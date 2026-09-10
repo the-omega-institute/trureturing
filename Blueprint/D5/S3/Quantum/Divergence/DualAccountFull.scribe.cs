@@ -89,6 +89,8 @@ internal sealed class DualAccountFullDocument : IScribeDocumentDefinition
         new Formula.BindMany(FormulaQuantifier.ForAll, [.. variables], body);
     private static Formula Eqn(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.Equal, right);
+    private static Formula Sub(Formula left, Formula right) =>
+        new Formula.Binary(left, FormulaBinaryOperator.Subtract, right);
     private static Formula Le(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
     private static Formula And(Formula left, Formula right) =>
