@@ -181,7 +181,7 @@ public sealed partial class ProductionEnvironmentTests
         string? observed = null;
         string? observedProjectionFixture = null;
         var verification = VerifiedScribeEmissions.Empty;
-        var callback = new Func<string, LeanAxiomReport, VerifiedScribeEmissions>((root, _) =>
+        var callback = new Func<string, LeanAxiomReport, FrozenStateCatalog?, FrozenStatementIndex?, VerifiedScribeEmissions>((root, _, _, _) =>
         {
             materializedRoot = root;
             observed = File.ReadAllText(Path.Combine(root, "captured", "probe.txt"), Encoding.UTF8);

@@ -1,0 +1,23 @@
+**原基线收据说明（PR1 追加）。** 紧接的“本次运行”及其输出是原版本的历史记录；扩充后的实际重跑与新增计数见 §17 的 PR1 核验收据，不以这份旧输出代替本轮运行。
+
+本次运行退出码为 `0`，实际标准输出如下：
+
+```text
+balanced_states=105 pair_checks=11025
+worked_product: q=1 archive=14 whole=8 selected=3 causal_pairs=27
+parallel_pairs=3 temporal_pairs=11 both_q=2
+zero_products: (archive,whole,selected,q)=(4,0,0,0),(14,8,6,0)
+raw_laws: sum_with_negative_archive=4 unit_product_archive=8 associativity_archives=28,32
+filters: spatial=(1,0) source=(2,1) causal=(2,1); restricted_q=0 omitted_charge=1
+transport: balanced_added_charge=0 unbalanced_defect=1; bin_complement=(0,-1); image_defect_and_cycle=confirmed
+coordinates: linear_and_time_translation_commute=True spatial_translation_commutes=False
+rationals: sum=-1 product=-3/4 negative=-1/2 division=-1/3 zero_divisor=rejected
+inverse_prefixes: (0,1,1,1)->(0,1,1,1); (1,1/2,1/3,1/4)->(1,2,3,4)
+sources: shared_difference={0} shared_square={1,4}; independent_difference={-1,0,1} independent_product={1,2,4}
+ALL_FINITE_CHECKS_PASSED
+```
+
+核验解释：这些读数仅覆盖上述有限域及具名例子。它们不证明任意图、任意 Cauchy 序列或 ZFC 的一致性，也不是 Lean 内核检查。新文档之外未改动任何仓库文件；完整仓库准入检查、独立数学评审和 PR 交付是调用方的后续步骤。
+
+<a id="pr1-observation"></a>
+

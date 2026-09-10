@@ -1,0 +1,6 @@
+**定义 11（逐行规范化与算术截面）。** 令 \(\mathcal C\subseteq\mathcal R\) 为每行规范的表，定义
+\[
+\nu(r)(p,\cdot)=s(V_p(r)),\qquad K(n)(p,\cdot)=s(v_p(n))\quad(n\in\mathbb N_+).
+\]
+\(s(0)=0\)，故两表均有限支撑。在 \(\mathcal C\) 上定义 \(c\oplus d=\nu(c+d)\)。整数本身的行 \(s(n)\) 与其素数指数表 \(K(n)\) 分别以 \(\mathbb N\) 和 \(\operatorname{Pr}\times\mathbb N\) 为索引。
+

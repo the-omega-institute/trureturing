@@ -35,7 +35,7 @@ internal static partial class CoverAtomCommand
             Current = Decode(CurrentRaw);
             Baseline = Decode(repository.ReadRevision(baselineRevision));
             Document = LoadDocument(Current);
-            BaselineDocument = BackfillInventoryLoader.LoadBaseline(Baseline);
+            BaselineDocument = IngestCommand.LoadDocument(Baseline, baseline: true);
             Report = reportSource.Load(Current);
             Lean = ValidateLean(Current, Report);
             try

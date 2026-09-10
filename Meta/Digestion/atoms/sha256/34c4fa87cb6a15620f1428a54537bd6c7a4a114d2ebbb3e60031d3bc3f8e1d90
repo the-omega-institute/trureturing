@@ -1,0 +1,60 @@
+## 2. fixed-edge completion fibre
+
+设固定边为：
+
+```math
+(I,T).
+```
+
+定义 factor fibre：
+
+```math
+\mathcal F(T)=
+\{F\in U(6):F\text{ flat},\ FT\text{ flat}\}.
+```
+
+若 `F in F(T)`，则：
+
+```math
+W=F^\dagger
+```
+
+给出同时无偏于 `I` 与 `T` 的第三基。反过来也成立。因此 completion fibre 可以用 factor fibre 表示。
+
+若 `F,F' in F(T)` 对应两个 completions `W=F^dagger` 与 `W'=F'^dagger`，则：
+
+```math
+W^\dagger W'=FF'^\dagger.
+```
+
+所以 quartet 条件是：
+
+```math
+\boxed{
+F,F'\in\mathcal F(T),
+\qquad FF'^\dagger\text{ flat}.
+}
+```
+
+定义：
+
+```math
+\mathcal E_6^{(1)}=
+\{T:\mathcal F(T)\ne\varnothing\},
+```
+
+以及：
+
+```math
+\mathcal E_6^{(2)}=
+\{T:\exists F,F'\in\mathcal F(T),\ FF'^\dagger\text{ flat}\}.
+```
+
+四 MUB 问题等价于：
+
+```math
+\boxed{\mathcal E_6^{(2)}=\varnothing.}
+```
+
+`E_6^(2)` 比全部 MUB triplet support `E_6^(1)` 更小。quartet-specific cross condition 应当在第一步就参与消元。
+

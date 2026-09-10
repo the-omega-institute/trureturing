@@ -294,6 +294,14 @@ __poll_task() {  # <task-id> <outfile>; ask/fetch share polling, __finish owns t
       case "$r" in
         *"Task is dispatched"*|*"Phase:"*|*queued*) n=$((n+1)); sleep "$POLL_SECONDS"; continue;;
       esac
+    else
+      # 2026-09-09 实测:任务已成功提交(Task submitted)后,一次 `oracle result` 的 HTTP 连接
+      # 超时(`error sending request for url … client error (Connect): operation timed out`)
+      # 被当成终态,一票已派出的席位在调用方眼里成了失败(第 8.4 条坏原材料)。
+      # 传输层错误不是任务判词:按一轮计数继续轮询,轮次耗尽走 TIMEOUT(任务仍可 fetch)。
+      case "$r" in
+        *"error sending request for url"*|*"client error (Connect)"*) n=$((n+1)); sleep "$POLL_SECONDS"; continue;;
+      esac
     fi
     __append "$out" "$r" || return 2
     break

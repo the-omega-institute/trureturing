@@ -1,0 +1,36 @@
+**命题 54（有下界区域的固定 q 表达，repo-derived）。** 精确量词为
+
+$$
+\begin{aligned}
+\forall B\subseteq K\ \forall k_0\in\mathbb Z:\quad
+&\bigl[(\forall(\tau,p)\in B,\ \tau\ge k_0)\ \Longrightarrow\\
+&\quad\forall k\le k_0-1\ \forall X\in\mathcal B:\quad
+q(F_BX)=q\bigl(F_{\downarrow Q^*}(X\boxtimes T_k(U_0))\bigr)\bigr],\\
+Q^*&=\{(p,\epsilon,r,\tau+1):(\tau,p)\in B,
+                 \ \epsilon\in\{\pm1\},\ r\in T\}.
+\end{aligned}
+\tag{MIX-QEXPR}
+$$
+
+$B,k_0,k,Q^*$ 都在 $X$ 之前固定；不要求 $B$ 有限或有上界，也不声称该表达保持历史同构。
+
+**证明。** $T_k(U_0)$ 只选位置 $0$、符号正、时刻 $k$ 的点 $u_+$。乘积的新选中事件恰来自 $(e,u_+)$、$e\in A_X$，位置与符号沿 $e$，时间为 $\max(t(e),k)+1$。该次乘积当前区域为反链，故因果筛选只检查新点自身属性。若 $t(e)\ge k$，新时间为 $t(e)+1$，在这个范围内单射，$Q^*$ 恰检查 $(t(e),x(e))\in B$。若 $t(e)<k$，新时间为 $k+1\le k_0$，不等于任何目标时间 $\tau+1\ge k_0+1$，故被拒；原事件因 $t(e)<k<k_0$ 也不属于 $B$。逐选中事件的有符号有限和相等，空选择及负时刻均包含在内。$k$ 只依赖指定区域的下界，不依赖 $X$ 的最早时刻。证毕。
+
+**坏界反例（不另编号）。** 将条件放宽为 $k\le k_0$ 不成立：取 $B=\{(0,0)\}$、$k=k_0=0$，输入为只选时刻 $-1$ 正点的平衡 $U_{-1}$。目标 $q=0$；乘 $U_0$ 后该点时间成为 $1$，命中 $Q^*$，右式为 $1$。因此原命题的统一界 $k\le k_0-1$ 不能按此方式放宽。
+
+命题 53 判定不可作丰富输出表达的**有下界**区域仍可由本命题作固定 $q$ 表达，例如 D12 的单元区域。**D14 的 $B$ 没有时间下界，不能把它列作命题 54 的适用例。** 它也有固定 $q$ 表达，但由以下单独的直接计算给出：
+
+$$
+\begin{aligned}
+Q_{14}^*={}&\{(p,\epsilon,r,1):\epsilon\in\{\pm1\},r\in T\}\\
+ &\cup\{(q,\epsilon,r,j):\epsilon\in\{\pm1\},r\in T,j\in\{1,2,3\}\},\\
+q(F_BX)={}&q\bigl(F_{\downarrow Q_{14}^*}(X\boxtimes U_0)\bigr)
+\quad\text{对全部 }X\in\mathcal B.
+\end{aligned}
+\tag{MIX-D14-Q}
+$$
+
+这里 $p,q$ 固定为 D14 的两个位置。乘后时间 $\max(t,0)+1=1$ 当且仅当 $t\le0$；它属于 $\{1,2,3\}$ 当且仅当 $t\le2$。在当前反链上逐选中点检查位置与该时间条件，恰给 D14 两个截面，符号保持，故等式成立。这个具名无下界例的 $q$ 表达已结算，丰富输出不可表达性仍由 D14 保持。
+
+**open：** 时间无下界且不属于命题 53 丰富输出可表达族的区域，其**一般** $q$ 层分类（$\exists$ 固定有限 $C\ \forall X$）仍未测，本节没有给出覆盖这整个剩余类的判据。不能将所有无下界 $B$ 一概记为 open：命题 53 的可表达族已给 $q$ 表达，D14 也已由 (MIX-D14-Q) 单独结算。
+

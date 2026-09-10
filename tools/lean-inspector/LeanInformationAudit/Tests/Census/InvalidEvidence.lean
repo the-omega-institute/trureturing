@@ -12,7 +12,7 @@ private def alterFinite (f : {key : StatementKey} → FiniteOccurrenceDispositio
         | .certified (.finiteOccurrence value) => .certified (.finiteOccurrence (f value))
         | value => value⟩ }
 
-/-- error: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.SealSuccess.idTheorem class=finite_occurrence invalid=state_enumeration_certificate -/
+/-- error: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.SealSuccess.idTheorem class=finite_occurrence invalid=state_enumeration_certificate.root_membership -/
 #guard_msgs in
 run_cmd liftTermElabM do
   validateEvidence `LeanInformationAudit.Tests.Census.Evidence
@@ -93,7 +93,7 @@ theorem structuralAlias : ∀ n : Nat, n % 2 < 2 := structuralTheorem
 /-- error: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.Census.Evidence.structuralAlias class=structural_occurrence invalid=realization.provenance -/
 #guard_msgs in
 run_cmd liftTermElabM do
-  let key : StatementKey := ⟨``structuralAlias, "alias-id"⟩
+  let key : StatementKey := ⟨``structuralAlias, "sha256:0000000000000000000000000000000000000000000000000000000000000011"⟩
   let rows := inventory.entries.filterMap fun entry => match entry.2 with
     | .certified (.structuralOccurrence value) => some ⟨key, .certified <| AnalysisDisposition.structuralOccurrence {
         canonicalArena := value.canonicalArena

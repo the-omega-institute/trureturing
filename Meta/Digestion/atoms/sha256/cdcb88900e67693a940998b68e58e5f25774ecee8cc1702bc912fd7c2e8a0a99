@@ -1,0 +1,30 @@
+### Next finite-volume target: linear-volume fluctuation control
+
+There is now a direct paper route from (37.2) to a graph-size-uniform variance
+bound. The function H_V(z)=M_1(V;z)/Z_V(z) is holomorphic on ActivityTube.
+For every real lambda in [0,51/20], the closed disk of radius epsilon/2 around
+lambda lies inside that tube. Cauchy's derivative estimate applied to (37.2)
+gives
+
+\[
+ |H'_V(\lambda)|\le6|V|/\epsilon.
+\]
+
+The normalized moment identity (35.4), together with the real coefficient
+transport, identifies lambda*H'_V(lambda) with the actual real Gibbs variance.
+Thus the candidate chain yields the paper consequence
+
+\[
+ 0\le\operatorname{Var}_{V,\lambda}(|S|)
+ \le\frac{153}{10\epsilon}|V|<16\cdot10^{30}|V|.
+\]
+
+The final strict inequality is intended for nonempty V; the empty variance is
+zero, and a non-strict bound with 16*10^30 covers all finite domains. This is an
+extremely conservative sufficient constant. Its point is the linear volume
+scaling, not numerical sharpness. The Cauchy-domain inclusion, derivative bound
+and full real/complex variance transport have not been assembled as new public
+Lean declarations here. They are the next concrete proof target. No infinite-
+volume susceptibility, central limit theorem or phase-transition theorem is
+asserted by this finite-volume deduction.
+

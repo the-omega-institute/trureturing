@@ -1,0 +1,31 @@
+**26.10 分数背包的匹配原始/价格证书。** 置 \(\sigma_i=v_i/h_i>0\),
+选任意排列 \(\pi\) 使 \(\sigma_{\pi(1)}\ge\cdots\ge\sigma_{\pi(k)}\),
+相等时任意固定次序。记
+\[
+q_m=A+\sum_{\ell=1}^m h_{\pi(\ell)},\qquad q_0=A.
+\]
+在 \(q_{m-1}\le u\le q_m\),取
+\[
+y_{\pi(\ell)}=
+\begin{cases}
+1,&\ell<m,\\
+(u-q_{m-1})/h_{\pi(m)},&\ell=m,\\
+0,&\ell>m.
+\end{cases}
+\]
+它可行且 \(\sum_i h_i y_i=u-A\)。任意可行 \(y\) 和 \(\lambda\ge0\) 满足
+\[
+\sum_i y_i v_i
+=\lambda\sum_i h_i y_i+\sum_i y_i(v_i-\lambda h_i)
+\le\lambda(u-A)+\sum_i\max(0,v_i-\lambda h_i).
+\]
+对上列具体 \(y\),取 \(\lambda_*=\sigma_{\pi(m)}\),
+前缀余值非负,后缀余值非正,第 \(m\) 项余值为零,
+故所有不等式同时取等。这直接证明 26.3 的最大值和下确界均达到且相等,其值为
+\[
+\boxed{D(u)=\sum_i f(c_i)+\sum_{\ell<m}v_{\pi(\ell)}
++\sigma_{\pi(m)}(u-q_{m-1}).}
+\]
+排序是经典分数背包材料,本式的无间隙结论来自显式匹配证书,
+没有先假定未证明的强对偶。
+

@@ -1,0 +1,7 @@
+**引理 6（repo-derived）。** 对任意有限族 $C_1,\ldots,C_r$，其中每个 $C_i$ 都是定义 16 的 $\Sigma_{{\rm cau},t}$ 总单孔上下文，存在共同整数 $c\le0$，使
+\[
+\forall p\in\mathbb Z^3\ \forall t,t'<c\ \exists X_t,X_{t'}\in\mathcal B\quad
+\forall i\in\{1,\ldots,r\}:\quad q(C_i(X_t))=q(C_i(X_{t'})).
+\]
+同一对输入供全部 $C_i$ 使用。它们具有相同的事件标识、位置、符号、来源、关系、当前区域、选择及档案端点；唯一不同的属性允许是唯一选中正点 $e$ 的时间 $t,t'$，其位置为 $p$、来源为 $l_0=\operatorname{leaf}(0)$。其余当前事件均共同且未选。阈值 $c$ 先于 $p,t,t'$ 固定，输入见证最后选取。
+

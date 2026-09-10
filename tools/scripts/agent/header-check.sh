@@ -60,6 +60,54 @@ PYEOF
 }
 __main() {
   local bad=0 f
+  # ---- dir-capacity 动词(2026-09-10 立;#6567 复发)----
+  # `header-check.sh --dirs <目录>...` 只做一件事:对每个**任意**目录量其条目数
+  # 与 SL-003 准入上限比,>= 上限即红。**上限仍从属主派生,不抄写。**
+  #
+  # 立条依据:本器原有的容量检查只数 `$dir/*.lean`,即**只管模块桶**;而 deposit 的
+  # 伴随文件(文献注 `Library/<域>/*.md`、`Problems/*.md`)所在的目录**从未被量**。
+  # 2026-09-10 实测代价:
+  #   · #6567 我自己开又自己关的单,标题即「Library/Arith 恰好停在 SL-003 上限 48:
+  #     下一个加 arithmetic 文献注的人必红」—— 关单理由是那次 lane 改道绕开了,
+  #     **陷阱本身没消失**;当日在 4.102 上原地复发,判词
+  #     `SL-003 Library/Arith: directory contains 50 files (admission limit 48)`。
+  #   · 我在派席前量了模块桶(`D5/S3/Arith/` 51/48,已发勘注 29.11 更正),
+  #     **却没量文献注桶**。规则我上一轮已写进 deposit-brief-note,**但我自己没执行** ——
+  #     故此处把它从「给席位读的散文」升为「器替我量的动作」(第 7.9 条:立制,不是提醒)。
+  #   · 当时 `Library/Arith` 与 `Library/Recurrence` 均为 **48/48**(余量 0),
+  #     而后者正是我前四条 lane 加注顶上去的。
+  #
+  # 判据用 **>= 上限**(比模块桶那条的 `> 上限` 更严一格):目标是**加一个文件之前**
+  # 就拦住,而非等加完判红。故 48/48 即报红,提示改用有余量的已注册域。
+  if [ "${1:-}" = "--dirs" ]; then
+    shift
+    [ $# -gt 0 ] || { echo "usage: header-check.sh --dirs <dir>..." >&2; return 2; }
+    _owner=tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs
+    dirlimit=$(grep -oE 'DirectoryFileLimit[[:space:]]*=[[:space:]]*[0-9]+' "$_owner" 2>/dev/null \
+               | grep -oE '[0-9]+' | head -1)
+    case "$dirlimit" in
+      ''|*[!0-9]*) echo "  ✗ 无法从 $_owner 读出 DirectoryFileLimit —— fail closed"; return 1 ;;
+    esac
+    _bad=0
+    for d in "$@"; do
+      if [ ! -d "$d" ]; then
+        echo "  · $d  <- 目录不存在(新建桶),余量 $dirlimit"
+        continue
+      fi
+      n=$(ls -1 "$d" 2>/dev/null | wc -l | tr -d ' ')
+      if [ "$n" -ge "$dirlimit" ]; then
+        echo "  ✗ $d  有 $n 项,已达/超 SL-003 准入上限 $dirlimit —— **不要往这里加文件**"
+        echo "      → 正解:改用有余量的已注册域,或按第 4.8 条 裂子桶"
+        echo "        (但裂子桶要先验 FILEMAP 是否收:例如 Library 的 pattern 是"
+        echo "         \"Library/*/*.md\" 恰两段,三段路径不匹配任何 pattern,该桶不能裂)"
+        _bad=1
+      else
+        echo "  ✓ $d  $n/$dirlimit  余量 $((dirlimit-n))"
+      fi
+    done
+    return "$_bad"
+  fi
+
   [ $# -gt 0 ] || { echo "usage: header-check.sh <lean-file>..." >&2; return 2; }
   for f in "$@"; do
     if [ ! -f "$f" ]; then echo "  ✗ $f  <- 文件不存在"; bad=1; continue; fi

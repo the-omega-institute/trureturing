@@ -102,6 +102,8 @@ internal static class FrozenStateRecordLoader
 
 internal sealed class FrozenStateCatalog
 {
+    internal static readonly AsyncLocal<Action?> Loading = new();
+
     private FrozenStateCatalog(ImmutableDictionary<RepoPath, FrozenStateRecord> records) =>
         Records = records;
 
@@ -114,6 +116,7 @@ internal sealed class FrozenStateCatalog
     internal static FrozenStateCatalog Load(RepositorySnapshot snapshot)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
+        Loading.Value?.Invoke();
         var records = ImmutableDictionary.CreateBuilder<RepoPath, FrozenStateRecord>();
         foreach (var file in snapshot.Files.Values
             .Where(static file => FrozenStatePath.IsUnderRoot(file.Path.Value))

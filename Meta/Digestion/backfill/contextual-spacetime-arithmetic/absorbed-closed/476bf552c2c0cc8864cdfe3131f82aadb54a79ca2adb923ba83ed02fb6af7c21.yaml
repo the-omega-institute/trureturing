@@ -1,0 +1,35 @@
+fingerprints:
+  raw_sha256: sha256:476bf552c2c0cc8864cdfe3131f82aadb54a79ca2adb923ba83ed02fb6af7c21
+  normalized_sha256: sha256:476bf552c2c0cc8864cdfe3131f82aadb54a79ca2adb923ba83ed02fb6af7c21
+cas_ref: sha256:476bf552c2c0cc8864cdfe3131f82aadb54a79ca2adb923ba83ed02fb6af7c21
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/ParallelComposition.background_parallel
+    target_statement_id: sha256:db3971683f782564f742fe2732241c7a0ab882cb3275fed80149571b012d2d3b
+  - gid: D5/S3/ConceptDynamics/Spacetime/ParallelComposition.balanced_parallel
+    target_statement_id: sha256:9dbb6a46ad99e262d3b1f872f0c9b53d6af30949ac2cd698638c72f1190260c7
+  - gid: D5/S3/ConceptDynamics/Spacetime/ParallelComposition.charge_disjSum
+    target_statement_id: sha256:bf4f7f8f9c6d9988c34fe5f96665e1bd74f75cb2bd94c4feb15db79c93be36fc
+  - gid: D5/S3/ConceptDynamics/Spacetime/ParallelComposition.internal_irrefl
+    target_statement_id: sha256:1369af4171e040e1c738537b29ba88f84843685259d8102fcc5b86c0750c07d2
+  - gid: D5/S3/ConceptDynamics/Spacetime/ParallelComposition.internal_time
+    target_statement_id: sha256:f51920673c7879c990dbaee4ab1c9073f12ca29e6c4c82fff40a41ded8981b9c
+  - gid: D5/S3/ConceptDynamics/Spacetime/ParallelComposition.internal_trans
+    target_statement_id: sha256:347bafb9597ec511e07bbb3127bab9d95e99ac736707787fcebf7d3321e31ee5
+  - gid: D5/S3/ConceptDynamics/Spacetime/ParallelComposition.parallel
+    target_statement_id: sha256:80a2d9569ace68a268923249b0ea507a4740a077b7a549bf6b55e6cfd2ecfc80
+  - gid: D5/S3/ConceptDynamics/Spacetime/ParallelComposition.parallelBalanced
+    target_statement_id: sha256:9534ad74a233ac042e9aabc8c4deb5603f645e1131f318f9c4dd13ca0a996431
+  - gid: D5/S3/ConceptDynamics/Spacetime/ParallelComposition.q_parallel
+    target_statement_id: sha256:536465b5917c7edd0d83871959b5e7bad2904d9b04b0d315dd6aa420aad0f68a
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.background_temporal
+    target_statement_id: sha256:61dce6fec1ed048cfe16f79914617e2a0c19e71b348bdc6010690c974fbdb9f6
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.balanced_temporal
+    target_statement_id: sha256:4c486ea6d7b26f9ee564e0f57bce4b4174ed4b053ea61aa29fc242f81b490643
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.charge_disjSum
+    target_statement_id: sha256:38acadd797204b6fc10cb73b4f3cce042de8f45feabc9417a4dee5a09ee5081c
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.q_temporal
+    target_statement_id: sha256:5cd6baa9a50f3b3d9d7c89a1f3d1573868fc0a7c5b08bb01c00654ed5fe0e841
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.temporalBalanced
+    target_statement_id: sha256:c5460d0dbb4d08426489f2334ece60587747bf705a8f5d74cc5082dac723f902
+receipts:
+  unresolved_subitems: []

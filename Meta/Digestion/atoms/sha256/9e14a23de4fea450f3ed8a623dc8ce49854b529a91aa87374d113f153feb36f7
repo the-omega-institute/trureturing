@@ -1,0 +1,58 @@
+## 16. order-three symmetry expectation 与 commutator 表达
+
+令：
+
+```math
+S=E_0+\omega E_1+\omega^2E_2,
+\qquad
+1+\omega+\omega^2=0.
+```
+
+对 probability vector `p_i`：
+
+```math
+\left|
+\operatorname{Tr}(P_iS)
+\right|^2
+=
+\frac{3\sum_kp_{ik}^2-1}{2}.
+```
+
+求和得到：
+
+```math
+\boxed{
+\alpha_S(C)
+=
+\frac13
+\sum_i
+\left|
+\operatorname{Tr}(P_iS)
+\right|^2.
+}
+```
+
+对 rank-one `P_i` 与 unitary `S`：
+
+```math
+\|[P_i,S]\|_{HS}^2
+=
+2\left(1-
+|\operatorname{Tr}(P_iS)|^2
+\right).
+```
+
+所以：
+
+```math
+\boxed{
+\alpha_S(C)
+=
+2-
+\frac16
+\sum_i\|[P_i,S]\|_{HS}^2.
+}
+```
+
+这把 symmetry affinity 直接接到仓库现有 commutator conservation 语言。
+

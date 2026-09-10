@@ -1,0 +1,9 @@
+**命题 30（$\Theta$ 恰为最粗充分读数，repo-derived）。** 对 (ST) 的严格 $q$ 观察，
+
+$$
+\approx_{\Sigma_{\rm st}}=\ker\Theta.
+\tag{THEQ}
+$$
+
+因此任意对此语言充分的总读数 $h:\mathcal B\to H$ 都在其实际像上唯一恢复 $\Theta$：存在唯一 $\kappa:h[\mathcal B]\to\mathcal T$ 满足 $\kappa(h(X))=\Theta(X)$。
+

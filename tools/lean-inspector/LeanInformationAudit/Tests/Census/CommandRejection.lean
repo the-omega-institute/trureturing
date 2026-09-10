@@ -191,21 +191,21 @@ private def duplicateReportNodes (secondName : Name) : Array Json :=
     ("freeze_status", toJson "frozen"),
     ("declarations", Json.arr #[Json.mkObj [("kind", toJson "theorem"),
       ("declaration_name_key", toJson (encodeNameKey name)),
-      ("statement_id", toJson "id-duplicate")]])]
+      ("statement_id", toJson "sha256:000000000000000000000000000000000000000000000000000000000000001d")]])]
 
 run_cmd do
   expectRejectedReport `duplicateFrozenKey "frozen_keys" "unique"
-    (toJson (StatementKey.mk `Fixture.duplicate "id-duplicate")).compress
+    (toJson (StatementKey.mk `Fixture.duplicate "sha256:000000000000000000000000000000000000000000000000000000000000001d")).compress
     (replaceReportNodes (duplicateReportNodes `Fixture.duplicate))
 
 run_cmd do
   expectRejectedReport `duplicateFrozenId "frozen_keys" "unique"
-    (toJson (StatementKey.mk `Fixture.other "id-duplicate")).compress
+    (toJson (StatementKey.mk `Fixture.other "sha256:000000000000000000000000000000000000000000000000000000000000001d")).compress
     (replaceReportNodes (duplicateReportNodes `Fixture.other))
 
 private def repeatedNameInventory : DispositionInventory := ⟨"fixture-head", #[
-  ⟨⟨`Fixture.repeated, "id-first"⟩, .certified <| .unreachable ⟨.noCanonicalObjectCarrier, `Evidence⟩⟩,
-  ⟨⟨`Fixture.repeated, "id-second"⟩, .certified <| .unreachable ⟨.noCanonicalObjectCarrier, `Evidence⟩⟩]⟩
+  ⟨⟨`Fixture.repeated, "sha256:0000000000000000000000000000000000000000000000000000000000000040"⟩, .certified <| .unreachable ⟨.noCanonicalObjectCarrier, `Evidence⟩⟩,
+  ⟨⟨`Fixture.repeated, "sha256:0000000000000000000000000000000000000000000000000000000000000041"⟩, .certified <| .unreachable ⟨.noCanonicalObjectCarrier, `Evidence⟩⟩]⟩
 
 /-- info: Except.ok 2 -/
 #guard_msgs in

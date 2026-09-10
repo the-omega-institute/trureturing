@@ -1,0 +1,1 @@
+'_private._stdin.0.A396808Trace.coeff_root_pow_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -11,6 +11,8 @@ internal enum FrozenStatementResolutionFailure
 
 internal sealed class FrozenStatementIndex
 {
+    internal static readonly AsyncLocal<Action?> Creating = new();
+
     private readonly FrozenStateCatalog state;
     private readonly LeanAxiomReport report;
 
@@ -24,6 +26,7 @@ internal sealed class FrozenStatementIndex
     {
         ArgumentNullException.ThrowIfNull(state);
         ArgumentNullException.ThrowIfNull(report);
+        Creating.Value?.Invoke();
         return new FrozenStatementIndex(state, report);
     }
 

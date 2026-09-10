@@ -1,0 +1,26 @@
+**28.3 定理 A:显式一致远坐标界。** 保留 primary 的常数,其中
+\(K\) 即原 payload 所记的 \(K_W\):
+\[
+\boxed{K=K_W=
+\frac{(S+4Q)^2+(2S+4Q)^2+(S+Q)^2}{9}},\qquad
+\boxed{\epsilon=\delta/18},
+\]
+\[
+\boxed{a=e^{-(S+Q)/2}(1-e^{-\epsilon})>0},
+\]
+\[
+\boxed{R=1+\max\left\{
+2S+3Q,\ \sqrt{6K},\ \frac{9K}{\delta},\quad
+\frac32(S+Q)+3\log\!\left(\frac{2}{1-e^{-\delta/18}}\right)
+\right\}.}
+\]
+这些量有限,\(K>0\),所有分母和对数自变量均严格正。
+若 \(t\ge R\),则 28.2 的每个可容许实薄层均满足
+\[
+\boxed{e^T G(M_0,M_1)<-a<0.}
+\]
+这也蕴含较弱的 \(e^TG\le-a\)。常数不依赖 \(T,s,M_0,M_1\)
+或步长标签的排列;但依赖固定步长集合及所选 \(S\)。
+证明依次由 28.4-28.12 给出。允许 \(T=\log2\)、\(s=0\)、\(s=S\),
+特别在 \(t=R\) 仍是严格负裕量。
+

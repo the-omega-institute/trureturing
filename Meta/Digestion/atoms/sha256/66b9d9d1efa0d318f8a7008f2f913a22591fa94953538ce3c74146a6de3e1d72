@@ -1,0 +1,22 @@
+### 1. 使用已有定义的整数 cocycle
+
+原定义保持为 `geometricPolynomial n z = sum_(j<n) z^j` 及 `reconstructedLi sigma a n = a integral |geometricPolynomial n|^2 dsigma`。新增整数延拓
+
+\[
+b_n(z)=\begin{cases}n,&z=1,\\(z^n-1)/(z-1),&z\ne1,\end{cases}\qquad n\in\mathbb Z.
+\]
+
+`integerGeometric_nat` 证明自然数分支与原多项式逐点相等；没有引入另一套 Li 系数。`integerGeometric_add` 证明
+
+\[
+b_{m+n}(z)=b_m(z)+z^m b_n(z).
+\]
+
+由此得到负索引公式、恒等点处连续性，以及对所有整数 m,n 和全部圆周点的精确距离式
+
+\[
+|b_m(z)-b_n(z)|^2=|\mathrm{geometricPolynomial}_{|m-n|}(z)|^2.
+\]
+
+z=1 始终保留，此时距离正是 (m-n)^2。无需无原子性、跳跃总质量有限或次二次增长前提。有限原子诊断只用于重放这些代数等式，源码的陈述是全整数、全圆周。
+

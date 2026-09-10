@@ -1,0 +1,13 @@
+**本轮实际运行收据（2026-09-09）。** 在指定工作树、基线 `4ee990c9cb7eb3c8692f0c3f6e5be53cf28f9c85` 上，按附录原 `sed ... | sed ... | python3 -` 命令执行扩充后的唯一代码块，进程实际退出码为 `0`。原 $105/11025$ 检查也在这次执行中运行；本次增加的实际标准输出为：
+
+```text
+pr1_recovery: singleton_checks=420 background_after_filter=preserved kernels_strict=True
+pr1_image_capacity: image_cases=243 fixed_contexts=19 choices=673 capacities=[-1,1],[-2,2]
+pr1_convolution: sparse_states=9 rich_pairs=81 pair_triples=729 explicit_full_q=2 restricted_q=-1 archives=28,32
+pr1_contexts: common_domain_miss=1 depth_counterexamples=5 restricted_word_checks=125 slot_parameter_and_extra_probe=distinguished
+pr1_boundaries: same_pair_source=1,0 causal=2,1 time_domain=defined,undefined identity=1,0 dependent_D=defined,undefined
+pr1_rng: zero_divisors=confirmed N_not_J=confirmed N_not_multiplicative=confirmed P0_unit_only=True finite_unit_candidates_rejected=513
+ALL_FINITE_CHECKS_PASSED
+```
+
+输出中的 `confirmed/True` 仅报告上述有限例子的断言；一般结论由正文证明。原附录末句“新文档之外未改动任何仓库文件”只描述基线工作；本轮交付范围为本源正文及本源 canonical ingest 新产物，不新增 Lean 或生产算术模块。

@@ -1,0 +1,14 @@
+**推论（较小语言的核仍成立）。** 按定义 23、24、27 有
+
+$$
+\Sigma_{\rm ts}\subseteq\Sigma_{\rm ts}^{\rm pair}\subseteq\Sigma_{\rm mix},
+\qquad
+\approx_{\Sigma_{\rm mix}}=\ker(\Gamma_t,m,M)
+\subsetneq\ker\Xi
+=\approx_{\Sigma_{\rm ts}^{\rm pair}}
+=\approx_{\Sigma_{\rm ts}}.
+\tag{MIX-COMPARISON}
+$$
+
+最后两个核等式分别消费命题 41、40。严格性直接引用 §32.5 的 B2：同 $\Xi$、含时间因果读数 $2,1$；该处 D5 的来源见证也可用，不重新编号。#6684 的命题 40 没有被推翻，它刻画较小语言的较粗核，不能改称 $\Sigma_{\rm mix}$ 的核。ARCH-R4-A1 的“未证混合闭包”由命题 52 闭合。语义下降仍不推出 (MIX-HEXPR)，其失败区域由命题 53 和 D13–D14 给出；$\Gamma_t$ 恢复历史的更强断言仍由 D10 反驳。
+

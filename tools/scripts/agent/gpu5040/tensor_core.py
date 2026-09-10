@@ -3,13 +3,16 @@
 import itertools
 import math
 import time
+from fractions import Fraction
+from functools import lru_cache
 
 import numpy as np
 import torch
 from torch import nn
 
 
-from search_config import ALPHABET, DIMENSIONS, OBJECTIVE, OCCUPATION, RESTRICTIONS, WORD_COUNT
+from search_config import (ALPHABET, DIMENSIONS, OBJECTIVE, OCCUPATION, RESTRICTIONS,
+                           WORD_COUNT, validate_initializer)
 
 
 def normalize(x, dim):
@@ -29,14 +32,120 @@ def householder_frame(reflectors, basis=None):
     return frame
 
 
+def analytic_physical(initialization):
+    """Construct the bound physical recipe on CPU, without RNG or NumPy calls."""
+    validate_initializer(initialization)
+    recipe = initialization["recipe"]
+    states = [None if state == "sink" else (tuple(state[:3]), state[3])
+              for state in recipe["states"]]
+    deleted = (tuple(recipe["deleted_state"][:3]), recipe["deleted_state"][3])
+    index = {state: i for i, state in enumerate(states)}
+
+    def outgoing(state):
+        if state is None:
+            return [(0, None)]
+        tails, zeros = state
+        if sum(tails) == 1:
+            return ([(0, (tails, zeros - 1))] if zeros else
+                    [(tails.index(1) + 1, None)])
+        edges = [(0, (tails, zeros - 1))] if zeros else []
+        for label, remaining in enumerate(tails):
+            if remaining:
+                after = tuple(n - int(i == label) for i, n in enumerate(tails))
+                edges.append((label + 1, (after, zeros)))
+        return edges
+
+    @lru_cache(None)
+    def count(state):
+        if state is None:
+            return 1
+        if state == deleted:
+            return 0
+        return sum(count(after) for _, after in outgoing(state))
+
+    dimension = len(states)
+    matrices = torch.zeros(4, dimension, dimension, dtype=torch.float64, device="cpu")
+    for column, state in enumerate(states):
+        for label, after in outgoing(state):
+            if after != deleted:
+                matrices[label, index[after], column] = math.sqrt(float(Fraction(count(after), count(state))))
+    rotation = recipe["rotation"]
+    matrices[:, :, rotation["column"]] = 0
+    for label, after, amplitude in rotation["entries"]:
+        matrices[label, after, rotation["column"]] = float(Fraction(amplitude))
+    initial = torch.zeros(dimension, dtype=torch.float64, device="cpu")
+    for position, weight in zip(recipe["initial"]["indices"], recipe["initial"]["squared_weights"]):
+        initial[position] = math.sqrt(float(Fraction(weight)))
+    return matrices, initial
+
+
+def encode_physical(matrices, initial):
+    """Positive-target reduction, stored in reverse for the fixed-eye forward.
+
+    No QR sign loss, projection, initial normalization or near-alignment cutoff.
+    A neutral reflection is legal only on an exactly unused last ambient row.
+    """
+    if (matrices.device.type != "cpu" or initial.device.type != "cpu"
+            or matrices.dtype != torch.float64 or initial.dtype != torch.float64):
+        raise ValueError("physical encoding requires explicit CPU float64 inputs")
+    dimension = initial.numel()
+    if initial.shape != (dimension,) or matrices.shape != (4, dimension, dimension):
+        raise ValueError("invalid physical tensor shape")
+    if not bool(torch.isfinite(matrices).all() and torch.isfinite(initial).all()):
+        raise ValueError("nonfinite physical input")
+    if float(gram_error(matrices)) > 2e-13:
+        raise ValueError("physical Gram identity fails before encoding")
+    if abs(float(initial.square().sum()) - 1) > 2e-13:
+        raise ValueError("physical initial norm fails before encoding")
+    frame = matrices.reshape(4 * dimension, dimension)
+    reduced = frame.clone()
+    steps = []
+    for column in range(dimension):
+        x = reduced[column:, column]
+        norm = torch.linalg.vector_norm(x)
+        tail_squared = x[1:].square().sum()
+        h = torch.zeros(4 * dimension, dtype=torch.float64, device="cpu")
+        if float(tail_squared) == 0 and float(x[0]) > 0:
+            if bool((x[1:] != 0).any()):
+                raise ValueError("near-aligned reflector underflow")
+            if bool((reduced[-1] != 0).any()):
+                raise ValueError("neutral reflector requires an exactly unused ambient row")
+            h[-1] = 1
+        else:
+            h[column:] = x
+            # x0 - ||x|| suffers cancellation for a positive, nearly aligned x.
+            h[column] = -tail_squared / (x[0] + norm) if float(x[0]) > 0 else x[0] - norm
+            length = torch.linalg.vector_norm(h)
+            if not bool(torch.isfinite(length)) or float(length) == 0:
+                raise ValueError("zero/nonfinite reduction reflector")
+            h = h / length
+        reduced = reduced - 2 * h[:, None] * (h @ reduced)[None, :]
+        steps.append(h)
+    reflectors = torch.stack(list(reversed(steps)))
+    error = float((householder_frame(reflectors) - frame).abs().max())
+    if not math.isfinite(error) or error > 2e-13:
+        raise ValueError("physical frame reconstruction fails: max_abs_error=" + repr(error))
+    return reflectors
+
+
 class RealIsometry(nn.Module):
-    def __init__(self, dimension, device, dtype=torch.float32):
+    def __init__(self, dimension, device, dtype=torch.float32, initialization=None, restore=False):
         super().__init__()
         self.dimension = dimension
-        self.reflectors = nn.Parameter(normalize(
-            torch.randn(dimension, 4 * dimension, device=device, dtype=dtype), 1))
-        self.initial = nn.Parameter(normalize(
-            torch.randn(dimension, device=device, dtype=dtype), 0))
+        if restore:
+            reflectors = torch.empty(dimension, 4 * dimension, device=device, dtype=dtype)
+            initial = torch.empty(dimension, device=device, dtype=dtype)
+        elif initialization is not None:
+            if dimension != 55:
+                raise ValueError("analytic initializer requires dimension 55")
+            matrices, physical_initial = analytic_physical(initialization)
+            reflectors = encode_physical(matrices, physical_initial).to(device=device, dtype=dtype)
+            initial = physical_initial.to(device=device, dtype=dtype)
+        else:
+            reflectors = normalize(torch.randn(dimension, 4 * dimension, device=device, dtype=dtype), 1)
+            initial = normalize(torch.randn(dimension, device=device, dtype=dtype), 0)
+        self.reflectors = nn.Parameter(reflectors)
+        self.initial = nn.Parameter(initial)
         self.register_buffer("basis", torch.eye(4 * dimension, dimension,
                                                 device=device, dtype=dtype), persistent=False)
 

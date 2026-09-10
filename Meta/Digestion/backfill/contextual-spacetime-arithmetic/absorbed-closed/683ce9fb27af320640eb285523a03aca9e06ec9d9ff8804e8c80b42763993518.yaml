@@ -1,0 +1,27 @@
+fingerprints:
+  raw_sha256: sha256:683ce9fb27af320640eb285523a03aca9e06ec9d9ff8804e8c80b42763993518
+  normalized_sha256: sha256:683ce9fb27af320640eb285523a03aca9e06ec9d9ff8804e8c80b42763993518
+cas_ref: sha256:683ce9fb27af320640eb285523a03aca9e06ec9d9ff8804e8c80b42763993518
+coverage_gids:
+  - gid: D5/S0/History/Spacetime/ArchiveCarrier.Archive
+    target_statement_id: sha256:68398975e18185ade9e842130995e305538d3523284b8d32d83856db8f8439a1
+  - gid: D5/S0/History/Spacetime/ArchiveCarrier.Attributes
+    target_statement_id: sha256:52b32d57c5513bfd79ac7e0864e407e16cd2bc8d4db6e178434cf8d91219809e
+  - gid: D5/S0/History/Spacetime/ArchiveCarrier.Context
+    target_statement_id: sha256:adbeabbe3a544bc4ac57bd42495811ef381ba0fbf815dcb34226e7e80b1209a3
+  - gid: D5/S0/History/Spacetime/ArchiveCarrier.Rich
+    target_statement_id: sha256:8657a552c4b71bd94643263f2c38b57a2a3f857e07ee0d717a5c71d7688b1cba
+  - gid: D5/S0/History/Spacetime/ArchiveCarrier.Selection
+    target_statement_id: sha256:5a7c37a9e079ef684bcf24911e6d7c8da348df644ba1a9bc8dba1018a97b7ffa
+  - gid: D5/S0/History/Spacetime/ArchiveEncoding.context_code_equiv
+    target_statement_id: sha256:7f79391f1efadb0000c0cd23a66ae0db6308c49884892b988283d1caad8f5639
+  - gid: D5/S0/History/Spacetime/ArchiveEncoding.rich_code_equiv
+    target_statement_id: sha256:f22a6839381cd1db13da74923ab9379fbdf217d56a0be81024e275b719bd032a
+  - gid: D5/S0/History/Spacetime/ArchiveRecordEncoding.Legal
+    target_statement_id: sha256:3dc1e0157510e4f812c7b53d749c4e4f44b80dc1191e8da69282f2ed462ec24c
+  - gid: D5/S0/History/Spacetime/ArchiveRecordEncoding.archive_code_equiv
+    target_statement_id: sha256:b1da08907c0a6df9547046cb2a7a50d482b4cce601f898f35c8a8fde70e46fe7
+  - gid: D5/S0/History/Spacetime/FiniteGraphEncoding.graph_code_equiv
+    target_statement_id: sha256:bb283074be20d35e89d643d8b6a96ecf4de55144467eac957756f6bac897f5e1
+receipts:
+  unresolved_subitems: []

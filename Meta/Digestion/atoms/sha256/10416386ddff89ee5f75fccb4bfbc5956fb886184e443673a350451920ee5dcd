@@ -1,0 +1,29 @@
+**29.16 所选薄层扰动的投影几何。** 令
+\(\varepsilon=\max_i\xi_i\le\varepsilon_0\)、\(\min_i\xi_i=0\),
+仍按 29.12 把相对薄层移动为 \([X+b,X+c]\)。有 \(X\le2\varepsilon\),
+容量始终为 \(u_1-X=c\),所以六组权重与零形状时逐项相同。
+沿用 27.3 的正交投影 \(\Pi=\operatorname{Id}-\frac13\mathbf1\mathbf1^{\mathsf T}\)。
+为估计其范数,可只在此计算中把形状排列为 \((0,v,\varepsilon)\),
+\(0\le v\le\varepsilon\);范数不受排列影响,并未更换步长标签。
+直接有
+\[
+\|\Pi\xi\|_2^2=\frac23(\varepsilon^2-\varepsilon v+v^2)
+\le\frac23\varepsilon^2,
+\]
+其差为 \(2v(\varepsilon-v)/3\ge0\)。
+把相对均值区间减去 \(X/3\),即回到固定 \([b/3,c/3]\),
+第 \(i\) 行端点对则移动 \(\xi_i-X/3=(\Pi\xi)_i\)。
+距离对平移是 1-Lipschitz:由三角不等式先得一个方向,反向交换两端得绝对值界。
+所以
+\[
+|\delta_i(\xi)-\delta_i(0)|\le|(\Pi\xi)_i|,\qquad
+|\rho(\xi)-\rho(0)|\le\frac{\|\Pi\xi\|_2}{\sqrt6}\le\frac\varepsilon3.
+\]
+由 \(X/3\le2\varepsilon/3\) 得
+\[
+|\lambda(\xi)-\lambda(0)|\le\varepsilon,\qquad
+|\eta(\xi)-\eta(0)|\le\frac43\varepsilon.
+\]
+这些界允许最近端点或最优排列改变,无需稳定的节点拓扑;
+每个扰动薄层仍含两个指定实际角点,故 29.4 的非负偏移始终适用。
+

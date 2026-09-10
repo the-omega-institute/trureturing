@@ -1,0 +1,11 @@
+### 15.2 闭包、空间筛选与位置限制的配对
+
+在 $R$ 上定义逐点加法及有限卷积
+
+$$
+(c*d)(r)=\sum_{p+q=r}c(p)d(q).
+\tag{CONV}
+$$
+
+求和只含两个有限支撑的 Cartesian 积；支撑包含于 $\operatorname{supp}(c)+\operatorname{supp}(d)$，故仍有限。
+

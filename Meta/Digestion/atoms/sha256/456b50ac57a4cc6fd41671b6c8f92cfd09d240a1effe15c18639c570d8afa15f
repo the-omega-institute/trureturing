@@ -1,0 +1,30 @@
+**第二分支：`rho!=0`。** 三个 `lambda` 都非零，三个相邻模长乘积相等，强制：
+
+```math
+|\lambda_0|=|\lambda_1|=|\lambda_2|.
+```
+
+利用 `||v||=||w||=1`，公共模长为一。于是：
+
+```math
+\rho^3=\prod_k|\lambda_k|^2=1,\qquad
+\lambda_{k+1}=\overline\rho\lambda_k.
+```
+
+所以：
+
+```math
+\boxed{w\sim R^m\Theta v\quad\text{for some }m\in\mathbb Z_3.}
+```
+
+正确的 conditional partner theorem 因而是：
+
+```math
+\boxed{
+\text{modewise orthogonality}+\text{coordinate flatness}+\Delta(v)\ne0
+\Longrightarrow\text{mode-local partner or dihedral partner}.
+}
+```
+
+这里没有预设逐模范数相同；它在非零乘积分支中由方程推出。该结果仍属于理论推导，尚未新增 Lean 文件。
+

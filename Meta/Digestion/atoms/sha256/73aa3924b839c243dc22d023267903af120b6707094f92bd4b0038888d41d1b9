@@ -1,0 +1,23 @@
+**定理 106（一般盒的边总数与确定性轨迹费用）。** 令 \(\mathsf e=|\mathsf E(P,A)|\)，则
+\[
+\mathsf e=\sum_{p\in P}\frac Q{q_p}A_p.
+\]
+拼接规范指数字段的总端点翻转和逐边最短规范化步数为
+\[
+\mathsf F_Z=\sum_{p\in P}\frac Q{q_p}(2A_p-w_Z(A_p)),\qquad
+\mathsf R_Z=\mathsf F_Z-\mathsf e.
+\tag{Z-BOX-COST}
+\]
+普通独立二进制字段以二进制占据数 \(w_2(A_p)\) 替换 \(w_Z(A_p)\)；拼接 Gray 字段给 \(\mathsf F_G=\mathsf e\)。有边时三者的最坏翻转分别为
+\[
+\max_{A_p>0}(\lfloor\ell_Z(A_p)/2\rfloor+1),\qquad
+\max_{A_p>0}(\lfloor\log_2A_p\rfloor+1),\qquad1.
+\]
+任意从零角单调走到容量角的单位路径，其原语步数、Zeckendorf 端点翻转及最短重写分别是
+\[
+\sum_pA_p,\qquad \sum_p(2A_p-w_Z(A_p)),\qquad
+\sum_p(A_p-w_Z(A_p)),
+\tag{Z-MONOTONE-COST}
+\]
+与坐标步骤的交错次序无关。
+

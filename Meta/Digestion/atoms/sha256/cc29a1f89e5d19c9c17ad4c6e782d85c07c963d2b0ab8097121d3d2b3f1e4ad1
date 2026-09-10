@@ -1,0 +1,2 @@
+- 881 exact whole-box affine row checks, including 704 clamped cases and
+  177 nonpositive-residual cases;

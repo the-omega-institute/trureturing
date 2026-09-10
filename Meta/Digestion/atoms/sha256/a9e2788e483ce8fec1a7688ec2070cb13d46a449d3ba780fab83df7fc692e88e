@@ -1,0 +1,16 @@
+**证明。** 外延公理由定理 72；空集由 \(\operatorname{NatZ}(0)\)；配对、并集及全部幂集由定理 74。\(\omega_Z\) 含语义零，且 \(\operatorname{El}(\operatorname{NatZ}(n+1))\) 为前 \(n\) 个叶再加第 \(n\) 个叶，故对语义序数后继封闭，证明无穷公理。自然数递归在此后继下由定理 70 的递归式给出同一加、乘。
+
+对基础公理，设有效码 \(c=\operatorname{Enc}(x)\) 语义非空，则 \(x\ne\varnothing\)。原基础公理给出 \(y\in x\) 且 \(y\cap x=\varnothing\)。其码属于 \(c\)，并没有同时属于 \(c\) 和 \(\operatorname{Enc}(y)\) 的语义成员。对选择公理，任给语义非空集合组成的语义集合，解码为非空集合族 \(\mathcal A\)；原选择公理给出选择函数 \(f\)，编码其完整图，由 (Z-EVAL) 得到逐成员选取的语义选择函数。任意集合索引族同样编码索引集及族函数，保留每个索引，不限于有限或可数族。
+
+对分离实例，先固定公式 \(\psi(u,\boldsymbol p)\) 及任意参数。对 \(c=\operatorname{Enc}(x)\)，原分离给
+\[
+y=\{u\in x:\psi(u,\boldsymbol p)\}.
+\]
+定理 76 逐成员给出 \(\operatorname{Enc}(y)\) 正是 \(c\) 内满足 \(\psi^Z(-,\operatorname{Enc}(\boldsymbol p))\) 的语义子集。
+
+对替代实例，假设对 \(c\) 的每个语义成员 \(a\) 恰有一个有效 \(b\) 满足 \(\theta^Z(a,b,\operatorname{Enc}(\boldsymbol p))\)。有效输出的存在与唯一性经解码及 (Z-FORMULA) 变成
+\[
+\forall u\in x\ \exists!v\ \theta(u,v,\boldsymbol p).
+\]
+原替代给 \(y=\{v:\exists u\in x\ \theta(u,v,\boldsymbol p)\}\)，编码 \(y\) 即为所需的语义像。反向唯一性也由编码单射保留。任意含已定义图符号的实例先作定义消去，仍是普通 ZFC 的一个实例。因此这里覆盖整个模式，而非只列有限个公式。证毕。
+

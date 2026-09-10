@@ -1,0 +1,2 @@
+**假设 2.9(绑定闭包严格弱于演绎闭包)**。对任一有限集 $S\subseteq\mathrm{Thm}(\mathfrak A)$,$B(S)\cap\mathrm{Thm}(\mathfrak A)\subsetneq\mathrm{Thm}(\mathfrak A)$。
+

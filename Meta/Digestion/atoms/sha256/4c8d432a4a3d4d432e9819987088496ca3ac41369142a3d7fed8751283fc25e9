@@ -1,0 +1,17 @@
+**定义 24（固定时间—空间配对选择）。** 固定任意 $P\subseteq K\times K$。对 $X,Y\in\mathcal B$，操作 $M_P(X,Y)$ 使用定义 6 的完整乘积情境，包含两份旧档案及来自全部 $\Omega_X\times\Omega_Y$ 的新当前事件；仅把选择改为
+
+$$
+\{p_{ef}:e\in A_X,\ f\in A_Y,
+\ ((t_X(e),x_X(e)),(t_Y(f),x_Y(f)))\in P\}.
+$$
+
+同时定义 $\odot_P:\mathcal L^2\to\mathcal L$：在 (TS-PRODUCT) 的同一有限求和中多乘因子 $\mathbf1_P((a,p),(b,q))$，即
+
+$$
+(c\odot_Pd)(n,r)=
+\sum_{\substack{(a,p)\in\operatorname{supp}(c),\ (b,q)\in\operatorname{supp}(d)\\
+\max(a,b)+1=n,\ p+q=r}}
+\mathbf1_P((a,p),(b,q))c(a,p)d(b,q).
+\tag{TS-PAIR}
+$$
+

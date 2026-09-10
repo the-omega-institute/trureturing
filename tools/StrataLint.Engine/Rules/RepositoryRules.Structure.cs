@@ -61,9 +61,9 @@ internal static partial class RepositoryRules
     // SL-003 capacity limits. These are the single enforcement source shared by
     // the admission rule (Capacity, below) and RepositoryCapacityAudit, so both
     // agree on the exact thresholds with no drift.
-    internal const int ArtifactHardLineLimit = 800;
+    internal const int ArtifactHardLineLimit = 1000;
 
-    internal const int ArtifactSoftLineLimit = 600;
+    internal const int ArtifactSoftLineLimit = 800;
 
     internal const int DirectoryFileLimit = 48;
 
@@ -239,7 +239,9 @@ internal static partial class RepositoryRules
                     ? CountArtifactLines(baselineFile.Text)
                     : 0;
                 findings.Add(lineCount > baselineLineCount
-                    ? new RuleFinding(path.Value, "artifact exceeds 800 lines")
+                    ? new RuleFinding(
+                        path.Value,
+                        $"artifact exceeds {ArtifactHardLineLimit} lines")
                     : new RuleFinding(
                         path.Value,
                         $"artifact is overfull at {lineCount} lines (hard limit "

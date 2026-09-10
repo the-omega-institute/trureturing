@@ -1,0 +1,578 @@
+{
+  "schema": "prime-slab-5711-window-report-v1",
+  "status": "implemented; awaiting independent review and caller delivery",
+  "flight": {
+    "id": "qgh0910-i34-gpu-5711-window-report",
+    "attempt": 1,
+    "retry_budget": 1,
+    "stage": "implementation",
+    "single_worker": true,
+    "delegations": 0,
+    "oracle_calls": 0,
+    "carrier": "codex-cli",
+    "caller_reported_version": "0.154.0",
+    "repo_prior_exposed": true,
+    "carriers_fallible": true,
+    "work_target": "/Users/auricstudio/trureturing-qgh-prime-slab-5711-report",
+    "base": "935d10335f7920a6a266191eaf8b8c0c3d132346",
+    "branch": "lane/math/prime-slab-5711-report-0910",
+    "git_mutations": "none; caller-owned",
+    "index": "empty",
+    "allowed_repository_additions": [
+      "/Users/auricstudio/trureturing-qgh-prime-slab-5711-report/docs/reports/quantized-gh/prime-slab-5711-window-0910.md",
+      "/Users/auricstudio/trureturing-qgh-prime-slab-5711-report/docs/reports/quantized-gh/prime-slab-5711-window-0910.json"
+    ]
+  },
+  "goal_preservation": {
+    "binding": "goal",
+    "complete_original_goal_read": true,
+    "raw_user_input": "开一条lane, 开一个新理论, 用GPT PRO 持续研究量子化GH在类似于5040等离散的边界, 推理.我看到有许多RH的等价判据实际上是有很多有零有整的离散边界条件的. /sshx 持续研究用不停止, 持续追加理论.",
+    "normalized_goal": "Open a dedicated long-lived research lane and a new theory volume; use actual GPT PRO and sshx independent reasoning to continuously investigate quantized GH in the user's RH-equivalent-criteria context, especially discrete boundaries like 5040, zeros, integer indices, strictness and equality. Keep appending substantive, checked theory and explicit remaining obligations while the host goal remains active.",
+    "constraint_count": 97,
+    "success_criteria_count": 51,
+    "revision_count": 87,
+    "all_original_goal_constraints_and_criteria_preserved": true,
+    "goal_artifact_modified": false,
+    "assignment": "C97 delivery of this newly searched window and exact coverage; related C12/C52 and S15 obligations only",
+    "standing_goal_complete": false,
+    "other_stages": "caller-owned"
+  },
+  "prerequisite_intake": {
+    "complete_before_target_mutation": true,
+    "required_bindings": [
+      "goal",
+      "skill",
+      "worker_spec",
+      "authority",
+      "authority_snapshot",
+      "agents",
+      "context",
+      "preregistration",
+      "runtime_pin",
+      "activation",
+      "historical_delivery",
+      "runtime_receipt",
+      "checkpoint",
+      "raw",
+      "classified"
+    ],
+    "skill_sha256_matches_expected": true,
+    "worker_spec_sha256_matches_expected": true,
+    "authority_used": "authority",
+    "authority_exception": {
+      "expected_blob_for_both": "3138b10dfc55b2e0c570da8079821518f36196eb",
+      "actual_target_blob": "3138b10dfc55b2e0c570da8079821518f36196eb",
+      "actual_snapshot_blob": "1392db0b7ee38fcadd4bda4c06af13a7a6806790",
+      "different_lines": [
+        {
+          "line": 621,
+          "target": "**改 CI 按三类验证,本条为唯一主责。** 适用面:`.github/workflows/**` 及其调用的脚本、workflow 权限与 job 拓扑、required check 的名称与判据。**最小 CI hotfix**只恢复既有行为,直接经普通 PR 到 `dev`,**无集成分支或稳定条数前置要求**;三 required check、相关回归与真实触发验证照常。**CI feature 与重构**无论单层、多层,均先在 `integration-ci-<主题>-tests` 做**大量集成测试**:feature **全部功能覆盖且连续稳定合入 ≥8 条集成 PR**,重构**全部受影响行为覆盖且连续稳定合入 ≥16 条集成 PR**;覆盖、性能与适用稳定条数全部达标后,才可将面向 dev 的 PR **转 Ready 或合入 dev**,允许提前建立下述跟踪 Draft。不得把 feature/重构改名 hotfix 规避验证。",
+          "snapshot": "**改 CI 按三类验证,本条为唯一主责。** 适用面:`.github/workflows/**` 及其调用的脚本、workflow 权限与 job 拓扑、required check 的名称与判据。**最小 CI hotfix**只恢复既有行为,直接经普通 PR 到 `dev`,**无集成分支或稳定条数前置要求**;三 required check、相关回归与真实触发验证照常。**CI feature 与重构**无论单层、多层,均先在 `integration-ci-<主题>-tests` 做**大量集成测试**:feature **全部功能覆盖且连续稳定合入 ≥12 条集成 PR**,重构**全部受影响行为覆盖且连续稳定合入 ≥36 条集成 PR**;覆盖、性能与适用稳定条数全部达标后,才可将面向 dev 的 PR **转 Ready 或合入 dev**,允许提前建立下述跟踪 Draft。不得把 feature/重构改名 hotfix 规避验证。"
+        },
+        {
+          "line": 625,
+          "target": "**逐原 PR 分析与优化**:每个原 PR 在 integration 实测并正常合入后,须先收集该集成 PR 及合入后 push 的 CI 结果,关联上款已记录的原 PR/原 SHA、集成 PR、候选 head/base SHA、实际 workflow 修订与各 run 身份,完整分析总结 CI 工作情况:各阶段成功/失败/跳过及原因,总耗时、关键路径耗时与分阶段耗时,缓存命中/未命中/恢复/写入行为及实际 Lean 重编与报告重检范围,重复工作、回归与异常。按实测定位瓶颈及可执行优化,按本条流程实施有据的修复/优化并按下款的可比条件复验、记录效果;无改动必要时须写明证据。完成本轮分析、必要优化与复验后才进入下一个原 PR,持续循环,不扩展为无关改进;预期负向测试仍依本条稳定计数款处理。CI 行为变更或修复须从该版本真实 CI 验绿起重新计满适用的 8/16 条稳定计数;正常输入原 PR 在 CI 未变且检查成功时按序计入,不得仅因 head/base SHA 前移重置计数,不要求计数期间仓库树不变。",
+          "snapshot": "**逐原 PR 分析与优化**:每个原 PR 在 integration 实测并正常合入后,须先收集该集成 PR 及合入后 push 的 CI 结果,关联上款已记录的原 PR/原 SHA、集成 PR、候选 head/base SHA、实际 workflow 修订与各 run 身份,完整分析总结 CI 工作情况:各阶段成功/失败/跳过及原因,总耗时、关键路径耗时与分阶段耗时,缓存命中/未命中/恢复/写入行为及实际 Lean 重编与报告重检范围,重复工作、回归与异常。按实测定位瓶颈及可执行优化,按本条流程实施有据的修复/优化并按下款的可比条件复验、记录效果;无改动必要时须写明证据。完成本轮分析、必要优化与复验后才进入下一个原 PR,持续循环,不扩展为无关改进;预期负向测试仍依本条稳定计数款处理。CI 行为变更或修复须从该版本真实 CI 验绿起重新计满适用的 12/36 条稳定计数;正常输入原 PR 在 CI 未变且检查成功时按序计入,不得仅因 head/base SHA 前移重置计数,不要求计数期间仓库树不变。"
+        },
+        {
+          "line": 627,
+          "target": "**稳定计数**:计数单位是**以最终候选 CI 版本在实际测试分支上经真实事件三门验绿并正常合入的集成 PR**,每条恰计一次,起算点为该最终候选版本首次真实验绿;feature 须连续计满 8 条,重构须连续计满 16 条。计入的只有逐原 PR 同步的集成 PR 与候选自身的实现、安装、修复、优化 PR;**空置分支、单纯等待时间、旧 workflow 的绿、同一 PR 的重跑、dummy commit 与验后关闭的探针触发 PR 一律不计入**,同一原 PR 不得拆包重复计数。出现**非预期失败**,先诊断修复、复验受影响行为,再从修复版本真实 CI 验绿起**重新计满适用条数**,此前已计条数清零。预先登记且命中预期判词的负向测试是验证证据,**不计为不稳定**,亦不计入条数;漏检或出现非预期判词仍须修复。",
+          "snapshot": "**稳定计数**:计数单位是**以最终候选 CI 版本在实际测试分支上经真实事件三门验绿并正常合入的集成 PR**,每条恰计一次,起算点为该最终候选版本首次真实验绿;feature 须连续计满 12 条,重构须连续计满 36 条。计入的只有逐原 PR 同步的集成 PR 与候选自身的实现、安装、修复、优化 PR;**空置分支、单纯等待时间、旧 workflow 的绿、同一 PR 的重跑、dummy commit 与验后关闭的探针触发 PR 一律不计入**,同一原 PR 不得拆包重复计数。出现**非预期失败**,先诊断修复、复验受影响行为,再从修复版本真实 CI 验绿起**重新计满适用条数**,此前已计条数清零。预先登记且命中预期判词的负向测试是验证证据,**不计为不稳定**,亦不计入条数;漏检或出现非预期判词仍须修复。"
+        }
+      ],
+      "scope": "CI stability thresholds outside report scope; target 8/16 versus snapshot 12/36",
+      "disposition": "use current target, which matches requested authoritative blob; preserve both unchanged"
+    },
+    "nested_docs_agents": "none at docs, docs/reports, docs/reports/quantized-gh"
+  },
+  "input_bindings": {
+    "goal": {"bytes":258079,"path":"/tmp/qgh-boundaries-0908/goal-prime-support-dual-obstruction-c97-0910.json","sha256":"58d41aa6a434ea440128cf45c5a286dabce3034fca9f2fdf3236862088dd2c47"},
+    "skill": {"bytes":63278,"path":"/Users/auricstudio/.claude/plugins/cache/consensus-rnd/consensus-rnd/1.0.0-beta.42/skills/sshx/SKILL.md","sha256":"8e56f6b4c5978e61f42cd3fd2e897174b45b8e69923c4e96c784a7e9e54e636b"},
+    "worker_spec": {"bytes":29223,"path":"/Users/auricstudio/.claude/plugins/cache/consensus-rnd/consensus-rnd/1.0.0-beta.42/skills/sshx/CODEX_WORKER_SPEC.md","sha256":"822872abada03b36a52384978909602a601cc937e7a4063683eb4b08e350fc02"},
+    "authority": {"bytes":281592,"git_blob":"3138b10dfc55b2e0c570da8079821518f36196eb","path":"/Users/auricstudio/trureturing-qgh-prime-slab-5711-report/CLAUDE.md","sha256":"0b5368fcd9e095edda4edbe1bafa994216ae77011ac81be8d9857e6ab1368405"},
+    "authority_snapshot": {"bytes":281595,"git_blob":"1392db0b7ee38fcadd4bda4c06af13a7a6806790","path":"/tmp/qgh-boundaries-0908/authoritative-CLAUDE-snapshot-i33-0910.md","sha256":"6d8c288d690bcd334a20aa1389b328ace2271897bc6d23bc1719ba7cac0bbb8a"},
+    "agents": {"bytes":186,"path":"/Users/auricstudio/trureturing-qgh-prime-slab-5711-report/AGENTS.md","sha256":"55ea1ad3a1e3036244ead614299f85b7d4b62abb0afde1014b2f236bf47f77f7"},
+    "context": {"bytes":3335,"path":"/Users/auricstudio/trureturing-qgh-prime-slab-5711-report/agents/CONTEXT.md","sha256":"c72c2bc5d0678d55a10943eaed7cc0da6ffe78fc6fda3783312b1b05d01d53c3"},
+    "preregistration": {"bytes":3009,"path":"/tmp/qgh-boundaries-0908/gpu-5711-window-preregistration-0910.json","sha256":"dbf1e1bcbdae8a1fc8e13d11cddbf371f3155e0ecd9d30f9c3a9698e3d73f4ed"},
+    "runtime_pin": {"bytes":3519,"path":"/tmp/qgh-boundaries-0908/gpu-5711-runtime-identity-pin-0910.json","sha256":"c6ac8493d12131769005baae91e8d53ae452d3c43180a2247a9c3bf3c1095303"},
+    "activation": {"bytes":1800,"path":"/tmp/qgh-boundaries-0908/gpu-5711-activation-0910.json","sha256":"8a290ab314374b2acf4d001bfe4a4780260e2780f54151d8cd1634e702089aad"},
+    "historical_delivery": {"bytes":929,"path":"/tmp/qgh-boundaries-0908/delivery-pilot-report-merged-c96-0910.json","sha256":"142e92493ee82212aa6e2ccf26d28eeacdd6ae1cbf8a0d12f62e53da06b95f71"},
+    "runtime_receipt": {"bytes":7157,"path":"/Users/auricstudio/.local/state/qgh-prime-slab-5711-0910/run-844b07e368574c8e8f6ce741ec5f2d8c.json","sha256":"e972f9251d473465127708de56627a896bfe0b70dcd545e3b58a24859fec5668"},
+    "checkpoint": {"bytes":2485,"path":"/Users/auricstudio/.local/state/qgh-prime-slab-5711-0910/window-148800-148863/checkpoint.json","sha256":"4ee5afe3f727868dea37e043f3dff934eb1ff441dc0a122f440daea38df35bc7"},
+    "raw": {"bytes":366620,"path":"/Users/auricstudio/.local/state/qgh-prime-slab-5711-0910/window-148800-148863/raw-148800-148863.jsonl","sha256":"389c1fb9a97b99dcf7244c7c70bc250c1ec5f5f5060065a41a29199374b07e54"},
+    "classified": {"bytes":2784180,"path":"/Users/auricstudio/.local/state/qgh-prime-slab-5711-0910/window-148800-148863/classified-148800-148863.jsonl","sha256":"48221af8551c0c20a9414b34c7d8b508b06945f6e848660a8417713ec10791f8"},
+    "historical_markdown": {"bytes":18636,"path":"/Users/auricstudio/trureturing-qgh-prime-slab-5711-report/docs/reports/quantized-gh/prime-slab-mps-pilot-0909.md","sha256":"4d11a1a4feb4fd871632902cd62ca27cc3b126ebc99395d852da7ca531d6a976"},
+    "historical_json": {"bytes":12955,"path":"/Users/auricstudio/trureturing-qgh-prime-slab-5711-report/docs/reports/quantized-gh/prime-slab-mps-pilot-0909.json","sha256":"52b151e12ee9347632e02ba219f960b4300e90d6caa4a9b42440bc0c19ef2db0"},
+    "finite_design": {"bytes":11142,"path":"/Users/auricstudio/trureturing-qgh-prime-slab-5711-report/docs/reports/prime-slab-finite-design-0909.md","sha256":"7000148383b534c10b6ce5573712a3d5f0368f579144d3ac1e4343c105529f48"},
+    "constant_input": {"bytes":6741,"path":"/Users/auricstudio/trureturing-qgh-prime-slab-5711-report/docs/reports/prime-slab-corner-order-0909.json","sha256":"9d28055d5255580ed58274822359961483d1deecbb7b4e38ce497948a4808672"},
+    "program:prime_slab_search.py": {"bytes":10979,"path":"/Users/auricstudio/trureturing-qgh-prime-slab-5711-report/tools/scripts/agent/prime_slab_search.py","sha256":"c4c8a6d3784d0fa442974eaec91d300f3f35a16affa89cee65d1210eb4501119"},
+    "program:gpu5040/state_store.py": {"bytes":3673,"path":"/Users/auricstudio/trureturing-qgh-prime-slab-5711-report/tools/scripts/agent/gpu5040/state_store.py","sha256":"a1eda747e24ea792caac30da136e85ba0beac6dc6f08d53880624b8ac6b1f03a"},
+    "program:prime_slabs/certify.py": {"bytes":4433,"path":"/Users/auricstudio/trureturing-qgh-prime-slab-5711-report/tools/scripts/agent/prime_slabs/certify.py","sha256":"d6888215edf92923b2c27dbd2e2a5dc2a18ff1b9e28e45dee80d22a4dfb3285e"},
+    "program:prime_slabs/exact.py": {"bytes":6417,"path":"/Users/auricstudio/trureturing-qgh-prime-slab-5711-report/tools/scripts/agent/prime_slabs/exact.py","sha256":"c125786e2485797c6a9aa3fbcba131e3d5655108d87ed61afd69a367bd70be8c"},
+    "program:prime_slabs/gpu.py": {"bytes":6595,"path":"/Users/auricstudio/trureturing-qgh-prime-slab-5711-report/tools/scripts/agent/prime_slabs/gpu.py","sha256":"2d2d14ef1400d8b0228ca3001ac8bb88e09ab0b337a51ad2b2ea5b68ef4245f3"},
+    "program:prime_slabs/search.metal": {"bytes":7436,"path":"/Users/auricstudio/trureturing-qgh-prime-slab-5711-report/tools/scripts/agent/prime_slabs/search.metal","sha256":"1305d0a1c9afd3d986f0d435ec3e8205d916ae951ff84420183e7ba1861b3e9d"},
+    "program:prime_slabs/storage.py": {"bytes":8562,"path":"/Users/auricstudio/trureturing-qgh-prime-slab-5711-report/tools/scripts/agent/prime_slabs/storage.py","sha256":"13a36959cfc07b8d52d3af41bf5231ef4e93f6525a7de28a28d238aadf2dcdf5"}
+  },
+  "original_json_values": {
+    "preregistration": {"CPU_candidate_generation":false,"CPU_mathematical_evaluations":0,"GPU_dispatches":0,"atlas_ref":"/tmp/qgh-boundaries-0908/prime-slab-corrected-program-inputs-r2-0910/docs/reports/prime-slab-corner-order-0909.json","atlas_sha256":"9d28055d5255580ed58274822359961483d1deecbb7b4e38ce497948a4808672","basis_ref":"/tmp/qgh-boundaries-0908/gpu-pilot-indeterminate-diagnostic-0910.json","box_range_closed":[148800,148863],"boxes":64,"clause":"C52","continuous_daemon_launched":false,"execution_requirements":["Corrected program final independent approval and MERGED","Historical pilot report MERGED with original bytes and results","Canonical make worktree pins current delivered program and input identities","One host-tracked finite-window command; existing shared GPU/verifier lock, no shell detached daemon","Persist raw stream before CPU verification, preserve every inactive and unresolved row, atomic full coverage checkpoint","No GPU-roundoff certificate or automatic negative admission from a negative finite approximation"],"exponent_window":{"b0":5,"b1_closed":[4,7],"b2_closed":[0,15]},"goal_ref":"/tmp/qgh-boundaries-0908/goal-gpu-5711-window-preparation-0910.json","mathematical_boundary":"G is the specified upper-bound comparison. Either sign is finite model evidence, not RH proof, a general prime theorem or Lean certification.","non_replay":{"disjoint_from_this_lane_pilot":true,"fixed_xi_m1_through1399999_excluded":true,"known_local_searched_boxes_closed":[3072,3135],"other_device_ranges":"not provided; no cross-device nonoverlap claim"},"prepared_at_utc":"2026-09-09T23:02:04.019447+00:00","preregistered_prediction":{"G_signs":"unmeasured","active_adjacent_slots":448,"reason":"64*7 adjacent slots; each R_lower>=5^5*7^4=7503125>5040","reflected_active_slots":"unmeasured"},"program_identity":"must pin delivered program at execution; not currently claimed run","prospective_command":"make -C tools prime-slab-search SLAB_FIRST=148800 SLAB_LAST=148863 SLAB_CHUNK=64 SLAB_MAX_CHUNKS=1 SLAB_STATE=/Users/auricstudio/.local/state/qgh-prime-slab-5711-0910","prospective_state_root":"/Users/auricstudio/.local/state/qgh-prime-slab-5711-0910","raw_range_closed":[3720000,3721599],"raw_slots":1600,"representative_exponents":[5,4,3],"representative_lower_products":[15625,16807,14641],"search_executed":false,"status":"preregistered; not dispatched","triple_certificate":{"primes":[5,7,11],"sorted_masks":[0,1,2,4,3,5,6,7],"subset_products":[1,5,7,11,35,55,77,385],"triple_index":36}},
+    "runtime_pin": {"CPU_candidate_generation":false,"GPU_dispatches":0,"branch":"lane/math/prime-slab-5711-run-0910","clean":true,"entrypoint_file_sha256":"c4c8a6d3784d0fa442974eaec91d300f3f35a16affa89cee65d1210eb4501119","files":{"gpu5040/state_store.py":"a1eda747e24ea792caac30da136e85ba0beac6dc6f08d53880624b8ac6b1f03a","prime_slab_search.py":"c4c8a6d3784d0fa442974eaec91d300f3f35a16affa89cee65d1210eb4501119","prime_slabs/certify.py":"d6888215edf92923b2c27dbd2e2a5dc2a18ff1b9e28e45dee80d22a4dfb3285e","prime_slabs/exact.py":"c125786e2485797c6a9aa3fbcba131e3d5655108d87ed61afd69a367bd70be8c","prime_slabs/gpu.py":"2d2d14ef1400d8b0228ca3001ac8bb88e09ab0b337a51ad2b2ea5b68ef4245f3","prime_slabs/search.metal":"1305d0a1c9afd3d986f0d435ec3e8205d916ae951ff84420183e7ba1861b3e9d","prime_slabs/storage.py":"13a36959cfc07b8d52d3af41bf5231ef4e93f6525a7de28a28d238aadf2dcdf5"},"head":"2ee40a714251977a35f70c0c277261ab9317fa86","historical_mathematical_replays":0,"input_bytes":6741,"input_sha256":"9d28055d5255580ed58274822359961483d1deecbb7b4e38ce497948a4808672","kernel_sha256":"1305d0a1c9afd3d986f0d435ec3e8205d916ae951ff84420183e7ba1861b3e9d","mathematical_program_executions":0,"original_seal_ref":"/tmp/qgh-boundaries-0908/caller-prime-slab-corrected-program-seal-r2-0910.json","pass":true,"program_sha256":"519acdc009869a00d18d918f5137ab035f717b220afbd1463a2ee9143e87dd5c","program_sha256_encoding":"sha256(json.dumps(files, sort_keys=True, indent=2, allow_nan=False) + LF)","purpose":"Bind the next unrun window to its actual canonical runtime; fixed metadata only.","recorded_at_utc":"2026-09-10T07:40:16.983141+00:00","runtime_bindings":[{"bytes":10979,"matches_delivered_source":true,"path":"tools/scripts/agent/prime_slab_search.py","sha256":"c4c8a6d3784d0fa442974eaec91d300f3f35a16affa89cee65d1210eb4501119"},{"bytes":3673,"matches_delivered_source":true,"path":"tools/scripts/agent/gpu5040/state_store.py","sha256":"a1eda747e24ea792caac30da136e85ba0beac6dc6f08d53880624b8ac6b1f03a"},{"bytes":4433,"matches_delivered_source":true,"path":"tools/scripts/agent/prime_slabs/certify.py","sha256":"d6888215edf92923b2c27dbd2e2a5dc2a18ff1b9e28e45dee80d22a4dfb3285e"},{"bytes":6417,"matches_delivered_source":true,"path":"tools/scripts/agent/prime_slabs/exact.py","sha256":"c125786e2485797c6a9aa3fbcba131e3d5655108d87ed61afd69a367bd70be8c"},{"bytes":6595,"matches_delivered_source":true,"path":"tools/scripts/agent/prime_slabs/gpu.py","sha256":"2d2d14ef1400d8b0228ca3001ac8bb88e09ab0b337a51ad2b2ea5b68ef4245f3"},{"bytes":7436,"matches_delivered_source":true,"path":"tools/scripts/agent/prime_slabs/search.metal","sha256":"1305d0a1c9afd3d986f0d435ec3e8205d916ae951ff84420183e7ba1861b3e9d"},{"bytes":8562,"matches_delivered_source":true,"path":"tools/scripts/agent/prime_slabs/storage.py","sha256":"13a36959cfc07b8d52d3af41bf5231ef4e93f6525a7de28a28d238aadf2dcdf5"}],"runtime_modules_imported":false,"state_root":"/Users/auricstudio/.local/state/qgh-prime-slab-5711-0910","state_root_contents_read":false,"state_root_exists":false,"work_target":"/Users/auricstudio/trureturing-qgh-prime-slab-5711-run"},
+    "activation": {"CPU_candidate_search":false,"CPU_role":"fixed orchestration and rigorous verification only","GPU_dispatch_confirmed":true,"box_range_closed":[148800,148863],"command":["make","-C","tools","prime-slab-search","SLAB_FIRST=148800","SLAB_LAST=148863","SLAB_CHUNK=64","SLAB_MAX_CHUNKS=1","SLAB_STATE=/Users/auricstudio/.local/state/qgh-prime-slab-5711-0910"],"cross_device_nonoverlap":"other device ranges unavailable; not claimed","host":47908,"host_exit":0,"launch_chunk":"fe9bc7","main_sync_completion_chunk":"6c3991","main_sync_exit":0,"main_sync_host":99233,"preregistration_ref":"/tmp/qgh-boundaries-0908/gpu-5711-window-preregistration-0910.json","previous_goal_turn_classification":"no-progress: user-requested explanation and historical receipt reads only; next safe action now activated","raw_range_closed":[3720000,3721599],"recorded_at_utc":"2026-09-10T15:02:46.072053+00:00","report_delivery_ref":"/tmp/qgh-boundaries-0908/delivery-pilot-report-merged-c96-0910.json","report_pr":6783,"report_state":"MERGED","run_ref":"/Users/auricstudio/.local/state/qgh-prime-slab-5711-0910/run-844b07e368574c8e8f6ce741ec5f2d8c.json","runtime_clean":true,"runtime_fresh_observation_chunk":"af0a83","runtime_head":"2ee40a714251977a35f70c0c277261ab9317fa86","runtime_pin_ref":"/tmp/qgh-boundaries-0908/gpu-5711-runtime-identity-pin-0910.json","state_root":"/Users/auricstudio/.local/state/qgh-prime-slab-5711-0910","state_root_existed_before_launch":false,"status":"terminal-certified-window-awaiting-report-delivery","terminal_chunk":"f54403","work_target":"/Users/auricstudio/trureturing-qgh-prime-slab-5711-run"},
+    "historical_delivery": {"GPU_searches":0,"goal_status":"active","head":"f1542ddd72a406d23a014b7e47a89bab7012093a","integration_ref":"/tmp/qgh-boundaries-0908/caller-pilot-report-final-integration-c96-0910.json","mathematical_program_executions":0,"merge_commit":"a9bccb706adebc97f90d8663dd4df55601c6ed04","merged_at":"2026-09-10T14:52:50Z","native_watcher":"make pr-watch PR=6783","observed_at_utc":"2026-09-10T14:55:05.087805+00:00","pr":6783,"required_checks":{"Candidate harness engineering checks":"SUCCESS","Canonical Lean report production":"SUCCESS","Content-addressed dev baseline admission":"SUCCESS"},"review_settlement_ref":"/tmp/qgh-boundaries-0908/pilot-report-count-review-r3-final-0910.json","state":"MERGED","url":"https://github.com/the-omega-institute/trureturing/pull/6783","watcher_exit":0,"watcher_host":16404,"watcher_tool_chunk":"af61c6"},
+    "runtime_receipt": {"argv":["/Users/auricstudio/.cache/uv/builds-v0/.tmpRUHgqv/bin/python","/Users/auricstudio/trureturing-qgh-prime-slab-5711-run/tools/scripts/agent/prime_slab_search.py","search","--first-box","148800","--last-box","148863","--chunk-boxes","64","--max-chunks","1","--precisions","128,256,512","--state-dir","/Users/auricstudio/.local/state/qgh-prime-slab-5711-0910","--input","/Users/auricstudio/trureturing-qgh-prime-slab-5711-run/tools/../docs/reports/prime-slab-corner-order-0909.json","--input-sha256","9d28055d5255580ed58274822359961483d1deecbb7b4e38ce497948a4808672"],"attempt_id":"844b07e368574c8e8f6ce741ec5f2d8c","command":"uv run --python 3.12 --with torch==2.8.0 --with numpy==2.0.2 --with python-flint==0.8.0 python /Users/auricstudio/trureturing-qgh-prime-slab-5711-run/tools/scripts/agent/prime_slab_search.py search --first-box 148800 --last-box 148863 --chunk-boxes 64 --max-chunks 1 --precisions 128,256,512 --state-dir /Users/auricstudio/.local/state/qgh-prime-slab-5711-0910 --input /Users/auricstudio/trureturing-qgh-prime-slab-5711-run/tools/../docs/reports/prime-slab-corner-order-0909.json --input-sha256 9d28055d5255580ed58274822359961483d1deecbb7b4e38ce497948a4808672","environment":{"cpu":"Apple M3 Ultra","cpu_query_exit":0,"dependencies":{"numpy":"2.0.2","python-flint":"0.8.0","torch":"2.8.0"},"executable":"/Users/auricstudio/.cache/uv/builds-v0/.tmpRUHgqv/bin/python","flags":{"PYTORCH_ENABLE_MPS_FALLBACK":"0","PYTORCH_MPS_FAST_MATH":null,"PYTORCH_MPS_PREFER_METAL":null},"gpu":[{"_name":"Apple M3 Ultra","spdisplays_vendor":"sppci_vendor_Apple","sppci_model":"Apple M3 Ultra"}],"gpu_query_exit":0,"machine":"arm64","metal_compile_options":"Torch 2.8 compile_shader defaults; no GPU rounding certificate","platform":"macOS-26.6.2-arm64-arm-64bit","python":"3.12.13 (main, Mar 10 2026, 18:18:07) [Clang 21.1.4 ]"},"events":[{"at":"2026-09-10T15:02:47.375057+00:00","first_box":148800,"kind":"chunk_intent","last_box":148863,"raw_rows":1600},{"at":"2026-09-10T15:02:49.244875+00:00","kernel_calls":0,"kind":"compile","status":"started"},{"at":"2026-09-10T15:02:49.250004+00:00","kernel_calls":0,"kind":"compile","max_threads":1024,"status":"compiled","thread_execution_width":32},{"at":"2026-09-10T15:02:49.302095+00:00","kernel":"search","kind":"dispatch","status":"started","threads":1600},{"at":"2026-09-10T15:02:49.314810+00:00","dispatch_and_synchronize_seconds":0.012077957857400179,"kernel":"search","kind":"dispatch_result","status":"returned","threads":1600},{"at":"2026-09-10T15:02:49.422497+00:00","classified_file":"classified-148800-148863.jsonl","classified_sha256":"48221af8551c0c20a9414b34c7d8b508b06945f6e848660a8417713ec10791f8","counts":{"by_kind":{"adjacent":448,"reflected":1152},"by_outcome":{"inactive":1144,"negative":456},"by_proposal":{"inactive":1144,"indeterminate":456},"completed_rows":1600,"cpu_evaluated_active":456,"disagreement_ids":[],"extra_precision_evaluations":0,"gpu_flags":{"integer_overflow":0,"nonfinite":0,"other":0,"underflow":456},"invalid_ids":[],"raw_rows":1600,"unresolved_ids":[]},"first_box":148800,"kind":"chunk_audited","last_box":148863,"raw_file":"raw-148800-148863.jsonl","raw_sha256":"389c1fb9a97b99dcf7244c7c70bc250c1ec5f5f5060065a41a29199374b07e54","status":"certified"}],"exit_code":0,"finished_at":"2026-09-10T15:02:49.459485+00:00","full_campaign_complete":false,"identity":{"dependencies":{"numpy":"2.0.2","python-flint":"0.8.0","torch":"2.8.0"},"fallback":"0","files":{"gpu5040/state_store.py":"a1eda747e24ea792caac30da136e85ba0beac6dc6f08d53880624b8ac6b1f03a","prime_slab_search.py":"c4c8a6d3784d0fa442974eaec91d300f3f35a16affa89cee65d1210eb4501119","prime_slabs/certify.py":"d6888215edf92923b2c27dbd2e2a5dc2a18ff1b9e28e45dee80d22a4dfb3285e","prime_slabs/exact.py":"c125786e2485797c6a9aa3fbcba131e3d5655108d87ed61afd69a367bd70be8c","prime_slabs/gpu.py":"2d2d14ef1400d8b0228ca3001ac8bb88e09ab0b337a51ad2b2ea5b68ef4245f3","prime_slabs/search.metal":"1305d0a1c9afd3d986f0d435ec3e8205d916ae951ff84420183e7ba1861b3e9d","prime_slabs/storage.py":"13a36959cfc07b8d52d3af41bf5231ef4e93f6525a7de28a28d238aadf2dcdf5"},"input_sha256":"9d28055d5255580ed58274822359961483d1deecbb7b4e38ce497948a4808672","kernel_sha256":"1305d0a1c9afd3d986f0d435ec3e8205d916ae951ff84420183e7ba1861b3e9d","normalization":"exp(min(c_i))*G; GPU 24 terms; CPU full expression","precisions":[128,256,512],"program_sha256":"519acdc009869a00d18d918f5137ab035f717b220afbd1463a2ee9143e87dd5c","python":"3.12.13","schema":"prime-slab-raw-and-arb-v1"},"mode":"search","new_cpu_audited_rows":1600,"new_gpu_raw_rows":1600,"recovered_gpu_raw_rows":0,"schema":"prime-slab-raw-and-arb-v1","standing_goal_complete":false,"started_at":"2026-09-10T15:02:46.807163+00:00","status":"certified_window","summary":{"by_kind":{"adjacent":448,"reflected":1152},"by_outcome":{"inactive":1144,"negative":456},"by_proposal":{"inactive":1144,"indeterminate":456},"checkpoint":"/Users/auricstudio/.local/state/qgh-prime-slab-5711-0910/window-148800-148863/checkpoint.json","classification_stream_sha256":"48221af8551c0c20a9414b34c7d8b508b06945f6e848660a8417713ec10791f8","completed_rows":1600,"coverage_complete":true,"cpu_evaluated_active":456,"disagreement_ids":[],"extra_precision_evaluations":0,"first_box":148800,"first_raw_row":3720000,"gpu_flags":{"integer_overflow":0,"nonfinite":0,"other":0,"underflow":456},"invalid_ids":[],"last_box":148863,"last_raw_row":3721599,"next_box":148864,"raw_rows":1600,"raw_stream_sha256":"1cea755d7428cb45f0a8a5aab2ea2c5fa450eec48a53c85d023ca32362edd3c6","unresolved_ids":[]},"timing_seconds":{"cpu_verification":0.0722249171230942,"gpu_dispatch_and_synchronize":0.012077957857400179,"orchestration":2.5700150409247726,"total":2.654317915905267},"verification_replay_rows":0},
+    "checkpoint": {"chunks":[{"classified_file":"classified-148800-148863.jsonl","classified_sha256":"48221af8551c0c20a9414b34c7d8b508b06945f6e848660a8417713ec10791f8","counts":{"by_kind":{"adjacent":448,"reflected":1152},"by_outcome":{"inactive":1144,"negative":456},"by_proposal":{"inactive":1144,"indeterminate":456},"completed_rows":1600,"cpu_evaluated_active":456,"disagreement_ids":[],"extra_precision_evaluations":0,"gpu_flags":{"integer_overflow":0,"nonfinite":0,"other":0,"underflow":456},"invalid_ids":[],"raw_rows":1600,"unresolved_ids":[]},"first_box":148800,"last_box":148863,"raw_file":"raw-148800-148863.jsonl","raw_sha256":"389c1fb9a97b99dcf7244c7c70bc250c1ec5f5f5060065a41a29199374b07e54","status":"certified"}],"first_box":148800,"identity":{"dependencies":{"numpy":"2.0.2","python-flint":"0.8.0","torch":"2.8.0"},"fallback":"0","files":{"gpu5040/state_store.py":"a1eda747e24ea792caac30da136e85ba0beac6dc6f08d53880624b8ac6b1f03a","prime_slab_search.py":"c4c8a6d3784d0fa442974eaec91d300f3f35a16affa89cee65d1210eb4501119","prime_slabs/certify.py":"d6888215edf92923b2c27dbd2e2a5dc2a18ff1b9e28e45dee80d22a4dfb3285e","prime_slabs/exact.py":"c125786e2485797c6a9aa3fbcba131e3d5655108d87ed61afd69a367bd70be8c","prime_slabs/gpu.py":"2d2d14ef1400d8b0228ca3001ac8bb88e09ab0b337a51ad2b2ea5b68ef4245f3","prime_slabs/search.metal":"1305d0a1c9afd3d986f0d435ec3e8205d916ae951ff84420183e7ba1861b3e9d","prime_slabs/storage.py":"13a36959cfc07b8d52d3af41bf5231ef4e93f6525a7de28a28d238aadf2dcdf5"},"input_sha256":"9d28055d5255580ed58274822359961483d1deecbb7b4e38ce497948a4808672","kernel_sha256":"1305d0a1c9afd3d986f0d435ec3e8205d916ae951ff84420183e7ba1861b3e9d","normalization":"exp(min(c_i))*G; GPU 24 terms; CPU full expression","precisions":[128,256,512],"program_sha256":"519acdc009869a00d18d918f5137ab035f717b220afbd1463a2ee9143e87dd5c","python":"3.12.13","schema":"prime-slab-raw-and-arb-v1"},"last_box":148863,"schema":"prime-slab-raw-and-arb-v1"}
+  },
+  "original_value_preservation": {
+    "mode": "exact parsed JSON values, including every original runtime schema/identity label and anomaly field",
+    "binding": "input_bindings keys match original_json_values keys; byte sizes/SHA256 bind original untouched input bytes",
+    "whitespace": "JSON embedding preserves values, not original whitespace",
+    "transitive_refs": "unlisted references are opaque supplied provenance; no other worktree, worker log, log_ref target or historical external stream accessed"
+  },
+  "coverage": {
+    "range_convention": "inclusive",
+    "triple_index": 36,
+    "primes": [
+      5,
+      7,
+      11
+    ],
+    "b0": 5,
+    "b1_closed": [
+      4,
+      7
+    ],
+    "b2_closed": [
+      0,
+      15
+    ],
+    "box_range_closed": [
+      148800,
+      148863
+    ],
+    "raw_range_closed": [
+      3720000,
+      3721599
+    ],
+    "box_count": 64,
+    "raw_row_count": 1600,
+    "slots_per_box": 25,
+    "adjacent_slots_closed": [
+      0,
+      6
+    ],
+    "reflected_slots_closed": [
+      7,
+      24
+    ],
+    "box_encoding": "4096*t+256*b0+16*b1+b2",
+    "row_encoding": "25*box_id+slot",
+    "complete_for_requested_window": true,
+    "checkpoint_chunks": 1,
+    "checkpoint_status": "certified",
+    "next_box": 148864,
+    "missing_ids": [],
+    "duplicate_ids": [],
+    "prospective_design_boxes": 229376,
+    "prospective_design_raw_slots": 5734400,
+    "full_campaign_complete": false
+  },
+  "outcomes": {
+    "kind_outcome_table": [
+      {
+        "kind": "adjacent",
+        "raw_rows": 448,
+        "active_count": 448,
+        "negative_count": 448,
+        "inactive_count": 0,
+        "invalid_count": 0,
+        "disagreement_count": 0,
+        "unresolved_count": 0
+      },
+      {
+        "kind": "reflected",
+        "raw_rows": 1152,
+        "active_count": 8,
+        "negative_count": 8,
+        "inactive_count": 1144,
+        "invalid_count": 0,
+        "disagreement_count": 0,
+        "unresolved_count": 0
+      }
+    ],
+    "negative_count": 456,
+    "inactive_count": 1144,
+    "invalid_count": 0,
+    "disagreement_count": 0,
+    "unresolved_count": 0,
+    "invalid_ids": [],
+    "disagreement_ids": [],
+    "unresolved_ids": [],
+    "validation_errors": [],
+    "source": "already-classified metadata; no mathematical recomputation"
+  },
+  "prediction": {
+    "preregistered_active_adjacent": 448,
+    "actual_active_adjacent": 448,
+    "confirmed": true,
+    "recorded_reason": "64*7 adjacent slots; each R_lower>=5^5*7^4=7503125>5040",
+    "reflected_activity_prior": "unmeasured",
+    "G_signs_prior": "unmeasured",
+    "actual_active_reflected": 8,
+    "actual_total_active": 456,
+    "scope": "448 predicted adjacent activity, not total active count"
+  },
+  "gpu_proposals": {
+    "search_dispatches": 1,
+    "threads": 1600,
+    "new_raw_rows": 1600,
+    "recovered_raw_rows": 0,
+    "indeterminate_count": 456,
+    "inactive_count": 1144,
+    "definite_sign_count": 0,
+    "flags": {
+      "integer_overflow": 0,
+      "nonfinite": 0,
+      "other": 0,
+      "underflow": 456
+    },
+    "active_error_bits": 4,
+    "underflow_semantics": "conservative possible-subnormal/flush-to-zero flag; no GPU roundoff certificate",
+    "finite_negative_floats_are_rigorous_evidence": false,
+    "raw_header": {
+      "first_box": 148800,
+      "identity": {
+        "dependencies": {
+          "numpy": "2.0.2",
+          "python-flint": "0.8.0",
+          "torch": "2.8.0"
+        },
+        "fallback": "0",
+        "files": {
+          "gpu5040/state_store.py": "a1eda747e24ea792caac30da136e85ba0beac6dc6f08d53880624b8ac6b1f03a",
+          "prime_slab_search.py": "c4c8a6d3784d0fa442974eaec91d300f3f35a16affa89cee65d1210eb4501119",
+          "prime_slabs/certify.py": "d6888215edf92923b2c27dbd2e2a5dc2a18ff1b9e28e45dee80d22a4dfb3285e",
+          "prime_slabs/exact.py": "c125786e2485797c6a9aa3fbcba131e3d5655108d87ed61afd69a367bd70be8c",
+          "prime_slabs/gpu.py": "2d2d14ef1400d8b0228ca3001ac8bb88e09ab0b337a51ad2b2ea5b68ef4245f3",
+          "prime_slabs/search.metal": "1305d0a1c9afd3d986f0d435ec3e8205d916ae951ff84420183e7ba1861b3e9d",
+          "prime_slabs/storage.py": "13a36959cfc07b8d52d3af41bf5231ef4e93f6525a7de28a28d238aadf2dcdf5"
+        },
+        "input_sha256": "9d28055d5255580ed58274822359961483d1deecbb7b4e38ce497948a4808672",
+        "kernel_sha256": "1305d0a1c9afd3d986f0d435ec3e8205d916ae951ff84420183e7ba1861b3e9d",
+        "normalization": "exp(min(c_i))*G; GPU 24 terms; CPU full expression",
+        "precisions": [
+          128,
+          256,
+          512
+        ],
+        "program_sha256": "519acdc009869a00d18d918f5137ab035f717b220afbd1463a2ee9143e87dd5c",
+        "python": "3.12.13",
+        "schema": "prime-slab-raw-and-arb-v1"
+      },
+      "last_box": 148863,
+      "provenance": {
+        "attempt": "/Users/auricstudio/.local/state/qgh-prime-slab-5711-0910/run-844b07e368574c8e8f6ce741ec5f2d8c.json",
+        "device": {
+          "cpu": "Apple M3 Ultra",
+          "cpu_query_exit": 0,
+          "dependencies": {
+            "numpy": "2.0.2",
+            "python-flint": "0.8.0",
+            "torch": "2.8.0"
+          },
+          "executable": "/Users/auricstudio/.cache/uv/builds-v0/.tmpRUHgqv/bin/python",
+          "flags": {
+            "PYTORCH_ENABLE_MPS_FALLBACK": "0",
+            "PYTORCH_MPS_FAST_MATH": null,
+            "PYTORCH_MPS_PREFER_METAL": null
+          },
+          "gpu": [
+            {
+              "_name": "Apple M3 Ultra",
+              "spdisplays_vendor": "sppci_vendor_Apple",
+              "sppci_model": "Apple M3 Ultra"
+            }
+          ],
+          "gpu_query_exit": 0,
+          "machine": "arm64",
+          "metal_compile_options": "Torch 2.8 compile_shader defaults; no GPU rounding certificate",
+          "platform": "macOS-26.6.2-arm64-arm-64bit",
+          "python": "3.12.13 (main, Mar 10 2026, 18:18:07) [Clang 21.1.4 ]"
+        }
+      },
+      "schema": "prime-slab-raw-and-arb-v1"
+    },
+    "integer_fields": [
+      "row_id",
+      "box_id",
+      "slot",
+      "triple_index",
+      "b0",
+      "b1",
+      "b2",
+      "p0",
+      "p1",
+      "p2",
+      "lower_mask",
+      "upper_mask",
+      "next_mask",
+      "j",
+      "i",
+      "guard_bits",
+      "active",
+      "error_bits"
+    ],
+    "float_fields": [
+      "M0",
+      "M1",
+      "ell",
+      "L",
+      "H",
+      "V0",
+      "scaled_gap",
+      "tail",
+      "permutation_0",
+      "permutation_1",
+      "permutation_2",
+      "permutation_3",
+      "permutation_4",
+      "permutation_5"
+    ]
+  },
+  "cpu_results": {
+    "new_audited_rows": 1600,
+    "evaluated_active_rows": 456,
+    "exactly_inactive_rows": 1144,
+    "precision_ladder": [
+      128,
+      256,
+      512
+    ],
+    "active_precision_counts": {
+      "128": 456
+    },
+    "extra_precision_evaluations": 0,
+    "verification_replay_rows": 0,
+    "inactive_refinements": "empty arrays",
+    "negative_basis": "original CPU-Arb full-expression G intervals; no worker recertification",
+    "nearest_tie_histogram": [
+      {
+        "indices": [],
+        "rows": 448
+      },
+      {
+        "indices": [
+          0
+        ],
+        "rows": 3
+      },
+      {
+        "indices": [
+          1
+        ],
+        "rows": 3
+      },
+      {
+        "indices": [
+          2
+        ],
+        "rows": 2
+      }
+    ]
+  },
+  "active_reflected_index": [
+    {"box_id":148802,"classified_line":73,"exponents":[5,4,2],"i":0,"j":6,"nearest_ties":[0],"raw_line":74,"row_id":3720072,"slot":22},
+    {"box_id":148803,"classified_line":89,"exponents":[5,4,3],"i":0,"j":3,"nearest_ties":[0],"raw_line":90,"row_id":3720088,"slot":13},
+    {"box_id":148803,"classified_line":93,"exponents":[5,4,3],"i":1,"j":4,"nearest_ties":[1],"raw_line":94,"row_id":3720092,"slot":17},
+    {"box_id":148820,"classified_line":524,"exponents":[5,5,4],"i":1,"j":6,"nearest_ties":[1],"raw_line":525,"row_id":3720523,"slot":23},
+    {"box_id":148821,"classified_line":540,"exponents":[5,5,5],"i":1,"j":3,"nearest_ties":[1],"raw_line":541,"row_id":3720539,"slot":14},
+    {"box_id":148834,"classified_line":858,"exponents":[5,6,2],"i":0,"j":1,"nearest_ties":[0],"raw_line":859,"row_id":3720857,"slot":7},
+    {"box_id":148836,"classified_line":925,"exponents":[5,6,4],"i":2,"j":6,"nearest_ties":[2],"raw_line":926,"row_id":3720924,"slot":24},
+    {"box_id":148852,"classified_line":1316,"exponents":[5,7,4],"i":2,"j":3,"nearest_ties":[2],"raw_line":1317,"row_id":3721315,"slot":15}
+  ],
+  "active_reflected_records": [
+    {"audit":{"C":[15625,16807,1331],"D":[78125,117649,14641],"R_lower":49933296875,"active":true,"disagreements":[],"exp_T1":"4656612873077392578125/18947489099","gpu_error_bits":4,"guard_bits":31,"kind":"reflected","proposed":"indeterminate","q0":"19224319296875","q1":"23283064365386962890625/246071287","row_id":3720072},"cpu":{"outcome":"negative","refinements":[{"bounds":{"D":["-34439056162063267293485532329307950009/348449143727040986586495598010130648530944","-34439056162063267293485532329307950003/348449143727040986586495598010130648530944"],"G":["-529816302113684540107510304279529345/21778071482940061661655974875633165533184","-16954121667637905283440329736944939015/696898287454081973172991196020261297061888"],"H":["244361690544838475304040534969819076189/21267647932558653966460912964485513216","244361690544838475304040534969819076193/21267647932558653966460912964485513216"],"L":["220024982204652824820777695082500984105/21267647932558653966460912964485513216","220024982204652824820777695082500984111/21267647932558653966460912964485513216"],"M0":["325258870896659847965588889233602681987/10633823966279326983230456482242756608","325258870896659847965588889233602681991/10633823966279326983230456482242756608"],"M1":["42775728434634007809099745320926315275/1329227995784915872903807060280344576","10693932108658501952274936330231578819/332306998946228968225951765070086144"],"Psi":["-207695962625954517214122939686683843965/2787593149816327892691964784081045188247552","-207695962625954517214122939686683843911/2787593149816327892691964784081045188247552"],"V0":["148526155711789731364590923161530917227/170141183460469231731687303715884105728","148526155711789731364590923161530917237/170141183460469231731687303715884105728"],"ell":["305985554646134609158172351143799045027/42535295865117307932921825928971026432","305985554646134609158172351143799045031/42535295865117307932921825928971026432"],"rho":["129795777814323469244068479399029824437/340282366920938463463374607431768211456","129795777814323469244068479399029824443/340282366920938463463374607431768211456"]},"distance_ratios":["246071287/48828125","1143828125/282475249","1313046875/214358881"],"mixtures":[["-132391442407180310465509695572106751365/696898287454081973172991196020261297061888","-132391442407180310465509695572106751335/696898287454081973172991196020261297061888"],["-137756224648253069173942129317231800035/1393796574908163946345982392040522594123776","-137756224648253069173942129317231800015/1393796574908163946345982392040522594123776"],["-132391442407180310465509695572106751365/696898287454081973172991196020261297061888","-132391442407180310465509695572106751335/696898287454081973172991196020261297061888"],["-140507549656762425078855509058323433283/1393796574908163946345982392040522594123776","-140507549656762425078855509058323433263/1393796574908163946345982392040522594123776"],["-137756224648253069173942129317231800035/1393796574908163946345982392040522594123776","-137756224648253069173942129317231800015/1393796574908163946345982392040522594123776"],["-140507549656762425078855509058323433283/1393796574908163946345982392040522594123776","-140507549656762425078855509058323433263/1393796574908163946345982392040522594123776"]],"nearest_ties":[0],"outcome":"negative","precision":128,"weights":[[["1","1"],["1","1"],["290298407186552868626973535215698400257/340282366920938463463374607431768211456","290298407186552868626973535215698400267/340282366920938463463374607431768211456"]],[["1","1"],["139344206318175610438529402180863811237/170141183460469231731687303715884105728","139344206318175610438529402180863811241/170141183460469231731687303715884105728"],["1","1"]],[["1","1"],["1","1"],["290298407186552868626973535215698400257/340282366920938463463374607431768211456","290298407186552868626973535215698400267/340282366920938463463374607431768211456"]],[["265811460129910002667564942336638319265/340282366920938463463374607431768211456","265811460129910002667564942336638319273/340282366920938463463374607431768211456"],["1","1"],["1","1"]],[["1","1"],["139344206318175610438529402180863811237/170141183460469231731687303715884105728","139344206318175610438529402180863811241/170141183460469231731687303715884105728"],["1","1"]],[["265811460129910002667564942336638319265/340282366920938463463374607431768211456","265811460129910002667564942336638319273/340282366920938463463374607431768211456"],["1","1"],["1","1"]]]}],"sign_disagreement":false},"raw":{"floats":["0x1.e965280000000p+4","0x1.0172700000000p+5","0x1.cc65580000000p+2","0x1.4b0e880000000p+3","0x1.6facb00000000p+3","0x1.bef46a0000000p-1","-0x1.0942f00000000p-5","0x0.0p+0","-0x1.3abf240000000p-3","-0x1.0942f20000000p-5","-0x1.3abf140000000p-3","-0x1.1ec8fc0000000p-5","-0x1.0942f00000000p-5","-0x1.1ec8fc0000000p-5"],"integers":[3720072,148802,22,36,5,4,2,5,7,11,5,6,7,6,0,31,1,4]},"validation_errors":[]},
+    {"audit":{"C":[15625,16807,14641],"D":[78125,117649,161051],"R_lower":69906615625,"active":true,"disagreements":[],"exp_T1":"23283064365386962890625/132632423693","gpu_error_bits":4,"guard_bits":31,"kind":"reflected","proposed":"indeterminate","q0":"26914047015625","q1":"116415321826934814453125/1722499009","row_id":3720088},"cpu":{"outcome":"negative","refinements":[{"bounds":{"D":["-150047688867170899908919196423557197625/1393796574908163946345982392040522594123776","-150047688867170899908919196423557197599/1393796574908163946345982392040522594123776"],"G":["-223774123465735494346731577351683554265/11150372599265311570767859136324180752990208","-223774123465735494346731577351683553775/11150372599265311570767859136324180752990208"],"H":["245334435575253831487344772535642057999/21267647932558653966460912964485513216","245334435575253831487344772535642058007/21267647932558653966460912964485513216"],"L":["53990155788918721007485132672808964887/5316911983139663491615228241121378304","107980311577837442014970265345617929777/10633823966279326983230456482242756608"],"M0":["328836857430430110664773934841956315637/10633823966279326983230456482242756608","328836857430430110664773934841956315641/10633823966279326983230456482242756608"],"M1":["42328480117912724971701614619882111069/1329227995784915872903807060280344576","84656960235825449943403229239764222139/2658455991569831745807614120560689152"],"Psi":["-61037961716976981557788874627298376689/696898287454081973172991196020261297061888","-122075923433953963115577749254596753341/1393796574908163946345982392040522594123776"],"V0":["54092855577114539591067197048938505319/42535295865117307932921825928971026432","27046427788557269795533598524469252661/21267647932558653966460912964485513216"],"ell":["203990369764089739438781567429199363351/21267647932558653966460912964485513216","203990369764089739438781567429199363355/21267647932558653966460912964485513216"],"rho":["78330166452210526553077978251749862535/170141183460469231731687303715884105728","39165083226105263276538989125874931269/85070591730234615865843651857942052864"]},"distance_ratios":["1722499009/244140625","228765625/40353607","1838265625/214358881"],"mixtures":[["-300095377734341799817838392847114395245/2787593149816327892691964784081045188247552","-300095377734341799817838392847114395203/2787593149816327892691964784081045188247552"],["-301195396443841602560984057517894997639/2787593149816327892691964784081045188247552","-301195396443841602560984057517894997595/2787593149816327892691964784081045188247552"],["-310854564463576450728371308442847809779/2787593149816327892691964784081045188247552","-310854564463576450728371308442847809737/2787593149816327892691964784081045188247552"],["-40755554292196365341714585745086815347/348449143727040986586495598010130648530944","-163022217168785461366858342980347261365/1393796574908163946345982392040522594123776"],["-80003444949902985166682166793357952247/696898287454081973172991196020261297061888","-160006889899805970333364333586715904471/1393796574908163946345982392040522594123776"],["-327336896494598672711415671874879445523/2787593149816327892691964784081045188247552","-327336896494598672711415671874879445477/2787593149816327892691964784081045188247552"]],"nearest_ties":[0],"outcome":"negative","precision":128,"weights":[[["1","1"],["219849329477124724538447055912107220301/340282366920938463463374607431768211456","219849329477124724538447055912107220309/340282366920938463463374607431768211456"],["0","0"]],[["1","1"],["0","0"],["89204696790883378754402151463116698181/170141183460469231731687303715884105728","89204696790883378754402151463116698185/170141183460469231731687303715884105728"]],[["97335681603909905842423192964791462055/170141183460469231731687303715884105728","97335681603909905842423192964791462059/170141183460469231731687303715884105728"],["1","1"],["0","0"]],[["0","0"],["1","1"],["32665258150145988923512906078054507605/85070591730234615865843651857942052864","130661032600583955694051624312218030425/340282366920938463463374607431768211456"]],[["198216909716403220143591587371244184979/680564733841876926926749214863536422912","198216909716403220143591587371244184987/680564733841876926926749214863536422912"],["0","0"],["1","1"]],[["0","0"],["327885446856815105348706361639877370825/1361129467683753853853498429727072845824","327885446856815105348706361639877370837/1361129467683753853853498429727072845824"],["1","1"]]]}],"sign_disagreement":false},"raw":{"floats":["0x1.eec7580000000p+4","0x1.fd82b00000000p+4","0x1.32ee3a0000000p+3","0x1.44f1000000000p+3","0x1.7123600000000p+3","0x1.458f1e0000000p+0","-0x1.2ce0c40000000p-2","0x0.0p+0","-0x1.2ce0c40000000p-2","-0x1.32cb200000000p-2","-0x1.66be780000000p-2","-0x1.b870660000000p-2","-0x1.9800e20000000p-2","-0x1.bf63ac0000000p-2"],"integers":[3720088,148803,13,36,5,4,3,5,7,11,2,4,3,3,0,31,1,4]},"validation_errors":[]},
+    {"audit":{"C":[15625,16807,14641],"D":[78125,117649,161051],"R_lower":109853253125,"active":true,"disagreements":[],"exp_T1":"65712362363534280139543/138403203125","gpu_error_bits":4,"guard_bits":31,"kind":"reflected","proposed":"indeterminate","q0":"42293502453125","q1":"459986536544739960976801/2516421875","row_id":3720092},"cpu":{"outcome":"negative","refinements":[{"bounds":{"D":["-227669970767784877298236521929573218953/2787593149816327892691964784081045188247552","-227669970767784877298236521929573218909/2787593149816327892691964784081045188247552"],"G":["-200175816445605857311656315617967205415/11150372599265311570767859136324180752990208","-200175816445605857311656315617967205057/11150372599265311570767859136324180752990208"],"H":["253243270414847980564270105593983823623/21267647932558653966460912964485513216","253243270414847980564270105593983823629/21267647932558653966460912964485513216"],"L":["222586554436153996854641353301924087077/21267647932558653966460912964485513216","222586554436153996854641353301924087083/21267647932558653966460912964485513216"],"M0":["166821593835845379999790256019574849867/5316911983139663491615228241121378304","166821593835845379999790256019574849869/5316911983139663491615228241121378304"],"M1":["174604094821788993568388203049457999445/5316911983139663491615228241121378304","174604094821788993568388203049457999449/5316911983139663491615228241121378304"],"Psi":["-88813008328191706485161221512540708823/1393796574908163946345982392040522594123776","-88813008328191706485161221512540708799/1393796574908163946345982392040522594123776"],"V0":["58921057785584163923732234143737035181/42535295865117307932921825928971026432","117842115571168327847464468287474070369/85070591730234615865843651857942052864"],"ell":["203990369764089739438781567429199363351/21267647932558653966460912964485513216","203990369764089739438781567429199363355/21267647932558653966460912964485513216"],"rho":["327004970439402492902706691115303856483/680564733841876926926749214863536422912","327004970439402492902706691115303856497/680564733841876926926749214863536422912"]},"distance_ratios":["1199923455715179443359375/459986536544739960976801","2516421875/282475249","262609375/19487171"],"mixtures":[["-227669970767784877298236521929573218949/2787593149816327892691964784081045188247552","-227669970767784877298236521929573218915/2787593149816327892691964784081045188247552"],["-57343144399659133561963096460722023271/696898287454081973172991196020261297061888","-114686288799318267123926192921444046525/1393796574908163946345982392040522594123776"],["-227669970767784877298236521929573218949/2787593149816327892691964784081045188247552","-227669970767784877298236521929573218915/2787593149816327892691964784081045188247552"],["-127110807746182927210292507142843809111/1393796574908163946345982392040522594123776","-31777701936545731802573126785710952273/348449143727040986586495598010130648530944"],["-7243014337458867392922248819739332531/87112285931760246646623899502532662132736","-57944114699670939143377990557914660239/696898287454081973172991196020261297061888"],["-15915219427850849875820624626238512231/174224571863520493293247799005065324265472","-31830438855701699751641249252477024457/348449143727040986586495598010130648530944"]],"nearest_ties":[1],"outcome":"negative","precision":128,"weights":[[["1","1"],["1","1"],["173851276571786559444143355612612062723/1361129467683753853853498429727072845824","173851276571786559444143355612612062735/1361129467683753853853498429727072845824"]],[["1","1"],["0","0"],["79901133360070448505248473164867897295/85070591730234615865843651857942052864","159802266720140897010496946329735794595/170141183460469231731687303715884105728"]],[["1","1"],["1","1"],["173851276571786559444143355612612062723/1361129467683753853853498429727072845824","173851276571786559444143355612612062735/1361129467683753853853498429727072845824"]],[["0","0"],["1","1"],["271856172459098992206241214045456223237/340282366920938463463374607431768211456","271856172459098992206241214045456223245/340282366920938463463374607431768211456"]],[["77368635852982232527052479570970008057/85070591730234615865843651857942052864","154737271705964465054104959141940016119/170141183460469231731687303715884105728"],["0","0"],["1","1"]],[["0","0"],["255962518794711900900128418302038283277/340282366920938463463374607431768211456","255962518794711900900128418302038283285/340282366920938463463374607431768211456"],["1","1"]]]}],"sign_disagreement":false},"raw":{"floats":["0x1.f602ac0000000p+4","0x1.06b7100000000p+5","0x1.32ee3a0000000p+3","0x1.4ee93e0000000p+3","0x1.7d09c20000000p+3","0x1.629df80000000p+0","-0x1.0d26020000000p-2","0x0.0p+0","-0x1.0d26060000000p-2","-0x1.164dec0000000p-2","-0x1.0d26020000000p-2","-0x1.9bf3340000000p-2","-0x1.233b760000000p-2","-0x1.9e37fe0000000p-2"],"integers":[3720092,148803,17,36,5,4,3,5,7,11,4,3,5,4,1,31,1,4]},"validation_errors":[]},
+    {"audit":{"C":[15625,117649,161051],"D":[78125,823543,1771561],"R_lower":42293502453125,"active":true,"disagreements":[],"exp_T1":"1104427674243920646305299201/7612176171875","gpu_error_bits":4,"guard_bits":31,"kind":"reflected","proposed":"indeterminate","q0":"16282998444453125","q1":"7730993719707444524137094407/138403203125","row_id":3720523},"cpu":{"outcome":"negative","refinements":[{"bounds":{"D":["-181280000961073001953335103420902090445/11150372599265311570767859136324180752990208","-181280000961073001953335103420902090409/11150372599265311570767859136324180752990208"],"G":["-65950049786469916999741132122497709661/11150372599265311570767859136324180752990208","-4121878111654369812483820757656106849/696898287454081973172991196020261297061888"],"H":["149504724200153638252777207196670228269/10633823966279326983230456482242756608","149504724200153638252777207196670228273/10633823966279326983230456482242756608"],"L":["260552519673685666533501023507775629139/21267647932558653966460912964485513216","260552519673685666533501023507775629147/21267647932558653966460912964485513216"],"M0":["49618616164616606365040674977794882393/1329227995784915872903807060280344576","24809308082308303182520337488897441197/664613997892457936451903530140172288"],"M1":["102514310968459826196569557676111464353/2658455991569831745807614120560689152","102514310968459826196569557676111464355/2658455991569831745807614120560689152"],"Psi":["-57664975587301542476796985649202190413/5575186299632655785383929568162090376495104","-115329951174603084953593971298404380783/11150372599265311570767859136324180752990208"],"V0":["185437884718833301548158046719573731287/85070591730234615865843651857942052864","185437884718833301548158046719573731299/85070591730234615865843651857942052864"],"ell":["205373753345763664750272877477234832057/21267647932558653966460912964485513216","205373753345763664750272877477234832061/21267647932558653966460912964485513216"],"rho":["205103619875315253184284751389679079453/340282366920938463463374607431768211456","205103619875315253184284751389679079463/340282366920938463463374607431768211456"]},"distance_ratios":["208422380089/6103515625","138403203125/13841287201","9191328125/2357947691"],"mixtures":[["-181280000961073001953335103420902090441/11150372599265311570767859136324180752990208","-181280000961073001953335103420902090415/11150372599265311570767859136324180752990208"],["-192334263375658117859728928309100700347/11150372599265311570767859136324180752990208","-192334263375658117859728928309100700317/11150372599265311570767859136324180752990208"],["-181280000961073001953335103420902090441/11150372599265311570767859136324180752990208","-181280000961073001953335103420902090415/11150372599265311570767859136324180752990208"],["-207779301025333486283847079909859165187/5575186299632655785383929568162090376495104","-207779301025333486283847079909859165147/5575186299632655785383929568162090376495104"],["-192334263375658117859728928309100700347/11150372599265311570767859136324180752990208","-192334263375658117859728928309100700317/11150372599265311570767859136324180752990208"],["-207779301025333486283847079909859165187/5575186299632655785383929568162090376495104","-207779301025333486283847079909859165147/5575186299632655785383929568162090376495104"]],"nearest_ties":[1],"outcome":"negative","precision":128,"weights":[[["1","1"],["1","1"],["239071589174257977228913463922587679217/340282366920938463463374607431768211456","239071589174257977228913463922587679225/340282366920938463463374607431768211456"]],[["1","1"],["215562915905775989852034481096244136773/340282366920938463463374607431768211456","215562915905775989852034481096244136781/340282366920938463463374607431768211456"],["1","1"]],[["1","1"],["1","1"],["239071589174257977228913463922587679217/340282366920938463463374607431768211456","239071589174257977228913463922587679225/340282366920938463463374607431768211456"]],[["189488823634782717864827290203013764137/340282366920938463463374607431768211456","189488823634782717864827290203013764145/340282366920938463463374607431768211456"],["1","1"],["1","1"]],[["1","1"],["215562915905775989852034481096244136773/340282366920938463463374607431768211456","215562915905775989852034481096244136781/340282366920938463463374607431768211456"],["1","1"]],[["189488823634782717864827290203013764137/340282366920938463463374607431768211456","189488823634782717864827290203013764145/340282366920938463463374607431768211456"],["1","1"],["1","1"]]]}],"sign_disagreement":false},"raw":{"floats":["0x1.2aa1940000000p+5","0x1.347e2a0000000p+5","0x1.3503160000000p+3","0x1.8809320000000p+3","0x1.c1e6420000000p+3","0x1.17040c0000000p+1","-0x1.7a89100000000p-4","0x0.0p+0","-0x1.7a89120000000p-4","-0x1.b9fba40000000p-4","-0x1.7a89100000000p-4","-0x1.aecdce0000000p-2","-0x1.b9fba40000000p-4","-0x1.aecdce0000000p-2"],"integers":[3720523,148820,23,36,5,5,4,5,7,11,5,6,7,6,1,31,1,4]},"validation_errors":[]},
+    {"audit":{"C":[15625,117649,1771561],"D":[78125,823543,19487171],"R_lower":59210903434375,"active":true,"disagreements":[],"exp_T1":"157775382034845806615042743/1522435234375","gpu_error_bits":4,"guard_bits":31,"kind":"reflected","proposed":"indeterminate","q0":"22796197822234375","q1":"1104427674243920646305299201/27680640625","row_id":3720539},"cpu":{"outcome":"negative","refinements":[{"bounds":{"D":["-206381241675192655424561556151845264423/11150372599265311570767859136324180752990208","-206381241675192655424561556151845264383/11150372599265311570767859136324180752990208"],"G":["-146109928195739432467299863519055602411/44601490397061246283071436545296723011960832","-146109928195739432467299863519055602013/44601490397061246283071436545296723011960832"],"H":["155184683750273495538830525846214865001/10633823966279326983230456482242756608","155184683750273495538830525846214865005/10633823966279326983230456482242756608"],"L":["251294573589795546548262659249877358755/21267647932558653966460912964485513216","251294573589795546548262659249877358763/21267647932558653966460912964485513216"],"M0":["100131728962675778404877611357678173199/2658455991569831745807614120560689152","100131728962675778404877611357678173201/2658455991569831745807614120560689152"],"M1":["25404953583754315130443324068505763985/664613997892457936451903530140172288","50809907167508630260886648137011527971/1329227995784915872903807060280344576"],"Psi":["-169853759626257797307736590272081363881/11150372599265311570767859136324180752990208","-169853759626257797307736590272081363819/11150372599265311570767859136324180752990208"],"V0":["27348512998587331027870734095365897589/5316911983139663491615228241121378304","109394051994349324111482936381463590361/21267647932558653966460912964485513216"],"ell":["205373753345763664750272877477234832057/21267647932558653966460912964485513216","205373753345763664750272877477234832061/21267647932558653966460912964485513216"],"rho":["9845798985125240754899732073758728541/10633823966279326983230456482242756608","157532783762003852078395713180139656661/170141183460469231731687303715884105728"]},"distance_ratios":["1458956660623/30517578125","27680640625/1977326743","153902073059493923354872515625/1104427674243920646305299201"],"mixtures":[["-103190620837596327712280778075922632209/5575186299632655785383929568162090376495104","-51595310418798163856140389037961316097/2787593149816327892691964784081045188247552"],["-241658188532475687562172408815257580581/11150372599265311570767859136324180752990208","-241658188532475687562172408815257580549/11150372599265311570767859136324180752990208"],["-267458231325436687425167660562261051613/5575186299632655785383929568162090376495104","-267458231325436687425167660562261051565/5575186299632655785383929568162090376495104"],["-91518075353819573207325642160719027507/1393796574908163946345982392040522594123776","-45759037676909786603662821080359513747/696898287454081973172991196020261297061888"],["-192691538032971815201530938915441236453/2787593149816327892691964784081045188247552","-192691538032971815201530938915441236423/2787593149816327892691964784081045188247552"],["-201124175671862540476399144841466705381/2787593149816327892691964784081045188247552","-201124175671862540476399144841466705351/2787593149816327892691964784081045188247552"]],"nearest_ties":[1],"outcome":"negative","precision":128,"weights":[[["1","1"],["313447665493098987026845465293247469205/680564733841876926926749214863536422912","313447665493098987026845465293247469215/680564733841876926926749214863536422912"],["0","0"]],[["1","1"],["0","0"],["254365151138943732221488463266245350645/680564733841876926926749214863536422912","254365151138943732221488463266245350655/680564733841876926926749214863536422912"]],[["14793590839086565860263591724494796123/42535295865117307932921825928971026432","118348726712692526882108733795958368989/340282366920938463463374607431768211456"],["1","1"],["0","0"]],[["0","0"],["1","1"],["317736858353156257183966212076429237519/1361129467683753853853498429727072845824","317736858353156257183966212076429237533/1361129467683753853853498429727072845824"]],[["45571636726148650538116283103995074725/680564733841876926926749214863536422912","45571636726148650538116283103995074731/680564733841876926926749214863536422912"],["0","0"],["1","1"]],[["0","0"],["301533839738056724994436274311773712111/5444517870735015415413993718908291383296","301533839738056724994436274311773712147/5444517870735015415413993718908291383296"],["1","1"]]]}],"sign_disagreement":false},"raw":{"floats":["0x1.2d52ac0000000p+5","0x1.31cd120000000p+5","0x1.3503160000000p+3","0x1.7a1b2c0000000p+3","0x1.d2fdee0000000p+3","0x1.4931e80000000p+2","-0x1.a3516e0000000p-5","0x0.0p+0","-0x1.a3516e0000000p-5","-0x1.9c23e40000000p-4","-0x1.05eb160000000p-1","-0x1.936ca00000000p-1","-0x1.af21d20000000p-1","-0x1.c7558a0000000p-1"],"integers":[3720539,148821,14,36,5,5,5,5,7,11,2,4,3,3,1,31,1,4]},"validation_errors":[]},
+    {"audit":{"C":[15625,823543,1331],"D":[78125,5764801,14641],"R_lower":44486028125,"active":true,"disagreements":[],"exp_T1":"23283064365386962890625/84402451441","gpu_error_bits":4,"guard_bits":31,"kind":"reflected","proposed":"indeterminate","q0":"17127120828125","q1":"116415321826934814453125/1096135733","row_id":3720857},"cpu":{"outcome":"negative","refinements":[{"bounds":{"D":["-51718969543218228462300573147864514691/174224571863520493293247799005065324265472","-103437939086436456924601146295729029363/348449143727040986586495598010130648530944"],"G":["-26811792497051469481524886452674411319/174224571863520493293247799005065324265472","-107247169988205877926099545810697645199/696898287454081973172991196020261297061888"],"H":["280254099204187712976070136059518636439/21267647932558653966460912964485513216","280254099204187712976070136059518636449/21267647932558653966460912964485513216"],"L":["101653560791234296310192213063245477211/10633823966279326983230456482242756608","101653560791234296310192213063245477215/10633823966279326983230456482242756608"],"M0":["81007631797292365332491839411190732885/2658455991569831745807614120560689152","40503815898646182666245919705595366443/1329227995784915872903807060280344576"],"M1":["171717085592281224554209747078125136323/5316911983139663491615228241121378304","171717085592281224554209747078125136327/5316911983139663491615228241121378304"],"Psi":["-199257416369334071846205493561520827055/1393796574908163946345982392040522594123776","-199257416369334071846205493561520826975/1393796574908163946345982392040522594123776"],"V0":["185597623328878786607748577302833391077/21267647932558653966460912964485513216","185597623328878786607748577302833391089/21267647932558653966460912964485513216"],"ell":["305985554646134609158172351143799045027/42535295865117307932921825928971026432","305985554646134609158172351143799045031/42535295865117307932921825928971026432"],"rho":["51297985081146080237123806622018454677/42535295865117307932921825928971026432","102595970162292160474247613244036909359/85070591730234615865843651857942052864"]},"distance_ratios":["1096135733/244140625","612242080141048888060122131/116415321826934814453125","12867859375/2357947691"],"mixtures":[["-266736560269542924674747589083283965631/348449143727040986586495598010130648530944","-266736560269542924674747589083283965611/348449143727040986586495598010130648530944"],["-122700892248930081676710652992074990273/174224571863520493293247799005065324265472","-30675223062232520419177663248018747565/43556142965880123323311949751266331066368"],["-284277885175527571897447835800333261807/348449143727040986586495598010130648530944","-284277885175527571897447835800333261785/348449143727040986586495598010130648530944"],["-284277885175527571897447835800333261807/348449143727040986586495598010130648530944","-284277885175527571897447835800333261785/348449143727040986586495598010130648530944"],["-206875878172872913849202292591458058763/696898287454081973172991196020261297061888","-206875878172872913849202292591458058729/696898287454081973172991196020261297061888"],["-206875878172872913849202292591458058763/696898287454081973172991196020261297061888","-206875878172872913849202292591458058729/696898287454081973172991196020261297061888"]],"nearest_ties":[0],"outcome":"negative","precision":128,"weights":[[["1","1"],["301157854108601318403119060682991677575/2722258935367507707706996859454145691648","301157854108601318403119060682991677595/2722258935367507707706996859454145691648"],["0","0"]],[["1","1"],["0","0"],["61097969063276443911358713041628197537/680564733841876926926749214863536422912","122195938126552887822717426083256395083/1361129467683753853853498429727072845824"]],[["0","0"],["19943000970330445745322046347970110561/21267647932558653966460912964485513216","39886001940660891490644092695940221123/42535295865117307932921825928971026432"],["0","0"]],[["0","0"],["19943000970330445745322046347970110561/21267647932558653966460912964485513216","39886001940660891490644092695940221123/42535295865117307932921825928971026432"],["0","0"]],[["0","0"],["0","0"],["64735584461947643575221182915779326581/85070591730234615865843651857942052864","64735584461947643575221182915779326583/85070591730234615865843651857942052864"]],[["0","0"],["0","0"],["64735584461947643575221182915779326581/85070591730234615865843651857942052864","64735584461947643575221182915779326583/85070591730234615865843651857942052864"]]]}],"sign_disagreement":false},"raw":{"floats":["0x1.e78c040000000p+4","0x1.025f020000000p+5","0x1.cc65580000000p+2","0x1.31e70c0000000p+3","0x1.a5adf40000000p+3","0x1.1741aa0000000p+3","-0x1.a37ea60000000p-3","0x0.0p+0","-0x1.a83dac0000000p-1","-0x1.7e84360000000p-1","-0x1.ca8c0a0000000p-1","-0x1.ca8c0a0000000p-1","-0x1.a37ea60000000p-3","-0x1.a37ea60000000p-3"],"integers":[3720857,148834,7,36,5,6,2,5,7,11,0,1,2,1,0,31,1,4]},"validation_errors":[]},
+    {"audit":{"C":[15625,823543,161051],"D":[78125,5764801,1771561],"R_lower":296054517171875,"active":true,"disagreements":[],"exp_T1":"1191817653772720942460132761/2251875390625","gpu_error_bits":4,"guard_bits":31,"kind":"reflected","proposed":"indeterminate","q0":"113980989111171875","q1":"13109994191499930367061460371/64339296875","row_id":3720924},"cpu":{"outcome":"negative","refinements":[{"bounds":{"D":["-318189357344585364244854919906672344027/22300745198530623141535718272648361505980416","-318189357344585364244854919906672343979/22300745198530623141535718272648361505980416"],"G":["-257424328435559726779762854453195786669/44601490397061246283071436545296723011960832","-257424328435559726779762854453195786431/44601490397061246283071436545296723011960832"],"H":["80008180915100569722967143717019609127/5316911983139663491615228241121378304","160016361830201139445934287434039218259/10633823966279326983230456482242756608"],"L":["131901259075242808361836579828796280049/10633823966279326983230456482242756608","131901259075242808361836579828796280053/10633823966279326983230456482242756608"],"M0":["208820697648091709507683259276907797733/5316911983139663491615228241121378304","208820697648091709507683259276907797737/5316911983139663491615228241121378304"],"M1":["105954719995171689042401861772907944589/2658455991569831745807614120560689152","105954719995171689042401861772907944591/2658455991569831745807614120560689152"],"Psi":["-189477193126805500854973492680074450765/22300745198530623141535718272648361505980416","-189477193126805500854973492680074450691/22300745198530623141535718272648361505980416"],"V0":["198225086398137812356150430897847967403/42535295865117307932921825928971026432","198225086398137812356150430897847967415/42535295865117307932921825928971026432"],"ell":["205373753345763664750272877477234832057/21267647932558653966460912964485513216","205373753345763664750272877477234832061/21267647932558653966460912964485513216"],"rho":["74973607346555549557593886947314501879/85070591730234615865843651857942052864","37486803673277774778796943473657250941/42535295865117307932921825928971026432"]},"distance_ratios":["1458956660623/6103515625","35936448167557809451312578125/13109994191499930367061460371","64339296875/2357947691"],"mixtures":[["-93391368126039345544422319091440413801/5575186299632655785383929568162090376495104","-23347842031509836386105579772860103447/1393796574908163946345982392040522594123776"],["-318189357344585364244854919906672344025/22300745198530623141535718272648361505980416","-318189357344585364244854919906672343985/22300745198530623141535718272648361505980416"],["-93391368126039345544422319091440413801/5575186299632655785383929568162090376495104","-23347842031509836386105579772860103447/1393796574908163946345982392040522594123776"],["-158789619270999762354930428956571480369/2787593149816327892691964784081045188247552","-158789619270999762354930428956571480343/2787593149816327892691964784081045188247552"],["-318189357344585364244854919906672344025/22300745198530623141535718272648361505980416","-318189357344585364244854919906672343985/22300745198530623141535718272648361505980416"],["-158789619270999762354930428956571480369/2787593149816327892691964784081045188247552","-158789619270999762354930428956571480343/2787593149816327892691964784081045188247552"]],"nearest_ties":[2],"outcome":"negative","precision":128,"weights":[[["1","1"],["1","1"],["146579411374485950961995305161877143657/340282366920938463463374607431768211456","146579411374485950961995305161877143663/340282366920938463463374607431768211456"]],[["1","1"],["203174344920370387225550568750350268279/680564733841876926926749214863536422912","203174344920370387225550568750350268287/680564733841876926926749214863536422912"],["1","1"]],[["1","1"],["1","1"],["146579411374485950961995305161877143657/340282366920938463463374607431768211456","146579411374485950961995305161877143663/340282366920938463463374607431768211456"]],[["206740353711816542107006094172529419279/1361129467683753853853498429727072845824","206740353711816542107006094172529419293/1361129467683753853853498429727072845824"],["1","1"],["1","1"]],[["1","1"],["203174344920370387225550568750350268279/680564733841876926926749214863536422912","203174344920370387225550568750350268287/680564733841876926926749214863536422912"],["1","1"]],[["206740353711816542107006094172529419279/1361129467683753853853498429727072845824","206740353711816542107006094172529419293/1361129467683753853853498429727072845824"],["1","1"],["1","1"]]]}],"sign_disagreement":false},"raw":{"floats":["0x1.3a32ce0000000p+5","0x1.3ed88a0000000p+5","0x1.3503160000000p+3","0x1.8ced060000000p+3","0x1.e1881e0000000p+3","0x1.2a41980000000p+2","-0x1.7162b00000000p-4","0x0.0p+0","-0x1.0827560000000p-3","-0x1.7162b00000000p-4","-0x1.0827560000000p-3","-0x1.83bb740000000p-1","-0x1.7162b00000000p-4","-0x1.83bb740000000p-1"],"integers":[3720924,148836,24,36,5,6,4,5,7,11,5,6,7,6,2,31,1,4]},"validation_errors":[]},
+    {"audit":{"C":[15625,5764801,161051],"D":[78125,40353607,1771561],"R_lower":263757660753125,"active":true,"disagreements":[],"exp_T1":"13109994191499930367061460371/22068378828125","gpu_error_bits":4,"guard_bits":31,"kind":"reflected","proposed":"indeterminate","q0":"101546699389953125","q1":"144209936106499234037676064081/630525109375","row_id":3721315},"cpu":{"outcome":"negative","refinements":[{"bounds":{"D":["-45937673992008242911676565400758508015/2787593149816327892691964784081045188247552","-22968836996004121455838282700379254003/1393796574908163946345982392040522594123776"],"G":["-220455243683833058018514405911760516551/44601490397061246283071436545296723011960832","-220455243683833058018514405911760516261/44601490397061246283071436545296723011960832"],"H":["336486310946504883028238437198991333915/21267647932558653966460912964485513216","336486310946504883028238437198991333923/21267647932558653966460912964485513216"],"L":["256804068214924701291109760080975861843/21267647932558653966460912964485513216","256804068214924701291109760080975861849/21267647932558653966460912964485513216"],"M0":["104103262897173258094936246741243961255/2658455991569831745807614120560689152","104103262897173258094936246741243961257/2658455991569831745807614120560689152"],"M1":["212523611844088571402614489340235764401/5316911983139663491615228241121378304","212523611844088571402614489340235764405/5316911983139663491615228241121378304"],"Psi":["-8039805315442169196379853757818368935/696898287454081973172991196020261297061888","-128636885047074707142077660125093902921/11150372599265311570767859136324180752990208"],"V0":["199027174259183196822700960080182543531/21267647932558653966460912964485513216","199027174259183196822700960080182543543/21267647932558653966460912964485513216"],"ell":["205373753345763664750272877477234832057/21267647932558653966460912964485513216","205373753345763664750272877477234832061/21267647932558653966460912964485513216"],"rho":["106242990308773575649504902824020629429/85070591730234615865843651857942052864","53121495154386787824752451412010314717/42535295865117307932921825928971026432"]},"distance_ratios":["6498988760957/30517578125","120796776870428820689642100109375/144209936106499234037676064081","630525109375/25937424601"],"mixtures":[["-212916705604892993867128732485945285231/11150372599265311570767859136324180752990208","-212916705604892993867128732485945285203/11150372599265311570767859136324180752990208"],["-183750695968032971646706261603034032055/11150372599265311570767859136324180752990208","-183750695968032971646706261603034032029/11150372599265311570767859136324180752990208"],["-61891421578618743375199689712804763253/1393796574908163946345982392040522594123776","-123782843157237486750399379425609526483/2787593149816327892691964784081045188247552"],["-190461422222604141498780739419387622177/2787593149816327892691964784081045188247552","-190461422222604141498780739419387622149/2787593149816327892691964784081045188247552"],["-297091112661144539591998903327098067181/5575186299632655785383929568162090376495104","-297091112661144539591998903327098067133/5575186299632655785383929568162090376495104"],["-180392076490873727674712733076206514233/2787593149816327892691964784081045188247552","-180392076490873727674712733076206514207/2787593149816327892691964784081045188247552"]],"nearest_ties":[2],"outcome":"negative","precision":128,"weights":[[["1","1"],["100412929254173800499740485015294841407/170141183460469231731687303715884105728","100412929254173800499740485015294841411/170141183460469231731687303715884105728"],["0","0"]],[["1","1"],["0","0"],["325943406033812916901318360446622831335/680564733841876926926749214863536422912","325943406033812916901318360446622831347/680564733841876926926749214863536422912"]],[["171670808205100347770134151623998622909/340282366920938463463374607431768211456","171670808205100347770134151623998622917/340282366920938463463374607431768211456"],["1","1"],["0","0"]],[["0","0"],["1","1"],["115223342035723656635906501609296049725/340282366920938463463374607431768211456","57611671017861828317953250804648024865/170141183460469231731687303715884105728"]],[["304431599421928584628334237520151165153/1361129467683753853853498429727072845824","304431599421928584628334237520151165167/1361129467683753853853498429727072845824"],["0","0"],["1","1"]],[["0","0"],["125895781490853305596421009056903610439/680564733841876926926749214863536422912","125895781490853305596421009056903610445/680564733841876926926749214863536422912"],["1","1"]]]}],"sign_disagreement":false},"raw":{"floats":["0x1.39463c0000000p+5","0x1.3fc51c0000000p+5","0x1.3503160000000p+3","0x1.8265500000000p+3","0x1.fa49d00000000p+3","0x1.2b768a0000000p+3","-0x1.3c56500000000p-4","0x0.0p+0","-0x1.e3bdde0000000p-4","-0x1.3c56500000000p-4","-0x1.06f27e0000000p-1","-0x1.c64e120000000p-1","-0x1.4e033c0000000p-1","-0x1.a968440000000p-1"],"integers":[3721315,148852,15,36,5,7,4,5,7,11,2,4,3,3,2,31,1,4]},"validation_errors":[]}
+  ],
+  "runtime_execution": {
+    "host": 47908,
+    "host_exit": 0,
+    "attempt_id": "844b07e368574c8e8f6ce741ec5f2d8c",
+    "runtime_work_target": "/Users/auricstudio/trureturing-qgh-prime-slab-5711-run",
+    "runtime_branch": "lane/math/prime-slab-5711-run-0910",
+    "runtime_head": "2ee40a714251977a35f70c0c277261ab9317fa86",
+    "runtime_tree_identity_source": "supplied runtime pin and activation; other worktree not accessed",
+    "program_sha256": "519acdc009869a00d18d918f5137ab035f717b220afbd1463a2ee9143e87dd5c",
+    "input_sha256": "9d28055d5255580ed58274822359961483d1deecbb7b4e38ce497948a4808672",
+    "kernel_sha256": "1305d0a1c9afd3d986f0d435ec3e8205d916ae951ff84420183e7ba1861b3e9d",
+    "attribution": "corrected delivered program; current report-tree source byte identities match its file map",
+    "program_hash_encoding": "sha256(json.dumps(files, sort_keys=True, indent=2, allow_nan=False) + LF)",
+    "started_at": "2026-09-10T15:02:46.807163+00:00",
+    "finished_at": "2026-09-10T15:02:49.459485+00:00",
+    "receipt_status": "certified_window",
+    "command_is_provenance_only": true
+  },
+  "timing_seconds": {
+    "cpu_verification": 0.0722249171230942,
+    "gpu_dispatch_and_synchronize": 0.012077957857400179,
+    "orchestration": 2.5700150409247726,
+    "total": 2.654317915905267
+  },
+  "timing_scopes": {
+    "gpu_dispatch_and_synchronize": "host monotonic wall time around kernel callable and MPS synchronization; excludes tensor setup/readback; not hardware-only timing",
+    "cpu_verification": "original audit and Arb-certification loop for 1600 returned rows; inactive rows have no analytic refinement",
+    "orchestration": "total minus GPU and CPU scopes; setup/environment, compilation, readback and persistence within total",
+    "total": "entrypoint run() start to final timer sample; excludes process startup, dependency installation and final receipt publication",
+    "timestamps": "separate UTC wall-clock stamps, not the monotonic total",
+    "comparability": "no campaign speed, cross-device benchmark or report-worker timing claim"
+  },
+  "stream_hashes": {
+    "raw_whole_file_sha256": "389c1fb9a97b99dcf7244c7c70bc250c1ec5f5f5060065a41a29199374b07e54",
+    "raw_whole_file_lines": 1601,
+    "raw_header_lines": 1,
+    "raw_rows": 1600,
+    "raw_normalized_stream_sha256": "1cea755d7428cb45f0a8a5aab2ea2c5fa450eec48a53c85d023ca32362edd3c6",
+    "raw_normalization": "Concatenate UTF-8 json.dumps(row, sort_keys=True, separators=(',', ':'), allow_nan=False) + LF for raw rows only, excluding header",
+    "classified_whole_file_sha256": "48221af8551c0c20a9414b34c7d8b508b06945f6e848660a8417713ec10791f8",
+    "classified_normalized_stream_sha256": "48221af8551c0c20a9414b34c7d8b508b06945f6e848660a8417713ec10791f8",
+    "classified_lines": 1600,
+    "classified_header_lines": 0,
+    "classified_normalization": "same encoding; whole-file and normalized hashes coincide for this input",
+    "external_files_rewritten": false,
+    "durability": "existing local external files preserved byte-for-byte; no off-host backup claim"
+  },
+  "historical_comparison": {
+    "markdown_binding": "historical_markdown",
+    "json_binding": "historical_json",
+    "delivery_binding": "historical_delivery",
+    "preserved_byte_for_byte": true,
+    "old_external_streams_opened": false,
+    "old_external_streams_reverified": false,
+    "original_program_sha256": "27a15ae48802d7ad188b5f73e315d6230f0e6b7b208d96d351e6556a18c34ef0",
+    "original_entrypoint_sha256": "da39b459defd607355291070c8be1c4ddbbaf72153e1ffdb3bd98ff35588289d",
+    "box_range_closed": [
+      3072,
+      3135
+    ],
+    "raw_range_closed": [
+      76800,
+      78399
+    ],
+    "primes": [
+      2,
+      3,
+      5
+    ],
+    "b0": 12,
+    "b1_closed": [
+      0,
+      3
+    ],
+    "b2_closed": [
+      0,
+      15
+    ],
+    "negative_count": 450,
+    "inactive_count": 1150,
+    "local_ranges_disjoint": true,
+    "cross_device_nonoverlap": "not claimed; other-device ranges never supplied",
+    "retroactive_attribution": false,
+    "delivery_status_scope": "supplied PR 6783 merge and successful checks concern the old pilot report only"
+  },
+  "scientific_context": {
+    "G": "D - Psi; existing comparison of two bounds, not an RH criterion",
+    "D": "maximum of six feasible fractional-knapsack mixtures",
+    "Psi": "f(H)+2*f(L), f(x)=log(1-exp(-x)); existing slab and nearest-endpoint definitions",
+    "cpu_expression": "full unscaled G",
+    "gpu_expression": "exp(min(c_i))*G; 24-term proposal",
+    "existing_truncation_bound": "3/104857600",
+    "bound_exclusions": "float input, transcendental, branch, clipping, summation/maximum, roundoff and underflow errors",
+    "mathematical_source_bindings": [
+      "finite_design",
+      "constant_input"
+    ],
+    "proof_status": "earlier mathematical reduction distinct from this finite operational record; no new proof"
+  },
+  "limitations": [
+    "Only the stated finite window is covered; no complete-domain or full-campaign claim.",
+    "No all-prime theorem, RH result, novel theorem or formalization.",
+    "All active GPU proposals remain indeterminate; finite negative floats and zero tails do not prove a GPU sign.",
+    "CPU outcomes/intervals are preserved from the original run; no mathematical recertification or independent review was performed by this implementation worker.",
+    "Nonempty nearest_ties, all anomaly arrays, underflow flags and the authority-snapshot mismatch are retained.",
+    "No cross-device coverage or performance inference.",
+    "No current ordinary-gate success, CI success or MERGED claim.",
+    "The complete goal, all 97 constraints and 51 success criteria remain unchanged; no whole-goal completion."
+  ],
+  "worker_scope": {
+    "repository_additions": 2,
+    "tracked_files_modified": 0,
+    "searches": 0,
+    "candidate_generations": 0,
+    "mathematical_evaluations": 0,
+    "mathematical_modules_imported": 0,
+    "old_certificate_runs": 0,
+    "saved_stream_mathematical_verifier_runs": 0,
+    "historical_replays": 0,
+    "test_suite_runs": 0,
+    "mutation_suite_runs": 0,
+    "builds": 0,
+    "ingests": 0,
+    "fixed_xi_sweeps": 0,
+    "other_research_worktrees_accessed": 0,
+    "worker_logs_accessed": 0,
+    "source_reingest_required": false
+  },
+  "validation": {
+    "scope": "fixed byte/schema/link/range/count checks on listed inputs and two outputs; standard library only",
+    "command": "python3 - <<'PY'\nimport json\nfrom pathlib import Path\nreport = json.loads(Path('docs/reports/quantized-gh/prime-slab-5711-window-0910.json').read_bytes())\nexec(compile(report['validation']['source'], '<fixed-5711-report-checks>', 'exec'))\nPY",
+    "source": "from pathlib import Path\nfrom collections import Counter\nimport hashlib, json, re\n\ndef unique(pairs):\n    out = {}\n    for key, value in pairs:\n        assert key not in out, ('duplicate JSON key', key)\n        out[key] = value\n    return out\n\ndef reject(value):\n    raise ValueError('non-JSON constant: ' + value)\n\ndef parse(data):\n    return json.loads(data, object_pairs_hook=unique, parse_constant=reject)\n\ndef sha(data):\n    return hashlib.sha256(data).hexdigest()\n\ndef normalized(values):\n    return b''.join((json.dumps(v, sort_keys=True, separators=(',', ':'), allow_nan=False)+'\\n').encode() for v in values)\n\np = Path('docs/reports/quantized-gh/prime-slab-5711-window-0910.json')\nd = parse(p.read_bytes()); bindings = d['input_bindings']; data = {}\nassert d['schema'] == 'prime-slab-5711-window-report-v1'\nfor key, v in bindings.items():\n    data[key] = Path(v['path']).read_bytes()\n    assert (len(data[key]),sha(data[key])) == (v['bytes'],v['sha256']), key\n    if 'git_blob' in v:\n        assert hashlib.sha1(b'blob '+str(len(data[key])).encode()+b'\\0'+data[key]).hexdigest() == v['git_blob']\nfor key, value in d['original_json_values'].items():\n    assert value == parse(data[key]), key\nr, cp, pin, pre, act = (parse(data[k]) for k in ('runtime_receipt','checkpoint','runtime_pin','preregistration','activation'))\nheader, *raw = map(parse, data['raw'].splitlines()); rows = list(map(parse, data['classified'].splitlines()))\nassert len(raw) == len(rows) == 1600\nassert header == d['gpu_proposals']['raw_header']\nassert header['schema'] == r['schema'] == cp['schema'] == r['identity']['schema'] == 'prime-slab-raw-and-arb-v1'\nassert header['identity'] == r['identity'] == cp['identity']\nassert header['provenance'] == dict(attempt=bindings['runtime_receipt']['path'],device=r['environment'])\nfor label, key in [('run_ref','runtime_receipt'),('runtime_pin_ref','runtime_pin'),('preregistration_ref','preregistration'),('report_delivery_ref','historical_delivery')]:\n    assert act[label] == bindings[key]['path']\nassert act['runtime_head'] == pin['head'] == d['runtime_execution']['runtime_head']\nassert act['host'] == 47908 and act['host_exit'] == r['exit_code'] == 0\nfor key in ('program_sha256','input_sha256','kernel_sha256','files'):\n    assert pin[key] == r['identity'][key]\nfor name, value in pin['files'].items():\n    assert value == bindings['program:'+name]['sha256']\nassert sha((json.dumps(pin['files'],sort_keys=True,indent=2,allow_nan=False)+'\\n').encode()) == pin['program_sha256']\nassert pre['atlas_sha256'] == pin['input_sha256'] == bindings['constant_input']['sha256']\nassert len(cp['chunks']) == 1; chunk = cp['chunks'][0]\nassert chunk['raw_file'] == Path(bindings['raw']['path']).name and chunk['classified_file'] == Path(bindings['classified']['path']).name\nassert chunk['raw_sha256'] == sha(data['raw']) == d['stream_hashes']['raw_whole_file_sha256']\nassert chunk['classified_sha256'] == sha(data['classified'])\nassert sha(normalized(raw)) == r['summary']['raw_stream_sha256'] == d['stream_hashes']['raw_normalized_stream_sha256']\nassert sha(normalized(rows)) == r['summary']['classification_stream_sha256'] == sha(data['classified'])\nfor value in (header,cp,chunk,r['summary']):\n    assert (value['first_box'],value['last_box']) == (148800,148863)\nassert pre['box_range_closed'] == act['box_range_closed'] == d['coverage']['box_range_closed'] == [148800,148863]\nassert pre['raw_range_closed'] == act['raw_range_closed'] == d['coverage']['raw_range_closed'] == [3720000,3721599]\nassert r['summary']['first_raw_row'] == 3720000 and r['summary']['last_raw_row'] == 3721599\nassert r['summary']['checkpoint'] == bindings['checkpoint']['path']\nassert r['summary']['coverage_complete'] is True and r['summary']['next_box'] == 148864\nassert chunk['status'] == 'certified' and r['status'] == 'certified_window'\ntable, boxes, ties = Counter(), Counter(), Counter()\nfor offset, (v,row) in enumerate(zip(raw,rows)):\n    assert set(v) == {'integers','floats'} and len(v['integers']) == 18 and len(v['floats']) == 14\n    assert all(type(x) is int for x in v['integers']) and all(type(x) is str for x in v['floats'])\n    assert set(row) == {'audit','cpu','raw','validation_errors'} and row['raw'] == v\n    z,a,c = v['integers'],row['audit'],row['cpu']\n    assert z[0] == 3720000+offset == a['row_id'] == 25*z[1]+z[2]\n    assert z[1] == 4096*z[3]+256*z[4]+16*z[5]+z[6]\n    assert z[3:5] == [36,5] and 4 <= z[5] <= 7 and 0 <= z[6] <= 15 and z[7:10] == [5,7,11]\n    assert z[2] == offset%25 and a['kind'] == ('adjacent' if z[2]<7 else 'reflected')\n    assert z[15] == a['guard_bits'] and z[16] in (0,1) and bool(z[16]) == a['active'] and z[17] == a['gpu_error_bits']\n    assert row['validation_errors'] == a['disagreements'] == [] and c['sign_disagreement'] is False\n    boxes[z[1]] += 1; table[(a['kind'],c['outcome'],a['proposed'],a['gpu_error_bits'])] += 1\n    if a['active']:\n        assert c['outcome'] == 'negative' and a['proposed'] == 'indeterminate' and a['gpu_error_bits'] == 4\n        assert len(c['refinements']) == 1; f = c['refinements'][0]\n        assert set(f) == {'bounds','distance_ratios','mixtures','nearest_ties','outcome','precision','weights'}\n        assert f['precision'] == 128 and f['outcome'] == 'negative'\n        assert set(f['bounds']) == {'D','G','H','L','M0','M1','Psi','V0','ell','rho'}\n        assert len(f['mixtures']) == len(f['weights']) == 6 and all(len(x)==3 for x in f['weights'])\n        intervals = list(f['bounds'].values())+f['mixtures']+[i for x in f['weights'] for i in x]\n        assert all(len(i)==2 and all(type(s) is str and re.fullmatch(r'-?\\d+(?:/[1-9]\\d*)?',s) for s in i) for i in intervals)\n        ties[tuple(f['nearest_ties'])] += 1\n    else:\n        assert c['outcome'] == a['proposed'] == 'inactive' and c['refinements'] == []\nassert dict(boxes) == dict.fromkeys(range(148800,148864),25)\nassert table == {('adjacent','negative','indeterminate',4):448,('reflected','negative','indeterminate',4):8,('reflected','inactive','inactive',0):1144}\nassert ties == {():448,(0,):3,(1,):3,(2,):2}\nfor v in d['outcomes']['kind_outcome_table']:\n    rr = [x for x in rows if x['audit']['kind']==v['kind']]\n    assert v['raw_rows']==len(rr) and v['active_count']==v['negative_count']==sum(x['audit']['active'] for x in rr)\n    assert v['inactive_count']==sum(x['cpu']['outcome']=='inactive' for x in rr)\n    assert v['invalid_count']==v['disagreement_count']==v['unresolved_count']==0\nfor summary in (chunk['counts'],r['summary']):\n    assert summary['by_kind']=={'adjacent':448,'reflected':1152} and summary['by_outcome']=={'inactive':1144,'negative':456}\n    assert summary['by_proposal']=={'inactive':1144,'indeterminate':456} and summary['raw_rows']==summary['completed_rows']==1600\n    assert summary['cpu_evaluated_active']==456 and summary['extra_precision_evaluations']==0\n    assert summary['invalid_ids']==summary['disagreement_ids']==summary['unresolved_ids']==[]\n    assert summary['gpu_flags']=={'integer_overflow':0,'nonfinite':0,'other':0,'underflow':456}\nref = [x for x in rows if x['audit']['kind']=='reflected' and x['audit']['active']]\nassert ref == d['active_reflected_records']\nassert [x['audit']['row_id'] for x in ref] == [3720072,3720088,3720092,3720523,3720539,3720857,3720924,3721315]\nassert len(d['active_reflected_index']) == 8\nfor v,row in zip(d['active_reflected_index'],ref):\n    z=row['raw']['integers']\n    assert v==dict(row_id=z[0],box_id=z[1],slot=z[2],exponents=z[4:7],j=z[13],i=z[14],nearest_ties=row['cpu']['refinements'][0]['nearest_ties'],classified_line=z[0]-3720000+1,raw_line=z[0]-3720000+2)\nassert pre['preregistered_prediction']['active_adjacent_slots']==d['prediction']['actual_active_adjacent']==448\nassert r['new_gpu_raw_rows']==r['new_cpu_audited_rows']==1600 and r['verification_replay_rows']==r['recovered_gpu_raw_rows']==0\nassert [e['threads'] for e in r['events'] if e['kind']=='dispatch_result' and e['kernel']=='search' and e['status']=='returned']==[1600]\nassert d['timing_seconds']==r['timing_seconds'] and r['full_campaign_complete'] is False and r['standing_goal_complete'] is False\nassert len(parse(data['goal'])['constraints'])==97 and len(parse(data['goal'])['success_criteria'])==51\nassert [i+1 for i,(a,b) in enumerate(zip(data['authority'].splitlines(),data['authority_snapshot'].splitlines())) if a!=b]==[621,625,627]\nmd=p.with_suffix('.md'); assert (md.stat().st_size,sha(md.read_bytes()))==(d['markdown_binding']['bytes'],d['markdown_binding']['sha256'])\nfor link in re.findall(r'\\[[^\\]]+\\]\\(([^)]+)\\)',md.read_text()):\n    target=md.parent/link\n    assert target.is_file() and (target==p or str(target.resolve()) in {str(Path(v['path']).resolve()) for v in bindings.values()}),link\nassert not re.search(r'\"unresolved\"\\s*:\\s*0',p.read_text())\nprint(json.dumps(dict(fixed_validation='pass',rows=1600,boxes=64,active_reflected_records=8,outputs=[dict(path=str(x.absolute()),bytes=x.stat().st_size,sha256=sha(x.read_bytes())) for x in (md,p)]),sort_keys=True))\n",
+    "exit_code": 0,
+    "result": "fixed_validation=pass",
+    "structural_failures": [],
+    "operational_failures": [
+      {
+        "kind": "shell_heredoc_parse_error",
+        "exit_code": 1,
+        "before_target_mutation": true,
+        "outputs_absent_confirmed": true,
+        "resolved": "separate Markdown write and unique heredoc delimiter"
+      }
+    ],
+    "intake_discrepancies": [
+      "authority_snapshot Git blob differs from shared-blob claim; target matches"
+    ],
+    "git_commands": [
+      "git --no-optional-locks rev-parse HEAD",
+      "git --no-optional-locks branch --show-current",
+      "git --no-optional-locks diff --cached --name-only",
+      "git --no-optional-locks diff --name-only",
+      "git --no-optional-locks status --porcelain=v1 --untracked-files=all"
+    ],
+    "git_expected": {
+      "head": "935d10335f7920a6a266191eaf8b8c0c3d132346",
+      "branch": "lane/math/prime-slab-5711-report-0910",
+      "index_empty": true,
+      "tracked_diff_empty": true,
+      "untracked_files": [
+        "docs/reports/quantized-gh/prime-slab-5711-window-0910.md",
+        "docs/reports/quantized-gh/prime-slab-5711-window-0910.json"
+      ]
+    }
+  },
+  "markdown_binding": {
+    "path": "/Users/auricstudio/trureturing-qgh-prime-slab-5711-report/docs/reports/quantized-gh/prime-slab-5711-window-0910.md",
+    "bytes": 12123,
+    "sha256": "6c26047f01715ccfe2c4829fe013430288987c8af0eca69575388ae6d5dc5915"
+  },
+  "delivery_obligations": {
+    "independent_review": "pending",
+    "caller_seal_and_commit": "pending",
+    "ordinary_applicable_gates": "pending; not run by this worker",
+    "MERGED": "pending for these two files",
+    "standing_goal_complete": false
+  }
+}

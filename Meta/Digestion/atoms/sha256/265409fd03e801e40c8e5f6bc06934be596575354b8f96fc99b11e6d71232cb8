@@ -1,0 +1,6 @@
+## [PR #6114] CIRCLE_PROBABILITY_COMPLETION_AND_LI_JUMP_BOUNDARY
+
+日期：2026-09-07。固定源码参照：`05c05729c5cb073dbeb215d8148813db4470952d`。本节继续 GICT VI.3、PZG 27.278–27.279 与 OACC 261.1 的既有概率路线。四个新增 Lean 文件及其 Scribe 位于 `Weil/Probability/`，使用现有 `circleMoment`、`toeplitzMatrix`、`geometricPolynomial` 和 `reconstructedLi`，没有另设 zeta、Li 系数或 Fourier 约定。
+
+本节的数学推导和证明脚本已完成；本轮没有执行 Lean elaboration、内核检查、传递公理报告或 Scribe emission。源码仍是候选形式化。精确有限诊断是第二实现检查，不能替代无限阶定理的内核验证。经典 Herglotz 表示、紧性和卷积 Fourier 公式不作数学优先权主张。
+

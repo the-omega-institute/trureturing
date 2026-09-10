@@ -1,0 +1,11 @@
+**定义 4（累积算术观察）。** 令 \(\mathcal R=\mathbb N^{(\operatorname{Pr}\times\mathbb N)}\) 为有限支撑原始数位表的加法幺半群，\(e_{p,j}\) 为其单位表。对 \(r\in\mathcal R\) 定义
+\[
+V_p(r)=\sum_jG_jr(p,j),\qquad D(r)=\prod_p p^{V_p(r)}.
+\]
+对 \(X\in\mathcal B_\lambda^+\) 及整数 \(T\) 定义
+\[
+r_X^T(p,j)=\sum_{t\le T}Z_X(t,\lambda(p,j)),\quad
+a_p^X(T)=V_p(r_X^T),\quad N_X(T)=D(r_X^T).
+\]
+总表 \(r_X(p,j)=\sum_tZ_X(t,\lambda(p,j))\)，总读数 \(N_X=D(r_X)\)；这些等于所有选择事件之后的累积值。空和为零、空积为一。\(\mathcal R\) 是 \(\mathcal B_\lambda^+\) 的观察值域。
+

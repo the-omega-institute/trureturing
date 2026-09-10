@@ -1,0 +1,7 @@
+**定理 2.2(账 ⊆ 证 ⊆ 真;真 ⊋ 证)**。
+(i)〔证〕$\mathrm{Frozen}_L(P)\Rightarrow\mathrm{Proved}_{\mathfrak A}(P)$;在假设 1.3 下 $\mathrm{Proved}_{\mathfrak A}(P)\Rightarrow\forall\mathfrak M\models\mathfrak A,\ \mathrm{True}_{\mathfrak M}(P)$。
+(ii)〔引〕若 $\mathfrak A$ 一致、递归可枚举、包含 Robinson 算术 $\mathsf Q$,且核 $K$ 对应一个有效的算术证明系统,则(Gödel–Rosser)存在 $G$ 使 $\neg\mathrm{Proved}_{\mathfrak A}(G)$ 且 $\neg\mathrm{Proved}_{\mathfrak A}(\neg G)$;若再假设 $\mathbb N\models\mathfrak A$(算术健全),则 $\mathrm{True}_{\mathbb N}(G)$,故 $\mathrm{True}_{\mathbb N}\supsetneq\mathrm{Proved}_{\mathfrak A}$。**一致性不蕴含健全性**:$\mathrm{PA}+\neg\mathrm{Con}(\mathrm{PA})$ 一致、递归可枚举、含算术,却证明 $\mathbb N$ 中为假的句子;故 $\mathbb N\models\mathfrak A$ 是独立前件,不可省。
+*证明*。(i) 由定义 1.5 与假设 1.3。(ii) Gödel 第一不完备定理(Gödel 1931,*Monatshefte für Mathematik und Physik* 38:173–198;`literature-attested`,见检索收据)及其 Rosser 一致性加强形(Rosser 1936,`ASSUMED-UNVERIFIED`:出处按记忆)。本卷不重证。∎
+
+*读法*。「真 ⊋ 证,诚实标 open」(母仓第 2.2 条)不是本库的谦辞,是 (ii) 的直接推论;且这条边界对**任何仍使用同一 $K$ 与 $\mathfrak A$ 的判官**成立——人也不能在该系统内给出 $G$ 或 $\neg G$ 的合格证明;改变许可集就是改变系统。这就是为什么母仓说「不可判者标 `open`,不是等人来判」:不存在一个能判它的人。
+
