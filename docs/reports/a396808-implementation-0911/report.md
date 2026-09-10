@@ -58,7 +58,11 @@
 
 冻结事件 event_hash: `sha256:b920195f85ebb897de035ff4702ca56d779cd90868e0d4a22b3264ada2d958bd`；模块 statement_id: `sha256:ce777b56d280ca0833c4b953081538f632507b098a650ba243a4d44a2d42625e`。完整命令/退出码/计时见 gate-receipts.json，原始日志位于该 runner attempt 目录。未运行 make preflight。
 
-交付前 `gh pr list --state open --search A396808` 返回 []；本地 rg 仅有原奇偶模块及本模块命中。PR 将由 make pr-open 建立并同步等待远端判词；此处不提前声称 CI 通过。
+交付前 `gh pr list --state open --search A396808` 返回 []；本地 rg 仅有原奇偶模块及本模块命中。`make pr-open` 已建立 [PR #6785](https://github.com/the-omega-institute/trureturing/pull/6785)，该同步原语负责等待远端必需检查；CI 最终退出码及判词由 runner 的 make-pr-open-receipt.json 与 make-pr-open.log 留档。
+
+## 交付状态
+
+成：统一的无限分类定理已证明并冻结，`make lean` EXIT=0，无 sorry、私设 axiom 或 native_decide，PR #6785 已开出。按用户给定三态条件结算；数值核对未计作证明。远端 CI 的实际结果另见 runner 结果封套，不把 PR 已开出或本地门通过表述为远端已绿。
 
 ## 逐公开定理审计
 
