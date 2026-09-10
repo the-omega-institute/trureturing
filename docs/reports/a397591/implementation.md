@@ -5,10 +5,13 @@ formal power series, with zero constant coefficient. The target is the `%C`
 conjecture for every n > 3: odd coefficient iff n = 2^k - 1 or 2^k + 1,
 with k > 1. The base is 588fe7fd3d5ebd6044a92be4bff1114968ade78b.
 
-Current status: the complete theorem, existence and uniqueness are proved;
-all final local build/content checks and the no-atom freeze passed. PR opening
-is the remaining delivery step. Sections below preserve chronological
-checkpoints: their earlier statements that proof or gates remain are historical.
+Final implementation outcome: **成**. The complete theorem, existence and
+uniqueness are proved; all final local build/content checks and the no-atom
+freeze passed. PR: https://github.com/the-omega-institute/trureturing/pull/6843
+(base dev, open, auto-merge disabled). Required CI was still pending at the
+delivery observation; CI success and merge are not claimed. Sections below
+preserve chronological checkpoints: earlier remaining-work statements are
+historical.
 
 ## Preregistered proof route
 
@@ -215,3 +218,13 @@ rendered all six public declarations (three definitions, three theorems).
 Its extractor again emitted `EDGES_OK edges=81 kernel_nonauxiliary_constants=6`.
 The table and generated edge JSON remain runner-local. No repository tool was
 modified and no replacement dependency extractor was written.
+
+## PR delivery
+
+The canonical `make pr-open` entry created PR #6843 successfully from the
+prepared message file, with `WATCH_TIMEOUT_SECONDS=60` and no AUTO_MERGE.
+The GitHub readback confirms base dev, state OPEN, autoMergeRequest=null,
+and creation head 905ef2ca9831adc2f52f5258a81921599ec36160. Candidate harness
+engineering and Canonical Lean report production were IN_PROGRESS at that
+observation; admission had not yet appeared. Later documentation-only commits
+record delivery without changing the frozen Lean or its state pin.
