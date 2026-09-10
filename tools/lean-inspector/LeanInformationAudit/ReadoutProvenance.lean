@@ -5,10 +5,10 @@ namespace LeanInformationAudit.RegistrationGates
 open Lean
 
 /-- Correctness bounds, independent of machine speed: at most 4096 constants,
-262144 expression nodes, and 256 forwarding steps to select a record field.
+524288 expression nodes, and forwarding recursion with fuel 256.
 Exhaustion always means incomplete, including on the clean path. -/
 def provenanceConstantFuel : Nat := 4096
-def provenanceExpressionFuel : Nat := 262144
+def provenanceExpressionFuel : Nat := 524288
 
 /-- Only expose record construction; never reduce a readout or a proof. -/
 private def recordHead (env : Environment) : Nat → Expr → Option Expr
@@ -28,8 +28,8 @@ private def recordHead (env : Environment) : Nat → Expr → Option Expr
       | none => none
     | .proj _ index value =>
       let value ← recordHead env fuel value
-      let .const name _ := value.getAppFn | none
-      let some (.ctorInfo info) := env.find? name | none
+      let .const name _ := value.getAppFn | some e
+      let some (.ctorInfo info) := env.find? name | some e
       let field ← value.getAppArgs[info.numParams + index]?
       recordHead env fuel (mkAppN field args)
     | _ => some e
@@ -66,6 +66,13 @@ or elaboration. The telescope and each forwarding reduction have fixed fuel. -/
 private def appliedType (env : Environment) (e : Expr) : Option Expr := do
   let .const name levels := e.getAppFn | some e
   let info ← env.find? name
+  -- Only instance-producing declarations need specialization. A dependent
+  -- data projection with an unknown result type is not an instance declaration.
+  let head ← recordHead env 256 info.type
+  let result := head.getForallBody
+  let .const _ _ := result.getAppFn | some e
+  let result ← recordHead env 256 result
+  unless result.isAppOfArity ``Decidable 1 do return e
   let args := e.getAppArgs
   if args.size > 256 then none else do
     let mut type := info.type.instantiateLevelParams info.levelParams levels
