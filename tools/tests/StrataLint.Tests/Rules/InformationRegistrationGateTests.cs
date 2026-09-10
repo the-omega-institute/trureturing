@@ -7,7 +7,7 @@ namespace StrataLint.Tests;
 public sealed class InformationRegistrationGateTests
 {
     private const string Ignored = "IE-C048 RealizationIgnoredByLaw key=Root/Catalog/T law_arena=A signature=A.signature domain=all reason=missing_witness";
-    private const string Unused = "IE-C049 UnusedPrimitiveInBundle key=Root/Catalog/T signature=A.signature primitive=unverified support=unverified";
+    private const string Unused = "IE-C049 UnusedPrimitiveInBundle key=Root/Catalog/T signature=A.signature primitive=null support=null";
 
     [Theory]
     [InlineData(Ignored)]

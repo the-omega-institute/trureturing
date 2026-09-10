@@ -2,7 +2,7 @@ import LeanInformationAudit.RegistryTypes
 import LeanInformationAudit.Census.Report
 import LeanInformationAudit.Census.Ownership
 import LeanInformationAudit.SealCommand
-import LeanInformationAudit.StructuralRealization
+import LeanInformationAudit.RegistrationGates
 import LeanInformationAudit.Sha256
 import Lean.Parser.Module
 
@@ -173,7 +173,8 @@ open Elab Command Term
 /-- Generate the statement, proof declaration and compiled unit as one transaction.
 There is no command that registers a pre-existing theorem. -/
 elab "structural_theorem " theoremId:ident " in " lawArenaId:ident
-    " realization " realizationTerm:term " nondegeneracy " certificateId:ident
+    " realization " realizationTerm:term certificateId:(" nondegeneracy " ident)?
+    domainId:(" domain " ident)? sensitivityId:(" sensitivity " ident)?
     " := " proofTerm:term : command => do
   let rawName := theoremId.getId.eraseMacroScopes
   let currentNamespace ← getCurrNamespace
@@ -186,7 +187,15 @@ elab "structural_theorem " theoremId:ident " in " lawArenaId:ident
     if before.contains name then throwError "structural declaration already exists: {name}"
   try
     let lawArenaName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo lawArenaId
-    let certificateName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo certificateId
+    let resolveOptional (stx : Syntax) : CommandElabM Name := do
+      if stx.getNumArgs != 2 then return .anonymous
+      let id := stx[1]
+      try liftCoreM <| realizeGlobalConstNoOverloadWithInfo id
+      catch _ => return id.getId.eraseMacroScopes
+    let command ← getRef
+    let certificateName ← resolveOptional command[6]
+    let domainName ← resolveOptional command[7]
+    let sensitivityWitness ← resolveOptional command[8]
     let entry ← liftTermElabM do
       let modules := censusRootModules (← getEnv) (← getEnv).header.mainModule
       let key : StatementKey := ⟨theoremName, ""⟩
@@ -201,8 +210,6 @@ elab "structural_theorem " theoremId:ident " in " lawArenaId:ident
       for entry in structuralRegistry.getState before do
         if entry.canonicalArena == canonicalArena && entry.lawArenaConst != lawArenaName then
           failClass key className "realization.canonical_law_arena"
-      let _ ← typed modules key className "law.nondegeneracy" certificateName
-        (← mkAppM ``StructuralPrimitiveLawArena.Nondegenerate #[lawArena])
       let signature ← mkAppM ``StructuralPrimitiveLawArena.signature #[lawArena]
       let realizationType ← mkAppM ``StructuralPrimitiveRealization #[arena, signature]
       let realized ← elabTermEnsuringType realizationTerm realizationType
@@ -246,10 +253,14 @@ elab "structural_theorem " theoremId:ident " in " lawArenaId:ident
         proofExpr := proof
         levelParams := levelParams
         certificateName := certificateName
+        sensitivityWitness
+        domainName
         registrationModule := before.header.mainModule
         canonicalArena := canonicalArena
         lawArenaSyntax := lawArenaId.raw.reprint.getD ""
         realizationSyntax := realizationTerm.raw.reprint.getD "" } : StructuralProvenanceEntry)
+    liftTermElabM do
+      RegistrationGates.publishDiagnostic entry.unitConst (← RegistrationGates.validateStructural entry)
     modifyEnv fun env => structuralRegistry.addEntry env entry
   catch error =>
     setEnv before
@@ -341,7 +352,8 @@ private def validateProvenanceSyntax (modules : Array Name)
             sourceDeclName ns declaration[1][0].getId == entry.theoremName then
           return ← reject
       else if let `(command| structural_theorem $theoremId:ident in $lawId:ident
-          realization $realizationTerm:term nondegeneracy $_:ident := $_:term) := command then
+          realization $realizationTerm:term $[nondegeneracy $_:ident]?
+          $[domain $_:ident]? $[sensitivity $_:ident]? := $_:term) := command then
         if sourceDeclName ns theoremId.getId == entry.theoremName then
           if found then return ← reject
           unless lawId.raw.reprint == some entry.lawArenaSyntax &&

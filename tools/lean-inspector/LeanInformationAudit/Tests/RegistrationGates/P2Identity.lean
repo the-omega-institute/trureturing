@@ -1,4 +1,6 @@
 import LeanInformationAudit.RegistrationGates
+import LeanInformationAudit.SealCommand
+open LeanInformationAudit
 open D5.S3.ConceptDynamics.InformationEscape
 namespace P2Identity
 def arena : PrimitiveLawArena.{0,0,0} where
@@ -39,5 +41,11 @@ run_cmd Lean.Elab.Command.liftTermElabM do
   let some message ← RegistrationGates.validateFinite entry
     | throwError "P2Identity: missing expected IE-C048"
   unless message.startsWith "IE-C048 " do throwError "unexpected verdict: {message}"
+  let diagnosticName := RegistrationGates.diagnosticName
+    entry.unitName entry.registrationModuleName
+  let some info := (← Lean.getEnv).find? diagnosticName
+    | throwError "DiagnosticPublication: missing registration metadata"
+  unless info.value? == some (Lean.mkStrLit message) do
+    throwError "DiagnosticPublication: expected {message}, actual {info.value?}"
   Lean.logInfo "IE-C048"
 end P2Identity

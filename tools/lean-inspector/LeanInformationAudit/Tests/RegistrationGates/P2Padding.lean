@@ -1,4 +1,6 @@
 import LeanInformationAudit.RegistrationGates
+import LeanInformationAudit.SealCommand
+open LeanInformationAudit
 open D5.S3.ConceptDynamics.InformationEscape
 namespace P2Padding
 abbrev arena : PrimitiveLawArena.{0,0,0} where
@@ -22,23 +24,23 @@ def readouts : PrimitiveRealization arena.signature where
 theorem source : ∀ x : Bool × Bool, x.1 = x.1 := fun _ => rfl
 theorem bridge : LegacyPrimitiveRealization arena (∀ x : Bool × Bool, x.1 = x.1) readouts where
   equivalence := Iff.rfl
+def bad : PrimitiveRealization arena.signature where
+  readout := fun _ _ => true
+  anchor := Fin.elim0
+theorem lawVariation : arena.Law readouts ∧ ¬arena.Law bad := by
+  constructor
+  · intro x; rfl
+  · intro h
+    have h0 := h (false,false)
+    exact Bool.noConfusion h0
 register_information_theorem source in arena
-  primitives readouts.toPrimitiveBundle realization bridge
+  primitives readouts.toPrimitiveBundle realization bridge variation lawVariation
 def cat : Catalog arena.toArena := Catalog.ofVector ![source.__information_unit]
 example : arena.toArena.Nondegenerate := by decide
 example : cat.uniqueCaptureCount (0 : Fin 1) = 12 := by decide
 def unpadded : PrimitiveRealization arena.signature where
   readout := fun i x => if i = 0 then x.1 else false
   anchor := Fin.elim0
-def bad : PrimitiveRealization arena.signature where
-  readout := fun _ _ => true
-  anchor := Fin.elim0
-theorem variation : arena.Law readouts ∧ ¬arena.Law bad := by
-  constructor
-  · intro x; rfl
-  · intro h
-    have h0 := h (false,false)
-    exact Bool.noConfusion h0
 example : arena.Law readouts ↔ arena.Law unpadded := Iff.rfl
 example : ¬readouts.toPrimitiveBundle.agrees (false,false) (false,true) := by
   intro h
@@ -60,9 +62,15 @@ example : (Catalog.ofVector ![unpaddedUnit]).uniqueCaptureCount (0 : Fin 1) = 8 
 run_cmd Lean.Elab.Command.liftTermElabM do
   let some entry := InformationRegistry.find? (← Lean.getEnv) ``source
     | throwError "missing probe registration"
-  let entry := { entry with variationWitness := ``variation }
+  let entry := { entry with variationWitness := ``lawVariation }
   let some message ← RegistrationGates.validateFinite entry
     | throwError "P2Padding: missing expected IE-C049"
   unless message.startsWith "IE-C049 " do throwError "unexpected verdict: {message}"
+  let diagnosticName := RegistrationGates.diagnosticName
+    entry.unitName entry.registrationModuleName
+  let some info := (← Lean.getEnv).find? diagnosticName
+    | throwError "DiagnosticPublication: missing registration metadata"
+  unless info.value? == some (Lean.mkStrLit message) do
+    throwError "DiagnosticPublication: expected {message}, actual {info.value?}"
   Lean.logInfo "IE-C049"
 end P2Padding
