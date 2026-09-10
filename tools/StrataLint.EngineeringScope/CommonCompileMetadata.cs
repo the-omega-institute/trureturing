@@ -14,11 +14,6 @@ internal static class CommonCompileMetadata
     {
         var destination = Path.Combine(root, RootPath);
         if (Directory.Exists(destination)) Directory.Delete(destination, recursive: true);
-        var projects = ScribeProjectCompilationContext.Create(
-            snapshot.Files.Values.Where(file => file.Path.Value.EndsWith(".csproj", StringComparison.Ordinal)
-                    || file.Path.Value.EndsWith("packages.lock.json", StringComparison.Ordinal))
-                .Select(file => new ScribeTrackedSource(file.Path.Value, file.Text)).ToArray(),
-            new Dictionary<string, string>(), new HashSet<string>()).Projects;
         var packages = new Dictionary<string, string>(StringComparer.Ordinal);
         string Locate(string id, string version)
         {
@@ -27,12 +22,7 @@ internal static class CommonCompileMetadata
             packages[PackageKey(id, version)] = path;
             return path;
         }
-        IReadOnlyList<string> Inputs(IEnumerable<ScribeCompilationProject> items) =>
-            ScribeMetadataReferenceResolver.DescribeInputPaths(items, Locate);
-        var paths = Inputs(projects);
-        foreach (var project in projects)
-            if (ScribeMetadataReferenceResolver.Resolve(project, Inputs).Degradation is { } missing)
-                throw new InvalidDataException($"compile metadata is unavailable: {missing.ProjectPath}: {missing.Reason}");
+        var paths = DescribeInputs(snapshot, Locate);
         var copied = new List<string>();
         foreach (var path in paths)
         {
@@ -47,6 +37,24 @@ internal static class CommonCompileMetadata
         CommonExecutionEvidence.Write(root, ManifestPath, new CompileMetadataRecord(1,
             packages.Keys.Order(StringComparer.Ordinal).ToArray(), CommonExecutionEvidence.Materials(root, copied)));
         return copied.Append(ManifestPath).ToArray();
+    }
+
+    // Runtime consumers also derive Roslyn compilations from snapshot projects.
+    // Keep their package view bound to this same authoritative metadata closure.
+    internal static IReadOnlyList<string> DescribeInputs(RepositorySnapshot snapshot, Func<string, string, string> locate)
+    {
+        var projects = ScribeProjectCompilationContext.Create(
+            snapshot.Files.Values.Where(file => file.Path.Value.EndsWith(".csproj", StringComparison.Ordinal)
+                    || file.Path.Value.EndsWith("packages.lock.json", StringComparison.Ordinal))
+                .Select(file => new ScribeTrackedSource(file.Path.Value, file.Text)).ToArray(),
+            new Dictionary<string, string>(), new HashSet<string>()).Projects;
+        IReadOnlyList<string> Inputs(IEnumerable<ScribeCompilationProject> items) =>
+            ScribeMetadataReferenceResolver.DescribeInputPaths(items, locate);
+        var paths = Inputs(projects);
+        foreach (var project in projects)
+            if (ScribeMetadataReferenceResolver.Resolve(project, Inputs).Degradation is { } missing)
+                throw new InvalidDataException($"compile metadata is unavailable: {missing.ProjectPath}: {missing.Reason}");
+        return paths;
     }
 
     internal static Func<IEnumerable<ScribeCompilationProject>, IReadOnlyList<string>> Load(
