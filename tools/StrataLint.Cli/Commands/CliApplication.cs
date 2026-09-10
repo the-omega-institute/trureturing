@@ -36,6 +36,8 @@ internal interface ICliEnvironment
 
     ExplicitCommandResult LeanUtilityInput(IReadOnlyList<string> arguments);
 
+    ExplicitCommandResult LeanSourceInput(IReadOnlyList<string> arguments);
+
     ExplicitCommandResult LedgerFrozen(IReadOnlyList<string> arguments);
 
     CommandResult Ingest(IReadOnlyList<string> arguments);
@@ -124,6 +126,8 @@ internal static class CliApplication
                 RenderCommand(environment.RenderDag(tail), console),
             ["deposit-header-check"] = static (environment, tail, console) =>
                 RenderExplicit(environment.DepositHeaderCheck(tail), console),
+            ["lean-source-input"] = static (environment, tail, console) =>
+                RenderExplicit(environment.LeanSourceInput(tail), console),
             ["lean-utility-input"] = static (environment, tail, console) =>
                 RenderExplicit(environment.LeanUtilityInput(tail), console),
             ["digest-status"] = static (environment, tail, console) =>

@@ -5,6 +5,7 @@ export LC_ALL=C
 
 REPOSITORY=""
 OUTPUT=""
+SOURCE_BASE="${STRATALINT_SOURCE_BASE:-HEAD}"
 LOG_DIR=""
 MODULE_TABLE=""
 DELTA_PLAN=""
@@ -14,6 +15,7 @@ SPOOL_REPORT=""
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
+    --base) SOURCE_BASE="$2"; shift 2 ;;
     --repository)
       [[ $# -ge 2 ]] || { echo "inspect.sh: --repository requires a value" >&2; exit 2; }
       REPOSITORY="$2"
@@ -349,3 +351,6 @@ fi
 set -e
 [[ "$serialize_rc" -eq 0 ]] || exit "$serialize_rc"
 printf 'RAW_LEAN_REPORT file=%s content_address=sha256:%s\n' "$OUTPUT" "$report_sha256"
+
+run_phase source-context "$BASH" "$REPOSITORY/tools/lean-inspector/source-context.sh" prepare \
+  --repository "$REPOSITORY" --report "$OUTPUT" --base "$SOURCE_BASE" --lake "$LAKE"

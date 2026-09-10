@@ -654,7 +654,8 @@ public sealed partial class FrozenLedgerTests
             candidateCatalog);
         var authorization = new MathlibUpgradeFrozenLedgerReplacementAuthorization(
             protectedBase,
-            current);
+            current,
+            SyntheticSourceContext.ForSnapshots(current, protectedBase));
         var authorized = recognition is not null
             && authorization.IsAuthorized(new FrozenLedgerReplacementAuthorizationContext(
                 recognition,

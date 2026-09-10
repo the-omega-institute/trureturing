@@ -197,6 +197,9 @@ internal interface IRepositoryGateway
 
 internal interface ILeanReportSource
 {
+    LeanSourceContextInput LoadSourceContext(RepositorySnapshot current, RepositorySnapshot protectedBase) =>
+        LeanSourceContextInput.Empty;
+
     LeanAxiomReport Load(RepositorySnapshot snapshot);
 }
 
@@ -348,6 +351,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 () => RawLeanReportArtifact.ReadFile(
                     options.CandidateLeanReport,
                     current));
+            var sourceContext = LeanSourceContextArtifact.ReadBundle(options.CandidateLeanReport, current, baseline);
             var verifiedScribeEmissions = timing.Measure(
                 "scribe-verify",
                 () => VerifyScribeForAdmission(
@@ -364,7 +368,8 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 verifiedScribeEmissions,
                 timing,
                 testMapStore,
-                DeriveTestMap).Outcome;
+                DeriveTestMap,
+                sourceContext).Outcome;
         }
         catch (Exception exception)
         {
@@ -401,7 +406,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
             if (route is not RouteOutcome.Routed routed
                 || routed.Result.Gid.Value != "D5/S0/Carrier/Probe"
                 || routed.Result.Path.Value != "D5/S0/Carrier/Probe.lean"
-                || RuleCatalog.Default.Descriptors.Length != 30)
+                || RuleCatalog.Default.Descriptors.Length != 31)
             {
                 return new CommandResult(false, string.Empty, "SELFTEST FAIL invariant mismatch\n");
             }

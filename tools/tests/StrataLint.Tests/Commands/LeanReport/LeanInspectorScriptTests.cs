@@ -112,7 +112,7 @@ public sealed class LeanInspectorScriptTests
 
         var result = Run("env", [$"LAKE_BIN={lake}", Path.Combine(root, InspectorScript), "--repository", repository, "--output", Path.Combine(temporary.Path, "report.json")], repository);
 
-        Assert.Equal(0, result.ExitCode);
+        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
         Assert.False(File.Exists(marker), "producer executed the candidate-owned module enumerator");
     }
 
@@ -149,6 +149,9 @@ public sealed class LeanInspectorScriptTests
             + "<TargetFramework>net10.0</TargetFramework></PropertyGroup></Project>\n");
         Write(repository, "tools/StrataLint.Cli/Fixture.cs", "System.Console.WriteLine(\"[]\");\n");
         Write(repository, "tools/scripts/lean-report-pair.sh", "#!/usr/bin/env bash\n");
+        Write(repository, "tools/lean-inspector/source-context.sh", LeanSourceContextScriptFixture.Script);
+        if (!File.Exists(Path.Combine(repository, InspectorScript)))
+            Write(repository, InspectorScript, "#!/usr/bin/env bash\n# resident producer fixture\n");
         Write(repository, "tools/scripts/worktree/lean-cache-publish.sh", "#!/usr/bin/env bash\n");
         Write(repository, "tools/scripts/workflow/scribe-content-checks.sh", "#!/usr/bin/env bash\n");
         Write(repository, ".github/workflows/ci.yml",

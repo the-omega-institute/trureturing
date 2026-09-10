@@ -89,6 +89,11 @@ for suffix in '' .sha256 .input.attestation .provenance.json .materials.zip; do
     || cp "${BUNDLE}${suffix}" "${target}${suffix}" \
     || fallback "bundle-copy-failed"
 done
+if [[ -f "${BUNDLE}.source-context.json" ]]; then
+  ln "${BUNDLE}.source-context.json" "${target}.source-context.json" 2>/dev/null \
+    || cp "${BUNDLE}.source-context.json" "${target}.source-context.json" \
+    || fallback "bundle-copy-failed"
+fi
 mv "$STAGING" "$entry" 2>/dev/null || fallback "cache-publish-failed"
 STAGING=""
 printf 'LEAN_REPORT_CI_BASELINE status=ready input_address=sha256:%s\n' "$address" >&2

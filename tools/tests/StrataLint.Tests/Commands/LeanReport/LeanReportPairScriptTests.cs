@@ -29,6 +29,7 @@ public sealed class LeanReportPairScriptTests
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
         Assert.Equal(1, fixture.ProducerInvocationCount);
         Assert.False(fixture.CandidateLegacyMaterialsExist);
+        Assert.True(fixture.CandidateContextExists);
         using var candidate = fixture.ReadCandidateProvenance();
         Assert.Equal("candidate", candidate.RootElement.GetProperty("side").GetString());
         Assert.Equal("produced", candidate.RootElement.GetProperty("mode").GetString());
@@ -252,6 +253,8 @@ public sealed class LeanReportPairScriptTests
                 "def producerFixture : True := by trivial\n",
                 new UTF8Encoding(false));
             File.WriteAllText(CacheEnsurePath, FakeCacheEnsure, new UTF8Encoding(false));
+            File.WriteAllText(Path.Combine(candidateRoot, "tools/lean-inspector/source-context.sh"),
+                LeanSourceContextScriptFixture.Script, new UTF8Encoding(false));
             var chmod = TestProcessRunner.Run(
                 "chmod",
                 ["+x", producer],
@@ -283,6 +286,8 @@ public sealed class LeanReportPairScriptTests
 
         internal bool CandidateLegacyMaterialsExist =>
             Directory.Exists(candidateReport + ".materials");
+
+        internal bool CandidateContextExists => File.Exists(candidateReport + ".source-context.json");
 
         internal ProcessOutput Run(
             int cacheEnsureExitCode = 0,

@@ -328,6 +328,11 @@ public sealed partial class LeanReportInputScriptTests
     public void AbsentJudgeLibraryContributesNoSourcesAndAddressSucceeds()
     {
         using var fixture = new LeanReportInputFixture();
+        const string contextLauncher = "tools/lean-inspector/source-context.sh";
+        fixture.RemoveSource(contextLauncher);
+        var missingMember = fixture.RunCommand("address");
+        Assert.Equal(2, missingMember.ExitCode);
+        Assert.Contains(contextLauncher, Encoding.UTF8.GetString(missingMember.StandardError), StringComparison.Ordinal);
         fixture.RemoveInspectorDirectory();
 
         var result = fixture.RunCommand("address");
@@ -418,6 +423,7 @@ public sealed partial class LeanReportInputScriptTests
             Write("lake-manifest.json", "{\"version\":\"1.1.0\"}\n");
             Write(inspectorScriptPath, "#!/usr/bin/env bash\n");
             Write(inspectorSourcePath, "def fixture : True := by trivial\n");
+            Write("tools/lean-inspector/source-context.sh", LeanSourceContextScriptFixture.Script);
             Write(InputHelperPath, "#!/usr/bin/env bash\n");
             Write("tools/scripts/worktree/lean-cache-input.sh", File.ReadAllText(
                 Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/lean-cache-input.sh"),
@@ -672,7 +678,7 @@ public sealed partial class LeanReportInputScriptTests
         internal string Address()
         {
             var result = Run("address");
-            Assert.Equal(0, result.ExitCode);
+            Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
             return Encoding.UTF8.GetString(result.StandardOutput)
                 .Split(' ', StringSplitOptions.RemoveEmptyEntries)[0];
         }

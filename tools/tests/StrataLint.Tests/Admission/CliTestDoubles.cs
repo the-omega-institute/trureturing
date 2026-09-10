@@ -49,6 +49,9 @@ internal sealed class StubCliEnvironment(
     public ExplicitCommandResult FileMapConform(IReadOnlyList<string> arguments) =>
         fileMapConform ?? new(2, string.Empty, "filemap conformance is not configured in this fixture");
 
+    public ExplicitCommandResult LeanSourceInput(IReadOnlyList<string> arguments) =>
+        new(0, "{}\n", string.Empty);
+
     public ExplicitCommandResult LeanUtilityInput(IReadOnlyList<string> arguments) =>
         new(0, "[]\n", string.Empty);
 

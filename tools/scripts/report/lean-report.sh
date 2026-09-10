@@ -21,6 +21,7 @@ if [[ "${CI:-}" != "true" && "${CI:-}" != "1" ]]; then
 fi
 
 exec "$PAIR" \
+  --base "${1:-HEAD}" \
   --producer "$INSPECTOR" \
   --lake-bin "$LAKE_BIN" \
   --candidate-root "$ROOT" \

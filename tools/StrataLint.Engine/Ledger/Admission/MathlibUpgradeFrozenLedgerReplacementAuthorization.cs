@@ -8,11 +8,17 @@ internal sealed class MathlibUpgradeFrozenLedgerReplacementAuthorization
 {
     private readonly RepositorySnapshot protectedBase;
     private readonly RepositorySnapshot candidate;
+    private readonly LeanSourceContextInput sourceContext;
+    private readonly LeanSourceComparisonResult? comparison;
 
     internal MathlibUpgradeFrozenLedgerReplacementAuthorization(
         RepositorySnapshot protectedBase,
-        RepositorySnapshot candidate)
+        RepositorySnapshot candidate,
+        LeanSourceContextInput? sourceContext = null,
+        LeanSourceComparisonResult? comparison = null)
     {
+        this.sourceContext = sourceContext ?? LeanSourceContextInput.Empty;
+        this.comparison = comparison;
         this.protectedBase = protectedBase ?? throw new ArgumentNullException(nameof(protectedBase));
         this.candidate = candidate ?? throw new ArgumentNullException(nameof(candidate));
     }
@@ -22,12 +28,13 @@ internal sealed class MathlibUpgradeFrozenLedgerReplacementAuthorization
         ArgumentNullException.ThrowIfNull(context);
         return context.Recognition is FrozenLedgerIncrementalReplacementRecognition incremental
             && EffectiveLeanPinsChanged(protectedBase, candidate)
-            && LeanPropositionSourceComparer.AreEquivalent(
+            && (comparison ?? LeanPropositionSourceComparer.Compare(
                 protectedBase,
                 candidate,
                 incremental.ChangedStatementModulePaths,
                 context.BaseView,
-                context.CandidateCatalog)
+                context.CandidateCatalog,
+                sourceContext)).Equivalent
             && FindChangedClosureOnlyStatements(context, incremental).IsEmpty
             && incremental.ReanchoredModulePaths.All(path =>
                 context.CandidateCatalog.ByPath.TryGetValue(path, out var material)

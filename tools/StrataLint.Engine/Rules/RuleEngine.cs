@@ -206,8 +206,10 @@ internal sealed class RuleEvaluationContext
         MetaEvaluationProfile metaEvaluation,
         VerifiedScribeEmissions? verifiedScribeEmissions,
         ScribeTestMapStore? testMapStore,
-        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap)
+        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap,
+        LeanSourceContextInput? sourceContext)
     {
+        SourceContext = sourceContext ?? LeanSourceContextInput.Empty;
         Current = current;
         Baseline = baseline;
         Policy = policy;
@@ -223,6 +225,8 @@ internal sealed class RuleEvaluationContext
         TestMapStore = testMapStore;
         DeriveTestMap = deriveTestMap ?? ScribeTestMapDeriver.DeriveSnapshot;
     }
+
+    internal LeanSourceContextInput SourceContext { get; }
 
     internal RepositorySnapshot Current { get; }
 
@@ -264,7 +268,8 @@ internal sealed class RuleEvaluationContext
         MetaClear metaClear,
         VerifiedScribeEmissions? verifiedScribeEmissions = null,
         ScribeTestMapStore? testMapStore = null,
-        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null) =>
+        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null,
+        LeanSourceContextInput? sourceContext = null) =>
         Create(
             current,
             baseline,
@@ -274,7 +279,8 @@ internal sealed class RuleEvaluationContext
             MetaEvaluationProfile.ForClear(metaClear),
             verifiedScribeEmissions,
             testMapStore,
-            deriveTestMap);
+            deriveTestMap,
+            sourceContext);
 
     internal static RuleEvaluationContext Create(
         RepositorySnapshot current,
@@ -285,7 +291,8 @@ internal sealed class RuleEvaluationContext
         MetaEvaluationProfile metaEvaluation,
         VerifiedScribeEmissions? verifiedScribeEmissions = null,
         ScribeTestMapStore? testMapStore = null,
-        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null) =>
+        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null,
+        LeanSourceContextInput? sourceContext = null) =>
         new(
             current,
             baseline,
@@ -295,7 +302,8 @@ internal sealed class RuleEvaluationContext
             metaEvaluation,
             verifiedScribeEmissions,
             testMapStore,
-            deriveTestMap);
+            deriveTestMap,
+            sourceContext);
 }
 
 internal sealed class RepositoryRule(

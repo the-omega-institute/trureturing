@@ -37,6 +37,9 @@ for suffix in '' .sha256 .input.attestation .provenance.json .materials.zip; do
   }
   cp "${REPORT}${suffix}" "${SNAPSHOT_REPORT}${suffix}"
 done
+if [[ -f "${REPORT}.source-context.json" ]]; then
+  cp "${REPORT}.source-context.json" "${SNAPSHOT_REPORT}.source-context.json"
+fi
 "$INPUT_VERIFIER" verify --repository "$ROOT" --report "$SNAPSHOT_REPORT"
 set +e
 "$SUPERVISOR" --role "$ROLE" -- env STRATALINT_LEAN_REPORT="$SNAPSHOT_REPORT" "$@"

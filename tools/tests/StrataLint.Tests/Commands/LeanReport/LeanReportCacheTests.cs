@@ -13,6 +13,25 @@ public sealed class LeanReportCacheTests
     private const string RawReportPath = "tools/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs";
     private const string CanonicalWriterPath = "tools/Trureturing.Truth/StructuredCanonicalWriter.cs";
     [Fact]
+    public void CachedDeclarationsMissingSourceContextAreCompletedWithoutReinspection()
+    {
+        using var world = new CacheWorld();
+        var first = world.RunPair();
+        Assert.True(first.ExitCode == 0, Encoding.UTF8.GetString(first.StandardError));
+        var address = world.AddressFrom(first);
+        var cached = Path.Combine(world.CacheRoot, address, "raw-lean-report.json.source-context.json");
+        Assert.True(File.Exists(cached));
+        File.Delete(cached);
+        File.Delete(world.Output + ".source-context.json");
+        var bytes = File.ReadAllBytes(world.Output);
+        var second = world.RunPair();
+        Assert.True(second.ExitCode == 0, Encoding.UTF8.GetString(second.StandardError));
+        Assert.Equal(1, world.ProducerRunCount);
+        Assert.Equal(bytes, File.ReadAllBytes(world.Output));
+        Assert.True(File.Exists(cached));
+        Assert.True(File.Exists(world.Output + ".source-context.json"));
+    }
+    [Fact]
     public void SecondProductionOfTheSameAddressIsServedFromCacheWithoutSlotOrProducer()
     {
         if (OperatingSystem.IsWindows()) return;
@@ -397,6 +416,7 @@ public sealed class LeanReportCacheTests
 
             Producer = Path.Combine(inspectorDir, "inspect.sh");
             WriteExecutable(Producer, StubProducer);
+            WriteRepositoryFile("tools/lean-inspector/source-context.sh", LeanSourceContextScriptFixture.Script);
             WriteExecutable(
                 Path.Combine(reportDir, "report-supervisor.sh"),
                 StubSupervisor);

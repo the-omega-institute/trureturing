@@ -17,6 +17,12 @@ public sealed class LeanReportCiBaselineScriptTests
     public void CiBaselineAdapterDoesNotCopyProducerLogsIntoDeltaCache() =>
         LeanReportCiBaselineScriptContract.AssertAdapterDoesNotCopyProducerLogsIntoDeltaCache();
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void CiBaselineAdapterPreservesOptionalSourceContext(bool present) =>
+        LeanReportCiBaselineScriptContract.AssertAdapterPreservesOptionalSourceContext(present);
+
     [Fact]
     public void DeltaPlanRechecksTransitiveImportersOfRemovedModule() =>
         LeanReportCiBaselineScriptContract.AssertDeltaPlanRechecksTransitiveImportersOfRemovedModule();
@@ -116,6 +122,24 @@ internal static class LeanReportCiBaselineScriptContract
             "LEAN_REPORT_CI_BASELINE status=ready",
             Encoding.UTF8.GetString(result.StandardError),
             StringComparison.Ordinal);
+    }
+
+    internal static void AssertAdapterPreservesOptionalSourceContext(bool present)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var temporary = new TemporaryDirectory();
+        var bundle = Path.Combine(temporary.Path, "bundle", "raw-lean-report.json");
+        var cache = Path.Combine(temporary.Path, "cache");
+        WriteBundle(bundle);
+        var context = Encoding.UTF8.GetBytes("{\"schema\":\"lean-source-context/1\",\"files\":[],\"registrations\":[]}\n");
+        if (present) File.WriteAllBytes(bundle + ".source-context.json", context);
+
+        var result = Run(bundle, cache);
+
+        Assert.Equal(0, result.ExitCode);
+        var copied = Path.Combine(cache, Address, "raw-lean-report.json.source-context.json");
+        Assert.Equal(present, File.Exists(copied));
+        if (present) Assert.True(File.ReadAllBytes(copied).AsSpan().SequenceEqual(context));
     }
 
     internal static void AssertDeltaPlanRechecksTransitiveImportersOfRemovedModule()

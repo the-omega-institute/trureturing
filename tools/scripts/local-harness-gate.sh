@@ -156,6 +156,7 @@ export STRATALINT_REPORT_CACHE_ROOT="${STRATALINT_REPORT_CACHE_ROOT:-${XDG_CACHE
 CANDIDATE_REPORT="$CANDIDATE_ROOT/.lake/build/stratalint/raw-lean-report.json"
 run_stage lean-reports \
   "$PAIR_PRODUCER" \
+  --base "$BASE_SHA" \
   --producer "$PRODUCER" \
   --lake-bin "$LAKE_BIN" \
   --candidate-root "$CANDIDATE_ROOT" \
