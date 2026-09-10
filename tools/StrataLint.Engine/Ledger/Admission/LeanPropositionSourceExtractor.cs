@@ -477,11 +477,18 @@ internal sealed partial class LeanSourceCatalog
         if (command.Kind is "Lean.Parser.Command.in" or "Lean.Parser.Command.mutual"
             && !command.Children.IsEmpty)
         {
-            if (command.Children[0].Start > command.Start)
-                yield return command with { End = command.Children[0].Start, Children = [] };
-            foreach (var child in command.Children.SelectMany(TopCommands)) yield return child;
-            if (command.Children[^1].End < command.End)
-                yield return command with { Start = command.Children[^1].End, Children = [] };
+            var previous = command.Start;
+            foreach (var child in command.Children)
+            {
+                // Retain wrapper syntax between commands (including `in`) as
+                // ambient source material, as well as the prefix and suffix.
+                if (previous < child.Start)
+                    yield return command with { Start = previous, End = child.Start, Children = [] };
+                foreach (var nested in TopCommands(child)) yield return nested;
+                previous = child.End;
+            }
+            if (previous < command.End)
+                yield return command with { Start = previous, Children = [] };
         }
         else yield return command;
     }

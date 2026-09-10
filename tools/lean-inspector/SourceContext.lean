@@ -50,6 +50,10 @@ partial def syntaxFacts (stx : Syntax) (c : ParserContext) : Json := Id.run do
     children := #[insideOpen stx[0][1] stx[2] c]
   else if stx.isOfKind ``Parser.Command.in && stx[0].isOfKind ``Parser.Command.set_option then
     children := #[insideOption stx[0] stx[2] c]
+  else if stx.isOfKind ``Parser.Command.in then
+    -- Command.in parses both commands before elaborating either one. Only its
+    -- parser-owned open/set_option callbacks above change the second parse context.
+    children := #[syntaxFacts stx[0] c, syntaxFacts stx[2] c]
   else if stx.isOfKind ``Parser.Term.open || stx.isOfKind ``Parser.Tactic.open then
     children := #[insideOpen stx[1] stx[3] c]
   else if stx.isOfKind ``Parser.Command.mutual then
@@ -136,9 +140,22 @@ def attributeTokenEffect (env : Environment) (stx : Syntax) : IO AttributeTokenE
 /- Bounded declarative token registration. Only the token is projected; the old
    expansion target is neither inspected as executable code nor evaluated. -/
 partial def projectRegistration (cmd : Syntax) (scope? : Option Name := none) : FrontendM Unit := do
+  if cmd.isOfKind ``Parser.Command.in then
+    -- BuiltinCommand.expandInCmd: section; cmd1; end_local_scope 1; cmd2; end.
+    -- Use the compiler's scope operations so globals survive and only cmd1's
+    -- local effects end here. Recursion projects effects without elaborating
+    -- source bodies or invoking their attribute handlers.
+    runCommandElabM do Command.elabSection (← `(command| section))
+    projectRegistration cmd[0] scope?
+    runCommandElabM <| setDelimitsLocal 1
+    projectRegistration cmd[2] scope?
+    runCommandElabM do Command.elabEnd (← `(command| end))
+    return
   if cmd.isOfKind `Mathlib.Tactic.scopedNS then
     projectRegistration cmd[6] (some cmd[4].getId)
     return
+  -- Scope transitions and token effects have the same owner in scanning/replay.
+  applyBuiltin cmd
   unless [``Parser.Command.mixfix, ``Parser.Command.notation, ``Parser.Command.syntax].contains cmd.getKind do
     if cmd.isOfKind ``Parser.Command.initialize || cmd.getKind.toString.endsWith ".run_cmd" then
       runCommandElabM <| logErrorAt cmd "source context cannot model a dynamic initializer registration effect"
@@ -182,8 +199,7 @@ partial def scan (project : Bool) (rows : Array Json := #[]) (commands : Array S
     return (rows, Json.mkObj [("line", toJson (input.fileMap.toPosition (cmd.getPos?.getD 0)).line),
       ("message", toJson "source context nested parser scope failed")], commands)
   let rows := rows.push facts
-  applyBuiltin cmd
-  if project then projectRegistration cmd
+  if project then projectRegistration cmd else applyBuiltin cmd
   let messages := (← getCommandState).messages
   if messages.hasErrors then return (rows, ← errorJson messages, commands)
   scan project rows (commands.push cmd)
@@ -209,7 +225,6 @@ def replay (commands : Array Syntax) : FrontendM (Array Json × Json) := do
       return (rows, Json.mkObj [("line", toJson (input.fileMap.toPosition (cmd.getPos?.getD 0)).line),
         ("message", toJson "source context nested parser scope failed")])
     rows := rows.push facts
-    applyBuiltin cmd
     projectRegistration cmd
     let messages := (← getCommandState).messages
     if messages.hasErrors then return (rows, ← errorJson messages)
