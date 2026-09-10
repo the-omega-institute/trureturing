@@ -650,7 +650,7 @@ x_a(k+1)=\{x_a(k)+\theta_a\}.
 \[
 hf(a)-\lfloor ha\alpha+x_a(s)\rfloor.
 \]
-后一个取整只有 \(\lfloor ha\alpha\rfloor\) 与 \(\lfloor ha\alpha\rfloor+1\) 两种可能，减去整数 \(hf(a)\) 后即所述相邻二值。最终周期的整数序列具有有理平均，而 \(\delta_a=f(a)-a\alpha\) 无理；其平均又由望远镜公式等于 \(\delta_a\)，矛盾。全部符号结论的自变量为固定加数的轨道 \((ka,a)\)。证毕。
+后一个取整只有 \(\lfloor ha\alpha\rfloor\) 与 \(\lfloor ha\alpha\rfloor+1\) 两种可能，用整数 \(hf(a)\) 减去该取整后，即得所述相邻二值。最终周期的整数序列具有有理平均，而 \(\delta_a=f(a)-a\alpha\) 无理；其平均又由望远镜公式等于 \(\delta_a\)，矛盾。全部符号结论的自变量为固定加数的轨道 \((ka,a)\)。证毕。
 
 **定理 55（原始代表修正与有理有界关系的全分类）。** 对任意 \(r\in\mathcal R\)，令 \(a_p=V_p(r)\)、\(n=D(r)\)、\(\zeta_p(r)=U_p(r)-f(a_p)\)。从 \(kr\) 到 \(K(n^k)\) 的每条有限实际路径的电荷为
 \[
