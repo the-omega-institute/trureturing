@@ -80,8 +80,6 @@ internal static class AffectedTestPlan
             var projectScopes = scopes.Where(scope => scope.Project == project).ToArray();
             if (projectScopes.Length == 0) projectScopes = [new(project, "*", [], [], [], [failure ?? "adapter:no-bound-test-identities"])];
             var commonUnknown = new SortedSet<string>(StringComparer.Ordinal);
-            if (projectScopes.Any(item => item.Unknown.Contains("adapter:custom-or-configured-test-attribute", StringComparer.Ordinal)))
-                commonUnknown.Add("adapter:project-discovery-or-skip-configuration");
             var common = new SortedDictionary<string, ActionInput>(StringComparer.Ordinal);
             foreach (var path in node.Inputs) BindInput(path, common, commonUnknown);
             foreach (var pair in node.Semantics) common["msbuild:" + pair[0]] = new("msbuild:" + pair[0], pair[1]);
@@ -107,6 +105,20 @@ internal static class AffectedTestPlan
             }
             var projectEdges = closure.SelectMany(item => item.ProjectReferences.Select(reference =>
                 item.Project + " -> " + Relative(reference))).Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToArray();
+            var discoveryUnknown = projectScopes.SelectMany(scope => scope.Unknown).Concat(commonUnknown)
+                .Where(reason => reason.StartsWith("adapter:", StringComparison.Ordinal)
+                    || reason.StartsWith("test-lifecycle:", StringComparison.Ordinal)
+                    || reason.StartsWith("compiler:", StringComparison.Ordinal)).ToArray();
+            if (discoveryUnknown.Length != 0)
+            {
+                // Declaration names are not native discovery identities for these
+                // shapes. Only a complete, current native project run covers them.
+                commonUnknown.UnionWith(discoveryUnknown);
+                projectScopes = [new(project, "*", [], projectScopes.SelectMany(scope => scope.RuntimeInputs)
+                    .Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToArray(),
+                    projectScopes.SelectMany(scope => scope.Edges).Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToArray(),
+                    projectScopes.SelectMany(scope => scope.Unknown).Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToArray())];
+            }
             var shared = new TestProjectInputs(project, common.Values.ToArray(), projectEdges, commonUnknown.ToArray(), "");
             shared = shared with { Identity = ProjectIdentity(shared) };
             projectInputs.Add(shared);
@@ -173,13 +185,16 @@ internal static class AffectedTestPlan
     internal static string ProducerIdentity() => Digest(new[] { typeof(AffectedTestPlan).Assembly,
         typeof(ScribeExecutionDependencies).Assembly, typeof(Compilation).Assembly, typeof(CSharpCompilation).Assembly,
         typeof(Tomlyn.TomlSerializer).Assembly }.Select(assembly => assembly.ManifestModule.ModuleVersionId.ToString()));
-    internal static string EnvironmentIdentity() => Digest(new[] { RuntimeInformation.RuntimeIdentifier, RuntimeInformation.FrameworkDescription,
-        CultureInfo.CurrentCulture.Name, CultureInfo.CurrentUICulture.Name, "xunit-v2/vstest;configuration=Release;cwd=testhost;filter=class" }
-        .Concat(Environment.GetEnvironmentVariables().Cast<System.Collections.DictionaryEntry>()
-            .Where(entry => ((string)entry.Key).StartsWith("DOTNET_", StringComparison.Ordinal)
-                || ((string)entry.Key).StartsWith("COMPlus_", StringComparison.Ordinal)
-                || ((string)entry.Key).StartsWith("VSTEST_", StringComparison.Ordinal))
-            .OrderBy(entry => (string)entry.Key, StringComparer.Ordinal).Select(entry => entry.Key + "=" + entry.Value)));
+    internal static string EnvironmentIdentity()
+    {
+        var environment = new System.Diagnostics.ProcessStartInfo().Environment;
+        CommonStages.NormalizeEnvironment(environment);
+        return Digest(new[] { RuntimeInformation.RuntimeIdentifier, RuntimeInformation.FrameworkDescription,
+            CultureInfo.CurrentCulture.Name, CultureInfo.CurrentUICulture.Name, "xunit-v2/vstest;configuration=Release;cwd=testhost;filter=class" }
+            .Concat(environment.Where(entry => entry.Key.StartsWith("DOTNET_", StringComparison.Ordinal)
+                || entry.Key.StartsWith("COMPlus_", StringComparison.Ordinal) || entry.Key.StartsWith("VSTEST_", StringComparison.Ordinal))
+                .OrderBy(entry => entry.Key, StringComparer.Ordinal).Select(entry => entry.Key + "=" + entry.Value)));
+    }
     internal static string Digest(IEnumerable<string> values)
     {
         using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
