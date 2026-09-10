@@ -2779,11 +2779,10 @@ PR7_KEYS = frozenset({
     "pullback_encoding_copy",
     "selected_pair_fiber_copy",
     "selected_pair_profile_copy",
-    "shared_saturation_empty_factor",
-    "shared_saturation_endpoints",
-    "shared_saturation_nonempty_factor",
-    "shared_saturation_pairs",
-    "shared_saturation_without_product",
+    "shared_saturation_family_contexts",
+    "shared_saturation_same_pair_q",
+    "shared_saturation_summary_equal",
+    "shared_saturation_negative_control",
     "slice_linear_coefficient",
     "slice_nonzero_constant",
     "successor_pair_push_copy",
@@ -2974,8 +2973,11 @@ pr7_d18_slices = tuple(q(pr7_rich_eval(pr7_d18_term, leaves))
 assert pr7_d18_reads == [0, 2, 4, 6] and pr7_d18_slices == (0, 1)
 assert pr7_lagrange(pr7_d18_reads)[1] == 2 != sum(pr7_d18_slices) - 2*pr7_d18_reads[0]
 pr7_hit("d18_slice_failure")
-pr7_d18_bad = valid(replace(pr3_U0, e={**pr3_U0.e, "late_archive": (3, origin, 1, pr3_l0)}))
-assert {event[0] for event in pr7_d18_bad.e.values()} == {0, 3}
+pr7_guard_x = valid(Rich(
+    {"e_-": (-3, origin, 1, pr3_l0), "e_+": (3, origin, -1, pr3_l0)},
+    frozenset(), frozenset(), frozenset()))
+pr7_d18_bad = pr7_guard_x
+assert {event[0] for event in pr7_d18_bad.e.values()} == {-3, 3}
 assert not guard(pr7_d18_bad, time_shift(pr7_d18_bad, 1))
 for pr7_failure_term in (pr7_d18_term, ("N", pr7_d18_term),
                          ("FS", frozenset(), pr7_d18_term),
@@ -3025,17 +3027,85 @@ for pr7_B, pr7_p, pr7_t, pr7_tt in pr6_controls:
     assert pr4_profile(mul(pr7_xs[0], pr3_U0)) == pr4_profile(mul(pr7_xs[1], pr3_U0))
     pr7_hit("copy_first_product_profiles")
 
-# The same saturated witness pair is used for all three factor cases.
-pr7_prefix = [("FQ", {(origin, 1, pr3_l0, 0)})]
-for pr7_factor, pr7_name in ((None, "shared_saturation_without_product"),
-                              (empty, "shared_saturation_empty_factor"),
-                              (unit_at(-4), "shared_saturation_nonempty_factor")):
-    pr7_sat_inputs = pr6_saturated(pr7_prefix, pr7_factor, origin)
-    assert theta(pr7_sat_inputs[0])[1:3] == theta(pr7_sat_inputs[1])[1:3]
-    pr7_hit("shared_saturation_endpoints")
-    assert q(pr7_sat_inputs[0]) == q(pr7_sat_inputs[1])
-    pr7_hit("shared_saturation_pairs")
-    pr7_hit(pr7_name)
+# One common witness family feeds every context, factor case, position, and pair.
+pr7_shared_targets = (
+    (origin, 1, pr3_l1, 0),
+    (v, 1, pr3_l1, 1),
+    (h, 1, pr3_l1, -1),
+)
+pr7_shared_prefixes = (
+    (("FQ", {pr7_shared_targets[0]}),),
+    (("FQ", {pr7_shared_targets[1]}), ("FL", {pr3_l1})),
+    (("T", 1), ("FQ", {pr7_shared_targets[2]}), ("FL", {pr3_l1})),
+)
+pr7_shared_factors = (None, empty, unit_at(-4))
+pr7_shared_suffix = (("FB", pr5_all),)
+pr7_shared_pulled = (
+    (origin, 1, pr3_l1, 0),
+    (v, 1, pr3_l1, 1),
+    (h, 1, pr3_l1, -2),
+)
+pr7_shared_c = min(0, *(a[3] for a in pr7_shared_pulled), -4)
+assert pr7_shared_c == -4
+
+def pr7_shared_input(t, p, drop=None):
+    events = {("e", p): (t, p, 1, pr3_l0)}
+    for i, (point, sign, source, witness_time) in enumerate(pr7_shared_pulled):
+        if i != drop:
+            events[("d", i)] = (witness_time, point, sign, source)
+    balance = 1 + sum(value[2] for value in events.values())
+    events.update({("n", i): (0, h, -1, pr3_l0) for i in range(balance)})
+    whole = frozenset(events)
+    events.update({("low",): (-20, origin, 1, pr3_l0),
+                   ("high",): (5, origin, 1, pr3_l0)})
+    edges = frozenset((('e', p), ('d', i))
+                      for i in range(len(pr7_shared_pulled)) if i != drop)
+    return valid(Rich(events, edges, whole, frozenset({("e", p)})))
+
+pr7_shared_context_reads = []
+pr7_shared_summary_reads = []
+pr7_shared_negative_reads = []
+for pr7_p in (origin, v, h):
+    for pr7_t, pr7_tt in ((-12, -11), (-10, -9)):
+        assert pr7_t < pr7_shared_c and pr7_tt < pr7_shared_c
+        pr7_pair = (pr7_shared_input(pr7_t, pr7_p),
+                    pr7_shared_input(pr7_tt, pr7_p))
+        for pr7_prefix, pr7_factor in zip(pr7_shared_prefixes, pr7_shared_factors):
+            pr7_outputs, pr7_first_summaries = [], []
+            for pr7_x in pr7_pair:
+                pr7_y = pr7_x
+                for pr7_step0 in pr7_prefix:
+                    pr7_y = pr5_rich_step(pr7_y, pr7_step0)
+                if pr7_factor is not None:
+                    pr7_y = pr5_rich_step(pr7_y, ("mul", 0, pr7_factor))
+                    pr7_first_summaries.append(theta(pr7_y)[:3])
+                for pr7_step0 in pr7_shared_suffix:
+                    pr7_y = pr5_rich_step(pr7_y, pr7_step0)
+                pr7_outputs.append(pr7_y)
+            pr7_expected = ((1, 1), (0, 0), (0, 0))[len(pr7_shared_context_reads) % 3]
+            assert tuple(q(pr7_y) for pr7_y in pr7_outputs) == pr7_expected
+            assert pr3_bytes(q(pr7_outputs[0])) == pr3_bytes(q(pr7_outputs[1]))
+            pr7_shared_context_reads.append(pr7_expected)
+            pr7_hit("shared_saturation_family_contexts")
+            pr7_hit("shared_saturation_same_pair_q")
+            if pr7_factor is not None:
+                assert pr7_first_summaries[0] == pr7_first_summaries[1]
+                pr7_shared_summary_reads.append(pr7_first_summaries[0])
+                pr7_hit("shared_saturation_summary_equal")
+        pr7_bad_pair = (pr7_shared_input(pr7_t, pr7_p),
+                        pr7_shared_input(pr7_tt, pr7_p, drop=0))
+        pr7_bad_outputs = []
+        for pr7_x in pr7_bad_pair:
+            pr7_y = pr7_x
+            for pr7_step0 in pr7_shared_prefixes[0]:
+                pr7_y = pr5_rich_step(pr7_y, pr7_step0)
+            pr7_bad_outputs.append(q(pr7_y))
+        assert tuple(pr7_bad_outputs) == (1, 0)
+        pr7_shared_negative_reads.append(tuple(pr7_bad_outputs))
+        pr7_hit("shared_saturation_negative_control")
+assert len(pr7_shared_context_reads) == 18
+assert len(pr7_shared_summary_reads) == 12
+assert pr7_shared_negative_reads == [(1, 0)] * 6
 pr7_periodic = pr6_sat
 assert tuple(q(pr3_causal_filter(x, pr6_even_Q, True)) for x in pr7_periodic) == (1, 1)
 pr7_hit("copy_periodic_saturation")
@@ -3055,11 +3125,24 @@ pr7_hit("ordered_pair_push")
 pr7_empty_pair = restricted_mul(empty, pr3_U0, lambda e, f: True)
 assert not pr7_empty_pair.w and q(pr7_empty_pair) == 0
 pr7_hit("copy_empty_product")
-assert old.e.keys() - old.w
+pr7_old_product = mul(old, pr3_U0)
+pr7_current_product = mul(u, pr3_U0)
+assert pr4_profile(pr7_old_product) == pr4_profile(pr7_current_product)
+assert q(pr7_old_product) == q(pr7_current_product) == 1
 pr7_hit("copy_old_archive_control")
-assert any(t < 0 for t, p, s, r in unit_at(-1).e.values())
+pr7_negative_time_copy = time_shift(unit_at(-1), 1)
+assert pr4_profile(pr7_negative_time_copy) == pr4_profile(u)
+assert q(pr7_negative_time_copy) == q(u) == 1
 pr7_hit("copy_negative_time_control")
 assert any(e not in pr6_X.a for e in pr6_X.w)
+pr7_unselected_domain = valid(replace(
+    pr6_X, w=pr6_X.a,
+    o=frozenset((a, b) for a, b in pr6_X.o if a in pr6_X.a and b in pr6_X.a)))
+pr7_full_parent_product = mul(pr6_X, pr3_U0)
+pr7_selected_parent_product = mul(pr7_unselected_domain, pr3_U0)
+assert len(pr7_full_parent_product.w) == len(pr6_X.w) * len(pr3_U0.w)
+assert len(pr7_selected_parent_product.w) == len(pr6_X.a) * len(pr3_U0.w)
+assert len(pr7_full_parent_product.w) > len(pr7_selected_parent_product.w)
 pr7_hit("copy_unselected_parent_control")
 pr7_suffix_rich = pr5_rich_step(pr7_pair_rich, ("N",))
 pr7_suffix_state = pr5_summary_step(pr5_summary(pr7_pair_rich), ("N",))
@@ -3082,7 +3165,7 @@ assert q(pr7_rich_mixed) == pr5_summary_q(pr7_state_mixed)
 pr7_hit("copy_causal_summary")
 pr7_hit("copy_causal_q")
 try:
-    temporal(unit_at(0), unit_at(0))
+    temporal(pr7_guard_x, pr7_guard_x)
 except ValueError:
     pr7_hit("copy_strict_temporal_failure")
 else:
@@ -6169,7 +6252,7 @@ E_q^{\rm dup}(B)\;:\Longleftrightarrow\;\exists\text{ 固定总项 }C\in\operato
 
 **引理 5（repo-derived）。** 设 $C$ 是定义 34 意义下的总复制项，并令 $r$ 为其输入叶数。
 
-**A（严格定义域与正规化）。** 总项的每个子项对全部输入有定义。沿输入叶到子项根的路径，旧事件时间只加固定平移 $j$。若时间复合两侧都含输入叶，取 $\Omega=A=\varnothing$，左侧仅含时刻 $L+j_{\rm 左}$ 的孤立档案事件，右侧仅含时刻 $-L+j_{\rm 右}$ 的孤立档案事件；令 $L+j_{\rm 左}\ge -L+j_{\rm 右}$ 即违反守卫。若一侧含输入、另一侧是非空固定档案，任意推早或推晚同样制造失败：$\Omega=\varnothing\ne E=\varnothing$，不能把守卫当作空真。故变量相关的时间复合在总项中被排除。
+**A（严格定义域与正规化）。** 总项的每个子项对全部输入有定义。沿输入叶到子项根的路径，旧事件时间只加固定平移 $j$。若时间复合两侧都含输入叶，取同一个 $X$：$\Omega=A=\varnothing$、$E=\{e_-,e_+\}$，$t(e_\pm)=\pm L$；这是空当前区域但 $E\ne\varnothing$。两子树各保留该同一 $X$ 的带标签副本；左侧固定一条输入叶路径包含晚事件 $e_+$（时刻 $L+j_{\rm 左}$），右侧包含早事件 $e_-$（时刻 $-L+j_{\rm 右}$）。令 $L+j_{\rm 左}\ge -L+j_{\rm 右}$ 即在合法对角输入上使守卫失败。若一侧含输入、另一侧是非空固定档案，仍取该同一双事件 $X$ 作输入并保留相应副本；额外档案只增加副本，不影响这个失败见证。故双侧含变量的时间复合与单侧非空固定档案均被排除。
 
 不含输入的闭子项先求值为固定平衡参数；剩余时间复合只能配固定空档案，按定义 4–5 精确替换为 $\boxplus$。正规化项只含 $N,F_S,F_L,F_{\downarrow Q},T_k,\boxplus,\boxtimes$ 与固定参数。把其它输入叶换成 $0_\varnothing$ 的单叶切片自动总定义；不能从对角输入上的总定义推断切片总定义。
 
@@ -6229,7 +6312,7 @@ L_B(X)=\sum_iq(C_i(X)).
 
 ### 42.5 反例 D17、D18：自乘对照与非总项切片失败
 
-**反例 D17（repo-derived，自乘子类，≤15 行）。** 对 $D_Q(X)=F_{\downarrow Q}(X\boxtimes X)$，有 $q(D_Q(nX))=n^2q(D_Q(X))$；该子类实现区域线性目标当且仅当 $B=\varnothing$。在两端无界的 $B_{\rm even}$ 上，$t=-4$ 的同属性正点复制 $n=1,2,3$ 读数为 $1,4,9$，目标为 $1,2,3$。一般有序来源的交叉项是 $\epsilon\epsilon'[m(a,a')+m(a',a)]$；仅当核对称时才为 $2\epsilon\epsilon'm$。对角子点精确属性为 $(t+1,2p,+1,\operatorname{pair}(r,r))$，其 $b^2=b$；旧档案保留两个父出现 $(0,e),(1,e)$，而新 $U_t$ 只有该单点，故保留时间不恢复原事件；同属性非对角项不能由属性隔离。另有 $X\boxplus(A(X)\boxplus N(A(X)))$ 的 $q$ 恒等于 $q(X)$，故终端线性不能逐个消灭自乘结点。$B_{d,R}$ 与 $B_{\rm drift}$ 仍由命题 64 判不可表达（前者及 $B_{\rm even}$ 两端无界；后者无下界、上界 $0$）。来源只取 $(\operatorname{leaf}(0),\operatorname{leaf}(1))$ 时，四个异来源选择读数为 $0,0,0,1$。这只否定自乘子类，不能替代命题 64 的任意项证明。
+**反例 D17（repo-derived，自乘子类，≤15 行）。** 一般先对任意 $Q$ 保留 $q(D_Q(nX))=n^2q(D_Q(X))$ 的齐次式与子类分类；数值例固定 $Q_{\rm odd}=\{a:\operatorname{time}(a)\text{ 为奇数}\}$（时间投影两端无界）。对 $D_Q(X)=F_{\downarrow Q}(X\boxtimes X)$，该子类实现区域线性目标当且仅当 $B=\varnothing$。在两端无界的 $B_{\rm even}$ 上，$t=-4$ 的同属性正点复制 $n=1,2,3$ 读数为 $1,4,9$，目标为 $1,2,3$。一般有序来源的交叉项是 $\epsilon\epsilon'[m(a,a')+m(a',a)]$；仅当核对称时才为 $2\epsilon\epsilon'm$。对角子点精确属性为 $(t+1,2p,+1,\operatorname{pair}(r,r))$，其 $b^2=b$；旧档案保留两个父出现 $(0,e),(1,e)$，而新 $U_t$ 只有该单点，故保留时间不恢复原事件；同属性非对角项不能由属性隔离。另有 $X\boxplus(A(X)\boxplus N(A(X)))$ 的 $q$ 恒等于 $q(X)$，故终端线性不能逐个消灭自乘结点。$B_{d,R}$ 与 $B_{\rm drift}$ 仍由命题 64 判不可表达（前者及 $B_{\rm even}$ 两端无界；后者无下界、上界 $0$）。来源只取 $(\operatorname{leaf}(0),\operatorname{leaf}(1))$ 时，四个异来源选择读数为 $0,0,0,1$。这只否定自乘子类，不能替代命题 64 的任意项证明。
 
 **反例 D18（repo-derived，引理 5A 的必要性）。** 令 $Q=\{(0,+1,\operatorname{leaf}(0),1)\}$、$D(X)=F_{\downarrow Q}(X\mathbin{\triangleright}T_1X)$。取 $X=U_0$，则 $q(D(nX))=2n$，而两次单出现替换 $D_1,D_2$ 的读数为 $0,1$，且 $D(0)=0$，所以 $2\ne0+1$，切片公式对非总项失败。$D$ 在含时刻 $0$ 与 $3$ 的档案输入上守卫失败，故不在命题 64 的量词域内；$Q$ 的时间投影上下界均为 $1$。
 
@@ -6237,7 +6320,7 @@ L_B(X)=\sum_iq(C_i(X)).
 
 **命题 65（repo-derived，实现类数）。** 给定命题 57 类型的 $(g,m,M)$，在历史同构 $\cong_h$ 下其实现在数满足：五条件任一失败时为 $0$；$g=0$ 且端点为 $(+\infty,-\infty)$ 时恰为 $1$ 个（空实现）；其余可实现三元组有 $\aleph_0$ 个。证明如下。命题 57 给出一个有限实现。对任意可实现非空剖面，在时刻 $m$ 追加任意多个孤立、非当前档案点；它们不改 $(g,m,M)$、摘要读数或 $q$，却改变 $|E|$，得到两两非同构实现。有限编码的有限集合全体可数，故上界为 $\aleph_0$。空当前区域而端点有限时，同样在端点档案中追加孤立点；其实现数仍为 $\aleph_0$。
 
-D10 型机制的短注：取 $E=\Omega$，$r$ 个选中正点 $a@0$（$U=\{a,b\}$）、$s$ 个选中正点 $b@1$（$U=\{b\}$），以及 $r+s$ 个孤立未选负点 $c@0$。全部历史是无零行的 $r\times s$ 二部邻接矩阵在 $S_r\times S_s$ 下的轨道；时间上下界为 $0,1$。当 $r=s=2$ 时有 $9$ 张带标号图、$4$ 个轨道；函数型子类的类数是分拆数。本注只计该子类，不把一般 $g$ 的有限骨架轨道枚举列为本批目标。
+D10 型机制的短注：取 $r,s\ge1$，$E=\Omega$，$r$ 个选中正点 $a@0$（$U=\{a,b\}$）、$s$ 个选中正点 $b@1$（$U=\{b\}$），以及 $r+s$ 个孤立未选负点 $c@0$。函数型子类指每一行恰有一个 $1$；全部历史是无零行的 $r\times s$ 二部邻接矩阵在 $S_r\times S_s$ 下的轨道。该子类的类数为 $p_{\le s}(r)$（把 $r$ 拆成至多 $s$ 个正部件）；当 $s\ge r$ 时为普通分拆数 $p(r)$。例如 $(r,s)=(3,2)$ 有 $2$ 类，$(3,3)$ 有 $3$ 类。时间上下界为 $0,1$。本注只计该子类，不把一般 $g$ 的有限骨架轨道枚举列为本批目标。
 
 ### 42.7 边界与范围收束
 
@@ -6251,7 +6334,18 @@ D10 型机制的短注：取 $E=\Omega$，$r$ 个选中正点 $a@0$（$U=\{a,b\}
 
 ### 43.1 逐节提交与范围
 
-PR7 正文提交为 `6e736baf68`，附录初稿为 `028723247c`，附录修正为 `46e226bd02` 与 `2156d58427`，首次摄入提交为 `5d3b1ab09d`。fix1 的最终 head 为 `d1f6ae5be4f1c1b4d6660a11a5b1bdee17d17e6e`。本次 fix2 通过合并提交 `6627b9d2ec5778a6d5a68f1ccc4f041f9a9422f5` 合入 `origin/dev` 的 `f15ac1a9fbba26c28132990dd7d54cd8e1f64ad5`；同尾冲突按 dev 的 §41 勘误在前、本批正文在后解决。重编号提交为 `106fc6edab`；定义 34、命题 64/65、引理 5/6、D17/D18 与增补 P 不变。本批只在唯一 Python 块末行打印之前插入 PR7 段，并在 dev 全部正文之后追加 §42、§43。
+本批产地三项按 CLAUDE.md 第 5.2 条完整披露。思考六席为：`natural-ownership = nyxid-oracle`（`company-chatgpt-pro` 池，自报 **GPT-6 Astra Pro**）；`teleology`、`parsimony`、`fidelity`、`proportional-containment`、`worth` 均为 `codex-cli`（自报 **GPT-6/Codex**）。六席并发、互不可见，均看到 caller 暴露的候选计划，故属于非盲独立修订；六席均回报 revise，独立收敛为 **6/6 revise**。meta-judge 在 caller 上下文中运行。分歧裁决为：D17 保留短对照（4:1）；D18 采纳（`fidelity` 唯一提出，`teleology` 删除反事实佐证）；命题 65 单立短命题（5:1）；41 键字面集合（6:0）。由此形成 `GoalArtifact` 修订 **R1-PR7**。
+
+抽签种子依次为：思考 `11430298646913755845`；评审 round 1 `212890107019809590`（`architecture=codex`、`quality=nyxid`、`tests=codex`）；评审 round 2 `14374724714442980988`（`architecture=nyxid`、`quality=codex`、`tests=codex`）。载体均自报 GPT-6 家族；这不构成异模型共识声明。
+
+四个实施阶段均由 `codex-cli` 单席承重，并逐项保留自查范围：初稿 `csa-pr7-impl-0910` 完成 PR7 正文、唯一 Python 块及初始附录收据；fix1 `csa-pr7-fix1-0910` 收敛复制多项式、D17/D18 与 pullback 对照并同步 stdout；fix2 `csa-pr7-fix2-0910` 合并当时的 dev 尾部、重编号 §§42–43、清理失效摄入产物并复核范围；本 fix3 `csa-pr7-fix3-0910` 逐项处置 F-1–F-6，重做共同饱和见证、同一双档案守卫输入、D17/D10 文字和 F-6 运算控制，并复跑唯一 Python 块、hunk、重复定义与 merge-tree。各阶段的承重产物和自查读数均由该单席自报；caller 亲验与席位自报分栏如下。
+
+| 证据栏 | 具体项目 |
+| --- | --- |
+| caller 亲验 | 两个纯插入 hunk；`uniq -d` 为空；差分范围；`git merge-tree --write-tree`；附录命令退出码、PR7 行 SHA-1；41 个字面键集合。 |
+| 席位自报／转述 | ingest 计数；删除与保留路径；各阶段承重和自查范围。 |
+
+round 1 评审中，`architecture`（`codex`）的 attempt-1 因载体过载 `turn.failed`，attempt-2 给出 reject；`tests`（`codex`）给出 reject；`quality`（`nyxid`）判词由 caller 另记，本 fix 即为其处置。未由 caller 核实的项目标为 **ASSUMED-UNVERIFIED**。后续评审、CI 与合入只留待后续记录，不在本节预报。
 
 ### 43.2 附录命令与 stdout
 
@@ -6264,49 +6358,25 @@ sed -n '/^```python$/,/^```$/p' docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHME
 PR7 行逐字为：
 
 ```text
-pr7_copy_expressibility: archive_parity_rule_copy=1 cancelled_square_linear=5 copy_causal_q=1 copy_causal_summary=1 copy_d15_fiber=1 copy_empty_product=1 copy_first_product_profiles=4 copy_first_product_q=4 copy_first_product_summary=1 copy_negative_time_control=1 copy_old_archive_control=1 copy_periodic_saturation=1 copy_q_only_control=1 copy_region_controls=4 copy_same_local_rows=1 copy_strict_temporal_failure=1 copy_tail_q_bytes=3 copy_unsaturated_control=1 copy_unselected_parent_control=1 cubic_control=4 d15_d10_controls=2 d17_square_vs_linear=1 d18_guard_failure=4 d18_slice_failure=1 image_d16_witness_failure=1 image_empty_endpoint_branches=6 image_empty_realizations=3 image_roundtrip_57=1 labeled_graphs_2x2=1 no_zero_row_orbits_2x2=1 orbit_cover_2x2=1 orbit_partition_2x2=1 orbits_2x2=1 ordered_pair_negation_suffix=1 ordered_pair_push=1 ordered_source_cross=1 poly_interpolation_coefficients=30 poly_profile_bytes=120 poly_q_bytes=120 pullback_encoding_copy=1 selected_pair_fiber_copy=1 selected_pair_profile_copy=1 shared_saturation_empty_factor=1 shared_saturation_endpoints=3 shared_saturation_nonempty_factor=1 shared_saturation_pairs=3 shared_saturation_without_product=1 slice_linear_coefficient=30 slice_nonzero_constant=5 successor_pair_push_copy=1 successor_size_rule_copy=1 required_pr6_keys=41 required_pr6_positive=1
+pr7_copy_expressibility: archive_parity_rule_copy=1 cancelled_square_linear=5 copy_causal_q=1 copy_causal_summary=1 copy_d15_fiber=1 copy_empty_product=1 copy_first_product_profiles=4 copy_first_product_q=4 copy_first_product_summary=1 copy_negative_time_control=1 copy_old_archive_control=1 copy_periodic_saturation=1 copy_q_only_control=1 copy_region_controls=4 copy_same_local_rows=1 copy_strict_temporal_failure=1 copy_tail_q_bytes=3 copy_unsaturated_control=1 copy_unselected_parent_control=1 cubic_control=4 d15_d10_controls=2 d17_square_vs_linear=1 d18_guard_failure=4 d18_slice_failure=1 image_d16_witness_failure=1 image_empty_endpoint_branches=6 image_empty_realizations=3 image_roundtrip_57=1 labeled_graphs_2x2=1 no_zero_row_orbits_2x2=1 orbit_cover_2x2=1 orbit_partition_2x2=1 orbits_2x2=1 ordered_pair_negation_suffix=1 ordered_pair_push=1 ordered_source_cross=1 poly_interpolation_coefficients=30 poly_profile_bytes=120 poly_q_bytes=120 pullback_encoding_copy=1 selected_pair_fiber_copy=1 selected_pair_profile_copy=1 shared_saturation_family_contexts=18 shared_saturation_negative_control=6 shared_saturation_same_pair_q=18 shared_saturation_summary_equal=12 slice_linear_coefficient=30 slice_nonzero_constant=5 successor_pair_push_copy=1 successor_size_rule_copy=1 required_pr6_keys=41 required_pr6_positive=1
 ```
 
-末行为 `ALL_FINITE_CHECKS_PASSED`。PR7 段首先用 41 个字面键构造 `REQUIRED_PR6_KEYS`，其原有包含关系与正计数两条断言逐字保留；PR7 自身的 51 个实验专名与该集合不相交，并先检查字面键集包含，再检查全部计数为正。
+末行为 `ALL_FINITE_CHECKS_PASSED`。PR7 的 41 个旧键仍由 `REQUIRED_PR6_KEYS` 字面集合检查；共同饱和旧的只查输入断言已删除，专名计数为 `shared_saturation_family_contexts=18`、`shared_saturation_same_pair_q=18`、`shared_saturation_summary_equal=12`、`shared_saturation_negative_control=6`。同一输入对在 3 个位置、2 组 `(t,t')` 和 3 个首乘情形中逐个执行上下文；负对照删除关键见证后的两侧 q 读数为 **`(1,0)`，重复 6 次**。`copy_strict_temporal_failure` 与 `d18_guard_failure` 均复用同一个 `E={e_-,e_+}`、空当前区域的双事件输入并核对守卫失败。
 
-本次修复的 repo-derived 有限核验取 6 个固定复制项：自乘、带固定时移单位的中间因子、平方消去项、三次项、嵌套筛选项与非零常数项；覆盖 $F_S,F_L,F_{\downarrow Q},N,T_k$。输入为 $U_0$ 加种子 `2026091007` 生成的 4 个随机平衡输入；对每项、每输入的 $n=0,1,2,3$，Rich 求值与 $\Gamma_t$ 线性／双线性推送多项式分别作 120 次完整剖面、120 次 q 规范字节比较。30 组读数独立作精确拉格朗日插值，并将一次系数与逐叶保留、其余换空档案的切片差和比较；其中非零常数项检查 5 次、非零三次系数检查 4 次。D18 检得 q 读数 `0,2,4,6`、两个单出现替换 `0,1`，并在档案时刻为 `0,3` 时检得守卫失败，连同 N、空筛选、零因子外壳共 4 次严格失败传播。D17 在 −4 时刻位置 0 的单位复制上，生成时间 −3 为奇数，检得自乘 `1,4,9` 对区域目标 `1,2,3`；只接受有序来源 `pair(leaf(0),leaf(1))` 的四个选择读 `0,0,0,1`。共同饱和、命题 57 实际像及 2×2 二部图 9 张／4 轨道的既有 PR7 检查仍执行。所有定向对照均为有限读数，有限读数不承担全称否定，也不替代正文全称证明。
+F-6 的三个控制均执行复制或乘积后核对运算结果：`copy_old_archive_control=1` 比较旧档案乘积与当前乘积的 profile/q；`copy_negative_time_control=1` 比较平移后的 profile/q；`copy_unselected_parent_control=1` 比较保留未选父与仅选域乘积的 profile 基数。其余 PR7 对照均在本次命令中通过；有限读数只支持这些固定实例，不承担全称否定。
 
 ### 43.3 ingest 收据
 
-章节重编号使未合入的旧摄入产物作废。按 `git diff --name-only $(git merge-base origin/dev HEAD)..HEAD -- Meta/Digestion/atoms/sha256 Meta/Digestion/backfill/contextual-spacetime-arithmetic/residual-open` 列得 54 个路径，全部不在 dev 中；提交 `517bd5c008` 删除其中 27 个 CAS 与 27 个 `residual-open` YAML。fix1 原差分中另有 27 个 CAS 与 27 个 YAML 已在 dev 且 OID 相同，全部保留。旧摄入计数只属于旧正文，不作为本次定稿的摄入读数。
+本 fix3 先合并了开工后追加的 `origin/dev=472501832bc5a90ff6d17571582217da5a196ac3`；`git merge-tree --write-tree origin/dev HEAD` 无冲突。清理摄入前按 `BASE=$(git merge-base origin/dev HEAD)` 逐路径比较：本 lane 的旧 PR7 产物只删除不在 dev 的 CAS 与 `residual-open` YAML，若 dev 已有相同 OID 则保留。删除／保留明细与计数由 caller 亲验并写入 result.json。
 
-在全部正文（含 §43.4）定稿并提交后执行：
+正文（含本节与 §43.4）最后定稿并提交后，才运行：
 
 ```sh
 BASE=$(git merge-base origin/dev HEAD) make ingest SOURCE="contextual-spacetime-arithmetic docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md"
 ```
 
-本次基线为 `f15ac1a9fbba26c28132990dd7d54cd8e1f64ad5`。最终命令的退出码、`residual_open_added`、`skipped_existing`、`coarse_fallbacks`、`open_genres`、`cas_objects_written`、`ledger_changed`，连同摄入提交及最终 HEAD，写入本轮 `csa-pr7-fix2-0910/attempt-1` 的 worker-owned `result.json` 及其 `log_ref` 日志；不在摄入后回写本文，以保持最终源字节与摄入输入一致。
+该命令的退出码、`residual_open_added`、`skipped_existing`、`coarse_fallbacks`、`open_genres`、`cas_objects_written`、`ledger_changed`、摄入提交及最终 HEAD 均只在完成运行后写入本轮 runner-owned `result.json`；摄入完成后不回写本文，保持输入源字节稳定。
 
 ### 43.4 git 读数与边界
 
-写入本次收据前的 HEAD 为 `517bd5c008`，`git merge-base origin/dev HEAD` 为 `f15ac1a9fbba26c28132990dd7d54cd8e1f64ad5`。本批定稿正文相对该 dev 的差异只有两个纯插入 hunk；命令
-
-```sh
-git diff -U0 origin/dev..HEAD -- docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md | grep '^@@'
-```
-
-输出为：
-
-```text
-@@ -2721,0 +2722,463 @@ print("pr6_expressibility_pairing: " + " ".join(f"{k}={v0}" for k, v0 in pr6_cou
-@@ -5691,0 +6155,158 @@ P2 初稿 `70463e7669a120e9fb180fadfb78bbe46ea6eaa1` 为 §§27–29，中间重
-```
-
-`grep -nE '^## 4[0-9]\.' docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md` 的读数为：
-
-```text
-6050:## 40. P2 的主数学来源、成熟框架与后续边界
-6078:## 41. P2 编号、来源与摄入归属勘误
-6156:## 42. PR7 增补 P：复制孔语言的 q 表达分类
-6248:## 43. PR7 产地与核验收据
-```
-
-`grep -oE '^\*\*(定义|命题|引理|反例) ?[0-9A-Z]+' docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md | sort | uniq -d` 的 stdout 为空。移除附录 PR7 插入段后，dev 全文字节是剩余正文的前缀；再移除尾部追加段，即逐字节还原 dev。附录插入发生在文件中间，因此原始文件不满足未经移除插入段的字节前缀关系。
-
-允许的新增路径是本卷、`Meta/Digestion/atoms/sha256`、`Meta/Digestion/backfill/contextual-spacetime-arithmetic/residual-open`；不改旧定义、导航或其它理论正文。未完成项为：评审三席判词、CI 与合入仍由 caller 的后续流程负责，本实施席不预报其结果。
+最终以 `BASE=$(git merge-base origin/dev HEAD)` 为比较基线。caller 亲验并在 result.json 记录：理论卷相对 BASE 恰两个纯插入 hunk（唯一 Python 块中间插入区与文档尾部追加区）；`git diff --name-only BASE..HEAD` 只含本卷、允许的 atoms 与 backfill；重复定义检查 `uniq -d` 为空；`git merge-tree --write-tree origin/dev HEAD` 无冲突；附录命令退出码为 0，PR7 行逐字节 SHA-1 与 §43.2 相同。移除两个新增区后，BASE 的全文逐字节恢复；本节不把未经验证的 CI、后续评审或合入写成结论。
