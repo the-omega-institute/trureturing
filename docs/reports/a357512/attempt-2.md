@@ -32,3 +32,26 @@ refuting A, or a concrete failed Lean goal and sharper remaining subclaim.
 No proof of A, new finite-case progress, counterexample, freeze, coverage, PR,
 CI success, or novelty is claimed at this checkpoint. No theory volume or atom
 will be created. Unopened external pages are `ASSUMED-UNVERIFIED`.
+
+## Fresh external and numerical checks
+
+GitHub REST code searches `A357512 language:Lean`,
+`"reducedSum" "choose" language:Lean`, and
+`"Apéry" "congruence" language:Lean` each return zero results with
+`incomplete_results=false`. Each response has 55 bytes and SHA-256
+`4af480b8ee5b87b369a76c49bd22c9a783908272ebffbe97898f8ab0f0772a5f`.
+The preceding attempt's read arXiv papers remain bounded negative evidence;
+their recorded statements do not cover A. No new external Lean hit was found.
+
+`https://oeis.org/search?q=id:A357512&fmt=json`: HTTP 200, 2499 bytes,
+SHA-256 `6a642473a60423ea755db62d0b7a702f3024bcedaaa5345e94de4ab04dbbcbba`.
+Python integer arithmetic again matches all 17 DATA entries. In odd
+`3 ≤ n ≤ 139`, all 46 nonmultiples of 3 pass and all 23 multiples fail.
+The six composites 25, 35, 49, 55, 65, 77 pass. These are semantic probes,
+not a proof or finite-case progress. The first Python fetch/probe command
+failed before DATA comparison because its OEIS fetch produced no file;
+curl returned the above HTTP 200 response and the comparison was then run.
+
+`make lean-cache-ensure`: EXIT=0, status `present`, method `none`, project and
+Mathlib `warm`, missing Mathlib oleans 0, stamp miss `null`, pin SHA-256
+`6c4c682ffba051b5744fe7a75ccc99d7f3b20227b3b026f392f3315be0adaa4e`.
