@@ -131,3 +131,11 @@ The complete sum then vanishes by the square/cube sum formulas and cancellation
 of 12. Harmonic corrections are unnecessary at this precision because `b`
 already has a factor `p`. This replaces the provisional harmonic-cancellation
 part of the initial plan; the numerical and literature conclusions remain valid.
+
+Additional prerequisite search found and fully read the public surface of
+`DedekindReciprocityFiniteSums`: its `sum_Ico_cast_sq` applies to every natural
+bound, and will be reused by casting its denominator-cleared rational identity
+through the integers. Mathlib's `sum_range_pow` supplies the cube sum. The
+private `six_mul_sum_sq` in A373561 is unavailable as a public dependency.
+First Lean attempt exposed an unnecessary rewrite after `dsimp` had already
+normalized `p+(k+1)-1` to `p+k`; removing that rewrite preserves the statement.
