@@ -108,3 +108,84 @@ lemma power_diagonal_zero (F : PowerSeries F2) (n t : ℕ) (hn : 0 < n) :
     · subst n
       rw [show 2*(2*m+1)*t = ((2*m+1)*t)*2 by ring, pow_mul, square_odd]
 ```
+
+## Unit coefficient multiplier
+
+The following continuation passed Lean (EXIT=0; `normalized_change` has only
+standard axioms). It shows the exact residual depends on the new coefficient
+with multiplier one over every commutative ring. Construction and parity
+identification are not yet asserted.
+
+```lean
+def Agree (n : ℕ) (F G : PowerSeries R) : Prop := ∀ k < n, coeff k F = coeff k G
+lemma agree_iff (n : ℕ) (F G : PowerSeries R) :
+    Agree n F G ↔ (X : PowerSeries R)^n ∣ F-G := by
+  simp [Agree, X_pow_dvd_iff, map_sub, sub_eq_zero]
+lemma agree_pow {n : ℕ} {F G : PowerSeries R} (h : Agree n F G) (e : ℕ) :
+    Agree n (F^e) (G^e) :=
+  (agree_iff _ _ _).mpr (((agree_iff _ _ _).mp h).trans (sub_dvd_pow_sub_pow F G e))
+lemma agree_mul {n : ℕ} {F G : PowerSeries R} (h : Agree n F G) (H : PowerSeries R) :
+    Agree n (F*H) (G*H) := by
+  apply (agree_iff _ _ _).mpr
+  rw [← sub_mul]
+  exact dvd_mul_of_dvd_left ((agree_iff _ _ _).mp h) H
+lemma leading_mul {n : ℕ} {U : PowerSeries R} (h : X^n ∣ U) (V : PowerSeries R) :
+    coeff n (U*V) = coeff n U * constantCoeff V := by
+  obtain ⟨W,rfl⟩ := h
+  have hc (T : PowerSeries R) : coeff n (X^n*T) = constantCoeff T := by
+    simpa only [zero_add, coeff_zero_eq_constantCoeff] using coeff_X_pow_mul T n 0
+  rw [mul_assoc, hc, hc, map_mul]
+lemma pow_change {n : ℕ} {F G : PowerSeries R}
+    (hF : constantCoeff F = 1) (hG : constantCoeff G = 1) (h : Agree n F G) (e : ℕ) :
+    coeff n (F^e) - coeff n (G^e) = (e : R)*(coeff n F - coeff n G) := by
+  induction e with
+  | zero => simp
+  | succ e ih =>
+    have he : F^(e+1)-G^(e+1) = (F^e-G^e)*F + (F-G)*G^e := by ring
+    rw [← map_sub, he, map_add, leading_mul ((agree_iff _ _ _).mp (agree_pow h e)),
+      leading_mul ((agree_iff _ _ _).mp h)]
+    simp only [map_sub, map_pow, hF, hG, one_pow, mul_one, ih, Nat.cast_add, Nat.cast_one]
+    ring
+lemma row_change {n : ℕ} {F G : PowerSeries R}
+    (hF : constantCoeff F = 1) (hG : constantCoeff G = 1) (h : Agree n F G) :
+    row F n - row G n = (((n+1)^2 : ℕ) : R)*(coeff n F-coeff n G) := by
+  dsimp [row]
+  rw [← map_sub, ← sub_mul, leading_mul ((agree_iff _ _ _).mp (agree_pow h _))]
+  simp only [geom, constantCoeff_mk, pow_zero, mul_one, map_sub]
+  exact pow_change hF hG h _
+lemma derivRow_change {n : ℕ} {F G : PowerSeries R} (hn : 0 < n)
+    (hF : constantCoeff F = 1) (hG : constantCoeff G = 1) (h : Agree n F G) :
+    derivRow F n - derivRow G n = (n : R)*(coeff n F-coeff n G) := by
+  let e := (n+1)^2
+  let g : PowerSeries R := geom e
+  have hp := agree_mul (agree_pow h e) (g^2)
+  have hl := agree_mul (agree_pow h (e-1)) g
+  have hd : X^(n-1) ∣ derivative R F - derivative R G := by
+    apply X_pow_dvd_iff.mpr
+    intro k hk
+    rw [map_sub, coeff_derivative, coeff_derivative, h (k+1) (by omega), sub_self]
+  have hz : coeff (n-1) ((F^(e-1)*g-G^(e-1)*g)*derivative R F) = 0 := by
+    have hdiv := dvd_mul_of_dvd_left ((agree_iff _ _ _).mp hl) (derivative R F)
+    exact X_pow_dvd_iff.mp hdiv _ (by omega)
+  have he : F^(e-1)*derivative R F*g - G^(e-1)*derivative R G*g =
+      (F^(e-1)*g-G^(e-1)*g)*derivative R F +
+      (derivative R F-derivative R G)*(G^(e-1)*g) := by ring
+  change coeff (n-1) (F^(e-1)*derivative R F*g+F^e*g^2) -
+    coeff (n-1) (G^(e-1)*derivative R G*g+G^e*g^2) = _
+  rw [map_add, map_add, hp (n-1) (by omega)]
+  rw [add_sub_add_right_eq_sub, ← map_sub, he, map_add, hz, zero_add, leading_mul hd]
+  have hncast : ((n-1 : ℕ) : R)+1 = n := by
+    simpa only [Nat.cast_add, Nat.cast_one] using
+      congrArg (fun k : ℕ => (k : R)) (Nat.sub_add_cancel hn)
+  simp only [map_sub, coeff_derivative, Nat.sub_add_cancel hn, hncast, map_mul,
+    map_pow, hG, one_pow, g, geom, constantCoeff_mk, pow_zero, one_mul, mul_one]
+  ring
+lemma normalized_change {n : ℕ} {F G : PowerSeries R} (hn : 0 < n)
+    (hF : constantCoeff F = 1) (hG : constantCoeff G = 1) (h : Agree n F G) :
+    normalized F n-normalized G n = coeff n F-coeff n G := by
+  have hr := row_change hF hG h
+  have ht := derivRow_change hn hF hG h
+  simp only [Nat.cast_pow, Nat.cast_add, Nat.cast_one] at hr
+  dsimp [normalized]
+  linear_combination hr-(n+2 : R)*ht
+```
