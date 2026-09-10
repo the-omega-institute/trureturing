@@ -225,3 +225,22 @@ The state is frozen and uncovered; source_id and atom_id are not applicable.
 `make -C tools capacity-audit` EXIT=0, 4.35 s, reason=clean.
 No sorry, axiom declaration or native_decide occurs in the module.
 PR creation and CI observation are the remaining delivery steps.
+
+## Evidence renderer
+
+The required existing shapes.sh renderer first failed under the host's Python
+3.9.6 because facts.py uses the Python 3.10 union-annotation syntax. Running
+the unchanged tool with `uv run --no-project --python 3.12` succeeded. It printed
+the six-public-declaration table, and proof-edges again reported EDGES_OK
+edges=81 kernel_nonauxiliary_constants=6. The table is included in the PR
+body, with separate semantic assessments; no replacement tool was written.
+
+## Final local admission
+
+The candidate CLI `check --candidate-lean-report ... --protected-base
+0011b3f0dfdd9eb32b753d122219f0749927922a` returned EXIT=3 in 80.70 s.
+Its sole protected change is the new Blueprint .scribe.cs (SL-022); content
+checks passed, with no content rejection. This is the documented protected-
+surface annotation path, not EXIT=0: CLAUDE.md section 7.5 and the local/CI
+wrappers explicitly accept rc=3 as content passed. No rule or gate was edited.
+The Lean build, selftest and local Scribe checks described above are complete.
