@@ -282,10 +282,9 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
             ("dev_check_failed", "push", "refs/heads/dev", "true", "false", False),
             ("dev_check_missing", "push", "refs/heads/dev", "true", None, False),
             ("other_branch", "push", "refs/heads/topic", "true", "true", False),
-            ("other_integration", "push", "refs/heads/integration-ci-other-tests", "true", "true", False),
+            ("other_integration", "push", "refs/heads/integration-ci-other-tests", "true", "true", True),
         ]
-        # Integration-only rollout data: exclude this block from dev delivery.
-        integration = "integration-ci-current-stability-0909-tests"
+        integration = "integration-ci-example-tests"
         cases += [
             ("integration_push", "push", f"refs/heads/{integration}", "true", "true", True),
             ("integration_pr_target", "pull_request_target", f"refs/heads/{integration}", "true", "true", False),
@@ -294,10 +293,11 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
             ("integration_writes_false", "push", f"refs/heads/{integration}", "false", "true", False),
             ("integration_check_failed", "push", f"refs/heads/{integration}", "true", "false", False),
             ("integration_check_missing", "push", f"refs/heads/{integration}", "true", None, False),
-            ("integration_suffix", "push", f"refs/heads/{integration}-other", "true", "true", False),
+            ("integration_suffix", "push", f"refs/heads/{integration}-other", "true", "true", True),
+            ("integration_nested", "push", "refs/heads/integration-ci/topic", "true", "true", True),
+            ("integration_lookalike", "push", "refs/heads/integrationci-topic", "true", "true", False),
             ("integration_tag", "push", f"refs/tags/{integration}", "true", "true", False),
         ]
-        # End integration-only rollout data.
         for name, event, ref, writes, success, allowed in cases:
             with self.subTest(case=name):
                 cache = self.root / "build/lean-cache"
