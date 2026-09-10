@@ -25,7 +25,17 @@
 
 ① 本仓 D5：rg A396808/a396808/coeff_pow_eq_strict_trunc_add/source_unique；精确序列仅命中 ArtinSchreierTracePowersOfTwo。完整读其公开面：prefixPolynomial_eq_sum、source_equation、normalized_solution_unique 可复用；F₂ 定理不能参数实例化成 F₃。严格前缀与唯一性 helper 是 private，按 brief 与第 3.1 条④本地证明。
 
-② 钉版 mathlib 与③第三方检索正在进行，未宣称 search-complete。
+② 钉版 mathlib v4.33.0，rev db584cd6d46c92f209a44c0f1c829460d327499d：rg Lagrange inversion / coeff_pow / trunc / frobenius；未见源方程唯一性或本题精确支持。命中 PowerSeries.trunc_trunc_pow、MvPowerSeries.map_frobenius_expand、PowerSeries.coeff_expand_mul 等，直接用于本地证明。
+
+③ 实测外部搜索：Loogle JSON 查询 `"A396808"` 返回 0；`"coeff_pow"` 返回 25，其中 PowerSeries 的三项均非本题或严格前缀桥；`"Lagrange"` 返回 76，模块仅插值与 Taylor，无反演。`gh search code A396808 --language Lean --limit 20 --json repository,path` 返回 []。未认证 GitHub REST code search 返回 401，不把该请求作为阴性证据。Leansearch 首页可达，但未执行其语义搜索，不计入搜索结果。上述有界范围未命中，按④本地证明。
+
+文献：亲自完整提取并读完 A038464、A396838、A396839 internal 的全部字段；未见模 3 猜想的证明。arXiv API `all:A396808` 和 `all:Hanna AND (all:congruence OR all:"power series")` 均 HTTP 200、totalResults=0。仅在这些明确范围裁 open，不主张全网没有证明。
+
+反演方向校正：记 A 为 A396808、B 为 A396838。A396808 的公式 (4) 声称 A=B(xA)，但二次项给 5≠3；A396838 的公式 (2) 正确方向为 B=A(xB)、A=B(x/A)。这个页面冲突不涉及本题源方程或已核验的数值读数。后续不以任何未经证明的反演联系承重。A396839 的自卷积链接亦未作为形式定理使用。
+
+## 候选源方程的具体推导计划
+
+原预登记见证仍为 R 的约化源方程；以下细化其构造（尚未证明）：S=1+xS³ 可推出 R=S⁻² 与 R³=R²+xR+x²。取 t(y)=Σ y^(3^k)，t³=t−y，则 R(y²)=1+t²+t⁴。另两根为 (t²+t)²、(t²−t)²，常数项为零且阶至少 2。三根幂和满足三阶多项式递推，次数界为 floor(2m/3)。在 floor(2m/3)<n<m 的带内据此消去 R^m 的系数，再处理 n=2,3,4 的边界。这是原见证的活路径计划，不假定候选源方程。
 
 ## 构建记录
 
