@@ -155,3 +155,13 @@ Before PR creation, fetched dev at a9bccb706adebc97f90d8663dd4df55601c6ed04:
 its D5 A397591 search has no hits, and merge-tree against this branch exits 0
 with merge tree c1e8f40f207b2820dc0add144793f2bdd3687e8a. No overlapping
 implementation or merge conflict was found in this snapshot.
+
+Final `make emit` exited 0 (zero changed Blueprint files after source formatting).
+The final source-bound invocation of
+`bash tools/scripts/workflow/scribe-content-checks.sh .lake/build/stratalint/raw-lean-report.json "" 588fe7fd3d5ebd6044a92be4bff1114968ade78b`
+exited 0. Describe checks passed and KaTeX reports
+`markdown: judged=1 formula(s)=6 red=0`. The script's projection branch was not
+triggered by this content-only delta, so the canonical Scribe
+`projections --check --report` command was also run explicitly and exited 0.
+All three requested Scribe verification components have now passed on the final
+source-bound report. The no-atom deposit command follows these checks.
