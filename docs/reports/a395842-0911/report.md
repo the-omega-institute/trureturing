@@ -46,7 +46,9 @@ it does not authorize claiming that an unmerged PR has landed on dev.
 
 The full parity theorem, all local repository gates and all three Scribe checks
 pass. The module is frozen by deposit-uncovered, with no atom or coverage edge.
-The PR is the remaining submission step; no merge into dev is claimed.
+PR https://github.com/the-omega-institute/trureturing/pull/6777 is open.
+This satisfies the task brief's implementation outcome 成 (proof plus opened PR);
+required CI is still pending at this report checkpoint. No merge into dev is claimed.
 
 Historical proof checkpoints (their pending statements refer to that checkpoint):
 
@@ -302,3 +304,19 @@ Module statement_id:
 Freeze event_hash:
 `sha256:9ca72a064b8d1500986b46dd2e908dc81b5cadd9fe91f27ab68001ea7036d448`.
 The event and state pin are generated canonical artifacts, not hand-written.
+
+## PR submission
+
+`make pr-open HEAD=lane/math/a395842 MESSAGE=<attempt>/pr-message.txt`
+successfully created PR #6777 targeting dev:
+https://github.com/the-omega-institute/trureturing/pull/6777.
+Auto-merge was not requested. The canonical PR watcher is running for the three
+required checks. Its eventual terminal receipt is retained in the runner-owned
+attempt directory as pr-open-result.json and pr-open.log; the completion envelope
+records the final observed PR and CI status.
+
+The task brief defines 成 by the kernel proof, successful make lean and opened PR.
+This report uses that task-specific outcome and does not override the repository's
+distinct requirement that only MERGED counts as landed on dev.
+The final canonical module audit contains 109 declarations, all with axiom sets
+contained in propext, Classical.choice, Quot.sound. `git diff --check` passed.
