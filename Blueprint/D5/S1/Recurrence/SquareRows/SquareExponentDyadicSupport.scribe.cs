@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Recurrence.SquareRows;
 
@@ -54,6 +56,57 @@ internal sealed class SquareExponentDyadicSupportDocument : IScribeDocumentDefin
     private static DocumentBlock Node(string name, string title, string prose,
         DescribeRole role = DescribeRole.Theorem) =>
         Describe.Lean(DescribeId.Create("a397902-" + name.Replace('_', '-').ToLowerInvariant()),
-            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromLean(),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Statement(name)),
             AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula Call(string name, params Formula[] arguments) =>
+        new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. arguments]);
+    private static Formula Par(Formula value) => Seq(Open, value, Close);
+    private static Formula Equal(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
+    private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
+    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
+    private static Formula Pow(Formula a, Formula b) => new Formula.Power(a, b);
+    private static Formula NatType() => Seq(Mathbb, Grp(F.Id("N")));
+    private static Formula SeriesType() => Call("PowerSeries", Seq(Mathbb, Grp(F.Id("Z"))));
+    private static Formula Bound(string name, Formula type) => Seq(Forall, Sp, F.Id(name), Colon, Sp, type, Comma, Sp);
+    private static Formula Def(Formula a) => Call("DefiningEquation", a);
+    private static Formula Coeff(Formula n, Formula a) => Call("coeff", n, a);
+
+    private static Formula Definition()
+    {
+        var a = F.Id("A");
+        var m = F.Id("m");
+        var exponent = Pow(m, D(2));
+        var denominator = Sub(D(1), Mul(exponent, F.Id("X")));
+        var inverse = Call("invOfUnit", denominator, D(1));
+        var row = Equal(Coeff(Sub(m, D(1)), Mul(Pow(Par(Sub(D(1), a)), exponent), inverse)), D(0));
+        var rows = Seq(Bound("m", NatType()), D(1), Sp, Lt, Sp, m, Sp, Implies, Sp, row);
+        return Seq(Bound("A", SeriesType()), Def(a), Sp, Iff, Sp,
+            Par(Seq(Equal(Call("constantCoeff", a), D(0)), Sp, Land, Sp, Par(rows))));
+    }
+
+    private static Formula Conjecture()
+    {
+        var n = F.Id("n");
+        var k = F.Id("k");
+        var power = Pow(D(2), k);
+        var support = Seq(Exists, Sp, k, Colon, Sp, NatType(), Comma, Sp,
+            D(1), Sp, Lt, Sp, k, Sp, Land, Sp,
+            Par(Seq(Equal(n, power), Sp, Lor, Sp, Equal(n, Sub(power, D(1))),
+                Sp, Lor, Sp, Equal(n, Sub(power, D(2))), Sp, Lor, Sp, Equal(n, Sub(power, D(3))))));
+        return Seq(Bound("A", SeriesType()), Def(F.Id("A")), Sp, Implies, Sp,
+            Bound("n", NatType()), D(2), Sp, Lt, Sp, n, Sp, Implies, Sp,
+            Par(Seq(Call("Odd", Coeff(n, F.Id("A"))), Sp, Iff, Sp, Par(support))));
+    }
+
+    private static Formula Statement(string name) => Disp(name switch
+    {
+        "generatingSeries" => Equal(Call("generatingSeries"), Sub(D(1), Call("solution"))),
+        "DefiningEquation" => Definition(),
+        "generating_equation" => Def(Call("generatingSeries")),
+        "integer_exists_unique" => Seq(Exists, Bang, Sp, F.Id("A"), Colon, Sp, SeriesType(), Comma, Sp, Def(F.Id("A"))),
+        "a" => Seq(Bound("n", NatType()), Equal(Call("a", F.Id("n")), Coeff(F.Id("n"), Call("generatingSeries")))),
+        "hanna_conjecture" => Conjecture(),
+        _ => throw new System.ArgumentOutOfRangeException(nameof(name))
+    });
 }

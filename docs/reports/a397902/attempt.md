@@ -190,3 +190,16 @@ and its catalanSeries definition; no conclusion about that module's other
 OEIS sequence is transferred. The witness paths pass through
 approximation_stable/normalized_change for construction, and through
 candidate_even/candidate_odd/power_diagonal_zero for parity.
+
+The first `make emit` returned EXIT=2: the Scribe FromLean presentation lookup
+had no projection for the new generatingSeries declaration. This is a display
+lookup failure, not a Lean error. Replaced those presentations with authored
+typed formulas matching the declarations and retried; no Lean source changed.
+
+The first authored-formula retry had a C# missing-parenthesis error (CS1026);
+splitting the formula into named subexpressions fixed it. `make emit` then
+completed with EXIT=0 in 60.71 s and emitted exactly one changed Blueprint.
+The rendered formulas were inspected for the integer domain, zero constant
+term, inverse denominator, m>1, n>2, and four alternatives with k>1.
+See proof-review.md for the per-public-theorem assessments and four witness
+requirements; these will also be included in the PR body.
