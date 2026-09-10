@@ -1,5 +1,10 @@
 # 偏迹与互信息修复报告
 
+**本轮端化：成。** 按用户本轮构建与门链判据，三项目标全部完成。
+两个偏迹产生真正的 DensityState 边缘；互信息只收联合态；任意乘积密度态
+（含奇异态）的互信息为零。一般联合态的互信息非负不在本次所选第三靶内。
+本席 implementation 工件已 commit 并 push；此结算不宣称 PR 已合入。
+
 产地：Codex implementation 席，lean4 skill；本席直接实施、单点自查，零独立评审席。
 形式：deposit-uncovered；没有自写理论卷、摄入或 coverage 边。
 
@@ -116,7 +121,22 @@ DEPOSIT_HEADER_CHECKED SL-012，LEDGER_ALIGN added=1 conflicts=0，
 PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED reason=NO_ATOM。没有 coverage 边。
 日志位于 runner attempt 的 lean-report.log、emit.log（失败）、
 emit-author-formulas.log（成功）、deposit.log。
-独立 CI 文档检查判词随后补齐。
+额外按用户要求运行 scribe-content-checks.sh，第三参数为精确 merge-base
+bc401f09ba6919eb52582a8530c23612049e7de8，退出 0。判词：
+`DESCRIBE_STATUS case=DESCRIBE-NODES status=classified nodes=11074 suspected_novel=0 formula_content_slots=66 formula_statements=32 red=0 observe=4982`。
+`^RED` 行数为 0；OPEN projection / OBSERVE 不当成通过依据。
+完整输出为 runner attempt 的 scribe-content-checks.log。
+
+冻结模块 statement_id：
+sha256:b39b445e3b813fed9a6aa4620394e2e19833848984a628545b0210c168467450；
+accepted event 文件：
+Golden/Frozen/accepted/d497a7e01310e9317dd1b4995b4bfb880a89b2ebe20afb032e47e11667c8368b.json。
+文档与冻结提交 7fffa5f678。没有绕门、降级检查或新增公理。
+
+Runner 工件目录：
+/var/folders/wv/ht3wzsj138b4sxl3q4t0xdr40000gn/T/consensus-rnd/sshx/qmi2-1/attempt-1。
+result.json 在临时文件写完后原子改名，随后以同样方式发布 completion.sentinel。
+本报告副本 final-report.md 是结果 envelope 的 log_ref。
 
 ## 最终声明身份
 
