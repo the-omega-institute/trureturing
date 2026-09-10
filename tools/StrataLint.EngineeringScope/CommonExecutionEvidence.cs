@@ -15,6 +15,7 @@ internal static class CommonExecutionEvidence
 {
     internal const string RootPath = "build/ci";
     internal const string TestsPath = RootPath + "/tests.json";
+    internal const string BuildPath = RootPath + "/build.json";
     internal const string EngineeringPath = RootPath + "/engineering.json";
     internal const string CurrentPath = RootPath + "/current.json";
     internal const string ReportPath = ".lake/build/stratalint/raw-lean-report.json";
@@ -23,7 +24,8 @@ internal static class CommonExecutionEvidence
     internal const string CliPath = "tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll";
     internal const string RunnerPath = "tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll";
     internal const string ScribePath = "tools/StrataLint.Scribe.Documents/bin/Release/net10.0/StrataLint.Scribe.Documents.dll";
-    internal static readonly string[] EngineeringSteps = ["restore-StrataLint", "restore-CompileFailProof", "restore-BannedApiCompileFailProof", "build", "tests", "selftest-first", "selftest-second", "capability-proof", "banned-api-proof"];
+    internal static readonly string[] BuildSteps = ["restore-StrataLint", "build"];
+    internal static readonly string[] EngineeringSteps = ["restore-CompileFailProof", "restore-BannedApiCompileFailProof", "tests", "selftest-first", "selftest-second", "capability-proof", "banned-api-proof"];
     internal static readonly string[] CurrentSteps = ["lean-report", "scribe", "filemap", "check-current"];
     private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true, PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower, UnmappedMemberHandling = System.Text.Json.Serialization.JsonUnmappedMemberHandling.Disallow };
 
@@ -80,56 +82,113 @@ internal static class CommonExecutionEvidence
     internal static ExecutionMaterial[] Materials(string root, IEnumerable<string> paths) =>
         paths.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).Select(path => new ExecutionMaterial(path, Hash(Path.Combine(root, path)))).ToArray();
 
-    internal static void SealEngineering(string root, string candidate, IEnumerable<string> binaries, StageStep[] steps)
+    internal static CommonStageRecord SealBuild(string root, string candidate, IEnumerable<string> binaries, StageStep[] steps)
     {
-        RequirePassed(steps, EngineeringSteps);
+        RequirePassed(steps, BuildSteps);
         var products = binaries.Concat(CommonCompileMetadata.Export(root, Snapshot(root))).ToArray();
-        // All producers, including metadata export, precede this final source boundary.
-        var finalCandidate = Candidate(root, out var snapshot);
-        if (candidate != finalCandidate) throw new InvalidDataException("candidate changed during engineering");
-        var tests = ValidateTests(root, Read<TestExecutionRecord>(root, TestsPath), finalCandidate, snapshot);
-        Write(root, EngineeringPath, new CommonStageRecord(1, tests.Candidate, tests.Round, steps,
-            Materials(root, products.Concat([TestsPath]).Concat(steps.Select(step => step.Log)))));
-        WriteBundleList(root, products);
+        if (candidate != Candidate(root)) throw new InvalidDataException("candidate changed during build");
+        var record = new CommonStageRecord(1, candidate, Guid.NewGuid().ToString("N"), steps,
+            Materials(root, products.Concat(steps.Select(step => step.Log))));
+        Write(root, BuildPath, record);
+        WriteBundleList(root, "build", record.Materials.Select(material => material.Path).Append(BuildPath));
+        return record;
     }
 
-    internal static CommonStageRecord ValidateEngineering(string root) => ValidateEngineering(root, ValidateTests(root));
+    internal static CommonStageRecord ValidateBuild(string root, string? round = null) =>
+        ValidateBuild(root, Candidate(root), round);
 
-    private static CommonStageRecord ValidateEngineering(string root, TestExecutionRecord tests)
+    private static CommonStageRecord ValidateBuild(string root, string candidate, string? round)
     {
-        var record = Read<CommonStageRecord>(root, EngineeringPath);
-        ValidateRecord(root, record, tests.Candidate, tests.Round);
-        RequirePassed(record.Steps, EngineeringSteps);
-        if (!record.Materials.Any(material => material.Path == TestsPath)) throw new InvalidDataException("engineering has no bound test evidence");
+        var record = Read<CommonStageRecord>(root, BuildPath);
+        if (string.IsNullOrWhiteSpace(record.Round)) throw new InvalidDataException("missing build round");
+        ValidateRecord(root, record, candidate, round ?? record.Round);
+        RequirePassed(record.Steps, BuildSteps);
         _ = CommonCompileMetadata.Load(root, record.Materials);
         return record;
     }
 
-    internal static void SealCurrent(string root, StageStep[] steps)
+    private static void ValidateStartedBuild(string root, CommonStageRecord started, string candidate)
     {
-        var engineering = ValidateEngineering(root);
-        RequirePassed(steps, CurrentSteps);
-        _ = RawLeanReportArtifact.ReadFile(Path.Combine(root, ReportPath), Snapshot(root), validateMaterials: true);
-        Write(root, CurrentPath, new CommonStageRecord(1, engineering.Candidate, engineering.Round, steps,
-            Materials(root, ReportPaths.Append(EngineeringPath).Concat(steps.Select(step => step.Log)))));
-        var logs = Path.Combine(root, ReportPath + ".logs");
-        WriteBundleList(root, engineering.Materials.Select(material => material.Path).Concat(ReportPaths)
-            .Concat(Directory.Exists(logs) ? [ReportPath + ".logs"] : []));
+        var completed = ValidateBuild(root, candidate, started.Round);
+        if (started.Candidate != candidate || !completed.Steps.SequenceEqual(started.Steps) || !completed.Materials.SequenceEqual(started.Materials))
+            throw new InvalidDataException("build receipt changed during branch execution");
     }
 
-    internal static (CommonStageRecord Current, CommonStageRecord Engineering) ValidateCurrent(
-        string root, IEnumerable<string>? baseProjects = null)
+    internal static void SealEngineering(string root, CommonStageRecord build, StageStep[] steps)
     {
-        var tests = ValidateTests(root, baseProjects);
-        var engineering = ValidateEngineering(root, tests);
+        RequirePassed(steps, EngineeringSteps);
+        var candidate = Candidate(root, out var snapshot);
+        ValidateStartedBuild(root, build, candidate);
+        var tests = ValidateTests(root, Read<TestExecutionRecord>(root, TestsPath), candidate, snapshot);
+        if (tests.Round != build.Round) throw new InvalidDataException("tests belong to a different build round");
+        var record = new CommonStageRecord(1, candidate, build.Round, steps,
+            Materials(root, new[] { BuildPath, TestsPath }.Concat(tests.Materials.Select(material => material.Path))
+                .Concat(steps.Select(step => step.Log))));
+        Write(root, EngineeringPath, record);
+        // The consumer already has the shared build (directly, or in current's
+        // standalone release bundle). Engineering transports only its own work.
+        WriteBundleList(root, "engineering", record.Materials.Select(material => material.Path)
+            .Where(path => path != BuildPath).Append(EngineeringPath));
+    }
+
+    internal static CommonStageRecord ValidateEngineering(string root)
+    {
+        var candidate = Candidate(root, out var snapshot);
+        return ValidateEngineering(root, ValidateBuild(root, candidate, null), snapshot);
+    }
+
+    private static CommonStageRecord ValidateEngineering(string root, CommonStageRecord build,
+        RepositorySnapshot snapshot, IEnumerable<string>? baseProjects = null)
+    {
+        var tests = ValidateTests(root, Read<TestExecutionRecord>(root, TestsPath), build.Candidate, snapshot, baseProjects);
+        if (tests.Round != build.Round) throw new InvalidDataException("tests belong to a different build round");
+        var record = Read<CommonStageRecord>(root, EngineeringPath);
+        ValidateRecord(root, record, build.Candidate, build.Round);
+        RequirePassed(record.Steps, EngineeringSteps);
+        if (!record.Materials.Any(material => material.Path == TestsPath)
+            || !record.Materials.Any(material => material.Path == BuildPath))
+            throw new InvalidDataException("engineering has no bound test or build evidence");
+        return record;
+    }
+
+    internal static void SealCurrent(string root, CommonStageRecord build, StageStep[] steps)
+    {
+        var candidate = Candidate(root, out var snapshot);
+        ValidateStartedBuild(root, build, candidate);
+        RequirePassed(steps, CurrentSteps);
+        _ = RawLeanReportArtifact.ReadFile(Path.Combine(root, ReportPath), snapshot, validateMaterials: true);
+        var record = new CommonStageRecord(1, build.Candidate, build.Round, steps,
+            Materials(root, ReportPaths.Append(BuildPath).Concat(steps.Select(step => step.Log))));
+        Write(root, CurrentPath, record);
+        WriteBundleList(root, "current", build.Materials.Concat(record.Materials)
+            .Select(material => material.Path).Append(CurrentPath));
+    }
+
+    internal static CommonStageRecord ValidateCurrent(string root)
+    {
+        var candidate = Candidate(root, out var snapshot);
+        return ValidateCurrent(root, ValidateBuild(root, candidate, null), snapshot);
+    }
+
+    private static CommonStageRecord ValidateCurrent(string root, CommonStageRecord build, RepositorySnapshot snapshot)
+    {
         var record = Read<CommonStageRecord>(root, CurrentPath);
-        ValidateRecord(root, record, engineering.Candidate, engineering.Round);
+        ValidateRecord(root, record, build.Candidate, build.Round);
         RequirePassed(record.Steps, CurrentSteps);
         if (ReportPaths.Any(path => !record.Materials.Any(material => material.Path == path))
-            || !record.Materials.Any(material => material.Path == EngineeringPath))
-            throw new InvalidDataException("current has no bound report or engineering evidence");
-        _ = RawLeanReportArtifact.ReadFile(Path.Combine(root, ReportPath), Snapshot(root), validateMaterials: true);
-        return (record, engineering);
+            || !record.Materials.Any(material => material.Path == BuildPath))
+            throw new InvalidDataException("current has no bound report or build evidence");
+        _ = RawLeanReportArtifact.ReadFile(Path.Combine(root, ReportPath), snapshot, validateMaterials: true);
+        return record;
+    }
+
+    internal static (CommonStageRecord Current, CommonStageRecord Engineering, CommonStageRecord Build) ValidateCommon(
+        string root, IEnumerable<string>? baseProjects = null)
+    {
+        var candidate = Candidate(root, out var snapshot);
+        var build = ValidateBuild(root, candidate, null);
+        var engineering = ValidateEngineering(root, build, snapshot, baseProjects);
+        return (ValidateCurrent(root, build, snapshot), engineering, build);
     }
 
     private static void ValidateRecord(string root, CommonStageRecord record, string candidate, string round)
@@ -142,15 +201,23 @@ internal static class CommonExecutionEvidence
 
     private static void RequirePassed(IEnumerable<StageStep> steps, string[]? required = null)
     {
-        if (steps.Any(step => step.Exit != 0 || step.Status != "executed"))
+        if (steps.Any(step => step.Exit != 0 || step.Status != "executed"
+                || step.RawExit != (step.Name is "capability-proof" or "banned-api-proof" ? 1 : 0)))
             throw new InvalidDataException("required common step did not succeed");
         if (required is not null && !required.SequenceEqual(steps.Select(step => step.Name)))
             throw new InvalidDataException("required common steps are missing, duplicated, or out of order");
     }
 
-    private static void WriteBundleList(string root, IEnumerable<string> materials) =>
-        File.WriteAllText(Path.Combine(root, RootPath, "artifact-paths.nul"), string.Join('\0',
-            materials.Where(path => !path.StartsWith(RootPath + "/", StringComparison.Ordinal)).Append(RootPath).Distinct().Order(StringComparer.Ordinal)) + "\0");
+    internal static string BundleListPath(string stage) => RootPath + "/" + stage + "-paths.nul";
+
+    private static void WriteBundleList(string root, string stage, IEnumerable<string> materials)
+    {
+        var path = BundleListPath(stage);
+        var logs = new[] { RootPath + "/logs/" + stage }.Concat(stage == "current" ? [ReportPath + ".logs"] : [])
+            .Where(directory => Directory.Exists(Path.Combine(root, directory)));
+        File.WriteAllText(Path.Combine(root, path), string.Join('\0', materials.Concat(logs).Append(path)
+            .Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal)) + "\0");
+    }
 
     internal static void ValidateMaterials(string root, IEnumerable<ExecutionMaterial> materials)
     {

@@ -42,7 +42,7 @@ internal sealed partial class ProductionCliEnvironment
                 var baseProjects = EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadSnapshotProjects(baseline));
                 removedProjectOutput = string.Concat(baseProjects.Where(path => !current.TryGetFile(path, out _))
                     .Select(path => $"ENGINEERING_TEST_PROJECT_REMOVED project={JsonSerializer.Serialize(path)}\n"));
-                var common = CommonExecutionEvidence.ValidateCurrent(repositoryRoot, baseProjects);
+                var common = CommonExecutionEvidence.ValidateCommon(repositoryRoot, baseProjects);
                 if (!string.Equals(Path.GetFullPath(options.CandidateLeanReport), Path.Combine(repositoryRoot, CommonExecutionEvidence.ReportPath), StringComparison.Ordinal))
                     throw new InvalidDataException("check-delta requires this round's canonical report");
                 if (EvaluateAdmissionPlane(raw, prepared.Changes) is { } plane)
@@ -55,7 +55,7 @@ internal sealed partial class ProductionCliEnvironment
                     BootstrapOutcome.ProtectedSurfaceVerificationRequired change => MetaEvaluationProfile.ForProtectedSurface(change.ChangeSet),
                     BootstrapOutcome.InfrastructureFailure failure => throw new InvalidDataException(failure.Message),
                 };
-                var metadata = CommonCompileMetadata.Load(repositoryRoot, common.Engineering.Materials);
+                var metadata = CommonCompileMetadata.Load(repositoryRoot, common.Build.Materials);
                 ScribeTestMap Derive(RepositorySnapshot snapshot) => ScribeTestMapDeriver.DeriveSnapshot(snapshot, metadata);
                 var cacheRoot = options.TestMapCacheRoot ?? Environment.GetEnvironmentVariable("STRATALINT_TEST_MAP_CACHE_ROOT");
                 var testMapStore = cacheRoot is null ? null : TryCreateTestMapStore(cacheRoot, out _, Derive, metadata);

@@ -72,12 +72,12 @@ public sealed class CommonSourceIdentityTests
         const string log = CommonExecutionEvidence.RootPath + "/fixture.log";
         TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, log), "executed\n");
         var steps = CommonExecutionEvidence.EngineeringSteps
-            .Select(name => new StageStep(name, 0, 0, "executed", log)).ToArray();
+            .Select(name => new StageStep(name, name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", log)).ToArray();
 
         var error = Assert.Throws<InvalidDataException>(() =>
-            CommonExecutionEvidence.SealEngineering(fixture.Root, candidate, [log], steps));
+            CiTransportTests.SealEngineering(fixture.Root, candidate, [log], steps));
 
-        Assert.Equal("candidate changed during engineering", error.Message);
+        Assert.Equal("candidate changed during build", error.Message);
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.EngineeringPath)));
     }
 

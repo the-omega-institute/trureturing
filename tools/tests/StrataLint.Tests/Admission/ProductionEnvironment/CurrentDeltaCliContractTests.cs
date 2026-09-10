@@ -112,6 +112,10 @@ public sealed class CurrentDeltaCliContractTests
             Assert.DoesNotContain(currentJson.RootElement.GetProperty("diagnostics").EnumerateArray(),
                 finding => finding.GetProperty("RuleId").GetProperty("Value").GetString() == "SL-022");
         }
+        const string log = CommonExecutionEvidence.RootPath + "/unit-stage.log";
+        Write(log, "fixture common stage succeeded\n");
+        var build = CommonExecutionEvidence.SealBuild(root, CommonExecutionEvidence.Candidate(root), [log],
+            CommonExecutionEvidence.BuildSteps.Select(name => new StageStep(name, 0, 0, "executed", log)).ToArray());
         Assert.Equal(0, StrataLint.EngineeringScope.Program.RunCurrentTests(root, (_, results) =>
         {
             File.WriteAllText(Path.Combine(results, "run.trx"), """
@@ -120,12 +124,9 @@ public sealed class CurrentDeltaCliContractTests
                 <ResultSummary outcome="Completed"><Counters executed="1" passed="1" failed="0" /></ResultSummary></TestRun>
                 """);
             return 0;
-        }, TextWriter.Null));
-        const string log = CommonExecutionEvidence.RootPath + "/unit-stage.log";
-        Write(log, "fixture common stage succeeded\n");
-        var candidate = CommonExecutionEvidence.Read<TestExecutionRecord>(root, CommonExecutionEvidence.TestsPath).Candidate;
-        CommonExecutionEvidence.SealEngineering(root, candidate, [log], CommonExecutionEvidence.EngineeringSteps.Select(name => new StageStep(name, name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", log)).ToArray());
-        CommonExecutionEvidence.SealCurrent(root, CommonExecutionEvidence.CurrentSteps.Select(name => new StageStep(name, 0, 0, "executed", log)).ToArray());
+        }, TextWriter.Null, build));
+        CommonExecutionEvidence.SealEngineering(root, build, CommonExecutionEvidence.EngineeringSteps.Select(name => new StageStep(name, name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", log)).ToArray());
+        CommonExecutionEvidence.SealCurrent(root, build, CommonExecutionEvidence.CurrentSteps.Select(name => new StageStep(name, 0, 0, "executed", log)).ToArray());
         switch (scenario)
         {
             case "missing-report": File.Delete(report); break;

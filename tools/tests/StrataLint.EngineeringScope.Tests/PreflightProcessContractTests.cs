@@ -15,7 +15,7 @@ public sealed class PreflightProcessContractTests
         fixture.Write("tools/scripts/ci-stage.sh", """
             #!/bin/bash
             mkdir -p build/ci
-            printf 'build/ci\0' > build/ci/artifact-paths.nul
+            printf 'build/ci/engineering-paths.nul\0' > build/ci/engineering-paths.nul
             if [[ "$1" == current ]]; then
               mkdir -p build/ci/logs/current/lean-inspector
               printf 'raw cold build output\n' > build/ci/logs/current/lean-inspector/build.stdout.log

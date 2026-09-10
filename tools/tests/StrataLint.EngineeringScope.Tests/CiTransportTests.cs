@@ -15,10 +15,11 @@ public sealed class CiTransportTests
         Prepare(fixture, current: false);
         Report(fixture.Root);
         TemporaryFileSystem.File.Delete(Path.Combine(fixture.Root, CommonExecutionEvidence.ReportPath + ".seed.json"));
-        Assert.ThrowsAny<IOException>(() => CommonExecutionEvidence.SealCurrent(fixture.Root, Steps(CommonExecutionEvidence.CurrentSteps)));
+        Assert.ThrowsAny<IOException>(() => CommonExecutionEvidence.SealCurrent(fixture.Root, CommonExecutionEvidence.ValidateBuild(fixture.Root), Steps(CommonExecutionEvidence.CurrentSteps)));
     }
 
     [Theory]
+    [InlineData("build")]
     [InlineData("engineering")]
     [InlineData("current")]
     public void CompleteNulListedBundleMovesAcrossRootsAndPreservesExecutableModes(string stage)
@@ -30,9 +31,19 @@ public sealed class CiTransportTests
         Assert.Equal(0, Run("transport-pack", fixture.Root, stage, commit, "17", "2", archive));
         var target = Path.Combine(fixture.Root, "build", "destination");
         Git(fixture.Root, "clone", "--quiet", "--no-hardlinks", fixture.Root, target);
+        if (stage == "engineering")
+        {
+            var buildArchive = Path.Combine(fixture.Root, "build", "build.tgz");
+            Assert.Equal(0, Run("transport-pack", fixture.Root, "build", commit, "17", "2", buildArchive));
+            using var shared = new GZipStream(File.OpenRead(buildArchive), CompressionMode.Decompress);
+            TarFile.ExtractToDirectory(shared, target, overwriteFiles: true);
+        }
         using (var input = new GZipStream(File.OpenRead(archive), CompressionMode.Decompress))
             TarFile.ExtractToDirectory(input, target, overwriteFiles: true);
         Assert.Equal(0, Run("transport-verify", target, stage, commit, "17", "2"));
+        Assert.Equal(stage == "engineering", TemporaryFileSystem.File.Exists(Path.Combine(target, CommonExecutionEvidence.EngineeringPath)));
+        Assert.Equal(stage == "engineering", TemporaryFileSystem.File.Exists(Path.Combine(target, CommonExecutionEvidence.TestsPath)));
+        Assert.Equal(stage == "current", TemporaryFileSystem.File.Exists(Path.Combine(target, CommonExecutionEvidence.CurrentPath)));
         if (!OperatingSystem.IsWindows())
             Assert.NotEqual(0, (int)(File.GetUnixFileMode(Path.Combine(target, Log)) & UnixFileMode.UserExecute));
         if (stage == "current")
@@ -70,7 +81,7 @@ public sealed class CiTransportTests
     }
 
     private const string Log = "build/ci/fixture-executable";
-    private static StageStep[] Steps(string[] names) => names.Select(name => new StageStep(name, 0, 0, "executed", Log)).ToArray();
+    private static StageStep[] Steps(string[] names) => names.Select(name => new StageStep(name, name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", Log)).ToArray();
 
     private static void Prepare(CurrentExecutionContractTests.CandidateFixture fixture, bool current)
     {
@@ -79,10 +90,18 @@ public sealed class CiTransportTests
         if (!OperatingSystem.IsWindows())
             File.SetUnixFileMode(Path.Combine(fixture.Root, Log), UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
         var candidate = CommonExecutionEvidence.Read<TestExecutionRecord>(fixture.Root, CommonExecutionEvidence.TestsPath).Candidate;
-        CommonExecutionEvidence.SealEngineering(fixture.Root, candidate, [Log], Steps(CommonExecutionEvidence.EngineeringSteps));
+        CiTransportTests.SealEngineering(fixture.Root, candidate, [Log], Steps(CommonExecutionEvidence.EngineeringSteps));
         if (!current) return;
         Report(fixture.Root);
-        CommonExecutionEvidence.SealCurrent(fixture.Root, Steps(CommonExecutionEvidence.CurrentSteps));
+        CommonExecutionEvidence.SealCurrent(fixture.Root, CommonExecutionEvidence.ValidateBuild(fixture.Root), Steps(CommonExecutionEvidence.CurrentSteps));
+    }
+
+    internal static void SealEngineering(string root, string candidate, IEnumerable<string> binaries, StageStep[] steps)
+    {
+        var build = CommonExecutionEvidence.SealBuild(root, candidate, binaries, CommonExecutionEvidence.BuildSteps.Select(name => new StageStep(name, name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", steps[0].Log)).ToArray());
+        var tests = CommonExecutionEvidence.Read<TestExecutionRecord>(root, CommonExecutionEvidence.TestsPath);
+        CommonExecutionEvidence.Write(root, CommonExecutionEvidence.TestsPath, tests with { Round = build.Round });
+        CommonExecutionEvidence.SealEngineering(root, build, steps);
     }
 
     internal static void Report(string root)

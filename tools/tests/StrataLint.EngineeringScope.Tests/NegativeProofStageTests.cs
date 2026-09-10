@@ -42,6 +42,11 @@ public sealed class NegativeProofStageTests
         var source = Path.Combine(fixture.Root, "tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs");
         TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(source)!);
         TemporaryFileSystem.File.WriteAllText(source, "// banned-api-proof\n");
+        const string log = "build/ci/proof-fixture.log";
+        TemporaryFileSystem.Directory.CreateDirectory(Path.Combine(fixture.Root, "build/ci"));
+        TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, log), "synthetic build\n");
+        var build = CommonExecutionEvidence.SealBuild(fixture.Root, CommonExecutionEvidence.Candidate(fixture.Root), [log],
+            CommonExecutionEvidence.BuildSteps.Select(name => new StageStep(name, 0, 0, "executed", log)).ToArray());
         var start = new ProcessStartInfo(Path.Combine(Path.GetDirectoryName(typeof(Program).Assembly.Location)!, "StrataLint.EngineeringScope"))
         {
             WorkingDirectory = fixture.Root, RedirectStandardOutput = true, RedirectStandardError = true,
@@ -49,6 +54,8 @@ public sealed class NegativeProofStageTests
         start.ArgumentList.Add("engineering");
         start.ArgumentList.Add("--repository");
         start.ArgumentList.Add(fixture.Root);
+        start.ArgumentList.Add("--build-round");
+        start.ArgumentList.Add(build.Round);
         start.Environment.Remove("PREFLIGHT_DEADLINE_AT");
         start.Environment["PATH"] = bin + Path.PathSeparator + Environment.GetEnvironmentVariable("PATH");
         start.Environment["CONTRACT_PROOF"] = proof;

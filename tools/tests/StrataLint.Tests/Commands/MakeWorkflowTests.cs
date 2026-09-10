@@ -85,6 +85,7 @@ public sealed partial class MakeWorkflowTests
         "dotnet",
         "check-fast",
         "test",
+        "ci-build",
         "engineering",
         "engineering-tests",
         "selftest",

@@ -34,24 +34,16 @@ public sealed class ScribeMetadataHandoffTests
             Git(producer, "add", ".");
             Git(producer, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "candidate");
             var snapshot = CommonExecutionEvidence.Snapshot(producer);
-            Assert.Equal(0, StrataLint.EngineeringScope.Program.RunCurrentTests(producer, (_, results) =>
-            {
-                File.WriteAllText(Path.Combine(results, "execution.trx"), """
-                    <TestRun><Results><UnitTestResult testId="one" testName="Existing.Runs" outcome="Passed" /></Results>
-                    <TestDefinitions><UnitTest id="one" storage="Probe.dll"><TestMethod className="Existing" name="Runs" /></UnitTest></TestDefinitions>
-                    <ResultSummary outcome="Completed"><Counters executed="1" passed="1" failed="0" /></ResultSummary></TestRun>
-                    """);
-                return 0;
-            }, TextWriter.Null));
             const string log = "build/ci/fixture.log";
+            Directory.CreateDirectory(Path.Combine(producer, "build/ci"));
             File.WriteAllText(Path.Combine(producer, log), "executed\n");
-            var candidate = CommonExecutionEvidence.Read<TestExecutionRecord>(producer, CommonExecutionEvidence.TestsPath).Candidate;
-            CommonExecutionEvidence.SealEngineering(producer, candidate, [], CommonExecutionEvidence.EngineeringSteps
+            var candidate = CommonExecutionEvidence.Candidate(producer);
+            CommonExecutionEvidence.SealBuild(producer, candidate, [], CommonExecutionEvidence.BuildSteps
                 .Select(name => new StageStep(name, 0, 0, "executed", log)).ToArray());
-            var materials = CommonExecutionEvidence.ValidateEngineering(producer).Materials;
+            var materials = CommonExecutionEvidence.ValidateBuild(producer).Materials;
             Assert.Contains(materials, item => item.Path.EndsWith("/xunit.core.dll", StringComparison.Ordinal));
             var commit = Git(producer, "rev-parse", "HEAD");
-            var archive = Path.Combine(producer, "build", "engineering.tar.gz");
+            var archive = Path.Combine(producer, "build", "build.tar.gz");
             Assert.Equal(0, Transport("transport-pack", producer, commit, archive));
             Git(producer, "clone", "--quiet", "--no-hardlinks", producer, recipient);
             Assert.False(Directory.Exists(Path.Combine(recipient, "build/ci")));
@@ -62,7 +54,7 @@ public sealed class ScribeMetadataHandoffTests
             Assert.True(extraction.ExitCode == 0, Encoding.UTF8.GetString(extraction.StandardError));
             Directory.Delete(producer, recursive: true);
             Assert.Equal(0, Transport("transport-verify", recipient, commit));
-            Assert.Equal(materials, CommonExecutionEvidence.ValidateEngineering(recipient).Materials);
+            Assert.Equal(materials, CommonExecutionEvidence.ValidateBuild(recipient).Materials);
             Assert.False(Directory.Exists(Path.Combine(recipient, "obj")));
             Assert.False(Directory.Exists(Path.Combine(recipient, "bin")));
             Assert.False(Directory.Exists(Path.Combine(recipient, ".nuget")));
@@ -124,7 +116,7 @@ public sealed class ScribeMetadataHandoffTests
     }
 
     private static int Transport(string command, string root, string commit, string? archive = null) =>
-        CiTransport.Run(new[] { command, "--repository", root, "--stage", "engineering", "--commit", commit,
+        CiTransport.Run(new[] { command, "--repository", root, "--stage", "build", "--commit", commit,
                 "--run-id", "17", "--run-attempt", "2" }
             .Concat(archive is null ? [] : new[] { "--archive", archive }).ToArray(), TextWriter.Null);
 

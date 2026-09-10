@@ -11,11 +11,11 @@ internal sealed record CiTransportRecord(int Version, string Stage, string Candi
 
 // The stage owns the file list and seals; this owner binds their transport to an
 // exact upstream execution. Consumers bootstrap the transported runtime, then
-// validate before invoking any current/delta or release command. No rebuild occurs.
+// validate before invoking any current/delta or release command. Engineering's
+// transport joins the shared build already present at its consumer. No rebuild occurs.
 internal static class CiTransport
 {
-    internal const string ManifestPath = CommonExecutionEvidence.RootPath + "/transport.json";
-    internal const string ListPath = CommonExecutionEvidence.RootPath + "/artifact-paths.nul";
+    internal static string ManifestPath(string stage) => CommonExecutionEvidence.RootPath + "/" + stage + "-transport.json";
 
     internal static string ArtifactName(string stage, long run, int attempt) => $"ci-{stage}-{run}-{attempt}";
 
@@ -31,22 +31,28 @@ internal static class CiTransport
         var required = new[] { "--repository", "--stage", "--commit", "--run-id", "--run-attempt" }
             .Concat(pack ? ["--archive"] : []).Order(StringComparer.Ordinal);
         if (!required.SequenceEqual(values.Keys.Order(StringComparer.Ordinal)))
-            throw new ArgumentException("transport-pack|transport-verify --repository ROOT --stage engineering|current --commit SHA --run-id ID --run-attempt N [--archive FILE]");
+            throw new ArgumentException("transport-pack|transport-verify --repository ROOT --stage build|engineering|current --commit SHA --run-id ID --run-attempt N [--archive FILE]");
         var root = Path.GetFullPath(values["--repository"]);
         var stage = values["--stage"];
         var commit = values["--commit"];
-        if (stage is not ("engineering" or "current") || commit.Length != 40 || !commit.All(char.IsAsciiHexDigit)
+        if (stage is not ("build" or "engineering" or "current") || commit.Length != 40 || !commit.All(char.IsAsciiHexDigit)
             || !long.TryParse(values["--run-id"], NumberStyles.None, CultureInfo.InvariantCulture, out var run) || run < 1
             || !int.TryParse(values["--run-attempt"], NumberStyles.None, CultureInfo.InvariantCulture, out var attempt) || attempt < 1)
             throw new ArgumentException("invalid transport stage or immutable execution identity");
         var repository = Environment.GetEnvironmentVariable("GITHUB_REPOSITORY") ?? "";
         if (Git(root, "rev-parse", "HEAD") != commit || Git(root, "status", "--porcelain", "--untracked-files=all").Length != 0)
             throw new InvalidDataException("transport requires the exact clean candidate commit");
-        var common = stage == "current" ? CommonExecutionEvidence.ValidateCurrent(root).Current : CommonExecutionEvidence.ValidateEngineering(root);
+        var common = stage switch
+        {
+            "build" => CommonExecutionEvidence.ValidateBuild(root),
+            "current" => CommonExecutionEvidence.ValidateCurrent(root),
+            _ => CommonExecutionEvidence.ValidateEngineering(root),
+        };
+        var manifestPath = ManifestPath(stage);
         if (pack)
         {
-            var paths = ListedFiles(root).Where(path => path != ManifestPath).ToArray();
-            CommonExecutionEvidence.Write(root, ManifestPath, new CiTransportRecord(1, stage, common.Candidate, common.Round,
+            var paths = ListedFiles(root, stage).Where(path => path != manifestPath).ToArray();
+            CommonExecutionEvidence.Write(root, manifestPath, new CiTransportRecord(1, stage, common.Candidate, common.Round,
                 commit, run, attempt, repository, paths.Select(path => new TransportMaterial(path,
                     CommonExecutionEvidence.Hash(Path.Combine(root, path)), Mode(Path.Combine(root, path)))).ToArray()));
             var archive = Path.GetFullPath(values["--archive"]);
@@ -56,7 +62,7 @@ internal static class CiTransport
             using (var file = File.Create(archive + ".tmp"))
             using (var gzip = new GZipStream(file, CompressionLevel.Fastest))
             using (var tar = new TarWriter(gzip))
-                foreach (var path in paths.Append(ManifestPath)) tar.WriteEntry(Path.Combine(root, path), path);
+                foreach (var path in paths.Append(manifestPath)) tar.WriteEntry(Path.Combine(root, path), path);
             File.Move(archive + ".tmp", archive, overwrite: true);
             var outputs = new Dictionary<string, string>
             {
@@ -69,11 +75,11 @@ internal static class CiTransport
         }
         else
         {
-            var record = CommonExecutionEvidence.Read<CiTransportRecord>(root, ManifestPath);
+            var record = CommonExecutionEvidence.Read<CiTransportRecord>(root, manifestPath);
             if (record.Version != 1 || record.Stage != stage || record.Candidate != common.Candidate || record.Round != common.Round
                 || record.Commit != commit || record.RunId != run || record.RunAttempt != attempt || record.Repository != repository)
                 throw new InvalidDataException("transport candidate, stage, or upstream execution mismatch");
-            if (!ListedFiles(root).Where(path => path != ManifestPath).SequenceEqual(record.Materials.Select(material => material.Path)))
+            if (!ListedFiles(root, stage).Where(path => path != manifestPath).SequenceEqual(record.Materials.Select(material => material.Path)))
                 throw new InvalidDataException("transport does not contain the complete stage file list");
             foreach (var material in record.Materials)
                 if (CommonExecutionEvidence.Hash(Path.Combine(root, material.Path)) != material.Sha256 || Mode(Path.Combine(root, material.Path)) != material.Mode)
@@ -83,11 +89,13 @@ internal static class CiTransport
         return 0;
     }
 
-    private static string[] ListedFiles(string root)
+    private static string[] ListedFiles(string root, string stage)
     {
-        var text = File.ReadAllText(Path.Combine(root, ListPath));
+        var text = File.ReadAllText(Path.Combine(root, CommonExecutionEvidence.BundleListPath(stage)));
         if (!text.EndsWith('\0')) throw new InvalidDataException("stage transport list is not NUL terminated");
-        return text.Split('\0', StringSplitOptions.RemoveEmptyEntries).SelectMany(path =>
+        var summary = CommonExecutionEvidence.RootPath + "/" + stage + "-result.json";
+        return text.Split('\0', StringSplitOptions.RemoveEmptyEntries)
+            .Concat(File.Exists(Path.Combine(root, summary)) ? [summary] : []).SelectMany(path =>
         {
             if (Path.IsPathRooted(path) || path.Split('/').Any(part => part is ".." or "." or ""))
                 throw new InvalidDataException("invalid stage artifact path");

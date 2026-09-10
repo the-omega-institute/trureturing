@@ -50,22 +50,11 @@ public sealed class CurrentPrebuiltCliContractTests
             var binaries = new[] { CommonExecutionEvidence.CliPath, CommonExecutionEvidence.ScribePath,
                 "tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll" };
             foreach (var binary in binaries) Write(binary, "synthetic candidate binary");
-            var executions = 0;
-            Assert.Equal(0, Program.RunCurrentTests(root, (_, directory) =>
-            {
-                executions++;
-                Write(Path.GetRelativePath(root, Path.Combine(directory, "execution.trx")), """
-                    <TestRun><Results><UnitTestResult testId="one" testName="Probe.Runs" outcome="Passed" /></Results>
-                    <TestDefinitions><UnitTest id="one" storage="Probe.dll"><TestMethod className="Probe" name="Runs" /></UnitTest></TestDefinitions>
-                    <ResultSummary outcome="Completed"><Counters executed="1" passed="1" failed="0" /></ResultSummary></TestRun>
-                    """);
-                return 0;
-            }, TextWriter.Null));
             Write("build/engineering.log", "synthetic engineering fixture\n");
-            var candidate = CommonExecutionEvidence.Read<TestExecutionRecord>(root, CommonExecutionEvidence.TestsPath).Candidate;
-            CommonExecutionEvidence.SealEngineering(root, candidate, binaries, CommonExecutionEvidence.EngineeringSteps
+            var candidate = CommonExecutionEvidence.Candidate(root);
+            CommonExecutionEvidence.SealBuild(root, candidate, binaries, CommonExecutionEvidence.BuildSteps
                 .Select(name => new StageStep(name, 0, 0, "executed", "build/engineering.log")).ToArray());
-            var before = CommonExecutionEvidence.Hash(Path.Combine(root, CommonExecutionEvidence.EngineeringPath));
+            var before = CommonExecutionEvidence.Hash(Path.Combine(root, CommonExecutionEvidence.BuildPath));
             Write("build/ci/logs/current/lean-inspector/stale.exit.log", "0\n");
             if (scenario == "changed-dll") Write(CommonExecutionEvidence.CliPath, "changed binary");
             if (scenario == "changed-producer-dll") Write(CommonExecutionEvidence.RunnerPath, "changed producer binary");
@@ -93,9 +82,10 @@ public sealed class CurrentPrebuiltCliContractTests
                 Assert.Empty(summary.RootElement.GetProperty("steps").EnumerateArray());
                 Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, "build/producer.log")));
             }
-            Assert.Equal(1, executions);
+            Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, CommonExecutionEvidence.TestsPath)));
+            Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, CommonExecutionEvidence.EngineeringPath)));
             Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, "build/repeated.log")));
-            Assert.Equal(before, CommonExecutionEvidence.Hash(Path.Combine(root, CommonExecutionEvidence.EngineeringPath)));
+            Assert.Equal(before, CommonExecutionEvidence.Hash(Path.Combine(root, CommonExecutionEvidence.BuildPath)));
 
             void Write(string path, string text)
             {

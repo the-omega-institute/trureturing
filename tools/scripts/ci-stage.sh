@@ -19,14 +19,19 @@ if [[ -n "${PREFLIGHT_DEADLINE_AT:-}" ]]; then
   [[ "$PREFLIGHT_DEADLINE_AT" -gt "$(date +%s)" ]] || { echo 'PREFLIGHT_BUDGET_EXHAUSTED owner=outer-deadline' >&2; exit 2; }
 fi
 case "$stage" in
-  engineering)
+  build|engineering)
     [[ $# == 1 ]] || exit 2
     export CI=true
+    if [[ "$stage" == engineering && -n "${CI_BUILD_ROUND:-}" ]]; then
+      [[ -f "$runner" ]] || exit 2
+      dotnet "$runner" "$stage" --repository "$ROOT" --build-round "$CI_BUILD_ROUND"
+      exit $?
+    fi
     /bin/bash tools/scripts/report/report-supervisor.sh --role ci-bootstrap-restore -- \
       dotnet restore tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj --locked-mode
     /bin/bash tools/scripts/report/report-supervisor.sh --role ci-bootstrap-build -- \
       dotnet build tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj --configuration Release --no-restore --warnaserror
-    dotnet "$runner" engineering --repository "$ROOT"
+    dotnet "$runner" "$stage" --repository "$ROOT"
     ;;
   current)
     [[ $# == 1 && -f "$runner" ]] || exit 2

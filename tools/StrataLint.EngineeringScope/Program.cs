@@ -32,12 +32,14 @@ internal static class Program
                 return TruthReleaseSelection.Run(arguments, output);
             if (arguments.FirstOrDefault() is "transport-pack" or "transport-verify")
                 return CiTransport.Run(arguments, output);
-            if (arguments.FirstOrDefault() is "engineering" or "current" or "delta")
+            if (arguments.FirstOrDefault() is "build" or "engineering" or "current" or "delta")
             {
                 if (arguments.Count is not (3 or 5) || arguments[1] != "--repository"
-                    || arguments.Count == 5 && (arguments[0] != "delta" || arguments[3] != "--base"))
-                    throw new ArgumentException("stage --repository ROOT [--base SHA]");
-                return new CommonStages(Path.GetFullPath(arguments[2]), output).Run(arguments[0], arguments.Count == 5 ? arguments[4] : null);
+                    || arguments.Count == 5 && !(arguments[0] == "delta" && arguments[3] == "--base"
+                        || arguments[0] == "engineering" && arguments[3] == "--build-round"))
+                    throw new ArgumentException("stage --repository ROOT [--base SHA | --build-round ROUND]");
+                return new CommonStages(Path.GetFullPath(arguments[2]), output).Run(arguments[0], arguments.Count == 5 && arguments[3] == "--base" ? arguments[4] : null,
+                    arguments.Count == 5 && arguments[3] == "--build-round" ? arguments[4] : null);
             }
             if (arguments.FirstOrDefault() == "verify-trx")
             {
@@ -52,8 +54,17 @@ internal static class Program
                 foreach (var assembly in assemblies) output.WriteLine(assembly);
                 return 0;
             }
+            string? buildRound = null;
+            if (arguments.Count == 5 && arguments[3] == "--build-round")
+            {
+                buildRound = arguments[4];
+                arguments = arguments.Take(3).ToArray();
+            }
             var repository = RepositoryOption(arguments, allowAll: true);
-            return RunCurrentTests(repository, (project, results) => RunTests(repository, project, results), output);
+            var build = buildRound is null ? null : CommonExecutionEvidence.ValidateBuild(repository, buildRound);
+            var testAssemblies = build is null ? null : CommonBuildOutputs.TestAssemblies(repository, build);
+            return RunCurrentTests(repository, (project, results) => RunTests(repository,
+                testAssemblies is null ? project : testAssemblies[project], results), output, build);
         }
         catch (Exception exception)
         {
@@ -71,18 +82,19 @@ internal static class Program
             : throw new ArgumentException("options must be exactly --repository value");
     }
 
-    internal static int RunCurrentTests(string root, Func<string, string, int> run, TextWriter output)
+    internal static int RunCurrentTests(string root, Func<string, string, int> run, TextWriter output, CommonStageRecord? build = null)
     {
         var candidate = CommonExecutionEvidence.Candidate(root);
         var projects = EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadSnapshotProjects(CommonExecutionEvidence.Snapshot(root)));
         if (projects.Length == 0) throw new InvalidDataException("candidate contains zero test projects");
-        var round = Guid.NewGuid().ToString("N");
+        var round = build?.Round ?? Guid.NewGuid().ToString("N");
+        var invocation = Guid.NewGuid().ToString("N");
         var records = new List<TestProjectExecution>();
         output.WriteLine($"ENGINEERING_TEST_PLAN state=full selected={projects.Length} candidate={candidate}");
         foreach (var project in projects)
         {
             output.WriteLine($"ENGINEERING_TEST_PROJECT project={JsonSerializer.Serialize(project)}");
-            var relative = $"{CommonExecutionEvidence.RootPath}/trx/{round}/{records.Count}";
+            var relative = $"{CommonExecutionEvidence.RootPath}/trx/{invocation}/{records.Count}";
             var directory = Path.Combine(root, relative);
             Directory.CreateDirectory(directory);
             var exit = 2;
@@ -111,6 +123,8 @@ internal static class Program
     {
         var start = new ProcessStartInfo("dotnet") { WorkingDirectory = root, UseShellExecute = false };
         start.Environment["DOTNET_CLI_UI_LANGUAGE"] = "en-US";
+        if (Directory.Exists(Path.Combine(root, CommonBuildOutputs.PackagesPath)))
+            start.Environment["NUGET_PACKAGES"] = Path.Combine(root, CommonBuildOutputs.PackagesPath);
         foreach (var argument in BuildTestArguments(project, results)) start.ArgumentList.Add(argument);
         using var process = Process.Start(start) ?? throw new InvalidOperationException("could not start dotnet test");
         process.WaitForExit();
