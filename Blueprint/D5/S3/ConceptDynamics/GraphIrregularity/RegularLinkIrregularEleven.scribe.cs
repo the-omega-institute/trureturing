@@ -9,9 +9,21 @@ internal sealed class RegularLinkIrregularElevenDocument : IScribeDocumentDefini
     private const string Prefix = "D5/S3/ConceptDynamics/GraphIrregularity/RegularLinkIrregularEleven.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "An explicit six-regular graph on eleven vertices refutes a preprint lower bound.",
+        "A kernel-checked proof that a known six-regular graph on eleven vertices is link-irregular.",
         H("A Regular Link-Irregular Graph on Eleven Vertices"),
         Blocks(
+            Paragraph(Text(
+                "Priority. The order-eleven fact is not new here. Jannis Harder reported a "
+                    + "six-regular link-irregular graph of order eleven on 14 December 2025, in "
+                    + "the discussion thread attached to David Eppstein's post \"Regular "
+                    + "link-irregular graphs\", and on 15 December 2025 reported an exhaustive "
+                    + "search over all six-regular graphs on eleven vertices yielding four "
+                    + "minimal counterexamples, noting that one of them is separated by link "
+                    + "degree sequences except for a single pair distinguished by whether its "
+                    + "two degree-two vertices are adjacent. The witness used here has that "
+                    + "structure and was reported isomorphic to the published one. What this "
+                    + "module adds is a kernel-checked proof and a general invariance lemma, "
+                    + "not the graph and not the refutation.")),
             Paragraph(Text(
                 "Bastien and Khormali, \"On the Regularity, Planarity and Edge Bounds of "
                     + "Link-irregular Graphs\", define: \"A graph G is a link-irregular graph "
@@ -135,16 +147,9 @@ internal sealed class RegularLinkIrregularElevenDocument : IScribeDocumentDefini
                 DeclarationHandle.Create(Prefix + "witness_regular"),
                 H("Every witness vertex has degree six"),
                 StatementSource.FromAuthor(Disp(Call("witnessGraph.IsRegularOfDegree", D(6)))),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/ConceptDynamics/harder2025linkirregular")),
                 Blocks(Paragraph(Text("Lean proves six-regularity by finite decision."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("witness-edge-count"),
-                DeclarationHandle.Create(Prefix + "witness_edge_count"),
-                H("Thirty-three undirected edges"),
-                StatementSource.FromAuthor(Disp(Seq(
-                    Member(Member(F.Id("witnessGraph"), "edgeFinset"), "card"), Sp, Eq, Sp, D(3, 3)))),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The edgeFinset counts each undirected edge once."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("witness-profiles-pairwise-ne"),
                 DeclarationHandle.Create(Prefix + "witness_profiles_pairwise_ne"),
@@ -153,7 +158,8 @@ internal sealed class RegularLinkIrregularElevenDocument : IScribeDocumentDefini
                     Forall, Sp, F.Id("u"), Sp, F.Id("v"), Colon, Sp, Call("Fin", D(1, 1)), Comma, Sp,
                     F.Id("u"), Sp, Neq, Sp, F.Id("v"), Sp, Rightarrow, Sp,
                     Call("linkProfile", F.Id("u")), Sp, Neq, Sp, Call("linkProfile", F.Id("v"))))),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/ConceptDynamics/harder2025linkirregular")),
                 Blocks(Paragraph(Text(
                     "The distinctness hypothesis u ≠ v is essential. Lean certifies the "
                         + "universally quantified implication using decide +kernel."))),
@@ -176,11 +182,13 @@ internal sealed class RegularLinkIrregularElevenDocument : IScribeDocumentDefini
                     Seq(Forall, Sp, Typed("n", F.Id("Nat")), Sp,
                         Typed("G", Call("SimpleGraph", Call("Fin", F.Id("n")))), Sp,
                         Typed("r", F.Id("Nat")), Comma),
-                    Seq(Call("G.IsRegularOfDegree", F.Id("r")), Sp, Rightarrow, Sp,
+                    Seq(D(2), Sp, Leq, Sp, F.Id("n"), Sp, Rightarrow, Sp,
+                        Call("G.IsRegularOfDegree", F.Id("r")), Sp, Rightarrow, Sp,
                         Call("LinkIrregular", F.Id("G")), Sp, Rightarrow, Sp,
                         D(1, 2), Sp, Leq, Sp, F.Id("n")),
                 ])),
-                "The quantifiers cover every natural order n, every simple graph on Fin(n), "
+                "The quantifiers cover every order n with at least two vertices, every "
+                    + "simple graph on Fin(n), "
                     + "and every natural degree r. Both regularity and link-irregularity "
                     + "are hypotheses. Lean supplies the decidability instances classically "
                     + "inside this closed proposition; the if-direction is not encoded."),
@@ -188,7 +196,8 @@ internal sealed class RegularLinkIrregularElevenDocument : IScribeDocumentDefini
                 DeclarationHandle.Create(Prefix + "witness_link_irregular"),
                 H("The witness has pairwise non-isomorphic links"),
                 StatementSource.FromAuthor(Disp(Call("LinkIrregular", F.Id("witnessGraph")))),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/ConceptDynamics/harder2025linkirregular")),
                 Blocks(Paragraph(Text(
                     "An isomorphism of two distinct links would equate their wlProfiles. "
                         + "The induced-link equality would then equate their linkProfiles, "
@@ -198,7 +207,8 @@ internal sealed class RegularLinkIrregularElevenDocument : IScribeDocumentDefini
                 DeclarationHandle.Create(Prefix + "not_regularLinkIrregularOnlyFromTwelve"),
                 H("The preprint's asserted lower bound is false"),
                 StatementSource.FromAuthor(Disp(Seq(Neg, Sp, F.Id("regularLinkIrregularOnlyFromTwelve")))),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/ConceptDynamics/harder2025linkirregular")),
                 Blocks(Paragraph(Text(
                     "This closed theorem has no hypotheses. Apply the claimed bound to "
                         + "n = 11, G = witnessGraph, and r = 6. The two witness theorems "

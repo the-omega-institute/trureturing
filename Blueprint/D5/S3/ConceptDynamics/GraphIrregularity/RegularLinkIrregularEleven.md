@@ -2,7 +2,9 @@
 
 ## Abstract
 
-An explicit six-regular graph on eleven vertices refutes a preprint lower bound.
+A kernel-checked proof that a known six-regular graph on eleven vertices is link-irregular.
+
+Priority. The order-eleven fact is not new here. Jannis Harder reported a six-regular link-irregular graph of order eleven on 14 December 2025, in the discussion thread attached to David Eppstein's post "Regular link-irregular graphs", and on 15 December 2025 reported an exhaustive search over all six-regular graphs on eleven vertices yielding four minimal counterexamples, noting that one of them is separated by link degree sequences except for a single pair distinguished by whether its two degree-two vertices are adjacent. The witness used here has that structure and was reported isomorphic to the published one. What this module adds is a kernel-checked proof and a general invariance lemma, not the graph and not the refutation.
 
 Bastien and Khormali, "On the Regularity, Planarity and Edge Bounds of Link-irregular Graphs", define: "A graph G is a link-irregular graph if every two distinct vertices of G have non-isomorphic links. The link of a vertex v in G is the subgraph induced by the neighbors of v in G." Thus degrees inside a link are measured within that induced graph, not in the ambient graph.
 
@@ -108,37 +110,25 @@ $$\operatorname{witnessGraph.IsRegularOfDegree}(6)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/GraphIrregularity/RegularLinkIrregularEleven.witness_regular` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Jannis Harder (2025). *Computational search for regular link-irregular graphs, Mathstodon thread of 14 and 15 December 2025*. URL: <https://mathstodon.xyz/@11011110/115716795916671285>.
 
 *Commentary.*
 
 Lean proves six-regularity by finite decision.
 
-**Theorem 1.9 (Thirty-three undirected edges).**
-
-$$witnessGraph.edgeFinset.card = 33$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/GraphIrregularity/RegularLinkIrregularEleven.witness_edge_count` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The edgeFinset counts each undirected edge once.
-
-**Theorem 1.10 (All eleven refined link profiles are distinct).**
+**Theorem 1.9 (All eleven refined link profiles are distinct).**
 
 $$\forall u v: \operatorname{Fin}(11), u \neq v \Rightarrow \operatorname{linkProfile}(u) \neq \operatorname{linkProfile}(v)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/GraphIrregularity/RegularLinkIrregularEleven.witness_profiles_pairwise_ne` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Jannis Harder (2025). *Computational search for regular link-irregular graphs, Mathstodon thread of 14 and 15 December 2025*. URL: <https://mathstodon.xyz/@11011110/115716795916671285>.
 
 *Commentary.*
 
 The distinctness hypothesis u ≠ v is essential. Lean certifies the universally quantified implication using decide +kernel.
 
-**Definition 1.11 (Pairwise non-isomorphic links).**
+**Definition 1.10 (Pairwise non-isomorphic links).**
 
 $$\begin{aligned}\forall \{ V: Type* \} [\operatorname{Fintype}(V)] [\operatorname{DecidableEq}(V)] (G: \operatorname{SimpleGraph}(V)) [\operatorname{DecidableRel}(G.Adj)],\\\operatorname{LinkIrregular}(G) \iff\\\forall u v: V, u \neq v \Rightarrow\\\operatorname{IsEmpty}(\operatorname{SimpleGraph.Iso}(\operatorname{G.induce}(\operatorname{G.neighborSet}(u)), \operatorname{G.induce}(\operatorname{G.neighborSet}(v))))\end{aligned}$$
 
@@ -150,9 +140,9 @@ $$\begin{aligned}\forall \{ V: Type* \} [\operatorname{Fintype}(V)] [\operatorna
 
 IsEmpty asserts that the type of graph isomorphisms between the two induced neighborhoods has no inhabitants. This implements the paper's definition for finite simple graphs.
 
-**Definition 1.12 (The preprint's only-if direction).**
+**Definition 1.11 (The preprint's only-if direction).**
 
-$$\begin{aligned}regularLinkIrregularOnlyFromTwelve \iff\\\forall (n: Nat) (G: \operatorname{SimpleGraph}(\operatorname{Fin}(n))) (r: Nat),\\\operatorname{G.IsRegularOfDegree}(r) \Rightarrow \operatorname{LinkIrregular}(G) \Rightarrow 12 \leq n\end{aligned}$$
+$$\begin{aligned}regularLinkIrregularOnlyFromTwelve \iff\\\forall (n: Nat) (G: \operatorname{SimpleGraph}(\operatorname{Fin}(n))) (r: Nat),\\2 \leq n \Rightarrow \operatorname{G.IsRegularOfDegree}(r) \Rightarrow \operatorname{LinkIrregular}(G) \Rightarrow 12 \leq n\end{aligned}$$
 
 *Formalization.* `D5/S3/ConceptDynamics/GraphIrregularity/RegularLinkIrregularEleven.regularLinkIrregularOnlyFromTwelve` (`✓ std3`).
 
@@ -160,27 +150,27 @@ $$\begin{aligned}regularLinkIrregularOnlyFromTwelve \iff\\\forall (n: Nat) (G: \
 
 *Commentary.*
 
-The quantifiers cover every natural order n, every simple graph on Fin(n), and every natural degree r. Both regularity and link-irregularity are hypotheses. Lean supplies the decidability instances classically inside this closed proposition; the if-direction is not encoded.
+The quantifiers cover every order n with at least two vertices, every simple graph on Fin(n), and every natural degree r. Both regularity and link-irregularity are hypotheses. Lean supplies the decidability instances classically inside this closed proposition; the if-direction is not encoded.
 
-**Theorem 1.13 (The witness has pairwise non-isomorphic links).**
+**Theorem 1.12 (The witness has pairwise non-isomorphic links).**
 
 $$\operatorname{LinkIrregular}(witnessGraph)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/GraphIrregularity/RegularLinkIrregularEleven.witness_link_irregular` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Jannis Harder (2025). *Computational search for regular link-irregular graphs, Mathstodon thread of 14 and 15 December 2025*. URL: <https://mathstodon.xyz/@11011110/115716795916671285>.
 
 *Commentary.*
 
 An isomorphism of two distinct links would equate their wlProfiles. The induced-link equality would then equate their linkProfiles, contradicting witness_profiles_pairwise_ne.
 
-**Theorem 1.14 (The preprint's asserted lower bound is false).**
+**Theorem 1.13 (The preprint's asserted lower bound is false).**
 
 $$\neg regularLinkIrregularOnlyFromTwelve$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/GraphIrregularity/RegularLinkIrregularEleven.not_regularLinkIrregularOnlyFromTwelve` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Jannis Harder (2025). *Computational search for regular link-irregular graphs, Mathstodon thread of 14 and 15 December 2025*. URL: <https://mathstodon.xyz/@11011110/115716795916671285>.
 
 *Commentary.*
 
@@ -195,7 +185,6 @@ This closed theorem has no hypotheses. Apply the claimed bound to n = 11, G = wi
 - Truth anchor: `D5/S3/ConceptDynamics/GraphIrregularity/RegularLinkIrregularEleven.not_regularLinkIrregularOnlyFromTwelve`
 - Truth anchor: `D5/S3/ConceptDynamics/GraphIrregularity/RegularLinkIrregularEleven.regularLinkIrregularOnlyFromTwelve`
 - Truth anchor: `D5/S3/ConceptDynamics/GraphIrregularity/RegularLinkIrregularEleven.witnessGraph`
-- Truth anchor: `D5/S3/ConceptDynamics/GraphIrregularity/RegularLinkIrregularEleven.witness_edge_count`
 - Truth anchor: `D5/S3/ConceptDynamics/GraphIrregularity/RegularLinkIrregularEleven.witness_link_irregular`
 - Truth anchor: `D5/S3/ConceptDynamics/GraphIrregularity/RegularLinkIrregularEleven.witness_profiles_pairwise_ne`
 - Truth anchor: `D5/S3/ConceptDynamics/GraphIrregularity/RegularLinkIrregularEleven.witness_regular`
