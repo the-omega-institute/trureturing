@@ -71,24 +71,16 @@ run_cmd do
   if <- artifactPath.pathExists then
     Lean.Elab.Command.liftIO <| IO.FS.removeFile artifactPath
 
-/--
-info: information seal redundancy: root=LeanInformationAudit.Tests.Occurrence.CompleteRedundantIndices catalog=LeanInformationAudit.Tests.CompleteRedundantIndices.arena counts=[0,0,0] certified=[0,1,2] members=["LeanInformationAudit.Tests.CompleteRedundantIndices.firstTheorem","LeanInformationAudit.Tests.CompleteRedundantIndices.secondTheorem","LeanInformationAudit.Tests.CompleteRedundantIndices.thirdTheorem"]
----
-error: IE-C007 ZeroUniqueCapture: theorem LeanInformationAudit.Tests.CompleteRedundantIndices.firstTheorem arena LeanInformationAudit.Tests.CompleteRedundantIndices.arena full 2 without 2
--/
-#guard_msgs in
+#guard_msgs (error) in
 #seal_information_theory
 
-/-- info: redundant seal failed before artifact output -/
-#guard_msgs (info) in
 run_cmd do
-  if <- artifactPath.pathExists then
-    throwError "failed redundant seal wrote an artifact"
-  unless (SealRecords.forRoot (← getEnv) (← getEnv).header.mainModule).isEmpty &&
-      !((← getEnv).contains
-        `LeanInformationAudit.Tests.CompleteRedundantIndices.arena.__information_catalog) do
-    throwError "failed redundant seal published declarations or records"
-  logInfo "redundant seal failed before artifact output"
+  let records := SealRecords.forRoot (← getEnv) (← getEnv).header.mainModule
+  unless records.size == 1 && records[0]!.theorems.map (·.uniqueCaptureCount) == #[0, 0, 0] do
+    throwError "complete zero classification missing"
+  let env ← getEnv
+  unless records[0]!.theorems.all (fun row => env.contains row.certificateName) do
+    throwError "missing triviality certificate"
 
 /- The real seal above pins collection and certification; this pins the exact
 completeness diagnostic independently. -/

@@ -49,9 +49,6 @@ expect_information_occurrence closedTruthTheorem
   in arena
   from "LeanInformationAudit.Tests.CirptClosedTruth"
 
-/-- error: IE-C007 ZeroUniqueCapture: theorem
-LeanInformationAudit.Tests.CirptClosedTruth.closedTruthTheorem arena
-LeanInformationAudit.Tests.CirptClosedTruth.arena full 2 without 2 -/
 #guard_msgs (error) in
 #seal_information_theory
 

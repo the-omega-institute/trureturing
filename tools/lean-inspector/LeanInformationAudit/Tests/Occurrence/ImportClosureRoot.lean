@@ -29,7 +29,7 @@ expect_information_occurrence importedTheorem
 run_cmd do
   let env <- getEnv
   let root := env.header.mainModule
-  let contents := serializeSealArtifact (SealRecords.forRoot env root)
+  let contents ← Lean.Elab.Command.liftTermElabM <| serializeSealArtifact (SealRecords.forRoot env root)
   let json <- match Json.parse contents with
     | .ok value => pure value
     | .error message => throwError message

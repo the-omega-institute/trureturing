@@ -26,7 +26,7 @@ private def theoremJson (denominator : Nat) (record : SealTheoremRecord) : Json 
       record.roleSignatureHistogram.toList.map fun entry =>
         (entry.1, toJson entry.2)),
     ("gain_rate", rateJson record.uniqueCaptureCount denominator),
-    ("lowers_escape", true),
+    ("lowers_escape", decide (record.uniqueCaptureCount > 0)),
     ("certificate", record.certificateName.toString),
     ("proof_method", record.proofMethod)
   ]
@@ -35,6 +35,8 @@ private def arenaJson (record : SealArenaRecord) : Json :=
   Json.mkObj [
     ("arena", record.catalog.arenaName.toString),
     ("catalog", record.catalog.catalogName.toString),
+    ("verdict", record.verdict.label),
+    ("verdict_certificate", record.verdict.name.toString),
     ("state_card", record.stateCard),
     ("off_diagonal_pair_count", record.offDiagonalPairCount),
     ("full_escape_count", record.fullEscapeCount),
@@ -52,8 +54,32 @@ private def artifactJson (records : Array SealArenaRecord) : Json :=
   ]
 
 /-- Serialize the catalog and escape-count seal artifact. -/
-def serializeSealArtifact (records : Array SealArenaRecord) : String :=
-  (artifactJson records).pretty
+def serializeSealArtifact (records : Array SealArenaRecord) : Meta.MetaM String := do
+  for record in records do
+    let catalogValue ← Meta.mkConstWithFreshMVarLevels record.catalog.catalogName
+    validateCountingRoute record.catalog.rootId record.catalog.catalogId catalogValue record.proofMethod
+    let positive := record.theorems.all (fun row => row.uniqueCaptureCount > 0)
+    let fail := throwError "IE-C028 AnalysisCertificateMismatch root={record.catalog.rootId} catalog={record.catalog.catalogId} component=classification expected=typed-certificate actual=different"
+    unless (match record.verdict with | .irredundant _ => true | .redundant _ => false) == positive do
+      fail
+    let expected ← Meta.mkAppM
+      (if positive then ``D5.S3.ConceptDynamics.InformationEscape.CatalogIrredundant
+        else ``D5.S3.ConceptDynamics.InformationEscape.Catalog.CatalogRedundant) #[catalogValue]
+    unless ← Meta.isDefEq (← Meta.inferType (← Meta.mkConstWithFreshMVarLevels record.verdict.name))
+        expected do fail
+    for (row, i) in record.theorems.zipIdx do
+      unless row.index == i do fail
+      let positive : Bool := row.uniqueCaptureCount > 0
+      unless (match row.certificate with | .positive _ => true | .trivial _ => false) == positive do
+        fail
+      let expected ← Meta.mkAppM
+        (if positive then ``D5.S3.ConceptDynamics.InformationEscape.Catalog.LowersEscape
+          else ``D5.S3.ConceptDynamics.InformationEscape.Catalog.TrivialInCatalog)
+        #[catalogValue, ← ProjectionProof.fin row.index record.theorems.size]
+      unless ← occurrenceTypeMatches
+          (← Meta.inferType (← Meta.mkConstWithFreshMVarLevels row.certificateName))
+          expected.getAppFn.constName! catalogValue expected.appArg! do fail
+  return (artifactJson records).pretty
 
 /-- Fixture-inspectable identity state retained for the later analysis projection. -/
 structure SealedOccurrenceState where
@@ -118,16 +144,30 @@ def analysisForRoot? (env : Environment) (rootId : Name) : Option StagedAnalysis
 def systemCatalogIrredundant (env : Environment) (rootId : Name) : Bool :=
   let records := forRoot env rootId
   !records.isEmpty && records.all fun record =>
-    env.contains record.irredundantCertificateName
+    match record.verdict with
+    | .irredundant name => env.contains name
+    | .redundant _ => false
 
 end SealRecords
 
 private def logSummary (record : SealArenaRecord) : CommandElabM Unit := do
   for theoremRecord in record.theorems do
-    logInfo <| s!
-      "information seal: arena={record.catalog.arenaName} \
+    if theoremRecord.uniqueCaptureCount == 0 then
+      let candidates := record.collisionClasses.filterMap fun (members, _) =>
+        if members.contains theoremRecord.theoremName then
+          some (members.filter (· != theoremRecord.theoremName)) else none
+      let closurePeers := record.theorems.filter (·.theoremName != theoremRecord.theoremName)
+        |>.map (·.theoremName)
+      logInfo s!"IE-C007 ZeroUniqueCapture: theorem {theoremRecord.theoremName} \
+arena {record.catalog.arenaName} full {record.fullEscapeCount} \
+without {theoremRecord.withoutEscapeCount} same_kernel_candidates={(toJson candidates).compress} \
+closure_candidates={(toJson closurePeers).compress} closure_certificate={theoremRecord.closureCertificate}"
+    logInfo s!"information seal: arena={record.catalog.arenaName} \
 theorem={theoremRecord.theoremName} unique={theoremRecord.uniqueCaptureCount} \
 method={theoremRecord.proofMethod}"
+  for (members, certificates) in record.collisionClasses do
+    logInfo s!"IE-C008 OvercompleteCollisionClass: members={(toJson members).compress} \
+certificates={(toJson certificates).compress}"
 
 private def declarationNames (declarations : Array Declaration) : List Name :=
   declarations.toList.foldl (init := []) fun names declaration =>
@@ -136,7 +176,7 @@ private def declarationNames (declarations : Array Declaration) : List Name :=
 private def catalogForGeneratedName? (records : Array SealArenaRecord) (name : Name) :
     Option SealArenaRecord :=
   records.find? fun record =>
-    record.catalog.catalogName == name || record.irredundantCertificateName == name ||
+    record.catalog.catalogName == name || record.verdict.name == name ||
       record.theorems.any fun theoremRecord => theoremRecord.unitName == name ||
         theoremRecord.realizationName == name || theoremRecord.certificateName == name ||
         catalogQualifiedName record.catalog.rootId record.catalog.arenaName
@@ -319,7 +359,8 @@ def prepareSealPublication : CommandElabM Unit := do
 /-- Stage analysis for an already-sealed root, publishing only after all checks pass. -/
 def prepareInformationAnalysisStage (rootId : Name) : CommandElabM Unit := do
   let sealedEnv ← getEnv
-  unless SealRecords.systemCatalogIrredundant sealedEnv rootId do
+  let sealed := SealRecords.forRoot sealedEnv rootId
+  unless !sealed.isEmpty && sealed.all (fun record => sealedEnv.contains record.verdict.name) do
     throwError "UnsealedAnalysisStage root={rootId} catalog=system"
   if (SealRecords.analysisForRoot? sealedEnv rootId).isSome then
     throwError "AnalysisAlreadyStaged root={rootId} catalog=system"
@@ -349,7 +390,7 @@ def prepareInformationAnalysisExport (rootId : Name) (requested : List ArtifactK
     throwError "UnstagedAnalysisExport root={rootId} catalog=system"
   let mut artifacts := []
   if requested.contains .seal then
-    artifacts := artifacts ++ [(.seal, serializeSealArtifact records)]
+    artifacts := artifacts ++ [(.seal, ← liftTermElabM (serializeSealArtifact records))]
   if requested.contains .analysis then
     let contents ← liftTermElabM do
       serializeAnalysisArtifact rootId analysis.records analysis.systemCertificate

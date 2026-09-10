@@ -30,9 +30,13 @@ def generatedCompanionSuffixes : Array String := #[
   theoremUnitSuffix,
   primitiveRealizationSuffix,
   "__lowers_escape",
+  "__trivial_in_catalog",
   "__escape_enriched",
   "__information_catalog",
   "__catalog_irredundant",
+  "__catalog_redundant",
+  "__system_catalog_irredundant",
+  "__system_catalog_not_irredundant",
   "__information_registration_diagnostic"
 ]
 

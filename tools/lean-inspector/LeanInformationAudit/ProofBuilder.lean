@@ -1,6 +1,9 @@
 import LeanInformationAudit.RegistryTypes
 import LeanInformationAudit.CatalogBuilder
 import LeanInformationAudit.Sha256
+import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
+import D5.S3.ConceptDynamics.InformationEscapeHierarchy.AnalysisLaws
+import D5.S3.ConceptDynamics.InformationEscape.StructuralNovelty
 import D5.S3.ConceptDynamics.InformationEscapeCounting.FusedCorrectness
 -- Enumerations is imported only to expose the production `__state_enumeration` witnesses.
 import D5.S3.ConceptDynamics.InformationEscapeCounting.Enumerations
@@ -18,6 +21,16 @@ universe u v w
 structure PreparedProofs where
   declarations : Array Declaration
   records : Array SealArenaRecord
+
+/-- Check catalog/index before reducing a proposition that may be definitionally trivial. -/
+def occurrenceTypeMatches (actual : Expr) (head : Name) (catalog index : Expr) : MetaM Bool := do
+  let equality := head == ``Catalog.TrivialInCatalog && actual.isAppOfArity ``Eq 3
+  let occurrence := if equality then actual.getAppArgs[1]! else actual
+  unless occurrence.isAppOfArity (if equality then ``Catalog.uniqueCapturePairs else head) 3 do
+    return false
+  return (← isDefEq occurrence.getAppArgs[1]! catalog) &&
+    (← isDefEq occurrence.getAppArgs[2]! index) &&
+    (← isDefEq actual (← mkAppM head #[catalog, index]))
 
 private structure CountingRouteSnapshot where
   root : Name
@@ -332,6 +345,7 @@ catalog={record.catalogId} pair_budget={pairBudget} limit=65536 seal={record.roo
   for index in [:uniqueCounts.size] do
     if uniqueCounts[index]! == 0 then
       redundantIndices := redundantIndices.push index
+  let mut zeroProofs := #[]
   let mut certifiedRedundantIndices := #[]
   for indexNat in redundantIndices do
     let index <- finValue indexNat record.units.size
@@ -353,6 +367,7 @@ catalog={record.catalogId} pair_budget={pairBudget} limit=65536 seal={record.roo
           let actualToFused <- mkAppM ``Eq.symm #[fusedEq]
           mkAppM ``Eq.trans #[actualToFused, fusedZero]
     checkWithKernel zeroProof
+    zeroProofs := zeroProofs.push (indexNat, zeroProof)
     certifiedRedundantIndices := certifiedRedundantIndices.push indexNat
   match validateRedundantIndices record.rootId record.catalogId expectedCounts
       certifiedRedundantIndices "complete-scan" with
@@ -362,16 +377,6 @@ catalog={record.catalogId} pair_budget={pairBudget} limit=65536 seal={record.roo
       expectedCounts uniqueCounts with
   | .ok () => pure ()
   | .error message => throwError message
-  if let some firstZero := redundantIndices[0]? then
-    let members := certifiedRedundantIndices.map fun index =>
-      record.units[index]!.theoremName.toString
-    logInfo s!"information seal redundancy: root={record.rootId} catalog={record.catalogId} \
-counts={natArrayJson uniqueCounts} certified={natArrayJson certifiedRedundantIndices} \
-members={(toJson members).compress}"
-    let unit := record.units[firstZero]!
-    throwError
-      "IE-C007 ZeroUniqueCapture: theorem {unit.theoremName} arena {record.arenaName} \
-full {fullCount} without {withoutCounts[firstZero]!}"
   for unit in record.units do
     let theoremName := unit.theoremName
     let unitName := unit.unitName
@@ -400,6 +405,36 @@ full {fullCount} without {withoutCounts[firstZero]!}"
       #[catalog, index]
     let uniqueCount := uniqueCounts[indexNat]!
     let withoutCount := withoutCounts[indexNat]!
+    if uniqueCount == 0 then
+      let some (_, zero) := zeroProofs.find? (·.1 == indexNat)
+        | throwError "missing certified zero"
+      let trivialType ← mkAppM ``Catalog.TrivialInCatalog #[catalog, index]
+      let emptyIff ← mkAppOptM ``Finset.card_eq_zero
+        #[none, some (← mkAppM ``Catalog.uniqueCapturePairs #[catalog, index])]
+      let proof ← mkAppM ``Iff.mp #[emptyIff, zero]
+      let name := if record.localSealNames then theoremName.str "__trivial_in_catalog" else
+        catalogQualifiedName record.rootId record.arenaName record.catalogId theoremName
+          "__trivial_in_catalog"
+      declarations := declarations.push <| .thmDecl {
+        name, levelParams := [], type := trivialType, value := proof }
+      let notLowers ← mkAppM ``Iff.mp #[
+        ← mkAppM ``Catalog.trivialInCatalog_iff_not_lowersEscape #[catalog, index, nondegenerateProof], proof]
+      let closure ← mkAppM ``of_not_not #[← mkAppM ``Iff.mp #[
+        ← mkAppM ``not_congr #[← mkAppM ``Catalog.lowersEscape_iff_not_mem_semanticClosureWithout
+          #[catalog, index, nondegenerateProof]], notLowers]]
+      let closureCertificate := name.str "closure"
+      declarations := declarations.push <| .thmDecl {
+        name := closureCertificate, levelParams := [], type := ← inferType closure, value := closure }
+      theoremRecords := theoremRecords.push {
+        theoremName, unitName, realizationName := unit.realizationName, certificate := .trivial name,
+        closureCertificate := some closureCertificate,
+        registrationModuleName := unit.registrationModuleName, index := indexNat,
+        primitiveCount, primitiveAxes, primitiveKernelAddress, uniqueCaptureCount := 0,
+        fullEscapeCount := fullCount, withoutEscapeCount := withoutCount, roleSignatureHistogram := #[],
+        proofMethod := match route with
+          | .decide => if record.localSealNames then "decide" else "direct"
+          | .reflected _ => "reflected-fused-counts" }
+      continue
     let positiveType ← mkLT (mkNatLit 0) uniqueExpr
     let positiveProof ← match route with
       | .decide => proofConstruction theoremName <| mkDecideProof positiveType
@@ -472,7 +507,7 @@ full {fullCount} without {withoutCounts[firstZero]!}"
       theoremName
       unitName
       realizationName := unit.realizationName
-      certificateName := lowersName
+      certificate := .positive lowersName
       registrationModuleName := unit.registrationModuleName
       index := indexNat
       primitiveCount
@@ -486,13 +521,53 @@ full {fullCount} without {withoutCounts[firstZero]!}"
         | .decide => if record.localSealNames then "decide" else "direct"
         | .reflected _ => "reflected-fused-counts"
     }
-  let irredundantProof ← irredundantFromLoweringProofs catalog loweringProofNames
-  let irredundantType ← inferType irredundantProof
+  let mut collisionClasses := #[]
+  let mut classified := #[]
+  for i in redundantIndices do
+    if classified.contains i then continue
+    let mut members := #[record.units[i]!.theoremName]
+    let mut certificates := #[]
+    for j in redundantIndices do
+      if j <= i || classified.contains j ||
+          theoremRecords[i]!.primitiveKernelAddress != theoremRecords[j]!.primitiveKernelAddress then
+        continue
+      let left ← finValue i record.units.size
+      let right ← finValue j record.units.size
+      let proof ← try
+        let refinement (a b : Expr) := do
+          let type ← mkAppM ``Catalog.KernelRefines #[catalog, a, b]
+          try
+            forallTelescopeReducing type fun args goal => do
+              unless ← isDefEq (← inferType args.back!) goal do throwError "nonreflexive"
+              mkLambdaFVars args args.back!
+          catch _ => mkDecideProof type
+        let proof ← mkAppM ``And.intro #[← refinement left right, ← refinement right left]
+        checkWithKernel proof
+        pure (some proof)
+      catch _ => pure none
+      let some proof := proof | continue
+      let name := catalogQualifiedName record.rootId record.arenaName record.catalogId
+        record.arenaName s!"__kernel_collision_{i}_{j}"
+      declarations := declarations.push <| .thmDecl {
+        name, levelParams := [], type := ← mkAppM ``Catalog.KernelEquivalent #[catalog, left, right],
+        value := proof }
+      members := members.push record.units[j]!.theoremName
+      certificates := certificates.push name
+      classified := classified.push j
+    if members.size > 1 then collisionClasses := collisionClasses.push (members, certificates)
+  let irredundantProof ← if let some (indexNat, zero) := zeroProofs[0]? then do
+      let type ← mkAppM ``Catalog.CatalogRedundant #[catalog]
+      let predicate := (← whnf type).appArg!
+      mkAppOptM ``Exists.intro
+        #[none, some predicate, some (← finValue indexNat record.units.size), some zero]
+    else irredundantFromLoweringProofs catalog loweringProofNames
+  let suffix := if zeroProofs.isEmpty then "__catalog_irredundant" else "__catalog_redundant"
+  let irredundantType ← mkAppM
+    (if zeroProofs.isEmpty then ``CatalogIrredundant else ``Catalog.CatalogRedundant) #[catalog]
   let irredundantName := if record.localSealNames then
-    record.arenaName.str "__catalog_irredundant"
+    record.arenaName.str suffix
   else
-    catalogQualifiedName record.rootId record.arenaName record.catalogId record.arenaName
-      "__catalog_irredundant"
+    catalogQualifiedName record.rootId record.arenaName record.catalogId record.arenaName suffix
   declarations := declarations.push <| .thmDecl {
     name := irredundantName
     levelParams := []
@@ -509,7 +584,8 @@ full {fullCount} without {withoutCounts[firstZero]!}"
       | _ => none }
   pure (declarations, {
     catalog := record
-    irredundantCertificateName := irredundantName
+    collisionClasses
+    verdict := if zeroProofs.isEmpty then .irredundant irredundantName else .redundant irredundantName
     proofMethod := method
     stateCard
     offDiagonalPairCount := stateCard * (stateCard - 1)

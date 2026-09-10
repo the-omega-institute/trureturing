@@ -1,3 +1,4 @@
+import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import LeanInformationAudit.SealCommand
 
 /-! T-005: the fst, snd, and product identity kernels are overcomplete. The
@@ -135,9 +136,6 @@ expect_information_occurrence idTheorem
   in arena
   from "LeanInformationAudit.Tests.SealOvercomplete"
 
-/-- error: IE-C007 ZeroUniqueCapture: theorem
-LeanInformationAudit.Tests.SealOvercomplete.fstTheorem arena
-LeanInformationAudit.Tests.SealOvercomplete.arena full 0 without 0 -/
 #guard_msgs (error) in
 #seal_information_theory
 
@@ -148,5 +146,13 @@ expression
 of type `True` -/
 #guard_msgs (error) in
 #check @LeanInformationAudit.Tests.SealOvercomplete.idTheorem.__lowers_escape
+
+example : Catalog.CatalogRedundant arena.__information_catalog := arena.__catalog_redundant
+example : Catalog.TrivialInCatalog arena.__information_catalog (0 : Fin 3) :=
+  fstTheorem.__trivial_in_catalog
+example : Catalog.TrivialInCatalog arena.__information_catalog (1 : Fin 3) :=
+  idTheorem.__trivial_in_catalog
+example : Catalog.TrivialInCatalog arena.__information_catalog (2 : Fin 3) :=
+  sndTheorem.__trivial_in_catalog
 
 end LeanInformationAudit.Tests.SealOvercomplete

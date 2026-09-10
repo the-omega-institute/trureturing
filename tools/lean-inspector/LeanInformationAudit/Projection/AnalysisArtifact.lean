@@ -76,7 +76,7 @@ def analysisCatalogJson (record : AnalysisCatalogRecord) : Json :=
     ("full_escape_rate", exactRateJson counts.fullEscapeCount denominator),
     ("catalog_verdict", toJson record.projection.verdict),
     ("redundant_theorems", namesJson (sortedNames record.projection.redundantIndices)),
-    ("verdict_certificate", toJson counts.irredundantCertificateName.toString),
+    ("verdict_certificate", toJson counts.verdict.name.toString),
     ("exclusive_capture_total", toJson record.analysis.exclusiveCaptureTotal),
     ("pairwise_capture_overlap", overlapJson denominator record.analysis.overlap),
     ("kernel_refinement", refinementJson record.analysis.refinement),
@@ -227,7 +227,7 @@ finer={row.finer} coarser={row.coarser} missing={if included then "proof" else "
     record.layerChains.flatMap (fun row => row.kernels.map ("layer_chains.kernel", ·)) ++
     p.redundantIndices.map ("redundant_indices", ·)
   for (component, name) in references do requireName root catalog component name
-  let certificates := #[counts.irredundantCertificateName] ++
+  let certificates := #[counts.verdict.name] ++
     counts.theorems.map (·.certificateName) ++ p.nodes.map (·.relationCertificate) ++
     p.edges.map (·.certificate) ++ p.collapsedAdditions.map (·.equalityCertificate) ++
     p.leaveOneOut.map (·.certificate) ++
@@ -282,11 +282,6 @@ component=system-certificate expected=Lean-theorem actual={systemCertificate}"
     validateInventory rootId record
     let reflected ← validateCertifiedProjection rootId record.counts.catalog.catalogId actual
       record.projection record.analysis record.layerChains
-    if record.counts.catalog.catalogKind == .canonicalMaximal &&
-        record.projection.verdict == "redundant" then
-      let zeroIndices := record.counts.theorems.filter (·.uniqueCaptureCount == 0) |>.map (·.index)
-      throwError "IE-C033 IncompleteRedundantIndexSet key={rootId}/{record.counts.catalog.catalogId} \
-expected=[] certified={(toJson (zeroIndices.qsort (· < ·))).compress} phase=canonical-export"
     validateAnalysisBindings rootId actual reflected (← mkAppM ``PackedCatalog.arena #[packed])
       record.counts record.projection
   let records := records.qsort fun a b =>

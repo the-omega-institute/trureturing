@@ -45,9 +45,6 @@ expect_information_occurrence target
   in arena
   from "LeanInformationAudit.Tests.Seal.ReflectedZeroCapture"
 
-/-- error: IE-C007 ZeroUniqueCapture: theorem
-LeanInformationAudit.Tests.Seal.ReflectedZeroCapture.target arena
-LeanInformationAudit.Tests.Seal.ReflectedZeroCapture.arena full 2 without 2 -/
 #guard_msgs (error) in
 #seal_information_theory
 

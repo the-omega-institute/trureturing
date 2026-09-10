@@ -39,9 +39,6 @@ expect_information_occurrence systemTheorem
   in arena
   from "LeanInformationAudit.Tests.Seal.SystemContentSensitivity.ConstantReadout"
 
-/-- error: IE-C007 ZeroUniqueCapture: theorem
-LeanInformationAudit.Tests.Seal.T013Constant.systemTheorem arena
-LeanInformationAudit.Tests.Seal.T013Constant.arena full 2 without 2 -/
 #guard_msgs (error) in
 #seal_information_theory
 

@@ -29,14 +29,14 @@ set_option maxRecDepth 100000
 set_option maxHeartbeats 16000000
 
 /--
-info: redundant-canonical rejected IE-C033 IncompleteRedundantIndexSet key=LeanInformationAudit.Tests.Projection.AnalysisView/LeanInformationAudit.Tests.Projection.AnalysisView.catalog expected=[] certified=[0,1] phase=canonical-export
+info: redundant-canonical rejected IE-C028 AnalysisCertificateMismatch root=LeanInformationAudit.Tests.Projection.AnalysisView catalog=LeanInformationAudit.Tests.Projection.AnalysisView.catalog component=proof-method expected=certified-catalog actual=different
 duplicate-occurrence rejected IE-C028 AnalysisCertificateMismatch root=LeanInformationAudit.Tests.Projection.AnalysisView catalog=LeanInformationAudit.Tests.Projection.AnalysisView.catalog component=occurrence-key expected="unique" actual="LeanInformationAudit.Tests.Projection.AnalysisView.arena/LeanInformationAudit.Tests.Projection.AnalysisView.first"
 direct-route rejected IE-C028 AnalysisCertificateMismatch root=LeanInformationAudit.Tests.Projection.AnalysisView catalog=LeanInformationAudit.Tests.Projection.AnalysisView.catalog component=proof-method expected=certified-catalog actual=different
 fused-route rejected IE-C028 AnalysisCertificateMismatch root=LeanInformationAudit.Tests.Projection.AnalysisView catalog=LeanInformationAudit.Tests.Projection.AnalysisView.catalog component=proof-method expected=certified-catalog actual=different
 native-route rejected IE-C028 AnalysisCertificateMismatch root=LeanInformationAudit.Tests.Projection.AnalysisView catalog=LeanInformationAudit.Tests.Projection.AnalysisView.catalog component=proof-method expected=certified-catalog actual=different
 nonempty coincidence key set passed
 -/
-#guard_msgs in
+#guard_msgs (info, error) in
 run_cmd do
   let root := (← getEnv).header.mainModule
   let names := #[``first, ``second]
@@ -59,12 +59,15 @@ run_cmd do
           #[toExpr root, original, normalized, same, index, zero])
       let mut theorems := #[]
       for name in names, i in [:2] do
-        let some loo := projection.leaveOneOut.find? (·.theoremName == qualified[i]!)
+        let some _loo := projection.leaveOneOut.find? (·.theoremName == qualified[i]!)
           | throwError "missing fixture leave-one-out"
-        let certificateName := catalogQualifiedName root ``arena ``catalog name "__lowers_escape"
-        let some (.thmDecl proof) := (← get).find? (·.getNames.contains loo.certificate)
-          | throwError "missing fixture certificate"
-        let _ ← ProjectionProof.proof certificateName proof.value
+        let certificateName := catalogQualifiedName root ``arena ``catalog name "__trivial_in_catalog"
+        let position ← ProjectionProof.fin i 2
+        let emptyIff ← mkAppOptM ``Finset.card_eq_zero
+          #[none, some (← mkAppM ``Catalog.uniqueCapturePairs #[original, position])]
+        let zero ← mkDecideProof (← mkEq
+          (← mkAppM ``Catalog.uniqueCaptureCount #[original, position]) (mkNatLit 0))
+        let _ ← ProjectionProof.proof certificateName (← mkAppM ``Iff.mp #[emptyIff, zero])
         let realizationName := catalogQualifiedName root ``arena ``catalog name
           primitiveRealizationSuffix
         let _ ← ProjectionProof.value realizationName
@@ -73,7 +76,7 @@ run_cmd do
         let address ← primitiveKernelAddress (← mkAppM ``Arena.stateFintype #[arena]) bundle
         theorems := theorems.push {
           theoremName := name, unitName := qualified[i]!,
-          realizationName, certificateName, registrationModuleName := root, index := i,
+          realizationName, certificate := .trivial certificateName, registrationModuleName := root, index := i,
           primitiveCount := 1, primitiveAxes := #["cut"], primitiveKernelAddress := address,
           uniqueCaptureCount := 0, fullEscapeCount := 0, withoutEscapeCount := 0,
           roleSignatureHistogram := #[], proofMethod := "reflected-readout" : SealTheoremRecord }
@@ -87,7 +90,7 @@ run_cmd do
             theoremName := row.theoremName,
             unitName := row.unitName, realizationName := row.realizationName,
             registrationModuleName := root, index := row.index } },
-        irredundantCertificateName := verdict.2, proofMethod := "reflected-readout",
+        verdict := .redundant verdict.2, proofMethod := "reflected-readout",
         stateCard := 2, offDiagonalPairCount := 2, fullEscapeCount := 0, theorems }
       let counts ← prepareAnalysisQualifiedCounts counts (← get)
       pure ({ counts, projection, analysis, layerChains : AnalysisCatalogRecord }, system)

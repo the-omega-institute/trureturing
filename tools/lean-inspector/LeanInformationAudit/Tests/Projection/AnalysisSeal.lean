@@ -27,7 +27,7 @@ run_cmd do
     analysis_output $analysis:str ascii_output $ascii:str))
 
 /-- info: complete analysis seal and output noninterference passed -/
-#guard_msgs in
+#guard_msgs (info, error) in
 run_cmd do
   let contents ← liftIO <| IO.FS.readFile (← fixturePath "seal-analysis.json")
   let artifact ← match Json.parse contents with
@@ -53,7 +53,7 @@ run_cmd do
   let ascii ← liftIO <| IO.FS.readFile (← fixturePath "seal-analysis.txt")
   unless ascii.startsWith "CATALOG " do throwError "ASCII inventory"
   let sealArtifact ← liftIO <| IO.FS.readFile (← fixturePath "seal-catalog.json")
-  unless sealArtifact == serializeSealArtifact (SealRecords.forRoot (← getEnv) root) do
+  unless sealArtifact == (← liftTermElabM <| serializeSealArtifact (SealRecords.forRoot (← getEnv) root)) do
     throwError "seal serializer changed"
   logInfo "complete analysis seal and output noninterference passed"
 

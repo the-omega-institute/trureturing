@@ -43,16 +43,11 @@ run_cmd do
       prepared.record.catalogId == `P2CloneSplit.arena do
     throwError "P2CloneSplit: aliases split the maximal catalog"
 
-/--
-info: information seal redundancy: root=LeanInformationAudit.Tests.Occurrence.P2CloneSplit catalog=P2CloneSplit.arena counts=[0,0] certified=[0,1] members=["P2CloneSplit.first","P2CloneSplit.second"]
----
-error: IE-C007 ZeroUniqueCapture: theorem P2CloneSplit.first arena P2CloneSplit.arena full 0 without 0
--/
-#guard_msgs in
+#guard_msgs (error) in
 #seal_information_theory
 
 run_cmd do
   let env ← getEnv
-  unless (LeanInformationAudit.SealRecords.forRoot env env.header.mainModule).isEmpty do
-    throwError "P2CloneSplit: rejected catalog publishes a seal"
+  unless (LeanInformationAudit.SealRecords.forRoot env env.header.mainModule).size == 1 do
+    throwError "P2CloneSplit: missing classification seal"
 end P2CloneSplit

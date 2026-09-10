@@ -1,7 +1,5 @@
 import LeanInformationAudit.Tests.Census.Evidence
-
 open Lean Lean.Meta Lean.Elab.Command LeanInformationAudit DispositionCensus
-
 -- A kernel-valid proof of True cannot satisfy a positive occurrence certificate.
 /-- info: finite-polarity rejected -/
 #guard_msgs in
@@ -18,7 +16,7 @@ run_cmd do
     elabCommand (← `(command| run_cmd
       modifyEnv fun current => ($registryId).modifyState current fun records =>
         records.map fun record => { record with theorems := record.theorems.map fun row =>
-          { row with certificateName := ``True.intro } }))
+          { row with certificate := .positive ``True.intro } }))
     let rejected ← try
       liftTermElabM <| validateEvidence root inventory
       pure false
