@@ -1,5 +1,11 @@
 # A357512 attempt 2
 
+A is now proved by `fourth_dvd_of_odd_not_three`; hot-tree Lean verification
+returns EXIT=0. Repository delivery gates remain to be completed. The proof
+does not consume any prime lemma or any external proof source. All attempt-1
+definitions and proofs are retained; only its preparatory digest/comment are
+updated to reflect the new A theorem.
+
 Skill: `lean4`. Producer: Codex implementation seat, single agent; no independent
 review or consensus claimed. Starting commit: `4b1a9ba824` on `lane/math/a357512`.
 The user reopens only A: every odd natural `n` with `3 ∤ n` satisfies
@@ -89,3 +95,10 @@ EXIT=0. In `ZMod(n^2)`, twelve times each reduced summand equals
 This identity consumes both general binomial recurrences; no index is inverted.
 An initial `simpa` left `2*(k+1)-1 = 2*k+1`; `ring` closes this normalization.
 The finite-sum telescoping step and the final coprimality cancellation remain.
+
+The complete sum and coprimality step now pass Lean, EXIT=0. The only failed
+sum attempt used `sum_range_sub'`, whose subtraction points in the opposite
+direction; the existing `Finset.sum_range_sub` is the exact required lemma.
+The final argument proves `n^2 ∣ 12*reducedSum(n)`, cancels 12 using
+`Odd n` and `3 ∤ n`, and consumes the original `sum_factorization`.
+No finite computation enters the target proof.

@@ -4,7 +4,7 @@
    mirror-E: none(waiver:universal-divisibility-no-numeric-artifact)
    anchors: [mathlib/module/Mathlib.Data.Nat.Choose.Basic]
    utility: none
-   digest: Preparatory summand congruences and an exact square-factor reduction for the fifth-weighted Apéry sum. -/
+   digest: Fourth-power divisibility of the fifth-weighted Apery sum at indices coprime to six. -/
 
 import Mathlib.Data.Nat.Choose.Basic
 import Mathlib.Data.ZMod.Basic
@@ -85,7 +85,7 @@ private lemma weighted_term (p : ℕ) (hp : p.Prime) (k : ℕ) (hk : k < p) :
   simp only [b, Nat.cast_mul] at h
   linear_combination (k : R p) * h
 
--- Preparatory results only: neither target A nor target B is asserted here.
+-- Exact square-factor reduction for arbitrary positive indices.
 private lemma shifted_binomial (n k : ℕ) :
     (k+1)^2 * ((n-1).choose (k+1) * (n+k).choose (k+1)) =
       n * (n-1-k) * ((n-1).choose k * (n+k).choose k) := by
@@ -191,6 +191,47 @@ private lemma reduced_term_telescopes (n k : ℕ) (hk : k < n) :
     push_cast
     ring
   simp only [boundary, hs, Nat.cast_add, Nat.cast_one]
-  convert h using 1 <;> ring
+  convert h using 1; ring
+
+private lemma reduced_sum_scaled_zero (n : ℕ) (hn : 0 < n) :
+    12 * (reducedSum n : Q n) = 0 := by
+  have ht : (n : Q n) ^ 2 = 0 := by rw [← Nat.cast_pow, ZMod.natCast_self]
+  calc
+    _ = ∑ k ∈ range (n - 1),
+        12 * (k + 1 : ℕ) * ((n - 1 - k : ℕ) : Q n) ^ 2 * (c n k : Q n) ^ 2 := by
+      simp only [reducedSum, Nat.cast_sum, Nat.cast_mul, Nat.cast_pow, mul_sum, c]
+      apply sum_congr rfl
+      intro k hk
+      push_cast
+      ring
+    _ = ∑ k ∈ range (n - 1), (boundary n (k + 1) - boundary n k) := by
+      apply sum_congr rfl
+      intro k hk
+      exact reduced_term_telescopes n k (by have := mem_range.mp hk; omega)
+    _ = boundary n (n - 1) - boundary n 0 := sum_range_sub (boundary n) (n - 1)
+    _ = (n : Q n) ^ 2 *
+        (3 * (n - 1) ^ 2 - 4 * (n - 1) * (2 * (n - 1) + 1)) *
+        (c n (n - 1) : Q n) ^ 2 := by
+      simp only [boundary, Nat.cast_zero, zero_pow (by decide : 2 ≠ 0), mul_zero,
+        zero_mul, sub_zero, Nat.cast_sub (by omega : 1 ≤ n), Nat.cast_one]
+      ring
+    _ = 0 := by rw [ht, zero_mul, zero_mul]
+
+/-- The fifth-weighted Apéry sum is divisible by the fourth power of every odd index
+that is not divisible by three, including composite indices. -/
+theorem fourth_dvd_of_odd_not_three (n : ℕ) (hn : Odd n) (h3 : ¬3 ∣ n) :
+    n ^ 4 ∣ a (n - 1) := by
+  have hnpos : 0 < n := Nat.pos_of_ne_zero (by rintro rfl; simp at hn)
+  have hscaled : n ^ 2 ∣ 12 * reducedSum n := by
+    apply (ZMod.natCast_eq_zero_iff _ _).mp
+    simpa only [Nat.cast_mul, Nat.cast_ofNat] using reduced_sum_scaled_zero n hnpos
+  have hc2 : n.Coprime 2 := hn.coprime_two_right
+  have hc3 : n.Coprime 3 := (Nat.prime_three.coprime_iff_not_dvd.mpr h3).symm
+  have hc12 : n.Coprime 12 := by
+    simpa using (hc2.pow_right 2).mul_right hc3
+  obtain ⟨q, hq⟩ := (hc12.pow_left 2).dvd_of_dvd_mul_left hscaled
+  refine ⟨q, ?_⟩
+  rw [sum_factorization n hnpos, hq]
+  ring
 
 end D5.S3.ArithSums.A357512PrimeDivisibility
