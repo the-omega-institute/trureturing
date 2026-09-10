@@ -3,6 +3,7 @@
    mirror-B: D5/B/S0/Certificates/BoxCover/CheckedRationalBoxCover
    mirror-E: none(waiver:checked-continuous-cover)
    anchors: []
+   utility: kind=checker; basis=terminal=gid:D5/S0/Certificates/BoxCover/BoxCoverExamples.square_sublevel_covered; instance=D5/S0/Certificates/BoxCover/BoxCoverExamples.square_forest_accepted
    digest: Exact rational checks of an explicitly ordered box forest supply the local real proofs required by FiniteSublevelCover. -/
 
 import D5.S0.Certificates.BoxCover.RationalIntervalExpression

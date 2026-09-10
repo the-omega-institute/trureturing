@@ -3,6 +3,7 @@
    mirror-B: D5/B/S0/Certificates/BoxCover/RationalIntervalExpression
    mirror-E: none(waiver:exact-real-enclosure-certificate)
    anchors: []
+   utility: kind=checker; basis=consumer=D5/S0/Certificates/BoxCover/CheckedRationalBoxCover.checked_forest_covers_sublevel; instance=D5/S0/Certificates/BoxCover/BoxCoverExamples.square_forest_accepted
    digest: A decidable rational endpoint checker entails enclosure of the actual real evaluation of an annotated arithmetic expression. -/
 
 import Mathlib.Data.Real.Basic

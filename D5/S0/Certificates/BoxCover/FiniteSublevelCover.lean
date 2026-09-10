@@ -3,6 +3,7 @@
    mirror-B: D5/B/S0/Certificates/BoxCover/FiniteSublevelCover
    mirror-E: none(waiver:proof-carrying-analytic-cover)
    anchors: []
+   utility: kind=checker; basis=consumer=D5/S0/Certificates/BoxCover/CheckedRationalBoxCover.checked_forest_covers_sublevel; instance=D5/S0/Certificates/BoxCover/BoxCoverExamples.square_forest_accepted
    digest: A finite postordered family of locally proved enclosure steps covers every real sublevel point, without a finite-candidate assumption or a trusted external verdict. -/
 
 import Mathlib.Data.Real.Basic
