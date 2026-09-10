@@ -131,6 +131,14 @@ the earlier donor seed is recorded above. Lake reports successful completion
 of 12,896 jobs. This is a local build reading, not a CI timing claim.
 The directory now contains 27 files; the original frozen source has no diff.
 
+Canonical report gate: `make lean-report` EXIT=0, wall time 558.407 seconds.
+The producer completed after its full fallback inspected 78,025 declaration
+material files. Output: `.lake/build/stratalint/raw-lean-report.json`, SHA-256
+`6ea9e580cc684cc4f0698ba4bf2d8b18a360d1da59573a487695f541ad655f57`;
+input address
+`sha256:bb401f2f55ac34c9a3c75ff21cf9221fe176fcafe975902db20c7b323e2beef1`.
+The adjacent `.provenance.json` records the canonical producer receipt.
+
 ### Elaborated dependency query
 
 A Lean `run_cmd` query used `Environment.find?`, `ConstantInfo.type`,
