@@ -46,6 +46,66 @@ it does not authorize claiming that an unmerged PR has landed on dev.
 
 Implementation in progress. No theorem has yet been claimed or frozen.
 
+## Search receipts and semantic correction
+
+Local searches used `rg` over D5 for A395842, A177775, diagonal iteration,
+substitution coefficients and dyadic support. Read every public declaration of
+CompositionalIterateCongruence and ShiftedIterateFixedPointCongruence (whole files).
+The former's public surface is iterate, step, fixed_unique, approximation, a,
+generatingSeries, generating_equation, mobius, mobius_iterate, mod_ten_fixed,
+coefficient_congruence. The latter's is a, generatingSeries, generating_equation,
+generating_unique, mod_identity, shift_iterate_mod, hanna_conjecture_five/six.
+Reuse `iterate` directly. No public perturbation or general congruence lemma is
+exported by these files. Read IterateProductNineModThree in full: its useful
+`iterate_top` and substitution perturbation lemmas are private; its public
+lift_mod_nine concerns a different mod-nine product. Such private proofs can
+guide local proofs but are not callable public frozen dependencies.
+
+Pinned Mathlib searches: PowerSeries/Substitution (coeff_subst', map_subst,
+subst_comp_subst_apply, substInvOfIsUnit, both inverse equations), Expand
+(Frobenius expansion), Nat/Choose/Lucas (digit congruences). These give operations,
+not the implicit diagonal bridge. Public Loogle query `"PowerSeries", "subst"`
+returned Mathlib substitution declarations; online version is not the pin, so
+the pin is checked locally before using any declaration. GitHub repository
+searches `Lean power series composition` and `A395842` returned total_count=0;
+these limited repository-name/metadata searches do not rule out hidden proofs.
+arXiv number query returned totalResults=0. Google phrase/number requests returned
+HTTP 200 redirect/interstitial pages, not search results; they provide no negative
+literature evidence. URLs, response sizes and SHA-256 are in search-receipts.json.
+
+Actually opened both official OEIS text responses in full. Their conjectural
+comments agree with the supplied triage assessment. No proof was found in these
+opened sources. This is not an exhaustive absence claim.
+
+**Correction to supplied numerical reading:** official A395842 DATA begins
+1,2,−6,66; the task brief says a(2)=4. The stated normalization gives
+[x²](G∘G)=g₁g₂+g₂g₁²=2. The target remains the same, since both 2 and 4 are even.
+The brief's claim of all DATA equality therefore cannot include its reported
+a(2)=4. No larger enumeration is planned to replace a proof.
+
+## Preregistration revision 2 (before proof experiments)
+
+Retain the implicit uniqueness bridge; replace the proposed binomial/Lucas
+implementation with this candidate equivalent mechanism, still unverified:
+let P=X+X² over ZMod 2 and H be its compositional inverse (via pinned Mathlib).
+Prove P iterated 2^r = X+X^(2^(2^r)); transport the inverse relation to obtain
+H iterated 2^r + (H iterated 2^r)^(2^(2^r))=X. This gives vanishing coefficients
+in the required degree interval. The relation H^∘(m+1)+(H^∘(m+1))²=H^∘m
+gives support only at powers of two by induction on degree. Together they imply
+the diagonal rule and parity for H. The proposed escape witness is this
+degree-gap identity on the live path from implicit uniqueness to the final parity.
+No existing proved H/diagonal bridge was found, so the high-bind stop does not apply.
+
+## Build environment
+
+Lean 4.33.0 and Mathlib db584cd6d46c92f209a44c0f1c829460d327499d match the task.
+`make lean-cache-ensure` EXIT=0: status=seeded, method=clonefile,
+donor=/Users/chronoai/trureturing, clonefile_attempts=1, stamp_miss=null,
+mathlib_olean_state=warm, project_olean_state=warm, mathlib_missing_olean_files=0.
+No cold bare lake command was run. Parity target bucket currently has 26 files
+(`find D5/S1/Recurrence/Parity -type f | wc -l`), below 48. The spec A5.1 utility
+grammar and registered Recurrence domain were checked.
+
 ## Unclaimed
 
 No claim of an exhaustive literature search, a proof of G's parity, a proof of
