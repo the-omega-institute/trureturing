@@ -120,3 +120,9 @@ files and was not selected. Library/notes had 27 direct files before this
 note. The source and mirror fit the registered S1 Recurrence domain. The
 manifest's artifact is `lean` (an initial empty-artifact invocation was rejected
 without mutation, then corrected). The seven-line header follows spec A5.1.
+
+`make lean-report` exited 0. Canonical report SHA-256:
+`1db433bbd13eba3eec2e7c67b0b1b7ffaa6b7d562ccf7c29c39116cf7e8aad42`.
+Its delta plan reports 37 added modules relative to the cached report input;
+this is report-cache scope, not a claim that this PR adds 37 modules. Only the
+new LinearExponentDyadicSupport module belongs to this task's Lean delta.
