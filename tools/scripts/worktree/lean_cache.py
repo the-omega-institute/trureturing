@@ -51,7 +51,7 @@ def actions_keys(root: pathlib.Path) -> dict:
                   and os.environ.get("STRATALINT_CACHE_WRITES", "true") == "true"
                   and os.environ.get("STRATALINT_CHECK_SUCCEEDED") == "true"}
     paths = {"dependency": ".lake/packages", "project": ".lake/build",
-             "report": ".lake/report-cache"}
+             "report": ".lake/report-cache", "tests": ".lake/test-cache/" + partition_path(root)}
     for layer, path in paths.items():
         prefix = f"lean-{layer}-v3-{revision}-{system}-{machine}-"
         result[layer] = {"restore_prefix": prefix, "key": f"{prefix}{run}-{attempt}",

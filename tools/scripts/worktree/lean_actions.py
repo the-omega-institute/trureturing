@@ -14,7 +14,8 @@ import tempfile
 from lean_cache import actions_keys, binary_platform
 from lean_cache_release import cache_guard, sha
 
-LAYERS = ("dependency", "project", "report")
+DEFAULT_LAYERS = ("dependency", "project", "report")
+LAYERS = (*DEFAULT_LAYERS, "tests")
 
 
 def output(values, destination="GITHUB_OUTPUT"):
@@ -44,8 +45,8 @@ def files(directory):
     return result
 
 
-def snapshot(root, keys):
-    for layer in LAYERS:
+def snapshot(root, keys, layers=DEFAULT_LAYERS):
+    for layer in layers:
         ready = False
         try:
             if not keys["save_allowed"]:
@@ -72,9 +73,9 @@ def snapshot(root, keys):
             output({layer + "_ready": ready})
 
 
-def restore(root, keys, matched):
+def restore(root, keys, matched, layers=DEFAULT_LAYERS):
     project_seeded = False
-    for layer in LAYERS:
+    for layer in layers:
         try:
             spec, key = keys[layer], matched[layer]
             if not key:
@@ -116,6 +117,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("command", choices=("keys", "restore", "snapshot"))
     parser.add_argument("--repository", required=True, type=pathlib.Path)
+    parser.add_argument("--layer", action="append", choices=LAYERS)
     for layer in LAYERS:
         parser.add_argument("--" + layer + "-key", default="")
     args = parser.parse_args()
@@ -130,9 +132,9 @@ def main():
             values["elan_key"] = f"elan-v1-{system}-{arch}-{toolchain}"
             output(values)
         elif args.command == "restore":
-            restore(args.repository, keys, {layer: getattr(args, layer + "_key") for layer in LAYERS})
+            restore(args.repository, keys, {layer: getattr(args, layer + "_key") for layer in LAYERS}, args.layer or DEFAULT_LAYERS)
         else:
-            snapshot(args.repository, keys)
+            snapshot(args.repository, keys, args.layer or DEFAULT_LAYERS)
         return 0
     except (OSError, ValueError, TypeError, KeyError) as error:
         receipt("all", "unavailable", reason=str(error))

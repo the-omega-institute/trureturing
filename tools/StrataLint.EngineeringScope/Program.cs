@@ -61,10 +61,11 @@ internal static class Program
                 arguments = arguments.Take(3).ToArray();
             }
             var repository = RepositoryOption(arguments, allowAll: true);
-            var build = buildRound is null ? null : CommonExecutionEvidence.ValidateBuild(repository, buildRound);
+            var build = buildRound is null && !File.Exists(Path.Combine(repository, CommonExecutionEvidence.BuildPath))
+                ? null : CommonExecutionEvidence.ValidateBuild(repository, buildRound);
             var testAssemblies = build is null ? null : CommonBuildOutputs.TestAssemblies(repository, build);
-            return RunCurrentTests(repository, (project, results) => RunTests(repository,
-                testAssemblies is null ? project : testAssemblies[project], results), output, build);
+            return RunCurrentTests(repository, (project, results, filter) => RunTests(repository,
+                testAssemblies is null ? project : testAssemblies[project], results, filter), output, build);
         }
         catch (Exception exception)
         {
@@ -80,6 +81,13 @@ internal static class Program
         return arguments.Count == 2 && arguments[0] == "--repository" && !string.IsNullOrWhiteSpace(arguments[1])
             ? Path.GetFullPath(arguments[1])
             : throw new ArgumentException("options must be exactly --repository value");
+    }
+
+    internal static int RunCurrentTests(string root, Func<string, string, string?, int> run, TextWriter output, CommonStageRecord? build = null)
+    {
+        if (build is not null && build.Materials.Any(material => material.Path == AffectedTestPlan.PathName))
+            return AffectedTestExecution.Run(root, run, output, build);
+        return RunCurrentTests(root, (project, results) => run(project, results, null), output, build);
     }
 
     internal static int RunCurrentTests(string root, Func<string, string, int> run, TextWriter output, CommonStageRecord? build = null)
@@ -114,26 +122,27 @@ internal static class Program
         var paths = records.SelectMany(record => Directory.GetFiles(Path.Combine(root, record.Results), "*.trx"))
             .Select(path => Path.GetRelativePath(root, path).Replace('\\', '/'));
         CommonExecutionEvidence.Write(root, CommonExecutionEvidence.TestsPath,
-            new TestExecutionRecord(1, candidate, round, records.ToArray(), CommonExecutionEvidence.Materials(root, paths)));
+            new TestExecutionRecord(2, candidate, round, records.ToArray(), CommonExecutionEvidence.Materials(root, paths)));
         if (CommonExecutionEvidence.Candidate(root) != candidate) throw new InvalidDataException("candidate changed during test execution");
         return records.Any(static record => record.Exit != 0 || record.Error is not null || record.Executed == 0) ? 1 : 0;
     }
 
-    private static int RunTests(string root, string project, string results)
+    private static int RunTests(string root, string project, string results, string? filter = null)
     {
         var start = new ProcessStartInfo("dotnet") { WorkingDirectory = root, UseShellExecute = false };
         start.Environment["DOTNET_CLI_UI_LANGUAGE"] = "en-US";
         if (Directory.Exists(Path.Combine(root, CommonBuildOutputs.PackagesPath)))
             start.Environment["NUGET_PACKAGES"] = Path.Combine(root, CommonBuildOutputs.PackagesPath);
-        foreach (var argument in BuildTestArguments(project, results)) start.ArgumentList.Add(argument);
+        foreach (var argument in BuildTestArguments(project, results, filter)) start.ArgumentList.Add(argument);
         using var process = Process.Start(start) ?? throw new InvalidOperationException("could not start dotnet test");
         process.WaitForExit();
         return process.ExitCode;
     }
 
-    internal static IReadOnlyList<string> BuildTestArguments(string projectPath, string resultsDirectory) =>
+    internal static IReadOnlyList<string> BuildTestArguments(string projectPath, string resultsDirectory, string? filter = null) =>
         new[] { "test", projectPath, "--configuration", "Release", "--verbosity", "minimal", "--no-restore", "--no-build" }
-            .Concat(["--logger", "trx;LogFilePrefix=engineering", "--results-directory", resultsDirectory]).ToArray();
+            .Concat(["--logger", "trx;LogFilePrefix=engineering", "--results-directory", resultsDirectory])
+            .Concat(filter is null ? [] : new[] { "--filter", filter }).ToArray();
 
     private static int VerifyTrx(IReadOnlyList<string> arguments, Func<string, TestResultEvidence> load, TextWriter output)
     {

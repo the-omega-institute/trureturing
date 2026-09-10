@@ -110,7 +110,28 @@ jobs:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
       - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - id: tests
+        if: steps.keys.outputs.tests_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ steps.keys.outputs.tests_path }}
+          key: ${{ steps.keys.outputs.tests_key }}
+          restore-keys: ${{ steps.keys.outputs.tests_restore_prefix }}
+      - env:
+          TESTS_KEY: ${{ steps.tests.outputs.cache-matched-key }}
+        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layer tests --tests-key "$TESTS_KEY"
       - run: make -C tools engineering
+      - id: tests_snapshot
+        env:
+          STRATALINT_CHECK_SUCCEEDED: 'true'
+        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layer tests
+      - if: steps.tests_snapshot.outputs.tests_ready == 'true'
+        continue-on-error: true
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ steps.keys.outputs.tests_path }}
+          key: ${{ steps.keys.outputs.tests_key }}
       - id: pack
         run: python3 tools/scripts/workflow/ci.py pack --repository "$GITHUB_WORKSPACE" --stage engineering --commit "$CANDIDATE_SHA" --archive "$RUNNER_TEMP/ci-engineering.tar.gz"
       - id: upload

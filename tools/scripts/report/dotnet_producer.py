@@ -7,7 +7,8 @@ import tempfile
 import xml.etree.ElementTree as ET
 
 
-def project_inputs(root, project):
+def project_inputs(root, project, evaluation_cache=None):
+    evaluation_cache = {} if evaluation_cache is None else evaluation_cache
     paths = set()
     semantics = set()
 
@@ -18,12 +19,16 @@ def project_inputs(root, project):
         paths.add(path.relative_to(root))
 
     def query(project, *arguments):
+        key = (str(project), arguments)
+        if key in evaluation_cache:
+            return evaluation_cache[key]
         result = subprocess.run([
             "dotnet", "msbuild", str(root / project), "-nologo", "-noAutoResponse",
             "-nodeReuse:false", "-verbosity:quiet", "-property:Configuration=Release", *arguments,
         ], cwd=root, text=True, capture_output=True)
         if result.returncode:
             raise ValueError(f"MSBuild producer evaluation failed: {root / project}\n{result.stdout}{result.stderr}")
+        evaluation_cache[key] = result.stdout
         return result.stdout
 
     add_file(root / "global.json")
@@ -32,7 +37,7 @@ def project_inputs(root, project):
     properties = ("NETCoreSdkVersion", "TargetFramework", "RuntimeIdentifier", "DefineConstants",
                   "LangVersion", "Nullable", "ImplicitUsings", "Optimize", "AllowUnsafeBlocks",
                   "CheckForOverflowUnderflow", "PlatformTarget", "RestorePackagesWithLockFile",
-                  "NuGetLockFilePath")
+                  "NuGetLockFilePath", "AssemblyName", "TargetPath")
     while pending:
         project = pathlib.Path(pending.pop())
         if project in visited:
@@ -48,7 +53,10 @@ def project_inputs(root, project):
             for item in items:
                 path = pathlib.Path(item["FullPath"]).resolve()
                 if kind == "Analyzer" and not path.is_relative_to(root):
-                    semantics.add(("external-analyzer", hashlib.sha256(path.read_bytes()).hexdigest()))
+                    digest_key = (str(path), "sha256")
+                    if digest_key not in evaluation_cache:
+                        evaluation_cache[digest_key] = hashlib.sha256(path.read_bytes()).hexdigest()
+                    semantics.add(("external-analyzer:" + str(path), evaluation_cache[digest_key]))
                     continue
                 add_file(path)
                 if kind == "ProjectReference":
@@ -60,26 +68,68 @@ def project_inputs(root, project):
             add_file(root / project.parent / (values["NuGetLockFilePath"] or "packages.lock.json"))
         # /preprocess records the imports MSBuild actually evaluated, including
         # property-only imports absent from MSBuildAllProjects and item metadata.
-        with tempfile.TemporaryDirectory(prefix="report-msbuild-") as temporary:
-            expanded = pathlib.Path(temporary) / "project.xml"
-            query(project, f"-preprocess:{expanded}")
-            parser = ET.XMLParser(target=ET.TreeBuilder(insert_comments=True))
-            document = ET.parse(expanded, parser=parser)
+        import_key = (str(project), "imports")
+        if import_key not in evaluation_cache:
+            evaluation_cache[import_key] = imported_paths(project, query)
+        imported = evaluation_cache[import_key]
         imports = 0
-        for node in document.iter(ET.Comment):
-            lines = (node.text or "").strip().splitlines()
-            if len(lines) < 3 or set(lines[0].strip()) != {"="} or lines[0] != lines[-1]:
-                continue
-            path = pathlib.Path(lines[-2].strip())
-            if not path.is_absolute():
-                continue
+        for value in imported:
+            path = pathlib.Path(value)
             imports += 1
             path = path.resolve()
             if path.is_relative_to(root):
                 if "obj" not in path.relative_to(root).parts:
                     add_file(path)
             else:
-                semantics.add(("external-build-input", hashlib.sha256(path.read_bytes()).hexdigest()))
+                digest_key = (str(path), "sha256")
+                if digest_key not in evaluation_cache:
+                    evaluation_cache[digest_key] = hashlib.sha256(path.read_bytes()).hexdigest()
+                semantics.add(("external-build-input:" + str(path), evaluation_cache[digest_key]))
         if not imports:
             raise ValueError(f"MSBuild returned no import provenance: {project}")
     return paths, semantics
+
+
+def imported_paths(project, query):
+        with tempfile.TemporaryDirectory(prefix="report-msbuild-") as temporary:
+            expanded = pathlib.Path(temporary) / "project.xml"
+            query(project, f"-preprocess:{expanded}")
+            parser = ET.XMLParser(target=ET.TreeBuilder(insert_comments=True))
+            document = ET.parse(expanded, parser=parser)
+        result = []
+        for node in document.iter(ET.Comment):
+            lines = (node.text or "").strip().splitlines()
+            if len(lines) < 3 or set(lines[0].strip()) != {"="} or lines[0] != lines[-1]:
+                continue
+            path = pathlib.Path(lines[-2].strip())
+            if path.is_absolute():
+                result.append(str(path))
+        return result
+
+
+def export_ci_inputs(root):
+    """One evaluated graph per shared build; no consumer repeats MSBuild queries."""
+    root = root.resolve()
+    directory = root / "build/ci/build-outputs"
+    cache, result = {}, []
+    for inventory in sorted(directory.rglob("*.outputs")):
+        project = pathlib.Path(inventory.read_text().splitlines()[0]).resolve().relative_to(root)
+        paths, semantics = project_inputs(root, project, cache)
+        evaluated = next(json.loads(value) for key, value in cache.items()
+                         if key[0] == str(project) and isinstance(key[1], tuple)
+                         and key[1][0].startswith("-getItem:"))
+        native = inventory.with_suffix(".native").read_text().splitlines()
+        # These are the actual post-build Compile/ReferencePath items, including
+        # generated sources and resolved SDK/package metadata.
+        items = {kind: [line.split("=", 1)[1] for line in native if line.startswith(kind + "=")]
+                 for kind in ("compile", "reference", "project", "argument", "generated")}
+        result.append({"project": project.as_posix(), "inputs": sorted(path.as_posix() for path in paths),
+                       "semantics": [list(item) for item in sorted(semantics)],
+                       "properties": evaluated["Properties"], **{("project_references" if kind == "project" else kind): value for kind, value in items.items()}})
+    destination = directory / "native-inputs.json"
+    destination.write_text(json.dumps(result, sort_keys=True) + "\n")
+
+
+if __name__ == "__main__":
+    import sys
+    export_ci_inputs(pathlib.Path(sys.argv[1]))

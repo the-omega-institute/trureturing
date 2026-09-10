@@ -75,6 +75,11 @@ internal static class CommonBuildOutputs
                      CommonExecutionEvidence.CliPath, CommonExecutionEvidence.RunnerPath, CommonExecutionEvidence.ScribePath }))
             foreach (var path in new[] { assembly, Path.ChangeExtension(assembly, ".deps.json"), Path.ChangeExtension(assembly, ".runtimeconfig.json") })
                 if (!paths.Contains(path)) throw new InvalidDataException("missing runtime output: " + path);
+        var evaluated = BoundedProcessRunner.Run("python3", ["tools/scripts/report/dotnet_producer.py", root], root,
+            BoundedProcessRunner.HangDetectionBudget, 4096);
+        if (evaluated.ExitCode != 0) throw new InvalidDataException("native build input export failed: "
+            + System.Text.Encoding.UTF8.GetString(evaluated.StandardOutput) + System.Text.Encoding.UTF8.GetString(evaluated.StandardError));
+        paths.Add(AffectedTestPlan.NativePath);
         CommonExecutionEvidence.Write(root, TestsPath, tests);
         return paths.Append(TestsPath).ToArray();
 
@@ -84,6 +89,24 @@ internal static class CommonBuildOutputs
             if (!RepoPath.TryCreate(relative, out _)) throw new InvalidDataException("build output escapes candidate: " + path);
             return relative;
         }
+    }
+
+    internal static bool HasModuleInitializer(string path)
+    {
+        using var stream = File.OpenRead(path);
+        using var pe = new PEReader(stream);
+        try
+        {
+            if (!pe.HasMetadata) return false;
+            var metadata = pe.GetMetadataReader();
+            return metadata.TypeDefinitions.Any(handle =>
+            {
+                var type = metadata.GetTypeDefinition(handle);
+                return metadata.GetString(type.Name) == "<Module>" && type.GetMethods().Any(method =>
+                    metadata.GetString(metadata.GetMethodDefinition(method).Name) == ".cctor");
+            });
+        }
+        catch (BadImageFormatException) { return false; } // Native DLLs/data have no CLR module initializer.
     }
 
     internal static Dictionary<string, string> TestAssemblies(string root, CommonStageRecord build)

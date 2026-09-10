@@ -20,6 +20,7 @@ public sealed class SharedBuildRuntimeTests
         Write("NuGet.Config", "<configuration><packageSources><clear /></packageSources></configuration>\n");
         Write("global.json", File.ReadAllText(Path.Combine(repository, "global.json")));
         Write("tools/scripts/ci-build-outputs.targets", File.ReadAllText(Path.Combine(repository, "tools/scripts/ci-build-outputs.targets")));
+        Write("tools/scripts/report/dotnet_producer.py", File.ReadAllText(Path.Combine(repository, "tools/scripts/report/dotnet_producer.py")));
         var projects = new[] { ("StrataLint.Cli", "StrataLint"), ("StrataLint.EngineeringScope", "StrataLint.EngineeringScope"),
             ("StrataLint.Scribe.Documents", "StrataLint.Scribe.Documents") };
         foreach (var (project, assembly) in projects)

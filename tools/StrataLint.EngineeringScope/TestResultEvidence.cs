@@ -7,6 +7,9 @@ internal sealed record TestResultEvidence(
     int Executed,
     IReadOnlySet<(string Assembly, string Id)> ExecutedTests)
 {
+    internal IReadOnlyDictionary<string, int> MethodCounts { get; init; } = new Dictionary<string, int>();
+    internal IReadOnlySet<string> SkippedMethods { get; init; } = new HashSet<string>();
+
     internal static TestResultEvidence Load(string resultsDirectory)
     {
         var files = Directory.GetFiles(resultsDirectory, "*.trx", SearchOption.TopDirectoryOnly);
@@ -15,6 +18,8 @@ internal sealed record TestResultEvidence(
         var executed = 0;
         var actual = new HashSet<(string Assembly, string Id)>();
         var unresolved = new List<string>();
+        var counts = new Dictionary<string, int>(StringComparer.Ordinal);
+        var skipped = new HashSet<string>(StringComparer.Ordinal);
         foreach (var file in files)
         {
             var document = XDocument.Load(file, LoadOptions.None);
@@ -63,8 +68,7 @@ internal sealed record TestResultEvidence(
             {
                 var id = (string?)test.Attribute("id");
                 if (id is null
-                    || !results.TryGetValue(id, out var result)
-                    || (string?)result.Attribute("outcome") == "NotExecuted")
+                    || !results.TryGetValue(id, out var result))
                 {
                     continue;
                 }
@@ -76,6 +80,9 @@ internal sealed record TestResultEvidence(
                     ?? throw new InvalidDataException("TRX test has no method identity");
                 var storage = (string?)test.Attribute("storage")
                     ?? throw new InvalidDataException("TRX test has no assembly identity");
+                var fullName = className + "." + methodName.Split('(')[0];
+                if ((string?)result.Attribute("outcome") == "NotExecuted") { skipped.Add(fullName); continue; }
+                counts[fullName] = counts.GetValueOrDefault(fullName) + 1;
                 actual.Add((Path.GetFileNameWithoutExtension(storage), $"{className.Split('.').Last()}.{methodName}"));
             }
         }
@@ -86,7 +93,7 @@ internal sealed record TestResultEvidence(
         }
 
         if (executed == 0) throw new InvalidDataException("dotnet test executed zero tests");
-        return new TestResultEvidence(executed, actual);
+        return new TestResultEvidence(executed, actual) { MethodCounts = counts, SkippedMethods = skipped };
     }
 
     internal int CountAssembly(string expectedAssembly) =>

@@ -1,6 +1,12 @@
 <Project>
   <!-- FileWrites is populated by the compiler and copy targets, including on an
        incremental Build. Do not infer runtime membership by walking bin/obj. -->
+  <!-- CoreCompile owns this receipt. A native no-op retains its prior arguments. -->
+  <Target Name="RecordCiCompilerArguments" AfterTargets="CoreCompile"
+      Condition="'$(CiBuildOutputRoot)' != '' and '@(CscCommandLineArgs)' != ''">
+    <WriteLinesToFile File="$(IntermediateOutputPath)ci-compiler-arguments.txt"
+      Lines="@(CscCommandLineArgs)" Overwrite="true" WriteOnlyWhenDifferent="true" />
+  </Target>
   <Target Name="RecordCiBuildOutputs" AfterTargets="Build" Condition="'$(CiBuildOutputRoot)' != ''">
     <PropertyGroup>
       <_CiProject>$([MSBuild]::MakeRelative('$(CiRepositoryRoot)', '$(MSBuildProjectFullPath)'))</_CiProject>
@@ -10,5 +16,12 @@
     <MakeDir Directories="$([System.IO.Path]::GetDirectoryName('$(_CiManifest)'))" />
     <WriteLinesToFile File="$(_CiManifest)" Overwrite="true"
       Lines="$(MSBuildProjectFullPath);$(TargetPath);$(TargetDir);$(ProjectAssetsFile);reference=$(_CiReference);@(FileWrites->'%(FullPath)')" />
+    <ItemGroup><_CiGeneratedSource Include="$(CompilerGeneratedFilesOutputPath)/**/*.cs" Condition="'$(CompilerGeneratedFilesOutputPath)' != ''" /></ItemGroup>
+    <ReadLinesFromFile File="$(IntermediateOutputPath)ci-compiler-arguments.txt"
+        Condition="Exists('$(IntermediateOutputPath)ci-compiler-arguments.txt')">
+      <Output TaskParameter="Lines" ItemName="_CiCompilerArguments" />
+    </ReadLinesFromFile>
+    <WriteLinesToFile File="$([System.IO.Path]::ChangeExtension('$(_CiManifest)', '.native'))" Overwrite="true"
+      Lines="@(_CiGeneratedSource->'generated=%(FullPath)');@(Compile->'compile=%(FullPath)');@(ReferencePath->'reference=%(FullPath)');@(ProjectReference->'project=%(FullPath)');@(_CiCompilerArguments->'argument=%(Identity)')" />
   </Target>
 </Project>
