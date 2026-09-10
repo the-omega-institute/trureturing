@@ -68,3 +68,13 @@ GitHub code search 实测可用：查询 `"Gibbs" language:Lean` 和
 缓存预热：make lean-cache-ensure EXIT=0；LEAN_CACHE status=seeded, method=clonefile,
 clonefile_attempts=1, project_olean_state=warm, mathlib_olean_state=warm,
 donor=/Users/chronoai/trureturing；完整日志 /tmp/gibbsvar-cache.log。
+
+## Lean 接线尝试
+
+热树 API 探针确认 `CFC.log_smul'`、`CFC.log_exp`、`Matrix.PosDef.trace_pos` 可用。
+首版编译发现 `NormedAlgebra ℚ (CStarMatrix n n ℂ)` 需局部 restrictScalars，
+且 CStarMatrix 的谱序不能与 MatrixOrder 定义等同；现改用
+`CStarMatrix.ofMatrixStarAlgEquiv.symm` 的 `map_nonneg` 及 ring equivalence 的 IsUnit 传递。
+迹代数已接入仓内熵分解；目前候选尚在编译修复，未声称 kernel 通过。
+route 实测返回 `D5/S3/Quantum/Divergence/GibbsVariationalIdentity.lean`，generality=G，utility=none。
+全部声明为任意有限非空指标类型的一般算子结果，不属于有界枚举、检查器、数值归约或认证实例。
