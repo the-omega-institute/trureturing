@@ -171,6 +171,11 @@ After freezing, the problem-resolution claim was restored and `make emit`
 passed again: EXIT=0, 61.698 seconds. The generated Blueprint now records
 that the exact target problem is proved by the frozen `a393867_odd`.
 
+Final local `scribe-content-checks.sh` after the resolution was restored:
+EXIT=0, 23.479 seconds. Describe: `red=0`; KaTeX:
+`judged=1 formula(s)=2 red=0`. All required local content checks selected by
+the change passed before PR publication. `make preflight` was not run.
+
 Pre-PR integration check: fetched `origin/dev` at
 `782d277e9cbfed84c26daf04ea6a3ea66c1ac44c` (the original base plus the
 A396843 lane). `git merge-tree --write-tree HEAD origin/dev` returned EXIT=0
