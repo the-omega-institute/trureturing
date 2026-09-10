@@ -1,0 +1,17 @@
+### 本轮唯一公共 Lean 主定理
+
+```text
+D5/S3/Quantum/Tomography/OrderThreeComplementaryContextRigidity.lean
+orderThree_complementary_contexts_no_split
+```
+
+直接复用 `RankOneContextCommutator` 中的 `RankOneContext`、`overlap`、rank-one projection laws，以及 Mathlib 的 `Matrix.trace`、有限谱和、complex conjugation。内部计算 lemma 保持 private，没有新建 basis、pinching、unitary 或 affinity carrier。
+
+Scribe 说明位于：
+
+```text
+Blueprint/D5/S3/Quantum/Tomography/OrderThreeComplementaryContextRigidity.scribe.cs
+```
+
+公共 theorem 的假设明确包括两个 context 的正交性、MUB overlap、两个 coefficient sums 为零、矩阵 unitarity 和三阶关系。结论是至少一整组 coefficient 为零。
+

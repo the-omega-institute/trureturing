@@ -1,0 +1,18 @@
+## 24. 主线冻结
+
+历史主线为：
+
+```text
+fixed strict-X edge
+  -> mode-coordinate completion equations
+  -> symmetry-plane affinity alpha
+  -> prove alpha > 1 on each generic branch
+  -> use alpha(C)+alpha(D) <= 2
+  -> isolate equality/ramification locus
+  -> exact exceptional certificates
+```
+
+第 31 节后，只需 context-level `alpha>=1` 就可用 order-three rigidity 排除两个 completions。这里仍未证明这个 branch lower bound。
+
+这条路线不要求先解决所有 MUB triplets，也不要求先证明 noncanonical fibre 为空。它把 quartet-specific obstruction 压缩为一个 centered-projector sharp bound，并保留 Hadamard atlas、feature kernels 和 finite symmetry skeleton 作为 branch-complete 后端。
+
