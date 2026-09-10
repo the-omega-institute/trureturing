@@ -1,0 +1,5 @@
+source_id = "mub-six-fourth-basis-theory"
+path = "docs/develop/theory/MUB_SIX_FOURTH_BASIS_THEORY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

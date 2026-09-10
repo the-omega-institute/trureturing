@@ -1,0 +1,35 @@
+### 一个复三阶行列式足以同时处理相位和幅度
+
+设每个 `v_k` 非零，`v,w` 都 normalized 且 coordinate-flat。写 `v_k=(u_k,z_k)`，定义：
+
+```math
+c_k=\overline{u_k}u_{k+1},\qquad
+ d_k=\overline{z_k}z_{k+1},
+```
+
+下标模三。由 length-three constant-modulus Fourier 条件，`sum c_k=sum d_k=0`。
+
+令：
+
+```math
+\Delta(v)=\det\begin{pmatrix}
+c_0&c_1&c_2\\d_0&d_1&d_2\\1&1&1
+\end{pmatrix}.
+```
+
+假设 `Delta(v) != 0`，则前两行独立，它们的共同 kernel 恰为 `span(1,1,1)`。
+
+对逐模正交的 `w_k=lambda_k J conjugate(v_k)`，令：
+
+```math
+r_k=\lambda_k\overline{\lambda_{k+1}}.
+```
+
+`w` 的两条 autocorrelation equations 给出 `sum r_k c_k=sum r_k d_k=0`，故：
+
+```math
+r_0=r_1=r_2=\rho.
+```
+
+必须保留两个分支：
+
