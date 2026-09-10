@@ -1,3 +1,34 @@
+## 本轮:**维持「无靶,暂停派席」**(第 12 轮,2026-09-10)
+
+第 12 轮向 `chatgpt-pro-pool` 派出一席核对,该席**独立维持**第 11 轮的停止判定,
+未被推动派题。判词与三条新读数存于 `round-12-20260910T185807Z.md`。
+**结论未变,故 CHARTER 不动**;本节只记新读数。
+
+### 新读数①:`waiting_response` 的词面命中不证明「仍在飞」
+
+归档文件开头是 CLI 的状态序列(`dispatched / selecting_model / sent / waiting_response`),
+**其后紧接判词正文与收尾**。以裸词面 `waiting_response` 判「该轮仍在飞」是把
+**表头**当**终态**读,属第 8.4 条 所指的坏原材料。判在飞须看该文件是否含判词正文与收尾段,
+或读宿主任务的哨兵退出码,不看表头词。
+
+### 新读数②:runner 默认池不是 `chatgpt-pro-pool`
+
+`quantum-reality-round.sh` 写的是 `POOL="${2:-chrono-chatgpt-pro-pool}"`;
+第二参数可覆盖。故「坏池在默认路径上」不成立,不因此 hotfix。
+**边界**:源码只证默认值,**不认证任一池的运行时健康**;文件存在性检查不是池健康检查。
+
+### 新读数③:第 11 轮所引承重内容已核到
+
+`D5.S3.Observer.Fluctuation.ThermalCoefficientFloor.sinh_le_self_mul_cosh_of_nonneg`
+的声明与其冻结状态片 `Golden/Frozen/state/D5/S3/Observer/Fluctuation/ThermalCoefficientFloor.lean.json`
+均存在于所钉提交。
+
+### 本轮的编号勘误
+
+派发时 runner 被传入**主检出**作 lane-dir,其 `docs/reports/quantum-reality/` 只到第 10 轮,
+故它算出 `round=10`,与本文件当前段(第 11 轮)冲突。该席当场指出此冲突。
+真实轮次为**第 12 轮**,归档按此命名;主检出已恢复干净(第 6.1 条)。
+
 ## 本轮:**无靶,暂停派席**(第 11 轮,2026-09-10)
 
 **判定与第 9、10 轮相同,且本轮无任何推翻**:三个原问题自第 8 轮起全部结算,
