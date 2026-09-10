@@ -140,3 +140,17 @@ The coefficient classification and `hanna_conjecture` passed the file-level
 Lean check, EXIT=0. Its axiom closure contains only propext, Classical.choice,
 Quot.sound. The source-form inverse-denominator interface, mirrors, freeze and
 project gates are still pending; this checkpoint is not final delivery.
+
+## Exact domain and source interface
+
+`integer_exists_unique` now states existence and uniqueness directly for
+zero-constant integer A and the inverse-denominator equation.
+`generating_equation` proves the constructed witness satisfies that equation.
+`hanna_conjecture` quantifies over every such integer A, with the exact n>2
+and k>1 bounds. All three passed the file check with standard axioms only.
+The superseded private coprime-divisibility experiment was removed; its stronger
+exact normalization remains on the live proof path.
+
+Routing returned D5/S1/Recurrence/SquareRows/SquareExponentDyadicSupport.
+Before addition this new formal/Blueprint bucket held 0 files each. The old
+Parity Blueprint bucket held 58 files; no frozen module was moved.
