@@ -4,8 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Admissible permutations produce bounded reversed tail words.
--/
+   digest: Admissible permutations produce bounded reversed tail words. -/
 
 import D5.S1.Words.Compositions.AlternatingResidualBridge
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
