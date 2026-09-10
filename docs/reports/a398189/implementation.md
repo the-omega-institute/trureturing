@@ -161,3 +161,16 @@ BASE=343718ed191002a4708ccf381081f9b0c7a58e1a` EXIT=0，92.742 s。
 公开定理 statement_id 保持上文 `sha256:2e736644e8d10de8ac10b8f0119891f2e59157d3122789f10da2fede6452aa8a`。
 接受事件：`Golden/Frozen/accepted/c9afbf1136a213d622f37bbf714f338caba8243879b3fdeb78bce16a165c23a4.json`。
 没有理论卷、atom 或 backfill 变更。未把私有余数枚举另做公开正向实例。
+
+## 交付状态
+
+成（按 brief 的判据）：最终 `make lean` EXIT=0，无 sorry、无私 axiom，公开定理覆盖全部指定参数；
+已冻结并经 `make pr-open` 开出 PR：
+https://github.com/the-omega-institute/trureturing/pull/6764 。
+创建时的证明/冻结提交为 `e4c9cc2f4188dd01466c131a0c812d3d06736364`。
+创建工具正在同步等待 required CI；本段不声称 CI 已绿或已经合并。
+本题交付两分支本身，不以 k=0、偶 n 或 Legendre 公式替代目标。
+保留未主张：例外类公式、全球文献穷尽、91项 DATA 的本席重算、独立评审、合并。
+上游56/45格结构探针仍按转述标 ASSUMED-UNVERIFIED；本席提交的是已编译的全称证明。
+原始门日志、逐次退出码/耗时和 runner 信封保存在本 attempt 目录；
+最终远端状态以 runner `result.json` 和其 `log_ref` 指向的交付记录为准。
