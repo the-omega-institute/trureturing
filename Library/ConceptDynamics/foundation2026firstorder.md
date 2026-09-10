@@ -43,7 +43,7 @@ triage: anchor
 <!-- GID: D5/L/ConceptDynamics/foundation2026firstorder -->
 # foundation2026firstorder
 
-## Upstream source
+## Verified locator
 
 Immutable source: [FormalizedFormalLogic/Foundation](https://github.com/FormalizedFormalLogic/Foundation/tree/30a16ffa93d79d73ab4d02427fa00f50e039bf29),
 revision `30a16ffa93d79d73ab4d02427fa00f50e039bf29`. The table below locates the
