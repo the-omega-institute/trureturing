@@ -107,3 +107,33 @@ Scribe 首次编译另报 `Sub` 未定义；按同目录 Gibbs 页面已有写�
 所有态是否在线段上。
 `dominating_theorem_search`：found（冻结的双捏合退极化与 Gibbs 守恒式）；
 新模块只作 atom 要求的具体连接，不宣称独立新数学内容。检索范围与命中身份如上。
+
+
+## 门链与结算
+
+**本次结算：成（用户指定的本地 implementation 标准）。**
+
+| 检查（按执行顺序） | 结果 |
+| --- | --- |
+| serial-lean | exit 0；status=complete built=1 failed=0 missing=1 |
+| make lean-report | exit 0；源码绑定报告中的三条定理只有标准三公理 |
+| make emit | exit 0；生成新页面 |
+| make deposit-uncovered | exit 0；added=1, conflicts=0；FROZEN_UNCOVERED |
+| scribe-content-checks.sh | exit 0；status=classified，red=0；无 RED 行 |
+
+最后一项第三参数是精确 merge-base
+`bc401f09ba6919eb52582a8530c23612049e7de8`，不是分支名。
+判词收据见 [scribe-content.log](scribe-content.log)，原始完整输出在 runner attempt 的
+`scribe-content.full.log`。其它收据分别为 build-pass.log、lean-report-pass.log、
+emit.log、deposit.log。合并试算 `git merge-tree --write-tree HEAD origin/dev` 退出 0。
+
+冻结模块身份为 `sha256:35bc509bf4b82c079bd7c8c06a5c9d31ce83461f536ff1ceb9b31c11ce8b61a0`。
+主定理身份为 `sha256:3ac9792e7fabd8d22497f7f494f44db1677296c582ad065fd855ba1766ff21b6`；
+相图定理身份为 `sha256:02d70aff25720f0ae221c1f471c825a3015a6e9eab59bdd24a3a6b593312feef`。
+形态是 deposit-uncovered：没有摄入自写理论，没有变更 source atom 或 coverage 账。
+源 atom 同含另外两条定理，不能以本次两条结果宣称整 atom 已 absorbed。
+
+本次差异为一个 Lean 模块、一个对应 Scribe 文档及其投影、一个冻结状态片、
+以及同一命题的预登记/核验收据。文件数超过仓内 p75 的部分全是该单一实施单元的
+复现材料；没有混入第二个数学目标或工具改造，无可独立落地的另一层。
+尚未主张远端 required-CI 通过、独立评审通过或 PR 合并；PR/提交终态由 runner 工件记录。
