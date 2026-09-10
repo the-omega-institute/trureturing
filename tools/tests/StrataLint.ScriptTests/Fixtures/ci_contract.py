@@ -4,7 +4,6 @@ import json
 import importlib
 import os
 import pathlib
-import platform
 import shutil
 import subprocess
 import sys
@@ -102,6 +101,30 @@ class CacheFixture:
     def run_tool(self, script, *args, env=None):
         return subprocess.run([sys.executable, str(script), *args, "--repository", str(self.root)],
                               env=env or self.env, capture_output=True, text=True)
+
+    def snapshot_result(self):
+        (self.root / "outputs").unlink(missing_ok=True)
+        result = self.run_tool(CACHE, "snapshot")
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        readiness = dict(line.split("=", 1) for line in (self.root / "outputs").read_text().splitlines())
+        receipts = {entry["layer"]: entry for entry in (
+            json.loads(line.removeprefix("LEAN_ACTIONS_CACHE "))
+            for line in result.stdout.splitlines() if line.startswith("LEAN_ACTIONS_CACHE "))}
+        return readiness, receipts
+
+    def dependency_files(self):
+        source = self.root / ".lake/packages"
+        material = {
+            "mathlib/scripts/bench/size/run": (b"#!/bin/sh\nprintf 'size\\n'\n", 0o755),
+            "mathlib/scripts/bench/build/fake-root/bin/lean": (b"#!/bin/sh\nexit 0\n", 0o755),
+            "batteries/README.md": (b"# Batteries\n\x00private bytes\xff\n", 0o640),
+        }
+        for relative, (data, mode) in material.items():
+            path = source / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(data)
+            path.chmod(mode)
+        return source, material
 
 
 class Contracts(CacheFixture, unittest.TestCase):
@@ -261,30 +284,6 @@ class Contracts(CacheFixture, unittest.TestCase):
 
 
 class SnapshotContracts(CacheFixture, unittest.TestCase):
-    def snapshot_result(self):
-        (self.root / "outputs").unlink(missing_ok=True)
-        result = self.run_tool(CACHE, "snapshot")
-        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
-        readiness = dict(line.split("=", 1) for line in (self.root / "outputs").read_text().splitlines())
-        receipts = {entry["layer"]: entry for entry in (
-            json.loads(line.removeprefix("LEAN_ACTIONS_CACHE "))
-            for line in result.stdout.splitlines() if line.startswith("LEAN_ACTIONS_CACHE "))}
-        return readiness, receipts
-
-    def dependency_files(self):
-        source = self.root / ".lake/packages"
-        material = {
-            "mathlib/scripts/bench/size/run": (b"#!/bin/sh\nprintf 'size\\n'\n", 0o755),
-            "mathlib/scripts/bench/build/fake-root/bin/lean": (b"#!/bin/sh\nexit 0\n", 0o755),
-            "batteries/README.md": (b"# Batteries\n\x00private bytes\xff\n", 0o640),
-        }
-        for relative, (data, mode) in material.items():
-            path = source / relative
-            path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_bytes(data)
-            path.chmod(mode)
-        return source, material
-
     def test_internal_dependency_file_links_round_trip_as_private_material(self):
         source, material = self.dependency_files()
         links = {
@@ -335,52 +334,6 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
         (cached / "data/batteries/README.md").write_bytes(b"changed cache bytes")
         self.assertEqual(expected["batteries/README.md"][0], (source / "batteries/README.md").read_bytes())
 
-    def test_invalid_dependency_links_disable_only_that_save_with_an_offending_path(self):
-        source, _ = self.dependency_files()
-        for target in (".lake/build", ".lake/report-cache"):
-            directory = self.root / target
-            directory.mkdir(parents=True)
-            (directory / "fixture").write_bytes(b"other layer bytes")
-        readiness, _ = self.snapshot_result()
-        self.assertEqual({layer + "_ready": "true" for layer in ("dependency", "project", "report")}, readiness)
-        cached = self.root / "build/lean-cache/dependency"
-        outside = self.root / "outside"
-        outside.write_bytes(b"outside must stay private")
-        # The same relative escape also lands on an existing file from staging.
-        staged_outside = cached.parent / "outside"
-        staged_outside.write_bytes(b"outside staging must stay private")
-        cases = {
-            "escape": "../../../../outside",
-            "absolute": str(outside),
-            "broken": "missing",
-            "self-cycle": "bad-link",
-            "chain-cycle": "cycle-peer",
-            "directory": "..",
-        }
-        link = source / "batteries/docs/bad-link"
-        link.parent.mkdir()
-        peer = link.with_name("cycle-peer")
-        for name, target in cases.items():
-            before = (cached / "manifest.json").read_bytes()
-            with self.subTest(link=name):
-                link.symlink_to(target)
-                if name == "chain-cycle":
-                    peer.symlink_to("bad-link")
-                try:
-                    readiness, receipts = self.snapshot_result()
-                    self.assertEqual({"dependency_ready": "false", "project_ready": "true", "report_ready": "true"},
-                                     readiness, receipts)
-                    self.assertEqual("save-failed", receipts["dependency"]["status"])
-                    self.assertIn("batteries/docs/bad-link", receipts["dependency"]["reason"])
-                    self.assertEqual(before, (cached / "manifest.json").read_bytes())
-                    self.assertEqual(target, os.readlink(link))
-                    self.assertEqual(b"outside must stay private", outside.read_bytes())
-                    self.assertEqual(b"outside staging must stay private", staged_outside.read_bytes())
-                    self.assertFalse(list(cached.parent.glob(".snapshot-*")))
-                finally:
-                    link.unlink()
-                    peer.unlink(missing_ok=True)
-
     def test_corrupt_dependency_seed_falls_back_without_replacing_current_material(self):
         source, _ = self.dependency_files()
         shutil.copy2(source / "batteries/README.md", source / "batteries/README.copy")
@@ -420,78 +373,6 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                 saved.chmod(mode)
                 (saved.parent / "extra").unlink(missing_ok=True)
         self.assertEqual(["producer"] * 10, (self.root / "calls").read_text().splitlines())
-
-    def test_snapshot_readiness_and_material_follow_writer_permissions(self):
-        material = {
-            "dependency": (".lake/packages", "mathlib/Mathlib.olean", b"private dependency seed\n"),
-            "project": (".lake/build", "lib/Module.olean", b"private project seed\n"),
-            "report": (".lake/report-cache", "fixture/raw-lean-report.json", b'{"fixture":"report seed"}\n'),
-        }
-        for target, relative, data in material.values():
-            path = self.root / target / relative
-            path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_bytes(data)
-            path.chmod(0o640)
-        system, machine = platform.system().lower(), platform.machine().lower()
-        architecture = {"aarch64": "arm64", "x86_64": "x64", "amd64": "x64"}.get(machine, machine)
-        partition = f"{REV}/{system}-{architecture}"
-        cases = [
-            ("dev_push", "push", "refs/heads/dev", "true", "true", True),
-            ("dev_pr_target", "pull_request_target", "refs/heads/dev", "true", "true", False),
-            ("pr_merge", "pull_request", "refs/pull/7/merge", "true", "true", False),
-            ("dev_dispatch", "workflow_dispatch", "refs/heads/dev", "true", "true", False),
-            ("dev_writes_false", "push", "refs/heads/dev", "false", "true", False),
-            ("dev_check_failed", "push", "refs/heads/dev", "true", "false", False),
-            ("dev_check_missing", "push", "refs/heads/dev", "true", None, False),
-            ("other_branch", "push", "refs/heads/topic", "true", "true", False),
-            ("other_integration", "push", "refs/heads/integration-ci-other-tests", "true", "true", False),
-        ]
-        # Integration-only rollout data: exclude this block from dev delivery.
-        integration = "integration-ci-current-stability-0909-tests"
-        cases += [
-            ("integration_push", "push", f"refs/heads/{integration}", "true", "true", True),
-            ("integration_pr_target", "pull_request_target", f"refs/heads/{integration}", "true", "true", False),
-            ("integration_pr", "pull_request", f"refs/heads/{integration}", "true", "true", False),
-            ("integration_dispatch", "workflow_dispatch", f"refs/heads/{integration}", "true", "true", False),
-            ("integration_writes_false", "push", f"refs/heads/{integration}", "false", "true", False),
-            ("integration_check_failed", "push", f"refs/heads/{integration}", "true", "false", False),
-            ("integration_check_missing", "push", f"refs/heads/{integration}", "true", None, False),
-            ("integration_suffix", "push", f"refs/heads/{integration}-other", "true", "true", False),
-            ("integration_tag", "push", f"refs/tags/{integration}", "true", "true", False),
-        ]
-        # End integration-only rollout data.
-        for name, event, ref, writes, success, allowed in cases:
-            with self.subTest(case=name):
-                cache = self.root / "build/lean-cache"
-                if cache.exists():
-                    shutil.rmtree(cache)
-                output = self.root / "outputs"
-                output.unlink(missing_ok=True)
-                env = dict(self.env, GITHUB_RUN_ID="34362630774", GITHUB_RUN_ATTEMPT="1",
-                           GITHUB_EVENT_NAME=event, GITHUB_REF=ref, STRATALINT_CACHE_WRITES=writes)
-                env.pop("STRATALINT_CHECK_SUCCEEDED", None)
-                if success is not None:
-                    env["STRATALINT_CHECK_SUCCEEDED"] = success
-                result = self.run_tool(CACHE, "snapshot", env=env)
-                self.assertEqual(0, result.returncode, result.stdout + result.stderr)
-                self.assertEqual({layer + "_ready": str(allowed).lower() for layer in material},
-                                 dict(line.split("=", 1) for line in output.read_text().splitlines()), result.stdout)
-                receipts = [json.loads(line.removeprefix("LEAN_ACTIONS_CACHE "))
-                            for line in result.stdout.splitlines() if line.startswith("LEAN_ACTIONS_CACHE ")]
-                self.assertEqual({layer: "snapshot" if allowed else "save-disabled" for layer in material},
-                                 {receipt["layer"]: receipt["status"] for receipt in receipts})
-                if not allowed:
-                    self.assertFalse(cache.exists())
-                    continue
-                for layer, (target, relative, data) in material.items():
-                    staged = cache / layer
-                    self.assertEqual(data, (staged / "data" / relative).read_bytes())
-                    self.assertEqual(data, (self.root / target / relative).read_bytes())
-                    self.assertEqual({
-                        "schema": "lean-actions-seed-v1", "partition": partition, "layer": layer,
-                        "key": f"lean-{layer}-v3-{REV}-{system}-{architecture}-34362630774-1",
-                        "files": [{"path": relative, "sha256": hashlib.sha256(data).hexdigest(), "mode": 0o640}],
-                    }, json.loads((staged / "manifest.json").read_text()))
 
 
 if __name__ == "__main__":

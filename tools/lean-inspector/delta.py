@@ -52,9 +52,7 @@ def materials_path(report: pathlib.Path) -> pathlib.Path:
     return pathlib.Path(str(report) + ".materials.zip")
 
 
-def parse_json_modules(report: pathlib.Path) -> tuple[dict[str, dict], str]:
-    data = report.read_bytes()
-    digest = hashlib.sha256(data).hexdigest()
+def validate_report_sha(report: pathlib.Path, digest: str) -> None:
     lines = sidecar_path(report).read_text(encoding="ascii").splitlines()
     if len(lines) != 1:
         raise ValueError("report SHA sidecar is not one line")
@@ -63,6 +61,12 @@ def parse_json_modules(report: pathlib.Path) -> tuple[dict[str, dict], str]:
         raise ValueError("report SHA sidecar is malformed")
     if fields[0] != digest or not HEX64.fullmatch(fields[0]):
         raise ValueError("report SHA sidecar does not match report")
+
+
+def parse_json_modules(report: pathlib.Path) -> tuple[dict[str, dict], str]:
+    data = report.read_bytes()
+    digest = hashlib.sha256(data).hexdigest()
+    validate_report_sha(report, digest)
     root = json.loads(data.decode("utf-8"))
     require_keys(root, {"modules", "schema"}, "cached report")
     if root.get("schema") != "stratalint-raw-lean-report-v2" or not isinstance(root.get("modules"), list):
