@@ -38,7 +38,6 @@ internal sealed class PhiTailEncodingDocument : IScribeDocumentDefinition
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
         AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
     private static Formula V(string name) => F.Id(name);
-    private static Formula Sub(string name, Formula index) => Q(V(name), Underscore, Grp(index));
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(Q(Operatorname, Grp(V(name))), [.. args]);
     private static Formula Q(params Formula[] items)
