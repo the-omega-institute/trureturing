@@ -6721,6 +6721,14 @@ catalog；该有限 family 的 membership 来自 `rootId` 的 import closure，�
 
 ### 23.6 AnalysisDisposition 与 census API
 
+**Phase 11 现役入口（2026-09-10）**：`make census` 已由
+[#6660](https://github.com/the-omega-institute/trureturing/pull/6660) 的查询、
+[#6664](https://github.com/the-omega-institute/trureturing/pull/6664) 的证书发布，经
+[#6767](https://github.com/the-omega-institute/trureturing/pull/6767) 合入 dev。
+全库查询是**读取 elaborated 输出(olean)的流式查询**。下列 J2 assessment、evidence 与
+`DispositionInventory.ExactlyCovers` API 仍承担其局部命令及 fixtures 的契约；全库发布使用本节
+所述的分桶 id 集证书，Name 与 report 的绑定由 elaborator 完成。
+
 当前 `DispositionInventory` 只有 `headSha` 与
 `entries : Array (Sigma fun key : StatementKey => CensusAssessment key)`；其 `ExactlyCovers`
 要求 HEAD 相等、完整 keys 与映射后的 `statementId` 均 `Nodup`、keys 集合等于 frozen theorem
@@ -6838,7 +6846,7 @@ def DispositionInventory.ExactlyCovers
 
 （J2 落地形态,2026-09-08:S0 的 `ClosedReasonEvidence`、`AnalysisObservationStatus`、`CensusInventory` 与 `CertifiedComplete` 未作为声明落地；现役形态为上述 `Name` evidence、scope record 与 `DispositionInventory`。）
 
-`#disposition_census` 的现役命令形状见
+J2 局部 `#disposition_census` 的现役命令形状见
 `tools/lean-inspector/LeanInformationAudit/DispositionCensus.lean`：
 
 ```text
@@ -6854,7 +6862,7 @@ key 从 declaration 的 `declaration_name_key` 保留 structured Lean `Name`，�
 映射后的 `statementId` 也 `Nodup`，且 HEAD 相等。命令的 `parseReport` 另核对
 `stratalint.truth-export.v2`、`schema_version=2`、`source_commit` 与钉住的 `report_sha256`；
 report input identity 来自实际 bytes 的 SHA-256，不是 generator 自报的标签。root 与 evidence
-由 `validateEvidenceSources` 核查，不是 `ExactlyCovers` 的字段。`coverageProof` 对实际 inventory
+由 `validateEvidenceSources` 核查，不是 `ExactlyCovers` 的字段。该局部命令的 `coverageProof` 对实际 inventory
 构造 `ExactlyCovers` 的 `mkDecideProof`，再以 `checkWithKernel` 检查；命令与 proof 见
 `tools/lean-inspector/LeanInformationAudit/DispositionCensus.lean`，root 检查见
 `tools/lean-inspector/LeanInformationAudit/DispositionEvidence.lean`。
@@ -6873,23 +6881,42 @@ reason 匹配、explanation 非空，且 `failedObligation=some name` 指向 ker
 `tools/lean-inspector/LeanInformationAudit/DispositionEvidence.lean`。
 （J2 落地形态,2026-09-08:没有 S0 的 `semanticContract`／`candidateDomain` 字段；具名 typed obligation 承担对应的候选语义，超出其范围的 closed reason 仍须另证。）
 
-`AnalysisObservation key` 绑定同一 HEAD／report inputs 的 elaborated environment。
+`AnalysisObservation key` 绑定同一 HEAD／report inputs 的 elaborated 输出及其查询作用域。
 `owningModule` 必须是该 key 的真实所属模块，`root` 必须等于命令 root，
 `importScope.modules` 必须精确列出该 root 的完整传递 import closure，包含 root 与 owning
 module 且不得重复；`queryCompleted` 与 `importScope.completed` 都必须为 true。
 JSON 字段是 `owning_module`、`root`、`import_scope: {modules, completed}`、
 `query_completed`、`candidates` 与 `note`，其中 Name 保持结构编码，note 仅作展示。
-census 从 environment 独立解析 root／closure／owner，并核实每个 supplied candidate 是同一
+J2 局部 validator 从 environment 独立解析 root／closure／owner，并核实每个 supplied candidate 是同一
 theorem 在该范围内的 registration 或 realization；scope、completion 或 candidate 不符用
 IE-C044。字段见 `tools/lean-inspector/LeanInformationAudit/AnalysisDisposition.lean`、
 `tools/lean-inspector/LeanInformationAudit/CensusSchema.lean`，语义检查见
 `tools/lean-inspector/LeanInformationAudit/DispositionEvidence.lean`。
 空 candidates 可在这些检查通过后入账，但不证明 registry absence 或候选列表穷尽性。
-Phase 11 的 J3 完整查询仍须从 environment 产生 rows：空列表或自报 completed 不能代替查询，
+Phase 11 已由读取 elaborated 输出(olean)的流式查询产生完整 rows：空列表或自报 completed 不能代替查询，
 查询失败、不完整或未完成不能计为 absence；若报告缺 realization、缺 certificate 或两者皆缺，
 必须由查询结果支持，两者皆有时不能报告 absence，已登记但无效的证书仍须报告验证失败，
 不能以 observed 隐藏。
 （J2 落地形态,2026-09-08:S0 的 `censusRoot`／`importClosure`／absence-status enum 未采用；现役 validator 核查 scope 和所列 candidates，不自行生成或证明穷尽的 absence 查询。）
+
+**全库查询的归属、新鲜性与增量契约**（[#6660](https://github.com/the-omega-institute/trureturing/pull/6660)）：
+流式索引以 `readModuleDataParts` 按顺序读取 olean parts，不对每个分区调用 `importModules`。
+owner 以声明在记录模块的 `ModuleData` 中的成员身份判定；同一 `Name` 的多个 owner 用
+报告生产器的 statement identity 消歧，不能把首次 import 出处当作唯一归属。
+落地全库样本中原有的 50 个冲突 keys 全部消歧，不再形成 incomplete rows。
+新鲜性的权威是 lake：生产入口经 `make lean` 的增量构建，缺失 tracked olean 时 fail closed，
+不以时间戳猜测 source 与 olean 一致。raw Lean report 在 truth-export 之前须通过 producer
+attestation 校验；失败即重新生成并验证报告，后续消费者使用这一份已验证报告。
+
+收据对**实际读取的 bytes**承诺：按序 olean parts、import graph、query source、export digest、
+tracked domain、各 root 的 scope 与 toolchain 均进入绑定。bounded replay 是重新读取并
+重算这些输入及查询结果，再与收据比较；它不是重信 generator 自报的 digest 或 completed。
+per-olean extraction 以内容寻址缓存，candidate validation 也缓存；复用须覆盖 owner／evidence
+输入、scope 与 toolchain 的有效性，不能把旧 scope 下的 absence 复用到新 scope。
+候选按有界批次校验，Name 冲突的 owners 隔离到不同批次；批内证据索引按 key 的 root scope
+过滤，嵌套的 bounded／transfer 等 evidence names 也在该 root scope 与 `ModuleData` 成员中解析。
+olean bytes 内嵌 worktree 路径，故其原始摘要、extraction cache 地址与 receipts 是 tree-local；
+规范化 rows 是 tree-independent，这不提供跨树原始收据或缓存的可移植性。
 
 在 exact coverage 与 rows 的上述语义检查通过后，`certified_complete` 才表示认证完备；它要求每个 row
 都是 certified。**observed 永不算 classified，永不履行 AC-023，也永不构成 closed reason。**
@@ -6915,6 +6942,44 @@ consumer 必须复核，不信任 generator 自报的 totals 或 flags：
 
 （J2 落地形态,2026-09-08:S0 的 nested class／reason／absence-status maps 与 `accounting_complete` 未发射，也没有 `CertifiedComplete` 声明；记账完备由命令校验和 kernel `ExactlyCovers` 证明体现，JSON 只有上述 flat counts 与 `certified_complete`。）
 
+**全库 kernel 证书只证明 id 集记账**（[#6664](https://github.com/the-omega-institute/trureturing/pull/6664)）。
+owner [2026-09-09 裁决](https://github.com/the-omega-institute/trureturing/issues/5214#issuecomment-5597487855)
+原句为「定理名不在会怎么样, 我感觉你这只是在防止一些不存在的攻击」。kernel-facing identity
+是 `statement_id` 的 256-bit `Nat`；ids 以 packed big-Nat literals 传入，在 kernel 中解码。
+最终 `CensusRun.accountingCertificate` 的命题恰为：
+
+```lean
+strictlyAscending ids = true ∧ ids.length = requested ∧ ids = reportIds
+```
+
+严格递增给出无重复，长度给出 requested 数量，等式把这组 ids 绑定到 reportIds；
+Name 不在该 kernel 命题里，也没有 disposition class、positivity 或结构读数的 kernel 主张。
+完整 `(structured Name, statement_id)` key 空间及其唯一性义务保持不变：Name↔hex↔Nat
+与报告侧 authority 是 elaborator 义务，由 strict codec 和 structural binder 承担。
+binder 一侧从已验证 rows 重算每个 literal，另一侧从已验证 report 重算；不能只比较两份
+同源抄写的 manifest，不能用 inventory 自身作 report-side authority。
+HEAD／report bytes／root／scope／class evidence 仍须在发布前通过检查，ids 等式不替代它们。
+Lean publisher 与 Python entrypoint 都遵守诊断优先序
+`IE-C044 > IE-C035 > IE-C036 > IE-C034`：query／receipt 完整性先于重复，重复先于 identity
+绑定错误，identity 错误先于缺行；不得因换入口或 codec 提前运行而改变这一顺序。
+
+owner [2026-09-09 增量裁决](https://github.com/the-omega-institute/trureturing/issues/5214#issuecomment-5606788311)
+原句为「这种编译一定得增量, 不能一次要求太大内存, 因为这个库还在不断膨胀」。
+证书按 id range 自适应分裂：每叶至多 $M$ 个 ids，内部节点二叉组合；Init-only 通用引理
+一次证明「有序范围中的有序子段蕴含父段有序」、长度相加与 congruence，再由各节点实例化。
+每个叶与组合节点都是单独编译、内容寻址的模块；新增一个 key 只重编受影响叶、其祖先与 Root。
+最终环境是 Init + `Census.Certificate` + range modules，公理闭包为 `[propext]`。
+证书编译的每进程工作集受单叶上限与二叉组合接口约束，上界不随全库 key 总数增长；
+落地样本每进程峰值约 0.29 GiB，合成 1k／10k ids 的叶、节点与根峰值持平。
+这不是整管线常量内存的主张：报告校验 driver 仍保留 $O(\mathrm{rows})$ 的校验及元数据，
+实测约 2.06 GiB，是已记录的剩余项；流式索引约 1.01 GiB 的读数也未冒称达到 1 GiB 目标。
+
+发布消费全流 `census.json`／`receipt.json` 的绑定，不再需要 per-partition receipts。
+现役 handoff 从收据以 `rows_sha256` 绑定的紧凑 `rows.jsonl` 单次读取并校验每行，
+不展开 `census.json` 中逐行内联的 scope 列表；receipt digest、HEAD、export 与 rows digest
+必须一致。发布不改写 `census.json`。展开工件归一的剩余成本记在
+[#6748](https://github.com/the-omega-institute/trureturing/issues/6748)，不由证书的每进程上界掩盖。
+
 有效 artifact 必须复核 `accounted = certified + observed`、class 分项之和等于 certified、reason 分项之和
 等于 certified unreachable、query-completion 分项之和等于 observed，且 incomplete 分项为零；
 计数相等不能替代 exact keys 检查。计数重算与字段核对见
@@ -6933,6 +6998,12 @@ consumer 仍待第 39 节 GATE 的 owner $\tau$ ruling。
 外层 certified assessment 认证的是 disposition 及其边界：bounded `reportOnly` 的 comparison
 证书可以认证其分类，但不因此取得全对象结论、transfer 或 positivity，原有 truncation 限制不变。
 comparison 与 transfer 的方向检查见 `tools/lean-inspector/LeanInformationAudit/DispositionEvidence.lean`。
+
+**结构 sidecar 与 assessment 分栏**：[#6717](https://github.com/the-omega-institute/trureturing/pull/6717)
+已提供独立 run-local `census-structure.json`，绑定 `head_sha`、`report_sha256` 与 `census_sha256`。
+这些证明依赖结构读数只作 report（定义见第 23.7 节），不是 `AnalysisDisposition` evidence，
+不改变 `census.json`、assessment rows／counts、`certified_complete` 或 `ExactlyCovers`。
+observed 永不因结构读数而成为 classified；core support、深度或后代数都不能替代证书。
 
 ---
 
