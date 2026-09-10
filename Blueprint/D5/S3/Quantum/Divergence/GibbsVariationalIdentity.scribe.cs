@@ -10,7 +10,7 @@ internal sealed class GibbsVariationalIdentityDocument : IScribeDocumentDefiniti
 
     public DocumentDefinition Create()
     {
-        Formula n = F.Id("n"), h = F.Id("H"), rho = Rho;
+        Formula n = F.Id("n"), h = F.Id("H"), rho = F.Id("rho");
         Formula z = Call("partitionFunction", h), g = Call("gibbsState", h);
         Formula General(Formula body) => All(
             [Bound("n", F.Id("FiniteNonemptyType")),
@@ -76,4 +76,17 @@ internal sealed class GibbsVariationalIdentityDocument : IScribeDocumentDefiniti
                         + "maximally mixed state equal to log(card(n))."))),
                     DescribeRole.Theorem))));
     }
+
+    private static Formula.BoundVariable Bound(string name, Formula type) =>
+        new(FormulaIdentifier.Create(name), type);
+    private static Formula All(Formula.BoundVariable[] variables, Formula body) =>
+        new Formula.BindMany(FormulaQuantifier.ForAll, [.. variables], body);
+    private static Formula Eqn(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.Equal, right);
+    private static Formula Add(Formula left, Formula right) =>
+        new Formula.Binary(left, FormulaBinaryOperator.Add, right);
+    private static Formula Sub(Formula left, Formula right) =>
+        new Formula.Binary(left, FormulaBinaryOperator.Subtract, right);
+    private static Formula Mul(Formula left, Formula right) =>
+        new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
 }

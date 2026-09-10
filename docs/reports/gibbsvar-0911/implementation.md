@@ -105,3 +105,8 @@ Example 1 明列 relative entropy/free-energy difference；该例是对角 qubit
 Library note 的 Verified locator 逐字含 DOI 和 URL。
 第三方 CsdLean4 的谱基证明未复制；本轮是优先级①②接口的本仓包装。
 重新 fetch origin/dev 后 Quantum 路径没有相对初始基线的新提交，未发现并行撞靶。
+
+Scribe 首次 .NET 构建发现示例中的 All/Bound/Eqn/Mul/Sub 是局部助手而非全局 DSL，
+已补充相同 typed Formula 构造并统一 rho 的 binder/显示符号。
+修正后 `make -C tools capacity-audit REPOSITORY=/Users/chronoai/trureturing-gibbsvar` EXIT=0，
+含文档程序集构建通过。
