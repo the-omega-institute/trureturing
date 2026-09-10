@@ -306,21 +306,25 @@ public sealed partial class LeanReportInputScriptTests
         Assert.NotEqual(configChanged.Sources, sourceChanged.Sources);
     }
 
-    [Fact]
-    public void JudgeLibraryLeanSourceChangesAddressButUnrelatedFileDoesNot()
+    [Theory]
+    [InlineData("repository")]
+    [InlineData("repository[cache]")]
+    public void JudgeLibraryLeanSourceChangesAddressButUnrelatedFileDoesNot(string repositoryName)
     {
-        using var fixture = new LeanReportInputFixture();
+        using var fixture = new LeanReportInputFixture(repositoryName);
         const string judgeSource =
             "tools/lean-inspector/LeanInformationAudit/Nested/ProofBuilder.lean";
         const string unrelated = "tools/lean-inspector/LeanInformationAudit/README.md";
         fixture.WriteSource(judgeSource, "def judgeFixture : True := by trivial\n");
         fixture.WriteSource(unrelated, "fixture documentation\n");
+        var producerBefore = fixture.Producer();
         var before = fixture.Address();
 
         fixture.Append(unrelated, "x");
         Assert.Equal(before, fixture.Address());
 
         fixture.Append(judgeSource, "x");
+        Assert.NotEqual(producerBefore, fixture.Producer());
         Assert.NotEqual(before, fixture.Address());
     }
 
@@ -401,9 +405,9 @@ public sealed partial class LeanReportInputScriptTests
         private readonly string inspectorSourcePath = string.Join(
             '/', "tools", "lean-inspector", "Inspector.lean");
 
-        internal LeanReportInputFixture()
+        internal LeanReportInputFixture(string repositoryName = "repository")
         {
-            repository = Path.Combine(temporary.Path, "repository");
+            repository = Path.Combine(temporary.Path, repositoryName);
             report = Path.Combine(temporary.Path, "raw-lean-report.json");
             script = Path.Combine(
                 TestRepositoryLayout.FindRoot(),
