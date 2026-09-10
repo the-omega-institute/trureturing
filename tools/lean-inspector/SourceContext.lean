@@ -29,10 +29,16 @@ partial def declarationNamespaces (stx : Syntax) : Array Name :=
       stx.getKind.toString.startsWith "Lean.Parser.Tactic." then #[]
   else stx.getArgs.flatMap declarationNamespaces
 
-partial def strings (stx : Syntax) : Array String :=
-  match stx.isStrLit? with
-  | some s => #[s.trimAscii.toString]
-  | none => stx.getArgs.flatMap strings
+/- `Elab.Term.toParserDescr.processSepBy/1` uses separator text as a symbol
+   only without an explicit separator parser. `sepBy/1Info.collectTokens`
+   combines the element and actual separator parser, excluding that metadata. -/
+partial def declarationTokens (stx : Syntax) : Array String :=
+  if stx.isOfKind ``Parser.Syntax.sepBy || stx.isOfKind ``Parser.Syntax.sepBy1 then
+    declarationTokens stx[1] ++ declarationTokens (if stx[4].isNone then stx[3] else stx[4][1])
+  else
+    match stx.isStrLit? with
+    | some s => #[s.trimAscii.toString]
+    | none => stx.getArgs.flatMap declarationTokens
 
 /- Export nested scope facts by running the actual parser scope operation. Its callback
    observes the inner context; the outer context is never substituted for that reading. -/
@@ -137,7 +143,7 @@ partial def projectRegistration (cmd : Syntax) (scope? : Option Name := none) : 
     if cmd.isOfKind ``Parser.Command.initialize || cmd.getKind.toString.endsWith ".run_cmd" then
       runCommandElabM <| logErrorAt cmd "source context cannot model a dynamic initializer registration effect"
     else if [``Parser.Command.macro, ``Parser.Command.elab].contains cmd.getKind &&
-      (strings cmd[7]).contains "='" then
+      (declarationTokens cmd[7]).contains "='" then
       runCommandElabM <| logErrorAt cmd "source context cannot model this equality-token registration effect"
     else if cmd.isOfKind ``Parser.Command.attribute then
       runCommandElabM do
@@ -151,7 +157,7 @@ partial def projectRegistration (cmd : Syntax) (scope? : Option Name := none) : 
   -- Parser.Syntax gives these commands a declaration-item field at index 7
   -- and attrKind at index 2. Expansion terms, attributes and priority expressions
   -- are separate fields; their strings/atoms are not registration facts.
-  unless (strings cmd[7]).contains "='" do return
+  unless (declarationTokens cmd[7]).contains "='" do return
   runCommandElabM do
     let ns ← getCurrNamespace
     let kind ← if scope?.isSome then pure AttributeKind.scoped
