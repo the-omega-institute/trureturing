@@ -44,7 +44,8 @@ it does not authorize claiming that an unmerged PR has landed on dev.
 
 ## Current result
 
-Implementation in progress. No theorem has yet been claimed or frozen.
+The full parity theorem is checked by Lean at file level. Repository gates,
+freeze and PR remain in progress; no freeze or landed PR is claimed yet.
 
 First Lean unit checked: the degree-n residual changes by exactly the change
 in g_n, and the diagonal constraints give uniqueness over any commutative ring.
@@ -77,6 +78,19 @@ the integer solution into ZMod 2 and applying diagonal uniqueness identifies it
 with H. `hanna_conjecture (n) (hn : 2 ≤ n) : 2 ∣ a n` passes the warm file check,
 EXIT=0, with only propext, Classical.choice, Quot.sound. All printed public
 theorem closures are clean. Full repository gates and PR are still pending.
+
+The canonical https://oeis.org/A395842 page was also opened and read in full;
+its DATA and conjectural comment agree with the official text response.
+The additional Loogle `"PowerSeries", "iterate"` query returned 15 declarations:
+analytic derivative iterations and Frobenius expansion, no compositional
+diagonal rule. Exact locator receipts are in locator-receipts.json.
+The Library note includes its verified locator section and no DOI is asserted.
+
+Capacity detail: the mirrored Blueprint bucket has 52 physical files but only
+26 counted sources. RepositoryRules.Structure.IsCapacityExcluded explicitly
+excludes its generated .md projections. Thus the new source occupies slot 27.
+The same canonical capacity source sets the soft/hard file-line limits to
+800/1000 (the older spec A5 prose still says 400); no capacity mechanism changed.
 
 ## Search receipts and semantic correction
 
@@ -140,6 +154,6 @@ grammar and registered Recurrence domain were checked.
 
 ## Unclaimed
 
-No claim of an exhaustive literature search, a proof of G's parity, a proof of
-A177775, an independent review, or a successful build has been made.
+No claim of an exhaustive literature search, a resolution of A177775,
+an independent review, a freeze, or a successful repository build has been made yet.
 Unopened external pages are ASSUMED-UNVERIFIED.
