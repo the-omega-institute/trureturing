@@ -1,6 +1,7 @@
 """Numerical probe only; independent analytic controls, not a Lean proof."""
 import json
 import math
+import sys
 import numpy as np
 
 TOL = 1e-10
@@ -70,7 +71,8 @@ for d in [1, 2, 3, 4, 5, 8]:
         assert close(pinch(rho,z), rho)
         assert close(abs(z.conj().T @ x)**2, np.ones((d,d))/d)
         s, tax, freedom = entropy(rho), divergence(rho,sigma), divergence(rho,omega)
-        residual = max(float(np.max(abs(sigma-omega))), abs(tax-freedom),
+        tested_freedom = -freedom if '--wrong-sign' in sys.argv else freedom
+        residual = max(float(np.max(abs(sigma-omega))), abs(tax-tested_freedom),
                        abs(tax-(math.log(d)-s)), abs(entropy(sigma)-s-tax),
                        abs(s+freedom-math.log(d)))
         assert residual < TOL

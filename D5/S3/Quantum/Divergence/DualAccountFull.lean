@@ -44,9 +44,14 @@ private theorem conjugate_pinching_eq_uniform
         (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm rho.2.1)
     have h := ((mutually_unbiased_diagonal_planes hd Z X hZ hX).2.2.2.mpr hZX
       (CStarMatrix.ofMatrix.symm rho.1) hp.isHermitian).2
+    change unreadState X.projector (unreadState Z.projector rho.1) =
+      (Matrix.trace rho.1 / (d : ℂ)) • (1 : Matrix (Fin d) (Fin d) ℂ) at h
     rw [hFixed, rho.2.2] at h
     rw [h, gibbs_state_zero]
+    ext i j
     simp [Complex.real_smul]
+    left
+    rfl
   · have hdOne : d = 1 := by have := NeZero.ne d; omega
     subst d
     have hr : rho.1 = (1 : CStarMatrix (Fin 1) (Fin 1) ℂ) := by
@@ -88,9 +93,14 @@ theorem dual_account_full
   have hAccount : vonNeumannEntropy rho + quantumRelativeEntropy rho omega = Real.log d := by
     simpa only [Fintype.card_fin] using entropy_uniform_identity rho
   have hSelf : quantumRelativeEntropy omega omega = 0 := by
-    simp [quantumRelativeEntropy]
+    simp only [quantumRelativeEntropy, sub_self, mul_zero]
+    change (Matrix.trace (0 : Matrix (Fin d) (Fin d) ℂ)).re = 0
+    simp
   have hEntropy : vonNeumannEntropy omega = Real.log d := by
-    simpa only [Fintype.card_fin, hSelf, add_zero] using entropy_uniform_identity omega
+    have h := entropy_uniform_identity omega
+    simp only [Fintype.card_fin] at h
+    change vonNeumannEntropy omega + quantumRelativeEntropy omega omega = Real.log d at h
+    simpa only [hSelf, add_zero] using h
   refine ⟨hSigma, congrArg (quantumRelativeEntropy rho) hSigma, ?_, ?_, ?_⟩
   · rw [hSigma]
     linarith
