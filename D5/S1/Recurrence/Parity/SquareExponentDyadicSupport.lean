@@ -266,7 +266,7 @@ private theorem candidate_even (F E O : PowerSeries F2)
       _ = ((1+X)^2+X*(E+O)^2)*g^2 := by rw [hpoly, hEO]
       _ = 1+X*((E+O)*g)^2 := by linear_combination g*(1+X)*hg+hg
   have hcast : (((2*m+1)^2 : ℕ) : F2)=1 := by
-    simp [Nat.cast_add, Nat.cast_mul, Nat.cast_pow, CharTwo.two_eq_zero, CharTwo.add_self_eq_zero]
+    simp [Nat.cast_add, Nat.cast_mul, Nat.cast_pow, CharTwo.two_eq_zero]
   have hgeom := geom_cast_congr ((2*m+1)^2) 1 (by simpa using hcast)
   have he : (2*m+1)^2 = 2*m*(m+1)*2+1 := by ring
   have hrow : row F (2*m) = 0 := by
@@ -343,7 +343,7 @@ private theorem U_support (n : ℕ) : coeff n U = 1 ↔ ∃ k : ℕ, n+1=2^k := 
   have h := D5.S1.Recurrence.Invariants.CatalanCompositionSquareParity.binary_catalan (n+1)
   have hmap : Upstream.map (Int.castRingHom F2) = X*U := by
     change (X*(PowerSeries.catalanSeries.map (Nat.castRingHom ℤ))).map (Int.castRingHom F2) = _
-    simp only [map_mul, map_X, MvPowerSeries.map_map, U]
+    simp only [map_mul, map_X, U]
     rfl
   rw [hmap, coeff_succ_X_mul] at h
   exact h
@@ -380,4 +380,74 @@ private theorem solution_mod_two : (solution (R := ℤ)).map (Int.castRingHom F2
     rw [normalized_map, solution_normalized n hn, map_zero]
   · exact candidate_normalized
 #print axioms solution_mod_two
+private theorem O_even (m : ℕ) : coeff (2*m) O = coeff m U := by
+  rw [O, H, add_mul, one_mul, map_add, square_even, even_X_square, add_zero]
+private theorem O_odd (m : ℕ) : coeff (2*m+1) O = coeff m U := by
+  rw [O, H, add_mul, one_mul, map_add, square_odd, coeff_succ_X_mul, square_even, zero_add]
+private theorem E_even (m : ℕ) : coeff (2*(m+1)) E = coeff m U := by
+  rw [E, map_add, map_add]
+  simp only [coeff_one, coeff_X, if_neg (by omega : 2*(m+1) ≠ 0),
+    if_neg (by omega : 2*(m+1) ≠ 1), zero_add]
+  rw [show 2*(m+1)=(2*m+1)+1 by omega, coeff_succ_X_mul, O_odd]
+private theorem E_odd (m : ℕ) (hm : 0 < m) : coeff (2*m+1) E = coeff m U := by
+  rw [E, map_add, map_add]
+  simp only [coeff_one, coeff_X, if_neg (by omega : 2*m+1 ≠ 0),
+    if_neg (by omega : 2*m+1 ≠ 1), zero_add]
+  rw [coeff_succ_X_mul, O_even]
+private theorem candidate_one (m : ℕ) : coeff (4*m+1) candidate = coeff m U := by
+  rw [candidate, map_add, show 4*m+1=2*(2*m)+1 by omega,
+    square_odd, coeff_succ_X_mul, square_even, O_even, zero_add]
+private theorem candidate_two (m : ℕ) (hm : 0 < m) : coeff (4*m+2) candidate = coeff m U := by
+  rw [candidate, map_add, show 4*m+2=2*(2*m+1) by omega,
+    square_even, even_X_square, E_odd m hm, add_zero]
+private theorem candidate_three (m : ℕ) : coeff (4*m+3) candidate = coeff m U := by
+  rw [candidate, map_add, show 4*m+3=2*(2*m+1)+1 by omega,
+    square_odd, coeff_succ_X_mul, square_even, O_odd, zero_add]
+private theorem candidate_four (m : ℕ) : coeff (4*m+4) candidate = coeff m U := by
+  rw [candidate, map_add, show 4*m+4=2*(2*(m+1)) by omega,
+    square_even, even_X_square, E_even, add_zero]
+private theorem candidate_coeff (n : ℕ) (hn : 2 < n) :
+    coeff n candidate = coeff ((n-1)/4) U := by
+  set q := (n-1)/4
+  have hq : 4*q+1 ≤ n ∧ n ≤ 4*q+4 := by dsimp [q]; omega
+  have hc : n=4*q+1 ∨ n=4*q+2 ∨ n=4*q+3 ∨ n=4*q+4 := by omega
+  rcases hc with h|h|h|h
+  · rw [h, candidate_one]
+  · rw [h, candidate_two q (by omega)]
+  · rw [h, candidate_three]
+  · rw [h, candidate_four]
+private theorem support_arithmetic (n : ℕ) (hn : 2 < n) :
+    (∃ j : ℕ, (n-1)/4+1=2^j) ↔
+      ∃ k : ℕ, 1 < k ∧ (n=2^k ∨ n=2^k-1 ∨ n=2^k-2 ∨ n=2^k-3) := by
+  constructor
+  · rintro ⟨j,hj⟩
+    refine ⟨j+2, by omega, ?_⟩
+    have hp : 2^(j+2)=4*2^j := by rw [pow_add]; ring
+    rw [hp]
+    omega
+  · rintro ⟨k,hk,h⟩
+    obtain ⟨j,rfl⟩ : ∃ j, k=j+2 := ⟨k-2, by omega⟩
+    refine ⟨j, ?_⟩
+    have hp : 2^(j+2)=4*2^j := by rw [pow_add]; ring
+    have hpos : 0 < 2^j := by positivity
+    rw [hp] at h
+    rcases h with h|h|h|h <;> omega
+
+/-- The integer generating function A has zero constant coefficient. -/
+noncomputable def generatingSeries : PowerSeries ℤ := 1-solution
+/-- The coefficient a(n) with the source's indexing, extended by a(0)=0. -/
+noncomputable def a (n : ℕ) : ℤ := coeff n generatingSeries
+
+/-- The complete parity conjecture from OEIS A397902. -/
+theorem hanna_conjecture (n : ℕ) (hn : 2 < n) :
+    Odd (a n) ↔ ∃ k : ℕ, 1 < k ∧
+      (n=2^k ∨ n=2^k-1 ∨ n=2^k-2 ∨ n=2^k-3) := by
+  have hc : (a n : F2) = coeff n candidate := by
+    have h := congrArg (coeff n) solution_mod_two
+    simp only [coeff_map] at h
+    simp only [a, generatingSeries, map_sub, coeff_one, if_neg (by omega : n ≠ 0),
+      zero_sub, Int.cast_neg, CharTwo.neg_eq]
+    exact h
+  rw [← ZMod.intCast_eq_one_iff_odd, hc, candidate_coeff n hn, U_support, support_arithmetic n hn]
+#print axioms hanna_conjecture
 end D5.S1.Recurrence.Parity.SquareExponentDyadicSupport

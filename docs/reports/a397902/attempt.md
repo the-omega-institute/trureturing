@@ -133,3 +133,10 @@ is imported and applied in `U_support`. Its unrelated sequence conjecture is
 not transferred to A397902. The S3 Artin–Schreier module was also screened;
 no S3 import is added to this S1 module. No new independent literature claim is
 made for the pre-existing Catalan theorem.
+
+## All-index support checkpoint
+
+The coefficient classification and `hanna_conjecture` passed the file-level
+Lean check, EXIT=0. Its axiom closure contains only propext, Classical.choice,
+Quot.sound. The source-form inverse-denominator interface, mirrors, freeze and
+project gates are still pending; this checkpoint is not final delivery.
