@@ -76,7 +76,7 @@ public sealed class AffectedExecutionTests
         try
         {
             Environment.SetEnvironmentVariable("DOTNET_TieredCompilation", previousRuntimeOption == "0" ? "1" : "0");
-            var changed = action with { Environment = AffectedTestPlan.EnvironmentIdentity() };
+            var changed = action with { Environment = CommonStages.TestEnvironment(fixture.Root).ValuesIdentity };
             changed = changed with { Identity = AffectedTestPlan.Identity(changed) };
             Assert.NotEqual(action.Environment, changed.Environment);
             Assert.Equal("environment-changed", cache.Select(changed).Reason);
@@ -111,17 +111,16 @@ public sealed class AffectedExecutionTests
     }
 
     [Fact]
-    public void OneUnknownClassDoesNotForceUnrelatedKnownTestsToExecute()
+    public void OneUnknownProjectDoesNotForceUnrelatedOwnedProjectsToExecute()
     {
         using var fixture = new AffectedExecutionFixture(unknown: true);
         Assert.Equal(4, fixture.Tests(fixture.Build()).Projects.Sum(project => project.Executed));
         fixture.Write("README.md", "metadata changed\n");
         var warmBuild = fixture.Build();
         var warm = fixture.Tests(warmBuild);
-        Assert.Equal(1, warm.Projects.Sum(project => project.Executed));
-        var reused = warm.Projects[1].Coverage.Where(coverage => coverage.Status == "reused").ToArray();
-        Assert.Equal(2, reused.Length);
-        Assert.Single(reused.SelectMany(coverage => coverage.Results).Distinct(StringComparer.Ordinal));
+        Assert.Equal(3, warm.Projects.Sum(project => project.Executed));
+        Assert.Equal(0, warm.Projects[0].Executed);
+        Assert.Equal("executed", Assert.Single(warm.Projects[1].Coverage).Status);
         Assert.Contains("Environment.GetEnvironmentVariable", fixture.Output.ToString(), StringComparison.Ordinal);
         CommonExecutionEvidence.ValidateTests(fixture.Root);
         Assert.Contains(fixture.Plan().Actions.SelectMany(action => action.Inputs), input =>
@@ -153,7 +152,7 @@ public sealed class AffectedExecutionTests
         fixture.Write("tools/tests/StrataLint.First/Tests.cs", "namespace First; public class Tests { [Xunit.Fact] public void Runs() { Xunit.Assert.Equal(7, Local.AddTwo(5)); } } internal static class Local { public static int AddTwo(int value) => value + 2; }\n");
         Assert.Equal(1, fixture.Tests(fixture.Build()).Projects.Sum(project => project.Executed));
         Assert.Contains("removed-edges:", fixture.Output.ToString(), StringComparison.Ordinal);
-        Assert.DoesNotContain(fixture.Plan().Actions.Where(action => action.Project == AffectedExecutionFixture.First).SelectMany(action => action.Edges), edge => edge.Contains("StrataLint.Shared", StringComparison.Ordinal));
+        Assert.DoesNotContain(fixture.Plan().Projects.Where(project => project.Project == AffectedExecutionFixture.First).SelectMany(project => project.Edges), edge => edge.Contains("StrataLint.Shared", StringComparison.Ordinal));
         fixture.Write("tools/StrataLint.Shared/Value.cs", "public static class Shared { public static int Value() => 9; }\n");
         var build = fixture.Build();
         var incremental = fixture.Tests(build, expectedExit: 1);

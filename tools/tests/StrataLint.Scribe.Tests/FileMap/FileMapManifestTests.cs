@@ -4,6 +4,49 @@ namespace StrataLint.Scribe.Tests;
 
 public sealed class FileMapManifestTests
 {
+    private const string ExplicitOwner = """
+
+        [[test_input_owners]]
+        project = "tools/tests/Values/Values.csproj"
+        contract = "ExplicitValues"
+        version = 1
+        producer = "StrataLint.Engine.ScribeExecutionDependencies.Derive"
+        verifier = "StrataLint.EngineeringScope.AffectedTestCache.ValidateSource"
+        runner = "StrataLint.EngineeringScope.Program.RunTests"
+        runner_contract = "StandardXunitInline-v1"
+
+        """;
+
+    [Fact]
+    public void ExplicitValuesDeclarationHasASeparateTypedConsumer()
+    {
+        Assert.Empty(FileMapLoader.Parse(Encoding.UTF8.GetBytes(DataKeyedRunLocalEntry()), "fixture.toml").TestInputOwners);
+        var manifest = FileMapLoader.Parse(Encoding.UTF8.GetBytes(DataKeyedRunLocalEntry() + ExplicitOwner), "fixture.toml");
+        var owner = Assert.Single(manifest.TestInputOwners);
+        Assert.Equal(TestInputContract.ExplicitValues, owner.Contract);
+        Assert.Equal(1, owner.Version);
+        Assert.Equal("PartitionEmitter", Assert.Single(manifest.Entries).ProducedBy);
+    }
+
+    [Theory]
+    [InlineData("version = 1", "")]
+    [InlineData("version = 1", "version = 0")]
+    [InlineData("ExplicitValues", "UnknownContract")]
+    [InlineData("Values.csproj", "Values.cs")]
+    [InlineData("version = 1", "version = 1\ncomplete = true")]
+    public void InvalidFiniteOwnerShapeCannotBeConsumed(string before, string after)
+    {
+        var source = DataKeyedRunLocalEntry() + ExplicitOwner.Replace(before, after, StringComparison.Ordinal);
+        Assert.Throws<FormatException>(() => FileMapLoader.Parse(Encoding.UTF8.GetBytes(source), "fixture.toml"));
+    }
+
+    [Fact]
+    public void DuplicateFiniteProjectOwnersAreRejected()
+    {
+        var source = DataKeyedRunLocalEntry() + ExplicitOwner + ExplicitOwner;
+        Assert.Throws<FormatException>(() => FileMapLoader.Parse(Encoding.UTF8.GetBytes(source), "fixture.toml"));
+    }
+
     [Fact]
     public void DataKeyedGeneratedRunLocalSetUsesTheNineKeyShape()
     {

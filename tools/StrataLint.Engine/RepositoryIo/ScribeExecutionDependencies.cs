@@ -5,175 +5,229 @@ using Microsoft.CodeAnalysis.Operations;
 
 namespace StrataLint.Engine;
 
-internal sealed record BoundTestScope(string Project, string Scope, string[] Methods,
-    string[] RuntimeInputs, string[] Edges, string[] Unknown);
+internal sealed record BoundTestScope(string Project, string[] Methods, string[] Rows,
+    string[] RuntimeInputs, string[] Providers, string[] Unknown, int Callables);
 
-// Execution closure is deliberately separate from Scribe's known/unknown debt.
-// It consumes the same compiler-bound calls, before relevance pruning. The
-// supported leaf semantics below are scalar CLR operations and xUnit v2 scalar
-// assertions. An unmodelled library call is an unknown, never a pure-call guess.
+// ExplicitValues is a reviewed declared-input contract, not a CLR purity proof.
+// Native inputs own code invalidation. This single project-union pass binds the
+// ordinary xUnit roots and local providers, and rejects known ambient effects.
+// Scribe's SL003 mapping and debt do not participate in this contract.
 internal static class ScribeExecutionDependencies
 {
-    internal static string[] CompilationUnknown(Microsoft.CodeAnalysis.CSharp.CSharpCompilation compilation)
+    internal static BoundTestScope Derive(ScribeProjectCompilationContext context, string project,
+        Func<string, string[], object?[], string> formatRow)
     {
+        var built = ScribeProjectCompilationBuilder.Build([], context);
+        var compilations = built.ToDictionary(p => p.Compilation.AssemblyName!, p => p.Compilation, StringComparer.Ordinal);
+        var models = built.SelectMany(p => p.Compilation.SyntaxTrees.Select(tree => (tree, model: p.Compilation.GetSemanticModel(tree))))
+            .ToDictionary(p => p.tree, p => p.model);
+        var test = built.Single(p => p.ProjectPath == project).Compilation;
         var unknown = new SortedSet<string>(StringComparer.Ordinal);
-        if (compilation.GetDiagnostics().Any(diagnostic => diagnostic.Severity == DiagnosticSeverity.Error))
-            unknown.Add("compiler:semantic-errors:" + compilation.AssemblyName);
-        // xUnit discovers these contracts regardless of the assembly defining
-        // the attribute. Their lifecycle is outside the test-callable closure.
-        var contracts = new[] { "Xunit.Sdk.ITestFrameworkAttribute", "Xunit.Sdk.ITraitAttribute",
-            "Xunit.Sdk.BeforeAfterTestAttribute", "Xunit.CollectionBehaviorAttribute",
-            "Xunit.TestCaseOrdererAttribute", "Xunit.TestCollectionOrdererAttribute" }
-            .Select(compilation.GetTypeByMetadataName).OfType<INamedTypeSymbol>()
-            .ToHashSet(SymbolEqualityComparer.Default);
-        foreach (var attribute in compilation.Assembly.GetAttributes())
-            for (var type = attribute.AttributeClass; type is not null; type = type.BaseType)
-                if (contracts.Contains(type) || type.AllInterfaces.Any(contracts.Contains))
-                    unknown.Add("test-lifecycle:assembly-adapter-attribute");
-        foreach (var tree in compilation.SyntaxTrees)
+        var methods = new SortedSet<string>(StringComparer.Ordinal);
+        var rows = new List<string>();
+        var providers = new SortedSet<string>(StringComparer.Ordinal);
+        var paths = new SortedSet<string>(StringComparer.Ordinal);
+        var pending = new Queue<ISymbol>();
+        var visited = new HashSet<ISymbol>(SymbolEqualityComparer.Default);
+        var initialized = new HashSet<string>(StringComparer.Ordinal);
+        var inspected = new HashSet<SyntaxNode>();
+        foreach (var compilation in compilations.Values)
         {
-            var model = compilation.GetSemanticModel(tree);
+            if (compilation.GetDiagnostics().Any(d => d.Severity == DiagnosticSeverity.Error))
+                unknown.Add("compiler:semantic-errors:" + compilation.AssemblyName);
+            foreach (var attribute in compilation.Assembly.GetAttributes())
+                if (IsLifecycle(attribute.AttributeClass)) unknown.Add("test-lifecycle:assembly-adapter-attribute");
+            foreach (var tree in compilation.SyntaxTrees)
             foreach (var declaration in tree.GetRoot().DescendantNodes().OfType<MethodDeclarationSyntax>())
-                if (model.GetDeclaredSymbol(declaration) is IMethodSymbol method && method.GetAttributes().Any(attribute =>
-                        attribute.AttributeClass?.ToDisplayString() == "System.Runtime.CompilerServices.ModuleInitializerAttribute"))
+            {
+                var method = models[tree].GetDeclaredSymbol(declaration)!;
+                if (method.GetAttributes().Any(a => a.AttributeClass?.ToDisplayString() == "System.Runtime.CompilerServices.ModuleInitializerAttribute"))
                     unknown.Add("runtime:module-initializer:" + method.ToDisplayString());
-        }
-        return unknown.ToArray();
-    }
-
-    internal static BoundTestScope[] Derive(ScribeProjectCompilationContext context, IReadOnlySet<string> tests)
-    {
-        var sources = context.Projects.Where(project => tests.Contains(project.Path))
-            .SelectMany(project => project.Sources.Select(source => new TestMapSource(source.Path, source.Content, project.Path)));
-        var parsed = ScribeTestSymbolBinder.Bind(sources, ScribeBindingStrategy.Demand, compilationContext: context);
-        return parsed.SelectMany(source => source.Callables).Where(callable => callable.IsTest)
-            .GroupBy(callable => (callable.PartitionKey, TypeName(callable.Symbol!.ContainingType)))
-            .Select(group => Scope(group.Key.PartitionKey, group.Key.Item2, group.ToArray()))
-            .OrderBy(scope => scope.Project, StringComparer.Ordinal).ThenBy(scope => scope.Scope, StringComparer.Ordinal).ToArray();
-    }
-
-    private static BoundTestScope Scope(string project, string name, ScribeBoundCallable[] roots)
-    {
-        var unknown = new HashSet<string>(StringComparer.Ordinal);
-        var paths = new HashSet<string>(StringComparer.Ordinal);
-        var edges = new HashSet<string>(StringComparer.Ordinal);
-        var pending = new Stack<ScribeBoundCallable>(roots);
-        var visited = new HashSet<ScribeBoundCallable>();
-        var type = roots[0].Symbol!.ContainingType;
-        if (type.IsAbstract || type.IsGenericType || type.ContainingType is not null || type.BaseType?.SpecialType != SpecialType.System_Object
-            || type.AllInterfaces.Length != 0)
-            unknown.Add("test-lifecycle:inheritance-or-fixture");
-        if (type.GetAttributes().Length != 0)
-            unknown.Add("test-lifecycle:class-adapter-attribute");
-        foreach (var root in roots)
-        {
-            if (root.Symbol!.IsAsync || root.Symbol.Parameters.Length != 0)
-                unknown.Add("adapter:async-or-data-driven-test");
-            foreach (var attribute in root.Symbol.GetAttributes())
-                if (attribute.AttributeClass?.ToDisplayString() != "Xunit.FactAttribute" || attribute.NamedArguments.Length != 0)
-                    unknown.Add("adapter:custom-or-configured-test-attribute");
-        }
-        while (pending.TryPop(out var callable))
-        {
-            if (!visited.Add(callable)) continue;
-            var symbol = callable.Symbol!;
-            var caller = symbol.ContainingAssembly.Name + ":" + symbol.GetDocumentationCommentId();
-            foreach (var target in callable.Targets)
-            {
-                edges.Add(caller + " -> " + target.Symbol!.ContainingAssembly.Name + ":" + target.Symbol.GetDocumentationCommentId());
-                pending.Push(target);
-            }
-            foreach (var reason in callable.BindingUnknownReasons) unknown.Add("binding:" + reason);
-            // Initializers/dispatch which the Scribe graph does not promise to
-            // traverse cannot be promoted to complete execution dependencies.
-            if (symbol.IsVirtual || symbol.IsAbstract || symbol.IsExtern || symbol.ContainingType.TypeKind == TypeKind.Interface)
-                unknown.Add("dispatch:" + caller);
-            if (symbol.ContainingType.GetMembers().OfType<IFieldSymbol>().Any(field => !field.IsConst)
-                || symbol.ContainingType.StaticConstructors.Length != 0
-                || symbol.ContainingType.GetMembers().OfType<IMethodSymbol>().Any(method => method.MethodKind == MethodKind.Destructor)
-                || symbol.ContainingType.BaseType is { SpecialType: not SpecialType.System_Object } && symbol.ContainingType.TypeKind == TypeKind.Class)
-                unknown.Add("state-or-type-initializer:" + TypeName(symbol.ContainingType));
-            foreach (var node in callable.InspectionNodes)
-            {
-                var model = callable.SemanticModel;
-                if (node is InvocationExpressionSyntax && model.GetOperation(node) is INameOfOperation) continue;
-                if (node is InvocationExpressionSyntax or ObjectCreationExpressionSyntax or ImplicitObjectCreationExpressionSyntax
-                    or ConstructorInitializerSyntax or AttributeSyntax)
+                if (compilation != test || !method.GetAttributes().Any(a => IsTest(a.AttributeClass))) continue;
+                var name = method.ContainingType.ToDisplayString() + "." + method.Name;
+                methods.Add(name);
+                var type = method.ContainingType;
+                if (type.IsAbstract || type.IsGenericType || type.ContainingType is not null
+                    || type.BaseType?.SpecialType != SpecialType.System_Object || type.AllInterfaces.Length != 0
+                    || type.GetAttributes().Length != 0)
+                    unknown.Add("test-lifecycle:inheritance-or-fixture:" + name);
+                if (type.InstanceConstructors.Any(ctor => ctor.Parameters.Length != 0 || ctor.DeclaredAccessibility != Accessibility.Public))
+                    unknown.Add("test-lifecycle:constructor-provider:" + name);
+                if (method.IsAsync || method.IsStatic || method.IsGenericMethod || !method.ReturnsVoid
+                    || method.DeclaredAccessibility != Accessibility.Public)
+                    unknown.Add("adapter:unsupported-root:" + name);
+                var attributes = method.GetAttributes();
+                if (attributes.Any(a => a.NamedArguments.Length != 0 || a.AttributeClass?.ToDisplayString()
+                    is not ("Xunit.FactAttribute" or "Xunit.TheoryAttribute" or "Xunit.InlineDataAttribute")))
+                    unknown.Add("adapter:custom-or-configured-test-attribute:" + name);
+                if (attributes.Any(a => a.AttributeClass?.ToDisplayString() == "Xunit.TheoryAttribute"))
                 {
-                    var method = model.GetSymbolInfo(node).Symbol as IMethodSymbol;
-                    if (method is null) { unknown.Add("unresolved-operation:" + callable.Path); continue; }
-                    edges.Add(caller + " -> " + method.ContainingAssembly.Name + ":" + method.OriginalDefinition.GetDocumentationCommentId());
-                    if (method.MethodKind == MethodKind.DelegateInvoke || method.IsVirtual || method.IsAbstract || method.IsExtern)
-                        unknown.Add("dispatch:" + method.ToDisplayString());
-                    if (callable.Targets.Any(target =>
-                            target.Symbol!.ContainingAssembly.Name == method.ContainingAssembly.Name
-                            && target.Symbol.GetDocumentationCommentId() == method.OriginalDefinition.GetDocumentationCommentId())) continue;
-                    if (node is AttributeSyntax && method.ContainingType.ToDisplayString() == "Xunit.FactAttribute") continue;
-                    if (ReadLiteral(method, node, model, paths))
-                    { unknown.Add("runtime:io-host-context"); continue; }
-                    if (!ScalarLeaf(method)) unknown.Add("external-call:" + method.ToDisplayString());
+                    var data = attributes.Where(a => a.AttributeClass?.ToDisplayString() == "Xunit.InlineDataAttribute").ToArray();
+                    if (data.Length == 0) unknown.Add("adapter:unresolved-data-provider:" + name);
+                    foreach (var row in data)
+                    {
+                        var values = row.ConstructorArguments is [{ Kind: TypedConstantKind.Array } argument]
+                            && !argument.IsNull ? argument.Values.ToArray() : [];
+                        if (values.Length != method.Parameters.Length || values.Any(v => v.Kind is not (TypedConstantKind.Primitive or TypedConstantKind.Enum)
+                                || v.Kind == TypedConstantKind.Enum))
+                        { unknown.Add("adapter:unsupported-inline-values:" + name); continue; }
+                        rows.Add(formatRow(name, method.Parameters.Select(p => p.Name).ToArray(), values.Select(v => v.Value).ToArray()));
+                    }
+                }
+                else if (method.Parameters.Length == 0 && attributes.Any(a => a.AttributeClass?.ToDisplayString() == "Xunit.FactAttribute")) rows.Add(name);
+                else unknown.Add("adapter:unsupported-fact:" + name);
+                pending.Enqueue(method);
+                Initialize(type, instance: true);
+                foreach (var ctor in type.InstanceConstructors) pending.Enqueue(ctor);
+            }
+        }
+        if (methods.Count == 0) unknown.Add("adapter:no-bound-test-identities");
+        while (pending.TryDequeue(out var symbol))
+        {
+            symbol = Resolve(symbol);
+            if (!visited.Add(symbol)) continue;
+            var id = symbol.ContainingAssembly.Name + ":" + symbol.GetDocumentationCommentId();
+            providers.Add(id);
+            if (symbol is IMethodSymbol { IsExtern: true } or IMethodSymbol { IsAbstract: true }
+                || symbol.ContainingType?.TypeKind == TypeKind.Interface)
+                unknown.Add("dispatch:" + id);
+            if (symbol.ContainingType is { } type) Initialize(type, symbol is IMethodSymbol { MethodKind: MethodKind.Constructor });
+            if (symbol.DeclaringSyntaxReferences.Length == 0 && !symbol.IsImplicitlyDeclared)
+                unknown.Add("binding:unresolved-native-member:" + id);
+            foreach (var reference in symbol.DeclaringSyntaxReferences)
+            {
+                var declaration = reference.GetSyntax();
+                // Compiler-synthesized record members are ordinary value semantics.
+                // Only their initializers/default values are inspected, not every method.
+                if (declaration is TypeDeclarationSyntax) continue;
+                Inspect(declaration);
+            }
+        }
+        return new(project, methods.ToArray(), rows.Order(StringComparer.Ordinal).ToArray(), paths.ToArray(),
+            providers.ToArray(), unknown.ToArray(), visited.Count);
+
+        ISymbol Resolve(ISymbol symbol)
+        {
+            if (symbol is IMethodSymbol method) symbol = ScribeCallableIndex.Normalize(method);
+            else symbol = symbol.OriginalDefinition;
+            return symbol.GetDocumentationCommentId() is { } id && compilations.TryGetValue(symbol.ContainingAssembly.Name, out var owner)
+                ? DocumentationCommentId.GetFirstSymbolForDeclarationId(id, owner) ?? symbol : symbol;
+        }
+        void Initialize(INamedTypeSymbol input, bool instance)
+        {
+            var type = (INamedTypeSymbol)Resolve(input);
+            if (!compilations.ContainsKey(type.ContainingAssembly.Name)) return;
+            var key = type.ContainingAssembly.Name + ":" + type.GetDocumentationCommentId() + ":" + instance;
+            if (!initialized.Add(key)) return;
+            if (type.GetAttributes().Length != 0) unknown.Add("binding:custom-value-metadata:" + key);
+            foreach (var ctor in type.StaticConstructors) pending.Enqueue(ctor);
+            if (instance)
+                foreach (var member in type.AllInterfaces.SelectMany(contract => contract.GetMembers()))
+                    if (type.FindImplementationForInterfaceMember(member) is { } implementation) Enqueue(implementation);
+            foreach (var member in type.GetMembers())
+            {
+                if (member is IMethodSymbol { MethodKind: MethodKind.Destructor }) unknown.Add("test-lifecycle:finalizer:" + key);
+                // Pinned value consumers (serialization/assertion formatting) can
+                // read getters implicitly. Bind constructed values' properties.
+                if (instance && member is IPropertySymbol) pending.Enqueue(member);
+                if (instance && member is IPropertySymbol or IFieldSymbol && member.GetAttributes().Length != 0)
+                    unknown.Add("binding:custom-value-member-metadata:" + member.ToDisplayString());
+                if (instance && member is IMethodSymbol m && (m.IsOverride || m.ExplicitInterfaceImplementations.Length != 0)) pending.Enqueue(m);
+                if (member is not (IFieldSymbol or IPropertySymbol) || !instance && !member.IsStatic) continue;
+                foreach (var syntax in member.DeclaringSyntaxReferences.Select(r => r.GetSyntax()))
+                {
+                    if (syntax is VariableDeclaratorSyntax { Initializer: { } field }) Inspect(field.Value);
+                    if (syntax is PropertyDeclarationSyntax { Initializer: { } property }) Inspect(property.Value);
+                }
+            }
+            if (instance && type.BaseType is { SpecialType: not SpecialType.System_Object } parent)
+            {
+                Initialize(parent, true);
+                foreach (var ctor in parent.InstanceConstructors) Enqueue(ctor);
+            }
+        }
+        void Enqueue(ISymbol symbol)
+        {
+            if (symbol is INamedTypeSymbol type) { Initialize(type, false); return; }
+            if (symbol.ContainingAssembly is null) return;
+            if (compilations.ContainsKey(symbol.ContainingAssembly.Name))
+            {
+                if (symbol is IMethodSymbol { MethodKind: MethodKind.DelegateInvoke }) return;
+                pending.Enqueue(symbol); return;
+            }
+            if (Ambient(symbol)) unknown.Add("runtime:ambient-input:" + symbol.ToDisplayString());
+            else if (!Platform(symbol.ContainingAssembly)) unknown.Add("binding:unresolved-provider:" + symbol.ToDisplayString());
+        }
+        void Inspect(SyntaxNode declaration)
+        {
+            if (!models.TryGetValue(declaration.SyntaxTree, out var model))
+            { unknown.Add("binding:unresolved-source:" + declaration.SyntaxTree.FilePath); return; }
+            foreach (var node in declaration.DescendantNodesAndSelf())
+            {
+                if (!inspected.Add(node) || node.AncestorsAndSelf().Any(n => n is AttributeSyntax)) continue;
+                if (node is AnonymousFunctionExpressionSyntax or LocalFunctionStatementSyntax)
+                    providers.Add("callback:" + declaration.SyntaxTree.FilePath + ":" + node.SpanStart);
+                if (node is ExpressionSyntax expression)
+                {
+                    if (model.GetTypeInfo(expression).Type?.TypeKind is TypeKind.Dynamic or TypeKind.Pointer or TypeKind.FunctionPointer)
+                        unknown.Add("dynamic-or-native-dispatch:" + declaration.SyntaxTree.FilePath);
+                    if (model.GetConversion(expression).MethodSymbol is { } conversion) Enqueue(conversion);
+                }
+                if (node is InvocationExpressionSyntax or BaseObjectCreationExpressionSyntax or ConstructorInitializerSyntax)
+                {
+                    if (model.GetOperation(node) is INameOfOperation) continue;
+                    if (model.GetSymbolInfo(node).Symbol is not IMethodSymbol call)
+                    { unknown.Add("binding:unresolved-call:" + declaration.SyntaxTree.FilePath); continue; }
+                    if (call.MethodKind != MethodKind.DelegateInvoke) Enqueue(call);
+                    if (node is BaseObjectCreationExpressionSyntax) Initialize(call.ContainingType, true);
+                    if (node is InvocationExpressionSyntax invocation && Ambient(call))
+                        foreach (var argument in invocation.ArgumentList.Arguments)
+                            if (model.GetConstantValue(argument.Expression) is { HasValue: true, Value: string value }
+                                && call.ContainingNamespace.ToDisplayString().StartsWith("System.IO", StringComparison.Ordinal)) paths.Add(value);
                 }
                 else if (node is MemberAccessExpressionSyntax or IdentifierNameSyntax or ElementAccessExpressionSyntax)
                 {
-                    if (node.Parent is InvocationExpressionSyntax) continue;
-                    switch (model.GetSymbolInfo(node).Symbol)
-                    {
-                        case IPropertySymbol property when !property.Locations.Any(location => location.IsInSource):
-                            unknown.Add("external-property:" + property.ToDisplayString()); break;
-                        case IPropertySymbol property when !callable.Targets.Any(target =>
-                            target.Symbol?.AssociatedSymbol?.GetDocumentationCommentId() == property.GetDocumentationCommentId()):
-                            unknown.Add("unbound-property:" + property.ToDisplayString()); break;
-                        case IFieldSymbol field when !field.IsConst && field.IsStatic:
-                            unknown.Add("static-state:" + field.ToDisplayString()); break;
-                    }
+                    if (model.GetSymbolInfo(node).Symbol is IPropertySymbol or IFieldSymbol or IMethodSymbol)
+                        Enqueue(model.GetSymbolInfo(node).Symbol!);
                 }
-                else if (node is AwaitExpressionSyntax or ForEachStatementSyntax or UsingStatementSyntax or LockStatementSyntax
-                    or QueryExpressionSyntax or InterpolatedStringExpressionSyntax or AnonymousFunctionExpressionSyntax
-                    or CollectionExpressionSyntax or InitializerExpressionSyntax or WithExpressionSyntax or PatternSyntax
-                    or ForEachVariableStatementSyntax or RangeExpressionSyntax or TupleExpressionSyntax
-                    or UnsafeStatementSyntax or FixedStatementSyntax or StackAllocArrayCreationExpressionSyntax
-                    || node is LocalDeclarationStatementSyntax { UsingKeyword.RawKind: not 0 })
-                    unknown.Add("implicit-runtime-operation:" + node.GetType().Name);
-                if (node is ExpressionSyntax expression && model.GetTypeInfo(expression).Type?.TypeKind is TypeKind.Dynamic or TypeKind.Pointer or TypeKind.FunctionPointer)
-                    unknown.Add("dynamic-or-native-dispatch");
-                if (node is ExpressionSyntax converted && model.GetConversion(converted).MethodSymbol is not null)
-                    unknown.Add("implicit-runtime-operation:user-conversion");
-                if (model.GetOperation(node) is IBinaryOperation { OperatorMethod: not null }
-                    or IUnaryOperation { OperatorMethod: not null } or IIncrementOrDecrementOperation { OperatorMethod: not null }
-                    or ICompoundAssignmentOperation { OperatorMethod: not null })
-                    unknown.Add("implicit-runtime-operation:user-operator");
+                if (model.GetOperation(node) is IBinaryOperation { OperatorMethod: { } binary }) Enqueue(binary);
+                if (model.GetOperation(node) is IUnaryOperation { OperatorMethod: { } unary }) Enqueue(unary);
+                if (node is ForEachStatementSyntax loop)
+                {
+                    var info = model.GetForEachStatementInfo(loop);
+                    foreach (var member in new ISymbol?[] { info.GetEnumeratorMethod, info.MoveNextMethod, info.CurrentProperty, info.DisposeMethod })
+                        if (member is not null) Enqueue(member);
+                }
             }
         }
-        return new(project, name, roots.Select(root => name + "." + root.Name).Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToArray(),
-            paths.Order(StringComparer.Ordinal).ToArray(), edges.Order(StringComparer.Ordinal).ToArray(), unknown.Order(StringComparer.Ordinal).ToArray());
     }
 
-    private static bool ReadLiteral(IMethodSymbol method, SyntaxNode node, SemanticModel model, HashSet<string> paths)
+    private static bool IsTest(INamedTypeSymbol? type) => type is not null
+        && (type.ToDisplayString() is "Xunit.FactAttribute" or "Xunit.TheoryAttribute" || IsTest(type.BaseType));
+    private static bool IsLifecycle(INamedTypeSymbol? type) => type is not null
+        && (type.ToDisplayString().StartsWith("Xunit.", StringComparison.Ordinal)
+            || type.AllInterfaces.Any(i => i.ToDisplayString().StartsWith("Xunit.", StringComparison.Ordinal)) || IsLifecycle(type.BaseType));
+    private static bool Platform(IAssemblySymbol assembly) =>
+        assembly.Name is "xunit.core" or "xunit.assert" or "xunit.abstractions"
+        || Convert.ToHexStringLower(assembly.Identity.PublicKeyToken.AsSpan()) is
+            "b03f5f7f11d50a3a" or "7cec85d7bea7798e" or "b77a5c561934e089" or "cc7b13ffcd2ddd51";
+
+    // Known capability boundaries, not a growing whitelist of pure BCL methods.
+    private static bool Ambient(ISymbol symbol)
     {
-        if (method.ContainingType.ToDisplayString() != "System.IO.File"
-            || method.Name is not ("ReadAllText" or "ReadAllBytes" or "Exists")
-            || node is not InvocationExpressionSyntax invocation || invocation.ArgumentList.Arguments.Count != 1
-            || model.GetConstantValue(invocation.ArgumentList.Arguments[0].Expression) is not { HasValue: true, Value: string value }
-            || string.IsNullOrEmpty(value)) return false;
-        paths.Add(value);
-        return true;
+        var type = symbol.ContainingType?.ToDisplayString() ?? "";
+        var ns = symbol.ContainingNamespace?.ToDisplayString() ?? "";
+        return type is "System.Environment" or "System.Random" or "System.TimeProvider"
+            or "System.Diagnostics.Process" or "System.Diagnostics.ProcessStartInfo" or "System.Diagnostics.Stopwatch"
+            or "System.IO.File" or "System.IO.Directory" or "System.IO.FileInfo" or "System.IO.DirectoryInfo"
+            or "System.IO.FileSystemInfo" or "System.IO.FileStream" or "System.IO.StreamReader" or "System.IO.StreamWriter" or "System.IO.DriveInfo"
+            || ns.StartsWith("System.Net", StringComparison.Ordinal) || ns.StartsWith("System.Reflection", StringComparison.Ordinal)
+            || ns.StartsWith("System.Threading", StringComparison.Ordinal) || ns.StartsWith("System.Runtime.Loader", StringComparison.Ordinal)
+            || type is "System.IO.FileSystemWatcher" or "System.Security.Cryptography.RandomNumberGenerator"
+            || ns.StartsWith("System.Runtime.InteropServices", StringComparison.Ordinal)
+            || type is "System.DateTime" or "System.DateTimeOffset" && symbol.Name is "Now" or "UtcNow" or "Today"
+            || type == "System.Guid" && symbol.Name == "NewGuid"
+            || type == "System.IO.Path" && symbol.Name is "GetFullPath" or "GetTempPath" or "GetTempFileName" or "GetRandomFileName"
+            || type == "System.Threading.Thread" && symbol.Name is not ("get_CurrentCulture" or "get_CurrentUICulture");
     }
-
-    private static bool ScalarLeaf(IMethodSymbol method)
-    {
-        if (method.ContainingType.SpecialType == SpecialType.System_Object && method.MethodKind == MethodKind.Constructor) return true;
-        if (method.ContainingAssembly.Name != "xunit.assert" || method.ContainingType.ToDisplayString() != "Xunit.Assert") return false;
-        if (method.Name is "True" or "False" or "Null" or "NotNull" or "Same" or "NotSame") return true;
-        // Equality over arbitrary objects can execute user comparers and cannot
-        // be inferred from Assert's name. Only scalar value arguments close here.
-        return method.Name == "Equal" && method.Parameters.All(parameter => Scalar(parameter.Type))
-            && method.TypeArguments.All(Scalar);
-    }
-
-    private static bool Scalar(ITypeSymbol type) => type.SpecialType is SpecialType.System_Boolean
-        or SpecialType.System_Char or SpecialType.System_SByte or SpecialType.System_Byte or SpecialType.System_Int16
-        or SpecialType.System_UInt16 or SpecialType.System_Int32 or SpecialType.System_UInt32 or SpecialType.System_Int64
-        or SpecialType.System_UInt64 or SpecialType.System_Decimal or SpecialType.System_Single or SpecialType.System_Double
-        or SpecialType.System_String;
-    private static string TypeName(INamedTypeSymbol type) => type.ToDisplayString();
 }

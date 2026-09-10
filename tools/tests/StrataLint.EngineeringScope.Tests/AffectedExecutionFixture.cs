@@ -24,7 +24,7 @@ internal sealed class AffectedExecutionFixture : IDisposable
         Write("global.json", File.ReadAllText(Path.Combine(repository, "global.json")));
         Write("lake-manifest.json", "{\"packages\":[{\"name\":\"mathlib\",\"rev\":\"1111111111111111111111111111111111111111\"}]}\n");
         Write("README.md", "a\n");
-        Write("Meta/FILEMAP.toml", File.ReadAllText(Path.Combine(repository, "Meta/FILEMAP.toml")));
+        Write("Meta/FILEMAP.toml", File.ReadAllText(Path.Combine(repository, "Meta/FILEMAP.toml")).Split("[[test_input_owners]]")[0] + Owner(First) + Owner(Second));
         Write("tools/scripts/ci-build-outputs.targets", File.ReadAllText(Path.Combine(repository, "tools/scripts/ci-build-outputs.targets")));
         Write("tools/scripts/report/dotnet_producer.py", File.ReadAllText(Path.Combine(repository, "tools/scripts/report/dotnet_producer.py")));
         foreach (var (name, assembly) in new[] { ("StrataLint.Cli", "StrataLint"),
@@ -61,6 +61,22 @@ internal sealed class AffectedExecutionFixture : IDisposable
         Run("git", "add", ".");
         Run("git", "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "parentless");
     }
+
+    internal static string Owner(string project) => $$"""
+
+        [[test_input_owners]]
+        project = "{{project}}"
+        contract = "ExplicitValues"
+        version = 1
+        producer = "StrataLint.Engine.ScribeExecutionDependencies.Derive"
+        verifier = "StrataLint.EngineeringScope.AffectedTestCache.ValidateSource"
+        runner = "StrataLint.EngineeringScope.Program.RunTests"
+        runner_contract = "StandardXunitInline-v1"
+
+        """;
+
+    internal void UnenrollFirst() => Write("Meta/FILEMAP.toml",
+        File.ReadAllText(Path.Combine(Root, "Meta/FILEMAP.toml")).Replace(Owner(First), "", StringComparison.Ordinal));
 
     internal CommonStageRecord Build()
     {

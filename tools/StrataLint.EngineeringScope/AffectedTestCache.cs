@@ -37,7 +37,7 @@ internal sealed class AffectedTestCache
             if (CommonExecutionEvidence.Hash(path) != File.ReadAllText(path + ".sha256").Trim()) throw new InvalidDataException("seed checksum mismatch");
             var seed = CommonExecutionEvidence.Read<TestSuccessSeed>(directory, "seed.json");
             AffectedTestPlan.Validate(seed.Manifest);
-            if (seed.Version != 1 || seed.Partition != partition
+            if (seed.Version != 2 || seed.Partition != partition
                 || seed.Successes.Any(success => !seed.Manifest.Actions.Any(action => action.Project == success.Project
                     && action.Scope == success.Scope && action.Identity == success.Identity && success.Source.ActionIdentity == action.Identity))
                 || seed.Successes.Select(success => (success.Project, success.Scope)).Distinct().Count() != seed.Successes.Length)
@@ -50,7 +50,7 @@ internal sealed class AffectedTestCache
 
     internal (CachedTestSuccess? Success, string Reason) Select(TestAction action, TestProjectInputs? projectInputs = null)
     {
-        if (action.Unknown.Length != 0) return (null, "unknown:" + string.Join(";", action.Unknown));
+        if (!action.UsesExplicitValues) return (null, "unknown:" + string.Join(";", action.Unknown));
         if (Seed is null) return (null, MissReason);
         try
         {
@@ -96,16 +96,27 @@ internal sealed class AffectedTestCache
         return paths.ToArray();
     }
 
-    internal void Save(TestInputManifest manifest, IEnumerable<CachedTestSuccess> successes)
+    internal void Save(TestInputManifest manifest, IEnumerable<CachedTestSuccess> successes, TestEnvironmentContext? context = null)
     {
-        AffectedEnvironmentObservation.Write(root, "cache-save", manifest);
+        AffectedEnvironmentObservation.Write(root, "cache-save", manifest, context: context);
         if (directory is null || partition is null) return;
         // This is local computation memory. Remote publishing remains the existing
         // Actions save gate, which is restore-only for PR callers.
         try
         {
             Directory.CreateDirectory(directory);
+            AffectedTestPlan.Validate(manifest);
             var items = successes.ToArray();
+            if (items.Select(item => item.Project).Distinct(StringComparer.Ordinal).Count() != items.Length)
+                throw new InvalidDataException("duplicate project success");
+            foreach (var success in items)
+            {
+                var action = manifest.Actions.Single(a => a.Project == success.Project && a.Scope == success.Scope && a.Identity == success.Identity);
+                if (context is not null && action.Environment != context.ForValues(action.UsesExplicitValues))
+                    throw new InvalidDataException("test environment changed before save");
+                ValidateSource(action, success.Source, success.Source.Trx.Select(material => File.Exists(CachedPath(material.Sha256))
+                    ? CachedPath(material.Sha256) : Path.Combine(root, material.Path)).ToArray());
+            }
             foreach (var trx in items.SelectMany(success => success.Source.Trx).DistinctBy(material => material.Sha256))
             {
                 var target = CachedPath(trx.Sha256);
@@ -119,7 +130,7 @@ internal sealed class AffectedTestCache
                 File.Move(temporary, target, overwrite: true);
             }
             var publication = "seed-" + Guid.NewGuid().ToString("N") + ".json";
-            CommonExecutionEvidence.Write(directory, publication, new TestSuccessSeed(1, partition, manifest, items));
+            CommonExecutionEvidence.Write(directory, publication, new TestSuccessSeed(2, partition, manifest, items));
             var staged = Path.Combine(directory, publication);
             File.WriteAllText(staged + ".sha256", CommonExecutionEvidence.Hash(staged) + "\n");
             File.Move(staged, Path.Combine(directory, "seed.json"), overwrite: true);
@@ -149,7 +160,7 @@ internal sealed class AffectedTestCache
         return result;
     }
 
-    internal static void ValidateSource(TestAction action, TestSuccessSource source, string[] files, Func<string, TestResultEvidence>? load = null, bool requireComplete = true, Func<string, string>? hash = null)
+    internal static void ValidateSource(TestAction action, TestSuccessSource source, string[] files, Func<string, TestResultEvidence>? load = null, Func<string, string>? hash = null)
     {
         if (source.Candidate.Length != 64 || !source.Candidate.All(char.IsAsciiHexDigit)
             || source.Round.Length != 32 || !source.Round.All(char.IsAsciiHexDigit)
@@ -158,27 +169,23 @@ internal sealed class AffectedTestCache
             || source.Repository != (Environment.GetEnvironmentVariable("GITHUB_REPOSITORY") ?? "local")
             || source.Trx.Any(material => material.Sha256.Length != 64 || !material.Sha256.All(char.IsAsciiHexDigit))
             || string.IsNullOrWhiteSpace(source.Candidate) || string.IsNullOrWhiteSpace(source.Round) || source.ActionIdentity != action.Identity
-            || source.Covered < (requireComplete ? 1 : 0) || source.Trx.Length == 0 || source.Trx.Length != files.Length)
+            || source.Covered < 1 || source.Trx.Length == 0 || source.Trx.Length != files.Length)
             throw new InvalidDataException("invalid original test success identity");
-        var count = 0;
+        if (!action.UsesExplicitValues || action.Scope != "*" || action.Binding!.Rows.Length == 0)
+            throw new InvalidDataException("test scope has no finite owned row obligations");
+        var rows = new List<string>();
         var directories = new HashSet<string>(StringComparer.Ordinal);
-        var methods = new HashSet<string>(StringComparer.Ordinal);
         for (var i = 0; i < files.Length; i++)
         {
             if ((hash ?? CommonExecutionEvidence.Hash)(files[i]) != source.Trx[i].Sha256) throw new InvalidDataException("original TRX integrity mismatch");
             if (!directories.Add(Path.GetDirectoryName(files[i])!)) continue;
             var trx = (load ?? (path => TestResultEvidence.Load(Path.GetDirectoryName(path)!)))(files[i]);
-            if (trx.CountAssembly(action.Assembly) == 0) throw new InvalidDataException("original TRX belongs to a different test assembly");
-            foreach (var method in action.Methods)
-            {
-                if (requireComplete && trx.SkippedMethods.Contains(method)) throw new InvalidDataException("original test method was skipped: " + method);
-                var rows = trx.MethodCounts.GetValueOrDefault(method);
-                count += rows;
-                if (rows > 0 || !requireComplete && trx.SkippedMethods.Contains(method)) methods.Add(method);
-            }
+            if (trx.CountAssembly(action.Assembly) != trx.Executed || trx.SkippedMethods.Count != 0)
+                throw new InvalidDataException("original TRX has skipped rows or a different test assembly");
+            rows.AddRange(trx.Rows);
         }
-        if (count != source.Covered || !action.Methods.All(methods.Contains))
-            throw new InvalidDataException("original TRX does not cover the complete test scope");
+        if (rows.Count != source.Covered || !rows.Order(StringComparer.Ordinal).SequenceEqual(action.Binding.Rows))
+            throw new InvalidDataException("original TRX does not cover the exact finite test rows and multiplicity");
     }
 
     internal static bool CacheFailure(Exception exception) => exception is InvalidDataException or IOException or UnauthorizedAccessException

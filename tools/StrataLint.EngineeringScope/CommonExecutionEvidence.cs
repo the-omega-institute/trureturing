@@ -108,7 +108,6 @@ internal static class CommonExecutionEvidence
         if (materials.Any(material => material.Path == AffectedTestPlan.NativePath))
         {
             var plan = AffectedTestPlan.Derive(root, candidate, snapshot, inputs, materials);
-            AffectedEnvironmentObservation.Write(root, "seal", plan, candidate);
             planFinished = clock.GetTimestamp();
             Write(root, AffectedTestPlan.PathName, plan);
             serializationFinished = clock.GetTimestamp();
@@ -264,15 +263,15 @@ internal static class CommonExecutionEvidence
         }
     }
 
-    internal static TestExecutionRecord ValidateTests(string root, IEnumerable<string>? requiredProjects = null)
+    internal static TestExecutionRecord ValidateTests(string root, IEnumerable<string>? requiredProjects = null, TestEnvironmentContext? context = null)
     {
         var record = Read<TestExecutionRecord>(root, TestsPath);
         var candidate = Candidate(root, out var snapshot);
-        return ValidateTests(root, record, candidate, snapshot, requiredProjects);
+        return ValidateTests(root, record, candidate, snapshot, requiredProjects, context: context);
     }
 
     private static TestExecutionRecord ValidateTests(string root, TestExecutionRecord record, string candidate,
-        RepositorySnapshot snapshot, IEnumerable<string>? requiredProjects = null, CommonStageRecord? build = null)
+        RepositorySnapshot snapshot, IEnumerable<string>? requiredProjects = null, CommonStageRecord? build = null, TestEnvironmentContext? context = null)
     {
         if (record.Version != 2 || record.Candidate != candidate || string.IsNullOrWhiteSpace(record.Round))
             throw new InvalidDataException("engineering evidence candidate identity mismatch or invalid version/round");
@@ -291,6 +290,12 @@ internal static class CommonExecutionEvidence
             AffectedTestPlan.Validate(plan);
             if (plan.Candidate != candidate) throw new InvalidDataException("test input manifest candidate mismatch");
         }
+        var producer = AffectedTestPlan.ProducerIdentity();
+        if (plan is not null)
+        {
+            context ??= CommonStages.TestEnvironment(root);
+            AffectedEnvironmentObservation.Write(root, "downstream-validation", plan, record.Candidate, context: context);
+        }
         var evidenceByDirectory = new Dictionary<string, TestResultEvidence>(StringComparer.Ordinal);
         TestResultEvidence LoadTrx(string file)
         {
@@ -300,14 +305,14 @@ internal static class CommonExecutionEvidence
             return evidence;
         }
         // Materials were validated above. Share those hashes and each parsed TRX
-        // across all class scopes covered by that file.
+        // across all project actions covered by that file.
         var validatedHashes = record.Materials.ToDictionary(material => Path.Combine(root, material.Path), material => material.Sha256, StringComparer.Ordinal);
         foreach (var project in record.Projects)
         {
             if (project.Exit != 0 || project.Error is not null || project.Executed < 0
                 || project.Executed + project.Coverage.Where(item => item.Status == "reused").Sum(item => item.Covered) <= 0)
                 throw new InvalidDataException($"test project failed: {project.Project}: {project.Error}");
-            if (plan is not null) ValidateCoverage(root, record, project, plan, LoadTrx, path => validatedHashes[path]);
+            if (plan is not null) ValidateCoverage(root, record, project, plan, LoadTrx, path => validatedHashes[path], context!, producer);
             else if (project.Coverage.Length != 0) throw new InvalidDataException("coverage has no current input manifest");
             if (project.Executed == 0) continue;
             if (!RepoPath.TryCreate(project.Results, out _)) throw new InvalidDataException("invalid TRX path");
@@ -323,25 +328,22 @@ internal static class CommonExecutionEvidence
                 throw new InvalidDataException($"base test project has no successful candidate coverage: {project}");
         return record;
     }
-    private static void ValidateCoverage(string root, TestExecutionRecord record, TestProjectExecution project, TestInputManifest plan, Func<string, TestResultEvidence> load, Func<string, string> hash)
+    private static void ValidateCoverage(string root, TestExecutionRecord record, TestProjectExecution project, TestInputManifest plan, Func<string, TestResultEvidence> load, Func<string, string> hash, TestEnvironmentContext context, string producer)
     {
         var actions = plan.Actions.Where(action => action.Project == project.Project).OrderBy(action => action.Scope, StringComparer.Ordinal).ToArray();
         if (actions.Length == 0 || !actions.Select(action => action.Scope).SequenceEqual(project.Coverage.Select(item => item.Scope)))
             throw new InvalidDataException("required test scopes are missing, duplicated, or out of order");
         var currentCount = 0;
-        var producer = AffectedTestPlan.ProducerIdentity();
-        var environment = AffectedTestPlan.EnvironmentIdentity();
-        AffectedEnvironmentObservation.Write(root, "downstream-validation", plan, record.Candidate);
         foreach (var (action, coverage) in actions.Zip(project.Coverage))
         {
             if (action.Identity != AffectedTestPlan.Identity(action) || action.Identity != coverage.Identity
-                || action.Producer != producer || action.Environment != environment || coverage.Covered < 0
+                || action.Producer != producer || action.Environment != context.ForValues(action.UsesExplicitValues) || coverage.Covered < 0
                 || string.IsNullOrWhiteSpace(coverage.Reason)) throw new InvalidDataException("test action input identity mismatch");
             if (coverage.Results.Any(path => !record.Materials.Any(material => material.Path == path)) || coverage.Results.Length == 0)
                 throw new InvalidDataException("missing bound coverage TRX");
             if (coverage.Status == "reused")
             {
-                if (action.Unknown.Length != 0) throw new InvalidDataException("unknown execution dependencies cannot be reused");
+                if (!action.UsesExplicitValues) throw new InvalidDataException("unknown execution dependencies cannot be reused");
                 AffectedTestCache.ValidateSource(action, coverage.Source, coverage.Results.Select(path => System.IO.Path.Combine(root, path)).ToArray(), load, hash: hash);
                 if (coverage.Covered != coverage.Source.Covered) throw new InvalidDataException("reused count mismatch");
             }
@@ -350,13 +352,13 @@ internal static class CommonExecutionEvidence
                 if (coverage.Source.Candidate != record.Candidate || coverage.Source.Round != record.Round
                     || coverage.Source.ActionIdentity != action.Identity || coverage.Covered != coverage.Source.Covered)
                     throw new InvalidDataException("executed coverage has an old success source");
-                if (action.Scope != "*")
-                    AffectedTestCache.ValidateSource(action, coverage.Source, coverage.Results.Select(path => System.IO.Path.Combine(root, path)).ToArray(), load, requireComplete: false, hash: hash);
+                if (action.UsesExplicitValues)
+                    AffectedTestCache.ValidateSource(action, coverage.Source, coverage.Results.Select(path => System.IO.Path.Combine(root, path)).ToArray(), load, hash: hash);
                 currentCount += coverage.Covered;
             }
             else throw new InvalidDataException("test scope is failed or uncovered");
         }
-        if (currentCount > project.Executed) throw new InvalidDataException("executed test coverage exceeds TRX count");
+        if (currentCount != project.Executed) throw new InvalidDataException("executed test coverage exceeds TRX count");
     }
 
 }

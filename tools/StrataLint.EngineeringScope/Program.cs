@@ -73,8 +73,12 @@ internal static class Program
             var build = buildRound is null && !File.Exists(Path.Combine(repository, CommonExecutionEvidence.BuildPath))
                 ? null : CommonExecutionEvidence.ValidateBuild(repository, buildRound);
             var testAssemblies = build is null ? null : CommonBuildOutputs.TestAssemblies(repository, build);
+            var context = CommonStages.TestEnvironment(repository);
+            var plan = build is not null && build.Materials.Any(material => material.Path == AffectedTestPlan.PathName)
+                ? CommonExecutionEvidence.Read<TestInputManifest>(repository, AffectedTestPlan.PathName) : null;
             return RunCurrentTests(repository, (project, results, filter) => RunTests(repository,
-                testAssemblies is null ? project : testAssemblies[project], results, filter), output, build);
+                testAssemblies is null ? project : testAssemblies[project], results, filter, context,
+                plan?.Actions.Single(action => action.Project == project).UsesExplicitValues == true), output, build, context);
         }
         catch (Exception exception)
         {
@@ -92,10 +96,10 @@ internal static class Program
             : throw new ArgumentException("options must be exactly --repository value");
     }
 
-    internal static int RunCurrentTests(string root, Func<string, string, string?, int> run, TextWriter output, CommonStageRecord? build = null)
+    internal static int RunCurrentTests(string root, Func<string, string, string?, int> run, TextWriter output, CommonStageRecord? build = null, TestEnvironmentContext? context = null)
     {
         if (build is not null && build.Materials.Any(material => material.Path == AffectedTestPlan.PathName))
-            return AffectedTestExecution.Run(root, run, output, build);
+            return AffectedTestExecution.Run(root, run, output, build, context);
         return RunCurrentTests(root, (project, results) => run(project, results, null), output, build);
     }
 
@@ -136,14 +140,17 @@ internal static class Program
         return records.Any(static record => record.Exit != 0 || record.Error is not null || record.Executed == 0) ? 1 : 0;
     }
 
-    private static int RunTests(string root, string project, string results, string? filter = null)
+    internal static int RunTests(string root, string project, string results, string? filter = null,
+        TestEnvironmentContext? context = null, bool explicitValues = false)
     {
         var start = new ProcessStartInfo("dotnet") { WorkingDirectory = root, UseShellExecute = false };
-        CommonStages.NormalizeEnvironment(start.Environment);
-        if (Directory.Exists(Path.Combine(root, CommonBuildOutputs.PackagesPath)))
-            start.Environment["NUGET_PACKAGES"] = Path.Combine(root, CommonBuildOutputs.PackagesPath);
+        context ??= CommonStages.TestEnvironment(root);
+        start.FileName = context.Launcher;
+        start.WorkingDirectory = context.WorkingDirectory;
+        start.Environment.Clear();
+        foreach (var pair in context.Exposure(explicitValues)) start.Environment[pair.Key] = pair.Value;
         foreach (var argument in BuildTestArguments(project, results, filter)) start.ArgumentList.Add(argument);
-        AffectedEnvironmentObservation.Write(root, "test-launch", launched: start.Environment);
+        AffectedEnvironmentObservation.Write(root, "test-launch", launched: start.Environment, context: context);
         using var process = Process.Start(start) ?? throw new InvalidOperationException("could not start dotnet test");
         process.WaitForExit();
         return process.ExitCode;

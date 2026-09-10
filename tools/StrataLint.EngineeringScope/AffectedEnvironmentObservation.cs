@@ -9,7 +9,7 @@ namespace StrataLint.EngineeringScope;
 internal static class AffectedEnvironmentObservation
 {
     internal static void Write(string root, string boundary, TestInputManifest? plan = null,
-        string? candidate = null, IDictionary<string, string?>? launched = null)
+        string? candidate = null, IDictionary<string, string?>? launched = null, TestEnvironmentContext? context = null)
     {
         var destination = Environment.GetEnvironmentVariable("AFFECTED_EVIDENCE_ROOT");
         if (string.IsNullOrEmpty(destination)) return;
@@ -19,15 +19,15 @@ internal static class AffectedEnvironmentObservation
             candidate = CommonExecutionEvidence.Read<CommonStageRecord>(root, CommonExecutionEvidence.BuildPath).Candidate;
         var environment = new ProcessStartInfo().Environment;
         CommonStages.NormalizeEnvironment(environment);
-        var child = CommonStages.TestEnvironment();
+        var child = context;
         var row = new
         {
             boundary, pid = Environment.ProcessId, root,
             expected = plan is null ? null : new { plan.Candidate,
                 producer = plan.Actions.Select(action => action.Producer).Distinct().ToArray(),
                 environment = plan.Actions.Select(action => action.Environment).Distinct().ToArray() },
-            actual = new { candidate, producer = AffectedTestPlan.ProducerIdentity(), environment = child.Identity,
-                culture = child.Culture, ui_culture = child.UICulture },
+            actual = new { candidate, producer = AffectedTestPlan.ProducerIdentity(), environment = child?.Identity, values_environment = child?.ValuesIdentity,
+                culture = child?.Culture, ui_culture = child?.UICulture },
             culture = CultureInfo.CurrentCulture.Name, ui_culture = CultureInfo.CurrentUICulture.Name,
             runtime = RuntimeInformation.RuntimeIdentifier, framework = RuntimeInformation.FrameworkDescription,
             inputs = new[] { "CI", "LANG", "LC_ALL", "LC_CTYPE", "LC_MESSAGES", "DOTNET_CLI_UI_LANGUAGE",

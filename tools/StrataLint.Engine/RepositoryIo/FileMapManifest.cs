@@ -22,6 +22,10 @@ internal sealed record FileMapResidencePolicy(
     int KnownViolationCount,
     string Status);
 
+internal enum TestInputContract { ExplicitValues }
+internal sealed record FileMapTestInputOwner(string Project, TestInputContract Contract, int Version,
+    string Producer, string Verifier, string Runner, string RunnerContract);
+
 internal sealed record FileMapEntry
 {
     private readonly FileMapGlob glob;
@@ -92,6 +96,8 @@ internal sealed class FileMapManifest
 
     internal ImmutableArray<FileMapEntry> Entries { get; }
 
+    internal ImmutableArray<FileMapTestInputOwner> TestInputOwners { get; init; } = [];
+
     internal ImmutableArray<FileMapEntry> Match(string path) =>
         Entries.Where(entry => entry.Matches(path)).ToImmutableArray();
 }
@@ -156,7 +162,9 @@ internal static class FileMapLoader
             throw new FileMapParseException(location, $"invalid TOML: {exception.Message}", exception);
         }
 
-        RequireExactKeys(root, location, "files", "residence_policy", "schema_version");
+        RequireExactKeys(root, location, root.ContainsKey("test_input_owners")
+            ? ["files", "residence_policy", "schema_version", "test_input_owners"]
+            : ["files", "residence_policy", "schema_version"]);
         if (root["schema_version"] is not long schemaVersion || schemaVersion != 2)
         {
             throw Invalid(location, "schema_version must be 2");
@@ -195,7 +203,29 @@ internal static class FileMapLoader
             throw Invalid(location, "artifact_id values other than none must be unique");
         }
 
-        return new FileMapManifest(residencePolicy, entries);
+        var owners = ImmutableArray<FileMapTestInputOwner>.Empty;
+        if (root.TryGetValue("test_input_owners", out var rawOwners))
+        {
+            if (rawOwners is not TomlTableArray ownerTables || ownerTables.Count == 0)
+                throw Invalid(location, "test_input_owners must be a nonempty table array");
+            owners = ownerTables.Select(table =>
+            {
+                RequireExactKeys(table, location, "project", "contract", "version", "producer", "verifier", "runner", "runner_contract");
+                var project = RequiredString(table, "project", location);
+                if (!RepoPath.TryCreate(project, out _) || !project.EndsWith(".csproj", StringComparison.Ordinal))
+                    throw Invalid(location, "test input owner must address a project");
+                var contract = RequiredString(table, "contract", location) == "ExplicitValues"
+                    ? TestInputContract.ExplicitValues : throw Invalid(location, "unsupported test input contract");
+                var version = table["version"] is long v && v > 0 && v <= int.MaxValue ? (int)v
+                    : throw Invalid(location, "test input version must be positive");
+                return new FileMapTestInputOwner(project, contract, version,
+                    RequiredString(table, "producer", location), RequiredString(table, "verifier", location),
+                    RequiredString(table, "runner", location), RequiredString(table, "runner_contract", location));
+            }).ToImmutableArray();
+            if (!owners.Select(owner => owner.Project).SequenceEqual(owners.Select(owner => owner.Project).Distinct().Order(StringComparer.Ordinal)))
+                throw Invalid(location, "test input owner projects must be unique and sorted");
+        }
+        return new FileMapManifest(residencePolicy, entries) { TestInputOwners = owners };
     }
 
     private static FileMapResidencePolicy ParseResidencePolicy(

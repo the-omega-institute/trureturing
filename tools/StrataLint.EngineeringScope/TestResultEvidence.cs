@@ -7,6 +7,8 @@ internal sealed record TestResultEvidence(
     int Executed,
     IReadOnlySet<(string Assembly, string Id)> ExecutedTests)
 {
+    internal IReadOnlyDictionary<string, int> AssemblyRows { get; init; } = new Dictionary<string, int>();
+    internal string[] Rows { get; init; } = [];
     internal IReadOnlyDictionary<string, int> MethodCounts { get; init; } = new Dictionary<string, int>();
     internal IReadOnlySet<string> SkippedMethods { get; init; } = new HashSet<string>();
 
@@ -20,6 +22,8 @@ internal sealed record TestResultEvidence(
         var unresolved = new List<string>();
         var counts = new Dictionary<string, int>(StringComparer.Ordinal);
         var skipped = new HashSet<string>(StringComparer.Ordinal);
+        var rows = new List<string>();
+        var assemblyRows = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
         foreach (var file in files)
         {
             var document = XDocument.Load(file, LoadOptions.None);
@@ -82,6 +86,9 @@ internal sealed record TestResultEvidence(
                     ?? throw new InvalidDataException("TRX test has no assembly identity");
                 var fullName = className + "." + methodName.Split('(')[0];
                 if ((string?)result.Attribute("outcome") == "NotExecuted") { skipped.Add(fullName); continue; }
+                var assembly = Path.GetFileNameWithoutExtension(storage);
+                assemblyRows[assembly] = assemblyRows.GetValueOrDefault(assembly) + 1;
+                rows.Add((string?)result.Attribute("testName") ?? throw new InvalidDataException("missing row identity"));
                 counts[fullName] = counts.GetValueOrDefault(fullName) + 1;
                 actual.Add((Path.GetFileNameWithoutExtension(storage), $"{className.Split('.').Last()}.{methodName}"));
             }
@@ -93,11 +100,11 @@ internal sealed record TestResultEvidence(
         }
 
         if (executed == 0) throw new InvalidDataException("dotnet test executed zero tests");
-        return new TestResultEvidence(executed, actual) { MethodCounts = counts, SkippedMethods = skipped };
+        return new TestResultEvidence(executed, actual) { MethodCounts = counts, SkippedMethods = skipped, Rows = rows.Order(StringComparer.Ordinal).ToArray(), AssemblyRows = assemblyRows };
     }
 
     internal int CountAssembly(string expectedAssembly) =>
-        ExecutedTests.Count(test =>
+        AssemblyRows.TryGetValue(expectedAssembly, out var count) ? count : ExecutedTests.Count(test =>
             StringComparer.OrdinalIgnoreCase.Equals(test.Assembly, expectedAssembly));
 }
 

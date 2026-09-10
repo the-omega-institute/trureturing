@@ -727,3 +727,14 @@ consumed_by = ["dotnet"]
 verified_by = ["dotnet-test"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+
+# Reviewed ExplicitValues contract: compiled values and local providers, with
+# pinned ordinary .NET/xUnit semantics. Known ambient effects remain execute.
+[[test_input_owners]]
+project = "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj"
+contract = "ExplicitValues"
+version = 1
+producer = "StrataLint.Engine.ScribeExecutionDependencies.Derive"
+verifier = "StrataLint.EngineeringScope.AffectedTestCache.ValidateSource"
+runner = "StrataLint.EngineeringScope.Program.RunTests"
+runner_contract = "StandardXunitInline-v1"

@@ -89,7 +89,7 @@ public sealed class AffectedNativeBoundaryTests
     [InlineData(false, false)]
     [InlineData(true, false)]
     [InlineData(true, true)]
-    public void SharedSdkSourceInExcludedProjectPreservesSelectedClassesAndDependencies(bool referenced, bool buildOnly)
+    public void SharedSdkSourceInExcludedProjectPreservesProjectActionsAndDependencies(bool referenced, bool buildOnly)
     {
         using var fixture = new AffectedExecutionFixture();
         const string excluded = "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj";
@@ -119,7 +119,7 @@ public sealed class AffectedNativeBoundaryTests
             path.EndsWith("Microsoft.NET.Test.Sdk.Program.cs", StringComparison.Ordinal));
         Assert.Equal(3, native.Count(project => project.Compile.Contains(sdkSource, StringComparer.Ordinal)));
         var plan = fixture.Plan();
-        Assert.Equal(new[] { "First.Tests", "Second.Tests" }, plan.Actions.Select(action => action.Scope));
+        Assert.Equal(new[] { "*", "*" }, plan.Actions.Select(action => action.Scope));
         Assert.All(plan.Actions, action => Assert.Empty(action.Unknown));
         Assert.DoesNotContain(plan.Projects, project => project.Project == excluded);
         var first = plan.Projects.Single(project => project.Project == AffectedExecutionFixture.First);
@@ -194,7 +194,7 @@ public sealed class AffectedNativeBoundaryTests
         using var fixture = new AffectedExecutionFixture();
         fixture.Write("tools/tests/StrataLint.First/Tests.cs", "namespace First; public class Tests { [Xunit.Fact] public void Runs() { Xunit.Assert.Equal(8, Shared.Value()); } }\n");
         var build = fixture.Build();
-        new AffectedTestCache(fixture.Root, fixture.Output).Save(dangling ? fixture.Plan() : DuplicateInputs(fixture.Plan(), actionInputs: false), []);
+        WriteSeed(fixture.Root, dangling ? fixture.Plan() : DuplicateInputs(fixture.Plan(), actionInputs: false));
         if (dangling) CorruptSharedSeed(fixture.Root, "input_ids", "inputs", duplicate: false);
         var result = fixture.Tests(build, expectedExit: 1);
         Assert.All(result.Projects, project => Assert.True(project.Executed > 0 || project.Error is not null));
@@ -206,12 +206,16 @@ public sealed class AffectedNativeBoundaryTests
 
     private static TestInputManifest Manifest()
     {
-        var project = new TestProjectInputs("project", [new("shared", "original")], ["project -> dependency"], ["unknown-input"], "");
+        var project = new TestProjectInputs("project", [new("shared", "original")], ["project -> dependency"], [], "");
         project = project with { Identity = AffectedTestPlan.ProjectIdentity(project) };
-        var action = new TestAction("project", "Tests", "Tests.Class", ["Tests.Class.Runs"],
+        var action = new TestAction("project", "Tests", "*", ["Tests.Class.Runs"],
             [new("shared", "original")], [], [], project.Identity, "producer", "environment", "");
+        var declaration = new string('d', 64);
+        var binding = new TestInputBinding(declaration, AffectedTestPlan.Digest([project.Identity, action.Producer, declaration]),
+            ["Tests.Class.Runs"], ["Tests:Tests.Class.Runs"], "");
+        action = action with { Binding = binding with { Identity = AffectedTestPlan.BindingIdentity(binding) } };
         action = action with { Identity = AffectedTestPlan.Identity(action) };
-        return new(3, new string('a', 64), [project], [action]);
+        return new(4, new string('a', 64), [project], [action]);
     }
 
     private static void CorruptSharedSeed(string root, string references, string table, bool duplicate)
@@ -220,7 +224,11 @@ public sealed class AffectedNativeBoundaryTests
         var seed = System.Text.Json.Nodes.JsonNode.Parse(File.ReadAllText(path))!;
         var manifest = seed["manifest"]!;
         var values = manifest[table]!.AsArray();
-        if (duplicate) values.Add(values[0]!.DeepClone());
+        if (duplicate)
+        {
+            if (values.Count == 0) values.Add("unexpected");
+            values.Add(values[0]!.DeepClone());
+        }
         else manifest["projects"]![0]![references] = new System.Text.Json.Nodes.JsonArray(values.Count);
         File.WriteAllText(path, seed.ToJsonString());
         File.WriteAllText(path + ".sha256", CommonExecutionEvidence.Hash(path));
@@ -244,12 +252,21 @@ public sealed class AffectedNativeBoundaryTests
         return plan with { Projects = [project, .. plan.Projects.Skip(1)], Actions = actions };
     }
 
+    private static void WriteSeed(string root, TestInputManifest plan)
+    {
+        var os = OperatingSystem.IsMacOS() ? "darwin" : OperatingSystem.IsWindows() ? "windows" : "linux";
+        var partition = new string('1', 40) + "/" + os + "-" + System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture.ToString().ToLowerInvariant();
+        var directory = Path.Combine(root, AffectedTestCache.CachePath, partition);
+        CommonExecutionEvidence.Write(directory, "seed.json", new TestSuccessSeed(2, partition, plan, []));
+        File.WriteAllText(Path.Combine(directory, "seed.json.sha256"), CommonExecutionEvidence.Hash(Path.Combine(directory, "seed.json")));
+    }
+
     private sealed class SeedFixture : IDisposable
     {
         internal string Root { get; } = TemporaryFileSystem.Directory.CreateTempSubdirectory("affected-seed-").FullName;
         internal SeedFixture() => TemporaryFileSystem.File.WriteAllText(Path.Combine(Root, "lake-manifest.json"),
             "{\"packages\":[{\"name\":\"mathlib\",\"rev\":\"1111111111111111111111111111111111111111\"}]}\n");
-        internal void Save(TestInputManifest plan) => new AffectedTestCache(Root, TextWriter.Null).Save(plan, []);
+        internal void Save(TestInputManifest plan) => WriteSeed(Root, plan);
         public void Dispose() => TemporaryFileSystem.Directory.Delete(Root, recursive: true);
     }
 }

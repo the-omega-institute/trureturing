@@ -5,7 +5,19 @@ using StrataLint.Engine;
 
 namespace StrataLint.EngineeringScope;
 
-internal sealed record TestEnvironmentContext(string Identity, string Culture, string UICulture);
+internal sealed record TestEnvironmentContext(string Identity, string Culture, string UICulture)
+{
+    [System.Text.Json.Serialization.JsonIgnore] public string Launcher { get; init; } = "dotnet";
+    public string WorkingDirectory { get; init; } = "";
+    public string RuntimeMaterial { get; init; } = "";
+    [System.Text.Json.Serialization.JsonIgnore] public string ValuesIdentity { get; init; } = "";
+    [System.Text.Json.Serialization.JsonIgnore] public IDictionary<string, string?> Inherited { get; init; } = new Dictionary<string, string?>();
+    [System.Text.Json.Serialization.JsonIgnore] public IDictionary<string, string?> Values { get; init; } = new Dictionary<string, string?>();
+    [System.Text.Json.Serialization.JsonIgnore] public int Startups { get; init; }
+    [System.Text.Json.Serialization.JsonIgnore] public double StartupSeconds { get; init; }
+    internal string ForValues(bool values) => values ? ValuesIdentity : Identity;
+    internal IDictionary<string, string?> Exposure(bool values) => values ? Values : Inherited;
+}
 
 internal sealed class CommonStages(string root, TextWriter output, CancellationToken deadlineCancellation = default,
     Action<Process>? processExited = null, TimeProvider? timeProvider = null)
@@ -27,16 +39,39 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
             System.Globalization.CultureInfo.GetCultureInfo(environment["DOTNET_CLI_UI_LANGUAGE"]!);
     }
 
-    internal static TestEnvironmentContext TestEnvironment()
+    internal static TestEnvironmentContext TestEnvironment(string? root = null)
     {
         // Observe fresh runtime startup under the actual launch policy. Caller
         // thread cultures (including a containing testhost's) are not child inputs.
-        var result = new CommonStages(Directory.GetCurrentDirectory(), TextWriter.Null).Capture("dotnet",
-            [typeof(Program).Assembly.Location, "test-environment"]);
+        root ??= Directory.GetCurrentDirectory();
+        var inherited = new ProcessStartInfo().Environment;
+        NormalizeEnvironment(inherited);
+        var started = TimeProvider.System.GetTimestamp();
+        var launcher = (inherited.TryGetValue("PATH", out var path) ? path ?? "" : "").Split(Path.PathSeparator)
+            .Select(directory => Path.Combine(directory, OperatingSystem.IsWindows() ? "dotnet.exe" : "dotnet"))
+            .FirstOrDefault(File.Exists) ?? throw new InvalidDataException("dotnet launcher is absent from PATH");
+        launcher = Path.GetFullPath(launcher);
+        var result = new CommonStages(root, TextWriter.Null).Capture(launcher,
+            [typeof(Program).Assembly.Location, "test-environment"], environment: inherited);
         if (result.Exit != 0) throw new InvalidDataException("test environment observation failed: " + result.Text);
-        return JsonSerializer.Deserialize<TestEnvironmentContext>(result.Text)
+        var child = JsonSerializer.Deserialize<TestEnvironmentContext>(result.Text)
             ?? throw new InvalidDataException("missing test environment observation");
+        root = child.WorkingDirectory;
+        if (Directory.Exists(Path.Combine(root, CommonBuildOutputs.PackagesPath)))
+            inherited["NUGET_PACKAGES"] = Path.Combine(root, CommonBuildOutputs.PackagesPath);
+        var values = inherited.Where(pair => RuntimeVariable(pair.Key) || pair.Key.StartsWith("LC_", StringComparison.Ordinal)
+            || pair.Key is "PATH" or "HOME" or "TMPDIR" or "TMP" or "TEMP" or "LANG" or "TZ" or "SystemRoot" or "WINDIR" or "NUGET_PACKAGES")
+            .ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.Ordinal);
+        return child with { Launcher = launcher, Inherited = inherited, Values = values, Startups = 1,
+            StartupSeconds = TimeProvider.System.GetElapsedTime(started).TotalSeconds,
+            ValuesIdentity = AffectedTestPlan.Digest([AffectedTestPlan.EnvironmentKey(values, child.Culture, child.UICulture, true),
+                root, child.Identity, launcher, CommonExecutionEvidence.Hash(launcher), child.RuntimeMaterial]) };
     }
+
+    internal static bool RuntimeVariable(string key) => key.StartsWith("DOTNET_", StringComparison.Ordinal)
+        || key.StartsWith("COMPlus_", StringComparison.Ordinal) || key.StartsWith("VSTEST_", StringComparison.Ordinal)
+        || key.StartsWith("CORECLR_", StringComparison.Ordinal) || key.StartsWith("COREHOST_", StringComparison.Ordinal)
+        || key.StartsWith("LD_", StringComparison.Ordinal) || key.StartsWith("DYLD_", StringComparison.Ordinal);
 
     internal static int Normalize(int raw, bool allowProtectedAnnotation = false) => raw switch
     {
@@ -216,7 +251,8 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         return result.Text;
     }
 
-    internal (int Exit, string Text) Capture(string executable, string[] arguments, TimeSpan? defaultTimeout = null)
+    internal (int Exit, string Text) Capture(string executable, string[] arguments, TimeSpan? defaultTimeout = null,
+        IDictionary<string, string?>? environment = null)
     {
         var clock = timeProvider ?? TimeProvider.System;
         if (deadlineCancellation.IsCancellationRequested) throw new TimeoutException("PREFLIGHT_BUDGET_EXHAUSTED owner=outer-deadline");
@@ -232,6 +268,11 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
             if (timeout <= TimeSpan.Zero) throw new TimeoutException("PREFLIGHT_BUDGET_EXHAUSTED owner=outer-deadline");
         }
         var start = new ProcessStartInfo(executable) { WorkingDirectory = root, RedirectStandardOutput = true, RedirectStandardError = true, UseShellExecute = false };
+        if (environment is not null)
+        {
+            start.Environment.Clear();
+            foreach (var pair in environment) start.Environment[pair.Key] = pair.Value;
+        }
         NormalizeEnvironment(start.Environment);
         if (stage != "build" && Directory.Exists(Path.Combine(root, CommonBuildOutputs.PackagesPath)))
             start.Environment["NUGET_PACKAGES"] = Path.Combine(root, CommonBuildOutputs.PackagesPath);
