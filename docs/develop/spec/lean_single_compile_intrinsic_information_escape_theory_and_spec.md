@@ -1243,6 +1243,117 @@ localization loss 误标 boundary escape，以及未证明存在唯一极限的 
 
 ---
 
+### 6.3 Law-content layer
+
+本层是 level 1 的 Law-content contract。level 0 是 §5 与 §6.2 的 states/readouts；level 1
+是本款定义的 Law layer；level ≥ 2 是关于 level-1 objects 的 statements，并各自冻结
+自己的 Γ、domain、support 与 variation certificates。每一层都有自己的 escape：该层的所有
+选定 readouts 在一对不同 admissible objects 上相等。上层不消除下层 escape；层间没有
+completeness 或 progress guarantee。
+
+固定 root、canonical arena $A$ 与 bundle signature $\sigma$。冻结 Law interface
+$\Gamma_1$ 指定 operation slots、固定 definitions/hypotheses 与 transports，并给出
+$\Omega_\Gamma\subseteq\operatorname{PrimitiveRealization}\ \sigma$。异构 bundles 在 $A$
+上共用一个 domain；差异只能由 certified restriction maps 表达。occurrence catalog $I$
+绑定 complete root/arena manifest。
+
+对每个 occurrence $i$，在 theorem proof 生成前且不使用该 proof，生成 open statement
+schema $P_i$ 与 $\operatorname{OpenLaw}_i:\Omega_\Gamma\to\operatorname{Prop}$，并给出
+uniform certificate
+
+$$
+\forall r\in\Omega_\Gamma,\quad P_i(r)\leftrightarrow\operatorname{OpenLaw}_i(r),
+$$
+
+以及在 actual realization 的 exact specialization。native assertions 共用一个 actual
+realization $a$，且 $\operatorname{OpenLaw}_i(a)$ 对所有 $i$ 成立；这同时固定 orientation
+与 consistency。记 $L_i=\operatorname{OpenLaw}_i$。
+
+定义
+
+$$
+\operatorname{LawForbidden}_i=\{r\in\Omega_\Gamma\mid\neg L_i(r)\},\qquad
+\operatorname{LawModels}(S)=\{r\mid\forall i\in S,\ L_i(r)\},
+$$
+
+$$
+\operatorname{LawUniqueExclusion}_i
+=\operatorname{LawModels}(I\setminus\{i\})\setminus\operatorname{LawModels}(I).
+$$
+
+并定义
+
+$$
+\operatorname{LawEntailedInCatalog}_i\;\Longleftrightarrow\;
+\operatorname{LawUniqueExclusion}_i=\varnothing\;\Longleftrightarrow\;
+\forall r,\ (\forall j\ne i,\ L_j(r))\to L_i(r).
+$$
+
+蕴含偏序 $\operatorname{LawEntails}(P,Q):\Longleftrightarrow
+\forall r\in\Omega_\Gamma, P(r)\to Q(r)$ 仅作 strength/redundancy report。作为 kernel
+companion，定义 $\operatorname{LawAgreement}_i(r,s):\Longleftrightarrow
+(L_i(r)\leftrightarrow L_i(s))$、
+
+$$
+KL_S=\bigcap_{i\in S}\operatorname{LawAgreement}_i,\qquad
+\operatorname{LawPairEscape}(S)=KL_S\setminus\Delta_{\Omega_\Gamma},\qquad
+\operatorname{LawUniquePair}_i=KL_{I\setminus\{i\}}\setminus KL_I.
+$$
+
+这是 §5 在 realizations 作 states、Laws 作 readouts 上的逐字 specialization。以 common
+positive point $a$ 定向，因为 $P$ 与 $\neg P$ 有相同 kernel。exclusion-zero 与 pair-zero
+是不同 verdict：在 $\mathrm{Bool}\times\mathrm{Bool}$ 上令 $L(a,b)=a$、
+$Q(a,b)=a\land b$，则 $Q\Rightarrow L$，所以 $L$ 无 unique exclusion，但 pair
+$((\mathrm{false},\mathrm{false}),(\mathrm{true},\mathrm{false}))$ 对 $Q$ agreement 而对 $L$
+disagreement，故 $L$ 有 positive pair capture。kernel triviality 在 common positive point
+下蕴含 exclusion triviality，反之不成立。
+
+§5 的精确实例取 $Z=D_X=\{(x,y)\mid x\ne y\}$ 与
+$L_i(x,y):=K_i(x,y)$。于是 $\operatorname{LawModels}(S)=E_S$、
+$\operatorname{LawForbidden}_i=Cap_i$、$\operatorname{LawUniqueExclusion}_i=U_i$，其
+denominator 为 $|X|(|X|-1)$。这是 mathematical instance 而非 native registration，且
+不需要 common satisfying point；在 $Z\times Z$ 上不增加第二个 pair denominator。
+
+证书形式如下：exclusion-positive 是 admissible $r$，满足所有 peer Laws 且 $\neg L_i(r)$；
+exclusion-zero 是 $\forall r$，peers 蕴含 $L_i(r)$；pair-positive 是
+$KL_I\subseteq KL_{I\setminus\{i\}}$ 加上 admissible pair $(r,s)$，其 peers agreement
+且在 $i$ 上 disagreement；pair-zero 是
+$\forall r\ s,\ KL_{I\setminus\{i\}}(r,s)\to\operatorname{LawAgreement}_i(r,s)$。
+有限 classifier $q:\Omega\to Q$ 在每个 Law factor through $q$ 且每个 classifier value 有
+certified representative 时，可证 implication/equality/strictness；它不产生 $\Omega$ 上的
+rate。realization spaces 即使 arena finite 也通常 infinite（function-space outputs），故
+`decide` 不是 default；不使用 `native_decide` 或 new axioms。除非 $\Omega$ finite 且
+enumerable，level 1 不定义 pair counts、rates、spectra 或其他 counted quantities。
+
+下列 vacuity conditions 是 contract：closed truth/proof/certificate 只能作为 Law，且须
+报告 Law-tautological；inconsistent peer conjunction 不得得分，必须有 common satisfying
+point；每个 occurrence 使用同一个 frozen $\Omega_\Gamma$，per-theorem restriction、hypothesis
+insertion 或 fixed-definition reinterpretation 触发 CHANGE-Γ；peers 绑定 complete manifest，
+不得为制造 uniqueness 而挑选；unused/cancelled slots 需 exact support 与 Γ-declared
+sensitivity。presentation collapse 也改变 level-1 object：registration bridge 不得用 actual
+realization 的 proved facts 把 open statement（例如 reverse inclusion ∧ separation）简化为
+separation；registered OpenLaw 必须是 uniform open schema，template library 不得以 theorem
+truth reduction。IE-C048–050 (M0/G1) 是 prerequisites；本款不分配新 diagnostic code，若需
+level-1 rejection 写「诊断码由本规范分配（待分配）」。
+
+level-1 verdicts 仅是 report fields：`law_unique_exclusion`、`law_entailed_in_catalog`、
+`law_pair_capture`、`law_entailment`。它们永不作为 seal input、AC-023 或 closed reason；
+observed/certified accounting 不变，当前无 consumer。
+
+规范 fixture：同一 arena 的 readouts $f,g$ 有两个 distinct level-1 objects：
+
+$$
+\text{separation}:\ \exists x\ y,\ f(x)=f(y)\land g(x)\ne g(y),
+$$
+
+$$
+\text{strict refinement}:\ \text{separation}\land
+\forall x\ y,\ g(x)=g(y)\to f(x)=f(y).
+$$
+
+strict refinement entails separation。所有与 separation uniform equivalent 的四种
+presentations 是同一个 level-1 object。
+
 ## 7. 语义闭包刻画
 
 ### 7.1 其他定理的语义闭包
