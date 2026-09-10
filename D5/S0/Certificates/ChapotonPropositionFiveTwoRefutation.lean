@@ -73,13 +73,12 @@ noncomputable def qPrime (n : ℕ) : ℚ[X] :=
   ∑ i ∈ Finset.range (2 * n + 1),
     C (rho (2 * n - 1) ((X ^ i - X ^ (2 * n - i)) /ₘ (X - 1))) * X ^ i
 
-/-- The initial value and recurrence (1.3). The unused n=0 value is zero. -/
-noncomputable def kreweras : ℕ → ℚ[X]
-  | 0 => 0
-  | 1 => 1 + X
-  | n + 2 =>
-      ((X ^ (2 * n + 5) + 1) * C ((kreweras (n + 1)).eval 1) -
-        2 * X ^ 2 * kreweras (n + 1)) /ₘ (X - 1) ^ 2
+/-- The initial value and recurrence (1.3), iterated n-1 times for n>=1.
+The total extension at n=0 is unused by the printed claim. -/
+noncomputable def kreweras (n : ℕ) : ℚ[X] :=
+  Nat.rec (1 + X)
+    (fun k P => ((X ^ (2 * k + 5) + 1) * C (P.eval 1) -
+      2 * X ^ 2 * P) /ₘ (X - 1) ^ 2) (n - 1)
 
 /-- The full printed polynomial equality, with every n>=1 and no exclusion. -/
 def claim : Prop :=
