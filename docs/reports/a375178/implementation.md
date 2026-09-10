@@ -35,8 +35,8 @@ The subsequent OEIS b-file comparison matches all 19 terms. The initial JSON URL
 
 ## Unclaimed
 
-No universal congruence, counterexample, Lean build, freeze, or literature-search
-completion is claimed at this checkpoint. The two higher conjectures are outside
+The universal congruence is now proved in the incremental Lean check.
+The full project gates, freeze, and PR remain pending at this checkpoint. The two higher conjectures are outside
 scope. Pages not retrieved by this worker remain `ASSUMED-UNVERIFIED`.
 
 ## Kernel checkpoints
@@ -49,4 +49,6 @@ t³(x³+y³)=−3t⁴x⁴ when t⁵=0 and x+y=txy,
 then the four-th power sum and cancellation of the unit 2.
 The tested scratch file's axiom output contains only propext, Classical.choice,
 and Quot.sound (the abstract paired-cube identity does not require choice).
-The actual universal A375178 statement is not yet proved.
+The final binomial cube expansion and universal theorem now compile (scratch
+check 12, exit 0). The final theorem has only propext, Classical.choice, and
+Quot.sound in its transitive axiom closure.

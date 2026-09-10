@@ -4,7 +4,7 @@
    mirror-E: none(waiver:universal-congruence-no-numeric-artifact)
    anchors: [mathlib/module/Mathlib.FieldTheory.Finite.Basic]
    utility: none
-   digest: First-order binomial expansions and harmonic sums for A375178. -/
+   digest: The A375178 binomial cube sum is 1 modulo the fifth power of every prime at least 7. -/
 
 import Mathlib.FieldTheory.Finite.Basic
 import Mathlib.Data.Nat.Choose.Basic
@@ -14,6 +14,7 @@ import Mathlib.Tactic
 open Finset
 namespace D5.S3.ArithSums.A375178Supercongruence
 
+/-- OEIS A375178, including its initial zero. -/
 def a (n : ℕ) : ℕ := ∑ k ∈ range n, (Nat.choose (n + k - 1) k) ^ 3
 
 private lemma prod_first_order {R : Type*} [CommRing R] {ι : Type*}
@@ -96,6 +97,7 @@ private lemma doubleH_shuffle (p : ℕ) [Fact p.Prime] :
   have he : x.val = y.val ↔ x = y := ⟨fun h => by simpa only [ZMod.natCast_zmod_val] using congrArg (fun n : ℕ => (n : ZMod p)) h, congrArg ZMod.val⟩
   split_ifs <;> simp_all <;> omega
 
+-- Reversal identifies H(1,3) and H(3,1); shuffle then cancels their sum.
 private lemma doubleH_zero (p : ℕ) [Fact p.Prime] (hp : 7 ≤ p) :
     doubleH p 1 3 = 0 := by
   have h1 := sum_inverse_pow p 1 (by omega)
@@ -175,6 +177,7 @@ private lemma sum_range_remove_zero (p : ℕ) [Fact p.Prime] (f : ℕ → R p) (
   rw [sum_Ico_eq_sub f (Nat.Prime.one_lt (Fact.out : p.Prime)).le]
   simp [h0]
 
+-- Pair k with p-k and use the fourth-power sum modulo p.
 private lemma cubic_harmonic_lift (p : ℕ) [Fact p.Prime] (hp : 7 ≤ p) :
     (p : R p) ^ 3 * ∑ k ∈ range p, (k : R p)⁻¹ ^ 3 = 0 := by
   let t : R p := p
@@ -259,5 +262,89 @@ private lemma lifted_doubleH (p : ℕ) [Fact p.Prime] (hp : 7 ≤ p) :
   rw [he, ← doubleH_eq_nested, doubleH_zero p hp]
 
 
+private lemma binomial_product (p : ℕ) [Fact p.Prime] :
+    ∀ k : ℕ, 0 < k → k < p →
+      (Nat.choose (p + k - 1) k : R p) =
+        (p : R p) * (k : R p)⁻¹ * ∏ j ∈ range k, (1 + (p : R p) * (j : R p)⁻¹) := by
+  intro k
+  induction k with
+  | zero => intro hk; omega
+  | succ k ih =>
+    intro hk hkp
+    by_cases hz : k = 0
+    · subst k
+      simp [ZMod.inv_zero]
+    have hprev := ih (by omega) (by omega)
+    have hp0 := (Fact.out : p.Prime).pos
+    have hrec := Nat.add_one_mul_choose_eq (p+k-1) k
+    rw [show p+k-1+1 = p+k by omega] at hrec
+    have hc : ((p : R p) + k) * (Nat.choose (p+k-1) k : R p) =
+        (Nat.choose (p+k) (k+1) : R p) * ((k : R p)+1) := by
+      simpa only [Nat.cast_mul, Nat.cast_add, Nat.cast_one] using congrArg (fun n : ℕ => (n : R p)) hrec
+    have hi := unit_inv p (k+1) (by omega) hkp
+    have hj := unit_inv p k (by omega) (by omega)
+    push_cast at hi
+    rw [show p + (k+1)-1 = p+k by omega, prod_range_succ]
+    push_cast
+    calc
+      _ = ((k : R p)+1)⁻¹ * (((p : R p)+k) * (Nat.choose (p+k-1) k : R p)) := by
+        rw [hc]
+        linear_combination -(Nat.choose (p+k) (k+1) : R p) * hi
+      _ = _ := by
+        rw [hprev]
+        linear_combination
+          (p : R p) * ((k : R p)+1)⁻¹ *
+            (∏ j ∈ range k, (1 + (p : R p) * (j : R p)⁻¹)) * hj
+
+private lemma scaled_cube_expansion {S : Type*} [CommRing S] (t x h r : S) (ht : t ^ 5 = 0) :
+    (t * x * (1 + t * h + t ^ 2 * r)) ^ 3 = t ^ 3 * x ^ 3 + 3 * t ^ 4 * x ^ 3 * h := by
+  have he : t ^ 5 ∣
+      (t * x * (1 + t * h + t ^ 2 * r)) ^ 3 - (t ^ 3 * x ^ 3 + 3 * t ^ 4 * x ^ 3 * h) := by
+    refine ⟨x ^ 3 * (3*r + 3*h^2 + t*(6*h*r+h^3) + t^2*(3*r^2+3*h^2*r) +
+      t^3*3*h*r^2 + t^4*r^3), ?_⟩
+    ring
+  rw [ht, zero_dvd_iff, sub_eq_zero] at he
+  exact he
+
+private lemma binomial_cube_expansion (p : ℕ) [Fact p.Prime] (k : ℕ) (hk : 0 < k) (hkp : k < p) :
+    (Nat.choose (p+k-1) k : R p) ^ 3 =
+      (p : R p) ^ 3 * (k : R p)⁻¹ ^ 3 +
+        3 * (p : R p) ^ 4 * (k : R p)⁻¹ ^ 3 * ∑ j ∈ range k, (j : R p)⁻¹ := by
+  rw [binomial_product p k hk hkp]
+  obtain ⟨r, hr⟩ := prod_first_order (range k) (p : R p) (fun j : ℕ => (j : R p)⁻¹)
+  rw [hr]
+  exact scaled_cube_expansion _ _ _ _ (p_fifth_zero p)
+
+
+/-- The fifth-power supercongruence conjectured in the OEIS entry. -/
+theorem supercongruence (p : ℕ) (hp : p.Prime) (hp7 : 7 ≤ p) :
+    a p ≡ 1 [MOD p ^ 5] := by
+  let : Fact p.Prime := ⟨hp⟩
+  apply (ZMod.natCast_eq_natCast_iff (a p) 1 (p ^ 5)).mp
+  simp only [Nat.cast_one]
+  change (a p : R p) = 1
+  unfold a
+  push_cast
+  have hsplit := sum_range_add_sum_Ico
+    (fun k => (Nat.choose (p+k-1) k : R p) ^ 3) (by omega : 1 ≤ p)
+  simp only [sum_range_one, Nat.choose_zero_right, Nat.cast_one, one_pow] at hsplit
+  rw [← hsplit]
+  suffices (∑ k ∈ Ico 1 p, (Nat.choose (p+k-1) k : R p) ^ 3) = 0 by
+    rw [this, add_zero]
+  have he :
+      (∑ k ∈ Ico 1 p, (Nat.choose (p+k-1) k : R p) ^ 3) =
+      (p : R p) ^ 3 * (∑ k ∈ Ico 1 p, (k : R p)⁻¹ ^ 3) +
+      3 * (p : R p) ^ 4 *
+        (∑ k ∈ Ico 1 p, (k : R p)⁻¹ ^ 3 * ∑ j ∈ range k, (j : R p)⁻¹) := by
+    rw [mul_sum, mul_sum, ← sum_add_distrib]
+    apply sum_congr rfl
+    intro k hk
+    rw [binomial_cube_expansion p k (by have := (mem_Ico.mp hk).1; omega) (mem_Ico.mp hk).2]
+    ring
+  have h3 := cubic_harmonic_lift p hp7
+  have h13 := lifted_doubleH p hp7
+  rw [sum_range_remove_zero p _ (by simp [ZMod.inv_zero])] at h3
+  rw [sum_range_remove_zero p _ (by simp [ZMod.inv_zero])] at h13
+  rw [he, h3, zero_add, mul_assoc, h13, mul_zero]
 
 end D5.S3.ArithSums.A375178Supercongruence
