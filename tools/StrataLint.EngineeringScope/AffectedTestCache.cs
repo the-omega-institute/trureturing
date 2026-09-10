@@ -52,23 +52,23 @@ internal sealed class AffectedTestCache
     {
         if (action.Unknown.Length != 0) return (null, "unknown:" + string.Join(";", action.Unknown));
         if (Seed is null) return (null, MissReason);
-        var previous = Seed.Manifest.Actions.SingleOrDefault(item => item.Project == action.Project && item.Scope == action.Scope);
-        if (previous is null) return (null, "new-test-scope");
-        if (previous.Producer != action.Producer) return (null, "producer-changed");
-        if (previous.Environment != action.Environment) return (null, "environment-changed");
-        if (previous.Identity != action.Identity)
-        {
-            var before = previous.Inputs.Concat(Seed.Manifest.Projects.Single(project => project.Project == action.Project).Inputs).ToDictionary(input => input.Path, input => input.Identity, StringComparer.Ordinal);
-            var after = (projectInputs is null ? action.Inputs : action.Inputs.Concat(projectInputs.Inputs)).ToDictionary(input => input.Path, input => input.Identity, StringComparer.Ordinal);
-            var changes = before.Keys.Union(after.Keys, StringComparer.Ordinal).Where(path => before.GetValueOrDefault(path) != after.GetValueOrDefault(path));
-            return (null, "inputs-changed:" + string.Join(';', changes.Order(StringComparer.Ordinal))
-                + ";removed-edges:" + string.Join(';', previous.Edges.Concat(Seed.Manifest.Projects.Single(project => project.Project == action.Project).Edges).Except(action.Edges.Concat(projectInputs?.Edges ?? []), StringComparer.Ordinal)));
-        }
-        var success = Seed.Successes.SingleOrDefault(item => item.Project == action.Project && item.Scope == action.Scope
-            && item.Identity == action.Identity);
-        if (success is null) return (null, "missing-success-coverage");
         try
         {
+            var previous = Seed.Manifest.Actions.SingleOrDefault(item => item.Project == action.Project && item.Scope == action.Scope);
+            if (previous is null) return (null, "new-test-scope");
+            if (previous.Producer != action.Producer) return (null, "producer-changed");
+            if (previous.Environment != action.Environment) return (null, "environment-changed");
+            if (previous.Identity != action.Identity)
+            {
+                var before = previous.Inputs.Concat(Seed.Manifest.Projects.Single(project => project.Project == action.Project).Inputs).ToDictionary(input => input.Path, input => input.Identity, StringComparer.Ordinal);
+                var after = (projectInputs is null ? action.Inputs : action.Inputs.Concat(projectInputs.Inputs)).ToDictionary(input => input.Path, input => input.Identity, StringComparer.Ordinal);
+                var changes = before.Keys.Union(after.Keys, StringComparer.Ordinal).Where(path => before.GetValueOrDefault(path) != after.GetValueOrDefault(path));
+                return (null, "inputs-changed:" + string.Join(';', changes.Order(StringComparer.Ordinal))
+                    + ";removed-edges:" + string.Join(';', previous.Edges.Concat(Seed.Manifest.Projects.Single(project => project.Project == action.Project).Edges).Except(action.Edges.Concat(projectInputs?.Edges ?? []), StringComparer.Ordinal)));
+            }
+            var success = Seed.Successes.SingleOrDefault(item => item.Project == action.Project && item.Scope == action.Scope
+                && item.Identity == action.Identity);
+            if (success is null) return (null, "missing-success-coverage");
             ValidateSource(action, success.Source, success.Source.Trx.Select(material => CachedPath(material.Sha256)).ToArray(), Load, hash: Hash);
             return (success, "validated-unchanged-inputs");
         }

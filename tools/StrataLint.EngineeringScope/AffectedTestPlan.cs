@@ -42,7 +42,10 @@ internal static class AffectedTestPlan
             .Select(material => material.Sha256).ToHashSet(StringComparer.Ordinal);
         var sourceTexts = new Dictionary<string, string>(StringComparer.Ordinal);
         var assemblies = native.Select(project => project.Properties["AssemblyName"]).ToHashSet(StringComparer.Ordinal);
-        var compilationProjects = native.Select(project =>
+        // Reconstruct the selected projects' native dependency closure. Runtime
+        // inventories above still retain every built project's exported outputs.
+        var compilationProjects = native.Where(project => testSet.Contains(project.Project))
+            .SelectMany(project => Closure(project, native)).DistinctBy(project => project.Project).Select(project =>
         {
             var command = project.Argument.Length == 0 ? null : CSharpCommandLineParser.Default.Parse(project.Argument,
                 Path.GetDirectoryName(System.IO.Path.Combine(root, project.Project))!, RuntimeEnvironment.GetRuntimeDirectory());
@@ -163,9 +166,11 @@ internal static class AffectedTestPlan
         .Concat(action.Inputs.Select(input => input.Path + "\0" + input.Identity)).Concat(action.Edges).Concat(action.Unknown));
     internal static void Validate(TestInputManifest plan)
     {
-        if (plan.Version != 2 || plan.Projects.Any(project => project.Identity != ProjectIdentity(project))
+        if (plan.Version != 2 || plan.Projects.Any(project => project.Identity != ProjectIdentity(project)
+                || project.Inputs.Select(input => input.Path).Distinct(StringComparer.Ordinal).Count() != project.Inputs.Length)
             || plan.Projects.Select(project => project.Project).Distinct(StringComparer.Ordinal).Count() != plan.Projects.Length
             || plan.Actions.Any(action => action.Identity != Identity(action)
+                || action.Inputs.Select(input => input.Path).Distinct(StringComparer.Ordinal).Count() != action.Inputs.Length
                 || !plan.Projects.Any(project => project.Project == action.Project && project.Identity == action.ProjectIdentity))
             || plan.Actions.Select(action => (action.Project, action.Scope)).Distinct().Count() != plan.Actions.Length)
             throw new InvalidDataException("invalid test input manifest");

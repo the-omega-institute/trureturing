@@ -138,6 +138,7 @@ internal static class ScribeProjectCompilationBuilder
     {
         if (context is null) return BuildSynthetic(governedSources);
 
+        var projectsByPath = context.Projects.ToDictionary(static project => project.Path, StringComparer.Ordinal);
         var governedByPath = governedSources.GroupBy(static source => source.Path, StringComparer.Ordinal)
             .ToDictionary(static group => group.Key, static group => group.ToArray(), StringComparer.Ordinal);
         TestMapSource? Governed(string project, string path)
@@ -145,9 +146,11 @@ internal static class ScribeProjectCompilationBuilder
             if (!governedByPath.TryGetValue(path, out var candidates)) return null;
             // Scribe partition keys are semantic labels; native execution uses
             // project addresses to disambiguate compiler inputs shared by projects.
+            // An excluded native project can share inputs without governing them.
+            if (projectsByPath[project].NativeReferences is not null)
+                return candidates.SingleOrDefault(source => source.PartitionKey == project);
             return candidates.Length == 1 ? candidates[0] : candidates.Single(source => source.PartitionKey == project);
         }
-        var projectsByPath = context.Projects.ToDictionary(static project => project.Path, StringComparer.Ordinal);
         var compilations = new Dictionary<string, CSharpCompilation>(StringComparer.Ordinal);
         var degradations = new Dictionary<string, ScribeMetadataDegradation?>(StringComparer.Ordinal);
         var visiting = new HashSet<string>(StringComparer.Ordinal);
