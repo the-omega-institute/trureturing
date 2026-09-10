@@ -21,10 +21,11 @@ permissions:
 # 同口径全窗(最近 100 次 dev push)是 **56 success / 43 cancelled / 1 failure = 56% 成功**;
 # 那个 20% 取自最忙的尾窗,不能当普遍前提。缓存**一直在被写入**,只是被取消的那部分没写成。
 # 本改动仍成立,但买到的是「少丢一部分写入」而非「从不写变成写」;效果**尚未被测量**(成功 PR run 一度为 0)。
-# 改用 github.sha:每次 dev push 自成一组,彼此既不取消也不排队。
+# push 按 ref + sha 分组:每个分支的每次提交自成一组,彼此既不取消也不排队。
+# integration 可从 dev 的同一 SHA 建立;缓存按分支隔离,不能让两者互相取消写入。
 # 代价是这些 run 会跑完而不是中途被杀 —— 它们本来就已启动,增量是其尾段。
 concurrency:
-  group: ci-${{ github.event.pull_request.number || github.sha }}
+  group: ci-${{ github.event.pull_request.number || format('{0}-{1}', github.ref, github.sha) }}
   cancel-in-progress: true
 
 # Trust topology: pull_request_target keeps workflow text on the base branch. The
