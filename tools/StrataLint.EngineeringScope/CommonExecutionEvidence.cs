@@ -23,6 +23,7 @@ internal static class CommonExecutionEvidence
         ReportPath + ".provenance.json", ReportPath + ".materials.zip", ReportPath + ".seed.json"];
     internal const string CliPath = "tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll";
     internal const string RunnerPath = "tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll";
+    internal const string LeanProducerPath = "tools/StrataLint.Lean/bin/Release/net10.0/StrataLint.Lean.dll";
     internal const string ScribePath = "tools/StrataLint.Scribe.Documents/bin/Release/net10.0/StrataLint.Scribe.Documents.dll";
     internal static readonly string[] BuildSteps = ["restore-StrataLint", "build"];
     internal static readonly string[] EngineeringSteps = ["restore-CompileFailProof", "restore-BannedApiCompileFailProof", "tests", "selftest-first", "selftest-second", "capability-proof", "banned-api-proof"];

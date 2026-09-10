@@ -72,7 +72,7 @@ internal static class CommonBuildOutputs
         var tests = selected.Select(project => new BuiltTestProject(project, projects.TryGetValue(project, out var assembly)
             ? assembly : throw new InvalidDataException("selected test project was not built: " + project))).ToArray();
         foreach (var assembly in tests.Select(test => test.Assembly).Concat(new[] {
-                     CommonExecutionEvidence.CliPath, CommonExecutionEvidence.RunnerPath, CommonExecutionEvidence.ScribePath }))
+                     CommonExecutionEvidence.CliPath, CommonExecutionEvidence.RunnerPath, CommonExecutionEvidence.LeanProducerPath, CommonExecutionEvidence.ScribePath }))
             foreach (var path in new[] { assembly, Path.ChangeExtension(assembly, ".deps.json"), Path.ChangeExtension(assembly, ".runtimeconfig.json") })
                 if (!paths.Contains(path)) throw new InvalidDataException("missing runtime output: " + path);
         CommonExecutionEvidence.Write(root, TestsPath, tests);

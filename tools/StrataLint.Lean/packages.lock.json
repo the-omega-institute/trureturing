@@ -33,12 +33,6 @@
           "YamlDotNet": "[16.3.0, )"
         }
       },
-      "stratalint.lean": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.Engine": "[1.0.0, )"
-        }
-      },
       "trureturing.truth": {
         "type": "Project"
       },

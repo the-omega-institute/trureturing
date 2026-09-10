@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
+    <!-- Keep shared utility type names stable across the ownership move. -->
     <RootNamespace>StrataLint.EngineeringScope</RootNamespace>
-    <AssemblyName>StrataLint.EngineeringScope</AssemblyName>
+    <AssemblyName>StrataLint.Lean</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../StrataLint.Engine/StrataLint.Engine.csproj" />
-    <ProjectReference Include="../StrataLint.Lean/StrataLint.Lean.csproj" />
     <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />
     <AdditionalFiles Include="../Architecture/BannedSymbols.txt" />
     <AdditionalFiles Include="../Architecture/BannedSymbols.Determinism.txt" />
