@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:ea964d4a688b6b080c93d665aa2fe399ee112488607e02a0b66ac1a57a3b2b14
   normalized_sha256: sha256:ea964d4a688b6b080c93d665aa2fe399ee112488607e02a0b66ac1a57a3b2b14
 cas_ref: sha256:ea964d4a688b6b080c93d665aa2fe399ee112488607e02a0b66ac1a57a3b2b14
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaBridge/SalemIntegralUniqueness.salem_bounded_measurable_uniqueness_iff_rh
+    target_statement_id: sha256:c9a43b77f458f9d69924286cf87df8878bc5d0f8958a762894cb9bfa68e2f0d1
 receipts:
   unresolved_subitems: []
