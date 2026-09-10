@@ -1,0 +1,6 @@
+**命题 64（repo-derived，OPEN-COPY）。**
+\[
+\forall B\subseteq K:\qquad E_q^{\rm dup}(B)\ \Longleftrightarrow\ \operatorname{Tail}(B),
+\]
+且因此 $E_q^{\rm dup}(B)\Longleftrightarrow E_q(B)$。
+

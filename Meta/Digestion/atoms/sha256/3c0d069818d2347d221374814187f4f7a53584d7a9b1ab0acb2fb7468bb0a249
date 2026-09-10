@@ -1,0 +1,10 @@
+**B（完整剖面的多项式性）。** 令 $V$ 为全部格 $(a,b,U)$ 上有限支撑整数剖面的自由阿贝尔群，$\ell(g)=\sum g(a,1,U)$。按命题 48，$N$ 是固定格映射 $b\mapsto1-b$ 的整数线性推送（不是 $\Gamma\mapsto-\Gamma$），$F_S,F_L,F_{\downarrow Q},T_k$ 是固定格映射推送，$\boxplus$ 为加法，$\boxtimes$ 为双线性推送。令 $0X=0_\varnothing$，$nX$ 为带标签的 $n$ 份并行副本，则
+\[
+\Gamma_t(nX)=n\Gamma_t(X).
+\]
+对 $z\Gamma_t(X)$ 递归评价，得到 $V$ 值多项式；叶数为 $r$ 时次数至多为 $r$。再施加 $\ell$，得到
+\[
+P_{C,X}(z)\in\mathbb Z[z],\qquad q(C(nX))=P_{C,X}(n).
+\]
+常数项来自 $C(0_\varnothing)$。端点不参与该多项式；变量相关且非平凡的时间守卫已由 A 排除。
+
