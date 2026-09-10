@@ -60,7 +60,16 @@ The witness is a proof obligation, not a hypothesis.
   `derivative_pow`, and `ZMod.intCast_eq_one_iff_odd` for direct reuse.
 - OEIS JSON query `id:A393866|id:A393867`, fetched successfully (HTTP 200):
   both entries returned; A393867 still prints both conjecture comments.
-  External Lean ecosystem and arXiv searches are pending, not negative evidence.
+- GitHub code API: exact queries `"A393867" language:Lean` and
+  `"A393866" language:Lean` each returned total_count=0, incomplete_results=false.
+- Loogle: `PowerSeries, "derivative"` returned 30 declarations, including the
+  power rule. The logarithm results require rational-algebra hypotheses and
+  do not prove the characteristic-two paired-coefficient statement.
+- arXiv API: `all:A393866 OR all:A393867` returned totalResults=0;
+  `(all:prime AND all:Hanna) AND (all:logarithmic OR all:"power series")`
+  also returned totalResults=0. Both responses were valid Atom feeds with
+  the exact query echoed. No failure is counted as a negative result.
+  No proof found in this explicit search scope; no global absence claim.
 
 ## Numerical semantic echo
 
