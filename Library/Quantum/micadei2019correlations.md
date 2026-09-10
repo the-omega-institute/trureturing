@@ -3,8 +3,8 @@ bibkey: micadei2019correlations
 authors: Kaonan Micadei, John P. S. Peterson, Alexandre M. Souza, Roberto S. Sarthour, Ivan S. Oliveira, Gabriel T. Landi, Tiago B. Batalhão, Roberto M. Serra, Eric Lutz
 year: 2019
 title: Reversing the direction of heat flow using quantum correlations
-doi: 10.1038/s41467-019-10333-7
-url: null
+doi: null
+url: https://doi.org/10.1038/s41467-019-10333-7
 claim: Thermal marginal relative entropies equal beta times energy change minus entropy change; joint unitary entropy conservation identifies the sum of marginal entropy changes with the change of mutual information.
 strata_touched:
   - D5/S3/Quantum/Information/CorrelatedGibbsEnergyIdentity

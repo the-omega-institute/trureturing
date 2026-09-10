@@ -110,4 +110,6 @@ summary = dict(seed=SEED, numpy=np.__version__, total_cases=len(rows),
                    for r in rows if r['correlated'])),
                min_wrong_sign_residual_correlated=min(abs(r['wrong_sign_residual'])
                    for r in rows if r['correlated']))
-print(json.dumps(dict(summary=summary, cases=rows), indent=2, allow_nan=False))
+print('{"summary": ' + json.dumps(summary, indent=2, allow_nan=False) + ', "cases": [')
+print(',\n'.join(json.dumps(row, allow_nan=False) for row in rows))
+print(']}')

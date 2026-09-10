@@ -30,10 +30,10 @@ internal sealed class CorrelatedGibbsEnergyIdentityDocument : IScribeDocumentDef
                 Disp(Seq(Forall, Sp, F.Id("H"), Comma, Sp, F.Id("beta"), Comma, Sp,
                     F.Id("sigma"), Comma, Sp,
                     Call("D", F.Id("sigma"), F.Id("gamma")), Sp, Eq, Sp,
-                    F.Id("beta"), Sp, Mul, Sp, Lp,
+                    F.Id("beta"), Sp, Cdot, Sp, Open,
                     Call("E", F.Id("H"), F.Id("sigma")), Sp, Minus, Sp,
-                    Call("E", F.Id("H"), F.Id("gamma")), Rp, Sp, Minus, Sp, Lp,
-                    Call("S", F.Id("sigma")), Sp, Minus, Sp, Call("S", F.Id("gamma")), Rp))),
+                    Call("E", F.Id("H"), F.Id("gamma")), Close, Sp, Minus, Sp, Open,
+                    Call("S", F.Id("sigma")), Sp, Minus, Sp, Call("S", F.Id("gamma")), Close))),
             Describe.Lean(
                 DescribeId.Create("joint-entropy"),
                 DeclarationHandle.Create(Module + "von_neumann_entropy_unitary"),
@@ -63,10 +63,10 @@ internal sealed class CorrelatedGibbsEnergyIdentityDocument : IScribeDocumentDef
                 + "identities and substitute the marginal entropy relation. No energy conservation "
                 + "assumption is needed for this weighted identity.",
                 Disp(Seq(Forall, Sp, Rho, Comma, Sp, F.Id("U"), Comma, Sp,
-                    F.Id("rhoA"), Sp, Eq, Sp, F.Id("gammaA"), Sp, And, Sp,
+                    F.Id("rhoA"), Sp, Eq, Sp, F.Id("gammaA"), Sp, Land, Sp,
                     F.Id("rhoB"), Sp, Eq, Sp, F.Id("gammaB"), Sp, Implies, Sp,
-                    F.Id("betaA"), Sp, Mul, Sp, F.Id("DeltaEA"), Sp, Plus, Sp,
-                    F.Id("betaB"), Sp, Mul, Sp, F.Id("DeltaEB"), Sp, Eq, Sp,
+                    F.Id("betaA"), Sp, Cdot, Sp, F.Id("DeltaEA"), Sp, Plus, Sp,
+                    F.Id("betaB"), Sp, Cdot, Sp, F.Id("DeltaEB"), Sp, Eq, Sp,
                     Call("D", F.Id("rhoAPrime"), F.Id("gammaA")), Sp, Plus, Sp,
                     Call("D", F.Id("rhoBPrime"), F.Id("gammaB")), Sp, Plus, Sp,
                     Call("I", F.Id("rhoPrime")), Sp, Minus, Sp, Call("I", Rho)))))));
