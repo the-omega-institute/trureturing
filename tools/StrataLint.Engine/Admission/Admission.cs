@@ -234,7 +234,8 @@ public static class AdmissionPipeline
         RuleApplicabilityMeasure? measureApplicability = null,
         CanonicalizationMeasure? measureCanonicalization = null,
         ScribeTestMapStore? testMapStore = null,
-        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null)
+        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null,
+        LeanSourceContextInput? sourceContext = null)
         => Evaluate(
             current,
             baseline,
@@ -247,7 +248,8 @@ public static class AdmissionPipeline
             measureApplicability,
             measureCanonicalization,
             testMapStore,
-            deriveTestMap);
+            deriveTestMap,
+            sourceContext);
 
     internal static AdmissionOutcome EvaluateProtectedSurface(
         RepositorySnapshot current,
@@ -261,7 +263,8 @@ public static class AdmissionPipeline
         RuleApplicabilityMeasure? measureApplicability = null,
         CanonicalizationMeasure? measureCanonicalization = null,
         ScribeTestMapStore? testMapStore = null,
-        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null)
+        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null,
+        LeanSourceContextInput? sourceContext = null)
         => Evaluate(
             current,
             baseline,
@@ -274,7 +277,8 @@ public static class AdmissionPipeline
             measureApplicability,
             measureCanonicalization,
             testMapStore,
-            deriveTestMap);
+            deriveTestMap,
+            sourceContext);
 
     private static AdmissionOutcome Evaluate(
         RepositorySnapshot current,
@@ -288,7 +292,8 @@ public static class AdmissionPipeline
         RuleApplicabilityMeasure? measureApplicability = null,
         CanonicalizationMeasure? measureCanonicalization = null,
         ScribeTestMapStore? testMapStore = null,
-        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null)
+        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null,
+        LeanSourceContextInput? sourceContext = null)
     {
         var context = RuleEvaluationContext.Create(
             current,
@@ -299,7 +304,8 @@ public static class AdmissionPipeline
             metaEvaluation,
             verifiedScribeEmissions,
             testMapStore,
-            deriveTestMap);
+            deriveTestMap,
+            sourceContext);
         return RuleCatalog.Default.Execute(context, measureRule, measureApplicability) switch
         {
             RuleExecutionOutcome.Completed completed => Complete(

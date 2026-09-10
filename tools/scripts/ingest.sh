@@ -38,8 +38,8 @@ case "$VERB" in
         align-digestion-status --base "$BASE"
     ;;
   mathlib-reanchor)
-    make -C "$ROOT" lean-report
     base_sha="$(git -C "$ROOT" merge-base HEAD "$BASE")"
+    make -C "$ROOT" lean-report BASE="$base_sha"
     dotnet run --project "$PROJECT" --configuration Release -- \
       ledger-reanchor-mathlib --base "$base_sha"
     exec "$CONSUMER" --role digestion-alignment-consumer --report "$REPORT" -- \

@@ -251,6 +251,9 @@ internal static class DagLedgerCommandPreparation
 
     internal sealed class FileLeanReportSource(string path) : ILeanReportSource
     {
+        public LeanSourceContextInput LoadSourceContext(RepositorySnapshot current, RepositorySnapshot protectedBase) =>
+            LeanSourceContextArtifact.ReadBundle(path, current, protectedBase);
+
         public LeanAxiomReport Load(RepositorySnapshot snapshot) =>
             RawLeanReportArtifact.ReadFile(path, snapshot);
     }

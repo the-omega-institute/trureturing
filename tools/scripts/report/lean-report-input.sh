@@ -7,11 +7,13 @@ COMMAND="${1:-}"
 if [[ -n "$COMMAND" ]]; then shift; fi
 REPOSITORY=""
 REPORT=""
+SOURCE_BASE=""
 PRODUCER_OVERRIDE=""
 INSPECTOR_OVERRIDE=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --repository) REPOSITORY="$2"; shift 2 ;;
+    --base) SOURCE_BASE="$2"; shift 2 ;;
     --report) REPORT="$2"; shift 2 ;;
     --producer) PRODUCER_OVERRIDE="$2"; shift 2 ;;
     --inspector) INSPECTOR_OVERRIDE="$2"; shift 2 ;;
@@ -66,6 +68,10 @@ producer_declared_paths() {
     Directory.Packages.props \
     tools/lean-inspector/inspect.sh \
     tools/lean-inspector/Inspector.lean \
+    tools/lean-inspector/SourceContext.lean \
+    tools/lean-inspector/SourceOptions.lean \
+    tools/lean-inspector/source-context.py \
+    tools/lean-inspector/source-context.sh \
     tools/lean-inspector/delta.py \
     tools/lean-inspector/materials.py \
     tools/scripts/report/lean-report-input.sh \
@@ -121,7 +127,9 @@ def source_text(relative):
         path.relative_to(root)
     except ValueError as error:
         raise SystemExit(f"lean-report-input: producer script escaped repository: {relative}") from error
-    if relative == inspector_entrypoint and not path.is_file() and not inspector_root.exists():
+    # An absent inspector library contributes no files. Within a present library,
+    # every reachable member (including source-context.sh) remains mandatory.
+    if relative.is_relative_to(inspector_entrypoint.parent) and not inspector_root.exists():
         return None
     if not path.is_file():
         raise SystemExit(f"lean-report-input: reachable producer input is absent: {relative}")
@@ -396,3 +404,8 @@ case "$COMMAND" in
       || { echo "lean-report-input: raw Lean report is stale for current repository inputs; run make lean-report first" >&2; exit 2; }
     ;;
 esac
+
+if [[ "$COMMAND" == verify && -n "$SOURCE_BASE" ]]; then
+  "$BASH" "$REPOSITORY/tools/lean-inspector/source-context.sh" verify \
+    --repository "$REPOSITORY" --report "$REPORT" --base "$SOURCE_BASE"
+fi

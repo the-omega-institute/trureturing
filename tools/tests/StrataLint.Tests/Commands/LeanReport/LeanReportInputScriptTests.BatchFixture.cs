@@ -22,6 +22,8 @@ public sealed partial class LeanReportInputScriptTests
         var hash = Convert.ToHexStringLower(SHA256.HashData(TemporaryFileSystem.File.ReadAllBytes(report)));
         TemporaryFileSystem.File.WriteAllText(report + ".sha256", $"{hash}  {Path.GetFileName(report)}\n");
         TemporaryFileSystem.File.WriteAllText(report + ".provenance.json", "{}\n");
+        TemporaryFileSystem.File.WriteAllText(report + ".source-context.json",
+            "{\"schema\":\"lean-source-context/1\",\"files\":[],\"registrations\":[]}\n");
         TemporaryFileSystem.File.WriteAllText(report + ".input.attestation",
             "schema=stratalint-lean-report-input-attestation-v1\n"
             + $"repository_input_sha256={fields[0]}\nproducer_sha256={fields[1]}\nreport_sha256={hash}\n");

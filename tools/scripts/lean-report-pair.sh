@@ -7,6 +7,7 @@ PRODUCER=""
 LAKE_BIN=""
 CANDIDATE_ROOT=""
 CANDIDATE_OUTPUT=""
+SOURCE_BASE="${STRATALINT_SOURCE_BASE:-HEAD}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 SUPERVISOR="$SCRIPT_DIR/report/report-supervisor.sh"
 INPUT_HELPER="$SCRIPT_DIR/report/lean-report-input.sh"
@@ -19,6 +20,7 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
     --producer) PRODUCER="$2"; shift 2 ;;
     --lake-bin) LAKE_BIN="$2"; shift 2 ;;
+    --base) SOURCE_BASE="$2"; shift 2 ;;
     --candidate-root) CANDIDATE_ROOT="$2"; shift 2 ;;
     --candidate-output) CANDIDATE_OUTPUT="$2"; shift 2 ;;
     *) echo "lean-report-pair: unknown argument '$1'" >&2; exit 2 ;;
@@ -277,6 +279,9 @@ cache_try_restore() {
       "${output}.input.attestation" "${output}.materials.zip"
     return 1
   fi
+  if [[ -f "${report}.source-context.json" ]]; then
+    cp "${report}.source-context.json" "${output}.source-context.json" || return 2
+  fi
   LAST_REPORT_SHA256="$actual"
   return 0
 }
@@ -293,7 +298,15 @@ cache_store() {
     && -s "${output}.materials.zip" ]] \
     || return 0
   local entry="$CACHE_ROOT/$address"
-  [[ -e "$entry" ]] && return 0
+  if [[ -d "$entry" ]]; then
+    cache_root_trusted || return 0
+    # Context depends on the requested immutable BASE as well as the declaration
+    # report address. Replace this run-local sibling without invalidating the report.
+    cp "${output}.source-context.json" "$entry/source-context.tmp.$$" 2>/dev/null \
+      && mv -f "$entry/source-context.tmp.$$" "$entry/raw-lean-report.json.source-context.json" || true
+    rm -f -- "$entry/source-context.tmp.$$"
+    return 0
+  fi
   mkdir -p "$CACHE_ROOT" 2>/dev/null || return 0
   # Lock the root to this UID (harmless if we already own a 0700 dir; a no-op fail
   # if some other user pre-created it, in which case the trust check below refuses
@@ -309,6 +322,7 @@ cache_store() {
     && cp "${output}.input.attestation" "${report}.input.attestation" \
     && cp "${output}.provenance.json" "${report}.provenance.json" \
     && cp "${output}.materials.zip" "${report}.materials.zip" \
+    && cp "${output}.source-context.json" "${report}.source-context.json" \
     && printf '%s  raw-lean-report.json\n' "$(hash_file "$report")" > "${report}.sha256"; }; then
     rm -rf -- "$tmp"
     return 0
@@ -338,7 +352,7 @@ materialize_report() {
   # SDK 10.0.201, so one producer SHA can otherwise execute code built by different
   # toolchains. Keep production on the complete-report path until that is solved.
   "$SUPERVISOR" --role lean-producer --lean-slot -- \
-    env LAKE_BIN="$LAKE_BIN" \
+    env LAKE_BIN="$LAKE_BIN" STRATALINT_SOURCE_BASE="$SOURCE_BASE" \
       STRATALINT_REPORT_INPUT_ADDRESS="$input_address" \
       STRATALINT_REPORT_REPOSITORY_SHA256="$repository_sha256" \
       STRATALINT_REPORT_PRODUCER_SHA256="$producer_sha256" \
@@ -408,7 +422,7 @@ verify_bundle() {
   [[ -s "${output}.materials.zip" ]] \
     || { echo "lean-report-pair: producer left no material archive: $output" >&2; return 2; }
   "$INPUT_HELPER" verify --repository "$root" --report "$output" \
-    --producer "$PRODUCER" --inspector "$INSPECTOR" >/dev/null
+    --producer "$PRODUCER" --inspector "$INSPECTOR" --base "$SOURCE_BASE" >/dev/null
 
   printf '{"schema":"stratalint-lean-report-provenance-v1","side":"candidate","mode":"%s","source_side":"candidate","input_address":"sha256:%s","producer_sha256":"%s","repository_inspector_sha256":"%s","lean_sources_sha256":"%s","lean_config_sha256":"%s","report_sha256":"%s"}\n' \
     "$mode" "$input_address" "$producer_sha256" \
@@ -457,6 +471,8 @@ prepare_bundle() {
   materialize_report "$root" "$staged_output" "$input_address"
   local mode="$LAST_REPORT_MODE"
   local report_sha256="$LAST_REPORT_SHA256"
+  "$BASH" "$root/tools/lean-inspector/source-context.sh" prepare \
+    --repository "$root" --report "$staged_output" --base "$SOURCE_BASE" --lake "$LAKE_BIN"
   write_provenance \
     "$staged_output" "$mode" "$input_address" \
     "$producer_sha256" "$resident_sha256" "$sources_sha256" \
@@ -477,7 +493,7 @@ publish_bundle() {
   local live="$2"
   local suffix
   rm -rf -- "${live}.materials" "${live}.logs"
-  for suffix in "" ".sha256" ".input.attestation" ".provenance.json" ".materials.zip"; do
+  for suffix in "" ".sha256" ".input.attestation" ".provenance.json" ".materials.zip" ".source-context.json"; do
     mv -f "${staged}${suffix}" "${live}${suffix}"
   done
   if [[ -d "${staged}.logs" ]]; then
@@ -515,6 +531,4 @@ candidate_mode="$LAST_BUNDLE_MODE"
 publish_bundle "$candidate_staged_output" "$CANDIDATE_OUTPUT"
 emit_provenance_receipt \
   "$CANDIDATE_OUTPUT" "$candidate_mode" "$candidate_address" "$candidate_report_sha256"
-if [[ "$candidate_mode" == "produced" ]]; then
-  cache_store "$candidate_address" "$CANDIDATE_OUTPUT"
-fi
+cache_store "$candidate_address" "$CANDIDATE_OUTPUT"

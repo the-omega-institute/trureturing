@@ -153,6 +153,7 @@ public sealed partial class LeanReportInputScriptTests
                 CliProjectPath, EngineProjectPath, TruthProjectPath,
                 "Directory.Build.props", "Directory.Packages.props", "global.json",
                 inspectorScriptPath, inspectorSourcePath, InputHelperPath,
+                "tools/lean-inspector/source-context.sh",
                 PairScriptPath, SupervisorScriptPath, CiBaselineScriptPath,
                 CacheEnsureScriptPath, CachePublishScriptPath,
                 "tools/scripts/worktree/lean-cache-input.sh",

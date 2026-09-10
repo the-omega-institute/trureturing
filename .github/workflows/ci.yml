@@ -1,11 +1,15 @@
-# BOOTSTRAP-NOT-ACTIVE until this workflow and the C# harness exist on dev.
+# Candidate CI is exercised on integration-ci branches before dev delivery.
 name: admission
+run-name: admission / ${{ github.event_name }} / ${{ github.head_ref || github.ref_name }} / ${{ github.sha }}
 
 on:
   push:
-    branches: [dev]
+    branches: [dev, 'integration-ci-**']
+  pull_request:
+    branches: ['integration-ci-**']
+    types: [opened, synchronize, reopened]
   pull_request_target:
-    branches: [dev, 'integration-**']
+    branches: [dev, 'integration-**', '!integration-ci-**']
     types: [opened, synchronize, reopened]
 
 permissions:
@@ -24,15 +28,17 @@ permissions:
 # 改用 github.sha:每次 dev push 自成一组,彼此既不取消也不排队。
 # 代价是这些 run 会跑完而不是中途被杀 —— 它们本来就已启动,增量是其尾段。
 concurrency:
-  group: ci-${{ github.event.pull_request.number || github.sha }}
+  group: ci-${{ github.event_name }}-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: true
 
-# Trust topology: pull_request_target keeps workflow text on the base branch. The
-# candidate-owned Lean producer and .NET judge inspect GitHub's post-merge tree
-# (candidate plus the current dev parent). Candidate engineering is only a signal.
-# Admission consumes immutable raw reports from the predecessor job; the protected
-# base is the checked merge commit's first-parent SHA passed to the gate. The
-# workflow itself retains an unfiltered floor for engineering and root inputs.
+# Integration CI uses pull_request's immutable merge commit and its candidate
+# workflow. pull_request_target uses the default branch workflow, even for an
+# integration base; retain that route for dev and non-CI integration branches.
+# Until dev delivery the default branch can also start its older target run.
+# Evidence must select this run's event, workflow SHA and all three job identities;
+# another run's same-named green is not candidate-workflow verification.
+# Both routes execute only the checked candidate's producer and judge. Protected
+# base data always comes from that checked commit's first parent.
 jobs:
   candidate-engineering:
     name: Candidate harness engineering checks
@@ -70,12 +76,15 @@ jobs:
           base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
           test -n "$head_sha"
           test -n "$base_sha"
+      - name: Record checked tree and actual workflow identity
+        shell: bash
+        run: python3 candidate/tools/scripts/workflow/checked-ci-identity.py --repository candidate
       - name: Fail closed when merge result is unavailable
         if: always() && steps.checkout-merge.outcome != 'success'
         shell: bash
         run: |
           set -euo pipefail
-          if [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
+          if [[ "$GITHUB_EVENT_NAME" != "push" ]]; then
             printf '%s\n' "cannot check out GitHub merge ref refs/pull/${{ github.event.pull_request.number }}/merge; conflicted pull requests have no merge result, so admission fails closed" >&2
           else
             printf '%s\n' "cannot check out push commit $GITHUB_SHA; admission fails closed" >&2
@@ -140,9 +149,9 @@ jobs:
         id: build-candidate
         if: steps.judge-cache.outputs.cache-hit != 'true' && github.event_name != 'schedule'
         run: make -C candidate/tools dotnet
-      - name: Stage judge binaries for the shared cache (dev push only)
+      - name: Stage judge binaries for the shared cache (dev or integration CI push only)
         id: stage-judge
-        if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-ci-'))
         shell: bash
         run: |
           set -euo pipefail
@@ -153,8 +162,8 @@ jobs:
             --configuration Release --output .judge-binaries/scribe
           test -s .judge-binaries/cli/StrataLint.dll
           test -s .judge-binaries/scribe/StrataLint.Scribe.Documents.dll
-      - name: Save judge binaries and candidate build outputs by content address (dev push only)
-        if: steps.build-candidate.outcome == 'success' && steps.stage-judge.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+      - name: Save judge binaries and candidate build outputs by content address (dev or integration CI push only)
+        if: steps.build-candidate.outcome == 'success' && steps.stage-judge.outcome == 'success' && github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-ci-'))
         uses: actions/cache/save@v4
         with:
           path: |
@@ -216,8 +225,8 @@ jobs:
             test "${actual_lines[$index]}" = "$expected_line"
             ((index += 1))
           done
-      - name: Save elan toolchain for engineering checks (dev push only)
-        if: always() && steps.install-elan.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+      - name: Save elan toolchain for engineering checks (dev or integration CI push only)
+        if: always() && steps.install-elan.outcome == 'success' && github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-ci-'))
         uses: actions/cache/save@v4
         with:
           path: ~/.elan
@@ -268,12 +277,15 @@ jobs:
           base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
           test -n "$head_sha"
           test -n "$base_sha"
+      - name: Record checked tree and actual workflow identity
+        shell: bash
+        run: python3 candidate/tools/scripts/workflow/checked-ci-identity.py --repository candidate
       - name: Fail closed when merge result is unavailable
         if: always() && steps.checkout-merge.outcome != 'success'
         shell: bash
         run: |
           set -euo pipefail
-          if [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
+          if [[ "$GITHUB_EVENT_NAME" != "push" ]]; then
             printf '%s\n' "cannot check out GitHub merge ref refs/pull/${{ github.event.pull_request.number }}/merge; conflicted pull requests have no merge result, so admission fails closed" >&2
           else
             printf '%s\n' "cannot check out push commit $GITHUB_SHA; admission fails closed" >&2
@@ -304,7 +316,7 @@ jobs:
       - name: Build candidate tools before Lean report production
         shell: bash
         run: make -C candidate/tools dotnet
-      - name: Resolve checked merge result's dev parent
+      - name: Resolve checked merge result's protected parent
         id: base
         shell: bash
         run: |
@@ -377,7 +389,11 @@ jobs:
           done
           helper="$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-input.sh"
           # 缓存条目对候选树重新验一次地址与报告哈希;不符即整体回落,不静默使用。
-          "$helper" verify --repository "$GITHUB_WORKSPACE/candidate" --report "$source"
+          "$helper" verify --repository "$GITHUB_WORKSPACE/candidate" --report "$source" --base "${{ steps.base.outputs.sha }}"
+          # Verification established that any missing context is unused. Publish
+          # its empty sibling without requiring a Lean installation on this hit.
+          python3 "$GITHUB_WORKSPACE/candidate/tools/lean-inspector/source-context.py" \
+            --repository "$GITHUB_WORKSPACE/candidate" --report "$source" --base "${{ steps.base.outputs.sha }}"
           producer="$(awk -F= '$1 == "producer_sha256" {print $2}' "${source}.input.attestation")"
           sources="${{ steps.lean-input.outputs.sources_sha256 }}"
           config="${{ steps.lean-input.outputs.config_sha256 }}"
@@ -390,7 +406,7 @@ jobs:
               producer_sha256: $producer, repository_inspector_sha256: $producer,
               lean_sources_sha256: $sources, lean_config_sha256: $config, report_sha256: $report}
             and (.[0].mode == "produced" or .[0].mode == "cached"))' "${source}.provenance.json" > /dev/null
-          for suffix in '' .input.attestation .provenance.json .materials.zip; do
+          for suffix in '' .input.attestation .provenance.json .materials.zip .source-context.json; do
             cp "${source}${suffix}" "$reports/candidate-lean-report.json${suffix}"
           done
           printf '%s  %s\n' \
@@ -460,16 +476,16 @@ jobs:
           PATH="$HOME/.elan/bin:$PATH" make -C candidate lean
       # Only a successful build materializes Lean artifacts. A report hit skips
       # that build; later report failures cannot revoke its completed cache supply.
-      - name: Save Lean project build artifacts (dev push only)
-        if: always() && steps.lean-build.outcome == 'success' && steps.lake-build-cache.outputs.cache-hit != 'true' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+      - name: Save Lean project build artifacts (dev or integration CI push only)
+        if: always() && steps.lean-build.outcome == 'success' && steps.lake-build-cache.outputs.cache-hit != 'true' && github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-ci-'))
         continue-on-error: true
         timeout-minutes: 12
         uses: actions/cache/save@v4
         with:
           path: candidate/.lake/build
           key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-input.outputs.config_sha256 }}-${{ steps.lean-input.outputs.sources_sha256 }}
-      - name: Save Lean dependency artifacts (dev push only)
-        if: always() && steps.lean-build.outcome == 'success' && steps.lake-deps-cache.outputs.cache-hit != 'true' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+      - name: Save Lean dependency artifacts (dev or integration CI push only)
+        if: always() && steps.lean-build.outcome == 'success' && steps.lake-deps-cache.outputs.cache-hit != 'true' && github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-ci-'))
         continue-on-error: true
         timeout-minutes: 12
         uses: actions/cache/save@v4
@@ -495,9 +511,10 @@ jobs:
           test -x "$pair_producer"
           reports="$RUNNER_TEMP/raw-lean-reports"
           mkdir -p "$reports"
-          # 只产受审的 post-merge 侧。base 是同一 merge 对象的 dev 第一父提交,
+          # 只产受审的 post-merge 侧。base 是同一 merge 对象的受保护第一父提交,
           # 只参与 admission gate 的 diff 语义,不再为它编译或上传第二份 Lean 报告。
           "$pair_producer" \
+            --base "${{ steps.base.outputs.sha }}" \
             --producer "$producer" \
             --lake-bin "$HOME/.elan/bin/lake" \
             --candidate-root "$GITHUB_WORKSPACE/candidate" \
@@ -509,7 +526,7 @@ jobs:
           source="$RUNNER_TEMP/raw-lean-reports/candidate-lean-report.json"
           target="$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json"
           mkdir -p "$(dirname "$target")"
-          for suffix in '' .input.attestation .provenance.json .materials.zip; do
+          for suffix in '' .input.attestation .provenance.json .materials.zip .source-context.json; do
             test -s "${source}${suffix}"
             cp "${source}${suffix}" "${target}${suffix}"
           done
@@ -521,12 +538,12 @@ jobs:
           cp -R "${source}.logs" "${target}.logs" 2>/dev/null || true
           "$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-input.sh" verify \
             --repository "$GITHUB_WORKSPACE/candidate" \
-            --report "$target"
+            --report "$target" --base "${{ steps.base.outputs.sha }}"
 
       # pull_request_target runs get a token without cache-write scope, so this save can only ever fail there: run 31389667812 logged "cache write denied: token has no writable scopes". The two saves below already carry this exact guard; this one was missing it, so every PR attempted a write it could not perform. dev-push runs do write it successfully (run 31389340892).
       # 命中报告缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;分层 lake cache exact hit 时对应 key 也已存在。三个 save 只在真正跑过生产路径时执行。
-      - name: Save candidate canonical Lean report (dev push only)
-        if: success() && steps.lean-report-input.outputs.address != '' && steps.report-reuse.outcome != 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+      - name: Save candidate canonical Lean report (dev or integration CI push only)
+        if: success() && steps.lean-report-input.outputs.address != '' && steps.report-reuse.outcome != 'success' && github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-ci-'))
         uses: actions/cache/save@v4
         with:
           path: .canonical-lean-report-cache
@@ -553,10 +570,10 @@ jobs:
           retention-days: 7
 
       # 命中报告缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;分层 lake cache exact hit 时对应 key 也已存在。三个 save 只在真正跑过生产路径时执行。
-      - name: Save elan toolchains (dev push only)
+      - name: Save elan toolchains (dev or integration CI push only)
         # 不挂在 success() 上:elan 装成功就该存。否则一次下载失败会让 job 红、缓存不写、
         # 下次继续 miss,故障自我延续。
-        if: always() && steps.install-elan.outcome == 'success' && steps.report-reuse.outcome != 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        if: always() && steps.install-elan.outcome == 'success' && steps.report-reuse.outcome != 'success' && github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-ci-'))
         uses: actions/cache/save@v4
         with:
           path: ~/.elan
@@ -595,12 +612,15 @@ jobs:
           base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
           test -n "$head_sha"
           test -n "$base_sha"
+      - name: Record checked tree and actual workflow identity
+        shell: bash
+        run: python3 candidate/tools/scripts/workflow/checked-ci-identity.py --repository candidate
       - name: Fail closed when merge result is unavailable
         if: always() && steps.checkout-merge.outcome != 'success'
         shell: bash
         run: |
           set -euo pipefail
-          if [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
+          if [[ "$GITHUB_EVENT_NAME" != "push" ]]; then
             printf '%s\n' "cannot check out GitHub merge ref refs/pull/${{ github.event.pull_request.number }}/merge; conflicted pull requests have no merge result, so admission fails closed" >&2
           else
             printf '%s\n' "cannot check out push commit $GITHUB_SHA; admission fails closed" >&2

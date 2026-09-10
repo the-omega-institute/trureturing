@@ -18,7 +18,8 @@ internal static class SnapshotAdmissionCore
         VerifiedScribeEmissions? verifiedScribeEmissions,
         AdmissionCheckTiming? timing = null,
         ScribeTestMapStore? testMapStore = null,
-        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null)
+        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null,
+        LeanSourceContextInput? sourceContext = null)
     {
         var phaseTiming = timing ?? AdmissionCheckTiming.Disabled;
         try
@@ -77,7 +78,8 @@ internal static class SnapshotAdmissionCore
                                 MeasureApplicability,
                                 MeasureCanonicalization,
                                 testMapStore,
-                                deriveTestMap),
+                                deriveTestMap,
+                                sourceContext),
                             BootstrapOutcome.ProtectedSurfaceVerificationRequired protectedSurfaceVerification =>
                                 AdmissionPipeline.EvaluateProtectedSurface(
                                     current,
@@ -91,7 +93,8 @@ internal static class SnapshotAdmissionCore
                                     MeasureApplicability,
                                     MeasureCanonicalization,
                                     testMapStore,
-                                    deriveTestMap),
+                                    deriveTestMap,
+                                    sourceContext),
                             _ => throw new InvalidOperationException("unknown bootstrap outcome"),
                         };
                     }

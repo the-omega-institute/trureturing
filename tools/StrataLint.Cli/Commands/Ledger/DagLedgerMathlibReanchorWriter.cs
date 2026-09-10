@@ -112,12 +112,15 @@ internal static class DagLedgerMathlibReanchorWriter
             var pinChanged = EffectiveLeanPins.TryRead(protectedBase, out var basePins)
                 && EffectiveLeanPins.TryRead(prospective, out var candidatePins)
                 && basePins != candidatePins;
-            var propositionFailures = MathlibUpgradePropositionSourceDiagnostics.FindFailures(
+            var sourceContext = leanReportSource.LoadSourceContext(truth.Snapshot, protectedBase);
+            var sourceComparison = LeanPropositionSourceComparer.Compare(
                 protectedBase,
                 prospective,
                 recognition.ChangedStatementModulePaths,
                 baseView,
-                candidateCatalog);
+                candidateCatalog,
+                sourceContext);
+            var propositionFailures = MathlibUpgradePropositionSourceDiagnostics.FindFailures(sourceComparison);
             var closureStatementFailures =
                 MathlibUpgradeFrozenLedgerReplacementAuthorization
                     .FindChangedClosureOnlyStatements(context, recognition);
@@ -128,7 +131,9 @@ internal static class DagLedgerMathlibReanchorWriter
                 .ToImmutableArray();
             var authorized = new MathlibUpgradeFrozenLedgerReplacementAuthorization(
                 protectedBase,
-                prospective).IsAuthorized(context);
+                prospective,
+                sourceContext,
+                sourceComparison).IsAuthorized(context);
             var diagnosedAuthorization = pinChanged
                 && propositionFailures.IsEmpty
                 && closureStatementFailures.IsEmpty
@@ -149,6 +154,8 @@ internal static class DagLedgerMathlibReanchorWriter
                 authorized);
             if (!authorized)
             {
+                output += string.Concat(sourceComparison.Failures.Select(failure =>
+                    $"PROPOSITION_SOURCE_LOCATION {failure.Path.Value}:{failure.Line}: {failure.Message}\n"));
                 return new CommandResult(
                     false,
                     output,

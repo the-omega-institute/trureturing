@@ -62,6 +62,8 @@ public sealed class RuleCatalog
         RuleId.CreateKnown(33),
         // SL-034 checks only newly added D5 Lean modules.
         RuleId.CreateKnown(34),
+        // SL-035 scans present byte-changed D5 Lean source; no timing measurement yet.
+        RuleId.CreateKnown(35),
     ];
 
     private readonly ImmutableArray<RuleRegistration> registrations;
@@ -168,6 +170,7 @@ public sealed class RuleCatalog
                 .Append(32)
                 .Append(33)
                 .Append(34)
+                .Append(35)
                 .Select(RuleId.CreateKnown)
                 .ToImmutableArray();
             var registeredIds = Descriptors.Select(static item => item.Id).ToImmutableArray();

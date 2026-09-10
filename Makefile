@@ -28,7 +28,7 @@ lean:
 	@/bin/bash tools/scripts/worktree/lean-cache-run.sh lake build
 
 lean-report:
-	@/bin/bash tools/scripts/report/lean-report.sh
+	@/bin/bash tools/scripts/report/lean-report.sh "$(BASE)"
 
 build: lean
 
