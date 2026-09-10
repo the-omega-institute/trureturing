@@ -44,14 +44,12 @@ by the two implementations recorded in docs/reports/crim-grundy-0910.
 abbrev Position := List ℕ
 
 /-- Remove any positive row, preserving the order of all remaining rows. -/
-def rowMoves : Position → List Position
-  | [] => []
-  | n :: p => (if n = 0 then [] else [p]) ++ (rowMoves p).map (n :: ·)
+def rowMoves (p : Position) : List Position :=
+  List.rec [] (fun n tail rest => (if n = 0 then [] else [tail]) ++ rest.map (n :: ·)) p
 
 /-- Number of cells in column j, with columns numbered from zero. -/
-def height : Position → ℕ → ℕ
-  | [], _ => 0
-  | n :: p, j => (if j < n then 1 else 0) + height p j
+def height (p : Position) : ℕ → ℕ :=
+  List.rec (fun _ => 0) (fun n _ rest j => (if j < n then 1 else 0) + rest j) p
 
 /-- Conjugation lists the positive column heights in increasing column order. -/
 def conjugate (p : Position) : Position :=
@@ -104,8 +102,10 @@ private def sum_heights (p : Position) (w : ℕ) (h : ∀ n ∈ p, n ≤ w) :
   induction p with
   | nil => simp [height]
   | cons n p ih =>
-    simp only [height, List.sum_map_add, List.sum_cons]
-    rw [sum_indicator w n (h n (by simp)), ih (fun x hx => h x (by simp [hx]))]
+    change ((List.range w).map (fun j => (if j < n then 1 else 0) + height p j)).sum =
+      n + p.sum
+    rw [List.sum_map_add, sum_indicator w n (h n (by simp)),
+      ih (fun x hx => h x (by simp [hx]))]
 
 private def sum_nonzero (p : Position) : (p.filter (· != 0)).sum = p.sum := by
   induction p with
@@ -149,14 +149,13 @@ private def mex_spec (s : Finset ℕ) :
   omega
 
 /-- Sprague–Grundy evaluation by well-founded recursion on the total cell count. -/
-def grundy (p : Position) : ℕ :=
-  mex ((moves p).attach.map (fun q => grundy q.val)).toFinset
-termination_by p.sum
-decreasing_by exact move_decreases _ _ q.property
+def grundy : Position → ℕ :=
+  (measure List.sum).wf.fix fun p rec =>
+    mex ((moves p).attach.map (fun q => rec q.val (move_decreases p q.val q.property))).toFinset
 
 private def grundy_eq (p : Position) :
     grundy p = mex ((moves p).map grundy).toFinset := by
-  rw [grundy]
+  rw [grundy, WellFounded.fix_eq]
   simp
 private def mex_unique (s : Finset ℕ) (n : ℕ)
     (hn : n ∉ s) (hbelow : ∀ m < n, m ∈ s) : mex s = n := by
