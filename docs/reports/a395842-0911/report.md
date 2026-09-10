@@ -48,7 +48,9 @@ The full parity theorem, all local repository gates and all three Scribe checks
 pass. The module is frozen by deposit-uncovered, with no atom or coverage edge.
 PR https://github.com/the-omega-institute/trureturing/pull/6777 is open.
 This satisfies the task brief's implementation outcome 成 (proof plus opened PR);
-required CI is still pending at this report checkpoint. No merge into dev is claimed.
+the first CI run passed canonical Lean report production but failed the report
+artifact line limit. The complete declaration data is now split into mathematical
+helper groups; the next CI run is pending at this report checkpoint. No merge into dev is claimed.
 
 Historical proof checkpoints (their pending statements refer to that checkpoint):
 
@@ -320,3 +322,27 @@ This report uses that task-specific outcome and does not override the repository
 distinct requirement that only MERGED counts as landed on dev.
 The final canonical module audit contains 109 declarations, all with axiom sets
 contained in propext, Classical.choice, Quot.sound. `git diff --check` passed.
+
+## CI correction: report artifact capacity
+
+The first PR watcher returned EXIT=2 with outcome=red for
+Content-addressed dev baseline admission (run 34446335593, job 102773405338).
+Canonical Lean report production passed. The admission log identifies
+SL-003: canonical-declarations.json exceeded 1000 lines (actual 1406).
+This was a worker report-layout error: the expanded full snapshot was added after
+the initial module/bucket capacity review. The other emitted signal, SL-022 on
+the new Scribe source, is the existing protected-surface signal handled by the
+CI script, not the failed capacity rule.
+
+Split the snapshot by mathematical responsibility: canonical-declarations.json
+retains public interfaces and imported dependency pins; the three
+canonical-*-helpers.json shards contain coefficient perturbation, series
+construction, and characteristic-two arguments respectively. Parsed JSON
+comparison verified that all 109 original declaration records are retained
+exactly once and unchanged. Every shard is below the 800-line soft limit.
+No Lean source, statement id, freeze event, or checker policy changed.
+`make -C tools capacity-audit` is the targeted local verification.
+Raw failure evidence is ci-admission-failure.log in the attempt directory.
+
+After the final split, `make -C tools capacity-audit` returned EXIT=0
+(`CAPACITY_AUDIT_RESULT exit=0 reason=clean`), 3.973 seconds.

@@ -1,0 +1,435 @@
+{
+  "module": "D5.S1.Recurrence.Parity.DiagonalIterateEven",
+  "report_sha256": "1014a93457f770aa10d979e00caf78a7e0dc1fe537467ecbe9a62cb4fe4bcf4d",
+  "declarations": [
+    {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": true,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.H_diagonal",
+      "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),10:H_diagonal)",
+      "statement_id": "sha256:81fe6c8e838ece3e81dc3fcb8b81e1eb59ffaff98484aefc3e4b6f1b86e5752d",
+      "type_sha256": "sha256:39c4eb18a94f7ed651784eda488229a7a1ead9c6c590035f3a759237fc1cf72b"
+    },
+    {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": true,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.H_residual",
+      "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),10:H_residual)",
+      "statement_id": "sha256:38cb13e1c926cfea7806340d20777d94af7d1da7359c88790e94712d079fcfc1",
+      "type_sha256": "sha256:313f9af9040d987747eac1a7dac8e0c68b7c189a3b27b2c8f15d496d83eca156"
+    },
+    {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": true,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.double_gap",
+      "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),10:double_gap)",
+      "statement_id": "sha256:8f25c6e4ed9707e3e75655b7e495fc7d9a7365c5216f97c4209b9916c39eeaa7",
+      "type_sha256": "sha256:01d23e9ee8b513f6eb9282be741810edfdabd208511b8f6e00445c5c4822b429"
+    },
+    {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": true,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.H_quadratic",
+      "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),11:H_quadratic)",
+      "statement_id": "sha256:045bf0967c1b210c5c46d85c43fe5a172ce8c0ba4f92deb34803bf988cafc935",
+      "type_sha256": "sha256:46e7c30c11f9004952c766ba28b1a961996867d90cabf76d1268e7542ea87ace"
+    },
+    {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": true,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.iterate_add",
+      "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),11:iterate_add)",
+      "statement_id": "sha256:a2898086c56817e73a8e360278110a9b85c9d60664992918130f087c3d771ecb",
+      "type_sha256": "sha256:36c1e841548442280572c933f2914fa0d5e4924cf27569de45363d8567323fa0"
+    },
+    {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": true,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.map_iterate",
+      "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),11:map_iterate)",
+      "statement_id": "sha256:ce90bfee74793394b7f1b47b5a993ebf3eb6b7f81c0ab8d3cf0c75d69fe53b73",
+      "type_sha256": "sha256:b0dcc94a9a378f1934dd32ba1187026b09e1b55e6499805a72369cc267d08fc5"
+    },
+    {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": true,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.H_dyadic_gap",
+      "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),12:H_dyadic_gap)",
+      "statement_id": "sha256:aecad5639231194d67cb81ab30712e375cc342f4588303b4b5d287b5105e58cb",
+      "type_sha256": "sha256:10d673724f16d5dabb2e137835459836873f02bf96a0d672193dd89d63091b0d"
+    },
+    {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": true,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.H_recurrence",
+      "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),12:H_recurrence)",
+      "statement_id": "sha256:5676fec603f44a5a3e8288e71e27b5b7d6c8eecc453f16bca0af2f4b8a678f0a",
+      "type_sha256": "sha256:3a21ee26babd82b8e39e60ff366bdf2356c069b41588bd816d8eba759fde7b4e"
+    },
+    {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": true,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.square_subst",
+      "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),12:square_subst)",
+      "statement_id": "sha256:2a54543a26d61a9bd6b9889f01726ea65aa492480234f3b1d7434a941af3fc0d",
+      "type_sha256": "sha256:c39f62fad5f922be44095c26aa35641be517975b2d6082cd4a589bcc51a9d9fa"
+    },
+    {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": true,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.H_dyadic_coeff",
+      "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),14:H_dyadic_coeff)",
+      "statement_id": "sha256:71a38e5fda153c10e71dd52aed73d12b559c8f0a07461be19ba19fbad3941e4b",
+      "type_sha256": "sha256:23ce53d0df449b44b5ebad4bad40b7cfd7c21f6b4f2f5855101f8133040dedac"
+    },
+    {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": true,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.quadratic_unit",
+      "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),14:quadratic_unit)",
+      "statement_id": "sha256:01fc4103acef730c667a8d4034e569e127a1d3f6033ee1c866df974189ec6f08",
+      "type_sha256": "sha256:f0603912fb70c2e424d8c68680160424eb1acaf39f28256dba508fa2420322b7"
+    },
+    {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": true,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.mod_two_identity",
+      "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),16:mod_two_identity)",
+      "statement_id": "sha256:5ed918961f2748c3d717eb4ee3e8abe64e1fed32e1cc18053e4eb721621577cb",
+      "type_sha256": "sha256:f4f63dcf270e3dde097235c70e40ca0dcc587fd99ec4e18e47d26bc1a073518a"
+    },
+    {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": true,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.H_previous_diagonal",
+      "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),19:H_previous_diagonal)",
+      "statement_id": "sha256:f74221efbf4dd86cfb288422efd6b3ffb753e8f12ffb0ac357fb9b98a088d8bf",
+      "type_sha256": "sha256:f234300e63b0c408350b8b386512df831ccd8c96d2216b5ffbfd036e57b54a63"
+    },
+    {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": true,
+      "kind": "def",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.H",
+      "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),1:H)",
+      "statement_id": "sha256:b64abccf84b63b7caaf9e7ce4c7c707e9f71272d0f3b620b28f7c71883a54c50",
+      "type_sha256": "sha256:5616d4ffc6d2f6928dad7ef79524d221e694d1ca45542eadab0b80a08d08d894"
+    },
+    {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": true,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.instCharPPowerSeriesZModOfNatNat_d5",
+      "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),35:instCharPPowerSeriesZModOfNatNat_d5)",
+      "statement_id": "sha256:477ac8cd624707f59892a9121a467d9bc95a70f3a3cc21c6fb50753c183d7167",
+      "type_sha256": "sha256:b22e3ffd7efbb15e2782d8da279f07c4c30c24ac07b1292082bc65bd353d4128"
+    },
+    {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": true,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.H_one",
+      "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),5:H_one)",
+      "statement_id": "sha256:c4b5a77d35887229a8d58b5e964f6e2243ed160d2d7b6f3bb27685fadde9fb78",
+      "type_sha256": "sha256:b645469616d748dad7119bd85a3c4321e8c18154349c8afbfd66f8e51ba8b70c"
+    },
+    {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": true,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.H_two",
+      "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),5:H_two)",
+      "statement_id": "sha256:04af0cc5a9b236bbc8e62ac618a1521c40f67347bc1164a2ab908260edd22b5b",
+      "type_sha256": "sha256:8ed6655c187af37ec00b9c225e2b9a5c930ef2188cd456281548525413a6363d"
+    },
+    {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": true,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.H_zero",
+      "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),6:H_zero)",
+      "statement_id": "sha256:4b31925b2e6c61b641e0aa96cb382fb42379cd2ab4c7f493bab3bc76691f035f",
+      "type_sha256": "sha256:91c2659931cedb60b786c10847f9c1ade34cd3ac650dd8bf39921b17f25385fc"
+    },
+    {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": true,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.H_support",
+      "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),9:H_support)",
+      "statement_id": "sha256:9b8ad72207a9a6602563956e1dfe18b44f083c3adcd3600cfd07c4f11c90f0b7",
+      "type_sha256": "sha256:42fa020bc6c787aabf4f02182e1df2b0011acc2221886ab1ea22679d55b89b98"
+    },
+    {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": true,
+      "kind": "def",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.quadratic",
+      "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),9:quadratic)",
+      "statement_id": "sha256:a968963bdee85628790203b4dc9027833e5d9d4b20ddc453da6077ff71e8bc3e",
+      "type_sha256": "sha256:e671ce4f5466292e98caa723833357077d79faa96717bfc02c4717aa1d61b57d"
+    },
+    {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": false,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.H_diagonal._proof_1_1",
+      "name_key": "ns(ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),10:H_diagonal),10:_proof_1_1)",
+      "statement_id": "sha256:e9bd1a439700f75e096375e520cf9e41dfc2643399eee1ad63f9d32430e732f2",
+      "type_sha256": "sha256:d9069602879cddf57bc1e07e412dc5ff52d40e193c44f83b69fc46f997364a38"
+    },
+    {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": false,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.H_residual._proof_1_2",
+      "name_key": "ns(ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),10:H_residual),10:_proof_1_2)",
+      "statement_id": "sha256:aab4e43ac8d7b7331e5850e59359bfbb61c45494bd720a252d33e24417913608",
+      "type_sha256": "sha256:ceaa889916bae78da9c496b69cca9dc04ed9d24299ecfa3722f8490702c0e86d"
+    },
+    {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": false,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.H_previous_diagonal._proof_1_1",
+      "name_key": "ns(ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),19:H_previous_diagonal),10:_proof_1_1)",
+      "statement_id": "sha256:72c2eb172b2dca5ca9be54dabcee6d342215124b2dad642c09e105f9758480e0",
+      "type_sha256": "sha256:8030e28d02b06a4852ef21b74e8f75a89d0aaff0f0927271ea9119e0f79ffd7f"
+    },
+    {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": false,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.H_previous_diagonal._proof_1_2",
+      "name_key": "ns(ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),19:H_previous_diagonal),10:_proof_1_2)",
+      "statement_id": "sha256:48da3c7369388b94ce7ba14a3fcbc6e8593007e4c8fe8bc518681116733b3e65",
+      "type_sha256": "sha256:d32e224168c96ef18dbcc8f900d88b47d3e400cb92d4066c0bbdefbea9dfb209"
+    },
+    {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": false,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.H_previous_diagonal._proof_1_3",
+      "name_key": "ns(ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),19:H_previous_diagonal),10:_proof_1_3)",
+      "statement_id": "sha256:3e1f7c31d9a42844f21bdb61d18f38cc13151b3c98fb0d34ca7e57d4c6c8cad0",
+      "type_sha256": "sha256:aa0ef7cfdfc9eb15fad8d81bfe5e999be78c4595496541bee97af00c8cf80873"
+    },
+    {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": false,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.H_previous_diagonal._proof_1_4",
+      "name_key": "ns(ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),19:H_previous_diagonal),10:_proof_1_4)",
+      "statement_id": "sha256:dc516c6f4059f7d57c25b252cf2fadd80268fa00bf8fbb4d3958a4cd1ba56373",
+      "type_sha256": "sha256:2d02993ff59aafe794162da4a05fbbd8cb99963382b83ad2754b6d69a97aee78"
+    },
+    {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": false,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.H_previous_diagonal._proof_1_5",
+      "name_key": "ns(ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),19:H_previous_diagonal),10:_proof_1_5)",
+      "statement_id": "sha256:2d8bb83d1e1e8002b0795eb7bf6ad67dc29496698145bd0a0ed9c1fdf331a7ec",
+      "type_sha256": "sha256:73fa0aeb307b7fc3f0f8bb4bd214a17fb2dc9e972d6811d427d4888b4420c7f7"
+    },
+    {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": false,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.H_previous_diagonal._proof_1_6",
+      "name_key": "ns(ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),19:H_previous_diagonal),10:_proof_1_6)",
+      "statement_id": "sha256:348b60be8227784caacff50978e632c4744806e46a40a9900ddb50c9a72cce37",
+      "type_sha256": "sha256:722468f28f921b1259567143a863f66da9afaddcb530131aa67082ccdd109685"
+    },
+    {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": false,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.H_previous_diagonal._proof_1_7",
+      "name_key": "ns(ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),19:H_previous_diagonal),10:_proof_1_7)",
+      "statement_id": "sha256:b33e7122a458c4c7d153806d72749abfd897fa45ec7b5d31f03ccd81500d91d9",
+      "type_sha256": "sha256:ba3e825abbff38a9a06d6c80579dc0438de8a2f925a931d5194c80772ad5e895"
+    },
+    {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": false,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.H_one._proof_1_1",
+      "name_key": "ns(ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),5:H_one),10:_proof_1_1)",
+      "statement_id": "sha256:12e6bfae99e71468b2ed21b9479aab80c5fabe80a870c4dc39f7d07faaa287cc",
+      "type_sha256": "sha256:9a9c20ba161ec7df588779895f6716eff8f8aa2f8c83ca47e3c10427c2d0b24c"
+    },
+    {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": false,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.H_two._proof_1_1",
+      "name_key": "ns(ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),5:H_two),10:_proof_1_1)",
+      "statement_id": "sha256:cf46b37d028b574a64849c9c4bd8485ce3b2d2a604707c1339ec5bdb5bb5054e",
+      "type_sha256": "sha256:048c84ac9daec28715a88f56399d6615e7278809cea7bd728b02b5a5367f9110"
+    },
+    {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": false,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.H_support._proof_1_1",
+      "name_key": "ns(ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),9:H_support),10:_proof_1_1)",
+      "statement_id": "sha256:21f80c8768b79b04ef47b6ebca28af85843c4ab2eff98abd88cb7b7592a42b24",
+      "type_sha256": "sha256:bae2777756ec1f4cb462762de6df58f485c79bf74a9aa2d04c2c78450cadb669"
+    },
+    {
+      "axioms": [
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": false,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.H_support._proof_1_2",
+      "name_key": "ns(ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),9:H_support),10:_proof_1_2)",
+      "statement_id": "sha256:cab038fc0664e48e4f327e10600ed0b8530411619c182cef9663ad98419f8cf0",
+      "type_sha256": "sha256:61dab39e165022a31dbafa4307552ecd86cb936f701f9324225da69b518eeb36"
+    },
+    {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "include_in_statement": false,
+      "kind": "theorem",
+      "name": "_private.D5.S1.Recurrence.Parity.DiagonalIterateEven.0.D5.S1.Recurrence.Parity.DiagonalIterateEven.quadratic.eq_1",
+      "name_key": "ns(ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),0),2:D5),2:S1),10:Recurrence),6:Parity),19:DiagonalIterateEven),9:quadratic),4:eq_1)",
+      "statement_id": "sha256:94894bb7df2f1567b397e357982e8f30a83ecfb6e6ad502958b78506ec7b9d9a",
+      "type_sha256": "sha256:ac959131cf27e2c8482dd32806464bc9538a1917fa15963d313586d0cfe9ad63"
+    }
+  ]
+}

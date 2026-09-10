@@ -92,5 +92,28 @@
     "exit_code": 0,
     "elapsed_seconds": 94.696,
     "log": "/private/var/folders/wv/ht3wzsj138b4sxl3q4t0xdr40000gn/T/consensus-rnd/sshx/a395842-impl-0911/attempt-1/deposit-uncovered.log"
+  },
+  "first_pr_open_and_watch": {
+    "command": [
+      "make",
+      "pr-open",
+      "HEAD=lane/math/a395842",
+      "MESSAGE=/var/folders/wv/ht3wzsj138b4sxl3q4t0xdr40000gn/T/consensus-rnd/sshx/a395842-impl-0911/attempt-1/pr-message.txt"
+    ],
+    "exit_code": 2,
+    "elapsed_seconds": 731.742,
+    "log": "/private/var/folders/wv/ht3wzsj138b4sxl3q4t0xdr40000gn/T/consensus-rnd/sshx/a395842-impl-0911/attempt-1/pr-open.log"
+  },
+  "capacity_audit_after_correction": {
+    "command": [
+      "make",
+      "-C",
+      "tools",
+      "capacity-audit",
+      "REPOSITORY=/Users/chronoai/trureturing-a395842"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 3.973,
+    "log": "/private/var/folders/wv/ht3wzsj138b4sxl3q4t0xdr40000gn/T/consensus-rnd/sshx/a395842-impl-0911/attempt-1/capacity-audit-final.log"
   }
 }
