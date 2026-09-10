@@ -3,6 +3,7 @@ bibkey: codex2026a392714bridge
 authors: Codex implementation worker
 year: 2026
 title: Alternating words and the A392714 residual intervals
+doi: null
 url: https://github.com/the-omega-institute/trureturing
 claim: The blocked prefix rule on explicitly alternating words is equivalent to the interlaced residual condition.
 strata_touched:
