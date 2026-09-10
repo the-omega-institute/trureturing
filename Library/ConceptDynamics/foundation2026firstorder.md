@@ -41,6 +41,7 @@ strata_touched:
   - D5/S3/ConceptDynamics/ZfcSyntax/FormulaOne
   - D5/S3/ConceptDynamics/ZfcSyntax/FormulaTwo
   - D5/S3/ConceptDynamics/ZfcTermRewriting/RewOne
+  - D5/S3/ConceptDynamics/ZfcTermRewriting/RewTwo
 license: Apache-2.0
 triage: anchor
 ---
@@ -57,10 +58,10 @@ Copyright and attribution remain with the upstream contributors. Original author
 required source notices are preserved. The upstream distribution has no NOTICE file.
 The complete unmodified Apache-2.0 license follows below.
 
-The installed layer contains 34 modules from 25 immutable upstream source files,
-with 4,309 Lean source lines (including headers and blank lines). Its source footprint
-is 34 Lean files, 34 Scribe sources and 34 Markdown twins, plus this shared note:
-103 files. The table lists exactly the installed Lean paths; each `strata_touched`
+The installed layer contains 35 modules from 25 immutable upstream source files,
+with 4,509 Lean source lines (including headers and blank lines). Its source footprint
+is 35 Lean files, 35 Scribe sources and 35 Markdown twins, plus this shared note:
+106 files. The table lists exactly the installed Lean paths; each `strata_touched`
 GID resolves to its corresponding Lean/Scribe/Markdown triple.
 
 Each row preserves the original source path, SHA-256 and capacity span. Only selected
@@ -121,6 +122,24 @@ The FormulaOne selection omits the optional upstream theorem
 commands preserve their original mathematical bodies and hypotheses; this exclusion
 belongs to the selected excerpts within FormulaOne's capacity span below.
 
+RewTwo supplies variable-domain lifts, binder shifts, `shift`, `free`, `fix`,
+their bound/free-variable laws, composition and substitution identities, q-lifts
+and finite `fixitr` iteration on actual first-order terms. It retains the supplied
+source commands and hypotheses except the optional `LO.FirstOrder.Rew.q_emb`.
+The supplied selection input is SHA-256
+`6639a4bd42da9b1cd99728d18f301d367f0a75c3afd0728373ce35c8ef55335c` (6,268 bytes);
+the installed source, after that omission, is SHA-256
+`b68465527cc3e61f7f31322848f3421d60b533f8195861822bb7ed2b98a91652`. These source digests are distinct from
+the complete upstream-file digest in the table. Historical 49-occurrence evidence
+associated with source SHA-256
+`d46397c4c5fb43b10a44c0596f5d7ab181e5e11a42ccd326611abe066825b2e8`
+is historical association evidence only; current identities require the current
+source-bound canonical report. Its 33 rule-11 upstream-wrapper proposals and 16
+generated-source/API associations confer no new escape, liveness or
+indispensability credit. Theorems remain bind-only; definitions and other
+non-theorems have null proof shape. These general APIs do not prove the CSA
+set-coding, defining-graph elimination or ZFC conservativity bridge.
+
 Retirement: replace a transplanted API by a direct Mathlib reference when the repository's pin
 provides a proved-equivalent syntax/theory/proof/definability API and its faithful bridge
 elaborates. Upstream PR acceptance alone is insufficient.
@@ -145,6 +164,7 @@ elaborates. Upstream PR acceptance alone is insufficient.
 | D5/S3/ConceptDynamics/ZfcFiniteCollections/Finset.lean | Foundation/Vorspiel/Finset/Basic.lean | 1–88 | 34c9b64196d84407927c2d8c9332cd07c91cfca871b243acf1bed717c8a27746 |
 | D5/S3/ConceptDynamics/ZfcSupport/Function.lean | Foundation/Vorspiel/Function.lean | 1–18 | b6eb4a72d46ac6f11b3ff3951b95f4cfe1b03498f290ad46b9bd75cc626ef796 |
 | D5/S3/ConceptDynamics/ZfcTermRewriting/RewOne.lean | Foundation/Syntax/Predicate/Rew.lean | 1–320 | 8df8681a12ebf5ef8700d9710c88fc39bfc35df47ef387e2893df3caf3b69873 |
+| D5/S3/ConceptDynamics/ZfcTermRewriting/RewTwo.lean | Foundation/Syntax/Predicate/Rew.lean | 321–637; selected commands exclude `LO.FirstOrder.Rew.q_emb` | 8df8681a12ebf5ef8700d9710c88fc39bfc35df47ef387e2893df3caf3b69873 |
 | D5/S3/ConceptDynamics/ZfcMinimalLogic/MinimalEntailmentOne.lean | Foundation/Propositional/Entailment/Minimal.lean | 1–320 | aa8c65b4a9a1c4cb1b5148ea65d159302b11dbcc839bba1184e422413808b8f1 |
 | D5/S3/ConceptDynamics/ZfcMinimalLogic/MinimalEntailmentTwo.lean | Foundation/Propositional/Entailment/Minimal.lean | 321–639 | aa8c65b4a9a1c4cb1b5148ea65d159302b11dbcc839bba1184e422413808b8f1 |
 | D5/S3/ConceptDynamics/ZfcMinimalLogic/MinimalEntailmentThree.lean | Foundation/Propositional/Entailment/Minimal.lean | 640–959 | aa8c65b4a9a1c4cb1b5148ea65d159302b11dbcc839bba1184e422413808b8f1 |
