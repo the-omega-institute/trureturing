@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Exhaustive witness chains have a unique core limit and infinitely many primes.
+Admissible chains: unique core limit; strict binding with exhaustion: infinite primes.
 
 **Remark 1.1 (Total admissible transformations).**
 
@@ -42,7 +42,7 @@ Write unionNodes(L) for the union over all natural-number stages of N(L(t)). Glu
 
 **Theorem 1.4 (Old targets have no new ancestors).**
 
-$$\forall s: ProofSystem, L: Nat \to \operatorname{LegalLedger}\left(s\right),\\{}\operatorname{GeneratedChain}\left(L\right) \Rightarrow\\{}\forall t: Nat, a, b: \operatorname{P}\left(s\right), b \in \operatorname{N}\left(\operatorname{L}\left(t\right)\right) \Rightarrow\\{}\operatorname{StrictReachable}\left(\operatorname{limitEdge}\left(L\right), a, b\right) \iff \operatorname{StrictReachable}\left(\operatorname{E}\left(\operatorname{core}\left(\operatorname{L}\left(t\right)\right)\right), a, b\right)$$
+$$\forall s: ProofSystem, L: Nat \to \operatorname{LegalLedger}\left(s\right),\\{}\operatorname{GeneratedChain}\left(L\right) \Rightarrow\\{}\forall t: Nat, a, b: \operatorname{P}\left(s\right), b \in \operatorname{N}\left(\operatorname{L}\left(t\right)\right) \Rightarrow\\{}(\operatorname{StrictReachable}\left(\operatorname{limitEdge}\left(L\right), a, b\right) \iff \operatorname{StrictReachable}\left(\operatorname{E}\left(\operatorname{core}\left(\operatorname{L}\left(t\right)\right)\right), a, b\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/FixedPointPhilosophy/PrimeInfinity.limit_path_iff` (`✓ std3`). ∎
 
