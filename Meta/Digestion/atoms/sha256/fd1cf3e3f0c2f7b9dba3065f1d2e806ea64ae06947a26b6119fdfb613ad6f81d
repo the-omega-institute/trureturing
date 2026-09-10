@@ -1,3 +1,0 @@
-### 43.4 git 读数与边界
-
-最终以 `BASE=$(git merge-base origin/dev HEAD)` 为比较基线。caller 亲验并在 result.json 记录：理论卷相对 BASE 恰两个纯插入 hunk（唯一 Python 块中间插入区与文档尾部追加区）；`git diff --name-only BASE..HEAD` 只含本卷、允许的 atoms 与 backfill；重复定义检查 `uniq -d` 为空；`git merge-tree --write-tree origin/dev HEAD` 无冲突；附录命令退出码为 0，PR7 行逐字节 SHA-1 与 §43.2 相同。移除两个新增区后，BASE 的全文逐字节恢复；本节不把未经验证的 CI、后续评审或合入写成结论。
