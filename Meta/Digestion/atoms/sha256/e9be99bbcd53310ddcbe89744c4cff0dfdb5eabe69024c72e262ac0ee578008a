@@ -1,0 +1,17 @@
+**本批实际运行收据（2026-09-09）。** 在固定候选 `feec239217c30601cca92c53620492516bec915a` 的指定工作树中，亲跑附录原 `sed ... | sed ... | python3 -` 提取命令；首次及将新增同构计数改为实际调用累加后的重跑均退出 `0`。最终执行包含原检查、PR1 检查及 PR2 新增检查，末行实得 `ALL_FINITE_CHECKS_PASSED`。下面仅列最终执行的 PR2 stdout，不把原历史输出当作本批收据：
+
+```text
+pr2_history: distributivity_archives=14,16 ordered_source_new_events=4,4 additive_isomorphisms=3
+pr2_temporal: triples=216 defined=56 legal_archive=6 legal_edges=12 empty_middle_adjacent_guards_insufficient=True
+pr2_theta: pairs=64 unary=56 integer_thresholds=256 amplification_cases=2 archive_maxima=10,11 following_U11=defined,failed time_filter=1,0
+pr2_theta_laws: rich_triples=64 associativity_maxima=2,3 zero_absorbing=False
+pr2_extrema: nonzero_samples=26 pairs=676 products_delta0=2 signed_delta_inverses=10 nonunit_augmentation=1 inverse_candidates_rejected=27
+pr2_clock: depth_cases=1377 rich_trees=7 translations=147 scaled_delay_cases=675 fixed_delay_scaling_rejected=True
+pr2_reference: rich_pairs=32 affine_transports=128 space_units=52 noninjective_events=4 direct_image_filter=1,2 pullback_filter=2
+ALL_FINITE_CHECKS_PASSED
+```
+
+这些结果只判所列样本；完整一般证明位于命题 24–36。canonical ingest 与差分检查的实际命令、退出码、新增 atom/backfill 及 residual-open 计数由本 worker 的 runner 结果工件记录，独立评审与 git/GitHub 生命周期交由 caller 接续。
+
+<a id="p1-joint-image"></a>
+

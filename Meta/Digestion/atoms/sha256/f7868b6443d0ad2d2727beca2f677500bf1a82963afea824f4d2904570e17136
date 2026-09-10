@@ -1,0 +1,16 @@
+## 12.1 证明义务清单(预登记,全部 `open`)
+
+以下义务先于任何证明写下。每条注明:形式化居所、假设的落地形(结构字段或前件)、按母仓第 3.2 条**预判**的判形(`content` / `bind-only`,落地时以实际判形为准,不得事后改标)、以及母仓第 3.3 条的用途依据。建议落点前缀 `D5/S3/ConceptDynamics/FixedPointPhilosophy/`,精确路径由 `route` 命令产出,不在此手写。全部义务须保持标准三公理闭包;假设 1.3、1.4、1.9、1.12、2.9、4.3、4.4、5.1a(及第十三部 的应用假设 13.33、13.14)一律作为 `structure` 字段或定理前件,**绝不**作 `axiom`。
+
+- **X-A(账本幺半群与不动集刻画;定理 1.13、1.15)**。有限账本作为 `structure`(节点 `Finset`、边关系、见证函数、边覆盖依赖谓词);容许变换为保持包含与限制的映射;证幺半群封闭与 $\mathrm{Fix}(L)=\mathrm{Frozen}(L)\cup\{\neg\mathrm{Proved}\}$。预判 `content`(须构造「追加 $P$」变换作为逃逸见证);用途 `none`。
+- **X-B(撤销闭包;定理 1.14)**。移除集 $S$ 使结果仍为账本 $\Rightarrow$ $S$ 含后代闭包。预判 `bind-only`(评审席指认:本仓冻结定理 `invariant_safety`(`InvariantSafety.lean`)沿关系闭合传播不变量,取 initial=invariant=safe=$S$、关系取 $E$,「$u\in S\wedge E(u,v)\Rightarrow v\in S$」由引用闭合定义展开即得,`TransGen`→`ReflTransGen` 见钉版 `Relation.lean`);先作直接实例化探针,若另有实质内容须单独预登记并说明为何该绑定不能完成它。
+- **X-C(素生成;定理 2.8)**。以 mathlib `ClosureOperator`(`Mathlib/Order/Closure.lean:60`)或本仓 `D5/S3/ConceptDynamics/Closure/DefinitionClosureOperator` 为 $B$,良基归纳证 $\mathrm{Frozen}\subseteq B(\mathrm{Prime})$。**先库后证收据**:D5 内 `ClosureOperator` 单项检索命中 14 模块、与 `OrderHom.gfp/lfp` 合并检索命中 20 模块(评审席于 `c0ce9e9f2e` 复算;含 `Closure/DefinitionClosureOperator.lean`、`Closure/SourceClosureLaws.lean`),须先查其是否已含「闭包下的良基生成」引理,有则直接引用。预判**未定**:「非素则在祖先闭包内」只是定义 2.7 的否定,不算逃逸见证;先查通用「良基生成」引理(mathlib `ClosureOperator` 与本仓两模块),有则 `bind-only`,无则登记归纳不变量后再判。注意 `DefinitionClosureOperator` 的载体是语义读出族,不能无映射替代命题上的绑定闭包。
+- **X-D(状态函数良定;定理 2.5、推论 2.6)**。以假设 1.4 为前件证互斥与穷尽。预判 `bind-only`(定义展开);只作具名伴随,**伴随落点待定**:须写出真实的「消费者 → 前置」使用边(哪条定理的证明实际使用它),主题相近不算依赖;写不出即不单独落地。
+- **X-E(保守由诚推出;定理 4.6)**。主张记录为 `List`,`AppendOnly` 复用冻结模块 `TargetChangeSettlementConservation` 的同名定义(不重造);证账平 ∧ 冻结节点消失 ⟹ 存在晚于原主张的新主张。预判 `bind-only`(精确定义 `last` 后可由 `AppendOnly` 与 `List.find?_append`、`List.find?_eq_some_iff_getElem`、`List.reverse_append` 绑定——评审席读数);先做直接复用探针,失败再登记见证。前件须含 $\mathrm{last}_t(P)=\mathsf{frozen}$(定理 4.6)。
+- **X-F(伪造与降级是浮账;定理 4.9、定理 13.11)**。预判 `bind-only`;其内容是账平定义与(定理 13.11 的)读数桥的展开,不是 X-E 定义的直接实例化;伴随落点待定,规则同 X-D。
+- **X-G(美不是真的函数;定理 5.5)**。形式:`claim := ∃ f, ∀ ρ₁ ρ₂, (ρ₁ ≽ ρ₂ ↔ f (s ρ₁) (s ρ₂))`,`result : ¬ claim`,以两节点有限见证反驳。用途依据 **`refutes`**(母仓第 3.3 条:反驳保留);预判 `bind-only`:同读数异结果的分离已有冻结 `manifestation_excludes_noninterference_descent`(评审席指认,模块 `ManifestationDescentObstruction`,路径待 route 核对)可经 $s\times s$ 实例化,抽象布尔见证只需规范化;`refutes` 是用途依据,不改变判形。账本侧读数只作叙事锚,形式化只用定理 5.5 给出的三节点命题逻辑模型。
+- **X-H(选择不由状态函数决定;定理 5.6)**。$s$ 在 $F^{+}$ 上常值 ⟹ 非常值选择不经 $s$ 因子化。预判 `bind-only`;伴随落点待定,规则同 X-D:须有真实使用边,「同一分离主题」不算。
+- **X-I(幸存者形状;定理 5.7)**。有限情形:收缩序列稳定于最大不动点(`Finset` 上归纳);一般情形包装 mathlib `OrderHom.gfp`(`Mathlib/Order/FixedPoints.lean:54`)或本仓 `D5/S1/Dynamics/KnasterTarski`;固定单轮筛选特例已由 `D5/S3/ConceptDynamics/Promotion/ResearchPromotionLoop` 的 `Survives`/`survivors` 冻结,X-I 须在其上扩展。在幂等假设下任一初始集**一步**稳定,有限归纳不是新增内容,故预判 `bind-only`;若为最大不动点包装 mathlib `OrderHom.gfp`,则 `rule-11-upstream-wrapper` 填入 **admission_basis**(它不是 proof_shape),并引用定理 5.7 为使包装成为必要的子句。
+- **X-J(先立门后补账;定理 13.16)**。有限步递推模型,证 (b) 的单调递减与 (c) 的停摆。预判**未定 / 探针**:先列仓内与钉版库的终止 / 不变量候选(`invariant_safety`、有限基数良基归纳、`Finset.card` 单调引理)及命中范围;未写出拟议新中间命题与活使用边之前,不据此派独立实施席。
+- **X-K(翻译定理;11.2 末)**。`open`;第六轮题目,本轮不派。
+

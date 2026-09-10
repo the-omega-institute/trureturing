@@ -1,0 +1,11 @@
+**定义 14（同一原始表上的实际进位）。** 每次固定一个素数 \(p\)，在有限未改动余项 \(r_0\in\mathcal R\) 上应用下列任一有向规则；省略 \(p\) 写 \(e_j=e_{p,j}\)：
+\[
+\begin{array}{rcll}
+r_0+e_j+e_{j+1}&\longrightarrow&r_0+e_{j+2}&(j\ge0),\\
+r_0+2e_0&\longrightarrow&r_0+e_1,&\\
+r_0+2e_1&\longrightarrow&r_0+e_0+e_2,&\\
+r_0+2e_{j+2}&\longrightarrow&r_0+e_j+e_{j+3}&(j\ge0).
+\end{array}
+\]
+依次称为相邻进位、底零进位、底一进位、高位重复进位，分别赋整数电荷 \(0,+1,-1,0\)。未改动余项可以在所列索引上仍有非零系数。有限路径由这些实际步骤连接，空路径允许，路径总电荷为步骤电荷之和；逐素数总电荷只计该素数行上的步骤。上述规则与[原始数位进位](../../../D5/S1/Digit/Carry.lean)、[带电荷路径](../../../D5/S1/Deficit/ChargedCarryPath.lean)一致。
+

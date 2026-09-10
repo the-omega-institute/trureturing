@@ -1,0 +1,12 @@
+## 91. Full original-law bounds and sharp master stopping
+
+`checked_separator_stopping_iff` proves that every original column has score at most tau if and only if the accepted winning value V is at most tau. `checked_separator_causal_bound` reuses the merged expectation identity to prove, for every full outcome law nu with the original prescribed success means r_i,
+
+```text
+J(pi,nu) <= V + sum_i lambda_i*r_i.
+```
+
+This remains a valid upper bound before a restricted master has converged. `checked_separator_master_isGreatest` adds an actual feasible candidate law, all original mean equalities, V<=tau, and exact candidate objective tau+sum lambda_i*r_i. It then proves the candidate is an attaining sharp upper endpoint of the full canonical outcome-law problem.
+
+The causal evaluator always receives the original pi and the original complete outcome table. The residual rho is used solely to compute and certify branch prices. Independence between the fixed mediator mechanism and outcome mechanism is retained by the existing product semantics. Neither new observational identification of pi nor optimization over unknown pi is inferred.
+

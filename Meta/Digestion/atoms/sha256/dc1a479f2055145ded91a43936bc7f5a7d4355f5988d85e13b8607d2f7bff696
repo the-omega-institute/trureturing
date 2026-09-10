@@ -1,0 +1,30 @@
+**命题 58（加法双射与差分逆）。** 逐时间相加使 $\mathcal A(R)$ 成为阿贝尔群，且
+
+$$
+P:\mathcal L\longrightarrow\mathcal A(R)
+\quad\text{是加法双射},\qquad
+(P^{-1}C)_n=C_n-C_{n-1}\quad(n\in\mathbb Z).
+\tag{CUM-INVERSE}
+$$
+
+**证明。** 对有限支撑 $c$，在最早非零时间以前 $C_n=0$，在最后非零时间以后 $C_n=\sum_t c_t\in R$；$c=0$ 时两个尾部都恒为零。因此 $Pc\in\mathcal A(R)$。对两个累积序列，取其左阈值的较小者、右阈值的较大者，便得到和的两个尾部；取负同样保持两尾条件。所以逐时间的加法、零和负号确实给出所述阿贝尔群。有限和还直接给 $P(c+d)=Pc+Pd$。
+
+反向，给定 $C\in\mathcal A(R)$，可把左阈值减小、右阈值增大而取 $\ell\le u$。置 $c_n=C_n-C_{n-1}$。当 $n<\ell$ 时相邻两项都为零；当 $n>u$ 时相邻两项都为 $B$。所以只有有限区间 $[\ell,u]\cap\mathbb Z$ 中的分量可能非零。每个差分都属于 $R$，且
+
+$$
+\operatorname{supp}(c)\subseteq
+\bigcup_{n\in[\ell,u]\cap\mathbb Z}
+\{n\}\times
+\bigl(\operatorname{supp}(C_n)\cup\operatorname{supp}(C_{n-1})\bigr).
+$$
+
+右边是有限多个有限集合之并，故确有 $c\in\mathcal L$，而不只是逐时间形式上可作差。对 $n\ge\ell$ 作有限望远镜求和，
+
+$$
+\sum_{t=\ell}^{n}(C_t-C_{t-1})=C_n-C_{\ell-1}=C_n;
+$$
+
+对 $n<\ell$ 两边均为零。因此 $P(P^{-1}C)=C$。另一方面，$Pc(n)-Pc(n-1)=c_n$，故 $P^{-1}(Pc)=c$。这同时证明双射、差分逆及单射性。证毕。
+
+由差分逆，累积序列的跳变位置恰为 $T(c)$，右尾常值为 $\sum_t c_t$。这给出 R3 的有限跳点表示：只需记录有限次跳变及最终常值，左尾按定义为零，无须实际存储整个无限累积序列。它是有限剖面的精确表示，并未放宽两个尾部条件。
+

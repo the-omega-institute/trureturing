@@ -1,0 +1,57 @@
+### 3. A complete uniform even Schur certificate
+
+The new verifier independently constructs the actual matrix and exterior
+couplings on the whole interval
+
+    |a-log(3)/2|<=1/100000000,    L=2a.                    (IS3)
+
+It uses N=128 retained positive/negative Fourier modes and explicitly sums
+both exterior signs through M_cut=8192. The prime-3 term is absent on the
+left of activation and present on the right. The diagonal overlap positive
+part and the column sine hull retain both cases, including the vanishing
+activation value. Gamma, pole, prime-2 and prime-3 contributions remain.
+The length enters interval expressions, not a collection of sampled scales.
+
+The original finite positive Gamma resolvent sum gives a uniform full
+high-complement floor beta>1; its computed lower endpoint exceeds
+1.009070267917372763. The near coupling is enclosed by a dyadic matrix and
+an exact two-sided Frobenius error. Young's inequality with parameter 1/20
+bounds its full Gram. The complete paired second-jet Gram and its nonzero
+far remainder pay every mode beyond 8192. No weighted pairing is substituted
+for this Gram or for an unweighted residual norm.
+
+Let G_upper bound the entire low-to-high coupling Gram, and let c be the
+same padded finite candidate coordinate vector. On the retained even basis,
+the verifier certifies positive definiteness of
+
+    A_low - T_+ I - G_upper/(1-T_+) + c c*,
+    T_+=1/1000.                                         (IS4)
+
+The basis is e_0 followed by e_n+e_-n, without an unrecorded unit rescaling.
+The rank-one term vanishes on the candidate complement. The complete Schur
+argument therefore gives, under the original Fourier/core and high-complement
+identifications,
+
+    q_a(f)>=||f||^2/1000
+    for all even f perpendicular to the transported candidate,
+    at EVERY a in IS3.                                  (IS5)
+
+This is an even candidate-complement bound. The odd sector and the full
+candidate complement are not assigned the threshold 1/1000. This increment
+also does not prove the historical positive ell is a lower bound throughout
+IS3. The normalized readout computation below uses that inherited ell only
+at the central physical window a=log(3)/2.
+
+Floating eigenvalues only propose congruence coordinates. Each matrix entry
+is enclosed about a 44-bit dyadic center, a 32-bit dyadic congruence is
+applied with exact integers, and an exact Gershgorin lower bound certifies
+positivity. Its positive bound is
+
+    322613388022726078131097863949363 /
+      324518553658426726783156020576256.
+
+This number belongs to the CONGRUENT matrix; it is not reported as the
+original operator's gap. The signed radix-20 integer Gram calculation has
+explicit overflow guards and was separately compared with object-integer
+multiplication on 80 matrices. Both 90- and 120-digit sector runs passed.
+

@@ -1,0 +1,32 @@
+**29.17 量化扰动完成严格负号和首矩裕量。** 对 \(s\ge0\)、\(0<z<1\),
+\[
+0<\frac{\partial}{\partial s}\log(1-ze^{-s})
+=\frac{ze^{-s}}{1-ze^{-s}}\le\frac z{1-z}.
+\]
+每行权重和为 1,故全部端点的加权位移和为
+\(\sum_{i,e}w^\pi_{i,e}\xi_i=X\le2\varepsilon\)。
+包络位移以 \(2|\lambda(\xi)-\lambda(0)|+|\eta(\xi)-\eta(0)|\)
+界定,至多 \(2\varepsilon+4\varepsilon/3\)。
+中间偏移保持非负,故均值定理给每个排列的一致界
+\[
+|G_{\pi,\xi}(z)-G_{\pi,0}(z)|
+\le\frac{16}{3}\varepsilon\frac z{1-z}.
+\]
+对六分支取最大值,结合 29.15 和 \(z\le1/2\),得
+\[
+G_\xi(z)<z\left(-m+\frac{32}{3}\varepsilon\right)
+\le-\frac m2z,
+\qquad \frac{32}{3}\varepsilon_0=\frac m2.
+\]
+另对首矩直接使用 \(|(e^{-s})'|\le1\) 及同一位移和,
+\[
+|A_{\pi,1}(\xi)-A_{\pi,1}(0)|\le\frac{16}{3}\varepsilon,
+\]
+从而
+\[
+\max_\pi A_{\pi,1}(\xi)<-m+\frac{16}{3}\varepsilon
+\le-\frac{3m}{4},\qquad \frac{16}{3}\varepsilon_0=\frac m4.
+\]
+零形状处已有严格号,所以闭扰动边界 \(\varepsilon=\varepsilon_0\) 仍严格。
+这完成 29.12,常数界定的是缩放差 \(e^TG_T\),不是无界高度上的未缩放负常数。
+

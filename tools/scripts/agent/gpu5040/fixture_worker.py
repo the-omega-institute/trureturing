@@ -28,6 +28,8 @@ parser.add_argument("--seed-steps", type=int, required=True)
 parser.add_argument("--dimensions", required=True)
 parser.add_argument("--history-db", required=True)
 parser.add_argument("--session-id", required=True)
+parser.add_argument("--device")
+parser.add_argument("--precision")
 args = parser.parse_args()
 state = Path(args.state_dir)
 options = json.loads((state / "fixture-options.json").read_text())
@@ -89,6 +91,10 @@ status.update(pid=os.getpid(), phase="stopped", stop_reason="max_steps", error=N
               checkpoint_saved=True)
 status["progress"] = dict(before["progress"], total_steps=total, run_index=run_index,
                           iteration=iteration, skipped_trials=skipped)
+if before.get("trial") is not None:
+    status["trial"] = dict(before["trial"], terminal=iteration == seed_steps)
+    assert args.device == before["runtime"]["actual_device"]
+    assert "torch." + args.precision == before["runtime"]["training_precision"]
 status["session"] = {
     "id": args.session_id,
     "start_total_steps": start, "completed_steps": completed,

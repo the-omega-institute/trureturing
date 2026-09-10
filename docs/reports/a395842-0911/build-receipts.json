@@ -1,0 +1,119 @@
+{
+  "make_lean": {
+    "command": "make lean",
+    "exit_code": 0,
+    "elapsed_seconds": 379.806,
+    "log": "/var/folders/wv/ht3wzsj138b4sxl3q4t0xdr40000gn/T/consensus-rnd/sshx/a395842-impl-0911/attempt-1/make-lean.log",
+    "cache_receipts": [
+      {
+        "status": "present",
+        "worktree": "/Users/chronoai/trureturing-a395842",
+        "donor": null,
+        "method": "none",
+        "reason": null,
+        "stamp_miss": null,
+        "pin_sha256": "sha256:6c4c682ffba051b5744fe7a75ccc99d7f3b20227b3b026f392f3315be0adaa4e",
+        "clonefile_errno": null,
+        "clonefile_errnos": [],
+        "clonefile_attempts": 0,
+        "clonefile_cleanup_error": null,
+        "mathlib_missing_olean_files": 0,
+        "mathlib_missing_olean_samples": [],
+        "archive_status": "not_attempted",
+        "archive_mode": null,
+        "archive_skip_reason": "project olean state is warm",
+        "archive_reason": null,
+        "archive_producer_commit_sha": null,
+        "archive_workflow_run_id": null,
+        "mathlib_olean_state": "warm",
+        "mathlib_olean_probe_error": null,
+        "project_olean_state": "warm",
+        "project_olean_probe_error": null
+      }
+    ],
+    "completion": [
+      "Build completed successfully (12896 jobs)."
+    ]
+  },
+  "make_lean_report": {
+    "command": "make lean-report",
+    "exit_code": 0,
+    "elapsed_seconds": 624.985,
+    "log": "/var/folders/wv/ht3wzsj138b4sxl3q4t0xdr40000gn/T/consensus-rnd/sshx/a395842-impl-0911/attempt-1/make-lean-report.log"
+  },
+  "make_emit": {
+    "command": [
+      "make",
+      "emit"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 59.361,
+    "log": "/private/var/folders/wv/ht3wzsj138b4sxl3q4t0xdr40000gn/T/consensus-rnd/sshx/a395842-impl-0911/attempt-1/make-emit.log"
+  },
+  "scribe_content_checks": {
+    "command": [
+      "bash",
+      "tools/scripts/workflow/scribe-content-checks.sh",
+      ".lake/build/stratalint/raw-lean-report.json",
+      "",
+      "6af98a19b1fd4f76f1bc1bf92b61593a0c167a09"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 24.601,
+    "log": "/private/var/folders/wv/ht3wzsj138b4sxl3q4t0xdr40000gn/T/consensus-rnd/sshx/a395842-impl-0911/attempt-1/scribe-content-checks.log"
+  },
+  "scribe_projections": {
+    "command": [
+      "env",
+      "STRATALINT_LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json",
+      "dotnet",
+      "run",
+      "--project",
+      "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj",
+      "--configuration",
+      "Release",
+      "--",
+      "projections",
+      "--check",
+      "--report",
+      ".lake/build/stratalint/raw-lean-report.json"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 10.821,
+    "log": "/private/var/folders/wv/ht3wzsj138b4sxl3q4t0xdr40000gn/T/consensus-rnd/sshx/a395842-impl-0911/attempt-1/scribe-projections.log"
+  },
+  "deposit_uncovered": {
+    "command": [
+      "make",
+      "deposit-uncovered",
+      "GID=D5/S1/Recurrence/Parity/DiagonalIterateEven.hanna_conjecture",
+      "BASE=6af98a19b1fd4f76f1bc1bf92b61593a0c167a09"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 94.696,
+    "log": "/private/var/folders/wv/ht3wzsj138b4sxl3q4t0xdr40000gn/T/consensus-rnd/sshx/a395842-impl-0911/attempt-1/deposit-uncovered.log"
+  },
+  "first_pr_open_and_watch": {
+    "command": [
+      "make",
+      "pr-open",
+      "HEAD=lane/math/a395842",
+      "MESSAGE=/var/folders/wv/ht3wzsj138b4sxl3q4t0xdr40000gn/T/consensus-rnd/sshx/a395842-impl-0911/attempt-1/pr-message.txt"
+    ],
+    "exit_code": 2,
+    "elapsed_seconds": 731.742,
+    "log": "/private/var/folders/wv/ht3wzsj138b4sxl3q4t0xdr40000gn/T/consensus-rnd/sshx/a395842-impl-0911/attempt-1/pr-open.log"
+  },
+  "capacity_audit_after_correction": {
+    "command": [
+      "make",
+      "-C",
+      "tools",
+      "capacity-audit",
+      "REPOSITORY=/Users/chronoai/trureturing-a395842"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 3.973,
+    "log": "/private/var/folders/wv/ht3wzsj138b4sxl3q4t0xdr40000gn/T/consensus-rnd/sshx/a395842-impl-0911/attempt-1/capacity-audit-final.log"
+  }
+}

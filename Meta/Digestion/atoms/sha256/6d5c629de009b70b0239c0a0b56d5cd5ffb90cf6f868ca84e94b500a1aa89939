@@ -1,0 +1,26 @@
+**28.19 实施、canonical 摄入与尚待交付。** 本层为 caller 的 consensus-rnd:sshx
+编排下 Codex CLI I12 实施,flight qgh0910-i12-relative-spread,attempt 1,
+工作树 /Users/auricstudio/trureturing-qgh-variance,分支
+lane/math/quantized-gh-relative-spread-0910。
+实施者继承 repo-prior-exposed 的 CLAUDE.md / agents/CONTEXT.md 及完整所供 GoalArtifact;
+primary 自报 external-prior-exposed,账户/项目先验未知且不可控。
+不声称先验无污染或模型族多样性。primary 当时读取 pinned 仓库 URL 遇到 DisabledError,
+故其仓库全文忠实性未获独立检查;此历史访问限制不会被本次本地核对抹去。
+
+本层源文之外只加一份纸面核验/provenance 报告。全部新增 CAS 与条目仅由
+~~~sh
+make ingest BASE=feb497ec31f68e09ccc547a08810c398e66f3ee6 SOURCE=arithmetic-boundary-quantization
+~~~
+产生;旧 CAS/entry/report 保留,生成字节及生成器拥有的 EOF 空行不手修。
+源文是 paper reference input,CAS 是该输入的 canonical 摄入物,
+覆盖源跨度不表示其命题已由 Lean 吸收。条目的 receipts.chain_atoms 及嵌套子项
+按实际 schema 读取,不用删字段来迎合临时检查。
+本轮没有工具、Lean、source registry、策略或 GPU kernel 改动,
+没有候选生成、旧 fixed-xi 重放、子 worker、peer review 或 worker log_ref 内容读取。
+canonical 工具的实际退出码、生成身份及每个新编号单元的跨度覆盖由实施信封记录;
+工具若失败须显式交回,不能手工制造通过。
+
+源实现候选仍需 caller 在实施 terminal 后封存,再安排独立源文评审、普通仓库门和 PR。
+最终 S17 MERGED 依赖 S16 MERGED;本实施不判定前驱实时 review 状态。
+Git 暂存、提交、push、PR 和 merge 都归 caller,不由 I12 执行。
+本节交回候选不等于独立评审、正式交付、长期研究目标完成或允许立即用作已准入剪枝规则。

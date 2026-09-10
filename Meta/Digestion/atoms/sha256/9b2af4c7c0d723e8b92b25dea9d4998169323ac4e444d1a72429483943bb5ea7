@@ -1,0 +1,14 @@
+**证明（充分性）。** 固定 Tail 的 $c$，任取整数 $k\le c-1$，定义
+
+$$
+\begin{aligned}
+Q_{B,k}&=\{(p,\epsilon,r,n):n\ge k+1,\ (n-1,p)\in B\},\\
+C_B(X)&=F_{\downarrow Q_{B,k}}(X\boxtimes T_k(U_0)).
+\end{aligned}
+\tag{O-CONSTRUCTION}
+$$
+
+其中 $\epsilon\in\{\pm1\},r\in T$ 任取。这也等于在 $n=k+1$ 层放全部 $p\in S^-$ 的属性，再放全部 $(p,\epsilon,r,t+1)$、$t\ge k+1,(t,p)\in B$。参数均在输入前固定，表达式是总单孔上下文。
+
+乘积选中的父对恰为 $(e,u_+)$、$e\in A_X$；子点位置与符号沿 $e$，时间为 $\max(t(e),k)+1$。当前区域为反链，因果筛选只检查子点自身。若 $t(e)>k$，检查恰为原单元 $(t(e),x(e))\in B$；若 $t(e)\le k$，检查为 $(k,x(e))\in B$，而 $t(e),k<c$，Tail 使其与原单元同真值。逐选中点作有符号有限和即得 q 等式，包括负点、负时刻及空选择。
+

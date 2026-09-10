@@ -1,0 +1,57 @@
+**命题 39（全部精确更新，repo-derived）。** 对 $X,Y\in\mathcal B$，并行加法满足
+
+$$
+\Xi(X\boxplus Y)=
+(W_X+W_Y,Z_X+Z_Y,\min(m_X,m_Y),\max(M_X,M_Y),\max(s_X,s_Y)).
+\tag{TS-ADD}
+$$
+
+严格时间复合的准确域为
+
+$$
+(X,Y)\in\operatorname{dom}(\triangleright)
+\iff M_X<m_Y;
+\qquad
+\Xi(X\triangleright Y)=\Xi(X\boxplus Y)\quad\text{在此域上}.
+\tag{TS-GUARD}
+$$
+
+沿用命题 29 的函数 $\gamma$，令
+
+$$
+g=\gamma(s_X,s_Y)=
+\begin{cases}
+-\infty,&s_X=-\infty\text{ 或 }s_Y=-\infty,\\
+\max(s_X,s_Y)+1,&s_X,s_Y\in\mathbb Z.
+\end{cases}
+$$
+
+则默认档案乘法满足
+
+$$
+\Xi(X\boxtimes Y)=
+(W_X\odot W_Y,Z_X\odot Z_Y,\min(m_X,m_Y),\max(M_X,M_Y,g),g).
+\tag{TS-MUL}
+$$
+
+其余全部更新为
+
+$$
+\begin{aligned}
+\Xi(NX)&=(W_X,W_X-Z_X,m_X,M_X,s_X),\\
+\Xi(F_BX)&=(W_X,\mathbf1_BZ_X,m_X,M_X,s_X),\\
+\Xi(T_kX)&=(\tau_kW_X,\tau_kZ_X,m_X+k,M_X+k,s_X+k).
+\end{aligned}
+\tag{TS-UNARY}
+$$
+
+端点平移按上述哨兵约定解释。对任意 $c,d\in\mathcal L$ 以及 $X\in\mathcal B$，还有
+
+$$
+q(X)=\varepsilon Z_X,\qquad
+\varepsilon(c\odot d)=(\varepsilon c)(\varepsilon d).
+\tag{TS-READ}
+$$
+
+这些式子在命题 37 的实际载体 $\mathcal D_{\rm ts}$ 上给出总操作及一个恰好保域的部分操作，成功输出全部仍在该实际像中。
+

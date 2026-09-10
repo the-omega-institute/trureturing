@@ -1,0 +1,39 @@
+**命题 49（含时间因果语言的精确观察核，repo-derived）。**
+
+$$
+\approx_{\Sigma_{{\rm cau},t}}=\ker(\Gamma_t,m,M).
+\tag{TCAU-EQ}
+$$
+
+**证明。** 充分性为命题 48。反向设 $X\approx_{\Sigma_{{\rm cau},t}}Y$，固定共同有限集 $D=V_t(X)\cup V_t(Y)$。每个实际 $U$ 是 $D$ 的非空子集。对 $\eta\in\{0,1\}$，取 $J_1=\mathrm{id},J_0=N$ 及合法上下文读数
+
+$$
+f_\eta^X(Q)=q(F_{\downarrow Q}(J_\eta X))
+=\sum_{\substack{e\in\Omega_X\\b_X(e)=\eta,\ U_t^X(e)\cap Q\ne\varnothing}}\sigma(e).
+\tag{TCAU-HIT}
+$$
+
+这里不需要位置筛选、来源筛选或乘积。对 $W\subseteq D$，令
+
+$$
+h_\eta^X(W)=f_\eta^X(D)-f_\eta^X(D\setminus W)
+=\sum_{\varnothing\ne U\subseteq W}
+ \Gamma_t(X)(\min_t(U),\eta,U).
+\tag{TCAU-ZETA}
+$$
+
+和式只对实际非零行解释 $\min_t$；其余 $U$ 的贡献约定为零，故不对任意形式子集假设最早元素唯一。第一项命中每个实际 $U$，第二项恰扣除不包含于 $W$ 的行；引理 2 说明同一个 $U$ 只能有一个自身属性。两次读数在**证明中**作整数相减，不增加复制孔或减读数原语。
+
+逐 $U\subseteq D$ 复用 §28.4 的 (CAU-MOB) 直接反演式：
+
+$$
+c_\eta^X(U)=\sum_{W\subseteq U}(-1)^{|U|-|W|}h_\eta^X(W).
+\tag{TCAU-MOB}
+$$
+
+该式恢复按 $(\eta,U)$ 索引的系数：代入 (TCAU-ZETA) 后每个实际 $U'\subseteq U$ 的系数仍为 §28.4 已核对的 $\mathbf1_{U'=U}$。非零的 $c_\eta^X(U)$ 由引理 2 确定唯一 $a=\min_t(U)$，于是恢复全部 $\Gamma_t$ 格；空子集系数为零。两对象的上下文读数全相同，所以反演逐格相同。若 $D=\varnothing$，两当前区域都为空、两剖面直接为空，不运行最早元素步骤。$D,Q,W$ 在这对对象的证明中固定，不是随输入改变的操作。
+
+最后，命题 30 的左右时间阈值探针属于 $\Sigma_{\rm st}\subseteq\Sigma_{{\rm cau},t}$，故恢复全档案端点 $m,M$，包含空档案哨兵；$s$ 已由 (TCAU-SUPPORT) 恢复。合并两方向即得 iff。证毕。
+
+与命题 23 同一像上函数图论证表明：任一对此语言充分的总读数 $h$ 都在 $h[\mathcal B]$ 上唯一恢复 $(\Gamma_t,m,M)$。这是核包含意义的最粗充分性，不是编码大小最优或任意集合谓词可计算的断言。一般量词由上述证明承担，附录只验证所列有限样本。
+

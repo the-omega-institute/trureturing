@@ -1,0 +1,24 @@
+**24.9 非集中距离域。** 若 \(v^2\le(k-1)V_0/k\),在分数行用对称支撑 \(\mu-v,\mu+v\),上端点权重 \(\alpha=(v+s)/(2v)\in(0,1)\),其它行保留原 \(t_i\)。对应加权和 \(\mathcal M_0\) 满足
+
+\[
+D(M_1)<\mathcal M_0(f),\qquad
+\mathcal M_0(1)=k,\quad \mathcal M_0(x)=k\mu,\quad
+\mathcal M_0((x-\mu)^2)=W+v^2\ge V_0.
+\]
+
+此域 \(V_0>0\),令 \(L_0=\mu-\sqrt{V_0/[k(k-1)]}>0\)、\(H_0=\mu+\sqrt{(k-1)V_0/k}\)。对原均值向量的零和偏差作 Cauchy-Schwarz,逐项得到
+
+\[
+|y_i-\mu|^2\le\frac{k-1}{k}\overline V
+<\frac{k-1}{k}V_0.
+\]
+
+故每个固定支撑 \(t_i<H_0\),而 \(\mu+v\le H_0\);正性已由 24.8 保证。用 24.6 在参考矩 \(V_0\) 的多项式 \(P_0\) 及其 \(a_0<0\),得到
+
+\[
+D(M_1)<\mathcal M_0(f)\le\mathcal M_0(P_0)
+=\Psi_k(\mu,V_0)+a_0(W+v^2-V_0)\le\Psi_k(\mu,V_0).
+\]
+
+阈值 \(v^2=(k-1)V_0/k\)、矩相等 \(W+v^2=V_0\) 及高节点上的支撑均包括在内;第一步的严格割线提升不消失。
+

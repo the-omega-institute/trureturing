@@ -1,0 +1,14 @@
+{
+  "pr": 6777,
+  "run_id": 34446335593,
+  "job_id": 102773405338,
+  "check": "Content-addressed dev baseline admission",
+  "conclusion": "failure",
+  "rule": "SL-003",
+  "artifact": "docs/reports/a395842-0911/canonical-declarations.json",
+  "actual_lines": 1406,
+  "hard_limit": 1000,
+  "canonical_lean_report_production": "success",
+  "correction": "Preserve all 109 records in a public-declaration index and three mathematical helper shards, each below 800 lines.",
+  "log_sha256": "232e4f2c1db7328863ab0303a4ac3187d047b1583071f357e12edf5ed2bdd153"
+}

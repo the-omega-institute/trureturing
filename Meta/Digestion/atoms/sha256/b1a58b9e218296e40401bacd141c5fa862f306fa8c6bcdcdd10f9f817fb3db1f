@@ -1,0 +1,35 @@
+**26.21 前瞻箱体、槽和稳定行号。** 对每个三元组独立取
+\(b_0,b_1,b_2\in\{0,\ldots,15\}\)。三元组指标 \(0\le t<56\),定义
+\[
+\mathrm{box\_id}=4096t+256b_0+16b_1+b_2.
+\]
+这是混合进制编码,每个三元组有 \(16^3=4096\) 个不同箱体,
+共 \(56\cdot4096=229376\) 个,box_id 从 0 到 229375。
+每箱预留 25 个原始槽:
+\[
+\begin{array}{c|c|c}
+\mathrm{slot}&\text{指标}&\text{预算对}\\\hline
+0,\ldots,6&s=\mathrm{slot}+1&(\beta_{s-1},\beta_s)\\
+7,\ldots,24&r=\mathrm{slot}-7,\ j=1+\lfloor r/3\rfloor,\ i=r\bmod3&
+(\beta_{j-1},\,3(c_i+d_i)-\beta_{j-1})
+\end{array}
+\]
+第一类只施加相邻 cutoff;第二类施加 26.18 的全部严格整数 guards。
+定义
+\[
+\mathrm{row\_id}=25\,\mathrm{box\_id}+\mathrm{slot},
+\qquad 0\le\mathrm{row\_id}\le5734399.
+\]
+批次、压缩和调度必须保留此含箱体身份的行号。
+计数仅由布局乘法给出:
+\[
+\begin{aligned}
+\text{相邻原始槽}&=229376\cdot7=1605632,\\
+\text{反射原始槽}&=229376\cdot(6\cdot3)=4128768,\\
+\text{原始槽合计}&=229376\cdot25=5734400.
+\end{aligned}
+\]
+这些全是 guards 前的 RAW slots,没有统计幸存槽。
+本次常量检查只遍历 56 个输入行,没有生成上述 229376 个指数箱体,
+也没有执行这些 row_id 的解析差值计算。
+

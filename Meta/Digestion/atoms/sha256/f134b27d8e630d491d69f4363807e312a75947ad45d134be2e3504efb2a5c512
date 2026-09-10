@@ -1,0 +1,15 @@
+## E. 检索、复用与实际检查
+
+除 #5602 新增尺度模块外，本轮检索了非 AlyciaBHZ 的近期谱／对角 PR，并实际读取 `MasslessTangentConeLimit.lean` 前 105 行（blob `1b1bc045341a1b0f7367d1c9e273c6b8a2d94a33`）。其正项塔、和积分比较与有限 Fourier 带的声明帮助核对“标量渐近”和“完整算子结论”的区别，未被当成本节的 Weil 域证明。指定 v4.3 规范已读取；没有运行内生信息分析或由声明数推断准入。几何核恒等式继续由原 `WeilBoundaryKernelIntegral` 所有，新 `gamma_exponential_kernel_hasSum` 只是公开该既有证明的伴随。其余接口使用 Mathlib 钉版 `db584cd6d46c92f209a44c0f1c829460d327499d`。
+
+本轮执行四个 Sympy 恒等式、1301 个精确有理标量／望远镜检查，以及 65 位非定向诊断：49 个实际正能量积分、147 个有限项积分、各 245 个完整尾包围和窗口修正包围、6272 个项符号检查。最大项积分差约 5.935×10⁻⁶⁶。这些有限诊断不构成 Lean 证明或真实本征模态距离。
+
+另用 mpmath 1.3.0 的 iv 在 80、100 位分别求值 L=log 3、n=1 的 4096 个有限项。输入只用精确整数／有理数；二进区间端点被精确读成 Fraction，再向外转成有理中心和半径。两次给出相同的外包区间：
+\[
+\boxed{1.6928293107\le E_{\log3}(1)\le1.6928295545.}
+\]
+对应 K=4095，全解析遗漏尾预算约 2.43733×10⁻⁷。结果依赖 iv 基本运算的包含语义；官方文档将该支持标为 experimental，故这里如实记录为外部区间运算检查，未据此宣称有限球已获得 Lean 证明、独立验证器复核或新谱认证。此前直接求积的约 1.6928295543939 位于该区间内，但它不参与区间构造，也不被当作证明输入。
+
+本轮修改两个已有 Lean 与对应两个 Scribe，在本卷追加本节。一个有限项定义、四个对角声明和一个几何核公开伴随均有 FromLean 条目。先前公开声明和证明正文保持不变。Lean/lake 未安装，未运行 elaboration、内核公理闭包或 Scribe 发射；源码为完成数学与接口审查后的候选证明，没有独立证明审稿人。未重跑 #5602 的完整谱验证器，未宣称全尺度 prolate 逼近、实际新谱隙、Xi 极限或经典公式的优先权。
+
+参考：CCM，《Zeta Spectral Triples》，`https://arxiv.org/html/2511.22755v1`，§§4.3、8；Suzuki，`https://arxiv.org/abs/2606.09096`，本轮返回的主记录显示 v1；mpmath 1.3.0，`https://mpmath.org/doc/current/contexts.html`，Arbitrary-precision interval arithmetic；#5602 `WeilGammaScaleModulus.lean`，blob `37cdd818e426159e6211491306681a7f4f686a08`。

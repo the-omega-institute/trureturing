@@ -1,0 +1,10 @@
+**定义 22（规范截面的进位缺陷）。** 对 \(a,b\in\mathbb N\)，置
+\[
+f(a)=U(s(a)),\qquad
+\kappa(a,b)=f(a)+f(b)-f(a+b)\in\mathbb Z.
+\]
+对 \(m,n\in\mathbb N_+\)，定义有限支撑素数电荷向量
+\[
+C(m,n)=(C_p(m,n))_p,\qquad C_p(m,n)=\kappa(v_p(m),v_p(n)).
+\]
+

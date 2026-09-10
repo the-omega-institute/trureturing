@@ -1,0 +1,36 @@
+**命题 20（精确更新式）。** 原稿的并行加法、档案乘法、补集和任意固定空间筛选均在 $\mathcal B$ 上总定义，且
+
+$$
+\begin{aligned}
+\pi(X\boxplus Y)&=(w_X+w_Y,z_X+z_Y),\\
+\pi(X\boxtimes Y)&=(w_X*w_Y,z_X*z_Y),\\
+\pi(NX)&=(w_X,w_X-z_X),\\
+\pi(F_SX)&=(w_X,\mathbf1_S z_X).
+\end{aligned}
+\tag{UP}
+$$
+
+此外 $\varepsilon(c+d)=\varepsilon c+\varepsilon d$，$\varepsilon(c*d)=(\varepsilon c)(\varepsilon d)$，所以 $I$ 对加法、负号封闭，且 $I*R\subseteq I$。
+
+**证明。** 并行时同一位置的两份带标签电荷相加。乘法只数新当前事件 $p_{ab}$：其位置为 $x(a)+x(b)$，符号为 $\sigma(a)\sigma(b)$；对父位置 $p,q$ 分组，每组有限双和为 $w_X(p)w_Y(q)$，所选组同理为 $z_X(p)z_Y(q)$，再按 $p+q=r$ 合组即得卷积。旧档案仍保留，但不在当前区域，故没有额外线性项。补集逐点是未选电荷，即 $w-z$；筛选只从 $A$ 中删点，背景 $\Omega$ 不动，故必须保留完整 $w$，**不能同时筛掉 $w$**。对有限和换序得到
+
+$$
+\sum_r\sum_{p+q=r}c(p)d(q)
+=\sum_p\sum_q c(p)d(q)
+=\Bigl(\sum_pc(p)\Bigr)\Bigl(\sum_qd(q)\Bigr).
+$$
+
+加法和负号下的增广公式逐项成立。由此各式背景都仍属 $I$，也给出 §2/3 的标量读数公式。证毕。
+
+**位置限制扩展的精确范围。** 固定一个谓词 $K\subseteq\mathbb Z^d\times\mathbb Z^d$；定义 14 中对每对输入取 $R_{X,Y}=\{(a,b):K(x_X(a),x_Y(b))\}$，记所得总操作为 $M_K$。仍使用完整乘积情境，因此
+
+$$
+w_{M_K(X,Y)}=w_X*w_Y,\qquad
+z_{M_K(X,Y)}(r)=\sum_{p+q=r}\mathbf1_K(p,q)z_X(p)z_Y(q).
+\tag{K}
+$$
+
+**证明。** 每个位置对 $(p,q)$ 中的事件对或者全部保留或者全部排除，故该组电荷为 $\mathbf1_K(p,q)z_X(p)z_Y(q)$；背景没有被限制，仍按 (UP)。有限分组即得式。证毕。这只依赖位置的前提不能换成任意来源、因果或出现身份关系；同位置组中的那些关系不必恒定。
+
+(K) 不恢复已被命题 12 否定的标量乘法：取非零 $v$，输入 $\mathbf i(1)$ 及其空间平移 $v$，二者读数均为 $1$；若 $K(p,q)$ 为 $p=q$，所选对被排除，结果读数为 $0$，而完整乘积为 $1$。第二个输入若不平移，受限读数又为 $1$。任意 $K$ 也不自动继承卷积的交换、结合律；本批只证明所写更新式及 §16 的语言充分性。
+

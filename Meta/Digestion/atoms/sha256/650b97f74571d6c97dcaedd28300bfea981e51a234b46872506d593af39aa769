@@ -1,0 +1,35 @@
+## 1. 固定种子的精确尺度流，包含新整数进入的边界
+
+对固定连续偶种子 H 于 [-1,1]，物理种子为 h_a(t)=H(t exp(-a))，于 t>exp(a) 置零。实际未偶化算术函数为
+
+\[
+p_{a,H}(x)=1_{[-a,a]}(x)\,4e^{x/2}\sum_{1\le m\le e^{a-x}}H(me^{x-a}).
+\]
+
+令 s=1/2+iz，Phi_(a,H)(z)=paperFT(p_(a,H))(z)。按每个 m 的实际支撑积分，作 t=m exp(x-a) 代换，得到
+
+\[
+\boxed{\Phi_{a,H}(z)=4e^{as}\sum_{m\le e^{2a}}m^{-s}
+\int_{me^{-2a}}^1H(t)t^{s-1}\,dt.}
+\tag{SF1}
+\]
+
+正 t 上的复幂均按实对数定义，有限窗口内无分支歧义。固定可见整数集合的开区间内，微分下端积分给出
+
+\[
+\boxed{(\partial_a-s)\Phi_{a,H}(z)=8e^{-as}\sum_{m\le e^{2a}}H(me^{-2a}).}
+\tag{SF2}
+\]
+
+在 a_m=log(m)/2，新 m 项的上下积分限同为 1，其 Fourier 质量严格为零。因此 Phi 连续，可将两侧的导数上界相接。其该项的一阶导数右减左为 8 exp(-a_m s)H(1)，不应把整个尺度族无条件当成 C1。偶化值是 [Phi(z)+Phi(-z)]/2，两边均按同一公式处理。对真正变化的 H_a，本节不对其求导，而用下一节的独立谱误差分开运输。
+
+当 H(t)=sum_(r<d)B_r*t^(2r)，物理多项式的系数是 B_r exp(-2ra)。新定义 `scaledPolynomialWindow` 直接把这些系数送入已有 `polynomialMellinWindow`。`scaled_polynomial_centered_paperFT` 证明
+
+\[
+\boxed{e^{-as}\Phi_{a,H}(z)=4\sum_{m=1}^M\sum_{r<d}
+B_rm^{2r}\frac{e^{-(s+2r)\log m}-e^{-2(s+2r)a}}{s+2r}.}
+\tag{SF3}
+\]
+
+假设是各纳入整数满足 log(m)<=2a 及 Im(z)<1/2。可积性及实际端点积分来自原 owner。`scaled_polynomial_paperFT_scale_difference` 进一步证明两尺度的 (SF3) 相减只留下后一个指数的差。代码不假设目标误差界或积分值，也未新定义 Fourier。一般固定连续 H 的 (SF1)-(SF2) 为纸面推导；有限多项式情形的代数导数由独立符号测试核对。
+

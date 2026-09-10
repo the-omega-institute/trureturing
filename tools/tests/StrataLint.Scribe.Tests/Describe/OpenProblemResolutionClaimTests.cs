@@ -316,6 +316,7 @@ public sealed class OpenProblemResolutionClaimTests
             var resolution = Assert.Single(parsed.RootElement.GetProperty("nodes").EnumerateArray())
                 .GetProperty("open_problem_resolution");
             Assert.Equal(ProblemSlug, resolution.GetProperty("problem_slug").GetString());
+            Assert.Equal(TheoremGid, resolution.GetProperty("declaration_gid").GetString());
             Assert.Equal("refuted", resolution.GetProperty("resolution_kind").GetString());
         });
     }
@@ -349,7 +350,35 @@ public sealed class OpenProblemResolutionClaimTests
             Assert.Equal("theorem", projected.GetProperty("kind").GetString());
             var resolution = projected.GetProperty("open_problem_resolution");
             Assert.Equal(ProblemSlug, resolution.GetProperty("problem_slug").GetString());
+            Assert.Equal(TheoremGid, resolution.GetProperty("declaration_gid").GetString());
             Assert.Equal("proved", resolution.GetProperty("resolution_kind").GetString());
+        });
+    }
+
+    [Fact]
+    public void ResolutionReportPreservesTheExactSelectorWhenNarrativeIdDiffers()
+    {
+        WithRepository(root =>
+        {
+            const string otherGid = ModuleGid + ".other_theorem";
+            var document = CreateDocument(Nest(ClaimDescribe(
+                id: "editorial-title", declarationGid: otherGid)));
+            var report = DescribeReport.Build(root, [document],
+                Report((TheoremGid, "theorem"), (otherGid, "theorem")));
+
+            Assert.Equal("classified", report.Status);
+            using var json = JsonDocument.Parse(DescribeReportWriter.WriteJson(report));
+            var node = Assert.Single(json.RootElement.GetProperty("nodes").EnumerateArray(),
+                item => item.GetProperty("open_problem_resolution").ValueKind != JsonValueKind.Null);
+            Assert.EndsWith("#describe/editorial-title", node.GetProperty("node_id").GetString());
+            Assert.Equal(otherGid, node.GetProperty("open_problem_resolution")
+                .GetProperty("declaration_gid").GetString());
+            Assert.Contains($"declaration_gid={otherGid}", DescribeReportWriter.WriteText(report));
+            using var marker = ParseResolutionMarker(Encoding.UTF8.GetString(
+                CanonicalMarkdownWriter.Write(document,
+                    DeclarationCatalog.Create(Report((TheoremGid, "theorem"), (otherGid, "theorem")))).AsSpan()));
+            Assert.Equal(marker.RootElement.GetProperty("declaration_gid").GetString(),
+                node.GetProperty("open_problem_resolution").GetProperty("declaration_gid").GetString());
         });
     }
 

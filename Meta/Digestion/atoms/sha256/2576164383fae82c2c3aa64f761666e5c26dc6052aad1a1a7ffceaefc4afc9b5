@@ -1,0 +1,50 @@
+### 5. Pay variation on the full complex disk
+
+For a unit genuine model e, nonzero d_e=<g0,e> and any g,g', direct algebra
+and Cauchy-Schwarz give
+
+    ||(g'-conj(<g',e>/d_e)g0)-(g-conj(<g,e>/d_e)g0)||
+       <=||g'-g||*(1+||g0||/|d_e|).                     (IS7)
+
+The changing model ratio is retained. For supported Fourier kernels and
+|Im z|<=251/1000, the full L2 derivative estimate is
+
+    D_F=a*sqrt(2a)*exp(a*251/1000).
+
+The inherited model origin is greater than 805/1000. Directed arithmetic
+therefore gives the centered-kernel Lipschitz bound
+
+    D_F*(1+sqrt(2a)/(805/1000))<8/5.
+
+This elementary compact-support integral/derivative specialization remains
+paper analysis; its generic centered-vector inequality is a new Lean proof.
+
+On the entire disk |z-(20+i/4)|<=1/1000, the readout-vector variation from
+its center is at most 8/5000. The same even-sector coercivity and a second
+Young inequality give
+
+    C_disk<=(31/30)*(49/20)+31*(8/5000)^2/(999/1000000)
+          =521699/199800 <21/8.                          (IS8)
+
+This is a full-disk statement from an independently bounded derivative,
+not a sampled-frequency inference. Every centered readout on the disk stays
+in the invariant sector and annihilates the SAME genuine model.
+
+The preceding global model-centering factor is below 20001/20000 and its
+derived projective origin lower bound is b=39/50. With the inherited model
+energy width nu=929549/15625000000000-ell, exact arithmetic proves
+
+    (20001/20000)*(21/8)*nu/(39/50)^2 <(7/50000)^2.
+
+Consequently, under the recorded actual spectrum, domain and Fourier/model
+identifications,
+
+    |FT(u)(z)/FT(u)(0)-FT(e)(z)/FT(e)(0)| <7/50000
+    for EVERY |z-(20+i/4)|<=1/1000.                      (IS9)
+
+The genuine model, normalization, physical window and disk are the same as
+#5602's earlier origin-normalized certificate with upper bound 51/100000.
+IS9 improves that sufficient radius by the factor 51/14, greater than 3.6.
+It does not measure the actual error, certify a new Xi zero, increase the
+physical window, or improve the full-space ground spectral gap.
+

@@ -1,0 +1,33 @@
+## 4. 候选残差先保留共同高符号，再求完整逆能量
+
+取正 parity 基 E0=1/sqrt2、En=(-1)^n cos(pi*n*y)。设 k_n 为该基中的实际归一化候选坐标，s_n 为原 prime/pole/Gamma 边界符号。对 m>64，候选残差高坐标等于
+\[
+\boxed{r_m=
+\sum_{n=1}^{64}\frac{2n k_n s_n}{\pi(m^2-n^2)}
+-s_m\left\{\frac{\sqrt2 k_0}{\pi m}+
+\sum_{n=1}^{64}\frac{2m k_n}{\pi(m^2-n^2)}\right\}.}
+\tag{UG8}
+\]
+与原 parity 列相加完全相同，但同一个 s_m 只在候选求和之后乘一次。这保留了真实相关抵消。低残差则用同一完整低矩阵计算 Ak-mu k，没有假设有限候选是本征向量。
+
+所有 65<=m<=32768 的高 load、加权平方和及 y 的每个坐标都以向外舍入区间计算。最终批量求和将 binary64 上下端点精确转换为有理数，再向外包一次，不使用无误差预算的浮点求和。工作精度 100/120 位不意味着每个 bulk 输入有同样准确度。
+
+远场保留候选的两个真实边界 jet：
+\[
+t_0=k_0+\sqrt2\sum n^0k_n,\qquad t_1=\sqrt2\sum n k_n s_n,
+\quad K_1=|k_0|+\sqrt2\sum|k_n|.
+\]
+原符号 |s_n|<=B=4 由原生产者的真实 Gamma、pole、两个素数预算重新验证。原有列的二阶展开给出
+\[
+|r_m|\le a_1/m+a_2/m^2+a_3/m^3,
+\quad a_1=\sqrt2 B|t_0|/\pi,\ a_2=\sqrt2|t_1|/\pi,
+\quad a_3=\frac{2\sqrt2 BN^2K_1}{\pi(1-N/M_{\rm cut})}.
+\tag{UG9}
+\]
+因此远场加权平方尾为至多
+\[
+f_{\rm tail}\sum_{i,j=1}^3
+\frac{a_i a_j}{(i+j-1)M_{\rm cut}^{i+j-1}}.
+\]
+正 parity 坐标已经包含两个原始 Fourier 方向，不能再重复乘二。每个交叉坐标的远场模长用 sqrt(T_i e_tail) 控制，T_i 是原耦合列的完整加权尾上界。复圆盘外包为矩形会增加保守性，但不会丢掉相位或尾部。没有终端频率截止。
+

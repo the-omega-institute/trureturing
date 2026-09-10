@@ -1,3 +1,4 @@
+import LeanInformationAudit.RegistryTypes
 import LeanInformationAudit.Registry
 import D5.S3.ConceptDynamics.InformationEscape.ExactRate
 import Mathlib.Data.Fin.VecNotation
@@ -9,24 +10,6 @@ open Lean.Elab.Command
 open Lean.Meta
 open D5.S3.ConceptDynamics.CIRPT
 open D5.S3.ConceptDynamics.InformationEscape
-
-/-- A closed catalog and the canonical theorem-to-index assignment used by the seal. -/
-structure CatalogUnitRecord where
-  theoremName : Name
-  unitName : Name
-  realizationName : Name
-  registrationModuleName : Name
-  index : Nat
-  deriving Inhabited
-
-structure CatalogRecord where
-  rootId : Name
-  catalogId : CatalogId
-  catalogKind : CatalogKind
-  arenaName : Name
-  catalogName : Name
-  units : Array CatalogUnitRecord
-  localSealNames : Bool
 
 structure PreparedCatalog where
   record : CatalogRecord

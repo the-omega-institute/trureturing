@@ -1,0 +1,8 @@
+**证明（没有乘法单位，独立于单位分类）。** 反设 $(a,b)\in P$ 对全部 $P$ 元素为单位。乘 $(0,\delta_0)$ 得 $(0,b)=(0,\delta_0)$，故 $b=\delta_0$。因 $d\ge1$，可取非零格点 $v$；$\delta_v-\delta_0\in I$。对 $(\delta_v-\delta_0,0)$ 的单位条件给出
+
+$$
+(a-\delta_0)*(\delta_v-\delta_0)=0.
+$$
+
+令 $c=a-\delta_0$，逐点评价为 $c(r-v)=c(r)$。若某点 $c(r_0)\ne0$，沿 $r_0+nv\ (n\in\mathbb Z)$ 值恒相同；非零整数向量无加法挠元，这些点两两不同，与有限支撑矛盾。因此 $c=0$，迫使 $a=\delta_0$；但 $\varepsilon(a)=0$ 而 $\varepsilon(\delta_0)=1$，矛盾。这个证明没有借用 $R$ 的整性或完整单位分类。$d\ge1$ 在此必要：$d=0$ 时格点群只有零点，$I=0$，$P\cong\mathbb Z$ 反而有单位。
+

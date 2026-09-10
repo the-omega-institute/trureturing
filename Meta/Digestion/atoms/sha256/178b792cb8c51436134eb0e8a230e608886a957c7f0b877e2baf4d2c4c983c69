@@ -1,0 +1,6 @@
+# 2026-09-07：同一真实 prolate 族的尺度流与中心化读出运输
+
+本节继续使用已认证的半宽区间 I={|a-a0|<=2e-8}，a0=log3/2。新结论处理随 a 变化的真正 prolate 模型，以及其原点归一化 Fourier 值和 model-centered 代表元。它不把中心尺度的种子固定后重新命名成真实尺度族，也不将模型的变化界当作新区间上真实 Weil ground 的误差界。
+
+新 Lean 为 `WeilMellinScaleFlow.lean`，有同名 Scribe；主程序为 `certify_prime3_prolate_scale_transport.py`。其 110、130 位定向运行均通过。Lean elaboration、Scribe emission 与传递公理审查未运行。标准正规 prolate 实现、谱投影、积分变量代换与以下范数运输是纸面桥；新 Lean 保存原 `Zeta23.paperFT` 的有限多项式尺度对应。
+

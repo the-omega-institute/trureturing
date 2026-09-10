@@ -1,0 +1,35 @@
+### 17.3 PR1 定向精确核验的范围与预期
+
+附录唯一 Python 块复用原有 `Rich/add/mul/neg`，新增函数仅服务本页的核验。预期值来自正文命题、展开式及反例，未用被检查输出反过来生成预期。一般命题的证明是 §14–16 的证明；脚本对如下明确有限窗口检查实现与这些结论是否一致。
+
+背景恢复在原 105 个表示上逐个探测第一坐标 $0,1,2,3$，共预期 $420$ 次；另用 $(\alpha,0)$ 与空档案检出漏存背景的错误，并检查筛选之后背景仍在。像构造取 $p\in\{0,v,h\}$，$v=(1,0,0),h=(0,1,-1)$，$w$ 的系数为 $(a,b,-a-b)$、$a,b\in\{-1,0,1\}$，$z$ 三个系数各取 $\{-1,0,1\}$，预期 $9\cdot27=243$ 个实现都达到 (IMAGE) 的事件数。固定容量枚举两个位置各自的 $n_+,n_-\in\{0,1,2\}$ 且全局平衡，预期 $19$ 个固定情境、$673$ 个选择；其读数像与 (CAP) 的逐点整数区间逐一比较。
+
+小量稀疏卷积另用显式例子
+
+$$
+\pi(X)=(\delta_0-\delta_v,2\delta_0-\delta_v),\qquad
+\pi(Y)=(\delta_h-\delta_0,\delta_v+\delta_h).
+$$
+
+普通展开给出背景 $\delta_h-\delta_0-\delta_{v+h}+\delta_v$、选择 $2\delta_v+2\delta_h-\delta_{2v}-\delta_{v+h}$，读数为 $2$；$K(p,q)\equiv(p=q)$ 只留下选择 $-\delta_{2v}$，读数为 $-1$，背景不变。这两个最小实现各有四事件，完整乘积档案数 $4+4+4\cdot4=24$。另取 $w=c\alpha\ (c\in\{-1,0,1\})$ 与 $z\in\{-\delta_h,0,\delta_v+\delta_h\}$ 的 $9$ 个状态，检查 $81$ 个丰富输入对的更新式和 $729$ 个空间读数三元组的卷积结合、分配式；仍单独保留 $28/32$ 的丰富层非结合见证。
+
+错误上下文族定向执行反例 A1、A2 的 $k=0,\ldots,4$、A3 的缺槽位与缺参数族（深度 $0$ 至 $3$ 分别 $40,85$ 个词），并区别额外非签名探针。来源、因果、时间域和出现身份使用 B1–B3 及共同有效 $D$ 的具名样本，预期读数分别为 $1/0$、$2/1$、有定义/无定义、$1/0$；另检查重命名后原 $D$ 的依赖域确实可能失效。
+
+零因子、$N\ne J$、$N$ 非乘法同态和 $P_0$ 的自身单位各执行正文见证。有限无单位探针仅枚举 $a$ 支撑在 $\{0,v,h\}$、系数在 $[-2,2]$ 且总和零的 $19$ 种背景，与同支撑、系数在 $\{-1,0,1\}$ 的 $27$ 种 $b$，共 $513$ 个候选；对 $b\ne\delta_0$ 用 $e_0$，对 $b=\delta_0$ 用 $(\alpha,0)$ 检出不满足单位律。这个有限排除**不证明所有格点、所有系数上不存在单位**，后者只由命题 21 的有限支撑周期性证明承担；同样，有限上下文测试不证明全部上下文的最大性或充分性。
+
+**本轮实际运行收据（2026-09-09）。** 在指定工作树、基线 `4ee990c9cb7eb3c8692f0c3f6e5be53cf28f9c85` 上，按附录原 `sed ... | sed ... | python3 -` 命令执行扩充后的唯一代码块，进程实际退出码为 `0`。原 $105/11025$ 检查也在这次执行中运行；本次增加的实际标准输出为：
+
+```text
+pr1_recovery: singleton_checks=420 background_after_filter=preserved kernels_strict=True
+pr1_image_capacity: image_cases=243 fixed_contexts=19 choices=673 capacities=[-1,1],[-2,2]
+pr1_convolution: sparse_states=9 rich_pairs=81 pair_triples=729 explicit_full_q=2 restricted_q=-1 archives=28,32
+pr1_contexts: common_domain_miss=1 depth_counterexamples=5 restricted_word_checks=125 slot_parameter_and_extra_probe=distinguished
+pr1_boundaries: same_pair_source=1,0 causal=2,1 time_domain=defined,undefined identity=1,0 dependent_D=defined,undefined
+pr1_rng: zero_divisors=confirmed N_not_J=confirmed N_not_multiplicative=confirmed P0_unit_only=True finite_unit_candidates_rejected=513
+ALL_FINITE_CHECKS_PASSED
+```
+
+输出中的 `confirmed/True` 仅报告上述有限例子的断言；一般结论由正文证明。原附录末句“新文档之外未改动任何仓库文件”只描述基线工作；本轮交付范围为本源正文及本源 canonical ingest 新产物，不新增 Lean 或生产算术模块。
+
+<a id="pr2-laws"></a>
+

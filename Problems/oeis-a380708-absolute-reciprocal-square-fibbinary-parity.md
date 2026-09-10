@@ -62,7 +62,9 @@ public `Fibbinary` predicate from
 induction. Hence `hanna_conjecture` proves, for n > 0,
 `Odd (a n) <-> exists f, Fibbinary f and n = 2*f + 1`, which is the COMMENT's
 `n = 2*A003714(k) + 1`. Target generality is I because the proof imports these
-three frozen providers, each of generality G.
+three frozen providers; `AbsoluteReciprocalSquareParity` is itself of
+generality I, while `FibbinarySquareSubstitutionParity` and
+`StripThreeTernaryCatalanParity` are G.
 
 ## Falsifier
 

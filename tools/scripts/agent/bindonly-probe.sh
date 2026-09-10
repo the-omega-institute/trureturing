@@ -80,6 +80,19 @@ fi
 # real use — a target written with `List.Sorted`, which this pinned Mathlib
 # replaced by `List.SortedLE`, produced both an unknown-field error and an
 # `exact?` failure, and the first version called it `open`.
+# An unbuilt lane fails the same way a broken statement does, and the two need
+# opposite actions: warm the lane, or fix the target. Measured 2026-09-10 — a
+# worktree whose cache had not been provisioned reported `unknown module prefix
+# 'Mathlib'`, the classifier below called it `statement-did-not-elaborate`, and
+# the caller went and rewrote a statement that was never the problem. The
+# signature is checked first because it makes every later count meaningless:
+# with no Mathlib, nothing in the file elaborates.
+if grep -qE "unknown (module prefix|package)" "$probe.out" 2>/dev/null; then
+  echo "BINDONLY_PROBE status=error lane=$LANE seconds=$seconds probe=$probe" \
+       "reason=mathlib-unavailable-in-lane"
+  exit 2
+fi
+
 others=$(grep -E 'error(\(|:)' "$probe.out" 2>/dev/null \
   | grep -cv 'could not close the goal' || true)
 others=${others:-0}

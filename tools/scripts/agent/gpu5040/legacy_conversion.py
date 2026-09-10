@@ -162,6 +162,7 @@ def import_prefix(registry, config, lineage, evidence, directory, count):
 
 def convert(snapshot, output, history_db):
     import torch
+    from gpu_worker import source_hash as current_source_hash
     snapshot = Path(snapshot).expanduser().resolve()
     output, history_db = external_path(output), external_path(history_db)
     require(output != snapshot and snapshot not in output.parents and output not in snapshot.parents,
@@ -192,7 +193,8 @@ def convert(snapshot, output, history_db):
                         "refusing to overwrite unrelated best tensors in output")
             converted = copy.deepcopy(saved)
             converted.update(schema=SCHEMA, algorithm=ALGORITHM, history_db=str(history_db),
-                             legacy_lineage=lineage, migration_evidence=evidence, provenance=evidence)
+                             legacy_lineage=lineage, migration_evidence=evidence, provenance=evidence,
+                             source_sha256=current_source_hash())
             converted["progress"].update(skipped_trials=0, traversal_start_steps=0)
             desc = legacy_descriptor(config, saved["progress"]["dimension"], saved["progress"]["seed"], lineage)
             summary = empty_summary(False)
@@ -229,7 +231,7 @@ def convert(snapshot, output, history_db):
         receipt = {**converted["invocation"], "sha256": file_hash(current_path),
                    "progress": campaign.progress()}
         status = {"schema": SCHEMA, "phase": "stopped", "stop_reason": "legacy_conversion", "error": None,
-                  "pid": os.getpid(), "source_sha256": saved["source_sha256"],
+                  "pid": os.getpid(), "source_sha256": converted["source_sha256"],
                   "state_directory": str(output), "history_db": str(history_db),
                   "latest_checkpoint": str(current_path), "config": converted["config"],
                   "config_sha256": hash_json(converted["config"]), "progress": converted["progress"],

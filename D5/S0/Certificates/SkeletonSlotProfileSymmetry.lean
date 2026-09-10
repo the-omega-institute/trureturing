@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Certificates/SkeletonSlotProfileSymmetry
    mirror-E: none(waiver:proved-slot-renaming-symmetry)
-   anchors: [mathlib/module/Mathlib.Logic.Equiv.Defs]
+   anchors: [mathlib/module/Mathlib.Logic.Equiv.Fin.Basic]
    utility: none
    digest: Slot renaming preserves the same skeleton, and sorting the two unanchored five-color profiles leaves a complete 168-case output cover. -/
 

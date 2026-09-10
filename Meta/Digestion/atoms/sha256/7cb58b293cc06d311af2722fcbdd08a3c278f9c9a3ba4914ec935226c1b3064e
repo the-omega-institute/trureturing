@@ -1,0 +1,23 @@
+### 35.2 附录实际命令与有限核验范围
+
+本席实际执行以下原文命令，退出 **0**，stderr 为空：
+
+```sh
+sed -n '/^```python$/,/^```$/p' docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md | sed '1d;$d' | python3 -
+```
+
+附录仅在原末行打印之前插入 **356 行** `pr5_` 段，复用 `Rich`、既有档案运算、`pr3_` 的 timed 筛选／剖面和 `pr4_` 的含时间辅助。stdout 的新增行和末行原文为：
+
+```text
+pr5_mixed_closure: region_updates=640 pair_updates=640 endpoints=1280 unselected_parent_pairs=7160 rejected_parent_pairs=5316 empty_products=208 old_endpoint_products=512 negative_time_inputs=61 asymmetric_slots=2 context_steps=13608 context_q=13608 ts_pair_contexts=800 mix_contexts=800 strict_failures=806 rich_equalities=400 H_cases=16384 D13_choices=12 D14_choices=8 bit_maps=52 q_expression=1200 D14_q=80 seed=2026091005 random_samples=64 cases=80 P_empty_Omega=4 P_empty_Gamma=nonempty P_empty_N_positive=2 wrong_deleted_rows=0 D13=0,0,1,1/0,1,1,2 D14=0,0,1,1,1,1,2,2/0,1,1,1,2,2,2,3 bad_k=0,1
+ALL_FINITE_CHECKS_PASSED
+```
+
+计数由执行累加。固定种子 `2026091005` 生成 64 份平衡状态，当前区域大小取 0、2、4、6，当前时刻取 −8 至 5，另取 0、1、2 个非当前档案点（时刻 −12 或 10），合法生成边取传递闭包，选择可为任意子集；加空档案、空当前区域、未选／非当前目标、D10、抵消、负时刻和 D14 族等定向输入，共 80 份。`unselected_parent_pairs`、`rejected_parent_pairs` 计的是多次配对实验中的父对出现数，非去重事件数。`old_endpoint_products` 计至少一个父档案有非当前端点的乘积实例；端点检查包含完整档案。非对称谓词在左右两槽位单列对照。$P=\varnothing,X=Y=U_0$ 的反例保留四个当前事件与非空 $\Gamma_t$，后接 $N$ 及正号因果筛选得 2，错误删行模型得 0。
+
+上下文词与全部参数在遍历输入之前固定，800 个 $\Sigma_{\rm ts}^{\rm pair}$、800 个 $\Sigma_{\rm mix}$ 实例将 $F_B,M_P$ 与旧原语交替；成功步独立比较逐事件状态的摘要及其 $q$ 和纯摘要更新路径。806 次严格失败含两个时间槽位及后接 $N$、空区域／因果筛选、左右零因子的定向对照，失败未被正常零吸收。
+
+400 次 (MIX-ENCODE) 检查覆盖全区域、空区域、柱集、过去半轴、D14 正对照的相邻阈值，比较完整 `Rich` 的 $(e,o,w,a)$：事件标识与所有属性、全部严格关系、当前区域、选择均规范序列化后逐字节相等。这里没有把“同剖面 + 同 $|E|$”充作历史同构证据，D10 的入射区别仍在完整字段中。D13 三组参数各查四个选择，D14 查全部八个选择；有限位映射闭包共 52 个映射只是配套检查，任意有限上下文的否定由引理 3 和命题 53 承担。
+
+正常形对照枚举两个位置上七个时间块的全部 $2^{14}=16384$ 个区域：$(-\infty,-3]$、五个单点 $-2,-1,0,1,2$、$[3,+\infty)$；两条无限尾各用两个代表时刻检查尾内严格关系。`pr5_H` 的条件矩阵与独立生成的柱集／单顶层正常形一致。该实验仅针对这个固定分块族，不能当作任意 ZFC 集合的可计算判定器。命题 54 的 1200 次 $q$ 比较含无限且无上界的有下界区域、负时刻和三个固定合法 $k$，坏界 $k=k_0$ 得 $(0,1)$；D14 的无下界区域另作 80 次 (MIX-D14-Q) 比较，不混入命题 54 的适用计数。
+

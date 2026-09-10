@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:b923baf16e3404ffc7143c8258cd778915ab93409a40512c8d156d065ed1f61a
+  normalized_sha256: sha256:b923baf16e3404ffc7143c8258cd778915ab93409a40512c8d156d065ed1f61a
+cas_ref: sha256:b923baf16e3404ffc7143c8258cd778915ab93409a40512c8d156d065ed1f61a
+coverage_gids:
+  - gid: D5/S3/Arith/ExponentExchange/DivisorParity.factor_parity_reflection
+    target_statement_id: sha256:913a551d3bd8112d5b3ad915fb7cca424a15bc9468ca7da653f4046c174c7ee2
+receipts:
+  unresolved_subitems: []

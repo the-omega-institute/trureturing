@@ -31,6 +31,11 @@ public sealed partial class MakeWorkflowTests
             makefile,
             StringComparison.Ordinal);
 
+        Assert.Contains("make deposit-uncovered GID=", makefile, StringComparison.Ordinal);
+        Assert.Equal(
+            $"\t@/bin/bash {PlaybookWorkflowScriptPath} deposit-uncovered \"$(BASE)\" \"$(GID)\"",
+            Recipe(makefile, "deposit-uncovered"));
+
         Assert.Contains("make cover-batch ATOMS=", makefile, StringComparison.Ordinal);
         Assert.Contains(
             "scripts/workflow/playbook-workflows.sh cover-batch \"$(BASE)\" \"$(ATOMS)\"",

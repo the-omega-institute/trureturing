@@ -1,0 +1,34 @@
+**29.22 本层产地、固定核验与 canonical 摄入。** 本实施为 caller 的
+consensus-rnd:sshx 1.0.0-beta.42 编排下 I13,flight qgh0910-i13-common-height,
+attempt 1,工作树 /Users/auricstudio/trureturing-qgh-common-height,
+分支 lane/math/quantized-gh-common-height-0910,immutable BASE
+66001d3b87d7063c5dd2a4ea97e51f8f1b876afa。
+实施者为 Codex CLI,继承完整所供 GoalArtifact 及 repo-prior-exposed 的仓库规范;
+没有子 worker 或同轮独立 review 票。primary 自报 external-prior-exposed,
+账户/项目上下文未知且不可控,其具体 serving-model/routing 未独立确认;
+本层不从 ACTUAL GPT PRO 的 caller 标签推断模型版本或模型族多样性。
+
+主 envelope 为 pro-common-height-envelope-0910.json,SHA256
+7bba088ffbdf3ae327aa0bbf34c17905e90a7510252a0e3f699ba28a27d6eda7,
+只消费 conclusion,所有 log_ref 保持不透明。
+caller-common-height-audit-0910.json 是已完成先行审计,
+记载 21 项成功固定精确核验、完整纸面审计及原 host exit 0,不是本轮 peer review。
+本层仅将同一 21 项算式适配成报告内自足固定证明证书并运行,
+原审计和原一次性程序字节不变;程序、实际结果和输入身份见
+[common-height-finite-mixtures-0910.md](../../reports/common-height-finite-mixtures-0910.md)。
+该证书不接受候选参数,不是可复用搜索器。CPU 仅用于固定核验、源和引用一致性;
+没有指数、高度、形状、素数或薄层候选生成,没有 GPU、daemon 或旧搜索重放。
+
+本节前的完整 224856 字节 / 4141 行源前缀保持不变,SHA256
+69702718f3602c508146f50cf70ebd78ef81adb09c2b826041d357e4a7dc11c8。
+所有历史 CAS、entry 和报告保留。源追加后唯一摄入门为
+~~~sh
+make ingest BASE=66001d3b87d7063c5dd2a4ea97e51f8f1b876afa SOURCE=arithmetic-boundary-quantization
+~~~
+全部新增 CAS/entry 仅由该命令生成,包括可能出现的历史末单元 terminal-LF 变体和
+自动 chain children;生成字节及其 EOF 空行不手修。摄入只提供源文内容地址,
+不表示数学被 Lean 吸收。本层源实现和独立源评审可在隔离树中推进,
+由 caller 在本次 implementation terminal 后封存、安排评审与普通仓库门;
+最终交付依赖 S17 MERGED。Git 暂存、提交、push、PR、merge 均由 caller 所有,
+本实施不执行,也不读取另一在飞 target 或同轮 reviewer 工件。
+交回本层候选不等于已独立批准、已正式交付或长期目标完成。

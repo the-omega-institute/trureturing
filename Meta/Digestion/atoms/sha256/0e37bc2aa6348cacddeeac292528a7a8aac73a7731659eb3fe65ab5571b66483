@@ -1,0 +1,24 @@
+### 6. Source and computation audit
+
+Five new declarations extend the existing GenuineModelDualTransport owner,
+with five matching canonical Scribe entries. No new Fourier transform,
+energy budget, model definition or logical axiom is introduced. The old
+signed proofs and the parallel invariant-sector module remain unchanged.
+All new statements have proof bodies, but Lean elaboration, transitive
+axiom reports and Scribe emission have not been executed in this runtime.
+The sources remain logically reviewed Candidates.
+
+New exact diagnostics exercise 400 restricted-domain examples, 400
+positive-form model-gap consequences, 400 full-residual frequency variations,
+400 finite pairing-error transports, 400 signed ratio bounds and 1200
+phase/scale identities. Negative controls retain the necessity of the actual
+sector restriction, the signed correction's vanishing in an original-model
+limit, full frequency variation and finite-pairing uncertainty. Those finite
+examples are not arithmetic Weil experiments or an independent review.
+
+The same old 512-mode interval calculation was actually replayed at 120
+digits and the full centered residual at 100. Their key intervals match the
+previous records. The local exact synthesis checks the named remote sector
+and readout fields as semantic projections, not an attestation or replay of
+their full spectral producers. All scripts, precise inputs and results are
+retained in the accompanying reproducibility archive.

@@ -1,0 +1,45 @@
+### 5. Executed signed pairing for the same genuine c=3 model
+
+The same archived 129-coordinate finite complex trial and aligned UNIT
+true prolate model are used. No eigensolver, zero-location table or numerical
+quadrature enters the new scalar consumer. The full arithmetic primitive
+projection and model proposal are pinned to the previous delivery.
+
+The actual pairing is
+
+    D=<v,(A-mu)e>=<(A-mu)v,e>.
+
+Both positive and negative column coefficients are evaluated independently.
+Fourier model coefficients are explicitly evaluated through |n|<=P=512.
+Action squares in the remaining finite exterior are evaluated through
+M=8192. The full analytic column tail beyond M retains all four boundary
+moments. The model tail is paid separately using SG6; no high coefficient
+is assigned zero.
+
+Two directed-interval executions, at 110 and 120 decimal digits, give the
+same outward rational enclosures. Convenient rounded statements are
+
+    -5.300e-6 < Re D < -5.288e-6,
+     1.209e-6 < Im D <  1.222e-6,
+    |D| < 5.44e-6.                                      (SG7)
+
+The actual interval endpoints and exact input hashes are in the local
+reproduction result. The all-tail radius is below 5.634e-9. A fixed rational
+complex approximation is
+
+    Dapprox=-10588081114283/2000000000000000000
+                 + i*(1215543485777/1000000000000000000),
+    |D-Dapprox| < 6/10^9.                                (SG8)
+
+The captured model energy gives a full model-tail norm below approximately
+5.065e-6. Combined with the complete column-tail energy, this is much tighter
+than using the old model/candidate distance 0.00113 for this scalar pairing.
+The basic product bound ||v||*rho<7*9.16662e-5 is over 117 times the new
+upper bound on |D|. This comparison concerns sufficient SCALAR-PAIRING budgets,
+not a 117-fold improvement of the actual mode or the final Fourier error.
+
+A P=128 calculation also completed. An exploratory P=1024 call hit the
+execution time limit and is not counted as a completed certificate. There
+is no claim of an optimal P, a converged unknown infinite-mode value, or
+an unbounded physical scale experiment.
+

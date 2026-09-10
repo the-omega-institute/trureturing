@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:16180f417c9d2a10df973600e22643f3a28fdd0999c77226951d63a31b5f2ff1
+  normalized_sha256: sha256:16180f417c9d2a10df973600e22643f3a28fdd0999c77226951d63a31b5f2ff1
+cas_ref: sha256:16180f417c9d2a10df973600e22643f3a28fdd0999c77226951d63a31b5f2ff1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This complete row is a bibliographic source/declaration crossreference to RelativeComplement. Its cited generic types and frozen identities have been checked; the actual embedding/charge bridge and source three-to-two counterexample remain open under extension and image_complement. Settling this citation is not covering those mathematical atoms.
+    previous_atom_id: 31c02919c4a2aa2bb8cd999558922341d4ea6481eaa21be33951692e75c36026
+    next_atom_id: c17a64eaf40d203fedb031353d7470e4aae6b71414d230acc4d6b335f247629d

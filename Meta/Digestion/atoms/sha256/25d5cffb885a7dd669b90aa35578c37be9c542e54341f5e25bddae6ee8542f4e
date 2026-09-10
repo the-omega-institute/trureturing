@@ -1,0 +1,32 @@
+### 1. Verified prior delivery and the specific next target
+
+The preceding centered-readout work was reread at remote commit
+44a831a15abe4d00268d973976101e0d62d66fd2. Its Lean, Scribe and existing
+RH theory blobs match the delivered archive. The present increment preserves
+that content and continues the actual lowest-Weil-mode/prolate comparison in
+Connes, Consani and Moscovici, Zeta Spectral Triples, arXiv:2511.22755v1,
+Section 8. The explicit-model limit and actual-mode approximation remain
+separate. The moving-scale rate has not been proved by the finite result below.
+
+The same paper's Section 5.2, Lemma 5.2, identifies the matrix involution
+V_n -> V_-n and its commutation with the truncated Weil matrix. The actual
+domain-level reflection and form-core realization remain required when this
+symmetry is used for the infinite operator. Suzuki, arXiv:2606.09096v1,
+provides the localized form/Friedrichs-domain context. These are classical
+invariant-sector and variational arguments; no priority claim is made.
+
+The latest #5602 sources were read at
+5b1c54e84706acdca64e2ec042b51a5d52c5fcea. Its new full-space scale certificate
+covers |a-log(3)/2|<=1e-8 with candidate-complement floor 1/200000. Its
+prime-activation, Gamma and complete Schur construction is the arithmetic
+reference for the independent stronger EVEN-sector test here. Loning's
+#5326 and #5296 were inspected at PR-description scope for the importance of
+preserving channels and independently certifying boundary readouts. Their
+theory descriptions are not used as arithmetic spectral hypotheses.
+
+The preceding centered coefficient paid the old whole-space gap even though
+the candidate, trial and centered Fourier readout are even. That can overpay
+for a direction invisible to the observable. We therefore certify an actual
+even candidate-complement floor and prove exactly when its readout estimate
+can be used in the existing whole-space centered transport.
+

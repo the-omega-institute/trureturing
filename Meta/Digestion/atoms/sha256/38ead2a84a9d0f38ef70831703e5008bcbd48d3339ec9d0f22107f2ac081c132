@@ -1,0 +1,6 @@
+## [PR #6219 continuation] Canonical disk equivalence and radius-dependent coefficient obstruction
+
+日期：2026-09-07。首先恢复上一轮缺失的理论追加：`b00b74c874b7fe6afbd975182d660e034ce1072a` 将已完成的 canonical 增长到实际 ξ 无零点推导补入本卷，87 行新增、零删除。六份既有 Lean/Scribe 的完整远端内容已重新回读。恢复并没有改变这些候选证明的编译状态。
+
+本轮继续使用 merged #6172 的同一 canonicalLiCoefficient、liGenerator 和 generator_taylor_coefficient。新扫描 dev 为 `65457467c879007d1e91f71ef861a4d3f7d462c3`；canonical 来源 blob 仍为 `0fb04eb79f87389016b51af25cdf6078d5616b7c`，当前 v4.3 规范 blob 为 `473d684ffda13d291c7df78f0edd8d4922550be6`。跨作者的相关 PR 与默认分支检索未找到可直接替代本轮全盘反向端点的新实现；工程类命中未作为数学来源。未将空检索结果解释为全库不存在。
+

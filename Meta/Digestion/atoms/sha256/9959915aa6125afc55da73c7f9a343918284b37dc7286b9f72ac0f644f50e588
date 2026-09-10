@@ -1,0 +1,2 @@
+**定义 13.28(定义的价值)**〔引〕。一个定义 $d$ 对命题 $\varphi$ 的证明增益为 $\mathrm{ProofGain}(d;\varphi)=L(\varphi)-\big(c(d)+L_{+d}(\varphi)\big)$,其中 $L(\varphi)$ 是固定证明系统中 $\varphi$ 的**最短证明长度**,$c(d)$ 是定义成本,$L_{+d}$ 是引入 $d$ 后的最短证明长度:引入 $d$ 后「证明 + 定义」的总长度是否更短(DECT 第 14.3 节)。
+

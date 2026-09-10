@@ -1,0 +1,15 @@
+**27.18 条件覆盖的记账语义与本轮零执行。** 未来若认证一个箱体的分离 guard,
+一个箱证书可覆盖它的全部 25 个既有 raw IDs,
+即 \([25\,\mathrm{box\_id},25\,\mathrm{box\_id}+24]\)。
+语义必须是“**若该 raw slot 可容许,则解析排除**”;eligibility 可以尚未求值,
+所以不能记作 25 个可容许薄层或 25 次数值符号评价。
+证书应绑定素数/指数三元组、带标签的精确坐标次序、guard 比较、定理身份与版本及 raw-ID 范围。
+压缩范围只有在规范展开逐一覆盖这些原始 ID 时才构成完整覆盖。
+未来一批中每个 raw slot 恰归一类:箱证书条件覆盖、ineligible、符号认证负、
+符号认证非负、unresolved;五类互斥,总数须为登记箱数的 25 倍。
+guard 失败或未决的箱不能计入第一类;输入/程序身份和独立精确算术认证仍是实施义务。
+
+本源增量的 searched boxes、executed box guards、executed kernels、numerically evaluated slots、
+certified computational exclusions 均为 0,没有实施 pruning,没有修改任何 kernel。
+固定代数和整数恒等式的 CPU 验算只支撑正文记号,不是候选生成、指数箱搜索或旧结果重放。
+

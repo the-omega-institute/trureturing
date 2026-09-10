@@ -8,6 +8,97 @@ namespace StrataLint.Tests;
 
 public sealed partial class DepositCoverWorkflowScriptTests
 {
+    [Theory]
+    [InlineData(false, "none")]
+    [InlineData(false, TransactionFixture.AtomId)]
+    [InlineData(false, "")]
+    [InlineData(true, "none")]
+    [InlineData(true, TransactionFixture.AtomId)]
+    [InlineData(true, "")]
+    public void DepositUncoveredRejectsAtomIdAndFreezesNothing(bool throughMake, string atomId)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TransactionFixture();
+        fixture.ChangeFormalization();
+
+        var result = fixture.Run("deposit-uncovered", atomId: atomId, throughMake: throughMake);
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Equal(0, fixture.FreezeCount());
+        Assert.Empty(fixture.CallKinds());
+        Assert.Contains("ATOM_ID is not accepted", Diagnostics(result), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void DepositUncoveredFreezesExactlyOnceWithoutCovering(bool throughMake)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TransactionFixture();
+        fixture.ChangeFormalization();
+        var commitsBefore = fixture.CommitCount();
+        var backfillBefore = fixture.BackfillContents();
+
+        var result = fixture.Run("deposit-uncovered", atomId: null, throughMake: throughMake);
+
+        Assert.True(result.ExitCode == 0, Diagnostics(result));
+        Assert.Equal(1, fixture.FreezeCount());
+        Assert.Equal(commitsBefore, fixture.CommitCount());
+        Assert.Equal(backfillBefore, fixture.BackfillContents());
+        Assert.Equal(
+            [
+                "make:lean-report",
+                "dotnet:deposit-header-check",
+                "make:emit",
+                "dotnet:ledger-frozen",
+                "dotnet:ledger-align",
+                "dotnet:ledger-frozen",
+            ],
+            fixture.CallKinds());
+        Assert.Contains(
+            $"dotnet:deposit-header-check --target {TransactionFixture.LeanPath} --protected-base {fixture.HeadRevision()}",
+            fixture.Calls());
+        Assert.Contains(
+            $"PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED gid={TransactionFixture.Gid} reason=NO_ATOM",
+            Diagnostics(result), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("", "HEAD", "GID does not resolve")]
+    [InlineData("D5/S0/Carrier/Probe", "HEAD", "GID does not resolve")]
+    [InlineData("D5/S2/Missing.missing", "HEAD", "GID does not resolve")]
+    [InlineData(TransactionFixture.Gid, "missing-base", "base does not resolve")]
+    public void DepositUncoveredRejectsInvalidModuleOrBaseBeforeFreeze(string gid, string baseRevision, string diagnostic)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TransactionFixture();
+
+        var result = fixture.Run("deposit-uncovered", gid, atomId: null, baseRevision: baseRevision);
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Equal(0, fixture.FreezeCount());
+        Assert.Empty(fixture.CallKinds());
+        Assert.Contains(diagnostic, Diagnostics(result), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DepositRefusesAnAtomIdThatResolvesToNoLedgerEntryAndFreezesNothing()
+    {
+        // #6676: 形状合法但并不存在的 atom id(实例 `ATOM_ID=none`,满足 ^[a-z0-9-]+$)
+        // 此前会先走完 freeze,再在 cover 处失败,留下已冻结而无覆盖的模块。
+        // 冻结不可逆,故这里同时断言两件事:非零退出,**且一次冻结都没有发生**。
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TransactionFixture();
+        fixture.ChangeFormalization();
+
+        var result = fixture.Run("deposit", atomId: "none");
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Equal(0, fixture.FreezeCount());
+        Assert.Contains("atom not found in the digestion ledger", Diagnostics(result), StringComparison.Ordinal);
+    }
+
     [Fact]
     public void DepositBuildsEmitsFreezesCoversAndReemitsWithoutCommitting()
     {
@@ -165,14 +256,16 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.DoesNotContain("dotnet:ledger-align", fixture.CallKinds());
     }
 
-    [Fact]
-    public void DepositFailsClosedWhenLeanReportRemainsStale()
+    [Theory]
+    [InlineData("deposit")]
+    [InlineData("deposit-uncovered")]
+    public void DepositFailsClosedWhenLeanReportRemainsStale(string command)
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
         fixture.ChangeFormalization();
 
-        var result = fixture.Run("deposit", staleReport: true);
+        var result = fixture.Run(command, atomId: command == "deposit" ? TransactionFixture.AtomId : null, staleReport: true);
 
         Assert.NotEqual(0, result.ExitCode);
         Assert.Contains("STALE_LEAN_REPORT", Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);

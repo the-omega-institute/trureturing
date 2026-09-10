@@ -1,0 +1,23 @@
+**28.9 两种资源情形的端点间隙。** 将 28.7 与 28.8 的显式式子相减,分别得
+\[
+\boxed{L_\infty-m_{\rm low}=
+\begin{cases}
+(B-q)/6+(q-r)/9,&q\le B,\\
+(q-B)/3+(q-r)/9,&q\ge B.
+\end{cases}}
+\]
+证明。在第一种情形,\(m_{\rm low}=T+(s+q)/2\),相减为
+\(B/6-q/18-r/9\),即所列第一式;第二种情形减去
+\(T+(s+B)/2\),得 \((4q-r)/9-B/3\),即第二式。
+在 \(q=B\) 两式同为 \((q-r)/9\),无缺口也无额外分支限制。
+各式首项非负,所以 \(q-r\ge\delta\) 给
+\(L_\infty-m_{\rm low}\ge\delta/9\)。又若
+\(t\ge\sqrt{6K}\) 且 \(t\ge9K/\delta\),28.7 给
+\[
+L\ge L_\infty-\frac K{2t}
+\ge m_{\rm low}+\frac\delta9-\frac\delta{18}
+=\boxed{m_{\rm low}+\epsilon}.
+\]
+允许 \(q-r=\delta\)、\(q=B\) 及两个余项阈值的等号。
+相邻角点足以满足间隔假设,但证明覆盖其间的每个实上预算。证毕。
+
