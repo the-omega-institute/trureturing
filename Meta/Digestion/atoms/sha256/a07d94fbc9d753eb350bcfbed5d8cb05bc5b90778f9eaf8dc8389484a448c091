@@ -1,0 +1,20 @@
+**37.12 定义与推论及证明（光滑成员判定与严格门槛）。** Let \(S\) be any finite set
+of primes, encoded increasingly, and let
+\(A_S=\{\prod_{p\in S}p^{e_p}:e_p\in\mathbb N_0\}\), including one.
+To decide \(n\in A_S\), repeatedly divide by each \(p\in S\) while divisible and
+accept exactly when the final quotient is one. Every division strictly decreases a positive
+integer; unique factorization proves correctness. For empty \(S\), this accepts exactly one.
+Primality itself has a finite integer definition: \(p\ge2\) and
+\(\gcd(d,p)=1\) for every \(2\le d<p\). Composite \(p\) has a proper prime divisor
+in that range; a prime has none. Equivalently one may test that no integer \(2\le d<p\) divides
+\(p\), which is the direct trial-division primality predicate. Euclid's algorithm terminates for every such gcd.
+
+Define \(\operatorname{VerifySmoothObstruction}(S,m,e)\) to check this legal prime list,
+\(m\in\mathbb N_+\), the tag-1021 record and \(\operatorname{VerifyJoint}(E,e)\)
+for its decoded \(E\), every \(n\in E\) outside \(A_S\), and \(m\lambda\ge1\).
+This is a total predicate with decidable omission, unlike arbitrary \(A\).
+Acceptance proves that every finite \(A_S\)-dictionary sum, and every member of its closure,
+has residual square at least \(D_{A_S}\ge\lambda\ge1/m\). Therefore a strict residual
+square \(<1/m\) is impossible even when \(\lambda=1/m\). Failure to accept a particular
+code gives no existence assertion and does not assert that any desired threshold is attainable.
+

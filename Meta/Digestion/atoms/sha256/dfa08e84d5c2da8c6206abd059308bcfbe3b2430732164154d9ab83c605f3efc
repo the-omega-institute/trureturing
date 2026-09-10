@@ -1,0 +1,29 @@
+**37.15 定理及证明（无限遗漏素数空间中的实际范数收敛）。** For finite \(S\), let
+\(\mathcal P_S\) be the primes outside \(S\). This set is infinite: given any finite
+list containing \(S\), a prime divisor of one plus its product lies outside that list.
+Set
+\[
+t_\infty(S)=\sum_{p\in\mathcal P_S}\frac1{\omega_p},\qquad
+W_{\mathrm{pr},S}=\overline{\operatorname{span}_{\mathbb C}\{r_p:p\in\mathcal P_S\}}.
+\]
+For \(n\ge2\), \(1/\omega_n=3/(60n^2+2)<1/(20n^2)\); the telescoping majorant
+\(1/n^2\le1/[n(n-1)]\) gives \(0<t_\infty(S)\le1/20\).
+For finite \(P\subset\mathcal P_S\), put
+\(q_P=\sum_{p\in P}r_p/\omega_p=\sum_{p\in P}u_p/\omega_p-t_Pu_1\).
+For any finite \(P,P'\), actual orthogonality gives
+\[
+\|q_P-q_{P'}\|^2
+=\sum_{p\in P\mathbin\triangle P'}\frac1{\omega_p}
+ +a_0(t_P-t_{P'})^2.
+\]
+Absolute convergence of the positive series makes this net Cauchy: once both finite sets
+contain a fixed sufficiently large finite core, both terms are bounded by its vanishing tail
+and its square. Completeness of \(H\) gives
+\[
+q_\infty=\sum_{p\in\mathcal P_S}\frac{u_p}{\omega_p}-t_\infty u_1
+\in W_{\mathrm{pr},S},\qquad
+\|q_\infty\|^2=t_\infty+a_0t_\infty^2.
+\]
+The series denotes convergence in the original norm, not merely coefficientwise convergence
+or a formal weighted-sequence expression.
+

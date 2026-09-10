@@ -1,0 +1,15 @@
+**37.36 定理及证明（粗糙截断的闭并仅为第一块的核）。** Equations (37.C) give
+\(W_{E_B}=\operatorname{span}_{\mathbb C}\{u_b-u_1:b\in R_S,2\le b\le B\}\).
+Their increasing union therefore contains every finite difference in the \(a=1\) block,
+and 37.22 gives exactly
+\[
+\overline{\bigcup_{B\ge1}W_{E_B}}=K_1=\ker\ell_1\subset U_1.
+\]
+It is a proper subspace of \(U_1\), since the nonzero vector \(g_1\) is orthogonal
+to it. If \(S\ne\varnothing\), choose a prime \(a\in S\) and any rough \(b>1\).
+Then \(u_{ab}-u_a\) is a nonzero vector of \(K_a\subset W_S\), orthogonal to
+\(K_1\), so the displayed closure is not all of \(W_S\). If \(S=\varnothing\),
+there is only the \(a=1\) block and \(W_S=K_1\). The rough truncations approach
+the full scalar optimum because \(p_S\in K_1\), not because they approximate every
+vector of \(W_S\).
+

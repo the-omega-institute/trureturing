@@ -1,0 +1,14 @@
+**37.26 定理及证明（完整字典距离的正交剩余项）。** Every omitted \(r_n\) annihilates
+\(M_{A_S}\) by 37.3; continuity gives \(W_S\perp M_{A_S}\). Also
+\(\chi-p_S\perp W_S\), so for every \(g\in M_{A_S}\), the vectors \(p_S\) and
+\(\chi-p_S-g\) are orthogonal. Pythagoras and then the infimum give
+\[
+\|\chi-g\|^2=\Gamma_S+\|\chi-p_S-g\|^2,
+\qquad D_{A_S}=\Gamma_S+
+ \operatorname{dist}(\chi-p_S,M_{A_S})^2.
+\]
+In particular \(D_{A_S}\ge\Gamma_S>0\). Equality is equivalent to
+\(\chi-p_S\in M_{A_S}\), since this subspace is closed. That extra approximation
+statement is not supplied by the projection theorem. Neither \(W_S=M_{A_S}^\perp\)
+nor \(D_{A_S}=\Gamma_S\) is being asserted.
+

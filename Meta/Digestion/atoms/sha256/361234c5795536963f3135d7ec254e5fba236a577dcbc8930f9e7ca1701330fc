@@ -1,0 +1,26 @@
+**37.39 定义与定理及证明（1041 总验证器与可靠性）。** Define the paper predicate
+\(\operatorname{VerifyRoughEnvelope104}(S,B,\eta,e)\) on finite input data and a
+natural certificate as follows. First require an external finite strictly increasing prime list
+\(S\), integer \(B\ge1\), and rational \(\eta>0\); primality is exactly the finite
+gcd predicate of 37.12, including vacuous proper-divisor range for the prime two. Decode the
+record, require tag 1041, eight fields and the declared types, and bind its \(S,B,\eta\)
+to these external inputs, using exact rational equality for precision. Reject any mismatch.
+Compute the finite integer product \(Q\), the ordered list
+\(\{2\le n\le B:\gcd(n,Q)=1\}\), its finite rational sum
+\(\sum_n3/(60n^2+2)\), and the two rational endpoint formulas of 37.37. Require exact
+equality to the record's \(E_B,T_B,L_B,V_B\), and finally require
+\[
+0\le L_B\le V_B\le1,\qquad V_B-L_B<\eta.
+\]
+All loops have finite input-dependent bounds or strictly decreasing positive-integer measures.
+All denominators \(60n^2+2\), \(20B\), and \(1+a_0t\) in legal data are positive.
+Gcd, products, sums, coding and cross-product comparisons terminate; any bad code is rejected.
+Thus this predicate is total without a real-number oracle or an infinite search.
+On acceptance the recomputed \(T_B\) is precisely the rough sum, and 37.37 proves
+\(\Gamma_S\in[L_B,V_B]\) with the required strict width. The finite value theorem
+needed here is justified by \(K=M^*GM,b=M^*\mathbf1\) and the full cancellation
+of 37.32. Since those corrected formulas prove the same \(\phi(T_B)\), the scalar
+certificate rules need no altered endpoint or hidden coefficient computation.
+This is soundness of a finite mathematical language; it does not assert an implemented or
+executed verifier.
+

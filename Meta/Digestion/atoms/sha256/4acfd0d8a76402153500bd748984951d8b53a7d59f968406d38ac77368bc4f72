@@ -1,0 +1,31 @@
+**37.19 定义与引理及证明（光滑—粗糙分解与两个有限张成式）。** Fix any finite prime
+set \(S\), put \(Q=\prod_{p\in S}p\) (empty product one), and define
+\[
+A_S=\{\text{positive integers with all prime factors in }S\},\qquad
+R_S=\{b\ge1:\gcd(b,Q)=1\}.
+\]
+Unique factorization gives a unique \(n=ab\), \(a\in A_S,b\in R_S\), with
+\(\gcd(a,b)=1\); omission from \(A_S\) is equivalent to \(b>1\).
+Let
+\(W_S=\overline{\operatorname{span}_{\mathbb C}\{r_n:n\notin A_S\}}\).
+For every \(a\in A_S,b\in R_S,b>1\), finite inversion in 37.3 gives
+\[
+u_{ab}-u_a=\sum_{c\mid a}\sum_{\substack{e\mid b\\e>1}}r_{ce},
+\tag{37.A}
+\]
+where \(u\) denotes the same atom as above. Indeed divisors of \(ab\) have unique form
+\(ce\), and subtracting the sum for \(a\) removes precisely \(e=1\).
+Conversely, multiplicativity of \(\mu\) on coprime factors gives
+\[
+r_{ab}=\sum_{c\mid a}\mu(a/c)
+ \sum_{\substack{e\mid b\\e>1}}\mu(b/e)(u_{ce}-u_c).
+\tag{37.B}
+\]
+To see the coefficient at \(u_c\), use
+\(\sum_{e\mid b,e>1}\mu(b/e)=-\mu(b)\) for \(b>1\). Thus the right side recovers
+also the missing \(e=1\) term of \(\sum_{c\mid a,e\mid b}\mu(a/c)\mu(b/e)u_{ce}\).
+Every \(ce\) with \(e>1\) is omitted, so these two identities prove equality of the
+algebraic finite spans of all omitted \(r_n\) and all differences \(u_{ab}-u_a\).
+Taking closures preserves equality. For \(S=\varnothing\), \(A_S=\{1\}\),
+\(R_S=\mathbb N_+\), and both formulas apply unchanged.
+

@@ -1,0 +1,31 @@
+**37.23 定理及证明（完整闭空间与精确的相对补空间）。** Equations (37.A)–(37.B) and
+37.22 imply
+\[
+W_S=\mathop{\bigoplus}_{a\in A_S}K_a.
+\]
+For completeness, the right side is closed: a norm-convergent sequence of its vectors has
+block projections converging in each \(U_a\), and the continuous \(\ell_a\) still
+vanishes. Every omitted probe belongs to this sum by (37.B), proving one inclusion.
+Conversely, given \(h=\sum_a h_a\) in the sum, first retain finitely many \(a\) so
+that the discarded block squared norm is small; approximate each retained \(h_a\) by
+37.22 and sum the finitely many errors. Orthogonality makes their squared norms additive.
+Equations (37.A) then express the resulting vector as a finite omitted-probe sum.
+This handles infinitely many smooth blocks. The condition is one zero coefficient sum in
+each block; it cannot be replaced by a single sum across all blocks.
+
+Within \(U_a\), the Riesz identity proves
+\(K_a^\perp\cap U_a=\operatorname{span}_{\mathbb C}\{g_a\}\): explicitly,
+\(h_a-(\ell_a(h_a)/s_a)g_a\in K_a\). Define
+\[
+G_S=\left\{\sum_a\lambda_ag_a:\sum_as_a|\lambda_a|^2<\infty\right\}.
+\]
+Then \(U=W_S\oplus G_S\) orthogonally. The corresponding projection series converges,
+since \(\sum_a|\ell_a(h_a)|^2/s_a\le\sum_a\|h_a\|^2\).
+In the full ambient space the exact statement is
+\[
+W_S^\perp=U^\perp\oplus G_S.
+\]
+It neither removes \(U^\perp\) nor identifies \(W_S\) with the full orthogonal
+complement of the original dictionary closure. In particular this orthogonal block theorem
+does not diagonalize either the \(r_n\) or the \(f_n\) Gram matrices.
+

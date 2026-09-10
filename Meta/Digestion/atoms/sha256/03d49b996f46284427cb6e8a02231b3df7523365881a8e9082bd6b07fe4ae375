@@ -1,0 +1,39 @@
+**37.42 推论与范围（固定坐标、保持的范数与经典依赖）。** Since
+\(D_{A_S}\ge\Gamma_S>0\), allowing all exponents in a fixed finite prime set and
+then closing in the actual norm still leaves a positive error. For an omitted prime \(p\),
+\(\langle r_p,f_p\rangle=1\) and \(r_p\perp M_{A_S}\), whence
+\(\operatorname{dist}(f_p,M_{A_S})^2\ge1/C_p>0\). Thus \(M_{A_S}\) is a proper
+subspace of the full dictionary closure, not a substitute for that closure.
+The original \(f_i,f_j\) are not orthogonal: on \(x>1\) their product is
+\(1/(ijx^2)\), and nonnegativity on the rest of the half-axis gives
+\(\langle f_i,f_j\rangle\ge1/(ij)>0\). Pythagoras above concerns actual orthogonal
+\(u_d\) coordinates or projections, not exponent labels or a diagonal original dictionary.
+Faithful prime-exponent or Zeckendorf recoding of the same integer parameters leaves the
+functions, measure, norm, algebraic spans, closed spaces, distances, and all these bounds
+unchanged. Changing functions or inner product defines another problem.
+
+The general Gram and Schur results, including singular blocks, pseudoinverse range conditions,
+zero/empty cases, finite strict-threshold attainment and distinctions from infinite synthesis
+attainment in 30.22–30.39, remain applicable in their stated domains. Positive definiteness of
+these particular finite probe matrices does not remove those general singular cases.
+The finite rational residual certificates and effective finite-distance bounds of 30.40–30.71,
+and the Möbius coercivity and local-certificate constructions of 30.72–30.85, retain their
+original constants, totality domains and strict boundaries. In particular coordinatewise
+Möbius convergence alone is insufficient for norm convergence (30.75); squarefree inclusion is
+necessary but no sufficiency theorem is supplied (30.76); and the ordinary finite spectral
+minimum tending to zero (30.40) does not by itself settle the global approximation distance.
+
+The classical closure bridge [B1], L. Báez-Duarte, *A strengthening of the Nyman–Beurling
+criterion for the Riemann hypothesis, 2*, [arXiv:math/0205003v1](https://arxiv.org/pdf/math/0205003v1),
+Theorem 1.1 with its full-half-axis definitions, is used exactly as in 30.36:
+RH is equivalent to \(\chi\) belonging to the specified full integer-dictionary closure.
+It is an external analytic theorem; the present obstruction proof does not reprove that bridge
+or claim density in all of \(H\). The value of the full-dictionary distance, equality
+\(D_{A_S}=\Gamma_S\), completeness of the omitted-probe complement, infinite coefficient
+attainment and a universal successful finite-certificate cutoff remain separate questions.
+Nothing here resolves the Robin \(n>5040\) criterion, the prime-box slab \(G\) sign
+problems, or the remaining common-height and general-prime questions. The user's label GH
+retains its stated working RH interpretation without an additional mathematical definition.
+These are paper arguments using the existing model and classical projection, divisor-inversion
+and finite-arithmetic facts; no new literature-priority, numerical execution or kernel theorem
+is entailed.

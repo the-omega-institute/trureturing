@@ -1,0 +1,17 @@
+**37.8 推论及证明（零增益的边界与平方因子）。** With an empty starting set, put
+\(s_j=r_j,d=C_j,h=b_j=-\mu(j)\). The gain is \(\mu(j)^2/C_j\), including zero.
+For a nonempty set whose target vector is zero, the gain vanishes exactly when \(b_j=0\).
+If all old and new indices have zero Möbius value, all bounds remain zero. In general,
+\(b_j=0\) alone does not imply zero gain: the residual value \(h\) is decisive.
+For a prime \(p\), take \(E=\{1\}\). Then \(r_1=u_1\), \(r_p=u_p-u_1\),
+\(K_E=a_0,b_E=-1,g=-a_0,b_p=1\); hence \(h=0,d=\omega_p>0\).
+This gives a nontrivial zero-gain example despite \(b_p\ne0\).
+Conversely take \(E=\{p\},j=p^2\). Since \(r_{p^2}=u_{p^2}-u_p\),
+\[
+K_E=\omega_p+a_0,\quad b_E=1,\quad g=-\omega_p,\quad b_{p^2}=0,
+\quad h=\frac{\omega_p}{\omega_p+a_0}>0,
+\quad d=\omega_{p^2}+\omega_p-\frac{\omega_p^2}{\omega_p+a_0}>0.
+\]
+The gain is positive. A squareful omitted index can improve a joint obstruction through
+correlations even though its individual target pairing vanishes.
+

@@ -1,0 +1,26 @@
+**37.40 定理及证明（总生成器、严格阈值与等号不终止边界）。** For legal finite \(S\)
+and rational \(\eta=p/d>0\), \(p,d\in\mathbb N_+\), define
+\[
+B=1+\left\lfloor\frac d{20p}\right\rfloor.
+\]
+Construct \(Q,E_B,T_B,L_B,V_B\) by the finite operations in 37.39 and encode the
+record. Integer division and all subsequent finite calculations terminate; 37.37 proves
+\(1/(20B)<\eta\), so the resulting certificate is accepted. The argument covers every
+positive rational precision, regardless of reducibility, size, or empty \(S,E_B\).
+It gives total generation at prescribed precision without asking whether a threshold is crossed.
+
+For integer \(m\ge1\), an accepted record with \(L_B\ge1/m\) proves strict residual
+square \(<1/m\) impossible for \(A_S\). Equality in the lower-endpoint comparison is
+included. If \(\Gamma_S>1/m\), set \(\eta_j=2^{-j}\) and use the total generator.
+For all sufficiently large \(j\), its width is smaller than \(\Gamma_S-1/m\);
+since \(\Gamma_S\le V_B<L_B+\eta_j\), one gets \(L_B>1/m\).
+If \(\Gamma_S=1/m\), 37.26 still analytically excludes the strict residual, but
+37.35 gives \(\beta_E<\Gamma_S=1/m\) for every finite omitted \(E\), including
+all mixed and squareful sets. Thus neither these rough lower endpoints nor a tag-1021 finite
+joint value can certify that equality threshold. If \(\Gamma_S<1/m\), this family of
+bounds likewise supplies no such acceptance; actual \(D_{A_S}\) may still be larger.
+No occurrence of the equality case is asserted. A search waiting for threshold acceptance is
+only conditionally terminating when the strict positive margin is known to exist; the total
+precision generator does not decide that margin. Nonacceptance of a finite certificate never
+proves a strict approximation witness exists.
+

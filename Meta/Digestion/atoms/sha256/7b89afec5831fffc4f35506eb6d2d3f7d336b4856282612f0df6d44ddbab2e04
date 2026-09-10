@@ -1,0 +1,28 @@
+**37.16 定理及证明（无限素数限制空间的达到与有限不达到）。** Put
+\(p_\infty=q_\infty/(1+a_0t_\infty)\). For each omitted prime,
+\[
+\langle r_p,q_\infty\rangle=1+a_0t_\infty,
+\qquad \langle r_p,\chi-p_\infty\rangle=0.
+\]
+Continuity extends these equations from finite sums to \(W_{\mathrm{pr},S}\).
+Hence \(p_\infty=P_{W_{\mathrm{pr},S}}\chi\) and
+\[
+\beta_\infty(S):=\|p_\infty\|^2=\phi(t_\infty(S))
+=\sup_{0\ne h\in W_{\mathrm{pr},S}}
+ \frac{|\langle h,\chi\rangle|^2}{\|h\|^2}
+=\sup_{P\subset\mathcal P_S\text{ finite}}\beta_P.
+\]
+The first supremum is attained exactly by nonzero complex multiples of \(p_\infty\).
+The last equality follows from convergence of finite sums and continuity of \(\phi\).
+Every finite \(P\) has \(t_P<t_\infty\), because an omitted prime remains outside it;
+thus \(\beta_P<\beta_\infty\). Equivalently the maximizing vector has infinitely many
+nonzero orthogonal \(u_p\) coordinates, and no finite prime combination can equal it.
+Since \(W_{\mathrm{pr},S}\perp M_{A_S}\),
+\[
+D_{A_S}=\beta_\infty+
+ \operatorname{dist}(\chi-p_\infty,M_{A_S})^2\ge\beta_\infty.
+\]
+Equality requires the displayed residual to belong to \(M_{A_S}\). Attainment inside the
+closed probe space does not establish that condition or infinite coefficient attainment in
+the original dictionary synthesis problem.
+

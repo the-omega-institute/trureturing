@@ -1,0 +1,34 @@
+**37.2 引理及证明（六个矩与正交原子）。** Define the real function \(w\), zero off
+\([-1/2,1/2]\), to have successive values \(1,-3,3,-1\) on
+\((-1/2,-1/4),(-1/4,0),(0,1/4),(1/4,1/2)\). For \(d\ge1\), put
+\(\psi_d(t)=w(t-d)\) and \(u_d(x)=-2x^{-2}\psi_d(1/x)\). These are the atoms of
+30.72, with the following six exact moments:
+\[
+\int w=0,\quad \int sw(s)\,ds=0,\quad \int_0^{1/2}w(s)\,ds=\tfrac12,
+\quad \int w^2=5,\quad \int sw^2=0,\quad \int s^2w^2=\tfrac16.
+\]
+Indeed \(w\) is odd, its positive half has integral \(3/4-1/4=1/2\), and
+\(\int sw=2(3/32-3/32)=0\). Also \(w^2\) is even,
+\(\int w^2=2(9/4+1/4)=5\), and
+\(\int s^2w^2=2(9/192+7/192)=1/6\). Substitution \(t=1/x\) gives
+\[
+\langle u_d,u_e\rangle=\delta_{de}\omega_d,\qquad
+\omega_d=4\int t^2\psi_d(t)^2dt=4(5d^2+1/6)=\frac{60d^2+2}{3}>0.
+\]
+The support intervals in \(t\) have disjoint interiors, proving orthogonality in the
+actual \(H\). Every integral here is absolutely convergent: the transformed supports
+are compact subsets of \((0,\infty)\), and alternatively the Hilbert pairings obey
+Cauchy–Schwarz.
+
+For any \(h\in H\), \(\langle u_d,h\rangle=-2\int\psi_d(t)h(1/t)\,dt\).
+For \(h=f_k\), the fractional part \(\{t/k\}\) has no jump in that support unless
+\(k\mid d\); in the latter case its only jump is the unit downward jump at \(d\).
+The constant and affine parts vanish by the first two moments, while the jump contributes
+\((-2)(-1)(1/2)=1\). For \(h=\chi\), the transformed function is
+\(\mathbf1_{[1,\infty)}\); the positive-half moment contributes \(-1\) when \(d=1\),
+and the full constant moment gives zero when \(d>1\). Consequently
+\[
+\langle u_d,f_k\rangle=\mathbf1_{k\mid d},\qquad
+\langle u_d,\chi\rangle=-\mathbf1_{d=1},\qquad a_0:=\omega_1=62/3.
+\]
+

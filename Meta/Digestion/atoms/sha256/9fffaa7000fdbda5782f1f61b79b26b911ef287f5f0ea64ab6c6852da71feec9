@@ -1,0 +1,23 @@
+**37.41 引理及证明（混合光滑因子的块分量与相关性限制）。** For \(b\in R_S,b>1\)
+and \(c\in A_S\), put
+\[
+\rho_{c,b}=\sum_{e\mid b}\mu(b/e)u_{ce}\in K_c.
+\]
+Its coefficient sum is \(\sum_{e\mid b}\mu(b/e)=0\). For \(a\in A_S\),
+finite coprime factorization yields
+\[
+r_{ab}=\sum_{c\mid a}\mu(a/c)\rho_{c,b},\qquad
+P_{U_1}r_{ab}=\mu(a)\rho_{1,b}=\mu(a)r_b.
+\]
+The target pairs only with the \(a=1\) block. If \(h=h_1+h_\perp\in W_S\),
+with \(h_1\in K_1\) and \(h_\perp\in\bigoplus_{a>1}K_a\), then
+\(\langle h,\chi\rangle=\langle h_1,\chi\rangle\) and
+\(\|h\|^2=\|h_1\|^2+\|h_\perp\|^2\). For \(h_1\ne0\), removing the other
+blocks weakly improves the quotient, strictly if the numerator and removed squared norm are
+both positive. If \(h_1=0\), the quotient of a nonzero \(h\) is zero. This proves
+again that the positive full optimum is attained only in \(K_1\).
+For a prescribed finite \(E\), however, projection onto \(U_1\) need not stay in
+\(W_E\). These equations therefore do not justify declaring individual mixed or zero-target
+probes useless in a constrained finite joint problem. The Schur calculation in 37.8 and the
+nonzero \(r_4\) coefficient in 37.34 are explicit correlated examples.
+

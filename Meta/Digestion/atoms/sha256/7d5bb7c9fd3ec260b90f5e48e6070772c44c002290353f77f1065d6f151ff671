@@ -1,0 +1,19 @@
+**37.9 引理及证明（有限有理消元的终止性）。** Given any finite distinct \(E\), all
+entries of \(K_E,b_E\) are rational. Trial division through integers bounded by each input
+integer determines its prime factors, exponents, divisors and Möbius value in finitely many
+integer operations. Rational arithmetic uses integer numerators and positive denominators;
+comparisons use cross multiplication. Successive Gaussian elimination without row swaps is
+valid for a positive definite matrix: the first pivot is positive and its Schur complement
+is positive definite, since its quadratic form is the minimum of the original form over the
+eliminated coordinate, as in 37.7. Induction gives a positive rational pivot at every step.
+More explicitly, for a block \(\left(\begin{smallmatrix}a&v^*\\v&C\end{smallmatrix}\right)\)
+and right side \((y_0,y)\), use the positive Schur block \(C-vv^*/a\) and right
+side \(y-vy_0/a\); after solving for \(z\), recover the first coordinate as
+\((y_0-v^*z)/a\). For \(z\ne0\), evaluating the original positive form at
+\((-v^*z/a,z)\) proves positivity of that Schur block. Back substitution terminates
+after the finite number of rows and gives the unique rational
+\(\alpha_E\), followed by \(\beta_E=b_E^{\mathsf T}\alpha_E\).
+All data are real rational here, although the theorem being certified is over complex
+coefficients. This is a paper construction using no real-number, logarithm, spectral or
+pseudoinverse oracle. Empty \(E\) directly returns an empty coefficient list and zero value.
+

@@ -1,0 +1,18 @@
+**37.6 定理及证明（字典距离恒等式与残差坐标）。** If \(E\cap A=\varnothing\), then
+\(W_E\perp M_A\). Since \(\chi-p_E\perp W_E\), every \(g\in M_A\) satisfies
+\[
+\|\chi-g\|^2=\beta_E+\|\chi-p_E-g\|^2,
+\qquad D_A=\beta_E+\operatorname{dist}(\chi-p_E,M_A)^2\ge\beta_E.
+\]
+Because \(M_A\) is closed, equality \(D_A=\beta_E\) holds if and only if
+\(\chi-p_E\in M_A\). The optimized quotient is exact within \(W_E\); it supplies
+no general equality with the actual dictionary distance and no upper bound for that distance.
+More generally, for any finite sum \(P=\sum_k a_kf_k\), take absent coefficients to
+be zero and put \(a_E=(a_n)_{n\in E}\). Applying the same normal equations to
+\(\chi-P\) yields
+\[
+\|\chi-P\|^2\ge(b_E-a_E)^*K_E^{-1}(b_E-a_E).
+\]
+Equality in this inequality means \(\chi-P\in W_E\); the bound is zero precisely
+when \(a_E=b_E\). For empty \(E\) it is the inequality \(\|\chi-P\|^2\ge0\).
+

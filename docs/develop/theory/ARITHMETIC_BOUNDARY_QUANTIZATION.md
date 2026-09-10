@@ -6564,3 +6564,1034 @@ Coordinate limits are necessary and have the explicit norm-divergent counterexam
 including all primes is insufficient by 30.76, and sufficiency of including every squarefree
 parameter has not been proved. The new bounds neither determine \(\inf_ND_N\) nor settle the
 separate general-prime or all-slab sign problems. No optimality of the constants or practical efficiency bound is implied by these finite formulas.
+
+## 37. 联合对偶与完整光滑字典障碍：定义、定理及证明
+
+The following results concern squared approximation distance in the actual Hilbert space
+\(L^2((0,\infty),dx)\). Finite joint probes, their closed prime subspace, and the closed
+space of all omitted probes for a finite-prime smooth dictionary give three distinct
+optimization problems. The bounded functionals of 30.72–30.85 provide the common foundation. The mathematical primary texts [J102], [S104] and the
+explicit finite-basis correction [E106] are cited in the
+[primary-source archive](../../reports/quantized-gh/joint-smooth-dual-closure-0911.md#primary-sources).
+
+**37.1 定义（实际空间、共轭与字典）。** Put
+\[
+H=L^2((0,\infty),dx;\mathbb C),\qquad
+\langle g,h\rangle=\int_0^\infty\overline{g(x)}h(x)\,dx,
+\quad \chi=\mathbf1_{(0,1]},\quad f_k(x)=\{1/(kx)\}\quad(k\ge1).
+\]
+Equality in \(H\) is equality almost everywhere; values at jump endpoints are immaterial.
+The first variable is conjugate-linear. A linear functional has Riesz representation
+\(h\mapsto\langle r,h\rangle\); for columns, \(C^*=\overline C^{\mathsf T}\) denotes the
+adjoint, with the rightmost map applied first. In particular, a real matrix still has adjoint
+\(C^{\mathsf T}\), not generally \(C\). For any \(A\subseteq\mathbb N_+\), let
+\[
+M_A=\overline{\operatorname{span}_{\mathbb C}\{f_k:k\in A\}},\qquad
+D_A=\operatorname{dist}(\chi,M_A)^2.
+\]
+Here the closure uses the full half-axis norm, \(\|\chi\|^2=1\), and \(0\le D_A\le1\).
+For empty \(A\), \(M_A=\{0\}\) and \(D_A=1\). The functions \(f_k\) belong to \(H\):
+on \((0,1/k]\) they are bounded by one, and on \((1/k,\infty)\) their square is
+\(1/(k^2x^2)\), so \(\|f_k\|^2\le2/k\). No coefficient constraint or change of measure
+is implicit in these definitions.
+
+**37.2 引理及证明（六个矩与正交原子）。** Define the real function \(w\), zero off
+\([-1/2,1/2]\), to have successive values \(1,-3,3,-1\) on
+\((-1/2,-1/4),(-1/4,0),(0,1/4),(1/4,1/2)\). For \(d\ge1\), put
+\(\psi_d(t)=w(t-d)\) and \(u_d(x)=-2x^{-2}\psi_d(1/x)\). These are the atoms of
+30.72, with the following six exact moments:
+\[
+\int w=0,\quad \int sw(s)\,ds=0,\quad \int_0^{1/2}w(s)\,ds=\tfrac12,
+\quad \int w^2=5,\quad \int sw^2=0,\quad \int s^2w^2=\tfrac16.
+\]
+Indeed \(w\) is odd, its positive half has integral \(3/4-1/4=1/2\), and
+\(\int sw=2(3/32-3/32)=0\). Also \(w^2\) is even,
+\(\int w^2=2(9/4+1/4)=5\), and
+\(\int s^2w^2=2(9/192+7/192)=1/6\). Substitution \(t=1/x\) gives
+\[
+\langle u_d,u_e\rangle=\delta_{de}\omega_d,\qquad
+\omega_d=4\int t^2\psi_d(t)^2dt=4(5d^2+1/6)=\frac{60d^2+2}{3}>0.
+\]
+The support intervals in \(t\) have disjoint interiors, proving orthogonality in the
+actual \(H\). Every integral here is absolutely convergent: the transformed supports
+are compact subsets of \((0,\infty)\), and alternatively the Hilbert pairings obey
+Cauchy–Schwarz.
+
+For any \(h\in H\), \(\langle u_d,h\rangle=-2\int\psi_d(t)h(1/t)\,dt\).
+For \(h=f_k\), the fractional part \(\{t/k\}\) has no jump in that support unless
+\(k\mid d\); in the latter case its only jump is the unit downward jump at \(d\).
+The constant and affine parts vanish by the first two moments, while the jump contributes
+\((-2)(-1)(1/2)=1\). For \(h=\chi\), the transformed function is
+\(\mathbf1_{[1,\infty)}\); the positive-half moment contributes \(-1\) when \(d=1\),
+and the full constant moment gives zero when \(d>1\). Consequently
+\[
+\langle u_d,f_k\rangle=\mathbf1_{k\mid d},\qquad
+\langle u_d,\chi\rangle=-\mathbf1_{d=1},\qquad a_0:=\omega_1=62/3.
+\]
+
+**37.3 引理及证明（Möbius 探针与逆约数和）。** Let \(\mu(1)=1\), let \(\mu(n)=0\)
+when a prime square divides \(n\), and otherwise let \(\mu(n)=(-1)^j\) for \(j\)
+distinct prime factors. Unique factorization gives
+\(\sum_{d\mid n}\mu(d)=\prod_{p\mid n}(1-1)=\mathbf1_{n=1}\). Define
+\[
+r_n=\sum_{d\mid n}\mu(n/d)u_d,\qquad \Lambda_n(h)=\langle r_n,h\rangle.
+\]
+These finite sums give bounded linear functionals, with
+\[
+\langle r_n,f_k\rangle=\delta_{nk},\quad
+\langle r_n,\chi\rangle=-\mu(n),\quad
+\|r_n\|^2=\sum_{d\mid n}\mu(n/d)^2\omega_d=:C_n>0,
+\qquad u_n=\sum_{d\mid n}r_d.
+\]
+For the first equality, the sum over \(d\mid n,k\mid d\) is zero if \(k\nmid n\)
+and otherwise equals \(\sum_{e\mid n/k}\mu(e)=\mathbf1_{n=k}\).
+For the inverse identity, the coefficient of \(u_e\) in the right side is
+\(\sum_{d:e\mid d\mid n}\mu(d/e)=\mathbf1_{e=n}\). All rearrangements are finite.
+If \(n\notin A\), continuity extends annihilation of finite dictionary sums to
+\(M_A\). These formulas retain the signs and full-half-axis normalization of 30.73–30.76.
+
+**37.4 定理及证明（任意有限联合 Gram 的严格正定性）。** Let
+\(E=\{n_1,\ldots,n_r\}\) be any finite set of distinct positive integers, ordered
+increasingly for matrices, and let \(T_Ez=\sum_{n\in E}z_nr_n\). Its Gram matrix is
+\[
+(K_E)_{nm}=\langle r_n,r_m\rangle
+=\sum_{d\mid\gcd(n,m)}\mu(n/d)\mu(m/d)\omega_d.
+\]
+For every \(z\in\mathbb C^E\), orthogonality of the \(u_d\) gives the full identity
+\[
+z^*K_Ez=\|T_Ez\|^2
+=\sum_{d\in\operatorname{Div}(E)}\omega_d
+ \left|\sum_{n\in E:d\mid n}\mu(n/d)z_n\right|^2,
+\quad \operatorname{Div}(E)=\bigcup_{n\in E}\{d:d\mid n\}.
+\]
+If \(z\ne0\), choose the largest integer \(n\in E\) with \(z_n\ne0\). The
+coefficient at \(u_n\) is exactly \(z_n\): any larger multiple in \(E\) has zero
+coefficient. Its positive summand proves \(K_E\succ0\). No squarefree restriction
+is used; square factors may kill \(\mu(n)\) but cannot kill the diagonal divisor term
+\(\mu(1)=1\). Thus the \(r_n\) are finitely independent over \(\mathbb C\).
+
+**37.5 定理及证明（联合最优投影与所有零情形）。** For nonempty \(E\), write
+\[
+b_E=(-\mu(n))_{n\in E}=T_E^*\chi,\quad
+\alpha_E=K_E^{-1}b_E,\quad p_E=T_E\alpha_E,\quad
+W_E=\operatorname{span}_{\mathbb C}\{r_n:n\in E\},\quad
+\beta_E=b_E^*K_E^{-1}b_E.
+\]
+The normal equations \(T_E^*(\chi-p_E)=b_E-K_E\alpha_E=0\) prove
+\(p_E=P_{W_E}\chi\), and
+\(\|p_E\|^2=\alpha_E^*K_E\alpha_E=\beta_E\in[0,1]\).
+For \(h=T_Ez\ne0\),
+\[
+\frac{|\langle h,\chi\rangle|^2}{\|h\|^2}
+=\frac{|z^*b_E|^2}{z^*K_Ez}\le\|p_E\|^2=\beta_E.
+\]
+Cauchy–Schwarz is applied to \(h,p_E\). If \(b_E\ne0\), equality holds precisely
+for nonzero complex multiples of \(p_E\), or equivalently of \(\alpha_E\) in
+coefficient space. If \(b_E=0\), then \(p_E=0,\beta_E=0\), and every nonzero
+\(h\in W_E\) has quotient zero and is a maximizer. In particular this happens when
+all indices in \(E\) are nonsquarefree. For \(E=\varnothing\), define
+\(W_E=\{0\},p_E=0,\beta_E=0\) and the optimized bound to be zero; there is no
+nonzero probe and no maximizing vector. No inverse of an empty matrix is required.
+
+**37.6 定理及证明（字典距离恒等式与残差坐标）。** If \(E\cap A=\varnothing\), then
+\(W_E\perp M_A\). Since \(\chi-p_E\perp W_E\), every \(g\in M_A\) satisfies
+\[
+\|\chi-g\|^2=\beta_E+\|\chi-p_E-g\|^2,
+\qquad D_A=\beta_E+\operatorname{dist}(\chi-p_E,M_A)^2\ge\beta_E.
+\]
+Because \(M_A\) is closed, equality \(D_A=\beta_E\) holds if and only if
+\(\chi-p_E\in M_A\). The optimized quotient is exact within \(W_E\); it supplies
+no general equality with the actual dictionary distance and no upper bound for that distance.
+More generally, for any finite sum \(P=\sum_k a_kf_k\), take absent coefficients to
+be zero and put \(a_E=(a_n)_{n\in E}\). Applying the same normal equations to
+\(\chi-P\) yields
+\[
+\|\chi-P\|^2\ge(b_E-a_E)^*K_E^{-1}(b_E-a_E).
+\]
+Equality in this inequality means \(\chi-P\in W_E\); the bound is zero precisely
+when \(a_E=b_E\). For empty \(E\) it is the inequality \(\|\chi-P\|^2\ge0\).
+
+**37.7 定理及证明（Schur 正分母与精确 Pythagoras 增量）。** Suppose \(j\notin E\),
+first with \(E\ne\varnothing\). Put
+\[
+g=T_E^*r_j,\quad a=\|r_j\|^2,\quad
+s_j=r_j-T_EK_E^{-1}g,\quad d=a-g^*K_E^{-1}g,\quad
+h=b_j-g^*K_E^{-1}b_E.
+\]
+Then \(T_E^*s_j=0\) and \(\|s_j\|^2=d\). If \(s_j=0\), the new probe would
+lie in \(W_E\), contradicting 37.4; hence \(d>0\). The full complex completed square is
+\[
+\begin{pmatrix}x\\z\end{pmatrix}^{\!*}
+\begin{pmatrix}K_E&g\\g^*&a\end{pmatrix}
+\begin{pmatrix}x\\z\end{pmatrix}
+=(x+K_E^{-1}gz)^*K_E(x+K_E^{-1}gz)+d|z|^2.
+\]
+Moreover \(\langle s_j,\chi\rangle=h\). Orthogonally adjoining \(s_j\) therefore gives
+\[
+p_{E\cup\{j\}}=p_E+\frac h d s_j,\qquad
+\beta_{E\cup\{j\}}-\beta_E=\frac{|h|^2}{d}.
+\]
+This is an exact Pythagorean gain in \(H\), not an assumption of orthogonal dictionary
+coordinates. It is strictly positive exactly when \(h\ne0\), and is zero exactly
+when \(\chi-p_E\perp r_j\), equivalently the new normal equation was already satisfied.
+
+**37.8 推论及证明（零增益的边界与平方因子）。** With an empty starting set, put
+\(s_j=r_j,d=C_j,h=b_j=-\mu(j)\). The gain is \(\mu(j)^2/C_j\), including zero.
+For a nonempty set whose target vector is zero, the gain vanishes exactly when \(b_j=0\).
+If all old and new indices have zero Möbius value, all bounds remain zero. In general,
+\(b_j=0\) alone does not imply zero gain: the residual value \(h\) is decisive.
+For a prime \(p\), take \(E=\{1\}\). Then \(r_1=u_1\), \(r_p=u_p-u_1\),
+\(K_E=a_0,b_E=-1,g=-a_0,b_p=1\); hence \(h=0,d=\omega_p>0\).
+This gives a nontrivial zero-gain example despite \(b_p\ne0\).
+Conversely take \(E=\{p\},j=p^2\). Since \(r_{p^2}=u_{p^2}-u_p\),
+\[
+K_E=\omega_p+a_0,\quad b_E=1,\quad g=-\omega_p,\quad b_{p^2}=0,
+\quad h=\frac{\omega_p}{\omega_p+a_0}>0,
+\quad d=\omega_{p^2}+\omega_p-\frac{\omega_p^2}{\omega_p+a_0}>0.
+\]
+The gain is positive. A squareful omitted index can improve a joint obstruction through
+correlations even though its individual target pairing vanishes.
+
+**37.9 引理及证明（有限有理消元的终止性）。** Given any finite distinct \(E\), all
+entries of \(K_E,b_E\) are rational. Trial division through integers bounded by each input
+integer determines its prime factors, exponents, divisors and Möbius value in finitely many
+integer operations. Rational arithmetic uses integer numerators and positive denominators;
+comparisons use cross multiplication. Successive Gaussian elimination without row swaps is
+valid for a positive definite matrix: the first pivot is positive and its Schur complement
+is positive definite, since its quadratic form is the minimum of the original form over the
+eliminated coordinate, as in 37.7. Induction gives a positive rational pivot at every step.
+More explicitly, for a block \(\left(\begin{smallmatrix}a&v^*\\v&C\end{smallmatrix}\right)\)
+and right side \((y_0,y)\), use the positive Schur block \(C-vv^*/a\) and right
+side \(y-vy_0/a\); after solving for \(z\), recover the first coordinate as
+\((y_0-v^*z)/a\). For \(z\ne0\), evaluating the original positive form at
+\((-v^*z/a,z)\) proves positivity of that Schur block. Back substitution terminates
+after the finite number of rows and gives the unique rational
+\(\alpha_E\), followed by \(\beta_E=b_E^{\mathsf T}\alpha_E\).
+All data are real rational here, although the theorem being certified is over complex
+coefficients. This is a paper construction using no real-number, logarithm, spectral or
+pseudoinverse oracle. Empty \(E\) directly returns an empty coefficient list and zero value.
+
+**37.10 定义及证明（有限自然数编码）。** Use the bijection
+\[
+\operatorname{Pair}(a,b)=2^a(2b+1)-1\quad(a,b\in\mathbb N_0).
+\]
+To decode \(N\), repeatedly divide \(N+1\) by two until it is odd, obtaining the
+unique exponent \(a\) and odd part \(2b+1\). The positive integer being divided strictly
+decreases, so this terminates. Encode an integer \(z\) by \(2z\) if \(z\ge0\), and
+by \(-2z-1\) if \(z<0\); even and odd codes give the inverse signs uniquely.
+Represent a rational by a numerator \(z\in\mathbb Z\) and denominator \(d\ge1\),
+with code \(\operatorname{Pair}(\operatorname{Sign}(z),d-1)\). Different unreduced
+representations denote the same rational exactly when cross products agree; canonical reduction
+is optional and can use Euclid's strictly decreasing nonnegative remainders.
+Encode a finite list by
+\[
+\operatorname{List}([])=0,\qquad
+\operatorname{List}([x_0,\ldots,x_{r-1}])
+=1+\operatorname{Pair}(x_0,\operatorname{List}([x_1,\ldots,x_{r-1}])).
+\]
+For a nonzero list code \(N=2^a(2b+1)\), the decoded tail \(b<N\). Thus decoding
+terminates on every natural input, including malformed typed records, and yields a unique
+finite list. Nested lists encode vectors and records. Checking length, integer sign, order,
+distinctness and rational equality consists of finite operations after decoding. This is the
+same finite coding convention as 30.47; a numerical tag below determines a distinct language.
+
+**37.11 定义与定理及证明（1021 联合证书）。** A tag-1021 certificate is the natural
+code of a five-field list
+\[
+[1021,\operatorname{List}(E),\operatorname{List}(\alpha),
+  \operatorname{Rat}(\beta),\operatorname{Rat}(\lambda)],
+\]
+where the coefficient list uses rational codes. Define the paper predicate
+\(\operatorname{VerifyJoint}(E,e)\) as follows. Check that the external \(E\) is a finite
+strictly increasing list of positive integers. Decode \(e\); reject a wrong tag, wrong
+length or ill-typed field, require exact equality of the encoded and external index lists,
+and require the coefficient length to equal \(|E|\). Recompute \(K_E,b_E\) by 37.9.
+For nonempty \(E\), perform the rational elimination of 37.9, require the recorded
+column to equal its unique solution, and check
+\[
+K_E\alpha=b_E,\qquad \beta=b_E^{\mathsf T}\alpha,
+\qquad 0\le\lambda\le\beta\le1.
+\]
+For empty \(E\), require an empty coefficient list and \(\beta=\lambda=0\).
+Each check is a finite integer/rational equality or comparison, so the predicate is total,
+returning rejection on every illegal input. Positive definiteness makes any accepted solution
+unique; 37.5 proves that its \(\beta\) is the exact joint value. Hence acceptance and the
+separate hypothesis \(E\cap A=\varnothing\) imply \(D_A\ge\lambda\).
+Conversely, finite rational elimination followed by \(\lambda=\beta_E\) constructs an
+accepted code for every legal \(E\), including empty \(E\). Both this generator and the
+verifier are mathematical definitions, with the above termination proofs. Arbitrary-set
+membership is not being decided: for unrestricted \(A\), omission remains an external premise.
+
+**37.12 定义与推论及证明（光滑成员判定与严格门槛）。** Let \(S\) be any finite set
+of primes, encoded increasingly, and let
+\(A_S=\{\prod_{p\in S}p^{e_p}:e_p\in\mathbb N_0\}\), including one.
+To decide \(n\in A_S\), repeatedly divide by each \(p\in S\) while divisible and
+accept exactly when the final quotient is one. Every division strictly decreases a positive
+integer; unique factorization proves correctness. For empty \(S\), this accepts exactly one.
+Primality itself has a finite integer definition: \(p\ge2\) and
+\(\gcd(d,p)=1\) for every \(2\le d<p\). Composite \(p\) has a proper prime divisor
+in that range; a prime has none. Equivalently one may test that no integer \(2\le d<p\) divides
+\(p\), which is the direct trial-division primality predicate. Euclid's algorithm terminates for every such gcd.
+
+Define \(\operatorname{VerifySmoothObstruction}(S,m,e)\) to check this legal prime list,
+\(m\in\mathbb N_+\), the tag-1021 record and \(\operatorname{VerifyJoint}(E,e)\)
+for its decoded \(E\), every \(n\in E\) outside \(A_S\), and \(m\lambda\ge1\).
+This is a total predicate with decidable omission, unlike arbitrary \(A\).
+Acceptance proves that every finite \(A_S\)-dictionary sum, and every member of its closure,
+has residual square at least \(D_{A_S}\ge\lambda\ge1/m\). Therefore a strict residual
+square \(<1/m\) is impossible even when \(\lambda=1/m\). Failure to accept a particular
+code gives no existence assertion and does not assert that any desired threshold is attainable.
+
+**37.13 定理及证明（有限素数族的共享原子公式）。** Let \(P\) be a finite set of
+primes. Since \(r_p=u_p-u_1\), writing \(\mathbf1\) for the all-one column gives
+\[
+K_P=\operatorname{diag}(\omega_p)_{p\in P}+a_0\mathbf1\mathbf1^*,
+\quad b_P=\mathbf1,\quad t_P=\sum_{p\in P}\frac1{\omega_p},
+\quad \phi(t)=\frac{t}{1+a_0t}.
+\]
+For nonempty \(P\), the column
+\(\alpha_p=1/[\omega_p(1+a_0t_P)]\) solves the normal equations because its
+\(p\)-th row is \(1/(1+a_0t_P)+a_0t_P/(1+a_0t_P)=1\). Thus
+\[
+p_P=\frac{\sum_{p\in P}u_p/\omega_p-t_Pu_1}{1+a_0t_P},
+\qquad\beta_P=\phi(t_P).
+\]
+The shared \(u_1\) term is essential; discarding it would incorrectly diagonalize the
+\(r_p\) Gram matrix. For one prime, \(\beta_{\{p\}}=1/(\omega_p+a_0)
+=3/(60p^2+64)\). For empty \(P\), use \(t_P=\beta_P=0,p_P=0\).
+For \(v>u\ge0\),
+\[
+\phi(v)-\phi(u)=\frac{v-u}{(1+a_0u)(1+a_0v)}>0,
+\]
+so every additional prime strictly increases the finite bound, though every finite value is
+less than \(1/a_0\).
+
+**37.14 算例及证明（2357 字典、11 与 13、1432 门槛）。** For
+\(S=\{2,3,5,7\}\), the integers 11 and 13 are primes outside \(S\). Neither is
+divisible by 2 or 3; any factorization with both factors at least 4 would have product at
+least 16. Hence both are omitted from \(A_S\). Their weights are
+\(\omega_{11}=7262/3\), \(\omega_{13}=10142/3\), and
+\[
+K_{\{11,13\}}=\frac13\begin{pmatrix}7324&62\\62&10204\end{pmatrix},
+\quad t=\frac{52212}{73651204},\quad
+1+a_0t=\frac{73651204+1079048}{73651204}
+=\frac{74730252}{73651204}.
+\]
+Consequently
+\[
+D_{A_S}\ge\beta_{\{11,13\}}=\frac{52212}{74730252}
+=\frac{4351}{6227521}.
+\]
+The same exact algebra follows from
+\(7324\cdot10204-62^2=74730252\) and the inverse quadratic-form numerator
+\(3(7324+10204-124)=52212\). The integer endpoint calculation is
+\[
+4351\cdot1431=6226281<6227521<6230632=4351\cdot1432.
+\]
+Thus \(\beta<1/1431\) but \(\beta>1/1432\); every integer \(m\ge1432\) excludes
+strict residual square \(<1/m\). For \(m<1432\) this argument makes no witness-existence
+claim. The individual bound \(3/7324\) and its \(m\ge2442\) exclusion in 30.77 remain
+valid. This is an exact rational paper example in the approximation model, separate from
+Robin's strict \(n>5040\) domain and the slab comparison \(G\).
+
+**37.15 定理及证明（无限遗漏素数空间中的实际范数收敛）。** For finite \(S\), let
+\(\mathcal P_S\) be the primes outside \(S\). This set is infinite: given any finite
+list containing \(S\), a prime divisor of one plus its product lies outside that list.
+Set
+\[
+t_\infty(S)=\sum_{p\in\mathcal P_S}\frac1{\omega_p},\qquad
+W_{\mathrm{pr},S}=\overline{\operatorname{span}_{\mathbb C}\{r_p:p\in\mathcal P_S\}}.
+\]
+For \(n\ge2\), \(1/\omega_n=3/(60n^2+2)<1/(20n^2)\); the telescoping majorant
+\(1/n^2\le1/[n(n-1)]\) gives \(0<t_\infty(S)\le1/20\).
+For finite \(P\subset\mathcal P_S\), put
+\(q_P=\sum_{p\in P}r_p/\omega_p=\sum_{p\in P}u_p/\omega_p-t_Pu_1\).
+For any finite \(P,P'\), actual orthogonality gives
+\[
+\|q_P-q_{P'}\|^2
+=\sum_{p\in P\mathbin\triangle P'}\frac1{\omega_p}
+ +a_0(t_P-t_{P'})^2.
+\]
+Absolute convergence of the positive series makes this net Cauchy: once both finite sets
+contain a fixed sufficiently large finite core, both terms are bounded by its vanishing tail
+and its square. Completeness of \(H\) gives
+\[
+q_\infty=\sum_{p\in\mathcal P_S}\frac{u_p}{\omega_p}-t_\infty u_1
+\in W_{\mathrm{pr},S},\qquad
+\|q_\infty\|^2=t_\infty+a_0t_\infty^2.
+\]
+The series denotes convergence in the original norm, not merely coefficientwise convergence
+or a formal weighted-sequence expression.
+
+**37.16 定理及证明（无限素数限制空间的达到与有限不达到）。** Put
+\(p_\infty=q_\infty/(1+a_0t_\infty)\). For each omitted prime,
+\[
+\langle r_p,q_\infty\rangle=1+a_0t_\infty,
+\qquad \langle r_p,\chi-p_\infty\rangle=0.
+\]
+Continuity extends these equations from finite sums to \(W_{\mathrm{pr},S}\).
+Hence \(p_\infty=P_{W_{\mathrm{pr},S}}\chi\) and
+\[
+\beta_\infty(S):=\|p_\infty\|^2=\phi(t_\infty(S))
+=\sup_{0\ne h\in W_{\mathrm{pr},S}}
+ \frac{|\langle h,\chi\rangle|^2}{\|h\|^2}
+=\sup_{P\subset\mathcal P_S\text{ finite}}\beta_P.
+\]
+The first supremum is attained exactly by nonzero complex multiples of \(p_\infty\).
+The last equality follows from convergence of finite sums and continuity of \(\phi\).
+Every finite \(P\) has \(t_P<t_\infty\), because an omitted prime remains outside it;
+thus \(\beta_P<\beta_\infty\). Equivalently the maximizing vector has infinitely many
+nonzero orthogonal \(u_p\) coordinates, and no finite prime combination can equal it.
+Since \(W_{\mathrm{pr},S}\perp M_{A_S}\),
+\[
+D_{A_S}=\beta_\infty+
+ \operatorname{dist}(\chi-p_\infty,M_{A_S})^2\ge\beta_\infty.
+\]
+Equality requires the displayed residual to belong to \(M_{A_S}\). Attainment inside the
+closed probe space does not establish that condition or infinite coefficient attainment in
+the original dictionary synthesis problem.
+
+**37.17 定义与定理及证明（1022 总有理包络）。** For an integer \(B\ge1\), define
+\[
+t_B=\sum_{\substack{p\le B\\p\in\mathcal P_S}}\frac1{\omega_p},
+\quad L_B=\phi(t_B),\quad U_B=\phi(t_B+1/(20B)).
+\]
+The omitted-prime tail is bounded by the larger integer tail:
+\[
+0<t_\infty-t_B\le\frac1{20}\sum_{n>B}\frac1{n^2}
+\le\frac1{20}\sum_{n>B}\left(\frac1{n-1}-\frac1n\right)=\frac1{20B}.
+\]
+Thus \(L_B<\beta_\infty\le U_B\) and
+\(0<U_B-L_B\le1/(20B)\), by 37.13's difference formula. Given rational
+\(\eta>0\), choose \(B=1+\lfloor1/(20\eta)\rfloor\); then the width is strictly
+less than \(\eta\), including when \(1/(20\eta)\) is an integer.
+
+Using 37.10, encode the seven fields
+\([1022,S,\eta,B,t_B,L_B,U_B]\), with natural-list and rational types as appropriate.
+The paper predicate \(\operatorname{VerifyPrimeEnvelope}(S,\eta,e)\) binds the encoded \(S,\eta\) to the external legal prime list and
+positive rational precision, requires integer \(B\ge1\), recomputes all primes at most
+\(B\) by the finite primality predicate of 37.12 and removes those in \(S\), and checks
+all three rational values exactly, \(0\le L_B\le U_B\le1\), and \(U_B-L_B<\eta\).
+Malformed types, lengths or tags are rejected. Finite primality checks, positive denominators,
+finite coding and rational comparison prove totality and soundness. The displayed formula for
+\(B\), followed by these finite sums and encoding, is a total rational enclosure generator.
+It certifies \(\beta_\infty\), not an upper bound for \(D_{A_S}\).
+
+**37.18 推论及证明（素数包络的严格与等号门槛）。** If
+\(\beta_\infty(S)>1/m\), the positive margin and \(L_B\to\beta_\infty\) ensure
+that sufficiently fine total enclosures have \(L_B\ge1/m\); the corresponding finite
+prime set gives a tag-1021 strict-residual obstruction. If instead
+\(\beta_\infty(S)=1/m\), the analytic lower bound still excludes residual square
+\(<1/m\), but every finite prime \(P\) has \(\beta_P<1/m\) and cannot certify that
+threshold using its exact joint value. This states a conditional equality boundary, not that
+such an equality occurs for a particular \(S,m\). A procedure waiting for threshold
+acceptance has no unconditional termination theorem. Total generation at a prescribed precision
+is a different assertion. These facts give no universal finite cutoff in \(m\), no upper
+bound for the actual distance, and no sufficiency theorem for the original RH approximation
+criterion.
+
+**37.19 定义与引理及证明（光滑—粗糙分解与两个有限张成式）。** Fix any finite prime
+set \(S\), put \(Q=\prod_{p\in S}p\) (empty product one), and define
+\[
+A_S=\{\text{positive integers with all prime factors in }S\},\qquad
+R_S=\{b\ge1:\gcd(b,Q)=1\}.
+\]
+Unique factorization gives a unique \(n=ab\), \(a\in A_S,b\in R_S\), with
+\(\gcd(a,b)=1\); omission from \(A_S\) is equivalent to \(b>1\).
+Let
+\(W_S=\overline{\operatorname{span}_{\mathbb C}\{r_n:n\notin A_S\}}\).
+For every \(a\in A_S,b\in R_S,b>1\), finite inversion in 37.3 gives
+\[
+u_{ab}-u_a=\sum_{c\mid a}\sum_{\substack{e\mid b\\e>1}}r_{ce},
+\tag{37.A}
+\]
+where \(u\) denotes the same atom as above. Indeed divisors of \(ab\) have unique form
+\(ce\), and subtracting the sum for \(a\) removes precisely \(e=1\).
+Conversely, multiplicativity of \(\mu\) on coprime factors gives
+\[
+r_{ab}=\sum_{c\mid a}\mu(a/c)
+ \sum_{\substack{e\mid b\\e>1}}\mu(b/e)(u_{ce}-u_c).
+\tag{37.B}
+\]
+To see the coefficient at \(u_c\), use
+\(\sum_{e\mid b,e>1}\mu(b/e)=-\mu(b)\) for \(b>1\). Thus the right side recovers
+also the missing \(e=1\) term of \(\sum_{c\mid a,e\mid b}\mu(a/c)\mu(b/e)u_{ce}\).
+Every \(ce\) with \(e>1\) is omitted, so these two identities prove equality of the
+algebraic finite spans of all omitted \(r_n\) and all differences \(u_{ab}-u_a\).
+Taking closures preserves equality. For \(S=\varnothing\), \(A_S=\{1\}\),
+\(R_S=\mathbb N_+\), and both formulas apply unchanged.
+
+**37.20 定理及证明（实际 Hilbert 空间中的加权坐标与正交块）。** Set
+\[
+U=\overline{\operatorname{span}_{\mathbb C}\{u_d:d\ge1\}},\qquad
+U_a=\overline{\operatorname{span}_{\mathbb C}\{u_{ab}:b\in R_S\}}\quad(a\in A_S).
+\]
+Every sequence with \(\sum_d\omega_d|x_d|^2<\infty\) determines an actual vector
+\(\sum_dx_du_d\in H\): differences of finite partial sums have squared norm equal
+to the corresponding weighted tail. Completeness gives convergence, independent of the
+exhaustion. The norm identity passes to the limit. Conversely the finite-sum isometry extends
+from the completion of finitely supported weighted sequences onto \(U\), by its definition;
+uniqueness of the coordinates follows from pairing with each nonzero \(u_d\).
+Grouping the nonnegative norm series using the unique factorization \(d=ab\) proves
+\[
+U=\mathop{\bigoplus}_{a\in A_S}U_a,\qquad
+h=\sum_{a\in A_S}h_a,\quad
+h_a=\sum_{b\in R_S}x_{a,b}u_{ab},\quad
+\|h\|^2=\sum_a\sum_b\omega_{ab}|x_{a,b}|^2.
+\]
+The block series converges in \(H\); for any tolerance, a finite number of blocks accounts
+for all but an arbitrarily small squared norm. This proves a coordinate representation of
+\(U\), without claiming that \(U=H\). Complex moduli and conjugation remain essential.
+
+**37.21 定理及证明（每块有界系数和与 Riesz 向量）。** For \(a\in A_S\), let
+\[
+s_a=\sum_{b\in R_S}\frac1{\omega_{ab}},\qquad
+\ell_a\left(\sum_bx_bu_{ab}\right)=\sum_bx_b,\qquad
+g_a=\sum_{b\in R_S}\frac{u_{ab}}{\omega_{ab}}.
+\]
+These are well-defined because
+\[
+0<s_a\le\frac1{20a^2}\sum_{b\ge1}\frac1{b^2}
+\le\frac1{10a^2},\qquad
+\sum_b|x_b|\le
+ \left(\sum_b\omega_{ab}|x_b|^2\right)^{1/2}s_a^{1/2}.
+\]
+The estimate \(\sum_{b\ge1}b^{-2}\le2\) follows from the same telescoping bound after
+separating \(b=1\). Thus the coefficient sum converges absolutely for every vector of
+\(U_a\), is complex-linear, and has norm at most \(\sqrt{s_a}\).
+The series for \(g_a\) converges in \(H\) by 37.20, with
+\(\|g_a\|^2=s_a\), and the first-variable convention gives
+\(\langle g_a,h\rangle=\ell_a(h)\). Evaluating at \(g_a\) proves the norm is exactly
+\(\sqrt{s_a}\). This is a continuous functional on the completed block, not a formal
+sum on finite supports only.
+
+**37.22 定理及证明（有限差的核稠密性与尾项）。** Let
+\(K_a=\ker\ell_a\subset U_a\). Every difference \(u_{ab}-u_a\), \(b>1\), has
+coefficient sum zero. Thus its closed span is contained in the closed subspace \(K_a\).
+For the reverse inclusion let \(h=\sum_{b\in R_S}x_bu_{ab}\in K_a\).
+Absolute convergence gives \(x_1=-\sum_{b>1}x_b\). For a finite set
+\(F\subset R_S\setminus\{1\}\), form the finite-difference vector
+\[
+y_F=\sum_{b\in F}x_b(u_{ab}-u_a).
+\]
+Its error has the exact squared norm
+\[
+\|h-y_F\|^2=\sum_{\substack{b>1\\b\notin F}}\omega_{ab}|x_b|^2
+ +\omega_a\left|\sum_{\substack{b>1\\b\notin F}}x_b\right|^2
+\le\left(1+\omega_a\sum_{\substack{b>1\\b\notin F}}\frac1{\omega_{ab}}\right)
+ \sum_{\substack{b>1\\b\notin F}}\omega_{ab}|x_b|^2.
+\]
+The last inequality is weighted Cauchy–Schwarz, valid for complex coefficients. As \(F\)
+exhausts the rough integers greater than one, the weighted norm tail tends to zero and the
+reciprocal tail is bounded (and also tends to zero). Therefore \(y_F\to h\) in the
+actual norm, proving
+\(K_a=\overline{\operatorname{span}_{\mathbb C}\{u_{ab}-u_a:b\in R_S,b>1\}}\).
+
+**37.23 定理及证明（完整闭空间与精确的相对补空间）。** Equations (37.A)–(37.B) and
+37.22 imply
+\[
+W_S=\mathop{\bigoplus}_{a\in A_S}K_a.
+\]
+For completeness, the right side is closed: a norm-convergent sequence of its vectors has
+block projections converging in each \(U_a\), and the continuous \(\ell_a\) still
+vanishes. Every omitted probe belongs to this sum by (37.B), proving one inclusion.
+Conversely, given \(h=\sum_a h_a\) in the sum, first retain finitely many \(a\) so
+that the discarded block squared norm is small; approximate each retained \(h_a\) by
+37.22 and sum the finitely many errors. Orthogonality makes their squared norms additive.
+Equations (37.A) then express the resulting vector as a finite omitted-probe sum.
+This handles infinitely many smooth blocks. The condition is one zero coefficient sum in
+each block; it cannot be replaced by a single sum across all blocks.
+
+Within \(U_a\), the Riesz identity proves
+\(K_a^\perp\cap U_a=\operatorname{span}_{\mathbb C}\{g_a\}\): explicitly,
+\(h_a-(\ell_a(h_a)/s_a)g_a\in K_a\). Define
+\[
+G_S=\left\{\sum_a\lambda_ag_a:\sum_as_a|\lambda_a|^2<\infty\right\}.
+\]
+Then \(U=W_S\oplus G_S\) orthogonally. The corresponding projection series converges,
+since \(\sum_a|\ell_a(h_a)|^2/s_a\le\sum_a\|h_a\|^2\).
+In the full ambient space the exact statement is
+\[
+W_S^\perp=U^\perp\oplus G_S.
+\]
+It neither removes \(U^\perp\) nor identifies \(W_S\) with the full orthogonal
+complement of the original dictionary closure. In particular this orthogonal block theorem
+does not diagonalize either the \(r_n\) or the \(f_n\) Gram matrices.
+
+**37.24 定理及证明（粗糙级数与实际投影候选的收敛）。** Define
+\[
+T_S=\sum_{\substack{b>1\\\gcd(b,Q)=1}}\frac1{\omega_b}
+=\sum_{\substack{b>1\\\gcd(b,Q)=1}}\frac3{60b^2+2},\qquad
+\rho_S=1+a_0T_S.
+\]
+There are infinitely many rough integers \(kQ+1\), \(k\ge1\), so \(T_S>0\).
+The integer-series bound proves \(T_S\le1/20\) and \(\rho_S>0\).
+For finite \(F\subset R_S\setminus\{1\}\), put
+\[
+T_F=\sum_{b\in F}\frac1{\omega_b},\qquad
+q_F=\sum_{b\in F}\frac{u_b-u_1}{\omega_b}.
+\]
+As in 37.15,
+\(\|q_F-q_{F'}\|^2=\sum_{b\in F\triangle F'}1/\omega_b
++a_0(T_F-T_{F'})^2\); hence in \(H\)
+\[
+q_S=\lim_Fq_F=\sum_{\substack{b\in R_S\\b>1}}\frac{u_b}{\omega_b}-T_Su_1
+\in K_1\subset W_S,\quad
+\|q_S\|^2=T_S+a_0T_S^2,\quad
+\langle q_S,\chi\rangle=T_S.
+\]
+Membership also follows from 37.21: the absolutely summable coefficients add to zero.
+All nonzero rough coordinates of this vector are retained; none of its infinite support is
+being replaced by an abstract surrogate space.
+
+**37.25 定理及证明（完整遗漏探针族的最优值与所有达到者）。** Put
+\[
+p_S=\frac{q_S}{\rho_S},\qquad
+\Gamma_S=\frac{T_S}{1+(62/3)T_S}.
+\]
+For \(a=1\) and rough \(b>1\),
+\(\langle u_b-u_1,q_S\rangle=1+a_0T_S=\rho_S\), whereas
+\(\langle u_b-u_1,\chi\rangle=1\). For any \(a>1\), both \(u_{ab},u_a\)
+are orthogonal to \(q_S\), and both have zero target pairing; hence the same projection
+equation holds with both sides zero. Equations (37.A)–(37.B), linearity in the second
+variable, conjugate-linearity in the first, and continuity prove
+\(\chi-p_S\perp W_S\). Since \(p_S\in W_S\), this is the actual projection onto
+the entire omitted-probe space, even though \(p_S\) lies entirely in \(K_1\).
+Therefore
+\[
+\sup_{0\ne h\in W_S}\frac{|\langle h,\chi\rangle|^2}{\|h\|^2}
+=\|p_S\|^2=\Gamma_S,\qquad 0<\Gamma_S<\frac1{a_0}=\frac3{62}.
+\]
+Cauchy–Schwarz shows that equality is attained exactly by nonzero complex multiples of
+\(p_S\). The strict upper bound follows from \(1+a_0T_S>a_0T_S\).
+An independent expression within the same proof is
+\[
+P_U\chi=-u_1/a_0,\quad s_1=1/a_0+T_S,\quad
+P_{K_1}\chi=-u_1/a_0+g_1/(a_0s_1)=p_S,
+\quad \Gamma_S=\frac1{a_0}-\frac1{a_0^2s_1}.
+\]
+Indeed \(\ell_1(-u_1/a_0)=-1/a_0\), and subtracting its \(g_1\) component gives
+the displayed vector. All other target block projections are zero. This explains why the
+maximizer lives in the \(a=1\) kernel without claiming that the other kernels vanish.
+For empty \(S\) the same theorem applies with one block and all integers rough.
+
+**37.26 定理及证明（完整字典距离的正交剩余项）。** Every omitted \(r_n\) annihilates
+\(M_{A_S}\) by 37.3; continuity gives \(W_S\perp M_{A_S}\). Also
+\(\chi-p_S\perp W_S\), so for every \(g\in M_{A_S}\), the vectors \(p_S\) and
+\(\chi-p_S-g\) are orthogonal. Pythagoras and then the infimum give
+\[
+\|\chi-g\|^2=\Gamma_S+\|\chi-p_S-g\|^2,
+\qquad D_{A_S}=\Gamma_S+
+ \operatorname{dist}(\chi-p_S,M_{A_S})^2.
+\]
+In particular \(D_{A_S}\ge\Gamma_S>0\). Equality is equivalent to
+\(\chi-p_S\in M_{A_S}\), since this subspace is closed. That extra approximation
+statement is not supplied by the projection theorem. Neither \(W_S=M_{A_S}^\perp\)
+nor \(D_{A_S}=\Gamma_S\) is being asserted.
+
+**37.27 推论及证明（严格强于无限素数限制值）。** The omitted primes form a subset of
+the rough integers greater than one, and 37.15–37.16 give their exact closed-space value
+\(\beta_\infty(S)=\phi(t_\infty(S))\). A prime divisor \(p\) of \(Q+1\) is
+outside \(S\); \(p^2\) is rough and composite, so it contributes to \(T_S\) but
+not to \(t_\infty(S)\). Thus
+\[
+T_S-t_\infty(S)\ge\frac1{\omega_{p^2}}>0,\qquad
+\Gamma_S-\beta_\infty(S)
+=\frac{T_S-t_\infty(S)}{(1+a_0T_S)(1+a_0t_\infty(S))}>0.
+\]
+The proof includes empty \(S\), for which \(Q+1=2\). It uses positivity and finite
+factorization, without any prime-density estimate. This is a strict improvement of one
+restricted dual optimum over another; the unknown remainder in 37.26 remains separate.
+
+**37.28 定义与引理及证明（粗糙截断的约数闭性与两个有限逆式）。** Fix integer
+\(B\ge1\) and set
+\[
+E_B=\{n:2\le n\le B,\ \gcd(n,Q)=1\},\qquad v_n=u_n-u_1\quad(n\in E_B).
+\]
+If \(d\mid n\in E_B\) and \(d>1\), then \(d\le n\le B\) and
+\(\gcd(d,Q)=1\); thus \(d\in E_B\). For every \(n\in E_B\), 37.3 and the
+Möbius divisor sum prove both finite identities
+\[
+v_n=\sum_{\substack{d\mid n\\d>1}}r_d,\qquad
+r_n=\sum_{\substack{d\mid n\\d>1}}\mu(n/d)v_d.
+\tag{37.C}
+\]
+The first subtracts \(r_1=u_1\) from \(u_n=\sum_{d\mid n}r_d\).
+For the second, the coefficient of \(u_1\) on the right is
+\(-\sum_{d\mid n,d>1}\mu(n/d)=\mu(n)\), exactly the omitted \(d=1\) term
+in \(r_n\). Thus these are identities in \(H\), and divisor closure keeps every
+index in the same finite set. Their spans are equal for every \(B\), with both spans
+zero if \(E_B\) is empty.
+
+**37.29 引理及证明（列变换与显式双边逆）。** Suppose \(E_B\ne\varnothing\) and order
+its elements increasingly. Define synthesis maps \(Vc=\sum_{n\in E_B}c_nv_n\) and
+\(R\alpha=\sum_{n\in E_B}\alpha_nr_n\), and real matrices indexed by \(d,n\in E_B\):
+\[
+M_{dn}=\mathbf1_{d\mid n}\mu(n/d),\qquad
+Z_{dn}=\mathbf1_{d\mid n}.
+\]
+They are upper triangular with diagonal one. For \(d\mid n\), divisor closure ensures
+all intermediate \(k\), \(d\mid k\mid n\), lie in \(E_B\), and
+\[
+(MZ)_{dn}=\sum_{d\mid k\mid n}\mu(k/d)=\mathbf1_{d=n},\qquad
+(ZM)_{dn}=\sum_{d\mid k\mid n}\mu(n/k)=\mathbf1_{d=n}.
+\]
+When \(d\nmid n\), both sums are empty and both entries zero. Therefore
+\(MZ=ZM=I\) and \(M^{-1}=Z\). Equations (37.C) give
+\[
+R=VM,\qquad V=RZ,\qquad c=M\alpha,\qquad\alpha=M^{-1}c=Zc.
+\tag{37.D}
+\]
+These are column-coefficient identities over \(\mathbb C\); there is no conjugation in
+a synthesis coefficient change. Adjoint conjugation enters when transforming a Gram matrix
+or target column, as follows.
+
+**37.30 定理及证明（正确的 Gram、目标列与非对角性）。** Let \(\mathbf1\) be the
+all-one column indexed by \(E_B\). Orthogonality of the atoms gives
+\[
+G=V^*V=\operatorname{diag}(\omega_n)+a_0\mathbf1\mathbf1^*,\qquad
+V^*\chi=\mathbf1,
+\quad K=R^*R=M^*GM,
+\quad b=R^*\chi=M^*\mathbf1.
+\tag{37.E}
+\]
+In coordinates,
+\[
+K_{ij}=\sum_{d,e\in E_B}\overline{M_{di}}G_{de}M_{ej},\qquad
+b_i=\sum_{d\in E_B}\overline{M_{di}}\langle v_d,\chi\rangle.
+\]
+Since \(M\) is real, these are \(K=M^{\mathsf T}GM\) and
+\(b=M^{\mathsf T}\mathbf1\). Reality does not remove the transpose.
+The target sum is \(\sum_{d\mid i,d>1}\mu(i/d)=-\mu(i)\), as required by 37.3.
+The direct atom expansion gives the same matrix:
+\[
+K_{nm}=\sum_{d\mid\gcd(n,m)}\mu(n/d)\mu(m/d)\omega_d.
+\]
+For complex columns,
+\[
+\|Vc\|^2=c^*Gc=\sum_n\omega_n|c_n|^2+a_0\left|\sum_nc_n\right|^2,
+\quad \langle Vc,\chi\rangle=c^*\mathbf1,
+\quad \|R\alpha\|^2=\alpha^*K\alpha,
+\quad\langle R\alpha,\chi\rangle=\alpha^*b.
+\]
+Positive weights prove \(G\succ0\), and invertibility of \(M\) gives \(K\succ0\).
+For distinct \(v_n,v_m\), the off-diagonal Gram entry is \(a_0\); the \(r_n\)
+Gram is also generally non-diagonal, as both 37.13 and 37.33 show. Orthogonal \(u_d\)
+coordinates do not imply diagonal original-probe coordinates. Equations (37.D)–(37.E) fix
+all vector, matrix and normal-equation orientations used below.
+
+**37.31 定理及证明（两个基中的直接解与最优投影）。** Write
+\[
+T_B=\sum_{n\in E_B}\frac1{\omega_n},\quad\rho_B=1+a_0T_B,\qquad
+c_n^0=\frac1{\omega_n\rho_B},\quad
+\alpha_d^0=(Zc^0)_d=\frac1{\rho_B}\sum_{\substack{n\in E_B\\d\mid n}}\frac1{\omega_n}.
+\]
+Every denominator is positive and every coefficient is rational. In the \(n\)-th row,
+\((Gc^0)_n=1/\rho_B+a_0T_B/\rho_B=1\). Using (37.D)–(37.E) gives both normal
+equations
+\[
+Gc^0=\mathbf1,\qquad K\alpha^0=M^*GM\alpha^0=M^*Gc^0=M^*\mathbf1=b.
+\]
+Positive definiteness makes these the unique solutions even over complex coefficient space;
+their rational reality is a consequence of the real data, not a restriction of the optimization.
+The common vector is
+\[
+p_B=Vc^0=R\alpha^0
+=\frac{\sum_{n\in E_B}u_n/\omega_n-T_Bu_1}{\rho_B}
+=P_{W_{E_B}}\chi.
+\]
+Its norm and target pairing are
+\(\|p_B\|^2=\langle p_B,\chi\rangle=T_B/\rho_B\). Thus the optimal quotient
+is \(\beta_{E_B}=\phi(T_B)\), attained exactly by its nonzero complex multiples.
+For nonempty \(E_B\), \(T_B>0\); no zero-target exception occurs in this finite family.
+
+**37.32 引理及证明（完整标量抵消与空截断）。** With the same nonempty matrices,
+\[
+K^{-1}=M^{-1}G^{-1}(M^*)^{-1},\qquad
+b^*=(M^*\mathbf1)^*=\mathbf1^*M.
+\]
+Therefore the entire basis-invariance calculation is
+\[
+b^*K^{-1}b
+=\mathbf1^*M\,M^{-1}G^{-1}(M^*)^{-1}M^*\mathbf1
+=\mathbf1^*G^{-1}\mathbf1=\frac{T_B}{1+a_0T_B}.
+\]
+The transposes in (37.E) are necessary for these cancellations; a left factor \(M\)
+instead of \(M^*\) is generally false. Thus the scalar value survives the correct basis
+change for a proved reason. If \(E_B=\varnothing\), define \(T_B=0,\rho_B=1\),
+\(V,R\) to be the zero maps on the zero-dimensional coefficient space, \(p_B=0\),
+and \(\beta_{E_B}=0\). Use the empty coefficient columns and no inverse formula.
+There are no nonzero quotient competitors; the optimized lower-bound convention is zero.
+The later tail enclosure remains nontrivial despite this zero lower endpoint.
+
+**37.33 算例及证明（\(S=\{3\},B=4\) 的列转置与矩阵）。** Here \(Q=3\) and
+\(E_B=\{2,4\}\), because 2 and 4 are coprime to 3 and 3 is not. The Möbius values
+are \(\mu(1)=1,\mu(2)=-1,\mu(4)=0\); hence
+\(r_2=v_2=u_2-u_1\), \(r_4=v_4-v_2=u_4-u_2\). In increasing order,
+\[
+M=\begin{pmatrix}1&-1\\0&1\end{pmatrix},\quad
+M^{\mathsf T}=\begin{pmatrix}1&0\\-1&1\end{pmatrix},\quad
+Z=M^{-1}=\begin{pmatrix}1&1\\0&1\end{pmatrix},\quad
+\mathbf1=\binom11,
+\quad b=M^{\mathsf T}\mathbf1=\binom10,\quad M\mathbf1=\binom01.
+\]
+The last two columns differ. With \(a_0=62/3,\omega_2=242/3,\omega_4=962/3\),
+\[
+G=\frac13\begin{pmatrix}304&62\\62&1024\end{pmatrix},\quad
+GM=\frac13\begin{pmatrix}304&-242\\62&962\end{pmatrix},\quad
+K=M^{\mathsf T}GM=\frac13\begin{pmatrix}304&-242\\-242&1204\end{pmatrix}.
+\]
+Directly, \(\|r_2\|^2=\omega_2+a_0=304/3\),
+\(\langle r_2,r_4\rangle=-\omega_2=-242/3\), and
+\(\|r_4\|^2=\omega_4+\omega_2=1204/3\), confirming the same \(K\).
+In contrast the product
+\(MGM=\frac13\left(\begin{smallmatrix}242&-1204\\62&962\end{smallmatrix}\right)\)
+is not symmetric and cannot be this Gram matrix. This exact finite example demonstrates both
+the necessary transpose and the non-diagonality of the \(r_n\) basis.
+
+**37.34 算例及证明（逆矩阵、两个正规方程与非零 \(r_4\) 系数）。** The two integer
+matrix determinants in 37.33 coincide:
+\[
+\Delta=304\cdot1024-62^2=304\cdot1204-242^2=307452.
+\]
+Consequently
+\[
+G^{-1}=\frac3\Delta\begin{pmatrix}1024&-62\\-62&304\end{pmatrix},\qquad
+K^{-1}=\frac3\Delta\begin{pmatrix}1204&242\\242&304\end{pmatrix}.
+\]
+The solutions and coefficient conversion are
+\[
+c^0=G^{-1}\mathbf1=\frac1{51242}\binom{481}{121},\qquad
+\alpha^0=K^{-1}b=\frac1{51242}\binom{602}{121}=Zc^0,
+\quad M\alpha^0=c^0.
+\]
+Both normal equations can be read as integer identities:
+\[
+\begin{pmatrix}304&62\\62&1024\end{pmatrix}\binom{481}{121}
+=\binom{153726}{153726},\qquad
+\begin{pmatrix}304&-242\\-242&1204\end{pmatrix}\binom{602}{121}
+=\binom{153726}{0},\qquad 3\cdot51242=153726.
+\]
+Also
+\[
+T_B=\frac3{242}+\frac3{962}=\frac{903}{58201},\quad
+\rho_B=\frac{76863}{58201},\quad
+\beta_{E_B}=\frac{301}{25621}=\frac{602}{51242}.
+\]
+The actual common projection is
+\[
+p_B=\frac{481v_2+121v_4}{51242}
+=\frac{602r_2+121r_4}{51242}
+=\frac{-602u_1+481u_2+121u_4}{51242}.
+\]
+The \(r_4\) coefficient is nonzero although \(b_4=-\mu(4)=0\). This illustrates
+precisely why a zero target coordinate cannot justify deleting a correlated finite probe.
+All displayed numbers are exact rational identities; no numerical approximation is needed.
+
+**37.35 定理及证明（所有有限遗漏集的严格差与完整上确界）。** For any finite
+\(E\subset\mathbb N_+\setminus A_S\), use the full Gram matrix and projection of
+37.4–37.5, not only prime or rough indices. Since \(W_E\subset W_S\) and
+\(\chi-p_S\perp W_S\), one has \(p_E=P_{W_E}p_S\). Thus
+\[
+\Gamma_S=\beta_E+\|p_S-p_E\|^2.
+\tag{37.F}
+\]
+Every vector in \(W_E\) has \(u_d\) support contained in the finite set
+\(\operatorname{Div}(E)\), while \(p_S\) has nonzero coefficient
+\(1/(\rho_S\omega_b)\) at every rough \(b>1\). Infinitely many such \(b\)
+lie outside that finite divisor set. Their orthogonal norm contribution gives the explicit gap
+\[
+\Gamma_S-\beta_E\ge\frac1{\rho_S^2}
+ \sum_{\substack{b>1,\ \gcd(b,Q)=1\\b\notin\operatorname{Div}(E)}}\frac1{\omega_b}>0.
+\]
+This proves strictness for every finite \(E\), including mixed smooth factors,
+nonsquarefree indices, all-zero Möbius target columns, and empty \(E\). In the last case
+\(\operatorname{Div}(E)=\varnothing,p_E=0,\beta_E=0<\Gamma_S\).
+The sets \(E_B\) give \(T_B\uparrow T_S\), so 37.31–37.32 and continuity of
+\(\phi\) imply \(\beta_{E_B}\uparrow\Gamma_S\). Combining this approaching
+subfamily with (37.F) proves
+\[
+\sup_{E\subset\mathbb N_+\setminus A_S\text{ finite}}\beta_E=\Gamma_S,
+\qquad \beta_E<\Gamma_S\text{ for every finite }E.
+\]
+The monotonic increase in \(B\) need not be strict at each integer: if no new rough
+integer enters, the finite set and bound remain unchanged. Every finite omitted-probe
+combination belongs to one such \(W_E\), so none attains the positive full optimum.
+This conclusion depends on the corrected column identities for the explicit approaching
+values, and on infinite orthogonal support for strictness, not on cofinality of the \(E_B\)
+among all omitted-index sets.
+
+**37.36 定理及证明（粗糙截断的闭并仅为第一块的核）。** Equations (37.C) give
+\(W_{E_B}=\operatorname{span}_{\mathbb C}\{u_b-u_1:b\in R_S,2\le b\le B\}\).
+Their increasing union therefore contains every finite difference in the \(a=1\) block,
+and 37.22 gives exactly
+\[
+\overline{\bigcup_{B\ge1}W_{E_B}}=K_1=\ker\ell_1\subset U_1.
+\]
+It is a proper subspace of \(U_1\), since the nonzero vector \(g_1\) is orthogonal
+to it. If \(S\ne\varnothing\), choose a prime \(a\in S\) and any rough \(b>1\).
+Then \(u_{ab}-u_a\) is a nonzero vector of \(K_a\subset W_S\), orthogonal to
+\(K_1\), so the displayed closure is not all of \(W_S\). If \(S=\varnothing\),
+there is only the \(a=1\) block and \(W_S=K_1\). The rough truncations approach
+the full scalar optimum because \(p_S\in K_1\), not because they approximate every
+vector of \(W_S\).
+
+**37.37 定理及证明（完整粗糙界的有理尾包络）。** For integer \(B\ge1\), the positive
+series and the full integer majorant give
+\[
+0<T_S-T_B\le\sum_{n>B}\frac3{60n^2+2}
+\le\frac1{20}\sum_{n>B}\frac1{n(n-1)}=\frac1{20B}.
+\]
+Define rational endpoints
+\[
+L_B=\frac{T_B}{1+a_0T_B},\qquad
+V_B=\frac{T_B+1/(20B)}{1+a_0(T_B+1/(20B))}.
+\]
+The increasing function \(\phi\) of 37.13 gives
+\[
+L_B<\Gamma_S\le V_B,\qquad
+0<V_B-L_B=\frac{1/(20B)}{(1+a_0T_B)(1+a_0(T_B+1/(20B)))}
+\le\frac1{20B}.
+\]
+If \(E_B\) is empty, \(T_B=L_B=0\) and
+\(V_B=1/(20B+a_0)>0\); the same enclosure remains valid.
+For positive rational \(\eta\), the choice
+\(B=1+\lfloor1/(20\eta)\rfloor\) ensures the strict width
+\(V_B-L_B<\eta\), including an integral reciprocal precision.
+The upper endpoint encloses \(\Gamma_S\). It does not bound \(D_{A_S}\) from
+above, because the nonnegative remainder in 37.26 has not been enclosed here.
+
+**37.38 定义及证明（1041 证书语言与有限解码）。** Use the primitive encodings of
+37.10. A tag-1041 record is a natural code for the eight fields
+\[
+[1041,\operatorname{List}(S),B,\operatorname{Rat}(\eta),
+ \operatorname{List}(E_B),\operatorname{Rat}(T_B),
+ \operatorname{Rat}(L_B),\operatorname{Rat}(V_B)].
+\]
+The prime list and rough list contain positive natural integers in strictly increasing order;
+\(B\) is a natural number to be checked positive and \(\eta\) is rational to be
+checked strictly positive. Integer and rational signs and denominators have exactly the
+meanings in 37.10. Pair decoding terminates by repeated division of a positive integer;
+list decoding terminates by a strictly decreasing natural tail. These proofs apply to every
+nested field and every input code, before any mathematical legality checks.
+A rational denominator decoded as one plus a natural is always positive; canonical lowest terms
+are unnecessary, since all comparisons and external bindings can use integer cross products.
+Euclid's optional reduction terminates because its nonzero remainders strictly decrease.
+The tag distinguishes this enclosure of the full omitted-probe optimum from tag 1022's
+prime-only enclosure and tag 1021's finite joint obstruction. It is not a new semantics for
+any earlier residual certificate.
+
+**37.39 定义与定理及证明（1041 总验证器与可靠性）。** Define the paper predicate
+\(\operatorname{VerifyRoughEnvelope104}(S,B,\eta,e)\) on finite input data and a
+natural certificate as follows. First require an external finite strictly increasing prime list
+\(S\), integer \(B\ge1\), and rational \(\eta>0\); primality is exactly the finite
+gcd predicate of 37.12, including vacuous proper-divisor range for the prime two. Decode the
+record, require tag 1041, eight fields and the declared types, and bind its \(S,B,\eta\)
+to these external inputs, using exact rational equality for precision. Reject any mismatch.
+Compute the finite integer product \(Q\), the ordered list
+\(\{2\le n\le B:\gcd(n,Q)=1\}\), its finite rational sum
+\(\sum_n3/(60n^2+2)\), and the two rational endpoint formulas of 37.37. Require exact
+equality to the record's \(E_B,T_B,L_B,V_B\), and finally require
+\[
+0\le L_B\le V_B\le1,\qquad V_B-L_B<\eta.
+\]
+All loops have finite input-dependent bounds or strictly decreasing positive-integer measures.
+All denominators \(60n^2+2\), \(20B\), and \(1+a_0t\) in legal data are positive.
+Gcd, products, sums, coding and cross-product comparisons terminate; any bad code is rejected.
+Thus this predicate is total without a real-number oracle or an infinite search.
+On acceptance the recomputed \(T_B\) is precisely the rough sum, and 37.37 proves
+\(\Gamma_S\in[L_B,V_B]\) with the required strict width. The finite value theorem
+needed here is justified by \(K=M^*GM,b=M^*\mathbf1\) and the full cancellation
+of 37.32. Since those corrected formulas prove the same \(\phi(T_B)\), the scalar
+certificate rules need no altered endpoint or hidden coefficient computation.
+This is soundness of a finite mathematical language; it does not assert an implemented or
+executed verifier.
+
+**37.40 定理及证明（总生成器、严格阈值与等号不终止边界）。** For legal finite \(S\)
+and rational \(\eta=p/d>0\), \(p,d\in\mathbb N_+\), define
+\[
+B=1+\left\lfloor\frac d{20p}\right\rfloor.
+\]
+Construct \(Q,E_B,T_B,L_B,V_B\) by the finite operations in 37.39 and encode the
+record. Integer division and all subsequent finite calculations terminate; 37.37 proves
+\(1/(20B)<\eta\), so the resulting certificate is accepted. The argument covers every
+positive rational precision, regardless of reducibility, size, or empty \(S,E_B\).
+It gives total generation at prescribed precision without asking whether a threshold is crossed.
+
+For integer \(m\ge1\), an accepted record with \(L_B\ge1/m\) proves strict residual
+square \(<1/m\) impossible for \(A_S\). Equality in the lower-endpoint comparison is
+included. If \(\Gamma_S>1/m\), set \(\eta_j=2^{-j}\) and use the total generator.
+For all sufficiently large \(j\), its width is smaller than \(\Gamma_S-1/m\);
+since \(\Gamma_S\le V_B<L_B+\eta_j\), one gets \(L_B>1/m\).
+If \(\Gamma_S=1/m\), 37.26 still analytically excludes the strict residual, but
+37.35 gives \(\beta_E<\Gamma_S=1/m\) for every finite omitted \(E\), including
+all mixed and squareful sets. Thus neither these rough lower endpoints nor a tag-1021 finite
+joint value can certify that equality threshold. If \(\Gamma_S<1/m\), this family of
+bounds likewise supplies no such acceptance; actual \(D_{A_S}\) may still be larger.
+No occurrence of the equality case is asserted. A search waiting for threshold acceptance is
+only conditionally terminating when the strict positive margin is known to exist; the total
+precision generator does not decide that margin. Nonacceptance of a finite certificate never
+proves a strict approximation witness exists.
+
+**37.41 引理及证明（混合光滑因子的块分量与相关性限制）。** For \(b\in R_S,b>1\)
+and \(c\in A_S\), put
+\[
+\rho_{c,b}=\sum_{e\mid b}\mu(b/e)u_{ce}\in K_c.
+\]
+Its coefficient sum is \(\sum_{e\mid b}\mu(b/e)=0\). For \(a\in A_S\),
+finite coprime factorization yields
+\[
+r_{ab}=\sum_{c\mid a}\mu(a/c)\rho_{c,b},\qquad
+P_{U_1}r_{ab}=\mu(a)\rho_{1,b}=\mu(a)r_b.
+\]
+The target pairs only with the \(a=1\) block. If \(h=h_1+h_\perp\in W_S\),
+with \(h_1\in K_1\) and \(h_\perp\in\bigoplus_{a>1}K_a\), then
+\(\langle h,\chi\rangle=\langle h_1,\chi\rangle\) and
+\(\|h\|^2=\|h_1\|^2+\|h_\perp\|^2\). For \(h_1\ne0\), removing the other
+blocks weakly improves the quotient, strictly if the numerator and removed squared norm are
+both positive. If \(h_1=0\), the quotient of a nonzero \(h\) is zero. This proves
+again that the positive full optimum is attained only in \(K_1\).
+For a prescribed finite \(E\), however, projection onto \(U_1\) need not stay in
+\(W_E\). These equations therefore do not justify declaring individual mixed or zero-target
+probes useless in a constrained finite joint problem. The Schur calculation in 37.8 and the
+nonzero \(r_4\) coefficient in 37.34 are explicit correlated examples.
+
+**37.42 推论与范围（固定坐标、保持的范数与经典依赖）。** Since
+\(D_{A_S}\ge\Gamma_S>0\), allowing all exponents in a fixed finite prime set and
+then closing in the actual norm still leaves a positive error. For an omitted prime \(p\),
+\(\langle r_p,f_p\rangle=1\) and \(r_p\perp M_{A_S}\), whence
+\(\operatorname{dist}(f_p,M_{A_S})^2\ge1/C_p>0\). Thus \(M_{A_S}\) is a proper
+subspace of the full dictionary closure, not a substitute for that closure.
+The original \(f_i,f_j\) are not orthogonal: on \(x>1\) their product is
+\(1/(ijx^2)\), and nonnegativity on the rest of the half-axis gives
+\(\langle f_i,f_j\rangle\ge1/(ij)>0\). Pythagoras above concerns actual orthogonal
+\(u_d\) coordinates or projections, not exponent labels or a diagonal original dictionary.
+Faithful prime-exponent or Zeckendorf recoding of the same integer parameters leaves the
+functions, measure, norm, algebraic spans, closed spaces, distances, and all these bounds
+unchanged. Changing functions or inner product defines another problem.
+
+The general Gram and Schur results, including singular blocks, pseudoinverse range conditions,
+zero/empty cases, finite strict-threshold attainment and distinctions from infinite synthesis
+attainment in 30.22–30.39, remain applicable in their stated domains. Positive definiteness of
+these particular finite probe matrices does not remove those general singular cases.
+The finite rational residual certificates and effective finite-distance bounds of 30.40–30.71,
+and the Möbius coercivity and local-certificate constructions of 30.72–30.85, retain their
+original constants, totality domains and strict boundaries. In particular coordinatewise
+Möbius convergence alone is insufficient for norm convergence (30.75); squarefree inclusion is
+necessary but no sufficiency theorem is supplied (30.76); and the ordinary finite spectral
+minimum tending to zero (30.40) does not by itself settle the global approximation distance.
+
+The classical closure bridge [B1], L. Báez-Duarte, *A strengthening of the Nyman–Beurling
+criterion for the Riemann hypothesis, 2*, [arXiv:math/0205003v1](https://arxiv.org/pdf/math/0205003v1),
+Theorem 1.1 with its full-half-axis definitions, is used exactly as in 30.36:
+RH is equivalent to \(\chi\) belonging to the specified full integer-dictionary closure.
+It is an external analytic theorem; the present obstruction proof does not reprove that bridge
+or claim density in all of \(H\). The value of the full-dictionary distance, equality
+\(D_{A_S}=\Gamma_S\), completeness of the omitted-probe complement, infinite coefficient
+attainment and a universal successful finite-certificate cutoff remain separate questions.
+Nothing here resolves the Robin \(n>5040\) criterion, the prime-box slab \(G\) sign
+problems, or the remaining common-height and general-prime questions. The user's label GH
+retains its stated working RH interpretation without an additional mathematical definition.
+These are paper arguments using the existing model and classical projection, divisor-inversion
+and finite-arithmetic facts; no new literature-priority, numerical execution or kernel theorem
+is entailed.

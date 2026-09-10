@@ -1,0 +1,24 @@
+**37.7 定理及证明（Schur 正分母与精确 Pythagoras 增量）。** Suppose \(j\notin E\),
+first with \(E\ne\varnothing\). Put
+\[
+g=T_E^*r_j,\quad a=\|r_j\|^2,\quad
+s_j=r_j-T_EK_E^{-1}g,\quad d=a-g^*K_E^{-1}g,\quad
+h=b_j-g^*K_E^{-1}b_E.
+\]
+Then \(T_E^*s_j=0\) and \(\|s_j\|^2=d\). If \(s_j=0\), the new probe would
+lie in \(W_E\), contradicting 37.4; hence \(d>0\). The full complex completed square is
+\[
+\begin{pmatrix}x\\z\end{pmatrix}^{\!*}
+\begin{pmatrix}K_E&g\\g^*&a\end{pmatrix}
+\begin{pmatrix}x\\z\end{pmatrix}
+=(x+K_E^{-1}gz)^*K_E(x+K_E^{-1}gz)+d|z|^2.
+\]
+Moreover \(\langle s_j,\chi\rangle=h\). Orthogonally adjoining \(s_j\) therefore gives
+\[
+p_{E\cup\{j\}}=p_E+\frac h d s_j,\qquad
+\beta_{E\cup\{j\}}-\beta_E=\frac{|h|^2}{d}.
+\]
+This is an exact Pythagorean gain in \(H\), not an assumption of orthogonal dictionary
+coordinates. It is strictly positive exactly when \(h\ne0\), and is zero exactly
+when \(\chi-p_E\perp r_j\), equivalently the new normal equation was already satisfied.
+

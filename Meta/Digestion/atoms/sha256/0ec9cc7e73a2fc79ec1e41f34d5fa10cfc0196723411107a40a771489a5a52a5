@@ -1,0 +1,34 @@
+**37.30 定理及证明（正确的 Gram、目标列与非对角性）。** Let \(\mathbf1\) be the
+all-one column indexed by \(E_B\). Orthogonality of the atoms gives
+\[
+G=V^*V=\operatorname{diag}(\omega_n)+a_0\mathbf1\mathbf1^*,\qquad
+V^*\chi=\mathbf1,
+\quad K=R^*R=M^*GM,
+\quad b=R^*\chi=M^*\mathbf1.
+\tag{37.E}
+\]
+In coordinates,
+\[
+K_{ij}=\sum_{d,e\in E_B}\overline{M_{di}}G_{de}M_{ej},\qquad
+b_i=\sum_{d\in E_B}\overline{M_{di}}\langle v_d,\chi\rangle.
+\]
+Since \(M\) is real, these are \(K=M^{\mathsf T}GM\) and
+\(b=M^{\mathsf T}\mathbf1\). Reality does not remove the transpose.
+The target sum is \(\sum_{d\mid i,d>1}\mu(i/d)=-\mu(i)\), as required by 37.3.
+The direct atom expansion gives the same matrix:
+\[
+K_{nm}=\sum_{d\mid\gcd(n,m)}\mu(n/d)\mu(m/d)\omega_d.
+\]
+For complex columns,
+\[
+\|Vc\|^2=c^*Gc=\sum_n\omega_n|c_n|^2+a_0\left|\sum_nc_n\right|^2,
+\quad \langle Vc,\chi\rangle=c^*\mathbf1,
+\quad \|R\alpha\|^2=\alpha^*K\alpha,
+\quad\langle R\alpha,\chi\rangle=\alpha^*b.
+\]
+Positive weights prove \(G\succ0\), and invertibility of \(M\) gives \(K\succ0\).
+For distinct \(v_n,v_m\), the off-diagonal Gram entry is \(a_0\); the \(r_n\)
+Gram is also generally non-diagonal, as both 37.13 and 37.33 show. Orthogonal \(u_d\)
+coordinates do not imply diagonal original-probe coordinates. Equations (37.D)–(37.E) fix
+all vector, matrix and normal-equation orientations used below.
+

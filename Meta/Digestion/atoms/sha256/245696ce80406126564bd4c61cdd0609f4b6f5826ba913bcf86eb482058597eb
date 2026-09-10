@@ -1,0 +1,19 @@
+**37.32 引理及证明（完整标量抵消与空截断）。** With the same nonempty matrices,
+\[
+K^{-1}=M^{-1}G^{-1}(M^*)^{-1},\qquad
+b^*=(M^*\mathbf1)^*=\mathbf1^*M.
+\]
+Therefore the entire basis-invariance calculation is
+\[
+b^*K^{-1}b
+=\mathbf1^*M\,M^{-1}G^{-1}(M^*)^{-1}M^*\mathbf1
+=\mathbf1^*G^{-1}\mathbf1=\frac{T_B}{1+a_0T_B}.
+\]
+The transposes in (37.E) are necessary for these cancellations; a left factor \(M\)
+instead of \(M^*\) is generally false. Thus the scalar value survives the correct basis
+change for a proved reason. If \(E_B=\varnothing\), define \(T_B=0,\rho_B=1\),
+\(V,R\) to be the zero maps on the zero-dimensional coefficient space, \(p_B=0\),
+and \(\beta_{E_B}=0\). Use the empty coefficient columns and no inverse formula.
+There are no nonzero quotient competitors; the optimized lower-bound convention is zero.
+The later tail enclosure remains nontrivial despite this zero lower endpoint.
+

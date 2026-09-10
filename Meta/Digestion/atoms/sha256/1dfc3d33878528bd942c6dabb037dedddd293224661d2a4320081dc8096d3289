@@ -1,0 +1,23 @@
+**37.29 引理及证明（列变换与显式双边逆）。** Suppose \(E_B\ne\varnothing\) and order
+its elements increasingly. Define synthesis maps \(Vc=\sum_{n\in E_B}c_nv_n\) and
+\(R\alpha=\sum_{n\in E_B}\alpha_nr_n\), and real matrices indexed by \(d,n\in E_B\):
+\[
+M_{dn}=\mathbf1_{d\mid n}\mu(n/d),\qquad
+Z_{dn}=\mathbf1_{d\mid n}.
+\]
+They are upper triangular with diagonal one. For \(d\mid n\), divisor closure ensures
+all intermediate \(k\), \(d\mid k\mid n\), lie in \(E_B\), and
+\[
+(MZ)_{dn}=\sum_{d\mid k\mid n}\mu(k/d)=\mathbf1_{d=n},\qquad
+(ZM)_{dn}=\sum_{d\mid k\mid n}\mu(n/k)=\mathbf1_{d=n}.
+\]
+When \(d\nmid n\), both sums are empty and both entries zero. Therefore
+\(MZ=ZM=I\) and \(M^{-1}=Z\). Equations (37.C) give
+\[
+R=VM,\qquad V=RZ,\qquad c=M\alpha,\qquad\alpha=M^{-1}c=Zc.
+\tag{37.D}
+\]
+These are column-coefficient identities over \(\mathbb C\); there is no conjugation in
+a synthesis coefficient change. Adjoint conjugation enters when transforming a Gram matrix
+or target column, as follows.
+

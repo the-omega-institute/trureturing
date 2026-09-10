@@ -1,0 +1,24 @@
+**37.13 定理及证明（有限素数族的共享原子公式）。** Let \(P\) be a finite set of
+primes. Since \(r_p=u_p-u_1\), writing \(\mathbf1\) for the all-one column gives
+\[
+K_P=\operatorname{diag}(\omega_p)_{p\in P}+a_0\mathbf1\mathbf1^*,
+\quad b_P=\mathbf1,\quad t_P=\sum_{p\in P}\frac1{\omega_p},
+\quad \phi(t)=\frac{t}{1+a_0t}.
+\]
+For nonempty \(P\), the column
+\(\alpha_p=1/[\omega_p(1+a_0t_P)]\) solves the normal equations because its
+\(p\)-th row is \(1/(1+a_0t_P)+a_0t_P/(1+a_0t_P)=1\). Thus
+\[
+p_P=\frac{\sum_{p\in P}u_p/\omega_p-t_Pu_1}{1+a_0t_P},
+\qquad\beta_P=\phi(t_P).
+\]
+The shared \(u_1\) term is essential; discarding it would incorrectly diagonalize the
+\(r_p\) Gram matrix. For one prime, \(\beta_{\{p\}}=1/(\omega_p+a_0)
+=3/(60p^2+64)\). For empty \(P\), use \(t_P=\beta_P=0,p_P=0\).
+For \(v>u\ge0\),
+\[
+\phi(v)-\phi(u)=\frac{v-u}{(1+a_0u)(1+a_0v)}>0,
+\]
+so every additional prime strictly increases the finite bound, though every finite value is
+less than \(1/a_0\).
+

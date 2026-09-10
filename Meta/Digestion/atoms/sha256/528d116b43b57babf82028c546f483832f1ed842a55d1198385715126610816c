@@ -1,0 +1,23 @@
+**37.5 定理及证明（联合最优投影与所有零情形）。** For nonempty \(E\), write
+\[
+b_E=(-\mu(n))_{n\in E}=T_E^*\chi,\quad
+\alpha_E=K_E^{-1}b_E,\quad p_E=T_E\alpha_E,\quad
+W_E=\operatorname{span}_{\mathbb C}\{r_n:n\in E\},\quad
+\beta_E=b_E^*K_E^{-1}b_E.
+\]
+The normal equations \(T_E^*(\chi-p_E)=b_E-K_E\alpha_E=0\) prove
+\(p_E=P_{W_E}\chi\), and
+\(\|p_E\|^2=\alpha_E^*K_E\alpha_E=\beta_E\in[0,1]\).
+For \(h=T_Ez\ne0\),
+\[
+\frac{|\langle h,\chi\rangle|^2}{\|h\|^2}
+=\frac{|z^*b_E|^2}{z^*K_Ez}\le\|p_E\|^2=\beta_E.
+\]
+Cauchy–Schwarz is applied to \(h,p_E\). If \(b_E\ne0\), equality holds precisely
+for nonzero complex multiples of \(p_E\), or equivalently of \(\alpha_E\) in
+coefficient space. If \(b_E=0\), then \(p_E=0,\beta_E=0\), and every nonzero
+\(h\in W_E\) has quotient zero and is a maximizer. In particular this happens when
+all indices in \(E\) are nonsquarefree. For \(E=\varnothing\), define
+\(W_E=\{0\},p_E=0,\beta_E=0\) and the optimized bound to be zero; there is no
+nonzero probe and no maximizing vector. No inverse of an empty matrix is required.
+

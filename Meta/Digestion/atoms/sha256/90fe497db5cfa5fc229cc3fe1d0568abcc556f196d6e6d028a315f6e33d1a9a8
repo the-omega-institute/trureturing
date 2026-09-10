@@ -1,0 +1,33 @@
+**37.35 定理及证明（所有有限遗漏集的严格差与完整上确界）。** For any finite
+\(E\subset\mathbb N_+\setminus A_S\), use the full Gram matrix and projection of
+37.4–37.5, not only prime or rough indices. Since \(W_E\subset W_S\) and
+\(\chi-p_S\perp W_S\), one has \(p_E=P_{W_E}p_S\). Thus
+\[
+\Gamma_S=\beta_E+\|p_S-p_E\|^2.
+\tag{37.F}
+\]
+Every vector in \(W_E\) has \(u_d\) support contained in the finite set
+\(\operatorname{Div}(E)\), while \(p_S\) has nonzero coefficient
+\(1/(\rho_S\omega_b)\) at every rough \(b>1\). Infinitely many such \(b\)
+lie outside that finite divisor set. Their orthogonal norm contribution gives the explicit gap
+\[
+\Gamma_S-\beta_E\ge\frac1{\rho_S^2}
+ \sum_{\substack{b>1,\ \gcd(b,Q)=1\\b\notin\operatorname{Div}(E)}}\frac1{\omega_b}>0.
+\]
+This proves strictness for every finite \(E\), including mixed smooth factors,
+nonsquarefree indices, all-zero Möbius target columns, and empty \(E\). In the last case
+\(\operatorname{Div}(E)=\varnothing,p_E=0,\beta_E=0<\Gamma_S\).
+The sets \(E_B\) give \(T_B\uparrow T_S\), so 37.31–37.32 and continuity of
+\(\phi\) imply \(\beta_{E_B}\uparrow\Gamma_S\). Combining this approaching
+subfamily with (37.F) proves
+\[
+\sup_{E\subset\mathbb N_+\setminus A_S\text{ finite}}\beta_E=\Gamma_S,
+\qquad \beta_E<\Gamma_S\text{ for every finite }E.
+\]
+The monotonic increase in \(B\) need not be strict at each integer: if no new rough
+integer enters, the finite set and bound remain unchanged. Every finite omitted-probe
+combination belongs to one such \(W_E\), so none attains the positive full optimum.
+This conclusion depends on the corrected column identities for the explicit approaching
+values, and on infinite orthogonal support for strictness, not on cofinality of the \(E_B\)
+among all omitted-index sets.
+

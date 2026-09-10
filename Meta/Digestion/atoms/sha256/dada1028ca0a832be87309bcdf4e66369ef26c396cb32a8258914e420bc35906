@@ -1,0 +1,19 @@
+**30.85 命题及证明（完整字典的真闭子空间与剩余边界）。** Even the full natural dictionary
+does not have closure equal to all \(\mathcal H\). Let
+\(z=\mathbf1_{(1,2)}-\mathbf1_{(2,4)}\). It is a nonzero element of \(\mathcal H\), and
+for each \(k\), since \(f_k(x)=1/(kx)\) on these intervals,
+\[
+\langle z,f_k\rangle=\frac1k\left(\int_1^2\frac{dx}{x}-\int_2^4\frac{dx}{x}\right)=0.
+\]
+The second integral equals the first by \(x=2u\). Continuity therefore puts \(M_{\mathbb N_+}\)
+inside the proper closed hyperplane \(z^\perp\); it is proper because \(z\ne0\).
+Whether that subspace contains the specific target \(\chi\) is the different question in [B1].
+Finite independence, positive finite distance and positive definite actual Gram matrices do not
+remove the general complex singular cases, the separate \(D_0=1\) case, the infinite compression
+threshold or the distinction between closure projection and attained infinite coefficient synthesis.
+Ordinary smallest eigenvalues still tend to zero unconditionally by the \(c/N^3\) bound.
+Coordinate limits are necessary and have the explicit norm-divergent counterexample of 30.75;
+including all primes is insufficient by 30.76, and sufficiency of including every squarefree
+parameter has not been proved. The new bounds neither determine \(\inf_ND_N\) nor settle the
+separate general-prime or all-slab sign problems. No optimality of the constants or practical efficiency bound is implied by these finite formulas.
+

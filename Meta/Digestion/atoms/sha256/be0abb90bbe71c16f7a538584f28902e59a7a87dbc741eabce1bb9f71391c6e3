@@ -1,0 +1,9 @@
+## 37. 联合对偶与完整光滑字典障碍：定义、定理及证明
+
+The following results concern squared approximation distance in the actual Hilbert space
+\(L^2((0,\infty),dx)\). Finite joint probes, their closed prime subspace, and the closed
+space of all omitted probes for a finite-prime smooth dictionary give three distinct
+optimization problems. The bounded functionals of 30.72–30.85 provide the common foundation. The mathematical primary texts [J102], [S104] and the
+explicit finite-basis correction [E106] are cited in the
+[primary-source archive](../../reports/quantized-gh/joint-smooth-dual-closure-0911.md#primary-sources).
+

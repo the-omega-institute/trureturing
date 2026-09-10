@@ -1,0 +1,26 @@
+**37.24 定理及证明（粗糙级数与实际投影候选的收敛）。** Define
+\[
+T_S=\sum_{\substack{b>1\\\gcd(b,Q)=1}}\frac1{\omega_b}
+=\sum_{\substack{b>1\\\gcd(b,Q)=1}}\frac3{60b^2+2},\qquad
+\rho_S=1+a_0T_S.
+\]
+There are infinitely many rough integers \(kQ+1\), \(k\ge1\), so \(T_S>0\).
+The integer-series bound proves \(T_S\le1/20\) and \(\rho_S>0\).
+For finite \(F\subset R_S\setminus\{1\}\), put
+\[
+T_F=\sum_{b\in F}\frac1{\omega_b},\qquad
+q_F=\sum_{b\in F}\frac{u_b-u_1}{\omega_b}.
+\]
+As in 37.15,
+\(\|q_F-q_{F'}\|^2=\sum_{b\in F\triangle F'}1/\omega_b
++a_0(T_F-T_{F'})^2\); hence in \(H\)
+\[
+q_S=\lim_Fq_F=\sum_{\substack{b\in R_S\\b>1}}\frac{u_b}{\omega_b}-T_Su_1
+\in K_1\subset W_S,\quad
+\|q_S\|^2=T_S+a_0T_S^2,\quad
+\langle q_S,\chi\rangle=T_S.
+\]
+Membership also follows from 37.21: the absolutely summable coefficients add to zero.
+All nonzero rough coordinates of this vector are retained; none of its infinite support is
+being replaced by an abstract surrogate space.
+

@@ -1,0 +1,14 @@
+**37.27 推论及证明（严格强于无限素数限制值）。** The omitted primes form a subset of
+the rough integers greater than one, and 37.15–37.16 give their exact closed-space value
+\(\beta_\infty(S)=\phi(t_\infty(S))\). A prime divisor \(p\) of \(Q+1\) is
+outside \(S\); \(p^2\) is rough and composite, so it contributes to \(T_S\) but
+not to \(t_\infty(S)\). Thus
+\[
+T_S-t_\infty(S)\ge\frac1{\omega_{p^2}}>0,\qquad
+\Gamma_S-\beta_\infty(S)
+=\frac{T_S-t_\infty(S)}{(1+a_0T_S)(1+a_0t_\infty(S))}>0.
+\]
+The proof includes empty \(S\), for which \(Q+1=2\). It uses positivity and finite
+factorization, without any prime-density estimate. This is a strict improvement of one
+restricted dual optimum over another; the unknown remainder in 37.26 remains separate.
+

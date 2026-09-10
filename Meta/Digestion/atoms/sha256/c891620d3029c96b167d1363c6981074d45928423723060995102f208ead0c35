@@ -1,0 +1,13 @@
+**37.18 推论及证明（素数包络的严格与等号门槛）。** If
+\(\beta_\infty(S)>1/m\), the positive margin and \(L_B\to\beta_\infty\) ensure
+that sufficiently fine total enclosures have \(L_B\ge1/m\); the corresponding finite
+prime set gives a tag-1021 strict-residual obstruction. If instead
+\(\beta_\infty(S)=1/m\), the analytic lower bound still excludes residual square
+\(<1/m\), but every finite prime \(P\) has \(\beta_P<1/m\) and cannot certify that
+threshold using its exact joint value. This states a conditional equality boundary, not that
+such an equality occurs for a particular \(S,m\). A procedure waiting for threshold
+acceptance has no unconditional termination theorem. Total generation at a prescribed precision
+is a different assertion. These facts give no universal finite cutoff in \(m\), no upper
+bound for the actual distance, and no sufficiency theorem for the original RH approximation
+criterion.
+

@@ -1,0 +1,26 @@
+**37.17 定义与定理及证明（1022 总有理包络）。** For an integer \(B\ge1\), define
+\[
+t_B=\sum_{\substack{p\le B\\p\in\mathcal P_S}}\frac1{\omega_p},
+\quad L_B=\phi(t_B),\quad U_B=\phi(t_B+1/(20B)).
+\]
+The omitted-prime tail is bounded by the larger integer tail:
+\[
+0<t_\infty-t_B\le\frac1{20}\sum_{n>B}\frac1{n^2}
+\le\frac1{20}\sum_{n>B}\left(\frac1{n-1}-\frac1n\right)=\frac1{20B}.
+\]
+Thus \(L_B<\beta_\infty\le U_B\) and
+\(0<U_B-L_B\le1/(20B)\), by 37.13's difference formula. Given rational
+\(\eta>0\), choose \(B=1+\lfloor1/(20\eta)\rfloor\); then the width is strictly
+less than \(\eta\), including when \(1/(20\eta)\) is an integer.
+
+Using 37.10, encode the seven fields
+\([1022,S,\eta,B,t_B,L_B,U_B]\), with natural-list and rational types as appropriate.
+The paper predicate \(\operatorname{VerifyPrimeEnvelope}(S,\eta,e)\) binds the encoded \(S,\eta\) to the external legal prime list and
+positive rational precision, requires integer \(B\ge1\), recomputes all primes at most
+\(B\) by the finite primality predicate of 37.12 and removes those in \(S\), and checks
+all three rational values exactly, \(0\le L_B\le U_B\le1\), and \(U_B-L_B<\eta\).
+Malformed types, lengths or tags are rejected. Finite primality checks, positive denominators,
+finite coding and rational comparison prove totality and soundness. The displayed formula for
+\(B\), followed by these finite sums and encoding, is a total rational enclosure generator.
+It certifies \(\beta_\infty\), not an upper bound for \(D_{A_S}\).
+

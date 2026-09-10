@@ -1,0 +1,22 @@
+**37.20 定理及证明（实际 Hilbert 空间中的加权坐标与正交块）。** Set
+\[
+U=\overline{\operatorname{span}_{\mathbb C}\{u_d:d\ge1\}},\qquad
+U_a=\overline{\operatorname{span}_{\mathbb C}\{u_{ab}:b\in R_S\}}\quad(a\in A_S).
+\]
+Every sequence with \(\sum_d\omega_d|x_d|^2<\infty\) determines an actual vector
+\(\sum_dx_du_d\in H\): differences of finite partial sums have squared norm equal
+to the corresponding weighted tail. Completeness gives convergence, independent of the
+exhaustion. The norm identity passes to the limit. Conversely the finite-sum isometry extends
+from the completion of finitely supported weighted sequences onto \(U\), by its definition;
+uniqueness of the coordinates follows from pairing with each nonzero \(u_d\).
+Grouping the nonnegative norm series using the unique factorization \(d=ab\) proves
+\[
+U=\mathop{\bigoplus}_{a\in A_S}U_a,\qquad
+h=\sum_{a\in A_S}h_a,\quad
+h_a=\sum_{b\in R_S}x_{a,b}u_{ab},\quad
+\|h\|^2=\sum_a\sum_b\omega_{ab}|x_{a,b}|^2.
+\]
+The block series converges in \(H\); for any tolerance, a finite number of blocks accounts
+for all but an arbitrarily small squared norm. This proves a coordinate representation of
+\(U\), without claiming that \(U=H\). Complex moduli and conjugation remain essential.
+

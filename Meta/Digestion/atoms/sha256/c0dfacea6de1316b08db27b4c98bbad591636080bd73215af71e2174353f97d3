@@ -1,0 +1,25 @@
+**37.37 定理及证明（完整粗糙界的有理尾包络）。** For integer \(B\ge1\), the positive
+series and the full integer majorant give
+\[
+0<T_S-T_B\le\sum_{n>B}\frac3{60n^2+2}
+\le\frac1{20}\sum_{n>B}\frac1{n(n-1)}=\frac1{20B}.
+\]
+Define rational endpoints
+\[
+L_B=\frac{T_B}{1+a_0T_B},\qquad
+V_B=\frac{T_B+1/(20B)}{1+a_0(T_B+1/(20B))}.
+\]
+The increasing function \(\phi\) of 37.13 gives
+\[
+L_B<\Gamma_S\le V_B,\qquad
+0<V_B-L_B=\frac{1/(20B)}{(1+a_0T_B)(1+a_0(T_B+1/(20B)))}
+\le\frac1{20B}.
+\]
+If \(E_B\) is empty, \(T_B=L_B=0\) and
+\(V_B=1/(20B+a_0)>0\); the same enclosure remains valid.
+For positive rational \(\eta\), the choice
+\(B=1+\lfloor1/(20\eta)\rfloor\) ensures the strict width
+\(V_B-L_B<\eta\), including an integral reciprocal precision.
+The upper endpoint encloses \(\Gamma_S\). It does not bound \(D_{A_S}\) from
+above, because the nonnegative remainder in 37.26 has not been enclosed here.
+

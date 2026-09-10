@@ -1,0 +1,22 @@
+**37.22 定理及证明（有限差的核稠密性与尾项）。** Let
+\(K_a=\ker\ell_a\subset U_a\). Every difference \(u_{ab}-u_a\), \(b>1\), has
+coefficient sum zero. Thus its closed span is contained in the closed subspace \(K_a\).
+For the reverse inclusion let \(h=\sum_{b\in R_S}x_bu_{ab}\in K_a\).
+Absolute convergence gives \(x_1=-\sum_{b>1}x_b\). For a finite set
+\(F\subset R_S\setminus\{1\}\), form the finite-difference vector
+\[
+y_F=\sum_{b\in F}x_b(u_{ab}-u_a).
+\]
+Its error has the exact squared norm
+\[
+\|h-y_F\|^2=\sum_{\substack{b>1\\b\notin F}}\omega_{ab}|x_b|^2
+ +\omega_a\left|\sum_{\substack{b>1\\b\notin F}}x_b\right|^2
+\le\left(1+\omega_a\sum_{\substack{b>1\\b\notin F}}\frac1{\omega_{ab}}\right)
+ \sum_{\substack{b>1\\b\notin F}}\omega_{ab}|x_b|^2.
+\]
+The last inequality is weighted Cauchy–Schwarz, valid for complex coefficients. As \(F\)
+exhausts the rough integers greater than one, the weighted norm tail tends to zero and the
+reciprocal tail is bounded (and also tends to zero). Therefore \(y_F\to h\) in the
+actual norm, proving
+\(K_a=\overline{\operatorname{span}_{\mathbb C}\{u_{ab}-u_a:b\in R_S,b>1\}}\).
+

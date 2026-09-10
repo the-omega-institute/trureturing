@@ -1,0 +1,24 @@
+**37.10 定义及证明（有限自然数编码）。** Use the bijection
+\[
+\operatorname{Pair}(a,b)=2^a(2b+1)-1\quad(a,b\in\mathbb N_0).
+\]
+To decode \(N\), repeatedly divide \(N+1\) by two until it is odd, obtaining the
+unique exponent \(a\) and odd part \(2b+1\). The positive integer being divided strictly
+decreases, so this terminates. Encode an integer \(z\) by \(2z\) if \(z\ge0\), and
+by \(-2z-1\) if \(z<0\); even and odd codes give the inverse signs uniquely.
+Represent a rational by a numerator \(z\in\mathbb Z\) and denominator \(d\ge1\),
+with code \(\operatorname{Pair}(\operatorname{Sign}(z),d-1)\). Different unreduced
+representations denote the same rational exactly when cross products agree; canonical reduction
+is optional and can use Euclid's strictly decreasing nonnegative remainders.
+Encode a finite list by
+\[
+\operatorname{List}([])=0,\qquad
+\operatorname{List}([x_0,\ldots,x_{r-1}])
+=1+\operatorname{Pair}(x_0,\operatorname{List}([x_1,\ldots,x_{r-1}])).
+\]
+For a nonzero list code \(N=2^a(2b+1)\), the decoded tail \(b<N\). Thus decoding
+terminates on every natural input, including malformed typed records, and yields a unique
+finite list. Nested lists encode vectors and records. Checking length, integer sign, order,
+distinctness and rational equality consists of finite operations after decoding. This is the
+same finite coding convention as 30.47; a numerical tag below determines a distinct language.
+

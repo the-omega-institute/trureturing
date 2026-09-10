@@ -1,0 +1,31 @@
+**37.25 定理及证明（完整遗漏探针族的最优值与所有达到者）。** Put
+\[
+p_S=\frac{q_S}{\rho_S},\qquad
+\Gamma_S=\frac{T_S}{1+(62/3)T_S}.
+\]
+For \(a=1\) and rough \(b>1\),
+\(\langle u_b-u_1,q_S\rangle=1+a_0T_S=\rho_S\), whereas
+\(\langle u_b-u_1,\chi\rangle=1\). For any \(a>1\), both \(u_{ab},u_a\)
+are orthogonal to \(q_S\), and both have zero target pairing; hence the same projection
+equation holds with both sides zero. Equations (37.A)–(37.B), linearity in the second
+variable, conjugate-linearity in the first, and continuity prove
+\(\chi-p_S\perp W_S\). Since \(p_S\in W_S\), this is the actual projection onto
+the entire omitted-probe space, even though \(p_S\) lies entirely in \(K_1\).
+Therefore
+\[
+\sup_{0\ne h\in W_S}\frac{|\langle h,\chi\rangle|^2}{\|h\|^2}
+=\|p_S\|^2=\Gamma_S,\qquad 0<\Gamma_S<\frac1{a_0}=\frac3{62}.
+\]
+Cauchy–Schwarz shows that equality is attained exactly by nonzero complex multiples of
+\(p_S\). The strict upper bound follows from \(1+a_0T_S>a_0T_S\).
+An independent expression within the same proof is
+\[
+P_U\chi=-u_1/a_0,\quad s_1=1/a_0+T_S,\quad
+P_{K_1}\chi=-u_1/a_0+g_1/(a_0s_1)=p_S,
+\quad \Gamma_S=\frac1{a_0}-\frac1{a_0^2s_1}.
+\]
+Indeed \(\ell_1(-u_1/a_0)=-1/a_0\), and subtracting its \(g_1\) component gives
+the displayed vector. All other target block projections are zero. This explains why the
+maximizer lives in the \(a=1\) kernel without claiming that the other kernels vanish.
+For empty \(S\) the same theorem applies with one block and all integers rough.
+

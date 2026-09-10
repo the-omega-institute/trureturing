@@ -1,0 +1,27 @@
+**37.11 定义与定理及证明（1021 联合证书）。** A tag-1021 certificate is the natural
+code of a five-field list
+\[
+[1021,\operatorname{List}(E),\operatorname{List}(\alpha),
+  \operatorname{Rat}(\beta),\operatorname{Rat}(\lambda)],
+\]
+where the coefficient list uses rational codes. Define the paper predicate
+\(\operatorname{VerifyJoint}(E,e)\) as follows. Check that the external \(E\) is a finite
+strictly increasing list of positive integers. Decode \(e\); reject a wrong tag, wrong
+length or ill-typed field, require exact equality of the encoded and external index lists,
+and require the coefficient length to equal \(|E|\). Recompute \(K_E,b_E\) by 37.9.
+For nonempty \(E\), perform the rational elimination of 37.9, require the recorded
+column to equal its unique solution, and check
+\[
+K_E\alpha=b_E,\qquad \beta=b_E^{\mathsf T}\alpha,
+\qquad 0\le\lambda\le\beta\le1.
+\]
+For empty \(E\), require an empty coefficient list and \(\beta=\lambda=0\).
+Each check is a finite integer/rational equality or comparison, so the predicate is total,
+returning rejection on every illegal input. Positive definiteness makes any accepted solution
+unique; 37.5 proves that its \(\beta\) is the exact joint value. Hence acceptance and the
+separate hypothesis \(E\cap A=\varnothing\) imply \(D_A\ge\lambda\).
+Conversely, finite rational elimination followed by \(\lambda=\beta_E\) constructs an
+accepted code for every legal \(E\), including empty \(E\). Both this generator and the
+verifier are mathematical definitions, with the above termination proofs. Arbitrary-set
+membership is not being decided: for unrestricted \(A\), omission remains an external premise.
+

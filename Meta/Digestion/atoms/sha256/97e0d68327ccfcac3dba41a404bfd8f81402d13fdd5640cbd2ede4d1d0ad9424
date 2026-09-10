@@ -1,0 +1,21 @@
+**37.3 引理及证明（Möbius 探针与逆约数和）。** Let \(\mu(1)=1\), let \(\mu(n)=0\)
+when a prime square divides \(n\), and otherwise let \(\mu(n)=(-1)^j\) for \(j\)
+distinct prime factors. Unique factorization gives
+\(\sum_{d\mid n}\mu(d)=\prod_{p\mid n}(1-1)=\mathbf1_{n=1}\). Define
+\[
+r_n=\sum_{d\mid n}\mu(n/d)u_d,\qquad \Lambda_n(h)=\langle r_n,h\rangle.
+\]
+These finite sums give bounded linear functionals, with
+\[
+\langle r_n,f_k\rangle=\delta_{nk},\quad
+\langle r_n,\chi\rangle=-\mu(n),\quad
+\|r_n\|^2=\sum_{d\mid n}\mu(n/d)^2\omega_d=:C_n>0,
+\qquad u_n=\sum_{d\mid n}r_d.
+\]
+For the first equality, the sum over \(d\mid n,k\mid d\) is zero if \(k\nmid n\)
+and otherwise equals \(\sum_{e\mid n/k}\mu(e)=\mathbf1_{n=k}\).
+For the inverse identity, the coefficient of \(u_e\) in the right side is
+\(\sum_{d:e\mid d\mid n}\mu(d/e)=\mathbf1_{e=n}\). All rearrangements are finite.
+If \(n\notin A\), continuity extends annihilation of finite dictionary sums to
+\(M_A\). These formulas retain the signs and full-half-axis normalization of 30.73–30.76.
+

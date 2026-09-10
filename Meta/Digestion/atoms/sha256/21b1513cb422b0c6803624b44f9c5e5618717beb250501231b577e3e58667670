@@ -1,0 +1,22 @@
+**37.21 定理及证明（每块有界系数和与 Riesz 向量）。** For \(a\in A_S\), let
+\[
+s_a=\sum_{b\in R_S}\frac1{\omega_{ab}},\qquad
+\ell_a\left(\sum_bx_bu_{ab}\right)=\sum_bx_b,\qquad
+g_a=\sum_{b\in R_S}\frac{u_{ab}}{\omega_{ab}}.
+\]
+These are well-defined because
+\[
+0<s_a\le\frac1{20a^2}\sum_{b\ge1}\frac1{b^2}
+\le\frac1{10a^2},\qquad
+\sum_b|x_b|\le
+ \left(\sum_b\omega_{ab}|x_b|^2\right)^{1/2}s_a^{1/2}.
+\]
+The estimate \(\sum_{b\ge1}b^{-2}\le2\) follows from the same telescoping bound after
+separating \(b=1\). Thus the coefficient sum converges absolutely for every vector of
+\(U_a\), is complex-linear, and has norm at most \(\sqrt{s_a}\).
+The series for \(g_a\) converges in \(H\) by 37.20, with
+\(\|g_a\|^2=s_a\), and the first-variable convention gives
+\(\langle g_a,h\rangle=\ell_a(h)\). Evaluating at \(g_a\) proves the norm is exactly
+\(\sqrt{s_a}\). This is a continuous functional on the completed block, not a formal
+sum on finite supports only.
+

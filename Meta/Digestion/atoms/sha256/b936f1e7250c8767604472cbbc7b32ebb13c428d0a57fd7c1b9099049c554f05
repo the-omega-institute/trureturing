@@ -1,0 +1,21 @@
+**37.1 定义（实际空间、共轭与字典）。** Put
+\[
+H=L^2((0,\infty),dx;\mathbb C),\qquad
+\langle g,h\rangle=\int_0^\infty\overline{g(x)}h(x)\,dx,
+\quad \chi=\mathbf1_{(0,1]},\quad f_k(x)=\{1/(kx)\}\quad(k\ge1).
+\]
+Equality in \(H\) is equality almost everywhere; values at jump endpoints are immaterial.
+The first variable is conjugate-linear. A linear functional has Riesz representation
+\(h\mapsto\langle r,h\rangle\); for columns, \(C^*=\overline C^{\mathsf T}\) denotes the
+adjoint, with the rightmost map applied first. In particular, a real matrix still has adjoint
+\(C^{\mathsf T}\), not generally \(C\). For any \(A\subseteq\mathbb N_+\), let
+\[
+M_A=\overline{\operatorname{span}_{\mathbb C}\{f_k:k\in A\}},\qquad
+D_A=\operatorname{dist}(\chi,M_A)^2.
+\]
+Here the closure uses the full half-axis norm, \(\|\chi\|^2=1\), and \(0\le D_A\le1\).
+For empty \(A\), \(M_A=\{0\}\) and \(D_A=1\). The functions \(f_k\) belong to \(H\):
+on \((0,1/k]\) they are bounded by one, and on \((1/k,\infty)\) their square is
+\(1/(k^2x^2)\), so \(\|f_k\|^2\le2/k\). No coefficient constraint or change of measure
+is implicit in these definitions.
+

@@ -1,0 +1,20 @@
+**37.38 定义及证明（1041 证书语言与有限解码）。** Use the primitive encodings of
+37.10. A tag-1041 record is a natural code for the eight fields
+\[
+[1041,\operatorname{List}(S),B,\operatorname{Rat}(\eta),
+ \operatorname{List}(E_B),\operatorname{Rat}(T_B),
+ \operatorname{Rat}(L_B),\operatorname{Rat}(V_B)].
+\]
+The prime list and rough list contain positive natural integers in strictly increasing order;
+\(B\) is a natural number to be checked positive and \(\eta\) is rational to be
+checked strictly positive. Integer and rational signs and denominators have exactly the
+meanings in 37.10. Pair decoding terminates by repeated division of a positive integer;
+list decoding terminates by a strictly decreasing natural tail. These proofs apply to every
+nested field and every input code, before any mathematical legality checks.
+A rational denominator decoded as one plus a natural is always positive; canonical lowest terms
+are unnecessary, since all comparisons and external bindings can use integer cross products.
+Euclid's optional reduction terminates because its nonzero remainders strictly decrease.
+The tag distinguishes this enclosure of the full omitted-probe optimum from tag 1022's
+prime-only enclosure and tag 1021's finite joint obstruction. It is not a new semantics for
+any earlier residual certificate.
+

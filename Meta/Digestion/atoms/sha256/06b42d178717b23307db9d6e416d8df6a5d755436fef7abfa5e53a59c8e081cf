@@ -1,0 +1,25 @@
+**37.31 定理及证明（两个基中的直接解与最优投影）。** Write
+\[
+T_B=\sum_{n\in E_B}\frac1{\omega_n},\quad\rho_B=1+a_0T_B,\qquad
+c_n^0=\frac1{\omega_n\rho_B},\quad
+\alpha_d^0=(Zc^0)_d=\frac1{\rho_B}\sum_{\substack{n\in E_B\\d\mid n}}\frac1{\omega_n}.
+\]
+Every denominator is positive and every coefficient is rational. In the \(n\)-th row,
+\((Gc^0)_n=1/\rho_B+a_0T_B/\rho_B=1\). Using (37.D)–(37.E) gives both normal
+equations
+\[
+Gc^0=\mathbf1,\qquad K\alpha^0=M^*GM\alpha^0=M^*Gc^0=M^*\mathbf1=b.
+\]
+Positive definiteness makes these the unique solutions even over complex coefficient space;
+their rational reality is a consequence of the real data, not a restriction of the optimization.
+The common vector is
+\[
+p_B=Vc^0=R\alpha^0
+=\frac{\sum_{n\in E_B}u_n/\omega_n-T_Bu_1}{\rho_B}
+=P_{W_{E_B}}\chi.
+\]
+Its norm and target pairing are
+\(\|p_B\|^2=\langle p_B,\chi\rangle=T_B/\rho_B\). Thus the optimal quotient
+is \(\beta_{E_B}=\phi(T_B)\), attained exactly by its nonzero complex multiples.
+For nonempty \(E_B\), \(T_B>0\); no zero-target exception occurs in this finite family.
+

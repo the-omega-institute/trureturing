@@ -1,0 +1,20 @@
+**37.4 定理及证明（任意有限联合 Gram 的严格正定性）。** Let
+\(E=\{n_1,\ldots,n_r\}\) be any finite set of distinct positive integers, ordered
+increasingly for matrices, and let \(T_Ez=\sum_{n\in E}z_nr_n\). Its Gram matrix is
+\[
+(K_E)_{nm}=\langle r_n,r_m\rangle
+=\sum_{d\mid\gcd(n,m)}\mu(n/d)\mu(m/d)\omega_d.
+\]
+For every \(z\in\mathbb C^E\), orthogonality of the \(u_d\) gives the full identity
+\[
+z^*K_Ez=\|T_Ez\|^2
+=\sum_{d\in\operatorname{Div}(E)}\omega_d
+ \left|\sum_{n\in E:d\mid n}\mu(n/d)z_n\right|^2,
+\quad \operatorname{Div}(E)=\bigcup_{n\in E}\{d:d\mid n\}.
+\]
+If \(z\ne0\), choose the largest integer \(n\in E\) with \(z_n\ne0\). The
+coefficient at \(u_n\) is exactly \(z_n\): any larger multiple in \(E\) has zero
+coefficient. Its positive summand proves \(K_E\succ0\). No squarefree restriction
+is used; square factors may kill \(\mu(n)\) but cannot kill the diagonal divisor term
+\(\mu(1)=1\). Thus the \(r_n\) are finitely independent over \(\mathbb C\).
+

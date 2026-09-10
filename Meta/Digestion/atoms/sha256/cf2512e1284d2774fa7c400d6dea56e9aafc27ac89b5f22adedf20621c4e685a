@@ -1,0 +1,20 @@
+**37.28 定义与引理及证明（粗糙截断的约数闭性与两个有限逆式）。** Fix integer
+\(B\ge1\) and set
+\[
+E_B=\{n:2\le n\le B,\ \gcd(n,Q)=1\},\qquad v_n=u_n-u_1\quad(n\in E_B).
+\]
+If \(d\mid n\in E_B\) and \(d>1\), then \(d\le n\le B\) and
+\(\gcd(d,Q)=1\); thus \(d\in E_B\). For every \(n\in E_B\), 37.3 and the
+Möbius divisor sum prove both finite identities
+\[
+v_n=\sum_{\substack{d\mid n\\d>1}}r_d,\qquad
+r_n=\sum_{\substack{d\mid n\\d>1}}\mu(n/d)v_d.
+\tag{37.C}
+\]
+The first subtracts \(r_1=u_1\) from \(u_n=\sum_{d\mid n}r_d\).
+For the second, the coefficient of \(u_1\) on the right is
+\(-\sum_{d\mid n,d>1}\mu(n/d)=\mu(n)\), exactly the omitted \(d=1\) term
+in \(r_n\). Thus these are identities in \(H\), and divisor closure keeps every
+index in the same finite set. Their spans are equal for every \(B\), with both spans
+zero if \(E_B\) is empty.
+
