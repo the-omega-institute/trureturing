@@ -40,3 +40,7 @@ scribe-content-checks 的判词为
 `DESCRIBE_STATUS ... status=classified ... red=0`，markdown 为 `judged=1 formula(s)=3 red=0`。
 `make deposit-uncovered` 以
 `PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED ... reason=NO_ATOM` 结束，模块已冻结且无覆盖 atom。
+
+联网复核命令 `curl -L --max-time 20 -sS https://arxiv.org/html/2605.11137v1 |
+rg -i "Remark 4|conjecture|parity"` 返回 Remark 4 原文：偶奇计数相差 1、优势交替，
+并明确写作 conjecture（`p≥7`）。
