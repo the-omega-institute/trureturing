@@ -144,6 +144,8 @@ problem-resolution claim with `invalid-problem-resolution-source`, because
 the target module was not frozen yet. The correction is sequencing: emit
 the theorem descriptions, freeze canonically, then attach the resolution
 claim and re-emit. The Lean proof is unchanged by this correction.
+The corrected pre-freeze `make emit` exits 0 in 65.568 seconds and generates
+the new Blueprint with both universal statements and their proof explanations.
 
 ### Elaborated dependency query
 
