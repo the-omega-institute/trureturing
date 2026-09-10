@@ -4,6 +4,19 @@ public sealed partial class ProductionEnvironmentTests
 {
     [Theory]
     [InlineData("='", false)]
+    [InlineData(",", false)]
+    [InlineData("='", true)]
+    [InlineData(",", true)]
+    public void GitCliExplicitSeparatorMetadataPreservesCharContext(string separator, bool modified)
+    {
+        var prefix = "import Lean\n"
+            + $"syntax \"eqList\" sepBy1(term, \"{separator}\", \",\") : term\n"
+            + "example : ')' =')' := by decide\n";
+        CheckAnonymousSource("decide", 0, prefix, modified, prepareContext: true);
+    }
+
+    [Theory]
+    [InlineData("='", false)]
     [InlineData("safe", false)]
     [InlineData("='", true)]
     [InlineData("safe", true)]
