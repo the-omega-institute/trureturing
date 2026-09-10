@@ -9,15 +9,25 @@ public sealed class AffectedBoundaryTests
     public void UnsetLanguageSurvivesSealingExecutorAndDownstreamVerification()
     {
         var previous = Environment.GetEnvironmentVariable("DOTNET_CLI_UI_LANGUAGE");
+        var culture = System.Globalization.CultureInfo.CurrentCulture;
+        var uiCulture = System.Globalization.CultureInfo.CurrentUICulture;
         try
         {
             Environment.SetEnvironmentVariable("DOTNET_CLI_UI_LANGUAGE", null);
             using var fixture = new AffectedExecutionFixture();
+            AffectedEnvironmentObservation.Write(fixture.Root, "fixture-after-unset");
+            var child = CommonStages.TestEnvironment();
+            Assert.Equal("en-US", child.UICulture);
+            System.Globalization.CultureInfo.CurrentCulture = new("fr-FR");
+            System.Globalization.CultureInfo.CurrentUICulture = new("tr-TR");
+            Assert.Equal(child, CommonStages.TestEnvironment());
             var build = fixture.Build();
             Assert.Null(Environment.GetEnvironmentVariable("DOTNET_CLI_UI_LANGUAGE"));
+            Assert.All(fixture.Plan().Actions, action => Assert.Equal(child.Identity, action.Environment));
             var cold = fixture.Tests(build, subprocess: true);
             Assert.Equal(2, cold.Projects.Sum(project => project.Executed));
             CommonExecutionEvidence.ValidateTests(fixture.Root);
+            fixture.VerifyTestHostCultures(child.Culture, child.UICulture);
             var warm = fixture.Tests(build, subprocess: true);
             Assert.Equal(0, warm.Projects.Sum(project => project.Executed));
             Assert.All(warm.Projects.SelectMany(project => project.Coverage), coverage =>
@@ -32,7 +42,12 @@ public sealed class AffectedBoundaryTests
             Assert.Equal(warm.Projects.Select(project => project.Exit), full.Projects.Select(project => project.Exit));
             Assert.Equal(2, warm.Projects.SelectMany(project => project.Coverage).Sum(coverage => coverage.Covered));
         }
-        finally { Environment.SetEnvironmentVariable("DOTNET_CLI_UI_LANGUAGE", previous); }
+        finally
+        {
+            Environment.SetEnvironmentVariable("DOTNET_CLI_UI_LANGUAGE", previous);
+            System.Globalization.CultureInfo.CurrentCulture = culture;
+            System.Globalization.CultureInfo.CurrentUICulture = uiCulture;
+        }
     }
 
     [Fact]

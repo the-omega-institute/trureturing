@@ -91,6 +91,40 @@ internal sealed class AffectedExecutionFixture : IDisposable
     }
 
     internal void Remove(string path) => TemporaryFileSystem.File.Delete(Path.Combine(Root, path));
+    internal void VerifyTestHostCultures(string culture, string uiCulture)
+    {
+        const string project = "local-runtime/culture-probe/CultureProbe.csproj";
+        Write(project, """
+            <Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net10.0</TargetFramework>
+            <IsTestProject>true</IsTestProject></PropertyGroup><ItemGroup>
+            <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+            <PackageReference Include="xunit" Version="2.9.3" />
+            <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
+            </ItemGroup></Project>
+            """);
+        Write("local-runtime/culture-probe/Cultures.cs", $$"""
+            public class Cultures
+            {
+                [Xunit.Fact] public void LaunchedTestHostUsesChildContext()
+                {
+                    var culture = System.Globalization.CultureInfo.CurrentCulture.Name;
+                    var uiCulture = System.Globalization.CultureInfo.CurrentUICulture.Name;
+                    System.Console.WriteLine("TESTHOST_CULTURES " + System.Text.Json.JsonSerializer.Serialize(new {
+                        culture, uiCulture, language = System.Environment.GetEnvironmentVariable("DOTNET_CLI_UI_LANGUAGE") }));
+                    Xunit.Assert.Equal({{JsonSerializer.Serialize(culture)}}, culture);
+                    Xunit.Assert.Equal({{JsonSerializer.Serialize(uiCulture)}}, uiCulture);
+                    Xunit.Assert.Equal("en-US", System.Environment.GetEnvironmentVariable("DOTNET_CLI_UI_LANGUAGE"));
+                }
+            }
+            """);
+        using var deadline = new CancellationTokenSource(TestBudgets.WorkflowProcessHangGuard);
+        var result = new CommonStages(Root, Output, deadline.Token).Capture("dotnet",
+            ["test", project, "--configuration", "Release", "--logger", "trx;LogFileName=cultures.trx",
+                "--results-directory", Path.Combine(Root, "build/ci/culture-probe")]);
+        Output.WriteLine(result.Text);
+        Retain("culture-probe");
+        Assert.True(result.Exit == 0, result.Text);
+    }
     internal TestInputManifest Plan() => CommonExecutionEvidence.Read<TestInputManifest>(Root, AffectedTestPlan.PathName);
     internal void ClearSeed() => TemporaryFileSystem.Directory.Delete(Path.Combine(Root, AffectedTestCache.CachePath), recursive: true);
     internal void Transport(string command, params string[] options)

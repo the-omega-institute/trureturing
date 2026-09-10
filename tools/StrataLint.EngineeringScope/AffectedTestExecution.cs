@@ -10,6 +10,7 @@ internal static class AffectedTestExecution
         AffectedTestPlan.Validate(plan);
         var producer = AffectedTestPlan.ProducerIdentity();
         var environment = AffectedTestPlan.EnvironmentIdentity();
+        AffectedEnvironmentObservation.Write(root, "executor-validation", plan, build.Candidate);
         if (plan.Candidate != build.Candidate || plan.Actions.Any(action =>
                 action.Producer != producer || action.Environment != environment))
             throw new InvalidDataException("current test input manifest is invalid or belongs to a different environment");

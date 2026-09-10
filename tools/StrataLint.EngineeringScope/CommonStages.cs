@@ -5,6 +5,8 @@ using StrataLint.Engine;
 
 namespace StrataLint.EngineeringScope;
 
+internal sealed record TestEnvironmentContext(string Identity, string Culture, string UICulture);
+
 internal sealed class CommonStages(string root, TextWriter output, CancellationToken deadlineCancellation = default,
     Action<Process>? processExited = null, TimeProvider? timeProvider = null)
 {
@@ -14,6 +16,27 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
 
     internal static void NormalizeEnvironment(IDictionary<string, string?> environment) =>
         environment["DOTNET_CLI_UI_LANGUAGE"] = "en-US";
+
+    internal static void InitializeTestEnvironment()
+    {
+        var environment = new ProcessStartInfo().Environment;
+        NormalizeEnvironment(environment);
+        // dotnet test applies the CLI language to its testhost. A raw runner DLL
+        // needs the same UI culture; setting an environment variable alone does not.
+        System.Globalization.CultureInfo.CurrentUICulture =
+            System.Globalization.CultureInfo.GetCultureInfo(environment["DOTNET_CLI_UI_LANGUAGE"]!);
+    }
+
+    internal static TestEnvironmentContext TestEnvironment()
+    {
+        // Observe fresh runtime startup under the actual launch policy. Caller
+        // thread cultures (including a containing testhost's) are not child inputs.
+        var result = new CommonStages(Directory.GetCurrentDirectory(), TextWriter.Null).Capture("dotnet",
+            [typeof(Program).Assembly.Location, "test-environment"]);
+        if (result.Exit != 0) throw new InvalidDataException("test environment observation failed: " + result.Text);
+        return JsonSerializer.Deserialize<TestEnvironmentContext>(result.Text)
+            ?? throw new InvalidDataException("missing test environment observation");
+    }
 
     internal static int Normalize(int raw, bool allowProtectedAnnotation = false) => raw switch
     {
@@ -213,6 +236,8 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         if (stage != "build" && Directory.Exists(Path.Combine(root, CommonBuildOutputs.PackagesPath)))
             start.Environment["NUGET_PACKAGES"] = Path.Combine(root, CommonBuildOutputs.PackagesPath);
         foreach (var arg in arguments) start.ArgumentList.Add(arg);
+        if (arguments.Contains("--build-round", StringComparer.Ordinal))
+            AffectedEnvironmentObservation.Write(root, "runner-launch", launched: start.Environment);
         using var process = Process.Start(start) ?? throw new IOException("cannot start " + executable);
         using var timer = new CancellationTokenSource(timeout, clock);
         using var cancellation = CancellationTokenSource.CreateLinkedTokenSource(deadlineCancellation, timer.Token);

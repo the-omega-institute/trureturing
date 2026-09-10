@@ -108,6 +108,7 @@ internal static class CommonExecutionEvidence
         if (materials.Any(material => material.Path == AffectedTestPlan.NativePath))
         {
             var plan = AffectedTestPlan.Derive(root, candidate, snapshot, inputs, materials);
+            AffectedEnvironmentObservation.Write(root, "seal", plan, candidate);
             planFinished = clock.GetTimestamp();
             Write(root, AffectedTestPlan.PathName, plan);
             serializationFinished = clock.GetTimestamp();
@@ -330,6 +331,7 @@ internal static class CommonExecutionEvidence
         var currentCount = 0;
         var producer = AffectedTestPlan.ProducerIdentity();
         var environment = AffectedTestPlan.EnvironmentIdentity();
+        AffectedEnvironmentObservation.Write(root, "downstream-validation", plan, record.Candidate);
         foreach (var (action, coverage) in actions.Zip(project.Coverage))
         {
             if (action.Identity != AffectedTestPlan.Identity(action) || action.Identity != coverage.Identity

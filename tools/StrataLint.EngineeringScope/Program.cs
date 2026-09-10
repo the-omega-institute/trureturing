@@ -6,12 +6,21 @@ namespace StrataLint.EngineeringScope;
 
 internal static class Program
 {
-    public static int Main(string[] arguments) => Run(arguments, TestResultEvidence.Load, Console.Out, Console.Error);
+    public static int Main(string[] arguments)
+    {
+        CommonStages.InitializeTestEnvironment();
+        return Run(arguments, TestResultEvidence.Load, Console.Out, Console.Error);
+    }
 
     internal static int Run(IReadOnlyList<string> arguments, Func<string, TestResultEvidence> evidenceLoader, TextWriter output, TextWriter error)
     {
         try
         {
+            if (arguments.Count == 1 && arguments[0] == "test-environment")
+            {
+                output.WriteLine(JsonSerializer.Serialize(AffectedTestPlan.ReadTestEnvironment()));
+                return 0;
+            }
             if (arguments.FirstOrDefault() == "lean-utility-input")
             {
                 var result = LeanUtilityInputCommand.Run(
@@ -134,6 +143,7 @@ internal static class Program
         if (Directory.Exists(Path.Combine(root, CommonBuildOutputs.PackagesPath)))
             start.Environment["NUGET_PACKAGES"] = Path.Combine(root, CommonBuildOutputs.PackagesPath);
         foreach (var argument in BuildTestArguments(project, results, filter)) start.ArgumentList.Add(argument);
+        AffectedEnvironmentObservation.Write(root, "test-launch", launched: start.Environment);
         using var process = Process.Start(start) ?? throw new InvalidOperationException("could not start dotnet test");
         process.WaitForExit();
         return process.ExitCode;

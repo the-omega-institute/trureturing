@@ -98,6 +98,7 @@ internal sealed class AffectedTestCache
 
     internal void Save(TestInputManifest manifest, IEnumerable<CachedTestSuccess> successes)
     {
+        AffectedEnvironmentObservation.Write(root, "cache-save", manifest);
         if (directory is null || partition is null) return;
         // This is local computation memory. Remote publishing remains the existing
         // Actions save gate, which is restore-only for PR callers.

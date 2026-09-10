@@ -267,15 +267,18 @@ internal static class AffectedTestPlan
     internal static string ProducerIdentity() => Digest(new[] { typeof(AffectedTestPlan).Assembly,
         typeof(ScribeExecutionDependencies).Assembly, typeof(Compilation).Assembly, typeof(CSharpCompilation).Assembly,
         typeof(Tomlyn.TomlSerializer).Assembly }.Select(assembly => assembly.ManifestModule.ModuleVersionId.ToString()));
-    internal static string EnvironmentIdentity()
+    internal static string EnvironmentIdentity() => CommonStages.TestEnvironment().Identity;
+
+    internal static TestEnvironmentContext ReadTestEnvironment()
     {
         var environment = new System.Diagnostics.ProcessStartInfo().Environment;
         CommonStages.NormalizeEnvironment(environment);
-        return Digest(new[] { RuntimeInformation.RuntimeIdentifier, RuntimeInformation.FrameworkDescription,
+        var identity = Digest(new[] { RuntimeInformation.RuntimeIdentifier, RuntimeInformation.FrameworkDescription,
             CultureInfo.CurrentCulture.Name, CultureInfo.CurrentUICulture.Name, "xunit-v2/vstest;configuration=Release;cwd=testhost;filter=class" }
             .Concat(environment.Where(entry => entry.Key.StartsWith("DOTNET_", StringComparison.Ordinal)
                 || entry.Key.StartsWith("COMPlus_", StringComparison.Ordinal) || entry.Key.StartsWith("VSTEST_", StringComparison.Ordinal))
                 .OrderBy(entry => entry.Key, StringComparer.Ordinal).Select(entry => entry.Key + "=" + entry.Value)));
+        return new(identity, CultureInfo.CurrentCulture.Name, CultureInfo.CurrentUICulture.Name);
     }
     internal static string Digest(IEnumerable<string> values)
     {
