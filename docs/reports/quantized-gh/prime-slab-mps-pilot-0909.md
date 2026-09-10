@@ -219,3 +219,20 @@ Immutable inputs: the [original Markdown](https://github.com/the-omega-institute
 The preceding body, commands, program/source/stream/checkpoint identities, results, failures, timings, resource limits and caller/worker/actual-PRO provenance are historical receipts of the original program. All 450 active negatives were CPU-certified; all 450 active GPU proposals remain indeterminate. The later corrected program has a different identity; this note does not attribute the historical stream to corrected-code execution.
 
 This Codex CLI I21 representation repair uses pinned `consensus-rnd:sshx` `1.0.0-beta.42` with repository prior exposed. The original 209-line body is preserved except one three-byte `../` insertion in its constant-input link; the summary bytes are exact. Only bounded byte, link, scope and directory-count checks were performed, with zero mathematical, test-suite, search or GPU executions. The original report's two approvals and one comment are prior-stage history. Fresh independent review of this representation and ordinary publication gates remain caller-owned; content delivery still waits for the corrected judge program to reach MERGED. This repair makes no new research, independent-review, CI-green or MERGED claim.
+
+---
+
+## Summary schema provenance — 2026-09-10 (C77)
+
+The [summary JSON](prime-slab-mps-pilot-0909.json) now presents this historical pilot as `prime-slab-pilot-report-v2`, with the numeric count `cpu_certification.unresolved_count: 0`. The former `unresolved: 0` collided with SL-019's reserved anomaly key: numeric values reach `IsOpen`'s default `true` branch. This is a descriptive report-schema repair; the original execution did not emit v2. Runtime `identity.schema` remains `prime-slab-raw-and-arb-v1`, with no legacy alias added.
+
+The immutable [v1 JSON](https://github.com/the-omega-institute/trureturing/blob/099da11b6b2f73579e4910d7c03ac33521c4651e/docs/reports/quantized-gh/prime-slab-mps-pilot-0909.json) and [pre-repair Markdown](https://github.com/the-omega-institute/trureturing/blob/099da11b6b2f73579e4910d7c03ac33521c4651e/docs/reports/quantized-gh/prime-slab-mps-pilot-0909.md) remain addressable at commit `099da11b6b2f73579e4910d7c03ac33521c4651e`. All 15,820 preceding Markdown bytes (221 LF; SHA-256 `b6e2a43793ae5e245ca807dc7eebeea6d46ff045177efb667b8beb0a9ba07475`) are retained exactly, including existing relative links.
+
+| JSON representation | Bytes | LF | SHA-256 |
+| --- | ---: | ---: | --- |
+| Historical v1 at the immutable commit above | 12,949 | 396 | `43990ef3037a0e46dacf3e9a287cf6732a8553c2d3744460f1229b5d314900ff` |
+| Current v2 presentation | 12,955 | 396 | `52b151e12ee9347632e02ba219f960b4300e90d6caa4a9b42440bc0c19ef2db0` |
+
+The exact inverse has two edits: remove the six ASCII bytes `_count` at zero-based byte offset 3404 from `cpu_certification.unresolved_count`; then change the final digit of the sole descriptive schema value `prime-slab-pilot-report-v2` from `2` to `1` at recovered offset 11296 (v2 offset 11302 before removal). These edits recover every original JSON byte; both variants parse, and reversing the key/schema mapping preserves every original value.
+
+Earlier “current”, “unchanged”, exact-summary, command/status, review and CI assertions retain their original I10/C65 representation-snapshot scope. The original r2 approvals cover only the immutable BASE above and do not approve v2; preserved JSON status and residuals remain historical statements, with no new closure inferred. All 450 active GPU proposals remain indeterminate; CPU-Arb certified 450 negatives and 1,150 rows were inactive. Every measurement, failure, range and original source/input/program/stream identity is preserved. This I26 Codex CLI repair under pinned `consensus-rnd:sshx` beta.42 used only fixed structural checks, with no new search or revalidation. Fresh independent full-report representation review, ordinary CI and MERGED delivery remain caller-owned and are not claimed here. All original scientific residuals and the standing goal remain unchanged.

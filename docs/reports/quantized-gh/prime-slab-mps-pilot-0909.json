@@ -81,7 +81,7 @@
     "parameter_guard_disagreements": 0,
     "positive": 0,
     "precision_bits": 128,
-    "unresolved": 0,
+    "unresolved_count": 0,
     "weak_sign": 0
   },
   "device_verification": {
@@ -340,7 +340,7 @@
       "total": 0.5970999591518193
     }
   },
-  "schema": "prime-slab-pilot-report-v1",
+  "schema": "prime-slab-pilot-report-v2",
   "standing_goal_complete": false,
   "status": "implementation-validation-only; independent review and delivery pending",
   "tests": {
