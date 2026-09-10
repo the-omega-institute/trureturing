@@ -72,12 +72,16 @@ internal sealed class NymanHalflineZeroSeparationDocument : IScribeDocumentDefin
                 Seq(Bind, Annihilates(M)),
                 "The kernel of J is closed and contains every shell. It therefore contains "
                     + "their union and its closure, which is the existing space M."),
-            Claim("halfline-full-real-closure", "fullRealClosure", "Full real source closure",
-                Seq(C, Eq, Overline, Grp(Operatorname, Grp(F.Id("span")), Underscore,
+            Describe.Lean(DescribeId.Create("halfline-full-real-closure"),
+                DeclarationHandle.Create(Prefix + "fullRealClosure"), H("Full real source closure"),
+                StatementSource.FromAuthor(Disp(Seq(C, Eq, Overline, Grp(Operatorname, Grp(F.Id("span")), Underscore,
                     Grp(Mathbb, Grp(F.Id("C"))), OpenBrace, F.Id("F"), Underscore, Grp(F.Id("a")),
-                    Colon, F.Id("a"), InMacro, Sp, Mathbb, Grp(F.Id("R")), Comma, F.Id("a"), Ge, Sp, D(1), CloseBrace)),
-                "C_real is a closed complex submodule of H formed from all real parameters. "
-                    + "It is not defined by the natural cumulative family.", DescribeRole.Definition),
+                    Colon, F.Id("a"), InMacro, Sp, Mathbb, Grp(F.Id("R")), Comma, F.Id("a"), Ge, Sp, D(1), CloseBrace)))),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Weil/baezduarte2002nyman")), Blocks(Paragraph(Text(
+                    "C_real is a closed complex submodule of H formed from all real parameters. "
+                    + "It makes the Introduction's span and closure explicit over C in the Lp quotient. "
+                    + "It is not defined by the natural cumulative family."))), DescribeRole.Definition),
             Claim("halfline-separator-real-closure", "halflineFunctional_fullRealClosure", "Full real closure vanishes",
                 Seq(Bind, Annihilates(C)),
                 "All real sources lie in the closed kernel, hence so do their complex span "
