@@ -4,7 +4,7 @@
 
 Typed constructors generate primitive inventories and laws over explicit canonical arenas.
 
-The separation family serves two gold registrations. Bijection, admitted surjection, anchored separation, context selection, exact design, completion exchange, and scope tables each serve one gold registration and are helpers under the reuse criterion.
+The separation family serves two gold registrations. Bijection, admitted surjection, anchored separation, context selection, exact design, completion exchange, scope tables, and two-step binary protocols each serve one gold registration and are helpers under the reuse criterion.
 
 **Definition 1.1 (Single CUT realization).**
 
@@ -198,6 +198,90 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.s
 
 Explicit coordinate functions compare the three local marginals; no state satisfies all three admission predicates.
 
+**Definition 1.17 (Binary sensor inventory).**
+
+Lean statement: `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.binaryFamilySignature`
+
+*Formalization.* `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.binaryFamilySignature` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+An arbitrary finite sensor type indexes Boolean CUT readouts over the supplied carrier.
+
+**Definition 1.18 (Binary sensor realization).**
+
+Lean statement: `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.binaryFamilyRealization`
+
+*Formalization.* `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.binaryFamilyRealization` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The supplied sensor family defines the readouts, with no point anchors.
+
+**Definition 1.19 (First successful natural index).**
+
+Lean statement: `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.firstSuccess`
+
+*Formalization.* `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.firstSuccess` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A natural-number predicate has its least successful index when a witness exists, and zero otherwise.
+
+**Theorem 1.20 (Witnessed minimum transport).**
+
+Lean statement: `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.firstSuccess_eq_find`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.firstSuccess_eq_find` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+An existence witness identifies firstSuccess with Nat.find for the same predicate.
+
+**Definition 1.21 (Two-step binary protocol statement).**
+
+Lean statement: `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.twoStepStatement`
+
+*Formalization.* `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.twoStepStatement` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The first sensor divides four named states into pairs. A history-dependent second question identifies the state; individual sensors and smaller depths fail, while adaptive and static costs are two and three.
+
+**Definition 1.22 (Two-step protocol helper).**
+
+Lean statement: `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.twoStepArena`
+
+*Formalization.* `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.twoStepArena` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The supplied finite arena and sensors generate the protocol law with realization-dependent adaptive and static minima.
+
+**Theorem 1.23 (Two-step registration bridge).**
+
+Lean statement: `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.twoStepLegacy`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.twoStepLegacy` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Existence witnesses transport the two source Nat.find costs to the generated law using firstSuccess_eq_find.
+
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.admittedSurjectionArena`
@@ -205,6 +289,8 @@ Explicit coordinate functions compare the three local marginals; no state satisf
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.anchoredSeparationArena`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.anchoredSeparationRealization`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.bijectiveArena`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.binaryFamilyRealization`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.binaryFamilySignature`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.completionExchangeArena`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.completionExchangeRealization`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.contextSelectionArena`
@@ -212,10 +298,16 @@ Explicit coordinate functions compare the three local marginals; no state satisf
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.cutRealization`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.exactDesignArena`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.exactDesignRealization`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.firstSuccess`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.firstSuccess_eq_find`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.scopeTableArena`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.scopeTableRealization`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.separationArena`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.separationRealization`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.twoStepArena`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.twoStepLegacy`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates.twoStepStatement`
+- Dependency: [D5/S3/ConceptDynamics/Coding/AdaptiveResidueIdentification](../Coding/AdaptiveResidueIdentification.md)
 - Dependency: [D5/S3/ConceptDynamics/Completion/CommutingCompletionExchange](../Completion/CommutingCompletionExchange.md)
 - Dependency: [D5/S3/ConceptDynamics/Faithfulness/JointFaithfulnessLeibnizCriterion](../Faithfulness/JointFaithfulnessLeibnizCriterion.md)
 - Dependency: [D5/S3/ConceptDynamics/InformationEscape/TheoremUnit](TheoremUnit.md)

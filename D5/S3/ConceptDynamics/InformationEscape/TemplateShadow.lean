@@ -6,20 +6,20 @@
    utility: kind=checker; basis=terminal=gid:D5/S3/ConceptDynamics/InformationEscape/TemplateShadow.spectrum_kernel_equal; instance=D5/S3/ConceptDynamics/InformationEscape/TemplateShadow.spectrumRealization
    digest: Shadow registration regression checks preserve canonical arenas, primitive kernels and statements, with sensitivity witnesses and sealed query evidence. -/
 
-/- Route-out: two_step_adaptive_residue_identification stays outside this first pack.
-In D5/S3/ConceptDynamics/InformationEscapeArenas/, adaptiveDepthFor
-(FirstThreeArenas.lean:92-95) and staticDepthFor (FirstThreeArenas.lean:97-102)
-are noncomputable Nat.find minima (with a zero fallback). residueArena
-(FirstThreeArenas.lean:116-135) has higher-order BinaryProtocol ResidueState 2
-and history-dependent question quantification (FirstThreeArenas.lean:125-131).
-The current constructors do not transport these source-depth minima or that
-higher-order protocol law. A future template needs a source-depth transport lemma
-relating adaptiveDepthFor/staticDepthFor at the source readout to the source
-depth constants, while preserving the protocol quantification. The existing
-hand bridges live in InformationEscapeRealizations/:
-adaptiveDepthFor_eq_source (FirstThreeRealizations.lean:94-100) and
-staticDepthFor_eq_source (FirstThreeRealizations.lean:102-109).
-This is a scoped route-out, not an impossibility claim or a new per-theorem bridge. -/
+/- Ten canonical golds use one reused template (separation) and eight helpers.
+The twoStep helper preserves the two-step binary protocol and Nat.find minima.
+Accounting uses inclusive physical spans; source theorem proofs are excluded.
+A/ = InformationEscapeArenas/, R/ = InformationEscapeRealizations/,
+I/ = InformationEscape/, all below D5/S3/ConceptDynamics/.
+Library, instance, and validation are separate authored scopes.
+| Gold | Hand spans | Library | Instance | Validation |
+| two_step_adaptive_residue_identification | A/FirstThreeArenas.lean:88-140 + R/FirstThreeRealizations.lean:86-171 + I/InformationRoot.lean:83-87 (144) | I/RegistrationTemplates.lean:336-392 (57) | I/TemplateShadow.lean:396-401,416-417 (8) | I/TemplateShadow.lean:402-415,418-427,444,471-472 (27) |
+Hand includes the arena/realization sections and InformationRoot registration.
+Authored instance means realization, bridge, and registration; the remaining
+per-gold checks, enumeration, axiom prints, and census entry are validation.
+Residue scaffolding is I/TemplateShadow.lean:393-395,428 (4); shared seal/query is separate.
+Counts describe this regression pack and make no throughput claim.
+-/
 
 import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
 import D5.S3.ConceptDynamics.InformationEscapeCounting.Enumerations
@@ -390,6 +390,43 @@ expect_information_occurrence compatible_local_laws_can_lack_global_state in loc
   from "D5.S3.ConceptDynamics.InformationEscape.TemplateShadow"
 end Gluing
 
+section Residue
+open D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification
+open FirstThreeArenas
+def residueRealization := binaryFamilyRealization residueReadout
+theorem residue_bridge : LegacyPrimitiveRealization residueArena
+    (twoStepStatement .two .three .five zeroState tenState fifteenState twentyOneState
+      residueReadout residueAdaptiveDepth residueStaticDepth) residueRealization := by
+  apply twoStepLegacy residueArena.toArena .two .three .five
+    zeroState tenState fifteenState twentyOneState residueReadout
+example : (twoStepArena residueArena.toArena ResidueSensor .two .three .five
+    zeroState tenState fifteenState twentyOneState).toArena = residueArena.toArena := rfl
+example : twoStepArena residueArena.toArena ResidueSensor .two .three .five
+    zeroState tenState fifteenState twentyOneState = residueArena := rfl
+theorem residue_kernel_equal : ∀ x y, residueRealization.toPrimitiveBundle.agrees x y ↔
+    FirstThreeRealizations.residueRealization.toPrimitiveBundle.agrees x y := by decide
+theorem residue_nondegenerate : residueArena.toArena.Nondegenerate := by decide
+def residueEnumeration : Arena.StateEnumeration residueArena.toArena := residueArena.__state_enumeration
+theorem residue_lawSensitive : residueArena.Law residueRealization ∧
+    ¬ residueArena.Law (binaryFamilyRealization (fun _ _ => false)) := by
+  refine ⟨residue_bridge.equivalence.mp two_step_adaptive_residue_identification, ?_⟩
+  intro h
+  exact (by decide : ¬ (fifteenState = zeroState ∨ fifteenState = tenState)) (h.1 fifteenState |>.mp rfl)
+example : ¬ residueRealization.toPrimitiveBundle.agrees zeroState tenState := by decide
+register_information_theorem two_step_adaptive_residue_identification in residueArena
+  primitives residueRealization.toPrimitiveBundle realization residue_bridge
+example : two_step_adaptive_residue_identification.__information_unit.Statement =
+    (FirstThreeRealizations.two_step_adaptive_residue_identification_realization.toTheoremUnit
+      two_step_adaptive_residue_identification).Statement := rfl
+#print axioms residue_bridge
+#print axioms residue_kernel_equal
+#print axioms residue_nondegenerate
+#print axioms residueEnumeration
+#print axioms residue_lawSensitive
+expect_information_occurrence two_step_adaptive_residue_identification in residueArena
+  from "D5.S3.ConceptDynamics.InformationEscape.TemplateShadow"
+end Residue
+
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 2000000 in
 #seal_information_theory
@@ -403,6 +440,8 @@ set_option maxHeartbeats 2000000 in
 #print axioms D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.static_exact_design.__lowers_escape
 #print axioms D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary.__lowers_escape
 #print axioms D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction.compatible_local_laws_can_lack_global_state.__lowers_escape
+
+#print axioms D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification.two_step_adaptive_residue_identification.__lowers_escape
 
 open Lean Meta LeanInformationAudit in
 run_meta do
@@ -428,7 +467,9 @@ run_meta do
     (``D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary,
       ``D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.commutingCompletionArena),
     (``D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction.compatible_local_laws_can_lack_global_state,
-      ``D5.S3.ConceptDynamics.InformationEscapeArenas.LocalLawGluingObstruction.localLawGluingArena)]
+      ``D5.S3.ConceptDynamics.InformationEscapeArenas.LocalLawGluingObstruction.localLawGluingArena),
+    (``D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification.two_step_adaptive_residue_identification,
+      ``D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.residueArena)]
   for (gold, arena) in cases do
     let key : StatementKey := ⟨gold, theoremStatementIdentity env gold⟩
     match ← CensusQuery.assess index head.stdout.trimAscii.toString key with

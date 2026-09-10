@@ -10,11 +10,11 @@ internal sealed class TemplateShadowDocument : IScribeDocumentDefinition
         "D5/S3/ConceptDynamics/InformationEscape/TemplateShadow.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Nine shadow registrations compare generated realizations with their hand registrations on canonical arenas.",
+        "Ten shadow registrations compare generated realizations with their hand registrations on canonical arenas.",
         H("Registration Shadows"),
         Blocks(
-            Paragraph(Text("Each shadow retains unrestricted agreement-kernel equality, statement equality, nondegeneracy, a complete state enumeration, a law-sensitivity witness, and a separated state pair. The module seals the nine registrations and checks their finite-occurrence census queries.")),
-            DefinitionNode("spectrum-realization", "spectrumRealization", "Spectrum shadow",
+            Paragraph(Text("Each shadow retains unrestricted agreement-kernel equality, statement equality, nondegeneracy, a complete state enumeration, a law-sensitivity witness, and a separated state pair. The module seals the ten registrations and checks their finite-occurrence census queries.")),
+            DeclarationNode("spectrum-realization", "spectrumRealization", "Spectrum shadow",
                 "The bijection helper uses SpectrumAtom.index on the canonical spectrum arena."),
             Describe.Lean(
                 DescribeId.Create("spectrum-kernel-equality"),
@@ -26,26 +26,39 @@ internal sealed class TemplateShadowDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Here shadow denotes spectrumRealization.toPrimitiveBundle and hand denotes FirstThreeRealizations.spectrumRealization.toPrimitiveBundle. The equivalence holds for every pair of states."))),
                 DescribeRole.Theorem),
-            DefinitionNode("intervention-realization", "interventionRealization", "Intervention shadow",
+            DeclarationNode("intervention-realization", "interventionRealization", "Intervention shadow",
                 "The separation template supplies intervention and counterfactual readouts on the canonical intervention arena."),
-            DefinitionNode("observation-realization", "observationRealization", "Observation shadow",
+            DeclarationNode("observation-realization", "observationRealization", "Observation shadow",
                 "The same separation template supplies observation and intervention readouts on the canonical observation-intervention arena."),
-            DefinitionNode("agenda-realization", "agendaRealization", "Agenda shadow",
+            DeclarationNode("agenda-realization", "agendaRealization", "Agenda shadow",
                 "The admitted-surjection helper uses the sequential winner and agenda validity predicate."),
-            DefinitionNode("preemption-realization", "preemptionRealization", "Preemption shadow",
+            DeclarationNode("preemption-realization", "preemptionRealization", "Preemption shadow",
                 "The anchored-separation helper uses end state, active cause, ordered-preemption predicates, and the two source traces."),
-            DefinitionNode("context-realization", "contextRealization", "Context shadow",
+            DeclarationNode("context-realization", "contextRealization", "Context shadow",
                 "The context-selection helper uses the source interpretation parameters and its two fixed-meaning predicates."),
-            DefinitionNode("static-realization", "staticRealization", "Static-design shadow",
+            DeclarationNode("static-realization", "staticRealization", "Static-design shadow",
                 "The exact-design helper supplies the two Boolean readouts over Fin 3."),
-            DefinitionNode("completion-realization", "completionRealization", "Completion shadow",
+            DeclarationNode("completion-realization", "completionRealization", "Completion shadow",
                 "The completion-exchange helper uses the source counterexample transitions and readout."),
-            DefinitionNode("gluing-realization", "gluingRealization", "Gluing shadow",
+            DeclarationNode("gluing-realization", "gluingRealization", "Gluing shadow",
                 "The scope-table helper supplies the three local equality and inequality predicates."),
-            Paragraph(Text("Only separation meets the two-instance reuse criterion; the other seven families are helpers. Adaptive residue identification remains outside this pack: its law includes noncomputable minimum depths and higher-order protocols. A future template needs a source-depth transport lemma preserving that protocol law; the Lean module's route-out comment identifies the exact declarations.")))));
+            DeclarationNode("residue-realization", "residueRealization", "Adaptive residue shadow",
+                "The two-step helper supplies residueReadout on the canonical residueArena."),
+            DeclarationNode("residue-bridge", "residue_bridge", "Adaptive residue registration bridge",
+                "The generic twoStepLegacy bridge preserves the full source statement, including history-dependent questions and minimum costs.", DescribeRole.Theorem),
+            DeclarationNode("residue-kernel-equality", "residue_kernel_equal", "Residue agreement kernels coincide",
+                "For every pair of states, the generated bundle agrees exactly when the hand bundle agrees.", DescribeRole.Theorem),
+            DeclarationNode("residue-nondegenerate", "residue_nondegenerate", "Nondegenerate residue arena",
+                "The canonical arena contains distinct states.", DescribeRole.Theorem),
+            DeclarationNode("residue-enumeration", "residueEnumeration", "Complete residue enumeration",
+                "The shadow uses the canonical arena's complete state enumeration."),
+            DeclarationNode("residue-law-sensitive", "residue_lawSensitive", "Residue law sensitivity",
+                "The source realization satisfies the law; the constant-false sensor family does not.", DescribeRole.Theorem),
+            Paragraph(Text("The library contains one reused template, separation, and eight single-consumer helpers. The two-step helper transports Nat.find minima and preserves the higher-order binary protocol law. All ten shadows participate in the shared seal and certified finite-occurrence census queries.")))));
 
-    private static DocumentBlock.Describe DefinitionNode(
-        string id, string declaration, string title, string paragraph) =>
+    private static DocumentBlock.Describe DeclarationNode(
+        string id, string declaration, string title, string paragraph,
+        DescribeRole role = DescribeRole.Definition) =>
         Describe.Lean(
             DescribeId.Create(id),
             DeclarationHandle.Create(Prefix + declaration),
@@ -53,7 +66,7 @@ internal sealed class TemplateShadowDocument : IScribeDocumentDefinition
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(paragraph))),
-            DescribeRole.Definition);
+            role);
 
     private static Formula Agreement(string bundle) => Seq(
         Operatorname, Grp(F.Id("agrees")), Open, F.Id(bundle), Comma, Sp,

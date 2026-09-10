@@ -9,6 +9,7 @@
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import D5.S3.ConceptDynamics.Faithfulness.JointFaithfulnessLeibnizCriterion
 import D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange
+import D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification
 import Mathlib.Data.Fintype.Option
 
 set_option autoImplicit false
@@ -20,7 +21,9 @@ namespace D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
 /- The canonical arena is an explicit input. No constructor accepts a Law or a
 bundle. Changing a readout changes the generated Law's argument, not its syntax.
 Search receipt: TheoremUnit's compiler and ADMIT reflection; Mathlib's Bijective
-API. These are presentation constructors, not new proofs of bijection facts. -/
+API. These are presentation constructors, not new proofs of bijection facts.
+The library has one reused template (separation, two causal golds) and eight
+single-consumer helpers; twoStep retains the binary protocol and minimum costs. -/
 
 def cutSignature (X Y : Type) [DecidableEq Y] : PrimitiveSignature X where
   Index := Unit
@@ -224,7 +227,7 @@ def exactDesignRealization {X : Type} (f g : X → Bool) :
     PrimitiveRealization (exactDesignSignature X) :=
   ⟨fun i => if i = 0 then f else g, Fin.elim0⟩
 
-/-- Two individually insufficient readouts whose joint experiment is minimal. -/
+/-- Single-consumer helper: individually insufficient readouts with a minimal joint experiment. -/
 def exactDesignArena (A : Arena) : PrimitiveLawArena where
   toArena := A
   signature := exactDesignSignature A.State
@@ -262,7 +265,7 @@ def completionExchangeRealization {X Y : Type} [DecidableEq X] [DecidableEq Y]
   readout | none => f | some false => F | some true => G
   anchor := Fin.elim0
 
-/-- Completion-order obstruction; the unbounded completion operation is reused verbatim. -/
+/-- Single-consumer helper; the unbounded completion operation is reused verbatim. -/
 def completionExchangeArena (A : Arena) (Y : Type) [DecidableEq Y] : PrimitiveLawArena := by
   letI := A.stateDecidableEq
   exact {
@@ -302,7 +305,7 @@ def scopeTableRealization {X : Type} (P Q R : X → Prop)
   readout | 0 => fun x => decide (P x) | 1 => fun x => decide (Q x) | 2 => fun x => decide (R x)
   anchor := Fin.elim0
 
-/-- Three local scopes with matching marginals and no joint admitted state.
+/-- Single-consumer helper: matching local marginals with no joint admitted state.
 Coordinates are explicit semantic input, not additional primitive readouts. -/
 def scopeTableArena (A : Arena) (first middle last : A.State → Bool) : PrimitiveLawArena where
   toArena := A
@@ -324,6 +327,73 @@ theorem scopeTableLegacy (A : Arena) (first middle last : A.State → Bool)
   simp only [scopeTableArena, scopeTableRealization,
     admit_readout_eq_true_iff P, admit_readout_eq_true_iff Q, admit_readout_eq_true_iff R]
 
+open D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification
+open D5.S3.ConceptDynamics.Coding.FiberBinaryIdentification
+
+/- Single-consumer helper family: finite arenas and sensor types are parameters.
+Only two_step_adaptive_residue_identification consumes this two-step protocol shape.
+The source predicates and BinaryProtocol are reused; dif_pos transports Nat.find. -/
+def binaryFamilySignature (X Sensor : Type) [Fintype Sensor] [DecidableEq Sensor] :
+    PrimitiveSignature X where
+  Index := Sensor
+  indexFintype := inferInstance
+  indexDecidableEq := inferInstance
+  Output := fun _ => Bool
+  outputDecidableEq := fun _ => inferInstance
+  axis := fun _ => .cut
+  readoutAxisNotAnchor := by simp
+  AnchorIndex := Fin 0
+  anchorFintype := inferInstance
+  anchorDecidableEq := inferInstance
+
+def binaryFamilyRealization {X Sensor : Type} [Fintype Sensor] [DecidableEq Sensor]
+    (r : Sensor → X → Bool) : PrimitiveRealization (binaryFamilySignature X Sensor) :=
+  ⟨r, Fin.elim0⟩
+
+noncomputable def firstSuccess (P : Nat → Prop) : Nat := by
+  classical
+  exact if h : ∃ n, P n then Nat.find h else 0
+
+theorem firstSuccess_eq_find {P : Nat → Prop} (h : ∃ n, P n) :
+    firstSuccess P = @Nat.find P (Classical.decPred P) h := by
+  classical
+  exact dif_pos h
+
+def twoStepStatement {X Sensor : Type} (first low high : Sensor) (a b c d : X)
+    (r : Sensor → X → Bool) (adaptive static : Nat) : Prop :=
+  (∀ x, r first x = false ↔ x = a ∨ x = b) ∧
+  (∀ x, r first x = true ↔ x = c ∨ x = d) ∧
+  (∃ protocol : BinaryProtocol X 2,
+    (∀ history : Fin 0 → Bool, protocol.question ⟨0, by decide⟩ history = r first) ∧
+    (∀ history : Fin 1 → Bool, protocol.question ⟨1, by decide⟩ history =
+      if history 0 then r high else r low) ∧
+    UsesReadoutFamily r protocol ∧ Function.Injective protocol.transcript) ∧
+  (∀ sensor, ¬ Function.Injective (r sensor)) ∧
+  (∀ depth, depth < 2 → ¬ ExactAtDepth r depth) ∧
+  adaptive = 2 ∧ static = 3 ∧ adaptive < static
+
+def twoStepArena (A : Arena) (Sensor : Type) [Fintype Sensor] [DecidableEq Sensor]
+    (first low high : Sensor) (a b c d : A.State) : PrimitiveLawArena where
+  toArena := A
+  signature := binaryFamilySignature A.State Sensor
+  Law := fun r => twoStepStatement first low high a b c d r.readout
+    (firstSuccess (ExactAtDepth r.readout)) (firstSuccess (StaticExactAtCardinality r.readout))
+
+theorem twoStepLegacy (A : Arena) {Sensor : Type} [Fintype Sensor] [DecidableEq Sensor]
+    (first low high : Sensor) (a b c d : A.State) (r : Sensor → A.State → Bool)
+    (ha : ∃ n, ExactAtDepth r n) (hs : ∃ n, StaticExactAtCardinality r n) :
+    LegacyPrimitiveRealization (twoStepArena A Sensor first low high a b c d)
+      (twoStepStatement first low high a b c d r
+        (@Nat.find _ (Classical.decPred _) ha) (@Nat.find _ (Classical.decPred _) hs))
+      (binaryFamilyRealization r) := by
+  refine ⟨?_⟩
+  change _ ↔ twoStepStatement first low high a b c d r
+    (firstSuccess (ExactAtDepth r)) (firstSuccess (StaticExactAtCardinality r))
+  rw [firstSuccess_eq_find ha, firstSuccess_eq_find hs]
+
+
+#print axioms firstSuccess_eq_find
+#print axioms twoStepLegacy
 #print axioms bijectiveLegacy
 #print axioms separationLegacy
 #print axioms admittedSurjectionLegacy
