@@ -9339,7 +9339,7 @@ inventory → judge v3 projection／covers-only ASCII → fixtures → **OPEN** 
 request。registry consumers 必须等待 v4.2 import-closure identity／grouping mechanics；hierarchy
 engine 与 counting modules 分别留在 GID-compliant siblings `InformationEscapeHierarchy/` 与
 `InformationEscapeCounting/`；此布局依 H10 ruling、measured `InformationEscape` 11/12 capacity
-与 governing parser rule `tools/StrataLint.Engine/Coordinates/Gid.cs:318-321`
+与 governing parser rule `tools/StrataLint.Engine/Coordinates/Gid.cs`
 （`ParseFormalCoordinates`：ordinary formal coordinates 有 three or four parts;该上限已于 2026-09-08 放开为 `>= 3`(PR #6426),下述落址结论此后由其自身理由承担），且 counting
 sibling 明确 **SUPERSEDES** 工程规范 v1 §6.4 的 nested `InformationEscape/Counting/` proposal；
 frozen D5 与 `Trureturing.lean` 零修改。
