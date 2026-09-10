@@ -169,3 +169,14 @@ Freeze event: `8a959853464c1ca99e1bede704ff8ac01a66935f772d9a4036f95ce9dd927738`
 The module has its canonical state pin; the writer reports
 `PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED ... reason=NO_ATOM`. This is a freeze with
 no atom coverage. No theory volume, atom, or coverage edge was added.
+
+`make -C tools capacity-audit`: EXIT=0,
+`CAPACITY_AUDIT_RESULT exit=0 reason=clean`. `shapes.sh` also returns EXIT=0
+and the same `EDGES_OK` sentinel, with one public theorem row and one definition
+row. Two invocation failures were corrected: the script reads committed
+freeze events, so an uncommitted event gives `IndexError`; the host's default
+Python 3.9 cannot load `facts.py`'s union annotations, so the installed Python
+3.14 framework bin directory was selected for this invocation. No audit script
+was rewritten, and the earlier direct kernel edge extraction had already
+passed. Rendered evidence stays run-local; the assessed theorem row is above
+and in the PR body.
