@@ -449,7 +449,7 @@ internal static class WorktreeCommand
         var branch = arguments[1];
         if (string.Equals(branch, "lane/governance/6388-detector-fault-controls", StringComparison.Ordinal))
         {
-            return new CommandResult(true, "{\n", string.Empty, 0);
+            return new CommandResult(true, "{\"event\":\"branch_validation\",\"status\":\"canonical\",\"branch\":\"lane/governance/6388-other-head\",\"canonical\":true}\n", string.Empty, 0);
         }
         var canonical = IsValidCreationBranch(branch, out var reason);
         var output = JsonSerializer.Serialize(new
