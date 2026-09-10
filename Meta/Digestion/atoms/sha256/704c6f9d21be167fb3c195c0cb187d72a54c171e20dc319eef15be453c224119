@@ -1,0 +1,38 @@
+**定义 QI-D4（组件观察商）。** 对非空连通 $A\subseteq I$，定义以下边界与限制，并对 $s\in\mathcal A(\partial A)$ 定义补集记录域：
+
+$$
+\partial A=U_A\cap U_{I\setminus A},\qquad
+\rho_A(a)=a|_{\partial A},\qquad
+\mathcal R_A(s)=
+\{r\in J_{I\setminus A}:r|_{\partial A}=s\}.
+\tag{QI-BOUNDARY}
+$$
+
+RI 给出
+
+$$
+\partial A=\bigcup_{\substack{i\in A,\ j\notin A\\\{i,j\}\in E_T}}C_{\{i,j\}}.
+\tag{QI-BOUNDARY-UNION}
+$$
+
+确实，一个同时出现在组件内外的变量沿连接路径出现在某条出边的两个端点，反向包含显然。这里保留的是该并集上的一个共同赋值。补集可能不连通，但 $J_{I\setminus A}$ 仍是整个补集上的完整相容赋值，包含各部分之间共享变量的一致性。
+
+对 $a\in J_A$ 令 $O_A(a)$ 为函数 $\mathcal R_A(\rho_A(a))\to\mathcal V_{\mathcal F}$，其值是 $r\mapsto G(a\cup r)$。取带边界的签名及等价：
+
+$$
+\begin{aligned}
+\Sigma_A(a)&=(\rho_A(a),O_A(a))
+\in\coprod_{s\in\mathcal A(\partial A)}
+\mathcal V_{\mathcal F}^{\mathcal R_A(s)},\\
+a\equiv_A a'
+&\iff \rho_A(a)=\rho_A(a')
+\ \text{且}\quad
+\forall r\in\mathcal R_A(\rho_A(a)),\
+G(a\cup r)=G(a'\cup r),\\
+q_A&:J_A\twoheadrightarrow Q_A^{\rm obs}=J_A/{\equiv_A}.
+\end{aligned}
+\tag{QI-COMPONENT-OBS}
+$$
+
+这个核保留边界相等，即使某纤维没有任何补全也不跨边界合并。逐边界应用命题 QI-P3，得到它恰为“须恢复边界并回答所有完整相容补集观察”这一契约下的最粗表示，且 $Q_A^{\rm obs}\cong\Sigma_A[J_A]$。边界读出 $\bar\rho_A$ 由图 $\{(q_A(a),\rho_A(a)):a\in J_A\}$ 定义；这是后续拼接兼容域可从商状态恢复的原因。
+
