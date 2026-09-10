@@ -162,3 +162,13 @@ Recurrence and Arith Library buckets each held 48 and were not extended.
 The typed Scribe mirror cites this note, describes the integer normalization
 and binary candidate, and derives declaration statements from Lean.
 No theory volume, atom, ingestion or self-coverage was created.
+
+## Project Lean build
+
+`make lean` EXIT=0, wall time 233.86 s (time -p), 12921 jobs.
+LEAN_CACHE: status=present; method=none; stamp_miss=null;
+project_olean_state=warm; mathlib_olean_state=warm; missing mathlib oleans=0.
+Pin SHA-256: 6c4c682ffba051b5744fe7a75ccc99d7f3b20227b3b026f392f3315be0adaa4e.
+The current module produced no error or warning. The full log also contains
+replayed diagnostics from unrelated existing modules. Canonical report and
+Scribe/freeze checks are next; this does not yet claim final delivery.
