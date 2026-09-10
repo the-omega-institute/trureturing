@@ -59,3 +59,26 @@ Text searches for Apéry/supercongruence and choose/ModEq found Lucas congruence
 modulo a prime, plus generic factorial/binomial identities; no A357512 target.
 Public helper candidates include `Nat.add_one_mul_choose_eq`,
 `Nat.descFactorial_eq_factorial_mul_choose`, and `Nat.choose_mul_succ_eq`.
+
+## Fetched source receipts
+
+| URL | HTTP | Bytes | SHA-256 |
+| --- | --- | --- | --- |
+| https://oeis.org/search?q=id:A357512&fmt=json | 200 | 2499 | `6a642473a60423ea755db62d0b7a702f3024bcedaaa5345e94de4ab04dbbcbba` |
+| https://oeis.org/A357512/b357512.txt | 200 | 354 | `024cfc8bafbce0b750834b74b2a404a40730fdefb62d96d2f7e3bd78a6157adc` |
+| https://arxiv.org/pdf/2403.19503 | 200 | 117335 | `2ce5211f7b973c8eaced9963bc08c472244d86a359f8fee83e7935309540b8b2` |
+| https://arxiv.org/pdf/1803.07146 | 200 | 236001 | `04aead65568fdb56bfb3c5a31b4ddd768fa47508eef7eabd622d3457065fc4c2` |
+| https://arxiv.org/pdf/1401.0854 | 200 | 291946 | `902b4799157c7f5cae8be1122f3be10937a7f6d3533322da4b633d35154551af` |
+
+OEIS DATA: all 17 terms match exactly. The FORMULA field additionally states
+the explicit A target (`n ≡ 1 or 5 mod 6`) as a conjecture, removing any
+ambiguity about its attribution to the entry. The comment retains its
+existential-prime-set wording.
+
+GitHub authenticated REST code search `A357512 language:Lean`: HTTP 200,
+`total_count=0`, `incomplete_results=false`. This is a bounded negative search,
+not an assertion about every third-party formalization.
+
+`make lean-cache-ensure`: EXIT=0; `status=seeded`, `method=clonefile`,
+`clonefile_attempts=1`, project and mathlib both `warm`, no missing mathlib oleans.
+Donor `/Users/chronoai/trureturing`.
