@@ -171,6 +171,13 @@ coefficient at every even degree; its proof cannot be reduced to instantiation
 or projection of the frozen source equations. The independent intermediate
 power-defect equality `defect_pow` supports that induction, but its algebraic
 normalization alone is not claimed as the novel content.
+The four checks for this first declaration are: (i) `defect_f_zero` occurs
+in its elaborated dependency closure; (ii) its strong induction establishes
+new coefficients, beyond frozen instantiation/projection/normalization;
+(iii) this invokes the explicitly permitted conclusion-as-construction
+form, rather than presenting an equivalent rewrite as an independent
+intermediate witness; (iv) the even-coefficient extraction consumes the
+induction result directly and no projected-away or dead component is involved.
 
 For `a393867_odd`, the named witness is `generating_coeff_pair`:
 
