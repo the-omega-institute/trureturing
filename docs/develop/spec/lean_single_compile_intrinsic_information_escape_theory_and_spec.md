@@ -8855,7 +8855,7 @@ $$
 `trureturing_engineering_optimization_v1.md` §6/§8 的 fused per-pair scan、`CertifiedCounts`
 与 proof sharing 实现本规范 seal 的计算；本文仍唯一负责数学定义与 admission semantics。
 H10 ruling、measured `InformationEscape` 11/12 capacity 与 governing parser rule
-`tools/StrataLint.Engine/Coordinates/Gid.cs:318-321`（`ParseFormalCoordinates`：ordinary formal
+`tools/StrataLint.Engine/Coordinates/Gid.cs`（`ParseFormalCoordinates`：ordinary formal
 coordinates 有 three or four parts;该上限已于 2026-09-08 放开为 `>= 3`(PR #6426),下述落址结论此后由其自身理由承担）要求 counting modules 落在 canonical-depth sibling
 `D5/S3/ConceptDynamics/InformationEscapeCounting/`；此裁决明确 **SUPERSEDES** 工程规范 v1
 §6.4 的 nested `InformationEscape/Counting/` proposal。schema v3 的 `proof_method` 必须报告
