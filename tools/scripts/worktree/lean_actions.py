@@ -11,10 +11,41 @@ import shutil
 import sys
 import tempfile
 
-from lean_cache import actions_keys, binary_platform
+from lean_cache import binary_platform, partition_path, resolved_mathlib
 from lean_cache_release import cache_guard, sha
 
 LAYERS = ("dependency", "project", "report")
+
+
+def actions_keys(root: pathlib.Path) -> dict:
+    """Build Actions snapshot keys and enforce the write policy.
+
+    Actions transport identity belongs to this module; lean_cache.py only
+    provides semantic inputs and platform partition helpers used by producers.
+    """
+    revision = resolved_mathlib(root)
+    system, machine = binary_platform()
+    run = os.environ.get("GITHUB_RUN_ID", "")
+    attempt = os.environ.get("GITHUB_RUN_ATTEMPT", "")
+    if not re.fullmatch(r"[0-9]+", run) or not re.fullmatch(r"[0-9]+", attempt):
+        raise ValueError("snapshot keys require GITHUB_RUN_ID and GITHUB_RUN_ATTEMPT")
+    result = {"mathlib_revision": revision, "os": system, "arch": machine,
+              "partition": partition_path(root),
+              "save_allowed": os.environ.get("GITHUB_EVENT_NAME") == "push"
+                  and os.environ.get("GITHUB_REF") in (
+                      "refs/heads/dev",
+                      # Integration-only rollout binding; exclude from dev delivery.
+                      "refs/heads/integration-ci-current-stability-0909-tests")
+                  and os.environ.get("STRATALINT_CACHE_WRITES", "true") == "true"
+                  and os.environ.get("STRATALINT_CHECK_SUCCEEDED") == "true"}
+    paths = {"dependency": ".lake/packages", "project": ".lake/build",
+             "report": ".lake/report-cache"}
+    for layer, path in paths.items():
+        prefix = f"lean-{layer}-v3-{revision}-{system}-{machine}-"
+        result[layer] = {"restore_prefix": prefix, "key": f"{prefix}{run}-{attempt}",
+                         "path": "build/lean-cache/" + layer, "target": path}
+    result["release_prefix"] = f"lean-cache-v2-{revision}-{system}-{machine}-"
+    return result
 
 
 def output(values, destination="GITHUB_OUTPUT"):
@@ -123,6 +154,8 @@ def main():
         keys = actions_keys(args.repository)
         if args.command == "keys":
             values = {}
+            values.update({key: keys[key] for key in
+                           ("mathlib_revision", "os", "arch", "partition", "save_allowed", "release_prefix")})
             for layer in LAYERS:
                 values.update({layer + "_" + key: value for key, value in keys[layer].items()})
             system, arch = binary_platform()

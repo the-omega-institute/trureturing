@@ -546,6 +546,52 @@ class ProducerIsolationTests(ProducerClosureFixture, unittest.TestCase):
 
 
 class ProducerClosureTests(ProducerClosureFixture, unittest.TestCase):
+    def test_actions_policy_change_does_not_invalidate_report_producer(self):
+        def policy():
+            # A fresh process resolves the fixture's live callable after each edit.
+            result = subprocess.run([sys.executable, "-B", "-c", '''
+import json, pathlib, sys
+sys.path.insert(0, sys.argv[1])
+from lean_actions import actions_keys
+from lean_cache import resolved_mathlib, semantic_config
+print(json.dumps({"owner": actions_keys.__code__.co_filename,
+    "save_allowed": actions_keys(pathlib.Path(sys.argv[2]))["save_allowed"],
+    "semantic_owners": [function.__code__.co_filename
+                        for function in (resolved_mathlib, semantic_config)]}))
+''', str(self.root / "tools/scripts/worktree"), str(self.root)],
+                text=True, capture_output=True, env={**os.environ,
+                    "GITHUB_RUN_ID": "12", "GITHUB_RUN_ATTEMPT": "1",
+                    "GITHUB_EVENT_NAME": "push", "GITHUB_REF": "refs/heads/feature-policy-probe",
+                    "STRATALINT_CACHE_WRITES": "true", "STRATALINT_CHECK_SUCCEEDED": "true"})
+            self.assertEqual(0, result.returncode, result.stderr)
+            return json.loads(result.stdout)
+
+        before = self.address()
+        policy_before = policy()
+        self.assertFalse(policy_before["save_allowed"])
+        owner = pathlib.Path(policy_before["owner"])
+        self.assertTrue(owner.resolve().is_relative_to(self.root.resolve()))
+        original = owner.read_text()
+        changed = original.replace('"refs/heads/dev",', '"refs/heads/dev",\n                      "refs/heads/feature-policy-probe",')
+        self.assertNotEqual(original, changed)
+        try:
+            write(owner, changed)
+            policy_after = policy()
+            self.assertEqual(policy_before["owner"], policy_after["owner"])
+            self.assertTrue(policy_after["save_allowed"])
+            paths = self.report_input("producer-paths")
+            self.assertEqual(0, paths.returncode, paths.stderr)
+            for source in policy_after["semantic_owners"]:
+                self.assertIn(pathlib.Path(source).relative_to(self.root).as_posix(), paths.stdout.splitlines())
+            after = self.address()
+            plan = self.plan_addresses(before, after)
+            self.assertEqual(before, after)
+            self.assertEqual([], plan["recheck"])
+            self.assertEqual("reuse", plan["status"])
+            self.assertFalse(plan["semantic_changed"])
+        finally:
+            write(owner, original)
+
     def test_ci_only_changes_preserve_address_and_reuse(self):
         before = self.address()
         for name, literal in (
