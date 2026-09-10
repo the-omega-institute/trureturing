@@ -131,7 +131,7 @@ G_i(\mathcal T)
 U_i\neq\varnothing.
 $$
 
-系统最终为每个原定理构造增强定理：
+系统仅为正成员构造下列增强定理，指定 maximal catalogs 的全称正性是 positive admission 的条件；完整、非退化且合法的 catalog 独立完成 level-0 classification seal，任一 designated catalog 冗余时产生 `__system_catalog_not_irredundant : ¬ SystemCatalogIrredundant` 与 typed negative verdict：
 
 $$
 \widehat\tau_i
@@ -149,7 +149,7 @@ $$
 
 其中 $g_i:G_i(\mathcal T)$ 由同一次 Lean 编译对当前完整定理族精确计算并由 kernel 检查。
 
-指定系统 root $R_\star$ 的整个准入条件只有一个：
+指定系统 root $R_\star$ 的 maximal catalogs 的 positive admission 要求下列全称正性；完整、非退化且合法的 catalogs 独立完成 level-0 classification seal，任一 designated catalog 冗余时产生 `__system_catalog_not_irredundant : ¬ SystemCatalogIrredundant` 与 typed negative verdict：
 
 $$
 \boxed{
@@ -159,9 +159,7 @@ $$
 }
 $$
 
-即指定 root 的 import closure 中每个 canonical maximal catalog 都必须是语义不可约的概念族：删除任意
-一个 occurrence，信息逃逸率都严格上升。辅助 root 与 analysis view 可以给出局部分析，
-但既不能证明系统准入，也不能豁免指定 root 中的零成员。
+即 positive admission 要求指定 root 的每个 canonical maximal catalog 中删除任意 occurrence 都使信息逃逸率严格上升。辅助 root 与 analysis view 不替代该证明；level-0 seal 保留完整 peers，对零成员认证 `trivial_in_catalog`、逐成员记录 IE-C007，并产生 `__catalog_redundant : Catalog.CatalogRedundant C`。待首次冻结对象的独立 dual-novelty gate 保持 OPEN、无 required check；其中 positivity 只由该对象自身判定，旧零 peers 不阻止新正对象，也不被删除。
 
 本规范明确取消以下对象：
 
@@ -454,7 +452,7 @@ $$
 
 为单射。
 
-完整系统不要求当前数学必须已经完备，因此准入不强制 $E_I=\varnothing$。系统只要求每个保留定理具有严格非零边际。
+完整系统不要求当前数学必须已经完备，因此 positive admission 不强制 $E_I=\varnothing$。level-0 seal 对完整、非退化且合法的 catalog 成功，保留全部成员；零成员认证为 `trivial_in_catalog`、逐成员记录 IE-C007，catalog 判为 `__catalog_redundant : Catalog.CatalogRedundant C`；待首次冻结对象自身为零时不获 positive admission。
 
 ---
 
@@ -1743,7 +1741,7 @@ $$
 \delta_i=\delta_j=0.
 $$
 
-因此以下形式会被自动排除：
+因此以下同核形式在完整 catalog 内认证为 `trivial_in_catalog`，逐成员记录 IE-C007，并以 IE-C008 非致命报告已证明的 collision class；catalog 成功 seal 为 `__catalog_redundant : Catalog.CatalogRedundant C`，零成员不获 positive admission：
 
 - 可逆改名；
 - 输出类型同构；
@@ -1763,7 +1761,7 @@ $$
 
 反过来，如果只保留 product theorem，删除各坐标 theorem，则 product theorem 可以具有正增益。
 
-系统不会替人选择哪一种不可约基；它只拒绝同一编译中同时保留一个过完备族。
+系统不选择或删减不可约基；完整、非退化且合法的过完备族成功 seal，零成员认证为 `trivial_in_catalog`、逐成员记录 IE-C007，catalog 产生 `__catalog_redundant : Catalog.CatalogRedundant C`；待首次冻结对象自身为零时不获 positive admission。
 
 更一般地，只要同一 catalog 中存在 $j\neq i$ 且 $K^R_{A,j}\subseteq K^R_{A,i}$，较细的
 $j$ 已捕获 $i$ 能捕获的全部 pair，故 $U^R_{A,i}=\varnothing$。这包括但不限于同核
@@ -1789,7 +1787,7 @@ $$
 
 这是正确结果，而不是系统无法决定“保留谁”。当前族确实不是不可约族。
 
-编译必须失败并报告 collision class。开发者删除任一重复项后重新编译，剩余代表将重新获得正边际。
+完整合法 catalog 成功 seal，双方均认证为 `trivial_in_catalog`、各有一条 IE-C007，catalog 产生 `__catalog_redundant : Catalog.CatalogRedundant C`，已证明的 collision class 以 IE-C008 非致命报告；零对象不获 positive admission，完整 peer membership 保持，不删除旧成员。
 
 ### 10.2 不设置名称优先级
 
@@ -2072,7 +2070,7 @@ $$
 
 这不是评价体系变化，而是当前数学族从不可约变成过完备。
 
-编译应失败，直到当前定理族重新成为不可约基。
+完整合法族重新 seal，旧 theorem 的分类非单调地变为 certified `trivial_in_catalog`，逐零成员记录 IE-C007，并产生 `__catalog_redundant : Catalog.CatalogRedundant C`；旧成员仍保留，待首次冻结对象是否获 positive admission 只取决于它自身的 positivity，dual-novelty gate 保持 OPEN、无 required check。
 
 特别地，若新 peer 的 kernel 严格细化旧 occurrence 的 kernel，则旧 occurrence 的
 leave-one-out capture 必为零。严格 refinement chain 的每个相邻增量可以非空，同时
@@ -4529,7 +4527,7 @@ $$
 
 一个非常简单但真正切开独有 primitive pair 的 theorem，其 $\delta_i$ 可以为正；它在本系统中不是语义冗余。
 
-一个极长但完全处于其他 theorem 语义闭包中的形式化，其 $\delta_i=0$；它在本系统中失败。
+一个极长但完全处于其他 theorem 语义闭包中的形式化，其 $\delta_i=0$；它认证为 `trivial_in_catalog` 并有一条 IE-C007，完整合法 catalog 成功 seal 为 `__catalog_redundant : Catalog.CatalogRedundant C`；若它是待首次冻结对象，则不获 positive admission。
 
 ---
 
@@ -6101,19 +6099,19 @@ lake build D5.S3.ConceptDynamics.InformationEscape.SharedInformationRoot
 4. 构造每个 arena 的当前完整有限 catalog；
 5. 对每个 theorem 执行 leave-one-out；
 6. 精确计算 `escapeFull`、`escapeWithout`、`uniqueCapture`；
-7. 在 Lean 内构造 `LowersEscape` 证明；
-8. 为原 theorem 构造增强 conjunction theorem；
-9. 若任一 theorem 增益为零，则当前 compilation 失败；
-10. 若全部通过，则写出只读 JSON／CSV／DOT 报告。
+7. 仅为正成员在 Lean 内构造 `LowersEscape` 证明；
+8. 仅为正成员的原 theorem 构造增强 conjunction theorem；
+9. 对全部零成员认证 `trivial_in_catalog` 并逐成员记录 IE-C007，完整合法 catalog 成功 seal 为 `__catalog_redundant : Catalog.CatalogRedundant C`；待首次冻结对象自身为零时不获 positive admission，dual-novelty gate 保持 OPEN、无 required check；
+10. 完整分类与 verdict 认证并 staged 后，写出只读 JSON／CSV／DOT 报告。
 11. 枚举 root import closure 中全部持久可见 occurrences，并按 canonical object `Arena` declaration 分组；
 12. 为每个 $(R,A)$ 构造覆盖该 import closure 全部同 arena members 的唯一 maximal `Catalog`，同时允许不承担准入的 typed analysis views；
 13. 证明并投影 overlap/refinement matrices、multiplicity spectrum、role totals 与完整 catalog verdict；
 14. 对显式 `LayerChain` 证明相邻 inclusions、ordered increments、partition 与 exact rates；
-15. 在 designated root 中组装全部 maximal catalogs 的 `SystemCatalogIrredundant`；
+15. 在 designated root 中组装全部 maximal catalogs 的全正证明，或 `__system_catalog_not_irredundant : ¬ SystemCatalogIrredundant` 与 typed negative verdict；
 16. 新共享结果写 schema v3，且不改写 frozen v4.1 schema-v2 singleton baseline。
 17. 为每个 maximal catalog 构造 generated-kernel closure，并输出 bounded hierarchy projection 与 ASCII projection；
 18. 为完整 frozen theorem report 生成 exactly-one `CensusAssessment` census，分别报告记账完备与认证完备；其 artifact 只作报告，永不作为 seal input 或 required gate；
-19. finite occurrences 继续精确计数，structural occurrences 以 strict inclusion pair witness 认证，truncations 与 unreachable reasons 诚实分栏；
+19. finite occurrences 继续精确计数，structural 正成员以 strict inclusion pair witness 认证，structural 零成员以 `StructuralCatalog.TrivialInCatalog C i` 认证，truncations 与 unreachable reasons 诚实分栏；
 20. 保持 hierarchy projection 对 admission 的单向性，并把 5⁗ dual-novelty gate 标为 OPEN，直到 owner $\tau$ ruling。
 
 不得：
@@ -6936,8 +6934,7 @@ def CatalogIrredundant
   ∀ index, LowersEscape catalog index
 ```
 
-该命题只属于 occurrence 所在 catalog。canonical system admission 只接受 maximal
-catalog 的该证明；analysis view 上的同名性质不向 maximal catalog 传递。
+该命题只属于 occurrence 所在 catalog；canonical system 的 positive admission 要求 designated maximal catalogs 的全称正性，而完整、非退化且合法的 catalogs 独立完成 level-0 classification seal，任一 designated catalog 冗余时产生 `__system_catalog_not_irredundant : ¬ SystemCatalogIrredundant` 与 typed negative verdict；analysis view 上的同名性质不向 maximal catalog 传递。
 
 ### 23.4 可判定实例
 
@@ -7018,8 +7015,8 @@ catalog；该有限 family 的 membership 来自 `rootId` 的 import closure，�
 计数增加 `counts.trivial_in_catalog`；trivial 计入 accounted/certified/AC-023，无 scalar credit；旧四类 fixtures 的新计数为零。现有码不能覆盖的新证据/未来 gate 诊断在 §31 标「待分配」，不占用新码。
 seal occurrence record 携带 positive/trivial typed certificate 分支；catalog record 携带 positive/negative verdict 分支，不再以不可选的 irredundant certificate Name 代表 seal 成功。serializer、parser、analysis bindings 与 census query 共同检查此分支及确切命题。
 payload.root 是证书所属 sealing root，census query root 另行绑定；导入 seal 仅在成员、顺序、arena、realizations 覆盖当前 query scope 的完整 catalog 时可复用。
-canonical payload fields are `key`, `root`, `canonicalArena`, `catalog`, `index`, `registration`, `realization`, `catalogSeal`, `trivialityCertificate`; finite context carries nondegeneracy and state-enumeration certificates, structural context carries the structural catalog and required realization evidence. The validator resolves every evidence name, checks the actual `Catalog.TrivialInCatalog C i` or `StructuralCatalog.TrivialInCatalog C i` proposition and occurrence index, and binds it to the current complete catalog and frozen statement key; positive validation checks a genuinely positive proposition, so a zero certificate cannot satisfy `finite_occurrence`.
-Positive occurrences alone emit `__lowers_escape` and `__escape_enriched`; zero occurrences emit `__trivial_in_catalog` and one IE-C007 record containing theorem, arena, full and leave-one-out counts, provable same-kernel/closure candidates, and no scoring advice. `__catalog_irredundant` exists iff every member is positive; otherwise emit `__catalog_redundant : ¬ CatalogIrredundant` and a typed negative verdict. `SystemCatalogIrredundant`, `SystemWidePositive`, and IE-039 retain their meanings; any redundant designated catalog yields `__system_catalog_not_irredundant`. staging/export accept either catalog verdict.
+canonical payload fields are `key`, `root`, `canonicalArena`, `catalog`, `index`, `registration`, `realization`, `catalogSeal`, `trivialityCertificate`; finite context carries nondegeneracy and state-enumeration certificates, structural context carries the structural catalog and required realization evidence. `catalogSeal` binds the classification seal in both contexts and must not require an all-positive irredundancy certificate. The validator resolves every evidence name, checks the actual `Catalog.TrivialInCatalog C i` or `StructuralCatalog.TrivialInCatalog C i` proposition and occurrence index, and binds it to the current complete catalog and frozen statement key; positive validation checks a genuinely positive proposition, so a zero certificate cannot satisfy `finite_occurrence`.
+Positive occurrences alone emit `__lowers_escape` and `__escape_enriched`; zero occurrences emit `__trivial_in_catalog` and one IE-C007 record containing theorem, arena, full and leave-one-out counts, provable same-kernel/closure candidates, and no scoring advice. `__catalog_irredundant` exists iff every member is positive; otherwise emit `__catalog_redundant : Catalog.CatalogRedundant C` and a typed negative verdict; consumers needing `¬ CatalogIrredundant C` use `catalogRedundant_iff_not_catalogIrredundant`. `SystemCatalogIrredundant`, `SystemWidePositive`, and IE-039 retain their meanings; any redundant designated catalog yields `__system_catalog_not_irredundant : ¬ SystemCatalogIrredundant`. staging/export accept either catalog verdict.
 
 **Phase 11 现役入口**：`make census` 提供全库查询与证书发布。
 全库查询是**读取 elaborated 输出(olean)的流式查询**。下列 J2 assessment、evidence 与
@@ -7097,9 +7094,14 @@ inductive TrivialCatalogContext where
   | finite (nondegeneracyCertificate stateEnumerationCertificate : Name)
   | structural
 structure TrivialInCatalogDisposition (key : StatementKey) where
-  root canonicalArena catalog : Name
+  root : Name
+  canonicalArena : Name
+  catalog : Name
   index : Nat
-  registration realization trivialityCertificate : Name
+  registration : Name
+  realization : Name
+  catalogSeal : Name
+  trivialityCertificate : Name
   context : TrivialCatalogContext
 inductive AnalysisDisposition (key : StatementKey) where
   | trivialInCatalog (value : TrivialInCatalogDisposition key)
@@ -7664,9 +7666,9 @@ registration modules 列表，且不能代替 designated root 的 `SystemCatalog
 18. 构造所有 reflected equality、matrix/spectrum/layer identity 与 verdict proofs；每个 certificate 绑定 member set/order/arena/primitives/environment；
 19. 拒绝把任何旧 snapshot certificate 复用于当前 catalog；
 20. 为正成员从 `0 < uniqueCaptureCount` 构造 proof；为零成员由 `decide` 或 reflected zero-count equality 得到 `uniqueCapturePairs = ∅` 的 `Catalog.TrivialInCatalog` proof；
-21. 经 `lowersEscape_iff_uniqueCaptureCount_pos` 得到 `LowersEscape` proof；
+21. 仅为正成员经 `lowersEscape_iff_uniqueCaptureCount_pos` 得到 `LowersEscape` proof；
 22. 添加 catalog-qualified private 或 namespaced companion theorem；
-23. catalog 全正时生成 `__catalog_irredundant`，否则生成 `__catalog_redundant : Catalog.CatalogRedundant`；analysis stage 组装完整 suite 的 `__system_catalog_irredundant` 或 `__system_catalog_not_irredundant : ¬ SystemCatalogIrredundant`；
+23. catalog 全正时生成 `__catalog_irredundant`，否则生成 `__catalog_redundant : Catalog.CatalogRedundant C`；analysis stage 组装完整 suite 的 `__system_catalog_irredundant` 或 `__system_catalog_not_irredundant : ¬ SystemCatalogIrredundant`；
 24. 完整认证后每个 zero member 输出一个 IE-C007 disposition record；zero 本身不抛错；seal/stage/export 仍分离，JSON 仅由已 staged 的 typed certificates 投影；
 25. 全部 theorem proof 加入 environment 后，写出 schema-v3 只读 artifact；
 26. 命令成功结束。
@@ -7687,7 +7689,7 @@ lake env lean Generated.lean
 
 ### 26.4 fail-closed
 
-以下任一情形使命令报错并使编译失败：
+以下 malformed、incomplete 或 degenerate catalog 的实际 validation failure 使命令报错并使编译失败；零成员本身不属于这些失败：
 
 - arena 无法实例化；
 - state cardinal 小于 2；
@@ -7710,9 +7712,7 @@ lake env lean Generated.lean
 - kernel address 被用作语义或准入证据；
 - 超预算 catalog 没有 refl lane reflected seal。
 
-canonical maximal catalog 失败时不得写任何 artifact。显式 redundant `analysis_view` 只在
-其完整 negative verdict certificates 已 staged 并由 kernel 接受后，才可单独输出
-diagnostic projection；它不改变 designated admission。
+canonical maximal catalog 的实际 validation failure 不得写任何 artifact；完整、非退化且合法的 canonical catalog 与 `analysis_view` 均可 seal，并在完整 positive 或 negative verdict certificates 已 staged 且由 kernel 接受后输出 projection；零成员认证为 `trivial_in_catalog` 并逐成员记录 IE-C007，不使 catalog 失败，也不授予待首次冻结零对象 positive admission。
 
 ---
 
@@ -8298,7 +8298,7 @@ compact form 输出，缺少任何 required payload key 本身即 IE-C028。
 | IE-C030 | `KernelAddressUsedAsSemanticEvidence` | kernel address 流入 grouping、transport、refinement、rate 或 verdict |
 | IE-C031 | `InvalidLayerChain` | adjacency proof、顺序、partition、nonemptiness 或 reflected count 失败 |
 | IE-C032 | `SizeBudgetRequiresReflectedSeal` | `pair_budget > 65536` 且无可解析的 refl-lane seal |
-| IE-C033 | `IncompleteRedundantIndexSet` | zero set 未完整认证、first-zero 短路，或 canonical failure 后写 artifact |
+| IE-C033 | `IncompleteRedundantIndexSet` | zero set 未完整认证、first-zero 短路，或实际 validation failure 后写 artifact |
 
 | code | exact deterministic message shape |
 |---|---|
@@ -8454,9 +8454,9 @@ Name、GID、路径仅用于寻址，不得进入增益公式。
 
 外部文献是否已有该结论属于来源学问题，不是 kernel escape rate 的组成。文献审计可以作为独立投影，但不能改变 $\delta_i$。
 
-### R-006　过完备族整体失败
+### R-006　过完备族的非单调重新封印
 
-若加入一个新 theorem 使旧 theorem 变为零边际，当前完整族失败。系统不得因为旧 theorem 先存在而保留它。
+若新 theorem 使旧 theorem 的边际归零，完整合法族成功重新 seal，旧 theorem 非单调地改分类为 certified `trivial_in_catalog`，逐零成员记录 IE-C007，并产生 `__catalog_redundant : Catalog.CatalogRedundant C`；旧成员保留，待首次冻结对象的 positive admission 只由它自身的 positivity 判定，旧零 peers 不否决新正对象。
 
 ### R-007　无顺序优先
 
@@ -8698,7 +8698,7 @@ $$
 |U_i|=0.
 $$
 
-编译失败。
+期望：完整合法 catalog 成功 seal，零成员认证为 `trivial_in_catalog` 并记录一条 IE-C007，catalog 产生 `__catalog_redundant : Catalog.CatalogRedundant C`；该零对象不获 positive admission。
 
 ### T-003　两个互补坐标
 
@@ -8711,13 +8711,13 @@ primitive readout：`Prod.fst`、`Prod.snd`。
 状态：`Bool × Bool`。  
 primitive readout：`Prod.fst` 与 `Bool.not ∘ Prod.fst`。  
 两者 kernel 相同。  
-期望：两者同时零边际，collision class，编译失败。
+期望：双方同时零边际，均认证为 `trivial_in_catalog`、各记录一条 IE-C007，已证明的 collision class 以 IE-C008 非致命报告；catalog 成功 seal 为 `__catalog_redundant : Catalog.CatalogRedundant C`，零对象不获 positive admission。
 
 ### T-005　product 包装过完备
 
 primitive readout：`Prod.fst`、`Prod.snd`、`id`。  
 `id` 可恢复两个坐标；两个坐标也可由 `id` 恢复。  
-期望：当前三元素族过完备，多成员零边际，编译失败。
+期望：与 T-022 一致，三个成员均零边际、均认证为 `trivial_in_catalog`、各记录一条 IE-C007；完整三元素 catalog 成功 seal 为 `__catalog_redundant : Catalog.CatalogRedundant C`，零对象不获 positive admission。
 
 ### T-006　只保留 product
 
@@ -9433,7 +9433,7 @@ Stage B recompilation
 
 ### AC-005　kernel proof
 
-每个 accepted theorem 都有：
+仅 positive theorem 使用下列 companions；level-0 certified trivial theorem 使用 §23.6 的 triviality companion：
 
 ```lean
 original.__lowers_escape
@@ -9445,9 +9445,9 @@ original.__lowers_escape
 original.__escape_enriched
 ```
 
-### AC-006　不可约总 theorem
+### AC-006　positive admission 的不可约总 theorem
 
-designated root environment 中对每个 canonical arena $A$ 都存在 catalog-qualified theorem：
+designated root 的 positive admission 要求每个 canonical maximal catalog 全正并具有下列 catalog-qualified theorem，而完整、非退化且合法的 catalogs 独立完成 level-0 classification seal，任一 designated catalog 冗余时产生 `__system_catalog_not_irredundant : ¬ SystemCatalogIrredundant` 与 typed negative verdict：
 
 ```lean
 theorem compiledCatalog_irredundant
@@ -9466,9 +9466,9 @@ theorem systemCatalogIrredundant
 它可由所有 catalog companion proofs 组装，也可由一次有限决定直接证明。analysis views
 不参与此 conjunction。
 
-### AC-007　零边际失败
+### AC-007　零边际分类封印与正准入分离
 
-插入常值、重复、可恢复或 wrapper primitive readout 时编译必失败。
+插入常值、重复、可恢复或 wrapper primitive readout 后，完整、非退化且合法的 catalog 成功 seal；零成员均认证为 `trivial_in_catalog`、逐成员记录 IE-C007，并产生 `__catalog_redundant : Catalog.CatalogRedundant C`，已证明的同核 collision class 以 IE-C008 非致命报告；待首次冻结对象自身为零时不获 positive admission，不删除旧成员。
 
 ### AC-008　次序不变
 
@@ -9914,7 +9914,7 @@ $$
 |U_0|=0,
 $$
 
-编译失败。
+完整合法 catalog 成功 seal，零成员认证为 `trivial_in_catalog` 并记录一条 IE-C007，catalog 产生 `__catalog_redundant : Catalog.CatalogRedundant C`；该零对象不获 positive admission。
 
 ## 42. Bool pair 的不可约坐标基
 
@@ -9966,9 +9966,9 @@ $$
 \delta_0=\delta_1=\delta_2=0.
 $$
 
-系统拒绝整个过完备族。
+完整过完备族成功 seal，三个成员均认证为 `trivial_in_catalog`、各记录一条 IE-C007，并产生 `__catalog_redundant : Catalog.CatalogRedundant C`；零对象不获 positive admission，完整 peer membership 保持。
 
-开发者必须选择：
+以下是独立的不可约 analysis views，不替代完整 maximal catalog，也不删除其成员或履行 positive admission 义务：
 
 $$
 \{\operatorname{id}\}
@@ -10323,10 +10323,10 @@ alignment device；二者都不声称 OI 与 IC 是同一个 causal ontology。
 
 # 第六部　最终规范句
 
-## 44. 唯一数学判词
+## 44. 唯一 positive admission 数学判词
 
 对当前 root $R$ 的 import closure 与 canonical object arena $A$ 形成的 maximal catalog
-$\mathcal T_{R,A}$，每个 occurrence $i$ 的数学判词是：
+$\mathcal T_{R,A}$，每个 occurrence $i$ 的 positive admission 数学条件是：
 
 $$
 \boxed{
@@ -10339,7 +10339,9 @@ $$
 这不是历史增量，而是当前 occurrence 在当前 maximal peers 内部的留一反事实。ordered
 layered capture 是 chain analysis，不替代该准入判词。
 
-## 45. 唯一准入条件
+## 45. 唯一 positive admission 条件
+
+指定 maximal catalogs 的 positive admission 要求下列全称正性，而完整、非退化且合法的 catalogs 独立完成 level-0 classification seal，任一 designated catalog 冗余时产生 `__system_catalog_not_irredundant : ¬ SystemCatalogIrredundant` 与 typed negative verdict；§8.7 的待首次冻结对象 dual-novelty gate 保持 OPEN、无 required check，其 positivity 仅由该对象自身判定。
 
 $$
 \boxed{
@@ -10389,11 +10391,11 @@ leave-one-out primitive kernels
         ↓
 exact shared analyses + optional certified LayerChains
         ↓
-Lean proofs of strict decrease and analysis identities
+Lean proofs of positive/trivial classification and analysis identities
         ↓
 catalog-qualified companion theorems
         ↓
-designated-root universal verdict succeeds or fails
+designated-root typed positive or negative verdict; classification seal succeeds
         ↓
 read-only schema-v3 artifacts
 ```
@@ -10402,13 +10404,13 @@ read-only schema-v3 artifacts
 
 该系统不是一个附着在数学之外的评价平台。
 
-它只做一件事：
+level-0 对完整合法 catalog 的每个成员给出 kernel-certified positive 或 trivial 分类；positive 成员的伴随命题为：
 
-> 对 designated root 的每个 canonical maximal catalog 中的每一个 theorem occurrence，
+> 对 designated root 的每个 canonical maximal catalog 中的 positive theorem occurrence，
 > 构造并证明另一个 Lean 数学命题：若从同一个 maximal peer catalog 中删除该
 > occurrence，则联合概念核严格变粗，信息逃逸率严格上升。
 
-因此接纳对象为：
+因此获得 positive admission 的对象为：
 
 $$
 \boxed{
@@ -10496,7 +10498,7 @@ v4.2 不推翻第 48 节；它在 v4.1 kernel-residual 内核上作 additive 扩
     导入 v4.1 `InformationRoot` 时自然继承其十一个 occurrences，与 `UnifiedBoolSCM` arena 上的
     causal occurrences 不碰撞。
 
-最终边界是：只有 designated maximal catalog 的 `CatalogIrredundant` 控制 admission；
+最终边界是：designated maximal catalogs 的 `CatalogIrredundant` 全称正性只控制 positive admission，而完整、非退化且合法的 catalogs 独立完成 level-0 classification seal，任一 designated catalog 冗余时产生 `__system_catalog_not_irredundant : ¬ SystemCatalogIrredundant` 与 typed negative verdict；
 overlap、rate magnitude、role comparison、spectrum、layered counts 与 address coincidence 都
 是无权重 analysis，不增加第二个 threshold，也不产生跨 arena scalar。
 ## 50. v4.3 generated-kernel hierarchy 与 dispositions 合并裁决
