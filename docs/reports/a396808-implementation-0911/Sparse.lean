@@ -84,7 +84,81 @@ private theorem power_pair_unique (i j k l : ℕ) (hij : i ≤ j) (hkl : k ≤ l
     exact Nat.add_right_cancel heq
   · rfl
 
-#print axioms t_cube
-#print axioms power_pair_unique
+
+private def pairSet (n : ℕ) : Finset (ℕ × ℕ) := by
+  classical
+  exact (Finset.antidiagonal n).filter fun p =>
+    (∃ i : ℕ, p.1 = 3^i) ∧ (∃ j : ℕ, p.2 = 3^j)
+
+private theorem coeff_square (n : ℕ) :
+    PowerSeries.coeff n (t^2) = ((pairSet n).card : F3) := by
+  classical
+  rw [pow_two, PowerSeries.coeff_mul]
+  simp only [t, PowerSeries.coeff_mk]
+  simp only [pairSet, Finset.card_eq_sum_ones, Nat.cast_sum,
+    Finset.sum_filter]
+  apply Finset.sum_congr rfl
+  intro p hp
+  split_ifs <;> simp_all
+
+private theorem pairSet_sum (i j : ℕ) (hij : i ≤ j) :
+    pairSet (3^i+3^j) = {(3^i,3^j), (3^j,3^i)} := by
+  classical
+  ext p
+  simp only [pairSet, Finset.mem_filter, Finset.mem_antidiagonal,
+    Finset.mem_insert, Finset.mem_singleton]
+  constructor
+  · rintro ⟨hs, ⟨k,hk⟩, ⟨l,hl⟩⟩
+    rcases le_total k l with hkl | hlk
+    · have heq : (3:ℕ)^i+3^j = 3^k+3^l := by omega
+      obtain ⟨rfl,rfl⟩ := power_pair_unique i j k l hij hkl heq
+      left
+      exact Prod.ext hk hl
+    · have heq : (3:ℕ)^i+3^j = 3^l+3^k := by omega
+      obtain ⟨rfl,rfl⟩ := power_pair_unique i j l k hij hlk heq
+      right
+      exact Prod.ext hk hl
+  · rintro (rfl | rfl)
+    · exact ⟨rfl, ⟨i,rfl⟩, ⟨j,rfl⟩⟩
+    · exact ⟨Nat.add_comm _ _, ⟨j,rfl⟩, ⟨i,rfl⟩⟩
+
+private theorem coeff_square_diagonal (i : ℕ) :
+    PowerSeries.coeff (2*3^i) (t^2) = 1 := by
+  classical
+  rw [show 2*3^i = 3^i+3^i by omega, coeff_square, pairSet_sum i i (by omega)]
+  simp
+
+private theorem coeff_square_off_diagonal (i j : ℕ) (hij : i < j) :
+    PowerSeries.coeff (3^i+3^j) (t^2) = 2 := by
+  classical
+  rw [coeff_square, pairSet_sum i j (by omega)]
+  have hne : (3:ℕ)^i ≠ 3^j := (Nat.pow_right_injective (by decide)).ne (by omega)
+  simp [hne, hne.symm]
+
+private theorem coeff_square_else (n : ℕ)
+    (h : ¬∃ i j : ℕ, n = 3^i+3^j) : PowerSeries.coeff n (t^2) = 0 := by
+  classical
+  rw [coeff_square]
+  have hempty : pairSet n = ∅ := by
+    apply Finset.eq_empty_iff_forall_notMem.mpr
+    intro p hp
+    simp only [pairSet, Finset.mem_filter, Finset.mem_antidiagonal] at hp
+    obtain ⟨hs, ⟨i,hi⟩, ⟨j,hj⟩⟩ := hp
+    exact h ⟨i,j,by omega⟩
+  simp [hempty]
+
+private theorem coeff_square_odd (n : ℕ) (hn : Odd n) :
+    PowerSeries.coeff n (t^2) = 0 := by
+  apply coeff_square_else
+  rintro ⟨i,j,rfl⟩
+  have hi : Odd ((3:ℕ)^i) := (by decide : Odd (3:ℕ)).pow
+  have hj : Odd ((3:ℕ)^j) := (by decide : Odd (3:ℕ)).pow
+  obtain ⟨a,ha⟩ := hi
+  obtain ⟨b,hb⟩ := hj
+  obtain ⟨c,hc⟩ := hn
+  omega
+
+#print axioms coeff_square_odd
+#print axioms coeff_square_off_diagonal
 end
 end A396808Sparse
