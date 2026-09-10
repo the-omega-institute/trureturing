@@ -26,6 +26,10 @@ $$\forall n: \mathbb{N}, 1 \le n \implies \operatorname{Odd}\left(\operatorname{
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivativeOdd.a393867_odd` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a393867-all-terms-odd` (proved) by `D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivativeOdd.a393867_odd`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a393867-all-terms-odd","declaration_gid":"D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivativeOdd.a393867_odd","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2026). *OEIS A393867, logarithmic derivative of A393866 (g.f. with [x^n] A^prime(n) = prime(n) [x^(n-1)] A^prime(n))*. URL: <https://oeis.org/A393867>.

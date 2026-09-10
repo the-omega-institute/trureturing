@@ -167,6 +167,17 @@ Accepted v5 event:
 `75306b440b9877089c4b3d32c9a6bb102782b818296b410e8c61b6cc8311d810`.
 Only this new module was frozen; no atom or theory volume was created.
 
+After freezing, the problem-resolution claim was restored and `make emit`
+passed again: EXIT=0, 61.698 seconds. The generated Blueprint now records
+that the exact target problem is proved by the frozen `a393867_odd`.
+
+Pre-PR integration check: fetched `origin/dev` at
+`782d277e9cbfed84c26daf04ea6a3ea66c1ac44c` (the original base plus the
+A396843 lane). `git merge-tree --write-tree HEAD origin/dev` returned EXIT=0
+and tree `c915e4f8fbdb50d0bf6f358d9694d9eb1d940010`. Exact target-name
+searches in that dev snapshot found neither new public theorem. The protected
+merge base for this lane remains the original SHA given above.
+
 ### Elaborated dependency query
 
 A Lean `run_cmd` query used `Environment.find?`, `ConstantInfo.type`,
@@ -181,15 +192,21 @@ reading the short coefficient derivation, not inferred from the graph alone.
 
 ## ASSUMED-UNVERIFIED
 
-No priority, exhaustive literature search, A393868 result, or completed
-PR is claimed at this checkpoint. A393866 and A393868 b-files were not opened:
+### Unclaimed
+
+No publication priority, exhaustive literature search, A393868 result,
+multi-model consensus, or independent review is claimed. A393866 and
+A393868 b-files and the A393868 page were not opened:
 `ASSUMED-UNVERIFIED`. The user's arXiv search report is not represented as a
-search performed by this worker. No theory volume or atom will be created.
+search performed by this worker. No theory volume or atom was created.
+This implementation seat publishes a PR; it does not claim a merge into dev.
+The PR URL and CI terminal reading belong to the runner-owned final report.
 
 ## Triage
 
 `theorem`: the exact target is proved by `a393867_odd`. Its Scribe node records
-the resolution; project gates and PR publication are still pending here.
+the resolution, and the new module has passed the project build and canonical
+freeze. The numerical evidence remains a semantic probe only.
 
 ### Theorem admission analysis
 
