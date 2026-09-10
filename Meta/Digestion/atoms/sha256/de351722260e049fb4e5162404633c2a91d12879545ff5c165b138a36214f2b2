@@ -1,0 +1,32 @@
+### 43.3 水平类与非水平极点类（FT-P2）
+
+若 $R\subseteq H_h$ 至少含两点，则 $B_h=\{(a,-h):a\in\mathbb Q\}$ 是同一个全失败类，其余记录各为单点类。证明：$B_h$ 的所有标签均为 $\bot$，其余记录在 $R$ 上均成功。若两个不同的其余记录等价，FT-P1 的同分母情形只能给一个不同于 $H_h$ 的水平等值域；异分母情形给一条非水平线，至多与 $H_h$ 交于一点。两者都不能容纳 $R$ 的两个不同点。
+
+若 $R\subseteq L_{u,v}$ 至少含两点，写成 $R=\{r_d:d\in D\}$，其中 $r_d=(ud+v,d)$、$D\subseteq\mathbb Q$、$\lvert D\rvert\ge2$。定义
+
+$$
+k(p)=a+v-ub,\qquad P_x=(-ux-v,-x)\quad(x\in\mathbb Q).
+$$
+
+在 $d\ne-b$ 时，有
+
+$$
+F_p(r_d)=\operatorname{ok}\!\left(u+\frac{k(p)}{b+d}\right).
+$$
+
+所以 $k(p)=0$ 恰当且仅当 $p=P_{-b}$，并且
+
+$$
+F_{P_x}(r_x)=\bot,\qquad
+d\ne x\ \Longrightarrow\ F_{P_x}(r_d)=\operatorname{ok}(u).
+$$
+
+唯一可能被合并的族是 $M_D=\{P_x:x\in\mathbb Q\setminus D\}$；若非空它构成一类，其余记录全为单点类。$M_D$ 为空时该类不存在，只有一个元素时只是单点，并非非平凡合并。特别地，
+
+$$
+P_x\sim_R P_y\ \Longleftrightarrow\
+x=y\ \lor\ \{x,y\}\cap D=\varnothing.
+$$
+
+证明。显示的成功值来自 $a+ud+v=u(b+d)+k(p)$。设不同 $p,p'$ 在 $R$ 上等价；同分母的水平等值域至多含该非水平线的一点，故必须异分母。FT-P1 的非水平等值线与 $L_{u,v}$ 共含两点，因两点决定唯一仿射线而相同。系数公式给 $a'-a=u(b'-b)$ 和 $v=ub-a$，故 $a=ub-v$、$a'=ub'-v$，两记录均属 $P_x$ 族。FT-P1 的两个穿孔要求其不同极点均不在 $D$。反之，两个缺失极点的记录在 $R$ 上处处给 $\operatorname{ok}(u)$。这证明整个核分类，尤其排除了与 $k\ne0$ 记录的任何合并。
+

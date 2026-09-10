@@ -1,0 +1,18 @@
+### 43.5 非水平线上的全部分离子集（FT-P4）
+
+沿用 FT-P2 的 $R,D,r_d,P_x$，写 $S=\{r_d:d\in T\}$，$T\subseteq D$。若 $R$ 是 $L_{u,v}$ 的真子集，则 $\operatorname{Sep}(S,R)$ 当且仅当 $S=R$。若 $R=L_{u,v}$，则 $\operatorname{Sep}(S,R)$ 当且仅当 $\lvert L_{u,v}\setminus S\rvert\le1$，即整线本身或整线删一点。两种情形都有 $\tau(R)=\lvert R\rvert$：有限 $n\ge2$ 点时为 $n$，无限时为 $\aleph_0$。
+
+证明。先设 $D\ne\mathbb Q$ 且 $T\ne D$，取 $x\in D\setminus T$、$y\in\mathbb Q\setminus D$。两者不同，$P_x,P_y$ 在每个 $d\in T$ 都给 $\operatorname{ok}(u)$，但在 $r_x\in R$ 分别给 $\bot$ 与 $\operatorname{ok}(u)$，所以任何真子集都不分离；$S=R$ 的充分性由定义成立。
+
+再设 $D=\mathbb Q$。若 $T$ 遗漏不同 $x,y$，同样两记录在 $S$ 上相等，在 $r_x\in R$ 不等。若至多遗漏一点，则 $S$ 至少有两点，FT-P2 的 $M_T$ 至多为单点，故 $\sim_S$ 与 $\sim_R$ 都是恒等核，充分性成立。有限非水平 $R$ 必为真线集，不能删任何点；无限真线集不能等于有限 $S$，整线也不能由有限 $S$ 留下至多一个遗漏点。可数的 $R$ 自身总是基，故无限最小值恰为 $\aleph_0$。
+
+无限障碍的量词是
+
+$$
+\forall S\subseteq R\text{ finite}\quad
+\exists p,p'\in\mathbb Q^2\ \exists r\in R:\quad
+p\sim_S p'\ \land\ F_p(r)\ne F_{p'}(r),
+$$
+
+其中 $R$ 为非水平线上的无限子集。也可在无限 $D$ 中直接选两个未测试的不同高度作为极点。见证依赖 $S$；不存在一个固定的非等价对能在所有有限子集上都相等，因为单点子集已经逐点检验整个 $R$。特别地，整线去一点本身是无限真线集：它的核虽恒等，仍只有自身分离，不能再删一点。
+

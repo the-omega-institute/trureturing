@@ -1,0 +1,19 @@
+### 43.14 有效性：固定基与固定线（FT-P7）
+
+有效性均采用有理数的通常有限精确编码。显式给出的有限分离基提供算法：逐测试先检查分母是否为零，失败时比较 $\bot$，成功时作精确有理比较，最后合取所有相等结果。FT-D1 的分离性使此算法恰判 $\sim_R$。因此对每个有有限基的固定 $R$，可以把这组有理数硬编码得到非一致的可判定性；这不等于从任意 $R$ 的描述自动找到基。
+
+对固定非水平 $L_{u,v}$ 及 $R=\{r_d:d\in D\}$、$\lvert D\rvert\ge2$，有
+
+$$
+\sim_R\text{ is decidable}\ \Longleftrightarrow\
+D\text{ has decidable membership}.
+$$
+
+证明。从可判定的 $D$ 到等价判定，先比较记录坐标；若相同即相等。否则先检查两者的 $k$ 是否均为零；若否即不等，若是则由 FT-P2 查询至多两个极点是否都不在 $D$ 即可。反向，若 $D=\mathbb Q$，成员判定平凡；否则固定一个 $e\in\mathbb Q\setminus D$。对 $x\ne e$ 有
+
+$$
+P_x\sim_R P_e\ \Longleftrightarrow\ x\notin D.
+$$
+
+$x=e$ 单独判为不在 $D$，其余调用等价判定器，从而判定 $D$。这里 $e$ 是固定的非一致参数，不能承诺从等价 oracle 一致取回：$D=\mathbb Q$ 和每个 $D=\mathbb Q\setminus\{e\}$ 都给完全相同的恒等核，等价 oracle 无法区别它们。
+
