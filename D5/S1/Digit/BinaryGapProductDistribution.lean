@@ -604,6 +604,4 @@ example : gapProductCount 4 2 = 6 := by decide +kernel
 
 end D5.S1.Digit.BinaryGapProductDistribution
 
-example : True := by decide
-
-example : ')' =')' := by decide
+example : True := by native_decide
