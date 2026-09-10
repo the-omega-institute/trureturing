@@ -120,6 +120,7 @@ Lean 七行头部次序与 utility:none 合规；Lean 每行不超过 100 字符
 使串行器真正重建当前源码。没有删除/重建用户指出的两个大内存模块。
 
 冻结状态片：Golden/Frozen/state/D5/S3/Quantum/Information/CoherentCopyCorrelationTax.lean.json。
+配套 Freeze 事件：sha256:e3630bdd0bb4db907c9eeb8be93638037b991b4f54759b940aa7e959fa3ae873。
 模块 statement_id：sha256:515e26b6d8e1b83bf165408fa389b250fd98e12f77fcb42d95532c8250a7de46。
 主定理 statement_id：sha256:cc3d1a3a93c455ec90e6ccc8a358f94e907eaf02a2e0c1a5f34c37b62f96b90d。
 形态是 deposit-uncovered：源 atom 的三个子句中只做相关-税这一条；未改 coverage，
