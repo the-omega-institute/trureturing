@@ -135,6 +135,7 @@ def hash_receipt(repository, directory):
               "extraction": {k: extraction[k] for k in ["cache_keys", "source_digest", "frozen_names_digest"]},
               "membership": read(directory / "membership-cache.json")["receipt"],
               "expanded_rows_cache_key": expanded_rows_key(projection, membership),
+              "rows": {"artifact": "rows.jsonl", "sha256": projection["rows_sha256"]},
               "candidate_validation": validation,
               "toolchain": (repository / "lean-toolchain").read_text().strip()}
     from streaming import receipt_digest

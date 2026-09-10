@@ -9,14 +9,25 @@ open Lean
 
 namespace DispositionCensus
 
-def checkFrozenKeys (head : String) (keys : Array StatementKey) : Except String Unit := do
+/-- Cache each display name once instead of rebuilding it in every comparison.
+The ordering is exactly StatementKey.lt, including its wire-id tie breaker. -/
+private def sortKeys (keys : Array StatementKey) : Array StatementKey :=
+  ((keys.map fun key => (key.theoremName.toString, key)).qsort fun a b =>
+    a.1 < b.1 || (a.1 == b.1 && a.2.statementId < b.2.statementId)).map (·.2)
+
+def checkFrozenUniqueness (head : String) (keys : Array StatementKey) : Except String Unit := do
   let mut ids : Std.HashSet String := {}
   for key in keys do
     if ids.contains key.statementId then
       throw <| censusError head "frozen_keys" "unique" (toJson key).compress
     ids := ids.insert key.statementId
-  for key in keys do
-    discard <| decodeStatementId key.theoremName key.statementId
+
+def checkStatementIds (keys : Array StatementKey) : Except String Unit := do
+  for key in keys do discard <| decodeStatementId key.theoremName key.statementId
+
+def checkFrozenKeys (head : String) (keys : Array StatementKey) : Except String Unit := do
+  checkFrozenUniqueness head keys
+  checkStatementIds keys
 
 def checkInventoryDuplicates (rows : Array StatementKey) : Except String Unit := do
   let mut records : Std.HashMap String (Array Nat) := {}
@@ -28,35 +39,49 @@ def checkInventoryDuplicates (rows : Array StatementKey) : Except String Unit :=
     if duplicates.size > 1 then
       throw s!"IE-C035 DuplicateAnalysisDisposition theorem={key.theoremName} statement_id={key.statementId} records={(toJson duplicates).compress}"
 
-/-- Duplicate statement IDs are checked before identity and missing-row diagnostics. -/
-def checkKeyCoverage (head : String) (frozen : Array StatementKey)
-    (inventoryHead : String) (rows : Array StatementKey) : Except String Unit := do
-  let expected := frozen.qsort StatementKey.lt
-  checkFrozenKeys head expected
+/-- All callers share IE-C044 > IE-C035 > IE-C036. Report parsing must
+defer the codec until inventory duplicates have had their turn. -/
+def checkIdentityInputs (head : String) (frozen rows : Array StatementKey) : Except String Unit := do
+  checkFrozenUniqueness head frozen
   checkInventoryDuplicates rows
-  let records := rows.foldl (init := ({} : Std.HashSet String)) fun ids row => ids.insert row.statementId
-  for key in rows do
-    discard <| decodeStatementId key.theoremName key.statementId
+  checkStatementIds frozen
+  checkStatementIds rows
+
+/-- Identity binding only; absence is checked after the manifest's Nat binding. -/
+def checkKeyIdentity (head : String) (frozen : Array StatementKey)
+    (inventoryHead : String) (rows : Array StatementKey) : Except String Unit := do
+  let expected := sortKeys frozen
   for key in expected do
     unless inventoryHead == head do
       throw <| identityError key.theoremName "head" head inventoryHead
   unless inventoryHead == head do
     throw <| identityError .anonymous "head" head inventoryHead
-  let names : Std.HashMap Name (Array String) :=
+  let names : Std.HashMap Name String :=
     expected.foldl (init := {}) fun result key =>
-      result.insert key.theoremName ((result.getD key.theoremName #[]).push key.statementId)
-  for key in rows.qsort StatementKey.lt do
+      if result.contains key.theoremName then result else result.insert key.theoremName key.statementId
+  let idNames : Std.HashMap String Name :=
+    expected.foldl (init := {}) fun result key => result.insert key.statementId key.theoremName
+  for key in sortKeys rows do
     match names[key.theoremName]? with
-    | some ids =>
-      unless ids.contains key.statementId do
-        throw <| identityError key.theoremName "statement_id" ids[0]! key.statementId
+    | some firstId =>
+      unless idNames[key.statementId]? == some key.theoremName do
+        throw <| identityError key.theoremName "statement_id" firstId key.statementId
     | none =>
-      let expectedName := (expected.find? (·.statementId == key.statementId)).map
-        (·.theoremName.toString) |>.getD "absent"
+      let expectedName := idNames[key.statementId]?.map Name.toString |>.getD "absent"
       throw <| identityError key.theoremName "theorem_name" expectedName key.theoremName.toString
-  for key in expected do
+
+def checkMissingKeys (head : String) (frozen rows : Array StatementKey) : Except String Unit := do
+  let records := rows.foldl (init := ({} : Std.HashSet String)) fun ids row => ids.insert row.statementId
+  for key in sortKeys frozen do
     unless records.contains key.statementId do
       throw s!"IE-C034 MissingAnalysisDisposition theorem={key.theoremName} statement_id={key.statementId} head={head}"
+
+/-- IE-C034 is last, after every identity obligation supplied by this API. -/
+def checkKeyCoverage (head : String) (frozen : Array StatementKey)
+    (inventoryHead : String) (rows : Array StatementKey) : Except String Unit := do
+  checkIdentityInputs head frozen rows
+  checkKeyIdentity head frozen inventoryHead rows
+  checkMissingKeys head frozen rows
 
 def checkCoverage (head : String) (frozen : Array StatementKey)
     (inventory : DispositionInventory) : Except String Unit :=
@@ -78,7 +103,7 @@ def truthExportIdentity : Json := Json.mkObj [
 source_commit binds HEAD; declaration_name_key preserves Lean Name structure;
 statement_id is read verbatim. Only frozen nodes' theorem declarations are included.
 The caller pins the report bytes independently with expectedSha256. -/
-def parseReportJson (json : Json) (actualSha256 : String) : Except String FrozenReport := do
+private def parseReportCore (json : Json) (actualSha256 : String) : Except String FrozenReport := do
   let expectedHead := (json.getObjValAs? String "source_commit").toOption.getD "unknown"
   for field in ["schema", "dialect", "producer"] do
     let expected ← truthExportIdentity.getObjValAs? String field
@@ -105,17 +130,32 @@ def parseReportJson (json : Json) (actualSha256 : String) : Except String Frozen
       if (← stringField declaration "kind") == "theorem" then
         keys := keys.push ⟨← parseNameKey (← stringField declaration "declaration_name_key"),
           ← stringField declaration "statement_id"⟩
-  let sorted := keys.qsort StatementKey.lt
-  checkFrozenKeys head sorted
+  let sorted := sortKeys keys
+  checkFrozenUniqueness head sorted
   return { headSha := head, reportSha256 := actualSha256, theorems := sorted }
 
-private def parseReportCore (bytes : String) : Except String FrozenReport := do
-  let json ← (Json.parse bytes).mapError (censusError "unknown" "report" "valid-json")
-  parseReportJson json ("sha256:" ++ Sha256.hex bytes.toUTF8)
+def parseReportJson (json : Json) (sha256 : String) : Except String FrozenReport := do
+  let report ← parseReportCore json sha256
+  checkFrozenKeys report.headSha report.theorems
+  return report
+
+private def parseReportHashed (bytes sha256 : String) : Except String FrozenReport :=
+  ((Json.parse bytes) >>= fun json => parseReportCore json sha256).mapError fun error =>
+    if error.startsWith "IE-" then error else censusError "unknown" "report" "well-formed" error
 
 def parseReportData (bytes : String) : Except String FrozenReport :=
-  (parseReportCore bytes).mapError fun error =>
-    if error.startsWith "IE-" then error else censusError "unknown" "report" "well-formed" error
+  parseReportHashed bytes ("sha256:" ++ Sha256.hex bytes.toUTF8)
+
+/-- Hash the exact bytes passed to the Lean parser, through the host SHA-256
+implementation. Piping those bytes avoids a second path read and its race.
+Only hashing crosses this boundary: frozen membership and keys are parsed here. -/
+def parseReportDataIO (bytes : String) : IO FrozenReport := do
+  let result ← IO.Process.output { cmd := "/usr/bin/shasum", args := #["-a", "256"] } (some bytes)
+  unless result.exitCode == 0 do throw <| IO.userError "census report: SHA-256 failed"
+  let hash := (result.stdout.take 64).toString
+  unless hash.length == 64 && hash.toList.all (fun c => c.isDigit || ('a' ≤ c && c ≤ 'f')) do
+    throw <| IO.userError "census report: invalid SHA-256 output"
+  IO.ofExcept <| parseReportHashed bytes ("sha256:" ++ hash)
 
 def checkReportBinding (expectedHead expectedSha256 : String) (report : FrozenReport) :
     Except String Unit := do
@@ -126,6 +166,7 @@ def checkReportBinding (expectedHead expectedSha256 : String) (report : FrozenRe
 
 def parseReport (expectedHead expectedSha256 bytes : String) : Except String FrozenReport := do
   let report ← parseReportData bytes
+  checkFrozenKeys report.headSha report.theorems
   checkReportBinding expectedHead expectedSha256 report
   return report
 

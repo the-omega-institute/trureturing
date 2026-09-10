@@ -24,9 +24,7 @@ def fourRows : DispositionInventory := {
 def frozenRows : Array StatementKey :=
   #[finiteKey, structuralKey, boundedKey, unreachableKey]
 
-def frozenKeys : List (Name × Nat) :=
-  [(`Fixture.bounded, 28), (`Fixture.finite, 30), (`Fixture.structural, 32),
-    (`Fixture.unreachable, 33)]
+def frozenKeys : List Nat := [28, 30, 32, 33]
 
 def keyManifest : CensusKeyManifest := ⟨"fixture-head", "digest", `Fixture, frozenKeys⟩
 
@@ -35,17 +33,15 @@ def encodeNameKey : Name → String
   | .str parent text => s!"ns({encodeNameKey parent},{text.utf8ByteSize}:{text})"
   | .num parent index => s!"nn({encodeNameKey parent},{index})"
 
-theorem exactCoverage : keyManifest.ExactlyCovers "fixture-head" frozenKeys.toFinset :=
-  CensusKeyManifest.exactlyCovers_of_certificate _ _ _ _ _
-    ⟨rfl, rfl, rfl, by decide, rfl⟩
+theorem exactCoverage : CensusKeyManifest.IdCoverage keyManifest.keys 4 frozenKeys.toFinset :=
+  CensusKeyManifest.idCoverage_of_certificate _ _ _ ⟨by decide, rfl, rfl⟩
 
 -- CT-001: independent of the separate IE-C034 diagnostic path.
 theorem missingKeyDoesNotExactlyCover :
-    ¬({ keyManifest with keys := frozenKeys.take 3 }).ExactlyCovers
-      "fixture-head" frozenKeys.toFinset := by
+    ¬CensusKeyManifest.IdCoverage (frozenKeys.take 3) 4 frozenKeys.toFinset := by
   intro h
-  have member : (`Fixture.unreachable, 33) ∈ frozenKeys.toFinset := by simp [frozenKeys]
-  rw [← h.2.2.2] at member
+  have member : 33 ∈ frozenKeys.toFinset := by simp [frozenKeys]
+  rw [← h.2.2] at member
   simpa [frozenKeys] using member
 
 /-- info: false -/

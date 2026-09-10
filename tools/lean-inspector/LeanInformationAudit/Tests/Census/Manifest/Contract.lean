@@ -1,4 +1,4 @@
-import LeanInformationAudit.Census.Manifest
+import LeanInformationAudit.Tests.Census.Manifest.Published
 
 open Lean Meta Elab.Command LeanInformationAudit DispositionCensus CensusManifest
 
@@ -25,50 +25,50 @@ private def report : FrozenReport :=
   { headSha := "head", reportSha256 := "digest", theorems := #[⟨`T, zeroId⟩, ⟨`U, oneId⟩] }
 
 private def manifest : CensusKeyManifest :=
-  ⟨"head", "digest", `Root, [(`T, 0), (`U, 1)]⟩
+  ⟨"head", "digest", `Root, [0, 1]⟩
 
 run_cmd do
   let keys := report.theorems
   ofExcept <| checkManifestBinding report `Root keys manifest manifest.keys
   for (label, candidate, reportKeys) in #[
-      ("manifestDetachedFromRows", { manifest with keys := [(`V, 0), (`U, 1)] }, manifest.keys),
-      ("reflexiveReportRejected", { manifest with keys := [(`V, 0), (`U, 1)] }, [(`V, 0), (`U, 1)]),
+      ("manifestDetachedFromRows", { manifest with keys := [0, 2] }, manifest.keys),
+      ("reflexiveReportRejected", { manifest with keys := [0, 2] }, [0, 2]),
       ("staleManifestHead", { manifest with headSha := "stale" }, manifest.keys),
       ("wrongManifestDigest", { manifest with reportSha256 := "wrong" }, manifest.keys),
-      ("manifestNatBinding", { manifest with keys := [(`T, 1), (`U, 2)] }, manifest.keys)] do
+      ("manifestNatBinding", { manifest with keys := [1, 2] }, manifest.keys)] do
     match checkManifestBinding report `Root keys candidate reportKeys with
     | .error _ => pure ()
     | .ok _ => throwError "{label}: detached certificate accepted"
-  match checkManifestBinding report `Root (keys.extract 0 1) manifest manifest.keys with
+  match checkManifestBinding report `Root (keys.extract 0 1)
+      { manifest with keys := [0] } manifest.keys with
   | .error error => unless error.startsWith "IE-C034" do throwError error
   | .ok _ => throwError "deletedManifestRow: deleted row accepted"
 
 run_cmd do
   liftTermElabM do
-    let value := toExpr manifest
-    let keys := toExpr manifest.keys
-    let proof ← try certificateProof value "head" "digest" `Root keys
+    let ids := toExpr manifest.keys
+    let proof ← try certificateProof ids 2 ids
       catch error => throwError "certificateAscendingConjunct: {error.toMessageData}"
-    let expected ← Elab.Term.elabTerm (← `(manifest.headSha = "head" ∧ manifest.reportSha256 = "digest" ∧
-      manifest.censusRoot = `Root ∧ strictlyAscending (manifest.keys.map Prod.snd) = true ∧
-      manifest.keys = manifest.keys)) none
+    let expected ← Elab.Term.elabTerm (← `(strictlyAscending manifest.keys = true ∧
+      manifest.keys.length = 2 ∧ manifest.keys = manifest.keys)) none
     unless ← isDefEq (← inferType proof) expected do
       throwError "certificateAscendingConjunct: certificate type lost a conjunct"
     checkWithKernel proof
-    let detached := toExpr ([(`Other, 0), (`U, 1)] : List (Name × Nat))
+    let detached := toExpr ([0, 2] : List Nat)
     let rejected ← try
-      discard <| certificateProof value "head" "digest" `Root detached
+      discard <| certificateProof ids 2 detached
       pure false
     catch _ => pure true
     unless rejected do throwError "reportListEqualityBinding: inventory copied to report side"
 
-example : manifest.ExactlyCovers "head" manifest.keys.toFinset :=
-  CensusKeyManifest.exactlyCovers_of_certificate manifest "head" "digest" `Root manifest.keys
-    ⟨rfl, rfl, rfl, by decide, rfl⟩
+-- Finset reasoning stays outside the final environment, over the id set only.
+example : CensusKeyManifest.IdCoverage manifest.keys 2 manifest.keys.toFinset :=
+  CensusKeyManifest.idCoverage_of_certificate _ _ _ ⟨by decide, rfl, rfl⟩
 
 example : strictlyAscending [0, 1, 2] = true := by decide
 example : strictlyAscending [0, 0] = false := by decide
 example : strictlyAscending [1, 0] = false := by decide
+example : decodeIds 2 (2 ^ 256) = [0, 1] := by decide +kernel
+example : decodeIds 2 1 = [1, 0] := by decide +kernel
 
--- The structured Name is part of the kernel contract even when the id agrees.
-example : ([(Name.mkSimple "T", 0)] : List (Name × Nat)) ≠ [(Name.mkSimple "U", 0)] := by decide
+run_cmd LeanInformationAudit.Tests.Census.Manifest.checkPublishedCertificate "certificateAscendingConjunct"

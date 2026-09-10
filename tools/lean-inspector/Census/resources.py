@@ -161,7 +161,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--directory", required=True)
     parser.add_argument("--label", required=True)
+    parser.add_argument("--budget-gib", type=float, default=4)
+    parser.add_argument("--design-limit-gib", type=float)
+    parser.add_argument("--wall-limit-s", type=float, default=1200)
+    parser.add_argument("--phase-path", type=pathlib.Path)
     parser.add_argument("command", nargs=argparse.REMAINDER)
     options = parser.parse_args()
     command = options.command[1:] if options.command[:1] == ["--"] else options.command
-    run(command, options.directory, options.label)
+    run(command, options.directory, options.label, budget_gb=options.budget_gib,
+        design_limit_gb=options.design_limit_gib, wall_limit_s=options.wall_limit_s,
+        phase_path=options.phase_path)

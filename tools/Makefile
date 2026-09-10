@@ -20,7 +20,7 @@ test:
 	@/bin/bash $(HERE)/scripts/dotnet-test.sh $(HERE)/StrataLint.sln
 
 census-test:
-	@python3 $(HERE)/lean-inspector/Census/fixtures.py $(if $(CENSUS_TEST_OUT),--output "$(CENSUS_TEST_OUT)",)
+	@python3 $(HERE)/lean-inspector/Census/tests/fixtures.py $(if $(CENSUS_TEST_OUT),--output "$(CENSUS_TEST_OUT)",)
 
 engineering-tests:
 	@cd "$(REPOSITORY)" && dotnet run --project "$(HERE)/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" --configuration Release --no-launch-profile -- --repository "$(REPOSITORY)" --head "$(HEAD)" --base "$(BASE)" $(if $(filter 1,$(FULL)),--full 1,)

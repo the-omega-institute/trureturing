@@ -35,8 +35,8 @@ def checkArtifact (report : FrozenReport) (inventory : DispositionInventory)
 
 open Meta Elab Command
 
-/-- Reify full Name × Nat keys; the kernel checks the flat certificate.
-The String-level accounting contract is checked by the elaborator only. -/
+/-- Reify ids for the small in-environment command. Name-level accounting is
+checked by the elaborator; full publication uses independently bound Nat chunks. -/
 def coverageProof (report : FrozenReport) (inventory : DispositionInventory)
     (root : Name := .anonymous) : MetaM Expr := do
   ofExcept <| checkCoverage report.headSha report.theorems inventory
@@ -45,8 +45,7 @@ def coverageProof (report : FrozenReport) (inventory : DispositionInventory)
   let manifest : CensusKeyManifest := ⟨inventory.headSha, report.reportSha256, root, keys⟩
   ofExcept <| CensusManifest.checkManifestBinding report root
     (inventory.entries.map (·.1)) manifest reportKeys
-  CensusManifest.certificateProof (toExpr manifest) report.headSha report.reportSha256 root
-    (toExpr reportKeys)
+  CensusManifest.certificateProof (toExpr keys) report.theorems.size (toExpr reportKeys)
 
 private def readUtf8 (path : String) : IO String := do
   let bytes ← IO.FS.readBinFile path
