@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Tomography/Hadamard/HadamardResidualConservation
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Tomography/Hadamard/HadamardResidualConservation
    mirror-E: none(waiver:interval-replay-is-not-kernel-admission)
    anchors: []
