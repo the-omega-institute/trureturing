@@ -1,3 +1,42 @@
+## 本轮:**无靶,暂停派席**(第 13 轮,2026-09-10)
+
+第 12 轮的判词**照收**;其四条引用已由 orchestrator 在 `origin/dev` 上逐条复算,全部成立。
+结算评论:issue #6298。本轮**不派席**,理由是没有靶,不是没有席位。
+
+### 结算读数(orchestrator 复算,非转述)
+
+| 第 12 轮的引用 | 复算读数 |
+|---|---|
+| `…ThermalCoefficientFloor.sinh_le_self_mul_cosh_of_nonneg` | `D5/S3/Observer/Fluctuation/ThermalCoefficientFloor.lean:42` 声明,第 71 行有使用 |
+| 其冻结状态片 | 存在,`statement_id sha256:0340cb1ee26dcb999a070578ea6570e5293490432a9b01dd9d39dfc0c1d1428a` |
+| runner 默认池 | `quantum-reality-round.sh:12` = `POOL="${2:-chrono-chatgpt-pro-pool}"` |
+| round-10 归档非仍在飞 | 441 行;`waiting_response` 全文仅 1 次(表头);尾部为「未主张栏」 |
+
+### 未复算(记 `ASSUMED-UNVERIFIED`)
+
+第 12 轮称三种入口均取不到 #6298 的评论链——**未复现其取读失败**;
+其对 pinned mathlib 的检索覆盖面亦未复算。
+
+### 为何不派席
+
+右栏余下四项(observer→objective 桥、cross-species principle、§17.1/§18 量子统计层、
+Einstein 方程)**全部属第三档**,第 3.6 条:**机器不替人选第三档目标**。
+第 3.2 条:**席位空闲不是派题的理由,有逃逸见证的靶才是**。
+第 2.7 条 预算包络:连续投入无边际改进即触底,正解是换 Γ 或换目标。
+**「这条该停」是本线允许的最好答案之一**;硬派一席只会产出一份复述。
+
+### 本线同期的形式化产出(停的是派席,不是这条线)
+
+- `D5/S3/Quantum/Divergence/GibbsVariationalIdentity` —— `log Z = ReTr(Hρ) + S(ρ) + D(ρ‖G)`,已合入 dev。
+- `D5/S3/Quantum/Divergence/SpectralReadoutEntropyEquality` —— 谱读出保熵 ⟺ 读出矩阵对角,已合入 dev(PR #6896)。
+- `observer-quantum-v1` 的 **131 个 atom 已全量分类**为 pointer / bind-only / needs-input / proposition,
+  分类表随 #6896 落地,构成本线此后的选题面。
+
+### 重启条件
+
+**τ=0 点题**:指定右栏四项之一,或给出新的物理输入。写成新的 Q1 填进本文件,
+跑 `tools/scripts/agent/quantum-reality-round.sh` 即续轮,**无需重建任何东西**。
+
 ## 本轮:**维持「无靶,暂停派席」**(第 12 轮,2026-09-10)
 
 第 12 轮向 `chatgpt-pro-pool` 派出一席核对,该席**独立维持**第 11 轮的停止判定,
