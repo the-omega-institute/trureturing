@@ -40,5 +40,14 @@
     "exit_code": 0,
     "elapsed_seconds": 624.985,
     "log": "/var/folders/wv/ht3wzsj138b4sxl3q4t0xdr40000gn/T/consensus-rnd/sshx/a395842-impl-0911/attempt-1/make-lean-report.log"
+  },
+  "make_emit": {
+    "command": [
+      "make",
+      "emit"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 59.361,
+    "log": "/private/var/folders/wv/ht3wzsj138b4sxl3q4t0xdr40000gn/T/consensus-rnd/sshx/a395842-impl-0911/attempt-1/make-emit.log"
   }
 }

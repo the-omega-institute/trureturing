@@ -263,3 +263,7 @@ Canonical raw report SHA-256:
 `1014a93457f770aa10d979e00caf78a7e0dc1fe537467ecbe9a62cb4fe4bcf4d`.
 The target's canonical declarations, their statement ids and axiom closures,
 and both imported iterate constants are extracted in canonical-declarations.json.
+
+`make emit`: EXIT=0, 59.361 seconds. One new Blueprint markdown document
+was emitted from the .scribe.cs source, with all five public declarations
+linked and marked std3. The generated markdown was read in full.
