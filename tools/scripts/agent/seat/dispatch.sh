@@ -45,6 +45,25 @@ resolve_runner() {
 hermetic() { local t="$1"; shift
   SSHX_PLUGIN_ROOT="$t/plugins" DISPATCH_GATE_ROUNDS=1 DISPATCH_GATE_SLEEP=0 "$0" "$@"; }
 
+# 同一工作树上已有在飞席位时,拒绝再派。两个席位同时写一棵树会互相覆盖,
+# 而第 5.11 条要求调用方对在飞 work_target 只读 —— 这道断言把「纪律」变成「机器判」。
+#
+# 立条依据(2026-09-09,本器落地当天我自己犯的):我用 `pgrep -fc 'codex exec'` 判席位死活,
+# 该 flag 在 macOS 上**静默返回 0**(见 pgrep-c-is-not-count-on-macos:rc=2、无输出),
+# 于是把一个已跑 2h42m 的活席位判成死的,并往同一棵树上又派了一席。
+# 一分钟内发现并杀掉,受管文件零改动 —— 但下次未必这么走运。
+# **`pgrep -f` 正常,坏的只有 `-c`**;本函数一律用前者。
+#
+# 判据只看 runner 的 `--work-target <路径>`,不看 flight id:同一棵树无论哪条 flight 都算冲突。
+inflight_on() {
+  local target="$1" pids
+  pids=$(pgrep -f -- "--work-target $target" 2>/dev/null | tr '\n' ' ')
+  # 排除本进程与其父(本脚本自己的命令行里也含该字符串)
+  pids=$(printf '%s\n' $pids | grep -v -e "^$$\$" -e "^$PPID\$" | tr '\n' ' ')
+  [ -n "${pids// /}" ] && { printf '%s\n' "$pids"; return 0; }
+  return 1
+}
+
 selftest() {
   local fails=0 tmp; tmp=$(mktemp -d); trap 'rm -rf "$tmp"' RETURN
   # 版本序:beta.9 必须排在 beta.42 之前(纯 sort 会判反,这正是用 -V 的理由)
@@ -92,6 +111,18 @@ selftest() {
   else
     echo "  FAIL gate timeout: rc=$rc out=$(cat "$tmp/o")"; fails=$((fails + 1))
   fi
+  # 在飞守卫:构造一个命令行里带 --work-target 的假进程,派发必须以 5 拒绝
+  ( exec -a "fake-runner --work-target $tmp/wt" sleep 8 ) &
+  fake=$!
+  sleep 1
+  hermetic "$tmp" f 1 "$tmp/brief.md" "$tmp/wt" review 0 8 >"$tmp/o" 2>&1
+  rc=$?
+  kill "$fake" 2>/dev/null; wait "$fake" 2>/dev/null
+  if [ "$rc" -eq 5 ] && grep -q 'worktree-busy' "$tmp/o"; then
+    echo "  ok   refuses to dispatch into a worktree that already has a seat (exit 5)"
+  else
+    echo "  FAIL in-flight guard: rc=$rc out=$(head -2 "$tmp/o")"; fails=$((fails + 1))
+  fi
   echo "SELFTEST_FAILS=$fails"; [ "$fails" -eq 0 ]
 }
 
@@ -106,6 +137,13 @@ case "$STAGE" in
   thinking|implementation|review|termination) ;;
   *) echo "DISPATCH_FAIL bad-stage '$STAGE' (thinking|implementation|review|termination)"; exit 3 ;;
 esac
+
+if busy=$(inflight_on "$WT"); then
+  echo "DISPATCH_FAIL worktree-busy $WT already has an in-flight seat (pids: $busy)"
+  echo "  两个席位同时写一棵树会互相覆盖(第 5.11 条)。等它归位,或换一棵树。"
+  echo "  确认它是不是真活着:用 ps 或 pgrep -f,**不要用 pgrep -fc**(macOS 上静默返回 0)。"
+  exit 5
+fi
 
 RUNNER=$(resolve_runner "$RUNNER_GLOB") || {
   echo "DISPATCH_FAIL runner-unresolved under $RUNNER_GLOB"; exit 3; }
