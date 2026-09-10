@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:755e7c20af6dfa94318d4cd0d8244409e186fbf7dcb0f14eb91493ed8c176cac
   normalized_sha256: sha256:755e7c20af6dfa94318d4cd0d8244409e186fbf7dcb0f14eb91493ed8c176cac
 cas_ref: sha256:755e7c20af6dfa94318d4cd0d8244409e186fbf7dcb0f14eb91493ed8c176cac
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DependencyTopology/LegalLedgerFixedSet.fixed_eq_frozen_union_unprovable
+    target_statement_id: sha256:a2a4d68bacbf27a93219b143e2970e1db6b9364b21b3f83899d43d63d253bb25
 receipts:
   unresolved_subitems: []
