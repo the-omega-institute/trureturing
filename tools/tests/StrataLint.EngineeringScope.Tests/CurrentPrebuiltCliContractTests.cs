@@ -62,7 +62,8 @@ public sealed class CurrentPrebuiltCliContractTests
                 return 0;
             }, TextWriter.Null));
             Write("build/engineering.log", "synthetic engineering fixture\n");
-            CommonExecutionEvidence.SealEngineering(root, binaries, CommonExecutionEvidence.EngineeringSteps
+            var candidate = CommonExecutionEvidence.Read<TestExecutionRecord>(root, CommonExecutionEvidence.TestsPath).Candidate;
+            CommonExecutionEvidence.SealEngineering(root, candidate, binaries, CommonExecutionEvidence.EngineeringSteps
                 .Select(name => new StageStep(name, 0, 0, "executed", "build/engineering.log")).ToArray());
             var before = CommonExecutionEvidence.Hash(Path.Combine(root, CommonExecutionEvidence.EngineeringPath));
             Write("build/ci/logs/current/lean-inspector/stale.exit.log", "0\n");

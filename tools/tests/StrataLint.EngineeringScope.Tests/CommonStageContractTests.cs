@@ -273,7 +273,8 @@ public sealed class CommonStageContractTests
             TemporaryFileSystem.File.WriteAllText(full, "fixture binary");
         }
         Assert.Equal(0, Program.RunCurrentTests(fixture.Root, (_, results) => { fixture.WriteTrx(results, "Passed"); return 0; }, TextWriter.Null));
-        CommonExecutionEvidence.SealEngineering(fixture.Root, binaries, CommonExecutionEvidence.EngineeringSteps
+        var candidate = CommonExecutionEvidence.Read<TestExecutionRecord>(fixture.Root, CommonExecutionEvidence.TestsPath).Candidate;
+        CommonExecutionEvidence.SealEngineering(fixture.Root, candidate, binaries, CommonExecutionEvidence.EngineeringSteps
             .Select(name => new StageStep(name, 0, 0, "executed", binaries[0])).ToArray());
     }
 
@@ -284,7 +285,8 @@ public sealed class CommonStageContractTests
         Assert.Equal(0, Program.RunCurrentTests(fixture.Root, (_, results) => { fixture.WriteTrx(results, "Passed"); return 0; }, TextWriter.Null));
         var log = CommonExecutionEvidence.RootPath + "/fixture.log";
         TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, log), "executed\n");
-        CommonExecutionEvidence.SealEngineering(fixture.Root, [log], CommonExecutionEvidence.EngineeringSteps
+        var candidate = CommonExecutionEvidence.Read<TestExecutionRecord>(fixture.Root, CommonExecutionEvidence.TestsPath).Candidate;
+        CommonExecutionEvidence.SealEngineering(fixture.Root, candidate, [log], CommonExecutionEvidence.EngineeringSteps
             .Select(name => new StageStep(name, 0, 0, "executed", log)).ToArray());
         TemporaryFileSystem.Directory.CreateDirectory(Path.Combine(fixture.Root, ".lake"));
         TemporaryFileSystem.Directory.Delete(Path.Combine(fixture.Root, ".lake"), recursive: true);
@@ -310,7 +312,8 @@ public sealed class CommonStageContractTests
         var dll = CommonExecutionEvidence.RootPath + "/fixture.dll";
         TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, dll), "candidate binary");
         var steps = CommonExecutionEvidence.EngineeringSteps.Select(name => new StageStep(name, 0, 0, "executed", dll)).ToArray();
-        CommonExecutionEvidence.SealEngineering(fixture.Root, [dll], steps);
+        var candidate = CommonExecutionEvidence.Read<TestExecutionRecord>(fixture.Root, CommonExecutionEvidence.TestsPath).Candidate;
+        CommonExecutionEvidence.SealEngineering(fixture.Root, candidate, [dll], steps);
         CommonExecutionEvidence.ValidateEngineering(fixture.Root);
         var currentSteps = CommonExecutionEvidence.CurrentSteps.Select(name => new StageStep(name, 0, 0, "executed", dll)).ToArray();
         Assert.ThrowsAny<IOException>(() => CommonExecutionEvidence.SealCurrent(fixture.Root, currentSteps));
@@ -360,7 +363,8 @@ public sealed class CommonStageContractTests
         const string log = CommonExecutionEvidence.RootPath + "/fixture.log";
         TemporaryFileSystem.File.WriteAllText(Path.Combine(source.Root, log), "executed\n");
         var engineeringSteps = CommonExecutionEvidence.EngineeringSteps.Select(name => new StageStep(name, name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", log)).ToArray();
-        CommonExecutionEvidence.SealEngineering(source.Root, [log], engineeringSteps);
+        var candidate = CommonExecutionEvidence.Read<TestExecutionRecord>(source.Root, CommonExecutionEvidence.TestsPath).Candidate;
+        CommonExecutionEvidence.SealEngineering(source.Root, candidate, [log], engineeringSteps);
         var report = Path.Combine(source.Root, CommonExecutionEvidence.ReportPath);
         CiTransportTests.Report(source.Root);
         TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(report)!);

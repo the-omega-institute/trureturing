@@ -45,7 +45,8 @@ public sealed class ScribeMetadataHandoffTests
             }, TextWriter.Null));
             const string log = "build/ci/fixture.log";
             File.WriteAllText(Path.Combine(producer, log), "executed\n");
-            CommonExecutionEvidence.SealEngineering(producer, [], CommonExecutionEvidence.EngineeringSteps
+            var candidate = CommonExecutionEvidence.Read<TestExecutionRecord>(producer, CommonExecutionEvidence.TestsPath).Candidate;
+            CommonExecutionEvidence.SealEngineering(producer, candidate, [], CommonExecutionEvidence.EngineeringSteps
                 .Select(name => new StageStep(name, 0, 0, "executed", log)).ToArray());
             var materials = CommonExecutionEvidence.ValidateEngineering(producer).Materials;
             Assert.Contains(materials, item => item.Path.EndsWith("/xunit.core.dll", StringComparison.Ordinal));

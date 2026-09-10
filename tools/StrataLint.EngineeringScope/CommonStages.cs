@@ -35,7 +35,9 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
                 case "delta": Delta(baseSha); break;
                 default: throw new ArgumentException("stage must be engineering, current, or delta");
             }
-            if (candidate != CommonExecutionEvidence.Candidate(root)) throw new InvalidDataException("candidate changed during stage");
+            // Engineering checks its final source snapshot immediately before sealing.
+            if (name != "engineering" && candidate != CommonExecutionEvidence.Candidate(root))
+                throw new InvalidDataException("candidate changed during stage");
             exit = 0;
         }
         catch (StageFailure exception) { exit = exception.Exit; failure = exception.Message; }
@@ -76,12 +78,11 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         Step("capability-proof", "dotnet", ["build", "tools/tests/CompileFailProof/CompileFailProof.csproj", "--no-restore", "--configuration", "Release"], CompilationProof.ValidateCapability);
         Step("banned-api-proof", "dotnet", ["build", "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj", "--no-restore", "--configuration", "Release"],
             (raw, text) => CompilationProof.ValidateBannedApi(raw, text, File.ReadAllText(Path.Combine(root, "tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"))));
-        if (candidate != CommonExecutionEvidence.Candidate(root)) throw new InvalidDataException("candidate changed during engineering");
         var directories = new[] { CommonExecutionEvidence.CliPath, CommonExecutionEvidence.ScribePath,
             CommonExecutionEvidence.RunnerPath }.Select(path => Path.GetDirectoryName(Path.Combine(root, path))!);
         var binaries = directories.SelectMany(directory => Directory.GetFiles(directory, "*", SearchOption.AllDirectories))
             .Select(path => Path.GetRelativePath(root, path).Replace('\\', '/'));
-        CommonExecutionEvidence.SealEngineering(root, binaries, steps.ToArray());
+        CommonExecutionEvidence.SealEngineering(root, candidate!, binaries, steps.ToArray());
     }
 
     private void Current()
@@ -116,8 +117,8 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
             throw new ArgumentException("delta requires an explicit 40-hex base commit SHA");
         var type = Capture("git", ["cat-file", "-t", baseSha]);
         if (type.Exit != 0 || type.Text.Trim() != "commit") throw new ArgumentException("base must be an available commit object");
-        CommonExecutionEvidence.ValidateCurrent(root);
-        RequireBinary(CommonExecutionEvidence.ValidateEngineering(root), CommonExecutionEvidence.CliPath);
+        var common = CommonExecutionEvidence.ValidateCurrent(root);
+        RequireBinary(common.Engineering, CommonExecutionEvidence.CliPath);
         Step("check-delta", "dotnet", [CommonExecutionEvidence.CliPath, "check-delta", "--protected-base", baseSha,
             "--candidate-lean-report", CommonExecutionEvidence.ReportPath], allowAnnotation: true);
     }

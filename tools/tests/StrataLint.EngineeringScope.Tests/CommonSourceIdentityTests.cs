@@ -53,6 +53,34 @@ public sealed class CommonSourceIdentityTests
         Assert.Throws<InvalidDataException>(() => CommonExecutionEvidence.ValidateTests(fixture.Root));
     }
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void EngineeringSealRejectsChangedStageStartEvenAfterNewTestsPass(bool modeOnly)
+    {
+        if (modeOnly && OperatingSystem.IsWindows()) return;
+        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        var candidate = CommonExecutionEvidence.Candidate(fixture.Root);
+        var source = Path.Combine(fixture.Root, CurrentExecutionContractTests.CandidateFixture.First);
+        if (modeOnly) File.SetUnixFileMode(source, File.GetUnixFileMode(source) | UnixFileMode.UserExecute);
+        else TemporaryFileSystem.File.AppendAllText(source, "\n");
+        Assert.Equal(0, Program.RunCurrentTests(fixture.Root, (_, results) =>
+        {
+            fixture.WriteTrx(results, "Passed");
+            return 0;
+        }, TextWriter.Null));
+        const string log = CommonExecutionEvidence.RootPath + "/fixture.log";
+        TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, log), "executed\n");
+        var steps = CommonExecutionEvidence.EngineeringSteps
+            .Select(name => new StageStep(name, 0, 0, "executed", log)).ToArray();
+
+        var error = Assert.Throws<InvalidDataException>(() =>
+            CommonExecutionEvidence.SealEngineering(fixture.Root, candidate, [log], steps));
+
+        Assert.Equal("candidate changed during engineering", error.Message);
+        Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.EngineeringPath)));
+    }
+
     private static void WriteProject(string root, bool releaseOnly) => TemporaryFileSystem.File.WriteAllText(
         Path.Combine(root, CurrentExecutionContractTests.CandidateFixture.First),
         "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><TargetFramework>net10.0</TargetFramework>"

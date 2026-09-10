@@ -123,7 +123,8 @@ public sealed class CurrentDeltaCliContractTests
         }, TextWriter.Null));
         const string log = CommonExecutionEvidence.RootPath + "/unit-stage.log";
         Write(log, "fixture common stage succeeded\n");
-        CommonExecutionEvidence.SealEngineering(root, [log], CommonExecutionEvidence.EngineeringSteps.Select(name => new StageStep(name, name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", log)).ToArray());
+        var candidate = CommonExecutionEvidence.Read<TestExecutionRecord>(root, CommonExecutionEvidence.TestsPath).Candidate;
+        CommonExecutionEvidence.SealEngineering(root, candidate, [log], CommonExecutionEvidence.EngineeringSteps.Select(name => new StageStep(name, name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", log)).ToArray());
         CommonExecutionEvidence.SealCurrent(root, CommonExecutionEvidence.CurrentSteps.Select(name => new StageStep(name, 0, 0, "executed", log)).ToArray());
         switch (scenario)
         {

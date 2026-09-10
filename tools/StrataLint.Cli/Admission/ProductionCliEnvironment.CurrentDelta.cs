@@ -55,14 +55,13 @@ internal sealed partial class ProductionCliEnvironment
                     BootstrapOutcome.ProtectedSurfaceVerificationRequired change => MetaEvaluationProfile.ForProtectedSurface(change.ChangeSet),
                     BootstrapOutcome.InfrastructureFailure failure => throw new InvalidDataException(failure.Message),
                 };
-                var metadata = CommonCompileMetadata.Load(repositoryRoot,
-                    CommonExecutionEvidence.ValidateEngineering(repositoryRoot).Materials);
+                var metadata = CommonCompileMetadata.Load(repositoryRoot, common.Engineering.Materials);
                 ScribeTestMap Derive(RepositorySnapshot snapshot) => ScribeTestMapDeriver.DeriveSnapshot(snapshot, metadata);
                 var cacheRoot = options.TestMapCacheRoot ?? Environment.GetEnvironmentVariable("STRATALINT_TEST_MAP_CACHE_ROOT");
                 var testMapStore = cacheRoot is null ? null : TryCreateTestMapStore(cacheRoot, out _, Derive, metadata);
                 result = AdmissionPipeline.CheckDelta(DeltaRuleContext.Create(current, baseline, policy, lean, prepared.Changes, meta, null,
                     testMapStore: testMapStore, deriveTestMap: Derive,
-                    commonResults: new CandidateCommonResults(common.Candidate, common.Round)));
+                    commonResults: new CandidateCommonResults(common.Current.Candidate, common.Current.Round)));
             }
             else
             {

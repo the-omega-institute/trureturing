@@ -42,7 +42,7 @@ internal static class CiTransport
         var repository = Environment.GetEnvironmentVariable("GITHUB_REPOSITORY") ?? "";
         if (Git(root, "rev-parse", "HEAD") != commit || Git(root, "status", "--porcelain", "--untracked-files=all").Length != 0)
             throw new InvalidDataException("transport requires the exact clean candidate commit");
-        var common = stage == "current" ? CommonExecutionEvidence.ValidateCurrent(root) : CommonExecutionEvidence.ValidateEngineering(root);
+        var common = stage == "current" ? CommonExecutionEvidence.ValidateCurrent(root).Current : CommonExecutionEvidence.ValidateEngineering(root);
         if (pack)
         {
             var paths = ListedFiles(root).Where(path => path != ManifestPath).ToArray();

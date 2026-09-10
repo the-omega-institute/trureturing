@@ -78,7 +78,8 @@ public sealed class CiTransportTests
         TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, Log), "#!/bin/sh\nexit 0\n");
         if (!OperatingSystem.IsWindows())
             File.SetUnixFileMode(Path.Combine(fixture.Root, Log), UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
-        CommonExecutionEvidence.SealEngineering(fixture.Root, [Log], Steps(CommonExecutionEvidence.EngineeringSteps));
+        var candidate = CommonExecutionEvidence.Read<TestExecutionRecord>(fixture.Root, CommonExecutionEvidence.TestsPath).Candidate;
+        CommonExecutionEvidence.SealEngineering(fixture.Root, candidate, [Log], Steps(CommonExecutionEvidence.EngineeringSteps));
         if (!current) return;
         Report(fixture.Root);
         CommonExecutionEvidence.SealCurrent(fixture.Root, Steps(CommonExecutionEvidence.CurrentSteps));
