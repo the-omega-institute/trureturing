@@ -102,3 +102,41 @@ direction; the existing `Finset.sum_range_sub` is the exact required lemma.
 The final argument proves `n^2 ∣ 12*reducedSum(n)`, cancels 12 using
 `Odd n` and `3 ∤ n`, and consumes the original `sum_factorization`.
 No finite computation enters the target proof.
+
+## Declaration assessment and build
+
+| Public theorem | proof_shape | Direct frozen dependencies (GID + statement_id) | escape_witness | admission_basis |
+| --- | --- | --- | --- | --- |
+| `fourth_dvd_of_odd_not_three` | content | none | `reduced_term_telescopes` | escape-witness |
+
+The proposed witness constructs the explicit boundary polynomial and proves
+the reduced summand equals its consecutive difference modulo `n^2`.
+Against CLAUDE.md 3.2: (i) the kernel dependency extractor places it in the
+target's closure through `reduced_sum_scaled_zero`; (ii) no frozen D5 theorem
+provides this weighted binomial telescoping identity; the new boundary and
+the two proved binomial recurrences are necessary; (iii) a single-summand
+identity in `ZMod(n^2)` is not definitionally equivalent to the final natural
+fourth-power divisibility claim; (iv) `sum_congr` consumes it to change the
+actual summand before `Finset.sum_range_sub` telescopes the sum. It is not a
+dead `have` or a projected-away component. The only other public declaration
+is the sequence definition `a`, not an additional theorem.
+
+`utility: none`: the theorem is universally quantified over unbounded natural
+indices. It is neither finite enumeration nor a checker, numerical reduction,
+or ordinary certified instance. The finite probes are not proof dependencies.
+
+`make lean`: EXIT=0, 11.232 seconds on this macOS ARM hot tree; 12987 jobs,
+the changed module built in 4.3 seconds. `LEAN_CACHE` matches the warm receipt
+above. Log: the runner attempt directory's `make-lean.log`.
+The repository `deposit-evidence/proof-edges.sh` returns EXIT=0 and
+`EDGES_OK edges=22 kernel_nonauxiliary_constants=2`. The target's axiom closure
+is exactly `Classical.choice`, `Quot.sound`, `propext`. Its live dependencies
+include the original exact factorization and the new composite telescoping
+chain; none of the prime lemmas is in that closure. The JSON projection remains
+run-local in the attempt directory, not under `docs/reports`.
+
+After fetching dev, `git merge-tree --write-tree --name-only HEAD origin/dev`
+returns EXIT=0 with no conflicts. No A357512 declaration is found in dev's D5
+tree. The merge base remains `d6836dd2ae403f006f1f2d6ae5ddef3af56c5e46`.
+The selected delivery route is `make deposit-uncovered`, whose canonical
+implementation calls `ledger-align --add`; no atom or theory input is created.
