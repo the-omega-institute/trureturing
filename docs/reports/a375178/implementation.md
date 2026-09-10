@@ -30,7 +30,7 @@ The first 19 computed values are:
 22543708920891189136, 1282873288801683197250, 73628947696550668509744,
 4257138240245923453355625, 247733479854085081062353400,
 14498252738780732999484606360`.
-OEIS identity comparison remains pending: the initial JSON URL
+The subsequent OEIS b-file comparison matches all 19 terms. The initial JSON URL
 `https://oeis.org/search?q=id:A375178&fmt=json` returned HTTP 403, an invalid query.
 
 ## Unclaimed
