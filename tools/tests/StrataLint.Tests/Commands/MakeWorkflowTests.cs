@@ -78,6 +78,7 @@ public sealed partial class MakeWorkflowTests
         "pr-watch",
         "preflight",
         "gate",
+        "census",
     ];
 
     private static readonly string[] ToolsTargets =
@@ -93,6 +94,7 @@ public sealed partial class MakeWorkflowTests
         "clean-lanes",
         "xi-quantization",
         "xi-quantization-test",
+        "census-test",
     ];
 
     [Fact]
