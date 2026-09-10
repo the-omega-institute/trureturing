@@ -1085,6 +1085,162 @@ $$
 kernel 外延相等，且 finite `LowersEscape` 与 structural strict inclusion 等价。因此 finite
 engine 是 universal structural layer 的有计数特化，不是平行判词。
 
+### 6.2 结构化观测接口 Γ 与相对逃逸处
+
+**接口契约。** 结构化观测接口 $\Gamma$ 由带结构的 carrier、允许的保结构 transports、
+每个站点的显式状态构造、localization mode 与 observation language 组成。
+观测语言规定 permitted operations 与模板的 slot grammar。
+站点族记为 $B_\Gamma$，站点 $b$ 的状态类型记为 $S_b$；站点标签不充当状态枚举。
+carrier 的类型、实例与参数共同确定可用的 registry entry，裸类型不确定逃逸处。
+canonical 的含义是站点、状态构造与读数在已登记 transports 下的交换性；它不指定代表元。
+声称两个 frame 等价时，必须另给状态 `Equiv` 与 kernel transport proof。
+
+固定 sealing root 与站点的 canonical arena 后，$I$ 是 §5.1 的完整 catalog 索引。
+认证模板只实例化其声明并实际消费的有限读数 $c_{i,a}:S_b\to O_{i,a}$；
+$i\in I$，每个 occurrence 的 slot $a$ 有限，$S_b$ 与 $O_{i,a}$ 无有限性要求。
+registry 提供一个 quotient constructor 不授权给每条定理追加完整 quotient readout。
+对 $J\subseteq I$，catalog-relative kernel、其商与相对逃逸处满足：
+
+$$
+K_{b,J}(s,t)\ \Longleftrightarrow
+\forall i\in J,\ \forall a,\ c_{i,a}(s)=c_{i,a}(t),
+\qquad Q_{b,J}=S_b/K_{b,J},
+$$
+
+$$
+L_{\Gamma,J}(b)
+=\bigl(S_b\times_{Q_{b,J}}S_b\bigr)\setminus\Delta_{S_b}
+=\{(s,t)\mid s\ne t\ \land\ K_{b,J}(s,t)\}.
+$$
+
+这是站点索引的 off-diagonal kernel pair，不要求是原 carrier 的子集。
+有限 pointwise 情形恰好退化为 §5.1 的完整族及其 §5 构造：只有一个站点，$S_b=X$，
+$L_J$ 就是 off-diagonal joint-kernel relation $E_J$；leave-one-out capture 仍为
+$U_i=L_{I\setminus\{i\}}\setminus L_I$。本款不重定义 §5，不增加任何量，
+有限非退化 arena 的 pair denominator、counts、exact rates 与 admission 判词沿用 §5。
+
+**规范性 entries。** 下列条目是带适用假设的规范例，不是穷尽 registry；Mathlib 名称是绑定标识。
+
+- **实数有序拓扑。** 站点是 $+\infty$ 与 $-\infty$，分别由
+  `(Filter.atTop : Filter ℝ)` 与 `(Filter.atBot : Filter ℝ)` 实现；对声明的值类型 $Y$，
+  站点状态是 `Filter.Germ (Filter.atTop : Filter ℝ) Y` 与
+  `Filter.Germ (Filter.atBot : Filter ℝ) Y`。全局函数到状态的构造是 `Filter.Germ.ofFun`，
+  其 kernel 是对应 filter 上的 `Filter.EventuallyEq`。
+  `Filter.Tendsto f F G` 分别记录 source $F$ 的局部化与 target $G$ 的收敛角色；
+  source `atTop` 与 target `atTop` 不互相替代。站点上的读数是模板声明的 germ 操作，
+  如 `Filter.Germ.map`；保 filter 的预复合由 `Filter.Germ.compTendsto` 及其 `Tendsto` 证明绑定。
+  读数 kernel 是所得 germs 相等，不是两个端点标签的相等；`EReal` 嵌入本身是单射。
+- **自然数有序尾部。** 站点是 `(Filter.atTop : Filter ℕ)`，状态是
+  `Filter.Germ (Filter.atTop : Filter ℕ) Y`；局部化 kernel 是 eventual equality，
+  即存在 $N$ 使所有 $n\ge N$ 上的函数值相等。有限值类型不使轨迹或 germ 状态自动有限。
+- **复数与局部紧 Hausdorff 空间。** 对 `LocallyCompactSpace X`、`T2Space X`，
+  cocompact mode 的站点是一个 $\infty$，绑定 `Filter.cocompact X`，状态是
+  `Filter.Germ (Filter.cocompact X) Y`；局部化 kernel 是紧集之外的 eventual equality。
+  `OnePoint X` 的无穷远邻域解释使用对应 filter 传输；`ℂ` 使用此单站点接口。
+  非平凡无穷远解释要求相应 `Filter.NeBot`；紧空间的底 filter 不冒充空间端点。
+  `OnePoint` 嵌入的 pointwise kernel 是对角线。范数趋于 `atTop` 与 cocompact 收敛的互推
+  要求 properness／紧闭球假设；范数读数的 kernel 是范数相等，该收敛互推不证明 kernels 相等。
+- **圆的覆盖接口。** 对实参数 $p>0$，令 $\Theta=\texttt{AddCircle}\ p$。
+  站点是指定覆盖 $q:\mathbb R\to\Theta$，状态是实数 lift；读数 $q(t)=(t:\Theta)$ 的
+  kernel 是 $t-s\in p\mathbb Z$，即 $\exists n:\mathbb Z,\ t-s=np$，
+  绑定 `AddCircle.coe_sub` 与 `AddCircle.coe_eq_zero_iff`。
+  它丢失 lift 的整数绕行，保留模 $p$ 的相位；`Real.Angle` 是周期 $2\pi$ 的表示。
+- **圆的旋转盲接口。** 这是与覆盖不同的 $\Gamma$。站点是声明的 diagonal rotation action，
+  状态是 $\Theta^m$（`Fin m → AddCircle p`），$m>0$，作用是 $z_j\mapsto z_j+\delta$。
+  完整 invariant classifier 是 orbit quotient，其 kernel 是
+  $z\sim w\Longleftrightarrow\exists\delta:\Theta,\ \forall j,\ w_j=z_j+\delta$。
+  全部 pairwise differences $z_j-z_k$ 分类这些 orbits；相等差分以任一坐标确定共同平移。
+  $m=1$ 时 quotient 只有一类，全部绝对相位不可见。只取部分 invariant readouts 时，
+  orbit relation 仅包含于观测 kernel；声称相等须有 observational-completeness proof。
+  普通紧圆无空间端点；全体 rotations 也不是保持加法零点的 automorphisms。
+- **测度陈述。** 站点是 `MeasureTheory.ae μ`，绑定确切的 measure $\mu$ 与 measurable space；
+  状态是 `Filter.Germ (MeasureTheory.ae μ) Y`，局部化 kernel 是 `f =ᶠ[MeasureTheory.ae μ] g`，
+  即 $\mu(\{x\mid f(x)\ne g(x)\})=0$。`MeasureTheory.AEEqFun` 另要求其 a.e. 强可测域，
+  不与任意函数的 filter germs 混同。积分模板只取实际积分读数，不自动附加完整 a.e. class。
+- **积。** 乘积读数的安全规则是
+  $\ker(q_X\times q_Y)((x,y),(x',y'))\Longleftrightarrow
+  \ker(q_X)(x,x')\land\ker(q_Y)(y,y')$。
+  diagonal actions 不是 independent product actions：圆对的共同旋转保留相对相位，独立旋转不保留。
+  不得推断 $\operatorname{End}(X\times Y)=\operatorname{End}(X)\times\operatorname{End}(Y)$；
+  这里 End 指空间 ends，$\mathbb R$ 有两端而 $\mathbb R^2$ 有一端，故该积等式不成立。
+  有限积的 germ 构造可用有限个 eventual domains 的交；无限积交换必须另证，不由逐坐标相等推出。
+
+**机械分工与策略边界。** elaboration 决定陈述实际使用的 carrier、结构实例、filter、
+period、measure 与参数位置，包括 `Tendsto` 的 source／target；表面出现或 binder 数不建立 arena。
+registry 按结构与参数提供 sites、state constructors、kernel／factorization lemmas 和适用假设。
+policy 决定 observation language，必须每个 $\Gamma$ 一次冻结，绝不逐 theorem 选择。
+registry lookup key 不取代 canonical arena declaration 的 catalog ownership；
+同一 arena 的 peers 不因 theorem 名称、读数表达式或系数不同而拆开。
+支持范围外的陈述保留未解决的语义选择，不把 inference 失败当作不可达证明。
+
+三个规范性反例固定如下，任何自动选择规则必须保留其区别；圆反例取 $p:\mathbb R$、$p>0$、
+$\Theta=\texttt{AddCircle}\ p$：
+
+1. **carrier 不定 locus。** 在同一 `Bool` pointwise arena，identity readout 的 kernel 是
+   对角线，escape 为空；constant readout 的 kernel 是全关系，escape 恰为
+   `(false, true)` 与 `(true, false)` 两个有序对。carrier 相同不使逃逸处相同。
+2. **覆盖不等于相位。** `AddCircle p` 的出现只给出指定商表示，不授权删除相位。
+   覆盖 kernel 是 $p\mathbb Z$ 的 lift 歧义；旋转盲 kernel 是共同相位的 orbit 歧义。
+   不存在选取代表点的 rotation-equivariant section $\{*\}\to\Theta$：等变要求所选点被每个
+   rotation 固定，而非零 rotation 没有固定点；选参考点或 branch 必须属于显式 $\Gamma$。
+3. **同一陈述有两种忠实读法。** 在同一状态空间 $S=\Theta\times\Theta$，
+   令 $T_\theta(x)=x+\theta$，陈述是 `Function.Injective Tθ`。
+   本反例的 intervention domain 是全部函数 $h:\Theta\to\Theta$；绝对读数
+   $c_{\rm abs}^h(x,y)=(h(x),h(y))$ 的 Law 是
+   $\forall x\,y,\ \pi_1(c_{\rm abs}^h(x,y))=\pi_2(c_{\rm abs}^h(x,y))\to x=y$；
+   相对读数 $c_{\rm rel}^h(x,y)=h(x)-h(y)$ 的 Law 是
+   $\forall x\,y,\ c_{\rm rel}^h(x,y)=0\to x=y$。
+   两个 Law 都对所有 $h$ uniformly equivalent 于 `Function.Injective h`，bridge 不用定理 proof；
+   translation 满足 Law，constant function 不满足，且各读法的 generated slots 与声明坐标均 exact-use。
+   在 $h=T_\theta$ 时，$K_{\rm abs}$ 是对角线，$K_{\rm rel}$ 是差分相等；
+   对任意 $a\ne0$，$(0,0)\sim(a,a)$ 仅在相对读法成立，故两个 kernels 不等价。
+   Law variation 与 exact-use 不选择 observation language，也不把这两种读法变成输出重编码。
+
+**结构注册的非空洞义务（契约；当前无机器消费者）。** 以下义务由结构路径的 registration gate 端到端执法；
+现役机器只检查 `StructuralPrimitiveLawArena.Nondegenerate`（任意两个 realization 的 Law 真假各一），
+没有 $\Gamma$／site／intervention domain／模板来源／slot support／冻结条目／localization／极限存在的检查，
+故在该消费者落地前这些义务由评审守，不得报为已执法：
+
+- readouts 不得编码 closed truth、proof 或 theorem-specific certificate；模板从开放 schema 生成 Law，
+  statement／Law bridge 对指定 operation slots 一致成立，不用已证 theorem 的 truth／proof 拼接 `Iff`。
+- Law 不得忽略 realization，也不得以抵消表达式假装消费；必须检查 $\Gamma$ 声明的 intervention
+  domain 上的 Law-variation witness，复用 `StructuralPrimitiveLawArena.Nondegenerate`。
+  其正、负 realizations 均须属于该 domain，固定结构、实例与假设不随 witness 偷换；不另定义竞争谓词。
+- readouts、状态坐标与输出内坐标须具有 exact generated slot support，禁止闲置读数或坐标填充 kernel。
+  slot 出现不证明语义敏感性，所需逐 slot sensitivity 由 $\Gamma$ 规定；exact-use 不冒充输出最小性。
+- $\Gamma$ entries、transports、observation constructors 及假设在 pilots 之前冻结；按 theorem
+  挑 compactification、group、reference point 或 branch 非法，改变这些项或 observation language 是 `CHANGE-Γ`。
+- 全局函数到 germs 的 localization map 与 germs 到观测 quotient 的 map 分开登记；
+  前者遗忘 off-tail／null-set 差别，不能标成 distinct germs 之间的 boundary escape。
+  boundary-value readout 必须在声明域上证明极限存在且唯一，禁止用 default-valued limit 隐藏无极限函数；
+  不得按 theorem 临时限制到成功或收敛子类来制造 bridge。
+
+`StructuralPrimitiveRealization.toTheoremUnit` 接受 statement 与 proof，不要求上述 witness 或 bridge。
+因此 enforcement 在注册门的完整消费链上；构造器能产出 `StructuralTheoremUnit` 不构成非空洞认证。
+结构 admission 仍要求 §6.1 的完整 catalog inclusion proof 与 separating pair；局部 singleton 成功不替代它。
+
+**§5 的无限载体边界。** 在 §6.1 下，relations、kernel inclusion／equality／incomparability、
+添加读数的单调性、由 separating pair 证明的 strictness、leave-one-out capture 与 overlap 的集合定义保留。
+有限 catalog 上每个 pair 被多少 occurrences 分离的 multiplicity 仍是自然数，其 strata 构成 partition；
+有序 capture layers 仍是不交集合。按关系外延相等取商的 generated family 仍有限，至多 $2^{|I|}$ 项；
+meet 是交，join 必须是 §5.10 的 internal generated-closure join，不是 ambient equivalence-relation join。
+数学上的有限 generated family 不给出无限状态上 kernel equality、inclusion 或完整 Hasse 图的可执行判定。
+pair counts、denominators、exact rates、数值 gain／overlap／spectra 没有本契约提供的无限替代；
+无限 cardinality 不能检测 strict inclusion，不能用基数相减恢复 unique capture。
+本款不引入 entropy、measure 或概率；测度接口中的 $\mu$ 只绑定该接口，不产生逃逸率。
+
+**诊断边界。** 本款使用 CIRPT-42 与第 31 节分配的诊断，不把契约定义冒充现役执法。
+IE-C007 仅指既有 finite zero unique capture；IE-C024 指同一 canonical arena（含定义性别名展开）的 catalog 拆分；
+IE-C029 仅指既有跨 arena realization 未 faithful 消费 hypothesis 或缺 injection／restriction 方程；
+IE-C038 仅指 structural inclusion／pair witness 缺失、不成立或不满足 without／full 两侧。
+M0 新增结构门的诊断码由本规范分配（IE-C048、IE-C049、IE-C050）：Law-variation witness 缺失、
+未经 kernel 检查或越出 intervention domain 用 IE-C048；不被 Law 消费却改变 bundle kernel 的
+readout index／anchor 用 IE-C049；closed-truth／proof／certificate／statement-identity readout 用 IE-C050。
+这三个码及 IE-C024 的别名归一扩展均定义完成；消费者随判官层落地，当前无机器消费者。
+开放 schema 的 uniform bridge 缺失、其余 unused coordinates、theorem-dependent $\Gamma$ 选择、
+localization loss 误标 boundary escape，以及未证明存在唯一极限的 default-valued readout
+仍是独立注册义务，其诊断分配保持 `OPEN`；不得借用 IE-C029 或 IE-C038 冒充已覆盖。
+
 ---
 
 ## 7. 语义闭包刻画
@@ -5269,7 +5425,11 @@ legacy theorem 与 primitive bundle 之间没有 Lean realization theorem。
 ### IE-C024　SplitCanonicalArenaCatalog
 
 同一 root import closure 内属于同一 canonical object `Arena` 的 occurrences 被 namespace、
-wrapper、cloned arena 或 sub-catalog 拆开，或试图用分析 view 替代 maximal catalog。
+wrapper、cloned arena 或 sub-catalog 拆开，或试图用分析 view 替代 maximal catalog 时触发。
+同一 canonical arena declaration 按定义性别名展开判定：`def cloneArena := arena` 及传递别名
+归属展开后解析到的声明，不按 `canonicalObjectArenaName` 的 `Name` 拼写另分 owner。
+`object_arena` 输出该归属声明，`catalog_ids` 收集其全部 catalogs；消息与字段形状不变。
+别名归一扩展定义完成；消费者随判官层落地，当前无机器消费者。
 
 ### IE-C025　QualifiedNameCollision
 
@@ -5399,6 +5559,31 @@ excluded rows 使用 IE-C036；状态分项是 query completion，完备标志�
 预留；在 owner 完成 $\tau$ ruling 前不是 active compiler errors，也不得接为 required check。
 批准后必须先以第 39 节的 mutation matrix 证明 missing/dead/forged inputs 均 fail closed，才可
 把这些 codes 从 `RESERVED / OPEN` 改为 active。
+
+### IE-C048　RealizationIgnoredByLaw
+
+已注册 law arena 在声明的 intervention domain 内没有 kernel-checked Law-variation witness
+`∃ r₁ r₂, Law r₁ ∧ ¬Law r₂` 时触发：两个 realizations 必须具有同一已注册 signature，
+结构路径还须同属 $\Gamma$ 的 domain；见证缺失、无效或越域均失败。本码适用于 finite 与 structural
+两条注册路径；`Iff.rfl` bridge 不构成见证。定义完成；消费者随判官层落地，当前无机器消费者。
+
+### IE-C049　UnusedPrimitiveInBundle
+
+已注册 signature 的某个 readout index 或 anchor 不被 Law 消费、违反 exact generated slot support，
+即删去它后 Law 经遗忘该 primitive 的投影在声明域上外延不变，而 bundle kernel 改变时触发。
+语法出现、抵消表达式或死项不算消费；本码适用于 finite 与 structural 两条注册路径。
+优先序 `IE-C048 > IE-C049`：IE-C048 触发时不另判本码——常量 Law 下所有 primitive 皆未被消费，只发
+IE-C048；本码仅在 Law-variation 见证成立后判定，故每个登记至多命中其中一码。
+定义完成；消费者随判官层落地，当前无机器消费者。
+
+### IE-C050　ClosedTruthReadout
+
+readout 定义依赖已注册 theorem 的 truth、proof term 或 theorem-specific certificate／statement
+identity 时触发，将 AC-CIRPT-011 落为 fail-closed 诊断：provenance 检查须取 readout 定义的传递
+常量闭包，闭包不得到达该 theorem、其 proof、该 statement 的 `Decidable` instances 或上述身份来源；
+闭包无法完整取得亦按本码失败。本码适用于 finite 与 structural 两条注册路径。
+优先序 `IE-C050 > IE-C021`：IE-C021（常值 `true` readout）是本码的特例，同一登记同时命中时只发 IE-C050。
+定义完成；消费者随判官层落地，当前无机器消费者。
 
 ---
 
@@ -7134,6 +7319,7 @@ private def catalogQualifiedUnitName :
 
 登记进 environment extension。`PrimitiveLawArenaName.toArena` 必须 definitionally 等于
 `CanonicalArenaName`；否则登记语法还必须引用 CIRPT-IE-022 transport declaration。
+注册契约要求按各自触发条件发出 IE-C048／IE-C049／IE-C050 及含别名归一的 IE-C024；这些新增消费义务定义完成，当前无机器消费者，消费者随判官层落地。
 
 ### 24.2 legacy theorem 登记
 
@@ -7156,6 +7342,7 @@ existingTheoremStatement ↔
 不得是字符串说明。跨原 arena 的 legacy realization 必须给出 faithful injection/restriction
 equations，并在 `equivalence` 两个方向实际消费输入 hypothesis；用两个已知 existential
 proof 构造与输入无关的 `Iff` 触发 IE-C029。
+legacy 注册契约同样要求按各自触发条件发出 IE-C048／IE-C049／IE-C050 及含别名归一的 IE-C024；这些新增消费义务定义完成，当前无机器消费者，消费者随判官层落地。
 
 ### 24.3 禁止字段
 
@@ -7967,7 +8154,7 @@ compact form 输出，缺少任何 required payload key 本身即 IE-C028。
 
 | code | name | exact fail-closed trigger |
 |---|---|---|
-| IE-C024 | `SplitCanonicalArenaCatalog` | 同一 root import closure/arena 有多个 maximal catalog，或 view 冒充 maximal |
+| IE-C024 | `SplitCanonicalArenaCatalog` | 同一 root import closure 内归属同一 canonical arena declaration（按定义性别名展开）的 occurrences 被拆入多个 catalogs，含按别名 Name 拆分，或 view 冒充 maximal；别名扩展定义完成、当前无机器消费者 |
 | IE-C025 | `QualifiedNameCollision` | 不同合法 occurrences 导出相同 catalog-qualified generated `Name` |
 | IE-C026 | `MissingMaximalCatalog` | arena 有 import-closure occurrences，但无恰好覆盖全集的唯一 maximal catalog |
 | IE-C027 | `UncertifiedKernelRefinement` | true cell 缺 inclusion proof，或 false cell 缺 witness pair |
@@ -8004,8 +8191,9 @@ compact form 输出，缺少任何 required payload key 本身即 IE-C028。
 | IE-C032 | `root_id, catalog_id, pair_budget, limit, seal_name` |
 | IE-C033 | `root_id, catalog_id, expected_zero, certified_zero, phase` |
 
-v4.3 active additions 同样由以下三表耦合；IE-C045--IE-C047 仍为 reserved/open，不进入 active
-table，也不得由现有 compiler 发出。
+以下三表耦合既有 active additions 与 IE-C048--IE-C050 的注册诊断契约；后三码定义完成，
+消费者随判官层落地，当前无机器消费者，不属于 active errors。
+IE-C045--IE-C047 仍为 reserved/open，不进入三表，也不得由现有 compiler 发出。
 
 | code | name | exact fail-closed trigger |
 |---|---|---|
@@ -8020,6 +8208,9 @@ table，也不得由现有 compiler 发出。
 | IE-C042 | `KernelProjectionCertificateMismatch` | hierarchy component 与 certificate/reflected value 不同 |
 | IE-C043 | `KernelProjectionUsedForAdmission` | admission consumer 读取任何 hierarchy presentation 字段 |
 | IE-C044 | `DispositionCensusMismatch` | frozen report 的 `statement_id` 不唯一、coverage/totals/flag 不精确，或 observation root/owner/scope/completion/candidates 不符 |
+| IE-C048 | `RealizationIgnoredByLaw` | finite／structural 注册缺少同 signature、声明 intervention domain 内的 kernel-checked Law-variation witness；结构路径两 realizations 均须在 Γ domain，Iff.rfl 不算见证 |
+| IE-C049 | `UnusedPrimitiveInBundle` | signature 的 readout index／anchor 不在 Law 的 exact generated slot support 中，删除后 Law 在声明域外延不变而 bundle kernel 改变；优先序 `IE-C048 > IE-C049`，IE-C048 触发时不判 |
+| IE-C050 | `ClosedTruthReadout` | readout 传递常量闭包到达注册 theorem、其 truth／proof、statement 的 Decidable instances 或 theorem-specific certificate／statement identity，或闭包无法完整取得；优先序 `IE-C050 > IE-C021`，同时命中只发本码 |
 
 | code | exact deterministic message shape |
 |---|---|
@@ -8034,6 +8225,9 @@ table，也不得由现有 compiler 发出。
 | IE-C042 | `IE-C042 KernelProjectionCertificateMismatch root={root_id} catalog={catalog_id} component={component} expected={expected} actual={actual}` |
 | IE-C043 | `IE-C043 KernelProjectionUsedForAdmission consumer={consumer} field={field} root={root_id} catalog={catalog_id}` |
 | IE-C044 | `IE-C044 DispositionCensusMismatch head={head_sha} component={component} expected={expected} actual={actual}` |
+| IE-C048 | `IE-C048 RealizationIgnoredByLaw key={root_id}/{catalog_id}/{theorem_name} law_arena={law_arena} signature={signature} domain={intervention_domain} reason={reason}` |
+| IE-C049 | `IE-C049 UnusedPrimitiveInBundle key={root_id}/{catalog_id}/{theorem_name} signature={signature} primitive={primitive} support={slot_support}` |
+| IE-C050 | `IE-C050 ClosedTruthReadout key={root_id}/{catalog_id}/{theorem_name} readout={readout} reason={reason} provenance={provenance_closure}` |
 
 | code | required payload keys |
 |---|---|
@@ -8048,12 +8242,20 @@ table，也不得由现有 compiler 发出。
 | IE-C042 | `root_id, catalog_id, component, expected, actual` |
 | IE-C043 | `consumer, field, root_id, catalog_id` |
 | IE-C044 | `head_sha, component, expected, actual` |
+| IE-C048 | `root_id, catalog_id, theorem_name, law_arena, signature, intervention_domain, reason` |
+| IE-C049 | `root_id, catalog_id, theorem_name, signature, primitive, slot_support` |
+| IE-C050 | `root_id, catalog_id, theorem_name, readout, reason, provenance_closure` |
+
+IE-C048 的 `reason` 取 `missing_witness`／`invalid_witness`／`signature_mismatch`／`outside_domain`；
+IE-C049 的 `primitive` 标识 signature 内的 readout index 或 anchor，`slot_support` 是 exact generated support。
+IE-C050 的 `reason` 取 `forbidden_dependency`／`incomplete_closure`；`provenance_closure` 是 readout
+定义的传递常量闭包，按 canonical sort 输出，闭包不完整时为 `null`。
 
 所有 arrays 使用 canonical sort 后的 compact JSON；`expected`／`actual` 若是 structured value
 也使用 canonical compact JSON，不退化为不确定的人类散文。reserved IE-C045--IE-C047 只有在
 owner $\tau$ ruling 与 mutation suite 落地后，才可另一个 policy PR 把它们加入这三表。
 
-当前 census 按上述 assessment active 三表工作。额外 inventory row 若指向
+当前 census 按上述三表中的 assessment active 条目工作，不消费 IE-C048--IE-C050。额外 inventory row 若指向
 被 selector 排除的未冻结 theorem 或 frozen definition，在 keys equality 检查前由 identity
 检查发出 IE-C036；覆盖检查见 `tools/lean-inspector/LeanInformationAudit/DispositionCensus.lean`。
 
