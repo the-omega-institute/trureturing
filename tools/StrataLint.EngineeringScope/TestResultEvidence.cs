@@ -1,3 +1,6 @@
+using System.Text.Json;
+using System.Text.RegularExpressions;
+using System.Xml;
 using System.Xml.Linq;
 using StrataLint.Engine;
 
@@ -7,6 +10,48 @@ internal sealed record TestResultEvidence(
     int Executed,
     IReadOnlySet<(string Assembly, string Id)> ExecutedTests)
 {
+    // Disposable startup diagnostic: delivery is independent of evidence validation,
+    // including failed runs and infrastructure skips, before the owner deletes TRX.
+    internal static void ForwardDefaultCliStartupProbe(string resultsDirectory, Action<string> emit)
+    {
+        try
+        {
+            foreach (var file in Directory.EnumerateFiles(resultsDirectory, "*.trx"))
+            {
+                try
+                {
+                    var document = XDocument.Load(file, LoadOptions.None);
+                    var outputs = document.Descendants()
+                        .Where(element => element.Name.LocalName is "UnitTestResult" or "ResultSummary")
+                        .Elements().Where(element => element.Name.LocalName == "Output")
+                        .Elements().Where(element => element.Name.LocalName is "StdOut" or "StdErr");
+                    foreach (var output in outputs)
+                    {
+                        using var lines = new StringReader(output.Value);
+                        while (lines.ReadLine() is { } captured)
+                        {
+                            // xUnit puts skip output in the run summary with this adapter prefix.
+                            var line = Regex.Replace(captured, @"^\[xUnit\.net [0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{2}\] +", "");
+                            if (!line.StartsWith(DefaultCliStartupProbe.Prefix, StringComparison.Ordinal)) continue;
+                            try
+                            {
+                                using var record = JsonDocument.Parse(line[DefaultCliStartupProbe.Prefix.Length..]);
+                                if (record.RootElement.ValueKind == JsonValueKind.Object)
+                                    DefaultCliStartupProbe.Emit(emit, line);
+                            }
+                            catch (JsonException) { }
+                        }
+                    }
+                }
+                catch (Exception error) when (DeliveryUnavailable(error)) { }
+            }
+        }
+        catch (Exception error) when (DeliveryUnavailable(error)) { }
+    }
+
+    private static bool DeliveryUnavailable(Exception error) => error is IOException
+        or UnauthorizedAccessException or System.Security.SecurityException or XmlException;
+
     internal static TestResultEvidence Load(string resultsDirectory)
     {
         var files = Directory.GetFiles(resultsDirectory, "*.trx", SearchOption.TopDirectoryOnly);

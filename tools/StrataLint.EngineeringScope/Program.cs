@@ -191,6 +191,7 @@ internal static class Program
         }
         finally
         {
+            TestResultEvidence.ForwardDefaultCliStartupProbe(resultsDirectory, Console.Out.WriteLine);
             Directory.Delete(resultsDirectory, recursive: true);
         }
     }

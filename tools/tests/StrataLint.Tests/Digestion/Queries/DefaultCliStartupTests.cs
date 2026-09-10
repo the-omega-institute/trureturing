@@ -85,12 +85,11 @@ public sealed class DefaultCliStartupTests(ITestOutputHelper output)
             probe.Collect(tracePath, lines.Add);
             probe.Identities(AppContext.BaseDirectory);
             probe.Cleanup(tracePath);
-            // xUnit retains success/skip output in TRX; direct stderr also survives the
-            // ordinary console logger and the wrapper's subsequent TRX deletion.
+            // xUnit retains success/skip output in TRX. EngineeringScope forwards
+            // these diagnostic records before deleting its temporary TRX.
             foreach (var line in lines)
             {
                 DefaultCliStartupProbe.Emit(output.WriteLine, line);
-                DefaultCliStartupProbe.Emit(Console.Error.WriteLine, line);
             }
         }
     }
