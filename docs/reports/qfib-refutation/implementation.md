@@ -169,3 +169,17 @@ Planned address: `D5/S0/Certificates/Polynomials/QProductNecessityRefutation`.
 The existing Certificates Blueprint bucket has 70 direct files (72 recursive);
 a Polynomials child holds this first real certificate and its mirrored source.
 No new domain registration is needed; Certificates is already registered S0.
+
+## First Lean implementation
+
+Canonical route succeeded at the planned GID. Two input-contract errors were
+fixed before routing: manifest must be repository-relative, and F requires
+artifact=lean. The manifest lives under ignored .lake/build, not in the report.
+
+First real Lean attempt reduced every finite inequality and failed only on the
+zero tail: `i > 9 ⊢ 2 ≤ i → Nat.choose 6 (i - 2) = 0`. The simplifier had
+normalized `(i+1)-3` to `i-2`, so the supplied rewrite did not match. Supplying
+`6 < i-2` fixes the exact remaining goal; no mathematical assumption changed.
+`family_coeff` directly applies `Polynomial.coeff_one_add_X_pow` and
+`Polynomial.coeff_mul_X_pow'`. The new `six_unimodal` is private and establishes
+all natural-index inequalities, not merely a truncated coefficient list.
