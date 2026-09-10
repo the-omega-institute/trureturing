@@ -4,8 +4,72 @@ using Xunit;
 
 namespace StrataLint.EngineeringScope.Tests;
 
-public sealed class SharedBuildContractTests
+public sealed class SharedBuildContractTests(Xunit.Abstractions.ITestOutputHelper output)
 {
+    [Fact]
+    public async Task ProcessReturnsDirectExitAndOutputBeforeDescendantClosesInheritedHandles()
+    {
+        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        var script = Path.Combine(fixture.Root, "direct child 'fixture.sh");
+        var pidPath = Path.Combine(fixture.Root, "holder.pid");
+        TemporaryFileSystem.File.WriteAllText(script, """
+            set -eu
+            mkfifo ready release
+            /bin/bash -c '
+              exec 3<>release
+              printf "ready\n" > ready
+              read -r release <&3
+            ' &
+            holder=$!
+            trap 'kill "$holder" 2>/dev/null || :; wait "$holder" 2>/dev/null || :' EXIT
+            printf '%s\n' "$holder" > holder.pid
+            read -r ready < ready
+            printf 'stdout:<%s><%s>\n' "$1" "$2"
+            printf 'stderr:<%s>\n' "$3" >&2
+            trap - EXIT
+            exit 23
+            """);
+        System.Diagnostics.Process? holder = null;
+        try
+        {
+            (int Exit, string Text) result = default;
+            var error = Record.Exception(() => result = Process(fixture.Root, "/bin/bash",
+                [script, "", "space 'quote' \"double\" $literal;*", "line one\nline two"]));
+            // A helper timeout is a regression failure here, never a passing skip.
+            Assert.Null(error);
+            holder = System.Diagnostics.Process.GetProcessById(int.Parse(TemporaryFileSystem.File.ReadAllText(pidPath),
+                System.Globalization.CultureInfo.InvariantCulture));
+            Assert.False(holder.HasExited);
+            output.WriteLine($"direct_exit={result.Exit}; descendant_pid={holder.Id}; descendant_has_exited={holder.HasExited}");
+            output.WriteLine(result.Text);
+            Assert.Equal(23, result.Exit);
+            Assert.Equal("stdout:<><space 'quote' \"double\" $literal;*>\nstderr:<line one\nline two>\n", result.Text);
+            TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, "release"), "release\n");
+            await holder.WaitForExitAsync().WaitAsync(TestBudgets.ScriptProcessHangGuard);
+            Assert.True(holder.HasExited);
+            output.WriteLine("descendant_released=true; descendant_joined=true");
+        }
+        finally
+        {
+            if (holder is null && TemporaryFileSystem.File.Exists(pidPath))
+            {
+                try { holder = System.Diagnostics.Process.GetProcessById(int.Parse(TemporaryFileSystem.File.ReadAllText(pidPath),
+                    System.Globalization.CultureInfo.InvariantCulture)); }
+                catch (ArgumentException) { } // Setup may have already reaped the descendant.
+            }
+            using (holder)
+            {
+                if (holder is not null)
+                {
+                    if (!holder.HasExited) holder.Kill();
+                    await holder.WaitForExitAsync().WaitAsync(TestBudgets.ScriptProcessHangGuard);
+                    Assert.True(holder.HasExited);
+                    output.WriteLine("descendant_cleanup_joined=true");
+                }
+            }
+        }
+    }
+
     [Theory]
     [InlineData("engineering")]
     [InlineData("current")]
@@ -243,23 +307,39 @@ public sealed class SharedBuildContractTests
     internal static (int Exit, string Text) Process(string root, string executable, string[] arguments,
         IReadOnlyDictionary<string, string>? environment = null, TimeSpan? hangGuard = null)
     {
-        var start = new ProcessStartInfo(executable) { WorkingDirectory = root, RedirectStandardOutput = true, RedirectStandardError = true };
+        // Capture into files owned by this invocation.  A descendant that inherits the
+        // parent's pipe handles must not be able to keep a completed direct child stuck
+        // in an EOF drain.  Positional parameters preserve executable/argument boundaries
+        // without interpolating them into shell source.
+        var capture = TemporaryFileSystem.Directory.CreateTempSubdirectory("shared-build-capture-");
+        var stdoutPath = Path.Combine(capture.FullName, "stdout");
+        var stderrPath = Path.Combine(capture.FullName, "stderr");
+        var start = new ProcessStartInfo("/bin/sh") { WorkingDirectory = root };
+        start.ArgumentList.Add("-c");
+        start.ArgumentList.Add("exec \"$0\" \"$@\" >" + ShellQuote(stdoutPath) + " 2>" + ShellQuote(stderrPath));
+        start.ArgumentList.Add(executable);
         foreach (var argument in arguments) start.ArgumentList.Add(argument);
         foreach (var pair in environment ?? new Dictionary<string, string>()) start.Environment[pair.Key] = pair.Value;
-        using var process = System.Diagnostics.Process.Start(start)!;
-        using var deadline = new CancellationTokenSource(hangGuard ?? TestBudgets.ScriptProcessHangGuard);
-        var stdout = process.StandardOutput.ReadToEndAsync(deadline.Token);
-        var stderr = process.StandardError.ReadToEndAsync(deadline.Token);
         try
         {
-            process.WaitForExitAsync(deadline.Token).GetAwaiter().GetResult();
-            Task.WhenAll(stdout, stderr).WaitAsync(deadline.Token).GetAwaiter().GetResult();
-            return (process.ExitCode, stdout.GetAwaiter().GetResult() + stderr.GetAwaiter().GetResult());
+            using var process = System.Diagnostics.Process.Start(start)!;
+            using var deadline = new CancellationTokenSource(hangGuard ?? TestBudgets.ScriptProcessHangGuard);
+            try
+            {
+                process.WaitForExitAsync(deadline.Token).GetAwaiter().GetResult();
+                return (process.ExitCode, TemporaryFileSystem.File.ReadAllText(stdoutPath) + TemporaryFileSystem.File.ReadAllText(stderrPath));
+            }
+            catch (OperationCanceledException)
+            {
+                throw new SkipException("infrastructure-hang-guard expired for shared build fixture: " + executable + " " + string.Join(' ', arguments));
+            }
+            finally { if (!process.HasExited) process.Kill(entireProcessTree: true); }
         }
-        catch (OperationCanceledException)
+        finally
         {
-            throw new SkipException("infrastructure-hang-guard expired for shared build fixture: " + executable + " " + string.Join(' ', arguments));
+            TemporaryFileSystem.Directory.Delete(capture.FullName, recursive: true);
         }
-        finally { if (!process.HasExited) process.Kill(entireProcessTree: true); }
+
+        static string ShellQuote(string value) => "'" + value.Replace("'", "'\\''", StringComparison.Ordinal) + "'";
     }
 }
