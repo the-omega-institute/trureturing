@@ -2781,8 +2781,12 @@ PR7_KEYS = frozenset({
     "selected_pair_profile_copy",
     "shared_saturation_family_contexts",
     "shared_saturation_same_pair_q",
-    "shared_saturation_summary_equal",
-    "shared_saturation_negative_control",
+    "shared_saturation_full_summary_equal",
+    "shared_saturation_suffix_full_summary_equal",
+    "shared_saturation_nonempty_first_q",
+    "shared_saturation_empty_factor_zero",
+    "shared_saturation_witness_drop_cases",
+    "shared_saturation_witness_drop_red",
     "slice_linear_coefficient",
     "slice_nonzero_constant",
     "successor_pair_push_copy",
@@ -3035,11 +3039,11 @@ pr7_shared_targets = (
 )
 pr7_shared_prefixes = (
     (("FQ", {pr7_shared_targets[0]}),),
-    (("FQ", {pr7_shared_targets[1]}), ("FL", {pr3_l1})),
-    (("T", 1), ("FQ", {pr7_shared_targets[2]}), ("FL", {pr3_l1})),
+    (("FQ", {pr7_shared_targets[1]}), ("FL", {pr3_l0})),
+    (("T", 1), ("FQ", {pr7_shared_targets[2]}), ("FL", {pr3_l0})),
 )
 pr7_shared_factors = (None, empty, unit_at(-4))
-pr7_shared_suffix = (("FB", pr5_all),)
+pr7_shared_suffix = (("N",), ("T", 2))
 pr7_shared_pulled = (
     (origin, 1, pr3_l1, 0),
     (v, 1, pr3_l1, 1),
@@ -3067,6 +3071,35 @@ def pr7_shared_input(t, p, drop=None):
             and theta(x)[1:3] == (-20, 5)), "pr7_shared_input_archive_endpoints"
     return x
 
+def pr7_shared_context(x, i):
+    # An independent input check also catches removal of the constructor guard.
+    assert charge(x, x.w) == 0, ("shared_saturation_input_balance", charge(x, x.w))
+    y = x
+    for step in pr7_shared_prefixes[i]:
+        y = pr5_rich_step(y, step)
+    first_summary = suffix_summary = None
+    factor = pr7_shared_factors[i]
+    if factor is not None:
+        y = pr5_rich_step(y, ("mul", 0, factor))
+        first_summary = pr5_summary(y)
+        # Compute the suffix from the full state independently of the comparison.
+        suffix_summary = pr5_summary(y)
+    for step in pr7_shared_suffix:
+        y = pr5_rich_step(y, step)
+        assert y is not FAIL, ("shared_saturation_suffix_defined", i)
+        if factor is not None:
+            suffix_summary = pr5_summary_step(suffix_summary, step)
+            assert pr3_bytes(pr5_summary(y)) == pr3_bytes(suffix_summary), (
+                "shared_saturation_suffix_consumes_full_summary", i, step)
+    return y, first_summary, suffix_summary
+
+# Registered failure points: d0 changes C0's q; d1 changes C2's full summary;
+# d2 changes both C2's q and full summary. The empty-factor C1 stays zero.
+pr7_shared_drop_controls = (
+    ("d0", 0, (-1, 0)),
+    ("d1", 2, (-1, -1)),
+    ("d2", 2, (-1, 0)),
+)
 pr7_shared_context_reads = []
 pr7_shared_summary_reads = []
 pr7_shared_negative_reads = []
@@ -3075,42 +3108,49 @@ for pr7_p in (origin, v, h):
         assert pr7_t < pr7_shared_c and pr7_tt < pr7_shared_c
         pr7_pair = (pr7_shared_input(pr7_t, pr7_p),
                     pr7_shared_input(pr7_tt, pr7_p))
-        for pr7_prefix, pr7_factor in zip(pr7_shared_prefixes, pr7_shared_factors):
-            pr7_outputs, pr7_first_summaries = [], []
-            for pr7_x in pr7_pair:
-                pr7_y = pr7_x
-                for pr7_step0 in pr7_prefix:
-                    pr7_y = pr5_rich_step(pr7_y, pr7_step0)
-                if pr7_factor is not None:
-                    pr7_y = pr5_rich_step(pr7_y, ("mul", 0, pr7_factor))
-                    pr7_first_summaries.append(theta(pr7_y)[:3])
-                for pr7_step0 in pr7_shared_suffix:
-                    pr7_y = pr5_rich_step(pr7_y, pr7_step0)
-                pr7_outputs.append(pr7_y)
-            pr7_expected = ((1, 1), (0, 0), (0, 0))[len(pr7_shared_context_reads) % 3]
-            assert tuple(q(pr7_y) for pr7_y in pr7_outputs) == pr7_expected
-            assert pr3_bytes(q(pr7_outputs[0])) == pr3_bytes(q(pr7_outputs[1]))
+        for pr7_i, pr7_factor in enumerate(pr7_shared_factors):
+            pr7_results = [pr7_shared_context(pr7_x, pr7_i) for pr7_x in pr7_pair]
+            pr7_outputs, pr7_first_summaries, pr7_suffix_summaries = zip(*pr7_results)
+            if pr7_factor is not None:
+                assert pr3_bytes(pr7_suffix_summaries[0]) == pr3_bytes(pr7_suffix_summaries[1]), (
+                    f"shared_saturation_suffix_full_summary_equal_C{pr7_i}")
+                pr7_hit("shared_saturation_suffix_full_summary_equal")
+                pr7_equal(pr7_first_summaries[0], pr7_first_summaries[1],
+                          "shared_saturation_full_summary_equal")
+                pr7_shared_summary_reads.append(pr7_first_summaries[0])
+                if pr7_factor.w:
+                    assert tuple(pr5_summary_q(s) for s in pr7_first_summaries) == (1, 1), (
+                        "shared_saturation_nonempty_first_q")
+                    pr7_hit("shared_saturation_nonempty_first_q")
+                else:
+                    assert all(not out.w and q(out) == 0 for out in pr7_outputs), (
+                        "shared_saturation_empty_factor_zero")
+                    pr7_hit("shared_saturation_empty_factor_zero")
+            pr7_actual = tuple(q(pr7_y) for pr7_y in pr7_outputs)
+            pr7_expected = ((-1, -1), (0, 0), (-1, -1))[pr7_i]
+            assert pr3_bytes(pr7_actual[0]) == pr3_bytes(pr7_actual[1]), (
+                f"shared_saturation_same_pair_q_C{pr7_i}", pr7_actual)
+            assert pr7_actual == pr7_expected, ("shared_saturation_expected_q", pr7_i, pr7_actual)
             pr7_shared_context_reads.append(pr7_expected)
             pr7_hit("shared_saturation_family_contexts")
             pr7_hit("shared_saturation_same_pair_q")
-            if pr7_factor is not None:
-                assert pr7_first_summaries[0] == pr7_first_summaries[1]
-                pr7_shared_summary_reads.append(pr7_first_summaries[0])
-                pr7_hit("shared_saturation_summary_equal")
-        pr7_bad_pair = (pr7_shared_input(pr7_t, pr7_p),
-                        pr7_shared_input(pr7_tt, pr7_p, drop=0))
-        pr7_bad_outputs = []
-        for pr7_x in pr7_bad_pair:
-            pr7_y = pr7_x
-            for pr7_step0 in pr7_shared_prefixes[0]:
-                pr7_y = pr5_rich_step(pr7_y, pr7_step0)
-            pr7_bad_outputs.append(q(pr7_y))
-        assert tuple(pr7_bad_outputs) == (1, 0)
-        pr7_shared_negative_reads.append(tuple(pr7_bad_outputs))
-        pr7_hit("shared_saturation_negative_control")
+        for pr7_drop, (pr7_name, pr7_ci, pr7_expected_q) in enumerate(pr7_shared_drop_controls):
+            pr7_bad_pair = (pr7_shared_input(pr7_t, pr7_p),
+                           pr7_shared_input(pr7_tt, pr7_p, drop=pr7_drop))
+            pr7_bad_results = [pr7_shared_context(pr7_x, pr7_ci) for pr7_x in pr7_bad_pair]
+            pr7_bad_q = tuple(q(result[0]) for result in pr7_bad_results)
+            assert pr7_bad_q == pr7_expected_q, (f"shared_saturation_witness_drop_{pr7_name}_q", pr7_bad_q)
+            if pr7_ci == 2:
+                assert pr3_bytes(pr7_bad_results[0][1]) != pr3_bytes(pr7_bad_results[1][1]), (
+                    f"shared_saturation_witness_drop_{pr7_name}_full_summary")
+                assert pr3_bytes(pr7_bad_results[0][2]) != pr3_bytes(pr7_bad_results[1][2]), (
+                    f"shared_saturation_witness_drop_{pr7_name}_suffix_full_summary")
+            pr7_shared_negative_reads.append((pr7_name, pr7_ci, pr7_bad_q))
+            pr7_hit("shared_saturation_witness_drop_cases")
 assert len(pr7_shared_context_reads) == 18
 assert len(pr7_shared_summary_reads) == 12
-assert pr7_shared_negative_reads == [(1, 0)] * 6
+assert pr7_shared_negative_reads == list(pr7_shared_drop_controls) * 6
+pr7_hit("shared_saturation_witness_drop_red", len(pr7_shared_drop_controls))
 pr7_periodic = pr6_sat
 assert tuple(q(pr3_causal_filter(x, pr6_even_Q, True)) for x in pr7_periodic) == (1, 1)
 pr7_hit("copy_periodic_saturation")
