@@ -1,0 +1,19 @@
+**命题 57（受限单射的充要条件及每个固定因子的全域失败）。** 对任意 $a\in\mathbb Z$、$d\in\mathcal L$，
+
+$$
+L_d|_{\mathcal L_{\ge a}}\text{ 单射}
+\quad\Longleftrightarrow\quad
+\forall n\ge a,\ D_n\ne0.
+\tag{CUM-INJECTIVE}
+$$
+
+特别地，当 $d=\delta_{(a,0)}$ 时，
+
+$$
+c\odot\delta_{(a,0)}=\tau_1c
+\qquad(c\in\mathcal L_{\ge a}).
+\tag{CUM-SHIFT-FACTOR}
+$$
+
+然而对每个 $d\in\mathcal L$，$L_d$ 在整个 $\mathcal L$ 上都不单射，即使 $\varepsilon d=1$ 也不能保证全域单射。
+

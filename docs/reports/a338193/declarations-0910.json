@@ -1,0 +1,142 @@
+{
+  "D5.S1.Recurrence.Algebraic.SchroderIntegralEGF.original_exists_unique": {
+    "statement_id": "sha256:74946859e132d934a778b7d3e8cc89c001c09bee88a921540b880b715b20f5b8",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "proof_shape": "content",
+    "escape_witness": "row_factor",
+    "admission_basis": "escape-witness",
+    "direct_frozen_dependencies": [
+      {
+        "gid": "D5/S1/Recurrence/Residue/IntegralEGFComposition.eCoeff",
+        "statement_id": "sha256:4352a2872dd069de3ca054aab1c4950930a811b324435173c0e64781d46fc330"
+      },
+      {
+        "gid": "D5/S1/Recurrence/Residue/IntegralEGFComposition.eCoeff_X_mul",
+        "statement_id": "sha256:ca3a45e32d54da0c01e288676eefce256c417db9b1acb024e5582391c1e29291"
+      },
+      {
+        "gid": "D5/S1/Recurrence/Residue/IntegralEGFComposition.eCoeff_derivative",
+        "statement_id": "sha256:d8c528ef732aa837c3d79d7314200e072b40f5bcdc873683da352f1acf37c5c8"
+      },
+      {
+        "gid": "D5/S1/Recurrence/Residue/IntegralEGFComposition.eCoeff_zero",
+        "statement_id": "sha256:69e1d2e22802c66151c2c3239fdceab9ab8a796d9f10d82c7366e4d57e790054"
+      },
+      {
+        "gid": "D5/S1/Recurrence/Residue/QuarticEGFFixedPoint.constantCoeff_encode",
+        "statement_id": "sha256:7ab6eca00f6e60caaf4d33e7a1ca32c3800e019418309254c586377c79ffb747"
+      },
+      {
+        "gid": "D5/S1/Recurrence/Residue/QuarticEGFFixedPoint.eCoeff_encode",
+        "statement_id": "sha256:352e6f7d24ca45dedb1bc8138765409965b1fb7a21903187a52a0d3fbd0a3bf7"
+      },
+      {
+        "gid": "D5/S1/Recurrence/Residue/QuarticEGFFixedPoint.eCoeff_ext",
+        "statement_id": "sha256:be297942dba1d71d921d56e5059d2544375954e34dd6e505146ebcbbed2baaff"
+      },
+      {
+        "gid": "D5/S1/Recurrence/Residue/QuarticEGFFixedPoint.encode",
+        "statement_id": "sha256:bb200c57b57d3db01e9c5a71120a010d1a0509f29a9046ca82c6726744329840"
+      }
+    ]
+  },
+  "D5.S1.Recurrence.Algebraic.SchroderIntegralEGF.A_original": {
+    "statement_id": "sha256:19f2b0004b543c02690537f096809bf4ef4eee5aa1e10ca46cba08c3fc0f8c25",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "proof_shape": "bind-only",
+    "escape_witness": null,
+    "admission_basis": "escape-witness",
+    "direct_frozen_dependencies": [
+      {
+        "gid": "D5/S1/Recurrence/Residue/IntegralEGFComposition.eCoeff",
+        "statement_id": "sha256:4352a2872dd069de3ca054aab1c4950930a811b324435173c0e64781d46fc330"
+      },
+      {
+        "gid": "D5/S1/Recurrence/Residue/IntegralEGFComposition.eCoeff_X_mul",
+        "statement_id": "sha256:ca3a45e32d54da0c01e288676eefce256c417db9b1acb024e5582391c1e29291"
+      },
+      {
+        "gid": "D5/S1/Recurrence/Residue/IntegralEGFComposition.eCoeff_derivative",
+        "statement_id": "sha256:d8c528ef732aa837c3d79d7314200e072b40f5bcdc873683da352f1acf37c5c8"
+      },
+      {
+        "gid": "D5/S1/Recurrence/Residue/IntegralEGFComposition.eCoeff_zero",
+        "statement_id": "sha256:69e1d2e22802c66151c2c3239fdceab9ab8a796d9f10d82c7366e4d57e790054"
+      },
+      {
+        "gid": "D5/S1/Recurrence/Residue/QuarticEGFFixedPoint.constantCoeff_encode",
+        "statement_id": "sha256:7ab6eca00f6e60caaf4d33e7a1ca32c3800e019418309254c586377c79ffb747"
+      },
+      {
+        "gid": "D5/S1/Recurrence/Residue/QuarticEGFFixedPoint.eCoeff_encode",
+        "statement_id": "sha256:352e6f7d24ca45dedb1bc8138765409965b1fb7a21903187a52a0d3fbd0a3bf7"
+      },
+      {
+        "gid": "D5/S1/Recurrence/Residue/QuarticEGFFixedPoint.eCoeff_ext",
+        "statement_id": "sha256:be297942dba1d71d921d56e5059d2544375954e34dd6e505146ebcbbed2baaff"
+      },
+      {
+        "gid": "D5/S1/Recurrence/Residue/QuarticEGFFixedPoint.encode",
+        "statement_id": "sha256:bb200c57b57d3db01e9c5a71120a010d1a0509f29a9046ca82c6726744329840"
+      }
+    ],
+    "admission_basis_scope": "module-level; this declaration is a bind-only companion and has no separate content claim",
+    "companion_to": [
+      "D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.original_exists_unique",
+      "D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.egf_coeff_eq_f"
+    ]
+  },
+  "D5.S1.Recurrence.Algebraic.SchroderIntegralEGF.egf_coeff_eq_f": {
+    "statement_id": "sha256:d9c68eeeb7bd3830064c04d660d54a835b76dcf6bd36df8af2c4c1789307c7dc",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "proof_shape": "content",
+    "escape_witness": "row_factor",
+    "admission_basis": "escape-witness",
+    "direct_frozen_dependencies": [
+      {
+        "gid": "D5/S1/Recurrence/Residue/IntegralEGFComposition.eCoeff",
+        "statement_id": "sha256:4352a2872dd069de3ca054aab1c4950930a811b324435173c0e64781d46fc330"
+      },
+      {
+        "gid": "D5/S1/Recurrence/Residue/IntegralEGFComposition.eCoeff_X_mul",
+        "statement_id": "sha256:ca3a45e32d54da0c01e288676eefce256c417db9b1acb024e5582391c1e29291"
+      },
+      {
+        "gid": "D5/S1/Recurrence/Residue/IntegralEGFComposition.eCoeff_derivative",
+        "statement_id": "sha256:d8c528ef732aa837c3d79d7314200e072b40f5bcdc873683da352f1acf37c5c8"
+      },
+      {
+        "gid": "D5/S1/Recurrence/Residue/IntegralEGFComposition.eCoeff_zero",
+        "statement_id": "sha256:69e1d2e22802c66151c2c3239fdceab9ab8a796d9f10d82c7366e4d57e790054"
+      },
+      {
+        "gid": "D5/S1/Recurrence/Residue/QuarticEGFFixedPoint.constantCoeff_encode",
+        "statement_id": "sha256:7ab6eca00f6e60caaf4d33e7a1ca32c3800e019418309254c586377c79ffb747"
+      },
+      {
+        "gid": "D5/S1/Recurrence/Residue/QuarticEGFFixedPoint.eCoeff_encode",
+        "statement_id": "sha256:352e6f7d24ca45dedb1bc8138765409965b1fb7a21903187a52a0d3fbd0a3bf7"
+      },
+      {
+        "gid": "D5/S1/Recurrence/Residue/QuarticEGFFixedPoint.eCoeff_ext",
+        "statement_id": "sha256:be297942dba1d71d921d56e5059d2544375954e34dd6e505146ebcbbed2baaff"
+      },
+      {
+        "gid": "D5/S1/Recurrence/Residue/QuarticEGFFixedPoint.encode",
+        "statement_id": "sha256:bb200c57b57d3db01e9c5a71120a010d1a0509f29a9046ca82c6726744329840"
+      }
+    ]
+  }
+}
