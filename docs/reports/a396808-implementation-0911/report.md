@@ -12,7 +12,7 @@
 
 ## 开工读取与数值收据
 
-完整阅读 CLAUDE.md、agents/CONTEXT.md、lean4/SKILL.md、冻结基模块公开面及私有证明；utility 文法已查 spec A5.1，非计算性一般证明使用 `utility: none`。Arith 已注册 S3。`find D5/S3/Arith -maxdepth 1 -type f | wc -l` 得 34；递归计数 123，不将两种口径混用。
+完整阅读 CLAUDE.md、agents/CONTEXT.md、lean4/SKILL.md、冻结基模块公开面及私有证明；utility 文法已查 spec A5.1，非计算性一般证明使用 `utility: none`。Arith 已注册 S3。正式模块加入后 D5/S3/Arith 顶层 35 个文件；Library/Arith 已满 48，文献 note 放在 Library/Recurrence（加入后 43）。`find D5/S3/Arith -maxdepth 1 -type f | wc -l` 得 34；递归计数 123，不将两种口径混用。
 
 `numeric_probe.py` 实现用户指定的严格前缀递推、二进制幂和截断乘法。重现前先 `curl -L https://oeis.org/A396808/b396808.txt -o /tmp/a396808-bfile.txt`，再运行 `python3 docs/reports/a396808-implementation-0911/numeric_probe.py`。实测 0.663 秒；完整读数见 numeric_probe.json。
 
@@ -52,7 +52,13 @@
 
 `make lean-cache-ensure` EXIT=0：status=seeded，method=clonefile，donor=/Users/chronoai/trureturing，clonefile_attempts=1，stamp_miss=null，mathlib_olean_state=warm，project_olean_state=warm，mathlib_missing_olean_files=0，pin_sha256=sha256:6c4c682ffba051b5744fe7a75ccc99d7f3b20227b3b026f392f3315be0adaa4e。
 
-正式 `make lean` EXIT=0，耗时 220.484420334 秒。runner attempt 目录的 make-lean.log 与 make-lean-receipt.json 保留原始输出和计时。`make lean-report` EXIT=0，耗时 64.241444375 秒。make emit、scribe-content-checks、无 atom deposit 及 PR 尚在执行，完成后补录。
+正式 `make lean` EXIT=0，耗时 220.484420334 秒。runner attempt 目录的 make-lean.log 与 make-lean-receipt.json 保留原始输出和计时。`make lean-report` EXIT=0，耗时 64.241444375 秒。`make emit` EXIT=0，耗时 51.766635541 秒，生成同名 Blueprint 镜像。指定 `scribe-content-checks.sh` EXIT=0，耗时 23.671711708 秒；Describe `red=0`，KaTeX `judged=1 formula(s)=1 red=0`。脚本按本次 delta 调用 describe-report 与 markdown-check；未改 Golden/Projection 或 producer，故 projections --check 分支未唤醒。
+
+`make deposit-uncovered GID=D5/S3/Arith/TernaryTraceSupport.a396808_mod_three BASE=2d8af6a6dd0beb23d4c3a4ac86fc2ea2b263a363` EXIT=0，耗时 85.228565208 秒。内部 header-check 通过、emit 无变化，`ledger-align --add` 读数 `added=1 conflicts=0`；结尾 `reason=NO_ATOM`。未创建或覆盖 atom。
+
+冻结事件 event_hash: `sha256:b920195f85ebb897de035ff4702ca56d779cd90868e0d4a22b3264ada2d958bd`；模块 statement_id: `sha256:ce777b56d280ca0833c4b953081538f632507b098a650ba243a4d44a2d42625e`。完整命令/退出码/计时见 gate-receipts.json，原始日志位于该 runner attempt 目录。未运行 make preflight。
+
+交付前 `gh pr list --state open --search A396808` 返回 []；本地 rg 仅有原奇偶模块及本模块命中。PR 将由 make pr-open 建立并同步等待远端判词；此处不提前声称 CI 通过。
 
 ## 逐公开定理审计
 
