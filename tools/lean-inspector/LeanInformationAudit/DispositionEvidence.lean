@@ -148,6 +148,17 @@ private def validateFinite (modules : Array Name) (key : StatementKey)
   let some sealed := finiteSealInScope? env modules key.theoremName payload.canonicalArena
     | failClass key "finite_occurrence" "maximal_catalog_seal"
   let certificate ← constant modules key "finite_occurrence" "seal_certificate" sealed
+  let some record := (SealRecords.entries env).find? fun record =>
+      record.theorems.any fun row => row.theoremName == key.theoremName &&
+        row.certificateName == sealed
+    | failClass key "finite_occurrence" "maximal_catalog_seal"
+  let some occurrence := record.theorems.find? (·.theoremName == key.theoremName)
+    | failClass key "finite_occurrence" "maximal_catalog_seal"
+  let catalogValue ← mkConstWithFreshMVarLevels record.catalog.catalogName
+  let index ← ProjectionProof.fin occurrence.index record.theorems.size
+  let expected ← mkAppM ``Catalog.LowersEscape #[catalogValue, index]
+  unless ← isDefEq (← inferType certificate) expected do
+    failClass key "finite_occurrence" "seal_certificate.proposition"
   checkWithKernel certificate
   let lawArena ← mkConstWithFreshMVarLevels registration.arenaName
   let arena ← mkAppM ``PrimitiveLawArena.toArena #[lawArena]
