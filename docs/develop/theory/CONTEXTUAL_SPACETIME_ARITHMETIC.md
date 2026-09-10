@@ -2762,6 +2762,9 @@ PR7_KEYS = frozenset({
     "d17_square_vs_linear",
     "d18_guard_failure",
     "d18_slice_failure",
+    "functional_orbits_2x2",
+    "functional_orbits_3x2",
+    "functional_orbits_3x3",
     "image_d16_witness_failure",
     "image_empty_endpoint_branches",
     "image_empty_realizations",
@@ -2989,7 +2992,8 @@ pr7_guard_success = pr7_rich_eval(pr7_guard_term, [pr7_guard_single]*2)
 assert pr7_guard_success is not FAIL, "copy_strict_temporal_single_success"
 assert len(pr7_guard_success.e) == 2 and q(pr7_guard_success) == 0
 pr7_hit("copy_strict_temporal_single_success")
-assert pr7_rich_eval(pr7_guard_term, [pr7_guard_x]*2) is FAIL, "copy_strict_temporal_failure"
+assert pr7_rich_eval(pr7_guard_term, [pr7_guard_x]*2) is FAIL, (
+    "copy_strict_temporal_failure", len(pr7_guard_x.e), guard(pr7_guard_x, time_shift(pr7_guard_x, 1)))
 pr7_hit("copy_strict_temporal_failure")
 pr7_d18_bad = pr7_guard_x
 assert {event[0] for event in pr7_d18_bad.e.values()} == {-3, 3}
@@ -3124,7 +3128,8 @@ for pr7_p in (origin, v, h):
             pr7_outputs, pr7_first_summaries, pr7_suffix_summaries = zip(*pr7_results)
             if pr7_factor is not None:
                 assert pr3_bytes(pr7_suffix_summaries[0]) == pr3_bytes(pr7_suffix_summaries[1]), (
-                    f"shared_saturation_suffix_full_summary_equal_C{pr7_i}")
+                    f"shared_saturation_suffix_full_summary_equal_C{pr7_i}",
+                    tuple(pr5_summary_q(s) for s in pr7_suffix_summaries), "full_summary_equal=False")
                 pr7_hit("shared_saturation_suffix_full_summary_equal")
                 pr7_equal(pr7_first_summaries[0], pr7_first_summaries[1],
                           "shared_saturation_full_summary_equal")
@@ -3271,11 +3276,14 @@ for pr7_bits in product((0, 1), repeat=4):
         pr7_mats.append(pr7_matrix)
 assert len(pr7_mats) == 9
 pr7_hit("labeled_graphs_2x2")
+from itertools import permutations as pr7_permutations
+
 def pr7_orbit(matrix):
+    r, s = len(matrix), len(matrix[0])
     return {
-        tuple(tuple(matrix[rows[i]][cols[j]] for j in range(2)) for i in range(2))
-        for rows in ((0, 1), (1, 0))
-        for cols in ((0, 1), (1, 0))
+        tuple(tuple(matrix[rows[i]][cols[j]] for j in range(s)) for i in range(r))
+        for rows in pr7_permutations(range(r))
+        for cols in pr7_permutations(range(s))
     }
 pr7_orbits, pr7_seen = [], set()
 for pr7_matrix in pr7_mats:
@@ -3293,6 +3301,31 @@ assert len(pr7_seen) == 9
 pr7_hit("orbit_cover_2x2")
 assert len({frozenset(orb) for orb in pr7_orbits}) == 4
 pr7_hit("orbits_2x2")
+
+# Independent partition expectations: 2=2 or 1+1; 3=3 or 2+1 or 1+1+1.
+# Enumerate S_r x S_s orbits first, then check the column-indegree classification.
+for pr7_r, pr7_s, pr7_expected in ((2, 2, 2), (3, 2, 2), (3, 3, 3)):
+    pr7_functional_mats = {
+        tuple(tuple(int(j == image[i]) for j in range(pr7_s)) for i in range(pr7_r))
+        for image in product(range(pr7_s), repeat=pr7_r)
+    }
+    assert len(pr7_functional_mats) == pr7_s**pr7_r
+    assert all(sum(row) == 1 for matrix in pr7_functional_mats for row in matrix)
+    pr7_functional_orbits = {frozenset(pr7_orbit(matrix)) for matrix in pr7_functional_mats}
+    pr7_functional_name = f"functional_orbits_{pr7_r}x{pr7_s}"
+    assert len(pr7_functional_orbits) == pr7_expected, (
+        pr7_functional_name, len(pr7_functional_orbits), pr7_expected)
+    assert set().union(*pr7_functional_orbits) == pr7_functional_mats
+    assert sum(map(len, pr7_functional_orbits)) == len(pr7_functional_mats)
+    pr7_degree_classes = set()
+    for pr7_orbit0 in pr7_functional_orbits:
+        pr7_degrees = {tuple(sorted(sum(row[j] for row in matrix) for j in range(pr7_s)))
+                       for matrix in pr7_orbit0}
+        assert len(pr7_degrees) == 1, (pr7_functional_name, "indegree_invariant")
+        pr7_degree_classes.update(pr7_degrees)
+    assert len(pr7_degree_classes) == len(pr7_functional_orbits), (
+        pr7_functional_name, "indegree_classification")
+    pr7_hit(pr7_functional_name, len(pr7_functional_orbits))
 
 pr7_D16 = {(pr7_a_pos, 1, frozenset({pr7_a_pos, (origin, 1, pr3_l0, 1)})): 1,
            ((origin, 1, pr3_l0, 1), 1, frozenset({(origin, 1, pr3_l0, 1),
