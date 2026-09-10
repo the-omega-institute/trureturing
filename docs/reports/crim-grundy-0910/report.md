@@ -269,6 +269,49 @@ selects DOI only, following `hennessey2024tree.md`. The four dangling-reference
 findings came from that rejected note, not from its canonical Library address.
 No loader or governance rule was changed.
 
-Final semantic report, emitted mirror and gate results will be recorded below
-once their commands have returned. No deposit, cover or PR command is authorized
-or performed; no frozen state file is added.
+Final validation on the explicit-recursion source completed successfully:
+
+| Command | Exit | Elapsed seconds | Receipt |
+| --- | --- | --- | --- |
+| `make lean` | 0 | 144.213 | `lean-explicit.log` / `.json` |
+| `make lean-report` | 0 | 243.615 | `lean-report-explicit.log` / `.json` |
+| `make emit` | 0 | 79.468 | `emit-explicit.log` / `.json` |
+| `make gate BASE=6ec605909ca7c64b117bc8bdecc8a62988dfebb4` | 0 | 889 (gate clock) | `gate.log` / `.json` |
+
+The gate checked implementation commit `99716a79cd` against the immutable
+starting base. The final commit only records these results in this report.
+The gate's engineering build, full engineering tests (749 seconds), selftest,
+Lean report consumption, admission, and FILEMAP conformity all passed.
+This is a local gate result; no remote CI result is asserted.
+
+The gate also reports `SL-022` for the added Scribe source: one protected-surface
+change. The inner admission flow returns 3 for this marker; the canonical
+`make gate` wrapper normalizes it to 0 after content checks pass. Thus the
+reported zero exit is not an assertion that there were no markers. `SL-031`
+records the typed refutation utility while leaving semantic classification to
+review; `SL-034` records the intentionally absent frozen state. The requested
+Scribe edit was already authorized, and no merge or freeze was performed.
+
+The final source SHA-256 is
+`d9a30262dc7f9c76838aee89b9c850b1b126c58c47f3b8344490e409e5333cbb`.
+The final raw report has exactly **one included theorem**, `.result`, and
+exactly **one included definition with the checked closed Prop type**, `.claim`.
+It reports `utility_refutation.is_closed_negation = true`. All declaration
+axiom closures lie in the standard three-axiom set.
+`semantic-summary.json` preserves this extracted evidence, including:
+
+- claim statement_id: `sha256:aaf0f9032fdbb04a70e0b69fb3b6e7a04a5df98542b19bf8093d268ae0245c5a`;
+- result statement_id: `sha256:8b9fba2c790bd44c5cd9d262760b7344f35e51c1b008d6a4b02321dd25bcbff5`.
+
+The canonical generated Blueprint mirror is
+`Blueprint/D5/S0/Certificates/Games/CrimGrundyRefutation.md`; the final emitter
+confirmed it without any hand edit. The final source build retains the eleven
+intentional `defProp` style warnings and the long utility-header warning
+recorded above; no warning was suppressed.
+
+Worker receipts and source snapshots are in
+`/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/crim-grundy-0910/attempt-2`,
+with the snapshots under `delivery/`. The result envelope and completion
+sentinel are published there by temporary-file write and atomic rename, after
+the final report commit is pushed. No production deposit, cover or PR was
+performed; no frozen state file was added.
