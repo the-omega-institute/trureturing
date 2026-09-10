@@ -1,5 +1,6 @@
 import LeanInformationAudit.Tests.RegistrationGates.Positive
 import LeanInformationAudit.Tests.RegistrationGates.Structural
+import LeanInformationAudit.Tests.RegistrationGates.P2Padding
 
 open Lean LeanInformationAudit DispositionCensus
 open D5.S3.ConceptDynamics.InformationEscape
@@ -197,4 +198,21 @@ run_cmd do
     ``specificTruth (mkConst ``openDecision)
   unless forbidden && closure.isSome do throwError "[FAIL] OpenAppliedDecidable"
   logInfo "[PASS] OpenAppliedDecidable"
+run_cmd do
+  let env ← getEnv
+  for (name, label) in [( ``RegistrationPositive.source, "CleanInlineFinite"),
+      (``P2Padding.source, "CleanBranchReadout")] do
+    let some entry := InformationRegistry.find? env name | throwError "missing fixture entry"
+    let actual := RegistrationGates.provenanceError env entry.registrationModuleName
+      entry.effectiveCatalogId entry.theoremName entry.realizationName
+    if actual.isSome then logError m!"[FAIL] {label}: {actual}"
+    else logInfo m!"[PASS] {label}"
+run_cmd do
+  let env ← getEnv
+  let entry := ((structuralProvenanceEntries env).find?
+    (·.theoremName == ``RegistrationStructural.positive)).get!
+  let actual := RegistrationGates.provenanceError env entry.registrationModule
+    entry.canonicalArena entry.theoremName entry.realizationConst
+  unless actual.isNone do throwError "[FAIL] CleanInlineStructural: {actual}"
+  logInfo "[PASS] CleanInlineStructural"
 end RegistrationProvenance
