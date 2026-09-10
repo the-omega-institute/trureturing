@@ -93,6 +93,11 @@ public sealed partial class MakeWorkflowTests
         "clean-lanes",
         "xi-quantization",
         "xi-quantization-test",
+        "prime-slab-search",
+        "prime-slab-test",
+        "prime-slab-device-test",
+        "prime-slab-verify",
+        "prime-slab-mutation-test",
     ];
 
     [Fact]
