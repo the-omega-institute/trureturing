@@ -152,3 +152,33 @@ This source was absent from the brief's three-paper scope. Verification of the
 actual source is pending; no B-level novelty claim will be made. The user's
 explicit instruction permits local Lean proof after no usable library hit,
 even for published mathematical results, and authorizes B as a delivery target.
+
+## Exact upstream Lean hit: B scope correction
+
+The complete README and mathematical proof were read at immutable revision
+`59c677df3563c4c506dfafcdf45237475140bb86`. The source public definitions
+`generalizedSum`, `u`, `exceptionalPrimes` and the principal theorem bodies
+were inspected. `OddExponentCongruence.u_prime_sub_one_dvd_of_good` permits
+`m : ℤ`; setting `m=-3` gives weight `k^5`, with good-prime condition
+`¬(p-1 : ℤ) ∣ -2 ∨ (p : ℤ) ∣ 1`. Every prime `p≥5` satisfies the first
+disjunct. The integer sum has denominator one, so its reduced numerator
+is precisely A357512. B therefore has an exact third-party Lean hit.
+
+This supersedes only the earlier no-hit assessment: GitHub code search did
+not index this matching source under the searched words. Its absence from those
+results cannot justify local reproof after this discovery. The brief permits
+local proof for published results when no usable Lean hit exists; it also
+explicitly requires direct reuse for exact Lean hits. Spec A17.2 requires
+dependency or transplant, forbids reproof, and requires preservation of license
+terms for transplant. Upstream Lean/mathlib is v4.29.0; this tree is v4.33.0.
+The GitHub repository API reports `license: null`; the exact root tree has
+no LICENSE/NOTICE file, and Proof.lean contains no license header. Compatibility
+compilation is being tested locally without copying upstream code into Git.
+
+| URL | HTTP | Bytes | SHA-256 |
+| --- | --- | --- | --- |
+| https://raw.githubusercontent.com/TheSil/A357513_conjecture/59c677df3563c4c506dfafcdf45237475140bb86/README.md | 200 | 3098 | `3eb4c29dc591396a3046091521212f210d4897026c02d0db80b6e4a64b8b7d4e` |
+| https://raw.githubusercontent.com/TheSil/A357513_conjecture/59c677df3563c4c506dfafcdf45237475140bb86/proof.tex | 200 | 6390 | `be0dc8655f45e4a7bb3d57e8c6d3cfb60c329cc8943c6518ae741fbf5abc3e18` |
+| https://raw.githubusercontent.com/TheSil/A357513_conjecture/59c677df3563c4c506dfafcdf45237475140bb86/Proof.lean | 200 | 51901 | `c375d541a9b14a18d591a0516bc9fb32784985fb75146eef42985cf5e9d4b1d0` |
+| https://raw.githubusercontent.com/TheSil/A357513_conjecture/59c677df3563c4c506dfafcdf45237475140bb86/lean-toolchain | 200 | 24 | `85b71aa934e019c03eac6ec5ed97526956b4dff51b54c5d558fca8a5b34703e6` |
+| https://raw.githubusercontent.com/TheSil/A357513_conjecture/59c677df3563c4c506dfafcdf45237475140bb86/lakefile.lean | 200 | 267 | `f2d179098dcb525a3799fd65bebbfcac45204ed0445c51ab2fd7c1da79f3ce37` |
