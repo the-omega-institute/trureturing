@@ -154,3 +154,11 @@ exact normalization remains on the live proof path.
 Routing returned D5/S1/Recurrence/SquareRows/SquareExponentDyadicSupport.
 Before addition this new formal/Blueprint bucket held 0 files each. The old
 Parity Blueprint bucket held 58 files; no frozen module was moved.
+
+## Source and mirror checkpoint
+
+Library route returned Library/notes/hanna2026a397902.md (26 files before addition);
+Recurrence and Arith Library buckets each held 48 and were not extended.
+The typed Scribe mirror cites this note, describes the integer normalization
+and binary candidate, and derives declaration statements from Lean.
+No theory volume, atom, ingestion or self-coverage was created.
