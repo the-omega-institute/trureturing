@@ -10247,7 +10247,7 @@ v4.3 不修改第 48、49 节的任何字节；它在 v4.2 shared-arena／analys
     H6 的预登记预测已被实验推翻；
 11. sealing scope 始终是 import closure（工程优化规范 v1 §9／§16）；H10 ruling、measured
     `InformationEscape` 11/12 capacity 与 governing parser rule
-    `tools/StrataLint.Engine/Coordinates/Gid.cs:318-321`（`ParseFormalCoordinates`：ordinary formal
+    `tools/StrataLint.Engine/Coordinates/Gid.cs`（`ParseFormalCoordinates`：ordinary formal
     coordinates 有 three or four parts;该上限已于 2026-09-08 放开为 `>= 3`(PR #6426),下述落址结论此后由其自身理由承担）要求 hierarchy／structural modules 位于 GID-compliant
     sibling `InformationEscapeHierarchy/`，counting modules 位于 `InformationEscapeCounting/`；
     后者明确 **SUPERSEDES** 工程优化规范 v1 §6.4 的 nested
