@@ -241,3 +241,19 @@ reports for A395842 and H_dyadic_gap. At
 6af98a19b1fd4f76f1bc1bf92b61593a0c167a09, only the supplied triage note matched;
 there was no D5 implementation. `git merge-tree --write-tree HEAD origin/dev`
 returned EXIT=0. The search is bounded to these repository paths and that SHA.
+
+### Direct frozen prerequisite identities
+
+For each of generating_equation, generating_unique and hanna_conjecture,
+the sole public frozen dependency is
+`D5/S1/Recurrence/Invariants/CompositionalIterateCongruence.iterate`,
+statement_id `sha256:2c3e59653afd73b2d73f987e14ea5655eab5fcc4558f85ac3558250fea2050b5`.
+Its module statement_id is
+`sha256:4063c4732963765b6b16b5dda51775b4d179cfc3a203c91ed15e3ebffb0467e7`,
+from accepted event
+`sha256:8961a45c8c0aaed51d2f3b7ba65a395c6063c6e28c25667729449c3a310b15a9`.
+The generated recursion equation iterate.eq_2 is also reachable; it is not an
+independent declaration in that event's declaration_statement_ids.
+Pinned Mathlib constants are excluded from the frozen-prerequisite column by
+CLAUDE 3.2 and are identified in the search and proof descriptions.
+Machine-readable extraction: frozen-dependency.json.
