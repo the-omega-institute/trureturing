@@ -4,7 +4,7 @@
    mirror-E: none(waiver:general-analytic-equality-criterion)
    anchors: [mathlib/module/Mathlib.Analysis.Convex.Jensen]
    utility: none
-   digest: Spectral readout preserves Shannon entropy exactly when the resulting matrix is diagonal. -/
+   digest: Spectral readout preserves Shannon entropy iff the readout matrix is diagonal. -/
 
 import D5.S3.Entropy.MaxEntropy
 import D5.S3.Weil.ZetaLinear.VonNeumann
@@ -52,7 +52,8 @@ private theorem entropy_eq_iff_support (M : Matrix n n ℝ)
 private theorem readout_diagonal (U : Matrix n n ℂ) (x : n → ℝ) (i : n) :
     (U * Matrix.diagonal (fun j => (x j : ℂ)) * star U) i i =
       (((RHLinalg.normSqMatrix U *ᵥ x) i : ℝ) : ℂ) := by
-  simp only [Matrix.mul_apply, Matrix.mul_diagonal, Matrix.star_apply,
+  rw [Matrix.mul_apply]
+  simp only [Matrix.mul_diagonal, Matrix.star_apply,
     RHLinalg.normSqMatrix, Matrix.of_apply, Matrix.mulVec, dotProduct,
     Complex.ofReal_sum, Complex.ofReal_mul]
   apply Finset.sum_congr rfl
@@ -60,7 +61,7 @@ private theorem readout_diagonal (U : Matrix n n ℂ) (x : n → ℝ) (i : n) :
   calc
     U i j * (x j : ℂ) * star (U i j) =
         (U i j * star (U i j)) * (x j : ℂ) := by ring
-    _ = _ := by rw [Complex.mul_conj, Complex.normSq_eq_norm_sq]
+    _ = _ := by simp [Complex.mul_conj']
 
 /-- For any nonnegative spectrum and unitary change of basis, the entropy of the diagonal
 readout equals the spectral Shannon entropy exactly when the conjugated matrix is diagonal.
