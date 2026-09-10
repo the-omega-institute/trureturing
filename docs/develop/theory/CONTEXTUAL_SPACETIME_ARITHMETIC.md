@@ -3053,14 +3053,19 @@ def pr7_shared_input(t, p, drop=None):
     for i, (point, sign, source, witness_time) in enumerate(pr7_shared_pulled):
         if i != drop:
             events[("d", i)] = (witness_time, point, sign, source)
-    balance = 1 + sum(value[2] for value in events.values())
+    balance = sum(value[2] for value in events.values())
     events.update({("n", i): (0, h, -1, pr3_l0) for i in range(balance)})
     whole = frozenset(events)
     events.update({("low",): (-20, origin, 1, pr3_l0),
                    ("high",): (5, origin, 1, pr3_l0)})
     edges = frozenset((('e', p), ('d', i))
                       for i in range(len(pr7_shared_pulled)) if i != drop)
-    return valid(Rich(events, edges, whole, frozenset({("e", p)})))
+    x = valid(Rich(events, edges, whole, frozenset({("e", p)})))
+    assert charge(x, x.w) == 0, ("pr7_shared_input_balance", charge(x, x.w))
+    assert x.a == frozenset({("e", p)}) and x.e[("e", p)][2] == 1, "pr7_shared_input_selected_positive"
+    assert ({("low",), ("high",)} <= x.e.keys() - x.w
+            and theta(x)[1:3] == (-20, 5)), "pr7_shared_input_archive_endpoints"
+    return x
 
 pr7_shared_context_reads = []
 pr7_shared_summary_reads = []
