@@ -1,0 +1,27 @@
+**定理 54（固定加数的符号、漂移与块平衡）。** 对每个正整数 \(a\)，有 \(0<\theta_a<1\)、\(b_a\in\{0,1\}\)，且
+\[
+d_a(k)=b_a-\mathbf1_{[1-\theta_a,1)}(x_a(k)),\qquad
+x_a(k+1)=\{x_a(k)+\theta_a\}.
+\]
+值 \(b_a\) 与 \(b_a-1\) 的频率分别为 \(1-\theta_a\) 与 \(\theta_a\)，均为正。若 \(b_a=1\)，则 \(d_a\in\{0,1\}\)、\(Q_a\) 非减且非负；若 \(b_a=0\)，则 \(d_a\in\{-1,0\}\)、\(Q_a\) 非增且非正。两种情形分别等价于 \(\theta_a>1-\alpha\) 与 \(\theta_a<1-\alpha\)。此外
+\[
+\lim_{k\to\infty}\frac{Q_a(k)}k=\delta_a=b_a-\theta_a\ne0,
+\]
+对每个 \(s\ge0,h\ge1\)，
+\[
+\sum_{j=s}^{s+h-1}d_a(j)=h\delta_a+x_a(s+h)-x_a(s),\qquad
+\left|\sum_{j=s}^{s+h-1}d_a(j)-h\delta_a\right|<1.
+\]
+给定长度 \(h\) 的全部块和只可能为 \(\lfloor h\delta_a\rfloor\)、\(\lceil h\delta_a\rceil\) 两个相邻整数。序列 \(d_a\) 非最终周期。
+
+**证明。** 定理 51 给出 \(b_a=\lfloor\theta_a+\alpha\rfloor\)。等号 \(\theta_a=1-\alpha\) 会使 \((a+1)\alpha\) 为整数，故不成立。对 \(y=(ka+1)\alpha\) 分开整数与小数部分，有
+\[
+\lfloor y+a\alpha\rfloor-\lfloor y\rfloor
+=\lfloor a\alpha\rfloor+\mathbf1_{[1-\theta_a,1)}(\{y\}),
+\]
+代入 \(\kappa\) 得符号公式。\(x_a(k)=\{\alpha+ka\alpha\}\) 是无理旋转，定理 53 给出两个区间的频率。由 \(Q_a(0)=0\) 及其相邻差的符号得单调性与符号。定理 52 给出漂移和望远镜块和。更精确地，块和为
+\[
+hf(a)-\lfloor ha\alpha+x_a(s)\rfloor.
+\]
+后一个取整只有 \(\lfloor ha\alpha\rfloor\) 与 \(\lfloor ha\alpha\rfloor+1\) 两种可能，用整数 \(hf(a)\) 减去该取整后，即得所述相邻二值。最终周期的整数序列具有有理平均，而 \(\delta_a=f(a)-a\alpha\) 无理；其平均又由望远镜公式等于 \(\delta_a\)，矛盾。全部符号结论的自变量为固定加数的轨道 \((ka,a)\)。证毕。
+

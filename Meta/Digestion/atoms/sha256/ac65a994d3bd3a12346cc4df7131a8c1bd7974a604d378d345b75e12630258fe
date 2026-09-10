@@ -1,0 +1,24 @@
+**定理 72（逆图、语义成员与遗传有限性）。** 令
+\[
+\mathfrak V_Z=\{c:\exists x\ \operatorname{Enc}(x)=c\}.
+\]
+\(\operatorname{Enc}\) 是到此类的双射。其逆记为 \(\operatorname{Dec}\)，只在 \(\mathfrak V_Z\) 上定义。对有效码 \(c,d\) 定义
+\[
+d\in_Zc\iff\operatorname{Dec}(d)\in\operatorname{Dec}(c),\qquad
+\operatorname{El}(c)=\{d\in\mathfrak V_Z:d\in_Zc\}.
+\]
+则 \(\operatorname{El}(c)\) 总为集合，并有
+\[
+\begin{gathered}
+\operatorname{Dec}(\operatorname{Enc}(x))=x,\qquad
+\operatorname{Enc}(\operatorname{Dec}(c))=c,\\
+\operatorname{Enc}(x)=\operatorname{Enc}(y)\iff x=y,
+\qquad \operatorname{Enc}(x)\in_Z\operatorname{Enc}(y)\iff x\in y,\\
+\operatorname{El}(\operatorname{NatZ}(n))=\{\operatorname{NatZ}(m):m<n\},\\
+\operatorname{El}(\langle1,B\rangle)=B\quad(\langle1,B\rangle\in\mathfrak V_Z),
+\qquad \operatorname{El}(\operatorname{Enc}(x))=\operatorname{Enc}[x],\\
+\operatorname{Enc}(x)\in HF\iff x\in HF.
+\end{gathered}
+\]
+特别地，\(\operatorname{El}(c)=\operatorname{El}(d)\) 当且仅当 \(c=d\)。
+

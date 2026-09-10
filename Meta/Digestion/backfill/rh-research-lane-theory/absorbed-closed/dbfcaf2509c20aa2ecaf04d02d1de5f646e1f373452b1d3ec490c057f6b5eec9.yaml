@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:dbfcaf2509c20aa2ecaf04d02d1de5f646e1f373452b1d3ec490c057f6b5eec9
+  normalized_sha256: sha256:dbfcaf2509c20aa2ecaf04d02d1de5f646e1f373452b1d3ec490c057f6b5eec9
+cas_ref: sha256:dbfcaf2509c20aa2ecaf04d02d1de5f646e1f373452b1d3ec490c057f6b5eec9
+coverage_gids:
+  - gid: D5/S3/Observer/Hilbert/NymanUnitIntervalMellin.nyman_unitInterval_mellin_and_zero_obstruction
+    target_statement_id: sha256:1b57542ab33c5f0d055bfe2c66234f73be145157ee02e498ca363a70abb19977
+receipts:
+  unresolved_subitems: []

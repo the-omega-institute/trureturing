@@ -1,0 +1,15 @@
+**定义 50（幂归一化电荷与共同相位）。** 令 \(\alpha=(\sqrt5-1)/2=\phi^{-1}\)，故 \(\alpha^2=1-\alpha\)，\(\alpha\) 无理且 \(1/2<\alpha<1\)。记 \(\{y\}=y-\lfloor y\rfloor\)，圆周 \(\mathbb T=\mathbb R/\mathbb Z\) 以 \([0,1)\) 表示，长度测度 \(\mu\) 满足 \(\mu(\mathbb T)=1\)。沿用定义 22 的 \(f,\kappa,C\)，对正整数 \(a\) 和 \(k\in\mathbb N\) 置
+\[
+\delta_a=f(a)-a\alpha,\quad Q_a(k)=kf(a)-f(ka),\quad
+d_a(k)=\kappa(ka,a),\quad x_a(k)=\{(ka+1)\alpha\},
+\]
+\[
+\theta_a=\{a\alpha\},\qquad b_a=f(a)-\lfloor a\alpha\rfloor.
+\]
+对零指数约定 \(Q_0(k)=d_0(k)=\delta_0=0\)、\(x_0(k)=\alpha\)。对 \(n>1\) 记 \(P(n)=\{p:p\mid n\}\)、\(a_p=v_p(n)>0\)，置
+\[
+\boldsymbol Q_n(k)=(Q_{a_p}(k))_{p\in P(n)},\qquad
+\boldsymbol c_n(k)=C(n^k,n)|_{P(n)}.
+\]
+槽外电荷取零；\(n=1\) 时向量为空。序列条件的频率指满足该条件的 \(0\le k<N\) 之比例在 \(N\to\infty\) 时的极限；沿 \(k=r+mt\) 的频率则对 \(0\le t<N\) 取同样极限。
+

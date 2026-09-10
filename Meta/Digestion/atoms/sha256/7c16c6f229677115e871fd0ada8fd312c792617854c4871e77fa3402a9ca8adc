@@ -1,0 +1,10 @@
+**证明。** 对非零整数 \(l\)，令 \(z=e^{2\pi i l\omega}\ne1\)，则
+\[
+\left|\frac1N\sum_{k=0}^{N-1}e^{2\pi i l(\rho+k\omega)}\right|
+=\left|e^{2\pi i l\rho}\frac{1-z^N}{N(1-z)}\right|
+\le\frac2{N|1-z|}\longrightarrow0.
+\]
+常数特征的平均恒为其积分，所以三角多项式满足结论。连续周期函数可由三角多项式一致逼近，平均算子和积分对一致范数均为有界算子，故连续函数满足结论。对有限区间并，在各端点的任意小邻域内用连续线性过渡构造指示函数的连续上、下界，其积分差可任意小；夹逼给出区间结论。一般黎曼可积实函数用达布上、下阶梯函数夹逼，积分差任意小，故得到结论；复函数分实、虚部处理。正长度开弧若仅访问有限次，其频率为零，矛盾。
+
+这沿用经典 [Weyl 判据](https://mathworld.wolfram.com/WeylsCriterion.html)的几何特征和证明；仓内[旋转特征平均](../../../D5/S1/Phase/CharacterAverage.lean)与[连续观察的圆周平均](../../../D5/S1/Phase/ContinuousAverage.lean)分别给出前两步的相同数学结论。证毕。
+
