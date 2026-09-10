@@ -24,7 +24,7 @@ $$\forall n \in FiniteNonemptyType, H \in \operatorname{HermitianMatrix}\left(n\
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/GibbsVariationalIdentity.gibbs_variational_identity` (`✓ std3`). ∎
 
-*Citation.* John Goold, Marcus Huber, Arnau Riera, Lidia del Rio, Paul Skrzypczyk (2016). *The role of quantum information in thermodynamics — a topical review*. DOI: [10.1088/1751-8113/49/14/143001](https://doi.org/10.1088/1751-8113/49/14/143001).
+*Citation.* John Goold, Marcus Huber, Arnau Riera, Lídia del Rio, Paul Skrzypczyk (2016). *The role of quantum information in thermodynamics — a topical review*. DOI: [10.1088/1751-8113/49/14/143001](https://doi.org/10.1088/1751-8113/49/14/143001).
 
 *Commentary.*
 
