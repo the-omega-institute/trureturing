@@ -103,3 +103,20 @@ uses frozen binary_catalan. The two shifted Catalan supports cannot overlap
 above degree three: both corresponding powers would be divisible by four
 while differing by two. This explains the source's strict n>3 cutoff.
 Full project, report, Scribe and deposit gates remain to be run.
+
+## Full build and placement
+
+`make lean` exited 0 in 237.854 seconds on this macOS ARM worktree, with
+12958 jobs. The build's LEAN_CACHE receipt is status=present, method=none,
+stamp_miss=null, project_olean_state=warm, mathlib_olean_state=warm. The prior
+ensure receipt records clonefile seeding; no cold bare Lake command was run.
+The log is runner-owned `make-lean.log`; its final sentinel is
+`MAKE_LEAN_EXIT=0 BUILD_SECONDS=237.854`.
+
+The route command confirms the canonical address
+D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport. New LinearRows
+subdirectories started empty; the existing Parity mirror had 58 recursive
+files and was not selected. Library/notes had 27 direct files before this
+note. The source and mirror fit the registered S1 Recurrence domain. The
+manifest's artifact is `lean` (an initial empty-artifact invocation was rejected
+without mutation, then corrected). The seven-line header follows spec A5.1.

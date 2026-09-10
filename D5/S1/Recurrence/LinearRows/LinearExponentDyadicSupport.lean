@@ -63,7 +63,8 @@ private theorem derivative_row (F : PowerSeries R) (n : ℕ) (hn : 0 < n) :
         F^((n+1)) * geom ((n+1))^2) := by ring
   rw [hfact, coeff_C_mul] at h
   have hncast : ((n-1 : ℕ) : R) + 1 = n := by
-    exact (by simpa only [Nat.cast_add, Nat.cast_one] using congrArg (fun k : ℕ => (k : R)) (Nat.sub_add_cancel hn))
+    simpa only [Nat.cast_add, Nat.cast_one] using
+      congrArg (fun k : ℕ => (k : R)) (Nat.sub_add_cancel hn)
   simpa only [row, derivRow, hncast, mul_comm] using h
 
 
@@ -225,7 +226,8 @@ private theorem solution_fixed : solution (R := R) = advance solution := by
     (advance_agree solution_zero (approximation_zero (n+1))
       (solution_agree (n+1)) n (by omega)).symm
 
-private theorem solution_normalized (n : ℕ) (hn : 0 < n) : normalized (solution (R := R)) n = 0 := by
+private theorem solution_normalized (n : ℕ) (hn : 0 < n) :
+    normalized (solution (R := R)) n = 0 := by
   have h := congrArg (coeff n) (solution_fixed (R := R))
   simp only [advance, coeff_mk, if_neg (by omega : n ≠ 0)] at h
   linear_combination h
@@ -395,7 +397,6 @@ private theorem candidate_odd (F E O : PowerSeries F2)
       _ = (E*O)^2+(E*O)^2+X*(O^2)^2 := by ring
       _ = X*(O^2)^2 := by rw [CharTwo.add_self_eq_zero, zero_add]
   have htrow : derivRow F (2*m+1) = 0 := by
-    have hpos : 1 ≤ (m+1) := by omega
     have hp1 : (2*m+1+1)-1 = ((m+1)-1)*2+1 := by omega
     have hp2 : (2*m+1+1) = ((m+1)-1)*2+2 := by omega
     rw [derivRow, show 2*m+1-1=2*m by omega, hg, one_pow, mul_one, mul_one]
