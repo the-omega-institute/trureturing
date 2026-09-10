@@ -70,14 +70,8 @@ internal sealed class ChapotonPropositionFiveTwoRefutationDocument : IScribeDocu
                         + "printed text and not a universal theorem proved here. No verdict "
                         + "is given on Conjecture 5.4. Neither first discovery of the values "
                         + "nor first identification of this Q' to P' misprint is claimed. "
-                        + "Mathlib, the imported definitions and normalization suffice; "
-                        + "no frozen numerical theorem supplies the obstruction. Admission "
-                        + "basis is escape-witness, section 3.2 form (2), the result produced "
-                        + "by its live numerical computation. Refutes supplies the separate "
-                        + "use condition, not a fourth basis. All finite equalities are "
-                        + "proof-local. FromRepo records this repository's formal derivation "
-                        + "because no LibraryNoteRef for this paper exists; it asserts no "
-                        + "literature novelty, and no L-plane note is introduced."))),
+                        + "The formal calculation uses exact rational polynomial arithmetic. "
+                        + "All finite equalities are local to the proof."))),
                 DescribeRole.Theorem)),
         [],
         anchors:
