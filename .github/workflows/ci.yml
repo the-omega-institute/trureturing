@@ -172,7 +172,7 @@ jobs:
             candidate/tools/**/obj
           key: stratalint-judge-binaries-v2-${{ runner.os }}-${{ steps.judge-address.outputs.runtime }}-${{ steps.judge-address.outputs.address }}
       - name: Signal PR head branch grammar
-        if: github.event_name == 'pull_request_target' && github.event.pull_request.base.ref == 'dev'
+        if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
         shell: bash
         env:
           HEAD_REF: ${{ github.event.pull_request.head.ref }}
