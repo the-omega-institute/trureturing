@@ -267,3 +267,20 @@ and both imported iterate constants are extracted in canonical-declarations.json
 `make emit`: EXIT=0, 59.361 seconds. One new Blueprint markdown document
 was emitted from the .scribe.cs source, with all five public declarations
 linked and marked std3. The generated markdown was read in full.
+
+The required local `scribe-content-checks.sh` command against exact base
+6af98a19b1fd4f76f1bc1bf92b61593a0c167a09 passed: EXIT=0, 24.601 seconds.
+It ran describe-report --check and real KaTeX markdown-check; the latter reports
+`judged=1 formula(s)=5 red=0`. Because this path set does not automatically trigger
+projections --check in the script, that check was run explicitly with the same
+canonical report and passed EXIT=0 in 10.821 seconds. All three subchecks were
+therefore actually executed before PR creation.
+
+Describe records the three theorem statements as OPEN projection with reason
+`missing:<GID>` in the pinned Golden/Projection fixtures. This is a presentation
+gap, not a Lean proof gap; the definitions are likewise authored presentations.
+StatementProjectionFixtureLoader.Assess and StatementSource.Validate were read
+to verify the rule: the current projector judges missing fixtures unprojectable,
+and FromAuthor is accepted in this case. No claim is made that the AST would be
+unsupported if a new fixture were added. Existing OBSERVE readings for offline
+DOI lookup and formula-like prose are not RED outcomes; no validation was disabled.
