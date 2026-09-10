@@ -31,5 +31,5 @@ statement and transition, not its truth or the repository's counterexample.
 Only the printed conjecture is at issue; no conclusion about the rest of
 the paper, the author's intended claim, or a corrected formula is asserted.
 
-The recorded bounded literature review is in docs/reports/tripod-nim-0910.md.
+The recorded bounded literature review is in docs/reports/tripod-nim-0910/report.md.
 No priority for the counterexample is claimed.

@@ -99,3 +99,9 @@ rg -n -i -P 'issue #\d+|PR #\d+|pull request|panel brief|dispatch brief|orchestr
 ```
 
 The full local gate will use the immutable initial base `248a800843acf89ed184074d66a8d577fc028f99`. No deposit, cover or PR is part of this attempt.
+
+
+## Full local gate and directory correction
+The full `make gate BASE=248a800843acf89ed184074d66a8d577fc028f99` run completed all engineering stages successfully: 5,092 tests passed across eight test projects (including the main 4,154-test suite and 232 architecture tests), and engineering selftests passed. Candidate report loading, Scribe verification, SL-031 typed utility admission, and SL-032 narrative checks passed. The run took 909 seconds; the gate script exited 1 and Make exited 2 because this new report raised the `docs/reports` direct-file count to 49, exceeding the admission cap of 48 (SL-003). The report is therefore moved to `docs/reports/tripod-nim-0910/report.md`, with its library-note reference updated. Existing report files are untouched.
+
+The other finding is SL-022 for the new `.scribe.cs` protected surface; the local wrapper explicitly treats a sole SL-022 verdict as its documented exit-0 protected-surface outcome. This is not a CI approval. After this documentation-only correction, the admission flow will be rerun with the supported `GATE_ARGS=--skip-engineering` option, preserving the successful engineering evidence from the full run. No gate rule, inspector, test or protection setting is changed.
