@@ -33,3 +33,8 @@ the paper, the author's intended claim, or a corrected formula is asserted.
 
 The recorded bounded literature review is in docs/reports/tripod-nim-0910/report.md.
 No priority for the counterexample is claimed.
+
+## Verified locator
+
+- DOI: https://doi.org/10.48550/arXiv.2401.07943
+- Preprint: https://arxiv.org/abs/2401.07943
