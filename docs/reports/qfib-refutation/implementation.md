@@ -183,3 +183,28 @@ normalized `(i+1)-3` to `i-2`, so the supplied rewrite did not match. Supplying
 `family_coeff` directly applies `Polynomial.coeff_one_add_X_pow` and
 `Polynomial.coeff_mul_X_pow'`. The new `six_unimodal` is private and establishes
 all natural-index inequalities, not merely a truncated coefficient list.
+
+## Kernel and semantic controls
+
+Warm file gate `lake env lean D5/S0/Certificates/Polynomials/QProductNecessityRefutation.lean`
+EXIT=0. Both claim and result have only propext, Classical.choice, Quot.sound.
+The built-in Lean LSP was exercised through `lake env lean --server`, opening
+the actual source: zero diagnostics, and hover at zero-based line 88, column 10
+returns `QProductNecessityRefutation.result : ¬claim`. The first protocol probe
+mistook a server inlay-refresh request for a hover response; it was discarded,
+then rerun matching a response with no method and the correct client request ID.
+
+The attempt-local `controls.lean` imports the real module and passed EXIT=0.
+It proves non-unimodality for every k=1..5 by an actual strict fall followed by
+a strict rise (indices (1,2), (1,3), (2,3), (2,4), (3,4), respectively).
+It proves unimodality for k=6,7,9, including each infinite zero tail, and checks
+all six coefficient lists in the brief exactly. These probes are not additional
+public deposited statements. This proves the chosen witness is minimal **within
+the specified all-twos, r=3, b=2 family**, not among all parameter tuples.
+
+Pre-PR duplicate check after fetching dev at
+`7fd01f41212a2b67264882e6d42802d222fe019b`:
+`git grep -i -P '2605\.12822|qfibonomial|QProductNecessity|q.?product.*unimodal'
+origin/dev -- D5 Problems Library` had no matches (EXIT=1).
+`git merge-tree --write-tree HEAD origin/dev` EXIT=0, tree
+`ac105293118980ca5c0803169f28e699b6e25e4b`. No existing source was moved or retired.
