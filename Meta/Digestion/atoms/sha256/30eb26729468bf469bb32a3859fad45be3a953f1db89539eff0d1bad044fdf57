@@ -1,0 +1,80 @@
+### Exact global separation of the affine product
+
+For a parent pair (a_p,b_p) and its three child pairs, write
+
+\[
+ C=\sum_db_d-\gamma b_p,
+ \qquad s_0=\gamma(b_p-a_p).
+\]
+
+Multiplication by the positive denominator gives the exact identity
+
+\[
+\begin{split}
+ &(1+\lambda\prod_dx_d)
+   \left[\gamma\Psi_p(y)-(1-y)\sum_d\Psi_d(x_d)\right]\\
+ &\hspace{12mm}=s_0-\lambda(\prod_dx_d)(C-\sum_da_dx_d).
+\end{split}
+\tag{15.2}
+\]
+
+Each row has one of two exact certificates. When C<=L*sum(a_d), the product's
+residual is nonpositive throughout the box, so it suffices that s_0>=eta.
+Otherwise the certificate supplies t>0 and reference values r_d in [L,1] with
+
+\[
+ C=t+\sum_da_dr_d,
+\]
+
+and, for every direction, at least one of
+
+\[
+ r_d=L,\ t\le a_dr_d;
+ \qquad r_d=1,\ a_dr_d\le t;
+ \qquad a_dr_d=t.
+\]
+
+These finite rational conditions imply the global inequality
+
+\[
+ (\prod_dx_d)(C-\sum_da_dx_d)\le t\prod_dr_d.
+\tag{15.3}
+\]
+
+Here is a proof that does not trust numerical global optimization. If the
+residual S=C-sum(a_d*x_d) is nonpositive, (15.3) is immediate. Otherwise consider
+the four nonnegative numbers S/t and x_d/r_d. Exact balance gives
+
+\[
+ S/t+\sum_dx_d/r_d
+ =4+\sum_d(x_d-r_d)(1/r_d-a_d/t)\le4.
+\]
+
+Each summand is nonpositive by its clamping condition. Four-term AM-GM bounds
+the product of the four numbers by one. Multiplication by t*prod(r_d) proves
+(15.3). Mathlib's existing AM-GM theorem is reused in AffineProductCertificate;
+no new abstract AM-GM result is claimed.
+
+The final finite check is
+
+\[
+ s_0-\Lambda t\prod_dr_d\ge\eta.
+\]
+
+It implies (15.2)>=eta for every smaller nonnegative lambda as well. The
+reference point and level are reconstructed from three base-three pattern
+digits using the balance equation. All divisions, interval bounds and sign
+conditions are then checked exactly. Among the 881 rows, 704 use a clamped
+certificate and 177 use the nonpositive-residual case.
+
+The minimum exact certified row margin is
+
+\[
+ \frac{15933066155943166674084141574726553949}
+ {4676403243490598502400000000000000000000}
+ >\frac3{1000}.
+\]
+
+Its decimal rendering is approximately 0.003407119815452501. The rational
+fraction, rather than this decimal, is the recorded evidence.
+

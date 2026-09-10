@@ -1,0 +1,11 @@
+### Complex absent-child handling is a substantive obligation
+
+On a positive real activity, identical numerator and denominator are automatically
+positive. On a complex activity, an absent marked vertex only gives Z/Z. Without
+Z!=0 this need not equal one under total field division, and under ordinary
+partial division it is undefined. The new complex_child_absent and
+complex_root_child_absent lemmas retain precisely the smaller-domain nonzero
+premises. Their callers discharge those premises by cardinality induction.
+A singleton partition at activity -1 supplies a regression detecting omission
+of this guard; that activity is outside the claimed tube.
+
