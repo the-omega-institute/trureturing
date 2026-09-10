@@ -39,6 +39,8 @@
 
 ## 构建记录
 
+第一批实际 Lean 尝试：热树 `lake env lean /tmp/A396808Bridge.lean`。第一次整数约化的 `exact_mod_cast` 未关闭环同态 map_mul goal，已改用 `simpa using congrArg ...`；第二次 EXIT=0，Bridge.lean 与 bridge.log 留档。已证任意交换环的严格前缀分解、无除法递推和归纳唯一性，以及对公开 source_equation 的 F₃ 约化与 a₀=a₁=1。所有新增 helper 为 private；axiom 输出仅标准三公理。它们是目标的证明脚手架，尚未冻结、尚未解决模 3 猜想。
+
 `make lean-cache-ensure` EXIT=0：status=seeded，method=clonefile，donor=/Users/chronoai/trureturing，clonefile_attempts=1，stamp_miss=null，mathlib_olean_state=warm，project_olean_state=warm，mathlib_missing_olean_files=0，pin_sha256=sha256:6c4c682ffba051b5744fe7a75ccc99d7f3b20227b3b026f392f3315be0adaa4e。
 
 尚未运行 make lean，退出码及耗时未产生。后续全门按 make lean → make lean-report → make emit → 无 atom deposit 路径执行，PR 前另跑 scribe-content-checks。
