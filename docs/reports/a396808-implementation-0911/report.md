@@ -21,7 +21,7 @@
 - 0…400：S 方程零差异，R 对递推零差异。
 - 已打开 https://oeis.org/A396808/internal，%C 逐字仍标两条模 3 命题为 Conjecture。
 
-## 检索收据（持续补充）
+## 检索收据
 
 ① 本仓 D5：rg A396808/a396808/coeff_pow_eq_strict_trunc_add/source_unique；精确序列仅命中 ArtinSchreierTracePowersOfTwo。完整读其公开面：prefixPolynomial_eq_sum、source_equation、normalized_solution_unique 可复用；F₂ 定理不能参数实例化成 F₃。严格前缀与唯一性 helper 是 private，按 brief 与第 3.1 条④本地证明。
 
@@ -33,26 +33,46 @@
 
 反演方向校正：记 A 为 A396808、B 为 A396838。A396808 的公式 (4) 声称 A=B(xA)，但二次项给 5≠3；A396838 的公式 (2) 正确方向为 B=A(xB)、A=B(x/A)。这个页面冲突不涉及本题源方程或已核验的数值读数。后续不以任何未经证明的反演联系承重。A396839 的自卷积链接亦未作为形式定理使用。
 
-## 候选源方程的具体推导计划
+## 已完成的无限证明
 
-原预登记见证仍为 R 的约化源方程；以下细化其构造（尚未证明）：S=1+xS³ 可推出 R=S⁻² 与 R³=R²+xR+x²。取 t(y)=Σ y^(3^k)，t³=t−y，则 R(y²)=1+t²+t⁴。另两根为 (t²+t)²、(t²−t)²，常数项为零且阶至少 2。三根幂和满足三阶多项式递推，次数界为 floor(2m/3)。在 floor(2m/3)<n<m 的带内据此消去 R^m 的系数，再处理 n=2,3,4 的边界。这是原见证的活路径计划，不假定候选源方程。
+正式模块 `D5/S3/Arith/TernaryTraceSupport.lean` 只公开统一定理 `a396808_mod_three`，对全部 n>1 同时给出两个支持及余下残基零。所有辅助声明均为 private。未修改被冻结的基模块。
+
+1. 对任意交换环建立严格前缀系数分解，以恒等式 (n+1)²−n(n+2)=1 得无除法递推，强归纳得唯一性。将公开 `source_equation` 沿整数到 ZMod 3 的环同态约化。
+2. 定义 t(y)=Σ y^(3^r)，由 Frobenius 证明 t³=t−y。证明两项三幂和的排序指标唯一，进而计算 t² 的全部系数：对角为 1，严格异指标为 2，其他为 0。
+3. 定义 U=1+y²−t⁶、R(n)=[y^(2n)]U，证明 U=1+t²+t⁴ 及 U=R(y²)。这是给定候选的偶变量表达；数学上 t(y)=yS(y²)。
+4. U 与 (t²+t)²、(t²−t)² 均满足 z³=z²+y²z+y⁴。三根的 m 次幂和对应多项式满足 T₀=0、T₁=1、T₂=1+2X 及 Tₘ₊₃=Tₘ₊₂+XTₘ₊₁+X²Tₘ，次数不超过 floor(2m/3)。另两根阶至少 2，推出 floor(2m/3)<n<m 时 [x^n]R^m=0。
+5. 消失带加上 n=2,3,4 的私有边界推导，证明 `R_source`。由源方程唯一性得到整数序列的模三约化等于 R，再由配对计数结算统一分类。
+6. `supports_disjoint` 由排序指标唯一性排除一个对角配对和一个严格递增配对具有相同幂和。最终定理在配对支持为真的分支直接调用它排除三幂支持，故不交结论在活推导路径上。
 
 ## 构建记录
 
-第二批 Lean：Sparse.lean 证明 t³=t−X、排序后的两项三幂和唯一、平方系数对角为 1/异指标为 2、奇指标为零；EXIT=0，标准三公理。第三批 Trace.lean 证明三根多项式恒等式、三阶迹递推、次数界，以及 `2*m/3<n<m` 时 `[y^(2n)](1+t²+t⁴)^m=0`；EXIT=0，标准三公理。Trace 的假设是 t 的已证 Artin–Schreier 等式与常数项零，不含源方程或支持猜想。两个实验模块仍仅属未冻结的证明尝试；最终结论尚待拼接与全门。
+各批证明历史均已 commit、push：严格前缀桥 `ee184f7e60`；Artin–Schreier 与配对唯一性 `853919f53d`；系数计数 `7e91e2660b`；迹次数界 `384c07c4e9`；完整定理 `29b313119e`。对应 bridge.log、sparse.log、trace.log、complete.log 保留。草稿 Lean 文件已合并到正式模块，旧快照可由提交历史取得。
 
-第一批实际 Lean 尝试：热树 `lake env lean /tmp/A396808Bridge.lean`。第一次整数约化的 `exact_mod_cast` 未关闭环同态 map_mul goal，已改用 `simpa using congrArg ...`；第二次 EXIT=0，Bridge.lean 与 bridge.log 留档。已证任意交换环的严格前缀分解、无除法递推和归纳唯一性，以及对公开 source_equation 的 F₃ 约化与 a₀=a₁=1。所有新增 helper 为 private；axiom 输出仅标准三公理。它们是目标的证明脚手架，尚未冻结、尚未解决模 3 猜想。
+第一次热树 Lean 尝试中的整数约化 `exact_mod_cast` 未关闭环同态 map_mul goal，已改用 `simpa using congrArg ...` 后通过。完整定理与 `R_source` 的 `#print axioms` 均只返回 `[propext, Classical.choice, Quot.sound]`。不存在 sorry、自设 axiom 或 native_decide。
 
 `make lean-cache-ensure` EXIT=0：status=seeded，method=clonefile，donor=/Users/chronoai/trureturing，clonefile_attempts=1，stamp_miss=null，mathlib_olean_state=warm，project_olean_state=warm，mathlib_missing_olean_files=0，pin_sha256=sha256:6c4c682ffba051b5744fe7a75ccc99d7f3b20227b3b026f392f3315be0adaa4e。
 
-尚未运行 make lean，退出码及耗时未产生。后续全门按 make lean → make lean-report → make emit → 无 atom deposit 路径执行，PR 前另跑 scribe-content-checks。
+正式 `make lean` EXIT=0，耗时 220.484420334 秒。runner attempt 目录的 make-lean.log 与 make-lean-receipt.json 保留原始输出和计时。make lean-report、make emit、scribe-content-checks、无 atom deposit 及 PR 尚在执行，完成后补录。
 
 ## 逐公开定理审计
 
-当前尚无新增公开定理。最终需逐条记录 proof_shape、直接冻结依赖的 GID 与 statement_id、escape_witness、admission_basis；content 的见证逐项核对依赖闭包、非投影、非定义等价、活路径。
+唯一新增公开定理：`D5/S3/Arith/TernaryTraceSupport.a396808_mod_three`。
+
+- proof_shape: content。
+- admission_basis: escape-witness；无额外数学假设，只有题定自然数索引与 n>1。
+- escape_witness: 本模块私有 `R_source`，即构造的 R 对所有 n>1 满足模三约化源方程。它已由三根迹次数界证明，不是前提。
+- 直接冻结依赖 GID: `D5/S3/Arith/ArtinSchreierTracePowersOfTwo.source_equation`，以及该模块的序列定义 `a`。声明级 statement_id 等 canonical report 生成后补录。
+- utility: none；无界符号分类，非主要计算性结论；其他 utility 字段 not-applicable(kind=none)。
+
+第 3.2 条四项逐项核对：
+
+1. 依赖闭包内：最终定理经 `reduced_eq_R` 调用 `R_source`，后者及其证明项均在编译后的依赖闭包。
+2. 非投影可得：冻结源方程只刻画整数序列；迹恒等式与带内系数消失证明了新构造 R 满足方程，并非从冻结结论取投影。
+3. 非定义等价：R 的系数方程涉及依 n 变化的幂及对角系数，与最终指标支持公式不定义等价；经迹递推和唯一性完成数学联系。
+4. 活推导路径：`R_source` 是源方程唯一性应用必需的输入；移去它就不能推出约化 a=R，最终分类无法得到。`supports_disjoint` 同样在最终条件分支被实际使用。
 
 冻结基模块状态片：sha256:49b268a8489008c167a9fb5758d2fd96efc81d1ec8a1705f01db66d3e4061241（模块身份，不冒充 source_equation 声明身份）。
 
 ## 未主张
 
-尚未证明模 3 分类或候选源方程；数值只作探针。未主张全球无文献证明。除明确写为亲自打开者，brief 转述的外部页面与反演联系均为 ASSUMED-UNVERIFIED；未把 A038464/A396838/A396839 反演联系作为已证等价使用。未修改或重证既有奇偶公开成果。
+未主张全球无文献证明；open 仅为上述明确检索范围中的文献裁决。未主张独立评审或多模型共识。数值只作探针，不算形式化进展，不冻结有限正向实例。除明确记录为亲自打开者，外部页面均为 ASSUMED-UNVERIFIED。A038464/A396838/A396839 的反演与自卷积联系不作为已证等价承重，未形式化它们。未修改或重证既有奇偶公开成果；没有自建理论卷、ingest 或新增 atom。
