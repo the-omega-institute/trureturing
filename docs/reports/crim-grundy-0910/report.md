@@ -200,8 +200,10 @@ claim for either the numbers or the counterexample.
   the brief's predictions. No checked root SG value is claimed by this worker.
 - No Lean module, claim/result declaration, Scribe source, emitted Blueprint,
   Library note or frozen state was created. Locator and Scribe prohibited-word
-  checks therefore have no new target. No make lean/lean-report/emit,
-  make deposit*, make cover, or PR was run or opened.
+  checks therefore have no new target. No target-specific Lean build/report
+  or make emit was run. The complete repository check below does invoke the
+  existing Lean report producer. No make deposit*, make cover, or PR was
+  run or opened.
 - Resuming as independent certification of an already posted calculation
   would be a revised task scope. Remaining work would include retrieving
   the CRIM formalization above for reuse analysis, both independent
@@ -222,3 +224,33 @@ SHA-256 of the retained downloads:
 The raw page and extracted text include the complete solution and its date.
 The preregistration was committed and pushed as `74a33a2d52` before reading
 that solution. The worker's report-only validation is recorded below.
+
+## Validation and delivery
+
+Preregistration commit: `74a33a2d52`; stopping-evidence commit: `ac1b7fba4c`.
+Both were pushed to `origin/lane/math/crim-grundy-refute-0910` immediately.
+The only changed tracked path is this report. The repository was clean
+after the check; `git diff --check` passed.
+
+On `ac1b7fba4c`, ran the requested full command:
+
+```text
+make gate BASE=bf7e99c6dec64fc5d08786d6d2e4e885ef642f17
+```
+
+Exit **0**, measured elapsed **826.790 seconds** on this local macOS tree.
+The canonical log reports engineering-dotnet passed (15 s), engineering-test
+passed (688 s), engineering-selftest passed (3 s), lean-reports passed (81 s),
+and admission passed (40 s, including filemap). The final diagnostic is
+`Admission: content fully validated, no protected-surface change`.
+These are local results, not remote CI or a new CRIM theorem certificate.
+The Lean cache receipt reports project and Mathlib both warm; the report
+producer planned `mode=delta changed=0 added=1 removed=0 recheck=1` relative
+to its cached report. No D5 source was changed by this worker.
+
+Worker-owned validation files are `make-gate.log` and
+`make-gate.receipt.json` in the artifact directory above. This final paragraph
+only records that completed check; no mathematical or harness input changed
+after it. The report is copied to the attempt directory, and the structured
+result and completion sentinel are published there by temporary-file rename.
+The scope is stopped and reported, not implemented, frozen, covered, or merged.
