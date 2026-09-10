@@ -179,4 +179,14 @@ run_cmd Elab.Command.liftTermElabM do
     value := mkStrLit entry.statementIdentity, hints := .abbrev, safety := .safe }
 def viaDigest (_ : Unit) (x : Bool) : Bool := let _ := statementDigest; x
 check_provenance "StatementDigest" using viaDigest expects "forbidden_dependency"
+def specificStatement : Prop := (137 : Nat) = 137
+theorem specificTruth : specificStatement := rfl
+noncomputable def genericDecision (_ : Unit) (x : Bool) : Bool :=
+  if @decide specificStatement (Classical.propDecidable specificStatement) then x else true
+run_cmd do
+  let (forbidden, closure) := RegistrationGates.readoutClosure (← getEnv)
+    ``specificTruth (mkConst ``genericDecision)
+  unless forbidden && closure.isSome do
+    throwError "[FAIL] AppliedDecidable: {forbidden}, {closure.isSome}"
+  logInfo "[PASS] AppliedDecidable"
 end RegistrationProvenance
