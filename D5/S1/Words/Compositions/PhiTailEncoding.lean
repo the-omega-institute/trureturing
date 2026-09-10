@@ -33,6 +33,8 @@ noncomputable def phi (n : ℕ) : Finset (Equiv.Perm (Fin (2 * n))) := by
 private def tailIndex {n : ℕ} (hn : 1 ≤ n) (j : Fin (2 * n - 1)) : Fin (2 * n) :=
   ⟨2 * n - 1 - j.val, by omega⟩
 
+private def zeroFin {n : ℕ} (hn : 1 ≤ n) : Fin (2 * n) := ⟨0, by omega⟩
+
 /-- The reversed tail, with the source's one-based shift removed. -/
 def tailWord (n : ℕ) (p : Equiv.Perm (Fin (2 * n))) (hn : 1 ≤ n) :
     List ℤ :=
@@ -49,21 +51,23 @@ private theorem tailIndex_ne_zero {n : ℕ} (hn : 1 ≤ n) (j : Fin (2 * n - 1))
   omega
 
 private theorem tailValue_ne_zero {n : ℕ} (p : Equiv.Perm (Fin (2 * n)))
-    (hp0 : p 0 = 0) (i : Fin (2 * n)) (hi : i.val ≠ 0) : (p i).val ≠ 0 := by
+    (hn : 1 ≤ n) (hp0 : p (zeroFin hn) = zeroFin hn) (i : Fin (2 * n))
+    (hi : i.val ≠ 0) :
+    (p i).val ≠ 0 := by
   intro h
-  have hpi : p i = 0 := Fin.ext h
-  have : i = 0 := p.injective (hpi.trans hp0.symm)
+  have hpi : p i = zeroFin hn := Fin.ext (by simpa [zeroFin] using h)
+  have : i = zeroFin hn := p.injective (hpi.trans hp0.symm)
   exact hi (congrArg Fin.val this)
 
 /-- Every reversed-tail letter lies in the intended residual alphabet interval.
 This is the part of the Φ-to-word reduction that is independent of the
 prefix inequalities. -/
 theorem tailWord_entry_bounds {n : ℕ} (p : Equiv.Perm (Fin (2 * n)))
-    (hn : 1 ≤ n) (hp0 : p 0 = 0) (j : Fin (2 * n - 1)) :
+    (hn : 1 ≤ n) (hp0 : p (zeroFin hn) = zeroFin hn) (j : Fin (2 * n - 1)) :
     -(n : ℤ) < (p (tailIndex hn j)).val - (n : ℤ) ∧
       (p (tailIndex hn j)).val - (n : ℤ) < (n : ℤ) := by
   have hidx := tailIndex_ne_zero hn j
-  have hval := tailValue_ne_zero p hp0 _ hidx
+  have hval := tailValue_ne_zero p hn hp0 _ hidx
   have hvlt := (p (tailIndex hn j)).isLt
   constructor <;> omega
 
@@ -71,10 +75,12 @@ theorem mem_phi_tailWord_bounds {n : ℕ} {p : Equiv.Perm (Fin (2 * n))}
     (hp : p ∈ phi n) (hn : 1 ≤ n) (j : Fin (2 * n - 1)) :
     -(n : ℤ) < (p (tailIndex hn j)).val - (n : ℤ) ∧
       (p (tailIndex hn j)).val - (n : ℤ) < (n : ℤ) := by
-  have hp0 : p 0 = 0 := by
-    have h := (Finset.mem_filter.mp hp).2
-    have hz := h 0 rfl
-    exact Fin.ext hz
+  classical
+  have hp0 : p (zeroFin hn) = zeroFin hn := by
+    have hp' : p ∈ Finset.univ.filter (admissible n) := by simpa [phi] using hp
+    have h := (Finset.mem_filter.mp hp').2
+    have hz := h.1 (zeroFin hn) rfl
+    exact Fin.ext (by simpa [zeroFin] using hz)
   exact tailWord_entry_bounds p hn hp0 j
 
 end D5.S1.Words.Compositions.PhiTailEncoding
