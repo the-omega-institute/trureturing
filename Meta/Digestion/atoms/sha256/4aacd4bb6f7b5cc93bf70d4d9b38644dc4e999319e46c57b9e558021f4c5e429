@@ -1,0 +1,12 @@
+- `HoKalmanPredictionBudget.lean`：可计算预测预算及每个时刻的终点误差定理。
+
+每个模块在 `Blueprint/D5/S3/Observer/Hankel/` 有同名 Scribe。其声明均从 Lean 源读取，当前应按待内核检查的候选源码理解。
+
+输入为已带误差预算的有限 Markov 参数；从原始输入输出轨迹估计这些参数并产生统计置信预算，属于另一个前端问题。本节没有实现截断 SVD，没有从有限数据推断真实阶数的上界，也没有完成平衡截断专门定理。固定阶数的恢复契约、噪声下的阶数下界和算法拒绝语义分别陈述。
+
+独立的精确有理数回归覆盖 26 个无噪声模型、26 个带噪声模型、312 个精确 Markov 等式、78 个参数误差检查和 416 个预测误差检查，另有拒绝与零维实例。它们包含 Jordan 块、多输入多输出及重复特征值，但这些有限检查不等于 Lean 全称定理的内核验证。
+
+参考：CCM `https://arxiv.org/html/2511.22755v1`，§§2.1、2.2、4.3、8；Suzuki `https://arxiv.org/abs/2606.09096`；Mathlib 钉版 `Analysis/Convolution.lean`、`MeasureTheory/Group/Integral.lean`、`Analysis/SpecialFunctions/Integrals/Basic.lean`；NIST DLMF `https://dlmf.nist.gov/5.7.E6` 仅用于数值参考。
+
+---
+

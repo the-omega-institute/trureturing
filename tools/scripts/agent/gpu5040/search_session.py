@@ -7,18 +7,27 @@ import os
 from pathlib import Path
 import uuid
 
-from search_config import (ALGORITHM, SCHEMA, Config, descriptor, identity,
-                           scientific_without_runtime)
+from search_config import (ALGORITHM, ANALYTIC_ALGORITHM, SCHEMA, Config, descriptor, identity,
+                           protocol_initializer, scientific_without_runtime, validate_initializer)
 from state_store import file_hash, sync_file
 from trial_history import empty_summary
 
 
 class Campaign:
     def __init__(self, directory, config, registry, runtime, checkpoint=None,
-                 fresh_start=False, lineage=None, provenance=None, session_id=None):
+                 fresh_start=False, lineage=None, provenance=None, session_id=None, initialization=None):
         self.directory = Path(directory).resolve()
+        if initialization is None and checkpoint:
+            initialization = protocol_initializer(checkpoint["trial"]["descriptor"], checkpoint.get("algorithm"))
+        self.initialization = validate_initializer(initialization)
+        if self.initialization is not None:
+            config = dataclasses.replace(config, base_seed=0)
         self.config, self.registry, self.runtime = config, registry, runtime
         self.provenance = provenance or {}
+        self.algorithm = ANALYTIC_ALGORITHM if self.initialization is not None else ALGORITHM
+        self.analytic_descriptor = (descriptor(config, 55, 0, runtime, self.initialization,
+                                              self.provenance.get("source_sha256"))
+                                    if self.initialization is not None else None)
         self.session_id = session_id or uuid.uuid4().hex
         self.checkpoint = checkpoint
         self.trial = None
@@ -33,7 +42,6 @@ class Campaign:
         self.registry.require_lineage(self.lineage)
         if checkpoint:
             self._validate_checkpoint(checkpoint)
-            self._reconcile(checkpoint)
             progress = checkpoint["progress"]
             self.resumed_from = {key: progress[key] for key in ("run_index", "iteration", "total_steps")}
             self.total_steps = progress["total_steps"]
@@ -50,7 +58,7 @@ class Campaign:
                 for key in ("run_index", "iteration", "skipped_trials", "traversal_start_steps"):
                     setattr(self, key, progress[key])
                 self.trial = copy.deepcopy(checkpoint["trial"])
-                current = descriptor(config, self.dimension, self.seed, runtime)
+                current = self.current_descriptor()
                 old = self.trial["descriptor"]
                 if old.get("legacy_lineage"):
                     matches = scientific_without_runtime(current) == scientific_without_runtime(old)
@@ -67,6 +75,7 @@ class Campaign:
                     matches = current == old
                 if not matches:
                     raise ValueError("scientific configuration or numerical runtime mismatch; resume in the saved environment")
+            self._reconcile(checkpoint)
         self.session_start_steps = self.total_steps
 
     @property
@@ -75,14 +84,26 @@ class Campaign:
 
     @property
     def seed(self):
-        return (self.config.base_seed + self.run_index) % (2 ** 63)
+        return 0 if self.initialization is not None else (self.config.base_seed + self.run_index) % (2 ** 63)
+
+    @property
+    def exhausted(self):
+        return self.initialization is not None and (self.run_index >= 1 or
+            self.trial is not None and self.iteration == self.config.seed_steps)
+
+    def current_descriptor(self):
+        return self.analytic_descriptor if self.initialization is not None else descriptor(
+            self.config, self.dimension, self.seed, self.runtime)
 
     def _validate_checkpoint(self, saved):
-        if saved.get("schema") != SCHEMA or saved.get("algorithm") != ALGORITHM:
+        if saved.get("schema") != SCHEMA:
             raise ValueError("unsupported checkpoint schema/algorithm; use legacy_conversion.py for schema 1")
         if saved.get("kind") != "latest":
             raise ValueError("expected a latest checkpoint")
         progress, trial = saved["progress"], saved["trial"]
+        saved_initializer = protocol_initializer(trial["descriptor"], saved.get("algorithm"))
+        if trial["descriptor"].get("algorithm") != saved.get("algorithm"):
+            raise ValueError("checkpoint algorithm/initializer mismatch")
         for key in ("run_index", "iteration", "total_steps", "skipped_trials", "traversal_start_steps"):
             if type(progress[key]) is not int or progress[key] < 0:
                 raise ValueError("invalid checkpoint progress")
@@ -100,10 +121,14 @@ class Campaign:
         saved_config = Config(**old)
         saved_config.validate()
         dimension = old["dimensions"][progress["run_index"] % len(old["dimensions"])]
-        seed = (old["base_seed"] + progress["run_index"]) % (2 ** 63)
+        seed = 0 if saved_initializer is not None else (old["base_seed"] + progress["run_index"]) % (2 ** 63)
+        if saved_initializer is not None and (progress["run_index"] != 0 or
+                progress["skipped_trials"] != 0 or old["base_seed"] != 0):
+            raise ValueError("analytic checkpoint is not a canonical singleton schedule")
         if trial["descriptor"]["dimension"] != dimension or trial["descriptor"]["seed"] != seed:
             raise ValueError("checkpoint trial does not match schedule")
-        expected = descriptor(saved_config, dimension, seed, saved.get("runtime", {}))
+        expected = descriptor(saved_config, dimension, seed, saved.get("runtime", {}),
+                              saved_initializer, saved.get("source_sha256"))
         if trial["descriptor"].get("legacy_lineage"):
             matches = (scientific_without_runtime(expected) == scientific_without_runtime(trial["descriptor"])
                        and trial["descriptor"]["legacy_lineage"] == saved.get("legacy_lineage"))
@@ -136,6 +161,8 @@ class Campaign:
     def select(self, stopped=lambda: False):
         if self.pending_terminal:
             raise RuntimeError("terminal completion is pending; restart to reconcile latest.pt")
+        if self.exhausted:
+            return False
         if stopped():
             return False
         if self.trial and not self.trial["terminal"]:
@@ -147,7 +174,9 @@ class Campaign:
             self.trial = None
             self.checkpoint = None
         while not stopped():
-            desc = descriptor(self.config, self.dimension, self.seed, self.runtime)
+            if self.exhausted:
+                return False
+            desc = self.current_descriptor()
             if self.registry.completed(desc) or self.registry.excluded(self.lineage, desc):
                 self.run_index += 1
                 self.skipped_trials += 1
@@ -187,13 +216,15 @@ class Campaign:
             raise ValueError("terminal checkpoint requires final trial-local metrics")
         self.trial["terminal"] = terminal
         self.trial["candidate_sha256"] = checkpoint.get("candidate_sha256")
-        checkpoint.update(schema=SCHEMA, algorithm=ALGORITHM, kind="latest",
+        checkpoint.update(schema=SCHEMA, algorithm=self.algorithm, kind="latest",
                           config=dataclasses.asdict(self.config), trial=copy.deepcopy(self.trial),
                           legacy_lineage=self.lineage, provenance=self.provenance,
                           history_db=str(self.registry.path),
                           progress={**checkpoint.get("progress", {}), **self.progress()},
                           runtime=self.runtime,
                           invocation={"session_id": self.session_id, "pid": os.getpid()})
+        if self.initialization is not None:
+            checkpoint["source_sha256"] = self.provenance["source_sha256"]
         path = self.directory / "latest.pt"
         # Set the guard before publication: even an exception after rename must
         # never let the final error handler destroy terminal recovery evidence.

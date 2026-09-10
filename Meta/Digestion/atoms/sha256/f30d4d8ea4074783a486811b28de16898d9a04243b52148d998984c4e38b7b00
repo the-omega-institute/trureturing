@@ -1,0 +1,8 @@
+**命题 23（任意充分读数恢复 $\pi$）。** 设 $h:\mathcal B\to H$ 是任意总读数，且对 $\Sigma_{\rm sp}$ **充分**，即 $h(X)=h(Y)$ 蕴含所有该签名上下文的严格终端观察相同。则存在唯一函数
+
+$$
+\kappa:h[\mathcal B]\longrightarrow P,
+\qquad \kappa(h(X))=\pi(X).
+\tag{FACTOR}
+$$
+

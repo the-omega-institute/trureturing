@@ -86,7 +86,7 @@ $$\left(\forall z \in \mathbb{C},\; \left\lVert z \right\rVert < 1 \Rightarrow \
 
 *Commentary.*
 
-The half-plane transfer feeds ActualZeroGeometry.rh_iff_xi_right_half_plane. Both existing summability consumers below use this bare bridge after disk nonvanishing.
+The half-plane transfer feeds ActualZeroGeometry.rh_iff_xi_right_half_plane. After disk nonvanishing, the half-plane summability consumer below uses xi_disk_zero_free_right_half_plane; the RH summability consumer additionally uses the bare converse xi_disk_zero_free_implies_rh.
 
 **Theorem 1.8 (Actual open right-half-plane nonvanishing).**
 

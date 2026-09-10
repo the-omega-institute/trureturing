@@ -106,6 +106,25 @@ internal static class Program
             invocation => RunTests(repositoryRoot, invocation));
     }
 
+    // Projects in a plan run concurrently (EngineeringTestExecutor.Execute), and two
+    // of them commonly reference the same project. The first attempt is --no-build
+    // and cannot race, but the fallback builds, and two concurrent builds of one
+    // shared reference write the same obj/ and bin/. A half-written output leaves
+    // the dependent test project with no runnable assembly, and dotnet test then
+    // reports the missing dll as an invalid argument.
+    //
+    // That is #5060: six occurrences over a month, every one of them naming
+    // CandidateNewXunitProjectWithoutLiteralIsTestProjectIsSelected, which is the
+    // only test in its class whose two selected projects share a ProjectReference.
+    // Its siblings run the same parallel path with disjoint references and have
+    // never been recorded failing.
+    //
+    // The build fallback is therefore serialized. It costs nothing where the
+    // fallback does not fire — in CI the projects are already built, and the
+    // recorded RETRY lines name only synthetic fixture projects — and where it
+    // does fire, the second build finds the shared reference up to date.
+    private static readonly object BuildFallbackGate = new();
+
     private static int RunTests(
         string repositoryRoot,
         EngineeringTestInvocation invocation)
@@ -148,7 +167,10 @@ internal static class Program
                 Console.WriteLine(
                     $"ENGINEERING_TEST_RETRY project={JsonSerializer.Serialize(invocation.ProjectPath)} "
                     + "reason=missing-build-output");
-                result = Run(noBuild: false);
+                lock (BuildFallbackGate)
+                {
+                    result = Run(noBuild: false);
+                }
                 Console.Error.Write(result.StandardError);
             }
             if (result.ExitCode != 0) return result.ExitCode;

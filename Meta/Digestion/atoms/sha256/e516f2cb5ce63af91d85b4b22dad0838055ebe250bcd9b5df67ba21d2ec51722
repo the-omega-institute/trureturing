@@ -1,0 +1,54 @@
+### 7. Sources, executed checks and formalization scope
+
+New Lean owner and paired Scribe:
+
+    D5/S3/Weil/GroundMode/InvariantSectorEnergyReadout.lean
+    Blueprint/D5/S3/Weil/GroundMode/InvariantSectorEnergyReadout.scribe.cs
+
+Five public proof scripts cover the actual domain energy split, sector
+readout lift, readout-neighborhood budget, model-centered vector variation
+and exact rational implications. They introduce no replacement Fourier
+transform, canonical zero data, full-space gap or energy-dual definition.
+Lean elaboration, transitive axiom reports and Scribe emission were not run.
+The operator/domain and interval identities are not automatically kernel
+validated by these generic proof bodies.
+
+Two new research programs and their actual outputs are committed under
+research/weil_ground_mode/. The sector program is a fresh evaluation of
+#5602's complete scale-Schur arithmetic with a different, sector-specific
+threshold and its own exact Gram/congruence calculation. The normalized
+consumer reuses and reruns this session's earlier centered-residual formulas
+with explicit source, trial and model-directory arguments. It checks the
+sector result's producer binding but does not rerun that producer internally;
+the latter was separately executed in this continuation.
+
+Final sector programs ran at 90 and 120 digits; final readout programs ran
+at 100 and 120 digits. The rational sector/readout conclusions agree. Local
+exact diagnostics cover 400 complex invariant splits, 400 sector lifts,
+400 neighborhood estimates, 400 centered-vector variation checks and 80
+signed integer Grams. Three mathematical negative controls test the missing
+invariance, commutation and opposite-sector positivity; integer-overflow,
+minimum-int64 and noninteger-array inputs are also rejected. Of the centered
+phase tests, 369 detect omission of the conjugation. These are single-author
+finite checks, not independent proof review or a synthetic Weil experiment.
+
+The arithmetic loader executes only its already inspected AST projection;
+complete local input bytes are identified separately and are not claimed
+identical to the full remote arithmetic owner. True-prolate and original
+global-spectrum verifiers were not rerun. Their selected mathematical fields,
+full model-proposal hash and analytic obligations retain the prior scope.
+
+Primary sources reread:
+
+- https://arxiv.org/html/2511.22755v1 , Section 5.2, Lemma 5.2,
+  and Section 8's genuine-mode approximation problem.
+- https://arxiv.org/html/2606.09096v1 , localized lower-bounded forms
+  and the distinction between form cores and operator domains.
+- https://arxiv.org/abs/2008.10871 , complete-exterior spectral discretization
+  methodology; its Schrodinger assumptions are not asserted for the Weil form.
+
+- Parallel #5602 source at `4804c4020d7d9f165a2e2683c42b01e3d47a8be4`: `WeilPrimeActivationEdge.lean`, blob `5cd36bfeef88311e1f5e6c140fc11e52b16e8881`; `certify_prime3_scale_schur.py`, blob `496333f97d20a6898d47f848a2abd839249e9207`.
+
+
+---
+

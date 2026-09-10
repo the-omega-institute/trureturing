@@ -1,0 +1,15 @@
+### M05. MUB symmetry budget
+
+复用：
+
+```text
+mutually_unbiased_diagonal_planes
+PurityPythagorasDecomposition
+```
+
+证明：
+
+```math
+\alpha_S(C)+\alpha_S(D)\le2.
+```
+

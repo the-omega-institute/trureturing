@@ -1,0 +1,27 @@
+## 1. 保持同一个模型及原始 Fourier 约定
+
+令 a0=log3/2，I=[a0-epsilon,a0+epsilon]，epsilon=1/50000000。相应 c=exp(2a) 跨过整数 3，但始终在 (2,4)。固定空间 [-1,1] 上的实际正规 prolate 算子为
+
+\[
+J(a)=-\partial_t((1-t^2)\partial_t)+(2\pi e^{2a})^2t^2.
+\tag{MF1}
+\]
+
+其偶 Legendre 自伴实现、紧 resolvent 和有界乘法势沿用 (PM1)-(PM5)，全部尺度具有相同算子域。psi_(0,a)、psi_(4,a) 是编号 0、2 的真实偶模式，单位归一化并以零阶 Legendre 系数为正固定符号。定义
+
+\[
+H_a=\psi_{4,a}-\frac{(\psi_{4,a})_0}{(\psi_{0,a})_0}\psi_{0,a},
+\qquad h_a(u)=H_a(e^{-a}u).
+\]
+
+实际算术函数为
+
+\[
+p_{a,H}(x)=1_{[-a,a]}(x)4e^{x/2}
+\sum_{1\le m\le e^{a-x}}H(me^{x-a}),\qquad
+p_a^+=(p_{a,H_a}(x)+p_{a,H_a}(-x))/2.
+\tag{MF2}
+\]
+
+Fourier 仍为原 `Zeta23.paperFT`，即 integral f(x)exp(i*z*x)dx。定义待比较的明确归一化 P_a(z)=FT(p_a^+)(z)/FT(p_a^+)(0)，其分母在本节独立认证。没有将 H_a、p_a、前节 dyadic k_a 或未知 Weil 最低模态相互重新命名。
+

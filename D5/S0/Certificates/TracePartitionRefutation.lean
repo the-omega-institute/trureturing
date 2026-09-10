@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Certificates/TracePartitionRefutation
    mirror-E: none(waiver:trace-congruence-refutation)
-   anchors: [mathlib/module/Mathlib.Data.Finset.Card]
+   anchors: [mathlib/module/Mathlib.Data.Fintype.Card]
    utility: none
    digest: Congruence closure, existing-state cases and one fresh-state case soundly refute bounded trace realizations, with an exact output-return signature cost bound. -/
 

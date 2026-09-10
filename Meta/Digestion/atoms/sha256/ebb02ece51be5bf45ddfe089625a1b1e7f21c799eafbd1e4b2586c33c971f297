@@ -1,0 +1,21 @@
+## 2. 新残差能量步骤：无需绝对 ground 下界
+
+在偶不变域设 M=A-U，Q 为 k 的正交补投影，r=QAk=Ak-mu k。设该补空间有 q_M(f)>=kap||f||^2、kap>0，并已由实际候选残差的独立计算得到
+\[
+|\langle r,f\rangle|^2\le E q_M(f)\qquad(f\perp k).
+\tag{UG3}
+\]
+令 alpha=<k,u>。如果 alpha=0，非零 u 位于该补空间，但 q_M(u)=(lambda_0-U)||u||^2<=0，与正 coercivity 矛盾。因此 alpha 非零。精确误差 w=u/alpha-k 满足 w perpendicular k，由本征方程有
+\[
+\boxed{q_M(w)+(U-\lambda_0)\|w\|^2=-\Re\langle w,r\rangle.}
+\tag{UG4}
+\]
+于是 0<=q_M(w)<=|<w,r>|；(UG3) 给出 q_M(w)^2<=E q_M(w)，从而
+\[
+\boxed{q_M(w)\le E,\qquad \|w\|^2\le E/\mathrm{kap}.}
+\tag{UG5}
+\]
+新 Lean `residual_driven_projective_energy` 从同一线性域上的 eigen-equation、非正 shifted eigenvalue、单位 k 和完整 residual-functional bound 证明非零 overlap、正交性及 (UG5)。其 residual 是 M(k)-Re<k,M(k)>k。真实自伴性用于数值消费者的谱和逆能量识别；这条代数/能量引理本身不额外要求未使用的对称性。没有接收未知 w 的误差界或绝对 lambda_0 下界作为假设。
+
+若实际 centered Fourier 代表元 g 另有 |<g,f>|^2<=C q_M(f) 于同一补空间，则 |<g,w>|^2<=EC。该最后一步是既有能量对偶思想的直接使用，不建立第二套通用读出 owner。
+

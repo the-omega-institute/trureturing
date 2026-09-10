@@ -1,0 +1,22 @@
+### 7. A control showing the preceding single rate is not necessary
+
+For a synthetic three-dimensional family let t=1/j, j>=10,
+
+    c=(1-t^2)/(1+t^2),   s=2t/(1+t^2),
+    M=diag(0,8s^2,1),   k=e=(c,0,s),   u=(1,0,0),
+    h=(0,1,0),   g0=(1,0,0),   v=(0,1/(8s^2),0).
+
+The old complement gap kappa=8s^2, model energy nu=s^2, eps=0 and anchor
+b=1/4 satisfy the old centered theorem's conditions. The sharp old coefficient
+is C=1/(8s^2), so nu*C/b^2=2 for every j. Nevertheless the actual normalized
+readout error is identically zero, as are D and the complete dual residual
+at sigma=lambda=0. The closed-form algebra proves the example; 101 exact
+instances were also replayed. This is not an arithmetic Weil family and is
+not evidence for its asymptotic cancellation.
+
+It demonstrates a precise methodological point: failure to prove the old
+single sufficient rate does not itself obstruct the original open problem.
+The signed product estimate can see output cancellation hidden by that rate.
+Conversely, a fixed-window nonzero D says nothing about whether D_a/d_(e,a)
+will decay in the physical scale limit. Both questions remain separate.
+

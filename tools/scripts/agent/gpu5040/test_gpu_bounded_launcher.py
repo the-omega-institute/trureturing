@@ -42,6 +42,7 @@ class LifecycleTests(unittest.TestCase):
         shutil.copyfile(HERE / "gpu_bounded_launcher.py", self.launcher)
         shutil.copyfile(HERE / "fixture_worker.py", self.program / "gpu_worker.py")
         shutil.copyfile(HERE / "state_store.py", self.program / "state_store.py")
+        shutil.copyfile(HERE / "search_config.py", self.program / "search_config.py")
         (self.state / "latest.pt").write_bytes(b"fixture checkpoint 123")
         self.before = {
             "schema": 2, "pid": 1, "phase": "stopped", "stop_reason": "STOP", "error": None,
@@ -234,6 +235,52 @@ class LifecycleTests(unittest.TestCase):
             with self.subTest(patch=patch):
                 self.save_before()
                 self.assertEqual(1, self.finish(self.spawn(receipt_patch=patch)))
+
+    def analytic_before(self, exhausted=False, no_checkpoint=False):
+        from search_config import ANALYTIC_ALGORITHM, Config, descriptor, identity, load_initializer
+        from test_trial_history import RUNTIME
+        config = Config(dimensions=(55,), seed_steps=6, base_seed=0)
+        self.before["config"].update(dimensions=[55], seed_steps=6, base_seed=0)
+        spec = load_initializer(HERE.parents[3] /
+            "Evidence/D5/S3/Quantum/AnalyticD55Initializer.result.json")[0]
+        desc = descriptor(config, 55, 0, RUNTIME, spec, "a" * 64)
+        self.before.update(algorithm=ANALYTIC_ALGORITHM, runtime=RUNTIME,
+                           trial={"identity": identity(desc), "descriptor": desc, "terminal": exhausted})
+        self.before["config_sha256"] = hashlib.sha256(encode(self.before["config"])).hexdigest()
+        self.before["progress"] = {"total_steps": 6 if exhausted else 3,
+            "run_index": 0, "iteration": 6 if exhausted else 3,
+            "skipped_trials": 0, "traversal_start_steps": 0}
+        if exhausted:
+            self.before.update(stop_reason="exhausted", exhaustion={"identity": identity(desc), "descriptor": desc})
+        self.save_before()
+        if no_checkpoint:
+            (self.state / "latest.pt").unlink()
+            self.before.update(checkpoint_saved=False, checkpoint_receipt=None, trial=None)
+            self.before["progress"].update(total_steps=0, run_index=1, iteration=0, skipped_trials=1)
+            (self.state / "status.json").write_bytes(encode(self.before))
+
+    def test_analytic_terminal_receipt_is_nonrepeating(self):
+        self.analytic_before()
+        exhausted = {"identity": self.before["trial"]["identity"],
+                     "descriptor": self.before["trial"]["descriptor"]}
+        self.assertEqual(4, self.finish(self.spawn(terminal_patch={
+            "stop_reason": "exhausted", "exhaustion": exhausted})), self.last_result)
+        self.assertEqual(3, json.loads((self.state / "status.json").read_text())["session"]["completed_steps"])
+
+    def test_analytic_already_exhausted_does_not_spawn_with_or_without_checkpoint(self):
+        for absent in (False, True):
+            with self.subTest(no_checkpoint=absent):
+                (self.state / "latest.pt").write_bytes(b"fixture checkpoint 123")
+                self.analytic_before(exhausted=True, no_checkpoint=absent)
+                self.assertEqual(4, self.finish(self.spawn()), self.last_result)
+                self.assertFalse(self.child_started)
+
+    def test_analytic_exhaustion_rejects_false_identity(self):
+        self.analytic_before(exhausted=True)
+        self.before["exhaustion"]["identity"] = "b" * 64
+        self.save_before()
+        self.assertEqual(1, self.finish(self.spawn()))
+        self.assertFalse(self.child_started)
 
     def test_sigterm_and_sigint_forward_and_wait_for_checkpoint(self):
         for number in (signal.SIGTERM, signal.SIGINT):

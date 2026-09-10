@@ -1,0 +1,11 @@
+**定义 18（双空间读数）。** 对 $X=(C,A)\in\mathcal B$ 定义
+
+$$
+\pi(X)=(w_X,z_X),\qquad
+w_X(p)=\sum_{e\in\Omega_C,\ x(e)=p}\sigma(e),\qquad
+z_X(p)=\sum_{e\in A,\ x(e)=p}\sigma(e).
+\tag{SP}
+$$
+
+这是定义 12／命题 9 的共同位置特化：先取含全部当前位置的有限 bin 集合，令 $f=x|_{\Omega_C}$，再将 $w,z$ 向全格点补零。增添空 bin 不改变这个有限支撑函数，比较两对象时可取两个有限 bin 集的并。因此不是另造一种符号计数。总有 $w_X\in I,z_X\in R$，且 $q(X)=\varepsilon(z_X)$；旧档案 $E_C\setminus\Omega_C$ 不计入任一分量。
+

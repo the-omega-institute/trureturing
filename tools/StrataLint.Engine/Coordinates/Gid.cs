@@ -315,10 +315,20 @@ public sealed class Gid : IEquatable<Gid>
     private static (CoordinatePath Coordinates, string Module, string? Declaration)
         ParseFormalCoordinates(string[] parts)
     {
-        var ordinary = parts.Length is 3 or 4
+        // Depth is a rule, not an enumeration. SPEC 2.3 grows the tree by local splitting with
+        // "深度对数增长" - logarithmic depth - so the coordinate carries a stratum, one or more
+        // bucket segments, and the module. Pinning the length to 3 or 4 capped nesting at one
+        // subdomain level and pushed the pressure sideways instead: with subdirectories exempt
+        // from SL-003, a full bucket's only exit was another flat sibling, and D5/S3/ConceptDynamics
+        // reached 120 sibling subdomains that way (2026-09-08 reading). Admitting every depth >= 3
+        // is a conservative extension: every coordinate the old predicate accepted still parses to
+        // the same target, and the round trip through Print stays byte-exact because printing joins
+        // the segments without consulting their count.
+        var buckets = parts[1..^1];
+        var ordinary = parts.Length >= 3
             && IsStratum(parts[0])
-            && parts[1..^1].All(CamelPattern.IsMatch)
-            && (parts.Length == 3 || !string.Equals(parts[1], parts[2], StringComparison.Ordinal));
+            && buckets.All(CamelPattern.IsMatch)
+            && HasNoAdjacentRepeat(buckets);
         var special = parts.Length == 2 && IsSpecialZone(parts[0]);
         if (!ordinary && !special)
         {
@@ -361,6 +371,23 @@ public sealed class Gid : IEquatable<Gid>
             $"{paper.Theory}/P/{string.Join('/', paper.Coordinates.Values)}"
             + (paper.Frozen ? $"{TagSeparator}frozen" : string.Empty),
     };
+
+    // A bucket may not repeat its parent (D5/S0/Carrier/Carrier/Ring): the segment carries no
+    // coordinate information and the address stops being the shortest name for its position. At
+    // four segments this is exactly the parts[1] != parts[2] test it generalises, so no coordinate
+    // that parsed before stops parsing now.
+    private static bool HasNoAdjacentRepeat(string[] segments)
+    {
+        for (var index = 1; index < segments.Length; index++)
+        {
+            if (string.Equals(segments[index - 1], segments[index], StringComparison.Ordinal))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     private static bool IsStratum(string value) => value is "S0" or "S1" or "S2" or "S3" or "S4";
 

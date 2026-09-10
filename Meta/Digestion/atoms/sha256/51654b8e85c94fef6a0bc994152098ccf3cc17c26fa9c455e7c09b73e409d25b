@@ -1,0 +1,29 @@
+### 5. Terminal implication to the original model limit
+
+The signed_goal_original_model_uniform_limit theorem permits a different
+Hilbert space and actual linear operator domain at each scale. Its inputs
+are actual eigenpairs, model energy and complement bounds, trial vectors,
+complete dual residual bounds S_j, spectral uncertainty eta_j, trial bounds
+V_j, derived-error radius data R_j, origin kernel bounds and margins b_j,b0_j.
+For the actual signed pairing assume a uniform finite bound |D_(j,z)|<=B_j.
+It invokes the existing projective signed theorem and proves convergence of
+the actual normalized eigenmode functions to the SAME limiting function as
+the original normalized models, provided
+
+    B_j/b0_j ->0,                                       (SC7)
+    (S_j+eta_j*V_j)*R_j/b_j
+       +B_j*G0_j*R_j/(b0_j*b_j) ->0,                    (SC8)
+
+and the original normalized models tend uniformly to that function on K.
+The triangle inequality adds SC7, SC8 and the original-model convergence.
+There is no assumed final mode-error estimate and no silent replacement of
+the model by a corrected one. If the correction does not vanish, convergence
+to the corrected surrogate alone gives a different possible limit.
+
+SC7-SC8 are still arithmetic hypotheses for the intended unbounded Weil
+windows. The theorem proves the complete implication from them, not those
+physical rates themselves. The finite-window certificates above establish
+neither an unbounded sequence of spectral enclosures nor the all-scale
+simple-even and model-normalization premises of CCM. Calling this endpoint
+an unconditional proof of the original open problem would be incorrect.
+

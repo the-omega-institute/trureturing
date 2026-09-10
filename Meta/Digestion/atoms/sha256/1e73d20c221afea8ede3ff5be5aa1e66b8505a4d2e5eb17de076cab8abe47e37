@@ -1,0 +1,4 @@
+# 2026-09-07 增补：有限窗口 Gamma 对角的正项级数与全频率边界修正
+
+本节继续 PR 6029。先回读 `99b3e1ca03e88f42a9b7c6ccadecc545e8c64a97`，确认上一节 Lean、Scribe 与本卷分别为 blob `13095f4742a370f37801a747de80f9e85d766d34`、`468bfe86329d8bb537dfd7e15cb73a385b53e96e`、`82911f81d26aa33e6bd567971a9cc541f931a003`，与实际交付包一致。本轮在原 `WeilDiagonalGammaRegularization` 内增补证明，原 `WeilBoundaryKernelIntegral` 只公开一个复用既有私有证明的几何核伴随。没有新建算子、理论卷或重复证明 Fourier 完备性。
+

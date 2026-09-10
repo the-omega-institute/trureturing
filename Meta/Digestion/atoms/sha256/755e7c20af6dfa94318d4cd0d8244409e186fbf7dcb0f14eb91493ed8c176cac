@@ -1,0 +1,16 @@
+**定理 1.15(不动点刻画)**〔证〕。对账本 $L$ 定义**不动集**
+
+$$
+\mathrm{Fix}(L)=\{P\in\mathcal P\mid\forall T\in\mathfrak M,\ (P\in\mathrm{Frozen}(L)\leftrightarrow P\in\mathrm{Frozen}(T L))\}.
+$$
+
+则在假设 1.4 下
+
+$$
+\mathrm{Fix}(L)=\mathrm{Frozen}(L)\ \cup\ \{P\mid\neg\mathrm{Proved}_{\mathfrak A}(P)\}.
+$$
+
+*证明*。($\supseteq$)若 $P\in\mathrm{Frozen}(L)$,由假设 1.12 对一切 $T$ 有 $P\in\mathrm{Frozen}(TL)$,两侧皆真。若 $\neg\mathrm{Proved}_{\mathfrak A}(P)$,则 $P$ 不可能出现在任何账本的冻结集(定义 1.5 要求见证),两侧皆假。($\subseteq$)若 $P\notin\mathrm{Frozen}(L)$ 且 $\mathrm{Proved}_{\mathfrak A}(P)$,由假设 1.3(ii) 取含 $P$ 的证书 $(C,w_C)$。令 $T(L)=(N\cup C,\ E',\ w',\ O\setminus C)$,其中 $w'=w$ 于 $N$、$w'=w_C$ 于 $C\setminus N$,$E'$ 由 $w'$ 派生。引用闭合:$N$ 中节点引用 $N$,$C\setminus N$ 中节点引用 $C\subseteq N\cup C$。无环:$N$ 中节点不引用 $C\setminus N$(引用闭合于 $N$),故任一环若经过 $C\setminus N$ 则整个位于 $C\setminus N$ 内、其边来自 $w_C$,与证书无环矛盾;不经过者位于 $N$ 内,与 $L$ 无环矛盾。故 $T(L)$ 是账本,$T$ 只追加(容许)且 $P\in\mathrm{Frozen}(TL)$,所以 $P\notin\mathrm{Fix}(L)$。若 $T$ 定义中 $P\in N$ 则取恒等。∎
+
+*读法*。**任何变换都动不了的东西恰有两种:已经冻结的,和永远冻不了的。** 其余一切——可证而未证者——就是前沿,是变换的用武之地。这是 GICT 定理 7.3「好坐标系是变换下的不动标架」在账本上的精确形:不动标架 = 冻结集 ∪ 不可证集;而后者的存在(第二部定理 2.2)使标架顶上永远有一块诚实的 `open`。
+

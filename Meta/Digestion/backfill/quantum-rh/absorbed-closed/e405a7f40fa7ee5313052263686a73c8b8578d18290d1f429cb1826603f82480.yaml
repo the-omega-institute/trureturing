@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:e405a7f40fa7ee5313052263686a73c8b8578d18290d1f429cb1826603f82480
+  normalized_sha256: sha256:e405a7f40fa7ee5313052263686a73c8b8578d18290d1f429cb1826603f82480
+cas_ref: sha256:e405a7f40fa7ee5313052263686a73c8b8578d18290d1f429cb1826603f82480
+coverage_gids:
+  - gid: D5/S3/QuantumChannels/ProjectionDiagnostics/MonitoredReturnConservation.monitored_return_conservation
+    target_statement_id: sha256:c12377f7f20aec218681384d88b4ab93220563fb65ce7b7eab019a9e18523ce4
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,4 @@
+**定理 4.6(保守由诚推出;勘误必留痕)**〔证〕。设 $\mathfrak S$ 诚,$\mathrm{Balanced}(\mathcal U_t,L_t)$,$P\in\mathrm{Frozen}(L_t)$,且 $\mathrm{last}_{\mathcal U_t}(P)$ 的状态为 $\mathsf{frozen}$。若 $P\notin\mathrm{Frozen}(L_{t+1})$,则本步追加的 $c(L_t,\mathcal U_t)$ 中必含一条关于 $P$ 的主张,其状态 $\in\{\mathsf{open},\mathsf{refuted},\mathsf{unverified}\}$——撤销与留痕**同步**发生在 $(t,t+1]$。
+*证明*。由诚与前件账平,$\mathcal U_{t+1}$ 相对 $L_{t+1}$ 账平。若本步无关于 $P$ 的新主张,则 $\mathrm{last}_{\mathcal U_{t+1}}(P)$ 仍为 $\mathsf{frozen}$ 而 $s_{L_{t+1}}(P)\neq\mathsf{frozen}$,且 $\mathsf{frozen}\neq\mathsf{unverified}$,浮账,矛盾。∎
+*读法*。「勘误 ≠ 解冻」在此是**定理**:静默撤销就是撒谎。本定理只推出撤销**之后**不得保留未更正的主张;「事前留痕」是另一条规范,不由本定理推出。前件「最新主张为 frozen」与「当前账平」都不可省:早已改记为 $\mathsf{unverified}$ 者撤销时无需再留痕;初态不账平的轨迹不受策略律约束。
+

@@ -1,0 +1,12 @@
+## 1. 当前研究背景与实际复用
+
+CCM, *Zeta Spectral Triples*, arXiv:2511.22755v1，Section 8 将真实最低模态的单纯偶性与充分精确的 prolate 比较分开。这里直接处理前者在一个含激活点的参数区间上的完整证书，不以增加孤立数值点代替它。
+
+本轮读取 #5895 在 `83f2bd4c2059bbe555447a594abc492fb16f6452` 的实际 `GenuineModelDualTransport.lean`，特别是正移位形式的能量 Young 不等式及 `positive_form_complement_coercivity`。该工作处理同一形式中候选方向的改变；本节处理形式随 a 改变，因此不复制其通用论证，也不将未合并源码隐式导入。
+
+读取 loning 研究链 #6171 的 `Mertens/Third.lean`，blob `435484ecbfc11097a057d6b435045728a6e41f01`。其标量 Mertens III 对 Robin/Gronwall 研究有用，未作为本节 s=1/2 平移作用的范数估计。上节 5040 的首缺失素数 11 提醒了普通范数跳变；当前区间同样跨过素数 3 的真实激活。
+
+交付期间，同一研究分支并行推进到 `4804c4020d7d9f165a2e2683c42b01e3d47a8be4`。实际读取其 `WeilPrimeActivationEdge.lean` 和 `certify_prime3_scale_schur.py`：前者处理偶块 rank-one 主项和零 trace 偶模板的五次界，后者记录 N=128、半宽 1e-8 的证书。本节的奇轮廓三次界与其互补；数值部分借鉴保留 Gram 方向性的 Young 处理，但重新独立计算 N=64、半宽 2e-8 的全部加权 Schur 数据。没有把初步完成的半宽 1e-9 证书重复报告为最新前沿，也没有将并行结果文件作为当前证明输入。
+
+Dusson-Sigal-Stamm, arXiv:2008.10871 的 Feshbach-Schur/Fourier 谱离散分析提供经典方法背景。本节所有 Gamma、prime、pole 和高补空间估计均按同一个 Weil 算子推导，不移植 Schrödinger 正则性假设。原 `certify_prime3_refined.py` 以 SHA-256 `8bb067fc5499b0f2e1e48836e7a82237a15504109f82a856c72478d1096d69d0` 固定，仅复用其算术区间例程和明确候选数据，不执行其旧谱结果作为输入。
+

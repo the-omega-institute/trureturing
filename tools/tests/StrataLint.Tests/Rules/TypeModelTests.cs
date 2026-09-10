@@ -245,6 +245,13 @@ public sealed class TypeModelTests
     [Theory]
     [InlineData("D5/S0/Carrier/Ring", RuleFixture.RingPath)]
     [InlineData("D5/S0/Carrier/Algebra/Ring", "D5/S0/Carrier/Algebra/Ring.lean")]
+    [InlineData("D5/S0/Carrier/Algebra/Graded/Ring", "D5/S0/Carrier/Algebra/Graded/Ring.lean")]
+    [InlineData("D5/S0/Carrier/Algebra/Graded/Filtered/Ring", "D5/S0/Carrier/Algebra/Graded/Filtered/Ring.lean")]
+    [InlineData("D5/S0/Carrier/Algebra/Carrier/Ring", "D5/S0/Carrier/Algebra/Carrier/Ring.lean")]
+    [InlineData("D5/S0/Carrier/Algebra/Algebra", "D5/S0/Carrier/Algebra/Algebra.lean")]
+    [InlineData("D5/S0/Carrier/Algebra/Graded/Ring.norm_mul", "D5/S0/Carrier/Algebra/Graded/Ring.lean")]
+    [InlineData("D5/B/S0/Carrier/Algebra/Graded/Ring", "Blueprint/D5/S0/Carrier/Algebra/Graded/Ring.md")]
+    [InlineData("D5/E/S0/Carrier/Algebra/Graded/Ring.result--json", "Evidence/D5/S0/Carrier/Algebra/Graded/Ring.result.json")]
     [InlineData("D5/S0/Carrier/Ring.norm_mul", RuleFixture.RingPath)]
     [InlineData("D5/B/S0/Carrier/Ring", RuleFixture.BlueprintPath)]
     [InlineData("D5/E/S0/Carrier/Ring.result--json", "Evidence/D5/S0/Carrier/Ring.result.json")]
@@ -290,8 +297,10 @@ public sealed class TypeModelTests
     [InlineData("D5/L/zeros/sample2026paper")]
     [InlineData("D5/L/Weil/sample2026paper/extra")]
     [InlineData("D8/S0/Carrier/Ring")]
-    [InlineData("D5/S0/Carrier/Algebra/Extra/Ring")]
     [InlineData("D5/S0/Carrier/Carrier/Ring")]
+    [InlineData("D5/S0/Carrier/Algebra/Algebra/Ring")]
+    [InlineData("D5/S0/Carrier/Algebra/Graded/Graded/Ring")]
+    [InlineData("D5/S0/Carrier/algebra/Graded/Ring")]
     public void GidRejectsUnsafeOrNoncanonicalNeighbors(string text)
     {
         Assert.False(Gid.TryParse(text, out _));
@@ -321,14 +330,32 @@ public sealed class TypeModelTests
     }
 
     [Fact]
-    public void RepositoryPathPolicyRejectsFiveCoordinateFormalPathAsAddressShape()
+    public void RepositoryPathPolicyAcceptsFiveCoordinateFormalPathAsAddressShape()
     {
-        var path = RepoPath.CreateKnown("D5/S0/Carrier/Algebra/Extra/Ring.lean");
+        var path = RepoPath.CreateKnown("D5/S0/Carrier/Algebra/Graded/Ring.lean");
+
+        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
+        Assert.True(RepositoryPathPolicy.TryResolve(path, Policy(), out _));
+    }
+
+    [Fact]
+    public void RepositoryPathPolicyAcceptsFiveCoordinateEvidenceProjection()
+    {
+        var path = RepoPath.CreateKnown("Evidence/D5/S0/Carrier/Algebra/Graded/Ring.result.json");
+
+        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
+        Assert.True(RepositoryPathPolicy.TryResolve(path, Policy(), out _));
+    }
+
+    [Fact]
+    public void RepositoryPathPolicyRejectsRepeatedAdjacentBucketAtAnyDepth()
+    {
+        var path = RepoPath.CreateKnown("D5/S0/Carrier/Algebra/Algebra/Ring.lean");
 
         var issue = Assert.IsType<RepositoryPathIssue>(RepositoryPathPolicy.Validate(path, Policy()));
         Assert.Equal("SL-000", issue.RuleId.Value);
         Assert.Equal(
-            "noncanonical formal artifact: formal address must be Sn/Domain[/SubDomain]/Module or X_Zone/Module",
+            "noncanonical formal artifact: formal address must be Sn/Domain[/SubDomain...]/Module or X_Zone/Module",
             issue.Message);
         Assert.False(RepositoryPathPolicy.TryResolve(path, Policy(), out _));
     }

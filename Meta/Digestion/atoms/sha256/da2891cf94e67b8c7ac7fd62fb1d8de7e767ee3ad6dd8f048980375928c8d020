@@ -1,0 +1,26 @@
+## 27. PR3 增补 I：来源语言与来源–位置双电荷
+
+本节沿用定义 1 的来源树集合 $T$，将定义 12／命题 9 的联合分箱 $f(e)=(x(e),\rho(e))$ 向全域补零。记全局读数为 $\rho_{\rm src}$，与逐事件来源函数 $\rho(e)$ 区分：
+
+$$
+\rho_{\rm src}(X)=(w_X^\rho,z_X^\rho),\qquad
+w_X^\rho(p,r)=\sum_{\substack{e\in\Omega_X\\x(e)=p,\ \rho(e)=r}}\sigma(e),\quad
+z_X^\rho(p,r)=\sum_{\substack{e\in A_X\\x(e)=p,\ \rho(e)=r}}\sigma(e).
+\tag{SRC}
+$$
+
+两分量都是 $\mathbb Z^3\times T\to\mathbb Z$ 的有限支撑函数；比较时可先取两对象所用联合 bin 的有限并。这是已有粗观察的特化，不另建来源本体。$q(X)=\sum_{p,r}z_X^\rho(p,r)$，$\sum_{p,r}w_X^\rho(p,r)=0$；对来源求和恢复 $\pi$。
+
+在加法群 $R_T=\mathbb Z^{(\mathbb Z^3\times T)}$ 上定义魔群环乘法：
+
+$$
+\delta_{(p,r)}\star\delta_{(q,s)}
+=\delta_{(p+q,\operatorname{pair}(r,s))},
+\tag{SRC*}
+$$
+
+再作 $\mathbb Z$ 双线性延拓。于是
+$(c\star d)(u,\operatorname{pair}(r,s))=\sum_{p+q=u}c(p,r)d(q,s)$，而每个叶来源处的乘积系数为零。pair 单射使每个 pair 结点的两个来源子树分解唯一；位置仍需对全部有限支撑拆分求和。这个乘法**非结合、非交换**：三叶的 $\operatorname{pair}(\operatorname{pair}(r,s),t)$ 与 $\operatorname{pair}(r,\operatorname{pair}(s,t))$ 不同；$r\ne s$ 时 $\operatorname{pair}(r,s)\ne\operatorname{pair}(s,r)$，相应基向量已见失败。双线性及有限支撑不授予结合律；§15 交换 rng 的结合证明、§19 的整性与单位分类不施于这个来源 pair 代数。
+
+指定 $\Sigma_{\rm src}=\Sigma_{\rm sp}\cup\{F_L:L\subseteq T\}$，载体仍为 $\mathcal B$，观察与全槽位、全参数、任意有限深度上下文仍按定义 16。
+

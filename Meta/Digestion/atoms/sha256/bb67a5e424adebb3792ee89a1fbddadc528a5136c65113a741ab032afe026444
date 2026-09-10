@@ -1,0 +1,24 @@
+**26.29 当前调用的不可变来源事实。** 第一 primary task 为
+ce312694-86a6-4a1b-8318-90c77dc28f75,conversation conv_264064eff69b5335,
+实际完成模型 GPT-6 Astra,完成于 2026-09-09T13:25:33.673+00:00;
+其 pro-real-slab-reduction-envelope-0909.json 的 SHA256 为
+5f551e3062515163f220d7fce433908598f5147c5060d92e56ba1292e03ec77a。
+第二 primary task 为 3609e6b0-ab4d-4891-9b0f-55c613d43942,
+conversation conv_4c0b62a5e14b0f64,实际完成模型 GPT-6 Astra,
+完成于 2026-09-09T13:47:33.577+00:00;
+其 pro-real-slab-sharpening-envelope-0909.json 的 SHA256 为
+8105875c946f2c693c8db6a6b1f789756aab75fbd4cd297293431f08f25dcc92。
+两份完成记录分别绑定这些 envelope 身份;两次调用都未成功获取钉版仓库 URL,
+使用完整的供给定义,caller 已将定义与交付源核对。
+这两份顺序主输入不构成两票独立批准,也不证明模型族多样性或 sterile priors。
+
+本实施为 caller 的 consensus-rnd:sshx 编排下的 Codex CLI I9,
+repo-prior-exposed;未产生子 agent、额外 oracle 或独立 review 票。
+只消费给定 conclusion、完成元数据及列明的 caller 数学/文献/常量/gate 输入,
+不追读 log_ref、不消费 peer review 工件。
+上述输入位于 caller 的 /tmp/qgh-boundaries-0908/;其完整字节身份见设计报告和实施信封。
+较早恢复但 hash 不匹配的 GPU manifest 是历史,不属于本节输入。
+本节用明确乘法核对 \(7+6\cdot3=25\)、
+\(6\cdot2^{-23}/25=3/104857600\)、\(255\cdot19+18=4863\),
+没有采用 primary 中压缩的乘法串。
+

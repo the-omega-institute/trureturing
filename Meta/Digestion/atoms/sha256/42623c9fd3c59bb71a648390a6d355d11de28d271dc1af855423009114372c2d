@@ -1,0 +1,2 @@
+**第四轮复审·tests(2026-09-10,基准 `ee77c25c21`)**:`reject`;第三轮 18 条:12 closed / 6 partial;新增 2 blocking + 5 advisory,全部采纳:13.36 改为类型化接口(Key = $\mathcal P\uplus(\mathcal D\times\mathrm{Ver})$、状态 $X=(L,R)$、$s_{\mathrm{app}}$、诚$_{\mathrm{app}}$、版本约定),13.11 改为同一版本化键翻转的条件式;13.25 改〔引·semantic〕并把检测义务列为政策、3.14 转述改「测试上不可区分」;P1 目标身份改声明级预登记;P3 固定 $1-\hat S_{\mathrm{KM}}(90)$ 与同刻/零样本规则;10.5(i) 指向 9.2。
+

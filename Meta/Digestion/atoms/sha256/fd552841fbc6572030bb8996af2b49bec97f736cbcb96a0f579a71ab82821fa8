@@ -1,0 +1,15 @@
+### 5. 与概率支线及剩余任务
+
+#6114 的 `normalized_curvature_quadratic_bound` 给出一般概率重建序列的二次包络。本轮 `canonical_li_probability_envelope_implies_rh` 消费这个包络在 L=canonicalLiCoefficient 时的特化。新分支从已含 #6172 的 dev 创建，没有复制未合并概率模块或处理旧分支冲突。
+
+当前是 canonical 增长或全阶曲率正性到 RH 的前向解析连接。没有证明 RH 到完整 canonical 曲率正性的反向，也没有完成无条件全阶算术正性。失败 RH 的反证结论仅说明存在某个失败矩阵阶数或越过任何给定二次包络的系数，不提供统一检测截止阶数。
+
+三个 Lean 模块有配套 Scribe 候选。没有执行 elaboration、内核接受、公理闭包检查或 Scribe emission。有限有理数检查检验代数、递推、Möbius 几何和零点阶数的有限 jet。它不验证全索引 canonical 算术前提，也不能替代无限域解析证明。
+
+上一轮交付包内的标准库精确诊断现已重放：119 个多项式几何尾式、86 组带符号二阶差分序列、180 个有理复数 Möbius 往返、216 个复 Toeplitz Gram 恒等式及 96 个有限零阶障碍。重放是作者自检，不是独立复核或 Lean 内核证据。源码与该数学追加的远端身份另外通过 commit/blob 回读核对。
+
+- Existing owners: `WeilInfiniteComplementLeakage`, `WeilArithmeticCouplingJet`, `WeilEvenDualStencil`; actual #6029 and #6204 sources at the blobs above.
+
+
+---
+

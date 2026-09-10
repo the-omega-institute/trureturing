@@ -1,0 +1,10 @@
+## 90. A checked global oracle beyond bipartite supports
+
+`residualCoupling_bipartite_iff` identifies the precise sufficient graph condition: the original off-diagonal nonzero support induced outside K admits the supplied two-coloring. In graph terminology K is an odd-cycle transversal of that support, though it need not be a minimum one. Self-loops are harmless. The statement concerns this coupling-support graph, not the causal DAG.
+
+`SeparatorMediatorPricing.lean` stores one existing STCutCertificate for every branch b:K->Bool and a proposed winning branch. The field is a total function on the full branch carrier. A producer cannot select an incomplete branch list. The executable checker runs the existing bipartite pricing test on rho and theta_b for every b, recomputes kappa_b plus the certified residual price, and verifies that the winner dominates all branch values.
+
+`checkSeparatorPricing_sound` returns an actual maximizing original outcome table: undo the residual color flip and then restore the winner's K coordinates. To bound an arbitrary competitor, restrict that actual competitor to K, apply its branch identity and checked branch bound, then compare with the winner. This proves an attained global maximum over the entire original response-table carrier, including graphs with odd cycles.
+
+There are 2^card(K) branches; the empty set has its unique empty branch. Each residual flow instance retains the original vertex carrier and can use the merged exact flow-cut certificate. All selected vertices may be fixed, leaving only harmless diagonal mass and zero free multipliers. No minimal-separator search, general certificate-existence theorem or kernel-verified max-flow producer is supplied. Classical max-flow algorithms can propose the checked branch data. The source does not assert a rational bit-complexity bound or a polynomial bound on the total number of master iterations.
+

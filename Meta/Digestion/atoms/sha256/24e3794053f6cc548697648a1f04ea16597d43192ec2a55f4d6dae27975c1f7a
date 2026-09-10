@@ -1,0 +1,12 @@
+## [PR #5602] UNIFORM_SCHUR_CERTIFICATE_RECEIPTS
+
+Verifier SHA-256：`c527fa349cc1b6e14afedaffae0a44eb453cfff68aea12709dac0379236fa7d6`。
+90 位结果 SHA-256：`d02b04f9318ccea70a8a7bc5d239f18a59142823608157739f57f1ab6185a146`。
+120 位结果 SHA-256：`9d9ad89760bcd2635bd569549810c74ddca582d9069d670bdb18e232a60064f0`。
+诊断源 SHA-256：`fd24021b55526ae061f22ecf327030c929836dd343d699aa2a89e2252edc8aff`。
+
+校核补记：第二表达诊断最初复用了一个已消耗的迭代器，导致有理复向量求和只检查实部。现已先物化系数列表，加入非零虚部控制，并重新执行全部诊断。主区间验证器、两个精度的谱结果和前述解析证明均未改变。
+
+三条公开 Lean 定义/定理具有三个对应 FromLean Scribe 条目。没有新 authored sorry、admit 或 axiom；Lean elaboration、Scribe 发射与传递公理报告未执行。计算机辅助结果依赖明确的 Fourier/core、无限尾纸面证明，以及 Python、NumPy、mpmath 的算术实现；没有独立作者审查。
+
+- https://arxiv.org/html/2511.22755v1 , Sections 7-8.

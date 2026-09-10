@@ -1,0 +1,33 @@
+**29.6 带符号有限测度、系数界和归一化余项。** 记
+\[
+\nu_\pi=\delta_{a_H}+2\delta_{a_L}
+-\sum_{i,e}w^\pi_{i,e}\delta_{a_{i,e}},\qquad
+A_{\pi,n}=a_H^n+2a_L^n-\sum_{i,e}w^\pi_{i,e}a_{i,e}^n.
+\]
+\(\delta_a\) 在本条是点质量,与距离 \(\delta_i\) 不同。
+26.24 的经典对数级数在每个 \(|za|<1\) 绝对收敛,故
+\[
+G_\pi(z)=-\int\log(1-z\alpha)\,d\nu_\pi(\alpha)
+=\sum_{n\ge1}\frac{A_{\pi,n}}n z^n.
+\]
+符号是“包络指数矩减混合指数矩”,不能反置。
+两侧正测度各有总质量 3,各自的 \(n\) 阶矩属于 \([0,3]\),因此
+\[
+|A_{\pi,n}|\le3\quad(n\ge1).
+\]
+这比 26.25 中仍有效的三角界 6 更紧,并不否定或修改那里已有的尾界。
+不要求两侧支撑不相交。于是对每个分支
+\[
+\left|\frac{G_\pi(z)}z-A_{\pi,1}\right|
+\le3\sum_{n\ge2}\frac{z^{n-1}}n
+\le\frac32\frac z{1-z}.
+\]
+应用 26.25 已用的有限最大值稳定性
+\(|\max x_\pi-\max y_\pi|\le\max|x_\pi-y_\pi|\),得到
+\[
+\boxed{\left|\frac{G(z)}z-\max_\pi A_{\pi,1}\right|
+\le\frac32\frac z{1-z}.}
+\]
+此界对本节全部许可形状、正步长、相对薄层和容许高度一致;
+特别 \(G(z)/z\to\max_\pi A_{\pi,1}\),而 \(G(z)\to0\)。
+

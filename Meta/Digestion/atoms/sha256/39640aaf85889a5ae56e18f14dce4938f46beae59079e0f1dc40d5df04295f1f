@@ -1,0 +1,30 @@
+**26.30 摄入、派发事实和剩余义务。** 本次指定树为
+/Users/auricstudio/trureturing-qgh-variance,分支
+lane/math/quantized-gh-real-slabs-0909,封存输入和 canonical ingest BASE 为
+0ba660de65b4224b8734908f7d0dd178115fa377。
+追加前源为 2410 行、144029 字节,SHA256
+b9898b7df94a1d46bb2898a738b27f927b6136ea1eb7db240fafc428f84bbe36,
+Git blob 41c4487989f5739f80e4098cd91a8b229f870891;完整前缀逐字节保留。
+新增源段、常量输入文件和设计报告之外,只由下列 canonical 命令产生 CAS/消化条目:
+
+~~~sh
+make ingest BASE=0ba660de65b4224b8734908f7d0dd178115fa377 SOURCE=arithmetic-boundary-quantization
+~~~
+
+新条目属于参考输入的 residual-open,不表示 Lean 吸收或冻结。
+本节每个实质内容单元均编号;新增 CAS/entry 身份、源覆盖和实际命令退出码
+由本次 implementation envelope 给出。旧 18 行散文覆盖 advisory 及 generator 所有的
+LF/EOF 变体均是历史,本次不重写、不手工规范化。
+caller gate 所给派发事实为 S12 PR #6640 已 MERGED,
+S13 的 sealed prefix 在派发时独立评审 pending;这里保留它的全部源字节,
+不读取或改动其活跃评审工作树。这是此调用的 provenance,不改写第 25 节当时的状态记录。
+
+本次执行的有界输入核验只有 56 个常量行及计数/位宽/carry/尾常数,
+指数箱体执行数为 0、解析测试行执行数为 0,没有候选实验或 exponent sweep。
+全素数、全非负指数、任意 \(k\ge3\) 的比较和 RH 均保持 OPEN。
+下一数值义务是按另行登记的 MPS 窗口实现并认证所有必要分类,
+本节不声称已有 GPU kernel、GPU 搜索、持续 CPU 候选生成、一般域符号结论、
+新 formal root、axiom 或 Lean freeze。
+S14 的独立数学评审、普通仓库门与 MERGED 尚属 caller 后续义务,
+最终交付依赖 S13 MERGED;Git/PR 动作不属于 I9。
+这次有限源追加不完成持续研究目标。

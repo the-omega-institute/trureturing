@@ -1,0 +1,25 @@
+**27.5 一个实际角点足以给出箱体下界。** 记
+\(E=\ell(c)\)、\(c_{\min}=\min_i c_i\)。对 27.2 中任一实际可行角点 \(x\),
+\(\bar x\in I\)、\(\mu\ge\bar x\),故逐项
+\(0\le\delta_i\le|x_i-\bar x|\)。于是
+\[
+\rho\le\frac{\|\Pi x\|_2}{\sqrt{k(k-1)}},\qquad
+L\ge\ell(x)\ge\ell(c)=E\ge\ell(c_{\min}\mathbf1)=c_{\min}>0.
+\]
+第二、三步用 27.4,因为 \(x\ge c\ge c_{\min}\mathbf1\)。这证明
+\[
+\boxed{H\ge L\ge E\ge c_{\min}>0;}
+\]
+素数域还给 \(c_{\min}\ge\log2\)。没有 \(\max h_i\) 或其它步宽罚项。
+对该固定角点,\(L=\ell(x)\) 当且仅当
+\(\mu=\bar x\) 且全部 \(\delta_i=|x_i-\bar x|\),因为两项非负差之和为零。
+故 \(L=E\) 恰要求再有 \(\ell(x)=\ell(c)\);
+后者可沿实际增加的坐标逐次用 27.4 的等号条件判定,不强称严格。
+
+另有 \(E=c_{\min}\) 当且仅当 \(c\) 至多一个坐标严格高于 \(c_{\min}\):
+令 \(z_i=c_i-c_{\min}\ge0\)、\(s=\sum_i z_i\),则
+\(\|\Pi c\|_2^2=\sum_i z_i^2-s^2/k\le(k-1)s^2/k\);
+取等恰为 \(\sum_{i<j}z_i z_j=0\)。这包含 \(s=0\)。
+\(H=L\) 当且仅当 \(\rho=0\),等价于 \(V_0=0\),又等价于每行距离为零。
+此时 \(\Psi=kf(\mu)\),所有论证仍成立;本节不在零方差处微分平方根。证毕。
+

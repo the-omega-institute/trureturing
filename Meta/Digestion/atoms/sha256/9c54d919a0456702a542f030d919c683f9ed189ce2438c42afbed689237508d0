@@ -1,0 +1,34 @@
+### 2. Use the even lower bound only inside the even domain
+
+The independently executed complete-sector certificate on this PR gives
+q_A(f)>=||f||^2/1000 for even k-orthogonal vectors, in the stated neighborhood
+of a=log(3)/2. Its source blob is c29d0459429becf39f294221949975a23894ef47.
+The normalized sector-readout report has blob
+05f5b73fabd92d68893fbb9c32d69816c71f3fb3. Both were reread at the immutable
+head above. Their Fourier/core, full high-complement and reflected-domain
+identifications remain inherited analytic premises. The sector producer was
+not rerun in this continuation.
+
+Let F be the complex submodule of actual even domain vectors. Require
+k,e,u,v in F. Restrict the original maps by iota_F=iota composed with the
+subtype map and M_F=M composed with that map. The stronger lower bound is
+used on F only. No assertion about an odd or full-space gap is made.
+
+At the CENTRAL window take the independently inherited global ell and set
+
+    kappa=1/1000-ell,   delta=q_M(k) upper,   nu=q_M(e) upper,
+    ||e-k||<=epsilon,
+    kap=kappa*(1-epsilon^2)/(1+t)-delta*epsilon^2/t.       (SC1)
+
+The already-proved positive shifted-form theorem derives the e-complement
+bound on F. The new sector_projective_signed_ratio_bound then calls the
+already-proved actual projective signed-output theorem on that restricted
+domain. Its hypotheses include actual eigenvalue placement, unit model,
+trial membership, full residual and origin margins. It does not receive a
+new-complement estimate or final output bound as an unexplained oracle.
+
+A whole-domain symmetric realization is used in this particular statement;
+positivity is needed only on F. The old global ell is not asserted uniform
+on the neighboring scale interval. Membership of the selected actual ground
+mode in the even sector is still supplied by the established symmetry chain.
+

@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using StrataLint.Engine;
 
 namespace StrataLint.Scribe;
 

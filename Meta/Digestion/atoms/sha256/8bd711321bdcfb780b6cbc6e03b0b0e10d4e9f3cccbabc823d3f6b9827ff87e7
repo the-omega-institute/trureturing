@@ -1,0 +1,27 @@
+**26.4 包络的完整正定义域。** 置 \(c_{\min}=\min_i c_i\ge\log2\)。
+取薄层内任一实际角点 \(x\),其均值
+\(\bar x=k^{-1}\sum_i x_i\in I\)。因 \(x_i\in C_i\),有
+\(\delta_i\le|x_i-\bar x|\)。令 \(y_i=x_i-c_{\min}\ge0\)、
+\(s=\sum_i y_i=k(\bar x-c_{\min})\),则
+
+\[
+\begin{aligned}
+V_0&\le\sum_i(x_i-\bar x)^2
+=\sum_i y_i^2-\frac{s^2}{k}\\
+&\le s^2-\frac{s^2}{k}
+=k(k-1)(\bar x-c_{\min})^2 .
+\end{aligned}
+\]
+
+中间不等式只用 \(2\sum_{i<l}y_i y_l\ge0\),不需要各个 \(y_i\) 严格正。
+事实上某个 \(x_i=c_{\min}\) 时 \(y_i=0\) 完全允许。由
+\(\bar x\le\mu\) 得
+\(\rho\le\bar x-c_{\min}\le\mu-c_{\min}\),因此
+
+\[
+\boxed{H\ge L=\mu-\rho\ge c_{\min}\ge\log2>0.}
+\]
+
+这还给出 \(V_0<k(k-1)\mu^2\)。后面所有固定下预算的角点区间都保留实际角点,
+故此证明逐点适用,包括 \(\rho=0\)、角点预算等于薄层端点和 \(b_i=0\)。
+

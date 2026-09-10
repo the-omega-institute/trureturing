@@ -1,0 +1,2 @@
+**反例 D7（同属性生成边可造成正面因果分离，repo-derived）。** $E=\Omega=\{a,b,c,d\}$，位置全 $0$、来源 $l_0$，符号 $+,+,-,-$，时刻 $0,1,2,0$，选择 $\{a\}$。$X$ 只有 $b\prec c$；$Y$ 为 $a\prec b,b\prec c,a\prec c$。两者 $\rho_{\rm src}=(0,\delta_{(0,l_0)})$、$(m,M,s)=(0,2,2)$，但对 $Q=\{(0,-1,l_0)\}$ 有 $q(F_{\downarrow Q}X)=0,q(F_{\downarrow Q}Y)=1$。这些值逐事件计算并由附录 `edge=0,1` 复核，证明 $\Sigma_{\rm cau}$ 严格细化 $\Sigma_{\rm src}\cup\Sigma_{\rm st}$。新增生成边 $a\prec b$ 两端同属性，却在闭包中新增 $a\prec c$ 的跨属性关系，故也反驳“插入同属性生成边并取闭包必不可见”的全称断言。
+

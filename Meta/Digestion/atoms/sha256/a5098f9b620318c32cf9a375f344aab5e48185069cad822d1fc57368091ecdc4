@@ -1,0 +1,16 @@
+## 97. Reuse subset-sum algorithms instead of rebuilding an exponential causal search
+
+The upper endpoint can be written
+
+```text
+U = 1/2 - (1/2)*min_S abs(sum_(i in S)(alpha_i+beta_i)-1).
+```
+
+Choose a positive common denominator D for the combined weights, so alpha_i+beta_i=a_i/D with nonnegative integers a_i and sum a_i=2D. Complement symmetry reduces closest-to-D to the largest reachable subset total s*<=D. Then U=s*/(2D). Ordinary Bellman reachability computes these totals and a subset witness in O(nD) basic state updates with an appropriate implementation. This is pseudopolynomial: D can be large relative to the bit length of the rational input. Neither a new subset-sum algorithm nor a Lean complexity theorem is asserted.
+
+Bringmann's SODA 2017 work, Koiliaris and Xu's TALG 15(3), Article 40 (2019), and the more recent Sajith preprint *Subset Sum in Near-Linear Pseudopolynomial Time and Polynomial Space*, arXiv:2508.04726 (2025), provide more sophisticated algorithmic owners. Their implementations and complexity proofs are not reproduced here. The executed local program uses ordinary exact integer reachability, then constructs the original coupling and outcome witnesses. Upgrading that backend can preserve the causal result through this exact mathematical interface.
+
+There is also a precise paper-level complexity encoding: given nonnegative integer partition weights a_i with positive total A, set alpha_i=beta_i=a_i/A. The causal ceiling 1/2 is attainable exactly when some subset sums to A/2. The input encoding has polynomial size. This shows why a small-support causal witness does not by itself imply an easy general discovery procedure; no Lean NP-hardness reduction is included.
+
+For alpha=beta uniform on three states, the sharp interval is [0,1/3], even though pi is no longer fixed to the earlier directed cycle. On five uniform states the upper endpoint is 2/5. At n uniform states the paper formula gives 1/2 for even n and (n-1)/(2n) for odd n. For alpha=(4/5,1/5), beta=(7/10,3/10), the upper value is 1/4, attained by pi=((1/2,3/10),(1/5,0)) and the fair outcome mixture of 01 and 10. These are exact instances, not effects estimated from real data.
+

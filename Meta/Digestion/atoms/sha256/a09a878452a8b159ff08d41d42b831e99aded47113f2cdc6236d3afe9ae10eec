@@ -1,0 +1,36 @@
+### 6. Complete corrected-output budget on the prior small box
+
+Use the same closed box of half-width 1/100000 around 20+i/4, the prior
+whole-domain lower bound ell, old candidate energy width delta and genuine
+model width nu. The previous centered full-residual verifier was replayed
+at 100 digits in this continuation. Its two-sided exterior is unchanged.
+
+Choose sigma=eta=delta/2, since the inherited eigenvalue enclosure gives
+0<=lambda<=delta for M=A-ell. The old complete centered residual radius is
+less than 357/10000. Recentring it with the full model residual and retaining
+the spectral-center shift yields
+
+    ||s_sigma|| < 3572/100000,
+    ||w|| < 194/10000,
+    ||v_e|| < 7,
+    ||g0|| < 21/20,
+    |d_e| > 805/1000,       |d_p| > 784/1000.
+
+The raw centered candidate component is below 13/1000, obtained from the
+prior uncentered component, the actual model ratio and the origin-kernel
+norm. Its contribution is not discarded. The original model graph residual
+is used here only to transport the full dual residual; it is not substituted
+for the signed scalar pairing in SG7.
+
+Exact Fraction arithmetic and a Candidate norm_num theorem give
+
+    |ratio(u)-ratio(e)+Dapprox/d_e| < 885/1000000,
+    |ratio(u)-ratio(e)| < 891/1000000.                    (SG9)
+
+These inherit the recorded canonical operator/domain, full spectrum, genuine
+model and Fourier identities. They are weaker than #5602's previously
+reported normalized bound 51/100000 on a larger disk. The useful new output
+is the signed defect and the product-remainder route, not a superior
+fixed-window zero-free region. The remainder is currently much larger than
+the signed defect, so no sign of the ACTUAL Fourier error is inferred.
+

@@ -1,0 +1,44 @@
+### 3. Multiplicative energy transport with no independent G term
+
+Use the existing actual complex-linear domain maps iota,M and
+q(f)=Re<iota(f),M(f)>. Assume symmetry and whole-domain shifted positivity,
+unit k, ||e-k||<=eps<1 and q(e)<=nu. Suppose the already-justified new
+complement satisfies q(f)>=kap||f||^2 on e-perp, kap>0. Suppose an old
+FULL-residual certificate gives
+
+    |<h,f>|^2<=C q(f) on k-perp, C>=0, and <h,e>=0.
+
+For f perpendicular to e, choose
+
+    beta=<k,f>/<k,e>,      v=f-beta e.
+
+The candidate-overlap floor gives |beta|<=eps||f||/(1-eps); v is
+k-orthogonal. Crucially <h,v>=<h,f> exactly. The previously proved positive
+energy Young inequality gives, for any t>0,
+
+    q(v)<=(1+t)q(f)+(1+1/t)|beta|^2 q(e).
+
+Consequently
+
+    |<h,f>|^2 <= A_t*C*q(f),
+    A_t=(1+t)+(1+1/t)*(eps/(1-eps))^2*nu/kap.             (CE2)
+
+This is purely multiplicative. It neither ignores the candidate readout nor
+claims it is small: annihilation preserves the entire readout in the change
+of hyperplane. No repaired trial's infinite action, model graph norm or new
+exact inverse is invoked by this argument.
+
+The original positive-form angle condition
+
+    eps^2*(kappa/2+delta)<=kappa/4,   q(k)<=delta,
+
+already derives kap=kappa/4 from the k-complement gap. With additionally
+0<=eps<=1/2 and nu<=kappa/4, t=1 gives A_t<=4. Thus the source proves both
+
+    q(f)>=(kappa/4)||f||^2,
+    |<h,f>|^2<=4C q(f),    f perpendicular to e.           (CE3)
+
+Whole-domain shifted positivity is essential. No unshifted all-window Weil
+positivity is assumed. The older uncentered readout theorem remains valid;
+one cannot delete its G term without changing and certifying the readout.
+

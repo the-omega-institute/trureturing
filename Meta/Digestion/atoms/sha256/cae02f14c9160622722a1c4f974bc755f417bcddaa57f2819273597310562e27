@@ -1,0 +1,34 @@
+### 35.3 摄入与追加边界的固定检查点
+
+以下读数固定在追加本收据之前，不用本节自指自己的最终摘要。两次 canonical ingest 均使用下列完整命令，均退出 **0**，stderr 均为空：
+
+```sh
+BASE=95442f6d3d6c3bb970029440d4e3a463aaec1993 make ingest SOURCE="contextual-spacetime-arithmetic docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md"
+```
+
+首次输入 HEAD 为 `074ea6b6ca60d0013ade8b3efb0e6c1df66be07b`，生成 **30 atoms／30 residual-open**，提交 `31dd372c12077da31ada29983172d103d4bd5053`；stdout 为：
+
+```text
+INGEST residual_open_added=30 skipped_existing=268 coarse_fallbacks=0 open_genres=0 cas_objects_written=30 ledger_changed=true
+```
+
+该次命令成功后，原文核对发现表格后的命题 52 证明、D14 完整反证及正对照没有全部进入 atoms；退出码不代替内容核对。本席只在新增 §34.2、§34.5 补上明确小标题，分别提交 `5b0cb519e83ada291f777f8b19ccbfb31deccd5e`、`113e4c1d6db2255463c716278dcdd6173c1b7c68`，没有手改、删除或修复已经生成的 CAS 对象或账目。
+
+第二次输入 HEAD 为 `113e4c1d6db2255463c716278dcdd6173c1b7c68`，生成 **12 atoms／12 residual-open**，提交 `bae7159e871dc22a57bddb1ba0a2d65518022d1e`；stdout 为：
+
+```text
+INGEST residual_open_added=12 skipped_existing=281 coarse_fallbacks=0 open_genres=0 cas_objects_written=12 ledger_changed=true
+```
+
+此检查点累计新增 **42 atoms／42 residual-open**。逐行核对 §34 至当时 EOF 的 **143 行非空、非标题、非锚点内容**，每行正文、公式或表格单元内容都能在至少一个新增 atom 中找到，遗漏 **0**；表格行仅去除末尾 Markdown `|` 后比较，因为实际 row atom 的字节边界止于该分隔符之前。全部 42 个 atom 的内容 SHA256 与文件名相符，且均有同源 residual-open。核验脚本与逐行 atom 索引位于本次 runner 目录的 `audit_source_ingest.py`、`ingest-2-coverage.json`。原始 CAS 切片保留段落末尾空行，通用 `git diff --check` 对此报 `new blank line at EOF`；没有为消除该诊断改写不可变 blob，正文的空白检查另行通过。
+
+在此期间 `origin/dev` 前进至 `d59adb46d4703e7fdc7ef7569c5c0919247cc87a`；本席再次 fetch／试合，退出均为 **0**，试合树 `8720ddcc8312b9852b5485b7e092963aa58635b6`。相对首次合入的 dev，本卷差异仍为空；`git merge --no-edit origin/dev` 以 merge commit `3ee29f1954874e4797ed72bc10271a22e9c4a9e9` 合入，不 rebase，摄入仍使用上列固定基线。
+
+追加本收据前的 HEAD 为 `bae7159e871dc22a57bddb1ba0a2d65518022d1e`，卷文 **4526 行／336985 字节**，SHA256 `850c525569a165d6fc5a6bc5f795204ea6562f45a6893e2133fd18b79f47023c`。去除附录唯一新增的 356 行后，现文的前 **296025 字节**与 3935 行基线全文逐字节相等；当时 §34 尾部新增 235 行，工作树干净。实际 `git diff -U0 origin/dev..HEAD -- docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md` 的 hunk 行为：
+
+```text
+@@ -2076,0 +2077,356 @@ print(f"pr4_temporal_causal: random_samples={len(pr4_samples)} cases={len(pr4_ca
+@@ -3935,0 +4292,235 @@ INGEST residual_open_added=57 skipped_existing=217 coarse_fallbacks=0 open_genre
+```
+
+本 §35 是固定检查点之后的正文追加，须在它最后一次改动之后再执行同一 ingest 命令并提交，使收据本身也进入上述链路。最终摄入的退出码、计数及提交、完整附录重跑的 `pr5_` 行与末行、逐节 commit SHA、最终两个纯插入 hunk、允许路径范围、同步／推送和干净状态，由 `/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-pr5-impl-0910/attempt-1/result.json` 与 `implementation.log` 绑定记录，不用这里的固定 42／42 代替最终累计数。本批交付推送分支，不开 PR；三席评审、后续准入及未测数学边界不由实施收据预先判定。

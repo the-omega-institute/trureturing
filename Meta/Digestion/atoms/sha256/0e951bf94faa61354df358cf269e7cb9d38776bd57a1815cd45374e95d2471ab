@@ -1,0 +1,26 @@
+### 1. Target and the additional exact information
+
+The target remains the actual lowest-Weil-mode comparison with the SAME
+prolate family in Connes, Consani and Moscovici, arXiv:2511.22755v1,
+Section 8, distinct from the explicit-model limit in Lemma 7.3. This increment
+addresses the normalized observable F(u)(z)/F(u)(0). The normalization removes
+global phase and amplitude, but its denominator still needs a certificate.
+
+The current #5602 source at 4b56b742eb5d3bc67e0e1bba3de8457224b4abc9 already
+has an origin-normalized fixed-window certificate, with error <51/100000 on
+a disk of radius 1/1000 around 20+i/4. It also adds Gamma form-scale moduli.
+Those computations and scale results are not repeated or claimed here. The
+new result retains an exact annihilation identity in the positive-form
+transport and derives a single normalized directional-rate condition.
+The actual EnergyDualPaperFT source on #5882 was reread. Its original
+unnormalized full-residual limit transport is not redefined.
+
+Loning's #5326 was inspected at PR-description scope for its distinction
+between finite boundary evidence and actual limiting functions. The 2026
+paper Wu and Zhang, arXiv:2607.23850, was read at primary-abstract scope for
+output-specific adjoint error estimation. Its PDE assumptions and error
+representation are not imported as Weil theorems. Suzuki, arXiv:2606.09096v1,
+retains the localized form-domain/lower-bound distinction used here. The
+centered linear functional, positive-form Young estimate and quotient
+identity are classical algebraic tools; no priority is claimed.
+

@@ -314,6 +314,19 @@ append_manifest_entry() {
   printf '%s\0%s\0' "$relative" "$path" >> "${manifest}.requests"
 }
 
+# The report inspector is a Lean program too. Keep its source closure owned by
+# this canonical Lean-input helper so report fingerprints and the Lean build
+# address enumerate the same supporting files.
+lean_inspector_source_paths() {
+  local path
+  [[ -d "$REPOSITORY/tools/lean-inspector" ]] || return 0
+  find "$REPOSITORY/tools/lean-inspector" -type f -name '*.lean' -print \
+    | while IFS= read -r path; do
+        printf '%s\n' "${path#"$REPOSITORY/"}"
+      done \
+    | sort
+}
+
 # Dependency preimage uses the same manifest form, with only the pinned inputs.
 lean_dependency_sha256() {
   local manifest="$TMP_ROOT/dependency.manifest"
@@ -343,8 +356,7 @@ lean_cache_address() {
     append_manifest_entry "$sources_manifest" "${path#"$REPOSITORY/"}" || return 2
   done < "$sources_list"
   if [[ -d "$REPOSITORY/tools/lean-inspector" ]]; then
-    find "$REPOSITORY/tools/lean-inspector" -type f -name '*.lean' -print \
-      | sort > "$inspector_sources_list" || return 2
+    lean_inspector_source_paths > "$inspector_sources_list" || return 2
     while IFS= read -r path; do
       append_manifest_entry "$sources_manifest" "${path#"$REPOSITORY/"}" || return 2
     done < "$inspector_sources_list"

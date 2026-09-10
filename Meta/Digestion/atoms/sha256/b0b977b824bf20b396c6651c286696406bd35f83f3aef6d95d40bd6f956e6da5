@@ -1,0 +1,25 @@
+## 4. 新 Lean 的另一个具体结果：奇低块的三次激活能量
+
+在固定空间采用实奇基 (-1)^n sin(pi*n*y)，其范数为 1。对有限复系数 v_n，记 F(t)=sum v_n sin(pi*n*t)。当新平移 s=2-h、0<=h<=1，左、右条带的轮廓分别为 F(t) 和 -F(h-t)。所以实际 Weil 的负对称 prime 项恰为
+
+\[
+Q^-_{w,h}(v)=w\int_0^h
+\{\overline{F(t)}F(h-t)+\overline{F(h-t)}F(t)\}\,dt.
+\tag{PT5}
+\]
+
+新 `oddPrimeActivation` 先独立定义这个完整复积分。其 integrand 是连续函数，所有交叉项保留。由 |sin(pi*n*t)|<=pi*n*|t|，令 B=sum n|v_n|，则积分内模长至多 2pi^2 B^2 t(h-t)。有限 Cauchy-Schwarz 和精确多项式积分给出
+
+\[
+\boxed{\|Q^-_{w,h}(v)\|\le
+\frac{w\pi^2h^3}{3}
+\left(\sum n^2\right)\left(\sum|v_n|^2\right),\qquad w,h\ge0.}
+\tag{PT6}
+\]
+
+`odd_prime_activation_cubic_bound` 保存 (PT6)，不接收边界值、组装后能量或积分值的假设。其积分表达对任意非负 h 都成立；与两个不交物理条带的识别使用 h<=1，正编号基下的系数平方和是实际 L2 范数。
+
+(PT1) 内 h3<=7.281914e-8，取 S={1,...,64} 后，对实际 w3 的 (PT6) 右侧系数再作定向检查，得到低奇块的新增素数能量范数上界小于 1e-16。这里是该有限块的预算，完整 Schur 计算仍使用未粗化的矩阵。
+
+(PT6) 的常数随有限频率集合增长。因此它与上一节全空间范数跳变、参考形式仅有对数模量完全相容。数值证书仍使用完整实际矩阵元素，没有用粗的 h^3 上界代替高低耦合计算。
+

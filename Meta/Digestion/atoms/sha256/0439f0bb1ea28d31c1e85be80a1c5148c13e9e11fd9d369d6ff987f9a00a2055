@@ -1,0 +1,17 @@
+### 37.2 有限的是证明节点，连续候选空间保持不变
+
+检索并读取 `FiniteExhaustion` 与 `FiniteBranchAtlas` 后，确认其有限性前提作用在 Candidate。不能把共同无偏向量空间换成观测到的六十个标签来调用它们。
+
+新的 `D5/S0/Certificates/FiniteSublevelCover.lean` 只把证明节点编号限制为 `Fin n`。实际候选类型 `X` 可以是连续相位空间。`LocalStep` 的每个构造都要求对应的 Lean 证明：目标集合包含、残差区间排除、守恒区间排除、完整二分，或保留全部小残差点的收缩。子节点编号必须严格小于父节点，避免循环论证。
+
+主定理 `sublevel_mem_target_of_local_steps` 通过自然数强归纳推出：
+
+```math
+x\in B_{root},\quad\forall a\ |f_a(x)|\le\varepsilon
+\quad\Longrightarrow\quad x\in T.
+```
+
+它不假设全局覆盖，不要求根唯一或存在，也不要求 `X` 有限。分裂必须覆盖整个父集合，包括公共边界。收缩必须保留整个闭子水平集，不能只保留精确零点。
+
+这是局部证明的逻辑组合定理，不是区间求值器、文件解析器，也不是具体轨迹已经满足 `LocalStep` 的证明。具体实例仍需要构造每个节点的证明项。
+

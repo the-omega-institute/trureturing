@@ -1,0 +1,21 @@
+### 3. 本路线所需的 forward Schoenberg 已有证明源码
+
+`FiniteGaussianSchoenberg` 只依赖 Mathlib。对任意有限实正半定矩阵 G，复系数意义下的矩阵
+
+\[
+\left[e^{-t(G_{ii}+G_{jj}-2G_{ij})}\right]_{ij}
+\]
+
+在每个 t>=0 都正半定。证明使用钉版 Mathlib 的 Schur product theorem：每个逐项幂 G^(Hadamard k) 都正半定，因此非负 factorial 权重的有限和保持正性。逐项标量指数级数收敛后，对每个有限二次型取极限，得到逐项 exp(2t G) 的正性。接着使用精确因式分解
+
+\[
+e^{-t(G_{ii}+G_{jj}-2G_{ij})}
+=e^{-tG_{ii}}\,e^{2tG_{ij}}\,e^{-tG_{jj}}
+\]
+
+作对角合同变换。实到复的标量扩张通过实际 G=B^T B 分解完成，因此结论检测所有复系数向量，而非只检测实部。这里始终是逐项指数，不是谱意义的矩阵指数。
+
+此结果是经典 Schoenberg 定理的有限 Gram 前向形式。经典结论及其 Hilbert Gaussian 背景可参照 J.C. Guella, *On Gaussian kernels on Hilbert spaces and kernels on hyperbolic spaces*, Journal of Approximation Theory 279 (2022), 105765, DOI 10.1016/j.jat.2022.105765。本轮没有主张新的 Gaussian 正性定理，也没有把一般条件负定核到 Hilbert 嵌入的逆构造计入完成范围。这里的 Li 核已经由上一节的实际 G 明确实现，因此不需要该一般逆构造。
+
+`reconstructed_li_exponential_posSemidef` 把这个定理应用到同一个积分 G，得到 exp(-t L_|n_i-n_j|) 的全有限样本正性。它无需另外提供 Schoenberg、条件负定性、指数正性或 Hilbert 距离表示。
+

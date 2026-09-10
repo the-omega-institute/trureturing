@@ -1,0 +1,36 @@
+**证明（累积核对与单射）。** 由定义及有限和直接有
+
+$$
+P(c\diamond d)(n)=C_nD_n=C_n*D_n,
+\qquad
+P(\alpha c)(n)=C_{n-1}.
+\tag{CUM-AUX-TRANSFORM}
+$$
+
+此显示式中的并置乘法 $C_nD_n$ 明确指原空间卷积 $*$，不是对空间位置逐点相乘。第一式使用 $\max(a,b)\le n$ 等价于 $a,b\le n$；第二式把平移后的求和时间减一。
+
+记 $E=Pe$。用命题 53 两次，(CUM-HOM) 两边经 $P$ 后在每个整数 $n$ 分别为
+
+$$
+\begin{aligned}
+P\bigl((c\odot d)\odot\alpha(e)\bigr)(n)
+&=(C_{n-2}*D_{n-2})*E_{n-2},\\
+P\bigl(\alpha(c)\odot(d\odot e)\bigr)(n)
+&=C_{n-2}*(D_{n-2}*E_{n-2}).
+\end{aligned}
+$$
+
+原空间卷积的结合律使它们相等；命题 52 的单射性把累积等式带回剖面等式。最后独立核对乘法保持式：
+
+$$
+\begin{aligned}
+P\bigl(\alpha(c\odot d)\bigr)(n)
+&=P(c\odot d)(n-1)=C_{n-2}*D_{n-2},\\
+P\bigl(\alpha(c)\odot\alpha(d)\bigr)(n)
+&=P(\alpha c)(n-1)*P(\alpha d)(n-1)
+=C_{n-2}*D_{n-2}.
+\end{aligned}
+$$
+
+再次由 $P$ 单射得到 (CUM-MULTIPLICATIVE)。这个第二恒等式有自己的核对，不从“Hom-associative”一词推出。全部论证发生在整数模块和原空间卷积中，没有借用域上的除法或假设全域单位。证毕。
+

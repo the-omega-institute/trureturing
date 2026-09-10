@@ -1,0 +1,19 @@
+**28.1 本层命题与证据身份。** 本节是 C33 / S17 的 PAPER_ARGUMENT / repo-derived
+参考输入,主数学输入为实际 GPT PRO task aaaf57ba-7b72-4143-b830-b4b58fe7fc2c,
+conversation conv_576df749336210e9,该调用观测模型 GPT-6 Astra。
+本节证明一个对共同高度一致的远第三坐标负裕量,再与第 27 节的小坐标分离结果合成
+固定三素数的有界相对跨度结论,并把射线排除扩展到所有非零非负整数方向。
+经典范数与凹性材料的出处见 28.18;专门的组合估计是这里展开的推导,
+其原创性未作评定,不声称新颖性、优先权或穷尽文献检索。
+GH 保留为用户尚未数学定义的原标签。这个包络比较缺口不被称为 RH 等价判据,
+本节没有 RH 进展或形式化证明主张。
+
+本节只用已完成的 relative-spread primary、其 caller 固定核验和本树封存的先行源文。
+后续 common-height 与 balanced-all-slab primaries 不是本层输入。
+第 1-27 节的 201529 字节 / 3627 行前缀原样保留,SHA256 为
+b7cb35d87d0a7b7e569c49ab57f2b556c454257de8bd65899587d13be1338537;
+implementation BASE 为 feb497ec31f68e09ccc547a08810c398e66f3ee6。
+原始 primary payload 的 SHA256 为
+7d0bddfc1fcf761290f7bf777663f52f07af927eb2832001a67ff509bdeb4f11。
+其两处转义的非负整数记号在本节排作通常的 \(\mathbb Z_{\ge0}\),原始 payload 不改。
+

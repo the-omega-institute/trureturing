@@ -1,0 +1,20 @@
+**命题 37（全部实际像，repo-derived）。** 令 $\mathcal D_{\rm ts}$ 为满足下列三个互斥分支之一的元组 $(W,Z,m,M,s)$ 的集合，则
+
+$$
+\Xi[\mathcal B]=\mathcal D_{\rm ts}.
+\tag{TS-IMAGE}
+$$
+
+1. **空档案分支：** $W=Z=0$，$m=+\infty$，$M=s=-\infty$。
+2. **非空档案、空当前区域分支：** $W=Z=0$，$m,M\in\mathbb Z$，$m\le M$，$s=-\infty$。
+3. **非空当前区域分支：** $W,Z\in\mathcal L$，$m,s,M\in\mathbb Z$，并且
+
+$$
+m\le s\le M,\qquad \varepsilon W=0,\qquad
+\operatorname{supp}(W)\cup\operatorname{supp}(Z)
+\subseteq([m,s]\cap\mathbb Z)\times\mathbb Z^3.
+\tag{TS-SUPPORT}
+$$
+
+第三分支没有要求 $s$ 出现在任一有符号支撑中；正负抵消可以使真实最高当前时刻不可见。
+

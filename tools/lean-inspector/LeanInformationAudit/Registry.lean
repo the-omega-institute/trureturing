@@ -1,3 +1,4 @@
+import LeanInformationAudit.RegistryTypes
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import LeanInformationAudit.Sha256
 import LeanInformationAudit.FixedSnapshot
@@ -33,33 +34,6 @@ def generatedCompanionSuffixes : Array String := #[
   "__information_catalog",
   "__catalog_irredundant"
 ]
-
-abbrev CatalogId := Name
-
-inductive CatalogKind where
-  | canonicalMaximal
-  | analysisView
-  deriving BEq, Inhabited, Repr
-
-def CatalogKind.artifactName : CatalogKind -> String
-  | .canonicalMaximal => "canonical_maximal"
-  | .analysisView => "analysis_view"
-
-structure InformationRegistryEntry where
-  theoremName : Name
-  unitName : Name
-  /-- The `PrimitiveLawArena` presentation. -/
-  arenaName : Name
-  /-- The declaration holding the native realization or the legacy witness. -/
-  realizationName : Name
-  catalogId : CatalogId := .anonymous
-  catalogKind : CatalogKind := .canonicalMaximal
-  registrationModuleName : Name := .anonymous
-  objectArenaName : Name := .anonymous
-  /-- Stable identity of the elaborated theorem statement captured at registration. -/
-  statementIdentity : String := ""
-  /-- False exactly for registrations using occurrence-aware syntax. -/
-  localRegistrationNames : Bool := true
 
 def InformationRegistryEntry.lawArenaName (entry : InformationRegistryEntry) : Name :=
   entry.arenaName
@@ -174,6 +148,15 @@ end ExpectedOccurrenceManifest
 
 def frozenInformationRootId : Name :=
   `D5.S3.ConceptDynamics.InformationEscape.InformationRoot
+
+/-- Companions of imported objects belong to this compilation, not the object's module.
+Lean's private names preserve local source resolution while separating compiled roots.
+The frozen root retains its public declarations: they are part of its frozen statement
+identity and are consumed by SharedInformationRoot and SealBaseline. -/
+def localCompanionName (env : Environment) (owner : Name) (suffix : String) : Name :=
+  let name := owner.str suffix
+  if env.header.mainModule == frozenInformationRootId || !env.isImportedConst owner then name
+  else mkPrivateName env name
 
 def designatedInformationRootId : Name :=
   `D5.S3.ConceptDynamics.InformationEscape.SharedInformationRoot

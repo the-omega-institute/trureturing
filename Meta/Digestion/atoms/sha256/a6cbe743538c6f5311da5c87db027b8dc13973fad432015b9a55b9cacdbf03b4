@@ -1,0 +1,11 @@
+**命题 32（最早整数与全部交换重标）。** 对 $a,b\in\mathbb Z$，$\max(a,b)+1$ 是同时严格晚于二者的最早整数。一个任意函数 $h:\mathbb Z\to\mathbb Z$ 满足
+
+$$
+h(\max(a,b)+1)=\max(h(a),h(b))+1\quad(\forall a,b\in\mathbb Z)
+\tag{CLOCK}
+$$
+
+当且仅当存在 $c\in\mathbb Z$ 使 $h(n)=n+c$ 对全部整数成立，不需先假设 $h$ 双射或单调。
+
+**证明。** $\max(a,b)+1$ 严格大于二者；任一整数 $j>a,b$ 满足 $j>\max(a,b)$，整数离散性给 $j\ge\max(a,b)+1$。对 (CLOCK) 代入 $a=b=n$，得到 $h(n+1)=h(n)+1$。以 $c=h(0)$，向上归纳给全部非负整数的公式；以 $h(n)=h(n+1)-1$ 向下归纳给全部负整数的公式。反向，整数平移保 max，代入即得 (CLOCK)。证毕。
+
