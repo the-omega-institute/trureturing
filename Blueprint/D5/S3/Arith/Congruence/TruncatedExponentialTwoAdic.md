@@ -24,13 +24,13 @@ $$\forall n,k: \mathbb{N}, (\operatorname{Odd}\left(n\right) \land 1 \le k \land
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/TruncatedExponentialTwoAdic.odd_positive_branches` (`✓ std3`). ∎
 
-*Source.* Suspected novel.
+*Source.* Repository-derived.
 
 *Acknowledgement.* Peter Luschny (2026). *OEIS A398189, binary valuations of generalized Schenker sums*. URL: <https://oeis.org/A398189>.
 
 *Commentary.*
 
-For odd k the binary valuation is zero. For even k outside 14 modulo 16 it is the binary valuation of k+2. The proof first identifies the sum with H(0)=1 and H(m+1)=n^(m+1)+(m+1)H(m). Six recursive steps have a history coefficient divisible by 16. Odd powers have period four modulo 16, so this identity reduces every length at least six to residues. The shorter lengths are treated separately. The resulting residues are nonzero in the asserted range, so they determine the exact valuation. No formula is asserted for k congruent to 14 modulo 16.
+For odd k the binary valuation is zero. For even k outside 14 modulo 16 it is the binary valuation of k+2. The proof first identifies the sum with H(0)=1 and H(m+1)=n^(m+1)+(m+1)H(m). Six recursive steps have a history coefficient divisible by 16. Odd powers have period four modulo 16, so this identity reduces every length at least six to residues. The shorter lengths are treated separately. The resulting residues are nonzero in the asserted range, so they determine the exact valuation. This proof is derived in the present Lean module; the OEIS comments state the formulas as conjectures. No formula is asserted for k congruent to 14 modulo 16.
 
 ## References
 

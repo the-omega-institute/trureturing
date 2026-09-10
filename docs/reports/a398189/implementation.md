@@ -135,6 +135,16 @@ axiom 闭包仍只有 Classical.choice、Quot.sound、propext。
 `make emit` EXIT=0，85.984 s。生成的数学式已逐项对照 Lean 陈述。
 首轮内容检查 EXIT=1，32.563 s，唯一 RED 为 `code=suspected-novel`：
 `production Describe corpus must not contain suspected-novel nodes`。
-按 CLAUDE §4 的「确系本仓推导 → repo-derived」，改用 FromRepo 并明确这是本模块内的证明，
+按 CLAUDE §3.7 的「确系本仓推导 → repo-derived」，改用 FromRepo 并明确这是本模块内的证明，
 同时保留 OEIS 猜想出处、全部检索收据和第一档定位；没有声称文献已经证明剩余目标。
 文献新颖性仍仅为搜过范围内未发现已有证明，不作全球优先权主张。
+
+最终 Scribe 字节 `make emit` EXIT=0，76.486 s。
+最终 Lean report 的 SHA-256 为 `ccf0b90ac6958b535551bbfdf45a9ea5a375fed8743acc7acb99bd1d2807445f`；
+报告输入地址为 `sha256:11283650196375dc7d1fb37295d23ce38e371c32e4986cb390e8071e72450571`。
+
+`scribe-content-checks.sh <report> "" <初始40位base>` 最终 EXIT=0，25.616 s；
+describe-report 无 RED，真 KaTeX 判词 `markdown: judged=1 formula(s)=2 red=0`。
+projections --check 按脚本变更面判定未触发（本席没有改 Golden/Projection 或 projector）；
+没有把该未触发子项冒称运行成功。FromAuthor 的 missing projection gap 是显式 OPEN 展示能力，
+不影响 Lean 内核已证状态或原始 statement_id 的声明绑定。
