@@ -1,5 +1,11 @@
 # A397902 implementation attempt
 
+Final task result: **成** under the user's stopping rule. The exact integer-domain
+conjecture is proved and frozen; `make lean` EXIT=0; PR [#6831](https://github.com/the-omega-institute/trureturing/pull/6831) is open.
+Required CI was still running at the recorded PR snapshot; no merge or CI success
+is claimed here. The sections below preserve checkpoint history, not current
+unfinished proof obligations.
+
 Origin: Codex implementation worker, using the local `lean4` skill. Single worker;
 no independent review or multi-model consensus is claimed. User supplied the
 literature adjudication and probe expectations; measurements below were run here.
@@ -244,3 +250,17 @@ checks passed, with no content rejection. This is the documented protected-
 surface annotation path, not EXIT=0: CLAUDE.md section 7.5 and the local/CI
 wrappers explicitly accept rc=3 as content passed. No rule or gate was edited.
 The Lean build, selftest and local Scribe checks described above are complete.
+
+## Delivery
+
+PR #6831: https://github.com/the-omega-institute/trureturing/pull/6831
+Base dev; head lane/math/a397902. PR creation returned success and the API
+confirmed OPEN. At the first snapshot, Candidate harness engineering checks and
+Canonical Lean report production were IN_PROGRESS; the final dependent check
+was not yet present. No merge is requested or claimed.
+
+The PR body includes the complete exact-domain claim, bounded search receipts,
+per-public-theorem proof_shape/dependencies/escape_witness/admission_basis, four
+witness requirements, source fidelity, utility=none, no-atom freeze event and
+origin/independence disclosure. Runner-owned result.json and completion.sentinel
+are written atomically in the assigned attempt directory after this checkpoint.
