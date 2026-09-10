@@ -147,7 +147,7 @@ mathematical inputs. I16 consumed the primary `conclusion` only; its `log_ref` s
 opaque. No worker log, caller transcript, peer envelope, other worktree or live target
 was read. This report makes no review or standing-goal completion claim.
 
-The source is [ARITHMETIC_BOUNDARY_QUANTIZATION.md](../develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md),
+The source is [ARITHMETIC_BOUNDARY_QUANTIZATION.md](../../develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md),
 section 32, in branch `lane/math/quantized-gh-actual-5040-fixed-0910` at immutable base
 `fe3f12abe8bc2e14628a93990fee2755c30da2bd`. The task-specific worktree is
 `/Users/auricstudio/trureturing-qgh-actual-5040-fixed`. All changes are returned unstaged.
@@ -1086,3 +1086,196 @@ The source-formatting proposal is not applied. Resolving the five incomplete bin
 <!-- END HISTORICAL I16 REPORT -->
 
 </details>
+
+## C69 / I23 placement repair and current bindings (2026-09-10)
+
+This note records the own S21 report relocation by the sole Codex CLI I23 worker,
+flight `qgh0910-i23-s21-own-report-placement`, attempt 1 / retry budget 1,
+under caller-pinned `consensus-rnd:sshx` 1.0.0-beta.42 and
+`CODEX_WORKER_SPEC.md`; prior context is repo-prior-exposed. The exact clean
+starting HEAD and ingestion BASE were
+`18b4ca2e2f282187c7036b78da9455c2e940b43b`, on
+`lane/math/quantized-gh-actual-5040-fixed-0910` in the worktree named above.
+No additional worker, oracle, review or termination seat was launched.
+
+The report now occupies
+`docs/reports/quantized-gh/actual-5040-fixed-box-0910.md`.
+Its sole live source destination is in **32.19**, original/current line 6440.
+The sole active report backlink remains at original/current line 150, inside
+the displayed historical I16 body. Both current relative Markdown links resolve.
+Only `quantized-gh/` (13 bytes) was inserted in the source destination, and
+only `../` (3 bytes) was inserted before the original report backlink.
+Inherited S19/S20 report addresses and all their source bytes are unchanged.
+
+The caller's allowed intake records 48 direct report blobs at measured dev
+`45ca4ae3b012cb1f59ff74a84e845691a3f0c99c`, with this own report projecting a
+49th against the recorded admission limit 48. That is previous-stage caller
+evidence; I23 did not query current dev or run an integration/CI gate. In this
+exact target, direct report files decreased from 36 to 35. This own report now
+contributes zero direct files to the caller's eventual integrated candidate.
+
+### Narrow navigation exception and exact historical recovery
+
+C69 explicitly permits the three-byte backlink insertion within the historical
+display. All earlier statements headed “current”, the old C48 binding table,
+all source/report/prefix/hash claims, all provenance and verification statements,
+the “preserved verbatim” summary, and the claim that the original I16 report is
+one contiguous byte sequence retain their **historical snapshot meaning**.
+The C48 statements describe the sealed C48 snapshot at the starting HEAD; the
+I16 statements and source 32.21 describe the first I16 return. Their old paths,
+commands, line/byte coordinates, ingest counts, failures and delivery status
+are historical records, not assertions about this new placement. In particular,
+the old C48 “current” 32.19 ID is historical after this address change. The
+updated whole-unit table below gives the current binding. Earlier immutable
+claims are not rewritten or silently made into claims of literal equality for
+the current displayed body with its authorized navigation insertion.
+
+The immutable originals remain available in the
+[BASE source](https://github.com/the-omega-institute/trureturing/blob/18b4ca2e2f282187c7036b78da9455c2e940b43b/docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md)
+and [BASE report](https://github.com/the-omega-institute/trureturing/blob/18b4ca2e2f282187c7036b78da9455c2e940b43b/docs/reports/actual-5040-fixed-box-0910.md),
+and in the caller's allowed source/report snapshots. I23 compared the local Git
+blob bytes and supplied snapshots directly; these URLs were not fetched anew.
+Recovery uses zero-based half-open UTF-8 byte offsets, with no trimming:
+
+- For the current source `s`, remove exactly `s[338672:338685]`, which equals
+  `b'quantized-gh/'`: `s[:338672] + s[338685:]` recovers all 343492 original bytes,
+  6498 LF, SHA256 `65f8ebe49381039838524752d4e3c19e4db13bc7046d74030f1acc9bb0f8be20`.
+- For the moved report `r`, first take `h = r[:78315]` to exclude this appended
+  note, then remove exactly `h[11717:11720]`, which equals `b'../'`:
+  `h[:11717] + h[11720:]` recovers all 78312 original bytes, 1088 LF, SHA256
+  `2a2c09a38094235089b50ef23a7411ac018c4e7e11ffed9c34d240d83b834592`.
+  This prefix before recovery is 78315 bytes, SHA256
+  `a24e1431750f1bd73d40195ed275f2d9eaea70fb30e4b8b1ac9b52f3cff93772`.
+- The original I16 body occupied report bytes `[10289,78265)`. Its current
+  display occupies `[10289,78268)`; remove only the same insertion at body
+  offset 1428 to recover 67976 bytes / 956 LF, SHA256
+  `290a0a99d77f1030d37c91e7be1f1341dd367c996b3b20e8cbbc2ae84004acb6`.
+
+Every original byte outside these two named insertions is retained. In
+particular, all eight historical fenced payloads compare exactly, including
+the 10595-byte / 205-LF executable certificate with SHA256
+`b8a5972435d74afd0c843057bd6471736db3b7303ddb45a51381bb95d70f0602`;
+the existing JSON fence still parses. Raw-primary records, embedded result
+bytes, stdout/stderr provenance, literal tables and their hashes are unchanged.
+The 71 raw / 16 active / 55 inactive classification, 277 fixed assertions,
+2182-byte first-run coverage failure and C48 five-pair repair retain exactly
+their recorded mathematical and execution scope. No historical result, raw
+envelope or inert log pointer was opened as a separate input or replayed.
+For current certificate extraction, use the new report path above in the
+unchanged marker-based recipe under “Standalone certificate”; the printed old
+path and `uv run` command remain I16's execution receipt. I23 compared the
+selected bytes in memory and did not execute or write out the certificate.
+
+### Single current ingestion and complete span accounting
+
+The finished source is 343505 bytes / 6498 LF, SHA256
+`6b7b3212af93662b5bba9d9e312e72d05a9cee516a78152d42ab65256b54ed42`.
+Its entire 316724-byte predecessor prefix remains exact, SHA256
+`9229e2affc81243efcdcbd228058d8ca19cea395630a94ae943afde374157dd2`.
+The current suffix is 26781 bytes / 524 LF, SHA256
+`49f6721c360950dcc8f6a9059432ceb16aaea46e529a0c91e6b267424cca0bf8`.
+Exactly one C69 invocation ran after the source insertion:
+
+```sh
+make ingest BASE=18b4ca2e2f282187c7036b78da9455c2e940b43b SOURCE=arithmetic-boundary-quantization
+```
+
+It exited 0, started at `2026-09-10T05:04:27.765733+00:00` and ended at
+`2026-09-10T05:04:42.141403+00:00`. Its measured counters are
+`residual_open_added=1`, `skipped_existing=290`, `coarse_fallbacks=0`,
+`open_genres=0`, `cas_objects_written=1`, `ledger_changed=true`.
+Stdout was 125 bytes, SHA256
+`9efd2027d47989f51871f754507d408657bd741b53d3c6ce9eea5f15c9725b74`;
+stderr was empty. This invocation is separate from the two recorded historical
+I16/C48 ingests. No second C69 ingest or manual canonical repair occurred.
+
+All 70 original CAS/YAML pairs (65 first-run pairs plus five C48 repair pairs)
+match both exact BASE Git blobs and the supplied manifest byte for byte. The
+one emitted pair binds the entire new 32.19 span: 1668 bytes / 21 LF, with two
+terminal LF bytes, ID
+`4b4515e76802e91f956ec04e63de2785119548fe214b27da72bcc064c5cc476d`.
+Its YAML is 328 bytes / 7 LF, SHA256
+`72d4577487cd229123b3696ca014dc7cf1421828ba620f3d29effc1473854fd0`.
+The old 32.19 ID `998b44b7a9dd7706d0d2b3b3d2c3cc3ad984ea49260563741f5082a5fcbb872f`
+and its YAML remain unchanged historical evidence. This accounts for every
+newly emitted pair; there are 71 cumulative S21 pairs. No new child, parent
+chain or inherited terminal-LF variant was emitted. Both old 31.22 LF variants,
+the first-run partial/table atoms, and all other historical canonical files
+remain intact. No existing canonical or earlier-report path changed.
+
+Every row below equals its complete CAS blob from the bold numbered lead to
+the next lead, or EOF for 32.21, including all trailing whitespace. Bare ID
+`X` expands to `Meta/Digestion/atoms/sha256/X` and
+`Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/X.yaml`.
+Each YAML has raw/normalized fingerprints and `cas_ref` equal to `sha256:X`,
+empty `coverage_gids` and `receipts.unresolved_subitems`; its ordered atom list
+is `[X]`, with no children. All 21 whole-unit comparisons passed: zero gaps,
+zero uncovered bytes. Only 32.19 has a new ID; later offsets shift by 13 bytes.
+
+| Unit | Current byte span | Lines | Bytes / LF / terminal LF | Whole-unit ID |
+| --- | --- | --- | --- | --- |
+| 32.1 | [316793,317790) | 5978-5992 | 997 / 15 / 2 | `577e0ea00b7c003c4a85f9277519129736ba52988fb506df6640363bf72baee2` |
+| 32.2 | [317790,318804) | 5993-6011 | 1014 / 19 / 2 | `bb70f0b6709196af0ae33eb4e256cf09bcae4df5491f77162a7ef3036639561d` |
+| 32.3 | [318804,320513) | 6012-6059 | 1709 / 48 / 2 | `af2714fed461cdcaf2da2725959e5001e1614a17dc6d10b4ab33ae5729bc32e0` |
+| 32.4 | [320513,321612) | 6060-6087 | 1099 / 28 / 2 | `67a340ef888de9e231fd65ab279997a59d5215a482a77f2ca115aa6bab25eabe` |
+| 32.5 | [321612,322281) | 6088-6102 | 669 / 15 / 2 | `dc7e472bfd09c2e5ad8ca57c353fd501607d33b6160e91c1f84632b58c73852b` |
+| 32.6 | [322281,322875) | 6103-6115 | 594 / 13 / 2 | `b812d431e527f840da3c065dcc99703aacf85c8e84c50f0943bafa95f2ebedcd` |
+| 32.7 | [322875,323567) | 6116-6135 | 692 / 20 / 2 | `6a26e45b7ee03e5f635a6f0a250c9da2d851b616db78b20cb6d22cda2fdde2df` |
+| 32.8 | [323567,325236) | 6136-6169 | 1669 / 34 / 2 | `bfabe3fcb9e5e69459e48e7d26c86be755f98cea19edff3688d6779771d575c1` |
+| 32.9 | [325236,325828) | 6170-6180 | 592 / 11 / 2 | `edc7df17929ebaa65f2378f7723066c9580cd6569bb6eb9a800408e47b96dd86` |
+| 32.10 | [325828,326573) | 6181-6197 | 745 / 17 / 2 | `e2dddcccb5498bba7dfcd8bf7e660b29f7280ac0c9d9a3815809032a12e48cbf` |
+| 32.11 | [326573,327785) | 6198-6225 | 1212 / 28 / 2 | `d5e64f4c4a5b37d1666829475dbd2c6b834970ec90fea63418575ab70d02af82` |
+| 32.12 | [327785,328713) | 6226-6243 | 928 / 18 / 2 | `5145aee91880772394bb9153a65de8e534ccfcab3d4500ab62bf9aa74655aa82` |
+| 32.13 | [328713,330244) | 6244-6285 | 1531 / 42 / 2 | `33a959a8ab03c5d5129b81d23df781014dc5b7ad4ca827a28a098b957d57dbb8` |
+| 32.14 | [330244,331456) | 6286-6311 | 1212 / 26 / 2 | `5a6ef842e39b9ef4700a2f7503c6e0f5a3334b4dd0e935d89691d81a82a0bd58` |
+| 32.15 | [331456,333742) | 6312-6342 | 2286 / 31 / 2 | `c75ebee1711448d758b7599f9e1e76d188879116fe05c22ee5070883da852ad2` |
+| 32.16 | [333742,335157) | 6343-6379 | 1415 / 37 / 2 | `6b9de42b2b39e8047434fd00688dde1c2ec1b686815d8390138e08ea9d2b4f1f` |
+| 32.17 | [335157,336182) | 6380-6399 | 1025 / 20 / 2 | `b494ca333580108b2deb6550e7123a7e08226df26dde679a3aabf52ac6d48df4` |
+| 32.18 | [336182,337546) | 6400-6425 | 1364 / 26 / 2 | `6f781365c3476b18072106757c1a1a873972e8de0c5fed7b1aae92f150140ac1` |
+| 32.19 | [337546,339214) | 6426-6446 | 1668 / 21 / 2 | `4b4515e76802e91f956ec04e63de2785119548fe214b27da72bcc064c5cc476d` |
+| 32.20 | [339214,341149) | 6447-6468 | 1935 / 22 / 2 | `3ac23b4b613f6b57cc186bea84165e3aaa9f1b80ccd97d61467732d3c48f92c5` |
+| 32.21 | [341149,343505) | 6469-6498 | 2356 / 30 / 1 | `9ee4f78f7fd25b90c4b6fbf4af060e9c82cbf7ba12d1184d6e14e01c3fff3e1c` |
+
+### Structural diagnostics and remaining ownership
+
+The tracked delta check `git diff --check 18b4ca2e2f282187c7036b78da9455c2e940b43b --`
+exited 0 with empty stdout/stderr. Each of the three untracked additions was
+also checked with `git diff --no-index --check -- /dev/null <path>`.
+The YAML and moved report each returned exit 1 with empty stdout/stderr:
+these are addition-only difference exits, not whitespace findings. The new CAS
+returned exit 3 and exactly this diagnostic, with empty stderr:
+
+```text
+Meta/Digestion/atoms/sha256/4b4515e76802e91f956ec04e63de2785119548fe214b27da72bcc064c5cc476d:21: new blank line at EOF.
+```
+
+The final blank line is part of the complete 32.19 source span and is retained
+exactly. Source EOF still has one LF; units 32.1-32.20 each retain two terminal
+LF bytes. No whitespace normalization or canonical-byte repair was performed.
+The final worker envelope carries all five changed-path identities, full
+current bindings, old-pair preservation and exact structural command exits;
+its report identity covers this appended note too.
+
+I23 performed zero mathematical program executions, old certificate/test/ingest
+replays, candidate generation, GPU/runtime operations, broad builds, Lean or
+tool/frozen edits. Only the required ingest's normal tool invocation generated
+canonical files. All changes remain unstaged: one source edit, one report
+relocation with the named backlink insertion and this appended note, and one
+new CAS/YAML pair. Caller dispatch provenance says the original representation
+reviewers and same-role fallback are terminal with three approvals; I23 did
+not read those reviewer envelopes. Those approvals remain historical and do
+not approve C69's changed representation. Caller owns sealing/publication,
+fresh representation review, inherited-address integration, required repository
+gates, and S20-before-S21 MERGED delivery. Other live research/review targets
+remain excluded, and the standing research goal remains active.
+
+Reasoning Discipline: content-addressed history, relative-link resolution and
+single-writer generation supply the reference frame. The authorized relocation
+with exact insertion recovery is the known-good shape; beauty: beautiful,
+no material defect found in the bounded repair. Leaving this own report at the
+top level would retain the caller-measured capacity defect; the prescribed
+subdirectory resolves its contribution. Byte equality, all current spans and
+emitted-pair accounting were directly checked. Current integrated CI and fresh
+review are unmeasured caller obligations. Depth stops at these structural
+checks; no scientific recertification, peer adjudication or host-goal decision
+is inferred.

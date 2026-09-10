@@ -6437,7 +6437,7 @@ I16 则在本树实际阅读第 26 节,核对其 \(k\ge2\)、互异素数、\(b_
 原 caller sign audit 记录 python-flint 0.8.0 / Arb256 对四个密度区间和
 48 个 \(D,\Psi,G\) 区间的独立确认,并另述纸面连续域核对;
 这些是原先完成的证据,原程序未在本轮执行。
-单一报告 [actual-5040-fixed-box-0910.md](../../reports/actual-5040-fixed-box-0910.md)
+单一报告 [actual-5040-fixed-box-0910.md](../../reports/quantized-gh/actual-5040-fixed-box-0910.md)
 嵌入一份无 caller 绝对路径依赖的完整可执行证书,静态带入角点、整数 guards、
 四个密度区间和 48 个节点区间。只抽取并执行该改编一次,
 精确程序字节/hash、实际解释器/库版本、命令、结果和 stderr 见报告。
