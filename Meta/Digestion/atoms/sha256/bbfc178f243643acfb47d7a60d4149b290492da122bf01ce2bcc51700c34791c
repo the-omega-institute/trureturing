@@ -1,0 +1,17 @@
+**定义 57（去漂移残差与滞后协方差）。** 对正整数 \(a\)，令
+\[
+R_a(k)=Q_a(k)-k\delta_a-(1/2-\alpha)=x_a(k)-1/2,
+\qquad S_a(x)=\{ax+\alpha\}-1/2.
+\]
+于是 \(R_a(k)=S_a(\{k\alpha\})\)。对整数滞后 \(h\) 令 \(k_0=\max(0,-h)\)，若极限存在，定义
+\[
+\Gamma_{ab}(h)=\lim_{N\to\infty}\frac1N
+\sum_{k=k_0}^{k_0+N-1}R_a(k)R_b(k+h),\qquad
+\Sigma(a,b)=\Gamma_{ab}(0),
+\]
+\[
+\Lambda_{ab}(h)=\lim_{N\to\infty}\frac1N
+\sum_{k=k_0}^{k_0+N-1}(d_a(k)-\delta_a)(d_b(k+h)-\delta_b).
+\]
+\(\Sigma\) 称残差协方差，\(\Lambda\) 称增量协方差；它们的中心分别为零与 \(\delta_a\)。
+
