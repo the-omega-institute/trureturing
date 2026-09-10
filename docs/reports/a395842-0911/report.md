@@ -20,7 +20,7 @@ No extension to the parity conjecture for A177775 is in scope.
 
 ## Preregistration
 
-Proposed bridge, still ASSUMED-UNVERIFIED: identify G modulo 2 with
+At preregistration, this proposed bridge was ASSUMED-UNVERIFIED: identify G modulo 2 with
 H = Σᵣ x^(2^r), prove the iterate coefficient formula
 [x^(2^r)] H iterated m = choose(m+r−1,r) modulo 2, and use binary
 binomial arithmetic plus the additive support to discharge the diagonal rule
@@ -44,8 +44,9 @@ it does not authorize claiming that an unmerged PR has landed on dev.
 
 ## Current result
 
-The full parity theorem and `make lean` pass. Report production, Scribe checks,
-freeze and PR remain in progress; no freeze or landed PR is claimed yet.
+The full parity theorem, all local repository gates and all three Scribe checks
+pass. The module is frozen by deposit-uncovered, with no atom or coverage edge.
+The PR is the remaining submission step; no merge into dev is claimed.
 
 Historical proof checkpoints (their pending statements refer to that checkpoint):
 
@@ -157,7 +158,7 @@ grammar and registered Recurrence domain were checked.
 ## Unclaimed
 
 No claim of an exhaustive literature search, a resolution of A177775,
-an independent review, a freeze, or a landed PR has been made yet.
+an independent review, or a merge into dev is made.
 Unopened external pages are ASSUMED-UNVERIFIED.
 
 ## Repository gate receipts
@@ -279,8 +280,25 @@ therefore actually executed before PR creation.
 Describe records the three theorem statements as OPEN projection with reason
 `missing:<GID>` in the pinned Golden/Projection fixtures. This is a presentation
 gap, not a Lean proof gap; the definitions are likewise authored presentations.
-StatementProjectionFixtureLoader.Assess and StatementSource.Validate were read
+StatementProjectionFixtureLoader.Assess and StatementSource.Materialize were read
 to verify the rule: the current projector judges missing fixtures unprojectable,
 and FromAuthor is accepted in this case. No claim is made that the AST would be
 unsupported if a new fixture were added. Existing OBSERVE readings for offline
 DOI lookup and formula-like prose are not RED outcomes; no validation was disabled.
+
+## Freeze receipt
+
+`make deposit-uncovered` for
+D5/S1/Recurrence/Parity/DiagonalIterateEven.hanna_conjecture at the exact initial
+base: EXIT=0, 94.696 seconds. It reused the attested canonical Lean report,
+passed deposit-header-check, emitted zero changed Blueprint files, then ran
+`ledger-align --add D5/S1/Recurrence/Parity/DiagonalIterateEven.lean`.
+The ledger reports added=1, conflicts=0 and reason=NO_ATOM.
+
+Shape: deposit (uncovered). Chain: source_id=null, atom_id=null →
+D5/S1/Recurrence/Parity/DiagonalIterateEven; no theory volume or coverage edge.
+Module statement_id:
+`sha256:5c97eb142841d5726ad07c5f68fabc8d14a21e1efdbb595f2edb86c64c3c16c6`.
+Freeze event_hash:
+`sha256:9ca72a064b8d1500986b46dd2e908dc81b5cadd9fe91f27ab68001ea7036d448`.
+The event and state pin are generated canonical artifacts, not hand-written.

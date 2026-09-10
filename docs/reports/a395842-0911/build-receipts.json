@@ -81,5 +81,16 @@
     "exit_code": 0,
     "elapsed_seconds": 10.821,
     "log": "/private/var/folders/wv/ht3wzsj138b4sxl3q4t0xdr40000gn/T/consensus-rnd/sshx/a395842-impl-0911/attempt-1/scribe-projections.log"
+  },
+  "deposit_uncovered": {
+    "command": [
+      "make",
+      "deposit-uncovered",
+      "GID=D5/S1/Recurrence/Parity/DiagonalIterateEven.hanna_conjecture",
+      "BASE=6af98a19b1fd4f76f1bc1bf92b61593a0c167a09"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 94.696,
+    "log": "/private/var/folders/wv/ht3wzsj138b4sxl3q4t0xdr40000gn/T/consensus-rnd/sshx/a395842-impl-0911/attempt-1/deposit-uncovered.log"
   }
 }
