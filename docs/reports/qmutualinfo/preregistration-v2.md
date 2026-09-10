@@ -24,3 +24,11 @@ marginalRight → partialTraceRight_posSemidef / trace_partialTraceRight；
 quantumMutualInformation → 两个 marginal。
 
 utility: none；理由及非平凡第三目标仍按 v1。
+
+实施前补充精确命中：同一 rev 的 QuantumInfo/Entropy.lean 提供
+spectral_sum_eq_of_charpoly_prod、spectral_sum_kronecker、
+vonNeumannEntropy_kronecker；TraceDistance.lean 提供 re_trace_cfc。
+这些亦采取保留来源的最小移植。Mathlib 精确命中 Real.negMulLog_mul，直接引用，
+不移植上游同名自证辅助引理。把谱熵与本仓 CStarMatrix 上的 CFC.log 迹表达式对齐，
+再由真实偏迹边缘推出 quantumMutualInformation (productState rho sigma) = 0。
+全部仍按 rule-11-upstream-wrapper，不以移植内容申报原创逃逸。
