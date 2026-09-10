@@ -123,7 +123,8 @@ internal static partial class LeanCacheEnsureCommand
         IReadOnlyList<string> arguments,
         IWorktreeProcessRunner runner,
         IDirectoryCloner cloner,
-        ILeanCacheStateProbe stateProbe)
+        ILeanCacheStateProbe stateProbe,
+        TimeProvider? observationClock = null)
     {
         ArgumentNullException.ThrowIfNull(cloner);
         ArgumentNullException.ThrowIfNull(stateProbe);
@@ -156,23 +157,27 @@ internal static partial class LeanCacheEnsureCommand
                 "canonical cache writer guard is busy");
         }
 
-        var ensured = EnsureLocked(
+        var observation = new LeanPhaseEvidence(runner, command[0], observationClock ?? TimeProvider.System);
+        observation.ProbeVersion(root);
+        var ensured = observation.Prepare(root, () => EnsureLocked(
             root,
             pins,
             command[0],
-            runner,
+            observation,
             cloner,
             guard,
             removePartial: null,
             continueOnCacheGetFailure: true,
             stateProbe,
-            out _);
-        if (!ensured.Success) return ensured;
+            out _));
+        if (!ensured.Success) return ensured with { Error = ensured.Error + observation.Records };
 
         var receipt = ensured.Output;
         try
         {
-            var invoked = runner.Run(
+            observation.Scope = command.Skip(1).SequenceEqual(["build"]) ? "lake-build"
+                : command.Skip(1).Take(3).SequenceEqual(["env", "lean", "--run"]) ? "report-inspection" : "wrapped-command";
+            var invoked = observation.Run(
                 command[0],
                 command.Skip(1).ToArray(),
                 root,
@@ -180,11 +185,12 @@ internal static partial class LeanCacheEnsureCommand
             return new CommandResult(
                 invoked.ExitCode == 0,
                 receipt + Encoding.UTF8.GetString(invoked.StandardOutput),
-                Encoding.UTF8.GetString(invoked.StandardError));
+                Encoding.UTF8.GetString(invoked.StandardError) + "\n" + observation.Records,
+                invoked.ExitCode);
         }
         catch (Exception exception)
         {
-            return new CommandResult(false, receipt, exception.Message + "\n");
+            return new CommandResult(false, receipt, exception.Message + "\n" + observation.Records);
         }
     }
 

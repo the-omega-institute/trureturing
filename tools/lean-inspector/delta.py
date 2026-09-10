@@ -240,19 +240,27 @@ def plan(args: argparse.Namespace) -> int:
             break
 
     if best is None:
-        result: dict = {"status": "fallback"}
+        result: dict = {"status": "fallback", "seed_identity": None,
+                        "recompute_reason": "no-valid-seed", "semantic_mismatches": None}
     else:
         _, entry, old, report_sha = best
         provenance = json.loads((entry / "raw-lean-report.json.provenance.json").read_text(encoding="utf-8"))
-        semantic_changed = (provenance["producer_sha256"] != args.producer_sha
-                            or provenance["repository_inspector_sha256"] != args.resident_sha
-                            or provenance["lean_config_sha256"] != args.config_sha)
+        semantic_mismatches = {
+            field: {"seed": provenance[field], "current": current_value}
+            for field, current_value in (("producer_sha256", args.producer_sha),
+                                         ("repository_inspector_sha256", args.resident_sha),
+                                         ("lean_config_sha256", args.config_sha))
+            if provenance[field] != current_value
+        }
         if args.runtime_sha:
             try:
                 seed = json.loads((entry / "raw-lean-report.json.seed.json").read_text(encoding="utf-8"))
-                semantic_changed |= seed.get("runtime_sha256") != args.runtime_sha
+                old_runtime = seed.get("runtime_sha256")
             except (OSError, ValueError):
-                semantic_changed = True
+                old_runtime = None
+            if old_runtime != args.runtime_sha:
+                semantic_mismatches["runtime_sha256"] = {"seed": old_runtime, "current": args.runtime_sha}
+        semantic_changed = bool(semantic_mismatches)
         changed = sorted(
             name for name in set(old) & set(current)
             if old[name]["path"] != current[name]["path"]
@@ -303,6 +311,10 @@ def plan(args: argparse.Namespace) -> int:
         result = {
             "status": "reuse" if not changed and not added and not removed and not semantic_changed else "delta",
             "semantic_changed": semantic_changed,
+            "semantic_mismatches": semantic_mismatches,
+            "seed_identity": entry.name,
+            "recompute_reason": ("semantic-mismatch" if semantic_changed else
+                                 "module-set-or-source-change" if changed or added or removed else "unchanged"),
             "baseline": str(entry / "raw-lean-report.json"),
             "baseline_report_sha256": report_sha,
             "changed": changed,
@@ -312,6 +324,13 @@ def plan(args: argparse.Namespace) -> int:
             "current": current,
         }
     pathlib.Path(args.plan).write_text(json.dumps(result, sort_keys=True), encoding="utf-8")
+    # Emit the decision where it is made; consumers need neither the module table
+    # nor a downloaded report bundle to attribute a source-identical full recheck.
+    summary = {key: result.get(key) for key in (
+        "status", "seed_identity", "baseline_report_sha256", "recompute_reason", "semantic_mismatches")}
+    summary.update(scope="report-modules", **{
+        key: len(result[key]) if key in result else None for key in ("changed", "added", "removed", "recheck")})
+    print("LEAN_REPORT_PLAN " + json.dumps(summary, sort_keys=True, separators=(",", ":")), flush=True)
     return 0
 
 

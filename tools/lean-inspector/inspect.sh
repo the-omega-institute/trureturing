@@ -112,6 +112,12 @@ run_phase() {
   local status=$?
   set -e
   printf '%s\n' "$status" > "$exit_log"
+  # The cache writer measures at the actual process boundary. Only compact
+  # records are repeated on success; full native stdout/stderr stay in the logs.
+  if [[ "$status" -eq 0 ]]; then
+    sed -n '/^LEAN_NATIVE_PHASE /p' "$stderr_log" || \
+      printf 'LEAN_NATIVE_PHASE {"measurement_status":"error","reason":"phase-log-read-failed"}\n'
+  fi
   if [[ "$status" -ne 0 ]]; then
     printf 'LEAN_INSPECTOR_FAILED phase=%s exit=%s\n' "$phase" "$status" >&2
     printf '%s\n' '--- command ---' >&2
@@ -233,11 +239,10 @@ fi
 DELTA_PLAN="$(mktemp "${TMPDIR:-/tmp}/stratalint-report-delta-plan.XXXXXXXX")"
 DELTA_SUBSET_OUTPUT="$(mktemp "${TMPDIR:-/tmp}/stratalint-report-delta-output.XXXXXXXX")"
 delta_status="fallback"
-delta_baseline=""
-delta_recheck_count=0
-delta_changed_count=0
-delta_added_count=0
-delta_removed_count=0
+delta_recheck_count=unknown
+delta_changed_count=unknown
+delta_added_count=unknown
+delta_removed_count=unknown
 
 cache_root_trusted() {
   [[ -n "${STRATALINT_REPORT_CACHE_ROOT:-}" \
@@ -269,38 +274,15 @@ if [[ "$delta_available" == "1" ]] \
     "$current_producer_sha256" "$current_resident_sha256" "$current_config_sha256" \
     "$MODULE_TABLE" "$DELTA_PLAN" --runtime-sha "$runtime_sha256" --partition "$cache_partition" || true
   if [[ -s "$DELTA_PLAN" ]]; then
-    delta_status="$(python3 - "$DELTA_PLAN" <<'PY'
+    IFS=$'\t' read -r delta_status delta_recheck_count delta_changed_count delta_added_count delta_removed_count < <(python3 - "$DELTA_PLAN" <<'PY'
 import json, pathlib, sys
-print(json.loads(pathlib.Path(sys.argv[1]).read_text(encoding="utf-8")).get("status", "fallback"))
+plan = json.loads(pathlib.Path(sys.argv[1]).read_text(encoding="utf-8"))
+print("\t".join([plan.get("status", "fallback"),
+                 *(str(len(plan[key])) if key in plan else "unknown"
+                   for key in ("recheck", "changed", "added", "removed"))]))
 PY
-)"
-    if [[ "$delta_status" == "delta" || "$delta_status" == "reuse" ]]; then
-      delta_baseline="$(python3 - "$DELTA_PLAN" <<'PY'
-import json, pathlib, sys
-print(json.loads(pathlib.Path(sys.argv[1]).read_text(encoding="utf-8")).get("baseline", ""))
-PY
-)"
-      delta_recheck_count="$(python3 - "$DELTA_PLAN" <<'PY'
-import json, pathlib, sys
-print(len(json.loads(pathlib.Path(sys.argv[1]).read_text(encoding="utf-8")).get("recheck", [])))
-PY
-)"
-      delta_changed_count="$(python3 - "$DELTA_PLAN" <<'PY'
-import json, pathlib, sys
-print(len(json.loads(pathlib.Path(sys.argv[1]).read_text(encoding="utf-8")).get("changed", [])))
-PY
-)"
-      delta_added_count="$(python3 - "$DELTA_PLAN" <<'PY'
-import json, pathlib, sys
-print(len(json.loads(pathlib.Path(sys.argv[1]).read_text(encoding="utf-8")).get("added", [])))
-PY
-)"
-      delta_removed_count="$(python3 - "$DELTA_PLAN" <<'PY'
-import json, pathlib, sys
-print(len(json.loads(pathlib.Path(sys.argv[1]).read_text(encoding="utf-8")).get("removed", [])))
-PY
-)"
-    else
+) || delta_status="fallback"
+    if [[ "$delta_status" != "delta" && "$delta_status" != "reuse" ]]; then
       delta_status="fallback"
     fi
   fi

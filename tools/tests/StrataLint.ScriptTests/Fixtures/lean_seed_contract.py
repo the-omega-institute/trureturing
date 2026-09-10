@@ -94,10 +94,16 @@ class DeltaTests(unittest.TestCase):
         self.assertEqual(["B", "C", "E"], result["recheck"])
 
     def test_semantics_change_reinspects_inside_producer(self):
-        for result in [self.plan(producer="f"*64), self.plan(config="f"*64)]:
+        self.address = "e"*64  # Current request differs from the actual selected seed.
+        for result, fields in [(self.plan(producer="f"*64), ["producer_sha256", "repository_inspector_sha256"]),
+                               (self.plan(config="f"*64), ["lean_config_sha256"])]:
             self.assertEqual("delta", result["status"])
             self.assertEqual(["A", "B", "C", "D"], result["recheck"])
             self.assertTrue(result["semantic_changed"])
+            self.assertEqual(self.report.parent.name, result["seed_identity"])
+            self.assertEqual(fields, list(result["semantic_mismatches"]))
+            self.assertEqual("semantic-mismatch", result["recompute_reason"])
+            self.assertEqual([], result["changed"])
 
     def test_corrupt_materials_are_not_a_reuse_seed(self):
         write(pathlib.Path(str(self.report) + ".materials.zip"), "broken")
@@ -703,12 +709,24 @@ class InspectorTests(PairFixture, unittest.TestCase):
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
 
     def test_actual_runtime_dependency_change_reinspects_inside_same_partition(self):
+        # Synthetic writer records exercise successful run_phase retention;
+        # actual process timing and Lake status semantics have native/C# tests.
+        runner = self.root / "tools/scripts/worktree/lean-cache-run.sh"
+        write(runner, '#!/bin/sh\nprintf \'%s\\n\' \'LEAN_NATIVE_PHASE {"fixture":true}\' >&2\n'
+              'echo ordinary-native-diagnostic >&2\nexec "$@"\n')
         first = self.pair()
         self.assertEqual(0, first.returncode, first.stdout + first.stderr)
+        self.assertEqual(2, first.stdout.count('LEAN_NATIVE_PHASE {"fixture":true}'))
+        self.assertNotIn("ordinary-native-diagnostic", first.stdout + first.stderr)
         write(self.core, "changed compiled core fixture")
         second = self.pair()
         self.assertEqual(0, second.returncode, second.stdout + second.stderr)
         self.assertIn("LEAN_REPORT_DELTA mode=delta changed=0 added=0 removed=0 recheck=2", second.stdout)
+        evidence = next(line for line in second.stdout.splitlines() if line.startswith("LEAN_REPORT_PLAN "))
+        plan = json.loads(evidence.split(" ", 1)[1])
+        self.assertEqual("semantic-mismatch", plan["recompute_reason"])
+        self.assertEqual(["runtime_sha256"], list(plan["semantic_mismatches"]))
+        self.assertEqual(64, len(plan["seed_identity"]))
 
     def test_unknown_runtime_disables_reuse_but_allows_real_full_production(self):
         self.core.with_suffix(".ilean").unlink()
