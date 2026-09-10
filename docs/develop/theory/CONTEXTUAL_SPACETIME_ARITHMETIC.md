@@ -2753,6 +2753,7 @@ PR7_KEYS = frozenset({
     "copy_region_controls",
     "copy_same_local_rows",
     "copy_strict_temporal_failure",
+    "copy_strict_temporal_single_success",
     "copy_tail_q_bytes",
     "copy_unsaturated_control",
     "copy_unselected_parent_control",
@@ -2980,6 +2981,16 @@ pr7_hit("d18_slice_failure")
 pr7_guard_x = valid(Rich(
     {"e_-": (-3, origin, 1, pr3_l0), "e_+": (3, origin, -1, pr3_l0)},
     frozenset(), frozenset(), frozenset()))
+pr7_guard_term, pr7_guard_r = pr7_number_leaves(("then", pr7_X, ("T", 1, pr7_X)))
+assert pr7_guard_r == 2
+pr7_guard_single = valid(Rich(
+    {"e_-": (-3, origin, 1, pr3_l0)}, frozenset(), frozenset(), frozenset()))
+pr7_guard_success = pr7_rich_eval(pr7_guard_term, [pr7_guard_single]*2)
+assert pr7_guard_success is not FAIL, "copy_strict_temporal_single_success"
+assert len(pr7_guard_success.e) == 2 and q(pr7_guard_success) == 0
+pr7_hit("copy_strict_temporal_single_success")
+assert pr7_rich_eval(pr7_guard_term, [pr7_guard_x]*2) is FAIL, "copy_strict_temporal_failure"
+pr7_hit("copy_strict_temporal_failure")
 pr7_d18_bad = pr7_guard_x
 assert {event[0] for event in pr7_d18_bad.e.values()} == {-3, 3}
 assert not guard(pr7_d18_bad, time_shift(pr7_d18_bad, 1))
@@ -3209,12 +3220,6 @@ assert pr5_summary(pr7_rich_mixed) == pr7_state_mixed
 assert q(pr7_rich_mixed) == pr5_summary_q(pr7_state_mixed)
 pr7_hit("copy_causal_summary")
 pr7_hit("copy_causal_q")
-try:
-    temporal(pr7_guard_x, pr7_guard_x)
-except ValueError:
-    pr7_hit("copy_strict_temporal_failure")
-else:
-    raise AssertionError("strict failure was not propagated")
 
 # D15/D10 controls and the U/J descent comparisons.
 assert pr5_summary(pr6_X) == pr5_summary(pr6_Y)
