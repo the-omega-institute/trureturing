@@ -591,7 +591,11 @@ set_option maxHeartbeats 4000000 in
 /-- The full CRIM recursion gives G(R^5_{7,6}) = 1, contradicting the printed value 3. -/
 theorem result : ¬ claim := by
   have checked : (domain certificate).all (check certificate) = true := by
-    decide +kernel
+    -- Keep each state's kernel reduction separate, then combine all checks.
+    conv_lhs => arg 1; reduce
+    simp only [List.all_cons, List.all_nil, Bool.and_eq_true, and_true]
+    repeat' apply And.intro
+    all_goals decide +kernel
   have actual : grundy (rectair 7 6 5) = 1 := by
     calc
       _ = value certificate (rectair 7 6 5) :=
