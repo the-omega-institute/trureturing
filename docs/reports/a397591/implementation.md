@@ -76,3 +76,13 @@ power-of-two predicate has 14. All supplied probe readings match.
 Cache preparation: make lean-cache-ensure exited 0, status=seeded,
 method=clonefile, clonefile_attempts=1, project and Mathlib both warm,
 stamp_miss=null. Donor /Users/chronoai/trureturing.
+
+## Kernel-checked construction
+
+The exponent-n scaffold compiles with `lake env lean` after the recorded cache
+ensure (exit 0). It proves exact normalization, coefficientwise contraction,
+stabilization, and integer existence and uniqueness for the exact NAME equation.
+The normalization is `R-T`, using `(n+1)-n=1`; this is a new exponent-n
+construction, parallel to the private square-exponent construction. No parity
+classification is claimed at this checkpoint. Compiler output contains only
+unused-simp-argument warnings, scheduled for cleanup before the full gate.
