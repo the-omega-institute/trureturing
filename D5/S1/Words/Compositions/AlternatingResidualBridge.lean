@@ -104,4 +104,44 @@ theorem encode_rule_iff {m : ℕ} (a b : Equiv.Perm (Fin m)) :
   · intro h i; exact h i.val i.isLt
   · intro h k hk; exact h ⟨k, hk⟩
 
+private theorem alternating_injective : Function.Injective alternating := by
+  intro l l' h
+  induction l generalizing l' with
+  | nil => cases l' <;> simp_all [alternating]
+  | cons p l ih =>
+    cases l' with
+    | nil => simp [alternating] at h
+    | cons q l' =>
+      rcases p with ⟨a, b⟩
+      rcases q with ⟨c, d⟩
+      simp only [alternating, List.cons.injEq, neg_inj, Nat.cast_inj] at h
+      rcases h with ⟨rfl, rfl, ht⟩
+      rw [ih ht]
+
+/-- The alternating word uniquely determines both permutations. -/
+theorem encode_injective {m : ℕ} :
+    Function.Injective (fun p : Equiv.Perm (Fin m) × Equiv.Perm (Fin m) =>
+      encode p.1 p.2) := by
+  rintro ⟨a, b⟩ ⟨c, d⟩ he
+  have hf := List.ofFn_injective (alternating_injective he)
+  apply Prod.ext
+  · apply Equiv.ext
+    intro i
+    have hi := congrArg Prod.fst (congrFun hf i)
+    exact Fin.ext (by simpa using hi)
+  · apply Equiv.ext
+    intro i
+    have hi := congrArg Prod.snd (congrFun hf i)
+    exact Fin.ext (by simpa using hi)
+
+open Classical in
+/-- The encoded words, weighted by the product of the two permutation signs, sum to one. -/
+theorem encoded_product_sign_sum (m : ℕ) :
+    (∑ a : Equiv.Perm (Fin m),
+      ∑ b : Equiv.Perm (Fin m) with Good 0 (encode a b) ∧ Unswappable 0 (encode a b),
+        signInt a * signInt b) = 1 := by
+  classical
+  simp only [encode_rule_iff, ← Finset.mul_sum, signed_residual_sum]
+  simp [signInt]
+
 end D5.S1.Words.Compositions.AlternatingResidualBridge
