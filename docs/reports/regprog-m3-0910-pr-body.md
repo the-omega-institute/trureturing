@@ -1,4 +1,4 @@
-Register five frozen causal peers on the canonical shared arenas
+Register five causal peers and expose maximal-catalog redundancy
 
 Skill context: `consensus-rnd:sshx`, implementation flight `regprog-m3-0910`, attempt 1. Carrier: one codex-cli implementation seat, GPT-6, repo-prior-exposed through AGENTS.md / CLAUDE.md. Mixing: the owner supplies the approved P2 plan and vacuity contract; this seat authors the registrations and runs local checks. Three blind review seats belong to the caller's subsequent stage; no review vote or orchestrator verification is claimed here.
 
@@ -61,8 +61,8 @@ Vacuity evidence is shared by definitional equality of each arena's occurrence b
 | `lake env lean <attempt>/SelectionProbe.lean` | 0 | 167 statements assessed; all five selected rows are observed. |
 | `lake env lean D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.lean` | 0 | All bridges, witnesses, capture counts, expected rejections, maximal catalogs, and seven census queries pass. |
 | Same root with the two expected-error guards absent | 1 | Exactly two IE-C007 errors: IC full/without 0/0 and OI full/without 24/24; no proof errors. |
-| `make lean-report` | ASSUMED-UNVERIFIED | Pending producer completion. |
-| `make emit` | ASSUMED-UNVERIFIED | Requires the fresh Lean report. |
+| `make lean-report` | 0 | Fresh canonical report includes the new root; all its proofs are closed. |
+| `make emit` | 0 | Emits `Blueprint/D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.md` from its scribe source. |
 | `make gate` | ASSUMED-UNVERIFIED | Pending. |
 
 The negative finding refutes positive shared-arena admission for these five registrations with the fixed canonical readouts. Reuse reduces bridge authorship, while identical peer kernels prevent unique capture. Any change of semantic arena or readouts belongs to a separately justified change of Γ. Further registrations stop at the five-pick budget; independent blind review and global inventory completeness are ASSUMED-UNVERIFIED.
