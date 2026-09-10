@@ -32,7 +32,7 @@ open MeasureTheory Set Filter Topology
 open D5.S3.Weil.TestFunctions.LiCurvatureCriterion
 open D5.S3.Weil.CayleyLaguerre.TruncatedCircleMomentBridge
 open D5.S3.Observer.MeasureSeparation.FourierModeDetermination
-open scoped ComplexConjugate ENNReal
+open scoped ComplexConjugate ComplexOrder ENNReal
 
 noncomputable local instance circleMeasurableSpace : MeasurableSpace Circle := borel Circle
 local instance circleBorelSpace : BorelSpace Circle := ⟨rfl⟩

@@ -26,6 +26,7 @@ noncomputable section
 namespace D5.S3.Weil.Probability.LiCurvatureLevyDecomposition
 
 open MeasureTheory Set Filter Topology
+open scoped ComplexOrder
 open D5.S3.Weil.TestFunctions.LiCurvatureCriterion
 open D5.S3.Weil.Probability.LiCurvatureProbabilityCompletion
 
@@ -106,6 +107,8 @@ theorem reconstructed_li_levy_decomposition
     apply setIntegral_congr_fun hs.compl
     intro z hz
     have hne : z ≠ 1 := by simpa using hz
+    change 2 * a * (1 - ((z : ℂ) ^ n).re) / Complex.normSq ((z : ℂ) - 1) =
+      a * Complex.normSq (geometricPolynomial n z)
     rw [geometric_energy_off_identity n z hne]
     ring
   calc

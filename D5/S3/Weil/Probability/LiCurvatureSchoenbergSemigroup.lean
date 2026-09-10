@@ -30,7 +30,7 @@ open D5.S3.Weil.TestFunctions.LiCurvatureCriterion
 open D5.S3.Weil.Probability.CircleProbabilitySemigroup
 open D5.S3.Weil.Probability.LiCurvatureProbabilityCompletion
 open D5.S3.Weil.Probability.GeometricLiNegativeType
-open scoped BigOperators NNReal MeasureTheory
+open scoped BigOperators NNReal MeasureTheory ComplexOrder
 
 noncomputable local instance circleMeasurableSpace : MeasurableSpace Circle := borel Circle
 local instance circleBorelSpace : BorelSpace Circle := ⟨rfl⟩

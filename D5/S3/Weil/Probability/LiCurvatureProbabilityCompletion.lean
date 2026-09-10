@@ -25,6 +25,7 @@ noncomputable section
 namespace D5.S3.Weil.Probability.LiCurvatureProbabilityCompletion
 
 open MeasureTheory
+open scoped ComplexOrder
 open D5.S3.Weil.TestFunctions.LiCurvatureCriterion
 open D5.S3.Weil.Probability.CircleHerglotzCompletion
 open D5.S3.Weil.Probability.CircleProbabilitySemigroup

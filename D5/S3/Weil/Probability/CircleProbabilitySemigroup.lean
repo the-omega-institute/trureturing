@@ -29,7 +29,7 @@ namespace D5.S3.Weil.Probability.CircleProbabilitySemigroup
 open MeasureTheory Set
 open D5.S3.Weil.TestFunctions.LiCurvatureCriterion
 open D5.S3.Weil.Probability.CircleHerglotzCompletion
-open scoped NNReal MeasureTheory
+open scoped NNReal MeasureTheory ComplexOrder
 
 noncomputable local instance circleMeasurableSpace : MeasurableSpace Circle := borel Circle
 local instance circleBorelSpace : BorelSpace Circle := ⟨rfl⟩
@@ -45,7 +45,8 @@ theorem circleMoment_mconv (μ ν : Measure Circle)
     intro z
     exact Or.inl (Circle.coe_ne_zero z)
   have hprod : Integrable (fun p : Circle × Circle => f p.1 * f p.2) (μ.prod ν) := by
-    have hcontinuous := (hf.comp continuous_fst).mul (hf.comp continuous_snd)
+    have hcontinuous : Continuous (fun p : Circle × Circle => f p.1 * f p.2) :=
+      (hf.comp continuous_fst).mul (hf.comp continuous_snd)
     simpa using hcontinuous.continuousOn.integrableOn_compact
       (μ := μ.prod ν) isCompact_univ
   change (∫ z, f z ∂(μ ∗ₘ ν)) = (∫ z, f z ∂μ) * ∫ z, f z ∂ν

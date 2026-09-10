@@ -88,10 +88,14 @@ theorem integerGeometric_neg (z : Circle) (n : ℤ) :
 /-- Integer continuation remains continuous across the identity. -/
 theorem integerGeometric_continuous (n : ℤ) : Continuous (integerGeometric n) := by
   rcases n.eq_nat_or_neg with ⟨k, rfl | rfl⟩
-  · simp_rw [integerGeometric_nat]
+  · rw [show integerGeometric (k : ℤ) = geometricPolynomial k from
+      funext (integerGeometric_nat k)]
     unfold geometricPolynomial
     fun_prop
-  · simp_rw [integerGeometric_neg, integerGeometric_nat]
+  · rw [show integerGeometric (-(k : ℤ)) =
+        (fun z : Circle => -(z : ℂ) ^ (-(k : ℤ)) * geometricPolynomial k z) by
+      funext z
+      rw [integerGeometric_neg, integerGeometric_nat]]
     have hp : Continuous (fun z : Circle => (z : ℂ) ^ (-(k : ℤ))) := by
       apply Continuous.zpow₀ continuous_subtype_val
       intro z
@@ -190,17 +194,23 @@ theorem geometricLiGram_distance (μ : Measure Circle) [IsFiniteMeasure μ]
       inner ℝ (integerGeometric (index j) z) (integerGeometric (index j) z) -
       2 * inner ℝ (integerGeometric (index i) z) (integerGeometric (index j) z) =
         Complex.normSq (geometricPolynomial (index i - index j).natAbs z) := by
-    rw [real_inner_self_eq_norm_sq, real_inner_self_eq_norm_sq, ← norm_sub_sq_real,
-      ← Complex.normSq_eq_norm_sq, integerGeometric_distance]
+    rw [real_inner_self_eq_norm_sq, real_inner_self_eq_norm_sq]
+    calc
+      _ = ‖integerGeometric (index i) z - integerGeometric (index j) z‖ ^ 2 := by
+        rw [norm_sub_sq_real]
+        ring
+      _ = _ := by rw [← Complex.normSq_eq_norm_sq, integerGeometric_distance]
   have hint :
       (∫ z : Circle, inner ℝ (integerGeometric (index i) z) (integerGeometric (index i) z) +
         inner ℝ (integerGeometric (index j) z) (integerGeometric (index j) z) -
         2 * inner ℝ (integerGeometric (index i) z) (integerGeometric (index j) z) ∂μ) =
       ∫ z : Circle, Complex.normSq (geometricPolynomial (index i - index j).natAbs z) ∂μ :=
     integral_congr_ae (Filter.Eventually.of_forall point)
-  rw [integral_sub ((inner_integrable μ (index i) (index i)).add
+  have hsplit := integral_sub ((inner_integrable μ (index i) (index i)).add
       (inner_integrable μ (index j) (index j)))
-      ((inner_integrable μ (index i) (index j)).const_mul 2),
+      ((inner_integrable μ (index i) (index j)).const_mul 2)
+  simp only [Pi.add_apply] at hsplit
+  rw [hsplit,
     integral_add (inner_integrable μ (index i) (index i)) (inner_integrable μ (index j) (index j)),
     integral_const_mul] at hint
   unfold geometricLiGram reconstructedLi
@@ -231,7 +241,8 @@ theorem reconstructed_li_conditionally_negative (μ : Measure Circle) [IsFiniteM
 complex vectors, directly from the same original Li energy. -/
 theorem reconstructed_li_exponential_posSemidef (μ : Measure Circle) [IsFiniteMeasure μ]
     (a : ℝ) (ha : 0 ≤ a) (index : I → ℤ) (t : ℝ) (ht : 0 ≤ t) :
-    (fun i j => (Real.exp (-t * reconstructedLi μ a (index i - index j).natAbs) : ℂ)).PosSemidef := by
+    Matrix.PosSemidef
+      (fun i j => (Real.exp (-t * reconstructedLi μ a (index i - index j).natAbs) : ℂ)) := by
   have h := gram_gaussian_posSemidef (geometricLiGram μ a index)
     (geometricLiGram_posSemidef μ a ha index) t ht
   simpa only [geometricLiGram_distance] using h
