@@ -111,8 +111,9 @@ public sealed class AffectedExecutionTests
     }
 
     [Fact]
-    public void OneUnknownProjectDoesNotForceUnrelatedOwnedProjectsToExecute()
+    public void OneUnknownClassDoesNotForceUnrelatedKnownTestsToExecute()
     {
+        // Scheduling now owns whole projects; preserve the original isolation/dependency checks.
         using var fixture = new AffectedExecutionFixture(unknown: true);
         Assert.Equal(4, fixture.Tests(fixture.Build()).Projects.Sum(project => project.Executed));
         fixture.Write("README.md", "metadata changed\n");

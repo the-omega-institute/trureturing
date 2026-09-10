@@ -1,3 +1,4 @@
+using StrataLint.TestSupport;
 using Xunit;
 
 namespace StrataLint.EngineeringScope.Tests;
@@ -10,7 +11,7 @@ public sealed class AffectedBoundaryTests
     {
         using var fixture = new AffectedExecutionFixture();
         fixture.Write("tools/tests/StrataLint.First/Tests.cs", """
-            namespace First;
+            using Xunit; namespace First;
             public class Tests {
                 private readonly int value = 7;
                 [Xunit.Theory] [Xunit.InlineData(1)] [Xunit.InlineData(2)]
@@ -88,12 +89,12 @@ public sealed class AffectedBoundaryTests
             Assert.Equal(0, result.Projects[1].Executed);
             Assert.Equal("executed", Assert.Single(result.Projects[0].Coverage).Status);
         }
-        var originalSeed = File.ReadAllBytes(Path.Combine(fixture.CacheDirectory, "seed.json"));
+        var originalSeed = TemporaryFileSystem.File.ReadAllBytes(Path.Combine(fixture.CacheDirectory, "seed.json"));
         Source(inline + fact + "[Xunit.Fact] public void AddedFailure() { Xunit.Assert.True(false); }");
         var failed = fixture.Tests(fixture.Build(), expectedExit: 1);
         Assert.NotNull(failed.Projects[0].Error);
         Assert.DoesNotContain(failed.Projects[0].Coverage, row => row.Status == "reused");
-        Assert.Equal(originalSeed, File.ReadAllBytes(Path.Combine(fixture.CacheDirectory, "seed.json")));
+        Assert.Equal(originalSeed, TemporaryFileSystem.File.ReadAllBytes(Path.Combine(fixture.CacheDirectory, "seed.json")));
         Source(inline + fact);
         fixture.Tests(fixture.Build());
         var map = File.ReadAllText(Path.Combine(fixture.Root, "Meta/FILEMAP.toml"));
@@ -123,14 +124,14 @@ public sealed class AffectedBoundaryTests
             using var fixture = new AffectedExecutionFixture();
             var expression = form == "helper" ? "Read()" : "new System.Func<string>(() => Read())()";
             fixture.Write("tools/tests/StrataLint.First/Tests.cs", $$"""
-                namespace First; public class Tests {
+                using Xunit; namespace First; public class Tests {
                     [Xunit.Fact] public void Runs() { Xunit.Assert.Equal("pass", {{expression}}); }
                     private static string Read() => System.Environment.GetEnvironmentVariable("AFFECTED_PROVIDER_INPUT");
                 }
                 """);
             if (form == "module-initializer")
                 fixture.Write("tools/tests/StrataLint.First/Tests.cs", """
-                    namespace First; public class Tests {
+                    using Xunit; namespace First; public class Tests {
                         internal static string Value;
                         [Xunit.Fact] public void Runs() { Xunit.Assert.Equal("pass", Value); }
                     }
@@ -163,7 +164,7 @@ public sealed class AffectedBoundaryTests
         var path = Path.Combine(fixture.Root, "local-runtime/property-input");
         fixture.Write("local-runtime/property-input", "7");
         fixture.Write("tools/tests/StrataLint.First/Tests.cs", $$"""
-            namespace First;
+            using Xunit; namespace First;
             public class Tests {
                 [Xunit.Fact] public void Runs() {
                     Xunit.Assert.Equal("{\"Present\":true}", System.Text.Json.JsonSerializer.Serialize(new Value()));
@@ -194,7 +195,7 @@ public sealed class AffectedBoundaryTests
         var path = Path.Combine(fixture.Root, "local-runtime/converter-input");
         fixture.Write("local-runtime/converter-input", "7");
         fixture.Write("tools/tests/StrataLint.First/Tests.cs", $$"""
-            namespace First;
+            using Xunit; namespace First;
             public class Tests {
                 [Xunit.Fact] public void Runs() {
                     Xunit.Assert.Equal("true", System.Text.Json.JsonSerializer.Serialize(new Value()));
@@ -229,7 +230,7 @@ public sealed class AffectedBoundaryTests
         var path = Path.Combine(fixture.Root, "local-runtime/query/value");
         fixture.Write("local-runtime/query/value", "7");
         fixture.Write("tools/tests/StrataLint.First/Tests.cs", $$"""
-            namespace First; public class Tests {
+            using Xunit; namespace First; public class Tests {
                 [Xunit.Fact] public void Runs() {
                     var path = {{System.Text.Json.JsonSerializer.Serialize(path)}};
                     System.Func<bool> provider = () => {{query}};
@@ -315,8 +316,7 @@ public sealed class AffectedBoundaryTests
                 using System.Reflection;
                 using Xunit.Abstractions;
                 using Xunit.Sdk;
-                [assembly: First.FrameworkSelection]
-                namespace First;
+                [assembly: First.FrameworkSelection] namespace First;
                 [AttributeUsage(AttributeTargets.Assembly)]
                 [TestFrameworkDiscoverer("First.FrameworkDiscoverer", "StrataLint.First")]
                 public sealed class FrameworkSelectionAttribute : Attribute, ITestFrameworkAttribute { }
@@ -357,7 +357,7 @@ public sealed class AffectedBoundaryTests
     {
         using var fixture = new AffectedExecutionFixture();
         fixture.Write("tools/tests/StrataLint.First/Tests.cs", """
-            namespace First;
+            using Xunit; namespace First;
             public abstract class BaseCases
             {
                 [Xunit.Fact] public void Check() { Xunit.Assert.Equal(7, Shared.Value()); }

@@ -1,11 +1,10 @@
 using System.Collections.Immutable;
 using System.Text;
 using System.Text.RegularExpressions;
-using StrataLint.Engine;
 using Tomlyn;
 using Tomlyn.Model;
 
-namespace StrataLint.Scribe;
+namespace StrataLint.Engine;
 
 internal enum FileMapKind
 {

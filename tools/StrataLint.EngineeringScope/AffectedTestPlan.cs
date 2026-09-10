@@ -8,7 +8,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.CodeAnalysis.CSharp;
 using StrataLint.Engine;
-using StrataLint.Scribe;
 
 namespace StrataLint.EngineeringScope;
 

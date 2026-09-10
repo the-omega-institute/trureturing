@@ -89,8 +89,9 @@ public sealed class AffectedNativeBoundaryTests
     [InlineData(false, false)]
     [InlineData(true, false)]
     [InlineData(true, true)]
-    public void SharedSdkSourceInExcludedProjectPreservesProjectActionsAndDependencies(bool referenced, bool buildOnly)
+    public void SharedSdkSourceInExcludedProjectPreservesSelectedClassesAndDependencies(bool referenced, bool buildOnly)
     {
+        // Scheduling now owns whole projects; preserve the original isolation/dependency checks.
         using var fixture = new AffectedExecutionFixture();
         const string excluded = "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj";
         fixture.Write(excluded, TemporaryFileSystem.File.ReadAllText(Path.Combine(fixture.Root, AffectedExecutionFixture.First)));

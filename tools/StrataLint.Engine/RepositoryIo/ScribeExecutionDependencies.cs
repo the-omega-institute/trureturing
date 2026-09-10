@@ -10,7 +10,8 @@ internal sealed record BoundTestScope(string Project, string[] Methods, string[]
 
 // ExplicitValues is a reviewed declared-input contract, not a CLR purity proof.
 // Native inputs own code invalidation. This single project-union pass binds the
-// ordinary xUnit roots and local providers, and rejects known ambient effects.
+// ordinary xUnit roots and local providers. External calls require the finite
+// ScribeValueProviders contract; unsupported providers always remain unknown.
 // Scribe's SL003 mapping and debt do not participate in this contract.
 internal static class ScribeExecutionDependencies
 {
@@ -29,6 +30,7 @@ internal static class ScribeExecutionDependencies
         var paths = new SortedSet<string>(StringComparer.Ordinal);
         var pending = new Queue<ISymbol>();
         var visited = new HashSet<ISymbol>(SymbolEqualityComparer.Default);
+        var valueTypes = new HashSet<ITypeSymbol>(SymbolEqualityComparer.Default);
         var initialized = new HashSet<string>(StringComparer.Ordinal);
         var inspected = new HashSet<SyntaxNode>();
         foreach (var compilation in compilations.Values)
@@ -132,7 +134,10 @@ internal static class ScribeExecutionDependencies
                 if (instance && member is IPropertySymbol) pending.Enqueue(member);
                 if (instance && member is IPropertySymbol or IFieldSymbol && member.GetAttributes().Length != 0)
                     unknown.Add("binding:custom-value-member-metadata:" + member.ToDisplayString());
-                if (instance && member is IMethodSymbol m && (m.IsOverride || m.ExplicitInterfaceImplementations.Length != 0)) pending.Enqueue(m);
+                // Generated record formatting/copying can invoke source instance
+                // implementations without a separate invocation syntax node.
+                if (instance && member is IMethodSymbol m && (type.IsRecord && !m.IsStatic
+                    || m.IsOverride || m.ExplicitInterfaceImplementations.Length != 0)) pending.Enqueue(m);
                 if (member is not (IFieldSymbol or IPropertySymbol) || !instance && !member.IsStatic) continue;
                 foreach (var syntax in member.DeclaringSyntaxReferences.Select(r => r.GetSyntax()))
                 {
@@ -146,8 +151,21 @@ internal static class ScribeExecutionDependencies
                 foreach (var ctor in parent.InstanceConstructors) Enqueue(ctor);
             }
         }
+        void ValueType(ITypeSymbol? symbol)
+        {
+            if (symbol is null || !valueTypes.Add(symbol)) return;
+            if (symbol is IArrayTypeSymbol array) ValueType(array.ElementType);
+            if (symbol is not INamedTypeSymbol type) return;
+            // Value consumers also receive default values, arrays and generic
+            // arguments. Their providers need ownership without a constructor call.
+            Initialize(type, instance: !type.IsStatic);
+            foreach (var argument in type.TypeArguments) ValueType(argument);
+            ValueType(type.ContainingType);
+        }
         void Enqueue(ISymbol symbol)
         {
+            if (symbol is IMethodSymbol generic)
+                foreach (var argument in generic.TypeArguments) ValueType(argument);
             if (symbol is INamedTypeSymbol type) { Initialize(type, false); return; }
             if (symbol.ContainingAssembly is null) return;
             if (compilations.ContainsKey(symbol.ContainingAssembly.Name))
@@ -155,8 +173,9 @@ internal static class ScribeExecutionDependencies
                 if (symbol is IMethodSymbol { MethodKind: MethodKind.DelegateInvoke }) return;
                 pending.Enqueue(symbol); return;
             }
-            if (Ambient(symbol)) unknown.Add("runtime:ambient-input:" + symbol.ToDisplayString());
-            else if (!Platform(symbol.ContainingAssembly)) unknown.Add("binding:unresolved-provider:" + symbol.ToDisplayString());
+            if (!ScribeValueProviders.Supports(symbol)) unknown.Add("binding:unresolved-provider:" + symbol.ToDisplayString());
+            else providers.Add("external:" + symbol.ContainingAssembly.Name + ":" +
+                (symbol is IMethodSymbol method ? ScribeCallableIndex.Normalize(method) : symbol.OriginalDefinition).GetDocumentationCommentId());
         }
         void Inspect(SyntaxNode declaration)
         {
@@ -169,7 +188,10 @@ internal static class ScribeExecutionDependencies
                     providers.Add("callback:" + declaration.SyntaxTree.FilePath + ":" + node.SpanStart);
                 if (node is ExpressionSyntax expression)
                 {
-                    if (model.GetTypeInfo(expression).Type?.TypeKind is TypeKind.Dynamic or TypeKind.Pointer or TypeKind.FunctionPointer)
+                    var type = model.GetTypeInfo(expression);
+                    ValueType(type.Type);
+                    ValueType(type.ConvertedType);
+                    if (type.Type?.TypeKind is TypeKind.Dynamic or TypeKind.Pointer or TypeKind.FunctionPointer)
                         unknown.Add("dynamic-or-native-dispatch:" + declaration.SyntaxTree.FilePath);
                     if (model.GetConversion(expression).MethodSymbol is { } conversion) Enqueue(conversion);
                 }
@@ -180,7 +202,7 @@ internal static class ScribeExecutionDependencies
                     { unknown.Add("binding:unresolved-call:" + declaration.SyntaxTree.FilePath); continue; }
                     if (call.MethodKind != MethodKind.DelegateInvoke) Enqueue(call);
                     if (node is BaseObjectCreationExpressionSyntax) Initialize(call.ContainingType, true);
-                    if (node is InvocationExpressionSyntax invocation && Ambient(call))
+                    if (node is InvocationExpressionSyntax invocation && !ScribeValueProviders.Supports(call))
                         foreach (var argument in invocation.ArgumentList.Arguments)
                             if (model.GetConstantValue(argument.Expression) is { HasValue: true, Value: string value }
                                 && call.ContainingNamespace.ToDisplayString().StartsWith("System.IO", StringComparison.Ordinal)) paths.Add(value);
@@ -192,13 +214,32 @@ internal static class ScribeExecutionDependencies
                 }
                 if (model.GetOperation(node) is IBinaryOperation { OperatorMethod: { } binary }) Enqueue(binary);
                 if (model.GetOperation(node) is IUnaryOperation { OperatorMethod: { } unary }) Enqueue(unary);
-                if (node is ForEachStatementSyntax loop)
+                if (model.GetOperation(node) is IIncrementOrDecrementOperation { OperatorMethod: { } increment }) Enqueue(increment);
+                if (model.GetOperation(node) is ICompoundAssignmentOperation compound)
+                {
+                    if (compound.OperatorMethod is { } operation) Enqueue(operation);
+                    if (compound.InConversion.MethodSymbol is { } input) Enqueue(input);
+                    if (compound.OutConversion.MethodSymbol is { } output) Enqueue(output);
+                }
+                if (node is AssignmentExpressionSyntax assignment && model.GetOperation(node) is IDeconstructionAssignmentOperation)
+                    Deconstruction(model.GetDeconstructionInfo(assignment));
+                if (node is ForEachVariableStatementSyntax variables)
+                    Deconstruction(model.GetDeconstructionInfo(variables));
+                if (node is CommonForEachStatementSyntax loop)
                 {
                     var info = model.GetForEachStatementInfo(loop);
                     foreach (var member in new ISymbol?[] { info.GetEnumeratorMethod, info.MoveNextMethod, info.CurrentProperty, info.DisposeMethod })
                         if (member is not null) Enqueue(member);
+                    if (info.ElementConversion.MethodSymbol is { } element) Enqueue(element);
+                    if (info.CurrentConversion.MethodSymbol is { } current) Enqueue(current);
                 }
             }
+        }
+        void Deconstruction(DeconstructionInfo info)
+        {
+            if (info.Method is { } method) Enqueue(method);
+            if (info.Conversion?.MethodSymbol is { } conversion) Enqueue(conversion);
+            foreach (var nested in info.Nested) Deconstruction(nested);
         }
     }
 
@@ -207,27 +248,4 @@ internal static class ScribeExecutionDependencies
     private static bool IsLifecycle(INamedTypeSymbol? type) => type is not null
         && (type.ToDisplayString().StartsWith("Xunit.", StringComparison.Ordinal)
             || type.AllInterfaces.Any(i => i.ToDisplayString().StartsWith("Xunit.", StringComparison.Ordinal)) || IsLifecycle(type.BaseType));
-    private static bool Platform(IAssemblySymbol assembly) =>
-        assembly.Name is "xunit.core" or "xunit.assert" or "xunit.abstractions"
-        || Convert.ToHexStringLower(assembly.Identity.PublicKeyToken.AsSpan()) is
-            "b03f5f7f11d50a3a" or "7cec85d7bea7798e" or "b77a5c561934e089" or "cc7b13ffcd2ddd51";
-
-    // Known capability boundaries, not a growing whitelist of pure BCL methods.
-    private static bool Ambient(ISymbol symbol)
-    {
-        var type = symbol.ContainingType?.ToDisplayString() ?? "";
-        var ns = symbol.ContainingNamespace?.ToDisplayString() ?? "";
-        return type is "System.Environment" or "System.Random" or "System.TimeProvider"
-            or "System.Diagnostics.Process" or "System.Diagnostics.ProcessStartInfo" or "System.Diagnostics.Stopwatch"
-            or "System.IO.File" or "System.IO.Directory" or "System.IO.FileInfo" or "System.IO.DirectoryInfo"
-            or "System.IO.FileSystemInfo" or "System.IO.FileStream" or "System.IO.StreamReader" or "System.IO.StreamWriter" or "System.IO.DriveInfo"
-            || ns.StartsWith("System.Net", StringComparison.Ordinal) || ns.StartsWith("System.Reflection", StringComparison.Ordinal)
-            || ns.StartsWith("System.Threading", StringComparison.Ordinal) || ns.StartsWith("System.Runtime.Loader", StringComparison.Ordinal)
-            || type is "System.IO.FileSystemWatcher" or "System.Security.Cryptography.RandomNumberGenerator"
-            || ns.StartsWith("System.Runtime.InteropServices", StringComparison.Ordinal)
-            || type is "System.DateTime" or "System.DateTimeOffset" && symbol.Name is "Now" or "UtcNow" or "Today"
-            || type == "System.Guid" && symbol.Name == "NewGuid"
-            || type == "System.IO.Path" && symbol.Name is "GetFullPath" or "GetTempPath" or "GetTempFileName" or "GetRandomFileName"
-            || type == "System.Threading.Thread" && symbol.Name is not ("get_CurrentCulture" or "get_CurrentUICulture");
-    }
 }

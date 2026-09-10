@@ -18,7 +18,7 @@ internal static class FileMapPolicy
     private const string BackfillLoaderPath =
         "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryLoader.cs";
     private const string FileMapLoaderPath =
-        "tools/StrataLint.Scribe/FileMap/FileMapManifest.cs";
+        "tools/StrataLint.Engine/RepositoryIo/FileMapManifest.cs";
     private const string FrozenStateRecordLoaderPath =
         "tools/StrataLint.Engine/FrozenState/FrozenStateRecord.cs";
     private const string LibraryNoteCatalogPath =
