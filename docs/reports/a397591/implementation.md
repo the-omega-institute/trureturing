@@ -138,3 +138,12 @@ The direct external edges occur in U_support and target the frozen public
 binary_catalan theorem and catalanSeries definition; no private upstream
 identifier is referenced. Reproducible declaration/edge JSON remains in the
 runner scratch directory, not in tracked reports.
+
+The first scribe-content-checks invocation exited 0, with the new mirror's six
+formulas parsed by KaTeX (`markdown: judged=1 formula(s)=6 red=0`). Four whitespace
+warnings visible only under Lake's project linter options were then removed.
+The final source passes `make lean` again, exit 0 in 49.652 seconds, with no
+warnings for this module. An explicit projections check against the pre-format
+report correctly failed source-hash binding; the report is being regenerated
+and the Scribe checks rerun against the final source. This failed stale-input
+check is not counted as a green validation result.

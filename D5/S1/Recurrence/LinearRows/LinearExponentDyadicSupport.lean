@@ -110,7 +110,7 @@ private theorem agree_mul {n : ℕ} {F G : PowerSeries R} (h : Agree n F G) (H :
   rw [← sub_mul]
   exact dvd_mul_of_dvd_left ((agree_iff _ _ _).mp h) H
 
-private theorem leading_mul {n : ℕ} {U : PowerSeries R} (h : X^n ∣ U) (V : PowerSeries R) :
+private theorem leading_mul {n : ℕ} {U : PowerSeries R} (h : X ^ n ∣ U) (V : PowerSeries R) :
     coeff n (U*V) = coeff n U * constantCoeff V := by
   obtain ⟨W,rfl⟩ := h
   have hc (T : PowerSeries R) : coeff n (X^n*T) = constantCoeff T := by
@@ -379,7 +379,7 @@ private theorem candidate_even (m : ℕ) (hm : 0 < m) :
   exact he.symm
 
 private theorem candidate_odd (F E O : PowerSeries F2)
-    (hF : F = E^2+X*O^2) (hEO : E*O=F) (m : ℕ) :
+    (hF : F = E ^ 2 + X * O ^ 2) (hEO : E * O = F) (m : ℕ) :
     normalized F (2*m+1) = 0 := by
   have hc : (((2*m+1+1) : ℕ) : F2)=0 := by
     simp [Nat.cast_add, Nat.cast_mul, CharTwo.two_eq_zero, CharTwo.add_self_eq_zero]
@@ -495,7 +495,7 @@ private theorem power_four_dvd (k : ℕ) (hk : 1 < k) : 4 ∣ 2^k := by
   rw [pow_add]
   exact dvd_mul_left 4 (2^j)
 
-private theorem high_power (n k : ℕ) (hn : 2 < n) (h : n=2^k) : 1 < k := by
+private theorem high_power (n k : ℕ) (hn : 2 < n) (h : n = 2 ^ k) : 1 < k := by
   by_contra! hk
   interval_cases k <;> norm_num at h <;> omega
 
