@@ -235,7 +235,11 @@ CI/preflight 的阶段、候选报告/DLL/工程证据交接、退出与缓存�
 
 `make preflight MODE=pr BASE=<sha>` 必须显式取得不可变 base commit SHA,并要求源 HEAD 已提交且工作树干净(含未跟踪文件)。入口校验模式、对象、路径与树状态,不以可变 ref 或隐式 fetch 补基线。以 `git merge-tree --write-tree BASE HEAD` 构造待合并候选树;冲突或无法合并即阻断,不得退回只判源 HEAD。BASE 无须是 HEAD 的祖先,不得设 ancestry 门。只物化合成候选,将其树身份与 BASE 固定后运行同一 engineering/current,再运行 delta;不得 checkout、restore、编译或执行 base 代码,base 仅作为候选判官的字节快照与差异输入。临时候选在所有出口清理,源工作树与分支不因预检改写。
 
-**增量计划与依赖。** `Meta/FILEMAP.toml` 仍是 ownership、producer、consumer、verifier 的唯一真源;实际执行依赖边须从语言原生编译/构建图及 producer 推导:MSBuild 求值后的输入与 project references、Lean imports/traces、实际 Scribe/producer 程序入口及测试的语义输入映射。现有 FILEMAP actor 字符串本身不证明可执行依赖闭包完整。不得另建手维 glob、逐 PR 清单或第二份 owner 注册表。
+**增量计划与依赖。** `Meta/FILEMAP.toml` 仍是 ownership、producer、consumer、verifier 的唯一真源;实际执行依赖边须从语言原生编译/构建图及 producer 推导:MSBuild 求值后的输入与 project references、Lean imports/traces、实际 Scribe/producer 程序入口及测试的语义输入映射。现有 FILEMAP actor 字符串、空观测、SL003-known 或 DLL 字节相同均不能单独证明输入完整或准许复用。不得另建手维 glob、逐 PR 清单或第二份 owner 注册表。
+
+测试结果复用采用普通 declared-input action contract:FILEMAP 的类型化 owner 声明须指明实际求值的测试项目、输入契约种类/版本、实际 producer/verifier 与标准 runner 契约,由对应 schema/消费者验证引用与接线。复用证据须绑定原生代码/材料闭包、实际可执行根与数据行义务、实际 callback/input provider(含捕获值与传递输入),机械核对当前声明输入值、runner 实际向子进程暴露的完整 context(含环境、路径、运行时/adapter 材料与有效配置),以及先前无过滤成功运行对整项目的精确完整覆盖;根、行身份/重数、发现及生命周期均须受契约支持,不能以受支持子集代表整项目。该声明与消费者是后续实现要求,不表示现有 FILEMAP schema 已支持。
+
+声明的 owner 完备性与钉版普通平台/框架语义是经评审信任的程序契约;上述机械校验只在该契约内验证身份、值、材料与成功覆盖,不构成任意 C#/CLR 无隐藏输入的通用纯度证明,亦不证明本轮进程健康。已知越出声明域的运行时效果、无 owner、未解析或不支持的输入/provider/发现均保持执行,不能由声明掩盖。未来输入仅在实际支持时由具体既有 owner 承担并验证,不预建通用查询 DSL、新注册表或推测性框架。
 
 CI 与 preflight 共用一个 canonical、确定性的增量计划:以当前输入/材料身份和已验证的缓存输入 manifest 求差,仅恢复必需缓存层,沿反向依赖安排受影响的编译、生产、检查与测试。调度单元采用既有有意义的 producer/project/module/test 归属,不做逐文件特判。成员及依赖的新增/删除须纳入新旧图的反向失效闭包;程序/producer、选项、工具链及语义环境均是增量内部的失效因素。任何计算复用均须验证当前候选完整声明的输入、环境、producer 闭包与成功材料证据。Git delta 可缩小候选集,不能单独证明传递运行时或测试输入未变。图或输入范围未解析、种子缺失/损坏/不可用时,在受影响 owner 或无法界定的 unknown 范围保守执行,不得把 unknown 当作无需检查。
 
@@ -269,7 +273,7 @@ engineering 从候选枚举全部必需当前测试项目,按完整输入闭包�
 
 缓存命中及既有报告种子仍须进入真实增量求值;构建入口验证输入并执行必要工作,不得因 Actions key 匹配跳过整个必需检查。Lake/报告增量入口每轮进入,无需重编时不得调用编译器;报告 producer 保留模块新增/删除、源 hash、反向依赖闭包与材料完整性的失效覆盖。producer 闭包、编译选项、工具链或语义环境变化所需重算在增量系统内部完成,不得改变远端兼容分区逃避失效判定。相同 mathlib 下源码变化只重算受影响闭包;完整输入验证未受影响的 README/metadata 改动应为零编译器调用、零报告模块重检、零无关单元测试,且保留 `.lake`。缓存只提供计算起点与待验证证据,永不提供通过判词。
 
-**验收矩阵。** 后续实现须先写有意义的程序行为测试再改程序;不新增 workflow 文本形状测试。同环境的增量与全量须在判词和产物上等价,以有代表性的验收对照证明,不要求每轮全量重放。至少覆盖以下放行与阻断边界,并以实际检查/产物证据判定,不能只比较最终退出码:
+**验收矩阵。** 后续实现须先写有意义的程序行为测试再改程序;不新增 workflow 文本形状测试。同环境的增量与全量须在判词和产物上等价,以有代表性的验收对照证明,不要求每轮全量重放。首个 owner 实现以完整真实 `Trureturing.Truth.Tests` 项目为验收对象,含其实际内置 Fact 与 InlineData Theory 行:无关候选改动须零当前执行而复用完整成功覆盖,相关真实源码改动致测试失败时须执行且与同候选无过滤运行同判;成员及行数由实际求值/发现派生,不在规范硬编码。至少覆盖以下放行与阻断边界,并以实际检查/产物证据判定,不能只比较最终退出码:
 
 | 场景 | 必须观察到的结果 |
 |---|---|
