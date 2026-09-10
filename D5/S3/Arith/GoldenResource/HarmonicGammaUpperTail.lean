@@ -7,8 +7,8 @@
    digest: A strict fourth-order upper bound completes the corrected harmonic-log tail bracket. -/
 
 /-
-proof_shape: content for harmonic_log_tail_upper and its named companion
-  harmonic_log_tail_bounds, whose upper component uses the former on a live path.
+proof_shape: content for harmonic_log_tail_upper and its named companions
+  harmonic_log_tail_bounds and eulerMascheroni_lower_64, which use it on live paths.
 Direct frozen dependency: D5/S3/Arith/GoldenResource/HarmonicGammaTail,
   statement_id sha256:a40c747352a586ff27baae23a34bc812476e0843d721817a311f21eab3f5562e.
   Its private stepGap, correctedSeq, step identity and limits are reused with open private.
@@ -19,9 +19,12 @@ escape_witness: upper_gap_neg proves f(x) < w(x) uniformly for x > 0 from the
   margin then place the fourth-corrected sequence strictly below gamma.
   Pure derivative algebra and finite arithmetic are not escape witnesses.
 admission_basis: escape-witness.
-utility: none; all declarations are general analytic definitions or estimates,
-  not bounded enumeration, a checker, numerical reduction, or a certified instance.
+utility: none; the principal declarations are general analytic definitions or estimates.
+  The requested numerical consequence is a named companion of the uniform estimate,
+  not an independent finite-instance delivery, checker, or numerical reduction API.
+  No declaration supplies bounded enumeration or computational infrastructure.
   Consumer -> prerequisite: harmonic_log_tail_bounds -> harmonic_log_tail_upper.
+  Consumer -> prerequisite: eulerMascheroni_lower_64 -> harmonic_log_tail_upper.
   RobinRationalBasis accepts coarse gamma witnesses; it does not explicitly demand
   ten-digit precision. This supplies a permitted tighter analytic bound.
 Provenance: literature-attested classical Euler-Maclaurin estimate, DLMF 5.11.2
@@ -139,7 +142,20 @@ theorem harmonic_log_tail_bounds (N : ℕ) (hN : 1 ≤ N) :
     linarith only [hl]
   · exact harmonic_log_tail_upper N hN
 
+/-- The uniform fourth-order estimate at 64 gives a rational lower bound for Euler's constant. -/
+theorem eulerMascheroni_lower_64 :
+    (5772156649 / 10 ^ 10 : ℝ) < Real.eulerMascheroniConstant := by
+  have htail := harmonic_log_tail_upper 64 (by norm_num)
+  have hlog := Real.sum_range_sub_log_div_le (by norm_num : |(1 / 3 : ℝ)| < 1) 14
+  norm_num [Finset.sum_range_succ] at hlog
+  have hu := (abs_le.mp hlog).2
+  norm_num [harmonic] at htail
+  rw [show (64 : ℝ) = 2 ^ 6 by norm_num, Real.log_pow] at htail
+  norm_num at htail ⊢
+  linarith only [htail, hu]
+
 #print axioms harmonic_log_tail_upper
 #print axioms harmonic_log_tail_bounds
+#print axioms eulerMascheroni_lower_64
 
 end D5.S3.Arith.GoldenResource.HarmonicGammaUpperTail
