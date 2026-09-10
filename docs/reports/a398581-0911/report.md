@@ -55,6 +55,14 @@ The named escape witness is `near_bound`, together with its live endpoint applic
 
 Before the formal write, directory counts: D5/S3/Arith/Congruence=21 files; mirrored Blueprint bucket=42; Library/notes=23. Arith is registered at S3. Generality I and utility none describe the unbounded, fixed-numerator arithmetic theorem. Canonical route requested for EgyptianFiveFirstMaximum.
 
+## Formal delivery gates
+
+Canonical route returned `D5/S3/Arith/Congruence/EgyptianFiveFirstMaximum.lean` and its seven-line skeleton (attempt-1/route-2.log). The first route call rejected an absolute manifest path; the successful call used repository-relative `build/a398581/formal-manifest.json` and artifact=lean. The verified scratch proof has been moved to that formal module; its previous versions remain in Git, not as a duplicate theory source.
+
+First `make lean`: EXIT=2 in 2.992s due to a missing parenthesis in the new Scribe formula. Corrected by naming the formula components. Second `make lean`: EXIT=0 in 79.090s, 12845 jobs; the new module's build was reported as 17s and its axiom closure as the standard three. Receipt `make-lean-2.json`, log `make-lean-2.log` in attempt-1. `LEAN_CACHE` status=present, method=none, stamp_miss=null, project_olean_state=warm, mathlib_olean_state=warm, missing mathlib oleans=0. The prior seed receipt is preserved above.
+
+The code's active capacity constants are hard=1000 and soft=800 lines (`RepositoryRules.Structure.cs`); the formal module has 673 lines, below both. Spec A5 still mentions 400 lines; this discrepancy is disclosed and no capacity rule is changed. The former report proof was removed after migration, not frozen or ingested.
+
 ## Verification and remaining obligations
 
 No Lean attempt run yet. No theorem frozen. Build/cache receipts, exact declaration classifications, and final outcome will be appended after each completed unit.
