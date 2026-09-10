@@ -6,6 +6,7 @@ public sealed class JudgeSeedTests
 {
     [Theory]
     [InlineData("test_checkout_and_runtime_copy")]
+    [InlineData("test_helper_readme_commit_and_source_change")]
     [InlineData("test_semantics_membership_and_clean_equivalence")]
     [InlineData("test_corrupt_missing_material_and_relocation")]
     [InlineData("test_no_seed_or_save_failure_cannot_pass_bad_compilation")]

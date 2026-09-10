@@ -74,9 +74,9 @@ class CompilerSeeds(unittest.TestCase):
             target = judge.prepare_seed(self.root)
         self.env["CustomAfterMicrosoftCSharpTargets"] = str(target)
 
-    def build(self, name, *, expected=None, properties=(), success=True):
-        self.run_dotnet("restore", "tools/StrataLint.sln", "--locked-mode")
-        result = self.run_dotnet("build", "tools/StrataLint.sln", "--no-restore", "--configuration", "Release",
+    def build(self, name, *, expected=None, properties=(), success=True, project="tools/StrataLint.sln"):
+        self.run_dotnet("restore", project, "--locked-mode")
+        result = self.run_dotnet("build", project, "--no-restore", "--configuration", "Release",
                                  "--warnaserror", "-v:diag", *properties, success=success)
         csc = len(re.findall(r'Task "Csc"(?: \(TaskId:\d+\))?', result.stdout))
         self.observations.append({"name": name, "exit": result.returncode, "csc_tasks": csc})
@@ -115,6 +115,50 @@ class CompilerSeeds(unittest.TestCase):
         actions.restore(self.root, keys, {"judge": keys["judge"]["key"]}, ("judge",))
         self.checkout_times()
         self.prepare()
+
+    def test_helper_readme_commit_and_source_change(self):
+        # The helper excludes root build properties, so exercise its production
+        # project in a real Git repository, including its own Csc execution.
+        inputs = ["global.json", "tools/scripts/report/JudgeSeedTask.csproj",
+                  "tools/scripts/report/JudgeSeedTask.cs", "tools/scripts/report/packages.lock.json"]
+        for path in inputs:
+            self.write(path, (ROOT / path).read_text())
+        self.write(".gitignore", "build/\n**/bin/\n**/obj/\n")
+        self.write("README.md", "helper fixture\n")
+        empty = self.root / "build/empty-git-config"
+        empty.mkdir(parents=True)
+
+        def git(*arguments):
+            result = subprocess.run(["git", "-c", "core.hooksPath=" + str(empty), "-c", "commit.gpgsign=false",
+                                     "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", *arguments],
+                                    cwd=self.root, env=self.env, text=True, capture_output=True)
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+            return result.stdout.strip()
+
+        git("init", "--quiet", "--template=" + str(empty))
+        git("add", ".")
+        git("commit", "--quiet", "-m", "helper compiler inputs")
+        before = git("rev-parse", "HEAD", "HEAD^{tree}").splitlines()
+        hashes = {path: hashlib.sha256((self.root / path).read_bytes()).hexdigest() for path in inputs}
+        project = "tools/scripts/report/JudgeSeedTask.csproj"
+        self.build("helper-cold", project=project, expected=1)
+        dll = self.dll("scripts/report", "JudgeSeedTask")
+        original = dll.read_bytes()
+        self.write("README.md", "helper fixture with updated documentation\n")
+        git("add", "README.md")
+        git("commit", "--quiet", "-m", "README only")
+        after = git("rev-parse", "HEAD", "HEAD^{tree}").splitlines()
+        self.assertTrue(all(first != second for first, second in zip(before, after)))
+        self.assertEqual("README.md", git("diff", "--name-only", before[0], after[0]))
+        self.assertEqual("", git("status", "--porcelain"))
+        self.assertEqual(hashes, {path: hashlib.sha256((self.root / path).read_bytes()).hexdigest() for path in inputs})
+        self.observations.append({"name": "helper-commits", "cold": before, "warm": after, "inputs": hashes})
+        self.build("helper-readme", project=project, expected=0)
+        self.assertEqual(original, dll.read_bytes())
+        source = self.root / "tools/scripts/report/JudgeSeedTask.cs"
+        source.write_text(source.read_text() + "\ninternal static class ChangedHelperSource { }\n")
+        self.build("helper-source", project=project, expected=1)
+        self.assertNotEqual(original, dll.read_bytes())
 
     def test_checkout_and_runtime_copy(self):
         self.prepare()
