@@ -86,3 +86,12 @@ The normalization is `R-T`, using `(n+1)-n=1`; this is a new exponent-n
 construction, parallel to the private square-exponent construction. No parity
 classification is claimed at this checkpoint. Compiler output contains only
 unused-simp-argument warnings, scheduled for cleanup before the full gate.
+
+The exact modulo-two identification now compiles without warnings (file-level
+Lean exit 0). The decisive diagonal statement is
+`coeff m (candidate^m*(1+X*U))=0` for every m>0. Odd m gives a square in an
+odd degree; even m halves by U=1+X*U² and U*(1+X*U)=1. This makes the even
+normalized rows vanish. The odd rows vanish from EO=candidate. Normalized
+uniqueness then proves the proposed modulo-two identity. One algebraic repair
+was needed: the even/odd split of (1+X)U consumes (1+X) times U's equation,
+not the unmultiplied equation. The full support classification is next.

@@ -70,7 +70,7 @@ private theorem derivative_row (F : PowerSeries R) (n : ℕ) (hn : 0 < n) :
 private theorem exact_normalization (F : PowerSeries R) (n : ℕ) (hn : 0 < n) :
     row F n = (((n+1) : ℕ) : R) * normalized F n := by
   have h := derivative_row F n hn
-  simp only [Nat.cast_pow, Nat.cast_add, Nat.cast_one] at h ⊢
+  simp only [Nat.cast_add, Nat.cast_one] at h ⊢
   dsimp [normalized]
   linear_combination -h
 
@@ -169,7 +169,7 @@ private theorem normalized_change {n : ℕ} {F G : PowerSeries R} (hn : 0 < n)
     normalized F n-normalized G n = coeff n F-coeff n G := by
   have hr := row_change hF hG h
   have ht := derivRow_change hn hF hG h
-  simp only [Nat.cast_pow, Nat.cast_add, Nat.cast_one] at hr
+  simp only [Nat.cast_add, Nat.cast_one] at hr
   dsimp [normalized]
   linear_combination hr-ht
 
@@ -261,7 +261,173 @@ private theorem normalized_map {S : Type*} [CommRing S] (f : R →+* S)
   have ht : derivRow (F.map f) n = f (derivRow F n) := by
     simp only [derivRow, ← geom_map f, ← derivative_map f, ← map_pow, ← map_mul,
       ← map_add, coeff_map]
-  simp only [normalized, hr, ht, map_sub, map_mul, map_add, map_natCast, map_ofNat]
+  simp only [normalized, hr, ht, map_sub]
+
+private theorem geom_cast_congr (e f : ℕ) (h : (e : F2) = (f : F2)) :
+    geom (R := F2) e = geom f := by ext n; simp [geom, h]
+
+private theorem geom_zero : geom (R := F2) 0 = 1 := by ext n; simp [geom, zero_pow_eq]
+
+private theorem geom_one_denom : (1+X)*geom (R := F2) 1 = 1 := by
+  simpa only [Nat.cast_one, map_one, one_mul, CharTwo.sub_eq_add] using geom_eq (R := F2) 1
+
+private theorem even_X_square (F : PowerSeries F2) (m : ℕ) : coeff (2*m) (X*F^2) = 0 := by
+  cases m with
+  | zero => simp
+  | succ m => rw [show 2*(m+1) = (2*m+1)+1 by omega, coeff_succ_X_mul, square_odd]
+
+private abbrev Upstream := D5.S1.Recurrence.Invariants.CatalanCompositionSquareParity.catalanSeries
+
+private def U : PowerSeries F2 :=
+  (PowerSeries.catalanSeries.map (Nat.castRingHom F2))
+
+private theorem U_equation : U = 1+X*U^2 := by
+  have h := congrArg (PowerSeries.map (Nat.castRingHom F2))
+    PowerSeries.catalanSeries_sq_mul_X_add_one
+  simpa only [map_add, map_mul, map_pow, map_X, map_one, U, add_comm, mul_comm] using h.symm
+
+private theorem U_zero : constantCoeff U = 1 := by
+  have h := congrArg constantCoeff U_equation
+  simpa using h
+
+private theorem U_support (n : ℕ) : coeff n U = 1 ↔ ∃ k : ℕ, n+1=2^k := by
+  have h := D5.S1.Recurrence.Invariants.CatalanCompositionSquareParity.binary_catalan (n+1)
+  have hmap : Upstream.map (Int.castRingHom F2) = X*U := by
+    change (X*(PowerSeries.catalanSeries.map (Nat.castRingHom ℤ))).map (Int.castRingHom F2) = _
+    simp only [map_mul, map_X, U]
+    rfl
+  rw [hmap, coeff_succ_X_mul] at h
+  exact h
+
+
+private def E : PowerSeries F2 := 1+X
+
+private def O : PowerSeries F2 := E*U
+
+private def candidate : PowerSeries F2 := E^2+X*O^2
+
+private def T : PowerSeries F2 := 1+X*U
+
+private theorem UT_mul : U*T=1 := by
+  dsimp [T]
+  linear_combination (norm := (ring_nf; simp [CharTwo.two_eq_zero])) U_equation
+
+private theorem candidate_factor : candidate = E^2*U := by
+  dsimp [candidate, O]
+  linear_combination -E^2*U_equation
+
+private theorem EO_mul : E*O=candidate := by
+  rw [candidate_factor, O]
+  ring
+
+private theorem candidate_T : candidate*T=E^2 := by
+  rw [candidate_factor, mul_assoc, UT_mul, mul_one]
+
+private theorem T_square : T^2*U=T := by
+  calc
+    T^2*U = T*(U*T) := by ring
+    _ = T := by rw [UT_mul, mul_one]
+
+-- A positive diagonal repeatedly halves until it has odd degree.
+private theorem diagonal_zero (m : ℕ) (hm : 0 < m) :
+    coeff m (candidate^m*T)=0 := by
+  induction m using Nat.strong_induction_on with
+  | h m ih =>
+    obtain ⟨r, hr | hr⟩ := Nat.even_or_odd' m
+    · subst m
+      have hp : candidate^(2*r)*T = (candidate^r*T)^2*U := by
+        rw [mul_pow, mul_assoc, T_square, show 2*r=r*2 by omega, pow_mul]
+      have hs : (candidate^r*T)^2*U =
+          (candidate^r*T)^2+X*((candidate^r*T)*U)^2 := by
+        conv_lhs => rw [U_equation]
+        ring
+      rw [hp, hs, map_add, square_even, even_X_square, add_zero]
+      exact ih r (by omega) (by omega)
+    · subst m
+      have hp : candidate^(2*r+1)*T = (candidate^r*E)^2 := by
+        rw [pow_succ, mul_assoc, candidate_T, show 2*r=r*2 by omega, pow_mul, mul_pow]
+      rw [hp, square_odd]
+
+private theorem candidate_geom : candidate*geom 1 = E*U := by
+  have hg := geom_one_denom
+  change E*geom 1=1 at hg
+  rw [candidate_factor]
+  linear_combination E*U*hg
+
+private theorem EU_split : E*U=T^2+X*(1+U)^2 := by
+  dsimp [E, T]
+  simp only [CharTwo.add_sq, one_pow, mul_pow]
+  linear_combination (1+X)*U_equation
+
+private theorem candidate_even (m : ℕ) (hm : 0 < m) :
+    normalized candidate (2*m)=0 := by
+  have hg : geom (R := F2) (2*m+1)=geom 1 :=
+    geom_cast_congr _ _ (by simp [Nat.cast_add, Nat.cast_mul, CharTwo.two_eq_zero])
+  have hr : row candidate (2*m)=0 := by
+    rw [row, hg, pow_succ, mul_assoc, candidate_geom, EU_split]
+    have hp : candidate^(2*m)*(T^2+X*(1+U)^2) =
+        (candidate^m*T)^2+X*(candidate^m*(1+U))^2 := by
+      rw [show 2*m=m*2 by omega, pow_mul]
+      ring
+    rw [hp, map_add, square_even, even_X_square, add_zero, diagonal_zero m hm]
+  have he := exact_normalization candidate (2*m) (by omega)
+  have hc : ((2*m+1 : ℕ) : F2)=1 := by
+    simp [Nat.cast_add, Nat.cast_mul, CharTwo.two_eq_zero]
+  rw [hc, one_mul, hr] at he
+  exact he.symm
+
+private theorem candidate_odd (F E O : PowerSeries F2)
+    (hF : F = E^2+X*O^2) (hEO : E*O=F) (m : ℕ) :
+    normalized F (2*m+1) = 0 := by
+  have hc : (((2*m+1+1) : ℕ) : F2)=0 := by
+    simp [Nat.cast_add, Nat.cast_mul, CharTwo.two_eq_zero, CharTwo.add_self_eq_zero]
+  have hg : geom (R := F2) ((2*m+1+1)) = 1 :=
+    (geom_cast_congr _ 0 (by simpa using hc)).trans geom_zero
+  have he : (2*m+1+1) = ((m+1))*2 := by ring
+  have hrow : row F (2*m+1) = 0 := by
+    rw [row, hg, mul_one, he, pow_mul, square_odd]
+  have ht : derivative F2 F = O^2 := by
+    rw [hF, Derivation.map_add, Derivation.leibniz, derivative_pow, derivative_pow]
+    simp [smul_eq_mul, CharTwo.two_eq_zero]
+  have hprod : F*derivative F2 F+F^2=X*(O^2)^2 := by
+    calc
+      F*derivative F2 F+F^2 = (E^2+X*O^2)*O^2+(E*O)^2 := by rw [ht, ← hF, hEO]
+      _ = (E*O)^2+(E*O)^2+X*(O^2)^2 := by ring
+      _ = X*(O^2)^2 := by rw [CharTwo.add_self_eq_zero, zero_add]
+  have htrow : derivRow F (2*m+1) = 0 := by
+    have hpos : 1 ≤ (m+1) := by omega
+    have hp1 : (2*m+1+1)-1 = ((m+1)-1)*2+1 := by omega
+    have hp2 : (2*m+1+1) = ((m+1)-1)*2+2 := by omega
+    rw [derivRow, show 2*m+1-1=2*m by omega, hg, one_pow, mul_one, mul_one]
+    have hp : F^((2*m+1+1)-1)*derivative F2 F+F^((2*m+1+1)) =
+        X*(F^((m+1)-1)*O^2)^2 := by
+      rw [hp1, hp2, pow_succ, pow_add, pow_mul]
+      calc
+        (F^((m+1)-1))^2*F*derivative F2 F+(F^((m+1)-1))^2*F^2 =
+          (F^((m+1)-1))^2*(F*derivative F2 F+F^2) := by ring
+        _ = X*(F^((m+1)-1)*O^2)^2 := by rw [hprod]; ring
+    rw [hp, even_X_square]
+  simp only [normalized, hrow, htrow, sub_self]
+
+
+private theorem candidate_zero : constantCoeff candidate=1 := by
+  simp [candidate, E]
+
+private theorem candidate_normalized (n : ℕ) (hn : 0 < n) : normalized candidate n=0 := by
+  obtain ⟨m, hm | hm⟩ := Nat.even_or_odd' n
+  · subst n
+    exact candidate_even m (by omega)
+  · subst n
+    exact candidate_odd candidate E O rfl EO_mul m
+
+private theorem solution_mod_two : (solution (R := ℤ)).map (Int.castRingHom F2)=candidate := by
+  apply normalized_unique
+  · rw [← coeff_zero_eq_constantCoeff]
+    simp only [coeff_map, coeff_zero_eq_constantCoeff, solution_zero, map_one]
+  · exact candidate_zero
+  · intro n hn
+    rw [normalized_map, solution_normalized n hn, map_zero]
+  · exact candidate_normalized
 
 /-- The integer generating function A has zero constant coefficient. -/
 noncomputable def generatingSeries : PowerSeries ℤ := 1-solution
