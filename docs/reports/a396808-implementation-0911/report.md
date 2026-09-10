@@ -39,6 +39,8 @@
 
 ## 构建记录
 
+第二批 Lean：Sparse.lean 证明 t³=t−X、排序后的两项三幂和唯一、平方系数对角为 1/异指标为 2、奇指标为零；EXIT=0，标准三公理。第三批 Trace.lean 证明三根多项式恒等式、三阶迹递推、次数界，以及 `2*m/3<n<m` 时 `[y^(2n)](1+t²+t⁴)^m=0`；EXIT=0，标准三公理。Trace 的假设是 t 的已证 Artin–Schreier 等式与常数项零，不含源方程或支持猜想。两个实验模块仍仅属未冻结的证明尝试；最终结论尚待拼接与全门。
+
 第一批实际 Lean 尝试：热树 `lake env lean /tmp/A396808Bridge.lean`。第一次整数约化的 `exact_mod_cast` 未关闭环同态 map_mul goal，已改用 `simpa using congrArg ...`；第二次 EXIT=0，Bridge.lean 与 bridge.log 留档。已证任意交换环的严格前缀分解、无除法递推和归纳唯一性，以及对公开 source_equation 的 F₃ 约化与 a₀=a₁=1。所有新增 helper 为 private；axiom 输出仅标准三公理。它们是目标的证明脚手架，尚未冻结、尚未解决模 3 猜想。
 
 `make lean-cache-ensure` EXIT=0：status=seeded，method=clonefile，donor=/Users/chronoai/trureturing，clonefile_attempts=1，stamp_miss=null，mathlib_olean_state=warm，project_olean_state=warm，mathlib_missing_olean_files=0，pin_sha256=sha256:6c4c682ffba051b5744fe7a75ccc99d7f3b20227b3b026f392f3315be0adaa4e。
