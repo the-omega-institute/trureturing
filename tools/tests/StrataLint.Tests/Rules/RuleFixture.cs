@@ -239,7 +239,7 @@ internal sealed partial class RuleFixture
         {
             case "upward-import": AddUpwardImport(); break;
             case "sorry": SetRingDeclaration("unfinished", "theorem", "sorryAx"); break;
-            case "file-capacity": Files[RingPath] += string.Concat(Enumerable.Repeat("-- pad\n", 801)); break;
+            case "file-capacity": Files[RingPath] += string.Concat(Enumerable.Repeat("-- pad\n", RepositoryRules.ArtifactHardLineLimit + 1)); break;
             case "mirror": Files.Remove(BlueprintPath); break;
             case "badge": Files[BlueprintPath] = "status: proven\n"; break;
             case "heart": ChangeHeartSignature(); break;
