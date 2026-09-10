@@ -47,3 +47,32 @@ Pages not successfully opened in this attempt are ASSUMED-UNVERIFIED.
 Codex implementation worker, using the lean4 skill with repository/user build
 and persistence rules taking precedence. Single implementation source and
 self-checks; no independent review or orchestrator recheck is asserted.
+
+## Retrieved source and numeric probe
+
+- https://oeis.org/search?q=id:A397591&fmt=json: HTTP 200, 3042 bytes, SHA-256 `e30a5609590bf9e3b9ed4d8bcf4a96235bbd318d1ae1eec4cef4f9c245c2dca5`
+- https://oeis.org/A397591/internal: HTTP 200, 14833 bytes, SHA-256 `2fc5cf2d5ed7780ff68a6c09aad0167565f9594cdaadec60d167df3ba59688ff`
+- https://export.arxiv.org/api/query?search_query=all:A397591: HTTP 200, 696 bytes, SHA-256 `049d997b380972359655e5e76f3b8b3bc117cbc8ebe1949cbd28b166f4537852`
+- https://reservoir.lean-lang.org/: HTTP 200, 115518 bytes, SHA-256 `cc504927f480af574c3fad96053941a720162b6b4b23ff5452e3def7eae9777b`
+- https://api.github.com/search/code?q=A397591+language%3ALean: HTTP 200, 55 bytes, SHA-256 `4af480b8ee5b87b369a76c49bd22c9a783908272ebffbe97898f8ab0f0772a5f`, total_count=0
+- https://api.github.com/search/repositories?q=A397591: HTTP 200, 55 bytes, SHA-256 `4af480b8ee5b87b369a76c49bd22c9a783908272ebffbe97898f8ab0f0772a5f`, total_count=0
+
+The parsed OEIS response confirms the exact NAME, conjecture, offset 1, and
+only one link (the 400-term b-file). The arXiv Atom feed has totalResults=0.
+Reservoir homepage is a successful availability check, not a negative search.
+Global GitHub code search covers indexed Lean repositories; unindexed projects
+are outside this bounded search. Pinned Mathlib PowerSeries Derivative/Expand/
+Catalan and repository CatalanCompositionSquareParity were inspected.
+The public binary_catalan theorem is directly reusable and will be imported.
+convolution_pairing is general, but the proof here uses Mathlib Frobenius
+coefficient extraction rather than an Icc convolution sum.
+
+N=120 exact-integer rerun: all 7260 coefficient divisions and 120 row
+divisions were exact; the first 21 coefficients match OEIS DATA individually.
+The odd indices in 4..120 are 5,7,9,15,17,31,33,63,65; 108 terms are even.
+The target predicate has zero counterexamples and the deliberately wrong
+power-of-two predicate has 14. All supplied probe readings match.
+
+Cache preparation: make lean-cache-ensure exited 0, status=seeded,
+method=clonefile, clonefile_attempts=1, project and Mathlib both warm,
+stamp_miss=null. Donor /Users/chronoai/trureturing.
