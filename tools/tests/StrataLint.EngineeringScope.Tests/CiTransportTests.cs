@@ -24,7 +24,7 @@ public sealed class CiTransportTests
             import pathlib, shutil, sys
             repository, root, relative = map(pathlib.Path, sys.argv[1:])
             sys.path.insert(0, str(repository / 'tools/tests/StrataLint.ScriptTests/Fixtures'))
-            from ci_contract import SnapshotContracts
+            from report_snapshot_contract import SnapshotContracts
             case = SnapshotContracts()
             case.setUp()
             try:
