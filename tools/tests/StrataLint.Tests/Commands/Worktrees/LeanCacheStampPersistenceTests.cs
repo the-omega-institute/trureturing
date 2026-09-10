@@ -52,7 +52,9 @@ public sealed class LeanCacheStampPersistenceTests
         Assert.Equal("build\n", ScriptHarnessScratch.ReadScratchText(repository, "producer-calls"));
         Assert.Equal(producerExit == 0, result.Success);
         Assert.EndsWith("producer output\n", result.Output, StringComparison.Ordinal);
-        Assert.Equal("producer diagnostic\n", result.Error);
+        Assert.StartsWith("producer diagnostic\n", result.Error, StringComparison.Ordinal);
+        Assert.Contains("LEAN_NATIVE_PHASE ", result.Error, StringComparison.Ordinal);
+        Assert.Equal(producerExit, result.ExitCode);
         Assert.Equal("cache-get\n", ScriptHarnessScratch.ReadScratchText(repository, "cache-calls"));
         Assert.Equal("Preserved\n", ScratchFile.ReadAllText(olean));
         Assert.True(Directory.Exists(LeanCacheStamp.PathFor(lake)));

@@ -73,13 +73,13 @@ public sealed partial class WorktreeCommandTests
             });
 
         Assert.Equal(
-            [lake, lake],
+            [lake, lake, lake],
             runner.Invocations
                 .Where(invocation => invocation.FileName == lake)
                 .Select(static invocation => invocation.FileName)
                 .ToArray());
         Assert.Equal(
-            ["get", "build"],
+            ["--version", "get", "build"],
             runner.Invocations
                 .Where(invocation => invocation.FileName == lake)
                 .Select(static invocation => invocation.Arguments.Last())
