@@ -29,7 +29,8 @@ private def copyIsometry : Matrix (n × n) n ℂ :=
 private theorem copyIsometry_star_mul :
     (copyIsometry (n := n))ᴴ * (copyIsometry (n := n)) = 1 := by
   ext i j
-  simp [Matrix.mul_apply, copyIsometry, Fintype.sum_prod_type, Matrix.conjTranspose_apply, Matrix.one_apply, eq_comm]
+  simp [Matrix.mul_apply, copyIsometry, Fintype.sum_prod_type,
+    Matrix.conjTranspose_apply, Matrix.one_apply, eq_comm]
 
 private def copyMatrix (M : Matrix n n ℂ) : Matrix (n × n) (n × n) ℂ :=
   (copyIsometry (n := n)) * M * (copyIsometry (n := n))ᴴ
@@ -39,7 +40,8 @@ private theorem copyMatrix_entry (M : Matrix n n ℂ) (a b : n × n) :
   rcases a with ⟨a₁,a₂⟩
   rcases b with ⟨c,d⟩
   by_cases hab : a₁ = a₂ <;> by_cases hcd : c = d <;>
-    simp [copyMatrix, Matrix.mul_apply, copyIsometry, Matrix.conjTranspose_apply, Matrix.one_apply, hab, hcd]
+    simp [copyMatrix, Matrix.mul_apply, copyIsometry, Matrix.conjTranspose_apply,
+      Matrix.one_apply, hab, hcd]
 
 private theorem trace_copyMatrix (M : Matrix n n ℂ) : (copyMatrix M).trace = M.trace := by
   rw [copyMatrix, Matrix.trace_mul_cycle, copyIsometry_star_mul, Matrix.one_mul]
@@ -111,7 +113,8 @@ private def copyHom :
     simp only [copyMatrix, Matrix.mul_add, Matrix.add_mul]
   map_mul' A B := copyMatrix_mul (CStarMatrix.ofMatrix.symm A) (CStarMatrix.ofMatrix.symm B)
   map_smul' r A := by
-    change copyMatrix (r • CStarMatrix.ofMatrix.symm A) = r • copyMatrix (CStarMatrix.ofMatrix.symm A)
+    change copyMatrix (r • CStarMatrix.ofMatrix.symm A) =
+      r • copyMatrix (CStarMatrix.ofMatrix.symm A)
     simp only [copyMatrix, Matrix.mul_smul, Matrix.smul_mul]
   map_star' A := by
     change copyMatrix ((CStarMatrix.ofMatrix.symm A)ᴴ) = (copyMatrix (CStarMatrix.ofMatrix.symm A))ᴴ
