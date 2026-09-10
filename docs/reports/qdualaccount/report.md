@@ -98,3 +98,12 @@ NumPy 2.0.2，阈值 1e-10。维数 1,2,3,4,5,8；612 个 Z 不变态样本包�
 没有发生构建被杀，也没有清理其它工作树的进程。
 
 失败诊断原件保存在 runner attempt 的 diagnostics/ 下；本报告保留可复用的失败原因。
+
+Scribe 首次编译另报 `Sub` 未定义；按同目录 Gibbs 页面已有写法补齐公式减法构造函数，
+随后 `make lean-report` 退出 0。`verified-module.json` 是成功报告的源码绑定模块片段：
+两个公开定理和私有引理的公理闭包均恰为 propext、Classical.choice、Quot.sound。
+
+`question_answered`：本报告预登记的 §17.2 实际 X 税是否等于全部自由、双不变态是否唯一、
+所有态是否在线段上。
+`dominating_theorem_search`：found（冻结的双捏合退极化与 Gibbs 守恒式）；
+新模块只作 atom 要求的具体连接，不宣称独立新数学内容。检索范围与命中身份如上。
