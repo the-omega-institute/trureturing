@@ -61,6 +61,19 @@ private def children (e : Expr) : List Expr :=
   | .proj name _ b => [mkConst name, b]
   | _ => []
 
+/-- Substitute actual arguments into a constant's stored type, without inferType
+or elaboration. The telescope and each forwarding reduction have fixed fuel. -/
+private def appliedType (env : Environment) (e : Expr) : Option Expr := do
+  let .const name levels := e.getAppFn | some e
+  let info ← env.find? name
+  let args := e.getAppArgs
+  if args.size > 256 then none else do
+    let mut type := info.type.instantiateLevelParams info.levelParams levels
+    for arg in args do
+      let .forallE _ _ body _ ← recordHead env 256 type | none
+      type := body.instantiate1 arg
+    recordHead env 256 type
+
 /-- Read the proof's closed, fully applied theorem references only when a
 reached proof needs classification. Shared unapplied combinators are not the
 registered proof; their concrete applications and closed proof helpers are. No proof normalization or transitive proof walk occurs. -/
@@ -120,6 +133,12 @@ def readoutClosure (env : Environment) (theoremName : Name) (readout : Expr) :
       let some proposition := recordHead env 256 e.getAppArgs[0]! | return (forbidden, none)
       let some statement := recordHead env 256 theoremInfo.type | return (forbidden, none)
       if proposition == statement then forbidden := true
+    if !forbidden && e.isApp && !e.hasLooseBVars && e.getAppFn.isConst then
+      let some type := appliedType env e | return (forbidden, none)
+      if type.isAppOfArity ``Decidable 1 then
+        let some proposition := recordHead env 256 type.getAppArgs[0]! | return (false, none)
+        let some statement := recordHead env 256 theoremInfo.type | return (false, none)
+        if proposition == statement then forbidden := true
     if let .const name _ := e then
       if constants.contains name then continue
       if constants.size >= provenanceConstantFuel then return (forbidden, none)

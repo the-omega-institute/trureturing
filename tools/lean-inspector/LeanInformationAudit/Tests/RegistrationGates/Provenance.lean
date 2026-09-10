@@ -140,11 +140,11 @@ run_cmd Elab.Command.liftTermElabM do
     value := mkConst ``clean, hints := .abbrev, safety := .safe }
 check_provenance "TypeDependency" using typeTruth expects "forbidden_dependency"
 
--- 131072 distinct leaves in a balanced term exhaust the expression budget
+-- 65536 distinct leaves in a balanced term exhaust the expression budget
 -- while using only a handful of constants; no time-based assertion is involved.
 set_option maxHeartbeats 2000000 in
 run_cmd Elab.Command.liftTermElabM do
-  let mut layer := (List.range 131072).toArray.map mkNatLit
+  let mut layer := (List.range 65536).toArray.map mkNatLit
   while layer.size > 1 do
     layer := (List.range (layer.size / 2)).toArray.map fun i =>
       mkApp2 (mkConst ``Nat.add) layer[2*i]! layer[2*i+1]!
