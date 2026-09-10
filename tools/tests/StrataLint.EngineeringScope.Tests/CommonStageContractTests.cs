@@ -317,7 +317,7 @@ public sealed class CommonStageContractTests
             read -r release < build/producer-wait
             """);
         var binaries = new[] { CommonExecutionEvidence.CliPath, CommonExecutionEvidence.ScribePath,
-            "tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll" };
+            CommonExecutionEvidence.RunnerPath, CommonExecutionEvidence.LeanProducerPath };
         foreach (var binary in binaries)
         {
             var full = Path.Combine(fixture.Root, binary);

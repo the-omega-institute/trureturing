@@ -645,7 +645,7 @@ public sealed class LeanCacheRunScriptTests
         [
             "run",
             "--project",
-            Path.Combine(LeanCacheGuard.PhysicalPath(repository), "tools", "StrataLint.EngineeringScope", "StrataLint.EngineeringScope.csproj"),
+            Path.Combine(LeanCacheGuard.PhysicalPath(repository), "tools", "StrataLint.Lean", "StrataLint.Lean.csproj"),
             "--configuration",
             "Release",
             "--",

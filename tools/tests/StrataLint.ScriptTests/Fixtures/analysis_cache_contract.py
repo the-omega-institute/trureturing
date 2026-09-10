@@ -52,10 +52,10 @@ exec "$ANALYSIS_REAL_DOTNET" "$STRATALINT_LEAN_PRODUCER_DLL" lean-cache-writer -
                 # compiler-owned producer discovery through its DLL entrypoint.
                 write(root / "global.json", "{}\n")
                 write(root / "producer.props", "<Project />\n")
-                write(root / "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+                write(root / "tools/StrataLint.Lean/StrataLint.Lean.csproj",
                       '<Project><Import Project="../../producer.props" />'
                       '<ItemGroup><Compile Include="Fixture.cs" /></ItemGroup></Project>\n')
-                write(root / "tools/StrataLint.EngineeringScope/Fixture.cs", "internal class Fixture { }\n")
+                write(root / "tools/StrataLint.Lean/Fixture.cs", "internal class Fixture { }\n")
                 lake = lean_seed_contract.FAKE_LAKE.replace('if args == ["build"]:', '''if args == ["exe", "cache", "get"]:
     (root / ".lake/packages").mkdir(parents=True, exist_ok=True)
     sys.exit(0)
@@ -69,7 +69,7 @@ if args == ["build"]:
                     HOME=str(root), XDG_CACHE_HOME=str(root / "cache"), STRATALINT_LEAN_CACHE_DONORS="",
                     STRATALINT_ACTIONS_CACHE_SEEDED="", STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS="300",
                     ANALYSIS_REAL_DOTNET=shutil.which("dotnet"), ANALYSIS_TEST_CLI=str(cli),
-                    STRATALINT_LEAN_PRODUCER_DLL=str(cli.with_name("StrataLint.EngineeringScope.dll")),
+                    STRATALINT_LEAN_PRODUCER_DLL=str(cli.with_name("StrataLint.Lean.dll")),
                     FAKE_REMOTE=str(remote), GH_CALLS=str(root / "gh-calls"),
                     GITHUB_SHA="d" * 40, GITHUB_RUN_ID="17", GITHUB_RUN_ATTEMPT="2",
                     GITHUB_EVENT_NAME="push", GITHUB_REF="refs/heads/dev", STRATALINT_CHECK_SUCCEEDED="true",

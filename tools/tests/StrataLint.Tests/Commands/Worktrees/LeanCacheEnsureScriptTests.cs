@@ -36,7 +36,7 @@ public sealed class LeanCacheEnsureScriptTests
             "/bin/bash",
             [
                 "-c",
-                "PATH=\"$1:$PATH\" DOTNET_ARGUMENTS=\"$2\" DOTNET_CWD=\"$3\" STRATALINT_LEAN_CLI_DLL=\"$(cd \"$5\" && pwd -P)/tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll\" STRATALINT_LEAN_PRODUCER_DLL=\"$(cd \"$5\" && pwd -P)/tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll\" exec /bin/bash \"$4\"",
+                "PATH=\"$1:$PATH\" DOTNET_ARGUMENTS=\"$2\" DOTNET_CWD=\"$3\" STRATALINT_LEAN_CLI_DLL=\"$(cd \"$5\" && pwd -P)/tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll\" STRATALINT_LEAN_PRODUCER_DLL=\"$(cd \"$5\" && pwd -P)/tools/StrataLint.Lean/bin/Release/net10.0/StrataLint.Lean.dll\" exec /bin/bash \"$4\"",
                 "lean-cache-test",
                 installed.Bin,
                 installed.ArgumentsPath,
@@ -60,7 +60,7 @@ public sealed class LeanCacheEnsureScriptTests
         Assert.Equal(0, canonicalRoot.ExitCode);
         var canonicalRepository = Encoding.UTF8.GetString(canonicalRoot.StandardOutput).TrimEnd('\n');
         var expected = command == "lean-cache-writer"
-            ? Path.Combine(canonicalRepository, "tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll") + "\nlean-cache-writer\n--\n"
+            ? Path.Combine(canonicalRepository, "tools/StrataLint.Lean/bin/Release/net10.0/StrataLint.Lean.dll") + "\nlean-cache-writer\n--\n"
             : Path.Combine(canonicalRepository, "tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll") + "\nworktree\nensure-cache\n";
         Assert.Equal(expected, installed.ArgumentsText);
         Assert.Equal(canonicalRepository + "\n", installed.DotnetCwdText);

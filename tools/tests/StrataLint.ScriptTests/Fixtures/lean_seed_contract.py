@@ -546,9 +546,33 @@ class ProducerIsolationTests(ProducerClosureFixture, unittest.TestCase):
 
 
 class ProducerClosureTests(ProducerClosureFixture, unittest.TestCase):
+    def test_ci_only_changes_preserve_address_and_reuse(self):
+        before = self.address()
+        for name, literal in (
+            ("CommonStages.cs", "stage must be build, engineering, current, or delta"),
+            ("CiTransport.cs", "transport options must be unique name/value pairs"),
+        ):
+            with self.subTest(owner=name):
+                owner = self.root / "tools/StrataLint.EngineeringScope" / name
+                original = owner.read_text()
+                changed = original.replace(literal, literal + " (CI-only probe)")
+                self.assertNotEqual(original, changed)
+                try:
+                    write(owner, changed)
+                    after = self.address()
+                    self.assertEqual(before[2:], after[2:])
+                    self.assertEqual(REV, self.partition())
+                    plan = self.plan_addresses(before, after)
+                    self.assertEqual(before, after)
+                    self.assertEqual([], plan["recheck"])
+                    self.assertFalse(plan["semantic_changed"])
+                    self.assertEqual("reuse", plan["status"])
+                finally:
+                    write(owner, original)
+
     def test_actual_cache_writer_source_invalidates_address_and_reuse(self):
         before = self.address()
-        owner = self.root / "tools/StrataLint.EngineeringScope/Lean/LeanCacheEnsureCommand.cs"
+        owner = self.root / "tools/StrataLint.Lean/Lean/LeanCacheEnsureCommand.cs"
         original = owner.read_bytes()
         write(owner, owner.read_text().replace('var receipt = ensured.Output;',
                                              'var receipt = ensured.Output + "producer-change";'))
@@ -611,10 +635,10 @@ class InspectorTests(PairFixture, unittest.TestCase):
         shutil.copyfile(ROOT / "tools/lean-inspector/inspect.sh", self.producer)
         shutil.copyfile(ROOT / "Makefile", self.root / "Makefile")
         write(self.root / "global.json", "{}\n")
-        write(self.root / "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+        write(self.root / "tools/StrataLint.Lean/StrataLint.Lean.csproj",
             '<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>Exe</OutputType>'
             '<TargetFramework>net10.0</TargetFramework></PropertyGroup></Project>\n')
-        write(self.root / "tools/StrataLint.EngineeringScope/Program.cs", 'System.Console.WriteLine("[]");\n')
+        write(self.root / "tools/StrataLint.Lean/Program.cs", 'System.Console.WriteLine("[]");\n')
         runner = self.root / "tools/scripts/worktree/lean-cache-run.sh"
         write(runner, '#!/bin/sh\nexec "$@"\n')
         runner.chmod(0o755)
@@ -645,6 +669,9 @@ class InspectorTests(PairFixture, unittest.TestCase):
         self.output = self.root / "out/candidate-lean-report.json"
         first = self.pair()
         self.assertEqual(0, first.returncode, first.stdout + first.stderr)
+        write(self.root / "lakefile.toml", 'name = "renamed"\nkeywords = ["metadata"]\n[leanOptions]\nmaxRecDepth = 1000\n')
+        self.manifest["packages"][0]["inputRev"] = "metadata-tag"
+        self.save_manifest()
         current = self.current_report()
         self.assertEqual(0, current.returncode, current.stdout + current.stderr)
         self.assertIn("LEAN_REPORT_DELTA mode=reuse changed=0 added=0 removed=0 recheck=0", current.stdout)
