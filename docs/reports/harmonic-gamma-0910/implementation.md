@@ -179,8 +179,7 @@ The public declaration statement identities are:
 `make emit` completed with exit 0 and generated the required
 `Blueprint/D5/S3/Arith/GoldenResource/HarmonicGammaTail.md`. Both formulae, the `✓ std3`
 markers, the literature citation, and the corollary's repository derivation were checked.
-Only this new Blueprint mirror is a tracked emission change. Local gate receipt follows
-when complete.
+Only this new Blueprint mirror is a tracked emission change. Local gate receipts follow below.
 
 
 ## Gate capacity correction
@@ -199,3 +198,47 @@ full-gate log is retained as `harmonic-gamma-gate-initial.log`. The subsequent g
 uses the supported `GATE_ARGS=--skip-engineering`, preserving the already successful full
 engineering receipt while rerunning report validation, Scribe, and admission for the
 corrected paths. No harness or policy changes were made.
+
+
+## Final validation and delivery
+
+The corrected `make emit` exited 0; the rendered Blueprint bytes did not change because
+only the citation note's bucket changed. Final `make gate
+BASE=248a800843acf89ed184074d66a8d577fc028f99 GATE_ARGS=--skip-engineering` ran at commit
+`675eddc7a1`, exited 0 in 121 s, and passed all content checks, including SL-003 and SL-032.
+The supported rerun reused the successful full engineering run described above. Its
+protected-surface classification is SL-022 for the Scribe source; local gate explicitly
+reports `protected-surface change (SL-022); content checks passed` and returns success.
+This is a local validation receipt, not a claim of PR or CI approval.
+
+Nonblocking observations remain honest: SL-031 reports `utility: none` with
+`semantics=unverified-by-machine`, so the per-theorem content classification above is the
+main loop's mathematical assessment. SL-034 observes the absent frozen state; this is
+expected for the requested implementation-only delivery without deposit. No module was
+frozen, no coverage was written, and no PR was opened. The full two-sided fourth-order
+remainder bound was not implemented. No independent review seats were used.
+
+The final Scribe self-scan used `rg -n -i -P` with this regex:
+
+```
+\b(?:issue\s*#?\s*\d{3,}|PR\s+#\d+|pull\s+request|panel\s+brief|dispatch\s+brief|orchestrator|six-route|proof_shape|admission_basis|escape[ _-]witness|bind-only|postmortem|git-history|accepted-event\s+receipts?|search(?:es)?|duplicate)\b
+```
+
+It returned exit 1 with empty output (zero forbidden matches). The positive control
+`rg -n -P '\bMathlib\b'` on the same file returned exit 0 and matched line 26.
+The full receipt, including the final Scribe source SHA-256, is `scribe-scan.json` in the
+attempt directory. `git diff --check` also passed.
+
+Stepwise commits were pushed: `68ca382e1a` preregistration, `743d11d0b4` library/derivative
+receipts, `ac6f1f3acd` the completed Lean module/Scribe/L-note, `93eebec807` emitted mirror,
+and `675eddc7a1` the directory-capacity correction. The final report-only receipt commit
+is recorded, with the remote HEAD and a clean-tree check, in the runner result envelope.
+The final receipt commit does not alter Lean, Scribe, the Blueprint mirror, or the L-note.
+
+Worker-owned artifacts are published under:
+`/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/harmonic-gamma-0910/attempt-1`.
+They include the full and corrected gate logs, build/report/emission logs, indexed-query
+receipts, both derivative audits, the restricted binding probe, the canonical target-module
+report extract, this report, and the final Scribe scan. The populated `result.json` is
+published via `.tmp` and atomic rename before `completion.sentinel` is published the same
+way. Its top level has exactly `conclusion` (object) and `log_ref` (nonempty string).
