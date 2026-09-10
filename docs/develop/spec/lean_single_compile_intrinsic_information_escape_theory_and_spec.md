@@ -13,7 +13,7 @@
 
 本规范定义一个完全位于 Lean 4 内部的数学系统。系统的输入不是论文、自然语言标签、人工评分或历史版本差分，而是同一次编译中已经 elaborated 的 Lean 定理对象及其数学概念读出。
 
-v4.2 把“当前完整定理族”精确化为 sealing root $R$ 的 import closure 与 canonical object
+“当前完整定理族”是 sealing root $R$ 的 import closure 与 canonical object
 `Arena` declaration $A$ 下的单个最大 catalog：
 
 $$
@@ -23,11 +23,11 @@ $$
 这里的成员是 $R$ 的 import closure 中持久可见的登记 occurrence，而不是裸 theorem 名。
 occurrence identity 是 `(canonical Arena declaration, theoremName)`。所有未显式写出上标、下标的
 $I,K,E,U,\delta,D_A$ 都是固定同一个 $(R,A)$ 后的简写；不同 arena 之间不存在
-默认标量。v4.2 同时给出共享 arena 上的 exclusive-capture vector、overlap、kernel
+默认标量。共享 arena 分析包括 exclusive-capture vector、overlap、kernel
 refinement、multiplicity spectrum、role histogram 与 ordered layered capture。共享分析产物使用
 第 30 节的 additive schema；冻结 theorem-record 产物及其十一项 singleton 计数的语义不变。
 
-v4.3 在上述 flat 与 ordered analysis 上固定层级对象：每个 maximal canonical catalog 的
+在上述 flat 与 ordered analysis 上，层级对象的定义如下：每个 maximal canonical catalog 的
 generated joint kernels 按**关系外延相等**取商，形成有限闭包格；其全部 strict generator
 transitions 组成可含 shortcut edges 的 DAG，Hasse cover graph 是该格的传递约简。Hasse diagram
 为 path（因而为 tree）当且仅当格为 chain；存在不可比 kernels 时出现 diamond，因而同一终局
