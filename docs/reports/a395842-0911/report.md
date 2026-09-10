@@ -166,3 +166,18 @@ LEAN_CACHE: status=present, method=none, stamp_miss=null, both project and Mathl
 warm, no missing Mathlib oleans, archive not attempted. The initial clonefile
 seed is recorded above. Full structured receipt: build-receipts.json; raw log
 is the attempt directory's make-lean.log. These local timings are not CI timings.
+
+## Elaborated dependency audit
+
+A warm-tree Lean metaprogram traversed each public theorem's elaborated type
+and value, descending into local declarations and stopping at other D5 constants.
+EXIT=0 after correcting two audit-only API/syntax errors (`prefix` is reserved;
+name conversion uses String.toName). The complete source and output are in
+dependency-audit.json. This audit verifies constant reachability, not semantic
+necessity or an automatic proof-shape classification.
+
+All three public theorem closures reach the imported `iterate` definition and
+its generated equation `iterate.eq_2`, with no other external D5 constant
+boundary. The first two reach `residual_top`; hanna_conjecture reaches
+`H_dyadic_gap`. The live mathematical paths and semantic four-part assessment
+are recorded below once the canonical declaration pins are available.
