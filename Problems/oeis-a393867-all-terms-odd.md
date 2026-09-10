@@ -114,3 +114,45 @@ No proof, priority, exhaustive literature search, A393868 result, or completed
 PR is claimed at this checkpoint. A393866 and A393868 b-files were not opened:
 `ASSUMED-UNVERIFIED`. The user's arXiv search report is not represented as a
 search performed by this worker. No theory volume or atom will be created.
+
+## Theorem admission analysis
+
+Both public declarations have `proof_shape: content` and
+`admission_basis: escape-witness`. `utility: none`: these are unbounded
+symbolic statements proved by induction and formal-series algebra, not
+bounded enumeration, a checker, numerical reduction, or a certified finite
+instance. The private initial coefficient and the two-element coefficient
+field calculation only support the universal proof.
+
+For `generating_coeff_pair`, the new construction is the strong induction in
+`defect_f_zero`, which derives the paired-coefficient conclusion itself
+(the second legitimate witness form in CLAUDE 3.2). It uses a newly established
+coefficient at every even degree; its proof cannot be reduced to instantiation
+or projection of the frozen source equations. The independent intermediate
+power-defect equality `defect_pow` supports that induction, but its algebraic
+normalization alone is not claimed as the novel content.
+
+For `a393867_odd`, the named witness is `generating_coeff_pair`:
+
+1. Dependency closure: the chain is `a393867_odd` -> `log_mod_two_identity`
+   -> `paired_derivative` -> `generating_coeff_pair` -> `defect_f_zero`.
+2. Not a frozen projection: the frozen source only defines the series and
+   proves divisibility by the nth prime. The new strong induction is needed
+   to prove the coefficient pairing modulo two.
+3. Not definitionally equivalent: pairing concerns coefficients of F;
+   the target concerns coefficients of its derivative times its unit inverse.
+   Formal differentiation, inversion, and a second induction connect them.
+4. Live path: `paired_derivative` uses the equality for each even degree;
+   `log_mod_two_identity` multiplies that equality by the inverse, and the
+   final coefficient induction uses this product identity. No discarded
+   conjunction or unused witness is used to establish the dependency.
+
+There are no unrelated public companions. The directed consumer edge is
+`a393867_odd` -> `generating_coeff_pair` and answers exactly the preregistered
+oddness conjecture. The only direct frozen module is
+`D5/S1/Recurrence/Parity/PrimePowerShiftLogDerivative`, state pin
+`sha256:ac377909f3efe06da244e7960fe628f1ea740f752641f94947b75c57a790b785`.
+The source theorem dependencies are `generating_equation` and `lt_prime`;
+the original definitions `generatingSeries`, `prime`, `logDerivative`, and
+`a393867` retain their meanings. Declaration-level identities will be read
+from the canonical report/export before delivery.
