@@ -376,7 +376,108 @@ private theorem H_dyadic_coeff (r n : ℕ) (hn : n < 2 ^ (2 ^ r)) :
   have hc := congrArg (coeff n) (H_dyadic_gap r)
   simpa only [map_add, pow_low (iterate_normal H_zero H_one _).1 hn, add_zero] using hc
 
-#print axioms H_dyadic_gap
+private theorem square_subst (f : PowerSeries (ZMod 2)) : f ^ 2 = f.subst (X ^ 2) := by
+  have h := MvPowerSeries.map_frobenius_expand (σ := Unit) (R := ZMod 2)
+    2 (by decide) (f := f)
+  rw [ZMod.frobenius_zmod, MvPowerSeries.map_id] at h
+  exact h.symm.trans (expand_apply 2 (by decide) f)
+
+private theorem H_support (n : ℕ) : (¬ ∃ r : ℕ, n = 2 ^ r) →
+    ∀ m, coeff n (iterate H m) = 0 := by
+  induction n using Nat.strong_induction_on with
+  | h n ih =>
+    intro hn m
+    by_cases hn0 : n = 0
+    · subst n
+      simpa only [coeff_zero_eq_constantCoeff] using (iterate_normal H_zero H_one m).1
+    have hn1 : n ≠ 1 := by
+      intro he
+      exact hn ⟨0, by simpa using he⟩
+    induction m with
+    | zero => simp [iterate, coeff_X, hn1]
+    | succ m ihm =>
+      have hc := congrArg (coeff n) (H_recurrence m)
+      rw [map_add, square_subst, coeff_subst_X_pow (by decide : 2 ≠ 0),
+        Algebra.algebraMap_self, RingHom.id_apply] at hc
+      by_cases hd : 2 ∣ n
+      · have hh : ¬ ∃ r : ℕ, n / 2 = 2 ^ r := by
+          rintro ⟨r, hr⟩
+          apply hn
+          refine ⟨r + 1, ?_⟩
+          have he := Nat.mod_eq_zero_of_dvd hd
+          rw [pow_succ]
+          omega
+        rw [if_pos hd, ih (n / 2) (by omega) hh (m + 1), add_zero, ihm] at hc
+        exact hc
+      · simpa only [if_neg hd, add_zero, ihm] using hc
+
+private theorem H_diagonal (n : ℕ) (hn : 2 ≤ n) : coeff n (iterate H n) = 0 := by
+  by_cases hp : ∃ r : ℕ, n = 2 ^ r
+  · obtain ⟨r, rfl⟩ := hp
+    rw [H_dyadic_coeff r _ (Nat.lt_two_pow_self : 2 ^ r < 2 ^ (2 ^ r))]
+    simp only [coeff_X, if_neg (by omega : 2 ^ r ≠ 1)]
+  · exact H_support n hp n
+
+private theorem H_previous_diagonal (n : ℕ) (hn : 2 < n) :
+    coeff n (iterate H (n - 1)) = 0 := by
+  by_cases hp : ∃ r : ℕ, n = 2 ^ r
+  · obtain ⟨r, hr⟩ := hp
+    have hi : n / 2 < 2 ^ (2 ^ r) := by
+      have hbound : n < 2 ^ n := Nat.lt_two_pow_self
+      rw [hr] at hbound
+      omega
+    have hh : coeff (n / 2) (iterate H n) = 0 := by
+      have hni : n / 2 ≠ 1 := by
+        rcases r with _ | _ | r
+        · norm_num at hr; omega
+        · norm_num at hr; omega
+        · have hp : 0 < 2 ^ r := pow_pos (by omega) _
+          simp only [pow_succ] at hr
+          omega
+      have hh' := H_dyadic_coeff r (n / 2) hi
+      rw [← hr] at hh'
+      simpa only [coeff_X, if_neg hni] using hh'
+    have hc := congrArg (coeff n) (H_recurrence (n - 1))
+    rw [show n - 1 + 1 = n by omega, map_add, H_diagonal n (by omega), zero_add,
+      square_subst, coeff_subst_X_pow (by decide : 2 ≠ 0),
+      Algebra.algebraMap_self, RingHom.id_apply] at hc
+    rw [hh] at hc
+    simpa only [ite_self] using hc.symm
+  · exact H_support n hp (n - 1)
+
+private theorem H_residual (n : ℕ) (hn : 2 < n) : residual H n = 0 := by
+  rw [residual, H_diagonal n (by omega), H_previous_diagonal n hn, sub_self]
+
+private theorem map_iterate {S : Type*} [CommRing S] (hom : R →+* S)
+    {f : PowerSeries R} (hf : constantCoeff f = 0) (m : ℕ) :
+    (iterate f m).map hom = iterate (f.map hom) m := by
+  induction m with
+  | zero => simp [iterate]
+  | succ m ih =>
+    change ((iterate f m).subst f).map hom = (iterate (f.map hom) m).subst (f.map hom)
+    rw [map_subst (.of_constantCoeff_zero hf), ih]
+    rfl
+
+private theorem mod_two_identity : generatingSeries.map (Int.castRingHom (ZMod 2)) = H := by
+  let hom := Int.castRingHom (ZMod 2)
+  have hg := generating_equation
+  have hz : constantCoeff (generatingSeries.map hom) = 0 := by
+    rw [← coeff_zero_eq_constantCoeff, coeff_map, coeff_zero_eq_constantCoeff, hg.1, map_zero]
+  have h1 : coeff 1 (generatingSeries.map hom) = 1 := by simp [hg.2.1]
+  have h2 : coeff 2 (generatingSeries.map hom) = 1 := by simp [hg.2.2.1]
+  refine diagonal_unique hz H_zero h1 H_one h2 H_two ?_ H_residual
+  intro n hn
+  dsimp only [residual]
+  rw [← map_iterate hom hg.1, ← map_iterate hom hg.1, coeff_map, coeff_map,
+    hg.2.2.2 n hn, sub_self]
+
+theorem hanna_conjecture (n : ℕ) (hn : 2 ≤ n) : 2 ∣ a n := by
+  have hc := H_diagonal n hn
+  rw [← mod_two_identity, ← map_iterate (Int.castRingHom (ZMod 2)) generating_equation.1,
+    coeff_map] at hc
+  exact (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).mp hc
+
+#print axioms hanna_conjecture
 #print axioms generating_equation
 #print axioms generating_unique
 #print axioms initial_echo

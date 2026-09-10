@@ -70,6 +70,14 @@ The first run exposed substitution folding, a missing PowerSeries CharP instance
 and a sign in the doubling calculation; all were corrected before this checkpoint.
 No binomial formula or unproved A177775 assertion was used.
 
+Fourth Lean unit checked: non-dyadic coefficients of every H iterate vanish by
+strong induction on degree and induction on iteration count; the dyadic gap
+handles powers of two. H satisfies the implicit diagonal constraints. Mapping
+the integer solution into ZMod 2 and applying diagonal uniqueness identifies it
+with H. `hanna_conjecture (n) (hn : 2 ≤ n) : 2 ∣ a n` passes the warm file check,
+EXIT=0, with only propext, Classical.choice, Quot.sound. All printed public
+theorem closures are clean. Full repository gates and PR are still pending.
+
 ## Search receipts and semantic correction
 
 Local searches used `rg` over D5 for A395842, A177775, diagonal iteration,
