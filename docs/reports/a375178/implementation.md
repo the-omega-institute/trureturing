@@ -146,3 +146,13 @@ presentation). The supported FromAuthor fallback now states equality of
 the two residues under exactly the prime and p>=7 hypotheses. The second
 make emit exited 0 and emitted the new Blueprint. This changed only the
 presentation; the checked Lean source stayed unchanged.
+
+make deposit-uncovered exited 0 against base
+5a99ae1169edaf09a73a9685ec0dcb2ce3da2dad. It ran the header check, reused the
+matching Lean report, emitted documents, and invoked ledger-align --add.
+Receipt: selectors_considered=4010, changed=0, added=1, unchanged=4009,
+conflicts=0; PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED reason=NO_ATOM.
+No atom or theory input was created.
+
+Pre-PR gh pr list --state all --search 'A375178 in:title' returned an empty
+array with exit 0. This is a bounded title search, not a body/full-text search.
