@@ -6651,3 +6651,141 @@ L_B(X)=\mathbf1_B(0,0)=L_B(Y).
 **反例 D19（命题：整系数与整值多项式的区别，repo-derived）。** 记 $\operatorname{Int}(\mathbb Z)=\{h\in\mathbb Q[z]:h(k)\in\mathbb Z\text{ 对每个 }k\in\mathbb Z\}$。函数 $g(k)=k(k-1)/2$ 由 $\operatorname{Int}(\mathbb Z)$ 中的多项式给出，却不由 $\mathbb Z[z]$ 中的多项式给出。因此对每个非空且满足 $\operatorname{Tail}(B)$ 的区域 $B$，$g\circ L_B\notin\mathcal E$。
 
 **证明。** 任意整数 $k$ 与 $k-1$ 中恰有一个是偶数，所以 $k(k-1)/2\in\mathbb Z$，包括负整数输入。若 $p\in\mathbb Z[z]$ 在全部整数处与 $g$ 相等，则 $2p(z)-z^2+z\in\mathbb Z[z]$ 的每个整数都是根。命题 66 证明中的根数界给出 $2p(z)-z^2+z=0$，即在 $\mathbb Q[z]$ 中 $p(z)=(z^2-z)/2$。其二次项系数为 $1/2$，不是整数，矛盾。命题 66 的非空区域必要性于是排除该目标，即使区域满足 Tail 也不例外。此反例以命题 66 为前置。证毕。
+
+## 45. 二叶复制读数与有限单孔后处理的分离
+
+### 45.1 引理 7：非负整数纤维中的平方和碰撞
+
+**引理 7（非负整数纤维中的平方和碰撞，repo-derived）。** 沿用 $\mathbb N=\{0,1,2,\ldots\}$。任给整数 $0\le m<s$、矩阵 $A\in\mathbb Z^{m\times s}$ 与 $b\in\mathbb Z^m$，存在 $u,v\in\mathbb N^s$，使
+\[
+Au+b=Av+b,\qquad \sum_{j=1}^s u_j^2\ne\sum_{j=1}^s v_j^2.
+\tag{FIBER-SQUARE-ESCAPE}
+\]
+成熟锚为教科书有限维线性代数的秩–零度定理：列数多于行数的矩阵在 $\mathbb Q$ 上有非零核向量。本条在此标准事实之上给出位于非负整数锥内的显式三点构造。
+
+**证明。** 将 $A$ 视为 $\mathbb Q^s\to\mathbb Q^m$ 的线性映射。其秩至多为 $m<s$，故核维数至少为 $s-m>0$。取非零有理核向量并乘以各坐标分母的公倍数，得到 $d\in\mathbb Z^s\setminus\{0\}$ 且 $Ad=0$。置 $z_j=|d_j|$。每个坐标均满足 $z_j\ge0$ 与 $z_j\pm d_j\ge0$，所以 $z,z+d,z-d\in\mathbb N^s$，并且三者的仿射像均为 $Az+b$。逐坐标展开平方，得
+\[
+\sum_j(z_j+d_j)^2+\sum_j(z_j-d_j)^2-2\sum_jz_j^2
+=2\sum_jd_j^2>0.
+\]
+如果 $z+d$ 和 $z-d$ 的平方和都等于 $z$ 的平方和，左端便为零，矛盾。令 $u=z$，在 $z+d,z-d$ 中取平方和不同于 $z$ 的一个作为 $v$，即得结论。$m=0$ 时仿射像落在单点集 $\mathbb Z^0$，上述秩论证与构造仍成立。若要求所有坐标严格为正，将 $z_j$ 换为 $|d_j|+1$，同一平方恒等式即给出严格正整数见证。证毕。
+
+### 45.2 命题 68：固定二叶读数超出任意有限单孔后处理
+
+**命题 68（二叶复制读数超出有限单孔后处理闭包，repo-derived）。** 沿用命题 66 的 $\mathcal E$，令
+\[
+\begin{aligned}
+\mathcal E_1&=\{q\circ C:C\text{ 为定义 16 的签名 }\Sigma_{{\rm cau},t}
+ \text{ 下的固定总单孔上下文}\},\\
+\ell_j&=\operatorname{leaf}(j),\qquad T_{\rm leaf}=\{\ell_j:j\in\mathbb N\},\\
+L_{=}&=\{\operatorname{pair}(\ell_j,\ell_j):j\in\mathbb N\},\qquad
+H_{=}(X)=q\bigl(F_{L_{=}}(X\boxtimes X)\bigr),\\
+z_r(X)&=\sum_{\substack{e\in A_X\\\rho(e)=r}}\sigma(e)\quad(r\in T).
+\end{aligned}
+\]
+其中 $L_{=}$ 是定义 13 已有的固定来源筛选参数：它比较两父的叶来源树相等，不比较父事件的出现标识。$L_{=}$ 与 $H_{=}$ 在任何被挑战的上下文族之前固定。以下三项成立。
+
+1. $H_{=}\in\mathcal E$，由定义 34 的固定总项 $F_{L_{=}}(X\boxtimes X)$ 表达，该项恰含两个输入叶，且对每个 $X\in\mathcal B$，
+   \[
+   H_{=}(X)=\sum_{r\in T_{\rm leaf}}z_r(X)^2
+   =\sum_{j\in\mathbb N}z_{\ell_j}(X)^2.
+   \tag{LEAF-SQUARE-READOUT}
+   \]
+   每个输入只有有限个非零来源电荷。这里平方和只遍历叶来源，与所固定的 $L_{=}$ 一致。
+2. 对任意整数 $m\ge0$ 及任意 $h_1,\ldots,h_m\in\mathcal E_1$，存在 $X,Y\in\mathcal B$，使
+   \[
+   \bigl(\forall i\in\{1,\ldots,m\},\ h_i(X)=h_i(Y)\bigr)
+   \quad\land\quad H_{=}(X)\ne H_{=}(Y).
+   \tag{FINITE-ONE-HOLE-SEPARATION}
+   \]
+   量词次序为：先固定 $m$、全部 $h_i$ 的总单孔上下文 $C_i$ 及其所有参数，再构造供整个有限族共用的 $X,Y$；见证允许依赖该有限族。
+3. 对每个这样的有限族及任意函数 $g:\mathbb Z^m\to\mathbb Z$，都有
+   \[
+   H_{=}\ne g\circ(h_1,\ldots,h_m),\qquad
+   \mathbb Z[\mathcal E_1]\subsetneq\mathcal E.
+   \tag{FINITE-POSTPROCESSING-OBSTRUCTION}
+   \]
+   此处 $g$ 不限于多项式，也不附加可计算性假设；$\mathbb Z[\mathcal E_1]$ 指由整数常函数和 $\mathcal E_1$ 在逐点加、减、乘下生成的函数环。
+
+**证明（总表达与读数）。** 命题 3 保证 $X\boxtimes X$ 对全部平衡输入有定义且平衡，定义 13 的 $F_{L_{=}}$ 只改选择，故该两叶项总定义。定义 6 为两个输入叶使用不同的档案标签，即使两叶代入同一个 $X$，仍生成全部有序父对。来源树构造的标签互斥及 $\operatorname{pair}$ 的单射性给出
+\[
+\rho(p_{ef})\in L_{=}
+\quad\Longleftrightarrow\quad
+\exists j\in\mathbb N:\ \rho(e)=\rho(f)=\ell_j.
+\]
+由定义 3、6，筛选后的读数因此为
+\[
+\sum_{j\in\mathbb N}
+\sum_{\substack{e\in A_X\\\rho(e)=\ell_j}}
+\sum_{\substack{f\in A_X\\\rho(f)=\ell_j}}
+\sigma(e)\sigma(f)
+=\sum_{j\in\mathbb N}
+\left(\sum_{\substack{e\in A_X\\\rho(e)=\ell_j}}\sigma(e)\right)^2.
+\]
+$A_X$ 有限，故非空内层求和只涉及有限多个 $j$，各分配等式都是有限和等式。属于同一叶来源而出现标识不同的父事件也进入该求和，没有使用身份对角筛选。
+
+**证明（总单孔族的正规化）。** 现固定第二项中的 $m,h_i,C_i$ 与全部参数。定义 16 的有限复合沿唯一孔展开后是一棵恰含一个输入叶的定义 34 总项。严格失败传播使孔路径上的每个前缀都总定义，故引理 5A 适用。具体地，每个原语都保留原输入的全部档案事件，事件时间只加该路径上的固定平移量。若孔路径上的某个时间复合另侧有非空固定档案，则在原输入的非当前区域放入一个时间足够大（孔在左）或足够小（孔在右）的孤立事件，即违反定义 5 的守卫；该输入可取 $\Omega=A=\varnothing$，因而平衡。此前的空筛选或零乘积仍保留这个档案事件，不能消除此矛盾。于是所有这样的另侧档案必为空，时间复合与带相同标签的 $\boxplus$ 精确相等。求值固定闭子项并作此替换后，各 $C_i$ 只含
+$N,F_S,F_L,F_{\downarrow Q},T_k,\boxplus,\boxtimes$ 及固定平衡参数，仍只有一个孔，且在全部 $\mathcal B$ 上保持原值。
+
+**证明（反链输入族上的逐步仿射性）。** 取 $s=m+1$ 个互异叶来源 $\ell_1,\ldots,\ell_s$，位置与时间均固定为零。对每个 $a=(a_1,\ldots,a_s)\in\mathbb N^s$，用互异的 $HF$ 编码 $e_{j,k}^{+},e_{j,k}^{-}$（$1\le j\le s,1\le k\le a_j$）构造 $X(a)$：档案与当前区域均为这些事件的全集，严格关系为空，$e_{j,k}^{\pm}$ 的符号为 $\pm1$、来源为 $\ell_j$，只选全部正事件。每个来源的当前正负事件各有 $a_j$ 个，故总电荷为零；空关系传递、无自环且严格增时条件空真。所有集合有限、所有属性全定义，因此 $X(a)\in\mathcal B$，包括 $a=0$ 的空表示。其当前区域是反链，且
+\[
+z_{\ell_j}(X(a))=a_j\quad(1\le j\le s),\qquad
+H_{=}(X(a))=\sum_{j=1}^s a_j^2.
+\tag{ANTICHAIN-SQUARES}
+\]
+
+令 $\mathscr G=\mathrm{Attr}_t\times\{0,1\}\times\mathcal P_{\rm fin}(\mathrm{Attr}_t)$，$V=\mathbb Z^{(\mathscr G)}$ 为其上有限支撑整数函数群，$\delta_{(\alpha,\eta,U)}$ 表示对应格的基向量。置 $\alpha_j^{\pm}=(0,\pm1,\ell_j,0)$。反链中每个当前事件的后继属性集只含自身，故按定义 26 逐格计数有
+\[
+\Gamma_t(X(a))=\sum_{j=1}^s a_jv_j,\qquad
+v_j=\delta_{(\alpha_j^+,1,\{\alpha_j^+\})}
+-\delta_{(\alpha_j^-,0,\{\alpha_j^-\})}.
+\tag{ANTICHAIN-PROFILE-LINEAR}
+\]
+未选负事件进入选择位 $0$ 的格，不能从这个剖面中删去。
+
+以下在 $V$ 上逐步证明正规化上下文沿孔路径的剖面为 $v_0+\sum_j a_jw_j$，其中各 $v_0,w_j$ 均先于 $a$ 固定。对 $\alpha=(p,\epsilon,r,n)$，命题 48 的各一元操作是将基格作下列固定映射后按整数系数相加：
+\[
+\begin{aligned}
+N:&\quad(\alpha,\eta,U)\longmapsto(\alpha,1-\eta,U),\\
+F_S:&\quad(\alpha,\eta,U)\longmapsto(\alpha,\eta\mathbf1_S(p),U),\\
+F_L:&\quad(\alpha,\eta,U)\longmapsto(\alpha,\eta\mathbf1_L(r),U),\\
+F_{\downarrow Q}:&\quad(\alpha,\eta,U)\longmapsto
+ (\alpha,\eta\mathbf1_{U\cap Q\ne\varnothing},U),\\
+T_k:&\quad(\alpha,\eta,U)\longmapsto(\tau_k\alpha,\eta,\tau_k[U]),
+\end{aligned}
+\]
+其中 $\tau_k(p,\epsilon,r,n)=(p,\epsilon,r,n+k)$。每个映射唯一延拓为整数线性推送 $P:V\to V$，即使若干格合并也只是系数相加；因此它把 $v_0+\sum_j a_jw_j$ 送到 $Pv_0+\sum_j a_jPw_j$。因果筛选的命中条件只读格内的 $U$ 及预先固定的 $Q$，不读系数或选择重数；补集在这里交换选择位，并非把整个形式剖面取负。
+
+并行加固定参数 $Z$ 在任一槽位的更新为 $v\mapsto v+\Gamma_t(Z)$，故只把仿射常数项增加 $\Gamma_t(Z)$。乘积的剖面更新是双线性映射 $B:V\times V\to V$，它在基向量上由
+\[
+B\bigl(\delta_{(\alpha,\eta,U)},\delta_{(\alpha',\eta',U')}\bigr)
+=\delta_{(\alpha\diamond_t\alpha',\eta\eta',\{\alpha\diamond_t\alpha'\})},
+\quad
+\alpha\diamond_t\alpha'=(p+p',\epsilon\epsilon',
+ \operatorname{pair}(r,r'),\max(n,n')+1)
+\]
+给出。其理由是定义 6 的新当前点是全部当前父对，符号及选择位分别相乘，新当前区域为反链，后继属性集因而为自身单点集；按父格分组即得上述双线性推送。只有一侧含孔，另一侧的 $v_Z=\Gamma_t(Z)$ 固定，所以两种槽位分别给出
+\[
+\begin{aligned}
+B\left(v_0+\sum_j a_jw_j,v_Z\right)
+ &=B(v_0,v_Z)+\sum_j a_jB(w_j,v_Z),\\
+B\left(v_Z,v_0+\sum_j a_jw_j\right)
+ &=B(v_Z,v_0)+\sum_j a_jB(v_Z,w_j).
+\end{aligned}
+\]
+两式都是仿射式，不需要假设 $B$ 交换。有限支撑经固定格映射、有限和与有限父格乘积仍有限。以 (ANTICHAIN-PROFILE-LINEAR) 为归纳起点，上述步骤穷尽正规化后每条孔路径，故其终点确为某个固定的 $v_{i0}+\sum_j a_jv_{ij}$。中间形式系数无需各自为合法剖面；对每个实际的 $a\in\mathbb N^s$，命题 48 的更新等式逐步保证该组合恰为实际求值的剖面。正规化已消除时间守卫，全部实际中间表示的合法与平衡性由原语闭包保证。这也涵盖 $a_j=0$ 导致的支撑消失，不以支撑非空为归纳假设。
+
+终端读数是线性泛函 $\lambda(v)=\sum_{\alpha,U}v(\alpha,1,U)$。置 $A_{ij}=\lambda(v_{ij})\in\mathbb Z$、$b_i=\lambda(v_{i0})\in\mathbb Z$，便得到一个先于 $a$ 固定的整数矩阵 $A\in\mathbb Z^{m\times s}$ 与向量 $b\in\mathbb Z^m$，满足
+\[
+\bigl(h_1(X(a)),\ldots,h_m(X(a))\bigr)=Aa+b
+\qquad(a\in\mathbb N^s).
+\tag{FINITE-ONE-HOLE-AFFINE}
+\]
+
+**证明（碰撞见证与任意后处理）。** 因 $s=m+1>m$，引理 7 为该 $A,b$ 给出 $u,v\in\mathbb N^s$，其仿射像相同而平方和不同。令 $X=X(u),Y=X(v)$，它们已由上述逐事件构造保证合法、平衡且为反链输入；全部 $C_i$ 总定义，$H_{=}$ 的两叶项也总定义。(FINITE-ONE-HOLE-AFFINE) 使整个有限族在 $X,Y$ 上读数相同，(ANTICHAIN-SQUARES) 使 $H_{=}(X)\ne H_{=}(Y)$，证明第二项。$m=0$ 时取 $s=1$，摘要为 $\mathbb Z^0$ 的唯一元素，仍由引理 7 得到同样的分离。
+
+任给 $g:\mathbb Z^m\to\mathbb Z$，相同的摘要元组必有相同的 $g$ 值，故 $g\circ(h_1,\ldots,h_m)$ 不可能在两点上都等于 $H_{=}$。这一步只用函数性，对 $g$ 无其它要求，且同一对见证同时排除该有限族的全部后处理函数。
+
+最后证明所写函数环的包含。每个总单孔项都是定义 34 的总项；若 $q(C(X))$ 与 $q(D(X))$ 属于 $\mathcal E$，则 $C(X)\boxplus D(X)$、$C(X)\boxtimes D(X)$ 及 $NC(X)$ 仍为固定有限总项，分别给出逐点和、积、负值（命题 1–3）。每个整数常函数 $c$ 由命题 66 证明中的单叶总项 $(X\boxtimes0_\varnothing)\boxplus\mathbf i(c)$ 表达。因此 $\mathbb Z[\mathcal E_1]\subseteq\mathcal E$。函数环中的每个元素都只使用有限多个生成元，是它们的某个整系数多项式后处理；已证的任意后处理分离使 $H_{=}\notin\mathbb Z[\mathcal E_1]$，而第一项给出 $H_{=}\in\mathcal E$，所以包含严格。
+
+第二项的有限族量词不能换成一对输入同时混淆所有总单孔上下文。命题 49 必要性证明中恢复 $\Gamma_t$ 的读数使用补集及固定因果筛选的有限复合，这些都是总单孔上下文；若一对输入对全部这类读数相同，便有相同 $\Gamma_t$。沿选择位 $1$ 的格对位置、符号、时间与后继属性集求和即可恢复每个 $z_r$，再由 (LEAF-SQUARE-READOUT) 得到相同的 $H_{=}$。因此这里证成的是每个有限单孔摘要的障碍，不是 $\mathcal E$ 的完整刻画。证毕。
