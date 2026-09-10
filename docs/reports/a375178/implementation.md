@@ -38,3 +38,15 @@ The subsequent OEIS b-file comparison matches all 19 terms. The initial JSON URL
 No universal congruence, counterexample, Lean build, freeze, or literature-search
 completion is claimed at this checkpoint. The two higher conjectures are outside
 scope. Pages not retrieved by this worker remain `ASSUMED-UNVERIFIED`.
+
+## Kernel checkpoints
+
+The one-step product expansion, inverse power sums (by the pinned finite-field
+theorem), cast/range summation, reversal and shuffle for H(1,3), and
+p³ H(3)=0 in ZMod(p⁵) compile without sorry or additional axioms.
+The last result uses the identity
+t³(x³+y³)=−3t⁴x⁴ when t⁵=0 and x+y=txy,
+then the four-th power sum and cancellation of the unit 2.
+The tested scratch file's axiom output contains only propext, Classical.choice,
+and Quot.sound (the abstract paired-cube identity does not require choice).
+The actual universal A375178 statement is not yet proved.

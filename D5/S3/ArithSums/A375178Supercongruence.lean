@@ -112,4 +112,104 @@ private lemma doubleH_zero (p : ℕ) [Fact p.Prime] (hp : 7 ≤ p) :
   exact (mul_eq_zero.mp this).resolve_left htwo
 
 
+private abbrev R (p : ℕ) := ZMod (p ^ 5)
+private def red (p : ℕ) : R p →+* ZMod p :=
+  ZMod.castHom (dvd_pow_self p (by decide)) (ZMod p)
+
+private lemma p_fifth_zero (p : ℕ) : (p : R p) ^ 5 = 0 := by
+  rw [← Nat.cast_pow, ZMod.natCast_self]
+
+private lemma lift_zero (p : ℕ) [Fact p.Prime] (x : R p) (hx : red p x = 0) :
+    (p : R p) ^ 4 * x = 0 := by
+  have hv : p ∣ x.val := by
+    apply (ZMod.natCast_eq_zero_iff x.val p).mp
+    have h := congrArg (red p) (ZMod.natCast_zmod_val x)
+    simpa only [map_natCast, hx] using h
+  obtain ⟨v, hv⟩ := hv
+  have he : x = (p : R p) * v := by
+    rw [← ZMod.natCast_zmod_val x, hv, Nat.cast_mul]
+  rw [he, ← mul_assoc, ← pow_succ, p_fifth_zero, zero_mul]
+
+private lemma unit_inv (p : ℕ) [Fact p.Prime] (k : ℕ) (hk : 0 < k) (hkp : k < p) :
+    (k : R p) * (k : R p)⁻¹ = 1 := by
+  apply ZMod.coe_mul_inv_eq_one
+  apply Nat.Coprime.pow_right
+  apply Nat.Coprime.symm
+  exact (Nat.Prime.coprime_iff_not_dvd (Fact.out : p.Prime)).mpr
+    (Nat.not_dvd_of_pos_of_lt hk hkp)
+
+private lemma red_inv (p : ℕ) [Fact p.Prime] (k : ℕ) (hkp : k < p) :
+    red p (k : R p)⁻¹ = (k : ZMod p)⁻¹ := by
+  by_cases hk : k = 0
+  · subst k
+    simp only [Nat.cast_zero, ZMod.inv_zero, map_zero, inv_zero]
+  have h := congrArg (red p) (unit_inv p k (by omega) hkp)
+  have he : (k : ZMod p) * red p (k : R p)⁻¹ = 1 := by simpa using h
+  exact (inv_eq_of_mul_eq_one_right he).symm
+
+private lemma lifted_power_sum (p : ℕ) [Fact p.Prime] (r : ℕ) (hr : r < p - 1) :
+    (p : R p) ^ 4 * ∑ k ∈ range p, (k : R p)⁻¹ ^ r = 0 := by
+  apply lift_zero
+  simp only [map_sum, map_pow]
+  have h : (∑ k ∈ range p, red p (k : R p)⁻¹ ^ r) =
+      ∑ k ∈ range p, (k : ZMod p)⁻¹ ^ r := by
+    apply sum_congr rfl
+    intro k hk
+    rw [red_inv p k (mem_range.mp hk)]
+  rw [h, sum_cast_range p (fun x : ZMod p => x⁻¹ ^ r), sum_inverse_pow p r hr]
+
+private lemma paired_cube {R : Type*} [CommRing R] (t x y : R)
+    (ht : t ^ 5 = 0) (hxy : x + y = t * x * y) :
+    t ^ 3 * (x ^ 3 + y ^ 3) = -3 * t ^ 4 * x ^ 4 := by
+  have hkill : t ^ 4 * (x + y) = 0 := by
+    calc
+      _ = t ^ 5 * (x * y) := by rw [hxy]; ring
+      _ = 0 := by rw [ht, zero_mul]
+  linear_combination
+    t ^ 3 * (x ^ 2 - x * y + y ^ 2) * hxy +
+      (x * y ^ 2 - 2 * x ^ 2 * y + 3 * x ^ 3) * hkill
+
+
+private lemma sum_range_remove_zero (p : ℕ) [Fact p.Prime] (f : ℕ → R p) (h0 : f 0 = 0) :
+    ∑ k ∈ range p, f k = ∑ k ∈ Ico 1 p, f k := by
+  rw [sum_Ico_eq_sub f (Nat.Prime.one_lt (Fact.out : p.Prime)).le]
+  simp [h0]
+
+private lemma cubic_harmonic_lift (p : ℕ) [Fact p.Prime] (hp : 7 ≤ p) :
+    (p : R p) ^ 3 * ∑ k ∈ range p, (k : R p)⁻¹ ^ 3 = 0 := by
+  let t : R p := p
+  let f : ℕ → R p := fun k => (k : R p)⁻¹ ^ 3
+  have hpair (k : ℕ) (hk : k ∈ Ico 1 p) :
+      t ^ 3 * (f k + f (p-k)) = -3 * t ^ 4 * (k : R p)⁻¹ ^ 4 := by
+    have hks := mem_Ico.mp hk
+    have hu := unit_inv p k (by omega) hks.2
+    have hv := unit_inv p (p-k) (by omega) (by omega)
+    have hxy : (k : R p)⁻¹ + ((p-k : ℕ) : R p)⁻¹ =
+        t * (k : R p)⁻¹ * ((p-k : ℕ) : R p)⁻¹ := by
+      rw [Nat.cast_sub (by omega : k ≤ p)] at hv ⊢
+      dsimp [t]
+      linear_combination -((p : R p) - k)⁻¹ * hu - (k : R p)⁻¹ * hv
+    exact paired_cube t _ _ (p_fifth_zero p) hxy
+  have href : ∑ k ∈ Ico 1 p, f (p-k) = ∑ k ∈ Ico 1 p, f k := by
+    simpa using (sum_Ico_reflect f 1 (n := p) (m := p) (by omega))
+  have he := sum_congr rfl hpair
+  rw [← mul_sum, sum_add_distrib, href, ← mul_sum] at he
+  have h4 := lifted_power_sum p 4 (by omega)
+  rw [sum_range_remove_zero p (fun k => (k : R p)⁻¹ ^ 4)
+    (by simp [ZMod.inv_zero])] at h4
+  have hzero : t ^ 3 * ∑ k ∈ Ico 1 p, f k = 0 := by
+    have hz : (2 : R p) * (t ^ 3 * ∑ k ∈ Ico 1 p, f k) = 0 := by
+      dsimp [t] at he ⊢
+      linear_combination he - 3 * h4
+    have hi := unit_inv p 2 (by omega) (by omega)
+    norm_num only [Nat.cast_ofNat] at hi
+    calc
+      _ = (2 : R p)⁻¹ * ((2 : R p) * (t ^ 3 * ∑ k ∈ Ico 1 p, f k)) := by
+        rw [← mul_assoc, mul_comm (2 : R p)⁻¹, hi, one_mul]
+      _ = 0 := by rw [hz, mul_zero]
+  rw [sum_range_remove_zero p (fun k => (k : R p)⁻¹ ^ 3)
+    (by simp [ZMod.inv_zero])]
+  exact hzero
+
+
 end D5.S3.ArithSums.A375178Supercongruence
