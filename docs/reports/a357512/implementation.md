@@ -82,3 +82,19 @@ not an assertion about every third-party formalization.
 `make lean-cache-ensure`: EXIT=0; `status=seeded`, `method=clonefile`,
 `clonefile_attempts=1`, project and mathlib both `warm`, no missing mathlib oleans.
 Donor `/Users/chronoai/trureturing`.
+
+## Calibrated arXiv searches
+
+| Query / URL | HTTP | Total | Bytes | SHA-256 |
+| --- | --- | --- | --- | --- |
+| [all:A357512](https://export.arxiv.org/api/query?search_query=all%3AA357512&max_results=30) | 200 | 0 | 696 | `7284ae403c36cff008a440f12bfca8b994b36b2d7491a219151c66f9b3ec1ef2` |
+| [abs:supercongruence](https://export.arxiv.org/api/query?search_query=abs%3Asupercongruence&max_results=30) | 200 | 183 | 39278 | `5d09a7553f292c36da096730843a0591244d6aad964af647baf63b94c7350c38` |
+| [abs:Apery](https://export.arxiv.org/api/query?search_query=abs%3AApery&max_results=30) | 200 | 52 | 37986 | `e1b09b22b98c2685e2ac6558370e8687a7775de7b21d10de79f81861a353a8dd` |
+| [abs:"Apéry"](https://export.arxiv.org/api/query?search_query=abs%3A%22Ap%C3%A9ry%22&max_results=30) | 200 | 201 | 42248 | `a54bbbccb78393901d19736e6aaf08a1bf277a0a5ab0381f6728974fb6ec40b3` |
+| [abs:"Apéry" AND abs:supercongruence](https://export.arxiv.org/api/query?search_query=abs%3A%22Ap%C3%A9ry%22+AND+abs%3Asupercongruence&max_results=30) | 200 | 16 | 23998 | `174318d020d72c54b5d6233306a8cc1fad7db4fdd152968bdbb33541c57973da` |
+| [abs:Apery AND abs:supercongruence](https://export.arxiv.org/api/query?search_query=abs%3AApery+AND+abs%3Asupercongruence&max_results=30) | 200 | 3 | 4617 | `614be35b0103d1ec9fe3ed05828579ab960b9912b19dfa4dac1325c4674374c5` |
+
+GitHub code searches: `supercongruence language:Lean` returned 0;
+`apery language:Lean` returned 3 (both `incomplete_results=false`).
+The hits are two files in `project-numina/LeanTriathlon` and unrelated prose
+in `deancureton/sphere-six-complex`; the relevant file is being opened.
