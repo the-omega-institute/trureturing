@@ -1,0 +1,26 @@
+**定理 98（精确位数、取整间隙与增长）。** 置
+\[
+\ell_Z(A)=\min\{\ell\ge0:A<G_\ell\}.
+\]
+这是容量窗口宽度，定义 40 的 \(L(a)\) 仍指那里由 \(a+1\) 确定的分层指标。已知配置、字段边界和译码函数时，以下宽度准确成立：
+\[
+\begin{array}{c|c}
+\text{任意单射状态码的最小位数}&B_0=\lceil\log_2Q\rceil\\
+\text{独立二进制字段的最小总位数}&B_{\rm ind}=\sum_{p\in P}\lceil\log_2(A_p+1)\rceil\\
+\text{字面指数 Zeckendorf 固定窗口}&B_Z=\sum_{p\in P}\ell_Z(A_p)\\
+\text{字面展开乘积的二进制窗口}&B_{\rm prod,2}=\lceil\log_2(M+1)\rceil\\
+\text{乘积整数自身的 Zeckendorf 窗口}&B_{\rm prod,Z}=\ell_Z(M).
+\end{array}
+\tag{Z-LENGTH}
+\]
+若 \(k=|P|\ge1\)，则 \(0\le B_{\rm ind}-B_0\le k-1\)；\(k=0\) 时差为零。零容量字段宽零，空配置状态宽零，但字面乘积一的两种窗口均宽一。若 \(\phi=(1+\sqrt5)/2\)，则
+\[
+\lim_{A\to\infty}\frac{\ell_Z(A)}{\lceil\log_2(A+1)\rceil}
+=\frac1{\log_2\phi}.
+\]
+对固定非空素数集及固定正实数 \(a_p\)，若 \(A_p(t)/t\to a_p\)，则字面展开乘积的两种宽度均为 \(\Theta(t)\)，两种指数字段宽度均为 \(\Theta(\log t)\)。
+
+**证明。** 单射需 \(2^B\ge Q\)，枚举有限状态并以 \(B_0\) 位给序号达到下界。独立码的每字段必须单射，否则只改该坐标就碰撞，计数给逐字段下界且普通二进制达到。定理 10 的完整 \(\ell\) 窗口恰表示 \([0,G_\ell-1]\)，因而包含全部 \(0\le a\le A\) 的最小字面窗口为 \(\ell_Z(A)\)。当 \(\ell_Z(A)>0\) 时 \(G_{\ell_Z(A)-1}\le A\)，其单一最高位确实出现，不能缩短。字面乘积虽只取稀疏约数集，仍包含最大值 \(M\)，普通二进制和自身规范数字的最高位强制后两式；这不改变稀疏集合的 \(B_0\) 计数下界。
+
+令 \(x_p=\log_2q_p\)。有 \(\lceil\sum x_p\rceil\le\sum\lceil x_p\rceil<\sum x_p+k\le\lceil\sum x_p\rceil+k\)，差是整数，得界。对固定 \(k\)，取全部 \(q_p=2^m+1\) 且 \(m\) 充分大使 \((1+2^{-m})^k<2\)，可得差 \(k-1\)，故一般界不能缩小。Binet 公式 \(G_j=(\phi^{j+2}-(-\phi^{-1})^{j+2})/\sqrt5\) 给 \(\log G_j=j\log\phi+O(1)\)，夹在相邻 \(G\) 之间得 \(\ell_Z(A)=\log A/\log\phi+O(1)\)，证明比值。最后 \(\log M(t)=\sum_p A_p(t)\log p=t\sum_pa_p\log p+o(t)\)，而每个 \(\log(A_p(t)+1)=\log t+O(1)\)，代入诸宽度式即得所述增长。引文为定理 10 及 [Zeckendorf 表示定理](https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Zeckendorf.html)。证毕。
+
