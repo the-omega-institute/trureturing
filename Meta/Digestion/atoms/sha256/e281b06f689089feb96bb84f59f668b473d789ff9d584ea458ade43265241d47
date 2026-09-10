@@ -1,0 +1,27 @@
+**命题 64（repo-derived，OPEN-COPY）。**
+\[
+\forall B\subseteq K:\qquad E_q^{\rm dup}(B)\ \Longleftrightarrow\ \operatorname{Tail}(B),
+\]
+且因此 $E_q^{\rm dup}(B)\Longleftrightarrow E_q(B)$。
+
+**证明（充分性）。** 命题 55 的 $(O\text{-}CONSTRUCTION)$ 是有限复制语言中的单孔项，故 $\operatorname{Tail}(B)\Rightarrow E_q^{\rm dup}(B)$。
+
+**证明（必要性）。** 设固定总项 $C$ 表达 $B$，记 $L_B(X)=q(F_BX)$。对每个平衡输入及 $n\ge0$，并行副本 $nX$ 合法，故
+\[
+P_{C,X}(n)=q(C(nX))=nL_B(X).
+\]
+引理 5 的多项式在无限多个整数点上等于一次式，于是恒等为一次式；其常数项为 $q(C(0_\varnothing))=0$。引理 5(C) 给出有限单孔项 $C_i$，满足
+\[
+L_B(X)=\sum_iq(C_i(X)).
+\]
+对 $\{C_i\}$ 应用引理 6，取共同 $c$。同一对输入 $X_t,X_{t'}$ 使
+\[
+\mathbf1_B(t,p)=L_B(X_t)=\sum_iq(C_i(X_t))
+=\sum_iq(C_i(X_{t'}))=L_B(X_{t'})=\mathbf1_B(t',p),
+\]
+故 $\operatorname{Tail}(B)$。
+
+若 $r=0$，整项不含 $X$，其空输入读数为 $0$，只能表达 $B=\varnothing$；$B\ne\varnothing$ 时取一个 $B$ 内正点即矛盾。于是常值情形也已覆盖。证毕。
+
+**范围边界。** 结论只对固定有限总项、原签名和全部平衡输入成立；输入自适应参数、无限项、身份查询、新配对原语及一般 $q$ 函数的复制表达力均在范围外。有限核验不替代上述全称证明。
+

@@ -1,0 +1,7 @@
+**C（单叶切片）。** 为 $r$ 个叶引入形式变量 $z_1,\ldots,z_r$，每个至多出现一次。令 $C_i$ 保留第 $i$ 叶为孔、其余叶替换为 $0_\varnothing$，并先求值无孔子树。则 $C_i$ 属定义 16，且 $C_i(0_\varnothing)=C(0_\varnothing)$。对角代入给出
+\[
+[z]P_{C,X}(z)=\sum_{i=1}^r\bigl(q(C_i(X))-q(C_i(0_\varnothing))\bigr)
+=\sum_iq(C_i(X))-r\,q(C(0_\varnothing)).
+\]
+形式系数或剖面差未被声称可实现；本引理只给出代数值，不冒称存在更丰富的状态。证毕。
+

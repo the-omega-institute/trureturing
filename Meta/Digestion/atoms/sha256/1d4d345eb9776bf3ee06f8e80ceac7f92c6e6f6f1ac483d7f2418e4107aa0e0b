@@ -1,0 +1,6 @@
+**定义 34（复制项语言 $\operatorname{Ctx}^{\rm dup}$，repo-derived）。** 有限语法树的叶是输入变量 $X$ 或固定平衡参数（元语法记法，不增加原语），节点只使用原有 $\Sigma_{{\rm cau},t}$ 操作。整项至少出现一次 $X$；多次出现的 $X$ 是同一个输入。参数、谓词、平移、槽位和语法树均先于 $X$ 固定。失败严格传播，失败不被 $N$、空筛选或零因子挽救。令
+\[
+E_q^{\rm dup}(B)\;:\Longleftrightarrow\;\exists\text{ 固定总项 }C\in\operatorname{Ctx}^{\rm dup}\ \forall X\in\mathcal B:\ q(C(X))=q(F_BX).
+\]
+这里“总项”要求每个子项对全部输入有定义。命题 64 只分类 $q\circ F_B$；例如 $X\mapsto q(X)^2$ 的复制表达力不在该断言范围内。证明使用原 $\Sigma_{{\rm cau},t}$，不加入 $F_B$、$\widehat M_P$、身份对角筛选或输入自适应参数。
+
