@@ -152,4 +152,45 @@ private lemma c_step_linear (n k : ℕ) (hk : k < n) :
     _ = n * (n - 1).choose k * ((n + k).choose (k + 1) * (k + 1)) := by rw [h]
     _ = _ := by ring
 
+private lemma telescoping_transport {S : Type*} [CommRing S] (t x u v : S)
+    (ht : t ^ 2 = 0) (hq : x ^ 2 * v ^ 2 = x ^ 2 * u ^ 2)
+    (hl : t * x * v ^ 2 = t * x * u ^ 2) :
+    12 * x * (t - x) ^ 2 * u ^ 2 =
+      (3 * x ^ 2 * (x + 1) ^ 2 - 4 * t * x * (x + 1) * (2 * x + 1)) * v ^ 2 -
+      (3 * (x - 1) ^ 2 * x ^ 2 - 4 * t * (x - 1) * x * (2 * x - 1)) * u ^ 2 := by
+  linear_combination
+    -3 * (x + 1) ^ 2 * hq + 4 * (x + 1) * (2 * x + 1) * hl + 12 * x * u ^ 2 * ht
+
+private abbrev Q (n : ℕ) := ZMod (n ^ 2)
+
+private def boundary (n k : ℕ) : Q n :=
+  (3 * (k : Q n) ^ 2 * (k + 1) ^ 2 -
+    4 * n * k * (k + 1) * (2 * k + 1)) * (c n k : Q n) ^ 2
+
+private lemma reduced_term_telescopes (n k : ℕ) (hk : k < n) :
+    12 * (k + 1 : ℕ) * ((n - 1 - k : ℕ) : Q n) ^ 2 * (c n k : Q n) ^ 2 =
+      boundary n (k + 1) - boundary n k := by
+  have ht : (n : Q n) ^ 2 = 0 := by rw [← Nat.cast_pow, ZMod.natCast_self]
+  have hrec := congrArg (fun z : ℕ => (z : Q n)) (c_step n k hk)
+  have hlin := congrArg (fun z : ℕ => (z : Q n)) (c_step_linear n k hk)
+  push_cast at hrec hlin
+  have hq : ((k : Q n) + 1) ^ 2 * (c n (k + 1) : Q n) ^ 2 =
+      ((k : Q n) + 1) ^ 2 * (c n k : Q n) ^ 2 := by
+    linear_combination
+      ((c n (k + 1) : Q n) - c n k) * hrec +
+      (c n k : Q n) * ((c n (k + 1) : Q n) - c n k) * ht
+  have hl : (n : Q n) * (k + 1) * (c n (k + 1) : Q n) ^ 2 =
+      (n : Q n) * (k + 1) * (c n k : Q n) ^ 2 := by
+    linear_combination
+      (n : Q n) * ((c n (k + 1) : Q n) - c n k) * hlin +
+      ((n - 1).choose k : Q n) * ((n + k).choose (k + 1) : Q n) *
+        ((c n (k + 1) : Q n) - c n k) * ht
+  have h := telescoping_transport (n : Q n) (k + 1) (c n k) (c n (k + 1)) ht hq hl
+  have hs : ((n - 1 - k : ℕ) : Q n) = (n : Q n) - (k + 1) := by
+    rw [Nat.cast_sub (by omega : k ≤ n - 1), Nat.cast_sub (by omega : 1 ≤ n)]
+    push_cast
+    ring
+  simp only [boundary, hs, Nat.cast_add, Nat.cast_one]
+  convert h using 1 <;> ring
+
 end D5.S3.ArithSums.A357512PrimeDivisibility

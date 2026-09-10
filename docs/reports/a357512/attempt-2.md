@@ -81,3 +81,11 @@ integer witness `choose(n-1,k)*choose(n+k,k+1)`. Its first proof attempt failed
 when `nlinarith` could not multiply a binomial equality by the other factors;
 explicit multiplication and rewriting closed that goal. The whole-sum proof
 is still outstanding at this checkpoint.
+
+`telescoping_transport` and `reduced_term_telescopes` now elaborate with
+EXIT=0. In `ZMod(n^2)`, twelve times each reduced summand equals
+`boundary(n,k+1)-boundary(n,k)`, where
+`boundary(n,k)=(3*k^2*(k+1)^2-4*n*k*(k+1)*(2*k+1))*c_k^2`.
+This identity consumes both general binomial recurrences; no index is inverted.
+An initial `simpa` left `2*(k+1)-1 = 2*k+1`; `ring` closes this normalization.
+The finite-sum telescoping step and the final coprimality cancellation remain.
