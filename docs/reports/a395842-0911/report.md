@@ -257,3 +257,9 @@ independent declaration in that event's declaration_statement_ids.
 Pinned Mathlib constants are excluded from the frozen-prerequisite column by
 CLAUDE 3.2 and are identified in the search and proof descriptions.
 Machine-readable extraction: frozen-dependency.json.
+
+`make lean-report`: EXIT=0, 624.985 seconds, full-fallback production.
+Canonical raw report SHA-256:
+`1014a93457f770aa10d979e00caf78a7e0dc1fe537467ecbe9a62cb4fe4bcf4d`.
+The target's canonical declarations, their statement ids and axiom closures,
+and both imported iterate constants are extracted in canonical-declarations.json.

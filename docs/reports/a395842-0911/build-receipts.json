@@ -34,5 +34,11 @@
     "completion": [
       "Build completed successfully (12896 jobs)."
     ]
+  },
+  "make_lean_report": {
+    "command": "make lean-report",
+    "exit_code": 0,
+    "elapsed_seconds": 624.985,
+    "log": "/var/folders/wv/ht3wzsj138b4sxl3q4t0xdr40000gn/T/consensus-rnd/sshx/a395842-impl-0911/attempt-1/make-lean-report.log"
   }
 }
