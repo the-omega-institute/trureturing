@@ -8,6 +8,7 @@
 
 import D5.S3.Entropy.MaxEntropy
 import D5.S3.Weil.ZetaLinear.VonNeumann
+import Mathlib.Analysis.Convex.Jensen
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
