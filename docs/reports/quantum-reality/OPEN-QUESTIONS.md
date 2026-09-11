@@ -1,3 +1,94 @@
+## 本轮:**同一类风险的第二次自查**(第 16 轮,2026-09-11)
+
+第 15 轮查出 `RecordSymmetryNoGo` 的表态错(`FromRepo` 应为 `FromLiterature`)。
+本轮问的是**同一类问题在另一条已合入 dev 的结果上是否也成立**——这不是席位空闲派题,
+是一个可点名的风险(第 7.10 条:防的必须是发生过的事;它刚发生过一次)。
+
+### 本轮派发状态:**载体不可用,未能派出**(非「无靶」)
+
+三个池依次失败,判词各不相同,**已按纪律停止换池**(换过两次,第三次即为撞墙):
+
+| 池 | 判词 | 语义 |
+|---|---|---|
+| `chrono-chatgpt-pro-pool` | `infrastructure_retry_exhausted` | 在 `selecting_model / page_ready` 间空转四次,从未发出 |
+| `company-chatgpt-pro` | `oracle_mode_required` | 该池要求 `--tag mode:chat\|mode:work`,**runner 不设该标签** ⟹ 经此 runner 结构上不可用 |
+| `chatgpt-pro-pool` | `extraction_failure` | 载体侧随机失败 |
+
+**这不是「本轮无靶」**——Q1 是实靶且有具名风险(见下)。这是 第 5.9 条 的**能力缺口**:
+记具名 open、等灯亮,其余 lane 继续推进。**失败归档已删**,不留空壳被下轮误读为判词。
+
+**已知的四种 nyxid 终态,处置各不相同,不可只看 `QR_ROUND status=failed`**:
+`extraction_failure`(连两次换池)/ 超时 `still dispatched`(**按 task ID 取,禁重投**)/
+`infrastructure_retry_exhausted`(终态,换池)/ `oracle_mode_required`(改调用方式,`retryable: false`)。
+
+**复原条件**:任一池恢复即可按本文件现有 Q1 原样派出,**问题不需重写**。
+
+### Q1:容量律 `card ≤ Σᵢ mᵢ` 的文献状态
+
+已冻结于 `D5/S3/Quantum/Matrix/RecordCapacity`(PR #6962,已合 dev)。其陈述为:
+
+> 设 `U : G →* Matrix n n ℂ`,`commutant U` 半单,由 Wedderburn 取块尺寸 `m`。
+> 则任何由非零、两两正交、求和为单位的**等变**幂等组成的族 `P` 满足 `card I ≤ ∑ b, m b`。
+
+该模块内 Wedderburn 那条已表 `FromLiterature`,**但计数那条仍表 `FromRepo`**。
+
+**要回答三件事**:
+① 「半单代数 `⊕ M_{mᵢ}` 中,完备正交幂等族的基数 ≤ `Σ mᵢ`」这条计数界,文献里已有吗?给出处。
+   (它看起来是 Artin–Wedderburn 之后的标准推论,与「`M_m` 中完备正交幂等族最多 `m` 个」同源。)
+② 若已有,本仓该表 `literature-attested` 并建 L note;若确系本仓推导,表 `repo-derived`。
+③ **更要紧的一问**:`docs/reports/quantum-reality/TERRAIN-MAP.md` 第二节把它称作
+   「**唯一的定量律**」。若①的答案是「已知」,该措辞就是**过度主张**,须改。
+   请直接判:这个称呼站得住吗?
+
+**答「已知、该改措辞」是完全可接受的答案。** 第 15 轮已有一次同类更正,
+本线不因承认而损失什么——因冒领而损失的更多(第 3.7 条:冒认与漏认同为不诚实)。
+
+### 为什么这一轮值得派席
+
+第 15 轮的教训不是「那一条表错了」,是**表态在写作当时无人核**。
+同一形态已出现一次,按 第 7.11 条 该查是否有第二例,而不是等下一次被抓。
+
+### 本线其余状态(不构成本轮问题)
+
+tier-3 四项右栏**已按预算包络停派**:五轮 oracle、四席条件切片,
+「四项变成无条件的」计数为 **0**,边际改进触底(第 2.7 条),根因(需 τ=0 给物理输入)在权限外。
+语料消化继续:`quantum-reality` 定理 229.1 的 FS 记录时间界已证完待合。
+
+## 第 15 轮结算:no-go 应记为 **`literature-attested`**(2026-09-11)
+
+任务 `333503a8-6b9d-4ad6-9d6e-2c927bfc875b` 已回包(超时后按 ID 取得,未重投)。
+
+### ① 文献状态:**已知**,不得标 `suspected-novel`
+
+判词原文:「**数学陈述已知。**它是 Schur 引理的直接推论;在酉表示的语境下,文献还明确给出了
+『不变子空间 ↔ 等变正交投影』的等价表述。**没有依据将这个数学内核标成 suspected-novel**。」
+
+出处:**Etingof 等《Introduction to representation theory》(2011) §1.3, Prop 1.16 / Cor 1.17,
+印刷页 8–9**;**Sophie Morel《MAT 449: Representation theory》(2018) §I.3.4,
+Thm I.3.4.1 / Lemma I.3.4.3, 印刷页 25–26**(后者直接写出该等价)。
+该席同时声明:**未核定最早历史出处**;判 `literature-attested` 不需要先解决首创年代问题。
+
+### ② 与 Zurek / Korbicz 的关系:**不同命题**
+
+- **非 einselection**:Zurek(式 4.21–4.22)的对易对象是**指定的相互作用 Hamiltonian**,
+  不是群作用;本 no-go 须额外指定群作用并要求记录投影逐个与之对易,才谈得上表示论限制。
+- **非 SBS**:Korbicz 等(*Quantum origins of objectivity*, PRA **91**, 032122, 2015)
+  的 SBS 定义(Def 2、式 1–2)**不要求**支撑投影与某个共享不可约群作用对易。
+
+### ③ 该席指出的两处,本线照收
+
+1. **冗余假设**:代数意义的不可约性下,零/一结论**不依赖酉性、自伴性、复数域或有限维性**;
+   去掉多余假设**不会**使它成为新结果。⟹ `RecordSymmetryNoGo` 的假设可收紧,且收紧不增新颖性。
+2. **互信息平台 ≠ objectivity**:Le 与 Olaya-Castro(2019)区分互信息平台 / strong quantum
+   Darwinism / SBS。⟹ **`TERRAIN-MAP.md` 中该行已由「全部经典信息 / objectivity」
+   改为「互信息平台」并加边界注**——那是 orchestrator 先前的过度主张,本轮更正。
+
+### 处置
+
+- `RecordSymmetryNoGo`(已证未合)须将 `AssessedProvenance` 由 `FromRepo`
+  改为 **`FromLiterature`** 并建 L 平面 note,方可落地。**先冻结再补表态是漏认前人成果的入口**,
+  故该模块自证完起一直压着未推,本轮答案到才动。
+
 ## 本轮:**文献核对一条 no-go**(第 15 轮,2026-09-11)
 
 自第 14 轮定价表以来,本线新增两条**条件切片**(均已冻结上 dev,物理输入在假设位、`axiom` 计数 0):
