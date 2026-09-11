@@ -47,8 +47,8 @@ internal sealed class IntegerExactDivisionDocument : IScribeDocumentDefinition
                 H("Retaining the pair and selecting the integer have equal quotient value"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "The original fraction class equals the class of the integer embedding of the exact output. "
-                        + "The former retains its two histories, while the latter selects a canonical numerator."))),
+                    "The original unquotiented fraction pair retains both input histories. "
+                        + "Its quotient class equals the class of the integer embedding of the selected canonical output."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("archive-loss"),

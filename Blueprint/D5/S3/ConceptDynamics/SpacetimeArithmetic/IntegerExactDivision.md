@@ -52,7 +52,7 @@ Lean statement: `D5/S3/ConceptDynamics/SpacetimeArithmetic/IntegerExactDivision.
 
 *Commentary.*
 
-The original fraction class equals the class of the integer embedding of the exact output. The former retains its two histories, while the latter selects a canonical numerator.
+The original unquotiented fraction pair retains both input histories. Its quotient class equals the class of the integer embedding of the selected canonical output.
 
 **Theorem 1.5 (Canonical selection loses generated input history).**
 
