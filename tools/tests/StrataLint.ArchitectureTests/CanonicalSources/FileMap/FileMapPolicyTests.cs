@@ -388,3 +388,5 @@ public sealed partial class FileMapPolicyTests
             ["README.md", "Makefile"]));
     }
 }
+
+// CI integration probe: registered judge program plus fixture comment; no payload merge.
