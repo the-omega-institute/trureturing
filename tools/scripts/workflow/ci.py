@@ -99,10 +99,16 @@ def advisory(root, branch):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=("resolve", "checkout", "pack", "restore", "verify", "advisory", "summary"))
+    parser.add_argument("command", choices=("resolve", "checkout", "pack", "restore", "verify", "advisory", "summary",
+                                           "plan", "pr-paths", "validate-plan", "no-work", "validate-no-work"))
     parser.add_argument("--repository", required=True, type=pathlib.Path)
     parser.add_argument("--commit", default="")
     parser.add_argument("--head", default="")
+    parser.add_argument("--base", default="")
+    parser.add_argument("--changes", type=pathlib.Path)
+    parser.add_argument("--plan", type=pathlib.Path)
+    parser.add_argument("--result", type=pathlib.Path)
+    parser.add_argument("--output", type=pathlib.Path)
     parser.add_argument("--stage", choices=("build", "engineering", "current", "delta"))
     parser.add_argument("--archive", type=pathlib.Path)
     parser.add_argument("--run-id", default=os.environ.get("GITHUB_RUN_ID", ""))
@@ -110,7 +116,10 @@ def main():
     args = parser.parse_args()
     args.repository = args.repository.resolve()
     try:
-        if args.command == "resolve": resolve(args.repository, args.head)
+        if args.command in ("plan", "pr-paths", "validate-plan", "no-work", "validate-no-work"):
+            import ci_plan
+            print(json.dumps(ci_plan.command(args), sort_keys=True, ensure_ascii=False))
+        elif args.command == "resolve": resolve(args.repository, args.head)
         elif args.command == "checkout": checkout(args.repository, args.commit)
         elif args.command in ("pack", "restore", "verify"): transport(args)
         elif args.command == "advisory": advisory(args.repository, args.head)
