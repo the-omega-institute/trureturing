@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:c998385a744afffc7fc790f737aa6cecb02c39a1dabc0444506adfdf2add78de
   normalized_sha256: sha256:c998385a744afffc7fc790f737aa6cecb02c39a1dabc0444506adfdf2add78de
 cas_ref: sha256:c998385a744afffc7fc790f737aa6cecb02c39a1dabc0444506adfdf2add78de
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/SpatialConvolutionEquation.spatial_convolution_equation_criterion
+    target_statement_id: sha256:5634949069d8ba98d13615195e56353c6a9222187115c113bbe52bb39d06dbfb
 receipts:
   unresolved_subitems: []
