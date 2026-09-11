@@ -105,4 +105,55 @@ noncomputable def expensiveDecision (_ : Unit) (x : Bool) : Bool :=
   if @decide (expensive 10000 = 0) (Classical.propDecidable _) then x else false
 check_provenance "DefeqExhaustion" using expensiveDecision expects "incomplete_closure" for expensiveTruth
 
+def independentAliasRead (_ : Unit) (x : Bool) : Bool := let _ := aliasHelper; x
+check_provenance "IndependentProofAlias" using independentAliasRead expects "forbidden_dependency" for truth
+
+run_cmd Elab.Command.liftTermElabM do
+  let type := (← getConstInfo ``truthReads).type
+  for i in [:300] do
+    let name := `RegistrationProvenance.forward |>.num i
+    let prev := if i == 0 then ``truthReads else `RegistrationProvenance.forward |>.num (i-1)
+    addDecl <| .defnDecl {
+      name, levelParams := [], type, value := mkConst prev,
+      hints := .abbrev, safety := .safe }
+  let some entry := InformationRegistry.find? (← getEnv) ``truth | throwError "fixture"
+  let actual ← RegistrationGates.validateFinite
+    { entry with realizationName := `RegistrationProvenance.forward |>.num 299 }
+  unless ((actual.getD "").splitOn "reason=incomplete_closure provenance=null").length == 2 do
+    throwError "[FAIL] ForwardingExhaustion"
+  logInfo "[PASS] ForwardingExhaustion"
+
+run_cmd Elab.Command.liftTermElabM do
+  let mut type := mkApp (mkConst ``Decidable) (.bvar 257)
+  let mut value := mkApp (mkConst ``Classical.propDecidable) (.bvar 257)
+  for _ in [:257] do
+    type := mkForall `x .default (mkConst ``Bool) type
+    value := mkLambda `x .default (mkConst ``Bool) value
+  type := mkForall `p .default (.sort .zero) type
+  value := mkLambda `p .default (.sort .zero) value
+  addDecl <| .defnDecl {
+    name := `RegistrationProvenance.wideDecision, levelParams := [],
+    type, value, hints := .abbrev, safety := .safe }
+  let instanceTerm := mkAppN (mkConst `RegistrationProvenance.wideDecision)
+    (#[mkConst ``specificStatement] ++ Array.replicate 257 (.bvar 0))
+  let decision := mkApp2 (mkConst ``Decidable.decide) (mkConst ``specificStatement) instanceTerm
+  addDecl <| .defnDecl {
+    name := `RegistrationProvenance.wideRead, levelParams := [],
+    type := (← getConstInfo ``clean).type,
+    value := mkLambda `i .default (mkConst ``Unit) (mkLambda `x .default (mkConst ``Bool) decision),
+    hints := .abbrev, safety := .safe }
+check_provenance "TypeArgumentExhaustion" using wideRead expects "incomplete_closure" for specificTruth
+
+run_cmd Elab.Command.liftTermElabM do
+  for i in [:4100] do
+    let name := `RegistrationProvenance.proofChain |>.num i
+    let prev := if i == 0 then ``rawTruth else `RegistrationProvenance.proofChain |>.num (i-1)
+    addDecl <| .thmDecl {
+      name, levelParams := [], type := mkConst ``True, value := mkConst prev }
+  addDecl <| .thmDecl {
+    name := `RegistrationProvenance.proofBudgetTruth, levelParams := [],
+    type := mkConst ``True, value := mkConst (`RegistrationProvenance.proofChain |>.num 4099) }
+def proofBudgetRead := viaAppliedProof
+check_provenance "ProofScanExhaustion" using proofBudgetRead expects "incomplete_closure" for proofBudgetTruth
+
 end RegistrationProvenance

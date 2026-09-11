@@ -75,23 +75,29 @@ private def recordHead (env : Environment) : Nat → Expr → Option Expr
       recordHead env fuel (mkAppN field args)
     | _ => some e
 
-/-- The realization supplies the family's carrier annotations. Project these
-schema fields before scanning an inline family, just as readoutFamily projects
-the readout field itself; the arena's Law/DecidableEq fields are not readouts.
-Explicit user let/proof annotations and the body remain raw. -/
+/-- Project schema carriers wherever elaboration inserts them, including implicit
+motives for empty readouts. All other syntax, including explicit proof terms and
+let annotations, stays raw. Each projection and syntax descent has fixed fuel. -/
 private def familyCarriers (env : Environment) : Nat → Expr → Option Expr
   | 0, _ => none
-  | fuel + 1, .lam n type body bi => do
-    let type ← if #[
+  | fuel + 1, e => do
+    if #[
         `D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature.Index,
         `D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature.Output,
         `D5.S3.ConceptDynamics.InformationEscape.Arena.State,
         `LeanInformationAudit.StructuralPrimitiveSignature.Index,
         `LeanInformationAudit.StructuralPrimitiveSignature.Output,
-        `LeanInformationAudit.StructuralArena.State].contains (type.getAppFn.constName?.getD .anonymous) then
-      recordHead env 256 type else some type
-    return .lam n type (← familyCarriers env fuel body) bi
-  | _, e => some e
+        `LeanInformationAudit.StructuralArena.State].contains (e.getAppFn.constName?.getD .anonymous) then
+      return ← familyCarriers env fuel (← recordHead env 256 e)
+    let go := familyCarriers env fuel
+    match e with
+    | .app f a => return .app (← go f) (← go a)
+    | .lam n t b bi => return .lam n (← go t) (← go b) bi
+    | .forallE n t b bi => return .forallE n (← go t) (← go b) bi
+    | .letE n t v b nd => return .letE n (← go t) (← go v) (← go b) nd
+    | .mdata m b => return .mdata m (← go b)
+    | .proj n i b => return .proj n i (← go b)
+    | _ => return e
 
 /-- Native and legacy paths share the same raw readout-family extraction. The
 legacy bridge contributes its type's realization argument, never its proof. -/

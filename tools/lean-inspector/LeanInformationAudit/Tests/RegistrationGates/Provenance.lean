@@ -48,7 +48,9 @@ elab "check_provenance " label:str " using " readout:ident " expects " reason:st
       name := holder, levelParams := [], type, value
       hints := .abbrev, safety := .safe }
     let entry := { entry with theoremName := `RegistrationProvenance ++ theoremName.getId }
-    let actual ← RegistrationGates.validateFinite { entry with realizationName := holder }
+    let actual ← tryCatchRuntimeEx
+      (RegistrationGates.validateFinite { entry with realizationName := holder })
+      (fun _ => throwError "[FAIL] {label.getString}: uncaught provenance exhaustion")
     let ok := match actual with
       | none => reason.getString == "clean"
       | some message => message.startsWith "IE-C050 ClosedTruthReadout key=" &&
