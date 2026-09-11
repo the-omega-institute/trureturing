@@ -1865,3 +1865,2930 @@ r(\ell c_0-c_1)>D_{\rm lib}.
 **证明。** 固定宽操作码按符号数相加；加入宏后字母表有 \(m+1\) 个符号，所以每个调用必须用 \(c_1\)，不能沿用 \(c_0\)。字典需储存 \(\ell\) 个旧操作码及其已声明的长度码，故给两种准确长度；移项就是 (Z-MACRO-COST)。展开为同一个原语字的 \(r\) 次串接，定理 111 给工作及失败结论。守卫不能仅按净位移化简：在任一正容量坐标，字 \(\operatorname{inc}_p\operatorname{dec}_p\) 于 \(a_p=A_p\) 失败，在 \(a_p<A_p\) 成功且净位移零，而空字在全部状态成功。
 
 因此，在共同状态码及相同原语轨迹下，宏仅按所给不等式改变程序描述长度，状态位数、逐边翻转及展开工作各保持各自原值。改变状态码时，定理 98–100、106–107 给出相应状态宽度、端点翻转及已证的 \((B,\Delta)\) 前沿；若目标还包含 \(B_{\rm prog}\)、译码工作或辅助状态，其系数和所需描述、函数必须另行指定后加入费用。对已声明的 \(\mu B+\nu\Delta\) 目标，定理 107 的两点选择准确；对当前重复字的程序长度目标，(Z-MACRO-COST) 准确。这些都是在各自定义域、费用函数和工作负荷下的比较。证毕。
+
+**定义 113（带符号的 Zeckendorf 整数码）。** 令 \(\mathsf W_Z\)、\(\operatorname{val}\) 与 \(\zeta\) 如定义 69–70。置
+\[
+\mathsf W_Z^{+}=\mathsf W_Z\setminus\{0_Z\},\qquad
+\mathsf Z_{\mathbb Z}=\{0_Z\}\cup(\{+\}\times\mathsf W_Z^{+})\cup(\{-\}\times\mathsf W_Z^{+}).
+\]
+定义
+\[
+\operatorname{ival}(0_Z)=0,\qquad
+\operatorname{ival}(+,u)=\operatorname{val}(u),\qquad
+\operatorname{ival}(-,u)=-\operatorname{val}(u).
+\]
+对 \(c,d\in\mathsf Z_{\mathbb Z}\) 定义
+\[
+c\oplus_Zd=\operatorname{scode}(\operatorname{ival}(c)+\operatorname{ival}(d)),\quad
+c\otimes_Zd=\operatorname{scode}(\operatorname{ival}(c)\operatorname{ival}(d)),\quad
+\ominus_Zc=\operatorname{scode}(-\operatorname{ival}(c)),
+\]
+其中 \(\operatorname{scode}(n)\) 是 \(0_Z\)、\((+,\zeta(n))\) 或 \((- ,\zeta(-n))\)，分别对应 \(n=0,n>0,n<0\)。零只有一个表示，符号不与零行重复。
+
+**定理 114（整数环的 Zeckendorf 同构）。** \(\operatorname{ival}:\mathsf Z_{\mathbb Z}\to\mathbb Z\) 是双射，并且
+\[
+\operatorname{ival}(c\oplus_Zd)=\operatorname{ival}(c)+\operatorname{ival}(d),\quad
+\operatorname{ival}(c\otimes_Zd)=\operatorname{ival}(c)\operatorname{ival}(d),\quad
+\operatorname{ival}(\ominus_Zc)=-\operatorname{ival}(c).
+\]
+因此 \((\mathsf Z_{\mathbb Z},\oplus_Z,\otimes_Z)\) 是与通常整数环同构的环；每个整数的符号行和 Zeckendorf 行唯一。
+
+**证明。** 定理 70 给出 \(\operatorname{val}:\mathsf W_Z\to\omega\) 的双射。正整数与负整数分别由正负标签和非零行唯一表示，零由唯一的 \(0_Z\) 表示，所以 \(\operatorname{ival}\) 双射。三个等式直接由 \(\operatorname{scode}\) 的定义和 \(\operatorname{ival}(\operatorname{scode}(n))=n\) 得到。把整数环的结合律、交换律、分配律、单位元和加法逆经此双射运输，即得结论。证毕。
+
+**定义 115（素数寄存器的全 Zeckendorf 码）。** 令 \(P\subseteq\operatorname{Pr}\) 为有限集，令 \(A:P\to\omega\) 为容量函数，并令
+\[
+S(P,A)=\prod_{p\in P}\{0,\ldots,A(p)\},\qquad a\in S(P,A).
+\]
+记 \(a_A^{\max}:P\to\omega\) 为 \(a_A^{\max}(p)=A(p)\) 的容量角。
+对任意 \(f:P\to\omega\) 定义
+\[
+\begin{aligned}
+\operatorname{Reg}_Z(P)&=\operatorname{Pack}\{\operatorname{NatZ}(p):p\in P\},\\
+\operatorname{Tab}_Z(P,f)&=\operatorname{Pack}\{\langle\operatorname{NatZ}(p),\operatorname{NatZ}(f(p))\rangle_Z:p\in P\},\\
+\operatorname{Cfg}_Z(P,A,a)&=\langle\operatorname{Reg}_Z(P),\operatorname{Tab}_Z(P,A),\operatorname{Tab}_Z(P,a)\rangle_Z.
+\end{aligned}
+\]
+其中 \(\operatorname{NatZ}(p)\) 是素数标签的自然数字码，\(\operatorname{NatZ}(f(p))\) 是该寄存器内容或容量的自然数字码；二者处于有序对的不同坐标。\(P,A,a\) 满足定义 91 的有限性和容量条件时，称 \(\operatorname{Cfg}_Z(P,A,a)\) 为有效配置码。
+
+**定理 116（配置码的唯一恢复与类型分离）。** 有效配置码属于 \(\mathfrak V_Z\)，且映射
+\[
+(P,A,a)\longmapsto\operatorname{Cfg}_Z(P,A,a)
+\]
+在所有有限配置上是单射。对每个有效配置有
+\[
+\begin{aligned}
+\operatorname{El}(\operatorname{Reg}_Z(P))
+ &=\{\operatorname{NatZ}(p):p\in P\},\\
+\operatorname{El}(\operatorname{Tab}_Z(P,f))
+ &=\{\langle\operatorname{NatZ}(p),\operatorname{NatZ}(f(p))\rangle_Z:p\in P\}.
+\end{aligned}
+\]
+故由配置码可唯一恢复 \(P\)、容量函数 \(A\) 和状态 \(a\)。尤其，标签数字、容量数字和当前内容数字虽都使用同一 \(\zeta\)，但不能因数字相同而互换其类型位置。
+
+**证明。** 定理 73 给出 \(\operatorname{El}(\operatorname{Pack}(B))=B\)，定理 74 给出语义有序对的唯一性；所以两个显示的成员式成立。若两个配置码相等，最外层有序对的三个坐标分别相等。第一坐标给出标签集合相等，\(\operatorname{NatZ}\) 的单射性给出 \(P=P'\)。第二坐标中每个标签的第一分量相同，第二分量的单射性给出 \(A(p)=A'(p)\)；第三坐标同理给出 \(a(p)=a'(p)\)。反向由集合构造的确定性显然成立。所有自然数字先由有限 Zeckendorf 行生成，再由 \(\operatorname{Pack}\) 和语义配对组合，故代码有效且位于 \(\mathfrak V_Z\)。有序坐标的相等不能改变其标签，因此类型位置不会合并。证毕。
+
+**定义 117（寄存器与 Zeckendorf 数位的直积）。** 对有限 \(P,A\) 定义数位状态集
+\[
+\mathsf D(P,A)=\{d:P\to\mathsf W_Z:\forall p\in P,\operatorname{val}(d(p))\le A(p)\}.
+\]
+定义
+\[
+\operatorname{dig}_{P,A}:S(P,A)\longrightarrow\mathsf D(P,A),\qquad
+\operatorname{dig}_{P,A}(a)(p)=\zeta(a(p)).
+\]
+若 \(u\in\mathsf W_Z\)，则 \(u(j)\) 表示同一寄存器内的第 \(j\) 个 Zeckendorf 数位；因此 \((p,j)\) 是二重索引，\(p\) 与 \(j\) 不在同一索引轴上。
+
+**定理 118（寄存器轴与数位轴的双射）。** \(\operatorname{dig}_{P,A}\) 是双射，并且
+\[
+|\mathsf D(P,A)|=|S(P,A)|=\prod_{p\in P}(A(p)+1).
+\]
+若 \(a,b\in S(P,A)\)，则
+\[
+a=b\iff\forall p\in P,\quad
+\operatorname{dig}_{P,A}(a)(p)=\operatorname{dig}_{P,A}(b)(p).
+\]
+在此直积中，素数 \(p\) 选择寄存器因子，Zeckendorf 索引 \(j\) 选择该因子内部的数位；任何交换二者的表达都不是同一有序对。
+
+**证明。** 定理 70 的 \(\zeta\) 在 \(\omega\) 与 \(\mathsf W_Z\) 之间双射。逐个 \(p\) 应用该双射得到直积双射，容量不等式在 \(\operatorname{val}\) 下等价。有限直积计数给基数公式，逐分量的双射给等价式。\(p\) 和 \(j\) 分别属于直积的外层和内层，故有序索引的两轴保持不变。证毕。
+
+**定义 119（全 Zeckendorf 配置的标量读数）。** 对自然数字码 \(c=\operatorname{NatZ}(n)\) 定义 \(\operatorname{nval}(c)=n\)。对 \(a\in S(P,A)\) 定义
+\[
+\Pi_P(a)=\prod_{p\in P}p^{a(p)}.
+\]
+若 \(R=\operatorname{Reg}_Z(P)\) 且 \(d\in\mathsf D(P,A)\)，定义
+\[
+\widehat\Pi_Z(R,d)
+=\operatorname{NatZ}\left(\prod_{c\in\operatorname{El}(R)}
+\operatorname{nval}(c)^{\,\operatorname{val}(d(\operatorname{nval}(c)))}\right).
+\]
+在这里 \(R\) 的每个成员 \(c\) 是素数标签的 Zeckendorf 自然码，\(d\) 的对应行是该标签的内容码；所以标签和指数都由 Zeckendorf 数字给出，而两者由有序索引保持区分。空积取一。
+
+**定理 120（标量读数、约数格与 5040 配置）。** \(\Pi_P:S(P,A)\to\mathbb N_+\) 是单射，其像为
+\[
+\operatorname{Div}(M),\qquad M=\prod_{p\in P}p^{A(p)}.
+\]
+它保持逐坐标整除序、最小值和最大值：
+\[
+\Pi_P(a)\mid\Pi_P(b)\iff a(p)\le b(p)\ (p\in P),
+\]
+\[
+\Pi_P(\min(a,b))=\gcd(\Pi_P(a),\Pi_P(b)),\qquad
+\Pi_P(\max(a,b))=\operatorname{lcm}(\Pi_P(a),\Pi_P(b)).
+\]
+并且
+\[
+\widehat\Pi_Z(\operatorname{Reg}_Z(P),\operatorname{dig}_{P,A}(a))
+=\operatorname{NatZ}(\Pi_P(a)).
+\]
+对
+\[
+P=\{2,3,5,7\},\qquad A(2)=4,\ A(3)=2,\ A(5)=A(7)=1,
+\]
+有
+\[
+|S(P,A)|=5\cdot3\cdot2\cdot2=60,\qquad
+\Pi_P(a_A^{\max})=2^4 3^2 5\,7=5040.
+\]
+因此 \((4,2,1,1)\) 是四个寄存器的容量向量，\(5040\) 是其最大状态的标量读数；它不是容量向量本身，也不是单个寄存器的 Zeckendorf 数字。
+
+**证明。** 素因数分解唯一性给出 \(\Pi_P\) 的单射性及整除判据。任意 \(d\mid M\) 在 \(P\) 外的估值为零，在 \(P\) 内的估值介于 \(0\) 和 \(A(p)\)，故恰有一个 \(a\in S(P,A)\) 映到 \(d\)，得到像的准确性。最大公因数和最小公倍数的素数估值分别是逐坐标最小值和最大值。定理 117 给出每个状态行的值 \(\operatorname{val}(\zeta(a(p)))=a(p)\)，而定义 119 给出 \(\operatorname{nval}(\operatorname{NatZ}(p))=p\)，代入 \(\widehat\Pi_Z\) 即得最后等式。最后的基数和乘积直接计算。证毕。
+
+**定义 121（有界单位变换与指令词）。** 固定 \(P,A\)。对每个 \(p\in P\) 定义部分变换
+\[
+\begin{aligned}
+\iota_p(a)(p)&=a(p)+1&&\text{若 }a(p)<A(p),\\
+\delta_p(a)(p)&=a(p)-1&&\text{若 }a(p)>0,
+\end{aligned}
+\]
+并令它们在其他坐标上保持 \(a\)；在守卫失败时部分变换无值。令
+\[
+\mathcal U_P=\{\iota_p,\delta_p:p\in P\},\qquad
+\mathcal U_P^*
+\]
+为该字母表生成的自由幺半群。空词 \(\varepsilon\) 的值为恒等变换。若 \(w=u_1\cdots u_m\)，则 \(\operatorname{ev}_A(a,w)\) 递归地先求 \(u_1\)，再求后续词；其中任一守卫失败即表示整个词在 \(a\) 上无值。记
+\[
+\eta_p(w)=\#\{i:u_i=\iota_p\}-\#\{i:u_i=\delta_p\}.
+\]
+
+**定理 122（指令词的端点与素数乘法）。** 若 \(\operatorname{ev}_A(a,w)\) 有值，则对每个 \(p\in P\)，
+\[
+\operatorname{ev}_A(a,w)(p)=a(p)+\eta_p(w),
+\]
+且
+\[
+\Pi_P(\operatorname{ev}_A(a,w))
+=\Pi_P(a)\prod_{p\in P}p^{\eta_p(w)}
+\quad\text{于 }\mathbb Q_{>0}.
+\tag{Z-INSTR}
+\]
+若两个词 \(w,v\) 都在 \(a\) 上有值且 \(\eta_p(w)=\eta_p(v)\) 对所有 \(p\) 成立，则它们的终点相同；词的次序可能改变定义域，但不改变已成功词的端点。
+
+**证明。** 对词长作归纳。空词给出 \(\eta_p=0\) 和恒等式；若结论对 \(w\) 成立，在其终点应用 \(\iota_p\) 或 \(\delta_p\) 只把相应坐标加一或减一，正好把 \(\eta_p\) 改变 \(+1\) 或 \(-1\)。对 \(\Pi_P\) 使用 \(p^{a(p)+1}=p^{a(p)}p\) 及 \(p^{a(p)-1}=p^{a(p)}/p\)，逐步相乘即得 (Z-INSTR)。两个成功词的每个坐标终值都由同一 \(\eta_p\) 给出，故终点相同；守卫是否在中途通过仍依赖次序。证毕。
+
+**定义 123（指令在 Zeckendorf 数位上的共轭）。** 对 \(u\in\mathsf W_Z\) 定义部分变换
+\[
+\operatorname{succ}_Z(u)=\zeta(\operatorname{val}(u)+1),\qquad
+\operatorname{pred}_Z(u)=\zeta(\operatorname{val}(u)-1)
+\]
+，其定义域分别为全部 \(u\) 及满足 \(\operatorname{val}(u)>0\) 的 \(u\)。在 \(\mathsf D(P,A)\) 上，\(\widehat\iota_p\) 只将第 \(p\) 行替换为 \(\operatorname{succ}_Z(d(p))\)，并要求 \(\operatorname{val}(d(p))<A(p)\)；\(\widehat\delta_p\) 类似地使用 \(\operatorname{pred}_Z\)，并要求 \(\operatorname{val}(d(p))>0\)。由此得到 \(\widehat{\operatorname{ev}}_A(d,w)\)。
+
+**定理 124（规范数字与单位变换的精确共轭）。** 对每个 \(a\in S(P,A)\) 和 \(w\in\mathcal U_P^*\)，
+\[
+\operatorname{ev}_A(a,w)\text{ 有值}
+\iff
+\widehat{\operatorname{ev}}_A(\operatorname{dig}_{P,A}(a),w)\text{ 有值},
+\]
+且在此情形
+\[
+\operatorname{dig}_{P,A}(\operatorname{ev}_A(a,w))
+=\widehat{\operatorname{ev}}_A(\operatorname{dig}_{P,A}(a),w).
+\tag{Z-CONJ-INSTR}
+\]
+进一步，
+\[
+\operatorname{Cfg}_Z(P,A,\operatorname{ev}_A(a,w))
+\]
+是由 \(\operatorname{Cfg}_Z(P,A,a)\) 的状态表按 \(\widehat{\operatorname{ev}}_A\) 逐行更新所得的唯一配置码。
+
+**证明。** 对词长作归纳。定理 70 给出
+\[
+\operatorname{val}(\operatorname{succ}_Z(u))=\operatorname{val}(u)+1,\qquad
+\operatorname{val}(\operatorname{pred}_Z(u))=\operatorname{val}(u)-1
+\]
+在相应定义域内成立，因此原变换的容量或正性守卫与码变换的守卫等价。单步更新后两边的数字行由 \(\zeta\) 唯一确定；归纳假设再给出整词的定义域和结果。定理 116 说明配置码的标签、容量和状态三坐标中只有状态表改变，且改变由这些唯一数字行组成，所以最后的码也是唯一的。证毕。
+
+**定理 125（不同寄存器的交换与同一寄存器的守卫）。** 令 \(p\ne q\)，并令 \(u_p\in\{\iota_p,\delta_p\}\)、\(u_q\in\{\iota_q,\delta_q\}\)。两词 \(u_pu_q\) 与 \(u_qu_p\) 的定义域相同，且在该域上的值相同。对同一 \(p\)，两个词的终点若均存在仍由净增量决定，但它们的定义域可以不同；例如在 \(0<A(p)\) 时，\(\iota_p\delta_p\) 与 \(\delta_p\iota_p\) 的可定义性分别受到不同端点的限制。
+
+**证明。** 作用于不同坐标的变换不改变对方的坐标及守卫，故两种次序都恰在两个单步守卫同时成立时有值，结果逐坐标相同。作用于同一坐标时，第一步会改变第二步所检查的端点；例如 \(\iota_p\delta_p\) 要求先有 \(a(p)<A(p)\)，而 \(\delta_p\iota_p\) 要求先有 \(a(p)>0\)。若两词均成功，定理 122 已给出相同净增量的终点；但定义域条件并不相同。证毕。
+
+**定理 126（配置理论对 ZFC 的定义性保守性）。** 在 ZFC 中，把定义 113–125 的新符号全部替换为其集合图、定义域谓词和 \(\operatorname{Pack}\)、\(\operatorname{NatZ}\) 的定义。对扩充语言中任意有限公式 \(\varphi\)，其每个有效配置实例都与上述替换后的 \(\in_Z\) 公式等价。若该扩充理论证明一个不含新符号的集合论句子 \(\theta\)，则 ZFC 也证明 \(\theta\)。
+
+**证明。** 定义 113 的符号码、定理 70 的 \(\zeta\)、定义 115 的有限集合构造、定理 74 的语义配对以及定义 121 的有限词递归，都是 ZFC 中的集合或一阶可定义类图。对 \(\varphi\) 的项和公式作结构归纳：原子等式和成员关系由定理 72 比较；新函数和部分函数由其图及定义域谓词比较；布尔联结词和量词由同一结构归纳保持。于是得到每个实例的 \(\in_Z\) 翻译等价。若 \(\theta\) 不含新符号，把扩充证明逐行替换，定义性公理的行以其在 ZFC 中的证明替代，得到 ZFC 对 \(\theta\) 的证明。这是定义性扩充的保守性，不断言 ZFC 的一致性。证毕。
+
+**定义 127（配置之间的指令路径）。** 对 \(a,b\in S(P,A)\) 定义
+\[
+\operatorname{Path}_{P,A}(a,b)
+=\{w\in\mathcal U_P^*:\operatorname{ev}_A(a,w)=b\}.
+\]
+这里词本身保留其字母次序；路径关系只在整词成功时成立。状态关系 \(a=b\)、规范数字关系 \(\operatorname{dig}_{P,A}(a)=\operatorname{dig}_{P,A}(b)\) 与路径关系是三种不同的关系。
+
+**定理 128（状态、数位与路径历史的严格区分）。** 若 \(w\in\operatorname{Path}_{P,A}(a,b)\)，则
+\[
+b(p)-a(p)=\eta_p(w),\qquad
+\Pi_P(b)=\Pi_P(a)\prod_{p\in P}p^{\eta_p(w)}.
+\]
+若存在 \(p\in P\) 使 \(A(p)>0\)，则
+\[
+\varepsilon\ne\iota_p\delta_p,\qquad
+\varepsilon,\ \iota_p\delta_p\in\operatorname{Path}_{P,A}(0,0).
+\]
+因此同一个起点和终点可以有不同的指令词；配置码和标量读数都不能由此恢复词的次序。若只取路径的起点与终点商，则由定理 118，状态商恰为 \(S(P,A)\)；若保留路径词，则得到严格更细的历史关系。
+
+**证明。** 第一组等式是定理 122 对 \(w\) 的直接应用。若 \(A(p)>0\)，零状态先满足 \(\iota_p\) 的守卫，所得状态在 \(p\) 坐标为一，随后满足 \(\delta_p\) 的守卫，返回零状态；空词也返回零状态。自由幺半群中的两个词字面不同，故它们是不同路径。定理 116 和定理 118 只编码当前标签、容量和状态数字，没有词的额外坐标，所以二者无法区分这两条路径。把路径词作为附加第二坐标时，投影到状态坐标仍保持同一终点，而词的不同性保留，故历史关系严格细于状态关系。证毕。
+
+**定理 129（路径扩充仍是 ZFC 的定义性扩充）。** 在 ZFC 中，\(\operatorname{Path}_{P,A}\)、\(\eta_p\) 以及“词在状态上有值”的谓词都由定义 121 和有限序列递归给出集合图。把定义 127 的路径关系加入定理 126 的扩充语言后，任意有限公式仍可逐项翻译为 \(\in_Z\) 公式；任何不含这些新符号的 ZFC 句子若在该扩充中可证，仍已由 ZFC 可证。
+
+**证明。** 对有限序列长度作递归，\(\operatorname{ev}_A\) 的图、失败分支和 \(\eta_p\) 的计数均为 ZFC 中的替代和分离所得集合。于是路径关系是一个定义域与函数值相等的公式。再对含路径原子的公式作结构归纳，原子由定理 76、定理 124 和定理 128 比较，量词与布尔联结词按同一归纳处理。最后逐行消去定义性符号，得到 ZFC 证明；这与定理 126 的保守性论证相同。证毕。
+
+**定义 130（配置的平衡时空实现）。** 固定有限配置 \((P,A)\)。令
+\[
+\pi(p,j)=\frac{(p+j)(p+j+1)}2+j
+\]
+为 \(\omega\times\omega\) 上的 Cantor 配对函数，并令
+\[
+\ell_p=\ell_Z(A(p)),\qquad d_a(p,j)=
+\begin{cases}
+\zeta(a(p))(j),&j<\ell_p,\\
+0,&j\ge\ell_p.
+\end{cases}
+\]
+对每个 \(p\in P\)、\(j<\ell_p\) 和 \(\epsilon\in\{+1,-1\}\) 取互异事件 \(e_{p,j}^{\epsilon}\)。令
+\[
+E_a=\Omega_a=\{e_{p,j}^{\epsilon}:p\in P,\ j<\ell_p,\ \epsilon\in\{+1,-1\}\},
+\quad \prec_a=\varnothing,
+\]
+\[
+t(e_{p,j}^{\epsilon})=0,\quad
+x(e_{p,j}^{\epsilon})=\lambda(p,j),\quad
+\sigma(e_{p,j}^{\epsilon})=\epsilon,\quad
+\rho(e_{p,j}^{\epsilon})=\operatorname{leaf}(\pi(p,j)),
+\]
+并令
+\[
+A_a=\{e_{p,j}^{+1}:d_a(p,j)=1\}.
+\]
+由此得到情境表示 \(X_{P,A}(a)=(C_a,A_a)\)。
+
+**定理 131（CSA 实现与乘积读数）。** 对每个 \(a\in S(P,A)\)，\(X_{P,A}(a)\in\mathcal B_\lambda^+\)，且
+\[
+W_{X_{P,A}(a)}(0,\lambda(p,j))=0,\qquad
+Z_{X_{P,A}(a)}(0,\lambda(p,j))=d_a(p,j)
+\quad(p\in P,\ j<\ell_p),
+\]
+其余时空单元的 \(W,Z\) 均为零。映射
+\[
+a\longmapsto X_{P,A}(a)
+\]
+是单射；并且
+\[
+q(X_{P,A}(a))=\sum_{p\in P}\sum_{j<\ell_p}d_a(p,j),
+\]
+以及
+\[
+\operatorname{NatZ}\left(
+\prod_{p\in P}p^{\,\sum_{j<\ell_p}G_j
+Z_{X_{P,A}(a)}(0,\lambda(p,j))}
+\right)
+=\operatorname{NatZ}(\Pi_P(a)).
+\tag{Z-CSA-PRODUCT}
+\]
+因此 CSA 的无权选择读数是所有占据 Zeckendorf 数位的和，而按 \(G_j\) 加权后再按素数作指数化，才得到配置的普通整数乘积。
+
+**证明。** 每个 \(e_{p,j}^{+1}\) 都与同一槽的 \(e_{p,j}^{-1}\) 同时属于 \(\Omega_a\)，所以每个槽的背景电荷为零，进而 \(u(C_a)=0\)。偏序为空时严格性、传递性和时间条件均空真；事件和当前区域有限，故 \(X_{P,A}(a)\in\mathcal B\)。所选事件只有正号，并且其每个槽的系数恰为 \(d_a(p,j)\in\{0,1\}\)，所以属于 \(\mathcal B_\lambda^+\)。
+
+在一个槽 \((p,j)\) 中，背景正负事件相消，选择集中只含正事件且当且仅当 \(d_a(p,j)=1\)，故显示的 \(W,Z\) 公式成立；没有所列槽的时空单元没有事件，系数为零。若两个状态产生相同档案表示，则其选择集相同，从而对每个 \(p,j\) 有 \(d_a(p,j)=d_b(p,j)\)。定理 118 遂给 \(a=b\)，故映射单射。有限和给出 \(q\) 公式。最后由已证的 \(\operatorname{val}(\zeta(a(p)))=\sum_jG_jd_a(p,j)=a(p)\)，并代入 \(Z=d_a\)，指数化的乘积恰为 \(\Pi_P(a)\)，再用 \(\operatorname{NatZ}\) 得 (Z-CSA-PRODUCT)。证毕。
+
+**定理 132（时空实现与全 Zeckendorf 配置码的交换）。** 对任意 \(a\in S(P,A)\)，定义 130 的档案编码满足
+\[
+\operatorname{Enc}(X_{P,A}(a))
+=\operatorname{Enc}(C_a,A_a),
+\]
+且其配置字段中的标签、容量和状态表分别由
+\[
+\operatorname{Reg}_Z(P),\qquad
+\operatorname{Tab}_Z(P,A),\qquad
+\operatorname{Tab}_Z(P,a)
+\]
+逐项恢复。若 \(a,b\) 经同一有效单位词 \(w\) 变换，则定理 124 与定理 131 给出
+\[
+\operatorname{Cfg}_Z(P,A,\operatorname{ev}_A(a,w))
+=\operatorname{Cfg}_Z(P,A,\operatorname{ev}_A(b,w))
+\iff
+\operatorname{ev}_A(a,w)=\operatorname{ev}_A(b,w).
+\]
+因此编码、时空档案和配置状态之间不存在额外的数值碰撞。
+
+**证明。** 定理 72–74 对 \(C_a,A_a\) 的每个有限集合、函数图、事件属性和选择集逐项编码，故第一式成立。由定义 130，事件的素数标签和数位索引由 \(\lambda(p,j)\) 及来源树的叶编号给出；定理 83 保持这些属性，定义 115 的三个表遂从编码档案中按成员和有序分量逐项恢复。后一等价的正向由定理 124；反向若两个配置码相等，定理 116 给两终态相等，定理 118 给相应状态相等，再用单位词求值的函数性得到等式。证毕。
+
+**定义 133（指数表的逐行加法与规范提升）。** 对有限 \(P\) 置
+\[
+\mathsf E(P)=\omega^P,\qquad
+(a\boxplus_P b)(p)=a(p)+b(p),
+\]
+并置 \(\mathsf D_\infty(P)=\mathsf W_Z^P\)。对 \(d,e\in\mathsf D_\infty(P)\) 定义
+\[
+(d\boxplus_Z e)(p)
+=\operatorname{Norm}\bigl(\operatorname{pad}(d(p))+\operatorname{pad}(e(p))\bigr).
+\]
+定义
+\[
+\operatorname{dig}^{\infty}_P:\mathsf E(P)\to\mathsf D_\infty(P),
+\qquad
+\operatorname{dig}^{\infty}_P(a)(p)=\zeta(a(p)).
+\]
+这里右侧的行加法先产生有限非负系数，再由 \(\operatorname{Norm}\) 唯一化；它不是把两个 Zeckendorf 数位的索引相加。有限容量域 \(S(P,A)\) 在 \(\boxplus_P\) 下的定义域为
+\[
+\operatorname{Dom}_{P,A}
+=\{(a,b)\in S(P,A)^2:\forall p\in P,\ a(p)+b(p)\le A(p)\}.
+\]
+
+**定理 134（指数加法、Zeckendorf 进位与乘积同态）。** 对任意 \(a,b\in\mathsf E(P)\)，
+\[
+\operatorname{dig}^{\infty}_P(a\boxplus_P b)
+=\operatorname{dig}^{\infty}_P(a)\boxplus_Z
+ \operatorname{dig}^{\infty}_P(b),
+\]
+其中 \(\operatorname{dig}^{\infty}_P(a)(p)=\zeta(a(p))\)。并且
+\[
+\Pi_P(a\boxplus_P b)=\Pi_P(a)\Pi_P(b).
+\tag{Z-EXP-ADD}
+\]
+若 \((a,b)\in\operatorname{Dom}_{P,A}\)，则两边仍属于 \(S(P,A)\)；若不在该定义域，规范提升仍在 \(\mathsf D_\infty(P)\) 中有值，但不再是给定容量盒的状态。Zeckendorf 乘法中的系数必须使用 \(G_iG_j\)，不能以 \(G_{i+j}\) 取代；例如
+\[
+G_1G_1=4\ne3=G_2.
+\]
+
+**证明。** 固定 \(p\)。定理 70 的 \(\operatorname{Norm}\) 满足
+\[
+\operatorname{val}\bigl(\operatorname{Norm}(\operatorname{pad}(\zeta(a(p)))
++\operatorname{pad}(\zeta(b(p))))\bigr)
+=a(p)+b(p),
+\]
+故逐行比较给第一式。对素数指数使用 \(p^{r+s}=p^rp^s\)，对有限 \(P\) 相乘即得 (Z-EXP-ADD)。容量条件正好是每个规范行的值不超过 \(A(p)\)，所以给出定义域的充要性。最后，若以 \(G_{i+j}\) 代表两个占据数位的乘法贡献，在 \(i=j=1\) 时会把真实值 \(G_1G_1=4\) 错写成 \(G_2=3\)；因此该替换与定理 70 的数值乘法不相容。证毕。
+
+**定义 135（配置格的秩与两种重量）。** 对 \(a\in S(P,A)\) 定义坐标秩和 Zeckendorf 重量
+\[
+r_{P}(a)=\sum_{p\in P}a(p),\qquad
+\omega_Z(a)=\sum_{p\in P}\sum_{j<\ell_Z(a(p))}\zeta(a(p))(j).
+\]
+定义配置的秩生成多项式
+\[
+\mathcal R_{P,A}(X)
+=\sum_{a\in S(P,A)}X^{r_P(a)}.
+\]
+
+**定理 136（配置格、约数格与 5040 的秩分布）。** \(S(P,A)\) 在逐坐标序下是有限分配格，并且
+\[
+\mathcal R_{P,A}(X)=\prod_{p\in P}(1+X+\cdots+X^{A(p)}).
+\]
+\(\Pi_P\) 是该格到 \((\operatorname{Div}(M),\mid)\) 的序同构。对
+\[
+(P,A)=((2,3,5,7),(4,2,1,1))
+\]
+有
+\[
+\mathcal R_{P,A}(X)
+=(1+X+X^2+X^3+X^4)(1+X+X^2)(1+X)^2
+\]
+\[
+=1+4X+8X^2+11X^3+12X^4+11X^5+8X^6+4X^7+X^8.
+\]
+容量角 \(a_A^{\max}\) 的秩为 \(8\)，而其 Zeckendorf 重量为
+\[
+\omega_Z(a_A^{\max})=w_Z(4)+w_Z(2)+w_Z(1)+w_Z(1)=5.
+\]
+所以状态格的秩、状态角的 Zeckendorf 重量与标量 \(5040\) 是三个不同的不变量。
+
+**证明。** 有限链 \(\{0,\ldots,A(p)\}\) 是分配格，有限直积仍是分配格。直积中每个坐标的秩相加，故按坐标独立求和得到多项式乘积。定理 120 已证明 \(\Pi_P\) 保持逐坐标序和整除序，因此给出序同构。对指定容量展开三个因子得到系数列
+\[
+(1,4,8,11,12,11,8,4,1),
+\]
+总和为 \(60\)，最高次数为 \(4+2+1+1=8\)。定理 70 给出 \(4=G_2+G_0\)、\(2=G_1\)、\(1=G_0\)，故重量为 \(2+1+1+1=5\)。而定理 120 给出容量角的乘积为 \(5040\)。三者分别属于秩、多行数位和及素数指数化三个定义，不能由定义相等。证毕。
+
+**定义 137（局部指数码与全局乘积码）。** 对固定 \(P,A\) 定义局部码
+\[
+\mathsf L_{P,A}(a)=\operatorname{Tab}_Z(P,a)
+\]
+以及全局码
+\[
+\mathsf G_{P,A}(a)=\operatorname{NatZ}(\Pi_P(a)).
+\]
+局部码的每一行先对一个指数 \(a(p)\) 作 Zeckendorf 规范化，再保留素数标签；全局码先完成素数指数化，再对所得单个自然数作 Zeckendorf 规范化。二者的值域分别是表对象和自然数字对象。
+
+**定理 138（局部码与全局码的精确关系）。** 固定 \(P,A\) 时，\(\mathsf L_{P,A}\) 与 \(\mathsf G_{P,A}\) 都是单射，并满足
+\[
+\mathsf G_{P,A}(a)
+=\widehat\Pi_Z(\operatorname{Reg}_Z(P),\operatorname{dig}_{P,A}(a)).
+\]
+然而，全局码的 Zeckendorf 数位不逐行等于局部码的数位；它们的索引集合一般不同。对 5040 容量角，局部指数行的占据索引分别为
+\[
+\{0,2\},\quad\{1\},\quad\{0\},\quad\{0\},
+\]
+而全局数 \(\operatorname{NatZ}(5040)\) 的占据索引为
+\[
+\{2,5,11,13,17\}.
+\]
+因此“全部使用 Zeckendorf”产生的是一个先保留寄存器轴、再作全局标量投影的二层表示，而不是把四个寄存器压成一个数位轴。
+
+**证明。** \(\mathsf L_{P,A}\) 的单射性由定理 116 或定理 118 得到；\(\mathsf G_{P,A}\) 的单射性由定理 120 的 \(\Pi_P\) 单射性及定理 70 的 \(\operatorname{NatZ}\) 单射性得到。两者的交换式是定理 120 的最后等式。容量角的局部索引由
+\[
+4=G_2+G_0,\qquad2=G_1,\qquad1=G_0
+\]
+直接给出。全局索引由
+\[
+5040=G_2+G_5+G_{11}+G_{13}+G_{17}
+\]
+给出，且这些索引互不相邻，故由定理 70 唯一。两组索引来自不同的函数复合：前者分别编码 \(a(p)\)，后者编码 \(\prod_pp^{a(p)}\)，所以没有逐行相等的必要，也不能把全局索引 \(j\) 解释成某一个固定寄存器的内部索引。证毕。
+
+**定义 139（时空电荷的规范下降）。** 令 \(\mathsf R_P\) 为所有满足有限支撑的函数
+\[
+r:P\times\omega\longrightarrow\omega.
+\]
+对 \(r\in\mathsf R_P\) 定义
+\[
+V_P(r)(p)=\sum_{j\ge0}G_jr(p,j).
+\]
+若 \(V_P(r)(p)\le A(p)\) 对所有 \(p\in P\)，定义
+\[
+\operatorname{Can}_{P,A}(r)(p)=\zeta(V_P(r)(p)).
+\]
+这是从非规范槽电荷到规范指数数位的部分映射；它只对每个素数寄存器内部作规范化，不改变寄存器标签。
+
+**定理 140（CSA 并行复合在规范观察商上的加法）。** 对 \(a,b\in S(P,A)\) 且 \((a,b)\in\operatorname{Dom}_{P,A}\)，令
+\[
+r_a(p,j)=d_a(p,j),\qquad r_b(p,j)=d_b(p,j).
+\]
+则
+\[
+\operatorname{Can}_{P,A}(r_a+r_b)
+=\operatorname{dig}_{P,A}(a\boxplus_P b),
+\tag{Z-DESCEND}
+\]
+并且
+\[
+r_{\boxplus}(p,j):=
+Z_{X_{P,A}(a)\boxplus X_{P,A}(b)}(0,\lambda(p,j))
+=r_a(p,j)+r_b(p,j).
+\]
+因此
+\[
+\operatorname{Can}_{P,A}\!\left(
+\ r_{\boxplus}
+\right)
+=\operatorname{dig}_{P,A}(a\boxplus_P b),
+\]
+而其全局标量读数满足
+\[
+\widehat\Pi_Z\!\left(\operatorname{Reg}_Z(P),
+\operatorname{Can}_{P,A}(r_a+r_b)\right)
+=\operatorname{NatZ}\!\left(\Pi_P(a)\Pi_P(b)\right).
+\tag{Z-CSA-DESCEND}
+\]
+
+**证明。** 固定 \(p\)。由定义 117，
+\[
+V_P(r_a)(p)=a(p),\qquad V_P(r_b)(p)=b(p).
+\]
+有限和可交换，故
+\[
+V_P(r_a+r_b)(p)=a(p)+b(p).
+\]
+容量定义域保证该值不超过 \(A(p)\)，定理 70 的唯一性遂给
+\[
+\operatorname{Can}_{P,A}(r_a+r_b)(p)=\zeta(a(p)+b(p)),
+\]
+这正是第一式的第 \(p\) 分量。定义 4 的带标签并集把两个输入在相同 \((p,j)\) 槽的选择电荷相加，因而得到第二式。对所有 \(p,j\) 应用第一式即得规范观察式，再由定理 134 的 (Z-EXP-ADD) 和定理 120 的全 Zeckendorf 标量交换式得到 (Z-CSA-DESCEND)。证毕。
+
+**定理 141（历史层不下降为规范配置层）。** 若 \(P\ne\varnothing\)、至少有一个 \(A(p)>0\)，则存在 \(a,b\in S(P,A)\) 使
+\[
+X_{P,A}(a)\boxplus X_{P,A}(b)
+\not\cong_h
+X_{P,A}(a\boxplus_P b),
+\]
+虽然两者的规范观察相同，且在 \(\operatorname{Can}_{P,A}\) 下给出同一指数状态。更具体地，对 \(a=b=0\)，有
+\[
+|E_{X_{P,A}(0)\boxplus X_{P,A}(0)}|
+=2|E_{X_{P,A}(0)}|
+\ne |E_{X_{P,A}(0)}|
+=|E_{X_{P,A}(0\boxplus_P0)}|.
+\]
+因此 \(\operatorname{Can}_{P,A}\) 是算术观察商，而不是历史同构。
+
+**证明。** 取 \(a=b=0\)。定义 130 的实现具有 \(2\sum_{p\in P}\ell_Z(A(p))\) 个事件；并行复合带两个互异标签，故其档案事件数加倍。右侧仍是同一固定配置的单个实现，档案事件数不变。历史同构保持事件集基数，所以两者不历史同构。另一方面，两个零状态的槽电荷都为零，定理 140 给规范观察为零状态；指数加法也给 \(0\boxplus_P0=0\)。这证明观察商忘记了并行复合产生的事件出现历史，但没有改变其规范算术值。证毕。
+
+**定义 142（时空整数的 Zeckendorf 码）。** 对情境时空算术中的整数编码
+\[
+\mathbb Z_{\mathrm{code}}
+=(\{0\}\times\omega)\cup(\{1\}\times\omega_{>0})
+\]
+定义
+\[
+\iota_Z(0,n)=\operatorname{scode}(n),\qquad
+\iota_Z(1,n)=\operatorname{scode}(-n).
+\]
+在 \(\mathsf Z_{\mathbb Z}\) 上置
+\[
+c<_Z^{\mathbb Z}d\iff\operatorname{ival}(c)<\operatorname{ival}(d),
+\qquad
+c\boxplus_Z^{\mathbb Z}d=c\oplus_Zd.
+\]
+对 \(z=(z_1,z_2,z_3)\in\mathbb Z^3\) 定义
+\[
+\iota_Z^{(3)}(z)=
+\langle\iota_Z(z_1),\iota_Z(z_2),\iota_Z(z_3)\rangle_Z,
+\]
+并把时间坐标 \(t\) 由同一 \(\iota_Z\) 编码。符号 \(+1,-1\) 作为选择标签保留；其电荷和使用 \(\mathsf Z_{\mathbb Z}\) 的运算。
+
+**定理 143（时空坐标算术的 Zeckendorf 共轭）。** \(\iota_Z:\mathbb Z_{\mathrm{code}}\to\mathsf Z_{\mathbb Z}\) 是双射，并且对所有整数 \(z,z'\)
+\[
+\iota_Z(z+z')=\iota_Z(z)\boxplus_Z^{\mathbb Z}\iota_Z(z'),
+\qquad
+z<z'\iff\iota_Z(z)<_Z^{\mathbb Z}\iota_Z(z').
+\]
+\(\iota_Z^{(3)}\) 是 \(\mathbb Z^3\) 与 \((\mathsf Z_{\mathbb Z})^3\) 的双射，并保持逐坐标加法。若 \(t<t'\)，则
+\[
+\iota_Z(t'+1)=\operatorname{succ}_{\mathbb Z,Z}(\iota_Z(t'))
+\]
+其中 \(\operatorname{succ}_{\mathbb Z,Z}(c)=\operatorname{scode}(\operatorname{ival}(c)+1)\)。因此 CSA 中的时间守卫、空间平移和乘积位置更新都能只用带符号 Zeckendorf 码表达。
+
+**证明。** \(\operatorname{scode}\) 与 \(\operatorname{ival}\) 互为双射，且 \(\mathbb Z_{\mathrm{code}}\) 与通常整数由定义给出的符号双射，所以 \(\iota_Z\) 双射。定理 114 的环同构等式给第一式，序关系由 \(\operatorname{ival}\) 的定义给出。有限直积保持双射和逐坐标运算，得三维结论。后继式是 \(\operatorname{succ}_{\mathbb Z,Z}\) 的定义。CSA 的时间复合守卫只使用整数严格序，空间位置只使用逐坐标加法，乘积的新时刻只使用二者最大值再加一，故上述各式逐项替换后保持。证毕。
+
+**定理 144（全数值字段的 CSA Zeckendorf 运输）。** 对任意有限情境
+\[
+C=(E,\prec,t,x,\sigma,\rho,\Omega)
+\]
+定义其 Zeckendorf 数值字段为
+\[
+t_Z(e)=\iota_Z(t(e)),\qquad
+x_Z(e)=\iota_Z^{(3)}(x(e)),\qquad
+q_Z(A)=\operatorname{scode}(q_C(A)),\qquad
+u_Z(C)=\operatorname{scode}(u(C)).
+\]
+事件身份、偏序、选择集和来源树保持原样，只有数值字段按上述映射替换。则：
+\[
+e\prec f\Longrightarrow t_Z(e)<_Z^{\mathbb Z}t_Z(f),
+\qquad
+u_Z(C)=0_Z\iff u(C)=0.
+\]
+并行加法、合法时间复合、补集和档案乘法在这些字段上的结果，分别等于原 CSA 结果经同一字段映射后的结果。特别地，对乘积父事件 \(p_{ab}\)，
+\[
+\begin{aligned}
+t_Z(p_{ab})
+ &=\operatorname{succ}_{\mathbb Z,Z}\!\left(
+   \max\nolimits_{<_Z^{\mathbb Z}}\{t_Z(a),t_Z(b)\}\right),\\
+x_Z(p_{ab})
+ &=x_Z(a)\boxplus_Z^{(3)}x_Z(b),\\
+\sigma(p_{ab})&=\sigma(a)\sigma(b),
+\end{aligned}
+\]
+其中 \(\boxplus_Z^{(3)}\) 逐坐标使用 \(\oplus_Z\)。因此原 CSA 的合法性、平衡性和全部有限复合运算在全 Zeckendorf 数值字段中保持且可反向恢复。
+
+**证明。** 定理 143 保持整数加法、序、三维逐坐标加法和后继。偏序、事件身份、选择及来源树没有改变；所以严格时间条件逐边等价，且背景电荷为零的条件经 \(\operatorname{scode}\) 双射等价。有限和的符号电荷满足定理 114 的加法同态，补集的加法逆满足其负号同态。并行复合只复制字段并取有限并集，合法时间复合只增加跨档案关系和比较时间，乘法只使用最大值加一、坐标加法、符号乘法及来源树配对；这些操作逐项由定理 143 和定义 113 共轭。反向运输使用 \(\iota_Z\) 的双射，故全部字段可恢复。证毕。
+
+**定理 145（配置码与时空码的统一有限交换图）。** 对任意有效配置 \(a\)，先构造定义 130 的 \(X_{P,A}(a)\)，再将其全部整数时间和空间字段按定义 142 编码；或者先取 \(\operatorname{Cfg}_Z(P,A,a)\)，再按定理 132 由配置字段生成事件档案。两条路径在事件身份、偏序、来源、选择以及每个数值字段上给出相同的 Zeckendorf 码。对任意有限的 CSA 复合表达式 \(C\)，有
+\[
+\operatorname{Code}_Z(C(X_{P,A}(a)))
+=
+C_Z(\operatorname{Code}_Z(X_{P,A}(a))),
+\]
+其中 \(C_Z\) 将每个原整数原语替换为定理 143 的 Zeckendorf 共轭原语；其定义域相同，成功结果和失败结果分别对应。
+
+**证明。** 定义 130 的档案中数值字段只有时间、空间和符号，配置字段只有素数标签、容量和指数；定义 115、142 分别对这些字段使用唯一的 \(\operatorname{NatZ}\) 或 \(\iota_Z\) 码，且均不改事件身份和有序位置。定理 116 和定理 144 给出每一字段的唯一恢复，故两条构造路径逐项相等。对表达式树作结构归纳：叶和固定参数由定义成立；并行、补集和筛选保持标签及字段映射；时间复合和乘法由定理 144 保持定义域及输出；任一失败守卫由定理 143 的序同构反映，故两侧同时失败。于是整棵有限表达式满足所写交换式。证毕。
+
+**定义 146（全数值 CSA 档案的 Zeckendorf 编码算子）。** 对有限情境
+\[
+C=(E,\prec,t,x,\sigma,\rho,\Omega),
+\]
+其中 \(t:E\to\mathbb Z\)、\(x:E\to\mathbb Z^3\)，定义
+\[
+\operatorname{Code}_Z(C)
+ =\bigl(E,\prec,\iota_Z\!\circ t,\iota_Z^{(3)}\!\circ x,
+          \sigma,\rho,\Omega\bigr).
+\tag{Z-CODE}
+\]
+\(\operatorname{Code}_Z(C)\) 的事件集、偏序、选择集、符号标签和来源树与 \(C\) 相同；其时间和空间字段分别取定义 142 的带符号整数码与三维逐坐标码。对属于该像的编码档案 \(C_Z\)，定义
+\[
+\operatorname{Dec}_Z(C_Z)
+ =\bigl(E,\prec,\iota_Z^{-1}\!\circ t_Z,
+  (\iota_Z^{(3)})^{-1}\!\circ x_Z,\sigma,\rho,\Omega\bigr).
+\]
+对情境表示 \(X=(C,A)\) 置
+\[
+\operatorname{Code}_Z(X)=\bigl(\operatorname{Code}_Z(C),A\bigr),
+\qquad
+\operatorname{Dec}_Z(X_Z)=\bigl(\operatorname{Dec}_Z(C_Z),A\bigr).
+\]
+并置
+\[
+q_Z(X_Z)=\operatorname{scode}(q(\operatorname{Dec}_Z(X_Z))),
+\qquad
+u_Z(X_Z)=\operatorname{scode}(u(\operatorname{Dec}_Z(X_Z))).
+\]
+若 \(\mathscr E\) 是由有限个 CSA 原语组成的表达式，则其 Zeckendorf 共轭 \(\mathscr E_Z\) 递归地把整数严格序、整数加法、三维逐坐标加法、最大值、后继和有符号电荷加法分别替换为
+\[
+<_Z^{\mathbb Z},\qquad \boxplus_Z^{\mathbb Z},qquad
+\boxplus_Z^{(3)},\qquad
+\max_{<_Z^{\mathbb Z}},\qquad
+\operatorname{succ}_{\mathbb Z,Z},\qquad
+\boxplus_Z^{\mathbb Z},
+\]
+符号乘法、集合运算、事件身份和来源配对按原定义保留。
+
+**定理 147（统一编码算子的双射与定理 145 的补足）。** \(\operatorname{Code}_Z\) 与 \(\operatorname{Dec}_Z\) 在各自定义域上互为逆，并且对任意有限情境表示 \(X=(C,A)\)
+\[
+\operatorname{Dec}_Z(\operatorname{Code}_Z(X))=X,
+\qquad
+q_Z(\operatorname{Code}_Z(X))=\operatorname{scode}(q(X)),
+\qquad
+u_Z(\operatorname{Code}_Z(X))=\operatorname{scode}(u(C)).
+\]
+对任意有限 CSA 表达式 \(\mathscr E\) 及其有效情境表示输入 \(X\)，有
+\[
+\operatorname{Code}_Z(\mathscr E(X))
+ =\mathscr E_Z(\operatorname{Code}_Z(X)),
+\tag{Z-EXPR-CONJ}
+\]
+且两侧同时有定义或同时无定义；成功时由 \(\operatorname{Dec}_Z\) 得到相同的原情境。于是定理 145 中的 \(\operatorname{Code}_Z\) 由定义 146 唯一确定，原交换式在该定义下成立。
+
+**证明。** 定理 143 给出 \(\iota_Z\) 与 \(\iota_Z^{-1}\) 以及 \(\iota_Z^{(3)}\) 与 \((\iota_Z^{(3)})^{-1}\) 的互逆性，因此事件集、关系、标签和来源不变时，定义 146 的两个复合恰逐字段恢复。定理 144 给出时间序、空间加法、后继和有符号电荷的逐项共轭，故两个数值读数等式成立。
+
+对表达式的树高作归纳。叶、常量和集合构造由定义成立；若子表达式有一个无定义，归纳假设使两侧同时无定义，严格求值遂使父表达式也无定义。若所有子表达式有定义，定理 143、144 使每个守卫在两侧等价，且每个输出字段由对应共轭原语得到；因此父节点输出满足 (Z-EXPR-CONJ)。归纳覆盖有限树的全部节点，最后用 \(\operatorname{Dec}_Z\) 的互逆性得到成功结果相同。证毕。
+
+**定义 148（有效容量形状与配置格）。** 对有限素数容量配置 \((P,A)\) 定义其正容量轴、容量形状和配置格为
+\[
+P^+=\{p\in P:A(p)>0\},
+\qquad
+\operatorname{sh}(P,A)=\{\!\{A(p):p\in P^+\}\!\},
+\]
+\[
+\mathcal L(P,A)=\bigl(S(P,A),\le,\wedge,\vee\bigr),
+\]
+其中 \(\le\) 为逐坐标序，\(\wedge\) 与 \(\vee\) 分别为逐坐标最小值和最大值。若两个配置的容量形状相同，记
+\[
+(P,A)\simeq_{\rm sh}(P',A').
+\]
+允许容量为零的轴属于标签数据，但不属于 \(\operatorname{sh}(P,A)\)。
+
+**定理 149（配置格由容量形状完全分类）。** 对任意有限素数容量配置 \((P,A)\)、\((P',A')\)，有
+\[
+\mathcal L(P,A)\cong\mathcal L(P',A')
+\iff
+(P,A)\simeq_{\rm sh}(P',A').
+\tag{Z-SHAPE}
+\]
+因此，去除零容量轴后，配置格的格同构类型恰由容量多重集决定；素数标签本身不改变格同构类型。
+
+**证明。** 若容量形状相同，取正容量轴之间保持容量的双射，在坐标上重排并在零容量轴上取唯一值，即得保持逐坐标最小值、最大值和序的格同构。
+
+反之，设 \(L=\mathcal L(P,A)\)。称 \(j\in L\) 为 join-不可约元，如果 \(j\ne0\) 且 \(j=x\vee y\) 蕴含 \(j=x\) 或 \(j=y\)。对每个 \(p\in P^+\) 和 \(1\le r\le A(p)\)，令 \(e_{p,r}\) 在坐标 \(p\) 取 \(r\)，其余坐标取零。若一个向量有两个正坐标，便可写成两个严格更小向量的逐坐标最大值；若只有一个正坐标，其唯一非零坐标的链序又说明它是 join-不可约。因此
+\[
+J(L)=\{e_{p,r}:p\in P^+,1\le r\le A(p)\}.
+\]
+在 \(J(L)\) 的诱导序下，每个固定 \(p\) 的集合 \(\{e_{p,r}:1\le r\le A(p)\}\) 是长度 \(A(p)\) 的链，不同 \(p\) 的链彼此不可比。格同构保持最小元、join-不可约性及其序，故给出两个 join-不可约偏序的同构。有限个互不相交链的长度多重集由该偏序唯一确定，遂有 \(\operatorname{sh}(P,A)=\operatorname{sh}(P',A')\)。证毕。
+
+**定理 150（最大标量的素因子分解与零容量边界）。** 令
+\[
+M(P,A)=\prod_{p\in P}p^{A(p)}.
+\]
+则
+\[
+\{(p,A(p)):p\in P^+\}
+ =\{(p,v_p(M(P,A))):v_p(M(P,A))>0\}.
+\tag{Z-MAX-FACTOR}
+\]
+从而对两个配置有
+\[
+M(P,A)=M(P',A')
+\iff
+P^+=P'^+\ \,\land\, A|_{P^+}=A'|_{P^+}.
+\]
+在允许零容量轴时，\(M(P,A)\) 不能恢复 \(P\setminus P^+\)；若所有容量均为零，则最大标量为一。
+
+**证明。** 唯一素因子分解给出
+\[
+v_q(M(P,A))=\begin{cases}A(q),&q\in P,\\0,&q\notin P,\end{cases}
+\]
+并且 \(A(q)>0\) 恰当标出正容量轴。这直接给出 (Z-MAX-FACTOR) 及两个配置的等价式。若 \(A(p)=0\)，其因子 \(p^0=1\) 不改变乘积，所以任意有限个额外零容量素数都产生同一最大标量。全零时空积为空积，故 \(M=1\)。证毕。
+
+**定义 151（全局标量码的轴解码）。** 固定 \((P,A)\)，置
+\[
+\mathsf G(P,A)=\{\operatorname{NatZ}(d):d\mid M(P,A)\}.
+\]
+对 \(c=\operatorname{NatZ}(d)\in\mathsf G(P,A)\) 定义
+\[
+\operatorname{Axis}_{P,A}(c)(p)=\zeta(v_p(d))
+\qquad(p\in P).
+\]
+这里 \(v_p(d)\in\omega\)，故 \(\operatorname{Axis}_{P,A}(c)\in\mathsf D(P,A)\)。
+
+**定理 152（全局 Zeckendorf 码与局部寄存器码的互逆）。** 对每个 \(a\in S(P,A)\) 和 \(c\in\mathsf G(P,A)\)，有
+\[
+\operatorname{Axis}_{P,A}(\mathsf G_{P,A}(a))
+ =\operatorname{dig}_{P,A}(a),
+\tag{Z-AXIS-DEC}
+\]
+\[
+\widehat\Pi_Z(\operatorname{Reg}_Z(P),
+ \operatorname{Axis}_{P,A}(c))=c.
+\tag{Z-AXIS-ENC}
+\]
+因此，在固定寄存器标签和容量的条件下，全局 Zeckendorf 数字与局部指数表是双射；全局数位本身不携带寄存器轴，但由唯一素因子分解可以恢复该轴。
+
+**证明。** 令 \(c=\mathsf G_{P,A}(a)=\operatorname{NatZ}(\Pi_P(a))\)。唯一素因子分解给 \(v_p(\Pi_P(a))=a(p)\)，于是
+\[
+\operatorname{Axis}_{P,A}(c)(p)=\zeta(a(p))
+ =\operatorname{dig}_{P,A}(a)(p),
+\]
+得到 (Z-AXIS-DEC)。反过来，任取 \(c=\operatorname{NatZ}(d)\in\mathsf G(P,A)\)，有 \(d\mid M(P,A)\)，故其每个正素数估值满足 \(v_p(d)\le A(p)\)。定义 119 的乘积取值为
+\[
+\prod_{p\in P}p^{v_p(d)}=d,
+\]
+定义 119 的 \(\operatorname{nval}\) 与定理 70 的 \(\operatorname{val}\) 分别恢复标签和指数，遂得到 (Z-AXIS-ENC)。双射性由两式立即成立。全局 Zeckendorf 行只编码整数 \(d\)；寄存器轴来自随后施加的估值函数，故其字面数位集合一般不与局部数位集合相同。证毕。
+
+**定义 153（固定最大标量的配置纤维与正容量约化）。** 对 \(M\in\mathbb N_+\) 定义配置纤维
+\[
+\mathfrak C(M)=\{(P,A):M(P,A)=M\},
+\]
+以及正容量约化
+\[
+\operatorname{red}(P,A)=(P^+,A|_{P^+}).
+\]
+若 \((P,A),(P',A')\in\mathfrak C(M)\)，定义扩展映射
+\[
+\operatorname{ext}_{P,P'}:S(P,A)\to S(P',A')
+\]
+为在共同正容量轴上保持坐标、在 \(P'\setminus P^+\) 上取零的函数；反向映射同样定义。
+
+**定理 154（最大标量纤维的完整分类）。** 若 \(M>1\)，则 \(\operatorname{red}\) 在 \(\mathfrak C(M)\) 上取唯一值，且该唯一约化由
+\[
+P_M=\{p:v_p(M)>0\},qquad A_M(p)=v_p(M)
+\]
+给出。每个 \((P,A)\in\mathfrak C(M)\) 都由 \((P_M,A_M)\) 加上有限个零容量素数轴得到。
+
+对纤维中的任意两个配置，\(\operatorname{ext}_{P,P'}\) 是配置格的序同构，满足
+\[
+\Pi_{P'}(\operatorname{ext}_{P,P'}(a))=\Pi_P(a),
+\qquad
+\mathsf G_{P',A'}(\operatorname{ext}_{P,P'}(a))
+ =\mathsf G_{P,A}(a).
+\]
+然而若两个配置的零容量标签不同，其 \(\operatorname{Cfg}_Z\) 不同；故最大标量及其全局 Zeckendorf 码不能恢复全部标签数据。
+
+**证明。** 定理 150 给出正容量约化的唯一性及 \((P_M,A_M)\) 的表达式；零容量轴对最大乘积均贡献因子一，故得到纤维的完整描述。扩展映射在共同正容量轴上是恒等，在新增零容量轴上取唯一允许值零，其逆映射同样存在；逐坐标序、最小值和最大值均保持，所以它是序同构。素数乘积中新增坐标的因子为一，故两式的标量相等，应用 \(\operatorname{NatZ}\) 得全局码相等。若零容量标签不同，定义 115 的寄存器标签表不同，定理 116 的单射性遂给出配置码不同。证毕。
+
+**定义 155（局部与全局 Zeckendorf 字长）。** 对有限配置 \((P,A)\) 定义
+\[
+\Lambda_{\rm loc}(P,A)=\sum_{p\in P}\ell_Z(A(p)),
+\qquad
+\Lambda_{\rm glob}(P,A)=\ell_Z(M(P,A)),
+\]
+并定义字长差
+\[
+\Delta_Z(P,A)=\Lambda_{\rm glob}(P,A)-\Lambda_{\rm loc}(P,A).
+\]
+局部字长把每一寄存器行补齐到容量宽度，全局字长把最大标量的规范行作为单一窗口；二者均不包含标签表和容量表的字长。
+
+**定理 156（字长下界与 5040 的局部—全局差异）。** 对任意有限配置，令 \(Q=|S(P,A)|\)，则
+\[
+\left\lceil\log_2Q\right\rceil
+\le \Lambda_{\rm loc}(P,A),
+\qquad
+\left\lceil\log_2Q\right\rceil
+\le \Lambda_{\rm glob}(P,A).
+\tag{Z-WIDTH-LOWER}
+\]
+对
+\[
+(P,A)=((2,3,5,7),(4,2,1,1))
+\]
+有
+\[
+Q=60,qquad
+\Lambda_{\rm loc}=\ell_Z(4)+\ell_Z(2)+2\ell_Z(1)=3+2+1+1=7,
+\]
+\[
+M=5040=G_2+G_5+G_{11}+G_{13}+G_{17},qquad
+\Lambda_{\rm glob}=18,qquad
+\Delta_Z=11.
+\]
+所以对该配置，局部指数码窗口比全局乘积码窗口短十一位；两者都不是六位状态枚举下界的同一编码。
+
+**证明。** 设 \(L_p=\ell_Z(A(p))\)。由定义，\(A(p)<G_{L_p}\)，故 \(A(p)+1\le G_{L_p}\le2^{L_p}\)；乘积得到
+\[
+Q=\prod_p(A(p)+1)\le2^{\sum_pL_p}=2^{\Lambda_{\rm loc}}.
+\]
+若 \(L=\ell_Z(M)\)，则 \(M+1\le G_L\le2^L\)。另一方面，对每个正容量轴有 \(A(p)+1\le2^{A(p)}\)，且 \(M\ge2^{\sum_{p\in P^+}A(p)}\)，从而 \(Q\le M\le M+1\le2^L\)。取二进制对数并取上整即得 (Z-WIDTH-LOWER)。
+
+对 5040，\(4=G_2+G_0\)、\(2=G_1\)、\(1=G_0\)，故局部字长为七。直接计算
+\[
+3+13+233+610+4181=5040
+\]
+且索引 \(2,5,11,13,17\) 互不相邻，定理 70 给出其唯一规范行及十八位窗口。于是字长差为 \(18-7=11\)，而 \(\lceil\log_2 60\rceil=6\)。证毕。
+
+**定义 157（单位指令的几何路径）。** 对 \(a,b\in S(P,A)\) 定义盒距离
+\[
+d_{P,A}(a,b)=\sum_{p\in P}|a(p)-b(p)|.
+\]
+定义最短路径集
+\[
+\operatorname{Geo}_{P,A}(a,b)
+ =\{w\in\operatorname{Path}_{P,A}(a,b):|w|=d_{P,A}(a,b)\},
+\]
+其中 \(|w|\) 是单位指令词长度。置 \(m_p=|b(p)-a(p)|\) 及 \(D=d_{P,A}(a,b)=\sum_pm_p\)。
+
+**定理 158（最短单位指令词的精确计数）。** 对任意 \(a,b\in S(P,A)\)，有
+\[
+\left|\operatorname{Geo}_{P,A}(a,b)\right|
+ =\frac{D!}{\prod_{p\in P}m_p!}.
+\tag{Z-GEO-COUNT}
+\]
+每个最短词在坐标 \(p\) 上恰执行 \(m_p\) 次，并且方向恒为 \(\iota_p\)（若 \(a(p)<b(p)\)）或 \(\delta_p\)（若 \(a(p)>b(p)\)）。当 \(a=b\) 时公式给出空词唯一。
+
+特别地，从零状态到 5040 容量角的最短单位指令词数为
+\[
+\frac{8!}{4!\,2!\,1!\,1!}=840.
+\]
+
+**证明。** 任意单位词从 \(a\) 到 \(b\) 在坐标 \(p\) 上的增量总和为 \(b(p)-a(p)\)。若该坐标同时出现相反方向的指令，则删除一对相反指令后仍可达到同一端点，且原词长度减少二；因此最短词在每个坐标只使用朝向端点的指令，并恰使用 \(m_p\) 次。反之，把这些指定的单位指令任意交错，任一时刻的坐标都位于 \(a(p)\) 与 \(b(p)\) 之间，故满足 \(0\le a(p)\le A(p)\) 的守卫并成功到达 \(b\)。长度必为 \(D\)，所以这些词恰为全部最短词。不同坐标指令的多重排列数为多项式系数 \(D!/\prod_pm_p!\)。零到容量角的四个净增量为 \(4,2,1,1\)，代入得 840。证毕。
+
+**定理 159（单位指令的端点观察商）。** 在固定起点 \(a\) 上，对成功词定义
+\[
+w\equiv_a v\iff\forall p\in P,\quad\eta_p(w)=\eta_p(v).
+\]
+置
+\[
+\operatorname{Path}_{P,A}(a,-)
+ =\{w\in\mathcal U_P^*: \operatorname{ev}_A(a,w)\text{ 有值}\}
+ =\bigcup_{b\in S(P,A)}\operatorname{Path}_{P,A}(a,b).
+\]
+则 \(\equiv_a\) 是 \(\operatorname{Path}_{P,A}(a,-)\) 上的等价关系，并且端点映射
+\[
+[w]_{\equiv_a}\longmapsto\operatorname{ev}_A(a,w)
+\]
+从成功词的等价类集合双射到 \(S(P,A)\)。每个端点的纤维含有至少一个最短词，且最短纤维的基数由定理 158 给出。
+
+**证明。** \(\eta_p\) 是词的逐坐标有符号计数，故等值关系自反、对称、传递。定理 122 表明等价词具有相同终点，所以端点映射良定义。若两个成功词具有相同终点，则
+\[
+\eta_p(w)=\operatorname{ev}_A(a,w)(p)-a(p)=\eta_p(v)
+\]
+对所有 \(p\) 成立，故它们属于同一等价类，端点映射单射。任意 \(b\in S(P,A)\) 都可先执行所有必要的 \(\iota_p\) 或 \(\delta_p\)，这些指令任意交错均成功，故存在词从 \(a\) 到 \(b\)，端点映射满射。定理 158 给出其中长度最小的纤维基数。证毕。
+
+**定理 160（追加理论对 ZFC 的定义性保守性）。** 在 ZFC 中，定义 146–159 的全部对象和谓词均有集合图或一阶可定义类图。把它们加入定义 126、129 及定理 77–78 的 Zeckendorf 语言后，所得理论对原集合论语言仍是定义性保守扩充：若扩充理论证明不含新符号的集合论句子 \(\theta\)，则
+\[
+\mathrm{ZFC}\vdash\theta.
+\]
+此外，在任意给定的 \(\mathfrak M\models\mathrm{ZFC}\) 内，编码宇宙及其配置、路径和字长结构与相应的内部原结构保持同构。
+
+**证明。** 定义 146 的字段变换由定理 114、143 的集合图组成；定义 148 的有限多重集、直积格和 join-不可约谓词由分离、替代及有限函数图构成；定义 151 的素因子估值、定义 153 的配置纤维、定义 155 的字长和定义 157 的有限词集合均由已有自然数、有限序列和算术关系定义。定理 147、149、150、152、154、156、158、159 的结论都是这些图上的一阶公式。
+
+对扩充证明逐行消去新符号：函数项替换为其定义图和域谓词，\(\operatorname{Code}_Z\) 与 \(\operatorname{Dec}_Z\) 用定理 147 的互逆图，有限路径和多重集用对应的替代图。定义性行由 ZFC 中的图存在与唯一性证明替代，旧的 ZFC 公式行保持不变；得到原语言中的 ZFC 证明。模型内同构由定理 71–78 的编码双射逐项扩展，有限格、有限词及字长均由同一双射运输，所以成员关系、配置关系和所有已定义运算保持且反映。证毕。
+
+**定理 161（最短路径下界的坐标分解补足）。** 对任意 \(a,b\in S(P,A)\) 及任意 \(w\in\operatorname{Path}_{P,A}(a,b)\)，令 \(N_p(w)\) 为 \(w\) 中作用于坐标 \(p\) 的指令数，则
+\[
+N_p(w)\ge |b(p)-a(p)|,
+\qquad
+|w|=\sum_{p\in P}N_p(w)\ge d_{P,A}(a,b).
+\tag{Z-PATH-LOWER}
+\]
+等号 \(|w|=d_{P,A}(a,b)\) 当且仅当每个坐标只出现朝向其端点的指令，并出现恰 \(|b(p)-a(p)|\) 次。因此定理 158 的最短性与计数结论不依赖于删除词中相反指令后仍保持中间守卫这一额外断言。
+
+**证明。** 将 \(w\) 投影到固定坐标 \(p\)，得到区间 \(\{0,\ldots,A(p)\}\) 中从 \(a(p)\) 到 \(b(p)\) 的一步整数路径。设其中上行次数为 \(I_p\)，下行次数为 \(D_p\)，则
+\[
+I_p-D_p=b(p)-a(p),
+\qquad
+N_p(w)=I_p+D_p.
+\]
+故三角不等式给 \(N_p(w)\ge|b(p)-a(p)|\)。对所有坐标求和，因每个单位指令只作用于一个坐标，得到 (Z-PATH-LOWER)。
+
+若总和取等号，则每个坐标的三角不等式均取等号；于是 \(I_pD_p=0\)，并且非零次数恰为 \(|b(p)-a(p)|\)，方向由端点差确定。反之，若每个坐标只执行该方向的规定次数，所有中间值都处在两个端点之间，故容量上下界守卫始终成立，词长度正好为距离。证毕。
+
+**定义 162（来源树自然叶的 Zeckendorf 重编码）。** 令 \(\mathsf{Tree}\) 为由 \(\operatorname{leaf}(n)\)（\(n\in\omega\)）及 \(\operatorname{pair}(r,s)\) 经过有限次构造得到的来源树类。定义其 Zeckendorf 树类 \(\mathsf{Tree}_Z\) 及递归双射 \(\tau_Z\) 为
+\[
+\tau_Z(\operatorname{leaf}(n))=\operatorname{leaf}_Z(\operatorname{NatZ}(n)),
+\qquad
+\tau_Z(\operatorname{pair}(r,s))
+ =\operatorname{pair}_Z(\tau_Z(r),\tau_Z(s)).
+\tag{Z-TREE}
+\]
+其中 \(\operatorname{leaf}_Z(c)\) 的参数 \(c\) 属于 \(\mathsf N_Z\)，而 \(\operatorname{pair}_Z\) 保留两个子树的有序位置。定义逆递归
+\[
+\tau_Z^{-1}(\operatorname{leaf}_Z(\operatorname{NatZ}(n)))=\operatorname{leaf}(n),
+\qquad
+\tau_Z^{-1}(\operatorname{pair}_Z(r,s))
+ =\operatorname{pair}(\tau_Z^{-1}(r),\tau_Z^{-1}(s)).
+\]
+对有限情境 \(C=(E,\prec,t,x,\sigma,\rho,\Omega)\) 定义全数值编码
+\[
+\operatorname{Code}^{\rm all}_Z(C)
+ =\bigl(E,\prec,\iota_Z\!\circ t,\iota_Z^{(3)}\!\circ x,
+ \sigma,\tau_Z\!\circ\rho,\Omega\bigr).
+\]
+情境表示 \(X=(C,A)\) 的全数值编码为
+\[
+\operatorname{Code}^{\rm all}_Z(X)
+ =\bigl(\operatorname{Code}^{\rm all}_Z(C),A\bigr).
+\]
+
+**定理 163（来源树重编码的结构保持）。** \(\tau_Z:\mathsf{Tree}\to\mathsf{Tree}_Z\) 是双射，且对任意来源树 \(r,s\)
+\[
+\tau_Z(\operatorname{pair}(r,s))
+ =\operatorname{pair}_Z(\tau_Z(r),\tau_Z(s)).
+\]
+\(\operatorname{Code}^{\rm all}_Z\) 与逐字段逆映射互为逆；它保持并反映事件身份、偏序、选择集、时间序、空间加法、符号电荷、来源树相等及来源树的左右祖先关系。若 \(\mathscr E\) 是有限 CSA 表达式，则
+\[
+\operatorname{Code}^{\rm all}_Z(\mathscr E(X))
+ =\mathscr E^{\rm all}_Z(\operatorname{Code}^{\rm all}_Z(X)),
+\tag{Z-ALL-CONJ}
+\]
+其中 \(\mathscr E^{\rm all}_Z\) 在定义 146 的数值替换之外，对来源叶和来源配对使用定义 162 的两个原语。
+
+**证明。** 对树的构造高度作归纳。叶情形由 \(\operatorname{NatZ}\) 的单射性和满射性成立；若两个子树的归纳逆存在，则有序配对的两个坐标分别唯一恢复，故配对情形成立。于是 \(\tau_Z\) 与 \(\tau_Z^{-1}\) 互为逆，并保持且反映左右子树关系。
+
+全数值编码只对时间、空间和来源叶的自然参数施加这些双射，事件身份、偏序、选择集及符号不变；定理 143 保持前两类数值，树归纳保持后一类数值，所以字段级保持和反映成立。对有限表达式作节点归纳：集合节点和事件复制节点使用双射的逐项像，时间、空间、电荷及后继节点使用定理 147，来源节点使用 (Z-TREE)；每个守卫的定义域由保持且反映的序关系给出。故 (Z-ALL-CONJ) 成立，且逆映射给出反向结论。证毕。
+
+**定理 164（包含全数值来源编码的 ZFC 保守性）。** 把定义 162–163 加入定理 160 的语言所得理论，仍是 ZFC 的定义性保守扩充。对任意不含编码符号的集合论句子 \(\theta\)，若该扩充理论证明 \(\theta\)，则
+\[
+\mathrm{ZFC}\vdash\theta.
+\]
+在任意 \(\mathfrak M\models\mathrm{ZFC}\) 内，\(\operatorname{Code}^{\rm all}_Z\) 的像与原情境结构、来源树结构及其有限复合运算同构。
+
+**证明。** 定义 162 的树类由有限序列、自然叶的 Zeckendorf 码和有序配对的最小闭包定义；其递归图及逆图由集合递归和替代得到。定义 163 的全数值编码再加入定理 146 的整数、空间和集合字段图，全部是一阶可定义图。对扩充证明逐行消去这些定义图，定义性行由定理 147、163 的 ZFC 证明替代，得到原语言的 ZFC 证明。给定 \(\mathfrak M\) 时，同一递归图在 \(\mathfrak M\) 内产生互逆函数；定理 71–78 的成员双射与定理 163 的有限树双射逐项组合，得到所述内部同构。证毕。
+
+**定义 165（素数支撑上的自由指数幺半群）。** 对有限互异素数集 \(P\)，置
+\[
+\mathsf E(P)=\omega^P,
+\qquad
+\mathbf 0_P(p)=0,
+\qquad
+(a\boxplus_P b)(p)=a(p)+b(p).
+\]
+定义其素数标量像
+\[
+\mathsf M(P)=\left\{\prod_{p\in P}p^{a(p)}:a\in\mathsf E(P)\right\}
+\subseteq\mathbb N_+,
+\]
+以及
+\[
+\Pi_P^{\infty}(a)=\prod_{p\in P}p^{a(p)}.
+\]
+沿用定义 133 的 \(\mathsf D_{\infty}(P)=\mathsf W_Z^P\) 及其逐行规范加法 \(\boxplus_Z\)。有限容量盒通过包含映射
+\[
+\jmath_A:S(P,A)\hookrightarrow\mathsf E(P)
+\]
+嵌入该自由指数幺半群。
+
+**定理 166（Zeckendorf 寄存器系统是自由指数幺半群的规范呈现）。** 有
+\[
+\Pi_P^{\infty}(\mathbf 0_P)=1,
+\qquad
+\Pi_P^{\infty}(a\boxplus_P b)
+ =\Pi_P^{\infty}(a)\Pi_P^{\infty}(b),
+\]
+且 \(\Pi_P^{\infty}:\mathsf E(P)\to\mathsf M(P)\) 是交换幺半群同构。逐行编码
+\[
+\operatorname{dig}^{\infty}_P(a)(p)=\zeta(a(p))
+\]
+也是 \((\mathsf E(P),\boxplus_P,\mathbf 0_P)\) 与 \((\mathsf D_{\infty}(P),\boxplus_Z,0)\) 的幺半群同构。
+
+对有限容量 \((P,A)\)，有界加法的定义域恰为
+\[
+(a,b)\in\operatorname{Dom}_{P,A}
+\iff
+\jmath_A(a)\boxplus_P\jmath_A(b)\in\jmath_A[S(P,A)].
+\]
+在该定义域上，\(\Pi_P\) 将有界指数加法送到标量乘法，\(\operatorname{dig}_{P,A}\) 将其送到逐行 Zeckendorf 规范加法。
+
+**证明。** 对 \(a,b\in\mathsf E(P)\)，有限乘积中逐个使用
+\(p^{a(p)+b(p)}=p^{a(p)}p^{b(p)}\)，得到同态等式。若两个指数向量的标量相等，唯一素因子分解给出每个 \(a(p)=b(p)\)，故单射；\(\mathsf M(P)\) 的定义给出满射，遂为幺半群同构。
+
+定理 70 的 \(\operatorname{val}\) 与 \(\zeta\) 互逆，并且定义 133 的每一行规范加法满足
+\[
+\operatorname{val}\bigl(d(p)\boxplus_Z e(p)\bigr)
+ =\operatorname{val}(d(p))+\operatorname{val}(e(p)).
+\]
+逐坐标应用该等式给出 \(\operatorname{dig}^{\infty}_P\) 的双射和同态性。
+
+最后，\(\jmath_A(a)\boxplus_P\jmath_A(b)\) 落在像中，当且仅当每个坐标和不超过 \(A(p)\)，这正是 \(\operatorname{Dom}_{P,A}\) 的定义。定理 120 与 134 分别给出有界标量乘法和局部 Zeckendorf 规范加法的交换式。证毕。
+
+**定义 167（配置格的自同构与标量保持自同构）。** 令
+\[
+\operatorname{Aut}_{\wedge,\vee}(P,A)
+\]
+为所有保持 \(\wedge\)、\(\vee\) 及最小、最大元的双射
+\(\varphi:S(P,A)\to S(P,A)\)。定义
+\[
+\operatorname{Aut}_{\Pi}(P,A)
+ =\{\varphi\in\operatorname{Aut}_{\wedge,\vee}(P,A):
+       \Pi_P\circ\varphi=\Pi_P\}.
+\]
+对每个 \(r\ge1\) 置
+\[
+m_r(P,A)=|\{p\in P^+:A(p)=r\}|.
+\]
+
+**定理 168（容量形状的对称群与素数标量的刚性）。** 有自然群同构
+\[
+\operatorname{Aut}_{\wedge,\vee}(P,A)
+ \cong\prod_{r\ge1}S_{m_r(P,A)},
+\tag{Z-LAT-AUT}
+\]
+其中 \(S_0,S_1\) 视为平凡群。每个自同构由同容量轴的置换唯一给出。另一方面，
+\[
+\operatorname{Aut}_{\Pi}(P,A)=\{\operatorname{id}\}.
+\tag{Z-SCALAR-RIGID}
+\]
+因此，容量格可以具有交换同容量寄存器的对称性，而带实际素数标签的标量读数消除这种对称性。
+
+**证明。** 由定理 149 的证明，格的 join-不可约偏序是长度为 \(A(p)\) 的互不相交链的并。格自同构保持 join-不可约元及其偏序；一条有限链的序自同构只能是恒等，而同一长度的链可以任意互换。因此自同构群正是按链长分组的置换群乘积，得到 (Z-LAT-AUT)。
+
+若 \(\varphi\in\operatorname{Aut}_{\Pi}(P,A)\)，则对每个 \(a\)
+\[
+\Pi_P(\varphi(a))=\Pi_P(a).
+\]
+定理 120 的素因子分解单射性给出 \(\varphi(a)=a\)，故 \(\varphi\) 为恒等。证毕。
+
+**定理 169（5040 配置的三重数值与唯一标量结构）。** 对
+\[
+P_{5040}=(2,3,5,7),qquad A_{5040}=(4,2,1,1),
+\]
+有
+\[
+M=5040,qquad Q=|S(P_{5040},A_{5040})|=60,qquad
+\left|\operatorname{Aut}_{\wedge,\vee}(P_{5040},A_{5040})\right|=2,
+\]
+且
+\[
+\operatorname{Aut}_{\wedge,\vee}(P_{5040},A_{5040})
+ =\{\operatorname{id},(5\ 7)\},
+\qquad
+\operatorname{Aut}_{\Pi}(P_{5040},A_{5040})=\{\operatorname{id}\}.
+\]
+容量角的局部 Zeckendorf 行为
+\[
+\bigl(\zeta(4),\zeta(2),\zeta(1),\zeta(1)\bigr)
+ =(101,01,1,1),
+\]
+而其全局标量行为为
+\[
+\zeta(5040)=G_2+G_5+G_{11}+G_{13}+G_{17}.
+\]
+从零状态到容量角的最短单位路径数为 \(840\)。这四个量分别属于最大标量、状态集合基数、配置格对称性、局部指数码、全局标量码和路径历史；它们没有定义上的相等关系。
+
+**证明。** 最大标量与状态数由定理 120 计算。容量形状的正容量多重集为 \(\{4,2,1,1\}\)，所以定理 168 给出自同构群 \(S_1\times S_1\times S_2\)，其非平凡元交换容量为一的两个轴，即交换标签 5 与 7。定理 168 的标量刚性给出第二个群为平凡群。
+
+定理 70 给出 \(4=G_2+G_0\)、\(2=G_1\)、\(1=G_0\)，得到局部行；直接求和
+\[
+G_2+G_5+G_{11}+G_{13}+G_{17}
+ =3+13+233+610+4181=5040
+\]
+且索引互不相邻，故这是唯一全局行。定理 158 给出最短路径数
+\(8!/(4!2!1!1!)=840\)。这些读数分别由不同的函数定义，因而只能作为同一配置的并列不变量，不能相互替代。证毕。
+
+**定理 170（定理 158 最短性证明的追加更正）。** 定理 158 的结论由定理 161 的逐坐标下界严格推出。对于其中任意达到长度 \(D\) 的词，定理 161 强制每个坐标的上行次数与下行次数之一为零；因此词必为各坐标规定方向指令的多重排列。定理 158 证明中关于直接删除相反指令的叙述不作为结论的依据。
+
+**证明。** 定理 161 给出任意成功词的长度下界 \(|w|\ge D\)。若 \(|w|=D\)，则其每个坐标投影均取三角不等式等号，故该坐标不含相反方向的指令，并恰有 \(|b(p)-a(p)|\) 次规定方向指令。反之，多重排列的每个前缀都把每个坐标保持在起点和终点之间，所有容量守卫均通过。由多重排列计数得到定理 158 的公式。证毕。
+
+**定义 171（Fibonacci 基位置多项式）。** 令 \(\mathsf{Pol}_{\rm fin}(\mathbb N)\) 为所有有限形式和
+\[
+F(X)=\sum_{j<\ell}r_jX^j,
+\qquad r_j\in\mathbb N,
+\]
+组成的集合。定义 Fibonacci 基评价、规范化及加权乘积原语为
+\[
+\operatorname{ev}_G(F)=\sum_{j<\ell}r_jG_j,
+\qquad
+\operatorname{nf}_G(F)=\zeta(\operatorname{ev}_G(F)),
+\]
+\[
+F\star_G H
+ =\bigl(\operatorname{ev}_G(F)\operatorname{ev}_G(H)\bigr)X^0.
+\]
+对有限 Zeckendorf 行 \(u\in\mathsf W_Z\) 置
+\[
+F_u(X)=\sum_j u(j)X^j.
+\]
+此处 \(j\) 是 Fibonacci 基的位置指标；\(\operatorname{ev}_G(F_u)\) 才是该行代表的自然数。对固定素数寄存器 \(p\)，若其指数行为 \(u_p\)，定义寄存器指数为
+\[
+a(p)=\operatorname{ev}_G(F_{u_p}).
+\]
+
+**定理 172（Zeckendorf 加法与普通多项式乘法的区别）。** 对任意 \(F,H\in\mathsf{Pol}_{\rm fin}(\mathbb N)\)，有
+\[
+\operatorname{ev}_G(F+H)=\operatorname{ev}_G(F)+\operatorname{ev}_G(H),
+\qquad
+\operatorname{ev}_G(F\star_GH)
+ =\operatorname{ev}_G(F)\operatorname{ev}_G(H).
+\tag{Z-POLY-EVAL}
+\]
+因此
+\[
+\operatorname{nf}_G(F_u+F_v)=u+_Zv,
+\qquad
+\operatorname{nf}_G(F_u\star_GF_v)=u\cdot_Zv.
+\]
+若 \(FH\) 表示通常的形式多项式乘法，则
+\[
+\operatorname{ev}_G(FH)=\sum_{i,j}r_is_jG_{i+j},
+\]
+该值一般不等于 \(\operatorname{ev}_G(F)\operatorname{ev}_G(H)\)。特别地，
+\[
+\operatorname{ev}_G(X\cdot X)=G_2=3,
+\qquad
+\operatorname{ev}_G(X)^2=G_1^2=4.
+\]
+所以 \(X^j\) 不是数值基 \(G_j\) 的幂，普通多项式乘法不能直接表示 Zeckendorf 数值乘法。
+
+**证明。** 第一式由有限和的分配律直接得到。由定义，\(F\star_GH\) 的唯一系数为 \(\operatorname{ev}_G(F)\operatorname{ev}_G(H)\) 且位于 \(X^0\)，故其评价就是该乘积。将 \(F_u+F_v\) 和 \(F_u\star_GF_v\) 代入定理 70 的规范化定义，得到两个行运算式。
+
+普通乘积的系数为 \(\sum_{i+j=k}r_is_j\)，评价后得到所列双重和；而两个评价的乘积为 \(\sum_{i,j}r_is_jG_iG_j\)。两者相等需要额外的数值关系 \(G_{i+j}=G_iG_j\)，该关系并非 Fibonacci 递推的性质。取 \(F=H=X\)，即得 \(G_2=3\ne4=G_1G_1\)，故一般不等。证毕。
+
+**定理 173（数位索引、寄存器指数与素数指数的三层分离）。** 对固定 \(P\) 及局部行族 \((u_p)_{p\in P}\)，全局标量码可写为
+\[
+\widehat\Pi_Z(\operatorname{Reg}_Z(P),(u_p)_{p\in P})
+ =\operatorname{NatZ}\left(
+   \prod_{p\in P}p^{\operatorname{ev}_G(F_{u_p})}
+  \right).
+\tag{Z-THREE-LAYERS}
+\]
+其中：\(j\) 只决定一个 Fibonacci 基位置 \(G_j\)；\(\operatorname{ev}_G(F_{u_p})\) 是寄存器 \(p\) 的整数指数；外层幂 \(p^{\operatorname{ev}_G(F_{u_p})}\) 才是素数的通常指数运算。若对两个局部行逐行相加并规范化，则
+\[
+p^{\operatorname{ev}_G(F_{u_p}+F_{v_p})}
+ =p^{\operatorname{ev}_G(F_{u_p})}
+  p^{\operatorname{ev}_G(F_{v_p})}.
+\]
+因此“指数由 Zeckendorf 组成”表示指数的表示方式改变；它不把 Fibonacci 位置指标本身变成素数幂指数，也不把位置相加替代数值评价。
+
+**证明。** 定义 171 给出每个局部行的评价，定义 119 的全局乘积再对各寄存器取素数幂，故 (Z-THREE-LAYERS) 直接成立。第一层等式是定义 171 的有限和评价；第二层由普通整数幂的 \(p^{r+s}=p^rp^s\)；两者合并即得所示式。若把 \(j+k\) 代替 \(G_jG_k\)，定理 172 的 \(G_1^2\ne G_2\) 给出反例，所以位置指标不能承担第二层或第三层的含义。证毕。
+
+**定义 174（固定形状的素数标签赋值）。** 令 \(p_1<\cdots<p_k\) 为固定互异素数，令
+\[
+A_1\ge A_2\ge\cdots\ge A_k>0
+\]
+为固定容量多重集。对置换 \(\pi\in S_k\)，定义容量赋值的最大标量与其全局字长为
+\[
+M_\pi=\prod_{i=1}^kp_i^{A_{\pi(i)}},
+\qquad
+L_\pi=\ell_Z(M_\pi).
+\]
+
+**定理 175（素数轴赋值的极值与 5040 的最小性）。** 在定义 174 的全部赋值中，
+\[
+M_{\rm min}=\prod_{i=1}^kp_i^{A_i},
+\qquad
+M_{\rm max}=\prod_{i=1}^kp_i^{A_{k+1-i}}.
+\tag{Z-ASSIGN-EXTREMA}
+\]
+最小值的赋值除容量相等的置换外唯一，最大值同样如此。由于 \(\ell_Z\) 单调，\(L_\pi\) 的最小值由同一最小赋值取得。
+
+对 \(p_1,p_2,p_3,p_4=(2,3,5,7)\) 和 \((A_1,A_2,A_3,A_4)=(4,2,1,1)\)，有
+\[
+M_{\rm min}=2^4\,3^2\,5\,7=5040.
+\]
+故 5040 是该四轴容量形状在这四个最小素数标签上的最小容量角标量；它不是所有标量表示的唯一形状编码。
+
+**证明。** 若 \(i<j\) 且某赋值把较小容量 \(a\) 放在 \(p_i\)、较大容量 \(b>a\) 放在 \(p_j\)，交换两容量后的乘积与原乘积之比为
+\[
+\frac{p_i^bp_j^a}{p_i^ap_j^b}
+ =\left(\frac{p_i}{p_j}\right)^{b-a}<1.
+\]
+有限次交换所有逆序对得到 \(A_i\) 随 \(p_i\) 递减的赋值，并且每次严格降低乘积，除非交换的两个容量相等。这给出最小值及其等号条件。将同一论证作用于逆序容量得到最大值及其等号条件。\(\ell_Z\) 由定义 98 按自然数序单调，故乘积最小也给字长最小。代入四个素数和容量即得 5040。证毕。
+
+**定义 176（有限情境历史群胚及其 Zeckendorf 版本）。** 令 \(\mathbf{Hist}_{\rm fin}\) 的对象为所有有限有效情境表示 \(X=(C,A)\)，态射为保持并反映事件身份、偏序、全部属性、来源树和选择集的历史同构。令 \(\mathbf{Hist}_{Z,\rm fin}^{\rm all}\) 的对象为定义 162 的全数值编码像，态射为保持相应编码字段的同构。定义
+\[
+\mathcal F_Z(X)=\operatorname{Code}^{\rm all}_Z(X),
+\qquad
+\mathcal F_Z(h)=h.
+\]
+
+**定理 177（完整 Zeckendorf 编码是有限历史结构的群胚同构）。** \(\mathcal F_Z\) 是 \(\mathbf{Hist}_{\rm fin}\) 与 \(\mathbf{Hist}_{Z,\rm fin}^{\rm all}\) 之间的群胚同构，且
+\[
+\mathcal F_Z(\operatorname{id}_X)=\operatorname{id}_{\mathcal F_Z(X)},
+\qquad
+\mathcal F_Z(g\circ h)=\mathcal F_Z(g)\circ\mathcal F_Z(h).
+\]
+它保持对象的历史同构类、有限复合的定义域和成功结果，并由 \(\operatorname{Dec}_Z\) 给出逆群胚同构。
+
+**证明。** 定理 163 给出对象编码的双射、属性保持与反映，以及每个有限 CSA 复合的定义域和输出保持。若 \(h\) 是原历史同构，它对事件属性和来源树的保持经 \(\iota_Z\)、\(\iota_Z^{(3)}\) 与 \(\tau_Z\) 运输，故 \(h\) 是编码对象的态射；反向由各逆映射同样成立。恒等态射逐事件不变，复合态射仍逐事件复合，所以两条等式成立。每个编码对象唯一解码，遂得到逆函子及群胚同构。证毕。
+
+**定义 178（局部与全局规范窗口的密度）。** 对 \(L\in\omega\) 定义规范窗口
+\[
+\mathsf W_Z^{<L}=\{u\in\mathsf W_Z:\operatorname{val}(u)<G_L\}.
+\]
+对有限配置 \((P,A)\)，令 \(L_p=\ell_Z(A(p))\)、\(L_M=\ell_Z(M(P,A))\)，定义局部窗口、全局窗口及相应状态子集
+\[
+\mathsf W_{\rm loc}(P,A)=\prod_{p\in P}\mathsf W_Z^{<L_p},
+\qquad
+\mathsf W_{\rm glob}(P,A)=\mathsf W_Z^{<L_M},
+\]
+\[
+\mathsf S_{\rm loc}(P,A)=\operatorname{dig}_{P,A}[S(P,A)],
+\qquad
+\mathsf S_{\rm glob}(P,A)=\mathsf G_{P,A}[S(P,A)].
+\]
+定义规范窗口密度和二进制立方体密度为
+\[
+\delta_{\rm loc}^{Z}(P,A)
+ =\frac{|\mathsf S_{\rm loc}(P,A)|}{|\mathsf W_{\rm loc}(P,A)|},
+\qquad
+\delta_{\rm glob}^{Z}(P,A)
+ =\frac{|\mathsf S_{\rm glob}(P,A)|}{|\mathsf W_{\rm glob}(P,A)|},
+\]
+\[
+\delta_{\rm loc}^{2}(P,A)=\frac{Q}{2^{\Lambda_{\rm loc}(P,A)}},
+\qquad
+\delta_{\rm glob}^{2}(P,A)=\frac{Q}{2^{\Lambda_{\rm glob}(P,A)}}.
+\]
+
+**定理 179（局部满窗口与全局稀疏窗口）。** 对任意 \(L\in\omega\)，
+\[
+|\mathsf W_Z^{<L}|=G_L.
+\]
+因此，对任意有限配置
+\[
+\delta_{\rm loc}^{Z}(P,A)
+ =\frac{\prod_{p\in P}(A(p)+1)}
+        {\prod_{p\in P}G_{\ell_Z(A(p))}},
+\qquad
+\delta_{\rm glob}^{Z}(P,A)
+ =\frac{\prod_{p\in P}(A(p)+1)}
+        {G_{\ell_Z(M(P,A))}}.
+\tag{Z-DENSITY}
+\]
+特别地，对 \(5040\) 配置
+\[
+\delta_{\rm loc}^{Z}=\frac{60}{G_3G_2G_1G_1}=1,
+\qquad
+\delta_{\rm glob}^{Z}=\frac{60}{G_{18}}=\frac{60}{6765}=\frac4{451},
+\]
+而二进制立方体密度为
+\[
+\delta_{\rm loc}^{2}=\frac{60}{2^7}=\frac{15}{32},
+\qquad
+\delta_{\rm glob}^{2}=\frac{60}{2^{18}}=\frac{15}{65536}.
+\]
+所以局部行的规范窗口恰被 \((4,2,1,1)\) 的状态填满，全局 \(5040\) 标量则是十八位规范窗口中的稀疏子集。
+
+**证明。** 定理 70 的 \(\operatorname{val}:\mathsf W_Z\to\omega\) 为双射，故其限制到 \(\mathsf W_Z^{<L}\) 与区间 \(\{0,\ldots,G_L-1\}\) 双射，得到窗口基数 \(G_L\)。定理 118 给出局部状态子集基数为 \(Q\)，定理 120 给出全局状态子集基数也为 \(Q\)，代入窗口基数即得 (Z-DENSITY)。二进制密度直接由定义 155 的两个字长得到。
+
+对 \(5040\)，有 \(\ell_Z(4)=3\)、\(\ell_Z(2)=2\)、\(\ell_Z(1)=1\)，并且 \(G_3=5,G_2=3,G_1=2\)，故局部窗口基数为 \(5\cdot3\cdot2\cdot2=60\)。定理 156 给出 \(L_M=18\)，而 \(G_{18}=6765\)，故全局密度为 \(60/6765=4/451\)；其余两个分数由 \(Q=60\) 和字长七、十八直接化简。证毕。
+
+**定理 180（单位容量轴增多时的全局稀疏化）。** 令 \(p_1<\cdots<p_k\) 为前 \(k\) 个素数，置 \(P_k=\{p_1,\ldots,p_k\}\)，并令 \(A_k(p_i)=1\)。则
+\[
+Q_k=2^k,\qquad M_k=\prod_{i=1}^kp_i,\qquad
+\delta_{\rm loc}^{Z}(P_k,A_k)=1,
+\]
+并且
+\[
+0<\delta_{\rm glob}^{Z}(P_k,A_k)
+ \le \frac{2^k}{M_k+1}
+ \le \frac{2^k}{(k+1)!}\xrightarrow[k\to\infty]{}0.
+\tag{Z-SPARSE-LIMIT}
+\]
+故局部每轴一位的规范窗口可以始终满占，而把这些轴指数化为一个全局 Zeckendorf 标量会使规范窗口密度趋于零。
+
+**证明。** 每个容量一轴有两个状态且 \(\ell_Z(1)=1,G_1=2\)，故局部窗口和状态数均为 \(2^k\)，局部密度为一。全局状态子集有 \(Q_k\) 个元素，全局窗口有 \(G_{\ell_Z(M_k)}\) 个元素；由 \(M_k<G_{\ell_Z(M_k)}\) 得
+\[
+\delta_{\rm glob}^{Z}
+ =\frac{Q_k}{G_{\ell_Z(M_k)}}
+ \le\frac{2^k}{M_k+1}.
+\]
+第 \(i\) 个素数满足 \(p_i\ge i+1\)，所以 \(M_k\ge\prod_{i=1}^k(i+1)=(k+1)!\)。最后，\(2^k/(k+1)!\to0\)，因为其相邻比值为 \(2/(k+2)\)，从某项起小于一且趋于零。证毕。
+
+**定义 181（局部重量—秩生成函数与全局重量生成函数）。** 对有限容量配置 \((P,A)\) 定义
+\[
+\mathcal W_{P,A}(X,Y)
+ =\sum_{a\in S(P,A)}
+    X^{r_P(a)}Y^{\omega_Z(a)},
+\qquad
+\mathcal H_{P,A}(Y)
+ =\sum_{a\in S(P,A)}
+    Y^{w_Z(\Pi_P(a))}.
+\]
+\(\mathcal W_{P,A}\) 同时记录配置格秩和各寄存器局部 Zeckendorf 重量；\(\mathcal H_{P,A}\) 只记录全局素数乘积的 Zeckendorf 重量。
+
+**定理 182（局部重量生成函数的乘法分解）。** 对任意有限容量配置，
+\[
+\mathcal W_{P,A}(X,Y)
+ =\prod_{p\in P}
+   \left(\sum_{n=0}^{A(p)}X^nY^{w_Z(n)}\right).
+\tag{Z-WEIGHT-GF}
+\]
+对 \(5040\) 配置，
+\[
+\mathcal W_{5040}(X,Y)
+ =(1+XY+X^2Y+X^3Y+X^4Y^2)
+  (1+XY+X^2Y)(1+XY)^2,
+\]
+并且
+\[
+\mathcal W_{5040}(1,Y)
+ =1+7Y+18Y^2+21Y^3+11Y^4+2Y^5.
+\]
+
+**证明。** 配置集合是各坐标区间的直积，且
+\[
+r_P(a)=\sum_{p\in P}a(p),
+\qquad
+\omega_Z(a)=\sum_{p\in P}w_Z(a(p)).
+\]
+将两式代入定义，对直积上的有限求和逐坐标分配，即得到 (Z-WEIGHT-GF)。对 \(A=4\)，\(w_Z(0),\ldots,w_Z(4)=(0,1,1,1,2)\)；对 \(A=2\)，对应序列为 \((0,1,1)\)；对 \(A=1\)，对应序列为 \((0,1)\)。代入并令 \(X=1\)，有限乘法展开给出所列系数。证毕。
+
+**定理 183（5040 的全局重量分布）。** 对 \(P=\{2,3,5,7\}\)、\(A=(4,2,1,1)\)，有
+\[
+\mathcal H_{P,A}(Y)
+ =7Y+18Y^2+17Y^3+9Y^4+7Y^5+Y^6+Y^7.
+\tag{Z-GLOBAL-WEIGHT}
+\]
+因此局部重量分布
+\[
+(1,7,18,21,11,2)
+\]
+与全局重量分布
+\[
+(0,7,18,17,9,7,1,1)
+\]
+不是同一个分布；前者的第 \(j\) 项对应局部重量 \(j\)，后者的第 \(j\) 项对应全局重量 \(j\)。
+
+**证明。** 定理 120 给出 \(\Pi_P\) 将 60 个状态双射到 \(5040\) 的正约数。按 \((a(2),a(3),a(5),a(7))\) 遍历
+\[
+\{0,1,2,3,4\}\times\{0,1,2\}\times\{0,1\}\times\{0,1\},
+\]
+对每个乘积使用定理 70 的唯一规范表示，按占据位数分组，得到
+\[
+\begin{array}{c|rrrrrrr}
+\text{全局重量}&1&2&3&4&5&6&7\\ \hline
+\text{状态数}&7&18&17&9&7&1&1
+\end{array}
+\]
+表中系数总和为 \(60\)，所以给出 \(\mathcal H_{P,A}\)。局部系数由定理 182 给出；其总和同样为 \(60\)。证毕。
+
+**定理 184（全局重量不是局部重量的函数）。** 不存在函数
+\[
+f:\mathbb N\to\mathbb N
+\]
+使得对所有 \(a\in S(\{2,3,5,7\},(4,2,1,1))\)，都有
+\[
+w_Z(\Pi_P(a))=f(\omega_Z(a)).
+\]
+特别地，状态
+\[
+a=(0,0,1,0),\qquad b=(0,0,0,1)
+\]
+满足
+\[
+\omega_Z(a)=\omega_Z(b)=1,
+\qquad
+w_Z(\Pi_P(a))=w_Z(5)=1,
+\qquad
+w_Z(\Pi_P(b))=w_Z(7)=2.
+\]
+
+**证明。** \(a\) 与 \(b\) 都只有一个局部行取值一，故局部重量均为一。其标量分别为 \(5\) 与 \(7\)。由 \(5=G_3\) 得 \(w_Z(5)=1\)，而 \(7=G_3+G_1\) 得 \(w_Z(7)=2\)。同一局部重量对应两个不同全局重量，故所述函数 \(f\) 不存在。证毕。
+
+**定义 185（带符号槽表与逐槽平衡）。** 对有限素数集 \(P\) 定义有限支撑带符号槽表
+\[
+\mathcal R_{P,\mathbb Z}=\mathbb Z^{(P\times\omega)}.
+\]
+对 \(r\in\mathcal R_{P,\mathbb Z}\) 定义
+\[
+V_P^{\mathbb Z}(r)(p)=\sum_{j\ge0}G_jr(p,j),
+\qquad
+\operatorname{sdig}_P(r)(p)
+ =\operatorname{scode}\bigl(V_P^{\mathbb Z}(r)(p)\bigr),
+\]
+并令 \(\ominus_Z^P\) 在 \(P\) 上逐坐标作用，即
+\[
+(\ominus_Z^P d)(p)=\ominus_Z(d(p)).
+\]
+以及有理素数幂读数
+\[
+\operatorname{Rat}_P(r)=\prod_{p\in P}p^{V_P^{\mathbb Z}(r)(p)}
+\in\mathbb Q_{>0}.
+\]
+对有限情境 \(X\) 定义背景的终端槽电荷和前缀槽电荷
+\[
+B_X(p,j)=\sum_{t\in\mathbb Z}W_X(t,\lambda(p,j)),
+\qquad
+B_X^T(p,j)=\sum_{t\le T}W_X(t,\lambda(p,j)).
+\]
+对任意槽支撑于 \(\lambda[P\times\omega]\) 的 \(X\)，同时置
+\[
+r_X(p,j)=\sum_{t\in\mathbb Z}Z_X(t,\lambda(p,j)),
+\qquad
+r_X^T(p,j)=\sum_{t\le T}Z_X(t,\lambda(p,j)).
+\]
+当 \(X\in\mathcal B_\lambda^+\) 时，这些表取值于 \(\mathbb N\)；一般情形下取值于 \(\mathbb Z\)。
+称 \(X\) 终端逐槽平衡，若 \(B_X(p,j)=0\) 对所有 \(p,j\) 成立；称 \(X\) 前缀逐槽平衡，若 \(B_X^T(p,j)=0\) 对所有 \(T,p,j\) 成立。前缀逐槽平衡蕴含终端逐槽平衡及定义 1 的全局平衡。
+
+**定理 186（带符号 Zeckendorf 槽表的群同态）。** 对任意 \(r,s\in\mathcal R_{P,\mathbb Z}\)，有
+\[
+V_P^{\mathbb Z}(r+s)=V_P^{\mathbb Z}(r)+V_P^{\mathbb Z}(s),
+\qquad
+\operatorname{sdig}_P(r+s)(p)
+ =\operatorname{scode}\!\left(
+  V_P^{\mathbb Z}(r)(p)+V_P^{\mathbb Z}(s)(p)\right),
+\]
+\[
+\operatorname{Rat}_P(r+s)
+ =\operatorname{Rat}_P(r)\operatorname{Rat}_P(s),
+\qquad
+\operatorname{Rat}_P(-r)=\operatorname{Rat}_P(r)^{-1}.
+\tag{Z-SIGNED-GROUP}
+\]
+若 \(r,s\) 的每一行已经是唯一的带符号 Zeckendorf 行，则 \(\operatorname{sdig}_P\) 将逐行加法运输为 \((\mathsf Z_{\mathbb Z})^P\) 上的坐标加法；其逆由逐行 \(\operatorname{ival}\) 给出。对非规范原始槽表，\(\operatorname{sdig}_P\) 一般不单射。
+
+**证明。** 第一式是有限整数和的分配律。定义 113 的 \(\operatorname{scode}\) 与 \(\operatorname{ival}\) 互逆，故第二式是逐坐标的带符号 Zeckendorf 规范化。对有限素数集逐个使用 \(p^{u+v}=p^up^v\)，得到有理读数的乘法和逆元等式。若每一行已规范，定理 114 给出逐行整数加法的双射运输；若允许任意原始系数，则存在不同槽表具有相同 Fibonacci 加权和，例如 \(G_2=G_1+G_0\)，所以不能保持单射。证毕。
+
+**定理 187（补集的逐槽负号定理）。** 令 \(X=(C,A)\) 为定义 185 的情境，记补集为 \(\mathsf cX=(C,\Omega\setminus A)\)。则对任意 \(T\)
+\[
+r_{\mathsf cX}^T(p,j)=B_X^T(p,j)-r_X^T(p,j),
+\tag{Z-COMP-PREFIX}
+\]
+并且在终端处
+\[
+r_{\mathsf cX}(p,j)=B_X(p,j)-r_X(p,j).
+\tag{Z-COMP-TERM}
+\]
+若 \(X\) 前缀逐槽平衡，则
+\[
+r_{\mathsf cX}^T=-r_X^T,\qquad
+\operatorname{sdig}_P(r_{\mathsf cX}^T)
+ =\ominus_Z^{P}\operatorname{sdig}_P(r_X^T),
+\qquad
+\operatorname{Rat}_P(r_{\mathsf cX}^T)
+ =\operatorname{Rat}_P(r_X^T)^{-1}.
+\tag{Z-COMP-SIGNED}
+\]
+若仅有终端逐槽平衡，则上述三式只在终端总表成立。只有全局平衡而没有逐槽平衡时，补集一般不等于各寄存器指数的逐坐标负号。
+
+**证明。** 在每个时空槽中，\(\Omega\) 被不交分成 \(A\) 与 \(\Omega\setminus A\)，所以其背景选择电荷等于当前选择电荷与补集选择电荷之和：
+\[
+W_X(t,\lambda(p,j))
+ =Z_X(t,\lambda(p,j))
+  +Z_{\mathsf cX}(t,\lambda(p,j)).
+\]
+对 \(t\le T\) 求和得到 (Z-COMP-PREFIX)，对所有时间求和得到 (Z-COMP-TERM)。前缀逐槽平衡使 \(B_X^T=0\)，于是 \(r_{\mathsf cX}^T=-r_X^T\)；定理 114 和定理 186 分别给出带符号码的加法逆与有理幂逆。若只有全局平衡，只有所有槽的总和为零，不能推出每个 \((p,j)\) 的 \(B_X(p,j)\) 为零，故逐坐标负号结论不成立。证毕。
+
+**定理 188（正指数域与加法逆的严格边界）。** 若 \(X\in\mathcal B_\lambda^+\) 且终端逐槽平衡，则
+\[
+r_X(p,j)\ge0,\qquad
+r_{\mathsf cX}(p,j)=-r_X(p,j)\le0.
+\]
+补集 \(\mathsf cX\) 同时属于正槽域 \(\mathcal B_\lambda^+\) 的充要条件是
+\[
+r_X(p,j)=0\quad\text{对所有 }p,j.
+\]
+因此正 Zeckendorf 数位域只形成非负指数幺半群；要使补集成为一般的加法逆，必须使用 \(\mathcal R_{P,\mathbb Z}\)、\(\mathsf Z_{\mathbb Z}\) 及定理 186 的带符号扩展。
+
+**证明。** \(X\in\mathcal B_\lambda^+\) 的逐单元选择电荷非负，故有限时间累积给出 \(r_X(p,j)\ge0\)。定理 187 在终端逐槽平衡下给 \(r_{\mathsf cX}=-r_X\)，所以补集的每个槽值非正。它同时非负，当且仅当每个槽值既非负又非正，即全部为零。正槽域因此只包含非负表；其逐行加法由定理 166 给出幺半群结构，而逆元需要带符号表。证毕。
+
+**定义 189（指数幺半群的群完成）。** 对有限素数集 \(P\)，在 \(\mathsf E(P)\times\mathsf E(P)\) 上定义
+\[
+(a,b)\sim_{\rm gp}(c,d)
+\iff a\boxplus_Pd=b\boxplus_Pc.
+\]
+令
+\[
+\mathsf{Gr}(P)
+ =(\mathsf E(P)\times\mathsf E(P))/\sim_{\rm gp},
+\qquad
+[a,b]+[c,d]=[a\boxplus_Pc,b\boxplus_Pd],
+\]
+并令 \(-[a,b]=[b,a]\)。定义
+\[
+\Gamma_P:\mathsf{Gr}(P)\longrightarrow\mathbb Z^P,
+\qquad
+\Gamma_P([a,b])=a-b.
+\]
+置
+\[
+\operatorname{Rat}^{\rm gp}_P([a,b])
+ =\frac{\Pi_P^{\infty}(a)}{\Pi_P^{\infty}(b)}
+ \in\mathbb Q_{>0},
+\]
+以及带符号局部码
+\[
+\operatorname{sdig}^{\rm gp}_P([a,b])(p)
+ =\operatorname{scode}\bigl(a(p)-b(p)\bigr).
+\]
+
+**定理 190（正指数系统的 Grothendieck 群与有理素数幂）。** \(\mathsf{Gr}(P)\) 在定义 189 的运算下是交换群，且
+\[
+\Gamma_P:\mathsf{Gr}(P)\xrightarrow{\ \cong\ }\mathbb Z^P
+\]
+是群同构。映射
+\[
+\operatorname{Rat}^{\rm gp}_P:\mathsf{Gr}(P)
+\xrightarrow{\ \cong\ }
+\left\{\prod_{p\in P}p^{z(p)}:z\in\mathbb Z^P\right\}
+\subseteq\mathbb Q_{>0}
+\]
+也是群同构；并且 \(\operatorname{sdig}^{\rm gp}_P\) 将其运输为 \((\mathsf Z_{\mathbb Z})^P\) 上的逐坐标带符号 Zeckendorf 加法。每个带符号指数向量 \(z\in\mathbb Z^P\) 都有正指数表示
+\[
+z=\Gamma_P([z^+,z^-]),
+\qquad
+z^+(p)=\max(z(p),0),\quad
+z^-(p)=\max(-z(p),0).
+\]
+
+**证明。** 关系 \(\sim_{\rm gp}\) 自反、对称、传递，并且与逐坐标加法相容；交换律和结合律由 \(\mathsf E(P)\) 的逐坐标加法继承，\([0,0]\) 是单位，交换两分量给出逆元。于是 \(\mathsf{Gr}(P)\) 为交换群。
+
+\(\Gamma_P\) 良定义，因为 \(a+d=b+c\) 恰好等价于 \(a-b=c-d\)。它是群同态。任意 \(z\in\mathbb Z^P\) 都可写作 \(z^+-z^-\)，故满射；若 \(\Gamma_P([a,b])=0\)，则 \(a=b\)，故该类为单位，得到单射。
+
+定理 166 的幺半群同态给出
+\[
+\frac{\Pi_P^\infty(a)}{\Pi_P^\infty(b)}
+ =\prod_{p\in P}p^{a(p)-b(p)}.
+\]
+唯一素因子分解使 \(z\mapsto\prod_pp^{z(p)}\) 在 \(\mathbb Z^P\) 上单射，故 \(\operatorname{Rat}^{\rm gp}_P\) 为同构。最后逐坐标应用定理 114，得到 \(\operatorname{sdig}^{\rm gp}_P\) 的带符号 Zeckendorf 表达及正负分解公式。证毕。
+
+**定理 191（逐槽平衡补集实现群完成中的逆元）。** 令 \(X\) 为终端逐槽平衡的有限情境，且其选择累积表 \(r_X\) 非负。置
+\[
+a_X(p)=V_P^{\mathbb Z}(r_X)(p)=\sum_{j\ge0}G_jr_X(p,j).
+\]
+则 \(a_X\in\mathsf E(P)\)，且
+\[
+[a_X,0]\in\mathsf{Gr}(P),\qquad
+[0,a_X]=-[a_X,0],
+\]
+并且补集的终端观察满足
+\[
+\operatorname{sdig}_P(r_{\mathsf cX})
+ =\operatorname{sdig}^{\rm gp}_P([0,a_X]),
+\qquad
+\operatorname{Rat}_P(r_{\mathsf cX})
+ =\operatorname{Rat}^{\rm gp}_P([0,a_X])
+ =\operatorname{Rat}_P(r_X)^{-1}.
+\]
+若 \(X\) 还前缀逐槽平衡，则对每个 \(T\) 置
+\[
+a_X^T(p)=V_P^{\mathbb Z}(r_X^T)(p),
+\]
+上述等式将 \(a_X,r_X\) 同时替换为 \(a_X^T,r_X^T\) 后仍成立。
+
+**证明。** 终端逐槽平衡由定理 187 给出 \(r_{\mathsf cX}=-r_X\)。应用 \(V_P^{\mathbb Z}\) 得
+\[
+V_P^{\mathbb Z}(r_{\mathsf cX})=-a_X.
+\]
+群完成中 \([0,a_X]=-[a_X,0]\)，其在 \(\mathbb Z^P\) 中的像正是 \(-a_X\)。定理 186 的带符号编码和有理读数遂给出两式。前缀逐槽平衡时定理 187 对每个 \(T\) 给同一负号等式，应用相同论证即得逐前缀结论。证毕。
+
+**定理 192（任意有限带符号槽表的 CSA 实现）。** 对任意 \(r\in\mathcal R_{P,\mathbb Z}\)，存在有限情境 \(X_r=(C_r,A_r)\in\mathcal B\)，满足
+\[
+B_{X_r}(p,j)=0\quad\text{对所有 }p,j,
+\qquad
+r_{X_r}(p,j)=r(p,j).
+\tag{Z-SIGNED-REALIZE}
+\]
+可以进一步要求所有事件时刻均为 \(0\)、偏序为空、所有事件位置都在 \(\lambda[P\times\omega]\)，且 \(X_r\) 前缀逐槽平衡。其有理素数幂读数为
+\[
+\operatorname{Rat}_P(r_{X_r})
+ =\operatorname{Rat}_P(r)
+ =\prod_{p\in P}p^{V_P^{\mathbb Z}(r)(p)}.
+\]
+当 \(r\) 含有负系数时，\(X_r\notin\mathcal B_\lambda^+\)；其带符号观察仍由定理 186–191 精确给出。
+
+**证明。** 对每个有限支撑槽 \((p,j)\)，置
+\[
+r^+(p,j)=\max(r(p,j),0),
+\qquad
+r^-(p,j)=\max(-r(p,j),0).
+\]
+取 \(r^+(p,j)\) 个互异的正号事件和 \(r^-(p,j)\) 个互异的负号事件作为当前选择；再取 \(r^-(p,j)\) 个互异的正号事件和 \(r^+(p,j)\) 个互异的负号事件作为未选背景事件。所有事件均置于时刻 \(0\)、位置 \(\lambda(p,j)\)、空偏序，令 \(E_r=\Omega_r\) 为这些事件的全集，令 \(A_r\) 为所列选择事件集。
+
+在每个槽中，背景正负事件数相等，故 \(W_{X_r}(0,\lambda(p,j))=0\)，且全部背景和为零，所以 \(X_r\in\mathcal B\)。选择电荷为
+\[
+r^+(p,j)-r^-(p,j)=r(p,j),
+\]
+于是总累积表满足 (Z-SIGNED-REALIZE)。时刻 \(0\) 以前没有事件，时刻 \(0\) 以后各槽背景仍为零，故每个前缀均逐槽平衡。定理 186 给出有理读数等式。若某个 \(r(p,j)<0\)，则选择电荷在该槽为负，违反 \(\mathcal B_\lambda^+\) 的非负条件；反之全体系数非负时可取无负选择，得到正槽域中的实现。证毕。
+
+**定义 193（终端逐槽观察商）。** 对有限素数集 \(P\)，令
+\[
+\mathcal C_P^{\rm tb}
+=\{X\in\mathcal B:
+ W_X(t,y)=Z_X(t,y)=0\text{ 若 }y\notin\lambda[P\times\omega],
+ \ X\text{ 终端逐槽平衡}\}.
+\]
+对 \(X,Y\in\mathcal C_P^{\rm tb}\) 定义
+\[
+X\equiv_PY
+\iff
+V_P^{\mathbb Z}(r_X)=V_P^{\mathbb Z}(r_Y).
+\tag{Z-OBS-EQ}
+\]
+置
+\[
+\mathcal C_P^+=\mathcal C_P^{\rm tb}\cap\mathcal B_\lambda^+.
+\]
+若再要求 \(X,Y\in\mathcal C_P^+\)，记所得限制关系为 \(\equiv_P^+\)。
+
+**定理 194（CSA 终端观察商的精确代数）。** \(\equiv_P\) 是等价关系，且并行复合在商上良定义：
+\[
+[X]_{\equiv_P}+[Y]_{\equiv_P}
+=[X\boxplus Y]_{\equiv_P}.
+\]
+映射
+\[
+\Theta_P:\mathcal C_P^{\rm tb}/\equiv_P
+\longrightarrow\mathbb Z^P,
+\qquad
+\Theta_P([X]_{\equiv_P})=V_P^{\mathbb Z}(r_X)
+\]
+是交换群同构；其复合
+\[
+\operatorname{Rat}_P\circ\Theta_P:
+\mathcal C_P^{\rm tb}/\equiv_P
+\xrightarrow{\ \cong\ }
+\left\{\prod_{p\in P}p^{z(p)}:z\in\mathbb Z^P\right\}
+\subseteq\mathbb Q_{>0}
+\]
+也是群同构。若限制到 \(\mathcal B_\lambda^+\)，则
+\[
+\mathcal C_P^{+}/\equiv_P^+
+\cong\mathbb N^P
+\cong\left\{\prod_{p\in P}p^{a(p)}:a\in\mathbb N^P\right\}.
+\tag{Z-OBS-QUOTIENT}
+\]
+终端逐槽平衡情形下，补集在商上诱导 \(z\mapsto-z\)；前缀逐槽平衡情形下，该负号关系对每个时间前缀同时成立。历史档案中的事件身份、时间和槽内原始系数全部被 \(\equiv_P\) 忘却。
+
+**证明。** 定义 193 的关系是函数 \(X\mapsto V_P^{\mathbb Z}(r_X)\) 的核，故自反、对称、传递。定理 6 给出
+\[
+r_{X\boxplus Y}=r_X+r_Y,
+\]
+定理 186 遂给出
+\[
+V_P^{\mathbb Z}(r_{X\boxplus Y})
+ =V_P^{\mathbb Z}(r_X)+V_P^{\mathbb Z}(r_Y),
+\]
+所以并行复合不依赖等价类代表。由定理 192，任意 \(z\in\mathbb Z^P\) 都有某个 \(X_r\in\mathcal C_P^{\rm tb}\) 使其终端表满足 \(V_P^{\mathbb Z}(r_{X_r})=z\)，故 \(\Theta_P\) 满射；其单射性正是 (Z-OBS-EQ) 的定义。定理 190 给出 \(\operatorname{Rat}_P\) 的群同构，得到第一组结论。
+
+若 \(X\in\mathcal B_\lambda^+\)，则其终端表非负，故 \(V_P^{\mathbb Z}(r_X)\in\mathbb N^P\)；定理 192 对任意 \(\mathbb N^P\) 向量给出正槽实现，于是限制商恰为 \(\mathbb N^P\) 的加法幺半群。定理 187 给出补集终端表为 \(-r_X\)，故在商上是取负；前缀逐槽平衡时逐前缀同样成立。由于等价关系只读取 \(V_P^{\mathbb Z}(r_X)\)，其它历史字段均不进入商。证毕。
+
+**定理 195（观察商中的补集逆元）。** 对任意 \(X\in\mathcal C_P^{\rm tb}\)，有
+\[
+[X]_{\equiv_P}+[\,\mathsf cX\,]_{\equiv_P}
+=[0]_{\equiv_P},
+\qquad
+[\mathsf c(\mathsf cX)]_{\equiv_P}
+=[X]_{\equiv_P},
+\]
+其中 \([0]_{\equiv_P}\) 是任意终端观察为零的情境等价类。因而补集在终端逐槽观察商上确实给出加法逆；在前缀逐槽平衡子域上，它对每个前缀观察同时给出逆元。
+
+**证明。** 定理 187 给出
+\[
+r_{\mathsf cX}=-r_X.
+\]
+定理 6 给出并行终端表的相加公式，所以
+\[
+V_P^{\mathbb Z}(r_{X\boxplus\mathsf cX})
+ =V_P^{\mathbb Z}(r_X)+V_P^{\mathbb Z}(r_{\mathsf cX})=0.
+\]
+根据定义 193，\(X\boxplus\mathsf cX\) 与任意零观察情境属于同一等价类；补集的集合论定义立即给出 \(\mathsf c(\mathsf cX)=X\)。前缀逐槽平衡时，定理 187 对每个 \(T\) 给 \(r_{\mathsf cX}^T=-r_X^T\)，同样的计算逐前缀成立。证毕。
+
+**定义 196（时间增量表与前缀积分）。** 对有限素数集 \(P\)，令
+\[
+\mathsf J_P=\mathbb Z^{(\mathbb Z\times P)}
+\]
+为有限支撑的时间—寄存器增量表。令 \(X\) 为定义 193 所要求的槽支撑情境，定义
+\[
+\delta_X(t,p)=\sum_{j\ge0}Z_X(t,\lambda(p,j)),
+\qquad
+\mathbf a_X^T(p)=\sum_{s\le T}\delta_X(s,p),
+\qquad
+\mathbf a_X^\infty(p)=\sum_{t\in\mathbb Z}\delta_X(t,p).
+\tag{Z-TEMPORAL-PROFILE}
+\]
+有限性保证上述和均为有限整数和。等价地，若 \(r_X^T\) 是定义 185 的前缀槽表，则
+\[
+\mathbf a_X^T=V_P^{\mathbb Z}(r_X^T),
+\qquad
+\mathbf a_X^\infty=V_P^{\mathbb Z}(r_X).
+\]
+定义
+\[
+\mathsf I_P(c)(T,p)=\sum_{s\le T}c(s,p),
+\qquad
+\Sigma_P(c)(p)=\sum_{t\in\mathbb Z}c(t,p)
+\quad(c\in\mathsf J_P).
+\]
+
+**定理 197（时间剖面的差分恢复与并行、补集运输）。** 对每个槽支撑情境 \(X\)，有
+\[
+\mathbf a_X^T=\mathsf I_P(\delta_X)(T,-),
+\qquad
+\mathbf a_X^\infty=\Sigma_P(\delta_X),
+\]
+且在所有整数 \(t\) 上
+\[
+\delta_X(t,p)=\mathbf a_X^t(p)-\mathbf a_X^{t-1}(p).
+\tag{Z-TEMPORAL-DIFFERENCE}
+\]
+若 \(X,Y\) 均属于定义 193 的支撑域，则
+\[
+\delta_{X\boxplus Y}=\delta_X+\delta_Y.
+\tag{Z-TEMPORAL-PARALLEL}
+\]
+若 \(X\) 还前缀逐槽平衡，则 \(\mathsf cX\) 也前缀逐槽平衡，并且
+\[
+\delta_{\mathsf cX}=-\delta_X,
+\qquad
+\mathbf a_{\mathsf cX}^T=-\mathbf a_X^T,
+\qquad
+\mathbf a_{\mathsf cX}^\infty=-\mathbf a_X^\infty.
+\tag{Z-TEMPORAL-COMPLEMENT}
+\]
+因此，对前缀逐槽平衡情境，全部前缀剖面恰好决定全部时间增量表。
+
+**证明。** 有限求和可交换，故
+\[
+V_P^{\mathbb Z}(r_X^T)(p)
+ =\sum_jG_j\sum_{s\le T}Z_X(s,\lambda(p,j))
+ =\sum_{s\le T}\sum_jZ_X(s,\lambda(p,j)),
+\]
+这就是第一式；把时间范围换成全体整数得到终端式。相邻前缀之差只留下时刻 \(t\) 的项，得到 (Z-TEMPORAL-DIFFERENCE)。并行复合在每个带标签槽中逐项相加，故给出 (Z-TEMPORAL-PARALLEL)。
+
+若 \(X\) 前缀逐槽平衡，则
+\[
+0=B_X^t(p,j)-B_X^{t-1}(p,j)=W_X(t,\lambda(p,j))
+\]
+对所有 \(t,p,j\) 成立。补集在该槽的选择电荷为
+\[
+Z_{\mathsf cX}(t,\lambda(p,j))
+ =W_X(t,\lambda(p,j))-Z_X(t,\lambda(p,j))
+ =-Z_X(t,\lambda(p,j)).
+\]
+逐槽求和及前缀求和即得 (Z-TEMPORAL-COMPLEMENT)。若两个情境的全部前缀剖面相同，应用差分式便得到其增量表相同；反向由前缀积分式立即成立。证毕。
+
+**定义 198（前缀逐槽平衡域与前缀观察等价）。** 对有限素数集 \(P\)，令
+\[
+\mathcal C_P^{\rm pb}
+ =\{X\in\mathcal C_P^{\rm tb}:B_X^T(p,j)=0
+ \text{ 对所有 }T,p,j\}.
+\]
+对 \(X,Y\in\mathcal C_P^{\rm pb}\) 定义
+\[
+X\equiv_P^{\rm pf}Y
+\iff
+\delta_X=\delta_Y.
+\tag{Z-PREFIX-EQ}
+\]
+等价地，\(X\equiv_P^{\rm pf}Y\) 当且仅当
+\[
+\mathbf a_X^T=\mathbf a_Y^T
+\quad\text{对所有 }T\in\mathbb Z.
+\]
+令
+\[
+\mathcal H_P=\mathcal C_P^{\rm pb}/\equiv_P^{\rm pf}
+\]
+为前缀观察商。
+
+**定理 199（前缀观察商的自由时间群）。** \(\equiv_P^{\rm pf}\) 是等价关系，且并行复合与补集在商上分别诱导加法与加法逆。映射
+\[
+\Theta_P^{\rm pf}:\mathcal H_P\longrightarrow\mathsf J_P,
+\qquad
+\Theta_P^{\rm pf}([X]_{\equiv_P^{\rm pf}})=\delta_X
+\tag{Z-PREFIX-THETA}
+\]
+是交换群同构。
+
+**证明。** 等价关系是函数 \(X\mapsto\delta_X\) 的核。定理 197 给出
+\[
+\delta_{X\boxplus Y}=\delta_X+\delta_Y,
+\qquad
+\delta_{\mathsf cX}=-\delta_X,
+\]
+所以并行复合在等价类上良定义，结合律、交换律和单位元由 \(\mathsf J_P\) 的逐点运算运输而来，补集给出逆元。
+
+\(\Theta_P^{\rm pf}\) 的单射性是等价关系的定义。为证满射，取任意 \(c\in\mathsf J_P\)。对每个有限支撑的 \((t,p)\)，若 \(c(t,p)=n\ge0\)，取 \(n\) 个互异的正号事件作为选择事件，并取 \(n\) 个互异的负号事件作为未选背景事件；若 \(c(t,p)=-n<0\)，交换正负号的两种角色。全部事件置于时刻 \(t\)、位置 \(\lambda(p,0)\)，偏序取空，令 \(E=\Omega\) 为这些事件的全集，令 \(A\) 为所取选择事件集。
+
+每个时间—槽的背景正负事件数相等，所以 \(W_X(t,\lambda(p,j))=0\)；因此所有前缀都逐槽平衡，且 \(X\in\mathcal C_P^{\rm pb}\)。选择电荷在 \((t,p)\) 恰为 \(c(t,p)\)，其余槽为零，故 \(\delta_X=c\)。于是 \(\Theta_P^{\rm pf}\) 满射，结论成立。证毕。
+
+**定义 200（终端化、循环核与时间零点分裂）。** 在 \(\mathsf J_P\) 上定义终端化同态
+\[
+\Sigma_P:\mathsf J_P\longrightarrow\mathbb Z^P,
+\qquad
+(\Sigma_Pc)(p)=\sum_{t\in\mathbb Z}c(t,p),
+\]
+其核记为
+\[
+\mathsf K_P=\ker\Sigma_P.
+\]
+定义时间零点嵌入
+\[
+\iota_P:\mathbb Z^P\longrightarrow\mathsf J_P,
+\qquad
+(\iota_Pz)(t,p)=
+\begin{cases}z(p),&t=0,\\0,&t\ne0.
+\end{cases}
+\]
+对 \(c\in\mathsf J_P\) 定义其零点规范循环部分
+\[
+c^{\circ}=c-\iota_P(\Sigma_Pc).
+\]
+
+**定理 201（时间历史到终端寄存器的短正合列）。** 有
+\[
+0\longrightarrow\mathsf K_P
+\longrightarrow\mathsf J_P
+\xrightarrow{\ \Sigma_P\ }\mathbb Z^P
+\longrightarrow0,
+\tag{Z-TEMPORAL-EXACT}
+\]
+且 \(\Sigma_P\circ\iota_P=\operatorname{id}_{\mathbb Z^P}\)。每个 \(c\in\mathsf J_P\) 有唯一分解
+\[
+c=\iota_P(\Sigma_Pc)+c^{\circ},
+\qquad c^{\circ}\in\mathsf K_P.
+\tag{Z-TEMPORAL-SPLIT}
+\]
+令
+\[
+\mathfrak T_P:\mathcal H_P\longrightarrow\mathbb Z^P,
+\qquad
+\mathfrak T_P([X])=\mathbf a_X^\infty.
+\]
+则 \(\mathfrak T_P\) 是满射同态，其核与 \(\mathsf K_P\) 同构，并且定理 194 的终端商给出满射
+\[
+\mathcal H_P\xrightarrow{\ [X]_{\equiv_P^{\rm pf}}\mapsto[X]_{\equiv_P}\ }
+\mathcal C_P^{\rm tb}/\equiv_P
+\xrightarrow{\ \Theta_P\ }\mathbb Z^P
+\]
+其复合正是 \(\mathfrak T_P\)。因此前缀历史商是终端寄存器群的一个分裂扩张，终端观察遗忘的恰好是零总和时间循环 \(\mathsf K_P\)。
+
+**证明。** 对逐点有限支撑表，\(\Sigma_P\) 是加法同态；时间零点只有一个非零时刻，故 \(\Sigma_P(\iota_Pz)=z\)，从而满射并得到短正合列。由定义
+\[
+\Sigma_P(c^{\circ})=\Sigma_Pc-\Sigma_P(\iota_P\Sigma_Pc)=0,
+\]
+所以分解存在。若 \(c=\iota_Pz+k=\iota_Pz'+k'\) 且 \(k,k'\in\mathsf K_P\)，应用 \(\Sigma_P\) 得 \(z=z'\)，再得 \(k=k'\)，故唯一。
+
+由定理 197，\(\mathbf a_X^\infty=\Sigma_P(\delta_X)\)，所以 \(\mathfrak T_P=\Sigma_P\circ\Theta_P^{\rm pf}\)。定理 199 给出前者为满射群同态，且其核经 \(\Theta_P^{\rm pf}\) 恰对应 \(\mathsf K_P\)。前缀等价蕴含终端表相同，故到定义 193 的终端商的映射良定义；定理 192 对任意 \(z\in\mathbb Z^P\) 给出前缀逐槽平衡代表，故该映射满射。定理 194 将其终端商识别为 \(\mathbb Z^P\)，并且复合读数为 \(\mathfrak T_P\)。时间零点嵌入给出该扩张的分裂，核的元素正是终端总和为零而前缀可能非零的时间循环。证毕。
+
+**定义 202（时间增量表的全 Zeckendorf 呈现）。** 令
+\[
+I_{P,Z}=\mathsf Z_{\mathbb Z}\times\operatorname{NatZ}[P],
+\qquad
+\mathsf J_{P,Z}=\mathsf Z_{\mathbb Z}^{(I_{P,Z})},
+\]
+其中上标表示有限支撑函数。对 \(d,e\in\mathsf J_{P,Z}\) 定义逐点运算
+\[
+(d\boxplus_Z^{\rm pt}e)(u,v)=d(u,v)\oplus_Ze(u,v),
+\qquad
+(\ominus_Z^{\rm pt}d)(u,v)=\ominus_Zd(u,v).
+\]
+定义
+\[
+\operatorname{TCode}_P:\mathsf J_P\longrightarrow\mathsf J_{P,Z}
+\]
+为
+\[
+\operatorname{TCode}_P(c)(\operatorname{scode}(t),\operatorname{NatZ}(p))
+ =\operatorname{scode}(c(t,p))
+\quad(t\in\mathbb Z,p\in P),
+\tag{Z-TEMPORAL-CODE}
+\]
+并令其在 \(I_{P,Z}\) 的其余位置取 \(0_Z\)。定义逆映射
+\[
+\operatorname{TDec}_P(d)(t,p)
+ =\operatorname{ival}\bigl(d(\operatorname{scode}(t),\operatorname{NatZ}(p))\bigr).
+\]
+
+**定理 203（时间群、平移与全 Zeckendorf 运输）。** \(\operatorname{TCode}_P\) 与 \(\operatorname{TDec}_P\) 互为逆，并且
+\[
+\operatorname{TCode}_P(c+c')
+ =\operatorname{TCode}_P(c)\boxplus_Z^{\rm pt}\operatorname{TCode}_P(c'),
+\qquad
+\operatorname{TCode}_P(-c)=\ominus_Z^{\rm pt}\operatorname{TCode}_P(c).
+\tag{Z-TEMPORAL-TRANSPORT}
+\]
+对 \(h\in\mathbb Z\) 定义时间平移
+\[
+(\tau_hc)(t,p)=c(t-h,p).
+\]
+则 \(\tau_h\) 是 \(\mathsf J_P\) 的群自同构，满足
+\[
+\Sigma_P(\tau_hc)=\Sigma_P(c),
+\qquad
+\mathsf I_P(\tau_hc)(T,p)=\mathsf I_P(c)(T-h,p).
+\tag{Z-TEMPORAL-SHIFT}
+\]
+其 Zeckendorf 呈现满足
+\[
+\operatorname{TCode}_P(\tau_hc)(\operatorname{scode}(t),\operatorname{NatZ}(p))
+ =\operatorname{TCode}_P(c)(\operatorname{scode}(t-h),\operatorname{NatZ}(p)).
+\]
+终端化在 Zeckendorf 侧由有限次 \(\oplus_Z\) 与 \(\operatorname{scode}\) 给出，故短正合列 (Z-TEMPORAL-EXACT) 在该呈现下保持。
+
+**证明。** 定理 113–114 给出 \(\operatorname{scode}\) 与 \(\operatorname{ival}\) 的互逆性。时间码 \(\operatorname{scode}(t)\) 与寄存器码 \(\operatorname{NatZ}(p)\) 均为单射，故 \(\operatorname{TCode}_P\) 的每个位置唯一，且有限支撑相互保持；逐点应用
+\[
+\operatorname{scode}(m+n)=\operatorname{scode}(m)\oplus_Z\operatorname{scode}(n)
+\]
+得到两式及双射性。
+
+平移只重排有限支撑的时间坐标，故保持有限支撑、加法及逆元。对终端和作变量替换 \(s=t-h\) 得第一式；对前缀和作同一替换得第二式。把 \(c(t-h,p)\) 代入 (Z-TEMPORAL-CODE) 即得编码侧平移公式。终端化只对有限非零时间项求和，定理 114 把该有限整数和运输为带符号 Zeckendorf 加法；因此 \(\Sigma_P\)、\(\iota_P\) 及其核、像和分裂关系全部保持。证毕。
+
+**定理 204（终端商的非平凡时间盲核）。** 若 \(P\ne\varnothing\)，取 \(p\in P\) 及整数 \(t_0<t_1\)，定义 \(c\in\mathsf J_P\) 为
+\[
+c(t,p')=
+\begin{cases}
+1,&(t,p')=(t_0,p),\\
+-1,&(t,p')=(t_1,p),\\
+0,&\text{其他}.
+\end{cases}
+\]
+则 \(c\ne0\)、\(\Sigma_P(c)=0\)，但
+\[
+\mathsf I_P(c)(T,p)=1
+\quad(t_0\le T<t_1).
+\]
+存在 \(X,Y\in\mathcal C_P^{\rm pb}\) 使
+\[
+\Theta_P^{\rm pf}([X])=c,
+\qquad
+\Theta_P^{\rm pf}([Y])=0,
+\]
+从而
+\[
+[X]_{\equiv_P}=[Y]_{\equiv_P},
+\qquad
+[X]_{\equiv_P^{\rm pf}}\ne[Y]_{\equiv_P^{\rm pf}}.
+\tag{Z-TEMPORAL-BLIND-KERNEL}
+\]
+因此任何只依赖终端逐槽观察的量都不能恢复该时间循环或其非零前缀。
+
+**证明。** \(c\) 的两个非零时间项相消，故 \(\Sigma_P(c)=0\)，而在 \(t_0\le T<t_1\) 的前缀中只包含第一项，故前缀值为一。定理 199 的满射性分别给出 \(X\) 与 \(Y\)。定理 201 给出
+\[
+\mathfrak T_P([X])=\Sigma_P(c)=0=\mathfrak T_P([Y]),
+\]
+故二者在定义 193 的终端商中相等；但其前缀增量表分别为 \(c\) 与零，按定义 198 不前缀等价。若终端观察能够恢复该循环，则这两个终端相等而前缀不同的类将被区分，矛盾。证毕。
+
+**定理 205（前缀时间扩充的 ZFC 定义性保守性）。** 在 ZFC 中，定义 196–204 的有限支撑表、前缀积分、终端化、商关系、平移、Zeckendorf 编码以及短正合列中的全部对象均由集合图和一阶可定义类图给出。把这些定义加入定理 78 的 Zeckendorf 语言后，所得扩充对原集合论语言仍为定义性保守扩充；对任意 ZFC 模型，其内部前缀商、终端商和 (Z-TEMPORAL-EXACT) 的内部解释分别与上述定义相同。
+
+**证明。** 对固定有限 \(P\)，\(\mathbb Z\times P\) 的有限支撑函数由有限序列、定义域和函数图定义；其逐点加法、有限时间求和及核谓词由替代、分离和整数算术定义。情境的 \(Z_X\)、\(W_X\) 是定义 1 的有限和，故 \(\delta_X\)、\(\mathbf a_X^T\)、\(\mathbf a_X^\infty\) 由同样的图得到。前缀等价和终端等价是这些可定义函数的核；商映射以等价类关系的定义图表示，不需选择代表。
+
+\(\operatorname{scode}\)、\(\operatorname{ival}\)、\(\operatorname{NatZ}\) 和逐点带符号运算由定义 69–70、113–114 给出集合图，时间平移只是有限函数图的重索引。定理 76 对含这些谓词的任意有限公式逐项给出 \(\in_Z\) 翻译；定理 199–204 的证明只使用这些图、有限和以及 ZFC 的基本逻辑。因此扩充证明可逐行消去新符号，若其结论不含新符号便得到 ZFC 证明。给定任意 \(\mathfrak M\models\mathrm{ZFC}\)，同一消去和内部替代构造在 \(\mathfrak M\) 内成立，故其内部商和正合列满足相同等式。证毕。
+
+**定义 206（三轴槽历史群与两级收缩）。** 对有限素数集 \(P\)，定义三轴有限支撑群
+\[
+\mathsf Q_P=\mathbb Z^{(\mathbb Z\times P\times\omega)}.
+\]
+其一个基元记为 \(e_{t,p,j}\)，在 \((t,p,j)\) 处取一、其余处取零。对 \(q\in\mathsf Q_P\) 定义槽到寄存器的 Fibonacci 加权收缩
+\[
+\mathsf V_P(q)(t,p)=\sum_{j\ge0}G_jq(t,p,j),
+\qquad
+\mathsf V_P:\mathsf Q_P\longrightarrow\mathsf J_P,
+\tag{Z-SLOT-TO-REGISTER}
+\]
+以及无权槽计数
+\[
+\mathsf U_P(q)(t,p)=\sum_{j\ge0}q(t,p,j).
+\]
+终端收缩定义为
+\[
+\mathsf C_P=\Sigma_P\circ\mathsf V_P:\mathsf Q_P\longrightarrow\mathbb Z^P.
+\tag{Z-SLOT-TO-TERM}
+\]
+于是 \(t\)、\(p\)、\(j\) 分别是时间轴、素数寄存器轴和寄存器内部的 Zeckendorf 位置轴；\(\mathsf V_P\) 忘却位置轴的原始表示而保留 Fibonacci 数值，\(\mathsf C_P\) 再忘却时间轴而保留终端寄存器指数。
+
+**定理 207（三轴群的精确核与 5040 型进位关系）。** \(\mathsf V_P\) 与 \(\mathsf C_P\) 都是满射群同态。定义
+\[
+\mathsf s_P(c)(t,p,j)=
+\begin{cases}c(t,p),&j=0,\\0,&j\ne0,\end{cases}
+\qquad(c\in\mathsf J_P),
+\]
+则 \(\mathsf V_P\circ\mathsf s_P=\operatorname{id}_{\mathsf J_P}\)，并且
+\[
+0\longrightarrow\ker\mathsf V_P\longrightarrow\mathsf Q_P
+\xrightarrow{\ \mathsf V_P\ }\mathsf J_P\longrightarrow0
+\tag{Z-SLOT-EXACT}
+\]
+为短正合列。进一步，
+\[
+\ker\mathsf V_P
+=\left\langle
+e_{t,p,1}-2e_{t,p,0},
+e_{t,p,j+2}-e_{t,p,j+1}-e_{t,p,j}
+:t\in\mathbb Z,\ p\in P,\ j\in\omega
+\right\rangle_{\mathbb Z}.
+\tag{Z-SLOT-KERNEL}
+\]
+令
+\[
+\mathsf L_P=\left\langle e_{t,p,0}-e_{0,p,0}:t\ne0,\ p\in P\right\rangle_{\mathbb Z}.
+\]
+则
+\[
+\ker\mathsf C_P=\ker\mathsf V_P\oplus\mathsf L_P,
+\qquad
+\mathsf Q_P/\ker\mathsf C_P\cong\mathbb Z^P.
+\tag{Z-THREE-AXIS-QUOTIENT}
+\]
+
+**证明。** 有限支撑使 \(\mathsf V_P\) 和 \(\mathsf C_P\) 的定义都是有限整数和，故为群同态。对任意 \(c\in\mathsf J_P\)，\(\mathsf s_P(c)\) 只有 \(j=0\) 一层，且 \(G_0=1\)，所以 \(\mathsf V_P(\mathsf s_P(c))=c\)，得到 \(\mathsf V_P\) 满射；\(\Sigma_P\) 的满射性由定义 200 给出，故 \(\mathsf C_P\) 也满射。
+
+先固定 \(t,p\)。Fibonacci 递推给出
+\[
+G_1=2G_0,\qquad G_{j+2}=G_{j+1}+G_j.
+\]
+所以 (Z-SLOT-KERNEL) 中列出的每个生成元均被 \(\mathsf V_P\) 送到零。反向取任意 \(q\in\ker\mathsf V_P\)，逐次用 \(e_{j+2}=e_{j+1}+e_j\) 将其在每个固定的 \((t,p)\) 上化为 \(a_{t,p}e_{t,p,0}+b_{t,p}e_{t,p,1}\)。其加权值为 \(a_{t,p}+2b_{t,p}\)，对每个 \((t,p)\) 的零值条件给出 \(a_{t,p}=-2b_{t,p}\)，该余项是 \(b_{t,p}(e_{t,p,1}-2e_{t,p,0})\)。有限支撑保证只出现有限多个生成元，遂得核的反向包含。
+
+若 \(q\in\ker\mathsf C_P\)，置 \(c=\mathsf V_P(q)\in\ker\Sigma_P\)。有限支撑且 \(\Sigma_P(c)=0\) 给出
+\[
+c=\sum_{t\ne0,p}c(t,p)\bigl(e_{t,p}-e_{0,p}\bigr)
+\quad\text{于 }\mathsf J_P,
+\]
+其中 \(e_{t,p}\) 是 \((t,p)\) 处的单位表。其 \(\mathsf s_P\) 的提升属于 \(\mathsf L_P\)，从 \(q\) 中减去该提升后落在 \(\ker\mathsf V_P\)。故 \(\ker\mathsf C_P=\ker\mathsf V_P+\mathsf L_P\)。若某元素同时属于两者，应用 \(\mathsf V_P\) 得到它在 \(\mathsf J_P\) 中既为零又是由 \(j=0\) 的时间循环表示的表，故其所有系数为零；和为直和。商同构由第一同构定理及 \(\mathsf C_P\) 的满射性得到。证毕。
+
+**定义 208（全素数寄存器幺半群及其 Zeckendorf 呈现）。** 令
+\[
+\mathsf E_{\rm Pr}=\mathbb N^{(\operatorname{Pr})},
+\qquad
+(a\boxplus b)(p)=a(p)+b(p),
+\]
+为所有素数上的有限支撑指数幺半群。定义全局素数读数与局部 Zeckendorf 呈现
+\[
+\Pi_{\rm Pr}(a)=\prod_{p\in\operatorname{Pr}}p^{a(p)},
+\qquad
+\operatorname{dig}_{\rm Pr}(a)(p)=\zeta(a(p)).
+\]
+令 \(\mathfrak B\) 为所有有限容量对 \((P,A)\) 的类，并定义
+\[
+(P,A)\preceq(P',A')
+\iff P\subseteq P'\ \land\ \forall p\in P\; A(p)\le A'(p).
+\]
+若 \((P,A)\preceq(P',A')\)，定义零扩展嵌入
+\[
+\jmath_{(P,A)}^{(P',A')}:S(P,A)\longrightarrow S(P',A')
+\]
+为在 \(P\) 上保持坐标、在 \(P'\setminus P\) 上取零。
+
+**定理 209（全素数寄存器的唯一性与有限容量盒的并）。** \(\Pi_{\rm Pr}\) 是交换幺半群同构
+\[
+\Pi_{\rm Pr}:\mathsf E_{\rm Pr}\xrightarrow{\ \cong\ }\mathbb N_{>0},
+\tag{Z-UNIVERSAL-REGISTERS}
+\]
+且 \(\operatorname{dig}_{\rm Pr}\) 是 \(\mathsf E_{\rm Pr}\) 与有限支撑局部 Zeckendorf 表
+\[
+\mathsf W_Z^{(\operatorname{Pr})}
+=\{d:\operatorname{Pr}\to\mathsf W_Z:
+\operatorname{supp}(d)\text{ 有限}\}
+\]
+之间的幺半群同构。每个 \(a\in\mathsf E_{\rm Pr}\) 都存在有限容量对 \((P,A)\) 使 \(a\) 是 \(S(P,A)\) 的零扩展像中的元素，并且
+\[
+\mathsf E_{\rm Pr}
+=\bigcup_{(P,A)\in\mathfrak B}
+\jmath_{(P,A)}^{\rm Pr}[S(P,A)]
+\tag{Z-BOX-COVER}
+\]
+在所有零扩展嵌入下相容。于是，有限寄存器盒的并不是另一种算术，而是全素数寄存器算术的有限子结构。
+
+**证明。** 对 \(a,b\in\mathsf E_{\rm Pr}\)，有限乘积的指数律给出
+\[
+\Pi_{\rm Pr}(a\boxplus b)=\Pi_{\rm Pr}(a)\Pi_{\rm Pr}(b).
+\]
+基本算术定理给出每个正整数的有限唯一素因子分解，故 \(\Pi_{\rm Pr}\) 满射且单射，得到 (Z-UNIVERSAL-REGISTERS)。定理 70 逐坐标给出 \(\zeta\) 与 \(\operatorname{val}\) 的互逆及逐行加法运输，故 \(\operatorname{dig}_{\rm Pr}\) 是幺半群同构。
+
+给定 \(a\)，取有限支撑 \(P=\operatorname{supp}(a)\)，令 \(A=a|_P\)；若 \(P\) 为空，取任意有限空容量对。则 \(a\) 在该盒中，故得到 (Z-BOX-COVER)。若两个盒有共同扩展，零扩展在共同坐标上恒等、在新增坐标上取零，所以嵌入复合相等；这证明并集的相容性。证毕。
+
+**定义 210（槽级素数乘法字符）。** 对有限素数集 \(P\)，定义
+\[
+\chi_P:\mathsf Q_P\longrightarrow\mathbb Q_{>0},
+\qquad
+\chi_P(q)=\prod_{t\in\mathbb Z}\prod_{p\in P}
+p^{\sum_{j\ge0}G_jq(t,p,j)}.
+\tag{Z-SLOT-CHARACTER}
+\]
+指数表有限支撑，故该乘积是有限个有理素数幂之积。等价地，
+\[
+\chi_P(q)=\prod_{p\in P}p^{\mathsf C_P(q)(p)}.
+\]
+
+**定理 211（三级收缩与有理素数幂商）。** \(\chi_P\) 是群同态，且
+\[
+\ker\chi_P=\ker\mathsf C_P.
+\tag{Z-CHARACTER-KERNEL}
+\]
+因此
+\[
+\mathsf Q_P/\ker\chi_P
+\xrightarrow{\ \cong\ }
+\left\{\prod_{p\in P}p^{z(p)}:z\in\mathbb Z^P\right\}
+\subseteq\mathbb Q_{>0}
+\]
+是群同构。对任意 \(q,q'\in\mathsf Q_P\)，有
+\[
+\chi_P(q+q')=\chi_P(q)\chi_P(q'),
+\qquad
+\chi_P(-q)=\chi_P(q)^{-1}.
+\]
+所以从三轴槽表到有理读数的全部信息损失恰好由两类生成元组成：定理 207 的局部 Fibonacci 关系，以及定理 201 的时间零点循环。
+
+**证明。** 定义 210 的指数为 \(\mathsf C_P(q)\)，有限指数律直接给出同态式和逆元式。若 \(\chi_P(q)=1\)，唯一素因子分解给出 \(\mathsf C_P(q)(p)=0\) 对每个 \(p\)，故 \(q\in\ker\mathsf C_P\)；反向显然。于是第一同构定理给出商同构，且定理 201、207 分别刻画其核的时间部分与槽位部分。证毕。
+
+**定理 212（5040 的三轴容量角分解）。** 令
+\[
+P_{5040}=(2,3,5,7),\qquad A_{5040}=(4,2,1,1),
+\]
+并令 \(q_{5040}\in\mathsf Q_{P_{5040}}\) 为时刻 \(0\) 的槽表，其非零项为
+\[
+q_{5040}(0,2,2)=1,\quad
+q_{5040}(0,2,0)=1,\quad
+q_{5040}(0,3,1)=1,\quad
+q_{5040}(0,5,0)=1,\quad
+q_{5040}(0,7,0)=1.
+\tag{Z-5040-SLOTS}
+\]
+则
+\[
+\mathsf V_{P_{5040}}(q_{5040})=(4,2,1,1),
+\qquad
+\mathsf C_{P_{5040}}(q_{5040})=(4,2,1,1),
+\]
+且
+\[
+\chi_{P_{5040}}(q_{5040})
+=2^{G_2+G_0}3^{G_1}5^{G_0}7^{G_0}
+=2^4 3^2 5\,7
+=5040.
+\tag{Z-5040-CHARACTER}
+\]
+该槽表有七个可能的局部 Zeckendorf 位置，其中容量角实际占据五个位置；配置状态数为
+\[
+|S(P_{5040},A_{5040})|=(4+1)(2+1)(1+1)(1+1)=60.
+\]
+全局单行 Zeckendorf 表仍为
+\[
+5040=G_2+G_5+G_{11}+G_{13}+G_{17}.
+\]
+
+**证明。** 由 \(G_2=3,G_1=2,G_0=1\)，所列槽表在寄存器 \(2\) 上给 \(3+1=4\)，在寄存器 \(3\) 上给 \(2\)，在寄存器 \(5,7\) 上各给 \(1\)，故两次收缩均得到容量向量。将这些指数代入定义 210 得
+\[
+2^{3+1}3^25^17^1=5040.
+\]
+局部窗口长度由 \(\ell_Z(4),\ell_Z(2),\ell_Z(1),\ell_Z(1)=(3,2,1,1)\) 给出，总长度七；其中 \(4\) 的行占据两位，其余三行各占一位，故实际占据五位。状态数是四个有限链长度的乘积。最后的单行表示及其唯一性由定理 169 给出。证毕。
+
+**定义 213（全素数零扩展与 5040 局部窗口）。** 对有限容量对 \((P,A)\)，定义全素数零扩展
+\[
+\jmath_{(P,A)}^{\rm Pr}:S(P,A)\longrightarrow\mathsf E_{\rm Pr},
+\qquad
+\jmath_{(P,A)}^{\rm Pr}(a)(p)=
+\begin{cases}
+a(p),&p\in P,\\
+0,&p\in\operatorname{Pr}\setminus P.
+\end{cases}
+\]
+对 \(P_{5040},A_{5040}\) 定义其局部窗口
+\[
+\mathsf S_{5040}^{\rm loc}
+=\{(p,j):p\in P_{5040},\ j<\ell_Z(A_{5040}(p))\}.
+\]
+这里“局部位置”只指该容量所需的有限窗口；三轴群 \(\mathsf Q_{P_{5040}}\) 的环境仍允许全部 \(j\in\omega\)。
+
+**定理 214（零扩展相容性与 5040 窗口基数）。** 定义 213 的 \(\jmath_{(P,A)}^{\rm Pr}\) 是单射，并且当
+\[
+(P,A)\preceq(P',A')\preceq(P'',A'')
+\]
+时有
+\[
+\jmath_{(P',A')}^{\rm Pr}\circ
+\jmath_{(P,A)}^{(P',A')}
+=\jmath_{(P,A)}^{\rm Pr}.
+\tag{Z-PR-EXTENSION-COMPATIBILITY}
+\]
+对 5040 配置，
+\[
+|\mathsf S_{5040}^{\rm loc}|
+=\ell_Z(4)+\ell_Z(2)+\ell_Z(1)+\ell_Z(1)=7,
+\]
+且 \(q_{5040}\) 的支撑包含于
+\[
+\{0\}\times\mathsf S_{5040}^{\rm loc}
+\]
+并恰有五个支撑点。因此定理 212 中的“七个可能位置”是容量角所在局部窗口的七个位置，而不是三轴群的全部位置。
+
+**证明。** 若两个有限盒状态的零扩展相等，则在每个 \(p\in P\) 上取值相等，故原状态相等，\(\jmath_{(P,A)}^{\rm Pr}\) 单射。对任意 \(p\)，复合映射在 \(P\) 上连续保持原坐标，在 \(P'\setminus P\) 与 \(\operatorname{Pr}\setminus P'\) 上均取零，故得到 (Z-PR-EXTENSION-COMPATIBILITY)。
+
+定理 169 给出 \(\ell_Z(4)=3,\ell_Z(2)=2,\ell_Z(1)=1\)，所以窗口基数为七。定理 212 的五个非零项的寄存器—位置对分别为
+\[
+(2,2),(2,0),(3,1),(5,0),(7,0),
+\]
+它们均落在上述窗口且互不相同，故支撑恰有五点。其余 \(j\) 属于三轴群的环境位置，但不属于该容量角的局部窗口。证毕。
+
+**定理 215（无权槽数与 Fibonacci 指数的不可混同）。** 取任意 \(p\in P\)，令
+\[
+q_1=2e_{0,p,0},
+\qquad
+q_2=e_{0,p,0}+e_{0,p,1}.
+\]
+则
+\[
+\mathsf U_P(q_1)(0,p)=\mathsf U_P(q_2)(0,p)=2,
+\]
+但
+\[
+\mathsf V_P(q_1)(0,p)=2,
+\qquad
+\mathsf V_P(q_2)(0,p)=3.
+\tag{Z-UNWEIGHTED-WEIGHTED-SEPARATION}
+\]
+所以不存在只由无权槽数 \(\mathsf U_P(q)\) 决定 Fibonacci 寄存器指数 \(\mathsf V_P(q)\) 的函数。对定理 212 的 \(q_{5040}\)，有
+\[
+\sum_{t,p}\mathsf U_{P_{5040}}(q_{5040})(t,p)=5,
+\qquad
+\sum_{p}\mathsf C_{P_{5040}}(q_{5040})(p)=8,
+\]
+而其素数加权读数仍为 \(5040\)。
+
+**证明。** 由 \(G_0=1,G_1=2\)，
+\[
+\mathsf U_P(q_1)(0,p)=2=\mathsf U_P(q_2)(0,p),
+\]
+而
+\[
+\mathsf V_P(q_1)(0,p)=2G_0=2,\qquad
+\mathsf V_P(q_2)(0,p)=G_0+G_1=3.
+\]
+两者无权值相同而加权值不同，故所述函数不存在。定理 212 的 \(q_{5040}\) 恰有五个非零槽项，所以无权总数为五；其四个寄存器指数之和为 \(4+2+1+1=8\)，而定义 210 按寄存器标签取幂给出
+\[
+2^4 3^2 5^1 7^1=5040.
+\]
+因此槽占据数、指数总和与素数加权标量是三个不同的量。证毕。
+
+**定义 216（三轴表的局部规范化与终端规范化）。** 对 \(q\in\mathsf Q_P\) 定义局部规范化表
+\[
+\mathsf N_P^{\rm loc}(q)(t,p)
+ =\operatorname{scode}\!\left(\mathsf V_P(q)(t,p)\right)
+ \in\mathsf Z_{\mathbb Z},
+\]
+以及终端规范化表
+\[
+\mathsf N_P^{\rm term}(q)(p)
+ =\operatorname{scode}\!\left(\mathsf C_P(q)(p)\right).
+\]
+定义局部码提升
+\[
+\mathsf L_P^{\rm loc}(d)(t,p,j)=
+\begin{cases}
+\operatorname{ival}(d(t,p)),&j=0,\\
+0,&j\ne0,
+\end{cases}
+\]
+其中 \(d\in\mathsf Z_{\mathbb Z}^{(\mathbb Z\times P)}\)，以及终端码提升
+\[
+\mathsf L_P^{\rm term}(z)(t,p,j)=
+\begin{cases}
+\operatorname{ival}(z(p)),&t=0,\ j=0,\\
+0,&\text{其他},
+\end{cases}
+\]
+其中 \(z\in(\mathsf Z_{\mathbb Z})^P\)。
+
+**定理 217（两层规范化的唯一性与交换）。** 对任意 \(q,q'\in\mathsf Q_P\)，有
+\[
+\mathsf N_P^{\rm loc}(q)=\mathsf N_P^{\rm loc}(q')
+\iff
+\mathsf V_P(q)=\mathsf V_P(q')
+\iff
+q-q'\in\ker\mathsf V_P,
+\tag{Z-LOCAL-NORMAL-FORM}
+\]
+以及
+\[
+\mathsf N_P^{\rm term}(q)=\mathsf N_P^{\rm term}(q')
+\iff
+\mathsf C_P(q)=\mathsf C_P(q')
+\iff
+q-q'\in\ker\mathsf C_P.
+\tag{Z-TERM-NORMAL-FORM}
+\]
+局部码和终端码均由其提升给出规范截面：
+\[
+\mathsf N_P^{\rm loc}(\mathsf L_P^{\rm loc}(d))=d,
+\qquad
+\mathsf N_P^{\rm term}(\mathsf L_P^{\rm term}(z))=z.
+\]
+并且
+\[
+\mathsf N_P^{\rm term}(q)(p)
+=\operatorname{scode}\!\left(
+\sum_{t\in\mathbb Z}
+\operatorname{ival}\bigl(\mathsf N_P^{\rm loc}(q)(t,p)\bigr)
+\right).
+\tag{Z-NORMALIZE-AGGREGATE}
+\]
+因此先在 \(j\) 轴规范化再沿 \(t\) 轴求和，与直接对全部三轴整数和作一次终端规范化得到同一结果。
+
+**证明。** \(\operatorname{scode}\) 与 \(\operatorname{ival}\) 互为逆。于是局部码相等当且仅当 \(\mathsf V_P(q)(t,p)=\mathsf V_P(q')(t,p)\) 对所有 \((t,p)\) 成立，这等价于 \(q-q'\in\ker\mathsf V_P\)。终端情形同理，使用 \(\mathsf C_P\)。
+
+对任意局部码 \(d\)，\(j=0\) 层的 Fibonacci 权重为 \(G_0=1\)，故
+\[
+\mathsf V_P(\mathsf L_P^{\rm loc}(d))(t,p)
+=\operatorname{ival}(d(t,p)),
+\]
+再用 \(\operatorname{scode}\) 恢复 \(d\)。终端提升的同一计算给出第二个截面式。
+
+最后，有限支撑允许交换 \(t\) 与 \(j\) 的有限求和：
+\[
+\mathsf C_P(q)(p)
+=\sum_t\sum_jG_jq(t,p,j)
+=\sum_t\mathsf V_P(q)(t,p).
+\]
+将每个 \(\mathsf V_P(q)(t,p)\) 用局部码的 \(\operatorname{ival}\) 恢复，再以 \(\operatorname{scode}\) 编码，即得 (Z-NORMALIZE-AGGREGATE)。证毕。
+
+**定义 218（三轴表的终端规范截面）。** 对 \(q\in\mathsf Q_P\) 定义
+\[
+\operatorname{Can}_P(q)=\mathsf L_P^{\rm term}
+\bigl(\mathsf N_P^{\rm term}(q)\bigr).
+\]
+显式地，
+\[
+\operatorname{Can}_P(q)(t,p,j)=
+\begin{cases}
+\mathsf C_P(q)(p),&t=0,\ j=0,\\
+0,&\text{其他}.
+\end{cases}
+\]
+其像记为
+\[
+\mathsf Q_P^{0,0}
+=\{q\in\mathsf Q_P:
+\operatorname{supp}(q)\subseteq\{0\}\times P\times\{0\}\}.
+\]
+
+**定理 219（终端规范截面的幂等性与完备性）。** 对任意 \(q,q'\in\mathsf Q_P\)，
+\[
+\mathsf C_P(\operatorname{Can}_P(q))=\mathsf C_P(q),
+\qquad
+\chi_P(\operatorname{Can}_P(q))=\chi_P(q),
+\tag{Z-CANONICAL-SECTION}
+\]
+\[
+\operatorname{Can}_P(\operatorname{Can}_P(q))=\operatorname{Can}_P(q),
+\]
+以及
+\[
+\operatorname{Can}_P(q)=\operatorname{Can}_P(q')
+\iff
+\mathsf C_P(q)=\mathsf C_P(q')
+\iff
+\chi_P(q)=\chi_P(q').
+\tag{Z-CANONICAL-COMPLETE}
+\]
+\(\operatorname{Can}_P\) 的像恰为 \(\mathsf Q_P^{0,0}\)，并且
+\[
+\mathsf Q_P/\ker\mathsf C_P
+\xrightarrow{\ \cong\ }\mathsf Q_P^{0,0}
+\]
+由 \([q]\mapsto\operatorname{Can}_P(q)\) 给出。
+
+**证明。** \(\operatorname{Can}_P(q)\) 在唯一的 \((t,j)=(0,0)\) 层放置 \(\mathsf C_P(q)(p)\)，所以再次应用 \(\mathsf C_P\) 只取 \(G_0=1\) 并恢复同一向量，得到第一式和幂等性；定义 210 随后给出 \(\chi_P\) 不变。
+
+若两个规范截面相等，则在 \((0,p,0)\) 处比较系数得到 \(\mathsf C_P(q)=\mathsf C_P(q')\)。反向由构造立即成立。由定理 211，终端指数向量相等当且仅当有理素数幂相等，故得到 (Z-CANONICAL-COMPLETE)。每个 \(\mathsf Q_P^{0,0}\) 元素显然是某个 \(\operatorname{Can}_P(q)\) 的像；商映射的核正是 \(\ker\mathsf C_P\)，故第一同构定理给出最后的同构。证毕。
+
+**定义 220（槽指令与寄存器指令）。** 对 \(q\in\mathsf Q_P\)、\(t\in\mathbb Z\)、\(p\in P\)、\(j\in\omega\)，定义正、负槽指令
+\[
+\mathsf I_{t,p,j}^{+}(q)=q+e_{t,p,j},
+\qquad
+\mathsf I_{t,p,j}^{-}(q)=q-e_{t,p,j}.
+\]
+其局部寄存器投影的对应单位变化定义为
+\[
+\mathsf R_{t,p,j}^{\pm}(c)(s,r)
+=c(s,r)\pm
+\begin{cases}
+G_j,&(s,r)=(t,p),\\
+0,&\text{其他}.
+\end{cases}
+\]
+其终端素数读数的对应乘法变化定义为
+\[
+\mathsf P_{p,j}^{\pm}(u)=u\,p^{\pm G_j}
+\quad(u\in\mathbb Q_{>0}).
+\]
+
+**定理 221（槽指令的三级作用）。** 对所有 \(q\in\mathsf Q_P\)，有
+\[
+\mathsf V_P(\mathsf I_{t,p,j}^{\pm}(q))
+=\mathsf R_{t,p,j}^{\pm}(\mathsf V_P(q)),
+\qquad
+\mathsf C_P(\mathsf I_{t,p,j}^{\pm}(q))
+=\mathsf C_P(q)\pm G_j e_p,
+\tag{Z-INSTRUCTION-LEVELS}
+\]
+以及
+\[
+\chi_P(\mathsf I_{t,p,j}^{\pm}(q))
+=\chi_P(q)\,p^{\pm G_j}.
+\tag{Z-INSTRUCTION-CHARACTER}
+\]
+特别地，\(j\) 不是独立的素数指数；它通过 \(G_j\) 产生指数增量 \(G_j\)，而寄存器标签 \(p\) 决定乘法字符 \(p^{G_j}\)。在 5040 的容量角分解中，五个局部槽指令的字符为
+\[
+\bigl(2^{G_2},\,2^{G_0},\,3^{G_1},\,5^{G_0},\,7^{G_0}\bigr)
+=(8,2,9,5,7),
+\]
+其乘积为 \(5040\)。
+
+**证明。** \(\mathsf V_P\) 对基元的作用为
+\[
+\mathsf V_P(e_{t,p,j})(s,r)
+=\begin{cases}
+G_j,&(s,r)=(t,p),\\
+0,&\text{其他},
+\end{cases}
+\]
+故第一式由加法线性性得到；再沿时间求和给出第二式。定义 210 的素数幂指数正是 \(\mathsf C_P(q)(p)\)，所以指数增加 \(\pm G_j\) 时读数乘以 \(p^{\pm G_j}\)。
+
+定理 212 给出的五个位置分别对应 \(j=2,0,1,0,0\)，代入 \(G_2=3,G_1=2,G_0=1\) 得 \((8,2,9,5,7)\)，而
+\[
+8\cdot2\cdot9\cdot5\cdot7=5040.
+\]
+这说明槽指令是三轴对象上的生成元；规范化只改变其表示，不改变其经过 \(\chi_P\) 的素数幂字符。证毕。
+
+**定理 222（规范寄存器指令的表示独立性）。** 设 \(w\) 为有限槽指令词，令 \(\eta_{t,p,j}(w)\in\mathbb Z\) 为其在 \((t,p,j)\) 上的有符号次数。若两个词 \(w,w'\) 满足
+\[
+\sum_{j\ge0}G_j\,\eta_{t,p,j}(w)
+=\sum_{j\ge0}G_j\,\eta_{t,p,j}(w')
+\quad\text{对所有 }(t,p),
+\]
+则它们具有相同的局部寄存器投影；若进一步满足
+\[
+\sum_{t\in\mathbb Z}\sum_{j\ge0}G_j\,\eta_{t,p,j}(w)
+=\sum_{t\in\mathbb Z}\sum_{j\ge0}G_j\,\eta_{t,p,j}(w')
+\quad\text{对所有 }p,
+\]
+则它们具有相同的终端投影。反之，局部投影相同当且仅当两词的差表属于 \(\ker\mathsf V_P\)；终端投影相同当且仅当差表属于 \(\ker\mathsf C_P\)。
+
+**证明。** 对槽指令词逐项应用定理 221 并相加，局部投影的增量恰为所给 Fibonacci 加权和；第一组等式遂给出局部投影相同。终端投影再沿时间求和，第二组等式给出终端投影相同。反向则由同一线性计算得到：局部投影相同当且仅当差表被 \(\mathsf V_P\) 送到零，终端投影相同当且仅当差表被 \(\mathsf C_P\) 送到零。定理 207 和定理 201 分别给出这两个核的局部进位与时间循环结构。证毕。
+
+**定义 223（终端指令类与商中的轴基）。** 令
+\[
+\overline e_p=[e_{0,p,0}]\in\mathsf Q_P/\ker\mathsf C_P
+\quad(p\in P)
+\]
+为时间零点、\(j=0\) 槽的终端指令类。对任意 \(t\in\mathbb Z\)、\(j\in\omega\)，令
+\[
+\overline e_{t,p,j}=[e_{t,p,j}]
+\]
+为一般槽指令类。
+
+**定理 224（终端商的最小轴生成集）。** 对任意 \(t\in\mathbb Z\)、\(p\in P\)、\(j\in\omega\)，有
+\[
+\overline e_{t,p,j}=G_j\,\overline e_p.
+\tag{Z-TERMINAL-INSTRUCTION-REDUCTION}
+\]
+因此
+\[
+\mathsf Q_P/\ker\mathsf C_P
+ =\bigoplus_{p\in P}\mathbb Z\,\overline e_p
+ \cong\mathbb Z^P,
+\tag{Z-TERMINAL-RANK}
+\]
+且 \(\{\overline e_p:p\in P\}\) 是该自由阿贝尔群的基。任何生成该终端商的指令族至少含有 \(|P|\) 个元素；恰由这 \(|P|\) 个轴基元即可生成全部终端指令类。对 5040 配置，终端商的秩为四；容量角的五个局部槽位经过商化后满足
+\[
+\overline e_{0,2,2}=3\overline e_2,\qquad
+\overline e_{0,2,0}=\overline e_2,\qquad
+\overline e_{0,3,1}=2\overline e_3,\qquad
+\overline e_{0,5,0}=\overline e_5,\qquad
+\overline e_{0,7,0}=\overline e_7.
+\]
+
+**证明。** 由定理 207 的局部核生成元，
+\[
+e_{t,p,j+2}-e_{t,p,j+1}-e_{t,p,j}\in\ker\mathsf V_P.
+\]
+在 \(\mathsf Q_P/\ker\mathsf C_P\) 中递推可得
+\[
+[e_{t,p,j}]=G_j[e_{t,p,0}],
+\]
+因为 \(G_0=1,G_1=2\) 且 \(G_{j+2}=G_{j+1}+G_j\)。定理 201 的时间循环给出
+\[
+[e_{t,p,0}]=[e_{0,p,0}]
+\]
+在终端商中成立，于是得到 (Z-TERMINAL-INSTRUCTION-REDUCTION)。
+
+定理 207 与 201 给出
+\[
+\mathsf Q_P/\ker\mathsf C_P\cong\mathbb Z^P,
+\]
+且 \(\overline e_p\) 映到 \(\mathbb Z^P\) 的标准单位向量 \(e_p\)，所以这些类线性无关并生成整个商。任何生成集映到 \(\mathbb Z^P\) 的生成集；自由阿贝尔群的秩为 \(|P|\)，故其基数至少为 \(|P|\)。最后将 \(G_2=3,G_1=2,G_0=1\) 代入定理 212 的五个位置，得到所列五个等式。证毕。
+
+**定理 225（定理 188 的逐时刻正域更正）。** 设 $X\in\mathcal B_\lambda^+$，且背景在所有素数槽上终端逐槽平衡。此处可取包含全部非零槽投影的有限素数集 $P$，在该 $P$ 上使用定义 185。定理 188 的终端结论 $r_X\ge0$、$r_{\mathsf cX}=-r_X\le0$ 成立，但其中以 $r_X=0$ 判定补集仍在正槽域的充分性不成立。正确的全局充要条件为
+$$
+\mathsf cX\in\mathcal B_\lambda^+
+\iff Z_X\equiv0\ \land\ W_X\equiv0,
+$$
+其中恒零是指整个时间—空间函数。若进一步 $X\in\mathcal C_P^{\rm pb}$，则 $W_X\equiv0$，并恢复
+$$
+\mathsf cX\in\mathcal B_\lambda^+\iff r_X=0.
+$$
+
+**证明。** 定义 3 的逐时刻非负性给 $r_X\ge0$；定义 2 的补集分割给 $Z_{\mathsf cX}=W_X-Z_X$，终端逐槽平衡遂给 $r_{\mathsf cX}=-r_X$。这不推出补集逐时刻非负。取任一素数 $p$，在同一位置 $\lambda(p,0)$ 的时刻 $0$ 放一个正事件、时刻 $1$ 放一个负事件，令 $E=\Omega$ 为这两个事件，偏序为空，来源为 $\operatorname{leaf}(0)$，选择为空。事件身份取两个互异的遗传有限标识。此时全局背景和与每个终端槽和均为零，$X\in\mathcal B_\lambda^+$ 且 $r_X=0$，但补集在时刻 $1$ 的该槽电荷为 $-1$，不属于正槽域。
+
+若 $X$ 与 $\mathsf cX$ 都在正槽域，则在每个槽上两者的终端和非负且互为相反数，因而各为零。每个终端和是有限个非负整数之和，所以两者在该槽的每一时刻都为零。槽外两者的逐时刻选择电荷也由定义 3 为零。于是 $Z_X\equiv Z_{\mathsf cX}\equiv0$，再由补集分割得 $W_X\equiv0$。反向若 $Z_X\equiv W_X\equiv0$，则 $Z_{\mathsf cX}\equiv0$；补集保留同一个全局平衡背景，故在正槽域。
+
+在 $\mathcal C_P^{\rm pb}$ 中，逐槽前缀差给
+$$
+W_X(t,\lambda(p,j))=B_X^t(p,j)-B_X^{t-1}(p,j)=0.
+$$
+定义 193 的支撑条件又给槽外 $W_X=0$，故 $W_X\equiv0$。若再有 $r_X=0$，$X$ 的逐时刻非负性使 $Z_X\equiv0$，由已证充要条件得补集在正槽域；必要性由终端互负成立。证毕。
+
+**定理 226（定理 191 的前缀群元与定理 194 的字符类型更正）。** 固定有限素数集 $P$。在定理 191 的终端逐槽平衡及 $r_X\ge0$ 假设下，$a_X=V_P^{\mathbb Z}(r_X)\in\mathbb N^P$ 及该条的终端群元、带符号码和有理读数结论均成立。若再有前缀逐槽平衡，对任意整数 $T$，令 $a_X^T=V_P^{\mathbb Z}(r_X^T)\in\mathbb Z^P$，则补集前缀对应的无条件群元为
+$$
+\Gamma_P^{-1}(-a_X^T)=[(a_X^T)^-,(a_X^T)^+].
+$$
+具体地，
+$$
+\operatorname{sdig}_P(r_{\mathsf cX}^T)
+=\operatorname{sdig}^{\rm gp}_P\bigl([(a_X^T)^-,(a_X^T)^+]\bigr),
+$$
+$$
+\operatorname{Rat}_P(r_{\mathsf cX}^T)
+=\operatorname{Rat}^{\rm gp}_P\bigl([(a_X^T)^-,(a_X^T)^+]\bigr)
+=\operatorname{Rat}_P(r_X^T)^{-1}.
+$$
+仅当 $a_X^T\ge0$ 时，才可把此群元写成 $[0,a_X^T]$。终端非负条件本身不保证该前缀条件。
+
+定理 194 的 $\Theta_P$ 仍是群同构，但其中写作 $\operatorname{Rat}_P\circ\Theta_P$ 的字符应替换为有类型的复合
+$$
+\operatorname{Rat}^{\rm gp}_P\circ\Gamma_P^{-1}\circ\Theta_P:
+\mathcal C_P^{\rm tb}/\equiv_P\longrightarrow\mathbb Q_{>0},
+\qquad
+[X]\longmapsto\operatorname{Rat}_P(r_X).
+$$
+其像为 $P$ 支撑的正有理素数幂群。正子商的自然映射
+$$
+\mathcal C_P^+/\equiv_P^+\longrightarrow\mathcal C_P^{\rm tb}/\equiv_P,
+\qquad [X]_+\longmapsto[X]
+$$
+是单射幺半群映射，经 $\Theta_P$ 的像恰为 $\mathbb N^P$；$P\ne\varnothing$ 时该像不是子群。
+
+**证明。** 定理 187 的终端互负及 $G_j>0$ 分别给 $V_P^{\mathbb Z}(r_{\mathsf cX})=-a_X$ 和 $a_X\ge0$，因此定义 189 的 $[0,a_X]$ 有类型且给终端逆元。前缀逐槽平衡给 $V_P^{\mathbb Z}(r_{\mathsf cX}^T)=-a_X^T$。定理 190 的逆映射是 $\Gamma_P^{-1}(z)=[z^+,z^-]$；代入 $z=-a_X^T$ 得所列群元，定义 185、189 逐坐标给编码与有理读数等式。当 $a_X^T\ge0$ 时正负部分分别为 $a_X^T,0$；否则 $a_X^T$ 不是 $\mathsf E(P)$ 的元素，$[0,a_X^T]$ 越出定义 189 的域。
+
+若 $P\ne\varnothing$，取 $p\in P$，在时刻 $0,1$ 的 $\lambda(p,0)$ 各放一对互异正负事件，令 $E=\Omega$，偏序为空，来源均为 $\operatorname{leaf}(0)$。时刻 $0$ 只选负事件，时刻 $1$ 只选正事件。背景逐单元为零，$r_X=0$，但 $a_X^0(p)=-1$。这证明定理 191 的无条件前缀替换断言失效；$P=\varnothing$ 时所有向量为空，前缀条件自动成立。
+
+为补足定理 194、195 在带符号域中对定理 6 的引用，直接使用定义 2：带互异标签的并集在每个 $(t,y)$ 上给
+$$
+W_{X\boxplus Y}=W_X+W_Y,\qquad Z_{X\boxplus Y}=Z_X+Z_Y.
+$$
+这不使用非负性。故 $\mathcal C_P^{\rm tb}$ 对并行封闭，终端加权值相加；补集保留背景及支撑并使终端槽表取负。$\Theta_P$ 的良定义和单射性由定义 193 成立。任意 $z\in\mathbb Z^P$ 可用定理 192 实现槽表 $r(p,0)=z(p)$、其余为零，故 $\Theta_P$ 满射，群运算由 $\mathbb Z^P$ 运输。这样同时补足定理 195 的带符号并行证明，而不将只在正域陈述的定理 6 越域使用。
+
+定义 185 的 $\operatorname{Rat}_P$ 以槽表为自变量，定义 189 的 $\Gamma_P$ 则以群完成元素为自变量。对 $z=\Theta_P([X])$，定理 190 给
+$$
+\operatorname{Rat}^{\rm gp}_P(\Gamma_P^{-1}(z))
+=\prod_{p\in P}p^{z(p)}
+=\operatorname{Rat}_P(r_X),
+$$
+并由唯一素因子分解得到到所述像的同构。正子商的关系是同一关系的限制，故自然映射单射且保并行；非负性与定理 192 的非负实现给像恰为 $\mathbb N^P$。若 $p\in P$，标准单位向量 $e_p$ 在像中，而 $-e_p$ 不在像中，故不是子群。证毕。
+
+**定义 227（保留 Fibonacci 权重的时间剖面）。** 固定有限素数集 $P$，复用定义 185、193、196、198、200、206 的槽表、支撑域、时间群与求和映射。对 $X\in\mathcal C_P^{\rm tb}$ 定义
+$$
+q_X(t,p,j)=Z_X(t,\lambda(p,j)),\qquad q_X\in\mathsf Q_P,
+$$
+$$
+\delta_X^G=\mathsf V_P(q_X),\qquad
+\mathbf a_X^{G,T}=\mathsf I_P(\delta_X^G)(T,-),\qquad
+\mathbf a_X^{G,\infty}=\Sigma_P(\delta_X^G).
+$$
+在 $\mathcal C_P^{\rm pb}$ 上定义
+$$
+X\equiv_P^{G,\rm pf}Y\iff\delta_X^G=\delta_Y^G,
+\qquad
+\mathcal H_P^G=\mathcal C_P^{\rm pb}/\equiv_P^{G,\rm pf}.
+$$
+这些是加权剖面；定义 196 的 $\delta_X=\mathsf U_P(q_X)$ 及 $\mathbf a_X^T,\mathbf a_X^\infty$ 仍保留其无权含义。
+
+**定理 228（加权剖面的积分、差分、并行与补集）。** 对 $X\in\mathcal C_P^{\rm tb}$ 及 $T\in\mathbb Z$，有
+$$
+\mathbf a_X^{G,T}=V_P^{\mathbb Z}(r_X^T),\qquad
+\mathbf a_X^{G,\infty}=V_P^{\mathbb Z}(r_X)=\mathsf C_P(q_X),
+$$
+$$
+\delta_X^G(t,p)=\mathbf a_X^{G,t}(p)-\mathbf a_X^{G,t-1}(p).
+$$
+因此两个加权剖面的全部前缀相等当且仅当其 $\delta^G$ 相等。对 $X,Y\in\mathcal C_P^{\rm tb}$，并行满足
+$$
+q_{X\boxplus Y}=q_X+q_Y,\qquad
+\delta_{X\boxplus Y}^G=\delta_X^G+\delta_Y^G,\qquad
+\mathbf a_{X\boxplus Y}^{G,T}=\mathbf a_X^{G,T}+\mathbf a_Y^{G,T},
+$$
+终端式同样成立。在 $M_X<m_Y$ 的定义域内，$\triangleright$ 满足同样的带符号等式。若 $X\in\mathcal C_P^{\rm pb}$，则 $\mathsf cX\in\mathcal C_P^{\rm pb}$ 且
+$$
+q_{\mathsf cX}=-q_X,\qquad
+\delta_{\mathsf cX}^G=-\delta_X^G,\qquad
+\mathbf a_{\mathsf cX}^{G,T}=-\mathbf a_X^{G,T},\qquad
+\mathbf a_{\mathsf cX}^{G,\infty}=-\mathbf a_X^{G,\infty}.
+$$
+若仅终端逐槽平衡，则终端负号式仍成立。
+
+**证明。** 选择集有限，故下式换序涉及的非零项有限，并且每项始终保留 $G_j$：
+$$
+\begin{aligned}
+\mathbf a_X^{G,T}(p)
+&=\sum_{t\le T}\sum_jG_jZ_X(t,\lambda(p,j))\\
+&=\sum_jG_j\sum_{t\le T}Z_X(t,\lambda(p,j))
+=V_P^{\mathbb Z}(r_X^T)(p).
+\end{aligned}
+$$
+将时间范围改为全部整数即得终端式。相邻前缀相减只留下时刻 $t$ 的项，得差分式；其正反两向分别给全部前缀与增量相等的等价。
+
+定义 2 的带标签并集逐单元复制事件的符号和，直接给 $q_{X\boxplus Y}=q_X+q_Y$，不要求系数非负。它还使背景相加，故终端平衡、槽支撑及在适用时的前缀平衡均封闭。$\triangleright$ 在全档案时间守卫内只多加偏序边，不改变时间、位置、符号和选择，所以同一计算适用。对 $q$ 应用 $\mathsf V_P$、$\mathsf I_P$、$\Sigma_P$ 的有限和可加性，得到全部并行和时间复合等式。
+
+前缀逐槽平衡由相邻背景前缀之差给槽上 $W_X=0$，定义 193 再给槽外为零。因此定义 2 的补集分割给 $Z_{\mathsf cX}=-Z_X$；补集背景不变，故仍在 $\mathcal C_P^{\rm pb}$。逐槽限制及上述线性映射给全部负号式。仅有终端逐槽平衡时，定理 187 给 $r_{\mathsf cX}=-r_X$，应用 $V_P^{\mathbb Z}$ 即得终端负号。证毕。
+
+**定理 229（加权时间商到终端商的自然分裂）。** 并行与补集在 $\mathcal H_P^G$ 上分别诱导加法与加法逆，且
+$$
+\Theta_P^{G,\rm pf}:\mathcal H_P^G\xrightarrow{\ \cong\ }\mathsf J_P,
+\qquad [X]\longmapsto\delta_X^G
+$$
+是群同构。自然映射
+$$
+\pi_P^G:\mathcal H_P^G\longrightarrow\mathcal C_P^{\rm tb}/\equiv_P,
+\qquad [X]_{\equiv_P^{G,\rm pf}}\longmapsto[X]_{\equiv_P}
+$$
+是满射群同态，并满足
+$$
+\Theta_P\circ\pi_P^G=\Sigma_P\circ\Theta_P^{G,\rm pf}.
+$$
+令 $\mathsf K_P,\iota_P$ 仍如定义 200，则有分裂短正合列
+$$
+0\longrightarrow\mathsf K_P
+\xrightarrow{\ k\mapsto(\Theta_P^{G,\rm pf})^{-1}(k)\ }
+\mathcal H_P^G\xrightarrow{\ \pi_P^G\ }
+\mathcal C_P^{\rm tb}/\equiv_P\longrightarrow0,
+$$
+其截面为
+$$
+(\Theta_P^{G,\rm pf})^{-1}\circ\iota_P\circ\Theta_P.
+$$
+特别地 $\ker\pi_P^G\cong\mathsf K_P$，且 $\mathcal H_P^G\cong\mathsf K_P\oplus\mathbb Z^P$。
+
+**证明。** 定义 227 的相等关系核是等价关系。定理 228 给并行与补集对该关系相容；$\Theta_P^{G,\rm pf}$ 按定义单射。为证满射，给定任意 $c\in\mathsf J_P$，对每个 $c(t,p)\ne0$ 放置 $|c(t,p)|$ 对互异正负事件，时间为 $t$，位置为 $\lambda(p,0)$。每对只选择符号为 $\operatorname{sgn}(c(t,p))$ 的事件；来源取 $\operatorname{leaf}(0)$，身份用有限元组的遗传有限编码区分。令 $E=\Omega$ 为全部事件，偏序为空。有限支撑保证事件总数有限。每对背景电荷为零，故构造所得 $X_c$ 在 $\mathcal C_P^{\rm pb}$，并且
+$$
+q_{X_c}=\mathsf s_P(c),\qquad
+\delta_{X_c}^G=c,
+$$
+其中 $\mathsf s_P$ 是定理 207 已有的 $j=0$ 截面，$G_0=1$。$c=0$ 时取空档案。故映射满射，群公理从 $\mathsf J_P$ 运输成立。
+
+若 $\delta_X^G=\delta_Y^G$，定理 228 给 $V_P^{\mathbb Z}(r_X)=V_P^{\mathbb Z}(r_Y)$，所以 $\pi_P^G$ 良定义。此处只推出加权终端相等，不推出原始槽表相同。并行等式给同态性。对任意终端向量 $z$，上述构造取 $c=\iota_Pz$ 即得终端向量为 $z$ 的代表，故 $\pi_P^G$ 满射。复合等式由定理 228 的终端式逐代表成立。
+
+第 200–201 条的抽象求和分裂满足 $\Sigma_P\iota_P=\operatorname{id}$，且每个 $c$ 唯一写成
+$$
+c=\iota_P(\Sigma_Pc)+\bigl(c-\iota_P(\Sigma_Pc)\bigr),
+\qquad c-\iota_P(\Sigma_Pc)\in\mathsf K_P.
+$$
+经两个已证同构运输即得短正合列、截面和核；将该唯一分解拉回 $\mathcal H_P^G$ 即得直和。这仅使用定理 201 的抽象 $\Sigma_P$ 分裂。$P=\varnothing$ 时各观察群均为零群，同一构造与等式仍成立。证毕。
+
+**定理 230（无权与加权时间关系的边界及旧断言的替代）。** 定义 196 的无权增量及其无权前缀积分保留；该条把它们分别等同于 $V_P^{\mathbb Z}(r_X^T)$ 和 $V_P^{\mathbb Z}(r_X)$ 的两个“等价地”公式，一般失效。定理 197 证明中换序后删除 $G_j$ 的等号也失效。它们的加权替代是定义 227 与定理 228。
+
+定理 197 原有的无权积分、差分、并行及前缀平衡补集公式，定义 198 与定理 199 的无权商 $\mathcal H_P\cong\mathsf J_P$，第 200–201 条的抽象 $\Sigma_P$ 分裂及无权同态 $\mathfrak T_P=\Sigma_P\circ\Theta_P^{\rm pf}$，定义 202 与定理 203 的抽象时间编码、平移结论仍成立。但若 $P\ne\varnothing$，定义 198 的关系 $\equiv_P^{\rm pf}$ 与定义 227 的关系 $\equiv_P^{G,\rm pf}$ 互不包含，定理 201 中以同一代表写出的箭头
+$$
+[X]_{\equiv_P^{\rm pf}}\longmapsto[X]_{\equiv_P}
+$$
+不良定义，因而不能用该箭头解释加权终端化。定理 229 给出有效替代。
+
+定理 204 的时间盲核存在性可用明确的 $j=0$ 代表恢复；不能由任意无权代表具有给定的 $\delta_X$ 推断其加权终端。定理 212 的第一次收缩则应作如下类型更正：
+$$
+\mathsf V_{P_{5040}}(q_{5040})=\iota_{P_{5040}}(A_{5040})\in\mathsf J_{P_{5040}},
+\qquad
+\mathsf C_{P_{5040}}(q_{5040})=A_{5040}\in\mathbb Z^{P_{5040}}.
+$$
+
+**证明。** 直接展开无权定义得到
+$$
+\mathbf a_X^T(p)=\sum_{s\le T}\sum_j Z_X(s,\lambda(p,j)),
+\qquad
+\mathbf a_X^\infty(p)=\sum_s\sum_j Z_X(s,\lambda(p,j)).
+$$
+相邻前缀差留下时刻 $t$ 的无权项。定义 2 的并集电荷相加给无权并行式；前缀平衡使 $W_X=0$，再由补集分割得无权负号式。因此定理 197 的这些断言有不依赖错误加权等号的直接证明。定理 229 的 $j=0$ 构造还满足 $\delta_{X_c}=c$，故同样证明无权商的满射性；关系核给单射性，以上加法及负号给定理 199 的群同构。对有限表 $c$，$\Sigma_P\iota_P=\operatorname{id}$ 及定理 229 所用唯一分解直接证明抽象短正合列；所以无权 $\mathfrak T_P$ 仍有核同构于 $\mathsf K_P$。定义 202 的有限支撑取相对于带符号零码 $0_Z$ 的支撑；定义 113 和定理 114 的双射逐坐标给编码互逆及加法运输。时间平移 $t\mapsto t-h$ 是双射，换元给定理 203 的终端不变式与前缀平移式，均不涉及槽权。
+
+设 $p\in P$。把定理 229 的同单元配对构造分别放在指定的 $j$ 上，便可实现以下三个 $\mathsf Q_P$ 表，且所得代表都在 $\mathcal C_P^{\rm pb}$：
+$$
+q_1=e_{0,p,1},\qquad q_0=e_{0,p,0},\qquad q_2=2e_{0,p,0}.
+$$
+$q_1,q_0$ 的无权增量相等，均仅在 $(0,p)$ 取 $1$；其加权增量却分别在该处取 $2,1$。这同时反驳两个无权与加权的等同公式、定理 197 删除权重的等号以及旧自然箭头的良定义性。$q_1,q_2$ 的加权增量相等，均在该处取 $2$，无权增量却为 $1,2$。两组代表证明关系互不包含；后一组也证明加权剖面相同并不强制原始槽表或三轴表相同。$P=\varnothing$ 时不存在这样的反例，两关系均为唯一观察类的关系。
+
+取定理 204 的 $t_0<t_1$ 和表 $c$，令 $X=X_c$ 为定理 229 的 $j=0$ 代表，$Y$ 为空档案。则
+$$
+\delta_X=\delta_X^G=c,\qquad
+\delta_Y=\delta_Y^G=0,\qquad
+\Sigma_P(c)=0,
+$$
+且在 $t_0\le T<t_1$ 时两种前缀在 $p$ 坐标均相差 $1$。定理 228 于是给加权终端相等，而两种前缀关系都区分 $X,Y$，恢复定理 204 的存在性。若把 $X$ 时刻 $t_0$ 的选中正事件改放在 $j=1$，并保留时刻 $t_1$ 的选中负事件在 $j=0$，两者各有同单元反号背景配对，则无权增量仍为 $c$，加权终端却为 $2-1=1$。所以原证明由任意无权代表直接推出同一加权端点的步骤无效。
+
+最后，$q_{5040}$ 仅在时刻 $0$ 非零；按定义 206，在该时刻四个加权寄存器值为 $3+1,2,1,1$，在其它时刻均为零。这正是 $\iota_{P_{5040}}(A_{5040})$；再应用 $\Sigma_{P_{5040}}$ 才得到向量 $A_{5040}$。定理 212 的字符与容量计数不受此类型更正影响。定理 216–224 中仅由 $\mathsf Q_P,\mathsf V_P,\mathsf C_P$ 及抽象 $\Sigma_P$ 分裂推出的群论结论，也不依赖旧无权自然箭头。证毕。
+
+**定义 231（固定寄存器数的窗口容量极值）。** 对整数 $k\ge1$、$B\ge0$，复用定义 9 的窗口及定理 98 的 $\ell_Z$，定义
+$$
+\mathcal C_k(B)=
+\max\left\{\prod_{i=1}^kG_{L_i}:L_i\in\mathbb N,\ \sum_{i=1}^kL_i=B\right\}.
+$$
+这里 $k$ 个寄存器及其字段边界固定，允许 $L_i=0$。对容量 $A_i\in\mathbb N$，要求 $A_i<G_{L_i}$，相应盒的状态数仍是 $Q=\prod_i(A_i+1)$；$G_{L_i}=|\mathcal W_{L_i}|$ 是完整窗口的状态数，不是容量角标量 $M$。
+
+**定理 232（精确窗口容量与全部等号条件）。** 对定义 231 的全部 $k,B$，有
+$$
+\mathcal C_k(B)=
+\begin{cases}
+2^B,&0\le B\le k,\\
+2^{k-1}G_{B-k+1},&B\ge k.
+\end{cases}
+$$
+当 $B\le k$，达到最大值的宽度向量恰为 $B$ 个 $1$ 和 $k-B$ 个 $0$ 的置换；当 $B\ge k$，恰为 $(B-k+1,1,\ldots,1)$ 的置换。$B=k$ 时两者一致。
+
+若 $A_i<G_{L_i}$ 且 $\sum_iL_i\le B$，则
+$$
+\prod_{i=1}^k(A_i+1)\le\mathcal C_k(B).
+$$
+取等当且仅当用满预算 $\sum_iL_i=B$、宽度向量属于上述最大形状，且每个 $A_i=G_{L_i}-1$。
+
+**证明。** 令通常 Fibonacci 数列满足 $F_0=0,F_1=1,F_{n+2}=F_{n+1}+F_n$，则定义 3 的初值和递推给 $G_j=F_{j+2}$。对整数 $a,b\ge1$，先证明恒等式
+$$
+2G_{a+b-1}-G_aG_b=F_{a-1}F_{b-1}.
+$$
+固定 $a$，等号两边作为 $b$ 的序列均满足相同的二阶递推。$b=1$ 时左边是 $2G_a-2G_a=0$；$b=2$ 时左边为
+$$
+2F_{a+3}-3F_{a+2}
+=2F_{a+1}-F_{a+2}
+=F_{a+1}-F_a
+=F_{a-1},
+$$
+对 $a=1$ 最后一步也是 $F_2-F_1=F_0=0$。这与右边的两个初值 $0,F_{a-1}$ 相同，归纳证明恒等式。
+
+每个宽度坐标在 $0$ 与 $B$ 之间，弱组合集合是非空有限集，故最大值存在。若某两个宽度为 $(a,0)$ 且 $a\ge2$，将它们改为 $(a-1,1)$ 保持总宽度，而两因子乘积严格增加，因为
+$$
+2G_{a-1}-G_a=F_{a-1}>0.
+$$
+若两个正宽度 $a,b$ 都至少为 $2$，将 $(a,b)$ 改为 $(a+b-1,1)$ 也保持总宽度；由已证恒等式，两因子乘积增加 $F_{a-1}F_{b-1}>0$。其它因子全为正数，所以这两种替换都严格增加整个乘积。
+
+当 $B\le k$ 时，若某宽度至少为 $2$，必有一个零宽度，否则总宽度至少为 $k+1$。第一种替换排除此形状成为最大值。因此每个宽度为 $0$ 或 $1$，总宽度强制恰有 $B$ 个 $1$，乘积为 $2^B$；所有这样的向量都给此值，所以等号形状完整。
+
+当 $B\ge k$ 时，若有零宽度，就必有宽度至少为 $2$，否则总宽度至多为 $k-1$；第一种替换排除零宽度。第二种替换表明至多一个宽度超过 $1$。总和于是强制宽度为 $(B-k+1,1,\ldots,1)$ 的置换，乘积为 $2^{k-1}G_{B-k+1}$。当 $k=1$，唯一宽度为 $B$，公式给 $G_B$；当 $B=0$，唯一形状全零，乘积为 $1$；当 $B=k$，唯一形状全一，两式均给 $2^k$，故边界均被覆盖。
+
+$G_L$ 严格递增，故把任一最大向量的一个坐标加一，便在预算 $B+1$ 下得到大于 $\mathcal C_k(B)$ 的乘积。因此 $\mathcal C_k(B)$ 对 $B$ 严格递增。若 $b=\sum_iL_i\le B$，整数容量给
+$$
+\prod_i(A_i+1)\le\prod_iG_{L_i}\le\mathcal C_k(b)\le\mathcal C_k(B).
+$$
+第一处取等恰要求每个正因子 $A_i+1=G_{L_i}$，第二处的等号已完整分类，第三处由严格单调性恰要求 $b=B$。这些条件也显然充分。证毕。
+
+**定理 233（容纳目标状态数的最小总宽度）。** 对整数 $k\ge1$、$Q\ge1$，允许选择 $k$ 个非负整数容量及独立 Zeckendorf 窗口，要求其容量盒至少含有 $Q$ 个状态。最小总宽度为
+$$
+\begin{cases}
+\lceil\log_2Q\rceil,&Q\le2^k,\\
+k-1+\ell_Z\!\left(\left\lceil Q/2^{k-1}\right\rceil-1\right),&Q>2^k.
+\end{cases}
+$$
+这里要求的是至少 $Q$ 个状态，不要求容量盒恰有 $Q$ 个状态。
+
+**证明。** 定理 232 说明预算 $B$ 可行当且仅当 $\mathcal C_k(B)\ge Q$：必要性由其上界，充分性由最大宽度形状并令每轴饱和 $A_i=G_{L_i}-1$。这些饱和容量的最小窗口确为 $L_i$，因为 $L_i>0$ 时 $G_{L_i-1}\le G_{L_i}-1$，而 $L_i=0$ 时容量为零。$\mathcal C_k$ 严格递增且无界，所以存在唯一最小预算。
+
+若 $Q\le2^k$，令 $b=\lceil\log_2Q\rceil\le k$，则 $2^b\ge Q$，而 $b>0$ 时 $2^{b-1}<Q$。定理 232 给最小预算 $b$；$Q=1$ 时 $b=0$。若 $Q>2^k$，预算必须大于 $k$。写 $L=B-k+1$，可行性等价于
+$$
+G_L\ge\left\lceil Q/2^{k-1}\right\rceil
+\iff
+\left\lceil Q/2^{k-1}\right\rceil-1<G_L.
+$$
+按定理 98，这样的最小 $L$ 就是所列 $\ell_Z$，且 $Q>2^k$ 保证该 $L\ge2$，与 $B>k$ 相符。对应饱和形状实现该预算，较小预算由严格单调性不够。证毕。
+
+**定理 234（5040 的最小宽度与同宽极大容量的区分）。** 固定 $P=(2,3,5,7)$。容量向量 $A=(4,2,1,1)$ 的状态数为 $60$，容量角标量为 $5040$，其独立 Zeckendorf 窗口的最小总宽度为 $7$。四个寄存器使用总宽度至多 $6$ 时最多容纳 $40$ 个状态，使用总宽度至多 $7$ 时最多容纳 $64$ 个状态。因此容纳至少 $60$ 个状态也至少需要七个独立窗口位置。
+
+宽度七、状态数六十四的饱和容量形状恰为 $(7,1,1,1)$ 的置换。该形状在固定标签 $P$ 上的最小容量角标量为
+$$
+2^7\,3\,5\,7=13440.
+$$
+在状态数增大、容量角标量减小这两个方向上，$(Q,M)=(60,5040)$ 与 $(64,13440)$ 互不支配。任意单射二进制状态码对六十个状态的最小位数仍为六，与上述独立 Zeckendorf 窗口下界属于不同的表示约束。
+
+**证明。** 定理 98 给 $\ell_Z(4)=3$、$\ell_Z(2)=2$、$\ell_Z(1)=1$，故该固定容量向量的最小总宽度为 $3+2+1+1=7$。其状态数和标量分别为 $(4+1)(2+1)(1+1)(1+1)=60$、$2^4 3^2 5\,7=5040$。定理 232 给
+$$
+\mathcal C_4(6)=2^3G_3=40,
+\qquad
+\mathcal C_4(7)=2^3G_4=64.
+$$
+所以总宽六不足，总宽七可由该容量向量实现六十个状态。六十四状态取总等号，定理 232 强制宽度为 $(4,1,1,1)$ 的置换、容量为 $(G_4-1,G_1-1,G_1-1,G_1-1)=(7,1,1,1)$ 的置换。定理 175 的逆序配对将最大容量放在最小素数 $2$ 上，给最小标量 $13440$，除等容量的交换外唯一。由于 $60<64$ 同时 $5040<13440$，两个点各改善一个目标而损失另一个，故互不支配；这不刻画全部可行点的 Pareto 前沿。最后定理 98 的一般单射状态码计数给 $2^5<60\le2^6$，故六位既必要又可由状态枚举实现。该编码没有每轴独立 Zeckendorf 窗口的要求，不能用其六位结论否定七位窗口下界。证毕。
+
+**定义 235（整数位置多项式的两个递推读数）。** 将定义 171 的非负位置多项式与 $\operatorname{ev}_G$、定义 15 的单行 $H$ 读数作整数线性延拓。在普通多项式环 $R=\mathbb Z[X]$ 上，对 $F(X)=\sum_j f_jX^j$ 定义
+$$
+V_G(F)=\sum_j f_jG_j,\qquad U_H(F)=\sum_j f_jH_j,
+\qquad m(X)=X^2-X-1.
+$$
+$X$ 在本条及以下多项式公式中是形式不定元。$U_H$ 使用递推权重 $H_j$，绝不是定义 206 的无权槽计数 $\mathsf U_P$。定义 19 的黄金值也按同一整数线性延拓解释为 $\beta(F)=\sum_j f_j\phi^{j+2}$；非负系数上的 $\operatorname{nf}_G$ 和 $F_u$ 仍使用定义 171，不另改规范化。
+
+**定理 236（共同核与双整数坐标的卷积环）。** 定义 235 的加法映射
+$$
+(V_G,U_H):R\longrightarrow\mathbb Z^2
+$$
+满射，且其共同核为
+$$
+\ker(V_G,U_H)=\ker V_G\cap\ker U_H=(m).
+$$
+在 $\mathbb Z^2$ 上取逐项加法及乘法
+$$
+(v,u)*(v',u')=
+\bigl(vv'-(v-u)(v'-u'),\ uu'+(v-u)(v'-u')\bigr),
+$$
+则它是单位为 $(1,1)$ 的交换环，$(V_G,U_H)$ 诱导环同构 $R/(m)\cong(\mathbb Z^2,+,*)$。其到 $\mathbb Z[\phi]$ 的环读数是
+$$
+(v,u)\longmapsto(2u-v)+(v-u)\phi.
+$$
+对任意 $F,K\in R$，有
+$$
+F(\phi)=(2U_H(F)-V_G(F))+(V_G(F)-U_H(F))\phi
+=\phi^{-2}\beta(F),
+$$
+$$
+\beta(FK)=\phi^{-2}\beta(F)\beta(K).
+$$
+
+**证明。** $G,H$ 的递推分别使 $V_G(X^jm)=U_H(X^jm)=0$，故理想 $(m)$ 被两个加法读数同时消去。因为 $m$ 首一，对任意 $F\in\mathbb Z[X]$ 可逐次减去最高项系数乘 $X^{\deg F-2}m$，每次降低次数，有限次后得到唯一余式 $a+bX$，$a,b\in\mathbb Z$。唯一性是因为非零的 $m$ 倍数次数至少为二。因此
+$$
+(V_G(F),U_H(F))=(a+2b,a+b)=(v,u),
+\qquad a=2u-v,\quad b=v-u.
+$$
+每个 $(v,u)\in\mathbb Z^2$ 都由这个整数余式给出，故满射；两个读数同时为零恰好强制 $a=b=0$，证明共同核等于 $(m)$。这里不把单独任一读数的核等同于共同核：$X-2$ 属于 $\ker V_G$ 而不属于 $\ker U_H$，$X-1$ 属于 $\ker U_H$ 而不属于 $\ker V_G$。
+
+在 $R/(m)$ 中，$X^2=X+1$，所以两个余式的积化为
+$$
+(a+bX)(a'+b'X)
+\equiv(aa'+bb')+(ab'+ba'+bb')X\pmod m.
+$$
+代入 $a=2u-v$、$b=v-u$ 及带撇的同式，再对余式取两个读数，得到恰为所述 $*$ 的公式。故此乘法由 $R/(m)$ 的乘法沿已证加法双射运输，结合律、交换律、分配律和加法逆全部成立；常数 $1$ 的坐标为 $(1,1)$，故为乘法单位。
+
+$\phi^2=\phi+1$ 使每个 $F(\phi)$ 等于其余式值 $a+b\phi$。$\phi$ 无理：若其为有理，则 $\sqrt5=2\phi-1$ 有理，写最简分数平方得分子被 $5$ 整除，继而分母也被 $5$ 整除，矛盾。因此 $a+b\phi=0$ 强制 $a=b=0$。评价于是给 $R/(m)\cong\mathbb Z[\phi]$，得到所列无移位环读数。定义 19 的值在每个幂上多乘 $\phi^2$，即 $\beta(F)=\phi^2F(\phi)$；因 $\phi\ne0$，乘积公式随普通评价的乘法性得到。证毕。
+
+**定理 237（普通卷积的精确乘法缺陷与相容域）。** 对任意 $F,K\in R$，有
+$$
+V_G(FK)-V_G(F)V_G(K)
+=-\bigl(V_G(F)-U_H(F)\bigr)\bigl(V_G(K)-U_H(K)\bigr).
+$$
+所以整数系数下 $V_G(FK)=V_G(F)V_G(K)$ 当且仅当至少一个因子模 $(m)$ 为常数。若两个多项式系数均非负，则此条件等价于至少一个因子本身是常数多项式，包括零。
+
+对规范有限数字 $u,v\in\mathsf W_Z$，有
+$$
+\operatorname{nf}_G(F_uF_v)=u\cdot_Zv
+\iff
+u\in\{0_Z,1_Z\}\ \lor\ v\in\{0_Z,1_Z\}.
+$$
+若 $\operatorname{val}(u),\operatorname{val}(v)\ge2$，则普通卷积规范化后的数值严格小于 $\operatorname{val}(u)\operatorname{val}(v)$。
+
+使 $V_G$ 保乘法的最大含幺子环为 $\mathbb Z+(m)\subseteq R$。对固定 $K\in R$，存在函数 $h:\mathbb Z\to\mathbb Z$ 使
+$$
+V_G(FK)=h(V_G(F))\quad\text{对所有 }F\in R
+$$
+当且仅当 $V_G(K)=U_H(K)$；此时唯一可能的函数为 $h(n)=nV_G(K)$。
+
+**证明。** 定理 236 的乘法第一坐标给精确缺陷。在整数中乘积为零当且仅当至少一因子为零；定理 236 的余式中 $X$ 的系数就是 $V_G(F)-U_H(F)$，所以缺陷为零恰好是至少一个因子模 $(m)$ 为常数。
+
+由初值和递推，定理 232 的通常 Fibonacci 数列满足
+$$
+G_j-H_j=F_j\quad(j\ge0),\qquad
+F_0=0,\quad F_j>0\quad(j\ge1).
+$$
+于是对非负系数多项式，
+$$
+V_G(F)-U_H(F)=\sum_{j\ge1}f_jF_j
+$$
+为零恰好要求全部正次数系数为零，即 $F$ 本身为常数。规范数字对应的常数多项式只能是 $0$ 或 $1$。定理 70 与定义 171 给 $\operatorname{val}(\operatorname{nf}_G(F_uF_v))=V_G(F_uF_v)$ 以及 $\operatorname{val}(u\cdot_Zv)=V_G(F_u)V_G(F_v)$；$\operatorname{val}$ 单射，所以得到规范数字的等价。两输入数值均至少为二时都不是常数数字，两个缺陷因子严格正，故输出数值严格偏小。
+
+若含幺子环 $S\subseteq R$ 上 $V_G$ 保乘法，则对每个 $F\in S$ 取平方，缺陷公式给
+$$
+0=V_G(F^2)-V_G(F)^2=-\bigl(V_G(F)-U_H(F)\bigr)^2.
+$$
+所以每个 $F$ 模 $(m)$ 为常数，即 $S\subseteq\mathbb Z+(m)$。反向，$\mathbb Z+(m)$ 是商映射到 $R/(m)$ 后常数子环的逆像，故为含幺子环；其中两个因子都满足 $V_G=U_H$，缺陷为零。加法和单位本已保留，故这是最大的相容含幺子环。
+
+固定 $K$ 时，若其两读数相等，缺陷公式直接给 $h(n)=nV_G(K)$。反向若 $h$ 存在，以常数 $F=n$ 得 $h(n)=nV_G(K)$，尤其 $h(0)=0$。取 $F=X-2$，有 $V_G(F)=0$、$U_H(F)=-1$，故
+$$
+0=h(0)=V_G((X-2)K)=-\bigl(V_G(K)-U_H(K)\bigr).
+$$
+这强制两读数相等，并同时证明 $h$ 的唯一性。证毕。
+
+**定理 238（保留整数观察的最粗卷积环商及其最小性边界）。** 对任意理想 $I\subseteq R$，存在整数加法观察 $\overline V:R/I\to\mathbb Z$ 满足 $\overline V(F+I)=V_G(F)$，当且仅当
+$$
+I\subseteq(m).
+$$
+因此 $(m)$ 是允许 $V_G$ 下降的最大理想，$R/(m)$ 是最粗的此类环商：对每个容许的 $I$，存在唯一与 $R$ 的自然投影相容的满射环同态
+$$
+R/I\longrightarrow R/(m),\qquad F+I\longmapsto F+(m).
+$$
+其加法群秩为二，每个容许商的加法群秩至少为二。这里的最小性限于继承普通多项式乘法的环商，或等价的满射环同态像连同其整数加法观察；不限制将集合 $\mathbb Z^2$ 单射编码进 $\mathbb Z$。定理 236 的 $V_G$ 第一坐标不是整个双坐标环到通常整数环的环同态。
+
+若要求在某个环商中对每个 $F\in R$ 都有 $F\equiv V_G(F)$，右边按常数解释，则该商只能是零环。相反，选取定义 171 的唯一规范代表仍可定义集合二元运算 $(u,v)\mapsto\operatorname{nf}_G(F_uF_v)$；它不由全部原始代表的 $V_G$ 等价诱导为卷积商，且其与数值乘法的相容范围恰如定理 237。
+
+**证明。** 加法观察下降等价于 $V_G$ 消去 $I$：若同一陪集有两个代表，它们之差在 $I$，加法性便给充要条件。递推和初值给 $G_{j+1}=G_j+H_j$，故对所有 $F$ 有
+$$
+V_G(XF)=V_G(F)+U_H(F).
+$$
+若 $V_G$ 消去理想 $I$，则每个 $F\in I$ 同时有 $XF\in I$，因而 $V_G(F)=V_G(XF)=0$，上式强制 $U_H(F)=0$。由定理 236 的共同核，$F\in(m)$，所以 $I\subseteq(m)$。反向，$(m)\subseteq\ker V_G$ 已证，故任何 $I\subseteq(m)$ 都允许下降。
+
+理想包含关系使所列映射良定义且保全部环运算，每个 $F+(m)$ 都有原像 $F+I$，故满射；与 $R$ 的投影相容强制每个陪集的像，故唯一。这是最粗容许商的泛性质；任意另一个有同一泛性质的商，经两个唯一相容映射互为逆，因而在此意义下唯一。定理 236 给它的加法群为 $\mathbb Z^2$。任意容许商中 $1+I,X+I$ 整数线性无关：其任一线性关系投到 $R/(m)$ 后，由次数小于二的余式唯一性强制两系数为零。因此其加法群秩至少为二，其中秩指张量 $\mathbb Q$ 后的维数；也可由到 $\mathbb Z^2$ 的满射及张量的右正合性得到该下界。本结论不声称仅由秩为二就能唯一确定一个容许商。满射环同态像与核理想之商同构，故同一下界适用于所述同态像；纯集合编码不必保持商投影、加法和卷积，因而不受此下界约束。定理 237 的缺陷公式表明 $V_G$ 只在其指定相容域上保乘法，不能将下降的加法观察称为整个环上的环同态。
+
+若每个 $F$ 都同余于其常数读数，则 $X-2\in I$；又因 $V_G(m)=0$，有 $m\in I$。但
+$$
+m-(X+1)(X-2)=1,
+$$
+故 $1\in I$，$I=R$，商为零环。这是对环商的障碍，不是否定定理 70、172 先取数值乘积再规范化的运算。
+
+最后，$F_uF_v$ 的系数非负且有限，所以定义 171 的 $\operatorname{nf}_G$ 总能给唯一规范数字，从而上述集合二元运算确实存在。若全部原始代表按 $V_G$ 相等取类可以诱导普通卷积，则每个固定乘子 $K$ 的 $V_G(FK)$ 都只依赖 $V_G(F)$。定理 237 已证明这要求每个 $K$ 满足 $V_G(K)=U_H(K)$，但不定元的两个读数为 $2,1$，矛盾。即使只允许非负原始代表，也可比较具有同一读数的 $X$ 与常数 $2$：对任意非负 $K$，两乘积的读数之差为 $U_H(K)-V_G(K)$，仍要求每个乘子的两读数相等，不能成立。因此该规范代表运算不是这样的卷积商。本条讨论单行位置多项式；定义 2 的 $\boxtimes$ 仍使用空间相加及 $\max+1$ 的时间规则，定理 27 的原载体闭包反例仍适用，这里没有把行卷积环等同于 CSA 档案乘法。证毕。
+
+**定理 239（经更正后的集合定义、Zeckendorf 运输与 ZFC 保守解释）。** 固定有限 $P$ 时，定义 227 的加权表、前缀积分和商，定义 231 的窗口极值，以及定义 235 与定理 236–238 的整数多项式、理想、商、双坐标运算与全部比较映射，均可在 ZFC 中以集合及集合函数图定义。把这些有效定义及其普通证明给出的性质加入第 75–78 条的解释，得到对原集合论语言的定义性保守扩充。给定任意 $\mathfrak M\models\mathrm{ZFC}$，同一图公式在 $\mathfrak M$ 内给出相应结构，并保留上述等式与适用域。
+
+此保守性仅包括有效定义和有证明的旧、新结论；明确排除定理 225、226、230 所指出的失效断言，特别是旧定理 188 的终端零表充分性、191 的无条件前缀非负群元替换、196 的两个无权与加权等同公式、197 删除权重的证明等号、201 的无权类到加权终端类的自然箭头及原始终端表推断、204 从任意无权代表推出同一加权端点的推断，以及 205 对这些失效联系作出的整体解释。定理 194、212 的类型误写按定理 226、230 替代。保留这些旧句的文本不构成继续把它们当作公理；本结论不担保其余未逐项论证的旧断言，也不担保全部文档字面合取的一致性。
+
+**证明。** 定义 1 的事件身份属于 $HF$，事件集有限，时间和位置为整数及整数三元组，来源属于由自然数叶和有序配对生成的有限树集合。把整数编码为符号与有限自然数之对，把有限关系及有限函数编码为有限有序对集合，则这些字段、偏序、当前区域及选择都可作遗传有限编码。有限情境的全部编码因而是 $HF$ 的一个可定义子集；等价地，可直接在有限事件集和相应有限函数集合的并中分离出有效情境。因此情境全域是集合，$\mathcal C_P^{\rm tb}$、$\mathcal C_P^{\rm pb}$ 及其关系商都是集合上的通常商，无须真类商或代表选择的附加假设。
+
+$\mathsf Q_P$、$\mathsf J_P$ 是固定集合索引上的整数函数集合中满足有限支撑谓词的子集；其完整函数图虽通常无限，但非零支撑及取值可用有限数据指定。定义 1 的有限事件和确定 $q_X$，固定递推 $G_j$ 与有限求和确定 $\delta_X^G$ 和终端向量。前缀积分作为所有整数 $T$ 上的函数，其值图属于相应的全函数集合，不要求沿 $T$ 有限支撑。替代与分离给出这些函数图及相等关系核，幂集与替代给出商集和商映射。定理 225–230 的证明用有限和、集合分割及明确有限事件构造，因而在 ZFC 内证明各自的适用域、存在性与等式。
+
+宽度弱组合是 $\{0,\ldots,B\}^k$ 的有限子集；有限乘积和有限非空最大值的图可定义，$\ell_Z$ 的存在由 $G_j$ 无界及自然数良序得到。故定理 232 的极值、定理 233 的最小预算及定理 234 的实例均是 ZFC 中的整数与有限集合命题。最小预算第一分支的 $\lceil\log_2Q\rceil$ 等价于最小的 $b\in\mathbb N$ 使 $Q\le2^b$，不需要为其定义另加分析假设。
+
+$\mathbb Z[X]$ 是 $\omega$ 上有限支撑整数系数表的集合；加法和卷积由有限和给出。其理想构成 $\mathcal P(R)$ 中满足理想谓词的子集，每个 $R/I$ 由陪集的集合图构造。首一除法、两递推读数及双坐标乘法都是明确的集合函数；定理 236–238 的有限消元、整数等式和理想论证明据此在 ZFC 中成立。
+
+定义 113 和定理 114 的 $\operatorname{scode}$ 与 $\operatorname{ival}$ 可对双坐标逐坐标应用：用已有的 $\oplus_Z,\ominus_Z,\otimes_Z$ 运输定理 236 的乘法公式，输出仍在 $(\mathsf Z_{\mathbb Z})^2$，单位是 $(\operatorname{scode}(1),\operatorname{scode}(1))$，并由双射运输全部环公理。第 95–96 条的 $\zeta$ 标签重索引和定义 202 的时间编码同样适用于新加权表。若使用定理 209 的全素数有限支撑码表，其支撑按 $\{p:d(p)\ne\zeta(0)\}$ 解释，逐点加法是定理 70 的 $+_Z$；这只是使用原有编码，不另造数位运算。任意集合层的对象则按定理 71–78 使用 $\operatorname{Enc}$ 与 $\in_Z$，没有把无限集合当作有限字，定理 79 的有限字障碍仍在。
+
+对扩充中的任意一个有限证明，把新谓词换为定义公式，把函数项换成新变量及其唯一值图约束；部分定义保留其域谓词，或在域外统一赋一个固定默认集合。以上存在唯一性保证逐步消去有效，所用新定理行换成其普通 ZFC 证明，已证旧定理行也如此；分离与替代的每个实例展开后仍是原模式的一个实例。因此若结论是原集合论语言的句子，消去后就是该句子的 ZFC 证明。已更正的旧错误不进入此有限证明的可用前提，故字面保留不改变这一论证。
+
+给定 $\mathfrak M\models\mathrm{ZFC}$，在其内部解释同一公式，其内部存在唯一性确定各结构和函数，前述证明给出相同等式。再按第 75–78 条 对每个外部标准有限公式运输，即得 Zeckendorf 侧的对应解释。非标准模型的有限性、整数和函数集都按模型内部理解；没有对可能外部非良基的成员关系另作递归，也没有断言内部全部子集就是外部全部子集。此为给定模型内的解释及定义消去，均不推出 ZFC 的无条件一致性。证毕。
