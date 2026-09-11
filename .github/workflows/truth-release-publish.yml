@@ -230,17 +230,11 @@ jobs:
         run: |
           set -euo pipefail
           source="$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json"
-          for suffix in '' .sha256 .input.attestation .provenance.json .materials.zip; do
-            test -s "${source}${suffix}"
-          done
+          served="$(python3 "$GITHUB_WORKSPACE/tools/scripts/report/lean-report-cache.py" stage \
+            --transport --bundle "$source" --staging-directory "$RUNNER_TEMP/canonical-lean-report")"
           # Re-verify the cached report against the checked-out tree; mismatch falls back.
           "$GITHUB_WORKSPACE/tools/scripts/report/lean-report-input.sh" verify \
-            --repository "$GITHUB_WORKSPACE" --report "$source"
-          served="$RUNNER_TEMP/canonical-lean-report/raw-lean-report.json"
-          mkdir -p "$RUNNER_TEMP/canonical-lean-report"
-          for suffix in '' .sha256 .input.attestation .provenance.json .materials.zip; do
-            cp "${source}${suffix}" "${served}${suffix}"
-          done
+            --repository "$GITHUB_WORKSPACE" --report "$served"
           printf 'path=%s\n' "$served" >> "$GITHUB_OUTPUT"
           printf '%s\n' 'canonical Lean report served from cached input address' >> "$GITHUB_STEP_SUMMARY"
 
@@ -272,17 +266,8 @@ jobs:
           gh run download "$run_id" --repo "$GITHUB_REPOSITORY" \
             --name raw-lean-reports --dir "$staging"
           source="$staging/candidate-lean-report.json"
-          served="$RUNNER_TEMP/canonical-lean-report/raw-lean-report.json"
-          mkdir -p "$(dirname "$served")"
-          for suffix in '' .input.attestation .provenance.json .materials.zip; do
-            test -s "${source}${suffix}"
-            cp "${source}${suffix}" "${served}${suffix}"
-          done
-          read -r declaredSha256 declaredName < "${source}.sha256"
-          reportSha256="$(sha256sum "$served" | cut -d ' ' -f 1)"
-          test "$declaredSha256" = "$reportSha256"
-          test "$declaredName" = "$(basename "$source")"
-          printf '%s  %s\n' "$reportSha256" "$(basename "$served")" > "${served}.sha256"
+          served="$(python3 "$GITHUB_WORKSPACE/tools/scripts/report/lean-report-cache.py" stage \
+            --transport --bundle "$source" --staging-directory "$RUNNER_TEMP/canonical-lean-report")"
           cp -R "${source}.logs" "${served}.logs" 2>/dev/null || true
           "$GITHUB_WORKSPACE/tools/scripts/report/lean-report-input.sh" verify \
             --repository "$GITHUB_WORKSPACE" --report "$served"
