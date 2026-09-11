@@ -9,7 +9,8 @@ internal static class LeanInputManifest
 {
     private const string Identity = "LeanInputManifest";
 
-    internal static IReadOnlyDictionary<string, string[]> Select(string repository, string[] requested)
+    internal static IReadOnlyDictionary<string, string[]> Select(
+        string repository, string[] requested, string[]? changedPaths = null)
     {
         var fileMap = FileMapLoader.LoadRepository(repository);
         var registrations = fileMap.Entries.Where(entry => entry.ArtifactId == Identity).ToArray();
@@ -41,7 +42,8 @@ internal static class LeanInputManifest
             var visiting = new HashSet<string>(StringComparer.Ordinal);
             var expanded = new HashSet<string>(StringComparer.Ordinal);
             Expand(name);
-            result.Add(name, paths.ToArray());
+            result.Add(name, changedPaths is null ? paths.ToArray()
+                : paths.Where(path => changedPaths.Contains(path, StringComparer.Ordinal)).ToArray());
 
             void Expand(string current)
             {
@@ -61,6 +63,7 @@ internal static class LeanInputManifest
                         var minimum = input.GetProperty("min_matches").GetInt32();
                         if (minimum < 0) throw Invalid(owner, "min_matches must be nonnegative");
                         var optional = input.GetProperty("optional_root");
+                        var absentOptionalRoot = false;
                         if (optional.ValueKind != JsonValueKind.Null)
                         {
                             var directory = Text(optional, owner);
@@ -68,12 +71,23 @@ internal static class LeanInputManifest
                             if (directory.Contains('*') || patterns.Any(pattern => !pattern.StartsWith(directory + "/", StringComparison.Ordinal)))
                                 throw Invalid(owner, "optional_root must contain all declared patterns");
                             if (File.Exists(Path.Combine(repository, directory))) throw Invalid(directory, "optional library is not a directory");
-                            if (!Directory.Exists(Path.Combine(repository, directory))) continue;
+                            absentOptionalRoot = !Directory.Exists(Path.Combine(repository, directory));
                         }
-                        var matches = patterns.SelectMany(pattern => ExpandPattern(repository, pattern))
+                        var matches = (absentOptionalRoot ? [] : patterns.SelectMany(pattern => ExpandPattern(repository, pattern)))
                             .Where(path => !excludes.Any(exclude => exclude.IsMatch(path))).ToArray();
-                        if (matches.Length < minimum)
+                        if (!absentOptionalRoot && matches.Length < minimum)
                             throw Invalid(string.Join(", ", patterns), $"{owner} requires at least {minimum} input(s), found {matches.Length}");
+                        // The supplied diff is data, including removed paths. Match it
+                        // against the same declarations after validating current inputs.
+                        // Keep duplicate current matches visible to the ownership check.
+                        if (changedPaths is not null)
+                        {
+                            var globs = patterns.Select(FileMapGlob.Create).ToArray();
+                            matches = matches.Concat(changedPaths.Distinct(StringComparer.Ordinal)
+                                .Where(path => !matches.Contains(path, StringComparer.Ordinal)
+                                    && globs.Any(glob => glob.IsMatch(path))
+                                    && !excludes.Any(exclude => exclude.IsMatch(path)))).ToArray();
+                        }
                         foreach (var path in matches)
                         {
                             if (!owners.TryAdd(path, owner)) throw Invalid(path, $"conflicting input registrations: {owners[path]} and {owner}");

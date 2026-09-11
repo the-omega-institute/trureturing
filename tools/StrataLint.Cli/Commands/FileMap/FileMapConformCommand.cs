@@ -7,7 +7,7 @@ namespace StrataLint.Cli;
 internal static class FileMapConformCommand
 {
     internal const string Usage =
-        "USAGE: StrataLint filemap-conform [--producer-write-set PRODUCER | --input-scopes SCOPES --repository DIR]";
+        "USAGE: StrataLint filemap-conform [--producer-write-set PRODUCER | --input-scopes SCOPES --repository DIR [--match-paths PATH...]]";
 
     internal static ExplicitCommandResult Run(
         IReadOnlyList<string> arguments,
@@ -15,11 +15,13 @@ internal static class FileMapConformCommand
     {
         ArgumentNullException.ThrowIfNull(arguments);
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
-        if (arguments.Count == 4 && arguments[0] == "--input-scopes" && arguments[2] == "--repository")
+        if (arguments.Count >= 4 && arguments[0] == "--input-scopes" && arguments[2] == "--repository"
+            && (arguments.Count == 4 || arguments[4] == "--match-paths"))
         {
             try
             {
-                var paths = LeanInputManifest.Select(arguments[3], arguments[1].Split(','));
+                var paths = LeanInputManifest.Select(arguments[3], arguments[1].Split(','),
+                    arguments.Count == 4 ? null : arguments.Skip(5).ToArray());
                 return new ExplicitCommandResult(0, JsonSerializer.Serialize(paths) + "\n", string.Empty);
             }
             catch (Exception exception)

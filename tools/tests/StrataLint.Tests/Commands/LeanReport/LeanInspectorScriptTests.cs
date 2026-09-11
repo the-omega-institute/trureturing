@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -30,6 +31,8 @@ public sealed class LeanInspectorScriptTests
         var fullInspect = File.ReadAllLines(log).Single(static line => line.Contains(" --output ", StringComparison.Ordinal));
         Assert.Contains("Trureturing Trureturing.lean sha256:", fullInspect, StringComparison.Ordinal);
         Assert.Contains("D5.Probe D5/Probe.lean sha256:", fullInspect, StringComparison.Ordinal);
+        Assert.Contains("D5.NotImported D5/NotImported.lean sha256:", fullInspect, StringComparison.Ordinal);
+        Assert.Equal(3, fullInspect.Split(" sha256:", StringSplitOptions.None).Length - 1);
     }
 
     [Theory]
@@ -41,11 +44,15 @@ public sealed class LeanInspectorScriptTests
         using var temporary = new TemporaryDirectory();
         var repository = CreateRepository(temporary.Path);
         if (!injectedDotnetFailure)
-            File.AppendAllText(Path.Combine(repository, "tools", "StrataLint.Cli", "StrataLint.Cli.csproj"), "<");
+            File.Delete(Path.Combine(repository, "required-producer.data"));
         var bin = Path.Combine(temporary.Path, "bin");
         Directory.CreateDirectory(bin);
         var dotnet = Path.Combine(bin, "dotnet");
-        File.WriteAllText(dotnet, "#!/usr/bin/env bash\nexit 71\n");
+        File.WriteAllText(dotnet, """
+            #!/usr/bin/env bash
+            if [[ " $* " == *' --input-scopes producer,lean-sources,lean-config '* ]]; then exit 71; fi
+            exec "$FIXTURE_DOTNET" "$@"
+            """ + "\n");
         File.SetUnixFileMode(dotnet, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
 
         var result = RunInspector(temporary.Path, repository, injectedDotnetFailure ? bin : "");
@@ -117,7 +124,14 @@ public sealed class LeanInspectorScriptTests
     }
 
     private static ProcessOutput Run(string command, IReadOnlyList<string> arguments, string cwd) =>
-        TestProcessRunner.Run(command, arguments, cwd, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
+        TestProcessRunner.Run("env", new[]
+        {
+            $"ORIGINAL_PATH={Environment.GetEnvironmentVariable("PATH")}",
+            $"PATH={cwd}/fixture-bin:{Environment.GetEnvironmentVariable("PATH")}",
+            $"FIXTURE_DOTNET={cwd}/fixture-bin/dotnet",
+            $"NATIVE_CLI={Path.Combine(AppContext.BaseDirectory, "StrataLint.dll")}",
+            command,
+        }.Concat(arguments).ToArray(), cwd, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
 
     private static string CreateRepository(string temporary)
     {
@@ -134,6 +148,7 @@ public sealed class LeanInspectorScriptTests
         }
         InstallCacheRun(repository);
         InstallProducerInputs(repository);
+        Write(repository, "D5/NotImported.lean", "def notImported : Nat := 2\n");
         return repository;
     }
 
@@ -147,7 +162,24 @@ public sealed class LeanInspectorScriptTests
         Write(repository, "tools/StrataLint.Cli/StrataLint.Cli.csproj",
             "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><OutputType>Exe</OutputType>"
             + "<TargetFramework>net10.0</TargetFramework></PropertyGroup></Project>\n");
-        Write(repository, "tools/StrataLint.Cli/Fixture.cs", "System.Console.WriteLine(\"[]\");\n");
+        // Only the utility-input child is synthetic. FILEMAP selection always
+        // executes the candidate CLI, including its native registration failures.
+        Write(repository, "tools/StrataLint.Cli/Fixture.cs",
+            "if (args.Length != 1 || args[0] != \"lean-utility-input\") return 2; "
+            + "System.Console.WriteLine(\"{}\"); return 0;\n");
+        Write(repository, "fixture-bin/dotnet", """
+            #!/usr/bin/env bash
+            if [[ " $* " == *' filemap-conform '* ]]; then
+              while [[ $# -gt 0 && "$1" != -- ]]; do shift; done
+              [[ $# -gt 0 ]] || exit 2
+              shift
+              PATH="$ORIGINAL_PATH" exec dotnet "$NATIVE_CLI" "$@"
+            fi
+            PATH="$ORIGINAL_PATH" exec dotnet "$@"
+            """ + "\n");
+        if (!OperatingSystem.IsWindows()) File.SetUnixFileMode(Path.Combine(repository, "fixture-bin/dotnet"),
+            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        WriteRegistration(repository);
         Write(repository, "tools/scripts/lean-report-pair.sh", "#!/usr/bin/env bash\n");
         Write(repository, "tools/lean-inspector/source-context.sh", LeanSourceContextScriptFixture.Script);
         if (!File.Exists(Path.Combine(repository, InspectorScript)))
@@ -159,6 +191,43 @@ public sealed class LeanInspectorScriptTests
         Write(repository, "lean-toolchain", "leanprover/lean4:v4.31.0\n");
         Write(repository, "lakefile.toml", "name = \"Fixture\"\n");
         Write(repository, "lake-manifest.json", "{\"version\":\"1.1.0\"}\n");
+    }
+
+    private static void WriteRegistration(string repository)
+    {
+        Write(repository, "required-producer.data", "producer input\n");
+        Write(repository, "Meta/FILEMAP.toml", """
+            schema_version = 2
+            [residence_policy]
+            case_id = "RESIDENCE-EPOCH"
+            desired = "data-must-live-outside-tools"
+            known_violation_count = 0
+            status = "closed"
+            [[files]]
+            pattern = "Meta/LeanInputs.json"
+            kind = "program"
+            admission_plane = "judge"
+            produced_by = "none"
+            consumed_by = ["LeanInputManifest"]
+            verified_by = ["LeanInputManifest"]
+            artifact_id = "LeanInputManifest"
+            runtime_disposition = "committed-source"
+            """ + "\n");
+        object Input(string pattern) => new
+            { patterns = new[] { pattern }, exclude = Array.Empty<string>(), optional_root = (string?)null, min_matches = 1 };
+        object Scope(string name, string[] includes, params object[] inputs) => new { name, includes, inputs };
+        Write(repository, "Meta/LeanInputs.json", JsonSerializer.Serialize(new
+        {
+            schema_version = 1,
+            scopes = new[]
+            {
+                Scope("managed-modules", [], Input("Trureturing.lean"), Input("D5/**/*.lean")),
+                Scope("lean-sources", ["managed-modules"]),
+                Scope("lean-config", [], Input("lean-toolchain"), Input("lakefile.toml"), Input("lake-manifest.json")),
+                Scope("producer", [], Input("required-producer.data"), Input(InspectorScript), Input(CacheRunScript),
+                    Input("Meta/FILEMAP.toml"), Input("Meta/LeanInputs.json")),
+            },
+        }) + "\n");
     }
 
     private static ProcessOutput RunInspector(string temporary, string repository, string bin)

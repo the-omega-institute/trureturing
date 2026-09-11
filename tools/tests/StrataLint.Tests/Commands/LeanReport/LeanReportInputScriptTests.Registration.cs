@@ -6,6 +6,79 @@ namespace StrataLint.Tests;
 
 public sealed partial class LeanReportInputScriptTests
 {
+    internal static void WritePairInputRegistration(string repository, params string[] producerPaths)
+    {
+        var meta = Path.Combine(repository, "Meta");
+        Directory.CreateDirectory(meta);
+        File.WriteAllText(Path.Combine(meta, "FILEMAP.toml"), """
+            schema_version = 2
+            [residence_policy]
+            case_id = "RESIDENCE-EPOCH"
+            desired = "data-must-live-outside-tools"
+            known_violation_count = 0
+            status = "closed"
+
+            """ + "\n" + LeanReportInputFixture.Registration + "\n");
+        object Input(string pattern) => new
+            { patterns = new[] { pattern }, exclude = Array.Empty<string>(), optional_root = (string?)null, min_matches = 1 };
+        object Scope(string name, string[] includes, params object[] inputs) => new { name, includes, inputs };
+        File.WriteAllText(Path.Combine(meta, "LeanInputs.json"), JsonSerializer.Serialize(new
+        {
+            schema_version = 1,
+            scopes = new[]
+            {
+                Scope("managed-modules", [], Input("Trureturing.lean"), Input("D5/**/*.lean")),
+                Scope("inspector-lean", [], Input("tools/lean-inspector/Inspector.lean")),
+                Scope("lean-sources", ["managed-modules", "inspector-lean"]),
+                Scope("lean-dependencies", [], Input("lean-toolchain"), Input("lake-manifest.json")),
+                Scope("lean-config", ["lean-dependencies"], Input("lakefile.toml")),
+                Scope("producer", ["inspector-lean"],
+                    new[] { "Meta/FILEMAP.toml", "Meta/LeanInputs.json" }.Concat(producerPaths).Select(Input).ToArray()),
+            },
+        }) + "\n");
+    }
+
+    [Theory]
+    [InlineData("producer-paths")]
+    [InlineData("scribe-producer-paths")]
+    public void NativeProducerIncludesCacheWriter(string command)
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var result = TestProcessRunner.Run("bash",
+            [Path.Combine(root, InputHelperPath), command, "--repository", root],
+            root, StrataLint.Engine.BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
+        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+        Assert.Contains("tools/scripts/worktree/lean-cache-run.sh", Lines(result));
+    }
+
+    [Fact]
+    public void CacheWriterEditInvalidatesAddressAndReportReuseAndAbsenceNamesInput()
+    {
+        using var fixture = new LeanReportInputFixture();
+        const string launcher = "tools/scripts/worktree/lean-cache-run.sh";
+        fixture.WriteSource(launcher, "#!/usr/bin/env bash\nexec \"$@\"\n");
+        fixture.RegisterProducerInput(launcher);
+        var before = Fields(fixture.RunCommand("address"));
+        Assert.Equal(0, fixture.CaptureProductionInput().ExitCode);
+        Assert.Equal(0, fixture.Verify().ExitCode);
+        fixture.CreateDeltaBaseline();
+        Assert.Equal("reuse", fixture.DeltaPlanStatus());
+
+        fixture.Append(launcher, "# changed launcher\n");
+        var after = Fields(fixture.RunCommand("address"));
+        Assert.NotEqual(before[0], after[0]);
+        Assert.NotEqual(before[1], after[1]);
+        Assert.Equal(before[2..], after[2..]);
+        Assert.Equal(2, fixture.Verify().ExitCode);
+        Assert.Equal("fallback", fixture.DeltaPlanStatus());
+
+        fixture.RemoveSource(launcher);
+        var absent = fixture.RunCommand("address");
+        Assert.Equal(2, absent.ExitCode);
+        Assert.Empty(absent.StandardOutput);
+        Assert.Contains(launcher, Encoding.UTF8.GetString(absent.StandardError));
+    }
+
     [Theory]
     [InlineData("address")]
     [InlineData("producer-paths")]
@@ -47,7 +120,7 @@ public sealed partial class LeanReportInputScriptTests
 
     private sealed partial class LeanReportInputFixture
     {
-        private const string Registration = """
+        internal const string Registration = """
             [[files]]
             pattern = "Meta/LeanInputs.json"
             kind = "program"

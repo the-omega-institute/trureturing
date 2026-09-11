@@ -265,6 +265,14 @@
         },
         {
           "patterns": [
+            "tools/scripts/worktree/lean-cache-run.sh"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
             "tools/scripts/worktree/lean-cache-publish.sh"
           ],
           "exclude": [],
@@ -388,7 +396,7 @@
       ]
     },
     {
-      "name": "scribe-producer",
+      "name": "scribe-runtime",
       "includes": [
         "producer"
       ],
@@ -451,11 +459,95 @@
         },
         {
           "patterns": [
+            "tools/Architecture/BannedSymbols*.txt"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        }
+      ]
+    },
+    {
+      "name": "scribe-definitions",
+      "includes": [],
+      "inputs": [
+        {
+          "patterns": [
             "Blueprint/**/*.scribe.cs"
           ],
           "exclude": [],
           "optional_root": null,
           "min_matches": 1
+        }
+      ]
+    },
+    {
+      "name": "scribe-producer",
+      "includes": [
+        "scribe-runtime",
+        "scribe-definitions"
+      ],
+      "inputs": []
+    },
+    {
+      "name": "scribe-report-inputs",
+      "includes": [
+        "scribe-runtime",
+        "lean-sources",
+        "lean-config"
+      ],
+      "inputs": []
+    },
+    {
+      "name": "scribe-projections",
+      "includes": [
+        "scribe-report-inputs"
+      ],
+      "inputs": [
+        {
+          "patterns": [
+            "Golden/Projection/*.json"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 0
+        }
+      ]
+    },
+    {
+      "name": "scribe-describe",
+      "includes": [
+        "scribe-report-inputs",
+        "scribe-definitions"
+      ],
+      "inputs": [
+        {
+          "patterns": [
+            "Library/**/*.yaml",
+            "Library/*/*.md",
+            "Problems/*.md",
+            "Meta/BACKFILL.yaml",
+            "Meta/Digestion/backfill/**/*.yaml"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 0
+        }
+      ]
+    },
+    {
+      "name": "scribe-markdown",
+      "includes": [
+        "scribe-definitions"
+      ],
+      "inputs": [
+        {
+          "patterns": [
+            "Blueprint/**/*.md"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 0
         }
       ]
     }
