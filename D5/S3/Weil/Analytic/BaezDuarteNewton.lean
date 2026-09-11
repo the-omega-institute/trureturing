@@ -102,10 +102,98 @@ private theorem kernel_norm_summable {s : ℂ} (hs : 1 < s.re) :
     exact_mod_cast (ArithmeticFunction.abs_moebius_le_one (n := p.2+1))
   exact div_le_div_of_nonneg_right hm (sq_nonneg _)
 
+private theorem power_bridge (n : ℕ) (s : ℂ) :
+    (q n : ℂ) * (q n : ℂ)^(s/2-1) = 1 / ((n+1 : ℕ) : ℂ)^s := by
+  have hq : (q n : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr (q_bounds n).1.ne'
+  rw [Complex.cpow_sub _ _ hq, Complex.cpow_one, mul_div_cancel₀ _ hq]
+  change (((1 / ((n+1 : ℕ) : ℝ)^2 : ℝ) : ℂ))^(s/2) = _
+  rw [one_div, Complex.ofReal_inv, Complex.inv_cpow_ofReal_nonneg (sq_nonneg _)]
+  rw [Complex.ofReal_pow, Complex.ofReal_natCast,
+    ← Complex.natCast_cpow_natCast_mul, one_div]
+  congr 2
+  push_cast
+  ring
+
+private theorem moebius_hasSum {s : ℂ} (hs : 1 < s.re) :
+    HasSum (fun n : ℕ => (ArithmeticFunction.moebius (n+1) : ℂ) /
+      ((n+1 : ℕ) : ℂ)^s) (1 / riemannZeta s) := by
+  have h := ArithmeticFunction.LSeries_zeta_mul_Lseries_moebius hs
+  rw [ArithmeticFunction.LSeries_zeta_eq_riemannZeta hs] at h
+  have he : LSeries (fun n => (ArithmeticFunction.moebius n : ℂ)) s =
+      1 / riemannZeta s := by
+    apply (eq_div_iff (riemannZeta_ne_zero_of_one_lt_re hs)).mpr
+    simpa only [mul_comm] using h
+  have hh := (ArithmeticFunction.LSeriesSummable_moebius_iff.mpr hs).hasSum
+  change HasSum (LSeries.term (fun n => (ArithmeticFunction.moebius n : ℂ)) s)
+    (LSeries (fun n => (ArithmeticFunction.moebius n : ℂ)) s) at hh
+  rw [he] at hh
+  have hshift := (hasSum_nat_add_iff' 1).mpr hh
+  simpa only [Finset.sum_range_one, LSeries.term_zero, sub_zero,
+    LSeries.term_of_ne_zero (Nat.succ_ne_zero _)] using hshift
+
+private theorem coefficient_fiber (s : ℂ) (k : ℕ) :
+    HasSum (fun n : ℕ => kernel s (k,n))
+      ((baezDuarte k : ℂ) * normalizedPochhammer k (s/2)) := by
+  dsimp only [kernel, q]
+  exact (Complex.hasSum_ofReal.mpr (baez_duarte_hasSum_moebius k)).mul_right _
+
+private theorem dirichlet_fiber (s : ℂ) (n : ℕ) :
+    HasSum (fun k : ℕ => kernel s (k,n))
+      ((ArithmeticFunction.moebius (n+1) : ℂ) / ((n+1 : ℕ) : ℂ)^s) := by
+  have ht : ‖((1-q n : ℝ) : ℂ)‖ < 1 := by
+    rw [Complex.norm_real, Real.norm_eq_abs,
+      abs_of_nonneg (sub_nonneg.mpr (q_bounds n).2)]
+    linarith [(q_bounds n).1]
+  have h := (binomial_hasSum (s/2) ((1-q n : ℝ) : ℂ) ht).mul_left
+    ((ArithmeticFunction.moebius (n+1) : ℂ) * (q n : ℂ))
+  have hv : (ArithmeticFunction.moebius (n+1) : ℂ) * (q n : ℂ) *
+      (1 - ((1-q n : ℝ) : ℂ))^(s/2-1) =
+      (ArithmeticFunction.moebius (n+1) : ℂ) / ((n+1 : ℕ) : ℂ)^s := by
+    rw [Complex.ofReal_sub, Complex.ofReal_one, sub_sub_cancel, mul_assoc, power_bridge]
+    ring
+  rw [hv] at h
+  refine h.congr_fun (fun k => ?_)
+  simp only [kernel, q, Complex.ofReal_mul, Complex.ofReal_div, Complex.ofReal_pow,
+    Complex.ofReal_sub, Complex.ofReal_one, Complex.ofReal_natCast, Complex.ofReal_intCast]
+  ring
+
+/-- The original Baez-Duarte coefficients and normalized Pochhammer polynomials
+sum to reciprocal zeta throughout the strict half-plane Re(s)>1. Absolute
+summability of the coupled arithmetic kernel is derived from this hypothesis. -/
+theorem baez_duarte_newton_hasSum {s : ℂ} (hs : 1 < s.re) :
+    HasSum (fun k : ℕ => (baezDuarte k : ℂ) * normalizedPochhammer k (s/2))
+      (1 / riemannZeta s) := by
+  have hp : Summable (kernel s) := (kernel_norm_summable hs).of_norm
+  have hn := hp.hasSum.prod_fiberwise (coefficient_fiber s)
+  have hd := hp.prod_symm.hasSum.prod_fiberwise (dirichlet_fiber s)
+  have he := hd.unique (moebius_hasSum hs)
+  have heq : (∑' p, kernel s p) = 1 / riemannZeta s := by
+    rw [← Equiv.tsum_eq (Equiv.prodComm ℕ ℕ)]
+    exact he
+  rw [heq] at hn
+  exact hn
+
 example (z : ℂ) : normalizedPochhammer 0 z = 1 := normalized_pochhammer_zero z
 example (z : ℂ) : normalizedPochhammer 1 z = 1-z := by
   simp [normalizedPochhammer]
 example (z : ℂ) : HasSum (fun k => normalizedPochhammer k z * (0 : ℂ)^k) 1 := by
   simpa using binomial_hasSum z 0 (by norm_num)
+
+example (s : ℂ) : HasSum (fun k : ℕ => kernel s (k,0)) 1 := by
+  simpa using dirichlet_fiber s 0
+example (s : ℂ) : kernel s (0,0) = 1 := by
+  simp [kernel, q, normalized_pochhammer_zero]
+example (k : ℕ) : normalizedPochhammer (k+1) ((2 : ℂ)/2) = 0 := by
+  simp [signed_choose]
+example : HasSum (fun k : ℕ => (baezDuarte k : ℂ) *
+    normalizedPochhammer k ((2 : ℂ)/2)) (1 / riemannZeta 2) :=
+  baez_duarte_newton_hasSum (by norm_num)
+example : (baezDuarte 0 : ℂ) = 1 / riemannZeta 2 := by
+  have h := baez_duarte_newton_hasSum (s := 2) (by norm_num)
+  have hv (k : ℕ) : (baezDuarte k : ℂ) * normalizedPochhammer k ((2 : ℂ)/2) =
+      if k = 0 then (baezDuarte 0 : ℂ) else 0 := by
+    cases k <;> simp [signed_choose]
+  simp only [hv] at h
+  exact (hasSum_ite_eq 0 (baezDuarte 0 : ℂ)).unique h
 
 end D5.S3.Weil.Analytic.BaezDuarteNewton
