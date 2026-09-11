@@ -14,36 +14,6 @@
 (空闲跌至 25%);改走 serial-lean 后**三席并发**跑完完整门链,40 个采样点
 最低空闲 55%、零 kill。
 
-**那个「三」是整台机器的额度,不是「席位的额度」。** 2026-09-11 实测:三席正常跑着,
-orchestrator 自己在第四棵树上起了一个完整 `make lean-report` + `make emit`,
-宿主低内存守卫**一次杀掉五个作业** —— 三席之一、那条 report、以及三个无关的
-gh/nyxid 作业。派席的负载门只看得见席位,看不见调用方自己起的活,
-所以这道算术得调用方自己做:**开任何重 Lean 作业之前,把它算进同一个额度**。
-被杀后照下一节清孤儿;那次数学一条没丢,因为席位按本段要求增量提交过。
-
-**而 `make lean-report` 不是「一个」重活,`serial-lean` 也管不到它。**
-同日第二次被杀时我已经数过额度(零席位、「一个」重活),照样被杀。查到的真数是:
-`make lean-report` → `lean-report.sh` → `report-supervisor.sh`,后者是
-`MAX_CONCURRENCY="${STRATALINT_LEAN_MAX_CONCURRENCY:-5}"` —— **默认五个并发 lean 槽**,
-每个槽里的 lake 还按核数自行并行(lake 5.0.0 无 job 旋钮,见上)。
-**这个并发面与树建没建满无关**:同日实测,先 `serial-lean` 把树建满
-(44 个模块、零失败、全程空闲 87%),随后的 `lean-report` **仍然**拉起七个 lean 进程、
-各占 80–88% CPU、单个峰值 3.06 GB,空闲 87% → 70%,该次 `RESOURCE_OBSERVATION` 的
-`rss_peak_kb=23914592`(跨进程求和口径)。原因是报告除了构建还要**逐模块跑检查**,
-那部分本来就是按槽并行的。
-⟹ 算额度时 `make lean-report` 按 **5** 计,不是按 1;要压下去只能显式设
-`STRATALINT_LEAN_MAX_CONCURRENCY`(该默认值是 `policy-override`,永久案号 #1910)。
-
-**槽锁是会留下来的。** 被杀的 report 会把 `slot-N.lock` 留在
-`$TMPDIR/stratalint-report-supervisor-501/slots/` 下,持有者 pid 已死而锁还在;
-不清的话这台机器每次 report 都少一个槽,**且没有任何症状**。
-判死看持有者 pid(锁文件内是 `pid|时间`),`kill -0` 不通即可删。
-
-**巨型模块要预先建好,不要在席位树里重编**:实测 `VersionBOddCountUnderdetermines`
-单进程峰值 7.57 GB。`oom-guard.sh` 只播种 `ExponentialImplicitParityPeriodThree`
-(#6360),其注释所称「the single module known to peak host memory」**已过期**。
-从源字节一致的 donor lane 复制两个 build 子树下同名文件即可(oom-guard 的规则)。
-
 ## 构建被杀之后:先清孤儿,再重跑
 
 被杀的是 harness 跟踪的作业,它派生的 lake/lean **成为孤儿继续跑**。不清就变成同树两个
@@ -88,52 +58,6 @@ elaborate 失败时 Lean 自插 `sorryAx`。2026-09-11 实测:一份 125 行、`
 派席时点名一个同桶现成 note 让它逐字抄 frontmatter 与 locator 段结构,只改值。
 **派生判词会淹没根判词**:第二次那回有 7 条 `dangling-literature-reference` 排在根判词前面,
 先 `grep 'invalid-'`,别从第一条读起。
-
-## brief 里写「上游没有 X」之前,先搜「做这件事的动作」而不是「复合名字」
-
-2026-09-11 一天内三次断言「不存在」,两次是错的,每次代价是一个席位的完整生命周期:
-
-| 我断言 | 我实际搜的 | 真相 |
-| --- | --- | --- |
-| 「mathlib 无 `exp_mulVec` / 本征向量版本」 | `exp_mulVec`、`eigenvector.*exp` | **对**,席位复查一致 |
-| 「模块只 import mathlib」 | (没搜;把席位报的「已冻结 D5 依赖为空」当成了 import 面) | **错**,admission 以 SL-010 判红 |
-| 「仓内与 mathlib 都没有把迹指数族对参数求导的任何结果」 | `trace_exp`、`exp_trace` | **错**,`Mathlib/Analysis/SpecialFunctions/Exponential.lean:382` 有 `hasDerivAt_exp_smul_const`,整条目标由它经连续线性迹与 log 法则闭合 |
-
-两次错的形状相同:**我搜的是一个复合名字,而上游把这件事拆在另一个名字下**。
-`trace_exp` 不存在,但「对 `exp (u • x)` 求导」存在;
-`import` 面没被搜,因为我把另一个字段的读数当成了它。
-
-**编排者的 brief 里不许出现「上游没有 X」这个结论。** 一句都不许。
-
-这是同一天**第三次**同型之后的收口。前两次的修法是「写出搜了哪几个名」,**不够** ——
-我照做了,然后在下一份 brief 里写下「`CompletelyMonotone` 0 命中、`StieltjesFunction`
-不是这个 ⟹ 上游没有这个对象」。而上游有
-`Mathlib/MeasureTheory/Measure/ResolventTransform.lean:104` 的 `resolventTransform`;
-**本仓自己**还有 `D5/S3/Weil/CayleyLaguerre/CayleyMomentTransport.lean:492` 的
-`private theorem iteratedDeriv_resolvent_budget`,正是那条逐阶公式。
-席位迟到检索查出来并拒绝落地,原话:「我不把这次迟到的发现掩盖为 search-complete」。
-
-三次形状完全一样:**我搜的是这件事的「名字」,上游归档在这件事的「做法」下。**
-`trace_exp` 不存在但「对 `exp (u • x)` 求导」存在;`CompletelyMonotone` 不存在但
-「对 `(x+u)⁻¹` 积分」作为 resolvent transform 存在。**换更好的名字救不了它 ——
-错的是让编排者来下这个判断。**
-
-**正形**:brief 里写
-
-> 我试过这几个名:`A`、`B`、`C`,都没命中。**这不是缺席断言,是我的起点。**
-> 动手前你自己按第 3.1 条 完成检索(D5 → 钉版 mathlib → 第三方生态),
-> 命中任何可用结果就停下报告,不要绕开它另证。
-
-**判据**:brief 里出现「上游没有」「0 命中 ⟹ 不可能是实例化」「这是空白」之类**结论句**,
-即违规。编排者提供**读数**(搜了哪些名、结果如何),**判断留给动手前的席位** ——
-它在树里、能编译、能查 import 面;编排者只有 grep。
-搜的对象是**动作**(对指数族求导、把迹当线性映射、把幂等元的迹换成秩),
-不是你为目标起的那个复合名。搜不出就如实写「我搜了这几个名,没命中」——
-那是可反驳的读数;「没有 X」是不可反驳的断言(第 2.9 条)。
-
-`tools/scripts/agent/bindonly-probe.sh` 只能挡住**单项**闭合:它自己的注释写明
-`open` 不充分,因为 `exact?` 找的是单个 term,**两行的库组合照样报 open**。
-上表第三行正是多步组合,探针救不了 —— 只有把搜索对象换成动作才救得了。
 
 ## 交付形状的三条禁令
 
