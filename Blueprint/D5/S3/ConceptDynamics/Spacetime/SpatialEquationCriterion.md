@@ -1,4 +1,4 @@
-# The Spatial Equation Criterion
+# The Abstract Spatial Equation Criterion
 
 ## Abstract
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/ConceptDynamics/Spacetime/SpatialEquationCriterion.princi
 
 *Commentary.*
 
-Finite-support differences remain principal multiples by distributivity. This closure is used as an explicit algebraic witness and does not claim that membership supplies a computable quotient.
+Differences of principal multiples remain principal multiples by distributivity. This is a closure property of a general ring; computing a quotient is a separate question.
 
 ## References
 
