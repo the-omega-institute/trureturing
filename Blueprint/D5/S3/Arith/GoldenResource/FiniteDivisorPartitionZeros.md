@@ -84,4 +84,3 @@ Apply the nonvanishing statement contrapositively to the same finite divisor par
 - Truth anchor: `D5/S3/Arith/GoldenResource/FiniteDivisorPartitionZeros.partition`
 - Truth anchor: `D5/S3/Arith/GoldenResource/FiniteDivisorPartitionZeros.partition_ne_zero_of_re_ne_zero`
 - Truth anchor: `D5/S3/Arith/GoldenResource/FiniteDivisorPartitionZeros.partition_zero_re`
-- Dependency: [D5/S3/Weil/EulerProduct](../../Weil/EulerProduct.md)

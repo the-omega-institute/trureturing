@@ -6,7 +6,6 @@
    utility: none
    digest: Finite divisor partition functions have explicit local zeros and no zeros off the imaginary axis. -/
 
-import D5.S3.Weil.EulerProduct
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Algebra.Field.GeomSum
 import Mathlib.Data.Nat.Factorization.Basic
@@ -17,7 +16,6 @@ noncomputable section
 namespace D5.S3.Arith.GoldenResource.FiniteDivisorPartitionZeros
 
 open scoped BigOperators
-open D5.S3.Weil.EulerProduct
 
 /-- The geometric factor with exponents from zero through `a`. -/
 def localFactor (p a : ℕ) (s : ℂ) : ℂ :=
@@ -38,10 +36,25 @@ private theorem geometric_zero_iff (q : ℂ) (a : ℕ) :
 private theorem power_one_iff {p : ℕ} (hp : p.Prime) (s : ℂ) :
     (p : ℂ) ^ (-s) = 1 ↔
       ∃ k : ℤ, s = (k : ℂ) * (2 * Real.pi * Complex.I) / (Real.log p : ℂ) := by
-  have h := finite_euler_denominator_eq_zero_iff hp s
-  unfold finiteEulerDenominator at h
-  rw [sub_eq_zero] at h
-  exact eq_comm.trans h
+  have hp0 : (p : ℂ) ≠ 0 := by exact_mod_cast hp.ne_zero
+  have hlog : (Real.log p : ℂ) ≠ 0 := by
+    exact_mod_cast (Real.log_pos (by exact_mod_cast hp.one_lt)).ne'
+  constructor
+  · intro hpow
+    rw [Complex.cpow_def_of_ne_zero hp0, ← Complex.natCast_log] at hpow
+    obtain ⟨k, hk⟩ := Complex.exp_eq_one_iff.mp hpow
+    refine ⟨-k, ?_⟩
+    apply (eq_div_iff hlog).2
+    calc
+      s * (Real.log p : ℂ) = -((Real.log p : ℂ) * -s) := by ring
+      _ = -((k : ℂ) * (2 * Real.pi * Complex.I)) := by rw [hk]
+      _ = ((-k : ℤ) : ℂ) * (2 * Real.pi * Complex.I) := by simp
+  · rintro ⟨k, rfl⟩
+    rw [Complex.cpow_def_of_ne_zero hp0, ← Complex.natCast_log]
+    apply Complex.exp_eq_one_iff.mpr
+    refine ⟨-k, ?_⟩
+    field_simp
+    simp
 
 private theorem power_length_one_iff {p : ℕ} (hp : p.Prime) (a : ℕ) (s : ℂ) :
     ((p : ℂ) ^ (-s)) ^ (a + 1) = 1 ↔
