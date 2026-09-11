@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:099fef413ebe3af40d56b131e2d40e73e7025aefd36cdebbe2657ede304fd02e
   normalized_sha256: sha256:099fef413ebe3af40d56b131e2d40e73e7025aefd36cdebbe2657ede304fd02e
 cas_ref: sha256:099fef413ebe3af40d56b131e2d40e73e7025aefd36cdebbe2657ede304fd02e
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Dynamics/FiniteEnergyRadiationBudget.finite_energy_radiation_budget
+    target_statement_id: sha256:01acdeb31201305dea197bcca214ae2977ad9f6bb0791dbb8deb00d7c34ab596
 receipts:
   unresolved_subitems: []
