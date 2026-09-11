@@ -1,5 +1,8 @@
 # Fubini–Study 角与条件记录时间界
 
+本席结算：**成**。三条目标均已证明并通过规定本地门链与无覆盖冻结。
+这不表示远端 CI 或 PR 已合并；本席依指令不开 PR，由 orchestrator 接续。
+
 产地：Codex 实施席，使用 lean4 skill；单点实施与自查，零独立评审席。
 orchestrator 的复算和最终评审由调用方填写，本报告不代填。
 
@@ -112,4 +115,29 @@ canonical `make lean-report` exit=0，delta 为 added=1、recheck=1；
 所有声明公理闭包并集仅为 propext、Classical.choice、Quot.sound，sorryAx=0。
 完整模块报告提取到 attempt/module-report.json；原报告 SHA-256 为
 `25592ceba4293362682b9240c09c92bc437f48c27479144f91822b2f17e75a01`。
-最终 emit、Scribe CI 与冻结结果待本次运行结算；尚不主张冻结或远端 CI 通过。
+`make emit` exit=0，新发射一份 Blueprint；随后 deposit 内部再发射为零变更。
+本地 CI 同层检查命令使用精确 merge-base
+`55a7383bcff911440a3bd641f23704afbd727113`，exit=0，判词为
+`DESCRIBE_STATUS case=DESCRIBE-NODES status=classified nodes=11148 suspected_novel=0
+formula_content_slots=68 formula_statements=32 red=0 observe=5011`。
+`^RED` 无行；KaTeX markdown 判词 `judged=1 formula(s)=3 red=0`。
+
+最后执行 `make deposit-uncovered`
+`GID=D5/S3/QuantumBounds/FubiniStudyRecordTime.fs_angle_triangle`
+`BASE=55a7383bcff911440a3bd641f23704afbd727113`，exit=0。
+`DEPOSIT_HEADER_CHECKED SL-012`；`LEDGER_ALIGN` 为
+`selectors_considered=4055 changed=0 added=1 unchanged=4054 conflicts=0`；
+终哨兵 `PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED ... reason=NO_ATOM`。
+新增 accepted 事件为
+`be7bb2c706721b7ba4edf691a5ffac54990516bfef63c485e6f05a381e0517a1`，
+模块的状态片位于 `Golden/Frozen/state/D5/S3/QuantumBounds/FubiniStudyRecordTime.lean.json`。
+形态为 deposit-uncovered；源 atom 的 coverage 和消化状态没有改动。
+
+主要原始日志均在 runner attempt：serial-lean.log、lean-report-fixed.log、
+emit-fixed.log、scribe-ci.log、deposit.log、module-report.json、controls.json。
+初次失败另存 lean-report.log 与 emit.log；完整数学无剩余缺口。
+未复算项：orchestrator 的 4000 例随机读数、第三方原环境构建/闭包、远端 CI、
+独立评审和 PR 合并；物理速度界、实际 Hamiltonian 演化及调度模型不在证明范围。
+`question_answered` 为本报告目标节的取模角三角不等式与其条件记录界；
+`dominating_theorem_search` 为 finite-dimensional third-party found / pinned-mathlib
+not-found-in-searched-scope，采取许可保全的移植适配，不主张检索穷尽或数学新颖。
