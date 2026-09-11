@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:37c02338cd2ddfe81ad29fc4c25a33ec67568446be6fe09c33cd02231f9ffe2b
   normalized_sha256: sha256:37c02338cd2ddfe81ad29fc4c25a33ec67568446be6fe09c33cd02231f9ffe2b
 cas_ref: sha256:37c02338cd2ddfe81ad29fc4c25a33ec67568446be6fe09c33cd02231f9ffe2b
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/HiddenArchiveTemporalDomain.current_spatial_projection_domain_refutation
+    target_statement_id: sha256:03c149e09c5014377974bee9a9b5b81764c0153e83845571e7258846ac91bdf2
 receipts:
   unresolved_subitems: []
