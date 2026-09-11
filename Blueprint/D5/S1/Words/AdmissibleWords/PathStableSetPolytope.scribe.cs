@@ -27,14 +27,14 @@ internal sealed class PathStableSetPolytopeDocument : IScribeDocumentDefinition
                     + "of (u,0,v), with u and v in [0,1], and the apex (0,1,0). "
                     + "The mixing coefficient t is the middle occupancy x1. Thus the base "
                     + "is the unit square in the plane x1=0 and the apex has x1=1.",
-                Eqn(F.Id("x"), Seq(Grp(Num(1), Minus, F.Id("t")), Sp,
+                Eqn(F.Id("x"), Seq(Seq(Open, Num(1), Minus, F.Id("t"), Close), Sp,
                     Tuple(F.Id("u"), Num(0), F.Id("v")), Sp, Plus, Sp, F.Id("t"), Sp,
                     Tuple(Num(0), Num(1), Num(0))))),
             Paragraph(Text(
                 "The induction keeps the entire tail mixture. On each tail word it prepends "
                     + "either zero or the complement of the first tail bit. At the level of "
                     + "means these are the affine maps y mapped to (0,y) and (1-y0,y). "
-                    + "If x1 is below one, their mixture with coefficient x0/(1-x1) "
+                    + "If x1 is below one, set t=x0/(1-x1); their mixture with coefficient t "
                     + "has the prescribed mean x. If x1 is one, x0 is zero and the first "
                     + "map suffices. A tail component of weight p therefore gives two "
                     + "components of weights (1-t)p and tp, preserving all tail correlations.")))));
@@ -52,5 +52,5 @@ internal sealed class PathStableSetPolytopeDocument : IScribeDocumentDefinition
     private static Formula Sub(Formula a, Formula b) => Seq(a, Underscore, Grp(b));
     private static Formula Eqn(Formula a, Formula b) => Disp(Seq(a, Sp, Eq, Sp, b));
     private static Formula Tuple(Formula a, Formula b, Formula c) =>
-        Seq(Lparen, a, Comma, b, Comma, c, Rparen);
+        Seq(Open, a, Comma, b, Comma, c, Close);
 }

@@ -3,8 +3,8 @@ bibkey: chvatal1975polytopes
 authors: Vaclav Chvatal
 year: 1975
 title: On certain polytopes associated with graphs
-doi: 10.1016/0095-8956(75)90041-6
-url: null
+doi: null
+url: https://doi.org/10.1016/0095-8956(75)90041-6
 claim: For a perfect graph the stable set polytope is described by nonnegativity and clique inequalities; finite paths give the bounded adjacent-sum description.
 strata_touched:
   - D5/S1/Words/AdmissibleWords/PathStableSetPolytope
@@ -16,7 +16,7 @@ triage: anchor
 
 ## Verified locator
 
-The bibliographic locator is 10.1016/0095-8956(75)90041-6.
+The bibliographic locator is https://doi.org/10.1016/0095-8956(75)90041-6.
 Crossref identifies the article as V. Chvatal, On certain polytopes associated
 with graphs, Journal of Combinatorial Theory, Series B 18 (1975), 138–154.
 The public exposition at https://en.wikipedia.org/wiki/Perfect_graph states
@@ -30,7 +30,7 @@ The singleton inequalities give coordinate upper bounds, including the
 isolated vertex when the path has length one. The edge inequalities say
 that adjacent occupancies sum to at most one.
 
-The Lean proof uses an induction on path length. Given a mixture of tail
+The Lean proof uses an induction on the number of vertices. Given a mixture of tail
 words, prepend either zero or the complement of the first tail bit. Both
 operations preserve admissibility and extend affinely to tail means. Mixing
 these two extensions with coefficient x0/(1-x1) restores the requested first
