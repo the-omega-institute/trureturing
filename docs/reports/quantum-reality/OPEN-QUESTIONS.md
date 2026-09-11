@@ -65,6 +65,45 @@ cross-species 共享 active symmetry / §17.1–18 量子统计层 / Einstein �
 四项 `物理输入` 缺口;表态类的整类重裁;任何需要跑 Lean / 构建 / 渲染的断言
 (你没有文件系统,凡涉及「跑过什么」一律标 `ASSUMED-UNVERIFIED`)。
 
+
+### 结算(第 20 轮判词已收,2026-09-12)
+
+**载体**:`nyx.sh` 遍历的三个池全部终局失败(`infrastructure_retry_exhausted` ×2、
+`composer_draft_conflict` ×1;三个 task id 均已提交,逐个 `result` 取回确认不是可取答案
+——与第 19 轮的 TIMEOUT 不同,那次任务仍在飞故可取,**两者不是同一症状**)。
+`nyxid oracle pool list` 显示**五个池全 active,而 `nyx.sh` 只遍历三个**;
+钉住从未试过的 `chatgpt-pro-pool` 重派,`NYX_OK` 一次成功。鉴权正常,非 τ=0 能力缺口。
+
+**Q1 结论**:假设**不能直接删**;**追加酉性后可卸,且对任意群成立**,不需有限或紧。
+路线是 **⋆-闭包 → Jacobson 根基为零 → 半单**,**不是 Maschke**;地形图第三节该行已据此更正。
+不加酉性的反例(orchestrator 手算复核):`G = ℤ`、`U n = [[1,n],[0,1]]`,
+交换子 `≅ ℂ[ε]/(ε²)`,根基 `(ε) ≠ 0`,不半单 —— 故 `hU` 是承重假设。
+
+**Q2 撤回,前提不成立**:我在题面里照抄第 16 轮的「三条仍标 `FromRepo`」而未核当前树;
+席位反过来更正我且它是对的 —— `RecordCapacity.scribe.cs` @ `852514a48b` 的三处
+(第 28 / 32 / 36 行)**各自显式传 `true`**,走 `FromLiterature` 分支。
+第 16 轮那条具名开项就此关闭(理由是已解决,不是被忽略)。
+同文件 7 个调用点全部显式传参,`bool literature = false` 默认值**存在但从未被走到**。
+
+**产出的形式化靶**(已派席 `commutant-ss-1`):
+
+```lean
+theorem commutant_isSemisimpleRing_of_unitary
+    {G n : Type*} [Group G] [Fintype n] [DecidableEq n]
+    (U : G →* Matrix n n ℂ) (hU : ∀ g, U g ∈ unitary (Matrix n n ℂ)) :
+    IsSemisimpleRing (commutant U)
+```
+
+具名见证 `jacobson_eq_bot_of_conjTranspose_closed`;上游入口
+`Artinian/Module.lean:650 isSemisimpleRing_iff_jacobson`、`Algebra/Star/Unitary.lean:116 star_eq_inv`
+(两处 orchestrator 已复核存在)。席位自标该签名 `ASSUMED-UNVERIFIED`,未编译过。
+
+**席位自划的未验边界**:未取得 `#6298` 评论正文(公开页只给主帖,两个评论 API 入口均失败),
+故不把内联提供的前轮结算冒充为它读到的评论链;仓内判断钉在 `852514a48b`,
+mathlib 钉在 `db584cd6d4`;Scribe 标签只证明当前源码,不证明它们在评论史上何时被裁过。
+**orchestrator 未复核**:Jacobson 根基为零那一步的完整代数论证与其钉版支持面。
+
+
 ---
 
 ## 本轮:**清零之后又长出十七条 —— 表态类真的闭合了吗**(第 19 轮,2026-09-11)
