@@ -79,8 +79,11 @@ inflight_on() {
 # 进程表取自 $SEAT_COUNT_PS,使本函数成为一段可喂合成输入的纯文本处理 —— 否则它没有钉子
 # (第 9.3 条:写不出反例的检查等于没检查)。生产路径不设该变量。
 seat_count() {
+  # 行必须同时含 runner 名与该 flag:只写 `grep -- '--work-target'` 会把任何**引用**了这个
+  # 字符串的 argv 一并数进来 —— 实测撞到过一次,是我自己那条 shell 命令的 zsh 包装行。
+  # 该方向是保守的(多数=多等),但它会让门在宿主明明空闲时挡住席位,与本次修的病同形。
   ${SEAT_COUNT_PS:-ps -eo args} 2>/dev/null \
-    | grep -- '--work-target' | grep -v -e '^ps ' -e 'grep' \
+    | grep -- 'run-codex-worker\.sh' | grep -- '--work-target' \
     | grep -o -- '--work-target [^ ]*' | sort -u | wc -l | tr -d ' '
 }
 
@@ -107,6 +110,22 @@ PS
     echo "  ok   seat_count counts work-targets, not processes"
   else
     echo "  FAIL seat_count returned '$seats', expected 2"; fails=$((fails + 1))
+  fi
+  # 阴性对照:只是**引用**了该 flag 的 argv 不算席位。
+  cat >"$tmp/ps-quoting" <<'PS'
+#!/bin/sh
+cat <<'ROWS'
+bash /p/run-codex-worker.sh --work-target /w/one --stage implementation
+/bin/zsh -c echo "the knob is --work-target <tree> in that script"
+python3 -c print('--work-target /w/fake')
+ROWS
+PS
+  chmod +x "$tmp/ps-quoting"
+  seats=$(SEAT_COUNT_PS="$tmp/ps-quoting" seat_count)
+  if [ "$seats" = "1" ]; then
+    echo "  ok   seat_count ignores argv that merely quotes the flag"
+  else
+    echo "  FAIL seat_count returned '$seats' with one seat plus two quoters, expected 1"; fails=$((fails + 1))
   fi
   cat >"$tmp/ps-idle" <<'PS'
 #!/bin/sh
