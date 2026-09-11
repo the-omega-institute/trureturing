@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Matrix/CommutantSemisimple
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: none
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Matrix/CommutantSemisimple.AllIntegerMatrixCommutantsSemisimple; result=D5/S3/Quantum/Matrix/CommutantSemisimple.not_all_integer_matrix_commutants_semisimple; claim=D5/S3/Quantum/Matrix/CommutantSemisimple.AllIntegerMatrixCommutantsSemisimple
    digest: Unitary matrix representations have semisimple commutants and record capacity bounds. -/
 
 import D5.S3.Quantum.Matrix.RecordCapacity
@@ -153,5 +153,14 @@ theorem unipotent_commutant_characterization (X : Matrix (Fin 2) (Fin 2) ℂ) :
     fin_cases i <;> fin_cases j <;> simp [hc, hd]
   · rintro ⟨a, b, rfl⟩
     simp
+
+/-- The universal claim obtained by dropping unitarity, restricted to integer two-dimensional actions. -/
+def AllIntegerMatrixCommutantsSemisimple : Prop :=
+  ∀ U : Multiplicative ℤ →* Matrix (Fin 2) (Fin 2) ℂ, IsSemisimpleRing (commutant U)
+
+/-- Integer shears refute universal semisimplicity without unitarity. -/
+theorem not_all_integer_matrix_commutants_semisimple : ¬ AllIntegerMatrixCommutantsSemisimple := by
+  intro h
+  exact unipotent_commutant_not_isSemisimpleRing (h unipotentRepresentation)
 
 end D5.S3.Quantum.Matrix.CommutantSemisimple
