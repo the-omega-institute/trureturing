@@ -40,7 +40,7 @@ internal sealed class FubiniStudyRecordTimeDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Module + "record_time_lower_bound"),
                 H("Orthogonal final records require contact time"),
                 StatementSource.FromAuthor(Disp(Seq(
-                    Frac, Grp(Pi, Sp, Hbar), Grp(D(4), Sp, F.Id("E")), Le, Tau))),
+                    Frac, Grp(Pi, Sp, F.Id("hbar")), Grp(D(4), Sp, F.Id("E")), Le, Tau))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -60,7 +60,8 @@ internal sealed class FubiniStudyRecordTimeDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Module + "record_count_upper_bound"),
                 H("A total contact-time budget bounds the number of records"),
                 StatementSource.FromAuthor(Disp(Seq(F.Id("N"), Le,
-                    Frac, Grp(D(4), Sp, F.Id("E"), Sp, F.Id("T")), Grp(Pi, Sp, Hbar)))),
+                    Frac, Grp(D(4), Sp, F.Id("E"), Sp, F.Id("T")),
+                    Grp(Pi, Sp, F.Id("hbar"))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
