@@ -39,9 +39,9 @@ internal sealed class CrossSpeciesConsensusDocument : IScribeDocumentDefinition
                     + "density matrices satisfy the hypotheses; trace normalization "
                     + "alone suffices for the algebraic conclusion. This concerns the "
                     + "same observable, with the same calibration, for all species.",
-                Disp(Seq(Call("ReTrProduct", F.Id("rho_s"), F.Id("A")), Sp, Eq, Sp,
+                Disp(Seq(Call("ReTrProduct", Call("probe", F.Id("s")), F.Id("A")), Sp, Eq, Sp,
                     F.Id("r"), Sp, Eq, Sp,
-                    Call("ReTrProduct", F.Id("rho_t"), F.Id("A"))))))));
+                    Call("ReTrProduct", Call("probe", F.Id("t")), F.Id("A"))))))));
 
     private static DocumentBlock Result(
         string id, string declaration, string title, string text, Formula statement) =>
