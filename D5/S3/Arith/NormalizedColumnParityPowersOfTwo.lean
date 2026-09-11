@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: The normalized A144637 column is odd exactly at positive powers of two. -/
+   digest: The zero-constant-coefficient solution of the cubic recorded for A144637 is odd exactly at positive powers of two. -/
 
 import D5.S3.Arith.ArtinSchreierQuadraticRootUniqueness
 import D5.S3.Arith.ArtinSchreierTracePowersOfTwo

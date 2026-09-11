@@ -11,14 +11,17 @@ internal sealed class NormalizedColumnParityPowersOfTwoDocument :
         "D5/S3/Arith/NormalizedColumnParityPowersOfTwo.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The normalized A144637 series is integral and odd exactly at positive powers of two.",
+        "The zero-constant-coefficient solution of the cubic equation recorded for A144637 is integral and odd exactly at positive powers of two.",
         H("A144637 Normalized Column Parity"),
         Blocks(
             Paragraph(Text(
-                "Write y=(1/18)A(6x), where A is the exponential generating function "
-                    + "of OEIS A144637. Its explicit equation is "
-                    + "36y^3+3y^2+(1+6x)y=x^2, with y(0)=0. Thus coefficient n of y "
-                    + "is 6^n a(n)/(18 n!).")),
+                "The series treated here is the unique power series with zero constant "
+                    + "coefficient satisfying 36y^3+3y^2+(1+6x)y=x^2. OEIS A144637 records "
+                    + "that its exponential generating function A satisfies this equation "
+                    + "through y=(1/18)A(6x), so that coefficient n of y would equal "
+                    + "6^n a(n)/(18 n!). That identification is quoted from the entry and is "
+                    + "not proved below; every statement below concerns only the series "
+                    + "defined by the equation.")),
             Describe.Lean(
                 DescribeId.Create("a144637-normalized-integral-series"),
                 DeclarationHandle.Create(Gid + "normalizedColumnSeries"),
