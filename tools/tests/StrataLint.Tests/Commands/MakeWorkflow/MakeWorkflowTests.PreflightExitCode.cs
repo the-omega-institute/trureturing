@@ -136,6 +136,9 @@ public sealed partial class MakeWorkflowTests
         var report = Path.Combine(root, ".lake", "build", "stratalint", "raw-lean-report.json");
         CopyPreflightScriptClosure(sourceRoot, root);
         CopyBannedApiCompileFailProof(root);
+        LeanReportRegistrationFixture.Install(root);
+        foreach (var relative in new[] { "Trureturing.lean", "lean-toolchain", "lake-manifest.json", "lakefile.toml" })
+            File.WriteAllText(Path.Combine(root, relative), "fixture\n");
         Directory.CreateDirectory(Path.GetDirectoryName(report)!);
         Directory.CreateDirectory(binDirectory);
         File.WriteAllText(
@@ -145,7 +148,8 @@ public sealed partial class MakeWorkflowTests
         RunScenarioGit(root, "init", "--initial-branch=dev");
         RunScenarioGit(root, "config", "user.email", "preflight@example.invalid");
         RunScenarioGit(root, "config", "user.name", "Preflight Fixture");
-        RunScenarioGit(root, "add", "README.md", "tools");
+        RunScenarioGit(root, "add", "README.md", "tools", "lean-report-inputs.json",
+            "Trureturing.lean", "lean-toolchain", "lake-manifest.json", "lakefile.toml");
         RunScenarioGit(root, "commit", "-m", "fixture base");
         var candidatePath = scenario == "stale-values"
             ? Path.Combine(root, "Golden", "values-kernels.toml")

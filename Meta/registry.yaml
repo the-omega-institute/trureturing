@@ -12,6 +12,7 @@ root_files:
   - "global.json"
   - "lake-manifest.json"
   - "lakefile.toml"
+  - "lean-report-inputs.json"
   - "lean-toolchain"
 governance_documents:
   - "D5/X_Frontier/HeartsAuthorizations.md"
