@@ -8,8 +8,10 @@ FROZEN_LEDGER="Golden/Frozen/accepted"
 TRUTH_GRAPH="Generated/truth-graph.v1.json"
 COMMAND="${1:-}"
 BASE="${2:-origin/dev}"
-ATOM_ID="${3:-}"
-GID="${4:-}"
+if [[ "$COMMAND" != deposit-uncovered ]]; then
+  ATOM_ID="${3:-}"
+  GID="${4:-}"
+fi
 COVER_FAILURE_REASON=""
 
 run_cli() {
@@ -102,8 +104,8 @@ atom_id_resolves() {
   return 1
 }
 
-require_transaction_arguments() {
-  if [[ ! "$ATOM_ID" =~ ^[a-z0-9-]+$ || "$GID" != D5/*.* || "$GID" == *[[:space:]]* ]]; then
+require_atom_argument() {
+  if [[ ! "$ATOM_ID" =~ ^[a-z0-9-]+$ ]]; then
     echo "usage: playbook-workflows.sh $COMMAND BASE ATOM_ID GID" >&2
     return 2
   fi
@@ -112,13 +114,20 @@ require_transaction_arguments() {
     echo "PLAYBOOK_INVALID atom not found in the digestion ledger: $ATOM_ID" >&2
     return 2
   fi
+}
 
+require_module_argument() {
   DOCUMENT_GID="${GID%.*}"
   MODULE_PATH="${DOCUMENT_GID}.lean"
-  if [[ "$DOCUMENT_GID" == "$GID" || ! -f "$MODULE_PATH" ]]; then
+  if [[ "$GID" != D5/*.* || "$GID" == *[[:space:]]* || ! -f "$MODULE_PATH" ]]; then
     echo "PLAYBOOK_INVALID GID does not resolve to a Lean module: $GID" >&2
     return 2
   fi
+}
+
+require_transaction_arguments() {
+  require_atom_argument
+  require_module_argument
 }
 
 require_cover_batch_arguments() {
@@ -165,6 +174,25 @@ freeze_module_if_needed() {
     echo "PLAYBOOK_INVALID ledger align did not freeze target module: $MODULE_PATH" >&2
     return 1
   fi
+}
+
+deposit_module() {
+  local deposit_base_sha freeze_precheck status
+  require_new_module_blueprint_mirror
+  step lean-report make lean-report
+  deposit_base_sha="$(git rev-parse --verify "${BASE}^{commit}")"
+  step deposit-header-check run_cli deposit-header-check --target "$MODULE_PATH" --protected-base "$deposit_base_sha"
+  step emit make emit
+  if freeze_exists; then
+    freeze_precheck=1
+    printf 'PLAYBOOK_SKIP command=deposit detail=module-already-frozen path=%s\n' \
+      "$MODULE_PATH" >&2
+  else
+    status=$?
+    [[ "$status" -eq 1 ]] || exit "$status"
+    freeze_precheck=0
+  fi
+  freeze_module_if_needed "$freeze_precheck"
 }
 
 verify_added_frozen_event_v5() {
@@ -290,21 +318,7 @@ case "$COMMAND" in
     ;;
   deposit)
     require_transaction_arguments
-    require_new_module_blueprint_mirror
-    step lean-report make lean-report
-    deposit_base_sha="$(git rev-parse --verify "${BASE}^{commit}")"
-    step deposit-header-check run_cli deposit-header-check --target "$MODULE_PATH" --protected-base "$deposit_base_sha"
-    step emit make emit
-    if freeze_exists; then
-      freeze_precheck=1
-      printf 'PLAYBOOK_SKIP command=deposit detail=module-already-frozen path=%s\n' \
-        "$MODULE_PATH" >&2
-    else
-      status=$?
-      [[ "$status" -eq 1 ]] || exit "$status"
-      freeze_precheck=0
-    fi
-    freeze_module_if_needed "$freeze_precheck"
+    deposit_module
     if cover_row; then
       step emit make emit
     else
@@ -313,6 +327,16 @@ case "$COMMAND" in
         "$ATOM_ID" "$GID" "$COVER_FAILURE_REASON" >&2
       exit "$status"
     fi
+    ;;
+  deposit-uncovered)
+    if [[ "$#" -ne 3 || -n "${ATOM_ID+x}" ]]; then
+      echo "usage: playbook-workflows.sh deposit-uncovered BASE GID (ATOM_ID is not accepted)" >&2
+      exit 2
+    fi
+    GID="$3"
+    require_module_argument
+    deposit_module
+    printf 'PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED gid=%s reason=NO_ATOM\n' "$GID" >&2
     ;;
   cover)
     require_transaction_arguments
@@ -326,7 +350,7 @@ case "$COMMAND" in
     step cover-batch run_cli cover-batch --atoms "$ATOM_ID" --base "$BASE"
     ;;
   *)
-    echo "usage: playbook-workflows.sh deliver-check|deposit|cover|cover-batch [BASE] [ATOM_ID GID|ATOMS_FILE]" >&2
+    echo "usage: playbook-workflows.sh deliver-check|deposit|deposit-uncovered|cover|cover-batch [BASE] [ATOM_ID GID|GID|ATOMS_FILE]" >&2
     exit 2
     ;;
 esac

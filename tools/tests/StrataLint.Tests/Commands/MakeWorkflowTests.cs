@@ -64,6 +64,7 @@ public sealed partial class MakeWorkflowTests
         "truth-export",
         "deliver-check",
         "deposit",
+        "deposit-uncovered",
         "cover",
         "cover-batch",
         "decompose",
