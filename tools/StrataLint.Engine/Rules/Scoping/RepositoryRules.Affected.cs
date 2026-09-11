@@ -53,7 +53,8 @@ internal static partial class RepositoryRules
 
     private static bool AnchorsAffected(RuleEvaluationContext context) =>
         Changed(context, static path => path == "Library/queries.yaml")
-        || LiteratureReferenceChanged(context);
+        || LiteratureReferenceChanged(context)
+        || Changed(context, IsManagedLeanPath) || Changed(context, IsLeanReportProducerInput);
 
     private static bool LedgerAffected(RuleEvaluationContext context) =>
         Changed(context, static path =>
