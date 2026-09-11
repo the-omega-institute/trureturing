@@ -116,6 +116,13 @@ Library/Quantum=20；均低于 48。Lean 源码每行不超过 100 字符。
 首次 emit 的投影产生后、其尾部查询尚在运行时启动了 deposit；
 在 deposit 的冻结步骤前已取得该 emit 的 exit 0，且 deposit 自身再次依次
 执行 report → emit → freeze 并全部 exit 0。此重叠如实记录，不伪报命令严格串行。
+随后在同一源码上用同步 subprocess 顺序执行并逐项等待
+serial-lean → make lean-report → make emit → make deposit-uncovered，
+四个退出码均为 0，最终哨兵 `ORDERED_GATE_CHAIN status=complete failed=0`。
+日志为 attempt 的 `ordered-build.log`、`ordered-report.log`、`ordered-emit.log`、
+`ordered-deposit.log`；串行构建确认无缺失模块，deposit 确认模块已冻结。
+由此补齐严格串行门链的收尾证据。分支已推送至 `origin/lane/math/inoutbalance`，
+未创建 PR；本次 implementation 交回 runner 作后续独立评审。
 
 build_seconds: null（未另做计时实验）。无剩余数学子命题；
 初始等距映射的保纯性没有单独形式化，主定理直接采用用户指定的最终全局纯态前提。
