@@ -62,9 +62,7 @@ public sealed partial class DagLedgerMathlibReanchorWriterTests
         var report = Path.Combine(temporary.Path, "current.json");
         File.Copy(after.ReportPath, report);
         File.Copy(after.ReportPath + ".materials.zip", report + ".materials.zip");
-        var ensure = TestProcessRunner.Run("make", ["lean-cache-ensure"], TestRepositoryLayout.FindRoot(),
-            BoundedProcessRunner.HangDetectionBudget, 4 * 1024 * 1024);
-        Assert.True(ensure.ExitCode == 0, Encoding.UTF8.GetString(ensure.StandardOutput) + Encoding.UTF8.GetString(ensure.StandardError));
+        QualifiedSourceContextFixture.EnsureCompilerCache();
         foreach (var source in new[] { "ProbeExternal/Equality.lean", "D5/S0/Carrier/Helper.lean" })
             _ = Run("compile", source);
         var first = Prepare("first");

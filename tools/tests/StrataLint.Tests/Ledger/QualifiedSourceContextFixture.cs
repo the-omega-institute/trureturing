@@ -9,6 +9,18 @@ namespace StrataLint.Tests;
 internal static class QualifiedSourceContextFixture
 {
     private static readonly ConcurrentDictionary<(string Before, string After), Lazy<string>> Results = new();
+    // All cases use the same current checkout, pins and compiler environment.
+    // Only their temporary query sources differ. Keep first-use preparation real,
+    // without rebuilding/probing the unchanged checkout for each source pair.
+    private static readonly Lazy<bool> CompilerCache = new(() =>
+    {
+        var ensure = TestProcessRunner.Run("make", ["lean-cache-ensure"], TestRepositoryLayout.FindRoot(),
+            BoundedProcessRunner.HangDetectionBudget, 4 * 1024 * 1024);
+        Assert.True(ensure.ExitCode == 0, Encoding.UTF8.GetString(ensure.StandardOutput) + Encoding.UTF8.GetString(ensure.StandardError));
+        return true;
+    });
+
+    internal static void EnsureCompilerCache() => _ = CompilerCache.Value;
     internal static string Source(string name, string path)
     {
         using var packet = System.Text.Json.JsonDocument.Parse(File.ReadAllBytes(Path.Combine(TestRepositoryLayout.FindRoot(),
@@ -61,9 +73,7 @@ internal static class QualifiedSourceContextFixture
     private static string Produce(string before, string after)
     {
         using var temporary = new TemporaryDirectory();
-        var ensure = TestProcessRunner.Run("make", ["lean-cache-ensure"], TestRepositoryLayout.FindRoot(),
-            BoundedProcessRunner.HangDetectionBudget, 4 * 1024 * 1024);
-        Assert.True(ensure.ExitCode == 0, Encoding.UTF8.GetString(ensure.StandardOutput) + Encoding.UTF8.GetString(ensure.StandardError));
+        EnsureCompilerCache();
         var prepared = JsonNode.Parse(Run("prepare"))!;
         foreach (var source in new[] { "ProbeExternal/Equality.lean", "D5/S0/Carrier/Helper.lean" })
             _ = Run("compile", source);

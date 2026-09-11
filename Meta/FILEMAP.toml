@@ -337,6 +337,16 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
+pattern = "Meta/LeanInputs.json"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["LeanInputManifest"]
+verified_by = ["LeanInputManifest"]
+artifact_id = "LeanInputManifest"
+runtime_disposition = "committed-source"
+
+[[files]]
 pattern = "Meta/domains.yaml"
 kind = "data"
 admission_plane = "judge"

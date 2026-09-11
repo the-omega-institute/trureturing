@@ -1,0 +1,563 @@
+{
+  "schema_version": 1,
+  "scopes": [
+    {
+      "name": "managed-modules",
+      "includes": [],
+      "inputs": [
+        {
+          "patterns": [
+            "Trureturing.lean"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "D5/**/*.lean"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        }
+      ]
+    },
+    {
+      "name": "inspector-lean",
+      "includes": [],
+      "inputs": [
+        {
+          "patterns": [
+            "tools/lean-inspector/**/*.lean"
+          ],
+          "exclude": [],
+          "optional_root": "tools/lean-inspector",
+          "min_matches": 1
+        }
+      ]
+    },
+    {
+      "name": "lean-sources",
+      "includes": [
+        "managed-modules",
+        "inspector-lean"
+      ],
+      "inputs": []
+    },
+    {
+      "name": "lean-dependencies",
+      "includes": [],
+      "inputs": [
+        {
+          "patterns": [
+            "lean-toolchain"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "lake-manifest.json"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        }
+      ]
+    },
+    {
+      "name": "lean-config",
+      "includes": [
+        "lean-dependencies"
+      ],
+      "inputs": [
+        {
+          "patterns": [
+            "lakefile.toml",
+            "lakefile.lean"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        }
+      ]
+    },
+    {
+      "name": "report-dotnet",
+      "includes": [],
+      "inputs": [
+        {
+          "patterns": [
+            "tools/StrataLint.Cli/StrataLint.Cli.csproj"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/StrataLint.Cli/packages.lock.json"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/StrataLint.Cli/**/*.cs"
+          ],
+          "exclude": [
+            "tools/StrataLint.Cli/bin/**",
+            "tools/StrataLint.Cli/obj/**"
+          ],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/StrataLint.Engine/StrataLint.Engine.csproj"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/StrataLint.Engine/packages.lock.json"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/StrataLint.Engine/**/*.cs"
+          ],
+          "exclude": [
+            "tools/StrataLint.Engine/bin/**",
+            "tools/StrataLint.Engine/obj/**"
+          ],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/Trureturing.Truth/Trureturing.Truth.csproj"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/Trureturing.Truth/packages.lock.json"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/Trureturing.Truth/**/*.cs"
+          ],
+          "exclude": [
+            "tools/Trureturing.Truth/bin/**",
+            "tools/Trureturing.Truth/obj/**"
+          ],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "Directory.Build.props"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "Directory.Packages.props"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "global.json"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "Directory.Build.targets"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 0
+        }
+      ]
+    },
+    {
+      "name": "report-scripts",
+      "includes": [],
+      "inputs": [
+        {
+          "patterns": [
+            ".github/workflows/ci.yml"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/scripts/lean-report-pair.sh"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/scripts/report/lean-report-input.sh"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/scripts/report/report-supervisor.sh"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/scripts/report/lean-report-ci-baseline.sh"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/scripts/worktree/lean-cache-ensure.sh"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/scripts/worktree/lean-cache-input.sh"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/scripts/worktree/lean-cache-run.sh"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/scripts/worktree/lean-cache-publish.sh"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/scripts/lib/resource-observation-lib.sh"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/scripts/workflow/install-lean-toolchain.sh"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/scripts/workflow/judge-content-address.sh"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/scripts/workflow/scribe-content-checks.sh"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/lean-inspector/inspect.sh"
+          ],
+          "exclude": [],
+          "optional_root": "tools/lean-inspector",
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/lean-inspector/source-context.py"
+          ],
+          "exclude": [],
+          "optional_root": "tools/lean-inspector",
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/lean-inspector/source-context.sh"
+          ],
+          "exclude": [],
+          "optional_root": "tools/lean-inspector",
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/lean-inspector/delta.py"
+          ],
+          "exclude": [],
+          "optional_root": "tools/lean-inspector",
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/lean-inspector/materials.py"
+          ],
+          "exclude": [],
+          "optional_root": "tools/lean-inspector",
+          "min_matches": 1
+        }
+      ]
+    },
+    {
+      "name": "producer",
+      "includes": [
+        "inspector-lean",
+        "report-dotnet",
+        "report-scripts"
+      ],
+      "inputs": [
+        {
+          "patterns": [
+            "Meta/FILEMAP.toml"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "Meta/LeanInputs.json"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/StrataLint.Scribe/FileMap/LeanInputManifest.cs"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/StrataLint.Scribe/FileMap/FileMapManifest.cs"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        }
+      ]
+    },
+    {
+      "name": "scribe-runtime",
+      "includes": [
+        "producer"
+      ],
+      "inputs": [
+        {
+          "patterns": [
+            "tools/StrataLint.Scribe/StrataLint.Scribe.csproj"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/StrataLint.Scribe/packages.lock.json"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/StrataLint.Scribe/Vendor/Katex/katex.min.js"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/StrataLint.Scribe/**/*.cs"
+          ],
+          "exclude": [
+            "tools/StrataLint.Scribe/bin/**",
+            "tools/StrataLint.Scribe/obj/**",
+            "tools/StrataLint.Scribe/FileMap/LeanInputManifest.cs",
+            "tools/StrataLint.Scribe/FileMap/FileMapManifest.cs"
+          ],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/StrataLint.Scribe.Documents/packages.lock.json"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/StrataLint.Scribe.Documents/**/*.cs"
+          ],
+          "exclude": [
+            "tools/StrataLint.Scribe.Documents/bin/**",
+            "tools/StrataLint.Scribe.Documents/obj/**"
+          ],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
+            "tools/Architecture/BannedSymbols*.txt"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        }
+      ]
+    },
+    {
+      "name": "scribe-definitions",
+      "includes": [],
+      "inputs": [
+        {
+          "patterns": [
+            "Blueprint/**/*.scribe.cs"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        }
+      ]
+    },
+    {
+      "name": "scribe-producer",
+      "includes": [
+        "scribe-runtime",
+        "scribe-definitions"
+      ],
+      "inputs": []
+    },
+    {
+      "name": "scribe-report-inputs",
+      "includes": [
+        "scribe-runtime",
+        "lean-sources",
+        "lean-config"
+      ],
+      "inputs": []
+    },
+    {
+      "name": "scribe-projections",
+      "includes": [
+        "scribe-report-inputs"
+      ],
+      "inputs": [
+        {
+          "patterns": [
+            "Golden/Projection/*.json"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 0
+        }
+      ]
+    },
+    {
+      "name": "scribe-describe",
+      "includes": [
+        "scribe-report-inputs",
+        "scribe-definitions"
+      ],
+      "inputs": [
+        {
+          "patterns": [
+            "Library/**/*.yaml",
+            "Library/*/*.md",
+            "Problems/*.md",
+            "Meta/BACKFILL.yaml",
+            "Meta/Digestion/backfill/**/*.yaml"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 0
+        }
+      ]
+    },
+    {
+      "name": "scribe-markdown",
+      "includes": [
+        "scribe-definitions"
+      ],
+      "inputs": [
+        {
+          "patterns": [
+            "Blueprint/**/*.md"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 0
+        }
+      ]
+    }
+  ]
+}

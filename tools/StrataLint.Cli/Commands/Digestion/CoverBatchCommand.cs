@@ -112,7 +112,7 @@ internal static partial class CoverBatchCommand
         {
             session.RequireUnchanged();
             emission = (emit ?? (() => Emit(repositoryRoot, session, reportBundle,
-                documentsAssembly ?? typeof(DocumentAssembly).Assembly)))();
+                documentsAssembly ?? typeof(DocumentAssembly).Assembly, options.BaseRevision)))();
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
@@ -148,11 +148,11 @@ internal static partial class CoverBatchCommand
         })).Append('\n');
 
     private static CommandResult Emit(string root, CoverAtomCommand.Session session,
-        PrecomputedLeanReportSource.CapturedBundle? reportBundle, Assembly documentsAssembly)
+        PrecomputedLeanReportSource.CapturedBundle? reportBundle, Assembly documentsAssembly, string protectedBase)
     {
         if (reportBundle is null)
             throw new InvalidOperationException("final emission requires a precomputed Lean report bundle");
-        reportBundle.ValidateForEmission();
+        reportBundle.ValidateForEmission(protectedBase);
         session.RequireUnchanged();
         var output = new StringWriter();
         var error = new StringWriter();

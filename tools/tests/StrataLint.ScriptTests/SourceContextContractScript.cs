@@ -169,6 +169,121 @@ internal static class SourceContextContractScript
                     self.assertIsNone(result["error"])
                     self.assertFalse(result["commands"][-1]["equality"])
 
+        def test_simp_attributes_do_not_elaborate_targets_or_change_tokens(self):
+            attributes = ["simp", "local simp", "scoped simp", "-simp", "simp, local simp", "simp 100"]
+            requests = []
+            for attribute in attributes:
+                # A declaration-free projection must not elaborate this protected proof,
+                # nor resolve its local theorem when interpreting the attribute effect.
+                source = ("import Init\nnamespace AttrScope\n"
+                          "theorem attr_control : True := by exact protectedProofMustNeverExecute\n"
+                          f"attribute [{attribute}] attr_control\nend AttrScope\n")
+                query = "import D5.AttrSource\nexample : ')' =')' := by decide\n"
+                requests.append(request_for(query, "projected", managed=[dict(
+                    module="D5.AttrSource", path="D5/AttrSource.lean", source=source)]))
+            results = self.query_requests(requests)
+            for attribute, result in zip(attributes, results):
+                with self.subTest(attribute=attribute):
+                    self.assertIsNone(result["error"])
+                    self.assertFalse(result["initialEquality"])
+                    self.assertFalse(result["commands"][-1]["equality"])
+                    self.assertEqual(0, result["projectedDeclarations"])
+                    self.assertEqual(0, result["elaboratedDeclarations"])
+
+        def test_unmodeled_attribute_is_a_located_error(self):
+            # term_parser is a real current-Lean registration handler. Mixing it
+            # with simp must not turn the entire attribute list into a known no-op.
+            for attribute in ["term_parser", "simp, term_parser", "instance, term_parser", "-term_parser"]:
+                result = self.query("import Lean\n"
+                                    f"attribute [{attribute}] Lean.Parser.Term.paren\n"
+                                    "example : ')' =')' := by decide\n")
+                self.assertIsNotNone(result["error"])
+                self.assertEqual(2, result["error"]["line"])
+                self.assertIn("cannot determine this attribute registration effect", result["error"]["message"])
+
+        def compile_source(self, source):
+            path = self.root / "Registration.lean"
+            path.write_text(source)
+            result = subprocess.run([self.lean, str(path)], cwd=REPOSITORY, env=self.env,
+                                    text=True, capture_output=True)
+            print("REGISTRATION_COMPILER " + json.dumps(dict(source=source, exit=result.returncode,
+                  stdout=result.stdout, stderr=result.stderr)), flush=True)
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+
+        def test_notation_expansion_strings_do_not_register_tokens(self):
+            declarations = [
+                'notation "attrWitness" => "=\'"',
+                'notation "attrWitness" => "safe"',
+                'prefix:50 "attrWitness" => fun (_ : Nat) => "=\'"',
+                'macro "attrWitness" : term => `("=\'")',
+                'elab "attrWitness" : term => return Lean.mkStrLit "=\'"',
+            ]
+            sources = ["import Lean\n" + declaration + "\nexample : ')' =')' := by decide\n"
+                       for declaration in declarations]
+            for source in sources:
+                self.compile_source(source)
+            requests = []
+            for source in sources:
+                requests.append(request_for(source))
+                managed = [dict(module="D5.Registration", path="D5/Registration.lean", source=source)]
+                query = "import D5.Registration\nexample : ')' =')' := by decide\n"
+                requests.append(request_for(query, "projected", managed=managed))
+                requests.append(request_for(query, "source", managed=managed))
+            results = self.query_requests(requests)
+            print("REGISTRATION_PROJECTION " + json.dumps(results), flush=True)
+            for index, result in enumerate(results):
+                with self.subTest(declaration=declarations[index // 3], mode=requests[index]["mode"]):
+                    self.assertIsNone(result["error"])
+                    self.assertFalse(result["commands"][-1]["equality"])
+                    self.assertEqual(0, result["elaboratedDeclarations"])
+
+        def test_declaration_tokens_retain_compiler_locality(self):
+            declarations = ['notation "=\'" => Eq', 'infix:50 "=\'" => Eq',
+                            'syntax "=\'" : term', 'syntax unicode("eqUnicode", "=\'") : term',
+                            'syntax "eqList" sepBy1(term, "=\'") : term']
+            for declaration in declarations:
+                for locality in ["", "local ", "scoped "]:
+                    source = ("import Lean\nnamespace Registration\n" + locality + declaration
+                              + "\nexample : True := by trivial\nend Registration\n"
+                              "example : True := by trivial\nopen scoped Registration\n"
+                              "example : True := by trivial\n")
+                    self.compile_source(source)
+                    result = self.query(source)
+                    print("REGISTRATION_LOCALITY " + json.dumps(dict(source=source, result=result)), flush=True)
+                    self.assertIsNone(result["error"])
+                    self.assertEqual(7, len(result["commands"]))
+                    examples = [result["commands"][index] for index in [2, 4, 6]]
+                    self.assertEqual([True, not locality, locality != "local "],
+                                     [row["equality"] for row in examples])
+
+        def test_instance_attributes_do_not_elaborate_targets_or_change_tokens(self):
+            attributes = ["instance", "local instance", "scoped instance", "-instance",
+                          "instance 100", "local instance 100", "scoped instance 100"]
+            requests = []
+            for attribute in attributes:
+                source = ("import Init\nnamespace AttrScope\n"
+                          "@[instance] def attr_instance : Inhabited Unit := ⟨()⟩\n"
+                          f"attribute [{attribute}] attr_instance\nend AttrScope\n"
+                          "example : ')' =')' := by decide\n")
+                self.compile_source(source)
+                requests.append(request_for(source))
+                # This second input is deliberately not a compiling-source witness:
+                # resolving or evaluating its source-only target must fail.
+                protected = source.replace("⟨()⟩", "by exact protectedTargetMustNeverExecute")
+                managed = [dict(module="D5.AttrSource", path="D5/AttrSource.lean", source=protected)]
+                query = "import D5.AttrSource\nexample : ')' =')' := by decide\n"
+                requests.append(request_for(query, "projected", managed=managed))
+                requests.append(request_for(query, "source", managed=managed))
+            results = self.query_requests(requests)
+            print("INSTANCE_PROJECTION " + json.dumps(results), flush=True)
+            for index, result in enumerate(results):
+                with self.subTest(attribute=attributes[index // 3], mode=requests[index]["mode"]):
+                    self.assertIsNone(result["error"])
+                    self.assertFalse(result["initialEquality"])
+                    self.assertFalse(result["commands"][-1]["equality"])
+                    self.assertEqual(0, result["projectedDeclarations"])
+                    self.assertEqual(0, result["elaboratedDeclarations"])
+
         def test_registration_source_is_data_and_scope_is_measured(self):
             external = self.root / "ProbeExternal/Equality.lean"
             external.parent.mkdir(parents=True, exist_ok=True)

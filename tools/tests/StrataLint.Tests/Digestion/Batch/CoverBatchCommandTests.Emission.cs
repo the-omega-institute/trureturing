@@ -162,12 +162,26 @@ public sealed partial class CoverBatchCommandTests
     {
         using var world = new BatchWorld { UseGitReader = true };
         WriteEmissionInputs(world.Root);
-        TemporaryFileSystem.File.WriteAllText(Path.Combine(world.Root, failedInput), "malformed input\n");
+        var failedOutput = Path.Combine(world.Root, failedInput == "Meta/FILEMAP.toml"
+            ? "Generated/FILEMAP.md" : CanonicalValuesWriter.RelativePath);
+        TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(failedOutput)!);
+        var priorOutput = Encoding.UTF8.GetBytes("prior producer output\n");
+        TemporaryFileSystem.File.WriteAllBytes(failedOutput, priorOutput);
         world.WriteReportBundle();
-
-        var result = world.RunProducers(Row(First, Gid) + Row(Second, OtherGid));
+        var discoveries = 0;
+        BatchClaimDefinition.Creating.Value = () =>
+        {
+            // Final Scribe emission follows the pristine bundle validation and
+            // coverage writes. Corrupt the later producer's input at that boundary.
+            if (++discoveries == 3)
+                TemporaryFileSystem.File.WriteAllText(Path.Combine(world.Root, failedInput), "malformed input\n");
+        };
+        CommandResult result;
+        try { result = world.RunProducers(Row(First, Gid) + Row(Second, OtherGid)); }
+        finally { BatchClaimDefinition.Creating.Value = null; }
 
         output.WriteLine(result.Output + result.Error);
+        Assert.Equal(3, discoveries);
         Assert.Equal(1, result.ExitCode);
         Assert.Equal(["applied", "applied"], Results(result).Select(item => item.Status).ToArray());
         Assert.Contains(diagnostic, result.Error, StringComparison.Ordinal);
@@ -175,6 +189,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Single(world.Entry(Second).Coverage);
         Assert.NotEmpty(TemporaryFileSystem.File.ReadAllBytes(Path.Combine(world.Root, "tools/Generated/scribe-emissions.v1.json")));
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(world.Root, "Generated/DAG.md")));
+        Assert.Equal(priorOutput, TemporaryFileSystem.File.ReadAllBytes(failedOutput));
         if (failedInput == "Meta/FILEMAP.toml")
             Assert.NotEmpty(TemporaryFileSystem.File.ReadAllBytes(Path.Combine(world.Root, CanonicalValuesWriter.RelativePath)));
     }

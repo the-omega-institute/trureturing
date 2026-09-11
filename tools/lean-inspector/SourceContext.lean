@@ -29,15 +29,16 @@ partial def declarationNamespaces (stx : Syntax) : Array Name :=
       stx.getKind.toString.startsWith "Lean.Parser.Tactic." then #[]
   else stx.getArgs.flatMap declarationNamespaces
 
-partial def strings (stx : Syntax) : Array String :=
-  match stx.isStrLit? with
-  | some s => #[s.trimAscii.toString]
-  | none => stx.getArgs.flatMap strings
-
-partial def atoms (stx : Syntax) : Array String :=
-  match stx with
-  | .atom _ s => #[s]
-  | _ => stx.getArgs.flatMap atoms
+/- `Elab.Term.toParserDescr.processSepBy/1` uses separator text as a symbol
+   only without an explicit separator parser. `sepBy/1Info.collectTokens`
+   combines the element and actual separator parser, excluding that metadata. -/
+partial def declarationTokens (stx : Syntax) : Array String :=
+  if stx.isOfKind ``Parser.Syntax.sepBy || stx.isOfKind ``Parser.Syntax.sepBy1 then
+    declarationTokens stx[1] ++ declarationTokens (if stx[4].isNone then stx[3] else stx[4][1])
+  else
+    match stx.isStrLit? with
+    | some s => #[s.trimAscii.toString]
+    | none => stx.getArgs.flatMap declarationTokens
 
 /- Export nested scope facts by running the actual parser scope operation. Its callback
    observes the inner context; the outer context is never substituted for that reading. -/
@@ -49,6 +50,10 @@ partial def syntaxFacts (stx : Syntax) (c : ParserContext) : Json := Id.run do
     children := #[insideOpen stx[0][1] stx[2] c]
   else if stx.isOfKind ``Parser.Command.in && stx[0].isOfKind ``Parser.Command.set_option then
     children := #[insideOption stx[0] stx[2] c]
+  else if stx.isOfKind ``Parser.Command.in then
+    -- Command.in parses both commands before elaborating either one. Only its
+    -- parser-owned open/set_option callbacks above change the second parse context.
+    children := #[syntaxFacts stx[0] c, syntaxFacts stx[2] c]
   else if stx.isOfKind ``Parser.Term.open || stx.isOfKind ``Parser.Tactic.open then
     children := #[insideOpen stx[1] stx[3] c]
   else if stx.isOfKind ``Parser.Command.mutual then
@@ -105,29 +110,75 @@ def applyBuiltin (cmd : Syntax) : FrontendM Unit := do
       for name in declarationNamespaces cmd do
         unless name.isAnonymous do modifyEnv (·.registerNamespace (ns ++ name))
 
+inductive AttributeTokenEffect where
+  | unchanged
+  | unknown
+
+/- Core `simp` and `instance` update simplifier/simproc and instance extensions,
+   respectively, without registering parser tokens, for add, erase, or any scope.
+   Check their identities in the current imported registry. Do not run elabAttr (which
+   expands attribute macros) or apply the handler to unelaborated source targets.
+   Other handlers remain unknown; their application time is not an effect guarantee. -/
+def attributeTokenEffect (env : Environment) (stx : Syntax) : IO AttributeTokenEffect := do
+  let name? := if stx.isOfKind ``Parser.Command.eraseAttr then
+      some stx[1].getId.eraseMacroScopes
+    else if stx.isOfKind ``Parser.Term.attrInstance then
+      if stx[1].isOfKind ``Parser.Attr.simp then some `simp
+      else if stx[1].isOfKind ``Parser.Attr.instance then some `instance
+      else if stx[1].isOfKind ``Parser.Attr.simple then some stx[1][0].getId.eraseMacroScopes
+      else none
+    else none
+  let some name := name? | return .unknown
+  let .ok impl := getAttributeImpl env name | return .unknown
+  if name == `simp && impl.ref == ``Meta.simpExtension then return .unchanged
+  -- Init-only sources inherit this builtin handler without importing its defining
+  -- module. Compare the compiler registry identity, not a generated private name.
+  if name == `instance && impl.ref == (← getBuiltinAttributeImpl `instance).ref then
+    return .unchanged
+  return .unknown
+
 /- Bounded declarative token registration. Only the token is projected; the old
    expansion target is neither inspected as executable code nor evaluated. -/
 partial def projectRegistration (cmd : Syntax) (scope? : Option Name := none) : FrontendM Unit := do
+  if cmd.isOfKind ``Parser.Command.in then
+    -- BuiltinCommand.expandInCmd: section; cmd1; end_local_scope 1; cmd2; end.
+    -- Use the compiler's scope operations so globals survive and only cmd1's
+    -- local effects end here. Recursion projects effects without elaborating
+    -- source bodies or invoking their attribute handlers.
+    runCommandElabM do Command.elabSection (← `(command| section))
+    projectRegistration cmd[0] scope?
+    runCommandElabM <| setDelimitsLocal 1
+    projectRegistration cmd[2] scope?
+    runCommandElabM do Command.elabEnd (← `(command| end))
+    return
   if cmd.isOfKind `Mathlib.Tactic.scopedNS then
     projectRegistration cmd[6] (some cmd[4].getId)
     return
+  -- Scope transitions and token effects have the same owner in scanning/replay.
+  applyBuiltin cmd
   unless [``Parser.Command.mixfix, ``Parser.Command.notation, ``Parser.Command.syntax].contains cmd.getKind do
     if cmd.isOfKind ``Parser.Command.initialize || cmd.getKind.toString.endsWith ".run_cmd" then
-      runCommandElabM <| throwErrorAt cmd "source context cannot model a dynamic initializer registration effect"
-    else if (strings cmd).contains "='" &&
-      ["Lean.Parser.Command.macro", "Lean.Parser.Command.elab", "Lean.Parser.Command.attribute"].contains cmd.getKind.toString then
-      runCommandElabM <| throwErrorAt cmd "source context cannot model this equality-token registration effect"
-    else if cmd.getKind.toString == "Lean.Parser.Command.attribute" then
-      runCommandElabM <| throwErrorAt cmd "source context cannot determine this attribute registration effect"
+      runCommandElabM <| logErrorAt cmd "source context cannot model a dynamic initializer registration effect"
+    else if [``Parser.Command.macro, ``Parser.Command.elab].contains cmd.getKind &&
+      (declarationTokens cmd[7]).contains "='" then
+      runCommandElabM <| logErrorAt cmd "source context cannot model this equality-token registration effect"
+    else if cmd.isOfKind ``Parser.Command.attribute then
+      runCommandElabM do
+        for attr in cmd[2].getSepArgs do
+          match ← attributeTokenEffect (← getEnv) attr with
+          | .unchanged => pure ()
+          | .unknown => logErrorAt attr "source context cannot determine this attribute registration effect"
     else if !(cmd.getKind.toString.startsWith "Lean.Parser.Command.") then
-      runCommandElabM <| throwErrorAt cmd "source context cannot determine this custom command registration effect"
+      runCommandElabM <| logErrorAt cmd "source context cannot determine this custom command registration effect"
     return
-  unless (strings cmd).contains "='" do return
-  let words := atoms cmd
+  -- Parser.Syntax gives these commands a declaration-item field at index 7
+  -- and attrKind at index 2. Expansion terms, attributes and priority expressions
+  -- are separate fields; their strings/atoms are not registration facts.
+  unless (declarationTokens cmd[7]).contains "='" do return
   runCommandElabM do
     let ns ← getCurrNamespace
-    let kind := if words.contains "local" then AttributeKind.local
-      else if scope?.isSome || words.contains "scoped" then AttributeKind.scoped else AttributeKind.global
+    let kind ← if scope?.isSome then pure AttributeKind.scoped
+      else liftMacroM <| toAttributeKind cmd[2]
     modifyEnv fun env => parserExtension.addCore env (.token "='") kind (scope?.getD ns)
 
 partial def scan (project : Bool) (rows : Array Json := #[]) (commands : Array Syntax := #[]) :
@@ -148,8 +199,7 @@ partial def scan (project : Bool) (rows : Array Json := #[]) (commands : Array S
     return (rows, Json.mkObj [("line", toJson (input.fileMap.toPosition (cmd.getPos?.getD 0)).line),
       ("message", toJson "source context nested parser scope failed")], commands)
   let rows := rows.push facts
-  applyBuiltin cmd
-  if project then projectRegistration cmd
+  if project then projectRegistration cmd else applyBuiltin cmd
   let messages := (← getCommandState).messages
   if messages.hasErrors then return (rows, ← errorJson messages, commands)
   scan project rows (commands.push cmd)
@@ -175,7 +225,6 @@ def replay (commands : Array Syntax) : FrontendM (Array Json × Json) := do
       return (rows, Json.mkObj [("line", toJson (input.fileMap.toPosition (cmd.getPos?.getD 0)).line),
         ("message", toJson "source context nested parser scope failed")])
     rows := rows.push facts
-    applyBuiltin cmd
     projectRegistration cmd
     let messages := (← getCommandState).messages
     if messages.hasErrors then return (rows, ← errorJson messages)

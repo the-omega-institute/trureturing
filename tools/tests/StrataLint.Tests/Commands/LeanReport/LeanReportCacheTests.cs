@@ -449,6 +449,23 @@ public sealed class LeanReportCacheTests
             }
             MakeExecutable(PairScript);
             MakeExecutable(Path.Combine(reportDir, "lean-report-input.sh"));
+            LeanReportInputScriptTests.WritePairInputRegistration(Repo,
+                "tools/lean-inspector/inspect.sh", "tools/lean-inspector/source-context.sh",
+                "tools/scripts/lean-report-pair.sh", "tools/scripts/report/lean-report-input.sh",
+                "tools/scripts/report/report-supervisor.sh", "tools/scripts/worktree/lean-cache-input.sh",
+                "tools/scripts/worktree/lean-cache-ensure.sh", "tools/scripts/worktree/lean-cache-publish.sh",
+                "tools/scripts/workflow/scribe-content-checks.sh", RawReportPath, CanonicalWriterPath,
+                "tools/StrataLint.Cli/StrataLint.Cli.csproj", "tools/StrataLint.Cli/FixtureProbe.cs",
+                "tools/StrataLint.Engine/StrataLint.Engine.csproj", "tools/Trureturing.Truth/Trureturing.Truth.csproj",
+                ".github/workflows/ci.yml");
+            WriteExecutable(Path.Combine(bin, "dotnet"), """
+                #!/usr/bin/env bash
+                set -euo pipefail
+                while [[ $# -gt 0 && "$1" != -- ]]; do shift; done
+                [[ $# -gt 0 ]] || exit 2
+                shift
+                PATH="$ORIGINAL_PATH" exec dotnet "$NATIVE_CLI" "$@"
+                """);
         }
 
         internal string Repo { get; }
@@ -510,6 +527,8 @@ public sealed class LeanReportCacheTests
             if (failureStage == "cache-restore") arguments.Add("STUB_CACHE_COPY_FAIL=1");
             if (cacheEnabled) arguments.Add($"STRATALINT_REPORT_CACHE_ROOT={CacheRoot}");
             arguments.Add($"STUB_CACHE_ROOT={CacheRoot}");
+            arguments.Add($"ORIGINAL_PATH={Environment.GetEnvironmentVariable("PATH")}");
+            arguments.Add($"NATIVE_CLI={Path.Combine(AppContext.BaseDirectory, "StrataLint.dll")}");
             arguments.Add(
                 $"PATH={Path.GetDirectoryName(CopyWrapper)}:{Environment.GetEnvironmentVariable("PATH")}");
             arguments.AddRange(
