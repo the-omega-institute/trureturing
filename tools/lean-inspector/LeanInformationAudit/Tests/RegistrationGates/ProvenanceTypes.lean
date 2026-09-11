@@ -74,4 +74,9 @@ check_provenance "JudgeGeneratedCompanions" using generatedRead expects "forbidd
 def sealPayloadRead (_ : Unit) (x : Bool) : Bool := let _ := SealTheoremRecord.mk; x
 check_provenance "JudgeSealPayload" using sealPayloadRead expects "forbidden_dependency" for specificTruth
 
+def apiOnlyRead (_ : Unit) (x : Bool) : Bool := let _ := InformationRegistryEntry.statementIdentity; x
+check_provenance "JudgeIdentityAPI" using apiOnlyRead expects "forbidden_dependency" for specificTruth
+def closedStatementRead (_ : Unit) (x : Bool) : Bool := let _ : specificStatement := Eq.refl 137; x
+check_provenance "ClosedStatementInhabitant" using closedStatementRead expects "forbidden_dependency" for specificTruth
+
 end RegistrationProvenance

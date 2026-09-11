@@ -6,6 +6,8 @@ open Lean LeanInformationAudit DispositionCensus
 open D5.S3.ConceptDynamics.InformationEscape
 namespace RegistrationProvenance
 
+-- These fixtures deliberately register True: reaching True.intro is forbidden.
+-- Sharing another proof, or copying Name/String data, does not alone carry truth.
 theorem proofSource : True ∧ True := ⟨True.intro, True.intro⟩
 theorem numberProof (n : Nat) : n = n := rfl
 theorem truth : True := let _ := numberProof 0; proofSource.1
