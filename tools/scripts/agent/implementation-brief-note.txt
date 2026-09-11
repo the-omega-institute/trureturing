@@ -103,7 +103,30 @@ elaborate 失败时 Lean 自插 `sorryAx`。2026-09-11 实测:一份 125 行、`
 `trace_exp` 不存在,但「对 `exp (u • x)` 求导」存在;
 `import` 面没被搜,因为我把另一个字段的读数当成了它。
 
-**写进 brief 的每一句「上游没有 X」,必须同时写出搜了哪几个名字。**
+**编排者的 brief 里不许出现「上游没有 X」这个结论。** 一句都不许。
+
+这是同一天**第三次**同型之后的收口。前两次的修法是「写出搜了哪几个名」,**不够** ——
+我照做了,然后在下一份 brief 里写下「`CompletelyMonotone` 0 命中、`StieltjesFunction`
+不是这个 ⟹ 上游没有这个对象」。而上游有
+`Mathlib/MeasureTheory/Measure/ResolventTransform.lean:104` 的 `resolventTransform`;
+**本仓自己**还有 `D5/S3/Weil/CayleyLaguerre/CayleyMomentTransport.lean:492` 的
+`private theorem iteratedDeriv_resolvent_budget`,正是那条逐阶公式。
+席位迟到检索查出来并拒绝落地,原话:「我不把这次迟到的发现掩盖为 search-complete」。
+
+三次形状完全一样:**我搜的是这件事的「名字」,上游归档在这件事的「做法」下。**
+`trace_exp` 不存在但「对 `exp (u • x)` 求导」存在;`CompletelyMonotone` 不存在但
+「对 `(x+u)⁻¹` 积分」作为 resolvent transform 存在。**换更好的名字救不了它 ——
+错的是让编排者来下这个判断。**
+
+**正形**:brief 里写
+
+> 我试过这几个名:`A`、`B`、`C`,都没命中。**这不是缺席断言,是我的起点。**
+> 动手前你自己按第 3.1 条 完成检索(D5 → 钉版 mathlib → 第三方生态),
+> 命中任何可用结果就停下报告,不要绕开它另证。
+
+**判据**:brief 里出现「上游没有」「0 命中 ⟹ 不可能是实例化」「这是空白」之类**结论句**,
+即违规。编排者提供**读数**(搜了哪些名、结果如何),**判断留给动手前的席位** ——
+它在树里、能编译、能查 import 面;编排者只有 grep。
 搜的对象是**动作**(对指数族求导、把迹当线性映射、把幂等元的迹换成秩),
 不是你为目标起的那个复合名。搜不出就如实写「我搜了这几个名,没命中」——
 那是可反驳的读数;「没有 X」是不可反驳的断言(第 2.9 条)。
