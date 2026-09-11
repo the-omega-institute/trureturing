@@ -3,6 +3,8 @@ using System.Text.Json.Serialization;
 
 namespace StrataLint.Engine;
 
+internal sealed record EngineeringSource(string Path, string Content);
+
 internal sealed record EngineeringProjectOwner(string Path, string Assembly);
 
 internal sealed record EngineeringProjectRegistration(
@@ -47,9 +49,9 @@ internal sealed class EngineeringProjectRegistry
     internal IReadOnlyList<EngineeringProjectRegistration> Projects { get; }
 
     internal static EngineeringProjectRegistry Read(RepositorySnapshot snapshot) => Read(
-        snapshot.Files.Values.Select(file => new ScribeTrackedSource(file.Path.Value, file.Text)).ToArray());
+        snapshot.Files.Values.Select(file => new EngineeringSource(file.Path.Value, file.Text)).ToArray());
 
-    internal static EngineeringProjectRegistry Read(IReadOnlyList<ScribeTrackedSource> files)
+    internal static EngineeringProjectRegistry Read(IReadOnlyList<EngineeringSource> files)
     {
         var manifest = files.SingleOrDefault(file => file.Path == ManifestPath)
             ?? throw new InvalidDataException($"missing engineering project registration: {ManifestPath}");
@@ -61,9 +63,7 @@ internal sealed class EngineeringProjectRegistry
     // registered historical projects) address those bytes; no old reader or discovery runs.
     internal static EngineeringProjectRegistry ReadBase(RepositorySnapshot baseline, RepositorySnapshot candidate)
     {
-        if (baseline.TryGetFile(ManifestPath, out var registeredBase))
-            return Bind(Parse(registeredBase.Text, execution: false).Projects,
-                baseline.Files.Keys.Select(path => path.Value), requireAll: true);
+        if (baseline.TryGetFile(ManifestPath, out _)) return Read(baseline);
         if (!candidate.TryGetFile(ManifestPath, out var file))
             throw new InvalidDataException($"missing engineering project registration: {ManifestPath}");
         var manifest = Parse(file.Text);
@@ -71,17 +71,7 @@ internal sealed class EngineeringProjectRegistry
             baseline.Files.Keys.Select(path => path.Value), requireAll: false);
     }
 
-    internal static RepositorySnapshot AddressBase(RepositorySnapshot baseline, RepositorySnapshot candidate)
-    {
-        if (baseline.TryGetFile(ManifestPath, out _)) return baseline;
-        var registrations = ReadBase(baseline, candidate);
-        var text = JsonSerializer.Serialize(new EngineeringProjectManifest(1, registrations.Projects.ToArray(), []), Options);
-        var raw = RawRepositoryEntry.FromText(ManifestPath, text);
-        return RepositorySnapshot.Create(baseline.Files.Add(RepoPath.CreateKnown(ManifestPath),
-            new RepositoryFile(RepoPath.CreateKnown(ManifestPath), raw.Bytes, text)));
-    }
-
-    private static EngineeringProjectManifest Parse(string text, bool execution = true)
+    private static EngineeringProjectManifest Parse(string text)
     {
         try
         {
@@ -109,22 +99,17 @@ internal sealed class EngineeringProjectRegistry
                     throw new InvalidDataException($"invalid registered test partition: {project.Path}");
                 ValidatePatterns(project.Include, project.Path);
                 ValidatePatterns(project.Exclude, project.Path);
-                // Base membership only consumes classification; execution declarations are
-                // required from the current candidate, never retroactively from base data.
-                if (execution)
+                ValidateMaterials(project.BuildInputs, [], project.Path);
+                if (project.IsTest)
                 {
-                    ValidateMaterials(project.BuildInputs, [], project.Path);
-                    if (project.IsTest)
-                    {
-                        ValidateMaterials(project.ExecutionInputs, project.ExecutionExcludes, project.Path);
-                        if (project.ExecutionEnvironment is null || project.ExecutionEnvironment.Any(name =>
-                                string.IsNullOrWhiteSpace(name) || !name.All(character => char.IsAsciiLetterOrDigit(character) || character == '_'))
-                            || project.ExecutionEnvironment.Distinct(StringComparer.Ordinal).Count() != project.ExecutionEnvironment.Length)
-                            throw new InvalidDataException($"missing or invalid registered execution environment: {project.Path}");
-                    }
-                    else if (project.ExecutionInputs is not null || project.ExecutionExcludes is not null || project.ExecutionEnvironment is not null)
-                        throw new InvalidDataException($"execution inputs require a test role: {project.Path}");
+                    ValidateMaterials(project.ExecutionInputs, project.ExecutionExcludes, project.Path);
+                    if (project.ExecutionEnvironment is null || project.ExecutionEnvironment.Any(name =>
+                            string.IsNullOrWhiteSpace(name) || !name.All(character => char.IsAsciiLetterOrDigit(character) || character == '_'))
+                        || project.ExecutionEnvironment.Distinct(StringComparer.Ordinal).Count() != project.ExecutionEnvironment.Length)
+                        throw new InvalidDataException($"missing or invalid registered execution environment: {project.Path}");
                 }
+                else if (project.ExecutionInputs is not null || project.ExecutionExcludes is not null || project.ExecutionEnvironment is not null)
+                    throw new InvalidDataException($"execution inputs require a test role: {project.Path}");
                 if (project.References is null || project.References.Any(path => !IsProjectPath(path))
                     || project.References.Distinct(StringComparer.Ordinal).Count() != project.References.Length)
                     throw new InvalidDataException($"invalid or duplicate registered project reference: {project.Path}");
@@ -151,64 +136,16 @@ internal sealed class EngineeringProjectRegistry
         if (projects.Where(project => project.IsTest).GroupBy(project => project.TestPartition, StringComparer.Ordinal)
             .Any(group => group.Count() != 1))
             throw new InvalidDataException("duplicate registered test partition");
-        if (projects.GroupBy(project => project.Assembly, StringComparer.OrdinalIgnoreCase).FirstOrDefault(group => group.Count() > 1) is { } conflict)
-            throw new InvalidDataException($"conflicting registered assembly: {conflict.Key}");
-        var byPath = projects.ToDictionary(project => project.Path, StringComparer.Ordinal);
-        var visited = new HashSet<string>(StringComparer.Ordinal);
-        var active = new HashSet<string>(StringComparer.Ordinal);
-        foreach (var project in projects) Visit(project);
         return new EngineeringProjectRegistry(projects);
-
-        void Visit(EngineeringProjectRegistration project)
-        {
-            if (visited.Contains(project.Path)) return;
-            if (!active.Add(project.Path)) throw new InvalidDataException($"cyclic registered project reference: {project.Path}");
-            foreach (var reference in project.References)
-            {
-                if (!byPath.TryGetValue(reference, out var dependency))
-                    throw new InvalidDataException($"unresolved registered project reference: {project.Path}: {reference}");
-                Visit(dependency);
-            }
-            active.Remove(project.Path);
-            visited.Add(project.Path);
-        }
     }
 
-    internal static string[] ExpandInputs(IEnumerable<string> paths, string[] includes, string[] excludes, string project)
-    {
-        var files = paths.ToHashSet(StringComparer.Ordinal);
-        var include = includes.Select(FileMapGlob.Create).ToArray();
-        var exclude = excludes.Select(FileMapGlob.Create).ToArray();
-        foreach (var path in includes.Where(pattern => !pattern.Contains('*')))
-            if (!files.Contains(path)) throw new InvalidDataException($"registered input is absent: {project}: {path}");
-        return files.Where(path => include.Any(pattern => pattern.IsMatch(path)) && !exclude.Any(pattern => pattern.IsMatch(path)))
-            .Order(StringComparer.Ordinal).ToArray();
-    }
-
-    private static void ValidateMaterials(string[]? includes, string[]? excludes, string project)
-    {
-        foreach (var patterns in new[] { includes, excludes })
-        {
-            if (patterns is null || patterns.Distinct(StringComparer.Ordinal).Count() != patterns.Length)
-                throw new InvalidDataException($"missing or duplicate registered execution/build inputs: {project}");
-            foreach (var pattern in patterns)
-            {
-                if (pattern is null || pattern.Contains(':')) throw new InvalidDataException($"invalid registered input: {project}: {pattern}");
-                _ = FileMapGlob.Create(pattern);
-            }
-        }
-        foreach (var path in includes!.Where(pattern => !pattern.Contains('*')))
-            if (excludes!.Any(pattern => FileMapGlob.Create(pattern).IsMatch(path)))
-                throw new InvalidDataException($"conflicting required registered input and exclusion: {project}: {path}");
-    }
-
-    internal IReadOnlyDictionary<string, IReadOnlyList<ScribeTrackedSource>> Sources(IReadOnlyList<ScribeTrackedSource> files)
+    internal IReadOnlyDictionary<string, IReadOnlyList<EngineeringSource>> Sources(IReadOnlyList<EngineeringSource> files)
     {
         var sources = files.Where(file => file.Path.EndsWith(".cs", StringComparison.Ordinal))
             .OrderBy(file => file.Path, StringComparer.Ordinal).ToArray();
         var byPath = sources.ToDictionary(file => file.Path, StringComparer.Ordinal);
         var covered = new HashSet<string>(StringComparer.Ordinal);
-        var result = new Dictionary<string, IReadOnlyList<ScribeTrackedSource>>(StringComparer.Ordinal);
+        var result = new Dictionary<string, IReadOnlyList<EngineeringSource>>(StringComparer.Ordinal);
         foreach (var project in Projects)
         {
             var includes = project.Include.Select(FileMapGlob.Create).ToArray();
@@ -225,6 +162,35 @@ internal sealed class EngineeringProjectRegistry
         var unregistered = sources.FirstOrDefault(source => !covered.Contains(source.Path));
         if (unregistered is not null) throw new InvalidDataException($"unregistered engineering source: {unregistered.Path}");
         return result;
+    }
+
+    internal static string[] ExpandInputs(IEnumerable<string> paths, string[] includes, string[] excludes, string project)
+    {
+        var available = paths.ToHashSet(StringComparer.Ordinal);
+        var include = includes.Select(FileMapGlob.Create).ToArray();
+        var exclude = excludes.Select(FileMapGlob.Create).ToArray();
+        foreach (var path in includes.Where(pattern => !pattern.Contains('*')))
+            if (!available.Contains(path)) throw new InvalidDataException($"registered input is absent: {project}: {path}");
+        return available.Where(path => include.Any(pattern => pattern.IsMatch(path))
+            && !exclude.Any(pattern => pattern.IsMatch(path))).Order(StringComparer.Ordinal).ToArray();
+    }
+
+    private static void ValidateMaterials(string[]? includes, string[]? excludes, string project)
+    {
+        foreach (var patterns in new[] { includes, excludes })
+        {
+            if (patterns is null || patterns.Distinct(StringComparer.Ordinal).Count() != patterns.Length)
+                throw new InvalidDataException($"missing or duplicate registered execution/build inputs: {project}");
+            foreach (var pattern in patterns)
+            {
+                if (pattern is null || pattern.Contains(':'))
+                    throw new InvalidDataException($"invalid registered input: {project}: {pattern}");
+                _ = FileMapGlob.Create(pattern);
+            }
+        }
+        foreach (var path in includes!.Where(pattern => !pattern.Contains('*')))
+            if (excludes!.Any(pattern => FileMapGlob.Create(pattern).IsMatch(path)))
+                throw new InvalidDataException($"conflicting required registered input and exclusion: {project}: {path}");
     }
 
     private static void ValidatePatterns(string[] patterns, string project)

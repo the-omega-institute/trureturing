@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Xml.Linq;
-using Microsoft.Build.Evaluation;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
@@ -24,6 +23,7 @@ public sealed class JudgeSeedInputs : Microsoft.CodeAnalysis.BuildTasks.Csc
     public ITaskItem[] JudgeInputs { get; set; }
     public ITaskItem[] JudgeOutputs { get; set; }
     [Output] public bool JudgeCaptured { get; set; }
+    [Output] public string JudgeRegistrationError { get; set; }
 
     public override bool Execute()
     {
@@ -45,46 +45,25 @@ public sealed class JudgeSeedInputs : Microsoft.CodeAnalysis.BuildTasks.Csc
                 new XElement("runtime", Environment.Version + "|" + CultureInfo.CurrentCulture.Name + "|" + CultureInfo.CurrentUICulture.Name));
             var inputs = new HashSet<string>((JudgeInputs ?? new ITaskItem[0])
                 .Select(item => Path.GetFullPath(item.ItemSpec)), StringComparer.Ordinal);
-            inputs.Add(typeof(object).Assembly.Location);
-            // File-bearing Csc parameters include modules/resources/embedded files
-            // as well as sources/references/analyzers. No compiler switch list.
-            foreach (var property in typeof(Microsoft.CodeAnalysis.BuildTasks.Csc).GetProperties())
-            {
-                if (!property.CanRead || property.GetIndexParameters().Length != 0) continue;
-                var value = property.GetValue(this);
-                var items = value as ITaskItem[];
-                if (items != null)
-                    foreach (var item in items) if (File.Exists(item.ItemSpec)) inputs.Add(Path.GetFullPath(item.ItemSpec));
-                var single = value as ITaskItem;
-                if (single != null && File.Exists(single.ItemSpec)) inputs.Add(Path.GetFullPath(single.ItemSpec));
-                var text = value as string;
-                if (!string.IsNullOrEmpty(text) && File.Exists(text)) inputs.Add(Path.GetFullPath(text));
-            }
-            // Re-evaluate with the actual global properties to obtain import
-            // provenance, including property-only imports absent from
-            // MSBuildAllProjects. Values are used here, never dumped in a seed.
-            using (var collection = new ProjectCollection())
-            {
-                var project = new Project(JudgeProject,
-                    ((IBuildEngine6)BuildEngine).GetGlobalProperties().ToDictionary(pair => pair.Key, pair => pair.Value), null, collection);
-                if (!string.IsNullOrEmpty(project.GetPropertyValue("TargetFrameworks")))
-                    throw new InvalidOperationException("multiple target frameworks are not seedable");
-                inputs.Add(JudgeProject);
-                foreach (var import in project.Imports) inputs.Add(import.ImportedProject.FullPath);
-                document.Add(new XElement("configuration", string.Join("|", new[] {
-                    project.GetPropertyValue("NETCoreSdkVersion"), project.GetPropertyValue("TargetFramework"),
-                    project.GetPropertyValue("Configuration"), project.GetPropertyValue("Platform"),
-                    project.GetPropertyValue("RuntimeIdentifier") })));
-            }
-            // Analyzer assemblies can load companion implementation assemblies.
-            foreach (var analyzer in Analyzers ?? new ITaskItem[0])
-                foreach (var companion in Directory.GetFiles(Path.GetDirectoryName(Path.GetFullPath(analyzer.ItemSpec)), "*.dll"))
-                    inputs.Add(companion);
+            // This is the fixed file-parameter contract of JudgeSeed.targets.
+            // Check membership only; never discover additional inputs from the SDK,
+            // project imports, task properties or an analyzer's neighbours.
+            foreach (var items in new[] { Sources, References, Resources, AdditionalFiles,
+                EmbeddedFiles, Analyzers, AnalyzerConfigFiles, LinkResources })
+                foreach (var item in items ?? Array.Empty<ITaskItem>())
+                    RequireRegistered(item.ItemSpec, inputs);
+            foreach (var path in new[] { ApplicationConfiguration, CodeAnalysisRuleSet,
+                KeyFile, Win32Icon, Win32Manifest, Win32Resource, SourceLink })
+                if (!string.IsNullOrEmpty(path)) RequireRegistered(path, inputs);
+            foreach (var path in AddModules ?? Array.Empty<string>()) RequireRegistered(path, inputs);
             inputs.ExceptWith(outputs);
+            foreach (var path in inputs)
+                if (!File.Exists(path)) throw new InvalidOperationException("required registered material is absent: " + path);
             document.Add(new XElement("inputs", inputs.OrderBy(path => path).Select(path => new XElement("file", path))));
         }
         catch (Exception error)
         {
+            JudgeRegistrationError = error.Message;
             document.Add(new XElement("unsupported", error.Message));
         }
         try
@@ -97,10 +76,17 @@ public sealed class JudgeSeedInputs : Microsoft.CodeAnalysis.BuildTasks.Csc
         catch (UnauthorizedAccessException error) { Log.LogMessage(MessageImportance.Low, "JUDGE_SEED capture unavailable: " + error.Message); }
         return true;
     }
+
+    private static void RequireRegistered(string path, HashSet<string> inputs)
+    {
+        if (!inputs.Contains(Path.GetFullPath(path)))
+            throw new InvalidOperationException("unregistered compiler material: " + path);
+    }
+
 }
 
-// Normal MSBuild Copy remains the writer. Removing a differing destination
-// makes PreserveNewest repair changed bytes even when their time was preserved.
+// Repair byte differences before timestamp-based MSBuild Copy. Stage the source
+// first: a source read/copy failure must leave the existing destination intact.
 public sealed class JudgeSeedCopies : Task
 {
     public ITaskItem[] SourceFiles { get; set; }
@@ -121,7 +107,13 @@ public sealed class JudgeSeedCopies : Task
             using (var output = File.OpenRead(destination))
                 if (sha.ComputeHash(input).SequenceEqual(sha.ComputeHash(output))
                     && (OperatingSystem.IsWindows() || File.GetUnixFileMode(source) == File.GetUnixFileMode(destination))) continue;
-            File.Delete(destination);
+            var temporary = destination + ".judge-copy-" + Guid.NewGuid().ToString("N");
+            try
+            {
+                File.Copy(source, temporary);
+                File.Move(temporary, destination, overwrite: true);
+            }
+            finally { if (File.Exists(temporary)) File.Delete(temporary); }
         }
         return true;
     }

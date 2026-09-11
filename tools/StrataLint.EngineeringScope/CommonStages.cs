@@ -132,6 +132,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
     private void Current()
     {
         ClearEvidence("current");
+        _ = CommonExecutionEvidence.ReadCheckManifest(CommonExecutionEvidence.Snapshot(root));
         var build = CommonExecutionEvidence.ValidateBuild(root);
         RequireBinary(build, CommonExecutionEvidence.CliPath);
         RequireBinary(build, CommonExecutionEvidence.ScribePath);
@@ -150,10 +151,22 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
             $"STRATALINT_LEAN_REPORT_LOG_DIR={Path.Combine(logs, "lean-inspector")}",
             "make", "--no-print-directory", "lean-report"], defaultTimeout: reportBudget);
         _ = RawLeanReportArtifact.ReadFile(Path.Combine(root, CommonExecutionEvidence.ReportPath), CommonExecutionEvidence.Snapshot(root), validateMaterials: true);
-        Step("scribe", "/bin/bash", ["tools/scripts/workflow/scribe-content-checks.sh", CommonExecutionEvidence.ReportPath, CommonExecutionEvidence.ScribePath]);
+        var currentSnapshot = CommonExecutionEvidence.Snapshot(root);
+        var checkManifest = CommonExecutionEvidence.ReadCheckManifest(currentSnapshot);
+        var markdown = checkManifest.Single(check => check.Id == "scribe-markdown");
+        var markdownPaths = EngineeringProjectRegistry.ExpandInputs(currentSnapshot.Files.Keys.Select(path => path.Value), markdown.PathInventory, [], markdown.Id);
+        CommonExecutionEvidence.Write(root, CommonExecutionEvidence.ScribeMarkdownPaths, string.Join("\n", markdownPaths) + "\n");
+        Step("scribe", "/bin/bash", ["tools/scripts/workflow/scribe-content-checks.sh", CommonExecutionEvidence.ReportPath, CommonExecutionEvidence.ScribePath, CommonExecutionEvidence.ScribeMarkdownPaths]);
         Step("filemap", "dotnet", [CommonExecutionEvidence.CliPath, "filemap-conform"]);
         Step("check-current", "dotnet", [CommonExecutionEvidence.CliPath, "check-current", "--candidate-lean-report", CommonExecutionEvidence.ReportPath]);
-        CommonExecutionEvidence.SealCurrent(root, build, steps.ToArray());
+        var checkInputs = CommonExecutionEvidence.CheckInputFingerprints(root, CommonExecutionEvidence.Snapshot(root));
+        var stepInputs = new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["scribe"] = checkInputs["scribe-projections"],
+            ["filemap"] = checkInputs["filemap"],
+            ["check-current"] = checkInputs["SL-001"],
+        };
+        CommonExecutionEvidence.SealCurrent(root, build, steps.ToArray(), stepInputs);
     }
 
     private void Delta(string? baseSha)

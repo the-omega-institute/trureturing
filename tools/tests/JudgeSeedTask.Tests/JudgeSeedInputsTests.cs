@@ -11,7 +11,7 @@ public sealed class JudgeSeedInputsTests : IDisposable
     private readonly string root = TemporaryFileSystem.Directory.CreateTempSubdirectory("judge-seed-inputs-").FullName;
 
     [Fact]
-    public void CaptureIncludesCompilerFilesImportsAndAnalyzerCompanionsWithoutCompiling()
+    public void CaptureConsumesOnlyRegisteredFilesWithoutCompiling()
     {
         var task = Create();
         var source = Write("source with spaces.cs", "this is deliberately invalid C#");
@@ -33,7 +33,7 @@ public sealed class JudgeSeedInputsTests : IDisposable
         task.Win32Manifest = manifest;
         task.Analyzers = [new TaskItem(analyzer)];
         task.OutputAssembly = new TaskItem(output);
-        task.JudgeInputs = [new TaskItem(explicitInput), new TaskItem(source), new TaskItem(output)];
+        task.JudgeInputs = new[] { source, reference, resource, additional, embedded, manifest, analyzer, explicitInput, task.JudgeProject }.Select(path => new TaskItem(path)).ToArray();
         task.JudgeOutputs = [new TaskItem(output), new TaskItem(output)];
 
         var capture = Capture(task);
@@ -42,10 +42,13 @@ public sealed class JudgeSeedInputsTests : IDisposable
         Assert.False(TemporaryFileSystem.File.Exists(output));
         var inputs = capture.Element("inputs")!.Elements("file").Select(file => file.Value).ToArray();
         foreach (var path in new[] { source, reference, resource, additional, embedded, manifest, analyzer,
-                     companion, explicitInput, task.JudgeProject, Path.Combine(root, "settings.props"), typeof(object).Assembly.Location })
+                     explicitInput, task.JudgeProject })
             Assert.Contains(path, inputs);
         Assert.DoesNotContain(output, inputs);
         Assert.DoesNotContain(unrelated, inputs);
+        Assert.DoesNotContain(companion, inputs);
+        Assert.DoesNotContain(Path.Combine(root, "settings.props"), inputs);
+        Assert.DoesNotContain(typeof(object).Assembly.Location, inputs);
         Assert.Equal(inputs.Distinct().Count(), inputs.Length);
         Assert.Equal(new[] { output }, capture.Element("outputs")!.Elements("file").Select(file => file.Value));
         Assert.Contains("\"" + source + "\"", capture.Element("arguments")!.Value, StringComparison.Ordinal);
@@ -55,30 +58,41 @@ public sealed class JudgeSeedInputsTests : IDisposable
         Assert.Equal(task.JudgeOutput, capture.Attribute("bin")!.Value);
     }
 
-    [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void GlobalPropertiesSelectConditionalImportsAndConfiguration(bool extra)
+    [Fact]
+    public void RegisteredImportsAreOpaqueBytesAndNeverReevaluated()
     {
         var task = Create();
-        var engine = (CaptureBuildEngine)task.BuildEngine;
-        engine.Properties["Flavor"] = extra ? "extra" : "plain";
-        engine.Properties["Configuration"] = "Release";
-        Write("extra.props", "<Project><PropertyGroup><RuntimeIdentifier>chosen-runtime</RuntimeIdentifier></PropertyGroup></Project>");
-        Write("probe.csproj", """
-            <Project>
-              <Import Project="settings.props" />
-              <Import Project="extra.props" Condition="'$(Flavor)' == 'extra'" />
-              <PropertyGroup><Configuration>Debug</Configuration></PropertyGroup>
-            </Project>
-            """);
+        var material = Write("settings.props", "not an MSBuild project");
+        task.JudgeInputs = [new TaskItem(material)];
 
         var capture = Capture(task);
 
         Assert.Null(capture.Element("unsupported"));
-        Assert.Equal(extra ? "test-sdk|net10.0|Release|AnyCPU|chosen-runtime" : "test-sdk|net10.0|Release|AnyCPU|",
-            capture.Element("configuration")!.Value);
-        Assert.Equal(extra, capture.Element("inputs")!.Elements("file").Any(file => file.Value == Path.Combine(root, "extra.props")));
+        Assert.Equal(new[] { material }, capture.Element("inputs")!.Elements("file").Select(file => file.Value));
+    }
+
+    [Fact]
+    public void MissingRegisteredMaterialFailsVisibly()
+    {
+        var task = Create();
+        task.JudgeInputs = [new TaskItem(Path.Combine(root, "missing.dll"))];
+
+        var capture = Capture(task);
+
+        Assert.Contains("required registered material is absent", capture.Element("unsupported")!.Value, StringComparison.Ordinal);
+        Assert.Null(capture.Element("inputs"));
+    }
+
+    [Fact]
+    public void UndeclaredCompilerSourceFailsVisibly()
+    {
+        var task = Create();
+        task.Sources = [new TaskItem(Write("undeclared.cs"))];
+
+        var capture = Capture(task);
+
+        Assert.Contains("unregistered compiler material", capture.Element("unsupported")!.Value, StringComparison.Ordinal);
+        Assert.Null(capture.Element("inputs"));
     }
 
     [Fact]
@@ -111,8 +125,7 @@ public sealed class JudgeSeedInputsTests : IDisposable
     [InlineData("key-container", "custom compiler/response files/key container are not seedable")]
     [InlineData("obj", "custom material directories are not seedable")]
     [InlineData("bin", "custom material directories are not seedable")]
-    [InlineData("frameworks", "multiple target frameworks are not seedable")]
-    public void UnsupportedInputsProduceARecordedFallback(string kind, string expected)
+    public void UnsupportedInputsReportARegistrationError(string kind, string expected)
     {
         var task = Create();
         switch (kind)
@@ -121,26 +134,14 @@ public sealed class JudgeSeedInputsTests : IDisposable
             case "key-container": task.KeyContainer = "container"; break;
             case "obj": task.JudgeIntermediate = Path.Combine(root, "custom-obj"); break;
             case "bin": task.JudgeOutput = Path.Combine(root, "custom-bin"); break;
-            case "frameworks": Write("probe.csproj", "<Project><PropertyGroup><TargetFrameworks>net9.0;net10.0</TargetFrameworks></PropertyGroup></Project>"); break;
         }
 
         var capture = Capture(task);
 
         Assert.Equal(expected, capture.Element("unsupported")!.Value);
+        Assert.Equal(expected, task.JudgeRegistrationError);
         Assert.Null(capture.Element("inputs"));
         Assert.NotNull(capture.Element("outputs"));
-    }
-
-    [Fact]
-    public void InvalidImportIsRecordedAsUnsupported()
-    {
-        var task = Create();
-        Write("settings.props", "not an MSBuild project");
-
-        var capture = Capture(task);
-
-        Assert.Contains("settings.props", capture.Element("unsupported")!.Value, StringComparison.Ordinal);
-        Assert.Null(capture.Element("inputs"));
     }
 
     [Fact]

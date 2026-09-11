@@ -22,6 +22,7 @@ internal sealed partial class ProductionCliEnvironment
                 throw new InvalidOperationException("check-current requires a candidate report and accepts no base; check-delta requires an explicit base and report");
             var raw = repository.ReadCurrent();
             var current = Decode(raw);
+            _ = CommonExecutionEvidence.ReadCheckManifest(current);
             var report = RawLeanReportArtifact.ReadFile(options.CandidateLeanReport, current, validateMaterials: true);
             if (!current.TryGetFile("Meta/registry.yaml", out var registry) || !current.TryGetFile("Meta/domains.yaml", out var domains))
                 throw new InvalidDataException("candidate policy is missing");
@@ -59,12 +60,7 @@ internal sealed partial class ProductionCliEnvironment
                     BootstrapOutcome.ProtectedSurfaceVerificationRequired change => MetaEvaluationProfile.ForProtectedSurface(change.ChangeSet),
                     BootstrapOutcome.InfrastructureFailure failure => throw new InvalidDataException(failure.Message),
                 };
-                var metadata = CommonCompileMetadata.Load(repositoryRoot, common.Build.Materials);
-                ScribeTestMap Derive(RepositorySnapshot snapshot) => ScribeTestMapDeriver.DeriveSnapshot(snapshot, metadata);
-                var cacheRoot = options.TestMapCacheRoot ?? Environment.GetEnvironmentVariable("STRATALINT_TEST_MAP_CACHE_ROOT");
-                var testMapStore = cacheRoot is null ? null : TryCreateTestMapStore(cacheRoot, out _, Derive, metadata);
                 result = AdmissionPipeline.CheckDelta(DeltaRuleContext.Create(current, baseline, policy, lean, prepared.Changes, meta, null,
-                    testMapStore: testMapStore, deriveTestMap: Derive,
                     commonResults: new CandidateCommonResults(common.Current.Candidate, common.Current.Round)));
             }
             else

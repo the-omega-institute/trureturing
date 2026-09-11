@@ -19,9 +19,7 @@ public sealed class DependencyDirectionTests
     [Fact]
     public void EngineReferencesExactlyBclDunetMarkdigPidginRoslynAndTruth()
     {
-        // …and YamlDotNet: SL-030 reads `.github/**` YAML with the parser family the Actions runner
-        // uses. The method keeps its original name on purpose: SL-003's test-map ratchet treats a
-        // renamed reflection-based test as a new "unknown" identity introduced after the fork point.
+        // YamlDotNet also supplies the parser for SL-030.
         Assert.Equal(
             ["Dunet", "Markdig", "Microsoft.CodeAnalysis", "Microsoft.CodeAnalysis.CSharp", "Pidgin", "Tomlyn", "Trureturing.Truth", "YamlDotNet"],
             AssemblyReferencePolicy.NonPlatformReferences(typeof(AdmissionPipeline).Assembly));
@@ -31,9 +29,6 @@ public sealed class DependencyDirectionTests
     public void CliReferencesExactlyEngineScribeTomlynTruthAndYamlDotNet()
     {
         Assert.Equal(
-            // 方法名保留原样:改名会产生一个新的测试身份,而本测试因走反射
-            // (typeof(Cli.Program).Assembly)无法被测试映射静态解析,落在 conservative
-            // unknown 桶里 —— 新身份撞 SL-003 棘轮。故名字不再穷举引用集,以下列表为准。
             [
                 "StrataLint.Engine",
                 "StrataLint.EngineeringScope",
@@ -91,7 +86,6 @@ public sealed class DependencyDirectionTests
     }
 
     [Fact]
-    // Keep the name: ScribeUnknownDebtPolicy's identity ratchet makes a rename new debt; the assertion body governs.
     public void EngineeringScopeTestsReferenceOnlyEngineeringScope()
     {
         // 此处曾有一条产物层(IL)断言,钉 `["StrataLint.EngineeringScope", "StrataLint.TestSupport"]`
@@ -113,7 +107,6 @@ public sealed class DependencyDirectionTests
     }
 
     [Fact]
-    // Keep the name: ScribeUnknownDebtPolicy's identity ratchet makes a rename new debt; the assertion body governs.
     public void ScribeTestsReferenceOnlyEngineAndScribe()
     {
         // 原为产物层(IL)断言,钉 `["StrataLint.Engine", "StrataLint.Scribe",

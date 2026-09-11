@@ -132,21 +132,32 @@ internal interface IRepositoryRule
 
 public sealed class CurrentRuleContext
 {
-    private CurrentRuleContext(RepositorySnapshot current, ValidatedPolicy policy, AcceptedLeanClosure lean, VerifiedScribeEmissions? emissions)
+    private CurrentRuleContext(RepositorySnapshot current, ValidatedPolicy policy, AcceptedLeanClosure lean,
+        VerifiedScribeEmissions? emissions, CurrentRuleSelection? selection)
     {
         Current = current;
         Policy = policy;
         Lean = lean;
         VerifiedScribeEmissions = emissions;
+        Selection = selection;
     }
 
     internal RepositorySnapshot Current { get; }
     internal ValidatedPolicy Policy { get; }
     internal AcceptedLeanClosure Lean { get; }
     internal VerifiedScribeEmissions? VerifiedScribeEmissions { get; }
+    internal CurrentRuleSelection? Selection { get; }
     internal static CurrentRuleContext Create(RepositorySnapshot current, ValidatedPolicy policy, AcceptedLeanClosure lean, VerifiedScribeEmissions? emissions = null) =>
-        new(current, policy, lean, emissions);
+        new(current, policy, lean, emissions, null);
+
+    internal static CurrentRuleContext Create(RepositorySnapshot current, ValidatedPolicy policy,
+        AcceptedLeanClosure lean, VerifiedScribeEmissions? emissions, CurrentRuleSelection selection) =>
+        new(current, policy, lean, emissions, selection);
 }
+
+// A validated producer may restrict current execution to affected registered rules. The
+// catalog remains the sole executor; no host or shell discovery is involved.
+internal sealed record CurrentRuleSelection(ImmutableHashSet<RuleId> Selected);
 
 internal sealed class RuleApplicabilityContext
 {
@@ -226,8 +237,6 @@ public sealed class DeltaRuleContext
         RawChangeSet changes,
         MetaEvaluationProfile metaEvaluation,
         VerifiedScribeEmissions? verifiedScribeEmissions,
-        ScribeTestMapStore? testMapStore,
-        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap,
         CandidateCommonResults? commonResults)
     {
         Current = current;
@@ -242,8 +251,6 @@ public sealed class DeltaRuleContext
         RuleImplementationChanged = BaseFactImpact.RuleImplementationChanged(changes);
         MetaEvaluation = metaEvaluation;
         VerifiedScribeEmissions = verifiedScribeEmissions;
-        TestMapStore = testMapStore;
-        DeriveTestMap = deriveTestMap ?? ScribeTestMapDeriver.DeriveSnapshot;
         CommonResults = commonResults;
     }
 
@@ -277,10 +284,6 @@ public sealed class DeltaRuleContext
 
     internal VerifiedScribeEmissions? VerifiedScribeEmissions { get; }
 
-    internal ScribeTestMapStore? TestMapStore { get; }
-
-    internal Func<RepositorySnapshot, ScribeTestMap> DeriveTestMap { get; }
-
     internal static DeltaRuleContext Create(
         RepositorySnapshot current,
         RepositorySnapshot baseline,
@@ -288,9 +291,7 @@ public sealed class DeltaRuleContext
         AcceptedLeanClosure lean,
         RawChangeSet changes,
         MetaClear metaClear,
-        VerifiedScribeEmissions? verifiedScribeEmissions = null,
-        ScribeTestMapStore? testMapStore = null,
-        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null) =>
+        VerifiedScribeEmissions? verifiedScribeEmissions = null) =>
         Create(
             current,
             baseline,
@@ -298,9 +299,7 @@ public sealed class DeltaRuleContext
             lean,
             changes,
             MetaEvaluationProfile.ForClear(metaClear),
-            verifiedScribeEmissions,
-            testMapStore,
-            deriveTestMap);
+            verifiedScribeEmissions);
 
     internal static DeltaRuleContext Create(
         RepositorySnapshot current,
@@ -310,8 +309,6 @@ public sealed class DeltaRuleContext
         RawChangeSet changes,
         MetaEvaluationProfile metaEvaluation,
         VerifiedScribeEmissions? verifiedScribeEmissions = null,
-        ScribeTestMapStore? testMapStore = null,
-        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null,
         CandidateCommonResults? commonResults = null) =>
         new(
             current,
@@ -321,8 +318,6 @@ public sealed class DeltaRuleContext
             changes,
             metaEvaluation,
             verifiedScribeEmissions,
-            testMapStore,
-            deriveTestMap,
             commonResults);
 }
 

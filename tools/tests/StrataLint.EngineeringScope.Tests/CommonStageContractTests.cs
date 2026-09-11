@@ -454,7 +454,6 @@ public sealed class CommonStageContractTests
     [InlineData("missing-report")]
     [InlineData("invalid-report")]
     [InlineData("missing-materials")]
-    [InlineData("missing-compile-metadata")]
     [InlineData("round")]
     [InlineData("missing-step")]
     [InlineData("failed-step")]
@@ -510,7 +509,6 @@ public sealed class CommonStageContractTests
             case "missing-report": TemporaryFileSystem.File.Delete(Path.Combine(target.Root, CommonExecutionEvidence.ReportPath)); break;
             case "invalid-report": TemporaryFileSystem.File.WriteAllText(Path.Combine(target.Root, CommonExecutionEvidence.ReportPath), "invalid"); break;
             case "missing-materials": TemporaryFileSystem.File.Delete(Path.Combine(target.Root, CommonExecutionEvidence.ReportPath + ".materials.zip")); break;
-            case "missing-compile-metadata": TemporaryFileSystem.Directory.Delete(Path.Combine(target.Root, "build/ci/compile-metadata"), recursive: true); break;
             case "round": CommonExecutionEvidence.Write(target.Root, CommonExecutionEvidence.CurrentPath, current with { Round = "another-round" }); break;
             case "missing-step": CommonExecutionEvidence.Write(target.Root, CommonExecutionEvidence.CurrentPath, current with { Steps = current.Steps.Skip(1).ToArray() }); break;
             case "failed-step": CommonExecutionEvidence.Write(target.Root, CommonExecutionEvidence.CurrentPath, current with { Steps = current.Steps.Select(step => step with { Exit = 1, Status = "failed" }).ToArray() }); break;

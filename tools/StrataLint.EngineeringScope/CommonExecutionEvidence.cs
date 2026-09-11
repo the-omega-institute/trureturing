@@ -12,8 +12,13 @@ internal sealed record TestProjectExecution(string Project, string InputFingerpr
 internal sealed record RegisteredTestInput(string Project, string Assembly, string Fingerprint);
 internal sealed record ExecutionMaterial(string Path, string Sha256);
 internal sealed record TestExecutionRecord(int Version, string Candidate, string Round, TestProjectExecution[] Projects, ExecutionMaterial[] Materials);
-internal sealed record StageStep(string Name, int RawExit, int Exit, string Status, string Log);
+internal sealed record StageStep(string Name, int RawExit, int Exit, string Status, string Log,
+    string? InputFingerprint = null, string? ExecutionCandidate = null, string? ExecutionRound = null);
 internal sealed record CommonStageRecord(int Version, string Candidate, string Round, StageStep[] Steps, ExecutionMaterial[] Materials);
+internal sealed record RegisteredCheckReport(string Producer, string Artifact, string[] Materials);
+internal sealed record RegisteredCommonCheck(string Id, string[] ProgramProjects, string[] Materials,
+    string[] MaterialExcludes, string[] PathInventory, RegisteredCheckReport[] ReportInputs);
+internal sealed record CommonCheckManifest(string Schema, RegisteredCommonCheck[] Checks);
 
 internal static class CommonExecutionEvidence
 {
@@ -25,6 +30,8 @@ internal static class CommonExecutionEvidence
     internal const string BuildPath = RootPath + "/build.json";
     internal const string EngineeringPath = RootPath + "/engineering.json";
     internal const string CurrentPath = RootPath + "/current.json";
+    internal const string ScribeMarkdownPaths = RootPath + "/scribe-markdown.paths";
+    internal const string CheckManifestPath = "Meta/ci-checks.json";
     internal const string ReportPath = ".lake/build/stratalint/raw-lean-report.json";
     internal static readonly string[] ReportPaths = [ReportPath, ReportPath + ".sha256", ReportPath + ".input.attestation",
         ReportPath + ".provenance.json", ReportPath + ".materials.zip", ReportPath + ".seed.json"];
@@ -50,8 +57,9 @@ internal static class CommonExecutionEvidence
     private static string Candidate(string root, out RepositorySnapshot snapshot)
     {
         snapshot = Snapshot(root);
-        var files = snapshot.Files.Values.Select(file => new ScribeTrackedSource(file.Path.Value, file.Text)).ToArray();
-        _ = EngineeringProjectRegistry.Read(files).Sources(files);
+        var files = snapshot.Files.Values.Select(file => new EngineeringSource(file.Path.Value, file.Text)).ToArray();
+        var registry = EngineeringProjectRegistry.Read(files);
+        _ = registry.Sources(files);
         using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
         foreach (var (path, file) in snapshot.Files.OrderBy(static pair => pair.Key.Value, StringComparer.Ordinal))
         {
@@ -62,6 +70,95 @@ internal static class CommonExecutionEvidence
             hash.AppendData(SHA256.HashData(file.RawBytes.AsSpan()));
         }
         return Convert.ToHexStringLower(hash.GetHashAndReset());
+    }
+
+    internal static IReadOnlyList<RegisteredCommonCheck> ReadCheckManifest(RepositorySnapshot snapshot,
+        EngineeringProjectRegistry? registry = null)
+    {
+        if (!snapshot.TryGetFile(CheckManifestPath, out var file))
+            throw new InvalidDataException($"missing common check registration: {CheckManifestPath}");
+        CommonCheckManifest manifest;
+        try
+        {
+            manifest = JsonSerializer.Deserialize<CommonCheckManifest>(file.Text, JsonOptions)
+                ?? throw new InvalidDataException("empty common check registration");
+        }
+        catch (JsonException exception) { throw new InvalidDataException($"invalid common check registration: {exception.Message}", exception); }
+        if (manifest.Schema != "ci-check-input-registration-v1" || manifest.Checks is null)
+            throw new InvalidDataException("invalid common check registration schema");
+        var expected = new[] { "SL-001", "SL-002", "SL-003", "SL-004", "SL-006", "SL-008", "SL-010", "SL-011", "SL-012", "SL-015", "SL-017", "SL-018", "SL-019", "SL-020", "SL-021", "SL-023", "SL-025", "SL-026", "selftest-pair", "capability-proof", "banned-api-proof", "scribe-projections", "scribe-describe", "scribe-markdown", "filemap" };
+        if (!manifest.Checks.Select(check => check.Id).Order(StringComparer.Ordinal).SequenceEqual(expected.Order(StringComparer.Ordinal)))
+            throw new InvalidDataException("common check registration must contain the complete current check set");
+        registry ??= EngineeringProjectRegistry.Read(snapshot.Files.Values.Select(item => new EngineeringSource(item.Path.Value, item.Text)).ToArray());
+        var projects = registry.Projects.Select(project => project.Path).ToHashSet(StringComparer.Ordinal);
+        var paths = snapshot.Files.Keys.Select(path => path.Value).ToArray();
+        foreach (var check in manifest.Checks)
+        {
+            if (check.ProgramProjects is null || check.Materials is null || check.MaterialExcludes is null
+                || check.PathInventory is null || check.ReportInputs is null || check.ProgramProjects.Length == 0)
+                throw new InvalidDataException($"missing common check registration fields: {check.Id}");
+            foreach (var project in check.ProgramProjects)
+                if (!projects.Contains(project)) throw new InvalidDataException($"check {check.Id} references unregistered project: {project}");
+            ValidatePatterns(check.Materials, check.MaterialExcludes, check.Id);
+            ValidatePatterns(check.PathInventory, [], check.Id);
+            _ = EngineeringProjectRegistry.ExpandInputs(paths, check.Materials, check.MaterialExcludes, check.Id);
+            _ = EngineeringProjectRegistry.ExpandInputs(paths, check.PathInventory, [], check.Id);
+            foreach (var report in check.ReportInputs)
+            {
+                if (string.IsNullOrWhiteSpace(report.Producer) || string.IsNullOrWhiteSpace(report.Artifact)
+                    || report.Materials is null || report.Materials.Length == 0)
+                    throw new InvalidDataException($"invalid report input registration: {check.Id}");
+                if (!snapshot.Files.ContainsKey(RepoPath.CreateKnown(report.Producer)))
+                    throw new InvalidDataException($"check {check.Id} references missing producer: {report.Producer}");
+                ValidatePatterns(report.Materials, [], check.Id);
+                _ = EngineeringProjectRegistry.ExpandInputs(paths, report.Materials, [], check.Id);
+            }
+        }
+        return manifest.Checks;
+
+        static void ValidatePatterns(string[] patterns, string[] excludes, string id)
+        {
+            if (patterns.Any(pattern => string.IsNullOrWhiteSpace(pattern) || pattern.Contains(':'))
+                || patterns.Distinct(StringComparer.Ordinal).Count() != patterns.Length
+                || excludes.Distinct(StringComparer.Ordinal).Count() != excludes.Length)
+                throw new InvalidDataException($"invalid or duplicate common check input registration: {id}");
+            foreach (var pattern in patterns.Concat(excludes)) _ = FileMapGlob.Create(pattern);
+            foreach (var pattern in patterns.Where(pattern => !pattern.Contains('*')))
+                if (excludes.Any(exclude => FileMapGlob.Create(exclude).IsMatch(pattern)))
+                    throw new InvalidDataException($"conflicting common check input registration: {id}: {pattern}");
+        }
+    }
+
+    // Computes identity from each check's declared projection. Unrelated registry rows and
+    // candidate/round labels are deliberately excluded from this input fingerprint.
+    internal static IReadOnlyDictionary<string, string> CheckInputFingerprints(string root,
+        RepositorySnapshot snapshot)
+    {
+        var files = snapshot.Files.Values.Select(item => new EngineeringSource(item.Path.Value, item.Text)).ToArray();
+        var registry = EngineeringProjectRegistry.Read(files);
+        var checks = ReadCheckManifest(snapshot, registry);
+        var paths = snapshot.Files.Keys.Select(path => path.Value).ToArray();
+        var projects = registry.Projects.ToDictionary(project => project.Path, StringComparer.Ordinal);
+        var result = new Dictionary<string, string>(StringComparer.Ordinal);
+        foreach (var check in checks)
+        {
+            var materialPaths = EngineeringProjectRegistry.ExpandInputs(paths, check.Materials, check.MaterialExcludes, check.Id)
+                .Concat(EngineeringProjectRegistry.ExpandInputs(paths, check.PathInventory, [], check.Id));
+            foreach (var report in check.ReportInputs)
+                materialPaths = materialPaths.Concat(EngineeringProjectRegistry.ExpandInputs(paths, report.Materials, [], check.Id));
+            var addressedProjects = check.ProgramProjects.Order(StringComparer.Ordinal).Select(path =>
+                projects.TryGetValue(path, out var project)
+                    ? new { project.Path, project.Assembly, project.Role, project.References, project.Include, project.Exclude }
+                    : throw new InvalidDataException($"check {check.Id} references unregistered project: {path}"));
+            var entries = materialPaths.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).Select(path =>
+            {
+                var item = snapshot.Files[RepoPath.CreateKnown(path)];
+                return new { path, sha256 = Convert.ToHexStringLower(SHA256.HashData(item.RawBytes.AsSpan())) };
+            });
+            result.Add(check.Id, Digest(new { check.Id, projects = addressedProjects, materials = entries,
+                reports = check.ReportInputs.OrderBy(item => item.Producer, StringComparer.Ordinal) }));
+        }
+        return result;
     }
 
     internal static string Hash(string path) => Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(path)));
@@ -84,10 +181,10 @@ internal static class CommonExecutionEvidence
     internal static CommonStageRecord SealBuild(string root, string candidate, IEnumerable<string> binaries, StageStep[] steps)
     {
         RequirePassed(steps, BuildSteps);
-        var products = binaries.Concat(CommonCompileMetadata.Export(root, Snapshot(root))).ToArray();
         if (candidate != Candidate(root)) throw new InvalidDataException("candidate changed during build");
-        var record = new CommonStageRecord(1, candidate, Guid.NewGuid().ToString("N"), steps,
-            Materials(root, products.Concat(steps.Select(step => step.Log))));
+        var round = Guid.NewGuid().ToString("N");
+        var record = new CommonStageRecord(2, candidate, round, BindStepIdentity(steps, candidate, round),
+            Materials(root, binaries.Concat(steps.Select(step => step.Log))));
         Write(root, BuildPath, record);
         WriteBundleList(root, "build", record.Materials.Select(material => material.Path).Append(BuildPath));
         return record;
@@ -102,7 +199,6 @@ internal static class CommonExecutionEvidence
         if (string.IsNullOrWhiteSpace(record.Round)) throw new InvalidDataException("missing build round");
         ValidateRecord(root, record, candidate, round ?? record.Round);
         RequirePassed(record.Steps, BuildSteps);
-        _ = CommonCompileMetadata.Load(root, record.Materials);
         return record;
     }
 
@@ -120,7 +216,7 @@ internal static class CommonExecutionEvidence
         ValidateStartedBuild(root, build, candidate);
         var tests = ValidateTests(root, Read<TestExecutionRecord>(root, TestsPath), candidate, snapshot);
         if (tests.Round != build.Round) throw new InvalidDataException("tests belong to a different build round");
-        var record = new CommonStageRecord(1, candidate, build.Round, steps,
+        var record = new CommonStageRecord(2, candidate, build.Round, BindStepIdentity(steps, candidate, build.Round),
             Materials(root, new[] { BuildPath, TestsPath }.Concat(tests.Materials.Select(material => material.Path))
                 .Concat(steps.Select(step => step.Log))));
         Write(root, EngineeringPath, record);
@@ -150,14 +246,19 @@ internal static class CommonExecutionEvidence
         return record;
     }
 
-    internal static void SealCurrent(string root, CommonStageRecord build, StageStep[] steps)
+    internal static void SealCurrent(string root, CommonStageRecord build, StageStep[] steps,
+        IReadOnlyDictionary<string, string>? inputFingerprints = null)
     {
         var candidate = Candidate(root, out var snapshot);
         ValidateStartedBuild(root, build, candidate);
         RequirePassed(steps, CurrentSteps);
         _ = RawLeanReportArtifact.ReadFile(Path.Combine(root, ReportPath), snapshot, validateMaterials: true);
-        var record = new CommonStageRecord(1, build.Candidate, build.Round, steps,
-            Materials(root, ReportPaths.Append(BuildPath).Concat(steps.Select(step => step.Log))));
+        var currentMaterials = ReportPaths.Append(BuildPath)
+            .Concat(File.Exists(Path.Combine(root, CheckManifestPath)) ? [CheckManifestPath] : [])
+            .Concat(File.Exists(Path.Combine(root, ScribeMarkdownPaths)) ? [ScribeMarkdownPaths] : [])
+            .Concat(steps.Select(step => step.Log));
+        var record = new CommonStageRecord(2, build.Candidate, build.Round, BindStepIdentity(steps, build.Candidate, build.Round, inputFingerprints),
+            Materials(root, currentMaterials));
         Write(root, CurrentPath, record);
         WriteBundleList(root, "current", build.Materials.Concat(record.Materials)
             .Select(material => material.Path).Append(CurrentPath));
@@ -177,6 +278,9 @@ internal static class CommonExecutionEvidence
         if (ReportPaths.Any(path => !record.Materials.Any(material => material.Path == path))
             || !record.Materials.Any(material => material.Path == BuildPath))
             throw new InvalidDataException("current has no bound report or build evidence");
+        _ = ReadCheckManifest(snapshot);
+        if (!record.Materials.Any(material => material.Path == CheckManifestPath))
+            throw new InvalidDataException("current has no bound common check registration");
         _ = RawLeanReportArtifact.ReadFile(Path.Combine(root, ReportPath), snapshot, validateMaterials: true);
         return record;
     }
@@ -192,16 +296,26 @@ internal static class CommonExecutionEvidence
 
     private static void ValidateRecord(string root, CommonStageRecord record, string candidate, string round)
     {
-        if (record.Version != 1 || record.Candidate != candidate || record.Round != round)
+        if (record.Version is not (1 or 2) || record.Candidate != candidate || record.Round != round)
             throw new InvalidDataException("common evidence candidate identity or round mismatch");
         RequirePassed(record.Steps);
         ValidateMaterials(root, record.Materials);
     }
 
+    private static StageStep[] BindStepIdentity(IEnumerable<StageStep> steps, string candidate, string round,
+        IReadOnlyDictionary<string, string>? inputFingerprints = null) =>
+        steps.Select(step => step.Status == "reused"
+            ? step
+            : step with { InputFingerprint = inputFingerprints is not null && inputFingerprints.TryGetValue(step.Name, out var fingerprint)
+                    ? fingerprint : step.InputFingerprint,
+                ExecutionCandidate = candidate, ExecutionRound = round }).ToArray();
+
     private static void RequirePassed(IEnumerable<StageStep> steps, string[]? required = null)
     {
-        if (steps.Any(step => step.Exit != 0 || step.Status != "executed"
-                || step.RawExit != (step.Name is "capability-proof" or "banned-api-proof" ? 1 : 0)))
+        if (steps.Any(step => step.Exit != 0 || step.Status is not ("executed" or "reused")
+                || step.RawExit != (step.Name is "capability-proof" or "banned-api-proof" ? 1 : 0)
+                || step.Status == "reused" && (!ValidCandidate(step.ExecutionCandidate)
+                    || !ValidRound(step.ExecutionRound) || string.IsNullOrWhiteSpace(step.InputFingerprint))))
             throw new InvalidDataException("required common step did not succeed");
         if (required is not null && !required.SequenceEqual(steps.Select(step => step.Name)))
             throw new InvalidDataException("required common steps are missing, duplicated, or out of order");
@@ -229,7 +343,7 @@ internal static class CommonExecutionEvidence
 
     internal static IReadOnlyDictionary<string, RegisteredTestInput> TestInputs(string root, RepositorySnapshot snapshot)
     {
-        var files = snapshot.Files.Values.Select(file => new ScribeTrackedSource(file.Path.Value, file.Text)).ToArray();
+        var files = snapshot.Files.Values.Select(file => new EngineeringSource(file.Path.Value, file.Text)).ToArray();
         var registry = EngineeringProjectRegistry.Read(files);
         var sources = registry.Sources(files);
         var projects = registry.Projects.ToDictionary(project => project.Path, StringComparer.Ordinal);

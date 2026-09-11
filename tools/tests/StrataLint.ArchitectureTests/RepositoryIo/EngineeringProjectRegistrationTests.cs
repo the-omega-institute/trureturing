@@ -60,8 +60,6 @@ public sealed class EngineeringProjectRegistrationTests
         var baseline = Snapshot(null, (Project, Misleading));
         var candidate = Snapshot(EngineeringRegistrationFixture.Manifest(Test()), (Project, Misleading));
         Assert.Equal([Project], EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadBaseProjects(baseline, candidate)).ToArray());
-        var addressed = EngineeringProjectRegistry.AddressBase(baseline, candidate);
-        Assert.Equal([Project], EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadSnapshotProjects(addressed)).ToArray());
         Assert.False(baseline.TryGetFile(EngineeringRegistrationFixture.Path, out _));
     }
 

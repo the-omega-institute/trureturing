@@ -250,6 +250,12 @@ public sealed class RuleCatalog
             {
                 var registration = RegistrationFor(ruleId);
                 var descriptor = registration.Descriptor;
+                if (includeCurrent && current.Selection is { } selection
+                    && !selection.Selected.Contains(descriptor.Id))
+                {
+                    skipped.Add(descriptor.Id);
+                    continue;
+                }
                 var runCurrent = includeCurrent && registration.Rule.HasCurrentPredicate;
                 var runDelta = delta is not null && registration.Rule.HasDeltaPredicate
                     && (registration.RecheckOnImplementationChange && delta.RuleImplementationChanged || (measureApplicability is null
