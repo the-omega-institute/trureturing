@@ -28,32 +28,32 @@ internal sealed class RecordCapacityDocument : IScribeDocumentDefinition
             Result("carrier-bound", "card_le_finrank_of_idempotent_sum",
                 "Each nonzero record consumes a dimension",
                 "A zero range dimension would make the trace and hence the idempotent "
-                    + "zero. Summing the positive integer range dimensions bounds the count."),
+                    + "zero. Summing the positive integer range dimensions bounds the count.", true),
             Result("algebra-bound", "algebra_card_le_finrank",
                 "The dimension of a complex algebra bounds its resolutions",
                 "Left multiplication represents the algebra faithfully on itself. "
-                    + "The preceding count therefore applies in its complex dimension."),
+                    + "The preceding count therefore applies in its complex dimension.", true),
             Result("commutant-bound", "equivariant_record_card_le_commutant_finrank",
                 "The commutant bounds equivariant records",
                 "Equivariance places each record in the actual centralizer of the common "
                     + "action. Its left regular action gives the bound by its complex dimension. "
-                    + "This is weaker than the multiplicity-sum law in general."),
+                    + "This is weaker than the multiplicity-sum law in general.", true),
             Result("block-bound", "matrix_blocks_card_le_sum",
                 "Matrix blocks give the sum of their sizes",
                 "The product of matrix algebras acts faithfully by block diagonal matrices "
                     + "on a carrier whose dimension is the sum of the block sizes. "
-                    + "The count applies on this smaller carrier."),
+                    + "The count applies on this smaller carrier.", true),
             Result("equivariant-block-bound", "equivariant_record_card_le_sum",
                 "A supplied commutant decomposition gives the sharp bound",
                 "The algebra equivalence is an explicit hypothesis linking the actual "
                     + "commutant to the stated blocks. Transport each record through it "
                     + "and apply the block count. Identifying these sizes with multiplicities "
-                    + "of a separately specified irrep decomposition is not formalized here."),
+                    + "of a separately specified irrep decomposition is not formalized here.", true),
             Result("semisimple-capacity", "semisimple_commutant_has_record_capacity",
                 "Semisimplicity supplies one bound for all resolutions",
                 "The upstream Wedderburn–Artin theorem supplies block sizes for a "
                     + "semisimple commutant. Those same sizes bound every finite nonzero "
-                    + "equivariant orthogonal resolution. Semisimplicity is an assumption."))));
+                    + "equivariant orthogonal resolution. Semisimplicity is an assumption.", true))));
 
     private static DocumentBlock Result(
         string id, string declaration, string title, string text, bool literature = false) =>

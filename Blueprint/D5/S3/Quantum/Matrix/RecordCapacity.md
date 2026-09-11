@@ -24,7 +24,7 @@ Lean statement: `D5/S3/Quantum/Matrix/RecordCapacity.card_le_finrank_of_idempote
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/RecordCapacity.card_le_finrank_of_idempotent_sum` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Junyan Xu and the mathlib community (2026). *Wedderburn–Artin structure and trace of idempotent endomorphisms*. URL: <https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/RingTheory/SimpleModule/IsAlgClosed.lean>.
 
 *Commentary.*
 
@@ -36,7 +36,7 @@ Lean statement: `D5/S3/Quantum/Matrix/RecordCapacity.algebra_card_le_finrank`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/RecordCapacity.algebra_card_le_finrank` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Junyan Xu and the mathlib community (2026). *Wedderburn–Artin structure and trace of idempotent endomorphisms*. URL: <https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/RingTheory/SimpleModule/IsAlgClosed.lean>.
 
 *Commentary.*
 
@@ -48,7 +48,7 @@ Lean statement: `D5/S3/Quantum/Matrix/RecordCapacity.equivariant_record_card_le_
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/RecordCapacity.equivariant_record_card_le_commutant_finrank` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Junyan Xu and the mathlib community (2026). *Wedderburn–Artin structure and trace of idempotent endomorphisms*. URL: <https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/RingTheory/SimpleModule/IsAlgClosed.lean>.
 
 *Commentary.*
 
@@ -60,7 +60,7 @@ Lean statement: `D5/S3/Quantum/Matrix/RecordCapacity.matrix_blocks_card_le_sum`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/RecordCapacity.matrix_blocks_card_le_sum` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Junyan Xu and the mathlib community (2026). *Wedderburn–Artin structure and trace of idempotent endomorphisms*. URL: <https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/RingTheory/SimpleModule/IsAlgClosed.lean>.
 
 *Commentary.*
 
@@ -72,7 +72,7 @@ Lean statement: `D5/S3/Quantum/Matrix/RecordCapacity.equivariant_record_card_le_
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/RecordCapacity.equivariant_record_card_le_sum` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Junyan Xu and the mathlib community (2026). *Wedderburn–Artin structure and trace of idempotent endomorphisms*. URL: <https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/RingTheory/SimpleModule/IsAlgClosed.lean>.
 
 *Commentary.*
 
@@ -84,7 +84,7 @@ Lean statement: `D5/S3/Quantum/Matrix/RecordCapacity.semisimple_commutant_has_re
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/RecordCapacity.semisimple_commutant_has_record_capacity` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Junyan Xu and the mathlib community (2026). *Wedderburn–Artin structure and trace of idempotent endomorphisms*. URL: <https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/RingTheory/SimpleModule/IsAlgClosed.lean>.
 
 *Commentary.*
 
