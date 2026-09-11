@@ -3,6 +3,7 @@
     <DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+    <RootNamespace>JudgeSeedTask.Tests</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../../scripts/report/JudgeSeedTask.csproj" />
