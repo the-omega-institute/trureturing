@@ -7,7 +7,6 @@
    digest: Nonzero equivariant idempotent resolutions obey commutant capacity bounds. -/
 
 import Mathlib.LinearAlgebra.Trace
-import Mathlib.LinearAlgebra.Matrix.Hermitian
 import Mathlib.Data.Matrix.Block
 import Mathlib.RingTheory.Idempotents
 import Mathlib.RingTheory.SimpleModule.IsAlgClosed
@@ -30,7 +29,8 @@ theorem sum_range_finrank_of_idempotent_sum
       (Module.finrank K V : K) := by
     calc
       _ = ∑ i, LinearMap.trace K V (p i) :=
-        Finset.sum_congr rfl fun i _ => (hid i).isProj_range.trace.symm
+        Finset.sum_congr rfl fun i _ =>
+          (LinearMap.IsIdempotentElem.isProj_range _ (hid i)).trace.symm
       _ = LinearMap.trace K V (∑ i, p i) := (map_sum _ _ _).symm
       _ = _ := by rw [hsum, LinearMap.trace_one]
   exact_mod_cast htrace
@@ -45,8 +45,8 @@ theorem card_le_finrank_of_idempotent_sum
     apply Nat.one_le_iff_ne_zero.mpr
     intro hz
     apply hne i
-    apply (hid i).eq_zero_of_trace_eq_zero
-    rw [(hid i).isProj_range.trace, hz, Nat.cast_zero]
+    apply LinearMap.IsIdempotentElem.eq_zero_of_trace_eq_zero (hid i)
+    rw [(LinearMap.IsIdempotentElem.isProj_range _ (hid i)).trace, hz, Nat.cast_zero]
   calc
     Fintype.card I = ∑ _ : I, 1 := by simp
     _ ≤ ∑ i, Module.finrank K (LinearMap.range (p i)) :=
@@ -62,7 +62,7 @@ def commutant {G n : Type*} [Group G] [Fintype n] [DecidableEq n]
 def equivariantElement {G n : Type*} [Group G] [Fintype n] [DecidableEq n]
     (U : G →* Matrix n n ℂ) (P : Matrix n n ℂ)
     (hP : ∀ g, P * U g = U g * P) : commutant U :=
-  ⟨P, Subalgebra.mem_centralizer_iff.mpr fun _ ⟨g, hg⟩ => hg ▸ (hP g).symm⟩
+  ⟨P, (Subalgebra.mem_centralizer_iff ℂ).mpr fun _ ⟨g, hg⟩ => hg ▸ (hP g).symm⟩
 
 /-- A finite nonzero idempotent resolution in any complex algebra is bounded by its dimension. -/
 theorem algebra_card_le_finrank
@@ -92,6 +92,62 @@ theorem equivariant_record_card_le_commutant_finrank
   · intro i h
     exact hne i (congrArg Subtype.val h)
   · apply Subtype.ext
+    change (commutant U).val (∑ i, p i) = (commutant U).val 1
+    rw [map_sum, map_one]
     exact hrecord.complete
+
+/-- A resolution in a product of matrix algebras has at most the sum of the block sizes. -/
+theorem matrix_blocks_card_le_sum
+    {B I : Type*} [Fintype B] [Fintype I] (m : B → ℕ)
+    (p : I → ∀ b, Matrix (Fin (m b)) (Fin (m b)) ℂ)
+    (hid : ∀ i, IsIdempotentElem (p i)) (hne : ∀ i, p i ≠ 0)
+    (hsum : ∑ i, p i = 1) : Fintype.card I ≤ ∑ b, m b := by
+  classical
+  let f := Matrix.toLinAlgEquiv'.toRingHom.comp
+    (Matrix.blockDiagonal'RingHom (fun b => Fin (m b)) ℂ)
+  have hf : Function.Injective f :=
+    Matrix.toLinAlgEquiv'.injective.comp Matrix.blockDiagonal'_injective
+  have hbound := card_le_finrank_of_idempotent_sum (fun i => f (p i))
+    (fun i => (hid i).map f)
+    (fun i h => hne i (hf (h.trans f.map_zero.symm)))
+    (by rw [← map_sum, hsum, map_one])
+  simpa only [Module.finrank_pi, Fintype.card_sigma, Fintype.card_fin] using hbound
+
+/-- The sharp bound for a supplied block decomposition of the actual commutant. -/
+theorem equivariant_record_card_le_sum
+    {G n I B : Type*} [Group G] [Fintype n] [DecidableEq n] [Fintype I]
+    [Fintype B] (U : G →* Matrix n n ℂ) (m : B → ℕ)
+    (e : commutant U ≃ₐ[ℂ] ∀ b, Matrix (Fin (m b)) (Fin (m b)) ℂ)
+    (P : I → Matrix n n ℂ) (hrecord : CompleteOrthogonalIdempotents P)
+    (hne : ∀ i, P i ≠ 0) (hequivariant : ∀ i g, P i * U g = U g * P i) :
+    Fintype.card I ≤ ∑ b, m b := by
+  classical
+  let p : I → commutant U := fun i => equivariantElement U (P i) (hequivariant i)
+  have hid (i : I) : IsIdempotentElem (p i) := Subtype.ext (hrecord.idem i).eq
+  have hp : ∑ i, p i = 1 := by
+    apply Subtype.ext
+    change (commutant U).val (∑ i, p i) = (commutant U).val 1
+    rw [map_sum, map_one]
+    exact hrecord.complete
+  apply matrix_blocks_card_le_sum m (fun i => e (p i))
+  · exact fun i => (hid i).map e
+  · intro i h
+    exact hne i (congrArg Subtype.val (e.injective (h.trans e.map_zero.symm)))
+  · rw [← map_sum, hp, map_one]
+
+/-- Upstream Wedderburn–Artin supplies block sizes that bound every equivariant resolution. -/
+theorem semisimple_commutant_has_record_capacity
+    {G n : Type*} [Group G] [Fintype n] [DecidableEq n]
+    (U : G →* Matrix n n ℂ) [IsSemisimpleRing (commutant U)] :
+    ∃ (k : ℕ) (m : Fin k → ℕ), (∀ b, NeZero (m b)) ∧
+      Nonempty (commutant U ≃ₐ[ℂ] ∀ b, Matrix (Fin (m b)) (Fin (m b)) ℂ) ∧
+      ∀ (I : Type) [Fintype I] (P : I → Matrix n n ℂ),
+        CompleteOrthogonalIdempotents P → (∀ i, P i ≠ 0) →
+        (∀ i g, P i * U g = U g * P i) → Fintype.card I ≤ ∑ b, m b := by
+  classical
+  obtain ⟨k, m, hm, ⟨e⟩⟩ :=
+    IsSemisimpleRing.exists_algEquiv_pi_matrix_of_isAlgClosed ℂ (commutant U)
+  exact ⟨k, m, hm, ⟨e⟩, fun I _ P hrecord hne hequivariant =>
+    equivariant_record_card_le_sum U m e P hrecord hne hequivariant⟩
 
 end D5.S3.Quantum.Matrix.RecordCapacity
