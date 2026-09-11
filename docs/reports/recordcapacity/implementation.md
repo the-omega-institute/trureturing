@@ -154,3 +154,20 @@ for mults,dims in [([1,1],[2,3]),([2],[2]),([2,1],[2,3]),([3],[2]),([2,2],[2,3])
 print(json.dumps(out,indent=2))
 Path(__file__).with_name('recompute.json').write_text(json.dumps(out,indent=2)+'\n')
 ```
+
+## 本席终局
+
+**成（上述形状 2 及显式结构同构下的锐界）。**
+`make deposit-uncovered` exit 0；
+`LEDGER_ALIGN selectors_considered=4052 changed=0 added=1 unchanged=4051 conflicts=0`；
+`PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED
+ gid=D5/S3/Quantum/Matrix/RecordCapacity.equivariant_record_card_le_commutant_finrank
+ reason=NO_ATOM`。
+冻结事件文件为
+`Golden/Frozen/accepted/04b3c32c6e6617522663ebaaf2b76023406607b7c04304985ac3fc6face313bb.json`，
+成员状态片为 `Golden/Frozen/state/D5/S3/Quantum/Matrix/RecordCapacity.lean.json`。
+这是 deposit-uncovered，无 atom 摄入或覆盖。完整一般重数识别仍未交付。
+
+门链完成后不再扩展代码或重跑门，提交冻结产物并推送本分支。
+本席未开 PR，未调用 pr-open，未设置 auto-merge；未声称远端三门或 MERGED。
+PR、orchestrator 亲验、独立评审及合并由调用方负责。
