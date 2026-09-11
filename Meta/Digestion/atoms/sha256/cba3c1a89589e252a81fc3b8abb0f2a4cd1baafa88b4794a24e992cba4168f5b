@@ -1,0 +1,24 @@
+**31.15 投影和距离的统一扰动界。** 以 27.3 的通常欧氏投影
+\(\Pi=\operatorname{Id}-\mathbf1\mathbf1^{\mathsf T}/3\),令
+\(u_*=X/3\)、\(t_*=\rho_\xi-\rho_0\)。将扰动均值区间平移回 \(u_*\),
+两个区间重合,第 \(i\) 行端点对则位移 \(\xi_i-u_*=(\Pi\xi)_i\)。
+三角不等式及交换两个平移给距离的 1-Lipschitz 性,反三角不等式继而给
+\[
+|\delta_i^\xi-\delta_i^0|\le|(\Pi\xi)_i|,\qquad
+|t_*|\le\frac{\|\Pi\xi\|_2}{\sqrt6}.
+\]
+仅为计算范数将形状排列为 \((0,s,\varepsilon)\)、\(0\le s\le\varepsilon\),
+并未重排素数标签。直接展开有
+\[
+\|\Pi\xi\|_2^2=\frac23(\varepsilon^2-\varepsilon s+s^2)
+\le\frac23\varepsilon^2,
+\]
+差为 \(2s(\varepsilon-s)/3\)。因此
+\[
+\varepsilon/3\le u_*\le2\varepsilon/3,\quad |t_*|\le\varepsilon/3,
+\quad L_\xi-L_0=u_*-t_*,\quad H_\xi-H_0=u_*+2t_*.
+\]
+特别 \(L_\xi\ge L_0>T\),给全部扰动宽域薄层更强的下支持。
+\(\varepsilon=0\) 时各增量为零。本证明允许最近端点标签、反射资格和零距离集合改变,
+不对最近端点 min 或零范数求导。
+
