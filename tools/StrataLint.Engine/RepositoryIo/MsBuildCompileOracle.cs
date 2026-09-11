@@ -1,8 +1,5 @@
-using System.Buffers.Binary;
 using System.Collections.Immutable;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 
@@ -43,70 +40,6 @@ internal static class MsBuildCompileOracle
         environment.Add("DOTNET_NOLOGO", "1"); // Keep CLI banners out of MSBuild JSON and version output.
         environment.Add("DOTNET_SKIP_FIRST_TIME_EXPERIENCE", "1"); // Evaluation must not trigger first-run setup.
         return environment.ToImmutable();
-    }
-
-    internal static ScribeTestMapEnvironment DescribeEnvironment() =>
-        DescribeEnvironment(ResolveDotnetExecutable);
-
-    internal static ScribeTestMapEnvironment DescribeEnvironment(
-        Func<string> resolveHost,
-        Func<string, ProcessOutput>? probeVersion = null,
-        BoundedProcessRunner.ProcessRunner? run = null)
-    {
-        var environment = EvaluationEnvironment();
-        var host = resolveHost();
-        var output = probeVersion is not null ? probeVersion(host) : (run ?? BoundedProcessRunner.Run)(
-            host, ["--version"], Directory.GetCurrentDirectory(),
-            BoundedProcessRunner.HangDetectionBudget, 4096, environment: environment);
-        if (output.ExitCode != 0)
-        {
-            throw new InvalidOperationException("dotnet-version-exit-" + output.ExitCode);
-        }
-
-        var version = StrictUtf8.GetString(output.StandardOutput).Trim();
-        if (version.Length == 0)
-        {
-            throw new InvalidOperationException("dotnet-version-empty");
-        }
-
-        return new ScribeTestMapEnvironment(
-            RuntimeInformation.RuntimeIdentifier,
-            RuntimeInformation.FrameworkDescription,
-            host,
-            version,
-            EvaluationEnvironmentDigest(environment));
-    }
-
-    private static string EvaluationEnvironmentDigest(IReadOnlyDictionary<string, string> environment)
-    {
-        using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
-        foreach (var (name, value) in environment.OrderBy(static entry => entry.Key, StringComparer.Ordinal))
-        {
-            Append(name);
-            Append(value);
-        }
-        return Convert.ToHexStringLower(hash.GetHashAndReset());
-
-        void Append(string value)
-        {
-            var bytes = StrictUtf8.GetBytes(value);
-            Span<byte> length = stackalloc byte[sizeof(int)];
-            BinaryPrimitives.WriteInt32BigEndian(length, bytes.Length);
-            hash.AppendData(length);
-            hash.AppendData(bytes);
-        }
-    }
-
-    internal static bool IsBuildInput(string path)
-    {
-        var separator = path.LastIndexOf('/');
-        var fileName = path[(separator + 1)..];
-        return fileName == "global.json"
-            || fileName.StartsWith("Directory.Build.", StringComparison.Ordinal)
-            || fileName.StartsWith("Directory.Packages.", StringComparison.Ordinal)
-            || fileName.Equals("NuGet.Config", StringComparison.OrdinalIgnoreCase)
-            || fileName.EndsWith(".props", StringComparison.Ordinal)
-            || fileName.EndsWith(".targets", StringComparison.Ordinal);
     }
 
     internal static MsBuildCompileMap Query(
@@ -170,29 +103,6 @@ internal static class MsBuildCompileOracle
         }
 
         return new MsBuildCompileMap(owners, findings);
-    }
-
-    internal static SnapshotCheckout Materialize(RepositorySnapshot snapshot, Func<string, bool> include)
-    {
-        var checkout = new SnapshotCheckout();
-        try
-        {
-            foreach (var file in snapshot.Files.Values.Where(file => include(file.Path.Value)))
-            {
-                var fullPath = Path.Combine(
-                    checkout.Root,
-                    file.Path.Value.Replace('/', Path.DirectorySeparatorChar));
-                Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
-                File.WriteAllBytes(fullPath, file.RawBytes.AsSpan().ToArray());
-            }
-
-            return checkout;
-        }
-        catch
-        {
-            checkout.Dispose();
-            throw;
-        }
     }
 
     private static IEnumerable<string> ParseCompilePaths(
@@ -318,14 +228,4 @@ internal static class MsBuildCompileOracle
             "dotnet");
         return File.Exists(userInstall) ? userInstall : "dotnet";
     }
-}
-
-internal sealed class SnapshotCheckout : IDisposable
-{
-    internal SnapshotCheckout() => Root = Directory.CreateTempSubdirectory(
-        "stratalint-msbuild-oracle-").FullName;
-
-    internal string Root { get; }
-
-    public void Dispose() => Directory.Delete(Root, recursive: true);
 }

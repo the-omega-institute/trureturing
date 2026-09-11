@@ -245,7 +245,9 @@ CI/preflight 的阶段、候选报告/DLL/工程证据交接、退出与缓存�
 
 引擎须有独立 `check-current` / `check-delta` 入口与不同的类型化 context。current context 只含当前树及其当轮产物,类型中不得有 baseline 或 changes;delta context 明确携带候选、base 数据、差异与绑定候选的证据。不得以空 changes 或 `base=candidate` 模拟 current。划分落在**谓词级**:同一规则若同时含当前有效性与跨树约束,须分别归属,不能只按规则名整条搬移。已有 delta-only 定义域及债务收缩作用域保持不变,包括 SL-029/030/031/032 等现有门;不得借拆分把它们改成 current 全树门、重判存量或漏掉跨树约束。
 
-engineering 从候选枚举全部当前测试项目,不按 base/diff 选择;Scribe 共用检查亦不得按 base 选测试或检查。delta 只把 base 的测试项目集合当数据读取,并用**本轮、同一候选身份绑定的 TRX** 确认这些项目已在候选中成功执行。项目被删、漏跑、执行失败或缺少有效成功证据均阻断;历史 TRX、另一候选的成功或重新运行 base 测试不能补证。此核验不再执行测试,也不引入 base 判官。
+engineering 按候选登记执行当前测试项目,不按 base 选择;Scribe 共用检查亦不得按 base 选测试或检查。delta 只把 base 的测试项目集合当数据读取,并用**本轮、同一候选身份绑定的 TRX** 确认这些项目已在候选中成功执行。项目被删、漏跑、执行失败或缺少有效成功证据均阻断;历史 TRX、另一候选的成功或重新运行 base 测试不能补证。此核验不再执行测试,也不引入 base 判官。
+
+**测试分析退役。** 测试归属、编译输入及影响范围按 FILEMAP 或显式 manifest 登记,不以 Roslyn 调用图、仓库路径或 IO 效果推导补全。Scribe 方法映射从未承担当前测试调度权威;其唯一规则消费者 SL-003 的 parser-unknown 债务分支及 280/281 容量、身份收缩条款退役。SL-003 直接执行原有行数和目录容量谓词,其 no-growth、作用域与容量棘轮不变,测试项目拓扑及 base 项目执行地板保留。仅为映射推导服务的编译元数据导出、运输和加载一并退役;候选 DLL/二进制材料封印、轮次和候选身份、locked restore/build、真实 Scribe 内容编译、工程测试、selftest、两项反证编译和 TRX 校验继续执行。登记缺口由后续真实 CI 暴露后补最小登记与原生行为测试,不重建分析器。
 
 **产物、退出与摘要属主。** producer 将报告、候选 DLL、TRX 与工程证据交给下游,每份产物必须能核对其候选身份、来源与完整性。预建 DLL 只可在确认由该候选源码生成后执行;无法确认的缓存产物须弃用并从候选构建。报告生产入口拥有增量生产与校验,消费者只校验和消费交接结果;必需报告或当轮证据缺失、格式错误、候选身份不符即失败,不得在下游静默重跑生产或把未执行记成成功。候选绑定与材料指纹用于验证和增量失效,不得变成远端缓存兼容选择器。
 
@@ -255,7 +257,7 @@ engineering 从候选枚举全部当前测试项目,不按 base/diff 选择;Scri
 
 最终 PR checks 规定为 `push / engineering`、`push / current`、`delta`;dev push checks 为 `engineering`、`current`。必须用新 workflow 的真实 integration run 核对 GitHub 实际名称,再按下述落地次序同步 required set;`strict=false` 保持,不以 ancestry、追平门或 admin bypass 代替该模型。YAML 只含事件、权限、checkout、依赖与运输编排,不得内置缓存地址、JSON 处理、测试选择、报告验证或判词/摘要业务逻辑。
 
-切换 workflow 时须原子迁移 watcher、`AdmissionTopology`、FILEMAP 与 truth-release 的现役消费者,删除旧 job 名、旧拓扑与已被替代的重复逻辑。`truth-release` 只消费明确指定的 dev commit 的两个 push checks 成功及其报告 artifact,并校验 artifact 绑定该 commit;不得追逐移动 dev tip、等待该 commit 的 PR delta 或借用另一 commit 的报告。报告 producer 的依赖闭包从 canonical **程序入口及其传递依赖**推导,不再从 workflow YAML 文本切片取闭包;入口迁移必须同步闭包与消费者,不得丢失生产依赖。
+切换 workflow 时须原子迁移 watcher、`AdmissionTopology`、FILEMAP 与 truth-release 的现役消费者,删除旧 job 名、旧拓扑与已被替代的重复逻辑。`truth-release` 只消费明确指定的 dev commit 的两个 push checks 成功及其报告 artifact,并校验 artifact 绑定该 commit;不得追逐移动 dev tip、等待该 commit 的 PR delta 或借用另一 commit 的报告。报告 producer 的输入由 FILEMAP 或显式 manifest 登记,不从程序或 workflow YAML 文本动态推导;入口迁移必须同步闭包与消费者,不得丢失生产依赖。
 
 **缓存与增量报告。** 用结构化解析器从 `lake-manifest.json` 读取 mathlib 的 **resolved revision**。Lean 依赖、项目构建与报告缓存共享该兼容分区,二进制另按 OS/arch 隔离;即分区只由 resolved mathlib revision 与 OS/arch 决定。tag、请求的 ref、完整配置/源码指纹、commit SHA 均不得成为兼容选择器;`elan` 安装缓存独立。Actions 快照只以 run ID/attempt 区分不可变发布实例,该后缀不参与兼容判定。PR 只 restore,dev push 仅在成功生产后 save,并发 run 不覆盖彼此快照。
 

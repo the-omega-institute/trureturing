@@ -21,21 +21,6 @@ public sealed class SharedBuildRuntimeTests
         // This fixture exercises transport without a network package source.
         Write("NuGet.Config", "<configuration><packageSources><clear /></packageSources></configuration>\n");
         Write("global.json", File.ReadAllText(Path.Combine(repository, "global.json")));
-        // This fixture contains the two JudgeSeed projects by design. Carry the
-        // same explicit registration and its five compiler-owned DLL materials
-        // into the isolated root; no SDK path evaluation or directory discovery
-        // is permitted to supply them.
-        Write("Meta/FILEMAP.toml", File.ReadAllText(Path.Combine(repository, "Meta/FILEMAP.toml")));
-        Write("Meta/compile-metadata.json", File.ReadAllText(Path.Combine(repository, "Meta/compile-metadata.json")));
-        foreach (var file in new[] { "Microsoft.Build.dll", "Microsoft.Build.Framework.dll",
-                     "Microsoft.Build.Utilities.Core.dll", "Microsoft.Build.Tasks.Core.dll",
-                     "Microsoft.Build.Tasks.CodeAnalysis.dll" })
-        {
-            var source = Path.Combine(repository, "tools/tests/JudgeSeedTask.Tests/bin/Release/net10.0", file);
-            var target = Path.Combine(root, "tools/tests/JudgeSeedTask.Tests/bin/Release/net10.0", file);
-            TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(target)!);
-            System.IO.File.Copy(source, target, overwrite: true);
-        }
         Write("tools/scripts/ci-build-outputs.targets", File.ReadAllText(Path.Combine(repository, "tools/scripts/ci-build-outputs.targets")));
         foreach (var path in new[] { "tools/scripts/ci-stage.sh", "tools/scripts/report/dotnet_producer.py",
                      "tools/scripts/report/JudgeSeedTask.cs", "tools/scripts/report/JudgeSeedTask.csproj",
