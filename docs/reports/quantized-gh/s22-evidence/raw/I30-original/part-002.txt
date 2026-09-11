@@ -1,0 +1,750 @@
+        362942
+      ],
+      "destination": "source",
+      "destination_span": [
+        360191,
+        360324
+      ],
+      "sha256": "58ee2b3a7909796c7749142712a0fb1a7a4915027b247d4084d3d883f2ece4d5",
+      "purpose": "logarithm series classical citations; finite remainder also cited in 33.3"
+    },
+    {
+      "original_span": [
+        362942,
+        363100
+      ],
+      "destination": "report",
+      "destination_span": [
+        54410,
+        54568
+      ],
+      "sha256": "f4b5b6ab984f5fb36787657739192ea435ccef4e4bdf7c1989cc3e8bc5d1d900",
+      "purpose": "reserved source numbers and process/citation container; mathematical citations rebound",
+      "original_unit": "33.20",
+      "delimiter_lf_count": 0
+    },
+    {
+      "original_span": [
+        363100,
+        363169
+      ],
+      "destination": "source",
+      "destination_span": [
+        344437,
+        344506
+      ],
+      "sha256": "410436a061bacec76d612c47ddff71a2b0d41218918a9f58be1467558a69e9d2",
+      "purpose": "existing proof-scope sentence"
+    },
+    {
+      "original_span": [
+        363169,
+        363198
+      ],
+      "destination": "report",
+      "destination_span": [
+        54715,
+        54744
+      ],
+      "sha256": "2cf29ccbc64954ce96d68f6bc0bd60f2ceefc809fd40adb3ecd62ae8ea7990f8",
+      "purpose": "reserved source numbers and process/citation container; mathematical citations rebound",
+      "original_unit": "33.20",
+      "delimiter_lf_count": 1
+    },
+    {
+      "original_span": [
+        363198,
+        363484
+      ],
+      "destination": "source",
+      "destination_span": [
+        350487,
+        350773
+      ],
+      "sha256": "fec03c574fd15743f42352f628afa5221289fecffa6bbc51bcf1ec5fbacbcc07",
+      "purpose": "inherited mathematical citations and scope distinctions"
+    },
+    {
+      "original_span": [
+        363484,
+        363708
+      ],
+      "destination": "report",
+      "destination_span": [
+        54892,
+        55116
+      ],
+      "sha256": "67ab8f6d8b771ddb0487f06d4f0d6530540754941bd9906bb33e6fd5a6764f19",
+      "purpose": "reserved source numbers and process/citation container; mathematical citations rebound",
+      "original_unit": "33.20",
+      "delimiter_lf_count": 0
+    },
+    {
+      "original_span": [
+        363708,
+        365021
+      ],
+      "destination": "report",
+      "destination_span": [
+        55263,
+        56576
+      ],
+      "sha256": "d6f606bae55b530bfe0d51c36e3c7f5003c0fbca7815a832bd375f33e180ac91",
+      "purpose": "reserved source numbers and process/citation container; mathematical citations rebound",
+      "original_unit": "33.21",
+      "delimiter_lf_count": 0
+    },
+    {
+      "original_span": [
+        365021,
+        366276
+      ],
+      "destination": "report",
+      "destination_span": [
+        56723,
+        57978
+      ],
+      "sha256": "0a96ba7764875bd81dd4771ae6148102162bbc1f77a499a1d3d85984c06cdfa5",
+      "purpose": "reserved source numbers and process/citation container; mathematical citations rebound",
+      "original_unit": "33.22",
+      "delimiter_lf_count": 0
+    }
+  ],
+  "source_additions": [
+    {
+      "current_span": [
+        343589,
+        343613
+      ],
+      "text": "Definition and theorem. ",
+      "purpose": "mathematical type label"
+    },
+    {
+      "current_span": [
+        343613,
+        343630
+      ],
+      "text": "Labels and scope.",
+      "purpose": "type/scope heading metadata"
+    },
+    {
+      "current_span": [
+        343632,
+        343633
+      ],
+      "text": "\n",
+      "purpose": "stage and implementation attribution"
+    },
+    {
+      "current_span": [
+        344435,
+        344437
+      ],
+      "text": "\n\n",
+      "purpose": "citation paragraph delimiter/label"
+    },
+    {
+      "current_span": [
+        344515,
+        344527
+      ],
+      "text": "Definition. ",
+      "purpose": "mathematical type label"
+    },
+    {
+      "current_span": [
+        345636,
+        345645
+      ],
+      "text": "Theorem. ",
+      "purpose": "mathematical type label"
+    },
+    {
+      "current_span": [
+        346658,
+        346667
+      ],
+      "text": "Theorem. ",
+      "purpose": "mathematical type label"
+    },
+    {
+      "current_span": [
+        347631,
+        347640
+      ],
+      "text": "Theorem. ",
+      "purpose": "mathematical type label"
+    },
+    {
+      "current_span": [
+        348813,
+        348822
+      ],
+      "text": "Theorem. ",
+      "purpose": "mathematical type label"
+    },
+    {
+      "current_span": [
+        349584,
+        349608
+      ],
+      "text": "Definition and theorem. ",
+      "purpose": "mathematical type label"
+    },
+    {
+      "current_span": [
+        350476,
+        350487
+      ],
+      "text": "\n\nSections ",
+      "purpose": "citation paragraph delimiter/label"
+    },
+    {
+      "current_span": [
+        350782,
+        350791
+      ],
+      "text": "Theorem. ",
+      "purpose": "mathematical type label"
+    },
+    {
+      "current_span": [
+        351883,
+        351885
+      ],
+      "text": "\n\n",
+      "purpose": "citation paragraph delimiter/label"
+    },
+    {
+      "current_span": [
+        352116,
+        352125
+      ],
+      "text": "Theorem. ",
+      "purpose": "mathematical type label"
+    },
+    {
+      "current_span": [
+        352783,
+        352792
+      ],
+      "text": "Theorem. ",
+      "purpose": "mathematical type label"
+    },
+    {
+      "current_span": [
+        353828,
+        353830
+      ],
+      "text": "\n\n",
+      "purpose": "citation paragraph delimiter/label"
+    },
+    {
+      "current_span": [
+        354036,
+        354045
+      ],
+      "text": "Theorem. ",
+      "purpose": "mathematical type label"
+    },
+    {
+      "current_span": [
+        355083,
+        355092
+      ],
+      "text": "Theorem. ",
+      "purpose": "mathematical type label"
+    },
+    {
+      "current_span": [
+        356363,
+        356387
+      ],
+      "text": "Definition and theorem. ",
+      "purpose": "mathematical type label"
+    },
+    {
+      "current_span": [
+        357540,
+        357549
+      ],
+      "text": "Theorem. ",
+      "purpose": "mathematical type label"
+    },
+    {
+      "current_span": [
+        358287,
+        358296
+      ],
+      "text": "Theorem. ",
+      "purpose": "mathematical type label"
+    },
+    {
+      "current_span": [
+        359385,
+        359409
+      ],
+      "text": "Definition and theorem. ",
+      "purpose": "mathematical type label"
+    },
+    {
+      "current_span": [
+        360189,
+        360191
+      ],
+      "text": "\n\n",
+      "purpose": "citation paragraph delimiter/label"
+    },
+    {
+      "current_span": [
+        360334,
+        360343
+      ],
+      "text": "Theorem. ",
+      "purpose": "mathematical type label"
+    },
+    {
+      "current_span": [
+        360385,
+        360401
+      ],
+      "text": "notation erratum",
+      "purpose": "erratum heading attribution metadata"
+    },
+    {
+      "current_span": [
+        360821,
+        360843
+      ],
+      "text": "The compressed tokens ",
+      "purpose": "erratum attribution moved; erroneous tokens and explicit correction retained"
+    },
+    {
+      "current_span": [
+        360865,
+        360871
+      ],
+      "text": "occur ",
+      "purpose": "grammatical bridge for retained erratum"
+    },
+    {
+      "current_span": [
+        361072,
+        361073
+      ],
+      "text": ".",
+      "purpose": "historical envelope immutability record; mathematical erratum retained"
+    },
+    {
+      "current_span": [
+        361131,
+        361140
+      ],
+      "text": "Theorem. ",
+      "purpose": "mathematical type label"
+    },
+    {
+      "current_span": [
+        361887,
+        361896
+      ],
+      "text": "Theorem. ",
+      "purpose": "mathematical type label"
+    }
+  ],
+  "numbered_correspondence": [
+    {
+      "number": "33.1",
+      "original_span": [
+        343582,
+        344581
+      ],
+      "original_heading": "**33.1 Statement, labels and mathematical status.**",
+      "original_identity": {
+        "byte_count": 999,
+        "lf_count": 15,
+        "sha256": "a38eb83c6e378f2d850af9b3f57e9d18067944cb741eb60cb9d62dded1ee2afa",
+        "git_blob_oid": "c7cf7851d0bfef486f61f091c6c19ac7882b2808"
+      },
+      "disposition": "retained-mathematical-entry",
+      "current_span": [
+        343582,
+        344508
+      ],
+      "analytical_correspondence": "Natural-log prime labels versus positional indices; ordinary (4,2,1,1) exponents and exact 5040; optimizer/moment scope, undefined GH and no broader sign/RH/orthogonality claim. Existing proof scope rebound from 33.20; operative status archived.",
+      "current_identity": {
+        "byte_count": 926,
+        "lf_count": 15,
+        "sha256": "345aa293198f1d1c2ee2e137897f44e3c87cbd69ffa5e80af5c1ae7a23a0bf71",
+        "git_blob_oid": "131ed7563c17db1113b517bba9d280a86b31f57e"
+      },
+      "coverage_segment_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "citation_rebindings": [
+        {
+          "original_unit": "33.20",
+          "current_unit": "33.1",
+          "original_span": [
+            363100,
+            363169
+          ],
+          "purpose": "existing proof-scope sentence"
+        }
+      ],
+      "current_canonical_binding": {
+        "number": "33.1",
+        "current_span": [
+          343582,
+          344508
+        ],
+        "identity": {
+          "byte_count": 926,
+          "lf_count": 15,
+          "sha256": "345aa293198f1d1c2ee2e137897f44e3c87cbd69ffa5e80af5c1ae7a23a0bf71",
+          "git_blob_oid": "131ed7563c17db1113b517bba9d280a86b31f57e"
+        },
+        "cas_path": "Meta/Digestion/atoms/sha256/345aa293198f1d1c2ee2e137897f44e3c87cbd69ffa5e80af5c1ae7a23a0bf71",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/345aa293198f1d1c2ee2e137897f44e3c87cbd69ffa5e80af5c1ae7a23a0bf71.yaml",
+        "whole_span_equals_cas": true,
+        "actual_yaml_structure": {
+          "fingerprints": {
+            "raw_sha256": "sha256:345aa293198f1d1c2ee2e137897f44e3c87cbd69ffa5e80af5c1ae7a23a0bf71",
+            "normalized_sha256": "sha256:345aa293198f1d1c2ee2e137897f44e3c87cbd69ffa5e80af5c1ae7a23a0bf71"
+          },
+          "cas_ref": "sha256:345aa293198f1d1c2ee2e137897f44e3c87cbd69ffa5e80af5c1ae7a23a0bf71",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "children_field_present": false,
+        "chain_atoms_field_present": false,
+        "interunit_structural_byte_count": 0
+      }
+    },
+    {
+      "number": "33.2",
+      "original_span": [
+        344581,
+        345690
+      ],
+      "original_heading": "**33.2 Fixed data and exact height domain.**",
+      "original_identity": {
+        "byte_count": 1109,
+        "lf_count": 26,
+        "sha256": "b39e26fac8b15edec594523d23842c0b67f92e84ed7c008e8249479c74f2b779",
+        "git_blob_oid": "f51ac4125c6ff9cf51d8813df773de9931da0303"
+      },
+      "disposition": "retained-mathematical-entry",
+      "current_span": [
+        344508,
+        345629
+      ],
+      "analytical_correspondence": "All fixed alpha/beta/A and log endpoints preserved verbatim, finite real T>=0 and z in (0,1], positive arguments, separate scaled endpoint and no lattice-attainability inference.",
+      "current_identity": {
+        "byte_count": 1121,
+        "lf_count": 26,
+        "sha256": "314d2fbd66f01400c1569e4ac940b2ba8cbaf87b4d4cc94ac44b79e22524420c",
+        "git_blob_oid": "78d8fbe0b6e9b0196deccba5a4600f87dc8191f6"
+      },
+      "coverage_segment_indices": [
+        9,
+        10
+      ],
+      "citation_rebindings": [],
+      "current_canonical_binding": {
+        "number": "33.2",
+        "current_span": [
+          344508,
+          345629
+        ],
+        "identity": {
+          "byte_count": 1121,
+          "lf_count": 26,
+          "sha256": "314d2fbd66f01400c1569e4ac940b2ba8cbaf87b4d4cc94ac44b79e22524420c",
+          "git_blob_oid": "78d8fbe0b6e9b0196deccba5a4600f87dc8191f6"
+        },
+        "cas_path": "Meta/Digestion/atoms/sha256/314d2fbd66f01400c1569e4ac940b2ba8cbaf87b4d4cc94ac44b79e22524420c",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/314d2fbd66f01400c1569e4ac940b2ba8cbaf87b4d4cc94ac44b79e22524420c.yaml",
+        "whole_span_equals_cas": true,
+        "actual_yaml_structure": {
+          "fingerprints": {
+            "raw_sha256": "sha256:314d2fbd66f01400c1569e4ac940b2ba8cbaf87b4d4cc94ac44b79e22524420c",
+            "normalized_sha256": "sha256:314d2fbd66f01400c1569e4ac940b2ba8cbaf87b4d4cc94ac44b79e22524420c"
+          },
+          "cas_ref": "sha256:314d2fbd66f01400c1569e4ac940b2ba8cbaf87b4d4cc94ac44b79e22524420c",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "children_field_present": false,
+        "chain_atoms_field_present": false,
+        "interunit_structural_byte_count": 0
+      }
+    },
+    {
+      "number": "33.3",
+      "original_span": [
+        345690,
+        346703
+      ],
+      "original_heading": "**33.3 Strict rational logarithm brackets with a derived remainder.**",
+      "original_identity": {
+        "byte_count": 1013,
+        "lf_count": 28,
+        "sha256": "fa7578549c4035fa5bffed7a1cb1430c371db729e46bb95b472f23c615ea1d2a",
+        "git_blob_oid": "0c0795304e93717e79d78e63dee9295c76d214ce"
+      },
+      "disposition": "retained-mathematical-entry",
+      "current_span": [
+        345629,
+        346651
+      ],
+      "analytical_correspondence": "All 32-term finite geometric identity, strictly positive remainder integral and strict upper bound, rational bracket inequalities and exact table preserved; classical DLMF attribution retained. No fixed certificate rerun.",
+      "current_identity": {
+        "byte_count": 1022,
+        "lf_count": 28,
+        "sha256": "5224550df00f189685005c46d7eb67814594f50067b23becf4a76c4cc7e1a32a",
+        "git_blob_oid": "9081f47beaffc3a35a0fcad80d73c8c5ceb246e7"
+      },
+      "coverage_segment_indices": [
+        10,
+        11
+      ],
+      "citation_rebindings": [],
+      "current_canonical_binding": {
+        "number": "33.3",
+        "current_span": [
+          345629,
+          346651
+        ],
+        "identity": {
+          "byte_count": 1022,
+          "lf_count": 28,
+          "sha256": "5224550df00f189685005c46d7eb67814594f50067b23becf4a76c4cc7e1a32a",
+          "git_blob_oid": "9081f47beaffc3a35a0fcad80d73c8c5ceb246e7"
+        },
+        "cas_path": "Meta/Digestion/atoms/sha256/5224550df00f189685005c46d7eb67814594f50067b23becf4a76c4cc7e1a32a",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/5224550df00f189685005c46d7eb67814594f50067b23becf4a76c4cc7e1a32a.yaml",
+        "whole_span_equals_cas": true,
+        "actual_yaml_structure": {
+          "fingerprints": {
+            "raw_sha256": "sha256:5224550df00f189685005c46d7eb67814594f50067b23becf4a76c4cc7e1a32a",
+            "normalized_sha256": "sha256:5224550df00f189685005c46d7eb67814594f50067b23becf4a76c4cc7e1a32a"
+          },
+          "cas_ref": "sha256:5224550df00f189685005c46d7eb67814594f50067b23becf4a76c4cc7e1a32a",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "children_field_present": false,
+        "chain_atoms_field_present": false,
+        "interunit_structural_byte_count": 0
+      }
+    },
+    {
+      "number": "33.4",
+      "original_span": [
+        346703,
+        347667
+      ],
+      "original_heading": "**33.4 Derivative comparison and its lower quadratic.**",
+      "original_identity": {
+        "byte_count": 964,
+        "lf_count": 28,
+        "sha256": "9846f5607e9e7d1f5e4076997a36705cd76799301cf14b40ef5d077ca2146c4e",
+        "git_blob_oid": "e7c8015554463fc63cb4b7b88dba5599b288c4a3"
+      },
+      "disposition": "retained-mathematical-entry",
+      "current_span": [
+        346651,
+        347624
+      ],
+      "analytical_correspondence": "Every derivative cancellation, positive denominator, N-Q strict inequality, q0/q1/q2 formula and differentiable endpoint extension retained exactly.",
+      "current_identity": {
+        "byte_count": 973,
+        "lf_count": 28,
+        "sha256": "9b64a71f38ab7ffe0bc73c439a493024aa8a30f8f0e1d283827fa088afeeed5c",
+        "git_blob_oid": "3a6f1d94515c83c5b25595b6a4e8580b1988ca79"
+      },
+      "coverage_segment_indices": [
+        11,
+        12
+      ],
+      "citation_rebindings": [],
+      "current_canonical_binding": {
+        "number": "33.4",
+        "current_span": [
+          346651,
+          347624
+        ],
+        "identity": {
+          "byte_count": 973,
+          "lf_count": 28,
+          "sha256": "9b64a71f38ab7ffe0bc73c439a493024aa8a30f8f0e1d283827fa088afeeed5c",
+          "git_blob_oid": "3a6f1d94515c83c5b25595b6a4e8580b1988ca79"
+        },
+        "cas_path": "Meta/Digestion/atoms/sha256/9b64a71f38ab7ffe0bc73c439a493024aa8a30f8f0e1d283827fa088afeeed5c",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/9b64a71f38ab7ffe0bc73c439a493024aa8a30f8f0e1d283827fa088afeeed5c.yaml",
+        "whole_span_equals_cas": true,
+        "actual_yaml_structure": {
+          "fingerprints": {
+            "raw_sha256": "sha256:9b64a71f38ab7ffe0bc73c439a493024aa8a30f8f0e1d283827fa088afeeed5c",
+            "normalized_sha256": "sha256:9b64a71f38ab7ffe0bc73c439a493024aa8a30f8f0e1d283827fa088afeeed5c"
+          },
+          "cas_ref": "sha256:9b64a71f38ab7ffe0bc73c439a493024aa8a30f8f0e1d283827fa088afeeed5c",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "children_field_present": false,
+        "chain_atoms_field_present": false,
+        "interunit_structural_byte_count": 0
+      }
+    },
+    {
+      "number": "33.5",
+      "original_span": [
+        347667,
+        348944
+      ],
+      "original_heading": "**33.5 Complete fixed quadratic certificate.**",
+      "original_identity": {
+        "byte_count": 1277,
+        "lf_count": 26,
+        "sha256": "75a5bdf099b699cbe1e0a953ecbd33803c7d357503c1f4f3d7301096c1a72bb0",
+        "git_blob_oid": "f96125dab8b6effcc2f0d198c18e5e8b372ea774"
+      },
+      "disposition": "retained-mathematical-entry",
+      "current_span": [
+        347624,
+        348806
+      ],
+      "analytical_correspondence": "Every rational coefficient, Q(1), delta and positive residual in both tables retained. q1,q2<0 and endpoint minimum imply universal strict derivative bounds; execution context alone archived.",
+      "current_identity": {
+        "byte_count": 1182,
+        "lf_count": 25,
+        "sha256": "7933bb9d25ab67beaeed9a3d9d3321a0c132eba056a8ac8e153c282192dadb55",
+        "git_blob_oid": "42b883ad787bd20d4d4f03cc361c4af6c4bef582"
+      },
+      "coverage_segment_indices": [
+        12,
+        13,
+        14,
+        15
+      ],
+      "citation_rebindings": [],
+      "current_canonical_binding": {
+        "number": "33.5",
+        "current_span": [
+          347624,
+          348806
+        ],
+        "identity": {
+          "byte_count": 1182,
+          "lf_count": 25,
+          "sha256": "7933bb9d25ab67beaeed9a3d9d3321a0c132eba056a8ac8e153c282192dadb55",
+          "git_blob_oid": "42b883ad787bd20d4d4f03cc361c4af6c4bef582"
+        },
+        "cas_path": "Meta/Digestion/atoms/sha256/7933bb9d25ab67beaeed9a3d9d3321a0c132eba056a8ac8e153c282192dadb55",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/7933bb9d25ab67beaeed9a3d9d3321a0c132eba056a8ac8e153c282192dadb55.yaml",
+        "whole_span_equals_cas": true,
+        "actual_yaml_structure": {
+          "fingerprints": {
+            "raw_sha256": "sha256:7933bb9d25ab67beaeed9a3d9d3321a0c132eba056a8ac8e153c282192dadb55",
+            "normalized_sha256": "sha256:7933bb9d25ab67beaeed9a3d9d3321a0c132eba056a8ac8e153c282192dadb55"
+          },
+          "cas_ref": "sha256:7933bb9d25ab67beaeed9a3d9d3321a0c132eba056a8ac8e153c282192dadb55",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "children_field_present": false,
+        "chain_atoms_field_present": false,
+        "interunit_structural_byte_count": 0
+      }
+    },
+    {
+      "number": "33.6",
+      "original_span": [
+        348944,
+        349706
+      ],
+      "original_heading": "**33.6 Strict order at every finite height and at the scaled endpoint.**",
+      "original_identity": {
+        "byte_count": 762,
+        "lf_count": 20,
+        "sha256": "fe38630149bbc5b95cacac2dbe5b553bf35d09cc4190b7e100f0e83316fd52c4",
+        "git_blob_oid": "202fe9df19d661cd8c126b3d353fc992ed852759"
+      },
+      "disposition": "retained-mathematical-entry",
+      "current_span": [
+        348806,
+        349577
+      ],
+      "analytical_correspondence": "Integration and derivative-at-zero arguments retain strict 2>3>5>7 at every finite height and all three scaled gaps at both endpoints; no equality and no sharpness assertion.",
+      "current_identity": {
+        "byte_count": 771,
+        "lf_count": 20,
+        "sha256": "8b53543acdc3eb791d72bd14018ab0edc28961a3042528fe1ff7b312ae72470b",
+        "git_blob_oid": "c381b3c5af0b2feaaeebd7962858ed73358faeb1"
+      },
+      "coverage_segment_indices": [
+        15,
+        16
+      ],
+      "citation_rebindings": [],
+      "current_canonical_binding": {
+        "number": "33.6",
+        "current_span": [
+          348806,
+          349577
+        ],
+        "identity": {
+          "byte_count": 771,
+          "lf_count": 20,
+          "sha256": "8b53543acdc3eb791d72bd14018ab0edc28961a3042528fe1ff7b312ae72470b",
+          "git_blob_oid": "c381b3c5af0b2feaaeebd7962858ed73358faeb1"
+        },
+        "cas_path": "Meta/Digestion/atoms/sha256/8b53543acdc3eb791d72bd14018ab0edc28961a3042528fe1ff7b312ae72470b",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/8b53543acdc3eb791d72bd14018ab0edc28961a3042528fe1ff7b312ae72470b.yaml",
+        "whole_span_equals_cas": true,
+        "actual_yaml_structure": {
+          "fingerprints": {
+            "raw_sha256": "sha256:8b53543acdc3eb791d72bd14018ab0edc28961a3042528fe1ff7b312ae72470b",
+            "normalized_sha256": "sha256:8b53543acdc3eb791d72bd14018ab0edc28961a3042528fe1ff7b312ae72470b"
+          },
+          "cas_ref": "sha256:8b53543acdc3eb791d72bd14018ab0edc28961a3042528fe1ff7b312ae72470b",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "children_field_present": false,
+        "chain_atoms_field_present": false,
+        "interunit_structural_byte_count": 0
+      }
+    },
+    {
+      "number": "33.7",
+      "original_span": [
+        349706,
+        350583
+      ],
+      "original_heading": "**33.7 The exact fractional resource problem.**",
+      "original_identity": {
+        "byte_count": 877,

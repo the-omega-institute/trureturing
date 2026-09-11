@@ -22,7 +22,7 @@ $$x = (1-t) (u,0,v) + t (0,1,0)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/AdmissibleWords/PathStableSetPolytope.convexHull_three_pyramid` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Wikipedia contributors (2026). *Perfect graph — polyhedral characterization*. URL: <https://en.wikipedia.org/wiki/Perfect_graph>.
 
 *Commentary.*
 

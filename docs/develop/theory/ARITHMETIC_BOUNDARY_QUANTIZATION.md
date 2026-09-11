@@ -7735,3 +7735,416 @@ a-b\in[a_--b_+,a_+-b_-],
 这证明每行四个端点比较，并证明原有两端数字无需更正。
 \(L\le H\) 来自 \(H-L=4\rho\ge0\)，而非把相关区间当作独立精确值。
 上述较小联合区间只是同一有限命题的加强包络；全实薄层的符号结论仍使用原来的解析归约与独立符号证据。
+## 33. Actual5040 common height: strict fractional densities and the moment obstruction
+
+**33.1 Definition and theorem. Labels and scope.**
+All logarithms are natural. The ordered prime labels are
+\(\mathcal P=(p_1,p_2,p_3,p_4)=(2,3,5,7)\).
+Subscripts \(p\in\mathcal P\) are prime labels, so \(h_2=\log2\) and
+\(h_3=\log3\); a position \(k\in\{1,2,3,4\}\) instead means \(p_k\).
+This differs from section 32's zero-based positional subscripts.
+The ordinary exponent vector is \((b_2,b_3,b_5,b_7)=(4,2,1,1)\), with
+\(5040=2^4\cdot3^2\cdot5\cdot7\). It is not a Zeckendorf digit string.
+We prove a common optimizer for the specified fractional resource problem at every
+finite height and a fixed obstruction to optimizing its moments separately.
+This is not a sign theorem for \(G=D-\Psi\). GH remains the mathematically unidentified label. No RH equivalence, proof or progress, encoded
+orthogonality, arbitrary-prime/shape theorem is asserted.
+
+The needed remainder, matching gap and all endpoints are proved here.
+
+**33.2 Definition. Fixed data and exact height domain.** For each prime label \(p\), set
+\(h_p=\log p\), \(c_p^*=(b_p+1)h_p\), \(d_p^*=c_p^*+h_p\), and
+\(c_p(T)=c_p^*+T\), \(d_p(T)=d_p^*+T\), where \(T\) is finite and \(T\ge0\).
+Thus \(z=e^{-T}\in(0,1]\), \(\alpha_p=e^{-c_p^*}\),
+\(\beta_p=e^{-d_p^*}\), and \(A_p=\alpha_p-\beta_p\).
+
+~~~text
+prime label p     2          3          5          7
+c_p^*            log32      log27      log25      log49
+d_p^*            log64      log81      log125     log343
+alpha_p          1/32       1/27       1/25       1/49
+beta_p           1/64       1/81       1/125      1/343
+A_p              1/64       2/81       4/125      6/343
+~~~
+
+Define
+\[
+s_p(z)=\frac{\log((1-\beta_pz)/(1-\alpha_pz))}{h_p},
+\qquad w_p(z)=s_p(z)/z\quad(z>0).
+\]
+Every logarithm has positive argument, since \(0<\beta_p<\alpha_p<1\).
+For a separate continuous extension put \(s_p(0)=0\) and
+\(w_p(0)=A_p/h_p\). The point \(z=0\) is not a finite height or an actual
+translated prime-exponent box. Common translation here is a continuous family;
+no arithmetic-lattice attainability is inferred from it.
+
+**33.3 Theorem. Strict rational logarithm brackets with a derived remainder.** For a fixed
+\(p\in\{2,3,5,7\}\), let \(t=(p-1)/(p+1)\in(0,1)\) and
+\[
+S_p=2\sum_{k=0}^{31}\frac{t^{2k+1}}{2k+1},\qquad
+R_p=\frac{2t^{65}}{65(1-t^2)}.
+\]
+The finite identity \((1-u^2)^{-1}=\sum_{k=0}^{31}u^{2k}
++u^{64}/(1-u^2)\), integrated from 0 to \(t\), gives
+\[
+\log p=S_p+2\int_0^t\frac{u^{64}}{1-u^2}\,du,
+\qquad S_p<\log p<S_p+R_p.
+\]
+The upper inequality is strict because \((1-u^2)^{-1}<(1-t^2)^{-1}\)
+on \(0<u<t\). Exact rational calculation certifies \(L_p<S_p\) and
+\(S_p+R_p<U_p\) for the following rational inputs:
+
+~~~text
+p      1000000 L_p     1000000 U_p
+2      693147         693148
+3      1098612        1098613
+5      1609437        1609438
+7      1945910        1945911
+~~~
+
+Consequently \(0<L_p<h_p<U_p\). These are strict proved brackets, not decimal
+approximations assumed to be correctly rounded. The odd-power logarithm identity
+is classical (NIST DLMF 4.6.4); the finite remainder above supplies its needed bound.
+
+**33.4 Theorem. Derivative comparison and its lower quadratic.** With the fixed data of
+33.2 let \(B_p(z)=(1-\alpha_pz)(1-\beta_pz)\). For \(0\le z\le1\),
+\(0<B_p(z)\le1\), and direct differentiation, including cancellation of mixed
+terms in the numerator, gives
+\[
+s_p'(z)=\frac{\alpha_p/(1-\alpha_pz)-\beta_p/(1-\beta_pz)}{h_p}
+=\frac{A_p}{h_pB_p(z)}.
+\]
+For an adjacent ordered pair \((i,j)\in\{(2,3),(3,5),(5,7)\}\), define
+\[
+N_{ij}=A_ih_jB_j-A_jh_iB_i,\qquad
+Q_{ij}=A_iL_jB_j-A_jU_iB_i=q_0+q_1z+q_2z^2.
+\]
+Then \((s_i-s_j)'=N_{ij}/(h_ih_jB_iB_j)\), and
+\[
+N_{ij}-Q_{ij}=A_i(h_j-L_j)B_j+A_j(U_i-h_i)B_i>0.
+\]
+The coefficients, with no implicit multiplication, are
+\[
+q_0=A_iL_j-A_jU_i,\quad
+q_1=-A_iL_j(\alpha_j+\beta_j)+A_jU_i(\alpha_i+\beta_i),
+\]
+\[
+q_2=A_iL_j\alpha_j\beta_j-A_jU_i\alpha_i\beta_i.
+\]
+All these formulas hold at both endpoints by differentiable extension to an open
+neighborhood of \([0,1]\); every denominator there is positive at the endpoints.
+
+**33.5 Theorem. Complete fixed quadratic certificate.** For the pairs and ascending
+coefficients defined in 33.4, the exact rational rows are as follows.
+Here \(E_{ij}=Q_{ij}(1)-\delta_{ij}U_iU_j\).
+
+~~~text
+(i,j)  q0                     q1                      q2
+(2,3)  66157/1296000000        -1963/43200000          -31589/62208000000
+(3,5)  7734773/1687500000      -433859/2531250000      -11475851/3417187500000
+(5,7)  73135501/2143750000     -541169/5359375000      -69645943/13130468750000
+
+(i,j)  Q_ij(1)                    delta_ij    E_ij
+(2,3)  317227/62208000000          1/200000    15697188161267/12150000000000000000
+(3,5)  470804057/106787109375      1/500       477045283208311/546750000000000000
+(5,7)  27909964602/820654296875    1/100       2261528264218737/840350000000000000
+~~~
+
+Substitution into the coefficient formulas proves the first table; summation and
+subtraction prove the second. Each row has \(q_1<0,q_2<0,E_{ij}>0\).
+Hence, on the entire closed interval, \(Q_{ij}(z)\ge Q_{ij}(1)
+>\delta_{ij}U_iU_j\). Also \(0<h_ih_jB_iB_j<U_iU_j\), so 33.4 implies
+\[
+(s_i-s_j)'(z)>\delta_{ij}\qquad(0\le z\le1).
+\]
+The sign proof is a global quadratic bound.
+
+**33.6 Theorem. Strict order at every finite height and at the scaled endpoint.** Integrate
+the continuous strict derivative inequality in 33.5 from 0 to \(z>0\).
+Because \(s_i(0)=s_j(0)=0\), this gives
+\[
+s_2-s_3>z/200000,\qquad s_3-s_5>z/500,\qquad s_5-s_7>z/100.
+\]
+Dividing by \(z\) gives the three strict scaled gaps for \(w\).
+At \(z=0\), differentiation of \(s_i-s_j\) instead gives
+\(w_i(0)-w_j(0)=(s_i-s_j)'(0)>\delta_{ij}\).
+Finally \(s_7'>0\) and \(s_7(0)=0\), so
+\[
+s_2(z)>s_3(z)>s_5(z)>s_7(z)>0\quad(0<z\le1),
+\]
+\[
+w_2(z)-w_3(z)>1/200000,\quad w_3(z)-w_5(z)>1/500,
+\quad w_5(z)-w_7(z)>1/100\quad(0\le z\le1).
+\]
+Also \(w_7(0)=A_7/h_7>0\). None of these scaled bounds attains equality,
+including at \(z=0\) and \(z=1\); the constants are not claimed sharp.
+
+**33.7 Definition and theorem. The exact fractional resource problem.** For finite \(T\ge0\) and real
+capacity \(r\), let
+\[
+K_r=\{y\in[0,1]^4:\sum_{p\in\mathcal P}h_py_p\le r\},\quad
+F_0(z)=\sum_p\log(1-\alpha_pz),
+\]
+\[
+D(T,r)=\max_{y\in K_r}\left[F_0(z)+\sum_ph_ps_p(z)y_p\right]\quad(r\ge0).
+\]
+For \(r<0\), \(K_r\) is empty since its resource is nonnegative: there is no
+optimizer or matching finite dual optimum (one may assign value \(-\infty\)).
+For every real \(r\ge0\), \(K_r\) is nonempty compact, so the displayed maximum
+exists. Put \(H_m=\sum_{k=1}^m h_{p_k}\), \(H_0=0\). Then
+\((H_0,H_1,H_2,H_3,H_4)=(0,\log2,\log6,\log30,\log210)\).
+If an upper mean-budget \(u\) is used, its residual is
+\(r=u-C(T)\), where \(C(T)=\sum_pc_p(T)=\log1058400+4T\).
+This is only a change of capacity coordinates. It imposes no lower budget,
+strict 5040 cutoff or requirement of two actual slab corners.
+
+Sections 18 and 26.10-26.11 already supply the fractional
+framework; 29.5-29.6 concern mass-three mixtures, not this four-label specialization;
+32.7-32.8 give the original fixed-height ordering. ZECKENDORF_EULER_5040's chapter
+41 F-4 already distinguishes integer budgets from price relaxations.
+
+**33.8 Theorem. The common greedy vector, including every boundary.** In the program of
+33.7, for every \(r\ge0\) the finite-height optimizer is
+\[
+y^*_{p_k}(r)=\min\{1,\max\{0,(r-H_{k-1})/h_{p_k}\}\}\quad(k=1,2,3,4).
+\]
+Its explicit vectors, always in prime-label order \((2,3,5,7)\), are
+
+~~~text
+capacity regime        y* = (y_2,y_3,y_5,y_7)
+r = 0                  (0,0,0,0)
+0 <= r <= H1           (r/h_2,0,0,0)
+H1 <= r <= H2          (1,(r-H1)/h_3,0,0)
+H2 <= r <= H3          (1,1,(r-H2)/h_5,0)
+H3 <= r <= H4          (1,1,1,(r-H3)/h_7)
+r >= H4                (1,1,1,1)
+at H0,H1,H2,H3,H4      (0,0,0,0); (1,0,0,0); (1,1,0,0); (1,1,1,0); (1,1,1,1)
+~~~
+
+Overlapping endpoint formulas give the same vector. The vector is independent
+of \(T\), uses exactly \(\min(r,H_4)\) resource, and has one genuinely fractional
+coordinate precisely when \(H_m<r<H_{m+1}\). Optimality and uniqueness follow
+from the explicit zero-gap proof in 33.10-33.12, without an integer relaxation
+being mistaken for an integer optimizer. For \(r>H_4\), unused capacity is
+exactly \(r-H_4\); full saturation \(r=H_4\) has zero slack.
+
+The sorting rule is
+literature-attested fractional knapsack: HKUST's
+[Lecture 14](https://home.cse.ust.hk/~dekai/271/notes/L14/L14.pdf), PDF pages 4-7,
+states decreasing value/weight selection and at most one partial item.
+
+**33.9 Theorem. The complete optimum value.** For the fixed data of 33.2 define, for
+\(m=0,\ldots,4\),
+\[
+F_m(z)=\sum_{k\le m}\log(1-\beta_{p_k}z)
++\sum_{k>m}\log(1-\alpha_{p_k}z).
+\]
+On \(H_m\le r\le H_{m+1}\), \(m=0,1,2,3\), set
+\(\theta=(r-H_m)/h_{p_{m+1}}\in[0,1]\). Substitution of 33.8 gives
+\[
+D(T,r)=(1-\theta)F_m(z)+\theta F_{m+1}(z)
+=F_m(z)+(r-H_m)s_{p_{m+1}}(z).
+\]
+Thus \(D(T,H_m)=F_m(z)\) for all five prefixes; shared endpoint values agree.
+For \(r\ge H_4\), \(D(T,r)=F_4(z)\). These include \(r=0\) and the entire
+slack-capacity tail. The proof of maximality is the matching price certificate
+below, not merely the evaluation of one feasible vector.
+
+**33.10 Theorem. A constructive nonnegative primal/dual gap.** Fix \(0<z\le1\),
+\(r\ge0\), abbreviate \(s_p=s_p(z)\), and write \(x_+=\max(x,0)\).
+For \(\lambda\ge0\) put
+\[
+\Phi_r(\lambda)=\lambda r+\sum_ph_p(s_p-\lambda)_+.
+\]
+For every \(y\in K_r\), exact rearrangement gives
+\[
+\Phi_r(\lambda)-\sum_ph_ps_py_p
+=\lambda\left(r-\sum_ph_py_p\right)
++\sum_ph_p\big[(s_p-\lambda)_+-y_p(s_p-\lambda)\big]\ge0.
+\]
+Each box summand is \(h_p(s_p-\lambda)(1-y_p)\) when \(s_p>\lambda\),
+\(h_p(\lambda-s_p)y_p\) when \(s_p<\lambda\), and zero when equal.
+It vanishes exactly when the respective nonnegative factor product vanishes.
+The upper-box multipliers are \(\mu_p=h_p(s_p-\lambda)_+\); if lower-box
+multipliers are also desired, \(\nu_p=h_p(\lambda-s_p)_+\) gives
+\(h_ps_p=\lambda h_p+\mu_p-\nu_p\). All are nonnegative.
+This proves weak duality directly and will prove attainment by zero gap.
+For \(r<0\), \(\Phi_r(\lambda)=\lambda r\) for \(\lambda\ge s_2\), so its
+infimum is \(-\infty\), unattained by a finite price, consistently with infeasibility.
+
+Boyd/Vandenberghe's
+[Duality](https://web.stanford.edu/class/ee364a/lectures/duality.pdf), PDF pages
+14 and 21-23 (slides 5.12 and 5.19-5.21), attests weak duality and complementary
+slackness/KKT.
+
+**33.11 Theorem. All matching nonnegative prices.** For finite \(T\ge0\) and the exact
+resource program 33.7, the complete sets of optimal resource prices are
+
+~~~text
+capacity                         all optimal lambda
+r = 0                            [s_2,+infinity)
+H_m < r < H_(m+1), m=0,1,2,3     {s_(p_(m+1))}
+r = H_m, m=1,2,3                 [s_(p_(m+1)),s_(p_m)]
+r = H4                           [0,s_7]
+r > H4                           {0}
+~~~
+
+Here every \(s\) is evaluated at the same \(z=e^{-T}>0\), and \(H_m\) has the
+definition of 33.7. Inserting each listed price and 33.8's vector into every
+nonnegative term of 33.10 gives zero. Hence both extrema are attained and
+\[
+D(T,r)=F_0(z)+\min_{\lambda\ge0}\Phi_r(\lambda).
+\]
+The upper multipliers for every matching price are the \(\mu_p\) in 33.10.
+Strict density inequalities do not make the price unique at prefix boundaries,
+at zero capacity or at full saturation. There is no finite matching price for
+negative capacity. Completeness, including price endpoints, is proved next.
+
+**33.12 Theorem. Completeness of prices and uniqueness of vectors.** For the finite-height
+program, a price attaining the optimum must have zero 33.10 gap at \(y^*\).
+A filled coordinate then requires \(\lambda\le s_p\); an empty one requires
+\(\lambda\ge s_p\); a fractional one requires \(\lambda=s_p\).
+Positive resource slack requires \(\lambda=0\). These necessary conditions
+give exactly all the sets in 33.11, including their closed endpoints.
+They also characterize objective equality. In an open prefix interval choose
+its positive pivot price. Since all four densities are distinct, zero box gap
+forces the earlier coordinates to 1 and later coordinates to 0, and zero budget
+gap fixes the remaining fraction. At an internal prefix choose a price strictly
+between the adjacent densities; this forces every coordinate of that prefix
+vector. At \(r=0\), feasibility already forces \(y=0\). At \(r\ge H_4\),
+choose price 0; positive densities force every coordinate to 1. Thus, for every
+real \(r\ge0\), objective equality occurs exactly at \(y=y^*\).
+In the full multiplier formulation, zero complementary products and stationarity
+also force \(\mu_p,\nu_p\) to be the formulas in 33.10 for each listed price;
+there are no additional optimal nonnegative box multipliers.
+
+**33.13 Definition and theorem. Mass-four mixture and permutation labels.** For \(r\ge0\) define the
+height-independent positive measure
+\[
+\mu_r=\sum_{p\in\mathcal P}[(1-y_p^*)\delta_{\alpha_p}+y_p^*\delta_{\beta_p}],
+\qquad \mu_r(\mathbb R)=4.
+\]
+The symbol \(\delta_a\) denotes a point mass, not a gap constant. The exact value is
+\(D(T,r)=\int\log(1-za)\,d\mu_r(a)\). This is a coordinate mixture measure
+of mass four, not a probability measure of mass one. Away from prefixes below
+saturation, the configuration mixture interpolates two corners; its upper corner
+has resource \(H_{m+1}>r\). It therefore certifies the fractional mean budget,
+not individual integer-budget or slab feasibility of both support corners.
+For any permutation \(\pi\) of the four labels, the same clipping formula with
+\(\pi\)-ordered prefixes is feasible and uses \(\min(r,H_4)\) resource.
+Its value equals \(D\) if and only if its vector equals \(y^*\), by 33.12.
+Permuting labels within filled or empty blocks can preserve the vector; at zero
+capacity and at or above saturation all 24 labels agree. A unique optimizer
+vector is thus compatible with nonunique permutation labels and prices.
+
+**33.14 Theorem. Density limits and all equality qualifications.** For the fixed family,
+\(s_p(z)=zA_p/h_p+o(z)\) as \(z\downarrow0\), directly from differentiability
+at zero. Consequently all unscaled densities and all unscaled adjacent gaps
+tend to zero as \(T\to\infty\). Each adjacent unscaled gap has infimum 0 on
+finite \(T\ge0\), never attained there. There is no finite-height tie, including
+\(T=0\). At the formal endpoint \(z=0\), all \(s_p=0\) and the inequalities
+\(s_i-s_j>\delta_{ij}z\) extend only as equalities \(0=0\).
+The separate scaled extension has \(w_p(0)=A_p/h_p\) and retains every strict
+margin in 33.6. An equality in the unscaled endpoint problem is not a scaled
+density tie or an equality at an actual finite height.
+
+**33.15 Theorem. Value limits, endpoint degeneracy and scaled optimization.** For every
+fixed real \(r\ge0\), the measure in 33.13 has mass four at strictly positive
+support points below 1. Thus \(D(T,r)<0\) for every finite \(T\ge0\),
+\(D(T,r)\to0\) from below, and
+\[
+\lim_{T\to\infty}\frac{D(T,r)}z
+=-\sum_p[(1-y_p^*)\alpha_p+y_p^*\beta_p].
+\]
+At the formal unscaled endpoint \(z=0\), the objective is identically zero on
+\(K_r\), so every feasible vector is optimal. The feasible set is a singleton
+only for \(r=0\): when \(r>0\), a sufficiently small positive coordinate gives
+a second feasible vector. The endpoint dual is \(\Phi_r(\lambda)=\lambda r\):
+all \(\lambda\ge0\) are optimal at \(r=0\), and only \(\lambda=0\) is optimal
+at \(r>0\). In contrast, the limiting gain divided by \(z\) is
+\(\sum_p A_py_p\), with densities \(w_p(0)>0\). Its optimizer remains the
+unique \(y^*\), and the complete table 33.11 holds with \(s_p\) replaced by
+\(w_p(0)\). The limiting full scaled objective additionally has the constant
+\(-\sum_p\alpha_p\), which does not change its optimizers or prices.
+
+**33.16 Definition and theorem. Logarithm series and moment objectives.** For \(p\in\mathcal P\) and
+integer \(n\ge1\), put
+\[
+a_{p,n}=\frac{\alpha_p^n-\beta_p^n}{h_p},\qquad
+J_n(y)=\sum_py_p(\alpha_p^n-\beta_p^n).
+\]
+The classical logarithm series (NIST DLMF 4.6.1, applied to negative arguments)
+gives, for \(0\le z\le1\),
+\[
+s_p(z)=\sum_{n\ge1}\frac{a_{p,n}}n z^n,\qquad
+\mathcal L_z(y):=\sum_ph_ps_p(z)y_p
+=\sum_{n\ge1}\frac{z^n}{n}J_n(y).
+\]
+Indeed \(a_{\max}=\max_p\alpha_p=1/25<1\), and, uniformly on every \(K_r\),
+\(0\le J_n(y)\le4a_{\max}^n\). Comparison with a geometric series proves
+absolute uniform convergence even at \(z=1\), justifying the sums and subsequent
+limits. The first-moment density is \(a_{p,1}=w_p(0)\), whose strict order is
+33.6. This does not imply the same order for every \(n\).
+
+The identities [DLMF 4.6.1](https://dlmf.nist.gov/4.6.E1) and
+[DLMF 4.6.4](https://dlmf.nist.gov/4.6.E4) attest the logarithm series.
+
+**33.17 Theorem. The prescribed second-moment reversal and notation erratum.**
+At precisely \(n=2\), direct rational arithmetic gives
+\[
+\alpha_2^2-\beta_2^2=3/4096,\qquad
+\alpha_3^2-\beta_3^2=8/6561.
+\]
+Since \(3^5=243<256=2^8\), strict monotonicity of logarithms gives
+\(h_3/h_2<8/5\). The exact multiplication is
+\[
+8\cdot19683=157464<163840=5\cdot32768,
+\qquad 8/5<32768/19683.
+\]
+Thus \(19683h_3<32768h_2\), equivalently
+\(a_{2,2}=3/(4096h_2)<8/(6561h_3)=a_{3,2}\); equality is impossible.
+The compressed tokens `819683` and `532768` occur in `Since 819683=157464<163840=532768`.
+Those are not valid integer equalities as written. The mathematical exposition
+explicitly corrects them to `8*19683` and `5*32768`, respectively, as proved above. Only this second-moment pair is evaluated here.
+
+**33.18 Theorem. A fixed capacity witness against the moment order.** At the exact
+capacity \(r=h_2=\log2\), the unique full logarithmic optimizer is
+\(y^*=(1,0,0,0)\). The vector
+\(\widetilde y=(0,h_2/h_3,0,0)\) is feasible because \(0<h_2/h_3<1\),
+and both vectors use resource \(h_2\). By 33.17,
+\[
+J_2(\widetilde y)-J_2(y^*)=h_2(a_{3,2}-a_{2,2})>0.
+\]
+Nevertheless for every \(0<z\le1\),
+\[
+\mathcal L_z(y^*)-\mathcal L_z(\widetilde y)
+=h_2(s_2-s_3)>h_2z/200000.
+\]
+The same difference holds for the full objective after adding \(F_0(z)\).
+Thus improving the second moment strictly worsens the full logarithmic value
+in this fixed witness. At \(z=0\) the two unscaled full values tie at zero,
+while the second-moment inequality itself remains strict.
+
+**33.19 Theorem. Failure to commute optimization and momentwise maximization.** For fixed
+\(r\ge0\), let \(M_n(r)=\max_{y\in K_r}J_n(y)\), which exists by compactness.
+The uniform bound in 33.16 also bounds \(M_n\), so
+\[
+\max_{y\in K_r}\sum_{n\ge1}\frac{z^n}{n}J_n(y)
+\le\sum_{n\ge1}\frac{z^n}{n}M_n(r)
+\]
+is an inequality between finite quantities for \(0\le z\le1\).
+At \(r=h_2\), evaluate the left side at its unique \(y^*\). Every difference
+\(M_n-J_n(y^*)\) is nonnegative, and 33.18 gives the strict bound
+\[
+\sum_{n\ge1}\frac{z^n}{n}M_n-
+\max_{y\in K_{h_2}}\mathcal L_z(y)
+\ge\frac{z^2}{2}h_2(a_{3,2}-a_{2,2})>0\quad(0<z\le1).
+\]
+Therefore maximizing the full logarithmic sum does not commute with separately
+maximizing every moment. For \(z>0\), equality in the general inequality holds
+exactly when the full optimizer also maximizes every \(J_n\), since all weights
+\(z^n/n\) are positive. Equality holds at \(r=0\) and \(r\ge H_4\), where zero
+or full vectors maximize every moment. At \(z=0\) both sides are zero for all
+\(r\ge0\). No classification at other capacities or of other second-moment
+pairs is asserted.
+

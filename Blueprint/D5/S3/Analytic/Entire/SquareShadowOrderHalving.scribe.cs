@@ -18,11 +18,15 @@ internal sealed class SquareShadowOrderHalvingDocument : IScribeDocumentDefiniti
                     + "under the norm of f. Continuity supplies boundedness; nonnegative "
                     + "radius supplies nonemptiness. Negative radii are irrelevant to growth order.",
                 Eqn(M("f", F.Id("r")), Call("sSup", Call("normImageOfSphere", F.Id("f"),
-                    F.Id("r")))), DescribeRole.Definition),
+                    F.Id("r")))),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Analytic/li2020circularmaximum")), DescribeRole.Definition),
             Result("zero-radius", "max_modulus_zero", "Radius zero",
                 "For every complex-valued function, the radius-zero sphere is the singleton "
                     + "origin, so its maximum modulus is the norm of the value there.",
-                Eqn(M("f", Num(0)), Call("norm", Call("f", Num(0))))),
+                Eqn(M("f", Num(0)), Call("norm", Call("f", Num(0)))),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Analytic/li2020circularmaximum"))),
             Result("attainment", "max_modulus_attained", "The maximum is attained",
                 "For continuous f and nonnegative r, there exists a complex z on the "
                     + "radius-r sphere whose value has norm maxModulus(f,r). This applies "
@@ -30,7 +34,9 @@ internal sealed class SquareShadowOrderHalvingDocument : IScribeDocumentDefiniti
                     + "with the supremum.",
                 Disp(Seq(Exists, Sp, F.Id("z"), Sp, InMacro, Sp,
                     Call("sphere", Num(0), F.Id("r")), Comma, Sp,
-                    M("f", F.Id("r")), Sp, Eq, Sp, Call("norm", Call("f", F.Id("z")))))),
+                    M("f", F.Id("r")), Sp, Eq, Sp, Call("norm", Call("f", F.Id("z"))))),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Analytic/li2020circularmaximum"))),
             Result("square-maximum", "max_modulus_square_shadow", "Square-shadow maximum modulus",
                 "Assume F and G are continuous complex functions and F(z)=G(z squared) "
                     + "for every z. For every nonnegative r, their circular maxima satisfy "
@@ -38,7 +44,8 @@ internal sealed class SquareShadowOrderHalvingDocument : IScribeDocumentDefiniti
                     + "the other chooses a complex square root of a maximizing point. "
                     + "Radius zero is included.",
                 Eqn(M("G", F.Id("r")), M("F", Seq(Sqrt, Grp(F.Id("r"))))),
-                literature: true),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Analytic/trureturing2026squareshadow"))),
             Result("order", "order", "Extended-real growth order",
                 "The real quotient is coerced to EReal before taking the limsup at "
                     + "positive infinity. Thus positive infinity remains a possible order. "
@@ -47,8 +54,9 @@ internal sealed class SquareShadowOrderHalvingDocument : IScribeDocumentDefiniti
                     + "Under these conventions the zero function has order zero.",
                 Eqn(Call("order", F.Id("f")), Call("limsupAtTop",
                     Seq(Frac, Grp(Call("log", Call("log", M("f", F.Id("r"))))),
-                        Grp(Call("log", F.Id("r")))))), DescribeRole.Definition,
-                literature: true),
+                        Grp(Call("log", F.Id("r")))))),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Analytic/trureturing2026squareshadow")), DescribeRole.Definition),
             Result("halving", "order_square_shadow", "Growth order is halved",
                 "For the same continuous F and G satisfying F(z)=G(z squared), the "
                     + "extended-real orders obey this equality, including infinite order. "
@@ -56,7 +64,8 @@ internal sealed class SquareShadowOrderHalvingDocument : IScribeDocumentDefiniti
                     + "the image of atTop under square root, and positive scalar "
                     + "multiplication of limsup form one proof chain.",
                 Eqn(Call("order", F.Id("G")), Seq(Frac, Grp(Call("order", F.Id("F"))),
-                    Grp(Num(2)))), literature: true),
+                    Grp(Num(2)))), AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Analytic/trureturing2026squareshadow"))),
             Result("order-one", "order_half_of_order_one", "Order one descends to one half",
                 "If F has order one, its square shadow G has order one half. In the "
                     + "entire-function setting, the source constructs G from the even "
@@ -64,16 +73,15 @@ internal sealed class SquareShadowOrderHalvingDocument : IScribeDocumentDefiniti
                     + "F(z)=G(z squared) as a hypothesis; it does not reconstruct the "
                     + "Taylor series or prove a canonical-product theorem.",
                 Eqn(Call("order", F.Id("G")), Seq(Frac, Grp(Num(1)), Grp(Num(2)))),
-                literature: true))));
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Analytic/trureturing2026squareshadow"))))));
 
     private static DocumentBlock Result(string id, string declaration, string title, string prose,
-        Formula formula, DescribeRole role = DescribeRole.Theorem, bool literature = false) =>
+        Formula formula, AssessedProvenance provenance, DescribeRole role = DescribeRole.Theorem) =>
         Describe.Lean(DescribeId.Create("square-shadow-" + id),
             DeclarationHandle.Create(Module + declaration), H(title),
             StatementSource.FromAuthor(formula),
-            literature ? AssessedProvenance.FromLiterature(
-                LibraryNoteRef.Create("D5/L/Analytic/trureturing2026squareshadow"))
-                : AssessedProvenance.FromRepo(),
+            provenance,
             Blocks(Paragraph(Text(prose))), role);
 
     private static Formula M(string f, Formula r) => Call("M", F.Id(f), r);
