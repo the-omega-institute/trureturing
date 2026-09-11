@@ -1,0 +1,960 @@
+{
+ "module": "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational",
+ "source": "kernel environment (Expr.getUsedConstants on value+type, aux constants expanded)",
+ "direction": "consumer -> prerequisite",
+ "edges": {
+  "direction": "consumer->prerequisite",
+  "kernel_iff_cross": [
+   "CrossEquivalent",
+   "Fraction",
+   "cross_iff_readout",
+   "kernelSetoid",
+   "readout"
+  ],
+  "inv": [
+   "Fraction",
+   "Fraction.denominator",
+   "Fraction.mk",
+   "Fraction.numerator",
+   "InverseGuard"
+  ],
+  "Fraction.mk.injEq": [
+   "Fraction",
+   "Fraction.mk",
+   "Fraction.mk.inj"
+  ],
+  "integerEmbedding_retains": [
+   "Fraction.numerator",
+   "integerEmbedding"
+  ],
+  "Fraction.ctorIdx": [
+   "Fraction"
+  ],
+  "Fraction.mk.sizeOf_spec": [
+   "Fraction",
+   "Fraction.mk",
+   "Fraction.rec"
+  ],
+  "readout": [
+   "Fraction",
+   "Fraction.denominator",
+   "Fraction.numerator"
+  ],
+  "integerEmbedding": [
+   "Fraction",
+   "Fraction.mk"
+  ],
+  "DivisionGuard": [
+   "Fraction",
+   "Fraction.numerator"
+  ],
+  "div_congr": [
+   "CrossEquivalent",
+   "DivisionGuard",
+   "Fraction",
+   "cross_iff_readout",
+   "div",
+   "div_readout",
+   "readout"
+  ],
+  "cross_equivalence": [
+   "CrossEquivalent",
+   "Fraction",
+   "kernelSetoid",
+   "kernel_iff_cross"
+  ],
+  "add_congr": [
+   "CrossEquivalent",
+   "Fraction",
+   "add",
+   "add_readout",
+   "cross_iff_readout",
+   "readout"
+  ],
+  "Fraction.mk.inj": [
+   "Fraction",
+   "Fraction.mk",
+   "Fraction.mk.noConfusion"
+  ],
+  "neg": [
+   "Fraction",
+   "Fraction.denominator",
+   "Fraction.denominator_ne_zero",
+   "Fraction.mk",
+   "Fraction.numerator"
+  ],
+  "Fraction.denominator": [
+   "Fraction"
+  ],
+  "Fraction.recOn": [
+   "Fraction",
+   "Fraction.mk",
+   "Fraction.rec"
+  ],
+  "integerEmbedding_readout": [
+   "integerEmbedding",
+   "readout"
+  ],
+  "div": [
+   "DivisionGuard",
+   "Fraction",
+   "Fraction.denominator",
+   "Fraction.denominator_ne_zero",
+   "Fraction.mk",
+   "Fraction.numerator"
+  ],
+  "inv_readout": [
+   "Fraction",
+   "Fraction.denominator",
+   "Fraction.numerator",
+   "InverseGuard",
+   "inv",
+   "readout"
+  ],
+  "cross_iff_readout": [
+   "CrossEquivalent",
+   "Fraction",
+   "Fraction.denominator",
+   "Fraction.numerator",
+   "denominator_cast_ne_zero",
+   "readout"
+  ],
+  "Fraction.numerator": [
+   "Fraction"
+  ],
+  "div_readout": [
+   "DivisionGuard",
+   "Fraction",
+   "Fraction.denominator",
+   "Fraction.numerator",
+   "div",
+   "readout"
+  ],
+  "Fraction.denominator_ne_zero": [
+   "Fraction",
+   "Fraction.denominator"
+  ],
+  "division_guard_iff": [
+   "DivisionGuard",
+   "Fraction",
+   "inverse_guard_iff",
+   "readout"
+  ],
+  "neg_congr": [
+   "CrossEquivalent",
+   "Fraction",
+   "cross_iff_readout",
+   "neg",
+   "neg_readout",
+   "readout"
+  ],
+  "inverse_guard_iff": [
+   "Fraction",
+   "Fraction.denominator",
+   "Fraction.denominator_ne_zero",
+   "Fraction.numerator",
+   "InverseGuard",
+   "readout"
+  ],
+  "neg_readout": [
+   "Fraction",
+   "Fraction.denominator",
+   "Fraction.numerator",
+   "neg",
+   "readout"
+  ],
+  "mul_readout": [
+   "Fraction",
+   "Fraction.denominator",
+   "Fraction.numerator",
+   "mul",
+   "readout"
+  ],
+  "mul_congr": [
+   "CrossEquivalent",
+   "Fraction",
+   "cross_iff_readout",
+   "mul",
+   "mul_readout",
+   "readout"
+  ],
+  "mul": [
+   "Fraction",
+   "Fraction.denominator",
+   "Fraction.denominator_ne_zero",
+   "Fraction.mk",
+   "Fraction.numerator",
+   "add"
+  ],
+  "Fraction.noConfusion": [
+   "Fraction",
+   "Fraction.casesOn",
+   "Fraction.noConfusionType"
+  ],
+  "Fraction.mk.noConfusion": [
+   "Fraction",
+   "Fraction.mk",
+   "Fraction.noConfusion"
+  ],
+  "inverse_guard_congr": [
+   "CrossEquivalent",
+   "Fraction",
+   "InverseGuard",
+   "cross_iff_readout",
+   "inverse_guard_iff",
+   "readout"
+  ],
+  "add": [
+   "Fraction",
+   "Fraction.denominator",
+   "Fraction.denominator_ne_zero",
+   "Fraction.mk",
+   "Fraction.numerator"
+  ],
+  "InverseGuard": [
+   "Fraction",
+   "Fraction.numerator"
+  ],
+  "add_readout": [
+   "Fraction",
+   "Fraction.denominator",
+   "Fraction.numerator",
+   "add",
+   "denominator_cast_ne_zero",
+   "readout"
+  ],
+  "inv_congr": [
+   "CrossEquivalent",
+   "Fraction",
+   "InverseGuard",
+   "cross_iff_readout",
+   "inv",
+   "inv_readout",
+   "readout"
+  ],
+  "Fraction.noConfusionType": [
+   "Fraction",
+   "Fraction.casesOn"
+  ],
+  "Fraction.rec": [
+   "Fraction",
+   "Fraction.mk"
+  ],
+  "denominator_cast_ne_zero": [
+   "Fraction",
+   "Fraction.denominator",
+   "Fraction.denominator_ne_zero"
+  ],
+  "kernelSetoid": [
+   "Fraction",
+   "readout"
+  ],
+  "division_guard_congr": [
+   "CrossEquivalent",
+   "DivisionGuard",
+   "Fraction",
+   "inverse_guard_congr"
+  ],
+  "Fraction": [],
+  "Fraction.mk": [
+   "Fraction"
+  ],
+  "CrossEquivalent": [
+   "Fraction",
+   "Fraction.denominator",
+   "Fraction.numerator"
+  ],
+  "Fraction.casesOn": [
+   "Fraction",
+   "Fraction.mk",
+   "Fraction.rec"
+  ]
+ },
+ "kinds": {
+  "kernel_iff_cross": "theorem",
+  "inv": "def",
+  "Fraction.mk.injEq": "theorem",
+  "integerEmbedding_retains": "theorem",
+  "Fraction.ctorIdx": "def",
+  "Fraction.mk.sizeOf_spec": "theorem",
+  "readout": "def",
+  "integerEmbedding": "def",
+  "DivisionGuard": "def",
+  "div_congr": "theorem",
+  "cross_equivalence": "theorem",
+  "add_congr": "theorem",
+  "Fraction.mk.inj": "theorem",
+  "neg": "def",
+  "Fraction.denominator": "def",
+  "Fraction.recOn": "def",
+  "integerEmbedding_readout": "theorem",
+  "div": "def",
+  "inv_readout": "theorem",
+  "cross_iff_readout": "theorem",
+  "Fraction.numerator": "def",
+  "div_readout": "theorem",
+  "Fraction.denominator_ne_zero": "theorem",
+  "division_guard_iff": "theorem",
+  "neg_congr": "theorem",
+  "inverse_guard_iff": "theorem",
+  "neg_readout": "theorem",
+  "mul_readout": "theorem",
+  "mul_congr": "theorem",
+  "mul": "def",
+  "Fraction.noConfusion": "def",
+  "Fraction.mk.noConfusion": "def",
+  "inverse_guard_congr": "theorem",
+  "add": "def",
+  "InverseGuard": "def",
+  "add_readout": "theorem",
+  "inv_congr": "theorem",
+  "Fraction.noConfusionType": "def",
+  "Fraction.rec": "other",
+  "denominator_cast_ne_zero": "theorem",
+  "kernelSetoid": "def",
+  "division_guard_congr": "theorem",
+  "Fraction": "inductive",
+  "Fraction.mk": "constructor",
+  "CrossEquivalent": "def",
+  "Fraction.casesOn": "def"
+ },
+ "numeric_certificate": {
+  "kernel_iff_cross": false,
+  "inv": false,
+  "Fraction.mk.injEq": false,
+  "integerEmbedding_retains": false,
+  "Fraction.ctorIdx": false,
+  "Fraction.mk.sizeOf_spec": false,
+  "readout": false,
+  "integerEmbedding": false,
+  "DivisionGuard": false,
+  "div_congr": false,
+  "cross_equivalence": false,
+  "add_congr": false,
+  "Fraction.mk.inj": false,
+  "neg": false,
+  "Fraction.denominator": false,
+  "Fraction.recOn": false,
+  "integerEmbedding_readout": false,
+  "div": false,
+  "inv_readout": false,
+  "cross_iff_readout": false,
+  "Fraction.numerator": false,
+  "div_readout": false,
+  "Fraction.denominator_ne_zero": false,
+  "division_guard_iff": false,
+  "neg_congr": false,
+  "inverse_guard_iff": false,
+  "neg_readout": false,
+  "mul_readout": false,
+  "mul_congr": false,
+  "mul": false,
+  "Fraction.noConfusion": false,
+  "Fraction.mk.noConfusion": false,
+  "inverse_guard_congr": false,
+  "add": false,
+  "InverseGuard": false,
+  "add_readout": false,
+  "inv_congr": false,
+  "Fraction.noConfusionType": false,
+  "Fraction.rec": false,
+  "denominator_cast_ne_zero": false,
+  "kernelSetoid": false,
+  "division_guard_congr": false,
+  "Fraction": false,
+  "Fraction.mk": false,
+  "CrossEquivalent": false,
+  "Fraction.casesOn": false
+ },
+ "axioms": {
+  "kernel_iff_cross": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "inv": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "Fraction.mk.injEq": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "integerEmbedding_retains": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "Fraction.ctorIdx": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "Fraction.mk.sizeOf_spec": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "readout": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "integerEmbedding": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "DivisionGuard": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "div_congr": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "cross_equivalence": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "add_congr": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "Fraction.mk.inj": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "neg": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "Fraction.denominator": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "Fraction.recOn": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "integerEmbedding_readout": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "div": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "inv_readout": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "cross_iff_readout": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "Fraction.numerator": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "div_readout": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "Fraction.denominator_ne_zero": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "division_guard_iff": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "neg_congr": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "inverse_guard_iff": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "neg_readout": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "mul_readout": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "mul_congr": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "mul": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "Fraction.noConfusion": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "Fraction.mk.noConfusion": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "inverse_guard_congr": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "add": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "InverseGuard": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "add_readout": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "inv_congr": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "Fraction.noConfusionType": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "Fraction.rec": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "denominator_cast_ne_zero": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "kernelSetoid": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "division_guard_congr": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "Fraction": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "Fraction.mk": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "CrossEquivalent": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "Fraction.casesOn": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "external_deps": {
+  "kernel_iff_cross": [],
+  "inv": [],
+  "Fraction.mk.injEq": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ"
+  ],
+  "integerEmbedding_retains": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich"
+  ],
+  "Fraction.ctorIdx": [],
+  "Fraction.mk.sizeOf_spec": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ"
+  ],
+  "readout": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ"
+  ],
+  "integerEmbedding": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedSection"
+  ],
+  "DivisionGuard": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ"
+  ],
+  "div_congr": [],
+  "cross_equivalence": [],
+  "add_congr": [],
+  "Fraction.mk.inj": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ"
+  ],
+  "neg": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.complementBalanced"
+  ],
+  "Fraction.denominator": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich"
+  ],
+  "Fraction.recOn": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ"
+  ],
+  "integerEmbedding_readout": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedSection",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedSection_rightInverse"
+  ],
+  "div": [
+   "D5.S3.ConceptDynamics.Spacetime.GeneratedProduct:D5.S3.ConceptDynamics.Spacetime.GeneratedProduct.productBalanced"
+  ],
+  "inv_readout": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ"
+  ],
+  "cross_iff_readout": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ"
+  ],
+  "Fraction.numerator": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich"
+  ],
+  "div_readout": [
+   "D5.S0.History.Spacetime.ArchiveCarrier:D5.S0.History.Spacetime.ArchiveCarrier.Context",
+   "D5.S0.History.Spacetime.ArchiveCarrier:D5.S0.History.Spacetime.ArchiveCarrier.Rich",
+   "D5.S0.History.Spacetime.ArchiveCarrier:D5.S0.History.Spacetime.ArchiveCarrier.Selection",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.Balanced",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.q",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.Spacetime.GeneratedProduct:D5.S3.ConceptDynamics.Spacetime.GeneratedProduct.product",
+   "D5.S3.ConceptDynamics.Spacetime.GeneratedProduct:D5.S3.ConceptDynamics.Spacetime.GeneratedProduct.q_product"
+  ],
+  "Fraction.denominator_ne_zero": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ"
+  ],
+  "division_guard_iff": [],
+  "neg_congr": [],
+  "inverse_guard_iff": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ"
+  ],
+  "neg_readout": [
+   "D5.S0.History.Spacetime.ArchiveCarrier:D5.S0.History.Spacetime.ArchiveCarrier.Context",
+   "D5.S0.History.Spacetime.ArchiveCarrier:D5.S0.History.Spacetime.ArchiveCarrier.Rich",
+   "D5.S0.History.Spacetime.ArchiveCarrier:D5.S0.History.Spacetime.ArchiveCarrier.Selection",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.Balanced",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.complementBalanced",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.complementBalanced_readout",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.q",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ"
+  ],
+  "mul_readout": [
+   "D5.S0.History.Spacetime.ArchiveCarrier:D5.S0.History.Spacetime.ArchiveCarrier.Context",
+   "D5.S0.History.Spacetime.ArchiveCarrier:D5.S0.History.Spacetime.ArchiveCarrier.Rich",
+   "D5.S0.History.Spacetime.ArchiveCarrier:D5.S0.History.Spacetime.ArchiveCarrier.Selection",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.Balanced",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.q",
+   "D5.S3.ConceptDynamics.Spacetime.GeneratedProduct:D5.S3.ConceptDynamics.Spacetime.GeneratedProduct.product",
+   "D5.S3.ConceptDynamics.Spacetime.GeneratedProduct:D5.S3.ConceptDynamics.Spacetime.GeneratedProduct.q_product"
+  ],
+  "mul_congr": [],
+  "mul": [
+   "D5.S3.ConceptDynamics.Spacetime.GeneratedProduct:D5.S3.ConceptDynamics.Spacetime.GeneratedProduct.productBalanced"
+  ],
+  "Fraction.noConfusion": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ"
+  ],
+  "Fraction.mk.noConfusion": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ"
+  ],
+  "inverse_guard_congr": [],
+  "add": [
+   "D5.S3.ConceptDynamics.Spacetime.GeneratedProduct:D5.S3.ConceptDynamics.Spacetime.GeneratedProduct.productBalanced",
+   "D5.S3.ConceptDynamics.Spacetime.ParallelComposition:D5.S3.ConceptDynamics.Spacetime.ParallelComposition.parallelBalanced"
+  ],
+  "InverseGuard": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ"
+  ],
+  "add_readout": [
+   "D5.S0.History.Spacetime.ArchiveCarrier:D5.S0.History.Spacetime.ArchiveCarrier.Context",
+   "D5.S0.History.Spacetime.ArchiveCarrier:D5.S0.History.Spacetime.ArchiveCarrier.Rich",
+   "D5.S0.History.Spacetime.ArchiveCarrier:D5.S0.History.Spacetime.ArchiveCarrier.Selection",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.Balanced",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.q",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.Spacetime.GeneratedProduct:D5.S3.ConceptDynamics.Spacetime.GeneratedProduct.product",
+   "D5.S3.ConceptDynamics.Spacetime.GeneratedProduct:D5.S3.ConceptDynamics.Spacetime.GeneratedProduct.q_product",
+   "D5.S3.ConceptDynamics.Spacetime.ParallelComposition:D5.S3.ConceptDynamics.Spacetime.ParallelComposition.parallel",
+   "D5.S3.ConceptDynamics.Spacetime.ParallelComposition:D5.S3.ConceptDynamics.Spacetime.ParallelComposition.q_parallel"
+  ],
+  "inv_congr": [],
+  "Fraction.noConfusionType": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ"
+  ],
+  "Fraction.rec": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ"
+  ],
+  "denominator_cast_ne_zero": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ"
+  ],
+  "kernelSetoid": [],
+  "division_guard_congr": [],
+  "Fraction": [],
+  "Fraction.mk": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ"
+  ],
+  "CrossEquivalent": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ"
+  ],
+  "Fraction.casesOn": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ"
+  ]
+ },
+ "public_declarations": [
+  {
+   "name": "kernel_iff_cross",
+   "kind": "theorem"
+  },
+  {
+   "name": "inv",
+   "kind": "def"
+  },
+  {
+   "name": "Fraction.mk.injEq",
+   "kind": "theorem"
+  },
+  {
+   "name": "integerEmbedding_retains",
+   "kind": "theorem"
+  },
+  {
+   "name": "Fraction.ctorIdx",
+   "kind": "def"
+  },
+  {
+   "name": "Fraction.mk.sizeOf_spec",
+   "kind": "theorem"
+  },
+  {
+   "name": "readout",
+   "kind": "def"
+  },
+  {
+   "name": "integerEmbedding",
+   "kind": "def"
+  },
+  {
+   "name": "DivisionGuard",
+   "kind": "def"
+  },
+  {
+   "name": "div_congr",
+   "kind": "theorem"
+  },
+  {
+   "name": "cross_equivalence",
+   "kind": "theorem"
+  },
+  {
+   "name": "add_congr",
+   "kind": "theorem"
+  },
+  {
+   "name": "Fraction.mk.inj",
+   "kind": "theorem"
+  },
+  {
+   "name": "neg",
+   "kind": "def"
+  },
+  {
+   "name": "Fraction.denominator",
+   "kind": "def"
+  },
+  {
+   "name": "Fraction.recOn",
+   "kind": "def"
+  },
+  {
+   "name": "integerEmbedding_readout",
+   "kind": "theorem"
+  },
+  {
+   "name": "div",
+   "kind": "def"
+  },
+  {
+   "name": "inv_readout",
+   "kind": "theorem"
+  },
+  {
+   "name": "cross_iff_readout",
+   "kind": "theorem"
+  },
+  {
+   "name": "Fraction.numerator",
+   "kind": "def"
+  },
+  {
+   "name": "div_readout",
+   "kind": "theorem"
+  },
+  {
+   "name": "Fraction.denominator_ne_zero",
+   "kind": "theorem"
+  },
+  {
+   "name": "division_guard_iff",
+   "kind": "theorem"
+  },
+  {
+   "name": "neg_congr",
+   "kind": "theorem"
+  },
+  {
+   "name": "inverse_guard_iff",
+   "kind": "theorem"
+  },
+  {
+   "name": "neg_readout",
+   "kind": "theorem"
+  },
+  {
+   "name": "mul_readout",
+   "kind": "theorem"
+  },
+  {
+   "name": "mul_congr",
+   "kind": "theorem"
+  },
+  {
+   "name": "mul",
+   "kind": "def"
+  },
+  {
+   "name": "Fraction.noConfusion",
+   "kind": "def"
+  },
+  {
+   "name": "Fraction.mk.noConfusion",
+   "kind": "def"
+  },
+  {
+   "name": "inverse_guard_congr",
+   "kind": "theorem"
+  },
+  {
+   "name": "add",
+   "kind": "def"
+  },
+  {
+   "name": "InverseGuard",
+   "kind": "def"
+  },
+  {
+   "name": "add_readout",
+   "kind": "theorem"
+  },
+  {
+   "name": "inv_congr",
+   "kind": "theorem"
+  },
+  {
+   "name": "Fraction.noConfusionType",
+   "kind": "def"
+  },
+  {
+   "name": "Fraction.rec",
+   "kind": "other"
+  },
+  {
+   "name": "denominator_cast_ne_zero",
+   "kind": "theorem"
+  },
+  {
+   "name": "kernelSetoid",
+   "kind": "def"
+  },
+  {
+   "name": "division_guard_congr",
+   "kind": "theorem"
+  },
+  {
+   "name": "Fraction",
+   "kind": "inductive"
+  },
+  {
+   "name": "Fraction.mk",
+   "kind": "constructor"
+  },
+  {
+   "name": "CrossEquivalent",
+   "kind": "def"
+  },
+  {
+   "name": "Fraction.casesOn",
+   "kind": "def"
+  }
+ ]
+}
