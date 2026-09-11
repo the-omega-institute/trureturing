@@ -1,0 +1,25 @@
+**33.8 The common greedy vector, including every boundary.** In the program of
+33.7, for every \(r\ge0\) the finite-height optimizer is
+\[
+y^*_{p_k}(r)=\min\{1,\max\{0,(r-H_{k-1})/h_{p_k}\}\}\quad(k=1,2,3,4).
+\]
+Its explicit vectors, always in prime-label order \((2,3,5,7)\), are
+
+~~~text
+capacity regime        y* = (y_2,y_3,y_5,y_7)
+r = 0                  (0,0,0,0)
+0 <= r <= H1           (r/h_2,0,0,0)
+H1 <= r <= H2          (1,(r-H1)/h_3,0,0)
+H2 <= r <= H3          (1,1,(r-H2)/h_5,0)
+H3 <= r <= H4          (1,1,1,(r-H3)/h_7)
+r >= H4                (1,1,1,1)
+at H0,H1,H2,H3,H4      (0,0,0,0); (1,0,0,0); (1,1,0,0); (1,1,1,0); (1,1,1,1)
+~~~
+
+Overlapping endpoint formulas give the same vector. The vector is independent
+of \(T\), uses exactly \(\min(r,H_4)\) resource, and has one genuinely fractional
+coordinate precisely when \(H_m<r<H_{m+1}\). Optimality and uniqueness follow
+from the explicit zero-gap proof in 33.10-33.12, without an integer relaxation
+being mistaken for an integer optimizer. For \(r>H_4\), unused capacity is
+exactly \(r-H_4\); full saturation \(r=H_4\) has zero slack.
+

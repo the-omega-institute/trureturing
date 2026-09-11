@@ -1,0 +1,28 @@
+**33.3 Strict rational logarithm brackets with a derived remainder.** For a fixed
+\(p\in\{2,3,5,7\}\), let \(t=(p-1)/(p+1)\in(0,1)\) and
+\[
+S_p=2\sum_{k=0}^{31}\frac{t^{2k+1}}{2k+1},\qquad
+R_p=\frac{2t^{65}}{65(1-t^2)}.
+\]
+The finite identity \((1-u^2)^{-1}=\sum_{k=0}^{31}u^{2k}
++u^{64}/(1-u^2)\), integrated from 0 to \(t\), gives
+\[
+\log p=S_p+2\int_0^t\frac{u^{64}}{1-u^2}\,du,
+\qquad S_p<\log p<S_p+R_p.
+\]
+The upper inequality is strict because \((1-u^2)^{-1}<(1-t^2)^{-1}\)
+on \(0<u<t\). Exact rational calculation certifies \(L_p<S_p\) and
+\(S_p+R_p<U_p\) for the following rational inputs:
+
+~~~text
+p      1000000 L_p     1000000 U_p
+2      693147         693148
+3      1098612        1098613
+5      1609437        1609438
+7      1945910        1945911
+~~~
+
+Consequently \(0<L_p<h_p<U_p\). These are strict proved brackets, not decimal
+approximations assumed to be correctly rounded. The odd-power logarithm identity
+is classical (NIST DLMF 4.6.4); the finite remainder above supplies its needed bound.
+

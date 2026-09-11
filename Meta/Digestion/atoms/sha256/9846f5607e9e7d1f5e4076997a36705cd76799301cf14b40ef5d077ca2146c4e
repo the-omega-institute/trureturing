@@ -1,0 +1,28 @@
+**33.4 Derivative comparison and its lower quadratic.** With the fixed data of
+33.2 let \(B_p(z)=(1-\alpha_pz)(1-\beta_pz)\). For \(0\le z\le1\),
+\(0<B_p(z)\le1\), and direct differentiation, including cancellation of mixed
+terms in the numerator, gives
+\[
+s_p'(z)=\frac{\alpha_p/(1-\alpha_pz)-\beta_p/(1-\beta_pz)}{h_p}
+=\frac{A_p}{h_pB_p(z)}.
+\]
+For an adjacent ordered pair \((i,j)\in\{(2,3),(3,5),(5,7)\}\), define
+\[
+N_{ij}=A_ih_jB_j-A_jh_iB_i,\qquad
+Q_{ij}=A_iL_jB_j-A_jU_iB_i=q_0+q_1z+q_2z^2.
+\]
+Then \((s_i-s_j)'=N_{ij}/(h_ih_jB_iB_j)\), and
+\[
+N_{ij}-Q_{ij}=A_i(h_j-L_j)B_j+A_j(U_i-h_i)B_i>0.
+\]
+The coefficients, with no implicit multiplication, are
+\[
+q_0=A_iL_j-A_jU_i,\quad
+q_1=-A_iL_j(\alpha_j+\beta_j)+A_jU_i(\alpha_i+\beta_i),
+\]
+\[
+q_2=A_iL_j\alpha_j\beta_j-A_jU_i\alpha_i\beta_i.
+\]
+All these formulas hold at both endpoints by differentiable extension to an open
+neighborhood of \([0,1]\); every denominator there is positive at the endpoints.
+
