@@ -406,29 +406,6 @@ theorem lucasVInt_positive_zero_iff_index_one (p q : ℤ) (hp : Even p) (hq : Od
 private theorem unit_odd (q : ℤˣ) : Odd (q : ℤ) := by
   rcases Int.units_eq_one_or q with h | h <;> rw [h] <;> norm_num
 
-/-- The simultaneous congruences for the original bilateral companion sequence. -/
-theorem lucasV_two_adic_congruences (p : ℤ) (q : ℤˣ) (hp : Even p) (j : ℕ) :
-    let t := padicValInt 2 p
-    lucasV p q (2 * j) ≡ 2 * (-(q : ℤ)) ^ j [ZMOD (2 : ℤ) ^ (t + 1)] ∧
-      lucasV p q (2 * j + 1) ≡ (2 * j + 1) * p * (-(q : ℤ)) ^ j
-        [ZMOD (2 : ℤ) ^ (t + 1)] := by
-  simpa only [lucasVInt_eq_lucasV, Nat.cast_mul, Nat.cast_add, Nat.cast_ofNat,
-    Nat.cast_one] using
-    lucasVInt_two_adic_congruences p q hp j
-
-/-- Exact valuation one at even natural indices in the bilateral sequence. -/
-theorem lucasV_even_two_adic_valuation (p : ℤ) (q : ℤˣ) (hp : Even p) (j : ℕ) :
-    padicValInt 2 (lucasV p q (2 * j)) = 1 := by
-  simpa only [lucasVInt_eq_lucasV, Nat.cast_mul, Nat.cast_ofNat] using
-    lucasVInt_even_two_adic_valuation p q hp (unit_odd q) j
-
-/-- Exact valuation of `p` at odd natural indices in the bilateral sequence. -/
-theorem lucasV_odd_two_adic_valuation (p : ℤ) (q : ℤˣ) (hp : Even p) (j : ℕ) :
-    padicValInt 2 (lucasV p q (2 * j + 1)) = padicValInt 2 p := by
-  simpa only [lucasVInt_eq_lucasV, Nat.cast_mul, Nat.cast_add, Nat.cast_ofNat,
-    Nat.cast_one] using
-    lucasVInt_odd_two_adic_valuation p q hp (unit_odd q) j
-
 /-- The integer divisibility criterion for the original companion sequence. -/
 theorem lucasV_exists_positive_zero_iff (p : ℤ) (q : ℤˣ) (hp : Even p)
     (v : ℕ) (hv : 2 ≤ v) :
@@ -436,7 +413,9 @@ theorem lucasV_exists_positive_zero_iff (p : ℤ) (q : ℤˣ) (hp : Even p)
   simpa only [lucasVInt_eq_lucasV] using
     lucasVInt_exists_positive_zero_iff p q hp (unit_odd q) v hv
 
-/-- Any positive zero implies that index one itself is a zero. -/
+/-- Any positive zero implies that index one itself is a zero.
+This is the interface needed by the assembly of the period over a coprime factorization
+of the modulus. -/
 theorem lucasV_positive_zero_iff_index_one (p : ℤ) (q : ℤˣ) (hp : Even p)
     (v : ℕ) (hv : 2 ≤ v) :
     (∃ r : ℕ, 0 < r ∧ (2 : ℤ) ^ v ∣ lucasV p q r) ↔ (2 : ℤ) ^ v ∣ lucasV p q 1 := by
@@ -453,9 +432,6 @@ theorem lucasV_positive_zero_iff_index_one (p : ℤ) (q : ℤˣ) (hp : Even p)
 #print axioms lucasVInt_odd_two_adic_valuation
 #print axioms lucasVInt_exists_positive_zero_iff
 #print axioms lucasVInt_positive_zero_iff_index_one
-#print axioms lucasV_two_adic_congruences
-#print axioms lucasV_even_two_adic_valuation
-#print axioms lucasV_odd_two_adic_valuation
 #print axioms lucasV_exists_positive_zero_iff
 #print axioms lucasV_positive_zero_iff_index_one
 

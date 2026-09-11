@@ -214,7 +214,7 @@ $$\begin{aligned}\forall R: Type*, [\operatorname{CommRing}\left(R\right)],\\\fo
 
 *Commentary.*
 
-This repository result strengthens the published Corollary 3.13, which assumes p odd, or p even with the modulus odd. Here the only additional hypotheses are that 2 is a unit and V has an integer zero: there is no parity hypothesis, no restriction on q beyond its unit type, and no finiteness assumption. Commutation and translation at the zero give a two-by-two linear system; its determinant is the unit -q^r. Cancellation forces the companion power at piV to be the identity. This direct proof removes both external dependencies of the published argument: Ballot's theorem and McDaniel's 1991 gcd theorem.
+This generalizes the odd-modulus branch of the published Corollary 3.13 to any commutative ring in which two is invertible, and proves it directly. It does not cover the branch in which the parameter is odd and the modulus is even, where two is not invertible. The hypotheses are that 2 is a unit and V has an integer zero, with no restriction on q beyond its unit type and no finiteness assumption. Commutation and translation at the zero give a two-by-two linear system; its determinant is the unit -q^r. Cancellation forces the companion power at piV to be the identity. This direct proof removes both external dependencies of the published argument: Ballot's theorem and McDaniel's 1991 gcd theorem.
 
 **Definition 1.18 (Natural traces for arbitrary integer parameters).**
 
@@ -312,43 +312,7 @@ $$\begin{aligned}\forall p: \mathbb{Z}, \forall q: \mathbb{Z},\\\operatorname{Ev
 
 Rewrite the divisibility criterion using W(1)=p. The result retains even p, odd q, and v at least 2.
 
-**Theorem 1.26 (Dyadic congruences for the bilateral sequence at natural indices).**
-
-$$\begin{aligned}\forall p: \mathbb{Z}, \forall q: \operatorname{Units}\left(\mathbb{Z}\right),\\\operatorname{Even}\left(p\right) \Rightarrow\\\forall j: \mathbb{N},\\\operatorname{let} t = \operatorname{padicValInt}\left(2, p\right) \operatorname{in}\\\operatorname{V}\left(p, q, \operatorname{Cast}\left(2 \cdot j, \mathbb{Z}\right)\right) \equiv 2 \cdot (-\operatorname{val}\left(q\right))^{j} (\operatorname{mod} (2: \mathbb{Z})^{t + 1}) \land\\\operatorname{V}\left(p, q, \operatorname{Cast}\left(2 \cdot j + 1, \mathbb{Z}\right)\right) \equiv (2 \cdot \operatorname{Cast}\left(j, \mathbb{Z}\right) + 1) \cdot p \cdot (-\operatorname{val}\left(q\right))^{j} (\operatorname{mod} (2: \mathbb{Z})^{t + 1})\end{aligned}$$
-
-*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/LucasCompanion.lucasV_two_adic_congruences` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Transport the integral congruences through the trace bridge. Here q is an integer unit and j is natural; the displayed casts distinguish the bilateral indices from natural exponents.
-
-**Theorem 1.27 (Even natural indices of V have valuation one).**
-
-$$\begin{aligned}\forall p: \mathbb{Z}, \forall q: \operatorname{Units}\left(\mathbb{Z}\right),\\\operatorname{Even}\left(p\right) \Rightarrow\\\forall j: \mathbb{N},\\\operatorname{padicValInt}\left(2, \operatorname{V}\left(p, q, \operatorname{Cast}\left(2 \cdot j, \mathbb{Z}\right)\right)\right) = 1\end{aligned}$$
-
-*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/LucasCompanion.lucasV_even_two_adic_valuation` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Every integer unit is odd. Apply the result for W and the agreement of the two traces at natural indices.
-
-**Theorem 1.28 (Odd natural indices of V have the valuation of p).**
-
-$$\begin{aligned}\forall p: \mathbb{Z}, \forall q: \operatorname{Units}\left(\mathbb{Z}\right),\\\operatorname{Even}\left(p\right) \Rightarrow\\\forall j: \mathbb{N},\\\operatorname{padicValInt}\left(2, \operatorname{V}\left(p, q, \operatorname{Cast}\left(2 \cdot j + 1, \mathbb{Z}\right)\right)\right) = \operatorname{padicValInt}\left(2, p\right)\end{aligned}$$
-
-*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/LucasCompanion.lucasV_odd_two_adic_valuation` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The odd-index integral valuation transfers to V for integer unit q, still allowing p=0 with v₂(0)=0.
-
-**Theorem 1.29 (The dyadic positive-zero criterion for V).**
+**Theorem 1.26 (The dyadic positive-zero criterion for V).**
 
 $$\begin{aligned}\forall p: \mathbb{Z}, \forall q: \operatorname{Units}\left(\mathbb{Z}\right),\\\operatorname{Even}\left(p\right) \Rightarrow\\\forall v: \mathbb{N}, 2 \leq v \Rightarrow\\(\exists r: \mathbb{N}, 0 < r \land (2: \mathbb{Z})^{v} \mid \operatorname{V}\left(p, q, \operatorname{Cast}\left(r, \mathbb{Z}\right)\right)) \iff (2: \mathbb{Z})^{v} \mid p\end{aligned}$$
 
@@ -360,7 +324,7 @@ $$\begin{aligned}\forall p: \mathbb{Z}, \forall q: \operatorname{Units}\left(\ma
 
 Specialize the integral criterion to unit q and cast each natural zero index into the bilateral index type.
 
-**Theorem 1.30 (Index one witnesses every positive zero for V).**
+**Theorem 1.27 (Index one witnesses every positive zero for V).**
 
 $$\begin{aligned}\forall p: \mathbb{Z}, \forall q: \operatorname{Units}\left(\mathbb{Z}\right),\\\operatorname{Even}\left(p\right) \Rightarrow\\\forall v: \mathbb{N}, 2 \leq v \Rightarrow\\(\exists r: \mathbb{N}, 0 < r \land (2: \mathbb{Z})^{v} \mid \operatorname{V}\left(p, q, \operatorname{Cast}\left(r, \mathbb{Z}\right)\right)) \iff (2: \mathbb{Z})^{v} \mid \operatorname{V}\left(p, q, \operatorname{Cast}\left(1, \mathbb{Z}\right)\right)\end{aligned}$$
 
@@ -394,13 +358,10 @@ The criterion and V(1)=p identify existence of a positive natural zero with vani
 - Truth anchor: `D5/S1/Recurrence/LucasCompanion.lucasVInt_two_adic_congruences`
 - Truth anchor: `D5/S1/Recurrence/LucasCompanion.lucasV_determinant_identity`
 - Truth anchor: `D5/S1/Recurrence/LucasCompanion.lucasV_eq_lucasU`
-- Truth anchor: `D5/S1/Recurrence/LucasCompanion.lucasV_even_two_adic_valuation`
 - Truth anchor: `D5/S1/Recurrence/LucasCompanion.lucasV_exists_positive_zero_iff`
-- Truth anchor: `D5/S1/Recurrence/LucasCompanion.lucasV_odd_two_adic_valuation`
 - Truth anchor: `D5/S1/Recurrence/LucasCompanion.lucasV_periodic`
 - Truth anchor: `D5/S1/Recurrence/LucasCompanion.lucasV_positive_zero_iff_index_one`
 - Truth anchor: `D5/S1/Recurrence/LucasCompanion.lucasV_recurrence`
-- Truth anchor: `D5/S1/Recurrence/LucasCompanion.lucasV_two_adic_congruences`
 - Truth anchor: `D5/S1/Recurrence/LucasCompanion.matrixPeriod`
 - Truth anchor: `D5/S1/Recurrence/LucasCompanion.matrixPeriod_pos`
 - Truth anchor: `D5/S1/Recurrence/LucasCompanion.matrixPeriod_zmod_pos`

@@ -150,11 +150,13 @@ internal sealed class LucasCompanionDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("companionPeriod_eq_matrixPeriod_of_lucasV_zero", "Equality of periods from a zero and invertible two",
                 PeriodEqualityFormula(),
-                "This repository result strengthens the published Corollary 3.13, "
-                    + "which assumes p odd, or p even with the modulus odd. Here the "
-                    + "only additional hypotheses are that 2 is a unit and V has an "
-                    + "integer zero: there is no parity hypothesis, no restriction on "
-                    + "q beyond its unit type, and no finiteness assumption. Commutation "
+                "This generalizes the odd-modulus branch of the published Corollary 3.13 "
+                    + "to any commutative ring in which two is invertible, and proves it "
+                    + "directly. It does not cover the branch in which the parameter is "
+                    + "odd and the modulus is even, where two is not invertible. The "
+                    + "hypotheses are that 2 is a unit and V has an integer zero, with "
+                    + "no restriction on q beyond its unit type and no finiteness "
+                    + "assumption. Commutation "
                     + "and translation at the zero give a two-by-two linear system; "
                     + "its determinant is the unit -q^r. Cancellation forces the "
                     + "companion power at piV to be the identity. This direct proof "
@@ -211,22 +213,6 @@ internal sealed class LucasCompanionDocument : IScribeDocumentDefinition
                 PositiveZeroFormula(false, true),
                 "Rewrite the divisibility criterion using W(1)=p. The result "
                     + "retains even p, odd q, and v at least 2.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
-            Node("lucasV_two_adic_congruences", "Dyadic congruences for the bilateral sequence at natural indices",
-                CongruencesFormula(true),
-                "Transport the integral congruences through the trace bridge. "
-                    + "Here q is an integer unit and j is natural; the displayed "
-                    + "casts distinguish the bilateral indices from natural exponents.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
-            Node("lucasV_even_two_adic_valuation", "Even natural indices of V have valuation one",
-                ValuationFormula(true, false),
-                "Every integer unit is odd. Apply the result for W and the "
-                    + "agreement of the two traces at natural indices.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
-            Node("lucasV_odd_two_adic_valuation", "Odd natural indices of V have the valuation of p",
-                ValuationFormula(true, true),
-                "The odd-index integral valuation transfers to V for integer "
-                    + "unit q, still allowing p=0 with v₂(0)=0.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("lucasV_exists_positive_zero_iff", "The dyadic positive-zero criterion for V",
                 PositiveZeroFormula(true, false),
