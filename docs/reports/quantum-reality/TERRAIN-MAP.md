@@ -17,6 +17,7 @@
 | 记录片段达到**互信息平台** `I = H(p)`(**不是**完整 objectivity) | 片段态两两正交、CQ 态 | `D5/S3/Quantum/Information/OrthogonalRecordEntropy` | `sha256:cee4de5737b3` |
 | 所有 probe 对同一可观测量读数**一致** | 共享**不可约**表示 + 可观测量等变 | `D5/S3/Quantum/Matrix/CrossSpeciesConsensus` | `sha256:672f7703c7fa` |
 | **等变幂等记录族的条数 ≤ `Σ_b m_b`** | commutant 半单;记录族**非零、完备、两两正交、与共享作用逐个对易**(`m_b` 是该 commutant 的 Wedderburn 块尺寸) | `D5/S3/Quantum/Matrix/RecordCapacity` | `sha256:07d5f082f3b7` |
+| **等变幂等记录族的条数 ≤ `Σ_b m_b`,不再需要半单性假设** | 表示**酉**(`∀ g, U g ∈ unitary`);记录族非零、完备、两两正交、与共享作用逐个对易。**群可任意**——无有限性、无紧性 | `D5/S3/Quantum/Matrix/CommutantSemisimple` | `sha256:50a83d557929` |
 | 谱读出**保熵 ⟺ 读出矩阵对角** | 有限维、酉基变换 | `D5/S3/Quantum/Divergence/SpectralReadoutEntropyEquality` | `sha256:733b32d4e8cb` |
 | 相关 = 记录账面价值 + 被杀相干(`I = S(𝒫ρ) + D(ρ‖𝒫ρ)`) | 记录侧取**预测量相干复制**膨胀 | `D5/S3/Quantum/Information/CoherentCopyCorrelationTax` | `sha256:515e26b6d8e1` |
 | 免双税 ⟹ **极大混态** | 两语境互无偏、秩一 | `D5/S3/Quantum/Divergence/DualAccountFull` | `sha256:35bc509bf4b8` |
@@ -69,13 +70,12 @@ commutant 为标量就只能有一条。**这是定量代价表,不是待决选�
 
 | 缺口 | 类别 | 说明 |
 |---|---|---|
-| 半单性由酉性导出(**⋆-闭包**,非 Maschke) | **数学**,可做,在证 | `RecordCapacity.semisimple_commutant_has_record_capacity` 现以 `[IsSemisimpleRing (commutant U)]` 为假设。该定理的 `G` 是**任意群**(无有限性、无紧性),故 Maschke 路线不适配;正确杠杆是 `U g⁻¹ = (U g)⁻¹ = (U g)*` ⟹ 交换子对伴随封闭 ⟹ 有限维 ⋆-子代数 ⟹ `Ring.jacobson = ⊥` ⟹ 半单(经 `Artinian/Module.lean:650` 的 `isSemisimpleRing_iff_jacobson`)。**酉性是承重的**:不加它则 `G = ℤ`、`U n = [[1,n],[0,1]]` 的交换子为 `ℂ[ε]/(ε²)`,根基非零。 |
 | objectivity 本身(而非「片段信息完整」) | **物理输入** | 需记录/环境分片结构为何出现,观察者假设不给 |
 | cross-species:为何所有 probe 共享同一 active symmetry | **物理输入** | 见 `OPEN-QUESTIONS.md` 第 14 轮定价表 |
 | §17.1 / §18 量子统计层 | **物理输入** | canonical quantization;`ρ_C ⊗ ρ_β` 是新制备条件 |
 | Einstein 方程 | **物理输入** | Fierz–Pauli / spin-2 本身即新输入,非观察者假设的后果 |
 
-**四项中三项缺的是物理输入,不是形式化能力**(第 14 轮定价表的结论,orchestrator 已复算)。
+**剩下四项缺的全部是物理输入,不是形式化能力**(原列第一项「半单性由酉性导出」已于 `CommutantSemisimple` 闭合,见第一节;其路线是 ⋆-闭包而非 Maschke,且反例 `not_all_integer_matrix_commutants_semisimple` 已一并冻结,证明酉性是承重假设)(第 14 轮定价表的结论,orchestrator 已复算)。
 按 第 3.6 条,**机器不替人选第三档目标**:采纳哪条物理输入由 τ=0 决定;
 机器负责把「若采纳它,买到什么」写成可查的账——本表第一、二节即是。
 

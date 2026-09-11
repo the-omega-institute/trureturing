@@ -5906,3 +5906,438 @@ $$
 在给定 $\mathfrak M$ 中，使用同一存在唯一性定理的内部解释。因此只使用 $\mathfrak M$ 内部的递归图及内部有限性，不要求模型外看来每棵内部有限树有限，也不在模型外沿其成员关系重新作良基递归。对外部标准有限公式的结构归纳给第一次等价，再由第 78 条的给定模型同构给第二次等价。模型存在性是条件，不由这段解释产生，故没有从保守性推出 ZFC 自身的一致性。
 
 最后，各替代子句都有不经旧三维式的证明链：一维与元组由第 256、258 条，全字段及来源双逆由第 262 条，态射由第 263 条，原语和有限项由第 265、267–269 条，配置由第 116、130、131、240、253 条及第 271 条。第 240–254 条的容量与极值函数定义在自然标签、自然容量和自然状态上；其原证明不以三维语义混合式为前提。第 254 条实际数值字段 $\operatorname{scode}(q)$、$\operatorname{scode}(t)$ 在 CSA 整数实现下分别解释为 $b(q),b(t)$，正是第 256 条；集合图部分由第 74、80–81 条。因而上述替代不改变这些已给证明的数学结论，也不以新的定义消去重新断言其它旧性质。证毕。
+
+**定义 275（规范来源树、目标零表与参考点乘法）。** 为给第 261 条的固定来源树构造一个明确实例，取互异的有限标签 $\tau_0=\langle2,0\rangle$、$\tau_1=\langle2,1\rangle$，并定义
+$$
+\begin{aligned}
+\operatorname{leaf}^{*}(n)&=\langle\tau_0,n\rangle,&
+\operatorname{pair}^{*}(r,s)&=\langle\tau_1,\langle r,s\rangle\rangle,\\
+\operatorname{leaf}^{*}_Z(c)&=\langle\tau_0,c\rangle,&
+\operatorname{pair}^{*}_Z(r',s')&=\langle\tau_1,\langle r',s'\rangle\rangle.
+\end{aligned}
+$$
+叶参数分别为 $n\in\omega$、$c\in\mathsf N_Z$。用自然层递归定义
+$$
+\begin{aligned}
+\mathsf Q_0&=\{\operatorname{leaf}^{*}(n):n\in\omega\},&
+\mathsf Q'_0&=\{\operatorname{leaf}^{*}_Z(c):c\in\mathsf N_Z\},\\
+\mathsf Q_{m+1}&=\mathsf Q_m\cup\{\operatorname{pair}^{*}(r,s):r,s\in\mathsf Q_m\},&
+\mathsf Q'_{m+1}&=\mathsf Q'_m\cup\{\operatorname{pair}^{*}_Z(r',s'):r',s'\in\mathsf Q'_m\},\\
+\mathsf{Tree}^{*}&=\bigcup_{m\in\omega}\mathsf Q_m,&
+\mathsf{Tree}^{*}_Z&=\bigcup_{m\in\omega}\mathsf Q'_m.
+\end{aligned}
+$$
+配对构造器的参数分别取自 $(\mathsf{Tree}^{*})^2$、$(\mathsf{Tree}^{*}_Z)^2$，输出仍在相应树载体。此为第 261 条自由条件的一种固定实例；原来源树若使用另一种固定实现，仍使用该条在相应实现之间的递归双射，不将不同实现规定为同一个字面集合。
+
+固定第 261 条的一种 $R$。第 268 条的 $\mathcal R_R=S^{(S^3)}$ 是全部非零支撑有限的全函数 $S^3\to S$ 的集合。定义全域零函数 $\mathbf0_R:S^3\to S$、二元运算 $\oplus_R,\ominus_R:\mathcal R_R^2\to\mathcal R_R$ 及一元运算 $\ominus_R:\mathcal R_R\to\mathcal R_R$，其中一元与二元负号按元数区分：
+$$
+\begin{aligned}
+\mathbf0_R(p')&=0_S,\\
+(C'\oplus_R D')(p')&=C'(p')\oplus_ZD'(p'),\\
+(\ominus_R C')(p')&=\ominus_ZC'(p'),\\
+C'\ominus_R D'&=C'\oplus_R(\ominus_R D')
+\end{aligned}
+\qquad(p'\in S^3).
+$$
+这里 $C',D'\in\mathcal R_R$。有限支撑只限制非零位置，完整函数图保留全部零位置；特别地，$\mathbf0_R$ 是图 $\{\langle p',0_S\rangle:p'\in S^3\}$，不是空函数图。
+
+在 $S^2$ 上置 $u'\le_Sn'$ 当且仅当 $u'<_Sn'$ 或 $u'=n'$，并定义前驱函数 $S\to S$ 为 $n'\mapsto n'\ominus_S1_S=n'\oplus_Z(\ominus_Z1_S)$。第 268 条 $\mathcal A_R$ 的尾部零值严格指 $\mathbf0_R$。对 $C'\in\mathcal A_R$，差分是联合域 $K_R=S\times S^3$ 上的函数，定义为
+$$
+(\Delta^RC')(n',p')
+ =C'(n')(p')\oplus_Z\ominus_Z\bigl(C'(n'\ominus_S1_S)(p')\bigr)
+ \qquad(n'\in S,\ p'\in S^3).
+$$
+它的目标类型为 $\Delta^R:\mathcal A_R\to\mathcal L_R=S^{(S\times S^3)}$。记 $(\Delta^RC')(n')$ 时只表示联合函数的时间切片 $p'\mapsto(\Delta^RC')(n',p')$，该切片等于 $C'(n')\ominus_R C'(n'\ominus_S1_S)$，不把切片族的图与联合图作字面认同。
+
+向量加减 $\oplus_Z^{(3)},\ominus_Z^{(3)}:S^3\times S^3\to S^3$ 按第 257 条的固定投影逐坐标定义为
+$$
+(u'\oplus_Z^{(3)}v')_j=u'_j\oplus_Zv'_j,\qquad
+(u'\ominus_Z^{(3)}v')_j=u'_j\oplus_Z(\ominus_Zv'_j).
+$$
+
+对每个目标参考点 $o'\in S^3$，令
+$$
+\mathcal B_{R,o'}=\{(o',Y):Y\in\mathcal B_R\}.
+$$
+在两个共同参考点记录上定义 $\boxtimes^R_{o'}$：底层记录的事件、时间、符号、来源、偏序、当前整体及选择沿第 264 条，唯一改动为
+$$
+x'(p_{ef})=x'_0(e)\oplus_Z^{(3)}x'_1(f)\ominus_Z^{(3)}o'.
+$$
+输出保留参考点 $o'$。固定参考点时，运算类型为 $\boxtimes^R_{o'}:\mathcal B_{R,o'}^2\to\mathcal B_{R,o'}$。在 $\mathcal B_{R,*}=\{(o',Y):o'\in S^3,\ Y\in\mathcal B_R\}$ 上，其联合域恰为
+$$
+\{((o'_0,Y_0),(o'_1,Y_1))\in\mathcal B_{R,*}^2:o'_0=o'_1\}.
+$$
+不同参考点的两个记录不在此域中。省略共同参考点标记时，$Y_0\boxtimes^R_{o'}Y_1$ 只表示输出的底层记录。
+
+**定理 276（目标构造的合法性及参考点交换）。** 第 275 条的两个规范树载体是集合，其叶与配对构造器单射、像互斥且满足自由有限树条件；第 261 条的递归式在它们之间给出双射及其完整逆。对每个 $o\in J^3$，映射
+$$
+R_o:\mathcal B_o\longrightarrow\mathcal B_{R,b_3(o)},\qquad
+R_o(o,X)=(b_3(o),RX)
+$$
+是双射，且
+$$
+R_o\bigl((o,X)\boxtimes_o(o,Y)\bigr)
+ =\bigl(b_3(o),RX\boxtimes^R_{b_3(o)}RY\bigr).
+$$
+这是完整记录的等式，联合域也保持且反映。目标参考点为 $(0_S,0_S,0_S)$ 时，底层乘法恰为第 264 条的 $\boxtimes^R$。对任意 $L\in\operatorname{Mat}_{3\times3}(J)$、$u\in J^3$，整数仿射函数 $F:J^3\to J^3$、$F(x)=Lx+_Ju$ 的第 266 条目标 $F^R:S^3\to S^3$ 满足下式，其中 $u',v',o'\in S^3$ 独立任取：
+$$
+F^R(u'\oplus_Z^{(3)}v'\ominus_Z^{(3)}o')
+ =F^R(u')\oplus_Z^{(3)}F^R(v')\ominus_Z^{(3)}F^R(o').
+$$
+
+第 268 条的零表、逐点加减与差分满足准确类型的等式
+$$
+\begin{gathered}
+\mathscr T_{b_3}(0_{\mathcal R})=\mathbf0_R,\qquad
+\mathscr T_{b_3}(c+d)=\mathscr T_{b_3}(c)\oplus_R\mathscr T_{b_3}(d),\\
+\mathscr T_{b_3}(-c)=\ominus_R\mathscr T_{b_3}(c),\qquad
+\mathscr T_k(\Delta C)=\Delta^R(\mathscr C C).
+\end{gathered}
+$$
+其中 $c,d\in\mathcal R$、$C\in\mathcal A(\mathcal R)$；$\mathscr C$ 将 $\mathcal A(\mathcal R)$ 双射到第 268 条按第 275 条解释的 $\mathcal A_R$。
+
+**证明。** Kuratowski 对的单射性及 $\tau_0\ne\tau_1$ 给出各构造器的单射性与叶、配对像的互斥性。$\omega,\mathsf N_Z$ 是集合，替代给两边第零层；每层用积、替代和并集得到下一层，自然递归及替代、并集给两个载体都是集合。层的递增性保证任意两棵已有树在某一共同层内，故配对仍属载体；反向每个元素按所属有限层有有限构造。若 $r$ 是配对节点的直接子树，则从 $r$ 到该节点存在经过配对外壳的非空成员链，故 $r$ 的环境秩严格较小；沿子树路径反复下降，不能产生循环。构造器互斥单射使递归分支及每一分支的参数唯一，所以第 261 条递归图存在且单值。
+
+对原树的构造高度归纳：叶上逆复合由 $\operatorname{Dec}(\operatorname{NatZ}(n))=n$ 恢复参数；配对上分别恢复左右子树再配对，故逆复合为恒等。另对目标树高度归纳：叶参数 $c\in\mathsf N_Z$ 满足 $\operatorname{NatZ}(\operatorname{Dec}(c))=c$；配对上将两个目标侧归纳式代入，故另一复合也为恒等。于是得到双射及完整逆；该证明分别用于各个已固定的合法实现。
+
+参考点乘法只改变位置，而位置不参与严格增时条件，所以第 265 条的合法性证明仍适用，背景电荷仍是两个背景电荷之积。新位置由第 256、258 条逐坐标给出
+$$
+b_3(x_X(a)+_Jx_Y(b)-_Jo)
+ =b_3(x_X(a))\oplus_Z^{(3)}b_3(x_Y(b))\ominus_Z^{(3)}b_3(o).
+$$
+其余字段逐项如下：两份旧事件的标签副本及全部 $\Omega_X\times\Omega_Y$ 父对事件在两侧相同；旧字段复制交换；新时刻用第 256 条的最大值和后继式交换；符号按同一标签乘法相乘；来源用 $\theta(\operatorname{pair}(r,s))=\operatorname{pair}_R(\theta r,\theta s)$ 交换。两旧偏序和每条父边相同，故连接任意两事件的有限生成边路径也相同，传递闭包因而相等。当前整体是全部父对，选择是 $A_X\times A_Y$ 的父对像，两者分别相同。这证明的是完整记录等式。每条生成边仍严格增时，因而闭包无自环；背景电荷为 $u^R(R(C_X))\otimes_Zu^R(R(C_Y))$，由第 265 条为零，保证乘法落在所述平衡纤维。
+
+$b_3$ 单射使两个参考点相等的条件保持且反映。第 262、265 条给 $R$ 与 $D_R$ 在平衡载体上的双逆，故纤维逆明确为 $(b_3(o),Y)\mapsto(o,D_RY)$。任意目标参考点又有唯一 $b_3^{-1}$ 原像，因此联合域两向对应。零参考点的逐坐标减法不改变位置，其余字段未改，故回到默认乘法。
+
+对仿射式的第 $i$ 个坐标取 $\operatorname{ival}$。由第 114 条，两侧都展开为通常整数
+$$
+\sum_{j=1}^{3}\operatorname{ival}(L^R_{ij})
+ \bigl(\operatorname{ival}(u'_j)+\operatorname{ival}(v'_j)-\operatorname{ival}(o'_j)\bigr)
+ +\operatorname{ival}(u^R_i).
+$$
+右侧的三个平移项之和为 $\operatorname{ival}(u^R_i)+\operatorname{ival}(u^R_i)-\operatorname{ival}(u^R_i)$，恰剩一个平移项。$\operatorname{ival}$ 单射及三个投影的唯一性给原等式；证明不要求矩阵可逆。
+
+表运算的支撑满足
+$$
+\operatorname{supp}(C'\oplus_R D')\subseteq
+\operatorname{supp}(C')\cup\operatorname{supp}(D'),\qquad
+\operatorname{supp}(\ominus_R C')=\operatorname{supp}(C'),\qquad
+\operatorname{supp}(\mathbf0_R)=\varnothing.
+$$
+故加、负、减均落在 $\mathcal R_R$，而零表的全函数域仍是 $S^3$。对每个 $p\in J^3$，$\mathscr T_{b_3}(c)(b_3p)=b(c(p))$，第 256 条的零、加、负式遂分别给前三个等式；$b_3$ 满射使它们是全域函数等式。
+
+原累积序列的尾部见证 $(\ell,u,B)$ 映到 $(b(\ell),b(u),\mathscr T_{b_3}(B))$。反向，对任意 $C'\in\mathcal A_R$，逐时间置 $C(n)=\mathscr T_{b_3}^{-1}(C'(b(n)))$；把目标见证 $(\ell',u',B')$ 取逆得到原见证 $(b^{-1}(\ell'),b^{-1}(u'),\mathscr T_{b_3}^{-1}(B'))$。序的保持反映和零表式使两侧左尾零、右尾常值分别对应，右尾常值不要求为零。逐点双逆证明 $\mathscr C[\mathcal A(\mathcal R)]=\mathcal A_R$ 且该限制是双射。
+
+给任意目标尾部见证，减小左阈值、增大右阈值可令 $\ell'\le_Su'$。若 $n'<_S\ell'$，则 $n'$ 及其前驱的时间片都为零；若 $u'<_Sn'$，整数前驱满足 $u'\le_Sn'\ominus_S1_S$，两个时间片都为 $B'$。所以差分的非零时间限于有限整数区间 $[\ell',u']_S$，并有
+$$
+\operatorname{supp}(\Delta^RC')\subseteq
+\bigcup_{n'\in[\ell',u']_S}\{n'\}\times
+\bigl(\operatorname{supp}(C'(n'))\cup
+\operatorname{supp}(C'(n'\ominus_S1_S))\bigr).
+$$
+每项有限，区间由 $\operatorname{ival}$ 双射到一个有限整数区间，故右侧有限，证明联合目标 $\mathcal L_R$ 的合法性。原侧用相同论证给 $\Delta C\in\mathcal L$。最后第 256 条给 $b(n-_J1_J)=b(n)\ominus_S1_S$。对任意 $(n,p)\in J\times J^3$，将此式及表的加负运输式代入第 275 条联合差分，得到
+$$
+\bigl(\Delta^R(\mathscr C C)\bigr)(b(n),b_3(p))
+ =b\bigl(C(n)(p)-_JC(n-_J1_J)(p)\bigr)
+ =\mathscr T_k(\Delta C)(b(n),b_3(p)).
+$$
+$k$ 满射给完整联合函数图等式，时间切片等式是它的逐时间限制。证毕。
+
+**定义 277（环境大小、语义大小与语义秩）。** 对任意集合 $x$，令
+$$
+T(x)=\operatorname{TC}(\{x\}),\qquad h(x)=|T(x)|,
+$$
+其中传递闭包采用含根约定：$x\in T(x)$，$T(x)$ 是把 $x$ 作为元素包含的最小传递集合，即从 $x$ 出发沿有限成员链可达的全部集合，长度零的链给根 $x$。$|\cdot|$ 取 ZFC 中的基数，$\operatorname{rk}$ 取环境成员关系下的通常秩。对有效码 $c\in\mathfrak V_Z$，定义
+$$
+\begin{aligned}
+\operatorname{size}_{\rm out}(c)&=|c|,&
+\operatorname{size}_{\rm sem}(c)&=|\operatorname{El}(c)|,\\
+\operatorname{Card}_Z(c)&=\operatorname{Enc}(|\operatorname{Dec}(c)|),&
+\operatorname{Rank}_Z(c)&=\operatorname{Enc}(\operatorname{rk}(\operatorname{Dec}(c))).
+\end{aligned}
+$$
+前两个值是环境中的基数，后两个值分别是基数与序数的有效集合码；$\operatorname{Rank}_Z(c)$ 不指环境秩 $\operatorname{rk}(c)$。$\operatorname{El}(c)$ 是第 72 条的语义成员集合，与外层集合 $c$ 分开。$\operatorname{Enc},\operatorname{Dec},T,h$ 均按可定义类函数使用，$\operatorname{Dec}$ 的调用限于有效码，不把整个类图当成集合。
+
+**定理 278（外层基数与全部语义成员的分离）。** 对任意集合 $x$，
+$$
+\operatorname{size}_{\rm out}(\operatorname{Enc}(x))
+ =\begin{cases}1,&x=\varnothing,\\2,&x\ne\varnothing,\end{cases}
+\qquad
+\operatorname{size}_{\rm sem}(\operatorname{Enc}(x))=|x|.
+$$
+同时
+$$
+\operatorname{Card}_Z(\operatorname{Enc}(x))=\operatorname{Enc}(|x|),\qquad
+\operatorname{Rank}_Z(\operatorname{Enc}(x))=\operatorname{Enc}(\operatorname{rk}(x)).
+$$
+因此无限集合的码具有两个环境成员，却具有与原集合等势的全部语义成员；它不属于 $HF$。
+
+**证明。** Kuratowski 对 $\langle a,b\rangle=\{\{a\},\{a,b\}\}$ 在 $a=b$ 时恰有一个成员，否则恰有两个。自然分支为 $\langle0,\zeta(n)\rangle$；$\zeta(n)=0$ 当且仅当 $n=0$，故此分支恰在 $x=\varnothing$ 时为单成员。非自然分支为 $\langle1,B\rangle$，其中 $B=\operatorname{Enc}[x]$。每个有效码都是非空有序对，所以 $\varnothing\notin B$；而 $1=\{\varnothing\}$，故 $B\ne1$，该分支总有两个成员。
+
+第 72 条给 $\operatorname{El}(\operatorname{Enc}(x))=\operatorname{Enc}[x]$，且 $\operatorname{Enc}|_x$ 是从 $x$ 到该集合的双射，故语义大小等于 $|x|$。后两个公式由 $\operatorname{Dec}\operatorname{Enc}=\operatorname{id}$ 代入定义得到；它们分别是通常基数与秩定义的第 76 条语义解释。无限集合不属于 $HF$，第 72 条的遗传有限性双向式使其码也不属于 $HF$。有限外层基数因此不能代替传递闭包的有限性。证毕。
+
+**定理 279（自然叶的环境秩及语义秩保持）。** 令 $\ell_Z(n)$ 如第 98 条。自然叶的环境秩准确为
+$$
+\operatorname{rk}(\operatorname{NatZ}(n))
+ =\begin{cases}
+ 2,&n=0,\\
+ 6,&n=1,\\
+ \ell_Z(n)+4,&n\ge2.
+ \end{cases}
+$$
+对任意 $x\notin\omega$，有序数等式
+$$
+\operatorname{rk}(\operatorname{Enc}(x))
+ =\left(\sup_{y\in x}\bigl(\operatorname{rk}(\operatorname{Enc}(y))+1\bigr)\right)+2.
+$$
+特别地，
+$$
+\operatorname{rk}(\operatorname{Enc}(\omega))=\omega+2,\qquad
+\operatorname{Rank}_Z(\operatorname{Enc}(\omega))=\operatorname{Enc}(\omega).
+$$
+环境成员与语义成员已有有限反例：
+$$
+\operatorname{Enc}(1)\notin\operatorname{Enc}(2),\qquad
+\operatorname{Enc}(1)\in_Z\operatorname{Enc}(2).
+$$
+
+**证明。** 先把第 98 条的窗口宽度与第 69 条的定义域对接。令 $d=\operatorname{dom}(\zeta(n))\in\omega$。补零把 $\zeta(n)$ 放进第 10 条的 $d$ 位窗口，故 $n<G_d$，从而 $\ell_Z(n)\le d$。反向，$n<G_{\ell_Z(n)}$ 给出该窗口中的唯一表示；补零后由全局唯一性等于 $s(n)$，截尾长度遂不超过 $\ell_Z(n)$。因此 $d=\ell_Z(n)$。特别地 $n=0$ 时长度为零，$n=1$ 时为一；因 $G_1=2$，$n\ge2$ 时长度至少为二。
+
+由秩的递归定义，单点集和无序对的秩分别为
+$$
+\operatorname{rk}(\{a\})=\operatorname{rk}(a)+1,\qquad
+\operatorname{rk}(\{a,b\})=\max(\operatorname{rk}(a),\operatorname{rk}(b))+1.
+$$
+将 $\langle a,b\rangle=\{\{a\},\{a,b\}\}$ 展开，两个成员的秩取最大后再加一，得到
+$$
+\operatorname{rk}(\langle a,b\rangle)
+ =\max(\operatorname{rk}(a),\operatorname{rk}(b))+2.
+$$
+零数字为空函数，故 $\operatorname{NatZ}(0)=\langle0,\varnothing\rangle$ 的秩为二。$n=1$ 时，$\zeta(1)=\{\langle0,1\rangle\}$ 的秩为四，再加外层配对得到六。
+
+若 $n\ge2$，置 $\ell=\ell_Z(n)\ge2$。有限数字 $\zeta(n)$ 的定义域为 $\ell$，末位为一。图中最高索引的边 $\langle\ell-1,1\rangle$ 的秩为 $\ell+1$，其余边的秩不超过此值，所以图的秩为 $\ell+2$，自然叶再增加二，得到 $\ell+4$。
+
+若 $x\notin\omega$，则 $x\ne\varnothing$。置 $B=\operatorname{Enc}[x]$，有
+$$
+\operatorname{rk}(B)=\sup_{y\in x}\bigl(\operatorname{rk}(\operatorname{Enc}(y))+1\bigr).
+$$
+$B$ 非空且成员是有效有序对，故其秩大于一；将 $\operatorname{Enc}(x)=\langle1,B\rangle$ 代入配对秩式，得到显示的序数公式。这里先取上确界再加二，不将它改为各项先加二后取上确界。
+
+对每个有限 $m$，取 $n=G_m$ 就有 $\ell_Z(n)>m$，所以这些字长是无界的有限自然数。自然叶的秩由刚证公式也有限而无界，因此在 $x=\omega$ 时上述上确界为 $\omega$，得到环境秩 $\omega+2$。通常 $\operatorname{rk}(\omega)=\omega$，第 278 条给出语义秩式。最后，两个自然叶 $\operatorname{Enc}(1),\operatorname{Enc}(2)$ 的环境秩均为六；环境成员严格降低秩，所以前者不属于后者。原成员式 $1\in2$ 经第 72 条则给出语义成员式。证毕。
+
+**定理 280（无限传递闭包的基数保持）。** 对任意 $x\notin HF$，
+$$
+h(\operatorname{Enc}(x))=h(x).
+$$
+对任意集合 $x$，另有统一上界
+$$
+h(\operatorname{Enc}(x))\le\max(\aleph_0,h(x)).
+$$
+故第 278 条的两个外层成员不使无限传递闭包的基数下降。
+
+**证明。** 置 $D=T(x)$、$\mu=\max(\aleph_0,|D|)$。令
+$$
+L=\omega\cup\bigcup_{n\in\omega}T(\operatorname{NatZ}(n)).
+$$
+每个自然叶属于 $HF$，其含根传递闭包有限。$\omega$ 和各个 $T(\operatorname{NatZ}(n))$ 都传递，传递集合的并仍传递；ZFC 中可数个有限集合的并至多可数，加上 $\omega$ 后 $L$ 恰可数。对 $y\in D\setminus\omega$ 置 $B_y=\operatorname{Enc}[y]$，并取
+$$
+U=L\cup\operatorname{Enc}[D]\cup
+ \bigcup_{y\in D\setminus\omega}
+ \{B_y,\{1\},\{1,B_y\}\}.
+$$
+替代保证 $\operatorname{Enc}[D]$、每个 $B_y$ 以及以 $D\setminus\omega$ 为索引的显示集合族都是集合；并集公理给 $U$ 是集合。$L$ 可数，$\operatorname{Enc}[D]$ 的基数至多 $|D|$，最后一项至多是 $|D|$ 个三元集合之并，故 $|U|\le\mu$。
+
+逐种元素核对传递性。$L$ 的元素的成员仍在 $L$。$y\in D\cap\omega$ 的码是自然叶，其全部成员都在 $T(\operatorname{NatZ}(y))\subseteq L$。$y\in D\setminus\omega$ 的码 $\langle1,B_y\rangle$ 的成员为 $\{1\}$、$\{1,B_y\}$，这两个集合已加入 $U$；它们的成员 $1,B_y$ 也在 $U$，其中 $1\in\omega\subseteq L$。最后，$B_y$ 的每个成员是某个 $z\in y$ 的码；$D$ 传递使 $z\in D$，故该码仍在 $\operatorname{Enc}[D]$。这涵盖 $U$ 的全部元素，所以 $U$ 传递。此外 $x\in D$，故 $\operatorname{Enc}(x)\in U$。最小性给
+$$
+T(\operatorname{Enc}(x))\subseteq U,
+$$
+得到统一上界。
+
+对任意 $y\in D\setminus\omega$，存在从 $x$ 到 $y$ 的有限成员链。链上每个集合都不属于 $\omega$，因为有限序数的全部传递成员仍是有限序数。对链上的每一步 $z\in w$，非自然编码给
+$$
+\operatorname{Enc}(z)\in B_w\in\{1,B_w\}\in\operatorname{Enc}(w).
+$$
+将链中每一步替换为此三步成员链，就得到从 $\operatorname{Enc}(x)$ 到 $\operatorname{Enc}(y)$ 的有限成员链。若原链长度为零，则 $y=x$，由含根约定直接成立。因此
+$$
+\operatorname{Enc}[D\setminus\omega]\subseteq T(\operatorname{Enc}(x)).
+$$
+这里只嵌入非自然节点。编码单射由此给出
+$$
+|D\setminus\omega|\le |T(\operatorname{Enc}(x))|.
+$$
+含根传递闭包有限当且仅当集合遗传有限：从有限遗传构造取各级成员的并仍有限；反向，若闭包有限，基础公理使其成员图无环，有限图的成员链长度有有限上界，由秩递推得闭包中各元素均有有限秩，逐秩为有限集合的遗传有限构造。若 $x\notin HF$，第 72 条使 $\operatorname{Enc}(x)\notin HF$，故源、目标闭包都无限。置 $\nu=|T(\operatorname{Enc}(x))|\ge\aleph_0$，上述注入给 $|D\setminus\omega|\le\nu$，而 $|D\cap\omega|\le\aleph_0\le\nu$。ZFC 的无限基数加法给 $|D|\le\nu+\nu=\nu$，即
+$$
+|D|\le |T(\operatorname{Enc}(x))|.
+$$
+此时 $|D|$ 也无限，统一上界中的 $\max(\aleph_0,|D|)$ 等于 $|D|$；两向不等式得到结论。证毕。
+
+**定义 281（遗传基数层与累积秩层）。** 对每个无限基数 $\kappa$，先以可定义类谓词置
+$$
+H_\kappa=\{x:h(x)<\kappa\},
+$$
+其中 $h$ 使用第 277 条的含根传递闭包。对集合序数定义通常累积层
+$$
+V_0=\varnothing,\qquad
+V_{\alpha+1}=\mathcal P(V_\alpha),\qquad
+V_\lambda=\bigcup_{\alpha<\lambda}V_\alpha
+\quad(\lambda\text{ 为非零极限序数}).
+$$
+层级指标均为集合序数，通常秩与层的对应记为 $x\in V_\alpha\iff\operatorname{rk}(x)<\alpha$。这里不在定义中假设 $H_\kappa$ 是集合或模型，也不要求 $\kappa$ 正则或不可达。对集合 $A$，$\operatorname{Enc}[A]=\{\operatorname{Enc}(x):x\in A\}$ 始终表示逐元素像，$\operatorname{Enc}(A)$ 表示单个集合 $A$ 的有效码，二者分属不同构造。
+
+**定理 282（层级集合性与全部遗传基数截层的像）。** 对每个集合序数 $\alpha$，$V_\alpha$ 是传递集合，且
+$$
+x\in V_\alpha\iff\operatorname{rk}(x)<\alpha.
+$$
+每个 $m<\omega$ 的 $V_m$ 有限，$V_\omega=HF$。对每个无限基数 $\kappa$，$H_\kappa$ 是集合，并有
+$$
+H_\kappa\subseteq V_\kappa,\qquad
+H_{\aleph_0}=HF,\qquad
+\operatorname{Enc}[H_\kappa]=\mathfrak V_Z\cap H_\kappa.
+$$
+最后一式对可数、不可数正则及奇异无限基数均成立。
+
+**证明。** 对任意给定集合序数作递归，零步为空集，后继步用幂集，极限步先用替代收集此前各层，再取并集，故每层都是集合。超限归纳还给出各层递增且传递：零步成立；若 $V_\alpha$ 传递，则其每个元素是 $V_\alpha$ 的子集，所以 $V_\alpha\subseteq\mathcal P(V_\alpha)$；若 $z\in y\in\mathcal P(V_\alpha)$，则 $z\in V_\alpha\subseteq\mathcal P(V_\alpha)$，故后继层传递。极限层为递增传递集合之并，仍递增且传递。
+
+秩成员判据也作超限归纳。零层两侧均为假。后继步中，$x\in V_{\alpha+1}$ 当且仅当 $x\subseteq V_\alpha$，由归纳假设当且仅当每个 $y\in x$ 满足 $\operatorname{rk}(y)<\alpha$。这恰等价于
+$$
+\operatorname{rk}(x)=\sup_{y\in x}(\operatorname{rk}(y)+1)\le\alpha,
+$$
+也就是 $\operatorname{rk}(x)<\alpha+1$，空集时同样成立。非零极限步中，属于 $V_\lambda$ 当且仅当对某个 $\alpha<\lambda$ 有 $\operatorname{rk}(x)<\alpha$；极限序数对后继封闭，使此条件等价于 $\operatorname{rk}(x)<\lambda$。有限幂集仍有限，故对 $m$ 归纳得每个 $V_m$ 有限。
+
+现在取任意集合 $x$，置 $D=T(x)$。先证对任意传递集合 $D$ 都有
+$$
+\operatorname{rk}[D]=\{\operatorname{rk}(y):y\in D\}
+ =\operatorname{rk}(D).
+$$
+左侧由替代是集合，每个成员严格小于 $\operatorname{rk}(D)$。反向，给 $\beta<\operatorname{rk}(D)$，由秩递推存在 $y\in D$ 的秩至少为 $\beta$。在这些秩中取最小者 $\gamma$，并取秩为 $\gamma$ 的 $y\in D$。若 $\gamma>\beta$，则 $\beta<\sup_{z\in y}(\operatorname{rk}(z)+1)$，故某个 $z\in y$ 满足 $\operatorname{rk}(z)\ge\beta$。传递性给 $z\in D$，但 $\operatorname{rk}(z)<\gamma$，违背最小性。因此 $\gamma=\beta$，反向包含成立；$D=\varnothing$ 时两侧都为零序数。
+
+秩映射于是满射到序数 $\operatorname{rk}(D)$，ZFC 的基数比较给
+$$
+|\operatorname{rk}(D)|\le|D|.
+$$
+若 $h(x)=|D|<\kappa$，则 $|\operatorname{rk}(D)|<\kappa$。$\kappa$ 是初始序数；若 $\operatorname{rk}(D)\ge\kappa$，包含映射将给 $\kappa\le|\operatorname{rk}(D)|$，矛盾。故 $\operatorname{rk}(D)<\kappa$。又 $x\in D$，所以 $\operatorname{rk}(x)<\operatorname{rk}(D)<\kappa$，即 $x\in V_\kappa$。这证明 $H_\kappa\subseteq V_\kappa$；在集合 $V_\kappa$ 中用 $h(x)<\kappa$ 分离，便得 $H_\kappa$ 是集合。
+
+同一秩像论证表明有限 $T(x)$ 使 $\operatorname{rk}(T(x))$ 为有限序数，因而 $x$ 的秩有限，属于某个 $V_m$。反向，若 $x\in V_m$，则有限传递集合 $V_m$ 把 $x$ 作为元素包含；最小性给 $T(x)\subseteq V_m$，故闭包有限。因此有限秩、有限含根传递闭包与遗传有限性等价：有限闭包中的成员均在有限闭包内，而有限层从空集经有限集合构造生成所有这些元素。于是
+$$
+V_\omega=\{x:\operatorname{rk}(x)<\omega\}
+ =\{x:h(x)<\aleph_0\}=HF=H_{\aleph_0}.
+$$
+
+固定任意无限基数 $\kappa$。若 $x\in HF$，第 72 条使 $\operatorname{Enc}(x)\in HF$，两侧含根闭包均有限，故两者的 $h$ 都严格小于 $\kappa$。若 $x\notin HF$，第 280 条给两侧的 $h$ 相等。两种情形穷尽所有集合，得到
+$$
+h(x)<\kappa\iff h(\operatorname{Enc}(x))<\kappa.
+$$
+特别地，$\kappa=\aleph_0$ 的严格阈值由有限性处理，不由可数上界代替。若 $x\in H_\kappa$，其码由此属于 $\mathfrak V_Z\cap H_\kappa$。反向，若有效码 $c\in H_\kappa$，令 $x=\operatorname{Dec}(c)$；第 72 条给 $c=\operatorname{Enc}(x)$，刚证的双向式给 $x\in H_\kappa$，故 $c\in\operatorname{Enc}[H_\kappa]$。左侧由替代是集合，右侧是在 $H_\kappa$ 中按有效码谓词分离的集合。整个证明只比较单个闭包的基数，未使用小于 $\kappa$ 的任意集合族之并仍小于 $\kappa$，故也覆盖奇异 $\kappa$。证毕。
+
+**定理 283（全部无限原秩的精确环境秩）。** 每个无限序数 $\alpha$ 唯一写为 $\lambda+n$，其中 $\lambda$ 是非零极限序数，$n<\omega$。对任意 $x\notin HF$，若 $\operatorname{rk}(x)=\lambda+n$，则
+$$
+\operatorname{rk}(\operatorname{Enc}(x))=\lambda+(3n+2).
+$$
+这里 $3n+2$ 在有限自然数中计算，再作为序数从右侧加到 $\lambda$。特别地，记 $r(x)=\operatorname{rk}(\operatorname{Enc}(x))$，有
+$$
+r(\omega)=\omega+2,\qquad r(\{\omega\})=\omega+5.
+$$
+该一般公式的适用域是无限原秩，有限秩仍按第 71、279 条的分支处理。
+
+**证明。** 先给出序数除法在此处的有限尾形式。对无限 $\alpha$，考虑
+$$
+\Xi=\{\xi\le\alpha:\omega\cdot\xi\le\alpha\}.
+$$
+序数归纳给 $\xi\le\omega\cdot\xi$：零步成立，后继步由 $\omega\cdot(\xi+1)=\omega\cdot\xi+\omega\ge\xi+1$，极限步取上确界。因此所需商均在显示的集合范围内。$1\in\Xi$；序数乘法在右侧极限连续，故 $\Xi$ 的上确界仍满足 $\omega\cdot\xi\le\alpha$，从而是它的最大元，记为 $\xi_0>0$。若 $\omega\cdot(\xi_0+1)\le\alpha$，则 $\xi_0+1\in\Xi$，矛盾。所以
+$$
+\omega\cdot\xi_0\le\alpha<\omega\cdot\xi_0+\omega
+ =\sup_{m<\omega}(\omega\cdot\xi_0+m).
+$$
+在此递增的有限后继序列中取第一个严格超过 $\alpha$ 的项；它必为某个 $\omega\cdot\xi_0+(n+1)$，前一项不超过 $\alpha$。两相邻序数之间没有其它序数，故 $\alpha=\omega\cdot\xi_0+n$。$\lambda=\omega\cdot\xi_0$ 是非零极限序数：商为后继时末段为 $\omega$，商为非零极限时用乘法的连续性。
+
+若 $\lambda<\mu$ 均为非零极限序数，则对每个有限 $m$，由后继归纳有 $\lambda+m<\mu$，所以 $\lambda+\omega\le\mu$。因此两个不同极限部分的有限尾不可能相等；极限部分相同时，逐次后继的严格递增性又使有限尾唯一。这证明所述分解的唯一性。
+
+在无限序数上记
+$$
+F(\lambda+n)=\lambda+(3n+2).
+$$
+它严格递增且 $F(\beta)\ge\beta$。后一个不等式由 $3n+2\ge n$；严格递增在相同极限部分内由有限尾比较得到，在不同极限部分 $\lambda<\mu$ 时由
+$$
+\lambda+(3n+2)<\lambda+\omega\le\mu\le\mu+(3m+2)
+$$
+得到。另对每个无限极限序数 $\eta$ 和 $\omega\le\beta<\eta$，若 $\beta=\mu+m$，则 $\mu\le\beta<\eta$。极限序数对有限次后继封闭，故
+$$
+F(\beta)+1=\mu+(3m+3)<\eta.
+$$
+这些比较均为序数右加法的比较。
+
+由第 282 条，$x\notin HF$ 当且仅当 $\operatorname{rk}(x)\ge\omega$；这时 $x\notin\omega$。对原秩作超限归纳，使用第 279 条的非自然分支递推
+$$
+r(x)=\left(\sup_{y\in x}(r(y)+1)\right)+2.
+$$
+
+先设 $\operatorname{rk}(x)=\omega$。每个 $y\in x$ 的秩有限，故 $y\in HF$。$x$ 必无限，否则有限多个有限秩的后继有有限最大值，秩递推将给 $\operatorname{rk}(x)<\omega$。第 72 条使 $\operatorname{Enc}[x]$ 为无限集合且其每个元素在 $HF$。所有 $r(y)$ 因而有限。若这些秩有有限上界 $m$，则 $\operatorname{Enc}[x]\subseteq V_{m+1}$，但第 282 条的 $V_{m+1}$ 有限，矛盾。因此
+$$
+\sup_{y\in x}(r(y)+1)=\omega,
+\qquad r(x)=\omega+2=F(\omega).
+$$
+这处理任意秩为 $\omega$ 的集合，不只处理序数 $\omega$。
+
+再设原秩为极限 $\eta>\omega$。源秩递推为 $\sup_{y\in x}(\operatorname{rk}(y)+1)=\eta$。对任意 $\gamma<\eta$，令 $\delta=\max(\omega,\gamma)<\eta$；上确界式给某个 $y\in x$ 满足 $\operatorname{rk}(y)\ge\delta$，否则全部后继秩至多 $\delta$。故成员中的无限原秩共尾于 $\eta$。对无限原秩的成员，归纳假设及刚证的 $F$ 性质给
+$$
+r(y)=F(\operatorname{rk}(y))\ge\operatorname{rk}(y),\qquad
+r(y)+1<\eta.
+$$
+其余成员在 $HF$，由第 72 条其码的秩有限，后继也小于 $\eta$。所以所有 $r(y)+1$ 的上确界至多 $\eta$，而无限原秩的共尾性及前一不等式使其至少为 $\eta$。于是
+$$
+\sup_{y\in x}(r(y)+1)=\eta,
+\qquad r(x)=\eta+2=F(\eta).
+$$
+这里只使用共尾子集和上确界，不要求 $\eta$ 有可数共尾性或正则性。
+
+最后设原秩为后继 $\beta+1$，其中 $\beta\ge\omega$。必有某个 $y_0\in x$ 的秩恰为 $\beta$：所有成员秩都至多为 $\beta$；若都严格小于 $\beta$，则它们的后继秩都至多为 $\beta$，其上确界不能等于 $\beta+1$。归纳给 $r(y_0)=F(\beta)$。任意其它无限原秩成员的码秩由 $F$ 的单调性至多为 $F(\beta)$；有限原秩成员的码秩有限，也小于 $F(\beta)$。因此这个成员取得最大码秩，且
+$$
+\sup_{y\in x}(r(y)+1)=F(\beta)+1,\qquad
+r(x)=(F(\beta)+1)+2=F(\beta)+3.
+$$
+若 $\beta=\lambda+n$，则 $\beta+1=\lambda+(n+1)$，序数加法结合律和有限自然数算术给
+$$
+F(\beta)+3=\lambda+((3n+2)+3)
+ =\lambda+(3(n+1)+2)=F(\beta+1).
+$$
+三种情形完成超限归纳。最后 $\operatorname{rk}(\omega)=\omega$，而单点集秩递推给 $\operatorname{rk}(\{\omega\})=\omega+1$，分别代入有限尾 $0,1$ 得两个附带等式。证毕。
+
+**定理 284（无限极限秩层的像与限制结构同构）。** 对每个无限极限集合序数 $\lambda$，有
+$$
+\operatorname{Enc}[V_\lambda]=\mathfrak V_Z\cap V_\lambda.
+$$
+对 $A=H_\kappa$ 或 $A=V_\lambda$，其中 $\kappa$ 为任意无限基数、$\lambda$ 为任意无限极限集合序数，限制映射给出集合结构的同构
+$$
+\operatorname{Enc}|_A:
+(A,\in\cap A^2)\cong
+\bigl(\mathfrak V_Z\cap A,
+\in_Z\cap(\mathfrak V_Z\cap A)^2\bigr),
+$$
+逆为 $\operatorname{Dec}|_{\mathfrak V_Z\cap A}$。记这两个限制结构分别为 $\mathfrak A,\mathfrak A_Z$，则对每个一阶集合论公式 $\varphi(x_1,\ldots,x_r)$ 和任意 $a_1,\ldots,a_r\in A$，
+$$
+\mathfrak A\models\varphi(a_1,\ldots,a_r)
+\iff
+\mathfrak A_Z\models\varphi(\operatorname{Enc}(a_1),\ldots,\operatorname{Enc}(a_r)).
+$$
+右侧的成员符号解释为限制后的 $\in_Z$，两侧量词分别只在自己的载体内取值。
+
+上述秩层像等式不能推广到全部后继层：$\omega\in V_{\omega+1}$，但 $\operatorname{Enc}(\omega)\notin V_{\omega+1}$。这些参数条件也不保证各限制结构满足 ZFC；具体地，$H_{\aleph_0}=V_\omega=HF$ 的源、目标限制结构均不满足无穷公理。若另给源限制结构满足 ZFC 的假设，则其目标限制结构满足相同公理及分离、替代的各个模式实例。
+
+**证明。** 固定无限极限 $\lambda$。若 $x\in HF$，第 72、282 条使 $x$ 及其码都具有有限秩，均小于 $\lambda$。若 $x\notin HF$，置 $\operatorname{rk}(x)=\mu+n$，第 283 条给 $r(x)=\mu+(3n+2)\ge\operatorname{rk}(x)$。当 $\operatorname{rk}(x)<\lambda$ 时，$\mu\le\operatorname{rk}(x)<\lambda$；极限 $\lambda$ 对有限次后继封闭，故 $r(x)<\lambda$。反向，当 $r(x)<\lambda$ 时，前述不等式给 $\operatorname{rk}(x)<\lambda$。结合 $HF$ 分支，得到对全部集合的双向切口
+$$
+\operatorname{rk}(x)<\lambda\iff
+\operatorname{rk}(\operatorname{Enc}(x))<\lambda.
+$$
+由秩成员判据，$x\in V_\lambda$ 的码属于 $\mathfrak V_Z\cap V_\lambda$。反向，若有效码 $c\in V_\lambda$，令 $x=\operatorname{Dec}(c)$，则 $\operatorname{Enc}(x)=c$，刚证的反向切口使 $x\in V_\lambda$。因此两集合相等，不能只从正向包含替代这一步。
+
+对两种 $A$，第 282 条或本条的像等式都给 $\operatorname{Enc}[A]=\mathfrak V_Z\cap A$。第 282 条保证 $A$ 是集合；替代给限制函数的图
+$$
+\{\langle x,\operatorname{Enc}(x)\rangle:x\in A\},
+$$
+分离给目标载体是集合。源关系是 $\{(x,y)\in A^2:x\in y\}$，目标关系是在目标载体平方中按第 72 条可定义谓词 $c\in_Zd$ 分离所得的集合。第 72 条给编码单射和成员保持反映，像等式给满射；其两个逆式及替代给所列限制解码函数确为集合函数和逆。因此显示的两个集合结构同构。这里使用的是逐元素像载体，不是单个对象 $\operatorname{Enc}(A)$。
+
+对公式结构归纳以证比较式。等号原子由单射性，成员原子由第 72 条的双向成员式；否定由归纳等价取否定，合取由两个归纳等价合取，其余布尔联结词可由这两种表达。对存在量词，源见证 $x\in A$ 的码在目标载体内，由归纳假设给目标见证；反向，目标见证 $c\in\mathfrak V_Z\cap A$ 的唯一原像 $\operatorname{Dec}(c)$ 在 $A$ 内，同一归纳假设给源见证。对全称量词，正向任取目标元素并解码应用源全称断言，反向任取源元素并编码应用目标全称断言，两向再用归纳假设。每一步其它参数均随限制双射运输，故得到全部载体内参数的公式比较。此处量词范围是两个限制结构，不将比较式解释为它们与整个集合宇宙的初等比较。
+
+边界子句由秩直接判定：$\operatorname{rk}(\omega)=\omega<\omega+1$，故 $\omega\in V_{\omega+1}$；第 283 条给 $r(\omega)=\omega+2$，故它的码不在 $V_{\omega+1}$。于是 $\operatorname{Enc}[V_{\omega+1}]$ 包含一个不在 $\mathfrak V_Z\cap V_{\omega+1}$ 的元素，后继层的普遍像等式为假。
+
+最后，$HF$ 传递，且其中每个集合有限。若 $(HF,\in\cap HF^2)$ 满足无穷公理，则其中存在一个内部归纳集 $I\in HF$。传递性使内部空集只能是环境空集，内部的序数后继也正是 $z\cup\{z\}$；这些有限集合都在 $HF$ 中。因此在环境中按 $n<\omega$ 归纳，零属于 $I$，$n\in I$ 推出 $n+1\in I$，得到 $\omega\subseteq I$，与 $I$ 有限矛盾。源结构不满足无穷公理，由已证公式比较，目标结构也不满足。若额外假设某个源限制结构满足 ZFC，则对每个公理及每个分离、替代实例应用同一公式比较，得到目标满足相应实例；这个条件性运输没有给出源模型的存在性。证毕。

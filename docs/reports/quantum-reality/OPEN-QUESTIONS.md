@@ -1,3 +1,39 @@
+## 第 20 轮靶已闭合;下一轮**无机器可选之靶**(2026-09-12)
+
+`commutant_isSemisimpleRing_of_unitary` 已冻结并合入 dev(PR 7098,
+`D5/S3/Quantum/Matrix/CommutantSemisimple`,`generality: G`,
+`statement_id sha256:50a83d557929`)。同模块一并冻结:
+
+- `jacobson_eq_bot_of_conjTranspose_closed` —— 预登记的具名见证,`proof_shape: content`,
+  `admission_basis: escape-witness`;
+- `unitary_commutant_has_record_capacity` —— **消费者**:把 `RecordCapacity` 那条的
+  `[IsSemisimpleRing (commutant U)]` 实例假设换成 `∀ g, U g ∈ unitary`,证明体即
+  `commutant_isSemisimpleRing_of_unitary U hU` 接原定理;
+- `not_all_integer_matrix_commutants_semisimple` —— 反例,经 SL-031 的**有界形式反驳硬门**
+  (`claim` / `result` 类型与 `Not claim` 定义相等且经类型推断相符),证明酉性是承重假设而非装饰。
+
+orchestrator 独立复核:`sorry` 0、自定义 `axiom` 0、G 只 import G(`RecordCapacity`,SL-010)、
+三门绿、冻结片在 dev 上。**判词提出的路线(⋆-闭包而非 Maschke)由编译确认成立。**
+
+### 下一轮的状态:无靶,暂停派席
+
+`TERRAIN-MAP.md` 第三节现在**四项全部标 `物理输入`** —— 原先唯一标「数学,可做」的那一项
+就是本轮闭合的这个。按 第 3.6 条,**机器不替人选第三档目标**,采纳哪条物理输入由 τ=0 点题。
+
+**这是合法终态,不是没找到题。** 逐项的挡因:
+
+| 剩余缺口 | 为什么机器不能自选 |
+|---|---|
+| objectivity 本身 | 需要「记录/环境分片结构为何出现」这条物理输入,观察者假设不给 |
+| cross-species 共享 active symmetry | 同上,见第 14 轮定价表 |
+| §17.1 / §18 量子统计层 | canonical quantization;`ρ_C ⊗ ρ_β` 是新制备条件 |
+| Einstein 方程 | Fierz–Pauli / spin-2 本身即新输入,非观察者假设的后果 |
+
+**下一轮若无 τ=0 点题,记「本轮无靶,暂停派席」,不为了有产出而把物理输入当数学题派。**
+另:**不得再以 `pool` 参数绕过 `BAD_SCRIPTS`**(见本单同日的载体更正)。
+
+---
+
 ## 本轮:**`RecordCapacity` 的半单性假设能不能卸掉,以及该走哪条路**(第 20 轮)
 
 仓库 https://github.com/the-omega-institute/trureturing
