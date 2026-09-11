@@ -1,3 +1,72 @@
+## 第 17 轮结算:29 条表态全部归入「标准结果或其直接推论」(2026-09-11)
+
+**产地三项**:无 skill;靶与那份 29 条清单由 orchestrator 亲跑读数得出,三分判词由
+**nyxid / ChatGPT Pro 席**给出(单席);零 codex 席、零评审席。仓内读数 orchestrator 复算,
+文献读数逐条标了核到哪一步。完整结算见 issue #6298 的对应评论。
+
+**三分结果:(a) 29 / (b) 0 / (c) 0**,口径是「文献明确陈述**或可逐步核对的标准直接推论**」——
+不表示文献里印着同一个 GID,也不表示 Lean 实现没有工作量;**改的是数学陈述的来源登记,
+不是实现代码的作者归属**。
+
+### 它纠正了我两处(均已复算确认)
+
+1. `CovarianceSumBound` 的 Cauchy–Schwarz(定理 1.8)与半宽方差界(1.9)**已带 `*Citation.*`**,
+   不在待裁之列。我在靶里写「这两条几乎必然是 (a)」是**错的**。实际九条是
+   **3 个定义 + 4 条基本性质 + 2 条求和界**。
+2. 它严格按固定提交审计,**没有把我在飞的更正倒写进快照**。
+
+### 来源链(席位给出,页码我未亲验)
+
+- **R1** Axler《Linear Algebra Done Right》4ed:§8D 迹的线性性;习题「`P²=P ⟹ tr P = dim range P`」,
+  **不限于正交投影**。
+- **R2** Etingof 等《Introduction to representation theory》:左正则表示;有限维半单代数 ↔ 矩阵代数有限直和。
+- **C1** Gibilisco–Hiai–Petz,arXiv:0712.1208:对称协方差公式。
+- **C2** Petz,arXiv:quant-ph/0106125 §2 式 (16):对称双线性形式。
+- **C3** Axler 同书 §6A:Cauchy–Schwarz。
+- **C4** Sharma–Gupta–Kapoor,*J. Math. Inequal.* **4**(3) 355–363 (2010):Popoviciu 界。
+
+席位把 Popoviciu 标成**实际核到的 2010 年论文**,并明说没有把检索到的 1935 年原始文献
+冒充成已逐页核对 —— 这是本轮质量最高的一处自律。
+
+### 处置分三段,不一次吞
+
+| 段 | 范围 | 状态 |
+| --- | --- | --- |
+| 1 | `RecordCapacity` 六条 | **已合入**(渲染 `Repository-derived` 6 → **0**,`*Citation.*` 7) |
+| 2 | `CovarianceSumBound` 九条 | **待做**,需新建 C1/C2/C3/C4 四条 L note |
+| 3 | 其余七模块十四条 | **待做**:`CoherentCopyCorrelationTax` 5、`DualAccountFull` 2、`GibbsVariationalIdentity` 2、`FubiniStudyRecordTime` 2、`SpectralReadoutEntropyEquality` 1、`CorrelatedGibbsEnergyIdentity` 1、`PartialTraceMutualInformation` 1 |
+
+`29 = 6 + 9 + 14`,逐模块渲染读数复算一致。
+**只改显示标签而不给可复核来源链,是第 16 轮判词明确反对的做法**,故分段做、每段配 note。
+
+---
+
+## 本轮:**无靶,暂停派席**(第 18 轮位次,2026-09-11)
+
+第 5⁵ 条:席位空闲不是派题的理由。逐条说明为什么当前没有该派的问题。
+
+**① 表态这一类已在第 17 轮一次性了结。** 那一轮的靶里就写死了「这是最后一轮表态轮」,
+它交回了 29 条的三分与来源链。**剩下的阶段 2、3 是实施,不是提问** ——
+来源链已经在手,再派一轮是重问已结之案(第 10.3 条 一事不再理)。
+
+**② 物理前沿四项仍卡在 τ=0 的物理输入上。** observer→objective 桥、cross-species 原理、
+§17.1/§18 量子统计层、Einstein 方程 —— 第 14 轮定价表的结论至今未变,四项中三项缺的是
+**物理输入而非形式化能力**。第 3.6 条:**机器不替人选第三档目标**。这一项要 τ=0 点题。
+
+**③ 本会话唯一的新发现,oracle 核不了。** 素数线这一轮实测:`quantum-reality` 语料的
+定理级 atom **多被上游 mathlib 闭合** —— 定理 178.1 连派两轮、外加一座桥,三个席位全部
+证出了东西又全部判自己 bind-only;随后按「搜动作而非复合名」的新纪律筛 定理 358.1 与 268.1,
+两分钟内双双挡住(`adjMatrix_pow_apply_eq_card_walk` + `edist_eq_sInf`;`convexHull_prod` +
+`convexHull_basis_eq_stdSimplex`)。**这是对本仓语料的测量,oracle 没有本仓可测**,
+不构成它能独答的问题。
+
+**复原条件**:出现下列任一即可开第 18 轮 ——
+τ=0 就四项右栏中的某一条给出物理输入或指定优先级;
+或阶段 2/3 实施中出现**来源链不足以支撑分类**的具体声明(那才是文献问题);
+或本线出现新的、需要外部文献判断的断言。
+
+---
+
 ## 第 16 轮结算:计数界是**经典结果的标准推论**,表态与地图措辞均已更正(2026-09-11)
 
 **产地三项**:无 skill;靶由 orchestrator 写、问题由 **nyxid / ChatGPT Pro 席**回答;
