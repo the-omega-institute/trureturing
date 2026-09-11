@@ -1,0 +1,79 @@
+实施席 brief 的常设纪律段。派实施席时把本段接在题目之后。
+本 note **不含题目信息**;题目只由 brief 头部指定,正文以 atom / 源文件为唯一真源。
+
+以下每条都对应一次实测事故,不是预防性设想(第 7.10 条:防的必须是发生过的事)。
+
+## 构建:走 serial-lean,禁裸 make lean
+
+    bash tools/scripts/agent/serial-lean.sh <本树绝对路径>
+
+2026-09-11 实测:lake 5.0.0 **没有 job 数旋钮**(`-j` 已被 `--json` 占用,
+`lake build --help` 无 job/parallel 选项),`LEAN_NUM_THREADS` 只限单进程内线程、
+**不限 lake 拉起几个 lean 进程**。八核宿主上裸 `make lean` 会同时拉起约 7 个 lean、
+各占 0.8–3.4 GB,16 GB 机器必被低内存守卫杀掉。同日实测:裸 make lean 一席即被杀
+(空闲跌至 25%);改走 serial-lean 后**三席并发**跑完完整门链,40 个采样点
+最低空闲 55%、零 kill。
+
+**巨型模块要预先建好,不要在席位树里重编**:实测 `VersionBOddCountUnderdetermines`
+单进程峰值 7.57 GB。`oom-guard.sh` 只播种 `ExponentialImplicitParityPeriodThree`
+(#6360),其注释所称「the single module known to peak host memory」**已过期**。
+从源字节一致的 donor lane 复制两个 build 子树下同名文件即可(oom-guard 的规则)。
+
+## 构建被杀之后:先清孤儿,再重跑
+
+被杀的是 harness 跟踪的作业,它派生的 lake/lean **成为孤儿继续跑**。不清就变成同树两个
+lake 叠加(2026-09-11 实测:同树两个不同 ppid,两个进程在编同一个文件)。
+清理**按本树 cwd 定范围**,不要用「非本引擎后代」——这台机器上有多个驱动者,
+那个判据会杀掉别人的 worker:
+
+    for q in $(pgrep -f "bin/lean|bin/lake"); do
+      cwd=$(lsof -a -p $q -d cwd -Fn 2>/dev/null | grep '^n' | cut -c2- | head -1)
+      case "$cwd" in /path/to/my-lane*) kill -TERM $q;; esac
+    done
+
+清完用 `memory_pressure` 的 `free percentage` 确认真的降下来了再重跑。
+**不要用 `ps -eo rss=` 求和判内存**:macOS 上它系统性低估(实测 5.03 GB RSS 对应只剩 25% 空闲,
+差额在 compressor / wired / 文件缓存里)。
+
+## 判绿:`grep -c sorry` 为 0 不等于证明成立
+
+elaborate 失败时 Lean 自插 `sorryAx`。2026-09-11 实测:一份 125 行、`sorry` 计数 0 的模块,
+`make lean` EXIT=2,而该定理的 axiom 闭包里带 `sorryAx`。
+判绿只认构建退出码;`make lean-report` 会打印 axiom 闭包,出现 `sorryAx` 即未证完。
+
+## 开 PR 前必须本地跑 CI 那一层(`make emit` red=0 抓不到它)
+
+    B=$(git merge-base HEAD origin/dev)
+    bash tools/scripts/workflow/scribe-content-checks.sh \
+      .lake/build/stratalint/raw-lean-report.json \
+      tools/StrataLint.Scribe.Documents/bin/Release/net10.0/StrataLint.Scribe.Documents.dll "$B"
+
+判绿看 `DESCRIBE_STATUS … status=classified … red=0`。
+输出里有数千条 `OPEN projection` 与 `OBSERVE`,**都不是判词**,直接 `grep '^RED'`。
+第三参数必须是**精确 merge-base SHA**,传 `origin/dev` 会被拒(`an exact merge-base is required`)。
+2026-09-11 判例:本地 `make emit` red=0 的 PR 被 CI 这一层判红。
+
+## Library note:照抄同桶现成的,别按描述写
+
+同一个 note 在一天内于**三个不同校验层**各栽一次:
+`doi` 与 `url` 都给(`invalid-doi`)→ `doi` 键整个缺失(`missing or unknown metadata fields`)
+→ 正文 `## Verified locator` 段里没有出现被绑定的定位符原文(`incomplete-library-locator`)。
+契约是:**两键都要在、恰一个非 null**;仓内推导用 `doi: null` + `url: <仓库地址>`;
+**正文 locator 段必须出现那个定位符原文**。第三层 `make emit` 抓不到,只有上面那条命令会红。
+派席时点名一个同桶现成 note 让它逐字抄 frontmatter 与 locator 段结构,只改值。
+**派生判词会淹没根判词**:第二次那回有 7 条 `dangling-literature-reference` 排在根判词前面,
+先 `grep 'invalid-'`,别从第一条读起。
+
+## 交付形状的三条禁令
+
+- **禁 `rfl` 同义反复冒充定理**:`theorem f_formula : f x = <f 的定义体> := by rfl` 零内容。
+- **禁两半不接的「基础设施」**:定义了 A 与 B,交付里必须有定理**把它们连起来**;
+  三个独立参数并列、彼此无约束等于什么都没建(2026-09-11 判例:互信息收三个独立参数,
+  与同模块的偏迹毫无连接,被打回重做)。
+- **`utility:` 的 `kind` 只有四类计算性内容或 `none`**,没有 `bridge` 之类自造值;
+  文法去仓里抄真实例子。
+
+## 每个可编译单元即时 commit
+
+席位常在约 40 分钟处被载体收走,作业也可能被宿主低内存守卫杀掉。
+2026-09-11 一日内三次靠增量提交保住了全部数学:被杀时 commit 已在,重来的只是门链。
