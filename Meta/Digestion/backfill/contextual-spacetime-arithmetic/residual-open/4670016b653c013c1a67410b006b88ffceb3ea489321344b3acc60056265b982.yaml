@@ -5,6 +5,19 @@ cas_ref: sha256:4670016b653c013c1a67410b006b88ffceb3ea489321344b3acc60056265b982
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S3/ConceptDynamics/Observation/CoarsestObservationQuotient.accurate_surjective_readout_factors
+    gaps:
+      - code: chain-migration-incomplete
+        detail: 95af9aff346656d61ba1e80bc1e26a98ee6d4746e00ebffa93af7340a947126c
+      - code: chain-migration-incomplete
+        detail: aea75d31b5b1ebb80a97b4ee9e2de5cdd0e488822c18f8a8f62c717675fb184a
+      - code: chain-migration-incomplete
+        detail: d61919c26bf6464843e9cb4806d3f80a7c89f723f48b7bfea260df07594f089f
+      - code: chain-migration-incomplete
+        detail: e676408863261c1c270e84fd38aad5fe3a752552f8aa5f60d9b21c863faccaf9
   chain_atoms:
     - d61919c26bf6464843e9cb4806d3f80a7c89f723f48b7bfea260df07594f089f
     - aea75d31b5b1ebb80a97b4ee9e2de5cdd0e488822c18f8a8f62c717675fb184a
