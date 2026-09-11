@@ -40,16 +40,43 @@ end Semiterm
 namespace RewThreeCompat
 
 variable {L : Language} {S : ℕ → Type*} [LCWQ S]
-  [SyntacticRewriting L S S] [LawfulSyntacticRewriting L S]
+  [SyntacticRewriting L S S]
 
 open Rewriting
 
 lemma shift_conj_two (Γ : List (S n)) : shift (⋀Γ) = ⋀Γ⁺ :=
   LawfulSyntacticRewriting.shift_conj₂ Γ
 
+variable [LawfulSyntacticRewriting L S]
+
 lemma app_subst_fbar_zero_comp_shift_eq_free (φ : S 1) :
     (shift φ)/[&0] = free φ :=
   LawfulSyntacticRewriting.app_subst_fbar_zero_comp_shift_eq_free φ
+
+variable {F : ℕ → Type*}
+
+lemma shifts_nil [LCWQ F] [Rewriting L ℕ F ℕ F] :
+    ([] : List (F n))⁺ = [] :=
+  Rewriting.shifts_nil
+
+lemma shifts_cons [LCWQ F] [Rewriting L ℕ F ℕ F] (φ : F n) (Γ : List (F n)) :
+    (φ :: Γ)⁺ = Rewriting.shift φ :: Γ⁺ :=
+  Rewriting.shifts_cons φ Γ
+
+lemma shifts_neg [LCWQ F] [Rewriting L ℕ F ℕ F] (Γ : List (F n)) :
+    (∼Γ)⁺ = ∼(Γ⁺) :=
+  Rewriting.shifts_neg Γ
+
+abbrev emb {ο ξ} [IsEmpty ο] {O F : ℕ → Type*} [LCWQ O] [LCWQ F]
+    [Rewriting L ο O ξ F] : O n →ˡᶜ F n :=
+  Rewriting.emb (L := L) (n := n) (ο := ο) (ξ := ξ) (O := O) (F := F)
+
+open Lean PrettyPrinter Delaborator
+
+syntax (name := substNotation) term:max "/[" term,* "]" : term
+
+macro_rules (kind := substNotation)
+  | `($φ:term /[$terms:term,*]) => `($φ ⇜ ![$terms,*])
 
 end RewThreeCompat
 

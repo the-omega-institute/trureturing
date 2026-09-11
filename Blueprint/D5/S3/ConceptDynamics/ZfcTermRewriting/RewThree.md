@@ -14,7 +14,7 @@ $$\forall n, m, x\in \operatorname{Fin}\left(n\right), \operatorname{fixitr}\lef
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.fixitr_bvar` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* FormalizedFormalLogic contributors (2026). *Foundation first-order logic and set theory, revision 30a16ffa*. URL: <https://github.com/FormalizedFormalLogic/Foundation/tree/30a16ffa93d79d73ab4d02427fa00f50e039bf29>.
 
 *Commentary.*
 
@@ -26,7 +26,7 @@ $$\forall n, m, x\in \mathbb{N}, \operatorname{fixitr}\left(n, m, \operatorname{
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.fixitr_fvar` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* FormalizedFormalLogic contributors (2026). *Foundation first-order logic and set theory, revision 30a16ffa*. URL: <https://github.com/FormalizedFormalLogic/Foundation/tree/30a16ffa93d79d73ab4d02427fa00f50e039bf29>.
 
 *Commentary.*
 
@@ -38,7 +38,7 @@ $$\forall omega1, omega2, t (\operatorname{agreeBvar}\left(omega1, omega2\right)
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.rew_eq_of_funEqOn` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* FormalizedFormalLogic contributors (2026). *Foundation first-order logic and set theory, revision 30a16ffa*. URL: <https://github.com/FormalizedFormalLogic/Foundation/tree/30a16ffa93d79d73ab4d02427fa00f50e039bf29>.
 
 *Commentary.*
 
@@ -50,7 +50,7 @@ $$\forall phi, b, e, t \operatorname{lMap}\left(phi, \operatorname{bind}\left(b,
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.lMap_bind` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* FormalizedFormalLogic contributors (2026). *Foundation first-order logic and set theory, revision 30a16ffa*. URL: <https://github.com/FormalizedFormalLogic/Foundation/tree/30a16ffa93d79d73ab4d02427fa00f50e039bf29>.
 
 *Commentary.*
 
@@ -62,7 +62,7 @@ $$\forall phi, b, e, t \operatorname{lMap}\left(phi, \operatorname{map}\left(b, 
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.lMap_map` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* FormalizedFormalLogic contributors (2026). *Foundation first-order logic and set theory, revision 30a16ffa*. URL: <https://github.com/FormalizedFormalLogic/Foundation/tree/30a16ffa93d79d73ab4d02427fa00f50e039bf29>.
 
 *Commentary.*
 
@@ -74,7 +74,7 @@ $$\forall phi, t \operatorname{lMap}\left(phi, \operatorname{bShift}\left(t\righ
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.lMap_bShift` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* FormalizedFormalLogic contributors (2026). *Foundation first-order logic and set theory, revision 30a16ffa*. URL: <https://github.com/FormalizedFormalLogic/Foundation/tree/30a16ffa93d79d73ab4d02427fa00f50e039bf29>.
 
 *Commentary.*
 
@@ -82,7 +82,7 @@ Adding one bound-variable slot before or after a language map gives the same ter
 
 **Lemma 1.7 (A free variable after rewriting comes from a source variable (the canonical selector is RewThreeCompat.fvar_rew; the source name is fvar?_rew).).**
 
-$$\forall omega, t, x \operatorname{fvarAt}\left(\operatorname{apply}\left(omega, t\right), x\right) \Rightarrow (\exists i, \operatorname{fvarAt}\left(\operatorname{apply}\left(omega, \operatorname{bvar}\left(i\right)\right), x\right) \lor \exists z, (\operatorname{contains}\left(\operatorname{fvarSupport}\left(t\right), z\right) \land \operatorname{fvarAt}\left(\operatorname{apply}\left(omega, \operatorname{fvar}\left(z\right)\right), x\right))).$$
+$$\forall omega, t, x \operatorname{fvarAt}\left(\operatorname{apply}\left(omega, t\right), x\right) \Rightarrow ((\exists i: \operatorname{Fin}\left(n1\right), \operatorname{fvarAt}\left(\operatorname{apply}\left(omega, \operatorname{bvar}\left(i\right)\right), x\right)) \lor (\exists z: xi1, (\operatorname{contains}\left(\operatorname{fvarSupport}\left(t\right), z\right) \land \operatorname{fvarAt}\left(\operatorname{apply}\left(omega, \operatorname{fvar}\left(z\right)\right), x\right)))).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.fvar_rew` (`✓ std3`). ∎
 
@@ -110,7 +110,7 @@ $$\forall t \operatorname{freeVariables}\left(t\right) = \emptyset \Rightarrow \
 
 *Formalization.* `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.toEmpty` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* FormalizedFormalLogic contributors (2026). *Foundation first-order logic and set theory, revision 30a16ffa*. URL: <https://github.com/FormalizedFormalLogic/Foundation/tree/30a16ffa93d79d73ab4d02427fa00f50e039bf29>.
 
 *Commentary.*
 
@@ -122,73 +122,181 @@ $$\forall t \operatorname{freeVariables}\left(t\right) = \emptyset \Rightarrow \
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.emb_toEmpty` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* FormalizedFormalLogic contributors (2026). *Foundation first-order logic and set theory, revision 30a16ffa*. URL: <https://github.com/FormalizedFormalLogic/Foundation/tree/30a16ffa93d79d73ab4d02427fa00f50e039bf29>.
 
 *Commentary.*
 
-Embedding the term produced by toEmpty is definitionally equal to the original term.
+The retained structural induction proves that embedding the term produced by toEmpty recovers the original term.
 
 **Definition 1.11 (A rewriting action applies rewrites to formulas and respects quantifiers).**
 
-$$\operatorname{Rewriting}\left(L, xi, F, zeta, G\right) = \operatorname{app}\left(\operatorname{Rew}\left(L, xi, n1, zeta, n2\right), \operatorname{F}\left(n1\right)\right) \land \operatorname{app}\left(omega, \operatorname{forall}\left(phi\right)\right) = \operatorname{forall}\left(\operatorname{app}\left(\operatorname{q}\left(omega\right), phi\right)\right) \land \operatorname{app}\left(omega, \operatorname{exists}\left(phi\right)\right) = \operatorname{exists}\left(\operatorname{app}\left(\operatorname{q}\left(omega\right), phi\right)\right).$$
+$$\operatorname{Rewriting}\left(L, xi, F, zeta, G\right) = (app: \operatorname{Rew}\left(L, xi, n1, zeta, n2\right) \to \operatorname{Hom}\left(\operatorname{F}\left(n1\right), \operatorname{G}\left(n2\right)\right), \forall omega12: \operatorname{Rew}\left(L, xi, n1, zeta, n2\right), phi: \operatorname{F}\left(n1\right), appAll omega12, phi : \operatorname{app}\left(omega12, \operatorname{forall1}\left(phi\right)\right) = \operatorname{forall1}\left(\operatorname{app}\left(\operatorname{q}\left(omega12\right), phi\right)\right) \land appExs omega12, phi : \operatorname{app}\left(omega12, \operatorname{exists1}\left(phi\right)\right) = \operatorname{exists1}\left(\operatorname{app}\left(\operatorname{q}\left(omega12\right), phi\right)\right)).$$
 
 *Formalization.* `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.Rewriting` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* FormalizedFormalLogic contributors (2026). *Foundation first-order logic and set theory, revision 30a16ffa*. URL: <https://github.com/FormalizedFormalLogic/Foundation/tree/30a16ffa93d79d73ab4d02427fa00f50e039bf29>.
 
 *Commentary.*
 
 A Rewriting instance supplies an action of term rewrites on formulas, with universal and existential quantification transported through the rewrite.
 
-**Definition 1.12 (The identity rewrite acts as the identity on formulas).**
+**Definition 1.12 (Formula substitution is the substitution rewrite action).**
+
+$$subst: \operatorname{F}\left(n1\right) \to \left(\left(\operatorname{Fin}\left(n1\right) \to \operatorname{Semiterm}\left(L, xi, n2\right)\right) \to \operatorname{F}\left(n2\right)\right) = \operatorname{app}\left(\operatorname{RewSubst}\left(w\right), phi\right).$$
+
+*Formalization.* `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.subst` (`✓ std3`).
+
+*Citation.* FormalizedFormalLogic contributors (2026). *Foundation first-order logic and set theory, revision 30a16ffa*. URL: <https://github.com/FormalizedFormalLogic/Foundation/tree/30a16ffa93d79d73ab4d02427fa00f50e039bf29>.
+
+*Commentary.*
+
+The formula-level substitution abbreviation applies Rew.subst to a formula through the Rewriting action.
+
+**Definition 1.13 (Formula shift is the shift rewrite action).**
+
+$$shift: \operatorname{Hom}\left(\operatorname{F}\left(n\right), \operatorname{F}\left(n\right)\right) = \operatorname{app}\left(RewShift\right).$$
+
+*Formalization.* `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.shift` (`✓ std3`).
+
+*Citation.* FormalizedFormalLogic contributors (2026). *Foundation first-order logic and set theory, revision 30a16ffa*. URL: <https://github.com/FormalizedFormalLogic/Foundation/tree/30a16ffa93d79d73ab4d02427fa00f50e039bf29>.
+
+*Commentary.*
+
+The shift connective homomorphism applies Rew.shift to formulas while increasing free-variable indices.
+
+**Definition 1.14 (Formula free operation removes the first free-variable slot).**
+
+$$free: \operatorname{Hom}\left(\operatorname{F}\left(n+1\right), \operatorname{F}\left(n\right)\right) = \operatorname{app}\left(RewFree\right).$$
+
+*Formalization.* `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.free` (`✓ std3`).
+
+*Citation.* FormalizedFormalLogic contributors (2026). *Foundation first-order logic and set theory, revision 30a16ffa*. URL: <https://github.com/FormalizedFormalLogic/Foundation/tree/30a16ffa93d79d73ab4d02427fa00f50e039bf29>.
+
+*Commentary.*
+
+The free connective homomorphism applies Rew.free from the n+1 free-variable family to the n family.
+
+**Definition 1.15 (Formula-list shift maps each member).**
+
+$$shifts: \operatorname{List}\left(\operatorname{F}\left(n\right)\right) \to \operatorname{List}\left(\operatorname{F}\left(n\right)\right) = \operatorname{map}\left(shift\right).$$
+
+*Formalization.* `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.shifts` (`✓ std3`).
+
+*Citation.* FormalizedFormalLogic contributors (2026). *Foundation first-order logic and set theory, revision 30a16ffa*. URL: <https://github.com/FormalizedFormalLogic/Foundation/tree/30a16ffa93d79d73ab4d02427fa00f50e039bf29>.
+
+*Commentary.*
+
+The shifts definition maps the shift homomorphism over a finite list of formulas.
+
+**Lemma 1.16 (Shifting an empty formula list stays empty).**
+
+$$\operatorname{shifts}\left([]\right) = [].$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.shifts_nil` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The ASCII compatibility selector forwards the source shifts_nil theorem, including its exact LCWQ and Rewriting assumptions.
+
+**Lemma 1.17 (Shifting a cons list shifts its head and tail).**
+
+$$\operatorname{shifts}\left(\operatorname{cons}\left(phi, Gamma\right)\right) = \operatorname{cons}\left(\operatorname{shift}\left(phi\right), \operatorname{shifts}\left(Gamma\right)\right).$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.shifts_cons` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The ASCII compatibility selector forwards the source shifts_cons theorem pointwise over the head and tail.
+
+**Lemma 1.18 (Shifting a negated formula list commutes with negation).**
+
+$$\operatorname{shifts}\left(\operatorname{negList}\left(Gamma\right)\right) = \operatorname{negList}\left(\operatorname{shifts}\left(Gamma\right)\right).$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.shifts_neg` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The ASCII compatibility selector forwards the source shifts_neg theorem for list negation.
+
+**Definition 1.19 (Empty-label formulas embed as connective homomorphisms).**
+
+$$emb: \operatorname{Hom}\left(\operatorname{O}\left(n\right), \operatorname{F}\left(n\right)\right) = \operatorname{app}\left(RewEmb\right).$$
+
+*Formalization.* `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.emb` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The ASCII compatibility selector exposes the source emb connective homomorphism from an empty-label family O to a ξ-labelled family F.
+
+**Definition 1.20 (Slash syntax expands to formula substitution).**
+
+$$phi/[w] \mapsto phi subst w.$$
+
+*Formalization.* `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.substNotation` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The ASCII parser selector mirrors the source substNotation macro: φ/[w] expands to φ ⇜ ![w].
+
+**Definition 1.21 (The identity rewrite acts as the identity on formulas).**
 
 $$\forall phi \operatorname{app}\left(\operatorname{id}\left(L\right), phi\right) = phi.$$
 
 *Formalization.* `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.ReflectiveRewriting` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* FormalizedFormalLogic contributors (2026). *Foundation first-order logic and set theory, revision 30a16ffa*. URL: <https://github.com/FormalizedFormalLogic/Foundation/tree/30a16ffa93d79d73ab4d02427fa00f50e039bf29>.
 
 *Commentary.*
 
 Reflectivity records that applying Rew.id leaves every formula unchanged.
 
-**Definition 1.13 (Composed rewrites act by successive formula application).**
+**Definition 1.22 (Composed rewrites act by successive formula application).**
 
 $$\forall omega12, omega23, phi \operatorname{app}\left(\operatorname{comp}\left(omega23, omega12\right), phi\right) = \operatorname{app}\left(omega23, \operatorname{app}\left(omega12, phi\right)\right).$$
 
 *Formalization.* `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.TransitiveRewriting` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* FormalizedFormalLogic contributors (2026). *Foundation first-order logic and set theory, revision 30a16ffa*. URL: <https://github.com/FormalizedFormalLogic/Foundation/tree/30a16ffa93d79d73ab4d02427fa00f50e039bf29>.
 
 *Commentary.*
 
 Transitivity identifies application of a composed rewrite with applying the first rewrite and then the second.
 
-**Definition 1.14 (Injective variable and label maps induce an injective formula action).**
+**Definition 1.23 (Injective variable and label maps induce an injective formula action).**
 
 $$\forall b, f (\operatorname{Injective}\left(b\right) \land \operatorname{Injective}\left(f\right)) \Rightarrow \operatorname{Injective}\left(\operatorname{mapAction}\left(b, f\right)\right).$$
 
 *Formalization.* `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.InjMapRewriting` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* FormalizedFormalLogic contributors (2026). *Foundation first-order logic and set theory, revision 30a16ffa*. URL: <https://github.com/FormalizedFormalLogic/Foundation/tree/30a16ffa93d79d73ab4d02427fa00f50e039bf29>.
 
 *Commentary.*
 
 If both the bound-variable map and free-variable map are injective, the induced map on formulas is injective.
 
-**Definition 1.15 (Lawful syntactic rewriting combines identity, composition and injectivity).**
+**Definition 1.24 (Lawful syntactic rewriting combines identity, composition and injectivity).**
 
 $$\operatorname{LawfulSyntacticRewriting}\left(L, S\right) = \operatorname{ReflectiveRewriting}\left(L, S\right) \land \operatorname{TransitiveRewriting}\left(L, S\right) \land \operatorname{InjMapRewriting}\left(L, S\right).$$
 
 *Formalization.* `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.LawfulSyntacticRewriting` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* FormalizedFormalLogic contributors (2026). *Foundation first-order logic and set theory, revision 30a16ffa*. URL: <https://github.com/FormalizedFormalLogic/Foundation/tree/30a16ffa93d79d73ab4d02427fa00f50e039bf29>.
 
 *Commentary.*
 
 The lawful syntactic interface packages reflective, transitive and injective rewriting for the same syntactic formula family.
 
-**Lemma 1.16 (Shifting a conjunction shifts each formula (the canonical selector is RewThreeCompat.shift_conj_two; the source name is shift_conj₂).).**
+**Lemma 1.25 (Shifting a conjunction shifts each formula (the canonical selector is RewThreeCompat.shift_conj_two; the source name is shift_conj₂).).**
 
 $$\forall gamma \operatorname{shift}\left(\operatorname{conj}\left(gamma\right)\right) = \operatorname{conj}\left(\operatorname{map}\left(\operatorname{shift}\left(\right), gamma\right)\right).$$
 
@@ -200,7 +308,7 @@ $$\forall gamma \operatorname{shift}\left(\operatorname{conj}\left(gamma\right)\
 
 The shift of a finite conjunction is the conjunction of the shifted list, including the empty and singleton cases.
 
-**Lemma 1.17 (Substituting the first free variable after shifting is free).**
+**Lemma 1.26 (Substituting the first free variable after shifting is free).**
 
 $$\forall phi: \operatorname{S}\left(1\right), \operatorname{subst}\left(\operatorname{shift}\left(phi\right), \operatorname{fvar}\left(0\right)\right) = \operatorname{free}\left(phi\right).$$
 
@@ -222,15 +330,24 @@ For a one-variable formula, shifting and substituting the zero free variable agr
 - Truth anchor: `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.emb_toEmpty`
 - Truth anchor: `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.fixitr_bvar`
 - Truth anchor: `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.fixitr_fvar`
+- Truth anchor: `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.free`
 - Truth anchor: `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.lMap_bShift`
 - Truth anchor: `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.lMap_bind`
 - Truth anchor: `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.lMap_map`
 - Truth anchor: `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.rew_eq_of_funEqOn`
+- Truth anchor: `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.shift`
+- Truth anchor: `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.shifts`
+- Truth anchor: `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.subst`
 - Truth anchor: `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.toEmpty`
 - Truth anchor: `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.app_subst_fbar_zero_comp_shift_eq_free`
+- Truth anchor: `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.emb`
 - Truth anchor: `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.fvar_bShift`
 - Truth anchor: `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.fvar_rew`
 - Truth anchor: `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.shift_conj_two`
+- Truth anchor: `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.shifts_cons`
+- Truth anchor: `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.shifts_neg`
+- Truth anchor: `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.shifts_nil`
+- Truth anchor: `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.substNotation`
 - Dependency: [D5/S3/ConceptDynamics/ZfcPredicate/Quantifier](../ZfcPredicate/Quantifier.md)
 - Dependency: [D5/S3/ConceptDynamics/ZfcPredicate/Term](../ZfcPredicate/Term.md)
 - Dependency: [D5/S3/ConceptDynamics/ZfcSupport/Function](../ZfcSupport/Function.md)

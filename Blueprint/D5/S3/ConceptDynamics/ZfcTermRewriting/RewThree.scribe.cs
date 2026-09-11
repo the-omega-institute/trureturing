@@ -6,6 +6,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.ZfcTermRewriting;
 
 internal sealed class RewThreeDocument : IScribeDocumentDefinition
 {
+    private static readonly LibraryNoteRef Foundation =
+        LibraryNoteRef.Create("D5/L/ConceptDynamics/foundation2026firstorder");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Licensed Foundation.Syntax.Predicate.Rew source selected from the historical first-order pair extension.",
         H("RewThree"),
@@ -72,7 +75,8 @@ internal sealed class RewThreeDocument : IScribeDocumentDefinition
                 FVarRewFormula(),
                 "If a free variable occurs in a rewritten term, it came either from a rewritten bound "
                     + "variable or from a free variable of the source term.",
-                DescribeRole.Lemma),
+                DescribeRole.Lemma,
+                false),
             DescribeEntry(
                 "fvar-bshift",
                 "D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.fvar_bShift",
@@ -80,7 +84,8 @@ internal sealed class RewThreeDocument : IScribeDocumentDefinition
                 FVarBShiftFormula(),
                 "The bShift operation changes only bound indices, so the set of free variables is "
                     + "unchanged.",
-                DescribeRole.Lemma),
+                DescribeRole.Lemma,
+                false),
             DescribeEntry(
                 "to-empty",
                 "D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.toEmpty",
@@ -94,7 +99,7 @@ internal sealed class RewThreeDocument : IScribeDocumentDefinition
                 "D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.emb_toEmpty",
                 "Embedding the empty-variable form recovers the original term",
                 EmbToEmptyFormula(),
-                "Embedding the term produced by toEmpty is definitionally equal to the original term.",
+                "The retained structural induction proves that embedding the term produced by toEmpty recovers the original term.",
                 DescribeRole.Lemma),
             DescribeEntry(
                 "rewriting",
@@ -104,6 +109,74 @@ internal sealed class RewThreeDocument : IScribeDocumentDefinition
                 "A Rewriting instance supplies an action of term rewrites on formulas, with universal "
                     + "and existential quantification transported through the rewrite.",
                 DescribeRole.Definition),
+            DescribeEntry(
+                "rewriting-subst",
+                "D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.subst",
+                "Formula substitution is the substitution rewrite action",
+                SubstFormula(),
+                "The formula-level substitution abbreviation applies Rew.subst to a formula through the Rewriting action.",
+                DescribeRole.Definition),
+            DescribeEntry(
+                "rewriting-shift",
+                "D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.shift",
+                "Formula shift is the shift rewrite action",
+                ShiftFormula(),
+                "The shift connective homomorphism applies Rew.shift to formulas while increasing free-variable indices.",
+                DescribeRole.Definition),
+            DescribeEntry(
+                "rewriting-free",
+                "D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.free",
+                "Formula free operation removes the first free-variable slot",
+                FreeFormula(),
+                "The free connective homomorphism applies Rew.free from the n+1 free-variable family to the n family.",
+                DescribeRole.Definition),
+            DescribeEntry(
+                "rewriting-shifts",
+                "D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.shifts",
+                "Formula-list shift maps each member",
+                ShiftsFormula(),
+                "The shifts definition maps the shift homomorphism over a finite list of formulas.",
+                DescribeRole.Definition),
+            DescribeEntry(
+                "rewriting-shifts-nil",
+                "D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.shifts_nil",
+                "Shifting an empty formula list stays empty",
+                ShiftsNilFormula(),
+                "The ASCII compatibility selector forwards the source shifts_nil theorem, including its exact LCWQ and Rewriting assumptions.",
+                DescribeRole.Lemma,
+                false),
+            DescribeEntry(
+                "rewriting-shifts-cons",
+                "D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.shifts_cons",
+                "Shifting a cons list shifts its head and tail",
+                ShiftsConsFormula(),
+                "The ASCII compatibility selector forwards the source shifts_cons theorem pointwise over the head and tail.",
+                DescribeRole.Lemma,
+                false),
+            DescribeEntry(
+                "rewriting-shifts-neg",
+                "D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.shifts_neg",
+                "Shifting a negated formula list commutes with negation",
+                ShiftsNegFormula(),
+                "The ASCII compatibility selector forwards the source shifts_neg theorem for list negation.",
+                DescribeRole.Lemma,
+                false),
+            DescribeEntry(
+                "rewriting-emb",
+                "D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.emb",
+                "Empty-label formulas embed as connective homomorphisms",
+                EmbFormula(),
+                "The ASCII compatibility selector exposes the source emb connective homomorphism from an empty-label family O to a ξ-labelled family F.",
+                DescribeRole.Definition,
+                false),
+            DescribeEntry(
+                "subst-notation",
+                "D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.substNotation",
+                "Slash syntax expands to formula substitution",
+                SubstNotationFormula(),
+                "The ASCII parser selector mirrors the source substNotation macro: φ/[w] expands to φ ⇜ ![w].",
+                DescribeRole.Definition,
+                false),
             DescribeEntry(
                 "reflective-rewriting",
                 "D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.ReflectiveRewriting",
@@ -142,7 +215,8 @@ internal sealed class RewThreeDocument : IScribeDocumentDefinition
                 ShiftConjFormula(),
                 "The shift of a finite conjunction is the conjunction of the shifted list, including "
                     + "the empty and singleton cases.",
-                DescribeRole.Lemma),
+                DescribeRole.Lemma,
+                false),
             DescribeEntry(
                 "app-subst-fbar-zero-comp-shift-eq-free",
                 "D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.app_subst_fbar_zero_comp_shift_eq_free",
@@ -150,7 +224,8 @@ internal sealed class RewThreeDocument : IScribeDocumentDefinition
                 AppSubstFormula(),
                 "For a one-variable formula, shifting and substituting the zero free variable agrees "
                     + "with the free operation.",
-                DescribeRole.Lemma))));
+                DescribeRole.Lemma,
+                false))));
 
     private static DocumentBlock DescribeEntry(
         string id,
@@ -158,13 +233,16 @@ internal sealed class RewThreeDocument : IScribeDocumentDefinition
         string title,
         Formula formula,
         string narrative,
-        DescribeRole role) =>
+        DescribeRole role,
+        bool upstream = true) =>
         Describe.Lean(
             DescribeId.Create(id),
             DeclarationHandle.Create(handle),
             H(title),
             StatementSource.FromAuthor(formula),
-            AssessedProvenance.FromRepo(),
+            upstream
+                ? AssessedProvenance.FromLiterature(Foundation)
+                : AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(narrative))),
             role);
 
@@ -212,10 +290,14 @@ internal sealed class RewThreeDocument : IScribeDocumentDefinition
         Disp(Seq(
             Forall, Sp, F.Id("omega"), Comma, Sp, F.Id("t"), Comma, Sp, F.Id("x"), Sp,
             Call("fvarAt", Call("apply", F.Id("omega"), F.Id("t")), F.Id("x")), Sp, Rightarrow, Sp,
-            Open, Exists, Sp, F.Id("i"), Comma, Sp, Call("fvarAt", Call("apply", F.Id("omega"), Call("bvar", F.Id("i"))), F.Id("x")), Sp,
-            Lor, Sp, Exists, Sp, F.Id("z"), Comma, Sp,
+            Open,
+            Open, Exists, Sp, F.Id("i"), Colon, Sp, Call("Fin", F.Id("n1")), Comma, Sp,
+            Call("fvarAt", Call("apply", F.Id("omega"), Call("bvar", F.Id("i"))), F.Id("x")), Close,
+            Sp, Lor, Sp,
+            Open, Exists, Sp, F.Id("z"), Colon, Sp, F.Id("xi1"), Comma, Sp,
             Open, Call("contains", Call("fvarSupport", F.Id("t")), F.Id("z")), Sp, Land, Sp,
-            Call("fvarAt", Call("apply", F.Id("omega"), Call("fvar", F.Id("z"))), F.Id("x")), Close, Close, Dot));
+            Call("fvarAt", Call("apply", F.Id("omega"), Call("fvar", F.Id("z"))), F.Id("x")), Close, Close,
+            Close, Dot));
 
     private static Formula FVarBShiftFormula() =>
         Disp(Seq(
@@ -234,14 +316,88 @@ internal sealed class RewThreeDocument : IScribeDocumentDefinition
             Call("freeVariables", F.Id("t")), Sp, Eq, Sp, Emptyset, Sp, Rightarrow, Sp,
             Call("emb", Call("toEmpty", F.Id("t"))), Sp, Eq, Sp, F.Id("t"), Dot));
 
-    private static Formula RewritingFormula() =>
+    private static Formula RewritingFormula()
+    {
+        Formula l = F.Id("L"), xi = F.Id("xi"), zeta = F.Id("zeta");
+        Formula n1 = F.Id("n1"), n2 = F.Id("n2");
+        Formula omega = F.Id("omega12"), phi = F.Id("phi");
+        Formula rew = Call("Rew", l, xi, n1, zeta, n2);
+        Formula source = Call("F", n1), target = Call("G", n2);
+        Formula appType = new Formula.TypeArrow(rew, Call("Hom", source, target));
+        Formula appField = Seq(F.Id("app"), Colon, Sp, appType);
+        Formula allLaw = Seq(
+            F.Id("appAll"), Sp, omega, Comma, Sp, phi, Sp, Colon, Sp,
+            Call("app", omega, Call("forall1", phi)), Sp, Eq, Sp,
+            Call("forall1", Call("app", Call("q", omega), phi)));
+        Formula exsLaw = Seq(
+            F.Id("appExs"), Sp, omega, Comma, Sp, phi, Sp, Colon, Sp,
+            Call("app", omega, Call("exists1", phi)), Sp, Eq, Sp,
+            Call("exists1", Call("app", Call("q", omega), phi)));
+        Formula quantifierScope = Seq(
+            Forall, Sp, omega, Colon, Sp, rew, Comma, Sp,
+            phi, Colon, Sp, source, Comma, Sp,
+            allLaw, Sp, Land, Sp, exsLaw);
+        return Disp(Seq(
+            Call("Rewriting", l, xi, F.Id("F"), zeta, F.Id("G")), Sp, Eq, Sp,
+            Open, appField, Comma, Sp, quantifierScope, Close, Dot));
+    }
+
+    private static Formula SubstFormula() =>
         Disp(Seq(
-            Call("Rewriting", F.Id("L"), F.Id("xi"), F.Id("F"), F.Id("zeta"), F.Id("G")), Sp, Eq, Sp,
-            Call("app", Call("Rew", F.Id("L"), F.Id("xi"), F.Id("n1"), F.Id("zeta"), F.Id("n2")), Call("F", F.Id("n1"))), Sp,
-            Land, Sp, Call("app", F.Id("omega"), Call("forall", F.Id("phi"))), Sp, Eq, Sp,
-            Call("forall", Call("app", Call("q", F.Id("omega")), F.Id("phi"))), Sp,
-            Land, Sp, Call("app", F.Id("omega"), Call("exists", F.Id("phi"))), Sp, Eq, Sp,
-            Call("exists", Call("app", Call("q", F.Id("omega")), F.Id("phi"))), Dot));
+            F.Id("subst"), Colon, Sp,
+            new Formula.TypeArrow(
+                Call("F", F.Id("n1")),
+                new Formula.TypeArrow(
+                    new Formula.TypeArrow(
+                        Call("Fin", F.Id("n1")),
+                        Call("Semiterm", F.Id("L"), F.Id("xi"), F.Id("n2"))),
+                    Call("F", F.Id("n2")))), Sp, Eq, Sp,
+            Call("app", Call("RewSubst", F.Id("w")), F.Id("phi")), Dot));
+
+    private static Formula ShiftFormula() =>
+        Disp(Seq(
+            F.Id("shift"), Colon, Sp,
+            Call("Hom", Call("F", F.Id("n")), Call("F", F.Id("n"))),
+            Sp, Eq, Sp, Call("app", F.Id("RewShift")), Dot));
+
+    private static Formula FreeFormula() =>
+        Disp(Seq(
+            F.Id("free"), Colon, Sp,
+            Call("Hom", Call("F", Seq(F.Id("n"), Plus, D(1))), Call("F", F.Id("n"))),
+            Sp, Eq, Sp, Call("app", F.Id("RewFree")), Dot));
+
+    private static Formula ShiftsFormula() =>
+        Disp(Seq(
+            F.Id("shifts"), Colon, Sp,
+            new Formula.TypeArrow(Call("List", Call("F", F.Id("n"))), Call("List", Call("F", F.Id("n")))),
+            Sp, Eq, Sp, Call("map", F.Id("shift")), Dot));
+
+    private static Formula ShiftsNilFormula() =>
+        Disp(Seq(
+            Call("shifts", EmptyList()), Sp, Eq, Sp, EmptyList(), Dot));
+
+    private static Formula ShiftsConsFormula() =>
+        Disp(Seq(
+            Call("shifts", Call("cons", F.Id("phi"), F.Id("Gamma"))), Sp, Eq, Sp,
+            Call("cons", Call("shift", F.Id("phi")), Call("shifts", F.Id("Gamma"))), Dot));
+
+    private static Formula ShiftsNegFormula() =>
+        Disp(Seq(
+            Call("shifts", Call("negList", F.Id("Gamma"))), Sp, Eq, Sp,
+            Call("negList", Call("shifts", F.Id("Gamma"))), Dot));
+
+    private static Formula EmbFormula() =>
+        Disp(Seq(
+            F.Id("emb"), Colon, Sp,
+            Call("Hom", Call("O", F.Id("n")), Call("F", F.Id("n"))),
+            Sp, Eq, Sp, Call("app", F.Id("RewEmb")), Dot));
+
+    private static Formula SubstNotationFormula() =>
+        Disp(Seq(
+            F.Id("phi"), Slash, OpenBracket, F.Id("w"), CloseBracket,
+            Sp, Mapsto, Sp, F.Id("phi"), Sp, F.Id("subst"), Sp, F.Id("w"), Dot));
+
+    private static Formula EmptyList() => Seq(OpenBracket, CloseBracket);
 
     private static Formula ReflectiveFormula() =>
         Disp(Seq(
