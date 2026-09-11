@@ -1,3 +1,38 @@
+## 第 15 轮结算:no-go 应记为 **`literature-attested`**(2026-09-11)
+
+任务 `333503a8-6b9d-4ad6-9d6e-2c927bfc875b` 已回包(超时后按 ID 取得,未重投)。
+
+### ① 文献状态:**已知**,不得标 `suspected-novel`
+
+判词原文:「**数学陈述已知。**它是 Schur 引理的直接推论;在酉表示的语境下,文献还明确给出了
+『不变子空间 ↔ 等变正交投影』的等价表述。**没有依据将这个数学内核标成 suspected-novel**。」
+
+出处:**Etingof 等《Introduction to representation theory》(2011) §1.3, Prop 1.16 / Cor 1.17,
+印刷页 8–9**;**Sophie Morel《MAT 449: Representation theory》(2018) §I.3.4,
+Thm I.3.4.1 / Lemma I.3.4.3, 印刷页 25–26**(后者直接写出该等价)。
+该席同时声明:**未核定最早历史出处**;判 `literature-attested` 不需要先解决首创年代问题。
+
+### ② 与 Zurek / Korbicz 的关系:**不同命题**
+
+- **非 einselection**:Zurek(式 4.21–4.22)的对易对象是**指定的相互作用 Hamiltonian**,
+  不是群作用;本 no-go 须额外指定群作用并要求记录投影逐个与之对易,才谈得上表示论限制。
+- **非 SBS**:Korbicz 等(*Quantum origins of objectivity*, PRA **91**, 032122, 2015)
+  的 SBS 定义(Def 2、式 1–2)**不要求**支撑投影与某个共享不可约群作用对易。
+
+### ③ 该席指出的两处,本线照收
+
+1. **冗余假设**:代数意义的不可约性下,零/一结论**不依赖酉性、自伴性、复数域或有限维性**;
+   去掉多余假设**不会**使它成为新结果。⟹ `RecordSymmetryNoGo` 的假设可收紧,且收紧不增新颖性。
+2. **互信息平台 ≠ objectivity**:Le 与 Olaya-Castro(2019)区分互信息平台 / strong quantum
+   Darwinism / SBS。⟹ **`TERRAIN-MAP.md` 中该行已由「全部经典信息 / objectivity」
+   改为「互信息平台」并加边界注**——那是 orchestrator 先前的过度主张,本轮更正。
+
+### 处置
+
+- `RecordSymmetryNoGo`(已证未合)须将 `AssessedProvenance` 由 `FromRepo`
+  改为 **`FromLiterature`** 并建 L 平面 note,方可落地。**先冻结再补表态是漏认前人成果的入口**,
+  故该模块自证完起一直压着未推,本轮答案到才动。
+
 ## 本轮:**文献核对一条 no-go**(第 15 轮,2026-09-11)
 
 自第 14 轮定价表以来,本线新增两条**条件切片**(均已冻结上 dev,物理输入在假设位、`axiom` 计数 0):
