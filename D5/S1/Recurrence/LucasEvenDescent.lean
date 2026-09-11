@@ -3,7 +3,7 @@
    mirror-B: D5/B/S1/Recurrence/LucasEvenDescent
    mirror-E: none(waiver:formal-unit-only)
    anchors: []
-   utility: kind=none
+   utility: none
    digest: Lucas doubling descends to zero or half-modulus at odd half-entry indices. -/
 
 import Mathlib.Data.ZMod.Units
@@ -20,8 +20,9 @@ set_option autoImplicit false
 The companion matrix defines the two-parameter Lucas sequence at every integer index when
 q is a unit. The result addresses Conjecture 5.2 of Fiebig--Mbirika--Spilker,
 arXiv:2408.14632v2, under the paper's coprime-modulus convention.
-The proof works without the other standing nonzero, coprimality, or nondegeneracy restrictions
-on the parameters; no such restrictions are needed for this modular implication.
+The modular implication needs only a positive even modulus and a unit q, in addition to
+the two doubling hypotheses. None of the paper's standing restrictions on the parameters
+are needed: nonzero parameters, coprimality of p and q, nondegeneracy, or parity of p.
 The local library supplies matrix determinant and integer-power identities, cyclic subgroup
 theory, finite orders, and `ZMod.neg_eq_self_iff`; the Lucas identities are derived here.
 All declarations are general definitions and proofs; this module has no bounded enumeration,
@@ -133,18 +134,18 @@ private theorem doubling (p : R) (q : Rˣ) (n : ℤ) :
     linear_combination hh
 
 /-- The two doubling hypotheses force two-torsion, over any commutative ring. -/
-theorem two_mul_lucas_eq_zero (p' : R) (q : Rˣ) (n : ℤ)
-    (h0 : lucasU (2 * p') q (2 * n) = 0)
-    (h1 : lucasU (2 * p') q (2 * n + 1) = (↑(q ^ n) : R)) :
-    2 * lucasU (2 * p') q n = 0 := by
-  obtain ⟨hd0, hd1⟩ := doubling (2 * p') q n
-  have hdet := determinant_identity (2 * p') q n
+theorem two_mul_lucas_eq_zero (p : R) (q : Rˣ) (n : ℤ)
+    (h0 : lucasU p q (2 * n) = 0)
+    (h1 : lucasU p q (2 * n + 1) = (↑(q ^ n) : R)) :
+    2 * lucasU p q n = 0 := by
+  obtain ⟨hd0, hd1⟩ := doubling p q n
+  have hdet := determinant_identity p q n
   rw [h0] at hd0
   rw [h1] at hd1
-  have h : (2 * lucasU (2 * p') q n) * (↑(q ^ n) : R) = 0 := by
+  have h : (2 * lucasU p q n) * (↑(q ^ n) : R) = 0 := by
     linear_combination
-      -lucasU (2 * p') q (n + 1) * hd0 -
-      lucasU (2 * p') q n * hdet + lucasU (2 * p') q n * hd1
+      -lucasU p q (n + 1) * hd0 -
+      lucasU p q n * hdet + lucasU p q n * hd1
   exact (q ^ n).mul_left_eq_zero.mp h
 
 private theorem addition (p : R) (q : Rˣ) (a b : ℤ) :
@@ -236,21 +237,18 @@ private theorem half_modulus_ne_zero (m : ℕ) (hm : 0 < m) (he : Even m) :
   have hl : m / 2 < m := Nat.div_lt_self hm (by decide)
   exact fun h => (Nat.le_of_dvd hp h).not_gt hl
 
-/-- Conjecture 5.2: exactly one alternative holds, with an odd integer multiple of
+/-- A strengthening of Conjecture 5.2 without a parity hypothesis on p:
+exactly one alternative holds, with an odd integer multiple of
 half the entry point in the nonzero alternative. The index ranges over all integers. -/
 theorem lucas_even_descent (m : ℕ) (hm : 0 < m) (hmEven : Even m)
-    (p : ZMod m) (hp : Even p) (q : (ZMod m)ˣ) (n : ℤ)
+    (p : ZMod m) (q : (ZMod m)ˣ) (n : ℤ)
     (h0 : lucasU p q (2 * n) = 0)
     (h1 : lucasU p q (2 * n + 1) = (↑(q ^ n) : ZMod m)) :
     Xor (lucasU p q n = 0)
       (lucasU p q n = ((m / 2 : ℕ) : ZMod m) ∧ Even (entryPoint p q) ∧
         ∃ c : ℤ, Odd c ∧ n = c * ((entryPoint p q : ℤ) / 2)) := by
   let : NeZero m := ⟨by omega⟩
-  obtain ⟨p', hp'⟩ := hp
-  have ht : 2 * lucasU p q n = 0 := by
-    have hp2 : p = 2 * p' := by linear_combination hp'
-    rw [hp2]
-    exact two_mul_lucas_eq_zero p' q n (by simpa [hp2] using h0) (by simpa [hp2] using h1)
+  have ht := two_mul_lucas_eq_zero p q n h0 h1
   have hh : lucasU p q n = 0 ∨ 2 * (lucasU p q n).val = m := by
     apply (ZMod.neg_eq_self_iff _).mp
     rw [neg_eq_iff_add_eq_zero, ← two_mul]
@@ -268,9 +266,11 @@ theorem lucas_even_descent (m : ℕ) (hm : 0 < m) (hmEven : Even m)
     exact Or.inr ⟨⟨hv, hi⟩, hn⟩
 
 /-- Integer parameters with the paper's load-bearing coprimality hypothesis.
-The unit lift specifies modular negative powers without dividing integers. -/
+The unit lift specifies modular negative powers without dividing integers.
+The parity hypothesis on p is retained for fidelity to the cited statement and is not used
+by the proof. -/
 theorem conjecture_five_two (p q : ℤ) (m : ℕ) (hm : 0 < m)
-    (hp : Even p) (hmEven : Even m) (hqm : Int.gcd q (m : ℤ) = 1) (n : ℤ) :
+    (_hp : Even p) (hmEven : Even m) (hqm : Int.gcd q (m : ℤ) = 1) (n : ℤ) :
     let Q := ZMod.unitOfIsCoprime q (Int.isCoprime_iff_gcd_eq_one.mpr hqm)
     lucasU (p : ZMod m) Q (2 * n) = 0 →
     lucasU (p : ZMod m) Q (2 * n + 1) = (↑(Q ^ n) : ZMod m) →
@@ -279,9 +279,7 @@ theorem conjecture_five_two (p q : ℤ) (m : ℕ) (hm : 0 < m)
         Even (entryPoint (p : ZMod m) Q) ∧
         ∃ c : ℤ, Odd c ∧ n = c * ((entryPoint (p : ZMod m) Q : ℤ) / 2)) := by
   dsimp only
-  apply lucas_even_descent m hm hmEven
-  obtain ⟨a, ha⟩ := hp
-  exact ⟨(a : ZMod m), by simp only [ha, Int.cast_add]⟩
+  exact lucas_even_descent m hm hmEven _ _ _
 
 #print axioms companion
 #print axioms lucasU
