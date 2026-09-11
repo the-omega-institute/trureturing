@@ -42,6 +42,7 @@ strata_touched:
   - D5/S3/ConceptDynamics/ZfcSyntax/FormulaTwo
   - D5/S3/ConceptDynamics/ZfcTermRewriting/RewOne
   - D5/S3/ConceptDynamics/ZfcTermRewriting/RewTwo
+  - D5/S3/ConceptDynamics/ZfcTermRewriting/RewFour
 license: Apache-2.0
 triage: anchor
 ---
@@ -58,10 +59,10 @@ Copyright and attribution remain with the upstream contributors. Original author
 required source notices are preserved. The upstream distribution has no NOTICE file.
 The complete unmodified Apache-2.0 license follows below.
 
-The installed layer contains 35 modules from 25 immutable upstream source files,
-with 4,509 Lean source lines (including headers and blank lines). Its source footprint
-is 35 Lean files, 35 Scribe sources and 35 Markdown twins, plus this shared note:
-106 files. The table lists exactly the installed Lean paths; each `strata_touched`
+The installed layer contains 36 modules from 25 immutable upstream source files,
+with 4,592 Lean source lines (including headers and blank lines). Its source footprint
+is 36 Lean files, 36 Scribe sources and 36 Markdown twins, plus this shared note:
+109 files. The table lists exactly the installed Lean paths; each `strata_touched`
 GID resolves to its corresponding Lean/Scribe/Markdown triple.
 
 Each row preserves the original source path, SHA-256 and capacity span. Only selected
@@ -140,6 +141,32 @@ indispensability credit. Theorems remain bind-only; definitions and other
 non-theorems have null proof shape. These general APIs do not prove the CSA
 set-coding, defining-graph elimination or ZFC conservativity bridge.
 
+RewFour supplies the retained lawful syntactic-rewriting identities for free-variable
+rewriting and shifts, bound-slot lifting, substitution and casting. Its
+selected source commands occupy `Foundation/Syntax/Predicate/Rew.lean:954-1080`
+at the pinned revision; the seven public declarations are theorem observations with
+bind-only proof shape, while generated simplifier companions are compiler output.
+This excerpt preserves the upstream hypotheses and proof bodies and adds no pair
+interpretation or definition-elimination theorem.
+
+The installed RewFour source is SHA-256
+`dc8b4a511119829e95a2bcf9c4f3db17e102fcbe8df882d12b1933dc25bebeda`.
+Each declaration below retains the corresponding command bytes in the same upstream
+namespace `LO.FirstOrder.LawfulSyntacticRewriting`; the spans refer to the immutable
+revision above. Its direct D5 imports are `ZfcPredicate/Quantifier`,
+`ZfcPredicate/Term`, `ZfcSupport/Function` and `ZfcTermRewriting/RewThree`, all under
+`D5/S3/ConceptDynamics`. The remaining direct import is toolchain `Init`.
+
+| RewFour declaration | Original command lines | General API identity |
+| --- | --- | --- |
+| `free_rewrite_eq` | 955–958 | Freeing a bound slot transports a lifted replacement map. |
+| `shift_rewrite_eq` | 960–962 | Free-variable shifting transports the replacement map. |
+| `rewrite_subst_eq` | 964–966 | Rewriting a substitution rewrites both the formula and substituted term. |
+| `free_subst_nil` | 968–970 | Freeing an unused bound slot equals free-variable shifting. |
+| `rewrite_subst_nil` | 972–978 | A lifted rewrite commutes with adding an unused bound slot. |
+| `cast_subst_eq` | 980–985 | Substitution into an unused bound slot recovers the formula. |
+| `rewrite_free_eq_subst` | 987–989 | Freeing followed by the specified rewrite equals substitution. |
+
 Retirement: replace a transplanted API by a direct Mathlib reference when the repository's pin
 provides a proved-equivalent syntax/theory/proof/definability API and its faithful bridge
 elaborates. Upstream PR acceptance alone is insufficient.
@@ -165,6 +192,7 @@ elaborates. Upstream PR acceptance alone is insufficient.
 | D5/S3/ConceptDynamics/ZfcSupport/Function.lean | Foundation/Vorspiel/Function.lean | 1–18 | b6eb4a72d46ac6f11b3ff3951b95f4cfe1b03498f290ad46b9bd75cc626ef796 |
 | D5/S3/ConceptDynamics/ZfcTermRewriting/RewOne.lean | Foundation/Syntax/Predicate/Rew.lean | 1–320 | 8df8681a12ebf5ef8700d9710c88fc39bfc35df47ef387e2893df3caf3b69873 |
 | D5/S3/ConceptDynamics/ZfcTermRewriting/RewTwo.lean | Foundation/Syntax/Predicate/Rew.lean | 321–637; selected commands exclude `LO.FirstOrder.Rew.q_emb` | 8df8681a12ebf5ef8700d9710c88fc39bfc35df47ef387e2893df3caf3b69873 |
+| D5/S3/ConceptDynamics/ZfcTermRewriting/RewFour.lean | Foundation/Syntax/Predicate/Rew.lean | 954–1080 (selected commands) | 8df8681a12ebf5ef8700d9710c88fc39bfc35df47ef387e2893df3caf3b69873 |
 | D5/S3/ConceptDynamics/ZfcMinimalLogic/MinimalEntailmentOne.lean | Foundation/Propositional/Entailment/Minimal.lean | 1–320 | aa8c65b4a9a1c4cb1b5148ea65d159302b11dbcc839bba1184e422413808b8f1 |
 | D5/S3/ConceptDynamics/ZfcMinimalLogic/MinimalEntailmentTwo.lean | Foundation/Propositional/Entailment/Minimal.lean | 321–639 | aa8c65b4a9a1c4cb1b5148ea65d159302b11dbcc839bba1184e422413808b8f1 |
 | D5/S3/ConceptDynamics/ZfcMinimalLogic/MinimalEntailmentThree.lean | Foundation/Propositional/Entailment/Minimal.lean | 640–959 | aa8c65b4a9a1c4cb1b5148ea65d159302b11dbcc839bba1184e422413808b8f1 |
