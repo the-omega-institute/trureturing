@@ -5698,7 +5698,7 @@ IE-C048；本码仅在 Law-variation 见证成立后判定，故每个登记至�
 readout 定义依赖已注册 theorem 的 truth、proof term 或 theorem-specific certificate／statement
 identity 时触发，将 AC-CIRPT-011 落为 fail-closed 诊断：provenance 检查须取 readout 定义的传递
 常量闭包，闭包不得到达该 theorem、其 proof、该 statement 的 `Decidable` instances 或上述身份来源；
-闭包无法完整取得亦按本码失败。本码适用于 finite 与 structural 两条注册路径。
+闭包无法完整取得亦按本码失败；readout 含判官允许表之外的形式时亦按本码失败（`reason=unclassified_form`），由作者改写 readout 或经判官层变更扩展允许表，不要求判官证明完备。本码适用于 finite 与 structural 两条注册路径。
 优先序 `IE-C050 > IE-C021`：IE-C021（常值 `true` readout）是本码的特例，同一登记同时命中时只发 IE-C050。
 定义完成；消费者随判官层落地，当前无机器消费者。
 
@@ -8385,7 +8385,7 @@ IE-C049 的 `primitive` 标识 signature 内的 readout index 或 anchor，`slot
 sensitivity 见证缺失或未通过 kernel 检查时，`primitive` 取首个无有效见证的 readout index 或 anchor，
 `slot_support` 取已通过 kernel 检查的见证所覆盖的 primitive 集合（checked support），不是语义 exact support；
 判官不枚举 realization 补全语义支持，两个字段不得为 `null`。
-IE-C050 的 `reason` 取 `forbidden_dependency`／`incomplete_closure`；`provenance_closure` 是 readout
+IE-C050 的 `reason` 取 `forbidden_dependency`／`incomplete_closure`／`unclassified_form`；判官只放行其允许表认得的 readout 形式（数据层常量、类型不触及定理模块与 arena 命名空间的证明常量、显式列举的实例产生器、由这些构成的表达式），认不出的形式以 `unclassified_form` 失败并点名首个未识别常量或形式，不以定义等价证明「未触及」；`provenance_closure` 是 readout
 定义的传递常量闭包，按 canonical sort 输出，闭包不完整时为 `null`。
 
 所有 arrays 使用 canonical sort 后的 compact JSON；`expected`／`actual` 若是 structured value
