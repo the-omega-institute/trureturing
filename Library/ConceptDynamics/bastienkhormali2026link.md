@@ -36,5 +36,6 @@ not corroborate that reading.
 
 10.7151/dmgt.2619 - Discussiones Mathematicae Graph Theory 46(2) (2026) 555-568.
 The conjecture quoted in this note is Conjecture 17 of Section 3 of the preprint
-arXiv:2503.21916 version 2; the published version was read for the presence of
-that conjecture and did not contain it. Retrieved 2026-09-11.
+arXiv:2503.21916 version 2; the first-hand inspection described above did not
+find it in the published version, and that reading remains independently
+uncorroborated. Retrieved 2026-09-11.

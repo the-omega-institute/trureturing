@@ -223,7 +223,7 @@ internal sealed class RegularLinkIrregularElevenDocument : IScribeDocumentDefini
                         + "would imply 12 ≤ 11, a contradiction. This refutes only the "
                         + "only-if direction printed in arXiv:2503.21916v2. It neither "
                         + "establishes nor refutes existence for every n >= 12. Order 10 "
-                        + "remains open; 11 is not claimed minimal. No classification or "
+                        + "is not addressed here; 11 is not claimed minimal. No classification or "
                         + "count of regular link-irregular graphs is claimed."))),
                 DescribeRole.Theorem))));
 

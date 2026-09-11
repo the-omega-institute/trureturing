@@ -174,7 +174,7 @@ $$\neg regularLinkIrregularOnlyFromTwelve$$
 
 *Commentary.*
 
-This closed theorem has no hypotheses. Apply the claimed bound to n = 11, G = witnessGraph, and r = 6. The two witness theorems would imply 12 ≤ 11, a contradiction. This refutes only the only-if direction printed in arXiv:2503.21916v2. It neither establishes nor refutes existence for every n >= 12. Order 10 remains open; 11 is not claimed minimal. No classification or count of regular link-irregular graphs is claimed.
+This closed theorem has no hypotheses. Apply the claimed bound to n = 11, G = witnessGraph, and r = 6. The two witness theorems would imply 12 ≤ 11, a contradiction. This refutes only the only-if direction printed in arXiv:2503.21916v2. It neither establishes nor refutes existence for every n >= 12. Order 10 is not addressed here; 11 is not claimed minimal. No classification or count of regular link-irregular graphs is claimed.
 
 ## References
 
