@@ -1648,8 +1648,8 @@ catalog 中零 unique capture；bind-only companion 也不能仅凭 object-level
 1. 有 HEAD／`statement_id` 绑定且唯一的 `AnalysisDisposition`；
 2. object-realizable theorem 在指定 system root 的 maximal catalog 中恰出现一次，并通过
    `LowersEscape` 或带 pair witness 的 structural strict inclusion；先完整记录零成员，仅待首次冻结对象的 positivity 失败使该独立 gate 原子失败，旧零 peers 不阻止新 positive；
-3. 有独立的 5⁗ `AdmissionCertificate`：`escape-witness`、`rule-11-upstream-wrapper` 或
-   `atom-required-bridge` 三者之一；bind-only companions 另带 directed use records。
+3. 有独立的 `AdmissionCertificate`：合法 `admission_basis` 与 bind-only 伴随声明的
+   实际使用条件唯一定义于 `CLAUDE.md` 第 3.2 条；本设计不另立准入例外。
 
 该“delta-first dual novelty gate”只作用于 base 无 freeze、HEAD 首次新增 freeze 的声明。
 legacy 使用 identity-keyed debt set $D$，必须满足 ratchet
@@ -9664,9 +9664,9 @@ $$
 object-realizable theorem 在 designated system root 的 maximal catalog 恰出现一次，finite
 须有 `LowersEscape`，structural 须有具 pair witness 的 strict inclusion；完整记录所有 zero members，仅待首次冻结对象的 positivity 失败使 gate 原子失败。
 `AdmissionCertificateValid` 独立消费
-`CLAUDE.md` 5⁗ 的 `proof_shape`、直接 frozen dependencies、`escape_witness` 与
-`admission_basis`；合法 basis 只有 `escape-witness`、`rule-11-upstream-wrapper`、
-`atom-required-bridge`，bind-only companions 必须有 directed use records。
+`CLAUDE.md` 第 3.2 条的 `proof_shape`、直接 frozen dependencies、`escape_witness` 与
+`admission_basis`；合法 basis 与 bind-only 伴随声明的实际使用条件均以该条为唯一真源，
+本设计不保留独立的枚举或准入例外。
 
 执行次序是 delta-first：先只判 first-freeze delta，再处理 identity-keyed legacy debt set $D$；
 每次必须证明 $D_{head}\subseteq D_{base}$，当 $D=\varnothing$ 时自动切为 full-tree enforcement，
