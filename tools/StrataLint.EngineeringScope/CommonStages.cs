@@ -14,6 +14,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
     private int? testsExecuted;
     private int? testsReused;
     private bool? testSeedSaved;
+    private ResourceExecutionPlan? resourcePlan;
 
     internal static int Normalize(int raw, bool allowProtectedAnnotation = false) => raw switch
     {
@@ -23,26 +24,34 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         _ => 2,
     };
 
-    internal int Run(string name, string? baseSha, string? buildRound = null)
+    internal int Run(string name, string? baseSha, string? buildRound = null, string? planPath = null)
     {
         stage = name;
         var exit = 2;
         string? failure = null;
         try
         {
-            candidate = CommonExecutionEvidence.Candidate(root);
-            switch (name)
+            resourcePlan = ResourceExecutionPlan.Load(root, planPath);
+            if (resourcePlan is not null && !resourcePlan.StageRequired(name))
             {
-                case "build": Build(); break;
-                case "engineering": Engineering(buildRound); break;
-                case "current": Current(); break;
-                case "delta": Delta(baseSha); break;
-                default: throw new ArgumentException("stage must be build, engineering, current, or delta");
+                exit = 0;
             }
-            // Engineering checks its final source snapshot immediately before sealing.
-            if (name is not ("engineering" or "build") && candidate != CommonExecutionEvidence.Candidate(root))
-                throw new InvalidDataException("candidate changed during stage");
-            exit = 0;
+            else
+            {
+                candidate = CommonExecutionEvidence.Candidate(root);
+                switch (name)
+                {
+                    case "build": Build(); break;
+                    case "engineering": Engineering(buildRound); break;
+                    case "current": Current(); break;
+                    case "delta": Delta(baseSha); break;
+                    default: throw new ArgumentException("stage must be build, engineering, current, or delta");
+                }
+                // Engineering checks its final source snapshot immediately before sealing.
+                if (name is not ("engineering" or "build") && candidate != CommonExecutionEvidence.Candidate(root))
+                    throw new InvalidDataException("candidate changed during stage");
+                exit = 0;
+            }
         }
         catch (InvalidDataException exception) when (steps.LastOrDefault() is { Status: "failed" } failed)
         { exit = failed.Exit; failure = exception.Message; }
@@ -89,11 +98,26 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         var outputs = Path.Combine(root, CommonBuildOutputs.RootPath);
         if (Directory.Exists(outputs)) Directory.Delete(outputs, recursive: true);
         // Captured restore/build calls own their nodes until the output closes.
-        Step("restore-StrataLint", "dotnet", ["restore", "tools/StrataLint.sln", "--locked-mode", "-nr:false"]);
-        Step("build", "dotnet", ["build", "tools/StrataLint.sln", "--configuration", "Release", "--no-restore", "--warnaserror", "-nr:false",
+        var roots = BuildRoots();
+        var target = roots is null ? "tools/StrataLint.sln" : roots[0];
+        Step("restore-StrataLint", "dotnet", ["restore", target, "--locked-mode", "-nr:false"]);
+        Step("build", "dotnet", ["build", target, "--configuration", "Release", "--no-restore", "--warnaserror", "-nr:false",
             "-p:CustomAfterMicrosoftCommonTargets=" + Path.Combine(root, "tools/scripts/ci-build-outputs.targets"),
             "-p:CiRepositoryRoot=" + root, "-p:CiBuildOutputRoot=" + outputs]);
-        return CommonExecutionEvidence.SealBuild(root, candidate!, CommonBuildOutputs.Collect(root), steps.ToArray());
+        return CommonExecutionEvidence.SealBuild(root, candidate!, CommonBuildOutputs.Collect(root, roots), steps.ToArray());
+    }
+
+    private string[]? BuildRoots()
+    {
+        if (resourcePlan is null || resourcePlan.Has("engineering") || resourcePlan.Has("current") || resourcePlan.Has("delta")) return null;
+        var roots = new List<string>();
+        if (resourcePlan.Has("filemap")) roots.Add("tools/StrataLint.Cli/StrataLint.Cli.csproj");
+        if (resourcePlan.Has("lean") || resourcePlan.Has("lean-report")) roots.Add("tools/StrataLint.Lean/StrataLint.Lean.csproj");
+        if (resourcePlan.Has("scribe")) roots.Add("tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj");
+        // A single registered root lets MSBuild follow its declared project
+        // references. Multiple independent roots use the complete entrypoint so
+        // both outputs are present for the subsequent producer.
+        return roots.Count == 1 ? roots.ToArray() : null;
     }
 
     private void Engineering(string? buildRound)
@@ -157,29 +181,52 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
     private void Current()
     {
         ClearEvidence("current");
-        _ = CommonExecutionEvidence.ReadCheckManifest(CommonExecutionEvidence.Snapshot(root));
+        File.Delete(Path.Combine(root, CommonExecutionEvidence.ScribeMarkdownPaths));
         var build = CommonExecutionEvidence.ValidateBuild(root);
-        RequireBinary(build, CommonExecutionEvidence.CliPath);
-        RequireBinary(build, CommonExecutionEvidence.ScribePath);
-        RequireBinary(build, CommonExecutionEvidence.RunnerPath);
-        RequireBinary(build, CommonExecutionEvidence.LeanProducerPath);
+        var runReport = resourcePlan is null || resourcePlan.Has("lean-report") || resourcePlan.Has("scribe") || resourcePlan.Has("current");
+        var runChecks = resourcePlan is null || resourcePlan.Has("current");
+        // check-current owns the registered Scribe/filemap units for a complete
+        // current resource. Standalone resource requests execute only that unit.
+        var runScribe = resourcePlan is not null && resourcePlan.Has("scribe") && !runChecks;
+        var runFilemap = resourcePlan is not null && resourcePlan.Has("filemap") && !runChecks;
+        if (runReport) RequireBinary(build, CommonExecutionEvidence.LeanProducerPath);
+        if (runScribe) RequireBinary(build, CommonExecutionEvidence.ScribePath);
+        if (runChecks)
+        {
+            _ = CommonExecutionEvidence.ReadCheckManifest(CommonExecutionEvidence.Snapshot(root));
+            RequireBinary(build, CommonExecutionEvidence.CliPath);
+            RequireBinary(build, CommonExecutionEvidence.RunnerPath);
+        }
         var logs = Path.Combine(root, CommonExecutionEvidence.RootPath, "logs/current");
         if (Directory.Exists(logs)) Directory.Delete(logs, recursive: true);
+        if (!runReport)
+            foreach (var report in CommonExecutionEvidence.ReportPaths)
+                File.Delete(Path.Combine(root, report));
         var reportBudget = TimeSpan.FromSeconds(LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds);
         string SupervisorBudget(string name) => Environment.GetEnvironmentVariable(name) is { Length: > 0 } value
             ? value : LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds.ToString(System.Globalization.CultureInfo.InvariantCulture);
         // Shared current supports normal cold production within the existing Lean
         // envelope. Nested defaults must not silently shorten that allowance.
-        Step("lean-report", "/usr/bin/env", [$"STRATALINT_LEAN_PRODUCER_DLL={Path.Combine(root, CommonExecutionEvidence.LeanProducerPath)}",
-            $"STRATALINT_BUILD_TIMEOUT_SECONDS={SupervisorBudget("STRATALINT_BUILD_TIMEOUT_SECONDS")}",
-            $"STRATALINT_LOCK_TIMEOUT_SECONDS={SupervisorBudget("STRATALINT_LOCK_TIMEOUT_SECONDS")}",
-            $"STRATALINT_LEAN_REPORT_LOG_DIR={Path.Combine(logs, "lean-inspector")}",
-            "make", "--no-print-directory", "lean-report"], defaultTimeout: reportBudget);
-        _ = RawLeanReportArtifact.ReadFile(Path.Combine(root, CommonExecutionEvidence.ReportPath), CommonExecutionEvidence.Snapshot(root), validateMaterials: true);
-        Step("check-current", "dotnet", [CommonExecutionEvidence.CliPath, "check-current",
-            "--candidate-lean-report", CommonExecutionEvidence.ReportPath, "--common-build-round", build.Round]);
-        CommonExecutionEvidence.SealCurrent(root, build, steps.ToArray());
-        _ = CommonExecutionEvidence.ExportCheckSeed(root, "current", output);
+        if (runReport)
+        {
+            Step("lean-report", "/usr/bin/env", [$"STRATALINT_LEAN_PRODUCER_DLL={Path.Combine(root, CommonExecutionEvidence.LeanProducerPath)}",
+                $"STRATALINT_BUILD_TIMEOUT_SECONDS={SupervisorBudget("STRATALINT_BUILD_TIMEOUT_SECONDS")}",
+                $"STRATALINT_LOCK_TIMEOUT_SECONDS={SupervisorBudget("STRATALINT_LOCK_TIMEOUT_SECONDS")}",
+                $"STRATALINT_LEAN_REPORT_LOG_DIR={Path.Combine(logs, "lean-inspector")}",
+                "make", "--no-print-directory", "lean-report"], defaultTimeout: reportBudget);
+            _ = RawLeanReportArtifact.ReadFile(Path.Combine(root, CommonExecutionEvidence.ReportPath), CommonExecutionEvidence.Snapshot(root), validateMaterials: true);
+        }
+        else if (resourcePlan is not null && resourcePlan.Has("lean"))
+            Step("lean", "make", ["--no-print-directory", "lean"]);
+        if (runScribe)
+            Step("scribe", "/bin/bash", ["tools/scripts/workflow/scribe-content-checks.sh", CommonExecutionEvidence.ReportPath, CommonExecutionEvidence.ScribePath]);
+        if (runFilemap)
+            Step("filemap", "dotnet", [CommonExecutionEvidence.CliPath, "filemap-conform"]);
+        if (runChecks)
+            Step("check-current", "dotnet", [CommonExecutionEvidence.CliPath, "check-current",
+                "--candidate-lean-report", CommonExecutionEvidence.ReportPath, "--common-build-round", build.Round]);
+        CommonExecutionEvidence.SealCurrent(root, build, steps.ToArray(), resourcePlan is not null);
+        if (runChecks) _ = CommonExecutionEvidence.ExportCheckSeed(root, "current", output);
     }
 
     private void Delta(string? baseSha)

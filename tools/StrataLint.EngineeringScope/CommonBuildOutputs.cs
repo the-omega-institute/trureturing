@@ -12,14 +12,21 @@ internal static class CommonBuildOutputs
     internal const string TestsPath = RootPath + "/test-assemblies.json";
     internal const string PackagesPath = RootPath + "/packages";
 
-    internal static string[] Collect(string root)
+    internal static string[] Collect(string root) => Collect(root, null);
+
+    // When a resource plan supplies roots, only those roots and their explicitly
+    // registered references are admitted. A null root set retains the complete
+    // engineering entrypoint for callers that explicitly request it.
+    internal static string[] Collect(string root, IEnumerable<string>? selectedRoots)
     {
         var projects = new Dictionary<string, string>(StringComparer.Ordinal);
         var paths = new HashSet<string>(StringComparer.Ordinal);
         string? packageRoot = null;
         var snapshot = CommonExecutionEvidence.Snapshot(root);
         var registrations = EngineeringProjectRegistry.Read(snapshot);
-        foreach (var registration in registrations.Projects.Where(project => project.Role != "compile-fail-proof"))
+        var selected = selectedRoots is null ? null : RegisteredClosure(registrations, selectedRoots);
+        foreach (var registration in registrations.Projects.Where(project => project.Role != "compile-fail-proof"
+                     && (selected is null || selected.Contains(project.Path))))
         {
             var file = Path.Combine(root, RootPath, registration.Path + ".outputs");
             if (!File.Exists(file))
@@ -68,11 +75,15 @@ internal static class CommonBuildOutputs
             Directory.CreateDirectory(Path.GetDirectoryName(target)!);
             File.Copy(material.Source, target, overwrite: true);
         }
-        var selected = EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadSnapshotProjects(snapshot));
-        var tests = selected.Select(project => new BuiltTestProject(project, projects.TryGetValue(project, out var assembly)
+        var testProjects = EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadSnapshotProjects(snapshot))
+            .Where(project => selected is null || selected.Contains(project)).ToArray();
+        var tests = testProjects.Select(project => new BuiltTestProject(project, projects.TryGetValue(project, out var assembly)
             ? assembly : throw new InvalidDataException("selected test project was not built: " + project))).ToArray();
-        foreach (var assembly in tests.Select(test => test.Assembly).Concat(new[] {
-                     CommonExecutionEvidence.CliPath, CommonExecutionEvidence.RunnerPath, CommonExecutionEvidence.LeanProducerPath, CommonExecutionEvidence.ScribePath }))
+        var runtime = selected is null ? new[] {
+            CommonExecutionEvidence.CliPath, CommonExecutionEvidence.RunnerPath,
+            CommonExecutionEvidence.LeanProducerPath, CommonExecutionEvidence.ScribePath }
+            : projects.Values.Where(assembly => selected.Contains(registrations.Projects.Single(project => project.Assembly == assembly).Path)).ToArray();
+        foreach (var assembly in tests.Select(test => test.Assembly).Concat(runtime))
             foreach (var path in new[] { assembly, Path.ChangeExtension(assembly, ".deps.json"), Path.ChangeExtension(assembly, ".runtimeconfig.json") })
                 if (!paths.Contains(path)) throw new InvalidDataException("missing runtime output: " + path);
         CommonExecutionEvidence.Write(root, TestsPath, tests);
@@ -84,6 +95,20 @@ internal static class CommonBuildOutputs
             if (!RepoPath.TryCreate(relative, out _)) throw new InvalidDataException("build output escapes candidate: " + path);
             return relative;
         }
+    }
+
+    private static HashSet<string> RegisteredClosure(EngineeringProjectRegistry registry, IEnumerable<string> roots)
+    {
+        var byPath = registry.Projects.ToDictionary(project => project.Path, StringComparer.Ordinal);
+        var result = new HashSet<string>(StringComparer.Ordinal);
+        void Visit(string path)
+        {
+            if (!byPath.TryGetValue(path, out var project)) throw new InvalidDataException("unregistered requested build root: " + path);
+            if (!result.Add(path)) return;
+            foreach (var reference in project.References) Visit(reference);
+        }
+        foreach (var root in roots) Visit(root);
+        return result;
     }
 
     internal static Dictionary<string, string> TestAssemblies(string root, CommonStageRecord build)

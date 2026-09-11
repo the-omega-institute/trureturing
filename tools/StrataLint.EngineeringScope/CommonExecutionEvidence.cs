@@ -40,7 +40,7 @@ internal static partial class CommonExecutionEvidence
     internal const string ScribePath = "tools/StrataLint.Scribe.Documents/bin/Release/net10.0/StrataLint.Scribe.Documents.dll";
     internal static readonly string[] BuildSteps = ["restore-StrataLint", "build"];
     internal static readonly string[] EngineeringSteps = ["tests"];
-    internal static readonly string[] CurrentSteps = ["lean-report", "check-current"];
+    internal static readonly string[] CurrentSteps = ["lean-report", "scribe", "filemap", "check-current"];
     private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true, PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower, UnmappedMemberHandling = System.Text.Json.Serialization.JsonUnmappedMemberHandling.Disallow, AllowDuplicateProperties = false, RespectRequiredConstructorParameters = true };
 
     internal static RepositorySnapshot Snapshot(string root) =>
@@ -221,19 +221,28 @@ internal static partial class CommonExecutionEvidence
         return record;
     }
 
-    internal static void SealCurrent(string root, CommonStageRecord build, StageStep[] steps)
+    internal static void SealCurrent(string root, CommonStageRecord build, StageStep[] steps, bool allowPartial = false)
     {
         var candidate = Candidate(root, out var snapshot);
         ValidateStartedBuild(root, build, candidate);
-        RequirePassed(steps, CurrentSteps);
-        _ = RawLeanReportArtifact.ReadFile(Path.Combine(root, ReportPath), snapshot, validateMaterials: true);
-        var checks = ValidateChecks(root, "current", build);
-        var currentMaterials = ReportPaths.Append(BuildPath).Append(ChecksPath("current"))
-            .Concat(checks.Units.SelectMany(unit => unit.Materials).Select(material => material.Path))
+        var expected = CurrentSteps.Where(name => steps.Any(step => step.Name == name)).ToArray();
+        if (!expected.SequenceEqual(steps.Select(step => step.Name)))
+            throw new InvalidDataException("current steps are missing, duplicated, or out of order");
+        if (!allowPartial && steps.Length != CurrentSteps.Length)
+            throw new InvalidDataException("complete current entrypoint requires every declared step");
+        RequirePassed(steps);
+        if (steps.Any(step => step.Name == "lean-report"))
+            _ = RawLeanReportArtifact.ReadFile(Path.Combine(root, ReportPath), snapshot, validateMaterials: true);
+        CommonCheckRecord? checks = steps.Any(step => step.Name == "check-current")
+            ? ValidateChecks(root, "current", build) : null;
+        var currentMaterials = (steps.Any(step => step.Name == "lean-report") ? ReportPaths : [])
+            .Append(BuildPath)
+            .Concat(checks is null ? [] : new[] { ChecksPath("current") })
+            .Concat(checks?.Units.SelectMany(unit => unit.Materials).Select(material => material.Path) ?? [])
             .Concat(File.Exists(Path.Combine(root, CheckManifestPath)) ? [CheckManifestPath] : [])
-            .Concat(File.Exists(Path.Combine(root, ScribeMarkdownPaths)) ? [ScribeMarkdownPaths] : [])
+            .Concat(steps.Any(step => step.Name == "scribe") && File.Exists(Path.Combine(root, ScribeMarkdownPaths)) ? [ScribeMarkdownPaths] : [])
             .Concat(steps.Select(step => step.Log));
-        var record = new CommonStageRecord(2, build.Candidate, build.Round, steps,
+        var record = new CommonStageRecord(allowPartial && steps.Length != CurrentSteps.Length ? 3 : 2, build.Candidate, build.Round, steps,
             Materials(root, currentMaterials));
         Write(root, CurrentPath, record);
         WriteBundleList(root, "current", build.Materials.Concat(record.Materials)
@@ -249,18 +258,28 @@ internal static partial class CommonExecutionEvidence
     private static CommonStageRecord ValidateCurrent(string root, CommonStageRecord build, RepositorySnapshot snapshot)
     {
         var record = Read<CommonStageRecord>(root, CurrentPath);
-        ValidateRecord(root, record, build.Candidate, build.Round);
-        RequirePassed(record.Steps, CurrentSteps);
-        _ = ValidateChecks(root, "current", build);
-        if (!record.Materials.Any(material => material.Path == ChecksPath("current")))
-            throw new InvalidDataException("current has no bound common check evidence");
-        if (ReportPaths.Any(path => !record.Materials.Any(material => material.Path == path))
-            || !record.Materials.Any(material => material.Path == BuildPath))
-            throw new InvalidDataException("current has no bound report or build evidence");
-        _ = ReadCheckManifest(snapshot);
-        if (!record.Materials.Any(material => material.Path == CheckManifestPath))
-            throw new InvalidDataException("current has no bound common check registration");
-        _ = RawLeanReportArtifact.ReadFile(Path.Combine(root, ReportPath), snapshot, validateMaterials: true);
+        var partial = record.Version == 3;
+        if (!partial && record.Version != 2) throw new InvalidDataException("invalid current evidence version");
+        ValidateRecord(root, partial ? record with { Version = 2 } : record, build.Candidate, build.Round);
+        var expected = CurrentSteps.Where(name => record.Steps.Any(step => step.Name == name)).ToArray();
+        if (!expected.SequenceEqual(record.Steps.Select(step => step.Name)))
+            throw new InvalidDataException("current steps are missing, duplicated, or out of order");
+        RequirePassed(record.Steps);
+        if (!record.Materials.Any(material => material.Path == BuildPath))
+            throw new InvalidDataException("current has no bound build evidence");
+        if (record.Steps.Any(step => step.Name == "check-current"))
+        {
+            _ = ValidateChecks(root, "current", build);
+            _ = ReadCheckManifest(snapshot);
+            if (!record.Materials.Any(material => material.Path == CheckManifestPath))
+                throw new InvalidDataException("current has no bound common check registration");
+        }
+        if (record.Steps.Any(step => step.Name == "lean-report"))
+        {
+            if (ReportPaths.Any(path => !record.Materials.Any(material => material.Path == path)))
+                throw new InvalidDataException("current has no bound report materials");
+            _ = RawLeanReportArtifact.ReadFile(Path.Combine(root, ReportPath), snapshot, validateMaterials: true);
+        }
         return record;
     }
 

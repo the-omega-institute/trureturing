@@ -20,12 +20,21 @@ internal static class Program
                 return CiTransport.Run(arguments, output);
             if (arguments.FirstOrDefault() is "build" or "engineering" or "current" or "delta")
             {
-                if (arguments.Count is not (3 or 5) || arguments[1] != "--repository"
-                    || arguments.Count == 5 && !(arguments[0] == "delta" && arguments[3] == "--base"
-                        || arguments[0] == "engineering" && arguments[3] == "--build-round"))
-                    throw new ArgumentException("stage --repository ROOT [--base SHA | --build-round ROUND]");
-                return new CommonStages(Path.GetFullPath(arguments[2]), output).Run(arguments[0], arguments.Count == 5 && arguments[3] == "--base" ? arguments[4] : null,
-                    arguments.Count == 5 && arguments[3] == "--build-round" ? arguments[4] : null);
+                if (arguments.Count < 3 || arguments[1] != "--repository")
+                    throw new ArgumentException("stage --repository ROOT [--base SHA | --build-round ROUND] [--plan FILE]");
+                string? baseSha = null, stageBuildRound = null, plan = null;
+                for (var i = 3; i < arguments.Count; i += 2)
+                {
+                    if (i + 1 >= arguments.Count) throw new ArgumentException("stage options must be name/value pairs");
+                    switch (arguments[i])
+                    {
+                        case "--base" when arguments[0] == "delta" && baseSha is null: baseSha = arguments[i + 1]; break;
+                        case "--build-round" when arguments[0] == "engineering" && stageBuildRound is null: stageBuildRound = arguments[i + 1]; break;
+                        case "--plan" when plan is null: plan = arguments[i + 1]; break;
+                        default: throw new ArgumentException("invalid stage option: " + arguments[i]);
+                    }
+                }
+                return new CommonStages(Path.GetFullPath(arguments[2]), output).Run(arguments[0], baseSha, stageBuildRound, plan);
             }
             if (arguments.FirstOrDefault() == "verify-trx")
             {

@@ -227,67 +227,92 @@ CI/preflight 的阶段、候选报告/DLL/工程证据交接、退出与缓存�
 
 **A21 性能账(2026-08-26 退役)** τ=0 owner 以 #3365 的机器负载相关失败裁决:挂钟与机器性能不得承测试判词,性能实验须与功能测试分离。退役前复核 `preflight.sh`、`local-harness-gate.sh` 与 `ci.yml` 对 `perf-report|PerfBudgetComparator|over-budget` 为 0 命中,三条预算全为 `warn-only`,`false_positive_rate_percent = "unmeasured"`,且无性能预算阻断事故;故按第 20″ 条与第Ⅵ节「为道日损」删除事件采集、账本 writer/report/comparator、预算数据、CLI/Make 入口及其测试,不留兼容动词或空壳。历史 revision notes 只作审计记录,不构成现役接口或义务。
 
-**A22 preflight 与 CI 共用 current/delta 契约(v7.31 修订,2026-09-07)**
+**A22 FILEMAP 资源声明、轻量计划与 CI/preflight current/delta 契约**
 
-**状态与等价域。** 本条是用户已授权 CI/preflight 重构的目标契约,原位替代旧 engineering/lean-inspect/admission 三段方案及精确地址命中短路方案。规范修订时,根 `Makefile` 的 preflight 仍要求 BASE,`tools/Makefile` 的 `engineering-tests` 仍接收 HEAD/BASE,`preflight.sh` 仍要求 BASE 为 HEAD 祖先;下列新目标、类型分离、缓存与 workflow 迁移尚待实施。新 workflow 真跑、合入后观察与 required-set 更新均未验证,记 `ASSUMED-UNVERIFIED`;旧方案的 run 不构成本契约的验收证据。本地 preflight 是早反馈,不强制作提交前闸;CI 是合并判词的权威。同一候选树、base(仅 PR)、工具链及语义环境下,CI 与 preflight 必须具有相同检查集与判词,共同构建、测试与报告只生产一次;运输或缓存状态不得改变检查集。
+**状态与等价域。** `tools/scripts/workflow/ci.py` 是 SDK/cache 之前的唯一轻量属主；`ci_plan.py` 只提供声明解析、路径计划及无资源结果验证，不执行 build/test/Lean/cache，也不另建调度器。轻量 CLI 可独立调用；workflow、preflight 的调用/运输及按资源执行仍待适配和真实验证，不能据计划成功宣称资源集成已工作或 CI 已免跑。本地 preflight 是早反馈，不强制作提交前闸；CI 是合并判词的权威。同一候选树、base（仅 PR）、完整显式范围、工具链及语义环境下，CI 与 preflight 必须具有相同资源集合、检查集与判词，共同构建、测试与报告只生产一次；运输或缓存状态不得改变所需检查集。资源内的增量执行/复用由既有生产属主负责。
 
-**模式与候选。** `make preflight` 默认 `MODE=push`,只检查当前树,执行 engineering 与 current,不执行 delta。push 不要求 BASE、父提交或 remote,不隐式读取 `HEAD^1`、远端引用或其它基线;无父提交、无 remote 的仓库也须可用。证据须绑定实际受审树,不得把工作树输入冒记成另一棵已提交树。
+**模式、候选与范围。** `make preflight` 默认 `MODE=push`，只检查当前树的 engineering/current，不执行 delta；所需工作由资源计划决定。current 只读显式候选 commit/tree 与完整范围清单，不要求 BASE、父提交或 remote，不读 `HEAD^1`、push before 或远端；无父、无 remote 的候选也须可用。证据须绑定实际受审树，不得把工作树输入冒记成另一棵已提交树。push 的完整路径来源仍为未决 owner 问题，push-before 读取未获授权，不以全路径、空清单或隐式基线兜底。current 清单的完整性由供给调用者显式担保；轻量器验证完整标记、计数、结构、候选树和每个新端点，但没有获准比较对象，不能证明供给者未隐瞒某条变化。
+PR 固定 M、第一父 B 与触发 head，`pr-paths` 只用这些 Git 对象产生 B→M 的 NUL raw diff。PR 计划独立重取同一 diff 校验完整性，截断清单即使改正计数也失败。base 只作为候选判官的字节快照与差异数据，不得 checkout、restore、编译或执行 base 代码。
+本地 `make preflight MODE=pr BASE=<sha>` 必须显式取得不可变 base commit SHA，源 HEAD 已提交且工作树干净（含未跟踪文件）。入口校验模式、对象、路径与树状态，不以可变 ref 或隐式 fetch 补基线；由 `git merge-tree --write-tree BASE HEAD` 合成候选，允许分叉或可快进，不设 ancestry 门。冲突或无法合并即阻断，不得退回只判源 HEAD。只物化合成候选，固定其树身份与 BASE 后运行同一 engineering/current，再运行 delta；所有出口清理临时候选，不改写源工作树与分支。组合入口可从已显式授权的 BASE→候选树供给范围，不改变 current context 的类型边界。
 
-`make preflight MODE=pr BASE=<sha>` 必须显式取得不可变 base commit SHA,并要求源 HEAD 已提交且工作树干净(含未跟踪文件)。入口校验模式、对象、路径与树状态,不以可变 ref 或隐式 fetch 补基线。以 `git merge-tree --write-tree BASE HEAD` 构造待合并候选树;冲突或无法合并即阻断,不得退回只判源 HEAD。BASE 无须是 HEAD 的祖先,不得设 ancestry 门。只物化合成候选,将其树身份与 BASE 固定后运行同一 engineering/current,再运行 delta;不得 checkout、restore、编译或执行 base 代码,base 仅作为候选判官的字节快照与差异输入。临时候选在所有出口清理,源工作树与分支不因预检改写。
+**声明格式。** `Meta/FILEMAP.toml` 当前严格 schema_version=3，顶层恰为 `schema_version/resources/residence_policy/files`。每条 files 行保留原分类/消费/路径字段并必填 `require`（有序、唯一 resource id 数组，可空）。resource 行恰为 `id/stage/owner/prerequisites/tools/cache_layers/materials`；stage 为 build/engineering/current/delta，owner 是现有操作的登记路径，prerequisites 是显式依赖 id 数组，tools/cache_layers 是闭合字母表内的有序唯一数组，materials 是有序唯一仓根相对路径数组。owner/material 必须是候选中唯一命中 FILEMAP 的普通文件；未知 id、重复/冲突、循环、向后阶段依赖、重复字段或非法路径/模式均失败。`*` 不跨路径组件、`**` 跨组件、`**/` 可为零层，精确匹配和重叠拒绝规则不变。
 
-**共享入口与谓词。** 内容层与工具层的唯一阶段入口如下,CI 和 preflight 共用其实现:
+| resource | 所属阶段 | 声明前置资源 | cache_layers |
+|---|---|---|---|
+| build | build | 无 | 空 |
+| engineering | engineering | build | judge |
+| filemap | current | build | 空 |
+| lean | current | build | dependency, elan, project |
+| lean-report | current | lean | report |
+| scribe | current | build, lean-report | 空 |
+| current | current | build, lean-report | 空 |
+| delta | delta | current, engineering, filemap, scribe | 空 |
 
-| 阶段入口 | 必须执行的工作 |
+表为 FILEMAP 的说明投影，具体 tools/materials/owner 只取该文件；tools 字母表为 bash/dotnet/git/lake/make/python3。build/engineering 对应 `ci-stage.sh`，current/delta 对应 `CommonStages`，filemap、Lean、report、Scribe 各用原有操作属主。空 cache_layers 表示该操作不请求缓存；前置资源可另有缓存请求。无 Lean 的 filemap/build 组合可精确表达。依赖并集只沿声明边，不按 suffix、kind、runtime、consumed_by、调用/IO/MSBuild 或宿主状态推断需求。
+只有 `README.md`、`docs/reports/**`、`docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md`、`docs/develop/spec/trureturing_engineering_optimization_v1.md` 四个批准参考族为 `require=[]`；theory Ingest 输入、Library/Problems Scribe 输入、Blueprint 生成文档、D5 ledger 与治理文件依各自非空声明，没有 docs/** 或全 Markdown 豁免。新增文件必须命中登记族，不能静默选择未登记邻居。.NET `FileMapLoader` 严格验证同一当前格式；历史 base 的候选自有数据投影可忽略未消费字段，不要求历史 base 补候选策略，也不执行 base loader/code。
+
+**公开轻量 CLI。** 以下命令前缀均为 `python3 tools/scripts/workflow/ci.py`；`--repository R` 指 Git 对象库，C/M/B/H 均为不可变非零 40 位小写 SHA。输出文件采用临时文件原子替换，同时 stdout 输出 JSON；成功 exit=0，输入/声明/身份错误 `CI_INPUT_FAILED` 且 exit=2。
+```text
+pr-paths --repository R --commit M --base B --head H --output changes.json
+plan --repository R --commit C --changes changes.json --output plan.json
+validate-plan --repository R --commit C --changes changes.json --plan plan.json
+no-work --repository R --commit C --changes changes.json --plan plan.json --output result.json [--stage engineering|current|delta|build]
+validate-no-work --repository R --commit C --changes changes.json --plan plan.json --result result.json [--stage engineering|current|delta|build]
+```
+changed-path JSON schema_version=1 恰含 `schema_version/mode/candidate/base/head/complete/change_count/changes`；mode 为 current 或 pr，candidate 恰为 `{commit,tree}`，current 的 base/head 必须为 null，PR 为 B/H；complete 必须为 true，整数 change_count 必须等于 changes 长度。每条 change 恰为 `{status,old,new}`，status 为 A/D/M/R；端点恰为 `{path,mode,oid}`，A 的 old 和 D 的 new 为 null，M 同名且 blob/mode 有变化，R 两端异名且均入范围；普通文件 mode 仅 100644/100755，oid 非零 40 位小写 SHA。拒绝重复端点、未知字段、缺项、候选/树不符和不完整声明；空白/Unicode 路径完整保留，不按换行或 shell 单词拆分。
+plan schema_version=1 恰含 `schema_version/status/mode/candidate/base/head/filemap_sha256/scope_sha256/paths/declared_require/resources/selected_stages/stages/tools/cache_layers/materials`，status=planned；paths 为有序 `{path,pattern,require}` 列表，declared_require 是路径声明并集，resources 是依赖闭包。每个阶段为 `{resources,status}`，status 为 required/not-required/not-applicable；current 的 delta 为 not-applicable，完整资源闭包保留，其余选择、工具/缓存/材料只汇总适用阶段。FILEMAP 原字节和规范 JSON 范围摘要绑定候选；计划只有经重算匹配后才可消费，缺失/失败/篡改计划不得当成功。
+no-work schema_version=1 恰含 `schema_version/status/exit/stage/candidate/mode/base/head/filemap_sha256/scope_sha256/paths/resources/stages/executed/artifacts`；status=not-required、exit=0、executed/artifacts 均为空。未指定 stage 只接受空资源计划；指定 stage 只接受该阶段为 not-required 的有效计划。非空必需阶段、not-applicable 阶段、错误身份、错误 JSON 类型、伪造 DLL/report/TRX 或失败上游计划均拒绝；这表示明确不需要资源，不声称执行测试或生产报告。
+
+**共享入口与谓词。** CI 与 preflight 共用以下阶段实现；已请求资源内部按登记受影响输入增量执行，明确不需要资源时消费经验证的 not-required 结果。
+
+| 阶段入口 | 资源内的执行义务 |
 |---|---|
-| `make -C tools engineering` | solution 与反证工程的 locked restore、候选 warnings-as-errors build、登记为 CI 执行成员的当前工程测试各一次（保留 ScriptTests 排除）、selftest 字节比对、CompileFailProof 与 BannedApi 两项反证编译证明。反证须核对预期诊断,不能以任意编译失败顶替;缓存不得省去所需 restore 或反证检查。 |
-| `make current` | 增量 Lean build 与报告生产、Scribe、filemap、当前树不变量。复用本轮候选 DLL 与工程产物,不重复 engineering。 |
-| `make delta BASE=<sha>` | 候选相对 base 的分区、保护面、首次冻结、棘轮及其余跨树约束;消费本轮 current 报告与 engineering 证据,不重跑共同工作。 |
+| `make -C tools engineering` | solution 与反证工程的 locked restore、候选 warnings-as-errors build、登记 CI 测试按受影响输入各执行一次或验证复用成功证据、selftest 字节比对、CompileFailProof 与 BannedApi 两项真实反证编译。反证须分别核对预期诊断，不得用任意编译失败顶替；缓存命中不得省去所需 restore、selftest 或反证检查。ScriptTests 保持 `ci=false`。 |
+| `make current` | 依请求执行增量 Lean build/report、真实 Scribe 内容编译、filemap 与当前树不变量；复用同轮候选 DLL 与工程产物，不重复 engineering。 |
+| `make delta BASE=<sha>` | 候选相对 base 的分区、保护面、首次冻结、棘轮及其余跨树约束；消费绑定同轮候选的必要 current/engineering 接受证据，不重跑共同工作。 |
 
-引擎须有独立 `check-current` / `check-delta` 入口与不同的类型化 context。current context 只含当前树及其当轮产物,类型中不得有 baseline 或 changes;delta context 明确携带候选、base 数据、差异与绑定候选的证据。不得以空 changes 或 `base=candidate` 模拟 current。划分落在**谓词级**:同一规则若同时含当前有效性与跨树约束,须分别归属,不能只按规则名整条搬移。已有 delta-only 定义域及债务收缩作用域保持不变,包括 SL-029/030/031/032 等现有门;不得借拆分把它们改成 current 全树门、重判存量或漏掉跨树约束。
+引擎须有独立 `check-current` / `check-delta` 入口与不同的类型化 context。current context 只含当前树及其当轮材料，类型中不得有 baseline 或 changes；delta context 明示候选、base 数据、差异和接受证据。不得以空 changes 或 `base=candidate` 模拟 current。划分落在**谓词级**：同一规则内的当前有效性与跨树约束须分别归属，不能只按规则名整条搬移。已有 delta-only 定义域及债务收缩作用域保持不变，包括 SL-029/030/031/032；不得借拆分改成 current 全树门、重判存量或漏掉跨树约束。
 
-工程分类、程序集身份、CI 执行成员、生产属主、测试债务分区、项目引用和 Compile 源 include/exclude（含共享链接）的唯一数据真源为 FILEMAP 登记的 `Meta/engineering-projects.json`。engineering、拓扑与候选工程证据消费同一严格 reader；禁止从项目/目录名称、`IsTestProject`、xUnit 引用、SDK、MSBuild 求值或源语义自行发现这些事实。登记 glob 可在已跟踪源上展开；缺失、重复、未覆盖输入明确失败并补登记，不作全仓兜底。拓扑债务身份、集合包含/严格收缩棘轮、ScriptTests CI 排除与两项反证编译保持。
+工程分类、程序集身份、role/ci/owner、测试债务分区、项目引用与 Compile include/exclude（含共享链接）的唯一数据真源为 FILEMAP 登记的 `Meta/engineering-projects.json`；engineering、拓扑与候选工程证据消费同一严格 reader。禁止从项目/目录名称、`IsTestProject`、xUnit 引用、SDK、MSBuild 求值或源语义发现这些事实；登记 glob 只在已跟踪源上展开，缺失、重复、未覆盖输入明确失败并补登记，不作全仓兜底。候选 version-1 行的 13 个字段均必填（原十字段及 `root_namespace/namespace_exclude/global_namespace_exceptions`）；顶层 `rule_build_inputs` 必填并逐路径登记，缺失、重复或指向不存在的文件均拒绝，不按 basename 或祖先目录推断配置成员。规则源码现有窄域不变。
+Scribe statement projection 的非空 changes 分支消费 `Meta/ReportProducers/scribe-content.json` 中登记的 scripts/projects/materials、显式项目引用闭包及 Compile include/exclude；空 changes（null）分支仍无条件验证，不冒领增量。工程登记或 producer 登记本身修改须唤醒对应检查。producer/compiler 身份只取相关已登记项目及其引用闭包的五字段 `path/assembly/include/exclude/references` 投影和所需材料字节；namespace、CI/owner/partition 等执行策略字段与无关项目行均不进入该指纹。
+base reader 由候选拥有，version-1 仅必读 `path/assembly/role/ci/references/owner/owned_test_assembly/test_partition` 八字段，忽略不消费的 Compile/namespace/execution 策略字段；历史原十字段登记无需补候选字段，当前候选仍严格验证。base 无 manifest 时，候选 current/historical 显式登记寻址历史项目字节，不运行旧发现器。engineering 按候选登记选择当前测试，Scribe 共用检查亦不得按 base 选测试或检查；delta 只把 base 项目集合当数据核验存在性及成功覆盖地板，不再执行测试。
+当轮接受记录可包含显式验证复用的原成功 TRX，但须核对当前登记输入指纹、声明身份/环境和绑定的原始 TRX/材料，保留原执行 candidate/round，不能把旧执行改写成当前新跑。项目被删、禁用、漏跑且无有效复用、失败或缺有效接受证据均阻断；陈旧或另一候选的成功本身、重新运行 base 测试均不能补证。拓扑债务身份、集合包含/严格收缩棘轮保持。
 
-候选 version-1 工程行的 13 个字段均必填：原十字段加 `root_namespace`、`namespace_exclude`、`global_namespace_exceptions`；顶层 `rule_build_inputs` 必填并逐路径登记规则引擎配置输入，缺失、重复或指向不存在的文件均拒绝，不按 basename 或祖先目录推断配置成员。规则源码的现有窄域与 current/delta 谓词定义域保持。statement projection 的非空 changes 分支消费既有 `Meta/ReportProducers/scribe-content.json` 的 scripts/projects/materials、显式项目引用闭包及 Compile include/exclude；空 changes（null）分支仍无条件验证，不宣称增量。工程登记文件和 producer 登记文件本身的修改会唤醒对应检查。producer/compiler 身份只取相关已登记项目及其引用闭包的 `path/assembly/include/exclude/references` 投影和所需材料字节，不纳入 namespace、CI/owner/partition 策略或无关项目行。base reader 由候选拥有，version-1 仅必读 `path/assembly/role/ci/references/owner/owned_test_assembly/test_partition`，忽略它不消费的 Compile/namespace/execution 策略字段；原十字段历史登记无需补候选字段，当前候选仍严格验证。base 实际项目覆盖与丢失项目的候选 TRX 地板不变。
+**测试分析退役。** 调用图/IO 测试分析、Scribe 方法映射、其唯一规则消费者 SL-003 的 parser-unknown 债务分支及 280/281 容量、身份收缩条款退役；方法映射不构成调度权威。SL-003 原有行数/目录容量、no-growth、作用域与容量棘轮保留。仅为映射推导服务的编译元数据导出、运输和加载一并退役；候选 DLL/二进制材料封印、轮次与候选身份及上述真实执行与 TRX 校验仍须履行。登记缺口由真实 CI 暴露后补最小登记与原生行为测试，不重建分析器。
+共享 build 的预期项目集合为工程登记中除 `compile-fail-proof` 外的项目，含 `ci=false` 的正常构建项目。逐项读取 `build/ci/build-outputs/<仓根相对项目路径>.outputs`，缺失即失败；收据项目路径和 PE 程序集身份须匹配登记，邻近未选中收据不参与运输。编译器 FileWrites、TargetPath 与 ref 输出只验证已声明项目产物；收据第四行 `packages=$(NuGetPackageRoot)` 提供同一绝对包根，`Meta/package-materials.json` 只展开一次，不以 assets.json 的包/文件清单发现材料。
 
-本层 engineering 按候选登记执行当前测试项目,不按 base 选择;Scribe 共用检查亦不得按 base 选测试或检查。delta 只把 base 的测试项目集合当数据读取,并用**本轮、同一候选身份绑定的 TRX** 确认这些项目已在候选中成功执行。项目被删、漏跑、执行失败或缺少有效成功证据均阻断;历史 TRX、另一候选的成功或重新运行 base 测试不能补证。此核验不再执行测试,也不引入 base 判官。 base 尚无 manifest 时,候选 current/historical 显式登记寻址历史项目字节,不运行旧发现器。按登记的受影响输入选择执行和验证复用成功证据仍是后续独立实现层,本层不宣称已完成按需选测。
+**产物、退出与摘要属主。** producer 交付报告、候选 DLL、TRX 与工程证据时，每份产物须可核对候选身份、来源和完整性。预建 DLL 只可在确认由该候选源码生成后执行；无法确认的缓存产物由 producer 弃用并从候选构建。报告生产入口拥有增量生产及校验，消费者只校验和消费交接结果；必需报告或接受证据缺失、格式错误、身份不符即失败，不在下游静默重跑生产或把未执行记成成功。候选绑定与材料指纹只用于验证及增量失效，不作远端缓存兼容选择器。
+资源适配须让 `CommonExecutionEvidence.CommonStageRecord` 的固定 BuildSteps/EngineeringSteps/CurrentSteps、ValidateBuild/ValidateCurrent/ValidateEngineering/ValidateCommon 与 `CiTransport` 的 transport-pack/transport-verify 显式运输并验证两类结果：已执行/经验证复用的 bundle，或绑定同一候选与完整范围的 not-required 结果。按 plan 的必要资源选择验证器，先验证上游 job 成功及身份；不能靠删 upload/download 让要求执行产物的验证器接受空产物。
+共享程序入口拥有全部输入/报告验证、退出归一与摘要，包括早退出口；YAML/preflight 只编排和传递结果。摘要须区分执行、验证复用、not-required、跳过、未执行与失败，列明已取得的候选身份、实际检查/测试项目结果、报告和工程证据，保留原始失败原因。raw `0` 为成功、`1` 为候选检查失败或 merge 冲突、`2` 为输入/基础设施失败、`3` 仅为 SL-022 保护面变更注记；只有其它必要检查全部成功时才可归一 `3`，不豁免所需 Lean/检查，也不触发第二次 Lean/current。make 只承诺成功/配方失败，不把其折叠的 `2` 当原始失败分类；cache、缺失证据或未知结果均不是通过判词。
 
-**测试分析退役。** 测试归属、编译输入及影响范围按 FILEMAP 或显式 manifest 登记,不以 Roslyn 调用图、仓库路径或 IO 效果推导补全。Scribe 方法映射从未承担当前测试调度权威;其唯一规则消费者 SL-003 的 parser-unknown 债务分支及 280/281 容量、身份收缩条款退役。SL-003 直接执行原有行数和目录容量谓词,其 no-growth、作用域与容量棘轮不变,测试项目拓扑及 base 项目执行地板保留。仅为映射推导服务的编译元数据导出、运输和加载一并退役;候选 DLL/二进制材料封印、轮次和候选身份、locked restore/build、真实 Scribe 内容编译、工程测试、selftest、两项反证编译和 TRX 校验继续执行。登记缺口由后续真实 CI 暴露后补最小登记与原生行为测试,不重建分析器。
+**Workflow 与消费者。** `ci-push.yml` 承载 `dev`、`integration-*` 的 push 与 `workflow_call`，运行独立的 engineering/current 检查。`ci-pr.yml` 只承载目标为 `dev` 与 `integration-**` 的 `pull_request_target`；每轮只解析一次 M 及其第一父 B，连同固定触发 head 将不可变身份传给调用的 push 流程与 delta。所有检查 jobs 均检出同一个 M，禁止各 job 重新解析可变 merge ref，merge ref 不可用即失败；被调用 PR jobs 缓存只读。B 只作 PR 完整范围校验和 delta 的数据，不进入 current context；delta 依赖两个共享阶段成功及有效结果交接，不重跑 engineering/current。
+最终 PR checks 为 `push / engineering`、`push / current`、`delta`；dev push checks 为 `engineering`、`current`。必须以新 workflow 的真实 integration run 核对 GitHub 实际名称，再按交付次序同步 required set，保持 `strict=false`；不得以 ancestry、追平门或 admin bypass 代替。YAML 只含事件、权限、checkout、依赖与运输编排，不内置缓存地址、JSON 处理、测试选择、报告验证或判词/摘要业务逻辑。
+workflow/preflight 必须在 SDK、keys/cache restore、artifact 操作前消费计划；无资源时 required check jobs 仍运行共享 no-work 验证并成功退出，不用整 job skip 或缺席 check，不编译判官、执行检查或下载/恢复缓存。切换 workflow 时须原子适配 watcher、`AdmissionTopology`、FILEMAP、summary/advisory 的 DLL 假设、delta 的必要结果 join 与 truth-release，删除旧 job 名、旧拓扑及替代掉的重复逻辑。
+`truth-release` 只消费明确指定的 dev commit 的两个 push checks 成功及其报告 artifact，并校验 artifact 绑定该 commit；不得追逐移动 dev tip、等待该 commit 的 PR delta 或借用另一 commit 的报告。not-required 不伪造报告，未生产报告即不得声称或触发发布。报告 producer 输入只由 FILEMAP 或显式 manifest 登记，不从程序或 workflow YAML 文本动态推导；入口迁移须同步声明闭包与消费者，不丢失生产依赖。
 
-共享 build 的预期项目集合为工程登记中除 `compile-fail-proof` 外的项目（含 `ci=false` 的正常构建项目）。逐项读取 `build/ci/build-outputs/<仓根相对项目路径>.outputs`,缺失即失败;收据声明的项目路径和 PE 程序集身份必须匹配登记。邻近未选中收据不参与运输。编译器 FileWrites、TargetPath 与 ref 输出只验证已声明项目的产物。收据第四行 `packages=$(NuGetPackageRoot)` 提供同一绝对包根;`Meta/package-materials.json` 只展开一次,不以 assets.json 的包或文件清单发现运输材料。
+**缓存与增量报告。** 只在已请求资源内向 `lean_actions` 请求声明层。以结构化解析器从 `lake-manifest.json` 读取 mathlib 的 resolved revision；Lean dependency/project/report 共享该兼容分区，二进制另按 OS/arch 隔离，分区仅由 resolved mathlib revision 与 OS/arch 决定，`elan` 安装缓存独立。tag、请求 ref、执行指纹、完整源码/config 或 commit 不进入远端兼容选择器。Actions 的 run ID/attempt 只区分不可变快照实例，不参与兼容判定；PR 只恢复，dev push 成功生产后保存，并发 run 不覆盖彼此快照。
+保留定时 GitHub Release 缓存发布；仅在 Actions 无可用种子时回落同分区成功 Release 快照。删除 exact/config-prefix/same-toolchain 回落层级，不跨分区借种。donor 与 stamp 使用同一分区口径；同 mathlib metadata 变化不得删除 `.lake`。缺缓存、损坏、传输失败或保存失败须可诊断地降级正常构建，不能仅因缓存不可用而阻断本可完成的检查；真实 locked restore/build/Lean/测试/规则失败仍须阻断。
+所请求的 Lean/report 命中仍进入各自增量生产，缓存只提供起点，不提供通过判词。报告 producer 保留模块增删、源 hash、反向依赖闭包和材料完整性的失效覆盖；producer 声明闭包、Lean 选项或语义环境变化所需重算在增量 producer 内完成，不用改远端分区代替失效判断。同 mathlib 源码变化只重算受影响闭包；纯 metadata 变化须零 Lean 模块重编、零报告模块检查且保留 `.lake`；同环境增量结果必须等于干净完整生产（incremental=full）。
 
-**产物、退出与摘要属主。** producer 将报告、候选 DLL、TRX 与工程证据交给下游,每份产物必须能核对其候选身份、来源与完整性。预建 DLL 只可在确认由该候选源码生成后执行;无法确认的缓存产物须弃用并从候选构建。报告生产入口拥有增量生产与校验,消费者只校验和消费交接结果;必需报告或当轮证据缺失、格式错误、候选身份不符即失败,不得在下游静默重跑生产或把未执行记成成功。候选绑定与材料指纹用于验证和增量失效,不得变成远端缓存兼容选择器。
-
-共享程序入口拥有全部输入/报告验证、退出归一与摘要,包括早退出口;YAML 与 preflight 只编排和传递这些结果。摘要须如实区分执行、跳过、未执行和失败,列明已取得的候选身份、实际检查与测试项目结果、报告及工程证据,保留可诊断的原始失败原因。raw `0` 为成功,`1` 为候选检查失败或 merge 冲突,`2` 为输入/基础设施失败,`3` 只表示 SL-022 保护面变更标注。只有其它必需检查全部成功时才可把该标注归一为阶段成功;它不豁免 Lean 或任何检查,也不触发第二次 Lean/current。make 只承诺成功/配方失败,不能把其折叠后的 `2` 当作原始失败分类。cache 状态、缺失证据或未知结果都不是通过判词。
-
-**Workflow 与消费者。** `ci-push.yml` 承载 `push` 到 `dev` 与 `workflow_call`,运行 engineering/current。PR 调用固定传入候选 SHA,被调用 jobs 检出该候选且缓存只读。`ci-pr.yml` 只承载 `pull_request_target`,目标分支保持 `dev` 与 `integration-**`;每轮只解析一次 merge 候选 M 及其第一父 B,将不可变身份传给调用的 push 流程与 delta。所有检查 jobs 均检出同一个 M,B 只供 delta 使用;各 job 不得重新解析可变 merge ref,merge ref 不可用即失败。delta 依赖两个共享阶段的成功与产物交接,不再运行 engineering/current。
-
-最终 PR checks 规定为 `push / engineering`、`push / current`、`delta`;dev push checks 为 `engineering`、`current`。必须用新 workflow 的真实 integration run 核对 GitHub 实际名称,再按下述落地次序同步 required set;`strict=false` 保持,不以 ancestry、追平门或 admin bypass 代替该模型。YAML 只含事件、权限、checkout、依赖与运输编排,不得内置缓存地址、JSON 处理、测试选择、报告验证或判词/摘要业务逻辑。
-
-切换 workflow 时须原子迁移 watcher、`AdmissionTopology`、FILEMAP 与 truth-release 的现役消费者,删除旧 job 名、旧拓扑与已被替代的重复逻辑。`truth-release` 只消费明确指定的 dev commit 的两个 push checks 成功及其报告 artifact,并校验 artifact 绑定该 commit;不得追逐移动 dev tip、等待该 commit 的 PR delta 或借用另一 commit 的报告。报告 producer 的输入由 FILEMAP 或显式 manifest 登记,不从程序或 workflow YAML 文本动态推导;入口迁移必须同步闭包与消费者,不得丢失生产依赖。
-
-**缓存与增量报告。** 用结构化解析器从 `lake-manifest.json` 读取 mathlib 的 **resolved revision**。Lean 依赖、项目构建与报告缓存共享该兼容分区,二进制另按 OS/arch 隔离;即分区只由 resolved mathlib revision 与 OS/arch 决定。tag、请求的 ref、完整配置/源码指纹、commit SHA 均不得成为兼容选择器;`elan` 安装缓存独立。Actions 快照只以 run ID/attempt 区分不可变发布实例,该后缀不参与兼容判定。PR 只 restore,dev push 仅在成功生产后 save,并发 run 不覆盖彼此快照。
-
-保留定时 GitHub Release 缓存发布;仅在 Actions 无可用种子时,回落**同分区的成功 Release 快照**。删除 exact/config-prefix/same-toolchain 回落层级,不得跨分区借种。donor 与 stamp 使用同一分区口径;同 mathlib 的 metadata 改动不得删除 `.lake`。缺缓存、损坏、传输失败或保存失败须可诊断地降级为正常构建,不能阻断仅因缓存不可用而本可完成的检查;真实 restore/build/Lean/测试/规则失败仍必须阻断。
-
-所有命中均须进入 Lake 与报告的增量执行,缓存只提供起点,永不提供通过判词。报告 producer 必须保留模块新增/删除、源 hash、反向依赖闭包与材料完整性的失效覆盖。producer 闭包、Lean 选项或语义环境变化所需的重算在增量 producer 内完成,不得靠改变远端兼容分区逃避失效判定。相同 mathlib 下源码变化只重算受影响闭包;纯 metadata 变化应为零 Lean 模块重编、零报告模块检查;同环境的增量结果必须等于干净生产。
-
-**验收矩阵。** 后续实现须先写程序行为测试再改程序;不新增 workflow 文本形状测试。至少覆盖以下放行与阻断边界,并以实际检查/产物证据判定,不能只比较最终退出码:
+**验收矩阵。** 程序变更先写原生行为测试再改程序；轻量计划由 C# 测试调用真实进程及共享 canonical fixtures，覆盖混合资源并集、无缓存检查、严格声明/输入拒绝、NUL 增删改名/模式/空白路径和 glob 正反例。禁止 Python 测试套件与 workflow 文本形状测试替代真实行为。以下放行/阻断边界须观察实际检查与产物，不能只比较最终退出码：
 
 | 场景 | 必须观察到的结果 |
 |---|---|
-| 无父提交、无 remote、无 BASE 的 push | engineering/current 完整执行各一次,无基线读取、无 delta。 |
-| PR 无冲突分叉或可快进;脏树、缺失/非法 base、冲突 | 合法候选按 merge-tree 判,无祖先要求;坏输入或不可合并阻断,所有出口清理临时候选。 |
-| 相同候选树/base/工具链的 CI 与 preflight | 检查集及判词一致,共同测试、Lean/report 不重跑,PR 各 job 的 M 一致,delta 的 B 为该 M 第一父。 |
-| 混分区、非法首次冻结、棘轮违规、base 测试项目未成功执行 | delta 逐项阻断,对应合法例放行;既有 delta-only 存量作用域不变。 |
-| 缺报告、交接身份错误、陈旧或另一候选 TRX/DLL | 必需证据校验失败;缓存材料不可用时由 producer 正常重建,不得假绿。 |
-| 同 mathlib 源码变化与纯 metadata 变化 | 前者仅重算受影响闭包;后者 Lean 模块重编与报告模块检查均为零,且保留 .lake。 |
-| mathlib 升级、OS/arch 变化 | 切换隔离分区,不复用跨分区种子;同分区增量结果等于同环境干净生产。 |
-| producer/Lean 选项/语义环境变化,模块增删或材料损坏 | producer 内必要失效及反向依赖重算完整,无旧报告残留或漏检。 |
-| absent/corrupt/transfer-failed/save-failed/concurrent caches | 仍进入真实增量构建与报告;缓存失败可降级,实际检查失败必阻断,并发快照互不覆盖。 |
+| 完整范围均声明 `require=[]` | 验证候选/完整范围绑定的 not-required；dotnet/lake/cache 一经调用即失败的负向装置仍放行，无伪造 DLL/report/TRX。 |
+| 无父、无 remote、无 BASE 的 current/push | 按声明执行所需 engineering/current 各一次或验证 not-required，无基线读取、无 delta；current 供给者完整性断言的未证明边界保持。 |
+| PR 无冲突分叉或可快进；脏树、非法/缺失 base、冲突 | 合法候选按 merge-tree 判，无 ancestry 门；坏输入/不可合并阻断，所有出口清理临时候选。B→M 清单截断即使计数自洽也拒绝。 |
+| 同候选树/base/完整范围/工具链的 CI 与 preflight | 资源/检查集及判词一致，共同工作不重跑；各 job 的 M 一致，B 为该 M 第一父。 |
+| 混分区、非法首次冻结、棘轮违规、base 项目无有效成功覆盖 | delta 逐项阻断，对应合法例及有效 TRX 复用放行，既有 delta-only 存量作用域不变。 |
+| 必需报告/接受证据缺失、交接身份错误、陈旧或另一候选 TRX/DLL | 无有效候选接受绑定即失败；不可用缓存由 producer 正常重建，不假绿；有效 not-required 不索取未声明产物。 |
+| 同 mathlib 源码变化或纯 metadata 变化 | 前者只重算受影响闭包；后者零 Lean 重编、零报告模块检查并保留 `.lake`。 |
+| mathlib 升级或 OS/arch 变化 | 切换隔离分区，不用跨分区种子；同分区增量结果等于同环境干净完整生产。 |
+| producer/Lean 选项/语义环境变化、模块增删或材料损坏 | producer 内必要失效及反向依赖重算完整，无旧报告残留或漏检。 |
+| absent/corrupt/transport-failed/save-failed/concurrent caches | 所需资源仍进入真实增量构建/报告；缓存失败可降级，实际检查失败必阻断，并发快照互不覆盖；缺必需证据不因命中而成功。 |
 
-**分层落地与证据。** 通过 `make worktree` 隔离实施,依次以独立 PR 落地本 A22 规范、入口/类型/谓词与 preflight、缓存、workflow 与其消费者原子迁移;可按职责继续拆小,每层须能独立通过当期 required checks,判官与内容不混 PR。接口首次改变时同步其实际调用者及行为测试,包括 Make help、agent/skill 调用链与对应说明;删除被替代的入口、重复判决、缓存层级与陈旧注释,不留 alias、stub 或双读。CLAUDE.md 等操作指导只在实现已改变行为的那一层同步,不由规范层提前冒领。
-
-每层在 integration 上通过检查后,还须以最小触发 PR 在真实事件中验证新判据的具名拒绝或放行;测试载荷验完关闭不合并。特别是 `pull_request_target` 从 base 取 workflow,必须核对 run **实际执行的 workflow revision**,旧文本下的绿不算新 workflow 已验;同轮复核本地 merge-tree 与 GitHub M 的 tree 一致。向 dev 开 PR 前,将最新 dev 合入 integration,在含其新增量的集成树上复测 engineering/current 及真实 PR delta,不豁免分区、首次冻结或棘轮。留存对应候选/base、workflow revision、具名 checks、报告/工程证据与 run 链接;本地行为测试不能替代权限、缓存只读、拓扑、artifact 传递与报告发布的真实集成验证。合入后观察首个新 dev push 与后续 PR 的新 checks,确认实际名称与判词后更新 required set 并复核 `strict=false`;失败须按仓库流程修复或撤因,不作 admin bypass。规范合入、程序完成或某一轮绿均不单独代表完整目标完成。
+**分层落地与证据。** 通过 `make worktree` 隔离实施，以独立 PR 分层交付规范、入口/类型/谓词与 preflight、缓存、workflow 与消费者原子适配；每层独立通过当期 required checks，判官与内容不混 PR。接口变化时同步实际调用者、原生行为测试、Make help、agent/skill 调用链及说明，删除替代掉的入口、重复判决、缓存层级与陈旧注释，不留 alias/stub/双读；操作指导随实际行为改变同步，不提前冒领实现。
+每层 integration 检查后，另以最小触发 PR 验证新判据的具名拒绝与放行，探针验后关闭不合。逐 run 核对实际事件、入口 workflow 的仓库/路径/不可变修订、候选 M 与 B、被调用 reusable workflow 修订；`pull_request_target` 入口来自 base 仓库默认分支，不由 integration 目标选择。旧 workflow 的绿不算新版本证据；替代事件须披露原生语义/权限覆盖缺口，同轮核对本地 merge-tree 与 GitHub M 的 tree 一致。SDK/cache/artifact 分支、权限、PR 缓存只读、拓扑、必需 checks、报告发布与增量成本须真实事件验证，本地测试不替代。
+交付方按现行 CLAUDE 8.12/8.14 逐原 PR 镜像、分析及必要复验，完成全部受影响行为/事件覆盖、可比性能和独立评审，并以实际候选 CI 版本连续计满 16 个合格 integration PR（候选 required checks 与合入后首个 push 必需 checks 均成功）。正常内容 SHA 前移不重置 CI 版本资格，非预期失败须诊断复验并重新计满，重跑成功不抹去失败；预登记命中预期判词的负向探针不计条数。无最短时长或 dev-tip 追平门，禁止批量合并 dev、打包多个原 PR 或直接 push 同步；只有实测冲突/不兼容才按职责逐层重落。
+未合格保持实际测试分支的跟踪 Draft 且 auto-merge 关闭；达标后由同一分支及 Draft 经普通门交付 dev，保留合法原 PR 同步内容/历史，仅清理专用载荷与临时 wrapper。留存候选/base、实际 workflow 修订、具名 checks、报告/工程证据及 run 链接；合入后观察首个新 dev push 与后续 PR，确认实际名称和判词后更新 required set 并复核 `strict=false`，失败按仓库流程修复或撤因，不作 admin bypass。规范修改、程序完成或某轮本地绿均不代表完整目标完成。
 
 ---
 
