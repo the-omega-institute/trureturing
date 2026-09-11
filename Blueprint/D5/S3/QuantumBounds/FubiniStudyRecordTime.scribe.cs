@@ -73,9 +73,9 @@ internal sealed class FubiniStudyRecordTimeDocument : IScribeDocumentDefinition
                         + "an explicit assumption, not a conclusion about arbitrary parallel devices."))),
                 DescribeRole.Theorem))));
 
-    private static Formula Norm(Formula x) => Seq(Vert, x, Vert);
+    private static Formula Norm(Formula x) => Seq(Vert, Sp, x, Sp, Vert);
 
     private static Formula Angle(string x, string y) => Seq(
         Operatorname, Grp(F.Id("arccos")), Open,
-        Norm(Seq(Langle, F.Id(x), Comma, F.Id(y), Rangle)), Close);
+        Norm(Seq(Langle, Sp, F.Id(x), Comma, F.Id(y), Sp, Rangle)), Close);
 }
