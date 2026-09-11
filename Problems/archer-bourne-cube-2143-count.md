@@ -5,6 +5,7 @@ doi: 10.46298/dmtcs.17199
 triage: window
 motivation_gids:
   - D5/S3/ConceptDynamics/PatternAvoidance/RotationSumPowerPatternAvoidance
+  - D5/S3/ConceptDynamics/PatternAvoidance/ArcherBourneDecomposition
 ---
 
 # Archer-Bourne cube-avoidance counting equality
@@ -36,10 +37,10 @@ formal input to the counting bridge.
 
 ## Gap
 
-The repository has frozen the criterion for a given list of positive block
-sizes. It has not formalized the external conjecture's counting equality.
-The missing decomposition and bijection are candidate theorem 6.222 in the
-theory volume and remain open in the repository.
+The formalization route is complete. Candidate theorem 6.222 supplies the
+decomposition, uniqueness of the indexing composition, and the restricted
+cardinality bijection needed to combine the earlier cube criterion with the
+published source results.
 
 ## Route
 
@@ -49,19 +50,19 @@ size fails to divide `r`. Its frozen cube specialization,
 `rotationSumPerm_cube_avoids_2143_iff`, makes the exceptional sizes precisely
 those outside `{1,3}`.
 
-The missing formal half is the decomposition of every 312/321-avoiding
+The completed formal half is the decomposition of every 312/321-avoiding
 permutation as a direct sum of cyclic rotations, its bijectivity with
 compositions of `n`, and the restriction of that bijection to transport
 cardinalities using the cube criterion. Archer and Bourne already prove the
 decomposition in Lemma 3.1 on page 4 and identify the bijection on page 5;
-this missing half is formalization of a published result, not new
+this part is formalization of a published result, not new
 mathematics. The worker read both passages in the fetched PDF.
 
-Mathematically, combining that published bijection with the frozen criterion
-gives the conjectured equality. The repository has not formalized the
-statement of the conjecture or that counting bridge. This dossier does not
-assert that the repository proved the Archer-Bourne conjecture, and it adds
-no resolution claim binding.
+`card_avoids_312_321_cube_2143_eq_compositions` combines the formalized
+bijection with the frozen criterion and proves the conjectured equality. Its
+Scribe declaration carries this problem's `Proved` resolution claim. The
+decomposition and bijection retain literature provenance, while this final
+counting theorem is repository-derived.
 
 ## Falsifier
 
@@ -79,6 +80,12 @@ certify those properties.
   `D5/S3/ConceptDynamics/PatternAvoidance/RotationSumPowerPatternAvoidance.lean`.
 - Public criterion theorems: `rotationSumPerm_pow_avoids_2143_iff` and
   `rotationSumPerm_cube_avoids_2143_iff`.
+- Frozen bridge module:
+  `D5/S3/ConceptDynamics/PatternAvoidance/ArcherBourneDecomposition.lean`.
+- Public bridge and counting theorems:
+  `avoids_312_321_iff_exists_rotationSumComposition`,
+  `rotationSumComposition_injective`, and
+  `card_avoids_312_321_cube_2143_eq_compositions`.
 - Machine-checkable frozen-state receipt:
   `Golden/Frozen/state/D5/S3/ConceptDynamics/PatternAvoidance/RotationSumPowerPatternAvoidance.lean.json`.
   The worker's `test -f` exited 0 on 2026-09-07.
@@ -87,15 +94,14 @@ certify those properties.
   `daec95fcbbf9b2c439b1a3680af97c01fe4912c1889fd312a0a8044ab6a497c9`.
   The conjecture is on page 13; the published decomposition and bijection
   are on pages 4 and 5. Candidate 6.221 records the criterion, while 6.222
-  records the still-missing repository bridge; these numbers are provenance.
+  records the completed repository bridge; these numbers are provenance.
 
 ## Triage
 
-`window`. The frozen criterion and the paper's already-proved bijection
-give a specified route, but the repository still lacks the formal
-decomposition, bijectivity, and counting equality. A criterion theorem does
-not justify classifying the full anchored counting proposition as a frozen
-repository theorem.
+`window`. The repository route is complete: the decomposition and injectivity
+formalize the paper's source results, and the final restricted cardinality
+bijection proves the anchored counting proposition. The final theorem carries
+the problem's `Proved` resolution claim.
 
 ## ASSUMED-UNVERIFIED
 
@@ -104,9 +110,9 @@ repository theorem.
   extracted source with the Lean criterion, including rotations and
   avoidance conventions, is human reading evidence, not a proof of
   source-to-Lean equivalence.
-- The decomposition and bijection are proved in the external paper but
-  are not formalized in this repository. No kernel receipt for the
-  counting equality is supplied or implied.
+- The decomposition and bijection are source results formalized in the
+  repository. Their identification with the paper's prose remains a reading
+  comparison rather than a machine-verified translation.
 - The API metadata and journal DOI redirect are caller-supplied readings
   dated 2026-09-07. The worker independently fetched and extracted the v3
   PDF, but did not repeat those metadata requests or rebuild Lean.
