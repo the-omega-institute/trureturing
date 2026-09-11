@@ -4,6 +4,7 @@ import gzip
 import json
 import pathlib
 import resource
+import subprocess
 import sys
 import tempfile
 
@@ -53,4 +54,15 @@ def probe(mebibytes):
 
 
 if __name__ == "__main__":
+    if sys.argv[1:] == ["--experiment"]:
+        results = [json.loads(subprocess.check_output(
+            [sys.executable, "-m", "tests.structure_frontier_probe", str(size)],
+            cwd=pathlib.Path(__file__).resolve().parents[1], text=True)) for size in [1, 128]]
+        delta = results[1]["rss_bytes"] - results[0]["rss_bytes"]
+        limit = 16 * 1024 ** 2
+        print("FRONTIER_RSS " + json.dumps({
+            "scope": "separate child process peaks: frontier generation, graph analysis and publication",
+            "samples": results, "rss_delta_bytes": delta, "limit_bytes": limit,
+            "passed": delta < limit}), flush=True)
+        raise SystemExit(0 if delta < limit else 1)
     print(json.dumps(probe(int(sys.argv[1]))))
