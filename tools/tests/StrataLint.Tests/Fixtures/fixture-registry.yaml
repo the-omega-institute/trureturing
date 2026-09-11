@@ -24,6 +24,7 @@ governance_documents:
 agent_files:
   - "CONTEXT.md"
   - "adversary.md"
+  - "prover.md"
 artifact_kinds:
   json:
     profile: structured-json
@@ -45,5 +46,3 @@ artifact_kinds:
     path_selectors:
       - "experiments"
       - "formal"
-
-# CI integration probe: registered judge fixture plus content report; expected rejection.
