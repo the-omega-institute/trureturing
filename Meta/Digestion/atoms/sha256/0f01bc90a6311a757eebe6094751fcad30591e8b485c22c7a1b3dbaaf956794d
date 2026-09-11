@@ -1,0 +1,13 @@
+**定理 41（不动点、最大黄金因数与纤维盒）。** \(b\) 单调、幂等且 \(0\le b(a)\le a\)；其不动点恰为 \(G_L-1\)。所以 \(\operatorname{Gobs}(n)\mid n\)，\(\operatorname{Gobs}\) 幂等并保持整除序，其值是 \(n\) 的最大黄金因数。若 \(g\) 是黄金不动点，写
+\[
+v_p(g)=G_{L_p}-1,\qquad
+T(g)=\prod_p p^{G_{L_p+1}-2},
+\]
+则
+\[
+\operatorname{Gobs}(n)=g\iff
+\forall p\quad G_{L_p}-1\le v_p(n)\le G_{L_p+1}-2
+\iff g\mid n\mid T(g).
+\]
+槽外的 \(L_p=0\)，相应区间仅为 \(\{0\}\)，因此 \(T(g)\) 是有限乘积；纤维基数为 \(\prod_{p\mid g}(G_{L_p+1}-G_{L_p})\)。
+

@@ -1,0 +1,4 @@
+**证明。** 单射需 \(2^B\ge Q\)，枚举有限状态并以 \(B_0\) 位给序号达到下界。独立码的每字段必须单射，否则只改该坐标就碰撞，计数给逐字段下界且普通二进制达到。定理 10 的完整 \(\ell\) 窗口恰表示 \([0,G_\ell-1]\)，因而包含全部 \(0\le a\le A\) 的最小字面窗口为 \(\ell_Z(A)\)。当 \(\ell_Z(A)>0\) 时 \(G_{\ell_Z(A)-1}\le A\)，其单一最高位确实出现，不能缩短。字面乘积虽只取稀疏约数集，仍包含最大值 \(M\)，普通二进制和自身规范数字的最高位强制后两式；这不改变稀疏集合的 \(B_0\) 计数下界。
+
+令 \(x_p=\log_2q_p\)。有 \(\lceil\sum x_p\rceil\le\sum\lceil x_p\rceil<\sum x_p+k\le\lceil\sum x_p\rceil+k\)，差是整数，得界。对固定 \(k\)，取全部 \(q_p=2^m+1\) 且 \(m\) 充分大使 \((1+2^{-m})^k<2\)，可得差 \(k-1\)，故一般界不能缩小。Binet 公式 \(G_j=(\phi^{j+2}-(-\phi^{-1})^{j+2})/\sqrt5\) 给 \(\log G_j=j\log\phi+O(1)\)，夹在相邻 \(G\) 之间得 \(\ell_Z(A)=\log A/\log\phi+O(1)\)，证明比值。最后 \(\log M(t)=\sum_p A_p(t)\log p=t\sum_pa_p\log p+o(t)\)，而每个 \(\log(A_p(t)+1)=\log t+O(1)\)，代入诸宽度式即得所述增长。引文为定理 10 及 [Zeckendorf 表示定理](https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Zeckendorf.html)。证毕。
+

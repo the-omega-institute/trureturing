@@ -1,0 +1,793 @@
+      "current_canonical": {
+        "whole_span_single_pair_exact": false,
+        "whole_span_atom_id": null,
+        "whole_span_cas_path": null,
+        "whole_span_yaml_path": null,
+        "complete_units": [
+          {
+            "kind": "heading region",
+            "label": "3. RH 等价判据的离散边界图谱",
+            "current": {
+              "byte_start": 4183,
+              "byte_end_exclusive": 5324,
+              "line_start": 110,
+              "line_end_inclusive": 126,
+              "byte_count": 1141,
+              "lf_count": 17,
+              "terminal_lf_count": 2,
+              "sha256": "12a7456bcdfae7970230281864ecada698bdddc0979a8557aacd5b8aba51d82a"
+            },
+            "cas_path": "Meta/Digestion/atoms/sha256/12a7456bcdfae7970230281864ecada698bdddc0979a8557aacd5b8aba51d82a",
+            "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/12a7456bcdfae7970230281864ecada698bdddc0979a8557aacd5b8aba51d82a.yaml",
+            "whole_span_byte_exact": true,
+            "yaml": {
+              "byte_count": 485,
+              "lf_count": 10,
+              "terminal_lf_count": 1,
+              "sha256": "26fe1079098d2d8684c53a1d008e22c534305e938e912df039a05927f6019bb6"
+            },
+            "actual_yaml": {
+              "fingerprints": {
+                "raw_sha256": "sha256:12a7456bcdfae7970230281864ecada698bdddc0979a8557aacd5b8aba51d82a",
+                "normalized_sha256": "sha256:12a7456bcdfae7970230281864ecada698bdddc0979a8557aacd5b8aba51d82a"
+              },
+              "cas_ref": "sha256:12a7456bcdfae7970230281864ecada698bdddc0979a8557aacd5b8aba51d82a",
+              "coverage_gids": [],
+              "receipts": {
+                "unresolved_subitems": [],
+                "chain_atoms": [
+                  "bcf626473ee6a740174e0ba59bec7045fbeefb506b8e0e54d1b18e6ea0ad74c5",
+                  "acea51c7777ee3b349436fc86bda7e92192deb63e950d0101c7ad43d1121e04b"
+                ]
+              }
+            },
+            "receipts_chain_atoms": [
+              {
+                "atom_id": "bcf626473ee6a740174e0ba59bec7045fbeefb506b8e0e54d1b18e6ea0ad74c5",
+                "parent_byte_start": 0,
+                "parent_byte_end_exclusive": 44,
+                "cas_path": "Meta/Digestion/atoms/sha256/bcf626473ee6a740174e0ba59bec7045fbeefb506b8e0e54d1b18e6ea0ad74c5",
+                "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/bcf626473ee6a740174e0ba59bec7045fbeefb506b8e0e54d1b18e6ea0ad74c5.yaml",
+                "byte_count": 44,
+                "lf_count": 2,
+                "terminal_lf_count": 2,
+                "sha256": "bcf626473ee6a740174e0ba59bec7045fbeefb506b8e0e54d1b18e6ea0ad74c5"
+              },
+              {
+                "atom_id": "acea51c7777ee3b349436fc86bda7e92192deb63e950d0101c7ad43d1121e04b",
+                "parent_byte_start": 44,
+                "parent_byte_end_exclusive": 1141,
+                "cas_path": "Meta/Digestion/atoms/sha256/acea51c7777ee3b349436fc86bda7e92192deb63e950d0101c7ad43d1121e04b",
+                "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/acea51c7777ee3b349436fc86bda7e92192deb63e950d0101c7ad43d1121e04b.yaml",
+                "byte_count": 1097,
+                "lf_count": 15,
+                "terminal_lf_count": 2,
+                "sha256": "acea51c7777ee3b349436fc86bda7e92192deb63e950d0101c7ad43d1121e04b"
+              }
+            ],
+            "new": true
+          },
+          {
+            "kind": "heading region",
+            "label": "Robin 与 Lagarias",
+            "current": {
+              "byte_start": 5324,
+              "byte_end_exclusive": 6149,
+              "line_start": 127,
+              "line_end_inclusive": 146,
+              "byte_count": 825,
+              "lf_count": 20,
+              "terminal_lf_count": 2,
+              "sha256": "8b478a638c46c345b79154ca55fad6d2829f18756a44f8806bd76c6cb8dad3ca"
+            },
+            "cas_path": "Meta/Digestion/atoms/sha256/8b478a638c46c345b79154ca55fad6d2829f18756a44f8806bd76c6cb8dad3ca",
+            "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/8b478a638c46c345b79154ca55fad6d2829f18756a44f8806bd76c6cb8dad3ca.yaml",
+            "whole_span_byte_exact": true,
+            "yaml": {
+              "byte_count": 328,
+              "lf_count": 7,
+              "terminal_lf_count": 1,
+              "sha256": "9e97a6f62017025df091c8edebda757621988907a2d605865c891d05feecd3f0"
+            },
+            "actual_yaml": {
+              "fingerprints": {
+                "raw_sha256": "sha256:8b478a638c46c345b79154ca55fad6d2829f18756a44f8806bd76c6cb8dad3ca",
+                "normalized_sha256": "sha256:8b478a638c46c345b79154ca55fad6d2829f18756a44f8806bd76c6cb8dad3ca"
+              },
+              "cas_ref": "sha256:8b478a638c46c345b79154ca55fad6d2829f18756a44f8806bd76c6cb8dad3ca",
+              "coverage_gids": [],
+              "receipts": {
+                "unresolved_subitems": []
+              }
+            },
+            "receipts_chain_atoms": [],
+            "new": false
+          },
+          {
+            "kind": "heading region",
+            "label": "Nicolas",
+            "current": {
+              "byte_start": 6149,
+              "byte_end_exclusive": 6602,
+              "line_start": 147,
+              "line_end_inclusive": 157,
+              "byte_count": 453,
+              "lf_count": 11,
+              "terminal_lf_count": 2,
+              "sha256": "29200050b4fd08cccd1cc857573725a326453823685aae7eebc6fa4687fa6a13"
+            },
+            "cas_path": "Meta/Digestion/atoms/sha256/29200050b4fd08cccd1cc857573725a326453823685aae7eebc6fa4687fa6a13",
+            "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/29200050b4fd08cccd1cc857573725a326453823685aae7eebc6fa4687fa6a13.yaml",
+            "whole_span_byte_exact": true,
+            "yaml": {
+              "byte_count": 328,
+              "lf_count": 7,
+              "terminal_lf_count": 1,
+              "sha256": "3df6788e9679fab7f5f02de40f01eaeeb682c2327afbdf2a24cf0a49d82e1bf6"
+            },
+            "actual_yaml": {
+              "fingerprints": {
+                "raw_sha256": "sha256:29200050b4fd08cccd1cc857573725a326453823685aae7eebc6fa4687fa6a13",
+                "normalized_sha256": "sha256:29200050b4fd08cccd1cc857573725a326453823685aae7eebc6fa4687fa6a13"
+              },
+              "cas_ref": "sha256:29200050b4fd08cccd1cc857573725a326453823685aae7eebc6fa4687fa6a13",
+              "coverage_gids": [],
+              "receipts": {
+                "unresolved_subitems": []
+              }
+            },
+            "receipts_chain_atoms": [],
+            "new": false
+          },
+          {
+            "kind": "heading region",
+            "label": "Li",
+            "current": {
+              "byte_start": 6602,
+              "byte_end_exclusive": 7306,
+              "line_start": 158,
+              "line_end_inclusive": 183,
+              "byte_count": 704,
+              "lf_count": 26,
+              "terminal_lf_count": 2,
+              "sha256": "f1914051a2305a19e562b367300ce86ebc9a03f9b769e9e96fcf6554484b7fe6"
+            },
+            "cas_path": "Meta/Digestion/atoms/sha256/f1914051a2305a19e562b367300ce86ebc9a03f9b769e9e96fcf6554484b7fe6",
+            "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/f1914051a2305a19e562b367300ce86ebc9a03f9b769e9e96fcf6554484b7fe6.yaml",
+            "whole_span_byte_exact": true,
+            "yaml": {
+              "byte_count": 328,
+              "lf_count": 7,
+              "terminal_lf_count": 1,
+              "sha256": "b87408e55cf30f7527a613cc8a2f8987e679969bb9239420a0c5865a3717153b"
+            },
+            "actual_yaml": {
+              "fingerprints": {
+                "raw_sha256": "sha256:f1914051a2305a19e562b367300ce86ebc9a03f9b769e9e96fcf6554484b7fe6",
+                "normalized_sha256": "sha256:f1914051a2305a19e562b367300ce86ebc9a03f9b769e9e96fcf6554484b7fe6"
+              },
+              "cas_ref": "sha256:f1914051a2305a19e562b367300ce86ebc9a03f9b769e9e96fcf6554484b7fe6",
+              "coverage_gids": [],
+              "receipts": {
+                "unresolved_subitems": []
+              }
+            },
+            "receipts_chain_atoms": [],
+            "new": true
+          },
+          {
+            "kind": "heading region",
+            "label": "Nyman-Beurling-Baez-Duarte",
+            "current": {
+              "byte_start": 7306,
+              "byte_end_exclusive": 8184,
+              "line_start": 184,
+              "line_end_inclusive": 214,
+              "byte_count": 878,
+              "lf_count": 31,
+              "terminal_lf_count": 2,
+              "sha256": "1fe75963de99fe6749b0190d7d196a245f38266ec713f250ed7b3418f334418b"
+            },
+            "cas_path": "Meta/Digestion/atoms/sha256/1fe75963de99fe6749b0190d7d196a245f38266ec713f250ed7b3418f334418b",
+            "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/1fe75963de99fe6749b0190d7d196a245f38266ec713f250ed7b3418f334418b.yaml",
+            "whole_span_byte_exact": true,
+            "yaml": {
+              "byte_count": 328,
+              "lf_count": 7,
+              "terminal_lf_count": 1,
+              "sha256": "fb4d2d66d5f30ee5103f0be68e43b94d5a3167328ef19713ddbea58fa10bd06a"
+            },
+            "actual_yaml": {
+              "fingerprints": {
+                "raw_sha256": "sha256:1fe75963de99fe6749b0190d7d196a245f38266ec713f250ed7b3418f334418b",
+                "normalized_sha256": "sha256:1fe75963de99fe6749b0190d7d196a245f38266ec713f250ed7b3418f334418b"
+              },
+              "cas_ref": "sha256:1fe75963de99fe6749b0190d7d196a245f38266ec713f250ed7b3418f334418b",
+              "coverage_gids": [],
+              "receipts": {
+                "unresolved_subitems": []
+              }
+            },
+            "receipts_chain_atoms": [],
+            "new": false
+          },
+          {
+            "kind": "heading region",
+            "label": "Baez-Duarte 系数与 Gronwall 对照",
+            "current": {
+              "byte_start": 8184,
+              "byte_end_exclusive": 9069,
+              "line_start": 215,
+              "line_end_inclusive": 239,
+              "byte_count": 885,
+              "lf_count": 25,
+              "terminal_lf_count": 2,
+              "sha256": "e474c6c816b87c60919a85653278b1e8fbd094525d6965efd8548a5c325f9bc7"
+            },
+            "cas_path": "Meta/Digestion/atoms/sha256/e474c6c816b87c60919a85653278b1e8fbd094525d6965efd8548a5c325f9bc7",
+            "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/e474c6c816b87c60919a85653278b1e8fbd094525d6965efd8548a5c325f9bc7.yaml",
+            "whole_span_byte_exact": true,
+            "yaml": {
+              "byte_count": 328,
+              "lf_count": 7,
+              "terminal_lf_count": 1,
+              "sha256": "b406671c23f87e095625bc711099bd15c49ce9800a9243e2dc9868105787f758"
+            },
+            "actual_yaml": {
+              "fingerprints": {
+                "raw_sha256": "sha256:e474c6c816b87c60919a85653278b1e8fbd094525d6965efd8548a5c325f9bc7",
+                "normalized_sha256": "sha256:e474c6c816b87c60919a85653278b1e8fbd094525d6965efd8548a5c325f9bc7"
+              },
+              "cas_ref": "sha256:e474c6c816b87c60919a85653278b1e8fbd094525d6965efd8548a5c325f9bc7",
+              "coverage_gids": [],
+              "receipts": {
+                "unresolved_subitems": []
+              }
+            },
+            "receipts_chain_atoms": [],
+            "new": false
+          }
+        ],
+        "complete_unit_concatenation_equals_whole_span": true
+      }
+    },
+    {
+      "address": "4",
+      "kind": "chapter",
+      "original": {
+        "byte_start": 10187,
+        "byte_end_exclusive": 12157,
+        "line_start": 234,
+        "line_end_inclusive": 268,
+        "byte_count": 1970,
+        "lf_count": 35,
+        "terminal_lf_count": 2,
+        "sha256": "e585f5ccbe859685e62c495b48000aebcdac58a17604ea7db34aedf9cd1b0b1c"
+      },
+      "disposition": "retained mathematics / attached citations with mapped archival fragments",
+      "type": "section: definitions, theorems, proofs, original open limitations",
+      "recovery": [
+        {
+          "recovery_span_index": 32,
+          "original": {
+            "byte_start": 10187,
+            "byte_end_exclusive": 10237,
+            "line_start": 234,
+            "line_end_inclusive": 235,
+            "byte_count": 50,
+            "lf_count": 2,
+            "terminal_lf_count": 2,
+            "sha256": "02eece2071f9332b4f8e747911a68c3f6ee23fe669f6d192e8b3b78d950d8d95"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 9069,
+            "byte_end_exclusive": 9119,
+            "line_start": 240,
+            "line_end_inclusive": 241,
+            "byte_count": 50,
+            "lf_count": 2,
+            "terminal_lf_count": 2,
+            "sha256": "02eece2071f9332b4f8e747911a68c3f6ee23fe669f6d192e8b3b78d950d8d95"
+          }
+        },
+        {
+          "recovery_span_index": 33,
+          "original": {
+            "byte_start": 10237,
+            "byte_end_exclusive": 10918,
+            "line_start": 236,
+            "line_end_inclusive": 243,
+            "byte_count": 681,
+            "lf_count": 7,
+            "terminal_lf_count": 0,
+            "sha256": "e22385414a04a43ed059d09959bf4833a1c303d8868c954dd1579863fc631cb5"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 9197,
+            "byte_end_exclusive": 9878,
+            "line_start": 244,
+            "line_end_inclusive": 251,
+            "byte_count": 681,
+            "lf_count": 7,
+            "terminal_lf_count": 0,
+            "sha256": "e22385414a04a43ed059d09959bf4833a1c303d8868c954dd1579863fc631cb5"
+          }
+        },
+        {
+          "recovery_span_index": 34,
+          "original": {
+            "byte_start": 10918,
+            "byte_end_exclusive": 10961,
+            "line_start": 243,
+            "line_end_inclusive": 243,
+            "byte_count": 43,
+            "lf_count": 0,
+            "terminal_lf_count": 0,
+            "sha256": "619b525441eb012d176d71fc22df8350e0d0ea26e5992b4d8d28ad4e6c204f2a"
+          },
+          "current": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 51945,
+            "byte_end_exclusive": 51988,
+            "line_start": 849,
+            "line_end_inclusive": 849,
+            "byte_count": 43,
+            "lf_count": 0,
+            "terminal_lf_count": 0,
+            "sha256": "619b525441eb012d176d71fc22df8350e0d0ea26e5992b4d8d28ad4e6c204f2a"
+          }
+        },
+        {
+          "recovery_span_index": 35,
+          "original": {
+            "byte_start": 10961,
+            "byte_end_exclusive": 11578,
+            "line_start": 243,
+            "line_end_inclusive": 261,
+            "byte_count": 617,
+            "lf_count": 19,
+            "terminal_lf_count": 2,
+            "sha256": "6becc7ff0128362df6e3b2c193204308366aab79195e1224a72c713894b85358"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 9878,
+            "byte_end_exclusive": 10495,
+            "line_start": 251,
+            "line_end_inclusive": 269,
+            "byte_count": 617,
+            "lf_count": 19,
+            "terminal_lf_count": 2,
+            "sha256": "6becc7ff0128362df6e3b2c193204308366aab79195e1224a72c713894b85358"
+          }
+        },
+        {
+          "recovery_span_index": 36,
+          "original": {
+            "byte_start": 11578,
+            "byte_end_exclusive": 11772,
+            "line_start": 262,
+            "line_end_inclusive": 265,
+            "byte_count": 194,
+            "lf_count": 4,
+            "terminal_lf_count": 1,
+            "sha256": "d941548395b2e12f9b05bd9ea2c9e445b8f964c13fd5f16805d7b68843249254"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 10503,
+            "byte_end_exclusive": 10697,
+            "line_start": 271,
+            "line_end_inclusive": 274,
+            "byte_count": 194,
+            "lf_count": 4,
+            "terminal_lf_count": 1,
+            "sha256": "d941548395b2e12f9b05bd9ea2c9e445b8f964c13fd5f16805d7b68843249254"
+          }
+        },
+        {
+          "recovery_span_index": 37,
+          "original": {
+            "byte_start": 11772,
+            "byte_end_exclusive": 12157,
+            "line_start": 266,
+            "line_end_inclusive": 268,
+            "byte_count": 385,
+            "lf_count": 3,
+            "terminal_lf_count": 2,
+            "sha256": "e5c100e4f9a997404044373e53967e7f9fcb9e2c1911d28e7654a82065f12672"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 10701,
+            "byte_end_exclusive": 11086,
+            "line_start": 276,
+            "line_end_inclusive": 278,
+            "byte_count": 385,
+            "lf_count": 3,
+            "terminal_lf_count": 2,
+            "sha256": "e5c100e4f9a997404044373e53967e7f9fcb9e2c1911d28e7654a82065f12672"
+          }
+        }
+      ],
+      "original_whole_heading": "## 4. 整数取整、真实等号与区间判定",
+      "current_whole_span": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 9069,
+        "byte_end_exclusive": 11086,
+        "line_start": 240,
+        "line_end_inclusive": 278,
+        "byte_count": 2017,
+        "lf_count": 39,
+        "terminal_lf_count": 2,
+        "sha256": "ec8fc11c3c10e16412476b5cc8ab7d64568ad9d85fc18db0eeed2133bf1306c5"
+      },
+      "current_canonical": {
+        "whole_span_single_pair_exact": true,
+        "whole_span_atom_id": "ec8fc11c3c10e16412476b5cc8ab7d64568ad9d85fc18db0eeed2133bf1306c5",
+        "whole_span_cas_path": "Meta/Digestion/atoms/sha256/ec8fc11c3c10e16412476b5cc8ab7d64568ad9d85fc18db0eeed2133bf1306c5",
+        "whole_span_yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/ec8fc11c3c10e16412476b5cc8ab7d64568ad9d85fc18db0eeed2133bf1306c5.yaml",
+        "complete_units": [
+          {
+            "kind": "heading region",
+            "label": "4. 整数取整、真实等号与区间判定",
+            "current": {
+              "byte_start": 9069,
+              "byte_end_exclusive": 11086,
+              "line_start": 240,
+              "line_end_inclusive": 278,
+              "byte_count": 2017,
+              "lf_count": 39,
+              "terminal_lf_count": 2,
+              "sha256": "ec8fc11c3c10e16412476b5cc8ab7d64568ad9d85fc18db0eeed2133bf1306c5"
+            },
+            "cas_path": "Meta/Digestion/atoms/sha256/ec8fc11c3c10e16412476b5cc8ab7d64568ad9d85fc18db0eeed2133bf1306c5",
+            "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/ec8fc11c3c10e16412476b5cc8ab7d64568ad9d85fc18db0eeed2133bf1306c5.yaml",
+            "whole_span_byte_exact": true,
+            "yaml": {
+              "byte_count": 485,
+              "lf_count": 10,
+              "terminal_lf_count": 1,
+              "sha256": "59f15f602c5ad9c4cc358fb10da6c659c7449e5596c3e8ecab86f8284afbf3d1"
+            },
+            "actual_yaml": {
+              "fingerprints": {
+                "raw_sha256": "sha256:ec8fc11c3c10e16412476b5cc8ab7d64568ad9d85fc18db0eeed2133bf1306c5",
+                "normalized_sha256": "sha256:ec8fc11c3c10e16412476b5cc8ab7d64568ad9d85fc18db0eeed2133bf1306c5"
+              },
+              "cas_ref": "sha256:ec8fc11c3c10e16412476b5cc8ab7d64568ad9d85fc18db0eeed2133bf1306c5",
+              "coverage_gids": [],
+              "receipts": {
+                "unresolved_subitems": [],
+                "chain_atoms": [
+                  "02eece2071f9332b4f8e747911a68c3f6ee23fe669f6d192e8b3b78d950d8d95",
+                  "c59e97b9e869558730b365cd247a18d16e9333ceb1ccb0e0bab4eab2f93b32d1"
+                ]
+              }
+            },
+            "receipts_chain_atoms": [
+              {
+                "atom_id": "02eece2071f9332b4f8e747911a68c3f6ee23fe669f6d192e8b3b78d950d8d95",
+                "parent_byte_start": 0,
+                "parent_byte_end_exclusive": 50,
+                "cas_path": "Meta/Digestion/atoms/sha256/02eece2071f9332b4f8e747911a68c3f6ee23fe669f6d192e8b3b78d950d8d95",
+                "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/02eece2071f9332b4f8e747911a68c3f6ee23fe669f6d192e8b3b78d950d8d95.yaml",
+                "byte_count": 50,
+                "lf_count": 2,
+                "terminal_lf_count": 2,
+                "sha256": "02eece2071f9332b4f8e747911a68c3f6ee23fe669f6d192e8b3b78d950d8d95"
+              },
+              {
+                "atom_id": "c59e97b9e869558730b365cd247a18d16e9333ceb1ccb0e0bab4eab2f93b32d1",
+                "parent_byte_start": 50,
+                "parent_byte_end_exclusive": 2017,
+                "cas_path": "Meta/Digestion/atoms/sha256/c59e97b9e869558730b365cd247a18d16e9333ceb1ccb0e0bab4eab2f93b32d1",
+                "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/c59e97b9e869558730b365cd247a18d16e9333ceb1ccb0e0bab4eab2f93b32d1.yaml",
+                "byte_count": 1967,
+                "lf_count": 37,
+                "terminal_lf_count": 2,
+                "sha256": "c59e97b9e869558730b365cd247a18d16e9333ceb1ccb0e0bab4eab2f93b32d1"
+              }
+            ],
+            "new": true
+          }
+        ],
+        "complete_unit_concatenation_equals_whole_span": true
+      }
+    },
+    {
+      "address": "5",
+      "kind": "chapter",
+      "original": {
+        "byte_start": 12157,
+        "byte_end_exclusive": 15483,
+        "line_start": 269,
+        "line_end_inclusive": 346,
+        "byte_count": 3326,
+        "lf_count": 78,
+        "terminal_lf_count": 2,
+        "sha256": "7c7427f83d557095444383aebb12e230cc6ea73068c858cb9a66b5ba0a350ac7"
+      },
+      "disposition": "retained mathematics / attached citations with mapped archival fragments",
+      "type": "section: definitions, theorems, proofs, original open limitations",
+      "recovery": [
+        {
+          "recovery_span_index": 38,
+          "original": {
+            "byte_start": 12157,
+            "byte_end_exclusive": 12245,
+            "line_start": 269,
+            "line_end_inclusive": 270,
+            "byte_count": 88,
+            "lf_count": 2,
+            "terminal_lf_count": 2,
+            "sha256": "267f855a71ab1eaf12fda4b022d72ef7eb007cc066adefc458de7dd86df944be"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 11086,
+            "byte_end_exclusive": 11174,
+            "line_start": 279,
+            "line_end_inclusive": 280,
+            "byte_count": 88,
+            "lf_count": 2,
+            "terminal_lf_count": 2,
+            "sha256": "267f855a71ab1eaf12fda4b022d72ef7eb007cc066adefc458de7dd86df944be"
+          }
+        },
+        {
+          "recovery_span_index": 39,
+          "original": {
+            "byte_start": 12245,
+            "byte_end_exclusive": 12281,
+            "line_start": 271,
+            "line_end_inclusive": 271,
+            "byte_count": 36,
+            "lf_count": 0,
+            "terminal_lf_count": 0,
+            "sha256": "ed9fdb44ca2eafdf5a77bdb2c118165d74bdf9d555e17bdf96dd2711dada3914"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 11252,
+            "byte_end_exclusive": 11288,
+            "line_start": 283,
+            "line_end_inclusive": 283,
+            "byte_count": 36,
+            "lf_count": 0,
+            "terminal_lf_count": 0,
+            "sha256": "ed9fdb44ca2eafdf5a77bdb2c118165d74bdf9d555e17bdf96dd2711dada3914"
+          }
+        },
+        {
+          "recovery_span_index": 40,
+          "original": {
+            "byte_start": 12281,
+            "byte_end_exclusive": 12300,
+            "line_start": 271,
+            "line_end_inclusive": 271,
+            "byte_count": 19,
+            "lf_count": 0,
+            "terminal_lf_count": 0,
+            "sha256": "b2b8c04615d59426ff8c39e7da2949d5fbd9229839c20e439f8188a5538dbd1f"
+          },
+          "current": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 52157,
+            "byte_end_exclusive": 52176,
+            "line_start": 857,
+            "line_end_inclusive": 857,
+            "byte_count": 19,
+            "lf_count": 0,
+            "terminal_lf_count": 0,
+            "sha256": "b2b8c04615d59426ff8c39e7da2949d5fbd9229839c20e439f8188a5538dbd1f"
+          }
+        },
+        {
+          "recovery_span_index": 41,
+          "original": {
+            "byte_start": 12300,
+            "byte_end_exclusive": 15164,
+            "line_start": 271,
+            "line_end_inclusive": 344,
+            "byte_count": 2864,
+            "lf_count": 74,
+            "terminal_lf_count": 2,
+            "sha256": "15d5d0f0a7c1677da4d653fcc8df85e28f973a3f4fab18e6a92a3af7547b5c5c"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 11288,
+            "byte_end_exclusive": 14152,
+            "line_start": 283,
+            "line_end_inclusive": 356,
+            "byte_count": 2864,
+            "lf_count": 74,
+            "terminal_lf_count": 2,
+            "sha256": "15d5d0f0a7c1677da4d653fcc8df85e28f973a3f4fab18e6a92a3af7547b5c5c"
+          }
+        },
+        {
+          "recovery_span_index": 42,
+          "original": {
+            "byte_start": 15164,
+            "byte_end_exclusive": 15332,
+            "line_start": 345,
+            "line_end_inclusive": 345,
+            "byte_count": 168,
+            "lf_count": 0,
+            "terminal_lf_count": 0,
+            "sha256": "3e00dfd52b8f4e9058b5e4a4fcebed278b09b0ba5375573fa70ced4716caa8c4"
+          },
+          "current": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 52323,
+            "byte_end_exclusive": 52491,
+            "line_start": 865,
+            "line_end_inclusive": 865,
+            "byte_count": 168,
+            "lf_count": 0,
+            "terminal_lf_count": 0,
+            "sha256": "3e00dfd52b8f4e9058b5e4a4fcebed278b09b0ba5375573fa70ced4716caa8c4"
+          }
+        },
+        {
+          "recovery_span_index": 43,
+          "original": {
+            "byte_start": 15332,
+            "byte_end_exclusive": 15483,
+            "line_start": 345,
+            "line_end_inclusive": 346,
+            "byte_count": 151,
+            "lf_count": 2,
+            "terminal_lf_count": 2,
+            "sha256": "84367084a6c53f52ca01540466547772bda00ec4e6891fca7adf7d397bf2b1b9"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 14182,
+            "byte_end_exclusive": 14333,
+            "line_start": 357,
+            "line_end_inclusive": 358,
+            "byte_count": 151,
+            "lf_count": 2,
+            "terminal_lf_count": 2,
+            "sha256": "84367084a6c53f52ca01540466547772bda00ec4e6891fca7adf7d397bf2b1b9"
+          }
+        }
+      ],
+      "original_whole_heading": "## 5. 纸面反例: 任意分辨率的最近网格舍入都不普遍保持回返正性",
+      "current_whole_span": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 11086,
+        "byte_end_exclusive": 14333,
+        "line_start": 279,
+        "line_end_inclusive": 358,
+        "byte_count": 3247,
+        "lf_count": 80,
+        "terminal_lf_count": 2,
+        "sha256": "24a4a0501b6d4473bc9c1b4d6bd527dd106e15813eea226cab2a49ec090015d5"
+      },
+      "current_canonical": {
+        "whole_span_single_pair_exact": true,
+        "whole_span_atom_id": "24a4a0501b6d4473bc9c1b4d6bd527dd106e15813eea226cab2a49ec090015d5",
+        "whole_span_cas_path": "Meta/Digestion/atoms/sha256/24a4a0501b6d4473bc9c1b4d6bd527dd106e15813eea226cab2a49ec090015d5",
+        "whole_span_yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/24a4a0501b6d4473bc9c1b4d6bd527dd106e15813eea226cab2a49ec090015d5.yaml",
+        "complete_units": [
+          {
+            "kind": "heading region",
+            "label": "5. 纸面反例: 任意分辨率的最近网格舍入都不普遍保持回返正性",
+            "current": {
+              "byte_start": 11086,
+              "byte_end_exclusive": 14333,
+              "line_start": 279,
+              "line_end_inclusive": 358,
+              "byte_count": 3247,
+              "lf_count": 80,
+              "terminal_lf_count": 2,
+              "sha256": "24a4a0501b6d4473bc9c1b4d6bd527dd106e15813eea226cab2a49ec090015d5"
+            },
+            "cas_path": "Meta/Digestion/atoms/sha256/24a4a0501b6d4473bc9c1b4d6bd527dd106e15813eea226cab2a49ec090015d5",
+            "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/24a4a0501b6d4473bc9c1b4d6bd527dd106e15813eea226cab2a49ec090015d5.yaml",
+            "whole_span_byte_exact": true,
+            "yaml": {
+              "byte_count": 769,
+              "lf_count": 14,
+              "terminal_lf_count": 1,
+              "sha256": "28c439a6cea8c8c1dd513f6141946c2e5118192f046788c2327e61d9b64deed4"
+            },
+            "actual_yaml": {
+              "fingerprints": {
+                "raw_sha256": "sha256:24a4a0501b6d4473bc9c1b4d6bd527dd106e15813eea226cab2a49ec090015d5",
+                "normalized_sha256": "sha256:24a4a0501b6d4473bc9c1b4d6bd527dd106e15813eea226cab2a49ec090015d5"
+              },
+              "cas_ref": "sha256:24a4a0501b6d4473bc9c1b4d6bd527dd106e15813eea226cab2a49ec090015d5",
+              "coverage_gids": [],
+              "receipts": {
+                "unresolved_subitems": [],
+                "chain_atoms": [
+                  "267f855a71ab1eaf12fda4b022d72ef7eb007cc066adefc458de7dd86df944be",
+                  "89683ac2bda35da807eb9c7931312dd6c954821797e95cd2629ab4519f45ecb2",
+                  "4c9e8087ed3826b95da48c3ac722ee15ed8111774e749e7bdfa4de8fe127cce0",
+                  "a801f84b3efa71b82d61d4d5babf9180365738319a1f4a2038a21c67c1e1e3cb",
+                  "2f980abc4ed83ce3de50d5d3106d3c5226576092eb20a0d8234ec1a8a448cb9c",
+                  "c6b278266ca4dd96d3063d5a081c755a017df013cfa6deef96a49b6422571fad"
+                ]
+              }
+            },
+            "receipts_chain_atoms": [
+              {
+                "atom_id": "267f855a71ab1eaf12fda4b022d72ef7eb007cc066adefc458de7dd86df944be",
+                "parent_byte_start": 0,
+                "parent_byte_end_exclusive": 88,
+                "cas_path": "Meta/Digestion/atoms/sha256/267f855a71ab1eaf12fda4b022d72ef7eb007cc066adefc458de7dd86df944be",
+                "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/267f855a71ab1eaf12fda4b022d72ef7eb007cc066adefc458de7dd86df944be.yaml",
+                "byte_count": 88,
+                "lf_count": 2,
+                "terminal_lf_count": 2,
+                "sha256": "267f855a71ab1eaf12fda4b022d72ef7eb007cc066adefc458de7dd86df944be"
+              },
+              {
+                "atom_id": "89683ac2bda35da807eb9c7931312dd6c954821797e95cd2629ab4519f45ecb2",
+                "parent_byte_start": 88,
+                "parent_byte_end_exclusive": 166,
+                "cas_path": "Meta/Digestion/atoms/sha256/89683ac2bda35da807eb9c7931312dd6c954821797e95cd2629ab4519f45ecb2",
+                "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/89683ac2bda35da807eb9c7931312dd6c954821797e95cd2629ab4519f45ecb2.yaml",
+                "byte_count": 78,
+                "lf_count": 2,
+                "terminal_lf_count": 2,
+                "sha256": "89683ac2bda35da807eb9c7931312dd6c954821797e95cd2629ab4519f45ecb2"
+              },
+              {
+                "atom_id": "4c9e8087ed3826b95da48c3ac722ee15ed8111774e749e7bdfa4de8fe127cce0",
+                "parent_byte_start": 166,
+                "parent_byte_end_exclusive": 310,
+                "cas_path": "Meta/Digestion/atoms/sha256/4c9e8087ed3826b95da48c3ac722ee15ed8111774e749e7bdfa4de8fe127cce0",
+                "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/4c9e8087ed3826b95da48c3ac722ee15ed8111774e749e7bdfa4de8fe127cce0.yaml",
+                "byte_count": 144,
+                "lf_count": 2,
+                "terminal_lf_count": 2,
+                "sha256": "4c9e8087ed3826b95da48c3ac722ee15ed8111774e749e7bdfa4de8fe127cce0"
+              },
+              {
+                "atom_id": "a801f84b3efa71b82d61d4d5babf9180365738319a1f4a2038a21c67c1e1e3cb",
+                "parent_byte_start": 310,
+                "parent_byte_end_exclusive": 916,
+                "cas_path": "Meta/Digestion/atoms/sha256/a801f84b3efa71b82d61d4d5babf9180365738319a1f4a2038a21c67c1e1e3cb",
+                "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/a801f84b3efa71b82d61d4d5babf9180365738319a1f4a2038a21c67c1e1e3cb.yaml",
+                "byte_count": 606,
+                "lf_count": 18,
+                "terminal_lf_count": 2,
+                "sha256": "a801f84b3efa71b82d61d4d5babf9180365738319a1f4a2038a21c67c1e1e3cb"
+              },
+              {
+                "atom_id": "2f980abc4ed83ce3de50d5d3106d3c5226576092eb20a0d8234ec1a8a448cb9c",
+                "parent_byte_start": 916,
+                "parent_byte_end_exclusive": 2432,
+                "cas_path": "Meta/Digestion/atoms/sha256/2f980abc4ed83ce3de50d5d3106d3c5226576092eb20a0d8234ec1a8a448cb9c",
+                "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/2f980abc4ed83ce3de50d5d3106d3c5226576092eb20a0d8234ec1a8a448cb9c.yaml",
+                "byte_count": 1516,
+                "lf_count": 50,
+                "terminal_lf_count": 2,
+                "sha256": "2f980abc4ed83ce3de50d5d3106d3c5226576092eb20a0d8234ec1a8a448cb9c"
+              },
+              {
+                "atom_id": "c6b278266ca4dd96d3063d5a081c755a017df013cfa6deef96a49b6422571fad",
+                "parent_byte_start": 2432,
+                "parent_byte_end_exclusive": 3247,
+                "cas_path": "Meta/Digestion/atoms/sha256/c6b278266ca4dd96d3063d5a081c755a017df013cfa6deef96a49b6422571fad",
+                "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/c6b278266ca4dd96d3063d5a081c755a017df013cfa6deef96a49b6422571fad.yaml",
+                "byte_count": 815,
+                "lf_count": 6,
+                "terminal_lf_count": 2,
+                "sha256": "c6b278266ca4dd96d3063d5a081c755a017df013cfa6deef96a49b6422571fad"
+              }
+            ],
+            "new": true
+          }
+        ],
+        "complete_unit_concatenation_equals_whole_span": true
+      }
+    },

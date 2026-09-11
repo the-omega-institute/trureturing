@@ -1,0 +1,12 @@
+{
+  "schema": "s19-evidence-entry-v1",
+  "resource": "CI-intake",
+  "logical_path": "pr6918-admission-grounded-repair-intake-0911.json",
+  "original": {"bytes": 2168, "sha256": "9666fb1996914e7b7081738aef644307c0b54181bf3b8e865acd4ef52a91f4cf", "lf": 37, "terminal_lf": 1, "lines": 37},
+  "origin": {"supplied_path": "/tmp/qgh-boundaries-0908/pr6918-admission-grounded-repair-intake-0911.json", "role": "Fixed public CI evidence; inert text, never a command script."},
+  "contract": "docs/reports/quantized-gh/s19-evidence/README.md",
+  "interpretation": "Archive of the complete named original resource. Parts are contiguous raw UTF-8 slices; parse JSON only after reconstruction. Historical fields retain their original owner and values.",
+  "parts": [
+    {"ordinal": 1, "path": "docs/reports/quantized-gh/s19-evidence/raw/ci-intake-9666fb199691/group-001/part-0001-9666fb199691.txt", "byte_start": 0, "byte_end_exclusive": 2168, "line_start": 1, "line_end_inclusive": 37, "bytes": 2168, "sha256": "9666fb1996914e7b7081738aef644307c0b54181bf3b8e865acd4ef52a91f4cf", "lf": 37, "terminal_lf": 1, "lines": 37, "context": "\"at_utc\": \"2026-09-10T22:48:42.768168+00:00\","}
+  ]
+}

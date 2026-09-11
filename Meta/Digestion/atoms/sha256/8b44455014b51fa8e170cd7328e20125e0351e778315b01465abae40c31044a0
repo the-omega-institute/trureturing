@@ -1,0 +1,21 @@
+**30.38 定理与证明：严格负二次型和残差的双向见证。** 对 \(q\in\mathbb Q(i)^N\) 定义
+\[
+Z_N(q)=(1,-q_1,-2q_2,\ldots,-Nq_N).
+\]
+由 \(h_k=f_k/k\) 有精确恒等式
+\[
+\boxed{\operatorname{inner}(Z_N(q),(A_N-\delta E_{00})Z_N(q))=R_N(q)-\delta.}
+\]
+反之，若 \((\alpha,b)\) 有严格负二次型，则 \(\alpha\ne0\)，因为 \(\alpha=0\) 时值为 \(\|V_Nb\|^2\ge0\)。取
+\(a_k=-b_k/(k\alpha)\)，有
+\[
+\operatorname{inner}((\alpha,b),(A_N-\delta E_{00})(\alpha,b))
+=|\alpha|^2(R_N(a)-\delta).
+\]
+故 \(R_N(a)<\delta\)；若原向量在 \(\mathbb Q(i)^{N+1}\)，除以非零 \(\alpha\) 后仍在这个域。任意复向量也可用 30.37 得有理严格残差，继而得实有理的 \(Z_N(q)\)。因此每个固定 \(N\ge1,\delta\ge0\) 满足
+\[
+D_N<\delta\iff A_N-\delta E_{00}\not\succeq0
+\iff\exists q\in\mathbb Q^N:R_N(q)<\delta.
+\]
+也等价于存在复有理负二次型向量。\(\delta=0\) 时各式均假；\(\delta=D_N\) 时矩阵仍非负且有限端点有核，零二次型不算严格负见证；\(\delta<D_N\) 时也没有严格见证。负 \(\delta\) 不在该等价式的指定域，且因 \(R_N\ge0\) 同样不可能有严格残差见证。
+

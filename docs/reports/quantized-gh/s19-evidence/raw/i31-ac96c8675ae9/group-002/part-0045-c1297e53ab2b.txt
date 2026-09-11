@@ -1,0 +1,754 @@
+      "current_unit_bindings": [
+        {
+          "byte_start": 73317,
+          "byte_end_exclusive": 74420,
+          "line_start": 1466,
+          "line_end_inclusive": 1486,
+          "byte_count": 1103,
+          "lf_count": 21,
+          "terminal_lf_count": 2,
+          "sha256": "8d9fb739549e45f8fe15c9bf830f94453c74f86e6651fee7abe39d3b58dc91db"
+        },
+        {
+          "byte_start": 74420,
+          "byte_end_exclusive": 75018,
+          "line_start": 1487,
+          "line_end_inclusive": 1495,
+          "byte_count": 598,
+          "lf_count": 9,
+          "terminal_lf_count": 2,
+          "sha256": "6478e2b95df1e6ff654dd18e03c448730f57a99eded3516a2075f959318d5d60"
+        },
+        {
+          "byte_start": 75018,
+          "byte_end_exclusive": 76991,
+          "line_start": 1496,
+          "line_end_inclusive": 1515,
+          "byte_count": 1973,
+          "lf_count": 20,
+          "terminal_lf_count": 2,
+          "sha256": "4d9ccec64e27fef01b8d2a11375cf29448040c205088bdafc15cc90ce524d866"
+        },
+        {
+          "byte_start": 76991,
+          "byte_end_exclusive": 78356,
+          "line_start": 1516,
+          "line_end_inclusive": 1527,
+          "byte_count": 1365,
+          "lf_count": 12,
+          "terminal_lf_count": 2,
+          "sha256": "5a174f44b43d66cf88d8cfb56c4f6a62465dbbe4bd4dca7d8c8c070c023d8ab5"
+        }
+      ],
+      "heading_id": "original-heading-58",
+      "current_heading_bindings": [
+        {
+          "kind": "numbered entry",
+          "label": "24.2",
+          "current": {
+            "byte_start": 73317,
+            "byte_end_exclusive": 74420,
+            "line_start": 1466,
+            "line_end_inclusive": 1486,
+            "byte_count": 1103,
+            "lf_count": 21,
+            "terminal_lf_count": 2,
+            "sha256": "8d9fb739549e45f8fe15c9bf830f94453c74f86e6651fee7abe39d3b58dc91db"
+          },
+          "cas_path": "Meta/Digestion/atoms/sha256/8d9fb739549e45f8fe15c9bf830f94453c74f86e6651fee7abe39d3b58dc91db",
+          "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/8d9fb739549e45f8fe15c9bf830f94453c74f86e6651fee7abe39d3b58dc91db.yaml",
+          "whole_span_byte_exact": true
+        }
+      ],
+      "type_attachment": "Heading grammar attached to the definitions/theorems/proofs and original logical-status limitations in the identified current units",
+      "pending_exception": false
+    },
+    {
+      "original": {
+        "byte_start": 101935,
+        "byte_end_exclusive": 101975,
+        "line_start": 1653,
+        "line_end_inclusive": 1653,
+        "byte_count": 40,
+        "lf_count": 1,
+        "terminal_lf_count": 1,
+        "sha256": "317fed5195edb94c9eadf2ecd4044d4a00984dced75f4f4794f4f0d187956a3c"
+      },
+      "level": 3,
+      "text": "Hermite 工具与真正分数分支",
+      "recovery": [
+        {
+          "recovery_span_index": 269,
+          "original": {
+            "byte_start": 101935,
+            "byte_end_exclusive": 101975,
+            "line_start": 1653,
+            "line_end_inclusive": 1653,
+            "byte_count": 40,
+            "lf_count": 1,
+            "terminal_lf_count": 1,
+            "sha256": "317fed5195edb94c9eadf2ecd4044d4a00984dced75f4f4794f4f0d187956a3c"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 78356,
+            "byte_end_exclusive": 78396,
+            "line_start": 1528,
+            "line_end_inclusive": 1528,
+            "byte_count": 40,
+            "lf_count": 1,
+            "terminal_lf_count": 1,
+            "sha256": "317fed5195edb94c9eadf2ecd4044d4a00984dced75f4f4794f4f0d187956a3c"
+          }
+        }
+      ],
+      "original_section_or_subsection_span": {
+        "byte_start": 101935,
+        "byte_end_exclusive": 106169,
+        "line_start": 1653,
+        "line_end_inclusive": 1760,
+        "byte_count": 4234,
+        "lf_count": 108,
+        "terminal_lf_count": 2,
+        "sha256": "cd6f99545f67e7256f4a50732991551b4d0fbebe696d4b00653ff86413af5113"
+      },
+      "current_unit_bindings": [
+        {
+          "byte_start": 78356,
+          "byte_end_exclusive": 78445,
+          "line_start": 1528,
+          "line_end_inclusive": 1531,
+          "byte_count": 89,
+          "lf_count": 4,
+          "terminal_lf_count": 2,
+          "sha256": "e97468478160606685c27683e3cf5eb8fc135a60507d28a9d8c5dd7bf10126a7"
+        },
+        {
+          "byte_start": 78445,
+          "byte_end_exclusive": 79612,
+          "line_start": 1532,
+          "line_end_inclusive": 1556,
+          "byte_count": 1167,
+          "lf_count": 25,
+          "terminal_lf_count": 2,
+          "sha256": "6161a73ecc868c1a5010a0a3a7536784203dd613eb25d0d0391eff1f3a94325e"
+        },
+        {
+          "byte_start": 79612,
+          "byte_end_exclusive": 80454,
+          "line_start": 1557,
+          "line_end_inclusive": 1573,
+          "byte_count": 842,
+          "lf_count": 17,
+          "terminal_lf_count": 2,
+          "sha256": "d1f10a6c6dde3a4bc0074874c140c25a60eac63c2b14a6a5812e67f3d3504daa"
+        },
+        {
+          "byte_start": 80454,
+          "byte_end_exclusive": 81771,
+          "line_start": 1574,
+          "line_end_inclusive": 1613,
+          "byte_count": 1317,
+          "lf_count": 40,
+          "terminal_lf_count": 2,
+          "sha256": "cee49505374dc61a13efb5e665f737df2f9dfc355c32f1ced2927e448adda59d"
+        },
+        {
+          "byte_start": 81771,
+          "byte_end_exclusive": 82758,
+          "line_start": 1614,
+          "line_end_inclusive": 1637,
+          "byte_count": 987,
+          "lf_count": 24,
+          "terminal_lf_count": 2,
+          "sha256": "a50df88fd4cd16cebca7776e2faaeb70b3fa7d28bddfe6069a5fb3bfa5dbe048"
+        }
+      ],
+      "heading_id": "original-heading-59",
+      "current_heading_bindings": [
+        {
+          "kind": "heading region",
+          "label": "Hermite 工具与真正分数分支",
+          "current": {
+            "byte_start": 78356,
+            "byte_end_exclusive": 78445,
+            "line_start": 1528,
+            "line_end_inclusive": 1531,
+            "byte_count": 89,
+            "lf_count": 4,
+            "terminal_lf_count": 2,
+            "sha256": "e97468478160606685c27683e3cf5eb8fc135a60507d28a9d8c5dd7bf10126a7"
+          },
+          "cas_path": "Meta/Digestion/atoms/sha256/e97468478160606685c27683e3cf5eb8fc135a60507d28a9d8c5dd7bf10126a7",
+          "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/e97468478160606685c27683e3cf5eb8fc135a60507d28a9d8c5dd7bf10126a7.yaml",
+          "whole_span_byte_exact": true
+        }
+      ],
+      "type_attachment": "Heading grammar attached to the definitions/theorems/proofs and original logical-status limitations in the identified current units",
+      "pending_exception": false
+    },
+    {
+      "original": {
+        "byte_start": 106169,
+        "byte_end_exclusive": 106228,
+        "line_start": 1761,
+        "line_end_inclusive": 1761,
+        "byte_count": 59,
+        "lf_count": 1,
+        "terminal_lf_count": 1,
+        "sha256": "cc0531f3de87ed719a1a58fd6ba07f99e538c34670c81621817bd866ed54f03b"
+      },
+      "level": 3,
+      "text": "集中距离域的两个完整证明与矩公式勘正",
+      "recovery": [
+        {
+          "recovery_span_index": 279,
+          "original": {
+            "byte_start": 106169,
+            "byte_end_exclusive": 106228,
+            "line_start": 1761,
+            "line_end_inclusive": 1761,
+            "byte_count": 59,
+            "lf_count": 1,
+            "terminal_lf_count": 1,
+            "sha256": "cc0531f3de87ed719a1a58fd6ba07f99e538c34670c81621817bd866ed54f03b"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 82758,
+            "byte_end_exclusive": 82817,
+            "line_start": 1638,
+            "line_end_inclusive": 1638,
+            "byte_count": 59,
+            "lf_count": 1,
+            "terminal_lf_count": 1,
+            "sha256": "cc0531f3de87ed719a1a58fd6ba07f99e538c34670c81621817bd866ed54f03b"
+          }
+        }
+      ],
+      "original_section_or_subsection_span": {
+        "byte_start": 106169,
+        "byte_end_exclusive": 110196,
+        "line_start": 1761,
+        "line_end_inclusive": 1868,
+        "byte_count": 4027,
+        "lf_count": 108,
+        "terminal_lf_count": 2,
+        "sha256": "2f3bb1983bdde6f0a46fef2807a9be8d7cd8e489d12c60569d2ccdae8f2f692c"
+      },
+      "current_unit_bindings": [
+        {
+          "byte_start": 82758,
+          "byte_end_exclusive": 82866,
+          "line_start": 1638,
+          "line_end_inclusive": 1641,
+          "byte_count": 108,
+          "lf_count": 4,
+          "terminal_lf_count": 2,
+          "sha256": "51f7af1f217392364d2fe21fcc677cc8ebd3fea7b34f0d3f276021a5363c110c"
+        },
+        {
+          "byte_start": 82866,
+          "byte_end_exclusive": 83747,
+          "line_start": 1642,
+          "line_end_inclusive": 1663,
+          "byte_count": 881,
+          "lf_count": 22,
+          "terminal_lf_count": 2,
+          "sha256": "5a3521bb018111bfeea91ca41d1d99f748a65c449f36c584cb6b6f503e594acc"
+        },
+        {
+          "byte_start": 83747,
+          "byte_end_exclusive": 84755,
+          "line_start": 1664,
+          "line_end_inclusive": 1694,
+          "byte_count": 1008,
+          "lf_count": 31,
+          "terminal_lf_count": 2,
+          "sha256": "c7b9842b6c357520542632d03a4b130ab680dc8d3c5d24922b0fd0a743602af9"
+        },
+        {
+          "byte_start": 84755,
+          "byte_end_exclusive": 85696,
+          "line_start": 1695,
+          "line_end_inclusive": 1723,
+          "byte_count": 941,
+          "lf_count": 29,
+          "terminal_lf_count": 2,
+          "sha256": "1e2ef58bcb3182066413489533f165cb55464521e458a345dac9df38671cfe3e"
+        },
+        {
+          "byte_start": 85696,
+          "byte_end_exclusive": 86808,
+          "line_start": 1724,
+          "line_end_inclusive": 1747,
+          "byte_count": 1112,
+          "lf_count": 24,
+          "terminal_lf_count": 2,
+          "sha256": "108f84ef6f9d7e2f6926d68048236e1e22938acfac865fb13e67304cf1fc638f"
+        }
+      ],
+      "heading_id": "original-heading-60",
+      "current_heading_bindings": [
+        {
+          "kind": "heading region",
+          "label": "集中距离域的两个完整证明与矩公式勘正",
+          "current": {
+            "byte_start": 82758,
+            "byte_end_exclusive": 82866,
+            "line_start": 1638,
+            "line_end_inclusive": 1641,
+            "byte_count": 108,
+            "lf_count": 4,
+            "terminal_lf_count": 2,
+            "sha256": "51f7af1f217392364d2fe21fcc677cc8ebd3fea7b34f0d3f276021a5363c110c"
+          },
+          "cas_path": "Meta/Digestion/atoms/sha256/51f7af1f217392364d2fe21fcc677cc8ebd3fea7b34f0d3f276021a5363c110c",
+          "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/51f7af1f217392364d2fe21fcc677cc8ebd3fea7b34f0d3f276021a5363c110c.yaml",
+          "whole_span_byte_exact": true
+        }
+      ],
+      "type_attachment": "Heading grammar attached to the definitions/theorems/proofs and original logical-status limitations in the identified current units",
+      "pending_exception": false
+    },
+    {
+      "original": {
+        "byte_start": 110196,
+        "byte_end_exclusive": 110237,
+        "line_start": 1869,
+        "line_end_inclusive": 1869,
+        "byte_count": 41,
+        "lf_count": 1,
+        "terminal_lf_count": 1,
+        "sha256": "f35151b64850c015f3bc9d11f7fe9600ab05dd05cf711412f84a6112b76331e2"
+      },
+      "level": 3,
+      "text": "素数平移、尚余区域与来源",
+      "recovery": [
+        {
+          "recovery_span_index": 294,
+          "original": {
+            "byte_start": 110196,
+            "byte_end_exclusive": 110236,
+            "line_start": 1869,
+            "line_end_inclusive": 1869,
+            "byte_count": 40,
+            "lf_count": 0,
+            "terminal_lf_count": 0,
+            "sha256": "a80a3c6c45aae3ea17598b210618f17b6e8fd476489a0ca5ca60d1ab98a249cf"
+          },
+          "current": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 93300,
+            "byte_end_exclusive": 93340,
+            "line_start": 1762,
+            "line_end_inclusive": 1762,
+            "byte_count": 40,
+            "lf_count": 0,
+            "terminal_lf_count": 0,
+            "sha256": "a80a3c6c45aae3ea17598b210618f17b6e8fd476489a0ca5ca60d1ab98a249cf"
+          }
+        },
+        {
+          "recovery_span_index": 295,
+          "original": {
+            "byte_start": 110236,
+            "byte_end_exclusive": 110237,
+            "line_start": 1869,
+            "line_end_inclusive": 1869,
+            "byte_count": 1,
+            "lf_count": 1,
+            "terminal_lf_count": 1,
+            "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 86857,
+            "byte_end_exclusive": 86858,
+            "line_start": 1748,
+            "line_end_inclusive": 1748,
+            "byte_count": 1,
+            "lf_count": 1,
+            "terminal_lf_count": 1,
+            "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+          }
+        }
+      ],
+      "original_section_or_subsection_span": {
+        "byte_start": 110196,
+        "byte_end_exclusive": 116208,
+        "line_start": 1869,
+        "line_end_inclusive": 1933,
+        "byte_count": 6012,
+        "lf_count": 65,
+        "terminal_lf_count": 2,
+        "sha256": "33cee4ee8ec440ef241e63f8b938df18f0a86ad4d2d5b515d16572b3918a8108"
+      },
+      "current_unit_bindings": [
+        {
+          "byte_start": 86808,
+          "byte_end_exclusive": 86907,
+          "line_start": 1748,
+          "line_end_inclusive": 1751,
+          "byte_count": 99,
+          "lf_count": 4,
+          "terminal_lf_count": 2,
+          "sha256": "5ba0ef3ddd029cfc3a65e86dabc7d2588fa84f0c980aecd82b526172908d6aea"
+        },
+        {
+          "byte_start": 86907,
+          "byte_end_exclusive": 88426,
+          "line_start": 1752,
+          "line_end_inclusive": 1784,
+          "byte_count": 1519,
+          "lf_count": 33,
+          "terminal_lf_count": 2,
+          "sha256": "4aecaa3e39890ee434fc09d7a6e648e414c7333d80e9ae94eb849f7d9f64d467"
+        },
+        {
+          "byte_start": 88426,
+          "byte_end_exclusive": 90161,
+          "line_start": 1785,
+          "line_end_inclusive": 1800,
+          "byte_count": 1735,
+          "lf_count": 16,
+          "terminal_lf_count": 2,
+          "sha256": "6932fb2dc043d3710539f98864728f304c948a11c941d236ba0b06287f336461"
+        },
+        {
+          "byte_start": 90161,
+          "byte_end_exclusive": 90609,
+          "line_start": 1801,
+          "line_end_inclusive": 1806,
+          "byte_count": 448,
+          "lf_count": 6,
+          "terminal_lf_count": 2,
+          "sha256": "ffd7688639d99a67f93d3a870cc363723e5298ea15bb0cb61ef7c01f897891e0"
+        }
+      ],
+      "heading_id": "original-heading-61",
+      "current_heading_bindings": [
+        {
+          "kind": "heading region",
+          "label": "定理与证明：素数平移与尚余区域",
+          "current": {
+            "byte_start": 86808,
+            "byte_end_exclusive": 86907,
+            "line_start": 1748,
+            "line_end_inclusive": 1751,
+            "byte_count": 99,
+            "lf_count": 4,
+            "terminal_lf_count": 2,
+            "sha256": "5ba0ef3ddd029cfc3a65e86dabc7d2588fa84f0c980aecd82b526172908d6aea"
+          },
+          "cas_path": "Meta/Digestion/atoms/sha256/5ba0ef3ddd029cfc3a65e86dabc7d2588fa84f0c980aecd82b526172908d6aea",
+          "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/5ba0ef3ddd029cfc3a65e86dabc7d2588fa84f0c980aecd82b526172908d6aea.yaml",
+          "whole_span_byte_exact": true
+        }
+      ],
+      "type_attachment": "Heading grammar attached to the definitions/theorems/proofs and original logical-status limitations in the identified current units",
+      "pending_exception": false
+    },
+    {
+      "original": {
+        "byte_start": 116208,
+        "byte_end_exclusive": 116264,
+        "line_start": 1934,
+        "line_end_inclusive": 1934,
+        "byte_count": 56,
+        "lf_count": 1,
+        "terminal_lf_count": 1,
+        "sha256": "b92d3e5f8a6507dc990fbcca174e8883a524d210d396a04a84d47b3cb6d33518"
+      },
+      "level": 2,
+      "text": "25. 素数逼近的局部障碍与变形三素数族",
+      "recovery": [
+        {
+          "recovery_span_index": 316,
+          "original": {
+            "byte_start": 116208,
+            "byte_end_exclusive": 116264,
+            "line_start": 1934,
+            "line_end_inclusive": 1934,
+            "byte_count": 56,
+            "lf_count": 1,
+            "terminal_lf_count": 1,
+            "sha256": "b92d3e5f8a6507dc990fbcca174e8883a524d210d396a04a84d47b3cb6d33518"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 90609,
+            "byte_end_exclusive": 90665,
+            "line_start": 1807,
+            "line_end_inclusive": 1807,
+            "byte_count": 56,
+            "lf_count": 1,
+            "terminal_lf_count": 1,
+            "sha256": "b92d3e5f8a6507dc990fbcca174e8883a524d210d396a04a84d47b3cb6d33518"
+          }
+        }
+      ],
+      "original_section_or_subsection_span": {
+        "byte_start": 116208,
+        "byte_end_exclusive": 144030,
+        "line_start": 1934,
+        "line_end_inclusive": 2411,
+        "byte_count": 27822,
+        "lf_count": 478,
+        "terminal_lf_count": 2,
+        "sha256": "aad26f795c5ddc1f5a8c125a71b769c85e8a2eb8d29674029255698b018530a6"
+      },
+      "current_unit_bindings": [
+        {
+          "byte_start": 90609,
+          "byte_end_exclusive": 90744,
+          "line_start": 1807,
+          "line_end_inclusive": 1810,
+          "byte_count": 135,
+          "lf_count": 4,
+          "terminal_lf_count": 2,
+          "sha256": "c7732e230a340afba65874b6960bbbe92e1d58705506f1983c7466c9a4c59da6"
+        },
+        {
+          "byte_start": 90744,
+          "byte_end_exclusive": 92565,
+          "line_start": 1811,
+          "line_end_inclusive": 1836,
+          "byte_count": 1821,
+          "lf_count": 26,
+          "terminal_lf_count": 2,
+          "sha256": "7238ad80c903f2a341d74ba23a30260b23bc04e839056d3f826284b876b085d5"
+        },
+        {
+          "byte_start": 92565,
+          "byte_end_exclusive": 93682,
+          "line_start": 1837,
+          "line_end_inclusive": 1869,
+          "byte_count": 1117,
+          "lf_count": 33,
+          "terminal_lf_count": 2,
+          "sha256": "39c2991600dc7bcfc74f6dbdb540055048b4b633dfc7605d3f3ab76da9bd3c64"
+        },
+        {
+          "byte_start": 93682,
+          "byte_end_exclusive": 95704,
+          "line_start": 1870,
+          "line_end_inclusive": 1917,
+          "byte_count": 2022,
+          "lf_count": 48,
+          "terminal_lf_count": 2,
+          "sha256": "3f8a34b05d85c54d5c564e8b3d5778f4b7c6833c911ac6e31bb91004705a612d"
+        },
+        {
+          "byte_start": 95704,
+          "byte_end_exclusive": 96564,
+          "line_start": 1918,
+          "line_end_inclusive": 1936,
+          "byte_count": 860,
+          "lf_count": 19,
+          "terminal_lf_count": 2,
+          "sha256": "3f6acd1057cb0964056f6995d801ef8611466f254271580d69ffc6bc50ada599"
+        },
+        {
+          "byte_start": 96564,
+          "byte_end_exclusive": 97968,
+          "line_start": 1937,
+          "line_end_inclusive": 1953,
+          "byte_count": 1404,
+          "lf_count": 17,
+          "terminal_lf_count": 2,
+          "sha256": "8f9463792a5258d9a6856c95402bf1f1f579669f10fad38395391e80a7c32a14"
+        },
+        {
+          "byte_start": 97968,
+          "byte_end_exclusive": 99442,
+          "line_start": 1954,
+          "line_end_inclusive": 1985,
+          "byte_count": 1474,
+          "lf_count": 32,
+          "terminal_lf_count": 2,
+          "sha256": "078ad895fc85e84e99df79202d05e55c51a40bfe92a12047cb2228e871fd99b7"
+        },
+        {
+          "byte_start": 99442,
+          "byte_end_exclusive": 100733,
+          "line_start": 1986,
+          "line_end_inclusive": 1998,
+          "byte_count": 1291,
+          "lf_count": 13,
+          "terminal_lf_count": 2,
+          "sha256": "5ef42bd7a739c964cfcfcc818c7b019b911caf61ee93c9f79774e048de9c64ca"
+        },
+        {
+          "byte_start": 100733,
+          "byte_end_exclusive": 101860,
+          "line_start": 1999,
+          "line_end_inclusive": 2016,
+          "byte_count": 1127,
+          "lf_count": 18,
+          "terminal_lf_count": 2,
+          "sha256": "c31591d079ad3cfc60bd5e6a1741d70d309c2d3c62cd71ea13fe566367801c3c"
+        },
+        {
+          "byte_start": 101860,
+          "byte_end_exclusive": 103156,
+          "line_start": 2017,
+          "line_end_inclusive": 2058,
+          "byte_count": 1296,
+          "lf_count": 42,
+          "terminal_lf_count": 2,
+          "sha256": "2bc2d3375d7a3402c4801dab7aae52eabe5cb094784a94c7fd749cea635144ac"
+        },
+        {
+          "byte_start": 103156,
+          "byte_end_exclusive": 104275,
+          "line_start": 2059,
+          "line_end_inclusive": 2086,
+          "byte_count": 1119,
+          "lf_count": 28,
+          "terminal_lf_count": 2,
+          "sha256": "fa626ce4ddc2af256f0c8772d5e924b8ef474971ef8e94372ac8232bc8f1ac4b"
+        },
+        {
+          "byte_start": 104275,
+          "byte_end_exclusive": 105217,
+          "line_start": 2087,
+          "line_end_inclusive": 2112,
+          "byte_count": 942,
+          "lf_count": 26,
+          "terminal_lf_count": 2,
+          "sha256": "15b706e8b8baf25929119e0e671acb1ccb97664afa08793ef81ef53820275a8d"
+        },
+        {
+          "byte_start": 105217,
+          "byte_end_exclusive": 106518,
+          "line_start": 2113,
+          "line_end_inclusive": 2139,
+          "byte_count": 1301,
+          "lf_count": 27,
+          "terminal_lf_count": 2,
+          "sha256": "7534800063c37df7c82e66107e3288768547351c5c8c828aafb97bcd7fbbc7a2"
+        },
+        {
+          "byte_start": 106518,
+          "byte_end_exclusive": 107855,
+          "line_start": 2140,
+          "line_end_inclusive": 2186,
+          "byte_count": 1337,
+          "lf_count": 47,
+          "terminal_lf_count": 2,
+          "sha256": "7ac48248522e83f0d483dcf7b21ba22fc938e60a57afa53bff7b2fb6fd496e3a"
+        },
+        {
+          "byte_start": 107855,
+          "byte_end_exclusive": 109261,
+          "line_start": 2187,
+          "line_end_inclusive": 2219,
+          "byte_count": 1406,
+          "lf_count": 33,
+          "terminal_lf_count": 2,
+          "sha256": "190b220b0b6d62e63496a308876126eb2d4431dfa1bbc39705565a5c40d87da4"
+        },
+        {
+          "byte_start": 109261,
+          "byte_end_exclusive": 111251,
+          "line_start": 2220,
+          "line_end_inclusive": 2254,
+          "byte_count": 1990,
+          "lf_count": 35,
+          "terminal_lf_count": 2,
+          "sha256": "e8ab8fa05569b7b2122e4698c69dd80daa091a95618bddc1d5ad8284def98fe9"
+        },
+        {
+          "byte_start": 111251,
+          "byte_end_exclusive": 113287,
+          "line_start": 2255,
+          "line_end_inclusive": 2267,
+          "byte_count": 2036,
+          "lf_count": 13,
+          "terminal_lf_count": 2,
+          "sha256": "f997dd3619c188b83af714ffd2b7d80e70039afd2d0e80180009b714318a4cee"
+        },
+        {
+          "byte_start": 113287,
+          "byte_end_exclusive": 113511,
+          "line_start": 2268,
+          "line_end_inclusive": 2269,
+          "byte_count": 224,
+          "lf_count": 2,
+          "terminal_lf_count": 2,
+          "sha256": "ae95f3cb9287e7d4b616b7012e53bf3111f16ba228a03264a25d3af875667e40"
+        }
+      ],
+      "heading_id": "original-heading-62",
+      "current_heading_bindings": [
+        {
+          "kind": "heading region",
+          "label": "25. 素数逼近的局部障碍与变形三素数族",
+          "current": {
+            "byte_start": 90609,
+            "byte_end_exclusive": 90744,
+            "line_start": 1807,
+            "line_end_inclusive": 1810,
+            "byte_count": 135,
+            "lf_count": 4,
+            "terminal_lf_count": 2,
+            "sha256": "c7732e230a340afba65874b6960bbbe92e1d58705506f1983c7466c9a4c59da6"
+          },
+          "cas_path": "Meta/Digestion/atoms/sha256/c7732e230a340afba65874b6960bbbe92e1d58705506f1983c7466c9a4c59da6",
+          "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/c7732e230a340afba65874b6960bbbe92e1d58705506f1983c7466c9a4c59da6.yaml",
+          "whole_span_byte_exact": true
+        }
+      ],
+      "type_attachment": "Heading grammar attached to the definitions/theorems/proofs and original logical-status limitations in the identified current units",
+      "pending_exception": false
+    },
+    {
+      "original": {
+        "byte_start": 144030,
+        "byte_end_exclusive": 144086,
+        "line_start": 2412,
+        "line_end_inclusive": 2412,
+        "byte_count": 56,
+        "lf_count": 1,
+        "terminal_lf_count": 1,
+        "sha256": "51172362d0d79357422bb0902fb72f242fbba220f8a563e45bd13be7f61dccdc"
+      },
+      "level": 2,
+      "text": "26. 固定素数箱体的全实数薄层有限归约",
+      "recovery": [
+        {
+          "recovery_span_index": 386,
+          "original": {
+            "byte_start": 144030,
+            "byte_end_exclusive": 144086,
+            "line_start": 2412,
+            "line_end_inclusive": 2412,
+            "byte_count": 56,
+            "lf_count": 1,
+            "terminal_lf_count": 1,
+            "sha256": "51172362d0d79357422bb0902fb72f242fbba220f8a563e45bd13be7f61dccdc"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 113511,
+            "byte_end_exclusive": 113567,
+            "line_start": 2270,
+            "line_end_inclusive": 2270,
+            "byte_count": 56,
+            "lf_count": 1,
+            "terminal_lf_count": 1,
+            "sha256": "51172362d0d79357422bb0902fb72f242fbba220f8a563e45bd13be7f61dccdc"
+          }
+        }
+      ],
+      "original_section_or_subsection_span": {
+        "byte_start": 144030,
+        "byte_end_exclusive": 176108,
+        "line_start": 2412,
+        "line_end_inclusive": 3135,
+        "byte_count": 32078,
+        "lf_count": 724,
+        "terminal_lf_count": 2,
+        "sha256": "9ede82265ca70c38d245b852179179b294661f562ed2384412cbec167f0ab316"
+      },

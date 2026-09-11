@@ -1,0 +1,12 @@
+{
+  "schema": "s19-evidence-entry-v1",
+  "resource": "C88",
+  "logical_path": "C88-pro-gram-recovered-visible-envelope-c88-0910.json",
+  "original": {"bytes": 29691, "sha256": "bb219d68ff32d636ae801b2e2856bb467bc9ee5337e2796775a8208a7392c013", "lf": 111, "terminal_lf": 0, "lines": 112},
+  "origin": {"archive_member": "primary/C88-pro-gram-recovered-visible-envelope-c88-0910.json"},
+  "contract": "docs/reports/quantized-gh/s19-evidence/README.md",
+  "interpretation": "Archive of the complete named original resource. Parts are contiguous raw UTF-8 slices; parse JSON only after reconstruction. Historical fields retain their original owner and values.",
+  "parts": [
+    {"ordinal": 1, "path": "docs/reports/quantized-gh/s19-evidence/raw/c88-bb219d68ff32/group-001/part-0001-bb219d68ff32.txt", "byte_start": 0, "byte_end_exclusive": 29691, "line_start": 1, "line_end_inclusive": 112, "bytes": 29691, "sha256": "bb219d68ff32d636ae801b2e2856bb467bc9ee5337e2796775a8208a7392c013", "lf": 111, "terminal_lf": 0, "lines": 112, "context": "\"conclusion\": {"}
+  ]
+}

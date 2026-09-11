@@ -1,0 +1,9 @@
+## 21. What the 5040 research contributes to this lane
+
+The 5040 research line was read in the current dev source, including
+ZECKENDORF_EULER_5040.md, GoldenResourceObjectiveFactorization,
+GoldenResource5040PriceInterval, and GoldenResource/EightStepAbundancy.
+The recent padding-mass PR 6131 was also read at its discussion level. These
+are cross-line mathematical inputs to the research strategy, not Lean imports
+or a claim that the grid and arithmetic state spaces are the same object.
+

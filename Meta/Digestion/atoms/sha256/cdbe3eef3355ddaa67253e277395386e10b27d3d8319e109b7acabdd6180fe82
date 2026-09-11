@@ -1,0 +1,37 @@
+## 0. 开放目标与仓库接口
+
+目标是判断是否存在四个两两 mutually unbiased orthonormal bases in `C^6`。
+
+固定第一基为坐标基以后，另外三个基可表示为六阶 complex Hadamard matrices。仓库当前已经具有：
+
+```text
+RankOneContext
+centeredProjector
+centeredContextPlane
+overlap / incompatibility
+rank-one commutator conservation
+tomography and purity Pythagoras
+complex Hadamard and Hadamard-unbiased transitions
+exact Hadamard atlas consumer contract
+```
+
+本研究线复用这些对象。有限 Fourier 与三循环 character 运算优先复用：
+
+```text
+D5/S3/Fourier/FinitePoisson.lean
+D5/S3/Observer/WindowRegister.lean
+```
+
+不在 MUB 文件中重新建立一套离散 Fourier 库。
+
+当前总路线是：
+
+```text
+order-six Hadamard atlas
+  -> fixed-edge completion fibre
+  -> two compatible completions
+  -> centered-projector / symmetry-plane sharp bound
+  -> Fourier and strict-2-circulant branch certificates
+  -> global atlas aggregation
+```
+

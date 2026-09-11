@@ -1,0 +1,43 @@
+## 1. Target and current result
+
+The research target is a uniform complex zero-free neighborhood for the
+independence polynomials of all finite induced square-grid subgraphs, extending
+the interval currently obtained from the Weitz-tree connective-constant bound
+2.429. Chen, Shao and Shi [1, Appendix A.6] give the threshold 2.538 and explicitly
+identify improved Weitz growth bounds as a possible improvement mechanism.
+
+This first result resolves a smaller, precise optimization question within that
+route: how much can adaptive neighbor ordering improve the spatial radius-three
+blocked-memory upper approximation? With the model defined below, let C_n^pi be
+its root descendant count under a controller pi, allowed to depend on the entire
+path history. Put
+
+\[
+ g(pi)=\limsup_{n\to\infty}(C_n^{pi})^{1/n},\qquad
+ g_3^*=\inf_{pi}g(pi).
+\]
+
+The exact certificate and the induction below establish, at the mathematical
+and independently replayed integer-certificate level,
+
+\[
+ \boxed{2.5205\le g_3^*\le2.5206,\qquad g(\mathrm{SRL})\ge2.5209.}
+\]
+
+In particular, an explicit adaptive policy strictly improves fixed SRL in this
+same memory model, while **every** ordering on this model is still above 2.429.
+The certificate therefore both supplies a constructive improvement and identifies
+which resource must change before this route can improve the global threshold.
+No improved global zero-free constant is asserted.
+
+The four accompanying Lean modules contain proof scripts for the finite
+certificates, the all-depth integer inequalities, and a genuine finite-domain
+simulation. They have been logically reviewed but not compiled in the authoring
+runtime. The asymptotic rate notation in this section is a paper consequence of
+the all-depth inequalities, not a separately elaborated Lean limsup theorem.
+
+This is the first dedicated square-grid hard-core research volume. Earlier
+repository hard-core transfer discussions concern one-dimensional forbidden
+adjacency and RH-related constructions; their determinant theorems do not
+supply the two-dimensional deletion-tree estimates needed here.
+

@@ -1,0 +1,49 @@
+## 3. Actual ordered deletion and the memory approximation
+
+Coordinates are relative to an east-facing incoming edge. The parent vertex
+(-1,0) has already been removed. The three possible next directions are
+
+\[
+ S=(1,0),\qquad R=(0,-1),\qquad L=(0,1).
+\]
+
+An action a is one of the six permutations SRL, SLR, RSL, RLS, LSR, LRS.
+For a chosen direction d, let E(a,d) be the directions preceding d in that
+permutation, and put
+
+\[
+ K(a,d)=\{(0,0)\}\cup E(a,d).
+\]
+
+The coordinate normalization is
+
+\[
+ T_S(x,y)=(x-1,y),\quad T_R(x,y)=(-y-1,x),\quad
+ T_L(x,y)=(y-1,-x).
+\]
+
+Each map is injective and sends the old origin to the new parent (-1,0).
+For an actual finite available vertex set V, taking child d is allowed exactly
+when d belongs to V, and the new available set is
+
+\[
+ V'=T_d(V\setminus K(a,d)).
+\]
+
+This is the ordered vertex-deletion expansion used in the hard-core ratio
+recursion. The source's orderedCount counts its three-direction paths. It
+requires no claimed relation between a supplied count and a grid: availability
+is tested against the actual finite set of integer vertices.
+
+For a retained blocked set F and radius r define
+
+\[
+ M_r(F,a,d)=T_d(F\cup K(a,d))\cap
+ \{(x,y):|x|+|y|\le r\}.
+\]
+
+A memory child is allowed whenever d is absent from F. Blockers forgotten by
+truncation do not reappear unless generated again by subsequent deletions.
+This creates an upper approximation, including some geometrically impossible
+long paths.
+

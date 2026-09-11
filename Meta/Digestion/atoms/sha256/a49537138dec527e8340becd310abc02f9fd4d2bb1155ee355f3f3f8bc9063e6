@@ -1,0 +1,11 @@
+**定理 70（自然数的精确 Zeckendorf 算术）。** \(\operatorname{val}:\mathsf W_Z\to\omega\) 与 \(\zeta\) 互逆；补零与截尾给出有限数字和规范总行的双射。置
+\[
+\begin{aligned}
+0_Z&=\zeta(0),&1_Z&=\zeta(1),&S_Zu&=\operatorname{Norm}(\operatorname{pad}(u)+e_0),\\
+u<_Zv&\iff\operatorname{val}(u)<\operatorname{val}(v),\\
+u+_Zv&=\operatorname{Norm}(\operatorname{pad}(u)+\operatorname{pad}(v)),\\
+u\cdot_Zv&=\operatorname{Norm}\left(\left(\sum_{i,j}G_iG_ju(i)v(j)\right)e_0\right).
+\end{aligned}
+\]
+有限数字的值在其定义域外取零。于是 \(\zeta\) 保持并反映零、一、后继、序、加法与乘法。它们满足通常自然数递归等式及每个带参数归纳实例。相同运算沿 \(u\mapsto\langle0,u\rangle\) 运输到 \(\mathsf N_Z\)。有限数字及自然叶均属于 \(HF\)，而每个总行 \(s(n)\) 的函数图均无限。
+

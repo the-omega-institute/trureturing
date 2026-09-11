@@ -1,0 +1,33 @@
+**31.21 经典出处、历史访问失败和固定核验的产地。** 专门九节点、两项缩放裕量、
+整箱传递和实际格点应用标为 repo-derived。经典工具当场作聚焦只读核对:
+HKUST [Lecture 14: Greedy Algorithms](https://home.cse.ust.hk/~dekai/271/notes/L14/L14.pdf)
+PDF pp.4-7 的递减 value/weight 与最后一项可分数;
+Boyd/Vandenberghe [Convex functions](https://web.stanford.edu/class/ee364a/lectures/functions.pdf)
+PDF pp.6,16,26,27 的范数凸性、Jensen 和单调复合;
+Gushchin–Borzykh, *Integrated quantile functions: properties and applications*,
+Modern Stochastics: Theory and Applications 4(4) (2017),285–314,
+DOI [10.15559/17-VMSTA88](https://doi.org/10.15559/17-VMSTA88),
+[原文](https://arxiv.org/pdf/1801.00977) PDF p.10 / 期刊 p.294 Theorem 5(ii)
+和证明的递增凸序/正部积分等价;本节质量约定除以 3 即与概率约定相容。
+另核对 NIST DLMF [4.6.E1](https://dlmf.nist.gov/4.6.E1.tex) 的对数级数,
+以及 Encyclopedia of Mathematics [Dirichlet theorem](https://encyclopediaofmath.org/wiki/Dirichlet_theorem)
+的 Diophantine approximations 小节中多实数版本,本节只用 \(Q=N^2\) 的抽屉特例。
+这些出处支持经典材料,不被说成已有本节专门素数差值定理。
+PDF 文本提取有字体解码警告,HKUST 若干公式字形不全;实际可读的算法文字与
+其它指定定理/公式已核对,本节的精确专门公式由上面的自足证明和证书承担。
+检索收据及其适用范围见报告,不作穷尽文献或优先权声明。
+
+primary envelope 的 SHA256 为
+7170e171ad3596e697ff4d515393606b935fb6d5237505d7191b464c46852439;
+只消费其 conclusion,log_ref 不透明。它原报两次公开获取均失败于 DisabledError:
+封存 feb497ec31f68e09ccc547a08810c398e66f3ee6 的本源文件 URL,
+及封存 391f7355698085c6500b46838a093dad05947ffb 的
+docs/reports/prime-slab-finite-design-0909.md URL。它没有读取这些源字节;
+本实施对本树的读取不改变这一历史事实。primary 自报九个指定节点的浮点计算
+仅作有界诊断,另有 Fraction 固定证书与十八项整数资格核对;不把诊断列为证明前提。
+caller 原审计记录 131 项全通过,不是 primary 的执行计数,也不是本轮独立评审票。
+原审计与程序保持原字节且未重跑。新报告把相同常数改编为无 caller-local 路径依赖的
+自足可执行证书,另补固定输入到证明假设的链接,只执行改编证书一次。
+精确命令、版本、字节/hash、实际结果及各类证据分工见
+[balanced-prime-237-all-slabs-0910.md](../../reports/balanced-prime-237-all-slabs-0910.md)。
+

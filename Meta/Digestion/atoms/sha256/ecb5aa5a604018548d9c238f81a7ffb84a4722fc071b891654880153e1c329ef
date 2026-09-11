@@ -1,0 +1,23 @@
+## 10. Uniform block bounds and completeness of fixed-order memory
+
+Fix one relative ordering a. Write P={(-1,0)}, c_k=C_infinity(k,P), and
+c_n^(r)=C_r(n,P). Every allowed update retains the parent for r>=1. Any descendant
+blocker set therefore contains P, and its continuation count is bounded above
+by the count after resetting to P under the same fixed relative ordering.
+This reset domination would require an additional controller argument for a
+state-dependent policy; the theorem in this section fixes a.
+
+MemoryBlockBounds.fixed_order_block_bound proves, for every r>=1, k<=r,
+q,s>=0, every starting history and every finite F containing P,
+
+\[
+ \boxed{ C_r(qk+s,F)\le c_k^{\,q}\,3^s. }
+\]
+
+Proof: at depth k, reset domination followed by finite_horizon_exact bounds the
+number of descendants by the actual complete prefix c_k. Every child at depth k
+again contains P. Induct on the number q of full blocks; the remaining s steps
+have at most 3^s descendants. This is an all-depth inequality with a uniform
+coefficient for all eligible initial blocker sets, not an assumed spectral bound.
+The companion complete_count_le_memory proves c_n<=c_n^(r) for every n and r.
+

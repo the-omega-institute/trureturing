@@ -2719,635 +2719,6 @@ print("pr6_expressibility_pairing: " + " ".join(f"{k}={v0}" for k, v0 in pr6_cou
       + " seed=2026091006 Tail_families=27 random_inputs=64 cases=80"
       + " periodic_and_drift=1,1/1,0 D15=1,2 D10=2,2 D16=1,1,1,0,1")
 
-REQUIRED_PR6_KEYS = frozenset({
-    "tail_q", "collapse_controls", "target_controls", "collapsed_profiles",
-    "saturation_endpoints", "saturation_q", "saturation_no_product",
-    "saturation_empty_factor", "saturation_product", "periodic_saturation",
-    "unsaturated_control", "first_product_fiber", "pair_push", "empty_products",
-    "old_archives", "negative_inputs", "unselected_parents", "pair_suffix",
-    "pullback_encoding", "mixed_summary", "mixed_q", "strict_failures",
-    "D15_fiber", "D15_q", "D10_control", "U_rule_push", "J_positive",
-    "J_fiber", "U_size_rule", "global_rule", "same_local_rows",
-    "q_only_control", "image_roundtrip", "enumerated_states",
-    "formal_membership", "enumerated_roundtrip", "image_sets",
-    "distinct_actual_profiles", "D16_conditions", "empty_endpoint_branches",
-    "empty_realizations",
-})
-assert REQUIRED_PR6_KEYS <= set(pr6_counts.keys())
-assert all(pr6_counts[k] > 0 for k in REQUIRED_PR6_KEYS)
-
-PR7_KEYS = frozenset({
-    "archive_parity_rule_copy",
-    "cancelled_square_linear",
-    "copy_causal_q",
-    "copy_causal_summary",
-    "copy_d15_fiber",
-    "copy_empty_product",
-    "copy_first_product_profiles",
-    "copy_first_product_q",
-    "copy_first_product_summary",
-    "copy_negative_time_control",
-    "copy_old_archive_control",
-    "copy_periodic_saturation",
-    "copy_q_only_control",
-    "copy_region_controls",
-    "copy_same_local_rows",
-    "copy_strict_temporal_failure",
-    "copy_strict_temporal_single_success",
-    "copy_tail_q_bytes",
-    "copy_unsaturated_control",
-    "copy_unselected_parent_control",
-    "cubic_control",
-    "d15_d10_controls",
-    "d17_square_vs_linear",
-    "d18_guard_failure",
-    "d18_slice_failure",
-    "functional_orbits_2x2",
-    "functional_orbits_3x2",
-    "functional_orbits_3x3",
-    "image_d16_witness_failure",
-    "image_empty_endpoint_branches",
-    "image_empty_realizations",
-    "image_roundtrip_57",
-    "labeled_graphs_2x2",
-    "no_zero_row_orbits_2x2",
-    "orbit_cover_2x2",
-    "orbit_partition_2x2",
-    "orbits_2x2",
-    "ordered_pair_negation_suffix",
-    "ordered_pair_push",
-    "ordered_source_cross",
-    "poly_interpolation_coefficients",
-    "poly_profile_bytes",
-    "poly_q_bytes",
-    "pullback_encoding_copy",
-    "selected_pair_fiber_copy",
-    "selected_pair_profile_copy",
-    "shared_saturation_family_contexts",
-    "shared_saturation_same_pair_q",
-    "shared_saturation_full_summary_equal",
-    "shared_saturation_suffix_full_summary_equal",
-    "shared_saturation_nonempty_first_q",
-    "shared_saturation_empty_factor_zero",
-    "shared_saturation_witness_drop_cases",
-    "shared_saturation_witness_drop_red",
-    "slice_linear_coefficient",
-    "slice_nonzero_constant",
-    "successor_pair_push_copy",
-    "successor_size_rule_copy",
-})
-assert PR7_KEYS.isdisjoint(REQUIRED_PR6_KEYS)
-pr7_counts = {name: 0 for name in PR7_KEYS}
-assert PR7_KEYS <= set(pr7_counts.keys())
-
-def pr7_hit(name, amount=1):
-    assert name in PR7_KEYS
-    pr7_counts[name] += amount
-
-# repo-derived: 引理 5、D17、D18 的有限核验；有限读数不承担全称否定。
-def pr7_equal(actual, expected, name):
-    assert pr3_bytes(actual) == pr3_bytes(expected), (name, actual, expected)
-    pr7_hit(name)
-
-def pr7_copies(x, n):
-    # add tags every occurrence; n=0 has an empty archive, not just empty A.
-    out = empty
-    for _ in range(n):
-        out = add(out, x)
-    return out
-
-def pr7_number_leaves(term):
-    count = 0
-    def visit(node):
-        nonlocal count
-        op = node[0]
-        if op == "X":
-            leaf = ("X", count)
-            count += 1
-            return leaf
-        if op == "const":
-            return node
-        if op in ("add", "mul", "then"):
-            return op, visit(node[1]), visit(node[2])
-        assert op in ("N", "FS", "FL", "FQ", "T")
-        return (*node[:-1], visit(node[-1]))
-    numbered = visit(term)
-    return numbered, count
-
-def pr7_rich_eval(term, leaves):
-    op = term[0]
-    if op == "X":
-        return leaves[term[1]]
-    if op == "const":
-        return term[1]
-    if op in ("add", "mul", "then"):
-        left = pr7_rich_eval(term[1], leaves)
-        right = pr7_rich_eval(term[2], leaves)
-        if left is FAIL or right is FAIL:
-            return FAIL
-        return attempt(lambda: {"add": add, "mul": mul, "then": temporal}[op](left, right))
-    return pr5_rich_step(pr7_rich_eval(term[-1], leaves), term[:-1])
-
-def pr7_profile_polynomial(term, g):
-    # Coefficients live in the free profile group; they need not be realizable.
-    # Endpoints play no role. Only normalized total terms enter this recursion.
-    op = term[0]
-    if op == "X":
-        return [{}, g]
-    if op == "const":
-        return [pr4_profile(term[1])]
-    if op in ("add", "mul"):
-        left = pr7_profile_polynomial(term[1], g)
-        right = pr7_profile_polynomial(term[2], g)
-        if op == "add":
-            return [plus_c(left[i] if i < len(left) else {},
-                           right[i] if i < len(right) else {})
-                    for i in range(max(len(left), len(right)))]
-        out = [{} for _ in range(len(left) + len(right) - 1)]
-        for i, gi in enumerate(left):
-            for j, gj in enumerate(right):
-                out[i+j] = plus_c(out[i+j], pr4_profile_product(gi, gj))
-        return out
-    assert op in ("N", "FS", "FL", "FQ", "T")
-    return [pr5_summary_step((coefficient, None, None), term[:-1])[0]
-            for coefficient in pr7_profile_polynomial(term[-1], g)]
-
-def pr7_poly_at(coefficients, n):
-    out = {}
-    for degree, g in enumerate(coefficients):
-        out = plus_c(out, sparse({row: value*n**degree for row, value in g.items()}))
-    return out
-
-def pr7_lagrange(readings):
-    # Exact interpolation from the four measured values, independent of Γ_t.
-    assert len(readings) == 4
-    coefficients = [Fraction(0) for _ in readings]
-    for i, value in enumerate(readings):
-        basis, denominator = [Fraction(1)], 1
-        for j in range(4):
-            if j == i:
-                continue
-            expanded = [Fraction(0) for _ in range(len(basis)+1)]
-            for degree, coefficient in enumerate(basis):
-                expanded[degree] -= j*coefficient
-                expanded[degree+1] += coefficient
-            basis = expanded
-            denominator *= i-j
-        for degree, coefficient in enumerate(basis):
-            coefficients[degree] += Fraction(value, denominator)*coefficient
-    assert all(c.denominator == 1 for c in coefficients)
-    return [c.numerator for c in coefficients]
-
-pr7_X = ("X",)
-pr7_A = ("mul", pr7_X, pr7_X)
-pr7_Qodd = pr5_Set(lambda a: a[3] % 2 == 1)
-pr7_pair_sources = frozenset({("pair", pr3_l0, pr3_l0), ("pair", pr3_l0, pr3_l1)})
-# Six fixed terms, all parameters chosen before generating the inputs.
-pr7_terms = (
-    ("square", pr7_A),
-    ("fixed_middle", ("mul", ("mul", pr7_X, ("const", time_shift(pr3_U0, -2))), pr7_X)),
-    ("cancelled_square", ("add", pr7_X, ("add", pr7_A, ("N", pr7_A)))),
-    ("cubic", ("mul", pr7_A, pr7_X)),
-    ("nested_filters", ("T", -1, ("FQ", pr5_Qpositive,
-        ("FL", frozenset({pr3_l0, pr3_l1}), ("N", ("FS", frozenset({origin, v}),
-            ("T", 2, ("add", pr7_X, ("mul", pr7_X, ("const", pr3_U0)))))))))),
-    ("constant_offset", ("add", ("const", pr3_U0), ("T", 1, ("N", ("FQ", pr7_Qodd,
-        ("FS", frozenset({origin}), ("FL", pr7_pair_sources,
-            ("mul", ("T", -1, pr7_X), pr7_X)))))))),
-)
-pr7_rng = pr3_Random(2026091007)
-pr7_random_inputs = []
-for pr7_i in range(4):
-    pr7_events = {j: (pr7_rng.randrange(-5, 6), pr7_rng.choice((origin, v, h)), sign,
-                      pr7_rng.choice((pr3_l0, pr3_l1)))
-                  for j, sign in enumerate((1, -1))}
-    pr7_whole = frozenset(pr7_events)
-    for pr7_j in range(pr7_i % 3):
-        pr7_events[("archive", pr7_j)] = (pr7_rng.randrange(-8, 9), h, 1, pr3_l1)
-    pr7_edges = {(e, f) for e in pr7_events for f in pr7_events
-                 if pr7_events[e][0] < pr7_events[f][0] and pr7_rng.randrange(2)}
-    pr7_selected = frozenset(e for e in sorted(pr7_whole) if pr7_rng.randrange(2))
-    pr7_input = valid(Rich(pr7_events, closure(pr7_edges), pr7_whole, pr7_selected))
-    assert charge(pr7_input, pr7_input.w) == 0
-    pr7_random_inputs.append(pr7_input)
-assert len(pr7_random_inputs) == 4 and len(pr7_terms) == 6
-pr7_poly_inputs = [pr3_U0] + pr7_random_inputs
-for pr7_label, pr7_raw_term in pr7_terms:
-    pr7_term, pr7_r = pr7_number_leaves(pr7_raw_term)
-    for pr7_input in pr7_poly_inputs:
-        pr7_g = pr4_profile(pr7_input)
-        pr7_poly = pr7_profile_polynomial(pr7_term, pr7_g)
-        assert len(pr7_poly) <= 4  # All six chosen terms have degree at most 3.
-        pr7_qpoly = [pr5_summary_q((g, None, None)) for g in pr7_poly]
-        pr7_reads = []
-        for pr7_n in range(4):
-            pr7_nx = pr7_copies(pr7_input, pr7_n)
-            assert pr3_bytes(pr4_profile(pr7_nx)) == pr3_bytes(
-                sparse({row: pr7_n*value for row, value in pr7_g.items()}))
-            pr7_value = pr7_rich_eval(pr7_term, [pr7_nx]*pr7_r)
-            assert pr7_value is not FAIL
-            pr7_equal(pr4_profile(pr7_value), pr7_poly_at(pr7_poly, pr7_n), "poly_profile_bytes")
-            pr7_read = q(pr7_value)
-            pr7_equal(pr7_read, sum(c*pr7_n**d for d, c in enumerate(pr7_qpoly)), "poly_q_bytes")
-            pr7_reads.append(pr7_read)
-        pr7_interpolated = pr7_lagrange(pr7_reads)
-        pr7_equal(pr7_interpolated, pr7_qpoly + [0]*(4-len(pr7_qpoly)), "poly_interpolation_coefficients")
-        pr7_c0 = pr7_reads[0]
-        pr7_slice_sum = 0
-        for pr7_leaf in range(pr7_r):
-            pr7_leaves = [pr7_input if j == pr7_leaf else empty for j in range(pr7_r)]
-            pr7_slice = pr7_rich_eval(pr7_term, pr7_leaves)
-            assert pr7_slice is not FAIL
-            pr7_slice_sum += q(pr7_slice) - pr7_c0
-        pr7_equal(pr7_interpolated[1], pr7_slice_sum, "slice_linear_coefficient")
-        if pr7_label == "constant_offset":
-            assert pr7_c0 == 1  # The subtraction of C(0_empty) is exercised.
-            pr7_hit("slice_nonzero_constant")
-        if pr7_label == "cancelled_square":
-            assert pr7_reads == [n*q(pr7_input) for n in range(4)]
-            pr7_hit("cancelled_square_linear")
-        if pr7_label == "cubic" and q(pr7_input) != 0:
-            assert pr7_interpolated == [0, 0, 0, q(pr7_input)**3]
-            pr7_hit("cubic_control")
-
-# repo-derived D18: 定向切片失败与严格失败传播；有限读数不承担全称否定。
-pr7_d18_Q = frozenset({(origin, 1, pr3_l0, 1)})
-pr7_d18_term, pr7_d18_r = pr7_number_leaves(
-    ("FQ", pr7_d18_Q, ("then", pr7_X, ("T", 1, pr7_X))))
-assert pr7_d18_r == 2
-pr7_d18_reads = [q(pr7_rich_eval(pr7_d18_term, [pr7_copies(pr3_U0, n)]*2)) for n in range(4)]
-pr7_d18_slices = tuple(q(pr7_rich_eval(pr7_d18_term, leaves))
-                      for leaves in ([pr3_U0, empty], [empty, pr3_U0]))
-assert pr7_d18_reads == [0, 2, 4, 6] and pr7_d18_slices == (0, 1)
-assert pr7_lagrange(pr7_d18_reads)[1] == 2 != sum(pr7_d18_slices) - 2*pr7_d18_reads[0]
-pr7_hit("d18_slice_failure")
-pr7_guard_x = valid(Rich(
-    {"e_-": (-3, origin, 1, pr3_l0), "e_+": (3, origin, -1, pr3_l0)},
-    frozenset(), frozenset(), frozenset()))
-pr7_guard_term, pr7_guard_r = pr7_number_leaves(("then", pr7_X, ("T", 1, pr7_X)))
-assert pr7_guard_r == 2
-pr7_guard_single = valid(Rich(
-    {"e_-": (-3, origin, 1, pr3_l0)}, frozenset(), frozenset(), frozenset()))
-pr7_guard_success = pr7_rich_eval(pr7_guard_term, [pr7_guard_single]*2)
-assert pr7_guard_success is not FAIL, "copy_strict_temporal_single_success"
-assert len(pr7_guard_success.e) == 2 and q(pr7_guard_success) == 0
-pr7_hit("copy_strict_temporal_single_success")
-assert pr7_rich_eval(pr7_guard_term, [pr7_guard_x]*2) is FAIL, (
-    "copy_strict_temporal_failure", len(pr7_guard_x.e), guard(pr7_guard_x, time_shift(pr7_guard_x, 1)))
-pr7_hit("copy_strict_temporal_failure")
-pr7_d18_bad = pr7_guard_x
-assert {event[0] for event in pr7_d18_bad.e.values()} == {-3, 3}
-assert not guard(pr7_d18_bad, time_shift(pr7_d18_bad, 1))
-for pr7_failure_term in (pr7_d18_term, ("N", pr7_d18_term),
-                         ("FS", frozenset(), pr7_d18_term),
-                         ("mul", pr7_d18_term, ("const", empty))):
-    assert pr7_rich_eval(pr7_failure_term, [pr7_d18_bad]*2) is FAIL
-    pr7_hit("d18_guard_failure")
-
-# repo-derived D17: 自乘与有序来源的定向对照；有限读数不承担全称否定。
-pr7_d17_term, pr7_d17_r = pr7_number_leaves(("FQ", pr7_Qodd, pr7_A))
-pr7_Beven = pr5_Set(lambda cell: cell[0] % 2 == 0)
-pr7_d17_reads, pr7_d17_targets = [], []
-for pr7_n in (1, 2, 3):
-    pr7_nx = pr7_copies(unit_at(-4), pr7_n)
-    pr7_square = mul(pr7_nx, pr7_nx)
-    assert {pr7_square.e[e][0] for e in pr7_square.w} == {-3}
-    pr7_d17_reads.append(q(pr7_rich_eval(pr7_d17_term, [pr7_nx]*pr7_d17_r)))
-    pr7_d17_targets.append(q(pr5_region(pr7_nx, pr7_Beven)))
-assert pr7_d17_reads == [1, 4, 9] and pr7_d17_targets == [1, 2, 3]
-pr7_hit("d17_square_vs_linear")
-pr7_source1 = valid(replace(pr3_U0, e={e: (t, p, sign, pr3_l1)
-                                      for e, (t, p, sign, source) in pr3_U0.e.items()}))
-pr7_sources = add(pr3_U0, pr7_source1)
-pr7_positive_ids = sorted(pr7_sources.a)
-pr7_ordered_Q = pr5_Set(lambda a: a[2] == ("pair", pr3_l0, pr3_l1))
-pr7_ordered_reads = []
-for pr7_selection in ((), (pr7_positive_ids[0],), (pr7_positive_ids[1],), tuple(pr7_positive_ids)):
-    pr7_selected_sources = replace(pr7_sources, a=frozenset(pr7_selection))
-    pr7_ordered_reads.append(q(pr3_causal_filter(
-        mul(pr7_selected_sources, pr7_selected_sources), pr7_ordered_Q, True)))
-assert pr7_ordered_reads == [0, 0, 0, 1]
-pr7_hit("ordered_source_cross")
-
-
-# Copy-language q checks on Tail families and directed periodic controls.
-for pr7_B, pr7_c in pr6_tails[:3]:
-    pr7_x = pr5_cases[0]
-    pr7_equal(q(pr6_expression(pr7_x, pr7_B, pr7_c - 1)),
-              q(pr5_region(pr7_x, pr7_B)), "copy_tail_q_bytes")
-for pr7_B, pr7_p, pr7_t, pr7_tt in pr6_controls:
-    pr7_xs = [replace(unit_at(pr7_s), e={
-        e: (n, pr7_p, s, r) for e, (n, p, s, r) in unit_at(pr7_s).e.items()
-    }) for pr7_s in (pr7_t, pr7_tt)]
-    assert tuple(q(mul(pr7_x, pr3_U0)) for pr7_x in pr7_xs) == (1, 1)
-    pr7_hit("copy_first_product_q")
-    assert tuple(q(pr5_region(pr7_x, pr7_B)) for pr7_x in pr7_xs) == (1, 0)
-    pr7_hit("copy_region_controls")
-    assert pr4_profile(mul(pr7_xs[0], pr3_U0)) == pr4_profile(mul(pr7_xs[1], pr3_U0))
-    pr7_hit("copy_first_product_profiles")
-
-# One common witness family feeds every context, factor case, position, and pair.
-pr7_shared_targets = (
-    (origin, 1, pr3_l1, 0),
-    (v, 1, pr3_l1, 1),
-    (h, 1, pr3_l1, -1),
-)
-pr7_shared_prefixes = (
-    (("FQ", {pr7_shared_targets[0]}),),
-    (("FQ", {pr7_shared_targets[1]}), ("FL", {pr3_l0})),
-    (("T", 1), ("FQ", {pr7_shared_targets[2]}), ("FL", {pr3_l0})),
-)
-pr7_shared_factors = (None, empty, unit_at(-4))
-pr7_shared_suffix = (("N",), ("T", 2))
-pr7_shared_pulled = (
-    (origin, 1, pr3_l1, 0),
-    (v, 1, pr3_l1, 1),
-    (h, 1, pr3_l1, -2),
-)
-pr7_shared_c = min(0, *(a[3] for a in pr7_shared_pulled), -4)
-assert pr7_shared_c == -4
-
-def pr7_shared_input(t, p, drop=None):
-    events = {("e", p): (t, p, 1, pr3_l0)}
-    for i, (point, sign, source, witness_time) in enumerate(pr7_shared_pulled):
-        if i != drop:
-            events[("d", i)] = (witness_time, point, sign, source)
-    balance = sum(value[2] for value in events.values())
-    events.update({("n", i): (0, h, -1, pr3_l0) for i in range(balance)})
-    whole = frozenset(events)
-    events.update({("low",): (-20, origin, 1, pr3_l0),
-                   ("high",): (5, origin, 1, pr3_l0)})
-    edges = frozenset((('e', p), ('d', i))
-                      for i in range(len(pr7_shared_pulled)) if i != drop)
-    x = valid(Rich(events, edges, whole, frozenset({("e", p)})))
-    assert charge(x, x.w) == 0, ("pr7_shared_input_balance", charge(x, x.w))
-    assert x.a == frozenset({("e", p)}) and x.e[("e", p)][2] == 1, "pr7_shared_input_selected_positive"
-    assert ({("low",), ("high",)} <= x.e.keys() - x.w
-            and theta(x)[1:3] == (-20, 5)), "pr7_shared_input_archive_endpoints"
-    return x
-
-def pr7_shared_context(x, i):
-    # An independent input check also catches removal of the constructor guard.
-    assert charge(x, x.w) == 0, ("shared_saturation_input_balance", charge(x, x.w))
-    y = x
-    for step in pr7_shared_prefixes[i]:
-        y = pr5_rich_step(y, step)
-    first_summary = suffix_summary = None
-    factor = pr7_shared_factors[i]
-    if factor is not None:
-        y = pr5_rich_step(y, ("mul", 0, factor))
-        first_summary = pr5_summary(y)
-        # Compute the suffix from the full state independently of the comparison.
-        suffix_summary = pr5_summary(y)
-    for step in pr7_shared_suffix:
-        y = pr5_rich_step(y, step)
-        assert y is not FAIL, ("shared_saturation_suffix_defined", i)
-        if factor is not None:
-            suffix_summary = pr5_summary_step(suffix_summary, step)
-            assert pr3_bytes(pr5_summary(y)) == pr3_bytes(suffix_summary), (
-                "shared_saturation_suffix_consumes_full_summary", i, step)
-    return y, first_summary, suffix_summary
-
-# Registered failure points: d0 changes C0's q; d1 changes C2's full summary;
-# d2 changes both C2's q and full summary. The empty-factor C1 stays zero.
-pr7_shared_drop_controls = (
-    ("d0", 0, (-1, 0)),
-    ("d1", 2, (-1, -1)),
-    ("d2", 2, (-1, 0)),
-)
-pr7_shared_context_reads = []
-pr7_shared_summary_reads = []
-pr7_shared_negative_reads = []
-for pr7_p in (origin, v, h):
-    for pr7_t, pr7_tt in ((-12, -11), (-10, -9)):
-        assert pr7_t < pr7_shared_c and pr7_tt < pr7_shared_c
-        pr7_pair = (pr7_shared_input(pr7_t, pr7_p),
-                    pr7_shared_input(pr7_tt, pr7_p))
-        for pr7_i, pr7_factor in enumerate(pr7_shared_factors):
-            pr7_results = [pr7_shared_context(pr7_x, pr7_i) for pr7_x in pr7_pair]
-            pr7_outputs, pr7_first_summaries, pr7_suffix_summaries = zip(*pr7_results)
-            if pr7_factor is not None:
-                assert pr3_bytes(pr7_suffix_summaries[0]) == pr3_bytes(pr7_suffix_summaries[1]), (
-                    f"shared_saturation_suffix_full_summary_equal_C{pr7_i}",
-                    tuple(pr5_summary_q(s) for s in pr7_suffix_summaries), "full_summary_equal=False")
-                pr7_hit("shared_saturation_suffix_full_summary_equal")
-                pr7_equal(pr7_first_summaries[0], pr7_first_summaries[1],
-                          "shared_saturation_full_summary_equal")
-                pr7_shared_summary_reads.append(pr7_first_summaries[0])
-                if pr7_factor.w:
-                    assert tuple(pr5_summary_q(s) for s in pr7_first_summaries) == (1, 1), (
-                        "shared_saturation_nonempty_first_q")
-                    pr7_hit("shared_saturation_nonempty_first_q")
-                else:
-                    assert all(not out.w and q(out) == 0 for out in pr7_outputs), (
-                        "shared_saturation_empty_factor_zero")
-                    pr7_hit("shared_saturation_empty_factor_zero")
-            pr7_actual = tuple(q(pr7_y) for pr7_y in pr7_outputs)
-            pr7_expected = ((-1, -1), (0, 0), (-1, -1))[pr7_i]
-            assert pr3_bytes(pr7_actual[0]) == pr3_bytes(pr7_actual[1]), (
-                f"shared_saturation_same_pair_q_C{pr7_i}", pr7_actual)
-            assert pr7_actual == pr7_expected, ("shared_saturation_expected_q", pr7_i, pr7_actual)
-            pr7_shared_context_reads.append(pr7_expected)
-            pr7_hit("shared_saturation_family_contexts")
-            pr7_hit("shared_saturation_same_pair_q")
-        for pr7_drop, (pr7_name, pr7_ci, pr7_expected_q) in enumerate(pr7_shared_drop_controls):
-            pr7_bad_pair = (pr7_shared_input(pr7_t, pr7_p),
-                           pr7_shared_input(pr7_tt, pr7_p, drop=pr7_drop))
-            pr7_bad_results = [pr7_shared_context(pr7_x, pr7_ci) for pr7_x in pr7_bad_pair]
-            pr7_bad_q = tuple(q(result[0]) for result in pr7_bad_results)
-            assert pr7_bad_q == pr7_expected_q, (f"shared_saturation_witness_drop_{pr7_name}_q", pr7_bad_q)
-            if pr7_ci == 2:
-                assert pr3_bytes(pr7_bad_results[0][1]) != pr3_bytes(pr7_bad_results[1][1]), (
-                    f"shared_saturation_witness_drop_{pr7_name}_full_summary")
-                assert pr3_bytes(pr7_bad_results[0][2]) != pr3_bytes(pr7_bad_results[1][2]), (
-                    f"shared_saturation_witness_drop_{pr7_name}_suffix_full_summary")
-            pr7_shared_negative_reads.append((pr7_name, pr7_ci, pr7_bad_q))
-            pr7_hit("shared_saturation_witness_drop_cases")
-assert len(pr7_shared_context_reads) == 18
-assert len(pr7_shared_summary_reads) == 12
-assert pr7_shared_negative_reads == list(pr7_shared_drop_controls) * 6
-pr7_hit("shared_saturation_witness_drop_red", len(pr7_shared_drop_controls))
-pr7_periodic = pr6_sat
-assert tuple(q(pr3_causal_filter(x, pr6_even_Q, True)) for x in pr7_periodic) == (1, 1)
-pr7_hit("copy_periodic_saturation")
-assert tuple(q(pr3_causal_filter(replace(x, o=frozenset()), pr6_even_Q, True))
-             for x in pr7_periodic) == (1, 0)
-pr7_hit("copy_unsaturated_control")
-assert pr5_summary(mul(pr7_periodic[0], pr3_U0)) == pr5_summary(mul(pr7_periodic[1], pr3_U0))
-pr7_hit("copy_first_product_summary")
-
-# Full ordered pair push, including empty/background/negative/unselected cases.
-pr7_P = pr5_all
-pr7_pair_rich = pr6_pair(pr6_X, pr3_U0, pr7_P)
-pr7_pair_expected = pr6_push(pr4_profile(pr6_X), pr4_profile(pr3_U0),
-                             lambda row, other: (row[0], other[0]) in pr7_P)
-assert pr4_profile(pr7_pair_rich) == pr7_pair_expected
-pr7_hit("ordered_pair_push")
-pr7_empty_pair = restricted_mul(empty, pr3_U0, lambda e, f: True)
-assert not pr7_empty_pair.w and q(pr7_empty_pair) == 0
-pr7_hit("copy_empty_product")
-pr7_old_product = mul(old, pr3_U0)
-pr7_current_product = mul(u, pr3_U0)
-assert pr4_profile(pr7_old_product) == pr4_profile(pr7_current_product)
-assert q(pr7_old_product) == q(pr7_current_product) == 1
-pr7_hit("copy_old_archive_control")
-pr7_negative_time_copy = time_shift(unit_at(-1), 1)
-assert pr4_profile(pr7_negative_time_copy) == pr4_profile(u)
-assert q(pr7_negative_time_copy) == q(u) == 1
-pr7_hit("copy_negative_time_control")
-assert any(e not in pr6_X.a for e in pr6_X.w)
-pr7_unselected_domain = valid(replace(
-    pr6_X, w=pr6_X.a,
-    o=frozenset((a, b) for a, b in pr6_X.o if a in pr6_X.a and b in pr6_X.a)))
-pr7_full_parent_product = mul(pr6_X, pr3_U0)
-pr7_selected_parent_product = mul(pr7_unselected_domain, pr3_U0)
-assert len(pr7_full_parent_product.w) == len(pr6_X.w) * len(pr3_U0.w)
-assert len(pr7_selected_parent_product.w) == len(pr6_X.a) * len(pr3_U0.w)
-assert len(pr7_full_parent_product.w) > len(pr7_selected_parent_product.w)
-pr7_hit("copy_unselected_parent_control")
-pr7_suffix_rich = pr5_rich_step(pr7_pair_rich, ("N",))
-pr7_suffix_state = pr5_summary_step(pr5_summary(pr7_pair_rich), ("N",))
-assert pr5_summary(pr7_suffix_rich) == pr7_suffix_state
-pr7_hit("ordered_pair_negation_suffix")
-
-# Pullback encoding and mixed strict propagation.
-pr7_cell_P = pr5_position_pair
-pr7_attr_P = pr5_Set(lambda pair: ((pair[0][3], pair[0][0]),
-                                   (pair[1][3], pair[1][0])) in pr7_cell_P)
-pr7_lifted = pr6_pair(pr6_X, pr3_U0, pr7_attr_P)
-pr7_direct_cells = pr5_pair(pr6_X, pr3_U0, pr7_cell_P)
-assert pr5_rich_bytes(pr7_lifted) == pr5_rich_bytes(pr7_direct_cells)
-pr7_hit("pullback_encoding_copy")
-pr7_step = ("FQ", pr5_Qpositive)
-pr7_rich_mixed = pr5_rich_step(pr6_X, pr7_step)
-pr7_state_mixed = pr5_summary_step(pr5_summary(pr6_X), pr7_step)
-assert pr5_summary(pr7_rich_mixed) == pr7_state_mixed
-assert q(pr7_rich_mixed) == pr5_summary_q(pr7_state_mixed)
-pr7_hit("copy_causal_summary")
-pr7_hit("copy_causal_q")
-
-# D15/D10 controls and the U/J descent comparisons.
-assert pr5_summary(pr6_X) == pr5_summary(pr6_Y)
-pr7_hit("copy_d15_fiber")
-assert (q(pr6_D(pr6_X)), q(pr6_D(pr6_Y))) == (1, 2)
-pr7_hit("d15_d10_controls")
-assert (q(pr6_D(pr3_d5x)), q(pr6_D(pr3_d5y))) == (2, 2)
-pr7_hit("d15_d10_controls")
-pr7_Q = frozenset({pr3_alpha(pr6_X, "b1", True)})
-pr7_rule = lambda e, f: any(a in pr7_Q for a in pr3_U(pr6_X, e, True))
-pr7_direct = restricted_mul(pr6_X, pr3_U0, pr7_rule)
-pr7_push = pr6_push(pr4_profile(pr6_X), pr4_profile(pr3_U0),
-                    lambda row, other: any(a in pr7_Q for a in row[2]))
-assert pr4_profile(pr7_direct) == pr7_push
-pr7_hit("successor_pair_push_copy")
-assert pr6_J(pr6_X, pr3_U0, pr7_rule) == {
-    a: n for (a, b, U), n in pr7_push.items() if b
-}
-pr7_hit("selected_pair_profile_copy")
-assert pr6_J(pr6_X, pr3_U0, pr7_rule) == pr6_J(pr6_Y, pr3_U0,
-                                                  lambda e, f: any(
-                                                      a in pr7_Q for a in pr3_U(pr6_Y, e, True)))
-pr7_hit("selected_pair_fiber_copy")
-pr7_size_rule = lambda e, f: len(pr3_U(pr6_X, e, True)) > 1
-assert pr4_profile(restricted_mul(pr6_X, pr3_U0, pr7_size_rule)) == pr6_push(
-    pr4_profile(pr6_X), pr4_profile(pr3_U0), lambda row, other: len(row[2]) > 1)
-pr7_hit("successor_size_rule_copy")
-pr7_global_rule = lambda e, f: (len(pr6_X.w) // 2) % 2
-assert pr4_profile(restricted_mul(pr6_X, pr3_U0, pr7_global_rule)) == pr6_push(
-    pr4_profile(pr6_X), pr4_profile(pr3_U0),
-    lambda row, other: (len(pr6_X.w) // 2) % 2)
-pr7_hit("archive_parity_rule_copy")
-assert set(pr4_profile(pr3_U0)) == set(pr4_profile(add(pr3_U0, pr3_U0)))
-pr7_hit("copy_same_local_rows")
-assert tuple(q(z) for z in pr6_q_only) == (1, 1)
-pr7_hit("copy_q_only_control")
-
-# Proposition 57 image round-trip and a finite 2x2 D10 orbit enumeration.
-pr7_a_pos = (origin, 1, pr3_l0, 0)
-pr7_a_neg = (origin, -1, pr3_l0, 0)
-pr7_g = {(pr7_a_pos, 1, frozenset({pr7_a_pos})): 1,
-         (pr7_a_neg, 0, frozenset({pr7_a_neg})): -1}
-assert pr5_summary(pr6_realize(pr7_g, 0, 0))[0] == pr7_g
-pr7_hit("image_roundtrip_57")
-pr7_mats = []
-for pr7_bits in product((0, 1), repeat=4):
-    pr7_matrix = (pr7_bits[:2], pr7_bits[2:])
-    if all(any(row) for row in pr7_matrix):
-        pr7_mats.append(pr7_matrix)
-assert len(pr7_mats) == 9
-pr7_hit("labeled_graphs_2x2")
-from itertools import permutations as pr7_permutations
-
-def pr7_orbit(matrix):
-    r, s = len(matrix), len(matrix[0])
-    return {
-        tuple(tuple(matrix[rows[i]][cols[j]] for j in range(s)) for i in range(r))
-        for rows in pr7_permutations(range(r))
-        for cols in pr7_permutations(range(s))
-    }
-pr7_orbits, pr7_seen = [], set()
-for pr7_matrix in pr7_mats:
-    if pr7_matrix in pr7_seen:
-        continue
-    pr7_orbit0 = pr7_orbit(pr7_matrix)
-    pr7_seen |= pr7_orbit0
-    pr7_orbits.append(pr7_orbit0)
-assert len(pr7_orbits) == 4
-assert all(all(any(row) for row in matrix) for orb in pr7_orbits for matrix in orb)
-pr7_hit("no_zero_row_orbits_2x2")
-assert sum(len(orb) for orb in pr7_orbits) == 9
-pr7_hit("orbit_partition_2x2")
-assert len(pr7_seen) == 9
-pr7_hit("orbit_cover_2x2")
-assert len({frozenset(orb) for orb in pr7_orbits}) == 4
-pr7_hit("orbits_2x2")
-
-# Independent partition expectations: 2=2 or 1+1; 3=3 or 2+1 or 1+1+1.
-# Enumerate S_r x S_s orbits first, then check the column-indegree classification.
-for pr7_r, pr7_s, pr7_expected in ((2, 2, 2), (3, 2, 2), (3, 3, 3)):
-    pr7_functional_mats = {
-        tuple(tuple(int(j == image[i]) for j in range(pr7_s)) for i in range(pr7_r))
-        for image in product(range(pr7_s), repeat=pr7_r)
-    }
-    assert len(pr7_functional_mats) == pr7_s**pr7_r
-    assert all(sum(row) == 1 for matrix in pr7_functional_mats for row in matrix)
-    pr7_functional_orbits = {frozenset(pr7_orbit(matrix)) for matrix in pr7_functional_mats}
-    pr7_functional_name = f"functional_orbits_{pr7_r}x{pr7_s}"
-    assert len(pr7_functional_orbits) == pr7_expected, (
-        pr7_functional_name, len(pr7_functional_orbits), pr7_expected)
-    assert set().union(*pr7_functional_orbits) == pr7_functional_mats
-    assert sum(map(len, pr7_functional_orbits)) == len(pr7_functional_mats)
-    pr7_degree_classes = set()
-    for pr7_orbit0 in pr7_functional_orbits:
-        pr7_degrees = {tuple(sorted(sum(row[j] for row in matrix) for j in range(pr7_s)))
-                       for matrix in pr7_orbit0}
-        assert len(pr7_degrees) == 1, (pr7_functional_name, "indegree_invariant")
-        pr7_degree_classes.update(pr7_degrees)
-    assert len(pr7_degree_classes) == len(pr7_functional_orbits), (
-        pr7_functional_name, "indegree_classification")
-    pr7_hit(pr7_functional_name, len(pr7_functional_orbits))
-
-pr7_D16 = {(pr7_a_pos, 1, frozenset({pr7_a_pos, (origin, 1, pr3_l0, 1)})): 1,
-           ((origin, 1, pr3_l0, 1), 1, frozenset({(origin, 1, pr3_l0, 1),
-                                                  (origin, -1, pr3_l0, 2)})): 1,
-           ((origin, -1, pr3_l0, 2), 0, frozenset({(origin, -1, pr3_l0, 2)})): -2}
-assert pr6_conditions(pr7_D16, 0, 2) == (True, True, True, False, True)
-pr7_hit("image_d16_witness_failure")
-for pr7_m, pr7_M, pr7_ok in ((None, None, True), (-2, -2, True),
-                              (-3, 4, True), (None, 0, False),
-                              (0, None, False), (1, 0, False)):
-    assert all(pr6_conditions({}, pr7_m, pr7_M)) == pr7_ok
-    pr7_hit("image_empty_endpoint_branches")
-    if pr7_ok:
-        assert pr5_summary(pr6_realize({}, pr7_m, pr7_M)) == ({}, pr7_m, pr7_M)
-        pr7_hit("image_empty_realizations")
-
-assert PR7_KEYS <= set(pr7_counts.keys())
-assert all(pr7_counts[k] > 0 for k in PR7_KEYS)
-print("pr7_copy_expressibility: " + " ".join(
-    f"{name}={pr7_counts[name]}" for name in sorted(PR7_KEYS)
-) + " required_pr6_keys=41 required_pr6_positive=1")
-
 print("ALL_FINITE_CHECKS_PASSED")
 ```
 
@@ -6994,151 +6365,427 @@ $$
 
 通用核与因子化工具为 literature-attested 背景；本节的 CSA 契约、严格标签应用、保边界拼接、准入完成域、联合见证与有限反例标为 repo-derived。它们不构成全球优先权、物理定律、量子解释或 Lean 内核验证声明。本节仅交付这一自给理论附录及其 canonical 摄入；独立实施后评审、PR 与合入由 caller 接续，也不据此宣称持续研究总目标终止。
 
-## 43. PR7 增补 P：复制孔语言的 q 表达分类
-
-本节是 repo-derived 的 PR7 结算。它只讨论目标族 $q\circ F_B$；一般数值函数的复制表达力另列，不能由本节推出“复制不增加任何 q 表达力”。因 origin/dev 已在 §37 后追加 §§38–42，本批正文按当前最大编号续接为 §43；内容对应 brief 的 §38。
+## 43. 复制孔语言的 q 表达分类
 
 ### 43.1 定义 34：复制项语言与严格量词
 
-**定义 34（复制项语言 $\operatorname{Ctx}^{\rm dup}$，repo-derived）。** 有限语法树的叶是输入变量 $X$ 或固定平衡参数（元语法记法，不增加原语），节点只使用原有 $\Sigma_{{\rm cau},t}$ 操作。整项至少出现一次 $X$；多次出现的 $X$ 是同一个输入。参数、谓词、平移、槽位和语法树均先于 $X$ 固定。失败严格传播，失败不被 $N$、空筛选或零因子挽救。令
+**定义 34（复制项语言 $\operatorname{Ctx}^{\rm dup}$，repo-derived）。** 沿用定义 3 的平衡载体 $\mathcal B$、定义 22 的 $K=\mathbb Z\times\mathbb Z^3$、定义 23 的 $F_B$ 及定义 26 的签名 $\Sigma_{{\rm cau},t}$。复制项是有限语法树，叶为输入变量 $X$ 或固定参数 $Z\in\mathcal B$，节点只使用该签名的操作。整项的输入叶数 $r\ge1$；所有输入叶代入同一个 $X$。参数、筛选谓词、整数平移、左右槽位和整棵语法树均先于 $X$ 固定。各节点按原操作的定义域求值；任一子项无定义则所有包含它的项无定义，失败不被 $N$、空筛选或零因子挽救。总项指对每个 $X\in\mathcal B$ 都有定义的项；由严格失败传播，这等价于每个子项对全部输入都有定义。
+
+对先固定的 $B\subseteq K$，定义
 \[
-E_q^{\rm dup}(B)\;:\Longleftrightarrow\;\exists\text{ 固定总项 }C\in\operatorname{Ctx}^{\rm dup}\ \forall X\in\mathcal B:\ q(C(X))=q(F_BX).
+E_q^{\rm dup}(B)\;:\Longleftrightarrow\;
+\exists\text{ 固定总项 }C\in\operatorname{Ctx}^{\rm dup}\quad
+\forall X\in\mathcal B:\quad q(C(X))=q(F_BX).
 \]
-这里“总项”要求每个子项对全部输入有定义。命题 64 只分类 $q\circ F_B$；例如 $X\mapsto q(X)^2$ 的复制表达力不在该断言范围内。证明使用原 $\Sigma_{{\rm cau},t}$，不加入 $F_B$、$\widehat M_P$、身份对角筛选或输入自适应参数。
+本节只讨论目标族 $q\circ F_B$，不能由本节推出“复制不增加任何 q 表达力”。一般数值函数如 $X\mapsto q(X)^2$ 不属于该分类的目标族。$F_B$、$\widehat M_P$、身份对角筛选均不作为本语言的原语；输入自适应参数及无限项也不属于本定义。
 
 ### 43.2 引理 5：总项正规化、复制多项式与单叶切片
 
-**引理 5（repo-derived）。** 设 $C$ 是定义 34 意义下的总复制项，并令 $r$ 为其输入叶数。
+**引理 5（repo-derived）。** 设 $C$ 为定义 34 的总项，输入叶数为 $r$。记 $0=0_\varnothing$ 为档案、当前区域和选择均空的平衡表示，$0X=0$；对整数 $n\ge1$，$nX$ 为采用固定括号的 $n$ 份带标签并行副本。则：
 
-**A（严格定义域与正规化）。** 总项的每个子项对全部输入有定义。沿输入叶到子项根的路径，旧事件时间只加固定平移 $j$。若时间复合两侧都含输入叶，取同一个 $X$：$\Omega=A=\varnothing$、$E=\{e_-,e_+\}$，$t(e_\pm)=\pm L$；这是空当前区域但 $E\ne\varnothing$。两子树各保留该同一 $X$ 的带标签副本；左侧固定一条输入叶路径包含晚事件 $e_+$（时刻 $L+j_{\rm 左}$），右侧包含早事件 $e_-$（时刻 $-L+j_{\rm 右}$）。令 $L+j_{\rm 左}\ge -L+j_{\rm 右}$ 即在合法对角输入上使守卫失败。若一侧含输入、另一侧是非空固定档案，仍取该同一双事件 $X$ 作输入并保留相应副本；额外档案只增加副本，不影响这个失败见证。故双侧含变量的时间复合与单侧非空固定档案均被排除。
+A. 求值无输入的闭子项，并把剩余时间复合替换为 $\boxplus$，得到与 $C$ 在每个输入上精确相等的总项。该正规化项只含 $N,F_S,F_L,F_{\downarrow Q},T_k,\boxplus,\boxtimes$ 及固定参数。把其中除第 $i$ 个输入叶外的所有输入叶换成 $0$，再求值无孔子树，得到定义 16 的总单孔上下文 $C_i$，且 $C_i(0)=C(0)$。
 
-不含输入的闭子项先求值为固定平衡参数；剩余时间复合只能配固定空档案，按定义 4–5 精确替换为 $\boxplus$。正规化项只含 $N,F_S,F_L,F_{\downarrow Q},T_k,\boxplus,\boxtimes$ 与固定参数。把其它输入叶换成 $0_\varnothing$ 的单叶切片自动总定义；不能从对角输入上的总定义推断切片总定义。
-
-**B（完整剖面的多项式性）。** 令 $V$ 为全部格 $(a,b,U)$ 上有限支撑整数剖面的自由阿贝尔群，$\ell(g)=\sum g(a,1,U)$。按命题 48，$N$ 是固定格映射 $b\mapsto1-b$ 的整数线性推送（不是 $\Gamma\mapsto-\Gamma$），$F_S,F_L,F_{\downarrow Q},T_k$ 是固定格映射推送，$\boxplus$ 为加法，$\boxtimes$ 为双线性推送。令 $0X=0_\varnothing$，$nX$ 为带标签的 $n$ 份并行副本，则
+B. 对每个固定 $X\in\mathcal B$，有次数至多 $r$ 的 $P_{C,X}\in\mathbb Z[z]$，满足
 \[
-\Gamma_t(nX)=n\Gamma_t(X).
+q(C(nX))=P_{C,X}(n)\quad(n\ge0),\qquad
+P_{C,X}(0)=q(C(0)).
 \]
-对 $z\Gamma_t(X)$ 递归评价，得到 $V$ 值多项式；叶数为 $r$ 时次数至多为 $r$。再施加 $\ell$，得到
+C. 上述单叶切片满足
 \[
-P_{C,X}(z)\in\mathbb Z[z],\qquad q(C(nX))=P_{C,X}(n).
+[z]P_{C,X}(z)=\sum_{i=1}^r\bigl(q(C_i(X))-q(C_i(0))\bigr)
+=\sum_{i=1}^r q(C_i(X))-r\,q(C(0)).
 \]
-常数项来自 $C(0_\varnothing)$。端点不参与该多项式；变量相关且非平凡的时间守卫已由 A 排除。
 
-**C（单叶切片）。** 为 $r$ 个叶引入形式变量 $z_1,\ldots,z_r$，每个至多出现一次。令 $C_i$ 保留第 $i$ 叶为孔、其余叶替换为 $0_\varnothing$，并先求值无孔子树。则 $C_i$ 属定义 16，且 $C_i(0_\varnothing)=C(0_\varnothing)$。对角代入给出
+**证明（A）。** 每个子项总定义是严格失败传播的直接结果。各原语保留输入的全部档案事件：$N$ 与筛选保持档案，$T_k$ 平移档案，并行、时间复合及乘积保留带标签的旧事件（定义 4–6）。故沿任一输入叶到子项根的路径，每个旧事件仍在档案中，其时间只加路径上固定平移的和 $j$；乘积新增子点不改旧事件时间。
+
+若某时间复合节点的左右子树都含输入叶，固定两侧各一条叶路径，累计平移为 $j_L,j_R$。取同一个合法平衡输入 $X$，令 $\Omega=A=\varnothing$、$E=\{e_-,e_+\}$，两点孤立，时间为 $-L,L$，其余属性任取合法固定值。左右子项因总定义均成功，左档案含时刻 $L+j_L$ 的旧点，右档案含时刻 $-L+j_R$ 的旧点。取整数 $L\ge0$ 使 $L+j_L\ge-L+j_R$，即违反定义 5 的严格守卫。若只有左侧含输入、右侧固定档案非空，取右侧任一事件时间 $s$，令 $L+j_L\ge s$；若只有右侧含输入，则取左侧固定事件时间 $s$，令 $-L+j_R\le s$。两种情形同样矛盾。额外档案事件不会消除已经存在的失败事件对。
+
+无输入闭子项均有固定的平衡值。上述排除说明，求出这些值后，每个剩余时间复合节点都有一侧为固定空档案。此时定义 5 不添任何跨边，与定义 4 使用完全相同的带标签并集，故可精确替换为 $\boxplus$。其余原语在 $\mathcal B$ 上总定义并保持平衡，正规化项因而在各输入叶分别代入任意平衡表示时也总定义。特别地，替换其它叶为 $0$ 后仍总定义；沿唯一剩余孔的路径，其余子树成为固定平衡参数，所以所得 $C_i$ 是定义 16 的上下文。再令该孔为 $0$，即所有原输入叶都取 $0$，得到 $C_i(0)=C(0)$。此处切片的总定义来自正规化后的原语，未从对角输入上的总定义直接推断独立代入的总定义。
+
+**证明（B、C）。** 令 $V$ 为格集 $\mathrm{Attr}_t\times\{0,1\}\times\mathcal P_{\rm fin}(\mathrm{Attr}_t)$ 上有限支撑整数函数的自由阿贝尔群，令 $\ell(g)=\sum_{a,U}g(a,1,U)$。定义 26 给出 $\ell(\Gamma_t(Y))=q(Y)$。按命题 48，$N$ 是格映射 $b\mapsto1-b$ 的整数线性推送；$F_S,F_L,F_{\downarrow Q},T_k$ 也为固定格映射的线性推送，$\boxplus$ 为加法，$\boxtimes$ 为固定格对映射的双线性推送。这些推送可在形式群 $V$ 上按基向量线性或双线性延拓；$N$ 在此群上不是取负映射。
+
+并行副本之间无跨边，每个副本的当前事件保留原属性、选择位及后继属性集。逐格相加得到 $\Gamma_t(nX)=n\Gamma_t(X)$，包括 $n=0$。在正规化项的第 $i$ 个输入叶放入形式剖面 $z_i\Gamma_t(X)$，在参数叶放入其固定剖面，用上述推送递归求值得到
 \[
-[z]P_{C,X}(z)=\sum_{i=1}^r\bigl(q(C_i(X))-q(C_i(0_\varnothing))\bigr)
-=\sum_iq(C_i(X))-r\,q(C(0_\varnothing)).
+G_X(z_1,\ldots,z_r)=\sum_{J\subseteq\{1,\ldots,r\}}v_J\prod_{j\in J}z_j,\qquad v_J\in V.
 \]
-形式系数或剖面差未被声称可实现；本引理只给出代数值，不冒称存在更丰富的状态。证毕。
+该式的存在可按语法树归纳：叶为一次式或常数，一元线性推送和加法保持多项式性；乘积节点的两子树使用互不相交的叶变量，双线性展开后每个变量的指数仍至多为 $1$。树与全部剖面支撑有限，所以展开只有有限项，各系数仍有限支撑。令 $c_J=\ell(v_J)$，并将 $z_1=\cdots=z_r=z$，则
+\[
+P_{C,X}(z)=\sum_J c_J z^{|J|}.
+\]
+在非负整数点，命题 48 的逐节点推送与实际输入 $nX$ 的剖面一致，证明 B。常数系数为 $c_\varnothing=q(C(0))$。只令 $z_i=1$、其余变量为 $0$ 时，实际值为 $q(C_i(X))=c_\varnothing+c_{\{i\}}$。对角代入后一次项恰由所有单元素 $J$ 贡献，故
+$[z]P_{C,X}=\sum_i c_{\{i\}}=\sum_i(q(C_i(X))-q(C(0)))$，即 C。形式系数及剖面差只取值于 $V$，不要求它们为某个平衡表示的实际剖面。证毕。
 
 ### 43.3 引理 6：有限单孔族的共同饱和
 
-**引理 6（repo-derived）。** 对任意有限总单孔上下文族 $C_1,\ldots,C_r$，存在共同 $c\le0$，使得任意 $p$ 及 $t,t'<c$ 均有
+**引理 6（repo-derived）。** 对任意有限族 $C_1,\ldots,C_r$，其中每个 $C_i$ 都是定义 16 的 $\Sigma_{{\rm cau},t}$ 总单孔上下文，存在共同整数 $c\le0$，使
 \[
-q(C_i(X_t))=q(C_i(X_{t'}))\qquad(1\le i\le r).
+\forall p\in\mathbb Z^3\ \forall t,t'<c\ \exists X_t,X_{t'}\in\mathcal B\quad
+\forall i\in\{1,\ldots,r\}:\quad q(C_i(X_t))=q(C_i(X_{t'})).
 \]
-这里 $X_t$ 与 $X_{t'}$ 是同一对见证输入：唯一选中正点分别为 $e@(t,p)$、$e@(t',p)$；全部前缀见证的未选后继为 $d$，并置共同星形 $e\prec d$；加入时刻 $0$ 的共同孤立未选平衡点及两个共同非当前档案端点。$c$ 取全部前缀拉回见证时刻、固定平移后的下界，以及各非空首乘固定因子 $\min t[\Omega]$ 减累计平移的有限最小值。无乘积、空因子和非空因子三类分别由同位、空剖面和首乘同摘要处理；随后用命题 48 的后缀保摘要归纳。因所有 $C_i$ 同时使用同一对输入，结论不是把各自引理 4 阈值取最小而沿用不同见证。证毕。
+同一对输入供全部 $C_i$ 使用。它们具有相同的事件标识、位置、符号、来源、关系、当前区域、选择及档案端点；唯一不同的属性允许是唯一选中正点 $e$ 的时间 $t,t'$，其位置为 $p$、来源为 $l_0=\operatorname{leaf}(0)$。其余当前事件均共同且未选。阈值 $c$ 先于 $p,t,t'$ 固定，输入见证最后选取。
 
-### 43.4 命题 64：OPEN-COPY 完整分类
-
-**命题 64（repo-derived，OPEN-COPY）。**
+**证明。** 按引理 5A 对每个上下文正规化，沿唯一孔写成有限基本步骤链。只取各链首次乘积之前的前缀；若无乘积，就取整链。这些前缀仅含平移、筛选、补集及并行加固定参数。对每个前缀因果筛选 $F_{\downarrow Q}$，记其前原输入的累计平移为 $j$，令 $Q^0=\tau_{-j}[Q]$（$\tau$ 见命题 48）。若 $Q^0\ne\varnothing$，选一个 $v\in Q^0$；对空集不选。全部前缀合起来只需有限个见证属性 $v_1,\ldots,v_h$。对每个有首乘的链，记其固定旁因子为 $Z_i$、此前累计平移为 $J_i$。取
 \[
-\forall B\subseteq K:\qquad E_q^{\rm dup}(B)\ \Longleftrightarrow\ \operatorname{Tail}(B),
+c=\min\Bigl(\{0\}\cup\{\operatorname{time}(v_j):1\le j\le h\}
+\cup\{\min t[\Omega_{Z_i}]-J_i:\Omega_{Z_i}\ne\varnothing\}\Bigr).
 \]
-且因此 $E_q^{\rm dup}(B)\Longleftrightarrow E_q(B)$。
+这是非空有限整数集的最小值，只依赖所给上下文族。
 
-**证明（充分性）。** 命题 55 的 $(O\text{-}CONSTRUCTION)$ 是有限复制语言中的单孔项，故 $\operatorname{Tail}(B)\Rightarrow E_q^{\rm dup}(B)$。
+给定 $p,t,t'<c$，在两份输入中置对应的正点 $e$，分别在 $(t,p)$、$(t',p)$，来源均为 $l_0$，且只选 $e$。每个 $v_j$ 用不同标识的未选当前事件 $d_j$ 实现，添边 $e\prec d_j$，不添其它边。这是传递星形，且 $t,t'<c\le\operatorname{time}(v_j)$ 使所有边严格增时。若这些当前点的总电荷为 $w$，就在两侧各加 $|w|$ 个共同的孤立未选当前点，时间为 $0$、位置为 $0$、来源为 $l_0$，$w>0$ 时符号取负，$w<0$ 时取正，$w=0$ 时不加。两侧因而都平衡。最后加两个共同的孤立非当前档案点，时间分别严格小于和严格大于两份当前时间的并集，得到相同的有限端点 $m,M$。全部事件可取不同的 $HF$ 标识（定义 1）。
 
-**证明（必要性）。** 设固定总项 $C$ 表达 $B$，记 $L_B(X)=q(F_BX)$。对每个平衡输入及 $n\ge0$，并行副本 $nX$ 合法，故
+固定任意链。在其前缀里，每个非空因果谓词都由对应 $d_j$ 为 $e$ 提供命中见证；该筛选处平移后的 $d_j$ 属性为 $\tau_j(v_j)\in Q$。空谓词两侧均不命中。筛选只改选择，故所有见证一直留在当前区域。$e$ 的空间、来源掩码相同，补集在两侧同步取补。其他输入点无通向 $e$ 的路径；并行加入的固定分量无跨边，所以它们的后继属性集及掩码也不随 $e$ 的时间变化。逐步归纳得到：前缀两侧对应当前事件的符号、位置、来源和选择位完全相同，只有 $e$ 的时间可以不同。无乘积时，这已使终端有符号和 $q$ 相同。
+
+若有首乘且 $\Omega_{Z_i}=\varnothing$，两侧乘积当前区域都为空。若 $\Omega_{Z_i}\ne\varnothing$，对其每个当前点 $f$ 有
 \[
-P_{C,X}(n)=q(C(nX))=nL_B(X).
+\max(t+J_i,t(f))+1=t(f)+1=\max(t'+J_i,t(f))+1.
 \]
-引理 5 的多项式在无限多个整数点上等于一次式，于是恒等为一次式；其常数项为 $q(C(0_\varnothing))=0$。引理 5(C) 给出有限单孔项 $C_i$，满足
+因此不论孔在左还是右，所有含 $e$ 的新父对子点在两侧都具有相同属性与选择位，其余父对也相同。定义 6 的新当前区域为反链，每个 $U_t$ 只含自身属性，故首乘后两侧 $\Gamma_t$ 相同。首乘前的并集和平移保留共同档案端点；首乘的新点时间逐对相同，旧档案又保留，所以首乘后端点也相同（命题 29）。对后缀用命题 48 逐步归纳，摘要及终端 $q$ 继续相同。所有项总定义，排除了失败。族为空时同一构造取 $c=0,h=0$，结论中的全称等式空真。以上构造始终用共同见证集合，故同时适用于全部 $C_i$。证毕。
+
+### 43.4 命题 64：复制项的完整分类
+
+**命题 64（repo-derived，§36.7 的 OPEN-COPY）。** 对定义 34 的固定有限总项及全部平衡输入，有
 \[
-L_B(X)=\sum_iq(C_i(X)).
+\forall B\subseteq K:\qquad E_q^{\rm dup}(B)\ \Longleftrightarrow\ \operatorname{Tail}(B)
+\ \Longleftrightarrow\ E_q(B),
 \]
-对 $\{C_i\}$ 应用引理 6，取共同 $c$。同一对输入 $X_t,X_{t'}$ 使
+其中 $\operatorname{Tail}$ 与 $E_q$ 沿用定义 28。该断言仅分类目标族 $q\circ F_B$。
+
+**证明（充分性）。** 命题 55 的 $(O\text{-}CONSTRUCTION)$ 是原签名的固定有限总单孔项，属于定义 34 的复制语言，故 $\operatorname{Tail}(B)\Rightarrow E_q^{\rm dup}(B)$。
+
+**证明（必要性）。** 先固定 $B$ 及表达它的总项 $C$，其输入叶数 $r\ge1$。记 $L_B(X)=q(F_BX)$。对任意平衡输入 $X$ 及整数 $n\ge0$，$nX$ 仍平衡；区域筛选逐副本使用同一 $B$，所以 $L_B(nX)=nL_B(X)$。引理 5B 给出
+\[
+P_{C,X}(n)=q(C(nX))=nL_B(X)\qquad(n\ge0).
+\]
+对固定 $X$，令 $H(z)=P_{C,X}(z)-zL_B(X)\in\mathbb Z[z]$。非零的次数为 $d$ 的整数多项式至多有 $d$ 个不同整数根：次数 $0$ 时无根；若 $a$ 为根，由每个 $z^k-a^k$ 都被 $z-a$ 整除，得 $H(z)=(z-a)R(z)$，其中 $\deg R=d-1$；其它整数根 $b\ne a$ 满足 $(b-a)R(b)=0$，整数无零因子给出 $R(b)=0$，归纳即得根数界。此处每个非负整数都是 $H$ 的根，所以 $H=0$。因而 $P_{C,X}(z)=zL_B(X)$，包括 $L_B(X)=0$ 的情形；其常数项为 $q(C(0))=0$，一次系数为 $L_B(X)$。
+
+引理 5A、C 给出先于 $X$ 固定的总单孔项 $C_1,\ldots,C_r$，且对每个 $X\in\mathcal B$，
+\[
+L_B(X)=\sum_{i=1}^r q(C_i(X)).
+\]
+对这一有限族应用引理 6，取得先于全部位置与时刻的共同 $c$。任给 $p\in\mathbb Z^3$ 及 $t,t'<c$，取该引理供全族共用的 $X_t,X_{t'}$。它们分别只选位于 $(t,p)$、$(t',p)$ 的一个正点，故
 \[
 \mathbf1_B(t,p)=L_B(X_t)=\sum_iq(C_i(X_t))
-=\sum_iq(C_i(X_{t'}))=L_B(X_{t'})=\mathbf1_B(t',p),
+=\sum_iq(C_i(X_{t'}))=L_B(X_{t'})=\mathbf1_B(t',p).
 \]
-故 $\operatorname{Tail}(B)$。
+这正是定义 28 的 $\operatorname{Tail}(B)$。最后，命题 55 给出 $\operatorname{Tail}(B)\Longleftrightarrow E_q(B)$，完成全部等价。证毕。
 
-若 $r=0$，整项不含 $X$，其空输入读数为 $0$，只能表达 $B=\varnothing$；$B\ne\varnothing$ 时取一个 $B$ 内正点即矛盾。于是常值情形也已覆盖。证毕。
+### 43.5 反例 D17、D18：自乘子类与非总项切片
 
-**范围边界。** 结论只对固定有限总项、原签名和全部平衡输入成立；输入自适应参数、无限项、身份查询、新配对原语及一般 $q$ 函数的复制表达力均在范围外。有限核验不替代上述全称证明。
+**反例 D17（命题：自乘子类的齐次性与边界，repo-derived）。** 对任意先固定的 $Q\subseteq\mathrm{Attr}_t$，令总项 $D_Q(X)=F_{\downarrow Q}(X\boxtimes X)$。则对所有 $X\in\mathcal B$ 及整数 $n\ge0$，
+\[
+q(D_Q(nX))=n^2q(D_Q(X)).
+\]
+在该子类中区域线性目标的存在性分类为
+\[
+\forall B\subseteq K:\quad
+\bigl(\exists Q\subseteq\mathrm{Attr}_t\ \forall X\in\mathcal B:\ q(D_Q(X))=q(F_BX)\bigr)
+\ \Longleftrightarrow\ B=\varnothing.
+\]
+固定 $Q_{\rm odd}=\{a:\operatorname{time}(a)\text{ 为奇数}\}$；它的时间投影两端无界。取 $X$ 为位置 $0$、时刻 $-4$、来源 $l_0$ 的孤立一正一负两当前点，只选正点。则 $n=1,2,3$ 时 $q(D_{Q_{\rm odd}}(nX))$ 为 $1,4,9$，而 $q(F_{B_{\rm even}}(nX))$ 为 $1,2,3$。
 
-### 43.5 反例 D17、D18：自乘对照与非总项切片失败
+更一般地，记 $m_Q(a,a')=\mathbf1_Q(a\diamond_t a')$，则两个不同所选父事件的无序对贡献为 $\epsilon\epsilon'[m_Q(a,a')+m_Q(a',a)]$；只有相应两核值相等时才能写为 $2\epsilon\epsilon'm_Q(a,a')$。对角父点 $e$ 的属性若为 $a=(p,\epsilon,\rho,t)$、选择位为 $b$，其子点属性为 $(2p,+1,\operatorname{pair}(\rho,\rho),t+1)$、选择位为 $b^2=b$，而其 $U_t$ 为该子点属性的单点集。同属性的非对角父对产生相同子点属性，不能由属性筛选隔离为对角父对。
 
-**反例 D17（repo-derived，自乘子类，≤15 行）。** 一般先对任意 $Q$ 保留 $q(D_Q(nX))=n^2q(D_Q(X))$ 的齐次式与子类分类；数值例固定 $Q_{\rm odd}=\{a:\operatorname{time}(a)\text{ 为奇数}\}$（时间投影两端无界）。对 $D_Q(X)=F_{\downarrow Q}(X\boxtimes X)$，该子类实现区域线性目标当且仅当 $B=\varnothing$。在两端无界的 $B_{\rm even}$ 上，$t=-4$ 的同属性正点复制 $n=1,2,3$ 读数为 $1,4,9$，目标为 $1,2,3$。一般有序来源的交叉项是 $\epsilon\epsilon'[m(a,a')+m(a',a)]$；仅当核对称时才为 $2\epsilon\epsilon'm$。对角子点精确属性为 $(t+1,2p,+1,\operatorname{pair}(r,r))$，其 $b^2=b$；旧档案保留两个父出现 $(0,e),(1,e)$，而新 $U_t$ 只有该单点，故保留时间不恢复原事件；同属性非对角项不能由属性隔离。另有 $X\boxplus(A(X)\boxplus N(A(X)))$ 的 $q$ 恒等于 $q(X)$，故终端线性不能逐个消灭自乘结点。$B_{d,R}$ 与 $B_{\rm drift}$ 仍由命题 64 判不可表达（前者及 $B_{\rm even}$ 两端无界；后者无下界、上界 $0$）。来源只取 $(\operatorname{leaf}(0),\operatorname{leaf}(1))$ 时，四个异来源选择读数为 $0,0,0,1$。这只否定自乘子类，不能替代命题 64 的任意项证明。
+对任意总项 $H$，总项 $X\boxplus(H(X)\boxplus N(H(X)))$ 的 $q$ 恒等于 $q(X)$，包括 $H(X)=X\boxtimes X$；故终端的线性不要求每个中间自乘子项消失。另取两个同位置、同时刻的正点 $e_0,e_1$，来源分别为 $l_0=\operatorname{leaf}(0),l_1=\operatorname{leaf}(1)$，再加两个孤立未选负点使之平衡，关系为空。若 $Q$ 恰要求子点来源为 $\operatorname{pair}(l_0,l_1)$，则选择依次为 $\varnothing,\{e_0\},\{e_1\},\{e_0,e_1\}$ 时，$q(D_Q(X))$ 依次为 $0,0,0,1$。
 
-**反例 D18（repo-derived，引理 5A 的必要性）。** 令 $Q=\{(0,+1,\operatorname{leaf}(0),1)\}$、$D(X)=F_{\downarrow Q}(X\mathbin{\triangleright}T_1X)$。取 $X=U_0$，则 $q(D(nX))=2n$，而两次单出现替换 $D_1,D_2$ 的读数为 $0,1$，且 $D(0)=0$，所以 $2\ne0+1$，切片公式对非总项失败。$D$ 在含时刻 $0$ 与 $3$ 的档案输入上守卫失败，故不在命题 64 的量词域内；$Q$ 的时间投影上下界均为 $1$。
+定义 28 后的 $B_{d,R}$、$B_{\rm even}$ 与 $B_{\rm drift}$ 均不满足 $\operatorname{Tail}$，因而由命题 64 在全部复制项中不可表达。前两族的时间投影两端无界；$B_{\rm drift}$ 的时间投影无下界且上界为 $0$。
+
+**证明。** 定义 6 使乘积当前区域为反链，因此其每个当前点的后继属性集为自身单点，因果筛选在该区域上就是对子点属性的成员检验。于是
+\[
+q(D_Q(X))=\sum_{e,f\in A_X}\sigma(e)\sigma(f)\,
+ m_Q(\alpha_t(e),\alpha_t(f)).
+\]
+$nX$ 的每个所选父事件有 $n$ 个带标签副本；对每个有序父对 $(e,f)$，独立选两个副本标签恰有 $n^2$ 种，属性及核值不变，故得到齐次式，$n=0$ 时两侧皆零。若某 $Q$ 表达 $B$，将 $n=1,2$ 的式子与区域线性 $q(F_B(nX))=nq(F_BX)$ 比较，得 $4q(F_BX)=2q(F_BX)$，故对全部 $X$ 有 $q(F_BX)=0$。若 $B$ 非空，取其中任一 $(t,p)$，在此单元放孤立一正一负两当前点而只选正点，得到平衡输入且目标为 $1$，矛盾。反向，$B=\varnothing$ 时取 $Q=\varnothing$，每个输入的输出选择为空，目标恒为零。这证明的是存在 $Q$ 的分类。
+
+数值例中 $nX$ 恰选 $n$ 个同属性正点；全部 $n^2$ 个选中子点符号为正、时间为 $\max(-4,-4)+1=-3$，均被 $Q_{\rm odd}$ 选中。$B_{\rm even}$ 则选中原来位于 $(-4,0)$ 的全部 $n$ 个正点，给出所列两组值。对一般两个不同父事件，把有序和中的 $(e,f)$ 与 $(f,e)$ 两项相加即得交叉项式；来源树有序，不能预设两个核值相等。对角子点的四个属性及选择位直接由定义 6 的四式和 $b^2=b$ 给出。旧档案保留不同出现 $(0,e),(1,e)$，新当前点位于 $t+1$，不是原事件；若不同父事件具有同一属性，新子点同样具有上述属性，且同为当前极大点，属性与后继属性集都无法区分这些子点的父对身份。
+
+平衡由各原语保持，命题 1 给 $q(N(H(X)))=-q(H(X))$，命题 2 的加法式遂给所述抵消恒等式。来源例的所选正点至多为 $e_0,e_1$；有序来源 $\operatorname{pair}(l_0,l_1)$ 只来自 $(e_0,e_1)$，当且仅当两点同时被选时贡献一个正子点，所以四个值恰为 $0,0,0,1$。
+
+最后，对任意整数阈值 $c$，$d\ge2$ 且 $\varnothing\ne R\subsetneq\mathbb Z/d\mathbb Z$ 时，可在 $c$ 以下分别选属于 $R$ 与其补集的两个剩余类代表；固定任意位置，$B_{d,R}$ 的两个真值为 $1,0$。在位置 $0$ 选 $c$ 以下的偶数与奇数，同样反驳 $B_{\rm even}$ 的 Tail。两族均有任意早和任意晚的所含时刻。对 $B_{\rm drift}$，取 $n\ge0$ 使 $-n+1<c$，在位置 $(n,0,0)$ 比较 $-n,-n+1$，真值为 $1,0$，所以无公共阈值；其定义中所有时刻不大于 $0$，而位置 $0$ 包含所有 $t\le0$，证明所列上下界。命题 64 于是适用。证毕。
+
+**反例 D18（命题：非总项的切片恒等式失效，repo-derived）。** 固定
+$Q=\{(0,+1,\operatorname{leaf}(0),1)\}$，其中首坐标 $0\in\mathbb Z^3$，令部分复制项
+\[
+D(X)=F_{\downarrow Q}(X\mathbin{\triangleright}T_1X),\qquad
+D_1(X)=F_{\downarrow Q}(X\mathbin{\triangleright}T_1 0),\qquad
+D_2(X)=F_{\downarrow Q}(0\mathbin{\triangleright}T_1X).
+\]
+$U_0$ 沿用引理 1：一正一负两个孤立当前点，时间、位置均为 $0$，来源为 $l_0$，只选正点。则对所有整数 $n\ge0$，$D(nU_0)$ 有定义且 $q(D(nU_0))=2n$，但
+\[
+q(D_1(U_0))=0,\qquad q(D_2(U_0))=1,\qquad q(D(0))=0.
+\]
+因此直线 $2z$ 的一次系数 $2$ 不等于切片和 $0+1-2\cdot0=1$。$D$ 并非总项，$Q$ 的时间投影上下界均为 $1$。
+
+**证明。** 对 $n\ge1$，左档案全部在时刻 $0$，右档案全部在时刻 $1$，故严格守卫成立。时间复合加入每个左事件到每个右事件的边。左边 $n$ 个所选正点均可达右边任一属性在 $Q$ 中的正点；右边 $n$ 个所选正点各由自身命中 $Q$，所以筛选保留全部 $2n$ 个所选正点。$n=0$ 时两档案皆空，守卫空真且输出为空，给零值。
+
+$D_1(U_0)$ 的右档案为空，没有跨边；左点及其当前后继都在时刻 $0$，不能命中时间为 $1$ 的 $Q$，故选择为空。$D_2(U_0)$ 的左档案为空；右边被选正点自身的属性恰在 $Q$ 中，故值为 $1$。这给出切片等式失效的全部数值。再取空当前区域的平衡输入，档案恰有时刻 $0$ 与 $3$ 的两个孤立点；其右侧平移档案的最早时刻为 $1$，左侧最晚时刻为 $3$，守卫要求 $3<1$，故失败。严格失败传播使 $D$ 在此输入无定义，所以不满足引理 5 和命题 64 的总项假设。证毕。
 
 ### 43.6 命题 65：实现类数
 
-**命题 65（repo-derived，实现类数）。** 给定命题 57 类型的 $(g,m,M)$，在历史同构 $\cong_h$ 下其实现在数满足：五条件任一失败时为 $0$；$g=0$ 且端点为 $(+\infty,-\infty)$ 时恰为 $1$ 个（空实现）；其余可实现三元组有 $\aleph_0$ 个。证明如下。命题 57 给出一个有限实现。对任意可实现非空剖面，在时刻 $m$ 追加任意多个孤立、非当前档案点；它们不改 $(g,m,M)$、摘要读数或 $q$，却改变 $|E|$，得到两两非同构实现。有限编码的有限集合全体可数，故上界为 $\aleph_0$。空当前区域而端点有限时，同样在端点档案中追加孤立点；其实现数仍为 $\aleph_0$。
+**命题 65（repo-derived，实现类数）。** 先固定命题 57 类型的有限支撑整数剖面 $g$ 及端点 $m,M$。记 $\mathscr R(g,m,M)$ 为全部有限平衡表示中实现 $(\Gamma_t,m_X,M_X)=(g,m,M)$ 的历史同构 $\cong_h$ 类的集合，则
+\[
+|\mathscr R(g,m,M)|=
+\begin{cases}
+0,&\text{命题 57 的五条件至少一项失败},\\
+1,&g=0\text{ 且 }(m,M)=(+\infty,-\infty),\\
+\aleph_0,&\text{其余满足五条件的三元组}.
+\end{cases}
+\]
 
-D10 型机制的短注：取 $r,s\ge1$，$E=\Omega$，$r$ 个选中正点 $a@0$（$U=\{a,b\}$）、$s$ 个选中正点 $b@1$（$U=\{b\}$），以及 $r+s$ 个孤立未选负点 $c@0$。函数型子类指每一行恰有一个 $1$；全部历史是无零行的 $r\times s$ 二部邻接矩阵在 $S_r\times S_s$ 下的轨道。该子类的类数为 $p_{\le s}(r)$（把 $r$ 拆成至多 $s$ 个正部件）；当 $s\ge r$ 时为普通分拆数 $p(r)$。例如 $(r,s)=(3,2)$ 有 $2$ 类，$(3,3)$ 有 $3$ 类。时间上下界为 $0,1$。本注只计该子类，不把一般 $g$ 的有限骨架轨道枚举列为本批目标。
+另对整数 $r,s\ge1$，记 $a=(0,+1,l_0,0)$、$b=(0,+1,l_0,1)$、$c=(0,-1,l_0,0)$。考虑 $E=\Omega$ 的有限历史子类：$r$ 个选中 $a$ 点、$s$ 个选中 $b$ 点、$r+s$ 个孤立未选 $c$ 点；关系只含从 $a$ 点到 $b$ 点的边，每个 $a$ 点至少有一条出边。它们共同的非零剖面格为
+\[
+g(a,1,\{a,b\})=r,\quad g(b,1,\{b\})=s,\quad
+ g(c,0,\{c\})=-(r+s),\qquad(m,M)=(0,1).
+\]
+该子类的历史同构类对应无零行的 $r\times s$ 二部邻接矩阵在 $S_r\times S_s$ 下的轨道。函数型子类指每行恰有一个 $1$，其历史同构类数为 $p_{\le s}(r)$，即 $r$ 拆成至多 $s$ 个正整数部件的分拆数。$s\ge r$ 时此数为普通分拆数 $p(r)$；特别地 $(r,s)=(3,2)$ 有 $2$ 类，$(3,3)$ 有 $3$ 类。此有限子类不含额外非当前档案点。
 
-### 43.7 边界与范围收束
+**证明（全部有限实现）。** 五条件任一失败时，命题 57 排除实现，类数为零。若 $g=0$ 且端点为 $(+\infty,-\infty)$，端点定义强制档案为空；其关系、全部属性函数、当前区域和选择均唯一为空，故恰有一个实现类。
 
-§36.7 原有的 OPEN-COPY open 文字由命题 64 完整结算；D17、D18 对自乘子类与非总项路线作具名的部分结算。引理 5 的多项式结论依赖严格总项；D18 说明删去该域后切片恒等式失效。命题 65 的 $\aleph_0$ 计数使用有限编码与历史同构，不能外推到无限档案。全文没有新增 Lean、axiom、判官或 schema；新推导均标 repo-derived，预期无新外部引用。
+其余满足五条件的三元组由命题 57 至少有一个有限实现 $X$，且端点 $m\le M$ 为有限整数。对每个整数 $k\ge0$，向 $E_X$ 追加 $k$ 个彼此不同且不属于原档案的孤立非当前事件，时间均为 $m$，位置为 $0$、符号为正、来源为 $l_0$。新点不加入 $\Omega_X$，不添任何边，故不改平衡、任何当前后继属性集、剖面或选择读数；原端点仍为 $m,M$。所得档案基数为 $|E_X|+k$，历史同构必须给出档案双射，所以这些实现两两不同构。这同时覆盖非零剖面与 $g=0$ 但端点有限的情形，给出 $\aleph_0$ 个不同类。
 
-<a id="pr7-evidence"></a>
+为证上界，定义 1 的 $HF=\bigcup_{n\ge0}V_n$ 中每个 $V_n$ 有限：$V_0=\varnothing$，$V_{n+1}=\mathcal P(V_n)$，归纳即得。按有限集合编码列举各层，故 $HF$ 可数。事件标识、整数、来源树和有限元组均取该编码；每个有限表示的事件集合、关系、属性函数、当前区域与选择都只有有限数据，可编码为一个遗传有限集合。因此全部有限表示可数。将其枚举映到历史同构类，每个类至少出现一次，故类集也至多可数；结合上述无限族得到恰为 $\aleph_0$。这一步只涉及有限档案。
 
-## 44. PR7 产地与核验收据
+**证明（D10 型子类）。** 所列图中所有边从时刻 $0$ 指向时刻 $1$，没有长度二的严格路径，故关系传递且严格增时；正负事件数相等，得到平衡。每个 $a$ 点有后继 $b$，所以当前可达属性恰为 $\{a,b\}$；$b,c$ 点各只有自身属性，逐格计数得所列 $g$ 及端点。历史同构保留时间、符号、来源和选择，必须分别置换 $r$ 个 $a$ 点、$s$ 个 $b$ 点及孤立的 $c$ 点。前两种置换正是邻接矩阵的行列置换；任一这样的矩阵对应再加任意 $c$ 点双射即给出历史同构，故轨道刻画双向成立。
 
-本批产地三项为：`skill=consensus-rnd:sshx`；思考六席载体见 caller 的 rotation 记录；实施席为 `codex-cli`。评审三席由 caller 另记，本席未代报其判词。形态为 `ingest`；不报告冻结或 absorbed 状态。因 `origin/dev` 在开工后已追加 §§38–42，本批按“当前 dev 最大编号续接”落在 §43–§44；brief 所称 §38–§39 内容对应本批的 §43–§44。
+函数型矩阵等价于函数 $f:\{1,\ldots,r\}\to\{1,\ldots,s\}$。其各列纤维大小 $n_j=|f^{-1}(j)|$ 为非负整数，和为 $r$。行置换不改纤维大小，列置换只重排它们。反过来，若两个函数的纤维大小多重集相同，先选列置换对齐各大小，再在每对等大的纤维之间选双射；这些双射并起来是行置换，证明两函数在同一轨道。因此轨道由排序后的 $s$ 个非负纤维大小唯一确定。删去零部件得到 $r$ 的至多 $s$ 部件分拆；任一这样的分拆补零至 $s$ 项，再用相应大小的纤维构造函数，给出逆映射。类数遂为 $p_{\le s}(r)$。每个正部件至少为 $1$，部件数不超过 $r$，故 $s\ge r$ 时限制自动满足。$r=3,s=2$ 的分拆为 $(3),(2,1)$；$s=3$ 时另有 $(1,1,1)$，给出 $2,3$ 两个数。证毕。
 
-### 44.1 逐节提交与范围
+## 44. 区域读数后复合的整系数多项式分类
 
-本批产地三项按 CLAUDE.md 第 5.2 条完整披露。思考六席为：`natural-ownership = nyxid-oracle`（`company-chatgpt-pro` 池，自报 **GPT-6 Astra Pro**）；`teleology`、`parsimony`、`fidelity`、`proportional-containment`、`worth` 均为 `codex-cli`（自报 **GPT-6/Codex**）。六席并发、互不可见，均看到 caller 暴露的候选计划，故属于非盲独立修订；六席均回报 revise，独立收敛为 **6/6 revise**。meta-judge 在 caller 上下文中运行。分歧裁决为：D17 保留短对照（4:1）；D18 采纳（`fidelity` 唯一提出，`teleology` 删除反事实佐证）；命题 65 单立短命题（5:1）；41 键字面集合（6:0）。由此形成 `GoalArtifact` 修订 **R1-PR7**。
+### 44.1 命题 66：固定标量目标的表达性
 
-抽签种子依次为：思考 `11430298646913755845`；评审 round 1 `212890107019809590`（`architecture=codex`、`quality=nyxid`、`tests=codex`）；评审 round 2 `14374724714442980988`（`architecture=nyxid`、`quality=codex`、`tests=codex`）。载体自报包含 GPT-6 家族与 GPT-5.6 Sol（仅该次调用的自报证据）；这不构成异模型共识声明。
+**命题 66（区域读数的后复合分类，repo-derived）。** 沿用定义 34 的固定总项语言。记
+\[
+\mathcal E=\{h:\mathcal B\to\mathbb Z:\exists\text{ 定义 34 的固定总项 }C\
+ \forall X\in\mathcal B,\ h(X)=q(C(X))\},\qquad
+L_B(X)=q(F_BX).
+\]
+这里 $B\subseteq K=\mathbb Z\times\mathbb Z^3$，$F_B$ 沿用定义 23，$\operatorname{Tail}$ 沿用定义 28。对任意先固定的 $B\subseteq K$ 与 $g:\mathbb Z\to\mathbb Z$，有
+\[
+\begin{aligned}
+&\bigl(\exists\text{ 定义 34 意义下的固定总项 }C\bigr)
+ \bigl(\forall X\in\mathcal B\bigr)\quad q(C(X))=g(L_B(X))\\
+&\quad\Longleftrightarrow\quad
+ B=\varnothing\ \lor\ g\text{ 在 }\mathbb Z\text{ 上恒定}\
+ \lor\ \bigl(\operatorname{Tail}(B)\ \land\
+  \exists p\in\mathbb Z[z]\ \forall k\in\mathbb Z,\ g(k)=p(k)\bigr).
+\end{aligned}
+\tag{POST-CLASSIFICATION}
+\]
+等价地，当 $B\ne\varnothing$ 时，$g\circ L_B\in\mathcal E$ 当且仅当 $g$ 是整系数多项式函数，且其表示多项式恒定或 $\operatorname{Tail}(B)$ 成立。表示同一整数函数的整系数多项式唯一。本条的分类对象仅为标量目标族 $g\circ L_B$，不刻画所有依赖来源或因果结构的数值函数；$F_B$ 仅用于指定目标，不作为定义 34 的项原语。记号 $\mathcal E$ 只指上述固定总项的全部数值函数。
 
-四个实施阶段均由 `codex-cli` 单席承重，并逐项保留自查范围：初稿 `csa-pr7-impl-0910` 完成 PR7 正文、唯一 Python 块及初始附录收据；fix1 `csa-pr7-fix1-0910` 收敛复制多项式、D17/D18 与 pullback 对照并同步 stdout；fix2 `csa-pr7-fix2-0910` 合并当时的 dev 尾部、重编号 §§42–43、清理失效摄入产物并复核范围；本 fix3 `csa-pr7-fix3-0910` 逐项处置 F-1–F-6，重做共同饱和见证、同一双档案守卫输入、D17/D10 文字和 F-6 运算控制，并复跑唯一 Python 块、hunk、重复定义与 merge-tree。各阶段的承重产物和自查读数均由该单席自报；caller 亲验与席位自报分栏如下。
+**证明（常量与空区域）。** 定义 8 的固定代表 $\mathbf i(a)$ 对每个整数 $a$ 满足 $u=0$、$q=a$。置
+\[
+K_a(X)=(X\boxtimes0_\varnothing)\boxplus\mathbf i(a).
+\]
+由命题 2、3，各子项在全部平衡输入上有定义且保持平衡，读数为 $q(X)\cdot0+a=a$。该项恰含一个输入叶，符合定义 34 的 $r\ge1$。若 $B=\varnothing$，定义 23 使 $L_B$ 恒为零，取 $a=g(0)$ 即得目标；若 $g$ 恒为 $a$，同一项对任意 $B$ 都给出目标。
 
-| 证据栏 | 具体项目 |
-| --- | --- |
-| caller 亲验 | 两个纯插入 hunk；`uniq -d` 为空；差分范围；`git merge-tree --write-tree`；附录命令退出码、PR7 行 SHA-1；41 个字面键集合。 |
-| 席位自报／转述 | ingest 计数；删除与保留路径；各阶段承重和自查范围。 |
+**证明（整数根数界）。** 先给出下文使用的多项式恒等判据。设非零 $H\in\mathbb Z[z]$ 的次数为 $d$。$d=0$ 时没有整数根；若 $d\ge1$ 且 $H(a)=0$，对每个正整数 $j$ 有
+\[
+z^j-a^j=(z-a)\sum_{h=0}^{j-1}z^{j-1-h}a^h.
+\]
+将 $H(z)-H(a)$ 逐项按此式分解，得到 $H(z)=(z-a)R(z)$，其中 $R\in\mathbb Z[z]$ 的次数为 $d-1$。任一不同于 $a$ 的整数根 $b$ 满足 $(b-a)R(b)=0$；整数无零因子且 $b-a\ne0$，所以 $R(b)=0$。对次数归纳，$H$ 至多有 $d$ 个不同整数根。于是有无穷多个整数根的整数多项式必为零；两整数多项式若在无穷多个整数处取同值，其差为零。特别地，表示同一整数函数的整系数多项式唯一。
 
-round 1 评审中，`architecture`（`codex`）的 attempt-1 因载体过载 `turn.failed`，attempt-2 给出 reject；`tests`（`codex`）给出 reject；quality(nyxid-oracle)：**abstained**——ask 提交至 macstudio3-trureturing 池后等待超时，fetch 续等再次超时（company-chatgpt-pro 池 10/10 满额），按 nyx.sh 契约未重投；任务未取消，若后续机会性取回只作附加意见，不回写为 round-1 判词。fix3 的 F-1..F-6 全部来自 architecture(codex)与 tests(codex)两席已取得的 findings，quality 席未提供 findings。round 2 评审中，architecture(nyxid-oracle,chrono-chatgpt-pro-pool，自报 GPT-5.6 Sol，ask 超时后 fetch 续等取得)reject 1 material（即本条）；quality(codex-cli)reject 2 material（F-1 实现：夹具失衡、粗摘要/非空首乘无钉子）；tests(codex-cli)reject 3 material + 1 minor（平衡、temporal(x,x) 守卫检查、函数型枚举、CAS 空白诊断）；处置为 fix4(codex-cli)与本 fix5；round 3 按 rotation-review-r3.json(seed 15601493124212581291:architecture=codex、quality=nyxid、tests=codex)另记，不预报。两种载体自报的模型现含 GPT-6 家族（Astra Pro / Codex）与 GPT-5.6 Sol（仅该次调用的自报证据），仍按协议不宣称异模型共识已核验；凡 caller 未亲验的席位陈述标 ASSUMED-UNVERIFIED。未由 caller 核实的项目标为 **ASSUMED-UNVERIFIED**。后续评审、CI 与合入只留待后续记录，不在本节预报。
+**证明（非空区域的全域刚性）。** 设 $B\ne\varnothing$，固定其中一个单元 $(t_*,x_*)$。对每个整数 $k$ 选定平衡参数 $Z_k$ 如下：$k=0$ 时取 $0_\varnothing$；$k\ne0$ 时，取 $2|k|$ 个不同的 $HF$ 事件标识，令档案等于当前区域，其中 $|k|$ 个正事件和 $|k|$ 个负事件都在 $(t_*,x_*)$，来源均为 $l_0=\operatorname{leaf}(0)$，关系为空。$k>0$ 时选择全部正事件，$k<0$ 时选择全部负事件。该构造的正负事件数相等、关系严格增时条件空真，故 $Z_k\in\mathcal B$，且 $L_B(Z_k)=k$。这些参数只依赖先固定的 $B,k$，不依赖后来代入的输入。
 
-### 44.2 附录命令与 stdout
+定义 4 的并行并集保留各分量的时间、位置、符号和选择，定义 23 的区域条件逐事件作用，因此对每个 $Y\in\mathcal B$，
+\[
+L_B(Y\boxplus Z_k)=L_B(Y)+k.
+\]
+并且对引理 5 的非负份并行副本，$L_B(nX)=nL_B(X)$，包括 $n=0$。记 $U=Z_1$，便有 $L_B(nU)=n$。
 
-实际执行命令（退出码 **0**，stderr 为空）为：
+现设固定总项 $C$ 表达 $g\circ L_B$。引理 5B 对 $C,U$ 给出 $p=P_{C,U}\in\mathbb Z[z]$，满足 $p(n)=g(n)$ 对所有 $n\ge0$ 成立。任给整数 $k$，把 $C$ 的每个输入叶换成 $X\boxplus Z_k$，所得项记为 $C^{(k)}$。它仍为固定有限项，输入叶数不变；命题 2 保证 $X\boxplus Z_k\in\mathcal B$，再由 $C$ 的总定义及定义 34 的严格求值，所有子项均有定义。因此引理 5B 也给出 $p_k=P_{C^{(k)},U}\in\mathbb Z[z]$，且
+\[
+p_k(n)=q(C^{(k)}(nU))=g(n+k)\qquad(n\ge0).
+\]
+当 $n\ge\max(0,-k)$ 时，$n+k\ge0$，从而 $p_k(n)=p(n+k)$。多项式 $p(z+k)$ 仍为整系数；上面的根数界使这两个在无穷多个整数处相等的多项式恒等。取 $z=0$，得 $g(k)=p_k(0)=p(k)$。$k$ 任意，故 $g=p|_{\mathbb Z}$。所有实际求值都只用了非负份并行副本；负整数由固定参数 $Z_k$ 的所选负事件给出读数。
 
-```sh
-sed -n '/^```python$/,/^```$/p' docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md | sed '1d;$d' | python3 -
-```
+**证明（非恒定目标的公共过去尾）。** 继续假设 $B\ne\varnothing$ 且 $g$ 非恒定。已得的 $p$ 非恒定，写作 $p(z)=\sum_{j=0}^d a_jz^j$，其中 $d\ge1$、$a_d\ne0$。形式导数 $p'(z)=\sum_{j=1}^d j a_jz^{j-1}$ 的首系数为 $d a_d\ne0$，故是非零整数多项式。根数界保证存在整数 $k$ 使 $a=p'(k)\ne0$。固定这样的 $k$，令 $T(Y)=C(Y\boxplus Z_k)$，仍按逐叶代换理解；上述总定义论证适用于 $T$。
 
-PR7 行逐字为：
+对每个固定的 $X\in\mathcal B$，引理 5B 及已证的全域等式给出
+\[
+P_{T,X}(n)=q(T(nX))=p\bigl(k+nL_B(X)\bigr)\qquad(n\ge0).
+\]
+两侧作为 $n$ 的整系数多项式在无穷多个整数处相等，故
+\[
+P_{T,X}(z)=p\bigl(k+zL_B(X)\bigr),\qquad
+[z]P_{T,X}=p'(k)L_B(X)=aL_B(X).
+\]
+这里一次系数的公式由逐项展开得到：$(k+zL_B(X))^j$ 的一次项从 $j$ 个因子中恰取一个 $zL_B(X)$，其余取 $k$，贡献 $j k^{j-1}L_B(X)$；常数项不贡献一次系数。
 
-```text
-pr7_copy_expressibility: archive_parity_rule_copy=1 cancelled_square_linear=5 copy_causal_q=1 copy_causal_summary=1 copy_d15_fiber=1 copy_empty_product=1 copy_first_product_profiles=4 copy_first_product_q=4 copy_first_product_summary=1 copy_negative_time_control=1 copy_old_archive_control=1 copy_periodic_saturation=1 copy_q_only_control=1 copy_region_controls=4 copy_same_local_rows=1 copy_strict_temporal_failure=1 copy_strict_temporal_single_success=1 copy_tail_q_bytes=3 copy_unsaturated_control=1 copy_unselected_parent_control=1 cubic_control=4 d15_d10_controls=2 d17_square_vs_linear=1 d18_guard_failure=4 d18_slice_failure=1 functional_orbits_2x2=2 functional_orbits_3x2=2 functional_orbits_3x3=3 image_d16_witness_failure=1 image_empty_endpoint_branches=6 image_empty_realizations=3 image_roundtrip_57=1 labeled_graphs_2x2=1 no_zero_row_orbits_2x2=1 orbit_cover_2x2=1 orbit_partition_2x2=1 orbits_2x2=1 ordered_pair_negation_suffix=1 ordered_pair_push=1 ordered_source_cross=1 poly_interpolation_coefficients=30 poly_profile_bytes=120 poly_q_bytes=120 pullback_encoding_copy=1 selected_pair_fiber_copy=1 selected_pair_profile_copy=1 shared_saturation_empty_factor_zero=6 shared_saturation_family_contexts=18 shared_saturation_full_summary_equal=12 shared_saturation_nonempty_first_q=6 shared_saturation_same_pair_q=18 shared_saturation_suffix_full_summary_equal=12 shared_saturation_witness_drop_cases=18 shared_saturation_witness_drop_red=3 slice_linear_coefficient=30 slice_nonzero_constant=5 successor_pair_push_copy=1 successor_size_rule_copy=1 required_pr6_keys=41 required_pr6_positive=1
-```
+对同一个固定项 $T$ 应用引理 5A、C，先正规化再取切片，得到先于 $X$ 固定的有限总单孔族 $S_1,\ldots,S_r$，满足
+\[
+aL_B(X)=\sum_{i=1}^r\bigl(q(S_i(X))-q(S_i(0_\varnothing))\bigr)
+\qquad(X\in\mathcal B).
+\]
+对该族整体应用引理 6，取共同阈值 $c$。任给位置 $x\in\mathbb Z^3$ 及整数 $t,t'<c$，该引理提供同一对输入 $X_t,X_{t'}$，使全部 $q(S_i(X_t))=q(S_i(X_{t'}))$ 同时成立。每份输入只选择位于 $(t,x)$ 或 $(t',x)$ 的一个正点，其余事件均未选。因此将上述两个切片等式相减，固定常数项消去，得到
+\[
+a\bigl(\mathbf1_B(t,x)-\mathbf1_B(t',x)\bigr)=0.
+\]
+整数无零因子且 $a\ne0$，所以两个指示值相等。$c$ 对全部位置及这两个过去时刻共同有效，正是定义 28 的 $\operatorname{Tail}(B)$。此处只在整数等式中消去非零因子，没有向项语言加入除法。
 
-末行为 `ALL_FINITE_CHECKS_PASSED`。本 fix4 `csa-pr7-fix4-0910` 由 `codex-cli` 单席按 caller 的 sshx brief 修复并自查；以下读数由该实施席实跑，不代报独立评审或 CI 判词。PR6 的 41 个旧键仍由 `REQUIRED_PR6_KEYS` 字面集合检查。共同饱和构造去掉重复计入选中正点的 `+1`，并在返回前断言 `charge(x,x.w)=0`、唯一选中正点及共同非当前档案端点；三条断言覆盖正例与每个删见证负例，旧 `valid()` 未改。3 个位置、2 组 `(t,t')` 和 3 个首乘情形共执行 `shared_saturation_family_contexts=18`、`shared_saturation_same_pair_q=18`；规范字节比较完整 `(Γ_t,m,M)` 得 `shared_saturation_full_summary_equal=12`，非空首乘保留 `e` 并有 `shared_saturation_nonempty_first_q=6`（两侧首乘 `q=(1,1)`），空当前因子有 `shared_saturation_empty_factor_zero=6`。后缀只用原签名的 `N`、`T_2`，逐步消费完整摘要并与 Rich 求值核对，`shared_saturation_suffix_full_summary_equal=12`；三个上下文的后缀 q 依次为 `(-1,-1)`、`(0,0)`、`(-1,-1)`。每个见证各删 6 次：`d0` 在 C0 上读 `(-1,0)`，`d1` 在 C2 上读 `(-1,-1)` 但完整摘要不同，`d2` 在 C2 上读 `(-1,0)` 且完整摘要不同，故 `shared_saturation_witness_drop_cases=18`、`shared_saturation_witness_drop_red=3`；旧 `shared_saturation_summary_equal`、`shared_saturation_negative_control` 键已删除。固定双变量项 `X ▷ T_1X` 在双事件档案上触发 `copy_strict_temporal_failure=1`，在单事件档案上通过并得 `copy_strict_temporal_single_success=1`；双事件同时供 `d18_guard_failure=4` 使用。函数型矩阵在 `S_r×S_s` 下逐一枚举轨道，再按列入度多重集核对分类，4、8、27 个带标签矩阵分别给出独立期望 `functional_orbits_2x2=2`、`functional_orbits_3x2=2`、`functional_orbits_3x3=3`。
+**证明（整系数多项式的充分性）。** 若 $\operatorname{Tail}(B)$，命题 55 给出固定有限总单孔项 $C_B$，对全部 $X\in\mathcal B$ 满足 $q(C_B(X))=L_B(X)$。常多项式已由 $K_a$ 处理。对次数 $d\ge1$ 的 $p(z)=\sum_{j=0}^d a_jz^j$，以固定参数叶 $H_d=\mathbf i(a_d)$ 起始，依次对 $j=d-1,\ldots,0$ 形成有限 Horner 项
+\[
+H_j(X)=\bigl(H_{j+1}(X)\boxtimes C_B(X)\bigr)\boxplus\mathbf i(a_j).
+\]
+这里每次出现 $C_B(X)$ 都使用同一先固定的语法树，最终的 $H_0$ 有 $d\ge1$ 个输入叶，起始闭参数本身不充当最终见证。定义 8 保证所有系数代表平衡；从 $H_d$ 起归纳，命题 2、3 和 $C_B$ 的总定义保证每个子项在全部输入上有定义且平衡。其读数递推为 $q(H_j(X))=q(H_{j+1}(X))L_B(X)+a_j$，从 $q(H_d)=a_d$ 逐级得到 $q(H_0(X))=p(L_B(X))$。负系数直接使用对应的固定整数代表。常量、非空区域的必要性和此构造合起来，证明所述充要条件及其非空形式。证毕。
 
-fix4 变异收据（预登记在各运行之前，卷快照为提交 `542cca66b9`）：(a0) 第二输入删 d0：预期 `shared_saturation_same_pair_q_C0` 红，实得 `('shared_saturation_same_pair_q_C0', (-1, 0))`、退出 `1`、恢复附录 SHA-256 `60387c5f35123be56a24e0c167891e5781f49f6218586bf770febef32297493e`；(a1) 第二输入删 d1：预期 `shared_saturation_suffix_full_summary_equal_C2` 红，实得 `('shared_saturation_suffix_full_summary_equal_C2', (-1, -1), 'full_summary_equal=False')`、退出 `1`、恢复附录 SHA-256 `60387c5f35123be56a24e0c167891e5781f49f6218586bf770febef32297493e`；(a2) 第二输入删 d2：预期 `shared_saturation_suffix_full_summary_equal_C2` 红，实得 `('shared_saturation_suffix_full_summary_equal_C2', (-1, 0), 'full_summary_equal=False')`、退出 `1`、恢复附录 SHA-256 `60387c5f35123be56a24e0c167891e5781f49f6218586bf770febef32297493e`；(b0) 增加一个未选当前正点：预期 `pr7_shared_input_balance` 红，实得 `('pr7_shared_input_balance', 1)`、退出 `1`、恢复附录 SHA-256 `60387c5f35123be56a24e0c167891e5781f49f6218586bf770febef32297493e`；(b1) 注释构造器平衡断言并增加一个未选当前正点：预期 `shared_saturation_input_balance` 红，实得 `('shared_saturation_input_balance', 1)`、退出 `1`、恢复附录 SHA-256 `60387c5f35123be56a24e0c167891e5781f49f6218586bf770febef32297493e`；(c) 首乘比较改回 theta[:3] 且第二输入 drop=2：预期 `shared_saturation_suffix_full_summary_equal_C2` 红，实得 `('shared_saturation_suffix_full_summary_equal_C2', (-1, 0), 'full_summary_equal=False')`、退出 `1`、恢复附录 SHA-256 `60387c5f35123be56a24e0c167891e5781f49f6218586bf770febef32297493e`；(d) 双事件改为单事件：预期 `copy_strict_temporal_failure` 红，实得 `('copy_strict_temporal_failure', 1, True)`、退出 `1`、恢复附录 SHA-256 `60387c5f35123be56a24e0c167891e5781f49f6218586bf770febef32297493e`；(e) 3×2 独立期望由 2 改为 3：预期 `functional_orbits_3x2` 红，实得 `('functional_orbits_3x2', 2, 3)`、退出 `1`、恢复附录 SHA-256 `60387c5f35123be56a24e0c167891e5781f49f6218586bf770febef32297493e`；8 次均 `compile_errors=0`、恰 1 条具名断言红，逐次恢复卷 SHA-256 均为 `7a49b4d38e1d6d2e269f8de589b135e93108790570b3e87459695e6d7c8b1232`，与各次变异前逐字节一致，其中 brief 的 (b) 被注释断言自身不可能报红，(b0) 验构造器断言、(b1) 验消费前独立平衡断言。
+### 44.2 命题 67：因果数值函数超出后复合子族
 
-R2-T-H01 实测口径：fix4 摄入前提交 `542cca66b9` 相对 `BASE=820bd4536b00c365e42ad201c96931c32421fb82`，本卷与 backfill 的 `git diff --check` 退出 `0`，完整提交差分退出 `2`，27 个 canonical ingest 生成 CAS 报 2 条尾空白与 25 条 EOF 空行诊断；这与 PR6 同属 producer 的既有空白现象，CAS 不作原位手改，最终摄入后的差分退出码与诊断计数写入本轮 `result.json`。
+**命题 67（后复合分类的范围，repo-derived）。** 沿用命题 66 的记号，存在 $H\in\mathcal E$，使任意 $B\subseteq K$ 与任意 $g:\mathbb Z\to\mathbb Z$ 都有 $H\ne g\circ L_B$。因而可表达的后复合子族满足严格包含
+\[
+\mathcal E\cap\{g\circ L_B:B\subseteq K,\ g:\mathbb Z\to\mathbb Z\}
+\subsetneq\mathcal E.
+\]
 
-F-6 的三个控制均执行复制或乘积后核对运算结果：`copy_old_archive_control=1` 比较旧档案乘积与当前乘积的 profile/q；`copy_negative_time_control=1` 比较平移后的 profile/q；`copy_unselected_parent_control=1` 比较保留未选父与仅选域乘积的 profile 基数。其余 PR7 对照均在本次命令中通过；有限读数只支持这些固定实例，不承担全称否定。
+**证明。** 固定 $l_0=\operatorname{leaf}(0)$ 和属性集合 $Q=\{(0,+1,l_0,1)\}\subseteq\mathrm{Attr}_t$，首坐标 $0$ 是空间零点。定义 26 的因果筛选是总原语，只改变选择而保持平衡，所以 $H(X)=q(F_{\downarrow Q}X)$ 由一个输入叶的固定总项表达，属于 $\mathcal E$。
 
-### 44.3 ingest 收据
+构造两份输入 $X,Y$，它们的档案和当前区域都由四个不同的事件 $e,f,n_1,n_2$ 组成，位置全为零、来源全为 $l_0$。$e,f$ 为正事件，时刻分别为 $0,1$；$n_1,n_2$ 为时刻 $0$ 的孤立负事件。两份输入都只选 $e$；$X$ 的严格关系恰为 $\{e\prec f\}$，$Y$ 的关系为空，其余数据完全相同。唯一的边严格增时，且没有长度二的严格路径，所以两关系都是合法传递严格关系；两正两负使两份输入都平衡。
 
-本 fix3 先合并了开工后追加的 `origin/dev=472501832bc5a90ff6d17571582217da5a196ac3`；`git merge-tree --write-tree origin/dev HEAD` 无冲突。清理摄入前按 `BASE=$(git merge-base origin/dev HEAD)` 逐路径比较：本 lane 的旧 PR7 产物只删除不在 dev 的 CAS 与 `residual-open` YAML，若 dev 已有相同 OID 则保留。删除／保留明细与计数由 caller 亲验并写入 result.json。
+$Q$ 在两份当前区域中都恰好命中 $f$ 的属性。由定义 26，目标事件只须在当前区域中，无须被选中。在 $X$ 中 $e\preceq f$，筛选留下唯一所选正事件 $e$，故 $H(X)=1$；在 $Y$ 中 $e$ 的当前后继只有自身，其时刻为 $0$，属性不在 $Q$，故筛选后选择为空、$H(Y)=0$。另一方面，两份输入的唯一所选事件及其时间、位置、符号全同，定义 23 使每个区域 $B$ 都满足
+\[
+L_B(X)=\mathbf1_B(0,0)=L_B(Y).
+\]
+于是任何 $g\circ L_B$ 在这两个输入上取同值，不能等于 $H$。同一对输入同时排除了全部 $B,g$；所显示子族的包含来自与 $\mathcal E$ 取交，$H$ 则证明包含严格。证毕。
 
-正文（含本节与 §44.4）最后定稿并提交后，才运行：
+### 44.3 反例 D19：整值性不足以表达
 
-```sh
-BASE=$(git merge-base origin/dev HEAD) make ingest SOURCE="contextual-spacetime-arithmetic docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md"
-```
+**反例 D19（命题：整系数与整值多项式的区别，repo-derived）。** 记 $\operatorname{Int}(\mathbb Z)=\{h\in\mathbb Q[z]:h(k)\in\mathbb Z\text{ 对每个 }k\in\mathbb Z\}$。函数 $g(k)=k(k-1)/2$ 由 $\operatorname{Int}(\mathbb Z)$ 中的多项式给出，却不由 $\mathbb Z[z]$ 中的多项式给出。因此对每个非空且满足 $\operatorname{Tail}(B)$ 的区域 $B$，$g\circ L_B\notin\mathcal E$。
 
-该命令的退出码、`residual_open_added`、`skipped_existing`、`coarse_fallbacks`、`open_genres`、`cas_objects_written`、`ledger_changed`、摄入提交及最终 HEAD 均只在完成运行后写入本轮 runner-owned `result.json`；摄入完成后不回写本文，保持输入源字节稳定。
+**证明。** 任意整数 $k$ 与 $k-1$ 中恰有一个是偶数，所以 $k(k-1)/2\in\mathbb Z$，包括负整数输入。若 $p\in\mathbb Z[z]$ 在全部整数处与 $g$ 相等，则 $2p(z)-z^2+z\in\mathbb Z[z]$ 的每个整数都是根。命题 66 证明中的根数界给出 $2p(z)-z^2+z=0$，即在 $\mathbb Q[z]$ 中 $p(z)=(z^2-z)/2$。其二次项系数为 $1/2$，不是整数，矛盾。命题 66 的非空区域必要性于是排除该目标，即使区域满足 Tail 也不例外。此反例以命题 66 为前置。证毕。
 
-### 44.4 git 读数与边界
+## 45. 二叶复制读数与有限单孔后处理的分离
 
-最终以 `BASE=$(git merge-base origin/dev HEAD)` 为比较基线。caller 亲验并在 result.json 记录：理论卷相对 BASE 恰两个纯插入 hunk（唯一 Python 块中间插入区与文档尾部追加区）；`git diff --name-only BASE..HEAD` 只含本卷、允许的 atoms 与 backfill；重复定义检查 `uniq -d` 为空；`git merge-tree --write-tree origin/dev HEAD` 无冲突；附录命令退出码为 0，PR7 行逐字节 SHA-1 与 §44.2 相同。移除两个新增区后，BASE 的全文逐字节恢复；本节不把未经验证的 CI、后续评审或合入写成结论。
+### 45.1 引理 7：非负整数纤维中的平方和碰撞
+
+**引理 7（非负整数纤维中的平方和碰撞，repo-derived）。** 沿用 $\mathbb N=\{0,1,2,\ldots\}$。任给整数 $0\le m<s$、矩阵 $A\in\mathbb Z^{m\times s}$ 与 $b\in\mathbb Z^m$，存在 $u,v\in\mathbb N^s$，使
+\[
+Au+b=Av+b,\qquad \sum_{j=1}^s u_j^2\ne\sum_{j=1}^s v_j^2.
+\tag{FIBER-SQUARE-ESCAPE}
+\]
+成熟锚为教科书有限维线性代数的秩–零度定理：列数多于行数的矩阵在 $\mathbb Q$ 上有非零核向量。本条在此标准事实之上给出位于非负整数锥内的显式三点构造。
+
+**证明。** 将 $A$ 视为 $\mathbb Q^s\to\mathbb Q^m$ 的线性映射。其秩至多为 $m<s$，故核维数至少为 $s-m>0$。取非零有理核向量并乘以各坐标分母的公倍数，得到 $d\in\mathbb Z^s\setminus\{0\}$ 且 $Ad=0$。置 $z_j=|d_j|$。每个坐标均满足 $z_j\ge0$ 与 $z_j\pm d_j\ge0$，所以 $z,z+d,z-d\in\mathbb N^s$，并且三者的仿射像均为 $Az+b$。逐坐标展开平方，得
+\[
+\sum_j(z_j+d_j)^2+\sum_j(z_j-d_j)^2-2\sum_jz_j^2
+=2\sum_jd_j^2>0.
+\]
+如果 $z+d$ 和 $z-d$ 的平方和都等于 $z$ 的平方和，左端便为零，矛盾。令 $u=z$，在 $z+d,z-d$ 中取平方和不同于 $z$ 的一个作为 $v$，即得结论。$m=0$ 时仿射像落在单点集 $\mathbb Z^0$，上述秩论证与构造仍成立。若要求所有坐标严格为正，将 $z_j$ 换为 $|d_j|+1$，同一平方恒等式即给出严格正整数见证。证毕。
+
+### 45.2 命题 68：固定二叶读数超出任意有限单孔后处理
+
+**命题 68（二叶复制读数超出有限单孔后处理闭包，repo-derived）。** 沿用命题 66 的 $\mathcal E$，令
+\[
+\begin{aligned}
+\mathcal E_1&=\{q\circ C:C\text{ 为定义 16 的签名 }\Sigma_{{\rm cau},t}
+ \text{ 下的固定总单孔上下文}\},\\
+\ell_j&=\operatorname{leaf}(j),\qquad T_{\rm leaf}=\{\ell_j:j\in\mathbb N\},\\
+L_{=}&=\{\operatorname{pair}(\ell_j,\ell_j):j\in\mathbb N\},\qquad
+H_{=}(X)=q\bigl(F_{L_{=}}(X\boxtimes X)\bigr),\\
+z_r(X)&=\sum_{\substack{e\in A_X\\\rho(e)=r}}\sigma(e)\quad(r\in T).
+\end{aligned}
+\]
+其中 $L_{=}$ 是定义 13 已有的固定来源筛选参数：它比较两父的叶来源树相等，不比较父事件的出现标识。$L_{=}$ 与 $H_{=}$ 在任何被挑战的上下文族之前固定。以下三项成立。
+
+1. $H_{=}\in\mathcal E$，由定义 34 的固定总项 $F_{L_{=}}(X\boxtimes X)$ 表达，该项恰含两个输入叶，且对每个 $X\in\mathcal B$，
+   \[
+   H_{=}(X)=\sum_{r\in T_{\rm leaf}}z_r(X)^2
+   =\sum_{j\in\mathbb N}z_{\ell_j}(X)^2.
+   \tag{LEAF-SQUARE-READOUT}
+   \]
+   每个输入只有有限个非零来源电荷。这里平方和只遍历叶来源，与所固定的 $L_{=}$ 一致。
+2. 对任意整数 $m\ge0$ 及任意 $h_1,\ldots,h_m\in\mathcal E_1$，存在 $X,Y\in\mathcal B$，使
+   \[
+   \bigl(\forall i\in\{1,\ldots,m\},\ h_i(X)=h_i(Y)\bigr)
+   \quad\land\quad H_{=}(X)\ne H_{=}(Y).
+   \tag{FINITE-ONE-HOLE-SEPARATION}
+   \]
+   量词次序为：先固定 $m$、全部 $h_i$ 的总单孔上下文 $C_i$ 及其所有参数，再构造供整个有限族共用的 $X,Y$；见证允许依赖该有限族。
+3. 对每个这样的有限族及任意函数 $g:\mathbb Z^m\to\mathbb Z$，都有
+   \[
+   H_{=}\ne g\circ(h_1,\ldots,h_m),\qquad
+   \mathbb Z[\mathcal E_1]\subsetneq\mathcal E.
+   \tag{FINITE-POSTPROCESSING-OBSTRUCTION}
+   \]
+   此处 $g$ 不限于多项式，也不附加可计算性假设；$\mathbb Z[\mathcal E_1]$ 指由整数常函数和 $\mathcal E_1$ 在逐点加、减、乘下生成的函数环。
+
+**证明（总表达与读数）。** 命题 3 保证 $X\boxtimes X$ 对全部平衡输入有定义且平衡，定义 13 的 $F_{L_{=}}$ 只改选择，故该两叶项总定义。定义 6 为两个输入叶使用不同的档案标签，即使两叶代入同一个 $X$，仍生成全部有序父对。来源树构造的标签互斥及 $\operatorname{pair}$ 的单射性给出
+\[
+\rho(p_{ef})\in L_{=}
+\quad\Longleftrightarrow\quad
+\exists j\in\mathbb N:\ \rho(e)=\rho(f)=\ell_j.
+\]
+由定义 3、6，筛选后的读数因此为
+\[
+\sum_{j\in\mathbb N}
+\sum_{\substack{e\in A_X\\\rho(e)=\ell_j}}
+\sum_{\substack{f\in A_X\\\rho(f)=\ell_j}}
+\sigma(e)\sigma(f)
+=\sum_{j\in\mathbb N}
+\left(\sum_{\substack{e\in A_X\\\rho(e)=\ell_j}}\sigma(e)\right)^2.
+\]
+$A_X$ 有限，故非空内层求和只涉及有限多个 $j$，各分配等式都是有限和等式。属于同一叶来源而出现标识不同的父事件也进入该求和，没有使用身份对角筛选。
+
+**证明（总单孔族的正规化）。** 现固定第二项中的 $m,h_i,C_i$ 与全部参数。定义 16 的有限复合沿唯一孔展开后是一棵恰含一个输入叶的定义 34 总项。严格失败传播使孔路径上的每个前缀都总定义，故引理 5A 适用。具体地，每个原语都保留原输入的全部档案事件，事件时间只加该路径上的固定平移量。若孔路径上的某个时间复合另侧有非空固定档案，则在原输入的非当前区域放入一个时间足够大（孔在左）或足够小（孔在右）的孤立事件，即违反定义 5 的守卫；该输入可取 $\Omega=A=\varnothing$，因而平衡。此前的空筛选或零乘积仍保留这个档案事件，不能消除此矛盾。于是所有这样的另侧档案必为空，时间复合与带相同标签的 $\boxplus$ 精确相等。求值固定闭子项并作此替换后，各 $C_i$ 只含
+$N,F_S,F_L,F_{\downarrow Q},T_k,\boxplus,\boxtimes$ 及固定平衡参数，仍只有一个孔，且在全部 $\mathcal B$ 上保持原值。
+
+**证明（反链输入族上的逐步仿射性）。** 取 $s=m+1$ 个互异叶来源 $\ell_1,\ldots,\ell_s$，位置与时间均固定为零。对每个 $a=(a_1,\ldots,a_s)\in\mathbb N^s$，用互异的 $HF$ 编码 $e_{j,k}^{+},e_{j,k}^{-}$（$1\le j\le s,1\le k\le a_j$）构造 $X(a)$：档案与当前区域均为这些事件的全集，严格关系为空，$e_{j,k}^{\pm}$ 的符号为 $\pm1$、来源为 $\ell_j$，只选全部正事件。每个来源的当前正负事件各有 $a_j$ 个，故总电荷为零；空关系传递、无自环且严格增时条件空真。所有集合有限、所有属性全定义，因此 $X(a)\in\mathcal B$，包括 $a=0$ 的空表示。其当前区域是反链，且
+\[
+z_{\ell_j}(X(a))=a_j\quad(1\le j\le s),\qquad
+H_{=}(X(a))=\sum_{j=1}^s a_j^2.
+\tag{ANTICHAIN-SQUARES}
+\]
+
+令 $\mathscr G=\mathrm{Attr}_t\times\{0,1\}\times\mathcal P_{\rm fin}(\mathrm{Attr}_t)$，$V=\mathbb Z^{(\mathscr G)}$ 为其上有限支撑整数函数群，$\delta_{(\alpha,\eta,U)}$ 表示对应格的基向量。置 $\alpha_j^{\pm}=(0,\pm1,\ell_j,0)$。反链中每个当前事件的后继属性集只含自身，故按定义 26 逐格计数有
+\[
+\Gamma_t(X(a))=\sum_{j=1}^s a_jv_j,\qquad
+v_j=\delta_{(\alpha_j^+,1,\{\alpha_j^+\})}
+-\delta_{(\alpha_j^-,0,\{\alpha_j^-\})}.
+\tag{ANTICHAIN-PROFILE-LINEAR}
+\]
+未选负事件进入选择位 $0$ 的格，不能从这个剖面中删去。
+
+以下在 $V$ 上逐步证明正规化上下文沿孔路径的剖面为 $v_0+\sum_j a_jw_j$，其中各 $v_0,w_j$ 均先于 $a$ 固定。对 $\alpha=(p,\epsilon,r,n)$，命题 48 的各一元操作是将基格作下列固定映射后按整数系数相加：
+\[
+\begin{aligned}
+N:&\quad(\alpha,\eta,U)\longmapsto(\alpha,1-\eta,U),\\
+F_S:&\quad(\alpha,\eta,U)\longmapsto(\alpha,\eta\mathbf1_S(p),U),\\
+F_L:&\quad(\alpha,\eta,U)\longmapsto(\alpha,\eta\mathbf1_L(r),U),\\
+F_{\downarrow Q}:&\quad(\alpha,\eta,U)\longmapsto
+ (\alpha,\eta\mathbf1_{U\cap Q\ne\varnothing},U),\\
+T_k:&\quad(\alpha,\eta,U)\longmapsto(\tau_k\alpha,\eta,\tau_k[U]),
+\end{aligned}
+\]
+其中 $\tau_k(p,\epsilon,r,n)=(p,\epsilon,r,n+k)$。每个映射唯一延拓为整数线性推送 $P:V\to V$，即使若干格合并也只是系数相加；因此它把 $v_0+\sum_j a_jw_j$ 送到 $Pv_0+\sum_j a_jPw_j$。因果筛选的命中条件只读格内的 $U$ 及预先固定的 $Q$，不读系数或选择重数；补集在这里交换选择位，并非把整个形式剖面取负。
+
+并行加固定参数 $Z$ 在任一槽位的更新为 $v\mapsto v+\Gamma_t(Z)$，故只把仿射常数项增加 $\Gamma_t(Z)$。乘积的剖面更新是双线性映射 $B:V\times V\to V$，它在基向量上由
+\[
+B\bigl(\delta_{(\alpha,\eta,U)},\delta_{(\alpha',\eta',U')}\bigr)
+=\delta_{(\alpha\diamond_t\alpha',\eta\eta',\{\alpha\diamond_t\alpha'\})},
+\quad
+\alpha\diamond_t\alpha'=(p+p',\epsilon\epsilon',
+ \operatorname{pair}(r,r'),\max(n,n')+1)
+\]
+给出。其理由是定义 6 的新当前点是全部当前父对，符号及选择位分别相乘，新当前区域为反链，后继属性集因而为自身单点集；按父格分组即得上述双线性推送。只有一侧含孔，另一侧的 $v_Z=\Gamma_t(Z)$ 固定，所以两种槽位分别给出
+\[
+\begin{aligned}
+B\left(v_0+\sum_j a_jw_j,v_Z\right)
+ &=B(v_0,v_Z)+\sum_j a_jB(w_j,v_Z),\\
+B\left(v_Z,v_0+\sum_j a_jw_j\right)
+ &=B(v_Z,v_0)+\sum_j a_jB(v_Z,w_j).
+\end{aligned}
+\]
+两式都是仿射式，不需要假设 $B$ 交换。有限支撑经固定格映射、有限和与有限父格乘积仍有限。以 (ANTICHAIN-PROFILE-LINEAR) 为归纳起点，上述步骤穷尽正规化后每条孔路径，故其终点确为某个固定的 $v_{i0}+\sum_j a_jv_{ij}$。中间形式系数无需各自为合法剖面；对每个实际的 $a\in\mathbb N^s$，命题 48 的更新等式逐步保证该组合恰为实际求值的剖面。正规化已消除时间守卫，全部实际中间表示的合法与平衡性由原语闭包保证。这也涵盖 $a_j=0$ 导致的支撑消失，不以支撑非空为归纳假设。
+
+终端读数是线性泛函 $\lambda(v)=\sum_{\alpha,U}v(\alpha,1,U)$。置 $A_{ij}=\lambda(v_{ij})\in\mathbb Z$、$b_i=\lambda(v_{i0})\in\mathbb Z$，便得到一个先于 $a$ 固定的整数矩阵 $A\in\mathbb Z^{m\times s}$ 与向量 $b\in\mathbb Z^m$，满足
+\[
+\bigl(h_1(X(a)),\ldots,h_m(X(a))\bigr)=Aa+b
+\qquad(a\in\mathbb N^s).
+\tag{FINITE-ONE-HOLE-AFFINE}
+\]
+
+**证明（碰撞见证与任意后处理）。** 因 $s=m+1>m$，引理 7 为该 $A,b$ 给出 $u,v\in\mathbb N^s$，其仿射像相同而平方和不同。令 $X=X(u),Y=X(v)$，它们已由上述逐事件构造保证合法、平衡且为反链输入；全部 $C_i$ 总定义，$H_{=}$ 的两叶项也总定义。(FINITE-ONE-HOLE-AFFINE) 使整个有限族在 $X,Y$ 上读数相同，(ANTICHAIN-SQUARES) 使 $H_{=}(X)\ne H_{=}(Y)$，证明第二项。$m=0$ 时取 $s=1$，摘要为 $\mathbb Z^0$ 的唯一元素，仍由引理 7 得到同样的分离。
+
+任给 $g:\mathbb Z^m\to\mathbb Z$，相同的摘要元组必有相同的 $g$ 值，故 $g\circ(h_1,\ldots,h_m)$ 不可能在两点上都等于 $H_{=}$。这一步只用函数性，对 $g$ 无其它要求，且同一对见证同时排除该有限族的全部后处理函数。
+
+最后证明所写函数环的包含。每个总单孔项都是定义 34 的总项；若 $q(C(X))$ 与 $q(D(X))$ 属于 $\mathcal E$，则 $C(X)\boxplus D(X)$、$C(X)\boxtimes D(X)$ 及 $NC(X)$ 仍为固定有限总项，分别给出逐点和、积、负值（命题 1–3）。每个整数常函数 $c$ 由命题 66 证明中的单叶总项 $(X\boxtimes0_\varnothing)\boxplus\mathbf i(c)$ 表达。因此 $\mathbb Z[\mathcal E_1]\subseteq\mathcal E$。函数环中的每个元素都只使用有限多个生成元，是它们的某个整系数多项式后处理；已证的任意后处理分离使 $H_{=}\notin\mathbb Z[\mathcal E_1]$，而第一项给出 $H_{=}\in\mathcal E$，所以包含严格。
+
+第二项的有限族量词不能换成一对输入同时混淆所有总单孔上下文。命题 49 必要性证明中恢复 $\Gamma_t$ 的读数使用补集及固定因果筛选的有限复合，这些都是总单孔上下文；若一对输入对全部这类读数相同，便有相同 $\Gamma_t$。沿选择位 $1$ 的格对位置、符号、时间与后继属性集求和即可恢复每个 $z_r$，再由 (LEAF-SQUARE-READOUT) 得到相同的 $H_{=}$。因此这里证成的是每个有限单孔摘要的障碍，不是 $\mathcal E$ 的完整刻画。证毕。

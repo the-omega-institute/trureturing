@@ -1,0 +1,47 @@
+## 33. Volume control and the next observable bridge
+
+Direct comparison of actual independent configurations with all vertex subsets
+gives, on the whole complex plane,
+
+\[
+ |Z_V(z)|\le\sum_{S\subseteq V}|z|^{|S|}=(1+|z|)^{|V|}.
+\]
+
+On U_epsilon, |z|<3. Combined with the preceding lower bound 2^(-|V|),
+exp(F_V)=Z_V, and the local argument bound, the new source proves
+
+\[
+\boxed{
+ -|V|\log2\le\operatorname{Re}F_V(z)\le |V|\log4,
+ \qquad |\operatorname{Im}F_V(z)|\le |V|\pi/2.
+}
+\tag{33.1}
+\]
+
+For nonempty domains, the normalized finite-volume pressure F_V/|V| is therefore
+uniformly bounded on the same complex neighborhood. This is a concrete input
+for a normal-family argument, rather than a conclusion about an infinite-volume
+limit. Identifying that limit still needs real-volume convergence and boundary
+or tiling control. Chen, Shao and Shi [1] study precisely this relation between
+uniform zero-freeness and analytic free energy; their result is literature
+context, not an implicit assumption that the present finite-domain limit exists.
+
+The next finite observable identity can be derived before addressing the limit.
+Differentiating the actual independent-set polynomial and counting each occupied
+vertex once gives
+
+\[
+ zZ'_V(z)=\sum_{v\in V}\bigl(Z_V(z)-Z_{V\setminus\{v\}}(z)\bigr),
+ \qquad
+ zF'_V(z)=\sum_{v\in V}(1-\alpha(V,v;z)).
+\tag{33.2}
+\]
+
+This uses actual configurations, not independence between neighbors. The
+identity avoids dividing by z and therefore includes z=0. Equation (33.2) is
+the next proposed formalization target; it is not counted among the current
+public declarations. On positive real activity it links the derivative to
+expected particle number after the Gibbs probability measure is explicitly
+constructed. Such a probability interpretation is not assigned to general
+complex activities.
+

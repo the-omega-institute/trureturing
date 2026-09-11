@@ -1,0 +1,32 @@
+**30.20 当前文献归属、primary 访问限制及固定核验产地。**
+本节专门的八节点、裕量、扰动组合及格点应用当前标为 repo-derived,
+没有以历史的未评定原始措辞作为现行 provenance 标签。
+经典分数背包、范数凸性和严格端点论证的已有核对直接引用 26.28;
+本次亲读本树第 26 节、27.3-27.5、29.1-29.22 和第 10 节度量定义作重叠检查。
+新增的聚合积分比较使用经典递增凸序:本次实际取得 Gushchin–Borzykh,
+*Integrated quantile functions: properties and applications*,
+Modern Stochastics: Theory and Applications 4(4) (2017),285–314,
+DOI [10.15559/17-VMSTA88](https://doi.org/10.15559/17-VMSTA88),
+[原文](https://arxiv.org/pdf/1801.00977) §2.3 Theorem 5(ii) 及其证明
+(PDF p.10 / 期刊 p.294),核对递增凸序、正部积分及积分分位函数的等价关系。
+把质量 3 的测度除以 3 后可与其概率约定对照;30.8 已直接证明本节所需版本。
+另实际取回 NIST DLMF [4.6.E1](https://dlmf.nist.gov/4.6.E1.tex) 的对数级数,
+及 Encyclopedia of Mathematics 的
+[Dirichlet theorem](https://encyclopediaofmath.org/wiki/Dirichlet_theorem)
+中同时逼近与抽屉原理小节。30.17 只用已自足证明的 \(Q=N^2\) 齐次特例。
+这些出处只支持经典工具,不被说成含有本节专门素数比较定理。
+本次另试的 EoM Majorization 页面返回 HTTP 404;检索不构成文献穷尽或优先权判定。
+
+primary 原始 envelope 的 SHA256 为
+5ad15f1f87730e33edd6ef2e9045aa4255a4a85efb1e456312b438da91c5288c。
+只消费其中 conclusion,log_ref 保持不透明。它自报 pinned source 获取遇 DisabledError,
+未读源字节或独立核对其 SHA256,且没有成功取回外部文献;
+本次源/文献读取不改变那些历史事实。原压缩串 `2^83^7` 留在原始输入,
+本节只按其数学意图显式写为 `2^8 * 3^7`。
+primary 自报 34 项固定有理检查;caller 的原审计另记录总计 64 项成功检查、
+host exit 0 及纸面核验,包含那 34 项及额外的分支、eligibility、权重和半径核对。
+它们是已完成的先行数学输入,不是本轮同轮 peer review,也不能合称为 primary 跑了 64 项。
+本实施把固定算式改成报告内不依赖绝对临时路径的自足证书并实际执行,
+原 caller 审计和程序不改。全部输入身份、逐单元映射、当前调用结果及检索收据见
+[balanced-prime-235-all-slabs-0910.md](../../reports/balanced-prime-235-all-slabs-0910.md)。
+

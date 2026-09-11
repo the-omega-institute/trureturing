@@ -1,0 +1,27 @@
+**30.62 定理及证明（网格证书的 RH 量词）。** The only external analytic-number-theory
+input in this bridge is [B1], Luis Báez-Duarte,
+*A strengthening of the Nyman-Beurling criterion for the Riemann hypothesis, 2*,
+[arXiv:math/0205003v1](https://arxiv.org/pdf/math/0205003v1), p. 1 definitions and p. 2
+Theorem 1.1: RH holds exactly when \(\chi\) belongs to the norm closure of the natural-parameter
+span of these \(f_k\) in the full \(\mathcal H\). This is the closure-membership statement
+used in 30.36, not density of the span in all \(\mathcal H\). Its full analytic proof is
+an imported theorem, not reproved by the finite estimates above.
+By the closure-distance theorem and 30.60,
+\[
+\mathrm{RH}\iff\forall m\in\mathbb N_+\ \exists N\in\mathbb N_+\ \exists e\in\mathbb N_0:
+ \operatorname{VerifyLess}(N,1/m,e).
+\]
+Forward, \(\inf_ND_N=0\) selects \(D_N<1/m\), and strict completeness gives a certificate.
+Backward, every certificate gives such a distance, so the infimum is zero and [B1] applies.
+All preceding finite lower bounds, optimizer bounds, grid coverage and totality proofs are
+independent of RH and [B1]. For any fixed \(N_0\), choose \(m\) with
+\(1/m\le\sigma_{N_0}\). Monotonicity of distance under enlarging the span gives
+\(D_N\ge D_{N_0}\ge\sigma_{N_0}\ge1/m\) for every \(N\le N_0\).
+Thus no finite prefix works for every \(m\). Computing intervals uniformly in \(N,\eta\)
+does not supply an unconditional successful cutoff \(m\mapsto N\).
+Since \(L_N\) is nondecreasing and \(L_N\ge N\), \(\sigma_N\downarrow0\).
+Positive finite lower bounds are compatible with zero limiting distance, and a lower bound tending
+to zero does not prove that limit. Neither finite collections of certificates nor finite failures
+to find one decide RH; no undecidability claim is involved. The constants and construction are
+not asserted optimal or practically fast, and they do not settle the separate prime-box sign problems.
+

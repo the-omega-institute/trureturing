@@ -1,0 +1,34 @@
+## 19. 为什么该目标适合 centered-projector SoS
+
+在 projector coordinates 中：
+
+```math
+p_{ik}=\operatorname{Tr}(P_iE_k)
+```
+
+是线性的，`alpha` 是二次多项式。rank-one 条件：
+
+```math
+P_i^2=P_i
+```
+
+也是二次。orthogonality、completeness 和 fixed-edge unbiasedness 都可以写成低次 polynomial constraints。
+
+因此 branch-specific sharp bound 可以寻找 exact certificate：
+
+```math
+\alpha_S(C)-1-\varepsilon
+=
+\sum_a s_a^2
++
+\sum_j q_jf_j
++
+\sum_kt_kg_k,
+```
+
+其中 `f_j = 0` 是 rank-one、basis、MUB 与 Hadamard branch equations，`g_k >= 0` 是 compact parameter-domain constraints，并且乘子 `t_k` 必须带有非负性证书。
+
+数值 SDP 负责发现 Gram matrix。最终使用 rational reconstruction、algebraic-number reduction 或 interval enclosure，把证书转成 Lean 可检查的 polynomial identity。
+
+这正是 2026 projector-coordinate SoS 结果给出的编码教训。一般 `m<=d+1` certificate 在 `m=4,d=6` 不足，branch-specific symmetry affinity 提供缺失的 order-six information。
+

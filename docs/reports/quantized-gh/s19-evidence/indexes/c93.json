@@ -1,0 +1,12 @@
+{
+  "schema": "s19-evidence-entry-v1",
+  "resource": "C93",
+  "logical_path": "C93-pro-rational-residual-certificates-recovered-visible-c93-0910.json",
+  "original": {"bytes": 26241, "sha256": "05ff29453e53453d1b0c7517ca44e5aee5c0635a93b50ad82f49bf9ec3113419", "lf": 130, "terminal_lf": 0, "lines": 131},
+  "origin": {"archive_member": "primary/C93-pro-rational-residual-certificates-recovered-visible-c93-0910.json"},
+  "contract": "docs/reports/quantized-gh/s19-evidence/README.md",
+  "interpretation": "Archive of the complete named original resource. Parts are contiguous raw UTF-8 slices; parse JSON only after reconstruction. Historical fields retain their original owner and values.",
+  "parts": [
+    {"ordinal": 1, "path": "docs/reports/quantized-gh/s19-evidence/raw/c93-05ff29453e53/group-001/part-0001-05ff29453e53.txt", "byte_start": 0, "byte_end_exclusive": 26241, "line_start": 1, "line_end_inclusive": 131, "bytes": 26241, "sha256": "05ff29453e53453d1b0c7517ca44e5aee5c0635a93b50ad82f49bf9ec3113419", "lf": 130, "terminal_lf": 0, "lines": 131, "context": "\"conclusion\": {"}
+  ]
+}
