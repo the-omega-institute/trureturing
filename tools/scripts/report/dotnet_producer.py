@@ -397,9 +397,10 @@ def prepare_task(directory, sdk, registration):
     write_if_changed(directory / "JudgeSeedTask.csproj", ET.tostring(project))
     write_if_changed(directory / "packages.lock.json", json.dumps({"version": 1, "dependencies": {framework: {}}}).encode())
     env = {key: value for key, value in os.environ.items() if key != "CustomAfterMicrosoftCSharpTargets"}
+    # These captured invocations own their MSBuild nodes through output EOF.
     for arguments in (("restore", "--locked-mode"), ("build", "--no-restore", "--configuration", "Release", "--warnaserror")):
         result = subprocess.run(["dotnet", arguments[0], str(directory / "JudgeSeedTask.csproj"), *arguments[1:],
-                                 "-p:ImportDirectoryBuildProps=false", "-p:ImportDirectoryBuildTargets=false"],
+                                 "-nr:false", "-p:ImportDirectoryBuildProps=false", "-p:ImportDirectoryBuildTargets=false"],
                                 env=env, text=True, capture_output=True)
         if result.returncode:
             if "JUDGE_SEED_REGISTRATION" in result.stdout + result.stderr:
@@ -423,6 +424,10 @@ def seed_targets(root, sdk, projects, task, registration, repository):
     }.items():
         ET.SubElement(properties, name).text = str(value)
     materials = ET.SubElement(driver, "ItemGroup")
+    # The generated import participates in MSBuild's incremental input check.
+    # Reconcile its bytes with the receipt before recovering its previous time,
+    # including when preparation recreated it in an empty judge-seed directory.
+    ET.SubElement(materials, "_JudgeSeedRegisteredMaterial", Include=str(root / "build/judge-seed/seed.targets"))
     for path in sorted(repository):
         ET.SubElement(materials, "_JudgeSeedRegisteredMaterial", Include=str(path))
     for project in projects:

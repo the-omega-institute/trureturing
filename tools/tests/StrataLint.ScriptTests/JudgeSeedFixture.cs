@@ -12,7 +12,6 @@ internal sealed class JudgeSeedFixture : IDisposable
     private readonly string producerRoot = TestRepositoryLayout.FindRoot();
     private readonly Dictionary<string, string> environment = new()
     {
-        ["MSBUILDDISABLENODEREUSE"] = "1", ["DOTNET_CLI_DO_NOT_USE_MSBUILD_SERVER"] = "1",
         ["CI"] = "true", ["DOTNET_CLI_UI_LANGUAGE"] = "en-US", ["GITHUB_RUN_ID"] = "17",
         ["GITHUB_RUN_ATTEMPT"] = "2", ["GITHUB_EVENT_NAME"] = "push", ["GITHUB_REF"] = "refs/heads/dev",
         ["STRATALINT_CACHE_WRITES"] = "true", ["STRATALINT_CHECK_SUCCEEDED"] = "false",
@@ -102,7 +101,10 @@ internal sealed class JudgeSeedFixture : IDisposable
         return result;
     }
 
-    internal Invocation Dotnet(string[] args, bool success = true) => Run("dotnet", args, success);
+    // Only owned MSBuild invocations disable node reuse; DLL/CLI calls retain
+    // their normal arguments and the producer must own its own child options.
+    internal Invocation Dotnet(string[] args, bool success = true) =>
+        Run("dotnet", args[0] is "restore" or "build" ? [..args, "-nr:false"] : args, success);
     internal void Build(string name, int expected, params string[] properties) => BuildProject(name, "tools/StrataLint.sln", expected, properties);
     internal void BuildHelper(string name, int expected) => BuildProject(name, "tools/scripts/report/JudgeSeedTask.csproj", expected, []);
     private void BuildProject(string name, string project, int expected, string[] properties)

@@ -4,6 +4,40 @@ namespace StrataLint.Tests;
 
 public sealed class JudgeSeedTests
 {
+    [Fact]
+    public void GeneratedDriverRecoversValidatedTimeAfterCleanStateRestore()
+    {
+        using var fixture = new JudgeSeedFixture();
+        fixture.Prepare();
+        fixture.Build("driver-cold", 2);
+        var driver = fixture.PathOf("build/judge-seed/seed.targets");
+        var bytes = File.ReadAllBytes(driver);
+        var stamp = File.GetLastWriteTimeUtc(driver);
+        fixture.Snapshot();
+        Directory.Delete(fixture.PathOf("build/judge-seed"), recursive: true);
+
+        fixture.Restore();
+
+        Assert.Equal(bytes, File.ReadAllBytes(driver));
+        fixture.Build("driver-clean-state-warm", 0);
+        Assert.Equal(stamp, File.GetLastWriteTimeUtc(driver));
+    }
+
+    [Fact]
+    public void AlteredGeneratedDriverBytesCannotReuseEvenWithPreservedTime()
+    {
+        using var fixture = new JudgeSeedFixture();
+        fixture.Prepare();
+        fixture.Build("driver-before-mutation", 2);
+        const string driver = "build/judge-seed/seed.targets";
+        fixture.WritePreservingTime(driver, File.ReadAllText(fixture.PathOf(driver)) + "\n<!-- altered driver -->\n");
+
+        fixture.Build("driver-altered-bytes", 2);
+        fixture.Build("driver-unchanged-bytes", 0);
+        fixture.Prepare();
+        fixture.Build("driver-regenerated-bytes", 2);
+    }
+
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
