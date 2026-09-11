@@ -171,7 +171,7 @@ internal sealed partial class RuleFixture
 
     internal static IReadOnlySet<string> RegisteredBuildInputs { get; } = new HashSet<string>(StringComparer.Ordinal)
     {
-        "global.json", "Directory.Build.props", "tools/Directory.Build.targets", "Directory.Packages.props",
+        "global.json", "Directory.Build.props", "Directory.Build.targets", "tools/Directory.Build.targets", "Directory.Packages.props",
     };
 
     internal Dictionary<string, string> Files { get; }

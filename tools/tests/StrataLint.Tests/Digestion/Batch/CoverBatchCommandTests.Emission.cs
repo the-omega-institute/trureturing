@@ -20,7 +20,7 @@ public sealed partial class CoverBatchCommandTests
         world.WriteReportBundle();
 
         Assert.DoesNotContain(world.Repository.ReadCurrent().Entries, entry => entry.Path == runtimePath);
-        const string sourcePath = "tools/StrataLint.Cli/Fixture.cs";
+        const string sourcePath = "tools/StrataLint.Cli/Program.cs";
         TemporaryFileSystem.File.WriteAllBytes(Path.Combine(world.Root, sourcePath), [0xff]);
         var failure = Assert.IsType<SnapshotDecodeOutcome.InfrastructureFailure>(
             SnapshotDecoder.Decode(world.Repository.ReadCurrent()));
@@ -269,7 +269,6 @@ public sealed partial class CoverBatchCommandTests
     {
         WriteProblem(root);
         WriteScribeFixture(root, "Trureturing.lean", "-- synthetic root module\n");
-        ProducerInputFixture.CopyBatchProducerInputs(root);
         WriteScribeFixture(root, ".gitignore",
             File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), ".gitignore")));
         WriteScribeFixture(root, "Blueprint/D5/S0/Carrier/Probe.md", "old blueprint projection\n");
@@ -277,7 +276,7 @@ public sealed partial class CoverBatchCommandTests
         foreach (var path in CanonicalValuesWriter.InputPaths)
         {
             if (!TemporaryFileSystem.File.Exists(Path.Combine(root, path)))
-                WriteScribeFixture(root, path, "-- synthetic producer input\n");
+                WriteScribeFixture(root, path, File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), path)));
         }
         WriteScribeFixture(root, "Golden/values-kernels.toml", """
             schema_version = 1
