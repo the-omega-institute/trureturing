@@ -1,0 +1,17 @@
+**34.14 A one-corner zero-sign witness.** To see why the analytical domain
+does not imply a negative baseline on that whole domain, choose any positive
+steps, let all \(a_i=0\), and fix \(T>0\) with \(T_{\min}=T\).
+Set \(M_1=kT=A\) and choose any finite \(M_0\le M_1\).
+Only the lower corner is admitted: raising any coordinate increases its
+total strictly above \(M_1\). The capacity is zero and every row distance
+is zero because \(T=M_1/k\in I\). Thus
+\[
+D_0=\sum_i f(T)=kf(T),\qquad \rho_0=0,\qquad
+\Psi_0=kf(T),\qquad G_0=0.
+\]
+This includes both \(M_0=M_1\) and \(M_0<M_1\).
+In particular, even the zero perturbation cannot turn a two-corner
+negative-margin theorem into a one-corner negative theorem.
+A transferred sign requires a separately proved margin on the actual
+inverse-image family, as stated next.
+

@@ -1,0 +1,750 @@
+    {
+      "pointer": "/conclusion/evidence/caller_symbolic_audit/attribution",
+      "node_type": "leaf",
+      "raw": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 29096,
+        "end_byte": 29230,
+        "start_line": 306,
+        "bytes": 134,
+        "LF": 0,
+        "terminal_LF_bytes": 0,
+        "sha256": "085401e532c33a73435691083d40d34eafdd18b3c3fd3b1105cd3ea2725e0794"
+      },
+      "current_mathematical_refs": [],
+      "operational_archive_refs": [
+        "#/replacements/0/archive",
+        "#/replacements/3/archive",
+        "#/replacements/4/archive"
+      ],
+      "disposition": "operational evidence retained in historical report/archive; no body proof claim"
+    },
+    {
+      "pointer": "/conclusion/evidence/caller_symbolic_audit/at_utc",
+      "node_type": "leaf",
+      "raw": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 29242,
+        "end_byte": 29276,
+        "start_line": 307,
+        "bytes": 34,
+        "LF": 0,
+        "terminal_LF_bytes": 0,
+        "sha256": "6410a758a7a337dc218b70f58d4f5ce5f69e5552f6938ecdfd260438adb44b09"
+      },
+      "current_mathematical_refs": [],
+      "operational_archive_refs": [
+        "#/replacements/0/archive",
+        "#/replacements/3/archive",
+        "#/replacements/4/archive"
+      ],
+      "disposition": "operational evidence retained in historical report/archive; no body proof claim"
+    },
+    {
+      "pointer": "/conclusion/evidence/caller_symbolic_audit/reported_status",
+      "node_type": "leaf",
+      "raw": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 29297,
+        "end_byte": 29305,
+        "start_line": 308,
+        "bytes": 8,
+        "LF": 0,
+        "terminal_LF_bytes": 0,
+        "sha256": "559532ad927252eed5d9b6687d55203a96b956d822055f4570f196a93a42bece"
+      },
+      "current_mathematical_refs": [],
+      "operational_archive_refs": [
+        "#/replacements/0/archive",
+        "#/replacements/3/archive",
+        "#/replacements/4/archive"
+      ],
+      "disposition": "operational evidence retained in historical report/archive; no body proof claim"
+    },
+    {
+      "pointer": "/conclusion/evidence/caller_symbolic_audit/program_sha256",
+      "node_type": "leaf",
+      "raw": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 29325,
+        "end_byte": 29391,
+        "start_line": 309,
+        "bytes": 66,
+        "LF": 0,
+        "terminal_LF_bytes": 0,
+        "sha256": "03560504e936a52e42fe62663f385984f4a5b674ea14477117b99ab9214db763"
+      },
+      "current_mathematical_refs": [],
+      "operational_archive_refs": [
+        "#/replacements/0/archive",
+        "#/replacements/3/archive",
+        "#/replacements/4/archive"
+      ],
+      "disposition": "operational evidence retained in historical report/archive; no body proof claim"
+    },
+    {
+      "pointer": "/conclusion/evidence/caller_symbolic_audit/gate_sha256",
+      "node_type": "leaf",
+      "raw": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 29408,
+        "end_byte": 29474,
+        "start_line": 310,
+        "bytes": 66,
+        "LF": 0,
+        "terminal_LF_bytes": 0,
+        "sha256": "0702db9de5a8a55f7342edcfcbd77eb233c9e8e053bb94fae2b6a7bbee7771f4"
+      },
+      "current_mathematical_refs": [],
+      "operational_archive_refs": [
+        "#/replacements/0/archive",
+        "#/replacements/3/archive",
+        "#/replacements/4/archive"
+      ],
+      "disposition": "operational evidence retained in historical report/archive; no body proof claim"
+    },
+    {
+      "pointer": "/conclusion/evidence/caller_symbolic_audit/reported_environment",
+      "node_type": "leaf",
+      "raw": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 29500,
+        "end_byte": 29530,
+        "start_line": 311,
+        "bytes": 30,
+        "LF": 0,
+        "terminal_LF_bytes": 0,
+        "sha256": "f5a7982c886de3f08d8b228a8651fbd61f4fe0ba0e58db42fae17099f11e2953"
+      },
+      "current_mathematical_refs": [],
+      "operational_archive_refs": [
+        "#/replacements/0/archive",
+        "#/replacements/3/archive",
+        "#/replacements/4/archive"
+      ],
+      "disposition": "operational evidence retained in historical report/archive; no body proof claim"
+    },
+    {
+      "pointer": "/conclusion/evidence/caller_symbolic_audit/scope",
+      "node_type": "leaf",
+      "raw": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 29541,
+        "end_byte": 29706,
+        "start_line": 312,
+        "bytes": 165,
+        "LF": 0,
+        "terminal_LF_bytes": 0,
+        "sha256": "cbe3fb04669bb321a32f257cbdc7dde94101775a1bc07b06fde2c45884d86584"
+      },
+      "current_mathematical_refs": [
+        "#/current_bindings/7"
+      ],
+      "operational_archive_refs": [
+        "#/replacements/0/archive"
+      ],
+      "disposition": "mixed: mathematical part in current body; operational part in preserved raw/archive"
+    },
+    {
+      "pointer": "/conclusion/evidence/caller_symbolic_audit",
+      "node_type": "object",
+      "raw": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 29079,
+        "end_byte": 29708,
+        "start_line": 305,
+        "bytes": 629,
+        "LF": 8,
+        "terminal_LF_bytes": 0,
+        "sha256": "af52b103ac494c25d43b0af32cc5028713c7c46b6ac9b26462ba87c01bd4e0f4"
+      },
+      "disposition": "container: all descendants individually resolved below"
+    },
+    {
+      "pointer": "/conclusion/evidence/execution_this_response/mathematical_code_runs",
+      "node_type": "leaf",
+      "raw": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 29765,
+        "end_byte": 29766,
+        "start_line": 315,
+        "bytes": 1,
+        "LF": 0,
+        "terminal_LF_bytes": 0,
+        "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+      },
+      "current_mathematical_refs": [],
+      "operational_archive_refs": [
+        "#/replacements/4/archive"
+      ],
+      "disposition": "operational evidence retained in historical report/archive; no body proof claim"
+    },
+    {
+      "pointer": "/conclusion/evidence/execution_this_response/numerical_probes",
+      "node_type": "leaf",
+      "raw": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 29788,
+        "end_byte": 29789,
+        "start_line": 316,
+        "bytes": 1,
+        "LF": 0,
+        "terminal_LF_bytes": 0,
+        "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+      },
+      "current_mathematical_refs": [],
+      "operational_archive_refs": [
+        "#/replacements/4/archive"
+      ],
+      "disposition": "operational evidence retained in historical report/archive; no body proof claim"
+    },
+    {
+      "pointer": "/conclusion/evidence/execution_this_response/candidate_searches",
+      "node_type": "leaf",
+      "raw": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 29813,
+        "end_byte": 29814,
+        "start_line": 317,
+        "bytes": 1,
+        "LF": 0,
+        "terminal_LF_bytes": 0,
+        "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+      },
+      "current_mathematical_refs": [],
+      "operational_archive_refs": [
+        "#/replacements/4/archive"
+      ],
+      "disposition": "operational evidence retained in historical report/archive; no body proof claim"
+    },
+    {
+      "pointer": "/conclusion/evidence/execution_this_response/GPU_dispatches",
+      "node_type": "leaf",
+      "raw": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 29834,
+        "end_byte": 29835,
+        "start_line": 318,
+        "bytes": 1,
+        "LF": 0,
+        "terminal_LF_bytes": 0,
+        "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+      },
+      "current_mathematical_refs": [],
+      "operational_archive_refs": [
+        "#/replacements/4/archive"
+      ],
+      "disposition": "operational evidence retained in historical report/archive; no body proof claim"
+    },
+    {
+      "pointer": "/conclusion/evidence/execution_this_response/repository_actions",
+      "node_type": "leaf",
+      "raw": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 29859,
+        "end_byte": 29860,
+        "start_line": 319,
+        "bytes": 1,
+        "LF": 0,
+        "terminal_LF_bytes": 0,
+        "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+      },
+      "current_mathematical_refs": [],
+      "operational_archive_refs": [
+        "#/replacements/4/archive"
+      ],
+      "disposition": "operational evidence retained in historical report/archive; no body proof claim"
+    },
+    {
+      "pointer": "/conclusion/evidence/execution_this_response/delegations",
+      "node_type": "leaf",
+      "raw": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 29877,
+        "end_byte": 29878,
+        "start_line": 320,
+        "bytes": 1,
+        "LF": 0,
+        "terminal_LF_bytes": 0,
+        "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+      },
+      "current_mathematical_refs": [],
+      "operational_archive_refs": [
+        "#/replacements/4/archive"
+      ],
+      "disposition": "operational evidence retained in historical report/archive; no body proof claim"
+    },
+    {
+      "pointer": "/conclusion/evidence/execution_this_response",
+      "node_type": "object",
+      "raw": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 29737,
+        "end_byte": 29880,
+        "start_line": 314,
+        "bytes": 143,
+        "LF": 7,
+        "terminal_LF_bytes": 0,
+        "sha256": "d1e4ec4e89c7652d5398f1227b6a46b1c6c9dcda2baf10b65ff17e14131dd692"
+      },
+      "disposition": "container: all descendants individually resolved below"
+    },
+    {
+      "pointer": "/conclusion/evidence",
+      "node_type": "object",
+      "raw": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 28149,
+        "end_byte": 29882,
+        "start_line": 302,
+        "bytes": 1733,
+        "LF": 20,
+        "terminal_LF_bytes": 0,
+        "sha256": "0da4e5bdb9676fbe2567932806ab01ce36e48691d188c239ec5645ac3947db01"
+      },
+      "disposition": "container: all descendants individually resolved below"
+    },
+    {
+      "pointer": "/conclusion/remaining_limits",
+      "node_type": "leaf",
+      "raw": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 29904,
+        "end_byte": 30421,
+        "start_line": 323,
+        "bytes": 517,
+        "LF": 0,
+        "terminal_LF_bytes": 0,
+        "sha256": "0a2f4f72626e7baaf8cf179bd762c1262a794c5178952363d360f9bd8712d36e"
+      },
+      "current_mathematical_refs": [
+        "#/current_bindings/20",
+        "#/current_bindings/22"
+      ],
+      "operational_archive_refs": [
+        "#/replacements/2/archive",
+        "#/replacements/4/archive"
+      ],
+      "disposition": "mixed: mathematical part in current body; operational part in preserved raw/archive"
+    },
+    {
+      "pointer": "/conclusion/reasoning_discipline",
+      "node_type": "leaf",
+      "raw": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 30447,
+        "end_byte": 30836,
+        "start_line": 324,
+        "bytes": 389,
+        "LF": 0,
+        "terminal_LF_bytes": 0,
+        "sha256": "ff952d69a7fb3de25f3d20f291a8524054c15b8eb94e64e39f73369db3c93e5a"
+      },
+      "current_mathematical_refs": [
+        "#/current_bindings/3",
+        "#/current_bindings/4",
+        "#/current_bindings/5",
+        "#/current_bindings/6",
+        "#/current_bindings/7",
+        "#/current_bindings/8",
+        "#/current_bindings/9",
+        "#/current_bindings/10",
+        "#/current_bindings/11"
+      ],
+      "operational_archive_refs": [
+        "#/replacements/4/archive"
+      ],
+      "disposition": "mixed: mathematical part in current body; operational part in preserved raw/archive"
+    },
+    {
+      "pointer": "/conclusion",
+      "node_type": "object",
+      "raw": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 15818,
+        "end_byte": 30838,
+        "start_line": 253,
+        "bytes": 15020,
+        "LF": 72,
+        "terminal_LF_bytes": 0,
+        "sha256": "175752924157141147656959e7425931be3856fdf568fe7d8625774797d5dcb9"
+      },
+      "disposition": "container: all descendants individually resolved below"
+    },
+    {
+      "pointer": "/log_ref",
+      "node_type": "leaf",
+      "raw": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 30851,
+        "end_byte": 30873,
+        "start_line": 326,
+        "bytes": 22,
+        "LF": 0,
+        "terminal_LF_bytes": 0,
+        "sha256": "9ae1041a1c51c18840520ba343717c390b388c677e622e06cf752e06cc1504b5"
+      },
+      "current_mathematical_refs": [],
+      "operational_archive_refs": [
+        "#/replacements/3/archive"
+      ],
+      "disposition": "operational evidence retained in historical report/archive; no body proof claim"
+    },
+    {
+      "pointer": "",
+      "node_type": "object",
+      "raw": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 15802,
+        "end_byte": 30875,
+        "start_line": 252,
+        "bytes": 15073,
+        "LF": 75,
+        "terminal_LF_bytes": 0,
+        "sha256": "e5d84e0dc8c6935b329694f3cf278151543a4ce4460cf0e1d42d4371cd5ce822"
+      },
+      "disposition": "container: all descendants individually resolved below"
+    }
+  ],
+  "source_to_primary_rows": [
+    {
+      "original_table_row_ref": "#/historical_tables/0/rows/2",
+      "current_mathematical_refs": [
+        "#/current_bindings/1",
+        "#/current_bindings/2"
+      ],
+      "raw_node_refs": [
+        "#/C47_nodes/2",
+        "#/C47_nodes/3",
+        "#/C47_nodes/7"
+      ],
+      "operational_archive_refs": [],
+      "scope": "row is historical; mathematical dependencies resolve to current units, execution/process portions only to report/archive"
+    },
+    {
+      "original_table_row_ref": "#/historical_tables/0/rows/3",
+      "current_mathematical_refs": [
+        "#/current_bindings/3"
+      ],
+      "raw_node_refs": [
+        "#/C47_nodes/9"
+      ],
+      "operational_archive_refs": [],
+      "scope": "row is historical; mathematical dependencies resolve to current units, execution/process portions only to report/archive"
+    },
+    {
+      "original_table_row_ref": "#/historical_tables/0/rows/4",
+      "current_mathematical_refs": [
+        "#/current_bindings/4"
+      ],
+      "raw_node_refs": [
+        "#/C47_nodes/10"
+      ],
+      "operational_archive_refs": [],
+      "scope": "row is historical; mathematical dependencies resolve to current units, execution/process portions only to report/archive"
+    },
+    {
+      "original_table_row_ref": "#/historical_tables/0/rows/5",
+      "current_mathematical_refs": [
+        "#/current_bindings/5",
+        "#/current_bindings/6"
+      ],
+      "raw_node_refs": [
+        "#/C47_nodes/11"
+      ],
+      "operational_archive_refs": [],
+      "scope": "row is historical; mathematical dependencies resolve to current units, execution/process portions only to report/archive"
+    },
+    {
+      "original_table_row_ref": "#/historical_tables/0/rows/6",
+      "current_mathematical_refs": [
+        "#/current_bindings/7"
+      ],
+      "raw_node_refs": [
+        "#/C47_nodes/14"
+      ],
+      "operational_archive_refs": [
+        "#/replacements/0/archive"
+      ],
+      "scope": "row is historical; mathematical dependencies resolve to current units, execution/process portions only to report/archive"
+    },
+    {
+      "original_table_row_ref": "#/historical_tables/0/rows/7",
+      "current_mathematical_refs": [
+        "#/current_bindings/8"
+      ],
+      "raw_node_refs": [
+        "#/C47_nodes/12"
+      ],
+      "operational_archive_refs": [],
+      "scope": "row is historical; mathematical dependencies resolve to current units, execution/process portions only to report/archive"
+    },
+    {
+      "original_table_row_ref": "#/historical_tables/0/rows/8",
+      "current_mathematical_refs": [
+        "#/current_bindings/9"
+      ],
+      "raw_node_refs": [
+        "#/C47_nodes/13"
+      ],
+      "operational_archive_refs": [],
+      "scope": "row is historical; mathematical dependencies resolve to current units, execution/process portions only to report/archive"
+    },
+    {
+      "original_table_row_ref": "#/historical_tables/0/rows/9",
+      "current_mathematical_refs": [
+        "#/current_bindings/10",
+        "#/current_bindings/11"
+      ],
+      "raw_node_refs": [
+        "#/C47_nodes/15"
+      ],
+      "operational_archive_refs": [],
+      "scope": "row is historical; mathematical dependencies resolve to current units, execution/process portions only to report/archive"
+    },
+    {
+      "original_table_row_ref": "#/historical_tables/0/rows/10",
+      "current_mathematical_refs": [
+        "#/current_bindings/12",
+        "#/current_bindings/13"
+      ],
+      "raw_node_refs": [
+        "#/C47_nodes/17",
+        "#/C47_nodes/18",
+        "#/C47_nodes/19"
+      ],
+      "operational_archive_refs": [],
+      "scope": "row is historical; mathematical dependencies resolve to current units, execution/process portions only to report/archive"
+    },
+    {
+      "original_table_row_ref": "#/historical_tables/0/rows/11",
+      "current_mathematical_refs": [
+        "#/current_bindings/14"
+      ],
+      "raw_node_refs": [
+        "#/C47_nodes/20"
+      ],
+      "operational_archive_refs": [],
+      "scope": "row is historical; mathematical dependencies resolve to current units, execution/process portions only to report/archive"
+    },
+    {
+      "original_table_row_ref": "#/historical_tables/0/rows/12",
+      "current_mathematical_refs": [
+        "#/current_bindings/15",
+        "#/current_bindings/16"
+      ],
+      "raw_node_refs": [
+        "#/C47_nodes/25"
+      ],
+      "operational_archive_refs": [],
+      "scope": "row is historical; mathematical dependencies resolve to current units, execution/process portions only to report/archive"
+    },
+    {
+      "original_table_row_ref": "#/historical_tables/0/rows/13",
+      "current_mathematical_refs": [
+        "#/current_bindings/17",
+        "#/current_bindings/18"
+      ],
+      "raw_node_refs": [
+        "#/C47_nodes/29"
+      ],
+      "operational_archive_refs": [],
+      "scope": "row is historical; mathematical dependencies resolve to current units, execution/process portions only to report/archive"
+    },
+    {
+      "original_table_row_ref": "#/historical_tables/0/rows/14",
+      "current_mathematical_refs": [
+        "#/current_bindings/19"
+      ],
+      "raw_node_refs": [
+        "#/C47_nodes/33"
+      ],
+      "operational_archive_refs": [
+        "#/replacements/1/archive"
+      ],
+      "scope": "row is historical; mathematical dependencies resolve to current units, execution/process portions only to report/archive"
+    },
+    {
+      "original_table_row_ref": "#/historical_tables/0/rows/15",
+      "current_mathematical_refs": [
+        "#/current_bindings/20"
+      ],
+      "raw_node_refs": [
+        "#/C47_nodes/37"
+      ],
+      "operational_archive_refs": [
+        "#/replacements/2/archive"
+      ],
+      "scope": "row is historical; mathematical dependencies resolve to current units, execution/process portions only to report/archive"
+    },
+    {
+      "original_table_row_ref": "#/historical_tables/0/rows/16",
+      "current_mathematical_refs": [
+        "#/current_bindings/21",
+        "#/current_bindings/22"
+      ],
+      "raw_node_refs": [
+        "#/C47_nodes/56",
+        "#/C47_nodes/57",
+        "#/C47_nodes/58"
+      ],
+      "operational_archive_refs": [
+        "#/replacements/3/archive",
+        "#/replacements/4/archive"
+      ],
+      "scope": "row is historical; mathematical dependencies resolve to current units, execution/process portions only to report/archive"
+    }
+  ],
+  "classical_source_table_rows": [
+    {
+      "original_table_row_ref": "#/historical_tables/1/rows/2",
+      "current_mathematical_refs": [
+        "#/current_bindings/21"
+      ],
+      "source_attestation_process_refs": [
+        "#/replacements/3/archive"
+      ],
+      "scope": "classical ingredient only; Duality is inherited price context, not a new premise"
+    },
+    {
+      "original_table_row_ref": "#/historical_tables/1/rows/3",
+      "current_mathematical_refs": [
+        "#/current_bindings/21"
+      ],
+      "source_attestation_process_refs": [
+        "#/replacements/3/archive"
+      ],
+      "scope": "classical ingredient only; Duality is inherited price context, not a new premise"
+    },
+    {
+      "original_table_row_ref": "#/historical_tables/1/rows/4",
+      "current_mathematical_refs": [
+        "#/current_bindings/21"
+      ],
+      "source_attestation_process_refs": [
+        "#/replacements/3/archive"
+      ],
+      "scope": "classical ingredient only; Duality is inherited price context, not a new premise"
+    }
+  ],
+  "historical_tables": [
+    {
+      "id": "table-1",
+      "rows": [
+        {
+          "row_number": 1,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 2929,
+            "end_byte": 2992,
+            "start_line": 54,
+            "bytes": 63,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "352b922ec010bee567ec2de759f16615d1f2d0c9ab201c12ff9e07a78792c82a"
+          },
+          "label": "Source units",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 2,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 2992,
+            "end_byte": 3012,
+            "start_line": 55,
+            "bytes": 20,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "a9e436d2babd638ade86791e162e7de5a6b1b3128c6ae9ed93504fbf3c53dc93"
+          },
+          "label": "---",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 3,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 3012,
+            "end_byte": 3246,
+            "start_line": 56,
+            "bytes": 234,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "f0d8067788fd1d1d9add687f600893f364e1c3fa746f66ac8d88ecbf9d484659"
+          },
+          "label": "34.1-34.2",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 4,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 3246,
+            "end_byte": 3426,
+            "start_line": 57,
+            "bytes": 180,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "26c1790f8270776a738bc4c9feb5e7810fb1c4348b02cb4d2fbb8ba6841c6272"
+          },
+          "label": "34.3",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 5,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 3426,
+            "end_byte": 3555,
+            "start_line": 58,
+            "bytes": 129,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "72a9de83b432be4ba759f5ddabd55a23289158790077566137efba82f8994391"
+          },
+          "label": "34.4",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 6,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 3555,
+            "end_byte": 3714,
+            "start_line": 59,
+            "bytes": 159,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "0b2e4ae8d4bd90965c0b356b4d21ff72ec64d58c05e066e91c9e4b74f4804189"
+          },
+          "label": "34.5-34.6",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 7,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 3714,
+            "end_byte": 3870,
+            "start_line": 60,
+            "bytes": 156,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "592c54249e4189137e97452c5a27db957302f5614c3b1159fd35686a3a33cc49"
+          },
+          "label": "34.7",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 8,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 3870,
+            "end_byte": 4001,
+            "start_line": 61,
+            "bytes": 131,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "c09337b0579e67b6b193e8f3421fff6e686629bbaa4131abb096d7f7970e39f6"
+          },
