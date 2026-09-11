@@ -9,9 +9,10 @@
 # --max bounds successful merges; pending counts the remaining fetched plan.
 # Exit: 0 complete/bounded/dry-run; 64 invalid input/precondition; 65 conflict;
 # 66 red checks (PR left open); 69 transport/incomplete checks/unsafe recovery;
-# 130 interrupted; 143 terminated (69 also when GitHub never registers checks).
-# GitHub registers a new PR's check runs asynchronously; the follower polls that
-# registration only (bounded), then the native watcher does all the waiting.
+# 130 interrupted; 143 terminated (69 also when the verdict set never settles).
+# The native watcher exits early before GitHub registers a new PR's check runs
+# ("no checks reported") and on transient API errors (HTTP 5xx); the follower
+# re-enters it, bounded by attempts, until any check is red or all passed.
 # Existing mirror PRs/branches are reused, never force-pushed or recreated.
 # Run one follower per integration branch from a dedicated worktree. A local
 # mkdir lock refuses concurrent invocations; after SIGKILL remove the stale lock
@@ -22,9 +23,9 @@
 # a stability count; those analyses and delivery to dev belong to the caller.
 set -Eeuo pipefail
 
-VERSION=2
-# Check-registration wait: GitHub check-run registration latency, not capacity.
-REGISTER_ATTEMPTS=20 REGISTER_INTERVAL=15
+VERSION=3
+# Watcher re-entry bound: GitHub registration latency and transient API errors.
+WATCH_ATTEMPTS=30 WATCH_INTERVAL=15
 integration='' since='' state='' max=0 dry_run=0
 mirrored=0 pending=0 scratch='' worktree='' lock=''
 merge='' original_pr=0 mirror_pr=0 head='' base='' verdicts='[]'
@@ -92,19 +93,25 @@ read_verdicts() {
   case $rc in 0|1|8) ;; *) return 1 ;; esac
   verdicts=$(jq -ce 'select(type == "array")' <<<"$output") || return 1
 }
-wait_for_checks() {
-  # No event exists for "check runs registered"; gh pr checks reports "no checks
-  # reported" until then. Poll registration only, bounded, and log every probe.
-  local attempt=0
+watch_checks() {
+  # The native watcher is the only wait for verdicts, but it exits early when
+  # GitHub has not yet registered the PR's check runs ("no checks reported") or
+  # on a transient API error (observed: HTTP 503 from api.github.com/graphql).
+  # Re-enter it, bounded by attempts, until the verdict set is terminal.
+  local attempt=0 watch_rc
   while :; do
     attempt=$((attempt + 1))
-    run registered gh pr checks "$mirror_pr" --repo "$repo" --required --json name,bucket || true
-    if jq -e 'type == "array" and length > 0' <<<"$output" >/dev/null 2>&1; then
-      log "registered mirror_pr=$mirror_pr attempt=$attempt"
-      return 0
+    watch_rc=0
+    run watch gh pr checks "$mirror_pr" --repo "$repo" --required --watch --fail-fast || watch_rc=$?
+    if read_verdicts; then
+      log "watch mirror_pr=$mirror_pr attempt=$attempt exit=$watch_rc"
+      jq -e 'any(.[]; .bucket == "fail" or .bucket == "cancel")' <<<"$verdicts" >/dev/null && return 0
+      jq -e --argjson required "$required" '
+        ([.[].name] | unique | sort) == ($required | sort) and all(.[]; .bucket == "pass")
+      ' <<<"$verdicts" >/dev/null && return 0
     fi
-    (( attempt < REGISTER_ATTEMPTS )) || return 1
-    sleep "$REGISTER_INTERVAL"
+    (( attempt < WATCH_ATTEMPTS )) || return 1
+    sleep "$WATCH_INTERVAL"
   done
 }
 validate_head() {
@@ -310,16 +317,13 @@ Script version: $VERSION"
     mirror_pr=${output##*/}
     [[ "$mirror_pr" =~ ^[1-9][0-9]*$ ]] || die 69 "gh returned no mirror PR number"
   fi
-  wait_for_checks || { record incomplete; die 69 "no checks registered for mirror_pr=$mirror_pr within $((REGISTER_ATTEMPTS * REGISTER_INTERVAL))s; PR left open"; }
-  watch_rc=0
-  run watch gh pr checks "$mirror_pr" --repo "$repo" --required --watch --fail-fast || watch_rc=$?
-  read_verdicts || die 69 "cannot retrieve check verdicts"
-  log "checks mirror_pr=$mirror_pr watch_exit=$watch_rc verdicts=$verdicts"
+  watch_checks || { record incomplete; die 69 "verdicts not settled for mirror_pr=$mirror_pr after $WATCH_ATTEMPTS watcher attempts; PR left open"; }
+  log "checks mirror_pr=$mirror_pr verdicts=$verdicts"
   if jq -e 'any(.[]; .bucket == "fail" or .bucket == "cancel")' <<<"$verdicts" >/dev/null; then
     record red
     die 66 "red mirror_pr=$mirror_pr left open"
   fi
-  if (( watch_rc != 0 )) || ! jq -e --argjson required "$required" '
+  if ! jq -e --argjson required "$required" '
     ([.[].name] | unique | sort) == ($required | sort) and all(.[]; .bucket == "pass")
   ' <<<"$verdicts" >/dev/null; then
     record incomplete
