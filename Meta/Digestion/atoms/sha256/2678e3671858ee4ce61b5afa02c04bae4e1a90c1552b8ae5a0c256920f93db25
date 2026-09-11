@@ -1,0 +1,5 @@
+**定理 2.8(素生成:冻结集由素节点绑定生成)**〔证〕。$\mathrm{Frozen}(L)\subseteq B(\mathrm{Prime}(L))$。
+*证明*。对 $\mathrm{depth}_L$ 良基归纳(定理 1.7)。设 $v\in N$ 且对一切 $u\in\mathrm{Anc}_L(v)$ 有 $u\in B(\mathrm{Prime}(L))$。若 $v$ 素,则 $v\in\mathrm{Prime}(L)\subseteq B(\mathrm{Prime}(L))$(扩张)。否则 $v\in B(\mathrm{Anc}_L(v))\subseteq B(B(\mathrm{Prime}(L)))=B(\mathrm{Prime}(L))$(单调 + 幂等)。∎
+
+*读法*。母仓第 1.4 条「我们不过是在寻找 truth 中的素数」在此可判:素节点是**逃逸内容**的携带者,其余节点由它们绑定生成;第 3.2 条「首次冻结的模块必须有逃逸内容」正是「只冻素节点及其具名伴随」的纪律形。
+

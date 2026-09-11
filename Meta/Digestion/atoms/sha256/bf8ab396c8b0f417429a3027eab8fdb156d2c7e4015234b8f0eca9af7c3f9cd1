@@ -1,0 +1,17 @@
+**定义 33（固定因子映射及支撑下界）。** 对每个固定的 $d\in\mathcal L$，定义整数线性映射
+
+$$
+L_d:\mathcal L\to\mathcal L,\qquad L_d(c)=c\odot d.
+$$
+
+线性来自 (TS-PRODUCT) 的有限和对 $c$ 的整数线性，也可由命题 60 的 (CUM-TWIST) 得到。写 $D=Pd$，对输入 $c$、目标 $h\in\mathcal L$ 分别写 $C=Pc,H=Ph$。对所有 $n\in\mathbb Z$，主理想及支撑受限子群定义为
+
+$$
+D_nR=\{D_n*r:r\in R\}\subseteq R,\qquad
+\mathcal L_{\ge a}=\{c\in\mathcal L:\forall n<a,\ c_n=0\}
+\quad(a\in\mathbb Z).
+\tag{CUM-FACTOR-TYPE}
+$$
+
+主理想使用原空间卷积；$D_n=0$ 时 $D_nR=\{0\}$。$\mathcal L_{\ge a}$ 对剖面加法与负号封闭。这里不在时间乘法 $\odot$ 上假设整环性质。
+

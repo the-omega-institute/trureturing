@@ -1,0 +1,15 @@
+**26.28 经典材料归属及核对范围。** 本节专门化组合标为 repo-derived,
+以下只归属实际用到的经典材料,不是这个素数差值定理的既有文献证明或穷尽新颖性调查。
+HKUST [Lecture 14: Greedy Algorithms](https://home.cse.ust.hk/~dekai/271/notes/L14/L14.pdf)
+slides 4-7 给出按 value/weight 递减的分数背包、至多最后一项部分选取及其正确性;
+本节自行给出匹配价格、并列和端点证明。
+Boyd/Vandenberghe [Convex functions](https://web.stanford.edu/class/ee364a/lectures/functions.pdf)
+slides 3.4、3.14、3.24、3.25 分别支持范数凸性、Jensen 和受单调性控制的复合规则;
+本节自行验证非负象限、插值正定义域、单射导致的严格性及零方差边界。
+Doikov [Convex Functions](https://doikov.com/teaching/orie6365-s26/notes/lecture05_convex.pdf)
+§5.1.3 Theorem 5.1.4 给出任意仿射扰动后的线段端点最大化,
+取扰动系数为零得到这里的经典端点材料;本节的严格内部排除另由 26.14 证明。
+caller 核对位置分别为 HKUST PDF pp.4-7、Boyd/Vandenberghe PDF pp.6,16,26,27、
+Doikov 陈述 p.2 / 证明 p.3。I9 读取的是获准的核对 receipt 及文字摘录,
+没有把 primary 无法访问仓库 URL 改写成已独立读 GitHub。
+

@@ -1,0 +1,800 @@
+      {
+        "atom_id": "93c7fc7eba04c82de3d54e11d50ce98fd6ee03bc10105ac0160480bcafde2191",
+        "cas_path": "Meta/Digestion/atoms/sha256/93c7fc7eba04c82de3d54e11d50ce98fd6ee03bc10105ac0160480bcafde2191",
+        "cas": {
+          "byte_count": 138,
+          "lf_count": 4,
+          "terminal_lf_count": 2,
+          "sha256": "93c7fc7eba04c82de3d54e11d50ce98fd6ee03bc10105ac0160480bcafde2191"
+        },
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/93c7fc7eba04c82de3d54e11d50ce98fd6ee03bc10105ac0160480bcafde2191.yaml",
+        "yaml": {
+          "byte_count": 485,
+          "lf_count": 10,
+          "terminal_lf_count": 1,
+          "sha256": "7ddb5dad901847b010a64d03ff3c841bcd5e05277d6319c7ed73b7066d67a9d3"
+        },
+        "actual_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:93c7fc7eba04c82de3d54e11d50ce98fd6ee03bc10105ac0160480bcafde2191",
+            "normalized_sha256": "sha256:93c7fc7eba04c82de3d54e11d50ce98fd6ee03bc10105ac0160480bcafde2191"
+          },
+          "cas_ref": "sha256:93c7fc7eba04c82de3d54e11d50ce98fd6ee03bc10105ac0160480bcafde2191",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": [],
+            "chain_atoms": [
+              "dc5cb97f6730ab70e3afb0cb68c7034fdb9bcf2a13dca96c67a985b67be1bf13",
+              "8f0c951a19753f9f16c17f04acf088b727319e1a2d7e800de506bac38cde07dd"
+            ]
+          }
+        },
+        "current_exact_occurrences": [
+          {
+            "byte_start": 20242,
+            "byte_end_exclusive": 20380,
+            "line_start": 497,
+            "line_end_inclusive": 500,
+            "byte_count": 138,
+            "lf_count": 4,
+            "terminal_lf_count": 2,
+            "sha256": "93c7fc7eba04c82de3d54e11d50ce98fd6ee03bc10105ac0160480bcafde2191"
+          }
+        ],
+        "receipts_chain_atoms": [
+          {
+            "atom_id": "dc5cb97f6730ab70e3afb0cb68c7034fdb9bcf2a13dca96c67a985b67be1bf13",
+            "parent_byte_start": 0,
+            "parent_byte_end_exclusive": 60,
+            "cas_path": "Meta/Digestion/atoms/sha256/dc5cb97f6730ab70e3afb0cb68c7034fdb9bcf2a13dca96c67a985b67be1bf13",
+            "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/dc5cb97f6730ab70e3afb0cb68c7034fdb9bcf2a13dca96c67a985b67be1bf13.yaml",
+            "byte_count": 60,
+            "lf_count": 2,
+            "terminal_lf_count": 2,
+            "sha256": "dc5cb97f6730ab70e3afb0cb68c7034fdb9bcf2a13dca96c67a985b67be1bf13"
+          },
+          {
+            "atom_id": "8f0c951a19753f9f16c17f04acf088b727319e1a2d7e800de506bac38cde07dd",
+            "parent_byte_start": 60,
+            "parent_byte_end_exclusive": 138,
+            "cas_path": "Meta/Digestion/atoms/sha256/8f0c951a19753f9f16c17f04acf088b727319e1a2d7e800de506bac38cde07dd",
+            "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/8f0c951a19753f9f16c17f04acf088b727319e1a2d7e800de506bac38cde07dd.yaml",
+            "byte_count": 78,
+            "lf_count": 2,
+            "terminal_lf_count": 2,
+            "sha256": "8f0c951a19753f9f16c17f04acf088b727319e1a2d7e800de506bac38cde07dd"
+          }
+        ],
+        "chain_covers_entire_parent": true
+      },
+      {
+        "atom_id": "93ca504e3059996775c59bc5d3c688beb53af70894922c205cecb6b24572f089",
+        "cas_path": "Meta/Digestion/atoms/sha256/93ca504e3059996775c59bc5d3c688beb53af70894922c205cecb6b24572f089",
+        "cas": {
+          "byte_count": 48,
+          "lf_count": 2,
+          "terminal_lf_count": 2,
+          "sha256": "93ca504e3059996775c59bc5d3c688beb53af70894922c205cecb6b24572f089"
+        },
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/93ca504e3059996775c59bc5d3c688beb53af70894922c205cecb6b24572f089.yaml",
+        "yaml": {
+          "byte_count": 328,
+          "lf_count": 7,
+          "terminal_lf_count": 1,
+          "sha256": "5bd8e00683a8faf362a0ef6ea75755e142c8dd473d9db61ec42d5d1b8b5befde"
+        },
+        "actual_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:93ca504e3059996775c59bc5d3c688beb53af70894922c205cecb6b24572f089",
+            "normalized_sha256": "sha256:93ca504e3059996775c59bc5d3c688beb53af70894922c205cecb6b24572f089"
+          },
+          "cas_ref": "sha256:93ca504e3059996775c59bc5d3c688beb53af70894922c205cecb6b24572f089",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "current_exact_occurrences": [
+          {
+            "byte_start": 78397,
+            "byte_end_exclusive": 78445,
+            "line_start": 1530,
+            "line_end_inclusive": 1531,
+            "byte_count": 48,
+            "lf_count": 2,
+            "terminal_lf_count": 2,
+            "sha256": "93ca504e3059996775c59bc5d3c688beb53af70894922c205cecb6b24572f089"
+          },
+          {
+            "byte_start": 82818,
+            "byte_end_exclusive": 82866,
+            "line_start": 1640,
+            "line_end_inclusive": 1641,
+            "byte_count": 48,
+            "lf_count": 2,
+            "terminal_lf_count": 2,
+            "sha256": "93ca504e3059996775c59bc5d3c688beb53af70894922c205cecb6b24572f089"
+          },
+          {
+            "byte_start": 86859,
+            "byte_end_exclusive": 86907,
+            "line_start": 1750,
+            "line_end_inclusive": 1751,
+            "byte_count": 48,
+            "lf_count": 2,
+            "terminal_lf_count": 2,
+            "sha256": "93ca504e3059996775c59bc5d3c688beb53af70894922c205cecb6b24572f089"
+          }
+        ],
+        "receipts_chain_atoms": [],
+        "chain_covers_entire_parent": null
+      },
+      {
+        "atom_id": "956bb9b9c99b556d3c83d2a64fd2cf12c0e137ce26dd7bbb8a04f9fcb0d67ab7",
+        "cas_path": "Meta/Digestion/atoms/sha256/956bb9b9c99b556d3c83d2a64fd2cf12c0e137ce26dd7bbb8a04f9fcb0d67ab7",
+        "cas": {
+          "byte_count": 1747,
+          "lf_count": 29,
+          "terminal_lf_count": 2,
+          "sha256": "956bb9b9c99b556d3c83d2a64fd2cf12c0e137ce26dd7bbb8a04f9fcb0d67ab7"
+        },
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/956bb9b9c99b556d3c83d2a64fd2cf12c0e137ce26dd7bbb8a04f9fcb0d67ab7.yaml",
+        "yaml": {
+          "byte_count": 556,
+          "lf_count": 11,
+          "terminal_lf_count": 1,
+          "sha256": "d66d11e6fc0085c9ae5e5521a2d069c03e1e8c3cd4d09bdd065a49672ea07cff"
+        },
+        "actual_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:956bb9b9c99b556d3c83d2a64fd2cf12c0e137ce26dd7bbb8a04f9fcb0d67ab7",
+            "normalized_sha256": "sha256:956bb9b9c99b556d3c83d2a64fd2cf12c0e137ce26dd7bbb8a04f9fcb0d67ab7"
+          },
+          "cas_ref": "sha256:956bb9b9c99b556d3c83d2a64fd2cf12c0e137ce26dd7bbb8a04f9fcb0d67ab7",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": [],
+            "chain_atoms": [
+              "4e198a7b042378506201ae6a26cf78e56c80b0aeca685b9bdc628b074c718f82",
+              "71bd5b10e8e7e9d09fca162750cb34c0df6c7ec1e2d74b031490fe4ebf9ef0aa",
+              "6c7086a27cf23c4da45d310d04c9305826bab8eae5e296b471bbc6b562ba060a"
+            ]
+          }
+        },
+        "current_exact_occurrences": [
+          {
+            "byte_start": 33345,
+            "byte_end_exclusive": 35092,
+            "line_start": 718,
+            "line_end_inclusive": 746,
+            "byte_count": 1747,
+            "lf_count": 29,
+            "terminal_lf_count": 2,
+            "sha256": "956bb9b9c99b556d3c83d2a64fd2cf12c0e137ce26dd7bbb8a04f9fcb0d67ab7"
+          }
+        ],
+        "receipts_chain_atoms": [
+          {
+            "atom_id": "4e198a7b042378506201ae6a26cf78e56c80b0aeca685b9bdc628b074c718f82",
+            "parent_byte_start": 0,
+            "parent_byte_end_exclusive": 53,
+            "cas_path": "Meta/Digestion/atoms/sha256/4e198a7b042378506201ae6a26cf78e56c80b0aeca685b9bdc628b074c718f82",
+            "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/4e198a7b042378506201ae6a26cf78e56c80b0aeca685b9bdc628b074c718f82.yaml",
+            "byte_count": 53,
+            "lf_count": 2,
+            "terminal_lf_count": 2,
+            "sha256": "4e198a7b042378506201ae6a26cf78e56c80b0aeca685b9bdc628b074c718f82"
+          },
+          {
+            "atom_id": "71bd5b10e8e7e9d09fca162750cb34c0df6c7ec1e2d74b031490fe4ebf9ef0aa",
+            "parent_byte_start": 53,
+            "parent_byte_end_exclusive": 178,
+            "cas_path": "Meta/Digestion/atoms/sha256/71bd5b10e8e7e9d09fca162750cb34c0df6c7ec1e2d74b031490fe4ebf9ef0aa",
+            "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/71bd5b10e8e7e9d09fca162750cb34c0df6c7ec1e2d74b031490fe4ebf9ef0aa.yaml",
+            "byte_count": 125,
+            "lf_count": 7,
+            "terminal_lf_count": 2,
+            "sha256": "71bd5b10e8e7e9d09fca162750cb34c0df6c7ec1e2d74b031490fe4ebf9ef0aa"
+          },
+          {
+            "atom_id": "6c7086a27cf23c4da45d310d04c9305826bab8eae5e296b471bbc6b562ba060a",
+            "parent_byte_start": 178,
+            "parent_byte_end_exclusive": 1747,
+            "cas_path": "Meta/Digestion/atoms/sha256/6c7086a27cf23c4da45d310d04c9305826bab8eae5e296b471bbc6b562ba060a",
+            "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/6c7086a27cf23c4da45d310d04c9305826bab8eae5e296b471bbc6b562ba060a.yaml",
+            "byte_count": 1569,
+            "lf_count": 20,
+            "terminal_lf_count": 2,
+            "sha256": "6c7086a27cf23c4da45d310d04c9305826bab8eae5e296b471bbc6b562ba060a"
+          }
+        ],
+        "chain_covers_entire_parent": true
+      },
+      {
+        "atom_id": "95e989a97c01b16bf28e71e2a506db4d6f357c364fb7643275221f6fb112574c",
+        "cas_path": "Meta/Digestion/atoms/sha256/95e989a97c01b16bf28e71e2a506db4d6f357c364fb7643275221f6fb112574c",
+        "cas": {
+          "byte_count": 2119,
+          "lf_count": 39,
+          "terminal_lf_count": 2,
+          "sha256": "95e989a97c01b16bf28e71e2a506db4d6f357c364fb7643275221f6fb112574c"
+        },
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/95e989a97c01b16bf28e71e2a506db4d6f357c364fb7643275221f6fb112574c.yaml",
+        "yaml": {
+          "byte_count": 328,
+          "lf_count": 7,
+          "terminal_lf_count": 1,
+          "sha256": "c6f2b2b1fa4ab1f1c479ebbf67c8120453788f3514e409a2558f9e31415eb046"
+        },
+        "actual_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:95e989a97c01b16bf28e71e2a506db4d6f357c364fb7643275221f6fb112574c",
+            "normalized_sha256": "sha256:95e989a97c01b16bf28e71e2a506db4d6f357c364fb7643275221f6fb112574c"
+          },
+          "cas_ref": "sha256:95e989a97c01b16bf28e71e2a506db4d6f357c364fb7643275221f6fb112574c",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "current_exact_occurrences": [
+          {
+            "byte_start": 41940,
+            "byte_end_exclusive": 44059,
+            "line_start": 866,
+            "line_end_inclusive": 904,
+            "byte_count": 2119,
+            "lf_count": 39,
+            "terminal_lf_count": 2,
+            "sha256": "95e989a97c01b16bf28e71e2a506db4d6f357c364fb7643275221f6fb112574c"
+          }
+        ],
+        "receipts_chain_atoms": [],
+        "chain_covers_entire_parent": null
+      },
+      {
+        "atom_id": "97ca0b147af7dc87d9aa578a132805d492851c893a9245da4243652b3e067673",
+        "cas_path": "Meta/Digestion/atoms/sha256/97ca0b147af7dc87d9aa578a132805d492851c893a9245da4243652b3e067673",
+        "cas": {
+          "byte_count": 2193,
+          "lf_count": 40,
+          "terminal_lf_count": 2,
+          "sha256": "97ca0b147af7dc87d9aa578a132805d492851c893a9245da4243652b3e067673"
+        },
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/97ca0b147af7dc87d9aa578a132805d492851c893a9245da4243652b3e067673.yaml",
+        "yaml": {
+          "byte_count": 328,
+          "lf_count": 7,
+          "terminal_lf_count": 1,
+          "sha256": "67c0655f756f6412eb94f0866c46419f84642453570eef10bfb90a448397c5d9"
+        },
+        "actual_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:97ca0b147af7dc87d9aa578a132805d492851c893a9245da4243652b3e067673",
+            "normalized_sha256": "sha256:97ca0b147af7dc87d9aa578a132805d492851c893a9245da4243652b3e067673"
+          },
+          "cas_ref": "sha256:97ca0b147af7dc87d9aa578a132805d492851c893a9245da4243652b3e067673",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "current_exact_occurrences": [
+          {
+            "byte_start": 69472,
+            "byte_end_exclusive": 71665,
+            "line_start": 1382,
+            "line_end_inclusive": 1421,
+            "byte_count": 2193,
+            "lf_count": 40,
+            "terminal_lf_count": 2,
+            "sha256": "97ca0b147af7dc87d9aa578a132805d492851c893a9245da4243652b3e067673"
+          }
+        ],
+        "receipts_chain_atoms": [],
+        "chain_covers_entire_parent": null
+      },
+      {
+        "atom_id": "97e1697dc4fd5bff1732a72fe53c3a8182cd82623b3013323b6d72a9fb5cf123",
+        "cas_path": "Meta/Digestion/atoms/sha256/97e1697dc4fd5bff1732a72fe53c3a8182cd82623b3013323b6d72a9fb5cf123",
+        "cas": {
+          "byte_count": 1014,
+          "lf_count": 25,
+          "terminal_lf_count": 2,
+          "sha256": "97e1697dc4fd5bff1732a72fe53c3a8182cd82623b3013323b6d72a9fb5cf123"
+        },
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/97e1697dc4fd5bff1732a72fe53c3a8182cd82623b3013323b6d72a9fb5cf123.yaml",
+        "yaml": {
+          "byte_count": 328,
+          "lf_count": 7,
+          "terminal_lf_count": 1,
+          "sha256": "663867321ae2012ff447c98e4938b96654bdc2bedad7c4c42808c0296a6917a1"
+        },
+        "actual_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:97e1697dc4fd5bff1732a72fe53c3a8182cd82623b3013323b6d72a9fb5cf123",
+            "normalized_sha256": "sha256:97e1697dc4fd5bff1732a72fe53c3a8182cd82623b3013323b6d72a9fb5cf123"
+          },
+          "cas_ref": "sha256:97e1697dc4fd5bff1732a72fe53c3a8182cd82623b3013323b6d72a9fb5cf123",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "current_exact_occurrences": [
+          {
+            "byte_start": 171082,
+            "byte_end_exclusive": 172096,
+            "line_start": 3572,
+            "line_end_inclusive": 3596,
+            "byte_count": 1014,
+            "lf_count": 25,
+            "terminal_lf_count": 2,
+            "sha256": "97e1697dc4fd5bff1732a72fe53c3a8182cd82623b3013323b6d72a9fb5cf123"
+          }
+        ],
+        "receipts_chain_atoms": [],
+        "chain_covers_entire_parent": null
+      },
+      {
+        "atom_id": "9984f0f9827ab76ed71cdb5bbd7dae9816361369065738a18d087daf60c2178e",
+        "cas_path": "Meta/Digestion/atoms/sha256/9984f0f9827ab76ed71cdb5bbd7dae9816361369065738a18d087daf60c2178e",
+        "cas": {
+          "byte_count": 1433,
+          "lf_count": 32,
+          "terminal_lf_count": 2,
+          "sha256": "9984f0f9827ab76ed71cdb5bbd7dae9816361369065738a18d087daf60c2178e"
+        },
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/9984f0f9827ab76ed71cdb5bbd7dae9816361369065738a18d087daf60c2178e.yaml",
+        "yaml": {
+          "byte_count": 328,
+          "lf_count": 7,
+          "terminal_lf_count": 1,
+          "sha256": "77336c6cb5ebd24aef4079b2752acded1c649729ae5cbbbe669e70e521253a0f"
+        },
+        "actual_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:9984f0f9827ab76ed71cdb5bbd7dae9816361369065738a18d087daf60c2178e",
+            "normalized_sha256": "sha256:9984f0f9827ab76ed71cdb5bbd7dae9816361369065738a18d087daf60c2178e"
+          },
+          "cas_ref": "sha256:9984f0f9827ab76ed71cdb5bbd7dae9816361369065738a18d087daf60c2178e",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "current_exact_occurrences": [
+          {
+            "byte_start": 216525,
+            "byte_end_exclusive": 217958,
+            "line_start": 4516,
+            "line_end_inclusive": 4547,
+            "byte_count": 1433,
+            "lf_count": 32,
+            "terminal_lf_count": 2,
+            "sha256": "9984f0f9827ab76ed71cdb5bbd7dae9816361369065738a18d087daf60c2178e"
+          }
+        ],
+        "receipts_chain_atoms": [],
+        "chain_covers_entire_parent": null
+      },
+      {
+        "atom_id": "9abccc5a4f112e3ae41e4aa9cd89cbd50c134ceadad86a2d08873908e47b774f",
+        "cas_path": "Meta/Digestion/atoms/sha256/9abccc5a4f112e3ae41e4aa9cd89cbd50c134ceadad86a2d08873908e47b774f",
+        "cas": {
+          "byte_count": 711,
+          "lf_count": 19,
+          "terminal_lf_count": 2,
+          "sha256": "9abccc5a4f112e3ae41e4aa9cd89cbd50c134ceadad86a2d08873908e47b774f"
+        },
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/9abccc5a4f112e3ae41e4aa9cd89cbd50c134ceadad86a2d08873908e47b774f.yaml",
+        "yaml": {
+          "byte_count": 328,
+          "lf_count": 7,
+          "terminal_lf_count": 1,
+          "sha256": "edce682415f6e150dc882e7dc7881bd159ebf36ad096cc96bb07bbc0df9df1e6"
+        },
+        "actual_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:9abccc5a4f112e3ae41e4aa9cd89cbd50c134ceadad86a2d08873908e47b774f",
+            "normalized_sha256": "sha256:9abccc5a4f112e3ae41e4aa9cd89cbd50c134ceadad86a2d08873908e47b774f"
+          },
+          "cas_ref": "sha256:9abccc5a4f112e3ae41e4aa9cd89cbd50c134ceadad86a2d08873908e47b774f",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "current_exact_occurrences": [
+          {
+            "byte_start": 1700,
+            "byte_end_exclusive": 2411,
+            "line_start": 47,
+            "line_end_inclusive": 65,
+            "byte_count": 711,
+            "lf_count": 19,
+            "terminal_lf_count": 2,
+            "sha256": "9abccc5a4f112e3ae41e4aa9cd89cbd50c134ceadad86a2d08873908e47b774f"
+          }
+        ],
+        "receipts_chain_atoms": [],
+        "chain_covers_entire_parent": null
+      },
+      {
+        "atom_id": "9b475f3d3099cdc077ced2418097284560c2e1a5baaa90fe243353f5681321e5",
+        "cas_path": "Meta/Digestion/atoms/sha256/9b475f3d3099cdc077ced2418097284560c2e1a5baaa90fe243353f5681321e5",
+        "cas": {
+          "byte_count": 1047,
+          "lf_count": 30,
+          "terminal_lf_count": 2,
+          "sha256": "9b475f3d3099cdc077ced2418097284560c2e1a5baaa90fe243353f5681321e5"
+        },
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/9b475f3d3099cdc077ced2418097284560c2e1a5baaa90fe243353f5681321e5.yaml",
+        "yaml": {
+          "byte_count": 328,
+          "lf_count": 7,
+          "terminal_lf_count": 1,
+          "sha256": "0dfe72769cc80a23a497b93fc9169315bacf634d989cfd7bf85c626e7e6cf02b"
+        },
+        "actual_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:9b475f3d3099cdc077ced2418097284560c2e1a5baaa90fe243353f5681321e5",
+            "normalized_sha256": "sha256:9b475f3d3099cdc077ced2418097284560c2e1a5baaa90fe243353f5681321e5"
+          },
+          "cas_ref": "sha256:9b475f3d3099cdc077ced2418097284560c2e1a5baaa90fe243353f5681321e5",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "current_exact_occurrences": [
+          {
+            "byte_start": 130315,
+            "byte_end_exclusive": 131362,
+            "line_start": 2680,
+            "line_end_inclusive": 2709,
+            "byte_count": 1047,
+            "lf_count": 30,
+            "terminal_lf_count": 2,
+            "sha256": "9b475f3d3099cdc077ced2418097284560c2e1a5baaa90fe243353f5681321e5"
+          }
+        ],
+        "receipts_chain_atoms": [],
+        "chain_covers_entire_parent": null
+      },
+      {
+        "atom_id": "9b910b826bbec6a05b01e271ad4bc8eeca17176a9b8230890a436ea83eed8c0b",
+        "cas_path": "Meta/Digestion/atoms/sha256/9b910b826bbec6a05b01e271ad4bc8eeca17176a9b8230890a436ea83eed8c0b",
+        "cas": {
+          "byte_count": 368,
+          "lf_count": 4,
+          "terminal_lf_count": 2,
+          "sha256": "9b910b826bbec6a05b01e271ad4bc8eeca17176a9b8230890a436ea83eed8c0b"
+        },
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/9b910b826bbec6a05b01e271ad4bc8eeca17176a9b8230890a436ea83eed8c0b.yaml",
+        "yaml": {
+          "byte_count": 328,
+          "lf_count": 7,
+          "terminal_lf_count": 1,
+          "sha256": "db263e39cb875986c725cf4aef1928e74837abe1a08d69edeb8e46503fc9e0cb"
+        },
+        "actual_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:9b910b826bbec6a05b01e271ad4bc8eeca17176a9b8230890a436ea83eed8c0b",
+            "normalized_sha256": "sha256:9b910b826bbec6a05b01e271ad4bc8eeca17176a9b8230890a436ea83eed8c0b"
+          },
+          "cas_ref": "sha256:9b910b826bbec6a05b01e271ad4bc8eeca17176a9b8230890a436ea83eed8c0b",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "current_exact_occurrences": [
+          {
+            "byte_start": 217,
+            "byte_end_exclusive": 585,
+            "line_start": 7,
+            "line_end_inclusive": 10,
+            "byte_count": 368,
+            "lf_count": 4,
+            "terminal_lf_count": 2,
+            "sha256": "9b910b826bbec6a05b01e271ad4bc8eeca17176a9b8230890a436ea83eed8c0b"
+          }
+        ],
+        "receipts_chain_atoms": [],
+        "chain_covers_entire_parent": null
+      },
+      {
+        "atom_id": "9c65f897c84155877e67d0c93b9ece034e7176de23914e138a08649f2380198e",
+        "cas_path": "Meta/Digestion/atoms/sha256/9c65f897c84155877e67d0c93b9ece034e7176de23914e138a08649f2380198e",
+        "cas": {
+          "byte_count": 1335,
+          "lf_count": 18,
+          "terminal_lf_count": 1,
+          "sha256": "9c65f897c84155877e67d0c93b9ece034e7176de23914e138a08649f2380198e"
+        },
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/9c65f897c84155877e67d0c93b9ece034e7176de23914e138a08649f2380198e.yaml",
+        "yaml": {
+          "byte_count": 328,
+          "lf_count": 7,
+          "terminal_lf_count": 1,
+          "sha256": "875d150854b5c7b83653eab155e77e4d9562e0141da5aae56aadd71b254dff85"
+        },
+        "actual_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:9c65f897c84155877e67d0c93b9ece034e7176de23914e138a08649f2380198e",
+            "normalized_sha256": "sha256:9c65f897c84155877e67d0c93b9ece034e7176de23914e138a08649f2380198e"
+          },
+          "cas_ref": "sha256:9c65f897c84155877e67d0c93b9ece034e7176de23914e138a08649f2380198e",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "current_exact_occurrences": [
+          {
+            "byte_start": 236937,
+            "byte_end_exclusive": 238272,
+            "line_start": 4966,
+            "line_end_inclusive": 4983,
+            "byte_count": 1335,
+            "lf_count": 18,
+            "terminal_lf_count": 1,
+            "sha256": "9c65f897c84155877e67d0c93b9ece034e7176de23914e138a08649f2380198e"
+          }
+        ],
+        "receipts_chain_atoms": [],
+        "chain_covers_entire_parent": null
+      },
+      {
+        "atom_id": "a03a13ed3c2f986ecaa41ac797d7f9aadca9f9b32bd0974de0f59970a90888e5",
+        "cas_path": "Meta/Digestion/atoms/sha256/a03a13ed3c2f986ecaa41ac797d7f9aadca9f9b32bd0974de0f59970a90888e5",
+        "cas": {
+          "byte_count": 1280,
+          "lf_count": 34,
+          "terminal_lf_count": 2,
+          "sha256": "a03a13ed3c2f986ecaa41ac797d7f9aadca9f9b32bd0974de0f59970a90888e5"
+        },
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/a03a13ed3c2f986ecaa41ac797d7f9aadca9f9b32bd0974de0f59970a90888e5.yaml",
+        "yaml": {
+          "byte_count": 328,
+          "lf_count": 7,
+          "terminal_lf_count": 1,
+          "sha256": "ef217eaadc7d916eb4a9dfe7d5dd1fe7c95851e57bb1bacb7fe36e7b435095ff"
+        },
+        "actual_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:a03a13ed3c2f986ecaa41ac797d7f9aadca9f9b32bd0974de0f59970a90888e5",
+            "normalized_sha256": "sha256:a03a13ed3c2f986ecaa41ac797d7f9aadca9f9b32bd0974de0f59970a90888e5"
+          },
+          "cas_ref": "sha256:a03a13ed3c2f986ecaa41ac797d7f9aadca9f9b32bd0974de0f59970a90888e5",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "current_exact_occurrences": [
+          {
+            "byte_start": 199696,
+            "byte_end_exclusive": 200976,
+            "line_start": 4180,
+            "line_end_inclusive": 4213,
+            "byte_count": 1280,
+            "lf_count": 34,
+            "terminal_lf_count": 2,
+            "sha256": "a03a13ed3c2f986ecaa41ac797d7f9aadca9f9b32bd0974de0f59970a90888e5"
+          }
+        ],
+        "receipts_chain_atoms": [],
+        "chain_covers_entire_parent": null
+      },
+      {
+        "atom_id": "a262370c499d58ea95a3f57d287ad15580a910395247df1d72f0c162c4e86949",
+        "cas_path": "Meta/Digestion/atoms/sha256/a262370c499d58ea95a3f57d287ad15580a910395247df1d72f0c162c4e86949",
+        "cas": {
+          "byte_count": 1167,
+          "lf_count": 24,
+          "terminal_lf_count": 2,
+          "sha256": "a262370c499d58ea95a3f57d287ad15580a910395247df1d72f0c162c4e86949"
+        },
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/a262370c499d58ea95a3f57d287ad15580a910395247df1d72f0c162c4e86949.yaml",
+        "yaml": {
+          "byte_count": 328,
+          "lf_count": 7,
+          "terminal_lf_count": 1,
+          "sha256": "5cc5883c466473c60899319fbcbcda0b506c72ce2e0ac9b7e8ece82e4e87e1dd"
+        },
+        "actual_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:a262370c499d58ea95a3f57d287ad15580a910395247df1d72f0c162c4e86949",
+            "normalized_sha256": "sha256:a262370c499d58ea95a3f57d287ad15580a910395247df1d72f0c162c4e86949"
+          },
+          "cas_ref": "sha256:a262370c499d58ea95a3f57d287ad15580a910395247df1d72f0c162c4e86949",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "current_exact_occurrences": [
+          {
+            "byte_start": 194706,
+            "byte_end_exclusive": 195873,
+            "line_start": 4079,
+            "line_end_inclusive": 4102,
+            "byte_count": 1167,
+            "lf_count": 24,
+            "terminal_lf_count": 2,
+            "sha256": "a262370c499d58ea95a3f57d287ad15580a910395247df1d72f0c162c4e86949"
+          }
+        ],
+        "receipts_chain_atoms": [],
+        "chain_covers_entire_parent": null
+      },
+      {
+        "atom_id": "a3369404072987cf98ce4c193dedd412106b179aecd60f9d9b5a908216f362dc",
+        "cas_path": "Meta/Digestion/atoms/sha256/a3369404072987cf98ce4c193dedd412106b179aecd60f9d9b5a908216f362dc",
+        "cas": {
+          "byte_count": 775,
+          "lf_count": 16,
+          "terminal_lf_count": 2,
+          "sha256": "a3369404072987cf98ce4c193dedd412106b179aecd60f9d9b5a908216f362dc"
+        },
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/a3369404072987cf98ce4c193dedd412106b179aecd60f9d9b5a908216f362dc.yaml",
+        "yaml": {
+          "byte_count": 328,
+          "lf_count": 7,
+          "terminal_lf_count": 1,
+          "sha256": "c7bbb1249ee5bc99d729721e46093b9dd26592d14b01e0bcea2e30b1487ebb60"
+        },
+        "actual_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:a3369404072987cf98ce4c193dedd412106b179aecd60f9d9b5a908216f362dc",
+            "normalized_sha256": "sha256:a3369404072987cf98ce4c193dedd412106b179aecd60f9d9b5a908216f362dc"
+          },
+          "cas_ref": "sha256:a3369404072987cf98ce4c193dedd412106b179aecd60f9d9b5a908216f362dc",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "current_exact_occurrences": [
+          {
+            "byte_start": 232416,
+            "byte_end_exclusive": 233191,
+            "line_start": 4889,
+            "line_end_inclusive": 4904,
+            "byte_count": 775,
+            "lf_count": 16,
+            "terminal_lf_count": 2,
+            "sha256": "a3369404072987cf98ce4c193dedd412106b179aecd60f9d9b5a908216f362dc"
+          }
+        ],
+        "receipts_chain_atoms": [],
+        "chain_covers_entire_parent": null
+      },
+      {
+        "atom_id": "a349ecb51389284af0d9942ced062e604529f1c2029630cc433a35e670228dcf",
+        "cas_path": "Meta/Digestion/atoms/sha256/a349ecb51389284af0d9942ced062e604529f1c2029630cc433a35e670228dcf",
+        "cas": {
+          "byte_count": 867,
+          "lf_count": 17,
+          "terminal_lf_count": 2,
+          "sha256": "a349ecb51389284af0d9942ced062e604529f1c2029630cc433a35e670228dcf"
+        },
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/a349ecb51389284af0d9942ced062e604529f1c2029630cc433a35e670228dcf.yaml",
+        "yaml": {
+          "byte_count": 328,
+          "lf_count": 7,
+          "terminal_lf_count": 1,
+          "sha256": "aa4dbbedddca9a9e863ad942ba6136e5bad43b5f2490b47439694b432228294b"
+        },
+        "actual_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:a349ecb51389284af0d9942ced062e604529f1c2029630cc433a35e670228dcf",
+            "normalized_sha256": "sha256:a349ecb51389284af0d9942ced062e604529f1c2029630cc433a35e670228dcf"
+          },
+          "cas_ref": "sha256:a349ecb51389284af0d9942ced062e604529f1c2029630cc433a35e670228dcf",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "current_exact_occurrences": [
+          {
+            "byte_start": 217958,
+            "byte_end_exclusive": 218825,
+            "line_start": 4548,
+            "line_end_inclusive": 4564,
+            "byte_count": 867,
+            "lf_count": 17,
+            "terminal_lf_count": 2,
+            "sha256": "a349ecb51389284af0d9942ced062e604529f1c2029630cc433a35e670228dcf"
+          }
+        ],
+        "receipts_chain_atoms": [],
+        "chain_covers_entire_parent": null
+      },
+      {
+        "atom_id": "a41dbe54185bc4fbabb4ec8f9761d68c6e630cf046a448ff1d5ead648f1ba49a",
+        "cas_path": "Meta/Digestion/atoms/sha256/a41dbe54185bc4fbabb4ec8f9761d68c6e630cf046a448ff1d5ead648f1ba49a",
+        "cas": {
+          "byte_count": 1772,
+          "lf_count": 44,
+          "terminal_lf_count": 2,
+          "sha256": "a41dbe54185bc4fbabb4ec8f9761d68c6e630cf046a448ff1d5ead648f1ba49a"
+        },
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/a41dbe54185bc4fbabb4ec8f9761d68c6e630cf046a448ff1d5ead648f1ba49a.yaml",
+        "yaml": {
+          "byte_count": 328,
+          "lf_count": 7,
+          "terminal_lf_count": 1,
+          "sha256": "e9567f2123fdf44010e369c2c16372e8663af504042a38286f15ede4198d8607"
+        },
+        "actual_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:a41dbe54185bc4fbabb4ec8f9761d68c6e630cf046a448ff1d5ead648f1ba49a",
+            "normalized_sha256": "sha256:a41dbe54185bc4fbabb4ec8f9761d68c6e630cf046a448ff1d5ead648f1ba49a"
+          },
+          "cas_ref": "sha256:a41dbe54185bc4fbabb4ec8f9761d68c6e630cf046a448ff1d5ead648f1ba49a",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "current_exact_occurrences": [
+          {
+            "byte_start": 2411,
+            "byte_end_exclusive": 4183,
+            "line_start": 66,
+            "line_end_inclusive": 109,
+            "byte_count": 1772,
+            "lf_count": 44,
+            "terminal_lf_count": 2,
+            "sha256": "a41dbe54185bc4fbabb4ec8f9761d68c6e630cf046a448ff1d5ead648f1ba49a"
+          }
+        ],
+        "receipts_chain_atoms": [],
+        "chain_covers_entire_parent": null
+      },
+      {
+        "atom_id": "a50df88fd4cd16cebca7776e2faaeb70b3fa7d28bddfe6069a5fb3bfa5dbe048",
+        "cas_path": "Meta/Digestion/atoms/sha256/a50df88fd4cd16cebca7776e2faaeb70b3fa7d28bddfe6069a5fb3bfa5dbe048",
+        "cas": {
+          "byte_count": 987,
+          "lf_count": 24,
+          "terminal_lf_count": 2,
+          "sha256": "a50df88fd4cd16cebca7776e2faaeb70b3fa7d28bddfe6069a5fb3bfa5dbe048"
+        },
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/a50df88fd4cd16cebca7776e2faaeb70b3fa7d28bddfe6069a5fb3bfa5dbe048.yaml",
+        "yaml": {
+          "byte_count": 328,
+          "lf_count": 7,
+          "terminal_lf_count": 1,
+          "sha256": "4a2f5cd0950731ce229d36cb62ed715c44e9d46c194eba33cbc8421057a3747e"
+        },
+        "actual_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:a50df88fd4cd16cebca7776e2faaeb70b3fa7d28bddfe6069a5fb3bfa5dbe048",
+            "normalized_sha256": "sha256:a50df88fd4cd16cebca7776e2faaeb70b3fa7d28bddfe6069a5fb3bfa5dbe048"
+          },
+          "cas_ref": "sha256:a50df88fd4cd16cebca7776e2faaeb70b3fa7d28bddfe6069a5fb3bfa5dbe048",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "current_exact_occurrences": [
+          {
+            "byte_start": 81771,
+            "byte_end_exclusive": 82758,
+            "line_start": 1614,
+            "line_end_inclusive": 1637,
+            "byte_count": 987,
+            "lf_count": 24,
+            "terminal_lf_count": 2,
+            "sha256": "a50df88fd4cd16cebca7776e2faaeb70b3fa7d28bddfe6069a5fb3bfa5dbe048"
+          }
+        ],
+        "receipts_chain_atoms": [],
+        "chain_covers_entire_parent": null
+      },

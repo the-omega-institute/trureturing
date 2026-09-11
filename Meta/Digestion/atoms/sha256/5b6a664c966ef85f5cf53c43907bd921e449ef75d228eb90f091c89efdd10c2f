@@ -1,0 +1,47 @@
+**25.13 抵消位置与负指数函数的精确余项。** 距离向量为
+
+\[
+(v,\ell_2,\ell_3)=(2w,w,w)+
+(\delta+E/3,-(E+\eta)/3,(2E-\eta)/3).
+\]
+
+Euclidean 范数的逆三角不等式及 \(w>0\) 给出
+
+\[
+|r-w|\le\frac{\delta+4E/3+2\eta/3}{\sqrt6}
+\le\delta+E+\eta.
+\]
+
+置 \(B=\delta+2E+\eta\),则 \(|L-c_2|\le B\)、\(E\le B\)、\(hB\to0\)。还有
+
+\[
+d_1-c_2=3w+\delta\ge3h/5,\quad
+H-c_2=3w+2(r-w)-E/3\ge h/2
+\]
+
+最终成立,而 \(u/h\to2/5\) 及 \(B/h\to0\) 给出 \(L-c_1\ge u-B>0\)。因此 \(c_1\) 最终是混合及包络所有函数自变量的最小值。
+
+暂置 \(g(x)=-e^{-x}\)。其 \(g'\) 也严格递减,所以相同割线次序、相同混合权重和相应价格证明 \(D_g\) 最优。写
+\(G_g=D_g-[g(H)+2g(L)]\),精确有
+
+\[
+e^{c_2}G_g=2e^{c_2-L}-1-e^E+e^{c_2-H}
+-\theta e^{c_2-d_1}-\alpha e^u.
+\]
+
+用 \(|e^x-1|\le|x|e^{|x|}\),前面三项的绝对值至多 \(3Be^B\);两个高端点项的绝对值和至多 \(2e^{-h/2}\)。由于 \(h\alpha=\delta\),得到
+
+\[
+\left|h e^{c_2}G_g+\delta e^u\right|
+\le h[3Be^B+2e^{-h/2}].
+\]
+
+右边趋于零。取整误差的精确控制是
+
+\[
+\delta e^u=\delta P^{2/5}e^{\zeta-\delta},\qquad
+-\delta\le\zeta-\delta<0,\qquad \delta e^u\longrightarrow1.
+\]
+
+这一等式包含所有 floor 余数,而非将 \(m\delta\) 直接当成 \(3h/5\)。
+

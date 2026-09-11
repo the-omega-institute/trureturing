@@ -19,7 +19,9 @@ public sealed class RuleEngineCapacityDerivationTests
             static _ => throw new InvalidOperationException("unknown-debt derivation was called"));
 
         var finding = Assert.Single(findings, item => item.Path == RuleFixture.RingPath);
-        Assert.Equal("artifact exceeds 800 lines", finding.Message);
+        Assert.Equal(
+            $"artifact exceeds {RepositoryRules.ArtifactHardLineLimit} lines",
+            finding.Message);
     }
 
     [Fact]

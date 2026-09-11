@@ -1,0 +1,60 @@
+## 27. Source scope, verification and the next mathematical target
+
+Six new Lean owners under HardCore/Holomorphic have six canonical Scribe
+companions: AffineChart, TypedJacobian, TubeEstimates, RowTubeBounds,
+InvariantTube and AdaptiveComplexNeighborhood. Their 47 explicitly named public
+declarations are paired with StatementSource.FromLean handles. Existing
+geometry, independent-set sums, real-message certificates and coefficient
+payloads are unchanged.
+
+Mathlib source interfaces were checked at db584cd6d46c92f209a44c0f1c829460d327499d:
+complex logarithm differentiation, the slit-plane criterion, exponential
+remainder bound, full Frechet finite-product derivative, complex-to-real
+restriction and the one-dimensional mean-value inequality. The genuine joint
+holomorphy proof uses HasFDerivAt.finsetProd, rather than the scalar-only
+DifferentiableAt.fun_finsetProd overload. The repository information-escape
+specification read in this continuation is version 4.3, blob
+473d684ffda13d291c7df78f0edd8d4922550be6. No new information arena, score or
+sealing assertion is attached to the analytic result.
+
+Reproduce the supplementary research checks with
+
+```sh
+python research/hard_core_weitz/verify_holomorphic_tube.py
+```
+
+The executed run checks all numerical proof budgets with exact Fraction
+arithmetic and ten symbolic rational identities with SymPy. At 110 decimal
+digits, it checks 384 three-child pruning cases and 48 four-child root cases,
+including zero slope and activity zero. Exactly 313 of the three-child cases
+satisfy the separately evaluated exact real-anchor row test and receive the
+additional contraction/invariance checks. The maximum simultaneous derivative
+error is 2.97533988991e-110. Four negative controls detect a missing x factor in
+the chart derivative, principal-branch wrapping, an unsupported larger activity
+width, and commuting distinct-type projective maps.
+
+Two final executions produced byte-identical JSON. This is a separate
+implementation by the same assistant, not independent-author review. The
+optional coefficient-source scan was not part of that recorded execution;
+the existing full 881-row rational certificate was not rerun. Its unchanged
+source theorem is a dependency, and the new b_i<=3 check is a finite Lean proof
+script requesting kernel reduction. Numerical regression does not certify any
+universal Lean proof term.
+
+No Lean/lake executable is present in the authoring runtime. Source elaboration,
+kernel checking, executed axiom closure and Scribe emission have not occurred.
+The scripts are mathematically reviewed candidate formalizations, with no new
+axioms, admits or native_decide verdicts. The real-to-complex principle is prior
+art from Shao and Sun [5]; the exact finite-type coordinate, explicit constants
+and the projective ordering calculation are the present application. No
+first-formalization or literature-priority claim is established.
+
+The next direct target is the simultaneous actual-grid cardinality induction
+in (26.2), with the existing exact coordinate/partition bridge as its consumer.
+After that, the same local derivative accounting can control the analytic
+logarithm of the actual partition and its activity derivative through exact
+vertex elimination. A sharper epsilon should use actual type-dependent margins
+and coefficient ratios; arbitrary phase compression or inserting a golden
+constant does not preserve those estimates without a separate theorem.
+
+

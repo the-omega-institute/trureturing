@@ -1,0 +1,18 @@
+**27.19 经典材料与历史访问限制。** Boyd/Vandenberghe 的
+[Convex Optimization](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf)
+Appendix A.1.2 印刷 p.634 给范数齐次性和三角不等式;
+§3.1.5 印刷 pp.72-73 给范数凸性及由三角不等式、齐次性作的证明;
+§3.1.3 式 (3.3) 印刷 p.70 给严格凸函数在不同点的严格一阶支撑不等式。
+这些是 literature-attested 的经典材料,不是该书含有本节素数定理的断言。
+27.4 的欧氏范数及增量等号、27.6 的严格 Bernoulli、27.13 的抽屉构造已在本节自足证明。
+这里没有穷尽检索新颖性,没有 Lean 或 RH 结果。
+
+caller 已检查这些书页,所供 PDF 为 6881335 字节,SHA256
+40d976c83c18cce1900eff8c41bd5ad408c102b813af39d05ff85678ccf8d76e。
+I11 读取所供核对材料、对应文字摘录,并核对 PDF 身份。
+primary 当时无法读取所给 immutable raw URL 和 GitHub blob URL,因此没有独立检查仓库全文或其身份;
+它使用请求提供的定义。这一历史限制不因 caller 后来的源核对或 I11 的本地前缀核对而抹去。
+primary、caller 的有界数学核验与 I11 实施自查是不同职责,不组成三票独立 review。
+本轮 provenance 和可复现的固定恒等式验算见
+[prime-coordinate-separation-0909.md](../../reports/prime-coordinate-separation-0909.md)。
+

@@ -1,0 +1,2 @@
+**定义 3.8(主张的信息)**。设可能世界类 $\mathcal W$。主张 $c$ 的**信息**是它排除的世界集 $\mathrm{Excl}(c)=\{\omega\in\mathcal W\mid c\ \text{在}\ \omega\ \text{下为假}\}$。$c$ **可反驳**当且仅当 $\mathrm{Excl}(c)\neq\varnothing$。
+

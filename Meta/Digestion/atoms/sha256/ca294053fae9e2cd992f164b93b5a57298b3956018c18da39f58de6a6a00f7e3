@@ -1,0 +1,18 @@
+**命题 36（有限推送与筛选的逆像公式）。** 即使 $F$ 非单射，$\mathcal F$ 也不合并任何事件身份。空间电荷则用有限推送
+
+$$
+(F_*c)(r)=\sum_{p\in\operatorname{supp}(c),\ F(p)=r}c(p),
+\qquad \pi(\mathcal F X)=(F_*w_X,F_*z_X)
+$$
+
+合并系数；对任意 $S\subseteq\mathbb Z^3$ 有
+
+$$
+F_*(\mathbf1_{F^{-1}(S)}z)=\mathbf1_SF_*z,
+\qquad
+\mathcal F(F_{F^{-1}(S)}X)=F_S(\mathcal F X).
+\tag{PULL}
+$$
+
+还满足 $F_*(c*_od)=(F_*c)*_{F(o)}(F_*d)$ 及 $\varepsilon(F_*c)=\varepsilon(c)$。
+

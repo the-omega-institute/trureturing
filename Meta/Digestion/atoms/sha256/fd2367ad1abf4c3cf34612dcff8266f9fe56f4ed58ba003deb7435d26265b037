@@ -1,0 +1,9 @@
+**命题 32（最早整数与全部交换重标）。** 对 $a,b\in\mathbb Z$，$\max(a,b)+1$ 是同时严格晚于二者的最早整数。一个任意函数 $h:\mathbb Z\to\mathbb Z$ 满足
+
+$$
+h(\max(a,b)+1)=\max(h(a),h(b))+1\quad(\forall a,b\in\mathbb Z)
+\tag{CLOCK}
+$$
+
+当且仅当存在 $c\in\mathbb Z$ 使 $h(n)=n+c$ 对全部整数成立，不需先假设 $h$ 双射或单调。
+

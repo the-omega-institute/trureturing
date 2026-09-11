@@ -1,0 +1,21 @@
+**定义 1（情境时空算术的载体与联合电荷）。** 沿用[《情境时空算术》定义 1–3、20、22](CONTEXTUAL_SPACETIME_ARITHMETIC.md)的三维载体。情境为
+\[
+C=(E,\prec,t,x,\sigma,\rho,\Omega),\qquad X=(C,A),\qquad A\subseteq\Omega\subseteq E.
+\]
+其中档案 \(E\) 是遗传有限集合中的有限事件出现集，\(\prec\) 为严格偏序，\(t:E\to\mathbb Z\)、\(x:E\to\mathbb Z^3\)、\(\sigma:E\to\{+1,-1\}\) 为全函数，且 \(e\prec f\Rightarrow t(e)<t(f)\)。来源 \(\rho\) 取值于由 \(\operatorname{leaf}(n)\) 和有序节点 \(\operatorname{pair}(r,s)\) 生成的有限树；出现标识与来源标识是两项数据。记
+\[
+u(C)=\sum_{e\in\Omega}\sigma(e),\qquad q(X)=\sum_{e\in A}\sigma(e),\qquad
+\mathcal B=\{X:u(C)=0\}.
+\]
+当前背景与当前选择的联合电荷分别为
+\[
+W_X(t,y)=\sum_{\substack{e\in\Omega\,:\,t(e)=t\,,\,x(e)=y}}\sigma(e),\qquad
+Z_X(t,y)=\sum_{\substack{e\in A\,:\,t(e)=t\,,\,x(e)=y}}\sigma(e).
+\]
+两者均有限支撑。空间边缘为 \(w_X(y)=\sum_tW_X(t,y)\)、\(z_X(y)=\sum_tZ_X(t,y)\)。令
+\[
+m_X=\min t[E],\quad M_X=\max t[E],\quad s_X=\max t[\Omega],\qquad
+\Xi(X)=(W_X,Z_X,m_X,M_X,s_X).
+\]
+空档案时 \(m_X=+\infty,M_X=-\infty\)，空当前区域时 \(s_X=-\infty\)；端点比较在扩展整数全序中进行。平衡条件只要求 \(\sum_{t,y}W_X(t,y)=0\)。选择空间为全部 \(A\subseteq\Omega\)，不额外要求选择向下闭。
+

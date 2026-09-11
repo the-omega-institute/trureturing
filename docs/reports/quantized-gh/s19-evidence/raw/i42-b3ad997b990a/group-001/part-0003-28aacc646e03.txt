@@ -1,0 +1,800 @@
+      {
+        "index": 68,
+        "label": "25. 素数逼近的局部障碍与变形三素数族",
+        "claim": false,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 90580,
+          "byte_end_exclusive": 90715,
+          "bytes": 135,
+          "lf": 4,
+          "terminal_lf": 2,
+          "sha256": "c7732e230a340afba65874b6960bbbe92e1d58705506f1983c7466c9a4c59da6"
+        },
+        "atom_id": "c7732e230a340afba65874b6960bbbe92e1d58705506f1983c7466c9a4c59da6",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/68"
+        }
+      },
+      {
+        "index": 69,
+        "label": "25.1",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 90715,
+          "byte_end_exclusive": 92536,
+          "bytes": 1821,
+          "lf": 26,
+          "terminal_lf": 2,
+          "sha256": "7238ad80c903f2a341d74ba23a30260b23bc04e839056d3f826284b876b085d5"
+        },
+        "atom_id": "7238ad80c903f2a341d74ba23a30260b23bc04e839056d3f826284b876b085d5",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/69"
+        }
+      },
+      {
+        "index": 70,
+        "label": "25.2",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 92536,
+          "byte_end_exclusive": 93653,
+          "bytes": 1117,
+          "lf": 33,
+          "terminal_lf": 2,
+          "sha256": "39c2991600dc7bcfc74f6dbdb540055048b4b633dfc7605d3f3ab76da9bd3c64"
+        },
+        "atom_id": "39c2991600dc7bcfc74f6dbdb540055048b4b633dfc7605d3f3ab76da9bd3c64",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/70"
+        }
+      },
+      {
+        "index": 71,
+        "label": "25.3",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 93653,
+          "byte_end_exclusive": 95675,
+          "bytes": 2022,
+          "lf": 48,
+          "terminal_lf": 2,
+          "sha256": "3f8a34b05d85c54d5c564e8b3d5778f4b7c6833c911ac6e31bb91004705a612d"
+        },
+        "atom_id": "3f8a34b05d85c54d5c564e8b3d5778f4b7c6833c911ac6e31bb91004705a612d",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/71"
+        }
+      },
+      {
+        "index": 72,
+        "label": "25.4",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 95675,
+          "byte_end_exclusive": 96535,
+          "bytes": 860,
+          "lf": 19,
+          "terminal_lf": 2,
+          "sha256": "3f6acd1057cb0964056f6995d801ef8611466f254271580d69ffc6bc50ada599"
+        },
+        "atom_id": "3f6acd1057cb0964056f6995d801ef8611466f254271580d69ffc6bc50ada599",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/72"
+        }
+      },
+      {
+        "index": 73,
+        "label": "25.5",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 96535,
+          "byte_end_exclusive": 97939,
+          "bytes": 1404,
+          "lf": 17,
+          "terminal_lf": 2,
+          "sha256": "8f9463792a5258d9a6856c95402bf1f1f579669f10fad38395391e80a7c32a14"
+        },
+        "atom_id": "8f9463792a5258d9a6856c95402bf1f1f579669f10fad38395391e80a7c32a14",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/73"
+        }
+      },
+      {
+        "index": 74,
+        "label": "25.6",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 97939,
+          "byte_end_exclusive": 99413,
+          "bytes": 1474,
+          "lf": 32,
+          "terminal_lf": 2,
+          "sha256": "078ad895fc85e84e99df79202d05e55c51a40bfe92a12047cb2228e871fd99b7"
+        },
+        "atom_id": "078ad895fc85e84e99df79202d05e55c51a40bfe92a12047cb2228e871fd99b7",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/74"
+        }
+      },
+      {
+        "index": 75,
+        "label": "25.7",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 99413,
+          "byte_end_exclusive": 100704,
+          "bytes": 1291,
+          "lf": 13,
+          "terminal_lf": 2,
+          "sha256": "5ef42bd7a739c964cfcfcc818c7b019b911caf61ee93c9f79774e048de9c64ca"
+        },
+        "atom_id": "5ef42bd7a739c964cfcfcc818c7b019b911caf61ee93c9f79774e048de9c64ca",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/75"
+        }
+      },
+      {
+        "index": 76,
+        "label": "25.8",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 100704,
+          "byte_end_exclusive": 101831,
+          "bytes": 1127,
+          "lf": 18,
+          "terminal_lf": 2,
+          "sha256": "c31591d079ad3cfc60bd5e6a1741d70d309c2d3c62cd71ea13fe566367801c3c"
+        },
+        "atom_id": "c31591d079ad3cfc60bd5e6a1741d70d309c2d3c62cd71ea13fe566367801c3c",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/76"
+        }
+      },
+      {
+        "index": 77,
+        "label": "25.9",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 101831,
+          "byte_end_exclusive": 103127,
+          "bytes": 1296,
+          "lf": 42,
+          "terminal_lf": 2,
+          "sha256": "2bc2d3375d7a3402c4801dab7aae52eabe5cb094784a94c7fd749cea635144ac"
+        },
+        "atom_id": "2bc2d3375d7a3402c4801dab7aae52eabe5cb094784a94c7fd749cea635144ac",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/77"
+        }
+      },
+      {
+        "index": 78,
+        "label": "25.10",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 103127,
+          "byte_end_exclusive": 104246,
+          "bytes": 1119,
+          "lf": 28,
+          "terminal_lf": 2,
+          "sha256": "fa626ce4ddc2af256f0c8772d5e924b8ef474971ef8e94372ac8232bc8f1ac4b"
+        },
+        "atom_id": "fa626ce4ddc2af256f0c8772d5e924b8ef474971ef8e94372ac8232bc8f1ac4b",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/78"
+        }
+      },
+      {
+        "index": 79,
+        "label": "25.11",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 104246,
+          "byte_end_exclusive": 105188,
+          "bytes": 942,
+          "lf": 26,
+          "terminal_lf": 2,
+          "sha256": "15b706e8b8baf25929119e0e671acb1ccb97664afa08793ef81ef53820275a8d"
+        },
+        "atom_id": "15b706e8b8baf25929119e0e671acb1ccb97664afa08793ef81ef53820275a8d",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/79"
+        }
+      },
+      {
+        "index": 80,
+        "label": "25.12",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 105188,
+          "byte_end_exclusive": 106489,
+          "bytes": 1301,
+          "lf": 27,
+          "terminal_lf": 2,
+          "sha256": "7534800063c37df7c82e66107e3288768547351c5c8c828aafb97bcd7fbbc7a2"
+        },
+        "atom_id": "7534800063c37df7c82e66107e3288768547351c5c8c828aafb97bcd7fbbc7a2",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/80"
+        }
+      },
+      {
+        "index": 81,
+        "label": "25.13",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 106489,
+          "byte_end_exclusive": 107826,
+          "bytes": 1337,
+          "lf": 47,
+          "terminal_lf": 2,
+          "sha256": "7ac48248522e83f0d483dcf7b21ba22fc938e60a57afa53bff7b2fb6fd496e3a"
+        },
+        "atom_id": "7ac48248522e83f0d483dcf7b21ba22fc938e60a57afa53bff7b2fb6fd496e3a",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/81"
+        }
+      },
+      {
+        "index": 82,
+        "label": "25.14",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 107826,
+          "byte_end_exclusive": 109232,
+          "bytes": 1406,
+          "lf": 33,
+          "terminal_lf": 2,
+          "sha256": "190b220b0b6d62e63496a308876126eb2d4431dfa1bbc39705565a5c40d87da4"
+        },
+        "atom_id": "190b220b0b6d62e63496a308876126eb2d4431dfa1bbc39705565a5c40d87da4",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/82"
+        }
+      },
+      {
+        "index": 83,
+        "label": "25.15",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 109232,
+          "byte_end_exclusive": 111222,
+          "bytes": 1990,
+          "lf": 35,
+          "terminal_lf": 2,
+          "sha256": "e8ab8fa05569b7b2122e4698c69dd80daa091a95618bddc1d5ad8284def98fe9"
+        },
+        "atom_id": "e8ab8fa05569b7b2122e4698c69dd80daa091a95618bddc1d5ad8284def98fe9",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/83"
+        }
+      },
+      {
+        "index": 84,
+        "label": "25.16",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 111222,
+          "byte_end_exclusive": 113258,
+          "bytes": 2036,
+          "lf": 13,
+          "terminal_lf": 2,
+          "sha256": "f997dd3619c188b83af714ffd2b7d80e70039afd2d0e80180009b714318a4cee"
+        },
+        "atom_id": "f997dd3619c188b83af714ffd2b7d80e70039afd2d0e80180009b714318a4cee",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/84"
+        }
+      },
+      {
+        "index": 85,
+        "label": "25.18",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 113258,
+          "byte_end_exclusive": 113482,
+          "bytes": 224,
+          "lf": 2,
+          "terminal_lf": 2,
+          "sha256": "ae95f3cb9287e7d4b616b7012e53bf3111f16ba228a03264a25d3af875667e40"
+        },
+        "atom_id": "ae95f3cb9287e7d4b616b7012e53bf3111f16ba228a03264a25d3af875667e40",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/85"
+        }
+      },
+      {
+        "index": 86,
+        "label": "26. 固定素数箱体的全实数薄层有限归约",
+        "claim": false,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 113482,
+          "byte_end_exclusive": 113617,
+          "bytes": 135,
+          "lf": 4,
+          "terminal_lf": 2,
+          "sha256": "b481e6ed6b9b3f64d1b875f0e20d6ef1a7c11184b73f57708de40b43012a1bb1"
+        },
+        "atom_id": "b481e6ed6b9b3f64d1b875f0e20d6ef1a7c11184b73f57708de40b43012a1bb1",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/86"
+        }
+      },
+      {
+        "index": 87,
+        "label": "26.1",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 113617,
+          "byte_end_exclusive": 114083,
+          "bytes": 466,
+          "lf": 2,
+          "terminal_lf": 2,
+          "sha256": "52c920bbc6d09fea07d750297bb85b03ce0e8a0600718d183e26a83aa8ecbd0c"
+        },
+        "atom_id": "52c920bbc6d09fea07d750297bb85b03ce0e8a0600718d183e26a83aa8ecbd0c",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/87"
+        }
+      },
+      {
+        "index": 88,
+        "label": "26.2",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 114083,
+          "byte_end_exclusive": 115197,
+          "bytes": 1114,
+          "lf": 28,
+          "terminal_lf": 2,
+          "sha256": "71c6b85ce78068adc0e8d090d8a8aeb462dd830054ba92229a07e00f01aebe99"
+        },
+        "atom_id": "71c6b85ce78068adc0e8d090d8a8aeb462dd830054ba92229a07e00f01aebe99",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/88"
+        }
+      },
+      {
+        "index": 89,
+        "label": "26.3",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 115197,
+          "byte_end_exclusive": 116373,
+          "bytes": 1176,
+          "lf": 39,
+          "terminal_lf": 2,
+          "sha256": "8f4031dd07e69c10d01dac15007e0bbdad540a8188e3dfe565212d0a81e3f6ad"
+        },
+        "atom_id": "8f4031dd07e69c10d01dac15007e0bbdad540a8188e3dfe565212d0a81e3f6ad",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/89"
+        }
+      },
+      {
+        "index": 90,
+        "label": "26.4",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 116373,
+          "byte_end_exclusive": 117307,
+          "bytes": 934,
+          "lf": 27,
+          "terminal_lf": 2,
+          "sha256": "362871001990fc34261a5096e161d805721c17a90620e4c68aecc22f414bad52"
+        },
+        "atom_id": "362871001990fc34261a5096e161d805721c17a90620e4c68aecc22f414bad52",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/90"
+        }
+      },
+      {
+        "index": 91,
+        "label": "26.5",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 117307,
+          "byte_end_exclusive": 118090,
+          "bytes": 783,
+          "lf": 21,
+          "terminal_lf": 2,
+          "sha256": "f36bce745e8a468af61fba836ca00ed48a0821de4eedc1ed663a955dcad3c5d2"
+        },
+        "atom_id": "f36bce745e8a468af61fba836ca00ed48a0821de4eedc1ed663a955dcad3c5d2",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/91"
+        }
+      },
+      {
+        "index": 92,
+        "label": "26.6",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 118090,
+          "byte_end_exclusive": 118921,
+          "bytes": 831,
+          "lf": 21,
+          "terminal_lf": 2,
+          "sha256": "4936512302a78e682c3bba9045561b126f57409095fc34d8ffc77d1d68630b09"
+        },
+        "atom_id": "4936512302a78e682c3bba9045561b126f57409095fc34d8ffc77d1d68630b09",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/92"
+        }
+      },
+      {
+        "index": 93,
+        "label": "26.7",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 118921,
+          "byte_end_exclusive": 119960,
+          "bytes": 1039,
+          "lf": 37,
+          "terminal_lf": 2,
+          "sha256": "aef035d0bb5167d8ed2c286415e8ed9f86a508695158c1d25c2eef6be7f95d22"
+        },
+        "atom_id": "aef035d0bb5167d8ed2c286415e8ed9f86a508695158c1d25c2eef6be7f95d22",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/93"
+        }
+      },
+      {
+        "index": 94,
+        "label": "26.8",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 119960,
+          "byte_end_exclusive": 120717,
+          "bytes": 757,
+          "lf": 15,
+          "terminal_lf": 2,
+          "sha256": "cbfac4ce166538a5167a451addbe16014e68dcc7a7eaeb59f037867e9d31380f"
+        },
+        "atom_id": "cbfac4ce166538a5167a451addbe16014e68dcc7a7eaeb59f037867e9d31380f",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/94"
+        }
+      },
+      {
+        "index": 95,
+        "label": "26.9",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 120717,
+          "byte_end_exclusive": 121510,
+          "bytes": 793,
+          "lf": 22,
+          "terminal_lf": 2,
+          "sha256": "8d3103609cf6632a942adb1c30a40fda6481603b2162a1cee0e3fed32fa35f5b"
+        },
+        "atom_id": "8d3103609cf6632a942adb1c30a40fda6481603b2162a1cee0e3fed32fa35f5b",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/95"
+        }
+      },
+      {
+        "index": 96,
+        "label": "26.10",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 121510,
+          "byte_end_exclusive": 122571,
+          "bytes": 1061,
+          "lf": 31,
+          "terminal_lf": 2,
+          "sha256": "1a2703254e6926fe6f8da434fe675fe56e2aaf7b24941cbeafd51e0dbfe83760"
+        },
+        "atom_id": "1a2703254e6926fe6f8da434fe675fe56e2aaf7b24941cbeafd51e0dbfe83760",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/96"
+        }
+      },
+      {
+        "index": 97,
+        "label": "26.11",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 122571,
+          "byte_end_exclusive": 123538,
+          "bytes": 967,
+          "lf": 19,
+          "terminal_lf": 2,
+          "sha256": "aef6c3da566cbbc5b6b97389e777639df28d5bede6d7aa0e4385cef8159321ac"
+        },
+        "atom_id": "aef6c3da566cbbc5b6b97389e777639df28d5bede6d7aa0e4385cef8159321ac",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/97"
+        }
+      },
+      {
+        "index": 98,
+        "label": "26.12",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 123538,
+          "byte_end_exclusive": 124373,
+          "bytes": 835,
+          "lf": 17,
+          "terminal_lf": 2,
+          "sha256": "0c4d770f00fc19ec7a548f4997671fefd4fb685b0251496e85b7453f6b5b4c52"
+        },
+        "atom_id": "0c4d770f00fc19ec7a548f4997671fefd4fb685b0251496e85b7453f6b5b4c52",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/98"
+        }
+      },
+      {
+        "index": 99,
+        "label": "26.13",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 124373,
+          "byte_end_exclusive": 125257,
+          "bytes": 884,
+          "lf": 24,
+          "terminal_lf": 2,
+          "sha256": "121fe7e92a5e113fac6ca3f6521c1d8a26c761baede301f93fda3c890ec7b08d"
+        },
+        "atom_id": "121fe7e92a5e113fac6ca3f6521c1d8a26c761baede301f93fda3c890ec7b08d",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/99"
+        }
+      },
+      {
+        "index": 100,
+        "label": "26.14",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 125257,
+          "byte_end_exclusive": 126356,
+          "bytes": 1099,
+          "lf": 22,
+          "terminal_lf": 2,
+          "sha256": "755595969145006216506ac3bbb51b8ed1578cbbf6d00e3421e9b4e7184c7ce6"
+        },
+        "atom_id": "755595969145006216506ac3bbb51b8ed1578cbbf6d00e3421e9b4e7184c7ce6",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/100"
+        }
+      },
+      {
+        "index": 101,
+        "label": "26.15",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 126356,
+          "byte_end_exclusive": 127088,
+          "bytes": 732,
+          "lf": 17,
+          "terminal_lf": 2,
+          "sha256": "430272005bd87ea86a0ac8f04ded7b31d7b30065410aa2cac998172163a1eac0"
+        },
+        "atom_id": "430272005bd87ea86a0ac8f04ded7b31d7b30065410aa2cac998172163a1eac0",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/101"
+        }
+      },
+      {
+        "index": 102,
+        "label": "26.16",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 127088,
+          "byte_end_exclusive": 128595,
+          "bytes": 1507,
+          "lf": 34,
+          "terminal_lf": 2,
+          "sha256": "9059492ed5256d8d58e04fb0407419ddaa461026802d00f9e6174c7e1e4c7809"
+        },
+        "atom_id": "9059492ed5256d8d58e04fb0407419ddaa461026802d00f9e6174c7e1e4c7809",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/102"
+        }
+      },
+      {
+        "index": 103,
+        "label": "26.17",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 128595,
+          "byte_end_exclusive": 130286,
+          "bytes": 1691,
+          "lf": 30,
+          "terminal_lf": 2,
+          "sha256": "e25e894eab9ef67a1b58aedc8a35d6b6546144b1a329f7dd6e9b35879bf84f28"
+        },
+        "atom_id": "e25e894eab9ef67a1b58aedc8a35d6b6546144b1a329f7dd6e9b35879bf84f28",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/103"
+        }
+      },
+      {
+        "index": 104,
+        "label": "26.18",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 130286,
+          "byte_end_exclusive": 131333,
+          "bytes": 1047,
+          "lf": 30,
+          "terminal_lf": 2,
+          "sha256": "9b475f3d3099cdc077ced2418097284560c2e1a5baaa90fe243353f5681321e5"
+        },
+        "atom_id": "9b475f3d3099cdc077ced2418097284560c2e1a5baaa90fe243353f5681321e5",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/104"
+        }
+      },
+      {
+        "index": 105,
+        "label": "26.19",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 131333,
+          "byte_end_exclusive": 132224,
+          "bytes": 891,
+          "lf": 15,
+          "terminal_lf": 2,
+          "sha256": "cb5e52d3d24982a9c21c2c0e95c360492aeb4992b269398abd243d430c3bb622"
+        },
+        "atom_id": "cb5e52d3d24982a9c21c2c0e95c360492aeb4992b269398abd243d430c3bb622",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/105"
+        }
+      },
+      {
+        "index": 106,
+        "label": "26.20",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 132224,
+          "byte_end_exclusive": 133237,
+          "bytes": 1013,
+          "lf": 20,
+          "terminal_lf": 2,
+          "sha256": "e480feaca7a078d31df4f7950cc52f31ad033f6f97860c8a0736defeb896b2e5"
+        },
+        "atom_id": "e480feaca7a078d31df4f7950cc52f31ad033f6f97860c8a0736defeb896b2e5",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/106"
+        }
+      },
+      {
+        "index": 107,
+        "label": "26.21",
+        "claim": true,
+        "span": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 133237,
+          "byte_end_exclusive": 134359,
+          "bytes": 1122,
+          "lf": 32,
+          "terminal_lf": 2,
+          "sha256": "916c8b57b491260156ba39e858fb7ddd2f821328018727c0cca7825730ad1178"
+        },
+        "atom_id": "916c8b57b491260156ba39e858fb7ddd2f821328018727c0cca7825730ad1178",
+        "disposition": "inherited_unchanged_via_I36",
+        "inherited_pointer": {
+          "map": "finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/whole_source_units/107"
+        }
+      },

@@ -1,0 +1,5 @@
+**拉回与连接。** 令 $\kappa(p,\epsilon,r,n)=(n,p)$。对旧类型 $P\subseteq K^2$ 取
+$P^\uparrow=\{(a,a'):(\kappa(a),\kappa(a'))\in P\}$，则 $\widehat M_{P^\uparrow}=M_P$ 是完整编码等式。#6684 的 $\Xi$ 核仍属于 $\Sigma_{\rm ts}^{\rm pair}$（及其子语言 $\Sigma_{\rm ts}$），不是本扩签名的核。
+
+在 $\Sigma_{\rm mix}^{\rm attr}$ 乃至 $\Sigma_{\rm mix}$ 中，令配对谓词查左父单元属于 $B$，右乘固定 $U_0$，便对任意 $B$ 得到 q 表达。**观察核不变，不等于固定表达资源相同。** 这正是命题 55 与命题 56 应保留的区别。§34.7 关于属性级配对闭包的未测项 **由命题 56 结算**；任意规则的下降边界如下。
+

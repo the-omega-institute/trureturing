@@ -1,0 +1,20 @@
+**30.28 定理与证明：有界 Hilbert–Schmidt 合成和正确伴随。** 令
+\[
+S_0=1+c\sum_{k=1}^\infty k^{-3}<\infty.
+\]
+对 \(z\in\ell^2(\mathbb N_0)\)，Cauchy–Schwarz 给
+\[
+\sum_{k\ge0}|z_k|\|h_k\|\le\|z\|_2\sqrt{S_0}.
+\]
+所以 \(\sum z_kh_k\) 在 \(H\) 中绝对范数收敛；定义 \(Tz\) 为此和。这给线性有界算子，\(Te_k=h_k\)，且是有限支持上的合成映射的唯一连续延拓。对 \(y\in H\)，
+\[
+\sum_{k\ge0}|\operatorname{inner}(h_k,y)|^2\le S_0\|y\|^2,
+\qquad \operatorname{adj}(T)y=(\operatorname{inner}(h_k,y))_{k\ge0}.
+\]
+先对有限和验证伴随恒等式，再由连续性传到全部 \(z\)。特别地
+\[
+\|T\|_{\rm HS}^2=\sum_{k\ge0}\|Te_k\|^2=S_0,\qquad
+1\le\|T\|_{\rm op}\le\sqrt{S_0}.
+\]
+下界用 \(Te_0=\chi,\|e_0\|=\|\chi\|=1\)。Hilbert–Schmidt 范数与算子范数在这里没有被断言相等。
+

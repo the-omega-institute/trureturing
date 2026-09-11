@@ -1,0 +1,33 @@
+**30.68 定理及证明（局部宽度、有限输出与统一总生成）。** Every \(q\) or \(q\pm e_k\)
+from 30.67 has coefficient absolute sum at most \(Q_{\rm gen}+1\). Choose
+\[
+h_1=1+\lfloor\Gamma(Q_{\rm gen}+1)/\tau\rfloor,\qquad
+J_i=h_1+1,\quad K_i=h_1\quad(0\le i\le2N).
+\]
+Then every local \(E_i<\tau\), without requiring these vectors to lie in the old coefficient box.
+The gradient intervals have exact width
+\(u_k-l_k=(E_{2k-1}+E_{2k})/4<\tau/2\). Since they contain \(v_k(q)\),
+\(\max(|l_k|,|u_k|)\le|v_k(q)|+\tau/2\). Thus
+\[
+S\le2\|v(q)\|_2^2+N\tau^2/2\le(N+4)\tau^2/2,
+\]
+by \((a+b)^2\le2a^2+2b^2\). The interval from 30.64 therefore has
+\[
+u-\ell\le E_0+S/\delta
+ \le\tau+(N+4)\tau^2/(2\delta)
+ \le C_{\rm width}\tau\le\eta/4<\eta,
+\]
+using \(\tau\le1\). Encode \(q\), these \(2N+1\) parameters and the recomputed endpoints
+as in 30.65. Positivity, input consistency and the width proof show that this certificate passes.
+The auxiliary probe values and matrices need not appear in the final certificate.
+
+This defines \(\operatorname{GenLocal}(N,\eta)\). Constants use finite rational arithmetic;
+all precision parameters are explicit floors of positive rational expressions; there are exactly
+\(2N+N(N-1)/2\) fixed probes, finite residual sums, a proved nonzero-denominator rational
+solve, and \(2N+1\) final local computations and finite encodings. Every stage terminates.
+Thus the rule is uniform and total for every legal \(N,\eta\), and
+\(\forall N\ge1\ \forall\eta\in\mathbb Q_{>0}\ \exists e\ \operatorname{VerifyLocal}(N,\eta,e)\).
+It requires neither coefficient-grid enumeration nor a guess of the optimizer, true gradient,
+residual margin or optimum value. Small \(\delta\) or \(\eta\) can make the finite parameters
+very large; no efficiency assertion follows from totality.
+

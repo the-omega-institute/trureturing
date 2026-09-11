@@ -1,0 +1,17 @@
+## 16. Paper transfer to a common complex zero-free neighborhood
+
+The following analytic and graph argument is a candidate computer-assisted
+proof of a uniform zero-free neighborhood of [0,51/20]. Its finite premises
+have been exactly replayed. The analytic continuation and graph induction in
+this section have been mathematically reviewed, but have not been formalized
+or independently reviewed. Consequently this is not an end-to-end Lean theorem,
+a kernel-admitted release or a literature-priority claim.
+
+The real-to-complex contraction principle is established prior art, especially
+Shao and Sun [5]. Their general theorem is not silently instantiated with
+unproved type-dependent hypotheses. The finite-type version needed here is
+spelled out below, including analytic coordinates, pruning and the four-child
+root. The interval endpoint 2.55 exceeds the 2.538 sufficient endpoint in
+[1, Appendix A.6]. The larger conjectural analyticity interval near 3.796
+remains open; the scalar 2.429 connective-constant question is not settled.
+

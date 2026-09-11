@@ -1,0 +1,3 @@
+* PrimeGoldenComplexMode retains a positive amplitude and a phase separately;
+  its norm recovers the amplitude. Its damping hypotheses matter for recovering
+  the prime label from that amplitude.

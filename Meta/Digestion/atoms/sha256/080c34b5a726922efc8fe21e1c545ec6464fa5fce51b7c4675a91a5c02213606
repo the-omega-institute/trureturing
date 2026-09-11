@@ -1,0 +1,20 @@
+**命题 66（区域读数的后复合分类，repo-derived）。** 沿用定义 34 的固定总项语言。记
+\[
+\mathcal E=\{h:\mathcal B\to\mathbb Z:\exists\text{ 定义 34 的固定总项 }C\
+ \forall X\in\mathcal B,\ h(X)=q(C(X))\},\qquad
+L_B(X)=q(F_BX).
+\]
+这里 $B\subseteq K=\mathbb Z\times\mathbb Z^3$，$F_B$ 沿用定义 23，$\operatorname{Tail}$ 沿用定义 28。对任意先固定的 $B\subseteq K$ 与 $g:\mathbb Z\to\mathbb Z$，有
+\[
+\begin{aligned}
+&\bigl(\exists\text{ 定义 34 意义下的固定总项 }C\bigr)
+ \bigl(\forall X\in\mathcal B\bigr)\quad q(C(X))=g(L_B(X))\\
+&\quad\Longleftrightarrow\quad
+ B=\varnothing\ \lor\ g\text{ 在 }\mathbb Z\text{ 上恒定}\
+ \lor\ \bigl(\operatorname{Tail}(B)\ \land\
+  \exists p\in\mathbb Z[z]\ \forall k\in\mathbb Z,\ g(k)=p(k)\bigr).
+\end{aligned}
+\tag{POST-CLASSIFICATION}
+\]
+等价地，当 $B\ne\varnothing$ 时，$g\circ L_B\in\mathcal E$ 当且仅当 $g$ 是整系数多项式函数，且其表示多项式恒定或 $\operatorname{Tail}(B)$ 成立。表示同一整数函数的整系数多项式唯一。本条的分类对象仅为标量目标族 $g\circ L_B$，不刻画所有依赖来源或因果结构的数值函数；$F_B$ 仅用于指定目标，不作为定义 34 的项原语。记号 $\mathcal E$ 只指上述固定总项的全部数值函数。
+

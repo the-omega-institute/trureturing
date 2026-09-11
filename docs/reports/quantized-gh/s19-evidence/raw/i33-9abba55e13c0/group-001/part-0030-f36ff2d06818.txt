@@ -1,0 +1,800 @@
+      {
+        "address": "25.8",
+        "kind": "item",
+        "span": {
+          "byte_start": 126349,
+          "byte_end_exclusive": 127777,
+          "line_start": 2122,
+          "line_end_inclusive": 2139,
+          "byte_count": 1428,
+          "lf_count": 18,
+          "terminal_lf_count": 2,
+          "sha256": "617f951ea8920fc51f00c372f6d739dec5e321d3944b1df4a43c542bf9cdfdb0",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 348,
+            "original_byte_start": 126349,
+            "original_byte_end_exclusive": 126356
+          },
+          {
+            "recovery_span_index": 349,
+            "original_byte_start": 126356,
+            "original_byte_end_exclusive": 126377
+          },
+          {
+            "recovery_span_index": 350,
+            "original_byte_start": 126377,
+            "original_byte_end_exclusive": 126403
+          },
+          {
+            "recovery_span_index": 351,
+            "original_byte_start": 126403,
+            "original_byte_end_exclusive": 126753
+          },
+          {
+            "recovery_span_index": 352,
+            "original_byte_start": 126753,
+            "original_byte_end_exclusive": 126785
+          },
+          {
+            "recovery_span_index": 353,
+            "original_byte_start": 126785,
+            "original_byte_end_exclusive": 126876
+          },
+          {
+            "recovery_span_index": 354,
+            "original_byte_start": 126876,
+            "original_byte_end_exclusive": 126877
+          },
+          {
+            "recovery_span_index": 355,
+            "original_byte_start": 126877,
+            "original_byte_end_exclusive": 126918
+          },
+          {
+            "recovery_span_index": 356,
+            "original_byte_start": 126918,
+            "original_byte_end_exclusive": 127200
+          },
+          {
+            "recovery_span_index": 357,
+            "original_byte_start": 127200,
+            "original_byte_end_exclusive": 127777
+          }
+        ],
+        "current_address_index": 45,
+        "reserved_inactive": false
+      },
+      {
+        "address": "25.9",
+        "kind": "item",
+        "span": {
+          "byte_start": 127777,
+          "byte_end_exclusive": 129068,
+          "line_start": 2140,
+          "line_end_inclusive": 2181,
+          "byte_count": 1291,
+          "lf_count": 42,
+          "terminal_lf_count": 2,
+          "sha256": "25116c729d3c8b4543b1324504751da1057fc33ce681472676aee3f85cb38bc9",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 358,
+            "original_byte_start": 127777,
+            "original_byte_end_exclusive": 127784
+          },
+          {
+            "recovery_span_index": 359,
+            "original_byte_start": 127784,
+            "original_byte_end_exclusive": 128681
+          },
+          {
+            "recovery_span_index": 360,
+            "original_byte_start": 128681,
+            "original_byte_end_exclusive": 128706
+          },
+          {
+            "recovery_span_index": 361,
+            "original_byte_start": 128706,
+            "original_byte_end_exclusive": 129068
+          }
+        ],
+        "current_address_index": 46,
+        "reserved_inactive": false
+      },
+      {
+        "address": "25.10",
+        "kind": "item",
+        "span": {
+          "byte_start": 129068,
+          "byte_end_exclusive": 130157,
+          "line_start": 2182,
+          "line_end_inclusive": 2209,
+          "byte_count": 1089,
+          "lf_count": 28,
+          "terminal_lf_count": 2,
+          "sha256": "ce300d60ca0959af45153b81d7ef420f9b2ce9c3564f6066b02b4cb23e934fca",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 362,
+            "original_byte_start": 129068,
+            "original_byte_end_exclusive": 129076
+          },
+          {
+            "recovery_span_index": 363,
+            "original_byte_start": 129076,
+            "original_byte_end_exclusive": 130157
+          }
+        ],
+        "current_address_index": 47,
+        "reserved_inactive": false
+      },
+      {
+        "address": "25.11",
+        "kind": "item",
+        "span": {
+          "byte_start": 130157,
+          "byte_end_exclusive": 131069,
+          "line_start": 2210,
+          "line_end_inclusive": 2235,
+          "byte_count": 912,
+          "lf_count": 26,
+          "terminal_lf_count": 2,
+          "sha256": "42767afec41d4aa097a7941028e45e7bafe8fcfc2f33ac351c45e915ab2f04f3",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 364,
+            "original_byte_start": 130157,
+            "original_byte_end_exclusive": 130165
+          },
+          {
+            "recovery_span_index": 365,
+            "original_byte_start": 130165,
+            "original_byte_end_exclusive": 131069
+          }
+        ],
+        "current_address_index": 48,
+        "reserved_inactive": false
+      },
+      {
+        "address": "25.12",
+        "kind": "item",
+        "span": {
+          "byte_start": 131069,
+          "byte_end_exclusive": 132359,
+          "line_start": 2236,
+          "line_end_inclusive": 2262,
+          "byte_count": 1290,
+          "lf_count": 27,
+          "terminal_lf_count": 2,
+          "sha256": "97fcf8ed182f7752a4b33973e61beefefd0d8607ee7d6b268e3aac5e0e39146a",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 366,
+            "original_byte_start": 131069,
+            "original_byte_end_exclusive": 131077
+          },
+          {
+            "recovery_span_index": 367,
+            "original_byte_start": 131077,
+            "original_byte_end_exclusive": 131675
+          },
+          {
+            "recovery_span_index": 368,
+            "original_byte_start": 131675,
+            "original_byte_end_exclusive": 131694
+          },
+          {
+            "recovery_span_index": 369,
+            "original_byte_start": 131694,
+            "original_byte_end_exclusive": 132359
+          }
+        ],
+        "current_address_index": 49,
+        "reserved_inactive": false
+      },
+      {
+        "address": "25.13",
+        "kind": "item",
+        "span": {
+          "byte_start": 132359,
+          "byte_end_exclusive": 133666,
+          "line_start": 2263,
+          "line_end_inclusive": 2309,
+          "byte_count": 1307,
+          "lf_count": 47,
+          "terminal_lf_count": 2,
+          "sha256": "5b6a664c966ef85f5cf53c43907bd921e449ef75d228eb90f091c89efdd10c2f",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 370,
+            "original_byte_start": 132359,
+            "original_byte_end_exclusive": 132367
+          },
+          {
+            "recovery_span_index": 371,
+            "original_byte_start": 132367,
+            "original_byte_end_exclusive": 133666
+          }
+        ],
+        "current_address_index": 50,
+        "reserved_inactive": false
+      },
+      {
+        "address": "25.14",
+        "kind": "item",
+        "span": {
+          "byte_start": 133666,
+          "byte_end_exclusive": 135042,
+          "line_start": 2310,
+          "line_end_inclusive": 2342,
+          "byte_count": 1376,
+          "lf_count": 33,
+          "terminal_lf_count": 2,
+          "sha256": "2f33b4e8d410f12d04c26a2b6dcea6cd5ff949979b84916f9ad606b10e81e398",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 372,
+            "original_byte_start": 133666,
+            "original_byte_end_exclusive": 133674
+          },
+          {
+            "recovery_span_index": 373,
+            "original_byte_start": 133674,
+            "original_byte_end_exclusive": 135042
+          }
+        ],
+        "current_address_index": 51,
+        "reserved_inactive": false
+      },
+      {
+        "address": "25.15",
+        "kind": "item",
+        "span": {
+          "byte_start": 135042,
+          "byte_end_exclusive": 137153,
+          "line_start": 2343,
+          "line_end_inclusive": 2377,
+          "byte_count": 2111,
+          "lf_count": 35,
+          "terminal_lf_count": 2,
+          "sha256": "16057ebd3ec24b6c4b4673de4de20fdebacbe6c00537738d6d65091303628abc",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 374,
+            "original_byte_start": 135042,
+            "original_byte_end_exclusive": 135050
+          },
+          {
+            "recovery_span_index": 375,
+            "original_byte_start": 135050,
+            "original_byte_end_exclusive": 135094
+          },
+          {
+            "recovery_span_index": 376,
+            "original_byte_start": 135094,
+            "original_byte_end_exclusive": 135792
+          },
+          {
+            "recovery_span_index": 377,
+            "original_byte_start": 135792,
+            "original_byte_end_exclusive": 135923
+          },
+          {
+            "recovery_span_index": 378,
+            "original_byte_start": 135923,
+            "original_byte_end_exclusive": 137153
+          }
+        ],
+        "current_address_index": 52,
+        "reserved_inactive": false
+      },
+      {
+        "address": "25.16",
+        "kind": "item",
+        "span": {
+          "byte_start": 137153,
+          "byte_end_exclusive": 139135,
+          "line_start": 2378,
+          "line_end_inclusive": 2390,
+          "byte_count": 1982,
+          "lf_count": 13,
+          "terminal_lf_count": 2,
+          "sha256": "ecb60d779ca43ad4ac27fb026524b5bfa1584cdbf8b467c604c35111f4c0d4de",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 379,
+            "original_byte_start": 137153,
+            "original_byte_end_exclusive": 137161
+          },
+          {
+            "recovery_span_index": 380,
+            "original_byte_start": 137161,
+            "original_byte_end_exclusive": 139135
+          }
+        ],
+        "current_address_index": 53,
+        "reserved_inactive": false
+      },
+      {
+        "address": "25.17",
+        "kind": "item",
+        "span": {
+          "byte_start": 139135,
+          "byte_end_exclusive": 141822,
+          "line_start": 2391,
+          "line_end_inclusive": 2399,
+          "byte_count": 2687,
+          "lf_count": 9,
+          "terminal_lf_count": 2,
+          "sha256": "af04d4d5c97c7eb45906b1afc25766d80354a600dabe0c7858a0c44a1f1fd388",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 381,
+            "original_byte_start": 139135,
+            "original_byte_end_exclusive": 141822
+          }
+        ],
+        "current_address_index": null,
+        "reserved_inactive": true
+      },
+      {
+        "address": "25.18",
+        "kind": "item",
+        "span": {
+          "byte_start": 141822,
+          "byte_end_exclusive": 144030,
+          "line_start": 2400,
+          "line_end_inclusive": 2411,
+          "byte_count": 2208,
+          "lf_count": 12,
+          "terminal_lf_count": 2,
+          "sha256": "b0294fb80c9388a3571f8c0bef664f2e9365d4aeeaa58f176a03a75a5ed4b464",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 382,
+            "original_byte_start": 141822,
+            "original_byte_end_exclusive": 141830
+          },
+          {
+            "recovery_span_index": 383,
+            "original_byte_start": 141830,
+            "original_byte_end_exclusive": 141860
+          },
+          {
+            "recovery_span_index": 384,
+            "original_byte_start": 141860,
+            "original_byte_end_exclusive": 141863
+          },
+          {
+            "recovery_span_index": 385,
+            "original_byte_start": 141863,
+            "original_byte_end_exclusive": 142085
+          },
+          {
+            "recovery_span_index": 386,
+            "original_byte_start": 142085,
+            "original_byte_end_exclusive": 142238
+          },
+          {
+            "recovery_span_index": 387,
+            "original_byte_start": 142238,
+            "original_byte_end_exclusive": 142318
+          },
+          {
+            "recovery_span_index": 388,
+            "original_byte_start": 142318,
+            "original_byte_end_exclusive": 142320
+          },
+          {
+            "recovery_span_index": 389,
+            "original_byte_start": 142320,
+            "original_byte_end_exclusive": 144030
+          }
+        ],
+        "current_address_index": 54,
+        "reserved_inactive": false
+      },
+      {
+        "address": "26",
+        "kind": "chapter",
+        "span": {
+          "byte_start": 144030,
+          "byte_end_exclusive": 176108,
+          "line_start": 2412,
+          "line_end_inclusive": 3135,
+          "byte_count": 32078,
+          "lf_count": 724,
+          "terminal_lf_count": 2,
+          "sha256": "9ede82265ca70c38d245b852179179b294661f562ed2384412cbec167f0ab316",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 390,
+            "original_byte_start": 144030,
+            "original_byte_end_exclusive": 144087
+          },
+          {
+            "recovery_span_index": 391,
+            "original_byte_start": 144087,
+            "original_byte_end_exclusive": 144094
+          },
+          {
+            "recovery_span_index": 392,
+            "original_byte_start": 144094,
+            "original_byte_end_exclusive": 144115
+          },
+          {
+            "recovery_span_index": 393,
+            "original_byte_start": 144115,
+            "original_byte_end_exclusive": 144157
+          },
+          {
+            "recovery_span_index": 394,
+            "original_byte_start": 144157,
+            "original_byte_end_exclusive": 144199
+          },
+          {
+            "recovery_span_index": 395,
+            "original_byte_start": 144199,
+            "original_byte_end_exclusive": 144353
+          },
+          {
+            "recovery_span_index": 396,
+            "original_byte_start": 144353,
+            "original_byte_end_exclusive": 144484
+          },
+          {
+            "recovery_span_index": 397,
+            "original_byte_start": 144484,
+            "original_byte_end_exclusive": 144530
+          },
+          {
+            "recovery_span_index": 398,
+            "original_byte_start": 144530,
+            "original_byte_end_exclusive": 144750
+          },
+          {
+            "recovery_span_index": 399,
+            "original_byte_start": 144750,
+            "original_byte_end_exclusive": 144757
+          },
+          {
+            "recovery_span_index": 400,
+            "original_byte_start": 144757,
+            "original_byte_end_exclusive": 145819
+          },
+          {
+            "recovery_span_index": 401,
+            "original_byte_start": 145819,
+            "original_byte_end_exclusive": 145826
+          },
+          {
+            "recovery_span_index": 402,
+            "original_byte_start": 145826,
+            "original_byte_end_exclusive": 146950
+          },
+          {
+            "recovery_span_index": 403,
+            "original_byte_start": 146950,
+            "original_byte_end_exclusive": 146957
+          },
+          {
+            "recovery_span_index": 404,
+            "original_byte_start": 146957,
+            "original_byte_end_exclusive": 147854
+          },
+          {
+            "recovery_span_index": 405,
+            "original_byte_start": 147854,
+            "original_byte_end_exclusive": 147861
+          },
+          {
+            "recovery_span_index": 406,
+            "original_byte_start": 147861,
+            "original_byte_end_exclusive": 148607
+          },
+          {
+            "recovery_span_index": 407,
+            "original_byte_start": 148607,
+            "original_byte_end_exclusive": 148614
+          },
+          {
+            "recovery_span_index": 408,
+            "original_byte_start": 148614,
+            "original_byte_end_exclusive": 149408
+          },
+          {
+            "recovery_span_index": 409,
+            "original_byte_start": 149408,
+            "original_byte_end_exclusive": 149415
+          },
+          {
+            "recovery_span_index": 410,
+            "original_byte_start": 149415,
+            "original_byte_end_exclusive": 150417
+          },
+          {
+            "recovery_span_index": 411,
+            "original_byte_start": 150417,
+            "original_byte_end_exclusive": 150424
+          },
+          {
+            "recovery_span_index": 412,
+            "original_byte_start": 150424,
+            "original_byte_end_exclusive": 151144
+          },
+          {
+            "recovery_span_index": 413,
+            "original_byte_start": 151144,
+            "original_byte_end_exclusive": 151151
+          },
+          {
+            "recovery_span_index": 414,
+            "original_byte_start": 151151,
+            "original_byte_end_exclusive": 151907
+          },
+          {
+            "recovery_span_index": 415,
+            "original_byte_start": 151907,
+            "original_byte_end_exclusive": 151915
+          },
+          {
+            "recovery_span_index": 416,
+            "original_byte_start": 151915,
+            "original_byte_end_exclusive": 152938
+          },
+          {
+            "recovery_span_index": 417,
+            "original_byte_start": 152938,
+            "original_byte_end_exclusive": 152946
+          },
+          {
+            "recovery_span_index": 418,
+            "original_byte_start": 152946,
+            "original_byte_end_exclusive": 153875
+          },
+          {
+            "recovery_span_index": 419,
+            "original_byte_start": 153875,
+            "original_byte_end_exclusive": 153883
+          },
+          {
+            "recovery_span_index": 420,
+            "original_byte_start": 153883,
+            "original_byte_end_exclusive": 153901
+          },
+          {
+            "recovery_span_index": 421,
+            "original_byte_start": 153901,
+            "original_byte_end_exclusive": 154669
+          },
+          {
+            "recovery_span_index": 422,
+            "original_byte_start": 154669,
+            "original_byte_end_exclusive": 154684
+          },
+          {
+            "recovery_span_index": 423,
+            "original_byte_start": 154684,
+            "original_byte_end_exclusive": 154698
+          },
+          {
+            "recovery_span_index": 424,
+            "original_byte_start": 154698,
+            "original_byte_end_exclusive": 154706
+          },
+          {
+            "recovery_span_index": 425,
+            "original_byte_start": 154706,
+            "original_byte_end_exclusive": 155537
+          },
+          {
+            "recovery_span_index": 426,
+            "original_byte_start": 155537,
+            "original_byte_end_exclusive": 155545
+          },
+          {
+            "recovery_span_index": 427,
+            "original_byte_start": 155545,
+            "original_byte_end_exclusive": 156606
+          },
+          {
+            "recovery_span_index": 428,
+            "original_byte_start": 156606,
+            "original_byte_end_exclusive": 156614
+          },
+          {
+            "recovery_span_index": 429,
+            "original_byte_start": 156614,
+            "original_byte_end_exclusive": 157308
+          },
+          {
+            "recovery_span_index": 430,
+            "original_byte_start": 157308,
+            "original_byte_end_exclusive": 157316
+          },
+          {
+            "recovery_span_index": 431,
+            "original_byte_start": 157316,
+            "original_byte_end_exclusive": 158785
+          },
+          {
+            "recovery_span_index": 432,
+            "original_byte_start": 158785,
+            "original_byte_end_exclusive": 158793
+          },
+          {
+            "recovery_span_index": 433,
+            "original_byte_start": 158793,
+            "original_byte_end_exclusive": 160446
+          },
+          {
+            "recovery_span_index": 434,
+            "original_byte_start": 160446,
+            "original_byte_end_exclusive": 160454
+          },
+          {
+            "recovery_span_index": 435,
+            "original_byte_start": 160454,
+            "original_byte_end_exclusive": 161463
+          },
+          {
+            "recovery_span_index": 436,
+            "original_byte_start": 161463,
+            "original_byte_end_exclusive": 161471
+          },
+          {
+            "recovery_span_index": 437,
+            "original_byte_start": 161471,
+            "original_byte_end_exclusive": 162324
+          },
+          {
+            "recovery_span_index": 438,
+            "original_byte_start": 162324,
+            "original_byte_end_exclusive": 162332
+          },
+          {
+            "recovery_span_index": 439,
+            "original_byte_start": 162332,
+            "original_byte_end_exclusive": 162359
+          },
+          {
+            "recovery_span_index": 440,
+            "original_byte_start": 162359,
+            "original_byte_end_exclusive": 162362
+          },
+          {
+            "recovery_span_index": 441,
+            "original_byte_start": 162362,
+            "original_byte_end_exclusive": 162382
+          },
+          {
+            "recovery_span_index": 442,
+            "original_byte_start": 162382,
+            "original_byte_end_exclusive": 162514
+          },
+          {
+            "recovery_span_index": 443,
+            "original_byte_start": 162514,
+            "original_byte_end_exclusive": 162547
+          },
+          {
+            "recovery_span_index": 444,
+            "original_byte_start": 162547,
+            "original_byte_end_exclusive": 163254
+          },
+          {
+            "recovery_span_index": 445,
+            "original_byte_start": 163254,
+            "original_byte_end_exclusive": 163475
+          },
+          {
+            "recovery_span_index": 446,
+            "original_byte_start": 163475,
+            "original_byte_end_exclusive": 163558
+          },
+          {
+            "recovery_span_index": 447,
+            "original_byte_start": 163558,
+            "original_byte_end_exclusive": 163610
+          },
+          {
+            "recovery_span_index": 448,
+            "original_byte_start": 163610,
+            "original_byte_end_exclusive": 163618
+          },
+          {
+            "recovery_span_index": 449,
+            "original_byte_start": 163618,
+            "original_byte_end_exclusive": 163654
+          },
+          {
+            "recovery_span_index": 450,
+            "original_byte_start": 163654,
+            "original_byte_end_exclusive": 164411
+          },
+          {
+            "recovery_span_index": 451,
+            "original_byte_start": 164411,
+            "original_byte_end_exclusive": 164478
+          },
+          {
+            "recovery_span_index": 452,
+            "original_byte_start": 164478,
+            "original_byte_end_exclusive": 164759
+          },
+          {
+            "recovery_span_index": 453,
+            "original_byte_start": 164759,
+            "original_byte_end_exclusive": 164900
+          },
+          {
+            "recovery_span_index": 454,
+            "original_byte_start": 164900,
+            "original_byte_end_exclusive": 164901
+          },
+          {
+            "recovery_span_index": 455,
+            "original_byte_start": 164901,
+            "original_byte_end_exclusive": 164909
+          },
+          {
+            "recovery_span_index": 456,
+            "original_byte_start": 164909,
+            "original_byte_end_exclusive": 164953
+          },
+          {
+            "recovery_span_index": 457,
+            "original_byte_start": 164953,
+            "original_byte_end_exclusive": 165313
+          },
+          {
+            "recovery_span_index": 458,
+            "original_byte_start": 165313,
+            "original_byte_end_exclusive": 165325
+          },
+          {
+            "recovery_span_index": 459,
+            "original_byte_start": 165325,
+            "original_byte_end_exclusive": 165354
+          },
+          {
+            "recovery_span_index": 460,
+            "original_byte_start": 165354,
+            "original_byte_end_exclusive": 165389
+          },
+          {
+            "recovery_span_index": 461,
+            "original_byte_start": 165389,
+            "original_byte_end_exclusive": 165746
+          },
+          {
+            "recovery_span_index": 462,
+            "original_byte_start": 165746,
+            "original_byte_end_exclusive": 165971
+          },
+          {

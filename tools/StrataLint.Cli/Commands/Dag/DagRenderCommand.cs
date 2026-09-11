@@ -1,3 +1,4 @@
+using System.Reflection;
 using StrataLint.Engine;
 using StrataLint.Scribe;
 using StrataLint.Scribe.Documents;
@@ -52,6 +53,15 @@ internal static class DagRenderCommand
             return Failure("truth DAG could not be built", exception);
         }
 
+        return Run(repositoryRoot, truth, check, typeof(DocumentAssembly).Assembly);
+    }
+
+    internal static CommandResult Run(
+        string repositoryRoot,
+        TruthContext truth,
+        bool check,
+        Assembly documentsAssembly)
+    {
         var output = new StringWriter();
         var error = new StringWriter();
         TruthDagProjection projection;
@@ -69,7 +79,7 @@ internal static class DagRenderCommand
         try
         {
             documentProjection = DocumentGraphExportProjectionExtensions.AssembleRepository(
-                DocumentAssembly.Value,
+                documentsAssembly,
                 repositoryRoot,
                 DeclarationCatalog.Create(truth.Report),
                 projection.Nodes.Select(static node => node.RepoPath.Value).ToHashSet(StringComparer.Ordinal));

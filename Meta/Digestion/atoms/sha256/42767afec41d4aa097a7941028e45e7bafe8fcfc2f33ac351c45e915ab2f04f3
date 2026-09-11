@@ -1,0 +1,26 @@
+**25.11 真素数族的最优混合与价格。** 足够大时
+
+\[
+c_2-c_1=u>0,\quad c_3-c_1=u-E>0,\quad
+d_2-d_1=u-\delta>0,\quad
+d_3-d_1=u-E-\delta-\eta>0.
+\]
+
+又 \(c_3<c_2,d_3<d_2\)。同 25.3 的割线积分证明
+\(\rho_1>\rho_3>\rho_2>0\)。剩余预算恰为 \(M_1-A=h_2<h\),所以令
+
+\[
+\theta=h_2/h\in(0,1),\quad\alpha=1-\theta=\delta/h,\quad
+D(M_1)=\alpha f(c_1)+\theta f(d_1)+f(c_2)+f(c_3).
+\]
+
+在 \(\lambda=\rho_1\) 处第 1 行并列、其它两行下端点唯一最大,且
+
+\[
+\lambda M_1+\sum_i[f(c_i)-\lambda c_i]
+=\sum_i f(c_i)+\rho_1h_2
+=\alpha f(c_1)+\theta f(d_1)+f(c_2)+f(c_3).
+\]
+
+期望和 \(A+\theta h=M_1\) 与逐项弱对偶证明这个匹配值精确最优。实际混合下角点 000 的和 \(A<M_0\),上角点 100 的和 \(A+h>M_1\);本族不满足第 24 节的可行下角点条件。乘回准确的 \(E_{\{P,Q,R\}}\) 后,\(U_{\rm dual}-U_{\rm var}=D-\Psi_3\) 的身份不变。
+

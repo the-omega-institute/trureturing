@@ -1,0 +1,26 @@
+**30.14 共同六混合使对偶增量落入同一正区间。** 对 30.12 的共同容量 \(r_1\),
+直接使用 26.23、29.5 的六排列权重
+\[
+y^\pi_{\pi(\ell)}=
+\operatorname{clip}\left(\frac{r_1-\sum_{m<\ell}h_{\pi(m)}}{h_{\pi(\ell)}}\right),
+\qquad \pi\in S_3.
+\]
+它们只依赖步长和容量,两箱完全相同,每个混合可行且总质量为 3。
+每个箱体在每个高度都至少有一个排列按其自身收益密度排序,故由已有匹配证书
+\(D_\xi=\max_\pi D_{\pi,\xi}\)、\(D_0=\max_\pi D_{\pi,0}\)。
+这允许两个最大值使用不同排列;\(r_1\ge Q\) 时全部混合都取全上端点。
+对 \(F_z(s)=\log(1-ze^{-s})\)、\(s\ge0\)、\(0<z<1\),
+\[
+0<F_z'(s)=\frac{ze^{-s}}{1-ze^{-s}}\le K_z:=\frac z{1-z}.
+\]
+形状第 \(i\) 行的两个偏移都增加 \(\xi_i\ge0\),每行权重和为 1,故
+\[
+0\le D_{\pi,\xi}-D_{\pi,0}\le XK_z\le2\varepsilon K_z.
+\]
+若逐项 \(a_\pi\le b_\pi\le a_\pi+C\),取最大值仍有
+\(\max a_\pi\le\max b_\pi\le\max a_\pi+C\)。因此
+\[
+0\le D_\xi-D_0\le2\varepsilon K_z.
+\]
+没有对最优排列求导,也没有假设贪心次序对形状或高度稳定。
+

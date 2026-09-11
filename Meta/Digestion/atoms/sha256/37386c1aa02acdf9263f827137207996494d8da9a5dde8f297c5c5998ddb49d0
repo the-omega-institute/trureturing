@@ -1,0 +1,74 @@
+**命题 60（辅助结合律、平移自同构及延迟校正式）。** $\diamond$ 交换、结合并对整数双线性，$\alpha$ 是 $(\mathcal L,+,\diamond)$ 的自同构，且
+
+$$
+c\odot d=\alpha(c\diamond d).
+\tag{CUM-TWIST}
+$$
+
+对全部 $c,d,e\in\mathcal L$，默认剖面乘法还满足两个分别成立的恒等式
+
+$$
+(c\odot d)\odot\alpha(e)=\alpha(c)\odot(d\odot e),
+\tag{CUM-HOM}
+$$
+
+$$
+\alpha(c\odot d)=\alpha(c)\odot\alpha(d).
+\tag{CUM-MULTIPLICATIVE}
+$$
+
+**证明（辅助代数）。** 交换两个父支撑点保持 $\max(a,b)$ 和 $p+q$，整数系数相乘也交换，故 $\diamond$ 交换。对任意输出 $(n,r)$，展开两个括号的有限和，均得到
+
+$$
+\sum_{\substack{\max(a,b,t)=n\\p+q+s=r}}
+c(a,p)d(b,q)e(t,s).
+$$
+
+此和限制在三个输入有限支撑的笛卡尔积上。时间等式
+$\max(\max(a,b),t)=\max(a,\max(b,t))$、空间加法结合及整数乘法结合，使两种分组逐项对应，故 $\diamond$ 结合。把任一因子的和或整数倍代入有限和，逐项用整数分配律，得到两个变量的整数线性。
+
+$\alpha$ 保加法且有逆 $\tau_{-1}$。共同平移两个父时间时，
+
+$$
+\max(a+1,b+1)=\max(a,b)+1,
+$$
+
+位置与系数不动，有限和重索引便给
+$\alpha(c\diamond d)=\alpha(c)\diamond\alpha(d)$。所以它确为自同构。将辅助乘积的输出时间再加一，正好把条件 $\max(a,b)=n$ 变为 (TS-PRODUCT) 的默认条件，得到 (CUM-TWIST)。
+
+**证明（累积核对与单射）。** 由定义及有限和直接有
+
+$$
+P(c\diamond d)(n)=C_nD_n=C_n*D_n,
+\qquad
+P(\alpha c)(n)=C_{n-1}.
+\tag{CUM-AUX-TRANSFORM}
+$$
+
+此显示式中的并置乘法 $C_nD_n$ 明确指原空间卷积 $*$，不是对空间位置逐点相乘。第一式使用 $\max(a,b)\le n$ 等价于 $a,b\le n$；第二式把平移后的求和时间减一。
+
+记 $E=Pe$。用命题 59 两次，(CUM-HOM) 两边经 $P$ 后在每个整数 $n$ 分别为
+
+$$
+\begin{aligned}
+P\bigl((c\odot d)\odot\alpha(e)\bigr)(n)
+&=(C_{n-2}*D_{n-2})*E_{n-2},\\
+P\bigl(\alpha(c)\odot(d\odot e)\bigr)(n)
+&=C_{n-2}*(D_{n-2}*E_{n-2}).
+\end{aligned}
+$$
+
+原空间卷积的结合律使它们相等；命题 58 的单射性把累积等式带回剖面等式。最后独立核对乘法保持式：
+
+$$
+\begin{aligned}
+P\bigl(\alpha(c\odot d)\bigr)(n)
+&=P(c\odot d)(n-1)=C_{n-2}*D_{n-2},\\
+P\bigl(\alpha(c)\odot\alpha(d)\bigr)(n)
+&=P(\alpha c)(n-1)*P(\alpha d)(n-1)
+=C_{n-2}*D_{n-2}.
+\end{aligned}
+$$
+
+再次由 $P$ 单射得到 (CUM-MULTIPLICATIVE)。这个第二恒等式有自己的核对，不从“Hom-associative”一词推出。全部论证发生在整数模块和原空间卷积中，没有借用域上的除法或假设全域单位。证毕。
+

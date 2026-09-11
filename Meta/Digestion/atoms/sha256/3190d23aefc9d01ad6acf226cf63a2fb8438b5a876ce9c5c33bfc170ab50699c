@@ -1,0 +1,12 @@
+### 15.1 共同位置、全局像与固定情境容量
+
+沿用 $d=3$，以下证明对任一固定有限 $d\ge1$ 成立。令
+
+$$
+R=\mathbb Z^{(\mathbb Z^d)}
+=\{c:\mathbb Z^d\to\mathbb Z:\operatorname{supp}(c)\text{ 有限}\},
+\quad \varepsilon(c)=\sum_p c(p),\quad I=\ker\varepsilon.
+$$
+
+括号上标表示有限支撑，绝非全部函数的无穷求和。记 $\delta_p(r)=1$ 当 $r=p$，其余为零。位置始终使用原稿同一坐标系。
+

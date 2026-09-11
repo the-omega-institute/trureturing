@@ -1,0 +1,10 @@
+**定义 3.2(账平与浮账)**。主张集 $\mathcal U$ 相对账本 $L$ **账平**,当且仅当
+
+$$
+\mathrm{Balanced}(\mathcal U,L)\iff\forall P\in\mathrm{dom}(\mathcal U),\ \mathrm{last}_{\mathcal U}(P)=(P,\sigma)\to\big(\sigma=\mathsf{unverified}\ \vee\ \sigma=s_L(P)\big).
+$$
+
+只量化出现过的命题,空记录平凡账平。不满足此式的最新主张称**浮账**。$\mathsf{unverified}$ 是唯一允许与 $s_L$ 不同的状态——它明说自己未经核验,故不冒领。
+
+*读法*。母仓第 2.1 条「账,平是一个可判谓词:浮账集为空」在此有了类型:它判的是主张集与状态函数的一致。
+

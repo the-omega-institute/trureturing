@@ -1,0 +1,1 @@
+| Geerts–Poggi，*On Database Query Languages for K-relations*（2010） | 以 $K$-关系考察查询语言及差运算扩展，要求说明注释域和查询操作；本卷也须先固定观察签名才能谈下降 | 本卷未建立同一查询语言或公理组，来源 pair 乘法也未满足交换半环契约，不能直接调用其查询等价结论 | DOI [10.1016/j.jal.2009.09.001](https://doi.org/10.1016/j.jal.2009.09.001)。文献陈述 `literature-attested`；对照 `repo-derived`

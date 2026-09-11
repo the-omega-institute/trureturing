@@ -1,0 +1,2 @@
+**思考产地（以下为 caller brief 转述，未读取各席原始判词）：** 六席为 `teleology`、`parsimony`、`fidelity`、`natural-ownership`、`proportional-containment`、`worth`。`fidelity` 载体为 `nyxid-oracle`，brief 记录模型为 **GPT-6 Astra Pro**；其余五席为 `codex-cli`，各自具体模型标识未提供。caller 记录 codex 席遇到 `dispatch.sh` 的负载门 `idle<20%`，因此直接经 runner 派发到分离只读检出；这就是该次旁路理由，不是本实施席对当时宿主负载的实测。六席均暴露 caller 候选计划，**非盲**；codex 席有仓库先验暴露，oracle 的外部先验不可由本席核定，不能据席数宣称先验独立或环境无记忆。各席逐票结果及原始完成工件未向本席提供，本收据只消费 caller 已给的收敛方案。
+

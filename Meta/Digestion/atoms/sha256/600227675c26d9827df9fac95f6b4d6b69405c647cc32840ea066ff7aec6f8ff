@@ -1,0 +1,40 @@
+**24.1 状态与精确问题域。** 本节是 2026-09-09 的 S12 后续结算,状态为 **PAPER_ARGUMENT / repo-derived 参考输入**。沿用第 15-23 节的函数、平方偏差之和及预算约定。第 22-23 节的二坐标全域结算、第 21 节的人工实数网格反例和所有历史记录保持有效;一般真实素数 \(k\ge3\) 的无条件比较仍 **OPEN**。GH 仍只有第 1 节的工作 RH 解释,不另造 GH 定义,不主张 RH 进展、全球新颖性或 Lean 冻结。
+
+取整数 \(k\ge2\),每行恰为正实二点网格
+
+\[
+C_i=\{c_i,d_i\},\qquad 0<c_i<d_i<\infty\quad(1\le i\le k),
+\qquad -\infty<M_0<M_1<\infty.
+\]
+
+要求至少两个不同的**实际角点**属于闭端点、严格正宽度的薄层
+
+\[
+\mathcal C=\left\{x\in\prod_{i=1}^k C_i:
+M_0\le\sum_i x_i\le M_1\right\},\qquad |\mathcal C|\ge2.
+\]
+
+不同角点的坐标和可以相等,不能用两个混合分布或两个满足期望预算的点替代这个计数要求。所有对数为自然对数,定义
+
+\[
+f(x)=\log(1-e^{-x})\quad(x>0),\qquad
+\mu_0=M_0/k,\quad \mu=M_1/k,\quad I=[\mu_0,\mu],
+\]
+\[
+\eta_i=\operatorname{dist}(I,C_i)
+=\min_{u\in I,\,x\in C_i}|u-x|,\qquad V_0=\sum_i\eta_i^2,
+\]
+\[
+D(M_1)=\inf_{\lambda\ge0}\left\{\lambda M_1+
+\sum_i\max_{x\in C_i}[f(x)-\lambda x]\right\}.
+\]
+
+对 \(m>0,0\le V<k(k-1)m^2\),始终使用
+
+\[
+r=\sqrt{\frac{V}{k(k-1)}},\qquad
+\Psi_k(m,V)=f(m+(k-1)r)+(k-1)f(m-r).
+\]
+
+这里 \(V\) 不是平均方差 \(V/k\);\(M_i\) 是坐标和预算,不是未平移的素数指数预算。
+

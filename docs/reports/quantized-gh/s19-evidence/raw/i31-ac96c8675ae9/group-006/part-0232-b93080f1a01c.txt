@@ -1,0 +1,792 @@
+      "current_occurrences": [
+        {
+          "byte_start": 193344,
+          "byte_end_exclusive": 193400,
+          "line_start": 4055,
+          "line_end_inclusive": 4057,
+          "byte_count": 56,
+          "lf_count": 3,
+          "terminal_lf_count": 1,
+          "sha256": "5096cb6d4108d572a07b8261a06329ccfd6062b82064a123223bdd3645ea141c"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 236341,
+        "byte_end_exclusive": 236488,
+        "line_start": 4395,
+        "line_end_inclusive": 4399,
+        "byte_count": 147,
+        "lf_count": 5,
+        "terminal_lf_count": 1,
+        "sha256": "dacd25e56c4be35c89454a9e53d8dabf398106b04d0df82d8e090e58e5b5ffa0"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 194875,
+          "byte_end_exclusive": 195022,
+          "line_start": 4081,
+          "line_end_inclusive": 4085,
+          "byte_count": 147,
+          "lf_count": 5,
+          "terminal_lf_count": 1,
+          "sha256": "dacd25e56c4be35c89454a9e53d8dabf398106b04d0df82d8e090e58e5b5ffa0"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 236573,
+        "byte_end_exclusive": 236655,
+        "line_start": 4401,
+        "line_end_inclusive": 4404,
+        "byte_count": 82,
+        "lf_count": 4,
+        "terminal_lf_count": 1,
+        "sha256": "6c43c4da84a82020dab8a35ce8433f213e473641b388a2883dc1a562ee7c1a5d"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 195107,
+          "byte_end_exclusive": 195189,
+          "line_start": 4087,
+          "line_end_inclusive": 4090,
+          "byte_count": 82,
+          "lf_count": 4,
+          "terminal_lf_count": 1,
+          "sha256": "6c43c4da84a82020dab8a35ce8433f213e473641b388a2883dc1a562ee7c1a5d"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 236884,
+        "byte_end_exclusive": 236928,
+        "line_start": 4408,
+        "line_end_inclusive": 4410,
+        "byte_count": 44,
+        "lf_count": 3,
+        "terminal_lf_count": 1,
+        "sha256": "6c801552f4e717c3d03250fc8a3fe6bb56b0a61d347d009e86d05a8b2005574e"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 195418,
+          "byte_end_exclusive": 195462,
+          "line_start": 4094,
+          "line_end_inclusive": 4096,
+          "byte_count": 44,
+          "lf_count": 3,
+          "terminal_lf_count": 1,
+          "sha256": "6c801552f4e717c3d03250fc8a3fe6bb56b0a61d347d009e86d05a8b2005574e"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 237472,
+        "byte_end_exclusive": 237569,
+        "line_start": 4419,
+        "line_end_inclusive": 4422,
+        "byte_count": 97,
+        "lf_count": 4,
+        "terminal_lf_count": 1,
+        "sha256": "0605b7da90de7dc1f6b7766e4a3f7e7db720ac9ecfdc2d7dea331a18b0ef19e9"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 196036,
+          "byte_end_exclusive": 196133,
+          "line_start": 4105,
+          "line_end_inclusive": 4108,
+          "byte_count": 97,
+          "lf_count": 4,
+          "terminal_lf_count": 1,
+          "sha256": "0605b7da90de7dc1f6b7766e4a3f7e7db720ac9ecfdc2d7dea331a18b0ef19e9"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 237687,
+        "byte_end_exclusive": 237759,
+        "line_start": 4425,
+        "line_end_inclusive": 4427,
+        "byte_count": 72,
+        "lf_count": 3,
+        "terminal_lf_count": 1,
+        "sha256": "a94275ce69e716bf6910c8b01b006d50de1cbc5fa1f2ea6579e36d9bd4f80b4a"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 196251,
+          "byte_end_exclusive": 196323,
+          "line_start": 4111,
+          "line_end_inclusive": 4113,
+          "byte_count": 72,
+          "lf_count": 3,
+          "terminal_lf_count": 1,
+          "sha256": "a94275ce69e716bf6910c8b01b006d50de1cbc5fa1f2ea6579e36d9bd4f80b4a"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 239152,
+        "byte_end_exclusive": 239279,
+        "line_start": 4447,
+        "line_end_inclusive": 4451,
+        "byte_count": 127,
+        "lf_count": 5,
+        "terminal_lf_count": 1,
+        "sha256": "abbb7ad36c0d416d66dc744630797dbd3538ab67c39c33d6ba14aa41232c71b9"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 197746,
+          "byte_end_exclusive": 197873,
+          "line_start": 4133,
+          "line_end_inclusive": 4137,
+          "byte_count": 127,
+          "lf_count": 5,
+          "terminal_lf_count": 1,
+          "sha256": "abbb7ad36c0d416d66dc744630797dbd3538ab67c39c33d6ba14aa41232c71b9"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 239385,
+        "byte_end_exclusive": 239441,
+        "line_start": 4454,
+        "line_end_inclusive": 4457,
+        "byte_count": 56,
+        "lf_count": 4,
+        "terminal_lf_count": 1,
+        "sha256": "afe849eb8089b1813359c9dd09c359378373768fd6fa982ce51ab4ee4f093569"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 197979,
+          "byte_end_exclusive": 198035,
+          "line_start": 4140,
+          "line_end_inclusive": 4143,
+          "byte_count": 56,
+          "lf_count": 4,
+          "terminal_lf_count": 1,
+          "sha256": "afe849eb8089b1813359c9dd09c359378373768fd6fa982ce51ab4ee4f093569"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 239587,
+        "byte_end_exclusive": 239663,
+        "line_start": 4460,
+        "line_end_inclusive": 4463,
+        "byte_count": 76,
+        "lf_count": 4,
+        "terminal_lf_count": 1,
+        "sha256": "ecea0ad42d79e1694844b72917dbbf343ba4ba32746655549bb0cb6596b39bb4"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 198181,
+          "byte_end_exclusive": 198257,
+          "line_start": 4146,
+          "line_end_inclusive": 4149,
+          "byte_count": 76,
+          "lf_count": 4,
+          "terminal_lf_count": 1,
+          "sha256": "ecea0ad42d79e1694844b72917dbbf343ba4ba32746655549bb0cb6596b39bb4"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 240195,
+        "byte_end_exclusive": 240249,
+        "line_start": 4472,
+        "line_end_inclusive": 4474,
+        "byte_count": 54,
+        "lf_count": 3,
+        "terminal_lf_count": 1,
+        "sha256": "1649d282be168c965b3db661309e58a1d8e3517cfc713404c0912adc98e22149"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 198819,
+          "byte_end_exclusive": 198873,
+          "line_start": 4158,
+          "line_end_inclusive": 4160,
+          "byte_count": 54,
+          "lf_count": 3,
+          "terminal_lf_count": 1,
+          "sha256": "1649d282be168c965b3db661309e58a1d8e3517cfc713404c0912adc98e22149"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 240468,
+        "byte_end_exclusive": 240526,
+        "line_start": 4478,
+        "line_end_inclusive": 4480,
+        "byte_count": 58,
+        "lf_count": 3,
+        "terminal_lf_count": 1,
+        "sha256": "58c6d843db1e8bef0b42ae792fa3ae3d81e402f42b60e88087901abc2ff3477e"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 199092,
+          "byte_end_exclusive": 199150,
+          "line_start": 4164,
+          "line_end_inclusive": 4166,
+          "byte_count": 58,
+          "lf_count": 3,
+          "terminal_lf_count": 1,
+          "sha256": "58c6d843db1e8bef0b42ae792fa3ae3d81e402f42b60e88087901abc2ff3477e"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 240894,
+        "byte_end_exclusive": 240985,
+        "line_start": 4488,
+        "line_end_inclusive": 4491,
+        "byte_count": 91,
+        "lf_count": 4,
+        "terminal_lf_count": 1,
+        "sha256": "2c343dd62643cd51c2efcc8cfe63474d99daf8a1d6d6cd40f04c8ddf7c07cc15"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 199518,
+          "byte_end_exclusive": 199609,
+          "line_start": 4174,
+          "line_end_inclusive": 4177,
+          "byte_count": 91,
+          "lf_count": 4,
+          "terminal_lf_count": 1,
+          "sha256": "2c343dd62643cd51c2efcc8cfe63474d99daf8a1d6d6cd40f04c8ddf7c07cc15"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 241156,
+        "byte_end_exclusive": 241219,
+        "line_start": 4495,
+        "line_end_inclusive": 4497,
+        "byte_count": 63,
+        "lf_count": 3,
+        "terminal_lf_count": 1,
+        "sha256": "7d251f58a53c6b3c4d76dc2a1809c033cd99194961d27a2f540b47ca2548d9a2"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 199810,
+          "byte_end_exclusive": 199873,
+          "line_start": 4181,
+          "line_end_inclusive": 4183,
+          "byte_count": 63,
+          "lf_count": 3,
+          "terminal_lf_count": 1,
+          "sha256": "7d251f58a53c6b3c4d76dc2a1809c033cd99194961d27a2f540b47ca2548d9a2"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 241386,
+        "byte_end_exclusive": 241460,
+        "line_start": 4500,
+        "line_end_inclusive": 4502,
+        "byte_count": 74,
+        "lf_count": 3,
+        "terminal_lf_count": 1,
+        "sha256": "1b73c34bca92637df8566b4783783453ebeffa3da197a744d2ab072e874c3fdb"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 200040,
+          "byte_end_exclusive": 200114,
+          "line_start": 4186,
+          "line_end_inclusive": 4188,
+          "byte_count": 74,
+          "lf_count": 3,
+          "terminal_lf_count": 1,
+          "sha256": "1b73c34bca92637df8566b4783783453ebeffa3da197a744d2ab072e874c3fdb"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 241547,
+        "byte_end_exclusive": 241624,
+        "line_start": 4505,
+        "line_end_inclusive": 4508,
+        "byte_count": 77,
+        "lf_count": 4,
+        "terminal_lf_count": 1,
+        "sha256": "e4215ff52728b320500829003bd31c274af3da5bab676a59ae114a517ddb11c3"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 200201,
+          "byte_end_exclusive": 200278,
+          "line_start": 4191,
+          "line_end_inclusive": 4194,
+          "byte_count": 77,
+          "lf_count": 4,
+          "terminal_lf_count": 1,
+          "sha256": "e4215ff52728b320500829003bd31c274af3da5bab676a59ae114a517ddb11c3"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 241647,
+        "byte_end_exclusive": 241745,
+        "line_start": 4510,
+        "line_end_inclusive": 4513,
+        "byte_count": 98,
+        "lf_count": 4,
+        "terminal_lf_count": 1,
+        "sha256": "efa4bc62af753b2255f5a5516e7cbc95a6b31349a8889602aa03ce909a27b91a"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 200301,
+          "byte_end_exclusive": 200399,
+          "line_start": 4196,
+          "line_end_inclusive": 4199,
+          "byte_count": 98,
+          "lf_count": 4,
+          "terminal_lf_count": 1,
+          "sha256": "efa4bc62af753b2255f5a5516e7cbc95a6b31349a8889602aa03ce909a27b91a"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 242030,
+        "byte_end_exclusive": 242157,
+        "line_start": 4520,
+        "line_end_inclusive": 4524,
+        "byte_count": 127,
+        "lf_count": 5,
+        "terminal_lf_count": 1,
+        "sha256": "c6c74d63931510cce673ef740b7afdab8bb5a3865d40f9e31b53ec669d13575d"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 200684,
+          "byte_end_exclusive": 200811,
+          "line_start": 4206,
+          "line_end_inclusive": 4210,
+          "byte_count": 127,
+          "lf_count": 5,
+          "terminal_lf_count": 1,
+          "sha256": "c6c74d63931510cce673ef740b7afdab8bb5a3865d40f9e31b53ec669d13575d"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 242403,
+        "byte_end_exclusive": 242488,
+        "line_start": 4529,
+        "line_end_inclusive": 4532,
+        "byte_count": 85,
+        "lf_count": 4,
+        "terminal_lf_count": 1,
+        "sha256": "edae16cdb1fa72bd4d3b4eff508f5eb6a30f1bcb1b1b990ab2a4cd86d210859a"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 201087,
+          "byte_end_exclusive": 201172,
+          "line_start": 4215,
+          "line_end_inclusive": 4218,
+          "byte_count": 85,
+          "lf_count": 4,
+          "terminal_lf_count": 1,
+          "sha256": "edae16cdb1fa72bd4d3b4eff508f5eb6a30f1bcb1b1b990ab2a4cd86d210859a"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 242626,
+        "byte_end_exclusive": 242697,
+        "line_start": 4535,
+        "line_end_inclusive": 4538,
+        "byte_count": 71,
+        "lf_count": 4,
+        "terminal_lf_count": 1,
+        "sha256": "711c354a61cb8be365b59f7704c7c0f6fe982dcaf6e6ad01782dc8e7ede4eeff"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 201310,
+          "byte_end_exclusive": 201381,
+          "line_start": 4221,
+          "line_end_inclusive": 4224,
+          "byte_count": 71,
+          "lf_count": 4,
+          "terminal_lf_count": 1,
+          "sha256": "711c354a61cb8be365b59f7704c7c0f6fe982dcaf6e6ad01782dc8e7ede4eeff"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 242697,
+        "byte_end_exclusive": 242797,
+        "line_start": 4539,
+        "line_end_inclusive": 4542,
+        "byte_count": 100,
+        "lf_count": 4,
+        "terminal_lf_count": 1,
+        "sha256": "7568a59c255d1a66fd788e74df1e5925528aeabd3d349b94c81fa7e29390c91c"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 201381,
+          "byte_end_exclusive": 201481,
+          "line_start": 4225,
+          "line_end_inclusive": 4228,
+          "byte_count": 100,
+          "lf_count": 4,
+          "terminal_lf_count": 1,
+          "sha256": "7568a59c255d1a66fd788e74df1e5925528aeabd3d349b94c81fa7e29390c91c"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 242797,
+        "byte_end_exclusive": 242872,
+        "line_start": 4543,
+        "line_end_inclusive": 4546,
+        "byte_count": 75,
+        "lf_count": 4,
+        "terminal_lf_count": 1,
+        "sha256": "e5b1920e1a900dd26eb62a5619915709d0181a9c89abba2be16292650d583cd2"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 201481,
+          "byte_end_exclusive": 201556,
+          "line_start": 4229,
+          "line_end_inclusive": 4232,
+          "byte_count": 75,
+          "lf_count": 4,
+          "terminal_lf_count": 1,
+          "sha256": "e5b1920e1a900dd26eb62a5619915709d0181a9c89abba2be16292650d583cd2"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 243067,
+        "byte_end_exclusive": 243127,
+        "line_start": 4550,
+        "line_end_inclusive": 4552,
+        "byte_count": 60,
+        "lf_count": 3,
+        "terminal_lf_count": 1,
+        "sha256": "24f298856d3b632731e07ee9f6ff0bcff438819edfa3fcd0557b067f0efe0fae"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 201751,
+          "byte_end_exclusive": 201811,
+          "line_start": 4236,
+          "line_end_inclusive": 4238,
+          "byte_count": 60,
+          "lf_count": 3,
+          "terminal_lf_count": 1,
+          "sha256": "24f298856d3b632731e07ee9f6ff0bcff438819edfa3fcd0557b067f0efe0fae"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 243937,
+        "byte_end_exclusive": 244024,
+        "line_start": 4566,
+        "line_end_inclusive": 4569,
+        "byte_count": 87,
+        "lf_count": 4,
+        "terminal_lf_count": 1,
+        "sha256": "0587140e4d04ab03b6ea7cb1bc8601e54552fcfb6bdd6336cdc502d87dff0e03"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 202651,
+          "byte_end_exclusive": 202738,
+          "line_start": 4252,
+          "line_end_inclusive": 4255,
+          "byte_count": 87,
+          "lf_count": 4,
+          "terminal_lf_count": 1,
+          "sha256": "0587140e4d04ab03b6ea7cb1bc8601e54552fcfb6bdd6336cdc502d87dff0e03"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 244304,
+        "byte_end_exclusive": 244431,
+        "line_start": 4575,
+        "line_end_inclusive": 4578,
+        "byte_count": 127,
+        "lf_count": 4,
+        "terminal_lf_count": 1,
+        "sha256": "86880de784ff0c9a932cbeccd937014f8d75a3f337cdd4504613f1baddd6d797"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 203018,
+          "byte_end_exclusive": 203145,
+          "line_start": 4261,
+          "line_end_inclusive": 4264,
+          "byte_count": 127,
+          "lf_count": 4,
+          "terminal_lf_count": 1,
+          "sha256": "86880de784ff0c9a932cbeccd937014f8d75a3f337cdd4504613f1baddd6d797"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 244464,
+        "byte_end_exclusive": 244559,
+        "line_start": 4580,
+        "line_end_inclusive": 4583,
+        "byte_count": 95,
+        "lf_count": 4,
+        "terminal_lf_count": 1,
+        "sha256": "83683788a01069d054a64b6cd2489282a902f919159f59ff6786e9d0736f89b5"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 203178,
+          "byte_end_exclusive": 203273,
+          "line_start": 4266,
+          "line_end_inclusive": 4269,
+          "byte_count": 95,
+          "lf_count": 4,
+          "terminal_lf_count": 1,
+          "sha256": "83683788a01069d054a64b6cd2489282a902f919159f59ff6786e9d0736f89b5"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 244813,
+        "byte_end_exclusive": 244907,
+        "line_start": 4588,
+        "line_end_inclusive": 4591,
+        "byte_count": 94,
+        "lf_count": 4,
+        "terminal_lf_count": 1,
+        "sha256": "5ba47dfe3eecac5df38c442c83dab97f1e4da036230cb5326d8bbeabf5febe62"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 203557,
+          "byte_end_exclusive": 203651,
+          "line_start": 4274,
+          "line_end_inclusive": 4277,
+          "byte_count": 94,
+          "lf_count": 4,
+          "terminal_lf_count": 1,
+          "sha256": "5ba47dfe3eecac5df38c442c83dab97f1e4da036230cb5326d8bbeabf5febe62"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 245200,
+        "byte_end_exclusive": 245276,
+        "line_start": 4597,
+        "line_end_inclusive": 4600,
+        "byte_count": 76,
+        "lf_count": 4,
+        "terminal_lf_count": 1,
+        "sha256": "e5097f9f279651aea24da00a594fa7d4cb0c25c77306237d96f06bcf0043e2db"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 203944,
+          "byte_end_exclusive": 204020,
+          "line_start": 4283,
+          "line_end_inclusive": 4286,
+          "byte_count": 76,
+          "lf_count": 4,
+          "terminal_lf_count": 1,
+          "sha256": "e5097f9f279651aea24da00a594fa7d4cb0c25c77306237d96f06bcf0043e2db"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 245334,
+        "byte_end_exclusive": 245448,
+        "line_start": 4602,
+        "line_end_inclusive": 4606,
+        "byte_count": 114,
+        "lf_count": 5,
+        "terminal_lf_count": 1,
+        "sha256": "4b7e62f7117b76082f561006935fc9b39432d33917fe9a5dac0731f01e8935ed"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 204078,
+          "byte_end_exclusive": 204192,
+          "line_start": 4288,
+          "line_end_inclusive": 4292,
+          "byte_count": 114,
+          "lf_count": 5,
+          "terminal_lf_count": 1,
+          "sha256": "4b7e62f7117b76082f561006935fc9b39432d33917fe9a5dac0731f01e8935ed"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 245513,
+        "byte_end_exclusive": 245576,
+        "line_start": 4608,
+        "line_end_inclusive": 4610,
+        "byte_count": 63,
+        "lf_count": 3,
+        "terminal_lf_count": 1,
+        "sha256": "6b93579a53c4c5b6c9b3a348a58037958fc33467b2971e6dc82181790dec2bf2"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 204257,
+          "byte_end_exclusive": 204320,
+          "line_start": 4294,
+          "line_end_inclusive": 4296,
+          "byte_count": 63,
+          "lf_count": 3,
+          "terminal_lf_count": 1,
+          "sha256": "6b93579a53c4c5b6c9b3a348a58037958fc33467b2971e6dc82181790dec2bf2"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 245583,
+        "byte_end_exclusive": 245700,
+        "line_start": 4612,
+        "line_end_inclusive": 4615,
+        "byte_count": 117,
+        "lf_count": 4,
+        "terminal_lf_count": 1,
+        "sha256": "8b118b5240f3eb49e42c17c1add9bb3790f24f2427fb5a19509c2d2817f737e4"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 204327,
+          "byte_end_exclusive": 204444,
+          "line_start": 4298,
+          "line_end_inclusive": 4301,
+          "byte_count": 117,
+          "lf_count": 4,
+          "terminal_lf_count": 1,
+          "sha256": "8b118b5240f3eb49e42c17c1add9bb3790f24f2427fb5a19509c2d2817f737e4"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 246480,
+        "byte_end_exclusive": 246543,
+        "line_start": 4627,
+        "line_end_inclusive": 4630,
+        "byte_count": 63,
+        "lf_count": 4,
+        "terminal_lf_count": 1,
+        "sha256": "ef88979796b84505ba38e55b5e8572be381e82cfe029561ccf5d67c461eff892"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 205254,
+          "byte_end_exclusive": 205317,
+          "line_start": 4313,
+          "line_end_inclusive": 4316,
+          "byte_count": 63,
+          "lf_count": 4,
+          "terminal_lf_count": 1,
+          "sha256": "ef88979796b84505ba38e55b5e8572be381e82cfe029561ccf5d67c461eff892"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 246913,
+        "byte_end_exclusive": 247009,
+        "line_start": 4637,
+        "line_end_inclusive": 4640,
+        "byte_count": 96,
+        "lf_count": 4,
+        "terminal_lf_count": 1,
+        "sha256": "d787e2147051a6ae635ac0b30dbb83f5d2db253feb1206fb495658ca99d4bc60"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 205687,
+          "byte_end_exclusive": 205783,
+          "line_start": 4323,
+          "line_end_inclusive": 4326,
+          "byte_count": 96,
+          "lf_count": 4,
+          "terminal_lf_count": 1,
+          "sha256": "d787e2147051a6ae635ac0b30dbb83f5d2db253feb1206fb495658ca99d4bc60"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 248621,
+        "byte_end_exclusive": 248704,
+        "line_start": 4664,
+        "line_end_inclusive": 4667,
+        "byte_count": 83,
+        "lf_count": 4,
+        "terminal_lf_count": 1,
+        "sha256": "0f1cfb4fb055b5a90c71f30aa39fc8e2be051dfaeb2c7e557692b7bd811956d8"
+      },
+      "current_occurrences": [
+        {
+          "byte_start": 207392,
+          "byte_end_exclusive": 207475,
+          "line_start": 4350,
+          "line_end_inclusive": 4353,
+          "byte_count": 83,
+          "lf_count": 4,
+          "terminal_lf_count": 1,
+          "sha256": "0f1cfb4fb055b5a90c71f30aa39fc8e2be051dfaeb2c7e557692b7bd811956d8"
+        }
+      ]
+    },
+    {
+      "original": {
+        "byte_start": 255568,
+        "byte_end_exclusive": 255641,
+        "line_start": 4763,
+        "line_end_inclusive": 4766,
+        "byte_count": 73,
+        "lf_count": 4,
+        "terminal_lf_count": 1,
+        "sha256": "6c552bdb2dc92d2b2447bb9b8e880f0a2156204f1aa0f03758cc04bda2a013ba"
+      },

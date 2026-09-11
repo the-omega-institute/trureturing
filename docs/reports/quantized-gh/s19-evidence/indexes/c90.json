@@ -1,0 +1,12 @@
+{
+  "schema": "s19-evidence-entry-v1",
+  "resource": "C90",
+  "logical_path": "C90-pro-gram-notation-addendum-visible-envelope-c90-0910.json",
+  "original": {"bytes": 27361, "sha256": "fbc480245062600a3d50b79ffc96b53cd34e1e7ad480b6d1e58953a837234d76", "lf": 100, "terminal_lf": 0, "lines": 101},
+  "origin": {"archive_member": "primary/C90-pro-gram-notation-addendum-visible-envelope-c90-0910.json"},
+  "contract": "docs/reports/quantized-gh/s19-evidence/README.md",
+  "interpretation": "Archive of the complete named original resource. Parts are contiguous raw UTF-8 slices; parse JSON only after reconstruction. Historical fields retain their original owner and values.",
+  "parts": [
+    {"ordinal": 1, "path": "docs/reports/quantized-gh/s19-evidence/raw/c90-fbc480245062/group-001/part-0001-fbc480245062.txt", "byte_start": 0, "byte_end_exclusive": 27361, "line_start": 1, "line_end_inclusive": 101, "bytes": 27361, "sha256": "fbc480245062600a3d50b79ffc96b53cd34e1e7ad480b6d1e58953a837234d76", "lf": 100, "terminal_lf": 0, "lines": 101, "context": "\"conclusion\": {"}
+  ]
+}

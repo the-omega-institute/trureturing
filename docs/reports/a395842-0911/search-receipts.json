@@ -1,0 +1,58 @@
+[
+  {
+    "name": "oeis-a395842",
+    "url": "https://oeis.org/search?q=id:A395842&fmt=text",
+    "status": 200,
+    "bytes": 2353,
+    "sha256": "997d71f7041741b4b773bd914725af7b71b0af4645372eaedee7fc4bfe212816"
+  },
+  {
+    "name": "oeis-a177775",
+    "url": "https://oeis.org/search?q=id:A177775&fmt=text",
+    "status": 200,
+    "bytes": 2465,
+    "sha256": "6efaa696873790426459540653dbc76ba4f736a0f99aeab16adb1f9834565799"
+  },
+  {
+    "name": "arxiv",
+    "url": "https://export.arxiv.org/api/query?search_query=all%3AA395842%20OR%20all%3AA177775&max_results=20",
+    "status": 200,
+    "bytes": 726,
+    "sha256": "4c63d8f8a87b7ff639afc3ec70d5b13d7c5f6171f98580195c002f479c561c80"
+  },
+  {
+    "name": "loogle",
+    "url": "https://loogle.lean-lang.org/json?q=%22PowerSeries%22%2C+%22subst%22",
+    "status": 200,
+    "bytes": 72275,
+    "sha256": "ef80e6cdd72e199285a717ab5baa9b7b7b21792c5c5494c62ea8a56fae654bb9"
+  },
+  {
+    "name": "github-lean",
+    "url": "https://api.github.com/search/repositories?q=Lean+power+series+composition",
+    "status": 200,
+    "bytes": 55,
+    "sha256": "4af480b8ee5b87b369a76c49bd22c9a783908272ebffbe97898f8ab0f0772a5f"
+  },
+  {
+    "name": "github-a395842",
+    "url": "https://api.github.com/search/repositories?q=A395842",
+    "status": 200,
+    "bytes": 55,
+    "sha256": "4af480b8ee5b87b369a76c49bd22c9a783908272ebffbe97898f8ab0f0772a5f"
+  },
+  {
+    "name": "web-phrase",
+    "url": "https://www.google.com/search?q=%22iterated+composition%22+%22diagonal%22+%22power+series%22+even",
+    "status": 200,
+    "bytes": 92466,
+    "sha256": "8808909c1f0a2b23f70c4a8e1e6c4d6e2a6f17ad5940733368c2322630233944"
+  },
+  {
+    "name": "web-number",
+    "url": "https://www.google.com/search?q=%22A395842%22+proof",
+    "status": 200,
+    "bytes": 92300,
+    "sha256": "d277f65ca7033855f5fbc31e0dd1fd1031d8a66bfc57eb7d0c24a6d13d677b90"
+  }
+]

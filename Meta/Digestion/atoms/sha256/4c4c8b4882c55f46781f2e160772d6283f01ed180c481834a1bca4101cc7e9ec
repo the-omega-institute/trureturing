@@ -1,0 +1,13 @@
+**命题 48（含时间剖面的更新与充分性，repo-derived）。** 对非零格作下表的系数推送；若多个格映到同格，系数相加。写 $a=(p,\epsilon,r,n)$，并令
+
+$$
+\begin{aligned}
+a\diamond_t a'&=(p+p',\epsilon\epsilon',
+ \operatorname{pair}(r,r'),\max(n,n')+1),\\
+\tau_k(a)&=(p,\epsilon,r,n+k),\qquad
+\tau_k[U]=\{\tau_k(v):v\in U\}.
+\end{aligned}
+$$
+
+| 操作 | 剖面推送 |
+| --- | --- |

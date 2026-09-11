@@ -1,0 +1,39 @@
+**28.4 正支持与饱和所需单调性。** 对 \(x\in\mathbb R^3\) 定义
+\[
+\bar x=\tfrac13\sum_i x_i,\qquad
+\Pi x=x-\bar x\mathbf1,\qquad
+\ell(x)=\bar x-\|\Pi x\|/\sqrt6.
+\]
+第 27 节已证明它的精确等号分类;此处只重述所需的自足范数步骤。
+因为 \(\|\Pi e_i\|=\sqrt{2/3}\),对 \(u\ge0\),三角不等式给
+\[
+\ell(x+ue_i)-\ell(x)
+\ge u/3-u\|\Pi e_i\|/\sqrt6=0.
+\]
+当 \(u=0\) 恒等;当 \(u>0\),取等恰为 \(\Pi x=\lambda\Pi e_i\)、\(\lambda\ge0\),
+即三角等号的非负共线情形。因此 \(\ell\) 逐坐标非减。
+若 \(x\) 是薄层中的实际角点,则 \(\bar x\in I\)、\(\mu\ge\bar x\),
+逐项 \(\delta_i\le|x_i-\bar x|\)。故
+\[
+L\ge\mu-\|\Pi x\|/\sqrt6
+=\ell(x)+(\mu-\bar x)\ge\ell(c)\ge\ell(T\mathbf1)=T.
+\]
+这与 primary 从 \(\delta_i\le|x_i-\mu|\) 和三角不等式得到的较弱式
+\(L\ge\ell(x)+(1-1/\sqrt2)(\mu-\bar x)\ge T\) 一致。
+于是 \(H\ge L\ge T\ge\log2\),包括 \(\rho=0\) 的情形。
+
+在正支持域 \(\mu-\rho>0\)、\(\rho\ge0\),令
+\(F(\mu,\rho)=f(\mu+2\rho)+2f(\mu-\rho)\)。直接微分得
+\[
+f'(x)=\frac1{e^x-1}>0,\qquad
+f''(x)=-\frac{e^x}{(e^x-1)^2}<0,
+\]
+\[
+F_\mu=f'(H)+2f'(L)>0,\qquad
+F_\rho=2\bigl(f'(H)-f'(L)\bigr)\le0.
+\]
+后式在 \(\rho=0\) 为等号,在 \(\rho>0\) 严格负;无需在零距离处微分范数。
+固定 \(M_1\) 而提高可容许的 \(M_0\) 时,区间缩小,各距离和 \(\rho\) 非减,
+所以 \(\Psi\) 非增、\(G\) 非减。中间区间仍含保留角点,正支持一直有效。
+这是非严格单调性,不能把所有饱和步骤都说成严格。证毕。
+

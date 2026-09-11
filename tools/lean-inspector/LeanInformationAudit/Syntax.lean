@@ -211,14 +211,17 @@ private def elabRegisterInformationTheorem : CommandElab := fun stx => do
     unless validLegacy do
       throwError "IE-C006 StatementProofMismatch: {theoremName}"
     checkRealizationBundle theoremName arenaName legacyArgs[2]! primitiveTerm
-    let unitName := theoremName.str theoremUnitSuffix
-    let unitId := absoluteIdentFrom theoremId unitName
+    let unitName := localCompanionName (← getEnv) theoremName theoremUnitSuffix
+    let unitId := absoluteIdentFrom theoremId (privateToUserName unitName)
     let unitType <- `(term|
       D5.S3.ConceptDynamics.InformationEscape.TheoremUnit ($arenaId:ident).toArena)
     let unitValue <- `(term|
       D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit
         $realizationId:ident $theoremId:ident)
-    elabCommand (← `(command| def $unitId : $unitType := $unitValue))
+    if isPrivateName unitName then
+      elabCommand (← `(command| private def $unitId : $unitType := $unitValue))
+    else
+      elabCommand (← `(command| def $unitId : $unitType := $unitValue))
     registerEntry {
       theoremName
       unitName

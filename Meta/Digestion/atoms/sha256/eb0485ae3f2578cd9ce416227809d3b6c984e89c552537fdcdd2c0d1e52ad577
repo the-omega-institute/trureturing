@@ -1,0 +1,19 @@
+**27.17 保留第 26 节的稳定 25 槽,不采纳另一排列。** 对原登记的
+\(0\le t<56\)、\(0\le b_0,b_1,b_2\le15\),继续精确使用
+\[
+\mathrm{box\_id}=4096t+256b_0+16b_1+b_2,\qquad
+\mathrm{row\_id}=25\,\mathrm{box\_id}+\mathrm{slot}.
+\]
+这里只为槽布局使用 \(i=0,1,2\),坐标与素数标签始终成对。
+槽 \(0,\ldots,6\) 是相邻对,令 \(s=\mathrm{slot}+1\),对应
+\((\beta_{s-1},\beta_s)\)。槽 \(7,\ldots,24\) 继续为
+\[
+r=\mathrm{slot}-7,\quad j=1+\lfloor r/3\rfloor,\quad i=r\bmod3,
+\qquad (\beta_{j-1},\,3(c_i+d_i)-\beta_{j-1}),
+\]
+即 \(\mathrm{slot}=7+3(j-1)+i\)、\(j=1,\ldots,6\)。全部 eligibility 条件仍是 26.18/26.21 的原条件。
+primary 另写的 `7+6*(i-1)+(j-1)` 使用 \(i=1,2,3\)、\(j=1,\ldots,6\),
+是同一对集合的另一种排列,本次只披露为**未采用的呈现**,不替换任何既有 raw ID。
+例如同一坐标行 \(i=0\)、\(j=2\) 在稳定布局为 slot 10,
+在该替代呈现以 \(i=1\) 表示时为 slot 8;两种编号不能互换而不说明。
+

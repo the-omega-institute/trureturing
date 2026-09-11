@@ -1,0 +1,50 @@
+**30.78 定理及证明（对偶强制常数、约数重排与三种模式）。** Let
+\[
+T_N=\sum_{n=1}^NC_n,\qquad\delta_{\rm dual}(N)=1/T_N.
+\]
+For complex \(a\in\mathbb C^N\), biorthogonality and the individual norm bounds give
+\[
+\sum_{n=1}^N|a_n|^2=\sum_{n=1}^N|\Lambda_n(Va)|^2
+ \le\left(\sum_{n=1}^NC_n\right)\|Va\|^2.
+\]
+Hence \(F_N\succeq\delta_{\rm dual}(N)I\). This is a finite sum of individual inequalities,
+not a constant-one Bessel inequality or an orthogonal-projection argument.
+Writing \(n=dr\), reorder the entire finite divisor sum to obtain
+\[
+T_N=4\sum_{d=1}^N(5d^2+1/6)\sum_{r=1}^{\lfloor N/d\rfloor}\mu(r)^2
+ \le20N\sum_{d=1}^Nd+\frac{2N}3\sum_{d=1}^N\frac1d
+ =10N^2(N+1)+\frac{2N}3\sum_{d=1}^N\frac1d.
+\]
+Here \(\mu(r)^2\le1\) and \(\lfloor N/d\rfloor\le N/d\).
+Using \(N+1\le2N\), \(\sum_{d=1}^N1/d\le N\), and \(N^2\le N^3\), gives
+\[
+T_N\le20N^3+(2/3)N^2\le(62/3)N^3,\qquad
+\delta_{\rm dual}(N)\ge\delta_{\rm poly}(N):=\frac3{62N^3}.
+\]
+All are finite rational inequalities, with no prime-distribution or asymptotic input.
+The exact integer expression is
+\[
+U_N^{\rm dual}=\sum_{n=1}^N\sum_{d\mid n}\mu(n/d)^2(30d^2+1)\in\mathbb N_+,
+\quad T_N=\frac23U_N^{\rm dual},\quad\delta_{\rm dual}(N)=\frac3{2U_N^{\rm dual}}.
+\]
+Finite division and factorization determine \(\mu\) and the sums; trial divisors bounded by the
+input integer already give a terminating definition. The polynomial constant dispenses even with
+that sum. Define the following fixed modes, each from \(N\) alone:
+\[
+\kappa_N^{(0)}=\delta_{\rm poly}(N),\qquad
+\kappa_N^{(1)}=\delta_{\rm dual}(N),\qquad
+\kappa_N^{(2)}=\max(\delta_{\rm old}(N),\delta_{\rm dual}(N)).
+\]
+Each is positive rational and \(F_N\succeq\kappa_N^{(s)}I\). The maximum is valid because
+both inequalities hold separately; adding the constants is not justified. Modes zero and one
+require no determinant; mode two retains the old determinant computation.
+At \(N=1\), \(C_1=T_1=62/3\), so both new constants equal \(3/62\), weaker than
+\(\delta_{\rm old}(1)=1/6\). They are not uniformly improvements of the old numerical bound.
+For the scaled columns \(h_k=f_k/k\) one must instead use
+\[
+\left\|\sum_{k=1}^Nb_kh_k\right\|^2
+ \ge\kappa_N^{(s)}\sum_k\frac{|b_k|^2}{k^2}
+ \ge\frac{\kappa_N^{(s)}}{N^2}\|b\|_2^2.
+\]
+The unscaled constant cannot be transferred unchanged to the scaled coefficient norm.
+

@@ -1,0 +1,13 @@
+**定理 70（自然数的精确 Zeckendorf 算术）。** \(\operatorname{val}:\mathsf W_Z\to\omega\) 与 \(\zeta\) 互逆；补零与截尾给出有限数字和规范总行的双射。置
+\[
+\begin{aligned}
+0_Z&=\zeta(0),&1_Z&=\zeta(1),&S_Zu&=\operatorname{Norm}(\operatorname{pad}(u)+e_0),\\
+u<_Zv&\iff\operatorname{val}(u)<\operatorname{val}(v),\\
+u+_Zv&=\operatorname{Norm}(\operatorname{pad}(u)+\operatorname{pad}(v)),\\
+u\cdot_Zv&=\operatorname{Norm}\left(\left(\sum_{i,j}G_iG_ju(i)v(j)\right)e_0\right).
+\end{aligned}
+\]
+有限数字的值在其定义域外取零。于是 \(\zeta\) 保持并反映零、一、后继、序、加法与乘法。它们满足通常自然数递归等式及每个带参数归纳实例。相同运算沿 \(u\mapsto\langle0,u\rangle\) 运输到 \(\mathsf N_Z\)。有限数字及自然叶均属于 \(HF\)，而每个总行 \(s(n)\) 的函数图均无限。
+
+**证明。** 规范行的有限支撑使截尾有定义；有限数字的末位条件使截尾补零后仍为原数字。定理 10 的唯一性给出两个值映射的逆关系。对上述每个输出取值，分别得到 \(0,1,\operatorname{val}(u)+1,\operatorname{val}(u)+\operatorname{val}(v),\operatorname{val}(u)\operatorname{val}(v)\)，然后用单射性带回等式。特别地，\(u+_Z0_Z=u\)、\(u+_ZS_Zv=S_Z(u+_Zv)\)、\(u\cdot_Z0_Z=0_Z\)、\(u\cdot_ZS_Zv=u\cdot_Zv+_Zu\)。将任一给定谓词沿 \(\zeta\) 拉回 \(\omega\)，自然数归纳即给该实例。有限函数图的各项是有限序数的有限配对，故为遗传有限；总图则对每个 \(j\in\omega\) 都含不同的 \(\langle j,s(n)_j\rangle\)，即使 \(n=0\) 也无限。乘法中的系数使用 \(G_iG_j\)，不能换成 \(G_{i+j}\)，后者已由定理 28 反驳。定义 11 的素数指数表规范相加满足 \(K(mn)=\nu(K(m)+K(n))\)，其运算所表示的是正整数乘法，与这里自然数字的加法有不同的比较映射。证毕。
+

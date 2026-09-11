@@ -1,0 +1,18 @@
+### 31.3 附录实际命令与有限收据
+
+本席在上述工作树实际运行下列原文命令（2026-09-10，本批执行文件对应本卷唯一 Python 块）；退出码 **0**，stderr 为空。复用 `Rich/add/mul/neg/temporal/filt`，R1 允许的 `pr3_` 代码只插在既有最终打印之前。
+
+```sh
+sed -n '/^```python$/,/^```$/p' docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md | sed '1d;$d' | python3 -
+```
+
+stdout 中 `pr3_` 两行及最终行原文如下；原有检查也在同一次执行中通过：
+
+```text
+pr3_source: samples=48 updates=240 witnesses=6 brackets=28,32 B1=distinct ordered_pair=distinct
+pr3_causal: updates=551 product_antichains=48 targets=Omega bare_probes=16 P_plus=1,0 legal_probes=1200 mobius_profiles=51 mobius_coefficients=1200 bounded_contexts=273 B2_time=2,1 strict_successor=1,0 edge=0,1 marginals=1,2 redundant_insertions=12 timed_nonisomorphism=True
+ALL_FINITE_CHECKS_PASSED
+```
+
+这些计数由实际执行累加。随机种子为 `20260910`；随机当前区域大小取 0、2、4，额外档案点数取 0、1、2，兼容时标的边取传递闭包，选择任意子集。48 个随机样本逐字节检查来源更新，并核对因果剖面更新、乘积当前反链与无出边；额外档案目标见证断言因果筛选只遍历 `Omega`。51 个反演对象为 48 个随机样本加 D6 两对象与当前区域外目标见证，合法探针恢复两种选择位，采用规范序列化字节逐格比较。B2 的 273 个有界上下文为 16 个固定基本操作在深度 0–2 的全部单孔复合；一般上下文结论由命题 46 证明。D6 的补集裸探针只要求两侧相等，§28.3 已列其非零情形。有限收据不声明枚举全部载体、上下文、时间属性签名或历史同构类型；一般必要性已由正文证明，未启用 `pr3_mobius_finite` 降级形态。
+

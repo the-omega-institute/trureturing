@@ -1,0 +1,768 @@
+      "ordered_parent_chain_count": 38,
+      "inherited_root_child_bindings": {
+        "ordered_chains": {
+          "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/ordered_current_chains"
+        },
+        "older_pair_records": {
+          "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/current_existing_bindings"
+        },
+        "I36_pair_records": {
+          "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/new_pairs"
+        },
+        "membership": {
+          "map": "docs/reports/quantized-gh/theory-section12-migration-s19-0911.json",
+          "pointer": "/canonical/reachable_composition/inherited_pair_inventory"
+        },
+        "resolution": "Resolve each older-pair map/pointer to its immutable CAS/YAML record; resolve each ordered_children_binding to the I33 ordered child records. I36 new_pairs includes exact parsed YAML. Apply the membership exclusion before forming the current closure.",
+        "coverage_gids_and_children_are_unchanged_for_inherited_pairs": true
+      },
+      "new_root_child_binding": {
+        "atom_id": "bd3a218a6615f5552f81a09ef9b439219bd103e9686f6d739c3069d521178f33",
+        "coverage_gids": [],
+        "children": []
+      }
+    },
+    "historical_composition": {
+      "all_old_pair_records_and_chains": "Referenced through all three immutable maps; no giant inventory copied. Their identities are bound above.",
+      "old_current_pair_count": 354,
+      "new_current_pair_count": 354,
+      "old_pair_replaced": 1,
+      "new_pair_added": 1,
+      "old_ordered_chain_count": 38,
+      "new_ordered_chain_count": 38,
+      "all_old_cas_yaml_lf_variants": "preserved byte-for-byte",
+      "inventory_references": [
+        {
+          "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+          "pointer": "/historical_source_pairs"
+        },
+        {
+          "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+          "pointer": "/canonical_ingest/actual_added_pairs"
+        },
+        {
+          "map": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+          "pointer": "/canonical/pairs"
+        },
+        {
+          "map": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+          "pointer": "/canonical/bounded_historical_bindings"
+        },
+        {
+          "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/historical_composition"
+        },
+        {
+          "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/new_pairs"
+        },
+        {
+          "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/canonical/current_existing_bindings"
+        }
+      ],
+      "verification_scope": "Reuse preserved historical identities and prior checks; I42 parses every map record and verifies current byte spans/chain members against the unchanged source. Only the one I41 CAS/YAML pair is opened on disk. No historical CAS/YAML corpus scan is replayed."
+    },
+    "whitespace_and_addition_checks": {
+      "new_CAS": {
+        "command": "git diff --no-index --check /dev/null Meta/Digestion/atoms/sha256/bd3a218a6615f5552f81a09ef9b439219bd103e9686f6d739c3069d521178f33",
+        "exit_code": 3,
+        "diagnostic": "new blank line at EOF; producer byte preserved exactly"
+      },
+      "new_YAML": {
+        "command": "git diff --no-index --check /dev/null Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/bd3a218a6615f5552f81a09ef9b439219bd103e9686f6d739c3069d521178f33.yaml",
+        "exit_code": 1,
+        "diagnostic": "addition-only exit; no whitespace diagnostic"
+      },
+      "source_and_report": {
+        "command": "git diff --check -- <source> <report>",
+        "exit_code": 0,
+        "diagnostic": "clean scoped tracked diff"
+      },
+      "interpretation": "Exit 3 is the producer CAS blank-EOF diagnostic; exit 1 is the ordinary no-index addition result. Neither was normalized or repaired."
+    },
+    "producer_evidence_owner": "I41 historical execution only; I42 performed zero ingest."
+  },
+  "changed_paths": [
+    {
+      "status": " M",
+      "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "bytes": 337429,
+      "sha256": "82c4c836d0ba2a2cdcdbc27debc97b88f0c5eb779d95f41eecd4e0d3247f08c8",
+      "scope": "only section12 replacement; prefix/suffix exact"
+    },
+    {
+      "status": " M",
+      "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+      "bytes": 224423,
+      "sha256": "380990dd23fe36c960a6c5d78c2b96603e2067f27ee4672bc7d931e9793aaf5a",
+      "scope": "append-only archive"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/atoms/sha256/bd3a218a6615f5552f81a09ef9b439219bd103e9686f6d739c3069d521178f33",
+      "bytes": 2152,
+      "sha256": "bd3a218a6615f5552f81a09ef9b439219bd103e9686f6d739c3069d521178f33",
+      "scope": "producer-emitted CAS"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/bd3a218a6615f5552f81a09ef9b439219bd103e9686f6d739c3069d521178f33.yaml",
+      "bytes": 328,
+      "sha256": "8dcd5ca5aa56d0a72f4383c1c6dbcf101b8d74c709252b51b27383d761ea0887",
+      "parsed_yaml": {
+        "fingerprints": {
+          "raw_sha256": "sha256:bd3a218a6615f5552f81a09ef9b439219bd103e9686f6d739c3069d521178f33",
+          "normalized_sha256": "sha256:bd3a218a6615f5552f81a09ef9b439219bd103e9686f6d739c3069d521178f33"
+        },
+        "cas_ref": "sha256:bd3a218a6615f5552f81a09ef9b439219bd103e9686f6d739c3069d521178f33",
+        "coverage_gids": [],
+        "receipts": {
+          "unresolved_subitems": []
+        }
+      },
+      "scope": "producer-emitted YAML"
+    },
+    {
+      "status": "??",
+      "path": "docs/reports/quantized-gh/theory-section12-migration-s19-0911.json",
+      "identity_binding": "external result envelope full SHA256; no recursive self-hash"
+    }
+  ],
+  "verification": {
+    "source_prefix_suffix_exact": true,
+    "original_unit_exact_snapshot": true,
+    "report_prefix_exact": true,
+    "archive_outer_fence_longer_than_inner": true,
+    "source_after_ingest_unchanged": true,
+    "map_self_hash_external": true,
+    "no_manual_cas_yaml_edit": true,
+    "no_second_ingest": true,
+    "no_math_program_or_replay": true,
+    "git_status_at_map_creation": "unstaged allowed changes only listed in changed_paths",
+    "I42_fixed_structure": {
+      "all_262_current_units_partition_complete_source": true,
+      "all_38_current_chains_and_child_hashes_checked_from_source": true,
+      "all_259_numeric_LF_corrections_exact": true,
+      "all_source_recoveries_byte_exact": true,
+      "both_pre_I31_routes_equal": true,
+      "all_inherited_report_contracts_unchanged": true,
+      "pre_repair_inventory_parse": {
+        "I31": {
+          "nodes_by_type": {
+            "dict": 25436,
+            "str": 36872,
+            "int": 93717,
+            "bool": 3075,
+            "list": 6768,
+            "NoneType": 705
+          },
+          "span_records": 11560,
+          "resolved_map_references": 0
+        },
+        "I33": {
+          "nodes_by_type": {
+            "dict": 10782,
+            "str": 9525,
+            "int": 34523,
+            "bool": 792,
+            "list": 1851,
+            "NoneType": 9,
+            "float": 3
+          },
+          "span_records": 3155,
+          "resolved_map_references": 0
+        },
+        "I36": {
+          "nodes_by_type": {
+            "dict": 2252,
+            "str": 5085,
+            "int": 3317,
+            "list": 774,
+            "bool": 308,
+            "float": 4
+          },
+          "span_records": 470,
+          "resolved_map_references": 559
+        },
+        "I41_input_map": {
+          "nodes_by_type": {
+            "dict": 876,
+            "str": 2335,
+            "int": 1715,
+            "bool": 312,
+            "list": 92,
+            "NoneType": 1
+          },
+          "span_records": 266,
+          "resolved_map_references": 0
+        }
+      },
+      "all_308_I36_leaves_joined_to_current_proofs_or_provenance": true,
+      "all_30_I33_proof_primary_records_composed": true,
+      "all_21_original_S19_primary_table_rows_composed": true,
+      "scope": "Fixed current source/report/new-pair/JSON/Git verification. Historical canonical checks reused, not rescanned. No mathematical evaluator or renewed analytical approval."
+    }
+  },
+  "limitations": {
+    "inherited_reviews": "C105/R4 architecture and quality rejects remain historical; tests approval remains historical; this implementation is not independent approval.",
+    "delivery": "Caller sealing, fresh complete-current-source review, ordinary gates and exact downstream predecessor integration with ordered S19->S26 MERGED remain required. This map supplies structural composition, not integration, independent approval or delivery.",
+    "mathematics": "No RH, Lean, global classification promotion or new numerical certification is claimed.",
+    "other_inputs": "No C102/C104/C106/C107/C108/C111 or chapter31+ material imported.",
+    "standing_goal": "All 115 cumulative constraints and the original 51 success criteria remain active. C114 is independent and supplies no result to I42; no later-stage proof is adopted."
+  },
+  "external_binding": {
+    "contract": "The current complete map has no recursive self-hash. I42 result.json/conclusion/final_map supplies its single final byte count and SHA256 after all map edits. Every hash in repair_history is explicitly historical. The unchanged I33 report footer still binds I33 only."
+  },
+  "composition": {
+    "reference_contract": {
+      "paths": "All new map references use repository-relative filenames. Existing bare filenames resolve relative to docs/reports/quantized-gh/.",
+      "pointers": "RFC 6901 JSON pointers into the exact immutable map named in each reference. A collection reference incorporates every member, every nested proof/archival disposition and every accepted correction, not a summary of selected rows.",
+      "inherited_aliases": {
+        "I31": {
+          "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+          "pointer": ""
+        },
+        "I33": {
+          "map": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+          "pointer": ""
+        },
+        "I36": {
+          "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+          "pointer": ""
+        }
+      },
+      "external_primary_pointers": "Pointers inside inherited primary records remain relative to the exact primary input identified there. Their full mapping records are incorporated from the supplied immutable maps; external primary files and opaque log_ref contents are not reopened in I42.",
+      "coordinates": "Byte intervals are zero-based and half-open. Source positions require the named source version. Report positions are unchanged in every inherited map. LF counts are actual counts of LF bytes, including trailing counts; they are not booleans.",
+      "prior_claim_scope": "Historical claims, failures and limits remain attributed to their original stage. Structural composition is not renewed analytical approval of inherited proofs."
+    },
+    "source_versions": {
+      "I42_current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "bytes": 337429,
+        "lf": 6581,
+        "terminal_lf": 1,
+        "sha256": "82c4c836d0ba2a2cdcdbc27debc97b88f0c5eb779d95f41eecd4e0d3247f08c8"
+      },
+      "I41_original_I36_current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "bytes": 336935,
+        "lf": 6566,
+        "terminal_lf": 1,
+        "sha256": "432782df7785d000f46b9f4836d0e65d692da278ab74ebb270819f5bd7b44f93"
+      },
+      "I36_original_I33_current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "bytes": 274562,
+        "lf": 5452,
+        "terminal_lf": 1,
+        "sha256": "bc500324952d4c4b7ba8120745c6d061d86c0cff650565545b5da4136e5de804"
+      },
+      "I33_original_I31_current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "bytes": 238272,
+        "lf": 4983,
+        "terminal_lf": 1,
+        "sha256": "9393b391e41432651264bde9a4e4dfdcb9a9f0eeaa880ab0c4afe502e6967dce"
+      },
+      "pre_I31_original": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "bytes": 286339,
+        "lf": 5391,
+        "terminal_lf": 1,
+        "sha256": "59838eb016d5a88043e4f9ca4ffc3c999d85357762d078cf4f05168521ad0d18"
+      }
+    },
+    "source_recovery": {
+      "I41_original": {
+        "source_input": "I42_current",
+        "report_input": {
+          "map": "docs/reports/quantized-gh/theory-section12-migration-s19-0911.json",
+          "pointer": "/report/current"
+        },
+        "ordered_slices": [
+          {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 0,
+            "byte_end_exclusive": 27206,
+            "bytes": 27206,
+            "lf": 590,
+            "terminal_lf": 2,
+            "sha256": "b2af71204c5b11ceff54f8a215441cbbe3b05b609b27417e7f3a647482f9c2b2"
+          },
+          {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 222353,
+            "byte_end_exclusive": 224011,
+            "bytes": 1658,
+            "lf": 35,
+            "terminal_lf": 2,
+            "sha256": "3a2cc7373cd8a766c432edcdac16977105d48d9c19b0239c696cb8b15fa7ba57"
+          },
+          {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 29358,
+            "byte_end_exclusive": 337429,
+            "bytes": 308071,
+            "lf": 5941,
+            "terminal_lf": 1,
+            "sha256": "b1021f85535fe56acb722e2d8ad8d7b6a8b4a06620699345978150ec494ffe96"
+          }
+        ],
+        "expression": "current_source[0:27206] + current_report[222353:224011] + current_source[29358:337429]",
+        "output": "I41_original_I36_current",
+        "identity": {
+          "map": "docs/reports/quantized-gh/theory-section12-migration-s19-0911.json",
+          "pointer": "/composition/source_versions/I41_original_I36_current"
+        },
+        "inverse_partition": [
+          {
+            "original": [
+              0,
+              27206
+            ],
+            "current_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "current": [
+              0,
+              27206
+            ]
+          },
+          {
+            "original": [
+              27206,
+              28864
+            ],
+            "current_path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "current": [
+              222353,
+              224011
+            ]
+          },
+          {
+            "original": [
+              28864,
+              336935
+            ],
+            "current_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "current": [
+              29358,
+              337429
+            ]
+          }
+        ],
+        "archive_rule": "Copy only the 1658 payload bytes, including its two trailing LF. The separate delimiter LF and outer fences are outside the payload."
+      },
+      "I36_original": {
+        "source_input": "I41_original_I36_current",
+        "report_input": {
+          "map": "docs/reports/quantized-gh/theory-section12-migration-s19-0911.json",
+          "pointer": "/report/current"
+        },
+        "recipe": {
+          "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/recovery/original_i36_source"
+        },
+        "row_count": 3,
+        "output": "I36_original_I33_current",
+        "identity": {
+          "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/source/original"
+        }
+      },
+      "I33_original": {
+        "source_input": "I36_original_I33_current",
+        "report_input": {
+          "map": "docs/reports/quantized-gh/theory-section12-migration-s19-0911.json",
+          "pointer": "/report/current"
+        },
+        "recipe": {
+          "map": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+          "pointer": "/recovery/i33_original_source"
+        },
+        "row_count": 17,
+        "output": "I33_original_I31_current",
+        "identity": {
+          "map": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+          "pointer": "/source/original_i33"
+        }
+      },
+      "pre_I31_direct": {
+        "source_input": "I36_original_I33_current",
+        "report_input": {
+          "map": "docs/reports/quantized-gh/theory-section12-migration-s19-0911.json",
+          "pointer": "/report/current"
+        },
+        "recipe": {
+          "map": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+          "pointer": "/recovery/pre_i31_original_source"
+        },
+        "row_count": 798,
+        "output": "pre_I31_original",
+        "identity": {
+          "map": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+          "pointer": "/source/pre_i31_original"
+        }
+      },
+      "pre_I31_via_I31": {
+        "source_input": "I33_original_I31_current",
+        "report_input": {
+          "map": "docs/reports/quantized-gh/theory-section12-migration-s19-0911.json",
+          "pointer": "/report/current"
+        },
+        "recipe": {
+          "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+          "pointer": "/recovery_spans"
+        },
+        "row_count": 786,
+        "output": "pre_I31_original",
+        "identity": {
+          "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+          "pointer": "/original_source"
+        }
+      },
+      "recipe_semantics": "For every referenced recipe, traverse all rows in original.byte_start order. Read current slices from source_input when current.path is the source, otherwise from the unchanged current report. Check every original/current payload identity and disjoint exhaustive original coverage, then concatenate. Both pre-I31 routes yield exactly the same 286339 bytes.",
+      "earlier_composition_contract": {
+        "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+        "pointer": "/recovery/composition"
+      }
+    },
+    "position_transform": {
+      "input_version": "I41_original_I36_current",
+      "output_version": "I42_current",
+      "replacement_original": [
+        27206,
+        28864
+      ],
+      "replacement_current": [
+        27206,
+        29358
+      ],
+      "source_byte_delta_after_replacement": 494,
+      "source_lf_delta_after_replacement": 15,
+      "cases": [
+        {
+          "condition": "e <= 27206",
+          "original_span": "[s,e)",
+          "destination": "current source [s,e)",
+          "payload_hash": "unchanged"
+        },
+        {
+          "condition": "s >= 28864",
+          "original_span": "[s,e)",
+          "destination": "current source [s+494,e+494)",
+          "payload_hash": "unchanged"
+        },
+        {
+          "condition": "27206 <= s <= e <= 28864",
+          "original_span": "[s,e)",
+          "destination": "current report [222353+s-27206,222353+e-27206)",
+          "payload_hash": "unchanged; inactive original section12 bytes"
+        },
+        {
+          "condition": "all other nonempty spans intersecting the replacement",
+          "destination": "first reconstruct I41_original_I36_current by source_recovery/I41_original; verify the old whole-span hash on that reconstructed version",
+          "current_representation": "For a byte-preserving projection, split at original 27206 and 28864 and concatenate the ordered source/archive slices above. For a current mathematical address, use its current_unit_indices in the current unit inventory; its changed whole-span hash must be recomputed."
+        }
+      ],
+      "earlier_source_versions": "Do not apply +494 directly to I33 or I31 positions. For any historical source interval, intersect it with all original spans of the next inverse recipe, translate each intersection by current.byte_start-original.byte_start, retain report destinations unchanged and continue source destinations through the following recipes. Split crossings and retain ordered pieces. This composes every earlier byte disposition, including fragments now in archives.",
+      "forward_byte_projection_routes": {
+        "I33_original_I31_current": [
+          "I33_original",
+          "I36_original",
+          "I41_original"
+        ],
+        "I36_original_I33_current": [
+          "I36_original",
+          "I41_original"
+        ],
+        "I41_original_I36_current": [
+          "I41_original"
+        ],
+        "pre_I31_original": [
+          "pre_I31_via_I31",
+          "I33_original",
+          "I36_original",
+          "I41_original"
+        ]
+      },
+      "report_rule": "All inherited report prefixes, primary tables, raw archives, correction records and digest-hole coordinates retain exactly their original report positions."
+    },
+    "current_addresses": {
+      "dictionary": {
+        "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+        "pointer": "/addresses"
+      },
+      "address_count": 231,
+      "unit_inventory": {
+        "map": "docs/reports/quantized-gh/theory-section12-migration-s19-0911.json",
+        "pointer": "/canonical/current_source_units"
+      },
+      "unit_count": 262,
+      "join": "For every address, retain its kind and ordered current_unit_indices from I36. Resolve index i to this map canonical/current_source_units/i. Concatenate whole spans in that order. Use these current bytes for active mathematical proofs and attachments. I36 current_span belongs to I41_original_I36_current; for new addresses 30.52..30.85 I36 records only unit indices, which are sufficient and authoritative.",
+      "historical_addresses": [
+        {
+          "map": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+          "pointer": "/addresses"
+        },
+        {
+          "map": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+          "pointer": "/headings"
+        },
+        {
+          "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+          "pointer": "/original_numbered_entries"
+        },
+        {
+          "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+          "pointer": "/original_headings"
+        },
+        {
+          "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+          "pointer": "/structural_and_unnumbered_regions"
+        }
+      ],
+      "permanent_reservations": {
+        "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+        "pointer": "/permanent_reservations"
+      },
+      "section12": {
+        "historical_address": {
+          "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/addresses/12"
+        },
+        "current_whole_address": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 27076,
+          "byte_end_exclusive": 31143,
+          "bytes": 4067,
+          "lf": 79,
+          "terminal_lf": 2,
+          "sha256": "893a24d6eb5a399dca8ed54c0ecf42b5a7990c7482f7886d97e3c5c8787fc41d"
+        },
+        "ordered_unit_indices": [
+          25,
+          26,
+          27
+        ],
+        "old_operational_unit": {
+          "map": "docs/reports/quantized-gh/theory-section12-migration-s19-0911.json",
+          "pointer": "/report/append/payload"
+        },
+        "current_mathematical_unit": {
+          "map": "docs/reports/quantized-gh/theory-section12-migration-s19-0911.json",
+          "pointer": "/canonical/current_source_units/26"
+        },
+        "meaning": "The earlier whole chapter span crosses the replacement. Its old 3573-byte hash resolves on reconstructed I41-original source. The current 4067-byte chapter has its own identity; its sufficient endpoint-floor theorem is the exact I41 unit. All table, classification, witness and following analytic-tail bytes keep their earlier evidence status."
+      },
+      "LF_variant_30_51": {
+        "binding": {
+          "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/addresses/30.51"
+        },
+        "historical_proof_span": {
+          "map": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+          "pointer": "/source/new_proof_span"
+        },
+        "rule": "The I36 current whole unit includes the appended separator LF; the I33 proof-span hash covers its own 36873 historical bytes, not that extra LF or the following new proofs. Reconstruct I33 current before checking it; retain both canonical variants."
+      }
+    },
+    "inherited_dispositions": {
+      "I31": {
+        "source_version": "I33_original_I31_current",
+        "original_version": "pre_I31_original",
+        "all_numbered_mathematics_and_archives": {
+          "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+          "pointer": "/original_numbered_entries"
+        },
+        "all_heading_units": {
+          "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+          "pointer": "/original_headings"
+        },
+        "all_structural_and_unnumbered_regions": {
+          "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+          "pointer": "/structural_and_unnumbered_regions"
+        },
+        "all_attached_citations": {
+          "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+          "pointer": "/citations"
+        },
+        "all_original_formula_occurrences": {
+          "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+          "pointer": "/display_formula_preservation"
+        },
+        "all_source_metadata": {
+          "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+          "pointer": "/added_source_metadata"
+        },
+        "all_inactive_archive_spans": {
+          "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+          "pointer": "/archive_spans"
+        },
+        "all_report_scaffolding": {
+          "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+          "pointer": "/added_report_metadata"
+        },
+        "mathematical_fidelity_and_explicit_prior_corrections": {
+          "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+          "pointer": "/mathematical_fidelity"
+        },
+        "historical_pending_Gram": {
+          "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+          "pointer": "/pending_mathematics"
+        },
+        "status_overlay": "The I31 pending Gram status remains history. I33 protected_gram and proof_to_primary give the later adoption; I41 section12 archival disposition supersedes the old active operational wording. No other historical disposition or mathematical limitation is waived."
+      },
+      "I33": {
+        "source_version": "I36_original_I33_current",
+        "source_changes_and_all_eight_archives": {
+          "map": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+          "pointer": "/source_changes"
+        },
+        "protected_Gram_full_and_subspan": {
+          "map": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+          "pointer": "/protected_gram"
+        },
+        "primary_inputs": {
+          "map": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+          "pointer": "/primary_inputs"
+        },
+        "input_identities": {
+          "map": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+          "pointer": "/prerequisite_intake/files"
+        },
+        "all_proof_primary_records": {
+          "map": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+          "pointer": "/proof_to_primary"
+        },
+        "completeness": {
+          "map": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+          "pointer": "/primary_completeness"
+        },
+        "limits": {
+          "map": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+          "pointer": "/substantive_limits"
+        }
+      },
+      "I36": {
+        "source_version": "I41_original_I36_current",
+        "all_primary_leaf_dispositions": {
+          "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/primary_correspondence"
+        },
+        "coverage_counts": {
+          "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/primary_coverage_counts"
+        },
+        "normalization_and_corrections": {
+          "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/normalization"
+        },
+        "source_replacement_and_archive": {
+          "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/source/replacement"
+        },
+        "provenance_and_open_limits": {
+          "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/provenance_and_review_limits"
+        }
+      },
+      "active_vs_archival_rule": "For every inherited proof_addresses or address member, join to current_addresses. For every inherited archive, metadata-only binding, raw primary, source/review/transport failure or provenance disposition, keep its exact report or immutable-map record. Mixed records retain both components. The entire referenced collections apply, including proofs not summarized in this file.",
+      "prior_correction_anchors": [
+        {
+          "topic": "Concentrated variance: corrected unaveraged moment and retained second proof",
+          "addresses": [
+            {
+              "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+              "pointer": "/addresses/24.11"
+            },
+            {
+              "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+              "pointer": "/addresses/24.12"
+            },
+            {
+              "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+              "pointer": "/addresses/24.13"
+            }
+          ],
+          "history": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/mathematical_fidelity/sections/23"
+          }
+        },
+        {
+          "topic": "Nearest-endpoint and explicit multiplication/cancellation correction",
+          "addresses": [
+            {
+              "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+              "pointer": "/addresses/25.4"
+            },
+            {
+              "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+              "pointer": "/addresses/25.15"
+            }
+          ],
+          "history": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/mathematical_fidelity/sections/24"
+          }
+        },
+        {
+          "topic": "Remaining guard region has no finite complement; no sign inference",
+          "addresses": [
+            {
+              "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+              "pointer": "/addresses/27.14"
+            }
+          ],
+          "history": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/mathematical_fidelity/sections/28"
+          }
+        },
+        {
+          "topic": "C90 five-item correction and C92 unchanged mathematical incorporation; C88/C93 carrier failures retain their original scope",
+          "mapping": {
+            "map": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+            "pointer": "/proof_to_primary"
+          },
+          "completeness": {
+            "map": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+            "pointer": "/primary_completeness"
+          },
+          "report": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 211818,
+            "byte_end_exclusive": 214501,
+            "bytes": 2683,
+            "lf": 10,
+            "terminal_lf": 2,
+            "sha256": "469bec7fb2290099dc2c6bcedc19f907a042082baa3a75b13fb282e3b0fb07c9"
+          }
+        },
+        {
+          "topic": "Corrected full-half-axis B1 closure and conjugate-linear-first adjoint types",
+          "normalization": {
+            "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+            "pointer": "/normalization"
+          },
+          "provenance": {
+            "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+            "pointer": "/provenance_and_review_limits"
+          }
+        },
+        {
+          "topic": "I36 finite-ID conditional semantics at 27.18",
+          "disposition": {
+            "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+            "pointer": "/source/replacement"
+          },
+          "current_address": {
+            "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+            "pointer": "/addresses/27.18"
+          }
+        }
+      ]
+    },

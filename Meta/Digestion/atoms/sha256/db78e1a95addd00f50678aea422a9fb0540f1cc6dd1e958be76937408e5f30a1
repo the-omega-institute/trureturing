@@ -1,0 +1,2 @@
+**定义 1.1(命题宇宙与核)**。固定:命题类型 $\mathcal P$;证明项类型 $\Pi$;**核** $K:\Pi\times\mathcal P\to\{\mathsf{acc},\mathsf{rej}\}$,一个可判定的核验函数;公理读出 $\mathrm{ax}:\Pi\to\mathcal P_{\mathrm{fin}}(\mathsf{Ax})$,给出一个证明项所用公理的有限集;**引用读出** $\mathrm{refs}:\Pi\to\mathcal P_{\mathrm{fin}}(\mathcal P)$,给出一个证明项作为已证事实**直接引用**的命题有限集;**许可集** $\mathfrak A\subseteq\mathsf{Ax}$。
+

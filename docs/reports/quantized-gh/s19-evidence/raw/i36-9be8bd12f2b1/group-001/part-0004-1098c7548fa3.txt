@@ -1,0 +1,794 @@
+          "proof_addresses": [
+            "30.78"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_6_determinant_free_coercivity/N_equals_1",
+          "value_sha256": "c20eef8d2e8535ed7003c30a79dbfbff7626a55214ef7dce942f82108c028902",
+          "proof_addresses": [
+            "30.78"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_6_determinant_free_coercivity/combining_valid_constants",
+          "value_sha256": "4bd4b74e50017ecbeee776da7583163851369b71f4ee3f009eff5d176270dcd8",
+          "proof_addresses": [
+            "30.78"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_6_determinant_free_coercivity/scaling_boundary",
+          "value_sha256": "8da21521523db420127394086d48f33a630fbd5c5cec932480c90583dbb99252",
+          "proof_addresses": [
+            "30.78"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_7_parameterized_C96_local_certification/parameter_theorem",
+          "value_sha256": "9b566083e6a325d9b350e8601247bfe0853e012e2708f62c52da4566bc5243e9",
+          "proof_addresses": [
+            "30.79"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_7_parameterized_C96_local_certification/real_optimizer_and_gap",
+          "value_sha256": "47dc064bdacace065bcc7931b53840d12e331c8100aa993e31798f7f9f8e00b6",
+          "proof_addresses": [
+            "30.79"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_7_parameterized_C96_local_certification/residual_subroutine_contract",
+          "value_sha256": "3c0b7fe8e9654d075000d02c97d8ec6c0aedce2630b04e6cf77e16207807ee7e",
+          "proof_addresses": [
+            "30.79"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_7_parameterized_C96_local_certification/finite_precision_rule",
+          "value_sha256": "1e4ce2368ab70a02117a5d36667a119cbcf00f6fdf0239afd38e101a63b3a3ea",
+          "proof_addresses": [
+            "30.79"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_7_parameterized_C96_local_certification/local_gradient_intervals",
+          "value_sha256": "54c0dc3fe4a5468a22283c6e4c9e090c6ae72703f413b5bb9f4cb201b4aa1a1b",
+          "proof_addresses": [
+            "30.79"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_7_parameterized_C96_local_certification/new_endpoints",
+          "value_sha256": "0f34322d2fb18838e17dfcca23816a993e43d336380a9c18d7090f3e961a56cf",
+          "proof_addresses": [
+            "30.79"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_7_parameterized_C96_local_certification/bad_candidates_and_binding",
+          "value_sha256": "0396fe7ca9b1aa2ea51bc675f47b7df698824179d8878502afba97e370735256",
+          "proof_addresses": [
+            "30.79",
+            "30.80"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_7_parameterized_C96_local_certification/new_verifier_definition",
+          "value_sha256": "4d3923c1de2e673e07d0ef2abe23923d21fcd3fc33f414ce58e3584528bc6b37",
+          "proof_addresses": [
+            "30.79",
+            "30.80"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_7_parameterized_C96_local_certification/finite_encoding",
+          "value_sha256": "f2fa20a76901f9f7f7e705eeddec8e89756a899afb4344228905a3d791146017",
+          "proof_addresses": [
+            "30.79",
+            "30.80"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_7_parameterized_C96_local_certification/verification_and_decidability",
+          "value_sha256": "979fe6a14b8d7d846ee371b67a797da29619e7e426c936057b9d30db65563984",
+          "proof_addresses": [
+            "30.79",
+            "30.80"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_8_C96_total_generation_with_the_new_constant/statement",
+          "value_sha256": "844e8b60e42d821164c3addb4e02af17d83824a32fc585ddc3896e6893261a0b",
+          "proof_addresses": [
+            "30.81"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_8_C96_total_generation_with_the_new_constant/a_priori_constants",
+          "value_sha256": "bd7ac87eb7badeed965ce7a9d72b6f4eb68359fab66b24196c26046114700d56",
+          "proof_addresses": [
+            "30.81"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_8_C96_total_generation_with_the_new_constant/fixed_probes_and_midpoints",
+          "value_sha256": "23dddc6524980b896389e771dda7e3e0587847ed64b77f0884a43345e8ccecf7",
+          "proof_addresses": [
+            "30.81"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_8_C96_total_generation_with_the_new_constant/polarization",
+          "value_sha256": "9c00b5223ab7193dd4cfc56865f85e26130b1b9cacbd1af7e9a8350175d6e883",
+          "proof_addresses": [
+            "30.81"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_8_C96_total_generation_with_the_new_constant/positive_definiteness",
+          "value_sha256": "0fc38c54e7c99825383412222f7c5a247dc16ebf9d11d2c24d70b62e5b19ab27",
+          "proof_addresses": [
+            "30.81"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_8_C96_total_generation_with_the_new_constant/determinant_free_rational_solve",
+          "value_sha256": "73056309229a93b2082532cb9d7a122735514ac58fcc84d9742d9bf40180ee8c",
+          "proof_addresses": [
+            "30.82"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_8_C96_total_generation_with_the_new_constant/coefficient_and_gradient_bounds",
+          "value_sha256": "333d16891aa7a805eac7a8e6c81bbebcd5b5fc7a3b3a2f4899fc987b49f64023",
+          "proof_addresses": [
+            "30.83"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_8_C96_total_generation_with_the_new_constant/local_precision",
+          "value_sha256": "08936cc72e28e0a0d2620f88cc76105b18e4bf87022f67bdaa60f28b8803ab6f",
+          "proof_addresses": [
+            "30.83"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_8_C96_total_generation_with_the_new_constant/final_width",
+          "value_sha256": "1ab8c16723d2b1df451549d70d3d1c27f56ad243253794e44db4b2f906beb280",
+          "proof_addresses": [
+            "30.83"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_8_C96_total_generation_with_the_new_constant/total_termination_and_scope",
+          "value_sha256": "2520cbc4e248172c14107d67c5d38ed7dc3f2775752c81fe0c1206cdc36917af",
+          "proof_addresses": [
+            "30.83"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/theorem_8_C96_total_generation_with_the_new_constant/old_method_preservation",
+          "value_sha256": "4d69018575946e8f28cdc565c1d864c6790546d7cc783332ef0a813d3c205b2b",
+          "proof_addresses": [
+            "30.83"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/strict_thresholds_and_RH_quantifiers/fixed_N_strict_certificates",
+          "value_sha256": "c668d9c7981f3e7a97eba01f779146795825757e201834ac201a49c5752aad1c",
+          "proof_addresses": [
+            "30.84"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/strict_thresholds_and_RH_quantifiers/equality",
+          "value_sha256": "d2ac35edfa94f27e75371fc699fb46a55acc3a433cba840fdd39ca4b8d659931",
+          "proof_addresses": [
+            "30.84"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/strict_thresholds_and_RH_quantifiers/residual_extraction",
+          "value_sha256": "c060d48fa6693169647001d4e2c2bf142a3a6dcee0c60b9af7ca62f24b7396ff",
+          "proof_addresses": [
+            "30.84"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/strict_thresholds_and_RH_quantifiers/literature_anchor",
+          "value_sha256": "f2f81a7d80b1cec21eecc1dd74ffb63e1b7f5652769dfe72fa2745bec21752c4",
+          "proof_addresses": [
+            "30.84"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/strict_thresholds_and_RH_quantifiers/unchanged_discrete_equivalence",
+          "value_sha256": "c05bd0fd29c2ece04aa80ecfffd15d20253764815d6032df9af8a10eb45d3c45",
+          "proof_addresses": [
+            "30.84"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/strict_thresholds_and_RH_quantifiers/not_density_in_all_H",
+          "value_sha256": "4829af972e3073d5d549f116c628ff134d23796f9a551baaca2ab1d0f70435b4",
+          "proof_addresses": [
+            "30.85"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/strict_thresholds_and_RH_quantifiers/no_cross_N_success_cutoff",
+          "value_sha256": "24439046759b5f018fb3110fd85426e8e9e069f9eeb1a4b36fa45020d9207303",
+          "proof_addresses": [
+            "30.84"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized"
+        },
+        {
+          "pointer": "/conclusion/preserved_boundaries_and_open_obligations/finite_and_singular_Gram",
+          "value_sha256": "d00a69e2ac120f13916f89589b3b54d30d00b56dc739d1bbcae508c5106fd3a9",
+          "proof_addresses": [
+            "30.61",
+            "30.70",
+            "30.85"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized",
+          "scope_note": "Mathematical statement/limitation maps here; author-role, execution and status language is governed only by /provenance_and_review_limits."
+        },
+        {
+          "pointer": "/conclusion/preserved_boundaries_and_open_obligations/infinite_endpoints",
+          "value_sha256": "65ace1cc676f9ad65d4bfeaf068b331ecfed73e3135396fef4de451eee4375a7",
+          "proof_addresses": [
+            "30.61",
+            "30.70",
+            "30.85"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized",
+          "scope_note": "Mathematical statement/limitation maps here; author-role, execution and status language is governed only by /provenance_and_review_limits."
+        },
+        {
+          "pointer": "/conclusion/preserved_boundaries_and_open_obligations/ordinary_eigenvalues",
+          "value_sha256": "d9eae28cc97929c8e7b0d62b250101e574cee25be6d0ed49d3ce5cdbf46fd1af",
+          "proof_addresses": [
+            "30.61",
+            "30.85"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized",
+          "scope_note": "Mathematical statement/limitation maps here; author-role, execution and status language is governed only by /provenance_and_review_limits."
+        },
+        {
+          "pointer": "/conclusion/preserved_boundaries_and_open_obligations/coordinate_limits",
+          "value_sha256": "616e51ecb6c852a6d517dce9e8fbd9d2efdccc4d09f4b805a84db3defe0c6b99",
+          "proof_addresses": [
+            "30.75",
+            "30.85"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized",
+          "scope_note": "Mathematical statement/limitation maps here; author-role, execution and status language is governed only by /provenance_and_review_limits."
+        },
+        {
+          "pointer": "/conclusion/preserved_boundaries_and_open_obligations/other_research_scope",
+          "value_sha256": "655ed1d98a2202e5efe649fc6d14759988e97cd6a682ecd60a747de6b48ada60",
+          "proof_addresses": [
+            "30.77",
+            "30.84",
+            "30.85"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized",
+          "scope_note": "Mathematical statement/limitation maps here; author-role, execution and status language is governed only by /provenance_and_review_limits."
+        },
+        {
+          "pointer": "/conclusion/preserved_boundaries_and_open_obligations/source_review_and_delivery",
+          "value_sha256": "502923dc54149ddbf11890c4889dac8be5d9d1ec32b592ef2158cb4b19dd7c7a",
+          "disposition": "author/status/transport/implementation metadata only",
+          "binding": "/provenance_and_review_limits"
+        },
+        {
+          "pointer": "/conclusion/preserved_boundaries_and_open_obligations/local_mathematics_status",
+          "value_sha256": "544825b3439880b3595187a2be15a8003e846cf746de66672cf07f9dff4d8461",
+          "proof_addresses": [
+            "30.72",
+            "30.73",
+            "30.74",
+            "30.76",
+            "30.78",
+            "30.79",
+            "30.83"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized",
+          "scope_note": "Mathematical statement/limitation maps here; author-role, execution and status language is governed only by /provenance_and_review_limits."
+        },
+        {
+          "pointer": "/conclusion/preserved_boundaries_and_open_obligations/novelty_and_execution",
+          "value_sha256": "2f8859b1d9cf7ceda53be668abe0cbdd79ec6de5a72d81332c35d90fcb1dd38f",
+          "proof_addresses": [
+            "30.83",
+            "30.85"
+          ],
+          "disposition": "active complete mathematical content; notation and citations normalized",
+          "scope_note": "Mathematical statement/limitation maps here; author-role, execution and status language is governed only by /provenance_and_review_limits."
+        },
+        {
+          "pointer": "/conclusion/provenance/basis",
+          "value_sha256": "ab3a62eefd917f24e332d218c550991d543d9a1382a33fd9772f148266e2fba6",
+          "disposition": "author/status/transport/implementation metadata only",
+          "binding": "/provenance_and_review_limits"
+        },
+        {
+          "pointer": "/conclusion/provenance/role",
+          "value_sha256": "df2478837d14494251fd9f83fa4512e4c1ada4de804a9fc23020a3242b0de100",
+          "disposition": "author/status/transport/implementation metadata only",
+          "binding": "/provenance_and_review_limits"
+        },
+        {
+          "pointer": "/conclusion/provenance/identity_and_prior",
+          "value_sha256": "bfb03ca3c10a7f891abce74c56721dab98fcc7ccde04446ba60af0c8fb77c315",
+          "disposition": "author/status/transport/implementation metadata only",
+          "binding": "/provenance_and_review_limits"
+        },
+        {
+          "pointer": "/conclusion/provenance/reference_meaning",
+          "value_sha256": "b134d5150a5561de7dc40f323631dee194b795c7b8f14662998f809e9e3a5d6f",
+          "disposition": "author/status/transport/implementation metadata only",
+          "binding": "/provenance_and_review_limits"
+        },
+        {
+          "pointer": "/log_ref",
+          "value_sha256": "024e33cc424c5263b2035b1f306108441d040e9fd30b099713927cce1cdbb618",
+          "disposition": "author/status/transport/implementation metadata only",
+          "binding": "/provenance_and_review_limits"
+        }
+      ]
+    }
+  ],
+  "primary_coverage_counts": {
+    "C95": {
+      "total": 102,
+      "mathematical": 92,
+      "metadata_only": 10
+    },
+    "C96": {
+      "total": 99,
+      "mathematical": 91,
+      "metadata_only": 8
+    },
+    "C97": {
+      "total": 107,
+      "mathematical": 99,
+      "metadata_only": 8
+    }
+  },
+  "normalization": {
+    "notation": "First-conjugate Hilbert inner product; adjoint/composition rendered as typed V*V and T*T, with right map applied first. Primary δ_N is δ_old(N); primary trace/determinant names are t_N,d_N to distinguish them from later precision τ. U_N=2 sum 1/k differs from U_N^dual. Mesh κ_mesh differs from fixed-mode coercivity κ. All original mathematical meanings, constants, signs, strictness and domains are retained.",
+    "citations": "Identical C93 definitions and full previous Gram proofs are cited at their actual existing addresses; B/E, encoding and all new arguments also appear actively. Browser citation artifacts were replaced by these exact source references and actual [B1].",
+    "fidelity_assessment": "Every primary scalar has an explicit current-proof or metadata disposition. New arguments, bounds, totality and boundary proofs are present completely. This is fallible implementation analytical inspection and structural coverage, not independent approval."
+  },
+  "source": {
+    "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+    "original": {
+      "bytes": 274562,
+      "lf": 5452,
+      "terminal_lf": 1,
+      "sha256": "bc500324952d4c4b7ba8120745c6d061d86c0cff650565545b5da4136e5de804"
+    },
+    "current": {
+      "bytes": 336935,
+      "lf": 6566,
+      "terminal_lf": 1,
+      "sha256": "432782df7785d000f46b9f4836d0e65d692da278ab74ebb270819f5bd7b44f93"
+    },
+    "new_proofs": {
+      "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "byte_start": 276059,
+      "byte_end_exclusive": 336935,
+      "bytes": 60876,
+      "lf": 1088,
+      "terminal_lf": 1,
+      "sha256": "6bf50e94a09c908b1a067b98679c61dbec76efd6cf772efc2aa1ad5c69d2c8f2"
+    },
+    "replacement": {
+      "original": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 160762,
+        "byte_end_exclusive": 161487,
+        "bytes": 725,
+        "lf": 10,
+        "terminal_lf": 2,
+        "sha256": "6a71711c4cd3e6959053720af28fee6ff3104efa86ff40d414f1609893da1911"
+      },
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 160762,
+        "byte_end_exclusive": 162984,
+        "bytes": 2222,
+        "lf": 36,
+        "terminal_lf": 2,
+        "sha256": "b6500544a5866fe2baf9b1cf41a199e414fe31570cad2a10ff69dabc0b690a86"
+      },
+      "archive": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 220039,
+        "byte_end_exclusive": 220764,
+        "bytes": 725,
+        "lf": 10,
+        "terminal_lf": 2,
+        "sha256": "6a71711c4cd3e6959053720af28fee6ff3104efa86ff40d414f1609893da1911"
+      },
+      "meaning": "Exactly one grounded operational passage removed from active use, with exact inactive recovery; original guards, labels and raw-ID interpretation retained. No other grounded operational fragment found in complete source inspection."
+    }
+  },
+  "recovery": {
+    "original_i36_source": [
+      {
+        "original": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 0,
+          "byte_end_exclusive": 160762,
+          "bytes": 160762,
+          "lf": 3317,
+          "terminal_lf": 2,
+          "sha256": "7914479604d612ab8d5d09067d4245e3d94d3669551d0a1f6a4001de2536dddc"
+        },
+        "current": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 0,
+          "byte_end_exclusive": 160762,
+          "bytes": 160762,
+          "lf": 3317,
+          "terminal_lf": 2,
+          "sha256": "7914479604d612ab8d5d09067d4245e3d94d3669551d0a1f6a4001de2536dddc"
+        },
+        "disposition": "retained"
+      },
+      {
+        "original": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 160762,
+          "byte_end_exclusive": 161487,
+          "bytes": 725,
+          "lf": 10,
+          "terminal_lf": 2,
+          "sha256": "6a71711c4cd3e6959053720af28fee6ff3104efa86ff40d414f1609893da1911"
+        },
+        "current": {
+          "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+          "byte_start": 220039,
+          "byte_end_exclusive": 220764,
+          "bytes": 725,
+          "lf": 10,
+          "terminal_lf": 2,
+          "sha256": "6a71711c4cd3e6959053720af28fee6ff3104efa86ff40d414f1609893da1911"
+        },
+        "disposition": "inactive exact archive"
+      },
+      {
+        "original": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 161487,
+          "byte_end_exclusive": 274562,
+          "bytes": 113075,
+          "lf": 2125,
+          "terminal_lf": 1,
+          "sha256": "9b61a2de40f864ad3be327b3c8184046489719ce019d5432f4daacf62f18a411"
+        },
+        "current": {
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "byte_start": 162984,
+          "byte_end_exclusive": 276059,
+          "bytes": 113075,
+          "lf": 2125,
+          "terminal_lf": 1,
+          "sha256": "9b61a2de40f864ad3be327b3c8184046489719ce019d5432f4daacf62f18a411"
+        },
+        "disposition": "retained"
+      }
+    ],
+    "method": "Concatenate the three current slices in increasing original-offset order. They are disjoint and exhaustive for all 274562 original bytes. New replacement and appended proof bytes are the only source additions.",
+    "composition": [
+      {
+        "result": "I33 input / I31 current source",
+        "first": "reconstruct original I36 source by /recovery/original_i36_source",
+        "then": {
+          "map": "I33",
+          "pointer": "/recovery/i33_original_source"
+        },
+        "source_input": "reconstructed original I36 bytes",
+        "report_input": "current report, unchanged original prefix",
+        "identity": {
+          "bytes": 238272,
+          "lf": 4983,
+          "terminal_lf": 1,
+          "sha256": "9393b391e41432651264bde9a4e4dfdcb9a9f0eeaa880ab0c4afe502e6967dce"
+        },
+        "verified": true
+      },
+      {
+        "result": "pre-I31 original source",
+        "first": "reconstruct original I36 source",
+        "then": {
+          "map": "I33",
+          "pointer": "/recovery/pre_i31_original_source"
+        },
+        "identity": {
+          "bytes": 286339,
+          "lf": 5391,
+          "terminal_lf": 1,
+          "sha256": "59838eb016d5a88043e4f9ca4ffc3c999d85357762d078cf4f05168521ad0d18"
+        },
+        "verified": true
+      },
+      {
+        "result": "same pre-I31 original source via independent composition",
+        "first": "reconstruct I31 current source as above",
+        "then": {
+          "map": "I31",
+          "pointer": "/recovery_spans"
+        },
+        "identity_binding": "/recovery/composition/1/identity",
+        "equals_previous_reconstruction": true
+      }
+    ],
+    "preserved_report_prefix": {
+      "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+      "byte_start": 0,
+      "byte_end_exclusive": 218517,
+      "bytes": 218517,
+      "lf": 3794,
+      "terminal_lf": 1,
+      "sha256": "53035b35dcb1cecdbd4cf87f6dbd92645ed1b17096632f7c789cbc03f97ad617"
+    },
+    "report_current": {
+      "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+      "bytes": 221717,
+      "lf": 3823,
+      "terminal_lf": 1,
+      "sha256": "c6b5fab2f8a2e6433666ee5af9e72d77ae568c98414cacc04f8bf68686503c9a"
+    },
+    "older_report_prefixes": "Exact full current I31 report-prefix hash verified. I33 payload-plus-footer reconstruction and its explicit map-digest-hole masked hash both verified against the unchanged 218517-byte original report prefix. Every prior archive byte is preserved."
+  },
+  "predecessor_maps": {
+    "I31": {
+      "path": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+      "bytes": 7519398,
+      "lf": 195301,
+      "terminal_lf": 1,
+      "sha256": "ac96c8675ae93c6eb4c76e63e010bd574d9f395d7d2742a27198bfc1982e489b"
+    },
+    "I33": {
+      "path": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+      "bytes": 2386329,
+      "lf": 69444,
+      "terminal_lf": 1,
+      "sha256": "9abba55e13c08d0f784a6c958416c5cfb4245872ad087ccba2f385469f23a8ec"
+    }
+  },
+  "addresses": {
+    "1": {
+      "kind": "chapter",
+      "original_binding": {
+        "map": "I33",
+        "pointer": "/addresses/current/0"
+      },
+      "current_span": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 185,
+        "byte_end_exclusive": 767,
+        "bytes": 582,
+        "lf": 8,
+        "terminal_lf": 2,
+        "sha256": "c3c6811051388c97e3b5d0ffbd2d803c311f5382bd6e770ba2a8339277c29f0c"
+      },
+      "current_unit_indices": [
+        1
+      ],
+      "disposition": "retained mathematical bytes"
+    },
+    "2": {
+      "kind": "chapter",
+      "original_binding": {
+        "map": "I33",
+        "pointer": "/addresses/current/1"
+      },
+      "current_span": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 767,
+        "byte_end_exclusive": 4183,
+        "bytes": 3416,
+        "lf": 97,
+        "terminal_lf": 2,
+        "sha256": "9c4a67aec42711da36b1132a044b0de77cdd8e99351ec42a91a3b3ccd9d070cb"
+      },
+      "current_unit_indices": [
+        2,
+        3
+      ],
+      "disposition": "retained mathematical bytes"
+    },
+    "3": {
+      "kind": "chapter",
+      "original_binding": {
+        "map": "I33",
+        "pointer": "/addresses/current/2"
+      },
+      "current_span": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 4183,
+        "byte_end_exclusive": 9069,
+        "bytes": 4886,
+        "lf": 130,
+        "terminal_lf": 2,
+        "sha256": "767ad1d0048f3bd1254d7709f132c12455ae92cf3b348256678a414a8ff06070"
+      },
+      "current_unit_indices": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "disposition": "retained mathematical bytes"
+    },
+    "4": {
+      "kind": "chapter",
+      "original_binding": {
+        "map": "I33",
+        "pointer": "/addresses/current/3"
+      },
+      "current_span": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 9069,
+        "byte_end_exclusive": 11086,
+        "bytes": 2017,
+        "lf": 39,
+        "terminal_lf": 2,
+        "sha256": "ec8fc11c3c10e16412476b5cc8ab7d64568ad9d85fc18db0eeed2133bf1306c5"
+      },
+      "current_unit_indices": [
+        10
+      ],
+      "disposition": "retained mathematical bytes"
+    },
+    "5": {
+      "kind": "chapter",
+      "original_binding": {
+        "map": "I33",
+        "pointer": "/addresses/current/4"
+      },
+      "current_span": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 11086,
+        "byte_end_exclusive": 14281,
+        "bytes": 3195,
+        "lf": 80,
+        "terminal_lf": 2,
+        "sha256": "5541bd02262eead5a95f78af8e848c10162795a3c0875f5b7f800ca7d747a09c"
+      },
+      "current_unit_indices": [
+        11
+      ],
+      "disposition": "retained mathematical bytes"
+    },
+    "6": {
+      "kind": "chapter",
+      "original_binding": {
+        "map": "I33",
+        "pointer": "/addresses/current/5"
+      },
+      "current_span": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 14281,
+        "byte_end_exclusive": 17317,
+        "bytes": 3036,
+        "lf": 95,
+        "terminal_lf": 2,
+        "sha256": "bc2e4fc605ae4b1f637a82dd9f90af969c40235a830f5822fd085bf24e1be135"
+      },
+      "current_unit_indices": [
+        12,
+        13,
+        14
+      ],
+      "disposition": "retained mathematical bytes"
+    },
+    "7": {
+      "kind": "chapter",
+      "original_binding": {
+        "map": "I33",
+        "pointer": "/addresses/current/6"
+      },
+      "current_span": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 17317,
+        "byte_end_exclusive": 19665,
+        "bytes": 2348,
+        "lf": 20,
+        "terminal_lf": 2,
+        "sha256": "814f92a72a0f1db342f16c52362677a84e81313656eac0d6a23c87a95cdce87a"
+      },
+      "current_unit_indices": [
+        15
+      ],
+      "disposition": "retained mathematical bytes"
+    },
+    "8": {
+      "kind": "chapter",
+      "original_binding": {
+        "map": "I33",
+        "pointer": "/addresses/current/7"
+      },
+      "current_span": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 19665,
+        "byte_end_exclusive": 22075,
+        "bytes": 2410,
+        "lf": 21,
+        "terminal_lf": 2,
+        "sha256": "cf96c028df79724445ea906f00d9ffe8fd3a3a2871d1b7bb84727895c3a7ab5e"
+      },
+      "current_unit_indices": [
+        16,
+        17
+      ],
+      "disposition": "retained mathematical bytes"
+    },
+    "10": {
+      "kind": "chapter",
+      "original_binding": {
+        "map": "I33",
+        "pointer": "/addresses/current/8"
+      },
+      "current_span": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 22075,
+        "byte_end_exclusive": 24855,
+        "bytes": 2780,
+        "lf": 49,
+        "terminal_lf": 2,
+        "sha256": "f905ff32b4ac5bb887e7bdf073435fa347ba5125739a50908649b017a8739050"
+      },
+      "current_unit_indices": [
+        18,
+        19,
+        20,
+        21
+      ],
+      "disposition": "retained mathematical bytes"
+    },
+    "11": {
+      "kind": "chapter",
+      "original_binding": {
+        "map": "I33",
+        "pointer": "/addresses/current/9"
+      },

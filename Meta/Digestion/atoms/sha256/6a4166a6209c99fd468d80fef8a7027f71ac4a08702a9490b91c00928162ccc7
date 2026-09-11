@@ -1,0 +1,35 @@
+**30.22 定义与定理：复 Hilbert 空间的有限 Gram 距离阈值。** 本条至 30.26 对任意复 Hilbert 空间 \(H\)、整数 \(N\ge0\) 及任意向量 \(u,v_1,\ldots,v_N\in H\) 成立；允许线性相关、零向量及 \(H=\{0\}\)。内积 \(\operatorname{inner}(x,y)\) 对第一变量共轭线性、第二变量线性；在 \(\mathbb C^N\) 中为 \(\sum_j\overline{x_j}y_j\)。记 \(\operatorname{compose}(X,Y)=X\circ Y\)，伴随由
+\[
+\operatorname{inner}(Xx,y)=\operatorname{inner}(x,\operatorname{adj}(X)y)
+\]
+定义。所有阈值 \(\delta\) 是有限实数；正性指自伴算子的二次型非负。令
+\[
+V:\mathbb C^N\to H,\quad Vb=\sum_{j=1}^N b_jv_j,\qquad
+(\operatorname{adj}(V)y)_j=\operatorname{inner}(v_j,y),
+\]
+\[
+a=\|u\|^2,\quad C=\operatorname{compose}(\operatorname{adj}(V),V),\quad
+g=\operatorname{adj}(V)u,\quad C_{ij}=\operatorname{inner}(v_i,v_j).
+\]
+把列向量 \(g\) 同时视为 \(\alpha\mapsto\alpha g\)，于是 \(\operatorname{adj}(g)b=\operatorname{inner}(g,b)\)。在 \(\mathbb C\oplus\mathbb C^N\) 定义
+\[
+B=\begin{pmatrix}a&\operatorname{adj}(g)\\g&C\end{pmatrix},\qquad
+B(\alpha,b)=(a\alpha+\operatorname{inner}(g,b),\alpha g+Cb),\quad
+E_{00}(\alpha,b)=(\alpha,0).
+\]
+这是 \(u,v_1,\ldots,v_N\) 的 Gram 矩阵。准确的复二次型展开为
+\[
+\begin{aligned}
+\operatorname{inner}((\alpha,b),B(\alpha,b))
+&=a|\alpha|^2+\overline\alpha\operatorname{inner}(g,b)
+ +\alpha\operatorname{inner}(b,g)+\operatorname{inner}(b,Cb)\\
+&=a|\alpha|^2+2\operatorname{Re}\bigl(\overline\alpha\operatorname{inner}(g,b)\bigr)+\|Vb\|^2
+=\|\alpha u+Vb\|^2.
+\end{aligned}
+\]
+设 \(d=\operatorname{dist}(u,\operatorname{Ran}V)^2\)。有限阈值定理是
+\[
+\boxed{\{\delta\ge0:B-\delta E_{00}\succeq0\}=[0,d].}
+\]
+以下给出距离达到、奇异块、核及全部退化情形的证明，不预设 \(C\) 可逆。
+

@@ -1,0 +1,14 @@
+## 16. PR1 增补 C：三种明确语言与最粗充分性
+
+本节统一取 $X=\mathcal B$、终端观察 $q:\mathcal B\to\mathbb Z$，上下文严格按定义 16 取全槽位、全部固定丰富参数及任意有限复合。固定空间区域作为操作的名字，不因当前输入改规则。定义
+
+$$
+\begin{aligned}
+\Sigma_{\rm arith}&=\{\boxplus,\boxtimes,N\},\\
+\Sigma_z&=\{\boxplus,\boxtimes\}\cup\{F_S:S\subseteq\mathbb Z^d\},\\
+\Sigma_{\rm sp}&=\Sigma_z\cup\{N\}.
+\end{aligned}
+$$
+
+在 $\Sigma_z,\Sigma_{\rm sp}$ 中也可以只保留全部单点筛选 $F_p:=F_{\{p\}}$，以下同一结论仍成立。$\Sigma_{\rm arith}$ 与 $\Sigma_z$ 作为符号集合**互不包含**，不能从命题 17 直接比较这两个签名；各自都是 $\Sigma_{\rm sp}$ 的子签名。
+

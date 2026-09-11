@@ -1,0 +1,316 @@
+**{(1,e):(1,(1,e)) for e in z.e}}
+
+def unit_at(t):
+    return time_shift(integer(1), t)
+
+def guard(x, y):
+    return all(x.e[e][0] < y.e[f][0] for e in x.e for f in y.e)
+
+def attempt(operation):
+    try:
+        return operation()
+    except ValueError:
+        return FAIL
+
+hist_left, hist_right = mul(u,add(u,u)), add(mul(u,u),mul(u,u))
+assert (len(hist_left.e),len(hist_right.e),q(hist_left),q(hist_right)) == (14,16,2,2)
+comm_left, comm_right = mul(source7,source8), mul(source8,source7)
+new_sources = [{z.e[e][3] for e in z.e if z.e[e][0] == 1}
+               for z in (comm_left,comm_right)]
+assert new_sources == [{("pair",("leaf",7),("leaf",8))},
+                       {("pair",("leaf",8),("leaf",7))}]
+assert new_sources[0].isdisjoint(new_sources[1])
+assert len(comm_left.w) == len(comm_right.w) == 4
+empty = integer(0)
+additive_isomorphisms = history_map(add(source7,source8),add(source8,source7),
+                                  {(i,e):(1-i,e) for i,z in enumerate((source7,source8)) for e in z.e})
+additive_isomorphisms += history_map(add(u,empty),u,{(0,e):e for e in u.e})
+assert add(u,empty) != u and add(add(u,u),u) != add(u,add(u,u))
+additive_isomorphisms += history_map(add(add(u,u),u),add(u,add(u,u)),rebracket(u,u,u))
+assert q(add(u,neg(u))) == 0 and len(add(u,neg(u)).e) == 4
+print(f"pr2_history: distributivity_archives={len(hist_left.e)},{len(hist_right.e)} ordered_source_new_events={len(comm_left.w)},{len(comm_right.w)} additive_isomorphisms={additive_isomorphisms}")
+
+temporal_states = [empty] + [unit_at(t0) for t0 in (-1,0,1,2)]
+current_empty = valid(replace(unit_at(4),w=frozenset(),a=frozenset()))
+temporal_states.append(current_empty)
+temporal_checks, temporal_defined = 0, 0
+for xx,yy,zz in product(temporal_states,repeat=3):
+    required = guard(xx,yy) and guard(xx,zz) and guard(yy,zz)
+    tl = attempt(lambda: temporal(temporal(xx,yy),zz))
+    tr = attempt(lambda: temporal(xx,temporal(yy,zz)))
+    assert (tl is not FAIL) == (tr is not FAIL) == required
+    if required:
+        history_map(tl,tr,rebracket(xx,yy,zz))
+        temporal_defined += 1
+    temporal_checks += 1
+assert guard(unit_at(2),empty) and guard(empty,unit_at(1))
+assert not guard(unit_at(2),unit_at(1))
+assert attempt(lambda:temporal(temporal(unit_at(2),empty),unit_at(1))) is FAIL
+assert attempt(lambda:temporal(unit_at(2),temporal(empty,unit_at(1)))) is FAIL
+legal = temporal(temporal(unit_at(0),unit_at(1)),unit_at(2))
+assert (len(legal.e),len(legal.o)) == (6,12)
+assert attempt(lambda:temporal(temporal(u,empty),unit_at(1))) is not FAIL
+assert temporal_checks == 216
+print(f"pr2_temporal: triples={temporal_checks} defined={temporal_defined} legal_archive={len(legal.e)} legal_edges={len(legal.o)} empty_middle_adjacent_guards_insufficient=True")
+
+# None denotes +infinity in m and -infinity in M/s; no finite float times.
+def theta(x):
+    return (read_pair(x), min((v[0] for v in x.e.values()),default=None),
+            max((v[0] for v in x.e.values()),default=None),
+            max((x.e[e][0] for e in x.w),default=None))
+
+def lo(*values):
+    return min((v for v in values if v is not None),default=None)
+
+def hi(*values):
+    return max((v for v in values if v is not None),default=None)
+
+def gamma(s, t):
+    return None if s is None or t is None else max(s,t)+1
+
+def theta_add(x, y):
+    return pair_add(x[0],y[0]),lo(x[1],y[1]),hi(x[2],y[2]),hi(x[3],y[3])
+
+def theta_mul(x, y):
+    g0 = gamma(x[3],y[3])
+    return pair_mul(x[0],y[0]),lo(x[1],y[1]),hi(x[2],y[2],g0),g0
+
+def theta_guard(x, y):
+    return x[2] is None or y[1] is None or x[2] < y[1]
+
+def ceiling_state(s, selected_time=None, floor=0, ceiling=10):
+    selected_time = s if selected_time is None else selected_time
+    e = {"pos":(selected_time,origin,1,("leaf",0)),
+         "neg":(s,origin,-1,("leaf",0)),
+         "old_min":(floor,origin,1,("leaf",9)),
+         "old_max":(ceiling,origin,1,("leaf",9))}
+    return valid(Rich(e,frozenset(),frozenset(("pos","neg")),frozenset(("pos",))))
+
+c0,c9 = ceiling_state(0),ceiling_state(9)
+selected_low = ceiling_state(9,selected_time=0)
+assert theta(c0) == (({},delta),0,10,0)
+assert theta(c9) == (({},delta),0,10,9)
+assert max(selected_low.e[e][0] for e in selected_low.a) == 0
+assert theta(selected_low)[3] == 9
+theta_states = [empty,unit_at(-1),u,unit_at(1),current_empty,c0,c9,selected_low]
+theta_pairs,theta_unary,threshold_checks = 0,0,0
+for xx in theta_states:
+    tx = theta(xx)
+    bg,zx = tx[0]
+    assert theta(neg(xx)) == ((bg,plus_c(bg,minus_c(zx))),*tx[1:])
+    theta_unary += 1
+    for points in (set(),{origin},{v}):
+        assert theta(at(xx,points)) == ((bg,{p:a for p,a in zx.items() if p in points}),*tx[1:])
+        theta_unary += 1
+    for k in (-3,0,4):
+        assert theta(time_shift(xx,k)) == (tx[0],*(a+k if a is not None else None for a in tx[1:]))
+        theta_unary += 1
+    for t0 in range(-3,13):
+        assert guard(xx,unit_at(t0)) == (tx[2] is None or tx[2] < t0)
+        assert guard(unit_at(t0),xx) == (tx[1] is None or t0 < tx[1])
+        threshold_checks += 2
+    for yy in theta_states:
+        ty = theta(yy)
+        assert theta(add(xx,yy)) == theta_add(tx,ty)
+        assert theta(mul(xx,yy)) == theta_mul(tx,ty)
+        out = attempt(lambda: temporal(xx,yy))
+        assert (out is not FAIL) == theta_guard(tx,ty)
+        if out is not FAIL:
+            assert theta(out) == theta_add(tx,ty)
+        theta_pairs += 1
+assert (theta_pairs,theta_unary,threshold_checks) == (64,56,256)
+c0_twice,c9_twice = [mul(mul(xx,u),u) for xx in (c0,c9)]
+maxima = theta(c0_twice)[2],theta(c9_twice)[2]
+assert maxima == (10,11)
+assert q(temporal(c0_twice,unit_at(11))) == 2
+assert attempt(lambda:temporal(c9_twice,unit_at(11))) is FAIL
+assert theta(mul(selected_low,u))[3] == 10  # Using max selected A would give 1.
+same_theta_time = ceiling_state(9,selected_time=5)
+assert theta(selected_low) == theta(same_theta_time)
+time_filter_reads = tuple(q(filt(xx,lambda e,xx=xx:xx.e[e][0] == 0))
+                          for xx in (selected_low,same_theta_time))
+assert time_filter_reads == (1,0)
+amplification_checks = 0
+amp0,amp2 = [ceiling_state(s,floor=-1,ceiling=2) for s in (0,2)]
+amp_empty = valid(replace(amp0,w=frozenset(),a=frozenset()))
+for xx,yy in ((amp0,amp2),(amp_empty,replace(amp2,a=frozenset()))):
+    tx,ty = theta(xx),theta(yy)
+    assert tx[:3] == ty[:3] and tx[3] != ty[3]
+    early = tx[1]
+    n = tx[2] - (tx[3] if tx[3] is not None else ty[3]) + 1
+    r0 = ty[3]+n
+    for j in range(1,n+1):
+        xx,yy = mul(xx,unit_at(early)),mul(yy,unit_at(early))
+        for rich,old_t in ((xx,tx),(yy,ty)):
+            s0 = old_t[3]
+            expected_s = None if s0 is None else s0+j
+            assert theta(rich)[2:] == (hi(old_t[2],expected_s),expected_s)
+    assert theta(xx)[2] < r0 == theta(yy)[2]
+    assert attempt(lambda:temporal(xx,unit_at(r0))) is not FAIL
+    assert attempt(lambda:temporal(yy,unit_at(r0))) is FAIL
+    amplification_checks += 1
+print(f"pr2_theta: pairs={theta_pairs} unary={theta_unary} integer_thresholds={threshold_checks} amplification_cases={amplification_checks} archive_maxima={maxima[0]},{maxima[1]} following_U11=defined,failed time_filter={time_filter_reads[0]},{time_filter_reads[1]}")
+
+theta_law_checks = 0
+law_states = [empty,u,current_empty,c9]
+for xx,yy,zz in product(law_states,repeat=3):
+    assert theta(add(add(xx,yy),zz)) == theta(add(xx,add(yy,zz)))
+    assert theta(mul(xx,add(yy,zz))) == theta(add(mul(xx,yy),mul(xx,zz)))
+    assert theta(mul(add(xx,yy),zz)) == theta(add(mul(xx,zz),mul(yy,zz)))
+    theta_law_checks += 1
+for xx,yy in product(theta_states,repeat=2):
+    assert theta(mul(xx,yy)) == theta(mul(yy,xx))
+    assert theta(add(xx,yy)) == theta(add(yy,xx))
+    assert theta(add(xx,empty)) == theta(xx)
+    assert theta(mul(xx,u))[3] != 0
+theta_left,theta_right = mul(mul(u,u),unit_at(1)),mul(u,mul(u,unit_at(1)))
+assert theta(theta_left) == (({},delta),0,2,2)
+assert theta(theta_right) == (({},delta),0,3,3)
+assert theta(mul(u,empty)) == (({},{}),0,0,None) != theta(empty)
+print(f"pr2_theta_laws: rich_triples={theta_law_checks} associativity_maxima={theta(theta_left)[2]},{theta(theta_right)[2]} zero_absorbing=False")
+
+small = [sparse(dict(zip((origin,v,h),cs))) for cs in product((-1,0,1),repeat=3) if any(cs)]
+extreme_checks,unit_product_checks = 0,0
+for ca,cb in product(small,repeat=2):
+    cc = conv(ca,cb)
+    assert cc
+    for extremum in (min,max):
+        pa,pb = extremum(ca),extremum(cb)
+        target = tuple(a+b for a,b in zip(pa,pb))
+        assert extremum(cc) == target and cc[target] == ca[pa]*cb[pb]
+        splits = [(p0,q0) for p0 in ca for q0 in cb
+                  if tuple(a+b for a,b in zip(p0,q0)) == target]
+        assert splits == [(pa,pb)]
+    if cc == delta:
+        assert len(ca) == len(cb) == 1
+        assert next(iter(ca.values()))*next(iter(cb.values())) == 1
+        unit_product_checks += 1
+    extreme_checks += 1
+unit_checks = 0
+for point,sgn in product((origin,v,tuple(-a for a in v),h,tuple(-a for a in h)),(-1,1)):
+    assert conv({point:sgn},{tuple(-a for a in point):sgn}) == delta
+    unit_checks += 1
+nonunit = {origin:2,v:-1}
+assert sum(nonunit.values()) == 1 and len(nonunit) == 2
+inverse_candidates = 0
+for cs in product((-1,0,1),repeat=3):
+    candidate = sparse(dict(zip((tuple(-a for a in v),origin,v),cs)))
+    assert conv(nonunit,candidate) != delta
+    inverse_candidates += 1
+assert (len(small),extreme_checks,unit_checks,inverse_candidates) == (26,676,10,27)
+print(f"pr2_extrema: nonzero_samples={len(small)} pairs={extreme_checks} products_delta0={unit_product_checks} signed_delta_inverses={unit_checks} nonunit_augmentation={sum(nonunit.values())} inverse_candidates_rejected={inverse_candidates}")
+
+def tree_shapes(start, n):
+    if n == 1:
+        return [start]
+    return [(left,right) for k in range(1,n) for left in tree_shapes(start,k)
+            for right in tree_shapes(start+k,n-k)]
+
+def tree_time(tree, times, delay=1):
+    if isinstance(tree,int):
+        return times[tree]
+    return max(tree_time(tree[0],times,delay),tree_time(tree[1],times,delay))+delay
+
+def leaf_depths(tree, depth=0):
+    return [(tree,depth)] if isinstance(tree,int) else (
+        leaf_depths(tree[0],depth+1)+leaf_depths(tree[1],depth+1))
+
+def tree_rich(tree, times):
+    return unit_at(times[tree]) if isinstance(tree,int) else mul(
+        tree_rich(tree[0],times),tree_rich(tree[1],times))
+
+tree_checks,rich_tree_checks = 0,0
+for n in (3,4):
+    for tree in tree_shapes(0,n):
+        for times in product((-2,0,3),repeat=n):
+            for delay in (1,2,3):
+                assert tree_time(tree,times,delay) == max(times[i]+delay*d for i,d in leaf_depths(tree))
+                tree_checks += 1
+        times = tuple(range(n))
+        rich = tree_rich(tree,times)
+        expected = max(times[i]+d for i,d in leaf_depths(tree))
+        assert theta(rich)[2:] == (expected,expected)
+        rich_tree_checks += 1
+translation_checks,delay_transport_checks = 0,0
+for a,b,c in product(range(-3,4),range(-3,4),(-2,0,3)):
+    assert max(a,b)+1+c == max(a+c,b+c)+1
+    translation_checks += 1
+for scale,b,delay,t0,t1 in product((1,2,3),(-2,0,3),(1,2,3),range(-2,3),range(-2,3)):
+    assert scale*(max(t0,t1)+delay)+b == max(scale*t0+b,scale*t1+b)+scale*delay
+    delay_transport_checks += 1
+assert 2*(max(0,0)+1) != max(2*0,2*0)+1
+assert (tree_checks,rich_tree_checks,translation_checks,delay_transport_checks) == (1377,7,147,675)
+print(f"pr2_clock: depth_cases={tree_checks} rich_trees={rich_tree_checks} translations={translation_checks} scaled_delay_cases={delay_transport_checks} fixed_delay_scaling_rejected=True")
+
+def mul_at(x, y, reference):
+    z = mul(x,y)
+    events = dict(z.e)
+    for key in z.w:
+        t0,p0,s0,r0 = events[key]
+        events[key] = (t0,tuple(a-b for a,b in zip(p0,reference)),s0,r0)
+    return valid(replace(z,e=events))
+
+def affine_point(p, matrix, offset):
+    return tuple(sum(a*b for a,b in zip(row,p))+v0 for row,v0 in zip(matrix,offset))
+
+def affine_rich(x, matrix, offset):
+    return valid(replace(x,e={key:(t0,affine_point(p0,matrix,offset),s0,r0)
+                              for key,(t0,p0,s0,r0) in x.e.items()}))
+
+def push_c(c, function):
+    out = {}
+    for p0,value in c.items():
+        target = function(p0)
+        out[target] = out.get(target,0)+value
+    return sparse(out)
+
+def conv_at(c, d, reference):
+    return {tuple(a-b for a,b in zip(p0,reference)):value for p0,value in conv(c,d).items()}
+
+matrices = [((1,0,0),(0,1,0),(0,0,1)),((2,0,0),(0,2,0),(0,0,2)),
+            ((1,1,0),(0,1,0),(0,0,-1)),((0,0,0),(0,1,0),(0,0,1))]
+references,offset = (origin,(1,2,-1)),(2,-1,3)
+reference_states = [u,sx,sy,current_empty]
+reference_checks,affine_checks,space_unit_checks = 0,0,0
+for reference in references:
+    for xx,yy in product(reference_states,repeat=2):
+        result = mul_at(xx,yy,reference)
+        standard = mul(xx,yy)
+        assert result.e.keys() == standard.e.keys()
+        assert (result.o,result.w,result.a) == (standard.o,standard.w,standard.a)
+        assert all((v0[0],v0[2:]) == (standard.e[e][0],standard.e[e][2:]) for e,v0 in result.e.items())
+        assert (q(result),charge(result,result.w),len(result.e)) == (
+            q(xx)*q(yy),0,len(xx.e)+len(yy.e)+len(xx.w)*len(yy.w))
+        assert read_pair(result) == tuple(conv_at(a,b,reference) for a,b in zip(read_pair(xx),read_pair(yy)))
+        if reference == origin:
+            assert result == standard
+        reference_checks += 1
+        for matrix in matrices:
+            function = lambda p,matrix=matrix:affine_point(p,matrix,offset)
+            transported = affine_rich(result,matrix,offset)
+            assert transported == mul_at(affine_rich(xx,matrix,offset),affine_rich(yy,matrix,offset),function(reference))
+            assert read_pair(transported) == tuple(push_c(c,function) for c in read_pair(result))
+            for a,b in zip(read_pair(xx),read_pair(yy)):
+                assert push_c(conv_at(a,b,reference),function) == conv_at(push_c(a,function),push_c(b,function),function(reference))
+            affine_checks += 1
+    for c in small:
+        assert conv_at({reference:1},c,reference) == conv_at(c,{reference:1},reference) == c
+        space_unit_checks += 1
+assert mul_at(spatial(u,offset=1),spatial(u,offset=1),origin) != spatial(mul_at(u,u,origin),offset=1)
+collapsed = realize({}, {origin:1,v:1})
+matrix = matrices[-1]
+function = lambda p:affine_point(p,matrix,origin)
+transported = affine_rich(collapsed,matrix,origin)
+assert transported.e.keys() == collapsed.e.keys() and len(transported.e) == 4
+wrong_before = affine_rich(at(collapsed,{origin}),matrix,origin)
+wrong_after = at(transported,{origin})
+assert (q(wrong_before),q(wrong_after)) == (1,2)
+pull_selected = filt(collapsed,lambda e:function(collapsed.e[e][1]) == origin)
+assert affine_rich(pull_selected,matrix,origin) == wrong_after
+assert push_c({origin:1},function) == {origin:1} != read_pair(wrong_after)[1]
+assert push_c(read_pair(pull_selected)[1],function) == read_pair(wrong_after)[1] == {origin:2}
+assert (reference_checks,affine_checks,space_unit_checks) == (32,128,52)
+print(f"pr2_reference: rich_pairs={reference_checks} affine_transports={affine_checks} space_units={space_unit_checks} noninjective_events={len(transported.e)} direct_image_filter={q(wrong_before)},{q(wrong_after)} pullback_filter={q(wrong_after)}")
+print("ALL_FINITE_CHECKS_PASSED")
+```
+

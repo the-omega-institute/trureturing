@@ -1,0 +1,15 @@
+### 37.2 附录实际核验
+
+本席实际运行下列原文命令，退出 **0**，stderr 为空，末行如下。新增 pr6_ 段共 **289 行**，只插在唯一 Python 块原末行打印之前；复用 Rich、pr3_／pr4_／pr5_ 的运算、剖面与规范字节函数。
+```sh
+sed -n '/^```python$/,/^```$/p' docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md | sed '1d;$d' | python3 -
+```
+```text
+pr6_expressibility_pairing: tail_q=4320 collapse_controls=4 target_controls=4 collapsed_profiles=4 saturation_endpoints=108 saturation_q=108 saturation_no_product=36 saturation_empty_factor=36 saturation_product=36 periodic_saturation=1 unsaturated_control=1 first_product_fiber=1 pair_push=800 empty_products=260 old_archives=640 negative_inputs=690 unselected_parents=8950 pair_suffix=2400 pullback_encoding=320 mixed_summary=3600 mixed_q=3600 strict_failures=720 D15_fiber=1 D15_q=1 D10_control=1 U_rule_push=6 J_positive=6 J_fiber=3 U_size_rule=4 global_rule=4 same_local_rows=1 q_only_control=1 image_roundtrip=64 enumerated_states=1280 formal_membership=1088 enumerated_roundtrip=704 image_sets=2 distinct_actual_profiles=670 D16_conditions=1 empty_endpoint_branches=6 empty_realizations=3 seed=2026091006 Tail_families=27 random_inputs=64 cases=80 periodic_and_drift=1,1/1,0 D15=1,2 D10=2,2 D16=1,1,1,0,1
+ALL_FINITE_CHECKS_PASSED
+```
+
+固定种子 2026091006 生成 24 个 Tail 谓词，连同 D14、空集、全集共 27 个，两个合法 k 遍历既有 64 份随机及 16 份定向输入。36 个随机小上下文分为无乘积、空因子、非空因子三组，各遍历三个位置；另以周期谓词对照有后继的 1/1 与删边后的 1/0，验证饱和见证的作用。属性配对核对两个槽位、非对称及符号／来源谓词、未选父、空区域、旧档案、负时刻、N／筛选续接与严格失败；P↑ 比较完整编码。J_R 的 U 依赖、全局计数与 q-only 对照分别核验。
+
+实际像核验包含 64 份直接生成的合法形式剖面往返；四事件族固定时间 (0,1,2,3) 与 (0,0,1,1)、符号 ++--、同位置同来源，穷举 1280 个图／选择组合和 1088 份形式候选，接受集与实际像逐个一致，去重实际剖面共 670 份。D16 逐项读数为 1,1,1,0,1；空档案与非空档案空当前区域端点分支另查。有限域计数不承担任意上下文或任意形式剖面的全称证明。预算原为计划而非机器门：正文 242 行在计划内，附录 289 行超过约 150 行的估量，用于保留要求的双路径计算、饱和负对照和完整枚举。
+

@@ -1,0 +1,52 @@
+## 32. One normalized holomorphic logarithm from every complete deletion order
+
+For a list l=(v1,...,vk), define the ordered sum of principal local logs along
+successive actual domains W0=V, Wj=W(j-1)\{vj}. The new source proves
+
+\[
+ \exp F_{V,l}(z)=\frac{Z(V;z)}{Z(W_k;z)},\qquad F_{V,l}(0)=0.
+\]
+
+This statement explicitly retains the remaining domain for an incomplete list.
+For a complete distinct enumeration of V, Wk is empty and its partition is one.
+Choose the existing Finset.toList enumeration to define F_V. Every other
+complete distinct enumeration gives the same exact complex value by the
+permutation theorem. Thus the chosen enumeration is absent from the mathematical
+content of F_V.
+
+Each local factor is the quotient of two entire independent-configuration sums,
+with a nonzero denominator on U_epsilon and image in the right half-plane.
+Differentiating its principal logarithm gives
+
+\[
+ \frac{d}{dz}\operatorname{Log}R(V,v;z)
+ =\frac{Z'_V(z)}{Z_V(z)}-
+   \frac{Z'_{V\setminus\{v\}}(z)}{Z_{V\setminus\{v\}}(z)}.
+\]
+
+The derivatives telescope on partial lists as well. For a complete list the
+remaining empty-domain derivative is zero. The concrete endpoint is therefore
+
+\[
+\boxed{
+ \exp F_V(z)=Z_V(z),\qquad F_V(0)=0,\qquad
+ F'_V(z)=\frac{Z'_V(z)}{Z_V(z)},\qquad
+ F_V\text{ is holomorphic on }U_\epsilon.
+}
+\tag{32.1}
+\]
+
+All statements use the original activity neighborhood, with no graph-dependent
+shrinking or supplied logarithm-existence premise. The candidate proof also
+establishes the exact canonical deletion equation
+
+\[
+ F_V(z)=\operatorname{Log}R(V,v;z)+F_{V\setminus\{v\}}(z).
+\tag{32.2}
+\]
+
+Uniqueness among all normalized holomorphic logarithms can also be deduced on
+the connected tube, but that broader uniqueness theorem is not a public
+statement in this increment. What is proved in source is exact independence
+from every complete distinct deletion enumeration.
+

@@ -1,0 +1,3 @@
+**25.17 主来源、支持证据与恢复身份。** 本次只消费 caller 所供完成输入的 conclusion 及完成元数据,未追随任何 `log_ref`,未打开 worker 日志或另一 S12 worktree。两次主数学任务均来自 `company-chatgpt-pro` browser Work,pool ID `61e1f52e-a625-4e08-b426-43e25bbab449`,完成记录观测模型均为 `GPT-6 Astra`,不是按产品名猜测模型:
+
+- 仿射障碍 task `c9caf71c-5b42-4d07-8de0-98540288eb7e`,conversation `conv_515ce9ddd365db68`,完成 `2026-09-08T17:49:38.119+00:00`。Envelope `pro-prime-bridge-retry-envelope-0909.json` SHA256 `1c8f5ae65d521ad567538a39a9623fcbbcdd6816f814307492682adada7cb515`;完成记录 `pro-prime-bridge-retry-complete-0909.json` SHA256 `862db73918aef78c101bd35ded76006783fa378d8cb53f483f5fad206ce554d9`。

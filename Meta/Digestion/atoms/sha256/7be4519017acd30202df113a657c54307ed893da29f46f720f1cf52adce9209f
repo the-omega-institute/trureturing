@@ -1,0 +1,3 @@
+**定理 13.5(回顾零损失不蕴含前瞻增益)**〔引〕。一个把已见数据逐条复制的判者,回顾损失为零,但其每条记录都被依赖污染,且零回顾损失不蕴含正的前瞻增益。
+*出处*。冻结定理 `lookup_copy_zero_loss_and_nonanticipating_failure`(GID `…/DefinitionEscapeAdjudication/RetrospectiveLookupFailure`)。母仓第 2.7 条「查表复制器」。
+
