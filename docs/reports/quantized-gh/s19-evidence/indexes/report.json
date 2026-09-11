@@ -1,0 +1,16 @@
+{
+  "schema": "s19-evidence-entry-v1",
+  "resource": "report",
+  "logical_path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+  "original": {"bytes": 224423, "sha256": "380990dd23fe36c960a6c5d78c2b96603e2067f27ee4672bc7d931e9793aaf5a", "lf": 3872, "terminal_lf": 1, "lines": 3872},
+  "origin": {"commit": "3a7f81337a673c09df19ed69d3bf5024eeef2600", "archive_member": "current/docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"},
+  "contract": "docs/reports/quantized-gh/s19-evidence/README.md",
+  "interpretation": "Archive of the complete named original resource. Parts are contiguous raw UTF-8 slices; parse JSON only after reconstruction. Historical fields retain their original owner and values.",
+  "parts": [
+    {"ordinal": 1, "path": "docs/reports/quantized-gh/s19-evidence/raw/report-380990dd23fe/group-001/part-0001-953c81343cd2.txt", "byte_start": 0, "byte_end_exclusive": 49736, "line_start": 1, "line_end_inclusive": 800, "bytes": 49736, "sha256": "953c81343cd28c720caff5e61b4238adc59bfae994c6b75031e09a3fbc933db9", "lf": 800, "terminal_lf": 2, "lines": 800, "context": "# (2,3,5) 整箱全薄层 S19：来源、固定证明证书与摄入核对"},
+    {"ordinal": 2, "path": "docs/reports/quantized-gh/s19-evidence/raw/report-380990dd23fe/group-001/part-0002-0b62815d7f9a.txt", "byte_start": 49736, "byte_end_exclusive": 86026, "line_start": 801, "line_end_inclusive": 1597, "bytes": 36290, "sha256": "0b62815d7f9a12dcbd001f3e4971013fc421a5ad9de80d03f3e780355546c438", "lf": 797, "terminal_lf": 2, "lines": 797, "context": "### Archived original bytes [678,879)"},
+    {"ordinal": 3, "path": "docs/reports/quantized-gh/s19-evidence/raw/report-380990dd23fe/group-001/part-0003-a25c206d72b7.txt", "byte_start": 86026, "byte_end_exclusive": 119515, "line_start": 1598, "line_end_inclusive": 2394, "bytes": 33489, "sha256": "a25c206d72b7e77927cffbfd88c81370f183727cc9f00d858b1e85979a4cfe64", "lf": 797, "terminal_lf": 2, "lines": 797, "context": "~~~~~~~~~~~~text"},
+    {"ordinal": 4, "path": "docs/reports/quantized-gh/s19-evidence/raw/report-380990dd23fe/group-001/part-0004-6c0d748f2c82.txt", "byte_start": 119515, "byte_end_exclusive": 162165, "line_start": 2395, "line_end_inclusive": 3194, "bytes": 42650, "sha256": "6c0d748f2c824e919b12bd1fe1c1b9b8c9ecc41d0809598fe4d49e5ea8110c81", "lf": 800, "terminal_lf": 2, "lines": 800, "context": "~~~~~~~~~~~~text"},
+    {"ordinal": 5, "path": "docs/reports/quantized-gh/s19-evidence/raw/report-380990dd23fe/group-001/part-0005-21e5f609b22b.txt", "byte_start": 162165, "byte_end_exclusive": 224423, "line_start": 3195, "line_end_inclusive": 3872, "bytes": 62258, "sha256": "21e5f609b22bdb99d0ac51f3bf388165f62cb04dc100b895c2490722abc8d4d6", "lf": 678, "terminal_lf": 1, "lines": 678, "context": "| `1a2703254e6926fe6f8da434fe675fe56e2aaf7b24941cbeafd51e0dbfe83760` | 1061 / 31 / 2 | `9ff35d61a86b6f1daea3888d6c3b68c7"}
+  ]
+}

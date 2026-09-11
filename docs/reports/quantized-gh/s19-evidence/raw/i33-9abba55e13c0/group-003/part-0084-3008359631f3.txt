@@ -1,0 +1,799 @@
+      {
+        "level": 3,
+        "text": "Li",
+        "claim": false,
+        "current": {
+          "byte_start": 6602,
+          "byte_end_exclusive": 7306,
+          "line_start": 158,
+          "line_end_inclusive": 183,
+          "byte_count": 704,
+          "lf_count": 26,
+          "terminal_lf_count": 2,
+          "sha256": "f1914051a2305a19e562b367300ce86ebc9a03f9b769e9e96fcf6554484b7fe6",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "f1914051a2305a19e562b367300ce86ebc9a03f9b769e9e96fcf6554484b7fe6"
+      },
+      {
+        "level": 3,
+        "text": "Nyman-Beurling-Baez-Duarte",
+        "claim": false,
+        "current": {
+          "byte_start": 7306,
+          "byte_end_exclusive": 8184,
+          "line_start": 184,
+          "line_end_inclusive": 214,
+          "byte_count": 878,
+          "lf_count": 31,
+          "terminal_lf_count": 2,
+          "sha256": "1fe75963de99fe6749b0190d7d196a245f38266ec713f250ed7b3418f334418b",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "1fe75963de99fe6749b0190d7d196a245f38266ec713f250ed7b3418f334418b"
+      },
+      {
+        "level": 3,
+        "text": "Baez-Duarte 系数与 Gronwall 对照",
+        "claim": false,
+        "current": {
+          "byte_start": 8184,
+          "byte_end_exclusive": 9069,
+          "line_start": 215,
+          "line_end_inclusive": 239,
+          "byte_count": 885,
+          "lf_count": 25,
+          "terminal_lf_count": 2,
+          "sha256": "e474c6c816b87c60919a85653278b1e8fbd094525d6965efd8548a5c325f9bc7",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "e474c6c816b87c60919a85653278b1e8fbd094525d6965efd8548a5c325f9bc7"
+      },
+      {
+        "level": 2,
+        "text": "4. 整数取整、真实等号与区间判定",
+        "claim": false,
+        "current": {
+          "byte_start": 9069,
+          "byte_end_exclusive": 11086,
+          "line_start": 240,
+          "line_end_inclusive": 278,
+          "byte_count": 2017,
+          "lf_count": 39,
+          "terminal_lf_count": 2,
+          "sha256": "ec8fc11c3c10e16412476b5cc8ab7d64568ad9d85fc18db0eeed2133bf1306c5",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "ec8fc11c3c10e16412476b5cc8ab7d64568ad9d85fc18db0eeed2133bf1306c5"
+      },
+      {
+        "level": 2,
+        "text": "5. 纸面反例: 任意分辨率的最近网格舍入都不普遍保持回返正性",
+        "claim": false,
+        "current": {
+          "byte_start": 11086,
+          "byte_end_exclusive": 14281,
+          "line_start": 279,
+          "line_end_inclusive": 358,
+          "byte_count": 3195,
+          "lf_count": 80,
+          "terminal_lf_count": 2,
+          "sha256": "5541bd02262eead5a95f78af8e848c10162795a3c0875f5b7f800ca7d747a09c",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "5541bd02262eead5a95f78af8e848c10162795a3c0875f5b7f800ca7d747a09c"
+      },
+      {
+        "level": 2,
+        "text": "6. 实际 ξ 的三阶专门化: Arb 严格区间证据",
+        "claim": false,
+        "current": {
+          "byte_start": 14281,
+          "byte_end_exclusive": 14978,
+          "line_start": 359,
+          "line_end_inclusive": 366,
+          "byte_count": 697,
+          "lf_count": 8,
+          "terminal_lf_count": 2,
+          "sha256": "139e7e00c6277ecdadd74711f90115062b5a6cc59f730386d95ff489206f64cf",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "139e7e00c6277ecdadd74711f90115062b5a6cc59f730386d95ff489206f64cf"
+      },
+      {
+        "level": 3,
+        "text": "定义与证明：从 Taylor 系数到 Li 回返",
+        "claim": false,
+        "current": {
+          "byte_start": 14978,
+          "byte_end_exclusive": 15999,
+          "line_start": 367,
+          "line_end_inclusive": 406,
+          "byte_count": 1021,
+          "lf_count": 40,
+          "terminal_lf_count": 2,
+          "sha256": "4707c9b2be597de7db9f05fe8a7fbdcac5f9cea22563f278e7d18a927f1a2fc7",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "4707c9b2be597de7db9f05fe8a7fbdcac5f9cea22563f278e7d18a927f1a2fc7"
+      },
+      {
+        "level": 3,
+        "text": "定理（原有数值证据）：严格包围与舍入的精确失败",
+        "claim": false,
+        "current": {
+          "byte_start": 15999,
+          "byte_end_exclusive": 17317,
+          "line_start": 407,
+          "line_end_inclusive": 453,
+          "byte_count": 1318,
+          "lf_count": 47,
+          "terminal_lf_count": 2,
+          "sha256": "39ed76a8f0abce131ef150d2615e45a2d4be44e110bdc4d7a56a77dcdc3ab0f8",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "39ed76a8f0abce131ef150d2615e45a2d4be44e110bdc4d7a56a77dcdc3ab0f8"
+      },
+      {
+        "level": 2,
+        "text": "7. 定理的适用边界与未证目标",
+        "claim": false,
+        "current": {
+          "byte_start": 17317,
+          "byte_end_exclusive": 19665,
+          "line_start": 454,
+          "line_end_inclusive": 473,
+          "byte_count": 2348,
+          "lf_count": 20,
+          "terminal_lf_count": 2,
+          "sha256": "814f92a72a0f1db342f16c52362677a84e81313656eac0d6a23c87a95cdce87a",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "814f92a72a0f1db342f16c52362677a84e81313656eac0d6a23c87a95cdce87a"
+      },
+      {
+        "level": 2,
+        "text": "8. 数学引文（附第 2–6 节及其后续引用）",
+        "claim": false,
+        "current": {
+          "byte_start": 19665,
+          "byte_end_exclusive": 19803,
+          "line_start": 474,
+          "line_end_inclusive": 477,
+          "byte_count": 138,
+          "lf_count": 4,
+          "terminal_lf_count": 2,
+          "sha256": "93c7fc7eba04c82de3d54e11d50ce98fd6ee03bc10105ac0160480bcafde2191",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "93c7fc7eba04c82de3d54e11d50ce98fd6ee03bc10105ac0160480bcafde2191"
+      },
+      {
+        "level": 3,
+        "text": "证明附引：各标记与原有适用范围",
+        "claim": false,
+        "current": {
+          "byte_start": 19803,
+          "byte_end_exclusive": 22075,
+          "line_start": 478,
+          "line_end_inclusive": 494,
+          "byte_count": 2272,
+          "lf_count": 17,
+          "terminal_lf_count": 2,
+          "sha256": "ae54ae2a8dd4aa2b9f6106f92b0e93cdcbae96d25ae5dc5aa1b6e80667962a05",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "ae54ae2a8dd4aa2b9f6106f92b0e93cdcbae96d25ae5dc5aa1b6e80667962a05"
+      },
+      {
+        "level": 2,
+        "text": "10. 指数截面、距离与已有的算术损失",
+        "claim": false,
+        "current": {
+          "byte_start": 22075,
+          "byte_end_exclusive": 22207,
+          "line_start": 495,
+          "line_end_inclusive": 498,
+          "byte_count": 132,
+          "lf_count": 4,
+          "terminal_lf_count": 2,
+          "sha256": "e9653086318238988a2627362c9a4ea8e66781f18529c4d26f231284b5dab1a7",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "e9653086318238988a2627362c9a4ea8e66781f18529c4d26f231284b5dab1a7"
+      },
+      {
+        "level": 3,
+        "text": "定义与定理：坐标独立不指定度量",
+        "claim": false,
+        "current": {
+          "byte_start": 22207,
+          "byte_end_exclusive": 23304,
+          "line_start": 499,
+          "line_end_inclusive": 511,
+          "byte_count": 1097,
+          "lf_count": 13,
+          "terminal_lf_count": 2,
+          "sha256": "7e2f7a19cc9d22d1ce72ec770a9dd9007dea9a6cb3845234507d95f0efe0d612",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "7e2f7a19cc9d22d1ce72ec770a9dd9007dea9a6cb3845234507d95f0efe0d612"
+      },
+      {
+        "level": 3,
+        "text": "定义与定理：黄金位是编码,不会新增独立方向",
+        "claim": false,
+        "current": {
+          "byte_start": 23304,
+          "byte_end_exclusive": 23969,
+          "line_start": 512,
+          "line_end_inclusive": 525,
+          "byte_count": 665,
+          "lf_count": 14,
+          "terminal_lf_count": 2,
+          "sha256": "5b5fe3f534552106c3425c4ab054450cbcddf5480b9ff9ee36008f843eccf1f4",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "5b5fe3f534552106c3425c4ab054450cbcddf5480b9ff9ee36008f843eccf1f4"
+      },
+      {
+        "level": 3,
+        "text": "定义与定理：Robin 的函数曲率与已有 KL 恒等式",
+        "claim": false,
+        "current": {
+          "byte_start": 23969,
+          "byte_end_exclusive": 24855,
+          "line_start": 526,
+          "line_end_inclusive": 543,
+          "byte_count": 886,
+          "lf_count": 18,
+          "terminal_lf_count": 2,
+          "sha256": "f2638303e2ec5c8083edbac9c9a62444bf158d81140924505a70155e6966d769",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "f2638303e2ec5c8083edbac9c9a62444bf158d81140924505a70155e6966d769"
+      },
+      {
+        "level": 2,
+        "text": "11. 三片 Schur 坐标的正交几何与量化",
+        "claim": false,
+        "current": {
+          "byte_start": 24855,
+          "byte_end_exclusive": 24985,
+          "line_start": 544,
+          "line_end_inclusive": 547,
+          "byte_count": 130,
+          "lf_count": 4,
+          "terminal_lf_count": 2,
+          "sha256": "44daa121c7cf5b47a3f639c42d1cdb5f1e70fae463c177ea0dc248c7e3848ff3",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "44daa121c7cf5b47a3f639c42d1cdb5f1e70fae463c177ea0dc248c7e3848ff3"
+      },
+      {
+        "level": 3,
+        "text": "定理与证明：既有 Schur 条件的投影解释",
+        "claim": false,
+        "current": {
+          "byte_start": 24985,
+          "byte_end_exclusive": 25912,
+          "line_start": 548,
+          "line_end_inclusive": 565,
+          "byte_count": 927,
+          "lf_count": 18,
+          "terminal_lf_count": 2,
+          "sha256": "1f70580349b16ea3fb2ff5ded0c95550dccd5ddcb1d1fe69ec73d4d261a397a1",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "1f70580349b16ea3fb2ff5ded0c95550dccd5ddcb1d1fe69ec73d4d261a397a1"
+      },
+      {
+        "level": 3,
+        "text": "定义与定理：两个不同的量化输出空间",
+        "claim": false,
+        "current": {
+          "byte_start": 25912,
+          "byte_end_exclusive": 27076,
+          "line_start": 566,
+          "line_end_inclusive": 586,
+          "byte_count": 1164,
+          "lf_count": 21,
+          "terminal_lf_count": 2,
+          "sha256": "82a1edcba51fbbacd9603b1a54dc3e2ad454b5ee15f70f68960278b62fa2ebd4",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "82a1edcba51fbbacd9603b1a54dc3e2ad454b5ee15f70f68960278b62fa2ebd4"
+      },
+      {
+        "level": 2,
+        "text": "12. 实际 xi 固定矩阵的全分辨率分类",
+        "claim": false,
+        "current": {
+          "byte_start": 27076,
+          "byte_end_exclusive": 27206,
+          "line_start": 587,
+          "line_end_inclusive": 590,
+          "byte_count": 130,
+          "lf_count": 4,
+          "terminal_lf_count": 2,
+          "sha256": "de7e4b8a4836463e2752b92ffb4e62c40d6a929920a8ade8c1c5fa99c66de9a6",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "de7e4b8a4836463e2752b92ffb4e62c40d6a929920a8ade8c1c5fa99c66de9a6"
+      },
+      {
+        "level": 3,
+        "text": "定理（原有数值证据）：输入区间与有限前缀分类",
+        "claim": false,
+        "current": {
+          "byte_start": 27206,
+          "byte_end_exclusive": 28864,
+          "line_start": 591,
+          "line_end_inclusive": 625,
+          "byte_count": 1658,
+          "lf_count": 35,
+          "terminal_lf_count": 2,
+          "sha256": "3a2cc7373cd8a766c432edcdac16977105d48d9c19b0239c696cb8b15fa7ba57",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "3a2cc7373cd8a766c432edcdac16977105d48d9c19b0239c696cb8b15fa7ba57"
+      },
+      {
+        "level": 3,
+        "text": "定理与证明：解析尾界,不是数值外推",
+        "claim": false,
+        "current": {
+          "byte_start": 28864,
+          "byte_end_exclusive": 30649,
+          "line_start": 626,
+          "line_end_inclusive": 650,
+          "byte_count": 1785,
+          "lf_count": 25,
+          "terminal_lf_count": 2,
+          "sha256": "18112e7e1985b5e7cb738ca9033155ee1418d617c667cbb0665beb9a0743c450",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "18112e7e1985b5e7cb738ca9033155ee1418d617c667cbb0665beb9a0743c450"
+      },
+      {
+        "level": 2,
+        "text": "15. 均值与平方偏差的尖锐因数丰度上包络",
+        "claim": false,
+        "current": {
+          "byte_start": 30649,
+          "byte_end_exclusive": 31047,
+          "line_start": 651,
+          "line_end_inclusive": 656,
+          "byte_count": 398,
+          "lf_count": 6,
+          "terminal_lf_count": 2,
+          "sha256": "4fd235927c9217d29d4765fdc70c98df9289795296b7e5fc7479c7d5e4affb9f",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "4fd235927c9217d29d4765fdc70c98df9289795296b7e5fc7479c7d5e4affb9f"
+      },
+      {
+        "level": 3,
+        "text": "定义：固定素数标签、预算与加权度量",
+        "claim": false,
+        "current": {
+          "byte_start": 31047,
+          "byte_end_exclusive": 32843,
+          "line_start": 657,
+          "line_end_inclusive": 694,
+          "byte_count": 1796,
+          "lf_count": 38,
+          "terminal_lf_count": 2,
+          "sha256": "2140c881a73102917a7d98789fc34938214f9e3f032bfa9333b0a17909596e00",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "2140c881a73102917a7d98789fc34938214f9e3f032bfa9333b0a17909596e00"
+      },
+      {
+        "level": 3,
+        "text": "定理与证明：强化的二次 Jensen 缺口",
+        "claim": false,
+        "current": {
+          "byte_start": 32843,
+          "byte_end_exclusive": 34590,
+          "line_start": 695,
+          "line_end_inclusive": 723,
+          "byte_count": 1747,
+          "lf_count": 29,
+          "terminal_lf_count": 2,
+          "sha256": "956bb9b9c99b556d3c83d2a64fd2cf12c0e137ce26dd7bbb8a04f9fcb0d67ab7",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "956bb9b9c99b556d3c83d2a64fd2cf12c0e137ce26dd7bbb8a04f9fcb0d67ab7"
+      },
+      {
+        "level": 3,
+        "text": "定理与证明：Hermite 上包络及全部等号情形",
+        "claim": false,
+        "current": {
+          "byte_start": 34590,
+          "byte_end_exclusive": 37448,
+          "line_start": 724,
+          "line_end_inclusive": 775,
+          "byte_count": 2858,
+          "lf_count": 52,
+          "terminal_lf_count": 2,
+          "sha256": "acfd341feae542551cf081f197c3f968a280b06e8b82fe0678f0712c5e3e648d",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "acfd341feae542551cf081f197c3f968a280b06e8b82fe0678f0712c5e3e648d"
+      },
+      {
+        "level": 2,
+        "text": "16. 有限指数箱体与预算薄层的充分证书",
+        "claim": false,
+        "current": {
+          "byte_start": 37448,
+          "byte_end_exclusive": 39182,
+          "line_start": 776,
+          "line_end_inclusive": 803,
+          "byte_count": 1734,
+          "lf_count": 28,
+          "terminal_lf_count": 2,
+          "sha256": "6bca950a7e5394471238f845120d89c38d21b7d0983b7baf08d0de15a06ca42a",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "6bca950a7e5394471238f845120d89c38d21b7d0983b7baf08d0de15a06ca42a"
+      },
+      {
+        "level": 3,
+        "text": "定理与证明：固定坐标的常数不能丢",
+        "claim": false,
+        "current": {
+          "byte_start": 39182,
+          "byte_end_exclusive": 40332,
+          "line_start": 804,
+          "line_end_inclusive": 823,
+          "byte_count": 1150,
+          "lf_count": 20,
+          "terminal_lf_count": 2,
+          "sha256": "cabf52cb765e921ab400a79ebe98b7299cb37c357de0079ac275d30ce602a821",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "cabf52cb765e921ab400a79ebe98b7299cb37c357de0079ac275d30ce602a821"
+      },
+      {
+        "level": 2,
+        "text": "17. 5040 证据、已有 KL 关系与未决比较",
+        "claim": false,
+        "current": {
+          "byte_start": 40332,
+          "byte_end_exclusive": 40464,
+          "line_start": 824,
+          "line_end_inclusive": 827,
+          "byte_count": 132,
+          "lf_count": 4,
+          "terminal_lf_count": 2,
+          "sha256": "b1da687a77cb422b86b7735222b2ebcf647b0d9da59401394ab74dea789ba107",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "b1da687a77cb422b86b7735222b2ebcf647b0d9da59401394ab74dea789ba107"
+      },
+      {
+        "level": 3,
+        "text": "定理（原有数值证据）：单个边界整数的上界",
+        "claim": false,
+        "current": {
+          "byte_start": 40464,
+          "byte_end_exclusive": 41438,
+          "line_start": 828,
+          "line_end_inclusive": 842,
+          "byte_count": 974,
+          "lf_count": 15,
+          "terminal_lf_count": 2,
+          "sha256": "fbac8ff148667978d6bca1785d879bae872db416cf7fad45ff6ee0258d9decba",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "fbac8ff148667978d6bca1785d879bae872db416cf7fad45ff6ee0258d9decba"
+      },
+      {
+        "level": 3,
+        "text": "定义与定理：固定支撑损失不等于任意全局损失",
+        "claim": false,
+        "current": {
+          "byte_start": 41438,
+          "byte_end_exclusive": 43557,
+          "line_start": 843,
+          "line_end_inclusive": 881,
+          "byte_count": 2119,
+          "lf_count": 39,
+          "terminal_lf_count": 2,
+          "sha256": "95e989a97c01b16bf28e71e2a506db4d6f357c364fb7643275221f6fb112574c",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "95e989a97c01b16bf28e71e2a506db4d6f357c364fb7643275221f6fb112574c"
+      },
+      {
+        "level": 3,
+        "text": "定义及开放比较：离散对偶",
+        "claim": false,
+        "current": {
+          "byte_start": 43557,
+          "byte_end_exclusive": 44653,
+          "line_start": 882,
+          "line_end_inclusive": 895,
+          "byte_count": 1096,
+          "lf_count": 14,
+          "terminal_lf_count": 2,
+          "sha256": "5be7ce10257a59ca44cf66414b412365c9804f578c2be4e4fede02624f49a7dd",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "5be7ce10257a59ca44cf66414b412365c9804f578c2be4e4fede02624f49a7dd"
+      },
+      {
+        "level": 2,
+        "text": "18. 相邻二点指数箱体:经典分数背包的精确对偶",
+        "claim": false,
+        "current": {
+          "byte_start": 44653,
+          "byte_end_exclusive": 49210,
+          "line_start": 896,
+          "line_end_inclusive": 961,
+          "byte_count": 4557,
+          "lf_count": 66,
+          "terminal_lf_count": 2,
+          "sha256": "583418ce7b86072c958442f0a4179a473429229c0358b624e3e778bb1b53bec6",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "583418ce7b86072c958442f0a4179a473429229c0358b624e3e778bb1b53bec6"
+      },
+      {
+        "level": 2,
+        "text": "19. 对方差包络的三个充分占优条件",
+        "claim": false,
+        "current": {
+          "byte_start": 49210,
+          "byte_end_exclusive": 55009,
+          "line_start": 962,
+          "line_end_inclusive": 1065,
+          "byte_count": 5799,
+          "lf_count": 104,
+          "terminal_lf_count": 2,
+          "sha256": "168e8a474e78bafc7fd72cd938ac995adcad5f0f8a3342c25dfdcfa6f3a95e7d",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "168e8a474e78bafc7fd72cd938ac995adcad5f0f8a3342c25dfdcfa6f3a95e7d"
+      },
+      {
+        "level": 2,
+        "text": "20. 唯一分数坐标的精确剩余不等式",
+        "claim": false,
+        "current": {
+          "byte_start": 55009,
+          "byte_end_exclusive": 56307,
+          "line_start": 1066,
+          "line_end_inclusive": 1089,
+          "byte_count": 1298,
+          "lf_count": 24,
+          "terminal_lf_count": 2,
+          "sha256": "dbe16e30c071470f84b9cc3d6fc9f05a8ebb4dcbb51cac5ba92f253395dac706",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "dbe16e30c071470f84b9cc3d6fc9f05a8ebb4dcbb51cac5ba92f253395dac706"
+      },
+      {
+        "level": 2,
+        "text": "21. 人工实数网格的反向实例与有界证据",
+        "claim": false,
+        "current": {
+          "byte_start": 56307,
+          "byte_end_exclusive": 59521,
+          "line_start": 1090,
+          "line_end_inclusive": 1152,
+          "byte_count": 3214,
+          "lf_count": 63,
+          "terminal_lf_count": 2,
+          "sha256": "2144b1c3e305ad48a2effa3ebc5f292741c5835b293b318946fa3cf3a7563d4b",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "2144b1c3e305ad48a2effa3ebc5f292741c5835b293b318946fa3cf3a7563d4b"
+      },
+      {
+        "level": 2,
+        "text": "22. 正实二点网格的二坐标全域占优与等号分类",
+        "claim": false,
+        "current": {
+          "byte_start": 59521,
+          "byte_end_exclusive": 61167,
+          "line_start": 1153,
+          "line_end_inclusive": 1197,
+          "byte_count": 1646,
+          "lf_count": 45,
+          "terminal_lf_count": 2,
+          "sha256": "f7d5a3098ec464365e29b2d5496308075b468713aa09d069ab8695476b8bc5c6",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "f7d5a3098ec464365e29b2d5496308075b468713aa09d069ab8695476b8bc5c6"
+      },
+      {
+        "level": 3,
+        "text": "定义域、精确 LP 与整数最优解",
+        "claim": false,
+        "current": {
+          "byte_start": 61167,
+          "byte_end_exclusive": 63377,
+          "line_start": 1198,
+          "line_end_inclusive": 1229,
+          "byte_count": 2210,
+          "lf_count": 32,
+          "terminal_lf_count": 2,
+          "sha256": "2bf60aeafd24999f571e1e2e0f84f09d6595854f17f8e3fecdc6423a124a8695",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "2bf60aeafd24999f571e1e2e0f84f09d6595854f17f8e3fecdc6423a124a8695"
+      },
+      {
+        "level": 3,
+        "text": "两个实际角点引理与均值方差情形",
+        "claim": false,
+        "current": {
+          "byte_start": 63377,
+          "byte_end_exclusive": 64649,
+          "line_start": 1230,
+          "line_end_inclusive": 1251,
+          "byte_count": 1272,
+          "lf_count": 22,
+          "terminal_lf_count": 2,
+          "sha256": "fc1aec0b7f59ad175533e5d76a2ab7bf4e7ada9201597f83c5b899d036db724a",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "fc1aec0b7f59ad175533e5d76a2ab7bf4e7ada9201597f83c5b899d036db724a"
+      },
+      {
+        "level": 3,
+        "text": "剩余情形的内侧割线与 Hermite 上包络",
+        "claim": false,
+        "current": {
+          "byte_start": 64649,
+          "byte_end_exclusive": 67338,
+          "line_start": 1252,
+          "line_end_inclusive": 1333,
+          "byte_count": 2689,
+          "lf_count": 82,
+          "terminal_lf_count": 2,
+          "sha256": "ef04fb2a6a04f2266dd2210aa619417ef2f9d179c70ac6a31fb6b552354660fd",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "ef04fb2a6a04f2266dd2210aa619417ef2f9d179c70ac6a31fb6b552354660fd"
+      },
+      {
+        "level": 3,
+        "text": "等号恰为上预算的等坐标角点",
+        "claim": false,
+        "current": {
+          "byte_start": 67338,
+          "byte_end_exclusive": 68466,
+          "line_start": 1334,
+          "line_end_inclusive": 1348,
+          "byte_count": 1128,
+          "lf_count": 15,
+          "terminal_lf_count": 2,
+          "sha256": "d43d1374ec12048cd72f625bae2c328d9c95dbe7410f0c193da7c1119ae50d4c",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "d43d1374ec12048cd72f625bae2c328d9c95dbe7410f0c193da7c1119ae50d4c"
+      },
+      {
+        "level": 2,
+        "text": "23. 两个不同素数的严格专门化与适用边界",
+        "claim": false,
+        "current": {
+          "byte_start": 68466,
+          "byte_end_exclusive": 71163,
+          "line_start": 1349,
+          "line_end_inclusive": 1398,
+          "byte_count": 2697,
+          "lf_count": 50,
+          "terminal_lf_count": 2,
+          "sha256": "f755864fff62e1e2cf5be7e960dc1e8d3d94f16190e114aeee05501bb519d85c",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "f755864fff62e1e2cf5be7e960dc1e8d3d94f16190e114aeee05501bb519d85c"
+      },
+      {
+        "level": 2,
+        "text": "24. 实际下端角点可行时的全维条件占优",
+        "claim": false,
+        "current": {
+          "byte_start": 71163,
+          "byte_end_exclusive": 71298,
+          "line_start": 1399,
+          "line_end_inclusive": 1402,
+          "byte_count": 135,
+          "lf_count": 4,
+          "terminal_lf_count": 2,
+          "sha256": "c853f87559e9cc166924b77f0c7e72dca2b3c33bf534693c1e219ea20d6302e6",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "c853f87559e9cc166924b77f0c7e72dca2b3c33bf534693c1e219ea20d6302e6"
+      },
+      {
+        "level": 2,
+        "text": "24.1",
+        "claim": true,
+        "current": {
+          "byte_start": 71298,
+          "byte_end_exclusive": 72794,
+          "line_start": 1403,
+          "line_end_inclusive": 1442,
+          "byte_count": 1496,
+          "lf_count": 40,
+          "terminal_lf_count": 2,
+          "sha256": "6dc0cb46da926291943f4d0e4ed261d5b307a35d0f6bbd58b6152d734ba27c8d",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "6dc0cb46da926291943f4d0e4ed261d5b307a35d0f6bbd58b6152d734ba27c8d"
+      },
+      {
+        "level": 2,
+        "text": "24.2",
+        "claim": true,
+        "current": {
+          "byte_start": 72794,
+          "byte_end_exclusive": 73897,
+          "line_start": 1443,
+          "line_end_inclusive": 1463,
+          "byte_count": 1103,
+          "lf_count": 21,
+          "terminal_lf_count": 2,
+          "sha256": "8d9fb739549e45f8fe15c9bf830f94453c74f86e6651fee7abe39d3b58dc91db",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "8d9fb739549e45f8fe15c9bf830f94453c74f86e6651fee7abe39d3b58dc91db"
+      },
+      {
+        "level": 3,
+        "text": "24.3",
+        "claim": true,
+        "current": {
+          "byte_start": 73897,
+          "byte_end_exclusive": 74495,
+          "line_start": 1464,
+          "line_end_inclusive": 1472,
+          "byte_count": 598,
+          "lf_count": 9,
+          "terminal_lf_count": 2,
+          "sha256": "6478e2b95df1e6ff654dd18e03c448730f57a99eded3516a2075f959318d5d60",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "6478e2b95df1e6ff654dd18e03c448730f57a99eded3516a2075f959318d5d60"
+      },
+      {
+        "level": 3,
+        "text": "24.4",
+        "claim": true,
+        "current": {
+          "byte_start": 74495,
+          "byte_end_exclusive": 76468,
+          "line_start": 1473,
+          "line_end_inclusive": 1492,
+          "byte_count": 1973,
+          "lf_count": 20,
+          "terminal_lf_count": 2,
+          "sha256": "4d9ccec64e27fef01b8d2a11375cf29448040c205088bdafc15cc90ce524d866",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "4d9ccec64e27fef01b8d2a11375cf29448040c205088bdafc15cc90ce524d866"
+      },
+      {
+        "level": 3,
+        "text": "24.5",
+        "claim": true,
+        "current": {
+          "byte_start": 76468,
+          "byte_end_exclusive": 77833,
+          "line_start": 1493,
+          "line_end_inclusive": 1504,
+          "byte_count": 1365,
+          "lf_count": 12,
+          "terminal_lf_count": 2,
+          "sha256": "5a174f44b43d66cf88d8cfb56c4f6a62465dbbe4bd4dca7d8c8c070c023d8ab5",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        },
+        "atom_id": "5a174f44b43d66cf88d8cfb56c4f6a62465dbbe4bd4dca7d8c8c070c023d8ab5"
+      },

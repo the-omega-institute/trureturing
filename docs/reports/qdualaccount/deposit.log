@@ -1,0 +1,17 @@
+PLAYBOOK_STEP command=deposit-uncovered detail=lean-report
+LEAN_REPORT_INPUT side=candidate content_address=sha256:ed30226d719de12e5ec5f711a18f9190fc9abf751d813e2f518644b06996b911 producer_sha256=4a47d8c2fb7870ddb5cf70ebe8323633e2d7b3bbc98b94ce1429ab62a9ba8ead repository_inspector_sha256=4a47d8c2fb7870ddb5cf70ebe8323633e2d7b3bbc98b94ce1429ab62a9ba8ead lean_sources_sha256=07077252b282f04ba98071dfc53f190ccfd889a79b6f03bf30ccaa8a73255129 lean_config_sha256=6c423ab8f3484b691bfe32ac6e463898827203fd86d5cf94b77c9017f90e442b
+LEAN_CACHE {"status":"present","worktree":"/Users/chronoai/trureturing-quantumobs2","donor":null,"method":"none","reason":null,"stamp_miss":null,"pin_sha256":"sha256:6c4c682ffba051b5744fe7a75ccc99d7f3b20227b3b026f392f3315be0adaa4e","clonefile_errno":null,"clonefile_errnos":[],"clonefile_attempts":0,"clonefile_cleanup_error":null,"mathlib_missing_olean_files":0,"mathlib_missing_olean_samples":[],"archive_status":"not_attempted","archive_mode":null,"archive_skip_reason":"project olean state is warm","archive_reason":null,"archive_producer_commit_sha":null,"archive_workflow_run_id":null,"mathlib_olean_state":"warm","mathlib_olean_probe_error":null,"project_olean_state":"warm","project_olean_probe_error":null}
+LEAN_REPORT_PROVENANCE side=candidate mode=cached source_side=candidate input_address=sha256:ed30226d719de12e5ec5f711a18f9190fc9abf751d813e2f518644b06996b911 report_sha256=86460ff6630540e9e2c0e2ef3f1ec4353216ed7daaa87b8cece69737214a1ffd attestation=/Users/chronoai/trureturing-quantumobs2/.lake/build/stratalint/raw-lean-report.json.provenance.json
+PLAYBOOK_STEP command=deposit-uncovered detail=deposit-header-check
+DEPOSIT_HEADER_CHECKED SL-012 D5/S3/Quantum/Divergence/DualAccountFull.lean
+PLAYBOOK_STEP command=deposit-uncovered detail=emit
+document graph: receipt-free=3885 receipt-bound=0 wired=3877 truth-anchor=11054 dependency=3670 narrative=5
+emitted: 0 changed blueprint(s)
+RESOURCE_OBSERVATION stage=report-supervisor-scribe-consumer disk_free_kb=100840916 fd_soft_limit=1048576 fd_peak=359 rss_peak_kb=1652608
+checked: Evidence/D5/values.json
+checked: Generated/FILEMAP.md
+wrote: Generated/truth-graph.v1.json
+checked: Generated/DAG.md
+PLAYBOOK_STEP command=deposit-uncovered detail=ledger-align --add D5/S3/Quantum/Divergence/DualAccountFull.lean
+LEDGER_ALIGN selectors_considered=4034 changed=0 added=1 unchanged=4033 conflicts=0
+PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED gid=D5/S3/Quantum/Divergence/DualAccountFull.dual_account_full reason=NO_ATOM

@@ -1,0 +1,800 @@
+~~~~~~~~~~~~text
+前瞻有限容量与第二处压缩记号订正。⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [195031,195046)
+
+Disposition: operational fragment in mixed mathematical passage.
+
+~~~~~~~~~~~~text
+另行预登记⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [195577,195592)
+
+Disposition: operational sentence or fragment.
+
+~~~~~~~~~~~~text
+未来逐内积⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [195770,195798)
+
+Disposition: operational sentence or fragment.
+
+~~~~~~~~~~~~text
+primary 的 `255255+255+255`⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [196121,196416)
+
+Disposition: operational sentence or fragment.
+
+~~~~~~~~~~~~text
+比较可从最高 limb 向下进行;完整幂构造、中间乘积、指数计数器、索引和进位传播
+仍须在真实实现中证明不越界。溢出、次序未认证或精确比较不可用只能返回 unresolved,
+不能排除箱体。这里没有认证任何 MPS 指令或 kernel。
+~~~~~~~~~~~~
+
+### Archived original bytes [196425,196482)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+保留第 26 节的稳定 25 槽,不采纳另一排列。⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [197099,197117)
+
+Disposition: operational sentence or fragment.
+
+~~~~~~~~~~~~text
+primary 另写的 ⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [197211,197229)
+
+Disposition: operational sentence or fragment.
+
+~~~~~~~~~~~~text
+本次只披露为⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [197451,197499)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+条件覆盖的记账语义与本轮零执行。⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [197502,197508)
+
+Disposition: operational fragment in mixed mathematical passage.
+
+~~~~~~~~~~~~text
+未来⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [197834,197964)
+
+Disposition: operational sentence or fragment.
+
+~~~~~~~~~~~~text
+证书应绑定素数/指数三元组、带标签的精确坐标次序、guard 比较、定理身份与版本及 raw-ID 范围。
+~~~~~~~~~~~~
+
+### Archived original bytes [198053,198059)
+
+Disposition: operational fragment in mixed mathematical passage.
+
+~~~~~~~~~~~~text
+未来⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [198275,198352)
+
+Disposition: type / grammar metadata; operational sentence or fragment.
+
+~~~~~~~~~~~~text
+第一类;输入/程序身份和独立精确算术认证仍是实施义务。⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [198354,198678)
+
+Disposition: operational provenance / implementation / execution / delivery, inactive archive.
+
+~~~~~~~~~~~~text
+本源增量的 searched boxes、executed box guards、executed kernels、numerically evaluated slots、
+certified computational exclusions 均为 0,没有实施 pruning,没有修改任何 kernel。
+固定代数和整数恒等式的 CPU 验算只支撑正文记号,不是候选生成、指数箱搜索或旧结果重放。
+
+~~~~~~~~~~~~
+
+### Archived original bytes [198686,198722)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+经典材料与历史访问限制。⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [199343,199961)
+
+Disposition: operational provenance / implementation / execution / delivery, inactive archive.
+
+~~~~~~~~~~~~text
+caller 已检查这些书页,所供 PDF 为 6881335 字节,SHA256
+40d976c83c18cce1900eff8c41bd5ad408c102b813af39d05ff85678ccf8d76e。
+I11 读取所供核对材料、对应文字摘录,并核对 PDF 身份。
+primary 当时无法读取所给 immutable raw URL 和 GitHub blob URL,因此没有独立检查仓库全文或其身份;
+它使用请求提供的定义。这一历史限制不因 caller 后来的源核对或 I11 的本地前缀核对而抹去。
+primary、caller 的有界数学核验与 I11 实施自查是不同职责,不组成三票独立 review。
+本轮 provenance 和可复现的固定恒等式验算见
+~~~~~~~~~~~~
+
+### Archived original bytes [200053,201530)
+
+Disposition: operational provenance / implementation / execution / delivery, inactive archive.
+
+~~~~~~~~~~~~text
+
+**27.20 本次 canonical 摄入及状态。** 本实施为 caller 的 consensus-rnd:sshx 编排下
+Codex CLI I11,flight qgh0909-i11-separation-append,attempt 1,retry budget 1;
+工作树为 /Users/auricstudio/trureturing-qgh-separation,分支
+lane/math/quantized-gh-separation-0909。实施者 repo-prior-exposed,
+primary external-prior-exposed;不声称 sterile priors 或模型族多样性。
+本轮没有子 worker、新 oracle、同轮 review 输入、worker 日志或 opaque log_ref 内容读取,
+没有邻近活跃工作树或 caller 会话发现。仅依指定参考源与显式供给材料执行本增量。
+源文和一个新报告之外的新增 CAS/entry 仅由
+~~~sh
+make ingest BASE=391f7355698085c6500b46838a093dad05947ffb SOURCE=arithmetic-boundary-quantization
+~~~
+产生,不手编或重命名 generated 文件。实际路径为 Meta/Digestion/atoms/sha256
+与 Meta/Digestion/backfill;schema 使用 fingerprints/cas_ref/coverage_gids,没有 body atom_id。
+新条目保持 residual-open,不表示证明已被 Lean 吸收。generator 若产生历史 LF 变体则原样保留,
+不重放历史 atom、不作全仓 harness/Lean 构建。每个新实质单元在本节中编号,
+新 canonical 源跨度覆盖、文件身份和命令退出码由本次 implementation envelope 记录。
+Git 暂存、提交、push、PR、merge 和后续独立评审均归 caller;本节没有代行这些动作,
+也没有把有效实施信封当作独立评审或长期目标完成。
+
+~~~~~~~~~~~~
+
+### Archived original bytes [201612,201642)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+本层命题与证据身份。⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [201645,201860)
+
+Disposition: operational sentence or fragment.
+
+~~~~~~~~~~~~text
+本节是 C33 / S17 的 PAPER_ARGUMENT / repo-derived
+参考输入,主数学输入为实际 GPT PRO task aaaf57ba-7b72-4143-b830-b4b58fe7fc2c,
+conversation conv_576df749336210e9,该调用观测模型 GPT-6 Astra。
+~~~~~~~~~~~~
+
+### Archived original bytes [202407,203008)
+
+Disposition: operational provenance / implementation / execution / delivery, inactive archive.
+
+~~~~~~~~~~~~text
+本节只用已完成的 relative-spread primary、其 caller 固定核验和本树封存的先行源文。
+后续 common-height 与 balanced-all-slab primaries 不是本层输入。
+第 1-27 节的 201529 字节 / 3627 行前缀原样保留,SHA256 为
+b7cb35d87d0a7b7e569c49ab57f2b556c454257de8bd65899587d13be1338537;
+implementation BASE 为 feb497ec31f68e09ccc547a08810c398e66f3ee6。
+原始 primary payload 的 SHA256 为
+7d0bddfc1fcf761290f7bf777663f52f07af927eb2832001a67ff509bdeb4f11。
+其两处转义的非负整数记号在本节排作通常的 \(\mathbb Z_{\ge0}\),原始 payload 不改。
+
+~~~~~~~~~~~~
+
+### Archived original bytes [204624,204655)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+保留 primary 的常数,其中⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [204665,204686)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+原 payload 所记的⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [206168,206187)
+
+Disposition: operational sentence or fragment.
+
+~~~~~~~~~~~~text
+这与 primary 从 ⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [213634,213669)
+
+Disposition: operational sentence or fragment.
+
+~~~~~~~~~~~~text
+,也不需要运行其 25 槽设计⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [216677,216788)
+
+Disposition: operational sentence or fragment.
+
+~~~~~~~~~~~~text
+primary 已纠正 caller 早先把被排除符号写成 \(G<0\) 的措辞;
+这里不沿用那个反向表述。⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [221018,221049)
+
+Disposition: operational sentence or fragment.
+
+~~~~~~~~~~~~text
+,本轮没有执行指数枚举⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [221482,221489)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+控制;⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [221490,221577)
+
+Disposition: operational sentence or fragment.
+
+~~~~~~~~~~~~text
+后续独立研究即使完成,也须作为另层输入,不能被本节提前引用。
+~~~~~~~~~~~~
+
+### Archived original bytes [221586,221625)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+经典归属与已完成固定核验。⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [221628,221652)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+primary 已读并引用 ⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [221896,221959)
+
+Disposition: operational provenance / implementation / execution / delivery, inactive archive.
+
+~~~~~~~~~~~~text
+第 27.19 节已保存 caller 的书页与 PDF 身份核对。
+~~~~~~~~~~~~
+
+### Archived original bytes [222229,222808)
+
+Disposition: operational provenance / implementation / execution / delivery, inactive archive.
+
+~~~~~~~~~~~~text
+caller 的既有审计为 caller-relative-prime-spread-audit-0909.json,
+SHA256 493e5f8d2432469936611f95c5d34a42ea5463bb1b29188e827b135ac14b4c47:
+SymPy 1.14.0,11 项固定符号恒等式已通过,所供 host session 11977 退出 0。
+这些既有核验按其原身份保留,不作为本轮重新运行的 11 个结果,
+更不作为独立评审或历史数值搜索的重放许可。
+本轮 CPU 仅做源文/身份/生成覆盖验证及普通编排;搜索计数和 GPU dispatch 均为 0。
+完整输入限制、11 项名称、核验出处和剩余交付义务见唯一新增报告
+~~~~~~~~~~~~
+
+### Archived original bytes [222900,224857)
+
+Disposition: operational provenance / implementation / execution / delivery, inactive archive.
+
+~~~~~~~~~~~~text
+
+**28.19 实施、canonical 摄入与尚待交付。** 本层为 caller 的 consensus-rnd:sshx
+编排下 Codex CLI I12 实施,flight qgh0910-i12-relative-spread,attempt 1,
+工作树 /Users/auricstudio/trureturing-qgh-variance,分支
+lane/math/quantized-gh-relative-spread-0910。
+实施者继承 repo-prior-exposed 的 CLAUDE.md / agents/CONTEXT.md 及完整所供 GoalArtifact;
+primary 自报 external-prior-exposed,账户/项目先验未知且不可控。
+不声称先验无污染或模型族多样性。primary 当时读取 pinned 仓库 URL 遇到 DisabledError,
+故其仓库全文忠实性未获独立检查;此历史访问限制不会被本次本地核对抹去。
+
+本层源文之外只加一份纸面核验/provenance 报告。全部新增 CAS 与条目仅由
+~~~sh
+make ingest BASE=feb497ec31f68e09ccc547a08810c398e66f3ee6 SOURCE=arithmetic-boundary-quantization
+~~~
+产生;旧 CAS/entry/report 保留,生成字节及生成器拥有的 EOF 空行不手修。
+源文是 paper reference input,CAS 是该输入的 canonical 摄入物,
+覆盖源跨度不表示其命题已由 Lean 吸收。条目的 receipts.chain_atoms 及嵌套子项
+按实际 schema 读取,不用删字段来迎合临时检查。
+本轮没有工具、Lean、source registry、策略或 GPU kernel 改动,
+没有候选生成、旧 fixed-xi 重放、子 worker、peer review 或 worker log_ref 内容读取。
+canonical 工具的实际退出码、生成身份及每个新编号单元的跨度覆盖由实施信封记录;
+工具若失败须显式交回,不能手工制造通过。
+
+源实现候选仍需 caller 在实施 terminal 后封存,再安排独立源文评审、普通仓库门和 PR。
+最终 S17 MERGED 依赖 S16 MERGED;本实施不判定前驱实时 review 状态。
+Git 暂存、提交、push、PR 和 merge 都归 caller,不由 I12 执行。
+本节交回候选不等于独立评审、正式交付、长期研究目标完成或允许立即用作已准入剪枝规则。
+
+~~~~~~~~~~~~
+
+### Archived original bytes [224933,224963)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+本层范围与已有前置。⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [224966,225125)
+
+Disposition: operational sentence or fragment.
+
+~~~~~~~~~~~~text
+本节为 C38 / S18 的 PAPER_ARGUMENT / repo-derived
+参考输入,主数学输入是已完成的 common-height primary
+fd06c983-162f-4f98-adab-2049d31a9f8d。⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [247454,247520)
+
+Disposition: operational sentence or fragment.
+
+~~~~~~~~~~~~text
+没有执行该构造、产生指数候选、计算数值见证或⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [247539,247543)
+
+Disposition: operational sentence or fragment.
+
+~~~~~~~~~~~~text
+。
+~~~~~~~~~~~~
+
+### Archived original bytes [249349,249408)
+
+Disposition: operational sentence or fragment.
+
+~~~~~~~~~~~~text
+本节不运行它,不修改稳定行号或实现剪枝。
+~~~~~~~~~~~~
+
+### Archived original bytes [249488,249493)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+OPEN,⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [249494,249534)
+
+Disposition: operational sentence or fragment.
+
+~~~~~~~~~~~~text
+本结果不完成长期研究目标。
+~~~~~~~~~~~~
+
+### Archived original bytes [249543,249600)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+经典出处、重叠核对与 primary 的历史限制。⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [249821,249843)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+本次另实际取回 ⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [250345,250544)
+
+Disposition: operational provenance / implementation / execution / delivery, inactive archive.
+
+~~~~~~~~~~~~text
+三个限定站点的 Google 查询仅返回跳转页,DLMF 的完整 4.6 页面请求为 HTTP 403;
+成功取回的公式与两个条目、实际查询和内容身份均记录于本层唯一报告。
+~~~~~~~~~~~~
+
+### Archived original bytes [250618,251274)
+
+Disposition: operational provenance / implementation / execution / delivery, inactive archive.
+
+~~~~~~~~~~~~text
+primary 自报请求 pinned source 时遇 DisabledError,未独立看到其字节、SHA256、25.7 或
+26 节全文,把先行源前提标为 ASSUMED-UNVERIFIED;它对原创性未作评定。
+这些是该次 primary 的历史访问/新颖性限制,不会因本次读取本树旧源而变成
+“primary 当时已经核查”。本次亲读 25.7、26.2-26.4、26.10-26.17、26.23-26.25、
+27.2-27.5 的相关条款、27.11-27.14、28.14-28.19 等先行文本,区分准确重叠与新增组合。
+本节专门推导的当前归属为 repo-derived,不以历史的“未评定”充当现行 provenance 状态,
+不声称穷尽文献检索或文献中无先例。
+
+~~~~~~~~~~~~
+
+### Archived original bytes [251705,251804)
+
+Disposition: operational sentence or fragment.
+
+~~~~~~~~~~~~text
+这里仅追加源文澄清,不修改 27.14,不新增定理,也不重开已结算的 S16 review。
+~~~~~~~~~~~~
+
+### Archived original bytes [251805,254299)
+
+Disposition: operational provenance / implementation / execution / delivery, inactive archive.
+
+~~~~~~~~~~~~text
+**29.22 本层产地、固定核验与 canonical 摄入。** 本实施为 caller 的
+consensus-rnd:sshx 1.0.0-beta.42 编排下 I13,flight qgh0910-i13-common-height,
+attempt 1,工作树 /Users/auricstudio/trureturing-qgh-common-height,
+分支 lane/math/quantized-gh-common-height-0910,immutable BASE
+66001d3b87d7063c5dd2a4ea97e51f8f1b876afa。
+实施者为 Codex CLI,继承完整所供 GoalArtifact 及 repo-prior-exposed 的仓库规范;
+没有子 worker 或同轮独立 review 票。primary 自报 external-prior-exposed,
+账户/项目上下文未知且不可控,其具体 serving-model/routing 未独立确认;
+本层不从 ACTUAL GPT PRO 的 caller 标签推断模型版本或模型族多样性。
+
+主 envelope 为 pro-common-height-envelope-0910.json,SHA256
+7bba088ffbdf3ae327aa0bbf34c17905e90a7510252a0e3f699ba28a27d6eda7,
+只消费 conclusion,所有 log_ref 保持不透明。
+caller-common-height-audit-0910.json 是已完成先行审计,
+记载 21 项成功固定精确核验、完整纸面审计及原 host exit 0,不是本轮 peer review。
+本层仅将同一 21 项算式适配成报告内自足固定证明证书并运行,
+原审计和原一次性程序字节不变;程序、实际结果和输入身份见
+[common-height-finite-mixtures-0910.md](../../reports/common-height-finite-mixtures-0910.md)。
+该证书不接受候选参数,不是可复用搜索器。CPU 仅用于固定核验、源和引用一致性;
+没有指数、高度、形状、素数或薄层候选生成,没有 GPU、daemon 或旧搜索重放。
+
+本节前的完整 224856 字节 / 4141 行源前缀保持不变,SHA256
+69702718f3602c508146f50cf70ebd78ef81adb09c2b826041d357e4a7dc11c8。
+所有历史 CAS、entry 和报告保留。源追加后唯一摄入门为
+~~~sh
+make ingest BASE=66001d3b87d7063c5dd2a4ea97e51f8f1b876afa SOURCE=arithmetic-boundary-quantization
+~~~
+全部新增 CAS/entry 仅由该命令生成,包括可能出现的历史末单元 terminal-LF 变体和
+自动 chain children;生成字节及其 EOF 空行不手修。摄入只提供源文内容地址,
+不表示数学被 Lean 吸收。本层源实现和独立源评审可在隔离树中推进,
+由 caller 在本次 implementation terminal 后封存、安排评审与普通仓库门;
+最终交付依赖 S17 MERGED。Git 暂存、提交、push、PR、merge 均由 caller 所有,
+本实施不执行,也不读取另一在飞 target 或同轮 reviewer 工件。
+交回本层候选不等于已独立批准、已正式交付或长期目标完成。
+
+~~~~~~~~~~~~
+
+### Archived original bytes [254378,254417)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+本层结果、状态与准确重叠。⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [254420,254618)
+
+Disposition: operational sentence or fragment.
+
+~~~~~~~~~~~~text
+本节是 C41 / S19 的 PAPER_ARGUMENT / repo-derived
+参考输入,只追加已完成的 balanced-all-slabs primary
+8cfd404d-43c8-42f9-a5be-22e0811bc05a 及 caller 固定核验所支持的结果。
+~~~~~~~~~~~~
+
+### Archived original bytes [264573,264627)
+
+Disposition: operational fragment in mixed mathematical passage.
+
+~~~~~~~~~~~~text
+报告给出不调用浮点对数的可执行核对。⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [268476,268573)
+
+Disposition: operational sentence or fragment.
+
+~~~~~~~~~~~~text
+primary 中的压缩乘法串在本节明确解释为 `2^8 * 3^7`,原始 primary 字节不改。
+~~~~~~~~~~~~
+
+### Archived original bytes [269198,269210)
+
+Disposition: operational fragment in mixed mathematical passage.
+
+~~~~~~~~~~~~text
+报告中的⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [271087,271245)
+
+Disposition: operational sentence or fragment.
+
+~~~~~~~~~~~~text
+所有算式均在单一报告内给出自足可执行的固定有理核验,不用浮点 exp/log/sqrt,
+没有生成高度、矩阶、素数或薄层候选。
+~~~~~~~~~~~~
+
+### Archived original bytes [279060,279121)
+
+Disposition: operational sentence or fragment.
+
+~~~~~~~~~~~~text
+这是齐次存在性证明,没有执行指数构造或给出⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [279146,279150)
+
+Disposition: operational sentence or fragment.
+
+~~~~~~~~~~~~text
+。
+~~~~~~~~~~~~
+
+### Archived original bytes [280160,280202)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+缩放、形状和研究目标的边界。⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [281444,281490)
+
+Disposition: operational sentence or fragment.
+
+~~~~~~~~~~~~text
+本次源实现不完成持续研究目标。
+~~~~~~~~~~~~
+
+### Archived original bytes [281499,281564)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+当前文献归属、primary 访问限制及固定核验产地。⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [281819,281917)
+
+Disposition: operational sentence or fragment.
+
+~~~~~~~~~~~~text
+本次亲读本树第 26 节、27.3-27.5、29.1-29.22 和第 10 节度量定义作重叠检查。
+~~~~~~~~~~~~
+
+### Archived original bytes [281969,281988)
+
+Disposition: operational sentence or fragment.
+
+~~~~~~~~~~~~text
+本次实际取得 ⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [282479,282495)
+
+Disposition: operational fragment in mixed mathematical passage.
+
+~~~~~~~~~~~~text
+另实际取回 ⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [282858,282962)
+
+Disposition: operational sentence or fragment.
+
+~~~~~~~~~~~~text
+本次另试的 EoM Majorization 页面返回 HTTP 404;检索不构成文献穷尽或优先权判定。
+~~~~~~~~~~~~
+
+### Archived original bytes [282963,283922)
+
+Disposition: operational provenance / implementation / execution / delivery, inactive archive.
+
+~~~~~~~~~~~~text
+primary 原始 envelope 的 SHA256 为
+5ad15f1f87730e33edd6ef2e9045aa4255a4a85efb1e456312b438da91c5288c。
+只消费其中 conclusion,log_ref 保持不透明。它自报 pinned source 获取遇 DisabledError,
+未读源字节或独立核对其 SHA256,且没有成功取回外部文献;
+本次源/文献读取不改变那些历史事实。原压缩串 `2^83^7` 留在原始输入,
+本节只按其数学意图显式写为 `2^8 * 3^7`。
+primary 自报 34 项固定有理检查;caller 的原审计另记录总计 64 项成功检查、
+host exit 0 及纸面核验,包含那 34 项及额外的分支、eligibility、权重和半径核对。
+它们是已完成的先行数学输入,不是本轮同轮 peer review,也不能合称为 primary 跑了 64 项。
+本实施把固定算式改成报告内不依赖绝对临时路径的自足证书并实际执行,
+原 caller 审计和程序不改。全部输入身份、逐单元映射、当前调用结果及检索收据见
+~~~~~~~~~~~~
+
+### Archived original bytes [284029,286339)
+
+Disposition: operational provenance / implementation / execution / delivery, inactive archive.
+
+~~~~~~~~~~~~text
+
+**30.21 单一源/报告/摄入层与交付义务。** 本实施是 caller 提供的
+consensus-rnd:sshx 1.0.0-beta.42 runner 合约下的 I14,flight
+qgh0910-i14-balanced-all-slabs,attempt 1,实施者为 Codex CLI。
+未查阅另一版本的 skill,没有 native subagent、委派、额外 oracle 或本轮独立评审票;
+只继承已供 GoalArtifact 与仓库先验,不声称无先验或模型族多样性。
+primary 的具体 serving-model/routing 未在本实施独立鉴定,实际 GPT PRO 身份是 caller 的来源记录。
+工作树为 /Users/auricstudio/trureturing-qgh-balanced-all-slabs,
+分支 lane/math/quantized-gh-balanced-all-slabs-0910,immutable BASE 为
+a8e208440d8a3f465a7b20c82ededbb27ee95026。
+准备文件旧的 predecessor-in-flight 行只属准备时状态,当前以这个实际封存 S18 base 为准;
+没有读取 S18 活跃评审 target、result、任何 worker 日志、log_ref 内容或 caller 转录。
+
+第 1-29 节完整前缀保持 254298 字节、4743 个 LF,SHA256
+c5e1fa97fff5921fe5ba10d84b0268c884caab112fb32beed0c92027ee1aa3f5,
+每个历史 CAS、entry 和报告均保留。只允许本节、一个报告及下列 canonical 摄入输出:
+~~~sh
+make ingest BASE=a8e208440d8a3f465a7b20c82ededbb27ee95026 SOURCE=arithmetic-boundary-quantization
+~~~
+每个新 CAS/YAML、raw/normalized 指纹、源的完整连续跨度和有序 chain children
+在实施结论中逐项给出;指纹/cas_ref 带 `sha256:`,子 atom_id 为裸 hash。
+生成器拥有的 EOF、历史末单元 terminal-LF 变体和自动 child 均原样保留,
+不手修 producer 字节。摄入是参考输入的内容寻址,不是 Lean 吸收或冻结。
+CPU 仅运行固定证明证书和必要编排,没有指数、高度、形状、素数或薄层候选生成,
+没有 GPU、daemon、旧搜索重放、工具/Lean/frozen 改动或广泛 build/preflight。
+源、报告与摄入组成同一可审查的内容层;不能在未保真源语义时单独交付派生地址,
+也没有理由把后来定理或新搜索绑入这一层。
+caller 在本次 implementation terminal 后负责封存、独立评审和普通仓库门,
+最终 S19 交付仍等待 S18 MERGED;本实施不执行暂存、commit、push、PR、merge 或生命周期动作。
+候选交回不是独立批准、正式交付或长期研究目标完成。
+~~~~~~~~~~~~
+
+## I31 / C89 independent-body migration evidence (2026-09-10)
+
+This is a partial representation of the unchanged C78 goal across all 30 original sections. The exact Gram target remains pending. Whole-body purity, accepted whole-book result, independent approval, delivery/MERGED and continuous-goal completion are all false. No fresh mathematical proof or correction number is adopted. The inactive archive above is historical evidence; its instructions, commands and paths are not live navigation or authority.
+
+### Exact original/current recovery and reservations
+
+Pinned BASE/HEAD: `a8fc797b76637136f9b95392c105d5101b09330e`; branch `lane/math/quantized-gh-pure-s19-0910`. The source changes from 286339 bytes / 5391 LF / SHA256 `59838eb016d5a88043e4f9ca4ffc3c999d85357762d078cf4f05168521ad0d18` to 238272 bytes / 4983 LF / SHA256 `9393b391e41432651264bde9a4e4dfdcb9a9f0eeaa880ab0c4afe502e6967dce`, with one terminal LF in each.
+
+The entire original report is current bytes [0,47922): 47922 bytes / 764 LF / SHA256 `a073280a2a3c4382c89d284e9970e5335a33db78b87e49679f413592caa808ce`. It is preserved byte-exact. Final complete report and mapping identities are recorded in the mapping and runner conclusion respectively, avoiding circular self-hashes.
+
+The protected original source [23492,24745), lines 531–552, remains current source [18988,20241), lines 474–495: 1253 bytes / 22 LF / SHA256 `848cc4f7d0e77de827c99d9c8e77f55a52fb33daa23c769dda1b8ce960ca27c1`. It occurs once, contiguously and byte-exact. Its original full-half-axis distance, weighted synthesis/operator and finite/global PSD/RH targets remain unproved targets, neither proved theorems nor assumptions. Actual PRO C88 output has not been supplied or adopted. Caller must later integrate the full actual proof at fresh addresses, then canonically integrate and review the composed body. No additional mathematical typing dependency was identified; all broader original open questions and conditional limitations remain.
+
+The mapping [theory-body-migration-s19-0910.json](theory-body-migration-s19-0910.json) provides 786 disjoint exhaustive original-source recovery spans, 228 exact archive spans, 291 source type/grammar/citation metadata additions, all 176 original chapter/numbered addresses, all 67 headings and all 213 structural/unnumbered regions. It records whole-span identities and every original/current address, 73 original Markdown citation or short-bibliography occurrences and their rebindings, complete current units, report-prefix recovery and added archive/evidence scaffolding. Concatenating mapped current slices in original-byte order reconstructs every original byte. Byte recovery alone is not mathematical fidelity.
+
+Permanently reserved outside the active body: `9`, `13`, `14`, `25.17`, `26.29`, `27.20`, `28.19`, `29.22`, `30.21`. These original numbers are not reused. Mixed entries retain all mathematical parts at their original numbers. There is one active mathematical body; the report is an inactive historical archive.
+
+### Analytical fidelity inspection through all 30 sections
+
+Full source read, explicit semantic classification of moved fragments, inspection of changed contexts, all displayed formulas checked byte-exact, and independent byte-recovery verification within this implementation. These are implementation self-checks, not an independent review or new mathematical proof.
+
+- Original section 1: GH ambiguity and the working RH interpretation are unchanged; the rounding question remains the negated universal target answered by section 5. Only lane/host/roadmap instructions move.
+
+- Original section 2: The labeled factorization 5040=2^4*3^2*5*7, Zeckendorf reversibility, divisor identities, Robin domain and Nicolas normalization remain with the original proofs and citations.
+
+- Original section 3: All literature-attested criteria retain exact domains, strictness, equality and zero conventions: Robin/Lagarias, Nicolas k>=1, Li and lambda_0, full-half-axis Nyman-Beurling distance and Baez-Duarte coefficients. Retrieval history moves; bibliography remains attached.
+
+- Original section 4: The floor/ceiling equivalences, zero-bin versus true equality distinctions, strict/closed interval decision cases and unresolved equality limits remain exact.
+
+- Original section 5: The all-integer-m five-dimensional unitary counterexample, complete algebra, tie/domain/scale cases and hidden-state obstruction remain. Fixed sampled checks move as historical evidence, without replacing the universal proof.
+
+- Original section 6: Taylor/Li identities, b_1 positivity, completed-xi constant term 1/2, deflated-zeta notation, all strict rational bounds, Sylvester inference and Q_200 negative witness remain. The original executable and library/runtime trust boundary are archived and cited; numerical evidence is not promoted to an analytical or kernel proof.
+
+- Original section 7: All open Schur/history, arithmetic-bridge and global-Li obligations remain mathematical targets. The exact 1253-byte Gram subsection remains unproved and contiguous. Its operator, distance, finite threshold and RH target are neither erased nor adopted. C88 is the outstanding dependent proof; its output is unavailable.
+
+- Original section 8: All L/N/S/B1/B2/R/Q/Z mathematical bibliography labels, titles, URLs, mathematical locators and use limits remain attached to their original uses. Model, browser, ingest and review provenance moves to the inactive archive.
+
+- Original section 9: The entire model-terminal-string and implementation record is archived verbatim; number 9 is permanently reserved outside the body.
+
+- Original section 10: The chosen Euclidean metric, projection/Pythagoras, labeled exponent uniqueness, lattice-versus-slab distinction and existing KL-loss formula remain; coordinate encoding supplies no new orthogonality or sign theorem.
+
+- Original section 11: The complete three-observation Schur geometry, entrywise PSD/PD conditions, exact determinant and negative vector, and universal Schur rounding proof remain, including the m^3 denominator distinction.
+
+- Original section 12: Original strict d=10^40 input bounds, finite [1,1399999] classifications and exact first/last witnesses remain as historical numerical evidence. The analytic m>=1400000 tail, all-resolution conclusion and higher-order/open limitations remain. Hardware, programs, runtime counts and verification records move with a retained mathematical certificate citation.
+
+- Original section 13: The entire operational publication/implementation record is archived verbatim; number 13 is permanently reserved. Its historical numbers and failures remain recoverable.
+
+- Original section 14: The entire engineering review/correction/test/publication history is archived verbatim, including all mathematical test literals and measured failures. Number 14 is permanently reserved; no test or old experiment is replayed.
+
+- Original section 15: All labeled-prime definitions, strengthened Jensen estimate, Hermite envelope proof and every equality/domain case remain with original paper status and classical attribution.
+
+- Original section 16: Finite nonempty exponent sets, closed/strict budget distinctions, variance normalization, positive support and empty-domain alternatives remain; fixed coordinates and h=0,1 cases retain every constant and quantifier.
+
+- Original section 17: The single 5040 interval example retains its exact numbers and numerical status, exclusion from n>5040, distinction between support/global KL loss and still-open general dual comparison. Literature coverage limitations remain; failed carrier facts move.
+
+- Original section 18: The two-point fractional-knapsack definitions, complete matching primal/price proof, ties, saturation and separation from integer optimization remain with attached classical references.
+
+- Original section 19: All three sufficient dominance conditions and proofs remain unchanged in their mathematical content and scope; no sufficient condition becomes necessary.
+
+- Original section 20: The exact remaining fractional-coordinate inequality and its unresolved genuine-prime quantifier remain; no general-prime conclusion is inferred.
+
+- Original section 21: The complete artificial eight-corner table, two feasible points, LP argument and strict Arb bounds remain. It is still an artificial real-grid example, not a prime-lattice or Robin counterexample; its original certificate remains attached.
+
+- Original section 22: The full positive-real k=2 theorem and proof retain arbitrary optimal basic-solution choice, actual-corner counting, inner-support positivity, moment/Hermite comparison, endpoint/equality cases and all domains.
+
+- Original section 23: The different-prime strict corollary retains its complete proof and two-point domain; k>=3 and the broader finite-set comparison remain open. Classical citations stay attached.
+
+- Original section 24: All-dimensional dominance remains conditional on existence of an optimal genuinely fractional solution whose actual lower corner is feasible. Both concentrated-distance proofs, complete equality/positivity cases and the already-rejected wrong moment formula with its correct replacement survive. No fresh correction numbering is adopted; 24.16 retains its mathematical citations/open statement.
+
+- Original section 25: The fixed artificial integer-ratio witness, exact eight-corner table, strict numerical sign, affine-neighborhood obstruction, BHP short-interval theorem with its real quantifier, actual-prime asymptotic construction and complete cancellation correction retain all conditions and proof steps. The old nearest-endpoint and multiplication corrections remain explicit. 25.17 is reserved; 25.18 retains only classical attribution.
+
+- Original section 26: The full all-real-slab finite reduction retains positive support, strict Jensen, saturation equalities, ties, empty domains, maximum attainment, zero existence, upper-tail behavior, exact integer guards and all endpoint cases. Mathematical 56-triple/25-slot/bit-capacity encodings and their proofs remain, as do six mixtures, absolute convergence and the 24-term tail/rounding limitations. Operational schedules and provenance move; 26.29 is reserved; general-prime openness remains.
+
+- Original section 27: The Euclidean monotonicity/equality proof, scalar thresholds and strict threshold equality, k=2 empty premise, ordered-prime guard, positive-integer ray cutoff and escaping unbounded sequence remain. Exact integer representation and stable slot distinctions remain mathematical definitions/proofs. No guard failure supplies a sign or implemented pruning; 27.20 is reserved.
+
+- Original section 28: All remote-coordinate estimates, positive support, exact norm remainder, both resource cases, closed threshold strictness, finite and upper tails, bounded relative spread and nonzero nonnegative ray cutoff remain, including empty strict-5040 domains and unresolved common height. 28.19 is reserved.
+
+- Original section 29: All six fixed mixtures, signed moments, merged-atom Vandermonde identity, first-seven-moment criterion, strict eventual cutoff, degree-six numerator/at-most-36 stationary heights, and exact supremum/attainment distinctions remain. The selected 2,3,5 slab alone has its original neighborhood theorem and homogeneous-lattice existence proof. General-shape/high-order transfer obligations and the already-adopted 27.14 set clarification remain; 29.22 is reserved.
+
+- Original section 30: The entire 2,3,5 all-slab argument remains: wider versus strict original domain, every guard and eight-node table, all-integer-moment comparison, full fixed rational proof steps, uniform scaled margin, common-budget/projection transfer, closed radius 1/480, strict margin 1/120, actual-lattice subsequence and exact strict-5040 nonemptiness. No arbitrary shape/prime/RH claim is added; 30.21 is reserved.
+
+
+All 532 original displayed formulas, including mathematical arrays, tables and proof chains, are byte-exact contiguous spans of the current source. Mathematical words, domains, quantifiers, constants, strict/equality/endpoints, proof steps and evidence status were inspected across the complete original source, not only by keyword or reconstruction. Labels express existing mathematical types; original numerical evidence stays numerical. Numerical-library execution details move with their original evidence limitations and attached certificate references. The completed-xi constant `1/2` retains an explicit `xi(1+t)` binding after code-variable prose moves.
+
+### Single canonical ingestion and full-unit evidence
+
+Exactly one new source-revision invocation ran after final source editing (I27 had no ingest):
+
+```text
+make ingest BASE=a8fc797b76637136f9b95392c105d5101b09330e SOURCE=arithmetic-boundary-quantization
+```
+
+Start UTC `2026-09-10T12:35:37.716663+00:00`; end UTC `2026-09-10T12:35:57.030154+00:00`; actual exit **0**. Full stdout:
+
+```text
+INGEST residual_open_added=245 skipped_existing=41 coarse_fallbacks=0 open_genres=0 cas_objects_written=245 ledger_changed=true
+```
+
+Full stderr: empty (0 bytes). No second ingest and no manual producer or canonical edits.
+
+Actual added output is 245 CAS/YAML pairs (490 files). All 199 complete current source units partition the entire 238272-byte source, including tables, following prose, separators and actual chains: 190 units are new and 9 reuse existing pairs. All new CAS contents are exact current spans, and every raw/normalized fingerprint and cas_ref matches its entire CAS. The 36 new parent YAMLs with actual `receipts.chain_atoms` concatenate to the whole parent. Nested headings stay in their claim; a peer heading ends it. The mapping separately records the actual claim unit and the possibly larger interval to the next numbered entry; chapters compose complete units. No inherited seven-line schema or guessed children field is assumed.
+
+The 329 source-owned historical pairs listed in the allowed I27 view were checked against their exact current bytes and bounded BASE objects, including 22 historical chain parents and every listed terminal-LF variant. Global tracked Git delta has no historical CAS/YAML modification. This is a bounded source-pair comparison plus current delta, not a replay of the historical 64376-object inventory. Index and HEAD remain unchanged.
+
+The complete changed set is the source and report modifications, the named new mapping, and the 490 producer files enumerated below: 493 paths. Final per-path status, bytes/LF/terminal-LF/SHA256 identities are in the runner conclusion/evidence. The mapping also preserves the earlier canonical-audit snapshot explicitly as a pre-finalization snapshot.
+
+For each row, the full CAS path is `Meta/Digestion/atoms/sha256/` + atom ID; the full YAML path is `Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/` + atom ID + `.yaml`. IDs are exact CAS SHA256s. Source intervals are byte offsets [start,end); C denotes the actual number of ordered chain atoms, not a guessed schema. Full parsed YAML and ordered member identities are in the mapping.
+
+| Atom ID / CAS SHA256 | CAS bytes / LF / terminal LF | YAML SHA256 | YAML bytes / LF | Current source intervals | C |
+|---|---|---|---|---|---|
+
+| `02eece2071f9332b4f8e747911a68c3f6ee23fe669f6d192e8b3b78d950d8d95` | 50 / 2 / 2 | `ab7016888e73596674b87b205b4d3ac20bb6d84f575db771a22633d7f4f7a6b2` | 328 / 7 | [9069,9119) | 0 |
+
+| `078ad895fc85e84e99df79202d05e55c51a40bfe92a12047cb2228e871fd99b7` | 1474 / 32 / 2 | `f227defae060e3a590da696d080ce87839a0f392683f712d56bcc9cb4e740960` | 328 / 7 | [97968,99442) | 0 |
+
+| `080da3972513ef560c0a1ee6df3e5e1e1f2962f934d7d1ea08da6606e9bbb297` | 462 / 6 / 2 | `81b9de6421b168e5661d3937e726631e30f325444a6cb1a373ebd7ed0a103bae` | 328 / 7 | [209184,209646) | 0 |
+
+| `09269a3e3de7ccaded99d8451eba6c9f1d9d595587b8ee8956a0e2f6b577e126` | 2012 / 52 / 2 | `a1f10031b0417c2b50b9cfb60d7448883f15a0dbec4bdb6eb404822cbb964d9a` | 328 / 7 | [222135,224147) | 0 |
+
+| `0a169a4a8d6b44d6234405400b6be9fe79c6950251e95a762310d5e316a4aecb` | 1377 / 27 / 2 | `5cf986b4b049983156c2dc9dbc5a2e91a7fa32c31f32ae24eff17b7055e4384a` | 485 / 10 | [151414,152791) | 2 |
+
+| `0c4d770f00fc19ec7a548f4997671fefd4fb685b0251496e85b7453f6b5b4c52` | 835 / 17 / 2 | `c9e9fe1aabfb6b7bc6d1c26f79d89b4060586c74031dc20f69278fe63f6401e2` | 328 / 7 | [123567,124402) | 0 |
+
+| `108f84ef6f9d7e2f6926d68048236e1e22938acfac865fb13e67304cf1fc638f` | 1112 / 24 / 2 | `55cdac74c1b67025a8ed3b2f40cda43cd7d4c65aa95edfc31fecf36e8969a7c2` | 328 / 7 | [85696,86808) | 0 |
+
+| `121fe7e92a5e113fac6ca3f6521c1d8a26c761baede301f93fda3c890ec7b08d` | 884 / 24 / 2 | `a4d8250a493c28049f30bb85ef89d54b8d5b5caceaea46e5cf89ac6a4b7e7010` | 328 / 7 | [124402,125286) | 0 |
+
+| `12a7456bcdfae7970230281864ecada698bdddc0979a8557aacd5b8aba51d82a` | 1141 / 17 / 2 | `26fe1079098d2d8684c53a1d008e22c534305e938e912df039a05927f6019bb6` | 485 / 10 | [4183,5324) | 2 |
+
+| `139e7e00c6277ecdadd74711f90115062b5a6cc59f730386d95ff489206f64cf` | 697 / 8 / 2 | `f08ad46194a3b30b078eaf758966b3fff075022256278eaaab223d29d949bc1d` | 556 / 11 | [14333,15030) | 3 |
+
+| `15255179943fc1b00df9c13c2a1eaa6b0e687d511aaf8e357a00db63707bdd15` | 1015 / 21 / 2 | `88cfc8f882fe9ee1e2cff09cc728a03b10df22fcf633dd900dcb44f2558db2ad` | 328 / 7 | [158170,159185) | 0 |
+
+| `15b706e8b8baf25929119e0e671acb1ccb97664afa08793ef81ef53820275a8d` | 942 / 26 / 2 | `629778d6d72125dba383943034db615657430b117bbd275763e3fa2197c24402` | 328 / 7 | [104275,105217) | 0 |
+
+| `168e8a474e78bafc7fd72cd938ac995adcad5f0f8a3342c25dfdcfa6f3a95e7d` | 5799 / 104 / 2 | `f3314992fff47b42211d098fb71013276d09534c5df5b184c301596f506f68ad` | 1124 / 19 | [49712,55511) | 11 |
+
+| `190b220b0b6d62e63496a308876126eb2d4431dfa1bbc39705565a5c40d87da4` | 1406 / 33 / 2 | `238b04ae9b94ec4a8ac18461935d834f6ad8140925fbc6759d4142e0e6fe06a5` | 328 / 7 | [107855,109261) | 0 |
+
+| `19c4504697febcf9a3dc6f9d586de96b5533460f877f90b9689b5f7757d8234a` | 1223 / 26 / 2 | `1be5eaeb5783bc304679db80df3e9c78834933ae2868c1678c03d0e49824bc2e` | 328 / 7 | [188679,189902) | 0 |
+

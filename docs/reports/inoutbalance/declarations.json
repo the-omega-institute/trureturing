@@ -1,0 +1,408 @@
+{
+  "collector": "Lean ConstantInfo.value? (allowOpaque := true), Expr.getUsedConstants; recurse only in new module",
+  "scope": "proof values, not a mechanical novelty or liveness verdict",
+  "theorems": [
+    {
+      "gid": "D5/S3/Quantum/Information/InputInformationBalance.pure_complementary_entropy",
+      "statement_id": "sha256:1a0214956d742b5bb66ecccadcab67377846dac3feb0ce2cf744ac5e3ec65ea8",
+      "proof_shape": "bind-only",
+      "admission_basis": "rule-11-upstream-wrapper",
+      "escape_witness": null,
+      "direct_frozen_dependencies_after_inlining_local_constants": [
+        {
+          "gid": "D5/S3/Quantum/Divergence/QuantumRelativeEntropyDefectComposition.DensityState",
+          "statement_id": "sha256:b8e1957ba4f81600248989dc21f0a107bcdd5ce2e68546c38b9164c4a09ac337"
+        },
+        {
+          "gid": "D5/S3/Quantum/Divergence/VonNeumannEntropyPinching.vonNeumannEntropy",
+          "statement_id": "sha256:9cf1e21822d8f3f61a5d349f41c4287a3ef43a0e8a600534b28ab8d06f437cd1"
+        },
+        {
+          "gid": "D5/S3/Quantum/Divergence/VonNeumannEntropyPinching.vonNeumannEntropy._proof_2",
+          "statement_id": "sha256:2513f56dc3dbbec32ceeb1c9a5d87c26b6b9802338fb5ca4705facc845128078"
+        },
+        {
+          "gid": "D5/S3/Quantum/Information/PartialTraceMutualInformation.marginalLeft",
+          "statement_id": "sha256:7579934e8cf68c9a1e1f14470e58e70c66939704953b29e953ae8d75b92bef6a"
+        },
+        {
+          "gid": "D5/S3/Quantum/Information/PartialTraceMutualInformation.marginalRight",
+          "statement_id": "sha256:bb5bad02426b231285a1d49fbc7f66f6f971cf3cd7ef3ee92fc2c21793f14ae7"
+        }
+      ],
+      "same_module_proof_edges": [
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.pure_complementary_entropy",
+          "callee": "D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.pure_complementary_entropy",
+          "callee": "D5.S3.Quantum.Information.InputInformationBalance.IsPure"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.pure_complementary_entropy",
+          "callee": "D5.S3.Quantum.Divergence.VonNeumannEntropyPinching.vonNeumannEntropy"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.pure_complementary_entropy",
+          "callee": "D5.S3.Quantum.Information.PartialTraceMutualInformation.marginalLeft"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.pure_complementary_entropy",
+          "callee": "D5.S3.Quantum.Information.PartialTraceMutualInformation.marginalRight"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.pure_complementary_entropy",
+          "callee": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.entropy_eq_of_nonzero_roots"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.pure_complementary_entropy",
+          "callee": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.nonzero_roots_mul_comm"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.nonzero_roots_mul_comm",
+          "callee": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.nonzero_roots_mul_comm._simp_1_2"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.nonzero_roots_mul_comm",
+          "callee": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.nonzero_roots_mul_comm._simp_1_1"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.entropy_eq_of_nonzero_roots",
+          "callee": "D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.entropy_eq_of_nonzero_roots",
+          "callee": "D5.S3.Quantum.Divergence.VonNeumannEntropyPinching.vonNeumannEntropy"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.entropy_eq_of_nonzero_roots",
+          "callee": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.density_hermitian"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.entropy_eq_of_nonzero_roots",
+          "callee": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.entropy_eq_sum"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.entropy_eq_of_nonzero_roots",
+          "callee": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.sum_filter_zero"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.entropy_eq_sum",
+          "callee": "D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.entropy_eq_sum",
+          "callee": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.density_hermitian"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.entropy_eq_sum",
+          "callee": "D5.S3.Quantum.Divergence.VonNeumannEntropyPinching.vonNeumannEntropy"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.entropy_eq_sum",
+          "callee": "D5.S3.Quantum.Divergence.VonNeumannEntropyPinching.vonNeumannEntropy._proof_2"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.density_hermitian",
+          "callee": "D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.IsPure",
+          "callee": "D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState"
+        }
+      ]
+    },
+    {
+      "gid": "D5/S3/Quantum/Information/InputInformationBalance.input_information_balance",
+      "statement_id": "sha256:4f1ca565e074ba20cbb27329cdabe74d18ccf03e0bb3073a173576dde4a36a91",
+      "proof_shape": "bind-only",
+      "admission_basis": "rule-11-upstream-wrapper",
+      "escape_witness": null,
+      "direct_frozen_dependencies_after_inlining_local_constants": [
+        {
+          "gid": "D5/S3/Quantum/Divergence/QuantumRelativeEntropyDefectComposition.DensityState",
+          "statement_id": "sha256:b8e1957ba4f81600248989dc21f0a107bcdd5ce2e68546c38b9164c4a09ac337"
+        },
+        {
+          "gid": "D5/S3/Quantum/Divergence/VonNeumannEntropyPinching.vonNeumannEntropy",
+          "statement_id": "sha256:9cf1e21822d8f3f61a5d349f41c4287a3ef43a0e8a600534b28ab8d06f437cd1"
+        },
+        {
+          "gid": "D5/S3/Quantum/Divergence/VonNeumannEntropyPinching.vonNeumannEntropy._proof_2",
+          "statement_id": "sha256:2513f56dc3dbbec32ceeb1c9a5d87c26b6b9802338fb5ca4705facc845128078"
+        },
+        {
+          "gid": "D5/S3/Quantum/Information/PartialTraceMutualInformation.marginalLeft",
+          "statement_id": "sha256:7579934e8cf68c9a1e1f14470e58e70c66939704953b29e953ae8d75b92bef6a"
+        },
+        {
+          "gid": "D5/S3/Quantum/Information/PartialTraceMutualInformation.marginalRight",
+          "statement_id": "sha256:bb5bad02426b231285a1d49fbc7f66f6f971cf3cd7ef3ee92fc2c21793f14ae7"
+        },
+        {
+          "gid": "D5/S3/Quantum/Information/PartialTraceMutualInformation.quantumMutualInformation",
+          "statement_id": "sha256:650358808a68c73893baf137ee9bae34238244b7e0906ce19e6b5fd68484ad75"
+        }
+      ],
+      "same_module_proof_edges": [
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.input_information_balance",
+          "callee": "D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.input_information_balance",
+          "callee": "D5.S3.Quantum.Information.InputInformationBalance.IsPure"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.input_information_balance",
+          "callee": "D5.S3.Quantum.Divergence.VonNeumannEntropyPinching.vonNeumannEntropy"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.input_information_balance",
+          "callee": "D5.S3.Quantum.Information.PartialTraceMutualInformation.marginalLeft"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.input_information_balance",
+          "callee": "D5.S3.Quantum.Information.InputInformationBalance.relabel"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.input_information_balance",
+          "callee": "D5.S3.Quantum.Information.PartialTraceMutualInformation.marginalRight"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.input_information_balance",
+          "callee": "D5.S3.Quantum.Information.InputInformationBalance.pure_complementary_entropy"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.input_information_balance",
+          "callee": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.isPure_relabel"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.input_information_balance",
+          "callee": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.arGrouping"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.input_information_balance",
+          "callee": "D5.S3.Quantum.Information.PartialTraceMutualInformation.quantumMutualInformation"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.input_information_balance",
+          "callee": "D5.S3.Quantum.Information.InputInformationBalance.stateAR"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.input_information_balance",
+          "callee": "D5.S3.Quantum.Information.InputInformationBalance.stateAB"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.input_information_balance",
+          "callee": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.ar_retains_A"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.input_information_balance",
+          "callee": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.ab_retains_A"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.input_information_balance",
+          "callee": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.ar_retains_R"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.input_information_balance",
+          "callee": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.ab_retains_B"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.ab_retains_B",
+          "callee": "D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.ab_retains_B",
+          "callee": "D5.S3.Quantum.Information.PartialTraceMutualInformation.marginalLeft"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.ab_retains_B",
+          "callee": "D5.S3.Quantum.Information.InputInformationBalance.stateAB"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.ab_retains_B",
+          "callee": "D5.S3.Quantum.Information.InputInformationBalance.relabel"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.ab_retains_B",
+          "callee": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.arGrouping"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.relabel",
+          "callee": "D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.relabel",
+          "callee": "D5.S3.Quantum.Information.InputInformationBalance.relabel._proof_1"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.relabel._proof_1",
+          "callee": "D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.stateAB",
+          "callee": "D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.stateAB",
+          "callee": "D5.S3.Quantum.Information.PartialTraceMutualInformation.marginalRight"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.stateAB",
+          "callee": "D5.S3.Quantum.Information.InputInformationBalance.relabel"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.ar_retains_R",
+          "callee": "D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.ar_retains_R",
+          "callee": "D5.S3.Quantum.Information.PartialTraceMutualInformation.marginalLeft"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.ar_retains_R",
+          "callee": "D5.S3.Quantum.Information.InputInformationBalance.stateAR"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.ar_retains_R",
+          "callee": "D5.S3.Quantum.Information.InputInformationBalance.relabel"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.stateAR",
+          "callee": "D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.stateAR",
+          "callee": "D5.S3.Quantum.Information.PartialTraceMutualInformation.marginalRight"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.stateAR",
+          "callee": "D5.S3.Quantum.Information.InputInformationBalance.relabel"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.stateAR",
+          "callee": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.arGrouping"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.ab_retains_A",
+          "callee": "D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.ab_retains_A",
+          "callee": "D5.S3.Quantum.Information.PartialTraceMutualInformation.marginalRight"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.ab_retains_A",
+          "callee": "D5.S3.Quantum.Information.InputInformationBalance.stateAB"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.ar_retains_A",
+          "callee": "D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.ar_retains_A",
+          "callee": "D5.S3.Quantum.Information.PartialTraceMutualInformation.marginalRight"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.ar_retains_A",
+          "callee": "D5.S3.Quantum.Information.InputInformationBalance.stateAR"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.isPure_relabel",
+          "callee": "D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.isPure_relabel",
+          "callee": "D5.S3.Quantum.Information.InputInformationBalance.IsPure"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.isPure_relabel",
+          "callee": "D5.S3.Quantum.Information.InputInformationBalance.relabel"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.IsPure",
+          "callee": "D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.pure_complementary_entropy",
+          "callee": "D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.pure_complementary_entropy",
+          "callee": "D5.S3.Quantum.Information.InputInformationBalance.IsPure"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.pure_complementary_entropy",
+          "callee": "D5.S3.Quantum.Divergence.VonNeumannEntropyPinching.vonNeumannEntropy"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.pure_complementary_entropy",
+          "callee": "D5.S3.Quantum.Information.PartialTraceMutualInformation.marginalLeft"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.pure_complementary_entropy",
+          "callee": "D5.S3.Quantum.Information.PartialTraceMutualInformation.marginalRight"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.pure_complementary_entropy",
+          "callee": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.entropy_eq_of_nonzero_roots"
+        },
+        {
+          "caller": "D5.S3.Quantum.Information.InputInformationBalance.pure_complementary_entropy",
+          "callee": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.nonzero_roots_mul_comm"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.nonzero_roots_mul_comm",
+          "callee": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.nonzero_roots_mul_comm._simp_1_2"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.nonzero_roots_mul_comm",
+          "callee": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.nonzero_roots_mul_comm._simp_1_1"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.entropy_eq_of_nonzero_roots",
+          "callee": "D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.entropy_eq_of_nonzero_roots",
+          "callee": "D5.S3.Quantum.Divergence.VonNeumannEntropyPinching.vonNeumannEntropy"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.entropy_eq_of_nonzero_roots",
+          "callee": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.density_hermitian"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.entropy_eq_of_nonzero_roots",
+          "callee": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.entropy_eq_sum"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.entropy_eq_of_nonzero_roots",
+          "callee": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.sum_filter_zero"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.entropy_eq_sum",
+          "callee": "D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.entropy_eq_sum",
+          "callee": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.density_hermitian"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.entropy_eq_sum",
+          "callee": "D5.S3.Quantum.Divergence.VonNeumannEntropyPinching.vonNeumannEntropy"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.entropy_eq_sum",
+          "callee": "D5.S3.Quantum.Divergence.VonNeumannEntropyPinching.vonNeumannEntropy._proof_2"
+        },
+        {
+          "caller": "_private.D5.S3.Quantum.Information.InputInformationBalance.0.D5.S3.Quantum.Information.InputInformationBalance.density_hermitian",
+          "callee": "D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState"
+        }
+      ]
+    }
+  ]
+}
