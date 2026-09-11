@@ -150,8 +150,12 @@ run_cmd do
               (String.ofList (bits.toList.map fun bit => if bit then '1' else '0'), count)
         let position ← ProjectionProof.fin i 3
         let certificate ← if row.uniqueCaptureCount > 0 then do
-          return .positive (← ProjectionProof.decide (row.certificate.str "original")
-            (← mkAppM ``Catalog.LowersEscape #[original, position]))
+          let positive ← mkDecideProof (← mkLT (mkNatLit 0)
+            (← mkAppM ``Catalog.uniqueCaptureCount #[original, position]))
+          let nd ← mkDecideProof (← mkAppM ``Arena.Nondegenerate #[arena])
+          pure (.positive (← ProjectionProof.proof (row.certificate.str "original")
+            (← mkAppM ``Iff.mpr #[← mkAppM ``Catalog.lowersEscape_iff_uniqueCaptureCount_pos
+              #[original, position, nd], positive])))
         else do
           let emptyIff ← mkAppOptM ``Finset.card_eq_zero
             #[none, some (← mkAppM ``Catalog.uniqueCapturePairs #[original, position])]

@@ -24,4 +24,3 @@ run_cmd do
       (SealRecords.forRoot after root).isEmpty && (SealRecords.analysisForRoot? after root).isNone &&
       (← mkModuleData after).constants.size == (← mkModuleData before).constants.size do
     throwError "RollbackAfterAliases: leaked declarations or retained artifacts"
-

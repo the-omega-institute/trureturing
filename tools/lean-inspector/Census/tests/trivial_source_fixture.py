@@ -31,7 +31,6 @@ def check_trivial_sources(repository, directory):
     assert cached["row"] == result["entries"][0], "StructuralSources: cached row changes"
     return {"name": "structural_trivial_production_cache", "sources": len(expected), "exit": 0}
 
-
 if __name__ == "__main__":
     print(json.dumps(check_trivial_sources(pathlib.Path(__file__).resolve().parents[4],
                                           pathlib.Path(sys.argv[1]).resolve())))

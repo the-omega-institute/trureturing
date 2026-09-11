@@ -1,7 +1,6 @@
 import LeanInformationAudit.SealCommand
 open Lean Lean.Elab.Command LeanInformationAudit
 namespace LeanInformationAudit.Tests
-
 def checkZeroMessages (kind : String) (count : Nat) (before : MessageLog) : CommandElabM Unit := do
   let mut records := #[]
   for message in (← get).messages.toList.drop before.toList.length do
