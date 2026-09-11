@@ -198,7 +198,7 @@
   },
   "versions": {
     "source-I42": {
-      "file_span": {"path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md", "byte_start": 0, "byte_end_exclusive": 337429},
+      "file": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
       "original": {
         "bytes": 337429,
         "sha256": "82c4c836d0ba2a2cdcdbc27debc97b88f0c5eb779d95f41eecd4e0d3247f08c8",

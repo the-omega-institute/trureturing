@@ -47,7 +47,7 @@ The seven C88/C90/C92/C93/C95/C96/C97 envelopes retain every original raw byte a
 | I36 | source-I33 | source-I36 | report-I36 |
 | I42 | source-I36 | source-I42 | report |
 
-The catalog defines all source versions from the fixed source-I42 interval in the growing active file and exact source/report slices. It reconstructs source-I36 by restoring report[222353:224011] between source-I42[0:27206] and source-I42[29358:337429]. Next it consumes I36 `/recovery/original_i36_source` with source-I36, then I33 `/recovery/i33_original_source` with source-I33, then I31 `/recovery_spans` with source-I31. Rows remain in increasing original offset order; every original/current payload identity and contiguous original coverage is checked. The separate I33 `/recovery/pre_i31_original_source` route must produce identical pre-I31 bytes. `source-scientific-base` is the exact historical 254298-byte prefix of that source. Report versions are named exact prefixes, not copies of this navigation page.
+The catalog defines all source versions from the frozen source-I42 file and exact source/report slices. It reconstructs source-I36 by restoring report[222353:224011] between source-I42[0:27206] and source-I42[29358:337429]. Next it consumes I36 `/recovery/original_i36_source` with source-I36, then I33 `/recovery/i33_original_source` with source-I33, then I31 `/recovery_spans` with source-I31. Rows remain in increasing original offset order; every original/current payload identity and contiguous original coverage is checked. The separate I33 `/recovery/pre_i31_original_source` route must produce identical pre-I31 bytes. `source-scientific-base` is the exact historical 254298-byte prefix of that source. Report versions are named exact prefixes, not copies of this navigation page.
 
 I42's full composition, address transform, 262-unit inventory, 354-pair inventory, 38 ordered chains, all inherited dispositions and prior corrections remain available by their original pointers. This representation preserves their values and version-bound references; it does not re-ingest, re-scan the physical canonical corpus or renew their scientific review. The 674 occurrence spans without local hashes are checked against their enclosing original CAS identity records using source bytes only. The remaining hash-free span is I33's report digest hole.
 
@@ -60,12 +60,6 @@ The current report page provides every section's original interval, contextual h
 The current I36 descriptor alone records C97 as `kind=failure, state=resolved`: the missing public evidence gap is resolved by completed import `66de8069-0171-4543-9caa-d8a065282093`. Original task `4b113aea-c074-4750-98bd-40363326d9eb` remains failed with `prompt_delivery_uncertain`. The original untyped node is unchanged in `Evidence.at("I36", "/provenance_and_review_limits/primary_recovery/C97")`. The typed current record binds the complete recovered visible envelope (30200 bytes, SHA256 `e06f1200c3fcb38381f64af69e50883d96c99962c88ef6b126acab747543e6aa`) and caller intake (2974 bytes, SHA256 `49ba86d66bbbd9994e26730e4214274efa9235bef33387fd87875dea4b85bdb6`). It attests neither original author serialization nor generation time nor serving identity. It asserts nothing about RH. No Lean TASK case is invented, and SL019 is unchanged.
 
 The prior R5 review applies to its old exact snapshot. This layout needs fresh independent full review and actual CI under caller ownership. Mathematical proofs, canonical membership and producer bytes remain inherited; reconstruction, references, spans, links, capacity and the current provenance binding are the new representation checks. These are not source adoption, new mathematics, a CI-green verdict, independent approval, delivery or whole-goal completion. PR6741 remains closed unmerged and the standing goal remains active.
-
-## Append composition contract (I47)
-
-`source-I42` now uses the explicit catalog `file_span` form: `path`, `byte_start=0`, and `byte_end_exclusive=337429`. The API checks integer bounds against the physical file, selects exactly that interval, then checks the existing full historical identity. It does not infer a prefix length from a digest or silently truncate a `file` input. The `file` form still reads and verifies the entire file. All existing resource aliases, original source/report versions, recovery routes, spans, provenance and I33 footer semantics retain their meanings.
-
-The exact preceding [README](../s20-evidence/s19-readme-before.json) and [catalog](../s20-evidence/s19-catalog-before.json) are retained as bounded raw text with their `56aebf5d4573c953d6a994f019d8abb216d5bf35` provenance. The [S20 contract](../s20-evidence/README.md) reconstructs those bytes. Their old whole-file API was valid for its 337429-byte snapshot and is not claimed to work unchanged after chapter 31 is appended. This small current-consumer extension changes representation only; all historical findings and independent-review limits remain attributed to their original stages.
 
 ## Fixed representation recipe
 
@@ -198,14 +192,7 @@ class Evidence:
             check_identity(data, entry['original'])
         else:
             version = self.catalog['versions'][name]
-            if 'file_span' in version:
-                binding = version['file_span']
-                data = self.read_file(binding['path'])
-                start, end = binding['byte_start'], binding['byte_end_exclusive']
-                if type(start) is not int or type(end) is not int or not 0 <= start <= end <= len(data):
-                    raise ValueError('invalid explicit file span')
-                data = data[start:end]
-            elif 'file' in version:
+            if 'file' in version:
                 data = self.read_file(version['file'])
             elif 'slices' in version:
                 data = b''.join(self.span(s['resource'], s) for s in version['slices'])
