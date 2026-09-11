@@ -1,0 +1,43 @@
+**34.2 Definitions and Euclidean normalization.** For the domain in 34.1 set
+\[
+A=\sum_i c_i,\qquad Q=\sum_i h_i,\qquad r=M_1-A,\qquad
+I=[M_0/k,M_1/k],\qquad \mu=M_1/k.
+\]
+For nonempty subsets of the real line, \(\operatorname{dist}(E,F)\)
+means \(\inf\{|v-w|:v\in E,\ w\in F\}\). Define
+\[
+\Delta_i=\operatorname{dist}(I,C_i),\quad
+V_0=\sum_i\Delta_i^2,\quad
+\rho=\frac{\|\Delta\|_2}{\sqrt{k(k-1)}}=\sqrt{\frac{V_0}{k(k-1)}},
+\quad L=\mu-\rho,\quad H=\mu+(k-1)\rho.
+\]
+The subscript in \(V_0\) is the historical distance-variance notation; it
+does not select the unperturbed shape. There is no additional division by
+\(k\) in \(V_0\). On \(x>0\), let \(f(x)=\log(1-e^{-x})\), with natural logarithms.
+Using the entire fractional polytope, set
+\[
+\mathcal P=\{y\in[0,1]^k:\sum_i h_i y_i\le r\},\qquad
+J_0(y)=\sum_i\big((1-y_i)f(c_i)+y_i f(d_i)\big),
+\]
+\[
+D_0=\max_{y\in\mathcal P}J_0(y),\qquad
+\Psi_0=(k-1)f(L_0)+f(H_0),\qquad G_0=D_0-\Psi_0.
+\]
+Perturbed definitions replace \(c_i,d_i,M_j\) by
+\(c_i+\xi_i,d_i+\xi_i,M_j+S\); thus \(J_\xi\) uses the translated endpoints.
+The lower budget enters \(I\), not an extra lower constraint on \(y\).
+This is exactly the positive-grid comparison of 27.3, including its
+classically matched price formulation; a greedy representation is not needed here.
+
+Throughout, \(\langle v,w\rangle=\sum_i v_iw_i\) and
+\(\|v\|_2=\sqrt{\langle v,v\rangle}\) are ordinary Euclidean quantities.
+For \(\mathbf1=(1,\ldots,1)^{\mathsf T}\) define
+\[
+\bar v=\frac1k\sum_i v_i,\qquad
+\Pi=\operatorname{Id}-\frac1k\mathbf1\mathbf1^{\mathsf T},\qquad
+\ell(v)=\bar v-\frac{\|\Pi v\|_2}{\sqrt{k(k-1)}}.
+\]
+Then \(\Pi v=v-\bar v\mathbf1\), \(\langle\Pi v,\mathbf1\rangle=0\) and
+\(\|v\|_2^2=k\bar v^2+\|\Pi v\|_2^2\). This projection is a choice of
+inner product, not orthogonality supplied by prime labels or an encoding.
+

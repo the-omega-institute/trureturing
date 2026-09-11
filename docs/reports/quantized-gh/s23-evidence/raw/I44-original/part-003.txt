@@ -1,0 +1,750 @@
+        "sha256": "cd9e13c4541a34e6b9f0d0f709a2395f08a1dbe4cde75c86fac9509afd8f6af2",
+        "revision": "d79a2cd3cd3d5881dce26df9cee8266de9ae61e7"
+      },
+      "current_ref": "#/current_bindings/20",
+      "archive": {
+        "payload": {
+          "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+          "start_byte": 70775,
+          "end_byte": 72326,
+          "start_line": 851,
+          "bytes": 1551,
+          "LF": 37,
+          "terminal_LF_bytes": 2,
+          "sha256": "cd9e13c4541a34e6b9f0d0f709a2395f08a1dbe4cde75c86fac9509afd8f6af2"
+        },
+        "delimiter_LF_bytes": 0,
+        "opening_fence_bytes": 13,
+        "closing_fence_bytes": 9
+      },
+      "old_binding_ref": "#/historical_pairs/20",
+      "mathematical_content": "retained in current mathematical body with scoped wording",
+      "operational_content": "exact original content retained in archive; historical stage unchanged"
+    },
+    {
+      "unit": "34.21",
+      "original": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "start_byte": 390136,
+        "end_byte": 392405,
+        "start_line": 7508,
+        "bytes": 2269,
+        "LF": 36,
+        "terminal_LF_bytes": 2,
+        "sha256": "0215cfc7e259f4f71c33315cfb0b6d3877f083db9d7f0bf1be8c1e9884320eef",
+        "revision": "d79a2cd3cd3d5881dce26df9cee8266de9ae61e7"
+      },
+      "current_ref": "#/current_bindings/21",
+      "archive": {
+        "payload": {
+          "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+          "start_byte": 72370,
+          "end_byte": 74639,
+          "start_line": 893,
+          "bytes": 2269,
+          "LF": 36,
+          "terminal_LF_bytes": 2,
+          "sha256": "0215cfc7e259f4f71c33315cfb0b6d3877f083db9d7f0bf1be8c1e9884320eef"
+        },
+        "delimiter_LF_bytes": 0,
+        "opening_fence_bytes": 13,
+        "closing_fence_bytes": 9
+      },
+      "old_binding_ref": "#/historical_pairs/21",
+      "mathematical_content": "retained in current mathematical body with scoped wording",
+      "operational_content": "exact original content retained in archive; historical stage unchanged"
+    },
+    {
+      "unit": "34.22",
+      "original": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "start_byte": 392405,
+        "end_byte": 394297,
+        "start_line": 7544,
+        "bytes": 1892,
+        "LF": 28,
+        "terminal_LF_bytes": 1,
+        "sha256": "08f48005a85a5e450c3ec8117b04f0f59c6fd2008b0749dc77b88607532e010b",
+        "revision": "d79a2cd3cd3d5881dce26df9cee8266de9ae61e7"
+      },
+      "current_ref": "#/current_bindings/22",
+      "archive": {
+        "payload": {
+          "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+          "start_byte": 74683,
+          "end_byte": 76575,
+          "start_line": 934,
+          "bytes": 1892,
+          "LF": 28,
+          "terminal_LF_bytes": 1,
+          "sha256": "08f48005a85a5e450c3ec8117b04f0f59c6fd2008b0749dc77b88607532e010b"
+        },
+        "delimiter_LF_bytes": 0,
+        "opening_fence_bytes": 13,
+        "closing_fence_bytes": 9
+      },
+      "old_binding_ref": "#/historical_pairs/22",
+      "mathematical_content": "retained in current mathematical body with scoped wording",
+      "operational_content": "exact original content retained in archive; historical stage unchanged"
+    }
+  ],
+  "original_source_inverse": [
+    {
+      "original": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "start_byte": 0,
+        "end_byte": 374616,
+        "start_line": 1,
+        "bytes": 374616,
+        "LF": 7150,
+        "terminal_LF_bytes": 2,
+        "sha256": "f189077c9be208494a943665d822f46808cd8d1f6d7be4263f1a2f46d15dbc6d",
+        "revision": "d79a2cd3cd3d5881dce26df9cee8266de9ae61e7"
+      },
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "start_byte": 0,
+        "end_byte": 374616,
+        "start_line": 1,
+        "bytes": 374616,
+        "LF": 7150,
+        "terminal_LF_bytes": 2,
+        "sha256": "f189077c9be208494a943665d822f46808cd8d1f6d7be4263f1a2f46d15dbc6d"
+      },
+      "kind": "unchanged",
+      "inverse_read": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "start_byte": 0,
+        "end_byte": 374616,
+        "start_line": 1,
+        "bytes": 374616,
+        "LF": 7150,
+        "terminal_LF_bytes": 2,
+        "sha256": "f189077c9be208494a943665d822f46808cd8d1f6d7be4263f1a2f46d15dbc6d"
+      }
+    },
+    {
+      "original": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "start_byte": 374616,
+        "end_byte": 375953,
+        "start_line": 7151,
+        "bytes": 1337,
+        "LF": 43,
+        "terminal_LF_bytes": 2,
+        "sha256": "6dccf987a67fb0e8b694e0ec3b4a4628d495e72c1120f993bf006832769b693b",
+        "revision": "d79a2cd3cd3d5881dce26df9cee8266de9ae61e7"
+      },
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "start_byte": 374616,
+        "end_byte": 375946,
+        "start_line": 7151,
+        "bytes": 1330,
+        "LF": 43,
+        "terminal_LF_bytes": 2,
+        "sha256": "32d914ac75f2a980560e718053e45d4a6351bbdebc0b4975ee2a96951b522cb2"
+      },
+      "kind": "replacement",
+      "unit": "34.7",
+      "inverse_read": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 68199,
+        "end_byte": 69536,
+        "start_line": 771,
+        "bytes": 1337,
+        "LF": 43,
+        "terminal_LF_bytes": 2,
+        "sha256": "6dccf987a67fb0e8b694e0ec3b4a4628d495e72c1120f993bf006832769b693b"
+      }
+    },
+    {
+      "original": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "start_byte": 375953,
+        "end_byte": 387434,
+        "start_line": 7194,
+        "bytes": 11481,
+        "LF": 250,
+        "terminal_LF_bytes": 2,
+        "sha256": "9f9c99ef9b73d222b7dc2f31882fc9b69f0618b6a2e5ba7b6ad8e7648addcca2",
+        "revision": "d79a2cd3cd3d5881dce26df9cee8266de9ae61e7"
+      },
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "start_byte": 375946,
+        "end_byte": 387427,
+        "start_line": 7194,
+        "bytes": 11481,
+        "LF": 250,
+        "terminal_LF_bytes": 2,
+        "sha256": "9f9c99ef9b73d222b7dc2f31882fc9b69f0618b6a2e5ba7b6ad8e7648addcca2"
+      },
+      "kind": "unchanged",
+      "inverse_read": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "start_byte": 375946,
+        "end_byte": 387427,
+        "start_line": 7194,
+        "bytes": 11481,
+        "LF": 250,
+        "terminal_LF_bytes": 2,
+        "sha256": "9f9c99ef9b73d222b7dc2f31882fc9b69f0618b6a2e5ba7b6ad8e7648addcca2"
+      }
+    },
+    {
+      "original": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "start_byte": 387434,
+        "end_byte": 388585,
+        "start_line": 7444,
+        "bytes": 1151,
+        "LF": 27,
+        "terminal_LF_bytes": 2,
+        "sha256": "23b83206d2663de403eb83b95662760cff79ad2b038de89ed19000dce144b640",
+        "revision": "d79a2cd3cd3d5881dce26df9cee8266de9ae61e7"
+      },
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "start_byte": 387427,
+        "end_byte": 388478,
+        "start_line": 7444,
+        "bytes": 1051,
+        "LF": 26,
+        "terminal_LF_bytes": 2,
+        "sha256": "ced43801ef6fe0c85c41164817879b33033d1cc348a52bcab17b32a1a70e3705"
+      },
+      "kind": "replacement",
+      "unit": "34.19",
+      "inverse_read": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 69580,
+        "end_byte": 70731,
+        "start_line": 819,
+        "bytes": 1151,
+        "LF": 27,
+        "terminal_LF_bytes": 2,
+        "sha256": "23b83206d2663de403eb83b95662760cff79ad2b038de89ed19000dce144b640"
+      }
+    },
+    {
+      "original": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "start_byte": 388585,
+        "end_byte": 390136,
+        "start_line": 7471,
+        "bytes": 1551,
+        "LF": 37,
+        "terminal_LF_bytes": 2,
+        "sha256": "cd9e13c4541a34e6b9f0d0f709a2395f08a1dbe4cde75c86fac9509afd8f6af2",
+        "revision": "d79a2cd3cd3d5881dce26df9cee8266de9ae61e7"
+      },
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "start_byte": 388478,
+        "end_byte": 389969,
+        "start_line": 7470,
+        "bytes": 1491,
+        "LF": 36,
+        "terminal_LF_bytes": 2,
+        "sha256": "054323012000e2df623d411cab1b742099241072c3a5916c89eff48f56cbd751"
+      },
+      "kind": "replacement",
+      "unit": "34.20",
+      "inverse_read": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 70775,
+        "end_byte": 72326,
+        "start_line": 851,
+        "bytes": 1551,
+        "LF": 37,
+        "terminal_LF_bytes": 2,
+        "sha256": "cd9e13c4541a34e6b9f0d0f709a2395f08a1dbe4cde75c86fac9509afd8f6af2"
+      }
+    },
+    {
+      "original": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "start_byte": 390136,
+        "end_byte": 392405,
+        "start_line": 7508,
+        "bytes": 2269,
+        "LF": 36,
+        "terminal_LF_bytes": 2,
+        "sha256": "0215cfc7e259f4f71c33315cfb0b6d3877f083db9d7f0bf1be8c1e9884320eef",
+        "revision": "d79a2cd3cd3d5881dce26df9cee8266de9ae61e7"
+      },
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "start_byte": 389969,
+        "end_byte": 391504,
+        "start_line": 7506,
+        "bytes": 1535,
+        "LF": 25,
+        "terminal_LF_bytes": 2,
+        "sha256": "74683a68fb84b18b5034af8e74f31aee8b78e90919f52f5f8bf6f53dfecfbf03"
+      },
+      "kind": "replacement",
+      "unit": "34.21",
+      "inverse_read": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 72370,
+        "end_byte": 74639,
+        "start_line": 893,
+        "bytes": 2269,
+        "LF": 36,
+        "terminal_LF_bytes": 2,
+        "sha256": "0215cfc7e259f4f71c33315cfb0b6d3877f083db9d7f0bf1be8c1e9884320eef"
+      }
+    },
+    {
+      "original": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "start_byte": 392405,
+        "end_byte": 394297,
+        "start_line": 7544,
+        "bytes": 1892,
+        "LF": 28,
+        "terminal_LF_bytes": 1,
+        "sha256": "08f48005a85a5e450c3ec8117b04f0f59c6fd2008b0749dc77b88607532e010b",
+        "revision": "d79a2cd3cd3d5881dce26df9cee8266de9ae61e7"
+      },
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "start_byte": 391504,
+        "end_byte": 392486,
+        "start_line": 7531,
+        "bytes": 982,
+        "LF": 15,
+        "terminal_LF_bytes": 1,
+        "sha256": "de75ae2acaa7c9ca34d6ee910d58998de11d3d2c5c8778d53b253fbfdbf83ffa"
+      },
+      "kind": "replacement",
+      "unit": "34.22",
+      "inverse_read": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 74683,
+        "end_byte": 76575,
+        "start_line": 934,
+        "bytes": 1892,
+        "LF": 28,
+        "terminal_LF_bytes": 1,
+        "sha256": "08f48005a85a5e450c3ec8117b04f0f59c6fd2008b0749dc77b88607532e010b"
+      }
+    }
+  ],
+  "inverse_verification": {
+    "piecewise_reconstruction_equal": true,
+    "original_source": {
+      "bytes": 394297,
+      "LF": 7571,
+      "terminal_LF_bytes": 1,
+      "sha256": "06331627e46c9e19fbb784282b192d521cb953e4c9a34fb421f74c44c0655b9b"
+    },
+    "unchanged_bytes_outside_five_units": true,
+    "archive_occurrences_each": 1
+  },
+  "I20_to_I18_composition": {
+    "source": {
+      "input": "reconstructed original I20 source",
+      "pieces": [
+        {
+          "input": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "start_byte": 0,
+            "end_byte": 392087,
+            "start_line": 1,
+            "bytes": 392087,
+            "LF": 7537,
+            "terminal_LF_bytes": 0,
+            "sha256": "004de7f813dcc5b3d0ceeb6437c93a083f09af0b3518de15f469d17505237f8f",
+            "revision": "d79a2cd3cd3d5881dce26df9cee8266de9ae61e7"
+          },
+          "output_start": 0,
+          "output_end": 392087
+        },
+        {
+          "input": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "start_byte": 392100,
+            "end_byte": 394297,
+            "start_line": 7538,
+            "bytes": 2197,
+            "LF": 34,
+            "terminal_LF_bytes": 1,
+            "sha256": "f6c7288d30fddaf3cbcd3fdfa5641dbc1dd7febe2afc8e372054d17e8d47b151",
+            "revision": "d79a2cd3cd3d5881dce26df9cee8266de9ae61e7"
+          },
+          "output_start": 392087,
+          "output_end": 394284
+        }
+      ],
+      "deleted": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "start_byte": 392087,
+        "end_byte": 392100,
+        "start_line": 7538,
+        "bytes": 13,
+        "LF": 0,
+        "terminal_LF_bytes": 0,
+        "sha256": "bbed7fb8388ebaa0b14e1de53c5c785f1abf84d27c1f8e860c0f017d0c511aa5",
+        "revision": "d79a2cd3cd3d5881dce26df9cee8266de9ae61e7"
+      },
+      "deleted_literal": "quantized-gh/",
+      "removed_bytes": 13,
+      "result": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "revision": "fcb8ee7c1f42a4cab386cbf64114b3afbee359e9",
+        "bytes": 394284,
+        "LF": 7571,
+        "terminal_LF_bytes": 1,
+        "sha256": "c15b9e6371968fe6a19c8cd6a1a45142a60af4696290da1a317359d0aaf71bde"
+      }
+    },
+    "report": {
+      "input": "immutable I20 report prefix",
+      "pieces": [
+        {
+          "input": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 0,
+            "end_byte": 828,
+            "start_line": 1,
+            "bytes": 828,
+            "LF": 16,
+            "terminal_LF_bytes": 0,
+            "sha256": "9f1fb0b16c9a37c295c8f14894a1aa7521b6b848690e7512c634936175ad3adb",
+            "revision": "d79a2cd3cd3d5881dce26df9cee8266de9ae61e7"
+          },
+          "output_start": 0,
+          "output_end": 828
+        },
+        {
+          "input": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 831,
+            "end_byte": 61057,
+            "start_line": 17,
+            "bytes": 60226,
+            "LF": 637,
+            "terminal_LF_bytes": 1,
+            "sha256": "549b056e34206197df89874dca3b6aa9faff61bf5273fa0f2f1a8f0dff9fd77b",
+            "revision": "d79a2cd3cd3d5881dce26df9cee8266de9ae61e7"
+          },
+          "output_start": 828,
+          "output_end": 61054
+        }
+      ],
+      "backlink_deleted": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 828,
+        "end_byte": 831,
+        "start_line": 17,
+        "bytes": 3,
+        "LF": 0,
+        "terminal_LF_bytes": 0,
+        "sha256": "fa08499e14d0113ba6794623f1badedcc8e9ae51cb5bafc7e14a5af1454bcfe7"
+      },
+      "deleted_literal": "../",
+      "removed_backlink_bytes": 3,
+      "removed_I20_append": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 61057,
+        "end_byte": 64694,
+        "start_line": 654,
+        "bytes": 3637,
+        "LF": 57,
+        "terminal_LF_bytes": 1,
+        "sha256": "ff9727080cbd0a4d467ae4d9da7089ac8cf45e921345e6feef0ee33b9183fb4f"
+      },
+      "removed_append_bytes": 3637,
+      "result": {
+        "path": "docs/reports/dimension-general-transfer-0910.md",
+        "revision": "fcb8ee7c1f42a4cab386cbf64114b3afbee359e9",
+        "bytes": 61054,
+        "LF": 653,
+        "terminal_LF_bytes": 1,
+        "sha256": "2f81c1c77d82de715739243b1d3c2aa2a747ec8f130700f16be831ff2e66e7f8"
+      }
+    },
+    "note": "Source piece offsets apply after the I44 current/archive inverse; report offsets resolve directly in the immutable current prefix."
+  },
+  "raw_payloads": [
+    {
+      "id": "symbolic_program",
+      "payload": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 12588,
+        "end_byte": 13645,
+        "start_line": 185,
+        "bytes": 1057,
+        "LF": 13,
+        "terminal_LF_bytes": 1,
+        "sha256": "33884a41ac675afe37909f266601fc3c12e689e20bb74bc218bb53a5c218e97a"
+      },
+      "delimiter_LF_bytes": 0,
+      "delimiter": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 13645,
+        "end_byte": 13645,
+        "start_line": 198,
+        "bytes": 0,
+        "LF": 0,
+        "terminal_LF_bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "fenced_envelope": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 12580,
+        "end_byte": 13649,
+        "start_line": 184,
+        "bytes": 1069,
+        "LF": 15,
+        "terminal_LF_bytes": 1,
+        "sha256": "19f6311dd71095d205fcb0da8ecfd542d995d3e7b0ff719198fa0cc85d62ccd3"
+      },
+      "disposition": "unchanged historical inert TEXT; no execution"
+    },
+    {
+      "id": "original_execution_receipt",
+      "payload": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 13754,
+        "end_byte": 14377,
+        "start_line": 205,
+        "bytes": 623,
+        "LF": 17,
+        "terminal_LF_bytes": 1,
+        "sha256": "b31c37c24e18890cc6ee135e231bb0732ecbea1b4739a18024afa2f206c00dd4"
+      },
+      "delimiter_LF_bytes": 0,
+      "delimiter": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 14377,
+        "end_byte": 14377,
+        "start_line": 222,
+        "bytes": 0,
+        "LF": 0,
+        "terminal_LF_bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "fenced_envelope": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 13746,
+        "end_byte": 14381,
+        "start_line": 204,
+        "bytes": 635,
+        "LF": 19,
+        "terminal_LF_bytes": 1,
+        "sha256": "1abbd6d8849a65f1bf234b6fbca7fd77437cddbd7502610dcba4f7fac45f09fd"
+      },
+      "disposition": "unchanged historical inert TEXT; no execution"
+    },
+    {
+      "id": "preregistered_gate",
+      "payload": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 14502,
+        "end_byte": 15394,
+        "start_line": 227,
+        "bytes": 892,
+        "LF": 13,
+        "terminal_LF_bytes": 1,
+        "sha256": "698e324d889f1b31b8ff36c43ef24cdc76143b72ce7f9f526e327f08710e2e58"
+      },
+      "delimiter_LF_bytes": 0,
+      "delimiter": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 15394,
+        "end_byte": 15394,
+        "start_line": 240,
+        "bytes": 0,
+        "LF": 0,
+        "terminal_LF_bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "fenced_envelope": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 14494,
+        "end_byte": 15398,
+        "start_line": 226,
+        "bytes": 904,
+        "LF": 15,
+        "terminal_LF_bytes": 1,
+        "sha256": "45b01ababf91e566bb8670e46bc79a5bde419bf62ba58271f6fbc2699e74f5ed"
+      },
+      "disposition": "unchanged historical inert TEXT; no execution"
+    },
+    {
+      "id": "C47_raw_envelope",
+      "payload": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 15802,
+        "end_byte": 30875,
+        "start_line": 252,
+        "bytes": 15073,
+        "LF": 75,
+        "terminal_LF_bytes": 0,
+        "sha256": "e5d84e0dc8c6935b329694f3cf278151543a4ce4460cf0e1d42d4371cd5ce822"
+      },
+      "delimiter_LF_bytes": 1,
+      "delimiter": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 30875,
+        "end_byte": 30876,
+        "start_line": 327,
+        "bytes": 1,
+        "LF": 1,
+        "terminal_LF_bytes": 1,
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+      },
+      "fenced_envelope": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 15794,
+        "end_byte": 30880,
+        "start_line": 251,
+        "bytes": 15086,
+        "LF": 78,
+        "terminal_LF_bytes": 1,
+        "sha256": "bc395e56eaa6225e5987755eb450893fbf2889bf489a71fc5d1eda171ecc24e8"
+      },
+      "disposition": "unchanged historical inert TEXT; no execution"
+    },
+    {
+      "id": "I18_ingest_command",
+      "payload": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 31010,
+        "end_byte": 31108,
+        "start_line": 337,
+        "bytes": 98,
+        "LF": 1,
+        "terminal_LF_bytes": 1,
+        "sha256": "372f0c09f233f2c39ee3d007ef305f62e18dda849e8d0bb63ef886dc1f9237d0"
+      },
+      "delimiter_LF_bytes": 0,
+      "delimiter": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 31108,
+        "end_byte": 31108,
+        "start_line": 338,
+        "bytes": 0,
+        "LF": 0,
+        "terminal_LF_bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "fenced_envelope": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 31002,
+        "end_byte": 31112,
+        "start_line": 336,
+        "bytes": 110,
+        "LF": 3,
+        "terminal_LF_bytes": 1,
+        "sha256": "61f3eb5c75dca72c969466d33f7c72ea183483cf3cd2887280da46fc92cc3bf5"
+      },
+      "disposition": "unchanged historical inert TEXT; no execution"
+    },
+    {
+      "id": "historical_LF_relations",
+      "payload": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 39276,
+        "end_byte": 42540,
+        "start_line": 458,
+        "bytes": 3264,
+        "LF": 17,
+        "terminal_LF_bytes": 1,
+        "sha256": "02a67dfd732fb9e1bfb1c8533f88a8a46f27d6f1580cf8cb1ed5a6f0731cadc4"
+      },
+      "delimiter_LF_bytes": 0,
+      "delimiter": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 42540,
+        "end_byte": 42540,
+        "start_line": 475,
+        "bytes": 0,
+        "LF": 0,
+        "terminal_LF_bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "fenced_envelope": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 39268,
+        "end_byte": 42544,
+        "start_line": 457,
+        "bytes": 3276,
+        "LF": 19,
+        "terminal_LF_bytes": 1,
+        "sha256": "f6e464d4c76d27a6a8861a3f849bad4b997f4f41472edce27921f95766aa0df5"
+      },
+      "disposition": "unchanged historical inert TEXT; no execution"
+    },
+    {
+      "id": "I18_file_inventory",
+      "payload": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 48449,
+        "end_byte": 57827,
+        "start_line": 556,
+        "bytes": 9378,
+        "LF": 48,
+        "terminal_LF_bytes": 1,
+        "sha256": "0fb023633449319186556b8c39a3fc3f139f1edafb15f9a50ae65529bd38155e"
+      },
+      "delimiter_LF_bytes": 0,
+      "delimiter": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 57827,
+        "end_byte": 57827,
+        "start_line": 604,
+        "bytes": 0,
+        "LF": 0,
+        "terminal_LF_bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "fenced_envelope": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 48441,
+        "end_byte": 57831,
+        "start_line": 555,
+        "bytes": 9390,
+        "LF": 50,
+        "terminal_LF_bytes": 1,
+        "sha256": "34eb973ab730c42f801fc1213eba44359f0b116ff912c952f8e697a508f12386"
+      },
+      "disposition": "unchanged historical inert TEXT; no execution"
+    }
+  ],
+  "C47_nodes": [
+    {
+      "pointer": "/conclusion/verdict",
+      "node_type": "leaf",
+      "raw": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 15831,
+        "end_byte": 15839,
+        "start_line": 254,
+        "bytes": 8,
+        "LF": 0,
+        "terminal_LF_bytes": 0,
+        "sha256": "5e3aec27e9921e0fa5243dc75a927ff87f67a90a1f2b63e864260d14370f2170"
+      },
+      "current_mathematical_refs": [],
+      "operational_archive_refs": [
+        "#/replacements/3/archive"
+      ],
+      "disposition": "operational evidence retained in historical report/archive; no body proof claim"
+    },
+    {
+      "pointer": "/conclusion/summary",
+      "node_type": "leaf",
+      "raw": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 15852,
+        "end_byte": 16155,
+        "start_line": 255,
+        "bytes": 303,
+        "LF": 0,
+        "terminal_LF_bytes": 0,
+        "sha256": "f734abb75dea69317b13a854c9a38b0dfeddfc482b7bd515961b42c6fb8bc87c"

@@ -1,0 +1,750 @@
+          "label": "34.8",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 9,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 4001,
+            "end_byte": 4146,
+            "start_line": 62,
+            "bytes": 145,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "9622fac1f12ef5542134744d89175bc803953c3c7b99a78c79994ddcd42b488f"
+          },
+          "label": "34.9",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 10,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 4146,
+            "end_byte": 4307,
+            "start_line": 63,
+            "bytes": 161,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "8d8cf3320814c9eea491c5250ee9244ebca70d33883a1e93bd1026e2d750d02c"
+          },
+          "label": "34.10-34.11",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 11,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 4307,
+            "end_byte": 4601,
+            "start_line": 64,
+            "bytes": 294,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "aaaa8e891931135eef5269a2cfcae8a14710eacdb12d04a92f295b4db7d250a9"
+          },
+          "label": "34.12-34.13",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 12,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 4601,
+            "end_byte": 4730,
+            "start_line": 65,
+            "bytes": 129,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "c21718e65161216c233936bcf58fcb610112ac0dc2766caf31832ec236cdb38e"
+          },
+          "label": "34.14",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 13,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 4730,
+            "end_byte": 4912,
+            "start_line": 66,
+            "bytes": 182,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "47c06fab075683f604ca197716461b0465c7bf7f72b65cdbed3ea35deb9a1df6"
+          },
+          "label": "34.15-34.16",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 14,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 4912,
+            "end_byte": 5068,
+            "start_line": 67,
+            "bytes": 156,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "be598d58de065f221e4436cc523ec1d1b3394c8593066be599f71fdf537e5aab"
+          },
+          "label": "34.17-34.18",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 15,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 5068,
+            "end_byte": 5215,
+            "start_line": 68,
+            "bytes": 147,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "5d4b869b3c41978d41c07df3314b6ab765775b1e7c66246ead071049bea0e9a7"
+          },
+          "label": "34.19",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 16,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 5215,
+            "end_byte": 5366,
+            "start_line": 69,
+            "bytes": 151,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "ef85755022000ebf5d7441e182e9b98b240cd72f920734f8550879e29032e2c3"
+          },
+          "label": "34.20",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 17,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 5366,
+            "end_byte": 5572,
+            "start_line": 70,
+            "bytes": 206,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "3cce3bd8c09cb6b753f5186269aea4e8cba874520a43a5805df868db97f6cec4"
+          },
+          "label": "34.21-34.22",
+          "disposition": "historical row preserved; not silently relabeled current"
+        }
+      ],
+      "span": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 2929,
+        "end_byte": 5572,
+        "start_line": 54,
+        "bytes": 2643,
+        "LF": 17,
+        "terminal_LF_bytes": 1,
+        "sha256": "71590c2e8bce1417f74aecd5ac1e14493c38ba23999190a153748a0f2f2ea9ca"
+      }
+    },
+    {
+      "id": "table-2",
+      "rows": [
+        {
+          "row_number": 1,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 7698,
+            "end_byte": 7771,
+            "start_line": 107,
+            "bytes": 73,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "9bbf064547dbc92079095622911e4c14c7819f9e45d1be35a176e91ac442c7f1"
+          },
+          "label": "Classical item",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 2,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 7771,
+            "end_byte": 7791,
+            "start_line": 108,
+            "bytes": 20,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "a9e436d2babd638ade86791e162e7de5a6b1b3128c6ae9ed93504fbf3c53dc93"
+          },
+          "label": "---",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 3,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 7791,
+            "end_byte": 8009,
+            "start_line": 109,
+            "bytes": 218,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "3bab84d6121e0bca2996bf62bf3c2f065a32bc4b081a2ae08da3741a6db067ab"
+          },
+          "label": "Boyd and Vandenberghe, Convex functions, Stanford EE364a",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 4,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 8009,
+            "end_byte": 8177,
+            "start_line": 110,
+            "bytes": 168,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "aa89e700d22e86132c6d64eddae5699d3428f9258e06fcaa95bd38ab22cd7677"
+          },
+          "label": "HKUST, Lecture 14: Greedy Algorithms",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 5,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 8177,
+            "end_byte": 8341,
+            "start_line": 111,
+            "bytes": 164,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "0db41bc4fb59ae00c66551c17ea36b4b02ec533d4c7fafd20cb59097725eb170"
+          },
+          "label": "Boyd and Vandenberghe, Duality, Stanford EE364a",
+          "disposition": "historical row preserved; not silently relabeled current"
+        }
+      ],
+      "span": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 7698,
+        "end_byte": 8341,
+        "start_line": 107,
+        "bytes": 643,
+        "LF": 5,
+        "terminal_LF_bytes": 1,
+        "sha256": "ddb0ddaed1787bc442dcd289ab7bd03bee44d4e2ebf0ef9d7235a9f004b4eb0e"
+      }
+    },
+    {
+      "id": "table-3",
+      "rows": [
+        {
+          "row_number": 1,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 11221,
+            "end_byte": 11290,
+            "start_line": 162,
+            "bytes": 69,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "f427d63b4ae58ea0dac7daf3d0852221ba74f496915498dff2035ddcb530df41"
+          },
+          "label": "Stage / evidence",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 2,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 11290,
+            "end_byte": 11310,
+            "start_line": 163,
+            "bytes": 20,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "a9e436d2babd638ade86791e162e7de5a6b1b3128c6ae9ed93504fbf3c53dc93"
+          },
+          "label": "---",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 3,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 11310,
+            "end_byte": 11496,
+            "start_line": 164,
+            "bytes": 186,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "86c22495c509e5b698fc33982fe99d88ced188132a20b0094298b64ccccda964"
+          },
+          "label": "Original caller symbolic identity audit",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 4,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 11496,
+            "end_byte": 11600,
+            "start_line": 165,
+            "bytes": 104,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "42755e6790cdd43fde7772aad9007d96e874f7f58a924c4d4a6caadf4aa8adfd"
+          },
+          "label": "C47 primary response",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 5,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 11600,
+            "end_byte": 11701,
+            "start_line": 166,
+            "bytes": 101,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "845fd0c5b18968df2f5ffb40601faf7d3bf828637ee49e3cb0915323cdbe1983"
+          },
+          "label": "Caller analytical audit of C47",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 6,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 11701,
+            "end_byte": 11849,
+            "start_line": 167,
+            "bytes": 148,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "8e62cd716716bc4e2eaaef93c034f2cdf26fef4846628f0c3c73fd2490d2449c"
+          },
+          "label": "This I18 implementation",
+          "disposition": "historical row preserved; not silently relabeled current"
+        }
+      ],
+      "span": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 11221,
+        "end_byte": 11849,
+        "start_line": 162,
+        "bytes": 628,
+        "LF": 6,
+        "terminal_LF_bytes": 1,
+        "sha256": "0598c8e2efe503c9a4d4e1b90c8b83ceb6d0b8127a5be933eb9cffb20e8b8234"
+      }
+    },
+    {
+      "id": "table-4",
+      "rows": [
+        {
+          "row_number": 1,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 32606,
+            "end_byte": 32639,
+            "start_line": 367,
+            "bytes": 33,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "4c5a092fbc9106a4645fe667314ff202f86239436581c225dba0d2bd2090269e"
+          },
+          "label": "Stream",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 2,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 32639,
+            "end_byte": 32667,
+            "start_line": 368,
+            "bytes": 28,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "c4c83aa30a8bbc655f55aa0efb240bbf9a49d5540e802aeb1f0aaa4629f6371c"
+          },
+          "label": "---",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 3,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 32667,
+            "end_byte": 32766,
+            "start_line": 369,
+            "bytes": 99,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "a6704c97e7d010be3daa7ea3911a5a7b96a917330a5a0296b1de7f94bd36c580"
+          },
+          "label": "ingest.stdout.bin",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 4,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 32766,
+            "end_byte": 32863,
+            "start_line": 370,
+            "bytes": 97,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "adfba0fb6b29a901a21f9592f7432f8c53404803a5d42257bb34cce7e57ebdce"
+          },
+          "label": "ingest.stderr.bin",
+          "disposition": "historical row preserved; not silently relabeled current"
+        }
+      ],
+      "span": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 32606,
+        "end_byte": 32863,
+        "start_line": 367,
+        "bytes": 257,
+        "LF": 4,
+        "terminal_LF_bytes": 1,
+        "sha256": "c38f0e553a2cdd8da254d755ed230646e1da0948f179232965c1e2a76234451b"
+      }
+    },
+    {
+      "id": "table-5",
+      "rows": [
+        {
+          "row_number": 1,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 34321,
+            "end_byte": 34427,
+            "start_line": 396,
+            "bytes": 106,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "46191f03f58ba60f30d05d8d06a45da783c4661bab3e2a6c258530ea34f22a1e"
+          },
+          "label": "Unit",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 2,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 34427,
+            "end_byte": 34460,
+            "start_line": 397,
+            "bytes": 33,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "d8d10a3fa184fd11d17c736c3848745b7ec62f45570cfc97806e3d203fd9e91b"
+          },
+          "label": "---",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 3,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 34460,
+            "end_byte": 34581,
+            "start_line": 398,
+            "bytes": 121,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "0ade5ce60a7499397a43c4af024d59dbce1229c70f7cdbd28ff32020ff2f953d"
+          },
+          "label": "33.22",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 4,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 34581,
+            "end_byte": 34701,
+            "start_line": 399,
+            "bytes": 120,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "f9d816ac787be2931e1893762962794333fcf0d90078cb134dd87a3d87d4661e"
+          },
+          "label": "34.1",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 5,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 34701,
+            "end_byte": 34821,
+            "start_line": 400,
+            "bytes": 120,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "9d8f5689cbf02ee08867d50e627753dc4c48d3899cfad7c97097c7dd0bf5cfd5"
+          },
+          "label": "34.2",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 6,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 34821,
+            "end_byte": 34941,
+            "start_line": 401,
+            "bytes": 120,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "d6e4e89c971a89060d694d80a5a7f1e3a534c4e31b4870184bae1fc41a2f93e9"
+          },
+          "label": "34.3",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 7,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 34941,
+            "end_byte": 35061,
+            "start_line": 402,
+            "bytes": 120,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "a06cb21b0a70df7562d845a05f4e11af435134b60002cf8136c5fde517a0003f"
+          },
+          "label": "34.4",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 8,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 35061,
+            "end_byte": 35180,
+            "start_line": 403,
+            "bytes": 119,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "10a6c9b844340a13c7279bf63877d213748742a1af85f717f23d321b98cbab25"
+          },
+          "label": "34.5",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 9,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 35180,
+            "end_byte": 35300,
+            "start_line": 404,
+            "bytes": 120,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "cbcbda6abf5e3540af047189be5f7c4da10be835073c66046237c5fed071741c"
+          },
+          "label": "34.6",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 10,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 35300,
+            "end_byte": 35420,
+            "start_line": 405,
+            "bytes": 120,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "541219bd370d1552e72525b3d98638a58c9e80965a28d101cf82072dbe5f3851"
+          },
+          "label": "34.7",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 11,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 35420,
+            "end_byte": 35539,
+            "start_line": 406,
+            "bytes": 119,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "51160d152dff23d6c25d6a3a33a2d858e295e3cbb4f69718ba26e58b68546302"
+          },
+          "label": "34.8",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 12,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 35539,
+            "end_byte": 35659,
+            "start_line": 407,
+            "bytes": 120,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "b461102b1d3210f13d03c912724e24790949950b25513451d7db167c815a13c9"
+          },
+          "label": "34.9",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 13,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 35659,
+            "end_byte": 35779,
+            "start_line": 408,
+            "bytes": 120,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "6d3fdcafa89a82fd8c722130b0e1cb42e8bb16ae4f6774075048683b4466ccfc"
+          },
+          "label": "34.10",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 14,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 35779,
+            "end_byte": 35899,
+            "start_line": 409,
+            "bytes": 120,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "45f7037dd507fd85f729b81fb56fff16287da85998a5886d56be6ebafd42c2cc"
+          },
+          "label": "34.11",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 15,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 35899,
+            "end_byte": 36020,
+            "start_line": 410,
+            "bytes": 121,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "de9693f929c13407e536c7366b3b5450c27aff52e6cf5fea70121996ba352a47"
+          },
+          "label": "34.12",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 16,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 36020,
+            "end_byte": 36141,
+            "start_line": 411,
+            "bytes": 121,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "38a1de0e4736aeba583aba27c2aecfd15b6272c5c7a59fbb620dfc38576d638e"
+          },
+          "label": "34.13",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 17,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 36141,
+            "end_byte": 36261,
+            "start_line": 412,
+            "bytes": 120,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "7ccb16762dd57b5819688911144a415e2c3e70b461741027daa2421785316bac"
+          },
+          "label": "34.14",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 18,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 36261,
+            "end_byte": 36382,
+            "start_line": 413,
+            "bytes": 121,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "45f567886d26a4a7db48cfebf5c426fdb64ccbc05a7b443f2cf40049a7eecc59"
+          },
+          "label": "34.15",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 19,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 36382,
+            "end_byte": 36503,
+            "start_line": 414,
+            "bytes": 121,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "e269c07da769512a23b56396e65047220e349f806058ea694b1c920b79e44809"
+          },
+          "label": "34.16",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 20,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 36503,
+            "end_byte": 36623,
+            "start_line": 415,
+            "bytes": 120,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "2138492df3cf739d698c0c39425e2ed0d3ebab34579456459d6876edf0e4b2f0"
+          },
+          "label": "34.17",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 21,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 36623,
+            "end_byte": 36744,
+            "start_line": 416,
+            "bytes": 121,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "a85f2d36ed933498c03cf0d7f8213c1581d9ee774194f791a8cc14bc4af98245"
+          },
+          "label": "34.18",
+          "disposition": "historical row preserved; not silently relabeled current"
+        },
+        {
+          "row_number": 22,
+          "span": {
+            "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+            "start_byte": 36744,
+            "end_byte": 36865,
+            "start_line": 417,
+            "bytes": 121,
+            "LF": 1,
+            "terminal_LF_bytes": 1,
+            "sha256": "7bf0bdcf5f56d944dafb210b2699155635f7325a882c0a40fa4a64ee7cc38dc9"
+          },

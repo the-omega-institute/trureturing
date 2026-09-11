@@ -8,14 +8,14 @@
       "heading": "Balanced (2,3,7): whole-box, all-real-slab fixed certificate (S20 / C43)",
       "byte_span": [
         0,
-        2394
+        58191
       ],
       "identity": {
-        "bytes": 2394,
-        "sha256": "620a9d7092a9e59c9cefda39d8025dddd9a0065b79698316f0108dfd4b15eee4",
-        "lf": 8,
-        "terminal_lf": 2,
-        "lines": 8
+        "bytes": 58191,
+        "sha256": "29d239c8f3f0bb3cde6bc8fb780360856955846ecc8c48ffe1f7f16b218a73c6",
+        "lf": 792,
+        "terminal_lf": 1,
+        "lines": 792
       }
     },
     {
@@ -128,14 +128,14 @@
       "heading": "C85 / S20 section 31 archival representation (I29, 2026-09-10)",
       "byte_span": [
         39336,
-        42664
+        58191
       ],
       "identity": {
-        "bytes": 3328,
-        "sha256": "94e99a9d601ec14684ff08722c39317f163381a2e56dacf6b2b3bd4b9d5ac79f",
-        "lf": 12,
-        "terminal_lf": 2,
-        "lines": 12
+        "bytes": 18855,
+        "sha256": "1d8d304a5145fdb4544dbd0001299ce535dbe013bd32768c5d47853efab936e3",
+        "lf": 292,
+        "terminal_lf": 1,
+        "lines": 292
       }
     },
     {
@@ -143,14 +143,14 @@
       "heading": "Verbatim relocated source payloads",
       "byte_span": [
         42664,
-        42704
+        50745
       ],
       "identity": {
-        "bytes": 40,
-        "sha256": "a750c8c713baeca300dff1ca4ebca7db1fe11b9093f0cce1888300bb1090e408",
-        "lf": 2,
+        "bytes": 8081,
+        "sha256": "49ab2185cbc2789801e8e3e22a1a4ac4cc9be5ac47c245fc0ba24d24271fd2a6",
+        "lf": 234,
         "terminal_lf": 2,
-        "lines": 2
+        "lines": 234
       }
     },
     {

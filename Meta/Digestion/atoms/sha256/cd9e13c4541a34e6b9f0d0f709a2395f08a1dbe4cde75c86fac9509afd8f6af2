@@ -1,0 +1,37 @@
+**34.20 The four-dimensional 5040 consequence remains conditional.** Take
+\[
+k=4,\qquad h=(\log2,\log3,\log5,\log7),\qquad
+a=(5\log2,3\log3,2\log5,2\log7)
+=(\log32,\log27,\log25,\log49),\qquad T_{\min}=0.
+\]
+These are the lower coordinates associated with ordinary exponents
+\((4,2,1,1)\) in 32.2-32.3; subsequent common translation is a continuous
+family. Here
+\[
+m=\log25,\qquad d_{\min}=24,\qquad
+|e^T(G_\xi-G_0)|\le3\epsilon/24=\epsilon/8.
+\]
+Only if a separate theorem establishes the full wider-domain bound
+\[
+e^TG_0<-1/2000
+\]
+for every finite \(T\ge0\) and every corresponding finite positive-width
+real slab containing two actual translated corners, without the fixed
+lower cutoff, does 34.16 imply
+\[
+0\le\epsilon\le1/500\quad\Longrightarrow\quad e^TG_\xi<-1/4000
+\]
+on that whole translated class. The calculation is
+\((1/2000-1/4000)\,24/3=1/500\); it includes \(T=0\) and the closed
+radius boundary. A subsequent intersection with
+\(\log1058400<M_0^\xi<M_1^\xi\) is then valid.
+A baseline result limited to the old cutoff instead supports only
+inverse-image-covered slabs, such as the buffers of 34.17-34.18.
+
+The raw C47 response calls this open mass/tail obligation C45.
+That is its historical name: the original C45 and later C49 carriers
+failed, and the still-open full mathematical obligation is now carried
+by C51. No old flight is revived or relabeled. No C51 result is supplied
+or inferred here. Section 32's fixed \(T=0\), cutoff-restricted certificate
+and section 33's density order do not establish this wider-domain margin.
+

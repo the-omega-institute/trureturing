@@ -1,0 +1,247 @@
+{
+  "schema": "s23-public-section-recipe-publication-I53-v1",
+  "flight_id": "qgh0912-s23-public-section-recipe-i53",
+  "goal_clause": "C193",
+  "implementation": "I53",
+  "stage": "implementation",
+  "worker_mode": "codex-cli",
+  "work_target": "/Users/auricstudio/trureturing-qgh-pure-s23",
+  "branch": "lane/math/quantized-gh-composed-s23-0911",
+  "starting_HEAD": "1f5f54ba9cdba9486e1c8170ccd627cadcd9ce25",
+  "authority": {
+    "path": "CLAUDE.md",
+    "sha256": "3b264bfbef31c918a0b41e014790ebf942bc2c674f9fa343236951f46423003e",
+    "repo_prior_exposed": true,
+    "model_diversity_claimed": false
+  },
+  "finding": {
+    "id": "I52-PUBLIC-RECIPE-1",
+    "location": "docs/reports/quantized-gh/s23-evidence/navigation-repair-verification-I52.md:7",
+    "disposition": "repaired by publishing the complete supplied fixed-text recipe"
+  },
+  "changed_paths": {
+    "docs/reports/quantized-gh/s23-evidence/navigation-repair-verification-I52.md": {
+      "bytes": 8000,
+      "LF": 133,
+      "terminal_LF": true,
+      "sha256": "aef559604991a2eeea4ba8bca58a6b33cfa4a7d8bc5eb77df262321bf9825cc3"
+    },
+    "docs/reports/quantized-gh/s23-evidence/navigation-repair-I52.json": {
+      "bytes": 11952,
+      "LF": 327,
+      "terminal_LF": true,
+      "sha256": "a41631debe9733e6b8ab621d33c029be73fba95ffb0e3285d53a02c834da7654"
+    },
+    "docs/reports/quantized-gh/s23-evidence/recipe-publication-I53.json": {
+      "identity": "self-hash omitted to avoid circularity; publication record is this path"
+    },
+    "docs/reports/quantized-gh/s23-evidence/before-I53/navigation-repair-verification-I52.md": {
+      "bytes": 3481,
+      "LF": 29,
+      "terminal_LF": true,
+      "sha256": "7b7e2d322c3883c83cc29f5dc94f30bb71899ced960c5f7938c236bd57b095b4"
+    },
+    "docs/reports/quantized-gh/s23-evidence/before-I53/navigation-repair-I52.json": {
+      "bytes": 11383,
+      "LF": 317,
+      "terminal_LF": true,
+      "sha256": "e4125458ff4462498e4c1401c08a4a11f067a024d0dc6c12d6524b2a1c21e257"
+    },
+    "docs/reports/quantized-gh/s23-evidence/before-I53/implementation-I52-result.json": {
+      "bytes": 14465,
+      "LF": 402,
+      "terminal_LF": true,
+      "sha256": "b7d063fa3df4c25177889912b5348ef139bd6edc53be15cec148f5c7cac51fc3"
+    },
+    "docs/reports/quantized-gh/s23-evidence/before-I53/implementation-I52-completion.txt": {
+      "bytes": 9,
+      "LF": 1,
+      "terminal_LF": true,
+      "sha256": "a4bccf5c13ef5ff8311e59b34d492bc7072a55298723601a6a9c127053aee8fc"
+    }
+  },
+  "before_I53_archives": [
+    {
+      "path": "docs/reports/quantized-gh/s23-evidence/before-I53/navigation-repair-verification-I52.md",
+      "identity": {
+        "bytes": 3481,
+        "LF": 29,
+        "terminal_LF": true,
+        "sha256": "7b7e2d322c3883c83cc29f5dc94f30bb71899ced960c5f7938c236bd57b095b4"
+      }
+    },
+    {
+      "path": "docs/reports/quantized-gh/s23-evidence/before-I53/navigation-repair-I52.json",
+      "identity": {
+        "bytes": 11383,
+        "LF": 317,
+        "terminal_LF": true,
+        "sha256": "e4125458ff4462498e4c1401c08a4a11f067a024d0dc6c12d6524b2a1c21e257"
+      }
+    },
+    {
+      "path": "docs/reports/quantized-gh/s23-evidence/before-I53/implementation-I52-result.json",
+      "identity": {
+        "bytes": 14465,
+        "LF": 402,
+        "terminal_LF": true,
+        "sha256": "b7d063fa3df4c25177889912b5348ef139bd6edc53be15cec148f5c7cac51fc3"
+      }
+    },
+    {
+      "path": "docs/reports/quantized-gh/s23-evidence/before-I53/implementation-I52-completion.txt",
+      "identity": {
+        "bytes": 9,
+        "LF": 1,
+        "terminal_LF": true,
+        "sha256": "a4bccf5c13ef5ff8311e59b34d492bc7072a55298723601a6a9c127053aee8fc"
+      }
+    }
+  ],
+  "current_verification": {
+    "path": "docs/reports/quantized-gh/s23-evidence/navigation-repair-verification-I52.md",
+    "identity": {
+      "bytes": 8000,
+      "LF": 133,
+      "terminal_LF": true,
+      "sha256": "aef559604991a2eeea4ba8bca58a6b33cfa4a7d8bc5eb77df262321bf9825cc3"
+    },
+    "recipe_block_identity": {
+      "bytes": 4892,
+      "LF": 99,
+      "terminal_LF": true,
+      "sha256": "1c9fd967dd44c0558c3cc2c96d8869ce0983d6068e296f2936f4eda9aa697aa1"
+    }
+  },
+  "current_navigation_repair": {
+    "path": "docs/reports/quantized-gh/s23-evidence/navigation-repair-I52.json",
+    "identity": {
+      "bytes": 11952,
+      "LF": 327,
+      "terminal_LF": true,
+      "sha256": "a41631debe9733e6b8ab621d33c029be73fba95ffb0e3285d53a02c834da7654"
+    },
+    "original_serialization_preserved_at": "before-I53/navigation-repair-I52.json",
+    "original_content_and_verdicts_preserved": true
+  },
+  "complete_recipe": {
+    "source": "/tmp/qgh-boundaries-0908/s20-public-section-recipe-c193-0912.py",
+    "identity": {
+      "bytes": 4892,
+      "LF": 99,
+      "terminal_LF": true,
+      "sha256": "1c9fd967dd44c0558c3cc2c96d8869ce0983d6068e296f2936f4eda9aa697aa1"
+    },
+    "published_block_exact_match": true,
+    "caller_prior_execution": {
+      "chunk": "c5da21",
+      "result": "PASS",
+      "scope": "supplied original block; attributed separately"
+    }
+  },
+  "actual_published_execution": {
+    "command": "python3 -B /tmp/s20-public-section-recipe-i53-published.py /Users/auricstudio/trureturing-qgh-pure-s23",
+    "exit": 0,
+    "scratch_path": "/tmp/s20-public-section-recipe-i53-published.py",
+    "result": {
+      "result": "PASS",
+      "headings": 33,
+      "anchors_checked": 33,
+      "descendant_pairs_checked": 78,
+      "regressions": {
+        "balanced-237-whole-box-all-real-slab-fixed-certificate-s20--c43": [
+          0,
+          58191
+        ],
+        "c85--s20-section-31-archival-representation-i29-2026-09-10": [
+          39336,
+          58191
+        ],
+        "verbatim-relocated-source-payloads": [
+          42664,
+          50745
+        ]
+      },
+      "public_consumer": "S20Evidence.section",
+      "report_sha256": "29d239c8f3f0bb3cde6bc8fb780360856955846ecc8c48ffe1f7f16b218a73c6"
+    }
+  },
+  "preservation_checks": {
+    "source": {
+      "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "bytes": 440285,
+      "LF": 8740,
+      "sha256": "75e41aeca17b0343d6ecb5cb16e6cee13d7a64f8f798556921351e855c3e6af9"
+    },
+    "report": {
+      "path": "docs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md",
+      "bytes": 58191,
+      "LF": 792,
+      "sha256": "29d239c8f3f0bb3cde6bc8fb780360856955846ecc8c48ffe1f7f16b218a73c6"
+    },
+    "public_APIs_current_identities": {
+      "docs/reports/quantized-gh/s19-evidence/README.md": {
+        "bytes": 29770,
+        "LF": 370,
+        "terminal_LF": true,
+        "sha256": "f9980ddb9091ab82432aec65afbe2a929ff2c967a8189b0acb6ed9cfa0a82248"
+      },
+      "docs/reports/quantized-gh/s20-evidence/README.md": {
+        "bytes": 19729,
+        "LF": 229,
+        "terminal_LF": true,
+        "sha256": "1920d129b001c3c00bad749498a0988a7e86a2044f0ac3fc333179dd08486d97"
+      },
+      "docs/reports/quantized-gh/s21-evidence/README.md": {
+        "bytes": 16454,
+        "LF": 208,
+        "terminal_LF": true,
+        "sha256": "c312f07c0b69500549bab1decfdfb7ba83eef41b4079d38c9b98e429b662c8b2"
+      },
+      "docs/reports/quantized-gh/s22-evidence/README.md": {
+        "bytes": 15902,
+        "LF": 213,
+        "terminal_LF": true,
+        "sha256": "8d1d6fd6446a32e8e4f83db512e2c9587e73fa6f951c85d16d38b53ba89476b9"
+      },
+      "docs/reports/quantized-gh/s23-evidence/README.md": {
+        "bytes": 17595,
+        "LF": 210,
+        "terminal_LF": true,
+        "sha256": "0a87b6a15616cd44aebddf7d914bbe089ee72dd56fcbcf74f1a016958d1d2386"
+      }
+    },
+    "navigation_and_composition_registered_bytes_unchanged": true,
+    "capture_common_files_checked": 18,
+    "capture_common_unaffected_mismatches": 0,
+    "other_candidate_paths": "caller independently verified all 128 allowed candidate paths unchanged"
+  },
+  "semantic_coverage": {
+    "source": "complete 440285-byte/8740-LF read",
+    "report": "complete 58191-byte/792-LF read",
+    "public_APIs": "complete affected S19-S23 public bodies and navigation/composition contracts read",
+    "original_evidence": "complete registered controls/intakes and original R1 packet read",
+    "omissions": [
+      "opaque log_ref targets and private diagnostics were not opened",
+      "unselected literature and prohibited mathematical programs were not read or run"
+    ]
+  },
+  "errors_and_disposition": {
+    "errors": [],
+    "mathematical_execution_count": 0,
+    "historical_replay": false,
+    "lifecycle_actions": false,
+    "authority_edit": false
+  },
+  "remaining_obligations": {
+    "source_approval": false,
+    "full_quality_review_outstanding": true,
+    "fresh_architecture_quality_tests_reviews_required": true,
+    "reviewed_byte_sealing_required": true,
+    "required_CI_and_ordered_merge_caller_owned": true,
+    "S24_S26_and_sixteen_paper_groups_pending": true,
+    "whole_goal_complete": false,
+    "PR6741": "CLOSED/unmerged"
+  },
+  "attribution_note": "Original I52 implementation result and architecture approve, quality comment, tests reject votes remain unchanged and are preserved under before-I53; this publication repair supplies no independent mathematics, CI, merge, source approval, or standing-goal completion claim."
+}

@@ -1,0 +1,37 @@
+**34.1 Domain and theorem.** This S23/C55 reference-input appendix implements
+the completed C47 PAPER_ARGUMENT / repo-derived perturbation theorem.
+Fix any integer \(k\ge2\), finite real \(h_i>0\), \(a_i\ge0\), and
+\(m=\min_{1\le i\le k}a_i\). Fix finite \(T_{\min}\ge0\) such that
+\(m+T_{\min}>0\). At every finite \(T\ge T_{\min}\), put
+\[
+c_i=a_i+T,\qquad d_i=c_i+h_i,\qquad C_i=\{c_i,d_i\}.
+\]
+Admit every finite real \(M_0\le M_1\) for which the closed slab contains
+an actual endpoint corner \(x(e)=(c_i+e_i h_i)_{i=1}^k\),
+\(e\in\{0,1\}^k\): \(M_0\le\sum_i x_i(e)\le M_1\).
+Here actual means a vertex of this specified grid, not a fractional mixture
+and not necessarily an arithmetic prime-exponent point. For every finite
+\(\epsilon\ge0\) and every vector \(0\le\xi_i\le\epsilon\) with
+\(\min_i\xi_i=0\), translate both endpoints in row \(i\) by \(\xi_i\)
+and both budgets by \(S=\sum_i\xi_i\). Subscripts \(0,\xi\) compare these
+two shapes at the same height and corresponding budgets.
+
+With the definitions in 34.2, write
+\[
+z=e^{-T}>0,\qquad K=\frac{z}{e^m-z}=\frac1{e^{m+T}-1},\qquad
+C=(k-1)\epsilon K.
+\]
+The denominator is positive. The theorem is
+\[
+H_0\ge L_0\ge\ell(c)\ge m+T>0,\qquad
+H_\xi\ge L_\xi\ge\ell(c+\xi)\ge\ell(c),\qquad L_\xi\ge L_0,
+\]
+\[
+0\le D_\xi-D_0\le C,\qquad 0\le\Psi_\xi-\Psi_0\le C,\qquad
+|G_\xi-G_0|\le C.
+\]
+There is no upper bound on \(k\), no restriction on step ratios and no
+positive-width requirement. The one-corner analytical domain is inherited
+from 27.2-27.5. A two-corner negative-sign theorem retains its own narrower
+hypotheses; 34.14 gives an obstruction to extending such a sign by this estimate.
+
