@@ -10,7 +10,7 @@ $$\operatorname{localFactor}\left(p, a, s\right) = \sum_{j=0}^{a} {{p}^{-s}}^{j}
 
 *Formalization.* `D5/S3/Arith/GoldenResource/FiniteDivisorPartitionZeros.localFactor` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* NIST Digital Library of Mathematical Functions (2026). *Divisor power sums and finite geometric factors*. URL: <https://dlmf.nist.gov/27.2>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ $$\operatorname{partition}\left(N, s\right) = \prod_{p \mid N, \operatorname{Pri
 
 *Formalization.* `D5/S3/Arith/GoldenResource/FiniteDivisorPartitionZeros.partition` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* NIST Digital Library of Mathematical Functions (2026). *Divisor power sums and finite geometric factors*. URL: <https://dlmf.nist.gov/27.2>.
 
 *Commentary.*
 
@@ -46,7 +46,7 @@ $$\operatorname{localFactor}\left(p, a, s\right) = 0 \Rightarrow \Re s = 0$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/GoldenResource/FiniteDivisorPartitionZeros.local_factor_zero_re` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* NIST Digital Library of Mathematical Functions (2026). *Divisor power sums and finite geometric factors*. URL: <https://dlmf.nist.gov/27.2>.
 
 *Commentary.*
 
@@ -58,7 +58,7 @@ $$\Re s \neq 0 \Rightarrow \operatorname{partition}\left(N, s\right) \neq 0$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/GoldenResource/FiniteDivisorPartitionZeros.partition_ne_zero_of_re_ne_zero` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* NIST Digital Library of Mathematical Functions (2026). *Divisor power sums and finite geometric factors*. URL: <https://dlmf.nist.gov/27.2>.
 
 *Commentary.*
 
@@ -70,7 +70,7 @@ $$\operatorname{partition}\left(N, s\right) = 0 \Rightarrow \Re s = 0$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/GoldenResource/FiniteDivisorPartitionZeros.partition_zero_re` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* NIST Digital Library of Mathematical Functions (2026). *Divisor power sums and finite geometric factors*. URL: <https://dlmf.nist.gov/27.2>.
 
 *Commentary.*
 
