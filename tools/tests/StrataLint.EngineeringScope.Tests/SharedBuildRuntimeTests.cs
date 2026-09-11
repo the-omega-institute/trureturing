@@ -22,6 +22,14 @@ public sealed class SharedBuildRuntimeTests
         Write("NuGet.Config", "<configuration><packageSources><clear /></packageSources></configuration>\n");
         Write("global.json", File.ReadAllText(Path.Combine(repository, "global.json")));
         Write("tools/scripts/ci-build-outputs.targets", File.ReadAllText(Path.Combine(repository, "tools/scripts/ci-build-outputs.targets")));
+        Write(PackageMaterialRegistry.RelativePath, JsonSerializer.Serialize(new {
+            schemaVersion = 1, packageRootSource = "build-output:NuGetPackageRoot",
+            packages = new[] { "microsoft.codeanalysis.bannedapianalyzers/5.6.0", "microsoft.codecoverage/18.0.1",
+                "microsoft.net.test.sdk/18.0.1", "microsoft.testplatform.objectmodel/18.0.1", "microsoft.testplatform.testhost/18.0.1",
+                "newtonsoft.json/13.0.3", "xunit/2.9.3", "xunit.abstractions/2.0.3", "xunit.analyzers/1.18.0",
+                "xunit.assert/2.9.3", "xunit.core/2.9.3", "xunit.extensibility.core/2.9.3", "xunit.extensibility.execution/2.9.3",
+                "xunit.runner.visualstudio/3.1.4" }.Order(StringComparer.Ordinal).Select(package => new {
+                    packagePath = package, include = new[] { "**/*" }, exclude = new[] { "**/*.nupkg", "**/*.snupkg" } }) }));
         foreach (var path in new[] { "tools/scripts/ci-stage.sh", "tools/scripts/report/dotnet_producer.py",
                      "tools/scripts/report/JudgeSeedTask.cs", "tools/scripts/report/JudgeSeedTask.csproj",
                      "tools/scripts/worktree/lean_actions.py", "tools/scripts/worktree/lean_cache.py",
