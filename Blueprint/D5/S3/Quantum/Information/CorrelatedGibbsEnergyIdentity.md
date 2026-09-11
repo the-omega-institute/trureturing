@@ -24,7 +24,7 @@ $$\forall \rho, U, \operatorname{S}\left(\operatorname{unitaryConjugateState}\le
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/CorrelatedGibbsEnergyIdentity.von_neumann_entropy_unitary` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* John Watrous (2018). *The Theory of Quantum Information — spectral calculus, reductions and entropy*. URL: <https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf>.
 
 *Commentary.*
 

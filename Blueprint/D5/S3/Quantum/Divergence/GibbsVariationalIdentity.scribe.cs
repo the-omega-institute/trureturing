@@ -37,7 +37,8 @@ internal sealed class GibbsVariationalIdentityDocument : IScribeDocumentDefiniti
                         [Bound("n", F.Id("FiniteNonemptyType")),
                             Bound("H", Call("HermitianMatrix", n))],
                         Eqn(Call("log", g), Sub(h, Mul(Call("log", z), F.Id("I"))))))),
-                    AssessedProvenance.FromRepo(),
+                    AssessedProvenance.FromLiterature(
+                        LibraryNoteRef.Create("D5/L/Quantum/watrous2018entropicidentities")),
                     Blocks(Paragraph(Text(
                         "The logarithm of a positive scalar multiple separates into a scalar "
                         + "logarithm and the matrix logarithm. The logarithm of the exponential "
@@ -68,7 +69,8 @@ internal sealed class GibbsVariationalIdentityDocument : IScribeDocumentDefiniti
                         Eqn(Add(Call("vonNeumannEntropy", rho),
                             Call("quantumRelativeEntropy", rho, Call("gibbsState", Num(0)))),
                             Call("log", Call("card", n)))))),
-                    AssessedProvenance.FromRepo(),
+                    AssessedProvenance.FromLiterature(
+                        LibraryNoteRef.Create("D5/L/Quantum/watrous2018entropicidentities")),
                     Blocks(Paragraph(Text(
                         "At H = 0 the partition function is card(n), and gibbs_state_zero "
                         + "identifies the Gibbs matrix with I/card(n). Substitution into the "

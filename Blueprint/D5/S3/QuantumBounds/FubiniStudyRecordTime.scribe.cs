@@ -41,7 +41,7 @@ internal sealed class FubiniStudyRecordTimeDocument : IScribeDocumentDefinition
                 H("Orthogonal final records require contact time"),
                 StatementSource.FromAuthor(Disp(Seq(
                     Frac, Grp(Pi, Sp, F.Id("hbar")), Grp(D(4), Sp, F.Id("E")), Le, Tau))),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(Geometry),
                 Blocks(
                     Paragraph(Text(
                         "Let a, m0 and m1 be unit vectors, with m0 and m1 orthogonal. Assume "
@@ -62,7 +62,7 @@ internal sealed class FubiniStudyRecordTimeDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Disp(Seq(F.Id("N"), Le,
                     Frac, Grp(D(4), Sp, F.Id("E"), Sp, F.Id("T")),
                     Grp(Pi, Sp, F.Id("hbar"))))),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(Geometry),
                 Blocks(
                     Paragraph(Text(
                         "For N records, each pair of orthogonal final states has its own common "

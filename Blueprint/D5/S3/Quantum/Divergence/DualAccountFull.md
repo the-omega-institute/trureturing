@@ -12,7 +12,7 @@ $$\forall d \in PositiveNatural, Z \in \operatorname{RankOneContext}\left(d\righ
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/DualAccountFull.dual_account_full` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* John Watrous (2018). *The Theory of Quantum Information — spectral calculus, reductions and entropy*. URL: <https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf>.
 
 *Commentary.*
 
@@ -24,7 +24,7 @@ $$\forall d \in PositiveNatural, rho \in \operatorname{DensityState}\left(d\righ
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/DualAccountFull.entropy_freedom_segment` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* John Watrous (2018). *The Theory of Quantum Information — spectral calculus, reductions and entropy*. URL: <https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf>.
 
 *Commentary.*
 

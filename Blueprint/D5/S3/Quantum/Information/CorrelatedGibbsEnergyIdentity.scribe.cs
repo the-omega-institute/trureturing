@@ -41,7 +41,8 @@ internal sealed class CorrelatedGibbsEnergyIdentityDocument : IScribeDocumentDef
                 StatementSource.FromAuthor(Disp(Seq(Forall, Sp, Rho, Comma, Sp, F.Id("U"),
                     Comma, Sp, Call("S", Call("unitaryConjugateState", F.Id("U"), Rho)),
                     Sp, Eq, Sp, Call("S", Rho)))),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(
+                        LibraryNoteRef.Create("D5/L/Quantum/watrous2018entropicidentities")),
                 Blocks(Paragraph(Text(
                     "For every density state and every unitary U, the existing entropy-production "
                     + "identity applied at U and at the identity matrix yields the same pinching "

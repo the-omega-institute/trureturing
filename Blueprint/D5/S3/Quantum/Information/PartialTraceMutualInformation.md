@@ -58,7 +58,7 @@ $$\operatorname{quantumMutualInformation}\left(\rho\right) = \operatorname{vonNe
 
 *Formalization.* `D5/S3/Quantum/Information/PartialTraceMutualInformation.quantumMutualInformation` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* John Watrous (2018). *The Theory of Quantum Information — spectral calculus, reductions and entropy*. URL: <https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf>.
 
 *Commentary.*
 
