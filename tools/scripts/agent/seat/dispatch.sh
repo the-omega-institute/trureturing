@@ -64,6 +64,29 @@ inflight_on() {
   return 1
 }
 
+# 在飞席位数。**数的是席位,不是进程。**
+#
+# 立条依据(2026-09-11 实测):此前这里是 `pgrep -f 'codex exec' | wc -l`,而一个席位在
+# 本机起**两个**匹配该模式的进程(`node .../codex exec` 包装器 + 其 vendor 原生二进制)。
+# 于是 `MAX_CODEX=3` 这个按「席位」命名的旋钮,实际在**第三席**上恒不通过:两席在飞时
+# 读数是 4,4 < 3 为假,门一直等到 240 轮跑满才以 GATE_TIMEOUT 退出。
+# 当天派的第三席正是这样卡住的,而两席已经跑在同一台机上 —— 名字是席位、量的是进程,
+# 差一个常数因子 2(第 8.4 条:坏原材料;第 2.9 条:读数要答得出它答的是哪句话)。
+#
+# 正确的席位键是 runner 的 `--work-target <树>`:一个工作树至多一个在飞席位,这正是
+# dispatch.sh 自己的 inflight_on 已经采用的判据。同一席位的多个进程共享同一个 work-target,
+# 去重后就是席位数。取不到 runner 进程时回落到 0,由 inflight_on 与 runner 自身兜底。
+# 进程表取自 $SEAT_COUNT_PS,使本函数成为一段可喂合成输入的纯文本处理 —— 否则它没有钉子
+# (第 9.3 条:写不出反例的检查等于没检查)。生产路径不设该变量。
+seat_count() {
+  # 行必须同时含 runner 名与该 flag:只写 `grep -- '--work-target'` 会把任何**引用**了这个
+  # 字符串的 argv 一并数进来 —— 实测撞到过一次,是我自己那条 shell 命令的 zsh 包装行。
+  # 该方向是保守的(多数=多等),但它会让门在宿主明明空闲时挡住席位,与本次修的病同形。
+  ${SEAT_COUNT_PS:-ps -eo args} 2>/dev/null \
+    | grep -- 'run-codex-worker\.sh' | grep -- '--work-target' \
+    | grep -o -- '--work-target [^ ]*' | sort -u | wc -l | tr -d ' '
+}
+
 selftest() {
   local fails=0 tmp; tmp=$(mktemp -d); trap 'rm -rf "$tmp"' RETURN
   # 版本序:beta.9 必须排在 beta.42 之前(纯 sort 会判反,这正是用 -V 的理由)
@@ -71,6 +94,50 @@ selftest() {
            "$tmp/plugins/1.0.0-beta.42/skills/sshx/scripts"
   : > "$tmp/plugins/1.0.0-beta.9/skills/sshx/scripts/run-codex-worker.sh"
   : > "$tmp/plugins/1.0.0-beta.42/skills/sshx/scripts/run-codex-worker.sh"
+  # seat_count 数的是席位不是进程:同一席位的两个进程共享一个 --work-target。
+  cat >"$tmp/ps-two-seats" <<'PS'
+#!/bin/sh
+cat <<'ROWS'
+node /opt/homebrew/bin/codex exec --json -C /w/one --sandbox danger-full-access
+/vendor/bin/codex exec --json -C /w/one --sandbox danger-full-access
+bash /p/run-codex-worker.sh --work-target /w/one --stage implementation
+bash /p/run-codex-worker.sh --work-target /w/two --stage implementation
+ROWS
+PS
+  chmod +x "$tmp/ps-two-seats"
+  local seats; seats=$(SEAT_COUNT_PS="$tmp/ps-two-seats" seat_count)
+  if [ "$seats" = "2" ]; then
+    echo "  ok   seat_count counts work-targets, not processes"
+  else
+    echo "  FAIL seat_count returned '$seats', expected 2"; fails=$((fails + 1))
+  fi
+  # 阴性对照:只是**引用**了该 flag 的 argv 不算席位。
+  cat >"$tmp/ps-quoting" <<'PS'
+#!/bin/sh
+cat <<'ROWS'
+bash /p/run-codex-worker.sh --work-target /w/one --stage implementation
+/bin/zsh -c echo "the knob is --work-target <tree> in that script"
+python3 -c print('--work-target /w/fake')
+ROWS
+PS
+  chmod +x "$tmp/ps-quoting"
+  seats=$(SEAT_COUNT_PS="$tmp/ps-quoting" seat_count)
+  if [ "$seats" = "1" ]; then
+    echo "  ok   seat_count ignores argv that merely quotes the flag"
+  else
+    echo "  FAIL seat_count returned '$seats' with one seat plus two quoters, expected 1"; fails=$((fails + 1))
+  fi
+  cat >"$tmp/ps-idle" <<'PS'
+#!/bin/sh
+echo "bash /some/other/thing"
+PS
+  chmod +x "$tmp/ps-idle"
+  seats=$(SEAT_COUNT_PS="$tmp/ps-idle" seat_count)
+  if [ "$seats" = "0" ]; then
+    echo "  ok   seat_count is zero with no seat in flight"
+  else
+    echo "  FAIL seat_count returned '$seats' on an idle host, expected 0"; fails=$((fails + 1))
+  fi
   local got; got=$(resolve_runner "$tmp/plugins" || echo NONE)
   case "$got" in
     *1.0.0-beta.42*) echo "  ok   resolve picks newest by version order" ;;
@@ -157,9 +224,9 @@ GATE_ROUNDS="${DISPATCH_GATE_ROUNDS:-240}"; gate_ok=0
 for _ in $(seq 1 "$GATE_ROUNDS"); do
   idle=$(top -l 2 -s 2 -n 0 | grep 'CPU usage' | tail -1 | grep -o '[0-9.]*% idle' | tr -d '% idle')
   lean=$(pgrep -f '^(/bin/)?bash [^ ]*report-supervisor\.sh' | wc -l | tr -d ' ')
-  cdx=$(pgrep -f 'codex exec' | wc -l | tr -d ' ')
+  cdx=$(seat_count)
   if python3 -c "import sys; sys.exit(0 if float('${idle:-0}')>=20 and $lean<=4 and $cdx<$MAXC else 1)" 2>/dev/null; then
-    echo "GATE_PASS idle=$idle lean=$lean codex=$cdx brief=$BRIEF"; gate_ok=1; break
+    echo "GATE_PASS idle=$idle lean=$lean seats=$cdx brief=$BRIEF"; gate_ok=1; break
   fi
   sleep "${DISPATCH_GATE_SLEEP:-30}"
 done
