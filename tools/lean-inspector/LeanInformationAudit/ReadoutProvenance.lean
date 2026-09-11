@@ -1,4 +1,3 @@
-import LeanInformationAudit.Sha256
 import Lean
 
 namespace LeanInformationAudit.RegistrationGates
@@ -37,17 +36,6 @@ private def boundedDefEq (a b : Expr) : MetaM Bool :=
   withCurrHeartbeats <| withOptions
     (fun o => (o.set `maxHeartbeats (10000 : Nat)).set `maxRecDepth (1024 : Nat)) do
       isDefEq a b
-
-/-- One memoized classification pass per readout. Open binder propositions stay
-open: no metavariable synthesis may turn an unrelated decision into this one. -/
-private def sameStatement (statement candidate : Expr) :
-    StateRefT (Std.HashMap Expr Bool) MetaM Bool := do
-  if candidate.hasLooseBVars || candidate.hasFVar then return false
-  if candidate.hasMVar then throwError "unresolved provenance type"
-  if let some answer := (← get)[candidate]? then return answer
-  let answer ← boundedDefEq candidate statement
-  modify (·.insert candidate answer)
-  return answer
 
 initialize registerTraceClass `InformationProvenance.check
 
@@ -117,155 +105,163 @@ private def readoutFamily (env : Environment) (realization : Name) : Option Expr
       name == `LeanInformationAudit.StructuralPrimitiveRealization.mk do none
   familyCarriers env 256 (← value.getAppArgs[2]?)
 
-private def children (e : Expr) : List Expr :=
+/-- Generated names are recognized as declaration addresses, never as Name
+values. Registry/catalog/proof builders append these reserved terminal segments,
+locally or after the single root/arena/catalog segment. Projection builders put
+all their products below __kernel_projection. Future catalog products retain
+__catalog_ / __system_catalog_ prefixes. -/
+private def generatedAddress : Name → Bool
+  | .str parent suffix =>
+      #["__information_unit", "__primitive_realization", "__structural_unit",
+        "__structural_realization", "__information_catalog", "__lowers_escape",
+        "__escape_enriched", "__trivial_in_catalog", "__state_enumeration",
+        "__information_registration_diagnostic", "__kernel_projection"].contains suffix ||
+      suffix.startsWith "__catalog_" || suffix.startsWith "__system_catalog_" ||
+      generatedAddress parent
+  | .num parent _ => generatedAddress parent
+  | .anonymous => false
+
+/-- Constructor families from RegistryTypes, SealCommand, AnalysisDisposition
+and DispositionEvidence. Constructor membership comes from ConstantInfo's
+induct field (including every constructor of the listed sum types). -/
+private def judgePayload (info : ConstantInfo) : Bool :=
+  match info with
+  | .ctorInfo ctor => #[
+      `LeanInformationAudit.InformationRegistryEntry, `LeanInformationAudit.ExpectedOccurrence,
+      `LeanInformationAudit.CatalogUnitRecord, `LeanInformationAudit.CatalogRecord,
+      `LeanInformationAudit.SealTheoremRecord, `LeanInformationAudit.SealArenaRecord,
+      `LeanInformationAudit.SealedOccurrenceState, `LeanInformationAudit.StagedAnalysisState,
+      `LeanInformationAudit.StructuralProvenanceEntry,
+      `LeanInformationAudit.StructuralRegistrationEvidence,
+      `LeanInformationAudit.BoundedTruncationFamily,
+      `LeanInformationAudit.UnreachableElaborationEvidence,
+      `LeanInformationAudit.AnalysisDisposition, `LeanInformationAudit.CensusAssessment,
+      `LeanInformationAudit.AnalysisObservation, `LeanInformationAudit.DispositionInventory,
+      `LeanInformationAudit.TruncationCertification].contains ctor.induct
+  | _ => false
+
+private structure ClosureState where
+  constants : NameHashSet := {}
+  pending : List Name := []
+  visited : Std.HashSet Expr := {}
+  compared : Std.HashMap Expr Bool := {}
+  expressionFuel : Nat := provenanceExpressionFuel
+  proofFuel : Nat := provenanceExpressionFuel
+  forbidden : Bool := false
+
+private abbrev ClosureM := StateRefT ClosureState MetaM
+
+/-- All reduction/type inference has a fixed local heartbeat bound as well as
+ the enclosing query bound. Only closed proposition types reach isDefEq. -/
+private def boundedMeta (action : MetaM α) : MetaM α :=
+  withCurrHeartbeats <| withOptions
+    (fun o => (o.set `maxHeartbeats (10000 : Nat)).set `maxRecDepth (1024 : Nat)) action
+
+private def sameStatement (statement candidate : Expr) : ClosureM Bool := do
+  if candidate.hasMVar then throwError "unresolved provenance type"
+  if candidate.hasFVar || candidate.hasLooseBVars then return false
+  if let some answer := (← get).compared[candidate]? then return answer
+  let answer ← boundedDefEq candidate statement
+  modify fun s => { s with compared := s.compared.insert candidate answer }
+  return answer
+
+/-- Classify by inferred types, including constructors and dependent projections.
+Let variables are instantiated by Meta.zetaReduce in the current local context.
+An open term may supply a closed type (e.g. f S x : Decidable S); no equality
+query ever synthesizes values for binders or compares an open proposition. -/
+private def classifyType (statement : Expr) (e : Expr) : ClosureM Unit := do
+  if (← get).forbidden then return
   match e with
-  | .app f a => [f, a]
-  | .lam _ t b _ | .forallE _ t b _ => [t, b]
-  | .letE _ t v b _ => [t, v, b]
-  | .mdata _ b => [b]
-  | .proj name _ b => [mkConst name, b]
-  | _ => []
+  | .sort .. | .lit .. | .forallE .. => return
+  | _ => pure ()
+  let type ← boundedMeta do
+    zetaReduce (← instantiateMVars (← inferType e))
+  if type.hasMVar then throwError "unresolved provenance type"
+  if type.hasFVar || type.hasLooseBVars then return
+  let proposition ← boundedMeta (isProp type)
+  let candidate ← if proposition then pure (some type) else boundedMeta do
+    let type ← whnf type
+    return if type.isAppOfArity ``Decidable 1 then some type.appArg! else none
+  if let some candidate := candidate then
+    -- Rule 2(a): an inhabitant of S; rule 2(b): an instance of Decidable S.
+    if ← sameStatement statement candidate then
+      modify fun s => { s with forbidden := true }
 
-/-- Substitute actual arguments into a constant's stored type, without inferType
-or elaboration. The telescope and each forwarding reduction have fixed fuel. -/
-private def appliedType (env : Environment) (e : Expr) : Option Expr := do
-  let .const name levels := e.getAppFn | some e
-  let info ← env.find? name
-  -- Only instance-producing declarations need specialization. A dependent
-  -- data projection with an unknown result type is not an instance declaration.
-  let head ← recordHead env 256 info.type
-  let result := head.getForallBody
-  let .const _ _ := result.getAppFn | some e
-  let result ← recordHead env 256 result
-  unless result.isAppOfArity ``Decidable 1 do return e
-  let args := e.getAppArgs
-  if args.size > 256 then none else do
-    let mut type := info.type.instantiateLevelParams info.levelParams levels
-    for arg in args do
-      let .forallE _ _ body _ ← recordHead env 256 type | none
-      type := body.instantiate1 arg
-    recordHead env 256 type
+private def reach (name : Name) : ClosureM Unit := do
+  if (← get).constants.contains name then return
+  if (← get).constants.size >= provenanceConstantFuel then
+    throwError "provenance constant budget"
+  modify fun s => { s with
+    constants := s.constants.insert name, pending := name :: s.pending }
 
-/-- Track the registered proof's raw dependencies transitively, once and only
-when a reached theorem needs classification. Both worklists have fixed bounds;
-shared unapplied proof combinators are not themselves forbidden proof terms. -/
-private def proofExpressions (env : Environment) (value : Expr) :
-    MetaM (Option (Std.HashSet Expr)) := do
-  let mut todo := [value]
-  let mut proofs : Std.HashSet Expr := {}
-  let mut constants : NameHashSet := {}
-  let mut visited : Std.HashSet Expr := {}
-  let mut fuel := provenanceExpressionFuel
-  while let e :: rest := todo do
-    if fuel == 0 then return none
-    fuel := fuel - 1
-    todo := rest
-    if visited.contains e then continue
-    visited := visited.insert e
-    if let .const name levels := e.getAppFn then
-      let some info := env.find? name | return none
-      if !e.hasLooseBVars && e.getAppNumArgs >= info.type.getNumHeadForalls &&
-          (info.isTheorem || (← isProp info.type)) then
-        proofs := proofs.insert e
-        if !constants.contains name then
-          if constants.size >= provenanceConstantFuel then return none
-          constants := constants.insert name
-        if let some value := info.value? (allowOpaque := true) then
-          todo := (value.instantiateLevelParams info.levelParams levels).beta e.getAppArgs :: todo
-    todo := children e ++ todo
-  return some proofs
-
-/-- Complete raw ConstantInfo dependency query. Types and values are inspected
-without elaboration, realization enumeration or unfolding proofs. A forbidden
-node stops semantic analysis; only dependency collection continues so a partial
-frontier is never presented as the complete provenance_closure. -/
-private def collectReadout (env : Environment) (theoremName : Name) (readout : Expr) :
-    StateRefT (Std.HashMap Expr Bool) MetaM (Bool × Option (Array String)) := do
-  let some theoremInfo := env.find? theoremName | return (false, none)
-  let identity := "sha256:" ++ Sha256.hex (toString theoremInfo.type).toUTF8
-  let quotedName := toExpr theoremName
-  let mut proofTerms : Option (Std.HashSet Expr) := none
-  let mut todo := [readout]
-  let mut constants : NameHashSet := {}
-  let mut visited : Std.HashSet Expr := {}
-  let mut applications : Array Expr := #[]
-  let mut forbidden := false
-  let mut fuel := provenanceExpressionFuel
-  while let e :: rest := todo do
+/-- Binder-aware traversal: every let value is visited before its contextual
+body. Local declarations stay in scope for inferType, including dependent
+projection result types. Raw proof values are never reduced away. -/
+private partial def visit (statement : Expr) (proofScan : Bool) (e : Expr) : ClosureM Unit :=
+  withIncRecDepth do
     Core.checkMaxHeartbeats "readout provenance"
-    if fuel == 0 then return (forbidden, none)
-    fuel := fuel - 1
-    todo := rest
-    if visited.contains e then continue
-    visited := visited.insert e
-    -- Name-indexed certificates and StatementKey/statement-id sources retain
-    -- these literal identity inputs in their type or value, even in dead terms.
-    if e == quotedName || e == mkStrLit identity then forbidden := true
-    if e.hasMVar then return (forbidden, none)
-    if (theoremInfo.value? (allowOpaque := true)) == some e then forbidden := true
-    if !forbidden && !e.hasLooseBVars then
-      if let some info := e.getAppFn.constName?.bind env.find? then
-        if info.isTheorem && e.getAppNumArgs >= info.type.getNumHeadForalls then
-          if proofTerms.isNone then
-            let some value := theoremInfo.value? (allowOpaque := true) | return (false, none)
-            proofTerms ← proofExpressions env value
-          let some proofs := proofTerms | return (false, none)
-          if proofs.contains e then forbidden := true
-    if e.isAppOfArity ``Decidable 1 then
-      if !forbidden && (← sameStatement theoremInfo.type e.getAppArgs[0]!) then forbidden := true
-    if !forbidden && e.isApp && e.getAppFn.isConst then
-      applications := applications.push e
-    if let .const name _ := e then
-      if constants.contains name then continue
-      if constants.size >= provenanceConstantFuel then return (forbidden, none)
-      constants := constants.insert name
-      let some info := env.find? name | return (forbidden, none)
-      let proofDeclaration := match info with
-        | .thmInfo _ | .defnInfo _ | .opaqueInfo _ => true
-        | _ => false
-      if name == theoremName || provenanceJudgeAPIs.contains name then forbidden := true
-      -- A user-defined certificate has the same forbidden capability when a
-      -- constructor parameter is Name (or StatementKey), whatever computes it.
-      if let .ctorInfo ctor := info then
-        if ctor.numParams > 256 then return (forbidden, none)
-        let mut type := ctor.type
-        for _ in [:ctor.numParams] do
-          let .forallE _ parameter body _ := type | return (forbidden, none)
-          let some parameter := recordHead env 256 parameter | return (forbidden, none)
-          if parameter.isConstOf ``Name ||
-              parameter.isConstOf `LeanInformationAudit.StatementKey then forbidden := true
-          type := body
-      if !forbidden && proofDeclaration && (← sameStatement theoremInfo.type info.type) then
-        forbidden := true
-      -- Literal evidence also covers materialized identities whose API call was
-      -- evaluated before the readout was stored (e.g. String.append fragments).
-      if !forbidden && info.type.isConstOf ``String then
-        if ← boundedDefEq e (mkStrLit identity) then forbidden := true
-      todo := info.type :: todo
-      match info.value? (allowOpaque := true) with
-      | some value => todo := value :: todo
-      | none =>
-        -- Kernel primitives/axioms have complete type-only dependency sets;
-        -- an axiom used as the defining readout has no obtainable definition.
-        if e == readout || (info.isAxiom &&
-            !#[`propext, `Classical.choice, `Quot.sound].contains name) then
-          return (forbidden, none)
-    else
-      todo := children e ++ todo
-  -- Classify specialized instances only when raw provenance is still clean.
-  -- Applications belong to the visited closure and therefore share its bound.
-  if !forbidden then
-    for e in applications do
-      let some type := appliedType env e | return (false, none)
-      if type.isAppOfArity ``Decidable 1 then
-        if ← sameStatement theoremInfo.type type.getAppArgs[0]! then
-          forbidden := true
-          break
-  let names := constants.toArray.map Name.toString |>.qsort (· < ·)
-  return (forbidden, some names)
+    let s ← get
+    if s.expressionFuel == 0 || (proofScan && s.proofFuel == 0) then
+      throwError "provenance expression/proof-scan budget"
+    modify fun s => { s with
+      expressionFuel := s.expressionFuel - 1
+      proofFuel := if proofScan then s.proofFuel - 1 else s.proofFuel }
+    if s.visited.contains e then return
+    modify fun s => { s with visited := s.visited.insert e }
+    let e ← instantiateMVars e
+    if e.hasMVar || e.hasLooseBVars then throwError "unresolved provenance expression"
+    if e.getAppNumArgs > 256 then throwError "provenance argument budget"
+    classifyType statement e
+    match e with
+    | .const name _ => reach name
+    | .app f a => visit statement proofScan f; visit statement proofScan a
+    | .lam n t b bi | .forallE n t b bi =>
+      visit statement proofScan t
+      withLocalDecl n bi t fun x => visit statement proofScan (b.instantiate1 x)
+    | .letE n t v b nd =>
+      visit statement proofScan t
+      visit statement proofScan v
+      -- Instantiate even nondependent lets/haves; Meta's default zetaDelta
+      -- intentionally hides their values when they predate its telescope.
+      withLetDecl n t v (nondep := nd) fun _ =>
+        visit statement proofScan (b.instantiate1 v)
+    | .mdata _ b => visit statement proofScan b
+    | .proj name _ b => reach name; visit statement proofScan b
+    | _ => pure ()
 
-/-- A query owns one fresh Meta context and one classification cache. A total
-200000-heartbeat/1024-depth bound also covers proof scanning and specialization.
+/-- The dependency queue visits each ConstantInfo type and obtainable value.
+Rule 2(c) and rule 3(iii) share exact theorem reachability: a theorem-dependent
+proposition's constants and their types/values enter this same transitive queue.
+After a forbidden hit, collection continues to completion for canonical payloads. -/
+private def collectReadout (env : Environment) (theoremName : Name) (readout : Expr) :
+    ClosureM (Bool × Option (Array String)) := do
+  let some theoremInfo := env.find? theoremName | return (false, none)
+  -- Prepare the registered statement once per readout, never once per constant.
+  let statement ← boundedMeta (whnf theoremInfo.type)
+  visit statement false readout
+  while let name :: rest := (← get).pending do
+    modify fun s => { s with pending := rest }
+    let some info := env.find? name | throwError "unavailable provenance constant"
+    -- Rule 3(i), rule 3(ii), and the shared rule 2(c)/3(iii), respectively.
+    if provenanceJudgeAPIs.contains name then
+      modify fun s => { s with forbidden := true }
+    if generatedAddress name || judgePayload info then
+      modify fun s => { s with forbidden := true }
+    if name == theoremName then
+      modify fun s => { s with forbidden := true }
+    visit statement false (mkConst name (info.levelParams.map Level.param))
+    visit statement false info.type
+    match info.value? (allowOpaque := true) with
+    | some value => visit statement info.isTheorem value
+    | none =>
+      if readout.isConstOf name || (info.isAxiom &&
+          !#[`propext, `Classical.choice, `Quot.sound].contains name) then
+        throwError "unavailable provenance definition"
+  let s ← get
+  return (s.forbidden, some (s.constants.toArray.map Name.toString |>.qsort (· < ·)))
+
+/-- A query owns one fresh Meta context and one type-comparison cache. A total
+200000-heartbeat/1024-depth bound also covers proof scanning and type inference.
 Frozen registrations call this once at registration; the seal consumes metadata. -/
 def readoutClosure (env : Environment) (theoremName : Name) (readout : Expr) :
     CoreM (Bool × Option (Array String)) := do

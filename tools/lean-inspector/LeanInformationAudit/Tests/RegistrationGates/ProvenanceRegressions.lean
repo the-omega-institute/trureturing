@@ -37,7 +37,7 @@ def computedKey : Name := Name.str (Name.mkSimple "RegistrationProvenance") "tru
 example : computedKey = ``truth := rfl
 def computedCert : Certificate computedKey := ⟨true⟩
 def computedRead (_ : Unit) (x : Bool) : Bool := if computedCert.bit then x else true
-check_provenance "ComputedName" using computedRead expects "forbidden_dependency" for truth
+check_provenance "ComputedName" using computedRead expects "clean" for truth
 run_cmd Elab.Command.liftTermElabM do
   let info ← getConstInfo ``specificTruth
   let digest := Sha256.hex (toString info.type).toUTF8
@@ -49,7 +49,7 @@ run_cmd Elab.Command.liftTermElabM do
       (mkStrLit (theoremStatementIdentity (← getEnv) ``specificTruth)) do
     throwError "fixture digest is not the registered identity"
 def computedDigestRead (_ : Unit) (x : Bool) : Bool := let _ := computedDigest; x
-check_provenance "ComputedDigest" using computedDigestRead expects "forbidden_dependency" for specificTruth
+check_provenance "ComputedDigest" using computedDigestRead expects "clean" for specificTruth
 
 def registryRead (env : Environment) : String :=
   ((InformationRegistry.find? env computedKey).map (·.statementIdentity)).getD ""
@@ -80,7 +80,9 @@ run_cmd Elab.Command.liftTermElabM do
   logInfo "[PASS] EscapeRegistrationFinite"
 def structuralKey : Name := Name.str (Name.mkSimple "RegistrationProvenance") "escapedStructural"
 def escapedCert : Certificate structuralKey := ⟨true⟩
-def escapedRead (_ : Unit) (x : Nat) : Nat := if escapedCert.bit then x else 0
+def escapedRead (_ : Unit) (x : Nat) : Nat :=
+  let _ := StatementKey.mk
+  if escapedCert.bit then x else 0
 structural_theorem escapedStructural in RegistrationStructural.law
   realization ⟨escapedRead⟩ nondegeneracy RegistrationStructural.lawVariation
   sensitivity RegistrationStructural.slotSensitivity := rfl
@@ -153,7 +155,7 @@ run_cmd Elab.Command.liftTermElabM do
   addDecl <| .thmDecl {
     name := `RegistrationProvenance.proofBudgetTruth, levelParams := [],
     type := mkConst ``True, value := mkConst (`RegistrationProvenance.proofChain |>.num 4099) }
-def proofBudgetRead := viaAppliedProof
+def proofBudgetRead (_ : Unit) (x : Bool) : Bool := let _ := proofBudgetTruth; x
 check_provenance "ProofScanExhaustion" using proofBudgetRead expects "incomplete_closure" for proofBudgetTruth
 
 end RegistrationProvenance

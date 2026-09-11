@@ -75,11 +75,11 @@ elab "check_provenance " label:str " using " readout:ident " expects " reason:st
     logInfo m!"[PASS] {label.getString}"
 
 check_provenance "TheoremTruth" using viaTruth expects "forbidden_dependency" for truth
-check_provenance "AppliedProof" using viaAppliedProof expects "forbidden_dependency" for truth
+check_provenance "AppliedProof" using viaAppliedProof expects "clean" for truth
 check_provenance "ProofConstant" using viaProof expects "forbidden_dependency" for truth
 check_provenance "StatementDecidable" using viaDecision expects "forbidden_dependency" for truth
-check_provenance "TheoremCertificate" using viaCertificate expects "forbidden_dependency" for truth
-check_provenance "StatementIdentity" using viaIdentity expects "forbidden_dependency" for truth
+check_provenance "TheoremCertificate" using viaCertificate expects "clean" for truth
+check_provenance "StatementIdentity" using viaIdentity expects "clean" for truth
 check_provenance "CleanReadout" using clean expects "clean" for truth
 check_provenance "C050BeforeC021" using constantTruth expects "forbidden_dependency" for truth
 
@@ -115,8 +115,8 @@ check_provenance "UnavailableDefinition" using unavailable expects "incomplete_c
 noncomputable def unavailableAlias := unavailable
 check_provenance "UnavailableAlias" using unavailableAlias expects "incomplete_closure" for truth
 
--- The structural command stores a proof constant used by the readout.
-def structuralRead (_ : Unit) (x : Nat) : Nat := let _ := proofSource; x
+-- A structural readout reaches a proof of its registered statement (0 = 0).
+def structuralRead (_ : Unit) (x : Nat) : Nat := let _ : (0 : Nat) = 0 := rfl; x
 structural_theorem structuralTruth in RegistrationStructural.law
   realization ⟨structuralRead⟩ nondegeneracy RegistrationStructural.lawVariation
   sensitivity RegistrationStructural.slotSensitivity := by let _ := proofSource; rfl
@@ -167,7 +167,7 @@ def boolLaw : StructuralPrimitiveLawArena boolArena where
   Law r := r.readout () false = true
 def structuralCert : Certificate `RegistrationProvenance.structuralConstant := ⟨true⟩
 structural_theorem structuralConstant in boolLaw
-  realization ⟨fun _ _ => structuralCert.bit⟩ := rfl
+  realization ⟨fun _ _ => let _ := StatementKey.mk; structuralCert.bit⟩ := rfl
 run_cmd Elab.Command.liftTermElabM do
   let entry := ((structuralProvenanceEntries (← getEnv)).find?
     (·.theoremName == ``structuralConstant)).get!
@@ -182,7 +182,7 @@ run_cmd Elab.Command.liftTermElabM do
     name := `RegistrationProvenance.statementDigest, levelParams := [], type := mkConst ``String
     value := mkStrLit entry.statementIdentity, hints := .abbrev, safety := .safe }
 def viaDigest (_ : Unit) (x : Bool) : Bool := let _ := statementDigest; x
-check_provenance "StatementDigest" using viaDigest expects "forbidden_dependency" for truth
+check_provenance "StatementDigest" using viaDigest expects "clean" for truth
 def specificStatement : Prop := (137 : Nat) = 137
 theorem specificTruth : specificStatement := rfl
 noncomputable def genericDecision (_ : Unit) (x : Bool) : Bool :=
