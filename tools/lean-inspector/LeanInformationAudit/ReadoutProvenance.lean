@@ -151,10 +151,22 @@ private structure ConstantType where
   type : Expr
   candidateClass : CandidateClass
 
+/-- A registration-independent scan. Only closed normalized types leave the
+binder context. Dependencies retain the raw type/value syntax, including proofs.
+A failed scan is cached as incomplete, never as an empty successful list. -/
+private structure ConstantCandidates where
+  types : Array Expr := #[]
+  dependencies : Array Name := #[]
+  expressionCost : Nat := 0
+  proofCost : Nat := 0
+  incomplete : Bool := false
+  deriving Inhabited
+
 /-- Compilation-local, registration-independent metadata. This extension is not
 serialized into oleans; scoped environment queries cannot leak cache entries. -/
 private structure TypeCache where
   constants : Std.HashMap Name ConstantType := {}
+  candidates : Std.HashMap Name ConstantCandidates := {}
   reduced : Std.HashMap Expr Expr := {}
   localPolicies : List (Name × ReducibilityStatus) := []
   overrides : List (Name × ReducibilityStatus) := []
@@ -184,6 +196,7 @@ private structure ClosureState where
   compared : Std.HashMap Expr Bool := {}
   decisionStatement : Expr := mkConst ``False
   classifiedTypes : Std.HashSet Expr := {}
+  candidates : Std.HashSet Expr := {}
   inferred : Std.HashMap Expr Expr := {}
   reduced : Std.HashMap Expr Expr := {}
   cache : TypeCache := {}
@@ -356,25 +369,25 @@ private def sameStatement (statement type : Expr) : ClosureM Bool := do
   modify fun s => { s with compared := s.compared.insert candidateType answer }
   return answer
 
-/-- Select heads before inferring subterms. Data-valued constant heads cannot
-supply proofs or decisions; let/projection/lambda forms remain candidates until
-contextual inference resolves their family. An open term is retained when its
-inferred proposition becomes closed; no binder values are synthesized. -/
-private def classifyType (statement : Expr) (e : Expr) : ClosureM Unit := do
-  if (← get).forbidden then return
+/-- Scan independently of S. Normalize before rejecting open types: a family
+can discard a rigid binder, including inside the argument of Decidable (F1). -/
+private def addCandidate (type : Expr) : ClosureM Unit := do
+  if (← get).classifiedTypes.contains type then return
+  modify fun s => { s with classifiedTypes := s.classifiedTypes.insert type }
+  let type ← reducedType type
+  let type ← if type.isAppOfArity ``Decidable 1 then do
+      pure <| mkApp (mkConst ``Decidable) (← reducedType type.appArg!)
+    else pure type
+  unless type.hasFVar || type.hasLooseBVars do
+    modify fun s => { s with candidates := s.candidates.insert type }
+
+private def classifyType (e : Expr) : ClosureM Unit := do
   match e with
   | .sort .. | .lit .. | .forallE .. => return
   | _ => pure ()
   if let .const name _ := e.getAppFn then
     if (← constantType name).candidateClass == .data then return
-  let type ← inferredType e
-  if (← get).classifiedTypes.contains type then return
-  modify fun s => { s with classifiedTypes := s.classifiedTypes.insert type }
-  unless ← mayMatch true type do return
-  let type ← reducedType type
-  -- Rule 2(a): an inhabitant of S; rule 2(b): an instance of Decidable S.
-  if ← sameStatement statement type then
-    modify fun s => { s with forbidden := true }
+  addCandidate (← inferredType e)
 
 private def reach (name : Name) : ClosureM Unit := do
   if (← get).constants.contains name then return
@@ -386,7 +399,7 @@ private def reach (name : Name) : ClosureM Unit := do
 /-- Binder-aware traversal: every let value is visited before its contextual
 body. Local declarations stay in scope for inferType, including dependent
 projection result types. Raw proof values are never reduced away. -/
-private partial def visit (statement : Expr) (proofScan : Bool) (e : Expr) : ClosureM Unit :=
+private partial def visit (proofScan : Bool) (e : Expr) : ClosureM Unit :=
   withIncRecDepth do
     Core.checkMaxHeartbeats "readout provenance"
     let s ← get
@@ -400,32 +413,62 @@ private partial def visit (statement : Expr) (proofScan : Bool) (e : Expr) : Clo
     let e ← instantiateMVars e
     if e.hasMVar || e.hasLooseBVars then throwError "unresolved provenance expression"
     if e.getAppNumArgs > 256 then throwError "provenance argument budget"
-    classifyType statement e
+    classifyType e
     match e with
     | .const name _ => reach name
-    | .app f a => visit statement proofScan f; visit statement proofScan a
+    | .app f a => visit proofScan f; visit proofScan a
     | .lam n t b bi | .forallE n t b bi =>
-      visit statement proofScan t
-      withLocalDecl n bi t fun x => visit statement proofScan (b.instantiate1 x)
+      visit proofScan t
+      withLocalDecl n bi t fun x => visit proofScan (b.instantiate1 x)
     | .letE n t v b nd =>
-      visit statement proofScan t
-      visit statement proofScan v
+      visit proofScan t
+      visit proofScan v
       -- Instantiate even nondependent lets/haves; Meta's default zetaDelta
       -- intentionally hides their values when they predate its telescope.
       withLetDecl n t v (nondep := nd) fun _ =>
-        visit statement proofScan (b.instantiate1 v)
-    | .mdata _ b => visit statement proofScan b
-    | .proj name _ b => reach name; visit statement proofScan b
+        visit proofScan (b.instantiate1 v)
+    | .mdata _ b => visit proofScan b
+    | .proj name _ b => reach name; visit proofScan b
     | _ => pure ()
 
-/-- The dependency queue visits each ConstantInfo type and obtainable value.
-Rule 2(c) and rule 3(iii) share exact theorem reachability: a theorem-dependent
-proposition's constants and their types/values enter this same transitive queue.
-After a forbidden hit, collection continues to completion for canonical payloads. -/
+/-- Build once in a fresh binder/traversal context, sharing only closed metadata.
+The root body uses this same scanner without memoisation on every registration. -/
+private def scanConstant (info : ConstantInfo) : ClosureM ConstantCandidates := do
+  let (incomplete, scan) ← (do
+    tryCatchRuntimeEx (do
+      addCandidate info.type
+      visit false info.type
+      if let some value := info.value? (allowOpaque := true) then
+        visit info.isTheorem value
+      return false)
+      (fun _ => pure true) : ClosureM Bool).run { cache := (← get).cache }
+  modify fun s => { s with cache := scan.cache }
+  return {
+    types := scan.candidates.toArray
+    dependencies := scan.constants.toArray
+    expressionCost := provenanceExpressionFuel - scan.expressionFuel
+    proofCost := provenanceExpressionFuel - scan.proofFuel, incomplete }
+
+private def constantCandidates (info : ConstantInfo) : ClosureM ConstantCandidates := do
+  if let some entry := (← get).cache.candidates[info.name]? then return entry
+  let entry ← scanConstant info
+  modify fun s => { s with cache.candidates := s.cache.candidates.insert info.name entry }
+  trace[InformationProvenance.check] "scan {info.name}: {entry.types.size} candidates"
+  return entry
+
+private def compareCandidates (statement : Expr) (types : Array Expr) : ClosureM Unit := do
+  for type in types do
+    if (← get).forbidden then break
+    if ← sameStatement statement type then
+      modify fun s => { s with forbidden := true }
+
+/-- Reachability and API/generated checks are registration-specific. Every
+transitively reached constant supplies its memoised candidates and raw edges;
+only the readout's own definition is scanned again. Cached costs retain the
+per-query exhaustion bounds, so reuse cannot turn an incomplete closure clean. -/
 private def collectReadout (env : Environment) (theoremName : Name) (readout : Expr) :
     ClosureM (Bool × Option (Array String)) := do
   let some theoremInfo := env.find? theoremName | return (false, none)
-  -- Prepare the registered statement once per readout, never once per constant.
   let statement ← reducedType theoremInfo.type
   let decisionStatement ← reducedType (mkApp (mkConst ``Decidable) statement)
   modify fun s => { s with decisionStatement }
@@ -434,30 +477,29 @@ private def collectReadout (env : Environment) (theoremName : Name) (readout : E
     let (decision, _) ← boundedMeta (typeConstants env (mkApp (mkConst ``Decidable) theoremInfo.type))
     modify fun s => { s with
       statementConstants := constants, decisionConstants := decision, filterEnabled := true }
-  visit statement false readout
+  visit false readout
+  compareCandidates statement (← get).candidates.toArray
   while let name :: rest := (← get).pending do
     modify fun s => { s with pending := rest }
     let some info := env.find? name | throwError "unavailable provenance constant"
-    let metadata ← constantType name
-    -- Preserve the additional closure-intersection gate even for data heads.
-    -- It can certify disjointness without type inference or isDefEq.
-    let _ ← mayMatch true metadata.type
-    -- Rule 3(i), rule 3(ii), and the shared rule 2(c)/3(iii), respectively.
-    if provenanceJudgeAPIs.contains name then
+    -- Preserve the observable additional type-closure intersection filter.
+    let _ ← mayMatch true info.type
+    if provenanceJudgeAPIs.contains name || generatedAddress name || judgePayload info then
       modify fun s => { s with forbidden := true }
-    if generatedAddress name || judgePayload info then
-      modify fun s => { s with forbidden := true }
-    visit statement false (mkConst name (info.levelParams.map Level.param))
-    visit statement false info.type
-    match info.value? (allowOpaque := true) with
-    | some value => visit statement info.isTheorem value
-    | none =>
-      if readout.isConstOf name || (info.isAxiom &&
-          !#[`propext, `Classical.choice, `Quot.sound].contains name) then
-        throwError "unavailable provenance definition"
+    let ownBody := readout.getAppFn.constName? == some name
+    if (info.value? (allowOpaque := true)).isNone && (ownBody || (info.isAxiom &&
+        !#[`propext, `Classical.choice, `Quot.sound].contains name)) then
+      throwError "unavailable provenance definition"
+    let entry ← if ownBody then scanConstant info else constantCandidates info
+    let s ← get
+    if entry.incomplete || entry.expressionCost > s.expressionFuel || entry.proofCost > s.proofFuel then
+      throwError "provenance incomplete constant scan"
+    modify fun s => { s with
+      expressionFuel := s.expressionFuel - entry.expressionCost
+      proofFuel := s.proofFuel - entry.proofCost }
+    compareCandidates statement entry.types
+    for dependency in entry.dependencies do reach dependency
   let s ← get
-  -- Rules 2(c)/3(iii) are solely membership in the memoised constant closure.
-  -- This path performs no type inference, WHNF, or isDefEq.
   return (s.forbidden || s.constants.contains theoremName,
     some (s.constants.toArray.map Name.toString |>.qsort (· < ·)))
 
@@ -472,7 +514,8 @@ private def readoutClosureCurrent (theoremName : Name) (readout : Expr) :
     withCurrHeartbeats <| withOptions
       (fun o => (o.set `maxHeartbeats (200000 : Nat)).set `maxRecDepth (1024 : Nat)) <|
       do
-        let (answer, state) ← (collectReadout env theoremName readout).run
+        let (answer, state) ← (tryCatchRuntimeEx (collectReadout env theoremName readout)
+          (fun _ => pure (false, none))).run
           { cache := compilationCache env } |>.run'
         modifyEnv (typeCache.setState · state.cache)
         return answer)
