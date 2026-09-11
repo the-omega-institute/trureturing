@@ -13,6 +13,7 @@ internal sealed class RectangularDeltaChainDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "An integer progression in a finite rectangle has an attained maximum length.",
         H("Longest Integer Chains in a Rectangle"),
+        Blocks(
         Paragraph(Text(
             "Let P be a finite coordinate set, L a family of natural side lengths, and d an "
             + "integer direction. A chain of n points from a has coordinates a(p) + j d(p) "
@@ -22,7 +23,6 @@ internal sealed class RectangularDeltaChainDocument : IScribeDocumentDefinition
             "Write M for one plus the minimum of floor(L(p)/|d(p)|) over the nonzero "
             + "coordinates. The corner c has c(p)=L(p) if d(p)<0 and c(p)=0 otherwise. "
             + "Lengths count points, including the initial point; the empty chain has length zero.")),
-        Blocks(
             Describe.Lean(
                 DescribeId.Create("delta-chain-coordinate-bound"),
                 DeclarationHandle.Create(Module + "chain_length_le_coordinate"),
