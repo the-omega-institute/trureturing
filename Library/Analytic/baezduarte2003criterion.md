@@ -5,11 +5,12 @@ year: 2003
 title: "A new necessary and sufficient condition for the Riemann hypothesis"
 doi: null
 url: "https://arxiv.org/abs/math/0307215v1"
-claim: "Equation (1.5), Lemma 1.1 and the compact-convergence argument of Proposition 2.1 motivate normalized Pochhammer bounds and an actual-coefficient summable majorant."
+claim: "Equation (1.5), Lemma 1.1 and the compact-convergence argument of Proposition 2.1 motivate normalized Pochhammer bounds and an actual-coefficient summable majorant; the initial half-plane Newton reciprocal-zeta identity is proved using the coupled unsigned kernel."
 strata_touched:
   - D5/S3/Analytic/SeriesInequalities/NormalizedPochhammerBounds
   - D5/S3/Analytic/SeriesInequalities/BaezDuarteNewtonMajorant
   - D5/S3/Analytic/SeriesInequalities/BaezDuarteQBounds
+  - D5/S3/Weil/Analytic/BaezDuarteNewton
 license: "No license assertion is made; this note records mathematical facts and bibliographic metadata only."
 triage: anchor
 ---
@@ -92,3 +93,30 @@ constants are not claimed to have been transcribed by the finite-split proof.
 Neither an original Newton HasSum/interchange/Dirichlet identification nor
 holomorphic extension nor either RH direction is established by this module.
 The reviewed P and compact-majorant content above remains unchanged in scope.
+
+
+## Newton identity on the initial half-plane
+
+The double-series argument around equation (2.8), printed page 4 of the same
+https://arxiv.org/abs/math/0307215v1 source, identifies the Newton series with
+reciprocal zeta initially for Re(s)>1. BaezDuarteNewton now proves this precise
+initial-domain HasSum for the existing actual coefficients and normalized
+Pochhammer polynomials evaluated at s/2. This new owner does not change the
+historical scope statements about the three earlier modules above.
+
+The proof is a **repo-derived implementation** of that identification. It
+combines the frozen Q and P estimates into a summable unsigned coupled kernel,
+with strict outer exponent -(Re(s)+1)/2 below -1. Eventual comparison keeps the
+entire finite prefix. The absolute Moebius bound supplies the signed kernel's
+absolute summability; this is derived from Re(s)>1, not imposed as a premise.
+The frozen signed coefficient HasSum and pinned mathlib's complex binomial
+series evaluate the two families of fibers. Positive-real-base complex-power
+identities and the existing Moebius Dirichlet product identify the sum with
+1/riemannZeta(s). The zero arithmetic row is one, P(0,z)=1, P(1,z)=1-z, and
+s=2 leaves only the original coefficient c(0).
+
+The full Proposition 2.1 continuation to Re(s)>1/2 under every-epsilon decay,
+holomorphic extension, and both RH directions remain outside this theorem.
+The source's printed positive 3/4 and Lemma 2.2 reference caveats remain as
+recorded above. No new primary-source access, successful Oracle participation,
+or exhaustive literature search is claimed by this implementation.
