@@ -38,6 +38,7 @@ private def boundedDefEq (a b : Expr) : MetaM Bool :=
       isDefEq a b
 
 initialize registerTraceClass `InformationProvenance.check
+initialize registerTraceClass `InformationProvenance.filter
 
 /-- Only expose record construction; never reduce a readout or a proof. -/
 private def recordHead (env : Environment) : Nat → Expr → Option Expr
@@ -146,6 +147,9 @@ private structure ClosureState where
   visited : Std.HashSet Expr := {}
   compared : Std.HashMap Expr Bool := {}
   classifiedTypes : Std.HashSet Expr := {}
+  statementConstants : NameHashSet := {}
+  decisionConstants : NameHashSet := {}
+  filterEnabled : Bool := false
   expressionFuel : Nat := provenanceExpressionFuel
   proofFuel : Nat := provenanceExpressionFuel
   forbidden : Bool := false
@@ -158,6 +162,52 @@ private def boundedMeta (action : MetaM α) : MetaM α :=
   withCurrHeartbeats <| withOptions
     (fun o => (o.set `maxHeartbeats (10000 : Nat)).set `maxRecDepth (1024 : Nat)) action
 
+/-- A constant head in WHNF survives normalization. Inspect only type domains
+and codomains under rigid binders; no full normalization or proof evaluation is
+needed to exhibit a constant in nf(S). Without a witness we disable the filter,
+including for pure binder/sort statements. Fuel exhaustion also disables it. -/
+private def hasNormalConstant : Nat → Expr → MetaM Bool
+  | 0, _ => pure false
+  | fuel + 1, e => do
+    let e ← whnf e
+    if e.getAppFn.isConst then return true
+    match e with
+    | .forallE n t b bi =>
+      if ← hasNormalConstant fuel t then return true
+      withLocalDecl n bi t fun x => hasNormalConstant fuel (b.instantiate1 x)
+    | _ => return false
+
+/-- The transitive constant closure includes declaration types, obtainable
+values and inductive/recursor families (kernel reduction can expose constructors).
+This is an overapproximation, never a claim of normal-form equality. -/
+private def typeConstants (env : Environment) (e : Expr)
+    (stopAt : NameHashSet := {}) : MetaM (NameHashSet × Bool) := do
+  let mut seen : NameHashSet := {}
+  let mut pending := e.getUsedConstants.toList
+  while let name :: rest := pending do
+    pending := rest
+    if stopAt.contains name then return (seen, true)
+    if seen.contains name then continue
+    if seen.size >= provenanceConstantFuel then throwError "provenance type-closure budget"
+    seen := seen.insert name
+    let some info := env.find? name | throwError "unavailable provenance type constant"
+    pending := info.getUsedConstantsAsSet.toList ++ pending
+    Core.checkMaxHeartbeats "provenance type closure"
+  return (seen, false)
+
+/-- Soundness: definitionally equal closed types have coincident normal heads;
+every constant in a normal form belongs to the original term's transitive
+constant closure. Our witness ensures nf(S) contains a constant. Consequently
+closure(T) disjoint from closure(S) implies T is not definitionally S. The same
+argument applies to Decidable S. We use the union for the initial type filter,
+then S alone for proposition comparisons. Unknown/open inputs fall back to the
+semantic classifier; a failed optimization never licenses a clean verdict. -/
+private def mayMatch (target : NameHashSet) (candidate : Expr) : ClosureM Bool := do
+  if !(← get).filterEnabled || candidate.hasFVar || candidate.hasLooseBVars then return true
+  let (_, shared) ← boundedMeta (typeConstants (← getEnv) candidate target)
+  unless shared do trace[InformationProvenance.filter] "disjoint: {candidate}"
+  return shared
+
 private def sameStatement (statement candidate : Expr) : ClosureM Bool := do
   if candidate.hasMVar then throwError "unresolved provenance type"
   -- Reduce under the active binder context before excluding open propositions:
@@ -165,6 +215,7 @@ private def sameStatement (statement candidate : Expr) : ClosureM Bool := do
   let candidate ← boundedMeta do instantiateMVars (← whnf candidate)
   if candidate.hasFVar || candidate.hasLooseBVars then return false
   if let some answer := (← get).compared[candidate]? then return answer
+  unless ← mayMatch (← get).statementConstants candidate do return false
   let answer ← boundedDefEq candidate statement
   modify fun s => { s with compared := s.compared.insert candidate answer }
   return answer
@@ -178,8 +229,11 @@ private def classifyType (statement : Expr) (e : Expr) : ClosureM Unit := do
   match e with
   | .sort .. | .lit .. | .forallE .. => return
   | _ => pure ()
+  let type ← boundedMeta (inferType e)
+  if type.hasMVar then throwError "unresolved provenance type"
+  unless ← mayMatch (← get).decisionConstants type do return
   let type ← boundedMeta do
-    instantiateMVars (← whnf (← inferType e))
+    instantiateMVars (← whnf type)
   if type.hasMVar then throwError "unresolved provenance type"
   if (← get).classifiedTypes.contains type then return
   modify fun s => { s with classifiedTypes := s.classifiedTypes.insert type }
@@ -243,6 +297,11 @@ private def collectReadout (env : Environment) (theoremName : Name) (readout : E
   let some theoremInfo := env.find? theoremName | return (false, none)
   -- Prepare the registered statement once per readout, never once per constant.
   let statement ← boundedMeta (whnf theoremInfo.type)
+  if ← boundedMeta (hasNormalConstant 256 statement) then
+    let (constants, _) ← boundedMeta (typeConstants env theoremInfo.type)
+    let (decision, _) ← boundedMeta (typeConstants env (mkApp (mkConst ``Decidable) theoremInfo.type))
+    modify fun s => { s with
+      statementConstants := constants, decisionConstants := decision, filterEnabled := true }
   visit statement false readout
   while let name :: rest := (← get).pending do
     modify fun s => { s with pending := rest }
