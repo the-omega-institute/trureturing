@@ -23,10 +23,12 @@ internal sealed class LucasEvenPeriodsDocument : IScribeDocumentDefinition
                     + "1991 gcd theorem; the paper's Corollary 3.13 does not reach the case where "
                     + "p and m are both even.")),
             Paragraph(Text(
-                "The exception is sharp. Over ZMod(2^v), a zero of the companion sequence and "
-                    + "Cayley--Hamilton give M^2 = -q. For q = 1 the trace sequence is "
-                    + "2, 0, -2, 0, ...; it drops to period 2 exactly when 2 = -2, namely v = 2. "
-                    + "For p congruent to 2 modulo 4 and modulus 4, the companion sequence is "
+                "The exception is sharp. Over ZMod(2^v) with v at least 2, a zero of the "
+                    + "companion sequence and Cayley--Hamilton give M^2 = -q. For q = 1 the "
+                    + "trace sequence is 2, 0, -2, 0, ...; it drops to period 2 exactly when "
+                    + "2 = -2, namely v = 2. The remaining dyadic case v = 1 is computed on "
+                    + "its own: the matrix period is 2 and the companion period is 1. For p "
+                    + "congruent to 2 modulo 4 and modulus 4, the companion sequence is "
                     + "constantly 2 modulo 4, so no zero exists and the hypothesis is vacuous; "
                     + "this confines the exception to 4 dividing p rather than all even p.")),
             Node("even_lucas_periods", "Exact equality criterion for even Lucas periods",
@@ -51,6 +53,7 @@ internal sealed class LucasEvenPeriodsDocument : IScribeDocumentDefinition
     private static Formula Equal(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
     private static Formula Divides(Formula a, Formula b) => Seq(a, Sp, Mid, Sp, b);
     private static Formula Not(Formula a) => Seq(Neg, Sp, a);
+    private static Formula Paren(Formula a) => Seq(Left, Open, a, Right, Close);
     private static Formula Even(Formula a) => Call("Even", a);
     private static Formula Positive(Formula a) => Seq(D(0), Sp, Lt, Sp, a);
     private static Formula Integers() => Seq(Mathbb, Grp(F.Id("Z")));
@@ -67,12 +70,12 @@ internal sealed class LucasEvenPeriodsDocument : IScribeDocumentDefinition
         Bind("p", Integers()), Bind("q", Units(Integers())), Bind("m", Naturals()),
         Seq(Even(P()), Sp, Rightarrow, Sp, Even(M()), Sp, Rightarrow, Sp,
             Seq(D(2), Sp, Lt, Sp, M()), Sp, Rightarrow, Sp),
-        Seq(Exists, Sp, Typed("r", Naturals()), Comma, Sp, Positive(F.Id("r")), Sp, Land, Sp,
-            Equal(V(F.Id("r")), D(0))), Sp, Rightarrow, Sp,
-        Seq(Equal(Call("matrixPeriod", Cast(P(), ZMod(M())), RUnit()),
-            Call("companionPeriod", Cast(P(), ZMod(M())), RUnit())), Sp, Iff, Sp,
-            Not(Seq(Q(), Sp, Eq, Sp, D(1), Sp, Land, Sp,
+        Paren(Seq(Exists, Sp, Typed("r", Naturals()), Comma, Sp, Positive(F.Id("r")), Sp,
+            Land, Sp, Equal(V(F.Id("r")), D(0)))), Sp, Rightarrow, Sp,
+        Seq(Paren(Equal(Call("matrixPeriod", Cast(P(), ZMod(M())), RUnit()),
+            Call("companionPeriod", Cast(P(), ZMod(M())), RUnit()))), Sp, Iff, Sp,
+            Not(Paren(Seq(Equal(Q(), D(1)), Sp, Land, Sp,
                 Equal(M(), D(4)), Sp, Land, Sp,
-                Divides(D(4), Cast(P(), Integers()))))),
+                Divides(D(4), Cast(P(), Integers())))))),
     ]));
 }
