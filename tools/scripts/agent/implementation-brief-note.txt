@@ -21,6 +21,24 @@ gh/nyxid 作业。派席的负载门只看得见席位,看不见调用方自己�
 所以这道算术得调用方自己做:**开任何重 Lean 作业之前,把它算进同一个额度**。
 被杀后照下一节清孤儿;那次数学一条没丢,因为席位按本段要求增量提交过。
 
+**而 `make lean-report` 不是「一个」重活,`serial-lean` 也管不到它。**
+同日第二次被杀时我已经数过额度(零席位、「一个」重活),照样被杀。查到的真数是:
+`make lean-report` → `lean-report.sh` → `report-supervisor.sh`,后者是
+`MAX_CONCURRENCY="${STRATALINT_LEAN_MAX_CONCURRENCY:-5}"` —— **默认五个并发 lean 槽**,
+每个槽里的 lake 还按核数自行并行(lake 5.0.0 无 job 旋钮,见上)。
+**这个并发面与树建没建满无关**:同日实测,先 `serial-lean` 把树建满
+(44 个模块、零失败、全程空闲 87%),随后的 `lean-report` **仍然**拉起七个 lean 进程、
+各占 80–88% CPU、单个峰值 3.06 GB,空闲 87% → 70%,该次 `RESOURCE_OBSERVATION` 的
+`rss_peak_kb=23914592`(跨进程求和口径)。原因是报告除了构建还要**逐模块跑检查**,
+那部分本来就是按槽并行的。
+⟹ 算额度时 `make lean-report` 按 **5** 计,不是按 1;要压下去只能显式设
+`STRATALINT_LEAN_MAX_CONCURRENCY`(该默认值是 `policy-override`,永久案号 #1910)。
+
+**槽锁是会留下来的。** 被杀的 report 会把 `slot-N.lock` 留在
+`$TMPDIR/stratalint-report-supervisor-501/slots/` 下,持有者 pid 已死而锁还在;
+不清的话这台机器每次 report 都少一个槽,**且没有任何症状**。
+判死看持有者 pid(锁文件内是 `pid|时间`),`kill -0` 不通即可删。
+
 **巨型模块要预先建好,不要在席位树里重编**:实测 `VersionBOddCountUnderdetermines`
 单进程峰值 7.57 GB。`oom-guard.sh` 只播种 `ExponentialImplicitParityPeriodThree`
 (#6360),其注释所称「the single module known to peak host memory」**已过期**。
