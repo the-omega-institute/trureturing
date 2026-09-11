@@ -52,7 +52,8 @@ internal sealed class DualAccountFullDocument : IScribeDocumentDefinition
                             Bound("rho", Call("DensityState", d)),
                             Bound("sigma", Call("DensityState", d))],
                         new Formula.Logic(assumptions, FormulaLogicOperator.Implies, conclusion)))),
-                    AssessedProvenance.FromRepo(),
+                    AssessedProvenance.FromLiterature(
+                        LibraryNoteRef.Create("D5/L/Quantum/watrous2018entropicidentities")),
                     Blocks(Paragraph(Text(
                         "Mutual unbiasedness makes the composition of the two measurements "
                         + "completely depolarizing. Since Z already fixes rho, the actual X "
@@ -72,7 +73,8 @@ internal sealed class DualAccountFullDocument : IScribeDocumentDefinition
                             Bound("rho", Call("DensityState", d))],
                         And(Le(Num(0), s), And(Le(Num(0), freedom),
                             Eqn(Add(s, freedom), Call("log", d))))))),
-                    AssessedProvenance.FromRepo(),
+                    AssessedProvenance.FromLiterature(
+                        LibraryNoteRef.Create("D5/L/Quantum/watrous2018entropicidentities")),
                     Blocks(Paragraph(Text(
                         "The eigenvalues of a density state form a probability distribution, "
                         + "and its von Neumann entropy is their Shannon entropy. The finite "

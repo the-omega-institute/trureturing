@@ -24,7 +24,7 @@ $$\frac{\pi hbar}{4 E}\le\tau$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumBounds/FubiniStudyRecordTime.record_time_lower_bound` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* QuAIR Team (2026). *Angular geometry of purified distance*. URL: <https://github.com/QuAIR/Lean-QIT/blob/c1d59b133b56e3d79efb11ee46a728d290f761f5/QIT/States/Geometry/PurifiedDistanceAngle.lean>.
 
 *Commentary.*
 
@@ -38,7 +38,7 @@ $$N\le\frac{4 E T}{\pi hbar}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumBounds/FubiniStudyRecordTime.record_count_upper_bound` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* QuAIR Team (2026). *Angular geometry of purified distance*. URL: <https://github.com/QuAIR/Lean-QIT/blob/c1d59b133b56e3d79efb11ee46a728d290f761f5/QIT/States/Geometry/PurifiedDistanceAngle.lean>.
 
 *Commentary.*
 

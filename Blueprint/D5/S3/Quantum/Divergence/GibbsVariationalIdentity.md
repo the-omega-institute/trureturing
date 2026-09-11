@@ -12,7 +12,7 @@ $$\forall n \in FiniteNonemptyType, H \in \operatorname{HermitianMatrix}\left(n\
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/GibbsVariationalIdentity.log_gibbs_state` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* John Watrous (2018). *The Theory of Quantum Information — spectral calculus, reductions and entropy*. URL: <https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf>.
 
 *Commentary.*
 
@@ -36,7 +36,7 @@ $$\forall n \in FiniteNonemptyType, rho \in \operatorname{DensityState}\left(n\r
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/GibbsVariationalIdentity.entropy_uniform_identity` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* John Watrous (2018). *The Theory of Quantum Information — spectral calculus, reductions and entropy*. URL: <https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf>.
 
 *Commentary.*
 

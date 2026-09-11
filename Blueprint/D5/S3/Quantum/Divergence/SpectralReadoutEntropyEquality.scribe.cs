@@ -37,13 +37,16 @@ internal sealed class SpectralReadoutEntropyEqualityDocument : IScribeDocumentDe
                         Iff(
                             Eqn(Call("shannonEntropy", readout), Call("shannonEntropy", x)),
                             Call("IsDiag", conj))))),
-                    AssessedProvenance.FromRepo(),
+                    AssessedProvenance.FromLiterature(
+                        LibraryNoteRef.Create("D5/L/Quantum/baumgratz2014coherence")),
                     Blocks(Paragraph(Text(
                         "The readout vector is the doubly stochastic image of the spectrum under "
                         + "the matrix of squared moduli of U, so its entropy is at least the "
-                        + "spectral entropy. Equality forces every convex combination to be "
-                        + "trivial, which pins each row of that matrix to a single unit entry, "
-                        + "and the conjugated matrix is then diagonal. The converse direction is "
+                        + "spectral entropy. Equality forces all spectral values in each row's "
+                        + "nonzero support "
+                        + "to coincide with that row's readout value. Thus U diagonal(x) equals "
+                        + "diagonal(readout) U, and multiplication by U* proves diagonality. "
+                        + "The converse direction is "
                         + "immediate because a diagonal conjugate reproduces the spectrum up to "
                         + "a permutation, and entropy does not see the order of its argument. "
                         + "No normalization, positive definiteness, or distinctness of the "

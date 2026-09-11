@@ -55,8 +55,10 @@ internal sealed class CoherentCopyCorrelationTaxDocument : IScribeDocumentDefini
         string id, string declaration, string title, string text, Formula statement) =>
         Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Module + declaration), H(title),
-            StatementSource.FromAuthor(statement), AssessedProvenance.FromRepo(
-                LibraryNoteRef.Create("D5/L/Quantum/codex2026correlationtax")),
+            StatementSource.FromAuthor(statement), AssessedProvenance.FromLiterature(
+                LibraryNoteRef.Create(declaration == "coherent_copy_correlation_tax"
+                    ? "D5/L/Quantum/baumgratz2014coherence"
+                    : "D5/L/Quantum/watrous2018entropicidentities")),
             Blocks(Paragraph(Text(text))),
             DescribeRole.Theorem);
 
