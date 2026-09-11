@@ -42,6 +42,7 @@ strata_touched:
   - D5/S3/ConceptDynamics/ZfcSyntax/FormulaTwo
   - D5/S3/ConceptDynamics/ZfcTermRewriting/RewOne
   - D5/S3/ConceptDynamics/ZfcTermRewriting/RewTwo
+  - D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree
 license: Apache-2.0
 triage: anchor
 ---
@@ -58,10 +59,10 @@ Copyright and attribution remain with the upstream contributors. Original author
 required source notices are preserved. The upstream distribution has no NOTICE file.
 The complete unmodified Apache-2.0 license follows below.
 
-The installed layer contains 35 modules from 25 immutable upstream source files,
-with 4,509 Lean source lines (including headers and blank lines). Its source footprint
-is 35 Lean files, 35 Scribe sources and 35 Markdown twins, plus this shared note:
-106 files. The table lists exactly the installed Lean paths; each `strata_touched`
+The installed layer contains 36 modules from 25 immutable upstream source files,
+with 4,749 Lean source lines (including headers and blank lines). Its source footprint
+is 36 Lean files, 36 Scribe sources and 36 Markdown twins, plus this shared note:
+109 files. The table lists exactly the installed Lean paths; each `strata_touched`
 GID resolves to its corresponding Lean/Scribe/Markdown triple.
 
 Each row preserves the original source path, SHA-256 and capacity span. Only selected
@@ -140,6 +141,20 @@ indispensability credit. Theorems remain bind-only; definitions and other
 non-theorems have null proof shape. These general APIs do not prove the CSA
 set-coding, defining-graph elimination or ZFC conservativity bridge.
 
+RewThree extends the term rewriting support with finite `fixitr` laws, term
+extensionality over free variables, language-map compatibility, free-variable
+propagation, conversion of closed terms to `ClosedSemiterm`, formula rewriting
+interfaces, notation and lawful syntactic rewriting identities. The supplied
+selection input is SHA-256
+`5b780be1e2900eca589caa86bf19ba20debb1253f048d784c08c96c114fd6fe9` (10,210 bytes),
+and the installed source has the same SHA-256. These declarations are retained
+as source-command excerpts from the capacity span below; their theorem
+observations are bind-only and the individually justified basis is
+`rule-11-upstream-wrapper`. No new escape, liveness or indispensability credit
+is claimed, and this support layer does not establish a pair interpretation,
+defining-graph elimination, ZFC conservativity or consistency/model-existence
+bridge.
+
 Retirement: replace a transplanted API by a direct Mathlib reference when the repository's pin
 provides a proved-equivalent syntax/theory/proof/definability API and its faithful bridge
 elaborates. Upstream PR acceptance alone is insufficient.
@@ -165,6 +180,7 @@ elaborates. Upstream PR acceptance alone is insufficient.
 | D5/S3/ConceptDynamics/ZfcSupport/Function.lean | Foundation/Vorspiel/Function.lean | 1–18 | b6eb4a72d46ac6f11b3ff3951b95f4cfe1b03498f290ad46b9bd75cc626ef796 |
 | D5/S3/ConceptDynamics/ZfcTermRewriting/RewOne.lean | Foundation/Syntax/Predicate/Rew.lean | 1–320 | 8df8681a12ebf5ef8700d9710c88fc39bfc35df47ef387e2893df3caf3b69873 |
 | D5/S3/ConceptDynamics/ZfcTermRewriting/RewTwo.lean | Foundation/Syntax/Predicate/Rew.lean | 321–637; selected commands exclude `LO.FirstOrder.Rew.q_emb` | 8df8681a12ebf5ef8700d9710c88fc39bfc35df47ef387e2893df3caf3b69873 |
+| D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.lean | Foundation/Syntax/Predicate/Rew.lean | 638–953 | 8df8681a12ebf5ef8700d9710c88fc39bfc35df47ef387e2893df3caf3b69873 |
 | D5/S3/ConceptDynamics/ZfcMinimalLogic/MinimalEntailmentOne.lean | Foundation/Propositional/Entailment/Minimal.lean | 1–320 | aa8c65b4a9a1c4cb1b5148ea65d159302b11dbcc839bba1184e422413808b8f1 |
 | D5/S3/ConceptDynamics/ZfcMinimalLogic/MinimalEntailmentTwo.lean | Foundation/Propositional/Entailment/Minimal.lean | 321–639 | aa8c65b4a9a1c4cb1b5148ea65d159302b11dbcc839bba1184e422413808b8f1 |
 | D5/S3/ConceptDynamics/ZfcMinimalLogic/MinimalEntailmentThree.lean | Foundation/Propositional/Entailment/Minimal.lean | 640–959 | aa8c65b4a9a1c4cb1b5148ea65d159302b11dbcc839bba1184e422413808b8f1 |
