@@ -149,6 +149,23 @@ private def judgePayload (info : ConstantInfo) : Bool :=
       `LeanInformationAudit.TruncationCertification].contains ctor.induct
   | _ => false
 
+private inductive CandidateClass where
+  | prop | instance | family | data
+  deriving Inhabited, BEq, Repr
+
+private structure ConstantType where
+  params : List Name
+  type : Expr
+  candidateClass : CandidateClass
+
+/-- Compilation-local, registration-independent metadata. This extension is not
+serialized into oleans; scoped environment queries cannot leak cache entries. -/
+private structure TypeCache where
+  constants : Std.HashMap Name ConstantType := {}
+  deriving Inhabited
+
+private initialize typeCache : EnvExtension TypeCache ← registerEnvExtension (pure {})
+
 private structure ClosureState where
   constants : NameHashSet := {}
   pending : List Name := []
@@ -157,7 +174,7 @@ private structure ClosureState where
   classifiedTypes : Std.HashSet Expr := {}
   inferred : Std.HashMap Expr Expr := {}
   reduced : Std.HashMap Expr Expr := {}
-  constantTypes : Std.HashMap Name (List Name × Expr) := {}
+  cache : TypeCache := {}
   intersections : Std.HashMap (Bool × Name) Bool := {}
   statementConstants : NameHashSet := {}
   decisionConstants : NameHashSet := {}
@@ -174,21 +191,42 @@ private def boundedMeta (action : MetaM α) : MetaM α :=
   withCurrHeartbeats <| withOptions
     (fun o => (o.set `maxHeartbeats (10000 : Nat)).set `maxRecDepth (1024 : Nat)) action
 
-/-- One cache for the entire readout family/registration, across all its slots.
-FVarIds are rigid, unique context identities; no metavariables enter these keys.
-Constant types come directly from ConstantInfo once, then instantiate universes. -/
+/-- Strip the type telescope under rigid binders, then inspect its WHNF result.
+Propositions include proof result types as well as Prop itself. A universe
+parameter or stuck dependent result stays family-valued: specializing it may
+expose Prop or Decidable. No proof/readout value is evaluated here. -/
+private def constantType (name : Name) : ClosureM ConstantType := do
+  if let some cached := (← get).cache.constants[name]? then return cached
+  let info ← getConstInfo name
+  let candidateClass ← boundedMeta <| withTransparency .default <|
+    forallTelescopeReducing info.type fun _ result => do
+      let result ← whnf result
+      match result.getAppFn with
+      | .fvar .. | .bvar .. | .proj .. => return .family
+      | .sort .zero => return .prop
+      | .sort (.succ _) => return .data
+      | .sort _ => return .family
+      | .const n _ =>
+        if n == ``Decidable || isClass (← getEnv) n then return .instance
+        if ← isProp result then return .prop
+        -- A stuck recursor/definition can reveal a family after specialization.
+        if result.hasFVar then
+          unless (← getConstInfo n).isInductive do return .family
+        return .data
+      | _ => return .family
+  let cached := { params := info.levelParams, type := info.type, candidateClass }
+  modify fun s => { s with cache.constants := s.cache.constants.insert name cached }
+  trace[InformationProvenance.check] "class {name}: {repr candidateClass}"
+  return cached
+
+/-- Expression caches are local to a readout; rigid FVarIds never escape it.
+Generic constant types/classes are shared by registrations in this compilation. -/
 private def inferredType (e : Expr) : ClosureM Expr := do
   if let some type := (← get).inferred[e]? then return type
   let type ← match e with
     | .const name levels => do
-      let (params, type) ← match (← get).constantTypes[name]? with
-        | some cached => pure cached
-        | none => do
-          let info ← getConstInfo name
-          let cached := (info.levelParams, info.type)
-          modify fun s => { s with constantTypes := s.constantTypes.insert name cached }
-          pure cached
-      pure (type.instantiateLevelParams params levels)
+      let cached ← constantType name
+      pure (cached.type.instantiateLevelParams cached.params levels)
     | _ => boundedMeta (inferType e)
   if type.hasMVar then throwError "unresolved provenance type"
   modify fun s => { s with inferred := s.inferred.insert e type }
@@ -288,6 +326,8 @@ private def classifyType (statement : Expr) (e : Expr) : ClosureM Unit := do
   match e with
   | .sort .. | .lit .. | .forallE .. => return
   | _ => pure ()
+  if let .const name _ := e.getAppFn then
+    if (← constantType name).candidateClass == .data then return
   let type ← inferredType e
   if (← get).classifiedTypes.contains type then return
   modify fun s => { s with classifiedTypes := s.classifiedTypes.insert type }
@@ -368,6 +408,10 @@ private def collectReadout (env : Environment) (theoremName : Name) (readout : E
   while let name :: rest := (← get).pending do
     modify fun s => { s with pending := rest }
     let some info := env.find? name | throwError "unavailable provenance constant"
+    let metadata ← constantType name
+    -- Preserve the additional closure-intersection gate even for data heads.
+    -- It can certify disjointness without type inference or isDefEq.
+    let _ ← mayMatch true metadata.type
     -- Rule 3(i), rule 3(ii), and the shared rule 2(c)/3(iii), respectively.
     if provenanceJudgeAPIs.contains name then
       modify fun s => { s with forbidden := true }
@@ -389,25 +433,37 @@ private def collectReadout (env : Environment) (theoremName : Name) (readout : E
 /-- A query owns one fresh Meta context and one type-comparison cache. A total
 200000-heartbeat/1024-depth bound also covers proof scanning and type inference.
 Frozen registrations call this once at registration; the seal consumes metadata. -/
-def readoutClosure (env : Environment) (theoremName : Name) (readout : Expr) :
+private def readoutClosureCurrent (theoremName : Name) (readout : Expr) :
     CoreM (Bool × Option (Array String)) := do
+  let env ← getEnv
   trace[InformationProvenance.check] "{theoremName}: {readout.getAppFn.constName?}"
   tryCatchRuntimeEx (do
-    withEnv env <| withCurrHeartbeats <| withOptions
+    withCurrHeartbeats <| withOptions
       (fun o => (o.set `maxHeartbeats (200000 : Nat)).set `maxRecDepth (1024 : Nat)) <|
-      (collectReadout env theoremName readout).run' {} |>.run')
+      do
+        let (answer, state) ← (collectReadout env theoremName readout).run
+          { cache := typeCache.getState env } |>.run'
+        modifyEnv (typeCache.setState · state.cache)
+        return answer)
     (fun _ => pure (false, none))
+
+/-- Explicit environment queries are scoped; production registrations use the
+current environment so its compilation-local cache survives the query. -/
+def readoutClosure (env : Environment) (theoremName : Name) (readout : Expr) :
+    CoreM (Bool × Option (Array String)) :=
+  withEnv env (readoutClosureCurrent theoremName readout)
 
 /-- IE-C050 precedes all readout-value diagnostics, including IE-C021. A family
 is checked as one dependent function, covering every signature index without
 sampling or enumerating realizations. Inline families use the realization owner
 as their address; named families retain the defining constant's address. -/
-def provenanceError (env : Environment) (root catalog theoremName realization : Name) :
+def provenanceErrorCurrent (root catalog theoremName realization : Name) :
     CoreM (Option String) := do
+  let env ← getEnv
   let readout := readoutFamily env realization
   let address := readout.bind (·.getAppFn.constName?) |>.getD realization
   let (forbidden, closure) ← match readout with
-    | some e => readoutClosure env theoremName e
+    | some e => readoutClosureCurrent theoremName e
     | none => pure (false, none)
   if !forbidden && closure.isSome then return none
   let reason := if closure.isNone then "incomplete_closure" else "forbidden_dependency"
@@ -416,5 +472,10 @@ def provenanceError (env : Environment) (root catalog theoremName realization : 
     | none => Json.null
   return some s!"IE-C050 ClosedTruthReadout key={root}/{catalog}/{theoremName} \
     readout={address} reason={reason} provenance={payload.compress}"
+
+/-- Scoped variant for explicit environment queries. -/
+def provenanceError (env : Environment) (root catalog theoremName realization : Name) :
+    CoreM (Option String) :=
+  withEnv env (provenanceErrorCurrent root catalog theoremName realization)
 
 end LeanInformationAudit.RegistrationGates
