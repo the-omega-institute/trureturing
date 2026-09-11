@@ -13,7 +13,8 @@ internal static class DigestionEvaluationScopes
 {
     internal static DigestionEvaluationScope ForChanges(
         RawChangeSet changes,
-        string callerImplementationPath)
+        string callerImplementationPath,
+        IReadOnlySet<string> registeredInputs)
     {
         ArgumentNullException.ThrowIfNull(changes);
         ArgumentException.ThrowIfNullOrWhiteSpace(callerImplementationPath);
@@ -23,7 +24,7 @@ internal static class DigestionEvaluationScopes
             : callerImplementationPath[..(callerDirectoryEnd + 1)];
         return !changes.Paths.Any()
             || changes.Paths.Any(path =>
-                StrataLintEngineBuildInputs.Contains(path.Value)
+                StrataLintEngineBuildInputs.Contains(path.Value, registeredInputs)
                 || IsCallerImplementationPath(
                     path.Value,
                     callerImplementationPath,

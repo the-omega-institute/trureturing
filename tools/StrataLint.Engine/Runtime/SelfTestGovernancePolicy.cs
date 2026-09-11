@@ -302,7 +302,7 @@ internal static partial class SelfTestGovernancePolicy
                 .Where(file => file.RelativePath == EngineeringProjectRegistry.ManifestPath
                     || file.RelativePath.EndsWith(".csproj", StringComparison.Ordinal)
                     || file.RelativePath.EndsWith(".cs", StringComparison.Ordinal))
-                .Select(file => new ScribeTrackedSource(file.RelativePath, File.ReadAllText(file.FullPath)))
+                .Select(file => new EngineeringSource(file.RelativePath, File.ReadAllText(file.FullPath)))
                 .ToArray();
             var sources = EngineeringProjectRegistry.Read(files).NamespaceSources(files);
             return sources.SelectMany(source => CheckToolsNamespace(

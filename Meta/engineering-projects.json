@@ -466,5 +466,16 @@
       "global_namespace_exceptions": []
     }
   ],
-  "historical_projects": []
+  "historical_projects": [],
+  "rule_build_inputs": [
+    "global.json",
+    "Directory.Build.props",
+    "Directory.Packages.props",
+    ".editorconfig",
+    "tools/Architecture/BannedSymbols.txt",
+    "tools/Architecture/BannedSymbols.Determinism.txt",
+    "tools/Architecture/BannedSymbols.Guid.txt",
+    "tools/StrataLint.Engine/packages.lock.json",
+    "tools/StrataLint.Engine/RepositoryIo/EngineeringProjectRegistry.cs"
+  ]
 }

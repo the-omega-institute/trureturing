@@ -6,6 +6,26 @@ namespace StrataLint.EngineeringScope.Tests;
 public sealed class CommonSourceIdentityTests
 {
     [Theory]
+    [InlineData("absent", "missing engineering project registration")]
+    [InlineData("duplicate", "duplicate engineering project registration")]
+    [InlineData("uncovered", "unregistered engineering source")]
+    public void CandidateRejectsInvalidRegistrationBeforeIssuingIdentity(string defect, string diagnostic)
+    {
+        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        var manifest = Path.Combine(fixture.Root, EngineeringRegistrationFixture.Path);
+        if (defect == "absent") TemporaryFileSystem.File.Delete(manifest);
+        else if (defect == "duplicate") TemporaryFileSystem.File.WriteAllText(manifest,
+            EngineeringRegistrationFixture.Append(TemporaryFileSystem.File.ReadAllText(manifest),
+                new EngineeringProjectFixture(CurrentExecutionContractTests.CandidateFixture.First,
+                    "First", "cross-cutting-test", true, [])));
+        else TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, "Unregistered.cs"), "class Unregistered { }");
+
+        var error = Assert.Throws<InvalidDataException>(() => CommonExecutionEvidence.Candidate(fixture.Root));
+
+        Assert.Contains(diagnostic, error.Message, StringComparison.Ordinal);
+    }
+
+    [Theory]
     [InlineData(".sshx-extra.cs", false)]
     [InlineData("local/Other.cs", false)]
     [InlineData("release/Conditional.cs", true)]

@@ -60,9 +60,69 @@ public sealed class EngineeringProjectRegistrationTests
         var baseline = Snapshot(null, (Project, Misleading));
         var candidate = Snapshot(EngineeringRegistrationFixture.Manifest(Test()), (Project, Misleading));
         Assert.Equal([Project], EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadBaseProjects(baseline, candidate)).ToArray());
-        var addressed = EngineeringProjectRegistry.AddressBase(baseline, candidate);
-        Assert.Equal([Project], EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadSnapshotProjects(addressed)).ToArray());
         Assert.False(baseline.TryGetFile(EngineeringRegistrationFixture.Path, out _));
+    }
+
+    // Original version-1 row from 653216143592d41af04f03074f33d07668d8d257.
+    // Deliberately independent of the candidate fixture writer and its namespace policy.
+    private const string PriorRegistration = """
+        {"version":1,"projects":[{
+          "path":"tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
+          "assembly":"StrataLint.ArchitectureTests","role":"cross-cutting-test","ci":true,
+          "include":["tools/tests/StrataLint.ArchitectureTests/**/*.cs"],"exclude":[],
+          "references":["tools/StrataLint.Engine/StrataLint.Engine.csproj",
+            "tools/StrataLint.Cli/StrataLint.Cli.csproj","tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
+            "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+            "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
+            "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"],
+          "owner":null,"owned_test_assembly":null,"test_partition":"tools/tests/StrataLint.ArchitectureTests"
+        }],"historical_projects":[]}
+        """;
+
+    [Fact]
+    public void OriginalTenFieldBaseRegistrationRetainsRemovedProjectInExecutionFloor()
+    {
+        const string path = "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj";
+        var baseline = Snapshot(PriorRegistration, (path, Misleading));
+        var candidate = Snapshot(EngineeringRegistrationFixture.Manifest());
+        Assert.Equal([path], EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadBaseProjects(baseline, candidate)).ToArray());
+        Assert.Empty(EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadSnapshotProjects(candidate)));
+    }
+
+    [Fact]
+    public void BaseDeclarationReadIgnoresPolicyItDoesNotConsume()
+    {
+        const string path = "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj";
+        var manifest = System.Text.Json.Nodes.JsonNode.Parse(PriorRegistration)!;
+        manifest["projects"]![0]!["execution_inputs"] = new System.Text.Json.Nodes.JsonArray("not-consumed");
+        var baseline = Snapshot(manifest.ToJsonString(), (path, Misleading));
+        Assert.Equal([path], EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadBaseProjects(baseline,
+            Snapshot(EngineeringRegistrationFixture.Manifest()))).ToArray());
+    }
+
+    [Theory]
+    [InlineData("path")]
+    [InlineData("assembly")]
+    [InlineData("role")]
+    [InlineData("ci")]
+    [InlineData("references")]
+    [InlineData("owner")]
+    [InlineData("owned_test_assembly")]
+    [InlineData("test_partition")]
+    public void BaseDeclarationReadRequiresEveryConsumedField(string field)
+    {
+        var manifest = System.Text.Json.Nodes.JsonNode.Parse(PriorRegistration)!;
+        manifest["projects"]![0]!.AsObject().Remove(field);
+        var error = Assert.Throws<InvalidDataException>(() => RepositoryRules.ReadBaseProjects(
+            Snapshot(manifest.ToJsonString()), Snapshot(EngineeringRegistrationFixture.Manifest())));
+        Assert.Contains(field, error.Message);
+    }
+
+    [Fact]
+    public void HistoricalProjectionDoesNotRelaxCandidateRegistration()
+    {
+        var error = Assert.Throws<InvalidDataException>(() => RepositoryRules.ReadSnapshotProjects(Snapshot(PriorRegistration)));
+        Assert.Contains("root_namespace", error.Message);
     }
 
     [Fact]

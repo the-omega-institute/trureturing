@@ -13,14 +13,14 @@ public sealed class JudgeSeedCopiesTests : IDisposable
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
-    public void ChangedBytesWithEqualLengthAndTimestampAreRepairedByNativeCopy(bool folder)
+    public void ChangedBytesWithEqualLengthAndTimestampAreRepairedBeforeNativeCopy(bool folder)
     {
         var source = Write("source/payload", [0, 255, 1, 2]);
         var destination = Write("destination/payload", [0, 254, 1, 2]);
         var task = Copies(source, destination, folder);
 
         Assert.True(task.Execute());
-        Assert.False(TemporaryFileSystem.File.Exists(destination));
+        Assert.True(TemporaryFileSystem.File.Exists(destination));
         Assert.Equal(new byte[] { 0, 255, 1, 2 }, TemporaryFileSystem.File.ReadAllBytes(source));
 
         Copy(source, destination);
@@ -54,7 +54,7 @@ public sealed class JudgeSeedCopiesTests : IDisposable
         File.SetUnixFileMode(destination, UnixFileMode.UserRead | UnixFileMode.UserWrite);
 
         Assert.True(Copies(source, destination, folder).Execute());
-        Assert.False(TemporaryFileSystem.File.Exists(destination));
+        Assert.True(TemporaryFileSystem.File.Exists(destination));
         Assert.Equal(executable, File.GetUnixFileMode(source));
 
         Copy(source, destination);
@@ -76,7 +76,7 @@ public sealed class JudgeSeedCopiesTests : IDisposable
         };
 
         Assert.True(task.Execute());
-        Assert.False(TemporaryFileSystem.File.Exists(remove));
+        Assert.Equal(new byte[] { 1 }, TemporaryFileSystem.File.ReadAllBytes(remove));
         Assert.Equal(new byte[] { 2 }, TemporaryFileSystem.File.ReadAllBytes(keep));
     }
 
@@ -100,6 +100,23 @@ public sealed class JudgeSeedCopiesTests : IDisposable
         Assert.Throws<FileNotFoundException>(() => Copies(Path.Combine(root, "missing"), destination, false).Execute());
 
         Assert.Equal(new byte[] { 7 }, TemporaryFileSystem.File.ReadAllBytes(destination));
+    }
+
+    [Fact]
+    public void StagingFailureLeavesTheExistingDestinationIntact()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var source = Write("source/payload", [1]);
+        var destination = Write("readonly/payload", [9]);
+        var directory = Path.GetDirectoryName(destination)!;
+        var mode = File.GetUnixFileMode(directory);
+        try
+        {
+            File.SetUnixFileMode(directory, UnixFileMode.UserRead | UnixFileMode.UserExecute);
+            Assert.Throws<UnauthorizedAccessException>(() => Copies(source, destination, false).Execute());
+            Assert.Equal(new byte[] { 9 }, TemporaryFileSystem.File.ReadAllBytes(destination));
+        }
+        finally { File.SetUnixFileMode(directory, mode); }
     }
 
     private string Write(string relative, byte[] bytes)

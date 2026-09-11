@@ -132,6 +132,11 @@ internal sealed partial class RuleFixture
                 new EngineeringProjectFixture(BannedApiCompileFailProofProjectPath, "BannedApiCompileFailProof", "compile-fail-proof", false, ["tools/tests/BannedApiCompileFailProof/**/*.cs"]),
                 new EngineeringProjectFixture(CompileFailProofProjectPath, "CompileFailProof", "compile-fail-proof", false, ["tools/tests/CompileFailProof/**/*.cs"])),
         };
+        var registration = System.Text.Json.Nodes.JsonNode.Parse(Files[EngineeringRegistrationFixture.Path])!;
+        registration["rule_build_inputs"] = new System.Text.Json.Nodes.JsonArray(
+            RegisteredBuildInputs.Select(path => System.Text.Json.Nodes.JsonValue.Create(path)).ToArray());
+        Files[EngineeringRegistrationFixture.Path] = registration.ToJsonString();
+        foreach (var path in RegisteredBuildInputs) Files.TryAdd(path, path == "global.json" ? "{}" : "<Project />");
         Baseline = new Dictionary<string, string>(Files, StringComparer.Ordinal);
         Reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
         {
@@ -163,6 +168,11 @@ internal sealed partial class RuleFixture
         Baseline[ValuesKernelBindingValidator.RelativePath] = Files[ValuesKernelBindingValidator.RelativePath];
         Changes = new List<string> { BlueprintPath };
     }
+
+    internal static IReadOnlySet<string> RegisteredBuildInputs { get; } = new HashSet<string>(StringComparer.Ordinal)
+    {
+        "global.json", "Directory.Build.props", "tools/Directory.Build.targets", "Directory.Packages.props",
+    };
 
     internal Dictionary<string, string> Files { get; }
 

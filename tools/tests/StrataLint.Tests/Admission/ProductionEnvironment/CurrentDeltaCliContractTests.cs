@@ -65,6 +65,8 @@ public sealed class CurrentDeltaCliContractTests
     [InlineData("valid", 0, "")]
     [InlineData("premanifest-base", 0, "")]
     [InlineData("premanifest-missing-base-project", 2, "base test project")]
+    [InlineData("original-registration-base", 0, "")]
+    [InlineData("original-registration-missing-base-project", 2, "base test project")]
     [InlineData("annotation", 3, "SL-022")]
     [InlineData("mixed", 1, "SL-029")]
     [InlineData("first-freeze", 1, "SL-008")]
@@ -95,6 +97,15 @@ public sealed class CurrentDeltaCliContractTests
         Write(EngineeringRegistrationFixture.Path, registration.ToJsonString());
         if (scenario.StartsWith("premanifest-", StringComparison.Ordinal))
             File.Delete(Path.Combine(root, EngineeringRegistrationFixture.Path));
+        if (scenario.StartsWith("original-registration-", StringComparison.Ordinal))
+        {
+            var historical = registration.DeepClone();
+            historical.AsObject().Remove("rule_build_inputs");
+            foreach (var row in historical["projects"]!.AsArray())
+                foreach (var field in new[] { "root_namespace", "namespace_exclude", "global_namespace_exceptions" })
+                    row!.AsObject().Remove(field);
+            Write(EngineeringRegistrationFixture.Path, historical.ToJsonString());
+        }
         const string protectedPath = "tools/scripts/probe.sh";
         Git(root, "init", "-q"); Git(root, "add", ".");
         Git(root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "base");
@@ -104,6 +115,7 @@ public sealed class CurrentDeltaCliContractTests
         switch (scenario)
         {
             case "premanifest-base": break;
+            case "original-registration-base": break;
             case "annotation": Write(protectedPath, "#!/bin/sh\nexit 0\n"); break;
             case "mixed": Write("tools/StrataLint.Cli/probe.cs", "// candidate judge\n"); Write(RuleFixture.BlueprintPath, "# changed\n"); break;
             case "first-freeze": Write("Golden/Frozen/accepted/" + new string('a', 64) + ".json", "{}\n"); break;
@@ -116,6 +128,7 @@ public sealed class CurrentDeltaCliContractTests
                 break;
             case "missing-base-project":
             case "premanifest-missing-base-project":
+            case "original-registration-missing-base-project":
                 File.Delete(Path.Combine(root, firstProject));
                 var removed = projects.Single(item => item!["path"]!.GetValue<string>() == firstProject)!;
                 projects.Remove(removed);
@@ -168,7 +181,7 @@ public sealed class CurrentDeltaCliContractTests
         var exit = CliApplication.Run(["check-delta", "--protected-base", basis, "--candidate-lean-report", report], environment, console);
         Assert.True(exit == expectedExit, $"expected exit {expectedExit}, got {exit}: {console.Output}{console.Error}");
         Assert.Contains(diagnostic, console.Output + console.Error, StringComparison.Ordinal);
-        if (scenario is "missing-base-project" or "premanifest-missing-base-project")
+        if (scenario is "missing-base-project" or "premanifest-missing-base-project" or "original-registration-missing-base-project")
         {
             Assert.Contains($"ENGINEERING_TEST_PROJECT_REMOVED project={JsonSerializer.Serialize(firstProject)}",
                 console.Output, StringComparison.Ordinal);

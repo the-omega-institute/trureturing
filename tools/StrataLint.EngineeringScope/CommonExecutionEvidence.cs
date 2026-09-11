@@ -43,7 +43,7 @@ internal static class CommonExecutionEvidence
     private static string Candidate(string root, out RepositorySnapshot snapshot)
     {
         snapshot = Snapshot(root);
-        var files = snapshot.Files.Values.Select(file => new ScribeTrackedSource(file.Path.Value, file.Text)).ToArray();
+        var files = snapshot.Files.Values.Select(file => new EngineeringSource(file.Path.Value, file.Text)).ToArray();
         _ = EngineeringProjectRegistry.Read(files).Sources(files);
         using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
         foreach (var (path, file) in snapshot.Files.OrderBy(static pair => pair.Key.Value, StringComparer.Ordinal))
@@ -77,10 +77,9 @@ internal static class CommonExecutionEvidence
     internal static CommonStageRecord SealBuild(string root, string candidate, IEnumerable<string> binaries, StageStep[] steps)
     {
         RequirePassed(steps, BuildSteps);
-        var products = binaries.Concat(CommonCompileMetadata.Export(root, Snapshot(root))).ToArray();
         if (candidate != Candidate(root)) throw new InvalidDataException("candidate changed during build");
         var record = new CommonStageRecord(1, candidate, Guid.NewGuid().ToString("N"), steps,
-            Materials(root, products.Concat(steps.Select(step => step.Log))));
+            Materials(root, binaries.Concat(steps.Select(step => step.Log))));
         Write(root, BuildPath, record);
         WriteBundleList(root, "build", record.Materials.Select(material => material.Path).Append(BuildPath));
         return record;
@@ -95,7 +94,6 @@ internal static class CommonExecutionEvidence
         if (string.IsNullOrWhiteSpace(record.Round)) throw new InvalidDataException("missing build round");
         ValidateRecord(root, record, candidate, round ?? record.Round);
         RequirePassed(record.Steps, BuildSteps);
-        _ = CommonCompileMetadata.Load(root, record.Materials);
         return record;
     }
 

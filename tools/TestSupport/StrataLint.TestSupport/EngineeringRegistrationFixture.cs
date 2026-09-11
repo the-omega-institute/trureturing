@@ -36,6 +36,7 @@ public static class EngineeringRegistrationFixture
     public static string Manifest(params EngineeringProjectFixture[] projects) => JsonSerializer.Serialize(new
     {
         version = 1,
+        rule_build_inputs = Array.Empty<string>(),
         projects = projects.Select(project => new
         {
             path = project.Path,
