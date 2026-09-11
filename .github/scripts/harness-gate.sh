@@ -6,7 +6,6 @@ set -euo pipefail
 CANDIDATE_ROOT="."
 BASE=""
 REPORT=""
-TEST_MAP_CACHE_ROOT=""
 JUDGE_HINT=""
 while [[ $# -gt 0 ]]; do
   [[ $# -ge 2 && -n "$2" ]] || { echo "harness-gate: options require values" >&2; exit 2; }
@@ -14,7 +13,6 @@ while [[ $# -gt 0 ]]; do
     --candidate) CANDIDATE_ROOT="$2" ;;
     --base) BASE="$2" ;;
     --candidate-lean-report) REPORT="$2" ;;
-    --test-map-cache-root) TEST_MAP_CACHE_ROOT="$2" ;;
     --judge-dll) JUDGE_HINT="$2" ;;
     *) echo "harness-gate: unknown argument '$1'" >&2; exit 2 ;;
   esac
@@ -25,13 +23,9 @@ done
 CANDIDATE_ROOT="$(cd "$CANDIDATE_ROOT" && pwd -P)"
 REPORT="$(cd "$(dirname "$REPORT")" && pwd -P)/$(basename "$REPORT")"
 args=(--protected-base "$BASE" --candidate-lean-report "$REPORT")
-if [[ -n "$TEST_MAP_CACHE_ROOT" ]]; then
-  mkdir -p "$TEST_MAP_CACHE_ROOT"
-  args+=(--test-map-cache-root "$(cd "$TEST_MAP_CACHE_ROOT" && pwd -P)")
-fi
 
 # The old caller may supply a cached runtime hint. The canonical build supplies
-# both candidate code and Roslyn compile assets, with no separate judge builder.
+# candidate binaries, with no separate judge builder.
 if [[ -n "$JUDGE_HINT" ]]; then
   echo "harness-gate: cached judge hint superseded by the canonical candidate build" >&2
 fi

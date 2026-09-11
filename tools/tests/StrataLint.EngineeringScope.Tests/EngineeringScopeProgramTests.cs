@@ -37,6 +37,11 @@ public sealed class EngineeringScopeProgramTests
             TemporaryFileSystem.Directory.CreateDirectory(retiredSuite);
             TemporaryFileSystem.File.WriteAllText(Path.Combine(retiredSuite, "StrataLint.ScriptTests.csproj"),
                 "<Project><PropertyGroup><IsTestProject>true</IsTestProject></PropertyGroup></Project>");
+            TemporaryFileSystem.Directory.CreateDirectory(Path.Combine(root, "Meta"));
+            TemporaryFileSystem.File.WriteAllText(Path.Combine(root, EngineeringRegistrationFixture.Path),
+                EngineeringRegistrationFixture.Manifest(
+                    new EngineeringProjectFixture("tools/tests/Probe/Probe.csproj", "Probe", "cross-cutting-test", true, ["tools/tests/Probe/**/*.cs"]),
+                    new EngineeringProjectFixture("tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj", "StrataLint.ScriptTests", "cross-cutting-test", false, [])));
             Run(root, "git", ["init", "-q"]);
             Run(root, "git", ["add", "."]);
             Run(root, "git", ["-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "parentless"]);

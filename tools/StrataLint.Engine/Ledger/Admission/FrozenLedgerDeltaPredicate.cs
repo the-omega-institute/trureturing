@@ -17,6 +17,7 @@ internal static class FrozenLedgerDeltaPredicate
         path is RepositoryPathPolicy.PrWorkflowPath
             or RepositoryPathPolicy.PushWorkflowPath
             or "tools/scripts/ci-stage.sh"
+            or "tools/scripts/ci-build-outputs.targets"
             or "tools/scripts/workflow/ci.py"
             or "tools/scripts/report/lean-report-input.sh"
             or "tools/lean-inspector/Inspector.lean"

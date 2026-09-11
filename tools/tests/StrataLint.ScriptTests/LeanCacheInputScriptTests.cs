@@ -29,13 +29,22 @@ public sealed class LeanCacheInputScriptTests
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
     }
 
-    [Fact]
-    public void SnapshotReadinessAndMaterialRespectWriterPermissions()
+    [Theory]
+    [InlineData("ci_contract", "test_internal_dependency_file_links_round_trip_as_private_material")]
+    [InlineData("report_snapshot_contract", "test_invalid_dependency_links_disable_only_that_save_with_an_offending_path")]
+    [InlineData("ci_contract", "test_corrupt_dependency_seed_falls_back_without_replacing_current_material")]
+    [InlineData("report_snapshot_contract", "test_snapshot_readiness_and_material_follow_writer_permissions")]
+    [InlineData("report_snapshot_contract", "test_report_snapshot_keeps_only_current_complete_seed")]
+    [InlineData("report_snapshot_contract", "test_report_snapshot_rejects_invalid_current_without_using_history")]
+    [InlineData("report_snapshot_contract", "test_report_staging_and_restore_validate_independently")]
+    [InlineData("report_snapshot_contract", "test_report_export_requires_matching_handoff")]
+    [InlineData("report_snapshot_contract", "test_report_export_does_not_revalidate")]
+    public void SnapshotReadinessAndMaterialRespectWriterPermissions(string fixture, string behavior)
     {
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();
         var result = TestProcessRunner.Run("python3",
-            [Path.Combine(root, "tools/tests/StrataLint.ScriptTests/Fixtures/ci_contract.py"), "SnapshotContracts"],
+            [Path.Combine(root, "tools/tests/StrataLint.ScriptTests/Fixtures", fixture + ".py"), "SnapshotContracts." + behavior],
             root, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
         Assert.True(result.ExitCode == 0,
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));

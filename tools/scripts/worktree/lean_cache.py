@@ -4,7 +4,6 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import os
 import pathlib
 import platform
 import re
@@ -32,29 +31,6 @@ def binary_platform() -> tuple[str, str]:
 def partition_path(root: pathlib.Path) -> str:
     system, machine = binary_platform()
     return f"{resolved_mathlib(root)}/{system}-{machine}"
-
-
-def actions_keys(root: pathlib.Path) -> dict:
-    revision = resolved_mathlib(root)
-    system, machine = binary_platform()
-    run = os.environ.get("GITHUB_RUN_ID", "")
-    attempt = os.environ.get("GITHUB_RUN_ATTEMPT", "")
-    if not re.fullmatch(r"[0-9]+", run) or not re.fullmatch(r"[0-9]+", attempt):
-        raise ValueError("snapshot keys require GITHUB_RUN_ID and GITHUB_RUN_ATTEMPT")
-    result = {"mathlib_revision": revision, "os": system, "arch": machine,
-              "partition": partition_path(root),
-              "save_allowed": os.environ.get("GITHUB_EVENT_NAME") == "push"
-                  and os.environ.get("GITHUB_REF") == "refs/heads/dev"
-                  and os.environ.get("STRATALINT_CACHE_WRITES", "true") == "true"
-                  and os.environ.get("STRATALINT_CHECK_SUCCEEDED") == "true"}
-    paths = {"dependency": ".lake/packages", "project": ".lake/build",
-             "report": ".lake/report-cache"}
-    for layer, path in paths.items():
-        prefix = f"lean-{layer}-v3-{revision}-{system}-{machine}-"
-        result[layer] = {"restore_prefix": prefix, "key": f"{prefix}{run}-{attempt}",
-                         "path": "build/lean-cache/" + layer, "target": path}
-    result["release_prefix"] = f"lean-cache-v2-{revision}-{system}-{machine}-"
-    return result
 
 
 def semantic_config(root: pathlib.Path) -> dict:
@@ -87,7 +63,7 @@ def semantic_config(root: pathlib.Path) -> dict:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=["partition", "partition-path", "keys", "config", "dependency-address"])
+    parser.add_argument("command", choices=["partition", "partition-path", "config", "dependency-address"])
     parser.add_argument("--repository", required=True, type=pathlib.Path)
     args = parser.parse_args()
     try:
@@ -99,8 +75,6 @@ def main() -> int:
             # Default dev ci.yml transition only: a 64-hex rendering of the same
             # partition. Remove after ci-push/ci-pr success and required-set migration.
             print(hashlib.sha256(partition_path(args.repository).encode("utf-8")).hexdigest())
-        elif args.command == "keys":
-            print(json.dumps(actions_keys(args.repository), sort_keys=True))
         else:
             print(json.dumps(semantic_config(args.repository), sort_keys=True, separators=(",", ":")))
         return 0

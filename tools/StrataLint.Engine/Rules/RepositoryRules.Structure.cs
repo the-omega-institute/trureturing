@@ -144,72 +144,8 @@ internal static partial class RepositoryRules
     }
 
     private static ImmutableArray<RuleFinding> Capacity(DeltaRuleContext context)
-        => EvaluateCapacity(context, context.DeriveTestMap);
-
-    internal static ImmutableArray<RuleFinding> EvaluateCapacity(
-        DeltaRuleContext context,
-        Func<RepositorySnapshot, ScribeTestMap> deriveSnapshot)
-    {
-        // Wrap both snapshot derivations here so cache outcomes remain observational to capacity findings.
-        ScribeTestMap GetMap(RepositorySnapshot snapshot) => context.TestMapStore is null
-            ? deriveSnapshot(snapshot)
-            : context.TestMapStore.GetOrDerive(snapshot);
-        if (context.Changes.Paths.Any(static path =>
-                ScribeTestMapDeriver.IsDerivationInput(path.Value)))
-        {
-            var currentDerivation = Task.Run(() => GetMap(context.Current));
-            var baselineDerivation = ReferenceEquals(context.Current, context.Baseline)
-                ? currentDerivation
-                : Task.Run(() => GetMap(context.Baseline));
-            return EvaluateCapacityAsync(context, currentDerivation, baselineDerivation)
-                .GetAwaiter()
-                .GetResult();
-        }
-
-        return EvaluateCapacityCore(context, derivedMaps: null);
-    }
-
-    internal static async Task<ImmutableArray<RuleFinding>> EvaluateCapacityAsync(
-        DeltaRuleContext context,
-        Task<ScribeTestMap> currentDerivation,
-        Task<ScribeTestMap> baselineDerivation)
-    {
-        var bothDerivations = Task.WhenAll(currentDerivation, baselineDerivation);
-        try
-        {
-            await bothDerivations.ConfigureAwait(false);
-        }
-        catch
-        {
-            _ = bothDerivations.Exception;
-            if (!currentDerivation.IsCompletedSuccessfully)
-            {
-                await currentDerivation.ConfigureAwait(false);
-            }
-
-            await baselineDerivation.ConfigureAwait(false);
-            throw;
-        }
-
-        return EvaluateCapacityCore(
-            context,
-            (currentDerivation.Result, baselineDerivation.Result));
-    }
-
-    private static ImmutableArray<RuleFinding> EvaluateCapacityCore(
-        DeltaRuleContext context,
-        (ScribeTestMap Current, ScribeTestMap Baseline)? derivedMaps)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        if (derivedMaps is { } maps)
-        {
-            findings.AddRange(ScribeUnknownDebtPolicy.Evaluate(maps.Current, maps.Baseline)
-                .Select(static finding => new RuleFinding(
-                    finding.Path,
-                    finding.Message,
-                    finding.Effect)));
-        }
-
         var directories = CapacityPathsByDirectory(context.Current.Files.Keys);
         var baselineDirectories = CapacityPathsByDirectory(context.Baseline.Files.Keys);
 

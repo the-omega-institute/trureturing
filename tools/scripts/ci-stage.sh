@@ -19,14 +19,24 @@ if [[ -n "${PREFLIGHT_DEADLINE_AT:-}" ]]; then
   [[ "$PREFLIGHT_DEADLINE_AT" -gt "$(date +%s)" ]] || { echo 'PREFLIGHT_BUDGET_EXHAUSTED owner=outer-deadline' >&2; exit 2; }
 fi
 case "$stage" in
-  engineering)
+  build|engineering)
     [[ $# == 1 ]] || exit 2
-    export CI=true
+    export CI=true DOTNET_CLI_UI_LANGUAGE=en-US
+    if [[ "$stage" == engineering && -n "${CI_BUILD_ROUND:-}" ]]; then
+      [[ -f "$runner" ]] || exit 2
+      dotnet "$runner" "$stage" --repository "$ROOT" --build-round "$CI_BUILD_ROUND"
+      exit $?
+    fi
+    python3 tools/scripts/report/dotnet_producer.py prepare "$ROOT"
+    export CustomAfterMicrosoftCSharpTargets="$ROOT/build/judge-seed/seed.targets"
+    # Bootstrap nodes belong to these invocations and must release their output.
     /bin/bash tools/scripts/report/report-supervisor.sh --role ci-bootstrap-restore -- \
-      dotnet restore tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj --locked-mode
+      dotnet restore tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj --locked-mode -nr:false
+    # Match the solution's import graph so its bootstrap compiler seed is reusable.
     /bin/bash tools/scripts/report/report-supervisor.sh --role ci-bootstrap-build -- \
-      dotnet build tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj --configuration Release --no-restore --warnaserror
-    dotnet "$runner" engineering --repository "$ROOT"
+      dotnet build tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj --configuration Release --no-restore --warnaserror -nr:false \
+        -p:CustomAfterMicrosoftCommonTargets="$ROOT/tools/scripts/ci-build-outputs.targets"
+    dotnet "$runner" "$stage" --repository "$ROOT"
     ;;
   current)
     [[ $# == 1 && -f "$runner" ]] || exit 2

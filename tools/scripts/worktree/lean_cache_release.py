@@ -16,6 +16,7 @@ import tempfile
 import time
 
 from lean_cache import partition_path
+from cache_material import sha
 
 ASSET = "lean-build.tgz"
 MANIFEST = "manifest.json"
@@ -29,14 +30,6 @@ CHUNK_BYTES = 1610612736
 # C# ArchiveBudget. Review against real multipart transfers during integration.
 # Fetch includes all snapshot attempts; publish starts only after make lean.
 RELEASE_OPERATION_TIMEOUT_SECONDS = 600
-
-
-def sha(path):
-    value = hashlib.sha256()
-    with path.open("rb") as source:
-        for block in iter(lambda: source.read(1024 * 1024), b""):
-            value.update(block)
-    return value.hexdigest()
 
 
 def operation_deadline():

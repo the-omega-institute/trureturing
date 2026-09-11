@@ -4,7 +4,6 @@ import json
 import importlib
 import os
 import pathlib
-import platform
 import shutil
 import subprocess
 import sys
@@ -46,7 +45,7 @@ esac
         self.assertTrue(self.gate.is_file(), str(self.gate))
         self.assertTrue(os.access(self.gate, os.X_OK), str(self.gate))
         return subprocess.run([str(self.gate), "--candidate", str(self.root), "--base", "a" * 40,
-            "--candidate-lean-report", str(self.report), "--test-map-cache-root", str(self.root / "test-maps"),
+            "--candidate-lean-report", str(self.report),
             "--judge-dll", str(self.root / "optional-cache/StrataLint.dll")],
             capture_output=True, text=True, env=dict(self.env, **env))
 
@@ -59,7 +58,7 @@ esac
                 calls = (self.root / "calls").read_text().splitlines()[-3:]
                 dll = self.root / "tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll"
                 self.assertEqual("make -C " + str(self.root / "tools") + " dotnet", calls[0])
-                self.assertEqual(f"dotnet {dll} check --protected-base {'a' * 40} --candidate-lean-report {self.report} --test-map-cache-root {self.root / 'test-maps'}", calls[1])
+                self.assertEqual(f"dotnet {dll} check --protected-base {'a' * 40} --candidate-lean-report {self.report}", calls[1])
                 self.assertEqual(f"dotnet {dll} filemap-conform", calls[2])
 
     def test_gate_build_failure_stops_before_checks(self):
@@ -94,6 +93,7 @@ class CacheFixture:
                         HOME=str(self.root),
                         GITHUB_OUTPUT=str(self.root / "outputs"), GITHUB_ENV=str(self.root / "environment"))
         (self.root / "lake-manifest.json").write_text(json.dumps({"packages": [{"name": "mathlib", "rev": REV}]}))
+        (self.root / "lean-toolchain").write_text("leanprover/lean4:v4.33.0\n")
 
     def tearDown(self):
         self.temp.cleanup()
@@ -101,6 +101,30 @@ class CacheFixture:
     def run_tool(self, script, *args, env=None):
         return subprocess.run([sys.executable, str(script), *args, "--repository", str(self.root)],
                               env=env or self.env, capture_output=True, text=True)
+
+    def snapshot_result(self):
+        (self.root / "outputs").unlink(missing_ok=True)
+        result = self.run_tool(CACHE, "snapshot")
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        readiness = dict(line.split("=", 1) for line in (self.root / "outputs").read_text().splitlines())
+        receipts = {entry["layer"]: entry for entry in (
+            json.loads(line.removeprefix("LEAN_ACTIONS_CACHE "))
+            for line in result.stdout.splitlines() if line.startswith("LEAN_ACTIONS_CACHE "))}
+        return readiness, receipts
+
+    def dependency_files(self):
+        source = self.root / ".lake/packages"
+        material = {
+            "mathlib/scripts/bench/size/run": (b"#!/bin/sh\nprintf 'size\\n'\n", 0o755),
+            "mathlib/scripts/bench/build/fake-root/bin/lean": (b"#!/bin/sh\nexit 0\n", 0o755),
+            "batteries/README.md": (b"# Batteries\n\x00private bytes\xff\n", 0o640),
+        }
+        for relative, (data, mode) in material.items():
+            path = source / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(data)
+            path.chmod(mode)
+        return source, material
 
 
 class Contracts(CacheFixture, unittest.TestCase):
@@ -153,12 +177,13 @@ class Contracts(CacheFixture, unittest.TestCase):
         (self.root / ".lake/build/lib/Module.olean").write_bytes(b"seed bytes")
         result = self.run_tool(CACHE, "snapshot")
         self.assertEqual(0, result.returncode, result.stderr)
-        keys = json.loads(subprocess.run([sys.executable, str(REPO / "tools/scripts/worktree/lean_cache.py"),
-            "keys", "--repository", str(self.root)], check=True, env=self.env, capture_output=True, text=True).stdout)
-        cached = self.root / keys["project"]["path"]
+        key_output = subprocess.run([sys.executable, str(CACHE),
+            "keys", "--repository", str(self.root)], check=True, env=self.env, capture_output=True, text=True).stdout
+        keys = dict(line.split("=", 1) for line in key_output.splitlines())
+        cached = self.root / keys["project_path"]
         self.assertTrue((cached / "manifest.json").is_file())
         shutil.rmtree(self.root / ".lake")
-        return cached, keys["project"]["key"]
+        return cached, keys["project_key"]
 
     def production(self, key, failure=False):
         (self.root / "Makefile").write_text("current:\n\t@echo producer >> calls\n\t@exit " + ("7" if failure else "0") + "\n")
@@ -259,63 +284,95 @@ class Contracts(CacheFixture, unittest.TestCase):
 
 
 class SnapshotContracts(CacheFixture, unittest.TestCase):
-    def test_snapshot_readiness_and_material_follow_writer_permissions(self):
-        material = {
-            "dependency": (".lake/packages", "mathlib/Mathlib.olean", b"private dependency seed\n"),
-            "project": (".lake/build", "lib/Module.olean", b"private project seed\n"),
-            "report": (".lake/report-cache", "fixture/raw-lean-report.json", b'{"fixture":"report seed"}\n'),
+    def test_internal_dependency_file_links_round_trip_as_private_material(self):
+        source, material = self.dependency_files()
+        links = {
+            "mathlib/scripts/bench/size/run.py": "run",
+            "mathlib/scripts/bench/build/fake-root/bin/lean.py": "lean",
+            "batteries/docs/README.md": "../README.md",
+            "batteries/docs/README.alias": "README.md",
         }
-        for target, relative, data in material.values():
-            path = self.root / target / relative
+        expected = dict(material)
+        for relative, target in links.items():
+            path = source / relative
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_bytes(data)
-            path.chmod(0o640)
-        system, machine = platform.system().lower(), platform.machine().lower()
-        architecture = {"aarch64": "arm64", "x86_64": "x64", "amd64": "x64"}.get(machine, machine)
-        partition = f"{REV}/{system}-{architecture}"
-        cases = [
-            ("dev_push", "push", "refs/heads/dev", "true", "true", True),
-            ("dev_pr_target", "pull_request_target", "refs/heads/dev", "true", "true", False),
-            ("pr_merge", "pull_request", "refs/pull/7/merge", "true", "true", False),
-            ("dev_dispatch", "workflow_dispatch", "refs/heads/dev", "true", "true", False),
-            ("dev_writes_false", "push", "refs/heads/dev", "false", "true", False),
-            ("dev_check_failed", "push", "refs/heads/dev", "true", "false", False),
-            ("dev_check_missing", "push", "refs/heads/dev", "true", None, False),
-            ("other_branch", "push", "refs/heads/topic", "true", "true", False),
-            ("other_integration", "push", "refs/heads/integration-ci-other-tests", "true", "true", False),
-        ]
-        for name, event, ref, writes, success, allowed in cases:
-            with self.subTest(case=name):
-                cache = self.root / "build/lean-cache"
-                if cache.exists():
-                    shutil.rmtree(cache)
-                output = self.root / "outputs"
-                output.unlink(missing_ok=True)
-                env = dict(self.env, GITHUB_RUN_ID="34362630774", GITHUB_RUN_ATTEMPT="1",
-                           GITHUB_EVENT_NAME=event, GITHUB_REF=ref, STRATALINT_CACHE_WRITES=writes)
-                env.pop("STRATALINT_CHECK_SUCCEEDED", None)
-                if success is not None:
-                    env["STRATALINT_CHECK_SUCCEEDED"] = success
-                result = self.run_tool(CACHE, "snapshot", env=env)
-                self.assertEqual(0, result.returncode, result.stdout + result.stderr)
-                self.assertEqual({layer + "_ready": str(allowed).lower() for layer in material},
-                                 dict(line.split("=", 1) for line in output.read_text().splitlines()), result.stdout)
-                receipts = [json.loads(line.removeprefix("LEAN_ACTIONS_CACHE "))
-                            for line in result.stdout.splitlines() if line.startswith("LEAN_ACTIONS_CACHE ")]
-                self.assertEqual({layer: "snapshot" if allowed else "save-disabled" for layer in material},
-                                 {receipt["layer"]: receipt["status"] for receipt in receipts})
-                if not allowed:
-                    self.assertFalse(cache.exists())
-                    continue
-                for layer, (target, relative, data) in material.items():
-                    staged = cache / layer
-                    self.assertEqual(data, (staged / "data" / relative).read_bytes())
-                    self.assertEqual(data, (self.root / target / relative).read_bytes())
-                    self.assertEqual({
-                        "schema": "lean-actions-seed-v1", "partition": partition, "layer": layer,
-                        "key": f"lean-{layer}-v3-{REV}-{system}-{architecture}-34362630774-1",
-                        "files": [{"path": relative, "sha256": hashlib.sha256(data).hexdigest(), "mode": 0o640}],
-                    }, json.loads((staged / "manifest.json").read_text()))
+            path.symlink_to(target)
+            expected[relative] = (path.read_bytes(), path.stat().st_mode & 0o777)
+        readiness, receipts = self.snapshot_result()
+        self.assertEqual({"dependency_ready": "true", "project_ready": "false", "report_ready": "false"},
+                         readiness, receipts)
+        self.assertEqual("snapshot", receipts["dependency"]["status"])
+        cached = self.root / "build/lean-cache/dependency"
+        manifest = json.loads((cached / "manifest.json").read_text())
+        self.assertEqual("lean-actions-seed-v1", manifest["schema"])
+        self.assertEqual([{"path": relative, "sha256": hashlib.sha256(data).hexdigest(), "mode": mode}
+                          for relative, (data, mode) in sorted(expected.items())], manifest["files"])
+        self.assertFalse(any(path.is_symlink() for path in (cached / "data").rglob("*")))
+        for relative, (data, mode) in expected.items():
+            self.assertEqual(data, (source / relative).read_bytes())
+            self.assertEqual(mode, (source / relative).stat().st_mode & 0o777)
+            self.assertEqual(data, (cached / "data" / relative).read_bytes())
+        for relative, target in links.items():
+            self.assertTrue((source / relative).is_symlink())
+            self.assertEqual(target, os.readlink(source / relative))
+        (source / "batteries/README.md").write_bytes(b"changed producer bytes")
+        self.assertEqual(expected["batteries/README.md"][0], (cached / "data/batteries/README.md").read_bytes())
+        shutil.rmtree(source)
+        result = self.run_tool(CACHE, "restore", "--dependency-key", manifest["key"])
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status": "restored"', result.stdout)
+        self.assertIn("STRATALINT_ACTIONS_CACHE_SEEDED=0", (self.root / "environment").read_text())
+        for relative, (data, mode) in expected.items():
+            path = source / relative
+            self.assertFalse(path.is_symlink())
+            self.assertEqual(data, path.read_bytes())
+            self.assertEqual(mode, path.stat().st_mode & 0o777)
+        (source / "batteries/docs/README.md").write_bytes(b"changed consumer bytes")
+        self.assertEqual(expected["batteries/docs/README.md"][0],
+                         (cached / "data/batteries/docs/README.md").read_bytes())
+        self.assertEqual(expected["batteries/README.md"][0], (source / "batteries/README.md").read_bytes())
+        (cached / "data/batteries/README.md").write_bytes(b"changed cache bytes")
+        self.assertEqual(expected["batteries/README.md"][0], (source / "batteries/README.md").read_bytes())
+
+    def test_corrupt_dependency_seed_falls_back_without_replacing_current_material(self):
+        source, _ = self.dependency_files()
+        shutil.copy2(source / "batteries/README.md", source / "batteries/README.copy")
+        readiness, _ = self.snapshot_result()
+        self.assertEqual("true", readiness["dependency_ready"])
+        cached = self.root / "build/lean-cache/dependency"
+        key = json.loads((cached / "manifest.json").read_text())["key"]
+        saved = cached / "data/batteries/README.md"
+        original, mode = saved.read_bytes(), saved.stat().st_mode & 0o777
+        (self.root / "Makefile").write_text("current:\n\t@echo producer >> calls\n\t@exit $${PRODUCER_EXIT:-0}\n")
+        for corruption in ("bytes", "mode", "link", "missing", "extra"):
+            with self.subTest(corruption=corruption):
+                (source / "batteries/README.md").write_bytes(b"current material")
+                if corruption == "bytes":
+                    saved.write_bytes(b"corrupted bytes")
+                elif corruption == "mode":
+                    saved.chmod(0o755)
+                elif corruption == "link":
+                    saved.unlink()
+                    saved.symlink_to("README.copy")
+                elif corruption == "missing":
+                    saved.unlink()
+                else:
+                    (saved.parent / "extra").write_bytes(b"unlisted")
+                for production_exit in ("0", "9"):
+                    result = subprocess.run(["bash", "-euc",
+                        '"$PYTHON" "$CACHE" restore --repository "$ROOT" --dependency-key "$KEY"; make -C "$ROOT" current'],
+                        env=dict(self.env, PYTHON=sys.executable, CACHE=str(CACHE), ROOT=str(self.root),
+                                 KEY=key, PRODUCER_EXIT=production_exit), capture_output=True, text=True)
+                    self.assertEqual(production_exit == "0", result.returncode == 0, result.stdout + result.stderr)
+                    self.assertIn('"layer": "dependency", "reason":', result.stdout)
+                    self.assertIn('"status": "miss"', result.stdout)
+                    self.assertEqual(b"current material", (source / "batteries/README.md").read_bytes())
+                    self.assertNotIn("STRATALINT_ACTIONS_CACHE_SEEDED=1", (self.root / "environment").read_text())
+                saved.unlink(missing_ok=True)
+                saved.write_bytes(original)
+                saved.chmod(mode)
+                (saved.parent / "extra").unlink(missing_ok=True)
+        self.assertEqual(["producer"] * 10, (self.root / "calls").read_text().splitlines())
 
 
 if __name__ == "__main__":

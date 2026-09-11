@@ -148,6 +148,7 @@ public sealed class Sl016ContentDispositionTests
         var source = Assert.Single(document.RequireDigestionSources());
         var entries = new List<RawRepositoryEntry>
         {
+            RawRepositoryEntry.FromText(EngineeringRegistrationFixture.Path, EngineeringRegistrationFixture.Manifest()),
             RawRepositoryEntry.FromText(SourcePath, Encoding.UTF8.GetString(atom.RawBytes.AsSpan())),
             RawRepositoryEntry.FromText(TheoryAtomizerDataLoader.DataPath, TheoryAtomizerDataTests.Minimal),
             RawRepositoryEntry.FromText(EnginePath, engineText),

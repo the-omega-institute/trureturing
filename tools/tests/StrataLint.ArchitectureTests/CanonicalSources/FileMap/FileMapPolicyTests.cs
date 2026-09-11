@@ -7,6 +7,21 @@ namespace StrataLint.ArchitectureTests;
 
 public sealed partial class FileMapPolicyTests
 {
+    [Theory]
+    [InlineData("lean-report")]
+    [InlineData("scribe-content")]
+    public void ReportProducerScopesHaveRegisteredDataVerifier(string scope)
+    {
+        var root = RepositoryLayout.FindRoot();
+        var manifest = FileMapLoader.LoadRepository(root);
+        var entry = Assert.Single(manifest.Match($"Meta/ReportProducers/{scope}.json"));
+
+        Assert.Equal(FileMapKind.Data, entry.Kind);
+        Assert.Equal(FileMapAdmissionPlane.Judge, entry.AdmissionPlane);
+        Assert.Equal("report-producer-scope", Assert.Single(entry.VerifiedBy));
+        Assert.Equal("committed-source", entry.RuntimeDisposition);
+    }
+
     [Fact]
     public void ComputationalProjectionsHaveCanonicalFileMapEntries()
     {
