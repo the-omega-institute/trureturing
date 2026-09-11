@@ -171,17 +171,19 @@ theorem baez_duarte_newton_reciprocal_uniform (K : Set ℂ) (hK : IsCompact K)
   intro s hs
   exact (baez_duarte_newton_reciprocal hdecay (hKH hs)).tsum_eq
 
+/-- The raw zeta product equals one only away from its pole. -/
+theorem baez_duarte_newton_product_off_one {s : ℂ} (hs : s ∈ H) (hs1 : s ≠ 1) :
+    riemannZeta s * F s = 1 := by
+  rw [riemannZeta_eq_inv_sub_mul hs1, mul_assoc,
+    baez_duarte_newton_regularized_product hdecay hs]
+  exact inv_mul_cancel₀ (sub_ne_zero.mpr hs1)
+
 theorem baez_duarte_decay_implies_rh : RiemannHypothesis := by
   apply D5.S3.Weil.ZetaBridge.RightHalfStripRiemannReduction.golden_right_half_strip_implies_rh
   intro s hz hs hlt
   have hs1 : s ≠ 1 := by intro h; subst s; norm_num at hlt
-  have hprod := baez_duarte_newton_regularized_product hdecay hs
-  have hunit : riemannZeta₁ s = 0 := by
-    have he := riemannZeta_eq_inv_sub_mul hs1
-    rw [hz] at he
-    exact (mul_eq_zero.mp he.symm).resolve_left (inv_ne_zero (sub_ne_zero.mpr hs1))
-  rw [hunit, zero_mul] at hprod
-  exact sub_ne_zero.mpr hs1 hprod.symm
+  have hprod := baez_duarte_newton_product_off_one hdecay hs hs1
+  simp only [hz, zero_mul, zero_ne_one] at hprod
 
 omit hdecay in
 /-- The paper's epsilon/2 convention quantifies the identical decay condition. -/
