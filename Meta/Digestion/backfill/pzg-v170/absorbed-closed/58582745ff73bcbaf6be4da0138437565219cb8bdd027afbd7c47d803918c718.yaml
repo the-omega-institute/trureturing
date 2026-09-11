@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:58582745ff73bcbaf6be4da0138437565219cb8bdd027afbd7c47d803918c718
   normalized_sha256: sha256:58582745ff73bcbaf6be4da0138437565219cb8bdd027afbd7c47d803918c718
 cas_ref: sha256:58582745ff73bcbaf6be4da0138437565219cb8bdd027afbd7c47d803918c718
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/Congruence/LehmerTotientStructure.lehmer_totient_structure
+    target_statement_id: sha256:ec2ac3d50806ee12eacbd0b969b0b15c636c0cd5ff628db00a7531e65ec17fbf
 receipts:
   unresolved_subitems: []
