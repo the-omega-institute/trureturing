@@ -12,6 +12,7 @@ import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.PosPart.Ba
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
 
 open scoped BigOperators ComplexOrder CStarAlgebra MatrixOrder
 open D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition
@@ -22,6 +23,9 @@ namespace D5.S3.Quantum.Information.OrthogonalRecordEntropy
 
 variable {n : Type*} [Fintype n] [DecidableEq n]
 
+local instance : ContinuousFunctionalCalculus ℝ (CStarMatrix n n ℂ) IsSelfAdjoint :=
+  IsSelfAdjoint.instContinuousFunctionalCalculus
+
 private theorem cfc_negMulLog_add {A B : CStarMatrix n n ℂ}
     (hA : 0 ≤ A) (hB : 0 ≤ B) (hAB : A * B = 0) :
     cfc Real.negMulLog (A + B) = cfc Real.negMulLog A + cfc Real.negMulLog B := by
@@ -29,15 +33,27 @@ private theorem cfc_negMulLog_add {A B : CStarMatrix n n ℂ}
     (IsSelfAdjoint.of_nonneg hA).sub (IsSelfAdjoint.of_nonneg hB)
   obtain ⟨ha, hb⟩ := CFC.posPart_negPart_unique (a := A - B) rfl hAB hA hB
   have ha' : cfc (fun x : ℝ => x⁺) (A - B) = A := by
-    simpa only [CFC.posPart_def, cfcₙ_eq_cfc] using ha
+    rw [CFC.posPart_def, cfcₙ_eq_cfc (by fun_prop) (by simp)] at ha
+    exact ha
   have hb' : cfc (fun x : ℝ => x⁻) (A - B) = B := by
-    simpa only [CFC.negPart_def, cfcₙ_eq_cfc] using hb
-  rw [← ha', ← hb', ← cfc_add, ← cfc_comp', ← cfc_comp', ← cfc_comp', ← cfc_add]
-  apply cfc_congr
-  intro x _
-  rcases le_total 0 x with hx | hx
-  · simp [posPart_eq_self.mpr hx, negPart_eq_zero.mpr hx]
-  · simp [posPart_eq_zero.mpr hx, negPart_eq_neg.mpr hx]
+    rw [CFC.negPart_def, cfcₙ_eq_cfc (by fun_prop) (by simp)] at hb
+    exact hb
+  have hsum : cfc (fun x : ℝ => x⁺ + x⁻) (A - B) = A + B := by
+    rw [cfc_add (A - B) (fun x : ℝ => x⁺) (fun x : ℝ => x⁻), ha', hb']
+  calc
+    _ = cfc (fun x : ℝ => Real.negMulLog (x⁺ + x⁻)) (A - B) := by
+      rw [cfc_comp' Real.negMulLog (fun x : ℝ => x⁺ + x⁻) (A - B), hsum]
+    _ = cfc (fun x : ℝ => Real.negMulLog x⁺ + Real.negMulLog x⁻) (A - B) := by
+      apply cfc_congr
+      intro x _
+      rcases le_total 0 x with hx | hx
+      · simp [posPart_eq_self.mpr hx, negPart_eq_zero.mpr hx]
+      · simp [posPart_eq_zero.mpr hx, negPart_eq_neg.mpr hx]
+    _ = _ := by
+      rw [cfc_add (A - B) (fun x : ℝ => Real.negMulLog x⁺)
+        (fun x : ℝ => Real.negMulLog x⁻),
+        cfc_comp' Real.negMulLog (fun x : ℝ => x⁺) (A - B),
+        cfc_comp' Real.negMulLog (fun x : ℝ => x⁻) (A - B), ha', hb']
 
 private theorem cfc_negMulLog_smul (p : ℝ) (A : CStarMatrix n n ℂ)
     (hA : IsSelfAdjoint A) :
@@ -48,10 +64,37 @@ private theorem cfc_negMulLog_smul (p : ℝ) (A : CStarMatrix n n ℂ)
       fun x => Real.negMulLog p * x + p * Real.negMulLog x := by
     funext x
     rw [Real.negMulLog_mul, mul_comm x]
-  rw [hf, cfc_add, cfc_const_mul, cfc_const_mul, cfc_id]
+  rw [hf, cfc_add A (fun x : ℝ => Real.negMulLog p * x)
+    (fun x : ℝ => p * Real.negMulLog x), cfc_const_mul (Real.negMulLog p) (fun x : ℝ => x) A,
+    cfc_const_mul p Real.negMulLog A, cfc_id' ℝ A]
+
+private noncomputable def realTrace (A : CStarMatrix n n ℂ) : ℝ :=
+  (Matrix.trace (CStarMatrix.ofMatrix.symm A)).re
+
+omit [DecidableEq n] in
+private theorem realTrace_add (A B : CStarMatrix n n ℂ) :
+    realTrace (A + B) = realTrace A + realTrace B := by
+  unfold realTrace
+  change (Matrix.trace (CStarMatrix.ofMatrix.symm A + CStarMatrix.ofMatrix.symm B)).re = _
+  rw [Matrix.trace_add, Complex.add_re]
+
+omit [DecidableEq n] in
+private theorem realTrace_smul (p : ℝ) (A : CStarMatrix n n ℂ) :
+    realTrace (p • A) = p * realTrace A := by
+  unfold realTrace
+  change (Matrix.trace (p • CStarMatrix.ofMatrix.symm A)).re = _
+  rw [Matrix.trace_smul]
+  simp [Complex.real_smul]
+
+omit [DecidableEq n] in
+private theorem realTrace_sum {ι : Type*} (s : Finset ι) (A : ι → CStarMatrix n n ℂ) :
+    realTrace (∑ i ∈ s, A i) = ∑ i ∈ s, realTrace (A i) := by
+  unfold realTrace
+  change (Matrix.trace (∑ i ∈ s, CStarMatrix.ofMatrix.symm (A i))).re = _
+  rw [Matrix.trace_sum, Complex.re_sum]
 
 private theorem entropy_eq_trace_cfc (rho : DensityState n) :
-    vonNeumannEntropy rho = (Matrix.trace (cfc Real.negMulLog rho.1)).re := by
+    vonNeumannEntropy rho = realTrace (cfc Real.negMulLog rho.1) := by
   have hA : IsSelfAdjoint rho.1 := IsSelfAdjoint.of_nonneg rho.2.1
   have hlog : ContinuousOn Real.log (spectrum ℝ rho.1) := by
     change ContinuousOn Real.log (spectrum ℝ (CStarMatrix.ofMatrix.symm rho.1))
@@ -59,7 +102,8 @@ private theorem entropy_eq_trace_cfc (rho : DensityState n) :
   have hf : Real.negMulLog = fun x : ℝ => -(x * Real.log x) := by
     funext x
     simp [Real.negMulLog]
-  rw [hf, cfc_neg, cfc_mul, cfc_id]
+  rw [hf, cfc_neg (fun x : ℝ => x * Real.log x) rho.1,
+    cfc_mul (fun x : ℝ => x) Real.log rho.1 continuousOn_id hlog, cfc_id' ℝ rho.1]
   change -(Matrix.trace (rho.1 * CFC.log rho.1)).re =
     (Matrix.trace (-(rho.1 * CFC.log rho.1))).re
   rw [Matrix.trace_neg, Complex.neg_re]
@@ -70,15 +114,17 @@ noncomputable def mixtureState {ι : Type*} [Fintype ι]
     (rho : ι → DensityState n) : DensityState n := by
   refine ⟨∑ i, p i • (rho i).1, Finset.sum_nonneg (fun i _ => ?_), ?_⟩
   · exact smul_nonneg (hp i) (rho i).2.1
-  · change Matrix.trace (∑ i, p i • (CStarMatrix.ofMatrix.symm (rho i).1)) = 1
+  · have ht (i : ι) : Matrix.trace (CStarMatrix.ofMatrix.symm (rho i).1) = 1 :=
+      (rho i).2.2
+    change Matrix.trace (∑ i, p i • (CStarMatrix.ofMatrix.symm (rho i).1)) = 1
     rw [Matrix.trace_sum]
-    simp only [Matrix.trace_smul, (rho _).2.2]
+    simp only [Matrix.trace_smul, ht, Complex.real_smul, mul_one]
     change (∑ i, (p i : ℂ)) = 1
     exact_mod_cast hs
 
 private theorem cfc_negMulLog_sum {ι : Type*} [DecidableEq ι]
     (s : Finset ι) (A : ι → CStarMatrix n n ℂ) (hA : ∀ i ∈ s, 0 ≤ A i)
-    (ho : s.Pairwise (fun i j => A i * A j = 0)) :
+    (ho : (s : Set ι).Pairwise (fun i j => A i * A j = 0)) :
     cfc Real.negMulLog (∑ i ∈ s, A i) = ∑ i ∈ s, cfc Real.negMulLog (A i) := by
   induction s using Finset.induction_on with
   | empty => simp
@@ -102,19 +148,18 @@ theorem orthogonal_mixture_entropy {ι : Type*} [Fintype ι]
       shannonEntropy p + ∑ i, p i * vonNeumannEntropy (rho i) := by
   classical
   rw [entropy_eq_trace_cfc]
-  change (Matrix.trace (cfc Real.negMulLog (∑ i, p i • (rho i).1))).re = _
+  change realTrace (cfc Real.negMulLog (∑ i, p i • (rho i).1)) = _
+  have ho : ((Finset.univ : Finset ι) : Set ι).Pairwise
+      (fun i j => (p i • (rho i).1) * (p j • (rho j).1) = 0) := by
+    intro i _ j _ hij
+    rw [smul_mul_assoc, mul_smul_comm, hOrthogonal hij, smul_zero, smul_zero]
   rw [cfc_negMulLog_sum Finset.univ _
-    (fun i _ => smul_nonneg (hp i) (rho i).2.1) (fun i _ j _ hij => ?_)]
-  · simp_rw [cfc_negMulLog_smul _ _ (IsSelfAdjoint.of_nonneg (rho _).2.1)]
-    change (Matrix.trace (∑ i, Real.negMulLog (p i) • (rho i).1 +
-      p i • cfc Real.negMulLog (rho i).1)).re = _
-    rw [Matrix.trace_sum, Complex.re_sum]
-    simp only [Matrix.trace_add, Matrix.trace_smul, (rho _).2.2]
-    simp only [Complex.add_re, Complex.real_smul, Complex.mul_re,
-      Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero, Complex.one_re, mul_one]
-    simp_rw [← entropy_eq_trace_cfc]
-    exact Finset.sum_add_distrib
-  · rw [smul_mul_assoc, mul_smul_comm, hOrthogonal hij, smul_zero, smul_zero]
+    (fun i _ => smul_nonneg (hp i) (rho i).2.1) ho, realTrace_sum]
+  have ht (i : ι) : realTrace (rho i).1 = 1 := by
+    exact congrArg Complex.re (rho i).2.2
+  simp_rw [cfc_negMulLog_smul _ _ (IsSelfAdjoint.of_nonneg (rho _).2.1),
+    realTrace_add, realTrace_smul, ht, mul_one, ← entropy_eq_trace_cfc]
+  exact Finset.sum_add_distrib
 
 #print axioms orthogonal_mixture_entropy
 
