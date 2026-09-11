@@ -11,13 +11,16 @@ strata_touched:
   - D5/S3/Analytic/SeriesInequalities/BaezDuarteNewtonMajorant
   - D5/S3/Analytic/SeriesInequalities/BaezDuarteQBounds
   - D5/S3/Weil/Analytic/BaezDuarteNewton
+  - D5/S3/Weil/Analytic/BaezDuarteContinuation
 license: "No license assertion is made; this note records mathematical facts and bibliographic metadata only."
 triage: anchor
 ---
 <!-- GID: D5/L/Analytic/baezduarte2003criterion -->
 # Normalized products and compact convergence
 
-## Locator
+## Verified locator
+
+- URL: https://arxiv.org/abs/math/0307215v1
 
 https://arxiv.org/abs/math/0307215v1 is the retained primary version.
 The registered PDF extraction locates equation (1.5), Lemma 1.1, and
@@ -120,3 +123,31 @@ holomorphic extension, and both RH directions remain outside this theorem.
 The source's printed positive 3/4 and Lemma 2.2 reference caveats remain as
 recorded above. No new primary-source access, successful Oracle participation,
 or exhaustive literature search is claimed by this implementation.
+
+## Continuation under the original decay assumption
+
+BaezDuarteContinuation proves the continuation and compact uniformity of
+Proposition 2.1 under every-positive-epsilon coefficient decay, together with
+the sufficiency direction of Theorem 1.1. The finite complex coefficients are
+bound to the existing real coefficients using even-zeta realness. Rescaling
+epsilon explicitly binds the two printed decay conventions.
+
+The holomorphic sum is identified with `(s-1)/riemannZeta₁(s)` on the whole
+open half-plane Re(s)>1/2. At one it is zero. Off one it agrees with the raw
+reciprocal zeta. All compact subsets, including those containing one, have
+uniform convergence of the actual range partial sums. Analytic uniqueness
+applied to the entire multiplier supplies the product identity and excludes
+zeros in the right half of the critical strip; the existing reduction then
+yields standard RH. These are literature-attested statements with a
+repo-derived implementation through public mathlib analytic continuation APIs.
+
+The six original paper pages were read for this continuation. Theorem 1.1 and
+Proposition 2.1 print the negative exponent; the page 5 proof paragraph prints
+positive 3/4. The negative exponent is used in the proof. Page 5 also prints
+a positive Abel-integral sign and a shifted transformed kernel; the actual
+coefficient requires the negative derivative integral at its actual index.
+The square substitution in the beta integral requires a factor 1/2. These
+are recorded mathematical corrections, not an author-issued erratum. No
+unproved printed identity is imported as a hypothesis. The Abel and beta
+transfer and the RH necessity direction are not claimed by this continuation
+module. Earlier module scope statements above remain historical and exact.
