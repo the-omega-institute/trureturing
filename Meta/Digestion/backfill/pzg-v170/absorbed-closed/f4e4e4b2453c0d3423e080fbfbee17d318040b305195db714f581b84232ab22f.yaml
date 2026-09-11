@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:f4e4e4b2453c0d3423e080fbfbee17d318040b305195db714f581b84232ab22f
   normalized_sha256: sha256:f4e4e4b2453c0d3423e080fbfbee17d318040b305195db714f581b84232ab22f
 cas_ref: sha256:f4e4e4b2453c0d3423e080fbfbee17d318040b305195db714f581b84232ab22f
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Factorization/LehmerTotientDichotomy.prime_dvd_totient_of_prime_sq_dvd
+    target_statement_id: sha256:9f0a29376da55338a6198879d9772b06ba3a1e5ae33aa89b684277d4c5e98d69
 receipts:
   unresolved_subitems: []

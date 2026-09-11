@@ -1,3 +1,87 @@
+## 第 15 轮结算:no-go 应记为 **`literature-attested`**(2026-09-11)
+
+任务 `333503a8-6b9d-4ad6-9d6e-2c927bfc875b` 已回包(超时后按 ID 取得,未重投)。
+
+### ① 文献状态:**已知**,不得标 `suspected-novel`
+
+判词原文:「**数学陈述已知。**它是 Schur 引理的直接推论;在酉表示的语境下,文献还明确给出了
+『不变子空间 ↔ 等变正交投影』的等价表述。**没有依据将这个数学内核标成 suspected-novel**。」
+
+出处:**Etingof 等《Introduction to representation theory》(2011) §1.3, Prop 1.16 / Cor 1.17,
+印刷页 8–9**;**Sophie Morel《MAT 449: Representation theory》(2018) §I.3.4,
+Thm I.3.4.1 / Lemma I.3.4.3, 印刷页 25–26**(后者直接写出该等价)。
+该席同时声明:**未核定最早历史出处**;判 `literature-attested` 不需要先解决首创年代问题。
+
+### ② 与 Zurek / Korbicz 的关系:**不同命题**
+
+- **非 einselection**:Zurek(式 4.21–4.22)的对易对象是**指定的相互作用 Hamiltonian**,
+  不是群作用;本 no-go 须额外指定群作用并要求记录投影逐个与之对易,才谈得上表示论限制。
+- **非 SBS**:Korbicz 等(*Quantum origins of objectivity*, PRA **91**, 032122, 2015)
+  的 SBS 定义(Def 2、式 1–2)**不要求**支撑投影与某个共享不可约群作用对易。
+
+### ③ 该席指出的两处,本线照收
+
+1. **冗余假设**:代数意义的不可约性下,零/一结论**不依赖酉性、自伴性、复数域或有限维性**;
+   去掉多余假设**不会**使它成为新结果。⟹ `RecordSymmetryNoGo` 的假设可收紧,且收紧不增新颖性。
+2. **互信息平台 ≠ objectivity**:Le 与 Olaya-Castro(2019)区分互信息平台 / strong quantum
+   Darwinism / SBS。⟹ **`TERRAIN-MAP.md` 中该行已由「全部经典信息 / objectivity」
+   改为「互信息平台」并加边界注**——那是 orchestrator 先前的过度主张,本轮更正。
+
+### 处置
+
+- `RecordSymmetryNoGo`(已证未合)须将 `AssessedProvenance` 由 `FromRepo`
+  改为 **`FromLiterature`** 并建 L 平面 note,方可落地。**先冻结再补表态是漏认前人成果的入口**,
+  故该模块自证完起一直压着未推,本轮答案到才动。
+
+## 本轮:**文献核对一条 no-go**(第 15 轮,2026-09-11)
+
+自第 14 轮定价表以来,本线新增两条**条件切片**(均已冻结上 dev,物理输入在假设位、`axiom` 计数 0):
+
+| 切片 | GID | 内容 |
+|---|---|---|
+| observer→objective | `D5/S3/Quantum/Information/OrthogonalRecordEntropy` | 记录片段两两正交 ⟹ `I = H(p)`,片段携带指针全部经典信息 |
+| cross-species | `D5/S3/Quantum/Matrix/CrossSpeciesConsensus` | 共享**不可约**表示 + 等变自伴 ⟹ 该可观测量为标量,各 probe 读数相同 |
+
+**把两组假设放在一起,它们相斥**——这是地图暴露的空白(第 3.6 条),也是本轮唯一的问题。
+
+### Q1:下面这条 no-go,文献里已经有了吗?
+
+> 设 `U : G →* Matrix n n ℂ`。若该表示**不可约**,则任何等变的自伴幂等 `P`
+> (`P² = P`、`Pᴴ = P`、`∀g, P·U g = U g·P`)必为 `0` 或 `1`。
+> 故**不存在非平凡的等变正交记录结构**,除非表示**可约**。
+> 物理读法:**objectivity 要求指针基破坏那个共享对称性**。
+
+论证极短(`P = r•1` 由已冻结的 `equivariant_selfAdjoint_eq_smul_id_of_irreducible` 给出,
+`P² = P ⟹ r² = r ⟹ r ∈ {0,1}`),**正因为短,必须先问文献**(第 3.6 条 硬规则①:
+候选进管线前先答「文献里有没有这条陈述」;第 3.7 条:写作即尽调,三态表态不许留白)。
+
+**要回答的三件事**:
+①这条陈述(或其等价形)在文献中是否已有?给出处;
+②它与 Zurek/Korbicz 一系的 einselection、pointer basis、SBS 结果是**同一件事**、**推论**,还是**不同**?
+③若已有,本仓应表 `literature-attested` 并建 L 平面 note;若确系新,表 `suspected-novel`。
+**答「已知」是完全可接受的答案,不要为了让它显得新而含糊。**
+
+### orchestrator 的数值读数(可复算)
+
+commutant 维数:不可约(两个通用酉生成)**恒为 1**,25/25;
+**判别力对照**:块对角可约时 **> 1**,25/25 ⟹ 存在非平凡等变投影。
+
+### 本轮派发状态:**在飞,不得重投**
+
+任务 ID **`333503a8-6b9d-4ad6-9d6e-2c927bfc875b`**,池 `chrono-chatgpt-pro-pool`。
+runner 在 3600s 处超时退出(`QR_ROUND status=failed`),但**超时不等于失败**:
+其判词原文为「still dispatched … Re-check later with `nyxid oracle result <id>`」,
+实时查询 `nyxid oracle result` 返回 `Phase: waiting_response`。
+**下一轮先用该 ID 取结果,不要重新派席**(重投会白费一次派发,且可能撞配额)。
+
+**判在飞的判据(两者不可混)**:归档文件**开头**的 CLI 状态序列是**提交那一刻**的状态,
+不随回包更新,以它判在飞是坏原材料;**实时 `nyxid oracle result` 的 `Phase:` 才是当前状态**。
+
+### 同期在飞
+
+形式化席 `nogo-1` 正在把上述 no-go 及其逆写成 Lean。**本轮的文献答案会决定它的
+`AssessedProvenance` 表态**,故先问,不等它落地。
+
 ## 第 14 轮结算:定价表已出,**四项全部卡在物理输入**(2026-09-10)
 
 Q1 问的是「给右栏四项定价,不选」。该席答得清楚,判词存于 `round-14-20260910T225553Z.md`。
