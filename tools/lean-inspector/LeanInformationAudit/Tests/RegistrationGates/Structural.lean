@@ -62,6 +62,12 @@ run_cmd Elab.Command.liftTermElabM do
   unless message.endsWith "reason=invalid_witness" do throwError "{message}"
   logInfo "IE-C048"
 -- Both witnesses inhabit the declared subtype, including its domain proof.
+-- A distinct canonical arena keeps this positive singleton catalog complete.
+namespace Domain
+abbrev arena : StructuralArena := ⟨Nat⟩
+def law : StructuralPrimitiveLawArena arena := RegistrationStructural.law
+def good : StructuralPrimitiveRealization arena law.signature := RegistrationStructural.good
+def bad : StructuralPrimitiveRealization arena law.signature := RegistrationStructural.bad
 def fullDomain (_ : StructuralPrimitiveRealization arena law.signature) : Prop := True
 theorem domainVariation : StructuralDomainVariation law fullDomain :=
   ⟨⟨good, trivial⟩, ⟨bad, trivial⟩, rfl, Nat.one_ne_zero⟩
@@ -130,4 +136,5 @@ run_cmd Elab.Command.liftTermElabM do
     | throwError "InvalidDomainWitness: malformed proof accepted"
   unless message.endsWith "reason=invalid_witness" do throwError "{message}"
   logInfo "invalid_witness"
+end Domain
 end RegistrationStructural

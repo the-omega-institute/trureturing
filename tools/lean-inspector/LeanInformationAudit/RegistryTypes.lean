@@ -63,13 +63,63 @@ structure CatalogRecord where
   catalogName : Name
   units : Array CatalogUnitRecord
   localSealNames : Bool
+  deriving Inhabited
+
+inductive OccurrenceCertificate where
+  | positive (name : Name)
+  | trivial (name : Name)
+  deriving Inhabited, Repr
+
+def OccurrenceCertificate.name : OccurrenceCertificate → Name
+  | .positive name | .trivial name => name
+
+def OccurrenceCertificate.suffix : OccurrenceCertificate → String
+  | .positive _ => "__lowers_escape"
+  | .trivial _ => "__trivial_in_catalog"
+
+inductive CatalogVerdict where
+  | irredundant (name : Name)
+  | redundant (name : Name)
+  deriving Inhabited, Repr
+
+def CatalogVerdict.name : CatalogVerdict → Name
+  | .irredundant name | .redundant name => name
+
+def CatalogVerdict.label : CatalogVerdict → String
+  | .irredundant _ => "irredundant"
+  | .redundant _ => "redundant"
+
+def CatalogVerdict.suffix : CatalogVerdict → String
+  | .irredundant _ => "__catalog_irredundant"
+  | .redundant _ => "__catalog_redundant"
+
+/-- Context-specific evidence for the single IE-C007 record. -/
+inductive ZeroCaptureContext where
+  | finite (full without : Nat) (stateEnumeration : Name)
+  | structural (registration catalogSeal : Name)
+  deriving Inhabited
+
+structure ZeroCaptureRecord where
+  root : Name
+  theoremName : Name
+  arena : Name
+  catalog : Name
+  index : Nat
+  realization : Name
+  trivialityCertificate : Name
+  context : ZeroCaptureContext
+  sameKernelCandidates : Array (Name × Nat × Name) := #[]
+  closureCandidates : Array Name := #[]
+  closureCertificate : Option Name := none
+  deriving Inhabited
 
 /-- Computed theorem data retained for summaries and the optional artifact. -/
 structure SealTheoremRecord where
   theoremName : Name
   unitName : Name
   realizationName : Name
-  certificateName : Name
+  certificate : OccurrenceCertificate
+  closureCertificate : Option Name := none
   registrationModuleName : Name
   index : Nat
   primitiveCount : Nat
@@ -81,15 +131,22 @@ structure SealTheoremRecord where
   roleSignatureHistogram : Array (String × Nat)
   proofMethod : String
 
+deriving instance Inhabited for SealTheoremRecord
+
+def SealTheoremRecord.certificateName (row : SealTheoremRecord) : Name := row.certificate.name
+
 /-- Computed arena data retained for summaries and the optional artifact. -/
 structure SealArenaRecord where
   catalog : CatalogRecord
-  irredundantCertificateName : Name
+  verdict : CatalogVerdict
+  collisionClasses : Array (Array Name × Array Name) := #[]
+  stateEnumeration : Option Name := none
   proofMethod : String
   stateCard : Nat
   offDiagonalPairCount : Nat
   fullEscapeCount : Nat
   theorems : Array SealTheoremRecord
+  deriving Inhabited
 
 namespace DispositionCensus
 
