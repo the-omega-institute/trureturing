@@ -1,3 +1,59 @@
+## 本轮:**同一类风险的第二次自查**(第 16 轮,2026-09-11)
+
+第 15 轮查出 `RecordSymmetryNoGo` 的表态错(`FromRepo` 应为 `FromLiterature`)。
+本轮问的是**同一类问题在另一条已合入 dev 的结果上是否也成立**——这不是席位空闲派题,
+是一个可点名的风险(第 7.10 条:防的必须是发生过的事;它刚发生过一次)。
+
+### 本轮派发状态:**载体不可用,未能派出**(非「无靶」)
+
+三个池依次失败,判词各不相同,**已按纪律停止换池**(换过两次,第三次即为撞墙):
+
+| 池 | 判词 | 语义 |
+|---|---|---|
+| `chrono-chatgpt-pro-pool` | `infrastructure_retry_exhausted` | 在 `selecting_model / page_ready` 间空转四次,从未发出 |
+| `company-chatgpt-pro` | `oracle_mode_required` | 该池要求 `--tag mode:chat\|mode:work`,**runner 不设该标签** ⟹ 经此 runner 结构上不可用 |
+| `chatgpt-pro-pool` | `extraction_failure` | 载体侧随机失败 |
+
+**这不是「本轮无靶」**——Q1 是实靶且有具名风险(见下)。这是 第 5.9 条 的**能力缺口**:
+记具名 open、等灯亮,其余 lane 继续推进。**失败归档已删**,不留空壳被下轮误读为判词。
+
+**已知的四种 nyxid 终态,处置各不相同,不可只看 `QR_ROUND status=failed`**:
+`extraction_failure`(连两次换池)/ 超时 `still dispatched`(**按 task ID 取,禁重投**)/
+`infrastructure_retry_exhausted`(终态,换池)/ `oracle_mode_required`(改调用方式,`retryable: false`)。
+
+**复原条件**:任一池恢复即可按本文件现有 Q1 原样派出,**问题不需重写**。
+
+### Q1:容量律 `card ≤ Σᵢ mᵢ` 的文献状态
+
+已冻结于 `D5/S3/Quantum/Matrix/RecordCapacity`(PR #6962,已合 dev)。其陈述为:
+
+> 设 `U : G →* Matrix n n ℂ`,`commutant U` 半单,由 Wedderburn 取块尺寸 `m`。
+> 则任何由非零、两两正交、求和为单位的**等变**幂等组成的族 `P` 满足 `card I ≤ ∑ b, m b`。
+
+该模块内 Wedderburn 那条已表 `FromLiterature`,**但计数那条仍表 `FromRepo`**。
+
+**要回答三件事**:
+① 「半单代数 `⊕ M_{mᵢ}` 中,完备正交幂等族的基数 ≤ `Σ mᵢ`」这条计数界,文献里已有吗?给出处。
+   (它看起来是 Artin–Wedderburn 之后的标准推论,与「`M_m` 中完备正交幂等族最多 `m` 个」同源。)
+② 若已有,本仓该表 `literature-attested` 并建 L note;若确系本仓推导,表 `repo-derived`。
+③ **更要紧的一问**:`docs/reports/quantum-reality/TERRAIN-MAP.md` 第二节把它称作
+   「**唯一的定量律**」。若①的答案是「已知」,该措辞就是**过度主张**,须改。
+   请直接判:这个称呼站得住吗?
+
+**答「已知、该改措辞」是完全可接受的答案。** 第 15 轮已有一次同类更正,
+本线不因承认而损失什么——因冒领而损失的更多(第 3.7 条:冒认与漏认同为不诚实)。
+
+### 为什么这一轮值得派席
+
+第 15 轮的教训不是「那一条表错了」,是**表态在写作当时无人核**。
+同一形态已出现一次,按 第 7.11 条 该查是否有第二例,而不是等下一次被抓。
+
+### 本线其余状态(不构成本轮问题)
+
+tier-3 四项右栏**已按预算包络停派**:五轮 oracle、四席条件切片,
+「四项变成无条件的」计数为 **0**,边际改进触底(第 2.7 条),根因(需 τ=0 给物理输入)在权限外。
+语料消化继续:`quantum-reality` 定理 229.1 的 FS 记录时间界已证完待合。
+
 ## 第 15 轮结算:no-go 应记为 **`literature-attested`**(2026-09-11)
 
 任务 `333503a8-6b9d-4ad6-9d6e-2c927bfc875b` 已回包(超时后按 ID 取得,未重投)。
