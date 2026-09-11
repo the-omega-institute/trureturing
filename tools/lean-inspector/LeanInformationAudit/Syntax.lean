@@ -17,6 +17,14 @@ private def declarationName (id : TSyntax `ident) : CommandElabM Name := do
 private def absoluteIdentFrom (ref : Syntax) (name : Name) : Ident :=
   mkIdentFrom ref (`_root_ ++ name)
 
+private def elabCompanionDefinition (ref : Syntax) (name : Name)
+    (type value : TSyntax `term) : CommandElabM Unit := do
+  let id := absoluteIdentFrom ref (privateToUserName name)
+  if isPrivateName name then
+    elabCommand (← `(command| private def $id : $type := $value))
+  else
+    elabCommand (← `(command| def $id : $type := $value))
+
 private def ensureRegisterableName (env : Environment) (theoremName : Name) :
     CommandElabM Unit := do
   if isCompanionName theoremName then
@@ -156,13 +164,14 @@ elab "information_theorem " theoremId:ident ppLine
           ($arenaId:ident).signature := $primitives))
     checkNativeStatement theoremName arenaName realizationName statement
     elabCommand (← `(command| theorem $theoremId : $statement := $proof))
-    let unitName := theoremName.str theoremUnitSuffix
-    let unitId := absoluteIdentFrom theoremId unitName
-    elabCommand (← `(command| def $unitId :
-        D5.S3.ConceptDynamics.InformationEscape.TheoremUnit ($arenaId:ident).toArena :=
+    let unitName := localCompanionName (← getEnv) theoremName theoremUnitSuffix
+    let unitType ← `(term|
+      D5.S3.ConceptDynamics.InformationEscape.TheoremUnit ($arenaId:ident).toArena)
+    let unitValue ← `(term|
       { primitives := ($realizationId:ident).toPrimitiveBundle
         Statement := $statement
-        proof := $theoremId }))
+        proof := $theoremId })
+    elabCompanionDefinition theoremId unitName unitType unitValue
     registerEntry {
       theoremName
       unitName
@@ -211,14 +220,13 @@ private def elabRegisterInformationTheorem : CommandElab := fun stx => do
     unless validLegacy do
       throwError "IE-C006 StatementProofMismatch: {theoremName}"
     checkRealizationBundle theoremName arenaName legacyArgs[2]! primitiveTerm
-    let unitName := theoremName.str theoremUnitSuffix
-    let unitId := absoluteIdentFrom theoremId unitName
+    let unitName := localCompanionName (← getEnv) theoremName theoremUnitSuffix
     let unitType <- `(term|
       D5.S3.ConceptDynamics.InformationEscape.TheoremUnit ($arenaId:ident).toArena)
     let unitValue <- `(term|
       D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit
         $realizationId:ident $theoremId:ident)
-    elabCommand (← `(command| def $unitId : $unitType := $unitValue))
+    elabCompanionDefinition theoremId unitName unitType unitValue
     registerEntry {
       theoremName
       unitName

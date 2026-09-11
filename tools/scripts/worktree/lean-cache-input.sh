@@ -324,6 +324,12 @@ lean_dependency_sha256() {
   hash_file "$manifest"
 }
 
+# Shared supporting-Lean closure for build addresses and report producers.
+inspector_lean_paths() {
+  [[ -d "$REPOSITORY/tools/lean-inspector" ]] || return 0
+  (cd "$REPOSITORY" && find tools/lean-inspector -type f -name '*.lean' -print) | sort
+}
+
 # Lean input preimage v1: root, sorted D5 sources, sorted inspector Lean
 # sources; then toolchain, manifest, and lakefiles in their declared order.
 lean_cache_address() {
@@ -342,13 +348,10 @@ lean_cache_address() {
   while IFS= read -r path; do
     append_manifest_entry "$sources_manifest" "${path#"$REPOSITORY/"}" || return 2
   done < "$sources_list"
-  if [[ -d "$REPOSITORY/tools/lean-inspector" ]]; then
-    find "$REPOSITORY/tools/lean-inspector" -type f -name '*.lean' -print \
-      | sort > "$inspector_sources_list" || return 2
-    while IFS= read -r path; do
-      append_manifest_entry "$sources_manifest" "${path#"$REPOSITORY/"}" || return 2
-    done < "$inspector_sources_list"
-  fi
+  inspector_lean_paths > "$inspector_sources_list" || return 2
+  while IFS= read -r path; do
+    append_manifest_entry "$sources_manifest" "$path" || return 2
+  done < "$inspector_sources_list"
   materialize_manifest "$sources_manifest" || return 2
   sources_sha256="$(hash_file "$sources_manifest")" || return 2
 
