@@ -8,7 +8,6 @@ url: https://doi.org/10.4064/aa200515-10-3
 claim: Equations (1.6)–(1.11) define the original theta differential weight and its logarithmic kernel and give the Mellin and all-complex Fourier representations of the Riemann xi function.
 strata_touched:
   - D5/S3/Analytic/Fourier/ThetaDifferentialKernel
-  - D5/S3/Analytic/Fourier/ThetaHalfLine
   - D5/S3/Analytic/Fourier/XiThetaTransform
 license: citation-only
 triage: anchor

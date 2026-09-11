@@ -101,7 +101,7 @@ theorem omega_eq_series {t : ℝ} (ht : 0 < t) :
       3 * Real.pi * t * thetaSeries 2 t := by
   unfold omega thetaSeries
   rw [← tsum_mul_left, ← tsum_mul_left,
-    ← Summable.tsum_sub ((thetaSeries_summable 4 ht).mul_left _) 
+    ← Summable.tsum_sub ((thetaSeries_summable 4 ht).mul_left _)
       ((thetaSeries_summable 2 ht).mul_left _)]
   apply tsum_congr
   intro n
