@@ -14,6 +14,13 @@
 (空闲跌至 25%);改走 serial-lean 后**三席并发**跑完完整门链,40 个采样点
 最低空闲 55%、零 kill。
 
+**那个「三」是整台机器的额度,不是「席位的额度」。** 2026-09-11 实测:三席正常跑着,
+orchestrator 自己在第四棵树上起了一个完整 `make lean-report` + `make emit`,
+宿主低内存守卫**一次杀掉五个作业** —— 三席之一、那条 report、以及三个无关的
+gh/nyxid 作业。派席的负载门只看得见席位,看不见调用方自己起的活,
+所以这道算术得调用方自己做:**开任何重 Lean 作业之前,把它算进同一个额度**。
+被杀后照下一节清孤儿;那次数学一条没丢,因为席位按本段要求增量提交过。
+
 **巨型模块要预先建好,不要在席位树里重编**:实测 `VersionBOddCountUnderdetermines`
 单进程峰值 7.57 GB。`oom-guard.sh` 只播种 `ExponentialImplicitParityPeriodThree`
 (#6360),其注释所称「the single module known to peak host memory」**已过期**。
