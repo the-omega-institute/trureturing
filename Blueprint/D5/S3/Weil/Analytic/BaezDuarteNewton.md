@@ -10,9 +10,7 @@ $$\forall s\in\mathbb{C}, 1<\operatorname{Re}\left(s\right)\Rightarrow \operator
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Analytic/BaezDuarteNewton.baez_duarte_newton_hasSum` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Luis Báez-Duarte (2003). *A new necessary and sufficient condition for the Riemann hypothesis*. URL: <https://arxiv.org/abs/math/0307215v1>.
+*Citation.* Luis Báez-Duarte (2003). *A new necessary and sufficient condition for the Riemann hypothesis*. URL: <https://arxiv.org/abs/math/0307215v1>.
 
 *Commentary.*
 
@@ -22,7 +20,7 @@ For m=n+1, the unsigned coupled kernel is the reciprocal square of m times the k
 
 The imported signed coefficient HasSum evaluates one family of fibers. A private adapter of mathlib's complex binomial series evaluates the other, and positive-real-base power rules identify the resulting Moebius Dirichlet terms. The existing Dirichlet product and nonvanishing theorems identify their sum with reciprocal zeta. Both zero indices are retained; at n=0 the inner series sums to one, and at s=2 only c(0) survives.
 
-This is a repo-derived formal proof of the source's initial half-plane identification, not its sharper half-plane extension or an RH direction. The generic adapters are private. Utility none classifies this as a general infinite analytical theorem, not a finite computation.
+This initial half-plane identification is literature-attested; its Lean proof is implemented in this repository. The sharper half-plane extension and both RH directions remain outside this theorem. The generic adapters are private. Utility none classifies this as a general infinite analytical theorem, not a finite computation.
 
 ## References
 

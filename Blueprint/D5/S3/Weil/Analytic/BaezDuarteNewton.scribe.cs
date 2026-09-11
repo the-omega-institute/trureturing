@@ -14,7 +14,7 @@ internal sealed class BaezDuarteNewtonDocument : IScribeDocumentDefinition
             DeclarationHandle.Create("D5/S3/Weil/Analytic/BaezDuarteNewton.baez_duarte_newton_hasSum"),
             H("The original Newton series on the initial half-plane"),
             StatementSource.FromAuthor(Statement()),
-            AssessedProvenance.FromRepo(
+            AssessedProvenance.FromLiterature(
                 LibraryNoteRef.Create("D5/L/Analytic/baezduarte2003criterion")),
             Blocks(
                 Paragraph(Text("Here c is the existing real baezDuarte finite binomial transform "
@@ -36,10 +36,11 @@ internal sealed class BaezDuarteNewtonDocument : IScribeDocumentDefinition
                     + "Moebius Dirichlet terms. The existing Dirichlet product and nonvanishing "
                     + "theorems identify their sum with reciprocal zeta. Both zero indices are "
                     + "retained; at n=0 the inner series sums to one, and at s=2 only c(0) survives.")),
-                Paragraph(Text("This is a repo-derived formal proof of the source's initial "
-                    + "half-plane identification, not its sharper half-plane extension or an RH "
-                    + "direction. The generic adapters are private. Utility none classifies this "
-                    + "as a general infinite analytical theorem, not a finite computation."))),
+                Paragraph(Text("This initial half-plane identification is literature-attested; its Lean "
+                    + "proof is implemented in this repository. The sharper half-plane extension "
+                    + "and both RH directions remain outside this theorem. The generic adapters "
+                    + "are private. Utility none classifies this as a general infinite analytical "
+                    + "theorem, not a finite computation."))),
             DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] args) =>
