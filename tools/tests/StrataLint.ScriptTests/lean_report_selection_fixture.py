@@ -191,18 +191,25 @@ class Contract(unittest.TestCase):
         self.write('tools/scripts/worktree/lean-cache-run.sh', '#!/bin/sh\nexec "$@"\n')
         (self.repo / 'tools/scripts/worktree/lean-cache-run.sh').chmod(0o700)
         (self.repo / INPUT).chmod(0o700)
-        self.policy['impact_cohorts'][1]['members'] = ['D5/Uncovered*.lean']
-        self.save()
         env = dict(os.environ, TMPDIR=str(SCRATCH), LAKE_BIN=str(lake))
         for suffix in ('INPUT_ADDRESS', 'REPOSITORY_SHA256', 'PRODUCER_SHA256', 'RESIDENT_SHA256', 'CONFIG_SHA256'):
             env['STRATALINT_REPORT_' + suffix] = 'a' * 64
-        result = subprocess.run(['bash', str(self.repo / 'tools/lean-inspector/inspect.sh'),
-            '--repository', str(self.repo), '--output', str(self.repo / 'report.json')],
-            text=True, capture_output=True, env=env)
-        self.assertNotEqual(result.returncode, 0)
-        self.assertIn('D5/Base.lean', result.stderr)
-        self.assertFalse(marker.exists(), result.stdout + result.stderr)
-        self.assertFalse((self.repo / 'report.json').exists())
+        for failure in ('missing-owner', 'conflicting-owner', 'missing-manifest'):
+            with self.subTest(failure=failure):
+                self.policy = declaration()
+                if failure == 'missing-owner':
+                    self.policy['impact_cohorts'][1]['members'] = ['D5/Uncovered*.lean']
+                elif failure == 'conflicting-owner':
+                    self.policy['impact_cohorts'][2]['members'].append('D5/Base.lean')
+                self.save()
+                if failure == 'missing-manifest': (self.repo / MANIFEST).unlink()
+                result = subprocess.run(['bash', str(self.repo / 'tools/lean-inspector/inspect.sh'),
+                    '--repository', str(self.repo), '--output', str(self.repo / 'report.json')],
+                    text=True, capture_output=True, env=env)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn(MANIFEST if failure == 'missing-manifest' else 'D5/Base.lean', result.stderr)
+                self.assertFalse(marker.exists(), result.stdout + result.stderr)
+                self.assertFalse((self.repo / 'report.json').exists())
 
     def test_entrypoint_failures(self):
         for relative in ('tools/scripts/report/lean-report-cache.sh',
@@ -309,6 +316,73 @@ class Contract(unittest.TestCase):
         seed(old_records[2:])
         Path(str(report) + '.sha256').write_text('corrupt')
         self.assertEqual(run()['status'], 'fallback')
+
+    def malformed_seed_fallback(self, damages):
+        module_spec = importlib.util.spec_from_file_location('delta', self.repo / 'tools/lean-inspector/delta.py')
+        delta = importlib.util.module_from_spec(module_spec)
+        module_spec.loader.exec_module(delta)
+        current = self.selection().modules()
+        table, output, cache = self.repo / 'modules.tsv', self.repo / 'plan.json', self.repo / 'cache'
+        table.write_text(''.join(name + '\t' + path + '\n' for name, path in current.items()))
+        records = [dict(module=name, source_path=path,
+            source_sha256='sha256:' + hashlib.sha256((self.repo / path).read_bytes()).hexdigest(),
+            imports=[], declarations=[dict(type_sha256='sha256:' + 'e'*64, statement_id='sha256:' + 'f'*64)])
+            for name, path in current.items()]
+        def seed(entry, damage=None):
+            entry.mkdir(parents=True)
+            root = dict(schema='stratalint-raw-lean-report-v2', modules=copy.deepcopy(records))
+            if damage and damage[0] == 'root': root = damage[1]
+            elif damage and damage[0] != 'provenance': root['modules'][0]['declarations'][0][damage[0]] = damage[1]
+            report = entry / 'raw-lean-report.json'
+            report.write_text(json.dumps(root))
+            digest = hashlib.sha256(report.read_bytes()).hexdigest()
+            Path(str(report) + '.sha256').write_text(digest + '  raw-lean-report.json\n')
+            Path(str(report) + '.input.attestation').write_text(
+                'schema=stratalint-lean-report-input-attestation-v1\nrepository_input_sha256=' + 'e'*64
+                + '\nproducer_sha256=' + 'b'*64 + '\nreport_sha256=' + digest + '\n')
+            provenance = dict(schema='stratalint-lean-report-provenance-v1', side='candidate', mode='produced',
+                source_side='candidate', input_address='sha256:' + entry.name, producer_sha256='b'*64,
+                repository_inspector_sha256='b'*64, lean_config_sha256='c'*64,
+                lean_sources_sha256='f'*64, report_sha256=digest)
+            if damage and damage[0] == 'provenance': provenance = damage[1]
+            Path(str(report) + '.provenance.json').write_text(json.dumps(provenance))
+            with zipfile.ZipFile(str(report) + '.materials.zip', 'w'): pass
+            return report
+        def run():
+            result = subprocess.run([sys.executable, '-B', str(self.repo / 'tools/lean-inspector/delta.py'),
+                'plan', str(self.repo), str(cache), 'a'*64, 'b'*64, 'b'*64, 'c'*64, str(table), str(output)],
+                text=True, capture_output=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            return json.loads(output.read_text())
+        for damage in damages:
+            for older in (False, True):
+                with self.subTest(damage=damage, older=older):
+                    if cache.exists(): shutil.rmtree(cache)
+                    invalid = cache / ('d'*64)
+                    report = seed(invalid, damage)
+                    os.utime(invalid, ns=(2000000000, 2000000000))
+                    if older:
+                        valid = cache / ('9'*64)
+                        seed(valid)
+                        os.utime(valid, ns=(1000000000, 1000000000))
+                    result = run()
+                    self.assertEqual(result['status'], 'reuse' if older else 'fallback')
+                    if older:
+                        self.assertEqual(result['baseline'], str(valid / 'raw-lean-report.json'))
+                        self.assertEqual(result['recheck'], [])
+                    # The public validation boundary must also reject decoded
+                    # nonobjects without relying on the planner's early filter.
+                    self.assertIsNone(delta.valid_baseline(invalid, 'a'*64, 'b'*64, 'b'*64, 'c'*64))
+                    if damage[0] != 'provenance':
+                        with self.assertRaisesRegex(ValueError, 'report schema|module record'):
+                            delta.parse_json_modules(report)
+
+    def test_malformed_provenance(self):
+        self.malformed_seed_fallback([('provenance', None), ('provenance', [])])
+
+    def test_malformed_reports(self):
+        self.malformed_seed_fallback([('root', None), ('root', []),
+            ('type_sha256', None), ('statement_id', [])])
 
     def test_delta_records(self):
         module_spec = importlib.util.spec_from_file_location('delta', self.repo / 'tools/lean-inspector/delta.py')

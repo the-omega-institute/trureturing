@@ -75,7 +75,9 @@ def parse_json_modules(report: pathlib.Path) -> tuple[dict[str, dict], str]:
     if fields[0] != digest or not HEX64.fullmatch(fields[0]):
         raise ValueError("report SHA sidecar does not match report")
     root = json.loads(data.decode("utf-8"))
-    if root.get("schema") != "stratalint-raw-lean-report-v2" or not isinstance(root.get("modules"), list):
+    if (not isinstance(root, dict)
+            or root.get("schema") != "stratalint-raw-lean-report-v2"
+            or not isinstance(root.get("modules"), list)):
         raise ValueError("report schema is not canonical")
     modules: dict[str, dict] = {}
     for item in root["modules"]:
@@ -93,7 +95,9 @@ def parse_json_modules(report: pathlib.Path) -> tuple[dict[str, dict], str]:
                 or any(not isinstance(value, str) for value in imports)
                 or not isinstance(declarations, list)
                 or any(not isinstance(value, dict)
+                       or not isinstance(value.get("type_sha256"), str)
                        or not SHA_FIELD.fullmatch(value.get("type_sha256", ""))
+                       or not isinstance(value.get("statement_id"), str)
                        or not SHA_FIELD.fullmatch(value.get("statement_id", ""))
                        for value in declarations)):
             raise ValueError("module record is malformed")
@@ -147,7 +151,7 @@ def valid_baseline(
                 or attestation_lines[3] != "report_sha256=" + report_sha):
             return None
         value = json.loads(provenance.read_text(encoding="utf-8"))
-        if (set(value) != {
+        if (not isinstance(value, dict) or set(value) != {
                     "schema", "side", "mode", "source_side", "input_address",
                     "producer_sha256", "repository_inspector_sha256",
                     "lean_sources_sha256", "lean_config_sha256", "report_sha256"}
@@ -199,7 +203,8 @@ def plan(args: argparse.Namespace) -> int:
         provenance = entry / "raw-lean-report.json.provenance.json"
         try:
             value = json.loads(provenance.read_text(encoding="utf-8"))
-            if (value.get("schema") != "stratalint-lean-report-provenance-v1"
+            if (not isinstance(value, dict)
+                    or value.get("schema") != "stratalint-lean-report-provenance-v1"
                     or value.get("side") != "candidate"
                     or value.get("source_side") != "candidate"
                     or value.get("mode") not in ("produced", "cached")

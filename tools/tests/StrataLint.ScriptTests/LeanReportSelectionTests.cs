@@ -13,6 +13,8 @@ public sealed class LeanReportSelectionTests
     [InlineData("delta_records")]
     [InlineData("planner_changes")]
     [InlineData("entrypoint_failures")]
+    [InlineData("malformed_provenance")]
+    [InlineData("malformed_reports")]
     public void RegisteredSelectionContract(string scenario)
     {
         if (OperatingSystem.IsWindows()) return;
