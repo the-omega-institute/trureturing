@@ -1,0 +1,222 @@
+{
+  "scope": "Canonical validation, warm probes, cache prerequisites and their repair attempts. Read-only text inspections and authored file writes are represented by the evidence files rather than an invented full shell transcript. Search capability/HTTP query receipts are in search.json.",
+  "commands": [
+    {
+      "command": "make lean-cache-ensure",
+      "exit_code": 0,
+      "evidence": "tracked tool session 37376; cache seeded by clonefile, project warm, Mathlib initially cold"
+    },
+    {
+      "command": "make lean LEAN_TARGETS=D5.S3.ConceptDynamics.Spacetime.GeneratedProduct",
+      "exit_code": 2,
+      "evidence": "tracked tool session 65326; owned Lake PID 27248 interrupted during cold dependency compilation before published cache restore",
+      "classification": "interrupted warmup, not theorem failure"
+    },
+    {
+      "command": "lake exe cache get",
+      "attempt_label": "mathlib-cache",
+      "exit_code": 1,
+      "command_output": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/mathlib-cache.log",
+      "output_sha256": "b216fd36b9d4d20d95c427c01b538a3024cd7307eba44ace6017bd58ac3f1dfb",
+      "exit_receipt": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/mathlib-cache.exit"
+    },
+    {
+      "command": "make lean LEAN_TARGETS=D5.S3.ConceptDynamics.Spacetime.LeafSquareReadout",
+      "attempt_label": "lean-initial",
+      "exit_code": 2,
+      "command_output": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/lean-initial.log",
+      "output_sha256": "70db2bb6d57643614130c6fef2922ccd0b6c2dea5b9d5028081330dfcb83e4f7",
+      "exit_receipt": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/lean-initial.exit"
+    },
+    {
+      "command": "lake env lean D5/S3/ConceptDynamics/Spacetime/LeafSquareReadout.lean",
+      "attempt_label": "lean-repair-1",
+      "exit_code": 1,
+      "command_output": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/lean-repair-1.log",
+      "output_sha256": "c1bea51a946438ea26f6c40d011fc8add10584d9c2741af860645b3bdccf7f5c",
+      "exit_receipt": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/lean-repair-1.exit"
+    },
+    {
+      "command": "lake env lean D5/S3/ConceptDynamics/Spacetime/LeafSquareReadout.lean",
+      "attempt_label": "lean-repair-2",
+      "exit_code": 1,
+      "command_output": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/lean-repair-2.log",
+      "output_sha256": "d116f0ff638aa13bc24a1395c6e0bf2d4e186a1f28488e7cb1189da30ea0989a",
+      "exit_receipt": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/lean-repair-2.exit"
+    },
+    {
+      "command": "make lean LEAN_TARGETS=D5.S3.ConceptDynamics.Spacetime.LeafSquareReadout",
+      "attempt_label": "lean-focused",
+      "exit_code": 0,
+      "command_output": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/lean-focused.log",
+      "output_sha256": "a7090675591cfbb728d890a192be0dfe17b33e723a799da0b58ba64174511596",
+      "exit_receipt": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/lean-focused.exit"
+    },
+    {
+      "command": "lake env lean docs/reports/csa-leaf-square68-0911/BoundaryProbes.lean",
+      "attempt_label": "boundary-1",
+      "exit_code": 1,
+      "command_output": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/boundary-1.log",
+      "output_sha256": "32ddbc7175efffeae99e4148ae9f111e068c2d7b3f8931b6b399295374bf1647",
+      "exit_receipt": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/boundary-1.exit"
+    },
+    {
+      "command": "lake env lean docs/reports/csa-leaf-square68-0911/BoundaryProbes.lean",
+      "attempt_label": "boundary-2",
+      "exit_code": 1,
+      "command_output": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/boundary-2.log",
+      "output_sha256": "6e302d137f12c90ec0d8b55dd6eef2638ca6ddf77df94d53a6fb7053814c35d1",
+      "exit_receipt": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/boundary-2.exit"
+    },
+    {
+      "command": "lake env lean docs/reports/csa-leaf-square68-0911/BoundaryProbes.lean",
+      "attempt_label": "boundary-3",
+      "exit_code": 0,
+      "command_output": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/boundary-3.log",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_receipt": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/boundary-3.exit"
+    },
+    {
+      "command": "lake env lean docs/reports/csa-leaf-square68-0911/BoundaryProbes.lean",
+      "attempt_label": "boundary-4",
+      "exit_code": 1,
+      "command_output": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/boundary-4.log",
+      "output_sha256": "ca40dc6c7ad7f2f1bbde3cde7fbded459348b5fa741130236352ad67c5037104",
+      "exit_receipt": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/boundary-4.exit"
+    },
+    {
+      "command": "lake env lean docs/reports/csa-leaf-square68-0911/BoundaryProbes.lean",
+      "attempt_label": "boundary-5",
+      "exit_code": 1,
+      "command_output": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/boundary-5.log",
+      "output_sha256": "327076b454bc5a41610bda8e52bb9b1eac9ebe1e9b0e027e0a9618a1acbb5545",
+      "exit_receipt": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/boundary-5.exit"
+    },
+    {
+      "command": "lake env lean docs/reports/csa-leaf-square68-0911/BoundaryProbes.lean",
+      "attempt_label": "boundary-6",
+      "exit_code": 1,
+      "command_output": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/boundary-6.log",
+      "output_sha256": "990caa9d9806b865a744d527382560e7779185191696219b717b7754786e5367",
+      "exit_receipt": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/boundary-6.exit"
+    },
+    {
+      "command": "lake env lean docs/reports/csa-leaf-square68-0911/BoundaryProbes.lean",
+      "attempt_label": "boundary-final",
+      "exit_code": 0,
+      "command_output": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/boundary-final.log",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_receipt": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/boundary-final.exit"
+    },
+    {
+      "command": "make lean-report",
+      "attempt_label": "lean-report",
+      "exit_code": 0,
+      "command_output": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/lean-report.log",
+      "output_sha256": "f1e903b1cd10b00fd2339afd45d3508744a44f9a875564921c7944ab5bc1889c",
+      "exit_receipt": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/lean-report.exit"
+    },
+    {
+      "command": "lake env lean --run tools/lean-inspector/Inspector.lean --dependencies docs/reports/csa-leaf-square68-0911/dependency-manifest.json docs/reports/csa-leaf-square68-0911/raw-dependencies.jsonl bodies",
+      "attempt_label": "dependencies",
+      "exit_code": 1,
+      "command_output": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/dependencies.log",
+      "output_sha256": "a1d3d84632a87b5b928248f490c8857872b838b67da72b8a1e7358267098412a",
+      "exit_receipt": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/dependencies.exit"
+    },
+    {
+      "command": "lake env lean --run tools/lean-inspector/Inspector.lean --dependencies docs/reports/csa-leaf-square68-0911/dependency-manifest.json docs/reports/csa-leaf-square68-0911/raw-dependencies.jsonl bodies",
+      "attempt_label": "dependencies-final",
+      "exit_code": 0,
+      "command_output": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/dependencies-final.log",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_receipt": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/dependencies-final.exit"
+    },
+    {
+      "command": "lake env lean docs/reports/csa-leaf-square68-0911/DeclarationTypes.lean",
+      "attempt_label": "declaration-types",
+      "exit_code": 1,
+      "command_output": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/declaration-types.log",
+      "output_sha256": "7e59c805d48d3152dee15d8e5f8a3c957688965fd97270cfe51c2ab97211df5b",
+      "exit_receipt": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/declaration-types.exit"
+    },
+    {
+      "command": "lake env lean docs/reports/csa-leaf-square68-0911/DeclarationTypes.lean",
+      "attempt_label": "declaration-types-final",
+      "exit_code": 0,
+      "command_output": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/declaration-types-final.log",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_receipt": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/declaration-types-final.exit"
+    },
+    {
+      "command": "lake env lean docs/reports/csa-leaf-square68-0911/DeclarationTypes.lean",
+      "attempt_label": "declaration-types-compact",
+      "exit_code": 0,
+      "command_output": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/declaration-types-compact.log",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_receipt": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/declaration-types-compact.exit"
+    },
+    {
+      "command": "lake env lean docs/reports/csa-leaf-square68-0911/LiveUseProbe.lean",
+      "attempt_label": "live-use",
+      "exit_code": 0,
+      "command_output": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/live-use.log",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_receipt": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/live-use.exit"
+    },
+    {
+      "command": "make emit",
+      "attempt_label": "emit",
+      "exit_code": 0,
+      "command_output": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/emit.log",
+      "output_sha256": "32374392c125103fd44ae107d676bd666c58bfa0bc2df384aa6a7b8bdb46047d",
+      "exit_receipt": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/emit.exit"
+    },
+    {
+      "command": "make gate BASE=e492280a34dc1f09ac42d23749ad6a90bd223584 GATE_ARGS=--skip-engineering",
+      "attempt_label": "gate",
+      "exit_code": 2,
+      "command_output": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/gate.log",
+      "output_sha256": "c6de4dcb0e2d40f46e6b5b4f4b4ee87bf5bbb9725c8bef112009c35317c23cf7",
+      "exit_receipt": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/gate.exit"
+    },
+    {
+      "command": "dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- check --candidate-lean-report .lake/build/stratalint/raw-lean-report.json --protected-base e492280a34dc1f09ac42d23749ad6a90bd223584",
+      "attempt_label": "check",
+      "exit_code": 1,
+      "command_output": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/check.log",
+      "output_sha256": "9525f270e15389431c2b4dcc8b3d54f688aea5f132f13eb55c84679f5de0b268",
+      "exit_receipt": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/check.exit"
+    },
+    {
+      "command": "dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- check --candidate-lean-report .lake/build/stratalint/raw-lean-report.json --protected-base e492280a34dc1f09ac42d23749ad6a90bd223584",
+      "attempt_label": "check-final",
+      "exit_code": 2,
+      "command_output": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/check-final.log",
+      "output_sha256": "db23cc2b9c932093128a30fa125a4b9406eadfeaff85c0cdbfdc6ec62261d1b3",
+      "exit_receipt": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/check-final.exit",
+      "interpretation": "Snapshot rejected binary module-materials.zip as non-UTF-8; repaired as exact text JSON."
+    },
+    {
+      "command": "dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- check --candidate-lean-report .lake/build/stratalint/raw-lean-report.json --protected-base e492280a34dc1f09ac42d23749ad6a90bd223584",
+      "attempt_label": "check-text-materials",
+      "exit_code": 3,
+      "command_output": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/check-text-materials.log",
+      "output_sha256": "4f0c1bda82efa42c4f02ba68ec9e975a22d1ac100ca55fb353bb4e5d8e853bad",
+      "exit_receipt": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/check-text-materials.exit",
+      "interpretation": "Final direct check: exit 3, protected-surface change only; content rules completed; utility semantics unverified; state missing as expected before caller freeze."
+    }
+  ],
+  "final_status": {
+    "make_gate": "exit 2 (underlying setup exit 1), vacuous fixed BASE=HEAD; caller commit required",
+    "direct_check": "exit 3 protected-surface-only",
+    "full_preflight": "not run; caller-owned",
+    "lifecycle": "not run; caller-owned"
+  },
+  "integrity_checks": {
+    "git_diff_check_exit_code": 0,
+    "source_pin_reference_files_mathlib_head_check_exit_code": 0,
+    "canonical_types_dependency_rows_match_exit_code": 0,
+    "canonical_material_byte_hash_check_exit_code": 0
+  }
+}
