@@ -24,7 +24,7 @@ internal sealed class RecordCapacityDocument : IScribeDocumentDefinition
                 "The ranges exhaust the dimension budget",
                 "The trace of each idempotent is its range dimension. Summing and using "
                     + "the identity resolution gives the dimension of the carrier. "
-                    + "The scalar field may be any field of characteristic zero."),
+                    + "The scalar field may be any field of characteristic zero.", true),
             Result("carrier-bound", "card_le_finrank_of_idempotent_sum",
                 "Each nonzero record consumes a dimension",
                 "A zero range dimension would make the trace and hence the idempotent "
@@ -55,11 +55,14 @@ internal sealed class RecordCapacityDocument : IScribeDocumentDefinition
                     + "semisimple commutant. Those same sizes bound every finite nonzero "
                     + "equivariant orthogonal resolution. Semisimplicity is an assumption."))));
 
-    private static DocumentBlock Result(string id, string declaration, string title, string text) =>
+    private static DocumentBlock Result(
+        string id, string declaration, string title, string text, bool literature = false) =>
         Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Module + declaration), H(title),
             StatementSource.WithoutFormula(),
-            AssessedProvenance.FromLiterature(
-                LibraryNoteRef.Create("D5/L/Quantum/mathlib2026recordcapacity")),
+            literature
+                ? AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Quantum/mathlib2026recordcapacity"))
+                : AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
 }
