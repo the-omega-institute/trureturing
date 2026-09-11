@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:cfc4939437b1bc82216557648ed4b1601b911f385c5d0f34e2f430943a2a24c1
   normalized_sha256: sha256:cfc4939437b1bc82216557648ed4b1601b911f385c5d0f34e2f430943a2a24c1
 cas_ref: sha256:cfc4939437b1bc82216557648ed4b1601b911f385c5d0f34e2f430943a2a24c1
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Divergence/FreeEnergyFluctuationIdentity.free_energy_deriv
+    target_statement_id: sha256:078df835308136f7f6825ad452175776fe320f402805df528ced03508837c5f1
 receipts:
   unresolved_subitems: []
