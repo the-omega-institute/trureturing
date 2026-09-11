@@ -10,8 +10,13 @@ public sealed class JudgeSeedTopologyTests
     [InlineData(true)]
     public void ActualJudgeSeedProjectRequiresItsOwner(bool removeOwner)
     {
-        var current = GitRepositorySnapshotReader.ReadCurrent(
-            RepositoryLayout.FindRoot(), static path => path.EndsWith(".csproj", StringComparison.Ordinal));
+        var root = RepositoryLayout.FindRoot();
+        var current = RawRepositorySnapshot.Create(
+            GitIndexRepositoryFiles.EnumerateDeclared(root, "tools")
+                .Where(static entry => entry.RelativePath.EndsWith(".csproj", StringComparison.Ordinal))
+                .Select(static entry => RawRepositoryEntry.FromText(
+                    entry.RelativePath,
+                    File.ReadAllText(entry.FullPath))));
         Assert.Contains(current.Entries, entry => entry.Path == Product);
         var baseline = Decode(current.Entries.Where(entry => entry.Path != Product && entry.Path != Owner));
         var candidate = Decode(current.Entries.Where(entry => !removeOwner || entry.Path != Owner));
