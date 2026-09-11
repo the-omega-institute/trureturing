@@ -357,6 +357,16 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
+pattern = "Meta/package-materials.json"
+kind = "data"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["CommonBuildOutputs"]
+verified_by = ["PackageMaterialRegistry"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
 pattern = "Meta/registry.yaml"
 kind = "data"
 admission_plane = "judge"

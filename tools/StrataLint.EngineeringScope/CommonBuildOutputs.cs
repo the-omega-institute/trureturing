@@ -1,6 +1,5 @@
 using System.Reflection.Metadata;
 using System.Reflection.PortableExecutable;
-using System.Text.Json;
 using StrataLint.Engine;
 
 namespace StrataLint.EngineeringScope;
@@ -17,12 +16,21 @@ internal static class CommonBuildOutputs
     {
         var projects = new Dictionary<string, string>(StringComparer.Ordinal);
         var paths = new HashSet<string>(StringComparer.Ordinal);
+        string? packageRoot = null;
         var snapshot = CommonExecutionEvidence.Snapshot(root);
         foreach (var file in Directory.GetFiles(Path.Combine(root, RootPath), "*.outputs", SearchOption.AllDirectories))
         {
             var lines = File.ReadAllLines(file);
-            if (lines.Length < 6 || !lines[4].StartsWith("reference=", StringComparison.Ordinal))
+            if (lines.Length < 6 || !lines[3].StartsWith("packages=", StringComparison.Ordinal)
+                || !lines[4].StartsWith("reference=", StringComparison.Ordinal))
                 throw new InvalidDataException("missing compiler output inventory: " + file);
+            var configuredRoot = lines[3]["packages=".Length..];
+            if (string.IsNullOrWhiteSpace(configuredRoot) || !Path.IsPathFullyQualified(configuredRoot))
+                throw new InvalidDataException("missing absolute NuGetPackageRoot in compiler output receipt: " + file);
+            configuredRoot = Path.TrimEndingDirectorySeparator(Path.GetFullPath(configuredRoot));
+            if (packageRoot is not null && packageRoot != configuredRoot)
+                throw new InvalidDataException("conflicting NuGetPackageRoot in compiler output receipt: " + file);
+            packageRoot = configuredRoot;
             var project = Relative(lines[0]);
             var assembly = Relative(lines[1]);
             var directory = Path.TrimEndingDirectorySeparator(Path.GetFullPath(lines[2])) + Path.DirectorySeparatorChar;
@@ -45,28 +53,15 @@ internal static class CommonBuildOutputs
                 if (!File.Exists(Path.Combine(root, path))) throw new InvalidDataException("missing build output: " + path);
                 paths.Add(path);
             }
-            // NuGet's resolved file inventory also serves tests which compile
-            // synthetic projects or query package metadata. Assets themselves
-            // contain producer paths and are never used by a recipient.
-            using var assets = JsonDocument.Parse(File.ReadAllText(lines[3]));
-            var folders = assets.RootElement.GetProperty("packageFolders").EnumerateObject().Select(item => item.Name).ToArray();
-            foreach (var library in assets.RootElement.GetProperty("libraries").EnumerateObject())
-            {
-                if (library.Value.GetProperty("type").GetString() != "package") continue;
-                var package = library.Value.GetProperty("path").GetString()!;
-                foreach (var entry in library.Value.GetProperty("files").EnumerateArray())
-                {
-                    var relative = package + "/" + entry.GetString();
-                    if (!RepoPath.TryCreate(relative, out _)) throw new InvalidDataException("invalid resolved package file: " + relative);
-                    var destination = PackagesPath + "/" + relative;
-                    if (!paths.Add(destination)) continue;
-                    var source = folders.Select(folder => Path.Combine(folder, relative)).FirstOrDefault(File.Exists)
-                        ?? throw new InvalidDataException("missing resolved package file: " + relative);
-                    var target = Path.Combine(root, destination);
-                    Directory.CreateDirectory(Path.GetDirectoryName(target)!);
-                    File.Copy(source, target, overwrite: true);
-                }
-            }
+        }
+        foreach (var material in PackageMaterialRegistry.Expand(root, packageRoot
+                     ?? throw new InvalidDataException("missing compiler NuGetPackageRoot receipt")))
+        {
+            var destination = PackagesPath + "/" + material.Relative;
+            paths.Add(destination);
+            var target = Path.Combine(root, destination);
+            Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+            File.Copy(material.Source, target, overwrite: true);
         }
         var selected = EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadSnapshotProjects(snapshot));
         var tests = selected.Select(project => new BuiltTestProject(project, projects.TryGetValue(project, out var assembly)
@@ -76,7 +71,7 @@ internal static class CommonBuildOutputs
             foreach (var path in new[] { assembly, Path.ChangeExtension(assembly, ".deps.json"), Path.ChangeExtension(assembly, ".runtimeconfig.json") })
                 if (!paths.Contains(path)) throw new InvalidDataException("missing runtime output: " + path);
         CommonExecutionEvidence.Write(root, TestsPath, tests);
-        return paths.Append(TestsPath).ToArray();
+        return paths.Append(TestsPath).Order(StringComparer.Ordinal).ToArray();
 
         string Relative(string path)
         {
