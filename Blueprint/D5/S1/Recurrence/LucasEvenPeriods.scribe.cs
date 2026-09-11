@@ -72,10 +72,10 @@ internal sealed class LucasEvenPeriodsDocument : IScribeDocumentDefinition
             Seq(D(2), Sp, Lt, Sp, M()), Sp, Rightarrow, Sp),
         Paren(Seq(Exists, Sp, Typed("r", Naturals()), Comma, Sp, Positive(F.Id("r")), Sp,
             Land, Sp, Equal(V(F.Id("r")), D(0)))), Sp, Rightarrow, Sp,
-        Seq(Paren(Equal(Call("matrixPeriod", Cast(P(), ZMod(M())), RUnit()),
-            Call("companionPeriod", Cast(P(), ZMod(M())), RUnit()))), Sp, Iff, Sp,
+        Paren(Seq(Equal(Call("matrixPeriod", Cast(P(), ZMod(M())), RUnit()),
+            Call("companionPeriod", Cast(P(), ZMod(M())), RUnit())), Sp, Iff, Sp,
             Not(Paren(Seq(Equal(Q(), D(1)), Sp, Land, Sp,
                 Equal(M(), D(4)), Sp, Land, Sp,
-                Divides(D(4), Cast(P(), Integers())))))),
+                Divides(D(4), Cast(P(), Integers()))))))),
     ]));
 }
