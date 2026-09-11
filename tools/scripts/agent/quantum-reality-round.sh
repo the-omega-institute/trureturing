@@ -28,7 +28,7 @@
 # `pool` is optional and normally omitted: empty lets `nyx.sh` rank the usable
 # pools and traverse them. Pass one only to pin a specific carrier.
 # Writes: <lane>/docs/reports/quantum-reality/round-<N>-<utc>.md
-# Sentinel: QR_ROUND round=<N> status=dispatched|failed file=<path>
+# Sentinel: QR_ROUND status=dispatched|failed file=<path>
 set -u
 
 LANE="${1:-/Users/chronoai/trureturing-quantum-reality}"
@@ -43,22 +43,13 @@ OPEN="$DIR/OPEN-QUESTIONS.md"
 [ -f "$OPEN" ]    || { echo "QR_ROUND status=failed reason=no-open-questions path=$OPEN"; exit 2; }
 
 mkdir -p "$DIR"
-# The round number is the archive's own maximum plus one, not a count.
-# Counting was wrong every time it mattered: a failed round's archive is deleted
-# on purpose (an empty shell would be misread as a verdict next round), so the
-# count undershoots by exactly the number of failures. It produced 10, 11, 12, 13
-# while the real rounds were 12, 14, 15, 16, and archives were renamed by hand
-# twice before the derivation itself was fixed (第 7.11 条: the same symptom a
-# second time means stop renaming files and fix the rule).
-n=$(find "$DIR" -maxdepth 1 -name 'round-*.md' 2>/dev/null \
-    | sed -n 's|.*/round-\([0-9][0-9]*\)-.*|\1|p' \
-    | sort -n | tail -1)
-n=$(( ${n:-0} + 1 ))
+# No round number: nothing read it, and three derivations for it were wrong.
+# The round is identified by OPEN-QUESTIONS.md and the archive by its UTC stamp.
 utc=$(date -u +%Y%m%dT%H%M%SZ)
 head_sha=$(git -C "$LANE" rev-parse origin/dev 2>/dev/null || echo unknown)
 brief=$(mktemp)
 {
-  printf '# 量子现实常设研究线 · 第 %s 轮\n\n' "$n"
+  printf '# 量子现实常设研究线\n\n'
   printf '本轮源码固定在 `%s`。取文件用\n' "$head_sha"
   printf '`https://github.com/the-omega-institute/trureturing/blob/%s/<path>`。\n\n' "$head_sha"
   cat "$CHARTER"
@@ -66,14 +57,14 @@ brief=$(mktemp)
   cat "$OPEN"
 } > "$brief"
 
-out="$DIR/round-$n-$utc.md"
+out="$DIR/round-$utc.md"
 if NYX_POOL="$POOL" bash "$NYX" ask "$brief" "$out"; then
-  echo "QR_ROUND round=$n status=dispatched file=$out pool=${POOL:-traversed} base=$head_sha"
+  echo "QR_ROUND status=dispatched file=$out pool=${POOL:-traversed} base=$head_sha"
   rm -f "$brief"; exit 0
 fi
 rc=$?
 # nyx.sh has already printed a classified NYX_* line and, on a timeout, written
 # the task id to "$out.taskid". Carry its exit code through instead of flattening
 # every failure to 1: the caller's next move differs by verdict.
-echo "QR_ROUND round=$n status=failed file=$out pool=${POOL:-traversed} nyx_rc=$rc"
+echo "QR_ROUND status=failed file=$out pool=${POOL:-traversed} nyx_rc=$rc"
 rm -f "$brief"; exit "$rc"
