@@ -316,7 +316,11 @@ public sealed class LeanReportCacheTests
         using var world = new CacheWorld();
         var cacheEnabled = stage == "cache-restore";
         var first = world.RunPair(cacheEnabled: cacheEnabled, reportVersion: 1);
-        Assert.Equal(0, first.ExitCode);
+        Assert.True(
+            first.ExitCode == 0,
+            $"Initial report production failed with exit {first.ExitCode}.\n"
+                + $"stdout:\n{Encoding.UTF8.GetString(first.StandardOutput)}\n"
+                + $"stderr:\n{Encoding.UTF8.GetString(first.StandardError)}");
         var prior = world.SnapshotLiveBundle();
 
         var failed = world.RunPair(
