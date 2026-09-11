@@ -32,9 +32,17 @@ def provenanceJudgeAPIs : Array Name := #[
 
 /-- A fresh, fixed budget per comparison; exceptions propagate to the query's
 incomplete result. Only types and identity data are reduced, never proof values. -/
-private def boundedDefEq (a b : Expr) : MetaM Bool :=
+private def boundedDefEq (a b : Expr) (decisionType : Bool := false) : MetaM Bool :=
   withCurrHeartbeats <| withOptions
-    (fun o => (o.set `maxHeartbeats (10000 : Nat)).set `maxRecDepth (1024 : Nat)) do
+    (fun o => (o.set `maxHeartbeats (10000 : Nat)).set `maxRecDepth (1024 : Nat)) <|
+    withTransparency .default do
+      -- Escalate only at the final semantic match. An alias may hide Decidable;
+      -- its argument may discard a rigid binder only at default transparency.
+      let a ← whnf a
+      if decisionType && !a.isAppOfArity ``Decidable 1 then return false
+      let a ← instantiateMVars (← whnf (if decisionType then a.appArg! else a))
+      if a.hasMVar then throwError "unresolved provenance type"
+      if a.hasFVar || a.hasLooseBVars then return false
       isDefEq a b
 
 initialize registerTraceClass `InformationProvenance.check
@@ -145,7 +153,7 @@ private structure ClosureState where
   constants : NameHashSet := {}
   pending : List Name := []
   visited : Std.HashSet Expr := {}
-  compared : Std.HashMap Expr Bool := {}
+  compared : Std.HashMap (Bool × Expr) Bool := {}
   classifiedTypes : Std.HashSet Expr := {}
   inferred : Std.HashMap Expr Expr := {}
   reduced : Std.HashMap Expr Expr := {}
@@ -188,7 +196,7 @@ private def inferredType (e : Expr) : ClosureM Expr := do
 
 private def reducedType (e : Expr) : ClosureM Expr := do
   if let some type := (← get).reduced[e]? then return type
-  let type ← boundedMeta do instantiateMVars (← whnf e)
+  let type ← boundedMeta <| withTransparency .instances do instantiateMVars (← whnf e)
   if type.hasMVar then throwError "unresolved provenance type"
   modify fun s => { s with reduced := s.reduced.insert e type }
   return type
@@ -199,9 +207,14 @@ needed to exhibit a constant in nf(S). Without a witness we disable the filter,
 including for pure binder/sort statements. Fuel exhaustion also disables it. -/
 private def hasNormalConstant : Nat → Expr → MetaM Bool
   | 0, _ => pure false
-  | fuel + 1, e => do
+  | fuel + 1, e => withTransparency .instances do
+    let some e := recordHead (← getEnv) 256 e | return false
     let e ← whnf e
-    if e.getAppFn.isConst then return true
+    if let .const name _ := e.getAppFn then
+      match (← getEnv).find? name with
+      | some (.inductInfo _) | some (.axiomInfo _) | some (.opaqueInfo _) => return true
+      | some (.defnInfo _) => return ← hasNormalConstant fuel e
+      | _ => pure ()
     match e with
     | .forallE n t b bi =>
       if ← hasNormalConstant fuel t then return true
@@ -228,11 +241,11 @@ private def typeConstants (env : Environment) (e : Expr)
 
 /-- Soundness: definitionally equal closed types have coincident normal heads;
 every constant in a normal form belongs to the original term's transitive
-constant closure. Our witness ensures nf(S) contains a constant. Consequently
+constant closure. Our irreducible-head witness ensures nf(S) contains a constant. Consequently
 closure(T) disjoint from closure(S) implies T is not definitionally S. The same
 argument applies to Decidable S. We use the union for the initial type filter,
 then S alone for proposition comparisons. Unknown/open inputs fall back to the
-semantic classifier; a failed optimization never licenses a clean verdict. -/
+semantic classifier; exhaustion remains incomplete, never a clean verdict. -/
 private def mayMatch (decision : Bool) (candidate : Expr) : ClosureM Bool := do
   if !(← get).filterEnabled || candidate.hasFVar || candidate.hasLooseBVars then return true
   let s ← get
@@ -254,15 +267,16 @@ private def mayMatch (decision : Bool) (candidate : Expr) : ClosureM Bool := do
   trace[InformationProvenance.filter] "disjoint: {candidate}"
   return false
 
-private def sameStatement (statement candidate : Expr) : ClosureM Bool := do
+private def sameStatement (statement candidate : Expr) (decisionType := false) : ClosureM Bool := do
   if candidate.hasMVar then throwError "unresolved provenance type"
   -- Reduce under the active binder context before excluding open propositions:
   -- family x may discard x and expose the closed registered statement.
   let candidate ← reducedType candidate
-  if candidate.hasFVar || candidate.hasLooseBVars then return false
-  if let some answer := (← get).compared[candidate]? then return answer
-  let answer ← if ← mayMatch false candidate then boundedDefEq candidate statement else pure false
-  modify fun s => { s with compared := s.compared.insert candidate answer }
+  let key := (decisionType, candidate)
+  if let some answer := (← get).compared[key]? then return answer
+  let answer ← if ← mayMatch decisionType candidate then
+    boundedDefEq candidate statement decisionType else pure false
+  modify fun s => { s with compared := s.compared.insert key answer }
   return answer
 
 /-- Classify by inferred types, including constructors and dependent projections.
@@ -287,13 +301,12 @@ private def classifyType (statement : Expr) (e : Expr) : ClosureM Unit := do
     | .const name _ =>
       if let some (.inductInfo _) := (← getEnv).find? name then return
     | _ => pure ()
-  let candidate : Option Expr ← if proposition then pure (some type) else do
-    let type ← reducedType type
-    pure (if type.isAppOfArity ``Decidable 1 then some type.appArg! else none)
-  if let some candidate := candidate then
-    -- Rule 2(a): an inhabitant of S; rule 2(b): an instance of Decidable S.
-    if ← sameStatement statement candidate then
-      modify fun s => { s with forbidden := true }
+  let type ← reducedType type
+  let decision := !proposition && !type.isAppOfArity ``Decidable 1
+  let candidate := if !proposition && !decision then type.appArg! else type
+  -- Rule 2(a): an inhabitant of S; rule 2(b): an instance of Decidable S.
+  if ← sameStatement statement candidate decision then
+    modify fun s => { s with forbidden := true }
 
 private def reach (name : Name) : ClosureM Unit := do
   if (← get).constants.contains name then return
@@ -345,7 +358,7 @@ private def collectReadout (env : Environment) (theoremName : Name) (readout : E
     ClosureM (Bool × Option (Array String)) := do
   let some theoremInfo := env.find? theoremName | return (false, none)
   -- Prepare the registered statement once per readout, never once per constant.
-  let statement ← boundedMeta (whnf theoremInfo.type)
+  let statement ← boundedMeta (withTransparency .instances (whnf theoremInfo.type))
   if ← boundedMeta (hasNormalConstant 256 statement) then
     let (constants, _) ← boundedMeta (typeConstants env theoremInfo.type)
     let (decision, _) ← boundedMeta (typeConstants env (mkApp (mkConst ``Decidable) theoremInfo.type))
