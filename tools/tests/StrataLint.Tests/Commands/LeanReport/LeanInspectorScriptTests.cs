@@ -40,18 +40,11 @@ public sealed class LeanInspectorScriptTests
         if (OperatingSystem.IsWindows()) return;
         using var temporary = new TemporaryDirectory();
         var repository = CreateRepository(temporary.Path);
-        if (!injectedDotnetFailure)
-            File.AppendAllText(Path.Combine(repository, "tools", "StrataLint.Cli", "StrataLint.Cli.csproj"), "<");
-        var bin = Path.Combine(temporary.Path, "bin");
-        Directory.CreateDirectory(bin);
-        var dotnet = Path.Combine(bin, "dotnet");
-        File.WriteAllText(dotnet, "#!/usr/bin/env bash\nexit 71\n");
-        File.SetUnixFileMode(dotnet, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
-
-        var result = RunInspector(temporary.Path, repository, injectedDotnetFailure ? bin : "");
-
+        if (injectedDotnetFailure) File.Delete(Path.Combine(repository, "lean-report-inputs.json"));
+        else File.AppendAllText(Path.Combine(repository, "lean-report-inputs.json"), "<");
+        var result = RunInspector(temporary.Path, repository, "");
         Assert.Equal(2, result.ExitCode);
-        Assert.Contains("producer closure is unavailable", Encoding.UTF8.GetString(result.StandardError));
+        Assert.Contains("lean-report-inputs.json", Encoding.UTF8.GetString(result.StandardError));
         AssertNoReport(temporary.Path, result);
     }
 
@@ -192,7 +185,7 @@ public sealed class LeanInspectorScriptTests
         Write(repository, "Trureturing.lean", "import D5.Probe\n");
         Write(repository, "D5/Probe.lean", "def probe : Nat := 1\n");
         foreach (var relative in new[]
-            { InspectorScript, InspectorSource, MaterialCompactor, InputScript, ResourceObservationLibrary,
+            { InspectorScript, InspectorSource, MaterialCompactor, "tools/lean-inspector/delta.py", InputScript, ResourceObservationLibrary,
                 "tools/scripts/worktree/lean-cache-input.sh" })
         {
             Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine(repository, relative))!);
@@ -219,6 +212,7 @@ public sealed class LeanInspectorScriptTests
         Write(repository, "tools/scripts/workflow/scribe-content-checks.sh", "#!/usr/bin/env bash\n");
         Write(repository, ".github/workflows/ci.yml",
             "jobs:\n  lean-inspect:\n    steps: []\n  baseline-admission:\n    steps: []\n");
+        LeanReportRegistrationFixture.Install(repository);
         Write(repository, "lean-toolchain", "leanprover/lean4:v4.31.0\n");
         Write(repository, "lakefile.toml", "name = \"Fixture\"\n");
         Write(repository, "lake-manifest.json", "{\"version\":\"1.1.0\"}\n");
@@ -251,7 +245,7 @@ public sealed class LeanInspectorScriptTests
         Assert.DoesNotContain("RAW_LEAN_REPORT", Encoding.UTF8.GetString(result.StandardOutput));
         foreach (var suffix in new[] { "", ".sha256", ".materials.zip" })
             Assert.False(File.Exists(Path.Combine(temporary, "report.json") + suffix));
-        Assert.Equal(["build"], File.ReadAllLines(Path.Combine(temporary, "lake.log")));
+        Assert.False(File.Exists(Path.Combine(temporary, "lake.log")));
     }
 
     private static void Write(string root, string relative, string contents)

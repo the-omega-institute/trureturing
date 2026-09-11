@@ -126,9 +126,6 @@ run_phase() {
   fi
 }
 
-# The cache writer converges the pinned mathlib cache before starting either Lake phase.
-run_phase build "$CACHE_RUN" "$LAKE" build
-
 INSPECTOR_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 INPUT_HELPER="$INSPECTOR_DIR/../scripts/report/lean-report-input.sh"
 [[ -x "$INPUT_HELPER" ]] || { echo "inspect.sh: module enumerator is absent: $INPUT_HELPER" >&2; exit 2; }
@@ -182,8 +179,7 @@ invoke_inspector() {
 }
 
 DELTA_SCRIPT="$INSPECTOR_DIR/delta.py"
-delta_available=1
-[[ -r "$DELTA_SCRIPT" ]] || delta_available=0
+[[ -r "$DELTA_SCRIPT" ]] || { echo "inspect.sh: registered delta planner is absent: $DELTA_SCRIPT" >&2; exit 2; }
 current_input_address="${STRATALINT_REPORT_INPUT_ADDRESS:-}"
 current_repository_sha256="${STRATALINT_REPORT_REPOSITORY_SHA256:-}"
 current_producer_sha256="${STRATALINT_REPORT_PRODUCER_SHA256:-}"
@@ -247,8 +243,7 @@ cache_root_trusted() {
   (( (8#$perm & 8#22) == 0 ))
 }
 
-if [[ "$delta_available" == "1" ]] \
-  && cache_root_trusted \
+if cache_root_trusted \
   && [[ "$current_input_address" =~ ^[0-9a-f]{64}$ \
      && "$current_repository_sha256" =~ ^[0-9a-f]{64}$ \
      && "$current_producer_sha256" =~ ^[0-9a-f]{64}$ \
@@ -257,11 +252,12 @@ if [[ "$delta_available" == "1" ]] \
   python3 "$DELTA_SCRIPT" plan \
     "$REPOSITORY" "$STRATALINT_REPORT_CACHE_ROOT" "$current_input_address" \
     "$current_producer_sha256" "$current_resident_sha256" "$current_config_sha256" \
-    "$MODULE_TABLE" "$DELTA_PLAN" || true
+    "$MODULE_TABLE" "$DELTA_PLAN" || exit 2
+  [[ -s "$DELTA_PLAN" ]] || { echo "inspect.sh: registered delta planner produced no plan" >&2; exit 2; }
   if [[ -s "$DELTA_PLAN" ]]; then
     delta_status="$(python3 - "$DELTA_PLAN" <<'PY'
 import json, pathlib, sys
-print(json.loads(pathlib.Path(sys.argv[1]).read_text(encoding="utf-8")).get("status", "fallback"))
+print(json.loads(pathlib.Path(sys.argv[1]).read_text(encoding="utf-8"))["status"])
 PY
 )"
     if [[ "$delta_status" == "delta" || "$delta_status" == "reuse" ]]; then
@@ -290,11 +286,15 @@ import json, pathlib, sys
 print(len(json.loads(pathlib.Path(sys.argv[1]).read_text(encoding="utf-8")).get("removed", [])))
 PY
 )"
-    else
-      delta_status="fallback"
+    elif [[ "$delta_status" != "fallback" ]]; then
+      echo "inspect.sh: registered delta planner returned an unknown status: $delta_status" >&2
+      exit 2
     fi
   fi
 fi
+
+# The declaration and plan must be valid before the existing cache writer builds.
+run_phase build "$CACHE_RUN" "$LAKE" build
 
 printf 'LEAN_REPORT_DELTA_PLAN mode=%s changed=%s added=%s removed=%s recheck=%s\n' \
   "$delta_status" "$delta_changed_count" "$delta_added_count" \

@@ -437,6 +437,7 @@ public sealed class LeanReportCacheTests
                 Directory.CreateDirectory(Path.GetDirectoryName(path)!);
                 File.WriteAllText(path, "fixture\n");
             }
+            LeanReportRegistrationFixture.Install(Repo);
             MakeExecutable(PairScript);
             MakeExecutable(Path.Combine(reportDir, "lean-report-input.sh"));
         }

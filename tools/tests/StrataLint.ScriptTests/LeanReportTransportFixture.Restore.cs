@@ -38,16 +38,12 @@ internal sealed partial class LeanReportTransportFixture
               fi
               exit 0
             fi
-            exec /usr/bin/python3 "$@"
-            """);
-        Executable(Path.Combine(Bin, "dotnet"), """
-            [[ "$1" == msbuild ]]
-            if [[ "${FIXTURE_RESTORE_FAILURE:-}" == input-evaluation && -e "$REPORT_FIXTURE/restore-validated" ]]; then
+            if [[ "${FIXTURE_RESTORE_FAILURE:-}" == input-evaluation && "${1:-}" == *lean-report-selection.py && -e "$REPORT_FIXTURE/restore-validated" ]]; then
               printf 'fault=input-evaluation\n' >> "$REPORT_FIXTURE/restore-events.log"
-              printf 'fixture Compile evaluation unavailable\n' >&2
+              printf 'fixture registered input reader unavailable\n' >&2
               exit 69
             fi
-            printf '{"Items":{"Compile":[{"FullPath":"%s/Probe.cs"}]}}\n' "$(dirname "$2")"
+            exec /usr/bin/python3 "$@"
             """);
         Executable(Path.Combine(Bin, "bash"), """
             if [[ "${FIXTURE_RESTORE_FAILURE:-}" == input-evaluation && "${1:-}" == *lean-report-input.sh && "${2:-}" == verify ]]; then

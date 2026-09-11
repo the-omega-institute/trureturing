@@ -7,7 +7,7 @@ internal sealed partial class LeanReportTransportFixture
     internal const string AuxiliarySource = "tools/lean-inspector/LeanInformationAudit/Tests/SealEmptyBundle.lean";
 
     // A two-module repository with real report scripts. Only external tools
-    // (MSBuild, utility input, the cache writer, and Lean) return synthetic data.
+    // (utility input, the cache writer, and Lean) return synthetic data.
     internal void UseRealInspector()
     {
         File.Delete(Path.Combine(Repository, "tools/lean-inspector/inspect.sh"));
@@ -18,9 +18,7 @@ internal sealed partial class LeanReportTransportFixture
         WriteSource(AuxiliarySource, "-- auxiliary Lean source outside the managed module inventory\n");
         Executable(Path.Combine(Bin, "lake"), InspectorLakeStub);
         Executable(Path.Combine(Bin, "dotnet"), """
-            if [[ "$1" == msbuild ]]; then
-              printf '{"Items":{"Compile":[{"FullPath":"%s/Probe.cs"}]}}\n' "$(dirname "$2")"
-            elif [[ "$1" == build ]]; then
+            if [[ "$1" == build ]]; then
               exit 0
             elif [[ "$1" == run ]]; then
               while [[ "$1" != -- ]]; do shift; done

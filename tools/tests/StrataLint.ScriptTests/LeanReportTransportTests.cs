@@ -376,7 +376,7 @@ public sealed class LeanReportTransportTests
         Assert.True(FixtureDirectory.Exists(Path.Combine(fixture.CacheRoot, oldAddress)));
         using var plan = fixture.DeltaPlan();
         Assert.Equal("delta", plan.RootElement.GetProperty("status").GetString());
-        Assert.Equal(["D5.Probe"], plan.RootElement.GetProperty("recheck").EnumerateArray().Select(value => value.GetString()));
+        Assert.Equal(["D5.Probe", "Trureturing"], plan.RootElement.GetProperty("recheck").EnumerateArray().Select(value => value.GetString()));
         fixture.Success(fixture.Pair(remote: true));
         Assert.Single(fixture.ProducerCalls);
         Assert.Contains("\"mode\":\"produced\"", FixtureFile.ReadAllText(fixture.Output + ".provenance.json"), StringComparison.Ordinal);
