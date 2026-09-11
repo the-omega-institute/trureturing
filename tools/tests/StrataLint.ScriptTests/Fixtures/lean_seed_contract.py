@@ -182,6 +182,11 @@ class PairFixture(PartitionFixture):
         self.producer = self.root / "tools/lean-inspector/inspect.sh"
         write(self.producer, PAIR_PRODUCER)
         self.producer.chmod(0o755)
+        # This synthetic producer runs only scripts; real project roots are
+        # registered by ProducerClosureFixture when it installs those sources.
+        registration = json.loads((ROOT / "Meta/ReportProducers/lean-report.json").read_text())
+        registration["projects"] = []
+        write(self.root / "Meta/ReportProducers/lean-report.json", json.dumps(registration))
         self.cache = self.root / ".lake/report-cache"
         self.output = self.root / "out/raw-lean-report.json"
         self.helper = self.root / "tools/scripts/report/lean-report-input.sh"
@@ -470,6 +475,8 @@ class ProducerClosureFixture(PairFixture):
                 shutil.copyfile(source, target)
         for name in ("Directory.Build.props", "Directory.Packages.props", "global.json"):
             shutil.copyfile(ROOT / name, self.root / name)
+        shutil.copyfile(ROOT / "Meta/ReportProducers/lean-report.json",
+                        self.root / "Meta/ReportProducers/lean-report.json")
 
     def address(self):
         result = self.report_input()

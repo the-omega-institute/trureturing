@@ -1,0 +1,28 @@
+{
+  "schema": "report-producer-scope-v1",
+  "scripts": [
+    "tools/lean-inspector/Inspector.lean",
+    "tools/lean-inspector/delta.py",
+    "tools/lean-inspector/inspect.sh",
+    "tools/lean-inspector/materials.py",
+    "tools/lean-inspector/report_cache.py",
+    "tools/lean-inspector/runtime_identity.py",
+    "tools/scripts/lean-report-pair.sh",
+    "tools/scripts/lib/resource-observation-lib.sh",
+    "tools/scripts/report/dotnet_producer.py",
+    "tools/scripts/report/lean-report-input.sh",
+    "tools/scripts/report/producer_paths.py",
+    "tools/scripts/report/report-supervisor.sh",
+    "tools/scripts/workflow/scribe-content-checks.sh",
+    "tools/scripts/worktree/cache_material.py",
+    "tools/scripts/worktree/lean-cache-input.sh",
+    "tools/scripts/worktree/lean-cache-publish.sh",
+    "tools/scripts/worktree/lean-cache-run.sh",
+    "tools/scripts/worktree/lean_cache.py",
+    "tools/scripts/worktree/lean_cache_release.py"
+  ],
+  "projects": [
+    "tools/StrataLint.Lean/StrataLint.Lean.csproj",
+    "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj"
+  ]
+}

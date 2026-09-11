@@ -10,10 +10,21 @@ internal sealed class ProducerInputFixture : IDisposable
 {
     internal const string FetcherPath = "tools/scripts/worktree/lean-cache-publish.sh";
     internal const string CliProjectPath = "tools/StrataLint.Cli/StrataLint.Cli.csproj";
+    internal const string LeanRegistrationPath = "Meta/ReportProducers/lean-report.json";
+    internal const string ScribeRegistrationPath = "Meta/ReportProducers/scribe-content.json";
     internal const string UnavailableSdk =
         "{\"sdk\":{\"version\":\"99.0.100\",\"rollForward\":\"disable\"}}\n";
     private const string InputHelperPath = "tools/scripts/report/lean-report-input.sh";
     private const string Revision = "0123456789abcdef0123456789abcdef01234567";
+    private static readonly string[] Scripts =
+    [
+        "tools/lean-inspector/inspect.sh", "tools/lean-inspector/Inspector.lean",
+        "tools/lean-inspector/delta.py", "tools/lean-inspector/materials.py",
+        "tools/lean-inspector/report_cache.py", "tools/lean-inspector/runtime_identity.py",
+        InputHelperPath, "tools/scripts/report/producer_paths.py", "tools/scripts/report/dotnet_producer.py",
+        "tools/scripts/lean-report-pair.sh", FetcherPath,
+        "tools/scripts/worktree/lean-cache-input.sh", "tools/scripts/worktree/lean_cache.py",
+    ];
     private readonly TemporaryDirectory temporary = new();
     private readonly string repository;
     private readonly string physicalRepository;
@@ -85,7 +96,21 @@ internal sealed class ProducerInputFixture : IDisposable
         Write("lean-toolchain", "leanprover/lean4:v4.33.0\n");
         Write("lakefile.toml", "name = \"fixture\"\n");
         Write("lake-manifest.json", "{\"packages\":[{\"name\":\"mathlib\",\"rev\":\"" + Revision + "\"}]}\n");
+        RegisterScripts();
     }
+
+    internal void RegisterScripts(params string[] additional)
+    {
+        WriteRegistration(LeanRegistrationPath, Scripts.Concat(additional), [CliProjectPath]);
+        WriteRegistration(ScribeRegistrationPath,
+            Scripts.Concat(additional).Append("tools/scripts/workflow/scribe-content-checks.sh"),
+            [CliProjectPath, "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
+                "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj",
+                "tools/StrataLint.Engine/StrataLint.Engine.csproj", "tools/Trureturing.Truth/Trureturing.Truth.csproj"]);
+    }
+
+    internal void WriteRegistration(string path, IEnumerable<string> scripts, IEnumerable<string> projects) =>
+        Write(path, JsonSerializer.Serialize(new { schema = "report-producer-scope-v1", scripts, projects }) + "\n");
 
     internal string CliProject => Path.Combine(physicalRepository, CliProjectPath);
 
@@ -134,11 +159,13 @@ internal sealed class ProducerInputFixture : IDisposable
 
     internal void Remove(string path) => ScriptHarnessScratch.DeleteScratchFile(Path.Combine(repository, path));
 
+    internal void RemoveInspectorRoot() => Directory.Delete(Path.Combine(repository, "tools/lean-inspector"), true);
+
     internal byte[] ExpectedAddressBytes()
     {
         string[] producerPaths =
         [
-            CliProjectPath, "tools/StrataLint.Cli/Fixture.cs", "producer.props", "global.json",
+            LeanRegistrationPath, CliProjectPath, "tools/StrataLint.Cli/Fixture.cs", "producer.props", "global.json",
             "tools/lean-inspector/inspect.sh", "tools/lean-inspector/Inspector.lean",
             "tools/lean-inspector/delta.py", "tools/lean-inspector/materials.py",
             "tools/lean-inspector/report_cache.py", "tools/lean-inspector/runtime_identity.py",
