@@ -103,19 +103,32 @@ internal static partial class CommonExecutionEvidence
             ValidatePatterns(check.PathInventory, [], check.Id);
             _ = EngineeringProjectRegistry.ExpandInputs(paths, check.Materials, check.MaterialExcludes, check.Id);
             _ = EngineeringProjectRegistry.ExpandInputs(paths, check.PathInventory, [], check.Id);
-            if (check.ReportInputs.Length > 1 || check.ProgramProjects.Distinct(StringComparer.Ordinal).Count() != check.ProgramProjects.Length)
+            if (check.ProgramProjects.Distinct(StringComparer.Ordinal).Count() != check.ProgramProjects.Length)
                 throw new InvalidDataException("duplicate common check declaration: " + check.Id);
+            var artifacts = new HashSet<string>(StringComparer.Ordinal);
             foreach (var report in check.ReportInputs)
             {
                 if (report is null) throw new InvalidDataException("missing report declaration: " + check.Id);
-                if (string.IsNullOrWhiteSpace(report.Producer) || report.Artifact != "raw-lean-report"
+                if (string.IsNullOrWhiteSpace(report.Producer) || report.Artifact is not ("raw-lean-report" or "VerifiedScribeEmissions")
                     || report.Materials is null || report.Materials.Length == 0)
-                    throw new InvalidDataException($"invalid report input registration: {check.Id}");
+                    throw new InvalidDataException($"invalid report input registration: {check.Id}: {report.Artifact}: {report.Producer}");
+                if (!artifacts.Add(report.Artifact))
+                    throw new InvalidDataException($"duplicate or conflicting report input: {check.Id}: {report.Artifact}: {report.Producer}");
                 if (!snapshot.Files.ContainsKey(RepoPath.CreateKnown(report.Producer)))
                     throw new InvalidDataException($"check {check.Id} references missing producer: {report.Producer}");
                 ValidatePatterns(report.Materials, [], check.Id);
                 _ = EngineeringProjectRegistry.ExpandInputs(paths, report.Materials, [], check.Id);
             }
+        }
+        // Verified emissions come from the shared describe unit. Its registered
+        // producer includes the Lean report consumed while emitting Scribe material.
+        var describe = manifest.Checks.Single(check => check.Id == "scribe-describe");
+        foreach (var check in manifest.Checks.Where(UsesScribe))
+        {
+            var input = check.ReportInputs.Single(report => report.Artifact == "VerifiedScribeEmissions");
+            if (!check.Id.StartsWith("SL-", StringComparison.Ordinal)
+                || !describe.ReportInputs.Any(report => report.Artifact == "raw-lean-report" && report.Producer == input.Producer))
+                throw new InvalidDataException($"conflicting Scribe producer registration: {check.Id}: {input.Producer}: scribe-describe");
         }
         return manifest.Checks;
 
@@ -131,6 +144,9 @@ internal static partial class CommonExecutionEvidence
                     throw new InvalidDataException($"conflicting common check input registration: {id}: {pattern}");
         }
     }
+
+    private static bool UsesScribe(RegisteredCommonCheck check) =>
+        check.ReportInputs.Any(report => report.Artifact == "VerifiedScribeEmissions");
 
     internal static string Hash(string path) => Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(path)));
 

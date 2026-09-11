@@ -4,7 +4,7 @@ using Xunit;
 
 namespace StrataLint.EngineeringScope.Tests;
 
-public sealed class CommonCheckExecutionTests
+public sealed partial class CommonCheckExecutionTests
 {
     [Theory]
     [InlineData("report", 1)]

@@ -74,7 +74,7 @@ internal static partial class CommonExecutionEvidence
                     & (UnixFileMode.UserExecute | UnixFileMode.GroupExecute | UnixFileMode.OtherExecute)) != 0;
                 return new { path, mode = executable ? "executable" : "regular", sha256 = Convert.ToHexStringLower(SHA256.HashData(item.RawBytes.AsSpan())) };
             }
-            result.Add(check.Id, Digest(new { contract = "common-check-execution-v1", registration = check,
+            result.Add(check.Id, Digest(new { contract = "common-check-execution-v2", registration = check,
                 projects = selected.Order(StringComparer.Ordinal).Select(name => ProjectProjection(projects[name])),
                 materials = materialPaths.Order(StringComparer.Ordinal).Select(Material),
                 inventory = EngineeringProjectRegistry.ExpandInputs(paths, check.PathInventory, [], check.Id),
@@ -86,6 +86,8 @@ internal static partial class CommonExecutionEvidence
                 foreach (var reference in project.References) Add(reference);
             }
         }
+        foreach (var check in checks.Where(UsesScribe))
+            result[check.Id] = Digest(new { input = result[check.Id], scribe = result["scribe-describe"] });
         return result;
     }
 

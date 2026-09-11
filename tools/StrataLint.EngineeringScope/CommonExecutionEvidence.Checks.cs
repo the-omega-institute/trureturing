@@ -59,7 +59,16 @@ internal static partial class CommonExecutionEvidence
             invocation = $"{RootPath}/check-material/{build.Candidate}/{build.Round}/{Guid.NewGuid():N}";
             reused = ImportCheckSeed(root, stage, snapshot, inputs, output);
         }
-        internal bool IsSelected(string id) => Ids.Contains(id, StringComparer.Ordinal) && !reused.ContainsKey(id);
+        internal bool IsSelected(string id)
+        {
+            if (!Ids.Contains(id, StringComparer.Ordinal)) return false;
+            // Selection happens after describe. A newly produced capability can
+            // differ even when its registered source inputs have not changed.
+            if (reused.TryGetValue(id, out var previous) && UsesScribe(registrations.Single(check => check.Id == id))
+                && completed.TryGetValue("scribe-describe", out var describe) && !SameScribeMaterial(root, previous, describe))
+                reused.Remove(id);
+            return !reused.ContainsKey(id);
+        }
         internal CurrentRuleSelection SelectCurrentRules() => CurrentRuleSelection.Create(
             Ids.Where(id => id.StartsWith("SL-", StringComparison.Ordinal)).ToArray(),
             Ids.Where(id => id.StartsWith("SL-", StringComparison.Ordinal) && IsSelected(id)).ToArray());
@@ -68,7 +77,10 @@ internal static partial class CommonExecutionEvidence
         {
             if (!Ids.Contains(id, StringComparer.Ordinal) || completed.ContainsKey(id))
                 throw new InvalidDataException("unregistered or duplicate common execution: " + id);
-            if (reused.TryGetValue(id, out var previous))
+            var needsScribe = UsesScribe(registrations.Single(check => check.Id == id));
+            var describe = needsScribe ? completed.GetValueOrDefault("scribe-describe")
+                ?? throw new InvalidDataException("predicate requires completed Scribe producer: " + id) : null;
+            if (!IsSelected(id) && reused.TryGetValue(id, out var previous))
             {
                 completed.Add(id, previous);
                 return previous;
@@ -77,6 +89,10 @@ internal static partial class CommonExecutionEvidence
             // fallback after this point, and original files are never rewritten as current.
             var work = execute();
             if (work.Operations is null) throw new InvalidDataException("missing current operations: " + id);
+            // Retain the exact capability used by this original predicate, using
+            // its existing data/material fields and original execution provenance.
+            if (describe is not null)
+                work = work with { Data = File.ReadAllText(Path.Combine(root, describe.Data!)) };
             var directory = invocation + "/" + id;
             var operations = work.Operations.Select((operation, index) =>
             {
@@ -169,6 +185,10 @@ internal static partial class CommonExecutionEvidence
         if (!expected.SequenceEqual(record.Units.Select(unit => unit.Id)))
             throw new InvalidDataException("missing, duplicated or unordered common check result");
         foreach (var unit in record.Units) ValidateCheckUnit(root, root, snapshot, unit, inputs[unit.Id], candidate, round);
+        foreach (var check in ReadCheckManifest(snapshot).Where(UsesScribe))
+            if (record.Stage == "current" && !SameScribeMaterial(root, record.Units.Single(unit => unit.Id == check.Id),
+                record.Units.Single(unit => unit.Id == "scribe-describe")))
+                throw new InvalidDataException("predicate Scribe material differs from current producer: " + check.Id);
     }
     private static void ValidateCheckUnit(string materialRoot, string sourceRoot, RepositorySnapshot snapshot,
         CheckUnitResult unit, string fingerprint, string candidate, string round)
@@ -217,7 +237,16 @@ internal static partial class CommonExecutionEvidence
         }
         if (unit.Id.StartsWith("SL-", StringComparison.Ordinal)) _ = ReadPredicate(materialRoot, unit);
         if (unit.Id == "scribe-describe") _ = ReadScribe(materialRoot, unit, snapshot);
+        if (UsesScribe(registration))
+        {
+            if (unit.Data is null) throw new InvalidDataException("missing predicate Scribe material: " + unit.Id);
+            _ = VerifiedScribeEmissions.ReadMaterial(File.ReadAllText(Path.Combine(materialRoot, unit.Data)), snapshot);
+        }
     }
+
+    private static bool SameScribeMaterial(string root, CheckUnitResult predicate, CheckUnitResult describe) =>
+        predicate.Data is not null && describe.Data is not null
+        && Hash(Path.Combine(root, predicate.Data)) == Hash(Path.Combine(root, describe.Data));
 
     internal static CurrentPredicateEvidence ReadPredicate(string root, CheckUnitResult unit)
     {

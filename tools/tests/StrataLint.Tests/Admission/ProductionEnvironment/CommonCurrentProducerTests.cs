@@ -22,9 +22,18 @@ public sealed class CommonCurrentProducerTests
         fixture.Files["Meta/ci-checks.json"] = CommonCheckRegistrationFixture.Manifest("tools/StrataLint.Scribe/StrataLint.Scribe.csproj");
         var checksDeclaration = JsonNode.Parse(fixture.Files["Meta/ci-checks.json"])!;
         checksDeclaration["checks"]!.AsArray().Single(row => row!["id"]!.ToString() == "SL-001")!["report_inputs"] = JsonNode.Parse("[{\"producer\":\"Meta/ReportProducers/lean-report.json\",\"artifact\":\"raw-lean-report\",\"materials\":[\"global.json\"]}]");
+        foreach (var id in new[] { "SL-006", "SL-023", "SL-025", "scribe-describe" })
+        {
+            var inputs = new JsonArray();
+            if (id == "SL-006") inputs.Add(JsonNode.Parse("{\"producer\":\"Meta/ReportProducers/lean-report.json\",\"artifact\":\"raw-lean-report\",\"materials\":[\"global.json\"]}"));
+            inputs.Add(JsonNode.Parse("{\"producer\":\"Meta/ReportProducers/scribe-content.json\",\"artifact\":\"" + (id == "scribe-describe" ? "raw-lean-report" : "VerifiedScribeEmissions") + "\",\"materials\":[\"global.json\"]}"));
+            checksDeclaration["checks"]!.AsArray().Single(row => row!["id"]!.ToString() == id)!["report_inputs"] = inputs;
+        }
         fixture.Files["Meta/ci-checks.json"] = checksDeclaration.ToJsonString();
         fixture.Files["Meta/ReportProducers/lean-report.json"] = "{\"schema\":\"report-producer-scope-v1\",\"scripts\":[],\"projects\":[],\"materials\":[\"global.json\"]}";
+        fixture.Files["Meta/ReportProducers/scribe-content.json"] = "{\"schema\":\"report-producer-scope-v1\",\"scripts\":[],\"projects\":[\"tools/StrataLint.Scribe/StrataLint.Scribe.csproj\"],\"materials\":[\"global.json\"]}";
         fixture.Files["Meta/registry.yaml"] = fixture.Files["Meta/registry.yaml"].Replace("  - \"Meta/ci-checks.json\"", "  - \"Meta/ReportProducers/lean-report.json\"\n  - \"Meta/ci-checks.json\"", StringComparison.Ordinal);
+        fixture.Files["Meta/registry.yaml"] = fixture.Files["Meta/registry.yaml"].Replace("  - \"Meta/ci-checks.json\"", "  - \"Meta/ReportProducers/scribe-content.json\"\n  - \"Meta/ci-checks.json\"", StringComparison.Ordinal);
         fixture.Files["global.json"] = "{\"sdk\":{\"version\":\"10.0.103\"}}";
         foreach (var file in fixture.Files)
         {
@@ -75,7 +84,14 @@ public sealed class CommonCurrentProducerTests
             var result = Assert.IsType<RuleExecutionOutcome.Completed>(checks.ExecuteCurrentPredicates(policy, data.Lean)).Capability;
             Assert.DoesNotContain(result.Diagnostics, d => d.AdmissionEffect != AdmissionEffect.Observe);
             Assert.Equal(cycle == 0 ? 18 : 0, result.ExecutedRules.Length);
-            checks.Seal();
+            var record = checks.Seal();
+            foreach (var id in new[] { "SL-006", "SL-023", "SL-025" })
+            {
+                var predicate = record.Units.Single(unit => unit.Id == id);
+                Assert.NotNull(predicate.Data);
+                var bound = VerifiedScribeEmissions.ReadMaterial(File.ReadAllText(Path.Combine(root, predicate.Data)), CommonExecutionEvidence.Snapshot(root));
+                Assert.True(bound.TryGet("D5/S0/Carrier/Ring", out _));
+            }
             CommonExecutionEvidence.SealCurrent(root, build, CommonExecutionEvidence.CurrentSteps.Select(name => new StageStep(name, 0, 0, "executed", log)).ToArray());
             Assert.True(CommonExecutionEvidence.ExportCheckSeed(root, "current", TextWriter.Null));
         }
@@ -86,7 +102,7 @@ public sealed class CommonCurrentProducerTests
         changedReports[RuleFixture.RingPath] = new LeanFileReport([], [new LeanDeclaration("goldenRing", "def", "Nat", ["Classical.choice"])]);
         RawLeanReportArtifact.WriteFile(rawPath, CommonExecutionEvidence.Snapshot(root), LeanAxiomReport.Create(changedReports));
         var selection = CommonExecutionEvidence.BeginChecks(root, "current", CommonExecutionEvidence.ValidateBuild(root), TextWriter.Null);
-        Assert.Equal(new[] { "SL-001" }, selection.Ids.Where(selection.IsSelected));
+        Assert.Equal(new[] { "SL-001", "SL-006", "SL-023", "SL-025", "scribe-describe" }, selection.Ids.Where(selection.IsSelected));
         void Git(params string[] arguments)
         {
             var result = TestProcessRunner.Run("git", arguments, root, TestBudgets.ScriptProcessHangGuard, 1024 * 1024);
