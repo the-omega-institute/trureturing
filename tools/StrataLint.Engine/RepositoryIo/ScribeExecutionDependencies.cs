@@ -204,6 +204,10 @@ internal static class ScribeExecutionDependencies
                         if (operation is IInvocationOperation invocation) Enqueue(invocation.TargetMethod);
                 if (model.GetOperation(node) is IRecursivePatternOperation { DeconstructSymbol: { } deconstruct })
                     Enqueue(deconstruct);
+                // Using disposal has no invocation node. Until its selected
+                // provider is bound, both using operations remain unsupported.
+                if (model.GetOperation(node) is IUsingOperation or IUsingDeclarationOperation)
+                    unknown.Add("binding:unsupported-using-disposal:" + declaration.SyntaxTree.FilePath);
                 if (node is InvocationExpressionSyntax or BaseObjectCreationExpressionSyntax or ConstructorInitializerSyntax)
                 {
                     if (model.GetOperation(node) is INameOfOperation) continue;

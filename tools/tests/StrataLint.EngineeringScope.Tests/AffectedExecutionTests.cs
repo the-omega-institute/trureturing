@@ -6,6 +6,103 @@ namespace StrataLint.EngineeringScope.Tests;
 public sealed class AffectedExecutionTests
 {
     [Fact]
+    public void PathPrependAfterBuildExecutesUnderNewIdentityAndPreservesProvenance()
+    {
+        using var fixture = new AffectedExecutionFixture();
+        var build = fixture.Build();
+        var sealedBytes = File.ReadAllBytes(Path.Combine(fixture.Root, AffectedTestPlan.PathName));
+        var cold = fixture.Tests(build, subprocess: true);
+        Assert.Equal(2, cold.Projects.Sum(project => project.Executed));
+        var unchanged = fixture.Tests(build, subprocess: true);
+        Assert.Equal(0, unchanged.Projects.Sum(project => project.Executed));
+        Assert.Equal(System.Text.Json.JsonSerializer.Serialize(cold.Projects[0].Coverage[0].Source),
+            System.Text.Json.JsonSerializer.Serialize(unchanged.Projects[0].Coverage[0].Source));
+        var originalPath = Environment.GetEnvironmentVariable("PATH");
+        var originalContext = CommonStages.TestEnvironment(fixture.Root);
+        fixture.Write("local-runtime/elan/bin/.keep", "");
+        TestExecutionRecord changed;
+        int changedExit;
+        try
+        {
+            Environment.SetEnvironmentVariable("PATH", Path.Combine(fixture.Root, "local-runtime/elan/bin") + Path.PathSeparator + originalPath);
+            var context = CommonStages.TestEnvironment(fixture.Root);
+            Assert.Equal(originalContext.Launcher, context.Launcher);
+            Assert.Equal(originalContext.RuntimeMaterial, context.RuntimeMaterial);
+            Assert.NotEqual(originalContext.ValuesIdentity, context.ValuesIdentity);
+            Assert.Throws<InvalidDataException>(() => CommonExecutionEvidence.ValidateTests(fixture.Root, context: context));
+            changed = fixture.Tests(build, expectedExit: null, subprocess: true);
+            changedExit = fixture.LastTestExit;
+            if (changedExit == 0)
+            {
+                CommonExecutionEvidence.ValidateTests(fixture.Root, context: context);
+                Assert.All(changed.Projects, project =>
+                {
+                    Assert.Equal(1, project.Executed);
+                    var coverage = Assert.Single(project.Coverage);
+                    Assert.Equal("executed", coverage.Status);
+                    Assert.Equal("environment-changed", coverage.Reason);
+                    Assert.Equal(build.Candidate, coverage.Source.Candidate);
+                    Assert.Equal(build.Round, coverage.Source.Round);
+                    var old = cold.Projects.Single(item => item.Project == project.Project).Coverage[0];
+                    Assert.NotEqual(old.Identity, coverage.Identity);
+                    Assert.NotEqual(old.Source.Trx[0].Sha256, coverage.Source.Trx[0].Sha256);
+                });
+                var warm = fixture.Tests(build, subprocess: true);
+                Assert.Equal(0, warm.Projects.Sum(project => project.Executed));
+                Assert.Equal(System.Text.Json.JsonSerializer.Serialize(changed.Projects[0].Coverage[0].Source),
+                    System.Text.Json.JsonSerializer.Serialize(warm.Projects[0].Coverage[0].Source));
+                fixture.ClearSeed();
+                var fresh = fixture.Tests(build, subprocess: true);
+                Assert.Equal(2, fresh.Projects.Sum(project => project.Executed));
+                Assert.Equal(changed.Projects.Select(project => project.Exit), fresh.Projects.Select(project => project.Exit));
+            }
+        }
+        finally { Environment.SetEnvironmentVariable("PATH", originalPath); }
+        var restored = fixture.Tests(build, subprocess: true);
+        Assert.Equal(0, fixture.LastTestExit);
+        Assert.Equal(sealedBytes, File.ReadAllBytes(Path.Combine(fixture.Root, AffectedTestPlan.PathName)));
+        CommonExecutionEvidence.ValidateBuild(fixture.Root, build.Round);
+        if (Environment.GetEnvironmentVariable("AFFECTED_EVIDENCE_ROOT") is { Length: > 0 } evidence)
+        {
+            Directory.CreateDirectory(evidence);
+            File.WriteAllText(Path.Combine(evidence, "path-counterexample.json"), System.Text.Json.JsonSerializer.Serialize(new
+            { fixture.Root, cold, unchanged, changedExit, changed, restored }));
+        }
+        Assert.Equal(0, changedExit);
+        Assert.Equal(2, restored.Projects.Sum(project => project.Executed));
+    }
+
+    [Fact]
+    public void TransportedSeedIsConsumedAtBuildBindingBeforeTestExecution()
+    {
+        using var fixture = new AffectedExecutionFixture();
+        var native = fixture.Build();
+        var cold = fixture.Tests(native);
+        Assert.Equal(2, cold.Projects.Sum(project => project.Executed));
+        fixture.Transport("snapshot");
+        var key = fixture.TransportKey();
+        fixture.ClearSeed();
+        // A late restore cannot undo descriptor work already consumed by sealing.
+        fixture.Reseal(native);
+        Assert.Equal(2, Passes());
+        fixture.Transport("restore", "--tests-key", key);
+        Assert.Equal(2, Passes());
+        // The same validated transport, available before the first consumer.
+        var build = fixture.Reseal(native);
+        Assert.Equal(0, Passes());
+        var warm = fixture.Tests(build);
+        Assert.Equal(0, warm.Projects.Sum(project => project.Executed));
+        Assert.Equal(System.Text.Json.JsonSerializer.Serialize(cold.Projects[0].Coverage[0].Source),
+            System.Text.Json.JsonSerializer.Serialize(warm.Projects[0].Coverage[0].Source));
+
+        int Passes()
+        {
+            using var cost = System.Text.Json.JsonDocument.Parse(File.ReadAllText(Path.Combine(fixture.Root, "build/ci/binding-cost.json")));
+            return cost.RootElement.GetProperty("passes").GetInt32();
+        }
+    }
+
+    [Fact]
     public void CommonRuntimeReusesKnownTestsForMetadataWithoutLosingBaseCoverage()
     {
         using var fixture = new AffectedExecutionFixture();

@@ -271,6 +271,14 @@ internal static class AffectedTestPlan
     internal static string Identity(TestAction action) => Digest(new[] { "test-action-v3", action.Project, action.Assembly, action.Scope,
             action.ProjectIdentity, action.Producer, action.Environment, action.Binding?.Identity ?? "unowned" }.Concat(action.Methods)
         .Concat(action.Inputs.Select(input => input.Path + "\0" + input.Identity)).Concat(action.Edges).Concat(action.Unknown));
+    internal static TestAction BindEnvironment(TestAction action, TestEnvironmentContext context)
+    {
+        // Build inputs stay sealed. The launch context determines the execution
+        // identity, so a different environment cannot consume an old success.
+        if (action.Identity != Identity(action)) throw new InvalidDataException("invalid sealed test action");
+        var bound = action with { Environment = context.ForValues(action.UsesExplicitValues) };
+        return bound with { Identity = Identity(bound) };
+    }
     internal static void Validate(TestInputManifest plan)
     {
         if (plan.Version != 4 || plan.Candidate.Length != 64 || !plan.Candidate.All(char.IsAsciiHexDigit)

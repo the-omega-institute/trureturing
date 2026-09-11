@@ -14,6 +14,7 @@ internal sealed class AffectedExecutionFixture : IDisposable
     internal StringWriter Output { get; } = new();
     private int buildNumber;
     private int testNumber;
+    internal int LastTestExit { get; private set; }
     internal string CacheDirectory => Path.GetDirectoryName(Directory.GetFiles(Path.Combine(Root, AffectedTestCache.CachePath), "seed.json", SearchOption.AllDirectories).Single())!;
 
     internal AffectedExecutionFixture(bool unknown = false)
@@ -89,6 +90,17 @@ internal sealed class AffectedExecutionFixture : IDisposable
         return record;
     }
 
+    internal CommonStageRecord Reseal(CommonStageRecord built)
+    {
+        // Exercise the descriptor's first consumer with the same successful native
+        // build materials; transport ordering does not require another compiler run.
+        var root = SharedBuildContractTests.Git(Root, "rev-parse", "--show-toplevel");
+        var record = CommonExecutionEvidence.SealBuild(root, built.Candidate,
+            built.Materials.Select(material => material.Path).Except([AffectedTestPlan.PathName, CommonCompileMetadata.ManifestPath]), built.Steps);
+        Retain("build-" + ++buildNumber);
+        return record;
+    }
+
     internal TestExecutionRecord Tests(CommonStageRecord build, int? expectedExit = 0, bool subprocess = false)
     {
         string[] arguments = ["--repository", Root, "--all", "--build-round", build.Round];
@@ -101,6 +113,7 @@ internal sealed class AffectedExecutionFixture : IDisposable
             exit = result.Exit;
         }
         else exit = Program.Run(arguments, TestResultEvidence.Load, Output, Output);
+        LastTestExit = exit;
         Output.WriteLine($"FIXTURE_TEST_EXIT invocation={testNumber + 1} subprocess={subprocess} exit={exit}");
         Retain("tests-" + ++testNumber);
         if (expectedExit is not null) Assert.True(exit == expectedExit, Output.ToString());

@@ -331,7 +331,8 @@ internal static class CommonExecutionEvidence
     }
     private static void ValidateCoverage(string root, TestExecutionRecord record, TestProjectExecution project, TestInputManifest plan, Func<string, TestResultEvidence> load, Func<string, string> hash, TestEnvironmentContext context, string producer)
     {
-        var actions = plan.Actions.Where(action => action.Project == project.Project).OrderBy(action => action.Scope, StringComparer.Ordinal).ToArray();
+        var actions = plan.Actions.Where(action => action.Project == project.Project)
+            .Select(action => AffectedTestPlan.BindEnvironment(action, context)).OrderBy(action => action.Scope, StringComparer.Ordinal).ToArray();
         if (actions.Length == 0 || !actions.Select(action => action.Scope).SequenceEqual(project.Coverage.Select(item => item.Scope)))
             throw new InvalidDataException("required test scopes are missing, duplicated, or out of order");
         var currentCount = 0;

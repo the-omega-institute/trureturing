@@ -56,7 +56,7 @@ jobs:
         with:
           global-json-file: global.json
       - id: keys
-        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --layers judge
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --layers judge tests
       - id: judge
         if: steps.keys.outputs.judge_key != ''
         continue-on-error: true
@@ -65,10 +65,19 @@ jobs:
           path: ${{ steps.keys.outputs.judge_path }}
           key: ${{ steps.keys.outputs.judge_key }}
           restore-keys: ${{ steps.keys.outputs.judge_restore_prefix }}
-      - name: Restore optional judge seed
+      - id: tests
+        if: steps.keys.outputs.tests_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ steps.keys.outputs.tests_path }}
+          key: ${{ steps.keys.outputs.tests_key }}
+          restore-keys: ${{ steps.keys.outputs.tests_restore_prefix }}
+      - name: Restore optional build input seeds
         env:
           JUDGE_KEY: ${{ steps.judge.outputs.cache-matched-key }}
-        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers judge --judge-key "$JUDGE_KEY"
+          TESTS_KEY: ${{ steps.tests.outputs.cache-matched-key }}
+        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers judge tests --judge-key "$JUDGE_KEY" --tests-key "$TESTS_KEY"
       - run: make -C tools ci-build
       - id: pack
         run: python3 tools/scripts/workflow/ci.py pack --repository "$GITHUB_WORKSPACE" --stage build --commit "$CANDIDATE_SHA" --archive "$RUNNER_TEMP/ci-build.tar.gz"

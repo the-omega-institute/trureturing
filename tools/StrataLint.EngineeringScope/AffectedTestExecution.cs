@@ -30,7 +30,8 @@ internal static class AffectedTestExecution
         if (record.Projects.Any(project => project.Exit != 0 || project.Error is not null)) return 1;
         // The stage, not the project executor, reconciles every required project.
         CommonExecutionEvidence.ValidateTests(root, context: context);
-        cache.Save(plan, results.Select(result => result.Success).OfType<CachedTestSuccess>(), context);
+        cache.Save(plan with { Actions = plan.Actions.Select(action => AffectedTestPlan.BindEnvironment(action, context)).ToArray() },
+            results.Select(result => result.Success).OfType<CachedTestSuccess>(), context);
         return 0;
     }
 
@@ -41,9 +42,9 @@ internal static class AffectedTestExecution
         Func<string, string, string?, int> run, TextWriter output, string relative)
     {
         if (action.Identity != AffectedTestPlan.Identity(action) || inputs.Identity != AffectedTestPlan.ProjectIdentity(inputs)
-            || action.Producer != AffectedTestPlan.ProducerIdentity() || action.ProjectIdentity != inputs.Identity
-            || action.Environment != context.ForValues(action.UsesExplicitValues))
-            throw new InvalidDataException("current test input manifest is invalid or belongs to a different environment");
+            || action.Producer != AffectedTestPlan.ProducerIdentity() || action.ProjectIdentity != inputs.Identity)
+            throw new InvalidDataException("current test input manifest is invalid");
+        action = AffectedTestPlan.BindEnvironment(action, context);
         var started = TimeProvider.System.GetTimestamp();
         var selection = cache.Select(action, inputs);
         if (selection.Success is { } success)

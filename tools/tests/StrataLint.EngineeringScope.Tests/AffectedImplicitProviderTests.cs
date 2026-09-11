@@ -6,6 +6,62 @@ namespace StrataLint.EngineeringScope.Tests;
 [Collection("Engineering scope process boundary")]
 public sealed class AffectedImplicitProviderTests
 {
+    [Fact]
+    public void PatternUsingDisposalCannotReuseFailingNativeTest()
+    {
+        using var fixture = new AffectedExecutionFixture();
+        const string input = "local-runtime/disposal-input.txt";
+        const string source = "tools/tests/StrataLint.First/Tests.cs";
+        const string dll = "tools/tests/StrataLint.First/bin/Release/net10.0/StrataLint.First.dll";
+        fixture.Write(input, "pass");
+        fixture.Write(source, $$"""
+            using Xunit; namespace First;
+            public class Tests { [Fact] public void Runs() { using var value = new Value(); } }
+            public ref struct Value {
+                public void Dispose() { Assert.True(System.IO.File.Exists({{JsonSerializer.Serialize(Path.Combine(fixture.Root, input))}})); }
+            }
+            """);
+        var build = fixture.Build();
+        var cold = fixture.Tests(build);
+        Assert.Equal(2, cold.Projects.Sum(project => project.Executed));
+        var sourceHash = CommonExecutionEvidence.Hash(Path.Combine(fixture.Root, source));
+        var dllHash = CommonExecutionEvidence.Hash(Path.Combine(fixture.Root, dll));
+        TestExecutionRecord affected;
+        TestExecutionRecord fresh;
+        int affectedExit;
+        try
+        {
+            fixture.Remove(input);
+            affected = fixture.Tests(build, expectedExit: null);
+            affectedExit = fixture.LastTestExit;
+            fixture.ClearSeed();
+            fresh = fixture.Tests(build, expectedExit: 1);
+            var trx = System.Xml.Linq.XDocument.Load(Directory.GetFiles(Path.Combine(fixture.Root, fresh.Projects[0].Results), "*.trx").Single());
+            var failed = Assert.Single(trx.Descendants(), element => element.Name.LocalName == "UnitTestResult");
+            Assert.Equal("First.Tests.Runs", failed.Attribute("testName")!.Value);
+            Assert.Equal("Failed", failed.Attribute("outcome")!.Value);
+            Assert.Contains("First.Value.Dispose()", failed.Value, StringComparison.Ordinal);
+        }
+        finally { fixture.Write(input, "pass"); }
+        var restored = fixture.Tests(build);
+        Assert.Equal(2, restored.Projects.Sum(project => project.Executed));
+        Assert.Equal(sourceHash, CommonExecutionEvidence.Hash(Path.Combine(fixture.Root, source)));
+        Assert.Equal(dllHash, CommonExecutionEvidence.Hash(Path.Combine(fixture.Root, dll)));
+        if (Environment.GetEnvironmentVariable("AFFECTED_EVIDENCE_ROOT") is { Length: > 0 } evidence)
+        {
+            Directory.CreateDirectory(evidence);
+            File.Copy(Path.Combine(fixture.Root, source), Path.Combine(evidence, "disposal-input-source.cs"), overwrite: true);
+            File.WriteAllText(Path.Combine(evidence, "disposal-counterexample.json"), JsonSerializer.Serialize(new
+            { fixture.Root, sourceHash, dllHash, cold, affectedExit, affected, fresh, restored, plan = fixture.Plan() }));
+        }
+        Assert.Equal(1, affectedExit);
+        Assert.Equal(new[] { 1, 0 }, affected.Projects.Select(project => project.Exit));
+        Assert.Equal(affected.Projects.Select(project => project.Exit), fresh.Projects.Select(project => project.Exit));
+        Assert.Empty(affected.Projects[0].Coverage);
+        Assert.Equal(0, affected.Projects[1].Executed);
+        Assert.NotEmpty(fixture.Plan().Actions[0].Unknown);
+    }
+
     [Theory]
     [InlineData("framework")]
     [InlineData("increment")]
