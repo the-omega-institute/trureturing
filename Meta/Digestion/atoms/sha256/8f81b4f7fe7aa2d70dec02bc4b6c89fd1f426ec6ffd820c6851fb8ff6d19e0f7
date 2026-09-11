@@ -1,0 +1,36 @@
+### 16.1 Analytic coordinates and the actual Jacobian
+
+For each type, use the real coordinate
+
+\[
+ \phi_i(x)=\frac{\log x-\log(b_i-a_ix)}{b_i},
+ \qquad \phi_i'(x)=\frac1{x\Psi_i(x)}.
+\]
+
+Both x and Psi_i(x) are strictly positive on [L,1], and b_i>0. The inverse is
+explicit:
+
+\[
+ \phi_i^{-1}(m)=\frac{b_i e^{b_i m}}{1+a_i e^{b_i m}}.
+\]
+
+These formulas remain valid when a_i=0. They define holomorphic functions near
+the corresponding compact real intervals, using the logarithm branches that
+agree with the real logarithms. Positive lower bounds and finitely many types
+provide a common sufficiently small neighborhood with no denominator or log
+argument vanishing. Write I_i=phi_i([L,1]); it is a compact real interval.
+
+For a parent type i and an allowed subset S of its actual children, transform
+the vacancy recursion to g_(i,S,lambda) in these coordinates. Direct
+differentiation gives, for every retained child j,
+
+\[
+ \frac{\partial g_{i,S,\lambda}}{\partial m_j}
+ =-\frac{(1-y)\Psi_j(x_j)}{\Psi_i(y)}.
+\]
+
+Thus (15.1) and the pruning result bound the absolute Jacobian row sum by
+gamma throughout every real product of the child intervals and for all
+lambda in [0,Lambda]. This derivative identification is a paper calculation;
+the current Lean endpoint proves the displayed algebraic row inequality.
+

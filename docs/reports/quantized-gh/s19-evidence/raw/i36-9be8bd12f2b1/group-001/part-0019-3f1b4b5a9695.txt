@@ -1,0 +1,346 @@
+    {
+      "status": "??",
+      "path": "Meta/Digestion/atoms/sha256/41cb93c6d7a9da5df20453dd8db8223e5c487811ca93695677c485ec0fc25ba8",
+      "identity_binding": "/canonical/new_pairs/41cb93c6d7a9da5df20453dd8db8223e5c487811ca93695677c485ec0fc25ba8/cas"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/atoms/sha256/46831bc6e3e8769c68d2bff4fe4e04920ee0a03e9909f62e8ff3f309ce129713",
+      "identity_binding": "/canonical/new_pairs/46831bc6e3e8769c68d2bff4fe4e04920ee0a03e9909f62e8ff3f309ce129713/cas"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/atoms/sha256/4dceba708efb5b0a6d40f541de9ac060af8f2b507301b726a6df88764cb0ac72",
+      "identity_binding": "/canonical/new_pairs/4dceba708efb5b0a6d40f541de9ac060af8f2b507301b726a6df88764cb0ac72/cas"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/atoms/sha256/51ee6ca29db600289c385b78822afc4e7534c1e8a1d7573dc392ca39b0c1c5ae",
+      "identity_binding": "/canonical/new_pairs/51ee6ca29db600289c385b78822afc4e7534c1e8a1d7573dc392ca39b0c1c5ae/cas"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/atoms/sha256/52a7573801731a0b05147eecc0db90e5431f6b37f6d254d64cb3e2ebf9ffbf29",
+      "identity_binding": "/canonical/new_pairs/52a7573801731a0b05147eecc0db90e5431f6b37f6d254d64cb3e2ebf9ffbf29/cas"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/atoms/sha256/5aee44da4e2e4d4556eadbb620f1623aa3ed92dad689983dbadf6bf3b1c226b5",
+      "identity_binding": "/canonical/new_pairs/5aee44da4e2e4d4556eadbb620f1623aa3ed92dad689983dbadf6bf3b1c226b5/cas"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/atoms/sha256/5e511e459690ba1d8c9426f65be3bd39b1de1e8fcdbb2b3c0d418eefa855e918",
+      "identity_binding": "/canonical/new_pairs/5e511e459690ba1d8c9426f65be3bd39b1de1e8fcdbb2b3c0d418eefa855e918/cas"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/atoms/sha256/6e03f125493e1c81bd778e5f90d30c455531e1eaeaa15f6302aa89f5cf6e972b",
+      "identity_binding": "/canonical/new_pairs/6e03f125493e1c81bd778e5f90d30c455531e1eaeaa15f6302aa89f5cf6e972b/cas"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/atoms/sha256/75fdd9bdebbbd4d54440574568bd2e150e5053301a252f2e26fa22f737e817c7",
+      "identity_binding": "/canonical/new_pairs/75fdd9bdebbbd4d54440574568bd2e150e5053301a252f2e26fa22f737e817c7/cas"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/atoms/sha256/7da4e4c09550f2e76d05afb5fc087806f4e8f22d4a927459e9e93e4247efca5d",
+      "identity_binding": "/canonical/new_pairs/7da4e4c09550f2e76d05afb5fc087806f4e8f22d4a927459e9e93e4247efca5d/cas"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/atoms/sha256/7f94de929616ec53b3420172fdd9554507445dd89d5fa6cec4b5dc12555d515e",
+      "identity_binding": "/canonical/new_pairs/7f94de929616ec53b3420172fdd9554507445dd89d5fa6cec4b5dc12555d515e/cas"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/atoms/sha256/81b5ef9539ed4f39d546eb4f1e1c94586cfa1a222856077ab58760e3fcc2fc5c",
+      "identity_binding": "/canonical/new_pairs/81b5ef9539ed4f39d546eb4f1e1c94586cfa1a222856077ab58760e3fcc2fc5c/cas"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/atoms/sha256/a3818e9b2274a4b87483cc3ca608a45182bff2f469ad9d51bfc96b5daf6ce51e",
+      "identity_binding": "/canonical/new_pairs/a3818e9b2274a4b87483cc3ca608a45182bff2f469ad9d51bfc96b5daf6ce51e/cas"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/atoms/sha256/a71b744f5a36bb9d4898ef0f8d8ceda1627a826d284c24b7e46919c77674afcb",
+      "identity_binding": "/canonical/new_pairs/a71b744f5a36bb9d4898ef0f8d8ceda1627a826d284c24b7e46919c77674afcb/cas"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/atoms/sha256/ae4c8c40d8c58e0f6b5c06b37e782444e4c9a44cacf6a2b2b766fc1445afcc80",
+      "identity_binding": "/canonical/new_pairs/ae4c8c40d8c58e0f6b5c06b37e782444e4c9a44cacf6a2b2b766fc1445afcc80/cas"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/atoms/sha256/b6500544a5866fe2baf9b1cf41a199e414fe31570cad2a10ff69dabc0b690a86",
+      "identity_binding": "/canonical/new_pairs/b6500544a5866fe2baf9b1cf41a199e414fe31570cad2a10ff69dabc0b690a86/cas"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/atoms/sha256/ba8ace893e2995a3a4a258fef07ee80b1d2d39b2eb21e8ae71c3c3e33f49e0ee",
+      "identity_binding": "/canonical/new_pairs/ba8ace893e2995a3a4a258fef07ee80b1d2d39b2eb21e8ae71c3c3e33f49e0ee/cas"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/atoms/sha256/ba9c65527d8ee2d4a957ca9ac631da05470df4d1b999492460ef980c351ae7ea",
+      "identity_binding": "/canonical/new_pairs/ba9c65527d8ee2d4a957ca9ac631da05470df4d1b999492460ef980c351ae7ea/cas"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/atoms/sha256/c778295c1d86c2649b725d03968768443d6026c0f084d55169ec2f53ad9bf6d0",
+      "identity_binding": "/canonical/new_pairs/c778295c1d86c2649b725d03968768443d6026c0f084d55169ec2f53ad9bf6d0/cas"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/atoms/sha256/cb30fd5e346932d9e6ed143e29b15fa23ea2e10494a374cd286c2392acc5db4c",
+      "identity_binding": "/canonical/new_pairs/cb30fd5e346932d9e6ed143e29b15fa23ea2e10494a374cd286c2392acc5db4c/cas"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/atoms/sha256/d3f49cbd5e45e3fcf5a70d896beed7eb7da1a7d3db59d4624f8cc953be2a2a5d",
+      "identity_binding": "/canonical/new_pairs/d3f49cbd5e45e3fcf5a70d896beed7eb7da1a7d3db59d4624f8cc953be2a2a5d/cas"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/atoms/sha256/d7e3c00856bcb18ef461d2d0ad484ac5ef08d2daf1a0472113458f1d25ab5e75",
+      "identity_binding": "/canonical/new_pairs/d7e3c00856bcb18ef461d2d0ad484ac5ef08d2daf1a0472113458f1d25ab5e75/cas"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/atoms/sha256/d9bd32d185d1823fa4027348dbfbd5a6170a700d246a29846cf7c563de409fff",
+      "identity_binding": "/canonical/new_pairs/d9bd32d185d1823fa4027348dbfbd5a6170a700d246a29846cf7c563de409fff/cas"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/atoms/sha256/ef59542ea730757e1125f661ba63c3ff1df3c59dcb104fccfbc0c366c5a34a05",
+      "identity_binding": "/canonical/new_pairs/ef59542ea730757e1125f661ba63c3ff1df3c59dcb104fccfbc0c366c5a34a05/cas"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/atoms/sha256/f63492e2c36cb9d709365f7e814e3fbb4cb1341f65e5c8f8d4f466b4cef71a41",
+      "identity_binding": "/canonical/new_pairs/f63492e2c36cb9d709365f7e814e3fbb4cb1341f65e5c8f8d4f466b4cef71a41/cas"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/atoms/sha256/fb8200fd76fa18e44278cc73938d66a5353de3d84a2e6cdd64ecd17ef44e7395",
+      "identity_binding": "/canonical/new_pairs/fb8200fd76fa18e44278cc73938d66a5353de3d84a2e6cdd64ecd17ef44e7395/cas"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/00be8e3b2f8ae123c9b0f1242440c639293569c7680dd9985de782956be44927.yaml",
+      "identity_binding": "/canonical/new_pairs/00be8e3b2f8ae123c9b0f1242440c639293569c7680dd9985de782956be44927/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/039855f0d2507b0e8ab88db30a13a1b04b881b617b3c5221d9ba3c0208ec2198.yaml",
+      "identity_binding": "/canonical/new_pairs/039855f0d2507b0e8ab88db30a13a1b04b881b617b3c5221d9ba3c0208ec2198/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/0bb2f6fa516e4e688b36a2236bcf68f579769c89bbda99fbe4f0f3900c4c237a.yaml",
+      "identity_binding": "/canonical/new_pairs/0bb2f6fa516e4e688b36a2236bcf68f579769c89bbda99fbe4f0f3900c4c237a/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/1763efebfcb509e70ea94ae3bd6f8c9d13886d3879fb027e7cd234beec8a1c10.yaml",
+      "identity_binding": "/canonical/new_pairs/1763efebfcb509e70ea94ae3bd6f8c9d13886d3879fb027e7cd234beec8a1c10/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/1ae4c83c5b2da3f5de84eb66a2b88620682c3be845df67c03e97b5e38b2662f8.yaml",
+      "identity_binding": "/canonical/new_pairs/1ae4c83c5b2da3f5de84eb66a2b88620682c3be845df67c03e97b5e38b2662f8/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/1b72537b414e7b40888d049ea8e5a7abb8716826344e04cbd4a14d0929304360.yaml",
+      "identity_binding": "/canonical/new_pairs/1b72537b414e7b40888d049ea8e5a7abb8716826344e04cbd4a14d0929304360/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/2a5e48687c0fb5fdaffac74c8b20d01a715d72665993c1c52c0d851cc439e0b5.yaml",
+      "identity_binding": "/canonical/new_pairs/2a5e48687c0fb5fdaffac74c8b20d01a715d72665993c1c52c0d851cc439e0b5/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/34e89d7235fff6d08464670798e83713a809ce9de6db97b6361d650897d61bc4.yaml",
+      "identity_binding": "/canonical/new_pairs/34e89d7235fff6d08464670798e83713a809ce9de6db97b6361d650897d61bc4/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/3a1cf17c09db4e4adda4aa6f0784cc891e7d9e017c72f51ab16cddd7a7d0596b.yaml",
+      "identity_binding": "/canonical/new_pairs/3a1cf17c09db4e4adda4aa6f0784cc891e7d9e017c72f51ab16cddd7a7d0596b/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/3f453a3db6ea6bde04905f8c00053629df65595a47b77f58c976fbcac523def8.yaml",
+      "identity_binding": "/canonical/new_pairs/3f453a3db6ea6bde04905f8c00053629df65595a47b77f58c976fbcac523def8/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/41cb93c6d7a9da5df20453dd8db8223e5c487811ca93695677c485ec0fc25ba8.yaml",
+      "identity_binding": "/canonical/new_pairs/41cb93c6d7a9da5df20453dd8db8223e5c487811ca93695677c485ec0fc25ba8/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/46831bc6e3e8769c68d2bff4fe4e04920ee0a03e9909f62e8ff3f309ce129713.yaml",
+      "identity_binding": "/canonical/new_pairs/46831bc6e3e8769c68d2bff4fe4e04920ee0a03e9909f62e8ff3f309ce129713/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/4dceba708efb5b0a6d40f541de9ac060af8f2b507301b726a6df88764cb0ac72.yaml",
+      "identity_binding": "/canonical/new_pairs/4dceba708efb5b0a6d40f541de9ac060af8f2b507301b726a6df88764cb0ac72/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/51ee6ca29db600289c385b78822afc4e7534c1e8a1d7573dc392ca39b0c1c5ae.yaml",
+      "identity_binding": "/canonical/new_pairs/51ee6ca29db600289c385b78822afc4e7534c1e8a1d7573dc392ca39b0c1c5ae/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/52a7573801731a0b05147eecc0db90e5431f6b37f6d254d64cb3e2ebf9ffbf29.yaml",
+      "identity_binding": "/canonical/new_pairs/52a7573801731a0b05147eecc0db90e5431f6b37f6d254d64cb3e2ebf9ffbf29/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/5aee44da4e2e4d4556eadbb620f1623aa3ed92dad689983dbadf6bf3b1c226b5.yaml",
+      "identity_binding": "/canonical/new_pairs/5aee44da4e2e4d4556eadbb620f1623aa3ed92dad689983dbadf6bf3b1c226b5/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/5e511e459690ba1d8c9426f65be3bd39b1de1e8fcdbb2b3c0d418eefa855e918.yaml",
+      "identity_binding": "/canonical/new_pairs/5e511e459690ba1d8c9426f65be3bd39b1de1e8fcdbb2b3c0d418eefa855e918/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/6e03f125493e1c81bd778e5f90d30c455531e1eaeaa15f6302aa89f5cf6e972b.yaml",
+      "identity_binding": "/canonical/new_pairs/6e03f125493e1c81bd778e5f90d30c455531e1eaeaa15f6302aa89f5cf6e972b/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/75fdd9bdebbbd4d54440574568bd2e150e5053301a252f2e26fa22f737e817c7.yaml",
+      "identity_binding": "/canonical/new_pairs/75fdd9bdebbbd4d54440574568bd2e150e5053301a252f2e26fa22f737e817c7/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/7da4e4c09550f2e76d05afb5fc087806f4e8f22d4a927459e9e93e4247efca5d.yaml",
+      "identity_binding": "/canonical/new_pairs/7da4e4c09550f2e76d05afb5fc087806f4e8f22d4a927459e9e93e4247efca5d/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/7f94de929616ec53b3420172fdd9554507445dd89d5fa6cec4b5dc12555d515e.yaml",
+      "identity_binding": "/canonical/new_pairs/7f94de929616ec53b3420172fdd9554507445dd89d5fa6cec4b5dc12555d515e/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/81b5ef9539ed4f39d546eb4f1e1c94586cfa1a222856077ab58760e3fcc2fc5c.yaml",
+      "identity_binding": "/canonical/new_pairs/81b5ef9539ed4f39d546eb4f1e1c94586cfa1a222856077ab58760e3fcc2fc5c/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/a3818e9b2274a4b87483cc3ca608a45182bff2f469ad9d51bfc96b5daf6ce51e.yaml",
+      "identity_binding": "/canonical/new_pairs/a3818e9b2274a4b87483cc3ca608a45182bff2f469ad9d51bfc96b5daf6ce51e/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/a71b744f5a36bb9d4898ef0f8d8ceda1627a826d284c24b7e46919c77674afcb.yaml",
+      "identity_binding": "/canonical/new_pairs/a71b744f5a36bb9d4898ef0f8d8ceda1627a826d284c24b7e46919c77674afcb/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/ae4c8c40d8c58e0f6b5c06b37e782444e4c9a44cacf6a2b2b766fc1445afcc80.yaml",
+      "identity_binding": "/canonical/new_pairs/ae4c8c40d8c58e0f6b5c06b37e782444e4c9a44cacf6a2b2b766fc1445afcc80/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/b6500544a5866fe2baf9b1cf41a199e414fe31570cad2a10ff69dabc0b690a86.yaml",
+      "identity_binding": "/canonical/new_pairs/b6500544a5866fe2baf9b1cf41a199e414fe31570cad2a10ff69dabc0b690a86/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/ba8ace893e2995a3a4a258fef07ee80b1d2d39b2eb21e8ae71c3c3e33f49e0ee.yaml",
+      "identity_binding": "/canonical/new_pairs/ba8ace893e2995a3a4a258fef07ee80b1d2d39b2eb21e8ae71c3c3e33f49e0ee/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/ba9c65527d8ee2d4a957ca9ac631da05470df4d1b999492460ef980c351ae7ea.yaml",
+      "identity_binding": "/canonical/new_pairs/ba9c65527d8ee2d4a957ca9ac631da05470df4d1b999492460ef980c351ae7ea/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/c778295c1d86c2649b725d03968768443d6026c0f084d55169ec2f53ad9bf6d0.yaml",
+      "identity_binding": "/canonical/new_pairs/c778295c1d86c2649b725d03968768443d6026c0f084d55169ec2f53ad9bf6d0/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/cb30fd5e346932d9e6ed143e29b15fa23ea2e10494a374cd286c2392acc5db4c.yaml",
+      "identity_binding": "/canonical/new_pairs/cb30fd5e346932d9e6ed143e29b15fa23ea2e10494a374cd286c2392acc5db4c/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/d3f49cbd5e45e3fcf5a70d896beed7eb7da1a7d3db59d4624f8cc953be2a2a5d.yaml",
+      "identity_binding": "/canonical/new_pairs/d3f49cbd5e45e3fcf5a70d896beed7eb7da1a7d3db59d4624f8cc953be2a2a5d/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/d7e3c00856bcb18ef461d2d0ad484ac5ef08d2daf1a0472113458f1d25ab5e75.yaml",
+      "identity_binding": "/canonical/new_pairs/d7e3c00856bcb18ef461d2d0ad484ac5ef08d2daf1a0472113458f1d25ab5e75/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/d9bd32d185d1823fa4027348dbfbd5a6170a700d246a29846cf7c563de409fff.yaml",
+      "identity_binding": "/canonical/new_pairs/d9bd32d185d1823fa4027348dbfbd5a6170a700d246a29846cf7c563de409fff/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/ef59542ea730757e1125f661ba63c3ff1df3c59dcb104fccfbc0c366c5a34a05.yaml",
+      "identity_binding": "/canonical/new_pairs/ef59542ea730757e1125f661ba63c3ff1df3c59dcb104fccfbc0c366c5a34a05/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/f63492e2c36cb9d709365f7e814e3fbb4cb1341f65e5c8f8d4f466b4cef71a41.yaml",
+      "identity_binding": "/canonical/new_pairs/f63492e2c36cb9d709365f7e814e3fbb4cb1341f65e5c8f8d4f466b4cef71a41/yaml"
+    },
+    {
+      "status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/fb8200fd76fa18e44278cc73938d66a5353de3d84a2e6cdd64ecd17ef44e7395.yaml",
+      "identity_binding": "/canonical/new_pairs/fb8200fd76fa18e44278cc73938d66a5353de3d84a2e6cdd64ecd17ef44e7395/yaml"
+    },
+    {
+      "status": " M",
+      "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "identity_binding": "/source/current"
+    },
+    {
+      "status": " M",
+      "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+      "identity_binding": "/recovery/report_current"
+    },
+    {
+      "status": "??",
+      "path": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+      "identity_binding": "self: full identity supplied by runner result"
+    }
+  ],
+  "final_check_obligations": "Implementation checks completed. Caller seal, full independent mathematical/fidelity/representation review including previously browser-unread artifacts, ordinary gates and downstream ordered integration remain outstanding.",
+  "final_structural_verification": {
+    "command": "python3 /var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/qgh0911-i36-s19-finite-distance-dual-adoption/attempt-1/validate_final.py",
+    "exit_code": 0,
+    "at_utc": "2026-09-10T17:09:33.089037+00:00",
+    "checks": [
+      "strict complete JSON and exhaustive primary pointer coverage",
+      "all 23 prerequisite identities through unchanged input or exact baseline/prefix",
+      "old I33 report digest-hole and footer exact reconstruction",
+      "three-span I36 inverse and both predecessor inverse compositions",
+      "all current addresses and canonical units/pairs/ordered chains",
+      "all changed path identities; exact 75-path allowlist; empty index; correct HEAD/branch",
+      "source/report git diff --check exit 0; source frozen since before single ingest"
+    ],
+    "mathematical_execution": false,
+    "new_mathematical_or_representation_defect_identified": false,
+    "independent_approval": false,
+    "scope": "Implementation structural checks and fallible analytical inspection; no independent approval. The pre-final metadata map identity is historical in the worker receipt only; final map identity is bound by result.json."
+  }
+}

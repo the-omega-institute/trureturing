@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2d7890d5da90fb88369888dc450baa49d46ff11d9e1fd6033e4cadd8ca4972ca
+  normalized_sha256: sha256:2d7890d5da90fb88369888dc450baa49d46ff11d9e1fd6033e4cadd8ca4972ca
+cas_ref: sha256:2d7890d5da90fb88369888dc450baa49d46ff11d9e1fd6033e4cadd8ca4972ca
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/WorldDomains.worldExclusion
+    target_statement_id: sha256:2d2276d6305e5820588a2fcda1ff53e4e995242f94d9f22e90abac3f0870ccbe
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/WorldDomains.world_exclusion_eq_guarded
+    target_statement_id: sha256:616a4450128332f04a9368ecad96e4f043ee7919d5c1716b37f5e06edfa1e730
+receipts:
+  unresolved_subitems: []

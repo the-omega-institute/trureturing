@@ -1,0 +1,65 @@
+fingerprints:
+  raw_sha256: sha256:d653aa43237d8b4027c603bdae92fcd4b7f03f23a106fce834a1e33e7fca5b68
+  normalized_sha256: sha256:d653aa43237d8b4027c603bdae92fcd4b7f03f23a106fce834a1e33e7fca5b68
+cas_ref: sha256:d653aa43237d8b4027c603bdae92fcd4b7f03f23a106fce834a1e33e7fca5b68
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/JointMarginalBoundary.FullMarginalsForceJoin
+    target_statement_id: sha256:1ee607ed230ff1ab5f3ae5a2f231f8db3583ad70bbf7ac7f4b74fdfa7d9cfa7b
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/JointMarginalBoundary.Value
+    target_statement_id: sha256:fe07d176905d02c7b6c7d5188bc4715065d8adaf1a4f12caaa3350888fe3e038
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/JointMarginalBoundary.crossed_worlds_excluded
+    target_statement_id: sha256:4da0b4fa7facdf4f1ecfe6f9f9713a470a088353fef21bdd8dfa644abd327c98
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/JointMarginalBoundary.diagonal
+    target_statement_id: sha256:885856a0eb94c2570e5b88dc5ad9329228f4388e9f1b4bce2f731c135f651b72
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/JointMarginalBoundary.diagonal_exact
+    target_statement_id: sha256:bc1515464abe39f58bd073de7f8e70fdb5f97992450005d8207f17b63be0d352
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/JointMarginalBoundary.diagonal_extra_constraint
+    target_statement_id: sha256:0ab917f9f928600d2bff3abf648fd11925773cd59d7335bb919c744fcf31e232
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/JointMarginalBoundary.diagonal_joint_refutation
+    target_statement_id: sha256:b9c264f83bd73d98c28b8cb464ea0ef768b0384364745d5e409dcee7dd4ee15c
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/JointMarginalBoundary.diagonal_local_marginals
+    target_statement_id: sha256:3876137948ec1fffcb86505af3727f760588962a068ed9c78592a437463e6398
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/JointMarginalBoundary.diagonal_marginals
+    target_statement_id: sha256:27b884d08552fdfc8ddc41ff2560baf45b815c01e6ab7c992ff36dfb55a440d8
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/JointMarginalBoundary.diagonal_strict_join
+    target_statement_id: sha256:4ed10be8e7780bcd35388b09c5b361203a283a5158ddc2840d2145e3bd3bd69f
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/JointMarginalBoundary.names_disjoint
+    target_statement_id: sha256:b9625ea9c9735b0b210e08e1f9a6dd82c25f9e1d4aa5256c31a78d0b9f979869
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/JointMarginalBoundary.oneValue
+    target_statement_id: sha256:47fcc539b6056e4fb697736dc88ad54ff4347db4c3dfd9f845ec274788650e9c
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/JointMarginalBoundary.pairEquiv
+    target_statement_id: sha256:b844e1936d6b7c57da3c893bb0de7ba681e4edc69b0e568995bb1c654cb3aaf4
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/JointMarginalBoundary.twoValue
+    target_statement_id: sha256:145c4e63b882011624578e63d3b3f4b3a7f2cd07266fc7fc197dc1c36994dc34
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/NaturalJoin.constrainedJoin
+    target_statement_id: sha256:c114b93c41fcdc74eb109acf264803ea86d3c7ae5cec985c51c62a487440b278
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/NaturalJoin.constrainedJoin_greatest
+    target_statement_id: sha256:3dca4f6291bf9d54173b7cd498be02806867ff45a33dbff3b92091e0c8b4b868
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/NaturalJoin.constrainedJoin_realizes
+    target_statement_id: sha256:133a9f5d832f034d7df6f72e3594e1c45d9b000ee2f17323783907cf772a4f95
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/NaturalJoin.naturalJoin
+    target_statement_id: sha256:9cadf1c60f293a8f99404d4d95e10391ebc1ef3cae53d51ec1f0736ad0000f06
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/NaturalJoin.naturalJoin_greatest
+    target_statement_id: sha256:fb45d372121281e52617c1d0bf2223bb0281fb930bf57d49edb2f4be59482cae
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/WorldDomains.incompatible_image_ne_zero
+    target_statement_id: sha256:05383e91b57cced65dad40c8ec7585c11a396fb58e7a94c1795e78fb6173b2e7
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/WorldProbabilityBoundary.CartesianForcesIndependence
+    target_statement_id: sha256:32a9067933c73e82bf67a3f5d4071b365aea26efede264df57707fe89db22aba
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/WorldProbabilityBoundary.cartesian_probability_refutation
+    target_statement_id: sha256:994753e3595c5bcbd0972a96c118eaa7df1a12213103bb172160f0e4f9a040c5
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/WorldProbabilityBoundary.coordinates_measurable
+    target_statement_id: sha256:a410a3d92cbce8bc04fe49bd50b894b4d9bc8d19f5eda466880b2dced148511b
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/WorldProbabilityBoundary.coordinates_not_independent
+    target_statement_id: sha256:44ddecef79fb2e0a824d82e37d7272cc0fa027cfd05ebedb792be46a239bb8b4
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/WorldProbabilityBoundary.diagonalMeasure
+    target_statement_id: sha256:631b0e95ef480e10fee2cab6ce8e0f41c6ed5029360674ef870f29ac3626e831
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/WorldProbabilityBoundary.diagonalMeasure_probability
+    target_statement_id: sha256:9f0e78e8486912c3daa419a41932a64c1d9a76be67e8dbc2950559dab4403610
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/WorldProbabilityBoundary.fullWorldEquiv
+    target_statement_id: sha256:225357cad52c1669fbb0bce2e5d6905517dea65d3dcc3579729814f2c762c5f9
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/WorldProbabilityBoundary.marginal_masses
+    target_statement_id: sha256:b40cb1ad950f2f78ace82210c2e3da0dd4f83329894e5800e06298057d4c81b9
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/WorldProbabilityBoundary.rectangle_masses
+    target_statement_id: sha256:0ce26cccdedc4c57b1b60437a0c8b23e22246995039ed8dba9649beeb0f13799
+receipts:
+  unresolved_subitems: []

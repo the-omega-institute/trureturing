@@ -1,0 +1,11 @@
+**30.26 定理与反例：一般 Hermitian 块的条件及复共轭的必要性。** 对任意有限 Hermitian 块
+\(\mathcal B=\left(\begin{smallmatrix}a&\operatorname{adj}(g)\\g&C\end{smallmatrix}\right)\)，其中 \(a\in\mathbb R\)、\(C=\operatorname{adj}(C)\)，对每个实 \(\delta\) 有
+\[
+\mathcal B-\delta E_{00}\succeq0
+\iff C\succeq0,\quad g\in\operatorname{Ran}C,\quad
+ a-\delta-\operatorname{inner}(g,\operatorname{pinv}(C)g)\ge0.
+\]
+证明：测试 \((0,b)\) 给 \(C\succeq0\)。对 \(z\in\ker C\)，测试 \((1,tz)\)；若 \(\operatorname{inner}(g,z)\ne0\)，可选复数 \(t\) 的相位及任意大的模，使交叉项 \(2\operatorname{Re}(t\operatorname{inner}(g,z))\) 趋向负无穷，矛盾。所以 \(g\perp\ker C\)，得到范围条件。设 \(\beta=\operatorname{pinv}(C)g\)，按 30.25 展开并取 \((1,-\beta)\) 给最后条件；反向直接完成平方。故一般块若 \(C\not\succeq0\)，或范围条件失败，或满足范围条件但 \(a-\operatorname{inner}(g,\operatorname{pinv}(C)g)<0\)，非负阈值集为空；不能无条件写成一个非空距离区间。
+
+范围条件不可省：\(a=1,C=[0],g=[1]\) 满足形式上的伪逆余量 \(1\ge0\)，但 \(\mathcal B=\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)\) 在 \((1,-1)\) 的二次型为 \(-1\)。复共轭也不可省：取 \(H=\mathbb C,u=1,v_1=i\)，则 \(Vb=ib\)、\(\operatorname{adj}(V)y=-iy\)、\(C=1,g=-i\)，而 \(\operatorname{compose}(V,V)=-1\)；正确的 Gram 块上右元为 \(i\)、下左元为 \(-i\)。更简单地，\(N=0,B=[1],z=i\) 时正确二次型 \(\overline z z=1\)，漏掉共轭的 \(zz=-1\) 会反转正性。一般复定理不能因后面的具体函数为实值而略去这些条件。上述定理延续第 11 节及 [Q] 的 Schur 几何，奇异情形由这里的范围证明承担。
+

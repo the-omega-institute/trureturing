@@ -1,0 +1,2 @@
+**定义 1.16(前沿的两半)**。可动前沿 $F^{+}(L)=\mathrm{Thm}(\mathfrak A)\setminus\mathrm{Frozen}(L)$;不可动前沿 $F^{0}(L)=\{P\in O\mid\neg\mathrm{Proved}_{\mathfrak A}(P)\wedge\neg\mathrm{Proved}_{\mathfrak A}(\neg P)\}$。定理 1.15 说:变换只在 $F^{+}$ 上有作为;$F^{0}$ 是 Gödel 边界,对任何变换不动。
+

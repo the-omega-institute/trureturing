@@ -1,0 +1,32 @@
+### Paper consequence: the hierarchy reaches the complete growth rate
+
+Define mu_infinity=limsup c_n^(1/n) and mu_r=limsup (c_n^(r))^(1/n).
+For each fixed ordering, the following follows from the formal-source integer
+inequalities by ordinary real limit arguments:
+
+\[
+ \boxed{
+ \mu_\infty\le\mu_R\le\mu_r\quad(1\le r\le R),\qquad
+ \inf_{r\ge1}\mu_r=\mu_\infty=\inf_{k\ge1}c_k^{1/k}.
+ }
+\]
+
+Here are the quantifiers and proof. For a fixed k>=1 and any r>=k, write
+n=qk+s with 0<=s<k. The block inequality gives
+mu_r<=c_k^(1/k), since the factor 3^s is uniformly bounded as n grows.
+Complete domination gives mu_infinity<=mu_r. Hence
+mu_infinity<=inf_k c_k^(1/k). The reverse inequality follows because the infimum
+of a sequence is at most its limsup. For every epsilon>0 choose one k with
+c_k^(1/k)<mu_infinity+epsilon; then every r>=k satisfies
+mu_infinity<=mu_r<mu_infinity+epsilon. Monotonicity comes from the common-order
+refinement theorem. The complete all-straight path ensures c_k>=1, and all
+counts are bounded by 3^k, so no infinite or zero-root pathology is used.
+
+Thus larger fixed-order geometric memories converge in growth rate to the
+complete ordered-deletion process. This establishes mathematical completeness
+of this approximation hierarchy. It supplies neither a convergence rate nor a
+particular finite radius attaining 2.429 or 2.42. It also makes no assertion that
+optimizing over arbitrary controllers commutes with either limit. The limsup,
+infimum and epsilon argument are proved here on paper; no separate Lean limit
+declaration is claimed.
+

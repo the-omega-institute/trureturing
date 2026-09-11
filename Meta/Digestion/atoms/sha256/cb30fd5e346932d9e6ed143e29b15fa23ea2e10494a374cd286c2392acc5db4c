@@ -1,0 +1,34 @@
+**30.81 定理及证明（新常数下的固定探针与正定有理系统）。** For each fixed mode, define
+from \(N,\eta\) the positive rationals
+\[
+H_{\rm gen}=4N/\kappa,\quad Q_{\rm gen}=NH_{\rm gen},\quad
+C_{\rm gen}=N(1+H_{\rm gen}),\quad C_{\rm width}=1+(N+4)/(2\kappa),
+\quad\tau=\min(1,\eta/(4C_{\rm width})),
+\quad\theta=\min(1,\kappa/(2N),\tau/C_{\rm gen}).
+\]
+Use all \(e_i,-e_i,e_i+e_j\ (i<j)\) as fixed probes, with absolute coefficient sum at most two,
+and choose \(h_0=1+\lfloor\Gamma(2)/\theta\rfloor\), \(\Gamma(2)=45/4\).
+With \(J=h_0+1,K=h_0\), compute \(B_p,E_p,c_p=B_p-E_p/2\).
+Then \(E_p<\theta\) by 30.79 and \(|c_p-R_N(p)|<\theta/2\).
+The exact residual polarizations are
+\[
+F_{ii}=(R_N(e_i)+R_N(-e_i)-2)/2,\quad
+y_i=(R_N(-e_i)-R_N(e_i))/4,\quad
+F_{ij}=(R_N(e_i+e_j)-R_N(e_i)-R_N(e_j)+1)/2.
+\]
+Replacing residuals by midpoints and explicitly reflecting upper-triangular entries defines
+real symmetric rational \(\widetilde F\) and rational \(\widetilde y\).
+The complete rational entry intervals are the three formulas of 30.66 with these new
+\(a_p=B_p-E_p,b_p=B_p\); they follow by choosing lower terms for positive signs and upper
+terms for negative signs in each displayed polarization. The diagonal, off-diagonal and vector
+errors are respectively \(<\theta/2,<3\theta/4,<\theta/4\), all at most \(\theta\).
+For \(E_F=\widetilde F-F\) and complex \(z\),
+\[
+\|E_Fz\|^2\le N\theta^2(\sum_j|z_j|)^2\le N^2\theta^2\|z\|^2.
+\]
+Therefore \(\|E_F\|_{\rm op}\le N\theta\) and
+\(\langle z,\widetilde Fz\rangle\ge(\kappa-N\theta)\|z\|^2\ge(\kappa/2)\|z\|^2\).
+The matrix is positive definite, and Cauchy–Schwarz applied to the last inequality gives
+\(\|\widetilde F^{-1}\|_{\rm op}\le2/\kappa\). The proof uses no computed true rank,
+true matrix error or spectral value.
+

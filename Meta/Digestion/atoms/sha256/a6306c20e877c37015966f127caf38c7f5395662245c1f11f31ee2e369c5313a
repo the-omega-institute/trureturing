@@ -1,0 +1,4 @@
+**定理 2.10(素无穷)**〔骨架〕。在假设 2.9 下,任一由容许变换生成的账本链 $L_0\le L_1\le\cdots$ 若穷尽 $\mathrm{Thm}(\mathfrak A)$,则 $\bigcup_t\mathrm{Prime}(L_t)$ 无限。
+*梗概*。若素节点总数有限为 $S$,则由定理 2.8 每个 $\mathrm{Frozen}(L_t)\subseteq B(S)$,故 $\bigcup_t\mathrm{Frozen}(L_t)\subseteq B(S)\cap\mathrm{Thm}(\mathfrak A)\subsetneq\mathrm{Thm}(\mathfrak A)$,与穷尽矛盾。待补:「穷尽」的精确定义与链的极限账本。
+*读法*。Euclid 与 Gödel 同形(母仓第 1.4 条):素无穷来自「有限个原子的绑定闭包盖不住全部定理」,不来自任何神秘。
+

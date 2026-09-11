@@ -1,0 +1,17 @@
+**命题 51（具名单元的丰富输出不可表达而 $q$ 读数可表达，repo-derived）。** 取
+$B=\{(1,0)\}\subseteq\mathbb Z\times\mathbb Z^3$。不存在固定的有限 $\Sigma_{{\rm cau},t}$ 单孔上下文 $C$，使对每个平衡表示 $X$ 都有定义且
+
+$$
+C(X)\cong_h F_B(X).
+\tag{TCAU-NONEXP}
+$$
+
+但对全部 $X\in\mathcal B$ 有合法的单孔 $q$ 表达式
+
+$$
+q(F_BX)=q\bigl(F_{\downarrow Q^*}(X\boxtimes U_0)\bigr),
+\qquad
+Q^*=\{(0,\epsilon,r,2):\epsilon\in\{+1,-1\},\ r\in T\}.
+\tag{TCAU-QEXP}
+$$
+

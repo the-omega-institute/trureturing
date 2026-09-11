@@ -1,0 +1,23 @@
+**29.20 经典出处、重叠核对与 primary 的历史限制。** 分数背包、
+对数幂级数、有限测度矩界、Vandermonde 可逆性、有理函数微分、
+紧区间极值和抽屉齐次同时逼近均为经典方法。
+分数背包的已有来源记录直接引用 26.28;
+本次另实际取回 NIST DLMF [4.6.E1](https://dlmf.nist.gov/4.6.E1.tex) 的对数级数,
+MathWorld [Vandermonde Determinant](https://mathworld.wolfram.com/VandermondeDeterminant.html)
+式 (1)-(2),及 Encyclopedia of Mathematics
+[Dirichlet theorem](https://encyclopediaofmath.org/wiki/Dirichlet_theorem)
+中 Diophantine approximations 小节的同时逼近与抽屉原理说明。
+这里使用的 \(Q=N^2\) 齐次特例已在 29.18 自足证明;
+没有把这些经典出处说成含有本比较差的专门邻域结论。
+三个限定站点的 Google 查询仅返回跳转页,DLMF 的完整 4.6 页面请求为 HTTP 403;
+成功取回的公式与两个条目、实际查询和内容身份均记录于本层唯一报告。
+收敛域和所需特殊化由本节的正支持及纸面证明核对。
+
+primary 自报请求 pinned source 时遇 DisabledError,未独立看到其字节、SHA256、25.7 或
+26 节全文,把先行源前提标为 ASSUMED-UNVERIFIED;它对原创性未作评定。
+这些是该次 primary 的历史访问/新颖性限制,不会因本次读取本树旧源而变成
+“primary 当时已经核查”。本次亲读 25.7、26.2-26.4、26.10-26.17、26.23-26.25、
+27.2-27.5 的相关条款、27.11-27.14、28.14-28.19 等先行文本,区分准确重叠与新增组合。
+本节专门推导的当前归属为 repo-derived,不以历史的“未评定”充当现行 provenance 状态,
+不声称穷尽文献检索或文献中无先例。
+

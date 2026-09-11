@@ -1,0 +1,8 @@
+**命题 44（来源与时间混合语言，repo-derived）。**
+
+$$
+\approx_{\Sigma_{\rm src}\cup\Sigma_{\rm st}}
+=\ker(\rho_{\rm src},m,M,s).
+\tag{SRC-ST}
+$$
+

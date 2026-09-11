@@ -1,0 +1,2 @@
+**定义 3.4(信)**。主体**信** $P$,当且仅当其 $\mathrm{last}(P)=(P,\mathsf{frozen})$ 或 $(P,\mathsf{unverified})$ 而 $s_L(P)\neq\mathsf{frozen}$。信是走在账本前面的主张;诚实的信只能取 $\mathsf{unverified}$ 形(定义 3.2)。
+

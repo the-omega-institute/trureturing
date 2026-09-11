@@ -1,0 +1,2 @@
+**定义 5.1(表述)**。固定表述载体:一个表述是三元组 $\rho=(\tau,n,\pi)$——陈述文本 $\tau$、名 $n$、证明脚本 $\pi$——连同解释函数:$\tau$ 解释为命题 $\llbracket\tau\rrbracket\in\mathcal P$,$\pi$ 解释为证明项 $\llbracket\pi\rrbracket\in\Pi$。$\rho$ 是命题 $P$ 的表述当且仅当 $\llbracket\tau\rrbracket=P$;它是**被核接受的**表述当且仅当 $K(\llbracket\pi\rrbracket,P)=\mathsf{acc}$。$\mathrm{Pres}(P)$ 为 $P$ 的全部表述(不要求 $P$ 已冻结,故前沿候选也有表述);表述的状态 $s(\rho):=s_L(\llbracket\tau\rrbracket)$。两个表述**逻辑等价**当且仅当 $\llbracket\tau_1\rrbracket=\llbracket\tau_2\rrbracket$。
+

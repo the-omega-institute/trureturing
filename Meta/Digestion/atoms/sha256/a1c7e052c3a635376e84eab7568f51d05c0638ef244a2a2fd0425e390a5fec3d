@@ -1,0 +1,20 @@
+### 4. 同一份测度重建全部原始 Li 型系数
+
+令 L_0=0，a=L_1，且
+
+\[
+L_{n+1}-2L_n+L_{n-1}=2a\Re c_n\quad(n\ge1).
+\]
+
+`LiCurvatureProbabilityCompletion.normalized_curvature_reconstruction` 从 c_0=1 和全部 T_N(c)>=0 构造上述唯一 mu，再利用已有二阶递推唯一性证明
+
+\[
+L_n=a\int_{\mathbb T}\left|1+z+\cdots+z^{n-1}\right|^2d\mu(z)
+\]
+
+对每个 n 成立。a>=0 因而导出每个原系数非负。整个原序列同时重建，没有在各阶任意选择不同的概率律。
+
+`li_curvature_criterion_without_herglotz` 将此构造代入原 `li_curvature_criterion`，消除外加的共同 Herglotz 测度前提。实际 derivative-defined Li 判据、原始递推及 RH-to-Fourier identification 仍然公开作为参数，不能把这个适配器写成无条件 RH 定理。
+
+`time_one_li_probability_implies_rh` 还记录：在给定实际算术 Li 判据的情况下，仅一份具有全部 exp(-L_|n|) 矩的 time-one 概率律就足以给出反向蕴含。它没有构造该律；一般指数半群仍使用上一节的全部正性条件。
+

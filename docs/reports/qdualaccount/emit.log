@@ -1,0 +1,9 @@
+document graph: receipt-free=3885 receipt-bound=0 wired=3877 truth-anchor=11054 dependency=3670 narrative=5
+wrote: Blueprint/D5/S3/Quantum/Divergence/DualAccountFull.md
+wrote: tools/Generated/scribe-emissions.v1.json
+emitted: 1 changed blueprint(s)
+RESOURCE_OBSERVATION stage=report-supervisor-scribe-consumer disk_free_kb=100940588 fd_soft_limit=1048576 fd_peak=678 rss_peak_kb=1975584
+checked: Evidence/D5/values.json
+checked: Generated/FILEMAP.md
+wrote: Generated/DAG.md
+wrote: Generated/truth-graph.v1.json

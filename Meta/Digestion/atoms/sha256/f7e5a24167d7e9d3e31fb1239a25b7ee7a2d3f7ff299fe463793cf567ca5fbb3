@@ -1,0 +1,13 @@
+**定理 89（原第 43–44 节分类的保留）。** 对每个固定 \(B\) 和 \(g:\mathbb Z\to\mathbb Z\)，
+\[
+E_q^{\rm dup}(B)\iff E_q(B)\iff\operatorname{Tail}(B),
+\tag{Z-TAIL}
+\]
+\[
+g\circ L_B\in\mathcal E\iff
+B=\varnothing\ \lor\ g\text{ 在全部整数上恒定}\ \lor\
+\left(\operatorname{Tail}(B)\land\exists p\in\mathbb Z[z]\ \forall k\in\mathbb Z, g(k)=p(k)\right).
+\tag{Z-POST}
+\]
+相同充要条件在定义 80 的码语言成立，其中 \(B,g,c,p,k,X\) 及量词域全按其原类型运输。整值多项式 \(k(k-1)/2\) 在非空区域不满足所需的整系数条件。 此分类的后复合子族严格小于 \(\mathcal E\)。
+

@@ -1,0 +1,794 @@
+    {
+      "address": "30.24",
+      "current_address_index": 169,
+      "primary_correspondence": [
+        {
+          "input": "C88",
+          "pointer": "/conclusion/mathematical_answer/finite_pseudoinverse_and_general_block_condition"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_2/range_condition"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_2/pseudoinverse_definition"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_2/distance_formula_and_minimizers"
+        },
+        {
+          "input": "C92",
+          "pointer": "/conclusion/item_2"
+        }
+      ],
+      "fidelity": "Kernel/range proof and spectral pseudoinverse, including least coefficient norm."
+    },
+    {
+      "address": "30.25",
+      "current_address_index": 170,
+      "primary_correspondence": [
+        {
+          "input": "C88",
+          "pointer": "/conclusion/mathematical_answer/finite_gram_threshold"
+        },
+        {
+          "input": "C88",
+          "pointer": "/conclusion/mathematical_answer/finite_pseudoinverse_and_general_block_condition"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_2/completed_square"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_2/finite_kernel"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_2/degenerate_cases"
+        },
+        {
+          "input": "C92",
+          "pointer": "/conclusion/item_2"
+        }
+      ],
+      "fidelity": "Every singular/zero/empty case and kernels below and at the finite endpoint."
+    },
+    {
+      "address": "30.26",
+      "current_address_index": 171,
+      "primary_correspondence": [
+        {
+          "input": "C88",
+          "pointer": "/conclusion/mathematical_answer/finite_pseudoinverse_and_general_block_condition"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_1/why_literal_forms_fail"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_2/general_hermitian_block"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_2/range_and_conjugation_counterexamples"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_2/deduplication"
+        },
+        {
+          "input": "C92",
+          "pointer": "/conclusion/item_1"
+        },
+        {
+          "input": "C92",
+          "pointer": "/conclusion/item_2"
+        }
+      ],
+      "fidelity": "General Hermitian block range necessity and conjugation/range counterexamples retained."
+    },
+    {
+      "address": "30.27",
+      "current_address_index": 172,
+      "primary_correspondence": [
+        {
+          "input": "C88",
+          "pointer": "/conclusion/mathematical_answer/exact_full_half_axis_model"
+        },
+        {
+          "input": "C88",
+          "pointer": "/conclusion/mathematical_answer/relationship_to_the_old_section_7"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_3/unchanged_model"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_3/integrability_and_scaling"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_4/full_half_axis_tail"
+        },
+        {
+          "input": "C92",
+          "pointer": "/conclusion/item_3"
+        },
+        {
+          "input": "C92",
+          "pointer": "/conclusion/item_4"
+        },
+        {
+          "input": "C93",
+          "pointer": "/conclusion/definitions/unchanged_hilbert_model"
+        }
+      ],
+      "fidelity": "Exactly the full half-axis model and coefficient-square tail; no added coefficient constraint."
+    },
+    {
+      "address": "30.28",
+      "current_address_index": 173,
+      "primary_correspondence": [
+        {
+          "input": "C88",
+          "pointer": "/conclusion/mathematical_answer/synthesis_operator_and_trace"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_3/synthesis_definition_and_extension"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_3/adjoint_direction"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_3/norm_distinctions"
+        },
+        {
+          "input": "C92",
+          "pointer": "/conclusion/item_3"
+        }
+      ],
+      "fidelity": "Absolute norm convergence, bounded extension and adjoint; Hilbert-Schmidt and operator norms distinguished."
+    },
+    {
+      "address": "30.29",
+      "current_address_index": 174,
+      "primary_correspondence": [
+        {
+          "input": "C88",
+          "pointer": "/conclusion/mathematical_answer/synthesis_operator_and_trace"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_3/gram_operator"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_3/trace_class_proof"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_3/norm_distinctions"
+        },
+        {
+          "input": "C92",
+          "pointer": "/conclusion/item_3"
+        }
+      ],
+      "fidelity": "Positive compact trace-class operator on coefficient space with spectral/Tonelli trace proof."
+    },
+    {
+      "address": "30.30",
+      "current_address_index": 175,
+      "primary_correspondence": [
+        {
+          "input": "C88",
+          "pointer": "/conclusion/mathematical_answer/finite_compressions_equal_the_original_distances"
+        },
+        {
+          "input": "C88",
+          "pointer": "/conclusion/mathematical_answer/relationship_to_the_old_section_7"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_4/original_distance_and_compression_types"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_4/finite_span_and_threshold"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_4/finite_scaling_limit"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_4/zero_prefix"
+        },
+        {
+          "input": "C92",
+          "pointer": "/conclusion/item_4"
+        }
+      ],
+      "fidelity": "Typed finite compressions, reversible finite scaling and original D_N; no infinite bounded inverse assertion."
+    },
+    {
+      "address": "30.31",
+      "current_address_index": 176,
+      "primary_correspondence": [
+        {
+          "input": "C88",
+          "pointer": "/conclusion/mathematical_answer/finite_compressions_equal_the_original_distances"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_4/strictly_positive_finite_distances"
+        },
+        {
+          "input": "C92",
+          "pointer": "/conclusion/item_4"
+        },
+        {
+          "input": "C93",
+          "pointer": "/conclusion/preserved_gram_and_infinite_results/finite_positive_distance"
+        }
+      ],
+      "fidelity": "Finite-N positive distance by periodicity after t=1/x, including null-set justification."
+    },
+    {
+      "address": "30.32",
+      "current_address_index": 177,
+      "primary_correspondence": [
+        {
+          "input": "C88",
+          "pointer": "/conclusion/mathematical_answer/increasing_prefix_limit"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_4/decreasing_limit"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_4/closed_subspace_minimizer"
+        },
+        {
+          "input": "C92",
+          "pointer": "/conclusion/item_4"
+        }
+      ],
+      "fidelity": "Decreasing distance limit and complete closed-subspace projection proof."
+    },
+    {
+      "address": "30.33",
+      "current_address_index": 178,
+      "primary_correspondence": [
+        {
+          "input": "C88",
+          "pointer": "/conclusion/mathematical_answer/infinite_threshold_and_finite_compression_equivalence"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_4/finite_compression_equivalence"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_4/all_finite_index_sets"
+        },
+        {
+          "input": "C92",
+          "pointer": "/conclusion/item_4"
+        }
+      ],
+      "fidelity": "Prefix, arbitrary finite index and finite-dimensional-subspace positivity, including empty and zero-absent cases."
+    },
+    {
+      "address": "30.34",
+      "current_address_index": 179,
+      "primary_correspondence": [
+        {
+          "input": "C88",
+          "pointer": "/conclusion/mathematical_answer/infinite_threshold_and_finite_compression_equivalence"
+        },
+        {
+          "input": "C88",
+          "pointer": "/conclusion/mathematical_answer/relationship_to_the_old_section_7"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_4/global_interval_and_endpoint"
+        },
+        {
+          "input": "C92",
+          "pointer": "/conclusion/item_4"
+        }
+      ],
+      "fidelity": "Closed global threshold and finite-support strict negative witness above it."
+    },
+    {
+      "address": "30.35",
+      "current_address_index": 180,
+      "primary_correspondence": [
+        {
+          "input": "C88",
+          "pointer": "/conclusion/mathematical_answer/infinite_endpoint_kernel"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_4/infinite_coefficients_and_kernel"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_4/three_distinct_attainments"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_4/analytic_nonattainment_example"
+        },
+        {
+          "input": "C92",
+          "pointer": "/conclusion/item_4"
+        },
+        {
+          "input": "C93",
+          "pointer": "/conclusion/preserved_gram_and_infinite_results/singular_and_infinite_endpoints"
+        }
+      ],
+      "fidelity": "All three attainments distinguished; complete analytic example with endpoint 1, no endpoint kernel and failed infinite range condition."
+    },
+    {
+      "address": "30.36",
+      "current_address_index": 181,
+      "primary_correspondence": [
+        {
+          "input": "C88",
+          "pointer": "/conclusion/mathematical_answer/classical_RH_connection"
+        },
+        {
+          "input": "C88",
+          "pointer": "/conclusion/mathematical_answer/relationship_to_the_old_section_7"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_5/literature_anchor"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_5/exact_imported_theorem"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_5/derived_RH_equivalences"
+        },
+        {
+          "input": "C92",
+          "pointer": "/conclusion/item_5"
+        }
+      ],
+      "fidelity": "B1 is chi membership in the specified closure, not density of that span in all H; external analytic theorem remains a dependency."
+    },
+    {
+      "address": "30.37",
+      "current_address_index": 182,
+      "primary_correspondence": [
+        {
+          "input": "C88",
+          "pointer": "/conclusion/mathematical_answer/rational_strict_witnesses"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_5/rational_density_proof"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_5/real_rationals_suffice_here"
+        },
+        {
+          "input": "C92",
+          "pointer": "/conclusion/item_5"
+        }
+      ],
+      "fidelity": "Strict rational density with explicit positive norm margin; real-rational reduction only in the real-valued model."
+    },
+    {
+      "address": "30.38",
+      "current_address_index": 183,
+      "primary_correspondence": [
+        {
+          "input": "C88",
+          "pointer": "/conclusion/mathematical_answer/rational_strict_witnesses"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_5/witness_identity"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_5/normalizing_any_negative_witness"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_5/fixed_prefix_strict_equivalence"
+        },
+        {
+          "input": "C92",
+          "pointer": "/conclusion/item_5"
+        }
+      ],
+      "fidelity": "Two-way normalized finite witness identity with all strict/equality/zero/negative cases."
+    },
+    {
+      "address": "30.39",
+      "current_address_index": 184,
+      "primary_correspondence": [
+        {
+          "input": "C88",
+          "pointer": "/conclusion/mathematical_answer/rational_strict_witnesses"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_5/complete_discrete_quantifiers"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_5/quantifier_proof_and_complement"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_5/no_finite_universal_prefix"
+        },
+        {
+          "input": "C92",
+          "pointer": "/conclusion/item_5"
+        }
+      ],
+      "fidelity": "All-m and all-epsilon quantifiers, complement and no fixed finite universal prefix."
+    },
+    {
+      "address": "30.40",
+      "current_address_index": 185,
+      "primary_correspondence": [
+        {
+          "input": "C88",
+          "pointer": "/conclusion/mathematical_answer/automatic_positivity_and_spectral_counterexample"
+        },
+        {
+          "input": "C88",
+          "pointer": "/conclusion/mathematical_answer/relationship_to_the_old_section_7"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_5/automatic_positivity_is_not_RH"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_5/smallest_eigenvalue_in_actual_model"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_5/analytic_spectral_counterexample"
+        },
+        {
+          "input": "C92",
+          "pointer": "/conclusion/item_5"
+        },
+        {
+          "input": "C93",
+          "pointer": "/conclusion/preserved_gram_and_infinite_results/automatic_spectral_limit"
+        },
+        {
+          "input": "C93",
+          "pointer": "/conclusion/preserved_gram_and_infinite_results/automatic_positivity"
+        }
+      ],
+      "fidelity": "Unconditional actual-model smallest eigenvalue limit and full diagonal spectral counterexample."
+    },
+    {
+      "address": "30.41",
+      "current_address_index": 186,
+      "primary_correspondence": [
+        {
+          "input": "C93",
+          "pointer": "/conclusion/definitions"
+        },
+        {
+          "input": "C93",
+          "pointer": "/conclusion/theorem_1_exact_residual_decomposition"
+        }
+      ],
+      "fidelity": "All signed-coefficient interval identities; x>1 coefficient-square tail and x<1/J residual tail remain distinct."
+    },
+    {
+      "address": "30.42",
+      "current_address_index": 187,
+      "primary_correspondence": [
+        {
+          "input": "C93",
+          "pointer": "/conclusion/theorem_2_rational_logarithm_enclosures"
+        }
+      ],
+      "fidelity": "Finite geometric identity integrated to derive rational logarithm enclosure and integer-only formulas."
+    },
+    {
+      "address": "30.43",
+      "current_address_index": 188,
+      "primary_correspondence": [
+        {
+          "input": "C93",
+          "pointer": "/conclusion/theorem_3_rational_upper_bound_and_soundness"
+        }
+      ],
+      "fidelity": "Full d_j sign rule, rational upper/lower enclosure, Gram witness and strict soundness."
+    },
+    {
+      "address": "30.44",
+      "current_address_index": 189,
+      "primary_correspondence": [
+        {
+          "input": "C93",
+          "pointer": "/conclusion/theorem_4_completeness_and_effective_error_control/uniform_weighted_log_error"
+        }
+      ],
+      "fidelity": "Entire weighted j-sum controlled by M^2/J + (3|b|M/8)9^(1-K)."
+    },
+    {
+      "address": "30.45",
+      "current_address_index": 190,
+      "primary_correspondence": [
+        {
+          "input": "C93",
+          "pointer": "/conclusion/theorem_4_completeness_and_effective_error_control/fixed_schedule_without_residual_oracle"
+        }
+      ],
+      "fidelity": "Deterministic J=r+1,K=r and explicit rational precision bound, no unknown residual input or monotonicity assumption."
+    },
+    {
+      "address": "30.46",
+      "current_address_index": 191,
+      "primary_correspondence": [
+        {
+          "input": "C93",
+          "pointer": "/conclusion/theorem_4_completeness_and_effective_error_control/strict_completeness"
+        },
+        {
+          "input": "C93",
+          "pointer": "/conclusion/theorem_4_completeness_and_effective_error_control/exact_infimum_corollaries"
+        }
+      ],
+      "fidelity": "Every strict residual has an eventually accepted scheduled certificate; strict margin used only existentially."
+    },
+    {
+      "address": "30.47",
+      "current_address_index": 192,
+      "primary_correspondence": [
+        {
+          "input": "C93",
+          "pointer": "/conclusion/finite_integer_encoding_and_Verify/integer_pairing"
+        },
+        {
+          "input": "C93",
+          "pointer": "/conclusion/finite_integer_encoding_and_Verify/signed_integers_and_rationals"
+        },
+        {
+          "input": "C93",
+          "pointer": "/conclusion/finite_integer_encoding_and_Verify/finite_list_encoding"
+        },
+        {
+          "input": "C93",
+          "pointer": "/conclusion/finite_integer_encoding_and_Verify/certificate_definition"
+        }
+      ],
+      "fidelity": "Natural Pair/SignCode/RatCode/ListCode, unique finite decoding and decreasing-tail termination."
+    },
+    {
+      "address": "30.48",
+      "current_address_index": 193,
+      "primary_correspondence": [
+        {
+          "input": "C93",
+          "pointer": "/conclusion/finite_integer_encoding_and_Verify/predicate_domain"
+        },
+        {
+          "input": "C93",
+          "pointer": "/conclusion/finite_integer_encoding_and_Verify/exact_arithmetic_evaluation"
+        },
+        {
+          "input": "C93",
+          "pointer": "/conclusion/finite_integer_encoding_and_Verify/strict_acceptance_rule"
+        },
+        {
+          "input": "C93",
+          "pointer": "/conclusion/finite_integer_encoding_and_Verify/integer_realization_of_rational_operations"
+        },
+        {
+          "input": "C93",
+          "pointer": "/conclusion/finite_integer_encoding_and_Verify/decidability_proof"
+        },
+        {
+          "input": "C93",
+          "pointer": "/conclusion/finite_integer_encoding_and_Verify/implementation_boundary"
+        }
+      ],
+      "fidelity": "Total Verify with exact integer arithmetic and strict mP<D, no real/log/Gram/pinv oracle; no implemented-software claim."
+    },
+    {
+      "address": "30.49",
+      "current_address_index": 194,
+      "primary_correspondence": [
+        {
+          "input": "C93",
+          "pointer": "/conclusion/theorem_5_completely_discrete_RH_equivalence"
+        }
+      ],
+      "fidelity": "Full forall-m exists-natural-certificate equivalence with both proofs and B1 dependency."
+    },
+    {
+      "address": "30.50",
+      "current_address_index": 195,
+      "primary_correspondence": [
+        {
+          "input": "C93",
+          "pointer": "/conclusion/boundary_cases"
+        },
+        {
+          "input": "C93",
+          "pointer": "/conclusion/computability_quantifiers_and_bounds/quantifier_order"
+        },
+        {
+          "input": "C93",
+          "pointer": "/conclusion/computability_quantifiers_and_bounds/one_certificate_cannot_cover_every_m"
+        }
+      ],
+      "fidelity": "Zero, signed/cancelling coefficients, equality, all finite N/J/K, endpoints, and failure of any bounded universal prefix."
+    },
+    {
+      "address": "30.51",
+      "current_address_index": 196,
+      "primary_correspondence": [
+        {
+          "input": "C93",
+          "pointer": "/conclusion/computability_quantifiers_and_bounds"
+        },
+        {
+          "input": "C93",
+          "pointer": "/conclusion/literature_and_remaining_obligations"
+        }
+      ],
+      "fidelity": "Coefficient-bounded dimension-uniform precision distinguished from unproved global success cutoff and conditional total enumeration."
+    }
+  ],
+  "primary_completeness": {
+    "C88": "Every mathematical_answer block covered",
+    "C90": "Every non-status field of items 1–5 covered with corrected notation",
+    "C92": "Full unchanged incorporation of all five C90 items; repaired author envelope is not a mathematical rejection",
+    "C93": "Every field of definitions, five theorems, encoding/Verify, boundary cases, computability bounds and preserved Gram results covered",
+    "metadata": "Original visible envelopes remain immutable inputs; author/transport evidence is in the report, with exact input identities here"
+  },
+  "canonical": {
+    "summary": {
+      "current_whole_units": 228,
+      "current_numbered_proof_units": 30,
+      "current_reachable_pairs": 320,
+      "current_parent_chains": 38,
+      "actual_added_pairs": 40,
+      "actual_added_cas": 40,
+      "actual_added_yaml": 40,
+      "new_whole_units": 38,
+      "new_parent_chains": 2,
+      "bounded_historical_whole_units": 9,
+      "checked_pair_records": 331
+    },
+    "pairs": {
+      "50490ced6d2ed020880e86fc48b5b47515b9b4efcfb3031552b7407b1bf0edca": {
+        "cas_path": "Meta/Digestion/atoms/sha256/50490ced6d2ed020880e86fc48b5b47515b9b4efcfb3031552b7407b1bf0edca",
+        "cas": {
+          "byte_count": 185,
+          "lf_count": 4,
+          "terminal_lf_count": 2,
+          "sha256": "50490ced6d2ed020880e86fc48b5b47515b9b4efcfb3031552b7407b1bf0edca"
+        },
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/50490ced6d2ed020880e86fc48b5b47515b9b4efcfb3031552b7407b1bf0edca.yaml",
+        "yaml": {
+          "byte_count": 328,
+          "lf_count": 7,
+          "terminal_lf_count": 1,
+          "sha256": "06606d2da72e69749084ff5b269c8affb85fdd721122e5fa41279276f2aeb628"
+        },
+        "actual_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:50490ced6d2ed020880e86fc48b5b47515b9b4efcfb3031552b7407b1bf0edca",
+            "normalized_sha256": "sha256:50490ced6d2ed020880e86fc48b5b47515b9b4efcfb3031552b7407b1bf0edca"
+          },
+          "cas_ref": "sha256:50490ced6d2ed020880e86fc48b5b47515b9b4efcfb3031552b7407b1bf0edca",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "new_pair": false,
+        "current_source_occurrences": [
+          {
+            "byte_start": 0,
+            "byte_end_exclusive": 185
+          }
+        ]
+      },
+      "c3c6811051388c97e3b5d0ffbd2d803c311f5382bd6e770ba2a8339277c29f0c": {
+        "cas_path": "Meta/Digestion/atoms/sha256/c3c6811051388c97e3b5d0ffbd2d803c311f5382bd6e770ba2a8339277c29f0c",
+        "cas": {
+          "byte_count": 582,
+          "lf_count": 8,
+          "terminal_lf_count": 2,
+          "sha256": "c3c6811051388c97e3b5d0ffbd2d803c311f5382bd6e770ba2a8339277c29f0c"
+        },
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/c3c6811051388c97e3b5d0ffbd2d803c311f5382bd6e770ba2a8339277c29f0c.yaml",
+        "yaml": {
+          "byte_count": 556,
+          "lf_count": 11,
+          "terminal_lf_count": 1,
+          "sha256": "7367b6ca63346062692e71b2ff3b2a4eebc6d4281b61935e6d8cd66817139336"
+        },
+        "actual_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:c3c6811051388c97e3b5d0ffbd2d803c311f5382bd6e770ba2a8339277c29f0c",
+            "normalized_sha256": "sha256:c3c6811051388c97e3b5d0ffbd2d803c311f5382bd6e770ba2a8339277c29f0c"
+          },
+          "cas_ref": "sha256:c3c6811051388c97e3b5d0ffbd2d803c311f5382bd6e770ba2a8339277c29f0c",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": [],
+            "chain_atoms": [
+              "7992cc777c11674132e03e386e5bd22e95c9b3ff52c5ac39d638ee894f092489",
+              "9b910b826bbec6a05b01e271ad4bc8eeca17176a9b8230890a436ea83eed8c0b",
+              "2b1f8b2853aa9149d8909ea7ed749dec06716b90eb2b834e9e1bee983cc638e7"
+            ]
+          }
+        },
+        "new_pair": false,
+        "current_source_occurrences": [
+          {
+            "byte_start": 185,
+            "byte_end_exclusive": 767
+          }
+        ]
+      },
+      "7992cc777c11674132e03e386e5bd22e95c9b3ff52c5ac39d638ee894f092489": {
+        "cas_path": "Meta/Digestion/atoms/sha256/7992cc777c11674132e03e386e5bd22e95c9b3ff52c5ac39d638ee894f092489",
+        "cas": {
+          "byte_count": 32,
+          "lf_count": 2,
+          "terminal_lf_count": 2,
+          "sha256": "7992cc777c11674132e03e386e5bd22e95c9b3ff52c5ac39d638ee894f092489"
+        },
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/7992cc777c11674132e03e386e5bd22e95c9b3ff52c5ac39d638ee894f092489.yaml",
+        "yaml": {
+          "byte_count": 328,
+          "lf_count": 7,
+          "terminal_lf_count": 1,
+          "sha256": "a6d4df6a096dd2cd8af5709ca86481ae218768b29f92a1228f8d8b524e9d6733"
+        },
+        "actual_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:7992cc777c11674132e03e386e5bd22e95c9b3ff52c5ac39d638ee894f092489",
+            "normalized_sha256": "sha256:7992cc777c11674132e03e386e5bd22e95c9b3ff52c5ac39d638ee894f092489"
+          },
+          "cas_ref": "sha256:7992cc777c11674132e03e386e5bd22e95c9b3ff52c5ac39d638ee894f092489",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "new_pair": false,
+        "current_source_occurrences": [
+          {
+            "byte_start": 185,
+            "byte_end_exclusive": 217
+          }
+        ]
+      },

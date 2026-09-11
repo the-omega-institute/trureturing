@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0b9f1b09dbce64654e7e32c0e9643ec2a66f2a7451f75f3062170fd2009861d1
+  normalized_sha256: sha256:0b9f1b09dbce64654e7e32c0e9643ec2a66f2a7451f75f3062170fd2009861d1
+cas_ref: sha256:0b9f1b09dbce64654e7e32c0e9643ec2a66f2a7451f75f3062170fd2009861d1
+coverage_gids:
+  - gid: D5/S3/Arith/Congruence/LehmerTotientStructure.isKorselt_of_totient_dvd_sub_one
+    target_statement_id: sha256:13a67efaf471a26873c8c74f4e4ed7c9c011621c0245d560589cb5874201a5ac
+receipts:
+  unresolved_subitems: []

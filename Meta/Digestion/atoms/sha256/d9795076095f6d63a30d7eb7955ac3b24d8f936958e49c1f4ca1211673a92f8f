@@ -1,0 +1,18 @@
+**命题 53（延迟一格的乘法公式）。** 对任意 $c,d\in\mathcal L$，写 $C=Pc,D=Pd$，则对所有 $n\in\mathbb Z$，
+
+$$
+P(c\odot d)(n)=C_{n-1}*D_{n-1}.
+\tag{CUM-DELAY}
+$$
+
+相应输出时间分量的两种差分表达式为
+
+$$
+\begin{aligned}
+(c\odot d)_n
+&=C_{n-1}*D_{n-1}-C_{n-2}*D_{n-2}\\
+&=c_{n-1}*D_{n-1}+C_{n-2}*d_{n-1}.
+\end{aligned}
+\tag{CUM-DIFFERENCE}
+$$
+

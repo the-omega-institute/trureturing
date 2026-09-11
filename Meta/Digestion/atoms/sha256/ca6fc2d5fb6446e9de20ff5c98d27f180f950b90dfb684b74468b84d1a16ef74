@@ -1,0 +1,87 @@
+## 25. Explicit widths and pole-free quantitative estimates
+
+The existing coefficient certificate gives a_i>=0 and
+b_i-a_i>=10577/1000000. The added finite source check gives b_i<=3 on the same
+Lean-owned payload. The analysis uses the weaker common bounds
+
+\[
+ 0\le a_i,\quad b_i-a_i\ge1/100,\quad b_i\le3.
+\]
+
+Choose the explicit widths
+
+\[
+ \boxed{\delta=10^{-20},\qquad\epsilon=10^{-30},\qquad
+ \gamma=999/1000,\quad\gamma'=1999/2000.}
+\tag{25.1}
+\]
+
+For r in [1/4,1], let c_i(r) be the real value of chi_i(r). If
+|m-c_i(r)|<=delta, set u=m-c_i(r), E=exp(b_i*u), and k=a_i*r/b_i in [0,1].
+Exact algebra gives
+
+\[
+ f_i(m)=\frac{rE}{1+k(E-1)}.
+\]
+
+The exponential bound |exp(w)-1|<=2|w| for |w|<=1 gives |E-1|<=6delta.
+Hence |1+k(E-1)|>=1/2. The exact difference numerator is
+r(1-k)(E-1), giving |f_i(m)-r|<=12delta<=100delta and |f_i(m)|<=2.
+This simultaneously excludes every inverse-coordinate pole.
+
+The following deliberately loose estimates hold for every subset of at most
+four children, so the same constants also cover the unconditioned root.
+Put P0=prod(r_j), choose real lambda in [0,3], and |z-lambda|<=epsilon.
+The finite-product induction and triangle inequalities give
+
+\[
+\begin{aligned}
+ |P|&\le16,&0\le P_0&\le1,\\
+ |P-P_0|&\le6400\delta,&
+ |zP-\lambda P_0|&\le16\epsilon+19200\delta\le20000\delta.
+\end{aligned}
+\]
+
+For H0=b_i-a_i+b_i*lambda*P0, we have H0>=1/100 and
+|H-H0|<=60000delta. Consequently,
+
+\[
+ \boxed{\operatorname{Re}H\ge1/200,\qquad
+ \operatorname{Re}(1+zP)\ge1/2.}
+\tag{25.2}
+\]
+
+This explicitly excludes the logarithm cut, the transformed-map pole and the
+vacancy denominator zero. The activity derivative satisfies |P/H|<=3200<=10000.
+No compactness-only assertion is used to select these widths.
+
+For one child coefficient in (24.1), compare the complex value with the same
+real anchor. We use |Psi_j(x_j)-Psi_j(r_j)|<=300delta, |Psi_j(x_j)|<=9,
+|lambda*P0*Psi_j(r_j)|<=9 and the denominator floors above. The exact quotient
+estimate is
+
+\[
+ \left|\frac{u}{v}-\frac{u_0}{v_0}\right|
+ \le200|u-u_0|+20000|u_0||v-v_0|.
+\]
+
+The numerator perturbation is at most 180900delta. Thus each Jacobian entry
+changes by at most
+
+\[
+ (200\cdot180900+20000\cdot9\cdot60000)\delta
+ =10836180000\delta<10^{11}\delta.
+\]
+
+At most four entries contribute, so their sum changes by at most 10^12 delta.
+The real certificate therefore gives the strict complex row bound
+
+\[
+ \sum_{j\in S}|\partial_{m_j}G|
+ \le\gamma+10^{12}\delta<\gamma'.
+\tag{25.3}
+\]
+
+This last contraction use is for genuine nonroot pruning rows. At the root
+only (25.2) is used; no three-child contraction is imposed on four children.
+

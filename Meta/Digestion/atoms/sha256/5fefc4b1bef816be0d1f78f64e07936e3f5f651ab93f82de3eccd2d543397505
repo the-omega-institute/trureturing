@@ -1,0 +1,24 @@
+**命题 38（隐形最高时刻的精确当前事件成本，repo-derived）。** 在第三分支内，定义有限整数和
+
+$$
+D(W,Z)=\sum_{(n,p)\in K}\bigl(|Z(n,p)|+|W(n,p)-Z(n,p)|\bigr),
+$$
+
+以及
+
+$$
+\eta_s=
+\begin{cases}
+1,&\forall p\in\mathbb Z^3,\quad W(s,p)=Z(s,p)=0,\\
+0,&\text{否则}.
+\end{cases}
+$$
+
+则所有实现中的最小当前事件数恰为
+
+$$
+\min_{\substack{X\in\mathcal B\\\Xi(X)=(W,Z,m,M,s)}}|\Omega_X|
+=D(W,Z)+2\eta_s.
+\tag{TS-COST}
+$$
+

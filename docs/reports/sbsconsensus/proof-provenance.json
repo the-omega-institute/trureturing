@@ -1,0 +1,192 @@
+{
+  "report_sha256": "sha256:8c237ecf1b26ccc518a544dc15aeb417329cd953be4599d17cd86997c50c07db",
+  "module": "D5.S3.Quantum.Information.OrthogonalRecordEntropy",
+  "source_sha256": "sha256:14e4a4b4cd222013683d7b5e9a80fbd871180fe92ec9b92988b9ea96d95d0d80",
+  "authored_public_theorems": [
+    {
+      "gid": "D5/S3/Quantum/Information/OrthogonalRecordEntropy.orthogonal_mixture_entropy",
+      "name": "D5.S3.Quantum.Information.OrthogonalRecordEntropy.orthogonal_mixture_entropy",
+      "statement_id": "sha256:0de48f59cd31d9966c14049a4fee24ce1aba95b2eea9f3980ae6ebdf93019620",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "proof_shape": "content",
+      "admission_basis": "escape-witness",
+      "escape_witness": "orthogonal_mixture_entropy (orthogonal functional-calculus additivity and scaling)",
+      "direct_preexisting_frozen_theorem_uses": [],
+      "direct_preexisting_definition_interfaces": [
+        {
+          "gid": "D5/S3/Entropy/MaxEntropy.shannonEntropy",
+          "statement_id": "sha256:0b9b0250c925b41ffab4b8ab0b198871ccb0bb46dd401760ec0158c98ad42e87"
+        },
+        {
+          "gid": "D5/S3/Quantum/Divergence/QuantumRelativeEntropyDefectComposition.DensityState",
+          "statement_id": "sha256:b8e1957ba4f81600248989dc21f0a107bcdd5ce2e68546c38b9164c4a09ac337"
+        },
+        {
+          "gid": "D5/S3/Quantum/Divergence/VonNeumannEntropyPinching.vonNeumannEntropy",
+          "statement_id": "sha256:9cf1e21822d8f3f61a5d349f41c4287a3ef43a0e8a600534b28ab8d06f437cd1"
+        }
+      ],
+      "new_module_dependency": "entropy_eq_trace_cfc, cfc_negMulLog_sum, cfc_negMulLog_smul and realTrace lemmas"
+    },
+    {
+      "gid": "D5/S3/Quantum/Information/OrthogonalRecordEntropy.orthogonal_record_trace_gives_sbs_consensus",
+      "name": "D5.S3.Quantum.Information.OrthogonalRecordEntropy.orthogonal_record_trace_gives_sbs_consensus",
+      "statement_id": "sha256:fc390ce9d27486ba5f8163e95243d66de435f386cc0bbc97d26c89e9af49fe60",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "proof_shape": "content",
+      "admission_basis": "escape-witness",
+      "escape_witness": "orthogonal_mixture_entropy (orthogonal functional-calculus additivity and scaling)",
+      "direct_preexisting_frozen_theorem_uses": [
+        {
+          "gid": "D5/S3/Quantum/Information/PartialTraceMutualInformation.marginalLeft_productState",
+          "statement_id": "sha256:a9840d043b5a8d2b0917f100f01c7f02a319c9363b7ba18fc4050e59e2321393"
+        },
+        {
+          "gid": "D5/S3/Quantum/Information/PartialTraceMutualInformation.marginalRight_productState",
+          "statement_id": "sha256:cafa71401e68066df56033c6466fde4878d18496f8ef43e8f2600b6a0074ef76"
+        },
+        {
+          "gid": "D5/S3/Quantum/Information/PartialTraceMutualInformation.vonNeumannEntropy_productState",
+          "statement_id": "sha256:c282fec63ac9abe78f2927a141bb4576d82585b91d0085e4a160f9a9b6efd042"
+        }
+      ],
+      "direct_preexisting_definition_interfaces": [
+        {
+          "gid": "D5/S3/Entropy/MaxEntropy.shannonEntropy",
+          "statement_id": "sha256:0b9b0250c925b41ffab4b8ab0b198871ccb0bb46dd401760ec0158c98ad42e87"
+        },
+        {
+          "gid": "D5/S3/Quantum/Divergence/QuantumRelativeEntropyDefectComposition.DensityState",
+          "statement_id": "sha256:b8e1957ba4f81600248989dc21f0a107bcdd5ce2e68546c38b9164c4a09ac337"
+        },
+        {
+          "gid": "D5/S3/Quantum/Divergence/VonNeumannEntropyPinching.vonNeumannEntropy",
+          "statement_id": "sha256:9cf1e21822d8f3f61a5d349f41c4287a3ef43a0e8a600534b28ab8d06f437cd1"
+        },
+        {
+          "gid": "D5/S3/Quantum/Information/PartialTraceMutualInformation.marginalLeft",
+          "statement_id": "sha256:7579934e8cf68c9a1e1f14470e58e70c66939704953b29e953ae8d75b92bef6a"
+        },
+        {
+          "gid": "D5/S3/Quantum/Information/PartialTraceMutualInformation.productState",
+          "statement_id": "sha256:a227a004102880bc79685377a2fa13a3a5134389ff6544ba0c606ba4403fbb22"
+        },
+        {
+          "gid": "D5/S3/Quantum/Information/PartialTraceMutualInformation.marginalRight",
+          "statement_id": "sha256:bb5bad02426b231285a1d49fbc7f66f6f971cf3cd7ef3ee92fc2c21793f14ae7"
+        },
+        {
+          "gid": "D5/S3/Quantum/Information/PartialTraceMutualInformation.quantumMutualInformation",
+          "statement_id": "sha256:650358808a68c73893baf137ee9bae34238244b7e0906ce19e6b5fd68484ad75"
+        }
+      ],
+      "new_module_dependency": "orthogonal_mixture_entropy plus marginal linearity and pointer-state helper lemmas"
+    }
+  ],
+  "module_axiom_union": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "existing_D5_interfaces": [
+    {
+      "gid": "D5/S3/Entropy/MaxEntropy.shannonEntropy",
+      "name": "D5.S3.Entropy.MaxEntropy.shannonEntropy",
+      "kind": "def",
+      "statement_id": "sha256:0b9b0250c925b41ffab4b8ab0b198871ccb0bb46dd401760ec0158c98ad42e87",
+      "frozen_module_state": {
+        "statement_id": "sha256:bb7656cc403aa1afcb3a8d1187c3c2e09f60c923721b2fdc47e373755b413610"
+      }
+    },
+    {
+      "gid": "D5/S3/Quantum/Divergence/QuantumRelativeEntropyDefectComposition.DensityState",
+      "name": "D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState",
+      "kind": "def",
+      "statement_id": "sha256:b8e1957ba4f81600248989dc21f0a107bcdd5ce2e68546c38b9164c4a09ac337",
+      "frozen_module_state": {
+        "statement_id": "sha256:445d28204f4c839e9d5711f568c7f8a3259e36bcff54986168a827333cbdbb5d"
+      }
+    },
+    {
+      "gid": "D5/S3/Quantum/Divergence/VonNeumannEntropyPinching.vonNeumannEntropy",
+      "name": "D5.S3.Quantum.Divergence.VonNeumannEntropyPinching.vonNeumannEntropy",
+      "kind": "def",
+      "statement_id": "sha256:9cf1e21822d8f3f61a5d349f41c4287a3ef43a0e8a600534b28ab8d06f437cd1",
+      "frozen_module_state": {
+        "statement_id": "sha256:7e20a9a8027e14e93fe22cd7900dc1a94b48a57dcb9f97b27d4815f8e9b61a00"
+      }
+    },
+    {
+      "gid": "D5/S3/Quantum/Information/PartialTraceMutualInformation.marginalLeft",
+      "name": "D5.S3.Quantum.Information.PartialTraceMutualInformation.marginalLeft",
+      "kind": "def",
+      "statement_id": "sha256:7579934e8cf68c9a1e1f14470e58e70c66939704953b29e953ae8d75b92bef6a",
+      "frozen_module_state": {
+        "statement_id": "sha256:b39b445e3b813fed9a6aa4620394e2e19833848984a628545b0210c168467450"
+      }
+    },
+    {
+      "gid": "D5/S3/Quantum/Information/PartialTraceMutualInformation.productState",
+      "name": "D5.S3.Quantum.Information.PartialTraceMutualInformation.productState",
+      "kind": "def",
+      "statement_id": "sha256:a227a004102880bc79685377a2fa13a3a5134389ff6544ba0c606ba4403fbb22",
+      "frozen_module_state": {
+        "statement_id": "sha256:b39b445e3b813fed9a6aa4620394e2e19833848984a628545b0210c168467450"
+      }
+    },
+    {
+      "gid": "D5/S3/Quantum/Information/PartialTraceMutualInformation.marginalRight",
+      "name": "D5.S3.Quantum.Information.PartialTraceMutualInformation.marginalRight",
+      "kind": "def",
+      "statement_id": "sha256:bb5bad02426b231285a1d49fbc7f66f6f971cf3cd7ef3ee92fc2c21793f14ae7",
+      "frozen_module_state": {
+        "statement_id": "sha256:b39b445e3b813fed9a6aa4620394e2e19833848984a628545b0210c168467450"
+      }
+    },
+    {
+      "gid": "D5/S3/Quantum/Information/PartialTraceMutualInformation.quantumMutualInformation",
+      "name": "D5.S3.Quantum.Information.PartialTraceMutualInformation.quantumMutualInformation",
+      "kind": "def",
+      "statement_id": "sha256:650358808a68c73893baf137ee9bae34238244b7e0906ce19e6b5fd68484ad75",
+      "frozen_module_state": {
+        "statement_id": "sha256:b39b445e3b813fed9a6aa4620394e2e19833848984a628545b0210c168467450"
+      }
+    },
+    {
+      "gid": "D5/S3/Quantum/Information/PartialTraceMutualInformation.marginalLeft_productState",
+      "name": "D5.S3.Quantum.Information.PartialTraceMutualInformation.marginalLeft_productState",
+      "kind": "theorem",
+      "statement_id": "sha256:a9840d043b5a8d2b0917f100f01c7f02a319c9363b7ba18fc4050e59e2321393",
+      "frozen_module_state": {
+        "statement_id": "sha256:b39b445e3b813fed9a6aa4620394e2e19833848984a628545b0210c168467450"
+      }
+    },
+    {
+      "gid": "D5/S3/Quantum/Information/PartialTraceMutualInformation.marginalRight_productState",
+      "name": "D5.S3.Quantum.Information.PartialTraceMutualInformation.marginalRight_productState",
+      "kind": "theorem",
+      "statement_id": "sha256:cafa71401e68066df56033c6466fde4878d18496f8ef43e8f2600b6a0074ef76",
+      "frozen_module_state": {
+        "statement_id": "sha256:b39b445e3b813fed9a6aa4620394e2e19833848984a628545b0210c168467450"
+      }
+    },
+    {
+      "gid": "D5/S3/Quantum/Information/PartialTraceMutualInformation.vonNeumannEntropy_productState",
+      "name": "D5.S3.Quantum.Information.PartialTraceMutualInformation.vonNeumannEntropy_productState",
+      "kind": "theorem",
+      "statement_id": "sha256:c282fec63ac9abe78f2927a141bb4576d82585b91d0085e4a160f9a9b6efd042",
+      "frozen_module_state": {
+        "statement_id": "sha256:b39b445e3b813fed9a6aa4620394e2e19833848984a628545b0210c168467450"
+      }
+    }
+  ],
+  "dependency_accounting": "Source-level direct uses, not an automated elaborated proof-dependency census. orthogonal_mixture_entropy uses new local lemmas and Mathlib; consensus additionally directly invokes the three listed product-state theorems and orthogonal_mixture_entropy. Definitions supply the shared state/entropy API."
+}

@@ -1,0 +1,12 @@
+{
+  "schema": "s19-evidence-entry-v1",
+  "resource": "C96",
+  "logical_path": "C96-pro-local-optimum-certificate-recovered-visible-c96-0910.json",
+  "original": {"bytes": 29604, "sha256": "0bd3cb477f4671f3515da0d9b9bcf82f5f1f778b84ce4619486f4bd4857b3725", "lf": 124, "terminal_lf": 0, "lines": 125},
+  "origin": {"archive_member": "primary/C96-pro-local-optimum-certificate-recovered-visible-c96-0910.json"},
+  "contract": "docs/reports/quantized-gh/s19-evidence/README.md",
+  "interpretation": "Archive of the complete named original resource. Parts are contiguous raw UTF-8 slices; parse JSON only after reconstruction. Historical fields retain their original owner and values.",
+  "parts": [
+    {"ordinal": 1, "path": "docs/reports/quantized-gh/s19-evidence/raw/c96-0bd3cb477f46/group-001/part-0001-0bd3cb477f46.txt", "byte_start": 0, "byte_end_exclusive": 29604, "line_start": 1, "line_end_inclusive": 125, "bytes": 29604, "sha256": "0bd3cb477f4671f3515da0d9b9bcf82f5f1f778b84ce4619486f4bd4857b3725", "lf": 124, "terminal_lf": 0, "lines": 125, "context": "\"conclusion\": {"}
+  ]
+}

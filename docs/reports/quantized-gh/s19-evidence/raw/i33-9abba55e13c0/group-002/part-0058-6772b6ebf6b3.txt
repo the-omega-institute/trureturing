@@ -1,0 +1,800 @@
+            "original_byte_start": 110237,
+            "original_byte_end_exclusive": 110238
+          },
+          {
+            "recovery_span_index": 301,
+            "original_byte_start": 110238,
+            "original_byte_end_exclusive": 110246
+          },
+          {
+            "recovery_span_index": 302,
+            "original_byte_start": 110246,
+            "original_byte_end_exclusive": 111727
+          },
+          {
+            "recovery_span_index": 303,
+            "original_byte_start": 111727,
+            "original_byte_end_exclusive": 111735
+          },
+          {
+            "recovery_span_index": 304,
+            "original_byte_start": 111735,
+            "original_byte_end_exclusive": 113101
+          },
+          {
+            "recovery_span_index": 305,
+            "original_byte_start": 113101,
+            "original_byte_end_exclusive": 113217
+          },
+          {
+            "recovery_span_index": 306,
+            "original_byte_start": 113217,
+            "original_byte_end_exclusive": 113482
+          },
+          {
+            "recovery_span_index": 307,
+            "original_byte_start": 113482,
+            "original_byte_end_exclusive": 113490
+          },
+          {
+            "recovery_span_index": 308,
+            "original_byte_start": 113490,
+            "original_byte_end_exclusive": 113538
+          },
+          {
+            "recovery_span_index": 309,
+            "original_byte_start": 113538,
+            "original_byte_end_exclusive": 113540
+          },
+          {
+            "recovery_span_index": 310,
+            "original_byte_start": 113540,
+            "original_byte_end_exclusive": 114057
+          },
+          {
+            "recovery_span_index": 311,
+            "original_byte_start": 114057,
+            "original_byte_end_exclusive": 114059
+          },
+          {
+            "recovery_span_index": 312,
+            "original_byte_start": 114059,
+            "original_byte_end_exclusive": 114293
+          },
+          {
+            "recovery_span_index": 313,
+            "original_byte_start": 114293,
+            "original_byte_end_exclusive": 114371
+          },
+          {
+            "recovery_span_index": 314,
+            "original_byte_start": 114371,
+            "original_byte_end_exclusive": 114393
+          },
+          {
+            "recovery_span_index": 315,
+            "original_byte_start": 114393,
+            "original_byte_end_exclusive": 114563
+          },
+          {
+            "recovery_span_index": 316,
+            "original_byte_start": 114563,
+            "original_byte_end_exclusive": 114641
+          },
+          {
+            "recovery_span_index": 317,
+            "original_byte_start": 114641,
+            "original_byte_end_exclusive": 114685
+          },
+          {
+            "recovery_span_index": 318,
+            "original_byte_start": 114685,
+            "original_byte_end_exclusive": 116153
+          },
+          {
+            "recovery_span_index": 319,
+            "original_byte_start": 116153,
+            "original_byte_end_exclusive": 116208
+          }
+        ]
+      },
+      {
+        "level": 3,
+        "text": "定义域、基本解与未使用分数假设的边界",
+        "heading": {
+          "byte_start": 98029,
+          "byte_end_exclusive": 98088,
+          "line_start": 1610,
+          "line_end_inclusive": 1610,
+          "byte_count": 59,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "467c7119bfbe36872f95af88b0f779ac041a014e7e280a0dfb8311fabc53bb8c"
+        },
+        "region": {
+          "byte_start": 98029,
+          "byte_end_exclusive": 101935,
+          "line_start": 1610,
+          "line_end_inclusive": 1652,
+          "byte_count": 3906,
+          "lf_count": 43,
+          "terminal_lf_count": 2,
+          "sha256": "9a390a6a25e7c82fb2ed9e457157d19e127a0d5282a664050fcd497450e75afa"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 266,
+            "original_byte_start": 98029,
+            "original_byte_end_exclusive": 98089
+          },
+          {
+            "recovery_span_index": 267,
+            "original_byte_start": 98089,
+            "original_byte_end_exclusive": 98096
+          },
+          {
+            "recovery_span_index": 268,
+            "original_byte_start": 98096,
+            "original_byte_end_exclusive": 98657
+          },
+          {
+            "recovery_span_index": 269,
+            "original_byte_start": 98657,
+            "original_byte_end_exclusive": 98664
+          },
+          {
+            "recovery_span_index": 270,
+            "original_byte_start": 98664,
+            "original_byte_end_exclusive": 100600
+          },
+          {
+            "recovery_span_index": 271,
+            "original_byte_start": 100600,
+            "original_byte_end_exclusive": 100607
+          },
+          {
+            "recovery_span_index": 272,
+            "original_byte_start": 100607,
+            "original_byte_end_exclusive": 101935
+          }
+        ]
+      },
+      {
+        "level": 3,
+        "text": "Hermite 工具与真正分数分支",
+        "heading": {
+          "byte_start": 101935,
+          "byte_end_exclusive": 101975,
+          "line_start": 1653,
+          "line_end_inclusive": 1653,
+          "byte_count": 40,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "317fed5195edb94c9eadf2ecd4044d4a00984dced75f4f4794f4f0d187956a3c"
+        },
+        "region": {
+          "byte_start": 101935,
+          "byte_end_exclusive": 106169,
+          "line_start": 1653,
+          "line_end_inclusive": 1760,
+          "byte_count": 4234,
+          "lf_count": 108,
+          "terminal_lf_count": 2,
+          "sha256": "cd6f99545f67e7256f4a50732991551b4d0fbebe696d4b00653ff86413af5113"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 273,
+            "original_byte_start": 101935,
+            "original_byte_end_exclusive": 101975
+          },
+          {
+            "recovery_span_index": 274,
+            "original_byte_start": 101975,
+            "original_byte_end_exclusive": 101976
+          },
+          {
+            "recovery_span_index": 275,
+            "original_byte_start": 101976,
+            "original_byte_end_exclusive": 101983
+          },
+          {
+            "recovery_span_index": 276,
+            "original_byte_start": 101983,
+            "original_byte_end_exclusive": 103113
+          },
+          {
+            "recovery_span_index": 277,
+            "original_byte_start": 103113,
+            "original_byte_end_exclusive": 103120
+          },
+          {
+            "recovery_span_index": 278,
+            "original_byte_start": 103120,
+            "original_byte_end_exclusive": 103925
+          },
+          {
+            "recovery_span_index": 279,
+            "original_byte_start": 103925,
+            "original_byte_end_exclusive": 103932
+          },
+          {
+            "recovery_span_index": 280,
+            "original_byte_start": 103932,
+            "original_byte_end_exclusive": 105212
+          },
+          {
+            "recovery_span_index": 281,
+            "original_byte_start": 105212,
+            "original_byte_end_exclusive": 105219
+          },
+          {
+            "recovery_span_index": 282,
+            "original_byte_start": 105219,
+            "original_byte_end_exclusive": 106169
+          }
+        ]
+      },
+      {
+        "level": 3,
+        "text": "集中距离域的两个完整证明与矩公式勘正",
+        "heading": {
+          "byte_start": 106169,
+          "byte_end_exclusive": 106228,
+          "line_start": 1761,
+          "line_end_inclusive": 1761,
+          "byte_count": 59,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "cc0531f3de87ed719a1a58fd6ba07f99e538c34670c81621817bd866ed54f03b"
+        },
+        "region": {
+          "byte_start": 106169,
+          "byte_end_exclusive": 110196,
+          "line_start": 1761,
+          "line_end_inclusive": 1868,
+          "byte_count": 4027,
+          "lf_count": 108,
+          "terminal_lf_count": 2,
+          "sha256": "2f3bb1983bdde6f0a46fef2807a9be8d7cd8e489d12c60569d2ccdae8f2f692c"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 283,
+            "original_byte_start": 106169,
+            "original_byte_end_exclusive": 106228
+          },
+          {
+            "recovery_span_index": 284,
+            "original_byte_start": 106228,
+            "original_byte_end_exclusive": 106229
+          },
+          {
+            "recovery_span_index": 285,
+            "original_byte_start": 106229,
+            "original_byte_end_exclusive": 106237
+          },
+          {
+            "recovery_span_index": 286,
+            "original_byte_start": 106237,
+            "original_byte_end_exclusive": 107080
+          },
+          {
+            "recovery_span_index": 287,
+            "original_byte_start": 107080,
+            "original_byte_end_exclusive": 107088
+          },
+          {
+            "recovery_span_index": 288,
+            "original_byte_start": 107088,
+            "original_byte_end_exclusive": 107132
+          },
+          {
+            "recovery_span_index": 289,
+            "original_byte_start": 107132,
+            "original_byte_end_exclusive": 107138
+          },
+          {
+            "recovery_span_index": 290,
+            "original_byte_start": 107138,
+            "original_byte_end_exclusive": 107183
+          },
+          {
+            "recovery_span_index": 291,
+            "original_byte_start": 107183,
+            "original_byte_end_exclusive": 107237
+          },
+          {
+            "recovery_span_index": 292,
+            "original_byte_start": 107237,
+            "original_byte_end_exclusive": 107329
+          },
+          {
+            "recovery_span_index": 293,
+            "original_byte_start": 107329,
+            "original_byte_end_exclusive": 108203
+          },
+          {
+            "recovery_span_index": 294,
+            "original_byte_start": 108203,
+            "original_byte_end_exclusive": 108211
+          },
+          {
+            "recovery_span_index": 295,
+            "original_byte_start": 108211,
+            "original_byte_end_exclusive": 109114
+          },
+          {
+            "recovery_span_index": 296,
+            "original_byte_start": 109114,
+            "original_byte_end_exclusive": 109122
+          },
+          {
+            "recovery_span_index": 297,
+            "original_byte_start": 109122,
+            "original_byte_end_exclusive": 110196
+          }
+        ]
+      },
+      {
+        "level": 3,
+        "text": "素数平移、尚余区域与来源",
+        "heading": {
+          "byte_start": 110196,
+          "byte_end_exclusive": 110237,
+          "line_start": 1869,
+          "line_end_inclusive": 1869,
+          "byte_count": 41,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "f35151b64850c015f3bc9d11f7fe9600ab05dd05cf711412f84a6112b76331e2"
+        },
+        "region": {
+          "byte_start": 110196,
+          "byte_end_exclusive": 116208,
+          "line_start": 1869,
+          "line_end_inclusive": 1933,
+          "byte_count": 6012,
+          "lf_count": 65,
+          "terminal_lf_count": 2,
+          "sha256": "33cee4ee8ec440ef241e63f8b938df18f0a86ad4d2d5b515d16572b3918a8108"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 298,
+            "original_byte_start": 110196,
+            "original_byte_end_exclusive": 110236
+          },
+          {
+            "recovery_span_index": 299,
+            "original_byte_start": 110236,
+            "original_byte_end_exclusive": 110237
+          },
+          {
+            "recovery_span_index": 300,
+            "original_byte_start": 110237,
+            "original_byte_end_exclusive": 110238
+          },
+          {
+            "recovery_span_index": 301,
+            "original_byte_start": 110238,
+            "original_byte_end_exclusive": 110246
+          },
+          {
+            "recovery_span_index": 302,
+            "original_byte_start": 110246,
+            "original_byte_end_exclusive": 111727
+          },
+          {
+            "recovery_span_index": 303,
+            "original_byte_start": 111727,
+            "original_byte_end_exclusive": 111735
+          },
+          {
+            "recovery_span_index": 304,
+            "original_byte_start": 111735,
+            "original_byte_end_exclusive": 113101
+          },
+          {
+            "recovery_span_index": 305,
+            "original_byte_start": 113101,
+            "original_byte_end_exclusive": 113217
+          },
+          {
+            "recovery_span_index": 306,
+            "original_byte_start": 113217,
+            "original_byte_end_exclusive": 113482
+          },
+          {
+            "recovery_span_index": 307,
+            "original_byte_start": 113482,
+            "original_byte_end_exclusive": 113490
+          },
+          {
+            "recovery_span_index": 308,
+            "original_byte_start": 113490,
+            "original_byte_end_exclusive": 113538
+          },
+          {
+            "recovery_span_index": 309,
+            "original_byte_start": 113538,
+            "original_byte_end_exclusive": 113540
+          },
+          {
+            "recovery_span_index": 310,
+            "original_byte_start": 113540,
+            "original_byte_end_exclusive": 114057
+          },
+          {
+            "recovery_span_index": 311,
+            "original_byte_start": 114057,
+            "original_byte_end_exclusive": 114059
+          },
+          {
+            "recovery_span_index": 312,
+            "original_byte_start": 114059,
+            "original_byte_end_exclusive": 114293
+          },
+          {
+            "recovery_span_index": 313,
+            "original_byte_start": 114293,
+            "original_byte_end_exclusive": 114371
+          },
+          {
+            "recovery_span_index": 314,
+            "original_byte_start": 114371,
+            "original_byte_end_exclusive": 114393
+          },
+          {
+            "recovery_span_index": 315,
+            "original_byte_start": 114393,
+            "original_byte_end_exclusive": 114563
+          },
+          {
+            "recovery_span_index": 316,
+            "original_byte_start": 114563,
+            "original_byte_end_exclusive": 114641
+          },
+          {
+            "recovery_span_index": 317,
+            "original_byte_start": 114641,
+            "original_byte_end_exclusive": 114685
+          },
+          {
+            "recovery_span_index": 318,
+            "original_byte_start": 114685,
+            "original_byte_end_exclusive": 116153
+          },
+          {
+            "recovery_span_index": 319,
+            "original_byte_start": 116153,
+            "original_byte_end_exclusive": 116208
+          }
+        ]
+      },
+      {
+        "level": 2,
+        "text": "25. 素数逼近的局部障碍与变形三素数族",
+        "heading": {
+          "byte_start": 116208,
+          "byte_end_exclusive": 116264,
+          "line_start": 1934,
+          "line_end_inclusive": 1934,
+          "byte_count": 56,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "b92d3e5f8a6507dc990fbcca174e8883a524d210d396a04a84d47b3cb6d33518"
+        },
+        "region": {
+          "byte_start": 116208,
+          "byte_end_exclusive": 144030,
+          "line_start": 1934,
+          "line_end_inclusive": 2411,
+          "byte_count": 27822,
+          "lf_count": 478,
+          "terminal_lf_count": 2,
+          "sha256": "aad26f795c5ddc1f5a8c125a71b769c85e8a2eb8d29674029255698b018530a6"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 320,
+            "original_byte_start": 116208,
+            "original_byte_end_exclusive": 116265
+          },
+          {
+            "recovery_span_index": 321,
+            "original_byte_start": 116265,
+            "original_byte_end_exclusive": 116272
+          },
+          {
+            "recovery_span_index": 322,
+            "original_byte_start": 116272,
+            "original_byte_end_exclusive": 116317
+          },
+          {
+            "recovery_span_index": 323,
+            "original_byte_start": 116317,
+            "original_byte_end_exclusive": 116363
+          },
+          {
+            "recovery_span_index": 324,
+            "original_byte_start": 116363,
+            "original_byte_end_exclusive": 116530
+          },
+          {
+            "recovery_span_index": 325,
+            "original_byte_start": 116530,
+            "original_byte_end_exclusive": 116551
+          },
+          {
+            "recovery_span_index": 326,
+            "original_byte_start": 116551,
+            "original_byte_end_exclusive": 118098
+          },
+          {
+            "recovery_span_index": 327,
+            "original_byte_start": 118098,
+            "original_byte_end_exclusive": 118105
+          },
+          {
+            "recovery_span_index": 328,
+            "original_byte_start": 118105,
+            "original_byte_end_exclusive": 119183
+          },
+          {
+            "recovery_span_index": 329,
+            "original_byte_start": 119183,
+            "original_byte_end_exclusive": 119241
+          },
+          {
+            "recovery_span_index": 330,
+            "original_byte_start": 119241,
+            "original_byte_end_exclusive": 119243
+          },
+          {
+            "recovery_span_index": 331,
+            "original_byte_start": 119243,
+            "original_byte_end_exclusive": 119250
+          },
+          {
+            "recovery_span_index": 332,
+            "original_byte_start": 119250,
+            "original_byte_end_exclusive": 120615
+          },
+          {
+            "recovery_span_index": 333,
+            "original_byte_start": 120615,
+            "original_byte_end_exclusive": 120743
+          },
+          {
+            "recovery_span_index": 334,
+            "original_byte_start": 120743,
+            "original_byte_end_exclusive": 120837
+          },
+          {
+            "recovery_span_index": 335,
+            "original_byte_start": 120837,
+            "original_byte_end_exclusive": 120963
+          },
+          {
+            "recovery_span_index": 336,
+            "original_byte_start": 120963,
+            "original_byte_end_exclusive": 121101
+          },
+          {
+            "recovery_span_index": 337,
+            "original_byte_start": 121101,
+            "original_byte_end_exclusive": 121175
+          },
+          {
+            "recovery_span_index": 338,
+            "original_byte_start": 121175,
+            "original_byte_end_exclusive": 121438
+          },
+          {
+            "recovery_span_index": 339,
+            "original_byte_start": 121438,
+            "original_byte_end_exclusive": 121440
+          },
+          {
+            "recovery_span_index": 340,
+            "original_byte_start": 121440,
+            "original_byte_end_exclusive": 121447
+          },
+          {
+            "recovery_span_index": 341,
+            "original_byte_start": 121447,
+            "original_byte_end_exclusive": 122270
+          },
+          {
+            "recovery_span_index": 342,
+            "original_byte_start": 122270,
+            "original_byte_end_exclusive": 122277
+          },
+          {
+            "recovery_span_index": 343,
+            "original_byte_start": 122277,
+            "original_byte_end_exclusive": 123644
+          },
+          {
+            "recovery_span_index": 344,
+            "original_byte_start": 123644,
+            "original_byte_end_exclusive": 123651
+          },
+          {
+            "recovery_span_index": 345,
+            "original_byte_start": 123651,
+            "original_byte_end_exclusive": 125088
+          },
+          {
+            "recovery_span_index": 346,
+            "original_byte_start": 125088,
+            "original_byte_end_exclusive": 125095
+          },
+          {
+            "recovery_span_index": 347,
+            "original_byte_start": 125095,
+            "original_byte_end_exclusive": 126349
+          },
+          {
+            "recovery_span_index": 348,
+            "original_byte_start": 126349,
+            "original_byte_end_exclusive": 126356
+          },
+          {
+            "recovery_span_index": 349,
+            "original_byte_start": 126356,
+            "original_byte_end_exclusive": 126377
+          },
+          {
+            "recovery_span_index": 350,
+            "original_byte_start": 126377,
+            "original_byte_end_exclusive": 126403
+          },
+          {
+            "recovery_span_index": 351,
+            "original_byte_start": 126403,
+            "original_byte_end_exclusive": 126753
+          },
+          {
+            "recovery_span_index": 352,
+            "original_byte_start": 126753,
+            "original_byte_end_exclusive": 126785
+          },
+          {
+            "recovery_span_index": 353,
+            "original_byte_start": 126785,
+            "original_byte_end_exclusive": 126876
+          },
+          {
+            "recovery_span_index": 354,
+            "original_byte_start": 126876,
+            "original_byte_end_exclusive": 126877
+          },
+          {
+            "recovery_span_index": 355,
+            "original_byte_start": 126877,
+            "original_byte_end_exclusive": 126918
+          },
+          {
+            "recovery_span_index": 356,
+            "original_byte_start": 126918,
+            "original_byte_end_exclusive": 127200
+          },
+          {
+            "recovery_span_index": 357,
+            "original_byte_start": 127200,
+            "original_byte_end_exclusive": 127777
+          },
+          {
+            "recovery_span_index": 358,
+            "original_byte_start": 127777,
+            "original_byte_end_exclusive": 127784
+          },
+          {
+            "recovery_span_index": 359,
+            "original_byte_start": 127784,
+            "original_byte_end_exclusive": 128681
+          },
+          {
+            "recovery_span_index": 360,
+            "original_byte_start": 128681,
+            "original_byte_end_exclusive": 128706
+          },
+          {
+            "recovery_span_index": 361,
+            "original_byte_start": 128706,
+            "original_byte_end_exclusive": 129068
+          },
+          {
+            "recovery_span_index": 362,
+            "original_byte_start": 129068,
+            "original_byte_end_exclusive": 129076
+          },
+          {
+            "recovery_span_index": 363,
+            "original_byte_start": 129076,
+            "original_byte_end_exclusive": 130157
+          },
+          {
+            "recovery_span_index": 364,
+            "original_byte_start": 130157,
+            "original_byte_end_exclusive": 130165
+          },
+          {
+            "recovery_span_index": 365,
+            "original_byte_start": 130165,
+            "original_byte_end_exclusive": 131069
+          },
+          {
+            "recovery_span_index": 366,
+            "original_byte_start": 131069,
+            "original_byte_end_exclusive": 131077
+          },
+          {
+            "recovery_span_index": 367,
+            "original_byte_start": 131077,
+            "original_byte_end_exclusive": 131675
+          },
+          {
+            "recovery_span_index": 368,
+            "original_byte_start": 131675,
+            "original_byte_end_exclusive": 131694
+          },
+          {
+            "recovery_span_index": 369,
+            "original_byte_start": 131694,
+            "original_byte_end_exclusive": 132359
+          },
+          {
+            "recovery_span_index": 370,
+            "original_byte_start": 132359,
+            "original_byte_end_exclusive": 132367
+          },
+          {
+            "recovery_span_index": 371,
+            "original_byte_start": 132367,
+            "original_byte_end_exclusive": 133666
+          },
+          {
+            "recovery_span_index": 372,
+            "original_byte_start": 133666,
+            "original_byte_end_exclusive": 133674
+          },
+          {
+            "recovery_span_index": 373,
+            "original_byte_start": 133674,
+            "original_byte_end_exclusive": 135042
+          },
+          {
+            "recovery_span_index": 374,
+            "original_byte_start": 135042,
+            "original_byte_end_exclusive": 135050
+          },
+          {
+            "recovery_span_index": 375,
+            "original_byte_start": 135050,
+            "original_byte_end_exclusive": 135094
+          },
+          {
+            "recovery_span_index": 376,
+            "original_byte_start": 135094,
+            "original_byte_end_exclusive": 135792
+          },
+          {
+            "recovery_span_index": 377,
+            "original_byte_start": 135792,
+            "original_byte_end_exclusive": 135923
+          },
+          {
+            "recovery_span_index": 378,
+            "original_byte_start": 135923,
+            "original_byte_end_exclusive": 137153
+          },
+          {
+            "recovery_span_index": 379,
+            "original_byte_start": 137153,
+            "original_byte_end_exclusive": 137161
+          },
+          {
+            "recovery_span_index": 380,
