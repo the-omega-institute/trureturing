@@ -10,7 +10,25 @@ internal sealed record TestProjectExecution(string Project, string Results, int 
     public TestActionCoverage[] Coverage { get; init; } = [];
 }
 internal sealed record ExecutionMaterial(string Path, string Sha256);
-internal sealed record TestExecutionRecord(int Version, string Candidate, string Round, TestProjectExecution[] Projects, ExecutionMaterial[] Materials);
+// This is persisted with the completed receipt because downstream consumers
+// must validate coverage against the context that produced it.  A reader's
+// ambient PATH is only authoritative for a newly launched execution.
+internal sealed record TestProducerExecutionContext(string Identity, string ValuesIdentity, string Culture,
+    string UICulture, string WorkingDirectory, string RuntimeMaterial)
+{
+    internal static TestProducerExecutionContext Capture(TestEnvironmentContext context) =>
+        new(context.Identity, context.ValuesIdentity, context.Culture, context.UICulture,
+            context.WorkingDirectory, context.RuntimeMaterial);
+
+    internal TestEnvironmentContext ToRuntime() => new(Identity, Culture, UICulture)
+    {
+        ValuesIdentity = ValuesIdentity,
+        WorkingDirectory = WorkingDirectory,
+        RuntimeMaterial = RuntimeMaterial
+    };
+}
+internal sealed record TestExecutionRecord(int Version, string Candidate, string Round,
+    TestProducerExecutionContext ProducerContext, TestProjectExecution[] Projects, ExecutionMaterial[] Materials);
 internal sealed record StageStep(string Name, int RawExit, int Exit, string Status, string Log);
 internal sealed record CommonStageRecord(int Version, string Candidate, string Round, StageStep[] Steps, ExecutionMaterial[] Materials);
 
@@ -274,7 +292,13 @@ internal static class CommonExecutionEvidence
     private static TestExecutionRecord ValidateTests(string root, TestExecutionRecord record, string candidate,
         RepositorySnapshot snapshot, IEnumerable<string>? requiredProjects = null, CommonStageRecord? build = null, TestEnvironmentContext? context = null)
     {
-        if (record.Version != 2 || record.Candidate != candidate || string.IsNullOrWhiteSpace(record.Round))
+        if (record.Version != 3 || record.Candidate != candidate || string.IsNullOrWhiteSpace(record.Round)
+            || record.ProducerContext is null || !Digest(record.ProducerContext.Identity)
+            || !Digest(record.ProducerContext.ValuesIdentity)
+            || string.IsNullOrWhiteSpace(record.ProducerContext.Culture)
+            || string.IsNullOrWhiteSpace(record.ProducerContext.UICulture)
+            || string.IsNullOrWhiteSpace(record.ProducerContext.WorkingDirectory)
+            || string.IsNullOrWhiteSpace(record.ProducerContext.RuntimeMaterial))
             throw new InvalidDataException("engineering evidence candidate identity mismatch or invalid version/round");
         ValidateMaterials(root, record.Materials);
         var expected = EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadSnapshotProjects(snapshot));
@@ -297,6 +321,10 @@ internal static class CommonExecutionEvidence
             context ??= CommonStages.TestEnvironment(root);
             AffectedEnvironmentObservation.Write(root, "downstream-validation", plan, record.Candidate, context: context);
         }
+        // Coverage identities are bound to the producer receipt.  The optional
+        // reader context is retained for observations and fresh launch policy;
+        // it must never rebind a completed success to the reader's PATH.
+        var producerContext = record.ProducerContext.ToRuntime();
         var evidenceByDirectory = new Dictionary<string, TestResultEvidence>(StringComparer.Ordinal);
         TestResultEvidence LoadTrx(string file)
         {
@@ -313,7 +341,7 @@ internal static class CommonExecutionEvidence
             if (project.Exit != 0 || project.Error is not null || project.Executed < 0
                 || project.Executed + project.Coverage.Where(item => item.Status == "reused").Sum(item => item.Covered) <= 0)
                 throw new InvalidDataException($"test project failed: {project.Project}: {project.Error}");
-            if (plan is not null) ValidateCoverage(root, record, project, plan, LoadTrx, path => validatedHashes[path], context!, producer);
+            if (plan is not null) ValidateCoverage(root, record, project, plan, LoadTrx, path => validatedHashes[path], producerContext, producer);
             else if (project.Coverage.Length != 0) throw new InvalidDataException("coverage has no current input manifest");
             if (project.Executed == 0) continue;
             if (!RepoPath.TryCreate(project.Results, out _)) throw new InvalidDataException("invalid TRX path");
@@ -328,6 +356,8 @@ internal static class CommonExecutionEvidence
             if (!record.Projects.Any(result => result.Project == project && result.Exit == 0 && result.Executed + result.Coverage.Where(item => item.Status == "reused").Sum(item => item.Covered) > 0))
                 throw new InvalidDataException($"base test project has no successful candidate coverage: {project}");
         return record;
+
+        static bool Digest(string value) => value.Length == 64 && value.All(char.IsAsciiHexDigit);
     }
     private static void ValidateCoverage(string root, TestExecutionRecord record, TestProjectExecution project, TestInputManifest plan, Func<string, TestResultEvidence> load, Func<string, string> hash, TestEnvironmentContext context, string producer)
     {

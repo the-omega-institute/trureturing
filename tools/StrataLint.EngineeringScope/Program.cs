@@ -84,15 +84,17 @@ internal static class Program
     {
         if (build is not null && build.Materials.Any(material => material.Path == AffectedTestPlan.PathName))
             return AffectedTestExecution.Run(root, run, output, build, context);
-        return RunCurrentTests(root, (project, results) => run(project, results, null), output, build);
+        return RunCurrentTests(root, (project, results) => run(project, results, null), output, build, context);
     }
 
-    internal static int RunCurrentTests(string root, Func<string, string, int> run, TextWriter output, CommonStageRecord? build = null)
+    internal static int RunCurrentTests(string root, Func<string, string, int> run, TextWriter output,
+        CommonStageRecord? build = null, TestEnvironmentContext? context = null)
     {
         var candidate = CommonExecutionEvidence.Candidate(root);
         var projects = EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadSnapshotProjects(CommonExecutionEvidence.Snapshot(root)));
         if (projects.Length == 0) throw new InvalidDataException("candidate contains zero test projects");
         var round = build?.Round ?? Guid.NewGuid().ToString("N");
+        context ??= CommonStages.TestEnvironment(root);
         var invocation = Guid.NewGuid().ToString("N");
         var records = new List<TestProjectExecution>();
         output.WriteLine($"ENGINEERING_TEST_PLAN state=full selected={projects.Length} candidate={candidate}");
@@ -119,7 +121,8 @@ internal static class Program
         var paths = records.SelectMany(record => Directory.GetFiles(Path.Combine(root, record.Results), "*.trx"))
             .Select(path => Path.GetRelativePath(root, path).Replace('\\', '/'));
         CommonExecutionEvidence.Write(root, CommonExecutionEvidence.TestsPath,
-            new TestExecutionRecord(2, candidate, round, records.ToArray(), CommonExecutionEvidence.Materials(root, paths)));
+            new TestExecutionRecord(3, candidate, round, TestProducerExecutionContext.Capture(context),
+                records.ToArray(), CommonExecutionEvidence.Materials(root, paths)));
         if (CommonExecutionEvidence.Candidate(root) != candidate) throw new InvalidDataException("candidate changed during test execution");
         return records.Any(static record => record.Exit != 0 || record.Error is not null || record.Executed == 0) ? 1 : 0;
     }

@@ -1,3 +1,6 @@
+using System.Formats.Tar;
+using System.IO.Compression;
+using StrataLint.TestSupport;
 using Xunit;
 
 namespace StrataLint.EngineeringScope.Tests;
@@ -29,7 +32,9 @@ public sealed class AffectedExecutionTests
             Assert.Equal(originalContext.Launcher, context.Launcher);
             Assert.Equal(originalContext.RuntimeMaterial, context.RuntimeMaterial);
             Assert.NotEqual(originalContext.ValuesIdentity, context.ValuesIdentity);
-            Assert.Throws<InvalidDataException>(() => CommonExecutionEvidence.ValidateTests(fixture.Root, context: context));
+            // Completed evidence is validated against its producer context. A
+            // reader running under A may consume successful B coverage.
+            CommonExecutionEvidence.ValidateTests(fixture.Root, context: context);
             changed = fixture.Tests(build, expectedExit: null, subprocess: true);
             changedExit = fixture.LastTestExit;
             if (changedExit == 0)
@@ -70,6 +75,59 @@ public sealed class AffectedExecutionTests
         }
         Assert.Equal(0, changedExit);
         Assert.Equal(2, restored.Projects.Sum(project => project.Executed));
+    }
+
+    [Fact]
+    public void TransportedProducerContextIsAcceptedByDownstreamReaderWithoutRerun()
+    {
+        using var fixture = new AffectedExecutionFixture();
+        var build = fixture.Build();
+        var originalPath = Environment.GetEnvironmentVariable("PATH");
+        var archive = Path.Combine(Path.GetTempPath(), "engineering-context-" + Guid.NewGuid().ToString("N") + ".tgz");
+        var repository = Environment.GetEnvironmentVariable("GITHUB_REPOSITORY");
+        try
+        {
+            Environment.SetEnvironmentVariable("GITHUB_REPOSITORY", "fixture/repository");
+            Environment.SetEnvironmentVariable("PATH", Path.Combine(fixture.Root, "local-runtime/elan/bin")
+                + Path.PathSeparator + originalPath);
+            fixture.Write("local-runtime/elan/bin/.keep", "");
+            var producerContext = CommonStages.TestEnvironment(fixture.Root);
+            var produced = fixture.Tests(build, subprocess: true);
+            Assert.Equal(producerContext.ValuesIdentity,
+                produced.ProducerContext.ValuesIdentity);
+            fixture.SealEngineering(build);
+            var commit = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD");
+            Assert.Equal(0, CiTransport.Run(["transport-pack", "--repository", fixture.Root, "--stage", "engineering",
+                "--commit", commit, "--run-id", "17", "--run-attempt", "2", "--archive", archive], TextWriter.Null));
+            var buildArchive = archive + ".build";
+            Assert.Equal(0, CiTransport.Run(["transport-pack", "--repository", fixture.Root, "--stage", "build",
+                "--commit", commit, "--run-id", "17", "--run-attempt", "2", "--archive", buildArchive], TextWriter.Null));
+
+            var target = TemporaryFileSystem.Directory.CreateTempSubdirectory("engineering-context-target-").FullName;
+            SharedBuildContractTests.Git(fixture.Root, "clone", "--quiet", "--no-hardlinks", fixture.Root, target);
+            using (var input = new GZipStream(File.OpenRead(buildArchive), CompressionMode.Decompress))
+                TarFile.ExtractToDirectory(input, target, overwriteFiles: true);
+            using (var input = new GZipStream(File.OpenRead(archive), CompressionMode.Decompress))
+                TarFile.ExtractToDirectory(input, target, overwriteFiles: true);
+
+            Environment.SetEnvironmentVariable("PATH", originalPath);
+            Assert.Equal(0, CiTransport.Run(["transport-verify", "--repository", target, "--stage", "engineering",
+                "--commit", commit, "--run-id", "17", "--run-attempt", "2"], TextWriter.Null));
+            var consumed = CommonExecutionEvidence.Read<TestExecutionRecord>(target, CommonExecutionEvidence.TestsPath);
+            Assert.Equal(produced.ProducerContext, consumed.ProducerContext);
+            Assert.Equal(produced.Projects.SelectMany(project => project.Coverage).SelectMany(coverage => coverage.Source.Trx),
+                consumed.Projects.SelectMany(project => project.Coverage).SelectMany(coverage => coverage.Source.Trx));
+            CommonExecutionEvidence.Write(target, CommonExecutionEvidence.TestsPath,
+                consumed with { ProducerContext = consumed.ProducerContext with { ValuesIdentity = "" } });
+            Assert.Throws<InvalidDataException>(() => CommonExecutionEvidence.ValidateTests(target));
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable("PATH", originalPath);
+            Environment.SetEnvironmentVariable("GITHUB_REPOSITORY", repository);
+            if (File.Exists(archive)) File.Delete(archive);
+            if (File.Exists(archive + ".build")) File.Delete(archive + ".build");
+        }
     }
 
     [Fact]

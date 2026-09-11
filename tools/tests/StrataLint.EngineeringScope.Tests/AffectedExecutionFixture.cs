@@ -101,6 +101,16 @@ internal sealed class AffectedExecutionFixture : IDisposable
         return record;
     }
 
+    internal CommonStageRecord SealEngineering(CommonStageRecord build)
+    {
+        var log = CommonExecutionEvidence.RootPath + "/logs/engineering/fixture.log";
+        Write(log, "engineering\n");
+        var steps = CommonExecutionEvidence.EngineeringSteps.Select(name =>
+            new StageStep(name, name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", log)).ToArray();
+        CommonExecutionEvidence.SealEngineering(Root, build, steps);
+        return CommonExecutionEvidence.ValidateEngineering(Root);
+    }
+
     internal TestExecutionRecord Tests(CommonStageRecord build, int? expectedExit = 0, bool subprocess = false)
     {
         string[] arguments = ["--repository", Root, "--all", "--build-round", build.Round];

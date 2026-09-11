@@ -23,7 +23,8 @@ internal static class AffectedTestExecution
         foreach (var action in plan.Actions)
             results.Add(RunProject(root, action, plan.Projects.Single(project => project.Project == action.Project), build,
                 cache, context, run, output, $"{CommonExecutionEvidence.RootPath}/trx/{invocation}/{results.Count}"));
-        var record = new TestExecutionRecord(2, build.Candidate, build.Round, results.Select(result => result.Execution).ToArray(),
+        var record = new TestExecutionRecord(3, build.Candidate, build.Round, TestProducerExecutionContext.Capture(context),
+            results.Select(result => result.Execution).ToArray(),
             CommonExecutionEvidence.Materials(root, results.SelectMany(result => result.Materials)
                 .Concat([AffectedTestPlan.PathName, CommonExecutionEvidence.BuildPath])));
         CommonExecutionEvidence.Write(root, CommonExecutionEvidence.TestsPath, record);
