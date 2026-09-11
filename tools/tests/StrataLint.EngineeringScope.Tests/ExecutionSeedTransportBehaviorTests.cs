@@ -130,6 +130,285 @@ public sealed class ExecutionSeedTransportBehaviorTests
         Assert.Equal(siblingBytes, File.ReadAllBytes(sibling));
     }
 
+    [Theory]
+    [InlineData("engineering")]
+    [InlineData("current")]
+    public void WorkflowAdapterSeedRoundTripAcceptsNewCandidateWithOriginalProvenance(string stage)
+    {
+        using var fixture = Prepare(stage);
+        var commit = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD");
+        var environment = Environment(commit, fixture.Root, "41", "2");
+        var archive = Path.Combine(fixture.Root, "build", stage + "-seed.tgz");
+        var packed = Workflow(fixture.Root, "pack", stage + "-seed", commit, archive, environment);
+        Assert.True(packed.Exit == 0, packed.Text);
+        Assert.Contains("status=packed", packed.Text, StringComparison.Ordinal);
+        var target = Destination(fixture, "workflow-" + stage);
+        var restored = Workflow(target, "restore", stage + "-seed", commit, archive, environment);
+        Assert.True(restored.Exit == 0, restored.Text);
+        Assert.Contains("status=verified", restored.Text, StringComparison.Ordinal);
+        AssertAccepted(fixture.Root, target, stage, "workflow-" + stage);
+    }
+
+    [Fact]
+    public void OptionalActionsMissesAndFailedSavePreserveAcceptedSeed()
+    {
+        using var fixture = Prepare("engineering");
+        var repository = TestRepositoryLayout.FindRoot();
+        var commit = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD");
+        var environment = Environment(commit, fixture.Root, "51", "1");
+        var snapshot = Python(fixture.Root, repository, ["snapshot", "--repository", fixture.Root, "--layers", "engineering"], environment);
+        AssertReceipt(snapshot, "snapshot");
+        var cached = Path.Combine(fixture.Root, "build/lean-cache/engineering");
+        var before = Inventory(cached);
+        var key = Key(Python(fixture.Root, repository, ["keys", "--repository", fixture.Root, "--layers", "engineering"], environment).Text, "engineering_key");
+        var target = Destination(fixture, "optional");
+        (int Exit, string Text) Restore(string matched) => Python(target, repository,
+            ["restore", "--repository", target, "--layers", "engineering", "--engineering-key", matched], environment);
+        var absent = Restore(key);
+        AssertReceipt(absent, "miss");
+        Assert.Contains("manifest.json", absent.Text, StringComparison.Ordinal);
+        Assert.False(Directory.Exists(Path.Combine(target, CommonExecutionEvidence.CheckSeedPath("engineering"))));
+        CopyDirectory(cached, Path.Combine(target, "build/lean-cache/engineering"));
+        var missingKey = Restore("");
+        AssertReceipt(missingKey, "miss");
+        Assert.Contains("Actions supplied no cache", missingKey.Text, StringComparison.Ordinal);
+        Assert.False(Directory.Exists(Path.Combine(target, CommonExecutionEvidence.CheckSeedPath("engineering"))));
+        var foreign = Restore(key.Replace("0123456789012345678901234567890123456789", new string('a', 40), StringComparison.Ordinal));
+        AssertReceipt(foreign, "miss");
+        Assert.Contains("outside the selected partition", foreign.Text, StringComparison.Ordinal);
+        Assert.False(Directory.Exists(Path.Combine(target, CommonExecutionEvidence.CheckSeedPath("engineering"))));
+
+        var pullRequest = new Dictionary<string, string>(environment) { ["GITHUB_EVENT_NAME"] = "pull_request" };
+        AssertReceipt(Python(fixture.Root, repository, ["snapshot", "--repository", fixture.Root, "--layers", "engineering"], pullRequest), "save-disabled");
+        Assert.Equal(before, Inventory(cached));
+        var malformed = new Dictionary<string, string>(environment) { ["CANDIDATE_SHA"] = "malformed-supplied-candidate" };
+        var invalid = Python(fixture.Root, repository, ["snapshot", "--repository", fixture.Root, "--layers", "engineering"], malformed);
+        AssertReceipt(invalid, "save-failed");
+        Assert.Contains("CANDIDATE_SHA must be a 40-character commit identity", invalid.Text, StringComparison.Ordinal);
+        Assert.Contains("engineering_ready=false", invalid.Text, StringComparison.Ordinal);
+        Assert.Equal(before, Inventory(cached));
+
+        var accepted = CommonExecutionEvidence.Read<CommonStageRecord>(fixture.Root, CommonExecutionEvidence.EngineeringPath);
+        CommonExecutionEvidence.Write(fixture.Root, CommonExecutionEvidence.EngineeringPath,
+            accepted with { Steps = accepted.Steps.Select(step => step with { Exit = 1 }).ToArray() });
+        var required = Workflow(fixture.Root, "pack", "engineering", commit, Path.Combine(fixture.Root, "build/failed.tgz"), environment);
+        Assert.Equal(2, required.Exit);
+        Assert.Contains("CI_INPUT_FAILED", required.Text, StringComparison.Ordinal);
+        var failedSave = Python(fixture.Root, repository, ["snapshot", "--repository", fixture.Root, "--layers", "engineering"], environment);
+        AssertReceipt(failedSave, "save-failed");
+        Assert.Contains("engineering_ready=false", failedSave.Text, StringComparison.Ordinal);
+        Assert.Equal(before, Inventory(cached));
+        Assert.Throws<InvalidDataException>(() => CommonExecutionEvidence.ValidateEngineering(fixture.Root));
+        CommonExecutionEvidence.Write(fixture.Root, CommonExecutionEvidence.EngineeringPath, accepted);
+        // Copy again after both failed saves, so destination acceptance proves the retained cache.
+        CopyDirectory(cached, Path.Combine(target, "build/lean-cache/engineering"));
+        AssertReceipt(Restore(key), "restored");
+        AssertAccepted(fixture.Root, target, "engineering", "optional");
+    }
+
+    [Fact]
+    public void NativePackFailureRemovesInvocationTemporaryArchive()
+    {
+        using var fixture = Prepare("engineering");
+        var accepted = CommonExecutionEvidence.Read<CommonStageRecord>(fixture.Root, CommonExecutionEvidence.EngineeringPath);
+        CommonExecutionEvidence.Write(fixture.Root, CommonExecutionEvidence.EngineeringPath,
+            accepted with { Steps = accepted.Steps.Select(step => step with { Exit = 1 }).ToArray() });
+        var parent = Path.Combine(fixture.Root, "build/persistent-staging");
+        fixture.Write("build/persistent-staging/unrelated.tgz", "retain me");
+        var commit = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD");
+        // The Actions CLI's outer TemporaryDirectory would mask an invocation archive leak.
+        // Call its real pack adapter with a persistent parent and the real native runner.
+        var result = SharedBuildContractTests.Process(fixture.Root, "python3", ["-B", "-c", """
+            import pathlib, sys
+            sys.path.insert(0, sys.argv[1])
+            from lean_actions import actions_keys, snapshot_execution
+            root, destination = map(pathlib.Path, sys.argv[2:])
+            snapshot_execution(root, 'engineering', actions_keys(root), destination)
+            """, Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree"), fixture.Root, Path.Combine(parent, "data")],
+            Environment(commit, fixture.Root, "55", "1"), TestBudgets.LongWorkflowProcessHangGuard);
+        Assert.NotEqual(0, result.Exit);
+        Assert.Contains("ENGINEERING_TEST_PLAN_FAILED", result.Text, StringComparison.Ordinal);
+        Assert.Empty(Directory.GetFiles(parent, ".engineering-transport-*"));
+        Assert.Equal("retain me", File.ReadAllText(Path.Combine(parent, "unrelated.tgz")));
+    }
+
+    [Fact]
+    public void ConcurrentActionsSavesProduceUsableNativeSeedOrHonestMiss()
+    {
+        using var fixture = Prepare("engineering");
+        var repository = TestRepositoryLayout.FindRoot();
+        var commit = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD");
+        var environment = Environment(commit, fixture.Root, "61", "1");
+        fixture.Write("build/coordination/dotnet", """
+            #!/usr/bin/env python3
+            import os, socket, sys
+            with socket.create_connection(('127.0.0.1', int(os.environ['SEED_BARRIER_PORT']))) as connection:
+                connection.sendall((os.environ['GITHUB_RUN_ID'] + '\n').encode())
+                if connection.recv(1) != b'G': raise RuntimeError('barrier did not release')
+            os.execv(os.environ['SEED_REAL_DOTNET'], [os.environ['SEED_REAL_DOTNET'], *sys.argv[1:]])
+            """);
+        if (!OperatingSystem.IsWindows())
+            File.SetUnixFileMode(Path.Combine(fixture.Root, "build/coordination/dotnet"), UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        var result = SharedBuildContractTests.Process(fixture.Root, "python3", ["-B", "-c", """
+            import os, pathlib, shutil, socket, subprocess, sys
+            root, script = map(pathlib.Path, sys.argv[1:])
+            environment = dict(os.environ, SEED_REAL_DOTNET=shutil.which('dotnet'))
+            environment['PATH'] = str(root / 'build/coordination') + os.pathsep + environment['PATH']
+            children, connections = [], []
+            with socket.socket() as server:
+                server.bind(('127.0.0.1', 0))
+                server.listen(2)
+                environment['SEED_BARRIER_PORT'] = str(server.getsockname()[1])
+                try:
+                    for run in ('61', '62'):
+                        children.append(subprocess.Popen([sys.executable, '-B', str(script), 'snapshot',
+                            '--repository', str(root), '--layers', 'engineering'],
+                            env=dict(environment, GITHUB_RUN_ID=run), stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True))
+                    for _ in children:
+                        connection, _ = server.accept()
+                        connections.append(connection)
+                        print('CONCURRENT_PACK_READY run=' + connection.makefile().readline().strip(), flush=True)
+                    assert all(child.poll() is None for child in children)
+                    for connection in connections: connection.sendall(b'G')
+                    for child in children:
+                        output, _ = child.communicate()
+                        print(output, end='')
+                        assert child.returncode == 0, output
+                finally:
+                    for connection in connections: connection.close()
+                    for child in children:
+                        if child.poll() is None: child.kill()
+                        child.wait()
+            """, fixture.Root, Path.Combine(repository, "tools/scripts/worktree/lean_actions.py")], environment,
+            TestBudgets.LongWorkflowProcessHangGuard);
+        Assert.True(result.Exit == 0, result.Text);
+        Assert.Contains("CONCURRENT_PACK_READY run=61", result.Text, StringComparison.Ordinal);
+        Assert.Contains("CONCURRENT_PACK_READY run=62", result.Text, StringComparison.Ordinal);
+        var receipts = result.Text.Split('\n').Where(line => line.StartsWith("LEAN_ACTIONS_CACHE ", StringComparison.Ordinal))
+            .Select(line => JsonNode.Parse(line["LEAN_ACTIONS_CACHE ".Length..])!["status"]!.ToString()).ToArray();
+        Assert.Equal(2, receipts.Length);
+        Assert.All(receipts, status => Assert.Contains(status, new[] { "snapshot", "save-failed" }));
+        var target = Destination(fixture, "concurrent");
+        var cached = Path.Combine(fixture.Root, "build/lean-cache/engineering");
+        var key = "";
+        if (Directory.Exists(cached))
+        {
+            CopyDirectory(cached, Path.Combine(target, "build/lean-cache/engineering"));
+            var manifest = Path.Combine(cached, "manifest.json");
+            if (File.Exists(manifest)) key = JsonNode.Parse(File.ReadAllText(manifest))!["key"]!.ToString();
+        }
+        var restore = Python(target, repository, ["restore", "--repository", target, "--layers", "engineering", "--engineering-key", key], environment);
+        Assert.True(restore.Exit == 0, restore.Text);
+        if (restore.Text.Contains("\"status\": \"restored\"", StringComparison.Ordinal))
+            AssertAccepted(fixture.Root, target, "engineering", "concurrent");
+        else
+        {
+            AssertReceipt(restore, "miss");
+            var build = CommonExecutionEvidence.ValidateBuild(target);
+            var checks = CommonExecutionEvidence.BeginChecks(target, "engineering", build, TextWriter.Null);
+            Assert.All(checks.Ids, id => Assert.True(checks.IsSelected(id), id));
+            foreach (var id in checks.Ids) checks.Run(id, () => new CheckWork(CommonCheckExecutionTests.Fixture.Work(id)));
+            Assert.All(checks.Seal().Units, unit => Assert.Equal("executed", unit.Status));
+        }
+    }
+
+    private static string Destination(CurrentExecutionContractTests.CandidateFixture fixture, string name)
+    {
+        var target = Path.Combine(fixture.Root, "build/destination-" + name);
+        SharedBuildContractTests.Git(fixture.Root, "clone", "--quiet", "--no-hardlinks", fixture.Root, target);
+        File.AppendAllText(Path.Combine(target, ".gitignore"), "# new accepted candidate\n");
+        SharedBuildContractTests.Git(target, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qam", "new acceptance");
+        CopyDirectory(Path.Combine(fixture.Root, "tools/StrataLint.EngineeringScope/bin/Release/net10.0"),
+            Path.Combine(target, "tools/StrataLint.EngineeringScope/bin/Release/net10.0"));
+        var sourceBuild = CommonExecutionEvidence.ValidateBuild(fixture.Root);
+        foreach (var path in sourceBuild.Materials.Select(material => material.Path).Concat(CommonExecutionEvidence.ReportPaths))
+        {
+            var source = Path.Combine(fixture.Root, path);
+            if (!File.Exists(source)) continue;
+            var destination = Path.Combine(target, path);
+            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+            File.Copy(source, destination, overwrite: true);
+        }
+        var build = CommonExecutionEvidence.SealBuild(target, CommonExecutionEvidence.Candidate(target),
+            sourceBuild.Materials.Select(material => material.Path), sourceBuild.Steps);
+        Assert.NotEqual(sourceBuild.Candidate, build.Candidate);
+        Assert.NotEqual(sourceBuild.Round, build.Round);
+        return target;
+    }
+
+    private static void AssertAccepted(string source, string target, string stage, string label)
+    {
+        var original = CommonExecutionEvidence.Read<CommonCheckRecord>(source, CommonExecutionEvidence.ChecksPath(stage));
+        var build = CommonExecutionEvidence.ValidateBuild(target);
+        var checks = CommonExecutionEvidence.BeginChecks(target, stage, build, TextWriter.Null);
+        Assert.NotEmpty(checks.Ids);
+        foreach (var id in checks.Ids)
+        {
+            Assert.False(checks.IsSelected(id), id);
+            checks.Run(id, () => throw new InvalidOperationException("transported unit must be reused: " + id));
+        }
+        var accepted = checks.Seal();
+        Assert.Equal(build.Candidate, accepted.Candidate);
+        Assert.Equal(build.Round, accepted.Round);
+        Assert.NotEqual(original.Candidate, accepted.Candidate);
+        Assert.NotEqual(original.Round, accepted.Round);
+        foreach (var unit in accepted.Units)
+        {
+            var prior = original.Units.Single(row => row.Id == unit.Id);
+            Assert.Equal("reused", unit.Status);
+            Assert.Equal(prior.ExecutionCandidate, unit.ExecutionCandidate);
+            Assert.Equal(prior.ExecutionRound, unit.ExecutionRound);
+            Assert.Equal(prior.Operations, unit.Operations);
+            Assert.Equal(prior.Materials, unit.Materials);
+        }
+        TestExecutionRecord? tests = null;
+        if (stage == "engineering")
+        {
+            Assert.Equal(0, Program.RunCurrentTests(target, (_, _) => throw new InvalidOperationException("transported test must be reused"), TextWriter.Null));
+            tests = CommonExecutionEvidence.ValidateTests(target);
+            var prior = CommonExecutionEvidence.ValidateTests(source);
+            Assert.Equal(build.Candidate, tests.Candidate);
+            Assert.Equal(build.Round, tests.Round);
+            Assert.Equal(prior.Projects.Select(project => project with { Status = "reused" }), tests.Projects);
+            Assert.Equal(prior.Materials, tests.Materials);
+            foreach (var material in prior.Materials)
+                Assert.Equal(File.ReadAllBytes(Path.Combine(source, material.Path)), File.ReadAllBytes(Path.Combine(target, material.Path)));
+        }
+        var originalStage = CommonExecutionEvidence.Read<CommonStageRecord>(source,
+            stage == "engineering" ? CommonExecutionEvidence.EngineeringPath : CommonExecutionEvidence.CurrentPath);
+        if (stage == "engineering") CommonExecutionEvidence.SealEngineering(target, build, originalStage.Steps);
+        else CommonExecutionEvidence.SealCurrent(target, build, originalStage.Steps);
+        var sealedStage = stage == "engineering" ? CommonExecutionEvidence.ValidateEngineering(target) : CommonExecutionEvidence.ValidateCurrent(target);
+        Assert.Equal(build.Candidate, sealedStage.Candidate);
+        Assert.Equal(build.Round, sealedStage.Round);
+        if (System.Environment.GetEnvironmentVariable("EXECUTION_SEED_EVIDENCE") is { Length: > 0 } evidence)
+        {
+            Directory.CreateDirectory(evidence);
+            File.WriteAllText(Path.Combine(evidence, label + "-acceptance.json"), JsonSerializer.Serialize(new { original, accepted, tests, sealedStage }));
+            foreach (var material in tests?.Materials ?? [])
+            {
+                var path = Path.Combine(evidence, label, material.Path);
+                Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+                File.Copy(Path.Combine(target, material.Path), path, overwrite: true);
+            }
+        }
+    }
+
+    private static (int Exit, string Text) Workflow(string root, string command, string stage, string commit, string archive, Dictionary<string, string> environment) =>
+        SharedBuildContractTests.Process(root, "python3", ["-B", Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/workflow/ci.py"),
+            command, "--repository", root, "--stage", stage, "--commit", commit, "--archive", archive], environment,
+            TestBudgets.LongWorkflowProcessHangGuard);
+
+    private static void AssertReceipt((int Exit, string Text) result, string status)
+    {
+        Assert.True(result.Exit == 0, result.Text);
+        Assert.Contains("\"status\": \"" + status + "\"", result.Text, StringComparison.Ordinal);
+    }
+
+    private static (string Path, string Hash, int Mode)[] Inventory(string root) => Directory.GetFiles(root, "*", SearchOption.AllDirectories)
+        .Order(StringComparer.Ordinal).Select(path => (Path.GetRelativePath(root, path), CommonExecutionEvidence.Hash(path),
+            OperatingSystem.IsWindows() ? 0 : (int)File.GetUnixFileMode(path))).ToArray();
+
     private static CurrentExecutionContractTests.CandidateFixture Prepare(string stage)
     {
         var fixture = new CurrentExecutionContractTests.CandidateFixture();
