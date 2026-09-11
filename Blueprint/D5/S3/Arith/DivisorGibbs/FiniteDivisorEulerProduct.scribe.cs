@@ -43,7 +43,7 @@ internal sealed class FiniteDivisorEulerProductDocument : IScribeDocumentDefinit
                     + "prime multiplicity. The power function is assigned zero at the natural "
                     + "index zero for this convolution; that index is never a positive divisor. "
                     + "No restriction on s is needed: at s=0 every local summand equals one."),
-            Entry("divisor_sum_eq_tsum", "Extension by zero",
+            Entry("divisor_sum_eq_tsum", "Zero outside the divisor set",
                 Disp(Seq(Forall, Sp, N, Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
                     S, Sp, InMacro, Sp, Mathbb, Grp(F.Id("C")), Comma, Sp,
                     Call("Z", N, S), Sp, Eq, Sp,
@@ -60,7 +60,7 @@ internal sealed class FiniteDivisorEulerProductDocument : IScribeDocumentDefinit
             DeclarationHandle.Create(Module + declaration), H(title),
             StatementSource.FromAuthor(statement),
             AssessedProvenance.FromLiterature(
-                LibraryNoteRef.Create("D5/L/Arith/mathlib2026divisoreuler")),
+                LibraryNoteRef.Create("D5/L/Factorization/mathlib2026divisoreuler")),
             Blocks(Paragraph(Text(prose))), role);
 
     private static Formula Pow(Formula x, Formula y) => Seq(Grp(x), Caret, Grp(y));
