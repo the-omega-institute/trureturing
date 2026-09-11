@@ -10,7 +10,7 @@ $$\operatorname{G}\left(d, m\right) = \operatorname{fromRel}\left(\lambda i j, i
 
 *Formalization.* `D5/S3/ConceptDynamics/GraphColoring/StepGraphComponentCount.stepGraph` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Hojin Chu, Homoon Ryu (2025). *Linear-Time Computation of the Frobenius Normal Form for Symmetric Toeplitz Matrices via Graph-Theoretic Decomposition*. URL: <https://arxiv.org/abs/2505.20811v1>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ $$\operatorname{R}\left(d, m\right) = \{\operatorname{mod}\left(i, m\right) \mid
 
 *Formalization.* `D5/S3/ConceptDynamics/GraphColoring/StepGraphComponentCount.occurringResidues` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Hojin Chu, Homoon Ryu (2025). *Linear-Time Computation of the Frobenius Normal Form for Symmetric Toeplitz Matrices via Graph-Theoretic Decomposition*. URL: <https://arxiv.org/abs/2505.20811v1>.
 
 *Commentary.*
 
@@ -34,7 +34,7 @@ $$\operatorname{Reachable}\left(\operatorname{G}\left(d, m\right), i, j\right) \
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/GraphColoring/StepGraphComponentCount.reachable_iff_mod_eq` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Hojin Chu, Homoon Ryu (2025). *Linear-Time Computation of the Frobenius Normal Form for Symmetric Toeplitz Matrices via Graph-Theoretic Decomposition*. URL: <https://arxiv.org/abs/2505.20811v1>.
 
 *Commentary.*
 
@@ -46,7 +46,7 @@ $$\operatorname{ConnectedComponent}\left(\operatorname{G}\left(d, m\right)\right
 
 *Formalization.* `D5/S3/ConceptDynamics/GraphColoring/StepGraphComponentCount.componentEquivResidues` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Hojin Chu, Homoon Ryu (2025). *Linear-Time Computation of the Frobenius Normal Form for Symmetric Toeplitz Matrices via Graph-Theoretic Decomposition*. URL: <https://arxiv.org/abs/2505.20811v1>.
 
 *Commentary.*
 
@@ -58,7 +58,7 @@ $$\forall d,m \in \mathbb{N}, 1 \le m \Rightarrow \operatorname{card}\left(\oper
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/GraphColoring/StepGraphComponentCount.connectedComponent_card` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Hojin Chu, Homoon Ryu (2025). *Linear-Time Computation of the Frobenius Normal Form for Symmetric Toeplitz Matrices via Graph-Theoretic Decomposition*. URL: <https://arxiv.org/abs/2505.20811v1>.
 
 *Commentary.*
 
