@@ -46,7 +46,7 @@ public sealed class CommonSourceIdentityTests
             "tools/tests/First/" + source, StringComparison.Ordinal));
         var error = Assert.Throws<InvalidDataException>(() => CommonExecutionEvidence.Candidate(fixture.Root));
 
-        Assert.Contains("Compile input is absent from candidate source", error.Message, StringComparison.Ordinal);
+        Assert.Contains("registered Compile input is absent", error.Message, StringComparison.Ordinal);
         Assert.Contains(source, error.Message, StringComparison.Ordinal);
         TemporaryFileSystem.File.Delete(path);
         TemporaryFileSystem.File.WriteAllText(manifest, registration);
@@ -67,6 +67,7 @@ public sealed class CommonSourceIdentityTests
         TemporaryFileSystem.Directory.CreateDirectory(Path.Combine(fixture.Root, "local"));
         TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, "local/Unconsumed.cs"), "class Unconsumed { }");
         Assert.Equal(dirty, CommonExecutionEvidence.Candidate(fixture.Root));
+        _ = fixture.Build();
         Assert.Equal(0, Program.RunCurrentTests(fixture.Root, (_, results) =>
         {
             fixture.WriteTrx(results, "Passed");
@@ -85,10 +86,11 @@ public sealed class CommonSourceIdentityTests
     {
         if (modeOnly && OperatingSystem.IsWindows()) return;
         using var fixture = new CurrentExecutionContractTests.CandidateFixture();
-        var candidate = CommonExecutionEvidence.Candidate(fixture.Root);
+        var started = CommonExecutionEvidence.ValidateBuild(fixture.Root);
         var source = Path.Combine(fixture.Root, CurrentExecutionContractTests.CandidateFixture.First);
         if (modeOnly) File.SetUnixFileMode(source, File.GetUnixFileMode(source) | UnixFileMode.UserExecute);
         else TemporaryFileSystem.File.AppendAllText(source, "\n");
+        _ = fixture.Build();
         Assert.Equal(0, Program.RunCurrentTests(fixture.Root, (_, results) =>
         {
             fixture.WriteTrx(results, "Passed");
@@ -100,9 +102,9 @@ public sealed class CommonSourceIdentityTests
             .Select(name => new StageStep(name, name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", log)).ToArray();
 
         var error = Assert.Throws<InvalidDataException>(() =>
-            CiTransportTests.SealEngineering(fixture.Root, candidate, [log], steps));
+            CommonExecutionEvidence.SealEngineering(fixture.Root, started, steps));
 
-        Assert.Equal("candidate changed during build", error.Message);
+        Assert.Equal("common evidence candidate identity or round mismatch", error.Message);
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.EngineeringPath)));
     }
 

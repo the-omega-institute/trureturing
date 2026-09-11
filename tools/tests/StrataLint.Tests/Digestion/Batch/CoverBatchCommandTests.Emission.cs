@@ -20,7 +20,7 @@ public sealed partial class CoverBatchCommandTests
         world.WriteReportBundle();
 
         Assert.DoesNotContain(world.Repository.ReadCurrent().Entries, entry => entry.Path == runtimePath);
-        const string sourcePath = "tools/StrataLint.Cli/Fixture.cs";
+        const string sourcePath = "tools/StrataLint.Cli/Program.cs";
         TemporaryFileSystem.File.WriteAllBytes(Path.Combine(world.Root, sourcePath), [0xff]);
         var failure = Assert.IsType<SnapshotDecodeOutcome.InfrastructureFailure>(
             SnapshotDecoder.Decode(world.Repository.ReadCurrent()));
@@ -269,7 +269,6 @@ public sealed partial class CoverBatchCommandTests
     {
         WriteProblem(root);
         WriteScribeFixture(root, "Trureturing.lean", "-- synthetic root module\n");
-        ProducerInputFixture.CopyBatchProducerInputs(root);
         WriteScribeFixture(root, ".gitignore",
             File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), ".gitignore")));
         WriteScribeFixture(root, "Blueprint/D5/S0/Carrier/Probe.md", "old blueprint projection\n");
@@ -277,7 +276,7 @@ public sealed partial class CoverBatchCommandTests
         foreach (var path in CanonicalValuesWriter.InputPaths)
         {
             if (!TemporaryFileSystem.File.Exists(Path.Combine(root, path)))
-                WriteScribeFixture(root, path, "-- synthetic producer input\n");
+                WriteScribeFixture(root, path, File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), path)));
         }
         WriteScribeFixture(root, "Golden/values-kernels.toml", """
             schema_version = 1
@@ -296,6 +295,18 @@ public sealed partial class CoverBatchCommandTests
             """ + "\n");
         WriteScribeFixture(root, "Meta/FILEMAP.toml",
             File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Meta/FILEMAP.toml")));
+        // FILEMAP resource declarations must have their actual registered inputs,
+        // including owners outside the report producer's project closure.
+        foreach (var path in new[] {
+            "tools/scripts/ci-stage.sh", "tools/StrataLint.EngineeringScope/CommonStages.cs",
+            "tools/StrataLint.Cli/Commands/FileMap/FileMapConformCommand.cs",
+            "tools/scripts/worktree/lean-cache-run.sh", "tools/scripts/report/lean-report.sh",
+            "tools/scripts/workflow/scribe-content-checks.sh", "Meta/ci-checks.json", "Meta/ci-resources.json",
+            "Meta/engineering-projects.json", "Meta/package-materials.json",
+            "Meta/ReportProducers/lean-report.json", "Meta/ReportProducers/scribe-content.json",
+            "lake-manifest.json", "lakefile.toml", "lean-toolchain" })
+            if (!TemporaryFileSystem.File.Exists(Path.Combine(root, path)))
+                WriteScribeFixture(root, path, File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), path)));
     }
 
     private sealed class ReportLoadCounter : IDisposable

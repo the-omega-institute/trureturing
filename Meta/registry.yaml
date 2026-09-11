@@ -21,6 +21,7 @@ governance_documents:
   - "Meta/ReportProducers/lean-report.json"
   - "Meta/ReportProducers/scribe-content.json"
   - "Meta/ci-checks.json"
+  - "Meta/ci-resources.json"
   - "Meta/engineering-projects.json"
   - "docs/CONTRIBUTING.md"
   - "docs/GOVERNANCE.md"

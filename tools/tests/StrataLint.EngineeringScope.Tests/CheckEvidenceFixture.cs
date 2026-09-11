@@ -4,9 +4,9 @@ namespace StrataLint.EngineeringScope.Tests;
 
 internal static class CheckEvidenceFixture
 {
-    internal static void Seal(string root, string stage, CommonStageRecord build)
+    internal static void Seal(string root, string stage, CommonStageRecord build, string[]? selectedIds = null)
     {
-        var checks = CommonExecutionEvidence.BeginChecks(root, stage, build, TextWriter.Null);
+        var checks = CommonExecutionEvidence.BeginChecks(root, stage, build, TextWriter.Null, selectedIds);
         foreach (var id in checks.Ids)
             checks.Run(id, () => new CheckWork(id.StartsWith("SL-", StringComparison.Ordinal)
                 ? [new(id, 0, CommonCheckRegistrationFixture.Predicate(id))] : CommonCheckExecutionTests.Fixture.Work(id),

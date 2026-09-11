@@ -201,6 +201,10 @@ def candidate(root, commit):
 
 
 def strict_json(file):
+    return strict_json_bytes(file.read_bytes())
+
+
+def strict_json_bytes(raw):
     def pairs(items):
         result = {}
         for key, value in items:
@@ -210,7 +214,7 @@ def strict_json(file):
         return result
     def invalid(value):
         raise ValueError(f"invalid JSON constant: {value}")
-    return json.loads(file.read_bytes().decode("utf-8"), object_pairs_hook=pairs, parse_constant=invalid)
+    return json.loads(raw.decode("utf-8"), object_pairs_hook=pairs, parse_constant=invalid)
 
 
 def same_record(left, right):
@@ -350,12 +354,84 @@ def make_plan(root, commit, changes_file):
     stages = {stage: {"resources": [r["id"] for r in active if r["stage"] == stage],
                       "status": "not-applicable" if stage == "delta" and data["mode"] == "current" else
                       "required" if any(r["stage"] == stage for r in active) else "not-required"} for stage in STAGES}
+    execution = execution_selection(root, commit, active, resources)
     return {"schema_version": 1, "status": "planned", "mode": data["mode"], "candidate": data["candidate"],
             "base": data["base"], "head": data["head"], "filemap_sha256": hashlib.sha256(raw).hexdigest(),
             "scope_sha256": hashlib.sha256(json.dumps(data, sort_keys=True, ensure_ascii=True, separators=(",", ":")).encode()).hexdigest(),
             "paths": scope, "declared_require": sorted(required), "resources": selected,
             "selected_stages": [s for s in STAGES if stages[s]["status"] == "required"], "stages": stages,
-            "tools": union("tools"), "cache_layers": union("cache_layers"), "materials": union("materials")}
+            "tools": union("tools"), "cache_layers": union("cache_layers"), "materials": union("materials"), "execution": execution}
+
+
+def execution_selection(root, commit, active, resources):
+    registration = "Meta/ci-resources.json"
+    if not active:
+        return {"projects": [], "checks": [], "steps": []}
+    if not any(registration in row["materials"] for row in active):
+        raise ValueError("missing declared resource execution manifest: " + registration)
+    declarations = {registration, "Meta/engineering-projects.json", "Meta/ci-checks.json"}
+    if not declarations <= {p for row in active for p in row["materials"]}:
+        raise ValueError("resource plan lacks declared execution inputs")
+    manifest = strict_json_bytes(git(root, "show", commit + ":" + registration))
+    exact(manifest, {"schema", "resources"}, registration)
+    if manifest["schema"] != "ci-resource-execution-v1":
+        raise ValueError("invalid resource execution schema")
+    rows = {}
+    for row in manifest["resources"]:
+        exact(row, {"id", "projects", "checks", "steps"}, registration)
+        if row["id"] in rows or row["id"] not in resources:
+            raise ValueError("unknown or duplicate resource execution: " + row["id"])
+        for key in ("projects", "checks", "steps"):
+            if not isinstance(row[key], list) or row[key] != sorted(set(row[key])):
+                raise ValueError("resource execution requires sorted unique " + key)
+        rows[row["id"]] = row
+    if set(rows) != set(resources):
+        raise ValueError("missing resource execution registration")
+    registry = strict_json_bytes(git(root, "show", commit + ":Meta/engineering-projects.json"))
+    projects = {row["path"]: row for row in registry["projects"]}
+    checks = {row["id"]: row for row in strict_json_bytes(git(root, "show", commit + ":Meta/ci-checks.json"))["checks"]}
+    selected_projects, selected_checks, steps = set(), set(), set()
+    for resource in active:
+        row = rows[resource["id"]]
+        selected_projects.update(row["projects"])
+        selected_checks.update(row["checks"])
+        if resource["stage"] == "current":
+            steps.update(row["steps"])
+    for check in list(selected_checks):
+        if check not in checks:
+            raise ValueError("unregistered selected check: " + check)
+        if any(item["artifact"] == "VerifiedScribeEmissions" for item in checks[check]["report_inputs"]):
+            if "scribe-describe" not in selected_checks or "scribe" not in steps:
+                raise ValueError("selected check requires declared Scribe producer: " + check)
+    for check in selected_checks:
+        if any(project not in projects for project in checks[check]["program_projects"]):
+            raise ValueError("unregistered check program input: " + check)
+        if checks[check]["report_inputs"] and "lean-report" not in steps:
+            raise ValueError("selected check requires lean-report: " + check)
+    # References are the only project closure authority. The compiler verifies these inputs.
+    visited, dependencies, visiting = set(), set(), set()
+    def visit(project):
+        if project not in projects:
+            raise ValueError("unregistered requested build root: " + project)
+        if project in visiting:
+            raise ValueError("cyclic project registration: " + project)
+        if project in visited:
+            return
+        visiting.add(project)
+        for ref in projects[project]["references"]:
+            dependencies.add(ref)
+            visit(ref)
+        visiting.remove(project)
+        visited.add(project)
+    for project in list(selected_projects):
+        visit(project)
+    if "lean-report" in steps:
+        steps.discard("lean")  # The report producer enters the Lean incremental path.
+    order = ["lean", "lean-report", "scribe", "filemap", "check-current"]
+    if steps - set(order):
+        raise ValueError("unknown current step registration")
+    return {"projects": sorted(selected_projects - dependencies), "checks": sorted(selected_checks),
+            "steps": [step for step in order if step in steps]}
 
 
 def no_work(plan, stage=None):

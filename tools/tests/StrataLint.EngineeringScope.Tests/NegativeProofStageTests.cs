@@ -5,6 +5,7 @@ using Xunit;
 
 namespace StrataLint.EngineeringScope.Tests;
 
+[Collection("Engineering scope process boundary")]
 public sealed class NegativeProofStageTests
 {
     public static TheoryData<string, int, int> RejectedExits()

@@ -27,10 +27,12 @@ public sealed class CurrentPrebuiltCliContractTests
             Write(project, "<Project><PropertyGroup><IsTestProject>true</IsTestProject></PropertyGroup></Project>\n");
             Write(EngineeringRegistrationFixture.Path, EngineeringRegistrationFixture.Manifest(
                 new EngineeringProjectFixture(project, "Probe", "cross-cutting-test", true, [])));
+            Write(CommonExecutionEvidence.CheckManifestPath, CommonCheckRegistrationFixture.Manifest(project));
             WriteExecutable("build/bin/git", """
                 case "$*" in
                   'ls-files --stage -z') printf '100644 0000000000000000000000000000000000000000 0\ttools/tests/Probe/Probe.csproj\0'
-                    printf '100644 0000000000000000000000000000000000000000 0\tMeta/engineering-projects.json\0' ;;
+                    printf '100644 0000000000000000000000000000000000000000 0\tMeta/engineering-projects.json\0'
+                    printf '100644 0000000000000000000000000000000000000000 0\tMeta/ci-checks.json\0' ;;
                   'ls-files --others --exclude-standard -z') ;;
                   *) exit 97 ;;
                 esac

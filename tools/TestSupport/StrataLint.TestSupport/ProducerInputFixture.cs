@@ -45,6 +45,8 @@ internal sealed class ProducerInputFixture : IDisposable
         references = name == "StrataLint.Cli" ? new[] { EngineProjectPath }
             : name == "StrataLint.Engine" ? new[] { TruthProjectPath } : [],
         role = "test-support", test_partition = (string?)null,
+        build_inputs = Array.Empty<string>(), execution_inputs = (string[]?)null,
+        execution_excludes = (string[]?)null, execution_environment = (string[]?)null,
         root_namespace = name, namespace_exclude = Array.Empty<string>(), global_namespace_exceptions = Array.Empty<string>(),
     };
 
@@ -265,24 +267,70 @@ internal sealed class ProducerInputFixture : IDisposable
         return JsonNode.Parse(result.StandardOutput)!.AsObject();
     }
 
-    internal static void CopyBatchProducerInputs(string root)
+    private static readonly Lazy<IReadOnlyDictionary<string, byte[]>> BatchProducerInputs = new(ReadBatchProducerInputs);
+
+    private static IReadOnlyDictionary<string, byte[]> ReadBatchProducerInputs()
     {
-        using var fixture = new ProducerInputFixture();
-        fixture.EditRegistry(registry => registry["projects"]![3]!["include"]!.AsArray().Add("Blueprint/**/*.scribe.cs"));
-        foreach (var path in TemporaryFileSystem.Directory.EnumerateFiles(fixture.repository, "*", SearchOption.AllDirectories))
+        var source = TestRepositoryLayout.FindRoot();
+        var manifest = JsonNode.Parse(File.ReadAllText(Path.Combine(source, ProjectRegistrationPath)))!.AsObject();
+        var rows = manifest["projects"]!.AsArray();
+        var inventory = TestProcessRunner.Run("git", ["ls-files", "--cached", "--others", "--exclude-standard", "-z", "--", "tools"], source,
+            TestBudgets.ScriptProcessHangGuard, 4 * 1024 * 1024);
+        Assert.True(inventory.ExitCode == 0, Encoding.UTF8.GetString(inventory.StandardError));
+        // Expand only explicitly registered Compile patterns before invoking the strict reader.
+        var available = Encoding.UTF8.GetString(inventory.StandardOutput).Split('\0', StringSplitOptions.RemoveEmptyEntries);
+        var declared = rows.SelectMany(row => EngineeringProjectRegistry.ExpandInputs(available,
+            row!["include"]!.AsArray().Select(value => value!.GetValue<string>()).ToArray(),
+            row["exclude"]!.AsArray().Select(value => value!.GetValue<string>()).ToArray(), row["path"]!.GetValue<string>()))
+            .Concat(rows.Select(row => row!["path"]!.GetValue<string>())).Distinct(StringComparer.Ordinal);
+        var registry = EngineeringProjectRegistry.Read(declared.Select(path =>
+            new EngineeringSource(path, File.ReadAllText(Path.Combine(source, path))))
+            .Prepend(new EngineeringSource(ProjectRegistrationPath, manifest.ToJsonString())).ToArray());
+        var scopes = new[] { LeanRegistrationPath, ScribeRegistrationPath }.ToDictionary(path => path,
+            path => JsonNode.Parse(File.ReadAllText(Path.Combine(source, path)))!.AsObject(), StringComparer.Ordinal);
+        var roots = scopes.Values.SelectMany(scope => scope["projects"]!.AsArray())
+            .Select(path => path!.GetValue<string>()).Append(CliProjectPath);
+        var paths = registry.ProjectInputs(roots, available, []).ToHashSet(StringComparer.Ordinal);
+        manifest["projects"] = new JsonArray(rows.Where(row => paths.Contains(row!["path"]!.GetValue<string>()))
+            .Select(row => row!.DeepClone()).ToArray());
+        manifest["historical_projects"] = new JsonArray();
+        paths.UnionWith(manifest["rule_build_inputs"]!.AsArray().Select(path => path!.GetValue<string>()));
+        foreach (var (path, scope) in scopes)
         {
-            var relative = Path.GetRelativePath(fixture.repository, path).Replace('\\', '/');
-            if (relative.StartsWith(".git/", StringComparison.Ordinal)
-                || relative.StartsWith("D5/", StringComparison.Ordinal)
-                || relative.StartsWith("Blueprint/", StringComparison.Ordinal)
-                || relative == "Trureturing.lean") continue;
-            var destination = Path.Combine(root, relative);
-            if (TemporaryFileSystem.File.Exists(destination)) continue;
-            TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
-            TemporaryFileSystem.File.WriteAllBytes(destination, TemporaryFileSystem.File.ReadAllBytes(path));
+            paths.Add(path);
+            paths.UnionWith(scope["scripts"]!.AsArray().Concat(scope["materials"]!.AsArray())
+                .Select(value => value!.GetValue<string>()));
         }
-        TemporaryFileSystem.File.WriteAllBytes(Path.Combine(root, InputHelperPath),
-            TemporaryFileSystem.File.ReadAllBytes(Path.Combine(fixture.repository, InputHelperPath)));
+        paths.UnionWith(["lean-toolchain", "lakefile.toml", "lake-manifest.json", ".gitignore"]);
+        var files = paths.ToDictionary(path => path, path => File.ReadAllBytes(Path.Combine(source, path)), StringComparer.Ordinal);
+        files.Add(ProjectRegistrationPath, Encoding.UTF8.GetBytes(manifest.ToJsonString()));
+        return files;
+    }
+
+    internal static IReadOnlyCollection<string> CopyBatchProducerInputs(string root)
+    {
+        var files = BatchProducerInputs.Value;
+        var registrationPath = Path.Combine(root, ProjectRegistrationPath);
+        var existing = JsonNode.Parse(TemporaryFileSystem.File.ReadAllText(registrationPath))!.AsObject();
+        var added = JsonNode.Parse(files[ProjectRegistrationPath])!.AsObject();
+        foreach (var row in added["projects"]!.AsArray())
+        {
+            Assert.DoesNotContain(existing["projects"]!.AsArray(),
+                prior => prior!["path"]!.GetValue<string>() == row!["path"]!.GetValue<string>());
+            existing["projects"]!.AsArray().Add(row!.DeepClone());
+        }
+        existing["rule_build_inputs"] = new JsonArray(existing["rule_build_inputs"]!.AsArray()
+            .Concat(added["rule_build_inputs"]!.AsArray()).Select(path => path!.GetValue<string>())
+            .Distinct(StringComparer.Ordinal).Select(path => JsonValue.Create(path)).ToArray());
+        foreach (var (relative, bytes) in files.Where(pair => pair.Key != ProjectRegistrationPath))
+        {
+            var destination = Path.Combine(root, relative);
+            Assert.False(TemporaryFileSystem.File.Exists(destination), "producer input already supplied: " + relative);
+            TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+            TemporaryFileSystem.File.WriteAllBytes(destination, bytes);
+        }
+        TemporaryFileSystem.File.WriteAllText(registrationPath, existing.ToJsonString());
+        return files.Keys.ToArray();
     }
 
     internal static void AttestBatchReport(string root, string report)
@@ -294,7 +342,12 @@ internal sealed class ProducerInputFixture : IDisposable
         var fields = Encoding.UTF8.GetString(result.StandardOutput).Trim().Split(' ');
         var hash = Convert.ToHexStringLower(SHA256.HashData(TemporaryFileSystem.File.ReadAllBytes(report)));
         TemporaryFileSystem.File.WriteAllText(report + ".sha256", $"{hash}  {Path.GetFileName(report)}\n");
-        TemporaryFileSystem.File.WriteAllText(report + ".provenance.json", "{}\n");
+        TemporaryFileSystem.File.WriteAllText(report + ".provenance.json", JsonSerializer.Serialize(new
+        {
+            schema = "stratalint-lean-report-provenance-v1", side = "candidate", source_side = "candidate", mode = "produced",
+            input_address = "sha256:" + fields[0], producer_sha256 = fields[1], repository_inspector_sha256 = fields[1],
+            lean_sources_sha256 = fields[2], lean_config_sha256 = fields[3], report_sha256 = hash,
+        }) + "\n");
         TemporaryFileSystem.File.WriteAllText(report + ".input.attestation",
             "schema=stratalint-lean-report-input-attestation-v1\n"
             + $"repository_input_sha256={fields[0]}\nproducer_sha256={fields[1]}\nreport_sha256={hash}\n");

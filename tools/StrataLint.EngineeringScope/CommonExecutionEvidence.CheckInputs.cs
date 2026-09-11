@@ -22,11 +22,11 @@ internal static partial class CommonExecutionEvidence
             options = "Release;no-build;no-restore;unfiltered;trx;language=en-US;CI=true", processors = Environment.GetEnvironmentVariable("DOTNET_PROCESSOR_COUNT") });
     }
 
-    internal static IReadOnlyDictionary<string, string> CheckInputFingerprints(string root, RepositorySnapshot snapshot, bool currentReport = false)
+    internal static IReadOnlyDictionary<string, string> CheckInputFingerprints(string root, RepositorySnapshot snapshot, bool currentReport = false, IReadOnlyCollection<string>? selectedIds = null)
     {
         var files = snapshot.Files.Values.Select(item => new EngineeringSource(item.Path.Value, item.Text)).ToArray();
         var registry = EngineeringProjectRegistry.Read(files);
-        var checks = ReadCheckManifest(snapshot, registry);
+        var checks = ReadCheckManifest(snapshot, registry).Where(check => selectedIds is null || selectedIds.Contains(check.Id)).ToArray();
         var sources = registry.Sources(files);
         var paths = snapshot.Files.Keys.Select(path => path.Value).ToArray();
         var projects = registry.Projects.ToDictionary(project => project.Path, StringComparer.Ordinal);
@@ -74,7 +74,7 @@ internal static partial class CommonExecutionEvidence
                     & (UnixFileMode.UserExecute | UnixFileMode.GroupExecute | UnixFileMode.OtherExecute)) != 0;
                 return new { path, mode = executable ? "executable" : "regular", sha256 = Convert.ToHexStringLower(SHA256.HashData(item.RawBytes.AsSpan())) };
             }
-            result.Add(check.Id, Digest(new { contract = "common-check-execution-v1", registration = check,
+            result.Add(check.Id, Digest(new { contract = "common-check-execution-v2", registration = check,
                 projects = selected.Order(StringComparer.Ordinal).Select(name => ProjectProjection(projects[name])),
                 materials = materialPaths.Order(StringComparer.Ordinal).Select(Material),
                 inventory = EngineeringProjectRegistry.ExpandInputs(paths, check.PathInventory, [], check.Id),
@@ -86,6 +86,8 @@ internal static partial class CommonExecutionEvidence
                 foreach (var reference in project.References) Add(reference);
             }
         }
+        foreach (var check in checks.Where(UsesScribe))
+            result[check.Id] = Digest(new { input = result[check.Id], scribe = result["scribe-describe"] });
         return result;
     }
 

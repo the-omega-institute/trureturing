@@ -5,6 +5,7 @@ using Xunit;
 
 namespace StrataLint.EngineeringScope.Tests;
 
+[Collection("Engineering scope process boundary")]
 public sealed class SharedBuildRuntimeTests
 {
     [Fact]
@@ -87,7 +88,8 @@ public sealed class SharedBuildRuntimeTests
             <ProjectReference Include="../../StrataLint.Cli/StrataLint.Cli.csproj" />
             <ProjectReference Include="../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" />
             <ProjectReference Include="../../StrataLint.Lean/StrataLint.Lean.csproj" />
-            <ProjectReference Include="../../StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj" /></ItemGroup></Project>
+            <ProjectReference Include="../../StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj" />
+            <ProjectReference Include="../../scripts/report/JudgeSeedTask.csproj" /></ItemGroup></Project>
             """);
         Write("tools/tests/Runtime/RuntimeTests.cs", """
             public class RuntimeTests {
@@ -104,7 +106,7 @@ public sealed class SharedBuildRuntimeTests
                 item.Item2, "production", false, [$"tools/{item.Item1}/**/*.cs"], OwnedTestAssembly: "Runtime"))
             .Concat(new[] {
                 new EngineeringProjectFixture(testProject, "Runtime", "cross-cutting-test", true, ["tools/tests/Runtime/**/*.cs"],
-                    References: projects.Select(item => $"tools/{item.Item1}/{item.Item1}.csproj").ToArray()),
+                    References: projects.Select(item => $"tools/{item.Item1}/{item.Item1}.csproj").Append("tools/scripts/report/JudgeSeedTask.csproj").ToArray()),
                 new EngineeringProjectFixture(proofProject, "CompileFailProof", "compile-fail-proof", false,
                     ["tools/tests/CompileFailProof/**/*.cs"], References: [cliProject]),
                 new EngineeringProjectFixture(bannedProject, "BannedApiCompileFailProof", "compile-fail-proof", false,
@@ -112,11 +114,7 @@ public sealed class SharedBuildRuntimeTests
                 new EngineeringProjectFixture("tools/scripts/report/JudgeSeedTask.csproj", "JudgeSeedTask", "production", false,
                     ["tools/scripts/report/JudgeSeedTask.cs"], OwnedTestAssembly: "JudgeSeedTask.Tests"),
             }).ToArray()));
-        Run("dotnet", "new", "sln", "--name", "StrataLint", "--format", "sln", "--output", "tools");
-        Run("dotnet", new[] { "sln", "tools/StrataLint.sln", "add" }.Concat(
-            projects.Select(item => $"tools/{item.Item1}/{item.Item1}.csproj").Append(testProject)
-                .Append("tools/scripts/report/JudgeSeedTask.csproj")).ToArray());
-        Run("dotnet", "restore", "tools/StrataLint.sln", "--use-lock-file", "-nr:false");
+        Run("dotnet", "restore", testProject, "--use-lock-file", "-nr:false");
         Run("dotnet", "restore", proofProject, "--use-lock-file", "-nr:false");
         Run("dotnet", "restore", bannedProject, "--use-lock-file", "-nr:false");
         SharedBuildContractTests.Git(root, "add", ".");
@@ -199,7 +197,7 @@ public sealed class SharedBuildRuntimeTests
         {
             SharedBuildContractTests.Git(root, "clone", "--quiet", "--no-hardlinks", root, destination);
             var extraction = SharedBuildContractTests.Process(destination, "python3", ["-c",
-                "import pathlib,sys; sys.path.insert(0, sys.argv[1]); import ci; ci.extract(pathlib.Path(sys.argv[2]), pathlib.Path(sys.argv[3]))",
+                "import pathlib,sys; sys.path.insert(0, sys.argv[1]); import ci; ci.extract(pathlib.Path(sys.argv[2]), pathlib.Path(sys.argv[3]), 'build')",
                 Path.Combine(repository, "tools/scripts/workflow"), destination, archive]);
             Assert.True(extraction.Exit == 0, extraction.Text);
             Directory.Move(root, offline);

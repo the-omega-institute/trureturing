@@ -152,7 +152,7 @@ public sealed class FileMapPlanningTests
         fixture.Supply(fixture.Changes("one/check.txt"));
         Assert.Equal(0, FileMapConformCommand.Run(["--producer-write-set", "none"], fixture.Root).ExitCode);
         Assert.Equal(0, fixture.MakePlan().ExitCode);
-        Assert.Equal(new[] { first, second }, Strings(FileMapPlanningFixture.Read(fixture.Plan)["materials"]));
+        Assert.Equal(new[] { "Meta/ci-checks.json", "Meta/ci-resources.json", "Meta/engineering-projects.json", first, second }, Strings(FileMapPlanningFixture.Read(fixture.Plan)["materials"]));
         fixture.AssertNoTools();
     }
 

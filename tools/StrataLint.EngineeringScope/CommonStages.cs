@@ -24,16 +24,25 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         _ => 2,
     };
 
-    internal int Run(string name, string? baseSha, string? buildRound = null, string? planPath = null)
+    internal int Run(string name, string? baseSha, string? buildRound = null, string? planPath = null, string? changesPath = null)
     {
         stage = name;
         var exit = 2;
         string? failure = null;
         try
         {
-            resourcePlan = ResourceExecutionPlan.Load(root, planPath);
+            if (name is not ("build" or "engineering" or "current" or "delta")) throw new ArgumentException("invalid stage");
+            if (name == "current") ClearEvidence("current");
+            resourcePlan = ResourceExecutionPlan.Load(root, planPath, changesPath);
+            if (name == "delta" && resourcePlan is not null
+                && (resourcePlan.Document.GetProperty("mode").GetString() != "pr"
+                    || resourcePlan.Document.GetProperty("base").GetString() != baseSha))
+                throw new InvalidDataException("delta requires the validated plan's explicit immutable base");
             if (resourcePlan is not null && !resourcePlan.StageRequired(name))
             {
+                candidate = resourcePlan.Commit;
+                ClearEvidence(name);
+                if (name == "current") File.Delete(Path.Combine(root, CommonExecutionEvidence.ScribeMarkdownPaths));
                 exit = 0;
             }
             else
@@ -71,12 +80,18 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
             "delta" => ["check-delta"],
             _ => [],
         };
-        object Summary() => new { stage, candidate, base_sha = baseSha, exit, error = failure, steps,
+        var required = resourcePlan is null || resourcePlan.StageRequired(stage);
+        string? Artifact(string path) => required && File.Exists(Path.Combine(root, path)) ? path : null;
+        object Summary() => new { stage, candidate, git_candidate = resourcePlan?.Document.GetProperty("candidate"),
+            scope = resourcePlan?.Document, status = exit != 0 ? "failed" : required ? "completed" : "not-required",
+            base_sha = baseSha, exit, error = failure, steps,
+            artifacts = required ? new[] { CommonExecutionEvidence.BuildPath, CommonExecutionEvidence.TestsPath, CommonExecutionEvidence.EngineeringPath, CommonExecutionEvidence.CurrentPath }
+                .Where(path => File.Exists(Path.Combine(root, path))).ToArray() : [],
             test_projects_executed = testsExecuted, test_projects_reused = testsReused, test_seed_saved = testSeedSaved,
-            not_executed = planned.Where(name => !steps.Any(step => step.Name == name)),
-            build_evidence = CommonExecutionEvidence.BuildPath, test_evidence = CommonExecutionEvidence.TestsPath,
-            engineering_evidence = CommonExecutionEvidence.EngineeringPath,
-            current_evidence = CommonExecutionEvidence.CurrentPath, report = CommonExecutionEvidence.ReportPath };
+            not_executed = (stage == "current" && resourcePlan is not null ? resourcePlan.CurrentSteps : planned).Where(name => !steps.Any(step => step.Name == name)),
+            build_evidence = Artifact(CommonExecutionEvidence.BuildPath), test_evidence = Artifact(CommonExecutionEvidence.TestsPath),
+            engineering_evidence = Artifact(CommonExecutionEvidence.EngineeringPath),
+            current_evidence = Artifact(CommonExecutionEvidence.CurrentPath), report = required && (resourcePlan?.CurrentSteps ?? CommonExecutionEvidence.CurrentSteps).Contains("lean-report") ? Artifact(CommonExecutionEvidence.ReportPath) : null };
         try { CommonExecutionEvidence.Write(root, CommonExecutionEvidence.RootPath + "/" + stage + "-result.json", Summary()); }
         catch (Exception exception) { exit = 2; failure = $"{failure}; summary write failed: {exception.Message}"; }
         output.WriteLine(JsonSerializer.Serialize(Summary()));
@@ -99,25 +114,22 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         if (Directory.Exists(outputs)) Directory.Delete(outputs, recursive: true);
         // Captured restore/build calls own their nodes until the output closes.
         var roots = BuildRoots();
-        var target = roots is null ? "tools/StrataLint.sln" : roots[0];
-        Step("restore-StrataLint", "dotnet", ["restore", target, "--locked-mode", "-nr:false"]);
-        Step("build", "dotnet", ["build", target, "--configuration", "Release", "--no-restore", "--warnaserror", "-nr:false",
-            "-p:CustomAfterMicrosoftCommonTargets=" + Path.Combine(root, "tools/scripts/ci-build-outputs.targets"),
-            "-p:CiRepositoryRoot=" + root, "-p:CiBuildOutputRoot=" + outputs]);
-        return CommonExecutionEvidence.SealBuild(root, candidate!, CommonBuildOutputs.Collect(root, roots), steps.ToArray());
+        foreach (var target in roots)
+        {
+            Step("restore-StrataLint", "dotnet", ["restore", target, "--locked-mode", "-nr:false"]);
+            Step("build", "dotnet", ["build", target, "--configuration", "Release", "--no-restore", "--warnaserror", "-nr:false",
+                "-p:CustomAfterMicrosoftCommonTargets=" + Path.Combine(root, "tools/scripts/ci-build-outputs.targets"),
+                "-p:CiRepositoryRoot=" + root, "-p:CiBuildOutputRoot=" + outputs]);
+        }
+        return CommonExecutionEvidence.SealBuild(root, candidate!, CommonBuildOutputs.Collect(root, roots), steps.ToArray(), roots, resourcePlan?.Retain(root));
     }
 
-    private string[]? BuildRoots()
+    private string[] BuildRoots()
     {
-        if (resourcePlan is null || resourcePlan.Has("engineering") || resourcePlan.Has("current") || resourcePlan.Has("delta")) return null;
-        var roots = new List<string>();
-        if (resourcePlan.Has("filemap")) roots.Add("tools/StrataLint.Cli/StrataLint.Cli.csproj");
-        if (resourcePlan.Has("lean") || resourcePlan.Has("lean-report")) roots.Add("tools/StrataLint.Lean/StrataLint.Lean.csproj");
-        if (resourcePlan.Has("scribe")) roots.Add("tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj");
-        // A single registered root lets MSBuild follow its declared project
-        // references. Multiple independent roots use the complete entrypoint so
-        // both outputs are present for the subsequent producer.
-        return roots.Count == 1 ? roots.ToArray() : null;
+        var registry = EngineeringProjectRegistry.Read(CommonExecutionEvidence.Snapshot(root));
+        var roots = resourcePlan?.Projects ?? registry.Projects.Where(project => project.Ci).Select(project => project.Path).Order(StringComparer.Ordinal).ToArray();
+        if (roots.Length == 0) throw new InvalidDataException("no registered requested build roots");
+        return roots;
     }
 
     private void Engineering(string? buildRound)
@@ -183,25 +195,14 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         ClearEvidence("current");
         File.Delete(Path.Combine(root, CommonExecutionEvidence.ScribeMarkdownPaths));
         var build = CommonExecutionEvidence.ValidateBuild(root);
-        var runReport = resourcePlan is null || resourcePlan.Has("lean-report") || resourcePlan.Has("scribe") || resourcePlan.Has("current");
-        var runChecks = resourcePlan is null || resourcePlan.Has("current");
-        // check-current owns the registered Scribe/filemap units for a complete
-        // current resource. Standalone resource requests execute only that unit.
-        var runScribe = resourcePlan is not null && resourcePlan.Has("scribe") && !runChecks;
-        var runFilemap = resourcePlan is not null && resourcePlan.Has("filemap") && !runChecks;
+        var obligations = resourcePlan?.CurrentSteps ?? CommonExecutionEvidence.CurrentSteps;
+        var ids = resourcePlan?.CheckUnits.Except(CommonExecutionEvidence.EngineeringCheckIds).Order(StringComparer.Ordinal).ToArray()
+            ?? CommonExecutionEvidence.CheckIds("current", CommonExecutionEvidence.ReadCheckManifest(CommonExecutionEvidence.Snapshot(root)));
+        var runReport = obligations.Contains("lean-report");
         if (runReport) RequireBinary(build, CommonExecutionEvidence.LeanProducerPath);
-        if (runScribe) RequireBinary(build, CommonExecutionEvidence.ScribePath);
-        if (runChecks)
-        {
-            _ = CommonExecutionEvidence.ReadCheckManifest(CommonExecutionEvidence.Snapshot(root));
-            RequireBinary(build, CommonExecutionEvidence.CliPath);
-            RequireBinary(build, CommonExecutionEvidence.RunnerPath);
-        }
+        if (ids.Length != 0) RequireBinary(build, CommonExecutionEvidence.CliPath);
         var logs = Path.Combine(root, CommonExecutionEvidence.RootPath, "logs/current");
         if (Directory.Exists(logs)) Directory.Delete(logs, recursive: true);
-        if (!runReport)
-            foreach (var report in CommonExecutionEvidence.ReportPaths)
-                File.Delete(Path.Combine(root, report));
         var reportBudget = TimeSpan.FromSeconds(LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds);
         string SupervisorBudget(string name) => Environment.GetEnvironmentVariable(name) is { Length: > 0 } value
             ? value : LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds.ToString(System.Globalization.CultureInfo.InvariantCulture);
@@ -216,17 +217,42 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
                 "make", "--no-print-directory", "lean-report"], defaultTimeout: reportBudget);
             _ = RawLeanReportArtifact.ReadFile(Path.Combine(root, CommonExecutionEvidence.ReportPath), CommonExecutionEvidence.Snapshot(root), validateMaterials: true);
         }
-        else if (resourcePlan is not null && resourcePlan.Has("lean"))
+        else if (obligations.Contains("lean"))
             Step("lean", "make", ["--no-print-directory", "lean"]);
-        if (runScribe)
-            Step("scribe", "/bin/bash", ["tools/scripts/workflow/scribe-content-checks.sh", CommonExecutionEvidence.ReportPath, CommonExecutionEvidence.ScribePath]);
-        if (runFilemap)
-            Step("filemap", "dotnet", [CommonExecutionEvidence.CliPath, "filemap-conform"]);
-        if (runChecks)
-            Step("check-current", "dotnet", [CommonExecutionEvidence.CliPath, "check-current",
-                "--candidate-lean-report", CommonExecutionEvidence.ReportPath, "--common-build-round", build.Round]);
-        CommonExecutionEvidence.SealCurrent(root, build, steps.ToArray(), resourcePlan is not null);
-        if (runChecks) _ = CommonExecutionEvidence.ExportCheckSeed(root, "current", output);
+        if (ids.Length != 0)
+        {
+            if (ids.SequenceEqual(new[] { "filemap" }))
+            {
+                var checks = CommonExecutionEvidence.BeginChecks(root, "current", build, output, ids);
+                checks.Run("filemap", () =>
+                {
+                    var result = Capture("dotnet", [CommonExecutionEvidence.CliPath, "filemap-conform"]);
+                    return new([new("filemap", result.Exit, result.Text)]);
+                });
+                _ = checks.Seal();
+            }
+            else
+            {
+                var arguments = new List<string> { CommonExecutionEvidence.CliPath, "check-current",
+                    "--candidate-lean-report", CommonExecutionEvidence.ReportPath, "--common-build-round", build.Round };
+                if (resourcePlan is not null)
+                    arguments.AddRange(["--common-plan", resourcePlan.PlanPath, "--common-changes", resourcePlan.ChangesPath]);
+                Step(obligations.Contains("check-current") ? "check-current" : "scribe", "dotnet", arguments.ToArray());
+                // The CLI owned these units once; their original evidence supplies the
+                // corresponding stage obligations without launching them a second time.
+                steps.RemoveAt(steps.Count - 1);
+            }
+            var accepted = CommonExecutionEvidence.ValidateChecks(root, "current", build, ids);
+            foreach (var name in obligations.Where(name => name is "scribe" or "filemap" or "check-current"))
+            {
+                var units = accepted.Units.Where(unit => name == "scribe" ? unit.Id.StartsWith("scribe-", StringComparison.Ordinal)
+                    : name == "filemap" ? unit.Id == "filemap" : unit.Id.StartsWith("SL-", StringComparison.Ordinal)).ToArray();
+                if (units.Length == 0) throw new InvalidDataException("missing registered units for required step: " + name);
+                steps.Add(new(name, 0, 0, units.All(unit => unit.Status == "reused") ? "reused" : "executed", units[0].Operations[0].Log));
+            }
+        }
+        CommonExecutionEvidence.SealCurrent(root, build, steps.ToArray(), resourcePlan);
+        if (ids.Length != 0) _ = CommonExecutionEvidence.ExportCheckSeed(root, "current", output);
     }
 
     private void Delta(string? baseSha)
@@ -250,7 +276,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         bool allowAnnotation = false, TimeSpan? defaultTimeout = null)
     {
         var result = Capture(executable, arguments, defaultTimeout);
-        var log = $"{CommonExecutionEvidence.RootPath}/logs/{stage}/{name}.log";
+        var log = $"{CommonExecutionEvidence.RootPath}/logs/{stage}/{name}{(steps.Any(step => step.Name == name) ? "-" + steps.Count : "")}.log";
         var full = Path.Combine(root, log);
         Directory.CreateDirectory(Path.GetDirectoryName(full)!);
         File.WriteAllText(full, result.Text);

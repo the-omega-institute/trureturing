@@ -25,14 +25,17 @@ internal static partial class CommonExecutionEvidence
         _ => throw new InvalidDataException("invalid common check stage: " + stage),
     };
 
-    internal static CheckExecution BeginChecks(string root, string stage, CommonStageRecord build, TextWriter output)
+    internal static CheckExecution BeginChecks(string root, string stage, CommonStageRecord build, TextWriter output, string[]? selectedIds = null)
     {
         var snapshot = Snapshot(root);
         var registrations = ReadCheckManifest(snapshot);
-        var inputs = CheckInputFingerprints(root, snapshot, currentReport: stage == "current");
+        var ids = selectedIds ?? CheckIds(stage, registrations);
+        if (ids.Distinct(StringComparer.Ordinal).Count() != ids.Length || ids.Except(CheckIds(stage, registrations)).Any())
+            throw new InvalidDataException("unregistered selected common units");
+        var inputs = CheckInputFingerprints(root, snapshot, currentReport: stage == "current", selectedIds: ids);
         ValidateStartedBuild(root, build, Candidate(root));
         File.Delete(Path.Combine(root, ChecksPath(stage)));
-        return new(root, stage, build, snapshot, registrations, inputs, output);
+        return new(root, stage, build, snapshot, registrations, inputs, output, ids);
     }
 
     // This is the existing common owner, split by responsibility. Only a validated
@@ -51,24 +54,36 @@ internal static partial class CommonExecutionEvidence
         internal string[] Ids { get; }
         internal IReadOnlyCollection<CheckUnitResult> Completed => completed.Values;
         internal CheckExecution(string root, string stage, CommonStageRecord build, RepositorySnapshot snapshot,
-            IReadOnlyList<RegisteredCommonCheck> registrations, IReadOnlyDictionary<string, string> inputs, TextWriter output)
+            IReadOnlyList<RegisteredCommonCheck> registrations, IReadOnlyDictionary<string, string> inputs, TextWriter output, string[] ids)
         {
             this.root = root; this.stage = stage; this.build = build; this.snapshot = snapshot;
             this.registrations = registrations; this.inputs = inputs;
-            Ids = CheckIds(stage, registrations);
+            Ids = ids;
             invocation = $"{RootPath}/check-material/{build.Candidate}/{build.Round}/{Guid.NewGuid():N}";
             reused = ImportCheckSeed(root, stage, snapshot, inputs, output);
         }
-        internal bool IsSelected(string id) => Ids.Contains(id, StringComparer.Ordinal) && !reused.ContainsKey(id);
+        internal bool IsSelected(string id)
+        {
+            if (!Ids.Contains(id, StringComparer.Ordinal)) return false;
+            // Selection happens after describe. A newly produced capability can
+            // differ even when its registered source inputs have not changed.
+            if (reused.TryGetValue(id, out var previous) && UsesScribe(registrations.Single(check => check.Id == id))
+                && completed.TryGetValue("scribe-describe", out var describe) && !SameScribeMaterial(root, previous, describe))
+                reused.Remove(id);
+            return !reused.ContainsKey(id);
+        }
         internal CurrentRuleSelection SelectCurrentRules() => CurrentRuleSelection.Create(
-            Ids.Where(id => id.StartsWith("SL-", StringComparison.Ordinal)).ToArray(),
+            registrations.Select(check => check.Id).Where(id => id.StartsWith("SL-", StringComparison.Ordinal)).ToArray(),
             Ids.Where(id => id.StartsWith("SL-", StringComparison.Ordinal) && IsSelected(id)).ToArray());
 
         internal CheckUnitResult Run(string id, Func<CheckWork> execute)
         {
             if (!Ids.Contains(id, StringComparer.Ordinal) || completed.ContainsKey(id))
                 throw new InvalidDataException("unregistered or duplicate common execution: " + id);
-            if (reused.TryGetValue(id, out var previous))
+            var needsScribe = UsesScribe(registrations.Single(check => check.Id == id));
+            var describe = needsScribe ? completed.GetValueOrDefault("scribe-describe")
+                ?? throw new InvalidDataException("predicate requires completed Scribe producer: " + id) : null;
+            if (!IsSelected(id) && reused.TryGetValue(id, out var previous))
             {
                 completed.Add(id, previous);
                 return previous;
@@ -77,6 +92,10 @@ internal static partial class CommonExecutionEvidence
             // fallback after this point, and original files are never rewritten as current.
             var work = execute();
             if (work.Operations is null) throw new InvalidDataException("missing current operations: " + id);
+            // Retain the exact capability used by this original predicate, using
+            // its existing data/material fields and original execution provenance.
+            if (describe is not null)
+                work = work with { Data = File.ReadAllText(Path.Combine(root, describe.Data!)) };
             var directory = invocation + "/" + id;
             var operations = work.Operations.Select((operation, index) =>
             {
@@ -113,8 +132,9 @@ internal static partial class CommonExecutionEvidence
         internal RuleExecutionOutcome ExecuteCurrentPredicates(ValidatedPolicy policy, AcceptedLeanClosure lean)
         {
             if (stage != "current") throw new InvalidDataException("current selection requires current owner");
-            var verified = ReadScribe(root, completed.TryGetValue("scribe-describe", out var describe) ? describe
-                : throw new InvalidDataException("current predicates require the completed Scribe producer"), snapshot);
+            var verified = completed.TryGetValue("scribe-describe", out var describe) ? ReadScribe(root, describe, snapshot)
+                : registrations.Any(check => Ids.Contains(check.Id) && UsesScribe(check))
+                    ? throw new InvalidDataException("current predicates require the completed Scribe producer") : VerifiedScribeEmissions.Empty;
             var evaluated = AdmissionPipeline.CheckCurrent(CurrentRuleContext.Create(snapshot, policy, lean, verified, SelectCurrentRules()));
             if (evaluated is not RuleExecutionOutcome.Completed complete) return evaluated;
             var actual = complete.Capability;
@@ -146,29 +166,33 @@ internal static partial class CommonExecutionEvidence
                 Ids.Select(id => completed.TryGetValue(id, out var unit) ? unit
                     : throw new InvalidDataException("required common unit did not run: " + id)).ToArray());
             ValidateStartedBuild(root, build, Candidate(root));
-            ValidateCheckRecord(root, record, snapshot, inputs, build.Candidate, build.Round);
+            ValidateCheckRecord(root, record, snapshot, inputs, build.Candidate, build.Round, Ids);
             Write(root, ChecksPath(stage), record);
             return record;
         }
     }
 
-    internal static CommonCheckRecord ValidateChecks(string root, string stage, CommonStageRecord build)
+    internal static CommonCheckRecord ValidateChecks(string root, string stage, CommonStageRecord build, string[]? selectedIds = null)
     {
         var record = Read<CommonCheckRecord>(root, ChecksPath(stage));
         if (record.Stage != stage) throw new InvalidDataException("common check stage mismatch");
         var snapshot = Snapshot(root);
-        ValidateCheckRecord(root, record, snapshot, CheckInputFingerprints(root, snapshot, currentReport: stage == "current"), build.Candidate, build.Round);
+        var ids = selectedIds ?? CheckIds(stage, ReadCheckManifest(snapshot));
+        ValidateCheckRecord(root, record, snapshot, CheckInputFingerprints(root, snapshot, currentReport: stage == "current", selectedIds: ids), build.Candidate, build.Round, ids);
         return record;
     }
     private static void ValidateCheckRecord(string root, CommonCheckRecord record, RepositorySnapshot snapshot,
-        IReadOnlyDictionary<string, string> inputs, string candidate, string round)
+        IReadOnlyDictionary<string, string> inputs, string candidate, string round, string[] expected)
     {
         if (record.Version != 1 || !ValidCandidate(record.Candidate) || !ValidRound(record.Round) || record.Candidate != candidate || record.Round != round || record.Units is null || record.Units.Any(unit => unit is null))
             throw new InvalidDataException("common check candidate or round mismatch");
-        var expected = CheckIds(record.Stage, ReadCheckManifest(snapshot));
         if (!expected.SequenceEqual(record.Units.Select(unit => unit.Id)))
             throw new InvalidDataException("missing, duplicated or unordered common check result");
         foreach (var unit in record.Units) ValidateCheckUnit(root, root, snapshot, unit, inputs[unit.Id], candidate, round);
+        foreach (var check in ReadCheckManifest(snapshot).Where(check => expected.Contains(check.Id) && UsesScribe(check)))
+            if (record.Stage == "current" && !SameScribeMaterial(root, record.Units.Single(unit => unit.Id == check.Id),
+                record.Units.Single(unit => unit.Id == "scribe-describe")))
+                throw new InvalidDataException("predicate Scribe material differs from current producer: " + check.Id);
     }
     private static void ValidateCheckUnit(string materialRoot, string sourceRoot, RepositorySnapshot snapshot,
         CheckUnitResult unit, string fingerprint, string candidate, string round)
@@ -217,7 +241,16 @@ internal static partial class CommonExecutionEvidence
         }
         if (unit.Id.StartsWith("SL-", StringComparison.Ordinal)) _ = ReadPredicate(materialRoot, unit);
         if (unit.Id == "scribe-describe") _ = ReadScribe(materialRoot, unit, snapshot);
+        if (UsesScribe(registration))
+        {
+            if (unit.Data is null) throw new InvalidDataException("missing predicate Scribe material: " + unit.Id);
+            _ = VerifiedScribeEmissions.ReadMaterial(File.ReadAllText(Path.Combine(materialRoot, unit.Data)), snapshot);
+        }
     }
+
+    private static bool SameScribeMaterial(string root, CheckUnitResult predicate, CheckUnitResult describe) =>
+        predicate.Data is not null && describe.Data is not null
+        && Hash(Path.Combine(root, predicate.Data)) == Hash(Path.Combine(root, describe.Data));
 
     internal static CurrentPredicateEvidence ReadPredicate(string root, CheckUnitResult unit)
     {

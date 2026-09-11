@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json.Nodes;
+using System.Text.Json;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -21,7 +22,37 @@ internal sealed class FileMapPlanningFixture : IDisposable
     {
         TemporaryFileSystem.Directory.CreateDirectory(Root);
         TemporaryFileSystem.Directory.CreateDirectory(Bin);
-        Write("Meta/FILEMAP.toml", filemap ?? Canonical["filemap"]!.GetValue<string>());
+        var source = filemap ?? Canonical["filemap"]!.GetValue<string>();
+        const string materials = "\"Meta/ci-checks.json\", \"Meta/ci-resources.json\", \"Meta/engineering-projects.json\"";
+        source = source.Replace("materials = []", "materials = [" + materials + "]", StringComparison.Ordinal)
+            .Replace("materials = [\"tools/", "materials = [" + materials + ", \"tools/", StringComparison.Ordinal);
+        const string row = """
+            [[files]]
+            pattern = "Meta/*.json"
+            require = ["engineering"]
+            kind = "program"
+            admission_plane = "judge"
+            produced_by = "none"
+            consumed_by = ["reader"]
+            verified_by = ["dotnet-test"]
+            artifact_id = "none"
+            runtime_disposition = "committed-source"
+
+            """;
+        source = source.Replace("[[files]]\npattern = \"Meta/FILEMAP.toml\"", row + "\n[[files]]\npattern = \"Meta/FILEMAP.toml\"", StringComparison.Ordinal);
+        Write("Meta/FILEMAP.toml", source);
+        const string project = "tools/Fixture/Fixture.csproj";
+        Write(project, "<Project />");
+        Write(EngineeringRegistrationFixture.Path, EngineeringRegistrationFixture.Manifest(
+            new EngineeringProjectFixture(project, "Fixture", "test-support", false, [])));
+        Write("Meta/ci-checks.json", CommonCheckRegistrationFixture.Manifest(project));
+        Write("Meta/ci-resources.json", JsonSerializer.Serialize(new { schema = "ci-resource-execution-v1",
+            resources = new[] {
+                new { id = "build", projects = new[] { project }, checks = Array.Empty<string>(), steps = Array.Empty<string>() },
+                new { id = "engineering", projects = new[] { project }, checks = Array.Empty<string>(), steps = Array.Empty<string>() },
+                new { id = "filemap", projects = new[] { project }, checks = new[] { "filemap" }, steps = new[] { "filemap" } },
+                new { id = "lean-report", projects = new[] { project }, checks = Array.Empty<string>(), steps = new[] { "lean-report" } },
+            } }));
         Write("README.md", "reference\n");
         Write("tools/owner.py", "# synthetic declared operation owner\n");
         Git("init", "-q");

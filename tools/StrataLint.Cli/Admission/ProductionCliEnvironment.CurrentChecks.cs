@@ -9,11 +9,11 @@ namespace StrataLint.Cli;
 internal sealed partial class ProductionCliEnvironment
 {
     private ExplicitCommandResult ExecuteCommonCurrent(string round, RepositorySnapshot snapshot,
-        ValidatedPolicy policy, AcceptedLeanClosure lean, LeanAxiomReport report)
+        ValidatedPolicy policy, AcceptedLeanClosure lean, LeanAxiomReport report, string[]? selectedIds = null)
     {
         using var trace = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
         var build = CommonExecutionEvidence.ValidateBuild(repositoryRoot, round);
-        var checks = CommonExecutionEvidence.BeginChecks(repositoryRoot, "current", build, trace);
+        var checks = CommonExecutionEvidence.BeginChecks(repositoryRoot, "current", build, trace, selectedIds);
         var assembly = typeof(DocumentAssembly).Assembly;
         CheckWork Scribe(string id, string[] arguments, bool capability = false)
         {
@@ -30,10 +30,10 @@ internal sealed partial class ProductionCliEnvironment
         }
         // The registered projection unit is the sole projection verification here.
         // ScribeEmitter issues the actual emission capability; shell status cannot issue it.
-        checks.Run("scribe-projections", () => Scribe("scribe-projections",
+        if (checks.Ids.Contains("scribe-projections")) checks.Run("scribe-projections", () => Scribe("scribe-projections",
             ["projections", "--check", "--report", CommonExecutionEvidence.ReportPath]));
-        checks.Run("scribe-describe", () => Scribe("scribe-describe", ["describe-report", "--check"], capability: true));
-        checks.Run("scribe-markdown", () =>
+        if (checks.Ids.Contains("scribe-describe")) checks.Run("scribe-describe", () => Scribe("scribe-describe", ["describe-report", "--check"], capability: true));
+        if (checks.Ids.Contains("scribe-markdown")) checks.Run("scribe-markdown", () =>
         {
             var declaration = CommonExecutionEvidence.ReadCheckManifest(snapshot).Single(check => check.Id == "scribe-markdown");
             var paths = EngineeringProjectRegistry.ExpandInputs(snapshot.Files.Keys.Select(path => path.Value), declaration.PathInventory, [], declaration.Id);
@@ -41,15 +41,21 @@ internal sealed partial class ProductionCliEnvironment
             return Scribe("scribe-markdown", ["markdown-check", "--report", CommonExecutionEvidence.ReportPath,
                 "--paths-from", Path.Combine(repositoryRoot, CommonExecutionEvidence.ScribeMarkdownPaths)]);
         });
-        checks.Run("filemap", () =>
+        if (checks.Ids.Contains("filemap")) checks.Run("filemap", () =>
         {
             var result = FileMapConform([]);
             return new([new("filemap", result.ExitCode, result.Output + result.Error)]);
         });
+        if (!checks.Ids.Any(id => id.StartsWith("SL-", StringComparison.Ordinal)))
+        {
+            _ = checks.Seal();
+            return new(0, trace + System.Text.Json.JsonSerializer.Serialize(new { accepted_units = checks.Ids }) + "\n", "");
+        }
         var combined = checks.ExecuteCurrentPredicates(policy, lean);
         var rendered = RenderStage(combined);
         if (rendered.ExitCode != 0) return new(rendered.ExitCode, trace + rendered.Output, rendered.Error);
-        if (RepositoryCanonicalizer.Validate(snapshot, policy) is CanonicalizationOutcome.InfrastructureFailure failure)
+        if ((selectedIds is null || CommonExecutionEvidence.ReadCheckManifest(snapshot).Where(check => check.Id.StartsWith("SL-", StringComparison.Ordinal)).All(check => checks.Ids.Contains(check.Id)))
+            && RepositoryCanonicalizer.Validate(snapshot, policy) is CanonicalizationOutcome.InfrastructureFailure failure)
             return new(2, trace + RenderStage(combined).Output, "INFRASTRUCTURE_FAILURE " + failure.Message + "\n");
         _ = checks.Seal();
         var accepted = RenderStage(combined);

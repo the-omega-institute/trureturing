@@ -66,8 +66,10 @@ internal static class CommonBuildOutputs
                 paths.Add(path);
             }
         }
-        foreach (var material in PackageMaterialRegistry.Expand(root, packageRoot
-                     ?? throw new InvalidDataException("missing compiler NuGetPackageRoot receipt")))
+        var needsTestPackages = registrations.Projects.Any(project => project.IsTest
+            && (selected is null || selected.Contains(project.Path)));
+        foreach (var material in needsTestPackages ? PackageMaterialRegistry.Expand(root, packageRoot
+                     ?? throw new InvalidDataException("missing compiler NuGetPackageRoot receipt")) : [])
         {
             var destination = PackagesPath + "/" + material.Relative;
             paths.Add(destination);
@@ -82,7 +84,7 @@ internal static class CommonBuildOutputs
         var runtime = selected is null ? new[] {
             CommonExecutionEvidence.CliPath, CommonExecutionEvidence.RunnerPath,
             CommonExecutionEvidence.LeanProducerPath, CommonExecutionEvidence.ScribePath }
-            : projects.Values.Where(assembly => selected.Contains(registrations.Projects.Single(project => project.Assembly == assembly).Path)).ToArray();
+            : selectedRoots!.Select(project => projects[project]).ToArray();
         foreach (var assembly in tests.Select(test => test.Assembly).Concat(runtime))
             foreach (var path in new[] { assembly, Path.ChangeExtension(assembly, ".deps.json"), Path.ChangeExtension(assembly, ".runtimeconfig.json") })
                 if (!paths.Contains(path)) throw new InvalidDataException("missing runtime output: " + path);

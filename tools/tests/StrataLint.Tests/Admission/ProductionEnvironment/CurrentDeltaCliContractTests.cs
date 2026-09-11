@@ -10,8 +10,10 @@ namespace StrataLint.Tests;
 
 public sealed class CurrentDeltaCliContractTests
 {
-    [Fact]
-    public void CurrentRunsInParentlessRemotelessRepositoryAndFindsExistingInvalidHeader()
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void CurrentRunsInParentlessRemotelessRepositoryAndFindsExistingInvalidHeader(bool selected)
     {
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
@@ -21,26 +23,87 @@ public sealed class CurrentDeltaCliContractTests
         fixture.Files["tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"] = "// banned-api-proof\n";
         fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical;
         fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
+        if (selected)
+        {
+            var repository = TestRepositoryLayout.FindRoot();
+            foreach (var path in new[] { "tools/scripts/workflow/ci.py", "tools/scripts/workflow/ci_plan.py" })
+                fixture.Files[path] = File.ReadAllText(Path.Combine(repository, path));
+            fixture.Files["Meta/ci-resources.json"] = JsonSerializer.Serialize(new {
+                schema = "ci-resource-execution-v1", resources = new[] {
+                    new { id = "current", projects = new[] { "tools/StrataLint.Scribe/StrataLint.Scribe.csproj" },
+                        checks = new[] { "SL-012" }, steps = new[] { "check-current" } } } });
+            fixture.Files["Meta/FILEMAP.toml"] = """
+                schema_version = 3
+                resources = [
+                  { id = "current", stage = "current", owner = "tools/scripts/workflow/ci.py", prerequisites = [], tools = [], cache_layers = [], materials = ["Meta/ci-checks.json", "Meta/ci-resources.json", "Meta/engineering-projects.json"] },
+                ]
+                [residence_policy]
+                case_id = "FIXTURE"
+                desired = "explicit"
+                known_violation_count = 0
+                status = "closed"
+                [[files]]
+                pattern = "**"
+                require = ["current"]
+                kind = "program"
+                admission_plane = "judge"
+                produced_by = "none"
+                consumed_by = ["test"]
+                verified_by = ["test"]
+                artifact_id = "none"
+                runtime_disposition = "committed-source"
+                """ + "\n";
+        }
         foreach (var pair in fixture.Files)
         {
             var file = Path.Combine(temporary.Path, pair.Key);
             Directory.CreateDirectory(Path.GetDirectoryName(file)!);
             File.WriteAllText(file, pair.Value);
         }
-        File.WriteAllText(Path.Combine(temporary.Path, ".gitignore"), ".lake/\nbuild/\n");
+        File.WriteAllText(Path.Combine(temporary.Path, ".gitignore"), ".lake/\nbuild/\n__pycache__/\n");
         Git(temporary.Path, "init", "-q");
         Git(temporary.Path, "add", ".");
         Git(temporary.Path, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "parentless");
         var report = Path.Combine(temporary.Path, ".lake/build/stratalint/raw-lean-report.json");
         WriteReport();
         var environment = new ProductionCliEnvironment(temporary.Path, new GitRepositoryGateway(temporary.Path), new FakeLeanReportSource(null));
-        var result = environment.CheckCurrent(["--candidate-lean-report", report]);
+        var result = environment.CheckCurrent(Arguments());
         Assert.True(result.ExitCode == 0, result.Output + result.Error);
+        if (selected)
+        {
+            Assert.Equal(new[] { "SL-012" }, CommonExecutionEvidence.Read<CommonCheckRecord>(temporary.Path,
+                CommonExecutionEvidence.ChecksPath("current")).Units.Select(unit => unit.Id));
+            using var verdict = JsonDocument.Parse(result.Output[result.Output.IndexOf("{\"executed\"", StringComparison.Ordinal)..]);
+            Assert.Equal(new[] { "SL-012" }, verdict.RootElement.GetProperty("executed").EnumerateArray().Select(value => value.GetString()));
+        }
         File.WriteAllText(Path.Combine(temporary.Path, RuleFixture.RingPath), "def invalid : Nat := 0\n");
         WriteReport();
-        result = environment.CheckCurrent(["--candidate-lean-report", report]);
+        result = environment.CheckCurrent(Arguments());
         Assert.Equal(1, result.ExitCode);
         Assert.Contains("SL-012", result.Output, StringComparison.Ordinal);
+
+        string[] Arguments()
+        {
+            if (!selected) return ["--candidate-lean-report", report];
+            var root = temporary.Path;
+            const string log = "build/ci/fixture-build.log";
+            Directory.CreateDirectory(Path.Combine(root, "build/ci"));
+            File.WriteAllText(Path.Combine(root, log), "fixture build material");
+            var build = CommonExecutionEvidence.SealBuild(root, CommonExecutionEvidence.Candidate(root), [log],
+                CommonExecutionEvidence.BuildSteps.Select(name => new StageStep(name, 0, 0, "executed", log)).ToArray());
+            var commit = Git(root, "rev-parse", "HEAD");
+            var entry = Git(root, "ls-tree", "HEAD", "--", RuleFixture.RingPath).Split([' ', '\t'], StringSplitOptions.RemoveEmptyEntries);
+            var changes = Path.Combine(root, "build/scope.json");
+            var plan = Path.Combine(root, "build/plan.json");
+            File.WriteAllText(changes, JsonSerializer.Serialize(new { schema_version = 1, mode = "current",
+                candidate = new { commit, tree = Git(root, "rev-parse", "HEAD^{tree}") }, @base = (string?)null, head = (string?)null,
+                complete = true, change_count = 1, changes = new[] { new { status = "A", old = (object?)null,
+                    @new = new { path = RuleFixture.RingPath, mode = entry[0], oid = entry[2] } } } }));
+            var planning = TestProcessRunner.Run("python3", ["-B", "tools/scripts/workflow/ci.py", "plan", "--repository", root,
+                "--commit", commit, "--changes", changes, "--output", plan], root, TestBudgets.ScriptProcessHangGuard, 1024 * 1024);
+            Assert.True(planning.ExitCode == 0, Encoding.UTF8.GetString(planning.StandardError));
+            return ["--candidate-lean-report", report, "--common-build-round", build.Round, "--common-plan", plan, "--common-changes", changes];
+        }
 
         void WriteReport()
         {
@@ -58,10 +121,11 @@ public sealed class CurrentDeltaCliContractTests
         Assert.Contains("accepts no base", result.Error, StringComparison.Ordinal);
     }
 
-    private static void Git(string root, params string[] arguments)
+    private static string Git(string root, params string[] arguments)
     {
         var result = TestProcessRunner.Run("git", arguments, root, TestBudgets.ScriptProcessHangGuard, 1024 * 1024);
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+        return Encoding.UTF8.GetString(result.StandardOutput).Trim();
     }
 
     [Theory]
@@ -92,8 +156,14 @@ public sealed class CurrentDeltaCliContractTests
         fixture.Files["tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"] = "// banned-api-proof\n";
         foreach (var pair in fixture.Files) Write(pair.Key, pair.Value);
         Write(".gitignore", ".lake/\nbuild/\n");
-        Write("Meta/FILEMAP.toml", File.ReadAllText(
-            Path.Combine(TestRepositoryLayout.FindRoot(), "Meta/FILEMAP.toml")).Replace("\n\n", "\n", StringComparison.Ordinal));
+        // Keep the exact registered rows while representing this large declaration
+        // as inline tables inside the fixture's ordinary artifact capacity envelope.
+        var filemap = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Meta/FILEMAP.toml"))
+            .Split("[[files]]", StringSplitOptions.None);
+        var residence = filemap[0].IndexOf("[residence_policy]", StringComparison.Ordinal);
+        Write("Meta/FILEMAP.toml", filemap[0][..residence] + "files = [\n" + string.Join("\n",
+            filemap.Skip(1).Select(row => "  { " + string.Join(", ", row.Split('\n', StringSplitOptions.RemoveEmptyEntries)) + " },")) +
+            "\n]\n" + filemap[0][residence..]);
         const string firstProject = "tools/tests/First/First.csproj";
         Write(firstProject, "<Project><PropertyGroup><IsTestProject>true</IsTestProject></PropertyGroup></Project>\n");
         Write("tools/tests/Second/Second.csproj", "<Project><PropertyGroup><IsTestProject>true</IsTestProject></PropertyGroup></Project>\n");

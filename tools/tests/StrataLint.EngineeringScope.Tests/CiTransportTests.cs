@@ -8,6 +8,7 @@ using Xunit;
 
 namespace StrataLint.EngineeringScope.Tests;
 
+[Collection("Engineering scope process boundary")]
 public sealed class CiTransportTests
 {
     [Fact]
@@ -20,31 +21,7 @@ public sealed class CiTransportTests
         var evidence = Environment.GetEnvironmentVariable("CI_REPORT_SNAPSHOT_EVIDENCE");
         // Reuse the nonempty synthetic statement producer, not its manually
         // authored current/transport records. C# owns the actual handoff below.
-        var inputs = SharedBuildContractTests.Process(root, "python3", ["-B", "-c", """
-            import pathlib, shutil, sys
-            repository, root, relative = map(pathlib.Path, sys.argv[1:])
-            sys.path.insert(0, str(repository / 'tools/tests/StrataLint.ScriptTests/Fixtures'))
-            from report_snapshot_contract import SnapshotContracts
-            case = SnapshotContracts()
-            case.setUp()
-            try:
-                fixture = case.prepare_report()
-                result = fixture.pair()
-                print(result.stdout + result.stderr)
-                assert result.returncode == 0
-                sys.path.insert(0, str(repository / 'tools/lean-inspector'))
-                from report_cache import copy_bundle, seed_valid
-                from lean_cache import partition_path
-                for name in ('D5', 'Trureturing.lean', 'lakefile.toml', 'lake-manifest.json', 'lean-toolchain'):
-                    source, target = fixture.root / name, root / name
-                    if source.is_dir(): shutil.copytree(source, target)
-                    else: shutil.copyfile(source, target)
-                copy_bundle(fixture.output, root / relative)
-                assert seed_valid(root / relative, partition_path(root))
-            finally:
-                case.doCleanups()
-            """, repository, root, CommonExecutionEvidence.ReportPath],
-            hangGuard: TestBudgets.WorkflowProcessHangGuard);
+        var inputs = ProduceReport(root);
         Capture("inputs.log", inputs.Text);
         Assert.True(inputs.Exit == 0, inputs.Text);
         Git(root, "add", "D5", "Trureturing.lean", "lakefile.toml", "lake-manifest.json", "lean-toolchain");
@@ -139,7 +116,7 @@ public sealed class CiTransportTests
 
         // Bind each malformed current record into the transport so these cases
         // exercise the consumer contract beyond the outer file hash check.
-        foreach (var defect in new[] { "version-one", "version-three", "candidate", "round" })
+        foreach (var defect in new[] { "version-one", "version-three", "candidate", "round", "missing-step", "missing-report-step", "reused-report" })
         {
             var current = CommonExecutionEvidence.Read<CommonStageRecord>(root, CommonExecutionEvidence.CurrentPath);
             var changed = defect switch
@@ -147,6 +124,9 @@ public sealed class CiTransportTests
                 "version-one" => current with { Version = 1 },
                 "version-three" => current with { Version = 3 },
                 "candidate" => current with { Candidate = new string('a', 64) },
+                "missing-step" => current with { Steps = current.Steps.Where(step => step.Name != "filemap").ToArray() },
+                "missing-report-step" => current with { Steps = current.Steps.Where(step => step.Name != "lean-report").ToArray() },
+                "reused-report" => current with { Steps = current.Steps.Select(step => step.Name == "lean-report" ? step with { Status = "reused" } : step).ToArray() },
                 _ => current with { Round = current.Round + "-stale" },
             };
             CommonExecutionEvidence.Write(root, CommonExecutionEvidence.CurrentPath, changed);
@@ -375,6 +355,36 @@ public sealed class CiTransportTests
                 .Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal)) + "\0");
         CheckEvidenceFixture.Seal(root, "engineering", build);
         CommonExecutionEvidence.SealEngineering(root, build, steps);
+    }
+
+    internal static (int Exit, string Text) ProduceReport(string root)
+    {
+        var repository = TestRepositoryLayout.FindRoot();
+        return SharedBuildContractTests.Process(root, "python3", ["-B", "-c", """
+            import pathlib, shutil, sys
+            repository, root, relative = map(pathlib.Path, sys.argv[1:])
+            sys.path.insert(0, str(repository / 'tools/tests/StrataLint.ScriptTests/Fixtures'))
+            from report_snapshot_contract import SnapshotContracts
+            case = SnapshotContracts()
+            case.setUp()
+            try:
+                fixture = case.prepare_report()
+                result = fixture.pair()
+                print(result.stdout + result.stderr)
+                assert result.returncode == 0
+                sys.path.insert(0, str(repository / 'tools/lean-inspector'))
+                from report_cache import copy_bundle, seed_valid
+                from lean_cache import partition_path
+                for name in ('D5', 'Trureturing.lean', 'lakefile.toml', 'lake-manifest.json', 'lean-toolchain'):
+                    source, target = fixture.root / name, root / name
+                    if source.is_dir(): shutil.copytree(source, target)
+                    else: shutil.copyfile(source, target)
+                copy_bundle(fixture.output, root / relative)
+                assert seed_valid(root / relative, partition_path(root))
+            finally:
+                case.doCleanups()
+            """, repository, root, CommonExecutionEvidence.ReportPath],
+            hangGuard: TestBudgets.WorkflowProcessHangGuard);
     }
 
     internal static void Report(string root)

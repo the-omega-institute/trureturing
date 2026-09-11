@@ -101,6 +101,30 @@ def snapshot_report(root, partition, destination):
             or current.get("candidate") != transport["candidate"] or current.get("round") != transport["round"]
             or summary.get("candidate") != current["candidate"]):
         raise ValueError("current report handoff mismatch")
+    # Native stage records and transport records have distinct versions. Selection
+    # is accepted only through the same exact light-plan authority used by native current.
+    required_steps = ["lean-report", "scribe", "filemap", "check-current"]
+    selection = current.get("selection")
+    if selection is not None:
+        sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "workflow"))
+        from ci_plan import make_plan, same_record
+        if not isinstance(selection, dict) or set(selection) != {"plan", "changes"}:
+            raise ValueError("invalid current resource selection")
+        for path in selection.values():
+            if pathlib.PurePosixPath(path).is_absolute() or any(part in ("", ".", "..") for part in path.split("/")):
+                raise ValueError("invalid current selection material")
+            bound_bytes(path)
+        plan = json.loads(bound_bytes(selection["plan"]))
+        if not same_record(plan, make_plan(root, transport["commit"], root / selection["changes"])):
+            raise ValueError("current selection differs from validated scope")
+        required_steps = plan["execution"]["steps"]
+    if ([step.get("name") for step in current["steps"]] != required_steps
+            or any(step.get("raw_exit") != 0 or step.get("exit") != 0
+                   or not (step.get("status") == "executed" or step.get("status") == "reused"
+                           and step.get("name") in ("scribe", "filemap", "check-current")) for step in current["steps"])
+            or "lean-report" not in required_steps
+            or summary.get("report") != ".lake/build/stratalint/raw-lean-report.json"):
+        raise ValueError("current report requires complete selected obligations")
     relative = summary["report"]
     if pathlib.PurePosixPath(relative).is_absolute() or any(part in ("", ".", "..") for part in relative.split("/")):
         raise ValueError("invalid current report path")

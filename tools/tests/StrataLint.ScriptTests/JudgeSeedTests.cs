@@ -248,6 +248,9 @@ public sealed class JudgeSeedTests
             registry["projects"]![0]!["owned_test_assembly"] = "Library.Tests";
         });
         fixture.Prepare();
+        fixture.Build("role-only-registry-row", 0);
+        fixture.EditProjects(registry => registry["projects"]![0]!["include"] = new JsonArray("tools/Library/Code.cs"));
+        fixture.Prepare();
         fixture.Build("relevant-registry-closure", 2);
         fixture.Snapshot();
         Assert.True(File.Exists(fixture.SnapshotManifest));

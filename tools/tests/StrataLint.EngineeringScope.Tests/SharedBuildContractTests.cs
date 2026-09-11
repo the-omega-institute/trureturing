@@ -4,6 +4,7 @@ using Xunit;
 
 namespace StrataLint.EngineeringScope.Tests;
 
+[Collection("Engineering scope process boundary")]
 public sealed class SharedBuildContractTests
 {
     [Theory]
@@ -55,7 +56,8 @@ public sealed class SharedBuildContractTests
         var result = Process(root, scope, ["build", "--repository", root], new Dictionary<string, string> {
             ["PATH"] = Path.Combine(root, "build/bin") + Path.PathSeparator + Environment.GetEnvironmentVariable("PATH") });
         Assert.True(result.Exit == expected, result.Text);
-        Assert.Equal(failure == "restore" ? ["restore"] : new[] { "restore", "build" },
+        Assert.Equal(failure == "restore" ? ["restore"] : failure == "build" ? ["restore", "build"]
+                : new[] { "restore", "build", "restore", "build" },
             TemporaryFileSystem.File.ReadAllText(Path.Combine(root, "build/events")).Split('\n', StringSplitOptions.RemoveEmptyEntries));
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, CommonExecutionEvidence.BuildPath)));
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, CommonExecutionEvidence.EngineeringPath)));

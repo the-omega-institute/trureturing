@@ -17,12 +17,20 @@ internal sealed partial class ProductionCliEnvironment
         TestProjectExecution[] acceptedBaseTests = [];
         try
         {
-            string? commonRound = null;
-            if (!delta && arguments.Count >= 2 && arguments[^2] == "--common-build-round")
+            string? commonRound = null, commonPlan = null, commonChanges = null;
+            while (!delta && arguments.Count >= 2 && arguments[^2].StartsWith("--common-", StringComparison.Ordinal))
             {
-                commonRound = arguments[^1];
+                switch (arguments[^2])
+                {
+                    case "--common-build-round" when commonRound is null: commonRound = arguments[^1]; break;
+                    case "--common-plan" when commonPlan is null: commonPlan = arguments[^1]; break;
+                    case "--common-changes" when commonChanges is null: commonChanges = arguments[^1]; break;
+                    default: throw new InvalidDataException("invalid common current option");
+                }
                 arguments = arguments.Take(arguments.Count - 2).ToArray();
             }
+            var resourcePlan = ResourceExecutionPlan.Load(repositoryRoot, commonPlan, commonChanges);
+            if (resourcePlan is not null && commonRound is null) throw new InvalidDataException("selected current requires a common build round");
             var options = ParseCheckArguments(arguments);
             if (options.CandidateLeanReport is null || (!delta && options.ProtectedBase is not null))
                 throw new InvalidOperationException("check-current requires a candidate report and accepts no base; check-delta requires an explicit base and report");
@@ -75,7 +83,7 @@ internal sealed partial class ProductionCliEnvironment
                 {
                     if (Path.GetFullPath(options.CandidateLeanReport, repositoryRoot) != Path.Combine(repositoryRoot, CommonExecutionEvidence.ReportPath))
                         throw new InvalidDataException("common current requires canonical report material");
-                    return ExecuteCommonCurrent(commonRound, current, policy, lean, report);
+                    return ExecuteCommonCurrent(commonRound, current, policy, lean, report, resourcePlan?.CheckUnits.Except(CommonExecutionEvidence.EngineeringCheckIds).Order(StringComparer.Ordinal).ToArray());
                 }
                 var verified = VerifyScribeForAdmission(scribeEmissionVerifier, current, report);
                 result = AdmissionPipeline.CheckCurrent(CurrentRuleContext.Create(current, policy, lean, verified));

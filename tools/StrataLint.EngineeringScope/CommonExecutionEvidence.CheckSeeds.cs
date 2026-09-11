@@ -31,7 +31,7 @@ internal static partial class CommonExecutionEvidence
             output.WriteLine($"COMMON_CHECK_SEED_UNAVAILABLE stage={stage} reason={JsonSerializer.Serialize(exception.Message)}");
             return accepted;
         }
-        foreach (var id in CheckIds(stage, ReadCheckManifest(snapshot)))
+        foreach (var id in CheckIds(stage, ReadCheckManifest(snapshot)).Where(inputs.ContainsKey))
         {
             try
             {
@@ -87,7 +87,7 @@ internal static partial class CommonExecutionEvidence
 
     private static bool CopyCheckSeed(string root, string stage, TextWriter output, string? destination, string[] testMaterials)
     {
-        var record = ValidateChecks(root, stage, ValidateBuild(root));
+        var record = ValidateChecks(root, stage, ValidateBuild(root), stage == "current" ? CurrentCheckIds(root) : null);
         destination ??= Path.Combine(root, CheckSeedPath(stage));
         var staging = destination + ".tmp-" + Guid.NewGuid().ToString("N");
         try

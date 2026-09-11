@@ -3,93 +3,72 @@ using System.Text.Json;
 
 namespace StrataLint.EngineeringScope;
 
-/// <summary>Validated output of tools/scripts/workflow/ci.py plan.</summary>
+internal sealed record ResourcePlanBinding(string Plan, string Changes);
+
+/// <summary>The light planner owns scope and resource validation; native code consumes its exact result.</summary>
 internal sealed class ResourceExecutionPlan
 {
-    private static readonly IReadOnlyDictionary<string, string[]> Prerequisites =
-        new Dictionary<string, string[]>(StringComparer.Ordinal)
-        {
-            ["build"] = [], ["engineering"] = ["build"], ["filemap"] = ["build"],
-            ["lean"] = ["build"], ["lean-report"] = ["lean"], ["scribe"] = ["build", "lean-report"],
-            ["current"] = ["build", "lean-report"], ["delta"] = ["current", "engineering", "filemap", "scribe"],
-        };
+    internal JsonElement Document { get; }
+    internal string Commit => Document.GetProperty("candidate").GetProperty("commit").GetString()!;
+    internal string[] Projects => Strings(Document.GetProperty("execution").GetProperty("projects"));
+    internal string[] CheckUnits => Strings(Document.GetProperty("execution").GetProperty("checks"));
+    internal string[] CurrentSteps => Strings(Document.GetProperty("execution").GetProperty("steps"));
+    internal string PlanPath { get; }
+    internal string ChangesPath { get; }
+    private ResourceExecutionPlan(JsonElement document, string plan, string changes)
+    { Document = document; PlanPath = plan; ChangesPath = changes; }
+    internal bool StageRequired(string stage) => Document.GetProperty("stages").GetProperty(stage).GetProperty("status").GetString() == "required";
 
-    internal string Commit { get; }
-    internal IReadOnlySet<string> Resources { get; }
-    internal IReadOnlyDictionary<string, string> StageStatus { get; }
-
-    private ResourceExecutionPlan(string commit, IReadOnlySet<string> resources,
-        IReadOnlyDictionary<string, string> stageStatus)
+    internal static ResourceExecutionPlan? Load(string root, string? path, string? changes = null)
     {
-        Commit = commit; Resources = resources; StageStatus = stageStatus;
+        if (path is null && changes is null) return null;
+        if (path is null || changes is null) throw new InvalidDataException("--plan requires the exact --changes scope input");
+        path = Path.GetFullPath(path, root);
+        changes = Path.GetFullPath(changes, root);
+        var commit = Run(root, "git", ["--no-replace-objects", "rev-parse", "HEAD"]).Trim();
+        var validated = Run(root, "python3", ["-B", "tools/scripts/workflow/ci.py", "validate-plan",
+            "--repository", root, "--commit", commit, "--changes", changes, "--plan", path]);
+        using var document = JsonDocument.Parse(validated);
+        // The planner validates the committed FILEMAP. Native execution must consume
+        // those same declaration bytes even for supported dirty local invocations.
+        foreach (var material in new[] { "Meta/FILEMAP.toml" }.Concat(
+                     Strings(document.RootElement.GetProperty("materials"))))
+        {
+            var committed = RunBytes(root, "git", ["--no-replace-objects", "show", commit + ":" + material]);
+            if (!File.ReadAllBytes(Path.Combine(root, material)).AsSpan().SequenceEqual(committed))
+                throw new InvalidDataException("resource plan declaration differs from candidate: " + material);
+        }
+        return new(document.RootElement.Clone(), path, changes);
     }
 
-    internal bool Has(string id) => Resources.Contains(id);
-
-    internal bool StageRequired(string stage) =>
-        StageStatus.TryGetValue(stage, out var status) && status == "required";
-
-    internal static ResourceExecutionPlan? Load(string root, string? path)
+    internal ResourcePlanBinding Retain(string root)
     {
-        if (path is null) return null;
-        var full = Path.GetFullPath(path);
-        using var document = JsonDocument.Parse(File.ReadAllText(full));
-        var node = document.RootElement;
-        if (node.ValueKind != JsonValueKind.Object || node.GetProperty("schema_version").GetInt32() != 1
-            || node.GetProperty("status").GetString() != "planned")
-            throw new InvalidDataException("resource plan is not a validated planned result");
-        var candidate = node.GetProperty("candidate");
-        var commit = candidate.GetProperty("commit").GetString();
-        var tree = candidate.GetProperty("tree").GetString();
-        if (!IsSha(commit, 40) || !IsSha(tree, 40)) throw new InvalidDataException("resource plan candidate identity is malformed");
-        var actualCommit = Git(root, "rev-parse", "HEAD");
-        var actualTree = Git(root, "rev-parse", "HEAD^{tree}");
-        if (!StringComparer.Ordinal.Equals(commit, actualCommit) || !StringComparer.Ordinal.Equals(tree, actualTree))
-            throw new InvalidDataException("resource plan candidate does not match the checked out commit/tree");
-
-        var resources = new HashSet<string>(StringComparer.Ordinal);
-        foreach (var item in node.GetProperty("resources").EnumerateArray())
+        const string plan = CommonExecutionEvidence.RootPath + "/resource-plan.json";
+        const string changes = CommonExecutionEvidence.RootPath + "/resource-scope.json";
+        foreach (var (source, destination) in new[] { (PlanPath, plan), (ChangesPath, changes) })
         {
-            var id = item.GetString() ?? throw new InvalidDataException("resource plan contains a null resource");
-            if (!Prerequisites.ContainsKey(id) || !resources.Add(id)) throw new InvalidDataException("unknown or duplicate planned resource: " + id);
+            var target = Path.Combine(root, destination);
+            Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+            if (Path.GetFullPath(source) != target) File.Copy(source, target, overwrite: true);
         }
-        foreach (var id in resources)
-            foreach (var prerequisite in Prerequisites[id])
-                if (!resources.Contains(prerequisite)) throw new InvalidDataException($"resource plan omits prerequisite {prerequisite} for {id}");
-
-        var status = new Dictionary<string, string>(StringComparer.Ordinal);
-        foreach (var stage in new[] { "build", "engineering", "current", "delta" })
-        {
-            var row = node.GetProperty("stages").GetProperty(stage);
-            var value = row.GetProperty("status").GetString();
-            if (value is not ("required" or "not-required" or "not-applicable"))
-                throw new InvalidDataException("invalid resource stage status: " + stage);
-            status.Add(stage, value);
-            var declared = row.GetProperty("resources").EnumerateArray().Select(v => v.GetString()!).ToArray();
-            var expected = resources.Where(id => ResourceStage(id) == stage).Order(StringComparer.Ordinal).ToArray();
-            if (!declared.SequenceEqual(expected) || (value == "required") != (expected.Length != 0))
-                throw new InvalidDataException("resource stage declaration disagrees with resource closure: " + stage);
-        }
-        return new ResourceExecutionPlan(commit!, resources, status);
+        return new(plan, changes);
     }
 
-    private static string ResourceStage(string id) => id switch
-    {
-        "build" => "build", "engineering" => "engineering", "delta" => "delta", _ => "current"
-    };
+    internal static string[] Strings(JsonElement array) => array.EnumerateArray().Select(item => item.GetString()!).ToArray();
+    internal static string Run(string root, string executable, string[] arguments)
+        => new System.Text.UTF8Encoding(false, true).GetString(RunBytes(root, executable, arguments));
 
-    private static bool IsSha(string? value, int length) => value is not null && value.Length == length && value.All(char.IsAsciiHexDigit);
-
-    private static string Git(string root, params string[] args)
+    private static byte[] RunBytes(string root, string executable, string[] arguments)
     {
-        var start = new ProcessStartInfo("git") { WorkingDirectory = root, RedirectStandardOutput = true, RedirectStandardError = true };
-        start.ArgumentList.Add("--no-replace-objects");
-        foreach (var arg in args) start.ArgumentList.Add(arg);
-        using var process = Process.Start(start) ?? throw new IOException("cannot start git");
-        var output = process.StandardOutput.ReadToEnd();
-        var error = process.StandardError.ReadToEnd();
+        var start = new ProcessStartInfo(executable) { WorkingDirectory = root, RedirectStandardOutput = true, RedirectStandardError = true, UseShellExecute = false };
+        foreach (var argument in arguments) start.ArgumentList.Add(argument);
+        using var process = Process.Start(start) ?? throw new IOException("cannot start " + executable);
+        using var bytes = new MemoryStream();
+        var stdout = process.StandardOutput.BaseStream.CopyToAsync(bytes);
+        var stderr = process.StandardError.ReadToEndAsync();
         process.WaitForExit();
-        if (process.ExitCode != 0) throw new InvalidDataException(error.Trim());
-        return output.Trim();
+        stdout.GetAwaiter().GetResult();
+        if (process.ExitCode != 0) throw new InvalidDataException(executable + " validation failed: " + stderr.GetAwaiter().GetResult().Trim());
+        return bytes.ToArray();
     }
 }
