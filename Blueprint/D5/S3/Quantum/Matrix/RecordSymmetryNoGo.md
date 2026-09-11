@@ -10,7 +10,7 @@ $equivariantIdempotentZeroOrOne$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/RecordSymmetryNoGo.equivariant_selfAdjoint_idempotent_eq_zero_or_one` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Pavel Etingof, Oleg Golberg, Sebastian Hensel, Tiankai Liu, Alex Schwendner, Dmitry Vaintrob, Elena Yudovina (2009). *Introduction to representation theory*. URL: <https://arxiv.org/abs/0901.0827>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ $nontrivialIdempotentImpliesReducible$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/RecordSymmetryNoGo.nontrivial_equivariant_selfAdjoint_idempotent_implies_reducible` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Pavel Etingof, Oleg Golberg, Sebastian Hensel, Tiankai Liu, Alex Schwendner, Dmitry Vaintrob, Elena Yudovina (2009). *Introduction to representation theory*. URL: <https://arxiv.org/abs/0901.0827>.
 
 *Commentary.*
 
@@ -34,7 +34,7 @@ $twoRecordsImplyReducible$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/RecordSymmetryNoGo.two_nonzero_orthogonal_equivariant_records_imply_reducible` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Pavel Etingof, Oleg Golberg, Sebastian Hensel, Tiankai Liu, Alex Schwendner, Dmitry Vaintrob, Elena Yudovina (2009). *Introduction to representation theory*. URL: <https://arxiv.org/abs/0901.0827>.
 
 *Commentary.*
 
