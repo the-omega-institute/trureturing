@@ -4,10 +4,9 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Integer-time cumulative summation is an additive equivalence between
-     finitely supported increments and histories with a zero left tail and a
-     constant right tail, with adjacent difference as its inverse.
-   boundary: Coefficients form any additive commutative group. The spatial
+   digest: Integer-time cumulative summation is an additive equivalence between finitely supported increments and histories with a zero left tail and a constant right tail, with adjacent difference as its inverse. -/
+
+/- boundary: Coefficients form any additive commutative group. The spatial
      specialization uses jointly finitely supported integer profiles on
      integer time times three-dimensional integer space.
 -/
