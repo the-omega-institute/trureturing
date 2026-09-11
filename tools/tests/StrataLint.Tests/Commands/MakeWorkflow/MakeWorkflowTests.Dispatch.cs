@@ -195,9 +195,29 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(
             $"\t@/bin/bash {IngestScriptPath} mathlib-reanchor \"$(BASE)\"",
             Recipe(makefile, "mathlib-reanchor"));
-        var showAtomRecipe = Recipe(makefile, "show-atom");
-        Assert.Contains("dotnet run --no-build --project", showAtomRecipe, StringComparison.Ordinal);
-        Assert.Contains(" show-atom --atom-id \"$(ATOM_ID)\"", showAtomRecipe, StringComparison.Ordinal);
+        // The four targets that reach the command line delegate in one line each, because the
+        // dispatch table above allows at most one recipe line per target. The build check and the
+        // --no-build invocation live in the script, which is where the behaviour belongs: a fresh
+        // worktree carries no build output, and before this two of five implementation seats on
+        // 2026-09-11 hit a raw process-start exception six times between them while every
+        // implementation brief opens by calling show-atom.
+        foreach (var (target, verb) in new[]
+        {
+            ("show-atom", "show-atom"),
+            ("atom-context", "atom-context"),
+            ("settle", "settle-atom"),
+            ("settle-clear", "settle-atom"),
+        })
+        {
+            Assert.Contains(
+                $"@/bin/bash tools/scripts/cli.sh {verb} ",
+                Recipe(makefile, target),
+                StringComparison.Ordinal);
+        }
+        var cliScript = File.ReadAllText(Path.Combine(root, "tools", "scripts", "cli.sh"));
+        Assert.Contains("dotnet run --no-build --project", cliScript, StringComparison.Ordinal);
+        Assert.Contains("if [ ! -x \"$BINARY\" ]; then", cliScript, StringComparison.Ordinal);
+        Assert.Contains("dotnet build \"$PROJECT\" --configuration Release", cliScript, StringComparison.Ordinal);
         Assert.Contains(
             EchoResidualSummaryScriptPath,
             Recipe(makefile, "echo-residual-summary"),
