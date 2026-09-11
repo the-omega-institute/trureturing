@@ -163,6 +163,7 @@ __classify() {  # 读一个 .out,打印:OK|EXTRACTION|QUOTA|NOFILE|RUNNING|UNKNO
   grep -q 'Failed to read prompt' "$f" && { echo NOFILE; return; }
   grep -q 'extraction_failure' "$f" && { echo EXTRACTION; return; }
   grep -q 'infrastructure_retry_exhausted' "$f" && { echo INFRA; return; }
+  grep -q '^Error: Task failed (' "$f" && { echo CARRIER; return; }
   echo UNKNOWN
 }
 
@@ -290,6 +291,21 @@ __verdict_of_payload() {  # 判**取回的文本**,不判文件 —— 活判决
     case "$last" in
       *"Task failed (prompt_delivery_uncertain)"*) echo UNCERTAIN; return;;
       *"Message delivery timed out"*) echo DELIVERY; return;;
+    esac
+  fi
+  # **规则,不是名单**(第 4.9 条:harness 存规则,不存代表元)。
+  # 上面四个具名判词各有下游差异(QUOTA 要退避、NOFILE 是我自己的 bug),所以保留具名;
+  # 但「还有哪些 reason」是上游的开放集合,逐个补 token 是打地鼠(第 7.11 条:
+  # 同症状第二次即停手修根因)。实测两次:`infrastructure_retry_exhausted` 停在第一个池,
+  # 补上它之后立刻又撞 `composer_draft_conflict`,同样停在第二个池。
+  #
+  # 判据:CLI 非零退出 ∧ 末行是它自己的 `Error: Task failed (<reason>).` 形态
+  # ⟹ 该 reason 命名了一次**已终结**的失败,任务没有留在这个池里跑。
+  # 换池是一次全新提交,不是对同一载体的重放,故 CARRIER 参与遍历。
+  # 唯一的例外已在上面单列:`prompt_delivery_uncertain` 明说交付状态未知,不得重投。
+  if [ "$cli_rc" -ne 0 ]; then
+    case "$last" in
+      "Error: Task failed ("*")"*) echo CARRIER; return;;
     esac
   fi
   first=${r%%$'\n'*}
@@ -463,7 +479,7 @@ case "${1:-}" in
       LIMIT="${NYX_LIMIT:-}"   # 每池按自报容量重新派生
       __submit_and_poll "$brief" "$out"; rc=$?
       case "$LAST_VERDICT" in
-        EXTRACTION|QUOTA|BUSY|EXPIRED|INFRA) ;;
+        EXTRACTION|QUOTA|BUSY|EXPIRED|INFRA|CARRIER) ;;
         *) break;;   # Includes UNCERTAIN/DELIVERY: no evidence that replay is safe.
       esac
     done
