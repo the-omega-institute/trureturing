@@ -147,6 +147,10 @@ private structure ClosureState where
   visited : Std.HashSet Expr := {}
   compared : Std.HashMap Expr Bool := {}
   classifiedTypes : Std.HashSet Expr := {}
+  inferred : Std.HashMap Expr Expr := {}
+  reduced : Std.HashMap Expr Expr := {}
+  constantTypes : Std.HashMap Name (List Name × Expr) := {}
+  intersections : Std.HashMap (Bool × Name) Bool := {}
   statementConstants : NameHashSet := {}
   decisionConstants : NameHashSet := {}
   filterEnabled : Bool := false
@@ -161,6 +165,33 @@ private abbrev ClosureM := StateRefT ClosureState MetaM
 private def boundedMeta (action : MetaM α) : MetaM α :=
   withCurrHeartbeats <| withOptions
     (fun o => (o.set `maxHeartbeats (10000 : Nat)).set `maxRecDepth (1024 : Nat)) action
+
+/-- One cache for the entire readout family/registration, across all its slots.
+FVarIds are rigid, unique context identities; no metavariables enter these keys.
+Constant types come directly from ConstantInfo once, then instantiate universes. -/
+private def inferredType (e : Expr) : ClosureM Expr := do
+  if let some type := (← get).inferred[e]? then return type
+  let type ← match e with
+    | .const name levels => do
+      let (params, type) ← match (← get).constantTypes[name]? with
+        | some cached => pure cached
+        | none => do
+          let info ← getConstInfo name
+          let cached := (info.levelParams, info.type)
+          modify fun s => { s with constantTypes := s.constantTypes.insert name cached }
+          pure cached
+      pure (type.instantiateLevelParams params levels)
+    | _ => boundedMeta (inferType e)
+  if type.hasMVar then throwError "unresolved provenance type"
+  modify fun s => { s with inferred := s.inferred.insert e type }
+  return type
+
+private def reducedType (e : Expr) : ClosureM Expr := do
+  if let some type := (← get).reduced[e]? then return type
+  let type ← boundedMeta do instantiateMVars (← whnf e)
+  if type.hasMVar then throwError "unresolved provenance type"
+  modify fun s => { s with reduced := s.reduced.insert e type }
+  return type
 
 /-- A constant head in WHNF survives normalization. Inspect only type domains
 and codomains under rigid binders; no full normalization or proof evaluation is
@@ -202,21 +233,35 @@ closure(T) disjoint from closure(S) implies T is not definitionally S. The same
 argument applies to Decidable S. We use the union for the initial type filter,
 then S alone for proposition comparisons. Unknown/open inputs fall back to the
 semantic classifier; a failed optimization never licenses a clean verdict. -/
-private def mayMatch (target : NameHashSet) (candidate : Expr) : ClosureM Bool := do
+private def mayMatch (decision : Bool) (candidate : Expr) : ClosureM Bool := do
   if !(← get).filterEnabled || candidate.hasFVar || candidate.hasLooseBVars then return true
-  let (_, shared) ← boundedMeta (typeConstants (← getEnv) candidate target)
-  unless shared do trace[InformationProvenance.filter] "disjoint: {candidate}"
-  return shared
+  let s ← get
+  let target := if decision then s.decisionConstants else s.statementConstants
+  for name in candidate.getUsedConstants do
+    if target.contains name then return true
+    let shared ← match (← get).intersections[(decision, name)]? with
+      | some answer => pure answer
+      | none => do
+        let (seen, answer) ← boundedMeta (typeConstants (← getEnv) (mkConst name) target)
+        modify fun s => { s with intersections := s.intersections.insert (decision, name) answer }
+        -- Only a completed disjoint search certifies every visited dependency.
+        unless answer do
+          modify fun s =>
+            let cache := seen.toArray.foldl (fun c n => c.insert (decision, n) false) s.intersections
+            { s with intersections := cache }
+        pure answer
+    if shared then return true
+  trace[InformationProvenance.filter] "disjoint: {candidate}"
+  return false
 
 private def sameStatement (statement candidate : Expr) : ClosureM Bool := do
   if candidate.hasMVar then throwError "unresolved provenance type"
   -- Reduce under the active binder context before excluding open propositions:
   -- family x may discard x and expose the closed registered statement.
-  let candidate ← boundedMeta do instantiateMVars (← whnf candidate)
+  let candidate ← reducedType candidate
   if candidate.hasFVar || candidate.hasLooseBVars then return false
   if let some answer := (← get).compared[candidate]? then return answer
-  unless ← mayMatch (← get).statementConstants candidate do return false
-  let answer ← boundedDefEq candidate statement
+  let answer ← if ← mayMatch false candidate then boundedDefEq candidate statement else pure false
   modify fun s => { s with compared := s.compared.insert candidate answer }
   return answer
 
@@ -229,17 +274,13 @@ private def classifyType (statement : Expr) (e : Expr) : ClosureM Unit := do
   match e with
   | .sort .. | .lit .. | .forallE .. => return
   | _ => pure ()
-  let type ← boundedMeta (inferType e)
-  if type.hasMVar then throwError "unresolved provenance type"
-  unless ← mayMatch (← get).decisionConstants type do return
-  let type ← boundedMeta do
-    instantiateMVars (← whnf type)
-  if type.hasMVar then throwError "unresolved provenance type"
+  let type ← inferredType e
   if (← get).classifiedTypes.contains type then return
   modify fun s => { s with classifiedTypes := s.classifiedTypes.insert type }
+  unless ← mayMatch true type do return
+  let type ← reducedType type
   let proposition ← boundedMeta (isProp type)
   let candidate ← if proposition then pure (some type) else boundedMeta do
-    let type ← whnf type
     return if type.isAppOfArity ``Decidable 1 then some type.appArg! else none
   if let some candidate := candidate then
     -- Rule 2(a): an inhabitant of S; rule 2(b): an instance of Decidable S.
