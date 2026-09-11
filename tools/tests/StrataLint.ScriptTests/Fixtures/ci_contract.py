@@ -1,4 +1,5 @@
 """Executable resolver and optional Actions seed contracts, with isolated Git/data."""
+import errno
 import hashlib
 import json
 import importlib
@@ -112,6 +113,14 @@ class CacheFixture:
             for line in result.stdout.splitlines() if line.startswith("LEAN_ACTIONS_CACHE "))}
         return readiness, receipts
 
+    def material(self, directory):
+        return {path.relative_to(directory).as_posix(): (path.read_bytes(), path.stat().st_mode & 0o777)
+                for path in directory.rglob("*") if path.is_file()}
+
+    def identities(self, directory):
+        return {path.relative_to(directory).as_posix(): (path.stat().st_dev, path.stat().st_ino)
+                for path in (directory, *directory.rglob("*"))}
+
     def dependency_files(self):
         source = self.root / ".lake/packages"
         material = {
@@ -175,6 +184,10 @@ class Contracts(CacheFixture, unittest.TestCase):
     def seed(self):
         (self.root / ".lake/build/lib").mkdir(parents=True)
         (self.root / ".lake/build/lib/Module.olean").write_bytes(b"seed bytes")
+        (self.root / ".lake/build/lib/Module.olean").chmod(0o640)
+        (self.root / ".lake/build/bin").mkdir()
+        (self.root / ".lake/build/bin/tool").write_bytes(b"executable seed\x00\xff")
+        (self.root / ".lake/build/bin/tool").chmod(0o755)
         result = self.run_tool(CACHE, "snapshot")
         self.assertEqual(0, result.returncode, result.stderr)
         key_output = subprocess.run([sys.executable, str(CACHE),
@@ -190,6 +203,112 @@ class Contracts(CacheFixture, unittest.TestCase):
         return subprocess.run(["bash", "-euc", '"$PYTHON" "$CACHE" restore --repository "$ROOT" --project-key "$KEY"; make -C "$ROOT" current'],
             env=dict(self.env, PYTHON=sys.executable, CACHE=str(CACHE), ROOT=str(self.root), KEY=key),
             capture_output=True, text=True)
+
+    def acquisition_fault(self, cached, error, *, fail_copy=False):
+        # A real CLI restore with deterministic errors at the filesystem boundary;
+        # no second filesystem or privileged read-only mount is required.
+        hooks = self.root / "restore-hooks"
+        hooks.mkdir(exist_ok=True)
+        (self.root / "acquisition-faults").touch()
+        (hooks / "sitecustomize.py").write_text(f'''
+import errno, os, pathlib, shutil
+source = pathlib.Path({str(cached / "data")!r})
+rename = os.rename
+def acquire(src, dst, *args, **kwargs):
+    if pathlib.Path(src) == source:
+        with open({str(self.root / "acquisition-faults")!r}, "a") as log:
+            log.write({str(error)!r} + "\\n")
+        raise OSError({error}, "injected acquisition failure")
+    return rename(src, dst, *args, **kwargs)
+os.rename = acquire
+copyfile = shutil.copyfile
+def copy(src, dst, *args, **kwargs):
+    if {fail_copy!r} and pathlib.Path(src).is_relative_to(source):
+        pathlib.Path(dst).write_bytes(b"partial staging copy")
+        raise OSError(errno.EIO, "injected fallback failure")
+    return copyfile(src, dst, *args, **kwargs)
+shutil.copyfile = copy
+''')
+        self.env["PYTHONPATH"] = str(hooks)
+
+    def test_same_filesystem_restore_consumes_material_and_preserves_producer_failure(self):
+        cached, key = self.seed()
+        expected = self.material(cached / "data")
+        identities = self.identities(cached / "data")
+        target = self.root / ".lake/build"
+        target.mkdir(parents=True)
+        (target / "old").write_bytes(b"replace this nonempty target")
+        result = self.production(key, failure=True)
+        self.assertNotEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status": "restored"', result.stdout)
+        self.assertEqual("producer\n", (self.root / "calls").read_text())
+        self.assertEqual(expected, self.material(target))
+        with self.subTest(contract="consumed"):
+            self.assertFalse((cached / "data").exists())
+        with self.subTest(contract="material_identity"):
+            self.assertEqual(identities, self.identities(target))
+        # The old transport manifest alone cannot turn a second restore into a hit.
+        repeated = self.production(key)
+        self.assertEqual(0, repeated.returncode, repeated.stdout + repeated.stderr)
+        self.assertNotIn('"status": "restored"', repeated.stdout)
+        self.assertEqual(expected, self.material(target))
+        self.assertEqual("producer\nproducer\n", (self.root / "calls").read_text())
+        self.assertEqual(["STRATALINT_ACTIONS_CACHE_SEEDED=1", "STRATALINT_ACTIONS_CACHE_SEEDED=0"],
+                         (self.root / "environment").read_text().splitlines())
+
+    def test_acquisition_exdev_and_eacces_copy_complete_material_and_retain_source(self):
+        cached, key = self.seed()
+        expected = self.material(cached / "data")
+        identities = self.identities(cached / "data")
+        target = self.root / ".lake/build"
+        target.mkdir(parents=True)
+        for error in (errno.EXDEV, errno.EACCES):
+            with self.subTest(errno=error):
+                (target / "old").write_bytes(b"old target")
+                self.acquisition_fault(cached, error)
+                result = self.production(key)
+                self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                self.assertIn('"status": "restored"', result.stdout)
+                self.assertEqual(expected, self.material(target))
+                self.assertEqual(expected, self.material(cached / "data"))
+                self.assertEqual(identities, self.identities(cached / "data"))
+                self.assertTrue(set(identities.values()).isdisjoint(self.identities(target).values()))
+        self.assertEqual([str(errno.EXDEV), str(errno.EACCES)],
+                         (self.root / "acquisition-faults").read_text().splitlines())
+        self.assertEqual("producer\nproducer\n", (self.root / "calls").read_text())
+        self.assertEqual(["STRATALINT_ACTIONS_CACHE_SEEDED=1"] * 2,
+                         (self.root / "environment").read_text().splitlines())
+
+    def test_failed_fallback_missing_and_corrupt_seeds_preserve_target_before_publication(self):
+        cached, key = self.seed()
+        fresh = self.root / "fresh-project-snapshot"
+        shutil.copytree(cached, fresh)
+        target = self.root / ".lake/build"
+        target.mkdir(parents=True)
+        (target / "current").write_bytes(b"current material\x00\xff")
+        (target / "current").chmod(0o750)
+        expected, identities = self.material(target), self.identities(target)
+        self.acquisition_fault(cached, errno.EXDEV, fail_copy=True)
+        for case in ("failed-copy", "missing", "corrupt"):
+            with self.subTest(case=case):
+                shutil.rmtree(cached)
+                shutil.copytree(fresh, cached)
+                if case == "missing": shutil.rmtree(cached / "data")
+                if case == "corrupt": (cached / "data/lib/Module.olean").write_bytes(b"corrupt")
+                source = self.material(cached / "data")
+                for failure in (False, True):
+                    result = self.production(key, failure=failure)
+                    self.assertEqual(not failure, result.returncode == 0, result.stdout + result.stderr)
+                    self.assertNotIn('"status": "restored"', result.stdout)
+                    if case == "failed-copy": self.assertIn("injected fallback failure", result.stdout)
+                    self.assertEqual(expected, self.material(target))
+                    self.assertEqual(identities, self.identities(target))
+                    self.assertEqual(source, self.material(cached / "data"))
+                    self.assertFalse(list(target.parent.glob(".actions-*")))
+        self.assertEqual([str(errno.EXDEV)] * 2, (self.root / "acquisition-faults").read_text().splitlines())
+        self.assertEqual(["producer"] * 6, (self.root / "calls").read_text().splitlines())
+        self.assertEqual(["STRATALINT_ACTIONS_CACHE_SEEDED=0"] * 6,
+                         (self.root / "environment").read_text().splitlines())
 
     def test_valid_actions_seed_still_enters_production_and_signals_release_skip(self):
         _, key = self.seed()
@@ -318,6 +437,7 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
         (source / "batteries/README.md").write_bytes(b"changed producer bytes")
         self.assertEqual(expected["batteries/README.md"][0], (cached / "data/batteries/README.md").read_bytes())
         shutil.rmtree(source)
+        identities = self.identities(cached / "data")
         result = self.run_tool(CACHE, "restore", "--dependency-key", manifest["key"])
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         self.assertIn('"status": "restored"', result.stdout)
@@ -327,12 +447,11 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
             self.assertFalse(path.is_symlink())
             self.assertEqual(data, path.read_bytes())
             self.assertEqual(mode, path.stat().st_mode & 0o777)
+        self.assertFalse((cached / "data").exists())
+        self.assertEqual(identities, self.identities(source))
         (source / "batteries/docs/README.md").write_bytes(b"changed consumer bytes")
-        self.assertEqual(expected["batteries/docs/README.md"][0],
-                         (cached / "data/batteries/docs/README.md").read_bytes())
         self.assertEqual(expected["batteries/README.md"][0], (source / "batteries/README.md").read_bytes())
-        (cached / "data/batteries/README.md").write_bytes(b"changed cache bytes")
-        self.assertEqual(expected["batteries/README.md"][0], (source / "batteries/README.md").read_bytes())
+        self.assertEqual(expected["batteries/docs/README.alias"][0], (source / "batteries/docs/README.alias").read_bytes())
 
     def test_corrupt_dependency_seed_falls_back_without_replacing_current_material(self):
         source, _ = self.dependency_files()
@@ -342,11 +461,15 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
         cached = self.root / "build/lean-cache/dependency"
         key = json.loads((cached / "manifest.json").read_text())["key"]
         saved = cached / "data/batteries/README.md"
-        original, mode = saved.read_bytes(), saved.stat().st_mode & 0o777
+        fresh = self.root / "fresh-dependency-snapshot"
+        shutil.copytree(cached, fresh)
         (self.root / "Makefile").write_text("current:\n\t@echo producer >> calls\n\t@exit $${PRODUCER_EXIT:-0}\n")
         for corruption in ("bytes", "mode", "link", "missing", "extra"):
             with self.subTest(corruption=corruption):
+                shutil.rmtree(cached)
+                shutil.copytree(fresh, cached)
                 (source / "batteries/README.md").write_bytes(b"current material")
+                expected = self.material(source)
                 if corruption == "bytes":
                     saved.write_bytes(b"corrupted bytes")
                 elif corruption == "mode":
@@ -366,12 +489,8 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                     self.assertEqual(production_exit == "0", result.returncode == 0, result.stdout + result.stderr)
                     self.assertIn('"layer": "dependency", "reason":', result.stdout)
                     self.assertIn('"status": "miss"', result.stdout)
-                    self.assertEqual(b"current material", (source / "batteries/README.md").read_bytes())
+                    self.assertEqual(expected, self.material(source))
                     self.assertNotIn("STRATALINT_ACTIONS_CACHE_SEEDED=1", (self.root / "environment").read_text())
-                saved.unlink(missing_ok=True)
-                saved.write_bytes(original)
-                saved.chmod(mode)
-                (saved.parent / "extra").unlink(missing_ok=True)
         self.assertEqual(["producer"] * 10, (self.root / "calls").read_text().splitlines())
 
 

@@ -219,7 +219,11 @@ def restore(root, keys, matched):
                 target.parent.mkdir(parents=True, exist_ok=True)
                 with tempfile.TemporaryDirectory(prefix=".actions-", dir=target.parent) as temporary:
                     staged = pathlib.Path(temporary) / "data"
-                    shutil.copytree(cached / "data", staged)
+                    # Consume the private download when it can move without copying.
+                    try:
+                        (cached / "data").rename(staged)
+                    except OSError:
+                        shutil.copytree(cached / "data", staged)
                     if target.exists():
                         shutil.rmtree(target)
                     staged.rename(target)

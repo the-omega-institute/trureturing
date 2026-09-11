@@ -191,7 +191,9 @@ atexit.register(finish)
         self.assertEqual(before, {seed: fixture.bundle_bytes(seed) for seed in seeds})
         self.assertFalse(any(path.is_symlink() for path in (cached / "data").rglob("*")))
         self.assertEqual(0o700, (cached / "data").stat().st_mode & 0o777)
-        key = json.loads((cached / "manifest.json").read_text())["key"]
+        manifest = (cached / "manifest.json").read_bytes()
+        key = json.loads(manifest)["key"]
+        material, identities = self.material(cached / "data"), self.identities(cached / "data")
         # Simulate a fresh PR runner; no report output can secretly seed it.
         shutil.rmtree(fixture.cache)
         shutil.rmtree(fixture.output.parent)
@@ -201,6 +203,10 @@ atexit.register(finish)
         self.assertIn('"status": "restored"', restored.stdout)
         self.assertEqual([current], fixture.seeds())
         self.assertEqual(before[current], fixture.bundle_bytes(current))
+        self.assertEqual(material, self.material(fixture.cache))
+        self.assertFalse((cached / "data").exists())
+        self.assertEqual(identities, self.identities(fixture.cache))
+        self.assertIn("STRATALINT_ACTIONS_CACHE_SEEDED=0", (self.root / "environment").read_text())
         config = self.root / "lakefile.toml"
         config.write_text(config.read_text().replace('name = "fixture"', 'name = "metadata-only"'))
         reused = fixture.pair()
@@ -223,8 +229,8 @@ atexit.register(finish)
         readiness, receipts = self.snapshot_result()
         self.assertEqual("false", readiness["report_ready"])
         self.assertEqual("save-disabled", receipts["report"]["status"])
-        self.assertEqual(actual, {path.relative_to(cached / "data").as_posix(): path.read_bytes()
-                               for path in (cached / "data").rglob("*") if path.is_file()})
+        self.assertFalse((cached / "data").exists())
+        self.assertEqual(manifest, (cached / "manifest.json").read_bytes())
 
     def test_report_snapshot_rejects_invalid_current_without_using_history(self):
         fixture = self.prepare_report()
@@ -301,9 +307,12 @@ shutil.copyfile = damaged
         self.assertEqual(saved, (cached / "manifest.json").read_bytes())
         self.assertFalse(list(cached.parent.glob(".snapshot-*")))
         report = next((cached / "data").glob("*/*/*/raw-lean-report.json"))
-        bundle = fixture.bundle_bytes(report)
+        fresh = self.root / "fresh-report-snapshot"
+        shutil.copytree(cached, fresh)
         for case in ("missing", "materials", "partition"):
             with self.subTest(case=case):
+                shutil.rmtree(cached)
+                shutil.copytree(fresh, cached)
                 manifest = json.loads(saved)
                 if case == "missing": report.unlink()
                 elif case == "materials": pathlib.Path(str(report) + ".materials.zip").write_bytes(b"corrupt")
@@ -320,8 +329,6 @@ shutil.copyfile = damaged
                 self.assertEqual(0, restored.returncode, restored.stdout + restored.stderr)
                 self.assertIn('"status": "miss"', restored.stdout)
                 self.assertEqual([], fixture.seeds())
-                fixture.write_bundle_bytes(report, bundle)
-        (cached / "manifest.json").write_bytes(saved)
 
     def test_invalid_dependency_links_disable_only_that_save_with_an_offending_path(self):
         fixture = self.prepare_report()
