@@ -1635,7 +1635,7 @@ $$
 $$
 
 它不是 theorem declaration 的全局标签，并且对 membership 非单调，方向由不变的 unique-capture 定义决定：固定既有 kernels，$I\subseteq J$ 蕴含 $U_i(J)\subseteq U_i(I)$，故加入 peer 只能使旧 occurrence 由 positive 变为 zero，不能恢复；只有删除或替换 peer 并重算完整 catalog 才可恢复 positivity。任一 membership 变化都使受影响的整个 maximal catalog 必须重新 seal；当前 census exact-key row 替换为 `certified (.trivialInCatalog payload)` 或 positive row，旧 scope/certificate（含 singleton certificate）不得作为 enlarged catalog evidence。
-冻结 pin 绑定 theorem statement identity，不绑定 disposition；多 arena occurrences 全部保留，census 按当前 query root 内 canonical occurrence 顺序确定一行，绝不回退到缺 peer 的旧 catalog。
+冻结 pin 绑定 theorem statement identity，不绑定 disposition；多 arena occurrences 全部保留，census 按当前 query root 内 canonical occurrence 顺序确定一行，绝不回退到缺 peer 的旧 catalog。一条 theorem 登记的全部 arenas（含各 §6.2 逃逸处上的 structural arenas）构成它的观测集合；theorem 级 trivial 汇总取该集合内全部 occurrence 判词的合取：任一 occurrence 为 positive 即不 trivial，只有每个已登记 arena 上均 certified `trivial_in_catalog` 才汇总为 trivial；汇总不替代逐 occurrence 记录，也不由判官代为选择 arena。
 level-0 trivial occurrence 的 `law_*` 按 §6.3 在同一完整 catalog 与冻结 Γ 上计算；open schema 不预先加入待测 law 的 inclusion 假设，level-1 verdict 永不把 level-0 trivial 升为 level-0 positive。
 level-1 fields carry the same complete catalog, including positive and trivial members; they never discharge `ObjectNovelty`.
 
