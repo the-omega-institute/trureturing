@@ -1,0 +1,19 @@
+{
+  "schema": "s21-logical-entry-v1",
+  "resource": "I32-original",
+  "logical_path": "docs/reports/quantized-gh/theory-body-migration-s21-0910.json",
+  "original": {
+    "bytes": 627313,
+    "sha256": "7089eb72df93688552ff44c93aea1cae5db137e4945fc81af2477e15ef8fe72d",
+    "lf": 14172,
+    "terminal_lf": 1,
+    "lines": 14172
+  },
+  "origin": {
+    "commit": "4cad15c01592c516efb041f2c4f37bbcc7b709bb",
+    "path": "docs/reports/quantized-gh/theory-body-migration-s21-0910.json"
+  },
+  "descriptor": "docs/reports/quantized-gh/s21-evidence/I32-original.json",
+  "contract": "docs/reports/quantized-gh/s21-evidence/README.md",
+  "interpretation": "Logical entry only. resource(resource) returns exact original bytes; at(resource, json_pointer) parses the complete original map, not this descriptor."
+}

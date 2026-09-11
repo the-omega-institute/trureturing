@@ -1,10 +1,10 @@
 # S20 predecessor composition and historical evidence
 
-The active [mathematical source](../../../develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md) is the exact merged S19 source followed by the already completed S20 pure tail. [composition.json](composition.json) binds both components, every old/current source and report version, the inherited S19 contract and all current canonical units. This is a fixed representation change. No theorem, premise, proof, numbered address or producer LF was changed.
+The S20 predecessor is the exact merged S19 source followed by the completed S20 pure tail. It occupies bytes `[0,364059)` of the growing [mathematical source](../../../develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md); S21 follows that interval. [composition.json](composition.json) binds both components, every old/current source and report version, the inherited S19 contract and all current canonical units. This is a fixed representation change. No theorem, premise, proof, numbered address or producer LF was changed.
 
 ## Source versions and interpretation
 
-The S19 component is 337429 bytes, SHA256 `82c4c836d0ba2a2cdcdbc27debc97b88f0c5eb779d95f41eecd4e0d3247f08c8`. The S20 component is 26630 bytes, SHA256 `69443ddea0e1a22e3d6dfed281b49b1c43f906f5e328dee743185dfa44c617fd`. The tail starts with the original chapter 31 heading, immediately after the exact predecessor LF. The composed source is 364059 bytes. Its full digest, counts and current unit spans are in the composition map and [current-units.json](current-units.json).
+The S19 component is 337429 bytes, SHA256 `82c4c836d0ba2a2cdcdbc27debc97b88f0c5eb779d95f41eecd4e0d3247f08c8`. The S20 component is 26630 bytes, SHA256 `69443ddea0e1a22e3d6dfed281b49b1c43f906f5e328dee743185dfa44c617fd`. The tail starts with the original chapter 31 heading, immediately after the exact predecessor LF. The named `source-composed-I47` predecessor is 364059 bytes. Its full digest, counts and current unit spans are in the composition map and [current-units.json](current-units.json).
 
 `source-S20-I29` names the complete 312957-byte pre-composition S20 source, SHA256 `28ee1eb94e166ef4f8b4f2b01408779b2fdfe0d05ee692a0158790841e2fe894`. Its [descriptor and ordered raw parts](old-source.json) retain all earlier process/proof text, including corrected and superseded statements. `I29` names the complete original 142389-byte JSON, SHA256 `b7fddf7ead7eaae9bd8d1f2d2548bde04c5027fa371273d7e5bba179bb84a31c`. Its [logical old path](../theory-body-migration-s20-0910.json) now declares `s20-evidence-entry-v1`: it is a descriptor, not the old map schema. `S20Evidence.json('I29')` returns the original map object; `raw('I29')` returns its exact original serialized bytes. Never substitute a new JSON serialization for those bytes.
 
@@ -12,7 +12,7 @@ The unchanged [original S20 report](../balanced-prime-237-all-slabs-0910.md) rem
 
 | Version | Exact consumption |
 | --- | --- |
-| source-composed-I47 | Whole active source; full identity checked |
+| source-composed-I47 | Explicit active source byte interval [0,364059); original full identity checked |
 | source-S19-merged | Explicit active source byte interval [0,337429) |
 | tail-S20-I29 | Explicit active source byte interval [337429,364059) |
 | source-S20-I29 | Ordered bounded raw parts of the old whole source |
@@ -221,3 +221,9 @@ class S20Evidence:
                     structural_regions=len(structural), own_addresses=22,
                     report_sections=len(nav['report_sections']), source=identity(source))
 ```
+
+## S21 bounded predecessor consumer repair (I49)
+
+`S20Evidence.raw('source-composed-I47')` now uses the existing `file_span` catalog form with explicit bounds `[0,364059)`. Its original full identity is unchanged. The complete inherited `verify()` recipe therefore consumes the S20 predecessor on the appended candidate. Ordinary `file` still reads and verifies the whole file.
+
+I48 appended README prose but left this catalog entry as `kind=file`; its claim that S20 consumption had been extended was not verified and the real API raised `ValueError('identity mismatch: bytes')`. The [exact pre-I49 README and catalog](../s21-evidence/consumer-repair.json) preserve that failure. The earlier [pre-S21 README archive](../s21-evidence/s20-readme-before-s21.md) remains exact. S21's `source-S20-merged` and `source-S20-prefix` name the same predecessor interval through its [public API](../s21-evidence/README.md).

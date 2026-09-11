@@ -1,0 +1,138 @@
+{
+  "schema": "s21-evidence-entry-v1",
+  "resource": "I35-original",
+  "original": {
+    "bytes": 237433,
+    "sha256": "100e33c0c3a84ef2735e553839a58007205f9f0c0775c3e5658d36d26c71282e",
+    "lf": 4903,
+    "terminal_lf": 1,
+    "lines": 4903
+  },
+  "origin": {
+    "commit": "4cad15c01592c516efb041f2c4f37bbcc7b709bb",
+    "path": "docs/reports/quantized-gh/actual-5040-fixed-box-0910.md"
+  },
+  "contract": "docs/reports/quantized-gh/s21-evidence/README.md",
+  "interpretation": "Concatenate exact UTF-8 parts in ordinal order before parsing; no normalization or separators.",
+  "parts": [
+    {
+      "bytes": 30444,
+      "sha256": "fe618bd15416fa73d00c02084fb97083f0d23ceaa1c923470e46a2200742fd1f",
+      "lf": 750,
+      "terminal_lf": 1,
+      "lines": 750,
+      "ordinal": 1,
+      "path": "docs/reports/quantized-gh/s21-evidence/raw/I35-original/part-001.txt",
+      "byte_span": [
+        0,
+        30444
+      ],
+      "line_span": [
+        1,
+        750
+      ]
+    },
+    {
+      "bytes": 31080,
+      "sha256": "6abf8dcb0e55ccfce8057dc6c89357d07fa7873725da15954cc4ac5411a45ecc",
+      "lf": 750,
+      "terminal_lf": 1,
+      "lines": 750,
+      "ordinal": 2,
+      "path": "docs/reports/quantized-gh/s21-evidence/raw/I35-original/part-002.txt",
+      "byte_span": [
+        30444,
+        61524
+      ],
+      "line_span": [
+        751,
+        1500
+      ]
+    },
+    {
+      "bytes": 36983,
+      "sha256": "536e741f5743a58ec4a3960bc8daa7930214c4a1c57d61526826681af477e8d5",
+      "lf": 750,
+      "terminal_lf": 1,
+      "lines": 750,
+      "ordinal": 3,
+      "path": "docs/reports/quantized-gh/s21-evidence/raw/I35-original/part-003.txt",
+      "byte_span": [
+        61524,
+        98507
+      ],
+      "line_span": [
+        1501,
+        2250
+      ]
+    },
+    {
+      "bytes": 46657,
+      "sha256": "4767969285a5a09483f97a6a19f5d48600f4228242e29227254c65ab42c14c65",
+      "lf": 750,
+      "terminal_lf": 1,
+      "lines": 750,
+      "ordinal": 4,
+      "path": "docs/reports/quantized-gh/s21-evidence/raw/I35-original/part-004.txt",
+      "byte_span": [
+        98507,
+        145164
+      ],
+      "line_span": [
+        2251,
+        3000
+      ]
+    },
+    {
+      "bytes": 47090,
+      "sha256": "5a08943aa29b3e24fa853bb6d115309926badff698cfcd4cc8e092023b4c24d2",
+      "lf": 750,
+      "terminal_lf": 1,
+      "lines": 750,
+      "ordinal": 5,
+      "path": "docs/reports/quantized-gh/s21-evidence/raw/I35-original/part-005.txt",
+      "byte_span": [
+        145164,
+        192254
+      ],
+      "line_span": [
+        3001,
+        3750
+      ]
+    },
+    {
+      "bytes": 26851,
+      "sha256": "f304554251e0f19bc42e73132b7bdcf2fa88c29f458f1a852f880a53a2a0f539",
+      "lf": 750,
+      "terminal_lf": 1,
+      "lines": 750,
+      "ordinal": 6,
+      "path": "docs/reports/quantized-gh/s21-evidence/raw/I35-original/part-006.txt",
+      "byte_span": [
+        192254,
+        219105
+      ],
+      "line_span": [
+        3751,
+        4500
+      ]
+    },
+    {
+      "bytes": 18328,
+      "sha256": "01f653d2ec8bf93a38291311b7b5729c43938acf2a08c7f62a6257922ac6fe7c",
+      "lf": 403,
+      "terminal_lf": 1,
+      "lines": 403,
+      "ordinal": 7,
+      "path": "docs/reports/quantized-gh/s21-evidence/raw/I35-original/part-007.txt",
+      "byte_span": [
+        219105,
+        237433
+      ],
+      "line_span": [
+        4501,
+        4903
+      ]
+    }
+  ]
+}

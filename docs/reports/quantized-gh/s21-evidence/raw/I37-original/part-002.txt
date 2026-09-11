@@ -1,0 +1,750 @@
+      },
+      {
+        "path": "tools/StrataLint.Cli/Commands/Digestion/Ingest/IngestCommand.ReportFree.cs",
+        "bytes": 11035,
+        "sha256": "432647ca21e4d84d5f12cce5f09a27a23cfbac7151494e0912483884e9fcb35c",
+        "git_blob_oid": "1370ae640ecbaeca327d9c0e0c65dd61e1a5ab52",
+        "lf": 246,
+        "terminal_lf": 1,
+        "eof_hex": "65726f5761726e696e6773293b0a7d0a"
+      },
+      {
+        "path": "tools/StrataLint.Engine/Digestion/Ingest/ReportFreeDigestionIngestor.cs",
+        "bytes": 12903,
+        "sha256": "c6d5a280042976b826f643aaded0bb24e7fe791409a2854159e482343ad1673f",
+        "git_blob_oid": "cd831a1623e3e9d5d9c9a3e0fe5c1db34b295b61",
+        "lf": 327,
+        "terminal_lf": 1,
+        "eof_hex": "7074757265643b0a202020207d0a7d0a"
+      },
+      {
+        "path": "tools/StrataLint.Engine/Digestion/Atomizers/GenericAtomizer.cs",
+        "bytes": 7598,
+        "sha256": "a22f6d9942ec14281f0347acfa6bda525558c406a3dbc100fbf8075568c83d4b",
+        "git_blob_oid": "e5dfe3ab65aa95a6326f9c57bc375e5c24666f88",
+        "lf": 159,
+        "terminal_lf": 1,
+        "eof_hex": "6164696e67293b0a202020207d0a7d0a"
+      },
+      {
+        "path": "tools/StrataLint.Engine/Digestion/Atomizers/MarkdigBlockAst.cs",
+        "bytes": 8182,
+        "sha256": "8868276b7c8990e7149eee872f4ae7b234d7216005c9bc8f6db6592ba64c7525",
+        "git_blob_oid": "661c610b77ac7026d4a863377b11a9f4676932d8",
+        "lf": 210,
+        "terminal_lf": 1,
+        "eof_hex": "72742c20696e7420456e64293b0a7d0a"
+      },
+      {
+        "path": "tools/StrataLint.Engine/Digestion/Atomizers/MarkdownAstAtomizer.cs",
+        "bytes": 12567,
+        "sha256": "60234f9b669bf58ebdc9741b3ab742c7d3bdd86077152f4a623a4f6e3c90fd4a",
+        "git_blob_oid": "2292ebad149cf96c34c7829ce670dfd54b44b5fb",
+        "lf": 307,
+        "terminal_lf": 1,
+        "eof_hex": "2c20696e74204c6576656c293b0a7d0a"
+      },
+      {
+        "path": "tools/StrataLint.Engine/Digestion/DigestionDecomposition.cs",
+        "bytes": 9101,
+        "sha256": "feefe69881288f9fa828cfd743ea4c115908bbabe59e8bfb602708eec439cc99",
+        "git_blob_oid": "39559e03731af4614c27721b7792d5ba0e6a918b",
+        "lf": 176,
+        "terminal_lf": 1,
+        "eof_hex": "737472696e672054657874293b0a7d0a"
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/source.toml",
+        "bytes": 198,
+        "sha256": "0948618a915f39996a9612c7a2cc1ed2e832c9121a57819ba3db8714c625bade",
+        "git_blob_oid": "fca153b0ee3d855fdfcf6e24bf035aaada13a760",
+        "lf": 5,
+        "terminal_lf": 1,
+        "eof_hex": "7265645f67656e726573203d205b5d0a"
+      }
+    ],
+    "control_flow": "make ingest -> ingest.sh -> CLI Ingest -> RunReportFree -> ReportFreeDigestionIngestor.Plan -> source generic-v1 -> MarkdigBlockAst -> MarkdownAstAtomizer -> GenericAtomizer clause plans -> append-only CAS/YAML write set.",
+    "applicable_behavior": "Pipe-table data rows are independent non-extending claims. The TeX array has no pipe-table rows or numbered/bold claim leads. The 32.24 paragraph claim extends to EOF; PlanClauses splits at the existing bold proof lead and retains all preamble, separators and closing prose. This expectation was checked against actual producer bytes after the sole invocation."
+  },
+  "ingest_record": {
+    "command": "make ingest BASE=1bad65f5c340e0a8b57355a76058833cec958236 SOURCE=arithmetic-boundary-quantization",
+    "argv": [
+      "make",
+      "ingest",
+      "BASE=1bad65f5c340e0a8b57355a76058833cec958236",
+      "SOURCE=arithmetic-boundary-quantization"
+    ],
+    "cwd": "/Users/auricstudio/trureturing-qgh-pure-s21",
+    "invocations": 1,
+    "started_at": "2026-09-10T17:19:14.664617+00:00",
+    "source_at_invocation": {
+      "bytes": 347400,
+      "sha256": "e9eb687b788d979d3bf06296c2fe2884b3dbabdd7a786de9f077d072fedad0d9",
+      "git_blob_oid": "9df2af9453b120bc9bea88569f039f9bacbe9a4e",
+      "lf": 6584,
+      "terminal_lf": 1,
+      "eof_hex": "e7aca6e58fb7e8af81e68daee380820a"
+    },
+    "source_edit_cutoff": "Final source edit preceded this sole invocation; no source writes are permitted afterward.",
+    "finished_at": "2026-09-10T17:19:26.898665+00:00",
+    "exit": 0,
+    "stdout": "INGEST residual_open_added=3 skipped_existing=291 coarse_fallbacks=0 open_genres=0 cas_objects_written=3 ledger_changed=true\n",
+    "stderr": "",
+    "stdout_identity": {
+      "bytes": 125,
+      "sha256": "845368e642bd33458c9de63ce1a8090fed53c641fc12c87ee850e9b65ecbad40",
+      "git_blob_oid": "c94c9a5ed4aee4d2d9d77d3712f0051de2269c9e",
+      "lf": 1,
+      "terminal_lf": 1,
+      "eof_hex": "65725f6368616e6765643d747275650a"
+    },
+    "stderr_identity": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_oid": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "lf": 0,
+      "terminal_lf": 0,
+      "eof_hex": ""
+    },
+    "source_after_invocation": {
+      "bytes": 347400,
+      "sha256": "e9eb687b788d979d3bf06296c2fe2884b3dbabdd7a786de9f077d072fedad0d9",
+      "git_blob_oid": "9df2af9453b120bc9bea88569f039f9bacbe9a4e",
+      "lf": 6584,
+      "terminal_lf": 1,
+      "eof_hex": "e7aca6e58fb7e8af81e68daee380820a"
+    },
+    "source_unchanged_during_invocation": true
+  },
+  "new_canonical_pairs": {
+    "41c90b2b5c7115b4bc7e0eb679094e9050882b92862d486665a3e2c34e2faa42": {
+      "cas_path": "Meta/Digestion/atoms/sha256/41c90b2b5c7115b4bc7e0eb679094e9050882b92862d486665a3e2c34e2faa42",
+      "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/41c90b2b5c7115b4bc7e0eb679094e9050882b92862d486665a3e2c34e2faa42.yaml",
+      "cas_identity": {
+        "bytes": 2624,
+        "sha256": "41c90b2b5c7115b4bc7e0eb679094e9050882b92862d486665a3e2c34e2faa42",
+        "git_blob_oid": "8df799c31c5f567d8131907451d6afb17631afdd",
+        "lf": 29,
+        "terminal_lf": 2,
+        "eof_hex": "5c656e647b61727261797d0a5c5d0a0a"
+      },
+      "yaml_identity": {
+        "bytes": 328,
+        "sha256": "647542d19b912124fc230fb9af93f21e68402acd7b22fea0feedb15974ea5010",
+        "git_blob_oid": "fa940c33b06832d6a38db14de54f59e7a69ea6a0",
+        "lf": 7,
+        "terminal_lf": 1,
+        "eof_hex": "65645f7375626974656d733a205b5d0a"
+      },
+      "actual_yaml_text": "fingerprints:\n  raw_sha256: sha256:41c90b2b5c7115b4bc7e0eb679094e9050882b92862d486665a3e2c34e2faa42\n  normalized_sha256: sha256:41c90b2b5c7115b4bc7e0eb679094e9050882b92862d486665a3e2c34e2faa42\ncas_ref: sha256:41c90b2b5c7115b4bc7e0eb679094e9050882b92862d486665a3e2c34e2faa42\ncoverage_gids: []\nreceipts:\n  unresolved_subitems: []\n",
+      "ordered_child_ids": [],
+      "producer": "sole I37 ingest"
+    },
+    "53141233bfaaa957db7667df81f8be4470560bba3a2df8f4acffb86107c804ff": {
+      "cas_path": "Meta/Digestion/atoms/sha256/53141233bfaaa957db7667df81f8be4470560bba3a2df8f4acffb86107c804ff",
+      "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/53141233bfaaa957db7667df81f8be4470560bba3a2df8f4acffb86107c804ff.yaml",
+      "cas_identity": {
+        "bytes": 992,
+        "sha256": "53141233bfaaa957db7667df81f8be4470560bba3a2df8f4acffb86107c804ff",
+        "git_blob_oid": "ff45f4511b09e74e13f9be99dfe3d9e7a0f4f536",
+        "lf": 17,
+        "terminal_lf": 1,
+        "eof_hex": "e7aca6e58fb7e8af81e68daee380820a"
+      },
+      "yaml_identity": {
+        "bytes": 328,
+        "sha256": "55777a23c486e243240978e412b7869b790ff816ee9e05fd9e3bda1ff6090735",
+        "git_blob_oid": "f341847955e78ab12ec06951bcb8e15bfab845c3",
+        "lf": 7,
+        "terminal_lf": 1,
+        "eof_hex": "65645f7375626974656d733a205b5d0a"
+      },
+      "actual_yaml_text": "fingerprints:\n  raw_sha256: sha256:53141233bfaaa957db7667df81f8be4470560bba3a2df8f4acffb86107c804ff\n  normalized_sha256: sha256:53141233bfaaa957db7667df81f8be4470560bba3a2df8f4acffb86107c804ff\ncas_ref: sha256:53141233bfaaa957db7667df81f8be4470560bba3a2df8f4acffb86107c804ff\ncoverage_gids: []\nreceipts:\n  unresolved_subitems: []\n",
+      "ordered_child_ids": [],
+      "producer": "sole I37 ingest"
+    },
+    "75565eac60ef67c7c8e5cf4d62a63822507e7f75e542612a59a846add84e37ce": {
+      "cas_path": "Meta/Digestion/atoms/sha256/75565eac60ef67c7c8e5cf4d62a63822507e7f75e542612a59a846add84e37ce",
+      "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/75565eac60ef67c7c8e5cf4d62a63822507e7f75e542612a59a846add84e37ce.yaml",
+      "cas_identity": {
+        "bytes": 3616,
+        "sha256": "75565eac60ef67c7c8e5cf4d62a63822507e7f75e542612a59a846add84e37ce",
+        "git_blob_oid": "ca2bb85c06eb2059357d4268f2c02e4eee6b994b",
+        "lf": 46,
+        "terminal_lf": 1,
+        "eof_hex": "e7aca6e58fb7e8af81e68daee380820a"
+      },
+      "yaml_identity": {
+        "bytes": 485,
+        "sha256": "4f22bf9148282d01157d7b8a85efbc21657f5b5680d5a554d170f2292a5d364c",
+        "git_blob_oid": "1a610335b809706f5a24e89985e721bf33419fa2",
+        "lf": 10,
+        "terminal_lf": 1,
+        "eof_hex": "6366666238363130376338303466660a"
+      },
+      "actual_yaml_text": "fingerprints:\n  raw_sha256: sha256:75565eac60ef67c7c8e5cf4d62a63822507e7f75e542612a59a846add84e37ce\n  normalized_sha256: sha256:75565eac60ef67c7c8e5cf4d62a63822507e7f75e542612a59a846add84e37ce\ncas_ref: sha256:75565eac60ef67c7c8e5cf4d62a63822507e7f75e542612a59a846add84e37ce\ncoverage_gids: []\nreceipts:\n  unresolved_subitems: []\n  chain_atoms:\n    - 41c90b2b5c7115b4bc7e0eb679094e9050882b92862d486665a3e2c34e2faa42\n    - 53141233bfaaa957db7667df81f8be4470560bba3a2df8f4acffb86107c804ff\n",
+      "ordered_child_ids": [
+        "41c90b2b5c7115b4bc7e0eb679094e9050882b92862d486665a3e2c34e2faa42",
+        "53141233bfaaa957db7667df81f8be4470560bba3a2df8f4acffb86107c804ff"
+      ],
+      "producer": "sole I37 ingest"
+    }
+  },
+  "current_owned_partition": {
+    "source_span": {
+      "start_byte": 316793,
+      "end_byte_exclusive": 347400,
+      "start_line": 5978,
+      "end_line_inclusive": 6584,
+      "bytes": 30607,
+      "sha256": "cad725ab3f14cc3c7da3a15189356075e95d19b35d5452c6303d07037a344437",
+      "git_blob_oid": "f66531fe9507044f0e71cb5973f8b4500c8dc2cb",
+      "lf": 607,
+      "terminal_lf": 1,
+      "eof_hex": "e7aca6e58fb7e8af81e68daee380820a"
+    },
+    "unit_count": 22,
+    "units": [
+      {
+        "unit": "32.1",
+        "source_coordinates": {
+          "start_byte": 316793,
+          "end_byte_exclusive": 317756,
+          "start_line": 5978,
+          "end_line_inclusive": 5993
+        },
+        "immutable_binding_ref": {
+          "document": "I35",
+          "json_pointer": "/current_unit_bindings/0"
+        },
+        "applicability": "Same current source coordinates and bytes; full parent, ordered parts, separators and identities are inherited exactly.",
+        "current_exact_revalidation": true
+      },
+      {
+        "unit": "32.2",
+        "source_coordinates": {
+          "start_byte": 317756,
+          "end_byte_exclusive": 318939,
+          "start_line": 5994,
+          "end_line_inclusive": 6014
+        },
+        "immutable_binding_ref": {
+          "document": "I35",
+          "json_pointer": "/current_unit_bindings/1"
+        },
+        "applicability": "Same current source coordinates and bytes; full parent, ordered parts, separators and identities are inherited exactly.",
+        "current_exact_revalidation": true
+      },
+      {
+        "unit": "32.3",
+        "source_coordinates": {
+          "start_byte": 318939,
+          "end_byte_exclusive": 320680,
+          "start_line": 6015,
+          "end_line_inclusive": 6062
+        },
+        "immutable_binding_ref": {
+          "document": "I35",
+          "json_pointer": "/current_unit_bindings/2"
+        },
+        "applicability": "Same current source coordinates and bytes; full parent, ordered parts, separators and identities are inherited exactly.",
+        "current_exact_revalidation": true
+      },
+      {
+        "unit": "32.4",
+        "source_coordinates": {
+          "start_byte": 320680,
+          "end_byte_exclusive": 322113,
+          "start_line": 6063,
+          "end_line_inclusive": 6094
+        },
+        "immutable_binding_ref": {
+          "document": "I35",
+          "json_pointer": "/current_unit_bindings/3"
+        },
+        "applicability": "Same current source coordinates and bytes; full parent, ordered parts, separators and identities are inherited exactly.",
+        "current_exact_revalidation": true
+      },
+      {
+        "unit": "32.5",
+        "source_coordinates": {
+          "start_byte": 322113,
+          "end_byte_exclusive": 322753,
+          "start_line": 6095,
+          "end_line_inclusive": 6109
+        },
+        "immutable_binding_ref": {
+          "document": "I35",
+          "json_pointer": "/current_unit_bindings/4"
+        },
+        "applicability": "Same current source coordinates and bytes; full parent, ordered parts, separators and identities are inherited exactly.",
+        "current_exact_revalidation": true
+      },
+      {
+        "unit": "32.6",
+        "source_coordinates": {
+          "start_byte": 322753,
+          "end_byte_exclusive": 323370,
+          "start_line": 6110,
+          "end_line_inclusive": 6122
+        },
+        "immutable_binding_ref": {
+          "document": "I35",
+          "json_pointer": "/current_unit_bindings/5"
+        },
+        "applicability": "Same current source coordinates and bytes; full parent, ordered parts, separators and identities are inherited exactly.",
+        "current_exact_revalidation": true
+      },
+      {
+        "unit": "32.7",
+        "source_coordinates": {
+          "start_byte": 323370,
+          "end_byte_exclusive": 324190,
+          "start_line": 6123,
+          "end_line_inclusive": 6144
+        },
+        "immutable_binding_ref": {
+          "document": "I35",
+          "json_pointer": "/current_unit_bindings/6"
+        },
+        "applicability": "Same current source coordinates and bytes; full parent, ordered parts, separators and identities are inherited exactly.",
+        "current_exact_revalidation": true
+      },
+      {
+        "unit": "32.8",
+        "source_coordinates": {
+          "start_byte": 324190,
+          "end_byte_exclusive": 326057,
+          "start_line": 6145,
+          "end_line_inclusive": 6182
+        },
+        "immutable_binding_ref": {
+          "document": "I35",
+          "json_pointer": "/current_unit_bindings/7"
+        },
+        "applicability": "Same current source coordinates and bytes; full parent, ordered parts, separators and identities are inherited exactly.",
+        "current_exact_revalidation": true
+      },
+      {
+        "unit": "32.9",
+        "source_coordinates": {
+          "start_byte": 326057,
+          "end_byte_exclusive": 326672,
+          "start_line": 6183,
+          "end_line_inclusive": 6193
+        },
+        "immutable_binding_ref": {
+          "document": "I35",
+          "json_pointer": "/current_unit_bindings/8"
+        },
+        "applicability": "Same current source coordinates and bytes; full parent, ordered parts, separators and identities are inherited exactly.",
+        "current_exact_revalidation": true
+      },
+      {
+        "unit": "32.10",
+        "source_coordinates": {
+          "start_byte": 326672,
+          "end_byte_exclusive": 327440,
+          "start_line": 6194,
+          "end_line_inclusive": 6210
+        },
+        "immutable_binding_ref": {
+          "document": "I35",
+          "json_pointer": "/current_unit_bindings/9"
+        },
+        "applicability": "Same current source coordinates and bytes; full parent, ordered parts, separators and identities are inherited exactly.",
+        "current_exact_revalidation": true
+      },
+      {
+        "unit": "32.11",
+        "source_coordinates": {
+          "start_byte": 327440,
+          "end_byte_exclusive": 329029,
+          "start_line": 6211,
+          "end_line_inclusive": 6242
+        },
+        "immutable_binding_ref": {
+          "document": "I35",
+          "json_pointer": "/current_unit_bindings/10"
+        },
+        "applicability": "Same current source coordinates and bytes; full parent, ordered parts, separators and identities are inherited exactly.",
+        "current_exact_revalidation": true
+      },
+      {
+        "unit": "32.12",
+        "source_coordinates": {
+          "start_byte": 329029,
+          "end_byte_exclusive": 329980,
+          "start_line": 6243,
+          "end_line_inclusive": 6260
+        },
+        "immutable_binding_ref": {
+          "document": "I35",
+          "json_pointer": "/current_unit_bindings/11"
+        },
+        "applicability": "Same current source coordinates and bytes; full parent, ordered parts, separators and identities are inherited exactly.",
+        "current_exact_revalidation": true
+      },
+      {
+        "unit": "32.13",
+        "source_coordinates": {
+          "start_byte": 329980,
+          "end_byte_exclusive": 331435,
+          "start_line": 6261,
+          "end_line_inclusive": 6301
+        },
+        "immutable_binding_ref": {
+          "document": "I35",
+          "json_pointer": "/current_unit_bindings/12"
+        },
+        "applicability": "Same current source coordinates and bytes; full parent, ordered parts, separators and identities are inherited exactly.",
+        "current_exact_revalidation": true
+      },
+      {
+        "unit": "32.14",
+        "source_coordinates": {
+          "start_byte": 331435,
+          "end_byte_exclusive": 332670,
+          "start_line": 6302,
+          "end_line_inclusive": 6327
+        },
+        "immutable_binding_ref": {
+          "document": "I35",
+          "json_pointer": "/current_unit_bindings/13"
+        },
+        "applicability": "Same current source coordinates and bytes; full parent, ordered parts, separators and identities are inherited exactly.",
+        "current_exact_revalidation": true
+      },
+      {
+        "unit": "32.15",
+        "source_coordinates": {
+          "start_byte": 332670,
+          "end_byte_exclusive": 334967,
+          "start_line": 6328,
+          "end_line_inclusive": 6358
+        },
+        "immutable_binding_ref": {
+          "document": "I35",
+          "json_pointer": "/current_unit_bindings/14"
+        },
+        "applicability": "Same current source coordinates and bytes; full parent, ordered parts, separators and identities are inherited exactly.",
+        "current_exact_revalidation": true
+      },
+      {
+        "unit": "32.16",
+        "source_coordinates": {
+          "start_byte": 334967,
+          "end_byte_exclusive": 336341,
+          "start_line": 6359,
+          "end_line_inclusive": 6394
+        },
+        "immutable_binding_ref": {
+          "document": "I35",
+          "json_pointer": "/current_unit_bindings/15"
+        },
+        "applicability": "Same current source coordinates and bytes; full parent, ordered parts, separators and identities are inherited exactly.",
+        "current_exact_revalidation": true
+      },
+      {
+        "unit": "32.17",
+        "source_coordinates": {
+          "start_byte": 336341,
+          "end_byte_exclusive": 337389,
+          "start_line": 6395,
+          "end_line_inclusive": 6414
+        },
+        "immutable_binding_ref": {
+          "document": "I35",
+          "json_pointer": "/current_unit_bindings/16"
+        },
+        "applicability": "Same current source coordinates and bytes; full parent, ordered parts, separators and identities are inherited exactly.",
+        "current_exact_revalidation": true
+      },
+      {
+        "unit": "32.18",
+        "source_coordinates": {
+          "start_byte": 337389,
+          "end_byte_exclusive": 338679,
+          "start_line": 6415,
+          "end_line_inclusive": 6442
+        },
+        "immutable_binding_ref": {
+          "document": "I35",
+          "json_pointer": "/current_unit_bindings/17"
+        },
+        "applicability": "Same current source coordinates and bytes; full parent, ordered parts, separators and identities are inherited exactly.",
+        "current_exact_revalidation": true
+      },
+      {
+        "unit": "32.21",
+        "source_coordinates": {
+          "start_byte": 338679,
+          "end_byte_exclusive": 339021,
+          "start_line": 6443,
+          "end_line_inclusive": 6446
+        },
+        "immutable_binding_ref": {
+          "document": "I35",
+          "json_pointer": "/current_unit_bindings/18"
+        },
+        "applicability": "Same current source coordinates and bytes; full parent, ordered parts, separators and identities are inherited exactly.",
+        "current_exact_revalidation": true
+      },
+      {
+        "unit": "32.22",
+        "source_coordinates": {
+          "start_byte": 339021,
+          "end_byte_exclusive": 341658,
+          "start_line": 6447,
+          "end_line_inclusive": 6502
+        },
+        "immutable_binding_ref": {
+          "document": "I35",
+          "json_pointer": "/current_unit_bindings/19"
+        },
+        "applicability": "Same current source coordinates and bytes; full parent, ordered parts, separators and identities are inherited exactly.",
+        "current_exact_revalidation": true
+      },
+      {
+        "unit": "32.23",
+        "source_coordinates": {
+          "start_byte": 341658,
+          "end_byte_exclusive": 343784,
+          "start_line": 6503,
+          "end_line_inclusive": 6538
+        },
+        "immutable_binding_ref": {
+          "document": "I35",
+          "json_pointer": "/current_unit_bindings/20"
+        },
+        "applicability": "Same current source coordinates and bytes; full parent, ordered parts, separators and identities are inherited exactly.",
+        "current_exact_revalidation": true
+      },
+      {
+        "unit": "32.24",
+        "source_span": {
+          "start_byte": 343784,
+          "end_byte_exclusive": 347400,
+          "start_line": 6539,
+          "end_line_inclusive": 6584,
+          "bytes": 3616,
+          "sha256": "75565eac60ef67c7c8e5cf4d62a63822507e7f75e542612a59a846add84e37ce",
+          "git_blob_oid": "ca2bb85c06eb2059357d4268f2c02e4eee6b994b",
+          "lf": 46,
+          "terminal_lf": 1,
+          "eof_hex": "e7aca6e58fb7e8af81e68daee380820a"
+        },
+        "full_parent_ref": "75565eac60ef67c7c8e5cf4d62a63822507e7f75e542612a59a846add84e37ce",
+        "complete": true,
+        "ordered_parts": [
+          {
+            "pair_ref": "41c90b2b5c7115b4bc7e0eb679094e9050882b92862d486665a3e2c34e2faa42",
+            "source_span": {
+              "start_byte": 343784,
+              "end_byte_exclusive": 346408,
+              "start_line": 6539,
+              "end_line_inclusive": 6567,
+              "bytes": 2624,
+              "sha256": "41c90b2b5c7115b4bc7e0eb679094e9050882b92862d486665a3e2c34e2faa42",
+              "git_blob_oid": "8df799c31c5f567d8131907451d6afb17631afdd",
+              "lf": 29,
+              "terminal_lf": 2,
+              "eof_hex": "5c656e647b61727261797d0a5c5d0a0a"
+            }
+          },
+          {
+            "pair_ref": "53141233bfaaa957db7667df81f8be4470560bba3a2df8f4acffb86107c804ff",
+            "source_span": {
+              "start_byte": 346408,
+              "end_byte_exclusive": 347400,
+              "start_line": 6568,
+              "end_line_inclusive": 6584,
+              "bytes": 992,
+              "sha256": "53141233bfaaa957db7667df81f8be4470560bba3a2df8f4acffb86107c804ff",
+              "git_blob_oid": "ff45f4511b09e74e13f9be99dfe3d9e7a0f4f536",
+              "lf": 17,
+              "terminal_lf": 1,
+              "eof_hex": "e7aca6e58fb7e8af81e68daee380820a"
+            }
+          }
+        ],
+        "uncovered_spans": [],
+        "uncovered_bytes": 0,
+        "complete_parent_equals_source_unit": true,
+        "ordered_child_concatenation_equals_source_unit": true,
+        "proof_and_separators_included": true
+      }
+    ],
+    "disjoint_exhaustive": true,
+    "all_units_have_complete_actual_parents": true,
+    "all_ordered_concatenations_exact": true,
+    "uncovered_bytes": 0,
+    "structural_heading": {
+      "start_byte": 316725,
+      "end_byte_exclusive": 316793,
+      "start_line": 5976,
+      "end_line_inclusive": 5977,
+      "bytes": 68,
+      "sha256": "510944feb612fbb66877d552a08e512eb26a3a7f39a5db95c97ad2703c54d574",
+      "git_blob_oid": "a4e6a2f2fc03d14572fa1944a704c3990382c486",
+      "lf": 2,
+      "terminal_lf": 2,
+      "eof_hex": "b182e4b8a5e6a0bce6af94e8be830a0a"
+    },
+    "inherited_outside_owned_span": {
+      "start_byte": 0,
+      "end_byte_exclusive": 316725,
+      "start_line": 1,
+      "end_line_inclusive": 5975,
+      "bytes": 316725,
+      "sha256": "2f2bd893627195ce52a344bc79d40095f51d9e87c447bc88753cb6d88598bbde",
+      "git_blob_oid": "7265f2652e3be9487cd6036b2d62236e73547c39",
+      "lf": 5975,
+      "terminal_lf": 2,
+      "eof_hex": "91a8e69c9fe591bde4bba4e380820a0a"
+    },
+    "permanently_unavailable_addresses": [
+      "32.19",
+      "32.20"
+    ]
+  },
+  "historical_failure": {
+    "immutable_ref": {
+      "document": "I35",
+      "json_pointer": "/current_unit_bindings/21"
+    },
+    "intake_complete_parent_absent": true,
+    "old_complete_parent_still_not_created": true,
+    "verified_uncovered_bytes": 1025,
+    "verified_uncovered_span_count": 16,
+    "old_fragment_bytes_and_record_unchanged": true,
+    "status": "Historical failed coverage is preserved; the new parent binds the new representation only."
+  },
+  "historical_preservation": {
+    "metadata_audit": {
+      "map_json_nodes_visited": 16652,
+      "recovery": {
+        "I35_intake_source": {
+          "segment_count": 3,
+          "identity": {
+            "bytes": 339172,
+            "sha256": "36786f32c4af6f93959076892547ad95f4096b2b5102218df6560274b5c40949",
+            "git_blob_oid": "7abdd96e9c0a51fef9267289b6957c53ce6dba21",
+            "lf": 6450,
+            "terminal_lf": 1,
+            "eof_hex": "e6978fe79a84e8a395e9878fe380820a"
+          },
+          "disjoint_exhaustive_exact": true
+        },
+        "pre_I32_source": {
+          "segment_count": 98,
+          "identity": {
+            "bytes": 343505,
+            "sha256": "6b7b3212af93662b5bba9d9e312e72d05a9cee516a78152d42ab65256b54ed42",
+            "git_blob_oid": "ab6466d43c09dab45f5c075e55219d9878ad88ba",
+            "lf": 6498,
+            "terminal_lf": 1,
+            "eof_hex": "e79baee6a087e5ae8ce68890e380820a"
+          },
+          "disjoint_exhaustive_exact": true
+        }
+      },
+      "I32_recovery_segments_checked": 98,
+      "I32_metadata_additions_checked": 115,
+      "I32_fixed_math_blocks_compared": 47,
+      "historical_pair_identity_occurrences": 145,
+      "unique_historical_pairs": 96,
+      "I32_historical_complete_bindings_checked": 40,
+      "unchanged_I35_complete_units_checked": 21,
+      "all_checks_exact": true
+    },
+    "baseline_tracked_inventory_identity": {
+      "bytes": 10827529,
+      "sha256": "f8478792630c4413b44a6965d28f36c981cf1255a935db7766df8a94bba9e54e",
+      "git_blob_oid": "89b90dc3cc0af2bb8f835359d0e96e3f5c550e72",
+      "lf": 0,
+      "terminal_lf": 0,
+      "eof_hex": "3034302f736f757263652e746f6d6c00"
+    },
+    "baseline_tracked_paths": 64415,
+    "all_tracked_digestion_bytes_unchanged_command": {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "diff",
+        "1bad65f5c340e0a8b57355a76058833cec958236",
+        "--exit-code",
+        "--",
+        "Meta/Digestion"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "method": "All old map identities and 96 unique referenced pairs are checked directly, including actual YAML text, LF variants and chains. The BASE tree inventory and empty tracked Meta/Digestion diff cover every historical tracked object; no historical canonical path is edited or deleted."
+  },
+  "whitespace": {
+    "tracked_diff_check": {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "diff",
+        "--check"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "new_producer_files": [
+      {
+        "argv": [
+          "git",
+          "--no-optional-locks",
+          "diff",
+          "--no-index",
+          "--check",
+          "--",
+          "/dev/null",
+          "Meta/Digestion/atoms/sha256/41c90b2b5c7115b4bc7e0eb679094e9050882b92862d486665a3e2c34e2faa42"
+        ],
+        "exit": 3,
+        "stdout": "Meta/Digestion/atoms/sha256/41c90b2b5c7115b4bc7e0eb679094e9050882b92862d486665a3e2c34e2faa42:29: new blank line at EOF.\n",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "git",
+          "--no-optional-locks",
+          "diff",
+          "--no-index",
+          "--check",
+          "--",
+          "/dev/null",
+          "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/41c90b2b5c7115b4bc7e0eb679094e9050882b92862d486665a3e2c34e2faa42.yaml"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "git",
+          "--no-optional-locks",
+          "diff",
+          "--no-index",
+          "--check",
+          "--",
+          "/dev/null",
+          "Meta/Digestion/atoms/sha256/53141233bfaaa957db7667df81f8be4470560bba3a2df8f4acffb86107c804ff"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "git",
+          "--no-optional-locks",
+          "diff",
+          "--no-index",
+          "--check",

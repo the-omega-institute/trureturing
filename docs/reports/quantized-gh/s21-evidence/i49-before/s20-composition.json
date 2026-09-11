@@ -1,0 +1,304 @@
+{
+  "schema": "s20-predecessor-composition-v1",
+  "source_id": "arithmetic-boundary-quantization",
+  "source_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+  "base": "56aebf5d4573c953d6a994f019d8abb216d5bf35",
+  "historical_S20_commit": "ffcb5a286b73983b62306ac76b900c17998d3e66",
+  "contract": "docs/reports/quantized-gh/s20-evidence/README.md",
+  "byte_convention": "Strict UTF-8; zero-based half-open byte spans; actual LF and integer terminal-LF counts; no trimming.",
+  "versions": {
+    "source-S20-I29": {
+      "kind": "parts",
+      "descriptor": "docs/reports/quantized-gh/s20-evidence/old-source.json",
+      "identity": {
+        "bytes": 312957,
+        "sha256": "28ee1eb94e166ef4f8b4f2b01408779b2fdfe0d05ee692a0158790841e2fe894",
+        "lf": 5939,
+        "terminal_lf": 2,
+        "lines": 5939
+      }
+    },
+    "I29": {
+      "kind": "parts",
+      "descriptor": "docs/reports/quantized-gh/theory-body-migration-s20-0910.json",
+      "identity": {
+        "bytes": 142389,
+        "sha256": "b7fddf7ead7eaae9bd8d1f2d2548bde04c5027fa371273d7e5bba179bb84a31c",
+        "lf": 3851,
+        "terminal_lf": 1,
+        "lines": 3851
+      }
+    },
+    "s19-README-before-I47": {
+      "kind": "parts",
+      "descriptor": "docs/reports/quantized-gh/s20-evidence/s19-readme-before.json",
+      "identity": {
+        "bytes": 28126,
+        "sha256": "920667b66b3ff08e1095b21bfd016896a5459691f7a10ee472eeaea5eabd9712",
+        "lf": 357,
+        "terminal_lf": 1,
+        "lines": 357
+      }
+    },
+    "s19-catalog-before-I47": {
+      "kind": "parts",
+      "descriptor": "docs/reports/quantized-gh/s20-evidence/s19-catalog-before.json",
+      "identity": {
+        "bytes": 13904,
+        "sha256": "501c9c917a719604090b103eb78174ce660b6aa3747e6495b1caa951f0e7beab",
+        "lf": 410,
+        "terminal_lf": 1,
+        "lines": 410
+      }
+    },
+    "source-composed-I47": {
+      "kind": "file",
+      "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "identity": {
+        "bytes": 364059,
+        "sha256": "47880f8a0b5b96b7fa2178c5a92284da6ec8b112b33c6e14236719f6963c3d00",
+        "lf": 7128,
+        "terminal_lf": 2,
+        "lines": 7128
+      }
+    },
+    "source-S19-merged": {
+      "kind": "file_span",
+      "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "byte_span": [
+        0,
+        337429
+      ],
+      "identity": {
+        "bytes": 337429,
+        "sha256": "82c4c836d0ba2a2cdcdbc27debc97b88f0c5eb779d95f41eecd4e0d3247f08c8",
+        "lf": 6581,
+        "terminal_lf": 1,
+        "lines": 6581
+      }
+    },
+    "tail-S20-I29": {
+      "kind": "file_span",
+      "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "byte_span": [
+        337429,
+        364059
+      ],
+      "identity": {
+        "bytes": 26630,
+        "sha256": "69443ddea0e1a22e3d6dfed281b49b1c43f906f5e328dee743185dfa44c617fd",
+        "lf": 547,
+        "terminal_lf": 2,
+        "lines": 547
+      }
+    },
+    "report-S20-I29": {
+      "kind": "file",
+      "path": "docs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md",
+      "identity": {
+        "bytes": 58191,
+        "sha256": "29d239c8f3f0bb3cde6bc8fb780360856955846ecc8c48ffe1f7f16b218a73c6",
+        "lf": 792,
+        "terminal_lf": 1,
+        "lines": 792
+      }
+    },
+    "source-S20-pre-I29": {
+      "kind": "i29_recovery",
+      "identity": {
+        "bytes": 316737,
+        "sha256": "3f27fbd4bef498d995cd7e1bd566c960ad8a384c5f04f8b5b2a91cb1625dc351",
+        "lf": 5974,
+        "terminal_lf": 1,
+        "lines": 5974
+      }
+    },
+    "source-S20-C72": {
+      "kind": "remove",
+      "version": "source-S20-pre-I29",
+      "byte_span": [
+        314676,
+        314689
+      ],
+      "literal": "quantized-gh/",
+      "identity": {
+        "bytes": 316724,
+        "sha256": "9229e2affc81243efcdcbd228058d8ca19cea395630a94ae943afde374157dd2",
+        "lf": 5974,
+        "terminal_lf": 1,
+        "lines": 5974
+      }
+    },
+    "report-S20-pre-I29": {
+      "kind": "slices",
+      "slices": [
+        {
+          "version": "report-S20-I29",
+          "byte_span": [
+            0,
+            39335
+          ]
+        }
+      ],
+      "identity": {
+        "bytes": 39335,
+        "sha256": "25ebbf523de8731ace65c4ee3125bc915b70203bc2096ca2e383685bc8d57461",
+        "lf": 499,
+        "terminal_lf": 1,
+        "lines": 499
+      }
+    },
+    "report-S20-C72-input": {
+      "kind": "slices",
+      "slices": [
+        {
+          "version": "report-S20-I29",
+          "byte_span": [
+            0,
+            31714
+          ]
+        }
+      ],
+      "identity": {
+        "bytes": 31714,
+        "sha256": "4b52cd797beff65a7d15b3f5eb22b70a23d75daff3112d056eefebd0cfc569e4",
+        "lf": 457,
+        "terminal_lf": 1,
+        "lines": 457
+      }
+    },
+    "report-S20-C72": {
+      "kind": "remove",
+      "version": "report-S20-C72-input",
+      "byte_span": [
+        124,
+        127
+      ],
+      "literal": "../",
+      "identity": {
+        "bytes": 31711,
+        "sha256": "2b100f9d29e4d481fe7f76433ddbd3644eb925975f52bd7655584a839b49c0fa",
+        "lf": 457,
+        "terminal_lf": 1,
+        "lines": 457
+      }
+    },
+    "report-S20-placement-note": {
+      "kind": "slices",
+      "slices": [
+        {
+          "version": "report-S20-I29",
+          "byte_span": [
+            31714,
+            39335
+          ]
+        }
+      ],
+      "identity": {
+        "bytes": 7621,
+        "sha256": "ed43263b36aceab4acb9c9973fc771a9e31671d122cab42278d5c17b99e07a8c",
+        "lf": 42,
+        "terminal_lf": 1,
+        "lines": 42
+      }
+    }
+  },
+  "aliases": {
+    "theory-body-migration-s20-0910.json": "I29",
+    "docs/reports/quantized-gh/theory-body-migration-s20-0910.json": "I29"
+  },
+  "i29_destination_owners": {
+    "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md": "source-S20-I29",
+    "docs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md": "report-S20-I29"
+  },
+  "i29_original_span_owner": "source-S20-pre-I29",
+  "i29_current_span_owner": "source-S20-I29",
+  "current_units": "docs/reports/quantized-gh/s20-evidence/current-units.json",
+  "canonical_pairs": "docs/reports/quantized-gh/s20-evidence/canonical-pairs.json",
+  "ordered_chains": "docs/reports/quantized-gh/s20-evidence/ordered-chains.json",
+  "own_addresses": "docs/reports/quantized-gh/s20-evidence/own-addresses.json",
+  "navigation": "docs/reports/quantized-gh/s20-evidence/navigation.json",
+  "inherited_contract": {
+    "api": "docs/reports/quantized-gh/s19-evidence/README.md",
+    "catalog": "docs/reports/quantized-gh/s19-evidence/catalog.json",
+    "version_prefix": "s19:",
+    "all_maps": [
+      "I31",
+      "I33",
+      "I36",
+      "I42"
+    ],
+    "all_current_addresses": {
+      "map": "s19:I42",
+      "pointer": "/composition/current_addresses"
+    },
+    "all_dispositions": {
+      "map": "s19:I42",
+      "pointer": "/composition/inherited_dispositions"
+    },
+    "all_report_primary_links": {
+      "map": "s19:I42",
+      "pointer": "/composition/report_contracts"
+    },
+    "all_primary_addresses": {
+      "map": "s19:I42",
+      "pointer": "/composition/primary_address_composition"
+    }
+  },
+  "structural_regions": [
+    {
+      "byte_span": [
+        337429,
+        337498
+      ],
+      "identity": {
+        "bytes": 69,
+        "sha256": "15a6f2a11e0a41aab6e2850b2a228b6cb0b29486b94d56d0718e39d252a3e289",
+        "lf": 2,
+        "terminal_lf": 2,
+        "lines": 2
+      },
+      "meaning": "Exact chapter31 heading. generic-v1 drops heading-only candidates; retained source/context, not a missing mathematical atom.",
+      "producer_rule": "MarkdownAstAtomizer.IsHeadingOnly with GenericAtomizer dropEmptyHeadingClaims=true"
+    }
+  ],
+  "offset_transform": {
+    "input": "source-S20-I29",
+    "output": "source-composed-I47",
+    "domain": [
+      286327,
+      312957
+    ],
+    "byte_delta": 51102,
+    "lf_delta": 1189,
+    "rule": "Only preserved S20 tail intervals translate by this delta. Reconstruct all earlier versions first; never apply this displacement to arbitrary old-source intervals."
+  },
+  "canonical_scope": {
+    "whole_units": 282,
+    "inherited_whole_units": 262,
+    "tail_whole_units": 20,
+    "current_reachable_pairs": 374,
+    "ordered_chains": 38,
+    "imported_historical_pairs": 44,
+    "new_ingest": 0,
+    "structural_heading_bytes": 69,
+    "inherited_payload_origin": {
+      "archive": "s19-full-source-review-dispatch-r6-0911.zip",
+      "sha256": "9b38a2a8316d47507b399045a829260855909ff843ac0b64a5215b7493da4b7a",
+      "manifest": {
+        "bytes": 1084907,
+        "sha256": "3dfcbe638b21f6ee08a38bb61052412182aa156ec3063b5f0f079c58f38bdcf3",
+        "lf": 17431,
+        "terminal_lf": 1,
+        "lines": 17431
+      }
+    }
+  },
+  "scientific_scope": "Exact representation of the merged S19 predecessor plus completed S20 pure tail. No new theorem, proof rewrite, mathematical execution, independent approval, CI-green, formal/kernel/RH result or current MERGED claim.",
+  "historical_predicates": {
+    "original": 131,
+    "adapted": 152,
+    "additional": 21,
+    "status": "Historical inert certificate claims; never executed by I47."
+  }
+}
