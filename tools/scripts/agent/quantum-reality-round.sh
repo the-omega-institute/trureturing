@@ -43,17 +43,37 @@ OPEN="$DIR/OPEN-QUESTIONS.md"
 [ -f "$OPEN" ]    || { echo "QR_ROUND status=failed reason=no-open-questions path=$OPEN"; exit 2; }
 
 mkdir -p "$DIR"
-# The round number is the archive's own maximum plus one, not a count.
-# Counting was wrong every time it mattered: a failed round's archive is deleted
-# on purpose (an empty shell would be misread as a verdict next round), so the
-# count undershoots by exactly the number of failures. It produced 10, 11, 12, 13
-# while the real rounds were 12, 14, 15, 16, and archives were renamed by hand
-# twice before the derivation itself was fixed (第 7.11 条: the same symptom a
-# second time means stop renaming files and fix the rule).
-n=$(find "$DIR" -maxdepth 1 -name 'round-*.md' 2>/dev/null \
-    | sed -n 's|.*/round-\([0-9][0-9]*\)-.*|\1|p' \
-    | sort -n | tail -1)
-n=$(( ${n:-0} + 1 ))
+# The round number comes from the carried open-questions text, not from the
+# archive files.
+#
+# Two earlier derivations were wrong, each for its own reason, and the second is
+# the one that matters:
+#
+#   count(round-*.md) + 5   undershoots by exactly the number of failed rounds,
+#                           because a failed round's archive is deleted on
+#                           purpose. It produced 10, 11, 12, 13 while the real
+#                           rounds were 12, 14, 15, 16.
+#
+#   max(round-*.md) + 1     fixes the counting error and is still wrong, because
+#                           **the archives are never committed**. They are
+#                           run-local outputs of whichever worktree ran the
+#                           round, and they vanish the moment that lane is reset
+#                           to the dev tip. Measured 2026-09-11: dev carries
+#                           archives 5,6,7,8,10,12,14,15 while OPEN-QUESTIONS.md
+#                           — which is committed — already names rounds 10
+#                           through 18. A freshly synced lane therefore dispatched
+#                           round 19 under the filename round-16.
+#
+# OPEN-QUESTIONS.md is the line's carried state: the dispatcher already refuses
+# to run without it, it is committed, and every round writes its own heading
+# into it. So the round number is the largest `第 N 轮` it mentions, plus one.
+# Fail closed if the file names no round at all, rather than silently restarting
+# at 1 and overwriting history.
+n=$(grep -oE '第 [0-9]+ 轮' "$OPEN" 2>/dev/null | grep -oE '[0-9]+' | sort -n | tail -1)
+case "$n" in
+  ''|*[!0-9]*) echo "QR_ROUND status=failed reason=no-round-number-in-open-questions path=$OPEN"; exit 2 ;;
+esac
+n=$(( n + 1 ))
 utc=$(date -u +%Y%m%dT%H%M%SZ)
 head_sha=$(git -C "$LANE" rev-parse origin/dev 2>/dev/null || echo unknown)
 brief=$(mktemp)
