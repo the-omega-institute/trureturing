@@ -91,7 +91,6 @@ public sealed class DependencyDirectionTests
     }
 
     [Fact]
-    // Keep the name: ScribeUnknownDebtPolicy's identity ratchet makes a rename new debt; the assertion body governs.
     public void EngineeringScopeTestsReferenceOnlyEngineeringScope()
     {
         // 此处曾有一条产物层(IL)断言,钉 `["StrataLint.EngineeringScope", "StrataLint.TestSupport"]`
@@ -113,7 +112,6 @@ public sealed class DependencyDirectionTests
     }
 
     [Fact]
-    // Keep the name: ScribeUnknownDebtPolicy's identity ratchet makes a rename new debt; the assertion body governs.
     public void ScribeTestsReferenceOnlyEngineAndScribe()
     {
         // 原为产物层(IL)断言,钉 `["StrataLint.Engine", "StrataLint.Scribe",

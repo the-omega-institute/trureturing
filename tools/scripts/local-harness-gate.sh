@@ -9,7 +9,6 @@ while [[ $# -gt 0 ]]; do
     --candidate) [[ $# -ge 2 ]] || exit 2; CANDIDATE_ROOT="$2"; shift 2 ;;
     --base) [[ $# -ge 2 ]] || exit 2; BASE_REF="$2"; shift 2 ;;
     --skip-engineering) [[ "$SKIP_ENGINEERING" == 0 ]] || exit 2; SKIP_ENGINEERING=1; shift ;;
-    --test-map-cache-root) [[ $# -ge 2 ]] || exit 2; export STRATALINT_TEST_MAP_CACHE_ROOT="$2"; shift 2 ;;
     *) echo "local-harness-gate: unknown argument $1" >&2; exit 2 ;;
   esac
 done
