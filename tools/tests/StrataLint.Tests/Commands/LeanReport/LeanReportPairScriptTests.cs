@@ -191,9 +191,10 @@ public sealed class LeanReportPairScriptTests
 
         Assert.NotEqual(0, result.ExitCode);
         Assert.Contains(
-            $"lean-report-pair: cache ensure is absent or not a readable regular file: {fixture.CanonicalCacheEnsurePath}\n",
+            "tools/scripts/worktree/lean-cache-ensure.sh:",
             Encoding.UTF8.GetString(result.StandardError),
             StringComparison.Ordinal);
+        Assert.Contains("requires at least 1 input(s), found 0", Encoding.UTF8.GetString(result.StandardError));
         Assert.Equal(0, fixture.ProducerInvocationCount);
         Assert.False(fixture.CandidateLakeExists);
     }
@@ -219,7 +220,6 @@ public sealed class LeanReportPairScriptTests
         private readonly string invocationCount;
         private readonly string candidateReport;
         private readonly string cacheEnsureLog;
-        private readonly string canonicalCandidateRoot;
         private string script = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "scripts", "lean-report-pair.sh");
         private string addressOutput = "";
 
@@ -233,14 +233,6 @@ public sealed class LeanReportPairScriptTests
                 candidateRoot, ".lake", "build", "stratalint", "candidate.json");
             cacheEnsureLog = Path.Combine(temporary.Path, "cache-ensure.log");
             InitializeRepository(candidateRoot);
-            var physicalRoot = TestProcessRunner.Run(
-                "pwd",
-                ["-P"],
-                candidateRoot,
-                BoundedProcessRunner.HangDetectionBudget,
-                4096);
-            Assert.Equal(0, physicalRoot.ExitCode);
-            canonicalCandidateRoot = Encoding.UTF8.GetString(physicalRoot.StandardOutput).Trim();
             Directory.CreateDirectory(producerDirectory);
             File.WriteAllText(
                 Path.Combine(producerDirectory, "Inspector.lean"),
@@ -255,6 +247,12 @@ public sealed class LeanReportPairScriptTests
             File.WriteAllText(CacheEnsurePath, FakeCacheEnsure, new UTF8Encoding(false));
             File.WriteAllText(Path.Combine(candidateRoot, "tools/lean-inspector/source-context.sh"),
                 LeanSourceContextScriptFixture.Script, new UTF8Encoding(false));
+            LeanReportInputScriptTests.WritePairInputRegistration(candidateRoot,
+                "tools/lean-inspector/inspect.sh", "tools/lean-inspector/source-context.sh",
+                "tools/scripts/worktree/lean-cache-ensure.sh", "tools/scripts/worktree/lean-cache-publish.sh",
+                InputHelperPath, PairScriptPath, RawReportPath, CanonicalWriterPath, ScribeProgramPath,
+                CliProjectPath, EngineProjectPath, TruthProjectPath, "tools/StrataLint.Cli/FixtureProbe.cs",
+                "Directory.Build.props", ".github/workflows/ci.yml");
             var chmod = TestProcessRunner.Run(
                 "chmod",
                 ["+x", producer],
@@ -271,9 +269,6 @@ public sealed class LeanReportPairScriptTests
 
         internal string CacheEnsurePath => Path.Combine(
             candidateRoot, "tools", "scripts", "worktree", "lean-cache-ensure.sh");
-
-        internal string CanonicalCacheEnsurePath => Path.Combine(
-            canonicalCandidateRoot, "tools", "scripts", "worktree", "lean-cache-ensure.sh");
 
         internal IReadOnlyList<string> CacheEnsureLakeStates =>
             File.Exists(cacheEnsureLog) ? File.ReadAllLines(cacheEnsureLog) : [];
@@ -316,7 +311,7 @@ public sealed class LeanReportPairScriptTests
         internal void DeleteCacheEnsure() => File.Delete(CacheEnsurePath);
 
         internal void BreakProducerClosureEvaluation() =>
-            File.AppendAllText(Path.Combine(candidateRoot, CliProjectPath), "<");
+            File.Delete(Path.Combine(candidateRoot, CliProjectPath));
 
         internal void StubAddress(string output)
         {

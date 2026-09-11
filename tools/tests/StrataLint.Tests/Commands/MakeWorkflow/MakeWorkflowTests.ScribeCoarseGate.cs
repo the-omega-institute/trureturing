@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json;
 using System.Runtime.Versioning;
 using StrataLint.Engine;
 
@@ -228,19 +229,21 @@ public sealed partial class MakeWorkflowTests
                 script,
                 UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
 
-            var inputHelper = Path.Combine(
-                Repository,
-                "tools",
-                "scripts",
-                "report",
-                "lean-report-input.sh");
-            Directory.CreateDirectory(Path.GetDirectoryName(inputHelper)!);
-            WriteExecutable(
-                inputHelper,
-                $"#!/usr/bin/env bash\n[[ \"${{1:-}}\" == scribe-producer-paths ]] || exit 2\nprintf '%s\\n' '{DerivedProducerPath}'\n");
+            WriteRegistration();
             WriteExecutable(
                 Path.Combine(binDirectory, "dotnet"),
-                "#!/usr/bin/env bash\nprintf '%s\\n' \"$*\" >> \"$SCRIBE_LOG\"\n");
+                "#!/usr/bin/env bash\n" + """
+                set -euo pipefail
+                if [[ "$1" == "$SCRIBE_DLL" ]]; then
+                  printf '%s\n' "$*" >> "$SCRIBE_LOG"
+                  exit 0
+                fi
+                # Only the launcher is transported; the candidate CLI selects inputs.
+                while [[ $# -gt 0 && "$1" != -- ]]; do shift; done
+                [[ $# -gt 0 ]] || exit 2
+                shift
+                PATH="$ORIGINAL_PATH" exec dotnet "$NATIVE_CLI" "$@"
+                """ + "\n");
             File.WriteAllText(
                 Path.Combine(Repository, "global.json"),
                 "{}\n",
@@ -255,6 +258,45 @@ public sealed partial class MakeWorkflowTests
                     "commit", "--quiet", "-m", "base",
                 ]);
             baseRevision = RunGit(["rev-parse", "HEAD"]);
+        }
+
+        private void WriteRegistration()
+        {
+            var meta = Path.Combine(Repository, "Meta");
+            Directory.CreateDirectory(meta);
+            File.WriteAllText(Path.Combine(meta, "FILEMAP.toml"), """
+                schema_version = 2
+                [residence_policy]
+                case_id = "RESIDENCE-EPOCH"
+                desired = "data-must-live-outside-tools"
+                known_violation_count = 0
+                status = "closed"
+                [[files]]
+                pattern = "Meta/LeanInputs.json"
+                kind = "program"
+                admission_plane = "judge"
+                produced_by = "none"
+                consumed_by = ["LeanInputManifest"]
+                verified_by = ["LeanInputManifest"]
+                artifact_id = "LeanInputManifest"
+                runtime_disposition = "committed-source"
+                """ + "\n");
+            object Input(params string[] patterns) => new
+                { patterns, exclude = Array.Empty<string>(), optional_root = (string?)null, min_matches = 0 };
+            object Scope(string name, string[] includes, params object[] inputs) => new { name, includes, inputs };
+            File.WriteAllText(Path.Combine(meta, "LeanInputs.json"), JsonSerializer.Serialize(new
+            {
+                schema_version = 1,
+                scopes = new[]
+                {
+                    Scope("scribe-producer", [], Input(DerivedProducerPath)),
+                    Scope("scribe-projections", ["scribe-producer"], Input("Golden/Projection/*.json")),
+                    Scope("scribe-describe", ["scribe-producer"], Input("D5/**/*.lean", "Trureturing.lean",
+                        "lean-toolchain", "lake-manifest.json", "lakefile.toml", "Library/*/*.md",
+                        "Meta/Digestion/backfill/**/*.yaml", "Problems/*.md", "Blueprint/**/*.scribe.cs")),
+                    Scope("scribe-markdown", [], Input("Blueprint/**/*.scribe.cs", "Blueprint/**/*.md")),
+                },
+            }) + "\n");
         }
 
         internal string Repository { get; }
@@ -276,7 +318,7 @@ public sealed partial class MakeWorkflowTests
             "/bin/bash",
             [
                 "-c",
-                "PATH=\"$1:/usr/bin:/bin\" SCRIBE_LOG=\"$2\" "
+                "ORIGINAL_PATH=\"$PATH\" PATH=\"$1:$PATH\" SCRIBE_LOG=\"$2\" SCRIBE_DLL=\"$5\" NATIVE_CLI=\"$7\" "
                     + "exec /bin/bash \"$3\" \"$4\" \"$5\" \"$6\"",
                 "scribe-coarse-gate",
                 binDirectory,
@@ -285,6 +327,7 @@ public sealed partial class MakeWorkflowTests
                 Report,
                 ScribeDll,
                 baseRevisionOverride ?? baseRevision,
+                Path.Combine(AppContext.BaseDirectory, "StrataLint.dll"),
             ],
             Repository,
             BoundedProcessRunner.HangDetectionBudget,

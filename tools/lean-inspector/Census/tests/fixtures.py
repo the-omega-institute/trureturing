@@ -34,6 +34,9 @@ def main():
     run(["make", "lean-cache-ensure"], directory, "cache", cwd=repository, budget_gb=None)
     run(["make", "lean"], directory, "freshness", cwd=repository, budget_gb=None)
     env = lean_env(repository)
+    run([shutil.which("lean", path=env["PATH"]), "--run",
+         str(repository / "tools/lean-inspector/LeanInformationAudit/Tests/Seal/CompanionOwnership.lean")],
+        directory, "companion_ownership", cwd=repository, env=env, budget_gb=None)
     # Lake checks every retained fixture through the inspector lean_lib glob.
     # Reimporting each fixture in another Environment would repeat that work.
     cases = ["Query/Streaming", "Query/Contract", "Query/DirectEvidence", "Query/Enumeration", "Query/Ownership",
