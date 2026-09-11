@@ -6,17 +6,20 @@ on:
   pull_request:
     branches: [dev, 'integration-**']
     types: [opened, synchronize, reopened]
+  pull_request_target:
+    branches: [dev, 'integration-**']
+    types: [opened, synchronize, reopened]
 
 permissions:
   contents: read
 # PR updates cancel earlier runs for the same PR. Pushes use the ref and commit
 # so different branches and later merges retain their checks and cache writes.
 concurrency:
-  # Keep PR and push runs in separate event groups.
+  # Keep pull_request, pull_request_target, and push runs in separate event groups.
   group: ci-${{ github.event_name }}-${{ github.event.pull_request.number || format('{0}-{1}', github.ref, github.sha) }}
   cancel-in-progress: true
 
-# Native pull_request checks the PR merge tree; push checks the pushed commit.
+# Both PR events explicitly check the PR merge tree; push checks the pushed commit.
 # The three required checks cover candidate engineering, canonical Lean report
 # production, and admission with the candidate's own judge. Admission consumes
 # immutable raw reports from the predecessor job; the protected base is the
@@ -35,9 +38,9 @@ jobs:
     steps:
       - name: Check out candidate
         id: checkout-merge
-        continue-on-error: ${{ github.event_name == 'pull_request' }}
+        continue-on-error: ${{ (github.event_name == 'pull_request' || github.event_name == 'pull_request_target') }}
         uses: actions/checkout@v4
-        with: { ref: "${{ github.event_name == 'pull_request' && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}", fetch-depth: 0, persist-credentials: false, path: candidate }
+        with: { ref: "${{ (github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}", fetch-depth: 0, persist-credentials: false, path: candidate }
       - name: Strip checkout remote state
         if: steps.checkout-merge.outcome == 'success'
         shell: bash
@@ -63,7 +66,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if [[ "$GITHUB_EVENT_NAME" == "pull_request" ]]; then
+          if [[ "$GITHUB_EVENT_NAME" == "pull_request" || "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
             printf '%s\n' "cannot check out GitHub merge ref refs/pull/${{ github.event.pull_request.number }}/merge; conflicted pull requests have no merge result, so admission fails closed" >&2
           else
             printf '%s\n' "cannot check out push commit $GITHUB_SHA; admission fails closed" >&2
@@ -151,7 +154,7 @@ jobs:
             candidate/tools/**/obj
           key: stratalint-judge-binaries-v2-${{ runner.os }}-${{ steps.judge-address.outputs.runtime }}-${{ steps.judge-address.outputs.address }}
       - name: Signal PR head branch grammar
-        if: github.event_name == 'pull_request'
+        if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
         shell: bash
         env:
           HEAD_REF: ${{ github.event.pull_request.head.ref }}
@@ -232,9 +235,9 @@ jobs:
     steps:
       - name: Check out candidate with history
         id: checkout-merge
-        continue-on-error: ${{ github.event_name == 'pull_request' }}
+        continue-on-error: ${{ (github.event_name == 'pull_request' || github.event_name == 'pull_request_target') }}
         uses: actions/checkout@v4
-        with: { ref: "${{ github.event_name == 'pull_request' && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}", fetch-depth: 0, persist-credentials: false, path: candidate }
+        with: { ref: "${{ (github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}", fetch-depth: 0, persist-credentials: false, path: candidate }
       - name: Strip checkout remote state
         if: steps.checkout-merge.outcome == 'success'
         shell: bash
@@ -260,7 +263,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if [[ "$GITHUB_EVENT_NAME" == "pull_request" ]]; then
+          if [[ "$GITHUB_EVENT_NAME" == "pull_request" || "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
             printf '%s\n' "cannot check out GitHub merge ref refs/pull/${{ github.event.pull_request.number }}/merge; conflicted pull requests have no merge result, so admission fails closed" >&2
           else
             printf '%s\n' "cannot check out push commit $GITHUB_SHA; admission fails closed" >&2
@@ -508,7 +511,7 @@ jobs:
             --repository "$GITHUB_WORKSPACE/candidate" \
             --report "$target"
 
-      # Actions cache writes require a push; native PRs only restore shared entries.
+      # Actions cache writes require a push; both PR events only restore shared entries.
       # Actions scopes these writes to the branch that received the push.
       # 命中报告缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;分层 lake cache exact hit 时对应 key 也已存在。三个 save 只在真正跑过生产路径时执行。
       - name: Save candidate canonical Lean report (push only)
@@ -559,9 +562,9 @@ jobs:
     steps:
       - name: Check out candidate with history
         id: checkout-merge
-        continue-on-error: ${{ github.event_name == 'pull_request' }}
+        continue-on-error: ${{ (github.event_name == 'pull_request' || github.event_name == 'pull_request_target') }}
         uses: actions/checkout@v4
-        with: { ref: "${{ github.event_name == 'pull_request' && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}", fetch-depth: 0, persist-credentials: false, path: candidate }
+        with: { ref: "${{ (github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}", fetch-depth: 0, persist-credentials: false, path: candidate }
       - name: Strip checkout remote state
         if: steps.checkout-merge.outcome == 'success'
         shell: bash
@@ -587,7 +590,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if [[ "$GITHUB_EVENT_NAME" == "pull_request" ]]; then
+          if [[ "$GITHUB_EVENT_NAME" == "pull_request" || "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
             printf '%s\n' "cannot check out GitHub merge ref refs/pull/${{ github.event.pull_request.number }}/merge; conflicted pull requests have no merge result, so admission fails closed" >&2
           else
             printf '%s\n' "cannot check out push commit $GITHUB_SHA; admission fails closed" >&2
@@ -615,7 +618,7 @@ jobs:
             candidate/tools/**/bin
             candidate/tools/**/obj
           key: stratalint-judge-binaries-v2-${{ runner.os }}-${{ steps.judge-address.outputs.runtime }}-${{ steps.judge-address.outputs.address }}
-      # Native pull_request uses the merge SHA; exact test-map lookup may miss.
+      # PR event SHAs can differ from the checked base; exact test-map lookup may miss.
       # Prefix fallback can restore the target branch or default-dev caches;
       # the Engine still validates entries against the checked first-parent base.
       - name: Restore base-side unknown-debt test maps
