@@ -253,6 +253,83 @@ class Contract(unittest.TestCase):
                 self.assertIn(MANIFEST, result.stderr)
                 self.assertFalse(marker.exists(), result.stdout + result.stderr)
 
+    def test_seed_metadata_io(self):
+        self.assertNotEqual(os.getuid(), 0, 'permission regression requires a non-root POSIX process')
+        current = self.selection().modules()
+        cache = self.repo / 'cache'
+        entry = cache / ('d' * 64)
+        entry.mkdir(parents=True)
+        marker = self.repo / 'build-called'
+        output = self.repo / 'report.json'
+        # Only Lake/Lean, utility input and cache-writer locking are doubles;
+        # selection, planning, inspection orchestration and compaction are real.
+        lake = self.repo / 'bin/lake'
+        self.write('bin/lake', '#!' + sys.executable + '\n' + '''
+import json, pathlib, sys
+args = sys.argv[1:]
+if args == ['build']:
+    pathlib.Path('build-called').write_text('build\\n')
+else:
+    assert args[:3] == ['env', 'lean', '--run'], args
+    args = args[4:]
+    assert args[0] == '--output' and args[2] == '--material-spool' and args[4] == '--utility-input', args
+    records = [dict(module=args[i], source_path=args[i+1], source_sha256=args[i+2],
+        imports=[], declarations=[]) for i in range(6, len(args), 3)]
+    pathlib.Path(args[1]).write_text(json.dumps(dict(schema='stratalint-lean-inspector-spool-v1', modules=sorted(records, key=lambda r: r['module']))))
+''')
+        self.write('bin/dotnet', '#!/bin/sh\nif [ "$1" = build ]; then exit 0; fi\nprintf "[]\\n"\n')
+        self.write('tools/scripts/worktree/lean-cache-run.sh', '#!/bin/sh\nexec "$@"\n')
+        for path in ('bin/lake', 'bin/dotnet', 'tools/scripts/worktree/lean-cache-run.sh', INPUT):
+            (self.repo / path).chmod(0o700)
+        env = dict(os.environ, TMPDIR=str(SCRATCH), LAKE_BIN=str(lake),
+            PATH=str(self.repo / 'bin') + ':' + os.environ['PATH'], STRATALINT_REPORT_CACHE_ROOT=str(cache))
+        for suffix in ('INPUT_ADDRESS', 'REPOSITORY_SHA256', 'PRODUCER_SHA256', 'RESIDENT_SHA256', 'CONFIG_SHA256'):
+            env['STRATALINT_REPORT_' + suffix] = 'a' * 64
+        try:
+            cache.chmod(0o400)
+            self.assertEqual(list(cache.iterdir()), [entry])
+            with self.assertRaises(PermissionError):
+                entry.stat()
+            for failure in ('missing-owner', 'conflicting-owner', None):
+                with self.subTest(failure=failure):
+                    self.policy = declaration()
+                    if failure == 'missing-owner':
+                        self.policy['impact_cohorts'][1]['members'] = ['D5/Uncovered*.lean']
+                    elif failure == 'conflicting-owner':
+                        self.policy['impact_cohorts'][2]['members'].append('D5/Base.lean')
+                    self.save()
+                    result = subprocess.run(['bash', str(self.repo / 'tools/lean-inspector/inspect.sh'),
+                        '--repository', str(self.repo), '--output', str(output)], cwd=self.repo,
+                        text=True, capture_output=True, env=env)
+                    if failure:
+                        self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+                        self.assertIn('D5/Base.lean', result.stderr)
+                        self.assertFalse(marker.exists())
+                        self.assertFalse(output.exists())
+                    else:
+                        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+                        self.assertTrue(marker.exists())
+                        self.assertIn('LEAN_REPORT_DELTA mode=full-fallback', result.stdout)
+                        records = json.loads(output.read_text())['modules']
+                        self.assertEqual(sorted(r['module'] for r in records), sorted(current))
+                        digest = hashlib.sha256(output.read_bytes()).hexdigest()
+                        self.assertEqual(Path(str(output) + '.sha256').read_text(), digest + '  report.json\n')
+                        with zipfile.ZipFile(str(output) + '.materials.zip') as archive:
+                            self.assertEqual(archive.namelist(), [])
+            # An optional scan failure must not swallow required planner IO or
+            # module-table integrity failures after successful registration.
+            cache.chmod(0o700)
+            table = self.repo / 'modules.tsv'
+            command = [sys.executable, '-B', str(self.repo / 'tools/lean-inspector/delta.py'),
+                'plan', str(self.repo), str(cache), *(['a' * 64] * 4), str(table), str(self.repo)]
+            for invalid_table in (True, False):
+                table.write_text('' if invalid_table else ''.join(n + '\t' + p + '\n' for n, p in current.items()))
+                result = subprocess.run(command, capture_output=True, text=True)
+                self.assertEqual(result.returncode, 1, result.stderr)
+                self.assertIn('module table' if invalid_table else 'Is a directory', result.stderr)
+        finally:
+            cache.chmod(0o700)
+
     def test_planner_changes(self):
         module_spec = importlib.util.spec_from_file_location('delta', self.repo / 'tools/lean-inspector/delta.py')
         delta = importlib.util.module_from_spec(module_spec)

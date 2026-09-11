@@ -4,6 +4,35 @@ namespace StrataLint.Tests;
 
 public sealed class LeanReportTransportMaterialTests
 {
+    [Theory]
+    [InlineData("null")]
+    [InlineData("[]")]
+    public void TransportStageRejectsNonobjectProvenanceWithCurrentAttestation(string provenance)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new LeanReportTransportFixture();
+        var source = fixture.Bundle();
+        var digest = FixtureFile.ReadAllBytes(source + ".sha256");
+        var attestation = FixtureFile.ReadAllBytes(source + ".input.attestation");
+        FixtureFile.WriteAllText(source + ".provenance.json", provenance + "\n");
+        fixture.Success(fixture.Input("verify", "--repository", fixture.Repository, "--report", source));
+
+        var rejected = fixture.Stage(source);
+        Assert.Equal(1, rejected.ExitCode);
+        Assert.Empty(rejected.Stdout);
+        Assert.Contains("invalid-attestation", rejected.Stderr, StringComparison.Ordinal);
+        Assert.Equal(digest, FixtureFile.ReadAllBytes(source + ".sha256"));
+        Assert.Equal(attestation, FixtureFile.ReadAllBytes(source + ".input.attestation"));
+
+        var alternative = fixture.Bundle("alternative-lean-report.json");
+        var served = fixture.Stage(alternative);
+        fixture.Success(served);
+        var report = served.Stdout.Trim();
+        fixture.Success(fixture.Input("verify", "--repository", fixture.Repository, "--report", report));
+        fixture.Success(fixture.Validate(report));
+        Assert.Equal("raw-lean-report.json", Path.GetFileName(report));
+    }
+
     [Fact]
     public void LocalExactUnavailableVerificationRetainsEntryForLaterReuse()
     {
@@ -52,6 +81,10 @@ public sealed class LeanReportTransportMaterialTests
         foreach (var suffix in LeanReportTransportFixture.Suffixes.Where(suffix => suffix != ".materials.zip"))
             Assert.Equal(original[Array.IndexOf(LeanReportTransportFixture.Suffixes, suffix)],
                 LeanReportTransportFixture.Digest(FixtureFile.ReadAllBytes(fixture.CachedReport + suffix)));
+        fixture.Success(fixture.Input("verify", "--repository", fixture.Repository, "--report", fixture.CachedReport));
+        var rejected = fixture.Stage(fixture.CachedReport);
+        Assert.Equal(1, rejected.ExitCode);
+        Assert.Empty(rejected.Stdout);
         var recovered = fixture.MakeReport("STRATALINT_REPORT_CACHE_REMOTE=0");
         fixture.Success(recovered);
         Assert.Contains("status=miss reason=local-entry-unavailable", recovered.Text, StringComparison.Ordinal);

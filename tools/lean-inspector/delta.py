@@ -184,11 +184,11 @@ def plan(args: argparse.Namespace) -> int:
     except OSError:
         cached_entries = []  # Optional seed IO failure; registration already validated.
     for entry in cached_entries:
-        if not entry.is_dir():
-            continue
         if not HEX64.fullmatch(entry.name) or entry.name == args.current_address:
             continue
         try:
+            if not entry.is_dir():
+                continue
             stamp = entry.stat().st_mtime_ns
         except OSError:
             continue
