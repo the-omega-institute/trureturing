@@ -156,5 +156,66 @@ theorem convexHull_vertices (n : ℕ) : convexHull ℝ (vertices n) = polytope n
   exact Set.Subset.antisymm (convexHull_min (fun _ hx => vertex_mem_polytope hx) (convex_polytope n))
     (fun _ hx => polytope_mem_hull n hx)
 
+/-- In three coordinates the edge inequalities describe a pyramid with square base
+`{(u,0,v) | u,v ∈ [0,1]}` and apex `(0,1,0)`. -/
+theorem convexHull_three_pyramid :
+    convexHull ℝ (vertices 3) =
+      {x : Fin 3 → ℝ | (∀ i, 0 ≤ x i) ∧ x 0 + x 1 ≤ 1 ∧ x 1 + x 2 ≤ 1} ∧
+    ∀ x : Fin 3 → ℝ, x ∈ convexHull ℝ (vertices 3) ↔
+      ∃ t u v : ℝ, t ∈ Set.Icc 0 1 ∧ u ∈ Set.Icc 0 1 ∧ v ∈ Set.Icc 0 1 ∧
+        x = (1 - t) • ![u, 0, v] + t • ![0, 1, 0] := by
+  have hthree : polytope 3 =
+      {x : Fin 3 → ℝ | (∀ i, 0 ≤ x i) ∧ x 0 + x 1 ≤ 1 ∧ x 1 + x 2 ≤ 1} := by
+    ext x
+    constructor
+    · intro hx
+      exact ⟨fun i => (hx.1 i).1, hx.2 0 1 rfl, hx.2 1 2 rfl⟩
+    · rintro ⟨h0, h01, h12⟩
+      constructor
+      · intro i
+        refine ⟨h0 i, ?_⟩
+        have hzero := h0 0
+        have hone := h0 1
+        have htwo := h0 2
+        fin_cases i <;> dsimp <;> linarith
+      · intro i j hij
+        fin_cases i <;> fin_cases j <;> simp_all
+  have heq := (convexHull_vertices 3).trans hthree
+  refine ⟨heq, ?_⟩
+  intro x
+  rw [heq]
+  constructor
+  · rintro ⟨h0, h01, h12⟩
+    have ht : x 1 ∈ Set.Icc (0 : ℝ) 1 := ⟨h0 1, by linarith [h0 0]⟩
+    by_cases hone : x 1 = 1
+    · have hx0 : x 0 = 0 := by linarith [h0 0]
+      have hx2 : x 2 = 0 := by linarith [h0 2]
+      refine ⟨1, 0, 0, ⟨by norm_num, le_rfl⟩, ⟨le_rfl, by norm_num⟩,
+        ⟨le_rfl, by norm_num⟩, ?_⟩
+      funext i
+      fin_cases i <;> simp [hx0, hx2, hone]
+    · have hd : 0 < 1 - x 1 := by rcases ht with ⟨_, ht⟩; exact sub_pos.mpr (lt_of_le_of_ne ht hone)
+      refine ⟨x 1, x 0 / (1 - x 1), x 2 / (1 - x 1), ht,
+        ⟨div_nonneg (h0 0) hd.le, (div_le_one hd).mpr (by linarith)⟩,
+        ⟨div_nonneg (h0 2) hd.le, (div_le_one hd).mpr (by linarith)⟩, ?_⟩
+      funext i
+      fin_cases i <;> simp <;> field_simp
+  · rintro ⟨t, u, v, ht, hu, hv, rfl⟩
+    have hn : 0 ≤ 1 - t := sub_nonneg.mpr ht.2
+    refine ⟨?_, ?_, ?_⟩
+    · intro i
+      fin_cases i
+      · change 0 ≤ (1 - t) * u + t * 0
+        nlinarith [mul_nonneg hn hu.1]
+      · change 0 ≤ (1 - t) * 0 + t * 1
+        linarith [ht.1]
+      · change 0 ≤ (1 - t) * v + t * 0
+        nlinarith [mul_nonneg hn hv.1]
+    · change (1 - t) * u + t * 0 + ((1 - t) * 0 + t * 1) ≤ 1
+      nlinarith [mul_nonneg hn (sub_nonneg.mpr hu.2)]
+    · change (1 - t) * 0 + t * 1 + ((1 - t) * v + t * 0) ≤ 1
+      nlinarith [mul_nonneg hn (sub_nonneg.mpr hv.2)]
+
+#print axioms convexHull_three_pyramid
 #print axioms convexHull_vertices
 end D5.S1.Words.AdmissibleWords.PathStableSetPolytope
