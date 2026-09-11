@@ -87,9 +87,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Matches(
             "^sha256:[0-9a-f]{64}$",
             Assert.Single(source.Entries).Fingerprints.RawSha256);
-        // The loader already requires the committed bytes to equal the writer's canonical
-        // output, so asserting the writer proves what the file holds without reading a
-        // path the conservative test-map parser cannot resolve.
+        // The loader requires canonical bytes; verify the writer preserves the genre token.
         Assert.Contains(
             "unregistered_genres = [\"**新\\\"判\\\\词。**\"]",
             Encoding.UTF8.GetString(

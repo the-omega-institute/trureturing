@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <RootNamespace>JudgeSeedTask.Tests</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../scripts/report/JudgeSeedTask.csproj" />
+    <ProjectReference Include="../../TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj" />
+    <Reference Include="Microsoft.Build" HintPath="$(MSBuildToolsPath)/Microsoft.Build.dll" />
+    <Reference Include="Microsoft.Build.Framework" HintPath="$(MSBuildToolsPath)/Microsoft.Build.Framework.dll" />
+    <Reference Include="Microsoft.Build.Utilities.Core" HintPath="$(MSBuildToolsPath)/Microsoft.Build.Utilities.Core.dll" />
+    <Reference Include="Microsoft.Build.Tasks.Core" HintPath="$(MSBuildToolsPath)/Microsoft.Build.Tasks.Core.dll" />
+    <Reference Include="Microsoft.Build.Tasks.CodeAnalysis" HintPath="$(MSBuildToolsPath)/Roslyn/Microsoft.Build.Tasks.CodeAnalysis.dll" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+</Project>

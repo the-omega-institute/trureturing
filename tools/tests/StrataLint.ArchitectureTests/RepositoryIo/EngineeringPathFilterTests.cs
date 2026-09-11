@@ -26,7 +26,7 @@ public sealed class EngineeringPathFilterTests
     }
 
     [Fact]
-    public void MissingLiteralUsesXunitClassification()
+    public void RegisteredRoleDoesNotRequireLiteralMetadata()
     {
         var topology = new TestProjectTopologySnapshot([Project("tools/tests/A/A.csproj", "", xunit: true)]);
         Assert.Single(EngineeringTestPlanPolicy.Evaluate(topology));
@@ -35,11 +35,13 @@ public sealed class EngineeringPathFilterTests
     [Theory]
     [InlineData("<IsTestProject>$(Dynamic)</IsTestProject>")]
     [InlineData("<IsTestProject>true</IsTestProject><IsTestProject>false</IsTestProject>")]
-    public void AmbiguousClassificationRejectsExistingAndNewProjects(string properties) =>
-        Assert.Throws<InvalidDataException>(() => EngineeringTestPlanPolicy.Evaluate(
+    public void MetadataCannotOverrideExplicitClassification(string properties) =>
+        Assert.Single(EngineeringTestPlanPolicy.Evaluate(
             new TestProjectTopologySnapshot([Project("tools/tests/A/A.csproj", properties, xunit: true)])));
 
     private static TestProjectTopologyProject Project(string path, string properties, bool xunit = false) =>
         new(path, "<Project><PropertyGroup>" + properties + "</PropertyGroup><ItemGroup>"
-            + (xunit ? "<PackageReference Include=\"xunit\" />" : "") + "</ItemGroup></Project>");
+            + (xunit ? "<PackageReference Include=\"xunit\" />" : "") + "</ItemGroup></Project>",
+            new EngineeringProjectRegistration(path, "Fixture", "cross-cutting-test",
+                path is "tools/tests/A/A.csproj" or "tools/tests/B/B.csproj", [], [], [], null, null, path, "Fixture", [], []));
 }

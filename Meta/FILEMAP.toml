@@ -347,12 +347,62 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
+pattern = "Meta/ReportProducers/lean-report.json"
+kind = "data"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["lean-inspector"]
+verified_by = ["report-producer-scope"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "Meta/ReportProducers/scribe-content.json"
+kind = "data"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["StrataLint"]
+verified_by = ["report-producer-scope"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
 pattern = "Meta/domains.yaml"
 kind = "data"
 admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["RegistryLoader"]
 verified_by = ["RegistryLoader"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "Meta/engineering-projects.json"
+kind = "data"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["EngineeringProjectRegistry"]
+verified_by = ["EngineeringProjectRegistry"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "Meta/judge-seed.json"
+kind = "data"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["automation"]
+verified_by = ["JudgeSeedRegistration"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "Meta/package-materials.json"
+kind = "data"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["CommonBuildOutputs"]
+verified_by = ["PackageMaterialRegistry"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -655,6 +705,16 @@ admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["dotnet"]
 verified_by = ["dotnet-build"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "tools/tests/JudgeSeedTask.Tests/**"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["dotnet"]
+verified_by = ["dotnet-test"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 

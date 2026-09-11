@@ -43,17 +43,8 @@ internal static class CommonExecutionEvidence
     private static string Candidate(string root, out RepositorySnapshot snapshot)
     {
         snapshot = Snapshot(root);
-        var projects = snapshot.Files.Keys.Select(path => path.Value)
-            .Where(path => path.EndsWith(".csproj", StringComparison.Ordinal)).ToArray();
-        if (projects.Length != 0)
-        {
-            var compile = MsBuildCompileOracle.Query(root, projects, configuration: "Release");
-            if (compile.Findings.Count != 0)
-                throw new InvalidDataException(string.Join("\n", compile.Findings.Select(finding => finding.Message)));
-            foreach (var path in compile.ProjectBySourcePath.Keys)
-                if (!snapshot.TryGetFile(path, out _))
-                    throw new InvalidDataException($"Compile input is absent from candidate source: {path}");
-        }
+        var files = snapshot.Files.Values.Select(file => new EngineeringSource(file.Path.Value, file.Text)).ToArray();
+        _ = EngineeringProjectRegistry.Read(files).Sources(files);
         using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
         foreach (var (path, file) in snapshot.Files.OrderBy(static pair => pair.Key.Value, StringComparer.Ordinal))
         {
@@ -86,10 +77,9 @@ internal static class CommonExecutionEvidence
     internal static CommonStageRecord SealBuild(string root, string candidate, IEnumerable<string> binaries, StageStep[] steps)
     {
         RequirePassed(steps, BuildSteps);
-        var products = binaries.Concat(CommonCompileMetadata.Export(root, Snapshot(root))).ToArray();
         if (candidate != Candidate(root)) throw new InvalidDataException("candidate changed during build");
         var record = new CommonStageRecord(1, candidate, Guid.NewGuid().ToString("N"), steps,
-            Materials(root, products.Concat(steps.Select(step => step.Log))));
+            Materials(root, binaries.Concat(steps.Select(step => step.Log))));
         Write(root, BuildPath, record);
         WriteBundleList(root, "build", record.Materials.Select(material => material.Path).Append(BuildPath));
         return record;
@@ -104,7 +94,6 @@ internal static class CommonExecutionEvidence
         if (string.IsNullOrWhiteSpace(record.Round)) throw new InvalidDataException("missing build round");
         ValidateRecord(root, record, candidate, round ?? record.Round);
         RequirePassed(record.Steps, BuildSteps);
-        _ = CommonCompileMetadata.Load(root, record.Materials);
         return record;
     }
 

@@ -1,11 +1,11 @@
 using System.Collections.Immutable;
-using System.Xml.Linq;
 
 namespace StrataLint.Engine;
 
 internal sealed record TestProjectTopologyProject(
     string Path,
-    string Content);
+    string Content,
+    EngineeringProjectDeclaration Registration);
 
 internal sealed record TestProjectTopologySnapshot(
     IReadOnlyList<TestProjectTopologyProject> Projects);
@@ -63,84 +63,30 @@ internal static partial class RepositoryRules
     internal const string OwnedTestToOwnedTestReference =
         "owned-test-to-owned-test-reference";
 
-    // 横跨型 harness:测试仓库自身的结构或执行仓库脚本,横跨多个生产项目、
-    // 不拥有其中任何一个,故不参与 `X` ↔ `X.Tests` 的拥有关系。
-    //
-    // 具名精确路径而非「凡不叫 X.Tests 者皆横跨」的命名规则 —— 后者会让任意
-    // `*ArchitectureTests` / `*ScriptTests` 自动逃逸拥有关系检查,削弱
-    // `OnlyExactCanonicalArchitectureHarnessPathIsExcluded` 有意钉住的守卫:
-    // 第三个**未具名**的横跨项目仍须判 orphan-owned-project。加一条具名路径是
-    // 保守扩展(旧判 admit 者仍 admit),换成命名规则则是放宽。
-    internal static readonly ImmutableHashSet<string> CrossCuttingHarnessPaths =
-        ImmutableHashSet.Create(
-            StringComparer.Ordinal,
-            "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
-            "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj");
-
-    // 共享测试支持项目:不含 xUnit、不被任何 `X.Tests` 拥有、也不拥有任何生产项目,
-    // 故不参与 `X` ↔ `X.Tests` 的拥有关系,亦不计入受管测试项目的 `ProdRefs`。
-    //
-    // 与 CrossCuttingHarnessPaths 同形:**具名精确路径**,不是
-    // `tools/TestSupport/<x>/<x>.csproj` 这样的目录文法 —— 后者会让任意新建的
-    // 嵌套项目自动取得豁免身份,而具名一条是保守扩展。相应地,
-    // NestedProjectOutsideTestsIsProductionAndNeedsItsOwnedDual 钉住:
-    // 第二个**未具名**的嵌套项目仍按生产项目判,须有其对偶测试项目。
-    //
-    // 案由(第 20″ 条):该项目 2026-08-30 曾以 tools/tests/ 下的路径被具名进
-    // CrossCuttingHarnessPaths(dbaef43a43),其后条目被删(4288ac913c)、项目于
-    // 2026-09-02 迁至 tools/TestSupport/(6f4cb2d501)。迁移后路径为四段,而彼时
-    // IsProductionProject 要求恰三段 ⟹ 该节点与其全部入边静默脱离债务代数。
-    // 2026-09-05 实测:向它新增三条入边(PR #5324)产生零拓扑债。
-    internal const string TestSupportProjectPath =
-        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj";
-
-    private static readonly Uri RepositoryUri = new("https://repository.invalid/");
-
-    // Boundary: runnable identity stays a runtime concern. Static detection would reimplement C#
-    // attributes, MSBuild Compile evaluation, and preprocessor symbols. Full-suite TRX verification
-    // consumes the owner assemblies derived here and requires nonzero executed identity for each.
     internal static TestProjectTopologySnapshot ReadTrackedProjects(string repositoryRoot)
     {
-        ArgumentNullException.ThrowIfNull(repositoryRoot);
-
-        var projects = GitIndexRepositoryFiles.Enumerate(repositoryRoot)
-            .Where(static file => file.RelativePath.EndsWith(
-                ".csproj",
-                StringComparison.Ordinal))
-            .Select(file => new TestProjectTopologyProject(
-                file.RelativePath,
-                File.ReadAllText(file.FullPath)))
-            .ToArray();
-        return new TestProjectTopologySnapshot(projects);
+        var files = GitIndexRepositoryFiles.Enumerate(repositoryRoot)
+            .Where(file => file.RelativePath == EngineeringProjectRegistry.ManifestPath
+                || file.RelativePath.EndsWith(".csproj", StringComparison.Ordinal))
+            .Select(file => new EngineeringSource(file.RelativePath, File.ReadAllText(file.FullPath))).ToArray();
+        var registry = EngineeringProjectRegistry.Read(files);
+        var byPath = files.ToDictionary(file => file.Path, StringComparer.Ordinal);
+        return new TestProjectTopologySnapshot(registry.Projects.Select(project =>
+            new TestProjectTopologyProject(project.Path, byPath[project.Path].Content, project)).ToArray());
     }
 
-    internal static TestProjectTopologySnapshot ReadSnapshotProjects(RepositorySnapshot snapshot)
-    {
-        ArgumentNullException.ThrowIfNull(snapshot);
+    internal static TestProjectTopologySnapshot ReadSnapshotProjects(RepositorySnapshot snapshot) =>
+        ReadRegisteredProjects(snapshot, EngineeringProjectRegistry.Read(snapshot).Projects);
 
-        var projects = snapshot.Files.Values
-            .Where(static file => file.Path.Value.EndsWith(
-                ".csproj",
-                StringComparison.Ordinal))
-            .OrderBy(static file => file.Path.Value, StringComparer.Ordinal)
-            .Select(file => new TestProjectTopologyProject(
-                file.Path.Value,
-                file.Text))
-            .ToArray();
-        return new TestProjectTopologySnapshot(projects);
-    }
+    internal static TestProjectTopologySnapshot ReadBaseProjects(RepositorySnapshot baseline, RepositorySnapshot candidate) =>
+        ReadRegisteredProjects(baseline, EngineeringProjectRegistry.ReadBase(baseline, candidate));
 
-    internal static TestProjectTopologyResult EvaluateSnapshots(
-        RepositorySnapshot protectedBase,
-        RepositorySnapshot candidate)
-    {
-        ArgumentNullException.ThrowIfNull(protectedBase);
-        ArgumentNullException.ThrowIfNull(candidate);
+    private static TestProjectTopologySnapshot ReadRegisteredProjects(RepositorySnapshot snapshot, IReadOnlyList<EngineeringProjectDeclaration> projects) =>
+        new(projects.Select(project => new TestProjectTopologyProject(project.Path,
+            snapshot.Files[RepoPath.CreateKnown(project.Path)].Text, project)).ToArray());
 
-        return Evaluate(
-            ReadSnapshotProjects(protectedBase),
-            ReadSnapshotProjects(candidate));
-    }
+    internal static TestProjectTopologyResult EvaluateSnapshots(RepositorySnapshot protectedBase, RepositorySnapshot candidate) =>
+        Evaluate(ReadBaseProjects(protectedBase, candidate), ReadSnapshotProjects(candidate));
 
     internal static TestProjectTopologyResult Evaluate(
         TestProjectTopologySnapshot protectedBase,
@@ -206,7 +152,7 @@ internal static partial class RepositoryRules
     private static DebtGraph BuildDebtGraph(TestProjectTopologySnapshot snapshot)
     {
         var allProjects = snapshot.Projects
-            .Select(ParseProject)
+            .Select(RegisteredVertex)
             .OrderBy(static project => project.Path, StringComparer.Ordinal)
             .ToArray();
         var projectByPath = allProjects.ToDictionary(
@@ -222,12 +168,6 @@ internal static partial class RepositoryRules
             .Where(static project => project.IsOwnedTest)
             .ToArray();
         var productionByIdentity = productionProjects
-            .GroupBy(static project => project.AssemblyName, StringComparer.OrdinalIgnoreCase)
-            .ToDictionary(
-                static group => group.Key,
-                static group => group.ToArray(),
-                StringComparer.OrdinalIgnoreCase);
-        var ownedTestsByIdentity = ownedTestProjects
             .GroupBy(static project => project.AssemblyName, StringComparer.OrdinalIgnoreCase)
             .ToDictionary(
                 static group => group.Key,
@@ -258,12 +198,10 @@ internal static partial class RepositoryRules
         foreach (var group in productionByIdentity.Values)
         {
             var productionIdentity = group[0].AssemblyName;
-            var expectedTestIdentity = productionIdentity + ".Tests";
-            var matchingOwnedTests = ownedTestsByIdentity.TryGetValue(
-                    expectedTestIdentity,
-                    out var tests)
-                ? tests
-                : [];
+            var expectedTestIdentity = group[0].Registration.OwnedTestAssembly!;
+            var matchingOwnedTests = ownedTestProjects.Where(test =>
+                group.Any(production => test.Registration.Owner!.Path == production.Path)
+                && StringComparer.OrdinalIgnoreCase.Equals(test.AssemblyName, expectedTestIdentity)).ToArray();
 
             if (matchingOwnedTests.Length != 1)
             {
@@ -280,15 +218,10 @@ internal static partial class RepositoryRules
 
         foreach (var test in ownedTestProjects)
         {
-            var expectedProductionIdentity = test.AssemblyName.EndsWith(
-                    ".Tests",
-                    StringComparison.OrdinalIgnoreCase)
-                ? test.AssemblyName[..^".Tests".Length]
-                : string.Empty;
-            var matchingProduction = expectedProductionIdentity.Length > 0
-                && productionByIdentity.TryGetValue(expectedProductionIdentity, out var projects)
-                    ? projects
-                    : [];
+            var owner = test.Registration.Owner!;
+            var expectedProductionIdentity = owner.Assembly;
+            var matchingProduction = productionProjects.Where(project => project.Path == owner.Path
+                && StringComparer.OrdinalIgnoreCase.Equals(project.AssemblyName, owner.Assembly)).ToArray();
             if (matchingProduction.Length != 1)
             {
                 AddDebt(
@@ -363,71 +296,14 @@ internal static partial class RepositoryRules
             ownedTestProjects);
     }
 
-    private static ProjectVertex ParseProject(TestProjectTopologyProject project)
-    {
-        var path = NormalizePath(project.Path);
-        var document = XDocument.Parse(project.Content, LoadOptions.None);
-        var assemblyName = document.Descendants()
-            .FirstOrDefault(static element => element.Name.LocalName == "AssemblyName")
-            ?.Value.Trim();
-        if (string.IsNullOrEmpty(assemblyName))
-        {
-            assemblyName = System.IO.Path.GetFileNameWithoutExtension(path);
-        }
-
-        var directReferences = document.Descendants()
-            .Where(static element => element.Name.LocalName == "ProjectReference")
-            .Select(static element => (string?)element.Attribute("Include"))
-            .Where(static include => !string.IsNullOrWhiteSpace(include))
-            .Select(include => ResolveProjectReference(path, include!))
-            .Distinct(StringComparer.Ordinal)
-            .Order(StringComparer.Ordinal)
-            .ToImmutableArray();
-        var isXunit = HasLiteralXunitReference(project.Content);
-
-        return new ProjectVertex(
-            path,
-            project.Content,
-            assemblyName,
-            IsProductionProject(path),
-            IsTestProject(path, isXunit),
-            IsOwnedTestProject(path, isXunit),
-            directReferences);
-    }
-
-    // 作用域是 tools/ 下、tests/ 之外的**任意深度** csproj:早先的「恰三段」写法
-    // 让多嵌一层的项目整个逃出双射与引用债务计算。
-    private static bool IsProductionProject(string path) =>
-        path.StartsWith("tools/", StringComparison.Ordinal)
-        && !path.StartsWith("tools/tests/", StringComparison.Ordinal)
-        && path.EndsWith(".csproj", StringComparison.Ordinal)
-        && !string.Equals(path, TestSupportProjectPath, StringComparison.Ordinal);
-
-    // 「是不是受管测试项目」与「是不是拥有某个生产项目」是两个正交的问题,此前由同一个
-    // 谓词回答,于是 CrossCuttingHarnessPaths 对**拥有关系**的豁免被一并施加到
-    // test→test 依赖上,使 ArchitectureTests / ScriptTests 的四条 test→test 边
-    // 结构上不进债账(#5419)。IsOwnedTestProject 由 IsTestProject **收窄**而来,
-    // 而非并列另写一个谓词 —— 这样「旧判 owned 者仍 owned」在结构上成立(保守扩展),
-    // 不依赖测试来保证。
-    private static bool IsTestProject(string path, bool isXunit) =>
-        isXunit
-        && path.StartsWith("tools/tests/", StringComparison.Ordinal)
-        && path.EndsWith(".csproj", StringComparison.Ordinal);
-
-    private static bool IsOwnedTestProject(string path, bool isXunit) =>
-        IsTestProject(path, isXunit)
-        && !CrossCuttingHarnessPaths.Contains(path);
-
-    private static string ResolveProjectReference(string projectPath, string include)
-    {
-        var slash = projectPath.LastIndexOf('/');
-        var directory = slash < 0 ? string.Empty : projectPath[..(slash + 1)];
-        var directoryUri = new Uri(RepositoryUri, directory);
-        var referenceUri = new Uri(directoryUri, include.Replace('\\', '/'));
-        return Uri.UnescapeDataString(referenceUri.AbsolutePath.TrimStart('/'));
-    }
-
-    private static string NormalizePath(string path) => path.Replace('\\', '/');
+    private static ProjectVertex RegisteredVertex(TestProjectTopologyProject project) => new(
+        project.Path,
+        project.Registration.Assembly,
+        project.Registration.Role == "production",
+        project.Registration.IsTest,
+        project.Registration.Role == "owned-test",
+        project.Registration.References.ToImmutableArray(),
+        project.Registration);
 
     private static bool TouchesBaseDebtVertex(
         TestProjectTopologySnapshot protectedBase,
@@ -435,16 +311,17 @@ internal static partial class RepositoryRules
         DebtGraph baseGraph)
     {
         var baseProjects = protectedBase.Projects.ToDictionary(
-            project => NormalizePath(project.Path),
+            project => project.Path,
             StringComparer.Ordinal);
         var candidateProjects = candidate.Projects.ToDictionary(
-            project => NormalizePath(project.Path),
+            project => project.Path,
             StringComparer.Ordinal);
         var changedProjectPaths = baseProjects.Keys
             .Union(candidateProjects.Keys, StringComparer.Ordinal)
             .Where(path => !baseProjects.TryGetValue(path, out var before)
                 || !candidateProjects.TryGetValue(path, out var after)
-                || !string.Equals(before.Content, after.Content, StringComparison.Ordinal))
+                || !string.Equals(before.Content, after.Content, StringComparison.Ordinal)
+                || !SameTopologyRegistration(before.Registration, after.Registration))
             .ToHashSet(StringComparer.Ordinal);
 
         // test→test 债的参与者**不**计入路径级触发:该债的性质是一条 ProjectReference 关系,
@@ -477,16 +354,9 @@ internal static partial class RepositoryRules
                     candidate.AssemblyName)));
     }
 
-    private static bool HasLiteralXunitReference(string content)
-    {
-        var document = XDocument.Parse(content, LoadOptions.None);
-        return document.Descendants().Any(static element =>
-            element.Name.LocalName == "PackageReference"
-            && string.Equals(
-                (string?)element.Attribute("Include"),
-                "xunit",
-                StringComparison.Ordinal));
-    }
+    private static bool SameTopologyRegistration(EngineeringProjectDeclaration before, EngineeringProjectDeclaration after) =>
+        before.Assembly == after.Assembly && before.Role == after.Role && before.Owner == after.Owner
+        && before.OwnedTestAssembly == after.OwnedTestAssembly && before.References.SequenceEqual(after.References);
 
     private static void AddDebt(
         IDictionary<TestProjectTopologyDebt, HashSet<string>> participants,
@@ -517,12 +387,12 @@ internal static partial class RepositoryRules
 
     private sealed record ProjectVertex(
         string Path,
-        string Content,
         string AssemblyName,
         bool IsProduction,
         bool IsTest,
         bool IsOwnedTest,
-        ImmutableArray<string> DirectProjectReferences);
+        ImmutableArray<string> DirectProjectReferences,
+        EngineeringProjectDeclaration Registration);
 
     private sealed record DebtGraph(
         ImmutableArray<TestProjectTopologyDebt> Debt,

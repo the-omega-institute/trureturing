@@ -246,7 +246,8 @@ public sealed partial class TheoryAtomizerTests
             .ToArray();
         var raw = RawRepositorySnapshot.Create(relativePaths.Select(path => new RawRepositoryEntry(
             path,
-            ImmutableArray.CreateRange(File.ReadAllBytes(Path.Combine(root, path))))));
+            ImmutableArray.CreateRange(File.ReadAllBytes(Path.Combine(root, path)))))
+            .Append(RawRepositoryEntry.FromText(EngineeringRegistrationFixture.Path, EngineeringRegistrationFixture.Manifest())));
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
             SnapshotDecoder.Decode(raw)).Snapshot;
         var source = Assert.Single(BackfillInventoryLoader.Load(snapshot).RequireDigestionSources());
@@ -274,7 +275,7 @@ public sealed partial class TheoryAtomizerTests
             environment,
             console);
 
-        Assert.Equal(0, exitCode);
+        Assert.True(exitCode == 0, $"exit={exitCode}: {console.Error}");
         Assert.DoesNotContain(
             "atomizer recognition is incomplete or empty",
             console.Output,

@@ -83,7 +83,7 @@ internal sealed class ProductionScribeEmissionVerifier : IScribeEmissionVerifier
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(report);
         using var materialized = MaterializedRepositorySnapshot.Create(snapshot);
-        if (StatementProjectionReconciliation.IsAffectedBy(changes))
+        if (StatementProjectionReconciliation.IsAffectedBy(snapshot, changes))
         {
             StatementProjectionReconciliation.Verify(
                 materialized.Root,

@@ -77,6 +77,7 @@ public sealed class SharedBuildContractTests
         Write(".gitignore", "build/\n.lake/\n**/bin/\n");
         Write("Makefile", "lean-report:\n\t@echo report >> build/events\n");
         Write("tools/scripts/workflow/scribe-content-checks.sh", "echo scribe >> build/events\n");
+        fixture.RegisterProofs();
         Write("tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs", "// banned-api-proof\n");
         Write("build/bin/dotnet", """
             #!/bin/bash
@@ -248,18 +249,53 @@ public sealed class SharedBuildContractTests
         foreach (var pair in environment ?? new Dictionary<string, string>()) start.Environment[pair.Key] = pair.Value;
         using var process = System.Diagnostics.Process.Start(start)!;
         using var deadline = new CancellationTokenSource(hangGuard ?? TestBudgets.ScriptProcessHangGuard);
-        var stdout = process.StandardOutput.ReadToEndAsync(deadline.Token);
-        var stderr = process.StandardError.ReadToEndAsync(deadline.Token);
+        using var cleanup = new CancellationTokenSource();
+        var stdoutText = new System.Text.StringBuilder();
+        var stderrText = new System.Text.StringBuilder();
+        var stdout = Drain(process.StandardOutput, stdoutText);
+        var stderr = Drain(process.StandardError, stderrText);
+        var phase = "child-exit";
+        var expired = false;
         try
         {
             process.WaitForExitAsync(deadline.Token).GetAwaiter().GetResult();
+            phase = "output-drain";
             Task.WhenAll(stdout, stderr).WaitAsync(deadline.Token).GetAwaiter().GetResult();
-            return (process.ExitCode, stdout.GetAwaiter().GetResult() + stderr.GetAwaiter().GetResult());
+            return (process.ExitCode, stdoutText.ToString() + stderrText);
         }
         catch (OperationCanceledException)
         {
-            throw new SkipException("infrastructure-hang-guard expired for shared build fixture: " + executable + " " + string.Join(' ', arguments));
+            expired = true;
+            throw new SkipException("infrastructure-hang-guard expired for shared build fixture: " + executable + " " + string.Join(' ', arguments)
+                + "; phase=" + phase);
         }
-        finally { if (!process.HasExited) process.Kill(entireProcessTree: true); }
+        finally
+        {
+            if (!process.HasExited) process.Kill(entireProcessTree: true);
+            cleanup.CancelAfter(TestBudgets.ScriptProcessHangGuard);
+            try { Task.WhenAll(process.WaitForExitAsync(cleanup.Token), stdout, stderr).GetAwaiter().GetResult(); }
+            catch (OperationCanceledException) when (expired) { } // Preserve the original guard phase after draining retained bytes.
+            finally
+            {
+                if (Environment.GetEnvironmentVariable("JUDGE_SEED_EVIDENCE") is { Length: > 0 } evidence)
+                {
+                    Directory.CreateDirectory(evidence);
+                    var path = Path.Combine(evidence, "process-" + process.Id + "-" + Guid.NewGuid().ToString("N"));
+                    File.WriteAllText(path + ".json", System.Text.Json.JsonSerializer.Serialize(new {
+                        executable, arguments, working_directory = root, phase, guard_expired = expired,
+                        child_exit = process.HasExited ? (int?)process.ExitCode : null }));
+                    File.WriteAllText(path + ".stdout.log", stdoutText.ToString());
+                    File.WriteAllText(path + ".stderr.log", stderrText.ToString());
+                }
+            }
+        }
+
+        async Task Drain(StreamReader reader, System.Text.StringBuilder text)
+        {
+            var buffer = new char[4096];
+            int count;
+            while ((count = await reader.ReadAsync(buffer.AsMemory(), cleanup.Token).ConfigureAwait(false)) != 0)
+                text.Append(buffer, 0, count);
+        }
     }
 }

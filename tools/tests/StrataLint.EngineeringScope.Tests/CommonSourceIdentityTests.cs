@@ -6,10 +6,30 @@ namespace StrataLint.EngineeringScope.Tests;
 public sealed class CommonSourceIdentityTests
 {
     [Theory]
+    [InlineData("absent", "missing engineering project registration")]
+    [InlineData("duplicate", "duplicate engineering project registration")]
+    [InlineData("uncovered", "unregistered engineering source")]
+    public void CandidateRejectsInvalidRegistrationBeforeIssuingIdentity(string defect, string diagnostic)
+    {
+        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        var manifest = Path.Combine(fixture.Root, EngineeringRegistrationFixture.Path);
+        if (defect == "absent") TemporaryFileSystem.File.Delete(manifest);
+        else if (defect == "duplicate") TemporaryFileSystem.File.WriteAllText(manifest,
+            EngineeringRegistrationFixture.Append(TemporaryFileSystem.File.ReadAllText(manifest),
+                new EngineeringProjectFixture(CurrentExecutionContractTests.CandidateFixture.First,
+                    "First", "cross-cutting-test", true, [])));
+        else TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, "Unregistered.cs"), "class Unregistered { }");
+
+        var error = Assert.Throws<InvalidDataException>(() => CommonExecutionEvidence.Candidate(fixture.Root));
+
+        Assert.Contains(diagnostic, error.Message, StringComparison.Ordinal);
+    }
+
+    [Theory]
     [InlineData(".sshx-extra.cs", false)]
     [InlineData("local/Other.cs", false)]
     [InlineData("release/Conditional.cs", true)]
-    public void UnrepresentedEvaluatedCompileInputCannotReceiveCandidateEvidence(string source, bool releaseOnly)
+    public void UnrepresentedRegisteredCompileInputCannotReceiveCandidateEvidence(string source, bool releaseOnly)
     {
         using var fixture = new CurrentExecutionContractTests.CandidateFixture();
         WriteProject(fixture.Root, releaseOnly);
@@ -20,11 +40,16 @@ public sealed class CommonSourceIdentityTests
         TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(path)!);
         TemporaryFileSystem.File.WriteAllText(path, "public class AdditionalSource { }\n");
 
+        var manifest = Path.Combine(fixture.Root, EngineeringRegistrationFixture.Path);
+        var registration = TemporaryFileSystem.File.ReadAllText(manifest);
+        TemporaryFileSystem.File.WriteAllText(manifest, registration.Replace("tools/tests/First/**/*.cs",
+            "tools/tests/First/" + source, StringComparison.Ordinal));
         var error = Assert.Throws<InvalidDataException>(() => CommonExecutionEvidence.Candidate(fixture.Root));
 
         Assert.Contains("Compile input is absent from candidate source", error.Message, StringComparison.Ordinal);
         Assert.Contains(source, error.Message, StringComparison.Ordinal);
         TemporaryFileSystem.File.Delete(path);
+        TemporaryFileSystem.File.WriteAllText(manifest, registration);
         Assert.Equal(before, CommonExecutionEvidence.Candidate(fixture.Root));
     }
 

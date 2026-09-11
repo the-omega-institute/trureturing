@@ -1,5 +1,7 @@
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
+using StrataLint.TestSupport;
 using StrataLint.Cli;
 using StrataLint.Engine;
 using StrataLint.EngineeringScope;
@@ -61,6 +63,10 @@ public sealed class CurrentDeltaCliContractTests
 
     [Theory]
     [InlineData("valid", 0, "")]
+    [InlineData("premanifest-base", 0, "")]
+    [InlineData("premanifest-missing-base-project", 2, "base test project")]
+    [InlineData("original-registration-base", 0, "")]
+    [InlineData("original-registration-missing-base-project", 2, "base test project")]
     [InlineData("annotation", 3, "SL-022")]
     [InlineData("mixed", 1, "SL-029")]
     [InlineData("first-freeze", 1, "SL-008")]
@@ -83,21 +89,54 @@ public sealed class CurrentDeltaCliContractTests
         const string firstProject = "tools/tests/First/First.csproj";
         Write(firstProject, "<Project><PropertyGroup><IsTestProject>true</IsTestProject></PropertyGroup></Project>\n");
         Write("tools/tests/Second/Second.csproj", "<Project><PropertyGroup><IsTestProject>true</IsTestProject></PropertyGroup></Project>\n");
+        var registration = JsonNode.Parse(fixture.Files[EngineeringRegistrationFixture.Path])!;
+        var projects = registration["projects"]!.AsArray();
+        foreach (var (path, assembly) in new[] { (firstProject, "First"), ("tools/tests/Second/Second.csproj", "Second") })
+            projects.Add(JsonNode.Parse(EngineeringRegistrationFixture.Manifest(
+                new EngineeringProjectFixture(path, assembly, "cross-cutting-test", true, [])))!["projects"]![0]!.DeepClone());
+        Write(EngineeringRegistrationFixture.Path, registration.ToJsonString());
+        if (scenario.StartsWith("premanifest-", StringComparison.Ordinal))
+            File.Delete(Path.Combine(root, EngineeringRegistrationFixture.Path));
+        if (scenario.StartsWith("original-registration-", StringComparison.Ordinal))
+        {
+            var historical = registration.DeepClone();
+            historical.AsObject().Remove("rule_build_inputs");
+            foreach (var row in historical["projects"]!.AsArray())
+                foreach (var field in new[] { "root_namespace", "namespace_exclude", "global_namespace_exceptions" })
+                    row!.AsObject().Remove(field);
+            Write(EngineeringRegistrationFixture.Path, historical.ToJsonString());
+        }
         const string protectedPath = "tools/scripts/probe.sh";
         Git(root, "init", "-q"); Git(root, "add", ".");
         Git(root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "base");
         var baseResult = TestProcessRunner.Run("git", ["rev-parse", "HEAD"], root, TestBudgets.ScriptProcessHangGuard, 1024);
         var basis = Encoding.UTF8.GetString(baseResult.StandardOutput).Trim();
+        Write(EngineeringRegistrationFixture.Path, registration.ToJsonString());
         switch (scenario)
         {
+            case "premanifest-base": break;
+            case "original-registration-base": break;
             case "annotation": Write(protectedPath, "#!/bin/sh\nexit 0\n"); break;
             case "mixed": Write("tools/StrataLint.Cli/probe.cs", "// candidate judge\n"); Write(RuleFixture.BlueprintPath, "# changed\n"); break;
             case "first-freeze": Write("Golden/Frozen/accepted/" + new string('a', 64) + ".json", "{}\n"); break;
             case "ratchet": for (var i = 0; i <= RepositoryRules.DirectoryFileLimit; i++) Write($"docs/reports/ratchet/{i}.json", "{}\n"); break;
-            case "unowned-project": Write("tools/StrataLint.NewProduct/StrataLint.NewProduct.csproj", "<Project />\n"); break;
-            case "missing-base-project": File.Delete(Path.Combine(root, firstProject)); break;
+            case "unowned-project":
+                const string product = "tools/StrataLint.NewProduct/StrataLint.NewProduct.csproj";
+                Write(product, "<Project />\n");
+                projects.Add(JsonNode.Parse(EngineeringRegistrationFixture.Manifest(new EngineeringProjectFixture(
+                    product, "StrataLint.NewProduct", "production", false, [], OwnedTestAssembly: "StrataLint.NewProduct.Tests")))!["projects"]![0]!.DeepClone());
+                break;
+            case "missing-base-project":
+            case "premanifest-missing-base-project":
+            case "original-registration-missing-base-project":
+                File.Delete(Path.Combine(root, firstProject));
+                var removed = projects.Single(item => item!["path"]!.GetValue<string>() == firstProject)!;
+                projects.Remove(removed);
+                registration["historical_projects"]!.AsArray().Add(removed);
+                break;
             default: Write(RuleFixture.BlueprintPath, "# changed\n"); break;
         }
+        Write(EngineeringRegistrationFixture.Path, registration.ToJsonString());
         var report = Path.Combine(root, CommonExecutionEvidence.ReportPath);
         RawLeanReportArtifact.WriteFile(report, CommonExecutionEvidence.Snapshot(root), LeanAxiomReport.Create(fixture.Reports));
         foreach (var suffix in new[] { ".sha256", ".input.attestation", ".provenance.json", ".seed.json" })
@@ -142,7 +181,7 @@ public sealed class CurrentDeltaCliContractTests
         var exit = CliApplication.Run(["check-delta", "--protected-base", basis, "--candidate-lean-report", report], environment, console);
         Assert.True(exit == expectedExit, $"expected exit {expectedExit}, got {exit}: {console.Output}{console.Error}");
         Assert.Contains(diagnostic, console.Output + console.Error, StringComparison.Ordinal);
-        if (scenario == "missing-base-project")
+        if (scenario is "missing-base-project" or "premanifest-missing-base-project" or "original-registration-missing-base-project")
         {
             Assert.Contains($"ENGINEERING_TEST_PROJECT_REMOVED project={JsonSerializer.Serialize(firstProject)}",
                 console.Output, StringComparison.Ordinal);
