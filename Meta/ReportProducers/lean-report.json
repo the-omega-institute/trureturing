@@ -22,5 +22,17 @@
   ],
   "projects": [
     "tools/StrataLint.Lean/StrataLint.Lean.csproj"
+  ],
+  "materials": [
+    "global.json",
+    "Directory.Build.props",
+    "Directory.Packages.props",
+    "tools/Architecture/BannedSymbols.txt",
+    "tools/Architecture/BannedSymbols.Determinism.txt",
+    "tools/Architecture/BannedSymbols.Guid.txt",
+    "tools/StrataLint.Lean/packages.lock.json",
+    "tools/StrataLint.Engine/packages.lock.json",
+    "tools/Trureturing.Truth/packages.lock.json",
+    ".editorconfig"
   ]
 }

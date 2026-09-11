@@ -139,7 +139,15 @@ def snapshot_report(root, partition, destination):
     return inventory
 
 
-def snapshot(root, keys, layers=LAYERS):
+def validate_judge_registration(root, layers):
+    if "judge" in layers:
+        sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "report"))
+        from dotnet_producer import project_registry
+        return project_registry(root)
+
+
+def snapshot(root, keys, layers=LAYERS, registry=None):
+    registry = registry if registry is not None else validate_judge_registration(root, layers)
     for layer in layers:
         ready = False
         try:
@@ -157,7 +165,7 @@ def snapshot(root, keys, layers=LAYERS):
                     elif layer == "judge":
                         sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "report"))
                         from dotnet_producer import stage_seed
-                        stage_seed(root, staged / "data")
+                        stage_seed(root, staged / "data", registry)
                     else:
                         shutil.copytree(root / spec["target"], staged / "data", symlinks=True)
                 if layer != "report":
@@ -176,7 +184,9 @@ def snapshot(root, keys, layers=LAYERS):
             output({layer + "_ready": ready})
 
 
-def restore(root, keys, matched, layers=LAYERS):
+def restore(root, keys, matched, layers=LAYERS, registry=None):
+    if registry is None:
+        validate_judge_registration(root, layers)
     project_seeded = False
     for layer in layers:
         try:
@@ -190,20 +200,28 @@ def restore(root, keys, matched, layers=LAYERS):
             manifest = json.loads((cached / "manifest.json").read_text())
             if (not isinstance(manifest, dict) or manifest.get("schema") != "lean-actions-seed-v1" or manifest.get("partition") != keys["partition"]
                     or manifest.get("layer") != layer or manifest.get("key") != key
-                    or manifest.get("files") != files(cached / "data")):
+                    or manifest.get("files") != files(cached / "data", expected=manifest["files"])):
                 raise ValueError("Actions seed identity or material integrity mismatch")
-            if layer == "report":
-                sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2] / "lean-inspector"))
-                from report_cache import seed_valid
-                reports = list((cached / "data" / keys["partition"]).glob("*/raw-lean-report.json"))
-                if not reports or not any(seed_valid(report, keys["partition"]) for report in reports):
-                    raise ValueError("Actions report cache has no valid complete seed")
             target = root / spec["target"]
             with cache_guard(root):
                 target.parent.mkdir(parents=True, exist_ok=True)
                 with tempfile.TemporaryDirectory(prefix=".actions-", dir=target.parent) as temporary:
                     staged = pathlib.Path(temporary) / "data"
-                    shutil.copytree(cached / "data", staged)
+                    # Copy exactly the validated manifest; unlisted neighbours
+                    # cannot introduce projects or executable seed material.
+                    staged.mkdir()
+                    for item in manifest["files"]:
+                        destination = staged / item["path"]
+                        destination.parent.mkdir(parents=True, exist_ok=True)
+                        shutil.copy2(cached / "data" / item["path"], destination)
+                    if layer == "report":
+                        sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2] / "lean-inspector"))
+                        from report_cache import seed_valid
+                        reports = [staged / item["path"] for item in manifest["files"]
+                                   if pathlib.PurePosixPath(item["path"]).name == "raw-lean-report.json"
+                                   and pathlib.PurePosixPath(item["path"]).parent.parent.as_posix() == keys["partition"]]
+                        if not reports or not any(seed_valid(report, keys["partition"]) for report in reports):
+                            raise ValueError("Actions report cache has no valid complete seed")
                     if target.exists():
                         shutil.rmtree(target)
                     staged.rename(target)
@@ -225,7 +243,10 @@ def main():
     for layer in ALL_LAYERS:
         parser.add_argument("--" + layer + "-key", default="")
     args = parser.parse_args()
+    sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "report"))
+    from dotnet_producer import ProjectRegistrationError
     try:
+        registry = validate_judge_registration(args.repository, args.layers) if args.command != "keys" else None
         keys = actions_keys(args.repository)
         if args.command == "keys":
             values = {}
@@ -238,10 +259,13 @@ def main():
             values["elan_key"] = f"elan-v1-{system}-{arch}-{toolchain}"
             output(values)
         elif args.command == "restore":
-            restore(args.repository, keys, {layer: getattr(args, layer + "_key") for layer in args.layers}, args.layers)
+            restore(args.repository, keys, {layer: getattr(args, layer + "_key") for layer in args.layers}, args.layers, registry)
         else:
-            snapshot(args.repository, keys, args.layers)
+            snapshot(args.repository, keys, args.layers, registry)
         return 0
+    except ProjectRegistrationError as error:
+        print(str(error), file=sys.stderr)
+        return 2
     except (OSError, ValueError, TypeError, KeyError) as error:
         receipt("all", "unavailable", reason=str(error))
         if args.command == "restore" and "project" in args.layers:

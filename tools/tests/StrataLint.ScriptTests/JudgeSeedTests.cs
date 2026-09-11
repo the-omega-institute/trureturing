@@ -5,6 +5,180 @@ namespace StrataLint.Tests;
 public sealed class JudgeSeedTests
 {
     [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ReportSeedValidationUsesOnlyTransportedBundleMembers(bool complete)
+    {
+        using var fixture = new JudgeSeedFixture();
+        using var producer = new ProducerInputFixture();
+        var address = producer.Address();
+        producer.Plan(address, address);
+        var keys = fixture.CacheKeys();
+        var partition = keys["partition"]!.GetValue<string>();
+        var key = keys["report"]!["key"]!.GetValue<string>();
+        var cache = keys["report"]!["path"]!.GetValue<string>();
+        var target = keys["report"]!["target"]!.GetValue<string>();
+        var name = partition + "/" + new string('a', 64) + "/raw-lean-report.json";
+        File.WriteAllText(producer.SeedReportPath + ".seed.json", System.Text.Json.JsonSerializer.Serialize(new
+        {
+            schema = "lean-report-seed-v1", partition, runtime_sha256 = address[1],
+            report_sha256 = Hash(producer.SeedReportPath), materials_sha256 = Hash(producer.SeedReportPath + ".materials.zip"),
+        }));
+        string[] suffixes = ["", ".sha256", ".input.attestation", ".provenance.json", ".materials.zip", ".seed.json"];
+        foreach (var suffix in suffixes)
+        {
+            var destination = fixture.Write(cache + "/data/" + name + suffix, "");
+            File.Copy(producer.SeedReportPath + suffix, destination, true);
+        }
+        fixture.Write(cache + "/manifest.json", System.Text.Json.JsonSerializer.Serialize(new
+        {
+            schema = "lean-actions-seed-v1", partition, layer = "report", key,
+            files = suffixes.Take(complete ? suffixes.Length : 1).Order(StringComparer.Ordinal).Select(suffix => new
+            {
+                path = name + suffix, sha256 = Hash(fixture.PathOf(cache + "/data/" + name + suffix)),
+                mode = OperatingSystem.IsWindows() ? 438 : (int)File.GetUnixFileMode(fixture.PathOf(cache + "/data/" + name + suffix)) & 511,
+            }),
+        }));
+        var restored = fixture.RestoreLayer("report", key);
+        Assert.True(restored.Text.Contains(complete ? "\"status\": \"restored\"" : "\"status\": \"miss\"", StringComparison.Ordinal), restored.Text);
+        Assert.Equal(complete, File.Exists(fixture.PathOf(target + "/" + name)));
+
+        static string Hash(string path) => Convert.ToHexStringLower(System.Security.Cryptography.SHA256.HashData(File.ReadAllBytes(path)));
+    }
+
+    [Theory]
+    [InlineData("dependency")]
+    [InlineData("project")]
+    public void SeedTransportUsesOnlyItsMaterialManifest(string layer)
+    {
+        using var fixture = new JudgeSeedFixture();
+        var keys = fixture.CacheKeys();
+        var cache = keys[layer]!["path"]!.GetValue<string>();
+        var target = keys[layer]!["target"]!.GetValue<string>();
+        var key = keys[layer]!["key"]!.GetValue<string>();
+        var registered = fixture.Write(cache + "/data/registered.txt", "registered material");
+        fixture.Write(cache + "/data/unlisted.txt", "unlisted neighbor");
+        fixture.Write(cache + "/manifest.json", System.Text.Json.JsonSerializer.Serialize(new
+        {
+            schema = "lean-actions-seed-v1", partition = keys["partition"]!.GetValue<string>(), layer, key,
+            files = new[] { new { path = "registered.txt", mode = OperatingSystem.IsWindows() ? 438 : (int)File.GetUnixFileMode(registered) & 511,
+                sha256 = Convert.ToHexStringLower(System.Security.Cryptography.SHA256.HashData(File.ReadAllBytes(registered))) } },
+        }));
+        var restored = fixture.RestoreLayer(layer, key);
+        Assert.Contains("\"status\": \"restored\"", restored.Text, StringComparison.Ordinal);
+        Assert.Equal("registered material", File.ReadAllText(fixture.PathOf(target + "/registered.txt")));
+        Assert.False(File.Exists(fixture.PathOf(target + "/unlisted.txt")));
+        File.WriteAllText(registered, "corrupt bytes");
+        var missed = fixture.RestoreLayer(layer, key);
+        Assert.Contains("\"status\": \"miss\"", missed.Text, StringComparison.Ordinal);
+        Assert.Equal("registered material", File.ReadAllText(fixture.PathOf(target + "/registered.txt")));
+    }
+
+    [Theory]
+    [InlineData("restore", false)]
+    [InlineData("restore", true)]
+    [InlineData("snapshot", false)]
+    [InlineData("snapshot", true)]
+    public void TransportRegistrationErrorsBlockBeforeOptionalCacheHandling(string command, bool duplicate)
+    {
+        using var fixture = new JudgeSeedFixture();
+        if (duplicate) fixture.EditProjects(registry => registry["projects"]!.AsArray().Add(registry["projects"]![0]!.DeepClone()));
+        else File.Delete(fixture.PathOf("Meta/engineering-projects.json"));
+        var marker = fixture.Write(".judge-binaries/preserved", "existing seed");
+        var result = fixture.TransportCommand(command);
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains("ENGINEERING_PROJECT_REGISTRATION", result.Text, StringComparison.Ordinal);
+        Assert.DoesNotContain("LEAN_ACTIONS_CACHE", result.Text, StringComparison.Ordinal);
+        Assert.Equal("existing seed", File.ReadAllText(marker));
+    }
+
+    [Fact]
+    public void SameBasenameProjectsReuseDistinctReceiptsAndUnlistedTransportIsIgnored()
+    {
+        using var fixture = new JudgeSeedFixture();
+        fixture.UseSameProjectBasenames();
+        fixture.Prepare();
+        fixture.Build("same-basename-cold", 2);
+        foreach (var name in new[] { "Library", "Consumer" })
+            Assert.True(File.Exists(fixture.PathOf($"build/judge-seed/receipts/tools/{name}/Project.csproj.seed.json")));
+        fixture.Snapshot();
+        Assert.True(File.Exists(fixture.SnapshotManifest));
+        fixture.AddUnlistedTransportNeighbor();
+        fixture.RestoreTransport();
+        Assert.False(Directory.Exists(fixture.PathOf(".judge-binaries/data/tools/Neighbor")));
+        fixture.Write(".judge-binaries/data/tools/Library/obj/unlisted.dll", "unlisted project material");
+        fixture.Write(".judge-binaries/data/build/judge-seed/task/obj/unlisted.dll", "unlisted task material");
+        fixture.Prepare();
+        Assert.False(File.Exists(fixture.PathOf("tools/Library/obj/unlisted.dll")));
+        Assert.False(File.Exists(fixture.PathOf("build/judge-seed/task/obj/unlisted.dll")));
+        fixture.Restore();
+        fixture.Build("same-basename-warm", 0);
+        fixture.Write("tools/Library/Code.cs", "not valid C#");
+        Assert.NotEqual(0, fixture.BuildFailure("warm-seed-bad-source").ExitCode);
+    }
+
+    [Theory]
+    [InlineData("missing")]
+    [InlineData("duplicate")]
+    [InlineData("reference")]
+    [InlineData("material")]
+    [InlineData("unregistered-project")]
+    public void InvalidProjectRegistrationFailsBeforeCacheHandling(string defect)
+    {
+        using var fixture = new JudgeSeedFixture();
+        if (defect == "missing") File.Delete(fixture.PathOf("Meta/engineering-projects.json"));
+        else if (defect == "unregistered-project")
+        {
+            fixture.Write("tools/Neighbor/Neighbor.csproj", "<Project />");
+            fixture.Git("add", "tools/Neighbor/Neighbor.csproj");
+        }
+        else fixture.EditProjects(registry =>
+        {
+            var rows = registry["projects"]!.AsArray();
+            if (defect == "duplicate") rows.Add(rows[0]!.DeepClone());
+            if (defect == "reference") rows[0]!["references"]!.AsArray().Add("tools/Missing/Missing.csproj");
+            if (defect == "material") rows[0]!["include"]!.AsArray().Add("tools/Library/Missing.cs");
+        });
+        var paths = new[] { "tools/Library/bin/existing", "tools/Library/obj/existing", ".judge-binaries/existing" }
+            .Select(path => fixture.Write(path, "preserved")).ToArray();
+
+        var result = fixture.Prepare(success: false);
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Contains("ENGINEERING_PROJECT_REGISTRATION", result.Text, StringComparison.Ordinal);
+        Assert.DoesNotContain("\"status\": \"miss\"", result.Text, StringComparison.Ordinal);
+        foreach (var path in paths) Assert.Equal("preserved", File.ReadAllText(path));
+    }
+
+    [Fact]
+    public void UnrelatedRegisteredProofDoesNotInvalidateCompilerSeedsOrGetBuilt()
+    {
+        using var fixture = new JudgeSeedFixture();
+        fixture.Write("tools/Proof/Proof.csproj", "<Project />");
+        fixture.Write("tools/Proof/Bad.cs", "deliberately invalid C#");
+        fixture.EditProjects(registry => registry["projects"]!.AsArray().Add(System.Text.Json.JsonSerializer.SerializeToNode(
+            JudgeSeedFixture.ProjectRow("tools/Proof/Proof.csproj", "Proof", "compile-fail-proof", ["tools/Proof/Bad.cs"], []))));
+        fixture.Git("add", "tools/Proof");
+        var neighbor = fixture.Write("tools/Neighbor/obj/preserved", "unregistered output");
+        fixture.Prepare();
+        fixture.Build("registered-cold", 2);
+        fixture.EditProjects(registry => registry["projects"]![2]!["assembly"] = "ChangedProof");
+        fixture.Prepare();
+        fixture.Build("unrelated-registry-row", 0);
+        Assert.Equal("unregistered output", File.ReadAllText(neighbor));
+        Assert.False(Directory.Exists(fixture.PathOf("tools/Proof/bin")));
+        fixture.EditProjects(registry =>
+        {
+            registry["projects"]![0]!["role"] = "production";
+            registry["projects"]![0]!["owned_test_assembly"] = "Library.Tests";
+        });
+        fixture.Prepare();
+        fixture.Build("relevant-registry-closure", 2);
+        fixture.Snapshot();
+        Assert.True(File.Exists(fixture.SnapshotManifest));
+    }
+
+    [Theory]
     [InlineData("missing")]
     [InlineData("version")]
     [InlineData("material")]
@@ -162,12 +336,16 @@ public sealed class JudgeSeedTests
         fixture.Build("clean-option", 2, "-p:Optimize=false", "-t:Rebuild");
         Assert.Equal(incremental, fixture.Products());
         fixture.Write("tools/Library/Added.cs", "// registered Compile glob member\n");
+        fixture.Git("add", "tools/Library/Added.cs");
+        fixture.Prepare();
         fixture.Build("membership", 1, "-p:Optimize=false");
         var project = fixture.PathOf("tools/Library/Library.csproj");
         File.WriteAllText(project, File.ReadAllText(project).Replace("</Project>",
             "<PropertyGroup><DefineConstants>CHANGED</DefineConstants></PropertyGroup></Project>", StringComparison.Ordinal));
         fixture.Build("project", 1, "-p:Optimize=false");
         File.Delete(fixture.PathOf("tools/Library/Added.cs"));
+        fixture.Git("add", "tools/Library/Added.cs");
+        fixture.Prepare();
         fixture.Build("removed-input", 1, "-p:Optimize=false");
         fixture.WritePreservingTime("tools/Library/message.txt", "changed resource");
         fixture.Build("preserved-time-resource", 1, "-p:Optimize=false");
@@ -186,6 +364,12 @@ public sealed class JudgeSeedTests
         fixture.CorruptSnapshot();
         fixture.Restore();
         fixture.Build("corrupt-transfer", 2);
+        fixture.Snapshot();
+        var nullInventory = JsonNode.Parse(File.ReadAllText(fixture.SnapshotManifest))!;
+        nullInventory["files"] = null;
+        File.WriteAllText(fixture.SnapshotManifest, nullInventory.ToJsonString());
+        fixture.Restore();
+        fixture.Build("null-inventory-transfer", 2);
         fixture.Snapshot();
         fixture.Restore();
         fixture.Build("runtime-rematerialization", 0);
