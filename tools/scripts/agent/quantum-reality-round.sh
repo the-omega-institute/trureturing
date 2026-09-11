@@ -3,13 +3,38 @@
 # oracle pool, and archive the reply in the lane. The charter and the carried
 # open questions live in the lane so a round survives across sessions and hosts.
 #
+#
+# It dispatches through the repository's own nyxid client, `nyx.sh`, and not
+# through `nyxid oracle ask` directly. The direct call was the line's single
+# largest carrier problem and it took three rounds to see, because everything
+# `nyx.sh` had been hardened to do was simply bypassed:
+#
+#   * **the mode tag was wrong.** This script passed `--tag quantum-reality-r<N>`
+#     as its only tag, so no `mode:chat` ever reached the pool;
+#     `company-chatgpt-pro` answered `oracle_mode_required` and the line recorded
+#     that pool as "structurally unusable through this runner". It is not --
+#     `nyx.sh` sets `mode:chat` by default and the same pool accepts submissions
+#     under it. The round is still identified: its number is in the filename.
+#   * **no pool traversal.** A fixed pool meant one carrier failure ended a round.
+#   * **no verdict classification.** `nyxid oracle ask` exits nonzero for a dozen
+#     unrelated reasons; the caller saw only `status=failed` and had to read the
+#     `Error:` line out of the archive by hand to tell "carrier broke, try the
+#     next pool" from "session expired, a human must log in".
+#   * **no task-id sidecar.** A timeout leaves a task still running upstream.
+#     Without the sidecar the only move left was to redispatch, which is exactly
+#     what must not be done.
+#
 # Usage: quantum-reality-round.sh [lane-dir] [pool]
+# `pool` is optional and normally omitted: empty lets `nyx.sh` rank the usable
+# pools and traverse them. Pass one only to pin a specific carrier.
 # Writes: <lane>/docs/reports/quantum-reality/round-<N>-<utc>.md
 # Sentinel: QR_ROUND round=<N> status=dispatched|failed file=<path>
 set -u
 
 LANE="${1:-/Users/chronoai/trureturing-quantum-reality}"
-POOL="${2:-chrono-chatgpt-pro-pool}"
+POOL="${2:-}"
+NYX="$(dirname "$0")/nyx.sh"
+[ -f "$NYX" ] || { echo "QR_ROUND status=failed reason=no-nyx path=$NYX"; exit 2; }
 DIR="$LANE/docs/reports/quantum-reality"
 CHARTER="$DIR/CHARTER.md"
 OPEN="$DIR/OPEN-QUESTIONS.md"
@@ -18,7 +43,17 @@ OPEN="$DIR/OPEN-QUESTIONS.md"
 [ -f "$OPEN" ]    || { echo "QR_ROUND status=failed reason=no-open-questions path=$OPEN"; exit 2; }
 
 mkdir -p "$DIR"
-n=$(( $(find "$DIR" -maxdepth 1 -name 'round-*.md' | wc -l | tr -d ' ') + 5 ))
+# The round number is the archive's own maximum plus one, not a count.
+# Counting was wrong every time it mattered: a failed round's archive is deleted
+# on purpose (an empty shell would be misread as a verdict next round), so the
+# count undershoots by exactly the number of failures. It produced 10, 11, 12, 13
+# while the real rounds were 12, 14, 15, 16, and archives were renamed by hand
+# twice before the derivation itself was fixed (第 7.11 条: the same symptom a
+# second time means stop renaming files and fix the rule).
+n=$(find "$DIR" -maxdepth 1 -name 'round-*.md' 2>/dev/null \
+    | sed -n 's|.*/round-\([0-9][0-9]*\)-.*|\1|p' \
+    | sort -n | tail -1)
+n=$(( ${n:-0} + 1 ))
 utc=$(date -u +%Y%m%dT%H%M%SZ)
 head_sha=$(git -C "$LANE" rev-parse origin/dev 2>/dev/null || echo unknown)
 brief=$(mktemp)
@@ -32,9 +67,13 @@ brief=$(mktemp)
 } > "$brief"
 
 out="$DIR/round-$n-$utc.md"
-if nyxid oracle ask "$POOL" --file "$brief" --tag "quantum-reality-r$n" > "$out" 2>&1; then
-  echo "QR_ROUND round=$n status=dispatched file=$out pool=$POOL base=$head_sha"
+if NYX_POOL="$POOL" bash "$NYX" ask "$brief" "$out"; then
+  echo "QR_ROUND round=$n status=dispatched file=$out pool=${POOL:-traversed} base=$head_sha"
   rm -f "$brief"; exit 0
 fi
-echo "QR_ROUND round=$n status=failed file=$out pool=$POOL"
-rm -f "$brief"; exit 1
+rc=$?
+# nyx.sh has already printed a classified NYX_* line and, on a timeout, written
+# the task id to "$out.taskid". Carry its exit code through instead of flattening
+# every failure to 1: the caller's next move differs by verdict.
+echo "QR_ROUND round=$n status=failed file=$out pool=${POOL:-traversed} nyx_rc=$rc"
+rm -f "$brief"; exit "$rc"
