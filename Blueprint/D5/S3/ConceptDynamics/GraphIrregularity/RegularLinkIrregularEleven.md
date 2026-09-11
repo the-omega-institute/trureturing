@@ -8,9 +8,9 @@ Priority. The order-eleven fact is not new here. Jannis Harder reported a six-re
 
 Bastien and Khormali, "On the Regularity, Planarity and Edge Bounds of Link-irregular Graphs", define: "A graph G is a link-irregular graph if every two distinct vertices of G have non-isomorphic links. The link of a vertex v in G is the subgraph induced by the neighbors of v in G." Thus degrees inside a link are measured within that induced graph, not in the ambient graph.
 
-Section 3 of the arXiv PREPRINT, arXiv:2503.21916v2, prints: "Conjecture 17. There exists a regular link-irregular graph on n vertices if and only if n >= 12." The peer-reviewed version, Discussiones Mathematicae Graph Theory 46(2) (2026) 555-568, DOI 10.7151/dmgt.2619, DOES NOT CONTAIN Conjecture 17; it was removed in revision. The refuted statement is the one printed in the arXiv preprint, not a conjecture published in DMGT.
+Section 3 of the arXiv PREPRINT, arXiv:2503.21916v2, prints: "Conjecture 17. There exists a regular link-irregular graph on n vertices if and only if n >= 12." The peer-reviewed version, Discussiones Mathematicae Graph Theory 46(2) (2026) 555-568, DOI 10.7151/dmgt.2619, was read here for that conjecture: every occurrence of the string onjecture was inspected and only Conjecture 1 was found, so on that reading Conjecture 17 was removed in revision. That is a first-hand reading which an independent web-enabled seat could not corroborate, because the publisher page and the published PDF did not load for it. The refuted statement is the one printed in the arXiv preprint; no claim is made about a conjecture published in DMGT.
 
-Only the only-if direction is refuted. The if-direction, asserting existence for every n >= 12, is untouched. Relative to the published results, the contribution is that the smallest known order of a regular link-irregular graph drops from 12 to 11. The paper's Theorem 10 rules out n <= 9; n = 10 remains open. No minimality of 11, classification, or count of such graphs is claimed. The witness graph and invariant are repository constructions; the paper supplies the conjecture, definitions, and n <= 9 exclusion.
+Only the only-if direction is refuted, and that refutation was already available from the order-eleven graph reported in December 2025. The if-direction, asserting existence for every n >= 12, is untouched. The paper supplies the conjecture, the definitions and the exclusion through order nine; the order-eleven graph is Harder's; what is delivered here is the formal verification and the invariance lemma used to carry it. No minimality of 11, classification, or count of such graphs is claimed, and n = 10 is not addressed.
 
 For a finite graph, take one round of degree refinement: each vertex contributes its degree paired with the multiset of its neighbors' degrees. Then collect these pairs in an outer multiset. Multiplicities are retained at both levels. The general isomorphism-invariance lemma applies to any finite graphs, independently of this witness.
 
@@ -84,7 +84,7 @@ $$witnessGraph: \operatorname{SimpleGraph}(\operatorname{Fin}(11)) = \operatorna
 
 *Formalization.* `D5/S3/ConceptDynamics/GraphIrregularity/RegularLinkIrregularEleven.witnessGraph` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Jannis Harder (2025). *Computational search for regular link-irregular graphs, Mathstodon thread of 14 and 15 December 2025*. URL: <https://mathstodon.xyz/@11011110/115716795916671285>.
 
 *Commentary.*
 
@@ -134,7 +134,7 @@ $$\begin{aligned}\forall \{ V: Type* \} [\operatorname{Fintype}(V)] [\operatorna
 
 *Formalization.* `D5/S3/ConceptDynamics/GraphIrregularity/RegularLinkIrregularEleven.LinkIrregular` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Alexander Bastien and Omid Khormali (2026). *On the regularity, planarity and edge bounds of link-irregular graphs*. DOI: [10.7151/dmgt.2619](https://doi.org/10.7151/dmgt.2619).
 
 *Commentary.*
 
@@ -146,7 +146,7 @@ $$\begin{aligned}regularLinkIrregularOnlyFromTwelve \iff\\\forall (n: Nat) (G: \
 
 *Formalization.* `D5/S3/ConceptDynamics/GraphIrregularity/RegularLinkIrregularEleven.regularLinkIrregularOnlyFromTwelve` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Alexander Bastien and Omid Khormali (2026). *On the regularity, planarity and edge bounds of link-irregular graphs*. DOI: [10.7151/dmgt.2619](https://doi.org/10.7151/dmgt.2619).
 
 *Commentary.*
 

@@ -36,9 +36,14 @@ internal sealed class RegularLinkIrregularElevenDocument : IScribeDocumentDefini
                     + "\"Conjecture 17. There exists a regular link-irregular graph on n "
                     + "vertices if and only if n >= 12.\" The peer-reviewed version, "
                     + "Discussiones Mathematicae Graph Theory 46(2) (2026) 555-568, "
-                    + "DOI 10.7151/dmgt.2619, DOES NOT CONTAIN Conjecture 17; it was "
-                    + "removed in revision. The refuted statement is the one printed "
-                    + "in the arXiv preprint, not a conjecture published in DMGT.")),
+                    + "DOI 10.7151/dmgt.2619, was read here for that conjecture: every "
+                    + "occurrence of the string onjecture was inspected and only "
+                    + "Conjecture 1 was found, so on that reading Conjecture 17 was "
+                    + "removed in revision. That is a first-hand reading which an "
+                    + "independent web-enabled seat could not corroborate, because the "
+                    + "publisher page and the published PDF did not load for it. The "
+                    + "refuted statement is the one printed in the arXiv preprint; no "
+                    + "claim is made about a conjecture published in DMGT.")),
             Paragraph(Text(
                 "Only the only-if direction is refuted, and that refutation was already "
                     + "available from the order-eleven graph reported in December 2025. The "
