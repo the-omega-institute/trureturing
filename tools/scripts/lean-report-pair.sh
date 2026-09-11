@@ -368,15 +368,13 @@ materialize_report() {
         [[ "$cache_rc" == "1" ]] || return "$cache_rc"
       fi
     else
+      local acquisition_rc=$?
+      [[ "$acquisition_rc" != "2" ]] || return 2
       printf 'LEAN_REPORT_CACHE status=miss reason=acquisition-failed fallback=producer\n' >&2
     fi
   fi
-  # Per-module reuse is disabled. Before enabling it, producer identity must cover
-  # the actually selected MSBuild SDK and dotnet runtime plus the bytes of every
-  # actually loaded NuGet package, analyzer, and source generator (or hash the DLL
-  # that is actually executed). global.json latestMinor can make 10.0.103 select
-  # SDK 10.0.201, so one producer SHA can otherwise execute code built by different
-  # toolchains. Keep production on the complete-report path until that is solved.
+  # Inspector uses the registered impact cohorts for compatible source-delta seeds.
+  # Native Lake incrementality and cache writer ownership remain unchanged.
   "$SUPERVISOR" --role lean-producer --lean-slot -- \
     env LAKE_BIN="$LAKE_BIN" \
       STRATALINT_REPORT_INPUT_ADDRESS="$input_address" \

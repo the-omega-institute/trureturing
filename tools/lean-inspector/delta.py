@@ -34,6 +34,11 @@ _materials_spec = importlib.util.spec_from_file_location(
     "lean_report_materials", pathlib.Path(__file__).with_name("materials.py"))
 materials = importlib.util.module_from_spec(_materials_spec)
 _materials_spec.loader.exec_module(materials)
+_selection_spec = importlib.util.spec_from_file_location(
+    "lean_report_selection", pathlib.Path(__file__).resolve().parent / "../scripts/report/lean-report-selection.py")
+selection = importlib.util.module_from_spec(_selection_spec)
+_selection_spec.loader.exec_module(selection)
+
 
 
 def current_modules(module_table: pathlib.Path, repository: pathlib.Path) -> dict[str, dict[str, str]]:
@@ -164,9 +169,17 @@ def valid_baseline(
 def plan(args: argparse.Namespace) -> int:
     repository = pathlib.Path(args.repository)
     cache_root = pathlib.Path(args.cache_root)
+    registered = selection.Selection(repository)
+    registered.validate("lean-report")
     current = current_modules(pathlib.Path(args.module_table), repository)
+    if {name: record["path"] for name, record in current.items()} != registered.modules():
+        raise ValueError("lean-report-inputs.json: module table differs from report_modules registration")
     entries: list[tuple[int, pathlib.Path]] = []
-    for entry in cache_root.iterdir():
+    try:
+        cached_entries = list(cache_root.iterdir())
+    except OSError:
+        cached_entries = []  # Optional seed IO failure; registration already validated.
+    for entry in cached_entries:
         if not entry.is_dir():
             continue
         if not HEX64.fullmatch(entry.name) or entry.name == args.current_address:
@@ -215,43 +228,15 @@ def plan(args: argparse.Namespace) -> int:
         added = sorted(set(current) - set(old))
         removed = sorted(set(old) - set(current))
 
-        # The report edge points importer -> imported module.  For every
-        # source-identical surviving importer, the attested old import list is
-        # identical to the current one. Together with declared refutation inputs,
-        # these edges close changed/added roots and surviving dependents of
-        # removed modules without inspecting first.
-        reverse = {name: set() for name in set(current) | set(old)}
-        names_by_path = {record["path"]: name for name, record in old.items()}
-        for importer, record in old.items():
-            if importer not in current:
-                continue
-            for dependency in record.get("imports", []):
-                if dependency in reverse:
-                    reverse[dependency].add(importer)
-            # A header-designated claim can affect definitional equality without a Lean import.
-            claim_path = record.get("refutation_claim_path")
-            if claim_path is not None:
-                if claim_path not in names_by_path:
-                    raise ValueError("refutation claim is absent from the baseline report")
-                reverse[names_by_path[claim_path]].add(importer)
-
-        # Deleted modules are not Inspector inputs, but their surviving importers
-        # must be rechecked to avoid retaining records with unloadable environments.
-        removed_importers = {
-            importer
-            for deleted in removed
-            for importer in reverse.get(deleted, set())
-            if importer in current
-        }
-        roots = set(changed) | set(added) | removed_importers
-        recheck = set(roots)
-        pending = list(roots)
-        while pending:
-            module = pending.pop()
-            for dependent in reverse.get(module, set()):
-                if dependent in current and dependent not in recheck:
-                    recheck.add(dependent)
-                    pending.append(dependent)
+        # Old coordinates remain integrity data; the authored cohort relation
+        # alone owns recheck selection, including removed paths and claim inputs.
+        for name, record in old.items():
+            registered.owner(record["path"])
+            if name != record["path"][:-5].replace("/", "."):
+                raise ValueError(f"lean-report-inputs.json: {name}: baseline source coordinate conflicts with registration")
+        dirty_paths = [current[name]["path"] for name in changed + added]
+        dirty_paths += [old[name]["path"] for name in changed + removed]
+        recheck = registered.affected(dirty_paths, registered.modules())
 
         result = {
             "status": "reuse" if not changed and not added and not removed else "delta",

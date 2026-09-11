@@ -80,8 +80,14 @@ internal sealed partial class LeanReportTransportFixture : IDisposable
             + "while [[ \"$1\" != -- ]]; do shift; done\nshift\nexec \"$@\"");
         Stub("tools/scripts/worktree/lean-cache-ensure.sh", "state=absent\n[[ ! -e \"$REPORT_REPOSITORY/.lake\" ]] || state=present\n"
             + "printf '%s\\n' \"$state\" >> \"$REPORT_FIXTURE/ensure.log\"\nexit \"${FIXTURE_ENSURE_EXIT:-0}\"");
-        Executable(Path.Combine(Bin, "dotnet"), "[[ \"$1\" == msbuild ]]\n"
-            + "printf '{\"Items\":{\"Compile\":[{\"FullPath\":\"%s/Probe.cs\"}]}}\\n' \"$(dirname \"$2\")\"");
+        Executable(Path.Combine(Bin, "dotnet"), "echo 'discovery unavailable' >&2; exit 71");
+        Executable(Path.Combine(Bin, "find"), """
+            case "$1" in
+              *.logs|/proc/*/fd) exec /usr/bin/find "$@" ;;
+              *) echo 'source discovery unavailable' >&2; exit 71 ;;
+            esac
+            """);
+        LeanReportRegistrationFixture.Install(Repository);
         Executable(Path.Combine(Bin, "gh"), GithubStub);
         File.WriteAllText(Path.Combine(Bin, "sitecustomize.py"), PublicationClockStub);
     }
@@ -155,7 +161,7 @@ internal sealed partial class LeanReportTransportFixture : IDisposable
     {
         var modules = Path.Combine(temporary.Path, "modules.tsv");
         var plan = Path.Combine(temporary.Path, "plan.json");
-        File.WriteAllText(modules, "D5.Probe\tD5/Probe.lean\n");
+        File.WriteAllText(modules, "Trureturing\tTrureturing.lean\nD5.Probe\tD5/Probe.lean\n");
         Success(Run(["python3", Path.Combine(Repository, "tools/lean-inspector/delta.py"), "plan", Repository, CacheRoot,
             PairAddress, Address[1], Address[1], Address[3], modules, plan]));
         return JsonDocument.Parse(File.ReadAllBytes(plan));

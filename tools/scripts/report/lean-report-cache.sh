@@ -74,9 +74,9 @@ except (OSError, subprocess.TimeoutExpired) as error:
 PY
 }
 
-tuple="$("$BASH" "$INPUT" address --repository "$ROOT" ${OVERRIDES[@]+"${OVERRIDES[@]}"})" || miss input-unavailable
+tuple="$("$BASH" "$INPUT" address --repository "$ROOT" ${OVERRIDES[@]+"${OVERRIDES[@]}"})" || exit 2
 pattern='^([0-9a-f]{64} ){3}[0-9a-f]{64}$'
-[[ "$tuple" =~ $pattern ]] || miss invalid-input
+[[ "$tuple" =~ $pattern ]] || { echo "lean-report-cache: invalid registered input address" >&2; exit 2; }
 read -r repository producer sources config <<< "$tuple"
 coordinates="$("$BASH" "$INPUT" coordinates "$producer" "$producer" "$sources" "$config")" || miss invalid-input
 address="${coordinates%% *}"
