@@ -148,8 +148,7 @@ public sealed partial class LeanCacheProvisionerTests
         Assert.Equal(0, cleanups);
         // 哨兵**长度**未变。这比「内容未变」弱,如实标注:同长度的替换抓不住。
         // 承重的是上面三条零调用断言 —— 拒绝发生在任何副作用之前,那才是本断言组的
-        // 主张;哨兵只是补充。用 FileInfo 而非 File.ReadAllText 是因为后者是 SL-003
-        // deriver 的 repository-input 信号,会把宿主方法计入 conservative unknown。
+        // 主张;哨兵只是补充。
         Assert.Equal("someone else was here\n".Length, new FileInfo(sentinel).Length);
         }
     }

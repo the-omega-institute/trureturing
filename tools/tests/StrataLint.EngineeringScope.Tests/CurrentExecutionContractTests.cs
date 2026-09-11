@@ -14,8 +14,10 @@ public sealed class CurrentExecutionContractTests
         TemporaryFileSystem.Directory.CreateDirectory(directory);
         var assembly = Path.Combine(directory, Path.GetFileName(typeof(CurrentExecutionContractTests).Assembly.Location));
         TemporaryFileSystem.File.WriteAllBytes(assembly, File.ReadAllBytes(typeof(CurrentExecutionContractTests).Assembly.Location));
-        TemporaryFileSystem.File.WriteAllText(Path.Combine(directory, "fixture.outputs"),
-            string.Join("\n", new[] { Path.Combine(fixture.Root, CandidateFixture.First), assembly, directory, "unused-assets.json", "reference=", assembly }));
+        var receipt = Path.Combine(directory, CandidateFixture.First + ".outputs");
+        TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(receipt)!);
+        TemporaryFileSystem.File.WriteAllText(receipt,
+            string.Join("\n", new[] { Path.Combine(fixture.Root, CandidateFixture.First), assembly, directory, "packages=" + Path.Combine(fixture.Root, "build/packages"), "reference=", assembly }));
 
         var failure = Assert.Throws<InvalidDataException>(() => CommonBuildOutputs.Collect(fixture.Root));
 
@@ -137,19 +139,17 @@ public sealed class CurrentExecutionContractTests
         internal void RegisterProofs()
         {
             var path = Path.Combine(Root, EngineeringRegistrationFixture.Path);
-            var manifest = System.Text.Json.Nodes.JsonNode.Parse(TemporaryFileSystem.File.ReadAllText(path))!;
-            var projects = manifest["projects"]!.AsArray();
+            var manifest = TemporaryFileSystem.File.ReadAllText(path);
             foreach (var name in new[] { "CompileFailProof", "BannedApiCompileFailProof" })
             {
                 var project = $"tools/tests/{name}/{name}.csproj";
                 var full = Path.Combine(Root, project);
                 TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(full)!);
                 TemporaryFileSystem.File.WriteAllText(full, "<Project />\n");
-                var registration = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest(
-                    new EngineeringProjectFixture(project, name, "compile-fail-proof", false, [$"tools/tests/{name}/**/*.cs"])))!;
-                projects.Add(registration["projects"]![0]!.DeepClone());
+                manifest = EngineeringRegistrationFixture.Append(manifest,
+                    new EngineeringProjectFixture(project, name, "compile-fail-proof", false, [$"tools/tests/{name}/**/*.cs"]));
             }
-            TemporaryFileSystem.File.WriteAllText(path, manifest.ToJsonString());
+            TemporaryFileSystem.File.WriteAllText(path, manifest);
         }
 
         internal void WriteTrx(string directory, string outcome)

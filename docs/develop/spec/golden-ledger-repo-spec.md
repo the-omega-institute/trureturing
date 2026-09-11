@@ -245,9 +245,13 @@ CI/preflight 的阶段、候选报告/DLL/工程证据交接、退出与缓存�
 
 引擎须有独立 `check-current` / `check-delta` 入口与不同的类型化 context。current context 只含当前树及其当轮产物,类型中不得有 baseline 或 changes;delta context 明确携带候选、base 数据、差异与绑定候选的证据。不得以空 changes 或 `base=candidate` 模拟 current。划分落在**谓词级**:同一规则若同时含当前有效性与跨树约束,须分别归属,不能只按规则名整条搬移。已有 delta-only 定义域及债务收缩作用域保持不变,包括 SL-029/030/031/032 等现有门;不得借拆分把它们改成 current 全树门、重判存量或漏掉跨树约束。
 
-工程分类、程序集身份、CI 执行成员、生产属主、测试债务分区、项目引用和 Compile 源 include/exclude（含共享链接）的唯一数据真源为 FILEMAP 登记的 `Meta/engineering-projects.json`。engineering、拓扑、Scribe 工程/源成员与工程证据消费同一严格 reader；禁止从项目/目录名称、`IsTestProject`、xUnit 引用、SDK、MSBuild 求值或源语义自行发现这些事实。登记 glob 可在已跟踪源上展开；缺失、重复、未覆盖输入明确失败并补登记，不作全仓兜底。拓扑债务身份、集合包含/严格收缩棘轮、ScriptTests CI 排除与两项反证编译保持。
+工程分类、程序集身份、CI 执行成员、生产属主、测试债务分区、项目引用和 Compile 源 include/exclude（含共享链接）的唯一数据真源为 FILEMAP 登记的 `Meta/engineering-projects.json`。engineering、拓扑与候选工程证据消费同一严格 reader；禁止从项目/目录名称、`IsTestProject`、xUnit 引用、SDK、MSBuild 求值或源语义自行发现这些事实。登记 glob 可在已跟踪源上展开；缺失、重复、未覆盖输入明确失败并补登记，不作全仓兜底。拓扑债务身份、集合包含/严格收缩棘轮、ScriptTests CI 排除与两项反证编译保持。
 
-本层 engineering 执行候选中登记 `ci=true` 的全部测试各一次，不按 base 选测；后续按影响范围增量调度也只能消费登记，缺登记不得自动发现或退回全仓。Scribe 共用检查亦不得按 base 选测试或检查。delta 只把 base 登记的 CI 测试集合当数据读取；base 尚无 manifest 时使用候选 current/historical 的显式登记寻址历史项目，不执行旧发现器、不设旧格式双读。用**本轮、同一候选身份绑定的 TRX** 确认这些项目已在候选中成功执行。项目被删、漏跑、执行失败或缺少有效成功证据均阻断;历史 TRX、另一候选的成功或重新运行 base 测试不能补证。此核验不再执行测试,也不引入 base 判官。候选正常 dotnet/Lake 编译与真实执行证据仍须保留。当前 Scribe 的 IO/调用图分类、NuGet 包资产及环境解析、其它既有构建/缓存推导尚待下一层登记迁移，不得扩展或冒称已完成；候选对历史源字节的 Roslyn 语义分析不授权 base checkout、restore、产物编译或执行。
+本层 engineering 按候选登记执行当前测试项目,不按 base 选择;Scribe 共用检查亦不得按 base 选测试或检查。delta 只把 base 的测试项目集合当数据读取,并用**本轮、同一候选身份绑定的 TRX** 确认这些项目已在候选中成功执行。项目被删、漏跑、执行失败或缺少有效成功证据均阻断;历史 TRX、另一候选的成功或重新运行 base 测试不能补证。此核验不再执行测试,也不引入 base 判官。 base 尚无 manifest 时,候选 current/historical 显式登记寻址历史项目字节,不运行旧发现器。按登记的受影响输入选择执行和验证复用成功证据仍是后续独立实现层,本层不宣称已完成按需选测。
+
+**测试分析退役。** 测试归属、编译输入及影响范围按 FILEMAP 或显式 manifest 登记,不以 Roslyn 调用图、仓库路径或 IO 效果推导补全。Scribe 方法映射从未承担当前测试调度权威;其唯一规则消费者 SL-003 的 parser-unknown 债务分支及 280/281 容量、身份收缩条款退役。SL-003 直接执行原有行数和目录容量谓词,其 no-growth、作用域与容量棘轮不变,测试项目拓扑及 base 项目执行地板保留。仅为映射推导服务的编译元数据导出、运输和加载一并退役;候选 DLL/二进制材料封印、轮次和候选身份、locked restore/build、真实 Scribe 内容编译、工程测试、selftest、两项反证编译和 TRX 校验继续执行。登记缺口由后续真实 CI 暴露后补最小登记与原生行为测试,不重建分析器。
+
+共享 build 的预期项目集合为工程登记中除 `compile-fail-proof` 外的项目（含 `ci=false` 的正常构建项目）。逐项读取 `build/ci/build-outputs/<仓根相对项目路径>.outputs`,缺失即失败;收据声明的项目路径和 PE 程序集身份必须匹配登记。邻近未选中收据不参与运输。编译器 FileWrites、TargetPath 与 ref 输出只验证已声明项目的产物。收据第四行 `packages=$(NuGetPackageRoot)` 提供同一绝对包根;`Meta/package-materials.json` 只展开一次,不以 assets.json 的包或文件清单发现运输材料。
 
 **产物、退出与摘要属主。** producer 将报告、候选 DLL、TRX 与工程证据交给下游,每份产物必须能核对其候选身份、来源与完整性。预建 DLL 只可在确认由该候选源码生成后执行;无法确认的缓存产物须弃用并从候选构建。报告生产入口拥有增量生产与校验,消费者只校验和消费交接结果;必需报告或当轮证据缺失、格式错误、候选身份不符即失败,不得在下游静默重跑生产或把未执行记成成功。候选绑定与材料指纹用于验证和增量失效,不得变成远端缓存兼容选择器。
 
@@ -257,7 +261,7 @@ CI/preflight 的阶段、候选报告/DLL/工程证据交接、退出与缓存�
 
 最终 PR checks 规定为 `push / engineering`、`push / current`、`delta`;dev push checks 为 `engineering`、`current`。必须用新 workflow 的真实 integration run 核对 GitHub 实际名称,再按下述落地次序同步 required set;`strict=false` 保持,不以 ancestry、追平门或 admin bypass 代替该模型。YAML 只含事件、权限、checkout、依赖与运输编排,不得内置缓存地址、JSON 处理、测试选择、报告验证或判词/摘要业务逻辑。
 
-切换 workflow 时须原子迁移 watcher、`AdmissionTopology`、FILEMAP 与 truth-release 的现役消费者,删除旧 job 名、旧拓扑与已被替代的重复逻辑。`truth-release` 只消费明确指定的 dev commit 的两个 push checks 成功及其报告 artifact,并校验 artifact 绑定该 commit;不得追逐移动 dev tip、等待该 commit 的 PR delta 或借用另一 commit 的报告。报告 producer 的依赖闭包须由 FILEMAP/登记 manifest 显式列出，禁止从程序入口、源语义或 workflow YAML 动态推导。该 producer 闭包迁移不属于本工程/源登记层；入口迁移须同步登记闭包与消费者，不得丢失生产依赖。
+切换 workflow 时须原子迁移 watcher、`AdmissionTopology`、FILEMAP 与 truth-release 的现役消费者,删除旧 job 名、旧拓扑与已被替代的重复逻辑。`truth-release` 只消费明确指定的 dev commit 的两个 push checks 成功及其报告 artifact,并校验 artifact 绑定该 commit;不得追逐移动 dev tip、等待该 commit 的 PR delta 或借用另一 commit 的报告。报告 producer 的输入由 FILEMAP 或显式 manifest 登记,不从程序或 workflow YAML 文本动态推导;入口迁移必须同步闭包与消费者,不得丢失生产依赖。
 
 **缓存与增量报告。** 用结构化解析器从 `lake-manifest.json` 读取 mathlib 的 **resolved revision**。Lean 依赖、项目构建与报告缓存共享该兼容分区,二进制另按 OS/arch 隔离;即分区只由 resolved mathlib revision 与 OS/arch 决定。tag、请求的 ref、完整配置/源码指纹、commit SHA 均不得成为兼容选择器;`elan` 安装缓存独立。Actions 快照只以 run ID/attempt 区分不可变发布实例,该后缀不参与兼容判定。PR 只 restore,dev push 仅在成功生产后 save,并发 run 不覆盖彼此快照。
 

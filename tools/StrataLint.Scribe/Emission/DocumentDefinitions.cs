@@ -39,14 +39,12 @@ public sealed record DocumentDefinition
 
 public static class DocumentDefinitions
 {
-    [CompileTimeInputUniverse("Blueprint/", ".scribe.cs")]
     public static ImmutableArray<DocumentDefinition> Discover(Assembly assembly)
     {
         ArgumentNullException.ThrowIfNull(assembly);
         return DiscoverCore(assembly);
     }
 
-    [CompileTimeInputUniverse("Blueprint/", ".scribe.cs")]
     public static ImmutableArray<DocumentDefinition> Discover(
         Assembly assembly,
         string repositoryRoot)

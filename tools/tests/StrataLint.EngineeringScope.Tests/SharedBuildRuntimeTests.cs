@@ -21,27 +21,24 @@ public sealed class SharedBuildRuntimeTests
         // This fixture exercises transport without a network package source.
         Write("NuGet.Config", "<configuration><packageSources><clear /></packageSources></configuration>\n");
         Write("global.json", File.ReadAllText(Path.Combine(repository, "global.json")));
-        // This fixture contains the two JudgeSeed projects by design. Carry the
-        // same explicit registration and its five compiler-owned DLL materials
-        // into the isolated root; no SDK path evaluation or directory discovery
-        // is permitted to supply them.
-        Write("Meta/FILEMAP.toml", File.ReadAllText(Path.Combine(repository, "Meta/FILEMAP.toml")));
-        Write("Meta/compile-metadata.json", File.ReadAllText(Path.Combine(repository, "Meta/compile-metadata.json")));
-        foreach (var file in new[] { "Microsoft.Build.dll", "Microsoft.Build.Framework.dll",
-                     "Microsoft.Build.Utilities.Core.dll", "Microsoft.Build.Tasks.Core.dll",
-                     "Microsoft.Build.Tasks.CodeAnalysis.dll" })
-        {
-            var source = Path.Combine(repository, "tools/tests/JudgeSeedTask.Tests/bin/Release/net10.0", file);
-            var target = Path.Combine(root, "tools/tests/JudgeSeedTask.Tests/bin/Release/net10.0", file);
-            TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(target)!);
-            System.IO.File.Copy(source, target, overwrite: true);
-        }
         Write("tools/scripts/ci-build-outputs.targets", File.ReadAllText(Path.Combine(repository, "tools/scripts/ci-build-outputs.targets")));
+        Write(PackageMaterialRegistry.RelativePath, JsonSerializer.Serialize(new {
+            schemaVersion = 1, packageRootSource = "build-output:NuGetPackageRoot",
+            packages = new[] { "microsoft.codeanalysis.bannedapianalyzers/5.6.0", "microsoft.codecoverage/18.0.1",
+                "microsoft.net.test.sdk/18.0.1", "microsoft.testplatform.objectmodel/18.0.1", "microsoft.testplatform.testhost/18.0.1",
+                "newtonsoft.json/13.0.3", "xunit/2.9.3", "xunit.abstractions/2.0.3", "xunit.analyzers/1.18.0",
+                "xunit.assert/2.9.3", "xunit.core/2.9.3", "xunit.extensibility.core/2.9.3", "xunit.extensibility.execution/2.9.3",
+                "xunit.runner.visualstudio/3.1.4" }.Order(StringComparer.Ordinal).Select(package => new {
+                    packagePath = package, include = new[] { "**/*" }, exclude = new[] { "**/*.nupkg", "**/*.snupkg" } }) }));
         foreach (var path in new[] { "tools/scripts/ci-stage.sh", "tools/scripts/report/dotnet_producer.py",
                      "tools/scripts/report/JudgeSeedTask.cs", "tools/scripts/report/JudgeSeedTask.csproj",
+                     "tools/scripts/report/JudgeSeed.targets",
                      "tools/scripts/worktree/lean_actions.py", "tools/scripts/worktree/lean_cache.py",
                      "tools/scripts/worktree/lean_cache_release.py", "tools/scripts/worktree/cache_material.py" })
             Write(path, File.ReadAllText(Path.Combine(repository, path)));
+        var seedRegistration = System.Text.Json.Nodes.JsonNode.Parse(File.ReadAllText(Path.Combine(repository, "Meta/judge-seed.json")))!;
+        seedRegistration["repository_files"] = new System.Text.Json.Nodes.JsonArray();
+        Write("Meta/judge-seed.json", seedRegistration.ToJsonString());
         Write("lean-toolchain", "leanprover/lean4:fixture\n");
         Write("lake-manifest.json", "{\"packages\":[{\"name\":\"mathlib\",\"rev\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}]}\n");
         // Exercise the canonical stage and real compiler. Only supervisor process
@@ -115,7 +112,9 @@ public sealed class SharedBuildRuntimeTests
                     ["tools/scripts/report/JudgeSeedTask.cs"], OwnedTestAssembly: "JudgeSeedTask.Tests"),
             }).ToArray()));
         Run("dotnet", "new", "sln", "--name", "StrataLint", "--format", "sln", "--output", "tools");
-        Run("dotnet", "sln", "tools/StrataLint.sln", "add", testProject);
+        Run("dotnet", new[] { "sln", "tools/StrataLint.sln", "add" }.Concat(
+            projects.Select(item => $"tools/{item.Item1}/{item.Item1}.csproj").Append(testProject)
+                .Append("tools/scripts/report/JudgeSeedTask.csproj")).ToArray());
         Run("dotnet", "restore", "tools/StrataLint.sln", "--use-lock-file");
         Run("dotnet", "restore", proofProject, "--use-lock-file");
         Run("dotnet", "restore", bannedProject, "--use-lock-file");
@@ -143,8 +142,7 @@ public sealed class SharedBuildRuntimeTests
             ["GITHUB_REF"] = "refs/heads/integration-ci-current-stability-0909-tests", ["STRATALINT_CACHE_WRITES"] = "true",
             ["STRATALINT_CHECK_SUCCEEDED"] = "false", ["STRATALINT_BUILD_SUCCEEDED"] = "true" };
         var cold = Stage("cold", "build");
-        Assert.Equal(projects.Length + 1, Compilers(cold)); // Utility projects plus Runtime.
-        Assert.Single(Calls(), call => call == "sln tools/StrataLint.sln list");
+        Assert.Equal(projects.Length + 2, Compilers(cold)); // Four utilities, Runtime, and the registered JudgeSeedTask.
         var build = CommonExecutionEvidence.ValidateBuild(root);
         Assert.Equal(new[] { "restore-StrataLint", "build" }, build.Steps.Select(step => step.Name));
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, CommonExecutionEvidence.EngineeringPath)));
@@ -156,13 +154,12 @@ public sealed class SharedBuildRuntimeTests
         var key = seed.RootElement.GetProperty("key").GetString()!;
         Assert.DoesNotContain(seed.RootElement.GetProperty("files").EnumerateArray(), item =>
             item.GetProperty("path").GetString()!.Contains("build/ci/", StringComparison.Ordinal));
-        foreach (var project in projects.Select(item => "tools/" + item.Item1).Append("tools/tests/Runtime"))
+        foreach (var project in projects.Select(item => "tools/" + item.Item1).Append("tools/tests/Runtime").Append("tools/scripts/report"))
             foreach (var kind in new[] { "bin", "obj" }) Directory.Delete(Path.Combine(root, project, kind), recursive: true);
         Directory.Delete(Path.Combine(root, "build/judge-seed"), recursive: true);
         Cache("restore", "--judge-key", key);
         var warm = Stage("warm", "build");
         Assert.Equal(0, Compilers(warm));
-        Assert.Single(Calls(), call => call == "sln tools/StrataLint.sln list");
         Assert.Contains("\"status\": \"installed\"", warm, StringComparison.Ordinal);
         var fresh = CommonExecutionEvidence.ValidateBuild(root);
         Assert.NotEqual(build.Round, fresh.Round);
@@ -171,7 +168,7 @@ public sealed class SharedBuildRuntimeTests
         Assert.False(File.Exists(Path.Combine(root, CommonExecutionEvidence.TestsPath)));
         environment["CI_BUILD_ROUND"] = build.Round;
         var engineering = Stage("engineering", "engineering");
-        Assert.DoesNotContain(Calls(), call => call == "sln tools/StrataLint.sln list" || call.StartsWith("build tools/StrataLint.sln", StringComparison.Ordinal));
+        Assert.DoesNotContain(Calls(), call => call.StartsWith("build tools/StrataLint.sln", StringComparison.Ordinal));
         Assert.Equal(2, Compilers(engineering)); // Both real negative proof compiles.
         Assert.Equal(1, Assert.Single(CommonExecutionEvidence.ValidateTests(root, [testProject]).Projects).Executed);
         Assert.Equal(build.Round, CommonExecutionEvidence.Read<CommonStageRecord>(root, CommonExecutionEvidence.EngineeringPath).Round);

@@ -118,17 +118,77 @@ def solution_projects(root):
     return projects
 
 
-def prepare_seed(root):
+class SeedRegistrationError(ValueError):
+    """Registration errors block preparation; cache transport errors do not."""
+
+
+def seed_registration(root, sdk_root=None):
+    """Read declared paths only. DOTNET_ROOT is a supplied location, not a probe."""
+    def unique_fields(pairs):
+        fields = {}
+        for name, value in pairs:
+            if name in fields:
+                raise ValueError(f"duplicate JSON field: {name}")
+            fields[name] = value
+        return fields
+
     try:
-        return _prepare_seed(root)
-    except (OSError, ValueError, KeyError, TypeError, StopIteration, subprocess.SubprocessError) as error:
-        # If this SDK cannot support the adapter, discard the compiled start and
-        # enter the unmodified SDK build. Failure of that build remains blocking.
-        for project in (root / "tools").rglob("*.csproj"):
-            if {"bin", "obj"}.intersection(project.relative_to(root / "tools").parts):
-                continue
+        path = root / "Meta/judge-seed.json"
+        registration = json.loads(path.read_text(), object_pairs_hook=unique_fields)
+        if (set(registration) != {"version", "sdk_version", "target_framework", "sdk_files", "repository_files"} or
+                type(registration["version"]) is not int or registration["version"] != 1):
+            raise ValueError("invalid judge seed manifest schema")
+        version = json.loads((root / "global.json").read_text(), object_pairs_hook=unique_fields)["sdk"]["version"]
+        if not isinstance(version, str) or version != registration["sdk_version"]:
+            raise ValueError("judge seed SDK registration differs from global.json")
+        if not registration["sdk_files"] or registration["target_framework"] != "net10.0":
+            raise ValueError("missing SDK materials or unsupported registered framework")
+        location = sdk_root or os.environ.get("DOTNET_ROOT")
+        if not location:
+            raise ValueError("supply DOTNET_ROOT for the pinned SDK")
+        sdk = pathlib.Path(location).resolve() / "sdk" / version
+
+        def expand(base, patterns):
+            if not isinstance(patterns, list) or any(not isinstance(item, str) or not item or
+                    pathlib.Path(item).is_absolute() or ".." in pathlib.Path(item).parts for item in patterns):
+                raise ValueError("registered material paths must be relative paths or explicit globs")
+            result = set()
+            seen = set()
+            for pattern in patterns:
+                if pattern in seen:
+                    raise ValueError(f"duplicate registered material pattern: {pattern}")
+                seen.add(pattern)
+                matches = sorted(base.glob(pattern))
+                if not matches or any(not file.is_file() for file in matches):
+                    raise ValueError(f"required registered material is absent: {base / pattern}")
+                result.update(matches)
+            return result
+
+        repository = expand(root, registration["repository_files"])
+        declared = expand(sdk, registration["sdk_files"]) | repository
+        declared.update((path, root / "global.json", TASK_PROJECT,
+                         TASK_PROJECT.with_suffix(".cs"), TASK_PROJECT.with_name("JudgeSeed.targets")))
+        compiler = {str(file): hashlib.sha256(file.read_bytes()).hexdigest() for file in sorted(declared)}
+        return registration, sdk, repository, compiler
+    except (OSError, ValueError, KeyError, TypeError) as error:
+        raise SeedRegistrationError("JUDGE_SEED_REGISTRATION: " + str(error)) from error
+
+
+def prepare_seed(root, sdk_root=None):
+    root = root.resolve()
+    # Validate before touching existing outputs. Missing registration must never
+    # be converted into an optional cache miss or unregistered SDK fallback.
+    registration, sdk, repository, compiler = seed_registration(root, sdk_root)
+    projects = solution_projects(root)
+    write_if_changed(root / "build/judge-seed/compiler.json", json.dumps(compiler, sort_keys=True).encode())
+    try:
+        return _prepare_seed(root, projects, registration, sdk, repository)
+    except SeedRegistrationError:
+        raise
+    except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as error:
+        for project in projects:
             for kind in ("bin", "obj"):
-                shutil.rmtree(project.parent / kind, ignore_errors=True)
+                shutil.rmtree(root / project.parent / kind, ignore_errors=True)
         shutil.rmtree(root / "build/judge-seed/receipts", ignore_errors=True)
         seed_receipt("miss", reason=str(error))
         target = root / "build/judge-seed/seed.targets"
@@ -136,26 +196,22 @@ def prepare_seed(root):
         return target
 
 
-def _prepare_seed(root):
-    """Install private validated material, then derive the hook from this SDK."""
-    root = root.resolve()
+def _prepare_seed(root, projects, registration, sdk, repository):
+    """Install private validated material and the fixed registered SDK hook."""
     state = root / "build/judge-seed"
     cached = root / ".judge-binaries"
-    projects = solution_projects(root)
     if cached.exists():
         try:
             manifest = json.loads((cached / "material.json").read_text())
             if manifest["root"] != str(root):
                 raise ValueError("unsupported checkout relocation")
-            for source in (cached / "data/tools").rglob("*.csproj.seed"):
-                relative = source.relative_to(cached / "data")
-                project = root / str(relative).removesuffix(".seed")
-                if project.relative_to(root) not in projects:
-                    continue
+            for relative in projects:
+                source = cached / "data" / (str(relative) + ".seed")
+                project = root / relative
                 destination = project.parent / "obj"
                 shutil.rmtree(destination, ignore_errors=True)
                 shutil.copytree(source.parent / "obj", destination)
-                write_if_changed(state / "receipts" / (relative.name + ".json"), source.read_bytes())
+                write_if_changed(state / "receipts" / (relative.name + ".seed.json"), source.read_bytes())
             task = cached / "data/build/judge-seed/task"
             if task.is_dir():
                 shutil.rmtree(state / "task", ignore_errors=True)
@@ -189,26 +245,15 @@ def _prepare_seed(root):
             for kind in ("bin", "obj"):
                 shutil.rmtree(project.parent / kind, ignore_errors=True)
             receipt.unlink(missing_ok=True)
-    version = subprocess.check_output(["dotnet", "--version"], cwd=root, text=True).strip()
-    sdks = subprocess.check_output(["dotnet", "--list-sdks"], cwd=root, text=True).splitlines()
-    sdk = next(pathlib.Path(line.split("[", 1)[1].rstrip("]")) / version for line in sdks if line.startswith(version + " "))
-    # Compiler bytes and the resolved host/SDK are internal compatibility inputs.
-    compiler = {str(path): hashlib.sha256(path.read_bytes()).hexdigest()
-                for path in sorted((sdk / "Roslyn/bincore").rglob("*")) if path.is_file()}
-    compiler[str(sdk / "dotnet.runtimeconfig.json")] = hashlib.sha256((sdk / "dotnet.runtimeconfig.json").read_bytes()).hexdigest()
-    for reference in ET.parse(TASK_PROJECT).findall(".//Reference"):
-        path = pathlib.Path(reference.get("HintPath").replace("$(MSBuildToolsPath)", str(sdk)))
-        compiler[str(path)] = hashlib.sha256(path.read_bytes()).hexdigest()
-    write_if_changed(state / "compiler.json", json.dumps(compiler, sort_keys=True).encode())
-    task = prepare_task(state / "task", sdk)
+    task = prepare_task(state / "task", sdk, registration)
     target = state / "seed.targets"
-    write_if_changed(target, seed_targets(root, sdk, projects, task))
+    write_if_changed(target, seed_targets(root, sdk, projects, task, registration, repository))
     return target
 
 
-def prepare_task(directory, sdk):
+def prepare_task(directory, sdk, registration):
     """Bootstrap the SDK task using the resolved SDK, with no NuGet packages."""
-    runtime = json.loads((sdk / "dotnet.runtimeconfig.json").read_text())["runtimeOptions"]
+    framework = registration["target_framework"]
     source = pathlib.Path(__file__).with_name("JudgeSeedTask.cs").resolve()
     template = TASK_PROJECT
     identity = hashlib.sha256(source.read_bytes() + template.read_bytes() + pathlib.Path(__file__).read_bytes()
@@ -228,103 +273,45 @@ def prepare_task(directory, sdk):
             shutil.rmtree(directory / kind, ignore_errors=True)
     project = ET.parse(template).getroot()
     properties = project.find("PropertyGroup")
-    properties.find("TargetFramework").text = runtime["tfm"]
+    properties.find("TargetFramework").text = framework
     ET.SubElement(properties, "AssemblyName").text = assembly
+    check = ET.SubElement(project, "Target", Name="JudgeSeedRegisteredSdk", BeforeTargets="PrepareForBuild")
+    ET.SubElement(check, "Error", Code="JUDGE_SEED_REGISTRATION",
+                  Condition=f"'$(NETCoreSdkVersion)' != '{registration['sdk_version']}'",
+                  Text="Build SDK differs from the registered pinned SDK.")
     project.find("ItemGroup/Compile").set("Include", str(source))
     write_if_changed(directory / "JudgeSeedTask.csproj", ET.tostring(project))
-    write_if_changed(directory / "packages.lock.json", json.dumps({"version": 1, "dependencies": {runtime["tfm"]: {}}}).encode())
+    write_if_changed(directory / "packages.lock.json", json.dumps({"version": 1, "dependencies": {framework: {}}}).encode())
     env = {key: value for key, value in os.environ.items() if key != "CustomAfterMicrosoftCSharpTargets"}
     for arguments in (("restore", "--locked-mode"), ("build", "--no-restore", "--configuration", "Release", "--warnaserror")):
         result = subprocess.run(["dotnet", arguments[0], str(directory / "JudgeSeedTask.csproj"), *arguments[1:],
                                  "-p:ImportDirectoryBuildProps=false", "-p:ImportDirectoryBuildTargets=false"],
                                 env=env, text=True, capture_output=True)
         if result.returncode:
+            if "JUDGE_SEED_REGISTRATION" in result.stdout + result.stderr:
+                raise SeedRegistrationError(result.stdout + result.stderr)
             raise ValueError(result.stdout + result.stderr)
     stamp.write_text(json.dumps({"identity": identity, "source_mtime_ns": source.stat().st_mtime_ns,
                                  "files": {kind: seed_files(directory / kind) for kind in ("bin", "obj")}}, sort_keys=True))
-    return directory / "bin/Release" / runtime["tfm"] / (assembly + ".dll")
+    return directory / "bin/Release" / framework / (assembly + ".dll")
 
 
-def seed_targets(root, sdk, projects, task):
-    """Use the installed SDK's Csc wiring and incremental inputs/outputs verbatim."""
-    import copy
-    namespace = "{http://schemas.microsoft.com/developer/msbuild/2003}"
-    compiler = ET.parse(sdk / "Roslyn/Microsoft.CSharp.Core.targets").getroot()
-    for element in compiler.iter():
-        element.tag = element.tag.removeprefix(namespace)
-    core = next(target for target in compiler.findall("Target") if target.get("Name") == "CoreCompile")
-    csc = core.find("Csc")
-    if csc is None or len(core.findall("Csc")) != 1:
-        raise ValueError("unsupported SDK CoreCompile target")
-    document = ET.Element("Project")
-    enabled = " Or ".join(f"'$(MSBuildProjectFullPath)' == '{root / project}'" for project in projects)
-    enabled = "(" + enabled + ")"
-    for name in ("JudgeSeedInputs", "JudgeSeedCopies"):
-        ET.SubElement(document, "UsingTask", TaskName="StrataLint.JudgeSeed." + name, AssemblyFile=str(task))
-    wrapper = ET.SubElement(document, "Target", Name="CoreCompile", DependsOnTargets=core.get("DependsOnTargets", ""),
-                            Returns=core.get("Returns", ""))
-    call = ET.SubElement(wrapper, "CallTarget", Targets="_JudgeSdkCoreCompile")
-    ET.SubElement(call, "Output", TaskParameter="TargetOutputs", ItemName="CscCommandLineArgs")
-    # BeforeTargets=CoreCompile hooks resolve analyzers before this call. Put the
-    # SDK prelude and capture in a dependency of the incremental target: properties
-    # assigned in a CallTarget caller's body do not flow into the called target.
-    capture_target = ET.SubElement(document, "Target", Name="_JudgeSeedCapture")
-    for child in list(core):
-        if child is csc:
-            break
-        capture_target.append(copy.deepcopy(child))
-        core.remove(child)
-    paths = ET.SubElement(capture_target, "PropertyGroup")
-    ET.SubElement(paths, "_JudgeSeedCaptureFile").text = "$([MSBuild]::NormalizePath('$(MSBuildProjectDirectory)', '$(IntermediateOutputPath)', 'judge-seed-inputs.xml'))"
-    capture = "$(_JudgeSeedCaptureFile)"
-    probe = copy.deepcopy(csc)
-    probe.tag = "JudgeSeedInputs"
-    for child in list(probe):
-        probe.remove(child)
-    probe.attrib.update(JudgeRoot=str(root), JudgeProject="$(MSBuildProjectFullPath)", JudgeCapture=capture,
-                        JudgeInputs=core.get("Inputs") + ";" + str(root / "build/judge-seed/compiler.json") + ";" + str(pathlib.Path(__file__).resolve())
-                            + ";" + str(pathlib.Path(__file__).with_name("JudgeSeedTask.cs").resolve()), JudgeOutputs=core.get("Outputs"),
-                        JudgeCompilerOverrides="$(CscToolPath)$(CscToolExe)$(CompilerResponseFile)",
-                        JudgeIntermediate="$(BaseIntermediateOutputPath)", JudgeOutput="$(BaseOutputPath)")
-    capture_target.append(probe)
-    probe.set("Condition", "(" + probe.get("Condition", "true") + ") And (" + enabled + ")")
-    ET.SubElement(probe, "Output", TaskParameter="JudgeCaptured", PropertyName="_JudgeSeedCaptured")
-    owner = pathlib.Path(__file__).resolve()
-    decision = ET.SubElement(capture_target, "Exec", Condition=f"({enabled}) And '$(_JudgeSeedCaptured)' == 'true'", Command=f'python3 "{owner}" reconcile "{capture}"',
-                             IgnoreExitCode="true", IgnoreStandardErrorWarningFormat="true")
-    ET.SubElement(decision, "Output", TaskParameter="ExitCode", PropertyName="_JudgeSeedExit")
-    force = ET.SubElement(capture_target, "PropertyGroup", Condition=f"({enabled}) And ('$(_JudgeSeedCaptured)' != 'true' Or '$(_JudgeSeedExit)' != '0')")
-    ET.SubElement(force, "NonExistentFile").text = "$(IntermediateOutputPath)judge-seed-missing-output"
-    core.set("Name", "_JudgeSdkCoreCompile")
-    core.set("DependsOnTargets", "_JudgeSeedCapture")
-    document.append(core)
-    after = ET.SubElement(document, "Target", Name="_JudgeSeedSeal", AfterTargets="Build",
-                          Condition=f"({enabled}) And '$(_JudgeSeedCaptured)' == 'true' And Exists('{capture}')")
-    ET.SubElement(after, "Exec", Command=f'python3 "{owner}" seal "{capture}"',
-                  IgnoreExitCode="true", IgnoreStandardErrorWarningFormat="true")
-    common = ET.parse(sdk / "Microsoft.Common.CurrentVersion.targets").getroot()
-    for element in common.iter():
-        element.tag = element.tag.removeprefix(namespace)
-    for name in ("_CopyFilesMarkedCopyLocal", "_CopyOutOfDateSourceItemsToOutputDirectory", "CopyFilesToOutputDirectory"):
-        original = next(target for target in common.findall("Target") if target.get("Name") == name)
-        before = ET.SubElement(document, "Target", Name="_Judge" + name, BeforeTargets=name, Condition=enabled)
-        for copier in original.findall("Copy"):
-            attributes = {key: value for key, value in copier.attrib.items()
-                          if key in ("SourceFiles", "DestinationFiles", "DestinationFolder", "Condition")}
-            ET.SubElement(before, "JudgeSeedCopies", attributes)
-    adapter = root / "build/judge-seed/compiler.targets"
-    write_if_changed(adapter, ET.tostring(document, encoding="utf-8", xml_declaration=True))
+def seed_targets(root, sdk, projects, task, registration, repository):
+    """Bind locations to the checked-in hook; never parse installed SDK targets."""
+    hook = TASK_PROJECT.with_name("JudgeSeed.targets").resolve()
     driver = ET.Element("Project")
-    paths = ET.SubElement(driver, "PropertyGroup")
-    ET.SubElement(paths, "_JudgeSeedCoreTargetsPath").text = "$([MSBuild]::NormalizePath('$(CSharpCoreTargetsPath)'))"
-    supported = f"'$(_JudgeSeedCoreTargetsPath)' == '{sdk / 'Roslyn/Microsoft.CSharp.Core.targets'}'"
-    ET.SubElement(driver, "Import", Project=str(adapter), Condition=f"({enabled}) And ({supported})")
-    fallback = ET.SubElement(driver, "Target", Name="_JudgeSeedUnsupported", BeforeTargets="PrepareForBuild",
-                             Condition=f"({enabled}) And !({supported})")
-    # Unsupported targets retain their normal implementation. Remove only the
-    # restored per-configuration outputs, preserving the locked restore assets.
-    ET.SubElement(fallback, "RemoveDir", Directories="$(OutputPath);$(IntermediateOutputPath)")
-    ET.SubElement(fallback, "Delete", Files=str(root / "build/judge-seed/receipts/$(MSBuildProjectFile).seed.json"))
+    enabled = " Or ".join(f"'$(MSBuildProjectFullPath)' == '{root / project}'" for project in projects)
+    properties = ET.SubElement(driver, "PropertyGroup")
+    for name, value in {
+        "JudgeSeedRoot": root, "JudgeSeedTaskAssembly": task, "JudgeSeedOwner": pathlib.Path(__file__).resolve(),
+        "JudgeSeedHook": hook, "JudgeSeedSdkVersion": registration["sdk_version"],
+        "JudgeSeedTargetFramework": registration["target_framework"], "JudgeSeedSdkPath": sdk,
+    }.items():
+        ET.SubElement(properties, name).text = str(value)
+    materials = ET.SubElement(driver, "ItemGroup")
+    for path in sorted(repository):
+        ET.SubElement(materials, "_JudgeSeedRegisteredMaterial", Include=str(path))
+    ET.SubElement(driver, "Import", Project=str(hook), Condition=enabled)
     return ET.tostring(driver, encoding="utf-8", xml_declaration=True)
 
 

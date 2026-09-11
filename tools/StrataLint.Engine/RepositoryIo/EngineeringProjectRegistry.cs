@@ -3,6 +3,8 @@ using System.Text.Json.Serialization;
 
 namespace StrataLint.Engine;
 
+internal sealed record EngineeringSource(string Path, string Content);
+
 internal sealed record EngineeringProjectOwner(string Path, string Assembly);
 
 internal sealed record EngineeringProjectRegistration(
@@ -43,9 +45,9 @@ internal sealed class EngineeringProjectRegistry
     internal IReadOnlyList<EngineeringProjectRegistration> Projects { get; }
 
     internal static EngineeringProjectRegistry Read(RepositorySnapshot snapshot) => Read(
-        snapshot.Files.Values.Select(file => new ScribeTrackedSource(file.Path.Value, file.Text)).ToArray());
+        snapshot.Files.Values.Select(file => new EngineeringSource(file.Path.Value, file.Text)).ToArray());
 
-    internal static EngineeringProjectRegistry Read(IReadOnlyList<ScribeTrackedSource> files)
+    internal static EngineeringProjectRegistry Read(IReadOnlyList<EngineeringSource> files)
     {
         var manifest = files.SingleOrDefault(file => file.Path == ManifestPath)
             ?? throw new InvalidDataException($"missing engineering project registration: {ManifestPath}");
@@ -63,16 +65,6 @@ internal sealed class EngineeringProjectRegistry
         var manifest = Parse(file.Text);
         return Bind(manifest.Projects.Concat(manifest.HistoricalProjects).ToArray(),
             baseline.Files.Keys.Select(path => path.Value), requireAll: false);
-    }
-
-    internal static RepositorySnapshot AddressBase(RepositorySnapshot baseline, RepositorySnapshot candidate)
-    {
-        if (baseline.TryGetFile(ManifestPath, out _)) return baseline;
-        var registrations = ReadBase(baseline, candidate);
-        var text = JsonSerializer.Serialize(new EngineeringProjectManifest(1, registrations.Projects.ToArray(), []), Options);
-        var raw = RawRepositoryEntry.FromText(ManifestPath, text);
-        return RepositorySnapshot.Create(baseline.Files.Add(RepoPath.CreateKnown(ManifestPath),
-            new RepositoryFile(RepoPath.CreateKnown(ManifestPath), raw.Bytes, text)));
     }
 
     private static EngineeringProjectManifest Parse(string text)
@@ -132,13 +124,13 @@ internal sealed class EngineeringProjectRegistry
         return new EngineeringProjectRegistry(projects);
     }
 
-    internal IReadOnlyDictionary<string, IReadOnlyList<ScribeTrackedSource>> Sources(IReadOnlyList<ScribeTrackedSource> files)
+    internal IReadOnlyDictionary<string, IReadOnlyList<EngineeringSource>> Sources(IReadOnlyList<EngineeringSource> files)
     {
         var sources = files.Where(file => file.Path.EndsWith(".cs", StringComparison.Ordinal))
             .OrderBy(file => file.Path, StringComparer.Ordinal).ToArray();
         var byPath = sources.ToDictionary(file => file.Path, StringComparer.Ordinal);
         var covered = new HashSet<string>(StringComparer.Ordinal);
-        var result = new Dictionary<string, IReadOnlyList<ScribeTrackedSource>>(StringComparer.Ordinal);
+        var result = new Dictionary<string, IReadOnlyList<EngineeringSource>>(StringComparer.Ordinal);
         foreach (var project in Projects)
         {
             var includes = project.Include.Select(FileMapGlob.Create).ToArray();
