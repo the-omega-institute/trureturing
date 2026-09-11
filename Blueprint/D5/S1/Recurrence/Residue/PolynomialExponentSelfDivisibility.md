@@ -6,7 +6,7 @@ Polynomial exponents divide their vanishing-diagonal coefficients.
 
 **Theorem 1.1 (Polynomial exponent theorem).**
 
-$$\forall P: Polynomial \mathbb{Z}, ((\operatorname{eval}\left(P, 1\right) = 1) \land (\forall n: \mathbb{n}, (1 \le n) \implies (1 \le \operatorname{eval}\left(P, n\right)))) \implies (\forall n: \mathbb{n}, (1 \le n) \implies (\operatorname{eval}\left(P, n\right) \mid \operatorname{a}\left(\operatorname{fun}\left(m, \operatorname{toNat}\left(\operatorname{eval}\left(P, m\right)\right)\right), n\right)))$$
+$$\forall P: Polynomial \mathbb{Z}, ((\operatorname{eval}\left(P, 1\right) = 1) \land (\forall n: \mathbb{N}, (1 \le n) \implies (1 \le \operatorname{eval}\left(P, n\right)))) \implies (\forall n: \mathbb{N}, (1 \le n) \implies (\operatorname{eval}\left(P, n\right) \mid \operatorname{a}\left(\operatorname{fun}\left(m, \operatorname{toNat}\left(\operatorname{eval}\left(P, m\right)\right)\right), n\right)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Residue/PolynomialExponentSelfDivisibility.polynomial_exponent_self_divisibility` (`✓ std3`). ∎
 
@@ -18,7 +18,7 @@ Positive integer polynomial exponents normalized at one divide their coefficient
 
 **Theorem 1.2 (Affine polynomial instance).**
 
-$$\forall d: \mathbb{d},  \forall n: \mathbb{n}, (1 \le n) \implies (\operatorname{eval}\left(\operatorname{C}\left(d\right) * (X - 1), n\right) \mid \operatorname{a}\left(d + 1, n\right))$$
+$$\forall d: \mathbb{N},  \forall n: \mathbb{N}, (1 \le n) \implies (\operatorname{eval}\left(\operatorname{C}\left(d\right) * (X - 1) + 1, n\right) \mid \operatorname{a}\left(d + 1, n\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Residue/PolynomialExponentSelfDivisibility.affine_polynomial_exponent_self_divisibility` (`✓ std3`). ∎
 
@@ -30,7 +30,7 @@ The affine polynomial instance recovers the frozen affine theorem, including slo
 
 **Theorem 1.3 (Monomial polynomial instance).**
 
-$$\forall k: \mathbb{k},  \forall n: \mathbb{n}, (1 \le n) \implies ((n) ^ k \mid \operatorname{a}\left(\operatorname{fun}\left(m, m ^ k\right), n\right))$$
+$$\forall k: \mathbb{N},  \forall n: \mathbb{N}, (1 \le n) \implies ((n) ^ k \mid \operatorname{a}\left(\operatorname{fun}\left(m, m ^ k\right), n\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Residue/PolynomialExponentSelfDivisibility.monomial_exponent_self_divisibility` (`✓ std3`). ∎
 

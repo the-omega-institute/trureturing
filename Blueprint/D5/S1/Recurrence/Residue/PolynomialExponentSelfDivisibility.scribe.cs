@@ -24,7 +24,7 @@ internal sealed class PolynomialExponentSelfDivisibilityDocument : IScribeDocume
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula), provenance,
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 
-    private static Formula Nat(string n) => Seq(Mathbb, Grp(F.Id(n)));
+    private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula I(string n) => F.Id(n);
     private static Formula Call(string n, params Formula[] a) => new Formula.Apply(Seq(Operatorname, Grp(F.Id(n))), [.. a]);
     private static Formula Eval(Formula p, Formula n) => Call("eval", p, n);
@@ -35,15 +35,15 @@ internal sealed class PolynomialExponentSelfDivisibilityDocument : IScribeDocume
     private static Formula Conj(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Land, Sp, Parenthesized(b));
     private static Formula GeneralFormula() => Disp(Seq(PolyBound(),
         Imp(Conj(Seq(Eval(I("P"), D(1)), Sp, Eq, Sp, D(1)),
-            Seq(Forall, Sp, I("n"), Colon, Sp, Nat("n"), Comma, Sp,
+            Seq(Forall, Sp, I("n"), Colon, Sp, Naturals(), Comma, Sp,
                 Imp(Pos(I("n")), Seq(D(1), Sp, Le, Sp, Eval(I("P"), I("n")))))),
-            Seq(Forall, Sp, I("n"), Colon, Sp, Nat("n"), Comma, Sp,
+            Seq(Forall, Sp, I("n"), Colon, Sp, Naturals(), Comma, Sp,
                 Imp(Pos(I("n")), Div(Eval(I("P"), I("n")),
                     Call("a", Call("fun", I("m"), Call("toNat", Eval(I("P"), I("m")))), I("n"))))))));
     private static Formula PolyBound() => Seq(Forall, Sp, I("P"), Colon, Sp, F.Id("Polynomial"), Sp, Seq(Mathbb, Grp(F.Id("Z"))), Comma, Sp);
-    private static Formula Bound(string name) => Seq(Forall, Sp, F.Id(name), Colon, Sp, Nat(name), Comma, Sp);
+    private static Formula Bound(string name) => Seq(Forall, Sp, F.Id(name), Colon, Sp, Naturals(), Comma, Sp);
     private static Formula AffineFormula() => Disp(Seq(Bound("d"), Sp, Bound("n"), Imp(Pos(I("n")),
-        Div(Eval(Seq(Call("C", I("d")), Sp, Star, Sp, Parenthesized(Seq(F.Id("X"), Sp, Minus, Sp, D(1)))), I("n")),
+        Div(Eval(Seq(Call("C", I("d")), Sp, Star, Sp, Parenthesized(Seq(F.Id("X"), Sp, Minus, Sp, D(1))), Sp, Plus, Sp, D(1)), I("n")),
             Call("a", Seq(I("d"), Sp, Plus, Sp, D(1)), I("n"))))));
     private static Formula MonomialFormula() => Disp(Seq(Bound("k"), Sp, Bound("n"), Imp(Pos(I("n")),
         Div(Seq(Parenthesized(I("n")), Sp, Caret, Sp, I("k")), Call("a", Call("fun", I("m"), Seq(I("m"), Sp, Caret, Sp, I("k"))), I("n"))))));
