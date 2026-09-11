@@ -1,3 +1,52 @@
+## 本轮:**文献核对一条 no-go**(第 15 轮,2026-09-11)
+
+自第 14 轮定价表以来,本线新增两条**条件切片**(均已冻结上 dev,物理输入在假设位、`axiom` 计数 0):
+
+| 切片 | GID | 内容 |
+|---|---|---|
+| observer→objective | `D5/S3/Quantum/Information/OrthogonalRecordEntropy` | 记录片段两两正交 ⟹ `I = H(p)`,片段携带指针全部经典信息 |
+| cross-species | `D5/S3/Quantum/Matrix/CrossSpeciesConsensus` | 共享**不可约**表示 + 等变自伴 ⟹ 该可观测量为标量,各 probe 读数相同 |
+
+**把两组假设放在一起,它们相斥**——这是地图暴露的空白(第 3.6 条),也是本轮唯一的问题。
+
+### Q1:下面这条 no-go,文献里已经有了吗?
+
+> 设 `U : G →* Matrix n n ℂ`。若该表示**不可约**,则任何等变的自伴幂等 `P`
+> (`P² = P`、`Pᴴ = P`、`∀g, P·U g = U g·P`)必为 `0` 或 `1`。
+> 故**不存在非平凡的等变正交记录结构**,除非表示**可约**。
+> 物理读法:**objectivity 要求指针基破坏那个共享对称性**。
+
+论证极短(`P = r•1` 由已冻结的 `equivariant_selfAdjoint_eq_smul_id_of_irreducible` 给出,
+`P² = P ⟹ r² = r ⟹ r ∈ {0,1}`),**正因为短,必须先问文献**(第 3.6 条 硬规则①:
+候选进管线前先答「文献里有没有这条陈述」;第 3.7 条:写作即尽调,三态表态不许留白)。
+
+**要回答的三件事**:
+①这条陈述(或其等价形)在文献中是否已有?给出处;
+②它与 Zurek/Korbicz 一系的 einselection、pointer basis、SBS 结果是**同一件事**、**推论**,还是**不同**?
+③若已有,本仓应表 `literature-attested` 并建 L 平面 note;若确系新,表 `suspected-novel`。
+**答「已知」是完全可接受的答案,不要为了让它显得新而含糊。**
+
+### orchestrator 的数值读数(可复算)
+
+commutant 维数:不可约(两个通用酉生成)**恒为 1**,25/25;
+**判别力对照**:块对角可约时 **> 1**,25/25 ⟹ 存在非平凡等变投影。
+
+### 本轮派发状态:**在飞,不得重投**
+
+任务 ID **`333503a8-6b9d-4ad6-9d6e-2c927bfc875b`**,池 `chrono-chatgpt-pro-pool`。
+runner 在 3600s 处超时退出(`QR_ROUND status=failed`),但**超时不等于失败**:
+其判词原文为「still dispatched … Re-check later with `nyxid oracle result <id>`」,
+实时查询 `nyxid oracle result` 返回 `Phase: waiting_response`。
+**下一轮先用该 ID 取结果,不要重新派席**(重投会白费一次派发,且可能撞配额)。
+
+**判在飞的判据(两者不可混)**:归档文件**开头**的 CLI 状态序列是**提交那一刻**的状态,
+不随回包更新,以它判在飞是坏原材料;**实时 `nyxid oracle result` 的 `Phase:` 才是当前状态**。
+
+### 同期在飞
+
+形式化席 `nogo-1` 正在把上述 no-go 及其逆写成 Lean。**本轮的文献答案会决定它的
+`AssessedProvenance` 表态**,故先问,不等它落地。
+
 ## 第 14 轮结算:定价表已出,**四项全部卡在物理输入**(2026-09-10)
 
 Q1 问的是「给右栏四项定价,不选」。该席答得清楚,判词存于 `round-14-20260910T225553Z.md`。
