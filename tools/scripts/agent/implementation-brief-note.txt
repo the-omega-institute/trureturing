@@ -89,6 +89,29 @@ elaborate 失败时 Lean 自插 `sorryAx`。2026-09-11 实测:一份 125 行、`
 **派生判词会淹没根判词**:第二次那回有 7 条 `dangling-literature-reference` 排在根判词前面,
 先 `grep 'invalid-'`,别从第一条读起。
 
+## brief 里写「上游没有 X」之前,先搜「做这件事的动作」而不是「复合名字」
+
+2026-09-11 一天内三次断言「不存在」,两次是错的,每次代价是一个席位的完整生命周期:
+
+| 我断言 | 我实际搜的 | 真相 |
+| --- | --- | --- |
+| 「mathlib 无 `exp_mulVec` / 本征向量版本」 | `exp_mulVec`、`eigenvector.*exp` | **对**,席位复查一致 |
+| 「模块只 import mathlib」 | (没搜;把席位报的「已冻结 D5 依赖为空」当成了 import 面) | **错**,admission 以 SL-010 判红 |
+| 「仓内与 mathlib 都没有把迹指数族对参数求导的任何结果」 | `trace_exp`、`exp_trace` | **错**,`Mathlib/Analysis/SpecialFunctions/Exponential.lean:382` 有 `hasDerivAt_exp_smul_const`,整条目标由它经连续线性迹与 log 法则闭合 |
+
+两次错的形状相同:**我搜的是一个复合名字,而上游把这件事拆在另一个名字下**。
+`trace_exp` 不存在,但「对 `exp (u • x)` 求导」存在;
+`import` 面没被搜,因为我把另一个字段的读数当成了它。
+
+**写进 brief 的每一句「上游没有 X」,必须同时写出搜了哪几个名字。**
+搜的对象是**动作**(对指数族求导、把迹当线性映射、把幂等元的迹换成秩),
+不是你为目标起的那个复合名。搜不出就如实写「我搜了这几个名,没命中」——
+那是可反驳的读数;「没有 X」是不可反驳的断言(第 2.9 条)。
+
+`tools/scripts/agent/bindonly-probe.sh` 只能挡住**单项**闭合:它自己的注释写明
+`open` 不充分,因为 `exact?` 找的是单个 term,**两行的库组合照样报 open**。
+上表第三行正是多步组合,探针救不了 —— 只有把搜索对象换成动作才救得了。
+
 ## 交付形状的三条禁令
 
 - **禁 `rfl` 同义反复冒充定理**:`theorem f_formula : f x = <f 的定义体> := by rfl` 零内容。
