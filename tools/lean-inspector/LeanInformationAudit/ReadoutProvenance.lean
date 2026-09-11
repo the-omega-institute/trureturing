@@ -278,10 +278,18 @@ private def classifyType (statement : Expr) (e : Expr) : ClosureM Unit := do
   if (← get).classifiedTypes.contains type then return
   modify fun s => { s with classifiedTypes := s.classifiedTypes.insert type }
   unless ← mayMatch true type do return
-  let type ← reducedType type
   let proposition ← boundedMeta (isProp type)
-  let candidate ← if proposition then pure (some type) else boundedMeta do
-    return if type.isAppOfArity ``Decidable 1 then some type.appArg! else none
+  -- A known data inductive head cannot become Decidable. Function and sort
+  -- types cannot either. Leave aliases/projections/instance producers to whnf.
+  unless proposition || type.isAppOfArity ``Decidable 1 do
+    match type.getAppFn with
+    | .forallE .. | .sort .. | .fvar .. => return
+    | .const name _ =>
+      if let some (.inductInfo _) := (← getEnv).find? name then return
+    | _ => pure ()
+  let candidate : Option Expr ← if proposition then pure (some type) else do
+    let type ← reducedType type
+    pure (if type.isAppOfArity ``Decidable 1 then some type.appArg! else none)
   if let some candidate := candidate then
     -- Rule 2(a): an inhabitant of S; rule 2(b): an instance of Decidable S.
     if ← sameStatement statement candidate then
