@@ -31,6 +31,17 @@
 commutant 维数:不可约(两个通用酉生成)**恒为 1**,25/25;
 **判别力对照**:块对角可约时 **> 1**,25/25 ⟹ 存在非平凡等变投影。
 
+### 本轮派发状态:**在飞,不得重投**
+
+任务 ID **`333503a8-6b9d-4ad6-9d6e-2c927bfc875b`**,池 `chrono-chatgpt-pro-pool`。
+runner 在 3600s 处超时退出(`QR_ROUND status=failed`),但**超时不等于失败**:
+其判词原文为「still dispatched … Re-check later with `nyxid oracle result <id>`」,
+实时查询 `nyxid oracle result` 返回 `Phase: waiting_response`。
+**下一轮先用该 ID 取结果,不要重新派席**(重投会白费一次派发,且可能撞配额)。
+
+**判在飞的判据(两者不可混)**:归档文件**开头**的 CLI 状态序列是**提交那一刻**的状态,
+不随回包更新,以它判在飞是坏原材料;**实时 `nyxid oracle result` 的 `Phase:` 才是当前状态**。
+
 ### 同期在飞
 
 形式化席 `nogo-1` 正在把上述 no-go 及其逆写成 Lean。**本轮的文献答案会决定它的
