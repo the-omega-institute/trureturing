@@ -1,3 +1,75 @@
+## 第 16 轮结算:计数界是**经典结果的标准推论**,表态与地图措辞均已更正(2026-09-11)
+
+**产地三项**:无 skill;靶由 orchestrator 写、问题由 **nyxid / ChatGPT Pro 席**回答;
+零 codex 席。下列每条**仓内**读数由 orchestrator 在本机亲验复算,
+每条**文献**读数是席位自报、并注明我核到哪一步为止。
+
+### 载体:第一次真正跑完三个池
+
+此前报的「载体不可用」,真因是派发器 `quantum-reality-round.sh` 直接调 `nyxid oracle ask`、
+绕过本仓自己的 `nyx.sh`,于是没有 `mode:chat` 标签、没有池遍历、没有判词分类、
+没有 task-id 边车(已修,PR 6993)。改走 `nyx.sh` 后本轮实测三池依次为
+`INFRA` → `CARRIER` → **`OK`**;**答出本轮的是第三个池,而旧派发器从不曾到达它。**
+
+本文件此前把 `company-chatgpt-pro` 的 `oracle_mode_required` 归因为「runner 不设 mode 标签」:
+那对**旧派发器**成立、对 `nyx.sh` 不成立。该归因行已就地更正。
+
+### 判词与我的复算
+
+**问的是**:容量律的计数界(`⊕M_{m_b}` 完全正交幂等族 `≤ Σ m_b`)是不是教科书结果,
+以及 `TERRAIN-MAP.md` 里「唯一的定量律」这个措辞站不站得住。
+
+**答:是标准推论,应记 `literature-attested`;措辞应改,但「已知」与「本图内唯一」要分开判。**
+
+推导(可自行复核,不依赖任何页码):令 `A = ∏_b M_{m_b}(ℂ)`,`ℓ_A` 为左 A-模的组成长度。
+正则模分解给出 `ℓ_A(A) = Σ_b m_b`;非零幂等族求和为一给出 `A = ⊕_i A p_i`,
+每个 `A p_i` 非零(含 `p_i = 1·p_i`)故组成长度 ≥ 1;组成长度对有限直和可加,于是
+`|I| ≤ Σ_i ℓ_A(A p_i) = ℓ_A(A) = Σ_b m_b`。
+**预算是正则模的组成长度,不是代数维数 `Σ_b m_b²`;两者不得混写。**
+
+**orchestrator 亲验的三条仓内读数(全部命中,不是转述)**:
+
+| 席位的读数 | 我的复算 |
+|---|---|
+| `RecordCapacity.scribe.cs` 里只有 `sum_range_finrank_of_idempotent_sum` 传 `literature = true`,其余六次走默认 `FromRepo` | ✅ 逐行核对;`Result(...)` 第 7 个参数默认 `false` |
+| 渲染正文 Theorem 1.1 有文献引用,1.2–1.7 全部 `Repository-derived` | ✅ `RecordCapacity.md` 逐条核对 |
+| `matrix_blocks_card_le_sum` 只要求幂等、非零、求和为一,**不要求两两正交** | ✅ 源码假设位逐条核对 |
+
+**席位自报、我未亲验的部分(如实标注)**:Knapp《Advanced Algebra》与 Etingof 等书内的
+**具体页码与定理编号**。我用自己的 fetch 核到了 arXiv 记录 `0901.0827v5`(标题、七位作者、
+math.RT)与既有 note 一致;想从该 PDF 确认章节编号时**失败** —— 其文本流用子集字体编码,
+本机可用的抽取手段解不开。故 L note 支持的是**数学主张**(计数界是 Artin–Wedderburn 配
+Jordan–Hölder 的标准推论,推导已写出),**不是**任何关于「印在哪一页」的主张。
+
+### 处置(已落地)
+
+1. **表态更正**:`matrix_blocks_card_le_sum`、`equivariant_record_card_le_sum`、
+   `semisimple_commutant_has_record_capacity` 三条由 `FromRepo` 改为 `FromLiterature`,
+   指向扩充后的 `D5/L/Quantum/mathlib2026recordcapacity`。
+   **这是漏认前人成果的更正**(第 3.7 条:冒认与漏认同为不诚实)。
+2. **L note 扩充**:加入上述组成长度推导、与仓内版本假设更弱的说明,
+   以及一节明写本 note attest 什么、不 attest 什么。
+3. **地图收窄**:`TERRAIN-MAP.md` 第二节改写,点明两处越界——
+   ①计数对象是**等变幂等分解**,不是「客观记录」,它不认定哪些幂等元是记录、也不给 objectivity;
+   ②`m_b` 是 **commutant 的 Wedderburn 块尺寸**,不是原表示各不可约分量的重数
+   (模块正文本来就写着这条不在形式化范围内)。第一节该行也补齐了记录族的非零/完备/正交/等变条件。
+4. **「唯一」保留但加限定**:标题本就带范围限定(本节只收统一多条结构的定量律),
+   文献已知不否定栏目内唯一性;但已写明**它不得被当作本线新发现的物理定量律**。
+
+### 本轮不新增研究靶
+
+席位明说:本轮没有新的逃逸见证,也不提出新的首冻候选;计数就是已登记的秩和恒等式,
+加上非零像空间维数至少为一,再经忠实作用或代数等价运输。**处置是更正来源登记,
+不是为此重新证明同一计数界。**
+
+### 仍开着的一项(不冒领)
+
+`RecordCapacity` 另外三条(`card_le_finrank_of_idempotent_sum`、`algebra_card_le_finrank`、
+`equivariant_record_card_le_commutant_finrank`)仍标 `FromRepo`。席位**只裁了直接承载本题的三条**,
+没有裁这三条,我也没有独立核过。**不因「看起来也是经典的」就顺手翻**——留作下一轮的具名开项。
+
+---
+
 ## 本轮:**同一类风险的第二次自查**(第 16 轮,2026-09-11)
 
 第 15 轮查出 `RecordSymmetryNoGo` 的表态错(`FromRepo` 应为 `FromLiterature`)。
@@ -11,7 +83,7 @@
 | 池 | 判词 | 语义 |
 |---|---|---|
 | `chrono-chatgpt-pro-pool` | `infrastructure_retry_exhausted` | 在 `selecting_model / page_ready` 间空转四次,从未发出 |
-| `company-chatgpt-pro` | `oracle_mode_required` | 该池要求 `--tag mode:chat\|mode:work`,**runner 不设该标签** ⟹ 经此 runner 结构上不可用 |
+| `company-chatgpt-pro` | `oracle_mode_required` | **该归因已过期,见本文件顶部第 16 轮结算**:不设 mode 标签的是旧派发器(它绕过 `nyx.sh` 直调 `nyxid oracle ask`),不是 runner 本身;该池今日以 `tag=mode:chat` 正常接收提交 |
 | `chatgpt-pro-pool` | `extraction_failure` | 载体侧随机失败 |
 
 **这不是「本轮无靶」**——Q1 是实靶且有具名风险(见下)。这是 第 5.9 条 的**能力缺口**:
