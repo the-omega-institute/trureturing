@@ -53,7 +53,7 @@ internal sealed class EnergyEigenstateStationarityDocument : IScribeDocumentDefi
 
     private static DocumentBlock Result(string name, string title, string prose, Formula formula,
         DescribeRole role = DescribeRole.Theorem, bool literature = false) =>
-        Describe.Lean(DescribeId.Create("eigenstationary-" + name.Replace('_', '-')),
+        Describe.Lean(DescribeId.Create("eigenstationary-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Module + name), H(title), StatementSource.FromAuthor(Disp(formula)),
             literature ? AssessedProvenance.FromLiterature(
                 LibraryNoteRef.Create("D5/L/Quantum/wikipedia2026stationarystate"))
