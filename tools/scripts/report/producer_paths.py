@@ -7,16 +7,7 @@ sys.dont_write_bytecode = True
 import hashlib
 import json
 import pathlib
-from dotnet_producer import project_inputs
-
-
-def unique_object(pairs):
-    result = {}
-    for key, value in pairs:
-        if key in result:
-            raise ValueError(f"duplicate registration field: {key}")
-        result[key] = value
-    return result
+from dotnet_producer import project_inputs, project_registry, unique_object
 
 
 def required_path(root, value):
@@ -42,12 +33,12 @@ def scope_inputs(root, scope):
     try:
         manifest = required_path(root, registration)
         data = json.loads((root / manifest).read_text(encoding="utf-8"), object_pairs_hook=unique_object)
-        if (not isinstance(data, dict) or set(data) != {"schema", "scripts", "projects"}
+        if (not isinstance(data, dict) or set(data) != {"schema", "scripts", "projects", "materials"}
                 or data["schema"] != "report-producer-scope-v1"):
-            raise ValueError("expected report-producer-scope-v1 with schema, scripts and projects")
+            raise ValueError("expected report-producer-scope-v1 with schema, scripts, projects and materials")
         paths = {manifest}
         registered = set()
-        for field in ("scripts", "projects"):
+        for field in ("scripts", "projects", "materials"):
             if not isinstance(data[field], list):
                 raise ValueError(f"{field} must be a list of registered paths")
             for value in data[field]:
@@ -60,11 +51,10 @@ def scope_inputs(root, scope):
                     raise ValueError(f"registered script must be .sh, .py or .lean: {value}")
                 registered.add(path)
                 paths.add(path)
-        semantics = set()
+        semantics = {}
+        registry = project_registry(root)
         for project in data["projects"]:
-            # Temporary migration boundary: this API still discovers project
-            # Compile/import/reference inputs until its own registration layer lands.
-            inputs, values = project_inputs(root, pathlib.Path(project))
+            inputs, values = project_inputs(root, pathlib.Path(project), registry)
             paths.update(required_path(root, path.as_posix()) for path in inputs)
             semantics.update(values)
         return paths, semantics
@@ -78,9 +68,9 @@ def main():
     try:
         paths, semantics = scope_inputs(pathlib.Path(sys.argv[1]).resolve(), sys.argv[2])
         if len(sys.argv) == 4:
-            value = json.dumps(sorted(semantics), separators=(",", ":")).encode("utf-8")
+            value = json.dumps([semantics[path] for path in sorted(semantics)], sort_keys=True, separators=(",", ":")).encode("utf-8")
             pathlib.Path(sys.argv[3]).write_text(
-                hashlib.sha256(value).hexdigest() + "  @msbuild-semantics\n", encoding="utf-8")
+                hashlib.sha256(value).hexdigest() + "  @engineering-projects\n", encoding="utf-8")
         for path in sorted(paths, key=lambda path: path.as_posix().encode("utf-8")):
             print(path.as_posix())
     except (ValueError, OSError) as error:

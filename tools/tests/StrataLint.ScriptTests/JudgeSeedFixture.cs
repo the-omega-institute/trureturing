@@ -1,6 +1,7 @@
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 
 namespace StrataLint.Tests;
@@ -20,6 +21,7 @@ internal sealed class JudgeSeedFixture : IDisposable
     private string root;
     private int sequence;
     private string? snapshotPath;
+    private string[] projectFiles = ["tools/Library/Library.csproj", "tools/Consumer/Consumer.csproj"];
     internal string SnapshotManifest => PathOf((snapshotPath ?? throw new InvalidOperationException()) + "/manifest.json");
 
     internal JudgeSeedFixture()
@@ -49,6 +51,32 @@ internal sealed class JudgeSeedFixture : IDisposable
         Dotnet(["new", "sln", "--format", "sln", "--name", "StrataLint", "--output", "tools"]);
         Dotnet(["sln", "tools/StrataLint.sln", "add", "tools/Library/Library.csproj", "tools/Consumer/Consumer.csproj"]);
         Dotnet(["restore", "tools/StrataLint.sln", "--use-lock-file"]);
+        Write("Meta/engineering-projects.json", JsonSerializer.Serialize(new
+        {
+            version = 1, projects = new[]
+            {
+                ProjectRow("tools/Library/Library.csproj", "Library", "test-support", ["tools/Library/**/*.cs"], []),
+                ProjectRow("tools/Consumer/Consumer.csproj", "Consumer", "test-support", ["tools/Consumer/**/*.cs"], ["tools/Library/Library.csproj"]),
+            }, historical_projects = Array.Empty<object>(),
+        }));
+        Write(".gitignore", "build/\n**/bin/\n**/obj/\n.judge-binaries/\n");
+        Directory.CreateDirectory(PathOf("build/empty-git-config"));
+        Git("init", "--quiet", "--template=" + PathOf("build/empty-git-config"));
+        Git("add", ".");
+    }
+
+    internal static object ProjectRow(string path, string assembly, string role, string[] include, string[] references) => new
+    {
+        path, assembly, role, ci = false, include, exclude = Array.Empty<string>(), references,
+        owner = (object?)null, owned_test_assembly = role == "production" ? assembly + ".Tests" : null,
+        test_partition = (string?)null,
+    };
+
+    internal void EditProjects(Action<JsonObject> change)
+    {
+        var registry = JsonNode.Parse(File.ReadAllText(PathOf("Meta/engineering-projects.json")))!.AsObject();
+        change(registry);
+        Write("Meta/engineering-projects.json", registry.ToJsonString());
     }
 
     internal string PathOf(string relative) => Path.Combine(root, relative);
@@ -104,7 +132,8 @@ internal sealed class JudgeSeedFixture : IDisposable
         Assert.False(keys.RootElement.GetProperty("save_allowed").GetBoolean());
         snapshotPath = keys.RootElement.GetProperty("judge").GetProperty("path").GetString()!;
         if (Directory.Exists(PathOf(snapshotPath))) Directory.Delete(PathOf(snapshotPath), true);
-        Python("actions.snapshot(root, actions.actions_keys(root), ('judge',))", settings: settings);
+        var result = Python("actions.snapshot(root, actions.actions_keys(root), ('judge',))", settings: settings);
+        Record("snapshot", result, null);
     }
 
     internal void Restore()
@@ -112,14 +141,55 @@ internal sealed class JudgeSeedFixture : IDisposable
         foreach (var project in new[] { "Library", "Consumer" })
         foreach (var kind in new[] { "bin", "obj" })
             if (Directory.Exists(PathOf($"tools/{project}/{kind}"))) Directory.Delete(PathOf($"tools/{project}/{kind}"), true);
-        Python("keys=actions.actions_keys(root); actions.restore(root, keys, {'judge':keys['judge']['key']}, ('judge',))");
+        RestoreTransport();
         // Perturb checkout times relative to the transported material, as a
         // checkout does. A future year would keep cold compiler outputs stale.
         var stamp = Directory.GetFiles(root, "*.dll", SearchOption.AllDirectories)
             .Select(File.GetLastWriteTimeUtc).Max().AddTicks(10);
-        foreach (var path in new[] { "global.json", "Directory.Build.props", "tools/Library/Library.csproj", "tools/Library/Code.cs",
-                     "tools/Consumer/Consumer.csproj", "tools/Consumer/Program.cs" }) File.SetLastWriteTimeUtc(PathOf(path), stamp);
+        foreach (var path in new[] { "global.json", "Directory.Build.props", "tools/Library/Code.cs",
+                     "tools/Consumer/Program.cs" }.Concat(projectFiles)) File.SetLastWriteTimeUtc(PathOf(path), stamp);
         Prepare();
+    }
+
+    internal void RestoreTransport()
+    {
+        var result = Python("keys=actions.actions_keys(root); actions.restore(root, keys, {'judge':keys['judge']['key']}, ('judge',))");
+        Record("restore", result, null);
+    }
+
+    internal Invocation TransportCommand(string command) => Run("python3",
+        [Path.Combine(producerRoot, "tools/scripts/worktree/lean_actions.py"), command, "--repository", root, "--layers", "judge"], false);
+
+    internal JsonObject CacheKeys() => JsonNode.Parse(Python("print(json.dumps(actions.actions_keys(root)))").Text)!.AsObject();
+
+    internal Invocation RestoreLayer(string layer, string key) => Run("python3",
+        [Path.Combine(producerRoot, "tools/scripts/worktree/lean_actions.py"), "restore", "--repository", root,
+            "--layers", layer, "--" + layer + "-key", key]);
+
+    internal void AddUnlistedTransportNeighbor() => Write(snapshotPath! + "/data/data/tools/Neighbor/obj/Neighbor.dll", "not in manifest");
+
+    internal void UseSameProjectBasenames()
+    {
+        foreach (var name in new[] { "Library", "Consumer" })
+        {
+            var path = PathOf($"tools/{name}/{name}.csproj");
+            var contents = File.ReadAllText(path).Replace("</Project>",
+                $"<PropertyGroup><AssemblyName>{name}</AssemblyName></PropertyGroup></Project>", StringComparison.Ordinal)
+                .Replace("Library.csproj", "Project.csproj", StringComparison.Ordinal);
+            File.Delete(path);
+            Write($"tools/{name}/Project.csproj", contents);
+        }
+        var solution = File.ReadAllText(PathOf("tools/StrataLint.sln"));
+        Write("tools/StrataLint.sln", solution.Replace("Library.csproj", "Project.csproj", StringComparison.Ordinal)
+            .Replace("Consumer.csproj", "Project.csproj", StringComparison.Ordinal));
+        projectFiles = ["tools/Library/Project.csproj", "tools/Consumer/Project.csproj"];
+        EditProjects(registry =>
+        {
+            registry["projects"]![0]!["path"] = projectFiles[0];
+            registry["projects"]![1]!["path"] = projectFiles[1];
+            registry["projects"]![1]!["references"] = new JsonArray(projectFiles[0]);
+        });
+        Git("add", "tools", "Meta/engineering-projects.json");
     }
 
     internal void RestoreWithMissingTransferredProject()
@@ -140,7 +210,7 @@ internal sealed class JudgeSeedFixture : IDisposable
     internal void FailSnapshotSave()
     {
         // A real unreadable material shape makes the optional transport fail.
-        var receipt = PathOf("build/judge-seed/receipts/Library.csproj.seed.json");
+        var receipt = PathOf("build/judge-seed/receipts/tools/Library/Library.csproj.seed.json");
         File.Delete(receipt);
         Directory.CreateDirectory(receipt);
         Snapshot();
@@ -164,7 +234,8 @@ internal sealed class JudgeSeedFixture : IDisposable
     {
         foreach (var path in new[] { "tools/scripts/report/JudgeSeedTask.csproj", "tools/scripts/report/JudgeSeedTask.cs", "tools/scripts/report/packages.lock.json" })
             Write(path, File.ReadAllText(Path.Combine(producerRoot, path)));
-        Write(".gitignore", "build/\n**/bin/\n**/obj/\n");
+        EditProjects(registry => registry["projects"]!.AsArray().Add(JsonSerializer.SerializeToNode(ProjectRow(
+            "tools/scripts/report/JudgeSeedTask.csproj", "JudgeSeedTask", "production", ["tools/scripts/report/JudgeSeedTask.cs"], []))));
         Write("README.md", "helper fixture\n");
         Directory.CreateDirectory(PathOf("build/empty-git-config"));
         Git("init", "--quiet", "--template=" + PathOf("build/empty-git-config"));
