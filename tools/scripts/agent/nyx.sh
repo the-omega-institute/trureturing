@@ -18,6 +18,17 @@
 #   153B  extraction_failure      —— 载体侧随机,可重投
 #   178B  waiting_response        —— **还在跑,根本不是失败**
 #   248B  HTTP 429 quota_exceeded —— **我自己把池打满了**
+#
+# 2026-09-11 又补一个第五状态,它此前落在 UNKNOWN 里,代价是**遍历只跑了一个池就停**:
+#   infrastructure_retry_exhausted —— CLI 自己的基础设施重试打满(Attempts: 4,
+#   infrastructure retries 3/3),任务没能送到 worker 手里。
+# 旧代码里 UNKNOWN 会 `break`(理由是「没有证据表明重投安全」),于是一次 ask 明明有三个
+# 排名池可投,实际只投了 `chrono-chatgpt-pro-pool` 一个就退出;我据此在上游报告里写了
+# 「三池全失败」,那是一个**没有发生过的普查**(第 2.4 条:账上没有的不冒领)。
+# INFRA 是**池作用域**的终局:换池是一次全新提交,不是对同一载体的重放。
+# 边界(第 2.9 条):「没送出去」是 round 16 观察到的 pool span(`selecting_model` /
+# `page_ready`,始终未发送),不是上游的保证;万一确实送出去了,后果只是同一个只读研究
+# 问题被问两遍,无副作用。凡投出去会改变外部状态的 brief,不得依赖本条。
 # 契约就写在 429 的 body 里:`limit 4` 并发。我从没读到它,因为代理把它藏了。
 # 而误读直接导致错误决策:读到「6 投全败」于是投得更多 → 更多 429。
 #
@@ -151,6 +162,8 @@ __classify() {  # 读一个 .out,打印:OK|EXTRACTION|QUOTA|NOFILE|RUNNING|UNKNO
   grep -q 'oracle_quota_exceeded\|HTTP 429' "$f" && { echo QUOTA; return; }
   grep -q 'Failed to read prompt' "$f" && { echo NOFILE; return; }
   grep -q 'extraction_failure' "$f" && { echo EXTRACTION; return; }
+  grep -q 'infrastructure_retry_exhausted' "$f" && { echo INFRA; return; }
+  grep -q '^Error: Task failed (' "$f" && { echo CARRIER; return; }
   echo UNKNOWN
 }
 
@@ -253,6 +266,7 @@ __verdict_of_payload() {  # 判**取回的文本**,不判文件 —— 活判决
     *oracle_quota_exceeded*|*"HTTP 429"*) echo QUOTA;      return;;
     *"Failed to read prompt"*)            echo NOFILE;     return;;
     *extraction_failure*)                 echo EXTRACTION; return;;
+    *infrastructure_retry_exhausted*)     echo INFRA;      return;;
   esac
   # Delivery tokens need CLI failure evidence; successful answers can quote them.
   # NyxID 0d7afdaa docs/ORACLE_RELAY.md:395-410 forbids uncertain post-send replay;
@@ -279,6 +293,21 @@ __verdict_of_payload() {  # 判**取回的文本**,不判文件 —— 活判决
       *"Message delivery timed out"*) echo DELIVERY; return;;
     esac
   fi
+  # **规则,不是名单**(第 4.9 条:harness 存规则,不存代表元)。
+  # 上面四个具名判词各有下游差异(QUOTA 要退避、NOFILE 是我自己的 bug),所以保留具名;
+  # 但「还有哪些 reason」是上游的开放集合,逐个补 token 是打地鼠(第 7.11 条:
+  # 同症状第二次即停手修根因)。实测两次:`infrastructure_retry_exhausted` 停在第一个池,
+  # 补上它之后立刻又撞 `composer_draft_conflict`,同样停在第二个池。
+  #
+  # 判据:CLI 非零退出 ∧ 末行是它自己的 `Error: Task failed (<reason>).` 形态
+  # ⟹ 该 reason 命名了一次**已终结**的失败,任务没有留在这个池里跑。
+  # 换池是一次全新提交,不是对同一载体的重放,故 CARRIER 参与遍历。
+  # 唯一的例外已在上面单列:`prompt_delivery_uncertain` 明说交付状态未知,不得重投。
+  if [ "$cli_rc" -ne 0 ]; then
+    case "$last" in
+      "Error: Task failed ("*")"*) echo CARRIER; return;;
+    esac
+  fi
   first=${r%%$'\n'*}
   case "$first" in "Error:"*) echo UNKNOWN; return;; esac
   echo OK
@@ -293,6 +322,14 @@ __poll_task() {  # <task-id> <outfile>; ask/fetch share polling, __finish owns t
     if [ "$rc" -eq 0 ]; then
       case "$r" in
         *"Task is dispatched"*|*"Phase:"*|*queued*) n=$((n+1)); sleep "$POLL_SECONDS"; continue;;
+      esac
+    else
+      # 2026-09-09 实测:任务已成功提交(Task submitted)后,一次 `oracle result` 的 HTTP 连接
+      # 超时(`error sending request for url … client error (Connect): operation timed out`)
+      # 被当成终态,一票已派出的席位在调用方眼里成了失败(第 8.4 条坏原材料)。
+      # 传输层错误不是任务判词:按一轮计数继续轮询,轮次耗尽走 TIMEOUT(任务仍可 fetch)。
+      case "$r" in
+        *"error sending request for url"*|*"client error (Connect)"*) n=$((n+1)); sleep "$POLL_SECONDS"; continue;;
       esac
     fi
     __append "$out" "$r" || return 2
@@ -442,7 +479,7 @@ case "${1:-}" in
       LIMIT="${NYX_LIMIT:-}"   # 每池按自报容量重新派生
       __submit_and_poll "$brief" "$out"; rc=$?
       case "$LAST_VERDICT" in
-        EXTRACTION|QUOTA|BUSY|EXPIRED) ;;
+        EXTRACTION|QUOTA|BUSY|EXPIRED|INFRA|CARRIER) ;;
         *) break;;   # Includes UNCERTAIN/DELIVERY: no evidence that replay is safe.
       esac
     done

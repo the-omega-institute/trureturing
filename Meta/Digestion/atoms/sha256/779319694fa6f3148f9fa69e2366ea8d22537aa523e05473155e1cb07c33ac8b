@@ -1,0 +1,2 @@
+**定义 3.5(疑)**。主体**疑** $P$,当且仅当 $\mathrm{last}(P)=(P,\mathsf{open})$ 且附有一条**追索**——写明何种见证(证明、读数、反例)会把它升为 $\mathsf{frozen}$ 或 $\mathsf{refuted}$。无追索的 `open` 不是疑,是遗忘。
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:e30f7db02edcdc29781a40f7d9a36bb1eed4deff161e5bd55c2d7b9f3261e31f
+  normalized_sha256: sha256:e30f7db02edcdc29781a40f7d9a36bb1eed4deff161e5bd55c2d7b9f3261e31f
+cas_ref: sha256:e30f7db02edcdc29781a40f7d9a36bb1eed4deff161e5bd55c2d7b9f3261e31f
+coverage_gids:
+  - gid: D5/S3/Arith/NormalizedColumnParityPowersOfTwo.a144637_normalized_column_parity
+    target_statement_id: sha256:830d448a305e91cff762f343433225a99fce75ce56000c461a16fbddac13852f
+receipts:
+  unresolved_subitems: []

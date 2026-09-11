@@ -1,0 +1,38 @@
+{
+  "probe": "BoundaryProbes.lean",
+  "exit_code": 0,
+  "assertions": 17,
+  "supporting_theorems": 8,
+  "cases": [
+    {
+      "case": "empty archive/current/selection",
+      "result": "zero readout; representative-zero empty archive and regions checked"
+    },
+    {
+      "case": "retained archive, empty current",
+      "result": "archive cardinality 4, current empty, readout zero"
+    },
+    {
+      "case": "nonempty archive/current, empty selection",
+      "result": "zero readout"
+    },
+    {
+      "case": "arbitrary fixed filter Context identity",
+      "result": "Rich and BalancedRich Context equalities by rfl"
+    },
+    {
+      "case": "same-leaf cancellation +1,-1",
+      "result": "coefficient zero; four actual selected generated occurrences retained; ordered contributions [1,-1,-1,1]; readout zero"
+    },
+    {
+      "case": "two distinct positive same-leaf occurrences",
+      "result": "four selected generated occurrences; readout four"
+    },
+    {
+      "case": "mixed leaf0 +1, nonleaf +1, leaf1 -1",
+      "result": "selected source-pair set is exactly {(0,0),(2,2)}; cardinality two; readout two; nonleaf source coefficient one"
+    }
+  ],
+  "admission_content": false,
+  "limits": "Kernel boundary probes on actual HF presentations. They do not replace the general Lean proofs or claim an independently admissible positive instance."
+}

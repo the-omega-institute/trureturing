@@ -21,6 +21,11 @@ __selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**
   chk OK         answer-multiline-err-later "$(printf 'line one\nError: quoted from their log')"
   # 阴性:载体侧失败必须各自可辨,不得混成一个
   chk EXTRACTION carrier-extraction         'Error: Task failed (extraction_failure).'
+  chk CARRIER    carrier-unknown-reason     'Error: Task failed (composer_draft_conflict).' 1
+  chk CARRIER    carrier-future-reason      'Error: Task failed (some_reason_not_yet_invented).' 1
+  chk UNKNOWN    carrier-named-reason-zero-exit 'Error: Task failed (composer_draft_conflict).' 0
+  chk INFRA      carrier-infra-exhausted    "$(printf '%s\n' 'Attempts: 4 (infrastructure retries 3/3)' \
+    'Error: Task failed (infrastructure_retry_exhausted).')" 1
   chk QUOTA      carrier-quota-429          'Error: HTTP 429 {"error":"oracle_quota_exceeded"}'
   chk NOFILE     carrier-prompt-missing     'Error: Failed to read prompt'
   # 载体投递失败:失败文本是 payload 的**末行**
@@ -168,6 +173,11 @@ __selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**
         result)
           case "$response" in
             extraction) echo 'Error: Task failed (extraction_failure).'; return 1;;
+            composer)
+              echo 'Error: Task failed (composer_draft_conflict).'; return 1;;
+            infra)
+              printf '%s\n' 'Attempts: 4 (infrastructure retries 3/3)' \
+                'Error: Task failed (infrastructure_retry_exhausted).'; return 1;;
             delivery|delivery-zero-exit)
               printf '%s\n' 'Attempts: 1 (infrastructure retries 0/3)' 'Message delivery timed out. Please try again.Retry'
               if [ "$response" = delivery ]; then return 1; fi;;
@@ -179,6 +189,11 @@ __selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**
             resume) if [ "$(wc -l < "$NYX_TEST_DIR/polls")" -le 2 ]; then echo 'Phase: waiting_response'; else echo '{"ok":true}'; fi;;
             barrier) printf 'ready\n' > "$NYX_TEST_DIR/ready"; IFS= read -r response < "$NYX_TEST_DIR/release"; echo '{"ok":true}';;
             result-error) echo 'Unexpected transport failure'; return 1;;
+            transient|transient-forever)
+              if [ "$response" = transient-forever ] || [ "$(wc -l < "$NYX_TEST_DIR/polls")" -le 1 ]; then
+                echo "Error: GET /oracle/tasks/$id failed: error sending request for url (https://example.invalid/oracle/tasks/$id): client error (Connect): operation timed out"; return 1
+              fi
+              echo '{"ok":true}';;
             *) echo '{"ok":true}';;
           esac; return 0;;
         *) return 97;;
@@ -245,7 +260,7 @@ __selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**
     local last='' next verdict actual
     [ ! -f "$run_out" ] || last=$(tail -1 "$run_out")
     next=$(awk '/^NYX_NEXT_POOL / {sub(/^after=/,"",$2); printf "%s%s", sep, $2; sep=","}' "$run_dir/stdout")
-    verdict=$(awk '/^NYX_(OK|EXTRACTION|QUOTA|NOFILE|UNKNOWN|DELIVERY|UNCERTAIN|NOPOOL|BUSY|EXPIRED|LOCKBUSY|TIMEOUT|IO|ERR|CANCELLED)( |$)/ {v=$1} END {print v}' "$run_dir/stdout")
+    verdict=$(awk '/^NYX_(OK|EXTRACTION|INFRA|CARRIER|QUOTA|NOFILE|UNKNOWN|DELIVERY|UNCERTAIN|NOPOOL|BUSY|EXPIRED|LOCKBUSY|TIMEOUT|IO|ERR|CANCELLED)( |$)/ {v=$1} END {print v}' "$run_dir/stdout")
     actual="$run_rc|$last|$(joined "$run_dir/submits")|$(joined "$run_out.taskid")|$(joined "$run_dir/polls")|$next|$verdict"
     chke "$1" "$run_name" "$actual"
     [ "$actual" = "$1" ] || cat "$run_dir/stdout"
@@ -253,6 +268,13 @@ __selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**
   run_case ask-select-good "$selection"
   check_run "0|EXIT=0|good|$id3|$id3||NYX_OK"
   run_case ask-ranked-traversal "$traversal"
+  check_run "0|EXIT=0|first,second|$id1,$id2|$id1,$id2|first|NYX_OK"
+  # infrastructure_retry_exhausted 是池作用域的终局,遍历必须继续投下一个排名池。
+  # 这条红过:未分类时它落进 UNKNOWN,遍历在第一个池就 break,submits 只有 first。
+  run_case ask-infra-then-answer "${traversal/extraction/infra}"
+  check_run "0|EXIT=0|first,second|$id1,$id2|$id1,$id2|first|NYX_OK"
+  # 规则(而非 token 名单)的钉子:一个从未被列举过的 reason 也必须换池。
+  run_case ask-composer-then-answer "${traversal/extraction/composer}"
   check_run "0|EXIT=0|first,second|$id1,$id2|$id1,$id2|first|NYX_OK"
   run_name=fetch-rerun-resumes; run_args=(fetch "$id2" "$run_out")
   run_child > "$run_dir/stdout" 2>&1; run_rc=$?
@@ -336,6 +358,12 @@ __selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**
     check_run '2|EXIT=2|||||NYX_ERR'
     chke '' "no-cli-$response" "$(joined "$run_dir/calls")"
   done
+  # A transport error on `oracle result` after a successful submission is not a task verdict:
+  # one transient failure then an answer is OK; a persistent one exhausts the rounds as TIMEOUT.
+  run_case ask-transient-then-answer "${rows_one/answer/transient}"
+  check_run "0|EXIT=0|first|$id1|$id1,$id1||NYX_OK"
+  run_case fetch-transient-forever "${rows_one/answer/transient-forever}"
+  check_run "3|EXIT=3||$id1|$id1,$id1||NYX_TIMEOUT"
   run_case fetch-delivery "${rows_one/answer/delivery}"
   check_run "1|EXIT=1||$id1|$id1||NYX_DELIVERY"
   run_case fetch-prompt-uncertain "${rows_one/answer/prompt-uncertain}"

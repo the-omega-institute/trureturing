@@ -9,46 +9,6 @@ import Lean.Meta
 
 open Lean
 
-structure ModuleInput where
-  moduleName : String
-  sourcePath : String
-  sourceSha256 : String
-
-structure DeclarationReport where
-  axioms : Array String
-  includeInStatement : Bool
-  kind : String
-  materialFile : String
-  name : String
-  nameKey : String
-
-structure UtilityInput where
-  modulePath : String
-  claimGid : String
-  claimModule : String
-  claimSelector : String
-  claimSourcePath : String
-  claimSourceSha256 : String
-  resultGid : String
-  resultModule : String
-  resultSelector : String
-  deriving FromJson
-
-structure RefutationReport where
-  claimGid : String
-  claimSourcePath : String
-  claimSourceSha256 : String
-  resultGid : String
-  isClosedNegation : Bool
-
-structure ModuleReport where
-  declarations : Array DeclarationReport
-  imports : Array String
-  moduleName : String
-  sourcePath : String
-  sourceSha256 : String
-  refutation : Option RefutationReport := none
-
 def atom (value : String) : String := s!"{value.utf8ByteSize}:{value}"
 
 partial def encodeName : Name → String
@@ -103,6 +63,46 @@ def encodeStatement (info : ConstantInfo) : String :=
       | none => header ++ ",value=missing)"
   | _ => header ++ ")"
 
+structure ModuleInput where
+  moduleName : String
+  sourcePath : String
+  sourceSha256 : String
+
+structure DeclarationReport where
+  axioms : Array String
+  includeInStatement : Bool
+  kind : String
+  materialFile : String
+  name : String
+  nameKey : String
+
+structure UtilityInput where
+  modulePath : String
+  claimGid : String
+  claimModule : String
+  claimSelector : String
+  claimSourcePath : String
+  claimSourceSha256 : String
+  resultGid : String
+  resultModule : String
+  resultSelector : String
+  deriving FromJson
+
+structure RefutationReport where
+  claimGid : String
+  claimSourcePath : String
+  claimSourceSha256 : String
+  resultGid : String
+  isClosedNegation : Bool
+
+structure ModuleReport where
+  declarations : Array DeclarationReport
+  imports : Array String
+  moduleName : String
+  sourcePath : String
+  sourceSha256 : String
+  refutation : Option RefutationReport := none
+
 def includeInStatement (name : Name) : ConstantInfo → Bool
   | .thmInfo _ => !(privateToUserName name).isInternalDetail
   | _ => true
@@ -121,18 +121,19 @@ def sortedUnique (values : Array String) : Array String :=
   (values.qsort (· < ·)).foldl (init := #[]) fun result value =>
     if result.back? == some value then result else result.push value
 
-/-- The constants whose axiom closures a declaration's own closure is the union
-of. Mirrors the per-kind traversal of `Lean.CollectAxioms.collect`: bodies (type
-and, where present, value/constructors) contribute their used constants. -/
-def declarationDependencies : ConstantInfo → Array Name
-  | .axiomInfo info => info.type.getUsedConstants
-  | .defnInfo info => info.type.getUsedConstants ++ info.value.getUsedConstants
-  | .thmInfo info => info.type.getUsedConstants ++ info.value.getUsedConstants
-  | .opaqueInfo info => info.type.getUsedConstants ++ info.value.getUsedConstants
-  | .quotInfo _ => #[]
-  | .ctorInfo info => info.type.getUsedConstants
-  | .recInfo info => info.type.getUsedConstants
-  | .inductInfo info => info.type.getUsedConstants ++ info.ctors.toArray
+/-- Single owner of dependency semantics for both axiom closure and structural
+extraction. Keep the type/constructor and optional value halves separate. -/
+def declarationDependencyParts (info : ConstantInfo) : Array Name × Option (Array Name) :=
+  let types := match info with
+    | .quotInfo _ => #[]
+    | .inductInfo value => value.type.getUsedConstants ++ value.ctors.toArray
+    | value => value.type.getUsedConstants
+  (types, (info.value? (allowOpaque := true)).map Expr.getUsedConstants)
+
+/-- The union consumed by the report's transitive axiom traversal. -/
+def declarationDependencies (info : ConstantInfo) : Array Name :=
+  let (types, values) := declarationDependencyParts info
+  types ++ values.getD #[]
 
 /-- Report-shared state for axiom-closure collection. `closure` memoizes the final
 sorted axiom set of every constant once its strongly connected component has been
@@ -253,11 +254,12 @@ def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
     let some info := environment.find? name
       | throw <| IO.userError s!"declaration missing: {name}"
     let axioms ← collectAxiomsShared environment cache name
-    let statement := encodeStatement info
     let materialIndex ← materialCounter.get
     materialCounter.set (materialIndex + 1)
     let materialFile := s!"{materialIndex}.statement"
-    IO.FS.writeFile (materialSpool / materialFile) statement
+    IO.FS.withFile (materialSpool / materialFile) .write fun handle => do
+      handle.putStr (encodeStatement info)
+      handle.flush
     return {
       axioms := sortedUnique (axioms.map Name.toString)
       includeInStatement := includeInStatement name info
@@ -367,7 +369,85 @@ def parseArguments : List String → Except String
   | _ => .error
       "usage: Inspector.lean --output FILE --material-spool DIR [--utility-input FILE] MODULE SOURCE_PATH SOURCE_SHA256 [...]"
 
+/-- Read statement material only for requested Names in collision modules. No
+project module is imported: ModuleData parts are read and released one at a time. -/
+@[noinline] private unsafe def emitStatementIdentities (moduleName : String)
+    (paths : Array String) (keys : Std.HashSet String) (out : IO.FS.Stream) :
+    IO (Array CompactedRegion) := do
+  let parts ← readModuleDataParts (paths.map System.FilePath.mk)
+  let mut regions := #[]
+  for h : i in [:parts.size] do
+    let (data, region) := parts[i]
+    for info in data.constants do
+      let nameKey := encodeName info.name
+      unless keys.contains nameKey do continue
+      out.putStrLn (Json.mkObj [("module", toJson moduleName),
+        ("part", toJson (#["base", "server", "private"][i]!)),
+        ("name_key", toJson nameKey),
+        ("kind", toJson (if info.isTheorem then "theorem" else "other")),
+        ("statement_material", toJson (encodeStatement info))]).compress
+    regions := regions.push region
+  return regions
+
+private unsafe def statementIdentities (manifest request : String) : IO Unit := do
+  let modules ← IO.ofExcept <| (Json.parse (← IO.FS.readFile manifest) >>= fromJson?
+    (α := Array (String × Array String)))
+  let input ← IO.ofExcept <| Json.parse (← IO.FS.readFile request)
+  let rows ← IO.ofExcept <| input.getObjValAs? (Array (Array String)) "keys"
+  let keys := Std.HashSet.ofArray (rows.map (·[1]!))
+  let out ← IO.getStdout
+  for (moduleName, paths) in modules do
+    unless paths.size ≥ 1 && paths.size ≤ 3 do
+      throw <| IO.userError "expected a prefix of olean parts"
+    let regions ← emitStatementIdentities moduleName paths keys out
+    for region in regions.reverse do region.free
+    out.flush
+
+/-- Detach one module's used constants before freeing its compacted regions.
+Names use Inspector's existing constructor-preserving encoding. -/
+@[noinline] private unsafe def emitDependencies (moduleName : String) (paths : Array String)
+    (bodies : Bool) (out : IO.FS.Stream) : IO (Array CompactedRegion) := do
+  let parts ← readModuleDataParts (paths.map System.FilePath.mk)
+  let mut regions := #[]
+  for h : i in [:parts.size] do
+    let (data, region) := parts[i]
+    out.putStrLn (Json.mkObj [("module", toJson moduleName),
+      ("part", toJson (#["base", "server", "private"][i]!)),
+      ("imports", toJson (data.imports.map (·.module.toString)))]).compress
+    if bodies then
+      for info in data.constants do
+        let (types, values) := declarationDependencyParts info
+        out.putStrLn (Json.mkObj [("name", toJson (encodeName info.name)),
+          ("kind", toJson (kindOf info)),
+          ("value", toJson (values.map (·.map encodeName))),
+          ("type", toJson (types.map encodeName))]).compress
+    else
+      for name in data.constNames do
+        out.putStrLn (Json.mkObj [("name", toJson (encodeName name))]).compress
+    regions := regions.push region
+  return regions
+
+private unsafe def dependencies (manifest destination mode : String) : IO Unit := do
+  unless mode == "bodies" || mode == "names" do
+    throw <| IO.userError "expected bodies or names"
+  let modules ← IO.ofExcept <| (Json.parse (← IO.FS.readFile manifest) >>= fromJson?
+    (α := Array (String × Array String)))
+  let out ← if destination == "-" then IO.getStdout else
+    IO.FS.Stream.ofHandle <$> IO.FS.Handle.mk destination .write
+  for (moduleName, paths) in modules do
+    unless paths.size ≥ 1 && paths.size ≤ 3 do
+      throw <| IO.userError "missing_olean_part"
+    let regions ← emitDependencies moduleName paths (mode == "bodies") out
+    for region in regions.reverse do region.free
+    out.flush
+
 unsafe def main (args : List String) : IO Unit := do
+  if let ["--dependencies", manifest, destination, mode] := args then
+    dependencies manifest destination mode
+    return
+  if let ["--statement-identities", manifest, request] := args then
+    statementIdentities manifest request
+    return
   let (output, materialSpool, utilityInput, inputs) ← match parseArguments args with
     | .ok parsed => pure parsed
     | .error message => throw <| IO.userError message

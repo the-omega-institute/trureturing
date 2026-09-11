@@ -1,0 +1,26 @@
+### Relation to the graph theorem
+
+Combining (26.1) with Section 20 gives the following complete paper induction.
+Carry both nonvanishing of each smaller-domain partition and a typed inverse
+message representation. For an internal node, each present child has the exact
+successor type and fewer vertices; absent children contribute one. The new
+analytic theorem puts the parent message in its own Omega and excludes its
+local denominator zero. The exact graph recursion proves parent nonvanishing.
+For an arbitrary unconditioned root, center its vertex, use the four smaller
+rootDomain instances at type zero and the separate four-factor denominator
+bound. The empty partition is one. Strong induction on finite cardinality
+therefore gives the candidate explicit consequence
+
+\[
+ z\in U_\epsilon\ \Longrightarrow\ Z_{\rm grid}(V;z)\ne0
+ \quad\text{for every finite induced grid domain }V.
+\tag{26.2}
+\]
+
+The new Lean endpoint is the all-type analytic theorem and its root bound.
+The final simultaneous finite-graph induction in this paragraph has not been
+assembled as a public Lean theorem in this increment. Prior coefficient and
+geometric proof scripts also retain their stated uncompiled status. Thus
+(26.2) is a paper consequence of the delivered certificate chain, not a
+kernel-verified zero-free theorem or an independently reviewed new record.
+

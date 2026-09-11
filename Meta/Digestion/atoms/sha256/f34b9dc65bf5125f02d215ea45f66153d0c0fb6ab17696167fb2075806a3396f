@@ -1,0 +1,31 @@
+**32.21 单层摄入与交付边界。** 本层由 caller 指定的隔离 Codex CLI I16
+在 consensus-rnd:sshx 1.0.0-beta.42 及其 CODEX_WORKER_SPEC.md 下实施,
+flight qgh0910-i16-actual-5040-fixed,attempt 1;repo-prior-exposed。
+遵守 CLAUDE 5.11 与本次 brief,无委派、native subagent、额外 worker/oracle 或本轮 review 票;
+不声称 sterile priors 或模型族多样性。工作树为
+/Users/auricstudio/trureturing-qgh-actual-5040-fixed,
+分支 lane/math/quantized-gh-actual-5040-fixed-0910,
+immutable BASE 为 fe3f12abe8bc2e14628a93990fee2755c30da2bd。
+完整前缀保留 316724 字节、5974 个 LF,SHA256
+9229e2affc81243efcdcbd228058d8ca19cea395630a94ae943afde374157dd2。
+唯一源改动为追加本节,另加一个报告,canonical 输出仅来自一次
+~~~sh
+make ingest BASE=fe3f12abe8bc2e14628a93990fee2755c30da2bd SOURCE=arithmetic-boundary-quantization
+~~~
+全部历史 CAS、entry、报告和输入保留,自动 children、历史 terminal-LF 变体
+及每个 producer EOF 字节均原样保留。编号内容单元作完整跨度和有序 chain 拼接核对,
+结构标题不要求成为 atom;fingerprint/cas_ref 带 sha256: 前缀,child atom_id 为裸 hash。
+源/报告/前后缀身份、完整改动清单与实际 canonical 绑定见实施结论及报告。
+该源、证书及其摄入绑定是同一个内容层,不拆出脱离源语义的地址产物。
+
+CPU 只作固定数学核验及必要编排;没有指数/高度/薄层 sweep、候选生成、旧搜索重放、
+GPU、daemon、广泛 build/preflight、工具/metadata/Lean/frozen 修复或手工 canonical 规范化。
+没有读取 worker 日志、log_ref 内容、caller 转录、同轮 peer 信封或其它 live target。
+本节仅比较两个上界,不是 RH 等价判据、Robin 证书、RH 进展、新 GH 定义或 Lean freeze。
+其它指数箱体、任意形状/素数、正高度 17 节点、全高度密度与未返回的平移全域结论
+都在本层之外;\(G\) 本身的固定裕量不能外推为无界共同高度族的裕量。
+全部改动返回 unstaged;不作 stage/commit/push/PR/merge 或生命周期动作。
+caller 负责后续封存、公共字节核对、独立评审、普通仓库门与交付;
+最终 S21 交付必须等待 S20 MERGED。本次实施不作 termination 判词,
+不把有限层的实现或摄入标成持续目标完成。
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f9af39f247c0a79e288664617a4dc7731d390e7535c8633f3abf0a6859c5ad66
+  normalized_sha256: sha256:f9af39f247c0a79e288664617a4dc7731d390e7535c8633f3abf0a6859c5ad66
+cas_ref: sha256:f9af39f247c0a79e288664617a4dc7731d390e7535c8633f3abf0a6859c5ad66
+coverage_gids:
+  - gid: D5/S3/Arith/DivisorCountRadicalCoincidence.radical_eq_card_divisors_of_dvd
+    target_statement_id: sha256:7520060e03d86e5bfb70262752677429eb15be8b5527bf9b713d4ec6b462fd69
+receipts:
+  unresolved_subitems: []

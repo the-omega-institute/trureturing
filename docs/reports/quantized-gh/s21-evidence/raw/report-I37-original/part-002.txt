@@ -1,0 +1,750 @@
+
+| 37 | 32.13 / table row | [329848,329944) | 6272–6272 | 0 / 0 | `sha256:d45b588fa94c70d6a039f4eb89f14df5775ae1738934c86b33b93e2940464eed` | `2c2720b6c46b1860ea7916ee590379acd4f02c5c542230f8b91ed2e86330b637` |
+
+| 38 | 32.13 / table row | [329946,329959) | 6273–6273 | 0 / 0 | `sha256:a50c00cf3946f0523f5d8b916406b25fe0cd4a1cb6a495ab842cfb08e0576faf` | `113258b39839011fc6c3551bbdb9d5fadda68d6a7b963a679edac38d4e26ab6b` |
+
+| 39 | 32.13 / table row | [329961,330018) | 6274–6274 | 0 / 0 | `sha256:df6550cf9f2398b1173c45ce1d2b03407561491f8fab4296fa8b6cd9d9f5c0ef` | `0f257f9280a547b7802a91f9a72d07a59665ecebbcef27bfe77a7079ce01b8fb` |
+
+| 40 | 32.14 / unit/head | [330208,330476) | 6280–6283 | 4 / 1 | `sha256:01e61aee85549b1df36e0119c10e1f6305b9fdb0e5e50be62859dd7e18c7ce4d` | `29e055c625e88509b80116892aaa93d1a388bb459991b61301842da67fe4cd9c` |
+
+| 41 | 32.14 / table row | [330476,330583) | 6284–6284 | 0 / 0 | `sha256:eb8e8ff664256ff0cc6dcd3671557cea4ba762b32fd46a498cb33eb6d63149f7` | `3e197de98b8c441a0ac1e1430dc92efebcb8f74eb2ce046e508a398fab595929` |
+
+| 42 | 32.14 / table row | [330585,330692) | 6285–6285 | 0 / 0 | `sha256:47015a272b045eb0281e555492115edd4c1bf5e32c14dde277e624c820c2abce` | `331ce8523123c06de0fc331771a4e235255c1dfdde8240347bff4cbff3c48d26` |
+
+| 43 | 32.15 / unit/head | [331408,331889) | 6304–6310 | 7 / 1 | `sha256:2b4c02c06144ba1acf56a23936ca14876b9530ea69d43db3ccc99bb8953df956` | `3bded5dba7509647de550e40f7fd9d486238a0856add0205c7b3d305f235eef7` |
+
+| 44 | 32.15 / table row | [331889,331983) | 6311–6311 | 0 / 0 | `sha256:8c0f1c1360e746bb191856570ea96923ac97bc1564ac555d9066c64e72319c82` | `f53eb9eb862aae936a8ca4bd8bf964aeb5d894a9ec2e365403e931f7bd04cf22` |
+
+| 45 | 32.15 / table row | [331985,332077) | 6312–6312 | 0 / 0 | `sha256:42f5d91960995b17a9049a75fc5b07cb5e3903a8d3414309ab9d7f1d9bce9a85` | `369bec994f6ae8f68aa8a4c5d79a82df5ed3129950f2c3594ad97280378fdda3` |
+
+| 46 | 32.15 / table row | [332079,332171) | 6313–6313 | 0 / 0 | `sha256:4bd965f152318e673854917aa9a53312cb026ff441b827ca313ab386330b08b5` | `99315e6f9574bd2b5e4e7c2fd9bb210211cb023168036c6a7cf06221e2f079e9` |
+
+| 47 | 32.15 / table row | [332173,332265) | 6314–6314 | 0 / 0 | `sha256:f9ca15f38e1c863bd691fee53774eb8fb4da56eb5350d4b2a45237367141fa5a` | `31d73d1b56a2728f1f94871ec3320c34f88d3b669f23a59b6252c1ecb73c6b00` |
+
+| 48 | 32.15 / table row | [332267,332359) | 6315–6315 | 0 / 0 | `sha256:3215d2768beb6710fca5b221285a27e140fc364dc26053cde12bf0c914358255` | `59e2afecea983a47cecfa869e0ed84c9d214fba63dab992a83a56d17eced16c6` |
+
+| 49 | 32.15 / table row | [332361,332453) | 6316–6316 | 0 / 0 | `sha256:0edeb29acbbeee54c4ba248b302c800b91abbfb635eed06bf9a9ff3b77d860a2` | `602628284ae6cc38bc18b6f87c409c14e53c1229a55a64ae26ac170949289080` |
+
+| 50 | 32.15 / table row | [332455,332547) | 6317–6317 | 0 / 0 | `sha256:7e8ea34e0dbf94e984f65610fdd650b309f1a8b4a32971dd17cc09b7fd4ffd46` | `5ee52777d044f2ef10ea329ec1668e41c4dd4d47604ff424feec0efe3b538703` |
+
+| 51 | 32.15 / table row | [332549,332641) | 6318–6318 | 0 / 0 | `sha256:815250d050a520815c406b9eb6faddc38b4962e21179452f94efe5da74517f1c` | `9d492685f4ae40ce956fccaeb5cd95a24e0d4910cd3aa6fb5e85481ef3330732` |
+
+| 52 | 32.15 / table row | [332643,332733) | 6319–6319 | 0 / 0 | `sha256:b2a648b5ecead5f43a565d2650ae04de4c64c3afc5396eb613f9e28048abd22c` | `bd430597c22514e2c923e34fee7b37f4708b028cd46981d8bb0be0e6cfd86a3e` |
+
+| 53 | 32.15 / table row | [332735,332828) | 6320–6320 | 0 / 0 | `sha256:fe68b15039cc9901262b44c5a22b6bec3647c27671607568df8a1840392bf682` | `453f00c78e93e4706369b68a0db9d107dc3cfb21a452ae022c5a7efd911ddd49` |
+
+| 54 | 32.15 / table row | [332830,332923) | 6321–6321 | 0 / 0 | `sha256:9b4bc9f73af1c3322539aa967689ee148c4c435bb1a489f837dca7b82843e129` | `778dcc4a991d0af89cba3e3a9408dc07c3261c5963724958b67d6ac8a3b0a5dc` |
+
+| 55 | 32.15 / table row | [332925,333018) | 6322–6322 | 0 / 0 | `sha256:9fc0199306f46b9f17984da4b460bb43a6e0d23de53be0f20332e9df078b47eb` | `fcccfdffba584aa5b4ebcb74f17c692ddc9c2748713cbc2060c8cd8975b624b5` |
+
+| 56 | 32.15 / table row | [333020,333113) | 6323–6323 | 0 / 0 | `sha256:deb8fcda5f9e82e26d4378937adef029805d5dfbf655fe28cba8f6f1bc5f03f3` | `5f8afcb4411d7e352ee0b4b31163f49ed5e47d1d46353cac7fa6d80904d79e46` |
+
+| 57 | 32.15 / table row | [333115,333208) | 6324–6324 | 0 / 0 | `sha256:ab781bf5011ef1b8c309b7cd2039008b8c2be705763a8588682380b4621912c9` | `1334996fba2b831e05ea0c98c8e00823cb89a64d3443b8315ffc08f65f0b203d` |
+
+| 58 | 32.15 / table row | [333210,333303) | 6325–6325 | 0 / 0 | `sha256:1f5a16b5d2184f367c6746951e4ed434693d8b70a59c22012c29b8dd757c9405` | `659ad1c371fc7318d3b06caff0eb00a4144534c66eb677794f253260f8af0fe2` |
+
+| 59 | 32.15 / table row | [333305,333398) | 6326–6326 | 0 / 0 | `sha256:7c8f235bb7de9a50d60d9ae3a90d499dc6dfc42830508d37c5c3e82afaa20c4f` | `6638b0071168d5905f00d97c4c87bd63875b881e0578fee06076cb4325768b2c` |
+
+| 60 | 32.16 / unit/head | [333682,335097) | 6333–6369 | 37 / 2 | `sha256:6b9de42b2b39e8047434fd00688dde1c2ec1b686815d8390138e08ea9d2b4f1f` | `43f043a0cae41a31b73e10515db217a8c61dca0f14cd6b534dc28e8fe8a4b0f2` |
+
+| 61 | 32.17 / unit/head | [335097,336122) | 6370–6389 | 20 / 2 | `sha256:b494ca333580108b2deb6550e7123a7e08226df26dde679a3aabf52ac6d48df4` | `c782d591c87cc9220c7beba2551f6e7f573f3500444ba9a8e86db8c81679897e` |
+
+| 62 | 32.18 / unit/head | [336122,337486) | 6390–6415 | 26 / 2 | `sha256:6f781365c3476b18072106757c1a1a873972e8de0c5fed7b1aae92f150140ac1` | `3c436f9e88edccc7bb53aed4e16fc7073428f20e430cf1a3b4c60ac998686c93` |
+
+| 63 | 32.19 / unit/head | [337486,339141) | 6416–6436 | 21 / 2 | `sha256:998b44b7a9dd7706d0d2b3b3d2c3cc3ad984ea49260563741f5082a5fcbb872f` | `d17f1439a835b73dc9675fd846acd02e735841dd6ff918f6d73f620a14f141b4` |
+
+| 64 | 32.20 / unit/head | [339141,341076) | 6437–6458 | 22 / 2 | `sha256:3ac23b4b613f6b57cc186bea84165e3aaa9f1b80ccd97d61467732d3c48f92c5` | `8e2eefec935a47381d9edfb1ae1122bd2712edc1eb312040f639aed90069cbca` |
+
+| 65 | 32.21 / unit/head | [341076,343432) | 6459–6488 | 30 / 1 | `sha256:9ee4f78f7fd25b90c4b6fbf4af060e9c82cbf7ba12d1184d6e14e01c3fff3e1c` | `5637a58624730d078318732b9adfc5e84cc91937609fcff29754e06d8058d806` |
+
+
+## Entire numbered-unit spans and ordered concatenations
+
+The full-unit fingerprint below hashes every source byte from the bold numbered lead to the next numbered lead (or source EOF), including tables and following prose. For incomplete units it is an expected source fingerprint, **not an emitted cas_ref**. No parent chain is claimed. The later ordered lists contain bare emitted atom IDs, exactly in source order; comparing their raw-byte concatenation with each complete unit passes for 16 units and fails for the five indicated units.
+
+| Unit | Entire byte span | Lines | Bytes / LF | Full-unit fingerprint | Concatenation | Missing bytes |
+| --- | --- | --- | --- | --- | --- | --- |
+
+| 32.1 | [316793,317790) | 5978–5992 | 997 / 15 | `sha256:577e0ea00b7c003c4a85f9277519129736ba52988fb506df6640363bf72baee2` | equal | 0 |
+
+| 32.2 | [317790,318804) | 5993–6011 | 1014 / 19 | `sha256:bb70f0b6709196af0ae33eb4e256cf09bcae4df5491f77162a7ef3036639561d` | equal | 0 |
+
+| 32.3 | [318804,320501) | 6012–6057 | 1697 / 46 | `sha256:87b286a5f6a8ed6bee5813aa739978e038ecc4562038a0e2f9f02cc4cb5442ab` | FAILED | 770 |
+
+| 32.4 | [320501,321600) | 6058–6085 | 1099 / 28 | `sha256:67a340ef888de9e231fd65ab279997a59d5215a482a77f2ca115aa6bab25eabe` | equal | 0 |
+
+| 32.5 | [321600,322269) | 6086–6100 | 669 / 15 | `sha256:dc7e472bfd09c2e5ad8ca57c353fd501607d33b6160e91c1f84632b58c73852b` | equal | 0 |
+
+| 32.6 | [322269,322863) | 6101–6113 | 594 / 13 | `sha256:b812d431e527f840da3c065dcc99703aacf85c8e84c50f0943bafa95f2ebedcd` | equal | 0 |
+
+| 32.7 | [322863,323543) | 6114–6131 | 680 / 18 | `sha256:f8d7841cfb8821ec298729281b73bbb21e7a8290667efa94a2da8acb8bb08dc1` | FAILED | 182 |
+
+| 32.8 | [323543,325212) | 6132–6165 | 1669 / 34 | `sha256:bfabe3fcb9e5e69459e48e7d26c86be755f98cea19edff3688d6779771d575c1` | equal | 0 |
+
+| 32.9 | [325212,325804) | 6166–6176 | 592 / 11 | `sha256:edc7df17929ebaa65f2378f7723066c9580cd6569bb6eb9a800408e47b96dd86` | equal | 0 |
+
+| 32.10 | [325804,326549) | 6177–6193 | 745 / 17 | `sha256:e2dddcccb5498bba7dfcd8bf7e660b29f7280ac0c9d9a3815809032a12e48cbf` | equal | 0 |
+
+| 32.11 | [326549,327761) | 6194–6221 | 1212 / 28 | `sha256:d5e64f4c4a5b37d1666829475dbd2c6b834970ec90fea63418575ab70d02af82` | equal | 0 |
+
+| 32.12 | [327761,328689) | 6222–6239 | 928 / 18 | `sha256:5145aee91880772394bb9153a65de8e534ccfcab3d4500ab62bf9aa74655aa82` | equal | 0 |
+
+| 32.13 | [328689,330208) | 6240–6279 | 1519 / 40 | `sha256:81c716399c07eb0195a5da9dbe49719c9471887fd034ec93abe64c1e58837814` | FAILED | 198 |
+
+| 32.14 | [330208,331408) | 6280–6303 | 1200 / 24 | `sha256:c290e2cda39466a2ce59c49cea6bbcc9026de0fc06b233b1f8dfaa791cb0a97d` | FAILED | 718 |
+
+| 32.15 | [331408,333682) | 6304–6332 | 2274 / 29 | `sha256:2cb44c2ecdb788d954e0696ca7e8073c53e491d9102bbbda3ef0b81220f6d0fc` | FAILED | 314 |
+
+| 32.16 | [333682,335097) | 6333–6369 | 1415 / 37 | `sha256:6b9de42b2b39e8047434fd00688dde1c2ec1b686815d8390138e08ea9d2b4f1f` | equal | 0 |
+
+| 32.17 | [335097,336122) | 6370–6389 | 1025 / 20 | `sha256:b494ca333580108b2deb6550e7123a7e08226df26dde679a3aabf52ac6d48df4` | equal | 0 |
+
+| 32.18 | [336122,337486) | 6390–6415 | 1364 / 26 | `sha256:6f781365c3476b18072106757c1a1a873972e8de0c5fed7b1aae92f150140ac1` | equal | 0 |
+
+| 32.19 | [337486,339141) | 6416–6436 | 1655 / 21 | `sha256:998b44b7a9dd7706d0d2b3b3d2c3cc3ad984ea49260563741f5082a5fcbb872f` | equal | 0 |
+
+| 32.20 | [339141,341076) | 6437–6458 | 1935 / 22 | `sha256:3ac23b4b613f6b57cc186bea84165e3aaa9f1b80ccd97d61467732d3c48f92c5` | equal | 0 |
+
+| 32.21 | [341076,343432) | 6459–6488 | 2356 / 30 | `sha256:9ee4f78f7fd25b90c4b6fbf4af060e9c82cbf7ba12d1184d6e14e01c3fff3e1c` | equal | 0 |
+
+
+Ordered emitted atom IDs per numbered unit (these are not fabricated chain children):
+
+```json
+{
+  "32.1": [
+    "577e0ea00b7c003c4a85f9277519129736ba52988fb506df6640363bf72baee2"
+  ],
+  "32.2": [
+    "bb70f0b6709196af0ae33eb4e256cf09bcae4df5491f77162a7ef3036639561d"
+  ],
+  "32.3": [
+    "a9b72f60803002eff46174c36fb81e6940d2328859ae63ecf5d78d32a1e0bdfa",
+    "7e55ae8cc41b40b93b9131f14a3742485b253adaf1293b105564be53323e52bb",
+    "a2b2849f37cf52da104f5b58fe3236e4fb8d88f93c3a05d76ccb8aca0cdf5390",
+    "760235d950de6dd8c39c6dd25d0912fb4afb0d2f75244a8734d9935e644babf4",
+    "ba45b796d57e465a3a1da2d8f2fce55bd4907a1641e40a30e71744b2c1b39078",
+    "740e47a7104d88dd907af0fcd6ec4ad204111113492ebdde8b49189cef9ba8f9",
+    "d24087583467f7500ed53fe28cfe2f4e4aae98a687683b8fbabfa099a74950e6",
+    "6b1c61d35af4bdcc2732a53a0aaa1965e59f6844d042e6198674ee0892bc268a",
+    "e4953539a0d59ac7bae8a3227240b9b4dd2fdd30576be9cba516a58645d56401",
+    "53b3b4f40651218ae280a983a76fab06c35912c7e6a85f1bc323ad8931cf86f8",
+    "62fe2f2deaeb7b78d6d306710ed8830d9b313a27aad55a963f9504a9ee463b96",
+    "5deaed73fb39f91993b52d47b33fb3ad114a53a6f165e140378ad610f3a939c9",
+    "706b18955e70dd2b28628a67e9609f5166150d3ed3e3f0c84ce3fef12fa5bb73",
+    "72b7243b07434ab6f5c790b9fc53c0ba474649957b54b77abe3c31c1e6857840",
+    "dd131b4e1db3a0022c8f4b52f2b620dd2043592bd2cc00c6648db2d12dfda095",
+    "9fe7ba3b8c5dd596cd5b661040a32626aa1763136f377d15518df8c1b2d8f351",
+    "6e0da5c1242f0ce1d310500323a2243b1e39d1258ed9a4da2b4c3a2953f5bf75"
+  ],
+  "32.4": [
+    "67a340ef888de9e231fd65ab279997a59d5215a482a77f2ca115aa6bab25eabe"
+  ],
+  "32.5": [
+    "dc7e472bfd09c2e5ad8ca57c353fd501607d33b6160e91c1f84632b58c73852b"
+  ],
+  "32.6": [
+    "b812d431e527f840da3c065dcc99703aacf85c8e84c50f0943bafa95f2ebedcd"
+  ],
+  "32.7": [
+    "9041c9e77ca1aca2c455d95519fa5a381f2622af593ebdff2270cc6a6783c98b",
+    "ef2ae0bce82fc2c30470ba93ed1cb2fe90a531ebd79d6456a091b0379269c0ba",
+    "15e66db0a5fbc6c50026db8014f5e12800b249961a1284bfb17438e2bfc7aafd",
+    "53ff4a3e9f1d7f4e673e0119e934961ae9a086e8f5db97aae2ce2c9586fdc01b",
+    "33b69d53ba97adbc5a181d8008c626d6a39a9368dd800fd95e001f7901f3b0b4"
+  ],
+  "32.8": [
+    "bfabe3fcb9e5e69459e48e7d26c86be755f98cea19edff3688d6779771d575c1"
+  ],
+  "32.9": [
+    "edc7df17929ebaa65f2378f7723066c9580cd6569bb6eb9a800408e47b96dd86"
+  ],
+  "32.10": [
+    "e2dddcccb5498bba7dfcd8bf7e660b29f7280ac0c9d9a3815809032a12e48cbf"
+  ],
+  "32.11": [
+    "d5e64f4c4a5b37d1666829475dbd2c6b834970ec90fea63418575ab70d02af82"
+  ],
+  "32.12": [
+    "5145aee91880772394bb9153a65de8e534ccfcab3d4500ab62bf9aa74655aa82"
+  ],
+  "32.13": [
+    "d9febb64631bf43aadc83ab5bdfe774d0eb4559a8aeb4ba458ac72689f039519",
+    "8632ed68e0330e692df73bb26f3683422284b2f14e674b7fd826d4be917809d7",
+    "d8d63c24d67c3b97446285ecb92f0060cd168204cbd3643a213943ad7adff0e0",
+    "d45b588fa94c70d6a039f4eb89f14df5775ae1738934c86b33b93e2940464eed",
+    "a50c00cf3946f0523f5d8b916406b25fe0cd4a1cb6a495ab842cfb08e0576faf",
+    "df6550cf9f2398b1173c45ce1d2b03407561491f8fab4296fa8b6cd9d9f5c0ef"
+  ],
+  "32.14": [
+    "01e61aee85549b1df36e0119c10e1f6305b9fdb0e5e50be62859dd7e18c7ce4d",
+    "eb8e8ff664256ff0cc6dcd3671557cea4ba762b32fd46a498cb33eb6d63149f7",
+    "47015a272b045eb0281e555492115edd4c1bf5e32c14dde277e624c820c2abce"
+  ],
+  "32.15": [
+    "2b4c02c06144ba1acf56a23936ca14876b9530ea69d43db3ccc99bb8953df956",
+    "8c0f1c1360e746bb191856570ea96923ac97bc1564ac555d9066c64e72319c82",
+    "42f5d91960995b17a9049a75fc5b07cb5e3903a8d3414309ab9d7f1d9bce9a85",
+    "4bd965f152318e673854917aa9a53312cb026ff441b827ca313ab386330b08b5",
+    "f9ca15f38e1c863bd691fee53774eb8fb4da56eb5350d4b2a45237367141fa5a",
+    "3215d2768beb6710fca5b221285a27e140fc364dc26053cde12bf0c914358255",
+    "0edeb29acbbeee54c4ba248b302c800b91abbfb635eed06bf9a9ff3b77d860a2",
+    "7e8ea34e0dbf94e984f65610fdd650b309f1a8b4a32971dd17cc09b7fd4ffd46",
+    "815250d050a520815c406b9eb6faddc38b4962e21179452f94efe5da74517f1c",
+    "b2a648b5ecead5f43a565d2650ae04de4c64c3afc5396eb613f9e28048abd22c",
+    "fe68b15039cc9901262b44c5a22b6bec3647c27671607568df8a1840392bf682",
+    "9b4bc9f73af1c3322539aa967689ee148c4c435bb1a489f837dca7b82843e129",
+    "9fc0199306f46b9f17984da4b460bb43a6e0d23de53be0f20332e9df078b47eb",
+    "deb8fcda5f9e82e26d4378937adef029805d5dfbf655fe28cba8f6f1bc5f03f3",
+    "ab781bf5011ef1b8c309b7cd2039008b8c2be705763a8588682380b4621912c9",
+    "1f5a16b5d2184f367c6746951e4ed434693d8b70a59c22012c29b8dd757c9405",
+    "7c8f235bb7de9a50d60d9ae3a90d499dc6dfc42830508d37c5c3e82afaa20c4f"
+  ],
+  "32.16": [
+    "6b9de42b2b39e8047434fd00688dde1c2ec1b686815d8390138e08ea9d2b4f1f"
+  ],
+  "32.17": [
+    "b494ca333580108b2deb6550e7123a7e08226df26dde679a3aabf52ac6d48df4"
+  ],
+  "32.18": [
+    "6f781365c3476b18072106757c1a1a873972e8de0c5fed7b1aae92f150140ac1"
+  ],
+  "32.19": [
+    "998b44b7a9dd7706d0d2b3b3d2c3cc3ad984ea49260563741f5082a5fcbb872f"
+  ],
+  "32.20": [
+    "3ac23b4b613f6b57cc186bea84165e3aaa9f1b80ccd97d61467732d3c48f92c5"
+  ],
+  "32.21": [
+    "9ee4f78f7fd25b90c4b6fbf4af060e9c82cbf7ba12d1184d6e14e01c3fff3e1c"
+  ]
+}
+```
+
+Every uncovered span is listed below. The small 2-byte gaps are the literal final pipe and LF of independent table rows. The longer terminal gaps contain the final row separator and the full following prose. None is discarded as a merely structural heading.
+
+| Unit | Missing byte span | Lines | Bytes / LF | Missing-span SHA256 |
+| --- | --- | --- | --- | --- |
+
+| 32.3 | [319399,319401) | 6029–6029 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.3 | [319421,319423) | 6030–6030 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.3 | [319443,319445) | 6031–6031 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.3 | [319465,319467) | 6032–6032 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.3 | [319487,319489) | 6033–6033 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.3 | [319509,319511) | 6034–6034 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.3 | [319532,319534) | 6035–6035 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.3 | [319555,319557) | 6036–6036 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.3 | [319578,319580) | 6037–6037 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.3 | [319603,319605) | 6038–6038 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.3 | [319628,319630) | 6039–6039 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.3 | [319654,319656) | 6040–6040 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.3 | [319680,319682) | 6041–6041 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.3 | [319706,319708) | 6042–6042 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.3 | [319733,319735) | 6043–6043 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.3 | [319761,320501) | 6044–6057 | 740 / 14 | `1dcb88e62b591605d1d203b263a23c59fb3977c329a0131aa82b1f5ea524e3e8` |
+
+| 32.7 | [323267,323269) | 6124–6124 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.7 | [323301,323303) | 6125–6125 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.7 | [323335,323337) | 6126–6126 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.7 | [323367,323543) | 6127–6131 | 176 / 5 | `57bcbf65a872d21dbb3ac50e41082f0811a3e7728ad10d317fe7ae8f9ac2e602` |
+
+| 32.13 | [329829,329831) | 6270–6270 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.13 | [329846,329848) | 6271–6271 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.13 | [329944,329946) | 6272–6272 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.13 | [329959,329961) | 6273–6273 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.13 | [330018,330208) | 6274–6279 | 190 / 6 | `55762e36a7f4550076c8ef6cb794105f096f3bbce6a73ddbc8b3a80d8c110d2b` |
+
+| 32.14 | [330583,330585) | 6284–6284 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.14 | [330692,331408) | 6285–6303 | 716 / 19 | `f5b77ac0debbecdbf3f8c5cb3b0b9d0151cd0f7dea9bba0607f75f8ea442d7ce` |
+
+| 32.15 | [331983,331985) | 6311–6311 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.15 | [332077,332079) | 6312–6312 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.15 | [332171,332173) | 6313–6313 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.15 | [332265,332267) | 6314–6314 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.15 | [332359,332361) | 6315–6315 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.15 | [332453,332455) | 6316–6316 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.15 | [332547,332549) | 6317–6317 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.15 | [332641,332643) | 6318–6318 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.15 | [332733,332735) | 6319–6319 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.15 | [332828,332830) | 6320–6320 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.15 | [332923,332925) | 6321–6321 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.15 | [333018,333020) | 6322–6322 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.15 | [333113,333115) | 6323–6323 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.15 | [333208,333210) | 6324–6324 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.15 | [333303,333305) | 6325–6325 | 2 / 1 | `9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1` |
+
+| 32.15 | [333398,333682) | 6326–6332 | 284 / 7 | `f8e9f5c591b44f2309572582437e8222f7bbc282b78d5589e3836b47ddbd6619` |
+
+
+The section-32 structural preamble occupies [316724,316793) (lines 5975–5977, 69 bytes / 3 LF, SHA256 `504c7cdafc0dff6a1c40cd394bf47b09f003cf66bba95443bfa30ba098ec48a6`). Its first LF is also the actual terminal byte of the historical variant; no source byte was removed or rewritten. Structural-heading atom coverage is not required.
+
+
+## Historical terminal-LF variant and byte preservation
+
+The producer emitted `sha256:b66d29c438734b309c1416fbdc0c350fcd50c315b67d697c9d9dc3fbf2f5019e` for unit 31.22, source bytes [314718,316725), lines 5950–5975: 2,007 bytes / 26 LF, ending in two LF bytes. It is exactly the preserved historical CAS `sha256:eae7985cf6b6ca0ed4b57eca118b4b48b116ff73442ea4cf699dec0cea6ff3c9` (2,006 bytes / 25 LF, ending in one LF) plus one LF introduced at the append boundary. The old CAS and YAML remain present and unchanged; old YAML SHA256 is `9d992fdcaed68fbacab613efa1445690d111c8181699df8cded036703a180da3`. This new variant is retained exactly, with no EOF normalization.
+
+The complete predecessor source was compared directly with `BASE` and remains byte-identical. A separate complete-byte Git-blob comparison against the immutable BASE tree checked 64,190 historical files: 32,040 CAS files, 32,083 other Digestion files, and 67 reports. No historical path changed. Its path/byte/SHA256/Git-object inventory has 23812851 bytes and SHA256 `54e63139fb30fc90f6090d8073143039927d2085de33d9728cad196bce6fb269` and is returned as a worker artifact. This is preservation verification, not a historical mathematical calculation replay.
+
+The complete changed-file set is the source path above, this report path, and exactly the 130 generated paths expanded from the binding table. No other tracked file changed; the index is empty of changes. The final worker envelope supplies the final source/report identities and every changed path with byte/LF/SHA256 fields, so the report does not attempt to embed its own complete-file hash.
+
+## Execution limitations and remaining handoff
+
+The original primary DisabledError, absent original executable/interpreter/stderr evidence, pinned-documentation HTTP 403, missing pdftotext and limited HKUST glyph extraction remain recorded above. During inventory inspection, a lowercase `metadata` directory lookup failed because the canonical directory is `Meta/Digestion`; inspection then used the actual emitted paths. An initial gap-preview display split a UTF-8 character and raised UnicodeDecodeError; decoding the complete byte slice before shortening the display resolved that read-only diagnostic. Neither attempt changed source, canonical data, input programs or mathematical results. Earlier overlong read output was retrieved in smaller targeted spans. The adapted certificate was executed exactly once, and the canonical command exactly once.
+
+The tracked-source `git diff --check` exited 0 with empty stdout and stderr. A separate read-only `git diff --no-index --check` against `/dev/null` covered all 131 new paths, including the report: 72 returned the expected difference-only exit 1 with no whitespace findings; 59 generated CAS files returned exit 3 with diagnostics (43 row atoms have trailing whitespace and 16 other CAS objects have a new blank line at EOF). Source and report have no whitespace findings. These are actual producer bytes and were not normalized. The initial diagnostic classifier stopped on the first expected exit 1 with empty output; accepting that difference-only status resolved the checker, without rerunning ingestion or mathematical verification.
+
+The source-formatting proposal is not applied. Resolving the five incomplete bindings needs an explicitly authorized follow-up; current coverage is not described as successful delivery. Caller still owns sealing, public byte verification, independent review, ordinary repository gates and final S21 delivery after S20 MERGED. No lifecycle condition was queried or marked complete. GH remains the literal user label; this fixed T=0 upper-bound comparison is not a translated-family theorem, Robin/RH result, novelty/priority claim or Lean freeze.
+
+<!-- END ACTUAL CANONICAL INVENTORY -->
+<!-- END HISTORICAL I16 REPORT -->
+
+</details>
+
+## C69 / I23 placement repair and current bindings (2026-09-10)
+
+This note records the own S21 report relocation by the sole Codex CLI I23 worker,
+flight `qgh0910-i23-s21-own-report-placement`, attempt 1 / retry budget 1,
+under caller-pinned `consensus-rnd:sshx` 1.0.0-beta.42 and
+`CODEX_WORKER_SPEC.md`; prior context is repo-prior-exposed. The exact clean
+starting HEAD and ingestion BASE were
+`18b4ca2e2f282187c7036b78da9455c2e940b43b`, on
+`lane/math/quantized-gh-actual-5040-fixed-0910` in the worktree named above.
+No additional worker, oracle, review or termination seat was launched.
+
+The report now occupies
+`docs/reports/quantized-gh/actual-5040-fixed-box-0910.md`.
+Its sole live source destination is in **32.19**, original/current line 6440.
+The sole active report backlink remains at original/current line 150, inside
+the displayed historical I16 body. Both current relative Markdown links resolve.
+Only `quantized-gh/` (13 bytes) was inserted in the source destination, and
+only `../` (3 bytes) was inserted before the original report backlink.
+Inherited S19/S20 report addresses and all their source bytes are unchanged.
+
+The caller's allowed intake records 48 direct report blobs at measured dev
+`45ca4ae3b012cb1f59ff74a84e845691a3f0c99c`, with this own report projecting a
+49th against the recorded admission limit 48. That is previous-stage caller
+evidence; I23 did not query current dev or run an integration/CI gate. In this
+exact target, direct report files decreased from 36 to 35. This own report now
+contributes zero direct files to the caller's eventual integrated candidate.
+
+### Narrow navigation exception and exact historical recovery
+
+C69 explicitly permits the three-byte backlink insertion within the historical
+display. All earlier statements headed “current”, the old C48 binding table,
+all source/report/prefix/hash claims, all provenance and verification statements,
+the “preserved verbatim” summary, and the claim that the original I16 report is
+one contiguous byte sequence retain their **historical snapshot meaning**.
+The C48 statements describe the sealed C48 snapshot at the starting HEAD; the
+I16 statements and source 32.21 describe the first I16 return. Their old paths,
+commands, line/byte coordinates, ingest counts, failures and delivery status
+are historical records, not assertions about this new placement. In particular,
+the old C48 “current” 32.19 ID is historical after this address change. The
+updated whole-unit table below gives the current binding. Earlier immutable
+claims are not rewritten or silently made into claims of literal equality for
+the current displayed body with its authorized navigation insertion.
+
+The immutable originals remain available in the
+[BASE source](https://github.com/the-omega-institute/trureturing/blob/18b4ca2e2f282187c7036b78da9455c2e940b43b/docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md)
+and [BASE report](https://github.com/the-omega-institute/trureturing/blob/18b4ca2e2f282187c7036b78da9455c2e940b43b/docs/reports/actual-5040-fixed-box-0910.md),
+and in the caller's allowed source/report snapshots. I23 compared the local Git
+blob bytes and supplied snapshots directly; these URLs were not fetched anew.
+Recovery uses zero-based half-open UTF-8 byte offsets, with no trimming:
+
+- For the current source `s`, remove exactly `s[338672:338685]`, which equals
+  `b'quantized-gh/'`: `s[:338672] + s[338685:]` recovers all 343492 original bytes,
+  6498 LF, SHA256 `65f8ebe49381039838524752d4e3c19e4db13bc7046d74030f1acc9bb0f8be20`.
+- For the moved report `r`, first take `h = r[:78315]` to exclude this appended
+  note, then remove exactly `h[11717:11720]`, which equals `b'../'`:
+  `h[:11717] + h[11720:]` recovers all 78312 original bytes, 1088 LF, SHA256
+  `2a2c09a38094235089b50ef23a7411ac018c4e7e11ffed9c34d240d83b834592`.
+  This prefix before recovery is 78315 bytes, SHA256
+  `a24e1431750f1bd73d40195ed275f2d9eaea70fb30e4b8b1ac9b52f3cff93772`.
+- The original I16 body occupied report bytes `[10289,78265)`. Its current
+  display occupies `[10289,78268)`; remove only the same insertion at body
+  offset 1428 to recover 67976 bytes / 956 LF, SHA256
+  `290a0a99d77f1030d37c91e7be1f1341dd367c996b3b20e8cbbc2ae84004acb6`.
+
+Every original byte outside these two named insertions is retained. In
+particular, all eight historical fenced payloads compare exactly, including
+the 10595-byte / 205-LF executable certificate with SHA256
+`b8a5972435d74afd0c843057bd6471736db3b7303ddb45a51381bb95d70f0602`;
+the existing JSON fence still parses. Raw-primary records, embedded result
+bytes, stdout/stderr provenance, literal tables and their hashes are unchanged.
+The 71 raw / 16 active / 55 inactive classification, 277 fixed assertions,
+2182-byte first-run coverage failure and C48 five-pair repair retain exactly
+their recorded mathematical and execution scope. No historical result, raw
+envelope or inert log pointer was opened as a separate input or replayed.
+For current certificate extraction, use the new report path above in the
+unchanged marker-based recipe under “Standalone certificate”; the printed old
+path and `uv run` command remain I16's execution receipt. I23 compared the
+selected bytes in memory and did not execute or write out the certificate.
+
+### Single current ingestion and complete span accounting
+
+The finished source is 343505 bytes / 6498 LF, SHA256
+`6b7b3212af93662b5bba9d9e312e72d05a9cee516a78152d42ab65256b54ed42`.
+Its entire 316724-byte predecessor prefix remains exact, SHA256
+`9229e2affc81243efcdcbd228058d8ca19cea395630a94ae943afde374157dd2`.
+The current suffix is 26781 bytes / 524 LF, SHA256
+`49f6721c360950dcc8f6a9059432ceb16aaea46e529a0c91e6b267424cca0bf8`.
+Exactly one C69 invocation ran after the source insertion:
+
+```sh
+make ingest BASE=18b4ca2e2f282187c7036b78da9455c2e940b43b SOURCE=arithmetic-boundary-quantization
+```
+
+It exited 0, started at `2026-09-10T05:04:27.765733+00:00` and ended at
+`2026-09-10T05:04:42.141403+00:00`. Its measured counters are
+`residual_open_added=1`, `skipped_existing=290`, `coarse_fallbacks=0`,
+`open_genres=0`, `cas_objects_written=1`, `ledger_changed=true`.
+Stdout was 125 bytes, SHA256
+`9efd2027d47989f51871f754507d408657bd741b53d3c6ce9eea5f15c9725b74`;
+stderr was empty. This invocation is separate from the two recorded historical
+I16/C48 ingests. No second C69 ingest or manual canonical repair occurred.
+
+All 70 original CAS/YAML pairs (65 first-run pairs plus five C48 repair pairs)
+match both exact BASE Git blobs and the supplied manifest byte for byte. The
+one emitted pair binds the entire new 32.19 span: 1668 bytes / 21 LF, with two
+terminal LF bytes, ID
+`4b4515e76802e91f956ec04e63de2785119548fe214b27da72bcc064c5cc476d`.
+Its YAML is 328 bytes / 7 LF, SHA256
+`72d4577487cd229123b3696ca014dc7cf1421828ba620f3d29effc1473854fd0`.
+The old 32.19 ID `998b44b7a9dd7706d0d2b3b3d2c3cc3ad984ea49260563741f5082a5fcbb872f`
+and its YAML remain unchanged historical evidence. This accounts for every
+newly emitted pair; there are 71 cumulative S21 pairs. No new child, parent
+chain or inherited terminal-LF variant was emitted. Both old 31.22 LF variants,
+the first-run partial/table atoms, and all other historical canonical files
+remain intact. No existing canonical or earlier-report path changed.
+
+Every row below equals its complete CAS blob from the bold numbered lead to
+the next lead, or EOF for 32.21, including all trailing whitespace. Bare ID
+`X` expands to `Meta/Digestion/atoms/sha256/X` and
+`Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/X.yaml`.
+Each YAML has raw/normalized fingerprints and `cas_ref` equal to `sha256:X`,
+empty `coverage_gids` and `receipts.unresolved_subitems`; its ordered atom list
+is `[X]`, with no children. All 21 whole-unit comparisons passed: zero gaps,
+zero uncovered bytes. Only 32.19 has a new ID; later offsets shift by 13 bytes.
+
+| Unit | Current byte span | Lines | Bytes / LF / terminal LF | Whole-unit ID |
+| --- | --- | --- | --- | --- |
+| 32.1 | [316793,317790) | 5978-5992 | 997 / 15 / 2 | `577e0ea00b7c003c4a85f9277519129736ba52988fb506df6640363bf72baee2` |
+| 32.2 | [317790,318804) | 5993-6011 | 1014 / 19 / 2 | `bb70f0b6709196af0ae33eb4e256cf09bcae4df5491f77162a7ef3036639561d` |
+| 32.3 | [318804,320513) | 6012-6059 | 1709 / 48 / 2 | `af2714fed461cdcaf2da2725959e5001e1614a17dc6d10b4ab33ae5729bc32e0` |
+| 32.4 | [320513,321612) | 6060-6087 | 1099 / 28 / 2 | `67a340ef888de9e231fd65ab279997a59d5215a482a77f2ca115aa6bab25eabe` |
+| 32.5 | [321612,322281) | 6088-6102 | 669 / 15 / 2 | `dc7e472bfd09c2e5ad8ca57c353fd501607d33b6160e91c1f84632b58c73852b` |
+| 32.6 | [322281,322875) | 6103-6115 | 594 / 13 / 2 | `b812d431e527f840da3c065dcc99703aacf85c8e84c50f0943bafa95f2ebedcd` |
+| 32.7 | [322875,323567) | 6116-6135 | 692 / 20 / 2 | `6a26e45b7ee03e5f635a6f0a250c9da2d851b616db78b20cb6d22cda2fdde2df` |
+| 32.8 | [323567,325236) | 6136-6169 | 1669 / 34 / 2 | `bfabe3fcb9e5e69459e48e7d26c86be755f98cea19edff3688d6779771d575c1` |
+| 32.9 | [325236,325828) | 6170-6180 | 592 / 11 / 2 | `edc7df17929ebaa65f2378f7723066c9580cd6569bb6eb9a800408e47b96dd86` |
+| 32.10 | [325828,326573) | 6181-6197 | 745 / 17 / 2 | `e2dddcccb5498bba7dfcd8bf7e660b29f7280ac0c9d9a3815809032a12e48cbf` |
+| 32.11 | [326573,327785) | 6198-6225 | 1212 / 28 / 2 | `d5e64f4c4a5b37d1666829475dbd2c6b834970ec90fea63418575ab70d02af82` |
+| 32.12 | [327785,328713) | 6226-6243 | 928 / 18 / 2 | `5145aee91880772394bb9153a65de8e534ccfcab3d4500ab62bf9aa74655aa82` |
+| 32.13 | [328713,330244) | 6244-6285 | 1531 / 42 / 2 | `33a959a8ab03c5d5129b81d23df781014dc5b7ad4ca827a28a098b957d57dbb8` |
+| 32.14 | [330244,331456) | 6286-6311 | 1212 / 26 / 2 | `5a6ef842e39b9ef4700a2f7503c6e0f5a3334b4dd0e935d89691d81a82a0bd58` |
+| 32.15 | [331456,333742) | 6312-6342 | 2286 / 31 / 2 | `c75ebee1711448d758b7599f9e1e76d188879116fe05c22ee5070883da852ad2` |
+| 32.16 | [333742,335157) | 6343-6379 | 1415 / 37 / 2 | `6b9de42b2b39e8047434fd00688dde1c2ec1b686815d8390138e08ea9d2b4f1f` |
+| 32.17 | [335157,336182) | 6380-6399 | 1025 / 20 / 2 | `b494ca333580108b2deb6550e7123a7e08226df26dde679a3aabf52ac6d48df4` |
+| 32.18 | [336182,337546) | 6400-6425 | 1364 / 26 / 2 | `6f781365c3476b18072106757c1a1a873972e8de0c5fed7b1aae92f150140ac1` |
+| 32.19 | [337546,339214) | 6426-6446 | 1668 / 21 / 2 | `4b4515e76802e91f956ec04e63de2785119548fe214b27da72bcc064c5cc476d` |
+| 32.20 | [339214,341149) | 6447-6468 | 1935 / 22 / 2 | `3ac23b4b613f6b57cc186bea84165e3aaa9f1b80ccd97d61467732d3c48f92c5` |
+| 32.21 | [341149,343505) | 6469-6498 | 2356 / 30 / 1 | `9ee4f78f7fd25b90c4b6fbf4af060e9c82cbf7ba12d1184d6e14e01c3fff3e1c` |
+
+### Structural diagnostics and remaining ownership
+
+The tracked delta check `git diff --check 18b4ca2e2f282187c7036b78da9455c2e940b43b --`
+exited 0 with empty stdout/stderr. Each of the three untracked additions was
+also checked with `git diff --no-index --check -- /dev/null <path>`.
+The YAML and moved report each returned exit 1 with empty stdout/stderr:
+these are addition-only difference exits, not whitespace findings. The new CAS
+returned exit 3 and exactly this diagnostic, with empty stderr:
+
+```text
+Meta/Digestion/atoms/sha256/4b4515e76802e91f956ec04e63de2785119548fe214b27da72bcc064c5cc476d:21: new blank line at EOF.
+```
+
+The final blank line is part of the complete 32.19 source span and is retained
+exactly. Source EOF still has one LF; units 32.1-32.20 each retain two terminal
+LF bytes. No whitespace normalization or canonical-byte repair was performed.
+The final worker envelope carries all five changed-path identities, full
+current bindings, old-pair preservation and exact structural command exits;
+its report identity covers this appended note too.
+
+I23 performed zero mathematical program executions, old certificate/test/ingest
+replays, candidate generation, GPU/runtime operations, broad builds, Lean or
+tool/frozen edits. Only the required ingest's normal tool invocation generated
+canonical files. All changes remain unstaged: one source edit, one report
+relocation with the named backlink insertion and this appended note, and one
+new CAS/YAML pair. Caller dispatch provenance says the original representation
+reviewers and same-role fallback are terminal with three approvals; I23 did
+not read those reviewer envelopes. Those approvals remain historical and do
+not approve C69's changed representation. Caller owns sealing/publication,
+fresh representation review, inherited-address integration, required repository
+gates, and S20-before-S21 MERGED delivery. Other live research/review targets
+remain excluded, and the standing research goal remains active.
+
+Reasoning Discipline: content-addressed history, relative-link resolution and
+single-writer generation supply the reference frame. The authorized relocation
+with exact insertion recovery is the known-good shape; beauty: beautiful,
+no material defect found in the bounded repair. Leaving this own report at the
+top level would retain the caller-measured capacity defect; the prescribed
+subdirectory resolves its contribution. Byte equality, all current spans and
+emitted-pair accounting were directly checked. Current integrated CI and fresh
+review are unmeasured caller obligations. Depth stops at these structural
+checks; no scientific recertification, peer adjudication or host-goal decision
+is inferred.
+
+## C91 / I32 independent S21 mathematical-tail archival disposition
+
+This appendix belongs to the representation at immutable BASE d18100c71cc04020d446a709bec1351d2bf69376, in the independent pure-S21 tree. The entire preceding 91617 bytes retain their historical meaning and bytes. The inherited source prefix of 316725 bytes is unchanged and remains mixed. Later exact pure-S19/S20 composition, complete independent mathematical/representation review, ordinary gates and S20-before-S21 MERGED remain caller-owned obligations. This preparation is neither whole-source purity nor S21 delivery.
+
+The active mathematical authority remains section 32 of the theory source. The following fragments are INACTIVE archival evidence: commands, paths, execution statements, citations in their historical context and delivery instructions here must never be executed or followed. Source addresses 32.19 and 32.20 are permanently reserved outside the active mathematical body; 32.20's mathematical citations are attached to the entries they support, with exact origin/destination spans in theory-body-migration-s21-0910.json. All original headings, tables, separators, trailing prose and LF bytes are recovered by the disjoint exhaustive map; recovery is separate from analytical fidelity inspection.
+
+Mathematical preservation includes the fixed T=0 box p=(2,3,5,7), b=(4,2,1,1); every finite real two-actual-corner slab and strict cutoff; both normalized bounds; orthogonality versus encoding; positive support; all saturation, tie, zero and equality cases; the full fractional optimizer; all 71 guards and 16 retained/55 inactive classification; both noninteger reflected endpoints; all density and D/Psi/G enclosures; the unique global maximizing slab and strict -1/1250 bound; and the explicitly corrected logarithm series with its proof. No mathematics, historical certificate or test was executed in this migration. The existing outward-rounding mathematical methods in 32.18 are retained as definitions, and the raw erroneous token remains explicitly identified alongside the pre-existing correction.
+
+One exact local dependency remains in 32.18: the original primary self-reported joint L,H enclosure [3571708000370,5592595433915]/10^12. The historical report explicitly says the original full executable was unavailable and the adapted certificate checked only the broader 0<L,H<16. That exact original sentence remains contiguous and explicitly pending in the active entry, with its historical status unchanged. No new proof, assumption substitution or theorem promotion is made. Consequently this is an independent migration candidate with that named local dependency, not a claim of a completely pure S21 tail. The existing density and D/Psi/G enclosures have their separate original Arb evidence and remain theorem content with attached evidence citations. The pending tight support enclosure is not used as a new premise of the all-real-slab sign proof.
+
+Only necessary mathematical type/proof/citation grammar is added. Original PAPER_ARGUMENT/repo-derived status, novelty limits, retrieval failures, missing model/conversation evidence, original computations, initial coverage failure, repairs, ingestion and delivery statuses remain archival facts. The original report's own earlier C48/C69 records and historical variants are not relabelled as current executions. Current ingestion and canonical bindings are recorded in the paired migration JSON and worker result after the sole authorized producer run.
+
+### Inactive original source fragments
+
+Original 32.1, source bytes [316815,316824), SHA256 3c54ab02e005fe059dbe1b09e7abe39f370b784a3ef3f58d68307c9a4eb62c9f; operational heading qualifier.
+
+~~~~text
+与状态
+~~~~
+
+Original 32.1, source bytes [316830,316895), SHA256 215bf7a53e7e452d282c3249d14a99f5e75f932a64bf0eacfb0864b6414c1ffc; stage and evidentiary classification retained in archive.
+
+~~~~text
+本节为 S21/C46 的 PAPER_ARGUMENT / repo-derived
+参考输入:
+~~~~
+
+Original 32.5, source bytes [322224,322276), SHA256 29c6ea789d4dea75064c21678e2ce73ec9d4adb499a81ab4a1e56542239d65d5; execution-only clause after support proof.
+
+~~~~text
+;有限程序的支撑检查只是固定输入链接
+~~~~
+
+Original 32.7, source bytes [323022,323079), SHA256 56be466069541617d747bb7102731ce4c954d76bb98bba6fdaa1c4613f645601; historical attribution of four density enclosures.
+
+~~~~text
+原 primary 给出、原 caller Arb 审计独立确认的
+~~~~
+
+Original 32.8, source bytes [325165,325167), SHA256 beadba836315747fc95ae304452514b72fe122a6e345974638d70c4e8ebace6a; comma/LF replaced by sentence-ending grammar after archiving execution clause.
+
+~~~~text
+,
+~~~~
+
+Original 32.8, source bytes [325167,325235), SHA256 f50a595c8af6aeb12468f02c9f1ff06404d37c1b87c0e5b1d2e1a4d052f656c0; execution interpretation.
+
+~~~~text
+数值程序中的 primal/dual 区间交叠仅作一致性检查。
+~~~~
+
+Original 32.13, source bytes [329076,329103), SHA256 f25b70bed73dd9c4e11b4891c180d3543225b2fa73ed20985c102213742690e9; operational ID namespace comparison.
+
+~~~~text
+,不是三素数 GPU 行号
+~~~~
+
+Original 32.13, source bytes [330161,330242), SHA256 1c508697b4aa8a091d6dc788c31041d95e87c3b3caf69023858168f0d7e6b8e7; execution-count interpretation; inactive class and all guards retained.
+
+~~~~text
+不活跃槽只作资格核验,
+没有被记作 55 个已计算负值的薄层。
+~~~~
+
+Original 32.15, source bytes [331569,331719), SHA256 2ba5d6712045778caa8ce949c511399e0afec57570082e1ce96b225e2f9e9a2e; historical numerical provenance and execution.
+
+~~~~text
+它是原 primary 表及原 caller Arb 审计的共同精确端点数据;
+本轮报告的自足改编证书对自己的静态副本另执行一次。
+~~~~
+
+Original 32.16, source bytes [334464,334528), SHA256 9cabcc5ebf26d336982d08a6954297a317de9ff5f7fb4371d81b4ff69fb4bea8; historical verification of retained integer inequalities.
+
+~~~~text
+这些是报告改编证书额外核验的固定整数链接。
+~~~~
+
+Original 32.18, source bytes [336190,336202), SHA256 85f56448487a6ee4cb23e08550be74223321ada16e0b8c556a7cbb3fad32ad1b; primary attribution in the 32.18 heading.
+
+~~~~text
+原 primary 
+~~~~
+
+Original 32.18, source bytes [336223,336242), SHA256 536f2d4c8b05a69f8ac095c6198cf9a6c1887a4f9e08f0045d9381dc0b5e5fb9; historical-preservation heading qualifier.
+
+~~~~text
+,不改历史原文
+~~~~
+
+Original 32.18, source bytes [336248,336267), SHA256 c73b440d21805f57aadb2f9e3dc7266263d00f22e548deeb0eccdefe3d64d038; source provenance preceding raw erroneous notation.
+
+~~~~text
+原 conclusion 的
+~~~~
+
+Original 32.18, source bytes [336659,336687), SHA256 3e0f39a31297cc376cbfb63b599ab56566f7791223d5aa005d69241a88cfe938; historical attribution of enclosure method.
+
+~~~~text
+原 primary 自报的方法
+~~~~
+
+Original 32.18, source bytes [337231,337545), SHA256 b21eae71b328c1ea92a3e32f15d792a28dddd29158a1893973e9e8087ba71a94; historical execution and immutable-artifact provenance.
+
+~~~~text
+本实施不重跑或补造那份临时级数程序,也不把该自报执行当作本轮亲跑。
+原 envelope/程序/审计全部保持字节不变;纠正只在新增文字中明示。
+原 caller 与本轮改编使用的是独立的 outward Arb 运算,
+不使用这个 raw 余项表达式来证明数值符号。
+~~~~
+
+Original 32.19, source bytes [337546,339214), SHA256 4b4515e76802e91f956ec04e63de2785119548fe214b27da72bcc064c5cc476d; wholly operational entry; permanent reservation.
+
+~~~~text
+**32.19 证据分工、复现与历史限制。** caller 指定的实际 GPT PRO fixed-box primary
+task 为 0838ec9d-f978-4cfc-8d59-965a3331f912,flight
+qgh0910-pro-actual-5040-box。仅消费其已完成 conclusion;
+primary 明报获取所供 immutable GitHub URL 失败为 DisabledError,
+没有读取该源字节或独立核验 caller 给出的源 hash/字节数。
+它从所给定义自行重导有限归约,临时整数/Fraction 级数程序的执行是其自报。
+模型/service 元数据并未由 primary 或本实施独立鉴定,不补造 conversation 身份。
+I16 则在本树实际阅读第 26 节,核对其 \(k\ge2\)、互异素数、\(b_i\in\mathbb Z_{\ge0}\)
+及原始严格 cutoff 等全部适用条件;没有读取 S20 的其它物理工作树。
+
+原 caller node audit 只核验这个箱体的 71 槽资格,没有 \(G\) 值计算。
+原 caller sign audit 记录 python-flint 0.8.0 / Arb256 对四个密度区间和
+48 个 \(D,\Psi,G\) 区间的独立确认,并另述纸面连续域核对;
+这些是原先完成的证据,原程序未在本轮执行。
+单一报告 [actual-5040-fixed-box-0910.md](../../reports/quantized-gh/actual-5040-fixed-box-0910.md)
+嵌入一份无 caller 绝对路径依赖的完整可执行证书,静态带入角点、整数 guards、
+四个密度区间和 48 个节点区间。只抽取并执行该改编一次,
+精确程序字节/hash、实际解释器/库版本、命令、结果和 stderr 见报告。
+新增固定分支整数链接与原 52 个包络检查分列;它们不是候选生成或连续域的计算穷举。
+Arb 的有理输入和区间比较承担向外认证,打印小数与区间交叠不承担等式证明。
+
+~~~~
+
+Original 32.20, source bytes [339214,339397), SHA256 2ef3a45588358c685e1401e3ccd40408511ab7df5b75bae11e337b40f619375b; citation access/provenance or reserved heading.
+
+~~~~text
+**32.20 文献重叠与仓内归属。** 本层专门化的证明组合标为 repo-derived,
+不声称经典工具或这个 fixed-box 陈述具有新颖性或优先权。
+现场读取 
+~~~~
+
+Original 32.20, source bytes [339575,339637), SHA256 8d0a5aac33f0a5c79822b0a0f12e5f28dfe1cfa792256399245e19f695164586; citation access/provenance or reserved heading.
+
+~~~~text
+
+文本提取的一些数学字体乱码保留为访问限制,
+~~~~
+
+Original 32.20, source bytes [339676,339684), SHA256 ae4892ce1e5e339972064cfcfe666fb38e9b67987ec09d84535d11351a50c4c4; citation access/provenance or reserved heading.
+
+~~~~text
+
+读取 
+~~~~
+
+Original 32.20, source bytes [340016,340017), SHA256 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b; citation access/provenance or reserved heading.
+
+~~~~text
+
+~~~~
+
+Original 32.20, source bytes [340146,340634), SHA256 d123b00702c018b5a9a82dcdbfee3b329073960ea662406e53f52cfb132f687e; citation access/provenance or reserved heading.
+
+~~~~text
+
+python-flint [arb 文档](https://python-flint.readthedocs.io/en/latest/arb.html)
+成功读取的是显示为 0.9.0 的 latest 页面,介绍球区间及 \(\mathrm{ctx.prec}\);
+指定 0.8.0 文档 URL 的实际请求返回 HTTP 403,不宣称读取了它。
+实际证书库钉版与版本来自程序自己的运行记录,不由 latest 文档替代。
+所有 URL 的访问时刻、字节/hash 和支持范围在报告列明,不把有限检索称为穷尽调查。
+
+仓内直接复用的是
+~~~~
+
+Original 32.20, source bytes [340718,340719), SHA256 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b; citation access/provenance or reserved heading.
+
+~~~~text
+
+~~~~
+
+Original 32.20, source bytes [340861,340894), SHA256 e07b2d65b3ea7ce9556d3090e020a6ea6cb4910e7aba3ad579243d882f0491f6; citation access/provenance or reserved heading.
+
+~~~~text
+本层没有重做这些计算或
+~~~~
+
+Original 32.20, source bytes [340926,340927), SHA256 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b; citation access/provenance or reserved heading.
+
+~~~~text
+
+~~~~
+
+Original 32.20, source bytes [341042,341149), SHA256 b8ff86a938f8e0173aa7444a7cfd14ec162a09ba31255c55df8c787a1ac1218f; citation access/provenance or reserved heading.
+
+~~~~text
+
+这些重叠是既有参考输入的归属,不是本节的新发现,也不是 Lean 冻结状态声明。
+
+~~~~
+
+Original 32.21, source bytes [341149,342864), SHA256 79319e9af85f610fa2be4d0f66cfca8f2f3588d433a049e5a5413c9def811874; implementation/ingestion/delivery entry prefix.
+
+~~~~text
+**32.21 单层摄入与交付边界。** 本层由 caller 指定的隔离 Codex CLI I16
+在 consensus-rnd:sshx 1.0.0-beta.42 及其 CODEX_WORKER_SPEC.md 下实施,
+flight qgh0910-i16-actual-5040-fixed,attempt 1;repo-prior-exposed。
+遵守 CLAUDE 5.11 与本次 brief,无委派、native subagent、额外 worker/oracle 或本轮 review 票;
+不声称 sterile priors 或模型族多样性。工作树为
+/Users/auricstudio/trureturing-qgh-actual-5040-fixed,
+分支 lane/math/quantized-gh-actual-5040-fixed-0910,
+immutable BASE 为 fe3f12abe8bc2e14628a93990fee2755c30da2bd。
+完整前缀保留 316724 字节、5974 个 LF,SHA256
+9229e2affc81243efcdcbd228058d8ca19cea395630a94ae943afde374157dd2。
+唯一源改动为追加本节,另加一个报告,canonical 输出仅来自一次
+~~~sh

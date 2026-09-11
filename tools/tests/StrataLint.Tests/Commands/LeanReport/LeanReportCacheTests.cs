@@ -316,7 +316,11 @@ public sealed class LeanReportCacheTests
         using var world = new CacheWorld();
         var cacheEnabled = stage == "cache-restore";
         var first = world.RunPair(cacheEnabled: cacheEnabled, reportVersion: 1);
-        Assert.Equal(0, first.ExitCode);
+        Assert.True(
+            first.ExitCode == 0,
+            $"Initial report production failed with exit {first.ExitCode}.\n"
+                + $"stdout:\n{Encoding.UTF8.GetString(first.StandardOutput)}\n"
+                + $"stderr:\n{Encoding.UTF8.GetString(first.StandardError)}");
         var prior = world.SnapshotLiveBundle();
 
         var failed = world.RunPair(
@@ -341,10 +345,10 @@ public sealed class LeanReportCacheTests
         Assert.Equal(0, replaced.ExitCode);
         Assert.NotEqual(prior, world.SnapshotLiveBundle());
         Assert.Equal(
-            "{\"schema\":\"stub-lean-report\",\"v\":2}\n",
+            "{\"schema\":\"stratalint-raw-lean-report-v2\",\"modules\":[],\"v\":2}\n",
             File.ReadAllText(world.Output));
         Assert.Equal(
-            "{\"schema\":\"stub-lean-report\",\"v\":2}\n",
+            "{\"schema\":\"stratalint-raw-lean-report-v2\",\"modules\":[],\"v\":2}\n",
             File.ReadAllText(Path.Combine(world.Output + ".logs", "producer.log")));
     }
 
@@ -418,6 +422,15 @@ public sealed class LeanReportCacheTests
             File.Copy(
                 Path.Combine(repositoryRoot, "tools", "scripts", "worktree", "lean-cache-input.sh"),
                 Path.Combine(worktreeDir, "lean-cache-input.sh"));
+            File.Copy(
+                Path.Combine(repositoryRoot, "tools", "scripts", "report", "lean-report-cache.py"),
+                Path.Combine(reportDir, "lean-report-cache.py"));
+            File.Copy(
+                Path.Combine(repositoryRoot, "tools", "lean-inspector", "delta.py"),
+                Path.Combine(inspectorDir, "delta.py"));
+            File.Copy(
+                Path.Combine(repositoryRoot, "tools", "lean-inspector", "materials.py"),
+                Path.Combine(inspectorDir, "materials.py"));
             foreach (var relative in new[]
             {
                 RawReportPath,
@@ -428,6 +441,7 @@ public sealed class LeanReportCacheTests
                 Directory.CreateDirectory(Path.GetDirectoryName(path)!);
                 File.WriteAllText(path, "fixture\n");
             }
+            LeanReportRegistrationFixture.Install(Repo);
             MakeExecutable(PairScript);
             MakeExecutable(Path.Combine(reportDir, "lean-report-input.sh"));
         }
@@ -479,7 +493,7 @@ public sealed class LeanReportCacheTests
             }
             arguments.Add($"STUB_SLOT_LOG={SlotLog}");
             arguments.Add($"STUB_PRODUCER_LOG={ProducerLog}");
-            arguments.Add($"STUB_REPORT_CONTENT={{\"schema\":\"stub-lean-report\",\"v\":{reportVersion}}}");
+            arguments.Add($"STUB_REPORT_CONTENT={{\"schema\":\"stratalint-raw-lean-report-v2\",\"modules\":[],\"v\":{reportVersion}}}");
             if (producerFails || failureStage == "producer") arguments.Add("STUB_PRODUCER_FAIL=1");
             if (omitProducerLogs) arguments.Add("STUB_OMIT_LOGS=1");
             if (producerLogsAsFile) arguments.Add("STUB_LOGS_AS_FILE=1");
@@ -658,7 +672,10 @@ public sealed class LeanReportCacheTests
             [[ -n "$output" ]] || { echo "stub-producer: no --output" >&2; exit 2; }
             mkdir -p "$(dirname "$output")"
             printf '%s\n' "$STUB_REPORT_CONTENT" > "$output"
-            printf '%s\n' "$STUB_REPORT_CONTENT" > "${output}.materials.zip"
+            python3 - "${output}.materials.zip" <<'PY'
+            import sys, zipfile
+            with zipfile.ZipFile(sys.argv[1], 'w'): pass
+            PY
             if command -v sha256sum >/dev/null 2>&1; then
               h="$(sha256sum "$output" | awk '{print $1}')"
             elif command -v openssl >/dev/null 2>&1; then

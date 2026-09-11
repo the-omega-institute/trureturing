@@ -1,0 +1,15 @@
+### M04. symmetry affinity algebra
+
+证明：
+
+```math
+\alpha_S(C)
+=\frac12(\sum p_{ik}^2-2),
+```
+
+```math
+M_S(C)=4-2\alpha_S(C),
+```
+
+以及 order-three expectation formula。
+

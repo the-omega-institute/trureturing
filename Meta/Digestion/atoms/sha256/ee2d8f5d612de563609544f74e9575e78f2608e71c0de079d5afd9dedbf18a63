@@ -1,0 +1,9 @@
+**定理 76（任意参数的全部公式比较）。** 对每个固定有限一阶公式 \(\varphi(x_1,\ldots,x_r)\)，ZFC 证明
+\[
+\forall x_1\cdots\forall x_r\quad
+\varphi(x_1,\ldots,x_r)\iff
+\varphi^Z(\operatorname{Enc}(x_1),\ldots,\operatorname{Enc}(x_r)).
+\tag{Z-FORMULA}
+\]
+等价地，对全部有效 \(c_i\)，右侧等价于 \(\varphi(\operatorname{Dec}(c_1),\ldots,\operatorname{Dec}(c_r))\)。参数可为任意集合。
+

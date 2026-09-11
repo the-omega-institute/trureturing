@@ -12,6 +12,7 @@ import sys
 import uuid
 
 from state_store import external_path, file_hash
+from search_config import ANALYTIC_ALGORITHM, Config, descriptor, identity, protocol_initializer
 
 
 class StopSignals:
@@ -71,8 +72,7 @@ def read_status(directory):
     require(type(value.get("schema")) is int and value["schema"] == 2, "unsupported status schema")
     require(value.get("state_directory") == str(directory), "status state directory mismatch")
     require(value.get("latest_checkpoint") == str(directory / "latest.pt"), "status checkpoint path mismatch")
-    require(value.get("checkpoint_saved") is True and value.get("error") is None,
-            "status does not describe a saved, error-free checkpoint")
+    require(value.get("error") is None, "status describes an error")
     require(value.get("phase") in ("running", "stopped"), "status phase is not resumable")
     config = value.get("config")
     require(type(config) is dict, "status config must be an object")
@@ -96,6 +96,44 @@ def read_status(directory):
             "inconsistent status progress")
     history = value.get("history_db")
     require(isinstance(history, str) and history == str(external_path(history)), "invalid history database path")
+    if value.get("algorithm") == ANALYTIC_ALGORITHM:
+        trial = value.get("trial")
+        exhausted = value.get("phase") == "stopped" and value.get("stop_reason") == "exhausted"
+        record = value.get("exhaustion") if exhausted else trial
+        require(isinstance(record, dict), "missing analytic identity")
+        spec = protocol_initializer(record.get("descriptor", {}), ANALYTIC_ALGORITHM)
+        numeric = Config(**config)
+        numeric.dimensions = tuple(numeric.dimensions)
+        numeric.validate()
+        expected = descriptor(numeric, 55, 0, value.get("runtime"), spec, value["source_sha256"])
+        require(config["base_seed"] == 0 and record.get("descriptor") == expected
+                and record.get("identity") == identity(expected), "analytic identity mismatch")
+        completed = progress["run_index"] == 0 and progress["iteration"] == seed_steps
+        skipped = (progress["run_index"] == 1 and progress["iteration"] == 0
+                   and progress["skipped_trials"] == 1
+                   and progress["total_steps"] == progress["traversal_start_steps"])
+        require((exhausted and (completed or skipped)) or
+                (not exhausted and progress["run_index"] == 0 and progress["iteration"] < seed_steps),
+                "invalid analytic traversal")
+        if trial is not None:
+            require(trial.get("identity") == identity(expected) and trial.get("descriptor") == expected
+                    and trial.get("terminal") is completed, "analytic trial mismatch")
+        if value.get("checkpoint_saved") is False:
+            require(exhausted and skipped and trial is None
+                    and value.get("checkpoint_receipt") is None, "dishonest zero-update exhaustion")
+            if (directory / "latest.pt").exists():
+                retained = value.get("retained_checkpoint")
+                checkpoint_identity(directory / "latest.pt")
+                require(isinstance(retained, dict)
+                        and retained.get("path") == str(directory / "latest.pt")
+                        and retained.get("sha256") == file_hash(directory / "latest.pt")
+                        and isinstance(retained.get("trial_identity"), str),
+                        "retained checkpoint digest mismatch")
+            else:
+                require(value.get("retained_checkpoint") is None, "missing retained checkpoint")
+            return value
+    require(value.get("checkpoint_saved") is True,
+            "status does not describe a saved, error-free checkpoint")
     receipt, session = value.get("checkpoint_receipt"), value.get("session")
     require(isinstance(receipt, dict) and isinstance(session, dict), "missing checkpoint/session receipt")
     require(isinstance(session.get("id"), str) and bool(session["id"])
@@ -112,8 +150,14 @@ def read_status(directory):
 
 def validate_completion(before, after, child_pid, max_steps, session_id):
     require(after.get("pid") == child_pid, "terminal status is not from this child")
-    require(after["phase"] == "stopped" and after.get("stop_reason") == "max_steps",
-            "child did not stop at max_steps")
+    analytic = before.get("algorithm") == ANALYTIC_ALGORITHM
+    expected_reason = "exhausted" if analytic else "max_steps"
+    require(after["phase"] == "stopped" and after.get("stop_reason") == expected_reason,
+            "child did not stop at " + expected_reason)
+    if analytic:
+        require(after.get("algorithm") == ANALYTIC_ALGORITHM
+                and after["exhaustion"] == {key: before["trial"][key] for key in ("identity", "descriptor")},
+                "child analytic identity changed")
     require(after["config_sha256"] == before["config_sha256"]
             and after["config"] == before["config"], "child config changed")
     require(after["source_sha256"] == before["source_sha256"], "child source changed")
@@ -144,9 +188,13 @@ def run_once(directory, stop, history_db=None):
     before = read_status(directory)
     if history_db is not None:
         require(before["history_db"] == str(external_path(history_db)), "requested history database mismatch")
+    analytic = before.get("algorithm") == ANALYTIC_ALGORITHM
+    if analytic and before.get("stop_reason") == "exhausted":
+        return 4
     previous_checkpoint = checkpoint_identity(directory / "latest.pt")
     config = before["config"]
-    max_steps = len(config["dimensions"]) * config["seed_steps"]
+    max_steps = (config["seed_steps"] - before["progress"]["iteration"] if analytic
+                 else len(config["dimensions"]) * config["seed_steps"])
     worker = Path(__file__).resolve().with_name("gpu_worker.py")
     require(worker.is_file(), "adjacent gpu_worker.py is missing")
     session_id = uuid.uuid4().hex
@@ -154,6 +202,12 @@ def run_once(directory, stop, history_db=None):
                "--history-db", before["history_db"], "--session-id", session_id,
                "--max-steps", str(max_steps), "--seed-steps", str(config["seed_steps"]),
                "--dimensions", ",".join(map(str, config["dimensions"]))]
+    if analytic:
+        runtime = before["runtime"]
+        require(runtime.get("actual_device") in ("cpu", "mps:0"), "invalid analytic device")
+        precision = runtime["training_precision"].removeprefix("torch.")
+        require(precision in ("float32", "float64"), "invalid analytic precision")
+        command += ["--device", runtime["actual_device"], "--precision", precision]
     # The last two flags are resume assertions: the worker rejects a config mismatch.
     if stop.number is not None or stop_path.exists():
         return 3
@@ -177,7 +231,7 @@ def run_once(directory, stop, history_db=None):
     validate_completion(before, after, child.pid, max_steps, session_id)
     require(checkpoint_identity(directory / "latest.pt") != previous_checkpoint,
             "latest.pt was not freshly published")
-    return 3 if stop_path.exists() or stop.number is not None else 0
+    return 3 if stop_path.exists() or stop.number is not None else (4 if analytic else 0)
 
 
 def main(argv=None):

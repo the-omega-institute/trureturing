@@ -1,0 +1,798 @@
+      {
+        "status": "??",
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/fe749c39ff4004dc12b2c8354949d9d623d5c1b2414610cd2baa148907c85b73.yaml",
+        "byte_count": 328,
+        "lf_count": 7,
+        "terminal_lf_count": 1,
+        "sha256": "c8d6ae95eefa8a32a5adc66c5acd6d1e45135059025666a2ef878afbc6a7bf8f"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/ffd7688639d99a67f93d3a870cc363723e5298ea15bb0cb61ef7c01f897891e0.yaml",
+        "byte_count": 328,
+        "lf_count": 7,
+        "terminal_lf_count": 1,
+        "sha256": "0327e76dd45a72660e8eac21e7caba129fdff85f44ae94bf91f309b6ddf565dd"
+      },
+      {
+        "status": "??",
+        "path": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+        "byte_count": 3760959,
+        "lf_count": 108609,
+        "terminal_lf_count": 1,
+        "sha256": "667a334fe93522b374ce2932a315383689e1c895d8b7ff1332f949489c9ca8b6"
+      }
+    ],
+    "changed_files_snapshot_scope": "Snapshot after canonical verification, before final report/evidence and mapping enrichment; final identities are in the runner conclusion. This snapshot is not final report/map identity."
+  },
+  "archive_spans": [
+    {
+      "original": {
+        "byte_start": 64,
+        "byte_end_exclusive": 143,
+        "line_start": 3,
+        "line_end_inclusive": 3,
+        "byte_count": 79,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "c405830b07694edc8a574ec8716da3d73736194f73ca9fa947a9845d5c58502a"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 49175,
+        "byte_end_exclusive": 49254,
+        "line_start": 782,
+        "line_end_inclusive": 782,
+        "byte_count": 79,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "c405830b07694edc8a574ec8716da3d73736194f73ca9fa947a9845d5c58502a"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 209,
+        "byte_end_exclusive": 292,
+        "line_start": 3,
+        "line_end_inclusive": 3,
+        "byte_count": 83,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "b2cf4b875da25db50631025795cdce129a4ec668e02098673a4460facea0409a"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 49439,
+        "byte_end_exclusive": 49522,
+        "line_start": 790,
+        "line_end_inclusive": 790,
+        "byte_count": 83,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "b2cf4b875da25db50631025795cdce129a4ec668e02098673a4460facea0409a"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 353,
+        "byte_end_exclusive": 386,
+        "line_start": 5,
+        "line_end_inclusive": 5,
+        "byte_count": 33,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "c0af87c39390b54aefebb20658c259bc992471a14115ce6bd3e31dd5d3c165bc"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 49660,
+        "byte_end_exclusive": 49693,
+        "line_start": 798,
+        "line_end_inclusive": 798,
+        "byte_count": 33,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "c0af87c39390b54aefebb20658c259bc992471a14115ce6bd3e31dd5d3c165bc"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 678,
+        "byte_end_exclusive": 879,
+        "line_start": 9,
+        "line_end_inclusive": 9,
+        "byte_count": 201,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "34162205e1c380fac58824ee3eb924e418d219676a87e37272bfddbef5b08099"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 49836,
+        "byte_end_exclusive": 50037,
+        "line_start": 806,
+        "line_end_inclusive": 806,
+        "byte_count": 201,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "34162205e1c380fac58824ee3eb924e418d219676a87e37272bfddbef5b08099"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 1061,
+        "byte_end_exclusive": 1866,
+        "line_start": 11,
+        "line_end_inclusive": 14,
+        "byte_count": 805,
+        "lf_count": 4,
+        "terminal_lf_count": 2,
+        "sha256": "26ae565eac6e3119ef6f881a783216bce3547deffae2896628587401237c4a55"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 50234,
+        "byte_end_exclusive": 51039,
+        "line_start": 814,
+        "line_end_inclusive": 817,
+        "byte_count": 805,
+        "lf_count": 4,
+        "terminal_lf_count": 2,
+        "sha256": "26ae565eac6e3119ef6f881a783216bce3547deffae2896628587401237c4a55"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 3371,
+        "byte_end_exclusive": 3429,
+        "line_start": 62,
+        "line_end_inclusive": 62,
+        "byte_count": 58,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "7b39aa05020278bb542d8a972f7553df2b1e4c2ff748e861fbf887b8272cad98"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 51177,
+        "byte_end_exclusive": 51235,
+        "line_start": 825,
+        "line_end_inclusive": 825,
+        "byte_count": 58,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "7b39aa05020278bb542d8a972f7553df2b1e4c2ff748e861fbf887b8272cad98"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 3478,
+        "byte_end_exclusive": 3516,
+        "line_start": 64,
+        "line_end_inclusive": 64,
+        "byte_count": 38,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "5d8ba0035f96998a86f1cd9944efc3703b4767140ff70d98036f494d871963e1"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 51375,
+        "byte_end_exclusive": 51413,
+        "line_start": 833,
+        "line_end_inclusive": 833,
+        "byte_count": 38,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "5d8ba0035f96998a86f1cd9944efc3703b4767140ff70d98036f494d871963e1"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 8131,
+        "byte_end_exclusive": 8302,
+        "line_start": 176,
+        "line_end_inclusive": 176,
+        "byte_count": 171,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "813bb344f229a414d725f13071a22b911320961489b4b6cc32d785683b001e71"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 51605,
+        "byte_end_exclusive": 51776,
+        "line_start": 841,
+        "line_end_inclusive": 841,
+        "byte_count": 171,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "813bb344f229a414d725f13071a22b911320961489b4b6cc32d785683b001e71"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 10918,
+        "byte_end_exclusive": 10961,
+        "line_start": 243,
+        "line_end_inclusive": 243,
+        "byte_count": 43,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "619b525441eb012d176d71fc22df8350e0d0ea26e5992b4d8d28ad4e6c204f2a"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 51945,
+        "byte_end_exclusive": 51988,
+        "line_start": 849,
+        "line_end_inclusive": 849,
+        "byte_count": 43,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "619b525441eb012d176d71fc22df8350e0d0ea26e5992b4d8d28ad4e6c204f2a"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 12281,
+        "byte_end_exclusive": 12300,
+        "line_start": 271,
+        "line_end_inclusive": 271,
+        "byte_count": 19,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "b2b8c04615d59426ff8c39e7da2949d5fbd9229839c20e439f8188a5538dbd1f"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 52157,
+        "byte_end_exclusive": 52176,
+        "line_start": 857,
+        "line_end_inclusive": 857,
+        "byte_count": 19,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "b2b8c04615d59426ff8c39e7da2949d5fbd9229839c20e439f8188a5538dbd1f"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 15164,
+        "byte_end_exclusive": 15332,
+        "line_start": 345,
+        "line_end_inclusive": 345,
+        "byte_count": 168,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "3e00dfd52b8f4e9058b5e4a4fcebed278b09b0ba5375573fa70ced4716caa8c4"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 52323,
+        "byte_end_exclusive": 52491,
+        "line_start": 865,
+        "line_end_inclusive": 865,
+        "byte_count": 168,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "3e00dfd52b8f4e9058b5e4a4fcebed278b09b0ba5375573fa70ced4716caa8c4"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 15883,
+        "byte_end_exclusive": 15917,
+        "line_start": 351,
+        "line_end_inclusive": 351,
+        "byte_count": 34,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "bad73304da29e360d952531e4bbd5adf1952d9cc4e2f54a23463c2c690a1d423"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 52633,
+        "byte_end_exclusive": 52667,
+        "line_start": 873,
+        "line_end_inclusive": 873,
+        "byte_count": 34,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "bad73304da29e360d952531e4bbd5adf1952d9cc4e2f54a23463c2c690a1d423"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 16573,
+        "byte_end_exclusive": 16585,
+        "line_start": 383,
+        "line_end_inclusive": 383,
+        "byte_count": 12,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "ff6a7f7d8f54380f546fe22a2a720694a5f1081712c34d7446eb5c269ab04903"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 52809,
+        "byte_end_exclusive": 52821,
+        "line_start": 881,
+        "line_end_inclusive": 881,
+        "byte_count": 12,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "ff6a7f7d8f54380f546fe22a2a720694a5f1081712c34d7446eb5c269ab04903"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 16631,
+        "byte_end_exclusive": 16659,
+        "line_start": 383,
+        "line_end_inclusive": 383,
+        "byte_count": 28,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "9ce19028f97d7d1b16d6653a126bac04e1690f83fa79bbe0b9619b511c8142d8"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 52990,
+        "byte_end_exclusive": 53018,
+        "line_start": 889,
+        "line_end_inclusive": 889,
+        "byte_count": 28,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "9ce19028f97d7d1b16d6653a126bac04e1690f83fa79bbe0b9619b511c8142d8"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 16759,
+        "byte_end_exclusive": 16783,
+        "line_start": 389,
+        "line_end_inclusive": 389,
+        "byte_count": 24,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "2c0437e2283d341c77ad7a5df8c9654b5291e3fad3b3ed97405f1a3212a4963e"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 53207,
+        "byte_end_exclusive": 53231,
+        "line_start": 897,
+        "line_end_inclusive": 897,
+        "byte_count": 24,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "2c0437e2283d341c77ad7a5df8c9654b5291e3fad3b3ed97405f1a3212a4963e"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 16795,
+        "byte_end_exclusive": 16796,
+        "line_start": 389,
+        "line_end_inclusive": 389,
+        "byte_count": 1,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "d03502c43d74a30b936740a9517dc4ea2b2ad7168caa0a774cefe793ce0b33e7"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 53420,
+        "byte_end_exclusive": 53421,
+        "line_start": 905,
+        "line_end_inclusive": 905,
+        "byte_count": 1,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "d03502c43d74a30b936740a9517dc4ea2b2ad7168caa0a774cefe793ce0b33e7"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 16828,
+        "byte_end_exclusive": 16887,
+        "line_start": 389,
+        "line_end_inclusive": 389,
+        "byte_count": 59,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "5edf84ad8e76fa16bfb19962a8ee1019d9bf923c05dbd44d27bf35062a12980b"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 53610,
+        "byte_end_exclusive": 53669,
+        "line_start": 913,
+        "line_end_inclusive": 913,
+        "byte_count": 59,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "5edf84ad8e76fa16bfb19962a8ee1019d9bf923c05dbd44d27bf35062a12980b"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 16940,
+        "byte_end_exclusive": 16980,
+        "line_start": 391,
+        "line_end_inclusive": 391,
+        "byte_count": 40,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "f8da57aa68a3cd966ecd7c6343f989d05f2b9b3f479a716de6c87d3eb4bc75eb"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 53811,
+        "byte_end_exclusive": 53851,
+        "line_start": 921,
+        "line_end_inclusive": 921,
+        "byte_count": 40,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "f8da57aa68a3cd966ecd7c6343f989d05f2b9b3f479a716de6c87d3eb4bc75eb"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 16982,
+        "byte_end_exclusive": 17056,
+        "line_start": 393,
+        "line_end_inclusive": 393,
+        "byte_count": 74,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "050bc503c8442b015a7dc0433efaed913c575906828291a523eda638d1a6675e"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 54002,
+        "byte_end_exclusive": 54076,
+        "line_start": 929,
+        "line_end_inclusive": 929,
+        "byte_count": 74,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "050bc503c8442b015a7dc0433efaed913c575906828291a523eda638d1a6675e"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 17711,
+        "byte_end_exclusive": 17833,
+        "line_start": 420,
+        "line_end_inclusive": 420,
+        "byte_count": 122,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "c040aa4989be89c6d1734582a54864137eb9859cfedc777534829590d8433d77"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 54224,
+        "byte_end_exclusive": 54346,
+        "line_start": 937,
+        "line_end_inclusive": 937,
+        "byte_count": 122,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "c040aa4989be89c6d1734582a54864137eb9859cfedc777534829590d8433d77"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 18421,
+        "byte_end_exclusive": 21726,
+        "line_start": 438,
+        "line_end_inclusive": 515,
+        "byte_count": 3305,
+        "lf_count": 78,
+        "terminal_lf_count": 2,
+        "sha256": "ea4767928cdbb90131ab360e947d4beb66867c3422dc1e4aea0e667433c562be"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 54545,
+        "byte_end_exclusive": 57850,
+        "line_start": 945,
+        "line_end_inclusive": 1022,
+        "byte_count": 3305,
+        "lf_count": 78,
+        "terminal_lf_count": 2,
+        "sha256": "ea4767928cdbb90131ab360e947d4beb66867c3422dc1e4aea0e667433c562be"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 21732,
+        "byte_end_exclusive": 21756,
+        "line_start": 516,
+        "line_end_inclusive": 516,
+        "byte_count": 24,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "e382857f8bfc246926ab414ef342f4e09af07ca0cfa4a5871430d9bde35c51f8"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 57963,
+        "byte_end_exclusive": 57987,
+        "line_start": 1030,
+        "line_end_inclusive": 1030,
+        "byte_count": 24,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "e382857f8bfc246926ab414ef342f4e09af07ca0cfa4a5871430d9bde35c51f8"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 21758,
+        "byte_end_exclusive": 21783,
+        "line_start": 518,
+        "line_end_inclusive": 518,
+        "byte_count": 25,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "7f51a757fbc1cc46b3b55517b9c5ecacceeba0dbc86c056f6c5d42200538f913"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 58156,
+        "byte_end_exclusive": 58181,
+        "line_start": 1038,
+        "line_end_inclusive": 1038,
+        "byte_count": 25,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "7f51a757fbc1cc46b3b55517b9c5ecacceeba0dbc86c056f6c5d42200538f913"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 21951,
+        "byte_end_exclusive": 22027,
+        "line_start": 518,
+        "line_end_inclusive": 518,
+        "byte_count": 76,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "69796b3d4d4c448e63ee1db236e20ec9682c93d79e56b27b66ef141fdb7331b1"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 58329,
+        "byte_end_exclusive": 58405,
+        "line_start": 1046,
+        "line_end_inclusive": 1046,
+        "byte_count": 76,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "69796b3d4d4c448e63ee1db236e20ec9682c93d79e56b27b66ef141fdb7331b1"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 22055,
+        "byte_end_exclusive": 22085,
+        "line_start": 520,
+        "line_end_inclusive": 520,
+        "byte_count": 30,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "7dc5d350c9ca0e040221d92557a501c1ff57577f9d0ce52216273ff13eb5bf57"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 58547,
+        "byte_end_exclusive": 58577,
+        "line_start": 1054,
+        "line_end_inclusive": 1054,
+        "byte_count": 30,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "7dc5d350c9ca0e040221d92557a501c1ff57577f9d0ce52216273ff13eb5bf57"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 22961,
+        "byte_end_exclusive": 23112,
+        "line_start": 527,
+        "line_end_inclusive": 527,
+        "byte_count": 151,
+        "lf_count": 1,
+        "terminal_lf_count": 1,
+        "sha256": "645789753f154021fbc3b6c473296a2bd8b8bd2adb0d01b4394783064ea95b2f"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 58776,
+        "byte_end_exclusive": 58927,
+        "line_start": 1062,
+        "line_end_inclusive": 1062,
+        "byte_count": 151,
+        "lf_count": 1,
+        "terminal_lf_count": 1,
+        "sha256": "645789753f154021fbc3b6c473296a2bd8b8bd2adb0d01b4394783064ea95b2f"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 23366,
+        "byte_end_exclusive": 23490,
+        "line_start": 529,
+        "line_end_inclusive": 529,
+        "byte_count": 124,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "78572667ac17284aa8f15de605de7525f0a2431749601c7b5236092c0865b7b3"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 59046,
+        "byte_end_exclusive": 59170,
+        "line_start": 1070,
+        "line_end_inclusive": 1070,
+        "byte_count": 124,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "78572667ac17284aa8f15de605de7525f0a2431749601c7b5236092c0865b7b3"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 24752,
+        "byte_end_exclusive": 24773,
+        "line_start": 554,
+        "line_end_inclusive": 554,
+        "byte_count": 21,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "50608315f91f6321e0d4b0bc9bcbe723cedf242188c5bde8d51ab7134763a58e"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 59312,
+        "byte_end_exclusive": 59333,
+        "line_start": 1078,
+        "line_end_inclusive": 1078,
+        "byte_count": 21,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "50608315f91f6321e0d4b0bc9bcbe723cedf242188c5bde8d51ab7134763a58e"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 24779,
+        "byte_end_exclusive": 24812,
+        "line_start": 556,
+        "line_end_inclusive": 556,
+        "byte_count": 33,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "b780130f260834b9957956721d1dacceacfb39523db67c6e0fe89abcefa82bea"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 59475,
+        "byte_end_exclusive": 59508,
+        "line_start": 1086,
+        "line_end_inclusive": 1086,
+        "byte_count": 33,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "b780130f260834b9957956721d1dacceacfb39523db67c6e0fe89abcefa82bea"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 24814,
+        "byte_end_exclusive": 25174,
+        "line_start": 558,
+        "line_end_inclusive": 559,
+        "byte_count": 360,
+        "lf_count": 2,
+        "terminal_lf_count": 2,
+        "sha256": "ebbe61714ccf2a00e738632d8484ee9c6277e67c6526419c11d8a8576ba30ae9"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 59707,
+        "byte_end_exclusive": 60067,
+        "line_start": 1094,
+        "line_end_inclusive": 1095,
+        "byte_count": 360,
+        "lf_count": 2,
+        "terminal_lf_count": 2,
+        "sha256": "ebbe61714ccf2a00e738632d8484ee9c6277e67c6526419c11d8a8576ba30ae9"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 25185,
+        "byte_end_exclusive": 25200,
+        "line_start": 560,
+        "line_end_inclusive": 560,
+        "byte_count": 15,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "1998b5d8df2deae637340b3258a3cedd4c5897ee7c48f2b19c618388a15ce06c"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 60180,
+        "byte_end_exclusive": 60195,
+        "line_start": 1103,
+        "line_end_inclusive": 1103,
+        "byte_count": 15,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "1998b5d8df2deae637340b3258a3cedd4c5897ee7c48f2b19c618388a15ce06c"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 25990,
+        "byte_end_exclusive": 26006,
+        "line_start": 564,
+        "line_end_inclusive": 564,
+        "byte_count": 16,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "8cade6974ff10b2b696079316304799be0871a689ed6743802ff0f5935b88895"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 60364,
+        "byte_end_exclusive": 60380,
+        "line_start": 1111,
+        "line_end_inclusive": 1111,
+        "byte_count": 16,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "8cade6974ff10b2b696079316304799be0871a689ed6743802ff0f5935b88895"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 26683,
+        "byte_end_exclusive": 26711,
+        "line_start": 567,
+        "line_end_inclusive": 567,
+        "byte_count": 28,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "1bff88869e5ccdd8c0aeac8379ae9b0cf13d943ab66e98199c40dc1ec2bc430e"
+      },
+      "current": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 60549,
+        "byte_end_exclusive": 60577,
+        "line_start": 1119,
+        "line_end_inclusive": 1119,
+        "byte_count": 28,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "1bff88869e5ccdd8c0aeac8379ae9b0cf13d943ab66e98199c40dc1ec2bc430e"
+      }
+    },
+    {
+      "original": {
+        "byte_start": 26879,
+        "byte_end_exclusive": 26901,
+        "line_start": 568,
+        "line_end_inclusive": 568,
+        "byte_count": 22,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "633c7ede21dd8a57e6aee36d3ea99af5eaf7720ca90d95cc545132da29d40331"
+      },

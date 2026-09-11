@@ -9,7 +9,7 @@ using Directory = StrataLint.TestSupport.TemporaryFileSystem.Directory;
 namespace StrataLint.Tests;
 
 [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
-internal sealed class LeanReportTransportFixture : IDisposable
+internal sealed partial class LeanReportTransportFixture : IDisposable
 {
     internal static readonly string[] Suffixes = ["", ".sha256", ".input.attestation", ".provenance.json", ".materials.zip"];
     private readonly TemporaryDirectory temporary = new();
@@ -57,7 +57,8 @@ internal sealed class LeanReportTransportFixture : IDisposable
         foreach (var path in new[] { "Makefile", "tools/scripts/report/lean-report.sh", "tools/scripts/lean-report-pair.sh",
                      "tools/scripts/report/lean-report-input.sh", "tools/scripts/report/lean-report-ci-baseline.sh",
                      "tools/scripts/report/lean-report-cache.sh", "tools/scripts/report/lean-report-cache.py",
-                     "tools/scripts/worktree/lean-cache-input.sh", "tools/lean-inspector/delta.py" })
+                     "tools/scripts/worktree/lean-cache-input.sh", "tools/lean-inspector/delta.py",
+                     "tools/lean-inspector/materials.py" })
             ScriptHarnessScratch.CopyScriptInto(Path.Combine(TestRepositoryLayout.FindRoot(), path), Path.Combine(Repository, path));
         WriteSource("lean-toolchain", "leanprover/lean4:v4.31.0\n");
         WriteSource("lakefile.toml", "name = \"fixture\"\n");
@@ -79,8 +80,14 @@ internal sealed class LeanReportTransportFixture : IDisposable
             + "while [[ \"$1\" != -- ]]; do shift; done\nshift\nexec \"$@\"");
         Stub("tools/scripts/worktree/lean-cache-ensure.sh", "state=absent\n[[ ! -e \"$REPORT_REPOSITORY/.lake\" ]] || state=present\n"
             + "printf '%s\\n' \"$state\" >> \"$REPORT_FIXTURE/ensure.log\"\nexit \"${FIXTURE_ENSURE_EXIT:-0}\"");
-        Executable(Path.Combine(Bin, "dotnet"), "[[ \"$1\" == msbuild ]]\n"
-            + "printf '{\"Items\":{\"Compile\":[{\"FullPath\":\"%s/Probe.cs\"}]}}\\n' \"$(dirname \"$2\")\"");
+        Executable(Path.Combine(Bin, "dotnet"), "echo 'discovery unavailable' >&2; exit 71");
+        Executable(Path.Combine(Bin, "find"), """
+            case "$1" in
+              *.logs|/proc/*/fd) exec /usr/bin/find "$@" ;;
+              *) echo 'source discovery unavailable' >&2; exit 71 ;;
+            esac
+            """);
+        LeanReportRegistrationFixture.Install(Repository);
         Executable(Path.Combine(Bin, "gh"), GithubStub);
         File.WriteAllText(Path.Combine(Bin, "sitecustomize.py"), PublicationClockStub);
     }
@@ -115,7 +122,7 @@ internal sealed class LeanReportTransportFixture : IDisposable
             input_address = "sha256:" + PairAddress, producer_sha256 = Address[1], repository_inspector_sha256 = Address[1],
             lean_sources_sha256 = Address[2], lean_config_sha256 = Address[3], report_sha256 = digest,
         }) + "\n");
-        File.WriteAllBytes(bundle + ".materials.zip", Zip(new Dictionary<string, byte[]> { ["sha256/fixture"] = [1, 2, 3] }));
+        File.WriteAllBytes(bundle + ".materials.zip", Zip(new Dictionary<string, byte[]>()));
         Directory.CreateDirectory(bundle + ".logs");
         File.WriteAllText(bundle + ".logs/producer.log", "diagnostic only\n");
         return bundle;
@@ -124,6 +131,14 @@ internal sealed class LeanReportTransportFixture : IDisposable
     internal Attempt Publish(string bundle, params string[] environment) => Run(["make", "lean-report-cache-to-github", $"LEAN_REPORT={bundle}"], environment);
     internal Attempt Fetch(params string[] environment) => Run(["make", "lean-report-cache-from-github"], environment);
     internal Attempt MakeReport(params string[] environment) => Run(["make", "lean-report"], environment);
+    internal Attempt Stage(string bundle) => Run(["python3", Path.Combine(Repository, "tools/scripts/report/lean-report-cache.py"),
+        "stage", "--transport", "--bundle", bundle, "--staging-directory", Path.Combine(temporary.Path, "validated")]);
+    internal void DamageCachedMaterials(string damage)
+    {
+        if (damage == "missing-archive") File.Delete(CachedReport + ".materials.zip");
+        else File.WriteAllBytes(CachedReport + ".materials.zip", damage == "missing-member"
+            ? Zip(new Dictionary<string, byte[]>()) : Encoding.ASCII.GetBytes("not a material ZIP"));
+    }
     internal Attempt PublicationState(string? created, string? updated)
     {
         const string archive = "report-fixture.zip";
@@ -146,7 +161,7 @@ internal sealed class LeanReportTransportFixture : IDisposable
     {
         var modules = Path.Combine(temporary.Path, "modules.tsv");
         var plan = Path.Combine(temporary.Path, "plan.json");
-        File.WriteAllText(modules, "D5.Probe\tD5/Probe.lean\n");
+        File.WriteAllText(modules, "Trureturing\tTrureturing.lean\nD5.Probe\tD5/Probe.lean\n");
         Success(Run(["python3", Path.Combine(Repository, "tools/lean-inspector/delta.py"), "plan", Repository, CacheRoot,
             PairAddress, Address[1], Address[1], Address[3], modules, plan]));
         return JsonDocument.Parse(File.ReadAllBytes(plan));
@@ -159,6 +174,14 @@ internal sealed class LeanReportTransportFixture : IDisposable
     }
 
     internal void BlockCacheRoot() => File.WriteAllText(CacheRoot, "unavailable\n");
+    internal void InjectValidationUnavailableOnce() => Executable(Path.Combine(Bin, "python3"), """
+        if [[ "${1:-}" == *lean-report-cache.py && "${2:-}" == validate && ! -e "$REPORT_FIXTURE/validation-fault-used" ]]; then
+          touch "$REPORT_FIXTURE/validation-fault-used"
+          printf 'fixture verifier unavailable\\n' >&2
+          exit 2
+        fi
+        exec /usr/bin/python3 "$@"
+        """);
     internal void ClearCache() { if (Directory.Exists(CacheRoot)) Directory.Delete(CacheRoot, true); }
     internal string[] LiveSnapshot() => Suffixes.Select(suffix => Digest(File.ReadAllBytes(Output + suffix)))
         .Append(Digest(File.ReadAllBytes(Output + ".logs/producer.log"))).ToArray();
@@ -284,7 +307,7 @@ internal sealed class LeanReportTransportFixture : IDisposable
     // Explicit UTC input for publication abandonment; no elapsed real time.
     private const string PublicationClockStub = """
         import datetime, os, time
-        time.time = lambda: datetime.datetime.fromisoformat(os.environ.get('FIXTURE_NOW', '2026-09-09T00:00:00Z')).timestamp()
+        time.time = lambda: datetime.datetime.fromisoformat(os.environ.get('FIXTURE_NOW', '2026-09-09T00:00:00Z').replace('Z', '+00:00')).timestamp()
         """;
 
     // Inject elapsed IO time at subprocess.run's deadline boundary. The command
@@ -317,13 +340,16 @@ internal sealed class LeanReportTransportFixture : IDisposable
         python3 - "$repository" "$output" <<'PY'
         import hashlib, json, pathlib, sys, zipfile
         root, out = map(pathlib.Path, sys.argv[1:])
+        material = b'canonical material fixture\n'
+        address = hashlib.sha256(b'trureturing:statement:v1\0' + material).hexdigest()
+        declaration = dict(type_sha256='sha256:' + address, statement_id='sha256:' + 'e' * 64)
         modules = []
         for name, path in [('D5.Probe', 'D5/Probe.lean'), ('Trureturing', 'Trureturing.lean')]:
-            modules.append(dict(module=name, source_path=path, source_sha256='sha256:'+hashlib.sha256((root/path).read_bytes()).hexdigest(), imports=['D5.Probe'] if name == 'Trureturing' else [], declarations=[]))
+            modules.append(dict(module=name, source_path=path, source_sha256='sha256:'+hashlib.sha256((root/path).read_bytes()).hexdigest(), imports=['D5.Probe'] if name == 'Trureturing' else [], declarations=[declaration]))
         out.write_text('{"modules": ['+', '.join(json.dumps(m) for m in modules)+'], "schema": "stratalint-raw-lean-report-v2"}\n')
         pathlib.Path(str(out)+'.sha256').write_text(hashlib.sha256(out.read_bytes()).hexdigest()+'  '+out.name+'\n')
         with zipfile.ZipFile(str(out)+'.materials.zip', 'w') as z:
-            z.writestr(zipfile.ZipInfo('sha256/fixture'), b'material')
+            z.writestr(zipfile.ZipInfo('sha256/' + address), material)
         logs = pathlib.Path(str(out)+'.logs')
         logs.mkdir()
         (logs/'producer.log').write_text('diagnostic\n')

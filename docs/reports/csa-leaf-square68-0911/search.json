@@ -1,0 +1,134 @@
+{
+  "order": [
+    "D5",
+    "pinned Mathlib v4.33.0",
+    "third-party ecosystem"
+  ],
+  "completed_before_local_proofs": true,
+  "d5": {
+    "query": "leaf.?square|source.?charge|source.?filter|filter.?source|sum_fiberwise",
+    "scope": "all D5, plus full explicit owner modules",
+    "exact_components": [
+      "GeneratedProduct.charge_generated",
+      "GeneratedProduct.attributes_generated",
+      "ProductNodes.selectedParents",
+      "ProductNodes.sum_selectedParents",
+      "GeneratedProduct.productBalanced"
+    ],
+    "complete_edges": "not-found-in-searched-scope"
+  },
+  "mathlib": {
+    "revision": "db584cd6d46c92f209a44c0f1c829460d327499d",
+    "receipt": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/pinned-search.json",
+    "exact_components": [
+      "Finset.sum_mul_sum",
+      "Finset.sum_fiberwise_of_maps_to",
+      "Finset.filter_map",
+      "Finsupp.single_apply",
+      "Finsupp.filter",
+      "Finsupp.comapDomain",
+      "Finsupp.sum_comapDomain"
+    ],
+    "complete_edges": "not-found-in-searched-scope"
+  },
+  "capability": {
+    "native_web_tool_exposed": false,
+    "http_search_executed": true,
+    "loogle_sum_mul_sum_http": 200,
+    "loogle_sum_mul_sum_hits": 10,
+    "host_config_modified": false
+  },
+  "ecosystem": [
+    {
+      "provider": "github",
+      "query": "Lean contextual spacetime arithmetic",
+      "url": "https://api.github.com/search/repositories?q=Lean%20contextual%20spacetime%20arithmetic",
+      "http_status": 200,
+      "result": {
+        "count": 0,
+        "hits": []
+      },
+      "path": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/ecosystem-0.json"
+    },
+    {
+      "provider": "github",
+      "query": "Lean source tree signed charge",
+      "url": "https://api.github.com/search/repositories?q=Lean%20source%20tree%20signed%20charge",
+      "http_status": 200,
+      "result": {
+        "count": 1,
+        "hits": [
+          "danderfer/Comp_Sci_Sem_2"
+        ]
+      },
+      "path": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/ecosystem-1.json"
+    },
+    {
+      "provider": "github",
+      "query": "Lean FreeMagma Finsupp",
+      "url": "https://api.github.com/search/repositories?q=Lean%20FreeMagma%20Finsupp",
+      "http_status": 200,
+      "result": {
+        "count": 0,
+        "hits": []
+      },
+      "path": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/ecosystem-2.json"
+    },
+    {
+      "provider": "reservoir",
+      "query": "https://reservoir.lean-lang.org/api/v1/packages?query=spacetime",
+      "url": "https://reservoir.lean-lang.org/api/v1/packages?query=spacetime",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "provider": "loogle",
+      "query": "\"leaf_square\"",
+      "url": "https://loogle.lean-lang.org/json?q=%22leaf_square%22",
+      "http_status": 200,
+      "result": {
+        "count": 0,
+        "hits": []
+      },
+      "path": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/ecosystem-4.json"
+    },
+    {
+      "provider": "loogle",
+      "query": "\"source_charge\"",
+      "url": "https://loogle.lean-lang.org/json?q=%22source_charge%22",
+      "http_status": 200,
+      "result": {
+        "count": 0,
+        "hits": []
+      },
+      "path": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/csa-leaf-square68-0911-implementation-r1/attempt-1/ecosystem-5.json"
+    }
+  ],
+  "admissibility": "A17.2 dependency/transplant contracts read. No new dependency or transplant: no complete third-party edge located. The sole broad GitHub hit is a Python repository with an unrelated movie-script description, excluded. Reservoir API endpoint 404 is a limitation, not zero hits. Repository search is bounded metadata search, not exhaustive code search.",
+  "basis": "Prospective bind-only/atom-required-bridge retained for two CSA edges, subject to proof and independent review. Generic component wrappers use exact owners; no escape witness or novelty claimed.",
+  "actual_applied_exact_owners": {
+    "source_charge_apply": [
+      "Finsupp.finsetSum_apply",
+      "Finsupp.single_apply",
+      "Finset.sum_filter"
+    ],
+    "leaf_product_fiber_readout": [
+      "Finset.filter_map",
+      "GeneratedProduct.attributes_generated",
+      "GeneratedProduct.charge_generated",
+      "ProductNodes.mem_selectedParents",
+      "ProductNodes.sum_selectedParents (through selected_fiber_sum)",
+      "Finset.sum_fiberwise_of_maps_to",
+      "Finset.sum_product"
+    ],
+    "leaf_square_readout": [
+      "Finsupp.sum_of_support_subset",
+      "Finsupp.filter_apply_pos",
+      "Finset.sum_mul_sum"
+    ],
+    "leaf_square_readout_nat": [
+      "Finsupp.sum_comapDomain (through leaf_reindex)",
+      "Finsupp.comapDomain_apply (through leafCharge_apply)"
+    ]
+  },
+  "complete_edge_result": "No complete typed CSA coefficient or filtered-history grouping edge was located in the bounded ordered search. Both registered bridges implemented; no basis narrowing triggered. Admission judgment remains prospective."
+}

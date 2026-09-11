@@ -1,0 +1,7 @@
+**定理 18（同一账本的自由阿贝尔表示）。** 令 \(F=\mathbb Z^{(\operatorname{Pr}\times\mathbb N)}\) 为 \(\mathcal R\) 的群完成。以相邻和高位重复规则的输入减输出生成子群 \(J\)，则
+\[
+F/J\simeq\bigoplus_p\mathbb Z^2,
+\qquad [e_{p,j}]\longmapsto(G_j,H_j)\text{ 的第 }p\text{ 分量}.
+\]
+若再加入两底规则的关系，商群为 \(\bigoplus_p\mathbb Z\)，对应 \((V_p)_p\)。
+

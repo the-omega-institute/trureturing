@@ -1,0 +1,33 @@
+**29.7 合并原子后的恒等判据和七阶上界。** 对每个固定排列,先合并
+\(\nu_\pi\) 中所有相同原子,再删除所得零质量,写成
+\[
+\nu_\pi=\sum_{j=1}^{q_\pi}s_j\delta_{\alpha_j},\qquad
+0<\alpha_j\le1,\quad \alpha_j\text{ 两两不同},\quad s_j\ne0.
+\]
+这里 \(q_\pi\le8\),且 \(\sum_j s_j=A_{\pi,0}=0\)。
+空测度允许 \(q_\pi=0\);非空时质量为零迫使 \(q_\pi\ge2\)。
+有精确等价
+\[
+\boxed{G_\pi\equiv0\ \Longleftrightarrow\ \nu_\pi=0
+\ \Longleftrightarrow\ A_{\pi,1}=\cdots=A_{\pi,7}=0.}
+\]
+若非恒等,首个非零矩的阶数 \(k\) 满足 \(k\le q_\pi-1\le7\)。
+
+证明。若零至 \(q_\pi-1\) 阶矩均零,列向量 \((s_j)\) 被矩阵
+\((\alpha_j^n)_{0\le n<q_\pi,\ 1\le j\le q_\pi}\) 消去。
+经典 Vandermonde 行列式为
+\(\prod_{i<j}(\alpha_j-\alpha_i)\ne0\),故所有 \(s_j=0\)。
+反向由零测度立即得到全部矩和函数为零。级数在 \(|z|<1\) 解析;
+函数恒等为零则各 Taylor 系数为零。即使“恒等”先只指 \(J\),
+它含一个开区间,解析恒等原理仍给同一结论。
+零阶矩原已为零,所以前七个正阶矩足够。证明也覆盖包络两原子重合、
+端点间重合、两侧互相抵消及原来的零权重,不能在合并之前声称 Vandermonde 可逆。
+
+由 \(s\mapsto e^{-s}\) 单射,还可在偏移坐标中表述恒等条件:
+\[
+\sum_{i,e}w^\pi_{i,e}\delta_{\xi_i+e h_i}
+=2\delta_\lambda+\delta_\eta.
+\]
+若 \(\lambda<\eta\),所有正端点权重须只落在这两个偏移,
+总权重分别为 2 和 1;若 \(\lambda=\eta\),全部正权重须集中于该一点,总量为 3。
+

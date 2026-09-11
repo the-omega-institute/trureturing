@@ -1,0 +1,22 @@
+**33.10 A constructive nonnegative primal/dual gap.** Fix \(0<z\le1\),
+\(r\ge0\), abbreviate \(s_p=s_p(z)\), and write \(x_+=\max(x,0)\).
+For \(\lambda\ge0\) put
+\[
+\Phi_r(\lambda)=\lambda r+\sum_ph_p(s_p-\lambda)_+.
+\]
+For every \(y\in K_r\), exact rearrangement gives
+\[
+\Phi_r(\lambda)-\sum_ph_ps_py_p
+=\lambda\left(r-\sum_ph_py_p\right)
++\sum_ph_p\big[(s_p-\lambda)_+-y_p(s_p-\lambda)\big]\ge0.
+\]
+Each box summand is \(h_p(s_p-\lambda)(1-y_p)\) when \(s_p>\lambda\),
+\(h_p(\lambda-s_p)y_p\) when \(s_p<\lambda\), and zero when equal.
+It vanishes exactly when the respective nonnegative factor product vanishes.
+The upper-box multipliers are \(\mu_p=h_p(s_p-\lambda)_+\); if lower-box
+multipliers are also desired, \(\nu_p=h_p(\lambda-s_p)_+\) gives
+\(h_ps_p=\lambda h_p+\mu_p-\nu_p\). All are nonnegative.
+This proves weak duality directly and will prove attainment by zero gap.
+For \(r<0\), \(\Phi_r(\lambda)=\lambda r\) for \(\lambda\ge s_2\), so its
+infimum is \(-\infty\), unattained by a finite price, consistently with infeasibility.
+

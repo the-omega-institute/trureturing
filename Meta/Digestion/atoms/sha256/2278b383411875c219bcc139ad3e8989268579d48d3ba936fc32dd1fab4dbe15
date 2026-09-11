@@ -1,0 +1,26 @@
+**命题 29（$\Theta$ 上的精确域与更新，repo-derived）。** 在 $\mathcal T$ 的实际像上，(ST) 的操作全部下降并恰好保域。并行加法与有定义的时间复合都更新为
+
+$$
+(\pi_X+\pi_Y,\ \min(m_X,m_Y),\ \max(M_X,M_Y),\ \max(s_X,s_Y)).
+\tag{TH+}
+$$
+
+时间复合的域恰为 $M_X<m_Y$，包括空输入。令
+
+$$
+\gamma(s,t)=
+\begin{cases}
+-\infty,&s=-\infty\text{ 或 }t=-\infty,\\
+\max(s,t)+1,&s,t\in\mathbb Z.
+\end{cases}
+$$
+
+档案乘法写 $g=\gamma(s_X,s_Y)$，更新为
+
+$$
+(\pi_X\pi_Y,\ \min(m_X,m_Y),\ \max(M_X,M_Y,g),\ g),
+\tag{TH*}
+$$
+
+其中 $\pi_X\pi_Y=(w_X*w_Y,z_X*z_Y)$。补集仅把 $\pi$ 换为 $(w,w-z)$，空间筛选仅换为 $(w,\mathbf1_Sz)$；两者三个端点均不变。$T_k$ 不改 $\pi$，对三个有限端点加 $k$，对无穷哨兵保持原值。
+

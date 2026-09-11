@@ -1,0 +1,17 @@
+### 证明附引：各标记与原有适用范围
+
+~~~text
+| 标记 | 引文 | 本卷使用范围 |
+|---|---|---|
+| [L] | [Lagarias, An Elementary Problem Equivalent to the Riemann Hypothesis](https://arxiv.org/html/math/0008177v2) | Problem E、定理 1.1、式 (1.2)、定理 2.2 和第 3 节证明;弱式全称等价、RH 下严格性、Robin 域及 Gronwall |
+| [N] | [Nicolas, Small values of the Euler function and the Riemann hypothesis](https://arxiv.org/html/1202.0729v2) | 引言在 primorial 定义之后的 \(\forall k\ge1\) 严格式;未使用其它差值辅助恒等式 |
+| [S] | [Suzuki, Li coefficients as norms of functions in a model space](https://arxiv.org/html/2301.05779v2) | 引言式 (1.1)、全体正整数的非负条件、ξ 定义和参考文献 [8];Li 原文 [DOI 10.1006/jnth.1997.2137](https://doi.org/10.1006/jnth.1997.2137) 仅书目 |
+| [B1] | [Baez-Duarte, A strengthening of the Nyman-Beurling criterion for the Riemann hypothesis, 2](https://arxiv.org/pdf/math/0205003v1) | PDF 第 1-2 页,全半轴空间、自然数生成族、定理 1.1 的闭包条件 |
+| [B2] | [Baez-Duarte, A new necessary and sufficient condition for the Riemann hypothesis](https://arxiv.org/pdf/math/0307215) | PDF 第 1 页定理 1.1,系数定义及每个 \(\varepsilon>0\) 的指数 \(-3/4+\varepsilon\) |
+| [R] | [Choie, Lichiardopol, Moree, Sole, On Robin's criterion for the Riemann hypothesis](https://www.numdam.org/article/JTNB_2007__19_2_357_0.pdf) | 期刊页 357-358 的判据和有限例外列表;DOI 10.5802/jtnb.591 |
+| [Q] | [钉版 QUANTUM-RH.md](https://github.com/the-omega-institute/trureturing/blob/45e7b20dd95dd8b2d7b8784392c1814193b80515/docs/develop/theory/QUANTUM-RH.md) | Li 差分定义、三片 Schur 边界、实际 ξ 小数及“不是严格区间认证”的原限定;定位约 49898、50545、50849 行 |
+| [Z] | [钉版 ZECKENDORF_EULER_5040.md](https://github.com/the-omega-institute/trureturing/blob/45e7b20dd95dd8b2d7b8784392c1814193b80515/docs/develop/theory/ZECKENDORF_EULER_5040.md) | 定义 2.4、定理 2.5、第 33 节 floor 缺口及第 34 节价格正规化勘注 |
+~~~
+
+[Q,Z] 是参考源的出处,其文字不构成 kernel 状态证明。不构成对第 5 节构造的全球新颖性检索或新颖性结论。
+

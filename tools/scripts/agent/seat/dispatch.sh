@@ -45,6 +45,48 @@ resolve_runner() {
 hermetic() { local t="$1"; shift
   SSHX_PLUGIN_ROOT="$t/plugins" DISPATCH_GATE_ROUNDS=1 DISPATCH_GATE_SLEEP=0 "$0" "$@"; }
 
+# 同一工作树上已有在飞席位时,拒绝再派。两个席位同时写一棵树会互相覆盖,
+# 而第 5.11 条要求调用方对在飞 work_target 只读 —— 这道断言把「纪律」变成「机器判」。
+#
+# 立条依据(2026-09-09,本器落地当天我自己犯的):我用 `pgrep -fc 'codex exec'` 判席位死活,
+# 该 flag 在 macOS 上**静默返回 0**(见 pgrep-c-is-not-count-on-macos:rc=2、无输出),
+# 于是把一个已跑 2h42m 的活席位判成死的,并往同一棵树上又派了一席。
+# 一分钟内发现并杀掉,受管文件零改动 —— 但下次未必这么走运。
+# **`pgrep -f` 正常,坏的只有 `-c`**;本函数一律用前者。
+#
+# 判据只看 runner 的 `--work-target <路径>`,不看 flight id:同一棵树无论哪条 flight 都算冲突。
+inflight_on() {
+  local target="$1" pids
+  pids=$(pgrep -f -- "--work-target $target" 2>/dev/null | tr '\n' ' ')
+  # 排除本进程与其父(本脚本自己的命令行里也含该字符串)
+  pids=$(printf '%s\n' $pids | grep -v -e "^$$\$" -e "^$PPID\$" | tr '\n' ' ')
+  [ -n "${pids// /}" ] && { printf '%s\n' "$pids"; return 0; }
+  return 1
+}
+
+# 在飞席位数。**数的是席位,不是进程。**
+#
+# 立条依据(2026-09-11 实测):此前这里是 `pgrep -f 'codex exec' | wc -l`,而一个席位在
+# 本机起**两个**匹配该模式的进程(`node .../codex exec` 包装器 + 其 vendor 原生二进制)。
+# 于是 `MAX_CODEX=3` 这个按「席位」命名的旋钮,实际在**第三席**上恒不通过:两席在飞时
+# 读数是 4,4 < 3 为假,门一直等到 240 轮跑满才以 GATE_TIMEOUT 退出。
+# 当天派的第三席正是这样卡住的,而两席已经跑在同一台机上 —— 名字是席位、量的是进程,
+# 差一个常数因子 2(第 8.4 条:坏原材料;第 2.9 条:读数要答得出它答的是哪句话)。
+#
+# 正确的席位键是 runner 的 `--work-target <树>`:一个工作树至多一个在飞席位,这正是
+# dispatch.sh 自己的 inflight_on 已经采用的判据。同一席位的多个进程共享同一个 work-target,
+# 去重后就是席位数。取不到 runner 进程时回落到 0,由 inflight_on 与 runner 自身兜底。
+# 进程表取自 $SEAT_COUNT_PS,使本函数成为一段可喂合成输入的纯文本处理 —— 否则它没有钉子
+# (第 9.3 条:写不出反例的检查等于没检查)。生产路径不设该变量。
+seat_count() {
+  # 行必须同时含 runner 名与该 flag:只写 `grep -- '--work-target'` 会把任何**引用**了这个
+  # 字符串的 argv 一并数进来 —— 实测撞到过一次,是我自己那条 shell 命令的 zsh 包装行。
+  # 该方向是保守的(多数=多等),但它会让门在宿主明明空闲时挡住席位,与本次修的病同形。
+  ${SEAT_COUNT_PS:-ps -eo args} 2>/dev/null \
+    | grep -- 'run-codex-worker\.sh' | grep -- '--work-target' \
+    | grep -o -- '--work-target [^ ]*' | sort -u | wc -l | tr -d ' '
+}
+
 selftest() {
   local fails=0 tmp; tmp=$(mktemp -d); trap 'rm -rf "$tmp"' RETURN
   # 版本序:beta.9 必须排在 beta.42 之前(纯 sort 会判反,这正是用 -V 的理由)
@@ -52,6 +94,50 @@ selftest() {
            "$tmp/plugins/1.0.0-beta.42/skills/sshx/scripts"
   : > "$tmp/plugins/1.0.0-beta.9/skills/sshx/scripts/run-codex-worker.sh"
   : > "$tmp/plugins/1.0.0-beta.42/skills/sshx/scripts/run-codex-worker.sh"
+  # seat_count 数的是席位不是进程:同一席位的两个进程共享一个 --work-target。
+  cat >"$tmp/ps-two-seats" <<'PS'
+#!/bin/sh
+cat <<'ROWS'
+node /opt/homebrew/bin/codex exec --json -C /w/one --sandbox danger-full-access
+/vendor/bin/codex exec --json -C /w/one --sandbox danger-full-access
+bash /p/run-codex-worker.sh --work-target /w/one --stage implementation
+bash /p/run-codex-worker.sh --work-target /w/two --stage implementation
+ROWS
+PS
+  chmod +x "$tmp/ps-two-seats"
+  local seats; seats=$(SEAT_COUNT_PS="$tmp/ps-two-seats" seat_count)
+  if [ "$seats" = "2" ]; then
+    echo "  ok   seat_count counts work-targets, not processes"
+  else
+    echo "  FAIL seat_count returned '$seats', expected 2"; fails=$((fails + 1))
+  fi
+  # 阴性对照:只是**引用**了该 flag 的 argv 不算席位。
+  cat >"$tmp/ps-quoting" <<'PS'
+#!/bin/sh
+cat <<'ROWS'
+bash /p/run-codex-worker.sh --work-target /w/one --stage implementation
+/bin/zsh -c echo "the knob is --work-target <tree> in that script"
+python3 -c print('--work-target /w/fake')
+ROWS
+PS
+  chmod +x "$tmp/ps-quoting"
+  seats=$(SEAT_COUNT_PS="$tmp/ps-quoting" seat_count)
+  if [ "$seats" = "1" ]; then
+    echo "  ok   seat_count ignores argv that merely quotes the flag"
+  else
+    echo "  FAIL seat_count returned '$seats' with one seat plus two quoters, expected 1"; fails=$((fails + 1))
+  fi
+  cat >"$tmp/ps-idle" <<'PS'
+#!/bin/sh
+echo "bash /some/other/thing"
+PS
+  chmod +x "$tmp/ps-idle"
+  seats=$(SEAT_COUNT_PS="$tmp/ps-idle" seat_count)
+  if [ "$seats" = "0" ]; then
+    echo "  ok   seat_count is zero with no seat in flight"
+  else
+    echo "  FAIL seat_count returned '$seats' on an idle host, expected 0"; fails=$((fails + 1))
+  fi
   local got; got=$(resolve_runner "$tmp/plugins" || echo NONE)
   case "$got" in
     *1.0.0-beta.42*) echo "  ok   resolve picks newest by version order" ;;
@@ -92,6 +178,18 @@ selftest() {
   else
     echo "  FAIL gate timeout: rc=$rc out=$(cat "$tmp/o")"; fails=$((fails + 1))
   fi
+  # 在飞守卫:构造一个命令行里带 --work-target 的假进程,派发必须以 5 拒绝
+  ( exec -a "fake-runner --work-target $tmp/wt" sleep 8 ) &
+  fake=$!
+  sleep 1
+  hermetic "$tmp" f 1 "$tmp/brief.md" "$tmp/wt" review 0 8 >"$tmp/o" 2>&1
+  rc=$?
+  kill "$fake" 2>/dev/null; wait "$fake" 2>/dev/null
+  if [ "$rc" -eq 5 ] && grep -q 'worktree-busy' "$tmp/o"; then
+    echo "  ok   refuses to dispatch into a worktree that already has a seat (exit 5)"
+  else
+    echo "  FAIL in-flight guard: rc=$rc out=$(head -2 "$tmp/o")"; fails=$((fails + 1))
+  fi
   echo "SELFTEST_FAILS=$fails"; [ "$fails" -eq 0 ]
 }
 
@@ -107,6 +205,13 @@ case "$STAGE" in
   *) echo "DISPATCH_FAIL bad-stage '$STAGE' (thinking|implementation|review|termination)"; exit 3 ;;
 esac
 
+if busy=$(inflight_on "$WT"); then
+  echo "DISPATCH_FAIL worktree-busy $WT already has an in-flight seat (pids: $busy)"
+  echo "  两个席位同时写一棵树会互相覆盖(第 5.11 条)。等它归位,或换一棵树。"
+  echo "  确认它是不是真活着:用 ps 或 pgrep -f,**不要用 pgrep -fc**(macOS 上静默返回 0)。"
+  exit 5
+fi
+
 RUNNER=$(resolve_runner "$RUNNER_GLOB") || {
   echo "DISPATCH_FAIL runner-unresolved under $RUNNER_GLOB"; exit 3; }
 echo "RUNNER $RUNNER"
@@ -119,9 +224,9 @@ GATE_ROUNDS="${DISPATCH_GATE_ROUNDS:-240}"; gate_ok=0
 for _ in $(seq 1 "$GATE_ROUNDS"); do
   idle=$(top -l 2 -s 2 -n 0 | grep 'CPU usage' | tail -1 | grep -o '[0-9.]*% idle' | tr -d '% idle')
   lean=$(pgrep -f '^(/bin/)?bash [^ ]*report-supervisor\.sh' | wc -l | tr -d ' ')
-  cdx=$(pgrep -f 'codex exec' | wc -l | tr -d ' ')
+  cdx=$(seat_count)
   if python3 -c "import sys; sys.exit(0 if float('${idle:-0}')>=20 and $lean<=4 and $cdx<$MAXC else 1)" 2>/dev/null; then
-    echo "GATE_PASS idle=$idle lean=$lean codex=$cdx brief=$BRIEF"; gate_ok=1; break
+    echo "GATE_PASS idle=$idle lean=$lean seats=$cdx brief=$BRIEF"; gate_ok=1; break
   fi
   sleep "${DISPATCH_GATE_SLEEP:-30}"
 done

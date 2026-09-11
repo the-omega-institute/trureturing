@@ -1,0 +1,36 @@
+{
+  "schema": "s20-evidence-entry-v1",
+  "resource": "s19-catalog-before-I47",
+  "original": {
+    "bytes": 13904,
+    "sha256": "501c9c917a719604090b103eb78174ce660b6aa3747e6495b1caa951f0e7beab",
+    "lf": 410,
+    "terminal_lf": 1,
+    "lines": 410
+  },
+  "origin": {
+    "commit": "56aebf5d4573c953d6a994f019d8abb216d5bf35",
+    "path": "docs/reports/quantized-gh/s19-evidence/catalog.json"
+  },
+  "contract": "docs/reports/quantized-gh/s20-evidence/README.md",
+  "interpretation": "Concatenate all exact text parts before parsing; original JSON bytes were not reserialized.",
+  "parts": [
+    {
+      "ordinal": 1,
+      "path": "docs/reports/quantized-gh/s20-evidence/raw/s19-catalog-before-I47-501c9c917a71/group-001/part-001.txt",
+      "byte_span": [
+        0,
+        13904
+      ],
+      "line_span": [
+        1,
+        410
+      ],
+      "bytes": 13904,
+      "sha256": "501c9c917a719604090b103eb78174ce660b6aa3747e6495b1caa951f0e7beab",
+      "lf": 410,
+      "terminal_lf": 1,
+      "lines": 410
+    }
+  ]
+}

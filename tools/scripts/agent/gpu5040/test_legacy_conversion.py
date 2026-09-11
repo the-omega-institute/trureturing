@@ -96,6 +96,9 @@ class LegacyTests(unittest.TestCase):
         report = legacy.convert(self.snapshot, self.output, self.db)
         self.assertEqual(2, report["completed_imported"])
         saved = torch.load(self.output / "latest.pt", weights_only=True)
+        from gpu_worker import source_hash as current_source_hash
+        self.assertEqual(current_source_hash(), saved["source_sha256"])
+        self.assertEqual(self.source_hash, saved["migration_evidence"]["source_sha256"])
         for key in ("model", "optimizer", "rng", "matrices", "initial"):
             self.assert_tensors_equal(self.saved[key], saved[key])
         best = torch.load(self.output / "best-13.pt", weights_only=True)

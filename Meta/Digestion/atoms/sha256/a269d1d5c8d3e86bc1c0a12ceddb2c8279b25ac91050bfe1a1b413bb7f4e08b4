@@ -1,0 +1,3 @@
+**定理 4.8(不可判者的唯一善处置)**〔证〕。设 $\mathrm{Balanced}(\mathcal U,L)$ 且 $P\in F^{0}(L)$(Gödel 边界)。若 $P\in\mathrm{dom}(\mathcal U)$,则其最新主张的状态只能是 $\mathsf{open}$ 或 $\mathsf{unverified}$;尤其「等待某人裁决」不是一个可账平的主张。对诚实主体,从账平初态出发的每一时刻都满足前件(假设 4.3)。
+*证明*。$s_L(P)=\mathsf{open}$,由定义 3.2 只允许 $\sigma\in\{\mathsf{open},\mathsf{unverified}\}$;「等待裁决」不在 $\sigma$ 的取值域中(推论 2.6)。∎
+

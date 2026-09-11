@@ -1,0 +1,2 @@
+**定义 1.6(深度)**。$\mathrm{depth}_L(v)=0$ 若 $\mathrm{pred}_E(v)=\varnothing$,否则 $1+\max_{u\in\mathrm{pred}_E(v)}\mathrm{depth}_L(u)$。
+

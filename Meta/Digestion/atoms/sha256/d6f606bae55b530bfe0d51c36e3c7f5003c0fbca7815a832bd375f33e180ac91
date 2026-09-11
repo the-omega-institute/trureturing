@@ -1,0 +1,18 @@
+**33.21 Primary and fixed-check attribution.** The caller supplied C44 task
+293edaba-2898-44f3-8038-c3fd198aa8cb's complete accepted conclusion, envelope SHA256
+b885a078d12b09b23156ad92c898a3f044c154caf96f49082cd1cf16130e0aba,
+with invocation-specific model observation `6\nPro`. This is previous-stage
+mathematical input, not an independent review of this source.
+C42 task 5f0129e1-eac7-4bfe-8837-91429f359565 remains formally abstained for its
+malformed envelope and damaged executable. Its supplied raw response identity is
+82671 bytes, SHA256 75e3e0cf945487ee43b3b2388debfa4e44d629fde3ce8953c4c16ede15114f39.
+Its claimed 37 checks were not reproduced. The caller's separate 18-check program
+is attributed historical evidence; it was not executed here. C44 reports a new
+22-check adaptation (3056 bytes, SHA256
+891f93fed300875cc3ceeca81116cff7aedc5b62e86bd77aa75164293151c60f) but returned no
+executable bytes, so neither reconstruction nor reproduction is claimed.
+Those historical byte identities are caller-supplied, not newly rehashed by I17.
+The one report [actual-5040-density-order-0910.md](../../reports/actual-5040-density-order-0910.md)
+contains I17's separately identified standalone adaptation and actual execution
+receipt; its fixed inputs come from the displayed definitions and caller program.
+

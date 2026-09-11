@@ -1,0 +1,44 @@
+**30.83 定理及证明（新模式的系数、梯度、局部宽度与总生成）。** Since
+\(0\le y_i\le1\), \(\theta\le1\) and each vector-entry error is at most \(\theta\),
+\(\|\widetilde y\|\le2N\). The exact solution of 30.82 therefore satisfies
+\[
+\|q\|\le(2/\kappa)2N=H_{\rm gen},\qquad\sum_k|q_k|\le N\|q\|\le Q_{\rm gen}.
+\]
+Using \(\widetilde Fq=\widetilde y\),
+\[
+v=Fq-y=(F-\widetilde F)q+(\widetilde y-y),\qquad
+\|v\|\le N\theta H_{\rm gen}+N\theta=C_{\rm gen}\theta\le\tau.
+\]
+Every local vector \(q,q\pm e_k\) has absolute coefficient sum at most \(Q_{\rm gen}+1\).
+Choose \(h_1=1+\lfloor\Gamma(Q_{\rm gen}+1)/\tau\rfloor\), and use
+\(J_i=h_1+1,K_i=h_1\) for all \(2N+1\) slots. Then \(E_i<\tau\).
+The interval width for each half-gradient coordinate is
+\((E_{2k-1}+E_{2k})/4<\tau/2\), so
+\(\max(|l_k|,|u_k|)\le|v_k|+\tau/2\). Squaring and summing gives
+\[
+S_q\le2\|v\|^2+N\tau^2/2\le(N+4)\tau^2/2.
+\]
+The complete substituted bound is consequently
+\[
+u-\ell\le E_0+S_q/\kappa
+ \le\tau+(N+4)\tau^2/(2\kappa)
+ \le C_{\rm width}\tau\le\eta/4<\eta.
+\]
+Here \(\tau\le1\) justifies the penultimate bound. All local endpoints are sound by 30.79,
+so encoding them with this \(q\), the parameters and fixed mode passes 30.80.
+
+The constants are finite rational formulas, \(\mu\) uses finite integer factorization when
+needed, the probe count is \(2N+N(N-1)/2\), every probe is a finite residual computation,
+and the solve has \(N\) proved positive pivots and finite back substitution. There remain only
+\(2N+1\) local computations and terminating encoding. Thus for every fixed mode
+\(s\in\{0,1,2\}\),
+\[
+\forall N\ge1\ \forall\eta\in\mathbb Q_{>0}\ \exists e\in\mathbb N_0:
+ \operatorname{VerifyLocalDual}_s(N,\eta,e),
+\]
+by an explicit uniform total generator. No coefficient grid, enumeration of all rational candidates,
+unknown optimum, true gradient or positive residual margin is required. A very small \(\kappa\)
+can inflate all the constants without defeating termination. These constants have not been proved
+optimal or practically fast. The older determinant/cofactor and complete-grid generation proofs
+remain separate valid constructions for the same \(D_N\).
+

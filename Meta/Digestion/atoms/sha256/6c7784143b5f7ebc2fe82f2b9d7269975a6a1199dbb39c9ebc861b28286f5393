@@ -1,0 +1,20 @@
+**30.27 定义与证明：同一个全半轴模型及不可丢弃的系数平方尾。** 现在严格使用第 3 节的
+\[
+H=L^2((0,\infty),dx),\quad\operatorname{inner}(f,g)=\int_0^\infty\overline{f(x)}g(x)\,dx,
+\quad\chi=\mathbf1_{(0,1]},\quad f_k(x)=\{1/(kx)\},\quad h_0=\chi,\ h_k=f_k/k.
+\]
+这些可测函数满足 \(0\le f_k<1\)。在 \((0,1/k)\) 的平方积分至多 \(1/k\)，在 \((1/k,\infty)\) 除一个端点外等于 \(1/(kx)\)，平方积分为 \(1/k\)，所以属于 \(H\)。换元 \(y=kx\) 给
+\[
+c:=\|f_1\|^2\in[1,2],\qquad \|f_k\|^2=c/k,\qquad \|h_k\|^2=c/k^3.
+\]
+\(c\ge1\) 来自 \(x>1\) 的积分。对每个有限 \(N\ge1\) 及 \(a\in\mathbb C^N\)，定义原残差平方
+\[
+R_N(a)=\left\|\chi-\sum_{k=1}^Na_kf_k\right\|^2.
+\]
+在 \(x>1\) 有 \(\chi=0,f_k=1/(kx)\)，故精确地
+\[
+\boxed{R_N(a)=\int_0^1\left|1-\sum_{k=1}^Na_k\{1/(kx)\}\right|^2dx
++\left|\sum_{k=1}^N\frac{a_k}{k}\right|^2.}
+\]
+第二项来自 \(\int_1^\infty x^{-2}dx=1\)。不添加 \(\sum a_k/k=0\) 约束，也不把全半轴距离换成 \((0,1)\) 上的另一个问题。
+

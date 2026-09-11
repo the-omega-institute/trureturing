@@ -1,0 +1,48 @@
+## 22. Verification and the remaining analytic step
+
+Four new Lean owners have four canonical Scribe companions and 34 explicitly
+named public declarations: PartitionRelabeling, SquareGridCoordinates,
+SquareGridMessages and SquareGridRootMessages. Existing partition, geometric,
+affine-message and root-domain owners are reused without replacement.
+
+The independent exact replay enumerates every independent subset of all 512
+subdomains of the 3-by-3 square. It checks 2048 complete configuration bijections,
+2048 weighted equalities, 17368 marked-ratio equalities, 3328 child matches,
+5120 denominator-cleared recursions, 4134 valid division recursions, 986 cases
+with a zero intermediate factor, and 13056 real input-box checks. A separate
+bounded exploration of 652 radius-four masks supplies 67152 compatible-child
+regressions; it is not a second full check of the 881-state certificate.
+Seven malformed transports are rejected. Their changes include loss of
+adjacency, injectivity, weight transport, marked-root transport, correct ordered
+deletion, the fourth root direction, and the root nonvanishing obligation.
+
+```sh
+python research/hard_core_weitz/verify_grid_correspondence.py
+```
+
+This verifier computes reference values directly from independent subsets,
+not from the deletion identity it tests. It uses exact rational and
+Gaussian-rational arithmetic. The logarithmic endpoint decimals are illustrative
+only. The upstream affine certificate is reused by the Lean source and has not
+been rerun in this continuation. The separate implementation is by the same
+authoring assistant, not an independent researcher.
+
+The new sources have been mathematically reviewed and regression-tested.
+Lean elaboration, kernel checking, executed axiom closure and Scribe emission
+remain unperformed. The finite proof scripts request decide +kernel. No
+kernel-admitted or independent-review status is inferred from that request.
+
+The exact graph/type correspondence in Section 20 removes the semantic
+premises from the current real certificate. The remaining work is to formalize
+the actual holomorphic coordinates and their Jacobian, build one invariant
+complex neighborhood for all types and pruning subsets, and combine it with
+the strict-cardinality induction and the separate four-child root denominator.
+These analytic obligations are not replaced by real positivity or the 5040
+analogy. No new zero-free endpoint or RH conclusion is asserted in this increment.
+
+[6] Steve Fan, Mits Kobayashi and Grant Molnar. *A family of analogues to the
+Robin criterion*. arXiv:2511.02106 (2025). The statistic and the explicit cutoff
+change together in their Robin-type equivalence.
+https://arxiv.org/abs/2511.02106
+
+

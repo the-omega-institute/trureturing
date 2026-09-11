@@ -1,0 +1,2155 @@
+## 附录 A. 精确有限核验
+
+以下 Python 3 标准库检查器是本任务的临时核验，不是生产算术引擎。它只用整数、集合与 `fractions.Fraction`，有限遍历的范围是档案即当前区域、空偏序、事件数为 $0,2,4$ 的全部平衡符号配置及全部选择，共 105 个表示、11025 个输入对。另核验正文的非空因果偏序例子、档案保留、原始非结合性、分数、补集粗观察、空间运输、来源与除法反例。普遍命题及全部无限序列的结论由正文证明，不由这些有限运行替代。
+
+在仓根直接执行文档中的唯一 Python 代码块，无需生成工具文件：
+
+```sh
+sed -n '/^```python$/,/^```$/p' docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md | sed '1d;$d' | python3 -
+```
+
+检查器使用 Python 元组和字典作为有限编码的可读实现；正文的集合编码论证不依赖 Python 对象身份。
+
+```python
+from dataclasses import dataclass, replace
+from fractions import Fraction
+from itertools import product
+
+@dataclass(frozen=True)
+class Rich:
+    e: dict
+    o: frozenset
+    w: frozenset
+    a: frozenset
+
+def closure(edges):
+    out = set(edges)
+    while True:
+        more = {(a, d) for a, b in out for c, d in out if b == c}
+        if more <= out:
+            return frozenset(out)
+        out |= more
+
+def valid(x):
+    assert x.a <= x.w <= x.e.keys()
+    assert all(t == int(t) and len(p) == 3 and s in (-1, 1)
+               for t, p, s, r in x.e.values())
+    assert all(a in x.e and b in x.e and x.e[a][0] < x.e[b][0]
+               for a, b in x.o)
+    assert closure(x.o) == x.o
+    return x
+
+def charge(x, a):
+    return sum(x.e[e][2] for e in a)
+
+def q(x):
+    return charge(x, x.a)
+
+def neg(x):
+    return replace(x, a=x.w - x.a)
+
+def add(x, y):
+    e = {(i, a): v for i, z in enumerate((x, y))
+         for a, v in z.e.items()}
+    o = frozenset(((i, a), (i, b)) for i, z in enumerate((x, y))
+                  for a, b in z.o)
+    w = frozenset((i, a) for i, z in enumerate((x, y)) for a in z.w)
+    a = frozenset((i, a) for i, z in enumerate((x, y)) for a in z.a)
+    return valid(Rich(e, o, w, a))
+
+def temporal(x, y):
+    if not all(x.e[a][0] < y.e[b][0] for a in x.e for b in y.e):
+        raise ValueError("time guard")
+    z = add(x, y)
+    cross = {((0, a), (1, b)) for a in x.e for b in y.e}
+    return valid(replace(z, o=closure(z.o | cross)))
+
+def mul(x, y):
+    z = add(x, y)
+    e, o, w, chosen = dict(z.e), set(z.o), set(), set()
+    for a in x.w:
+        for b in y.w:
+            key = (2, (a, b))
+            ta, pa, sa, ra = x.e[a]
+            tb, pb, sb, rb = y.e[b]
+            e[key] = (max(ta, tb) + 1, tuple(u + v for u, v in zip(pa, pb)),
+                      sa * sb, ("pair", ra, rb))
+            o |= {((0, a), key), ((1, b), key)}
+            w.add(key)
+            if a in x.a and b in y.a:
+                chosen.add(key)
+    return valid(Rich(e, closure(o), frozenset(w), frozenset(chosen)))
+
+def integer(n):
+    e = {(i, s): (0, (0, 0, 0), s, ("leaf", i))
+         for i in range(abs(n)) for s in (-1, 1)}
+    a = frozenset(k for k in e if k[1] == (1 if n > 0 else -1))
+    return valid(Rich(e, frozenset(), frozenset(e), a))
+
+def time_shift(x, k):
+    return valid(replace(x, e={a: (t + k, p, s, r)
+                               for a, (t, p, s, r) in x.e.items()}))
+
+def spatial(x, scale=1, offset=0):
+    return valid(replace(x, e={a: (t, (scale*p[0] + offset,
+                                       scale*p[1], scale*p[2]), s, r)
+                               for a, (t, p, s, r) in x.e.items()}))
+
+def filt(x, pred):
+    return replace(x, a=frozenset(a for a in x.a if pred(a)))
+
+def coarse(x, f):
+    bins = {f(a) for a in x.w}
+    w = {b: charge(x, {a for a in x.w if f(a) == b}) for b in bins}
+    z = {b: charge(x, {a for a in x.a if f(a) == b}) for b in bins}
+    return w, z
+
+def rv(r):
+    return Fraction(q(r[0]), q(r[1]))
+
+def rat(a, b=1):
+    if b == 0:
+        raise ValueError("denominator guard")
+    return integer(a), integer(b)
+
+def radd(r, s):
+    x, y = r
+    z, w = s
+    return add(mul(x, w), mul(z, y)), mul(y, w)
+
+def rmul(r, s):
+    return mul(r[0], s[0]), mul(r[1], s[1])
+
+def rneg(r):
+    return neg(r[0]), r[1]
+
+def rdiv(r, s):
+    if q(s[0]) == 0:
+        raise ValueError("divisor guard")
+    return mul(r[0], s[1]), mul(r[1], s[0])
+
+def inverse_term(r):
+    return (r[1], r[0]) if rv(r) != 0 else radd(r, rneg(r))
+
+states = []
+for n in (0, 2, 4):
+    for signs in product((-1, 1), repeat=n):
+        if sum(signs) != 0:
+            continue
+        e = {i: (i, (i, 0, 0), signs[i], ("leaf", i)) for i in range(n)}
+        for bits in product((False, True), repeat=n):
+            x = valid(Rich(e, frozenset(), frozenset(e),
+                           frozenset(i for i in e if bits[i])))
+            assert q(neg(x)) == -q(x) and neg(neg(x)) == x
+            states.append(x)
+pairs = 0
+for x in states:
+    for y in states:
+        a, p = add(x, y), mul(x, y)
+        assert q(a) == q(x) + q(y) and q(p) == q(x) * q(y)
+        assert charge(a, a.w) == charge(p, p.w) == 0
+        assert len(p.e) == len(x.e) + len(y.e) + len(x.w)*len(y.w)
+        for i, old in enumerate((x, y)):
+            assert all(p.e[(i, k)] == v for k, v in old.e.items())
+            assert all((((i, a), (i, b)) in p.o) == ((a, b) in old.o)
+                       for a in old.e for b in old.e)
+        pairs += 1
+assert (len(states), pairs) == (105, 11025)
+print("balanced_states=105 pair_checks=11025")
+
+xe = {"a": (0, (0,0,0), 1, ("leaf",7)),
+      "b": (1, (2,0,0), 1, ("leaf",7)),
+      "c": (1, (1,0,0), -1, ("leaf",8)),
+      "d": (2, (3,0,0), -1, ("leaf",8))}
+ye = {"r": (3, (10,0,0), 1, ("leaf",7)),
+      "s": (4, (10,0,0), -1, ("leaf",9))}
+x = valid(Rich(xe, frozenset({("a","b"), ("c","d")}),
+               frozenset(xe), frozenset("abc")))
+y = valid(Rich(ye, frozenset({("r","s")}), frozenset(ye), frozenset("r")))
+p, a, t = mul(x, y), add(x, y), temporal(x, y)
+assert (q(x), q(y), q(p), len(p.e), len(p.w), len(p.a), len(p.o)) == (1,1,1,14,8,3,27)
+assert [(p.e[(2,(k,"r"))][0], p.e[(2,(k,"r"))][1][0],
+         p.e[(2,(k,"r"))][2]) for k in "abc"] == [(4,10,1),(4,12,1),(4,11,-1)]
+assert (len(a.o), len(t.o), q(a), q(t)) == (3,11,2,2)
+print("worked_product: q=1 archive=14 whole=8 selected=3 causal_pairs=27")
+print("parallel_pairs=3 temporal_pairs=11 both_q=2")
+z0, z1 = mul(x, integer(0)), mul(x, replace(y, a=y.w))
+assert (len(z0.e), len(z0.w), q(z0)) == (4,0,0)
+assert (len(z1.e), len(z1.w), len(z1.a), q(z1)) == (14,8,6,0)
+assert mul(x, integer(0)) == mul(neg(x), integer(0))
+u, two = integer(1), integer(2)
+left, right = mul(mul(u,u),two), mul(u,mul(u,two))
+assert (len(left.e), len(right.e), q(left), q(right)) == (28,32,2,2)
+assert len(add(u,neg(u)).e) == 4 and q(add(u,neg(u))) == 0
+assert len(mul(u,u).e) == 8 and q(mul(u,u)) == 1
+print("zero_products: (archive,whole,selected,q)=(4,0,0,0),(14,8,6,0)")
+print("raw_laws: sum_with_negative_archive=4 unit_product_archive=8 associativity_archives=28,32")
+
+xp = replace(x, a=frozenset("a"))
+predicates = (lambda k: x.e[k][1][0] >= 2,
+              lambda k: x.e[k][3] == ("leaf",7),
+              lambda k: k == "b" or (k,"b") in x.o)
+observed = [(q(filt(x,f)), q(filt(xp,f))) for f in predicates]
+assert q(x) == q(xp) == 1 and observed == [(1,0),(2,1),(2,1)]
+restricted = replace(p, a=frozenset(k for k in p.a
+                     if abs(x.e[k[1][0]][1][0] - y.e[k[1][1]][1][0]) <= 9))
+omitted = charge(p, p.a - restricted.a)
+assert (q(restricted), omitted, q(p)) == (0,1,1)
+single = mul(replace(x,a=frozenset("a")), y)
+assert q(single) == 1 and q(replace(single,a=frozenset())) == 0
+print("filters: spatial=(1,0) source=(2,1) causal=(2,1); restricted_q=0 omitted_charge=1")
+
+expanded = replace(two, a=u.a)
+extra = two.w - u.w
+assert extra and charge(two,extra) == 0 and q(neg(expanded)) == q(neg(u)) == -1
+unbalanced = valid(Rich({k:v for k,v in two.e.items() if k in u.w or k == (1,1)},
+                        frozenset(), u.w | {(1,1)}, u.a))
+assert q(neg(unbalanced)) == 0 and charge(unbalanced,unbalanced.w) == 1
+w,z = coarse(u, lambda k: k[1])
+wn,zn = coarse(neg(u), lambda k: k[1])
+assert w == wn == {-1:-1,1:1} and z == {-1:0,1:1} and zn == {-1:-1,1:0}
+assert all(zn[b] == w[b] - z[b] for b in w)
+f = {"a":0,"b":0,"c":1}
+assert {f[k] for k in {"b","c"}} == {0,1}
+assert {0,1} - {f["a"]} == {1}
+assert {("L","L"),("R","R")} <= closure({("L","R"),("R","L")})
+print("transport: balanced_added_charge=0 unbalanced_defect=1; bin_complement=(0,-1); image_defect_and_cycle=confirmed")
+assert mul(spatial(x,2),spatial(y,2)) == spatial(p,2)
+assert mul(time_shift(x,5),time_shift(y,5)) == time_shift(p,5)
+assert mul(spatial(x,offset=1),spatial(y,offset=1)) != spatial(p,offset=1)
+try:
+    temporal(u,u)
+    raise AssertionError("unguarded temporal composition")
+except ValueError:
+    pass
+assert q(temporal(u,time_shift(u,1))) == 2
+print("coordinates: linear_and_time_translation_commute=True spatial_translation_commutes=False")
+
+r,s = rat(1,2),rat(-3,2)
+assert (rv(radd(r,s)),rv(rmul(r,s)),rv(rneg(r)),rv(rdiv(r,s))) == (
+    Fraction(-1),Fraction(-3,4),Fraction(-1,2),Fraction(-1,3))
+try:
+    rdiv(r,rat(0))
+    raise AssertionError("unguarded rational division")
+except ValueError:
+    pass
+prefix = [rv(inverse_term(rat(k))) for k in (0,1,1,1)]
+null_inverse_prefix = [rv(inverse_term(rat(1,k))) for k in (1,2,3,4)]
+assert prefix == [0,1,1,1] and null_inverse_prefix == [1,2,3,4]
+print("rationals: sum=-1 product=-3/4 negative=-1/2 division=-1/3 zero_divisor=rejected")
+print("inverse_prefixes: (0,1,1,1)->(0,1,1,1); (1,1/2,1/3,1/4)->(1,2,3,4)")
+
+shared = ({t-t for t in (1,2)}, {t*t for t in (1,2)})
+independent = ({t-s for t in (1,2) for s in (1,2)},
+               {t*s for t in (1,2) for s in (1,2)})
+assert shared == ({0},{1,4}) and independent == ({-1,0,1},{1,2,4})
+assert {(s,t) for s in (1,2) for t in (1,2) if s == t} == {(1,1),(2,2)}
+assert {t for t in (0,1) if t != 0} == {1}
+chain = {("e","f")}
+assert all(b not in {"e"} or a in {"e"} for a,b in chain)
+assert not all(b not in {"f"} or a in {"f"} for a,b in chain)
+print("sources: shared_difference={0} shared_square={1,4}; independent_difference={-1,0,1} independent_product={1,2,4}")
+
+# PR1: verification helpers only; Rich/add/mul/neg above remain the archive model.
+# Rich.w is Omega (an event set), whereas the first read_pair component is w(p).
+def sparse(c):
+    return {p: a for p, a in c.items() if a}
+
+def read_pair(x):
+    return tuple(sparse(c) for c in coarse(x, lambda k: x.e[k][1]))
+
+def plus_c(c, d):
+    return sparse({p: c.get(p, 0) + d.get(p, 0) for p in c.keys() | d.keys()})
+
+def minus_c(c):
+    return {p: -a for p, a in c.items()}
+
+def conv(c, d, keep=lambda p, q: True):
+    out = {}
+    for p, a in c.items():
+        for q0, b in d.items():
+            if keep(p, q0):
+                r = tuple(i + j for i, j in zip(p, q0))
+                out[r] = out.get(r, 0) + a*b
+    return sparse(out)
+
+def pair_add(x, y):
+    return tuple(plus_c(c, d) for c, d in zip(x, y))
+
+def pair_mul(x, y):
+    return tuple(conv(c, d) for c, d in zip(x, y))
+
+def flip_signs(x):
+    return valid(replace(x, e={k: (t, p, -s, r)
+                               for k, (t, p, s, r) in x.e.items()}))
+
+def at(x, points):
+    return filt(x, lambda k: x.e[k][1] in points)
+
+def realize(w, z):
+    assert sum(w.values()) == 0
+    events, chosen = {}, set()
+    for p in sorted(w.keys() | z.keys()):
+        for selected, value in ((True, z.get(p, 0)),
+                                (False, w.get(p, 0) - z.get(p, 0))):
+            for i in range(abs(value)):
+                k = (p, selected, i)
+                events[k] = (0, p, 1 if value > 0 else -1, ("leaf", 0))
+                if selected:
+                    chosen.add(k)
+    return valid(Rich(events, frozenset(), frozenset(events), frozenset(chosen)))
+
+def restricted_mul(x, y, keep):
+    full = mul(x, y)
+    return replace(full, a=frozenset(k for k in full.a if keep(*k[1])))
+
+origin, v, h = (0,0,0), (1,0,0), (0,1,-1)
+delta = {origin: 1}
+alpha = {origin: 1, v: -1}
+recovery_checks = 0
+for state in states:
+    bg, selected = read_pair(state)
+    for point in ((i,0,0) for i in range(4)):
+        z_at = q(at(state, {point}))
+        n_at = q(at(neg(state), {point}))
+        assert z_at == selected.get(point, 0)
+        assert z_at + n_at == bg.get(point, 0)
+        assert read_pair(at(state, {point}))[0] == bg
+        recovery_checks += 1
+assert recovery_checks == 420
+background_only = realize(alpha, {})
+assert read_pair(background_only) == (alpha, {})
+assert q(at(neg(background_only), {origin})) == 1
+assert q(at(neg(integer(0)), {origin})) == 0
+assert read_pair(at(background_only, set()))[0] == alpha
+assert read_pair(neg(background_only)) == (alpha, alpha)
+assert read_pair(flip_signs(background_only)) == (minus_c(alpha), {})
+shifted_u = spatial(u, offset=1)
+assert q(u) == q(shifted_u) == 1
+assert (q(at(u, {origin})), q(at(shifted_u, {origin}))) == (1, 0)
+print("pr1_recovery: singleton_checks=420 background_after_filter=preserved kernels_strict=True")
+
+image_cases = 0
+for a0, a1 in product((-1,0,1), repeat=2):
+    bg = sparse(dict(zip((origin,v,h), (a0,a1,-a0-a1))))
+    for zs in product((-1,0,1), repeat=3):
+        selected = sparse(dict(zip((origin,v,h), zs)))
+        state = realize(bg, selected)
+        assert read_pair(state) == (bg, selected)
+        bound = sum(abs(selected.get(p,0)) + abs(bg.get(p,0)-selected.get(p,0))
+                    for p in bg.keys() | selected.keys())
+        assert len(state.w) == len(state.e) == bound
+        assert charge(state, state.w) == 0 and not state.o
+        assert all(event[0] == 0 for event in state.e.values())
+        image_cases += 1
+assert image_cases == 243
+
+capacity_cases, selection_cases = 0, 0
+for pp0, pm0, pp1, pm1 in product(range(3), repeat=4):
+    if pp0 + pp1 != pm0 + pm1:
+        continue
+    counts = {origin: (pp0,pm0), v: (pp1,pm1)}
+    events = {(p,s,i): (0,p,s,("leaf",0)) for p, ns in counts.items()
+              for s,n in zip((1,-1),ns) for i in range(n)}
+    fixed = valid(Rich(events, frozenset(), frozenset(events), frozenset()))
+    seen = set()
+    for bits in product((False,True), repeat=len(events)):
+        chosen = frozenset(k for k,yes in zip(events,bits) if yes)
+        bg, selected = read_pair(replace(fixed, a=chosen))
+        assert bg == sparse({origin:pp0-pm0, v:pp1-pm1})
+        seen.add(tuple(selected.get(p,0) for p in (origin,v)))
+        selection_cases += 1
+    expected = set(product(range(-pm0,pp0+1), range(-pm1,pp1+1)))
+    assert seen == expected
+    capacity_cases += 1
+assert (capacity_cases, selection_cases) == (19,673)
+empty_u, empty_two = replace(u,a=frozenset()), replace(two,a=frozenset())
+assert read_pair(empty_u) == read_pair(empty_two) == ({},{})
+capacities = []
+for fixed in (empty_u, empty_two):
+    capacities.append({q(replace(fixed,a=frozenset(k for k,b in zip(fixed.w,bits) if b)))
+                       for bits in product((False,True),repeat=len(fixed.w))})
+assert capacities == [{-1,0,1},{-2,-1,0,1,2}]
+print("pr1_image_capacity: image_cases=243 fixed_contexts=19 choices=673 capacities=[-1,1],[-2,2]")
+
+# Explicit coefficients come from the delta expansions in section 17.3.
+sx = realize(alpha, {origin:2, v:-1})
+sy = realize({h:1, origin:-1}, {v:1, h:1})
+vh, vv = (1,1,-1), (2,0,0)
+expected_bg = {h:1, origin:-1, vh:-1, v:1}
+expected_z = {v:2, h:2, vv:-1, vh:-1}
+full = mul(sx, sy)
+assert read_pair(full) == (expected_bg, expected_z)
+assert (len(full.e), len(full.w), q(full)) == (24,16,2)
+assert read_pair(neg(sx)) == (alpha, {origin:-1})
+kept = restricted_mul(sx, sy, lambda a,b: sx.e[a][1] == sy.e[b][1])
+assert read_pair(kept) == (expected_bg, {vv:-1})
+assert q(kept) == -1 and q(full) == 2
+assert conv(read_pair(sx)[1], read_pair(sy)[1], lambda p,q0:p == q0) == {vv:-1}
+assert q(restricted_mul(u, shifted_u, lambda a,b:u.e[a][1] == shifted_u.e[b][1])) == 0
+assert q(restricted_mul(u, u, lambda a,b:u.e[a][1] == u.e[b][1])) == 1
+
+space_states = [realize(sparse({origin:c, v:-c}), z0)
+                for c in (-1,0,1) for z0 in ({h:-1},{},{v:1,h:1})]
+space_pairs = 0
+for xx in space_states:
+    bx,zx = read_pair(xx)
+    assert read_pair(neg(xx)) == (bx,plus_c(bx,minus_c(zx)))
+    assert read_pair(add(xx,flip_signs(xx))) == ({},{})
+    for yy in space_states:
+        px,py = read_pair(xx),read_pair(yy)
+        assert read_pair(add(xx,yy)) == pair_add(px,py)
+        assert read_pair(mul(xx,yy)) == pair_mul(px,py)
+        assert sum(conv(px[0],py[0]).values()) == 0
+        assert sum(conv(px[1],py[1]).values()) == q(xx)*q(yy)
+        assert pair_mul(px,py) == pair_mul(py,px)
+        space_pairs += 1
+space_triples = 0
+pair_samples = [read_pair(xx) for xx in space_states]
+for px,py,pz in product(pair_samples, repeat=3):
+    assert pair_mul(pair_mul(px,py),pz) == pair_mul(px,pair_mul(py,pz))
+    assert pair_mul(px,pair_add(py,pz)) == pair_add(pair_mul(px,py),pair_mul(px,pz))
+    space_triples += 1
+assert (space_pairs,space_triples) == (81,729)
+assert read_pair(left) == read_pair(right) == ({},{origin:2})
+assert (len(left.e),len(right.e)) == (28,32)
+print("pr1_convolution: sparse_states=9 rich_pairs=81 pair_triples=729 explicit_full_q=2 restricted_q=-1 archives=28,32")
+
+FAIL = object()
+def observe(ops, state, read):
+    try:
+        for operation in ops:
+            state = operation(state)
+    except (KeyError, ValueError):
+        return FAIL
+    return ("ok", read(state))
+
+only_a = {"a":"a"}.__getitem__
+rd0 = lambda _: 0
+common_words = [(),(only_a,),(only_a,only_a)]
+for word in common_words:
+    oa,ob = observe(word,"a",rd0),observe(word,"b",rd0)
+    assert oa is FAIL or ob is FAIL or oa == ob  # The wrong rule misses the defect.
+assert observe((only_a,),"a",rd0) == ("ok",0)
+assert observe((only_a,),"b",rd0) is FAIL
+assert observe((only_a,),"b",rd0) != ("ok",0)
+depth_cases = 0
+for depth in range(5):
+    advance = lambda x, k=depth: (x[0],min(x[1]+1,k+1))
+    read = lambda x, k=depth: int(x == ("a",k+1))
+    for j in range(depth+1):
+        assert observe((advance,)*j,("a",0),read) == observe((advance,)*j,("b",0),read)
+    assert (observe((advance,)*(depth+1),("a",0),read),
+            observe((advance,)*(depth+1),("b",0),read)) == (("ok",1),("ok",0))
+    assert observe((advance,)*depth,advance(("a",0)),read) != observe((advance,)*depth,advance(("b",0)),read)
+    depth_cases += 1
+f = lambda s,t: 2 if (s,t) == (1,2) else 0
+read012 = lambda x: int(x == 2)
+second_only = [lambda x,a=a:f(a,x) for a in (0,1,2)]
+params01 = [lambda x,a=a:f(a,x) for a in (0,1)] + [lambda x,a=a:f(x,a) for a in (0,1)]
+restricted_words = 0
+for family in (second_only,params01):
+    for depth in range(4):
+        for word in product(family,repeat=depth):
+            assert observe(word,0,read012) == observe(word,1,read012)
+            restricted_words += 1
+assert observe((lambda x:f(x,2),),0,read012) == ("ok",0)
+assert observe((lambda x:f(x,2),),1,read012) == ("ok",1)
+g = lambda x: 0 if x == 0 else 2
+assert observe((),0,read012) == observe((),1,read012)
+assert observe((g,),0,read012) != observe((g,),1,read012)
+assert (depth_cases,restricted_words) == (5,125)
+print("pr1_contexts: common_domain_miss=1 depth_counterexamples=5 restricted_word_checks=125 slot_parameter_and_extra_probe=distinguished")
+
+source7 = valid(Rich({"a":(0,origin,1,("leaf",7)), "b":(0,origin,-1,("leaf",7))},
+                    frozenset(),frozenset(("a","b")),frozenset(("a",))))
+source8 = replace(source7,e={k:(t,p,s,("leaf",8)) for k,(t,p,s,r) in source7.e.items()})
+assert read_pair(source7) == read_pair(source8) == ({},delta)
+source_reads = tuple(q(filt(xx,lambda k,xx=xx:xx.e[k][3] == ("leaf",7)))
+                     for xx in (source7,source8))
+assert source_reads == (1,0)
+source_products = tuple(q(restricted_mul(xx,source7,
+                        lambda a,b,xx=xx:xx.e[a][3] == source7.e[b][3]))
+                        for xx in (source7,source8))
+assert source_products == (1,0)
+ce = {k:(t,origin,s,("leaf",0)) for k,t,s in zip("abcd",(0,1,0,1),(1,1,-1,-1))}
+causal = valid(Rich(ce,frozenset({("a","b")}),frozenset(ce),frozenset("ab")))
+no_causal = valid(replace(causal,o=frozenset()))
+def past(x, targets):
+    if not targets <= x.e.keys():
+        raise ValueError("dependent causal query domain")
+    return filt(x,lambda e:any(e == d or (e,d) in x.o for d in targets))
+assert read_pair(causal) == read_pair(no_causal) == ({},{origin:2})
+assert (q(past(causal,{"b"})),q(past(no_causal,{"b"}))) == (2,1)
+assert tuple(q(restricted_mul(xx,u,lambda a,b,xx=xx:a in past(xx,{"b"}).a))
+             for xx in (causal,no_causal)) == (2,1)
+old = valid(replace(u,e={**u.e,("old",0):(2,origin,1,("leaf",9))}))
+assert read_pair(old) == read_pair(u) == ({},delta)
+after = time_shift(u,1)
+assert observe((lambda xx:temporal(xx,after),),u,q) == ("ok",2)
+assert observe((lambda xx:temporal(xx,after),),old,q) is FAIL
+renamed = valid(Rich({"a2":source7.e["a"],"b2":source7.e["b"]},frozenset(),
+                    frozenset(("a2","b2")),frozenset(("a2",))))
+assert read_pair(renamed) == read_pair(source7)
+assert (q(filt(source7,lambda k:k == "a")),q(filt(renamed,lambda k:k == "a"))) == (1,0)
+assert tuple(q(restricted_mul(xx,u,lambda a,b:a == "a")) for xx in (source7,renamed)) == (1,0)
+assert observe((lambda xx:past(xx,{"a"}),),source7,q) == ("ok",1)
+assert observe((lambda xx:past(xx,{"a"}),),renamed,q) is FAIL
+print("pr1_boundaries: same_pair_source=1,0 causal=2,1 time_domain=defined,undefined identity=1,0 dependent_D=defined,undefined")
+
+a0 = read_pair(background_only)
+e0 = read_pair(u)
+zero_pair = ({},{})
+assert a0 != zero_pair and e0 != zero_pair
+assert read_pair(mul(background_only,u)) == zero_pair
+assert read_pair(mul(u,source7)) == read_pair(source7)
+assert read_pair(neg(mul(u,u))) == ({},{origin:-1})
+assert read_pair(mul(neg(u),neg(u))) == e0
+assert read_pair(neg(u)) == read_pair(flip_signs(u))
+for xx in space_states:
+    bg,_ = read_pair(xx)
+    assert (read_pair(neg(xx)) == read_pair(flip_signs(xx))) == (bg == {})
+unit_candidates = 0
+for coeffs in product(range(-2,3),repeat=3):
+    if sum(coeffs) != 0:
+        continue
+    candidate_a = sparse(dict(zip((origin,v,h),coeffs)))
+    # This detects finite examples of c(r-v) != c(r); the unbounded proof is prose.
+    c = plus_c(candidate_a,{origin:-1})
+    assert conv(c,{v:1,origin:-1}) != {}
+    for b_coeffs in product((-1,0,1),repeat=3):
+        candidate_b = sparse(dict(zip((origin,v,h),b_coeffs)))
+        candidate = (candidate_a,candidate_b)
+        if candidate_b != delta:
+            assert pair_mul(candidate,e0) != e0
+        else:
+            assert pair_mul(candidate,a0) != a0
+        unit_candidates += 1
+assert unit_candidates == 513
+print("pr1_rng: zero_divisors=confirmed N_not_J=confirmed N_not_multiplicative=confirmed P0_unit_only=True finite_unit_candidates_rejected=513")
+
+# PR2: all finite data still use Rich and the original archive operations.
+def history_map(x, y, mapping):
+    assert set(mapping) == set(x.e) and set(mapping.values()) == set(y.e)
+    assert len(set(mapping.values())) == len(mapping)
+    assert all(x.e[e] == y.e[mapping[e]] for e in x.e)
+    assert {(mapping[a],mapping[b]) for a,b in x.o} == set(y.o)
+    assert {mapping[e] for e in x.w} == set(y.w)
+    assert {mapping[e] for e in x.a} == set(y.a)
+    return 1
+
+def rebracket(x, y, z):
+    return {**{(0,(0,e)):(0,e) for e in x.e},
+            **{(0,(1,e)):(1,(0,e)) for e in y.e},
+            **{(1,e):(1,(1,e)) for e in z.e}}
+
+def unit_at(t):
+    return time_shift(integer(1), t)
+
+def guard(x, y):
+    return all(x.e[e][0] < y.e[f][0] for e in x.e for f in y.e)
+
+def attempt(operation):
+    try:
+        return operation()
+    except ValueError:
+        return FAIL
+
+hist_left, hist_right = mul(u,add(u,u)), add(mul(u,u),mul(u,u))
+assert (len(hist_left.e),len(hist_right.e),q(hist_left),q(hist_right)) == (14,16,2,2)
+comm_left, comm_right = mul(source7,source8), mul(source8,source7)
+new_sources = [{z.e[e][3] for e in z.e if z.e[e][0] == 1}
+               for z in (comm_left,comm_right)]
+assert new_sources == [{("pair",("leaf",7),("leaf",8))},
+                       {("pair",("leaf",8),("leaf",7))}]
+assert new_sources[0].isdisjoint(new_sources[1])
+assert len(comm_left.w) == len(comm_right.w) == 4
+empty = integer(0)
+additive_isomorphisms = history_map(add(source7,source8),add(source8,source7),
+                                  {(i,e):(1-i,e) for i,z in enumerate((source7,source8)) for e in z.e})
+additive_isomorphisms += history_map(add(u,empty),u,{(0,e):e for e in u.e})
+assert add(u,empty) != u and add(add(u,u),u) != add(u,add(u,u))
+additive_isomorphisms += history_map(add(add(u,u),u),add(u,add(u,u)),rebracket(u,u,u))
+assert q(add(u,neg(u))) == 0 and len(add(u,neg(u)).e) == 4
+print(f"pr2_history: distributivity_archives={len(hist_left.e)},{len(hist_right.e)} ordered_source_new_events={len(comm_left.w)},{len(comm_right.w)} additive_isomorphisms={additive_isomorphisms}")
+
+temporal_states = [empty] + [unit_at(t0) for t0 in (-1,0,1,2)]
+current_empty = valid(replace(unit_at(4),w=frozenset(),a=frozenset()))
+temporal_states.append(current_empty)
+temporal_checks, temporal_defined = 0, 0
+for xx,yy,zz in product(temporal_states,repeat=3):
+    required = guard(xx,yy) and guard(xx,zz) and guard(yy,zz)
+    tl = attempt(lambda: temporal(temporal(xx,yy),zz))
+    tr = attempt(lambda: temporal(xx,temporal(yy,zz)))
+    assert (tl is not FAIL) == (tr is not FAIL) == required
+    if required:
+        history_map(tl,tr,rebracket(xx,yy,zz))
+        temporal_defined += 1
+    temporal_checks += 1
+assert guard(unit_at(2),empty) and guard(empty,unit_at(1))
+assert not guard(unit_at(2),unit_at(1))
+assert attempt(lambda:temporal(temporal(unit_at(2),empty),unit_at(1))) is FAIL
+assert attempt(lambda:temporal(unit_at(2),temporal(empty,unit_at(1)))) is FAIL
+legal = temporal(temporal(unit_at(0),unit_at(1)),unit_at(2))
+assert (len(legal.e),len(legal.o)) == (6,12)
+assert attempt(lambda:temporal(temporal(u,empty),unit_at(1))) is not FAIL
+assert temporal_checks == 216
+print(f"pr2_temporal: triples={temporal_checks} defined={temporal_defined} legal_archive={len(legal.e)} legal_edges={len(legal.o)} empty_middle_adjacent_guards_insufficient=True")
+
+# None denotes +infinity in m and -infinity in M/s; no finite float times.
+def theta(x):
+    return (read_pair(x), min((v[0] for v in x.e.values()),default=None),
+            max((v[0] for v in x.e.values()),default=None),
+            max((x.e[e][0] for e in x.w),default=None))
+
+def lo(*values):
+    return min((v for v in values if v is not None),default=None)
+
+def hi(*values):
+    return max((v for v in values if v is not None),default=None)
+
+def gamma(s, t):
+    return None if s is None or t is None else max(s,t)+1
+
+def theta_add(x, y):
+    return pair_add(x[0],y[0]),lo(x[1],y[1]),hi(x[2],y[2]),hi(x[3],y[3])
+
+def theta_mul(x, y):
+    g0 = gamma(x[3],y[3])
+    return pair_mul(x[0],y[0]),lo(x[1],y[1]),hi(x[2],y[2],g0),g0
+
+def theta_guard(x, y):
+    return x[2] is None or y[1] is None or x[2] < y[1]
+
+def ceiling_state(s, selected_time=None, floor=0, ceiling=10):
+    selected_time = s if selected_time is None else selected_time
+    e = {"pos":(selected_time,origin,1,("leaf",0)),
+         "neg":(s,origin,-1,("leaf",0)),
+         "old_min":(floor,origin,1,("leaf",9)),
+         "old_max":(ceiling,origin,1,("leaf",9))}
+    return valid(Rich(e,frozenset(),frozenset(("pos","neg")),frozenset(("pos",))))
+
+c0,c9 = ceiling_state(0),ceiling_state(9)
+selected_low = ceiling_state(9,selected_time=0)
+assert theta(c0) == (({},delta),0,10,0)
+assert theta(c9) == (({},delta),0,10,9)
+assert max(selected_low.e[e][0] for e in selected_low.a) == 0
+assert theta(selected_low)[3] == 9
+theta_states = [empty,unit_at(-1),u,unit_at(1),current_empty,c0,c9,selected_low]
+theta_pairs,theta_unary,threshold_checks = 0,0,0
+for xx in theta_states:
+    tx = theta(xx)
+    bg,zx = tx[0]
+    assert theta(neg(xx)) == ((bg,plus_c(bg,minus_c(zx))),*tx[1:])
+    theta_unary += 1
+    for points in (set(),{origin},{v}):
+        assert theta(at(xx,points)) == ((bg,{p:a for p,a in zx.items() if p in points}),*tx[1:])
+        theta_unary += 1
+    for k in (-3,0,4):
+        assert theta(time_shift(xx,k)) == (tx[0],*(a+k if a is not None else None for a in tx[1:]))
+        theta_unary += 1
+    for t0 in range(-3,13):
+        assert guard(xx,unit_at(t0)) == (tx[2] is None or tx[2] < t0)
+        assert guard(unit_at(t0),xx) == (tx[1] is None or t0 < tx[1])
+        threshold_checks += 2
+    for yy in theta_states:
+        ty = theta(yy)
+        assert theta(add(xx,yy)) == theta_add(tx,ty)
+        assert theta(mul(xx,yy)) == theta_mul(tx,ty)
+        out = attempt(lambda: temporal(xx,yy))
+        assert (out is not FAIL) == theta_guard(tx,ty)
+        if out is not FAIL:
+            assert theta(out) == theta_add(tx,ty)
+        theta_pairs += 1
+assert (theta_pairs,theta_unary,threshold_checks) == (64,56,256)
+c0_twice,c9_twice = [mul(mul(xx,u),u) for xx in (c0,c9)]
+maxima = theta(c0_twice)[2],theta(c9_twice)[2]
+assert maxima == (10,11)
+assert q(temporal(c0_twice,unit_at(11))) == 2
+assert attempt(lambda:temporal(c9_twice,unit_at(11))) is FAIL
+assert theta(mul(selected_low,u))[3] == 10  # Using max selected A would give 1.
+same_theta_time = ceiling_state(9,selected_time=5)
+assert theta(selected_low) == theta(same_theta_time)
+time_filter_reads = tuple(q(filt(xx,lambda e,xx=xx:xx.e[e][0] == 0))
+                          for xx in (selected_low,same_theta_time))
+assert time_filter_reads == (1,0)
+amplification_checks = 0
+amp0,amp2 = [ceiling_state(s,floor=-1,ceiling=2) for s in (0,2)]
+amp_empty = valid(replace(amp0,w=frozenset(),a=frozenset()))
+for xx,yy in ((amp0,amp2),(amp_empty,replace(amp2,a=frozenset()))):
+    tx,ty = theta(xx),theta(yy)
+    assert tx[:3] == ty[:3] and tx[3] != ty[3]
+    early = tx[1]
+    n = tx[2] - (tx[3] if tx[3] is not None else ty[3]) + 1
+    r0 = ty[3]+n
+    for j in range(1,n+1):
+        xx,yy = mul(xx,unit_at(early)),mul(yy,unit_at(early))
+        for rich,old_t in ((xx,tx),(yy,ty)):
+            s0 = old_t[3]
+            expected_s = None if s0 is None else s0+j
+            assert theta(rich)[2:] == (hi(old_t[2],expected_s),expected_s)
+    assert theta(xx)[2] < r0 == theta(yy)[2]
+    assert attempt(lambda:temporal(xx,unit_at(r0))) is not FAIL
+    assert attempt(lambda:temporal(yy,unit_at(r0))) is FAIL
+    amplification_checks += 1
+print(f"pr2_theta: pairs={theta_pairs} unary={theta_unary} integer_thresholds={threshold_checks} amplification_cases={amplification_checks} archive_maxima={maxima[0]},{maxima[1]} following_U11=defined,failed time_filter={time_filter_reads[0]},{time_filter_reads[1]}")
+
+theta_law_checks = 0
+law_states = [empty,u,current_empty,c9]
+for xx,yy,zz in product(law_states,repeat=3):
+    assert theta(add(add(xx,yy),zz)) == theta(add(xx,add(yy,zz)))
+    assert theta(mul(xx,add(yy,zz))) == theta(add(mul(xx,yy),mul(xx,zz)))
+    assert theta(mul(add(xx,yy),zz)) == theta(add(mul(xx,zz),mul(yy,zz)))
+    theta_law_checks += 1
+for xx,yy in product(theta_states,repeat=2):
+    assert theta(mul(xx,yy)) == theta(mul(yy,xx))
+    assert theta(add(xx,yy)) == theta(add(yy,xx))
+    assert theta(add(xx,empty)) == theta(xx)
+    assert theta(mul(xx,u))[3] != 0
+theta_left,theta_right = mul(mul(u,u),unit_at(1)),mul(u,mul(u,unit_at(1)))
+assert theta(theta_left) == (({},delta),0,2,2)
+assert theta(theta_right) == (({},delta),0,3,3)
+assert theta(mul(u,empty)) == (({},{}),0,0,None) != theta(empty)
+print(f"pr2_theta_laws: rich_triples={theta_law_checks} associativity_maxima={theta(theta_left)[2]},{theta(theta_right)[2]} zero_absorbing=False")
+
+small = [sparse(dict(zip((origin,v,h),cs))) for cs in product((-1,0,1),repeat=3) if any(cs)]
+extreme_checks,unit_product_checks = 0,0
+for ca,cb in product(small,repeat=2):
+    cc = conv(ca,cb)
+    assert cc
+    for extremum in (min,max):
+        pa,pb = extremum(ca),extremum(cb)
+        target = tuple(a+b for a,b in zip(pa,pb))
+        assert extremum(cc) == target and cc[target] == ca[pa]*cb[pb]
+        splits = [(p0,q0) for p0 in ca for q0 in cb
+                  if tuple(a+b for a,b in zip(p0,q0)) == target]
+        assert splits == [(pa,pb)]
+    if cc == delta:
+        assert len(ca) == len(cb) == 1
+        assert next(iter(ca.values()))*next(iter(cb.values())) == 1
+        unit_product_checks += 1
+    extreme_checks += 1
+unit_checks = 0
+for point,sgn in product((origin,v,tuple(-a for a in v),h,tuple(-a for a in h)),(-1,1)):
+    assert conv({point:sgn},{tuple(-a for a in point):sgn}) == delta
+    unit_checks += 1
+nonunit = {origin:2,v:-1}
+assert sum(nonunit.values()) == 1 and len(nonunit) == 2
+inverse_candidates = 0
+for cs in product((-1,0,1),repeat=3):
+    candidate = sparse(dict(zip((tuple(-a for a in v),origin,v),cs)))
+    assert conv(nonunit,candidate) != delta
+    inverse_candidates += 1
+assert (len(small),extreme_checks,unit_checks,inverse_candidates) == (26,676,10,27)
+print(f"pr2_extrema: nonzero_samples={len(small)} pairs={extreme_checks} products_delta0={unit_product_checks} signed_delta_inverses={unit_checks} nonunit_augmentation={sum(nonunit.values())} inverse_candidates_rejected={inverse_candidates}")
+
+def tree_shapes(start, n):
+    if n == 1:
+        return [start]
+    return [(left,right) for k in range(1,n) for left in tree_shapes(start,k)
+            for right in tree_shapes(start+k,n-k)]
+
+def tree_time(tree, times, delay=1):
+    if isinstance(tree,int):
+        return times[tree]
+    return max(tree_time(tree[0],times,delay),tree_time(tree[1],times,delay))+delay
+
+def leaf_depths(tree, depth=0):
+    return [(tree,depth)] if isinstance(tree,int) else (
+        leaf_depths(tree[0],depth+1)+leaf_depths(tree[1],depth+1))
+
+def tree_rich(tree, times):
+    return unit_at(times[tree]) if isinstance(tree,int) else mul(
+        tree_rich(tree[0],times),tree_rich(tree[1],times))
+
+tree_checks,rich_tree_checks = 0,0
+for n in (3,4):
+    for tree in tree_shapes(0,n):
+        for times in product((-2,0,3),repeat=n):
+            for delay in (1,2,3):
+                assert tree_time(tree,times,delay) == max(times[i]+delay*d for i,d in leaf_depths(tree))
+                tree_checks += 1
+        times = tuple(range(n))
+        rich = tree_rich(tree,times)
+        expected = max(times[i]+d for i,d in leaf_depths(tree))
+        assert theta(rich)[2:] == (expected,expected)
+        rich_tree_checks += 1
+translation_checks,delay_transport_checks = 0,0
+for a,b,c in product(range(-3,4),range(-3,4),(-2,0,3)):
+    assert max(a,b)+1+c == max(a+c,b+c)+1
+    translation_checks += 1
+for scale,b,delay,t0,t1 in product((1,2,3),(-2,0,3),(1,2,3),range(-2,3),range(-2,3)):
+    assert scale*(max(t0,t1)+delay)+b == max(scale*t0+b,scale*t1+b)+scale*delay
+    delay_transport_checks += 1
+assert 2*(max(0,0)+1) != max(2*0,2*0)+1
+assert (tree_checks,rich_tree_checks,translation_checks,delay_transport_checks) == (1377,7,147,675)
+print(f"pr2_clock: depth_cases={tree_checks} rich_trees={rich_tree_checks} translations={translation_checks} scaled_delay_cases={delay_transport_checks} fixed_delay_scaling_rejected=True")
+
+def mul_at(x, y, reference):
+    z = mul(x,y)
+    events = dict(z.e)
+    for key in z.w:
+        t0,p0,s0,r0 = events[key]
+        events[key] = (t0,tuple(a-b for a,b in zip(p0,reference)),s0,r0)
+    return valid(replace(z,e=events))
+
+def affine_point(p, matrix, offset):
+    return tuple(sum(a*b for a,b in zip(row,p))+v0 for row,v0 in zip(matrix,offset))
+
+def affine_rich(x, matrix, offset):
+    return valid(replace(x,e={key:(t0,affine_point(p0,matrix,offset),s0,r0)
+                              for key,(t0,p0,s0,r0) in x.e.items()}))
+
+def push_c(c, function):
+    out = {}
+    for p0,value in c.items():
+        target = function(p0)
+        out[target] = out.get(target,0)+value
+    return sparse(out)
+
+def conv_at(c, d, reference):
+    return {tuple(a-b for a,b in zip(p0,reference)):value for p0,value in conv(c,d).items()}
+
+matrices = [((1,0,0),(0,1,0),(0,0,1)),((2,0,0),(0,2,0),(0,0,2)),
+            ((1,1,0),(0,1,0),(0,0,-1)),((0,0,0),(0,1,0),(0,0,1))]
+references,offset = (origin,(1,2,-1)),(2,-1,3)
+reference_states = [u,sx,sy,current_empty]
+reference_checks,affine_checks,space_unit_checks = 0,0,0
+for reference in references:
+    for xx,yy in product(reference_states,repeat=2):
+        result = mul_at(xx,yy,reference)
+        standard = mul(xx,yy)
+        assert result.e.keys() == standard.e.keys()
+        assert (result.o,result.w,result.a) == (standard.o,standard.w,standard.a)
+        assert all((v0[0],v0[2:]) == (standard.e[e][0],standard.e[e][2:]) for e,v0 in result.e.items())
+        assert (q(result),charge(result,result.w),len(result.e)) == (
+            q(xx)*q(yy),0,len(xx.e)+len(yy.e)+len(xx.w)*len(yy.w))
+        assert read_pair(result) == tuple(conv_at(a,b,reference) for a,b in zip(read_pair(xx),read_pair(yy)))
+        if reference == origin:
+            assert result == standard
+        reference_checks += 1
+        for matrix in matrices:
+            function = lambda p,matrix=matrix:affine_point(p,matrix,offset)
+            transported = affine_rich(result,matrix,offset)
+            assert transported == mul_at(affine_rich(xx,matrix,offset),affine_rich(yy,matrix,offset),function(reference))
+            assert read_pair(transported) == tuple(push_c(c,function) for c in read_pair(result))
+            for a,b in zip(read_pair(xx),read_pair(yy)):
+                assert push_c(conv_at(a,b,reference),function) == conv_at(push_c(a,function),push_c(b,function),function(reference))
+            affine_checks += 1
+    for c in small:
+        assert conv_at({reference:1},c,reference) == conv_at(c,{reference:1},reference) == c
+        space_unit_checks += 1
+assert mul_at(spatial(u,offset=1),spatial(u,offset=1),origin) != spatial(mul_at(u,u,origin),offset=1)
+collapsed = realize({}, {origin:1,v:1})
+matrix = matrices[-1]
+function = lambda p:affine_point(p,matrix,origin)
+transported = affine_rich(collapsed,matrix,origin)
+assert transported.e.keys() == collapsed.e.keys() and len(transported.e) == 4
+wrong_before = affine_rich(at(collapsed,{origin}),matrix,origin)
+wrong_after = at(transported,{origin})
+assert (q(wrong_before),q(wrong_after)) == (1,2)
+pull_selected = filt(collapsed,lambda e:function(collapsed.e[e][1]) == origin)
+assert affine_rich(pull_selected,matrix,origin) == wrong_after
+assert push_c({origin:1},function) == {origin:1} != read_pair(wrong_after)[1]
+assert push_c(read_pair(pull_selected)[1],function) == read_pair(wrong_after)[1] == {origin:2}
+assert (reference_checks,affine_checks,space_unit_checks) == (32,128,52)
+print(f"pr2_reference: rich_pairs={reference_checks} affine_transports={affine_checks} space_units={space_unit_checks} noninjective_events={len(transported.e)} direct_image_filter={q(wrong_before)},{q(wrong_after)} pullback_filter={q(wrong_after)}")
+
+# PR3: finite checks only, using the original Rich archive operations.
+import json as pr3_json
+from random import Random as pr3_Random
+from itertools import combinations as pr3_combinations
+
+pr3_counts = {"source_updates": 0, "source_witnesses": 0,
+              "causal_updates": 0, "product_antichains": 0,
+              "bare_probes": 0, "legal_probes": 0,
+              "mobius_profiles": 0, "mobius_coefficients": 0,
+              "bounded_contexts": 0, "redundant_insertions": 0}
+
+def pr3_bytes(value):
+    def canonical(z):
+        if isinstance(z, dict):
+            return sorted([[canonical(k), canonical(v)] for k, v in z.items()],
+                          key=lambda item: pr3_json.dumps(item, sort_keys=True))
+        if isinstance(z, (set, frozenset)):
+            return sorted([canonical(k) for k in z], key=pr3_json.dumps)
+        if isinstance(z, (tuple, list)):
+            return [canonical(k) for k in z]
+        return z
+    return pr3_json.dumps(canonical(value), separators=(",", ":")).encode("utf-8")
+
+def pr3_equal(actual, expected, counter):
+    assert pr3_bytes(actual) == pr3_bytes(expected), (counter, actual, expected)
+    pr3_counts[counter] += 1
+
+def pr3_rho_src(x):
+    return tuple(sparse(c) for c in coarse(x, lambda e: (x.e[e][1], x.e[e][3])))
+
+def pr3_pair_product(c, d):
+    out = {}
+    for (p, r), n in c.items():
+        for (q0, s), m in d.items():
+            key = (tuple(a+b for a, b in zip(p, q0)), ("pair", r, s))
+            out[key] = out.get(key, 0) + n*m
+    return sparse(out)
+
+def pr3_alpha(x, e, timed=False):
+    t0, p, sign, source = x.e[e]
+    return (p, sign, source, t0) if timed else (p, sign, source)
+
+def pr3_U(x, e, timed=False):
+    return frozenset(pr3_alpha(x, d, timed) for d in x.w
+                     if e == d or (e, d) in x.o)
+
+def pr3_profile(x, timed=False):
+    out = {}
+    for e in x.w:
+        key = (pr3_alpha(x, e, timed), int(e in x.a), pr3_U(x, e, timed))
+        out[key] = out.get(key, 0) + x.e[e][2]
+    return sparse(out)
+
+def pr3_V(profile):
+    return frozenset(a for a, b, upper in profile)
+
+def pr3_causal_filter(x, Q, timed=False):
+    # The target domain is Omega = Rich.w, including unselected targets.
+    targets = frozenset(d for d in x.w if pr3_alpha(x, d, timed) in Q)
+    assert targets <= x.w
+    return filt(x, lambda e: any(e == d or (e, d) in x.o for d in targets))
+
+def pr3_diamond(a, b):
+    return (tuple(p+q0 for p, q0 in zip(a[0], b[0])), a[1]*b[1],
+            ("pair", a[2], b[2]))
+
+def pr3_profile_product(c, d):
+    out = {}
+    for (a, b, upper), n in c.items():
+        for (aa, bb, uu), m in d.items():
+            joined = pr3_diamond(a, aa)
+            key = (joined, b*bb, frozenset((joined,)))
+            out[key] = out.get(key, 0) + n*m
+    return sparse(out)
+
+def pr3_subsets(values):
+    values = sorted(values, key=repr)
+    return [frozenset(c) for n in range(len(values)+1)
+            for c in pr3_combinations(values, n)]
+
+pr3_U0 = integer(1)
+assert charge(pr3_U0, pr3_U0.w) == 0 and q(pr3_U0) == 1
+assert len(pr3_U0.w) == 2 and not pr3_U0.o
+
+class pr3_SignTargets:
+    # Membership in the fixed attribute set {a in Attr : sign(a) = eps}.
+    def __init__(self, eps):
+        assert eps in (-1, 1)
+        self.eps = eps
+    def __contains__(self, a):
+        return a[1] == self.eps
+
+def pr3_P_eps(z, eps):
+    return pr3_causal_filter(mul(z, pr3_U0), pr3_SignTargets(eps))
+
+def pr3_probe(x, Q, v0, eta):
+    p, eps, tau = v0
+    selected = x if eta == 1 else neg(x)
+    H = pr3_causal_filter(filt(at(selected, {p}),
+                              lambda e: selected.e[e][3] == tau), Q)
+    target = (p, eps, ("pair", tau, ("leaf", 0)))
+    return q(pr3_causal_filter(mul(H, pr3_U0), {target}))
+
+pr3_rng = pr3_Random(20260910)
+pr3_samples = []
+for pr3_i in range(48):
+    pr3_n = pr3_rng.choice((0, 2, 4))
+    pr3_signs = [1]*(pr3_n//2) + [-1]*(pr3_n//2)
+    pr3_rng.shuffle(pr3_signs)
+    pr3_events = {}
+    for pr3_j, pr3_sign in enumerate(pr3_signs):
+        pr3_p = origin if pr3_i % 2 else pr3_rng.choice((origin, v, h))
+        pr3_r = ("leaf", 0) if pr3_i % 2 else pr3_rng.choice(
+            (("leaf", 0), ("leaf", 7), ("pair", ("leaf", 0), ("leaf", 7))))
+        pr3_events[pr3_j] = (pr3_rng.randrange(-1, 3), pr3_p, pr3_sign, pr3_r)
+    pr3_whole = frozenset(pr3_events)
+    for pr3_j in range(pr3_rng.randrange(3)):
+        pr3_events[("old", pr3_j)] = (pr3_rng.randrange(-2, 4), v, 1, ("leaf", 9))
+    pr3_edges = {(a, b) for a in pr3_events for b in pr3_events
+                 if pr3_events[a][0] < pr3_events[b][0] and pr3_rng.randrange(3) == 0}
+    pr3_chosen = frozenset(e for e in sorted(pr3_whole) if pr3_rng.randrange(2))
+    pr3_samples.append(valid(Rich(pr3_events, closure(pr3_edges), pr3_whole, pr3_chosen)))
+
+for pr3_x in pr3_samples:
+    pr3_y = pr3_rng.choice(pr3_samples)
+    pr3_w, pr3_z = pr3_rho_src(pr3_x)
+    pr3_wy, pr3_zy = pr3_rho_src(pr3_y)
+    pr3_S, pr3_L = {origin, h}, {("leaf", 0), ("leaf", 7)}
+    pr3_equal(pr3_rho_src(add(pr3_x, pr3_y)),
+              (plus_c(pr3_w, pr3_wy), plus_c(pr3_z, pr3_zy)), "source_updates")
+    pr3_mul = mul(pr3_x, pr3_y)
+    pr3_equal(pr3_rho_src(pr3_mul),
+              (pr3_pair_product(pr3_w, pr3_wy), pr3_pair_product(pr3_z, pr3_zy)),
+              "source_updates")
+    assert all(r[0] == "pair" for c in pr3_rho_src(pr3_mul) for p, r in c)
+    pr3_equal(pr3_rho_src(neg(pr3_x)), (pr3_w, plus_c(pr3_w, minus_c(pr3_z))),
+              "source_updates")
+    pr3_equal(pr3_rho_src(at(pr3_x, pr3_S)),
+              (pr3_w, {k: n for k, n in pr3_z.items() if k[0] in pr3_S}), "source_updates")
+    pr3_source_filtered = filt(pr3_x, lambda e: pr3_x.e[e][3] in pr3_L)
+    pr3_equal(pr3_rho_src(pr3_source_filtered),
+              (pr3_w, {k: n for k, n in pr3_z.items() if k[1] in pr3_L}), "source_updates")
+    assert not any(a in pr3_mul.w for a, b in pr3_mul.o)
+    assert not any(a in pr3_mul.w and b in pr3_mul.w for a, b in pr3_mul.o)
+    pr3_counts["product_antichains"] += 1
+    pr3_g, pr3_gy = pr3_profile(pr3_x), pr3_profile(pr3_y)
+    assert pr3_V(pr3_g) == {pr3_alpha(pr3_x, e) for e in pr3_x.w}
+    assert all(pr3_alpha(pr3_x, e) in pr3_U(pr3_x, e) for e in pr3_x.w)
+    pr3_equal(pr3_profile(add(pr3_x, pr3_y)), plus_c(pr3_g, pr3_gy), "causal_updates")
+    pr3_equal(pr3_profile(neg(pr3_x)),
+              push_c(pr3_g, lambda k: (k[0], 1-k[1], k[2])), "causal_updates")
+    pr3_equal(pr3_profile(at(pr3_x, pr3_S)),
+              push_c(pr3_g, lambda k: (k[0], k[1]*int(k[0][0] in pr3_S), k[2])),
+              "causal_updates")
+    pr3_equal(pr3_profile(pr3_source_filtered),
+              push_c(pr3_g, lambda k: (k[0], k[1]*int(k[0][2] in pr3_L), k[2])),
+              "causal_updates")
+    for pr3_Q in pr3_subsets(pr3_V(pr3_g)):
+        pr3_equal(pr3_profile(pr3_causal_filter(pr3_x, pr3_Q)),
+                  push_c(pr3_g, lambda k: (k[0], k[1]*int(bool(k[2] & pr3_Q)), k[2])),
+                  "causal_updates")
+    pr3_equal(pr3_profile(pr3_mul), pr3_profile_product(pr3_g, pr3_gy), "causal_updates")
+    pr3_equal(pr3_profile(time_shift(pr3_x, 3)), pr3_g, "causal_updates")
+    # Exercise both success and failure, then force a legal nonempty timing if needed.
+    assert guard(pr3_x, pr3_y) == theta_guard(theta(pr3_x), theta(pr3_y))
+    pr3_late = time_shift(pr3_y, (theta(pr3_x)[2] or 0) - (theta(pr3_y)[1] or 0) + 1)
+    assert guard(pr3_x, pr3_late)
+    pr3_equal(pr3_profile(temporal(pr3_x, pr3_late)),
+              plus_c(push_c(pr3_g, lambda k: (k[0], k[1], k[2] | pr3_V(pr3_gy))), pr3_gy),
+              "causal_updates")
+
+pr3_l0, pr3_l1 = ("leaf", 0), ("leaf", 1)
+pr3_bracket_left, pr3_bracket_right = mul(mul(u, u), two), mul(u, mul(u, two))
+pr3_expected_left = {(origin, ("pair", ("pair", pr3_l0, pr3_l0), r)): 1
+                     for r in (pr3_l0, pr3_l1)}
+pr3_expected_right = {(origin, ("pair", pr3_l0, ("pair", pr3_l0, r))): 1
+                      for r in (pr3_l0, pr3_l1)}
+for pr3_actual, pr3_expected in (
+        (pr3_rho_src(pr3_bracket_left), ({}, pr3_expected_left)),
+        (pr3_rho_src(pr3_bracket_right), ({}, pr3_expected_right)),
+        (pr3_rho_src(source7), ({}, {(origin, ("leaf", 7)): 1})),
+        (pr3_rho_src(source8), ({}, {(origin, ("leaf", 8)): 1})),
+        (pr3_rho_src(comm_left), ({}, {(origin, ("pair", ("leaf", 7), ("leaf", 8))): 1})),
+        (pr3_rho_src(comm_right), ({}, {(origin, ("pair", ("leaf", 8), ("leaf", 7))): 1}))):
+    pr3_equal(pr3_actual, pr3_expected, "source_witnesses")
+assert set(pr3_expected_left).isdisjoint(pr3_expected_right)
+assert pr3_rho_src(comm_left) != pr3_rho_src(comm_right)
+assert pr3_rho_src(source7)[1] != pr3_rho_src(source8)[1]
+
+# D6: bare probes cancel, including equality after N, but the legal isolation separates.
+pr3_d1e = {e: (t0, origin, sign, pr3_l0)
+           for e, t0, sign in zip("abcd", (0, 1, 2, 2), (1, -1, 1, -1))}
+pr3_d1x = valid(Rich(pr3_d1e, closure({("a", "b"), ("b", "c"), ("b", "d")}),
+                     frozenset(pr3_d1e), frozenset("ab")))
+pr3_d1y = replace(pr3_d1x, a=frozenset())
+pr3_vp, pr3_vm = (origin, 1, pr3_l0), (origin, -1, pr3_l0)
+assert pr3_U(pr3_d1x, "a") == pr3_U(pr3_d1x, "b") == {pr3_vp, pr3_vm}
+for pr3_Q, pr3_S, pr3_L in product(pr3_subsets({pr3_vp, pr3_vm}),
+                                   (set(), {origin}), (set(), {pr3_l0})):
+    pr3_raw, pr3_complements = [], []
+    for pr3_x in (pr3_d1x, pr3_d1y):
+        for pr3_dest, pr3_z0 in ((pr3_raw, pr3_x), (pr3_complements, neg(pr3_x))):
+            pr3_dest.append(q(pr3_causal_filter(filt(at(pr3_z0, pr3_S),
+                                    lambda e: pr3_z0.e[e][3] in pr3_L), pr3_Q)))
+    assert pr3_raw == [0, 0] and pr3_complements[0] == pr3_complements[1]
+    pr3_counts["bare_probes"] += 1
+pr3_isolated = tuple(q(pr3_P_eps(z, 1)) for z in (pr3_d1x, pr3_d1y))
+assert pr3_isolated == (1, 0)
+assert tuple(pr3_probe(z, {pr3_vp, pr3_vm}, pr3_vp, 1) for z in (pr3_d1x, pr3_d1y)) == (1, 0)
+# Complemented bare readings are equal, NOT identically zero.
+assert tuple(q(pr3_causal_filter(neg(z), {pr3_vp})) for z in (pr3_d1x, pr3_d1y)) == (1, 1)
+
+# Targets outside Omega must have no effect, even when archived and reachable.
+pr3_outside = valid(Rich({"a": (0, origin, 1, pr3_l0), "b": (0, origin, -1, pr3_l0),
+                         "old": (1, origin, 1, ("leaf", 9))},
+                        frozenset({("a", "old")}), frozenset("ab"), frozenset("a")))
+assert set(pr3_outside.e) - pr3_outside.w == {"old"}
+assert q(pr3_causal_filter(pr3_outside, {pr3_alpha(pr3_outside, "old")})) == 0
+assert q(past(pr3_outside, {"old"})) == 1
+assert pr3_U(pr3_outside, "a") == {pr3_vp}
+
+# Full finite Boolean inversion through legal carrier-parameter contexts, both selection bits.
+for pr3_x in pr3_samples + [pr3_d1x, pr3_d1y, pr3_outside]:
+    pr3_D = frozenset(pr3_alpha(pr3_x, e) for e in pr3_x.w)
+    pr3_powerset = pr3_subsets(pr3_D)
+    pr3_restored = {}
+    for pr3_v0, pr3_eta in product(sorted(pr3_D, key=repr), (0, 1)):
+        pr3_f = {}
+        for pr3_Q in pr3_powerset:
+            pr3_f[pr3_Q] = pr3_probe(pr3_x, pr3_Q, pr3_v0, pr3_eta)
+            pr3_expected = sum(pr3_x.e[e][2] for e in pr3_x.w
+                               if pr3_alpha(pr3_x, e) == pr3_v0
+                               and int(e in pr3_x.a) == pr3_eta and pr3_U(pr3_x, e) & pr3_Q)
+            assert pr3_f[pr3_Q] == pr3_expected
+            pr3_counts["legal_probes"] += 1
+        pr3_h = {W: pr3_f[pr3_D] - pr3_f[pr3_D-W] for W in pr3_powerset}
+        for pr3_upper in pr3_powerset:
+            pr3_coeff = sum((-1)**(len(pr3_upper)-len(W))*pr3_h[W]
+                            for W in pr3_subsets(pr3_upper))
+            if pr3_coeff:
+                pr3_restored[(pr3_v0, pr3_eta, pr3_upper)] = pr3_coeff
+            pr3_counts["mobius_coefficients"] += 1
+    pr3_equal(pr3_restored, pr3_profile(pr3_x), "mobius_profiles")
+
+# B2: a bounded family of the actual signature; no new primitive is used.
+assert pr3_profile(causal) == pr3_profile(no_causal) == {
+    (pr3_vp, 1, frozenset((pr3_vp,))): 2,
+    (pr3_vm, 0, frozenset((pr3_vm,))): -2}
+pr3_ops = [neg, lambda z: at(z, {origin}), lambda z: at(z, {v}),
+           lambda z: filt(z, lambda e: z.e[e][3] == pr3_l0),
+           lambda z: add(z, u), lambda z: add(u, z),
+           lambda z: mul(z, u), lambda z: mul(u, z),
+           lambda z: temporal(z, unit_at(2)), lambda z: temporal(unit_at(-1), z),
+           lambda z: time_shift(z, 1), lambda z: time_shift(z, -1)]
+pr3_ops += [lambda z, Q=Q: pr3_causal_filter(z, Q)
+            for Q in pr3_subsets({pr3_vp, pr3_vm})]
+for pr3_depth in range(3):
+    for pr3_word in product(pr3_ops, repeat=pr3_depth):
+        assert observe(pr3_word, causal, q) == observe(pr3_word, no_causal, q)
+        pr3_counts["bounded_contexts"] += 1
+pr3_time_reads = tuple(q(pr3_causal_filter(z, {(origin, 1, pr3_l0, 1)}, timed=True))
+                       for z in (causal, no_causal))
+assert pr3_time_reads == (2, 1)
+pr3_J_reads = tuple(q(filt(z, lambda e: any((e, d) in z.o for d in z.w)))
+                    for z in (causal, no_causal))
+assert pr3_J_reads == (1, 0)
+
+# D7: inserting a same-attribute generating edge creates a cross-attribute closure edge.
+pr3_d2e = {e: (t0, origin, sign, pr3_l0)
+           for e, t0, sign in zip("abcd", (0, 1, 2, 0), (1, 1, -1, -1))}
+pr3_d2x = valid(Rich(pr3_d2e, frozenset({("b", "c")}), frozenset(pr3_d2e), frozenset("a")))
+pr3_d2y = valid(replace(pr3_d2x, o=closure(pr3_d2x.o | {("a", "b")})))
+assert pr3_rho_src(pr3_d2x) == pr3_rho_src(pr3_d2y)
+assert theta(pr3_d2x)[1:] == theta(pr3_d2y)[1:]
+pr3_edge_reads = tuple(q(pr3_causal_filter(z, {pr3_vm})) for z in (pr3_d2x, pr3_d2y))
+assert pr3_edge_reads == (0, 1)
+
+# D8: all singleton hitting marginals agree, but a two-attribute query differs.
+pr3_d3e = {"e1": (0, origin, 1, pr3_l0), "e2": (0, origin, 1, pr3_l0),
+           "b": (1, origin, -1, ("leaf", 1)), "c": (1, origin, -1, ("leaf", 2))}
+pr3_d3x = valid(Rich(pr3_d3e, frozenset({("e2", "b"), ("e2", "c")}),
+                     frozenset(pr3_d3e), frozenset(("e1", "e2"))))
+pr3_d3y = valid(replace(pr3_d3x, o=frozenset({("e1", "b"), ("e2", "c")})))
+for pr3_attr in {pr3_alpha(pr3_d3x, e) for e in pr3_d3x.w}:
+    assert q(pr3_causal_filter(pr3_d3x, {pr3_attr})) == q(pr3_causal_filter(pr3_d3y, {pr3_attr}))
+pr3_bc = {pr3_alpha(pr3_d3x, e) for e in ("b", "c")}
+pr3_marginal_reads = tuple(q(pr3_causal_filter(z, pr3_bc)) for z in (pr3_d3x, pr3_d3y))
+assert pr3_marginal_reads == (1, 2)
+
+# A lawful edge insertion with U(f) <= U(e) preserves every current upper set.
+for pr3_x in pr3_samples:
+    for pr3_e, pr3_f0 in product(sorted(pr3_x.w), repeat=2):
+        if (pr3_x.e[pr3_e][0] < pr3_x.e[pr3_f0][0]
+                and (pr3_e, pr3_f0) not in pr3_x.o
+                and pr3_U(pr3_x, pr3_f0) <= pr3_U(pr3_x, pr3_e)):
+            pr3_y = valid(replace(pr3_x, o=closure(pr3_x.o | {(pr3_e, pr3_f0)})))
+            assert all(pr3_U(pr3_x, e) == pr3_U(pr3_y, e) for e in pr3_x.w)
+            assert pr3_profile(pr3_x) == pr3_profile(pr3_y)
+            pr3_counts["redundant_insertions"] += 1
+assert pr3_counts["redundant_insertions"] > 0
+
+# D10: even the time-attribute profile need not recover incidence or history isomorphism.
+pr3_d5e = {e: (t0, origin, 1, pr3_l0)
+           for e, t0 in zip(("a1", "a2", "b1", "b2"), (0, 0, 1, 1))}
+pr3_d5e.update({("n", i): (0, origin, -1, pr3_l0) for i in range(4)})
+pr3_d5x = valid(Rich(pr3_d5e, frozenset({("a1", "b1"), ("a2", "b2")}),
+                     frozenset(pr3_d5e), frozenset(("a1", "a2", "b1", "b2"))))
+pr3_d5y = valid(replace(pr3_d5x, o=frozenset({("a1", "b1"), ("a2", "b1")})))
+assert pr3_profile(pr3_d5x, timed=True) == pr3_profile(pr3_d5y, timed=True)
+pr3_indegrees = tuple(sorted(sum((a, b) in z.o for a in z.e) for b in ("b1", "b2"))
+                      for z in (pr3_d5x, pr3_d5y))
+assert pr3_indegrees == ([1, 1], [0, 2])
+print(f"pr3_source: samples={len(pr3_samples)} updates={pr3_counts['source_updates']} witnesses={pr3_counts['source_witnesses']} brackets={len(pr3_bracket_left.e)},{len(pr3_bracket_right.e)} B1=distinct ordered_pair=distinct")
+print(f"pr3_causal: updates={pr3_counts['causal_updates']} product_antichains={pr3_counts['product_antichains']} targets=Omega bare_probes={pr3_counts['bare_probes']} P_plus={pr3_isolated[0]},{pr3_isolated[1]} legal_probes={pr3_counts['legal_probes']} mobius_profiles={pr3_counts['mobius_profiles']} mobius_coefficients={pr3_counts['mobius_coefficients']} bounded_contexts={pr3_counts['bounded_contexts']} B2_time={pr3_time_reads[0]},{pr3_time_reads[1]} strict_successor={pr3_J_reads[0]},{pr3_J_reads[1]} edge={pr3_edge_reads[0]},{pr3_edge_reads[1]} marginals={pr3_marginal_reads[0]},{pr3_marginal_reads[1]} redundant_insertions={pr3_counts['redundant_insertions']} timed_nonisomorphism=True")
+
+# PR4: temporal causal checks; PR1--PR3 and the Rich operations remain unchanged.
+pr4_counts = {name: 0 for name in (
+    "updates", "endpoint_updates", "earliest_rows", "product_antichains",
+    "guard_success", "strict_failures", "context_reads", "mobius_coefficients",
+    "mobius_profiles", "xi_paths", "forget_paths", "q_expression", "kernel_edges")}
+
+def pr4_equal(actual, expected, counter):
+    assert pr3_bytes(actual) == pr3_bytes(expected), (counter, actual, expected)
+    pr4_counts[counter] += 1
+
+def pr4_profile(x):
+    return pr3_profile(x, timed=True)
+
+def pr4_earliest(upper):
+    earliest_time = min(a[3] for a in upper)
+    first = [a for a in upper if a[3] == earliest_time]
+    assert len(first) == 1, upper
+    return first[0]
+
+def pr4_support_time(g):
+    return max((a[3] for a, b, upper in g), default=None)
+
+def pr4_shift_attr(a, k):
+    return (*a[:3], a[3] + k)
+
+def pr4_shift_profile(g, k):
+    return push_c(g, lambda row: (pr4_shift_attr(row[0], k), row[1],
+                  frozenset(pr4_shift_attr(a, k) for a in row[2])))
+
+def pr4_diamond(a, aa):
+    return (*pr3_diamond(a[:3], aa[:3]), max(a[3], aa[3]) + 1)
+
+def pr4_profile_product(g, gg):
+    result = {}
+    for (a, b, upper), value in g.items():
+        for (aa, bb, uu), other in gg.items():
+            joined = pr4_diamond(a, aa)
+            row = (joined, b * bb, frozenset((joined,)))
+            result[row] = result.get(row, 0) + value * other
+    return sparse(result)
+
+def pr4_xi_direct(x):
+    # Definition 22: independent traversal of Omega and A, not of a profile.
+    background, chosen = {}, {}
+    for e in x.w:
+        time, position, sign, source = x.e[e]
+        cell = (time, position)
+        background[cell] = background.get(cell, 0) + sign
+    for e in x.a:
+        time, position, sign, source = x.e[e]
+        cell = (time, position)
+        chosen[cell] = chosen.get(cell, 0) + sign
+    return (sparse(background), sparse(chosen),
+            min((event[0] for event in x.e.values()), default=None),
+            max((event[0] for event in x.e.values()), default=None),
+            max((x.e[e][0] for e in x.w), default=None))
+
+def pr4_xi_from_profile(g, m, M):
+    # The coefficient already includes sign; do not multiply it by a[1].
+    background, chosen = {}, {}
+    for (a, b, upper), value in g.items():
+        cell = (a[3], a[0])
+        background[cell] = background.get(cell, 0) + value
+        if b == 1:
+            chosen[cell] = chosen.get(cell, 0) + value
+    return sparse(background), sparse(chosen), m, M, pr4_support_time(g)
+
+def pr4_forget_time(g):
+    return push_c(g, lambda row: (row[0][:3], row[1],
+                                 frozenset(a[:3] for a in row[2])))
+
+def pr4_read_table(x, D):
+    readings = {}
+    for eta in (0, 1):
+        selected = x if eta == 1 else neg(x)
+        for Q in pr3_subsets(D):
+            readings[(eta, Q)] = q(pr3_causal_filter(selected, Q, timed=True))
+            pr4_counts["context_reads"] += 1
+    return readings
+
+def pr4_restore(D, readings):
+    # Inputs are the fixed finite query vocabulary and terminal context readings.
+    # No Rich state, profile function, own-attribute probe or product is consumed.
+    restored = {}
+    subsets = pr3_subsets(D)
+    for eta in (0, 1):
+        h0 = {W: readings[(eta, D)] - readings[(eta, D - W)] for W in subsets}
+        for upper in subsets:
+            coefficient = sum((-1) ** (len(upper) - len(W)) * h0[W]
+                              for W in pr3_subsets(upper))
+            if coefficient:
+                assert upper
+                a = pr4_earliest(upper)
+                assert coefficient * a[1] > 0
+                restored[(a, eta, upper)] = coefficient
+            pr4_counts["mobius_coefficients"] += 1
+    return restored
+
+pr4_rng = pr3_Random(2026091004)
+pr4_samples = []
+for pr4_i in range(64):
+    pr4_n = pr4_rng.choice((0, 2, 4, 6))
+    pr4_signs = [1] * (pr4_n // 2) + [-1] * (pr4_n // 2)
+    pr4_rng.shuffle(pr4_signs)
+    pr4_events = {j: (pr4_rng.randrange(-5, 5),
+                        pr4_rng.choice((origin, v, h)), sign,
+                        pr4_rng.choice((pr3_l0, pr3_l1, ("pair", pr3_l0, pr3_l1))))
+                  for j, sign in enumerate(pr4_signs)}
+    pr4_whole = frozenset(pr4_events)
+    for pr4_j in range(pr4_rng.randrange(3)):
+        pr4_events[("old", pr4_j)] = (pr4_rng.randrange(-7, 7), v, 1, ("leaf", 9))
+    pr4_edges = {(e, d) for e in pr4_events for d in pr4_events
+                 if pr4_events[e][0] < pr4_events[d][0] and pr4_rng.randrange(4) == 0}
+    pr4_chosen = frozenset(e for e in sorted(pr4_whole) if pr4_rng.randrange(2))
+    pr4_samples.append(valid(Rich(pr4_events, closure(pr4_edges), pr4_whole, pr4_chosen)))
+
+# Directed boundaries: empty archive; nonempty archive with empty Omega;
+# highest current time cancels in W and Z but is visible in Gamma_t support.
+pr4_archive_only = valid(Rich({"old": (-4, origin, 1, pr3_l0)},
+                              frozenset(), frozenset(), frozenset()))
+pr4_cancel_events = {"p": (-3, origin, 1, pr3_l0), "n": (-3, origin, -1, pr3_l0),
+                     "top+": (4, origin, 1, pr3_l0), "top-": (4, origin, -1, pr3_l0),
+                     "old_min": (-9, v, 1, pr3_l0), "old_max": (8, v, 1, pr3_l0)}
+pr4_cancel = valid(Rich(pr4_cancel_events, frozenset(),
+                        frozenset(("p", "n", "top+", "top-")), frozenset(("p",))))
+assert pr4_xi_direct(pr4_cancel) == ({}, {(-3, origin): 1}, -9, 8, 4)
+assert pr4_support_time(pr4_profile(pr4_cancel)) == 4
+
+# D11: one fixed context, different selections at negative own times.
+pr4_d11e = {e: (t0, origin, sign, pr3_l0)
+            for e, t0, sign in zip("abcd", (-2, -1, 0, 0), (1, 1, -1, -1))}
+pr4_d11x = valid(Rich(pr4_d11e, frozenset({("a", "b")}),
+                      frozenset(pr4_d11e), frozenset("a")))
+pr4_d11y = replace(pr4_d11x, a=frozenset("b"))
+pr4_d11_c = {(pr3_vp, 1, frozenset((pr3_vp,))): 1,
+             (pr3_vp, 0, frozenset((pr3_vp,))): 1,
+             (pr3_vm, 0, frozenset((pr3_vm,))): -2}
+assert pr3_profile(pr4_d11x) == pr3_profile(pr4_d11y) == pr4_d11_c
+assert pr3_rho_src(pr4_d11x) == pr3_rho_src(pr4_d11y) == ({}, {(origin, pr3_l0): 1})
+assert theta(pr4_d11x)[1:] == theta(pr4_d11y)[1:] == (-2, 0, 0)
+pr4_d11_W = {(-2, origin): 1, (-1, origin): 1, (0, origin): -2}
+assert pr4_xi_direct(pr4_d11x) == (pr4_d11_W, {(-2, origin): 1}, -2, 0, 0)
+assert pr4_xi_direct(pr4_d11y) == (pr4_d11_W, {(-1, origin): 1}, -2, 0, 0)
+assert pr4_profile(pr4_d11x) != pr4_profile(pr4_d11y)
+pr4_d11_reads = tuple(q(pr3_causal_filter(z, {(origin, 1, pr3_l0, -2)}, timed=True))
+                      for z in (pr4_d11x, pr4_d11y))
+assert pr4_d11_reads == (1, 0)
+pr4_common_k = min(theta(z)[1] for z in (pr4_d11x, pr4_d11y)) - 1
+pr4_shift_probe = tuple(q(pr3_causal_filter(mul(z, time_shift(pr3_U0, pr4_common_k)),
+                         {(origin, 1, ("pair", pr3_l0, pr3_l0), -1)}, timed=True))
+                        for z in (pr4_d11x, pr4_d11y))
+pr4_flat_probe = tuple(q(pr3_causal_filter(mul(z, pr3_U0),
+                        {(origin, 1, ("pair", pr3_l0, pr3_l0), 1)}, timed=True))
+                       for z in (pr4_d11x, pr4_d11y))
+assert pr4_shift_probe == (1, 0) and pr4_flat_probe == (1, 1)
+assert pr4_profile(mul(pr4_d11x, pr3_U0)) == pr4_profile(mul(pr4_d11y, pr3_U0))
+
+# D12: four input selections on the same balanced context; q expression below.
+pr4_d12 = valid(Rich({e: (t0, origin, sign, pr3_l0)
+                      for e, t0, sign in zip("abcd", (0, 1, 0, 0), (1, 1, -1, -1))},
+                     frozenset({("a", "b")}), frozenset("abcd"), frozenset("ab")))
+pr4_d12_family = [replace(pr4_d12, a=A) for A in pr3_subsets("ab")]
+
+# D1 and D5 retain their section 26 numbering; check both incomparability directions.
+pr4_d1e = {j: (t0, p, sign, pr3_l0) for j, (t0, p, sign) in enumerate(
+            ((0, origin, 1), (0, origin, -1), (1, v, 1), (1, v, -1)))}
+pr4_d1x = valid(Rich(pr4_d1e, frozenset(), frozenset(pr4_d1e), frozenset((0, 2))))
+pr4_d1y = valid(replace(pr4_d1x, e={j: (t0, v if p == origin else origin, sign, r)
+                                    for j, (t0, p, sign, r) in pr4_d1e.items()}))
+pr4_d5x = pr3_U0
+pr4_d5y = valid(replace(pr4_d5x, e={e: (t0, p, sign, pr3_l1 if e in pr4_d5x.a else r)
+                                    for e, (t0, p, sign, r) in pr4_d5x.e.items()}))
+pr4_cases = pr4_samples + [empty, pr4_archive_only, pr4_cancel, pr4_d11x, pr4_d11y,
+                           pr3_outside, pr3_d2y, causal, no_causal, pr3_d5x, pr3_d5y,
+                           pr4_d1x, pr4_d1y, pr4_d5x, pr4_d5y] + pr4_d12_family
+pr4_xi_cases = list(pr4_cases)
+
+def pr4_check_update(x, expected_g, expected_endpoints):
+    pr4_equal(pr4_profile(x), expected_g, "updates")
+    pr4_equal(theta(x)[1:], expected_endpoints, "endpoint_updates")
+    assert pr4_support_time(expected_g) == expected_endpoints[2]
+    pr4_xi_cases.append(x)
+
+for pr4_i, pr4_x in enumerate(pr4_cases):
+    assert charge(pr4_x, pr4_x.w) == 0
+    pr4_g = pr4_profile(pr4_x)
+    pr4_tx = theta(pr4_x)
+    pr4_D = frozenset(pr3_alpha(pr4_x, e, timed=True) for e in pr4_x.w)
+    assert pr3_V(pr4_g) == pr4_D
+    assert pr4_support_time(pr4_g) == pr4_tx[3]
+    for (pr4_a, pr4_b, pr4_upper), pr4_value in pr4_g.items():
+        assert pr4_a == pr4_earliest(pr4_upper) and pr4_value * pr4_a[1] > 0
+        pr4_counts["earliest_rows"] += 1
+    pr4_equal(pr4_restore(pr4_D, pr4_read_table(pr4_x, pr4_D)), pr4_g, "mobius_profiles")
+    pr4_S, pr4_L = {origin, h}, {pr3_l0, pr3_l1}
+    pr4_check_update(neg(pr4_x), push_c(pr4_g, lambda k: (k[0], 1-k[1], k[2])), pr4_tx[1:])
+    pr4_check_update(at(pr4_x, pr4_S),
+                     push_c(pr4_g, lambda k: (k[0], k[1]*int(k[0][0] in pr4_S), k[2])),
+                     pr4_tx[1:])
+    pr4_check_update(filt(pr4_x, lambda e: pr4_x.e[e][3] in pr4_L),
+                     push_c(pr4_g, lambda k: (k[0], k[1]*int(k[0][2] in pr4_L), k[2])),
+                     pr4_tx[1:])
+    for pr4_Q in pr3_subsets(pr4_D):
+        pr4_check_update(pr3_causal_filter(pr4_x, pr4_Q, timed=True),
+                         push_c(pr4_g, lambda k: (k[0], k[1]*int(bool(k[2] & pr4_Q)), k[2])),
+                         pr4_tx[1:])
+    for pr4_k in (-7, 0, 3):
+        pr4_check_update(time_shift(pr4_x, pr4_k), pr4_shift_profile(pr4_g, pr4_k),
+                         tuple(a+pr4_k if a is not None else None for a in pr4_tx[1:]))
+    pr4_y = pr4_cases[(pr4_i + 1) % len(pr4_cases)]
+    pr4_gy, pr4_ty = pr4_profile(pr4_y), theta(pr4_y)
+    for pr4_left, pr4_right in ((pr4_x, pr4_y), (pr4_y, pr4_x)):
+        pr4_gl, pr4_gr = pr4_profile(pr4_left), pr4_profile(pr4_right)
+        pr4_tl, pr4_tr = theta(pr4_left), theta(pr4_right)
+        pr4_check_update(add(pr4_left, pr4_right), plus_c(pr4_gl, pr4_gr),
+                         theta_add(pr4_tl, pr4_tr)[1:])
+        pr4_product = mul(pr4_left, pr4_right)
+        pr4_check_update(pr4_product, pr4_profile_product(pr4_gl, pr4_gr),
+                         theta_mul(pr4_tl, pr4_tr)[1:])
+        assert not any(e in pr4_product.w for e, d in pr4_product.o)
+        assert all(pr3_U(pr4_product, e, timed=True) ==
+                   {pr3_alpha(pr4_product, e, timed=True)} for e in pr4_product.w)
+        pr4_counts["product_antichains"] += 1
+        pr4_success = theta_guard(pr4_tl, pr4_tr)
+        pr4_out = attempt(lambda: temporal(pr4_left, pr4_right))
+        assert (pr4_out is not FAIL) == pr4_success
+        pr4_strict = observe((lambda z: temporal(z, pr4_right), neg,
+                               lambda z: pr3_causal_filter(z, set(), timed=True)), pr4_left, q)
+        if pr4_success:
+            pr4_check_update(pr4_out,
+                             plus_c(push_c(pr4_gl, lambda k: (k[0], k[1], k[2] | pr3_V(pr4_gr))),
+                                    pr4_gr), theta_add(pr4_tl, pr4_tr)[1:])
+            assert pr4_strict == ("ok", 0)
+            pr4_counts["guard_success"] += 1
+        else:
+            assert pr4_strict is FAIL
+            pr4_counts["strict_failures"] += 1
+    # A successful temporal step using the shifted target attributes on the right.
+    pr4_delay = 0 if pr4_tx[2] is None or pr4_ty[1] is None else pr4_tx[2] - pr4_ty[1] + 1
+    pr4_late = time_shift(pr4_y, pr4_delay)
+    pr4_glate = pr4_shift_profile(pr4_gy, pr4_delay)
+    pr4_check_update(temporal(pr4_x, pr4_late),
+                     plus_c(push_c(pr4_g, lambda k: (k[0], k[1], k[2] | pr3_V(pr4_glate))),
+                            pr4_glate), theta_add(pr4_tx, theta(pr4_late))[1:])
+    pr4_counts["guard_success"] += 1
+assert pr4_counts["guard_success"] > 0 and pr4_counts["strict_failures"] > 0
+
+# A common D can include attributes absent on either side, as in the pairwise proof.
+for pr4_left, pr4_right in ((pr4_d11x, pr4_d11y), (pr4_d1x, pr4_d1y), (empty, pr4_d5y)):
+    pr4_D = frozenset(pr3_alpha(z, e, timed=True) for z in (pr4_left, pr4_right) for e in z.w)
+    for pr4_x in (pr4_left, pr4_right):
+        pr4_equal(pr4_restore(pr4_D, pr4_read_table(pr4_x, pr4_D)),
+                   pr4_profile(pr4_x), "mobius_profiles")
+
+assert q(pr3_causal_filter(pr3_outside, {pr3_alpha(pr3_outside, "old", timed=True)}, timed=True)) == 0
+assert "c" not in pr3_d2y.a
+assert q(pr3_causal_filter(pr3_d2y, {pr3_alpha(pr3_d2y, "c", timed=True)}, timed=True)) == 1
+pr4_B2 = tuple(q(pr3_causal_filter(z, {(origin, 1, pr3_l0, 1)}, timed=True))
+                for z in (causal, no_causal))
+assert pr4_B2 == (2, 1)
+assert (pr4_profile(pr3_d5x), theta(pr3_d5x)[1:3]) == (pr4_profile(pr3_d5y), theta(pr3_d5y)[1:3])
+pr4_D10_indegrees = tuple(sorted(sum((e, b) in z.o for e in z.e) for b in ("b1", "b2"))
+                           for z in (pr3_d5x, pr3_d5y))
+assert pr4_D10_indegrees == ([1, 1], [0, 2])
+pr4_c_then_b = tuple(q(pr3_causal_filter(pr3_causal_filter(z, {pr3_alpha(z, "c")}),
+                                       {pr3_alpha(z, "b")})) for z in (pr3_d3x, pr3_d3y))
+assert pr4_c_then_b == (1, 0)
+
+class pr4_Qstar:
+    def __contains__(self, a):
+        return a[0] == origin and a[3] == 2
+
+for pr4_x in pr4_cases:
+    pr4_direct_q = q(filt(pr4_x, lambda e: (pr4_x.e[e][0], pr4_x.e[e][1]) == (1, origin)))
+    pr4_context_q = q(pr3_causal_filter(mul(pr4_x, pr3_U0), pr4_Qstar(), timed=True))
+    pr4_equal(pr4_context_q, pr4_direct_q, "q_expression")
+
+for pr4_x in pr4_xi_cases:
+    pr4_g = pr4_profile(pr4_x)
+    pr4_m, pr4_M = theta(pr4_x)[1:3]
+    pr4_equal(pr4_xi_from_profile(pr4_g, pr4_m, pr4_M), pr4_xi_direct(pr4_x), "xi_paths")
+    pr4_equal(pr4_forget_time(pr4_g), pr3_profile(pr4_x), "forget_paths")
+assert sum(pr4_xi_from_profile(pr4_profile(pr3_U0), 0, 0)[0].values()) == 0
+assert sum(a[1] * value for (a, b, upper), value in pr4_profile(pr3_U0).items()) == 2
+
+# Each tuple certifies a strict kernel edge: fine differs, coarse agrees.
+pr4_fine = lambda x: (pr4_profile(x), theta(x)[1:3])
+pr4_cau = lambda x: (pr3_profile(x), theta(x)[1:])
+pr4_src_time = lambda x: (pr3_rho_src(x), theta(x)[1:])
+pr4_zero_background = realize({origin: 1, v: -1}, {})
+for pr4_x, pr4_y, pr4_f, pr4_c in (
+        (causal, no_causal, pr4_fine, pr4_cau),
+        (pr3_d2x, pr3_d2y, pr4_cau, pr4_src_time),
+        (source7, source8, pr4_src_time, theta),
+        (pr3_U0, time_shift(pr3_U0, 1), theta, read_pair),
+        (empty, pr4_zero_background, read_pair, lambda x: read_pair(x)[1]),
+        (pr3_U0, spatial(pr3_U0, offset=1), lambda x: read_pair(x)[1], q),
+        (causal, no_causal, pr4_fine, pr4_xi_direct),
+        (pr4_d5x, pr4_d5y, pr4_fine, pr4_xi_direct),
+        (pr4_d1x, pr4_d1y, pr4_xi_direct, theta),
+        (pr3_U0, time_shift(pr3_U0, 1), pr4_src_time, pr3_rho_src),
+        (source7, source8, pr3_rho_src, read_pair),
+        (pr4_d1x, pr4_d1y, pr4_xi_direct, pr4_cau),
+        (pr4_d1x, pr4_d1y, pr4_xi_direct, pr4_src_time),
+        (pr4_d5x, pr4_d5y, pr4_cau, pr4_xi_direct),
+        (pr4_d5x, pr4_d5y, pr4_src_time, pr4_xi_direct),
+        (pr3_U0, time_shift(pr3_U0, 1), theta, pr3_rho_src),
+        (source7, source8, pr3_rho_src, theta)):
+    assert pr3_bytes(pr4_f(pr4_x)) != pr3_bytes(pr4_f(pr4_y))
+    pr4_equal(pr4_c(pr4_x), pr4_c(pr4_y), "kernel_edges")
+
+print(f"pr4_temporal_causal: random_samples={len(pr4_samples)} cases={len(pr4_cases)} updates={pr4_counts['updates']} endpoint_updates={pr4_counts['endpoint_updates']} earliest_rows={pr4_counts['earliest_rows']} product_antichains={pr4_counts['product_antichains']} guard_success={pr4_counts['guard_success']} strict_failures={pr4_counts['strict_failures']} context_reads={pr4_counts['context_reads']} mobius_profiles={pr4_counts['mobius_profiles']} mobius_coefficients={pr4_counts['mobius_coefficients']} xi_paths={pr4_counts['xi_paths']} forget_paths={pr4_counts['forget_paths']} kernel_edges={pr4_counts['kernel_edges']} D11={pr4_d11_reads[0]},{pr4_d11_reads[1]} D11_Z_times=-2,-1 common_k={pr4_common_k} shifted_probe={pr4_shift_probe[0]},{pr4_shift_probe[1]} fixed_U0={pr4_flat_probe[0]},{pr4_flat_probe[1]} q_expression={pr4_counts['q_expression']} B2={pr4_B2[0]},{pr4_B2[1]} D10_indegrees={pr4_D10_indegrees[0]},{pr4_D10_indegrees[1]} c_then_b={pr4_c_then_b[0]},{pr4_c_then_b[1]}")
+# PR5: mixed closure and expression checks; reuse Rich and timed PR3/PR4 helpers.
+pr5_counts = {name: 0 for name in (
+    "region_updates", "pair_updates", "endpoints", "unselected_parent_pairs",
+    "rejected_parent_pairs", "empty_products", "old_endpoint_products",
+    "negative_time_inputs", "asymmetric_slots", "context_steps", "context_q",
+    "ts_pair_contexts", "mix_contexts", "strict_failures", "rich_equalities",
+    "H_cases", "D13_choices", "D14_choices", "bit_maps", "q_expression", "D14_q")}
+
+def pr5_equal(actual, expected, counter):
+    assert pr3_bytes(actual) == pr3_bytes(expected), (counter, actual, expected)
+    pr5_counts[counter] += 1
+
+class pr5_Set:
+    # Fixed mathematical predicates, including infinite regions; no input X here.
+    def __init__(self, predicate):
+        self.predicate = predicate
+    def __contains__(self, item):
+        return self.predicate(item)
+
+def pr5_cell(x, e):
+    return x.e[e][0], x.e[e][1]
+
+def pr5_region(x, B):
+    return filt(x, lambda e: pr5_cell(x, e) in B)
+
+def pr5_pair(x, y, P):
+    return restricted_mul(x, y, lambda e, f: (pr5_cell(x, e), pr5_cell(y, f)) in P)
+
+def pr5_region_profile(g, B):
+    return push_c(g, lambda row: (row[0], row[1] * int((row[0][3], row[0][0]) in B), row[2]))
+
+def pr5_pair_profile(g, gg, P):
+    out = {}
+    for (a, b, upper), value in g.items():
+        for (aa, bb, uu), other in gg.items():
+            joined = pr4_diamond(a, aa)
+            selected = b * bb * int(((a[3], a[0]), (aa[3], aa[0])) in P)
+            row = (joined, selected, frozenset((joined,)))
+            # Coefficients already carry sign. P only changes the selection bit.
+            out[row] = out.get(row, 0) + value * other
+    return sparse(out)
+
+def pr5_summary(x):
+    return pr4_profile(x), *theta(x)[1:3]
+
+def pr5_summary_q(summary):
+    return sum(value for (a, b, upper), value in summary[0].items() if b)
+
+def pr5_rich_bytes(x):
+    # Complete encoded state, including event IDs, all attributes, order, Omega, A.
+    return x.e, x.o, x.w, x.a
+
+def pr5_summary_step(state, step):
+    if state is FAIL:
+        return FAIL
+    g, m, M = state
+    op, *args = step
+    if op == "N":
+        return push_c(g, lambda row: (row[0], 1-row[1], row[2])), m, M
+    if op in ("FB", "FS", "FL", "FQ"):
+        param, = args
+        if op == "FB":
+            return pr5_region_profile(g, param), m, M
+        def mask(row):
+            if op == "FS":
+                return row[0][0] in param
+            if op == "FL":
+                return row[0][2] in param
+            return any(a in param for a in row[2])
+        return push_c(g, lambda row: (row[0], row[1]*int(mask(row)), row[2])), m, M
+    if op == "T":
+        k, = args
+        return (pr4_shift_profile(g, k), m+k if m is not None else None,
+                M+k if M is not None else None)
+    slot, parameter, *predicate = args
+    left, right = (state, pr5_summary(parameter)) if slot == 0 else (pr5_summary(parameter), state)
+    gl, ml, Ml = left
+    gr, mr, Mr = right
+    if op == "then" and not (Ml is None or mr is None or Ml < mr):
+        return FAIL
+    if op in ("add", "then"):
+        updated_left = gl if op == "add" else push_c(
+            gl, lambda row: (row[0], row[1], row[2] | pr3_V(gr)))
+        return plus_c(updated_left, gr), lo(ml, mr), hi(Ml, Mr)
+    assert op in ("mul", "MP")
+    generated_max = gamma(pr4_support_time(gl), pr4_support_time(gr))
+    updated = pr4_profile_product(gl, gr) if op == "mul" else pr5_pair_profile(gl, gr, predicate[0])
+    return updated, lo(ml, mr), hi(Ml, Mr, generated_max)
+
+def pr5_rich_step(state, step):
+    if state is FAIL:
+        return FAIL
+    op, *args = step
+    if op == "N":
+        return neg(state)
+    if op == "FB":
+        return pr5_region(state, args[0])
+    if op == "FS":
+        return at(state, args[0])
+    if op == "FL":
+        return filt(state, lambda e: state.e[e][3] in args[0])
+    if op == "FQ":
+        return pr3_causal_filter(state, args[0], timed=True)
+    if op == "T":
+        return time_shift(state, args[0])
+    slot, parameter, *predicate = args
+    left, right = (state, parameter) if slot == 0 else (parameter, state)
+    if op == "MP":
+        return pr5_pair(left, right, predicate[0])
+    return attempt(lambda: {"add": add, "mul": mul, "then": temporal}[op](left, right))
+
+pr5_all = pr5_Set(lambda _: True)
+pr5_empty = frozenset()
+pr5_column = pr5_Set(lambda cell: cell[1] in {origin, v})
+pr5_past = pr5_Set(lambda cell: cell[0] <= -2)
+pr5_adjacent = pr5_Set(lambda cell: (cell[1] == origin and cell[0] <= 0)
+                                  or (cell[1] == v and cell[0] <= 1))
+pr5_gap2 = pr5_Set(lambda cell: (cell[1] == origin and cell[0] <= 0)
+                              or (cell[1] == v and cell[0] <= 2))
+pr5_single = frozenset({(1, origin)})
+pr5_checker = pr5_Set(lambda cell: (cell[0] + cell[1][0]) % 2 == 0)
+pr5_regions = (pr5_all, pr5_empty, pr5_column, pr5_past,
+               pr5_adjacent, pr5_gap2, pr5_single, pr5_checker)
+pr5_asymmetric = pr5_Set(lambda pair: pair[0][0] < pair[1][0])
+pr5_position_pair = pr5_Set(lambda pair: pair[0][1] == origin and pair[1][1] == v)
+pr5_predicates = (pr5_empty, pr5_all, pr5_asymmetric, pr5_position_pair)
+pr5_Qpositive = pr5_Set(lambda a: a[1] == 1)
+
+def pr5_Q(B):
+    return pr5_Set(lambda a: (a[3], a[0]) in B)
+
+def pr5_Qstar(B):
+    return pr5_Set(lambda a: (a[3]-1, a[0]) in B)
+
+pr5_rng = pr3_Random(2026091005)
+pr5_samples = []
+for pr5_i in range(64):
+    pr5_n = pr5_rng.choice((0, 2, 4, 6))
+    pr5_signs = [1]*(pr5_n//2) + [-1]*(pr5_n//2)
+    pr5_rng.shuffle(pr5_signs)
+    pr5_events = {j: (pr5_rng.randrange(-8, 6), pr5_rng.choice((origin, v, h)), sign,
+                      pr5_rng.choice((pr3_l0, pr3_l1, ("pair", pr3_l0, pr3_l1))))
+                   for j, sign in enumerate(pr5_signs)}
+    pr5_whole = frozenset(pr5_events)
+    for pr5_j in range(pr5_rng.randrange(3)):
+        pr5_events[("old", pr5_j)] = (pr5_rng.choice((-12, 10)), h, 1, ("leaf", 9))
+    pr5_edges = {(a, b) for a in pr5_events for b in pr5_events
+                 if pr5_events[a][0] < pr5_events[b][0] and pr5_rng.randrange(4) == 0}
+    pr5_chosen = frozenset(e for e in sorted(pr5_whole) if pr5_rng.randrange(2))
+    pr5_samples.append(valid(Rich(pr5_events, closure(pr5_edges), pr5_whole, pr5_chosen)))
+
+# D13 is parameterized, with negative-time instances distinct from the old D12.
+pr5_D13_reads = []
+for pr5_t1, pr5_t2, pr5_p in ((-4, -1, origin), (-2, 3, v), (4, 7, h)):
+    pr5_events = {e: (n, pr5_p, sign, pr3_l0)
+                  for e, n, sign in zip("abcd", (pr5_t1, pr5_t2, pr5_t1, pr5_t1), (1, 1, -1, -1))}
+    pr5_fixed = valid(Rich(pr5_events, frozenset({("a", "b")}), frozenset(pr5_events), frozenset()))
+    pr5_D13_family = [replace(pr5_fixed, a=A) for A in pr3_subsets("ab")]
+    pr5_B = frozenset({(pr5_t2, pr5_p)})
+    pr5_target = frozenset({pr3_alpha(pr5_fixed, "b", timed=True)})
+    pr5_reads = tuple(q(pr5_region(x, pr5_B)) for x in pr5_D13_family)
+    pr5_causal_reads = tuple(q(pr3_causal_filter(x, pr5_target, timed=True)) for x in pr5_D13_family)
+    assert pr5_reads == (0, 0, 1, 1) and pr5_causal_reads == (0, 1, 1, 2)
+    pr5_counts["D13_choices"] += len(pr5_D13_family)
+    pr5_D13_reads.append((pr5_reads, pr5_causal_reads))
+
+# D14: three individually identifiable positive points, plus three isolated negatives.
+pr5_d14_events = {"a": (1, origin, 1, pr3_l0), "b": (2, v, 1, pr3_l0),
+                   "c": (0, origin, 1, pr3_l0)}
+pr5_d14_events.update({e: (0, origin, -1, pr3_l0) for e in "xyz"})
+pr5_d14 = valid(Rich(pr5_d14_events, frozenset({("a", "b")}),
+                     frozenset(pr5_d14_events), frozenset()))
+pr5_D14_family = [replace(pr5_d14, a=A) for A in pr3_subsets("abc")]
+pr5_D14_reads, pr5_D14_causal = [], []
+for pr5_x in pr5_D14_family:
+    pr5_direct = pr5_region(pr5_x, pr5_gap2)
+    pr5_encoded = at(pr3_causal_filter(pr5_x, pr5_Q(pr5_gap2), timed=True), {origin, v})
+    assert pr5_direct.a == pr5_x.a & {"b", "c"}
+    assert pr5_encoded.a == pr5_x.a
+    pr5_D14_reads.append(q(pr5_direct))
+    pr5_D14_causal.append(q(pr5_encoded))
+    pr5_counts["D14_choices"] += 1
+assert pr5_D14_reads == [0, 0, 1, 1, 1, 1, 2, 2]
+assert pr5_D14_causal == [0, 1, 1, 1, 2, 2, 2, 3]
+assert (pr5_D14_reads[1], pr5_D14_causal[1]) == (0, 1)
+
+pr5_cases = pr5_samples + [empty, pr4_archive_only, pr4_cancel, pr3_outside,
+                           pr3_d5x, pr3_d5y, pr3_U0, unit_at(-3)] + pr5_D14_family
+for pr5_i, pr5_x in enumerate(pr5_cases):
+    assert charge(pr5_x, pr5_x.w) == 0
+    pr5_g, pr5_m, pr5_M = pr5_summary(pr5_x)
+    if any(event[0] < 0 for event in pr5_x.e.values()):
+        pr5_counts["negative_time_inputs"] += 1
+    for pr5_B in pr5_regions:
+        pr5_out = pr5_region(pr5_x, pr5_B)
+        pr5_equal(pr4_profile(pr5_out), pr5_region_profile(pr5_g, pr5_B), "region_updates")
+        pr5_equal(theta(pr5_out)[1:], theta(pr5_x)[1:], "endpoints")
+        assert (pr5_out.e, pr5_out.o, pr5_out.w) == (pr5_x.e, pr5_x.o, pr5_x.w)
+    pr5_y = pr5_cases[(pr5_i + 3) % len(pr5_cases)]
+    for pr5_left, pr5_right in ((pr5_x, pr5_y), (pr5_y, pr5_x)):
+        for pr5_P in pr5_predicates:
+            pr5_out = pr5_pair(pr5_left, pr5_right, pr5_P)
+            pr5_expected = pr5_summary_step(pr5_summary(pr5_left), ("MP", 0, pr5_right, pr5_P))
+            pr5_equal(pr4_profile(pr5_out), pr5_expected[0], "pair_updates")
+            pr5_equal(theta(pr5_out)[1:], (*pr5_expected[1:], pr4_support_time(pr5_expected[0])), "endpoints")
+            assert len(pr5_out.w) == len(pr5_left.w)*len(pr5_right.w)
+            assert len(pr5_out.e) == len(pr5_left.e)+len(pr5_right.e)+len(pr5_out.w)
+            assert not any(e in pr5_out.w for e, d in pr5_out.o)
+            assert all(pr3_U(pr5_out, e, timed=True) == {pr3_alpha(pr5_out, e, timed=True)}
+                       for e in pr5_out.w)
+            for pr5_e, pr5_f in product(pr5_left.w, pr5_right.w):
+                pr5_counts["unselected_parent_pairs"] += int(pr5_e not in pr5_left.a or pr5_f not in pr5_right.a)
+                pr5_counts["rejected_parent_pairs"] += int((pr5_cell(pr5_left, pr5_e), pr5_cell(pr5_right, pr5_f)) not in pr5_P)
+            pr5_counts["empty_products"] += int(not pr5_out.w)
+            pr5_counts["old_endpoint_products"] += int(any(
+                z.e[e][0] in theta(z)[1:3] for z in (pr5_left, pr5_right) for e in z.e.keys()-z.w))
+
+# A fixed asymmetric P distinguishes both slots; sources remain ordered as well.
+pr5_early, pr5_late = unit_at(-3), unit_at(2)
+assert (q(pr5_pair(pr5_early, pr5_late, pr5_asymmetric)),
+        q(pr5_pair(pr5_late, pr5_early, pr5_asymmetric))) == (1, 0)
+for pr5_slot in (0, 1):
+    pr5_step = ("MP", pr5_slot, pr5_late, pr5_asymmetric)
+    pr5_equal(pr5_summary(pr5_rich_step(pr5_early, pr5_step)),
+               pr5_summary_step(pr5_summary(pr5_early), pr5_step), "asymmetric_slots")
+
+# P=empty must retain the full background. Deleting rejected rows predicts 0, not 2.
+pr5_empty_pair = pr5_pair(pr3_U0, pr3_U0, pr5_empty)
+pr5_empty_g = pr5_pair_profile(pr4_profile(pr3_U0), pr4_profile(pr3_U0), pr5_empty)
+pr5_pair_negative_control = q(pr3_causal_filter(neg(pr5_empty_pair), pr5_Qpositive, timed=True))
+assert len(pr5_empty_pair.w) == 4 and pr5_empty_g and all(b == 0 for a, b, U in pr5_empty_g)
+assert sum(abs(value) for value in pr5_empty_g.values()) == 4
+assert pr5_pair_negative_control == 2
+pr5_wrong_g = {}  # The deliberately wrong update deletes every rejected pair.
+assert pr5_summary_q(pr5_summary_step(pr5_summary_step((pr5_wrong_g, 0, 1), ("N",)),
+                                     ("FQ", pr5_Qpositive))) == 0
+
+# All words/parameters are fixed before iterating X. Both binary slots are exercised.
+pr5_words = []
+for pr5_param in (pr3_U0, unit_at(-20), unit_at(20), pr4_archive_only, empty):
+    for pr5_slot in (0, 1):
+        pr5_words.append(("ts_pair_contexts", (("FB", pr5_checker), ("MP", pr5_slot, pr5_param, pr5_asymmetric),
+                          ("N",), ("T", -2), ("FB", pr5_past), ("add", 1-pr5_slot, pr3_U0),
+                          ("mul", pr5_slot, pr3_U0), ("then", 0, unit_at(30)))))
+        pr5_words.append(("mix_contexts", (("FQ", pr5_Qpositive), ("FB", pr5_gap2),
+                          ("MP", pr5_slot, pr5_param, pr5_position_pair), ("FL", pr5_all),
+                          ("T", 1), ("N",), ("FS", {origin, v}), ("FQ", pr5_Qpositive),
+                          ("then", pr5_slot, unit_at(30)), ("FB", pr5_empty))))
+for pr5_x in pr5_cases:
+    for pr5_kind, pr5_word in pr5_words:
+        pr5_rich, pr5_state = pr5_x, pr5_summary(pr5_x)
+        for pr5_step in pr5_word:
+            pr5_rich = pr5_rich_step(pr5_rich, pr5_step)
+            pr5_state = pr5_summary_step(pr5_state, pr5_step)
+            assert (pr5_rich is FAIL) == (pr5_state is FAIL)
+            if pr5_state is not FAIL:
+                pr5_equal(pr5_summary(pr5_rich), pr5_state, "context_steps")
+                pr5_equal(q(pr5_rich), pr5_summary_q(pr5_state), "context_q")
+                assert charge(pr5_rich, pr5_rich.w) == 0
+            else:
+                pr5_counts["strict_failures"] += 1
+        pr5_counts[pr5_kind] += 1
+for pr5_slot in (0, 1):
+    pr5_failing = ("then", pr5_slot, pr3_U0)
+    pr5_suffixes = (("N",), ("FB", pr5_empty), ("FQ", pr5_empty), ("mul", 0, empty),
+                    ("mul", 1, empty), ("MP", 0, empty, pr5_empty), ("MP", 1, empty, pr5_empty))
+    for pr5_suffix in pr5_suffixes:
+        pr5_ops = tuple(lambda z, step=step: pr5_rich_step(z, step) for step in (pr5_failing, pr5_suffix))
+        # Also use the original strict evaluator, whose failed temporal raises.
+        pr5_temporal_op = (lambda z: temporal(z, pr3_U0)) if pr5_slot == 0 else (lambda z: temporal(pr3_U0, z))
+        assert observe((pr5_temporal_op, pr5_ops[1]), pr3_U0, q) is FAIL
+        assert pr5_summary_step(pr5_summary_step(pr5_summary(pr3_U0), pr5_failing), pr5_suffix) is FAIL
+        pr5_counts["strict_failures"] += 1
+
+# Proposition 53: full Rich equality, never a profile+cardinality substitute for history.
+pr5_expressible = ((pr5_all, pr5_all), (pr5_empty, pr5_empty),
+                   (pr5_column, {origin, v}), (pr5_past, pr5_all), (pr5_adjacent, {origin, v}))
+for pr5_B, pr5_S in pr5_expressible:
+    for pr5_x in pr5_cases:
+        pr5_out = at(pr3_causal_filter(pr5_x, pr5_Q(pr5_B), timed=True), pr5_S)
+        pr5_equal(pr5_rich_bytes(pr5_out), pr5_rich_bytes(pr5_region(pr5_x, pr5_B)), "rich_equalities")
+
+# Exact small family: two positions, arbitrary membership on seven time blocks
+# (-infinity,-3], {-2}, {-1}, {0}, {1}, {2}, [3,+infinity).
+# Two representatives in each infinite tail expose strict-time witnesses there.
+pr5_times = (-4, -3, -2, -1, 0, 1, 2, 3, 4)
+pr5_blocks = (0, 0, 1, 2, 3, 4, 5, 6, 6)
+def pr5_H(matrix):
+    active = [p for p in range(len(matrix[0])) if any(row[p] for row in matrix)]
+    return all(not any(matrix[j]) or all(matrix[i][p] for p in active)
+               for i in range(len(matrix)) for j in range(i+1, len(matrix)))
+
+pr5_normal_forms = set()
+for pr5_S in pr3_subsets(range(2)):
+    pr5_normal_forms.add(tuple(tuple(p in pr5_S for p in range(2)) for t in pr5_times))
+    for pr5_top in range(-4, 5):
+        for pr5_R in pr3_subsets(pr5_S):
+            if pr5_R:
+                pr5_normal_forms.add(tuple(tuple((t < pr5_top and p in pr5_S) or
+                                      (t == pr5_top and p in pr5_R) for p in range(2)) for t in pr5_times))
+for pr5_bits in product((False, True), repeat=14):
+    pr5_matrix = tuple(tuple(pr5_bits[7*p+block] for p in range(2)) for block in pr5_blocks)
+    assert pr5_H(pr5_matrix) == (pr5_matrix in pr5_normal_forms)
+    pr5_counts["H_cases"] += 1
+for pr5_B, pr5_expected_H in ((pr5_column, True), (pr5_past, True), (pr5_adjacent, True),
+                              (pr5_gap2, False), (pr5_single, False), (pr5_empty, True)):
+    pr5_matrix = tuple(tuple((t, p) in pr5_B for p in (origin, v, h)) for t in pr5_times)
+    assert pr5_H(pr5_matrix) == pr5_expected_H
+
+# Finite bit-map closure is supplementary; the proof excludes arbitrary finite words.
+for pr5_size in (2, 3):
+    pr5_identity = (0, 1)*pr5_size
+    pr5_masks = {mask for mask in product((0, 1), repeat=pr5_size) if mask[0] >= mask[1]}
+    if pr5_size == 3:
+        pr5_masks |= {mask for mask in product((0, 1), repeat=3) if mask[0] == mask[2]}
+    pr5_maps, pr5_pending = {pr5_identity}, [pr5_identity]
+    while pr5_pending:
+        pr5_map = pr5_pending.pop()
+        pr5_next = {tuple(1-z for z in pr5_map)} | {
+            tuple(z*mask[i//2] for i, z in enumerate(pr5_map)) for mask in pr5_masks}
+        for pr5_map1 in pr5_next-pr5_maps:
+            pr5_maps.add(pr5_map1)
+            pr5_pending.append(pr5_map1)
+    assert (0, 0)+(0, 1)*(pr5_size-1) not in pr5_maps
+    assert all(f[:2] == (0, 1) for f in pr5_maps if f[2:] == (0, 1)*(pr5_size-1))
+    pr5_counts["bit_maps"] += len(pr5_maps)
+
+# Proposition 54: fixed lower bounds, no upper-bound or finite-region assumption.
+pr5_bounded_regions = ((pr5_empty, -5), (pr5_single, 1),
+    (frozenset({(-5, origin), (-2, v), (3, h)}), -5),
+    (pr5_Set(lambda cell: cell[0] >= -4 and cell[1] in {origin, v}), -4),
+    (pr5_Set(lambda cell: cell[0] >= -6 and (cell[0]+cell[1][0]) % 2 == 0), -6))
+for pr5_B, pr5_k0 in pr5_bounded_regions:
+    for pr5_k in (pr5_k0-1, pr5_k0-2, pr5_k0-7):
+        pr5_parameter, pr5_target = time_shift(pr3_U0, pr5_k), pr5_Qstar(pr5_B)
+        for pr5_x in pr5_cases:
+            pr5_equal(q(pr3_causal_filter(mul(pr5_x, pr5_parameter), pr5_target, timed=True)),
+                       q(pr5_region(pr5_x, pr5_B)), "q_expression")
+pr5_bad_B = frozenset({(0, origin)})
+pr5_bad_x = unit_at(-1)
+pr5_bad_bound = (q(pr5_region(pr5_bad_x, pr5_bad_B)),
+                 q(pr3_causal_filter(mul(pr5_bad_x, pr3_U0), pr5_Qstar(pr5_bad_B), timed=True)))
+assert pr5_bad_bound == (0, 1)
+
+# D14 is unbounded below, so its positive q expression is a separate direct check.
+pr5_D14_Q = pr5_Set(lambda a: (a[0] == origin and a[3] == 1)
+                              or (a[0] == v and a[3] in {1, 2, 3}))
+for pr5_x in pr5_cases:
+    pr5_equal(q(pr3_causal_filter(mul(pr5_x, pr3_U0), pr5_D14_Q, timed=True)),
+               q(pr5_region(pr5_x, pr5_gap2)), "D14_q")
+assert all(pr5_counts[k] > 0 for k in pr5_counts)
+print("pr5_mixed_closure: " + " ".join(f"{name}={value}" for name, value in pr5_counts.items())
+      + f" seed=2026091005 random_samples={len(pr5_samples)} cases={len(pr5_cases)}"
+      + " P_empty_Omega=4 P_empty_Gamma=nonempty P_empty_N_positive=2 wrong_deleted_rows=0"
+      + " D13=0,0,1,1/0,1,1,2 D14=0,0,1,1,1,1,2,2/0,1,1,1,2,2,2,3 bad_k=0,1")
+
+# PR6: fixed seed; finite experiments supplement the arbitrary-context proofs.
+pr6_rng = pr3_Random(2026091006)
+pr6_counts = {}
+
+def pr6_equal(actual, expected, name):
+    assert pr3_bytes(actual) == pr3_bytes(expected), (name, actual, expected)
+    pr6_counts[name] = pr6_counts.get(name, 0) + 1
+
+def pr6_pair(x, y, P):
+    return restricted_mul(x, y, lambda e, f:
+        (pr3_alpha(x, e, True), pr3_alpha(y, f, True)) in P)
+
+def pr6_push(g, gg, rule):
+    out = {}
+    for row, value in g.items():
+        for other, coefficient in gg.items():
+            a = pr4_diamond(row[0], other[0])
+            target = (a, row[1]*other[1]*int(rule(row, other)), frozenset({a}))
+            out[target] = out.get(target, 0) + value*coefficient
+    return sparse(out)
+
+def pr6_step(state, step, rich=False):
+    if state is FAIL or step[0] != "MAP":
+        return (pr5_rich_step if rich else pr5_summary_step)(state, step)
+    _, slot, parameter, P = step
+    if rich:
+        x, y = (state, parameter) if slot == 0 else (parameter, state)
+        return pr6_pair(x, y, P)
+    x, y = (state, pr5_summary(parameter)) if slot == 0 else (pr5_summary(parameter), state)
+    g = pr6_push(x[0], y[0], lambda row, other: (row[0], other[0]) in P)
+    return g, lo(x[1], y[1]), hi(x[2], y[2], gamma(pr4_support_time(x[0]), pr4_support_time(y[0])))
+
+def pr6_expression(x, B, k):
+    Q = pr5_Set(lambda a: a[3] >= k+1 and (a[3]-1, a[0]) in B)
+    return pr3_causal_filter(mul(x, time_shift(pr3_U0, k)), Q, True)
+
+# Tail predicates are fixed before traversing the 64 random and 16 directed inputs.
+pr6_tails = [(pr5_gap2, 1), (pr5_empty, -3), (pr5_all, 2)]
+for pr6_i in range(24):
+    pr6_c = pr6_rng.randrange(-6, 5)
+    pr6_S = frozenset(p for p in (origin, v, h) if pr6_rng.randrange(2))
+    pr6_d = pr6_rng.randrange(2, 6)
+    pr6_R = frozenset(r for r in range(pr6_d) if pr6_rng.randrange(2))
+    pr6_B = pr5_Set(lambda cell, c=pr6_c, S=pr6_S, d=pr6_d, R=pr6_R:
+        cell[1] in S if cell[0] < c else (cell[0]+sum(cell[1])) % d in R)
+    pr6_tails.append((pr6_B, pr6_c))
+for pr6_B, pr6_c in pr6_tails:
+    for pr6_k in (pr6_c-1, pr6_c-4):
+        for pr6_x in pr5_cases:
+            pr6_equal(q(pr6_expression(pr6_x, pr6_B, pr6_k)),
+                      q(pr5_region(pr6_x, pr6_B)), "tail_q")
+pr6_controls = []
+for pr6_d in (2, 3, 5):
+    pr6_controls.append((pr5_Set(lambda cell, d=pr6_d: cell[0] % d == 0),
+                         origin, -2*pr6_d, -2*pr6_d+1))
+pr6_drift = pr5_Set(lambda cell: cell[1][1:] == (0, 0) and cell[1][0] >= 0
+                    and cell[0] <= -cell[1][0])
+pr6_controls.append((pr6_drift, (3, 0, 0), -3, -2))
+for pr6_B, pr6_p, pr6_t, pr6_tt in pr6_controls:
+    pr6_inputs = [replace(unit_at(t), e={e: (n, pr6_p, s, r)
+                   for e, (n, p, s, r) in unit_at(t).e.items()}) for t in (pr6_t, pr6_tt)]
+    pr6_equal(tuple(q(mul(x, pr3_U0)) for x in pr6_inputs), (1, 1), "collapse_controls")
+    pr6_equal(tuple(q(pr5_region(x, pr6_B)) for x in pr6_inputs), (1, 0), "target_controls")
+    pr6_equal(*(pr4_profile(mul(x, pr3_U0)) for x in pr6_inputs), "collapsed_profiles")
+
+# Lemma 4: pull prefix witnesses back by cumulative shifts; c never depends on p.
+def pr6_saturated(prefix, factor, p):
+    witnesses, J = [], 0
+    for step in prefix:
+        if step[0] == "T":
+            J += step[1]
+        if step[0] == "FQ" and step[1]:
+            witnesses.append(pr4_shift_attr(sorted(step[1], key=repr)[0], -J))
+    c = min([0] + [a[3] for a in witnesses]
+            + ([min(factor.e[e][0] for e in factor.w)-J] if factor is not None and factor.w else []))
+    times = (c-2, c-1)
+    common = {("d", i): (a[3], a[0], a[1], a[2]) for i, a in enumerate(witnesses)}
+    balance = 1 + sum(a[1] for a in witnesses)
+    common.update({("n", i): (0, origin, -1 if balance > 0 else 1, pr3_l0)
+                   for i in range(abs(balance))})
+    whole = frozenset(common) | {"e"}
+    extremes = list(times) + [event[0] for event in common.values()]
+    common.update({"low": (min(extremes)-1, origin, 1, pr3_l0),
+                   "high": (max(extremes)+1, origin, 1, pr3_l0)})
+    edges = frozenset(("e", ("d", i)) for i in range(len(witnesses)))
+    return [valid(Rich(dict(common, e=(t, p, 1, pr3_l0)), edges, whole, frozenset({"e"}))) for t in times]
+
+for pr6_i in range(36):
+    pr6_Q = frozenset((pr6_rng.choice((origin, v)), pr6_rng.choice((-1, 1)),
+                      pr3_l0, pr6_rng.randrange(-3, 5)) for _ in range(pr6_i % 4))
+    pr6_prefix = [("T", pr6_rng.randrange(-3, 4)), ("FQ", pr6_Q), ("N",),
+                  ("add", pr6_i % 2, unit_at(2)), ("FS", {origin, v}),
+                  ("T", -1), ("FL", {pr3_l0}), ("FQ", pr6_Q), ("then", 0, empty)]
+    pr6_rng.shuffle(pr6_prefix)
+    pr6_factor = None if pr6_i % 3 == 0 else (empty if pr6_i % 3 == 1 else unit_at(-4))
+    pr6_word = pr6_prefix + ([] if pr6_factor is None else [("mul", pr6_i % 2, pr6_factor)])
+    pr6_word += [("N",), ("add", 1, pr3_U0), ("FQ", pr5_Qpositive), ("T", 2)]
+    for pr6_p in (origin, v, (7, -2, 1)):
+        pr6_inputs = pr6_saturated(pr6_prefix, pr6_factor, pr6_p)
+        pr6_equal(theta(pr6_inputs[0])[1:3], theta(pr6_inputs[1])[1:3], "saturation_endpoints")
+        pr6_outputs = []
+        for pr6_x in pr6_inputs:
+            assert charge(pr6_x, pr6_x.w) == 0
+            for pr6_step0 in pr6_word:
+                pr6_x = pr5_rich_step(pr6_x, pr6_step0)
+                assert pr6_x is not FAIL
+            pr6_outputs.append(q(pr6_x))
+        pr6_equal(*pr6_outputs, "saturation_q")
+        pr6_name = "saturation_no_product" if pr6_factor is None else (
+            "saturation_empty_factor" if not pr6_factor.w else "saturation_product")
+        pr6_counts[pr6_name] = pr6_counts.get(pr6_name, 0) + 1
+
+# A periodic query can see early times; the successor witness removes that difference.
+pr6_even_Q = pr5_Set(lambda a: a[3] % 2 == 0)
+pr6_sat = pr6_saturated([("FQ", {(origin, 1, pr3_l0, 0)})], pr3_U0, origin)
+pr6_equal(tuple(q(pr3_causal_filter(x, pr6_even_Q, True)) for x in pr6_sat),
+          (1, 1), "periodic_saturation")
+pr6_equal(tuple(q(pr3_causal_filter(replace(x, o=frozenset()), pr6_even_Q, True)) for x in pr6_sat),
+          (1, 0), "unsaturated_control")
+pr6_equal(*(pr5_summary(mul(x, pr3_U0)) for x in pr6_sat), "first_product_fiber")
+
+# Attribute pairing: ordered predicates, both slots, full background, and suffixes.
+pr6_asym = pr5_Set(lambda pair: pair[0][3] < pair[1][3])
+pr6_signed_source = pr5_Set(lambda pair: pair[0][1] != pair[1][1]
+                           and pair[0][2] == pr3_l0)
+for pr6_i, pr6_x in enumerate(pr5_cases):
+    pr6_y = pr5_cases[(pr6_i+3) % len(pr5_cases)]
+    pr6_attrs = sorted(pr3_V(pr4_profile(pr6_x)) | pr3_V(pr4_profile(pr6_y)), key=repr)
+    pr6_P = frozenset(pair for pair in product(pr6_attrs, repeat=2) if pr6_rng.randrange(2))
+    for pr6_P0 in (pr6_P, pr6_asym, pr6_signed_source, pr5_all, pr5_empty):
+        for pr6_slot in (0, 1):
+            pr6_step0 = ("MAP", pr6_slot, pr6_y, pr6_P0)
+            pr6_rich = pr6_step(pr6_x, pr6_step0, True)
+            pr6_state = pr6_step(pr5_summary(pr6_x), pr6_step0)
+            pr6_equal(pr5_summary(pr6_rich), pr6_state, "pair_push")
+            assert len(pr6_rich.w) == len(pr6_x.w)*len(pr6_y.w)
+            pr6_counts["empty_products"] = pr6_counts.get("empty_products", 0) + int(not pr6_rich.w)
+            pr6_counts["old_archives"] = pr6_counts.get("old_archives", 0) + int(bool(pr6_x.e.keys()-pr6_x.w or pr6_y.e.keys()-pr6_y.w))
+            pr6_counts["negative_inputs"] = pr6_counts.get("negative_inputs", 0) + int(any(t < 0 for z in (pr6_x, pr6_y) for t, p, s, r in z.e.values()))
+            pr6_counts["unselected_parents"] = pr6_counts.get("unselected_parents", 0) + sum(e not in pr6_x.a or f not in pr6_y.a for e, f in product(pr6_x.w, pr6_y.w))
+            for pr6_suffix in (("N",), ("FQ", pr5_Qpositive), ("FB", pr5_past)):
+                pr6_rich = pr5_rich_step(pr6_rich, pr6_suffix)
+                pr6_state = pr5_summary_step(pr6_state, pr6_suffix)
+                pr6_equal(pr5_summary(pr6_rich), pr6_state, "pair_suffix")
+    for pr6_P0 in pr5_predicates:
+        pr6_lift = pr5_Set(lambda pair, P=pr6_P0:
+            ((pair[0][3], pair[0][0]), (pair[1][3], pair[1][0])) in P)
+        pr6_equal(pr5_rich_bytes(pr6_pair(pr6_x, pr6_y, pr6_lift)),
+                  pr5_rich_bytes(pr5_pair(pr6_x, pr6_y, pr6_P0)), "pullback_encoding")
+pr6_words = [[("FQ", pr5_Qpositive), ("MAP", slot, param, pr6_signed_source), ("N",),
+              ("FB", pr5_gap2), ("MP", 1-slot, pr3_U0, pr5_asymmetric),
+              ("T", -2), ("then", slot, unit_at(15)), ("N",), ("FQ", pr5_empty)]
+             for param in (empty, pr4_archive_only, pr3_U0) for slot in (0, 1)]
+for pr6_word in pr6_words:
+    for pr6_x in pr5_cases:
+        pr6_rich, pr6_state = pr6_x, pr5_summary(pr6_x)
+        for pr6_step0 in pr6_word:
+            pr6_rich, pr6_state = pr6_step(pr6_rich, pr6_step0, True), pr6_step(pr6_state, pr6_step0)
+            assert (pr6_rich is FAIL) == (pr6_state is FAIL)
+            if pr6_state is FAIL:
+                pr6_counts["strict_failures"] = pr6_counts.get("strict_failures", 0) + 1
+            else:
+                pr6_equal(pr5_summary(pr6_rich), pr6_state, "mixed_summary")
+                pr6_equal(q(pr6_rich), pr5_summary_q(pr6_state), "mixed_q")
+
+# D15 and the fiber criterion; D10 has equal edge counts and is only a control.
+pr6_events = {e: (t, origin, sign, pr3_l0)
+              for e, t, sign in (("e", 0, 1), ("b1", 1, 1), ("b2", 1, 1),
+                                 ("n1", 0, -1), ("n2", 0, -1), ("n3", 0, -1))}
+pr6_X = valid(Rich(pr6_events, frozenset({("e", "b1")}), frozenset(pr6_events),
+                  frozenset({"e", "b1", "b2"})))
+pr6_Y = valid(replace(pr6_X, o=pr6_X.o | {("e", "b2")}))
+def pr6_D(x):
+    return restricted_mul(x, x, lambda e, f: (e, f) in x.o)
+
+def pr6_J(x, y, rule):
+    result = {}
+    for e, f in product(x.a, y.a):
+        if rule(e, f):
+            a = pr4_diamond(pr3_alpha(x, e, True), pr3_alpha(y, f, True))
+            result[a] = result.get(a, 0) + x.e[e][2]*y.e[f][2]
+    return sparse(result)
+
+pr6_equal(pr5_summary(pr6_X), pr5_summary(pr6_Y), "D15_fiber")
+pr6_equal((q(pr6_D(pr6_X)), q(pr6_D(pr6_Y))), (1, 2), "D15_q")
+pr6_equal((q(pr6_D(pr3_d5x)), q(pr6_D(pr3_d5y))), (2, 2), "D10_control")
+assert pr6_J(pr6_X, pr6_X, lambda e, f: (e, f) in pr6_X.o) != pr6_J(
+    pr6_Y, pr6_Y, lambda e, f: (e, f) in pr6_Y.o)
+for pr6_Q in (frozenset(), {pr3_alpha(pr6_X, "b1", True)}, pr5_Qpositive):
+    for pr6_z in (pr6_X, pr6_Y):
+        pr6_rule = lambda e, f: any(a in pr6_Q for a in pr3_U(pr6_z, e, True))
+        pr6_direct = restricted_mul(pr6_z, pr3_U0, pr6_rule)
+        pr6_expected = pr6_push(pr4_profile(pr6_z), pr4_profile(pr3_U0),
+                                lambda row, other: any(a in pr6_Q for a in row[2]))
+        pr6_equal(pr4_profile(pr6_direct), pr6_expected, "U_rule_push")
+        pr6_equal(pr6_J(pr6_z, pr3_U0, pr6_rule), {a: n for (a, b, U), n
+                    in pr6_expected.items() if b}, "J_positive")
+    pr6_equal(pr6_J(pr6_X, pr3_U0, lambda e, f: any(a in pr6_Q for a in pr3_U(pr6_X, e, True))),
+              pr6_J(pr6_Y, pr3_U0, lambda e, f: any(a in pr6_Q for a in pr3_U(pr6_Y, e, True))), "J_fiber")
+for pr6_z in (pr6_X, pr6_Y, pr3_U0, add(pr3_U0, pr3_U0)):
+    pr6_equal(pr4_profile(restricted_mul(pr6_z, pr3_U0, lambda e, f: len(pr3_U(pr6_z, e, True)) > 1)),
+              pr6_push(pr4_profile(pr6_z), pr4_profile(pr3_U0), lambda row, other: len(row[2]) > 1), "U_size_rule")
+    pr6_parity = (sum(abs(n) for n in pr4_profile(pr6_z).values())//2) % 2
+    pr6_equal(pr4_profile(restricted_mul(pr6_z, pr3_U0, lambda e, f: (len(pr6_z.w)//2) % 2)),
+              pr6_push(pr4_profile(pr6_z), pr4_profile(pr3_U0), lambda row, other: pr6_parity), "global_rule")
+pr6_equal(set(pr4_profile(pr3_U0)), set(pr4_profile(add(pr3_U0, pr3_U0))), "same_local_rows")
+pr6_q_only = []
+for pr6_z in (pr6_X, pr6_Y):
+    pr6_pairs = [(e, f) for e, f in product(pr6_z.a, pr3_U0.a) if pr6_z.e[e][2]*pr3_U0.e[f][2] == 1]
+    pr6_pairs.sort(key=lambda ef: (pr4_diamond(pr3_alpha(pr6_z, ef[0], True), pr3_alpha(pr3_U0, ef[1], True))[3], repr(ef)))
+    pr6_pair0 = pr6_pairs[0 if len(pr6_z.o) % 2 else -1]
+    pr6_q_only.append(restricted_mul(pr6_z, pr3_U0, lambda e, f: (e, f) == pr6_pair0))
+pr6_equal(tuple(q(z) for z in pr6_q_only), (1, 1), "q_only_control")
+assert pr4_profile(pr6_q_only[0]) != pr4_profile(pr6_q_only[1])
+
+# Proposition 57: five independent conditions, then an event realization.
+def pr6_conditions(g, m, M):
+    rows = list(sparse(g))
+    return (all(a[1]*g[a, b, U] > 0 for a, b, U in rows),
+            sum(g.values()) == 0,
+            all(a in U and all(v[3] > a[3] for v in U-{a}) for a, b, U in rows),
+            all(any(aa == v and V <= U for aa, bb, V in rows) for a, b, U in rows for v in U-{a}),
+            ((m is None and M is None) or (m is not None and M is not None and m <= M))
+            if not rows else (m is not None and M is not None and all(m <= a[3] <= M for a, b, U in rows)))
+
+def pr6_realize(g, m, M):
+    assert all(pr6_conditions(g, m, M))
+    assigned = [row for row, coefficient in g.items() for _ in range(abs(coefficient))]
+    events = {i: (a[3], a[0], a[1], a[2]) for i, (a, b, U) in enumerate(assigned)}
+    whole = frozenset(events)
+    chosen = frozenset(i for i, (a, b, U) in enumerate(assigned) if b)
+    edges = frozenset((i, j) for i, (a, b, U) in enumerate(assigned)
+                      for j, (aa, bb, V) in enumerate(assigned) if a[3] < aa[3] and V <= U)
+    if m is not None:
+        events.update({"low": (m, origin, 1, pr3_l0), "high": (M, origin, 1, pr3_l0)})
+    return valid(Rich(events, edges, whole, chosen))
+
+for pr6_i in range(64):
+    pr6_g = {}
+    for pr6_n in reversed(range(pr6_rng.randrange(7))):
+        pr6_a = (pr6_rng.choice((origin, v)), pr6_rng.choice((-1, 1)), pr3_l0, pr6_n-4)
+        pr6_U = frozenset({pr6_a}).union(*(U for a, b, U in pr6_g if pr6_rng.randrange(2)))
+        pr6_g[pr6_a, pr6_rng.randrange(2), pr6_U] = pr6_a[1]*pr6_rng.randrange(1, 4)
+    pr6_total = sum(pr6_g.values())
+    if pr6_total:
+        pr6_a = (h, -1 if pr6_total > 0 else 1, ("leaf", 99), 3)
+        pr6_g[pr6_a, 0, frozenset({pr6_a})] = -pr6_total
+    pr6_m, pr6_M = (-6, 5) if pr6_g or pr6_i % 2 else (None, None)
+    pr6_equal(pr5_summary(pr6_realize(pr6_g, pr6_m, pr6_M)), (pr6_g, pr6_m, pr6_M), "image_roundtrip")
+
+# Exhaust both formal target sets/selection bits and all forward-edge graphs.
+for pr6_times in ((0, 1, 2, 3), (0, 0, 1, 1)):
+    pr6_e = {i: (t, origin, 1 if i < 2 else -1, pr3_l0) for i, t in enumerate(pr6_times)}
+    pr6_base = Rich(pr6_e, frozenset(), frozenset(pr6_e), frozenset())
+    pr6_D0 = [pr3_alpha(pr6_base, i, True) for i in range(4)]
+    pr6_actual, pr6_accepted = set(), set()
+    for pr6_edges in pr3_subsets((i, j) for i, j in product(range(4), repeat=2) if pr6_times[i] < pr6_times[j]):
+        for pr6_A in pr3_subsets(range(4)):
+            pr6_z = valid(replace(pr6_base, o=closure(pr6_edges), a=pr6_A))
+            pr6_actual.add(pr3_bytes(pr4_profile(pr6_z)).decode())
+            pr6_counts["enumerated_states"] = pr6_counts.get("enumerated_states", 0) + 1
+    pr6_options = [[frozenset({a}) | U for U in pr3_subsets({v0 for v0 in pr6_D0 if v0[3] > a[3]})] for a in pr6_D0]
+    for pr6_Us in product(*pr6_options):
+        for pr6_bits in product((0, 1), repeat=4):
+            pr6_g = {}
+            for pr6_a, pr6_b, pr6_U in zip(pr6_D0, pr6_bits, pr6_Us):
+                pr6_row = (pr6_a, pr6_b, pr6_U)
+                pr6_g[pr6_row] = pr6_g.get(pr6_row, 0) + pr6_a[1]
+            pr6_ok = all(pr6_conditions(pr6_g, min(pr6_times), max(pr6_times)))
+            pr6_equal(pr6_ok, pr3_bytes(pr6_g).decode() in pr6_actual, "formal_membership")
+            if pr6_ok:
+                pr6_accepted.add(pr3_bytes(pr6_g).decode())
+                pr6_equal(pr4_profile(pr6_realize(pr6_g, min(pr6_times), max(pr6_times))), pr6_g, "enumerated_roundtrip")
+    pr6_equal(pr6_actual, pr6_accepted, "image_sets")
+    pr6_counts["distinct_actual_profiles"] = pr6_counts.get("distinct_actual_profiles", 0) + len(pr6_actual)
+pr6_a, pr6_b, pr6_c = [(origin, s, pr3_l0, t) for t, s in ((0, 1), (1, 1), (2, -1))]
+pr6_D16 = {(pr6_a, 1, frozenset({pr6_a, pr6_b})): 1,
+           (pr6_b, 1, frozenset({pr6_b, pr6_c})): 1, (pr6_c, 0, frozenset({pr6_c})): -2}
+pr6_equal(pr6_conditions(pr6_D16, 0, 2), (True, True, True, False, True), "D16_conditions")
+for pr6_m, pr6_M, pr6_ok in ((None, None, True), (-2, -2, True), (-3, 4, True),
+                             (None, 0, False), (0, None, False), (1, 0, False)):
+    pr6_equal(all(pr6_conditions({}, pr6_m, pr6_M)), pr6_ok, "empty_endpoint_branches")
+    if pr6_ok:
+        pr6_equal(pr5_summary(pr6_realize({}, pr6_m, pr6_M)), ({}, pr6_m, pr6_M), "empty_realizations")
+assert all(value > 0 for value in pr6_counts.values())
+print("pr6_expressibility_pairing: " + " ".join(f"{k}={v0}" for k, v0 in pr6_counts.items())
+      + " seed=2026091006 Tail_families=27 random_inputs=64 cases=80"
+      + " periodic_and_drift=1,1/1,0 D15=1,2 D10=2,2 D16=1,1,1,0,1")
+
+print("ALL_FINITE_CHECKS_PASSED")
+```
+
+**原基线收据说明（PR1 追加）。** 紧接的“本次运行”及其输出是原版本的历史记录；扩充后的实际重跑与新增计数见 §17 的 PR1 核验收据，不以这份旧输出代替本轮运行。
+
+本次运行退出码为 `0`，实际标准输出如下：
+
+```text
+balanced_states=105 pair_checks=11025
+worked_product: q=1 archive=14 whole=8 selected=3 causal_pairs=27
+parallel_pairs=3 temporal_pairs=11 both_q=2
+zero_products: (archive,whole,selected,q)=(4,0,0,0),(14,8,6,0)
+raw_laws: sum_with_negative_archive=4 unit_product_archive=8 associativity_archives=28,32
+filters: spatial=(1,0) source=(2,1) causal=(2,1); restricted_q=0 omitted_charge=1
+transport: balanced_added_charge=0 unbalanced_defect=1; bin_complement=(0,-1); image_defect_and_cycle=confirmed
+coordinates: linear_and_time_translation_commute=True spatial_translation_commutes=False
+rationals: sum=-1 product=-3/4 negative=-1/2 division=-1/3 zero_divisor=rejected
+inverse_prefixes: (0,1,1,1)->(0,1,1,1); (1,1/2,1/3,1/4)->(1,2,3,4)
+sources: shared_difference={0} shared_square={1,4}; independent_difference={-1,0,1} independent_product={1,2,4}
+ALL_FINITE_CHECKS_PASSED
+```
+
+核验解释：这些读数仅覆盖上述有限域及具名例子。它们不证明任意图、任意 Cauchy 序列或 ZFC 的一致性，也不是 Lean 内核检查。新文档之外未改动任何仓库文件；完整仓库准入检查、独立数学评审和 PR 交付是调用方的后续步骤。
+
+<a id="pr1-observation"></a>
+

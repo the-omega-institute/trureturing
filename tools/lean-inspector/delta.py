@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.util
 import json
 import os
 import pathlib
@@ -26,6 +27,18 @@ SHA_FIELD = re.compile(r"^sha256:[0-9a-f]{64}$")
 PREFIX = '{"modules": ['
 SUFFIX = '], "schema": "stratalint-raw-lean-report-v2"}\n'
 ARCHIVE_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
+
+# Load the sibling owner by its path, including when cache transport imports
+# this script or Python runs it in isolated mode.
+_materials_spec = importlib.util.spec_from_file_location(
+    "lean_report_materials", pathlib.Path(__file__).with_name("materials.py"))
+materials = importlib.util.module_from_spec(_materials_spec)
+_materials_spec.loader.exec_module(materials)
+_selection_spec = importlib.util.spec_from_file_location(
+    "lean_report_selection", pathlib.Path(__file__).resolve().parent / "../scripts/report/lean-report-selection.py")
+selection = importlib.util.module_from_spec(_selection_spec)
+_selection_spec.loader.exec_module(selection)
+
 
 
 def current_modules(module_table: pathlib.Path, repository: pathlib.Path) -> dict[str, dict[str, str]]:
@@ -62,7 +75,9 @@ def parse_json_modules(report: pathlib.Path) -> tuple[dict[str, dict], str]:
     if fields[0] != digest or not HEX64.fullmatch(fields[0]):
         raise ValueError("report SHA sidecar does not match report")
     root = json.loads(data.decode("utf-8"))
-    if root.get("schema") != "stratalint-raw-lean-report-v2" or not isinstance(root.get("modules"), list):
+    if (not isinstance(root, dict)
+            or root.get("schema") != "stratalint-raw-lean-report-v2"
+            or not isinstance(root.get("modules"), list)):
         raise ValueError("report schema is not canonical")
     modules: dict[str, dict] = {}
     for item in root["modules"]:
@@ -80,7 +95,9 @@ def parse_json_modules(report: pathlib.Path) -> tuple[dict[str, dict], str]:
                 or any(not isinstance(value, str) for value in imports)
                 or not isinstance(declarations, list)
                 or any(not isinstance(value, dict)
+                       or not isinstance(value.get("type_sha256"), str)
                        or not SHA_FIELD.fullmatch(value.get("type_sha256", ""))
+                       or not isinstance(value.get("statement_id"), str)
                        or not SHA_FIELD.fullmatch(value.get("statement_id", ""))
                        for value in declarations)):
             raise ValueError("module record is malformed")
@@ -88,6 +105,7 @@ def parse_json_modules(report: pathlib.Path) -> tuple[dict[str, dict], str]:
             "path": source_path,
             "source_sha256": source_sha,
             "imports": imports,
+            "materials": {"sha256/" + value["type_sha256"][7:] for value in declarations},
             "refutation_claim_path": None,
         }
         refutation = item.get("utility_refutation")
@@ -109,6 +127,8 @@ def valid_baseline(
     resident_sha: str,
     config_sha: str,
 ) -> tuple[dict[str, dict], str] | None:
+    # Planning only: selected material bytes are verified at consumption, by
+    # merge's staged copy or inspect.sh's complete-bundle reuse validator.
     if not HEX64.fullmatch(entry.name) or entry.name == current_address:
         return None
     report = entry / "raw-lean-report.json"
@@ -131,7 +151,7 @@ def valid_baseline(
                 or attestation_lines[3] != "report_sha256=" + report_sha):
             return None
         value = json.loads(provenance.read_text(encoding="utf-8"))
-        if (set(value) != {
+        if (not isinstance(value, dict) or set(value) != {
                     "schema", "side", "mode", "source_side", "input_address",
                     "producer_sha256", "repository_inspector_sha256",
                     "lean_sources_sha256", "lean_config_sha256", "report_sha256"}
@@ -153,9 +173,17 @@ def valid_baseline(
 def plan(args: argparse.Namespace) -> int:
     repository = pathlib.Path(args.repository)
     cache_root = pathlib.Path(args.cache_root)
+    registered = selection.Selection(repository)
+    registered.validate("lean-report")
     current = current_modules(pathlib.Path(args.module_table), repository)
+    if {name: record["path"] for name, record in current.items()} != registered.modules():
+        raise ValueError("lean-report-inputs.json: module table differs from report_modules registration")
     entries: list[tuple[int, pathlib.Path]] = []
-    for entry in cache_root.iterdir():
+    try:
+        cached_entries = list(cache_root.iterdir())
+    except OSError:
+        cached_entries = []  # Optional seed IO failure; registration already validated.
+    for entry in cached_entries:
         if not entry.is_dir():
             continue
         if not HEX64.fullmatch(entry.name) or entry.name == args.current_address:
@@ -175,7 +203,8 @@ def plan(args: argparse.Namespace) -> int:
         provenance = entry / "raw-lean-report.json.provenance.json"
         try:
             value = json.loads(provenance.read_text(encoding="utf-8"))
-            if (value.get("schema") != "stratalint-lean-report-provenance-v1"
+            if (not isinstance(value, dict)
+                    or value.get("schema") != "stratalint-lean-report-provenance-v1"
                     or value.get("side") != "candidate"
                     or value.get("source_side") != "candidate"
                     or value.get("mode") not in ("produced", "cached")
@@ -204,43 +233,15 @@ def plan(args: argparse.Namespace) -> int:
         added = sorted(set(current) - set(old))
         removed = sorted(set(old) - set(current))
 
-        # The report edge points importer -> imported module.  For every
-        # source-identical surviving importer, the attested old import list is
-        # identical to the current one. Together with declared refutation inputs,
-        # these edges close changed/added roots and surviving dependents of
-        # removed modules without inspecting first.
-        reverse = {name: set() for name in set(current) | set(old)}
-        names_by_path = {record["path"]: name for name, record in old.items()}
-        for importer, record in old.items():
-            if importer not in current:
-                continue
-            for dependency in record.get("imports", []):
-                if dependency in reverse:
-                    reverse[dependency].add(importer)
-            # A header-designated claim can affect definitional equality without a Lean import.
-            claim_path = record.get("refutation_claim_path")
-            if claim_path is not None:
-                if claim_path not in names_by_path:
-                    raise ValueError("refutation claim is absent from the baseline report")
-                reverse[names_by_path[claim_path]].add(importer)
-
-        # Deleted modules are not Inspector inputs, but their surviving importers
-        # must be rechecked to avoid retaining records with unloadable environments.
-        removed_importers = {
-            importer
-            for deleted in removed
-            for importer in reverse.get(deleted, set())
-            if importer in current
-        }
-        roots = set(changed) | set(added) | removed_importers
-        recheck = set(roots)
-        pending = list(roots)
-        while pending:
-            module = pending.pop()
-            for dependent in reverse.get(module, set()):
-                if dependent in current and dependent not in recheck:
-                    recheck.add(dependent)
-                    pending.append(dependent)
+        # Old coordinates remain integrity data; the authored cohort relation
+        # alone owns recheck selection, including removed paths and claim inputs.
+        for name, record in old.items():
+            registered.owner(record["path"])
+            if name != record["path"][:-5].replace("/", "."):
+                raise ValueError(f"lean-report-inputs.json: {name}: baseline source coordinate conflicts with registration")
+        dirty_paths = [current[name]["path"] for name in changed + added]
+        dirty_paths += [old[name]["path"] for name in changed + removed]
+        recheck = registered.affected(dirty_paths, registered.modules())
 
         result = {
             "status": "reuse" if not changed and not added and not removed else "delta",
@@ -337,22 +338,25 @@ def merge(args: argparse.Namespace) -> int:
                     compresslevel=6, allowZip64=True) as destination:
                 for address in addresses:
                     name = "sha256/" + address[7:]
-                    material = None
+                    source_info = None
                     for source in sources:
                         if source is None:
                             continue
                         try:
-                            material = source.read(name)
+                            source_info = source.getinfo(name)
                             break
                         except KeyError:
                             continue
-                    if material is None:
+                    if source_info is None:
                         raise ValueError(f"statement material is missing for {address}")
                     info = zipfile.ZipInfo(name, ARCHIVE_TIMESTAMP)
+                    # Known size lets zipfile choose ZIP64 before writing the header.
+                    info.file_size = source_info.file_size
                     info.compress_type = zipfile.ZIP_DEFLATED
                     info.create_system = 3
                     info.external_attr = (stat.S_IFREG | 0o644) << 16
-                    destination.writestr(info, material)
+                    with source.open(source_info) as material, destination.open(info, "w") as target:
+                        materials.verify_material(material, address, target)
         finally:
             for source in sources:
                 if source is not None:

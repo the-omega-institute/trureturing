@@ -1,0 +1,795 @@
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 91992,
+        "byte_end_exclusive": 92140,
+        "line_start": 1714,
+        "line_end_inclusive": 1721,
+        "byte_count": 148,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "4b2f95adfe1569ff297e22e6d69f96cfb14e41047d90dc1c757012db9a47f157",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [95261,95443)\n\nDisposition: operational trailing fragment.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 92322,
+        "byte_end_exclusive": 92464,
+        "line_start": 1722,
+        "line_end_inclusive": 1729,
+        "byte_count": 142,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "6bf73e126cdc558fafdb96a430ac6dae931ef39abead106ca7d85fc6d706da15",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [95539,95591)\n\nDisposition: type / grammar metadata.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 92516,
+        "byte_end_exclusive": 92660,
+        "line_start": 1730,
+        "line_end_inclusive": 1737,
+        "byte_count": 144,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "2289de501c0a73d39cc6a7ae6e780839acda9af4370f974315f664f9e3dccd16",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [107088,107132)\n\nDisposition: type / grammar metadata.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 92704,
+        "byte_end_exclusive": 92848,
+        "line_start": 1738,
+        "line_end_inclusive": 1745,
+        "byte_count": 144,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "9d6e406843ac47f8053154f95246c635dcdc6246465adbc8f56c4878485baf09",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [107138,107183)\n\nDisposition: type / grammar metadata.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 92893,
+        "byte_end_exclusive": 93064,
+        "line_start": 1746,
+        "line_end_inclusive": 1753,
+        "byte_count": 171,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "dd39c18fe9cdde41e31e8b73c23b25ef677d8c622af7ddd6d1995284d9972cf1",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [107237,107329)\n\nDisposition: operational fragment in mixed mathematical passage.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 93156,
+        "byte_end_exclusive": 93300,
+        "line_start": 1754,
+        "line_end_inclusive": 1761,
+        "byte_count": 144,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "4ed50188ff50c815e7398cfda3501ec595d8133032ee728b71cce7467db9174d",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [110196,110236)\n\nDisposition: type / grammar metadata.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 93340,
+        "byte_end_exclusive": 93515,
+        "line_start": 1762,
+        "line_end_inclusive": 1769,
+        "byte_count": 175,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "1dbabaca8894287bdb617f6c7e6e125cef63030986fce05821e6d7028cfca48f",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [113101,113217)\n\nDisposition: type / grammar metadata; operational trailing fragment.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 93631,
+        "byte_end_exclusive": 93775,
+        "line_start": 1770,
+        "line_end_inclusive": 1777,
+        "byte_count": 144,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "be515dceeb92d690a861948cf08266235cfe29030c9aec9c45410403ced558b3",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [113490,113538)\n\nDisposition: type / grammar metadata.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 93823,
+        "byte_end_exclusive": 94024,
+        "line_start": 1778,
+        "line_end_inclusive": 1785,
+        "byte_count": 201,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "cf6494c297f1ef0baa1acc6fbe984f988e0cd312af475238d55bc98aaa3ea9c9",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [113540,114057)\n\nDisposition: grammar: archive space before removed operational suffix; operational provenance.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 94541,
+        "byte_end_exclusive": 94690,
+        "line_start": 1786,
+        "line_end_inclusive": 1793,
+        "byte_count": 149,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "57ff595dc1fd3201bc21ac0cfac59cb7fa19402c42fa40f54fbc0d72b6aec727",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [114059,114293)\n\nDisposition: operational leading fragment.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 94924,
+        "byte_end_exclusive": 95068,
+        "line_start": 1794,
+        "line_end_inclusive": 1801,
+        "byte_count": 144,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "f16ba3fd8c34061844dceb202836e2b3898cb519e924b815e735f87a4986d320",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [114371,114393)\n\nDisposition: type / grammar metadata.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 95090,
+        "byte_end_exclusive": 95234,
+        "line_start": 1802,
+        "line_end_inclusive": 1809,
+        "byte_count": 144,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "4d2322d09d0dc701a8678e29c32c766872d17d47e946751696d4e198af7a2b2b",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [114563,114641)\n\nDisposition: type / grammar metadata.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 95312,
+        "byte_end_exclusive": 95543,
+        "line_start": 1810,
+        "line_end_inclusive": 1817,
+        "byte_count": 231,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "dc445654a16a7eeb6810ce76f6b1bd2408d42cf657e04b42821a514403576a70",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [114685,116153)\n\nDisposition: operational provenance / implementation / execution / delivery, inactive archive; operational leading fragment.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 97011,
+        "byte_end_exclusive": 97155,
+        "line_start": 1826,
+        "line_end_inclusive": 1833,
+        "byte_count": 144,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "61d54059fa165bf1976362ed55cb558953220f1c48058a68b2746998646f22fc",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [116317,116363)\n\nDisposition: type / grammar metadata.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 97201,
+        "byte_end_exclusive": 97372,
+        "line_start": 1834,
+        "line_end_inclusive": 1841,
+        "byte_count": 171,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "425a39b340f85ffcdc450369b98ec455d9e0195a2e3752fc3718e8428ec5d2b3",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [116530,116551)\n\nDisposition: operational fragment in mixed mathematical passage.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 97393,
+        "byte_end_exclusive": 97543,
+        "line_start": 1842,
+        "line_end_inclusive": 1849,
+        "byte_count": 150,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "fc8207422bcfd339e3fc91ade853da86c91e4a3154c0ed14c76607b7c2385dd9",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [119183,119241)\n\nDisposition: operational trailing fragment.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 97601,
+        "byte_end_exclusive": 97745,
+        "line_start": 1850,
+        "line_end_inclusive": 1857,
+        "byte_count": 144,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "592fdde359d7b854b99185819c523e476566560b70f9bb422db21966c0ddc9b9",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [120743,120837)\n\nDisposition: type / grammar metadata.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 97839,
+        "byte_end_exclusive": 98030,
+        "line_start": 1858,
+        "line_end_inclusive": 1865,
+        "byte_count": 191,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "1fe5186a46b2d61fd0f77a1217ad83bb513f75bba202b814560a4b3e8eedfd48",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [120963,121101)\n\nDisposition: mixed passage: preserve listed exact mathematical / citation fragments.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 98168,
+        "byte_end_exclusive": 98359,
+        "line_start": 1866,
+        "line_end_inclusive": 1873,
+        "byte_count": 191,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "39c2f0fd2624bea2235aa52c8c52716efc37ef162af097c84ea9fd373a4ceb84",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [121175,121438)\n\nDisposition: mixed passage: preserve listed exact mathematical / citation fragments.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 98622,
+        "byte_end_exclusive": 98766,
+        "line_start": 1874,
+        "line_end_inclusive": 1881,
+        "byte_count": 144,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "ed4f8ec68dc4047bae8c0d1bf79c69350430f574c984e6337159681225fe5061",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [126377,126403)\n\nDisposition: type / grammar metadata.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 98792,
+        "byte_end_exclusive": 98983,
+        "line_start": 1882,
+        "line_end_inclusive": 1889,
+        "byte_count": 191,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "95fe593d3a44f867e45b23a62f0e3f230cabaf0bc432d65f899dc2b3d6e53467",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [126753,126785)\n\nDisposition: mixed passage: preserve listed exact mathematical / citation fragments.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 99015,
+        "byte_end_exclusive": 99206,
+        "line_start": 1890,
+        "line_end_inclusive": 1897,
+        "byte_count": 191,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "7e39ed26bc5f35b83c93679a3d563474ff79507c7236e3f85df6dff0f4d2d961",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [126876,126877)\n\nDisposition: mixed passage: preserve listed exact mathematical / citation fragments.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 99207,
+        "byte_end_exclusive": 99398,
+        "line_start": 1898,
+        "line_end_inclusive": 1905,
+        "byte_count": 191,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "8ad71d40d1adc929b88f3b12093921e266f21bbef75ef9b9e471c872459e4dd5",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [126918,127200)\n\nDisposition: mixed passage: preserve listed exact mathematical / citation fragments.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 99680,
+        "byte_end_exclusive": 99851,
+        "line_start": 1906,
+        "line_end_inclusive": 1913,
+        "byte_count": 171,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "71a6134d6c8f56b305171c92549e889944a80652fb348369389360d24094eb07",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [128681,128706)\n\nDisposition: operational fragment in mixed mathematical passage.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 99876,
+        "byte_end_exclusive": 100047,
+        "line_start": 1914,
+        "line_end_inclusive": 1921,
+        "byte_count": 171,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "cf930fa799db3be8cac7b187cd1756f5a17017a0e835e9bc563cc170dd4f7e12",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [131675,131694)\n\nDisposition: operational fragment in mixed mathematical passage.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 100066,
+        "byte_end_exclusive": 100210,
+        "line_start": 1922,
+        "line_end_inclusive": 1929,
+        "byte_count": 144,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "29b30d77a0f6db02838f51ae72dd25d8b041ca95594b24baca581a7e99ef3b8c",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [135050,135094)\n\nDisposition: type / grammar metadata.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 100254,
+        "byte_end_exclusive": 100404,
+        "line_start": 1930,
+        "line_end_inclusive": 1937,
+        "byte_count": 150,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "1c026fa44070ea5ad4361c3b8b77037d6f741668a955b3bea362c2313092fe13",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [135792,135923)\n\nDisposition: operational trailing fragment.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 100535,
+        "byte_end_exclusive": 100736,
+        "line_start": 1938,
+        "line_end_inclusive": 1945,
+        "byte_count": 201,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "6203e7fe69090d154539e514d5e46ca5ebfd2a0cbb110459bd2da5a3d136d0c3",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [139135,141822)\n\nDisposition: operational provenance / implementation / execution / delivery, inactive archive.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 103423,
+        "byte_end_exclusive": 103538,
+        "line_start": 1955,
+        "line_end_inclusive": 1961,
+        "byte_count": 115,
+        "lf_count": 7,
+        "terminal_lf_count": 1,
+        "sha256": "54b6d97524421fa8a842bb18e482725840cccf4a5420f8f2c924cd1155de562f",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "~~~~~~~~~~~~\n\n### Archived original bytes [141830,141860)\n\nDisposition: type / grammar metadata.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 103568,
+        "byte_end_exclusive": 103759,
+        "line_start": 1962,
+        "line_end_inclusive": 1969,
+        "byte_count": 191,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "561769c372268f0d6ee26f7add638fd7b9b02de8ed8c0186b6f283571030f05f",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [141863,142085)\n\nDisposition: mixed passage: preserve listed exact mathematical / citation fragments.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 103981,
+        "byte_end_exclusive": 104172,
+        "line_start": 1970,
+        "line_end_inclusive": 1977,
+        "byte_count": 191,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "afb16afbd3719896b845d978ebc4fe0e55079939f33b6889ef4e69ac18edd0d2",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [142238,142318)\n\nDisposition: mixed passage: preserve listed exact mathematical / citation fragments.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 104252,
+        "byte_end_exclusive": 104453,
+        "line_start": 1978,
+        "line_end_inclusive": 1985,
+        "byte_count": 201,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "90ca03e680db4759a66958087a96c81df0ff0d2845c11a0537620bbbc1dc7175",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [142320,144030)\n\nDisposition: operational provenance / implementation / execution / delivery, inactive archive.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 106163,
+        "byte_end_exclusive": 106305,
+        "line_start": 1996,
+        "line_end_inclusive": 2002,
+        "byte_count": 142,
+        "lf_count": 7,
+        "terminal_lf_count": 1,
+        "sha256": "d4b31d51b9e47100c2a883728217c9c9a2bf372027201eb8b6a61bd09ac031c1",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "~~~~~~~~~~~~\n\n### Archived original bytes [144115,144157)\n\nDisposition: operational fragment in mixed mathematical passage.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 106347,
+        "byte_end_exclusive": 106518,
+        "line_start": 2003,
+        "line_end_inclusive": 2010,
+        "byte_count": 171,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "1fa04894085064575a86d20a100c4cc8d109f31702af35a4739db7813f5d6499",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [144199,144353)\n\nDisposition: operational fragment in mixed mathematical passage.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 106672,
+        "byte_end_exclusive": 106843,
+        "line_start": 2011,
+        "line_end_inclusive": 2018,
+        "byte_count": 171,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "069f167d051b3f0efc0d1c17502c898d64282a2b343fa013cbfa3a9b0b72242b",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [144484,144530)\n\nDisposition: operational fragment in mixed mathematical passage.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 106889,
+        "byte_end_exclusive": 107033,
+        "line_start": 2019,
+        "line_end_inclusive": 2026,
+        "byte_count": 144,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "90eddb56245e710d39de398cf67cbd8bc58e5c7e2614e46021ccf1af5d2b33c3",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [153883,153901)\n\nDisposition: type / grammar metadata.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 107051,
+        "byte_end_exclusive": 107195,
+        "line_start": 2027,
+        "line_end_inclusive": 2034,
+        "byte_count": 144,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "7cc88570a8c34b0cfd0cc7474ba1380c5e916733808ed303ef6f861d40cc53bd",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [154669,154684)\n\nDisposition: type / grammar metadata.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 107210,
+        "byte_end_exclusive": 107354,
+        "line_start": 2035,
+        "line_end_inclusive": 2042,
+        "byte_count": 144,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "9e8b590451a9a350a89e553dc1b44a4a45a671d4ba617ac3a214bd01f536a111",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [162332,162359)\n\nDisposition: type / grammar metadata.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 107381,
+        "byte_end_exclusive": 107525,
+        "line_start": 2043,
+        "line_end_inclusive": 2050,
+        "byte_count": 144,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "f7c90069d747db43e966f62ad54b826b122f1b71eb5b3d179707dd062326f437",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [162362,162382)\n\nDisposition: type / grammar metadata.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 107545,
+        "byte_end_exclusive": 107689,
+        "line_start": 2051,
+        "line_end_inclusive": 2058,
+        "byte_count": 144,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "5f5689ba7fdb0b01b99ac947fc9ec54654931c116061221a70da1bac96243d44",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [162514,162547)\n\nDisposition: type / grammar metadata.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 107722,
+        "byte_end_exclusive": 107923,
+        "line_start": 2059,
+        "line_end_inclusive": 2066,
+        "byte_count": 201,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "45438748c67d3a79dbc2772eab92a74c9e50c2d3229dc9db7c33ff4400a6985c",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [163254,163475)\n\nDisposition: operational provenance / implementation / execution / delivery, inactive archive.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 108144,
+        "byte_end_exclusive": 108316,
+        "line_start": 2070,
+        "line_end_inclusive": 2076,
+        "byte_count": 172,
+        "lf_count": 7,
+        "terminal_lf_count": 1,
+        "sha256": "baf4d115287b62cfe72fc685c5edfe74cea9bc19d706b6d5cdfa9b1f15de7ce4",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "~~~~~~~~~~~~\n\n### Archived original bytes [163558,163610)\n\nDisposition: operational provenance / implementation / execution / delivery, inactive archive.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 108368,
+        "byte_end_exclusive": 108483,
+        "line_start": 2079,
+        "line_end_inclusive": 2085,
+        "byte_count": 115,
+        "lf_count": 7,
+        "terminal_lf_count": 1,
+        "sha256": "d8399d7b46b6bd0a0f4925395bd80e7e37b9416a28d317f994be61e08f5baa41",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "~~~~~~~~~~~~\n\n### Archived original bytes [163618,163654)\n\nDisposition: type / grammar metadata.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 108519,
+        "byte_end_exclusive": 108672,
+        "line_start": 2086,
+        "line_end_inclusive": 2093,
+        "byte_count": 153,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "d67fda78847333c93e71dbffd140b4cb08cfa0e37b6273f76b6aa74d67ff1d8d",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [164411,164478)\n\nDisposition: operational sentence or fragment.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 108739,
+        "byte_end_exclusive": 108863,
+        "line_start": 2095,
+        "line_end_inclusive": 2101,
+        "byte_count": 124,
+        "lf_count": 7,
+        "terminal_lf_count": 1,
+        "sha256": "33af185b0075c6543ab69ca9c41d8cb2f5a08c83f7d0018bfb90d3db9cd14dd1",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "~~~~~~~~~~~~\n\n### Archived original bytes [164759,164900)\n\nDisposition: operational sentence or fragment.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 109004,
+        "byte_end_exclusive": 109119,
+        "line_start": 2104,
+        "line_end_inclusive": 2110,
+        "byte_count": 115,
+        "lf_count": 7,
+        "terminal_lf_count": 1,
+        "sha256": "fcd12d0314809937a26673da133ef3f0d4460dae2808a1d79cdd6909be9c02f5",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "~~~~~~~~~~~~\n\n### Archived original bytes [164909,164953)\n\nDisposition: type / grammar metadata.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 109163,
+        "byte_end_exclusive": 109316,
+        "line_start": 2111,
+        "line_end_inclusive": 2118,
+        "byte_count": 153,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "8cd302cc5ae002edf832cdcd987dafb5b7a6b127055ac72bcf9705934929a0dc",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [165313,165325)\n\nDisposition: operational sentence or fragment.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 109328,
+        "byte_end_exclusive": 109481,
+        "line_start": 2119,
+        "line_end_inclusive": 2126,
+        "byte_count": 153,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "e91b3b04f89ffd8826442d3796d95df196d1de7aadd657a16d35e32d42f97059",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [165354,165389)\n\nDisposition: operational sentence or fragment.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 109516,
+        "byte_end_exclusive": 109640,
+        "line_start": 2128,
+        "line_end_inclusive": 2134,
+        "byte_count": 124,
+        "lf_count": 7,
+        "terminal_lf_count": 1,
+        "sha256": "a8a6fefe666129930e7b2e839e486fb34bbd73e07b05f5d21d8fb1905ebfbd54",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "~~~~~~~~~~~~\n\n### Archived original bytes [165746,165971)\n\nDisposition: operational sentence or fragment.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 109865,
+        "byte_end_exclusive": 109980,
+        "line_start": 2138,
+        "line_end_inclusive": 2144,
+        "byte_count": 115,
+        "lf_count": 7,
+        "terminal_lf_count": 1,
+        "sha256": "ba36a235451df3e9f7df690c987725b0c0fbc8fa5ff669673e71b61ac2ab78b7",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "~~~~~~~~~~~~\n\n### Archived original bytes [169931,169961)\n\nDisposition: type / grammar metadata.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 110010,
+        "byte_end_exclusive": 110211,
+        "line_start": 2145,
+        "line_end_inclusive": 2152,
+        "byte_count": 201,
+        "lf_count": 8,
+        "terminal_lf_count": 1,
+        "sha256": "d3ccb647da0e06fc72bf0abe64281386458ad14f7870acc39e503e39d6e45158",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "⟦end of exact byte span⟧\n~~~~~~~~~~~~\n\n### Archived original bytes [170013,170482)\n\nDisposition: operational provenance / implementation / execution / delivery, inactive archive.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 110680,
+        "byte_end_exclusive": 110852,
+        "line_start": 2159,
+        "line_end_inclusive": 2165,
+        "byte_count": 172,
+        "lf_count": 7,
+        "terminal_lf_count": 1,
+        "sha256": "db28bd0745d29e716e63f498b95010b771bd454a750a544d63c1266cf5ebfe4d",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "~~~~~~~~~~~~\n\n### Archived original bytes [170632,171282)\n\nDisposition: operational provenance / implementation / execution / delivery, inactive archive.\n\n~~~~~~~~~~~~text\n"
+    },
+    {
+      "kind": "added inactive archive delimiters, address/disposition labels, pending/reservation notice or final evidence",
+      "current": {
+        "byte_start": 111502,
+        "byte_end_exclusive": 111617,
+        "line_start": 2175,
+        "line_end_inclusive": 2181,
+        "byte_count": 115,
+        "lf_count": 7,
+        "terminal_lf_count": 1,
+        "sha256": "7c5786a04a16fb5401684abd66c1e4d27c160a2af46fb0dce9a908eabb3179dc",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+      },
+      "text": "~~~~~~~~~~~~\n\n### Archived original bytes [171290,171326)\n\nDisposition: type / grammar metadata.\n\n~~~~~~~~~~~~text\n"
+    },

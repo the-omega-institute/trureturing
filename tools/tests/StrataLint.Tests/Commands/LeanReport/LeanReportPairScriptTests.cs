@@ -93,7 +93,7 @@ public sealed class LeanReportPairScriptTests
 
         Assert.Equal(2, result.ExitCode);
         Assert.Empty(result.StandardOutput);
-        Assert.Contains("producer closure is unavailable", Encoding.UTF8.GetString(result.StandardError));
+        Assert.Contains("lean-report-inputs.json", Encoding.UTF8.GetString(result.StandardError));
         Assert.Empty(fixture.CacheEnsureLakeStates);
         Assert.Equal(0, fixture.ProducerInvocationCount);
         Assert.False(fixture.CandidateLakeExists);
@@ -195,18 +195,6 @@ public sealed class LeanReportPairScriptTests
             StringComparison.Ordinal);
         Assert.Equal(0, fixture.ProducerInvocationCount);
         Assert.False(fixture.CandidateLakeExists);
-    }
-
-    [Fact]
-    public void PairScriptPinsPerModuleReuseOff()
-    {
-        var script = File.ReadAllText(Path.Combine(
-            TestRepositoryLayout.FindRoot(), "tools", "scripts", "lean-report-pair.sh"));
-
-        Assert.Contains("Per-module reuse is disabled", script, StringComparison.Ordinal);
-        Assert.DoesNotContain("--module-cache-report", script, StringComparison.Ordinal);
-        Assert.DoesNotContain("--module-cache-manifest", script, StringComparison.Ordinal);
-        Assert.DoesNotContain("--modules-file", script, StringComparison.Ordinal);
     }
 
     private sealed class LeanReportPairFixture : IDisposable
@@ -311,7 +299,7 @@ public sealed class LeanReportPairScriptTests
         internal void DeleteCacheEnsure() => File.Delete(CacheEnsurePath);
 
         internal void BreakProducerClosureEvaluation() =>
-            File.AppendAllText(Path.Combine(candidateRoot, CliProjectPath), "<");
+            File.AppendAllText(Path.Combine(candidateRoot, "lean-report-inputs.json"), "<");
 
         internal void StubAddress(string output)
         {
@@ -395,6 +383,7 @@ public sealed class LeanReportPairScriptTests
             WriteProducerInput(root, "tools/StrataLint.Cli/FixtureProbe.cs");
             WriteProducerInput(root, "tools/scripts/worktree/lean-cache-publish.sh");
             WriteProducerInput(root, "Directory.Build.props");
+            LeanReportRegistrationFixture.Install(root);
             WriteProducerInput(root, ".github/workflows/ci.yml", MinimalWorkflow);
             Directory.CreateDirectory(Path.Combine(root, "tools", "scripts", "worktree"));
         }

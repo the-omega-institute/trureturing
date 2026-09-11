@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:4a0a125fb428377f6b7395f9aba381120c3c1a7adee0d4c89b7ce331a6c7679c
+  normalized_sha256: sha256:4a0a125fb428377f6b7395f9aba381120c3c1a7adee0d4c89b7ce331a6c7679c
+cas_ref: sha256:4a0a125fb428377f6b7395f9aba381120c3c1a7adee0d4c89b7ce331a6c7679c
+coverage_gids:
+  - gid: D5/S0/Carrier/ArithmeticFunctions/PowerfulDivisorTransform.powerfulDivisorSum_isMultiplicative
+    target_statement_id: sha256:b9ea5c1a94c0d5820c7e14f62cbdfa2e59a18ba3d139e7605abc9dcd87c246ce
+receipts:
+  unresolved_subitems: []

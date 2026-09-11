@@ -44,7 +44,7 @@ theorem unrelatedStrictness : unrelatedCatalog.StructurallyLowersEscape () :=
   unrelatedCatalog.structurallyLowersEscape_of_certificate () unrelatedWitness
 
 def unrelatedInventory : DispositionInventory := ⟨"probe-head", #[
-  ⟨⟨``closedTruth, "closed-truth-id"⟩, .certified <| .structuralOccurrence {
+  ⟨⟨``closedTruth, "sha256:0000000000000000000000000000000000000000000000000000000000000014"⟩, .certified <| .structuralOccurrence {
     canonicalArena := ``unrelatedArena
     registration := ``unrelatedRegistration
     «realization» := ``unrelatedRealization
@@ -99,7 +99,7 @@ theorem wrongKernelStrictness : wrongKernelCatalog.StructurallyLowersEscape () :
 #guard_msgs in
 run_cmd liftTermElabM do
   validateEvidence (← getEnv).header.mainModule ⟨"probe-head", #[
-    ⟨⟨``wrongKernelTheorem, "wrong-kernel"⟩, .certified <| .structuralOccurrence {
+    ⟨⟨``wrongKernelTheorem, "sha256:000000000000000000000000000000000000000000000000000000000000002f"⟩, .certified <| .structuralOccurrence {
       canonicalArena := ``wrongKernelArena
       registration := ``wrongKernelRegistration
       «realization» := ``wrongKernelTheorem.__structural_realization
@@ -132,7 +132,7 @@ theorem wrongLawStrictness : wrongLawCatalog.StructurallyLowersEscape () :=
   wrongLawCatalog.structurallyLowersEscape_of_certificate () wrongLawWitness
 
 def wrongLawInventory : DispositionInventory := ⟨"probe-head", #[
-    ⟨⟨``wrongLawTheorem, "wrong-law"⟩, .certified <| .structuralOccurrence {
+    ⟨⟨``wrongLawTheorem, "sha256:0000000000000000000000000000000000000000000000000000000000000030"⟩, .certified <| .structuralOccurrence {
       canonicalArena := ``wrongLawArena
       registration := ``wrongLawRegistration
       «realization» := ``Evidence.structuralTheorem.__structural_realization
@@ -182,21 +182,21 @@ def arbitraryNoRealization : UnreachableElaborationEvidence (∀ n : Nat, n % 2 
 #guard_msgs in
 run_cmd liftTermElabM do
   validateEvidence (← getEnv).header.mainModule ⟨"probe-head", #[
-    ⟨⟨``unregisteredDynamics, "id"⟩,
+    ⟨⟨``unregisteredDynamics, "sha256:0000000000000000000000000000000000000000000000000000000000000019"⟩,
       .certified <| .unreachable ⟨.noCanonicalObjectCarrier, ``arbitraryNoCarrier⟩⟩]⟩
 
 /-- error: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.Census.ArchitectureRepair.unregisteredDynamics class=unreachable invalid=evidence.failed_obligation -/
 #guard_msgs in
 run_cmd liftTermElabM do
   validateEvidence (← getEnv).header.mainModule ⟨"probe-head", #[
-    ⟨⟨``unregisteredDynamics, "id"⟩,
+    ⟨⟨``unregisteredDynamics, "sha256:0000000000000000000000000000000000000000000000000000000000000019"⟩,
       .certified <| .unreachable ⟨.noFinitePrimitiveBundle, ``arbitraryNoBundle⟩⟩]⟩
 
 /-- error: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.Census.ArchitectureRepair.unregisteredDynamics class=unreachable invalid=evidence.failed_obligation -/
 #guard_msgs in
 run_cmd liftTermElabM do
   validateEvidence (← getEnv).header.mainModule ⟨"probe-head", #[
-    ⟨⟨``unregisteredDynamics, "id"⟩,
+    ⟨⟨``unregisteredDynamics, "sha256:0000000000000000000000000000000000000000000000000000000000000019"⟩,
       .certified <| .unreachable ⟨.noFaithfulPrimitiveRealization, ``arbitraryNoRealization⟩⟩]⟩
 
 end LeanInformationAudit.Tests.Census.ArchitectureRepair

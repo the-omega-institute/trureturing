@@ -1,0 +1,543 @@
+{
+ "module": "D5.S3.ConceptDynamics.SpacetimeArithmetic.IntegerExactDivision",
+ "source": "kernel environment (Expr.getUsedConstants on value+type, aux constants expanded)",
+ "direction": "consumer -> prerequisite",
+ "edges": {
+  "direction": "consumer->prerequisite",
+  "exact_guard_fraction_congr": [
+   "ExactGuard",
+   "exact_guard_iff_integer_value"
+  ],
+  "division_domains_equal_claim": [
+   "ExactGuard"
+  ],
+  "quotient_exactDivide": [
+   "ExactGuard",
+   "exactDivide",
+   "fraction_exactDivide"
+  ],
+  "exactDivide_loses_product_history": [
+   "ExactGuard",
+   "exactDivide",
+   "exactDivide_by_one",
+   "exactQuotient",
+   "exactQuotient_unique",
+   "section_loses_product_history"
+  ],
+  "section_loses_product_history": [],
+  "exact_quotient_exists_unique": [
+   "ExactGuard"
+  ],
+  "exact_guard_iff_integer_value": [
+   "ExactGuard",
+   "exactQuotient",
+   "exactQuotient_spec",
+   "fraction_eq_integer_iff"
+  ],
+  "exact_guard_congr": [
+   "ExactGuard"
+  ],
+  "exactQuotient_spec": [
+   "ExactGuard",
+   "exactQuotient",
+   "exact_quotient_exists_unique"
+  ],
+  "exactDivide_congr": [
+   "ExactGuard",
+   "exactDivide",
+   "exactQuotient",
+   "exactQuotient_spec",
+   "exactQuotient_unique"
+  ],
+  "exactDivide_by_one": [
+   "ExactGuard"
+  ],
+  "fraction_eq_integer_iff": [],
+  "half": [],
+  "exactQuotient_unique": [
+   "ExactGuard",
+   "exactQuotient",
+   "exact_quotient_exists_unique"
+  ],
+  "exactQuotient": [
+   "ExactGuard",
+   "exact_quotient_exists_unique"
+  ],
+  "division_domains_equal_refuted": [
+   "ExactGuard",
+   "division_domains_equal_claim",
+   "half"
+  ],
+  "exactDivide": [
+   "ExactGuard",
+   "exactQuotient"
+  ],
+  "ExactGuard": [],
+  "exactDivide_readout": [
+   "ExactGuard",
+   "exactDivide",
+   "exactQuotient"
+  ],
+  "exactDivide_literal": [
+   "ExactGuard",
+   "exactDivide",
+   "exactQuotient",
+   "exactQuotient_unique"
+  ],
+  "fraction_exactDivide": [
+   "ExactGuard",
+   "exactDivide",
+   "exactDivide_readout",
+   "exactQuotient",
+   "exactQuotient_spec",
+   "fraction_eq_integer_iff"
+  ]
+ },
+ "kinds": {
+  "exact_guard_fraction_congr": "theorem",
+  "division_domains_equal_claim": "def",
+  "quotient_exactDivide": "theorem",
+  "exactDivide_loses_product_history": "theorem",
+  "section_loses_product_history": "theorem",
+  "exact_quotient_exists_unique": "theorem",
+  "exact_guard_iff_integer_value": "theorem",
+  "exact_guard_congr": "theorem",
+  "exactQuotient_spec": "theorem",
+  "exactDivide_congr": "theorem",
+  "exactDivide_by_one": "theorem",
+  "fraction_eq_integer_iff": "theorem",
+  "half": "def",
+  "exactQuotient_unique": "theorem",
+  "exactQuotient": "def",
+  "division_domains_equal_refuted": "theorem",
+  "exactDivide": "def",
+  "ExactGuard": "def",
+  "exactDivide_readout": "theorem",
+  "exactDivide_literal": "theorem",
+  "fraction_exactDivide": "theorem"
+ },
+ "numeric_certificate": {
+  "exact_guard_fraction_congr": false,
+  "division_domains_equal_claim": false,
+  "quotient_exactDivide": false,
+  "exactDivide_loses_product_history": false,
+  "section_loses_product_history": false,
+  "exact_quotient_exists_unique": false,
+  "exact_guard_iff_integer_value": false,
+  "exact_guard_congr": false,
+  "exactQuotient_spec": false,
+  "exactDivide_congr": false,
+  "exactDivide_by_one": false,
+  "fraction_eq_integer_iff": false,
+  "half": false,
+  "exactQuotient_unique": false,
+  "exactQuotient": false,
+  "division_domains_equal_refuted": true,
+  "exactDivide": false,
+  "ExactGuard": false,
+  "exactDivide_readout": false,
+  "exactDivide_literal": false,
+  "fraction_exactDivide": false
+ },
+ "axioms": {
+  "exact_guard_fraction_congr": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "division_domains_equal_claim": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "quotient_exactDivide": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "exactDivide_loses_product_history": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "section_loses_product_history": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "exact_quotient_exists_unique": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "exact_guard_iff_integer_value": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "exact_guard_congr": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "exactQuotient_spec": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "exactDivide_congr": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "exactDivide_by_one": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "fraction_eq_integer_iff": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "half": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "exactQuotient_unique": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "exactQuotient": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "division_domains_equal_refuted": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "exactDivide": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "ExactGuard": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "exactDivide_readout": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "exactDivide_literal": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "fraction_exactDivide": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "external_deps": {
+  "exact_guard_fraction_congr": [
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.CrossEquivalent",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.CrossEquivalent",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction.denominator",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction.denominator",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction.numerator",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction.numerator",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.cross_iff_readout",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.readout"
+  ],
+  "division_domains_equal_claim": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.DivisionGuard",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.integerEmbedding"
+  ],
+  "quotient_exactDivide": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RationalQuotient:D5.S3.ConceptDynamics.SpacetimeArithmetic.RationalQuotient.Rational",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RationalQuotient:D5.S3.ConceptDynamics.SpacetimeArithmetic.RationalQuotient.Rational",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RationalQuotient:D5.S3.ConceptDynamics.SpacetimeArithmetic.RationalQuotient.classOf",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RationalQuotient:D5.S3.ConceptDynamics.SpacetimeArithmetic.RationalQuotient.classOf",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RationalQuotient:D5.S3.ConceptDynamics.SpacetimeArithmetic.RationalQuotient.quotient_readout",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RationalQuotient:D5.S3.ConceptDynamics.SpacetimeArithmetic.RationalQuotient.rational_quotient_equiv",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction.denominator",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction.denominator",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction.numerator",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction.numerator",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.integerEmbedding",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.integerEmbedding",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.integerEmbedding_readout",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.readout"
+  ],
+  "exactDivide_loses_product_history": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedSection",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedSection",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedSection_rightInverse",
+   "D5.S3.ConceptDynamics.Spacetime.GeneratedProduct:D5.S3.ConceptDynamics.Spacetime.GeneratedProduct.productBalanced",
+   "D5.S3.ConceptDynamics.Spacetime.GeneratedProduct:D5.S3.ConceptDynamics.Spacetime.GeneratedProduct.productBalanced"
+  ],
+  "section_loses_product_history": [
+   "D5.S0.History.Spacetime.ArchiveCarrier:D5.S0.History.Spacetime.ArchiveCarrier.Archive.Event",
+   "D5.S0.History.Spacetime.ArchiveCarrier:D5.S0.History.Spacetime.ArchiveCarrier.Archive.events",
+   "D5.S0.History.Spacetime.ArchiveCarrier:D5.S0.History.Spacetime.ArchiveCarrier.Context",
+   "D5.S0.History.Spacetime.ArchiveCarrier:D5.S0.History.Spacetime.ArchiveCarrier.Context.archive",
+   "D5.S0.History.Spacetime.ArchiveCarrier:D5.S0.History.Spacetime.ArchiveCarrier.Context.current",
+   "D5.S0.History.Spacetime.ArchiveCarrier:D5.S0.History.Spacetime.ArchiveCarrier.Rich",
+   "D5.S0.History.Spacetime.ArchiveCarrier:D5.S0.History.Spacetime.ArchiveCarrier.Selection",
+   "D5.S0.History.Spacetime.HFEncoding:D5.S0.History.Spacetime.HFEncoding.HF",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.Balanced",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.q",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedSection",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedSection",
+   "D5.S3.ConceptDynamics.Spacetime.GeneratedProduct:D5.S3.ConceptDynamics.Spacetime.GeneratedProduct.archive",
+   "D5.S3.ConceptDynamics.Spacetime.GeneratedProduct:D5.S3.ConceptDynamics.Spacetime.GeneratedProduct.archive_card",
+   "D5.S3.ConceptDynamics.Spacetime.GeneratedProduct:D5.S3.ConceptDynamics.Spacetime.GeneratedProduct.product",
+   "D5.S3.ConceptDynamics.Spacetime.GeneratedProduct:D5.S3.ConceptDynamics.Spacetime.GeneratedProduct.productBalanced",
+   "D5.S3.ConceptDynamics.Spacetime.GeneratedProduct:D5.S3.ConceptDynamics.Spacetime.GeneratedProduct.productBalanced",
+   "D5.S3.ConceptDynamics.Spacetime.GeneratedProduct:D5.S3.ConceptDynamics.Spacetime.GeneratedProduct.q_product",
+   "D5.S3.ConceptDynamics.Spacetime.IntegerRepresentatives:D5.S3.ConceptDynamics.Spacetime.IntegerRepresentatives.representative",
+   "D5.S3.ConceptDynamics.Spacetime.IntegerRepresentatives:D5.S3.ConceptDynamics.Spacetime.IntegerRepresentatives.representativeArchive",
+   "D5.S3.ConceptDynamics.Spacetime.IntegerRepresentatives:D5.S3.ConceptDynamics.Spacetime.IntegerRepresentatives.representativeContext",
+   "D5.S3.ConceptDynamics.Spacetime.IntegerRepresentatives:D5.S3.ConceptDynamics.Spacetime.IntegerRepresentatives.representative_archive_card",
+   "D5.S3.ConceptDynamics.Spacetime.IntegerRepresentatives:D5.S3.ConceptDynamics.Spacetime.IntegerRepresentatives.representative_current_card",
+   "D5.S3.ConceptDynamics.Spacetime.IntegerRepresentatives:D5.S3.ConceptDynamics.Spacetime.IntegerRepresentatives.representative_readout"
+  ],
+  "exact_quotient_exists_unique": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ"
+  ],
+  "exact_guard_iff_integer_value": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction.denominator",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction.denominator",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction.denominator_ne_zero",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction.numerator",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction.numerator",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.readout",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.readout"
+  ],
+  "exact_guard_congr": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ"
+  ],
+  "exactQuotient_spec": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ"
+  ],
+  "exactDivide_congr": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedSection"
+  ],
+  "exactDivide_by_one": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedSection",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedSection",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedSection_rightInverse"
+  ],
+  "fraction_eq_integer_iff": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction.denominator",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction.denominator",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction.numerator",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction.numerator",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.denominator_cast_ne_zero",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.readout",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.readout",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.readout.eq_1"
+  ],
+  "half": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedSection",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction.mk"
+  ],
+  "exactQuotient_unique": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ"
+  ],
+  "exactQuotient": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ"
+  ],
+  "division_domains_equal_refuted": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedSection",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedSection_rightInverse",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.DivisionGuard",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction.denominator",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction.denominator_ne_zero",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction.numerator",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.integerEmbedding"
+  ],
+  "exactDivide": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedSection"
+  ],
+  "ExactGuard": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ"
+  ],
+  "exactDivide_readout": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedSection_rightInverse"
+  ],
+  "exactDivide_literal": [
+   "D5.S0.History.Spacetime.ArchiveCarrier:D5.S0.History.Spacetime.ArchiveCarrier.Context",
+   "D5.S0.History.Spacetime.ArchiveCarrier:D5.S0.History.Spacetime.ArchiveCarrier.Context",
+   "D5.S0.History.Spacetime.ArchiveCarrier:D5.S0.History.Spacetime.ArchiveCarrier.Rich",
+   "D5.S0.History.Spacetime.ArchiveCarrier:D5.S0.History.Spacetime.ArchiveCarrier.Rich",
+   "D5.S0.History.Spacetime.ArchiveCarrier:D5.S0.History.Spacetime.ArchiveCarrier.Selection",
+   "D5.S0.History.Spacetime.ArchiveCarrier:D5.S0.History.Spacetime.ArchiveCarrier.Selection",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.Balanced",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.Balanced",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementCharge:D5.S3.ConceptDynamics.Spacetime.ComplementCharge.BalancedRich",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedSection",
+   "D5.S3.ConceptDynamics.Spacetime.IntegerRepresentatives:D5.S3.ConceptDynamics.Spacetime.IntegerRepresentatives.representative",
+   "D5.S3.ConceptDynamics.Spacetime.IntegerRepresentatives:D5.S3.ConceptDynamics.Spacetime.IntegerRepresentatives.representative"
+  ],
+  "fraction_exactDivide": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction.denominator",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction.denominator",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction.numerator",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction.numerator",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.readout",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.readout"
+  ]
+ },
+ "public_declarations": [
+  {
+   "name": "exact_guard_fraction_congr",
+   "kind": "theorem"
+  },
+  {
+   "name": "division_domains_equal_claim",
+   "kind": "def"
+  },
+  {
+   "name": "quotient_exactDivide",
+   "kind": "theorem"
+  },
+  {
+   "name": "exactDivide_loses_product_history",
+   "kind": "theorem"
+  },
+  {
+   "name": "section_loses_product_history",
+   "kind": "theorem"
+  },
+  {
+   "name": "exact_quotient_exists_unique",
+   "kind": "theorem"
+  },
+  {
+   "name": "exact_guard_iff_integer_value",
+   "kind": "theorem"
+  },
+  {
+   "name": "exact_guard_congr",
+   "kind": "theorem"
+  },
+  {
+   "name": "exactQuotient_spec",
+   "kind": "theorem"
+  },
+  {
+   "name": "exactDivide_congr",
+   "kind": "theorem"
+  },
+  {
+   "name": "exactDivide_by_one",
+   "kind": "theorem"
+  },
+  {
+   "name": "fraction_eq_integer_iff",
+   "kind": "theorem"
+  },
+  {
+   "name": "half",
+   "kind": "def"
+  },
+  {
+   "name": "exactQuotient_unique",
+   "kind": "theorem"
+  },
+  {
+   "name": "exactQuotient",
+   "kind": "def"
+  },
+  {
+   "name": "division_domains_equal_refuted",
+   "kind": "theorem"
+  },
+  {
+   "name": "exactDivide",
+   "kind": "def"
+  },
+  {
+   "name": "ExactGuard",
+   "kind": "def"
+  },
+  {
+   "name": "exactDivide_readout",
+   "kind": "theorem"
+  },
+  {
+   "name": "exactDivide_literal",
+   "kind": "theorem"
+  },
+  {
+   "name": "fraction_exactDivide",
+   "kind": "theorem"
+  }
+ ]
+}

@@ -1,0 +1,17 @@
+### 42.3 固定边纤维与完整观察函数
+
+**定义 QI-D3（边观察契约）。** 固定有向边割 $L\mid R$ 及 $s\in\mathcal A(C_e)$，令
+
+$$
+\begin{aligned}
+\mathcal B_e(s)&=\{a\in J_L:a|_{C_e}=s\},\\
+\mathcal R_e(s)&=\{r\in J_R:r|_{C_e}=s\},\\
+O_{e,s}&:\mathcal B_e(s)\longrightarrow
+\mathcal V_{\mathcal F}^{\mathcal R_e(s)},\\
+O_{e,s}(a)(r)&=G(a\cup r).
+\end{aligned}
+\tag{QI-EDGE-OBS}
+$$
+
+$\mathcal R_e(s)$ 是模型中实际存在的原始对侧记录域，此处“原始”表示尚未用 $K$ 筛选；它不是各个响应边缘值集的乘积。命题 QI-P1 保证每次 $a\cup r$ 都在 $J$。契约固定了每个对侧记录及每个指定消费者，观察值是完整联合向量。若要改用更小的对侧摘要，全部相关兼容性测试与消费者必须先证明可经该摘要因子化。
+

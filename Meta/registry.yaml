@@ -12,8 +12,11 @@ root_files:
   - "global.json"
   - "lake-manifest.json"
   - "lakefile.toml"
+  - "lean-report-inputs.json"
   - "lean-toolchain"
 governance_documents:
+  - ".claude/skills"
+  - ".codex/skills"
   - "D5/X_Frontier/HeartsAuthorizations.md"
   - "Golden/gate-authority-roots.toml"
   - "Meta/Digestion/atomizers.toml"

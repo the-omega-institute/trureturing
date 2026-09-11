@@ -13,6 +13,7 @@ import stat
 import sys
 import tempfile
 import zipfile
+from typing import BinaryIO, Iterable
 
 
 SPOOL_SCHEMA = "stratalint-lean-inspector-spool-v1"
@@ -44,7 +45,37 @@ def canonical_json(value: object) -> bytes:
 
 
 def statement_address(material: bytes) -> str:
-    return "sha256:" + hashlib.sha256(STATEMENT_DOMAIN + material).hexdigest()
+    return _statement_address((material,))
+
+
+def _statement_address(blocks: Iterable[bytes]) -> str:
+    digest = hashlib.sha256(STATEMENT_DOMAIN)
+    for block in blocks:
+        digest.update(block)
+    return "sha256:" + digest.hexdigest()
+
+
+def verify_material(source: BinaryIO, address: str, target: BinaryIO | None = None) -> None:
+    """Verify a material stream, optionally copying it into a private staging sink."""
+    def blocks() -> Iterable[bytes]:
+        for block in iter(lambda: source.read(1024 * 1024), b""):
+            if target is not None:
+                target.write(block)
+            yield block
+
+    if _statement_address(blocks()) != address:
+        raise ValueError(f"statement material address mismatch: {address}")
+
+
+def declaration_statement_id(source_path: str, kind: str, name_key: str, material: str) -> str:
+    """The canonical declaration address used by the report and ownership query."""
+    return statement_address(canonical_json({
+        "declaration_name_key": name_key,
+        "kind": kind,
+        "module_path": source_path,
+        "schema": "declaration-statement-v1",
+        "statement_material": material,
+    }))
 
 
 def require_keys(value: object, expected: set[str], context: str) -> dict:
@@ -158,14 +189,7 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
                     raise ValueError(
                         f"statement material spool is not strict UTF-8: {material_file}") from error
                 type_sha256 = statement_address(material)
-                declaration_preimage = canonical_json({
-                    "declaration_name_key": name_key,
-                    "kind": kind,
-                    "module_path": source_path,
-                    "schema": "declaration-statement-v1",
-                    "statement_material": material.decode("utf-8"),
-                })
-                declaration_id = statement_address(declaration_preimage)
+                declaration_id = declaration_statement_id(source_path, kind, name_key, material.decode("utf-8"))
                 destination = staged_materials / type_sha256[7:]
                 if destination.exists():
                     if destination.read_bytes() != material:

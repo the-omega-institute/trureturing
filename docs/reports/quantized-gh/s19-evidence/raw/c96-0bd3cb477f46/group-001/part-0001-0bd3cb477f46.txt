@@ -1,0 +1,125 @@
+{
+"conclusion": {
+"verdict": "propose",
+"mathematical_status": "proved",
+"status_scope": "候选的最优性缺口恒等式、中心差分公式、梯度分量包络和区间端点均成立。下面给出只核验一个有理候选 q 的 2N+1 组残差包络的总可判定谓词 VerifyLocal，并构造不使用系数网格、不枚举有理候选的总终止有理生成算法。该算法对每个 N≥1 和正有理 η 产生通过验收的证书。这是固定有限维最优距离的认证定理，不是 RH 证明，也不是独立评审、实现或交付结论。",
+"premise_check": {
+"accepted_formulas": "在本实际实值、线性无关函数族中，F_N 正定，R_N(q)−D_N=inner(v(q),F_N^(−1)v(q))≤||v(q)||²/δ_N；对实 q，v_k(q)=[R_N(q+e_k)−R_N(q−e_k)]/4。题给 l_k、u_k、S、ell 和 u 的符号及方向均正确。",
+"normalization_clarification": "v(q)=F_Nq−y_N 是实变量残差平方 R_N 的一半梯度，完整梯度是 2v(q)。因此候选中的分母 4 正确，不应改成 2；最优性缺口上界使用 ||v(q)||²/δ_N，等价于使用完整梯度时的 ||∇R_N(q)||²/(4δ_N)。",
+"generation_route": "从固定整数探针的残差区间进行极化，可以构造足够精确的对称有理 Ftilde 和有理 ytilde。下文明确选择精度，证明 Ftilde 正定、精确有理解存在、系数有界、真实 v(q) 足够小，并证明最终局部证书宽度严格小于 η。",
+"no_replacement": "C93、C95 的完整定理和全部证明继续有效。本方法增加另一种生成和验收方式，不调用、撤销或缩小 C95 的完整网格方法。原一般复 Gram 定理的相关列、奇异块、退化情形和无限维义务继续保留。pro-gram-proof-complete-inputs-…"
+},
+"notation_and_certified_constants": {
+"domains": "N∈ℕ+={1,2,...}，η∈ℚ 且 η>0，q∈ℚ^N。自然数证书属于 ℕ0={0,1,2,...}。inner 对第一变量共轭线性，compose(X,Y) 表示先作用 Y 再作用 X，伴随写作 adj，伪逆写作 pinv。所有验收用有理数均以有符号整数分子和正整数分母表示。",
+"unchanged_model": "H=L²((0,∞),dx)，inner(F,G)=∫0^∞conj(F(x))G(x)dx，χ=1(0,1]，f_k(x)={1/(kx)}。定义 V:ℂ^N→H，Va=Σ_(k=1)^N a_kf_k，R_N(a)=||χ−Va||²，D_N=inf_(a∈ℂ^N)R_N(a)。这是未缩放 f_k 的系数空间；原 h_k=f_k/k、无限合成 T 和其 Gram 算子保持原定义。pro-gram-proof-complete-inputs-…",
+"gram_types": "F_N=compose(adj(V),V):ℂ^N→ℂ^N，(F_N)(i,j)=inner(f_i,f_j)，y_N=adj(V)χ，(y_N)i=inner(f_i,χ)。本模型的 F_N 是实对称矩阵，y_N 是实列向量。下面省略下标时写 F、y、δ、σ。",
+"rational_K_formula": "为使验证器能从 N 自行重算强制常数，沿用 C95 的 K_N。对 j=0,...,N、k=1,...,N，令 r(j,k)=j−k floor(j/k)。定义 (K_N)(k,l)=1/[(N+1)²kl]·Σ_(j=0)^N[r_(j,k)r_(j,l)+(r_(j,k)+r_(j,l))/2+1/3]。它等于 (N+1)^(−2)∫0^(N+1){t/k}{t/l}dt，并且其计算公式只含有限整数和有理运算。",
+"K_positive_definite": "对 a∈ℂ^N，令 g_a(t)=Σ_ka_k{t/k}。则 inner(a,K_Na)=(N+1)^(−2)∫0^(N+1)|g_a(t)|²dt。若它为零，g_a 在每个单位开区间上作为仿射函数恒为零。整数 j=1,...,N 两侧的跳跃为 −Σ(k|j)a_k，所以这些约数和全部为零。按 j 从 1 到 N 归纳，得到所有 a_j=0。因此 K_N 正定。又因 t^(−2)≥(N+1)^(−2) 在 0<t<N+1 上成立，||Va||²≥inner(a,K_Na)。",
+"coercivity_constant": "定义 δ_N=det(K_N)/(trace K_N)^(N−1)>0，N=1 时分母约定为 1。K_N 的每个正特征值都至少为这个比值：其余 N−1 个特征值的乘积不超过 trace(K_N)^(N−1)。故 F_N≥δ_N I，即 ||Va||²≥δ_N||a||²。这里特征值只用于证明不等式，计算 δ_N 只需有理条目、迹和有限行列式；不求任何真实 Gram 特征值或秩。",
+"positive_distance_constant": "令 L_N=lcm(1,...,N)，σ_N=3/(3L_N²+3L_N+2)。沿用 C95 的周期配对证明：t=1/x 后，g_a(t+L_N)=g_a(t)，而目标在 (0,1) 为零、在 (L_N,L_N+1) 为一。对每个复数 z 和 0<t<1，|z|²/t²+|1−z|²/(L_N+t)²≥1/[t²+(L_N+t)²]。积分并应用 Cauchy–Schwarz，得 R_N(a)≥1/∫0^1[t²+(L_N+t)²]dt=σ_N。因此 0<σ_N≤D_N≤1。",
+"simple_y_bound": "因为 0≤f_i(x)<1 且 χ 支持在 (0,1]，0≤y_i=∫0^1f_i(x)dx≤1。因此 ||y||2≤√N≤N。这个证明中的范数估计不会要求生成器计算平方根。",
+"computing_constants": "最小公倍数由整数 gcd 算出，K_N 用上面的有限公式算出，迹由对角求和算出，行列式可定义为有限带符号排列和。因此 δ_N、σ_N 都从 N 精确重算。其正性已对所有 N 证明，验证器可以再用有理分子符号检查，不能采用候选自报的替代常数。"
+},
+"theorem_1_exact_optimality_gap_and_finite_differences": {
+"complex_to_real_and_optimizer": "F≥δI 保证 F 可逆。令 a°=F^(−1)y，则 a°∈ℝ^N，因为 F、y 均实。对任意 a∈ℂ^N，R_N(a)=1−inner(a,y)−inner(y,a)+inner(a,Fa)=D_N+inner(a−a°,F(a−a°))，其中 D_N=1−inner(y,F^(−1)y)。因此 a° 是全部复系数中的唯一最优解。也可直接写 a=b+ic、b,c∈ℝ^N，得到 R_N(a)=R_N(b)+||Vc||²，说明实系数最小值就是原复系数最小值。",
+"gradient_identity": "对 q∈ℚ^N，定义 v(q)=Fq−y=F(q−a°)。于是 R_N(q)−D_N=inner(q−a°,F(q−a°))=inner(v(q),F^(−1)v(q))。因为这里所有向量和矩阵都实，该式也等于题给的 v(q)^T F^(−1)v(q)。一般复向量的表达必须保留 inner，而不能把共轭转置静默换成普通转置。",
+"inverse_bound_without_oracle": "对任意 w，令 z=F^(−1)w。由 δ||z||²≤inner(z,Fz)=inner(z,w)≤||z||||w||，得到 ||z||≤||w||/δ。再得 0≤inner(w,F^(−1)w)≤||w||²/δ。因此 0≤R_N(q)−D_N≤||v(q)||²/δ。F^(−1) 仅出现在证明中，局部验证器不计算它。",
+"finite_difference_expansion": "对任意实数 s，R_N(q+s e_k)=R_N(q)+2s v_k(q)+s²F(k,k)。分别取 s=1 和 s=−1 相减，得到 R_N(q+e_k)−R_N(q−e_k)=4v_k(q)。这是二次多项式的精确恒等式，不是有步长误差的差分近似。",
+"complex_boundary": "若 q 是一般复向量，仅用实方向 q±e_k 的差分只能读取 v_k 的实部。这里 VerifyLocal 明确限定 q∈ℚ^N；前面已经证明该限制不缩小原复系数最优距离问题。"
+},
+"C93_subroutine_and_error_contract": {
+"exact_rational_definition": "对任意 x∈ℚ^N 和整数 J≥2、K≥1，令 b_x=Σ_kx_k/k，M_x=1+Σ_k|x_k|，A(x,j)=1+Σ_kx_k floor(j/k)，d(x,j)=−2A(x,j)b_x，d_(x,j)^+=max(d_(x,j),0)。对 j≥1，令 w_j=2j+1，L_(j,K)=2Σ_(l=0)^(K−1)1/[(2l+1)w_j^(2l+1)]，ρ_(j,K)=2/[(2K+1)w_j^(2K−1)(w_j²−1)]。定义 B(x;J,K)=b_x²+Σ_(j=1)^(J−1)[A_(x,j)²/[j(j+1)]+b_x²+d_(x,j)L_(j,K)+d_(x,j)^+ρ_(j,K)]+M_x²/J。",
+"chosen_error_bound": "本轮固定使用可重算的有理误差 E(x;J,K)=M_x²/J+(3|b_x|M_x/8)/9^(K−1)。C93 已证明 B(x;J,K)−E(x;J,K)≤R_N(x)≤B(x;J,K)，也就是 0≤B−R_N(x)≤E。这里 E 是整个包络误差界，不是未知的积分尾部本身。",
+"proof_of_the_contract": "t=1/x 的变量代换保留权重 dt/t²。变换后 (0,1) 的积分是 b_x²；在 (j,j+1) 上，函数差为 A_(x,j)−b_xt，区间积分含对数系数 d_(x,j)。未知 t≥J 尾部位于 [0,M_x²/J]。有限几何恒等式积分给出 L_(j,K)≤log((j+1)/j)≤L_(j,K)+ρ_(j,K)，按 d_(x,j) 符号选择相应端点便得到 B≥R_N(x)。逐项对数误差至多为 |d_(x,j)|ρ_(j,K)。利用 |A_(x,j)|≤jM_x、ρ_(j,K)≤(3/4)9^(1−K)/(2j+1)³、j/(2j+1)³≤1/(8j²) 及 Σ_(j=1)^(J−1)1/j²≤2，得到所选 E。",
+"uniform_precision_rule": "对任意有理 Q≥0，定义 Γ(Q)=(1+Q)²+3Q(1+Q)/8。若 Σ_k|x_k|≤Q，则对每个整数 h≥1，E(x;h+1,h)≤Γ(Q)/h。证明是 |b_x|≤Q、M_x≤1+Q，以及 9^(h−1)≥h；后一个不等式由整数归纳成立。",
+"explicit_finite_precision": "给定 Q≥0 和正有理 ε，取 h=1+floor(Γ(Q)/ε)，J=h+1、K=h，即保证 E(x;J,K)<ε 对全部满足该 Q 界的 x 同时成立。这个选择不需要知道真实残差、真实误差或其与任何阈值的裕量。",
+"endpoint_and_sign_semantics": "所有公式对负系数、零系数、b_x=0、N=1 及 J<N 均适用。各个断点只影响零测集。首项 b_x² 是原全半轴 x>1 的贡献，M_x²/J 控制的是原变量接近零的另一端，二者不合并或遗漏。验收只计算上述有理表达式，绝不计算 log。"
+},
+"theorem_2_local_gradient_enclosure_and_sound_interval": {
+"local_data": "固定任意 q∈ℚ^N。规定 2N+1 个有序输入为 x_0=q，x_(2k−1)=q+e_k，x_(2k)=q−e_k，k=1,...,N。每个输入各配任意合法整数 J_i≥2、K_i≥1，并重算 B_i=B(x_i;J_i,K_i)、E_i=E(x_i;J_i,K_i)。",
+"gradient_intervals": "对每个 k，定义 l_k=(B_(2k−1)−E_(2k−1)−B_(2k))/4，u_k=(B_(2k−1)−B_(2k)+E_(2k))/4。因为 R_N(x_(2k−1))∈[B_(2k−1)−E_(2k−1),B_(2k−1)]，R_N(x_(2k))∈[B_(2k)−E_(2k),B_(2k)]，相减并除以正数 4，恰得 l_k≤v_k(q)≤u_k。这里下界要减去正方向误差，上界要加上负方向误差，题给方向正确。",
+"norm_enclosure": "定义 S=Σ_(k=1)^N max(|l_k|,|u_k|)²。每个区间确实包含 v_k(q)，所以 S≥Σ_k|v_k(q)|²=||v(q)||²。此式不相信候选提供的梯度或其符号。",
+"certified_endpoints": "定义 ell=max(σ_N,B_0−E_0−S/δ_N)，u=min(1,B_0)。则对每个合法 q 和全部合法截断参数，无论候选质量如何，都有 0<ell≤D_N≤u≤1。",
+"lower_bound_proof": "第一定理给 D_N≥R_N(q)−||v(q)||²/δ_N。再用 R_N(q)≥B_0−E_0 和 ||v(q)||²≤S，得到 D_N≥B_0−E_0−S/δ_N；另有 D_N≥σ_N>0。因此二者的最大值是可靠正下界。",
+"upper_bound_proof": "D_N≤R_N(q)≤B_0，且零系数给 D_N≤R_N(0)=1，因此 D_N≤min(1,B_0)=u。上、下界证明共同保证 ell≤u；无需预设坏候选也近似最优。",
+"width_estimate": "由于 u≤B_0、ell≥B_0−E_0−S/δ_N，总有 0≤u−ell≤E_0+S/δ_N。因此精度是否合格是另一个完全有理的检查 u−ell<η；可靠性本身不依赖它。",
+"why_coercivity_matters": "这里小梯度控制的是全局最优性缺口，而非仅说明某种局部平稳性，原因正是已经对全部系数证明 F_N≥δ_NI。不能在缺少这个强制常数时把同一局部梯度测试当成全局最优性证明。"
+},
+"finite_encoding_and_VerifyLocal": {
+"pairing": "定义 Pair(a,b)=2^a(2b+1)−1，a,b∈ℕ0。解码 n 时，把正整数 n+1 反复除以 2，直到得到奇数；除二次数为 a，剩余奇数写成 2b+1。这给出唯一解码，并且每次除二严格减小正整数，故终止。",
+"rational_encoding": "整数 p 的符号码为 Sign(p)=2p 若 p≥0，Sign(p)=−2p−1 若 p<0。偶数码 a 解为 a/2，奇数码 a 解为 −(a+1)/2。定义 Rat(p,d)=Pair(Sign(p),d−1)，其中 d≥1，表示 p/d。无需约分；有理数相等按交叉相乘检查。",
+"list_encoding": "定义 List()=0，List(a_1,...,a_n)=1+Pair(a_1,List(a_2,...,a_n))。正列表码 L 的尾码 t 满足 L=2^a(2t+1)>t，所以任何列表解码都有限终止。",
+"certificate_schema": "证书 e 是长度恰为七的自然数列表，字段依次为版本标记 1、N、η 的有理编码、q 的 N 项有理编码列表、2N+1 项参数列表、ell 的有理编码、u 的有理编码。第 i 项参数是 Pair(J_i−2,K_i−1)，其顺序必须对应 x_0=q、x_(2k−1)=q+e_k、x_(2k)=q−e_k。",
+"no_claimed_real_data": "证书不携带被直接信任的真实残差、梯度、F_N、y_N、最优系数、强制常数或最优性结论。B_i、E_i、l_k、u_k、S 均不必由候选填报，因为验证器自行计算。它也不包含系数网格、网格最小值或覆盖声明。",
+"predicate_definition": "VerifyLocal(N,η,e) 首先检查外部输入 N≥1、η>0，以及证书的版本、长度、内部 N 和 η 与外部输入一致。解码 q 并检查长度恰为 N；解码参数列表并检查长度恰为 2N+1。随后从 N 重算 δ_N、σ_N，并检查其正性。",
+"reconstruction_and_acceptance": "验证器从 q 推导全部 x_i，而不接受独立提供的偏移向量；按每组 J_i,K_i 重算全部 B_i,E_i；再重算 l_k,u_k,S、ell 和 u。检查它们与证书的两个端点完全相等，最后检查 0<ell≤u≤1 和严格不等式 u−ell<η。全部成立才返回 true。",
+"integer_semantics": "有理 p/d 与 r/s 的比较等价于整数 ps 与 rd 的比较，分母保持正数；加法、乘法、平方、绝对值、最大最小值、floor、整数幂、行列式均用有限整数运算完成。没有 log、浮点、平方根、真实 Gram/梯度 oracle、实数秩测试或无限极限判定。",
+"total_decidability": "所有解码过程已证明终止；矩阵 K_N 和 δ_N 的计算是有限代数运算；随后恰有 2N+1 组输入指定的有限残差包络计算及有限有理比较。故 VerifyLocal 在每个编码输入上都终止，对不合法输入返回 false。",
+"soundness": "若 VerifyLocal(N,η,e)=true，第二定理给出该证书端点满足 0<ell≤D_N≤u≤1，验收的最后一个严格比较再给 u−ell<η。",
+"separation_from_generation": "VerifyLocal 不核验下一节的生成历史，也不重算其辅助极化探针。任何来源提出的有理 q 都可以提交，只按它和规定参数重算局部证据。这正是生成方法与固定验收之间的边界；来源标签没有数学证明效力。"
+},
+"theorem_3_grid_free_total_rational_generator": {
+"statement": "存在一个关于输入 N≥1、η∈ℚ_(>0) 统一定义的总终止有理算法，它输出 q、2N+1 组有限参数和端点，并编码成通过 VerifyLocal 的证书。算法不调用 C95 网格生成器，不枚举有理候选，也不需要知道 a°、F_N、y_N 的精确实数值。",
+"a_priori_rational_parameters": "先从 N 算出 δ=δ_N、σ=σ_N。定义 H_gen=4N/δ，Q_gen=N H_gen，C_gen=N(1+H_gen)，C_width=1+(N+4)/(2δ)。再取 τ=min(1,η/(4C_width))，θ=min(1,δ/(2N),τ/C_gen)。所有量都是严格正的可计算有理数。H_gen 是本次生成器使用的新上界，不替换 C95 原有系数盒。",
+"fixed_integer_probes": "使用固定探针集合 P_N={e_i,−e_i:1≤i≤N}∪{e_i+e_j:1≤i<j≤N}。这些是由 N 直接指定的整数向量，不是待搜索的候选。其系数绝对值总和均不超过 2。R_N(0)=1 直接作为精确常数使用。",
+"probe_precision": "令 h_0=1+floor(Γ(2)/θ)，其中 Γ(2)=45/4。对每个 p∈P_N，计算 B_p=B(p;h_0+1,h_0)、E_p=E(p;h_0+1,h_0)，并定义有理中点 c_p=B_p−E_p/2。于是 E_p<θ，且 |c_p−R_N(p)|≤E_p/2<θ/2。",
+"exact_polarization_formulas": "残差二次式直接给出 F_(i,i)=[R_N(e_i)+R_N(−e_i)−2]/2，y_i=[R_N(−e_i)−R_N(e_i)]/4。对 i<j，F_(i,j)=[R_N(e_i+e_j)−R_N(e_i)−R_N(e_j)+1]/2。最后一个常数为 +1，因为 R_N(0)=1，且相减后交叉项为 2F_(i,j)。",
+"rational_entry_intervals": "若记各探针残差下、上端点为 a_p=B_p−E_p 和 b_p=B_p，则 y_i 位于 [(a_(-e_i)−b_(e_i))/4,(b_(-e_i)−a_(e_i))/4]；F_(i,i) 位于 [(a_(e_i)+a_(-e_i)−2)/2,(b_(e_i)+b_(-e_i)−2)/2]；F_(i,j) 位于 [(a_(e_i+e_j)−b_(e_i)−b_(e_j)+1)/2,(b_(e_i+e_j)−a_(e_i)−a_(e_j)+1)/2]。这些区间都由有理运算得到。",
+"symmetric_rational_approximation": "把精确极化公式中的每个 R_N(p) 换成 c_p，定义 Ftilde_(i,i)、ytilde_i 及 i<j 时的 Ftilde_(i,j)，再强制定义 Ftilde_(j,i)=Ftilde_(i,j)。由中点误差，|Ftilde_(i,i)−F_(i,i)|<θ/2，|Ftilde_(i,j)−F_(i,j)|<3θ/4，|ytilde_i−y_i|<θ/4。因此全部条目误差均≤θ。对称性由定义保证，不依赖不精确计算碰巧给出相同两侧。",
+"operator_error_proof": "令 E_F=Ftilde−F。对任意 z∈ℂ^N，每个坐标满足 |(E_Fz)i|≤θΣ_j|z_j|。所以 ||E_Fz||²≤Nθ²(Σ_j|z_j|)²≤N²θ²||z||²，即 ||E_F||op≤Nθ。同时 ||ytilde−y||≤Nθ。这里的范数推导用于证明，生成器不计算这些真实误差或平方根。",
+"certified_positive_definiteness": "对任意 z，inner(z,Ftilde z)≥inner(z,Fz)−Nθ||z||²≥(δ−Nθ)||z||²≥(δ/2)||z||²。因此 Ftilde 是正定有理矩阵，必定非奇异。又由 Cauchy–Schwarz，(δ/2)||z||²≤inner(z,Ftilde z)≤||z||||Ftilde z||，得到 ||Ftilde^(−1)||op≤2/δ。没有调用真实 F_N 的数值秩或特征值。",
+"exact_rational_solve": "以精确有理运算解 Ftilde q=ytilde。例如可明确采用 Cramer 公式 q_j=det(Ftilde 的第 j 列替换成 ytilde 后的矩阵)/det(Ftilde)。每个行列式是有限有理代数表达；分母非零已经证明。有限余子式恒等式保证得到的 q 确实解方程，且 q∈ℚ^N。这不是对真实 F_Nq=y_N 的精确实数求解。",
+"coefficient_control": "由 |y_i|≤1、θ≤1 及条目误差≤θ，||ytilde||≤2N。因此 ||q||≤(2/δ)||ytilde||≤4N/δ=H_gen，且 Σ_k|q_k|≤N||q||≤Q_gen。这给出不依赖未知最优系数的有理先验界。",
+"true_gradient_control": "利用精确等式 Ftilde q=ytilde，有 v(q)=Fq−y=(F−Ftilde)q+(ytilde−y)。故 ||v(q)||≤NθH_gen+Nθ=C_genθ≤τ。此时还可推出 R_N(q)−D_N≤τ²/δ，但最终验收不会直接相信这个生成器推导，而是重新使用局部包络。",
+"local_parameter_selection": "对 q 及全部 q±e_k，系数绝对值总和均≤Q_gen+1。令 h_1=1+floor(Γ(Q_gen+1)/τ)，并在全部 2N+1 个局部槽位使用 J_i=h_1+1、K_i=h_1。于是每个局部 E_i<τ。无需测试它们是否落在 C95 的旧系数盒内。",
+"interval_inflation_bound": "局部梯度区间宽度精确为 u_k−l_k=(E(2k−1)+E(2k))/4<τ/2。因为 v_k(q) 属于该区间，每个端点与 v_k(q) 的距离不超过该宽度，故 max(|l_k|,|u_k|)≤|v_k(q)|+τ/2。使用 (a+b)²≤2a²+2b² 并求和，得到 S≤2||v(q)||²+Nτ²/2≤(N+4)τ²/2。",
+"final_width_proof": "由第二定理，u−ell≤E_0+S/δ≤τ+(N+4)τ²/(2δ)。由于 τ≤1，右侧≤C_widthτ≤η/4<η。因此生成出的端点必定通过精度验收；这不依赖 D_N 的值，也不依赖与某个阈值的未知间隔。",
+"finite_output": "生成器最后只重算该 q 的 2N+1 组局部 B_i,E_i，形成 l_k,u_k,S、ell、u，再按给定格式编码。极化阶段的辅助探针值和 Ftilde、ytilde 无需进入最终证书，因为局部验收的可靠性不依赖其生成历史。",
+"total_termination": "δ、σ 计算有限；全部精度参数由正有理数的 floor 和有限运算直接给出；探针集合有 2N+N(N−1)/2 个元素；每次 B、E 的定义只含指定的有限和及整数幂；有理线性方程通过非零分母的有限公式求解；最后只有 2N+1 组局部计算。每一阶段都有限，且没有等待未知实数比较分离的循环。因此该算法对全部合法 N,η 总终止。",
+"what_was_not_used": "没有调用完整系数网格，没有扫描某个有界系数盒，没有枚举所有有理数，也没有先猜测最优系数再要求其正确。有限探针索引、行列式的有限代数展开及残差包络的有限求和，都不是系数候选搜索。这里是纸面算法定义，本轮未运行。"
+},
+"theorem_4_certificate_existence_and_strict_thresholds": {
+"arbitrary_precision_existence": "上一节给出明确的总生成函数 GenLocal(N,η)。对每个 N≥1、η∈ℚ(>0)，其输出 e 满足 VerifyLocal(N,η,e)=true。因此不仅证明存在合格候选，还证明 ∀N≥1 ∀η∈ℚ_(>0) ∃e∈ℕ0：VerifyLocal(N,η,e)，且存在一个统一的总有理生成算法。",
+"strict_predicates": "对任意 r∈ℚ，定义 LocalLess(N,r,e)：证书内有合法正有理精度 η_e，VerifyLocal(N,η_e,e)=true，且其上端点 u<r。定义 LocalGreater(N,r,e)：同样通过 VerifyLocal，且其下端点 ell>r。解码失败则返回 false。二者都是总可判定谓词。",
+"strict_soundness": "LocalLess 通过时，D_N≤u<r，所以 D_N<r。LocalGreater 通过时，D_N≥ell>r，所以 D_N>r。",
+"strict_completeness": "对每个固定 N≥1、r∈ℚ，有 D_N<r ⇔ 存在 e 使 LocalLess(N,r,e) 成立，以及 D_N>r ⇔ 存在 e 使 LocalGreater(N,r,e) 成立。证明正向时，按 j=1,2,... 取 η_j=2^(−j)，每次用总生成器得到区间 [ell_j,u_j]。若 D_N<r，最终 η_j<r−D_N，且 u_j−D_N≤u_j−ell_j<η_j，于是 u_j<r。若 D_N>r，最终 η_j<D_N−r，且 D_N−ell_j<η_j，于是 ell_j>r。反向由可靠性。",
+"equality_boundary": "若 D_N=r，则每个可靠区间都满足 ell≤r≤u，两种严格谓词都不可能通过。逐步缩小精度以等待严格分离的比较过程在此情形不会终止；但每一次固定 η 的生成和验证仍然总终止。有限次没有找到严格证书不能作为等号证明。",
+"all_rational_thresholds": "上述定理不要求 r>0。r≤0 时，每个已通过的区间都有 ell>r，直接认证 D_N>r；r>1 时 u≤1<r，直接认证 D_N<r。r=1 及其他边界仍按严格比较规则处理。",
+"extracting_a_residual_witness": "若 LocalLess(N,r,e) 通过且 r≤1，则 u=min(1,B_0)<r 强制 B_0=u<r，因而证书中的实际有理 q 满足 R_N(q)≤B_0<r。特别是对 r=1/m、m≥1，可以直接取回该 q 及其 C93 参数作为严格残差证书。若 r>1，截断 u=min(1,B_0) 可能是由 1 给出的，此时不应声称原 q 必然合格；零系数 q=0 提供 R_N(0)=1<r 的实际见证。",
+"negative_Gram_witness": "对 m≥1 的通过证书，令 Z(q)=(1,−q_1,−2q_2,...,−Nq_N)。在原由 χ,h_1,...,h_N 构成的有限 Gram 矩阵 A_N 上，inner(Z(q),(A_N−(1/m)E00)Z(q))=R_N(q)−1/m<0。该负号、因子 k 和首坐标归一化不变。"
+},
+"RH_connection_and_effectivity_boundaries": {
+"literature": "外部文献仍为 [B1]：Luis Báez-Duarte，A strengthening of the Nyman-Beurling criterion for the Riemann hypothesis, 2，arXiv:math/0205003v1。其 PDF 第 1 页定义全半轴 L² 空间、χ 和 ρ_k(x)={1/(kx)}；第 2 页 Theorem 1.1 给出 RH 当且仅当 χ 属于自然数参数函数线性张成空间的范数闭包。本轮查看了这两页图像，确认闭包符号；没有重证其完整解析数论证明。arXiv+1",
+"exact_discrete_equivalence": "结合已保留的闭包距离定理和本轮严格完备性，得到 RH ⇔ ∀m∈ℕ+ ∃N∈ℕ+ ∃e∈ℕ0：LocalLess(N,1/m,e)=true。正向由 inf_N D_N=0 选取 D_N<1/m 的有限 N，再用本轮完备性；反向由每个通过证书推出某个 D_N<1/m，故 inf_N D_N=0，再应用 [B1]。",
+"external_dependency_only_here": "本轮局部最优性恒等式、有理区间、VerifyLocal 的可靠性、网格外总生成算法和固定 N 的严格比较完备性，全部不依赖 RH 或 [B1]。只有将无限维闭包条件解释为 RH 时使用该文献定理。",
+"quantifier_distinction": "对给定 N,η 能总终止地产生精确误差区间，不等于对给定 m 已无条件找到使 D_N<1/m 的 N。本轮确实给出了关于 N,η 的明确探针精度和局部截断界，但没有给出无条件保证成功的 m↦N 截止。",
+"no_fixed_N_for_all_m": "对每个固定 N_0，D_(N_0)≥σ_(N_0)>0。取足够大的 m 使 1/m≤σ_(N_0)，则全部 N≤N_0 都有 D_N≥D_(N_0)≥1/m。因此不能把 ∀m∃N 交换为 ∃N∀m，也不能用一个固定有限维度覆盖所有严格容差。",
+"shrinking_positive_bounds": "L_N 非减且 L_N≥N，所以 σ_N 非增并趋零。每个有限 D_N 有正下界与 D_N→0 相容；这些正下界不反驳 RH，它们自身趋零也不证明 RH。",
+"no_finite_RH_decision": "一个有限证书只回答一个有限 N 和目标精度或阈值的问题。有限多个成功、失败或未通过结果不能验证全部 m 的量词，也不能从没有找到证书推出不存在证书。本轮没有证明 RH、反驳 RH、提出有限 RH 判定，或证明 RH 不可判定。",
+"performance_boundary": "已经证明的是运算完全离散、每次输入总终止、局部验收只需一个 q 的 2N+1 组残差包络。没有据此声称实际复杂度收益、GPU 吞吐、CPU 时间、实用维度范围或与 C95 网格法的实测优劣；极小 δ_N 可能使有理数和截断参数极大。"
+},
+"boundary_cases_and_preserved_results": {
+"N_equals_1": "N=1 时，K_1=[1/6]，δ_1=1/6，L_1=1，σ_1=3/8。极化集合只有 e_1、−e_1，没有 i<j 的探针；所有参数分母仍为正，局部证书有三组残差数据，全部推导适用。",
+"arbitrary_eta_and_small_delta": "任意正有理 η 都给出正有理 τ、θ 和有限整数 h_0,h_1。δ_N 无论多小，只会增大这些明确有限参数，不引入除零、实数秩判断或未知停止条件。",
+"zero_negative_and_bad_candidates": "VerifyLocal 不要求 q 非零、不要求系数非负，也不要求 v(q) 小。任意合法 q 和参数都给出可靠区间；坏候选可能不能满足宽度要求。对一个固定坏候选不断缩小 E_i，不保证区间能达到任意精度；总生成定理另外构造了具有可控真实 v(q) 的 q，不能把两者混为一谈。",
+"outside_the_old_box": "q±e_k 可以超出 C95 的旧系数盒，甚至提交的 q 自身也可以超出。C93 的 B、E 对所有有理向量有效，局部验收不调用任何旧盒限制。总生成证明只为自己生成的 q 使用新界 Σ|q_k|≤Q_gen，因而 q±e_k 有 Q_gen+1 的统一误差界。",
+"tails_and_endpoints": "全半轴 x>1 的项及 x 接近零的截断尾部始终保留。整数断点和 χ 的端点按几乎处处处理，J=2、K=1 也是合法验收参数。真实 R_N(q) 或 D_N 与某个阈值相等时，严格负性或严格比较不得由等号推得。",
+"general_singular_Gram": "本轮使用 F_N^(−1) 是因为已经证明本实际有限族独立。对一般相关列的 Gram，不能沿用正的全空间强制常数或普通逆；原定理仍须保留 range 条件并使用 pinv。一般奇异块的原结论没有被实际族的特殊可逆性替换。pro-gram-proof-complete-inputs-…",
+"old_zero_prefix": "主算法明确以 N≥1 为域。原一般 Gram 定理的 N=0、零块和 d=0 情形全部保留；辅助 D_0=1 可以单独由精确区间 [1,1] 处理，不将本轮 δ_N 公式擅自用于零维。",
+"infinite_operator_and_nonattainment": "原 T 的 Hilbert–Schmidt 性、A=compose(adj(T),T) 的正迹类性、有限压缩等价及全局阈值区间 [0,inf_N D_N] 保持有效。本轮不证明无限尾合成范围闭，不引入有界无限逆或无限 pinv，也不从阈值端点可达推出存在 ℓ² 最小化系数。闭包最佳逼近属于实际合成范围仍是那个额外条件。",
+"ordinary_eigenvalue_limit": "原 h_k=f_k/k 及 ||h_k||²=c/k³，c=||f_1||²，未改变。因此 0≤λ_min(A_N)≤inner(e_N,A_Ne_N)=c/N³，普通最小特征值趋零仍然无条件成立，不能替代距离阈值趋零。A≥0 本身也仍是 inner(z,Az)=||Tz||² 的自动结果。",
+"C95_grid_proof_retained": "C95 的完整系数盒、完整网格覆盖、上下界、总生成器和 VerifyOpt 证明继续作为另一套有效方法整体保留。本轮无需使用它们生成 q，但不撤销其全局覆盖论证、证书或边界。"
+},
+"open_obligations_and_provenance": {
+"local_result_status": "本轮四部分目标中的局部可靠验收、无网格总生成、严格阈值双向完备性和所列边界，均已给出完整数学证明。没有把需要证明的最优性缺口留给数值优化、候选自报或真实实数 oracle。",
+"unresolved_mathematics": "仍未判定 inf_N D_N 是零还是正数，未获得无条件跨 N 成功截止，也未判定原无限最佳逼近是否由 ℓ² 系数精确合成。任意固定素数三元组、全部所要求的有限高度和全薄层等其他持续数学问题完整保留。",
+"literature_obligation": "[B1] 仍是明确引用的经典解析数论前提。若要求消除该外部定理依赖，必须另行给出其完整证明；本轮的有限整数认证不能代替它。",
+"implementation_and_independent_review": "尚未实现或运行这里的生成器或 VerifyLocal，没有搜索结果、数值证书、旧证书重放、测试、Lean 形式化或冻结，也没有独立评审通过的结论。未来实现仍须忠实保持精确整数语义、完整参数绑定及误差公式，并接受独立复审。",
+"source_and_delivery": "不批准正文摄入、整卷纯数学性或交付。旧数学、原完整证明、失败和历史证据状态保持不变；完整纯 S19 迁移、忠实下游整合、当前全源审查、普通门禁及 S19→S20→S21→S22→S23→S24→S25 的有序合并义务继续保留。pro-gram-proof-complete-inputs-…",
+"visible_basis_and_actions": "依据本轮候选、本会话可见的完整 C93/C95 证明及已保留的 Gram 勘误推导，并在线核对指定 [B1] 第 1、2 页。没有运行数学程序、系数搜索、CPU/GPU sweep、旧证书、测试或摄入，也没有访问本地仓库或本地日志。",
+"role_and_identity": "这是本会话原数学作者的延续推导，不是独立评审。不声称新颖性或实际服务模型身份；没有独立的调用级服务身份凭证。prior exposure 为 external-prior-exposed; account memory/project context unknown，未检索个人历史补充前提。",
+"reference_meaning": "log_ref 只标识本回复与先前证明所在会话，不表示访问过该链接、存在本地日志、恢复了原始作者字节或核验了服务身份。"
+}
+},
+"log_ref": "https://chatgpt.com/c/6aa2976f-bd7c-83ec-a508-f65682dcc906"
+}

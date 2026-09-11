@@ -1,0 +1,17 @@
+**30.71 定理及证明（局部计算与全局量词的分界）。** With exactly the [B1] full-half-axis
+closure statement specified in 30.62,
+\[
+\mathrm{RH}\iff\forall m\ge1\ \exists N\ge1\ \exists e\in\mathbb N_0:
+ \operatorname{LocalLess}(N,1/m,e).
+\]
+If RH holds, closure distance tends to zero, so select \(N\) with \(D_N<1/m\) and use
+30.69. Conversely each passing certificate gives a true residual below \(1/m\); thus the
+infimum distance is zero, and [B1] yields RH. The finite local theorems and their total generator
+are independent of this external analytic theorem. Their quantifier is
+\(\forall N\forall\eta>0\exists e\), not an unconditional success statement
+\(\forall m\exists N\) with a supplied finite cutoff. For any \(N_0\), taking
+\(1/m\le\sigma_{N_0}\) excludes every \(N\le N_0\) by monotonicity.
+The shrinking positive bounds neither prove nor disprove RH. No finite RH decision,
+unconditional cross-dimension success bound, optimal constants or practical runtime bound is
+provided. The remaining all-prime, shape and slab sign questions are mathematically separate.
+

@@ -192,7 +192,7 @@ jobs:
       # The publish producer only needs the canonical Lean report for the selected
       # gate-verified commit. That commit already passed the "Canonical Lean report
       # production" gate on its dev push, which content-addresses and caches the report
-      # under stratalint-canonical-lean-report-v2-<address>. Reuse it here instead of
+      # under stratalint-canonical-lean-report-reportcache0909-restored-v1-<address>. Reuse it here instead of
       # re-running the whole-tree `make lean-report` (which does not finish in the
       # runner window). If the cache misses or fails to verify, fall through to the
       # full production path below, so this is a pure speed-up, never a trust weakening.
@@ -204,35 +204,26 @@ jobs:
           set -euo pipefail
           helper="$GITHUB_WORKSPACE/tools/scripts/report/lean-report-input.sh"
           test -x "$helper"
-          # Only reuse the cached report when the producer closure is COMPLETELY
-          # discovered. If discovery degrades (the address then embeds an
-          # `unavailable:candidate` marker over a declared-only producer set), a
-          # changed-but-omitted producer source could retain the cache key, so we
-          # refuse reuse and fall through to full production. The producer-paths and
-          # scribe-producer-paths subcommands exit non-zero when the closure is
-          # incomplete, giving us a fail-closed gate on the reuse path.
-          closure_complete=true
-          "$helper" producer-paths --repository "$GITHUB_WORKSPACE" >/dev/null 2>&1 \
-            && "$helper" scribe-producer-paths --repository "$GITHUB_WORKSPACE" >/dev/null 2>&1 \
-            || closure_complete=false
-          echo "closure_complete=$closure_complete" >> "$GITHUB_OUTPUT"
-          read -r address producer_sha256 sources_sha256 config_sha256 \
-            <<< "$("$helper" address --repository "$GITHUB_WORKSPACE")"
-          [[ "$address" =~ ^[0-9a-f]{64}$ ]]
+          # A missing or invalid registered scope is a production failure.
+          "$helper" scribe-producer-paths --repository "$GITHUB_WORKSPACE" >/dev/null
+          address_output="$("$helper" address --repository "$GITHUB_WORKSPACE")"
+          address_pattern='^([0-9a-f]{64} ){3}[0-9a-f]{64}$'
+          [[ "$address_output" =~ $address_pattern ]]
+          read -r address producer_sha256 sources_sha256 config_sha256 <<< "$address_output"
           echo "address=$address" >> "$GITHUB_OUTPUT"
 
       - name: Restore canonical Lean report by input address
         id: report-cache
-        if: steps.source.outputs.publish_ready == 'true' && steps.lean-report-input.outputs.closure_complete == 'true'
+        if: steps.source.outputs.publish_ready == 'true'
         uses: actions/cache/restore@v4
         with:
           path: .canonical-lean-report-cache
-          key: stratalint-canonical-lean-report-v2-${{ steps.lean-report-input.outputs.address }}
-          restore-keys: stratalint-canonical-lean-report-v2-
+          key: stratalint-canonical-lean-report-reportcache0909-restored-v1-${{ steps.lean-report-input.outputs.address }}
+          restore-keys: stratalint-canonical-lean-report-reportcache0909-restored-v1-
 
       - name: Serve the canonical Lean report from the cached address
         id: report-reuse
-        if: steps.source.outputs.publish_ready == 'true' && steps.lean-report-input.outputs.closure_complete == 'true' && steps.report-cache.outputs.cache-hit == 'true'
+        if: steps.source.outputs.publish_ready == 'true' && steps.report-cache.outputs.cache-hit == 'true'
         # A cache serve failure must fall back to full production, not fail the job.
         continue-on-error: true
         shell: bash

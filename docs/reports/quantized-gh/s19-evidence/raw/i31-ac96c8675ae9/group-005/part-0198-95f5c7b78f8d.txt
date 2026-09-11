@@ -1,0 +1,794 @@
+      {
+        "kind": "numbered entry",
+        "label": "30.19",
+        "current": {
+          "byte_start": 235599,
+          "byte_end_exclusive": 236937,
+          "line_start": 4948,
+          "line_end_inclusive": 4965,
+          "byte_count": 1338,
+          "lf_count": 18,
+          "terminal_lf_count": 2,
+          "sha256": "d70eb8957edeab1bf1f289bfcce08049c7e490778498b752d4dd04aca93c17b2"
+        },
+        "cas_path": "Meta/Digestion/atoms/sha256/d70eb8957edeab1bf1f289bfcce08049c7e490778498b752d4dd04aca93c17b2",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/d70eb8957edeab1bf1f289bfcce08049c7e490778498b752d4dd04aca93c17b2.yaml",
+        "whole_span_byte_exact": true,
+        "yaml": {
+          "byte_count": 328,
+          "lf_count": 7,
+          "terminal_lf_count": 1,
+          "sha256": "4d66411f710e47291008230ce084f8e6937b0f4884bd25ee5f659e7e8d1a3ecb"
+        },
+        "actual_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:d70eb8957edeab1bf1f289bfcce08049c7e490778498b752d4dd04aca93c17b2",
+            "normalized_sha256": "sha256:d70eb8957edeab1bf1f289bfcce08049c7e490778498b752d4dd04aca93c17b2"
+          },
+          "cas_ref": "sha256:d70eb8957edeab1bf1f289bfcce08049c7e490778498b752d4dd04aca93c17b2",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "receipts_chain_atoms": [],
+        "new": true
+      },
+      {
+        "kind": "numbered entry",
+        "label": "30.20",
+        "current": {
+          "byte_start": 236937,
+          "byte_end_exclusive": 238272,
+          "line_start": 4966,
+          "line_end_inclusive": 4983,
+          "byte_count": 1335,
+          "lf_count": 18,
+          "terminal_lf_count": 1,
+          "sha256": "9c65f897c84155877e67d0c93b9ece034e7176de23914e138a08649f2380198e"
+        },
+        "cas_path": "Meta/Digestion/atoms/sha256/9c65f897c84155877e67d0c93b9ece034e7176de23914e138a08649f2380198e",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/9c65f897c84155877e67d0c93b9ece034e7176de23914e138a08649f2380198e.yaml",
+        "whole_span_byte_exact": true,
+        "yaml": {
+          "byte_count": 328,
+          "lf_count": 7,
+          "terminal_lf_count": 1,
+          "sha256": "875d150854b5c7b83653eab155e77e4d9562e0141da5aae56aadd71b254dff85"
+        },
+        "actual_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:9c65f897c84155877e67d0c93b9ece034e7176de23914e138a08649f2380198e",
+            "normalized_sha256": "sha256:9c65f897c84155877e67d0c93b9ece034e7176de23914e138a08649f2380198e"
+          },
+          "cas_ref": "sha256:9c65f897c84155877e67d0c93b9ece034e7176de23914e138a08649f2380198e",
+          "coverage_gids": [],
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "receipts_chain_atoms": [],
+        "new": true
+      }
+    ],
+    "changed_files_at_canonical_audit": [
+      {
+        "status": " M",
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_count": 238272,
+        "lf_count": 4983,
+        "terminal_lf_count": 1,
+        "sha256": "9393b391e41432651264bde9a4e4dfdcb9a9f0eeaa880ab0c4afe502e6967dce"
+      },
+      {
+        "status": " M",
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_count": 144084,
+        "lf_count": 3054,
+        "terminal_lf_count": 2,
+        "sha256": "6bc0a3f0d63436081eb625bf713153e11c92542549847f5fa30d9b3cd1b89abb"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/02eece2071f9332b4f8e747911a68c3f6ee23fe669f6d192e8b3b78d950d8d95",
+        "byte_count": 50,
+        "lf_count": 2,
+        "terminal_lf_count": 2,
+        "sha256": "02eece2071f9332b4f8e747911a68c3f6ee23fe669f6d192e8b3b78d950d8d95"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/078ad895fc85e84e99df79202d05e55c51a40bfe92a12047cb2228e871fd99b7",
+        "byte_count": 1474,
+        "lf_count": 32,
+        "terminal_lf_count": 2,
+        "sha256": "078ad895fc85e84e99df79202d05e55c51a40bfe92a12047cb2228e871fd99b7"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/080da3972513ef560c0a1ee6df3e5e1e1f2962f934d7d1ea08da6606e9bbb297",
+        "byte_count": 462,
+        "lf_count": 6,
+        "terminal_lf_count": 2,
+        "sha256": "080da3972513ef560c0a1ee6df3e5e1e1f2962f934d7d1ea08da6606e9bbb297"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/09269a3e3de7ccaded99d8451eba6c9f1d9d595587b8ee8956a0e2f6b577e126",
+        "byte_count": 2012,
+        "lf_count": 52,
+        "terminal_lf_count": 2,
+        "sha256": "09269a3e3de7ccaded99d8451eba6c9f1d9d595587b8ee8956a0e2f6b577e126"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/0a169a4a8d6b44d6234405400b6be9fe79c6950251e95a762310d5e316a4aecb",
+        "byte_count": 1377,
+        "lf_count": 27,
+        "terminal_lf_count": 2,
+        "sha256": "0a169a4a8d6b44d6234405400b6be9fe79c6950251e95a762310d5e316a4aecb"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/0c4d770f00fc19ec7a548f4997671fefd4fb685b0251496e85b7453f6b5b4c52",
+        "byte_count": 835,
+        "lf_count": 17,
+        "terminal_lf_count": 2,
+        "sha256": "0c4d770f00fc19ec7a548f4997671fefd4fb685b0251496e85b7453f6b5b4c52"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/108f84ef6f9d7e2f6926d68048236e1e22938acfac865fb13e67304cf1fc638f",
+        "byte_count": 1112,
+        "lf_count": 24,
+        "terminal_lf_count": 2,
+        "sha256": "108f84ef6f9d7e2f6926d68048236e1e22938acfac865fb13e67304cf1fc638f"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/121fe7e92a5e113fac6ca3f6521c1d8a26c761baede301f93fda3c890ec7b08d",
+        "byte_count": 884,
+        "lf_count": 24,
+        "terminal_lf_count": 2,
+        "sha256": "121fe7e92a5e113fac6ca3f6521c1d8a26c761baede301f93fda3c890ec7b08d"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/12a7456bcdfae7970230281864ecada698bdddc0979a8557aacd5b8aba51d82a",
+        "byte_count": 1141,
+        "lf_count": 17,
+        "terminal_lf_count": 2,
+        "sha256": "12a7456bcdfae7970230281864ecada698bdddc0979a8557aacd5b8aba51d82a"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/139e7e00c6277ecdadd74711f90115062b5a6cc59f730386d95ff489206f64cf",
+        "byte_count": 697,
+        "lf_count": 8,
+        "terminal_lf_count": 2,
+        "sha256": "139e7e00c6277ecdadd74711f90115062b5a6cc59f730386d95ff489206f64cf"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/15255179943fc1b00df9c13c2a1eaa6b0e687d511aaf8e357a00db63707bdd15",
+        "byte_count": 1015,
+        "lf_count": 21,
+        "terminal_lf_count": 2,
+        "sha256": "15255179943fc1b00df9c13c2a1eaa6b0e687d511aaf8e357a00db63707bdd15"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/15b706e8b8baf25929119e0e671acb1ccb97664afa08793ef81ef53820275a8d",
+        "byte_count": 942,
+        "lf_count": 26,
+        "terminal_lf_count": 2,
+        "sha256": "15b706e8b8baf25929119e0e671acb1ccb97664afa08793ef81ef53820275a8d"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/168e8a474e78bafc7fd72cd938ac995adcad5f0f8a3342c25dfdcfa6f3a95e7d",
+        "byte_count": 5799,
+        "lf_count": 104,
+        "terminal_lf_count": 2,
+        "sha256": "168e8a474e78bafc7fd72cd938ac995adcad5f0f8a3342c25dfdcfa6f3a95e7d"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/190b220b0b6d62e63496a308876126eb2d4431dfa1bbc39705565a5c40d87da4",
+        "byte_count": 1406,
+        "lf_count": 33,
+        "terminal_lf_count": 2,
+        "sha256": "190b220b0b6d62e63496a308876126eb2d4431dfa1bbc39705565a5c40d87da4"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/19c4504697febcf9a3dc6f9d586de96b5533460f877f90b9689b5f7757d8234a",
+        "byte_count": 1223,
+        "lf_count": 26,
+        "terminal_lf_count": 2,
+        "sha256": "19c4504697febcf9a3dc6f9d586de96b5533460f877f90b9689b5f7757d8234a"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/1a2703254e6926fe6f8da434fe675fe56e2aaf7b24941cbeafd51e0dbfe83760",
+        "byte_count": 1061,
+        "lf_count": 31,
+        "terminal_lf_count": 2,
+        "sha256": "1a2703254e6926fe6f8da434fe675fe56e2aaf7b24941cbeafd51e0dbfe83760"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/1a5fe71020bfbd4112873a2535c5829ddf36cf2b3fe51f90cc6e65954626fe23",
+        "byte_count": 2358,
+        "lf_count": 66,
+        "terminal_lf_count": 2,
+        "sha256": "1a5fe71020bfbd4112873a2535c5829ddf36cf2b3fe51f90cc6e65954626fe23"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/1e2ef58bcb3182066413489533f165cb55464521e458a345dac9df38671cfe3e",
+        "byte_count": 941,
+        "lf_count": 29,
+        "terminal_lf_count": 2,
+        "sha256": "1e2ef58bcb3182066413489533f165cb55464521e458a345dac9df38671cfe3e"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/1f70580349b16ea3fb2ff5ded0c95550dccd5ddcb1d1fe69ec73d4d261a397a1",
+        "byte_count": 927,
+        "lf_count": 18,
+        "terminal_lf_count": 2,
+        "sha256": "1f70580349b16ea3fb2ff5ded0c95550dccd5ddcb1d1fe69ec73d4d261a397a1"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/2140c881a73102917a7d98789fc34938214f9e3f032bfa9333b0a17909596e00",
+        "byte_count": 1796,
+        "lf_count": 38,
+        "terminal_lf_count": 2,
+        "sha256": "2140c881a73102917a7d98789fc34938214f9e3f032bfa9333b0a17909596e00"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/2144b1c3e305ad48a2effa3ebc5f292741c5835b293b318946fa3cf3a7563d4b",
+        "byte_count": 3214,
+        "lf_count": 63,
+        "terminal_lf_count": 2,
+        "sha256": "2144b1c3e305ad48a2effa3ebc5f292741c5835b293b318946fa3cf3a7563d4b"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/2150768d0d1eaac4230a93b181ac0fca48a4c5124d10b92a448f54995b36626d",
+        "byte_count": 2056,
+        "lf_count": 29,
+        "terminal_lf_count": 2,
+        "sha256": "2150768d0d1eaac4230a93b181ac0fca48a4c5124d10b92a448f54995b36626d"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/215955f248c978f22d82bb721b7e777b4e5caebd9853c9dc75d7bc92c2163ca5",
+        "byte_count": 57,
+        "lf_count": 2,
+        "terminal_lf_count": 2,
+        "sha256": "215955f248c978f22d82bb721b7e777b4e5caebd9853c9dc75d7bc92c2163ca5"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/2277a0690523b9ef10c8e4e29c0ec29db992c9792ccde9ac3d280031df8842fc",
+        "byte_count": 987,
+        "lf_count": 19,
+        "terminal_lf_count": 2,
+        "sha256": "2277a0690523b9ef10c8e4e29c0ec29db992c9792ccde9ac3d280031df8842fc"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/228ed2150eecc4cb74b77a92282e3437c91e838c54f60bbe64244816f1d44cc7",
+        "byte_count": 1615,
+        "lf_count": 39,
+        "terminal_lf_count": 2,
+        "sha256": "228ed2150eecc4cb74b77a92282e3437c91e838c54f60bbe64244816f1d44cc7"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/22aa76eccac61cdbcea9627b69e84ac118320c199f81e21c744fc504de058a4d",
+        "byte_count": 1158,
+        "lf_count": 13,
+        "terminal_lf_count": 1,
+        "sha256": "22aa76eccac61cdbcea9627b69e84ac118320c199f81e21c744fc504de058a4d"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/23568c1278678820cb38a2d8632719e8b407a79af63e176bdea07d11b4efd65d",
+        "byte_count": 885,
+        "lf_count": 23,
+        "terminal_lf_count": 2,
+        "sha256": "23568c1278678820cb38a2d8632719e8b407a79af63e176bdea07d11b4efd65d"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/24a4a0501b6d4473bc9c1b4d6bd527dd106e15813eea226cab2a49ec090015d5",
+        "byte_count": 3247,
+        "lf_count": 80,
+        "terminal_lf_count": 2,
+        "sha256": "24a4a0501b6d4473bc9c1b4d6bd527dd106e15813eea226cab2a49ec090015d5"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/2551c0986ef0c70fec4af806603e8175baf398f13cb605c98fa40ac5e2069bff",
+        "byte_count": 1629,
+        "lf_count": 33,
+        "terminal_lf_count": 2,
+        "sha256": "2551c0986ef0c70fec4af806603e8175baf398f13cb605c98fa40ac5e2069bff"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/2b1f8b2853aa9149d8909ea7ed749dec06716b90eb2b834e9e1bee983cc638e7",
+        "byte_count": 182,
+        "lf_count": 2,
+        "terminal_lf_count": 2,
+        "sha256": "2b1f8b2853aa9149d8909ea7ed749dec06716b90eb2b834e9e1bee983cc638e7"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/2b571dd7954d9dbf4660633265e372370d42257b0b918d01b70fc89ee2141693",
+        "byte_count": 62,
+        "lf_count": 2,
+        "terminal_lf_count": 2,
+        "sha256": "2b571dd7954d9dbf4660633265e372370d42257b0b918d01b70fc89ee2141693"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/2bc2d3375d7a3402c4801dab7aae52eabe5cb094784a94c7fd749cea635144ac",
+        "byte_count": 1296,
+        "lf_count": 42,
+        "terminal_lf_count": 2,
+        "sha256": "2bc2d3375d7a3402c4801dab7aae52eabe5cb094784a94c7fd749cea635144ac"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/2e291aae7a929a7418e1952756fe0429a2a6bcc7c93d3f6addfdc5fedf1abc1c",
+        "byte_count": 1773,
+        "lf_count": 29,
+        "terminal_lf_count": 2,
+        "sha256": "2e291aae7a929a7418e1952756fe0429a2a6bcc7c93d3f6addfdc5fedf1abc1c"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/2f441300fc6afc73470b75ed5d7199ef9d598b8c57558f5c1c3bae5b570b2303",
+        "byte_count": 664,
+        "lf_count": 7,
+        "terminal_lf_count": 2,
+        "sha256": "2f441300fc6afc73470b75ed5d7199ef9d598b8c57558f5c1c3bae5b570b2303"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/2fc4306d5dd4d50ceccef52c1201ea1f2e5ea7f56bab8bc57e9c241b4cd0dae7",
+        "byte_count": 1003,
+        "lf_count": 26,
+        "terminal_lf_count": 2,
+        "sha256": "2fc4306d5dd4d50ceccef52c1201ea1f2e5ea7f56bab8bc57e9c241b4cd0dae7"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/2fd666b069c9cb70caa823a99332a676c0f16f40580ad121d6c5b5902cc7712d",
+        "byte_count": 1024,
+        "lf_count": 19,
+        "terminal_lf_count": 2,
+        "sha256": "2fd666b069c9cb70caa823a99332a676c0f16f40580ad121d6c5b5902cc7712d"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/3459206e69ab5fb27b11a04cbf1def2003943b743ab909d5c6b0e2d6b5e953b4",
+        "byte_count": 44,
+        "lf_count": 2,
+        "terminal_lf_count": 2,
+        "sha256": "3459206e69ab5fb27b11a04cbf1def2003943b743ab909d5c6b0e2d6b5e953b4"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/361599c01c984a71fba24506b0d2c214d04ec3817e21b723688e727b524e5f54",
+        "byte_count": 51,
+        "lf_count": 2,
+        "terminal_lf_count": 2,
+        "sha256": "361599c01c984a71fba24506b0d2c214d04ec3817e21b723688e727b524e5f54"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/362871001990fc34261a5096e161d805721c17a90620e4c68aecc22f414bad52",
+        "byte_count": 934,
+        "lf_count": 27,
+        "terminal_lf_count": 2,
+        "sha256": "362871001990fc34261a5096e161d805721c17a90620e4c68aecc22f414bad52"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/36ce66a874175df45a80e4180b2e0627359375c550d4636fc793200db2587a34",
+        "byte_count": 420,
+        "lf_count": 6,
+        "terminal_lf_count": 1,
+        "sha256": "36ce66a874175df45a80e4180b2e0627359375c550d4636fc793200db2587a34"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/39c2991600dc7bcfc74f6dbdb540055048b4b633dfc7605d3f3ab76da9bd3c64",
+        "byte_count": 1117,
+        "lf_count": 33,
+        "terminal_lf_count": 2,
+        "sha256": "39c2991600dc7bcfc74f6dbdb540055048b4b633dfc7605d3f3ab76da9bd3c64"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/39ed76a8f0abce131ef150d2615e45a2d4be44e110bdc4d7a56a77dcdc3ab0f8",
+        "byte_count": 1318,
+        "lf_count": 47,
+        "terminal_lf_count": 2,
+        "sha256": "39ed76a8f0abce131ef150d2615e45a2d4be44e110bdc4d7a56a77dcdc3ab0f8"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/3a2cc7373cd8a766c432edcdac16977105d48d9c19b0239c696cb8b15fa7ba57",
+        "byte_count": 1658,
+        "lf_count": 35,
+        "terminal_lf_count": 2,
+        "sha256": "3a2cc7373cd8a766c432edcdac16977105d48d9c19b0239c696cb8b15fa7ba57"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/3a33f608ef07e3dc8d7e7a339bc939eed204d1c036ca3792fe24e1e74463f0ae",
+        "byte_count": 51,
+        "lf_count": 2,
+        "terminal_lf_count": 2,
+        "sha256": "3a33f608ef07e3dc8d7e7a339bc939eed204d1c036ca3792fe24e1e74463f0ae"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/3dbd9ceec2ae3316370314092fbcb624f91050e66ae0e20509f9dfaca81c86e3",
+        "byte_count": 1850,
+        "lf_count": 26,
+        "terminal_lf_count": 2,
+        "sha256": "3dbd9ceec2ae3316370314092fbcb624f91050e66ae0e20509f9dfaca81c86e3"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/3f083007aef982459e36850cddcbb1571a2344af1fed50bf44ac3277f780b770",
+        "byte_count": 1144,
+        "lf_count": 23,
+        "terminal_lf_count": 2,
+        "sha256": "3f083007aef982459e36850cddcbb1571a2344af1fed50bf44ac3277f780b770"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/3f6acd1057cb0964056f6995d801ef8611466f254271580d69ffc6bc50ada599",
+        "byte_count": 860,
+        "lf_count": 19,
+        "terminal_lf_count": 2,
+        "sha256": "3f6acd1057cb0964056f6995d801ef8611466f254271580d69ffc6bc50ada599"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/3f8a34b05d85c54d5c564e8b3d5778f4b7c6833c911ac6e31bb91004705a612d",
+        "byte_count": 2022,
+        "lf_count": 48,
+        "terminal_lf_count": 2,
+        "sha256": "3f8a34b05d85c54d5c564e8b3d5778f4b7c6833c911ac6e31bb91004705a612d"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/402414011b95ec738e1f7bdeaaefa294bb08c15da0671c0d7b348bfb1fc15781",
+        "byte_count": 824,
+        "lf_count": 26,
+        "terminal_lf_count": 2,
+        "sha256": "402414011b95ec738e1f7bdeaaefa294bb08c15da0671c0d7b348bfb1fc15781"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/430272005bd87ea86a0ac8f04ded7b31d7b30065410aa2cac998172163a1eac0",
+        "byte_count": 732,
+        "lf_count": 17,
+        "terminal_lf_count": 2,
+        "sha256": "430272005bd87ea86a0ac8f04ded7b31d7b30065410aa2cac998172163a1eac0"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/441aaaad58ccdb96acf28d0ea83f67049178a3b6d35aa2dc773228f968e11c7e",
+        "byte_count": 1145,
+        "lf_count": 22,
+        "terminal_lf_count": 2,
+        "sha256": "441aaaad58ccdb96acf28d0ea83f67049178a3b6d35aa2dc773228f968e11c7e"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/44daa121c7cf5b47a3f639c42d1cdb5f1e70fae463c177ea0dc248c7e3848ff3",
+        "byte_count": 130,
+        "lf_count": 4,
+        "terminal_lf_count": 2,
+        "sha256": "44daa121c7cf5b47a3f639c42d1cdb5f1e70fae463c177ea0dc248c7e3848ff3"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/44de17b0bc3ee6e429099c87da8a13ac76b7f45f5b26209f311a821b086deb86",
+        "byte_count": 136,
+        "lf_count": 2,
+        "terminal_lf_count": 2,
+        "sha256": "44de17b0bc3ee6e429099c87da8a13ac76b7f45f5b26209f311a821b086deb86"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/4707c9b2be597de7db9f05fe8a7fbdcac5f9cea22563f278e7d18a927f1a2fc7",
+        "byte_count": 1021,
+        "lf_count": 40,
+        "terminal_lf_count": 2,
+        "sha256": "4707c9b2be597de7db9f05fe8a7fbdcac5f9cea22563f278e7d18a927f1a2fc7"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/472f3b7460d2e43304aa24cb7b9cae3165914081a1c131528e7b3a672a1597d3",
+        "byte_count": 60,
+        "lf_count": 2,
+        "terminal_lf_count": 2,
+        "sha256": "472f3b7460d2e43304aa24cb7b9cae3165914081a1c131528e7b3a672a1597d3"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/4773fb3a1dc30aa8250574218d7e231b3ddcac23b38d7b6fce1fbe6757501140",
+        "byte_count": 3013,
+        "lf_count": 54,
+        "terminal_lf_count": 2,
+        "sha256": "4773fb3a1dc30aa8250574218d7e231b3ddcac23b38d7b6fce1fbe6757501140"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/47aa7d67efc061585de15f04a60a0f93914b4cf87dc165105118124ae2825cb0",
+        "byte_count": 60,
+        "lf_count": 2,
+        "terminal_lf_count": 2,
+        "sha256": "47aa7d67efc061585de15f04a60a0f93914b4cf87dc165105118124ae2825cb0"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/4936512302a78e682c3bba9045561b126f57409095fc34d8ffc77d1d68630b09",
+        "byte_count": 831,
+        "lf_count": 21,
+        "terminal_lf_count": 2,
+        "sha256": "4936512302a78e682c3bba9045561b126f57409095fc34d8ffc77d1d68630b09"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/4aa7dd18704f49a2948b6775cd1afe0b8a431ff8e8880434ea2721d6ab41335e",
+        "byte_count": 1023,
+        "lf_count": 30,
+        "terminal_lf_count": 2,
+        "sha256": "4aa7dd18704f49a2948b6775cd1afe0b8a431ff8e8880434ea2721d6ab41335e"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/4aecaa3e39890ee434fc09d7a6e648e414c7333d80e9ae94eb849f7d9f64d467",
+        "byte_count": 1519,
+        "lf_count": 33,
+        "terminal_lf_count": 2,
+        "sha256": "4aecaa3e39890ee434fc09d7a6e648e414c7333d80e9ae94eb849f7d9f64d467"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/4c9e8087ed3826b95da48c3ac722ee15ed8111774e749e7bdfa4de8fe127cce0",
+        "byte_count": 144,
+        "lf_count": 2,
+        "terminal_lf_count": 2,
+        "sha256": "4c9e8087ed3826b95da48c3ac722ee15ed8111774e749e7bdfa4de8fe127cce0"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/4d9ccec64e27fef01b8d2a11375cf29448040c205088bdafc15cc90ce524d866",
+        "byte_count": 1973,
+        "lf_count": 20,
+        "terminal_lf_count": 2,
+        "sha256": "4d9ccec64e27fef01b8d2a11375cf29448040c205088bdafc15cc90ce524d866"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/4e198a7b042378506201ae6a26cf78e56c80b0aeca685b9bdc628b074c718f82",
+        "byte_count": 53,
+        "lf_count": 2,
+        "terminal_lf_count": 2,
+        "sha256": "4e198a7b042378506201ae6a26cf78e56c80b0aeca685b9bdc628b074c718f82"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/4f3e1a6dab466fca335953afbeb7b47a204713cce5ec81a9a91de66f1136202a",
+        "byte_count": 982,
+        "lf_count": 22,
+        "terminal_lf_count": 2,
+        "sha256": "4f3e1a6dab466fca335953afbeb7b47a204713cce5ec81a9a91de66f1136202a"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/4fd235927c9217d29d4765fdc70c98df9289795296b7e5fc7479c7d5e4affb9f",
+        "byte_count": 398,
+        "lf_count": 6,
+        "terminal_lf_count": 2,
+        "sha256": "4fd235927c9217d29d4765fdc70c98df9289795296b7e5fc7479c7d5e4affb9f"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/50490ced6d2ed020880e86fc48b5b47515b9b4efcfb3031552b7407b1bf0edca",
+        "byte_count": 185,
+        "lf_count": 4,
+        "terminal_lf_count": 2,
+        "sha256": "50490ced6d2ed020880e86fc48b5b47515b9b4efcfb3031552b7407b1bf0edca"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/5124472be02c76ac2f0d5bec3cc0d653fc17252154f1f6cf2366b1d74ff43c26",
+        "byte_count": 41,
+        "lf_count": 2,
+        "terminal_lf_count": 2,
+        "sha256": "5124472be02c76ac2f0d5bec3cc0d653fc17252154f1f6cf2366b1d74ff43c26"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/51f7af1f217392364d2fe21fcc677cc8ebd3fea7b34f0d3f276021a5363c110c",
+        "byte_count": 108,
+        "lf_count": 4,
+        "terminal_lf_count": 2,
+        "sha256": "51f7af1f217392364d2fe21fcc677cc8ebd3fea7b34f0d3f276021a5363c110c"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/5210844d9c032e7c6d6983ddedf9adae7a79a845f497fb9430c1ff234a935e67",
+        "byte_count": 1526,
+        "lf_count": 30,
+        "terminal_lf_count": 2,
+        "sha256": "5210844d9c032e7c6d6983ddedf9adae7a79a845f497fb9430c1ff234a935e67"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/52c920bbc6d09fea07d750297bb85b03ce0e8a0600718d183e26a83aa8ecbd0c",
+        "byte_count": 466,
+        "lf_count": 2,
+        "terminal_lf_count": 2,
+        "sha256": "52c920bbc6d09fea07d750297bb85b03ce0e8a0600718d183e26a83aa8ecbd0c"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/53d4a5aaff0ccb369fed986c326373c0853bda29bfcfe43de979b635ce89aae3",
+        "byte_count": 1710,
+        "lf_count": 25,
+        "terminal_lf_count": 2,
+        "sha256": "53d4a5aaff0ccb369fed986c326373c0853bda29bfcfe43de979b635ce89aae3"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/557465cae39cc4ca6e670ceb714ee9e8e4177d8e17b8ebacb711367e00be5ace",
+        "byte_count": 52,
+        "lf_count": 2,
+        "terminal_lf_count": 2,
+        "sha256": "557465cae39cc4ca6e670ceb714ee9e8e4177d8e17b8ebacb711367e00be5ace"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/56040bfd48608c107c8d23293442db6d6f7e3e007dd0cde47ebd43902b874684",
+        "byte_count": 147,
+        "lf_count": 4,
+        "terminal_lf_count": 2,
+        "sha256": "56040bfd48608c107c8d23293442db6d6f7e3e007dd0cde47ebd43902b874684"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/583418ce7b86072c958442f0a4179a473429229c0358b624e3e778bb1b53bec6",
+        "byte_count": 4557,
+        "lf_count": 66,
+        "terminal_lf_count": 2,
+        "sha256": "583418ce7b86072c958442f0a4179a473429229c0358b624e3e778bb1b53bec6"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/5835e7dc0110ed3fe10e56b6c92a52ea040735bfcc86a999e76c694adac8c9ad",
+        "byte_count": 1218,
+        "lf_count": 24,
+        "terminal_lf_count": 2,
+        "sha256": "5835e7dc0110ed3fe10e56b6c92a52ea040735bfcc86a999e76c694adac8c9ad"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/5a174f44b43d66cf88d8cfb56c4f6a62465dbbe4bd4dca7d8c8c070c023d8ab5",
+        "byte_count": 1365,
+        "lf_count": 12,
+        "terminal_lf_count": 2,
+        "sha256": "5a174f44b43d66cf88d8cfb56c4f6a62465dbbe4bd4dca7d8c8c070c023d8ab5"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/5a3521bb018111bfeea91ca41d1d99f748a65c449f36c584cb6b6f503e594acc",
+        "byte_count": 881,
+        "lf_count": 22,
+        "terminal_lf_count": 2,
+        "sha256": "5a3521bb018111bfeea91ca41d1d99f748a65c449f36c584cb6b6f503e594acc"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/5a7e708ec94f8bd857acdb691c5e654ddd96067c37c11076a306c5cfd708673c",
+        "byte_count": 967,
+        "lf_count": 11,
+        "terminal_lf_count": 2,
+        "sha256": "5a7e708ec94f8bd857acdb691c5e654ddd96067c37c11076a306c5cfd708673c"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/5b3f571f0307b02dac5e9f4914fe98b6856621afc3d0fc82c90b0e15db315c61",
+        "byte_count": 600,
+        "lf_count": 6,
+        "terminal_lf_count": 2,
+        "sha256": "5b3f571f0307b02dac5e9f4914fe98b6856621afc3d0fc82c90b0e15db315c61"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/5b5fe3f534552106c3425c4ab054450cbcddf5480b9ff9ee36008f843eccf1f4",
+        "byte_count": 665,
+        "lf_count": 14,
+        "terminal_lf_count": 2,
+        "sha256": "5b5fe3f534552106c3425c4ab054450cbcddf5480b9ff9ee36008f843eccf1f4"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/5ba0ef3ddd029cfc3a65e86dabc7d2588fa84f0c980aecd82b526172908d6aea",
+        "byte_count": 99,
+        "lf_count": 4,
+        "terminal_lf_count": 2,
+        "sha256": "5ba0ef3ddd029cfc3a65e86dabc7d2588fa84f0c980aecd82b526172908d6aea"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/5be7ce10257a59ca44cf66414b412365c9804f578c2be4e4fede02624f49a7dd",
+        "byte_count": 1096,
+        "lf_count": 14,
+        "terminal_lf_count": 2,
+        "sha256": "5be7ce10257a59ca44cf66414b412365c9804f578c2be4e4fede02624f49a7dd"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/5ef42bd7a739c964cfcfcc818c7b019b911caf61ee93c9f79774e048de9c64ca",
+        "byte_count": 1291,
+        "lf_count": 13,
+        "terminal_lf_count": 2,
+        "sha256": "5ef42bd7a739c964cfcfcc818c7b019b911caf61ee93c9f79774e048de9c64ca"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/5fd570c2d406ab4d8ddbdb7509186b1bc5b3b56b2f9a610a92d5e528e5f0c1b3",
+        "byte_count": 260,
+        "lf_count": 2,
+        "terminal_lf_count": 2,
+        "sha256": "5fd570c2d406ab4d8ddbdb7509186b1bc5b3b56b2f9a610a92d5e528e5f0c1b3"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/610c2dfbb4c101e59a5eace80821b4d696a8d4421f45b2e745e50c65e7d138a0",
+        "byte_count": 1373,
+        "lf_count": 34,
+        "terminal_lf_count": 2,
+        "sha256": "610c2dfbb4c101e59a5eace80821b4d696a8d4421f45b2e745e50c65e7d138a0"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/6161a73ecc868c1a5010a0a3a7536784203dd613eb25d0d0391eff1f3a94325e",
+        "byte_count": 1167,
+        "lf_count": 25,
+        "terminal_lf_count": 2,
+        "sha256": "6161a73ecc868c1a5010a0a3a7536784203dd613eb25d0d0391eff1f3a94325e"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/625a42d0c2c5251efd57bca51e3af63654a659bebd4629a19fbc546b59d1296a",
+        "byte_count": 1188,
+        "lf_count": 18,
+        "terminal_lf_count": 2,
+        "sha256": "625a42d0c2c5251efd57bca51e3af63654a659bebd4629a19fbc546b59d1296a"
+      },
+      {
+        "status": "??",
+        "path": "Meta/Digestion/atoms/sha256/62cac1a9ae1e70284c6f5239c8e406e0420510bc79ecf769e162ba56f8c132b5",
+        "byte_count": 1138,
+        "lf_count": 18,
+        "terminal_lf_count": 2,
+        "sha256": "62cac1a9ae1e70284c6f5239c8e406e0420510bc79ecf769e162ba56f8c132b5"
+      },

@@ -1,0 +1,438 @@
+{
+ "module": "D5.S3.ConceptDynamics.SpacetimeArithmetic.RationalQuotient",
+ "source": "kernel environment (Expr.getUsedConstants on value+type, aux constants expanded)",
+ "direction": "consumer -> prerequisite",
+ "edges": {
+  "direction": "consumer->prerequisite",
+  "rationalSection_reduced": [
+   "rationalSection"
+  ],
+  "rationalSection_rightInverse": [
+   "rationalSection"
+  ],
+  "class_add": [
+   "Rational",
+   "classOf",
+   "quotientField",
+   "rational_field_equiv"
+  ],
+  "classOf": [
+   "Rational"
+  ],
+  "quotient_division_domain": [
+   "Rational",
+   "classOf",
+   "quotientField",
+   "quotient_inverse_domain"
+  ],
+  "rationalSection_zero": [
+   "rationalSection"
+  ],
+  "quotientField": [
+   "Rational",
+   "rational_quotient_equiv"
+  ],
+  "rationalSection": [],
+  "quotient_readout": [
+   "Rational",
+   "classOf",
+   "rational_quotient_equiv"
+  ],
+  "class_inv": [
+   "Rational",
+   "classOf",
+   "quotientField",
+   "rational_field_equiv"
+  ],
+  "Rational": [],
+  "class_mul": [
+   "Rational",
+   "classOf",
+   "quotientField",
+   "rational_field_equiv"
+  ],
+  "class_neg": [
+   "Rational",
+   "classOf",
+   "quotientField",
+   "rational_field_equiv"
+  ],
+  "class_div": [
+   "Rational",
+   "classOf",
+   "quotientField",
+   "rational_field_equiv"
+  ],
+  "reduced_coordinates_unique": [],
+  "class_eq_iff": [
+   "Rational",
+   "classOf",
+   "rational_quotient_equiv"
+  ],
+  "rational_field_equiv": [
+   "Rational",
+   "quotientField",
+   "rational_quotient_equiv"
+  ],
+  "rationalSection_injective": [
+   "rationalSection",
+   "rationalSection_rightInverse"
+  ],
+  "quotient_inverse_domain": [
+   "Rational",
+   "classOf",
+   "quotientField",
+   "rational_field_equiv"
+  ],
+  "rational_quotient_equiv": [
+   "Rational",
+   "rationalSection",
+   "rationalSection_rightInverse"
+  ]
+ },
+ "kinds": {
+  "rationalSection_reduced": "theorem",
+  "rationalSection_rightInverse": "theorem",
+  "class_add": "theorem",
+  "classOf": "def",
+  "quotient_division_domain": "theorem",
+  "rationalSection_zero": "theorem",
+  "quotientField": "def",
+  "rationalSection": "def",
+  "quotient_readout": "theorem",
+  "class_inv": "theorem",
+  "Rational": "def",
+  "class_mul": "theorem",
+  "class_neg": "theorem",
+  "class_div": "theorem",
+  "reduced_coordinates_unique": "theorem",
+  "class_eq_iff": "theorem",
+  "rational_field_equiv": "def",
+  "rationalSection_injective": "theorem",
+  "quotient_inverse_domain": "theorem",
+  "rational_quotient_equiv": "def"
+ },
+ "numeric_certificate": {
+  "rationalSection_reduced": false,
+  "rationalSection_rightInverse": false,
+  "class_add": false,
+  "classOf": false,
+  "quotient_division_domain": false,
+  "rationalSection_zero": false,
+  "quotientField": false,
+  "rationalSection": false,
+  "quotient_readout": false,
+  "class_inv": false,
+  "Rational": false,
+  "class_mul": false,
+  "class_neg": false,
+  "class_div": false,
+  "reduced_coordinates_unique": false,
+  "class_eq_iff": false,
+  "rational_field_equiv": false,
+  "rationalSection_injective": false,
+  "quotient_inverse_domain": false,
+  "rational_quotient_equiv": false
+ },
+ "axioms": {
+  "rationalSection_reduced": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "rationalSection_rightInverse": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "class_add": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "classOf": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "quotient_division_domain": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "rationalSection_zero": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "quotientField": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "rationalSection": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "quotient_readout": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "class_inv": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "Rational": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "class_mul": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "class_neg": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "class_div": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "reduced_coordinates_unique": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "class_eq_iff": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "rational_field_equiv": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "rationalSection_injective": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "quotient_inverse_domain": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ],
+  "rational_quotient_equiv": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ "external_deps": {
+  "rationalSection_reduced": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedSection",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedSection_rightInverse",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction.denominator",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction.denominator",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction.numerator",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction.numerator"
+  ],
+  "rationalSection_rightInverse": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedQ",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedSection",
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedSection_rightInverse",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.readout",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.readout"
+  ],
+  "class_add": [
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.add",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.add",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.add_readout"
+  ],
+  "classOf": [
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.kernelSetoid"
+  ],
+  "quotient_division_domain": [
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.DivisionGuard",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction"
+  ],
+  "rationalSection_zero": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedSection",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.integerEmbedding"
+  ],
+  "quotientField": [],
+  "rationalSection": [
+   "D5.S3.ConceptDynamics.Spacetime.ComplementFibers:D5.S3.ConceptDynamics.Spacetime.ComplementFibers.balancedSection",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction.mk"
+  ],
+  "quotient_readout": [
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.readout"
+  ],
+  "class_inv": [
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.InverseGuard",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.InverseGuard",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.inv",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.inv",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.inv_readout"
+  ],
+  "Rational": [
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.kernelSetoid"
+  ],
+  "class_mul": [
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.mul",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.mul",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.mul_readout"
+  ],
+  "class_neg": [
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.neg",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.neg",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.neg_readout"
+  ],
+  "class_div": [
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.DivisionGuard",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.DivisionGuard",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.div",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.div",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.div_readout"
+  ],
+  "reduced_coordinates_unique": [],
+  "class_eq_iff": [
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.CrossEquivalent",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.CrossEquivalent",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.cross_iff_readout",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.readout"
+  ],
+  "rational_field_equiv": [],
+  "rationalSection_injective": [
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.readout"
+  ],
+  "quotient_inverse_domain": [
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.InverseGuard",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.InverseGuard",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.inverse_guard_iff",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.readout"
+  ],
+  "rational_quotient_equiv": [
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.Fraction",
+   "D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational:D5.S3.ConceptDynamics.SpacetimeArithmetic.RichRational.readout"
+  ]
+ },
+ "public_declarations": [
+  {
+   "name": "rationalSection_reduced",
+   "kind": "theorem"
+  },
+  {
+   "name": "rationalSection_rightInverse",
+   "kind": "theorem"
+  },
+  {
+   "name": "class_add",
+   "kind": "theorem"
+  },
+  {
+   "name": "classOf",
+   "kind": "def"
+  },
+  {
+   "name": "quotient_division_domain",
+   "kind": "theorem"
+  },
+  {
+   "name": "rationalSection_zero",
+   "kind": "theorem"
+  },
+  {
+   "name": "quotientField",
+   "kind": "def"
+  },
+  {
+   "name": "rationalSection",
+   "kind": "def"
+  },
+  {
+   "name": "quotient_readout",
+   "kind": "theorem"
+  },
+  {
+   "name": "class_inv",
+   "kind": "theorem"
+  },
+  {
+   "name": "Rational",
+   "kind": "def"
+  },
+  {
+   "name": "class_mul",
+   "kind": "theorem"
+  },
+  {
+   "name": "class_neg",
+   "kind": "theorem"
+  },
+  {
+   "name": "class_div",
+   "kind": "theorem"
+  },
+  {
+   "name": "reduced_coordinates_unique",
+   "kind": "theorem"
+  },
+  {
+   "name": "class_eq_iff",
+   "kind": "theorem"
+  },
+  {
+   "name": "rational_field_equiv",
+   "kind": "def"
+  },
+  {
+   "name": "rationalSection_injective",
+   "kind": "theorem"
+  },
+  {
+   "name": "quotient_inverse_domain",
+   "kind": "theorem"
+  },
+  {
+   "name": "rational_quotient_equiv",
+   "kind": "def"
+  }
+ ]
+}

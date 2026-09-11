@@ -58,6 +58,7 @@ internal static class FileMapPolicy
             ["FrozenStateRecordLoader"] = FrozenStateRecordLoaderPath,
             ["GateAuthorityRootCatalogLoader"] = GateAuthorityRootCatalogLoaderPath,
             ["LibraryNoteCatalog"] = LibraryNoteCatalogPath,
+            ["LeanReportSelection"] = "tools/scripts/report/lean-report-selection.py",
             ["ProblemCandidateCatalog"] = ProblemCandidateCatalogPath,
             ["RegistryLoader"] = RegistryLoaderPath,
             ["ScribeEmitter"] = ScribeEmitterPath,
@@ -741,9 +742,11 @@ internal static class FileMapPolicy
         || path.EndsWith(".json", StringComparison.Ordinal)
         || path.EndsWith(".scribe.cs", StringComparison.Ordinal);
 
-    private static string[] TrackedPaths(string repositoryRoot) =>
-        GitIndexRepositoryFiles.Enumerate(repositoryRoot)
+    internal static string[] TrackedPaths(string repositoryRoot) =>
+        GitIndexRepositoryFiles.EnumerateTracked(repositoryRoot)
             .Select(static file => file.RelativePath)
+            .Where(path => File.Exists(Absolute(repositoryRoot, path))
+                || new FileInfo(Absolute(repositoryRoot, path)).LinkTarget is not null)
             .ToArray();
 
     private static IReadOnlyDictionary<string, string> TrackedModes(string repositoryRoot) =>

@@ -1,0 +1,52 @@
+### 16.3 Exact graph recursion and its geometric typing
+
+For a finite induced grid graph H and vertex v, separate independent sets
+according to whether v is occupied:
+
+\[
+ Z_H(z)=Z_{H-v}(z)+zZ_{H-N[v]}(z).
+\tag{16.1}
+\]
+
+Order the available neighbors u_1,...,u_k as prescribed by the current geometric
+type, and let H_j=H-v-\{u_1,...,u_{j-1}\}. Wherever the smaller partition
+functions are nonzero, telescoping gives
+
+\[
+ \frac{Z_{H-N[v]}(z)}{Z_{H-v}(z)}
+ =\prod_{j=1}^k\frac{Z_{H_j-u_j}(z)}{Z_{H_j}(z)}.
+\tag{16.2}
+\]
+
+These are finite exact identities. No assumption of independence between
+neighbors in the original graph is used. Orders may depend on the entire
+recursion history, since (16.2) holds at each finite subproblem separately.
+The translation and quarter-turns preserve square-grid adjacency. The proved
+blocker disjointness guarantees that every actual available child is represented,
+and the geometric closure assigns its correct successor type. Missing actual
+vertices simply remove children, which Section 15 already covers.
+
+Induct on the finite number of available vertices, simultaneously carrying
+the nonroot typed vacancy values in the invariant message neighborhoods.
+The empty partition function is one. At each step all smaller denominators in
+(16.2) are nonzero by induction, so (16.1) expresses Z_H as the nonzero smaller
+partition function times the certified nonzero local recursion denominator.
+Nonroot outputs remain in their typed neighborhoods by Section 16.2; the full
+root uses its separate four-child nonvanishing bound. Every finite induced
+subgraph, including disconnected graphs and irregular boundaries, is covered.
+
+This yields the paper/computer-assisted conclusion
+
+\[
+ \boxed{\exists\epsilon>0\ \forall H\subseteq_{\mathrm{fin,ind}}\mathbb Z^2\
+ \forall z\in\mathbb C:\
+ \operatorname{dist}(z,[0,51/20])<\epsilon\ \Longrightarrow\ Z_H(z)\ne0.}
+\tag{16.3}
+\]
+
+The argument gives existence, not a numerical value of epsilon. It concerns
+unconditioned finite induced partition functions. An occupied pinned vertex
+can contribute a factor z, so no claim of nonvanishing at zero for arbitrary
+pinned partition functions is made. Infinite-volume free-energy analyticity
+and an implemented approximation algorithm are not separately established here.
+
