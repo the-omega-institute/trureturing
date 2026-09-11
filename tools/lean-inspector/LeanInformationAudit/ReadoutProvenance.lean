@@ -145,6 +145,7 @@ private structure ClosureState where
   pending : List Name := []
   visited : Std.HashSet Expr := {}
   compared : Std.HashMap Expr Bool := {}
+  classifiedTypes : Std.HashSet Expr := {}
   expressionFuel : Nat := provenanceExpressionFuel
   proofFuel : Nat := provenanceExpressionFuel
   forbidden : Bool := false
@@ -166,7 +167,7 @@ private def sameStatement (statement candidate : Expr) : ClosureM Bool := do
   return answer
 
 /-- Classify by inferred types, including constructors and dependent projections.
-Let variables are instantiated by Meta.zetaReduce in the current local context.
+Let variables are substituted by the contextual traversal before inference.
 An open term may supply a closed type (e.g. f S x : Decidable S); no equality
 query ever synthesizes values for binders or compares an open proposition. -/
 private def classifyType (statement : Expr) (e : Expr) : ClosureM Unit := do
@@ -175,9 +176,11 @@ private def classifyType (statement : Expr) (e : Expr) : ClosureM Unit := do
   | .sort .. | .lit .. | .forallE .. => return
   | _ => pure ()
   let type ← boundedMeta do
-    zetaReduce (← instantiateMVars (← inferType e))
+    instantiateMVars (← inferType e)
   if type.hasMVar then throwError "unresolved provenance type"
   if type.hasFVar || type.hasLooseBVars then return
+  if (← get).classifiedTypes.contains type then return
+  modify fun s => { s with classifiedTypes := s.classifiedTypes.insert type }
   let proposition ← boundedMeta (isProp type)
   let candidate ← if proposition then pure (some type) else boundedMeta do
     let type ← whnf type
