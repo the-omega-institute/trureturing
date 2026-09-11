@@ -111,10 +111,15 @@ internal sealed class LucasEvenDescentDocument : IScribeDocumentDefinition
                     + "exclusive disjunction. The alternatives are mutually exclusive "
                     + "because an even positive m is at least 2 and 0 < m/2 < m. "
                     + "Consequently the half-modulus residue is not zero. Both alternatives "
-                    + "actually occur: for p=2, q=1 and m=4 the recurrence gives U(n)=n "
-                    + "modulo 4 and e=4. The index n=4 gives the zero alternative, while "
-                    + "n=2 gives the half-modulus alternative with odd multiplier c=1; "
-                    + "both indices satisfy the two doubling hypotheses.")),
+                    + "actually occur, and they occur inside the cited paper's own "
+                    + "parameter setting: take p=2 and q=-1, the Pell sequence, whose "
+                    + "parameters are nonzero and coprime and whose discriminant is 8, so "
+                    + "it is nondegenerate. Modulo m=2 the index n=1 has U(2)=0 and "
+                    + "U(3)=1=q, with U(1)=1=m/2 and e=2, so n=1 is the odd multiple "
+                    + "1*(e/2) and the half-modulus alternative holds. Modulo m=4, where "
+                    + "e=4, the index n=-2 gives the half-modulus alternative with "
+                    + "c=-1 and the index n=-4 gives the zero alternative; those two "
+                    + "exercise the negative indices that the integer quantifier admits.")),
             Node("conjecture_five_two", "Conjecture 5.2 with integer parameters",
                 IntegerParametersFormula(),
                 "For integers p and q, the hypothesis gcd(q,m)=1 supplies the canonical "
