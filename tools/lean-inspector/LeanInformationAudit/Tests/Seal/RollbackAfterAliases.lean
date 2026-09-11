@@ -14,10 +14,13 @@ run_cmd do
   let mut rejected := false
   try prepareSealPublication
   catch error => rejected := (← error.toMessageData.toString).startsWith "IE-C025"
+  let mut exportRejected := false
+  try discard <| prepareInformationAnalysisExport root [.seal, .analysis, .ascii]
+  catch _ => exportRejected := true
   let after ← getEnv
   let generated := #[theoremUnitSuffix, primitiveRealizationSuffix, "__lowers_escape",
     "__escape_enriched"].map (catalogQualifiedName root arena `importedBool member)
-  unless rejected && !(generated.any after.contains) &&
+  unless rejected && exportRejected && !(generated.any after.contains) &&
       (SealRecords.forRoot after root).isEmpty && (SealRecords.analysisForRoot? after root).isNone &&
       (← mkModuleData after).constants.size == (← mkModuleData before).constants.size do
     throwError "RollbackAfterAliases: leaked declarations or retained artifacts"

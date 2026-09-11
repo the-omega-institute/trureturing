@@ -1,3 +1,4 @@
+import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import LeanInformationAudit.Projection.ProjectionSeal
 import LeanInformationAudit.Tests.Projection.FixtureState
 

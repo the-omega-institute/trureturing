@@ -1,3 +1,4 @@
+import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import LeanInformationAudit.Tests.SealSuccess
 open Lean LeanInformationAudit Lean.Elab.Command
 open LeanInformationAudit.Tests.SealSuccess

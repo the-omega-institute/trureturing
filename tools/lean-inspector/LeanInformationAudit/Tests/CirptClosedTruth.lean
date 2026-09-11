@@ -1,3 +1,4 @@
+import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import D5.S3.ConceptDynamics.CIRPT.SemanticIntegrity
 import LeanInformationAudit.SealCommand
 
