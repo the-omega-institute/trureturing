@@ -10,7 +10,7 @@ $$Av = muv \Rightarrow \operatorname{exp}\left(A\right)v = \operatorname{exp}\le
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/EnergyEigenstateStationarity.exp_mulVec_of_eigenvector` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Nicholas J. Higham (2006). *Functions of Matrices*. URL: <https://eprints.maths.manchester.ac.uk/310/>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ $$rho = vv^{*}$$
 
 *Formalization.* `D5/S3/Quantum/Dynamics/EnergyEigenstateStationarity.pureDensityState` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Nicholas J. Higham (2006). *Functions of Matrices*. URL: <https://eprints.maths.manchester.ac.uk/310/>.
 
 *Commentary.*
 
@@ -46,7 +46,7 @@ $$\operatorname{Var}\left(rho, H\right) = 0$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/EnergyEigenstateStationarity.energy_eigenstate_variance_zero` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Nicholas J. Higham (2006). *Functions of Matrices*. URL: <https://eprints.maths.manchester.ac.uk/310/>.
 
 *Commentary.*
 

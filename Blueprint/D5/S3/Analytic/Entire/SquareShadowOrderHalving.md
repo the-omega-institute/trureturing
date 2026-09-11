@@ -10,7 +10,7 @@ $$\operatorname{M}\left(f, r\right) = \operatorname{sSup}\left(\operatorname{nor
 
 *Formalization.* `D5/S3/Analytic/Entire/SquareShadowOrderHalving.maxModulus` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Hui Li, Jun Wang, Xiao Yao, Zhuan Ye (2020). *Inequalities Concerning Maximum Modulus and Zeros of Random Entire Functions*. URL: <https://arxiv.org/abs/2012.07453>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ $$\operatorname{M}\left(f, 0\right) = \operatorname{norm}\left(\operatorname{f}\
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Entire/SquareShadowOrderHalving.max_modulus_zero` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Hui Li, Jun Wang, Xiao Yao, Zhuan Ye (2020). *Inequalities Concerning Maximum Modulus and Zeros of Random Entire Functions*. URL: <https://arxiv.org/abs/2012.07453>.
 
 *Commentary.*
 
@@ -34,7 +34,7 @@ $$\exists z \in \operatorname{sphere}\left(0, r\right), \operatorname{M}\left(f,
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Entire/SquareShadowOrderHalving.max_modulus_attained` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Hui Li, Jun Wang, Xiao Yao, Zhuan Ye (2020). *Inequalities Concerning Maximum Modulus and Zeros of Random Entire Functions*. URL: <https://arxiv.org/abs/2012.07453>.
 
 *Commentary.*
 
