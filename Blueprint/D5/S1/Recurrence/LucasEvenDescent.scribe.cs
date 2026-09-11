@@ -8,7 +8,7 @@ internal sealed class LucasEvenDescentDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Recurrence/LucasEvenDescent.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Recurrence/fiebigmbirikaspilker2025lucas");
+        LibraryNoteRef.Create("D5/L/Periods/fiebigmbirikaspilker2025lucas");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A machine-checked proof of Conjecture 5.2 on Lucas descent at all integer indices.",
