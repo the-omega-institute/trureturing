@@ -9,7 +9,7 @@ public sealed partial class LeanReportInputScriptTests
     [Theory]
     [InlineData("producer-paths")]
     [InlineData("scribe-producer-paths")]
-    public void CacheFetcherClosureIncludesTransitiveInputsAndRejectsMissingInputs(string command)
+    public void CacheFetcherClosureConsumesDeclaredInputsAndRejectsMissingInputs(string command)
     {
         using var fixture = new LeanReportInputFixture();
         const string dependency = "tools/scripts/worktree/fetch-input.sh";
@@ -20,6 +20,10 @@ public sealed partial class LeanReportInputScriptTests
 
         Assert.Equal(0, complete.ExitCode);
         Assert.Contains(CachePublishScriptPath, Lines(complete));
+        Assert.DoesNotContain(dependency, Lines(complete));
+        fixture.RegisterProducerInput(dependency);
+        complete = fixture.RunCommand(command);
+        Assert.Equal(0, complete.ExitCode);
         Assert.Contains(dependency, Lines(complete));
         fixture.RemoveSource(dependency);
         var missingDependency = fixture.RunCommand(command);
@@ -63,28 +67,17 @@ public sealed partial class LeanReportInputScriptTests
     }
 
     [Theory]
-    [InlineData("msbuild")]
+    [InlineData("project")]
     [InlineData("sdk")]
-    public void AddressFailurePreservesProjectAndRawDiagnostic(string failure)
+    public void AddressConsumesDeclarationsWithoutEvaluatingProjectOrSdk(string input)
     {
         using var fixture = new LeanReportInputFixture();
-        if (failure == "msbuild") fixture.BreakProducerClosureEvaluation();
+        var before = fixture.Address();
+        if (input == "project") fixture.Append(CliProjectPath, "<");
         else fixture.UseUnavailableRepositorySdk();
-        var raw = fixture.EvaluateCliProject();
-        Assert.NotEqual(0, raw.ExitCode);
-        Assert.NotEmpty(raw.StandardOutput.Concat(raw.StandardError));
-
         var result = fixture.AddressFromRepository();
-
-        Assert.Equal(2, result.ExitCode);
-        Assert.Empty(result.StandardOutput);
-        var diagnostic = Encoding.UTF8.GetString(result.StandardError);
-        Assert.Contains(fixture.CliProject, diagnostic, StringComparison.Ordinal);
-        foreach (var stream in new[] { raw.StandardOutput, raw.StandardError })
-        {
-            if (stream.Length > 0)
-                Assert.Contains(Encoding.UTF8.GetString(stream), diagnostic, StringComparison.Ordinal);
-        }
+        Assert.Equal(0, result.ExitCode);
+        Assert.NotEqual(before, Fields(result)[0]);
     }
 
     [Fact]
@@ -108,20 +101,6 @@ public sealed partial class LeanReportInputScriptTests
         private const string UnavailableSdk =
             "{\"sdk\":{\"version\":\"99.0.100\",\"rollForward\":\"disable\"}}\n";
 
-        internal string CliProject
-        {
-            get
-            {
-                var physicalPath = TestProcessRunner.Run(
-                    "pwd", ["-P"], repository,
-                    BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
-                Assert.Equal(0, physicalPath.ExitCode);
-                return Path.Combine(
-                    Encoding.UTF8.GetString(physicalPath.StandardOutput).TrimEnd('\r', '\n'),
-                    CliProjectPath);
-            }
-        }
-
         internal ProcessOutput AddressFromRepository() => Run("address", repository);
 
         internal void RemoveSource(string relativePath) => File.Delete(Path.Combine(repository, relativePath));
@@ -135,13 +114,6 @@ public sealed partial class LeanReportInputScriptTests
         }
 
         internal void UseUnavailableRepositorySdk() => Write("global.json", UnavailableSdk);
-
-        internal ProcessOutput EvaluateCliProject() => TestProcessRunner.Run(
-            "dotnet",
-            ["msbuild", CliProject, "-getItem:Compile", "-verbosity:quiet", "-nologo"],
-            repository,
-            BoundedProcessRunner.HangDetectionBudget,
-            1024 * 1024);
 
         internal byte[] ExpectedAddressBytes()
         {
@@ -160,6 +132,7 @@ public sealed partial class LeanReportInputScriptTests
                 ResourceObservationLibraryPath, ToolchainInstallerPath,
                 JudgeContentAddressPath, ScribeContentChecksPath, WorkflowPath,
                 EngineLockPath, CliLockPath, TruthLockPath,
+                "Meta/FILEMAP.toml", "Meta/LeanInputs.json",
             ];
             var producerManifest = string.Concat(producerPaths.Select(path =>
                 $"{Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(Path.Combine(repository, path))))}  {path}\n")

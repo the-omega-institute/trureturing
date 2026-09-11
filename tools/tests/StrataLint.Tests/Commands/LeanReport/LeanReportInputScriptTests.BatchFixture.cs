@@ -45,7 +45,8 @@ public sealed partial class LeanReportInputScriptTests
                 TemporaryFileSystem.File.WriteAllBytes(destination, TemporaryFileSystem.File.ReadAllBytes(path));
             }
             TemporaryFileSystem.File.WriteAllText(Path.Combine(root, InputHelperPath),
-                File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), InputHelperPath)));
+                "#!/bin/bash\nexec /bin/bash '"
+                + Path.Combine(TestRepositoryLayout.FindRoot(), InputHelperPath) + "' \"$@\"\n");
         }
     }
 }

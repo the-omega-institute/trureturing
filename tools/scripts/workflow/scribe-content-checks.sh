@@ -70,7 +70,7 @@ if [[ "${#CHANGED_PATHS[@]}" -gt 0 ]]; then
         requires_projection_check=1
         requires_describe_check=1
         ;;
-      *.cs|*.sh|*.csproj|*.props|*.targets|*/packages.lock.json)
+      Meta/FILEMAP.toml|Meta/LeanInputs.json|*.cs|*.sh|*.csproj|*.props|*.targets|*/packages.lock.json)
         derive_producer_closure=1
         ;;
     esac

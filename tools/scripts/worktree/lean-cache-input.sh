@@ -314,62 +314,51 @@ append_manifest_entry() {
   printf '%s\0%s\0' "$relative" "$path" >> "${manifest}.requests"
 }
 
-# Dependency preimage uses the same manifest form, with only the pinned inputs.
-lean_dependency_sha256() {
-  local manifest="$TMP_ROOT/dependency.manifest"
+# Reuse the native FILEMAP loader/glob consumer. Normal dotnet build validates
+# the selector implementation; project contents never generate selection authority.
+LEAN_INPUT_TOOL_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
+REGISTERED_INPUT_SCOPES="${REGISTERED_INPUT_SCOPES:-lean-sources,lean-config}"
+if [[ "${COMMAND:-}" == dependency-address ]]; then REGISTERED_INPUT_SCOPES=lean-dependencies; fi
+
+registered_input_paths() {
+  local scope="$1" selected="$TMP_ROOT/registered-inputs.json"
+  if [[ ! -f "$selected" ]]; then
+    (
+      cd "$LEAN_INPUT_TOOL_ROOT" || exit 2
+      dotnet run --project "$LEAN_INPUT_TOOL_ROOT/tools/StrataLint.Cli/StrataLint.Cli.csproj" \
+        --configuration Release --no-launch-profile --disable-build-servers --verbosity quiet -- \
+        filemap-conform --input-scopes "$REGISTERED_INPUT_SCOPES" --repository "$REPOSITORY"
+    ) > "${selected}.tmp" || { cat "${selected}.tmp" >&2; return 2; }
+    mv "${selected}.tmp" "$selected" || return 2
+  fi
+  python3 - "$selected" "$scope" <<'SELECT'
+import json, pathlib, sys
+selected = json.loads(pathlib.Path(sys.argv[1]).read_text())
+for path in selected[sys.argv[2]]:
+    print(path)
+SELECT
+}
+
+registered_input_sha256() {
+  local scope="$1" manifest="$TMP_ROOT/$1.manifest" paths="$TMP_ROOT/$1.paths"
+  registered_input_paths "$scope" > "$paths" || return 2
   : > "${manifest}.requests"
-  append_manifest_entry "$manifest" "lean-toolchain" || return 2
-  append_manifest_entry "$manifest" "lake-manifest.json" || return 2
+  while IFS= read -r path; do
+    append_manifest_entry "$manifest" "$path" || return 2
+  done < "$paths"
   materialize_manifest "$manifest" || return 2
   hash_file "$manifest"
 }
 
-# Shared supporting-Lean closure for build addresses and report producers.
-inspector_lean_paths() {
-  [[ -d "$REPOSITORY/tools/lean-inspector" ]] || return 0
-  (cd "$REPOSITORY" && find tools/lean-inspector -type f -name '*.lean' -print) | sort
-}
+lean_dependency_sha256() { registered_input_sha256 lean-dependencies; }
 
-# Lean input preimage v1: root, sorted D5 sources, sorted inspector Lean
-# sources; then toolchain, manifest, and lakefiles in their declared order.
+# Ordering and optional libraries are declared in the registered manifest.
+# Every call validates registration before cache lookup. File identities bind the
+# selected bytes; producer identity additionally binds the registry source files.
 lean_cache_address() {
-  local sources_manifest="$TMP_ROOT/sources.manifest"
-  local sources_list="$TMP_ROOT/sources.list"
-  local inspector_sources_list="$TMP_ROOT/inspector-sources.list"
-  local config_manifest="$TMP_ROOT/config.manifest"
-  local sources_sha256 config_sha256 lakefile_count=0 lakefile
-
-  : > "$sources_manifest"
-  : > "${sources_manifest}.requests"
-  append_manifest_entry "$sources_manifest" "Trureturing.lean" || return 2
-  [[ -d "$REPOSITORY/D5" ]] \
-    || { echo "lean-cache-input: managed Lean root is absent: $REPOSITORY/D5" >&2; return 2; }
-  find "$REPOSITORY/D5" -type f -name '*.lean' -print | sort > "$sources_list" || return 2
-  while IFS= read -r path; do
-    append_manifest_entry "$sources_manifest" "${path#"$REPOSITORY/"}" || return 2
-  done < "$sources_list"
-  inspector_lean_paths > "$inspector_sources_list" || return 2
-  while IFS= read -r path; do
-    append_manifest_entry "$sources_manifest" "$path" || return 2
-  done < "$inspector_sources_list"
-  materialize_manifest "$sources_manifest" || return 2
-  sources_sha256="$(hash_file "$sources_manifest")" || return 2
-
-  : > "$config_manifest"
-  : > "${config_manifest}.requests"
-  append_manifest_entry "$config_manifest" "lean-toolchain" || return 2
-  append_manifest_entry "$config_manifest" "lake-manifest.json" || return 2
-  for lakefile in lakefile.toml lakefile.lean; do
-    if [[ -f "$REPOSITORY/$lakefile" ]]; then
-      append_manifest_entry "$config_manifest" "$lakefile" || return 2
-      lakefile_count=$((lakefile_count + 1))
-    fi
-  done
-  [[ "$lakefile_count" -gt 0 ]] \
-    || { echo "lean-cache-input: repository has no lakefile" >&2; return 2; }
-  materialize_manifest "$config_manifest" || return 2
-  config_sha256="$(hash_file "$config_manifest")" || return 2
-
+  local sources_sha256 config_sha256
+  sources_sha256="$(registered_input_sha256 lean-sources)" || return 2
+  config_sha256="$(registered_input_sha256 lean-config)" || return 2
   printf '%s %s\n' "$sources_sha256" "$config_sha256"
 }
 

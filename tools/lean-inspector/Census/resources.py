@@ -17,6 +17,10 @@ class ResourceRejected(RuntimeError):
     pass
 
 
+class InfrastructureHang(RuntimeError):
+    pass
+
+
 def check_budget(free_percent, rss_bytes, budget_bytes):
     if free_percent < 30:
         raise ResourceRejected(f"free memory {free_percent}% is below 30% before heavy step")
@@ -70,10 +74,12 @@ def kill_tree(pid, known):
 
 def run(command, directory, label, *, cwd=None, env=None, budget_gb=4, phase_path=None,
         design_limit_gb=None, wall_limit_s=1200):
-    """Measure per-process RSS. Build scheduling is exempt from the census budget.
+    """Measure per-process RSS; None selects functional execution.
 
     The acceptance reading is 4 GiB; only a design failure (twice the planned
     phase size) aborts. Heavy census steps run sequentially with 30% free memory.
+    Functional calls treat memory as observation and the deadline as an
+    infrastructure hang guard, independently of the workload acceptance path.
     """
     directory = pathlib.Path(directory)
     directory.mkdir(parents=True, exist_ok=True)
@@ -87,10 +93,22 @@ def run(command, directory, label, *, cwd=None, env=None, budget_gb=4, phase_pat
     child_env = dict(os.environ if env is None else env)
     design_limit = (design_limit_gb or 2 * budget_gb) * 1024 ** 3 if budget_gb else None
     timing_path = directory / f"{label}.time.log"
+    def observe_memory(seconds):
+        try:
+            free = free_memory()
+            reading = {"seconds": seconds, "free_percent": free}
+        except (OSError, ValueError, ResourceRejected, subprocess.SubprocessError) as error:
+            if budget_gb is not None:
+                raise
+            free = None
+            reading = {"seconds": seconds, "error": str(error)}
+        measurement["memory_readings"].append(reading)
+        return free
+
     try:
-        free = free_memory()
-        measurement["memory_readings"].append({"seconds": 0, "free_percent": free})
-        check_budget(free, 0, (budget_gb or 4) * 1024 ** 3)
+        free = observe_memory(0)
+        if budget_gb is not None:
+            check_budget(free, 0, budget_gb * 1024 ** 3)
         flag = "-l" if sys.platform == "darwin" else "-v"
         with (directory / f"{label}.log").open("w") as output:
             proc = subprocess.Popen(["/usr/bin/time", flag, "-o", str(timing_path), *command],
@@ -111,14 +129,14 @@ def run(command, directory, label, *, cwd=None, env=None, budget_gb=4, phase_pat
                 if phase_path and pathlib.Path(phase_path).exists():
                     current_phase = pathlib.Path(phase_path).read_text() or current_phase
                 if now >= next_memory_check:
-                    free = free_memory()
-                    measurement["memory_readings"].append(
-                        {"seconds": round(now - started, 3), "free_percent": free})
+                    observe_memory(round(now - started, 3))
                     next_memory_check = now + 5
                 if design_limit and rss > design_limit:
                     raise ResourceRejected(f"phase design bound exceeded: {rss} > {design_limit}")
                 if budget_gb and now - started > wall_limit_s:
                     raise ResourceRejected(f"phase wall design bound exceeded: {now - started:.1f}s")
+                if budget_gb is None and now - started > wall_limit_s:
+                    raise InfrastructureHang(f"infrastructure-hang-guard expired: {label}")
                 try:
                     result = proc.wait(timeout=0.2)
                     break
@@ -140,6 +158,8 @@ def run(command, directory, label, *, cwd=None, env=None, budget_gb=4, phase_pat
         return measurement
     except BaseException as error:
         measurement["error"] = str(error)
+        if isinstance(error, InfrastructureHang):
+            measurement["status"] = "infrastructure-unresolved"
         if proc is not None and proc.poll() is None:
             kill_tree(proc.pid, known)
             proc.wait()
