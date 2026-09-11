@@ -265,9 +265,11 @@ PY
 complete_producer_paths() {
   local compile_paths="$TMP_ROOT/producer-compile-paths"
   local script_paths="$TMP_ROOT/producer-script-paths"
+  local lean_paths="$TMP_ROOT/producer-lean-paths"
   producer_compile_paths lean-report > "$compile_paths" || return 1
   producer_reachable_script_paths lean-report > "$script_paths" || return 1
-  { cat "$compile_paths"; cat "$script_paths"; producer_declared_paths; } | sort -u
+  lean_inspector_source_paths > "$lean_paths" || return 1
+  { cat "$compile_paths"; cat "$script_paths"; cat "$lean_paths"; producer_declared_paths; } | sort -u
 }
 
 scribe_declared_paths() {

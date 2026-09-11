@@ -21,7 +21,7 @@ def noRealization : UnreachableElaborationEvidence (∀ n : Nat, n % 2 < 2) wher
   failedObligation := some ``failedReadout
 
 def inventory : DispositionInventory := ⟨"fixture-head", #[
-  ⟨⟨``Evidence.structuralTheorem, "structural-id"⟩,
+  ⟨⟨``Evidence.structuralTheorem, "sha256:0000000000000000000000000000000000000000000000000000000000000029"⟩,
     .certified <| .unreachable ⟨.noFaithfulPrimitiveRealization, ``noRealization⟩⟩]⟩
 
 /--
@@ -31,7 +31,7 @@ info: rejected=true output-absent=true certificate-absent=true
 -/
 #guard_msgs in
 run_cmd do
-  expectRejectedCensus `LeanInformationAudit.Tests.Census.Evidence ``inventory
+  expectRejectedCensus (← getEnv).header.mainModule ``inventory
     `correctRootCoverage inventory
     (classError ``Evidence.structuralTheorem "unreachable" "registered_structural_realization")
 
@@ -65,7 +65,7 @@ def noCarrier : UnreachableElaborationEvidence (2 + 3 = 5) where
   failedObligation := some ``numericalObligation
 
 def withoutMembership : DispositionInventory := ⟨"fixture-head", #[
-  ⟨⟨``generatedWithoutMembership, "without-membership-id"⟩,
+  ⟨⟨``generatedWithoutMembership, "sha256:000000000000000000000000000000000000000000000000000000000000002e"⟩,
     .certified <| .unreachable ⟨.noCanonicalObjectCarrier, ``noCarrier⟩⟩]⟩
 
 /--

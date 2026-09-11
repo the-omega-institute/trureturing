@@ -89,6 +89,9 @@ domains:
   FixedPoints:
     stratum: S1
     definition: Least and greatest fixed-point structure and concrete gaps between inductive and coinductive solutions.
+  FluidDynamics:
+    stratum: S3
+    definition: Spectral observers for incompressible flow — low-mode reversal witnesses and the wave syntheses that realize them.
   Fourier:
     stratum: S3
     definition: Fourier analysis for the kernel, including finite and discrete Poisson summation and entire analytic extensions of the Weil Fourier-Laplace transform.
@@ -149,6 +152,9 @@ domains:
   RenyiDivergence:
     stratum: S3
     definition: Finite Renyi divergences of order alpha, their pinning identities against the Bhattacharyya coefficient and the classical divergence, and their monotonicity in the order.
+  Resolvent:
+    stratum: S3
+    definition: Resolvent identities and normalized logarithmic-derivative expansions over the classical zeta zero divisor.
   Resource:
     stratum: S3
     definition: Resource-theoretic functionals defined as infima over tensor-closed strategy classes and their subadditivity.
@@ -167,6 +173,9 @@ domains:
   SpectralTopology:
     stratum: S3
     definition: Finite spectral localizers, point gaps, and chiral inertia counts for doubled Hermitian block operators.
+  StatisticalMechanics:
+    stratum: S3
+    definition: Hard-core lattice gas on grids and trees — mask data, branching potentials and the clamped certificates that bound their message maps.
   TotalVariation:
     stratum: S3
     definition: Finite total-variation distance between mass functions and its comparison inequalities against the classical divergence, including Pinsker-type bounds.

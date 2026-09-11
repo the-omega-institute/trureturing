@@ -179,6 +179,11 @@ __selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**
             resume) if [ "$(wc -l < "$NYX_TEST_DIR/polls")" -le 2 ]; then echo 'Phase: waiting_response'; else echo '{"ok":true}'; fi;;
             barrier) printf 'ready\n' > "$NYX_TEST_DIR/ready"; IFS= read -r response < "$NYX_TEST_DIR/release"; echo '{"ok":true}';;
             result-error) echo 'Unexpected transport failure'; return 1;;
+            transient|transient-forever)
+              if [ "$response" = transient-forever ] || [ "$(wc -l < "$NYX_TEST_DIR/polls")" -le 1 ]; then
+                echo "Error: GET /oracle/tasks/$id failed: error sending request for url (https://example.invalid/oracle/tasks/$id): client error (Connect): operation timed out"; return 1
+              fi
+              echo '{"ok":true}';;
             *) echo '{"ok":true}';;
           esac; return 0;;
         *) return 97;;
@@ -336,6 +341,12 @@ __selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**
     check_run '2|EXIT=2|||||NYX_ERR'
     chke '' "no-cli-$response" "$(joined "$run_dir/calls")"
   done
+  # A transport error on `oracle result` after a successful submission is not a task verdict:
+  # one transient failure then an answer is OK; a persistent one exhausts the rounds as TIMEOUT.
+  run_case ask-transient-then-answer "${rows_one/answer/transient}"
+  check_run "0|EXIT=0|first|$id1|$id1,$id1||NYX_OK"
+  run_case fetch-transient-forever "${rows_one/answer/transient-forever}"
+  check_run "3|EXIT=3||$id1|$id1,$id1||NYX_TIMEOUT"
   run_case fetch-delivery "${rows_one/answer/delivery}"
   check_run "1|EXIT=1||$id1|$id1||NYX_DELIVERY"
   run_case fetch-prompt-uncertain "${rows_one/answer/prompt-uncertain}"
