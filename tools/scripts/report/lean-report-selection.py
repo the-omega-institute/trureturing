@@ -155,7 +155,14 @@ class Selection:
                 if start.is_symlink():
                     fail(name, f'{pattern}: registered glob root is a symlink')
                 matches = []
-                for directory, dirs, files in os.walk(start, followlinks=False):
+                def traversal_error(error):
+                    if isinstance(error, FileNotFoundError):
+                        return
+                    detail = error.strerror or str(error)
+                    fail(name, f'{pattern}: registered source traversal failed: {detail}')
+
+                for directory, dirs, files in os.walk(start, onerror=traversal_error,
+                                                      followlinks=False):
                     # Excluded build trees need not be traversed.
                     dirs[:] = [d for d in dirs if not any(
                         e.fullmatch((Path(directory) / d).relative_to(self.root).as_posix() + '/')

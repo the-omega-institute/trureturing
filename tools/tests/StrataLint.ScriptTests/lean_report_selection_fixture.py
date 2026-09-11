@@ -330,6 +330,72 @@ else:
         finally:
             cache.chmod(0o700)
 
+    def test_source_traversal_io(self):
+        self.assertNotEqual(os.getuid(), 0, 'permission regression requires a non-root POSIX process')
+        output = self.repo / 'report.json'
+        lake = self.repo / 'bin/lake'
+        self.write('bin/lake', '#!' + sys.executable + '\n' + '''
+import json, pathlib, sys
+args = sys.argv[1:]
+if args == ['build']:
+    pathlib.Path('build-called').write_text('build\\n')
+else:
+    assert args[:3] == ['env', 'lean', '--run'], args
+    args = args[4:]
+    assert args[0] == '--output' and args[2] == '--material-spool' and args[4] == '--utility-input', args
+    records = [dict(module=args[i], source_path=args[i+1], source_sha256=args[i+2],
+        imports=[], declarations=[]) for i in range(6, len(args), 3)]
+    pathlib.Path(args[1]).write_text(json.dumps(dict(
+        schema='stratalint-lean-inspector-spool-v1',
+        modules=sorted(records, key=lambda r: r['module']))))
+''')
+        self.write('bin/dotnet', '#!/bin/sh\nif [ "$1" = build ]; then exit 0; fi\nprintf "[]\\n"\n')
+        self.write('tools/scripts/worktree/lean-cache-run.sh', '#!/bin/sh\nexec "$@"\n')
+        for path in ('bin/lake', 'bin/dotnet', 'tools/scripts/worktree/lean-cache-run.sh', INPUT):
+            (self.repo / path).chmod(0o700)
+        env = dict(os.environ, TMPDIR=str(SCRATCH), LAKE_BIN=str(lake),
+            PATH=str(self.repo / 'bin') + ':' + os.environ['PATH'],
+            STRATALINT_REPORT_CACHE_ROOT=str(self.repo / 'cache'))
+        for suffix in ('INPUT_ADDRESS', 'REPOSITORY_SHA256', 'PRODUCER_SHA256', 'RESIDENT_SHA256', 'CONFIG_SHA256'):
+            env['STRATALINT_REPORT_' + suffix] = 'a' * 64
+        baseline = subprocess.run(
+            ['bash', str(self.repo / 'tools/lean-inspector/inspect.sh'),
+             '--repository', str(self.repo), '--output', str(output)],
+            cwd=self.repo, text=True, capture_output=True, env=env)
+        self.assertEqual(baseline.returncode, 0, baseline.stdout + baseline.stderr)
+        baseline_address = self.run_input().stdout.strip()
+        baseline_coordinates = baseline_address.split()
+        self.assertEqual(len(baseline_coordinates), 4)
+        report_sha = hashlib.sha256(output.read_bytes()).hexdigest()
+        (Path(str(output) + '.input.attestation')).write_text(
+            'schema=stratalint-lean-report-input-attestation-v1\n'
+            'repository_input_sha256=' + baseline_coordinates[0] + '\n'
+            'producer_sha256=' + baseline_coordinates[1] + '\n'
+            'report_sha256=' + report_sha + '\n')
+        self.write('D5/BaseAdded.lean', 'def added := 2\n')
+        d5 = self.repo / 'D5'
+        try:
+            d5.chmod(0)
+            inaccessible = self.run_input()
+            self.assertEqual(inaccessible.returncode, 2, inaccessible.stdout + inaccessible.stderr)
+            self.assertIn('registered source traversal failed', inaccessible.stderr)
+            self.assertNotEqual(inaccessible.stdout.strip(), baseline_address)
+        finally:
+            d5.chmod(0o700)
+        restored = self.run_input()
+        self.assertEqual(restored.returncode, 0, restored.stderr)
+        self.assertNotEqual(restored.stdout.strip(), baseline_address)
+        modules = self.run_input('modules')
+        self.assertEqual(modules.returncode, 0, modules.stderr)
+        self.assertIn('D5.BaseAdded', modules.stdout)
+        stale = subprocess.run(
+            ['bash', str(self.repo / INPUT), 'verify', '--repository', str(self.repo),
+             '--report', str(output)], cwd=SCRATCH, text=True, capture_output=True,
+            env=dict(os.environ, TMPDIR=str(SCRATCH),
+                STRATALINT_LEAN_INPUT_MEMO_ROOT=str(SCRATCH / 'memo')))
+        self.assertEqual(stale.returncode, 2, stale.stdout + stale.stderr)
+        self.assertIn('stale for current repository inputs', stale.stderr.lower())
+
     def test_planner_changes(self):
         module_spec = importlib.util.spec_from_file_location('delta', self.repo / 'tools/lean-inspector/delta.py')
         delta = importlib.util.module_from_spec(module_spec)

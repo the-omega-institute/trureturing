@@ -16,6 +16,7 @@ public sealed class LeanReportSelectionTests
     [InlineData("malformed_provenance")]
     [InlineData("malformed_reports")]
     [InlineData("seed_metadata_io")]
+    [InlineData("source_traversal_io")]
     public void RegisteredSelectionContract(string scenario)
     {
         if (OperatingSystem.IsWindows()) return;
