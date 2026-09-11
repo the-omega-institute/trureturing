@@ -208,7 +208,8 @@ def restore_execution(root, layer, keys, staged):
     spec = keys[layer]
     transport_path = staged / "build/ci" / (spec["stage"] + "-transport.json")
     transport = json.loads(transport_path.read_text())
-    if transport.get("stage") != spec["stage"] or not re.fullmatch(r"[0-9a-f]{40}", transport.get("commit", "")):
+    if (not isinstance(transport, dict) or transport.get("stage") != spec["stage"]
+            or not re.fullmatch(r"[0-9a-f]{40}", transport.get("commit", ""))):
         raise ValueError("invalid native execution transport identity")
     runner = root / "tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll"
     if not runner.is_file():
@@ -224,6 +225,11 @@ def restore_execution(root, layer, keys, staged):
     except subprocess.CalledProcessError as error:
         detail = (error.stderr or error.stdout or str(error)).strip()
         raise ValueError("native execution transport rejected staged seed: " + detail) from error
+    # Native verification owns the accepted material list; the copying adapter
+    # must not extend it with extra rows from the outer Actions inventory.
+    declared = {item["path"] for item in transport["materials"]}
+    if {item["path"] for item in inventory} != declared | {transport_path.relative_to(staged).as_posix()}:
+        raise ValueError("execution seed differs from declared transport materials")
     with tempfile.TemporaryDirectory(prefix=".transport-rollback-", dir=root.parent) as rollback:
         rollback_root = pathlib.Path(rollback)
         backups = []

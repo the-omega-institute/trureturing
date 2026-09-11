@@ -92,6 +92,89 @@ public sealed class ExecutionSeedTransportBehaviorTests
         }
     }
 
+    [Theory]
+    [InlineData("engineering")]
+    [InlineData("current")]
+    public void ActionsOuterInventoryCannotInstallMaterialOutsideNativeBundle(string stage) =>
+        AssertRejectedActionsSeed(stage, "extra-material");
+
+    [Theory]
+    [InlineData("engineering", "[]")]
+    [InlineData("engineering", "null")]
+    [InlineData("current", "[]")]
+    [InlineData("current", "null")]
+    public void ActionsNonObjectTransportIsAnHonestMiss(string stage, string json) =>
+        AssertRejectedActionsSeed(stage, json);
+
+    private static void AssertRejectedActionsSeed(string stage, string damage)
+    {
+        using var fixture = Prepare(stage);
+        var repository = TestRepositoryLayout.FindRoot();
+        var commit = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD");
+        var environment = Environment(commit, fixture.Root, "71", "1");
+        AssertReceipt(Python(fixture.Root, repository,
+            ["snapshot", "--repository", fixture.Root, "--layers", stage], environment), "snapshot");
+        var target = Destination(fixture, "boundary");
+        var cached = Path.Combine(target, "build/lean-cache", stage);
+        CopyDirectory(Path.Combine(fixture.Root, "build/lean-cache", stage), cached);
+        var manifestPath = Path.Combine(cached, "manifest.json");
+        var manifest = JsonNode.Parse(File.ReadAllText(manifestPath))!.AsObject();
+        var data = Path.Combine(cached, "data");
+        var transportPath = CiTransport.ManifestPath(stage + "-seed");
+        var collateral = ".gitignore";
+        var sibling = CommonExecutionEvidence.RootPath + "/" + (stage == "engineering" ? "current" : "engineering") + ".json";
+        File.WriteAllText(Path.Combine(target, sibling), "existing sibling evidence\n");
+        var protectedPaths = new[] { collateral, sibling, CommonExecutionEvidence.BuildPath };
+        var before = protectedPaths.ToDictionary(path => path, path => File.ReadAllBytes(Path.Combine(target, path)));
+        var damagedPath = damage == "extra-material" ? collateral : transportPath;
+        File.WriteAllText(Path.Combine(data, damagedPath), damage == "extra-material" ? "unaccepted cache collateral\n" : damage);
+        // Keep the outer Actions row valid so only the native material boundary
+        // (or the native transport root shape) can reject this seed.
+        var entries = manifest["files"]!.AsArray().Select(item => item!.DeepClone()).ToList();
+        entries.RemoveAll(item => item["path"]!.GetValue<string>() == damagedPath);
+        entries.Add(JsonSerializer.SerializeToNode(new
+        {
+            path = damagedPath,
+            sha256 = CommonExecutionEvidence.Hash(Path.Combine(data, damagedPath)),
+            mode = OperatingSystem.IsWindows() ? 0 : (int)File.GetUnixFileMode(Path.Combine(data, damagedPath)),
+        })!);
+        manifest["files"] = new JsonArray(entries.OrderBy(item => item["path"]!.GetValue<string>(), StringComparer.Ordinal).ToArray());
+        File.WriteAllText(manifestPath, manifest.ToJsonString() + "\n");
+        if (damage == "extra-material")
+        {
+            var declared = CommonExecutionEvidence.Read<CiTransportRecord>(data, transportPath);
+            Assert.DoesNotContain(declared.Materials, item => item.Path == collateral);
+            // Verification of a bundle inside a larger root must remain valid.
+            // This extra file is rejected by the copying adapter, not global verify.
+            var native = SharedBuildContractTests.Process(target, "dotnet",
+                [Path.Combine(target, CommonExecutionEvidence.RunnerPath), "transport-verify", "--repository", data,
+                    "--stage", stage + "-seed", "--commit", commit, "--run-id", "71", "--run-attempt", "1"],
+                environment, TestBudgets.LongWorkflowProcessHangGuard);
+            Assert.True(native.Exit == 0, native.Text);
+        }
+        var result = Python(target, repository,
+            ["restore", "--repository", target, "--layers", stage, "--" + stage + "-key", manifest["key"]!.GetValue<string>()], environment);
+        var unchanged = before.All(item => item.Value.SequenceEqual(File.ReadAllBytes(Path.Combine(target, item.Key))));
+        if (System.Environment.GetEnvironmentVariable("EXECUTION_SEED_EVIDENCE") is { Length: > 0 } evidence)
+        {
+            Directory.CreateDirectory(evidence);
+            var label = stage + "-" + (damage == "extra-material" ? damage : damage == "[]" ? "array-root" : "null-root");
+            File.WriteAllText(Path.Combine(evidence, label + ".json"), JsonSerializer.Serialize(new
+            {
+                stage, damage, result.Exit, result.Text, unchanged,
+                before = before.ToDictionary(item => item.Key, item => Convert.ToHexStringLower(SHA256.HashData(item.Value))),
+                after = protectedPaths.ToDictionary(path => path, path => CommonExecutionEvidence.Hash(Path.Combine(target, path))),
+                outerManifest = manifest,
+            }));
+        }
+        AssertReceipt(result, "miss");
+        Assert.DoesNotContain("\"status\": \"restored\"", result.Text, StringComparison.Ordinal);
+        Assert.True(unchanged, "optional seed changed candidate collateral or sibling evidence");
+        Assert.False(File.Exists(Path.Combine(target, CommonExecutionEvidence.BundleListPath(stage + "-seed"))));
+        Assert.False(Directory.Exists(Path.Combine(target, CommonExecutionEvidence.CheckSeedPath(stage))));
+        CommonExecutionEvidence.ValidateBuild(target);
+    }
+
     [Fact]
     public void CorruptExecutionSeedDoesNotClobberExistingBuildOrSiblingEvidence()
     {
