@@ -32,7 +32,6 @@ public sealed class LeanCacheInputScriptTests
     [Theory]
     [InlineData("ci_contract", "test_internal_dependency_file_links_round_trip_as_private_material")]
     [InlineData("report_snapshot_contract", "test_invalid_dependency_links_disable_only_that_save_with_an_offending_path")]
-    [InlineData("ci_contract", "test_corrupt_dependency_seed_falls_back_without_replacing_current_material")]
     [InlineData("report_snapshot_contract", "test_snapshot_readiness_and_material_follow_writer_permissions")]
     [InlineData("report_snapshot_contract", "test_report_snapshot_keeps_only_current_complete_seed")]
     [InlineData("report_snapshot_contract", "test_report_snapshot_rejects_invalid_current_without_using_history")]

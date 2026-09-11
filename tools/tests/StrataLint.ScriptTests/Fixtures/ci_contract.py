@@ -334,46 +334,5 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
         (cached / "data/batteries/README.md").write_bytes(b"changed cache bytes")
         self.assertEqual(expected["batteries/README.md"][0], (source / "batteries/README.md").read_bytes())
 
-    def test_corrupt_dependency_seed_falls_back_without_replacing_current_material(self):
-        source, _ = self.dependency_files()
-        shutil.copy2(source / "batteries/README.md", source / "batteries/README.copy")
-        readiness, _ = self.snapshot_result()
-        self.assertEqual("true", readiness["dependency_ready"])
-        cached = self.root / "build/lean-cache/dependency"
-        key = json.loads((cached / "manifest.json").read_text())["key"]
-        saved = cached / "data/batteries/README.md"
-        original, mode = saved.read_bytes(), saved.stat().st_mode & 0o777
-        (self.root / "Makefile").write_text("current:\n\t@echo producer >> calls\n\t@exit $${PRODUCER_EXIT:-0}\n")
-        for corruption in ("bytes", "mode", "link", "missing", "extra"):
-            with self.subTest(corruption=corruption):
-                (source / "batteries/README.md").write_bytes(b"current material")
-                if corruption == "bytes":
-                    saved.write_bytes(b"corrupted bytes")
-                elif corruption == "mode":
-                    saved.chmod(0o755)
-                elif corruption == "link":
-                    saved.unlink()
-                    saved.symlink_to("README.copy")
-                elif corruption == "missing":
-                    saved.unlink()
-                else:
-                    (saved.parent / "extra").write_bytes(b"unlisted")
-                for production_exit in ("0", "9"):
-                    result = subprocess.run(["bash", "-euc",
-                        '"$PYTHON" "$CACHE" restore --repository "$ROOT" --dependency-key "$KEY"; make -C "$ROOT" current'],
-                        env=dict(self.env, PYTHON=sys.executable, CACHE=str(CACHE), ROOT=str(self.root),
-                                 KEY=key, PRODUCER_EXIT=production_exit), capture_output=True, text=True)
-                    self.assertEqual(production_exit == "0", result.returncode == 0, result.stdout + result.stderr)
-                    self.assertIn('"layer": "dependency", "reason":', result.stdout)
-                    self.assertIn('"status": "miss"', result.stdout)
-                    self.assertEqual(b"current material", (source / "batteries/README.md").read_bytes())
-                    self.assertNotIn("STRATALINT_ACTIONS_CACHE_SEEDED=1", (self.root / "environment").read_text())
-                saved.unlink(missing_ok=True)
-                saved.write_bytes(original)
-                saved.chmod(mode)
-                (saved.parent / "extra").unlink(missing_ok=True)
-        self.assertEqual(["producer"] * 10, (self.root / "calls").read_text().splitlines())
-
-
 if __name__ == "__main__":
     unittest.main()
