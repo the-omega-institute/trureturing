@@ -4,7 +4,8 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Equivariant self-adjoint idempotents in an irreducible matrix representation are only zero or identity, so any nontrivial equivariant orthogonal records force reducibility. -/
+   digest: Equivariant self-adjoint idempotents in an irreducible matrix representation are
+   only zero or identity; nontrivial equivariant orthogonal records force reducibility. -/
 
 import D5.S3.Quantum.Matrix.CrossSpeciesConsensus
 
