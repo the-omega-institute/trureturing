@@ -1,5 +1,8 @@
 # Conditional cross-species consensus
 
+**Implementation outcome: 成**, under the caller's local build-and-gates criterion.
+This does not mean the physical inputs were adopted or that a PR was merged.
+
 Origin: Codex implementation worker using the lean4 skill, one implementation thread.
 No independent review or multi-model consensus is claimed. The caller owns later
 review and merge stages. Preregistration precedes Lean source in commit `8b07c89ace`.
@@ -104,7 +107,7 @@ Statement IDs from the canonical inspector:
 - scalar theorem: `sha256:9bb08c3676f60db283c08f3de88d4f2895869debd96852d014f230448f0a4114`
 - consensus theorem: `sha256:36a89f748c3b41e367f15c2c71abc84dad95e2fa00efeeb7e3d9d9792d2b0120`
 
-## Failed attempts and remaining checks
+## Failed attempts
 
 The router initially rejected an absolute manifest path and then null optional fields.
 Reading its contract resolved these as a repository-relative manifest with string
@@ -115,5 +118,42 @@ which C# compilation rejected. Reading the full DSL resolved the cause: express
 the family as the existing `Call("probe", Id("s"))` function-application form.
 No validation or detection was weakened.
 
-Emission, deposit-uncovered, and exact-merge-base Scribe results will be recorded
-below before the implementation handoff.
+## Completed gate chain
+
+The validated chain is serial Lean build -> `make lean-report` -> `make emit`
+-> `make deposit-uncovered`. The final emission exited 0 and produced one Blueprint.
+The deposit command also exited 0; its own ordered report, header check, emission,
+and ledger writer all succeeded. No atom coverage was requested or written.
+
+```text
+DEPOSIT_HEADER_CHECKED SL-012 D5/S3/Quantum/Matrix/CrossSpeciesConsensus.lean
+LEDGER_ALIGN selectors_considered=4046 changed=0 added=1 unchanged=4045 conflicts=0
+```
+
+Deposit anchor:
+`D5/S3/Quantum/Matrix/CrossSpeciesConsensus.equivariant_selfAdjoint_eq_smul_id_of_irreducible`.
+Module pin: `sha256:672f7703c7fa0dadde253054bfab3473c762e4dc1bd2e354f6dcd25bdf3fc386`.
+Freeze event: `sha256:30f7ae44c291fc072bd99bd31ce825480bf76ad1cb4387a38056b55efafcded0`.
+
+The exact-merge-base CI-layer command exited 0, with base
+`0959718b31ddd1d663683c2d71ac23c32ccb6e8d`:
+
+```text
+DESCRIBE_STATUS case=DESCRIBE-NODES status=classified nodes=11107 suspected_novel=0 formula_content_slots=68 formula_statements=32 red=0 observe=4997
+markdown: judged=1 formula(s)=2 red=0
+```
+
+There were zero lines beginning `RED`. No OPEN projection or OBSERVE line was used
+as a green verdict. `git diff --check` also exited 0. Final immediate file counts:
+D5 matrix 6, Blueprint matrix 6 (generated .md excluded), Library Quantum 20,
+crossspecies reports 4. Domain and generality checks retain the preregistered result.
+
+Remote dev was fetched to `d0070d656d`; `git merge-tree --write-tree HEAD origin/dev`
+exited 0 with no conflicts. The second D5 exact-name search on that dev revision
+found neither new theorem. This is a bounded duplicate search, not global novelty.
+
+Raw logs, the selected source-bound Lean report, and upstream source receipt are in:
+`/var/folders/wv/ht3wzsj138b4sxl3q4t0xdr40000gn/T/consensus-rnd/sshx/crossspecies-1/attempt-1/`.
+Relevant logs are `serial-lean-2.log`, `lean-report.log`, `emit-3.log`, `deposit.log`,
+and `scribe-content-checks.log`. Earlier failures remain in `emit-1.log` and `emit-2.log`.
+PR and final commit identities are recorded in the runner result envelope.
