@@ -137,6 +137,32 @@ public sealed class CiTransportTests
             environment["CANDIDATE_SHA"] = commit;
         }
 
+        // Bind each malformed current record into the transport so these cases
+        // exercise the consumer contract beyond the outer file hash check.
+        foreach (var defect in new[] { "version-one", "version-three", "candidate", "round" })
+        {
+            var current = CommonExecutionEvidence.Read<CommonStageRecord>(root, CommonExecutionEvidence.CurrentPath);
+            var changed = defect switch
+            {
+                "version-one" => current with { Version = 1 },
+                "version-three" => current with { Version = 3 },
+                "candidate" => current with { Candidate = new string('a', 64) },
+                _ => current with { Round = current.Round + "-stale" },
+            };
+            CommonExecutionEvidence.Write(root, CommonExecutionEvidence.CurrentPath, changed);
+            var transport = CommonExecutionEvidence.Read<CiTransportRecord>(root, "build/ci/current-transport.json");
+            CommonExecutionEvidence.Write(root, "build/ci/current-transport.json", transport with
+            {
+                Materials = transport.Materials.Select(material => material.Path == CommonExecutionEvidence.CurrentPath
+                    ? material with { Sha256 = CommonExecutionEvidence.Hash(Path.Combine(root, material.Path)) } : material).ToArray(),
+            });
+            Snapshot(defect, ready: false);
+            foreach (var item in saved) Assert.Equal(item.Value, File.ReadAllBytes(item.Key));
+            File.WriteAllBytes(Path.Combine(root, CommonExecutionEvidence.CurrentPath), currentBytes);
+            File.WriteAllBytes(transportPath, transportBytes);
+            CommonExecutionEvidence.ValidateCurrent(root);
+        }
+
         void Snapshot(string label, bool ready)
         {
             File.Delete(environment["GITHUB_OUTPUT"]);
@@ -156,6 +182,94 @@ public sealed class CiTransportTests
             Directory.CreateDirectory(evidence);
             File.WriteAllText(Path.Combine(evidence, name), text);
         }
+    }
+
+    [Fact]
+    public void CurrentCliTransportRoundTripRetainsRegistrationAndRejectsInvalidBundles()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        Prepare(fixture, current: false);
+        var root = fixture.Root;
+        var repository = TestRepositoryLayout.FindRoot();
+        var runtime = Path.GetDirectoryName(CommonExecutionEvidence.RunnerPath)!;
+        Directory.CreateDirectory(Path.Combine(root, runtime));
+        var binaries = Directory.GetFiles(Path.Combine(repository, runtime)).Select(file =>
+        {
+            var relative = runtime + "/" + Path.GetFileName(file);
+            File.Copy(file, Path.Combine(root, relative));
+            return relative;
+        }).ToArray();
+        SealEngineering(root, CommonExecutionEvidence.Candidate(root), binaries, Steps(CommonExecutionEvidence.EngineeringSteps));
+        Report(root);
+        CheckEvidenceFixture.Seal(root, "current", CommonExecutionEvidence.ValidateBuild(root));
+        CommonExecutionEvidence.SealCurrent(root, CommonExecutionEvidence.ValidateBuild(root), Steps(CommonExecutionEvidence.CurrentSteps));
+        var commit = Git(root, "rev-parse", "HEAD");
+        var archive = Path.Combine(root, "build/current.tgz");
+        var packed = Cli("pack", root, archive);
+        Assert.True(packed.Exit == 0, packed.Text);
+        Assert.Contains("status=packed", packed.Text);
+
+        var target = Path.Combine(root, "build/destination");
+        Git(root, "clone", "--quiet", "--no-hardlinks", root, target);
+        var restored = Cli("restore", target, archive);
+        Assert.True(restored.Exit == 0, restored.Text);
+        Assert.Contains("status=verified", restored.Text);
+        Assert.Equal(File.ReadAllBytes(Path.Combine(root, "Meta/ci-checks.json")),
+            File.ReadAllBytes(Path.Combine(target, "Meta/ci-checks.json")));
+        Assert.Contains(CommonExecutionEvidence.ValidateCurrent(target).Materials, material => material.Path == "Meta/ci-checks.json");
+        Assert.Equal(File.GetUnixFileMode(Path.Combine(root, Log)), File.GetUnixFileMode(Path.Combine(target, Log)));
+
+        foreach (var defect in new[] { "extra", "extra-meta", "escape", "absolute", "symlink", "hardlink", "mode", "hash", "candidate", "round", "missing-registration" })
+        {
+            var damaged = Path.Combine(root, "build/" + defect + ".tgz");
+            using (var input = new GZipStream(File.OpenRead(archive), CompressionMode.Decompress))
+            using (var reader = new TarReader(input))
+            using (var output = new GZipStream(File.Create(damaged), CompressionLevel.Fastest))
+            using (var writer = new TarWriter(output))
+            {
+                while (reader.GetNextEntry(copyData: true) is { } entry)
+                {
+                    if (defect == "missing-registration" && entry.Name == "Meta/ci-checks.json") continue;
+                    if (entry.Name == Log && defect == "mode") entry.Mode ^= UnixFileMode.UserExecute;
+                    if (entry.Name == Log && defect == "hash") entry.DataStream = new MemoryStream("corrupt"u8.ToArray());
+                    if (entry.Name == CommonExecutionEvidence.CurrentPath && defect is "candidate" or "round")
+                    {
+                        var record = CommonExecutionEvidence.Read<CommonStageRecord>(root, CommonExecutionEvidence.CurrentPath);
+                        var node = System.Text.Json.Nodes.JsonNode.Parse(File.ReadAllText(Path.Combine(root, entry.Name)))!;
+                        node[defect] = defect == "candidate" ? new string('a', 64) : record.Round + "-stale";
+                        entry.DataStream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(node.ToJsonString()));
+                    }
+                    writer.WriteEntry(entry);
+                }
+                var extra = defect switch { "extra" => "build/ci/undeclared", "extra-meta" => "Meta/undeclared.json",
+                    "escape" => "../escaped", "absolute" => "/escaped", "symlink" or "hardlink" => "build/ci/link", _ => null };
+                if (extra is not null)
+                {
+                    var type = defect == "symlink" ? TarEntryType.SymbolicLink : defect == "hardlink" ? TarEntryType.HardLink : TarEntryType.RegularFile;
+                    var entry = new PaxTarEntry(type, extra);
+                    if (type == TarEntryType.RegularFile) entry.DataStream = new MemoryStream("extra"u8.ToArray());
+                    else entry.LinkName = Log;
+                    writer.WriteEntry(entry);
+                }
+            }
+            var rejected = Cli("restore", target, damaged);
+            Assert.True(rejected.Exit == 2, defect + ": " + rejected.Text);
+            Assert.DoesNotContain("status=verified", rejected.Text);
+            Assert.False(File.Exists(Path.Combine(target, "build/ci/undeclared")));
+            var recovered = Cli("restore", target, archive);
+            Assert.True(recovered.Exit == 0, recovered.Text);
+        }
+        foreach (var (wrongCommit, run, attempt) in new[] { (commit, "18", "2"), (commit, "17", "3"), (new string('a', 40), "17", "2") })
+        {
+            var rejected = Cli("verify", target, archive, wrongCommit, run, attempt);
+            Assert.True(rejected.Exit == 2, rejected.Text);
+        }
+
+        (int Exit, string Text) Cli(string command, string destination, string bundle, string? candidate = null, string run = "17", string attempt = "2") =>
+            SharedBuildContractTests.Process(destination, "python3", ["-B", Path.Combine(repository, "tools/scripts/workflow/ci.py"),
+                command, "--repository", destination, "--stage", "current", "--commit", candidate ?? commit,
+                "--run-id", run, "--run-attempt", attempt, "--archive", bundle], hangGuard: TestBudgets.WorkflowProcessHangGuard);
     }
 
     [Fact]

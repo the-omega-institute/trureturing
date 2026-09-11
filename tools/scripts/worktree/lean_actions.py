@@ -97,7 +97,7 @@ def snapshot_report(root, partition, destination):
     current = json.loads(bound_bytes("build/ci/current.json"))
     if (not isinstance(summary, dict) or summary.get("stage") != "current" or summary.get("exit") != 0
             or summary.get("current_evidence") != "build/ci/current.json"
-            or not isinstance(current, dict) or current.get("version") != 1
+            or not isinstance(current, dict) or current.get("version") != 2
             or current.get("candidate") != transport["candidate"] or current.get("round") != transport["round"]
             or summary.get("candidate") != current["candidate"]):
         raise ValueError("current report handoff mismatch")

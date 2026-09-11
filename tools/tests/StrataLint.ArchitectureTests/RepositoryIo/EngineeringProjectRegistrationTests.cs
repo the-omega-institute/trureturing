@@ -164,6 +164,39 @@ public sealed class EngineeringProjectRegistrationTests
     }
 
     [Fact]
+    public void TrackedTopologyIncludesExplicitCompileMaterialsOutsideTheProjectDirectory()
+    {
+        using var repository = new TemporaryDirectory();
+        const string source = "linked/ActualInput.cs";
+        Write(Project, Misleading);
+        Write(source, "namespace Fixture; public sealed class ActualInput {}\n");
+        Write(EngineeringRegistrationFixture.Path, EngineeringRegistrationFixture.Manifest(Test() with { Include = [source] }));
+        Git("init", "-q");
+        Git("add", ".");
+
+        var topology = RepositoryRules.ReadTrackedProjects(repository.Path);
+        Assert.Equal(Project, Assert.Single(topology.Projects).Path);
+        Assert.Equal(Misleading, topology.Projects[0].Content);
+        Assert.Equal([Project], EngineeringTestPlanPolicy.Evaluate(topology).ToArray());
+
+        // An existing but untracked source cannot discharge a declared Compile input.
+        Git("rm", "--cached", source);
+        var error = Assert.Throws<InvalidDataException>(() => RepositoryRules.ReadTrackedProjects(repository.Path));
+        Assert.Contains("registered Compile input is absent", error.Message);
+        Assert.Contains(source, error.Message);
+
+        void Write(string path, string content)
+        {
+            var full = Path.Combine(repository.Path, path);
+            Directory.CreateDirectory(Path.GetDirectoryName(full)!);
+            File.WriteAllText(full, content);
+        }
+
+        void Git(params string[] arguments) => Assert.Equal(0, TestProcessRunner.Run("git", arguments,
+            repository.Path, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024).ExitCode);
+    }
+
+    [Fact]
     public void RepositoryRegistrationKeepsScriptCiExclusionAndBothProofProjects()
     {
         var topology = RepositoryRules.ReadTrackedProjects(RepositoryLayout.FindRoot());
