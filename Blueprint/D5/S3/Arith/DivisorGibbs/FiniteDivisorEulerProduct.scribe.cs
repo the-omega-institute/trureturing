@@ -56,7 +56,7 @@ internal sealed class FiniteDivisorEulerProductDocument : IScribeDocumentDefinit
 
     private static DocumentBlock Entry(string declaration, string title, Formula statement,
         string prose, DescribeRole role = DescribeRole.Theorem) =>
-        Describe.Lean(DescribeId.Create("divisor-euler-" + declaration.Replace('_', '-')),
+        Describe.Lean(DescribeId.Create("divisor-euler-" + declaration.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Module + declaration), H(title),
             StatementSource.FromAuthor(statement),
             AssessedProvenance.FromLiterature(
