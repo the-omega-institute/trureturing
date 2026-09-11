@@ -34,11 +34,16 @@ dependency is the imported CrossSpeciesConsensus theorem above.
 
 ## Verification
 
-The source was checked with Lean 4.33.0 and the pinned Mathlib environment. The direct warm
-elaboration passed after the CrossSpeciesConsensus object was built. The required serial build,
-`make lean-report`, `make emit`, `make deposit-uncovered`, and the pre-PR scribe content check
-are the final gate sequence for this branch; their exact receipts are appended when run on the
-complete tree.
+The source was checked with Lean 4.33.0 and the pinned Mathlib environment. The required serial
+build returned `SERIAL_LEAN status=complete built=0 failed=0`. `make lean-report` produced the
+candidate report with delta `changed=1 added=0 removed=0`, and its axiom closure for the new
+declarations is `Classical.choice`, `Quot.sound`, and `propext`, with no `sorryAx`. `make emit`
+reported `red=0` and `emitted: 0 changed blueprint(s)`. The pre-PR content check at merge-base
+`02374e0e1c52b2751c9f214ad3884bb7e30bad50` reported `DESCRIBE_STATUS ... classified ... red=0`
+and `markdown ... red=0`. `make deposit-uncovered` completed for the module and recorded
+accepted event `fe2173ed0ddb3ba87ca8f674d232532a881dbf2639219edfbe64b7fe3f965942`; the source
+header was subsequently normalized to the canonical seven-line form without changing any
+declaration statement.
 
 ## Boundary and constructive reading
 
