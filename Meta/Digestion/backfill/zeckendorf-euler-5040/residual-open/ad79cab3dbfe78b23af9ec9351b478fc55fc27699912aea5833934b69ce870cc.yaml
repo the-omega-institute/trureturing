@@ -5,6 +5,10 @@ cas_ref: sha256:ad79cab3dbfe78b23af9ec9351b478fc55fc27699912aea5833934b69ce870cc
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  quarantine:
+    justification: "Half of this atom is frozen and the other half has a located, unbuilt foundation. Theorem 9.1 argues in two segments. The second, that one together with the primes is not a semilinear set, is frozen as D5/S3/Arith/PrimesNotSemilinear.primes_union_one_not_isSemilinearSet, which reduces through the pinned Nat.isSemilinearSet_iff_ultimately_periodic and closes by the composite p times one plus d. The first segment is Conway's theorem that the reachable exponents of PRIMEGAME on the pure powers of two axis are exactly one together with the primes; no carrier for it is in D5. The earlier scoping note recorded that the repository has no FRACTRAN foundation, which is accurate for D5 but incomplete: a probe seat located two third-party Lean formalizations, pimlu/fractran with fractran-lean/Fractran/Basic.lean and sanchace/FRACTRAN. The same probe also showed that the one-step semantics of FRACTRAN closes term by term against pinned Mathlib factorization results, so building that layer locally would not itself yield an admissible first freeze."
+    reentry_condition: Land a carrier for Conway's PRIMEGAME characterization, then compose it with the frozen non-semilinearity result to obtain theorem 9.1 and cover this atom. Before building the FRACTRAN layer from scratch, settle the third-party question under spec A17.2, which admits only dependency or transplant on an exact hit and forbids reproof; a transplant must carry the full license text of the source. Note also that the one-step characterization alone is definitional against the pinned library, so the reachability statement, not the step semantics, is where the mathematical content of Conway's theorem sits.
+    blocker_class: multi-clause-guard
   chain_atoms:
     - e9e8e6177e4d886622022328cfba3d0e8d7340bdee59b53ea513b0cdf01ad11d
     - 8e4e6887bdde074e55e00e5a0ebbc4696f43062c1e19bdd7d681521cd5563abe
