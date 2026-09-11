@@ -1,0 +1,97 @@
+---
+slug: oeis-a292394-diagonal-index-divisibility
+bibkey: hanna2017a292394
+doi: null
+url: https://oeis.org/A292394
+triage: theorem
+motivation_gids:
+  - D5/S1/Recurrence/Residue/DiagonalVanishingIndexDivisibility
+---
+
+# A292394: square-index divisibility
+
+## Problem
+
+Quoted directly from the seat-local file `oeis-A292394.src`
+(`seats/opB-diagidx2/oeis-A292394.src` in the supplied workspace):
+
+> NAME: G.f. A(x) satisfies: [x^n] A( x/A(x)^(n^2) ) = 0 for n>1.
+> COMMENT: a(n) is divisible by n^2 for n>=1 (conjecture): A292395(n) = a(n)/n^2.
+> AUTHOR: _Paul D. Hanna_, Sep 15 2017
+
+The target is the quoted divisibility conjecture for this entry.
+The formal object has `a(0)=a(1)=1` and exponent `e(n)=n^2`.
+The formal vanishing condition is imposed for `n>1`, as in the quoted NAME.
+
+## Motivation
+
+This is a first-tier OEIS conjecture attributed to Paul D. Hanna in 2017.
+The target is the unbounded assertion `n^2` divides this entry's `a(n)`
+for every `n>=1`. This dossier and its claim account for this entry alone.
+
+## Gap
+
+The supplied source labels the target a conjecture. This offline follow-up
+checks the entry-specific source and its connection to the delivered theorem;
+it performs no new external literature or revision-history search. Whether
+an earlier proof exists outside the supplied material remains unverified.
+
+## Route
+
+The module constructs a normalized integer power series by a triangular
+coefficient update. Agreement of inverses preserves agreement of coefficients,
+and each update improves agreement by one degree. Stabilization produces the
+series; `generating_equation` and `generating_unique` establish its normalized
+vanishing equation and uniqueness.
+
+The coefficient engine `power_coefficient_identity` comes from differentiating
+integer powers of a unit, including negative powers. In the triangular sum,
+put `alpha=v_p(n)`. If `v_p(m)<alpha`, then `v_p(n-m)=v_p(m)`, so the engine
+supplies the required prime-power factor in the inverse-power coefficient.
+If `v_p(m)>=alpha`, strong induction supplies it in `a(e,m)`. Combining prime
+multiplicities, summing and negating proves `index_power_divisibility`.
+Its hypothesis `n^k | e(n)` for every natural `n` is sufficient; no claim
+is made that it is the weakest sufficient hypothesis.
+
+For this entry specialize `e(n)=n^2` and `k=2`.
+
+This instance uses the general theorem within the same module; it needs no
+identification with a coefficient object from the frozen sibling module.
+
+## Falsifier
+
+A natural index `n>=1` at which `n^2` fails to divide this entry's
+normalized coefficient would falsify the claimed conclusion.
+The formal coefficient is `a (fun m => m ^ 2) n`.
+Finite agreement with DATA and finite divisibility checks cannot exclude
+an arbitrary later counterexample.
+
+## Evidence
+
+- Lean module: `D5/S1/Recurrence/Residue/DiagonalVanishingIndexDivisibility.lean`.
+- Entry-specific theorem and Scribe claim: `hanna_conjecture_a292394`.
+- Exact conclusion for `n : ℕ`, `hn : 1 ≤ n`: `(n : ℤ) ^ 2 ∣ a (fun m => m ^ 2) n`.
+- General input: `index_power_divisibility`; coefficient engine:
+  `power_coefficient_identity`; construction: `generating_equation` and
+  `generating_unique`.
+
+The orchestrator reports from `results/verify-r28.py` / `results/verify-r28.out`
+that this entry's published DATA is reproduced exactly (12 terms), with
+zero violations of its divisibility conjecture for `1 <= n < 16`.
+These are attributed finite supporting readings, not a proof or a fresh run
+by this seat.
+
+## Triage
+
+`theorem`. The claim for this slug is attached only to `hanna_conjecture_a292394`
+and settles this entry's `n^2` divisibility conjecture for every `n>=1`.
+
+## ASSUMED-UNVERIFIED
+
+The quotations and author date were read directly from this entry's own
+local `.src` file; the file's fidelity to the live OEIS page and revision
+history was not independently checked because this seat has no network.
+External OEIS-to-Lean identification and publication priority are not
+kernel-checked facts. No exhaustive literature search is claimed.
+The numerical readings above are supplied by the orchestrator and were not
+independently recomputed by this follow-up seat; they are support, not proof.
