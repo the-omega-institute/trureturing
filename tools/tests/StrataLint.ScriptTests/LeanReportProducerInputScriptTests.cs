@@ -37,12 +37,12 @@ public sealed class LeanReportProducerInputScriptTests
     [Theory]
     [InlineData("producer-paths")]
     [InlineData("scribe-producer-paths")]
-    public void CacheFetcherClosureIncludesTransitiveInputsAndRejectsMissingInputs(string command)
+    public void RegisteredDependencyWithoutCodeMentionIsRequired(string command)
     {
         using var fixture = new ProducerInputFixture();
         const string dependency = "tools/scripts/worktree/fetch-input.sh";
         fixture.Write(dependency, "#!/usr/bin/env bash\n");
-        fixture.Append(ProducerInputFixture.FetcherPath, "\nsource \"$SCRIPT_DIR/fetch-input.sh\"\n");
+        fixture.RegisterScripts(dependency);
 
         var complete = fixture.Run(command);
 
@@ -59,6 +59,196 @@ public sealed class LeanReportProducerInputScriptTests
         Assert.Equal(2, missingFetcher.ExitCode);
         Assert.Empty(missingFetcher.StandardOutput);
         Assert.Contains(ProducerInputFixture.FetcherPath, Encoding.UTF8.GetString(missingFetcher.StandardError));
+    }
+
+    [Theory]
+    [InlineData("producer-paths")]
+    [InlineData("scribe-producer-paths")]
+    public void UnregisteredShellPythonAndDllMentionsDoNotAddInputs(string command)
+    {
+        using var fixture = new ProducerInputFixture();
+        const string shell = "tools/scripts/worktree/unregistered.sh";
+        const string python = "tools/lean-inspector/unregistered.py";
+        fixture.Write(shell, "#!/bin/bash\n");
+        fixture.Write(python, "VALUE = 1\n");
+        fixture.Append(ProducerInputFixture.FetcherPath,
+            "source \"$SCRIPT_DIR/unregistered.sh\"\n"
+            + "python3 \"$ROOT/tools/lean-inspector/delta.py\"\n"
+            + "dotnet \"$ROOT/tools/unregistered/bin/Release/net10.0/unregistered.dll\"\n"
+            + "dotnet run --project \"$ROOT/tools/unregistered/unregistered.csproj\"\n");
+        fixture.Append("tools/lean-inspector/delta.py", "import unregistered\n");
+
+        var result = fixture.Run(command);
+
+        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+        Assert.DoesNotContain(shell, Lines(result));
+        Assert.DoesNotContain(python, Lines(result));
+        var before = fixture.Address();
+        fixture.Remove(shell);
+        fixture.Remove(python);
+        Assert.Equal(before, fixture.Address());
+    }
+
+    [Fact]
+    public void RegisteredProjectContributesWithoutEntrypointMention()
+    {
+        using var fixture = new ProducerInputFixture();
+        fixture.Write("tools/lean-inspector/inspect.sh", "#!/bin/bash\n");
+        var before = fixture.Address();
+
+        fixture.Append("tools/StrataLint.Cli/Fixture.cs", "// changed producer\n");
+
+        Assert.NotEqual(before[1], fixture.Address()[1]);
+    }
+
+    [Fact]
+    public void DeclaredBytesAndRegistrationBytesChangeProducerDigest()
+    {
+        using var fixture = new ProducerInputFixture();
+        const string dependency = "tools/scripts/worktree/declared.py";
+        fixture.Write(dependency, "VALUE = 1\n");
+        var original = fixture.Address();
+        fixture.RegisterScripts(dependency);
+        var registered = fixture.Address();
+        Assert.NotEqual(original[1], registered[1]);
+        fixture.Append(dependency, "VALUE = 2\n");
+        var changed = fixture.Address();
+        Assert.NotEqual(registered[1], changed[1]);
+        fixture.Append(ProducerInputFixture.LeanRegistrationPath, "\n");
+        Assert.NotEqual(changed[1], fixture.Address()[1]);
+        Assert.Equal(original[2..], changed[2..]);
+    }
+
+    [Theory]
+    [InlineData("producer-paths", ProducerInputFixture.LeanRegistrationPath)]
+    [InlineData("scribe-producer-paths", ProducerInputFixture.ScribeRegistrationPath)]
+    public void MissingScopeRegistrationFailsWithDiagnostic(string command, string registration)
+    {
+        using var fixture = new ProducerInputFixture();
+        fixture.Remove(registration);
+
+        AssertRegistrationFailure(fixture.Run(command), registration);
+    }
+
+    [Theory]
+    [InlineData("{")]
+    [InlineData("[]")]
+    [InlineData("{\"schema\":\"unknown\",\"scripts\":[],\"projects\":[]}")]
+    [InlineData("{\"schema\":\"report-producer-scope-v1\",\"scripts\":[]}")]
+    [InlineData("{\"schema\":\"report-producer-scope-v1\",\"scripts\":[],\"projects\":[],\"extra\":true}")]
+    [InlineData("{\"schema\":\"report-producer-scope-v1\",\"scripts\":\"script.sh\",\"projects\":[]}")]
+    [InlineData("{\"schema\":\"report-producer-scope-v1\",\"scripts\":[],\"projects\":[],\"scripts\":[]}")]
+    public void MalformedScopeRegistrationFailsWithDiagnostic(string contents)
+    {
+        using var fixture = new ProducerInputFixture();
+        fixture.Write(ProducerInputFixture.LeanRegistrationPath, contents);
+
+        AssertRegistrationFailure(fixture.Run("address"), ProducerInputFixture.LeanRegistrationPath);
+    }
+
+    [Theory]
+    [InlineData("scripts")]
+    [InlineData("projects")]
+    public void DuplicateScopeRegistrationFailsWithDiagnostic(string field)
+    {
+        using var fixture = new ProducerInputFixture();
+        fixture.WriteRegistration(ProducerInputFixture.LeanRegistrationPath,
+            field == "scripts" ? [ProducerInputFixture.FetcherPath, ProducerInputFixture.FetcherPath] : [ProducerInputFixture.FetcherPath],
+            field == "projects" ? [ProducerInputFixture.CliProjectPath, ProducerInputFixture.CliProjectPath] : [ProducerInputFixture.CliProjectPath]);
+
+        var result = fixture.Run("address");
+
+        AssertRegistrationFailure(result, ProducerInputFixture.LeanRegistrationPath);
+        Assert.Contains("duplicate", Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    [Theory]
+    [InlineData("/absolute.sh")]
+    [InlineData("../outside.sh")]
+    [InlineData("tools/../script.sh")]
+    [InlineData("./script.sh")]
+    [InlineData("tools//script.sh")]
+    [InlineData("tools\\script.sh")]
+    [InlineData("tools/*.sh")]
+    [InlineData("")]
+    public void NonCanonicalRegisteredPathFails(string path)
+    {
+        using var fixture = new ProducerInputFixture();
+        fixture.WriteRegistration(ProducerInputFixture.LeanRegistrationPath, [path], [ProducerInputFixture.CliProjectPath]);
+
+        AssertRegistrationFailure(fixture.Run("address"), ProducerInputFixture.LeanRegistrationPath);
+    }
+
+    [Theory]
+    [InlineData("tools/lean-inspector/inspect.sh")]
+    [InlineData("tools/lean-inspector/Inspector.lean")]
+    [InlineData("tools/StrataLint.Cli/Fixture.cs")]
+    [InlineData(ProducerInputFixture.CliProjectPath)]
+    public void MissingRegisteredSourceFails(string source)
+    {
+        using var fixture = new ProducerInputFixture();
+        fixture.Remove(source);
+        var result = fixture.Run("address");
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Empty(result.StandardOutput);
+        Assert.Contains(source, Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    [Fact]
+    public void MissingInspectorRootIsNotOptional()
+    {
+        using var fixture = new ProducerInputFixture();
+        fixture.RemoveInspectorRoot();
+        var result = fixture.Run("address");
+
+        AssertRegistrationFailure(result, ProducerInputFixture.LeanRegistrationPath);
+        Assert.Contains("tools/lean-inspector/", Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    [Fact]
+    public void UnrelatedScopeDoesNotInvalidateLeanProducer()
+    {
+        using var fixture = new ProducerInputFixture();
+        var before = fixture.Address();
+        fixture.Append("tools/scripts/workflow/scribe-content-checks.sh", "# Scribe only\n");
+        fixture.Write(ProducerInputFixture.ScribeRegistrationPath, "malformed unrelated scope");
+
+        Assert.Equal(before, fixture.Address());
+        AssertRegistrationFailure(fixture.Run("scribe-producer-paths"), ProducerInputFixture.ScribeRegistrationPath);
+    }
+
+    [Fact]
+    public void MetadataOnlyLeanConfigurationDoesNotChangeProducerDigest()
+    {
+        using var fixture = new ProducerInputFixture();
+        var before = fixture.Address();
+        fixture.Write("lakefile.toml", "name = \"renamed\"\nkeywords = [\"metadata\"]\n");
+
+        Assert.Equal(before, fixture.Address());
+    }
+
+    [Theory]
+    [InlineData("producer-paths")]
+    [InlineData("scribe-producer-paths")]
+    public void ScopePathsAreUniqueAndDeterministicallyOrdered(string command)
+    {
+        using var fixture = new ProducerInputFixture();
+        var result = fixture.Run(command);
+
+        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+        var paths = Lines(result);
+        Assert.Equal(paths.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal), paths);
+        Assert.Equal(result.StandardOutput, fixture.Run(command).StandardOutput);
+    }
+
+    private static void AssertRegistrationFailure(ProcessOutput result, string registration)
+    {
+        Assert.Equal(2, result.ExitCode);
+        Assert.Empty(result.StandardOutput);
+        var diagnostic = Encoding.UTF8.GetString(result.StandardError);
+        Assert.Contains("registration", diagnostic);
+        Assert.Contains(registration, diagnostic);
     }
 
     [Fact]
