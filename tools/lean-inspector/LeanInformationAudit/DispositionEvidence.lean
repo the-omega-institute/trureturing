@@ -533,7 +533,29 @@ private def validateStructural (root : Name) (head : String) (modules : Array Na
   let indexFintype ← mkAppM ``StructuralCatalog.indexFintype #[catalogValue]
   let cardinality ← mkAppOptM ``Fintype.card #[some indexType, some indexFintype]
   let size : Nat ← reduceEval cardinality
-  unless size == peers.size do failClass key className "maximal_catalog_membership"
+  let expectedPeers := (structuralProvenanceEntries (← getEnv)).filter fun entry =>
+    modules.contains entry.registrationModule && entry.canonicalArena == payload.canonicalArena
+  unless size == peers.size && peers.size == expectedPeers.size do
+    failClass key className "maximal_catalog_membership"
+  for entry in expectedPeers do
+    let mut matchingPeers :=  #[]
+    for peer in peers do
+      if (← reduceEval peer.2.getAppArgs[0]! : Name) == entry.theoremName then
+        matchingPeers := matchingPeers.push peer
+    unless matchingPeers.size == 1 do failClass key className "maximal_catalog_membership"
+    let (name, type) := matchingPeers[0]!
+    let peerKey : StatementKey := ⟨entry.theoremName,
+      theoremStatementIdentity (← getEnv) entry.theoremName⟩
+    discard <| validateStructuralProvenance root head modules peerKey
+      ⟨payload.canonicalArena, name, entry.realizationConst, .anonymous, .anonymous⟩
+    let peerProof ← constant modules peerKey className "theorem" entry.theoremName
+    let peerStatement ← inferType peerProof
+    let realized ← constant modules peerKey className "realization" entry.realizationConst
+    let compiled ← mkAppM ``StructuralPrimitiveRealization.toTheoremUnit
+      #[realized, peerStatement, peerProof]
+    unless (← isDefEq type.getAppArgs[2]! compiled) &&
+        (← isDefEq type.getAppArgs[5]! peerStatement) do
+      failClass key className "maximal_catalog_membership"
   let indexDecidableEq ← mkAppM ``StructuralCatalog.indexDecidableEq #[catalogValue]
   withLetDecl `censusIndexDecidableEq (← inferType indexDecidableEq) indexDecidableEq fun inst =>
     withNewLocalInstances #[inst] 0 do

@@ -19,11 +19,6 @@ finish() {
 }
 trap 'finish "$?"' EXIT
 
-if [[ -n "${TEST_FILTER:-}" ]]; then
-  set -- "$@" --filter "$TEST_FILTER"
-  unset TEST_FILTER
-fi
-
 dotnet test "$@" --configuration Release --verbosity normal \
   --logger 'trx;LogFilePrefix=canonical' --results-directory "$RESULTS_DIRECTORY"
 

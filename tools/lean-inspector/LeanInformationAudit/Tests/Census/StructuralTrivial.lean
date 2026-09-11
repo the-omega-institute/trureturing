@@ -25,5 +25,14 @@ run_cmd liftTermElabM do
   let key : StatementKey := ⟨``member, theoremStatementIdentity env ``member⟩
   let row ← CensusQuery.assess (← CensusQuery.indexScope env.header.mainModule) "fixture-head" key
   unless row.className == "trivial_in_catalog" do throwError "structural trivial classification"
+  let json := dispositionRowJson ⟨key, row⟩
+  let payload ← ofExcept <| json.getObjVal? "payload"
+  let fields ← ofExcept <| payload.getObj?
+  unless fields.size == 9 && ["root", "canonical_arena", "catalog", "index", "registration",
+      "realization", "catalog_seal", "triviality_certificate", "context"].all fields.contains do
+    throwError "structural wire fields"
+  let context ← ofExcept <| (← ofExcept <| payload.getObjVal? "context").getObj?
+  unless context.size == 1 && context.contains "kind" do throwError "structural wire counts"
+  unless (parseRow json).toOption == some ⟨key, row⟩ do throwError "structural wire roundtrip"
   logInfo "structural trivial member certified"
 end LeanInformationAudit.Tests.Census.StructuralTrivial
