@@ -242,4 +242,56 @@ theorem romikPhi_eq_source (x : ℝ) : romikPhi x = sourceThetaKernel x := by
   · rw [← romikPhi_even x, romikPhi_eq_source_nonneg (by linarith)]
     exact D5.S3.Zeros.Jensen.SourceThetaMomentBounds.source_theta_even x
 
+private theorem thetaSeries_nonneg (k : ℕ) (t : ℝ) : 0 ≤ thetaSeries k t := by
+  unfold thetaSeries
+  exact tsum_nonneg (fun n => by positivity)
+
+private theorem thetaSeries_le_next (k : ℕ) {t : ℝ} (ht : 0 < t) :
+    thetaSeries k t ≤ thetaSeries (k + 2) t := by
+  apply Summable.tsum_le_tsum _ (thetaSeries_summable k ht) (thetaSeries_summable (k + 2) ht)
+  intro n
+  apply mul_le_mul_of_nonneg_right _ (exp_pos _).le
+  exact pow_le_pow_right₀ (by have := Nat.cast_nonneg (α := ℝ) n; linarith : (1 : ℝ) ≤ (n : ℝ) + 1) (by omega)
+
+/-- The theta tail and its first derivative are dominated by the positive kernel on the ray. -/
+theorem psi_bounds {x : ℝ} (hx : 0 ≤ x) :
+    |psi x| ≤ sourceThetaKernel x ∧ |psiFirst x| ≤ sourceThetaKernel x := by
+  let t := exp (2 * x)
+  let p := Real.pi * t
+  have ht : 0 < t := exp_pos _
+  have ht1 : 1 ≤ t := one_le_exp (by linarith)
+  have hp : 3 ≤ p := by
+    dsimp [p]
+    nlinarith [mul_nonneg (sub_nonneg.mpr ht1) Real.pi_pos.le, Real.pi_gt_three]
+  have h0 := thetaSeries_nonneg 0 t
+  have h2 := thetaSeries_nonneg 2 t
+  have h4 := thetaSeries_nonneg 4 t
+  have h02 := thetaSeries_le_next 0 ht
+  have h24 := thetaSeries_le_next 2 ht
+  norm_num only at h02 h24
+  have hc : 2 * p * thetaSeries 2 t ≥ thetaSeries 0 t / 2 := by
+    nlinarith [mul_nonneg (by linarith : 0 ≤ 2 * p - 1) h2]
+  have hpoly : 1 + 2 * p ≤ 4 * p ^ 2 - 6 * p := by nlinarith
+  have hcoeff : (1 + 2 * p) * thetaSeries 2 t ≤
+      4 * p ^ 2 * thetaSeries 4 t - 6 * p * thetaSeries 2 t := by
+    nlinarith [mul_nonneg (sub_nonneg.mpr h24) (sq_nonneg p),
+      mul_nonneg (sub_nonneg.mpr hpoly) h2]
+  have hk : sourceThetaKernel x = exp (x / 2) *
+      (4 * p ^ 2 * thetaSeries 4 t - 6 * p * thetaSeries 2 t) := by
+    rw [← romikPhi_eq_source, romikPhi, omega_eq_series ht]
+    dsimp [p, t]
+    ring
+  rw [hk, psi_eq_series, psiFirst]
+  rw [show 2 * Real.pi * exp (2 * x) = 2 * p by dsimp [p, t]; ring]
+  change |exp (x / 2) * thetaSeries 0 t| ≤ _ ∧
+    |exp (x / 2) * (thetaSeries 0 t / 2 - 2 * p * thetaSeries 2 t)| ≤ _
+  rw [abs_of_nonneg (mul_nonneg (exp_pos _).le h0),
+    abs_of_nonpos (mul_nonpos_of_nonneg_of_nonpos (exp_pos _).le (by linarith))]
+  constructor
+  · apply mul_le_mul_of_nonneg_left _ (exp_pos _).le
+    nlinarith [mul_nonneg (by linarith : 0 ≤ p) h2]
+  · rw [← mul_neg]
+    apply mul_le_mul_of_nonneg_left _ (exp_pos _).le
+    linarith
+
 end D5.S3.Analytic.Fourier.ThetaDifferentialKernel
