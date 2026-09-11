@@ -659,6 +659,16 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
+pattern = "tools/tests/JudgeSeedTask.Tests/**"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["dotnet"]
+verified_by = ["dotnet-test"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
 pattern = "tools/tests/StrataLint.*/**/*.cs"
 kind = "program"
 admission_plane = "judge"
