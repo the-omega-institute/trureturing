@@ -2,11 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/ConceptDynamics/Observation/HistoryPayloadFactorization
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   proof_shape: bind-only; admission_basis: atom-required-bridge
-   atom: aea75d31b5b1ebb80a97b4ee9e2de5cdd0e488822c18f8a8f62c717675fb184a
-   source_clause: QI-ASSIGN/QI-JOIN/QI-BOUNDARY/QI-ADMISSION-SIGNATURE/QI-P9 complete-complement pointwise tests
-   consumer: local_completion_global_tests -> mem_completion_payload_iff -> compatible_union_restrictions -> pinned dependent-function gluing
-   anchors: [TopCat.Presheaf.toTypes_isSheaf, TopCat.Sheaf.existsUnique_gluing', Set.domRestrict₂]
+   anchors: [mathlib/module/Mathlib.Topology.Sheaves.SheafOfFunctions, mathlib/module/Mathlib.Topology.Sheaves.SheafCondition.UniqueGluing, mathlib/module/Mathlib.Data.Set.Restrict]
    utility: none
    digest: Realized-image factors recover admission and complete local completion sets. -/
 
@@ -136,6 +132,20 @@ def rawJoin (A : Set Node) : Set (Assignment Value (componentScope S A)) :=
   {a | ∀ n (hn : n ∈ A),
     restrictAssignment Value (D := S n) (E := componentScope S A)
       (fun _ hx => ⟨n, hn, hx⟩) a ∈ Γ n}
+
+/-- The empty raw join is the singleton canonical empty assignment, transported
+back along the empty component-scope identity. No value inhabitance is needed. -/
+theorem rawJoin_empty :
+    rawJoin Value S Γ (∅ : Set Node) =
+      {(componentScope_empty S).symm ▸ emptyAssignment Value} := by
+  apply Set.eq_singleton_iff_unique_mem.mpr
+  refine ⟨fun n hn => hn.elim, fun a _ => ?_⟩
+  have transport_empty : ∀ (D : Set Var) (hD : D = ∅) (b : Assignment Value D),
+      b = hD.symm ▸ emptyAssignment Value := by
+    intro D hD
+    subst D
+    exact assignment_eq_empty Value
+  exact transport_empty _ (componentScope_empty S) a
 
 /-- Specialization from the complete global join to a component join. -/
 def restrictRecord (A : Set Node) (a : rawJoin Value S Γ Set.univ) :

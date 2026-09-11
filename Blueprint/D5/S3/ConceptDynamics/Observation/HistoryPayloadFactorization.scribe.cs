@@ -68,13 +68,15 @@ internal sealed class HistoryPayloadFactorizationDocument : IScribeDocumentDefin
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("empty-assignment"),
-                DeclarationHandle.Create(Module + "assignment_eq_empty"),
-                H("Canonical empty assignment"),
+                DeclarationHandle.Create(Module + "rawJoin_empty"),
+                H("Canonical singleton empty join"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "The QI-JOIN empty component is identified with the canonical empty assignment; "
-                        + "the dependent Value family and empty carrier remain intact."))),
+                    "The empty raw join is exactly the singleton containing emptyAssignment, "
+                        + "transported back along componentScope_empty. This proves membership "
+                        + "and uniqueness for the dependent Value family without any inhabited "
+                        + "value fiber or local relation premise."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("complete-record-bridge"),

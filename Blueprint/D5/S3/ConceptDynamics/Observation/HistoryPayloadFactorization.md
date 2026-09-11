@@ -52,17 +52,17 @@ Lean statement: `D5/S3/ConceptDynamics/Observation/HistoryPayloadFactorization.a
 
 At each complete raw record, the recovered Boolean test is true exactly when the record belongs to J intersect K. Factorization does not assert that the test is constantly true or authorize removing it.
 
-**Theorem 1.5 (Canonical empty assignment).**
+**Theorem 1.5 (Canonical singleton empty join).**
 
-Lean statement: `D5/S3/ConceptDynamics/Observation/HistoryPayloadFactorization.assignment_eq_empty`
+Lean statement: `D5/S3/ConceptDynamics/Observation/HistoryPayloadFactorization.rawJoin_empty`
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Observation/HistoryPayloadFactorization.assignment_eq_empty` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Observation/HistoryPayloadFactorization.rawJoin_empty` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-The QI-JOIN empty component is identified with the canonical empty assignment; the dependent Value family and empty carrier remain intact.
+The empty raw join is exactly the singleton containing emptyAssignment, transported back along componentScope_empty. This proves membership and uniqueness for the dependent Value family without any inhabited value fiber or local relation premise.
 
 **Theorem 1.6 (Completion payloads use complete compatible records).**
 
@@ -121,7 +121,6 @@ Source identifiers, dependency sets, and other requested payloads use the same a
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Observation/HistoryPayloadFactorization.admission_factor_test`
-- Truth anchor: `D5/S3/ConceptDynamics/Observation/HistoryPayloadFactorization.assignment_eq_empty`
 - Truth anchor: `D5/S3/ConceptDynamics/Observation/HistoryPayloadFactorization.global_admission_factorization`
 - Truth anchor: `D5/S3/ConceptDynamics/Observation/HistoryPayloadFactorization.global_admission_iff_union_fibers`
 - Truth anchor: `D5/S3/ConceptDynamics/Observation/HistoryPayloadFactorization.ker_beta_subset_ker_payload_iff_unique_factorization`
@@ -129,4 +128,5 @@ Source identifiers, dependency sets, and other requested payloads use the same a
 - Truth anchor: `D5/S3/ConceptDynamics/Observation/HistoryPayloadFactorization.local_completion_global_tests`
 - Truth anchor: `D5/S3/ConceptDynamics/Observation/HistoryPayloadFactorization.local_completion_tests`
 - Truth anchor: `D5/S3/ConceptDynamics/Observation/HistoryPayloadFactorization.mem_completion_payload_iff`
+- Truth anchor: `D5/S3/ConceptDynamics/Observation/HistoryPayloadFactorization.rawJoin_empty`
 - Dependency: [D5/S0/Rewriting/Quotients/SplitSurjectionFactorization](../../../S0/Rewriting/Quotients/SplitSurjectionFactorization.md)
