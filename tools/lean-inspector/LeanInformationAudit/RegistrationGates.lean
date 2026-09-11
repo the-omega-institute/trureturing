@@ -1,4 +1,5 @@
 import LeanInformationAudit.RegistryTypes
+import LeanInformationAudit.ReadoutProvenance
 import LeanInformationAudit.RegistrationWitnesses
 
 namespace LeanInformationAudit.RegistrationGates
@@ -126,6 +127,8 @@ private def finiteVariation (arena : Expr) (name : Name) : MetaM Bool := do
 protected-base consumer owns delta membership, never an olean or an environment
 variable captured during compilation. C048 has strict precedence over C049. -/
 def validateFinite (entry : InformationRegistryEntry) : MetaM (Option String) := budget do
+  if let some error ← provenanceErrorCurrent entry.registrationModuleName
+      entry.effectiveCatalogId entry.theoremName entry.realizationName then return some error
   if entry.variationWitness.isAnonymous then
     return some <| variationError entry.registrationModuleName entry.effectiveCatalogId
       entry.theoremName entry.arenaName "all" "missing_witness"

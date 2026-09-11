@@ -31,7 +31,8 @@ information_theorem positive in arena primitives good
 run_cmd Elab.Command.liftTermElabM do
   let some entry := InformationRegistry.find? (← getEnv) ``positive
     | throwError "AnchorPositive: missing registration"
-  if let some message ← RegistrationGates.validateFinite entry then throwError "{message}"
+  if let some message ← RegistrationGates.validateFinite entry then
+    throwError "[FAIL] CleanEmptyReadout: {message}"
 
 /-- info: IE-C049 -/
 #guard_msgs in
