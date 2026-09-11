@@ -1,0 +1,466 @@
+{
+  "kind": "source-identity-and-statement-echo",
+  "source_commit": "84f82618a724f6ba559475094a1184fb323c6346",
+  "source_toolchain": "leanprover/lean4:v4.29.0-rc8",
+  "target_toolchain": "leanprover/lean4:v4.33.0",
+  "target_mathlib": "db584cd6d46c92f209a44c0f1c829460d327499d",
+  "declarations": [
+    {
+      "original_declaration": "Real.sq_le_exp_const_mul_rpow",
+      "original_type": "∀ {b r : ℝ}, 0 < b → 1 ≤ r → r ^ 2 ≤ Real.exp (4 / b * r ^ b)",
+      "source_url": "https://github.com/or4nge19/mathlib4/blob/84f82618a724f6ba559475094a1184fb323c6346/Mathlib/Analysis/SpecialFunctions/Log/ExpGrowth.lean",
+      "source_sha256": "78c7551e3daea2a3e1ab6ee70660586beee976cf3761a9b7d94bebd145185f33",
+      "production_name": "D5.S3.Analytic.EntireGrowth.RealExponential.sq_le_exp_const_mul_rpow",
+      "selected_source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
+      "registered_consumer_edges": [
+        {
+          "consumer": {
+            "source_module": "WF84.XiOrder",
+            "source_declaration": "Riemann.riemannXi_entireOfOrderAtMost_one"
+          },
+          "prerequisite": "Real.sq_le_exp_const_mul_rpow",
+          "direction": "consumer -> prerequisite"
+        }
+      ]
+    },
+    {
+      "original_declaration": "Real.log_growth_of_norm_le_exp_mul_rpow",
+      "original_type": "∀ {α : Type u_1} {E : Type u_2} [inst : SeminormedAddCommGroup E] {f : α → E} {r : α → ℝ} {C τ : ℝ},\n  0 < C →\n    0 ≤ τ →\n      (∀ (x : α), 1 ≤ r x) →\n        (∀ (x : α), ‖f x‖ ≤ Real.exp (C * r x ^ τ)) → ∃ C' > 0, ∀ (x : α), Real.log (1 + ‖f x‖) ≤ C' * r x ^ τ",
+      "source_url": "https://github.com/or4nge19/mathlib4/blob/84f82618a724f6ba559475094a1184fb323c6346/Mathlib/Analysis/SpecialFunctions/Log/ExpGrowth.lean",
+      "source_sha256": "78c7551e3daea2a3e1ab6ee70660586beee976cf3761a9b7d94bebd145185f33",
+      "production_name": "D5.S3.Analytic.EntireGrowth.RealExponential.log_growth_of_norm_le_exp_mul_rpow",
+      "selected_source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
+      "registered_consumer_edges": [
+        {
+          "consumer": {
+            "source_module": "WF84.ExpPolyGrowth",
+            "source_declaration": "Complex.Hadamard.natDegree_le_floor_of_exp_eval_norm_bound"
+          },
+          "prerequisite": "Real.log_growth_of_norm_le_exp_mul_rpow",
+          "direction": "consumer -> prerequisite"
+        },
+        {
+          "consumer": {
+            "source_module": "WF84.OrderSummability",
+            "source_declaration": "Complex.Hadamard.EntireOfOrderAtMost.exists_log_growth"
+          },
+          "prerequisite": "Real.log_growth_of_norm_le_exp_mul_rpow",
+          "direction": "consumer -> prerequisite"
+        }
+      ]
+    },
+    {
+      "original_declaration": "Real.exists_norm_le_exp_mul_pow_of_rpow_bound",
+      "original_type": "∀ {α : Type u_1} {E : Type u_2} [inst : SeminormedAddCommGroup E] {f : α → E} {r : α → ℝ} {τ : ℝ} {n : ℕ},\n  (∀ (x : α), 1 ≤ r x) →\n    τ < ↑n → (∃ C > 0, ∀ (x : α), ‖f x‖ ≤ Real.exp (C * r x ^ τ)) → ∃ C > 0, ∀ (x : α), ‖f x‖ ≤ Real.exp (C * r x ^ n)",
+      "source_url": "https://github.com/or4nge19/mathlib4/blob/84f82618a724f6ba559475094a1184fb323c6346/Mathlib/Analysis/SpecialFunctions/Log/ExpGrowth.lean",
+      "source_sha256": "78c7551e3daea2a3e1ab6ee70660586beee976cf3761a9b7d94bebd145185f33",
+      "production_name": "D5.S3.Analytic.EntireGrowth.RealExponential.exists_norm_le_exp_mul_pow_of_rpow_bound",
+      "selected_source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
+      "registered_consumer_edges": [
+        {
+          "consumer": {
+            "source_module": "WF84.HadamardGrowth",
+            "source_declaration": "Complex.Hadamard.hadamard_factorization_of_growth"
+          },
+          "prerequisite": "Real.exists_norm_le_exp_mul_pow_of_rpow_bound",
+          "direction": "consumer -> prerequisite"
+        }
+      ]
+    },
+    {
+      "original_declaration": "Real.norm_le_exp_mul_rpow_of_exponent_le",
+      "original_type": "∀ {α : Type u_1} {E : Type u_2} [inst : SeminormedAddCommGroup E] {f : α → E} {r : α → ℝ} {C ρ τ : ℝ},\n  0 ≤ C →\n    (∀ (x : α), 1 ≤ r x) →\n      ρ ≤ τ → (∀ (x : α), ‖f x‖ ≤ Real.exp (C * r x ^ ρ)) → ∀ (x : α), ‖f x‖ ≤ Real.exp (C * r x ^ τ)",
+      "source_url": "https://github.com/or4nge19/mathlib4/blob/84f82618a724f6ba559475094a1184fb323c6346/Mathlib/Analysis/SpecialFunctions/Log/ExpGrowth.lean",
+      "source_sha256": "78c7551e3daea2a3e1ab6ee70660586beee976cf3761a9b7d94bebd145185f33",
+      "production_name": "D5.S3.Analytic.EntireGrowth.RealExponential.norm_le_exp_mul_rpow_of_exponent_le",
+      "selected_source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
+      "registered_consumer_edges": [
+        {
+          "consumer": {
+            "source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
+            "source_declaration": "Real.exists_norm_le_exp_mul_pow_of_rpow_bound"
+          },
+          "prerequisite": "Real.norm_le_exp_mul_rpow_of_exponent_le",
+          "direction": "consumer -> prerequisite"
+        }
+      ]
+    },
+    {
+      "original_declaration": "Real.exp_mul_rpow_le_exp_mul_rpow_of_le_mul",
+      "original_type": "∀ {A B x y τ : ℝ},\n  0 ≤ A → 0 ≤ B → 0 ≤ x → 0 ≤ y → 0 ≤ τ → x ≤ B * y → Real.exp (A * x ^ τ) ≤ Real.exp (A * B ^ τ * y ^ τ)",
+      "source_url": "https://github.com/or4nge19/mathlib4/blob/84f82618a724f6ba559475094a1184fb323c6346/Mathlib/Analysis/SpecialFunctions/Log/ExpGrowth.lean",
+      "source_sha256": "78c7551e3daea2a3e1ab6ee70660586beee976cf3761a9b7d94bebd145185f33",
+      "production_name": "D5.S3.Analytic.EntireGrowth.RealExponential.exp_mul_rpow_le_exp_mul_rpow_of_le_mul",
+      "selected_source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
+      "registered_consumer_edges": [
+        {
+          "consumer": {
+            "source_module": "WF84.HadamardGrowth",
+            "source_declaration": "Complex.Hadamard.hadamardQuotient_norm_le_exp_rpow_of_growth"
+          },
+          "prerequisite": "Real.exp_mul_rpow_le_exp_mul_rpow_of_le_mul",
+          "direction": "consumer -> prerequisite"
+        }
+      ]
+    },
+    {
+      "original_declaration": "Real.one_add_le_three_mul_one_add_of_le_two_mul_max",
+      "original_type": "∀ {x r : ℝ}, 0 ≤ x → r ≤ 2 * max x 1 → 1 + r ≤ 3 * (1 + x)",
+      "source_url": "https://github.com/or4nge19/mathlib4/blob/84f82618a724f6ba559475094a1184fb323c6346/Mathlib/Analysis/SpecialFunctions/Log/ExpGrowth.lean",
+      "source_sha256": "78c7551e3daea2a3e1ab6ee70660586beee976cf3761a9b7d94bebd145185f33",
+      "production_name": "D5.S3.Analytic.EntireGrowth.RealExponential.one_add_le_three_mul_one_add_of_le_two_mul_max",
+      "selected_source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
+      "registered_consumer_edges": [
+        {
+          "consumer": {
+            "source_module": "WF84.HadamardGrowth",
+            "source_declaration": "Complex.Hadamard.hadamardQuotient_norm_le_exp_rpow_of_growth"
+          },
+          "prerequisite": "Real.one_add_le_three_mul_one_add_of_le_two_mul_max",
+          "direction": "consumer -> prerequisite"
+        }
+      ]
+    },
+    {
+      "original_declaration": "Real.norm_le_exp_mul_rpow_of_log_growth",
+      "original_type": "∀ {α : Type u_1} {E : Type u_2} [inst : SeminormedAddCommGroup E] {f : α → E} {r : α → ℝ} {C ρ τ : ℝ},\n  0 ≤ C →\n    (∀ (x : α), 1 ≤ r x) →\n      ρ ≤ τ → (∀ (x : α), Real.log (1 + ‖f x‖) ≤ C * r x ^ ρ) → ∀ (x : α), ‖f x‖ ≤ Real.exp (C * r x ^ τ)",
+      "source_url": "https://github.com/or4nge19/mathlib4/blob/84f82618a724f6ba559475094a1184fb323c6346/Mathlib/Analysis/SpecialFunctions/Log/ExpGrowth.lean",
+      "source_sha256": "78c7551e3daea2a3e1ab6ee70660586beee976cf3761a9b7d94bebd145185f33",
+      "production_name": "D5.S3.Analytic.EntireGrowth.RealExponential.norm_le_exp_mul_rpow_of_log_growth",
+      "selected_source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
+      "registered_consumer_edges": [
+        {
+          "consumer": {
+            "source_module": "WF84.HadamardGrowth",
+            "source_declaration": "Complex.Hadamard.hadamardQuotient_norm_le_exp_rpow_of_growth"
+          },
+          "prerequisite": "Real.norm_le_exp_mul_rpow_of_log_growth",
+          "direction": "consumer -> prerequisite"
+        }
+      ]
+    },
+    {
+      "original_declaration": "Real.log_norm_le_of_log_one_add_growth_on_sphere",
+      "original_type": "∀ {f : ℂ → ℂ} {C ρ R : ℝ},\n  (∀ (z : ℂ), Real.log (1 + ‖f z‖) ≤ C * (1 + ‖z‖) ^ ρ) →\n    ∀ {z : ℂ}, z ∈ Metric.sphere 0 |R| → Real.log ‖f z‖ ≤ C * (1 + |R|) ^ ρ",
+      "source_url": "https://github.com/or4nge19/mathlib4/blob/84f82618a724f6ba559475094a1184fb323c6346/Mathlib/Analysis/SpecialFunctions/Log/ExpGrowth.lean",
+      "source_sha256": "78c7551e3daea2a3e1ab6ee70660586beee976cf3761a9b7d94bebd145185f33",
+      "production_name": "D5.S3.Analytic.EntireGrowth.RealExponential.log_norm_le_of_log_one_add_growth_on_sphere",
+      "selected_source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
+      "registered_consumer_edges": [
+        {
+          "consumer": {
+            "source_module": "WF84.LogCountingGrowth",
+            "source_declaration": "Function.locallyFinsuppWithin.logCounting_divisor_le_of_log_growth"
+          },
+          "prerequisite": "Real.log_norm_le_of_log_one_add_growth_on_sphere",
+          "direction": "consumer -> prerequisite"
+        }
+      ]
+    },
+    {
+      "original_declaration": "Real.log_norm_le_log_one_add_norm",
+      "original_type": "∀ {E : Type u_2} [inst : SeminormedAddCommGroup E] (w : E), Real.log ‖w‖ ≤ Real.log (1 + ‖w‖)",
+      "source_url": "https://github.com/or4nge19/mathlib4/blob/84f82618a724f6ba559475094a1184fb323c6346/Mathlib/Analysis/SpecialFunctions/Log/ExpGrowth.lean",
+      "source_sha256": "78c7551e3daea2a3e1ab6ee70660586beee976cf3761a9b7d94bebd145185f33",
+      "production_name": "D5.S3.Analytic.EntireGrowth.RealExponential.log_norm_le_log_one_add_norm",
+      "selected_source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
+      "registered_consumer_edges": [
+        {
+          "consumer": {
+            "source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
+            "source_declaration": "Real.log_norm_le_of_log_one_add_growth_on_sphere"
+          },
+          "prerequisite": "Real.log_norm_le_log_one_add_norm",
+          "direction": "consumer -> prerequisite"
+        }
+      ]
+    },
+    {
+      "original_declaration": "Real.log_two_le_log_two_mul_mul_inv_norm_of_norm_le",
+      "original_type": "∀ {F : Type u_3} [inst : NormedAddCommGroup F] {z : F} {R : ℝ}, z ≠ 0 → ‖z‖ ≤ R → Real.log 2 ≤ Real.log (2 * R * ‖z‖⁻¹)",
+      "source_url": "https://github.com/or4nge19/mathlib4/blob/84f82618a724f6ba559475094a1184fb323c6346/Mathlib/Analysis/SpecialFunctions/Log/ExpGrowth.lean",
+      "source_sha256": "78c7551e3daea2a3e1ab6ee70660586beee976cf3761a9b7d94bebd145185f33",
+      "production_name": "D5.S3.Analytic.EntireGrowth.RealExponential.log_two_le_log_two_mul_mul_inv_norm_of_norm_le",
+      "selected_source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
+      "registered_consumer_edges": [
+        {
+          "consumer": {
+            "source_module": "WF84.LogCountingGrowth",
+            "source_declaration": "Function.locallyFinsuppWithin.log_two_mul_massClosedBall₀_le_logCounting"
+          },
+          "prerequisite": "Real.log_two_le_log_two_mul_mul_inv_norm_of_norm_le",
+          "direction": "consumer -> prerequisite"
+        }
+      ]
+    },
+    {
+      "original_declaration": "Real.log_nonneg_mul_inv_norm_of_norm_le",
+      "original_type": "∀ {F : Type u_3} [inst : NormedAddCommGroup F] {z : F} {r : ℝ}, ‖z‖ ≤ r → 0 ≤ Real.log (r * ‖z‖⁻¹)",
+      "source_url": "https://github.com/or4nge19/mathlib4/blob/84f82618a724f6ba559475094a1184fb323c6346/Mathlib/Analysis/SpecialFunctions/Log/ExpGrowth.lean",
+      "source_sha256": "78c7551e3daea2a3e1ab6ee70660586beee976cf3761a9b7d94bebd145185f33",
+      "production_name": "D5.S3.Analytic.EntireGrowth.RealExponential.log_nonneg_mul_inv_norm_of_norm_le",
+      "selected_source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
+      "registered_consumer_edges": [
+        {
+          "consumer": {
+            "source_module": "WF84.LogCountingGrowth",
+            "source_declaration": "Function.locallyFinsuppWithin.log_two_mul_massClosedBall₀_le_logCounting"
+          },
+          "prerequisite": "Real.log_nonneg_mul_inv_norm_of_norm_le",
+          "direction": "consumer -> prerequisite"
+        }
+      ]
+    },
+    {
+      "original_declaration": "Real.exists_between_self_and_floor_add_one_same_floor",
+      "original_type": "∀ {ρ : ℝ}, 0 ≤ ρ → ∃ τ, ρ < τ ∧ τ < ↑⌊ρ⌋₊ + 1 ∧ 0 ≤ τ ∧ ⌊τ⌋₊ = ⌊ρ⌋₊",
+      "source_url": "https://github.com/or4nge19/mathlib4/blob/84f82618a724f6ba559475094a1184fb323c6346/Mathlib/Analysis/SpecialFunctions/Log/ExpGrowth.lean",
+      "source_sha256": "78c7551e3daea2a3e1ab6ee70660586beee976cf3761a9b7d94bebd145185f33",
+      "production_name": "D5.S3.Analytic.EntireGrowth.RealExponential.exists_between_self_and_floor_add_one_same_floor",
+      "selected_source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
+      "registered_consumer_edges": [
+        {
+          "consumer": {
+            "source_module": "WF84.HadamardGrowth",
+            "source_declaration": "Complex.Hadamard.hadamard_factorization_of_growth"
+          },
+          "prerequisite": "Real.exists_between_self_and_floor_add_one_same_floor",
+          "direction": "consumer -> prerequisite"
+        },
+        {
+          "consumer": {
+            "source_module": "WF84.HadamardOrder",
+            "source_declaration": "Complex.Hadamard.hadamard_factorization_of_order"
+          },
+          "prerequisite": "Real.exists_between_self_and_floor_add_one_same_floor",
+          "direction": "consumer -> prerequisite"
+        },
+        {
+          "consumer": {
+            "source_module": "WF84.OrderSummability",
+            "source_declaration": "Complex.Hadamard.EntireOfOrderAtMost.summable_norm_inv_pow_divisorZeroIndex₀"
+          },
+          "prerequisite": "Real.exists_between_self_and_floor_add_one_same_floor",
+          "direction": "consumer -> prerequisite"
+        }
+      ]
+    },
+    {
+      "original_declaration": "Real.le_exp_self",
+      "original_type": "∀ (x : ℝ), x ≤ Real.exp x",
+      "source_url": "https://github.com/or4nge19/mathlib4/blob/84f82618a724f6ba559475094a1184fb323c6346/Mathlib/Analysis/SpecialFunctions/Exp.lean",
+      "source_sha256": "5877803a333d3a92da980fae2453f906b6396ea2ab76f952eb619d6080956f47",
+      "production_name": "D5.S3.Analytic.EntireGrowth.RealExponential.le_exp_self",
+      "selected_source_module": "WF84.Base.RealGrowth",
+      "registered_consumer_edges": [
+        {
+          "consumer": {
+            "source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
+            "source_declaration": "Real.sq_le_exp_const_mul_rpow"
+          },
+          "prerequisite": "Real.le_exp_self",
+          "direction": "consumer -> prerequisite"
+        },
+        {
+          "consumer": {
+            "source_module": "WF84.ZetaOrder",
+            "source_declaration": "Complex.completedRiemannZeta₀_order_one"
+          },
+          "prerequisite": "Real.le_exp_self",
+          "direction": "consumer -> prerequisite"
+        }
+      ],
+      "current_selection_note": "The registered ZetaOrder consumer still requires this endpoint. The original sq_le_exp_const_mul_rpow edge is superseded locally by direct reuse of pinned Real.log_le_rpow_div."
+    },
+    {
+      "original_declaration": "Real.log_one_add_le_add_log_two_of_le_exp",
+      "original_type": "∀ {x y : ℝ}, 0 ≤ y → 0 ≤ x → y ≤ Real.exp x → Real.log (1 + y) ≤ x + Real.log 2",
+      "source_url": "https://github.com/or4nge19/mathlib4/blob/84f82618a724f6ba559475094a1184fb323c6346/Mathlib/Analysis/SpecialFunctions/Log/PosLog.lean",
+      "source_sha256": "e70dccca01a6601dfbcfb722b24b516b227dd4f7a12ddac0ea9cc9cddad07c59",
+      "production_name": "D5.S3.Analytic.EntireGrowth.RealExponential.log_one_add_le_add_log_two_of_le_exp",
+      "selected_source_module": "WF84.Base.RealGrowth",
+      "registered_consumer_edges": [
+        {
+          "consumer": {
+            "source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
+            "source_declaration": "Real.log_growth_of_norm_le_exp_mul_rpow"
+          },
+          "prerequisite": "Real.log_one_add_le_add_log_two_of_le_exp",
+          "direction": "consumer -> prerequisite"
+        }
+      ]
+    },
+    {
+      "original_declaration": "Real.log_one_add_exp_le_add_log_two",
+      "original_type": "∀ {x : ℝ}, 0 ≤ x → Real.log (1 + Real.exp x) ≤ x + Real.log 2",
+      "source_url": "https://github.com/or4nge19/mathlib4/blob/84f82618a724f6ba559475094a1184fb323c6346/Mathlib/Analysis/SpecialFunctions/Log/PosLog.lean",
+      "source_sha256": "e70dccca01a6601dfbcfb722b24b516b227dd4f7a12ddac0ea9cc9cddad07c59",
+      "production_name": "D5.S3.Analytic.EntireGrowth.RealExponential.log_one_add_exp_le_add_log_two",
+      "selected_source_module": "WF84.Base.RealGrowth",
+      "registered_consumer_edges": [
+        {
+          "consumer": {
+            "source_module": "WF84.Base.RealGrowth",
+            "source_declaration": "Real.log_one_add_le_add_log_two_of_le_exp"
+          },
+          "prerequisite": "Real.log_one_add_exp_le_add_log_two",
+          "direction": "consumer -> prerequisite"
+        }
+      ]
+    },
+    {
+      "original_declaration": "Real.le_exp_of_log_one_add_le",
+      "original_type": "∀ {x y : ℝ}, 0 ≤ y → Real.log (1 + y) ≤ x → y ≤ Real.exp x",
+      "source_url": "https://github.com/or4nge19/mathlib4/blob/84f82618a724f6ba559475094a1184fb323c6346/Mathlib/Analysis/SpecialFunctions/Log/PosLog.lean",
+      "source_sha256": "e70dccca01a6601dfbcfb722b24b516b227dd4f7a12ddac0ea9cc9cddad07c59",
+      "production_name": "D5.S3.Analytic.EntireGrowth.RealExponential.le_exp_of_log_one_add_le",
+      "selected_source_module": "WF84.Base.RealGrowth",
+      "registered_consumer_edges": [
+        {
+          "consumer": {
+            "source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
+            "source_declaration": "Real.norm_le_exp_mul_rpow_of_log_growth"
+          },
+          "prerequisite": "Real.le_exp_of_log_one_add_le",
+          "direction": "consumer -> prerequisite"
+        }
+      ]
+    },
+    {
+      "original_declaration": "Complex.Hadamard.EntireOfOrderAtMost",
+      "original_type": "ℝ → (ℂ → ℂ) → Prop",
+      "source_url": "https://github.com/or4nge19/mathlib4/blob/84f82618a724f6ba559475094a1184fb323c6346/Mathlib/Analysis/Complex/HadamardFactorization/Order.lean",
+      "source_sha256": "06724a849121ccc695fab85248b0560aa428ebb0c66800d2b54cffd490e76204",
+      "production_name": "D5.S3.Analytic.EntireGrowth.RealExponential.EntireOfOrderAtMost",
+      "selected_source_module": "WF84.OrderCore",
+      "registered_consumer_edges": [
+        {
+          "consumer": {
+            "source_module": "WF84.Binding",
+            "source_declaration": "WF84.Binding.growth_of_order"
+          },
+          "prerequisite": "Complex.Hadamard.EntireOfOrderAtMost",
+          "direction": "consumer -> prerequisite"
+        },
+        {
+          "consumer": {
+            "source_module": "WF84.HadamardOrder",
+            "source_declaration": "Complex.Hadamard.hadamard_factorization_of_order"
+          },
+          "prerequisite": "Complex.Hadamard.EntireOfOrderAtMost",
+          "direction": "consumer -> prerequisite"
+        },
+        {
+          "consumer": {
+            "source_module": "WF84.OrderCore",
+            "source_declaration": "Complex.Hadamard.EntireOfOrderAtMost.exists_bound"
+          },
+          "prerequisite": "Complex.Hadamard.EntireOfOrderAtMost",
+          "direction": "consumer -> prerequisite"
+        },
+        {
+          "consumer": {
+            "source_module": "WF84.OrderCore",
+            "source_declaration": "Complex.Hadamard.EntireOfOrderAtMost.differentiable"
+          },
+          "prerequisite": "Complex.Hadamard.EntireOfOrderAtMost",
+          "direction": "consumer -> prerequisite"
+        },
+        {
+          "consumer": {
+            "source_module": "WF84.OrderSummability",
+            "source_declaration": "Complex.Hadamard.EntireOfOrderAtMost.exists_log_growth"
+          },
+          "prerequisite": "Complex.Hadamard.EntireOfOrderAtMost",
+          "direction": "consumer -> prerequisite"
+        },
+        {
+          "consumer": {
+            "source_module": "WF84.OrderSummability",
+            "source_declaration": "Complex.Hadamard.EntireOfOrderAtMost.summable_norm_inv_pow_divisorZeroIndex₀"
+          },
+          "prerequisite": "Complex.Hadamard.EntireOfOrderAtMost",
+          "direction": "consumer -> prerequisite"
+        },
+        {
+          "consumer": {
+            "source_module": "WF84.XiOrder",
+            "source_declaration": "Riemann.riemannXi_entireOfOrderAtMost_one"
+          },
+          "prerequisite": "Complex.Hadamard.EntireOfOrderAtMost",
+          "direction": "consumer -> prerequisite"
+        },
+        {
+          "consumer": {
+            "source_module": "WF84.XiOrder",
+            "source_declaration": "Riemann.completedRiemannZeta₀_entireOfOrderAtMost_one"
+          },
+          "prerequisite": "Complex.Hadamard.EntireOfOrderAtMost",
+          "direction": "consumer -> prerequisite"
+        }
+      ]
+    },
+    {
+      "original_declaration": "Complex.Hadamard.EntireOfOrderAtMost.exists_bound",
+      "original_type": "∀ {ρ ε : ℝ} {f : ℂ → ℂ},\n  Complex.Hadamard.EntireOfOrderAtMost ρ f → 0 < ε → ∃ C > 0, ∀ (z : ℂ), ‖f z‖ ≤ Real.exp (C * (1 + ‖z‖) ^ (ρ + ε))",
+      "source_url": "https://github.com/or4nge19/mathlib4/blob/84f82618a724f6ba559475094a1184fb323c6346/Mathlib/Analysis/Complex/HadamardFactorization/Order.lean",
+      "source_sha256": "06724a849121ccc695fab85248b0560aa428ebb0c66800d2b54cffd490e76204",
+      "production_name": "D5.S3.Analytic.EntireGrowth.RealExponential.EntireOfOrderAtMost.exists_bound",
+      "selected_source_module": "WF84.OrderCore",
+      "registered_consumer_edges": [
+        {
+          "consumer": {
+            "source_module": "WF84.Binding",
+            "source_declaration": "WF84.Binding.growth_of_order"
+          },
+          "prerequisite": "Complex.Hadamard.EntireOfOrderAtMost.exists_bound",
+          "direction": "consumer -> prerequisite"
+        },
+        {
+          "consumer": {
+            "source_module": "WF84.OrderSummability",
+            "source_declaration": "Complex.Hadamard.EntireOfOrderAtMost.exists_log_growth"
+          },
+          "prerequisite": "Complex.Hadamard.EntireOfOrderAtMost.exists_bound",
+          "direction": "consumer -> prerequisite"
+        },
+        {
+          "consumer": {
+            "source_module": "WF84.XiOrder",
+            "source_declaration": "Riemann.riemannXi_entireOfOrderAtMost_one"
+          },
+          "prerequisite": "Complex.Hadamard.EntireOfOrderAtMost.exists_bound",
+          "direction": "consumer -> prerequisite"
+        }
+      ]
+    },
+    {
+      "original_declaration": "Complex.Hadamard.EntireOfOrderAtMost.differentiable",
+      "original_type": "∀ {ρ : ℝ} {f : ℂ → ℂ}, Complex.Hadamard.EntireOfOrderAtMost ρ f → Differentiable ℂ f",
+      "source_url": "https://github.com/or4nge19/mathlib4/blob/84f82618a724f6ba559475094a1184fb323c6346/Mathlib/Analysis/Complex/HadamardFactorization/Order.lean",
+      "source_sha256": "06724a849121ccc695fab85248b0560aa428ebb0c66800d2b54cffd490e76204",
+      "production_name": "D5.S3.Analytic.EntireGrowth.RealExponential.EntireOfOrderAtMost.differentiable",
+      "selected_source_module": "WF84.OrderCore",
+      "registered_consumer_edges": [
+        {
+          "consumer": {
+            "source_module": "WF84.HadamardOrder",
+            "source_declaration": "Complex.Hadamard.hadamard_factorization_of_order"
+          },
+          "prerequisite": "Complex.Hadamard.EntireOfOrderAtMost.differentiable",
+          "direction": "consumer -> prerequisite"
+        },
+        {
+          "consumer": {
+            "source_module": "WF84.OrderSummability",
+            "source_declaration": "Complex.Hadamard.EntireOfOrderAtMost.summable_norm_inv_pow_divisorZeroIndex₀"
+          },
+          "prerequisite": "Complex.Hadamard.EntireOfOrderAtMost.differentiable",
+          "direction": "consumer -> prerequisite"
+        }
+      ]
+    }
+  ],
+  "selection_scope": "S01 selected real/exponential API and three necessary OrderCore companions; no minimality claim.",
+  "dependency_form": "A17.2 attributed selected-source port; no WF84 Lake dependency."
+}
