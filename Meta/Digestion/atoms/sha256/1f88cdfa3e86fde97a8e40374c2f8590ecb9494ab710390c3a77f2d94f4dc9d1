@@ -1,0 +1,27 @@
+**定义 6（档案乘法）。** $P=X\boxtimes Y$ 的档案为
+
+$$
+E_P=\iota_0[E_X]\sqcup\iota_1[E_Y]\sqcup
+\{p_{ab}=(2,(a,b)):a\in\Omega_X,b\in\Omega_Y\}.
+$$
+
+旧事件的四个属性照抄。每个新事件满足
+
+$$
+\begin{aligned}
+t_P(p_{ab})&=\max(t_X(a),t_Y(b))+1,\\
+x_P(p_{ab})&=x_X(a)+x_Y(b),\\
+\sigma_P(p_{ab})&=\sigma_X(a)\sigma_Y(b),\\
+\rho_P(p_{ab})&=\operatorname{pair}(\rho_X(a),\rho_Y(b)).
+\end{aligned}
+$$
+
+保留两份旧偏序，加入 $\iota_0(a)\prec p_{ab}$ 与 $\iota_1(b)\prec p_{ab}$，然后取传递闭包。当前整体与选择是
+
+$$
+\Omega_P=\{p_{ab}:a\in\Omega_X,b\in\Omega_Y\},\qquad
+A_P=\{p_{ab}:a\in A_X,b\in A_Y\}.
+$$
+
+旧事件只入档案、不重复计数。新当前整体使用所有候选对，不能用所选对替代它，否则补集的背景也被改了。
+

@@ -1,0 +1,1 @@
+| A016 | D | 存在圆周概率测度 \(\sigma\)，使 \(\lambda_n=L\int\vert \sum_{j<n}z^j\vert ^2d\sigma\) 对所有 \(n\ge0\)。 

@@ -1,0 +1,24 @@
+**24.13 不平均固定行的直接证明。** 同在集中域,令
+
+\[
+\mathcal M_{\rm dir}(\phi)=(1-\theta')\phi(c')+\theta'\phi(d')+
+\sum_{i\ne j}\phi(t_i).
+\]
+
+内侧割线给出 \(D(M_1)\le\mathcal M_{\rm dir}(f)\),总质量和一次矩仍为 \(k,k\mu\),中心二阶矩恰为 24.11 的 \(V_{\rm new}\)。由 24.9 对原均值向量的坐标界和本域条件,
+
+\[
+0<t_i\le\mu+\sqrt{\frac{k-1}{k}\overline V}
+<\mu+\sqrt{\frac{k-1}{k}V_0}<\mu+v=H.
+\]
+
+加上 \(0<c'<H\)、\(d'=H\),全部支撑仍在 Hermite 的有效范围。保持 24.12 的 \(L,H,V_*\),用正确的 \(V_{\rm new}\ge V_*\) 及 \(a<0\) 得到
+
+\[
+D(M_1)\le\mathcal M_{\rm dir}(f)\le\mathcal M_{\rm dir}(P)
+=\Psi_k(\mu,V_*)+a\left(W-\frac{s^2}{k-1}\right)
+\le\Psi_k(\mu,V_*)<\Psi_k(\mu,V_0).
+\]
+
+这是保留原固定行的第二条完整路线,不是把平均证明的矩等式误用于未平均的行。\(W=s^2/(k-1)\) 的边界允许,最后的方差严格比较仍在。24.7、24.9、24.12 或 24.13 穷尽真正分数分支;零方差与整数、inactive budget 已分别处理。24.2 的条件定理证毕。
+

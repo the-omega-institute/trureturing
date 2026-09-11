@@ -1,0 +1,19 @@
+#### 2.5 Weil 的完整形式与有限窗口算子
+
+令 \(Q_W\) 为现有显式公式对应的完整 Weil 二次型，测试函数取复值 \(C_c^\infty(\mathbb R)\)。在与谱坐标匹配的 Fourier 约定下，它的零点侧为
+
+\[
+Q_W(f)=\Re\sum_{\rho\in\mathcal Z}m_\rho\,
+\widehat f(\gamma_\rho)\overline{\widehat f(\overline{\gamma_\rho})}.
+\]
+
+测试函数的固定带衰减、零点计数与绝对可和性需来自真实解析真源。混合形式由同一对象极化；不能把交叉项改成逐零点的模平方。
+
+在窗口 \((-a,a)\) 上，令
+
+\[
+\ell(a)=\inf_{0\ne f\in C_c^\infty(-a,a)}\frac{Q_W(f)}{\|f\|_2^2}.
+\]
+
+\(A_a\) 专指该实际下半有界形式的 Friedrichs 实现。使用谱判据前，必须构造闭形式、证明核心与算子对应，不能从任意自伴算子出发重新命名。仓库的偶测试函数版本、`Zeta23.EF.weilTest` 的非受限版本和 [L01] 的形式之间分别需要精确适配。记 \(E(g)\) 为现有 `poleTerm - primeTerm + archimedeanTerm` 在实际卷积平方上的实部。[L01, L03]
+

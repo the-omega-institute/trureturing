@@ -1,0 +1,272 @@
+## 附录 A. 精确有限核验
+
+以下 Python 3 标准库检查器是本任务的临时核验，不是生产算术引擎。它只用整数、集合与 `fractions.Fraction`，有限遍历的范围是档案即当前区域、空偏序、事件数为 $0,2,4$ 的全部平衡符号配置及全部选择，共 105 个表示、11025 个输入对。另核验正文的非空因果偏序例子、档案保留、原始非结合性、分数、补集粗观察、空间运输、来源与除法反例。普遍命题及全部无限序列的结论由正文证明，不由这些有限运行替代。
+
+在仓根直接执行文档中的唯一 Python 代码块，无需生成工具文件：
+
+```sh
+sed -n '/^```python$/,/^```$/p' docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md | sed '1d;$d' | python3 -
+```
+
+检查器使用 Python 元组和字典作为有限编码的可读实现；正文的集合编码论证不依赖 Python 对象身份。
+
+```python
+from dataclasses import dataclass, replace
+from fractions import Fraction
+from itertools import product
+
+@dataclass(frozen=True)
+class Rich:
+    e: dict
+    o: frozenset
+    w: frozenset
+    a: frozenset
+
+def closure(edges):
+    out = set(edges)
+    while True:
+        more = {(a, d) for a, b in out for c, d in out if b == c}
+        if more <= out:
+            return frozenset(out)
+        out |= more
+
+def valid(x):
+    assert x.a <= x.w <= x.e.keys()
+    assert all(t == int(t) and len(p) == 3 and s in (-1, 1)
+               for t, p, s, r in x.e.values())
+    assert all(a in x.e and b in x.e and x.e[a][0] < x.e[b][0]
+               for a, b in x.o)
+    assert closure(x.o) == x.o
+    return x
+
+def charge(x, a):
+    return sum(x.e[e][2] for e in a)
+
+def q(x):
+    return charge(x, x.a)
+
+def neg(x):
+    return replace(x, a=x.w - x.a)
+
+def add(x, y):
+    e = {(i, a): v for i, z in enumerate((x, y))
+         for a, v in z.e.items()}
+    o = frozenset(((i, a), (i, b)) for i, z in enumerate((x, y))
+                  for a, b in z.o)
+    w = frozenset((i, a) for i, z in enumerate((x, y)) for a in z.w)
+    a = frozenset((i, a) for i, z in enumerate((x, y)) for a in z.a)
+    return valid(Rich(e, o, w, a))
+
+def temporal(x, y):
+    if not all(x.e[a][0] < y.e[b][0] for a in x.e for b in y.e):
+        raise ValueError("time guard")
+    z = add(x, y)
+    cross = {((0, a), (1, b)) for a in x.e for b in y.e}
+    return valid(replace(z, o=closure(z.o | cross)))
+
+def mul(x, y):
+    z = add(x, y)
+    e, o, w, chosen = dict(z.e), set(z.o), set(), set()
+    for a in x.w:
+        for b in y.w:
+            key = (2, (a, b))
+            ta, pa, sa, ra = x.e[a]
+            tb, pb, sb, rb = y.e[b]
+            e[key] = (max(ta, tb) + 1, tuple(u + v for u, v in zip(pa, pb)),
+                      sa * sb, ("pair", ra, rb))
+            o |= {((0, a), key), ((1, b), key)}
+            w.add(key)
+            if a in x.a and b in y.a:
+                chosen.add(key)
+    return valid(Rich(e, closure(o), frozenset(w), frozenset(chosen)))
+
+def integer(n):
+    e = {(i, s): (0, (0, 0, 0), s, ("leaf", i))
+         for i in range(abs(n)) for s in (-1, 1)}
+    a = frozenset(k for k in e if k[1] == (1 if n > 0 else -1))
+    return valid(Rich(e, frozenset(), frozenset(e), a))
+
+def time_shift(x, k):
+    return valid(replace(x, e={a: (t + k, p, s, r)
+                               for a, (t, p, s, r) in x.e.items()}))
+
+def spatial(x, scale=1, offset=0):
+    return valid(replace(x, e={a: (t, (scale*p[0] + offset,
+                                       scale*p[1], scale*p[2]), s, r)
+                               for a, (t, p, s, r) in x.e.items()}))
+
+def filt(x, pred):
+    return replace(x, a=frozenset(a for a in x.a if pred(a)))
+
+def coarse(x, f):
+    bins = {f(a) for a in x.w}
+    w = {b: charge(x, {a for a in x.w if f(a) == b}) for b in bins}
+    z = {b: charge(x, {a for a in x.a if f(a) == b}) for b in bins}
+    return w, z
+
+def rv(r):
+    return Fraction(q(r[0]), q(r[1]))
+
+def rat(a, b=1):
+    if b == 0:
+        raise ValueError("denominator guard")
+    return integer(a), integer(b)
+
+def radd(r, s):
+    x, y = r
+    z, w = s
+    return add(mul(x, w), mul(z, y)), mul(y, w)
+
+def rmul(r, s):
+    return mul(r[0], s[0]), mul(r[1], s[1])
+
+def rneg(r):
+    return neg(r[0]), r[1]
+
+def rdiv(r, s):
+    if q(s[0]) == 0:
+        raise ValueError("divisor guard")
+    return mul(r[0], s[1]), mul(r[1], s[0])
+
+def inverse_term(r):
+    return (r[1], r[0]) if rv(r) != 0 else radd(r, rneg(r))
+
+states = []
+for n in (0, 2, 4):
+    for signs in product((-1, 1), repeat=n):
+        if sum(signs) != 0:
+            continue
+        e = {i: (i, (i, 0, 0), signs[i], ("leaf", i)) for i in range(n)}
+        for bits in product((False, True), repeat=n):
+            x = valid(Rich(e, frozenset(), frozenset(e),
+                           frozenset(i for i in e if bits[i])))
+            assert q(neg(x)) == -q(x) and neg(neg(x)) == x
+            states.append(x)
+pairs = 0
+for x in states:
+    for y in states:
+        a, p = add(x, y), mul(x, y)
+        assert q(a) == q(x) + q(y) and q(p) == q(x) * q(y)
+        assert charge(a, a.w) == charge(p, p.w) == 0
+        assert len(p.e) == len(x.e) + len(y.e) + len(x.w)*len(y.w)
+        for i, old in enumerate((x, y)):
+            assert all(p.e[(i, k)] == v for k, v in old.e.items())
+            assert all((((i, a), (i, b)) in p.o) == ((a, b) in old.o)
+                       for a in old.e for b in old.e)
+        pairs += 1
+assert (len(states), pairs) == (105, 11025)
+print("balanced_states=105 pair_checks=11025")
+
+xe = {"a": (0, (0,0,0), 1, ("leaf",7)),
+      "b": (1, (2,0,0), 1, ("leaf",7)),
+      "c": (1, (1,0,0), -1, ("leaf",8)),
+      "d": (2, (3,0,0), -1, ("leaf",8))}
+ye = {"r": (3, (10,0,0), 1, ("leaf",7)),
+      "s": (4, (10,0,0), -1, ("leaf",9))}
+x = valid(Rich(xe, frozenset({("a","b"), ("c","d")}),
+               frozenset(xe), frozenset("abc")))
+y = valid(Rich(ye, frozenset({("r","s")}), frozenset(ye), frozenset("r")))
+p, a, t = mul(x, y), add(x, y), temporal(x, y)
+assert (q(x), q(y), q(p), len(p.e), len(p.w), len(p.a), len(p.o)) == (1,1,1,14,8,3,27)
+assert [(p.e[(2,(k,"r"))][0], p.e[(2,(k,"r"))][1][0],
+         p.e[(2,(k,"r"))][2]) for k in "abc"] == [(4,10,1),(4,12,1),(4,11,-1)]
+assert (len(a.o), len(t.o), q(a), q(t)) == (3,11,2,2)
+print("worked_product: q=1 archive=14 whole=8 selected=3 causal_pairs=27")
+print("parallel_pairs=3 temporal_pairs=11 both_q=2")
+z0, z1 = mul(x, integer(0)), mul(x, replace(y, a=y.w))
+assert (len(z0.e), len(z0.w), q(z0)) == (4,0,0)
+assert (len(z1.e), len(z1.w), len(z1.a), q(z1)) == (14,8,6,0)
+assert mul(x, integer(0)) == mul(neg(x), integer(0))
+u, two = integer(1), integer(2)
+left, right = mul(mul(u,u),two), mul(u,mul(u,two))
+assert (len(left.e), len(right.e), q(left), q(right)) == (28,32,2,2)
+assert len(add(u,neg(u)).e) == 4 and q(add(u,neg(u))) == 0
+assert len(mul(u,u).e) == 8 and q(mul(u,u)) == 1
+print("zero_products: (archive,whole,selected,q)=(4,0,0,0),(14,8,6,0)")
+print("raw_laws: sum_with_negative_archive=4 unit_product_archive=8 associativity_archives=28,32")
+
+xp = replace(x, a=frozenset("a"))
+predicates = (lambda k: x.e[k][1][0] >= 2,
+              lambda k: x.e[k][3] == ("leaf",7),
+              lambda k: k == "b" or (k,"b") in x.o)
+observed = [(q(filt(x,f)), q(filt(xp,f))) for f in predicates]
+assert q(x) == q(xp) == 1 and observed == [(1,0),(2,1),(2,1)]
+restricted = replace(p, a=frozenset(k for k in p.a
+                     if abs(x.e[k[1][0]][1][0] - y.e[k[1][1]][1][0]) <= 9))
+omitted = charge(p, p.a - restricted.a)
+assert (q(restricted), omitted, q(p)) == (0,1,1)
+single = mul(replace(x,a=frozenset("a")), y)
+assert q(single) == 1 and q(replace(single,a=frozenset())) == 0
+print("filters: spatial=(1,0) source=(2,1) causal=(2,1); restricted_q=0 omitted_charge=1")
+
+expanded = replace(two, a=u.a)
+extra = two.w - u.w
+assert extra and charge(two,extra) == 0 and q(neg(expanded)) == q(neg(u)) == -1
+unbalanced = valid(Rich({k:v for k,v in two.e.items() if k in u.w or k == (1,1)},
+                        frozenset(), u.w | {(1,1)}, u.a))
+assert q(neg(unbalanced)) == 0 and charge(unbalanced,unbalanced.w) == 1
+w,z = coarse(u, lambda k: k[1])
+wn,zn = coarse(neg(u), lambda k: k[1])
+assert w == wn == {-1:-1,1:1} and z == {-1:0,1:1} and zn == {-1:-1,1:0}
+assert all(zn[b] == w[b] - z[b] for b in w)
+f = {"a":0,"b":0,"c":1}
+assert {f[k] for k in {"b","c"}} == {0,1}
+assert {0,1} - {f["a"]} == {1}
+assert {("L","L"),("R","R")} <= closure({("L","R"),("R","L")})
+print("transport: balanced_added_charge=0 unbalanced_defect=1; bin_complement=(0,-1); image_defect_and_cycle=confirmed")
+assert mul(spatial(x,2),spatial(y,2)) == spatial(p,2)
+assert mul(time_shift(x,5),time_shift(y,5)) == time_shift(p,5)
+assert mul(spatial(x,offset=1),spatial(y,offset=1)) != spatial(p,offset=1)
+try:
+    temporal(u,u)
+    raise AssertionError("unguarded temporal composition")
+except ValueError:
+    pass
+assert q(temporal(u,time_shift(u,1))) == 2
+print("coordinates: linear_and_time_translation_commute=True spatial_translation_commutes=False")
+
+r,s = rat(1,2),rat(-3,2)
+assert (rv(radd(r,s)),rv(rmul(r,s)),rv(rneg(r)),rv(rdiv(r,s))) == (
+    Fraction(-1),Fraction(-3,4),Fraction(-1,2),Fraction(-1,3))
+try:
+    rdiv(r,rat(0))
+    raise AssertionError("unguarded rational division")
+except ValueError:
+    pass
+prefix = [rv(inverse_term(rat(k))) for k in (0,1,1,1)]
+null_inverse_prefix = [rv(inverse_term(rat(1,k))) for k in (1,2,3,4)]
+assert prefix == [0,1,1,1] and null_inverse_prefix == [1,2,3,4]
+print("rationals: sum=-1 product=-3/4 negative=-1/2 division=-1/3 zero_divisor=rejected")
+print("inverse_prefixes: (0,1,1,1)->(0,1,1,1); (1,1/2,1/3,1/4)->(1,2,3,4)")
+
+shared = ({t-t for t in (1,2)}, {t*t for t in (1,2)})
+independent = ({t-s for t in (1,2) for s in (1,2)},
+               {t*s for t in (1,2) for s in (1,2)})
+assert shared == ({0},{1,4}) and independent == ({-1,0,1},{1,2,4})
+assert {(s,t) for s in (1,2) for t in (1,2) if s == t} == {(1,1),(2,2)}
+assert {t for t in (0,1) if t != 0} == {1}
+chain = {("e","f")}
+assert all(b not in {"e"} or a in {"e"} for a,b in chain)
+assert not all(b not in {"f"} or a in {"f"} for a,b in chain)
+print("sources: shared_difference={0} shared_square={1,4}; independent_difference={-1,0,1} independent_product={1,2,4}")
+print("ALL_FINITE_CHECKS_PASSED")
+```
+
+本次运行退出码为 `0`，实际标准输出如下：
+
+```text
+balanced_states=105 pair_checks=11025
+worked_product: q=1 archive=14 whole=8 selected=3 causal_pairs=27
+parallel_pairs=3 temporal_pairs=11 both_q=2
+zero_products: (archive,whole,selected,q)=(4,0,0,0),(14,8,6,0)
+raw_laws: sum_with_negative_archive=4 unit_product_archive=8 associativity_archives=28,32
+filters: spatial=(1,0) source=(2,1) causal=(2,1); restricted_q=0 omitted_charge=1
+transport: balanced_added_charge=0 unbalanced_defect=1; bin_complement=(0,-1); image_defect_and_cycle=confirmed
+coordinates: linear_and_time_translation_commute=True spatial_translation_commutes=False
+rationals: sum=-1 product=-3/4 negative=-1/2 division=-1/3 zero_divisor=rejected
+inverse_prefixes: (0,1,1,1)->(0,1,1,1); (1,1/2,1/3,1/4)->(1,2,3,4)
+sources: shared_difference={0} shared_square={1,4}; independent_difference={-1,0,1} independent_product={1,2,4}
+ALL_FINITE_CHECKS_PASSED
+```
+
+核验解释：这些读数仅覆盖上述有限域及具名例子。它们不证明任意图、任意 Cauchy 序列或 ZFC 的一致性，也不是 Lean 内核检查。新文档之外未改动任何仓库文件；完整仓库准入检查、独立数学评审和 PR 交付是调用方的后续步骤。

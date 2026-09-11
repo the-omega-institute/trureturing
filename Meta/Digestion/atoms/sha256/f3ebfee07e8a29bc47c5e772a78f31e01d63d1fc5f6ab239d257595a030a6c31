@@ -1,0 +1,46 @@
+## 5. 真正的 Fourier 观察量与整体归一化
+
+固定空间中取 g_(a,z)(y)=conjugate(cos(a*z*y))，K0=<1,k>=sqrt2*k0，与 a 无关。令 K_a(z)=<g_(a,z),k>/K0，并把代表元中心化为
+\[
+h_{a,z}=g_{a,z}-\overline{K_a(z)}\,1.
+\]
+它在 k 上严格读出零。写 zeta=conjugate(a z)，正 parity Fourier 系数为
+\[
+(g_{a,z})_0=\sqrt2\sin\zeta/\zeta,
+\qquad(g_{a,z})_n=\frac{2\zeta\sin\zeta}{\zeta^2-\pi^2n^2}\quad(n>0).
+\]
+中心化只改变零坐标，实际采用 h0=-sum_(n>0)k_n*g_n/k0，因此候选配对恒等式先精确消去。中心 z0 非实且 a>0，实际有限分母非零。对所有 m>M_cut 且 M_cut>=2|zeta|/pi，|h_m|<=4|2zeta sin zeta|/(3pi^2m^2)，完整加权平方尾由相应 m^-4 积分覆盖。
+
+把同一 (UG7) 分别用于 r_a 和 h_(a,z0)，两档执行均认证
+\[
+\boxed{E_a<4.4\cdot10^{-9},\qquad C_{a,z_0}<3.7.}
+\tag{UG10}
+\]
+实际充分上表达式的上端分别约为 4.353429552e-9、3.678035788。前者的原始近高加权质量约 1.19402e-9，剩余无限高尾上预算约 5.80375e-12，低 load 与全部高交叉相消后的预算也计入。
+
+令 b=251/1000、a_+=sup I、rho_z=1/1000。有限窗口 Fourier 导数和固定 k 给出
+\[
+\|h_{a,z}-h_{a,z_0}\|\le
+\sqrt2 a_+e^{a_+b}(1+\sqrt2/|K0|)\rho_z=:d.
+\]
+由于整个偶扇区 G>=kap I，在其逆能量范数中应用三角不等式，得
+\[
+C_{a,D}\le(\sqrt{C_{a,z_0}}+d/\sqrt{\mathrm{kap}})^2<4.
+\tag{UG11}
+\]
+这是整个复圆盘的解析控制，不是采样网格。
+
+由 (UG5)，||w_a||<=sqrt(E_a/kap)。固定空间的 projective 原点分母满足
+\[
+b_a=|\langle1,k+w_a\rangle|\ge |K0|-\sqrt2\sqrt{E_a/\mathrm{kap}}>27/25.
+\tag{UG12}
+\]
+这里 K0 约为 -1.085330103，是伸缩到 [-1,1] 后的积分；不要与旧物理窗口中的 -0.804394472 混用。物理 Fourier 积分有 sqrt(a) 因子，它在原点归一化中消去。精确中心化恒等式给出
+\[
+\boxed{\sup_{a\in I,z\in D}
+\left|\frac{\widehat u_a(z)}{\widehat u_a(0)}-K_a(z)\right|
+\le\frac{\sqrt{E_a C_{a,D}}}{b_a}<1/8000.}
+\tag{UG13}
+\]
+实际上预算小于 0.000120866616。固定区间的 ground placement、偶性和所有分母均已支付，没有每个 z 单独选择的相位。
+

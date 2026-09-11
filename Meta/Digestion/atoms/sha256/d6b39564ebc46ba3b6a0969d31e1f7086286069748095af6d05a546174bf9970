@@ -1,0 +1,2 @@
+**A077：** 对每个 \(t\in\mathbb R\)，\(\sigma\mapsto|\xi(\sigma+it)|\) 在 \((1/2,\infty)\) 严格递增。[E07, Corollary 1] 左半平面严格递减版本由函数方程归入同族。
+

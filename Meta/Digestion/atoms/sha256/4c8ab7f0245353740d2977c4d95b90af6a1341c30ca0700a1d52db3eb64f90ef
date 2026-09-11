@@ -1,0 +1,16 @@
+## 3. 先做实际奇偶合并，再产生区间 Gram
+
+对原 a_mn=(s_n-s_m)/(pi(m-n))，s_-n=-s_n。实际偶、奇配对列是
+
+\[
+C^+_{mn}=\frac{2(ns_n-ms_m)}{\pi(m^2-n^2)},\qquad
+C^-_{mn}=\frac{2(ms_n-ns_m)}{\pi(m^2-n^2)}.
+\tag{PT4}
+\]
+
+新 Lean `arithmetic_parity_pair_columns` 从原 `couplingColumn` 展开证明两式，使用已证明的原符号奇性，并先排除全部分母碰撞。Lean 的 c 参数仍按原 owner 为自然数；实 L 的算术表达及其奇性在本节独立按同一公式解释，没有把 c 自然数定理冒用成实尺度实现。
+
+在正交归一 parity 基 E_0=V_0、E_n=(V_n+V_-n)/sqrt2、O_n=(V_n-V_-n)/sqrt2 中，正高编号之间的矩阵元素恰是 (PT4)，偶零列为 -sqrt2*s_m/(pi*m)。偶低块的 n>0 对角是 A_nn-s_n/(pi*n)，奇低块是 A_nn+s_n/(pi*n)。奇扇区乘整体 i 不改变矩阵或能量。
+
+这些相消在区间量化之前完成。实际高空间的正负编号已合并为一个正交 parity 坐标，因此后续不得再重复乘二。程序对每个 parity 块分别形成全体 65<=m<=32768 的 Gram，并保留参数区间造成的系数半径。
+

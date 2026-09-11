@@ -1,0 +1,18 @@
+#### 7.3 BSY 的同一半径读数
+
+[L13] 的无条件恒等式为
+
+\[
+I_{\rm BSY}=2\pi\sum_{\Re\alpha>1/2}m_\alpha
+\log\left|\frac\alpha{1-\alpha}\right|.
+\]
+
+右侧每项为正，因此给定零点 \(\rho\) 产生
+
+\[
+\boxed{I_{\rm BSY}\ge-2\pi m_\rho\log r>0.}
+\tag{E12}
+\]
+
+这里按全部实际零点带重数计数，不再额外重复乘一个共轭对因子。
+

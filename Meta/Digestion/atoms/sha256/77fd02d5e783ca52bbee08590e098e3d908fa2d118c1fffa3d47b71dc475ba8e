@@ -1,0 +1,32 @@
+#### 2.2 规范 Li 系数、曲率及正定性的量词
+
+\[
+\lambda_0=0,\qquad
+\lambda_n=\frac1{(n-1)!}
+\left.\frac{d^n}{ds^n}\bigl(s^{n-1}\log\xi(s)\bigr)\right|_{s=1}
+\quad(n\ge1).
+\]
+
+局部对数由 \(\xi(1)=1/2\) 选定，所得系数为实数。复用现有第一系数
+
+\[
+L=\lambda_1=1+\frac{\gamma_{\!E}}2-\log(2\sqrt\pi)>0.
+\]
+
+其中 \(\gamma_E\) 专指 Euler–Mascheroni 常数。定义规范实偶曲率
+
+\[
+c_0=1,\qquad
+c_k=\frac{\lambda_{|k|+1}-2\lambda_{|k|}+\lambda_{|k|-1}}{2L}
+\quad(k\ne0),\qquad \psi(k)=\lambda_{|k|}.
+\]
+
+\(T^{(n)}=(c_{j-k})_{0\le j,k<n}\)。仓库 `toeplitzMatrix c N` 的大小为 \(N+1\)，因此 \(n\ge1\) 时它对应参数 \(N=n-1\)。圆周 Fourier 约定沿用
+
+\[
+\widehat\sigma(k)=\int_{\mathbb T}z^{-k}\,d\sigma(z).
+\]
+
+正定函数 \(h\) 表示：任意有限索引组 \(x_i\) 和任意复系数 \(a_i\) 都满足
+\(\sum_{i,j}\overline{a_i}a_jh(x_i-x_j)\ge0\)。条件负定的量词相同，但要求 \(\sum_i a_i=0\)，不等式反向。所有概率测度均为正测度且总质量为一。[L02–L04]
+

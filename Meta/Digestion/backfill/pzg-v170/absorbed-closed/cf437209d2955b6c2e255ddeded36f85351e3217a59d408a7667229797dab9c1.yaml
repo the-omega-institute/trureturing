@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:cf437209d2955b6c2e255ddeded36f85351e3217a59d408a7667229797dab9c1
+  normalized_sha256: sha256:cf437209d2955b6c2e255ddeded36f85351e3217a59d408a7667229797dab9c1
+cas_ref: sha256:cf437209d2955b6c2e255ddeded36f85351e3217a59d408a7667229797dab9c1
+coverage_gids:
+  - gid: D5/S3/Arith/DeeplyCompositeLcmRank.deeply_composite_lcm_sqrt_rank
+    target_statement_id: sha256:5b90b138cd4356e124f805a48caeb3153e8a1dd8be61bdb8b7546453fc4d7ab6
+receipts:
+  unresolved_subitems: []

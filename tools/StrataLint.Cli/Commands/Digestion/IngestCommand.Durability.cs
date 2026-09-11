@@ -5,6 +5,7 @@ namespace StrataLint.Cli;
 
 internal static partial class IngestCommand
 {
+    // Observe actual parser calls within one execution context, including ranking reloads.
     internal sealed record LedgerUpdate(
         string Path,
         ImmutableArray<byte>? Bytes,
@@ -17,12 +18,19 @@ internal static partial class IngestCommand
 
     internal static ImmutableArray<LedgerUpdate> LedgerUpdates(
         RawRepositorySnapshot current,
-        RawRepositorySnapshot final)
+        RawRepositorySnapshot final) =>
+        LedgerUpdates(current, final, LoadDocument(Decode(current)), LoadDocument(Decode(final)));
+
+    internal static ImmutableArray<LedgerUpdate> LedgerUpdates(
+        RawRepositorySnapshot current,
+        RawRepositorySnapshot final,
+        BackfillInventoryDocument currentDocument,
+        BackfillInventoryDocument finalDocument)
     {
         var currentEntries = current.Entries.ToDictionary(static entry => entry.Path, StringComparer.Ordinal);
         var finalEntries = final.Entries.ToDictionary(static entry => entry.Path, StringComparer.Ordinal);
-        var currentRanks = LedgerDurabilityRanks(current);
-        var finalRanks = LedgerDurabilityRanks(final);
+        var currentRanks = LedgerDurabilityRanks(currentDocument.RequireDigestionEntries());
+        var finalRanks = LedgerDurabilityRanks(finalDocument.RequireDigestionEntries());
         var updates = final.Entries
             .Where(static entry => entry.Path == BackfillInventoryLoader.RelativePath
                 || BackfillInventoryLoader.IsCanonicalPath(entry.Path))
@@ -45,10 +53,6 @@ internal static partial class IngestCommand
             .ToImmutableArray();
         return updates;
     }
-
-    private static IReadOnlyDictionary<string, int> LedgerDurabilityRanks(
-        RawRepositorySnapshot snapshot) =>
-        LedgerDurabilityRanks(LoadDocument(Decode(snapshot)).RequireDigestionEntries());
 
     private static IReadOnlyDictionary<string, int> LedgerDurabilityRanks(
         IEnumerable<DigestionLedgerEntry> ledgerEntries)

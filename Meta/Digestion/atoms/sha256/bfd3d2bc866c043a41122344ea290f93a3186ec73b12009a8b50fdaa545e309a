@@ -1,0 +1,12 @@
+## 一、事实:两条要求指向相反的方向
+
+H-3 原文是一句四条断言:反驳(非乘性 ∧ 不动点上不结合,附两个见证值),故不构成幺半群,故格同余不升级为乘法同余。
+
+**机器一侧**。模块头部按 SL-031 声明 `basis=refutes=atom:H-3`。校验器 `UtilityDeclarationValidator` 逐条要求:①`claim` 必须是 `def`,`result` 必须是 `theorem`;②`result` 必须是 `claim` 的**闭合否定**(`IsClosedNegation`,否则判 `not-a-closed-proof-of-not-claim`);③首次冻结时,该 atom 必须有一条**恰好指向 `result` 那条声明**的覆盖边(`HasExactCoverage(atom, declaration.Result, …)`,否则判 `UTILITY-REFUTES-ATOM-NO-COVERAGE`)。
+
+三条合起来:**H-3 的覆盖边必须指向那条形如 `¬claim` 的定理**,别无选择。实测两次:把 `result` 改指整条属主 → `not-a-closed-proof-of-not-claim`;把那条边删掉 → `UTILITY-REFUTES-ATOM-NO-COVERAGE`。
+
+**评审一侧**。两席(codex tests 与 ChatGPT Pro quality)各自独立判:那条 `¬claim` 定理**不能作为四子句 atom 的属主**,因为它的陈述里没有不动点归属、没有两个见证值、也没有两条推论。
+
+**两侧都对。** 冲突不在任何一方,在**我把四条断言写进了一个 atom**:一个 `¬claim` 形状的定理无论如何都装不下四条断言,而 `¬(A ∨ B)` 也无法把 `IsGolden` 这类正面事实纳入其中——否定不能生成正面合取项。
+

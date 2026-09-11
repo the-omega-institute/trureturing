@@ -1,0 +1,14 @@
+**命题 20（精确更新式）。** 原稿的并行加法、档案乘法、补集和任意固定空间筛选均在 $\mathcal B$ 上总定义，且
+
+$$
+\begin{aligned}
+\pi(X\boxplus Y)&=(w_X+w_Y,z_X+z_Y),\\
+\pi(X\boxtimes Y)&=(w_X*w_Y,z_X*z_Y),\\
+\pi(NX)&=(w_X,w_X-z_X),\\
+\pi(F_SX)&=(w_X,\mathbf1_S z_X).
+\end{aligned}
+\tag{UP}
+$$
+
+此外 $\varepsilon(c+d)=\varepsilon c+\varepsilon d$，$\varepsilon(c*d)=(\varepsilon c)(\varepsilon d)$，所以 $I$ 对加法、负号封闭，且 $I*R\subseteq I$。
+

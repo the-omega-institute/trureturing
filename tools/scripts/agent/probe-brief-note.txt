@@ -1,0 +1,40 @@
+- **落盘纪律(放在 brief 最前,不放最后)**:
+  **每答完一问、每拿到一批检索读数、每验过一个 Lean 片段,就 `git commit` + `git push`。
+  报告边做边写,不要攒到最后。**
+
+  案由(2026-09-09 实测,两席同时死于同一次载体网络断流
+  `stream disconnected before completion: Transport error … error decoding response body`,
+  `carrier_exit: 1` / `CARRIER_EXIT_NONZERO`):
+  · brief 里写了每步推送的那席(implementation)**保住 3 个已推送提交**;
+  · 没写的那席(`alpha-mean-probe-0909`,thinking 阶段)跑了 **1,971 s**,
+    远端分支数 **0**,一无所有 —— 它的判形结论只剩最后几条 agent message 里的片段。
+  **探针的中间产物同样是几十分钟的工作**,而且「报告最后写」使**最脆的一段恰好排在最后**。
+  故本条不分阶段:实施 / 探针 / 筛选 / 地图席**一律适用**。
+
+  **辨析(与 openproblem Stage A 的「STOP HERE, 不 commit」不冲突)**:
+  那条禁的是**过 deposit/cover 门之前不要冻结与开 PR**,针对的是同一 worktree 里
+  待镜像核对的三个新文件;本条要求的是**把已完成的中间产物推到远端分支留痕**。
+  凡 brief 明写某阶段不得提交(Stage A 一类),以该 brief 为准,但报告仍须边做边写。
+
+- **判形报告的最低字段(探针席交付物,不是可选项)**:
+  逐条公开定理的 `proof_shape`(bind-only / content)、直接冻结依赖(GID + `statement_id`)、
+  `escape_witness`(或 `null`)、`admission_basis`;
+  判 content 者**必须点名**是哪一条见证,并对照第 3.2 条四项(依赖闭包内 / 非投影可得 /
+  非定义等价 / 活推导路径)逐项作答。**点不出满足四项的见证即 bind-only。**
+
+- **第 1 条硬要求恒为**:先尝试**只用**钉版 Mathlib 直接实例化 + 冻结件投影 + 规范化改写
+  (含 `sq_nonneg` + `linarith only`)重证目标,**成功即如实记 `bind-only` 并停手报告,不建模块**。
+  **探针席的价值在尽早判掉,不在做出东西** —— 自报 `likely-bind-only` / `escape_witness: null`
+  就是一次有效交付。
+
+- **检索纪律**:仓内一律 `git grep -P` 或 `rg`;
+  **`git grep -E` 不支持 `\b`,会静默零命中**(2026-09-02 实测:据此公开写下「无撞题」,
+  真数是 Nyman=3 / Gram=76)。阳性对照必须带**同样的正则特性**,命令与命中数一并入报告。
+
+- **接口须实查冻结树**:「dev 上有」≠「已冻结」。
+  称某接口可接,须给 `Golden/Frozen/state/**` 下的 GID + `statement_id` + **作用域限制**;
+  接不上就写 `none`。
+
+- **未主张栏(必填)**:明确写出本席**未**主张什么 ——
+  未证该目标、未主张可证、未主张检索穷尽、未主张与更大命题(如 RH)有任何蕴含关系。
+  凡未真正打开的页面标 `ASSUMED-UNVERIFIED`(第 2.9 条:不把未测之事包装成判断送出去)。

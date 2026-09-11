@@ -1,0 +1,6 @@
+### 输入认证与完整有限前缀
+
+程序 `tools/scripts/agent/xi_quantization.py` 从第 6 节的 completed xi Taylor 公式自身计算 \(x,y,\beta\),不读取理论散文。Python-FLINT 0.8.0、Arb 256 位、`ctx.cap=4`;分母 \(d=10^{40}\) 的严格有理区间是 \(a/d<t<(a+1)/d\),其中:
+
+| 量 | 下端分子 a |
+|---|---:|

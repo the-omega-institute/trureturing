@@ -1,0 +1,63 @@
+fingerprints:
+  raw_sha256: sha256:780d70056387d00bd0627b8c89c54dfbd810f955e7ff7388ee0f1cd93f120b9c
+  normalized_sha256: sha256:780d70056387d00bd0627b8c89c54dfbd810f955e7ff7388ee0f1cd93f120b9c
+cas_ref: sha256:780d70056387d00bd0627b8c89c54dfbd810f955e7ff7388ee0f1cd93f120b9c
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.Guard
+    target_statement_id: sha256:d5bb646dba86389582c2f1121c9a6a868d4265930aa117b344f61e5a819c7678
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.archive
+    target_statement_id: sha256:c30001e8a68d1b107c4b9ea3caedf67159598ade078a5ada4fe6f540ce2162e5
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.archive_card
+    target_statement_id: sha256:80685ddb549dce52fceef1d411d84225f3eff41c4e70244057e43403dee2ffe5
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.attributes_equiv
+    target_statement_id: sha256:c8367b1f020fbe9d3410f73f6e530ae28f7bd8f240af5a214fb316120578dc58
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.background_shift
+    target_statement_id: sha256:51ea43755b822315b039120de53883f4c2cb3b4bbfec4d83be38dde4a7c668cd
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.causal_equiv
+    target_statement_id: sha256:b3fbaa159ef6281d2a911580dc2f4dc72f38f1c047cfa30e4d5651e006040b14
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.context
+    target_statement_id: sha256:194a3756c3367f5d302360d1646fe11f6eb842aecd31e2ea43e874e70307c627
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.edge
+    target_statement_id: sha256:a931876965279b8670d8888ef9c8d38c4475fa9cd77fc687f9d7824feb131654
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.edge_irrefl
+    target_statement_id: sha256:7df3a528bfb8d6d229eb30d1c9b43570978534d5047cd7645fa1f589b4514945
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.edge_trans
+    target_statement_id: sha256:7213d44a7943d5c90e21e7d35e683e4c8473c63ae98b731d2954d20a3750ea18
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.equiv
+    target_statement_id: sha256:e157498c3ac99b9b529eabd5be68167b598660e825dd6a1344a5572b9e93b8e6
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.equiv_val
+    target_statement_id: sha256:ae0960a6da2a30b25e498ef1955275a518fb007b8e27b482a2ba2f1835fff0d0
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.events_eq
+    target_statement_id: sha256:b82e715556ea6fc93687980d996aa324ab5bd7cde2e7c315a71e52b75a176cde
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.exists_shift
+    target_statement_id: sha256:9ba6515eb1d67539fa2de0feab1aad0ed749d5cf3a2abae2e0de5be6fa4ae20a
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.guard_empty_left
+    target_statement_id: sha256:03a72e38a0229db08afa74c026e7b9ceb3464e03229e1c893c6a8eae39197a75
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.guard_empty_right
+    target_statement_id: sha256:4e0d3a328f3247cc2344025ec67487ee1f2ed972235e7b46872a829c7f2c256b
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.guard_of_large_shift
+    target_statement_id: sha256:2a6841954bc9772f2217180f37ad4abda482cbb3a66584ca7d4b16ec3264892b
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.hf_time_condition_iff
+    target_statement_id: sha256:ee7e25f35fe50f92c6f3a09b8fe8f5aed4c44bad34c5af9dca484ba509d5bfff
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.q_shift
+    target_statement_id: sha256:cf4a69906430c6382b9328ac1f274d52f891ec49d3d89739958a247eaed929b0
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.selection
+    target_statement_id: sha256:c0c7661b962f92f48a4c563527ff5c94a857409acb22021ab736b18ac047c39c
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.shiftArchive
+    target_statement_id: sha256:2f5f61e1fc1d3e2a485c82cd222ab1fbf3a35d756e32e8eb5dc3c7dfce55b445
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.shiftBound
+    target_statement_id: sha256:fd204b08494578fd3d6c8cea79651ce46d7ed04372e5a1c02caa32152b70522a
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.shiftContext
+    target_statement_id: sha256:d0d509d76981c60dbfb6376faf3ab637dec820bc09245b270d156b9a7507f3b9
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.shiftRich
+    target_statement_id: sha256:a6856514b75891bb58d45e4bf58016a1dd45522d04249371c9aa59013a0e1a1e
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.shift_attributes
+    target_statement_id: sha256:a0026c3be67c6d1c053e2b11de66a260ac053adecb9e233500e602cc8aaf73a1
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.shift_causal
+    target_statement_id: sha256:2c2fbda69e1e1e412910a51ca47531ba9d28f23c68bb9886bc1ea7c0615088b3
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.temporal
+    target_statement_id: sha256:84a2aef8fcc6695682f39df1ccae2ecfd1d4314b6a79d7f49a25f2cac01ac269
+  - gid: D5/S3/ConceptDynamics/Spacetime/TemporalComposition.temporal_guard_iff
+    target_statement_id: sha256:08a8218b3ab8c931df51e53a60043bffb5fcbd63f6bc87d0e28a4a5f27542c40
+receipts:
+  unresolved_subitems: []

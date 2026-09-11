@@ -1,0 +1,1 @@
+| [ConceptFiberDecomposition.lean](../../../D5/S3/ConceptDynamics/ConceptFiberDecomposition.lean) | `concept_fiber_decomposition` 的读数加依赖纤维表述，不能把纤维中的点从数值自动重建 

@@ -1,0 +1,18 @@
+### Robin 的函数曲率与已有 KL 恒等式
+
+令 \(F(a)=\log(\sigma(n)/n)=\sum_pf_p(a_p)\)。对实指数 \(a_p\ge0\) 作同一有限支撑延拓,
+
+\[
+f_p(a)=\log\frac{1-p^{-a-1}}{1-p^{-1}},\qquad
+f_p''(a)=-\frac{(\log p)^2p^{a+1}}{(p^{a+1}-1)^2}<0.
+\]
+
+Hessian 是对角的,但曲率随素数和指数变化。普通欧氏距离没有单独决定 Robin 符号的信息。已有 [Z] 第十二章定理 12.2、12.3 与推论 12.4(本次源约 2210-2460 行)给出了连续最优指数、精确 Bernoulli KL 损失及
+
+\[
+\Delta(n)=\mathfrak D(n)-\mathfrak Q(\log n),\qquad
+\mathrm{RH}\iff\mathfrak D(n)>\mathfrak Q(\log n)\quad(n>5040).
+\]
+
+这里 \(\Delta(n)=\gamma+\log\log\log n-F(a)\),其符号与 Robin 的严格上界相同。本节引用已有损失公式,不声称重新发现连续优化器或 KL 分解。截面几何能组织搜索;仍须比较函数损失与连续超额,不能用距离替代这笔比较。
+

@@ -1,0 +1,14 @@
+### 35.1 产地、先验暴露与亲验范围
+
+本批 skill 上下文为 **`consensus-rnd:sshx`**，阶段为 `implementation`。本实施席按 caller 的“六席收敛契约”在工作树 `/Users/auricstudio/trureturing-csa-upgrade-pr5-0910`、分支 `lane/theory/csa-upgrade-pr5-0910` 工作，并实际读取本机该 skill 的 `SKILL.md`、完整 `CLAUDE.md`、指定卷文与附录。没有将自身检查充作六席思考或三席评审。
+
+**思考产地（以下为 caller brief 转述，未读取各席原始判词）：** 六席为 `teleology`、`parsimony`、`fidelity`、`natural-ownership`、`proportional-containment`、`worth`。`fidelity` 载体为 `nyxid-oracle`，brief 记录模型为 **GPT-6 Astra Pro**；其余五席为 `codex-cli`，各自具体模型标识未提供。caller 记录 codex 席遇到 `dispatch.sh` 的负载门 `idle<20%`，因此直接经 runner 派发到分离只读检出；这就是该次旁路理由，不是本实施席对当时宿主负载的实测。六席均暴露 caller 候选计划，**非盲**；codex 席有仓库先验暴露，oracle 的外部先验不可由本席核定，不能据席数宣称先验独立或环境无记忆。各席逐票结果及原始完成工件未向本席提供，本收据只消费 caller 已给的收敛方案。
+
+**实施与评审分工：** 本批实施由一个 `codex-cli` worker 承担，未另派子工作者；它同样看到候选计划和仓库先验，属于 `repo-prior-exposed`。后续三席 `architecture`／`quality`／`tests` 的评审载体、模型、判词及分歧裁决由 caller **另记**；实施交付时未收到这些结果，不预报通过。brief 将 D14 列作有时间下界的例子与其区域公式冲突，本席在改动前指出该点，保留命题 54 原量词，并以 (MIX-D14-Q) 单独证明及核验 D14 的固定 $q$ 表达；其余主数学边界按收敛契约实施。
+
+**caller 亲验范围（仅转述已提供记录）：** brief 记载 2026-09-10 06:35 对 `origin/dev=95442f6d3d` 核对本卷零改动、无在飞 PR 触碰本卷。此后 caller 对本批证明、附录、ingest、提交或评审的亲验结果未向本席提供；本席不代其声明。**本 worker 亲验范围：** 开工 fetch／试合与 fast-forward、卷文 SHA256、原语及证明前提的原文核对、下列附录执行、canonical ingest、只追加字节检查、编号与最终 git 读数。前者为 caller 自报范围，后者为实施自查，二者不合算为独立评审。
+
+原始基线为 `3759149d0ea0884cb8a57fb950e3caddab007a38`。开工实际执行 `git fetch origin dev && git merge-tree --write-tree origin/dev HEAD`，退出 **0**，试合树为 `1d617412f68464c354f309cab594df6790c8e77e`；随后 `git merge origin/dev` 退出 **0**，fast-forward 到 `95442f6d3d6c3bb970029440d4e3a463aaec1993`，作为本批摄入基线。两版本卷字节相同，3935 行、SHA256 `54894115cd9c214a6ba131fe32ca8a2d0109a4c406733394a9060c6780968b04`，故续接定义 27、引理 3、命题 52–54、D13–D14、增补 N 与 §35，没有 rebase 或重编号。
+
+本批形态为 **ingest**；链上一环是 `source_id=contextual-spacetime-arithmetic` 的新增源文 → 新 `atoms/sha256` 对象 → 同源 `residual-open` backfill。新推导为 `repo-derived`，只依赖卷内既有定义与具名结果，没有新增外部引文；未作全球新颖性检索，不作优先权主张。本批未作 deposit／cover，不报告新增冻结或 absorbed；Lean、一般剩余 $q$ 分类、其他配对及全实际像的未测边界见 §34。
+

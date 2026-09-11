@@ -1,0 +1,4 @@
+**定理 2.3(前沿不枯竭)**〔证〕。在定理 2.2(ii) 的假设下,对任一账本 $L$:$F^{+}(L)\neq\varnothing$ 且 $F^{0}$ 可非空。
+*证明*。$\mathrm{Frozen}(L)$ 有限,而 $\mathrm{Thm}(\mathfrak A)$ 无限(例如由任一定理 $P$ 生成 $P\wedge P,\ P\wedge P\wedge P,\dots$,它们在 $\mathcal P$ 中两两不同),故 $\mathrm{Thm}(\mathfrak A)\setminus\mathrm{Frozen}(L)\neq\varnothing$。$G$ 见证 $F^{0}$ 可非空。∎
+*读法*。这个证明用的例子是无聊的——它只说明前沿在**基数**上不枯竭。有内容的不枯竭是定理 2.10(素无穷,〔骨架〕),它需要假设 2.9。
+

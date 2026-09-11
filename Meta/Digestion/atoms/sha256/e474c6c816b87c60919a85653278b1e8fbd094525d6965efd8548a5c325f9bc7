@@ -1,0 +1,25 @@
+### Baez-Duarte 系数与 Gronwall 对照
+
+为避免与第 6 节 Li 差分的 \(c_j\) 混名,本小节加上标 BD:
+
+\[
+c_k^{\mathrm{BD}}=\sum_{j=0}^k(-1)^j\binom{k}{j}\frac1{\zeta(2j+2)},\quad k\ge0.
+\]
+
+[B2] 定理 1.1 给出
+
+\[
+\mathrm{RH}\iff\forall\varepsilon>0:\quad
+c_k^{\mathrm{BD}}=O_\varepsilon(k^{-3/4+\varepsilon})\quad(k\to\infty,\ k\ge1).
+\]
+
+准确含义是每个 \(\varepsilon>0\) 都有 \(C_\varepsilon>0,K_\varepsilon\ge1\),使所有整数 \(k\ge K_\varepsilon\) 满足 \(|c_k^{\mathrm{BD}}|\le C_\varepsilon k^{-3/4+\varepsilon}\)。不能删去绝对值、\(\varepsilon\) 或它对常数的依赖。
+
+Gronwall 定理 [L,定理 2.2] 则是无条件的比较背景:
+
+\[
+\limsup_{n\to\infty}\frac{\sigma(n)}{n\log\log n}=e^\gamma.
+\]
+
+它不是又一行 RH 等价判据。任何有限前缀都不能单独证明本节的全称条件、闭包条件或渐近估计。
+

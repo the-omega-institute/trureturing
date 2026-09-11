@@ -1,0 +1,24 @@
+## 2. 同一个实参数算术矩阵，激活项精确表示
+
+令 L=2a，使用原基 V_n(x)=(-1)^n exp(2pi*i*n*x/L)/sqrt(L)，窗口外零延拓。经 J_a 酉伸缩，其基在 [-1,1] 上固定为 (-1)^n exp(i*pi*n*y)/sqrt(2)。固定候选整数系数除以其精确范数后定义 k_a；没有把未知 ground 当作 k_a。
+
+在 (PT1) 上，log2<L<2log2，素数 4 及更大 prime powers 尚未进入。定义实际归一化交叠长度
+
+\[
+h_2=2-2\log2/L,\qquad h_3=\max(0,2-2\log3/L),\qquad
+w_p=\log p/\sqrt p.
+\tag{PT2}
+\]
+
+在边界符号和实际对角中，两个素数的贡献分别为
+
+\[
+s^{\rm prime}_L(n)=\sum_{p=2,3}w_p\sin(\pi n h_p),\qquad
+A^{\rm prime}_{nn}=-\sum_{p=2,3}w_ph_p\cos(\pi n h_p).
+\tag{PT3}
+\]
+
+这是原 -w_p sin(omega_n log p) 与 -2w_p(1-log p/L)cos(omega_n log p) 的精确格点相位改写；h_p=0 时两项均为零。端点等号是 L2 零测作用，(PT3) 跨阈值有效。程序对 L 的整个闭区间计算正部分包络，不将抽样或中心条件当作区间条件。
+
+完整边界符号为原 pole、无限 Gamma 边界级数与 (PT3) 的和，omega_n=2pi n/L。完整对角使用同一 digamma、trigamma、指数修正、pole 及 (PT3)。Gamma 指数修正保留前 32 项并显式包住无限尾。新的 sine 例程在选择整数周期后先严格检查余量位于 (-4,4)，再以 63 次 Taylor 多项式和 4^64/64! 的明确尾界覆盖整个参数区间；浮点周期选择不提供正确性假设。有限工作精度与 bulk binary64 符号包络的准确度分开：每个 bulk 运算都向外舍入，最终各项误差继续进入矩阵证书。
+

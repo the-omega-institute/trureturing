@@ -4,6 +4,37 @@ namespace StrataLint.ArchitectureTests;
 
 public sealed class CapacityPolicyTests
 {
+    [Fact]
+    public void CapacityExcludesOnlyCanonicalProblemPoolPaths()
+    {
+        Assert.True(RepositoryRules.IsDirectoryCapacityExcluded(
+            "Problems/oeis-a363560-cubic-ninth-power-substitution-mod-three.md"));
+        Assert.False(RepositoryRules.IsDirectoryCapacityExcluded("Problems/sub/x.md"));
+        Assert.False(RepositoryRules.IsDirectoryCapacityExcluded("Problems/Foo.md"));
+        Assert.False(RepositoryRules.IsCapacityExcluded(
+            "Problems/oeis-a363560-cubic-ninth-power-substitution-mod-three.md"));
+    }
+
+    [Fact]
+    public void CapacityAuditExcludesCanonicalProblemPoolOccupancyButBoundsDossierLength()
+    {
+        // Both the oversize length and the expected verdict derive from the constant.
+        var oversizeLines = RepositoryRules.ArtifactHardLineLimit + 1;
+        var files = Enumerable.Range(0, RepositoryRules.DirectoryToleranceLimit + 1)
+            .Select(i => ($"Problems/oeis-a000001-sample-slug-{i:0000}.md",
+                i == 0
+                    ? string.Concat(Enumerable.Repeat("pad\n", oversizeLines))
+                    : "fixture\n"));
+
+        var finding = Assert.Single(RepositoryCapacityAudit.InspectFiles(files));
+
+        Assert.Equal("Problems/oeis-a000001-sample-slug-0000.md", finding.Path);
+        Assert.Equal(
+            $"artifact spans {oversizeLines} lines "
+            + $"(hard limit {RepositoryRules.ArtifactHardLineLimit})",
+            finding.Message);
+    }
+
     // RED: an artifact one line past the hard limit must be flagged.
     [Fact]
     public void OversizeArtifactIsRejectedByRedFixture()
@@ -45,7 +76,7 @@ public sealed class CapacityPolicyTests
     public void DirectoryPastToleranceIsRejectedByRedFixture()
     {
         var files = Enumerable.Range(0, RepositoryRules.DirectoryToleranceLimit + 1)
-            .Select(static i => ($"Synthetic/Bucket/File{i}.cs", "x"))
+            .Select(i => ($"Synthetic/Bucket/File{i}.cs", "x"))
             .ToArray();
 
         var finding = Assert.Single(RepositoryCapacityAudit.InspectFiles(files));
@@ -106,7 +137,7 @@ public sealed class CapacityPolicyTests
     public void GeneratedBlueprintMarkdownProjectionIsNotBounded()
     {
         var files = Enumerable.Range(0, RepositoryRules.DirectoryToleranceLimit + 1)
-            .Select(static i => ($"Blueprint/D5/S1/Synthetic/File{i}.md", "x"))
+            .Select(i => ($"Blueprint/D5/S1/Synthetic/File{i}.md", "x"))
             .ToArray();
 
         Assert.Empty(RepositoryCapacityAudit.InspectFiles(files));
@@ -119,7 +150,7 @@ public sealed class CapacityPolicyTests
     public void NonBlueprintMarkdownPastToleranceProducesFinding()
     {
         var files = Enumerable.Range(0, RepositoryRules.DirectoryToleranceLimit + 1)
-            .Select(static i => ($"Notes/Synthetic/File{i}.md", "x"))
+            .Select(i => ($"Notes/Synthetic/File{i}.md", "x"))
             .ToArray();
 
         var finding = Assert.Single(RepositoryCapacityAudit.InspectFiles(files));
@@ -133,7 +164,7 @@ public sealed class CapacityPolicyTests
     public void BlueprintDefinitionSourcesRemainBounded()
     {
         var files = Enumerable.Range(0, RepositoryRules.DirectoryToleranceLimit + 1)
-            .Select(static i => ($"Blueprint/D5/S1/Synthetic/File{i}.scribe.cs", "x"))
+            .Select(i => ($"Blueprint/D5/S1/Synthetic/File{i}.scribe.cs", "x"))
             .ToArray();
 
         var finding = Assert.Single(RepositoryCapacityAudit.InspectFiles(files));

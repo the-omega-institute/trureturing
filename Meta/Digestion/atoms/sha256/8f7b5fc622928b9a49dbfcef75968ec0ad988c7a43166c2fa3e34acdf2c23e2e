@@ -1,0 +1,15 @@
+## 5. 研究来源、实际执行和剩余承重义务
+
+CCM, *Zeta Spectral Triples*, arXiv:2511.22755v1, Section 8 仍明确区分最低模态的单纯偶性与充分精确的真实模型对应。DLMF 30.3 的正规 spheroidal 模式和参数性质用于核对对象；此处数值隔离由实际无限 Jacobi 界独立认证，未由定性解析性代替误差率。Suzuki arXiv:2606.09096 的原始版本页此次返回 v1；未使用聚合站声称的未核验新版结果。
+
+也读取 loning/5040 研究链 #6204 的实际 `GronwallUpperEnvelope.lean`，提交 `0805069c8c630f909f89b0573dbe672c98f275bc`。它复用 Mertens III 得到归一化 divisor sum 最终 <=1+epsilon。这个标量包络没有提供严格 Robin 全称界或当前算子谱间隔；本节不将它混作前提。其已合并状态已从 PR 元数据核对，作者自报的编译未在此复验。
+
+新 verifier 以固定 proposal 的 SHA-256 为输入检查，并在 110、130 位定向精度分别运行通过；未读取旧数值谱结论、未用 eigensolver 或数值求积。种子比值、所有遗漏 Legendre 分量、激活边界、原点分母和中心化代表元变化均明确计入。独立表达式诊断核对了 24 条符号尺度/导数/激活等式、5 个错误 seed 缩放的失败对照，以及 12 次原物理窗口积分对照。后者为非定向 65 位诊断，最大相对差约 4.121e-66，不作为区间证明依据。
+
+Verifier SHA-256：`fe1d574f38a13e0dbcc185649c0e6c32dfd9e1cb676ceebb73ad7c6c31218b4f`。Proposal SHA-256：`242c9897bbd247ef0485039e6dcde819a351c5900ceac52fecc420934c1896db`。三个新公开 Lean 定义/定理有三个 FromLean Scribe 项。Lean、Scribe 编译及公理闭包未执行，测试由同一助手完成，无独立作者审查或数学优先权声明。
+
+本轮提供同一尺度区间中真正 prolate 族的 Fourier 和中心化读出变化率。此前的统一 simple-even/gap 证书已另行写回并重跑；它与 (SF9) 之间仍缺真实 Weil ground 的统一方向误差，不能据此宣称已得到区间 ground/prolate 的完整逼近或 Xi 极限。下一实际算术任务是联合验证变尺度对偶作用及其完整 Schur 补，保留本节已确定的同模型中心系数。
+
+参考：
+
+- Connes, Consani, Moscovici, arXiv:2511.22755v1, Sections 7-8. https://arxiv.org/html/2511.22755v1

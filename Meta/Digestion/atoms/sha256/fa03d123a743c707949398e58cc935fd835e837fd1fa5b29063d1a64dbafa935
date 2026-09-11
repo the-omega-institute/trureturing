@@ -1,0 +1,8 @@
+## 9. 追加勘注: 终态字符串与本次来源
+
+日期 2026-09-08。本次 implementation worker 按 `consensus-rnd:sshx` worker 模式执行,没有派出子席,没有读取 peer 日志,没有提交、推送或操作 PR。以下为参考输入中的纸面论证与数值库证据,不是独立评审批准,也不是 Lean-frozen 定理。长期研究目标保持 active。
+
+**具体勘误,只追加不改旧文:** 第 8 节把 terminal model 当成含字面反斜杠的字符串,这是记录错误。caller 指定的 `pro-map-task-complete.json` 经本次 JSON 解析,其 model 字段的 Unicode codepoints 恰为 `[54,10,80,114,111]`:字符 `6`,一个实际 LF,再接 `Pro`。正确的 JSON 序列化是 `"6\nPro"`,其中只有一个换行转义序列;不是第 8 节所写的含两个反斜杠的序列化。原 JSON SHA256 为 `6274bc727c4a83f7056a8112edee31940604806de34a0c7d4d3413cb32f1c715`。本勘注不据此推断未见的后端型号,不改变第 5-6 节数学。
+
+本次实际源 HEAD 为 `8698bf1a197adb887967cb6722261ea525ea9400`,已经包含 caller 提交的第一卷。`45e7b20dd95dd8b2d7b8784392c1814193b80515` 仅保留为历史 intake 与摄取 BASE。追加前本卷 598 行,源 SHA256 为 `1051e55d93ab1beae2cfc2f4fcee04a6f9c79b1a17792c5ce187286d20b44404`;原文及 62 个已摄入 atom 全部保留。以下使用 [Q]、[Z] 的当前 HEAD 字节,其 SHA256 分别为 `4d38746e7e83ef96bb8c5af3b58f2e6d7a51484f4cbdd673ca4e644fa34bf246`、`2c60183ac740a7426db7f9113b5d769f883382d75bb216e6dfa780c42fca11f7`。
+

@@ -1,0 +1,12 @@
+# Exact stationary occupation-memory minimum: 56
+
+Reference input, not the repository's Lean truth source. All claims below remain open for canonical formalization; the ordinary audit is not kernel admission. The final paragraph's historical formalization status describes the retained source's recording time.
+
+Author kind: AI. Source author: NyxID oracle, reported model GPT-6 Astra; task 2260c8d2-e53d-40b0-8fe6-1401a8bda816, conversation conv_f0cb5286379a9c82, completed 2026-09-07T19:41:29.771Z. Source conversation: https://chatgpt.com/c/6a9f10ad-d51c-83ec-af58-b2f5a4f72166. Model identity is task metadata, not independent backend verification. The retained corrected note's editor model is unknown; no human mathematical coauthorship is asserted. This intake was normalized by Codex on 2026-09-08 from stationary-minimum56.md, SHA-256 654a826f9fa4b2808487380cb33345f6e42839aff5adcb64699c63aec3b39270. Only headings and this provenance paragraph are added; claim sentences are retained. No novelty claim is made.
+
+Status (2026-09-08): ordinary mathematical proof, independently reviewed by
+CLI flight boundary5040-a-nullity-audit-20260908, attempt1, verdict approve,
+carrier exit0 at2026-09-07T20:03:37Z. The reviewer derived the required notation
+corrections and found no remaining mathematical gap. This is not Lean/kernel
+verification, full sshx consensus, or a novelty claim.
+

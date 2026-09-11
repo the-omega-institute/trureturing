@@ -63,15 +63,65 @@ retaining the database and dimension bests. An unfinished checkpoint rejects
 fresh-start with a `--resume` instruction; finish it with its original scientific
 configuration and numerical runtime first.
 
-An identity contains the physical model, actual dimension/seed, initialization,
+The random-v1 identity contains the physical model, actual dimension/seed, initialization,
 all Adam settings, cosine schedule, full update budget, algorithm version,
 float32 dtype and numerical runtime. NumPy's version belongs to verification
-provenance, since the optimizer does not call NumPy. Identity excludes source hashes, executable and
+provenance, since the optimizer does not call NumPy. Random identity excludes source hashes, executable and
 state paths, invocation limits, logging/checkpoint cadence, verification trigger
 settings and the MPS memory fraction. The source never feeds these operational
 values or champion tensors into an optimizer update. Source/config hashes remain
-provenance. Scientific code changes require an algorithm version change;
-checkpoint layout compatibility uses a separate schema version.
+provenance. Resume still rejects an actual scientific source hash mismatch;
+retaining the random descriptor does not make different source bytes equivalent.
+Scientific code changes require an algorithm version change; checkpoint layout
+compatibility uses a separate schema version.
+
+## Analytic D55 Input
+
+`--initializer analytic-d55` selects one deterministic candidate with dimensions
+`[55]`. The complete declarative recipe lives in
+`Evidence/D5/S3/Quantum/AnalyticD55Initializer.result.json`; an exact relocated
+copy can be supplied with `--initializer-recipe PATH`. Content is validated before
+claim or tensor allocation. Changed content is rejected by this baseline version.
+Raw input bytes and their path/hash are checkpoint provenance; the complete typed
+recipe, orientation, positive-target converter version, actual six-file scientific
+source hash, precision, runtime and Adam budget enter the analytic trial identity.
+
+The constructor uses physical completion-count square roots, the specified
+`40/41,9/41` column rotation and positive initial weights. Positive-target
+Householder reduction stores reversed reflector rows over the existing fixed eye
+basis. Raw Gram and vector norms and entrywise reconstruction must pass before
+training. The model retains exactly the `reflectors` and `initial` parameters;
+the eye basis is nonpersistent. Checkpoint schema 2 and numeric Config fields are
+unchanged. The initial vector remains trainable and normalized by forward.
+
+The analytic effective seed is always 0, with explicit RNG reset and zero
+initializer draws. A requested base seed is retained as provenance and creates
+no additional exploration. `--forever` is rejected. Completed content skips
+before allocation and stops as `exhausted`, including when `--max-steps` alone
+is given or the final update coincides with that bound. A skip records zero
+updates. An empty state can be exhausted without `latest.pt`; a fresh traversal
+retains an older real checkpoint under a separate status receipt.
+
+For a fresh, isolated CPU verification state and history:
+
+```sh
+ANALYTIC_STATE="$HOME/.local/state/gpu5040/analytic-cpu-verification"
+ANALYTIC_HISTORY="$HOME/.local/state/gpu5040/analytic-cpu-verification.sqlite3"
+"$PYTHON" -B "$TOOL/gpu_worker.py" --state-dir "$ANALYTIC_STATE" \
+  --history-db "$ANALYTIC_HISTORY" --initializer analytic-d55 \
+  --device cpu --precision float64 --seed-steps 6 --batch-steps 1 --max-steps 3
+"$PYTHON" -B "$TOOL/gpu_worker.py" --state-dir "$ANALYTIC_STATE" \
+  --resume --device cpu --precision float64 --max-steps 3
+```
+
+CPU training requires the analytic protocol and explicit `--device cpu`.
+MPS uses float32 and requires a separately authorized root handoff. No automatic
+device choice or CPU fallback occurs. On resume, the worker allocates only the
+fixed model layout, restores saved parameters, Adam and selected-device RNG, and
+records the first forward in `startup.json` before updates. It never regenerates
+initializer tensors on that path; a recipe path is unnecessary for resume.
+CPU checkpoints retain the RNG envelope with `torch_mps: null`, explicitly
+inapplicable; actual MPS checkpoints retain CPU and MPS RNG byte tensors.
 
 Only exact completed optimization identities, or explicitly selected legacy
 lineage exclusions, are skipped before model initialization. Interrupted and
@@ -105,14 +155,19 @@ rm "$STATE/STOP"
 "$PYTHON" -B "$TOOL/gpu_bounded_launcher.py" --state-dir "$STATE" --history-db "$HISTORY"
 ```
 
-The launcher runs one additional round of actual updates, deriving its budget
+For random trials the launcher runs one additional round of actual updates, deriving its budget
 from saved dimensions and seed steps. Exit 0 requests existing launchd
 `SuccessfulExit` repetition only after exact additional-update and fresh durable
 checkpoint validation, bound to child PID, invocation UUID, progress and digest.
 STOP, signals, failures, stale receipts and malformed status exit nonzero.
 Signals are forwarded and the child is joined. This tool installs no service.
-After changing source provenance, first run a bounded worker resume to publish a
-new baseline status before enabling launcher repetition.
+Analytic trials run only the remaining singleton budget. Validated exhaustion
+returns **exit 4**, which never requests repetition, including an already
+exhausted state that launches no child. The launcher validates analytic content
+identity, source, invocation, progress and checkpoint digest; a zero-update skip
+is never an exact-budget work receipt. It propagates the saved explicit device
+and precision. Changed scientific source bytes require their own scientific
+run; old checkpoints cannot be relabeled by a resume invocation.
 
 ## Legacy Conversion
 
@@ -142,6 +197,10 @@ MIGRATED="$HOME/.local/state/gpu5040/migrated"
 Conversion validates known source, physical/configuration compatibility, exact
 snapshot digests, schedule continuity, tensor shapes/dtypes and Adam state. It
 preserves current parameters, optimizer, CPU/MPS RNG and dimension best tensors.
+New converted latest checkpoints bind the current six-file source closure;
+the exact historical source hash remains in migration evidence. Migration
+metadata cannot bypass the worker's actual source check. Existing outputs are
+never rewritten merely to update a source hash.
 Retained champions and available verification results enter separate history
 tables under the checked candidate digest; missing verifier provenance stays unknown.
 It imports indices below `run_index`, and the current index only when
@@ -170,9 +229,23 @@ operations; this implementation does not perform them.
 "$PYTHON" -B "$TOOL/smoke_test.py" --mps    # root only, after pausing old GPU work
 ```
 
-Tests use external temporary synthetic state, fault injection and pipe barriers;
+Tests use external temporary state, fault injection and pipe barriers;
 timeouts are infrastructure hang guards, not performance assertions. The MPS
 smoke additionally compares resumed/continuous parameters, Adam moments and RNG,
 and checks deduplication, CPU verification and launcher accounting. These Python
 tests are local checks; existing ScriptTests are excluded from CI, and required
 repository CI is not claimed to run this suite.
+
+`test_analytic_initializer.py` checks physical bytes, both CPU precisions,
+chronological full-word amplitudes and the baseline, signed-phase, invalid Gram,
+rational-gauge and D56 controls. `test_analytic_resume.py` runs actual D55 Adam
+for six updates versus three plus a durable new-process reload plus three. It
+compares saved/loaded bytes, the first restored forward, each trajectory step,
+final parameters/moments/RNG, exact counters/LR and trained best restoration.
+Its CPU subprocesses guard accelerator APIs. Set `GPU5040_ADAM_EVIDENCE` to a
+fresh external directory to retain raw observations, checkpoint bytes, commands
+and readings. `GPU5040_NUMERICAL_EVIDENCE` similarly retains precision evidence.
+The MPS persistence test is skipped unless root explicitly sets
+`GPU5040_RUN_MPS=1` after its serialized handoff. CPU results do not discharge
+actual MPS precision/persistence, independent review, required CI, MERGED
+delivery or termination obligations.

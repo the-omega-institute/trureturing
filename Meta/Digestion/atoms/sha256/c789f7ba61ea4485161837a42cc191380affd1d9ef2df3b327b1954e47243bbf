@@ -1,0 +1,21 @@
+## 101. Exact transport of an entire dependent Boolean response table
+
+`BooleanOutcomeMarginalTransport.lean` starts from an arbitrary existing `FiniteResponseLaw (M -> Bool)`. Let its coordinate means be r_i, and let s_i be any rational target means in [0,1]. For one original bit b, define the conditional target-success rate
+
+```text
+r<=s: rate(false)=(s-r)/(1-r), rate(true)=1;
+r>s:  rate(false)=0,           rate(true)=s/r.
+```
+
+The source proves rate bounds, exact target means, and exact coordinate mismatch abs(s-r). It includes r,s equal to zero or one. Division at r=s=1 occurs only in the unused original-zero branch; the expectation proof handles that case separately. No division at a positive-probability null event is treated as a conditional probability.
+
+The existing `finite_conditional_table_realization` realizes all transition rows indexed by M times Bool in one auxiliary random table. Take its product with the entire original outcome law, then push forward to the pair of original and transformed tables. The theorem `exists_exact_marginal_transport` proves simultaneously:
+
+```text
+E_joint[f(old)] = E_original[f] for every rational whole-table query f,
+E_joint[new_i] = s_i for every i,
+P_joint(old_i != new_i) = abs(s_i-r_i) for every i.
+```
+
+The first equality preserves the complete old distribution, not only its marginal vector. Old coordinates may have arbitrary dependence. The transformed law can have different dependence, so extra cross-coordinate constraints are not automatically preserved. Independent auxiliary entries are one possible realization of the required transition marginals, not an independence assumption on potential outcomes. All auxiliary randomness belongs to the outcome disturbance and can remain independent of the mediator disturbance.
+

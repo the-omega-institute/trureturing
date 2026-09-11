@@ -1,0 +1,34 @@
+**证明:预算与常数的精确平移。** 对 \(i\in\{p,q\}\) 置
+
+\[
+\ell_i=\log i,\quad x_i=(a_i+1)\ell_i,\quad
+c_i=(b_i+1)\ell_i>0,\quad d_i=(b_i+2)\ell_i>c_i,
+\]
+\[
+M_j=T_j+\ell_p+\ell_q\quad(j=0,1),\qquad
+E_S=(1-p^{-1})^{-1}(1-q^{-1})^{-1}.
+\]
+
+因 \(a_p\ell_p+a_q\ell_q=x_p+x_q-\ell_p-\ell_q\),指数薄层与 \(M_0\le x_p+x_q\le M_1\) 的实际角点一一对应;两个实际配置和严格宽度都保留。\(\mu_j=M_j/2\)、\(I\)、\(V_0\) 恰是第 16/19 节原来的量,没有另换度量或方差归一化。又 \(g_i(a)=f((a+1)\ell_i)-\log(1-i^{-1})\),对每个 \(\lambda\ge0\) 都逐项精确有
+
+\[
+\lambda T_1+\sum_{i\in S}\max_{a\in A_i}[g_i(a)-\lambda a\ell_i]
+=\log E_S+\lambda M_1+\sum_{i\in S}\max_{x\in C_i}[f(x)-\lambda x].
+\]
+
+取下确界得到
+
+\[
+U_{\rm dual}=\log E_S+D(M_1),\qquad
+U_{\rm var}=\log E_S+\Psi_2(\mu_1,V_0).
+\]
+
+第 22 节给出弱占优,等号则要求某个允许指数对满足
+
+\[
+(a_p+1)\log p=(a_q+1)\log q=\mu_1,
+\qquad p^{a_p+1}=q^{a_q+1}.
+\]
+
+两个幂指数都是正整数,与不同素数的唯一分解矛盾,所以严格。允许相邻指数选择包含零,因为 \(a_i+1\ge1\)、\(x_i>0\),且 \(g_i(0)=0\) 无需例外。假设 \(T_0>\log5040\) 完整继承,其具体数值不是这条比较所需的额外条件。证明只用两个不同配置确实落在薄层内,不要求它们预算相等;一般实数定理允许等预算角点。证毕。
+

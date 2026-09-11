@@ -1,0 +1,1 @@
+| `D5/S3/Zeros/Endpoints/CanonicalLiLocalExpansion.lean` | 从 `xiReading` 导数定义的 Li 系数、全部阶数的 Taylor 系数恒等式、局部生成展开及第一系数正性；blob `0fb04eb79f87389016b51af25cdf6078d5616b7c` | 不另定义替代 Li 序列。局部展开与全单位圆盘展开分开登记。 

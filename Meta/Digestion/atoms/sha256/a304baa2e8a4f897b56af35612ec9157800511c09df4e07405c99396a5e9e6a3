@@ -1,0 +1,10 @@
+**A093：** 固定整数 \(r\ge0\)、实数 \(k\ge r+1,\ell>0\)。令 \(\sigma_r(n)=\sum_{d\mid n}d^r\)，其 Dirichlet 卷积逆为 \(\sigma_r^{-1}=\mu*(n\mapsto n^r\mu(n))\)。RH 等价于
+
+\[
+\forall\epsilon>0,\quad
+\sum_{n\ge1}\sigma_r^{-1}(n)n^{-k}e^{-x/n^\ell}
+=O_{k,r,\ell,\epsilon}(x^{-k/\ell+(1+2r)/(2\ell)+\epsilon}).
+\]
+
+[E12, Theorem 3.13] 卷积逆不等于逐点倒数。边界参数的级数收敛须单独证明；相邻公式为使用 \(1/\zeta'(\rho)\) 所加的单零点假设不能未经核对混入此端点。一般 L-function 的版本另记为 GRH 范围。
+

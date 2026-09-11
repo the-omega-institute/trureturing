@@ -1,0 +1,6 @@
+#### F08. Robin、Lagarias 与 Nicolas 的整数不等式（A045–A047）
+
+记 \(\sigma(n)=\sum_{d\mid n}d\)，\(H_n=\sum_{j=1}^n1/j\)，\(P_k\) 为前 \(k\) 个素数的乘积，\(\varphi\) 为 Euler 函数。
+
+| ID | 类别 | 精确目标 |
+| --- | --- | --- |

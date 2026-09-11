@@ -1,0 +1,9 @@
+**命题 13（共同世界上的点态算术）。** 对所有函数在同一非空 $\Gamma$ 上点态求值，命题 7 的兼容性逐世界成立；随后才取可能值像
+
+$$
+\operatorname{Poss}_\Gamma(F)
+=\{\operatorname{Eval}_{\rm usual}(F; q(H_1(\gamma)),\ldots,q(H_k(\gamma))):\gamma\in\Gamma\}.
+$$
+
+其中 $q$ 在有理或实数层换为相应读数。不能用各函数边缘可能值的无条件 Cartesian 组合替代该像。
+

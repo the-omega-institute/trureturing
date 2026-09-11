@@ -1,0 +1,1 @@
+| A087 | 存在最终有界实序列 \(u_n,v_n\)，使所有充分大 \(n\) 满足 \((d-c)(1+\tfrac{\log\log n+u_n}{4\log n})\le q_n\le(d+c)(1+\tfrac{\log\log n+v_n}{4\log n})\)。 

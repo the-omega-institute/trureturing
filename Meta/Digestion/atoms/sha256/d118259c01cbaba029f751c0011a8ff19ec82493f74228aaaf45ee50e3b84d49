@@ -1,0 +1,4 @@
+### 1. 当前 dev 与所有开放 PR 的接入位置
+
+主要数学源读取固定在 dev `aee1eaff34f997e44f04147cee1010bb482c4c1b`。提交前再次捕获 dev `3a8854105ef7bc1a480c4473cdc50b16d6993146`，树为 `717a3fee18b949f40ce178b595cb7d109fb24981`；本卷 blob 仍为 `1e9316d22d780b370a70aa340009ab0a5604819d`，原文未变。下表的开放 PR head 已再次刷新；这些快照日期不表示执行了全库编译。下列路径均相对仓库根目录；固定版本可用 `https://github.com/the-omega-institute/trureturing/blob/<commit>/<path>` 读取。
+

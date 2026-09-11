@@ -1,0 +1,24 @@
+### 离散对偶比较与来源边界
+
+对于第 16 节的同一箱体,既有可分离离散 Lagrange 基线可写为
+
+\[
+U_{\rm dual}=\inf_{\lambda\ge0}
+\left\{\lambda T_1+\sum_{p\in S}\max_{a\in A_p}
+[g_p(a)-\lambda a\log p]\right\}.
+\]
+
+每个括号给所有预算不超过 \(T_1\) 的配置一个上界。距离证书相对这个最优对偶是否有实用优势仍 **OPEN**;比 Jensen 更紧是已经证明的较弱结论,不能升级为优于 \(U_{\rm dual}\)。caller 提供的两次后续任务 `949095a4-d3a7-4179-b842-f255db211159`、`db06ed96-26f3-47ff-90eb-db97ec4de9d6` 只有载体失败记录(`prompt_delivery_uncertain`;`page.goto Page crashed`),没有数学答案。它们既不证明也不否定优势。本增量未执行所提 GPU 窗口,不把预测当作结果,也不让新搜索依赖缺失结论。
+
+主要研究输入是 caller 提供的实际 GPT PRO task `14803801-6a68-4b5a-8a76-f6615d838e88` 的 structured conclusion,完成时间 `2026-09-08T13:17:09.406+00:00`,返回 model `chatgpt-5.5-pro`;该输入没有单独提供 conversation id,不补造。实施 worker 没有打开 oracle transcript 或 opaque log_ref,没有新 oracle 调用。caller 的单点 256 位 Arb 读数是支持证据;本 worker 独立重算同一 5040 输入,结果一致。这里独立指证明核对和计算路径,不表示独立评审或模型族多样性;Codex 为 `repo-prior-exposed`。
+
+文献尽调范围明确如下:实施者于 2026-09-08 读取 [Liao-Berg, Sharpening Jensen's Inequality](https://arxiv.org/abs/1707.08644) 与 [Rodin, Variance and the Inequality of Arithmetic and Geometric Means](https://arxiv.org/abs/1409.0162) 的摘要页及作者元数据。后者摘要已陈述普通乘积在同均值、方差下的一个大坐标极值形状。PRO 自报亲读前者 Theorem 1 / Corollary 1.1、后者 Theorem 1 / Remark 1,并提供前者 DOI `10.1080/00031305.2017.1419145`;本 worker 未独立取得这些正文或核对 DOI,不把转述写成亲验。PRO 另报 Pittenger 的 *Sharp mean-variance bounds for Jensen-type inequalities* 正文获取失败,其一般结果是否覆盖本特例未核实。以上不支持全球新颖性或文献穷尽声明;本节的函数特例由第 15 节完整短证承担。
+
+本次是 `consensus-rnd:sshx` 的委派 implementation,无新增子席或独立评审判词。C17 允许的 continuation 工作树为 `/Users/auricstudio/trureturing-qgh-variance`,分支 `lane/math/quantized-gh-variance-0908`,封存起点 `0b8b5592d56d601d92db36b5f7ef331ef3ed33f1`;原 803 行前缀逐字节保留。源与报告之外仅由以下 canonical 命令生成新 atom/账目,计数由实施结果信封报告:
+
+```sh
+make ingest BASE=0b8b5592d56d601d92db36b5f7ef331ef3ed33f1 SOURCE=arithmetic-boundary-quantization
+```
+
+本轮不新建形式根或修改冻结 Lean,不重做既有有限扫描。独立复审、PR 三门和 MERGED 发布由 caller 负责,尚未交付的环节保持 open;有限追加不完成持续研究目标。
+

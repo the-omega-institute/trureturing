@@ -1,0 +1,8 @@
+**充分条件三。** 设唯一真正分数坐标为 \(j\),\(\overline V<V_0\),并且
+
+\[
+\delta=\eta_j,\qquad \delta^2\le\frac{k-1}{k}V_0.
+\]
+
+则仍有 \(U_{\rm dual}\le U_{\rm var}\)。
+

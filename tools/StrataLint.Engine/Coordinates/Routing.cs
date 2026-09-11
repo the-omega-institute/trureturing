@@ -285,14 +285,31 @@ public static class RouteEngine
             return (ImmutableArray.Create(domain, module), null);
         }
 
-        if (subDomain is not null && !CamelPattern.IsMatch(subDomain))
+        // A subdomain names a chain, not a single level: the coordinate grammar admits any depth
+        // >= 3 (Gid.ParseFormalCoordinates), so the manifest writes the chain as "/"-joined
+        // segments. Each segment is validated on its own, which leaves a one-segment subdomain on
+        // exactly the path it took before - one code path, not a second one kept for the old shape.
+        var subDomainSegments = subDomain?.Split('/') ?? [];
+        if (!subDomainSegments.All(CamelPattern.IsMatch))
         {
             throw new FormatException("subdomain must be CamelCase");
         }
 
-        if (string.Equals(subDomain, domain, StringComparison.Ordinal))
+        if (subDomainSegments.Length > 0
+            && string.Equals(subDomainSegments[0], domain, StringComparison.Ordinal))
         {
             throw new FormatException("subdomain must differ from domain");
+        }
+
+        for (var index = 1; index < subDomainSegments.Length; index++)
+        {
+            if (string.Equals(
+                subDomainSegments[index - 1],
+                subDomainSegments[index],
+                StringComparison.Ordinal))
+            {
+                throw new FormatException("subdomain segments must not repeat");
+            }
         }
 
         var match = policy.Domains.FirstOrDefault(
@@ -302,9 +319,11 @@ public static class RouteEngine
             throw new FormatException("formal route requires a controlled domain");
         }
 
-        return subDomain is null
-            ? (ImmutableArray.Create(match.Value.ToString(), domain, module), match.Value)
-            : (ImmutableArray.Create(match.Value.ToString(), domain, subDomain, module), match.Value);
+        return (
+            ImmutableArray.Create(match.Value.ToString(), domain)
+                .AddRange(subDomainSegments)
+                .Add(module),
+            match.Value);
     }
 
     internal static void ValidateSubDomainApplicability(ManifestSyntax syntax)
@@ -377,7 +396,7 @@ internal static class RouteCapacityPreflight
 
         var currentPaths = repository.Entries
             .Select(static entry => entry.Path)
-            .Where(static path => !RepositoryRules.IsCapacityExcluded(path))
+            .Where(static path => !RepositoryRules.IsDirectoryCapacityExcluded(path))
             .Distinct(StringComparer.Ordinal)
             .ToHashSet(StringComparer.Ordinal);
         var stratumDomains = stratum is { } routeStratum
@@ -387,7 +406,7 @@ internal static class RouteCapacityPreflight
                 .ToArray()
             : [];
         var failures = projectedOutputs
-            .Where(static path => !RepositoryRules.IsCapacityExcluded(path))
+            .Where(static path => !RepositoryRules.IsDirectoryCapacityExcluded(path))
             .GroupBy(DirectoryOf, StringComparer.Ordinal)
             .Select(group => CapacityFailure(currentPaths, stratumDomains, group.Key, group))
             .Where(static failure => failure is not null)
@@ -425,13 +444,13 @@ internal static class RouteCapacityPreflight
         IEnumerable<string> projectedOutputs)
     {
         // This preflight exists to predict SL-003, so it must count exactly what SL-003
-        // counts. Reusing IsCapacityExcluded keeps the two in one source: a preflight that
+        // counts. Reusing IsDirectoryCapacityExcluded keeps the two in one source: a preflight that
         // bounded artifacts the rule itself exempts would refuse addresses the gate would
         // have admitted, which is a stricter policy invented in the wrong place.
         var currentOccupancy = currentPaths.Count(path =>
-            DirectoryOf(path) == targetDirectory && !RepositoryRules.IsCapacityExcluded(path));
+            DirectoryOf(path) == targetDirectory && !RepositoryRules.IsDirectoryCapacityExcluded(path));
         var additions = projectedOutputs.Count(path =>
-            !currentPaths.Contains(path) && !RepositoryRules.IsCapacityExcluded(path));
+            !currentPaths.Contains(path) && !RepositoryRules.IsDirectoryCapacityExcluded(path));
         var projectedOccupancy = currentOccupancy + additions;
         if (projectedOccupancy <= RepositoryRules.DirectoryFileLimit)
         {
@@ -454,13 +473,11 @@ internal static class RouteCapacityPreflight
             .OrderBy(static domain => domain, StringComparer.Ordinal)
             .Select(domain => $"{domain}={currentPaths.Count(path =>
                 DirectoryOf(path) == bucketPrefix + domain
-                && !RepositoryRules.IsCapacityExcluded(path))}");
-        var coordinateDirectory = targetDirectory.StartsWith("Blueprint/", StringComparison.Ordinal)
-            ? targetDirectory["Blueprint/".Length..]
-            : targetDirectory;
-        var exits = coordinateDirectory.Count(static character => character == '/') == 3
-            ? "choose a sibling subdomain or new subdomain; nesting is limited to one subdomain level"
-            : "choose a sibling domain or new domain, or create a subdomain in this domain";
+                && !RepositoryRules.IsDirectoryCapacityExcluded(path))}");
+        // Depth is unbounded, so a full bucket has the same exits wherever it sits and the hint no
+        // longer branches on how deep the caller already is.
+        const string exits =
+            "choose a sibling bucket or a new bucket, or create a subdomain in this bucket";
 
         return $"bucket at capacity — 只裂不迁: {targetDirectory} projected occupancy {projectedOccupancy} "
             + $"exceeds maximum {RepositoryRules.DirectoryFileLimit}; split only, {exits}. "

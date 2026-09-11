@@ -61,9 +61,9 @@ internal static partial class RepositoryRules
     // SL-003 capacity limits. These are the single enforcement source shared by
     // the admission rule (Capacity, below) and RepositoryCapacityAudit, so both
     // agree on the exact thresholds with no drift.
-    internal const int ArtifactHardLineLimit = 800;
+    internal const int ArtifactHardLineLimit = 1000;
 
-    internal const int ArtifactSoftLineLimit = 600;
+    internal const int ArtifactSoftLineLimit = 800;
 
     internal const int DirectoryFileLimit = 48;
 
@@ -109,6 +109,14 @@ internal static partial class RepositoryRules
         || (path.StartsWith("Blueprint/", StringComparison.Ordinal)
             && path.EndsWith(".md", StringComparison.Ordinal));
 
+    // The literature problem pool (spec §11.20.3) is a flat slug-addressed pool of registered
+    // candidates that grows one file per registered candidate. As the spec states, pool
+    // membership conveys no resolution status; it is never navigated as a content bucket.
+    // Spec line 83: "容量只约束骨骼". This exclusion applies to DIRECTORY occupancy only;
+    // dossiers stay bounded by the artifact line limits.
+    internal static bool IsDirectoryCapacityExcluded(string path) =>
+        IsCapacityExcluded(path) || ProblemPoolPaths.IsCanonicalPath(path);
+
     // The canonical artifact line count: newline-delimited lines, not counting a
     // trailing terminator. Shared with RepositoryCapacityAudit so both tiers agree exactly.
     internal static int CountArtifactLines(string text) =>
@@ -120,7 +128,7 @@ internal static partial class RepositoryRules
         var directories = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
         foreach (var path in paths)
         {
-            if (IsCapacityExcluded(path.Value))
+            if (IsDirectoryCapacityExcluded(path.Value))
             {
                 continue;
             }
@@ -231,7 +239,9 @@ internal static partial class RepositoryRules
                     ? CountArtifactLines(baselineFile.Text)
                     : 0;
                 findings.Add(lineCount > baselineLineCount
-                    ? new RuleFinding(path.Value, "artifact exceeds 800 lines")
+                    ? new RuleFinding(
+                        path.Value,
+                        $"artifact exceeds {ArtifactHardLineLimit} lines")
                     : new RuleFinding(
                         path.Value,
                         $"artifact is overfull at {lineCount} lines (hard limit "

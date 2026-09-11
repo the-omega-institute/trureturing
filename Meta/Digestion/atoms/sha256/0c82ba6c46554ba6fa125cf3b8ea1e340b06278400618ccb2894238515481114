@@ -1,0 +1,10 @@
+**定义 12（带背景的粗观察）。** 取有限 bin 集合 $B$ 和映射 $f:\Omega_C\to B$，不要求满射。定义
+
+$$
+O_f(X)=(B,w,z),\quad
+w(b)=\sum_{e\in\Omega_C,\ f(e)=b}\sigma(e),\quad
+z(b)=\sum_{e\in A,\ f(e)=b}\sigma(e).
+$$
+
+这里 $w,z:B\to\mathbb Z$ 是电荷而不是布尔占据；bin 可承载 $2,-3,0$ 等整数，不必是一个符号为 $\pm1$ 的新事件。粗观察本身也没有自动携带新的合法因果偏序。
+

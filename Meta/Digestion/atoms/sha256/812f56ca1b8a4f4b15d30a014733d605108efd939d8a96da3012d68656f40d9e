@@ -1,0 +1,25 @@
+#### 6.2 定量负方向与二次增长
+
+若 \(L>0,u_n<0\)，由于 \(\Vert e_n\Vert ^2=n\)，Rayleigh 商给出
+
+\[
+\lambda_{\min}(T^{(n)})\le\frac{u_n}{nL}<0.
+\tag{E6}
+\]
+
+这是指定矩阵大小和指定见证向量的运输。另一方面，所有两点主压缩半正定给出 \(\vert c_k\vert \le c_0=1\)。由 (E4)
+
+\[
+|u_n|\le L\left[n+2\sum_{k=1}^{n-1}(n-k)\right]=Ln^2.
+\tag{E7}
+\]
+
+对规范 Li 系数，这给出
+
+\[
+\text{A014}\Longrightarrow\text{A013}\Longrightarrow\text{A010}
+\Longrightarrow\text{A005}\Longrightarrow\mathrm{RH}.
+\]
+
+最后两步应复用 #6219 的实际解析延拓候选源，并完成所需编译检查。该反向路线不需要把 Li 判据本身作为参数传入。
+

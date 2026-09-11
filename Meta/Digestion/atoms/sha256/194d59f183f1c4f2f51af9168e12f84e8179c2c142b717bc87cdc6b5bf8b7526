@@ -1,0 +1,37 @@
+#### 2.1 ξ、Ξ、实际零点与 Möbius 圆盘
+
+采用经典归一化
+
+\[
+\xi(s)=\frac12s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s),
+\qquad \xi(0)=\xi(1)=\frac12,
+\qquad \Xi(z)=\xi\!\left(\frac12+iz\right).
+\]
+
+在 Lean 中消费现有 `xiReading` 与其端点、整性、函数方程、共轭性质。记 \(\mathcal Z\) 为实际非平凡零点集合，\(m_\rho\) 为解析重数；枚举变化不改变带重数的规范和。
+
+定义
+
+\[
+w_\rho=1-\rho^{-1},\qquad
+D=\{z\in\mathbb C:|z|<1\},\qquad
+F(z)=\xi((1-z)^{-1}),
+\]
+
+\[
+G(z)=(1-z)^{-2}\frac{\xi'}{\xi}((1-z)^{-1}).
+\]
+
+\(G\) 的解析性是需要证明的性质，定义它时不能预先要求整个圆盘零点自由。Lean 对除法的全函数约定也不能把分母零点变成解析延拓证明。
+
+直接代数给出
+
+\[
+|w_\rho|^2-1=\frac{1-2\Re\rho}{|\rho|^2},\qquad
+w_{1-\rho}=w_\rho^{-1},\qquad
+w_{\bar\rho}=\overline{w_\rho}.
+\tag{E1}
+\]
+
+故临界线对应单位圆，右半临界带的零点对应圆盘内部。若使用 Suzuki 的谱坐标，本节固定 \(\gamma_\rho=i(\rho-\tfrac12)\)，即 \(\xi(\tfrac12-i\gamma_\rho)=0\)。它与惯用正虚部 ordinate 的符号差异必须通过现有坐标适配器处理。[L02, L03]
+

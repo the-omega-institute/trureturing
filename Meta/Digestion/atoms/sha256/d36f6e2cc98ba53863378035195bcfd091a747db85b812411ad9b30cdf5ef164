@@ -1,0 +1,10 @@
+**A064，C：**
+
+\[
+\int_0^\infty\frac{1-12t^2}{(1+4t^2)^3}
+\left(\int_{1/2}^\infty\log|\zeta(\sigma+it)|\,d\sigma\right)dt
+=\frac{\pi(3-\gamma_E)}{32}.
+\]
+
+采用 [L18] Eq. (2.1) 所列 Volchkov 表达，避免未规定路径的 `arg zeta`。对极点、零点的对数奇性和两层无穷积分分别证明合法性，不能只用截断数值代替等式。
+

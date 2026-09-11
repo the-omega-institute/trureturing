@@ -1,0 +1,10 @@
+**定义 4（并行加法）。** $X\boxplus Y$ 的档案、当前区域、选择分别为
+
+$$
+\iota_0[E_X]\sqcup\iota_1[E_Y],\quad
+\iota_0[\Omega_X]\sqcup\iota_1[\Omega_Y],\quad
+\iota_0[A_X]\sqcup\iota_1[A_Y].
+$$
+
+时间、位置、符号、来源照抄各自输入，只复制内部偏序，不增加跨输入的因果边。
+

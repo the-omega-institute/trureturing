@@ -1,0 +1,26 @@
+#### F16. 真实 zeta screw function 与实线概率（A059–A062）
+
+为使对象独立于 RH，先用 [L04] 的原始算术公式定义 \(g_\zeta\)。对 \(t\ge0\)，
+
+\[
+\begin{aligned}
+g_\zeta(t)={}&-4(e^{t/2}+e^{-t/2}-2)
++\sum_{n\le e^t}\frac{\Lambda(n)}{\sqrt n}(t-\log n)\\
+&-\frac t2\left(\frac{\Gamma'}\Gamma(1/4)-\log\pi\right)\\
+&+\frac14\left[e^{-t/2}\operatorname{LerchPhi}(e^{-2t},2,1/4)
+-\operatorname{LerchPhi}(1,2,1/4)\right].
+\end{aligned}
+\]
+
+向负数作偶延拓，\(g_\zeta(0)=0\)。完整无条件显式公式给出
+
+\[
+g_\zeta(t)=\sum_{\rho\in\mathcal Z}m_\rho
+\frac{e^{-i\gamma_\rho t}-1}{\gamma_\rho^2}.
+\tag{E3}
+\]
+
+须先证明实际算术公式、实值连续性及紧集上一致绝对收敛，不能在定义中假定 \(\gamma_\rho\) 都为实数。
+
+| ID | 类别 | 精确目标 |
+| --- | --- | --- |

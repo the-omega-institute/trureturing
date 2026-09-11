@@ -1,0 +1,13 @@
+**A070，显式 Mellin 表达：** 对所有 \(1/2<\delta<1\)、\(\gamma\in\mathbb R\)，
+\(\int_0^\infty t^{\delta-1+i\gamma}/(e^t+1)dt\ne0\)。
+
+直接桥梁为
+
+\[
+\int_0^\infty\frac{t^{s-1}}{e^{xt}+1}dt
+=x^{-s}\Gamma(s)(1-2^{1-s})\zeta(s),\quad x>0,\ \Re s>0.
+\tag{E17}
+\]
+
+\(s=1\) 按可去抵消解释。目标开带上 Gamma 与 \(1-2^{1-s}\) 不为零，故 A070 与 RH 等价。[E03] 任意有界函数的 Salem 唯一性仍需自己的分析证明；显式幂函数读法不替代它。2026 预印本的发表状态与经典 Mellin 恒等式分开，不主张新的数学优先权。
+

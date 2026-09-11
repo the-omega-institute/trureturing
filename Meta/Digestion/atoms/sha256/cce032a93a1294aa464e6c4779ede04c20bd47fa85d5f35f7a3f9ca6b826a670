@@ -1,0 +1,2 @@
+**A080，预印本规格，待独立核验：** 对全部 superabundant 正整数 \(n\)，\(\sigma(n)\le H_n+e^{H_n}\log H_n\)。superabundant 指每个 \(1\le m<n\) 都满足 \(\sigma(m)/m<\sigma(n)/n\)。[E09, Theorem 3.1] 声称最小 Lagarias 反例必为 superabundant；其有限初始区间与阈值单调性尚待独立复核。本条进入公开规格数量，但不能与独立核验完毕的经典定理或机器证明合并统计。
+

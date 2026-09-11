@@ -1,0 +1,4 @@
+**A075，Pólya–Schur 特化：** 对每个实根实多项式 \(\sum p_jX^j\)，系数乘子输出 \(\sum a_jp_jX^j\) 仍实根，零多项式按通用乘子定义允许。[E05] 通过 \(\Psi(u)=\sum a_nu^n/n!\) 的 Laguerre–Pólya I 类性质连接 RH。
+
+令 \(b_n=a_n/n!\) 对 \(n\ge0\)，\(b_n=0\) 对 \(n<0\)。
+

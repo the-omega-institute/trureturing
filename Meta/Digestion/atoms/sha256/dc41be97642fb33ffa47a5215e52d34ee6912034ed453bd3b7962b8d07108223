@@ -1,0 +1,8 @@
+**命题 1（补集恒等式及必要条件）。** 在每个有限情境中，对所有 $A\subseteq\Omega_C$，
+
+$$
+q_C(N_C(A))=u(C)-q_C(A),\qquad N_C(N_C(A))=A.
+$$
+
+并且 $u(C)=0$ 当且仅当对全部 $A\subseteq\Omega_C$ 都有 $q_C(N_C(A))=-q_C(A)$。
+

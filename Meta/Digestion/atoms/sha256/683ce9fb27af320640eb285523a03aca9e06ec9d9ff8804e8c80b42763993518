@@ -1,0 +1,14 @@
+**定义 1（情境与丰富整数表示）。** 情境是元组
+
+$$
+C=(E,\prec,t,x,\sigma,\rho,\Omega),
+$$
+
+其中 $E\subset HF$ 有限，称为档案；$\prec\subset E\times E$ 是严格偏序；$t:E\to\mathbb Z$、$x:E\to\mathbb Z^3$、$\sigma:E\to\{1,-1\}$、$\rho:E\to T$ 为全函数，且
+
+$$
+e\prec f\Longrightarrow t(e)<t(f),\qquad \Omega\subseteq E.
+$$
+
+$\Omega$ 是本次的**当前整体**，即候选贡献区域。丰富表示是 $X=(C,A)$，其中 $A\subseteq\Omega$ 是本次选中的贡献。档案中的 $E\setminus\Omega$ 不参与本次读数。空档案、空区域和空选择均允许。时间只是本模型的离散时标，偏序不是由距离推导出的光锥关系。
+

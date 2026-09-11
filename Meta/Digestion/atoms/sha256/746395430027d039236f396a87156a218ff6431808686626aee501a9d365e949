@@ -1,0 +1,23 @@
+**命题 6（实数完备化与合法求逆）。** 上述逐项运算对 $\mathcal R^{\rm rich}$ 封闭，等价关系是同余关系；映射 $[R]\mapsto\ell(R)$ 是到标准实数域 $\widehat{\mathbb Q}\cong\mathbb R$ 的同构。对于一条 Cauchy 读数序列 $a_n$，以下条件等价：
+
+$$
+[(a_n)]\ne0
+\quad\Longleftrightarrow\quad
+\exists\delta\in\mathbb Q_{>0}\ \exists N\ \forall n\ge N,
+\ |a_n|\ge\delta.
+\tag{R}
+$$
+
+在这个定义域上，求逆可逐项**完整**定义为
+
+$$
+(\operatorname{Inv}R)_n=
+\begin{cases}
+(R_n)^{-1}_{\mathbb Q},&a_n\ne0,\\
+R_n\boxplus_{\mathbb Q}N_{\mathbb Q}(R_n),&a_n=0.
+\end{cases}
+\tag{I}
+$$
+
+第二分支是合法的丰富有理零，不包含除以零；在 (R) 上，它只会在有限前缀被使用。实数除法定义为逐项乘以 (I)，只要求**除数实数类非零**。
+

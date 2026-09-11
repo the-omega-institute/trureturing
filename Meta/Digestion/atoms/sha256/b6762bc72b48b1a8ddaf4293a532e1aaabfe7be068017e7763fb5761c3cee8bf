@@ -1,0 +1,1 @@
+| A001 | R | 每个实际非平凡零点 \(\rho\) 满足 \(\Re\rho=1/2\)，使用 Mathlib 的标准 `RiemannHypothesis`。 

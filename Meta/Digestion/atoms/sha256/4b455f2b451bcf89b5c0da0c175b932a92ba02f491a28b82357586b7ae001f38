@@ -1,0 +1,64 @@
+## 18. 相邻二点指数箱体:经典分数背包的精确对偶
+
+**状态: PAPER_ARGUMENT / repo-derived 专门化,经典 LP 材料。** 本次追加日期为 2026-09-09,保留此前 1050 行。第 17 节的真实素数域比较仍 **OPEN**;这里消去价格下确界,证明三个充分条件,并给出一个仅在人工实数网格上的反向实例。GH 的未定义边界沿用第 1 节。
+
+固定有限的不同素数标签集 \(S\),\(k=|S|\ge2\),及整数 \(b_p\ge0\),只允许
+\(A_p=\{b_p,b_p+1\}\)。保留自然对数、\(g_p(a)=f((a+1)\log p)-\log(1-p^{-1})\)、\(f(x)=\log(1-e^{-x})\) 和准确的 \(E_S\)。设
+
+\[
+\log5040<T_0<T_1,\quad
+\mathcal A=\{a\in\prod_p A_p:T_0\le\sum_pa_p\log p\le T_1\}.
+\]
+
+所问素数域要求 \(\mathcal A\) 至少含两个不同的**实际整数指数向量**;其素数乘积由唯一分解给出两个不同整数 \(n>5040\)。下面的 LP 归约只需 \(\mathcal A\ne\varnothing\),不以混合分布代替这个假设。记
+
+\[
+\ell_p=\log p,\quad c_p=(b_p+1)\ell_p,\quad d_p=c_p+\ell_p,
+\quad \Delta_p=f(d_p)-f(c_p)>0,\quad\rho_p=\Delta_p/\ell_p,
+\]
+\[
+T_b=\sum_pb_p\ell_p,\quad B=T_1-T_b,\quad
+F_b=\sum_pg_p(b_p)=\log E_S+\sum_pf(c_p).
+\]
+
+本节 \(B\) 专指剩余预算,不是第 15 节的 \(e^\mu\)。非空性给出 \(T_b\le T_1\),故 \(B\ge0\)。第 17 节的同一个对偶精确化为
+
+\[
+U_{\rm dual}=\inf_{\lambda\ge0}Q(\lambda),\qquad
+Q(\lambda)=F_b+\lambda B+\sum_p\max(0,\Delta_p-\lambda\ell_p).
+\]
+
+**命题。** 按 \(\rho_p\) 非增排序,相等时按素数大小递增固定顺序 \(p_1,\ldots,p_k\)。若 \(B\ge\sum_p\ell_p\),则
+\(U_{\rm dual}=F_b+\sum_p\Delta_p\),可取 \(\lambda_*=0\)。否则令
+\(q_m=\sum_{i=1}^m\ell_{p_i}\),\(q_0=0\),取唯一的 \(m\in\{0,\ldots,k-1\}\) 使 \(q_m\le B<q_{m+1}\),并置
+
+\[
+J=\{p_1,\ldots,p_m\},\quad j=p_{m+1},\quad
+\theta=(B-q_m)/\ell_j\in[0,1).
+\]
+
+则有达到的原始 LP 值和对偶值
+
+\[
+\max_{\substack{0\le t_p\le1\\\sum_p\ell_pt_p\le B}}
+\left(F_b+\sum_p\Delta_pt_p\right)
+=U_{\rm dual}=F_b+\sum_{p\in J}\Delta_p+\theta\Delta_j.
+\]
+
+**证明及匹配证书。** 任意 LP 可行 \(t\) 与 \(\lambda\ge0\) 满足
+\(F_b+\sum_p\Delta_pt_p\le Q(\lambda)\):先用预算控制 \(\lambda\sum_p\ell_pt_p\),再逐项用 \(t_p(\Delta_p-\lambda\ell_p)\le\max(0,\Delta_p-\lambda\ell_p)\)。全箱可行时取全部 \(t_p=1\) 和 \(\lambda_*=0\),两边相等。其余情形取 \(t_p=1\) 于 \(J\),\(t_j=\theta\),其它为零,预算恰好饱和。取 \(\lambda_* =\rho_j>0\),前缀的 \(\Delta_p-\lambda_*\ell_p\ge0\),后缀的该量 \(\le0\),第 \(j\) 项为零。于是每一步上界都取等,具体为
+
+\[
+Q(\lambda_*)=F_b+\sum_{p\in J}\Delta_p+
+\lambda_*(B-\sum_{p\in J}\ell_p)
+=F_b+\sum_{p\in J}\Delta_p+\theta\Delta_j.
+\]
+
+这同时证明最优性、无 LP 对偶间隙及下确界达到,不需要用数值相近证明相等。密度相等时上述非严格符号仍成立,固定排序给出至多一个分数坐标的最优解,不声称所有最优解都只有一个分数坐标。证毕。
+
+\(B=0\) 时 \(J=\varnothing,\theta=0\),值为 \(F_b\);任意 \(\lambda\ge\max_p\rho_p\) 都给匹配证书。此时实际预算可行向量只有 \(b\),故不满足“至少两个”的完整问题域。\(0<B<\sum_p\ell_p\) 且 \(B=q_m\) 时仍有 \(\theta=0\),是整数最优解,不能称为真正分数解。\(B=\sum_p\ell_p\) 时全上端点恰好饱和;\(B>\sum_p\ell_p\) 时有松弛,全上端点的均值一般小于 \(\mu_1\)。
+
+概率证书是:前缀取上端点,其余取下端点,第 \(j\) 行以概率 \(\theta\) 取上端点。\(0<\theta<1\) 时它由两个箱体配置混合而成,\(\theta=0\) 时退化为一个。任意满足期望预算的箱体分布,其上端点边际概率形成 LP 可行 \(t\);反过来任意 LP 可行 \(t\) 可用独立 Bernoulli 坐标实现。因此 LP 精确描述的是**期望预算**不超过 \(T_1\) 的混合最优值;它不要求支撑点各自在 \([T_0,T_1]\) 内,甚至不要求各自预算不超过 \(T_1\)。
+
+**去重与文献边界。** [Z] `ZECKENDORF_EULER_5040.md` 第四十一章 **F-4:预算侧的反面见证** 已记录整数预算真最优值与价格对偶的严格差,含 \(\lambda_0=\rho(3,1)\)、预算 \(\log4\) 的例子。本节继承该区别,不新建第二个整数优化器,不称发现了该间隙。按密度排序的分数背包是经典算法;实施时读取的 [Continuous knapsack problem](https://en.wikipedia.org/wiki/Continuous_knapsack_problem) 的问题定义与算法段也给出同一归约和贪心规则。这里的匹配证书自含证明,网页仅为经典归属的有限核对,不支持文献穷尽或全球新颖性声明。
+

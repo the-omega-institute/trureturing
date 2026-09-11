@@ -1,0 +1,1 @@
+| `D5/S3/Weil/ZeroData/UnconditionalCanonicalZeroData.lean` | 无外部解析参数的 `zetaZeroData`，实际非平凡零点的穷尽性、唯一索引、正解析重数、反射与共轭；blob `a5ef2be4da1c3a6cf361b911d447bacc22be622f` | 所有零点判据共用这一实际对象。旧文档中“尚无 ZeroData 实例”的说法不再适用。 

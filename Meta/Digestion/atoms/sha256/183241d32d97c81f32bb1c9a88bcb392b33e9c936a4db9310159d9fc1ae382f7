@@ -1,0 +1,41 @@
+### 5. New actual centered full-residual computation
+
+The local interval consumer replays the archived complete-residual verifier
+at c=3 on the unchanged finite candidate k and trial v. It uses the same
+true aligned prolate model and inherited <1e-23 polynomial model-error cap.
+It encloses the true ratio r_e(z) on the complete closed box of half-width
+1/100000 around 20+i/4, using the inherited compact-support derivative bound.
+All model and spectral premises retain their earlier paper/interval scope.
+
+In the translated Fourier basis the origin representer is g0=sqrt(L)*e0,
+L=log(3). Thus centering changes only the finite residual head. Every
+nonzero exterior coefficient and the complete uncomputed tail stay exactly
+the same, rather than being dropped or refitted.
+
+For R=P_k(g_z-Mv), k real unit, and q=conj(r_e(z))*sqrt(L), the exact head
+update is
+
+    ||R-q*(e0-k0*k)||^2
+       =||R||^2+|q|^2*(1-k0^2)-2 Re(q*conj(R0)).          (CE7)
+
+The objective changes by -2 Re(r_e(z)*sqrt(L)*v0). Both the direct finite
+sum and covariance formula were evaluated and compared. All omitted positive
+and negative modes remain in the inherited exterior budget. The resulting
+centered coefficient has upper endpoint about 107.800065579058, hence
+
+    C_centered<108.                                      (CE8)
+
+For the archived exact energy numbers use the positive-form gap parameter
+s=1/100000 and CE2 parameter t=1/50000. Exact Fraction arithmetic gives
+A_t<20001/20000. The true origin floor exceeds 805/1000. With b=39/50,
+log(3)<11/10 and CE4, the derived p_e anchor is at least 39/50. The exact
+rational guards give
+
+    A_t*108*nu/(39/50)^2 < (9/10000)^2.                   (CE9)
+
+Thus, conditional on the recorded actual domain/spectral/model identities,
+the normalized true-mode to SAME prolate-model error is <9/10000 everywhere
+on this box. This is a validation of the new centered-energy consumer. It
+does not improve #5602's tighter 51/100000 result on a larger disk, produce
+a new eigenvalue enclosure, or certify a physical unbounded-scale rate.
+

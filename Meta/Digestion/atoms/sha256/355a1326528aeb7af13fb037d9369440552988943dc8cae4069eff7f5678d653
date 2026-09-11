@@ -1,0 +1,8 @@
+**命题 4（整数算术同构）。** $\sim$ 是 $\mathcal B$ 上的等价关系，并且是 $\boxplus,\boxtimes,N$ 的同余关系。商集 $\mathbb Z_{\rm st}=\mathcal B/{\sim}$ 在这些诱导运算下是与 $\mathbb Z$ 同构的环，唯一指定的同构为
+
+$$
+\bar q_{\mathbb Z}([X])=q(X).
+$$
+
+在 $q\ge0$ 的表示子集上，仅用加、乘、零、一取商，得到 $\mathbb N$ 的半环；负号不封闭于该子集。
+

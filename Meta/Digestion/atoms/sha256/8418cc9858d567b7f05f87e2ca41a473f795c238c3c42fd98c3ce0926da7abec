@@ -1,0 +1,18 @@
+### 19. 新增参考文献
+
+- **[E01]** A. Laurinčikas, *Remarks on the Connection of the Riemann Hypothesis to Self-Approximation*, Computation 12(8), 164 (2024), [DOI:10.3390/computation12080164](https://www.mdpi.com/2079-3197/12/8/164). Theorems 2、4。
+- **[E02]** J. Manzur, W. Noor, G. Quintero, *A Hardy space approximation supporting zero-free half-planes for the ζ-function*, [arXiv:2606.16097v1](https://arxiv.org/html/2606.16097v1). Theorems 2.1–2.2 重述原始 Noor、Bagchi 判据；不采用数值实验作证明。
+- **[E03]** González, Negrín, *A new equivalence to the Riemann Hypothesis by means of the Salem integral equation*, [arXiv:2604.15396v1](https://arxiv.org/html/2604.15396v1). 经典 Salem 与显式幂函数读法；预印本。
+- **[E04]** S. K. Sekatskii, *Generalized Bombieri–Lagarias’ theorem and generalized Li’s criterion*, [arXiv:1304.7895v3](https://arxiv.org/abs/1304.7895v3). Theorems 1、2、5。
+- **[E05]** I. Wagner, *On a new class of Laguerre–Pólya type functions with applications in number theory*, [arXiv:2108.01827v2](https://arxiv.org/abs/2108.01827v2). 经典 Pólya–Schur 与广义 Laguerre 引用链；不将 shifted 类结果升级为 RH。
+- **[E06]** W. Michałowski, *An explicit uniform cubic wedge for consecutive Toeplitz minors of the Riemann ξ-coefficients*, [arXiv:2607.16795v1](https://arxiv.org/html/2607.16795v1). 使用引言的经典 PF∞ 对应，巨大 shift 结果没有在本轮独立核验。
+- **[E07]** J. Sondow, C. Dumitrescu, *A monotonicity property of Riemann’s xi function and a reformulation of the Riemann Hypothesis*, [arXiv:1005.1104](https://arxiv.org/abs/1005.1104). Corollary 1。
+- **[E08]** S. Nazardonyavi, S. Yakubovich, *Extremely abundant numbers and the Riemann hypothesis*, [arXiv:1211.2147](https://arxiv.org/abs/1211.2147). Theorem 2.4。
+- **[E09]** A. MacArevey, *On the Lagarias Inequality and Superabundant Numbers*, [arXiv:2602.15905v2](https://arxiv.org/html/2602.15905v2). Theorem 3.1；A080 待独立核验。
+- **[E10]** M. Deléglise, J.-L. Nicolas, *The Landau function and the Riemann hypothesis*, [arXiv:1907.07664](https://arxiv.org/abs/1907.07664). Theorem 1.1、Corollary 1.3、Section 2.2。
+- **[E11]** J.-L. Nicolas, *A Robin inequality for n/phi(n)*, New Zealand Journal of Mathematics 55 (2024), 1–9, [DOI:10.53733/324](https://nzjmath.org/index.php/NZJMATH/article/view/324). Theorem 1.1 与 Eqs. (1.5)–(1.12)。
+- **[E12]** Garg, Maji, *Equivalent criteria for the Riemann hypothesis for a general class of L-functions*, [arXiv:2409.17708v2](https://arxiv.org/html/2409.17708v2). Introduction、Theorems 3.10、3.13；这里只收普通 ζ 范围。
+- **[E13]** K. Broughan, *Equivalents of the Riemann Hypothesis*, Volume I (2017), [DOI:10.1017/9781108178228](https://doi.org/10.1017/9781108178228); Volume II (2017), [DOI:10.1017/9781108178266](https://doi.org/10.1017/9781108178266). 已核目录与部分对应原文，未完成全书逐定理核对。
+- **[E14]** K. Broughan, Volume III (2023), [DOI:10.1017/9781009384780](https://doi.org/10.1017/9781009384780). 逐定理覆盖审查仍开放。
+- **[E15]** American Institute of Mathematics, [RH expert workshop outline](https://www.aimath.org/WWN/rh/rh.pdf), Section C。第一方专家目录与原文追溯入口，空标题不充当完整定理。
+

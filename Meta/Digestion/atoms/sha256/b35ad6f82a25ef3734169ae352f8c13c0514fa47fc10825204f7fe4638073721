@@ -1,0 +1,1 @@
+| A047 | C | 对每个整数 \(k\ge1\)，\(P_k/\varphi(P_k)>e^{\gamma_E}\log\log P_k\)。 

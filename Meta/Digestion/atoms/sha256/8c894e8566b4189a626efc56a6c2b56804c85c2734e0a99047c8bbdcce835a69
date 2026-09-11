@@ -1,0 +1,19 @@
+#### 2.3 Jensen 的正偶阶系数
+
+定义
+
+\[
+a_n=\frac{n!}{(2n)!}\xi^{(2n)}\!\left(\frac12\right)>0,
+\qquad
+\xi\!\left(\frac12+z\right)=\sum_{n\ge0}\frac{a_n}{n!}z^{2n}.
+\]
+
+严格正性由实际 theta 积分的偶矩给出，应独立形式化。用级数定义整函数
+\(\Psi(u)=\sum_{n\ge0}a_nu^n/n!\)，避免依赖平方根分支；有 \(\Psi(-z^2)=\Xi(z)\)。定义
+
+\[
+J_{d,m}(X)=\sum_{j=0}^d\binom dj a_{m+j}X^j.
+\]
+
+[L05] 的系数归一化为 \(\gamma_n=8a_n\)。这个共同正因子不改变多项式根，但必须先证明与本项目导数定义一致。不能直接拿 \(\Xi\) 的交错 Taylor 系数，或包含恒零奇阶项的序列，替代这里的 \(a_n\)。
+

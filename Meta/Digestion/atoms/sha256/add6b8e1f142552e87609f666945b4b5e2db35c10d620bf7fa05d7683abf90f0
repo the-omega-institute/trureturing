@@ -1,0 +1,35 @@
+**28.15 定理 C:非零非负整数指数射线的 ceiling 截断。** 固定同一 \(P\),取
+\[
+m,r\in\mathbb Z_{\ge0}^3,\qquad m\ne(0,0,0),\qquad
+b_i(n)=m_i n+r_i\quad(n\in\mathbb Z_{\ge0}).
+\]
+在原始固定标签下定义
+\[
+\alpha_i=m_i\log p_i,\qquad \gamma_i=(r_i+1)\log p_i,\qquad
+c_i(n)=\alpha_i n+\gamma_i.
+\]
+任选最大斜率标签 \(i_+\) 与最小斜率标签 \(i_-\);若几个最小值同为零,
+可任取其中一个。置
+\[
+\Delta=\alpha_{i_+}-\alpha_{i_-}>0,\qquad
+\beta=\gamma_{i_+}-\gamma_{i_-},\qquad
+\boxed{N=\max\left\{0,\left\lceil\frac{R-\beta}{\Delta}\right\rceil\right\}.}
+\]
+则对每个整数 \(n\ge N\),箱体 \(b(n)\) 的每个可容许实薄层均满足 \(G<0\)。
+
+证明。先验 \(\Delta>0\):若全部 \(\alpha_i\) 相同且一个 \(m_i=0\),
+共同斜率为零,使所有 \(m_i=0\),矛盾。若共同斜率严格正,则任意两个标签满足
+\(p_i^{m_i}=p_j^{m_j}\),与不同素数的唯一分解矛盾。
+因此 \(\Delta\) 严格正,\(N\) 有限且为非负整数。对每个 \(n\ge0\),
+不管当前坐标的排序怎样,都有
+\[
+\max_i c_i(n)-\min_i c_i(n)
+\ge c_{i_+}(n)-c_{i_-}(n)=\Delta n+\beta.
+\]
+当整数 \(n\ge N\) 时,ceiling 定义确保 \(\Delta n+\beta\ge R\),
+即使 \((R-\beta)/\Delta\le0\) 而 \(N=0\) 也如此。
+定理 B 的逆否形式遂给所需严格负号。\(\Delta n+\beta=R\) 被同一定理覆盖,
+无需给 ceiling 加一,也无需第 27 节的坐标排序稳定化 cutoff。
+零斜率坐标可以存在,\(\beta\) 可以为负,都不改变证明。
+这里没有计算或认证任何数值 \(N\)。证毕。
+

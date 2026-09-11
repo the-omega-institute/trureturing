@@ -1,0 +1,28 @@
+**状态: PAPER_ARGUMENT / repo-derived 专门化,经典 LP 材料。** 本次追加日期为 2026-09-09,保留此前 1050 行。第 17 节的真实素数域比较仍 **OPEN**;这里消去价格下确界,证明三个充分条件,并给出一个仅在人工实数网格上的反向实例。GH 的未定义边界沿用第 1 节。
+
+固定有限的不同素数标签集 \(S\),\(k=|S|\ge2\),及整数 \(b_p\ge0\),只允许
+\(A_p=\{b_p,b_p+1\}\)。保留自然对数、\(g_p(a)=f((a+1)\log p)-\log(1-p^{-1})\)、\(f(x)=\log(1-e^{-x})\) 和准确的 \(E_S\)。设
+
+\[
+\log5040<T_0<T_1,\quad
+\mathcal A=\{a\in\prod_p A_p:T_0\le\sum_pa_p\log p\le T_1\}.
+\]
+
+所问素数域要求 \(\mathcal A\) 至少含两个不同的**实际整数指数向量**;其素数乘积由唯一分解给出两个不同整数 \(n>5040\)。下面的 LP 归约只需 \(\mathcal A\ne\varnothing\),不以混合分布代替这个假设。记
+
+\[
+\ell_p=\log p,\quad c_p=(b_p+1)\ell_p,\quad d_p=c_p+\ell_p,
+\quad \Delta_p=f(d_p)-f(c_p)>0,\quad\rho_p=\Delta_p/\ell_p,
+\]
+\[
+T_b=\sum_pb_p\ell_p,\quad B=T_1-T_b,\quad
+F_b=\sum_pg_p(b_p)=\log E_S+\sum_pf(c_p).
+\]
+
+本节 \(B\) 专指剩余预算,不是第 15 节的 \(e^\mu\)。非空性给出 \(T_b\le T_1\),故 \(B\ge0\)。第 17 节的同一个对偶精确化为
+
+\[
+U_{\rm dual}=\inf_{\lambda\ge0}Q(\lambda),\qquad
+Q(\lambda)=F_b+\lambda B+\sum_p\max(0,\Delta_p-\lambda\ell_p).
+\]
+

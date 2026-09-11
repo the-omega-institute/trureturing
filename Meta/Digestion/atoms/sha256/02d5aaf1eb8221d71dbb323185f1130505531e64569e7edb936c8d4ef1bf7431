@@ -1,0 +1,50 @@
+## proposition 2: Lower bound
+
+Set R={r:0<=r<=a} and M(r)=|r|!/product_i(r_i!). Actual legal prefixes define
+unit residual memories phi_r: apply the remaining isometric evolution to a
+prefix memory and use injectivity to see that its normalization depends only
+on r, including phase. With phi_0=f and z_d=<phi_d,f>, their Gram entries are
+
+    G_rs = sqrt(M(s) M(r-s)/M(r)) z_(r-s)  if s<=r,
+
+zero for incomparable indices, with conjugate reverse entries and z_0=1.
+Thus G is PSD and rank G<=dim H. This necessity was also independently audited
+in the earlier Gram characterization.
+
+Let D_rr=sqrt(M(r)) and B=DGD. On nonzero r,s,
+
+    B_rs = sum_i B_(r-e_i,s-e_i),
+
+omitting zero coordinates. Define T_i e_r=e_(r-e_i) when r_i>0 and0 otherwise.
+For u_0=0 the recurrence gives the sesquilinear identity
+
+    u^* B u = sum_i (T_i u)^* B(T_i u).
+
+PSD therefore implies T_i u in ker B whenever u in ker B and u_0=0.
+The invertible coefficient map J(e_r)=x^r/product_i(r_i!) intertwines T_i with
+partial_i. Hence L=J(ker B) contains no nonzero constant and has conditional
+derivative closure: p in L and p(0)=0 imply partial_i p in L.
+
+Polynomial rigidity: if dim L>=2, then L is contained in C[ell] for one
+nonzero homogeneous linear form ell. To prove this, choose a nonzero p in L
+of minimum degree m. Its value at0 is nonzero, since otherwise all partials
+would have smaller degree in L and vanish. Choose nonzero q of minimum degree
+n in the kernel of evaluation at0. Then n>m, and every element of L below
+degree n is a multiple of p. Thus partial_i q=c_i p, not all c_i zero.
+Commuting mixed derivatives shows p,q depend only on ell=sum_i c_i x_i.
+
+If h outside C[ell] exists in L, take its minimum degree and subtract
+h(0)p/p(0). This cannot increase degree and leaves h outside C[ell] with zero
+constant term. All its partials lie in L intersect C[ell]. For a tangent
+direction v with ell(v)=0 and u with ell(u)=1, commutation gives
+D_u D_v h=D_v D_u h=0. Thus D_v h is constant; membership in L makes it zero.
+All tangent derivatives vanish, contradicting h outside C[ell]. This uses
+complex directions and characteristic zero, with no positivity of c_i assumed.
+
+If ell has nonzero coefficient c_i, a degree-n polynomial F(ell) has a nonzero
+x_i^n coefficient. Rectangular support forces n<=b=min_(c_i!=0)a_i. Excluding
+the constant direction bounds dim L<=b<=max_i a_i. Nullity0/1 satisfies the
+same bound for a nontrivial box; the all-zero box has G=[1]. Hence
+
+    rank G >= |R|-max_i a_i.
+

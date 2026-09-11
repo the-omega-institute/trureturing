@@ -1,0 +1,18 @@
+### 34.4 命题 53：区域筛选至历史同构的完整表达判据
+
+对任意 $B\subseteq K$ 记
+
+$$
+S_B=\{p:\exists t\ (t,p)\in B\},\qquad
+Q_B=\{(p,\epsilon,r,t):(t,p)\in B,\ \epsilon\in\{\pm1\},\ r\in T\}.
+$$
+
+定义条件
+
+$$
+H_B:\quad
+\forall p\in S_B\ \forall q\in\mathbb Z^3\ \forall t<s:\quad
+(s,q)\in B\ \Longrightarrow\ (t,p)\in B.
+\tag{MIX-H}
+$$
+

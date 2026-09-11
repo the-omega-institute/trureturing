@@ -1,0 +1,15 @@
+## 7. 研究意义、复验及尚缺的连接
+
+前节已经在同一个 I 上认证实际 Weil ground 的简单偶性和大于 4.8e-6 的间隔。本节消除了模型端尚无统一尺度误差及原点分母控制的缺口。不能因此声称 ground/model 的同尺度差已经小：还需要实际 q_a 正交补上的能量对偶试探及完整 residual，或有效的低能谱投影传递。中心尺度已有的 0.00051 归一化 ground/model 圆盘界，也不能未经 ground 传递误差预算就扩展到整个 I。
+
+本次重新核对 CCM arXiv:2511.22755 的官方版本页（取得的记录列出 v1）和正文 Sections 7-8；其模型极限与真实模式充分逼近保持分开。Connes 2026 综述 arXiv:2602.04022 为同一路线背景。实际读取 5040/Mertens 研究链 #6204 的 `GronwallUpperEnvelope.lean`，blob `75eb28885ee1250985d9dbd19b73fa76f3502d04`：该结论是 sigma(n)/(exp(gamma)*n*loglog n) 的渐近上包络，不是本节的算子间隔或 prolate 估计，不将标量渐近移作谱假设。原有 #5882 能量对偶、#5895 正移位形式和归一化消费者继续作为下游目标，未新建通用包装。
+
+现行模型源 SHA-256：`fe1d574f38a13e0dbcc185649c0e6c32dfd9e1cb676ceebb73ad7c6c31218b4f`；固定提案 SHA-256：`242c9897bbd247ef0485039e6dcde819a351c5900ceac52fecc420934c1896db`。本次实际重放 110、130 位定向区间计算，全部惯性、完整残差、符号、原点和误差 guard 通过。110 位结果 Git blob 与远端 `45c149e61156ad85ce1c5cd0cbde1ba297ec790f` 完全一致；其 SHA-256 为 `bd57ff4bf4b7a388dc086519f708ee33b381f1202af25a11cba0d0bfc81f4d0a`。同时重放前节 70、100 位的全空间 Weil 区间证书通过。本轮的重放不等于独立作者审稿。
+
+Lean 的三个公开声明与三个同名 Scribe handles 对应，完整谱实现、积分变换、跨激活拼接和归一化运输仍是上述纸面桥。Lean elaboration、Scribe emission、传递公理报告未执行，没有新增冻结或 CI 状态声明。经典谱残差、Leibniz 公式和商估计不作数学优先权主张。当前窄尺度区间和小复圆盘尚不能推出无界尺度族上的 Xi 极限或 RH。
+
+参考：Connes-Consani-Moscovici, *Zeta Spectral Triples*, arXiv:2511.22755v1, Sections 7-8；Connes, arXiv:2602.04022；既有 `WeilPolynomialMellinWindow`、`WeilMellinScaleFlow` 和本卷 prolate Jacobi 实现。
+
+- https://arxiv.org/abs/2008.10871 , complete-exterior spectral discretization
+  methodology; its Schrodinger assumptions are not asserted for the Weil form.
+

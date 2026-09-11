@@ -1,0 +1,11 @@
+**证明:区间与正性。** 写 \(z=y_j\)、\(s=z-\mu\)、\(W=\sum_{p\ne j}(y_p-\mu)^2\)。其它坐标都是实际端点,且 \(\mu\in I\),所以 \(\sum_{p\ne j}\eta_p^2\le W\)。由
+\(W+s^2=\overline V<V_0=\sum_{p\ne j}\eta_p^2+\delta^2\) 得到 \(\delta^2>s^2\),即 \(\delta>|s|\)。特别地 \(\delta>0\),两个端点都不在 \(I\) 中。如果二者都在 \(I\) 左边,则 \(\mu-z\ge\mu_0-d_j\ge\delta\);都在右边则 \(z-\mu\ge c_j-\mu\ge\delta\),均矛盾。因此
+
+\[
+c_j<\mu_0\le\mu<d_j,\quad
+\delta=\min(\mu_0-c_j,d_j-\mu),\quad
+0<c_j\le\mu-\delta<z<\mu+\delta\le d_j.
+\]
+
+左侧包含性来自 \(\mu-\delta\ge c_j+(\mu-\mu_0)\ge c_j>0\),右侧来自 \(\delta\le d_j-\mu\)。这既证明跨越整个 \(I\),也证明替代端点为正,不能只凭画图假定它们存在。
+

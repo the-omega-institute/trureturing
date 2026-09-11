@@ -1,0 +1,19 @@
+#### 7.1 原始 Nyman Mellin 恒等式
+
+对 \(0<\theta\le1\)、\(0<\Re s<1\)，
+
+\[
+\int_0^1\{\theta/x\}x^{s-1}dx
+=\frac\theta{s-1}-\frac{\theta^s\zeta(s)}s.
+\tag{E9}
+\]
+
+可先在 \(\Re s>1\) 将 floor 写为指示函数和并逐项积分，再用左侧在 \(\Re s>0\) 的解析性作延拓，处理 \(s=1\) 的可去抵消。复幂使用正实数的实对数。
+
+在 \(L^2(0,1)\) 上，\(\mathcal L_\rho f=\int_0^1f(x)x^{\rho-1}dx\) 的范数为 \((2\beta-1)^{-1/2}\)。由 (E9) 及 \(B_0\) 的约束，\(\mathcal L_\rho\) 消去整个 \(B_0\)，而 \(\mathcal L_\rho1=1/\rho\)。故
+
+\[
+\operatorname{dist}(1,\overline{B_0})\ge\frac{\sqrt{2\beta-1}}{|\rho|}.
+\tag{E10}
+\]
+

@@ -1,0 +1,9 @@
+**命题 11（总操作与部分操作的下降判据）。** 设 $q:\mathcal X\twoheadrightarrow Q$ 为满射，$U:\mathcal X\to\mathcal X$ 是确定性总操作。存在唯一 $\bar U:Q\to Q$ 使 $q\circ U=\bar U\circ q$，当且仅当
+
+$$
+q(X)=q(Y)\Longrightarrow q(U(X))=q(U(Y)).
+\tag{D}
+$$
+
+对部分操作 $U:D\to\mathcal X$，若下降还须保留**恰好相同的定义域**，则另外且恰好要求 $D=q^{-1}[q[D]]$，并要求 (D) 对 $X,Y\in D$ 成立。多元版本把 $q$ 换成乘积读数，结论相同。
+

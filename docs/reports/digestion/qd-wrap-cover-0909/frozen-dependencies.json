@@ -1,0 +1,62 @@
+{
+  "b11": [
+    {
+      "declaration": "D5.S3.Zeros.Jensen.NormalizedJensenDegreeLowering.normalizedJensen_degree_lowering",
+      "gid": "D5/S3/Zeros/Jensen/NormalizedJensenDegreeLowering.normalizedJensen_degree_lowering",
+      "statement_id": "sha256:f13a2fdd4121c7b170af20e397cf8d9c567ddfcfd4dd8e37d469c21f8603d6bf",
+      "frozen_module_statement_id": "sha256:ee43a04a542df25237818cbfeeb29bb1abaed956f90db04822d08e8f413d50b4",
+      "accepted_event": "Golden/Frozen/accepted/afd9189dc663834087e112c1f91417f4f168ac2c96ec35c1fa10631a68a6ea32.json",
+      "scope": "Arbitrary real coefficient sequence and degree at least two; polynomial lowering only.",
+      "verification": "Read current state pin and matching accepted declaration identity; source-level proof use reviewed, not a new transitive-dependency extractor."
+    },
+    {
+      "declaration": "D5.S3.Zeros.Jensen.NormalizedJensenDegreeLowering.sourceJensenPolynomial_eq_normalizedJensen",
+      "gid": "D5/S3/Zeros/Jensen/NormalizedJensenDegreeLowering.sourceJensenPolynomial_eq_normalizedJensen",
+      "statement_id": "sha256:0c96cec689edaf5a585802b79a9c52b976c6dcedbee0cd259b40d0a7d19ecfa9",
+      "frozen_module_statement_id": "sha256:ee43a04a542df25237818cbfeeb29bb1abaed956f90db04822d08e8f413d50b4",
+      "accepted_event": "Golden/Frozen/accepted/afd9189dc663834087e112c1f91417f4f168ac2c96ec35c1fa10631a68a6ea32.json",
+      "scope": "Actual source to normalized Jensen polynomial for positive degree.",
+      "verification": "Read current state pin and matching accepted declaration identity; source-level proof use reviewed, not a new transitive-dependency extractor."
+    }
+  ],
+  "b3": [
+    {
+      "declaration": "D5.S3.Zeros.Jensen.SourceJensenIntegralExtension.source_jensen_integral_extension",
+      "gid": "D5/S3/Zeros/Jensen/SourceJensenIntegralExtension.source_jensen_integral_extension",
+      "statement_id": "sha256:a8936b9e14aa7a92fc0e635fc797651d50954edfd7b5a05df5349a1a55a1455e",
+      "frozen_module_statement_id": "sha256:69753797ae7111e7603fd1f8dbfe7c434da1f2ebc2d95d8a7a88d8165dc09042",
+      "accepted_event": "Golden/Frozen/accepted/513d2b730b8904d7eda32910bc49fc7522dd114a55fc9f3b1f6ec220b5bf81bd.json",
+      "scope": "Uses the full polynomial derivative projection for d=n+2.",
+      "verification": "Read current state pin and matching accepted declaration identity; source-level proof use reviewed, not a new transitive-dependency extractor."
+    },
+    {
+      "declaration": "D5.S3.Zeros.Jensen.SourceThetaMomentBounds.source_theta_normalization",
+      "gid": "D5/S3/Zeros/Jensen/SourceThetaMomentBounds.source_theta_normalization",
+      "statement_id": "sha256:f2833d5f83723ffce02a966e718c61fa0d1e6bd269835bfcc1c5ed396ced9d03",
+      "frozen_module_statement_id": "sha256:9de7bd223c662525a590ce1366b1efcfc26700544e7bb42d0e6fb229b51f67f1",
+      "accepted_event": "Golden/Frozen/accepted/b380c7f38f7c8f78b36353265b0f7411ccf10a5c0742d486bba394dc862476a5.json",
+      "scope": "Uses the coefficient positivity projection under the explicit h0 normalization.",
+      "verification": "Read current state pin and matching accepted declaration identity; source-level proof use reviewed, not a new transitive-dependency extractor."
+    }
+  ],
+  "b4": [
+    {
+      "declaration": "D5.S3.Zeros.Jensen.SourceJensenIntegralExtension.source_jensen_integral_extension",
+      "gid": "D5/S3/Zeros/Jensen/SourceJensenIntegralExtension.source_jensen_integral_extension",
+      "statement_id": "sha256:a8936b9e14aa7a92fc0e635fc797651d50954edfd7b5a05df5349a1a55a1455e",
+      "frozen_module_statement_id": "sha256:69753797ae7111e7603fd1f8dbfe7c434da1f2ebc2d95d8a7a88d8165dc09042",
+      "accepted_event": "Golden/Frozen/accepted/513d2b730b8904d7eda32910bc49fc7522dd114a55fc9f3b1f6ec220b5bf81bd.json",
+      "scope": "Uses the full derivative projection to derive criticality of the scaled preceding roots.",
+      "verification": "Read current state pin and matching accepted declaration identity; source-level proof use reviewed, not a new transitive-dependency extractor."
+    },
+    {
+      "declaration": "D5.S3.Zeros.Jensen.SourceJensenPositiveExtension.source_jensen_positive_extension",
+      "gid": "D5/S3/Zeros/Jensen/SourceJensenPositiveExtension.source_jensen_positive_extension",
+      "statement_id": "sha256:aff726c2285de50e35bd19fe5256d773f97e4d4aa967a601cee7df2aeb215989",
+      "frozen_module_statement_id": "sha256:a8f73fcb2c082adec6d64fca18f9e294965527b1a3438249bd3ed94b910f9e1d",
+      "accepted_event": "Golden/Frozen/accepted/cd712e5b6557f689f6d63fe7713b19ca86e63ac6618380879947ba3f4d5dfd36.json",
+      "scope": "Uses the second-derivative nonzero projection with exactly the same source and preceding roots.",
+      "verification": "Read current state pin and matching accepted declaration identity; source-level proof use reviewed, not a new transitive-dependency extractor."
+    }
+  ]
+}

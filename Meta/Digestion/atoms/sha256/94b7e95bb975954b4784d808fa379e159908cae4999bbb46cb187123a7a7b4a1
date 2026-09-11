@@ -1,0 +1,1 @@
+| A012 | D | \(\limsup_{n\to\infty}\vert \lambda_{n+1}\vert ^{1/n}\le1\)，根指数从 \(n\ge1\) 起。 

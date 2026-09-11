@@ -1,0 +1,8 @@
+### 31.2 本批产地与调用边界
+
+本批由 `consensus-rnd:sshx` 的一个 `codex-cli implementation worker` 在工作树 `/Users/auricstudio/trureturing-csa-upgrade-pr3-0909`、分支 `lane/theory/csa-upgrade-pr3-0909` 实施，基线钉住 `4ac806a62d274a48550978b827a4bf546a8c898e`。输入为 caller 交付的收敛 brief（含 R1）、本仓标架与既有卷文，属于 `repo-prior-exposed`；本 implementation worker 未另派子席。
+
+按 **caller／brief 提供的席位记录**，思考席六席全部为 `nyxid-oracle`，其中五席为 codex 负载门超时后的协议回退。该席位说明不是本 worker 对宿主超时原因的独立测量，也不构成模型多样性声明。本 worker 亲跑附录、canonical ingest 与下列 git／字节核对；orchestrator 亲验结果未向本席提供，记“未测”。评审与 PR 生命周期由 caller 接续；本节不预报评审、CI 或合入结果。
+
+本批形态为 **ingest**：`contextual-spacetime-arithmetic` 源卷新增内容经 canonical writer 进入 atom CAS 与该 source 的 `residual-open` backfill。未新增 Lean、axiom、判官、schema 或生产引擎；本批没有 deposit／cover，不报告新增冻结或已吸收状态。Lean、CI、独立评审与物理实验均为“未测”，分别由形式化／CI／评审／物理模型工作承担。
+

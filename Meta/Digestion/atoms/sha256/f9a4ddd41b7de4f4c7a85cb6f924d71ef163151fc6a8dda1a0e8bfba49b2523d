@@ -1,0 +1,30 @@
+### 3. The fixed trial controls the entire frequency disk
+
+For the same e and trial v, let
+
+    h_z=g_z-conj(F(e)(z)/F(e)(0))*g0,
+    s_z=P_e(h_z-(M-sigma)v).
+
+Since v and sigma are FIXED as z changes,
+
+    s_z-s_z0=P_e(h_z-h_z0),
+    ||s_z||<=||s_z0||+||h_z-h_z0||.                      (SC2)
+
+The new signed_goal_residual_neighborhood proves this identity's norm
+consequence using the existing orthogonal projection contraction. The
+residual is a full Hilbert-space vector, including every omitted Fourier
+coefficient. No positive high-frequency term disappears during transport.
+
+The parallel same-model readout certificate independently proves
+||h_z-h_z0||<=(8/5)|z-z0| on |z-z0|<=1/1000, z0=20+i/4. It includes the
+variation of the true-model ratio, not just the raw Fourier kernel. The
+signed model pairing D=<v,(M-sigma)e> is constant across this disk because
+the repaired trial, model and spectral center are fixed.
+
+The previous complete centered residual calculation was rerun at 100 digits,
+and the complete signed 512-mode pairing was rerun at 120 digits. Both agree
+with the recorded outward rational enclosures. Model Fourier coefficients
+are evaluated through 512, arithmetic columns through 8192, and all remaining
+modes have their original complete tail budgets. The same arithmetic AST,
+finite trial, unit-model alignment and model-proposal hash are retained.
+

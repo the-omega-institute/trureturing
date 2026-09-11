@@ -1,0 +1,36 @@
+### 4. Derive the actual eigenmode anchor and normalized error
+
+Let M u=lambda*u with u nonzero, 0<=lambda<kap and q(e)<=nu<kap, where e is
+unit. The existing projective Rayleigh theorem and energy identity yield
+
+    p_e=u/<e,u>=e+w,    w perpendicular to e,
+    0<=q(w)<=nu,       kap||w||^2<=nu.
+
+For b>0 assume the independently checkable squared origin margin
+
+    b<=|<g0,e>|,
+    ||g0||^2*nu<=kap*(|<g0,e>|-b)^2.                     (CE4)
+
+Cauchy-Schwarz then gives |<g0,p_e>|>=b, so <g0,u> is nonzero as well.
+Combining this conclusion with CE1-CE2 proves for the actual eigenvector
+
+    |<g_z,u>/<g0,u>-<g_z,e>/<g0,e>|^2
+       <= A_t*C*nu/b^2.                                 (CE5)
+
+The raw eigenvector may have any nonzero complex phase and scale. Both
+cancel algebraically. The hypotheses supply its eigenpair and spectral
+placement; the theorem does not create the eigenvector.
+
+The new moving-domain theorem uses CE3 and proves standard Mathlib
+TendstoUniformlyOn for the ACTUAL ratio difference when, on the target set K,
+
+    nu_j*Cbar_j/b_j^2 -> 0.                              (CE6)
+
+The centered coefficient, actual gap/energy and squared origin margins
+remain explicit. All Hilbert spaces and operator domains may vary with j.
+There is no additional W*eps^2*|F(k)|^2/kappa rate in this bound. This reduces
+the sufficient estimate to one correctly centered observable. It does not
+prove CE6 for the unbounded arithmetic Weil/prolate family, and a bound on
+the old uncentered C does not prove it either. Convergence of the SAME
+normalized model functions to Xi(z)/Xi(0) is a separate final input.
+

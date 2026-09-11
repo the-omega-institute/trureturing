@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5f5912050d91b5f8998e6799d12c40e766fa4d65798ff890b506a56c3bc0ed3c
+  normalized_sha256: sha256:5f5912050d91b5f8998e6799d12c40e766fa4d65798ff890b506a56c3bc0ed3c
+cas_ref: sha256:5f5912050d91b5f8998e6799d12c40e766fa4d65798ff890b506a56c3bc0ed3c
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenResource/FourFactorSumProductBalance.sorted_positive_sum_product_classification
+    target_statement_id: sha256:8ded602bc1d7c17f7e80f170c674f3785b55e2f3b00a5836c0e032d8ec7c5a8e
+receipts:
+  unresolved_subitems: []

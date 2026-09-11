@@ -1,0 +1,1 @@
+| `D5/S3/Weil/Separator/ExplicitFormulaWeilCriterion.lean` | 实际零点和与 pole-minus-prime-plus-Archimedean 表达的运输；签名仍有每个卷积平方的 Archimedean 收敛输入 | 固定 canonical ZeroData 后，继续从相应解析真源构造收敛证明。不要删除该输入而不提供证明。 

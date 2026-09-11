@@ -1,0 +1,2 @@
+**自身属性谓词只是充分条件。** 规则 $R(e,f)\Longleftrightarrow U_t^X(e)\cap Q\ne\varnothing$ 等于 $F_{\downarrow Q}(X)\boxtimes Y$ 的选择；$R(e,f)\Longleftrightarrow |U_t^X(e)|>1$ 也可按父格直接推送。这两者依赖 $U$，仍下降。全局规则 $R(e,f)\Longleftrightarrow |\Omega_X|/2$ 为奇数也下降，因为 $|\Omega_X|=\sum|\Gamma_t(X)|$，但不是固定局部父格谓词：$U_0$ 与 $U_0\boxplus U_0$ 有相同的父格类型，准入真值却相反。候选中只问 $|\Omega_X|$ 奇偶的版本在平衡载体上恒偶，不能充作这个反例。
+

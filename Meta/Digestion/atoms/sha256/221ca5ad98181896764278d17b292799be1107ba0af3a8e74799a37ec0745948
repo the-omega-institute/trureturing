@@ -1,0 +1,1 @@
+| A073 | 对每个 \(\epsilon>0\)，存在 \(C_{a,\epsilon}\ge0\)，使所有 \(n\ge1\) 满足 \(S_n(a)\ge-C_{a,\epsilon}e^{\epsilon n}\)。 

@@ -1,0 +1,43 @@
+## 22. 正实二点网格的二坐标全域占优与等号分类
+
+**状态: PAPER_ARGUMENT / repo-derived 参考输入,后续结算。** 本次于 2026-09-09 追加,完整保留 I5 的 1297 行及其中历史 OPEN 陈述。这里解决第 18-20 节相邻二点问题的整个 \(k=2\) 参数族,并加强到任意正实二点坐标网格;不是把第 17 节的任意有限指数集合问题一并关闭。一般真实素数 \(k\ge3\) 比较仍 **OPEN**,第 21 节人工 \(k=3\) 反例及其原有适用范围保持有效。GH 的未定义边界沿用第 1 节。
+
+**定理。** 取 \(C_i=\{c_i,d_i\}\subset\mathbb R\),\(0<c_i<d_i\),\(i=1,2\),以及有限实数 \(M_0<M_1\)。假设四个角点中至少两个不同的**实际角点**属于
+
+\[
+\mathcal C=\{(x_1,x_2)\in C_1\times C_2:
+M_0\le x_1+x_2\le M_1\}.
+\]
+
+不同角点的坐标和允许相等,也允许不等;要求的是 \(|\mathcal C|\ge2\),不是两个满足期望预算的混合。所有对数为自然对数,定义
+
+\[
+f(x)=\log(1-e^{-x})\quad(x>0),\qquad
+\mu_j=M_j/2\ (j=0,1),\quad I=[\mu_0,\mu_1],
+\]
+\[
+\operatorname{dist}(I,C_i)=\min_{u\in I,\,x\in C_i}|u-x|,
+\quad V_0=\sum_{i=1}^2\operatorname{dist}(I,C_i)^2,
+\]
+\[
+D(M_1)=\inf_{\lambda\ge0}
+\left\{\lambda M_1+\sum_{i=1}^2\max_{x\in C_i}[f(x)-\lambda x]\right\}.
+\]
+
+对 \(m>0\)、\(0\le V<2m^2\),明确使用第 15 节的归一化
+
+\[
+r=\sqrt{V/2},\qquad \Psi_2(m,V)=f(m-r)+f(m+r).
+\]
+
+这里 \(V\) 是两个坐标的平方偏差**之和**,不是平均方差。则
+
+\[
+\mu_1>0,\qquad 0\le V_0<2\mu_1^2,\qquad
+D(M_1)\le\Psi_2(\mu_1,V_0),
+\]
+\[
+D(M_1)=\Psi_2(\mu_1,V_0)
+\quad\Longleftrightarrow\quad (\mu_1,\mu_1)\in C_1\times C_2.
+\]
+

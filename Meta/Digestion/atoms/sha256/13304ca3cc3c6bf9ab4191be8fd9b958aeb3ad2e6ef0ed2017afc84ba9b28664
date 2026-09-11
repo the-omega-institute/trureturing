@@ -1,0 +1,58 @@
+**定义 26（含时间属性的去身份因果剖面，repo-derived）。** 令
+
+$$
+\begin{aligned}
+\mathrm{Attr}_t&=\mathbb Z^3\times\{+1,-1\}\times T\times\mathbb Z,\\
+\alpha_t(e)&=(x(e),\sigma(e),\rho(e),t(e)),\\
+U_t^X(e)&=\{\alpha_t(d):d\in\Omega_X,\ e\preceq_X d\}\quad(e\in\Omega_X).
+\end{aligned}
+\tag{TCAU-U}
+$$
+
+$e\preceq d$ 仍指 $e=d$ 或 $e\prec d$。$U_t^X(e)$ 是有限非空属性集，同属性目标去重；目标严格限于 $\Omega_X$，不要求属于 $A_X$。对每个固定 $Q\subseteq\mathrm{Attr}_t$ 定义总操作
+
+$$
+F_{\downarrow Q}(C,A)
+=\bigl(C,\{e\in A:\exists d\in\Omega_C\quad
+ (\alpha_t(d)\in Q\ \land\ e\preceq d)\}\bigr).
+\tag{TCAU-F}
+$$
+
+它保持完整 $C$，只筛选当前选择。沿用 $b_X(e)=\mathbf1_{A_X}(e)$，定义有限支撑整数剖面
+
+$$
+\Gamma_t(X)(a,b,U)
+=\sum_{\substack{e\in\Omega_X\\
+ \alpha_t(e)=a,\ b_X(e)=b,\ U_t^X(e)=U}}\sigma(e),
+\quad
+(a,b,U)\in\mathrm{Attr}_t\times\{0,1\}\times\mathcal P_{\rm fin}(\mathrm{Attr}_t).
+\tag{TCAU-P}
+$$
+
+这里对 $\Omega_X$ 全体计数，未选事件进入 $b=0$ 行，$E_X\setminus\Omega_X$ 不进入任何行。指定
+
+$$
+\Sigma_{{\rm cau},t}
+=\Sigma_{\rm src}\cup\Sigma_{\rm st}
+ \cup\{F_{\downarrow Q}:Q\subseteq\mathrm{Attr}_t\}.
+\tag{TCAU-LANG}
+$$
+
+本节 $F_{\downarrow Q}$ 的参数类型是 $\mathrm{Attr}_t$；§28 的无时间因果筛选可由
+$Q\mapsto\varphi^{-1}[Q]=\{a_t:\varphi(a_t)\in Q\}$ 表示，其中
+$\varphi(p,\epsilon,r,n)=(p,\epsilon,r)$。因此旧因果上下文逐操作翻译后仍可使用；不把身份目标集合 $D\subset HF$ 加入语言。定义 23 的一般 $F_B$ 和定义 24 的 $M_P$ 也未作为原语并入（ARCH-R4-A1）。
+
+同格事件的符号已由 $a$ 的 $\epsilon$ 坐标固定，故非空格系数为 $\epsilon$ 乘其事件数，不会抵消。因此
+
+$$
+\begin{aligned}
+V_t(X)=\alpha_t[\Omega_X]
+ &=\{a:\exists b,U\ \Gamma_t(X)(a,b,U)\ne0\},\\
+s_X&=\max\{n:\exists p,\epsilon,r,b,U\quad
+ \Gamma_t(X)((p,\epsilon,r,n),b,U)\ne0\}.
+\end{aligned}
+\tag{TCAU-SUPPORT}
+$$
+
+第二行空支撑取 $-\infty$。与定义 22 的 $W,Z$ 不同，最高时刻的一正一负在这里分属不同属性格，不能共同消失；§26.1 D3 的隐形最高时刻也由此显现。$V_t,s$ 均非独立坐标，所需摘要写成 $(\Gamma_t,m,M)$。$m,M$ 仍为**全档案**端点，含非当前事件；只由当前剖面恢复这两个端点的断言已被 B3／D4 反驳。
+

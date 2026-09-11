@@ -1,0 +1,32 @@
+### 4. Why the finite trial can compute the genuine signed defect
+
+Let mu=Re<e,Me>. Symmetry makes this diagonal pairing real, so the actual
+Rayleigh residual r_mu=Me-mu e obeys <e,r_mu>=0. Therefore subtracting ANY
+multiple of e from a domain trial leaves its pairing with r_mu unchanged:
+
+    <v-beta e,r_mu>=<Mv,e>-mu<v,e>.                       (SG4)
+
+In particular let v_e=v-<e,v>e be the repaired trial used in SG1. Since
+v_e is e-orthogonal, its pairing with r_sigma also equals its pairing with
+r_mu. Thus its signed correction is exactly <(M-mu)v,e>, computed from the
+ORIGINAL finite v. The full action (M-mu)v is still generally infinite.
+SG4 does not assert finite support of that action or of the repaired trial.
+
+Split that action into finite a_head and exterior a_tail. A complete pairing
+budget can use a known finite candidate k with <a_tail,k>=0:
+
+    |<a_head+a_tail,e>-<a_head,e_approx>|
+      <= ||a_tail|| ||e-k|| + ||a_head|| ||e-e_approx||.    (SG5)
+
+For a sharper tail budget, unit normalization and orthogonal Fourier
+projection give
+
+    ||e_tail||^2 = 1-||e_head||^2
+      <= 1-(||e_approx,head||-gamma)^2,                  (SG6)
+
+provided ||e_head-e_approx,head||<=gamma<=||e_approx,head||.
+Subtract the approximation error before squaring. The near cancellation in
+one minus captured energy must use outward rounding. SG5 and SG6 have new
+Candidate Lean proof bodies; the actual Fourier/Parseval identification and
+model-approximation record are still the same separate analytic inputs.
+

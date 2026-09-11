@@ -1,0 +1,7 @@
+**命题 55（$\Sigma_{{\rm cau},t}$ 单孔 q 表达分类，repo-derived）。**
+
+$$
+\forall B\subseteq K:\qquad E_q(B)\ \Longleftrightarrow\ \operatorname{Tail}(B).
+\tag{O-CLASSIFICATION}
+$$
+

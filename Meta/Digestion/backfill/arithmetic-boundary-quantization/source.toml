@@ -1,0 +1,5 @@
+source_id = "arithmetic-boundary-quantization"
+path = "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

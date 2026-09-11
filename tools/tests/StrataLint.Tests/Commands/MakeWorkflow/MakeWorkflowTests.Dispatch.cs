@@ -309,6 +309,20 @@ public sealed partial class MakeWorkflowTests
         }
 
         Assert.Contains("$(HERE)/scripts/dotnet-build.sh", Recipe(makefile, "dotnet"), StringComparison.Ordinal);
+        Assert.Equal(
+            "\t@PYTHONDONTWRITEBYTECODE=1 PYTORCH_ENABLE_MPS_FALLBACK=0 uv run --python 3.12 --with torch==2.8.0 --with numpy==2.0.2 --with python-flint==0.8.0 python \"$(HERE)/scripts/agent/xi_quantization.py\" " +
+            "--mode \"$(XI_MODE)\" --first \"$(XI_FIRST)\" --last \"$(XI_LAST)\" --chunk \"$(XI_CHUNK)\" --precision \"$(XI_PRECISION)\" --digits \"$(XI_DIGITS)\" --state-dir \"$(XI_STATE)\" --report \"$(XI_REPORT)\"",
+            Recipe(makefile, "xi-quantization"));
+        Assert.Equal(
+            "\t@python3 -B \"$(HERE)/scripts/agent/test_xi_quantization.py\"",
+            Recipe(makefile, "xi-quantization-test"));
+        foreach (var script in new[] { "xi_quantization.py", "test_xi_quantization.py" })
+        {
+            Assert.True(File.Exists(Path.Combine(root, "tools", "scripts", "agent", script)));
+        }
+        var helpRecipe = Recipe(makefile, "help");
+        Assert.Contains("make -C tools xi-quantization [", helpRecipe, StringComparison.Ordinal);
+        Assert.Contains("make -C tools xi-quantization-test ", helpRecipe, StringComparison.Ordinal);
         var testRecipe = Recipe(makefile, "test");
         Assert.Contains("scripts/dotnet-test.sh $(HERE)/StrataLint.sln", testRecipe, StringComparison.Ordinal);
         Assert.DoesNotContain("--filter", testRecipe, StringComparison.Ordinal);

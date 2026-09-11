@@ -1,0 +1,21 @@
+### 6. What this changes for the remaining scale problem
+
+The previous single-rate theorem can now consume centered coefficients
+certified in the invariant sector and lifted by IS2. The relevant rate is
+still
+
+    nu_a * C^circ_(+,a,K) / b_a^2 -> 0.
+
+An opposite-sector small positive gap need not amplify C^circ_+. This is a
+structural saving at every scale where the stated invariance, opposite-sector
+shifted positivity and complete even-sector certificate hold. It does not
+prove how the even threshold, model energy, origin floor or centered trial
+quality behave along unbounded physical windows.
+
+The older global spectral placement and positive-form/model-centering
+conditions have not disappeared from the complete chain. In particular,
+this continuation does not certify them throughout an unbounded family or
+replace them by the stronger even bound. The new results consist of a
+universal sector-lift proof, an actual full-exterior uniform interval test,
+and a quantitatively improved actual same-model disk certificate.
+

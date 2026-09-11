@@ -1,0 +1,2 @@
+**A091，Hardy–Littlewood：** 定义整函数 \(H(x)=\sum_{j\ge1}(-x)^j/(j!\zeta(2j+1))\)。对每个 \(\epsilon>0\)，\(H(x)=O_\epsilon(x^{-1/4+\epsilon})\) 当 \(x\to+\infty\)，当且仅当 RH。[E12, Introduction] 它对应 \(\sum\mu(n)e^{-x/n^2}/n\) 的自然部分和极限；也可用绝对收敛的 \(\sum\mu(n)(e^{-x/n^2}-1)/n\) 定义，再消费无条件 \(\sum\mu(n)/n=0\)。
+

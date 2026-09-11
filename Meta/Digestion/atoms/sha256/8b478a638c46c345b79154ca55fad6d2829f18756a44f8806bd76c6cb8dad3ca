@@ -1,0 +1,20 @@
+### Robin 与 Lagarias
+
+Robin 定理是
+
+\[
+\mathrm{RH}\iff
+\forall n\in\mathbb Z,\ n\ge5041:
+\quad \sigma(n)<e^\gamma n\log\log n.
+\]
+
+5040 是经典定理排除的小整数区间端点,[R] 列出了该区间的例外。它不是由“令两边相等”定义的数,也不是 ζ 的一个零点。指数分解解释因数丰度,却不能单凭它推出 cutoff 或处理所有更大的整数。
+
+令 \(H_n=\sum_{j=1}^n1/j\),\(T_n=H_n+e^{H_n}\log H_n\)。Lagarias 定理给出
+
+\[
+\mathrm{RH}\iff\forall n\ge1:\quad \sigma(n)\le T_n.
+\]
+
+在 \(n=1\) 时,\(H_1=T_1=\sigma(1)=1\),等号无条件成立。RH 成立时对所有 \(n\ge2\) 有严格式 \(\sigma(n)<T_n\)。[L] 的 Problem E、定理 1.1 及其证明同时支持这些量词。**这不声称在不假设 RH 时,每个其它单独整数处都已知不取等号。**
+

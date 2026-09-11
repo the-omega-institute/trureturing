@@ -1,0 +1,23 @@
+### 4. 跨领域证明的共同骨架
+
+在标准 RH 根之外，最重要的几条可复用解析链为
+
+```text
+actual xi / actual ZeroData / functional equation
+  |-- Mobius disk -- canonical Li generator -- coefficient growth
+  |                         |-- Li curvature -- circle moments
+  |                         |                    |-- negative type / cocycle
+  |                         |                    `-- probability semigroup
+  |-- explicit formula -- full Weil form -- finite windows / actual spectrum
+  |-- even xi coefficients -- Jensen / Laguerre-Polya -- Newton-Hankel
+  |-- Mellin transform -- Nyman-Beurling -- original Gram distances
+  |-- reciprocal zeta / Mobius sums -- Riesz / discrete transform / Redheffer
+  |-- prime error terms -- divisor extrema / Farey discrepancy
+  |-- logarithmic integrals -- BSY / Volchkov
+  `-- heat deformation / total positivity / actual zeta probability
+```
+
+箭头代表要构造的数学映射及其定理，不保证所有箭头已经在仓库完成。已知两条 `RH ↔ P` 可以导出 `P ↔ Q`，但这类命题传递性不会自动产生误差界、矩阵大小、有效截断、测度对应或恢复算法。
+
+同理，RH 等价命题之间的逻辑等价不表示项目中两个观察映射的不可区分核相同。后者必须固定同一原始状态空间并证明实际读出之间的恢复关系。不能凭 64 个闭命题构造新的信息逃逸分数或宣称全体读出有相同内核。
+

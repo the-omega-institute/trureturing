@@ -1,0 +1,50 @@
+**证明。** 内积取第二个变量线性。令
+
+\[
+\eta=h/12,\quad t=1-h/3,\quad\theta=\arccos t,\quad\omega=e^{2\pi i/3},
+\]
+\[
+U=\operatorname{diag}(e^{i\theta},e^{-i\theta},1,\omega,\omega^2).
+\]
+
+取 \(a\) 的五个坐标为非负实数,平方依次为
+
+\[
+\left((1-\eta)/2,(1-\eta)/2,\eta/3,\eta/3,\eta/3\right).
+\]
+
+由于 \(0<h\le1\),所有权重正且和为 1;\(U\) 酉。对任意整数 \(k\),
+
+\[
+r_k=(1-\eta)\cos(k\theta)+\frac\eta3(1+\omega^k+\omega^{2k})
+\]
+
+为实数且 \(r_{-k}=r_k\)。三次单位根的和在 \(k=\pm1,\pm2\) 时为零,所以
+
+\[
+r_1=(1-\eta)t,\qquad r_2=(1-\eta)(2t^2-1).
+\]
+
+前三个历史向量 \(a,Ua,U^2a\) 的 Gram 矩阵正是 \(T\)。令 \(C_{ij}=\cos((j-i)\theta)\);它也是 Gram 矩阵,例如取平面单位向量 \((\cos(i\theta),\sin(i\theta))\)。于是
+
+\[
+T=(1-\eta)C+\eta I_3\succeq\eta I_3.
+\]
+
+另一方面直接展开得到
+
+\[
+\frac{1-r_1}{h}=\frac5{12}-\frac h{36}\in(0,1/2),
+\qquad
+\frac{1-r_2}{h}=\frac{17}{12}-\frac h3+\frac{h^2}{54}\in(1/2,3/2).
+\]
+
+第一式介于 \(7/18\) 与 \(5/12\) 之间;第二式至少 \(13/12>1/2\),且不超过 \(17/12+1/54=155/108<3/2\)。故两个数都严格位于各自舍入格内部,没有 tie。因 \(1=mh\),得
+
+\[
+Q_m(r_1)=1,\quad Q_m(r_2)=1-h,\qquad
+Q_m[T]=\begin{pmatrix}1&1&1-h\\1&1&1\\1-h&1&1\end{pmatrix}.
+\]
+
+矩阵乘法给出 \(v^{\mathsf T}Q_m[T]v=6-8+2(1-h)=-2h\);展开行列式得 \(-h^2\)。同时标准基向量的二次型为 1,所以矩阵既有正方向也有负方向,是不定矩阵。证毕。
+

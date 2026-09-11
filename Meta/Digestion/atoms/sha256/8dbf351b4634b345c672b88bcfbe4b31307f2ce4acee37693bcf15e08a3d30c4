@@ -1,0 +1,31 @@
+**命题 55（固定因子的完整核、像与全部解）。** 对任意固定 $d\in\mathcal L$，有
+
+$$
+\ker L_d=
+\{c\in\mathcal L:\forall n\in\mathbb Z,\quad
+D_n\ne0\Longrightarrow C_n=0\}.
+\tag{CUM-KERNEL}
+$$
+
+对任意目标 $h\in\mathcal L$，其像条件恰为
+
+$$
+h\in\operatorname{im}L_d
+\quad\Longleftrightarrow\quad
+\forall n\in\mathbb Z,\
+\begin{cases}
+H_{n+1}=0,&D_n=0,\\
+H_{n+1}\in D_nR,&D_n\ne0.
+\end{cases}
+\tag{CUM-IMAGE}
+$$
+
+当此条件成立时，全部解由下列累积序列恰好给出：在 $D_n\ne0$ 的每个位置，$C_n$ 是空间方程 $D_n*C_n=H_{n+1}$ 在 $R$ 中的唯一解；在 $D_n=0$ 的位置，可以自由取 $C_n\in R$，但这些自由值与其余值合成的整个序列必须属于 $\mathcal A(R)$。对所有满足这项两尾限制的选择，取
+
+$$
+c_n=C_n-C_{n-1}\qquad(n\in\mathbb Z)
+\tag{CUM-ALL-SOLUTIONS}
+$$
+
+便得到全部且仅有的解。若 (CUM-IMAGE) 不成立则无解。特别地，$d=0$ 时 $\ker L_0=\mathcal L$、$\operatorname{im}L_0=\{0\}$；目标为零时每个 $c\in\mathcal L$ 都是解，目标非零时无解。
+

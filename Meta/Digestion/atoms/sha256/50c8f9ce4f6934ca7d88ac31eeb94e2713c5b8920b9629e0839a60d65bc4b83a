@@ -1,0 +1,8 @@
+# 2026-09-08：同尺度 ground/prolate 联合区间证书与残差驱动的逆能量
+
+新 Lean：`D5/S3/Weil/GroundMode/ResidualDrivenProjectiveEnergy.lean`，配套同名 Scribe。
+主程序：`research/weil_ground_mode/certify_prime3_uniform_ground_readout.py`；主结果为 `prime3_uniform_ground_readout_certificate.json`。
+第二表达检查：`test_uniform_ground_readout.py` 与 `uniform_ground_readout_regression.json`。
+
+本节连接前两节分别完成的统一 Weil 谱分离和真实 prolate 尺度传递。对同一个连续尺度区间和同一个复圆盘，直接认证实际最低模态与同尺度真实模型的原点归一化差。方法以实际候选残差和观察代表元在完整逆能量中的预算为输入，不再预设一条绝对的统一最低特征值下界。数值证书使用新鲜重放的全空间算术矩阵、高补空间和真实 prolate 数据；其 Fourier/core、高空间估计和逆形式识别仍是纸面分析，不冒称端到端内核结果。
+

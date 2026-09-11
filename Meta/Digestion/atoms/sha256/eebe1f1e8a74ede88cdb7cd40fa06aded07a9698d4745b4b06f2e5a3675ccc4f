@@ -1,0 +1,1 @@
+| A049 | C | 对每个 \(\varepsilon>0\)，\(b_k=O_\varepsilon(k^{-3/4+\varepsilon})\)，整数 \(k\to\infty\)。 

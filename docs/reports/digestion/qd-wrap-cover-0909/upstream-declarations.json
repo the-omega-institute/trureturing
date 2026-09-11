@@ -1,0 +1,142 @@
+{
+  "coeff_reflect": {
+    "declaration": "Polynomial.coeff_reflect",
+    "path": ".lake/packages/mathlib/Mathlib/Algebra/Polynomial/Reverse.lean",
+    "line": 96,
+    "source_line": "theorem coeff_reflect (N : ℕ) (f : R[X]) (i : ℕ) : coeff (reflect N f) i = f.coeff (revAt N i) := by",
+    "verified_in_local_pin": true
+  },
+  "reflect": {
+    "declaration": "Polynomial.reflect",
+    "path": ".lake/packages/mathlib/Mathlib/Algebra/Polynomial/Reverse.lean",
+    "line": 88,
+    "source_line": "noncomputable def reflect (N : ℕ) : R[X] → R[X]",
+    "verified_in_local_pin": true
+  },
+  "reflect_map": {
+    "declaration": "Polynomial.reflect_map",
+    "path": ".lake/packages/mathlib/Mathlib/Algebra/Polynomial/Reverse.lean",
+    "line": 138,
+    "source_line": "lemma reflect_map {S : Type*} [Semiring S] (f : R →+* S) (p : R[X]) (n : ℕ) :",
+    "verified_in_local_pin": true
+  },
+  "eval_reflect": {
+    "declaration": "Polynomial.eval₂_reflect_mul_pow",
+    "path": ".lake/packages/mathlib/Mathlib/Algebra/Polynomial/Reverse.lean",
+    "line": 191,
+    "source_line": "theorem eval₂_reflect_mul_pow (i : R →+* S) (x : S) [Invertible x] (N : ℕ) (f : R[X])",
+    "verified_in_local_pin": true
+  },
+  "poly_deriv": {
+    "declaration": "Polynomial.hasDerivAt",
+    "path": ".lake/packages/mathlib/Mathlib/Analysis/Calculus/Deriv/Polynomial.lean",
+    "line": 66,
+    "source_line": "protected theorem hasDerivAt (x : 𝕜) : HasDerivAt (fun x => p.eval x) (p.derivative.eval x) x :=",
+    "verified_in_local_pin": true
+  },
+  "ftc": {
+    "declaration": "intervalIntegral.integral_eq_sub_of_hasDerivAt",
+    "path": ".lake/packages/mathlib/Mathlib/MeasureTheory/Integral/IntervalIntegral/FundThmCalculus.lean",
+    "line": 1148,
+    "source_line": "theorem integral_eq_sub_of_hasDerivAt (hderiv : ∀ x ∈ uIcc a b, HasDerivAt f (f' x) x)",
+    "verified_in_local_pin": true
+  },
+  "poly_unique": {
+    "declaration": "Polynomial.eq_of_degree_le_of_eval_index_eq",
+    "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Lagrange.lean",
+    "line": 117,
+    "source_line": "theorem eq_of_degree_le_of_eval_index_eq (hvs : Set.InjOn v s)",
+    "verified_in_local_pin": true
+  },
+  "interpolate": {
+    "declaration": "Lagrange.eq_interpolate",
+    "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Lagrange.lean",
+    "line": 362,
+    "source_line": "theorem eq_interpolate {f : F[X]} (hvs : Set.InjOn v s) (degree_f_lt : f.degree < #s) :",
+    "verified_in_local_pin": true
+  },
+  "interpolate_eval": {
+    "declaration": "Lagrange.eval_interpolate_not_at_node",
+    "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Lagrange.lean",
+    "line": 685,
+    "source_line": "theorem eval_interpolate_not_at_node (hx : ∀ i ∈ s, x ≠ v i) :",
+    "verified_in_local_pin": true
+  },
+  "coeff_sum": {
+    "declaration": "Lagrange.coeff_eq_sum",
+    "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Lagrange.lean",
+    "line": 495,
+    "source_line": "theorem coeff_eq_sum",
+    "verified_in_local_pin": true
+  },
+  "nodal_deriv": {
+    "declaration": "Lagrange.eval_nodal_derivative_eval_node_eq",
+    "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Lagrange.lean",
+    "line": 605,
+    "source_line": "theorem eval_nodal_derivative_eval_node_eq [DecidableEq ι] {i : ι} (hi : i ∈ s) :",
+    "verified_in_local_pin": true
+  },
+  "log_deriv": {
+    "declaration": "Polynomial.Splits.eval_derivative_div_eval_of_ne_zero",
+    "path": ".lake/packages/mathlib/Mathlib/Algebra/Polynomial/Splits.lean",
+    "line": 654,
+    "source_line": "theorem Splits.eval_derivative_div_eval_of_ne_zero (hf : Splits f) {x : R} (hx : f.eval x ≠ 0) :",
+    "verified_in_local_pin": true
+  },
+  "schur": {
+    "declaration": "Matrix.det_fromBlocks₂₂",
+    "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/SchurComplement.lean",
+    "line": 384,
+    "source_line": "theorem det_fromBlocks₂₂ (A : Matrix m m α) (B : Matrix m n α) (C : Matrix n m α)",
+    "verified_in_local_pin": true
+  },
+  "charpoly_eval": {
+    "declaration": "Matrix.eval_charpoly",
+    "path": ".lake/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Charpoly/Basic.lean",
+    "line": 137,
+    "source_line": "theorem eval_charpoly (M : Matrix m m R) (t : R) :",
+    "verified_in_local_pin": true
+  },
+  "hermitian_charpoly": {
+    "declaration": "Matrix.IsHermitian.charpoly_eq",
+    "path": ".lake/packages/mathlib/Mathlib/Analysis/Matrix/Spectrum.lean",
+    "line": 155,
+    "source_line": "lemma charpoly_eq : A.charpoly = ∏ i, (X - C (hA.eigenvalues i : 𝕜)) := by",
+    "verified_in_local_pin": true
+  },
+  "posdef": {
+    "declaration": "Matrix.IsHermitian.posDef_iff_eigenvalues_pos",
+    "path": ".lake/packages/mathlib/Mathlib/Analysis/Matrix/PosDef.lean",
+    "line": 71,
+    "source_line": "lemma IsHermitian.posDef_iff_eigenvalues_pos [DecidableEq n] (hA : A.IsHermitian) :",
+    "verified_in_local_pin": true
+  },
+  "deriv_div": {
+    "declaration": "HasDerivAt.fun_div",
+    "path": ".lake/packages/mathlib/Mathlib/Analysis/Calculus/Deriv/Inv.lean",
+    "line": 168,
+    "source_line": "theorem HasDerivAt.fun_div (hc : HasDerivAt c c' x) (hd : HasDerivAt d d' x) (hx : d x ≠ 0) :",
+    "verified_in_local_pin": true
+  },
+  "deriv_sum": {
+    "declaration": "HasDerivAt.fun_sum",
+    "path": ".lake/packages/mathlib/Mathlib/Analysis/Calculus/Deriv/Add.lean",
+    "line": 218,
+    "source_line": "theorem HasDerivAt.fun_sum (h : ∀ i ∈ u, HasDerivAt (A i) (A' i) x) :",
+    "verified_in_local_pin": true
+  },
+  "deriv_unique": {
+    "declaration": "HasDerivAt.unique",
+    "path": ".lake/packages/mathlib/Mathlib/Analysis/Calculus/Deriv/Basic.lean",
+    "line": 399,
+    "source_line": "theorem HasDerivAt.unique (h₀ : HasDerivAt f f₀' x) (h₁ : HasDerivAt f f₁' x) : f₀' = f₁' :=",
+    "verified_in_local_pin": true
+  },
+  "deriv_congr": {
+    "declaration": "HasDerivAt.congr_of_eventuallyEq",
+    "path": ".lake/packages/mathlib/Mathlib/Analysis/Calculus/Deriv/Basic.lean",
+    "line": 609,
+    "source_line": "theorem HasDerivAt.congr_of_eventuallyEq (h : HasDerivAt f f' x) (h₁ : f₁ =ᶠ[𝓝 x] f) :",
+    "verified_in_local_pin": true
+  }
+}

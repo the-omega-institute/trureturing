@@ -1,0 +1,33 @@
+**24.14 精确的素数下角点条件。** 取第 18 节完整素数域:有限不同素数标签集 \(S=\{p_1,\ldots,p_k\}\)、\(k\ge2\)、\(b_i\in\mathbb Z_{\ge0}\)、\(A_{p_i}=\{b_i,b_i+1\}\)、有限 \(\log5040<T_0<T_1\),且至少两个不同的实际允许指数向量落在 \([T_0,T_1]\) 内。令
+
+\[
+\ell_i=\log p_i,\quad c_i=(b_i+1)\ell_i,\quad d_i=(b_i+2)\ell_i,
+\quad M_q=T_q+\sum_i\ell_i\quad(q=0,1).
+\]
+
+实际角点与指数向量一一对应,\(M_1-M_0=T_1-T_0\)。\(\mu_0,\mu,I,V_0\) 恰为第 16/19 节原来的量。零指数仍允许,因为 \(c_i\ge\log p_i>0\),\(g_{p_i}(0)=0\)。保留 \(E_S=\prod_{p\in S}(1-p^{-1})^{-1}\),对每个 \(\lambda\ge0\) 精确有
+
+\[
+\lambda T_1+\sum_i\max_{a\in A_{p_i}}[g_{p_i}(a)-\lambda a\ell_i]
+=\log E_S+\lambda M_1+\sum_i\max_{x\in C_i}[f(x)-\lambda x],
+\]
+\[
+U_{\rm dual}=\log E_S+D(M_1),\qquad
+U_{\rm var}=\log E_S+\Psi_k(\mu,V_0).
+\]
+
+对某个最优真正分数基本解,记分数行 \(j\) 的权重为 \(\theta_j\in(0,1)\)。其实际下角点预算为
+
+\[
+M^-=M_1-\theta_j\ell_j,
+\qquad T^-=T_1-\theta_j\log p_j.
+\]
+
+因为 \(M^-<M_1\),附加条件精确等价于
+
+\[
+\boxed{\theta_j\log(p_j)\le T_1-T_0}.
+\]
+
+等号表示实际下角点恰在下预算端点,仍在定理域内。因此,只要**存在一个**最优真正分数基本解满足这个条件,就有 \(U_{\rm dual}<U_{\rm var}\)。\(T_0>\log5040\) 完整保留,但其数值不是本条比较证明所需的新性质;该结论本身不证明任何 Robin 阈值。
+

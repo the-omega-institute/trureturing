@@ -1,0 +1,20 @@
+## 20. 唯一分数坐标的精确剩余不等式
+
+三个条件排除后,只余 \(0<\theta<1\)、\(\overline V<V_0\)、\(c_j<\mu_0\le\mu<d_j\) 且
+\(\delta^2>(k-1)V_0/k\)。令
+
+\[
+D_j=f(z)-(1-\theta)f(c_j)-\theta f(d_j)>0,
+\qquad z=(1-\theta)c_j+\theta d_j.
+\]
+
+其它坐标不随机,所以有**恒等式**
+
+\[
+U_{\rm dual}-U_{\rm var}
+=\sum_pf(y_p)-\Psi_k(\mu,V_0)-D_j.
+\]
+
+因此在余域中,\(U_{\rm dual}\le U_{\rm var}\) 当且仅当
+\(D_j\ge\sum_pf(y_p)-\Psi_k(\mu,V_0)\);等号也恰好对应。严格反向则精确否定该实例的占优。
+

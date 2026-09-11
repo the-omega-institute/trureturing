@@ -1,0 +1,18 @@
+**命题。** 对每个整数 \(m\ge1\),置 \(h=1/m\),定义
+
+\[
+Q_m(s)=\frac{\lfloor ms+1/2\rfloor}{m}\quad(s\in\mathbb R),
+\]
+
+即最近网格舍入,正中间的 tie 向 \(+\infty\)。存在五维酉算子 \(U\) 及单位向量 \(a\),使所有整数 \(k\) 的回返 \(r_k=\langle a,U^ka\rangle\) 为实数,\(r_0=1\),且
+
+\[
+T=(r_{j-i})_{0\le i,j\le2}\succeq\frac h{12}I_3,
+\]
+
+而逐项舍入的矩阵 \(Q_m[T]\) 不定。包括单位对角线在内的每一项都用同一个 \(Q_m\),对角线保持 1。对 \(v=(1,-2,1)^{\mathsf T}\),精确有
+
+\[
+v^{\mathsf T}Q_m[T]v=-2h,\qquad \det Q_m[T]=-h^2.
+\]
+

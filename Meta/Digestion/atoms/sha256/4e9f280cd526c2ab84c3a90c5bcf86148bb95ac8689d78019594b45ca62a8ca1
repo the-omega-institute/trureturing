@@ -1,0 +1,2 @@
+**第六轮复审(2026-09-10,基准 `ae158b66ab`;flight `fpp-review6-20260910-{quality,architecture,tests}`)**:三席皆 `comment`,**无 blocking**;第五轮 findings:quality 5 closed / 1 partial,architecture 3 closed / 3 partial,tests 5 closed / 1 partial;剩余 advisory 6 条(5.6 读法与摘要的「逻辑」措辞、X-H 标题、Hardy 引句核对口径、第四轮账本归属措辞)全部采纳。至此六轮评审的 blocking 计数为 50 → 20 → 24 → 8 → 1 → 0;合并前修订按 OSUV 惯例整体计入 v1.0。
+

@@ -1,0 +1,60 @@
+**命题 61（固定因子的完整核、像与全部解）。** 对任意固定 $d\in\mathcal L$，有
+
+$$
+\ker L_d=
+\{c\in\mathcal L:\forall n\in\mathbb Z,\quad
+D_n\ne0\Longrightarrow C_n=0\}.
+\tag{CUM-KERNEL}
+$$
+
+对任意目标 $h\in\mathcal L$，其像条件恰为
+
+$$
+h\in\operatorname{im}L_d
+\quad\Longleftrightarrow\quad
+\forall n\in\mathbb Z,\
+\begin{cases}
+H_{n+1}=0,&D_n=0,\\
+H_{n+1}\in D_nR,&D_n\ne0.
+\end{cases}
+\tag{CUM-IMAGE}
+$$
+
+当此条件成立时，全部解由下列累积序列恰好给出：在 $D_n\ne0$ 的每个位置，$C_n$ 是空间方程 $D_n*C_n=H_{n+1}$ 在 $R$ 中的唯一解；在 $D_n=0$ 的位置，可以自由取 $C_n\in R$，但这些自由值与其余值合成的整个序列必须属于 $\mathcal A(R)$。对所有满足这项两尾限制的选择，取
+
+$$
+c_n=C_n-C_{n-1}\qquad(n\in\mathbb Z)
+\tag{CUM-ALL-SOLUTIONS}
+$$
+
+便得到全部且仅有的解。若 (CUM-IMAGE) 不成立则无解。特别地，$d=0$ 时 $\ker L_0=\mathcal L$、$\operatorname{im}L_0=\{0\}$；目标为零时每个 $c\in\mathcal L$ 都是解，目标非零时无解。
+
+**证明（核、必要性及非零处唯一性）。** 命题 59 在输出时间 $n+1$ 给
+
+$$
+P(L_d(c))(n+1)=C_n*D_n=D_n*C_n
+\qquad(n\in\mathbb Z).
+\tag{CUM-EQUATION}
+$$
+
+这里等号的交换使用原空间卷积。由命题 58 的单射性，$L_d(c)=h$ 等价于所有这些值等于 $H_{n+1}$；输出下标必须是 $n+1$。
+
+命题 26 已证明原 $R$ 无零因子。因此 $D_n\ne0$ 时，$D_n*C_n=0$ 当且仅当 $C_n=0$；$D_n=0$ 时乘积恒为零，不限制该处 $C_n$。这给出 (CUM-KERNEL)。一般目标下，在 $D_n=0$ 处必须有 $H_{n+1}=0$；在 $D_n\ne0$ 处必须有 $H_{n+1}\in D_nR$，故像条件必要。若 $D_n\ne0$ 且有两个商 $r_1,r_2\in R$，则 $D_n*(r_1-r_2)=0$，命题 26 使 $r_1=r_2$；这正是命题 32 的空间方程唯一性。所用消去律只属于 $R$，没有移植到 $\odot$。
+
+**证明（像条件充分，明确构造左右尾部）。** 假设 (CUM-IMAGE)。因 $D,H\in\mathcal A(R)$，可取整数 $\ell<u$，使
+
+$$
+D_n=H_{n+1}=0\quad(n<\ell),\qquad
+D_n=D_\infty,\ H_{n+1}=H_\infty\quad(n\ge u)
+$$
+
+其中 $D_\infty,H_\infty\in R$ 为固定常值。在整个左尾 $n<\ell$ 令 $C_n=0$，于是逐点方程成立。
+
+对于右尾，若 $D_\infty\ne0$，像条件给出 $H_\infty\in D_\infty R$，故存在唯一 $Q_\infty\in R$ 使 $D_\infty*Q_\infty=H_\infty$。对全部 $n\ge u$ 取同一个 $C_n=Q_\infty$；因为因子与目标在右尾都恒定，唯一性保证所需商不随 $n$ 变化。若 $D_\infty=0$，像条件迫使 $H_\infty=0$，就在整个右尾令 $C_n=0$。两种右尾都已满足方程及最终常值条件。
+
+剩余只有 $\ell\le n<u$ 的有限多个整数。在其中 $D_n\ne0$ 处取像条件给出的唯一 $R$ 中商，在 $D_n=0$ 处取 $C_n=0$。如此构造的 $C$ 左尾为零、右尾为常值，每个中间值都属于 $R$，所以 $C\in\mathcal A(R)$。命题 58 的有限支撑证明保证其差分是 $\mathcal L$ 中的 $c$。逐点方程对全部整数都成立，(CUM-EQUATION) 及 $P$ 单射给出 $L_d(c)=h$。这里实际只处理两个常值尾部和有限中段，没有对无限多个不受约束的商作选择，也没有把 $R$ 嵌入某个域后作未说明的除法。
+
+**证明（全部解与 $d=0$ 情形）。** 任一实际解的累积序列必属于 $\mathcal A(R)$，并满足 (CUM-EQUATION) 的每个空间方程。因此非零 $D_n$ 处的值被唯一强制，零 $D_n$ 处只有 $R$ 类型及整个序列的两尾条件；反向任何满足这些要求的序列由命题 58 和同一逐点方程给出解。除 $\mathcal A(R)$ 的条件外，没有遗漏其他时间一致性约束。
+
+若 $d=0$，则 $D_n=0$ 对所有整数成立，像条件要求 $H_{n+1}=0$ 对所有整数成立，即 $H=0$；由 $P$ 单射这恰为 $h=0$。此时全部 $\mathcal A(R)$ 都可作解的累积序列，差分逆给全部 $\mathcal L$。核与像的特殊结论随之成立。证毕。
+

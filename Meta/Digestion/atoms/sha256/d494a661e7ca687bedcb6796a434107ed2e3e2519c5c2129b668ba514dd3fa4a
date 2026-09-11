@@ -1,0 +1,4 @@
+**定理 5.7(幸存者形状)**〔证〕。设审计算子 $A:\mathcal P(\mathrm{Pres})\to\mathcal P(\mathrm{Pres})$ 从一个表述集中移除被反驳、被勘误或浮账的表述,满足:收缩 $A(S)\subseteq S$、单调、幂等。则对任一初始集 $S_0$(不限有限),$S_1=A(S_0)$ 已是不动点,且是 $S_0$ 之下 $A$ 的最大不动点。
+*证明*。幂等给 $A(S_1)=S_1$;若 $S'\subseteq S_0$ 为另一不动点,则由单调 $S'=A(S')\subseteq A(S_0)=S_1$。∎ 若只假设收缩与单调而不假设幂等,则最大不动点的存在由 Knaster–Tarski(Tarski 1955,*Pacific J. Math.* 5:285–309,`literature-attested`;mathlib `OrderHom.gfp`,本仓已有包装先例 #572)给出,迭代可多于一步——那是「多轮审计」的情形。
+*读法*。「美是幸存下来的形状」(PZG 第(四)句):留在账上的表述不是装饰出来的,是审计淘洗后的**不动点**。第一部说真是变换的不动点(定理 1.15),本定理说美是审计的不动点——**同一个数学,两个层次**:命题层与表述层。**先库后证**:D5 已有 `S3/ConceptDynamics/Promotion/ResearchPromotionLoop.lean` 的 `Survives`/`survivors`——候选在有限反驳账本 $\{$falsifier$\}$ 下的存活筛选——它是本定理审计算子在「一次固定筛选」情形的特例(一步即达不动点);固定幂等 $A$ 的一步稳定与它同形,X-I 直接复用并保留 bind-only 判形;允许 $A_t$ 逐轮变化的「多轮审计」是另一模型,须另立前件与消费者,本卷不预设它有新内容。
+

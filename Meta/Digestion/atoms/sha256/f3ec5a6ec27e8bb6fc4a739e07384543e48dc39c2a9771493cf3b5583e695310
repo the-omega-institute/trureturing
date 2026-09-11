@@ -1,0 +1,10 @@
+**定义 3。** 对 $A\subseteq\Omega_C$ 定义
+
+$$
+q_C(A)=\sum_{e\in A}\sigma(e)
+=|\{e\in A:\sigma(e)=1\}|-|\{e\in A:\sigma(e)=-1\}|,
+\quad u(C)=q_C(\Omega_C),\quad q(X)=q_C(A).
+$$
+
+一般情境允许 $u(C)\ne0$。算术载体 $\mathcal B$ 是所有满足 $u(C)=0$ 的丰富表示的集合，称为平衡表示。对它定义 $N(X)=(C,N_C(A))$。平衡是当前整体相对于这个读数的条件，不要求整个档案平衡，也不要求每个地点或来源分别平衡。
+

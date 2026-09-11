@@ -1,0 +1,14 @@
+**证明:同均值替代。** 以 \(u=\mu-\delta\)、\(v=\mu+\delta\) 为新端点,令 \(Z_j\) 以概率 \(\alpha=(z-u)/(2\delta)\in(0,1)\) 取 \(v\),否则取 \(u\);其它 \(Z_p=y_p\)。令 \(h\) 为经过 \((c_j,f(c_j)),(d_j,f(d_j))\) 的仿射割线。由凹性及 \(u,v\in[c_j,d_j]\),有 \(f(u)\ge h(u),f(v)\ge h(v)\),故
+
+\[
+\mathbb E f(Z_j)\ge h(\mathbb E Z_j)=h(z)=\mathbb E f(X_j).
+\]
+
+替代保持 \(\sum_p\mathbb E Z_p=k\mu\),并有
+
+\[
+M:=\sum_p\mathbb E(Z_p-\mu)^2=W+\delta^2\ge V_0.
+\]
+
+这只是用于估计的正实混合,不要求新端点属于素数指数梯级或实际薄层。
+

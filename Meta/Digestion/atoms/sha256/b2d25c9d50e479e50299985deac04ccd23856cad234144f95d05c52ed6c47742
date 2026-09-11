@@ -1,0 +1,1 @@
+- `caller-short-interval-audit-0909.json` SHA256 `8fe87b0f14e0997aec9a8f52b2c07060cd277e9f0403ab7f7ea1744d14d22c02` 记录 caller 用 SymPy 1.14.0 核对 11 条精确恒等式、exit 0、零素数样本,是支持证据而非独立批准。其旧 notation-gap 字段由下项后续 correction 解决。

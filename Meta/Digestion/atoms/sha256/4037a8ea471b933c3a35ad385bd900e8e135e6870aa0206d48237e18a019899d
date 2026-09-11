@@ -1,0 +1,20 @@
+**定义 9。** 令 $\mathcal Q^{\rm rich}=\{(X,Y)\in\mathcal B^2:q(Y)\ne0\}$，记 $v(X,Y)=q(X)/q(Y)\in\mathbb Q$，这里右端的 $\mathbb Q$ 是 ZFC 中标准整数分数构造。定义
+
+$$
+(X,Y)\sim_{\mathbb Q}(X',Y')
+\quad\Longleftrightarrow\quad q(X)q(Y')=q(X')q(Y).
+$$
+
+对 $R=(X,Y),S=(Z,W)$，取以下丰富运算；每次出现的 $\boxplus,\boxtimes,N$ 均为前述档案运算：
+
+$$
+\begin{aligned}
+R\boxplus_{\mathbb Q}S&=((X\boxtimes W)\boxplus(Z\boxtimes Y),\ Y\boxtimes W),\\
+R\boxtimes_{\mathbb Q}S&=(X\boxtimes Z,\ Y\boxtimes W),\\
+N_{\mathbb Q}(R)&=(N(X),Y),\\
+R^{-1}_{\mathbb Q}&=(Y,X)\quad\text{仅当 }q(X)\ne0,\\
+R\div_{\mathbb Q}S&=(X\boxtimes W,\ Y\boxtimes Z)
+\quad\text{仅当 }q(Z)\ne0.
+\end{aligned}
+$$
+

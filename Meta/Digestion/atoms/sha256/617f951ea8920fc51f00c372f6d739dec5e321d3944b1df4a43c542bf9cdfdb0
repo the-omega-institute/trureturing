@@ -1,0 +1,18 @@
+**25.8 所需短区间定理及 caller 核对的来源。** Literature-attested 输入为 R. C. Baker、G. Harman、J. Pintz, *The Difference Between Consecutive Primes, II*, *Proc. London Math. Soc.* (3) **83** (2001),532-562,DOI [10.1112/plms/83.3.532](https://doi.org/10.1112/plms/83.3.532),Theorem 1:存在 \(x_0\),对所有实数 \(x>x_0\),区间
+
+\[
+[x-x^{0.525},x]=[x-x^{21/40},x]
+\]
+
+含素数。Caller 独立下载并核对了 [大学镜像的原论文](https://www.cs.umd.edu/~gasarch/BLOGPAPERS/BakerHarmanPintz.pdf),位置 PDF 第 1 页 / 期刊第 532 页,PDF SHA256 为 `d3b6011255c49e52b002e08faebb7d252ca1027e545b72fa097176e6285443a2`。这是 caller-checked 书目、区间方向及实数全称量词的 provenance,不声称这就是先前 primary invocation 所访问的 author-uploaded URL。本增量没有复核完整筛法证明,没有有效数值 \(x_0\)。
+
+令 \(P\) 趋于无穷并遍历素数,\(X=P-P^{3/5}\),\(Q\) 为不大于 \(X\) 的最大素数,\(R\) 为 \(Q\) 的前一素数。足够大时在 \(X\) 应用定理得到
+\(0\le X-Q\le X^{21/40}\)。再在实数 \(Q-1/2\) 应用,所得素数严格小于 \(Q\),从而不大于 \(R\),故
+
+\[
+0<Q-R\le\tfrac12+(Q-\tfrac12)^{21/40},\quad
+P-Q=P^{3/5}+O(P^{21/40}),\quad Q-R=O(P^{21/40}).
+\]
+
+这同时证明所选 \(Q,R\) 足够大时存在且 \(P>Q>R\)。隐常数沿本选择规则统一,不把 \(Q-R\) 指定成未经定理提供的渐近主项。
+

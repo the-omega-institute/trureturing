@@ -1,0 +1,44 @@
+### 小素数为什么让因数较丰?
+
+对正整数 \(n\),由 \(\sigma\) 的乘法性和有限几何级数,
+
+\[
+A(n):=\frac{\sigma(n)}n
+=\prod_{p^a\parallel n}\left(1+\frac1p+\cdots+\frac1{p^a}\right)
+=\prod_{p^a\parallel n}\frac{1-p^{-a-1}}{1-p^{-1}}.
+\]
+
+固定指数 \(a\ge1\) 时,素数越小,每个倒数项越大。5040 的比值为 \(403/105\)。这解释了小素数对相对因数和的影响,并不意味着所有 Robin 余量沿乘法单调。
+
+更精确地,对任意正整数 \(n\)、素数 \(p\) 及 \(a=v_p(n)\ge0\),包括 \(p\nmid n\) 的 \(a=0\) 情况,
+
+\[
+\frac{A(np)}{A(n)}
+=\frac{1-p^{-(a+2)}}{1-p^{-(a+1)}}.
+\]
+
+证明就是把上述乘积的 \(p\) 因子由指数 \(a\) 换成 \(a+1\);其余因子抵消。对于 \(a=0\),比值正是 \(1+1/p\)。Robin 的边界也随 \(n\) 改变。对 \(n\ge2\),令 \(R(n)=e^\gamma\log\log n-A(n)\),有精确恒等式
+
+\[
+R(np)-R(n)=e^\gamma\log\left(1+\frac{\log p}{\log n}\right)
+-A(n)\left(\frac{1-p^{-(a+2)}}{1-p^{-(a+1)}}-1\right).
+\]
+
+右边两项都是正量相减,上式本身不给余量变化的统一符号。Robin 判据实际使用的域为 \(n\ge5041\)。
+
+对于连续的素数支撑,设 \(p_j\) 为第 \(j\) 个素数,\(k\ge1\),
+
+\[
+n=\prod_{j=1}^k p_j^{a_j},\quad a_j\ge1,\qquad
+P_k=\prod_{j=1}^k p_j,\quad \theta(x)=\sum_{p\le x}\log p.
+\]
+
+同一几何级数恒等式给出
+
+\[
+A(n)=\frac{P_k}{\phi(P_k)}\prod_{j=1}^k(1-p_j^{-a_j-1}),
+\qquad \log P_k=\theta(p_k).
+\]
+
+这里 \(\phi\) 是 Euler 函数。**素数幂修正乘积不能丢掉。** Nicolas 的边界是 \(\log\log P_k=\log\theta(p_k)\),不是恒等于 \(\log p_k\);两者的渐近比较不能替代精确等式。以上是初等纸面恒等式与旧卷坐标的整理,不建立新的算术桥定理。
+

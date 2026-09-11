@@ -1,0 +1,39 @@
+**28.2 正步长、闭角点与同一比较目标。** 全部对数为自然对数,范数为通常欧氏范数。
+固定有限 \(h_1,h_2,h_3>0\),要求八个子集和两两不同,并按值排列为
+\[
+0=v_0<v_1<\cdots<v_7=Q,\qquad Q=h_1+h_2+h_3,
+\qquad \delta=\min_{0\le j<7}(v_{j+1}-v_j)>0.
+\]
+正步长本身不保证子集和不同;这是假设的一部分,素数情形在 28.13 验证它。
+固定有限 \(S\ge0\)。对有限实数
+\[
+T\ge\log2,\qquad 0\le s\le S,\qquad t\ge s,
+\qquad c=(T,T+s,T+t),\quad d_i=c_i+h_i,\quad A=3T+s+t,
+\]
+称有限实预算对 \((M_0,M_1)\) 可容许,当且仅当
+\[
+Q+\log5040<M_0<M_1<\infty
+\]
+且至少两个角点 \(x\in\prod_i\{c_i,d_i\}\) 的预算在闭区间
+\([M_0,M_1]\) 中。角点预算恰为 \(A+v_j\);两端均可取到实际角点。
+置
+\[
+f(x)=\log(1-e^{-x})\quad(x>0),\qquad
+D(M_1)=\max_{\substack{0\le y_i\le1\\\sum_i h_i y_i\le M_1-A}}
+\sum_{i=1}^3\bigl((1-y_i)f(c_i)+y_i f(d_i)\bigr),
+\]
+\[
+\mu=M_1/3,\quad I=[M_0/3,M_1/3],\quad
+\delta_i=\operatorname{dist}(I,\{c_i,d_i\}),\quad
+\rho=\sqrt{\frac{\delta_1^2+\delta_2^2+\delta_3^2}{6}},
+\qquad L=\mu-\rho,\quad H=\mu+2\rho,
+\]
+\[
+\Psi=f(H)+2f(L),\qquad G(M_0,M_1)=D(M_1)-\Psi.
+\]
+\(\delta\) 是子集和最小间隔,\(\delta_i\) 是距离,二者不可混用。
+角点存在保证 \(M_1\ge A\),所以 \(D\) 的可行域非空且紧,最大值存在。
+28.4 先证 \(L,H\ge T>0\),再使用 \(\Psi\)。在原素数域,这仍是
+\(G=U_{\rm dual}-U_{\rm var}\),共同的 \(\log E_S\) 抵消;
+本节直接使用上述原始优化定义,无需重建背包价格证书。
+

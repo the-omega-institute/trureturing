@@ -1,0 +1,1 @@
+| A057 | C | 明确函数 \(K(x)=(2\pi)^{-1}\int_{\mathbb R}e^{-ix\tau}/\xi(1/2+\tau)\,d\tau\) 满足 \(PF_\infty(K)\)。 

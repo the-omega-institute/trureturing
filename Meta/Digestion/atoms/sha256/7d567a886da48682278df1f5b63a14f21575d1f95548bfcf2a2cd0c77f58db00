@@ -1,0 +1,14 @@
+#### F14. de Bruijn–Newman 热形变（A055–A056）
+
+定义
+
+\[
+\Phi(u)=\sum_{n\ge1}(2\pi^2n^4e^{9u}-3\pi n^2e^{5u})e^{-\pi n^2e^{4u}},
+\qquad
+H_t(z)=\int_0^\infty e^{tu^2}\Phi(u)\cos(zu)\,du.
+\]
+
+该约定满足 \(H_0(z)=\xi(1/2+iz/2)/8\)。令 \(\Lambda_{\rm dBN}\) 为“\(H_t\) 全部零点实当且仅当 \(t\ge\Lambda_{\rm dBN}\)”的实阈值。
+
+| ID | 类别 | 精确目标 |
+| --- | --- | --- |

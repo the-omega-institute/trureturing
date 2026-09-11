@@ -1,0 +1,26 @@
+### Li
+
+固定正规化
+
+\[
+\xi(s)=\frac12 s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s),
+\qquad
+\lambda_n=\left.\frac1{(n-1)!}\frac{d^n}{ds^n}
+\bigl(s^{n-1}\log\xi(s)\bigr)\right|_{s=1},\quad n\ge1.
+\]
+
+在 \(s=1\) 邻域取与 \(\xi(1)=1/2>0\) 相容的解析对数;常数分支差不影响该导数。Li 判据为
+
+\[
+\mathrm{RH}\iff\forall n\ge1:\quad \lambda_n\ge0.
+\]
+
+[S] 引言核对的是同一 Li 正规化的经典零点和表达
+
+\[
+\lambda_n=\lim_{Y\to\infty}\sum_{|\operatorname{Im}\rho|\le Y}
+\left[1-\left(1-\frac1\rho\right)^n\right],
+\]
+
+其中非平凡零点按重数计。Li 原文 DOI 仅作书目信息,本轮未取得其全文;不把二手核对写成亲读原文。第 6 节直接从导数定义核对本次使用的 Taylor 系数关系。这里 \(\lambda_n\) 为实数;\(\lambda_0=0\) 是后续差分的约定,不是上述导数公式在 \(n=0\) 的取值。
+

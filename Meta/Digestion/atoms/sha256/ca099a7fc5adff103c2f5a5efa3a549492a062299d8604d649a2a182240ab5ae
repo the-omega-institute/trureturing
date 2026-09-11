@@ -1,0 +1,37 @@
+**26.7 距离的精确行公式与唯一凹折点。** 固定 \(b=\beta_{j-1}\)、\(a=b/k\),
+令 \(\mu=u/k\ge a\),简记
+\(\delta_i(\mu)=\operatorname{dist}([a,\mu],C_i)\)。
+逐个取区间到两个点的较小距离,得到彼此兼容的公式
+\[
+\delta_i(\mu)=
+\begin{cases}
+a-d_i,&d_i\le a,\\
+(c_i-\mu)_+,&a\le c_i,\\
+\min\{a-c_i,(d_i-\mu)_+\},&c_i<a<d_i,
+\end{cases}
+\qquad t_+=\max(t,0).
+\]
+在中间几何情形 \(c_i<a<d_i\),若
+\(a\ge(c_i+d_i)/2\),则 \((d_i-\mu)_+\le d_i-a\le a-c_i\),
+整行就是 \((d_i-\mu)_+\)。若
+\[
+c_i<a<(c_i+d_i)/2,
+\quad \mu_* = c_i+d_i-a>a,
+\]
+则精确分成
+\[
+\delta_i(\mu)=
+\begin{cases}
+a-c_i,&a\le\mu\le\mu_*,\\
+(d_i-\mu)_+,&\mu\ge\mu_*.
+\end{cases}
+\]
+唯一可能破坏凸性的向下斜率跳变是这个活跃最近端点切换
+\(0\to-1\);其上预算为
+\[
+u_*=k\mu_*=k(c_i+d_i)-b.
+\]
+在 \(c_i,d_i\) 处的折点只可能是 \(-1\to0\),仍保持凸性。
+\(a=c_i,a=d_i,a=(c_i+d_i)/2\) 都由上述兼容公式处理,
+不产生额外的内部向下跳变。
+

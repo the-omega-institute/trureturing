@@ -1,0 +1,12 @@
+**定义 17（强保域同余）。** $\theta$ 是 $X$ 上的等价关系；对任意 $f\in\Sigma$ 及逐坐标 $x_j\mathrel\theta y_j$ 的两元组 $\boldsymbol x,\boldsymbol y\in X^{n_f}$，要求
+
+$$
+\boldsymbol x\in D_f\iff\boldsymbol y\in D_f,
+\qquad
+\boldsymbol x,\boldsymbol y\in D_f\Longrightarrow
+f(\boldsymbol x)\mathrel\theta f(\boldsymbol y).
+\tag{SC}
+$$
+
+第一项保留整个定义域，不能删成“共同有定义时比较”。零元情形只有同一个空元组，条件自动成立。记 $\ker q=\{(x,y):q(x)=q(y)\}$；关系按集合包含排序，“最大”指包含所有符合条件的关系。
+
