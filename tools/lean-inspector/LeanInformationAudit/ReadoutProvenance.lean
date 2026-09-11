@@ -30,19 +30,12 @@ def provenanceJudgeAPIs : Array Name := #[
   `LeanInformationAudit.BoundedFiniteTruncationDisposition.mk,
   `LeanInformationAudit.UnreachableDisposition.mk]
 
-/-- A fresh, fixed budget per comparison; exceptions propagate to the query's
-incomplete result. Only types and identity data are reduced, never proof values. -/
-private def boundedDefEq (a b : Expr) (decisionType : Bool := false) : MetaM Bool :=
+/-- The last check only compares already reduced, closed types. Reduction and
+comparison each have a fresh fixed budget; either failure is incomplete. -/
+private def boundedDefEq (a b : Expr) : MetaM Bool :=
   withCurrHeartbeats <| withOptions
     (fun o => (o.set `maxHeartbeats (10000 : Nat)).set `maxRecDepth (1024 : Nat)) <|
     withTransparency .default do
-      -- Escalate only at the final semantic match. An alias may hide Decidable;
-      -- its argument may discard a rigid binder only at default transparency.
-      let a ← whnf a
-      if decisionType && !a.isAppOfArity ``Decidable 1 then return false
-      let a ← instantiateMVars (← whnf (if decisionType then a.appArg! else a))
-      if a.hasMVar then throwError "unresolved provenance type"
-      if a.hasFVar || a.hasLooseBVars then return false
       isDefEq a b
 
 initialize registerTraceClass `InformationProvenance.check
@@ -162,15 +155,34 @@ private structure ConstantType where
 serialized into oleans; scoped environment queries cannot leak cache entries. -/
 private structure TypeCache where
   constants : Std.HashMap Name ConstantType := {}
+  reduced : Std.HashMap Expr Expr := {}
+  localPolicies : List (Name × ReducibilityStatus) := []
+  overrides : List (Name × ReducibilityStatus) := []
+  classes : List Name := []
   deriving Inhabited
 
 private initialize typeCache : EnvExtension TypeCache ← registerEnvExtension (pure {})
+
+/-- New declarations preserve cached results. Changing the reduction policy of
+an existing declaration (including scoped/imported overrides), or class metadata,
+invalidates them. Imported declarations themselves are immutable in this env. -/
+private def compilationCache (env : Environment) : TypeCache := Id.run do
+  let old := typeCache.getState env
+  let overrides := (reducibilityExtraExt.getState env).map₂.toList
+  let classes := (classExtension.getState env).outParamMap.map₂.toList.map Prod.fst
+  let changed := old.overrides != overrides || old.classes != classes ||
+    old.localPolicies.any (fun (n, status) => getReducibilityStatusCore env n != status)
+  let cache := if changed then {} else old
+  let localPolicies := env.constants.map₂.toList.map fun (n, _) =>
+    (n, getReducibilityStatusCore env n)
+  return { cache with localPolicies, overrides, classes }
 
 private structure ClosureState where
   constants : NameHashSet := {}
   pending : List Name := []
   visited : Std.HashSet Expr := {}
-  compared : Std.HashMap (Bool × Expr) Bool := {}
+  compared : Std.HashMap Expr Bool := {}
+  decisionStatement : Expr := mkConst ``False
   classifiedTypes : Std.HashSet Expr := {}
   inferred : Std.HashMap Expr Expr := {}
   reduced : Std.HashMap Expr Expr := {}
@@ -234,10 +246,32 @@ private def inferredType (e : Expr) : ClosureM Expr := do
 
 private def reducedType (e : Expr) : ClosureM Expr := do
   if let some type := (← get).reduced[e]? then return type
-  let type ← boundedMeta <| withTransparency .instances do instantiateMVars (← whnf e)
+  let closed := !e.hasFVar && !e.hasLooseBVars && !e.hasMVar
+  if closed then
+    if let some type := (← get).cache.reduced[e]? then return type
+  let type ← boundedMeta <| withTransparency .default do instantiateMVars (← whnf e)
   if type.hasMVar then throwError "unresolved provenance type"
-  modify fun s => { s with reduced := s.reduced.insert e type }
+  modify fun s => { s with
+    reduced := s.reduced.insert e type
+    cache.reduced := if closed then s.cache.reduced.insert e type else s.cache.reduced }
   return type
+
+/-- Soundness: for closed types, default-transparency WHNF exposes the same
+rigid head in any definitionally equal pair: the same constant (including
+constructors), sort, or binder shape. Thus different rigid heads certify
+inequality before isDefEq. Stuck projections/variables are unknown, never a
+negative certificate. This is only a necessary condition, so matching heads
+still require the bounded semantic check. WHNF exhaustion propagates as
+incomplete_closure; it never produces a head mismatch or a clean result. -/
+private def headsMayMatch (a b : Expr) : Bool :=
+  match a.getAppFn, b.getAppFn with
+  | .const n _, .const m _ => n == m
+  | .sort _, .sort _ | .forallE .., .forallE .. | .lam .., .lam .. => true
+  | .const .., .sort .. | .const .., .forallE .. | .const .., .lam ..
+  | .sort .., .const .. | .sort .., .forallE .. | .sort .., .lam ..
+  | .forallE .., .const .. | .forallE .., .sort .. | .forallE .., .lam ..
+  | .lam .., .const .. | .lam .., .sort .. | .lam .., .forallE .. => false
+  | _, _ => true
 
 /-- A constant head in WHNF survives normalization. Inspect only type domains
 and codomains under rigid binders; no full normalization or proof evaluation is
@@ -305,22 +339,27 @@ private def mayMatch (decision : Bool) (candidate : Expr) : ClosureM Bool := do
   trace[InformationProvenance.filter] "disjoint: {candidate}"
   return false
 
-private def sameStatement (statement candidate : Expr) (decisionType := false) : ClosureM Bool := do
+private def sameStatement (statement type : Expr) : ClosureM Bool := do
+  -- Reduce the proposition argument separately: Decidable (family x) can be
+  -- closed after family discards x, even though its raw syntax is open (F1).
+  let decision := type.isAppOfArity ``Decidable 1
+  let candidate ← if decision then reducedType type.appArg! else pure type
+  if candidate.hasFVar || candidate.hasLooseBVars then return false
   if candidate.hasMVar then throwError "unresolved provenance type"
-  -- Reduce under the active binder context before excluding open propositions:
-  -- family x may discard x and expose the closed registered statement.
-  let candidate ← reducedType candidate
-  let key := (decisionType, candidate)
-  if let some answer := (← get).compared[key]? then return answer
-  let answer ← if ← mayMatch decisionType candidate then
-    boundedDefEq candidate statement decisionType else pure false
-  modify fun s => { s with compared := s.compared.insert key answer }
+  let candidateType := if decision then mkApp (mkConst ``Decidable) candidate else candidate
+  if let some answer := (← get).compared[candidateType]? then return answer
+  let state ← get
+  let target := if decision then state.decisionStatement else statement
+  let answer ← if headsMayMatch candidateType target && (!decision || headsMayMatch candidate statement) then do
+      if ← mayMatch false candidate then boundedDefEq candidate statement else pure false
+    else pure false
+  modify fun s => { s with compared := s.compared.insert candidateType answer }
   return answer
 
-/-- Classify by inferred types, including constructors and dependent projections.
-Let variables are substituted by the contextual traversal before inference.
-An open term may supply a closed type (e.g. f S x : Decidable S); no equality
-query ever synthesizes values for binders or compares an open proposition. -/
+/-- Select heads before inferring subterms. Data-valued constant heads cannot
+supply proofs or decisions; let/projection/lambda forms remain candidates until
+contextual inference resolves their family. An open term is retained when its
+inferred proposition becomes closed; no binder values are synthesized. -/
 private def classifyType (statement : Expr) (e : Expr) : ClosureM Unit := do
   if (← get).forbidden then return
   match e with
@@ -332,20 +371,9 @@ private def classifyType (statement : Expr) (e : Expr) : ClosureM Unit := do
   if (← get).classifiedTypes.contains type then return
   modify fun s => { s with classifiedTypes := s.classifiedTypes.insert type }
   unless ← mayMatch true type do return
-  let proposition ← boundedMeta (isProp type)
-  -- A known data inductive head cannot become Decidable. Function and sort
-  -- types cannot either. Leave aliases/projections/instance producers to whnf.
-  unless proposition || type.isAppOfArity ``Decidable 1 do
-    match type.getAppFn with
-    | .forallE .. | .sort .. | .fvar .. => return
-    | .const name _ =>
-      if let some (.inductInfo _) := (← getEnv).find? name then return
-    | _ => pure ()
   let type ← reducedType type
-  let decision := !proposition && !type.isAppOfArity ``Decidable 1
-  let candidate := if !proposition && !decision then type.appArg! else type
   -- Rule 2(a): an inhabitant of S; rule 2(b): an instance of Decidable S.
-  if ← sameStatement statement candidate decision then
+  if ← sameStatement statement type then
     modify fun s => { s with forbidden := true }
 
 private def reach (name : Name) : ClosureM Unit := do
@@ -398,7 +426,9 @@ private def collectReadout (env : Environment) (theoremName : Name) (readout : E
     ClosureM (Bool × Option (Array String)) := do
   let some theoremInfo := env.find? theoremName | return (false, none)
   -- Prepare the registered statement once per readout, never once per constant.
-  let statement ← boundedMeta (withTransparency .instances (whnf theoremInfo.type))
+  let statement ← reducedType theoremInfo.type
+  let decisionStatement ← reducedType (mkApp (mkConst ``Decidable) statement)
+  modify fun s => { s with decisionStatement }
   if ← boundedMeta (hasNormalConstant 256 statement) then
     let (constants, _) ← boundedMeta (typeConstants env theoremInfo.type)
     let (decision, _) ← boundedMeta (typeConstants env (mkApp (mkConst ``Decidable) theoremInfo.type))
@@ -417,8 +447,6 @@ private def collectReadout (env : Environment) (theoremName : Name) (readout : E
       modify fun s => { s with forbidden := true }
     if generatedAddress name || judgePayload info then
       modify fun s => { s with forbidden := true }
-    if name == theoremName then
-      modify fun s => { s with forbidden := true }
     visit statement false (mkConst name (info.levelParams.map Level.param))
     visit statement false info.type
     match info.value? (allowOpaque := true) with
@@ -428,7 +456,10 @@ private def collectReadout (env : Environment) (theoremName : Name) (readout : E
           !#[`propext, `Classical.choice, `Quot.sound].contains name) then
         throwError "unavailable provenance definition"
   let s ← get
-  return (s.forbidden, some (s.constants.toArray.map Name.toString |>.qsort (· < ·)))
+  -- Rules 2(c)/3(iii) are solely membership in the memoised constant closure.
+  -- This path performs no type inference, WHNF, or isDefEq.
+  return (s.forbidden || s.constants.contains theoremName,
+    some (s.constants.toArray.map Name.toString |>.qsort (· < ·)))
 
 /-- A query owns one fresh Meta context and one type-comparison cache. A total
 200000-heartbeat/1024-depth bound also covers proof scanning and type inference.
@@ -442,7 +473,7 @@ private def readoutClosureCurrent (theoremName : Name) (readout : Expr) :
       (fun o => (o.set `maxHeartbeats (200000 : Nat)).set `maxRecDepth (1024 : Nat)) <|
       do
         let (answer, state) ← (collectReadout env theoremName readout).run
-          { cache := typeCache.getState env } |>.run'
+          { cache := compilationCache env } |>.run'
         modifyEnv (typeCache.setState · state.cache)
         return answer)
     (fun _ => pure (false, none))
