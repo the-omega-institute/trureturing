@@ -1,0 +1,403 @@
+          "end_byte_exclusive": 346268
+        }
+      ],
+      "uncovered_spans": [
+        {
+          "start_byte": 344409,
+          "end_byte_exclusive": 344411,
+          "start_line": 6548,
+          "end_line_inclusive": 6548,
+          "bytes": 2,
+          "sha256": "9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1",
+          "git_blob_oid": "948cf947f86682cc5c1a28187aa1fc360525a7e9",
+          "lf": 1,
+          "terminal_lf": 1,
+          "eof_hex": "7c0a"
+        },
+        {
+          "start_byte": 344529,
+          "end_byte_exclusive": 344531,
+          "start_line": 6549,
+          "end_line_inclusive": 6549,
+          "bytes": 2,
+          "sha256": "9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1",
+          "git_blob_oid": "948cf947f86682cc5c1a28187aa1fc360525a7e9",
+          "lf": 1,
+          "terminal_lf": 1,
+          "eof_hex": "7c0a"
+        },
+        {
+          "start_byte": 344649,
+          "end_byte_exclusive": 344651,
+          "start_line": 6550,
+          "end_line_inclusive": 6550,
+          "bytes": 2,
+          "sha256": "9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1",
+          "git_blob_oid": "948cf947f86682cc5c1a28187aa1fc360525a7e9",
+          "lf": 1,
+          "terminal_lf": 1,
+          "eof_hex": "7c0a"
+        },
+        {
+          "start_byte": 344769,
+          "end_byte_exclusive": 344771,
+          "start_line": 6551,
+          "end_line_inclusive": 6551,
+          "bytes": 2,
+          "sha256": "9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1",
+          "git_blob_oid": "948cf947f86682cc5c1a28187aa1fc360525a7e9",
+          "lf": 1,
+          "terminal_lf": 1,
+          "eof_hex": "7c0a"
+        },
+        {
+          "start_byte": 344890,
+          "end_byte_exclusive": 344892,
+          "start_line": 6552,
+          "end_line_inclusive": 6552,
+          "bytes": 2,
+          "sha256": "9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1",
+          "git_blob_oid": "948cf947f86682cc5c1a28187aa1fc360525a7e9",
+          "lf": 1,
+          "terminal_lf": 1,
+          "eof_hex": "7c0a"
+        },
+        {
+          "start_byte": 345012,
+          "end_byte_exclusive": 345014,
+          "start_line": 6553,
+          "end_line_inclusive": 6553,
+          "bytes": 2,
+          "sha256": "9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1",
+          "git_blob_oid": "948cf947f86682cc5c1a28187aa1fc360525a7e9",
+          "lf": 1,
+          "terminal_lf": 1,
+          "eof_hex": "7c0a"
+        },
+        {
+          "start_byte": 345134,
+          "end_byte_exclusive": 345136,
+          "start_line": 6554,
+          "end_line_inclusive": 6554,
+          "bytes": 2,
+          "sha256": "9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1",
+          "git_blob_oid": "948cf947f86682cc5c1a28187aa1fc360525a7e9",
+          "lf": 1,
+          "terminal_lf": 1,
+          "eof_hex": "7c0a"
+        },
+        {
+          "start_byte": 345256,
+          "end_byte_exclusive": 345258,
+          "start_line": 6555,
+          "end_line_inclusive": 6555,
+          "bytes": 2,
+          "sha256": "9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1",
+          "git_blob_oid": "948cf947f86682cc5c1a28187aa1fc360525a7e9",
+          "lf": 1,
+          "terminal_lf": 1,
+          "eof_hex": "7c0a"
+        },
+        {
+          "start_byte": 345378,
+          "end_byte_exclusive": 345380,
+          "start_line": 6556,
+          "end_line_inclusive": 6556,
+          "bytes": 2,
+          "sha256": "9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1",
+          "git_blob_oid": "948cf947f86682cc5c1a28187aa1fc360525a7e9",
+          "lf": 1,
+          "terminal_lf": 1,
+          "eof_hex": "7c0a"
+        },
+        {
+          "start_byte": 345501,
+          "end_byte_exclusive": 345503,
+          "start_line": 6557,
+          "end_line_inclusive": 6557,
+          "bytes": 2,
+          "sha256": "9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1",
+          "git_blob_oid": "948cf947f86682cc5c1a28187aa1fc360525a7e9",
+          "lf": 1,
+          "terminal_lf": 1,
+          "eof_hex": "7c0a"
+        },
+        {
+          "start_byte": 345624,
+          "end_byte_exclusive": 345626,
+          "start_line": 6558,
+          "end_line_inclusive": 6558,
+          "bytes": 2,
+          "sha256": "9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1",
+          "git_blob_oid": "948cf947f86682cc5c1a28187aa1fc360525a7e9",
+          "lf": 1,
+          "terminal_lf": 1,
+          "eof_hex": "7c0a"
+        },
+        {
+          "start_byte": 345747,
+          "end_byte_exclusive": 345749,
+          "start_line": 6559,
+          "end_line_inclusive": 6559,
+          "bytes": 2,
+          "sha256": "9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1",
+          "git_blob_oid": "948cf947f86682cc5c1a28187aa1fc360525a7e9",
+          "lf": 1,
+          "terminal_lf": 1,
+          "eof_hex": "7c0a"
+        },
+        {
+          "start_byte": 345871,
+          "end_byte_exclusive": 345873,
+          "start_line": 6560,
+          "end_line_inclusive": 6560,
+          "bytes": 2,
+          "sha256": "9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1",
+          "git_blob_oid": "948cf947f86682cc5c1a28187aa1fc360525a7e9",
+          "lf": 1,
+          "terminal_lf": 1,
+          "eof_hex": "7c0a"
+        },
+        {
+          "start_byte": 345996,
+          "end_byte_exclusive": 345998,
+          "start_line": 6561,
+          "end_line_inclusive": 6561,
+          "bytes": 2,
+          "sha256": "9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1",
+          "git_blob_oid": "948cf947f86682cc5c1a28187aa1fc360525a7e9",
+          "lf": 1,
+          "terminal_lf": 1,
+          "eof_hex": "7c0a"
+        },
+        {
+          "start_byte": 346132,
+          "end_byte_exclusive": 346134,
+          "start_line": 6562,
+          "end_line_inclusive": 6562,
+          "bytes": 2,
+          "sha256": "9d5244c50ced231a7bb23d76593f0bce8f8d3ff803dfe514176002739b6f75c1",
+          "git_blob_oid": "948cf947f86682cc5c1a28187aa1fc360525a7e9",
+          "lf": 1,
+          "terminal_lf": 1,
+          "eof_hex": "7c0a"
+        },
+        {
+          "start_byte": 346268,
+          "end_byte_exclusive": 347263,
+          "start_line": 6563,
+          "end_line_inclusive": 6581,
+          "bytes": 995,
+          "sha256": "7a94ac9149cc4c559295ff80f8b11e17a34dcadbbf1d0e24a5cbcf711e058b4c",
+          "git_blob_oid": "931e11df40324ddd792583265079a71dab15aba6",
+          "lf": 19,
+          "terminal_lf": 1,
+          "eof_hex": "e7aca6e58fb7e8af81e68daee380820a"
+        }
+      ],
+      "uncovered_bytes": 1025,
+      "gap_scope": "not covered by the sole producer new-object set; exact complete parent absent"
+    }
+  ],
+  "canonical_verification": {
+    "new_pair_count": 26,
+    "current_units": 22,
+    "complete_units": 21,
+    "incomplete_units": [
+      "32.24"
+    ],
+    "uncovered_bytes": 1025,
+    "all_existing_parent_chains_exact": true,
+    "historical_pairs_checked": 70,
+    "tracked_canonical_modifications": [],
+    "producer_bytes_normalized": false,
+    "source_edited_after_ingest": false,
+    "full_current_canonical_coverage": false
+  },
+  "new_producer_whitespace_diagnostics": [
+    {
+      "pair_ref": "01613aa2513164515598959adc81b18723d33df31f3898e67f537fef9ab37f23",
+      "exit": 3,
+      "stdout": "Meta/Digestion/atoms/sha256/01613aa2513164515598959adc81b18723d33df31f3898e67f537fef9ab37f23:1: trailing whitespace.\n+| 37 | 7408800 | 95367431640625/7408800 | [3861593487709095353,3861593487709095354] | [4785798744716525144,4785798744716525145] | 内 \n",
+      "stderr": ""
+    },
+    {
+      "pair_ref": "05745066716ccacdeb06b5d2ff48c4ab322ee9f2a08b33dfec2b87b496be975b",
+      "exit": 3,
+      "stdout": "Meta/Digestion/atoms/sha256/05745066716ccacdeb06b5d2ff48c4ab322ee9f2a08b33dfec2b87b496be975b:39: new blank line at EOF.\n",
+      "stderr": ""
+    },
+    {
+      "pair_ref": "1a18125637ad0db0198a9ae256eb9b16043066a9fd8c60dbd21fd86bebf55cc2",
+      "exit": 3,
+      "stdout": "Meta/Digestion/atoms/sha256/1a18125637ad0db0198a9ae256eb9b16043066a9fd8c60dbd21fd86bebf55cc2:17: new blank line at EOF.\n",
+      "stderr": ""
+    },
+    {
+      "pair_ref": "26b0e2a20828908611065e4f91c31db6243882cba59ab80a7100dd13bbecfbe0",
+      "exit": 3,
+      "stdout": "Meta/Digestion/atoms/sha256/26b0e2a20828908611065e4f91c31db6243882cba59ab80a7100dd13bbecfbe0:1: trailing whitespace.\n+| 8 | 15876000 | 22226400 | [4035465149539971906,4035465149539971907] | [4810395880886390258,4810395880886390259] | 内 \n",
+      "stderr": ""
+    },
+    {
+      "pair_ref": "26d91251df21207803f6596a4a4d7ade71a66ffbada7f1fd970677d38dd1f1ca",
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "pair_ref": "341bb6c12c599c2d10029c605d892c6a0002d55b1aa1e02459f155ae789548de",
+      "exit": 3,
+      "stdout": "Meta/Digestion/atoms/sha256/341bb6c12c599c2d10029c605d892c6a0002d55b1aa1e02459f155ae789548de:1: trailing whitespace.\n+| 1 | 2116800 | 3175200 | [3571708000370205849,3571708000370205850] | [4255757179340375123,4255757179340375124] | 内 \n",
+      "stderr": ""
+    },
+    {
+      "pair_ref": "40c26d910bc5b3083a9a6f25a5e6fa6673e28d9a99fe6f30523d0466728a1b85",
+      "exit": 3,
+      "stdout": "Meta/Digestion/atoms/sha256/40c26d910bc5b3083a9a6f25a5e6fa6673e28d9a99fe6f30523d0466728a1b85:28: new blank line at EOF.\n",
+      "stderr": ""
+    },
+    {
+      "pair_ref": "481a10f217394a7df4185850c5d322d0a6d4cc89792f22ca3f2167de93198fc6",
+      "exit": 3,
+      "stdout": "Meta/Digestion/atoms/sha256/481a10f217394a7df4185850c5d322d0a6d4cc89792f22ca3f2167de93198fc6:1: trailing whitespace.\n+| 3 | 5292000 | 6350400 | [3672351920444274689,3672351920444274690] | [4646972599678113912,4646972599678113913] | 内 \n",
+      "stderr": ""
+    },
+    {
+      "pair_ref": "60be58ddefded6ee57503872533c1570e703617ea9b1586924caefd6c7161717",
+      "exit": 3,
+      "stdout": "Meta/Digestion/atoms/sha256/60be58ddefded6ee57503872533c1570e703617ea9b1586924caefd6c7161717:1: trailing whitespace.\n+| 7 | 14817600 | 15876000 | [3924307344577077266,3924307344577077267] | [4807397059153861248,4807397059153861249] | 内 \n",
+      "stderr": ""
+    },
+    {
+      "pair_ref": "696851c83492ac651b196b9e762f6fcb95375d2577d1cf2c39e58de2e7833497",
+      "exit": 3,
+      "stdout": "Meta/Digestion/atoms/sha256/696851c83492ac651b196b9e762f6fcb95375d2577d1cf2c39e58de2e7833497:1: trailing whitespace.\n+| 4 | 6350400 | 7408800 | [3709281801213438733,3709281801213438734] | [4690333637197880086,4690333637197880087] | 内 \n",
+      "stderr": ""
+    },
+    {
+      "pair_ref": "6c6da1934f8b89cf9aa2406e058902e509be0629603ec69a680db4cde331fb06",
+      "exit": 3,
+      "stdout": "Meta/Digestion/atoms/sha256/6c6da1934f8b89cf9aa2406e058902e509be0629603ec69a680db4cde331fb06:1: trailing whitespace.\n+| 2 | 3175200 | 5292000 | [3656087431865280954,3656087431865280955] | [4513444508621140490,4513444508621140491] | 内 \n",
+      "stderr": ""
+    },
+    {
+      "pair_ref": "6f624b72c16091da136e044854ea6ce17902556a56c85a398f8136a61c57fda0",
+      "exit": 3,
+      "stdout": "Meta/Digestion/atoms/sha256/6f624b72c16091da136e044854ea6ce17902556a56c85a398f8136a61c57fda0:1: trailing whitespace.\n+| 6 | 10584000 | 14817600 | [3906887374518372080,3906887374518372081] | [4790664097843025352,4790664097843025353] | 内 \n",
+      "stderr": ""
+    },
+    {
+      "pair_ref": "71f1b9f703819b5e8e2754cfe3fadf2e57029bfa9b467b675ac372040b5666c9",
+      "exit": 3,
+      "stdout": "Meta/Digestion/atoms/sha256/71f1b9f703819b5e8e2754cfe3fadf2e57029bfa9b467b675ac372040b5666c9:2: new blank line at EOF.\n",
+      "stderr": ""
+    },
+    {
+      "pair_ref": "7310cee6ccfd4e15faeb55449779326ea693ae1c1517bfdb042e3e2cf26bb191",
+      "exit": 3,
+      "stdout": "Meta/Digestion/atoms/sha256/7310cee6ccfd4e15faeb55449779326ea693ae1c1517bfdb042e3e2cf26bb191:56: new blank line at EOF.\n",
+      "stderr": ""
+    },
+    {
+      "pair_ref": "78ed3fa08d0afe20f27db9128db1cb0b4baf7f7e136d199e275c2202898082bc",
+      "exit": 3,
+      "stdout": "Meta/Digestion/atoms/sha256/78ed3fa08d0afe20f27db9128db1cb0b4baf7f7e136d199e275c2202898082bc:1: trailing whitespace.\n+| 11 | 37044000 | 44452800 | [4211686767642371492,4211686767642371493] | [4974878207139136808,4974878207139136809] | 内 \n",
+      "stderr": ""
+    },
+    {
+      "pair_ref": "84269ed513088e7134eb039d59f07275e73628c5e306ec39c11f86752fab9bc5",
+      "exit": 3,
+      "stdout": "Meta/Digestion/atoms/sha256/84269ed513088e7134eb039d59f07275e73628c5e306ec39c11f86752fab9bc5:22: new blank line at EOF.\n",
+      "stderr": ""
+    },
+    {
+      "pair_ref": "852ec4ad9d0750ffc49d419edfaecf1f5c4512d2b63d814fc192a0bfe55154b6",
+      "exit": 3,
+      "stdout": "Meta/Digestion/atoms/sha256/852ec4ad9d0750ffc49d419edfaecf1f5c4512d2b63d814fc192a0bfe55154b6:1: trailing whitespace.\n+| 9 | 22226400 | 31752000 | [4139340862663385094,4139340862663385095] | [4855443685454883071,4855443685454883072] | 内 \n",
+      "stderr": ""
+    },
+    {
+      "pair_ref": "86dd05bb0a3edb24f6fc6cedbe5cef5ab918e9726467370be6848b9625e48bee",
+      "exit": 3,
+      "stdout": "Meta/Digestion/atoms/sha256/86dd05bb0a3edb24f6fc6cedbe5cef5ab918e9726467370be6848b9625e48bee:14: new blank line at EOF.\n",
+      "stderr": ""
+    },
+    {
+      "pair_ref": "93273e4270217e61f05fd544b0573df67698475f24c97e63b42851644a0b152b",
+      "exit": 3,
+      "stdout": "Meta/Digestion/atoms/sha256/93273e4270217e61f05fd544b0573df67698475f24c97e63b42851644a0b152b:36: new blank line at EOF.\n",
+      "stderr": ""
+    },
+    {
+      "pair_ref": "b55cafb749c1187a3f0015d130f764a5de5dc432d3548111415454866f438706",
+      "exit": 3,
+      "stdout": "Meta/Digestion/atoms/sha256/b55cafb749c1187a3f0015d130f764a5de5dc432d3548111415454866f438706:1: trailing whitespace.\n+| 23 | 3175200 | 17592186044416/3175200 | [3667629269505833276,3667629269505833277] | [4524706955669101113,4524706955669101114] | 内 \n",
+      "stderr": ""
+    },
+    {
+      "pair_ref": "c5bf8477274a2b925ec0c3e61ea331a3ba6079cead82f3f3e9f0d3bca61aee66",
+      "exit": 3,
+      "stdout": "Meta/Digestion/atoms/sha256/c5bf8477274a2b925ec0c3e61ea331a3ba6079cead82f3f3e9f0d3bca61aee66:1: trailing whitespace.\n+| 5 | 7408800 | 10584000 | [3805416993823084069,3805416993823084070] | [4758603003307676456,4758603003307676457] | 内 \n",
+      "stderr": ""
+    },
+    {
+      "pair_ref": "cfe7c5cb5364e709d2944b0df8b57f457f86906474c1924ce59269bde068a639",
+      "exit": 3,
+      "stdout": "Meta/Digestion/atoms/sha256/cfe7c5cb5364e709d2944b0df8b57f457f86906474c1924ce59269bde068a639:1: trailing whitespace.\n+| 14 | 111132000 | 222264000 | [4542260329528568813,4542260329528568814] | [5592595433914645221,5592595433914645222] | 内 \n",
+      "stderr": ""
+    },
+    {
+      "pair_ref": "d6cbd446402c318cfe425f01d77a4a01d4bcae786423700f86560c187b2d7e46",
+      "exit": 3,
+      "stdout": "Meta/Digestion/atoms/sha256/d6cbd446402c318cfe425f01d77a4a01d4bcae786423700f86560c187b2d7e46:1: trailing whitespace.\n+| 10 | 31752000 | 37044000 | [4167384397859439993,4167384397859439994] | [4925463759693976678,4925463759693976679] | 内 \n",
+      "stderr": ""
+    },
+    {
+      "pair_ref": "e5c0f8aea4c6ee3d20808687aefba33f8d6a8c4d8653f62d0a1a98189818f671",
+      "exit": 3,
+      "stdout": "Meta/Digestion/atoms/sha256/e5c0f8aea4c6ee3d20808687aefba33f8d6a8c4d8653f62d0a1a98189818f671:1: trailing whitespace.\n+| 13 | 74088000 | 111132000 | [4407480363376819653,4407480363376819654] | [5303788151809947391,5303788151809947392] | 内 \n",
+      "stderr": ""
+    },
+    {
+      "pair_ref": "eb671e56db94848864eb4781fd93f61d258cd552dbd43b32c0770b546f789f1e",
+      "exit": 3,
+      "stdout": "Meta/Digestion/atoms/sha256/eb671e56db94848864eb4781fd93f61d258cd552dbd43b32c0770b546f789f1e:4: new blank line at EOF.\n",
+      "stderr": ""
+    },
+    {
+      "pair_ref": "f70aa7c9c78fc6f347e7c143e2e1aefd974de73c4283ead3df669793ee7f6a26",
+      "exit": 3,
+      "stdout": "Meta/Digestion/atoms/sha256/f70aa7c9c78fc6f347e7c143e2e1aefd974de73c4283ead3df669793ee7f6a26:1: trailing whitespace.\n+| 12 | 44452800 | 74088000 | [4345560437173103411,4345560437173103412] | [5084082822312931734,5084082822312931735] | 内 \n",
+      "stderr": ""
+    }
+  ],
+  "tracked_diff_check": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "errors_and_limits_ref": "docs/reports/quantized-gh/actual-5040-fixed-box-0910.md#observed-errors-and-limitations",
+  "remaining_gaps": [
+    "Representation repair: 32.24 has no complete canonical parent; actual fragments and every uncovered byte are recorded in its current_unit_bindings entry. A separately authorized new source layer/ingest is required; the single allowed ingest cannot be repeated.",
+    "Caller must compose exact pure predecessors and review the full current source; inherited chapters remain mixed and unchanged.",
+    "Caller owns sealing, independent review, ordinary gates and predecessor-ordered S21 delivery; no approval or MERGED is claimed.",
+    "Standing cumulative GoalArtifact mathematical obligations remain active; this finite support proof proves no new all-height/all-prime sign theorem or RH and does not complete the continuous research goal."
+  ],
+  "scope_status": {
+    "mathematical_support_obligation_proved": true,
+    "implementation_fully_complete": false,
+    "whole_source_pure": false,
+    "independent_review_approval": false,
+    "s21_merged": false,
+    "goal_complete": false
+  },
+  "repository_return": {
+    "branch": "lane/math/quantized-gh-pure-s21-0910",
+    "head": "2dcd259aa895ad0030875378e2748da57ee563f8",
+    "all_changes_unstaged": true,
+    "caller_owns_git_lifecycle": true
+  },
+  "reference_schema": "catalog keys are bare SHA256 atom IDs; full_parent_ref and ordered_parts.pair_ref resolve there. Catalog actual_yaml_text preserves the actual producer fingerprint/cas_ref/ordered-child syntax and terminal LF; identities bind exact file bytes. No missing parent is synthesized. Evidence spans refer to report_path. Recovery byte intervals are half-open.",
+  "mapping_self_identity_location": "result.json conclusion.map; excluded here to avoid recursive hashing"
+}

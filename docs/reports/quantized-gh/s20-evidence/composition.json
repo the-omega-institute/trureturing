@@ -52,7 +52,7 @@
       }
     },
     "source-composed-I47": {
-      "kind": "file",
+      "kind": "file_span",
       "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
       "identity": {
         "bytes": 364059,
@@ -60,7 +60,11 @@
         "lf": 7128,
         "terminal_lf": 2,
         "lines": 7128
-      }
+      },
+      "byte_span": [
+        0,
+        364059
+      ]
     },
     "source-S19-merged": {
       "kind": "file_span",
