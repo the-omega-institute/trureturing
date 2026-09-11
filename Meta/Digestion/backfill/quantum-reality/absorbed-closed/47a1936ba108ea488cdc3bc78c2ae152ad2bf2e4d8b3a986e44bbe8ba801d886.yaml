@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:47a1936ba108ea488cdc3bc78c2ae152ad2bf2e4d8b3a986e44bbe8ba801d886
   normalized_sha256: sha256:47a1936ba108ea488cdc3bc78c2ae152ad2bf2e4d8b3a986e44bbe8ba801d886
 cas_ref: sha256:47a1936ba108ea488cdc3bc78c2ae152ad2bf2e4d8b3a986e44bbe8ba801d886
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/GraphColoring/StepGraphComponentCount.connectedComponent_card
+    target_statement_id: sha256:35c1d86765b4ec61e6f8e90237c6e4a71cd7380df3b671a37f9ac2e5de3fa04b
 receipts:
   unresolved_subitems: []
