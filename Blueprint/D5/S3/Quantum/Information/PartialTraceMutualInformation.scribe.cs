@@ -34,7 +34,8 @@ internal sealed class PartialTraceMutualInformationDocument : IScribeDocumentDef
                 DeclarationHandle.Create(Module + "quantumMutualInformation"),
                 H("Mutual information of a joint density state"),
                 StatementSource.FromAuthor(MutualInformationFormula()),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(
+                        LibraryNoteRef.Create("D5/L/Quantum/watrous2018entropicidentities")),
                 Blocks(Paragraph(Text(
                     "The only input is the joint state. marginalRight retains A and "
                     + "marginalLeft retains B; each is constructed by partial trace."))),

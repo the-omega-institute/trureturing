@@ -12,9 +12,7 @@ $$\forall \rho, i, j, \operatorname{jointEntry}\left(\rho, i, j\right) = \operat
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/CoherentCopyCorrelationTax.coherentCopyState_correlated_entry` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Codex implementation worker (2026). *Coherent premeasurement and the correlation-tax identity*. URL: <https://github.com/the-omega-institute/trureturing>.
+*Citation.* John Watrous (2018). *The Theory of Quantum Information — spectral calculus, reductions and entropy*. URL: <https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf>.
 
 *Commentary.*
 
@@ -26,9 +24,7 @@ $$\forall \rho, \operatorname{marginalRight}\left(\operatorname{coherentCopyStat
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/CoherentCopyCorrelationTax.marginalRight_coherentCopyState` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Codex implementation worker (2026). *Coherent premeasurement and the correlation-tax identity*. URL: <https://github.com/the-omega-institute/trureturing>.
+*Citation.* John Watrous (2018). *The Theory of Quantum Information — spectral calculus, reductions and entropy*. URL: <https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf>.
 
 *Commentary.*
 
@@ -40,9 +36,7 @@ $$\forall \rho, \operatorname{marginalLeft}\left(\operatorname{coherentCopyState
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/CoherentCopyCorrelationTax.marginalLeft_coherentCopyState` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Codex implementation worker (2026). *Coherent premeasurement and the correlation-tax identity*. URL: <https://github.com/the-omega-institute/trureturing>.
+*Citation.* John Watrous (2018). *The Theory of Quantum Information — spectral calculus, reductions and entropy*. URL: <https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf>.
 
 *Commentary.*
 
@@ -54,9 +48,7 @@ $$\forall \rho, \operatorname{vonNeumannEntropy}\left(\operatorname{coherentCopy
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/CoherentCopyCorrelationTax.vonNeumannEntropy_coherentCopyState` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Codex implementation worker (2026). *Coherent premeasurement and the correlation-tax identity*. URL: <https://github.com/the-omega-institute/trureturing>.
+*Citation.* John Watrous (2018). *The Theory of Quantum Information — spectral calculus, reductions and entropy*. URL: <https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf>.
 
 *Commentary.*
 
@@ -68,9 +60,7 @@ $$\forall \rho, \operatorname{quantumMutualInformation}\left(\operatorname{coher
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/CoherentCopyCorrelationTax.coherent_copy_correlation_tax` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Codex implementation worker (2026). *Coherent premeasurement and the correlation-tax identity*. URL: <https://github.com/the-omega-institute/trureturing>.
+*Citation.* T. Baumgratz, M. Cramer, M. B. Plenio (2014). *Quantifying Coherence*. URL: <https://arxiv.org/abs/1311.0275v3>.
 
 *Commentary.*
 
