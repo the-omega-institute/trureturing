@@ -77,6 +77,7 @@ public sealed class SharedBuildContractTests
         Write(".gitignore", "build/\n.lake/\n**/bin/\n");
         Write("Makefile", "lean-report:\n\t@echo report >> build/events\n");
         Write("tools/scripts/workflow/scribe-content-checks.sh", "echo scribe >> build/events\n");
+        fixture.RegisterProofs();
         Write("tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs", "// banned-api-proof\n");
         Write("build/bin/dotnet", """
             #!/bin/bash

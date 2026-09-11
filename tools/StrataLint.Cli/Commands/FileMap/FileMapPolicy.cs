@@ -54,6 +54,7 @@ internal static class FileMapPolicy
         new Dictionary<string, string>(StringComparer.Ordinal)
         {
             ["CommonCompileMetadata"] = "tools/StrataLint.EngineeringScope/CommonCompileMetadata.cs",
+            ["EngineeringProjectRegistry"] = "tools/StrataLint.Engine/RepositoryIo/EngineeringProjectRegistry.cs",
             ["BackfillInventoryLoader"] = BackfillLoaderPath,
             ["FileMapLoader"] = FileMapLoaderPath,
             ["FrozenStateRecordLoader"] = FrozenStateRecordLoaderPath,

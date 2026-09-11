@@ -39,7 +39,7 @@ internal sealed partial class ProductionCliEnvironment
             {
                 var prepared = repository.Prepare(options.ProtectedBase);
                 var baseline = Decode(repository.ReadRevision(prepared.Revision));
-                var baseProjects = EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadSnapshotProjects(baseline));
+                var baseProjects = EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadBaseProjects(baseline, current));
                 removedProjectOutput = string.Concat(baseProjects.Where(path => !current.TryGetFile(path, out _))
                     .Select(path => $"ENGINEERING_TEST_PROJECT_REMOVED project={JsonSerializer.Serialize(path)}\n"));
                 var common = CommonExecutionEvidence.ValidateCommon(repositoryRoot, baseProjects);

@@ -43,17 +43,8 @@ internal static class CommonExecutionEvidence
     private static string Candidate(string root, out RepositorySnapshot snapshot)
     {
         snapshot = Snapshot(root);
-        var projects = snapshot.Files.Keys.Select(path => path.Value)
-            .Where(path => path.EndsWith(".csproj", StringComparison.Ordinal)).ToArray();
-        if (projects.Length != 0)
-        {
-            var compile = MsBuildCompileOracle.Query(root, projects, configuration: "Release");
-            if (compile.Findings.Count != 0)
-                throw new InvalidDataException(string.Join("\n", compile.Findings.Select(finding => finding.Message)));
-            foreach (var path in compile.ProjectBySourcePath.Keys)
-                if (!snapshot.TryGetFile(path, out _))
-                    throw new InvalidDataException($"Compile input is absent from candidate source: {path}");
-        }
+        var files = snapshot.Files.Values.Select(file => new ScribeTrackedSource(file.Path.Value, file.Text)).ToArray();
+        _ = EngineeringProjectRegistry.Read(files).Sources(files);
         using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
         foreach (var (path, file) in snapshot.Files.OrderBy(static pair => pair.Key.Value, StringComparer.Ordinal))
         {

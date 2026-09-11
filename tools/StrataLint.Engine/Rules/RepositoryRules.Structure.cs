@@ -151,9 +151,14 @@ internal static partial class RepositoryRules
         Func<RepositorySnapshot, ScribeTestMap> deriveSnapshot)
     {
         // Wrap both snapshot derivations here so cache outcomes remain observational to capacity findings.
-        ScribeTestMap GetMap(RepositorySnapshot snapshot) => context.TestMapStore is null
-            ? deriveSnapshot(snapshot)
-            : context.TestMapStore.GetOrDerive(snapshot);
+        ScribeTestMap GetMap(RepositorySnapshot snapshot)
+        {
+            var registered = ReferenceEquals(snapshot, context.Baseline)
+                ? EngineeringProjectRegistry.AddressBase(snapshot, context.Current) : snapshot;
+            return context.TestMapStore is null
+                ? deriveSnapshot(registered)
+                : context.TestMapStore.GetOrDerive(registered);
+        }
         if (context.Changes.Paths.Any(static path =>
                 ScribeTestMapDeriver.IsDerivationInput(path.Value)))
         {

@@ -101,6 +101,19 @@ public sealed class SharedBuildRuntimeTests
                 }
             }
             """);
+        Write(EngineeringRegistrationFixture.Path, EngineeringRegistrationFixture.Manifest(
+            projects.Select(item => new EngineeringProjectFixture($"tools/{item.Item1}/{item.Item1}.csproj",
+                item.Item2, "production", false, [$"tools/{item.Item1}/**/*.cs"], OwnedTestAssembly: "Runtime"))
+            .Concat(new[] {
+                new EngineeringProjectFixture(testProject, "Runtime", "cross-cutting-test", true, ["tools/tests/Runtime/**/*.cs"],
+                    References: projects.Select(item => $"tools/{item.Item1}/{item.Item1}.csproj").ToArray()),
+                new EngineeringProjectFixture(proofProject, "CompileFailProof", "compile-fail-proof", false,
+                    ["tools/tests/CompileFailProof/**/*.cs"], References: [cliProject]),
+                new EngineeringProjectFixture(bannedProject, "BannedApiCompileFailProof", "compile-fail-proof", false,
+                    ["tools/tests/BannedApiCompileFailProof/**/*.cs"]),
+                new EngineeringProjectFixture("tools/scripts/report/JudgeSeedTask.csproj", "JudgeSeedTask", "production", false,
+                    ["tools/scripts/report/JudgeSeedTask.cs"], OwnedTestAssembly: "JudgeSeedTask.Tests"),
+            }).ToArray()));
         Run("dotnet", "new", "sln", "--name", "StrataLint", "--format", "sln", "--output", "tools");
         Run("dotnet", "sln", "tools/StrataLint.sln", "add", testProject);
         Run("dotnet", "restore", "tools/StrataLint.sln", "--use-lock-file");

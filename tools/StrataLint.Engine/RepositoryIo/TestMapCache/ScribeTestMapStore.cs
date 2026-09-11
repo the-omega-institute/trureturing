@@ -75,9 +75,9 @@ internal sealed record ScribeTestMapCacheEvent(string InputDigest, string Outcom
 // collision, equal digests iff the projection bytes are equal.
 //
 // C1 (2): environment (rid/framework/dotnet_host/dotnet_sdk_version/evaluation_environment_digest)
-// and metadata_digest bind the fixed MSBuild environment and Roslyn reference/nuspec contents.
-// Snapshot derivation materializes only IsDerivationInput files, so its checkout exposes the
-// same tree-side projection as the input digest. Environment/reference inputs remain bound above.
+// and metadata_digest bind the existing metadata environment and Roslyn reference/nuspec contents.
+// Project/source membership comes from the registered manifest; no snapshot checkout or
+// MSBuild evaluation runs. Environment/reference inputs remain a next-layer boundary.
 //
 // C1 (3): Cache provenance is the same as --judge-dll's judge-binaries cache: only dev push writes
 // the base scope; PRs read it. Cache tampering has zero recorded incidents (CLAUDE.md 20''); no Engine MAC.
@@ -98,6 +98,8 @@ internal sealed class ScribeTestMapStore(
     internal ScribeTestMap GetOrDerive(RepositorySnapshot snapshot)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
+        var sources = snapshot.Files.Values.Select(file => new ScribeTrackedSource(file.Path.Value, file.Text)).ToArray();
+        EngineeringProjectRegistry.Read(sources).Sources(sources);
         var inputDigest = ComputeInputDigest(snapshot);
         string? metadataDigest = null;
         try
@@ -116,12 +118,6 @@ internal sealed class ScribeTestMapStore(
         }
 
         var map = deriveSnapshot(snapshot);
-        if (map.CompileQueryFindings.Count != 0)
-        {
-            Record(inputDigest, "store-skipped-compile-findings");
-            return map;
-        }
-
         try
         {
             if (metadataDigest is null) return map;
@@ -178,16 +174,8 @@ internal sealed class ScribeTestMapStore(
         Func<IEnumerable<ScribeCompilationProject>, IReadOnlyList<string>>? describeInputPaths = null)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
-        var projects = snapshot.Files.Values
-            .Where(static file => file.Path.Value.EndsWith(".csproj", StringComparison.Ordinal))
-            .OrderBy(static file => file.Path.Value, StringComparer.Ordinal)
-            .Select(file =>
-            {
-                var path = file.Path.Value;
-                var lockPath = path[..(path.LastIndexOf('/') + 1)] + "packages.lock.json";
-                return new ScribeCompilationProject(path, file.Text, "", [], [],
-                    snapshot.Files.GetValueOrDefault(RepoPath.CreateKnown(lockPath))?.Text);
-            });
+        var files = snapshot.Files.Values.Select(file => new ScribeTrackedSource(file.Path.Value, file.Text)).ToArray();
+        var projects = ScribeProjectCompilationContext.Create(files, EngineeringProjectRegistry.Read(files)).Projects;
         var paths = (describeInputPaths ?? ScribeMetadataReferenceResolver.DescribeInputPaths)(projects);
         using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
         AppendHashString(hash, "test-map-metadata-v1");

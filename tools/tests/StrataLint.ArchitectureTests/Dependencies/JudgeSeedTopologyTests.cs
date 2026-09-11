@@ -1,3 +1,5 @@
+using System.Text.Json.Nodes;
+
 namespace StrataLint.ArchitectureTests;
 
 public sealed class JudgeSeedTopologyTests
@@ -18,8 +20,8 @@ public sealed class JudgeSeedTopologyTests
                     entry.RelativePath,
                     File.ReadAllText(entry.FullPath))));
         Assert.Contains(current.Entries, entry => entry.Path == Product);
-        var baseline = Decode(current.Entries.Where(entry => entry.Path != Product && entry.Path != Owner));
-        var candidate = Decode(current.Entries.Where(entry => !removeOwner || entry.Path != Owner));
+        var baseline = Registered(current.Entries.Where(entry => entry.Path != Product && entry.Path != Owner));
+        var candidate = Registered(current.Entries.Where(entry => !removeOwner || entry.Path != Owner));
 
         var result = RepositoryRules.EvaluateSnapshots(baseline, candidate);
 
@@ -37,6 +39,17 @@ public sealed class JudgeSeedTopologyTests
             Assert.Empty(result.IntroducedDebt);
             Assert.Contains(Owner, EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadSnapshotProjects(candidate)));
         }
+    }
+
+    private static RepositorySnapshot Registered(IEnumerable<RawRepositoryEntry> entries)
+    {
+        var files = entries.ToArray();
+        var paths = files.Select(entry => entry.Path).ToHashSet(StringComparer.Ordinal);
+        var manifest = JsonNode.Parse(File.ReadAllText(Path.Combine(RepositoryLayout.FindRoot(), EngineeringProjectRegistry.ManifestPath)))!;
+        var registrations = manifest["projects"]!.AsArray();
+        foreach (var item in registrations.ToArray())
+            if (!paths.Contains(item!["path"]!.GetValue<string>())) registrations.Remove(item);
+        return Decode(files.Append(RawRepositoryEntry.FromText(EngineeringProjectRegistry.ManifestPath, manifest.ToJsonString())));
     }
 
     private static RepositorySnapshot Decode(IEnumerable<RawRepositoryEntry> entries) =>

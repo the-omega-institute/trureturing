@@ -9,7 +9,7 @@ internal sealed partial class ProductionCliEnvironment
         ScribeTestMapDeriver.DeriveSnapshot;
 
     internal Func<ScribeTestMapEnvironment> DescribeTestMapEnvironment { get; init; } =
-        MsBuildCompileOracle.DescribeEnvironment;
+        ScribeTestMapEnvironmentProbe.DescribeEnvironment;
 
     internal TextWriter? TestMapCacheError { get; init; }
 

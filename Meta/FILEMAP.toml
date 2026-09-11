@@ -367,6 +367,16 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
+pattern = "Meta/engineering-projects.json"
+kind = "data"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["EngineeringProjectRegistry"]
+verified_by = ["EngineeringProjectRegistry"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
 pattern = "Meta/registry.yaml"
 kind = "data"
 admission_plane = "judge"

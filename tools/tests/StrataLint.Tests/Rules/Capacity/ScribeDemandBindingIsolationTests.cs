@@ -164,7 +164,7 @@ public sealed class ScribeDemandBindingIsolationTests
             project with { Sources = [.. project.Sources, new("tests/Root.cs", """
                 partial class Cases { static string root = FindRoot(); static string FindRoot() => ""; }
                 """)] }] } };
-        var expected = new ScribeTestMap([new("Tests", "tests/Cases.cs", "Cases.Root", [])], [], [], [], []);
+        var expected = new ScribeTestMap([new("Tests", "tests/Cases.cs", "Cases.Root", [])]);
         var eager = Derive(fixture, ScribeBindingStrategy.Eager);
         var demand = Derive(fixture, ScribeBindingStrategy.Demand);
         Assert.Equal(Bytes(expected), Bytes(eager));
@@ -184,7 +184,7 @@ public sealed class ScribeDemandBindingIsolationTests
                 partial class Cases { static string RootPath { get; } = FindRoot(); static string FindRoot() => ""; }
                 """)] }] } };
         var expected = new ScribeTestMap([new("Tests", "tests/Cases.cs", "Cases.Root",
-            [TestMapUnknownReason.IndirectViaProductionLoader])], [], [], [], []);
+            [TestMapUnknownReason.IndirectViaProductionLoader])]);
         var eager = Derive(fixture, ScribeBindingStrategy.Eager);
         var demand = Derive(fixture, ScribeBindingStrategy.Demand);
         Assert.Equal(Bytes(expected), Bytes(eager));
@@ -232,7 +232,7 @@ public sealed class ScribeDemandBindingIsolationTests
         };
 
         var expected = new ScribeTestMap(
-            [new("Tests", "tests/A.cs", "Cases.Read", [])], [], [], [], []);
+            [new("Tests", "tests/A.cs", "Cases.Read", [])]);
         var eager = Derive(fixture, ScribeBindingStrategy.Eager);
         var demand = Derive(fixture, ScribeBindingStrategy.Demand);
 

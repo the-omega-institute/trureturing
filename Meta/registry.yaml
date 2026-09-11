@@ -19,6 +19,7 @@ governance_documents:
   - "Meta/Digestion/atomizers.toml"
   - "Meta/FILEMAP.toml"
   - "Meta/compile-metadata.json"
+  - "Meta/engineering-projects.json"
   - "docs/CONTRIBUTING.md"
   - "docs/GOVERNANCE.md"
 agent_files:

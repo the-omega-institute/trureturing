@@ -89,27 +89,12 @@ public sealed class ScribeMetadataHandoffTests
                 .Cast<PortableExecutableReference>().Select(reference => reference.FilePath!).ToHashSet(StringComparer.Ordinal);
             foreach (var path in inputs(ScribeProjectCompilationContext.Create(snapshot.Files.Values
                          .Select(file => new ScribeTrackedSource(file.Path.Value, file.Text)).ToArray(),
-                         new Dictionary<string, string>(), new HashSet<string>()).Projects))
+                         EngineeringProjectRegistry.Read(snapshot)).Projects))
                 Assert.True(platform.Contains(path) || path.StartsWith(Path.Combine(recipient, "build/ci/compile-metadata")
                     + Path.DirectorySeparatorChar, StringComparison.Ordinal), path);
-            var calls = new List<string>();
-            ProcessOutput Evaluate(string host, IEnumerable<string> arguments, string root, TimeSpan timeout,
-                int limit, ReadOnlyMemory<byte> stdin, IReadOnlyDictionary<string, string>? environment)
-            {
-                Assert.Equal("msbuild", arguments.First());
-                Assert.Contains("-getItem:Compile", arguments);
-                Assert.DoesNotContain(arguments, argument => argument.StartsWith("-target:", StringComparison.Ordinal));
-                calls.Add(arguments.ElementAt(1));
-                return TestProcessRunner.Classify(() => BoundedProcessRunner.Run(host, arguments, root, timeout,
-                    limit, stdin, environment), host);
-            }
-            ScribeTestMap Derive(RepositorySnapshot source) => ScribeTestMapDeriver.DeriveSnapshot(source, inputs,
-                data => ScribeTestMapDeriver.DeriveSnapshotUncached(data, Evaluate, inputs));
+            ScribeTestMap Derive(RepositorySnapshot source) => ScribeTestMapDeriver.DeriveSnapshot(source, inputs);
             var current = Derive(snapshot);
             var baseline = Derive(RegisteredSnapshot(false));
-            Assert.Equal(6, calls.Count);
-            Assert.Empty(current.CompileQueryFindings);
-            Assert.Empty(baseline.CompileQueryFindings);
             Assert.Equal(2, current.Methods.Count);
             Assert.Single(baseline.Methods);
             Assert.All(current.Methods, method => Assert.Empty(method.UnknownReasons));
@@ -234,7 +219,6 @@ public sealed class ScribeMetadataHandoffTests
         var snapshot = Snapshot(true, "0.0.0-unavailable-metadata-fixture");
         var map = ScribeTestMapDeriver.DeriveSnapshot(snapshot, _ => References());
 
-        Assert.Empty(map.CompileQueryFindings);
         Assert.Equal(2, map.Methods.Count);
         Assert.All(map.Methods, method => Assert.Empty(method.UnknownReasons));
         Assert.Empty(ScribeUnknownDebtPolicy.Evaluate(map,
@@ -261,8 +245,9 @@ public sealed class ScribeMetadataHandoffTests
             RawRepositoryEntry.FromText("tools/tests/Probe/Existing.cs",
                 "public class Existing { [Xunit.Fact] public void Runs() { Xunit.Assert.True(true); } }"),
         };
-        foreach (var path in ScribeTestMapDeriver.CompileFailProofProjectExemptions)
-            files.Add(RawRepositoryEntry.FromText(path, "<Project />"));
+        files.Add(RawRepositoryEntry.FromText(EngineeringRegistrationFixture.Path,
+            EngineeringRegistrationFixture.Manifest(new EngineeringProjectFixture(
+                "tools/tests/Probe/Probe.csproj", "Probe", "cross-cutting-test", true, ["tools/tests/Probe/**/*.cs"]))));
         if (addition) files.Add(RawRepositoryEntry.FromText("tools/tests/Probe/Added.cs",
             "public class Added { [Xunit.Fact] public void HarmlessAddition() { Xunit.Assert.True(true); } }"));
         return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(RawRepositorySnapshot.Create(files))).Snapshot;

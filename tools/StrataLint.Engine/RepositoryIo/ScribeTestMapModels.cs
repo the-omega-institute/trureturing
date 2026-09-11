@@ -30,13 +30,6 @@ internal sealed record ScribeTestMethod(
     internal string DisplayIdentity => $"{PartitionKey}::{Id}";
 }
 
-internal sealed record ScribeTestMap(
-    IReadOnlyList<ScribeTestMethod> Methods,
-    IReadOnlyList<string> UnclassifiedManagedProjectPaths,
-    IReadOnlyList<string> OrphanManagedSourcePaths,
-    IReadOnlyList<string> DanglingCompileFailProofProjectExemptionPaths,
-    IReadOnlyList<MsBuildCompileFinding> CompileQueryFindings);
-
-internal sealed record ScribeTestProjectPartition(string Key, string ProjectPath);
+internal sealed record ScribeTestMap(IReadOnlyList<ScribeTestMethod> Methods);
 
 internal sealed record ScribeTrackedSource(string Path, string Content);

@@ -23,7 +23,7 @@ public sealed class ScribeTestMapEnvelopeTests
 
         Assert.True(accepted, reason);
         Assert.NotNull(decoded);
-        Assert.Equal(1, decoded.SchemaVersion);
+        Assert.Equal(2, decoded.SchemaVersion);
         Assert.Equal(original.InputDigest, decoded.InputDigest);
         Assert.Equal(original.MetadataDigest, decoded.MetadataDigest);
         Assert.Equal(original.Producer, decoded.Producer);
@@ -31,18 +31,6 @@ public sealed class ScribeTestMapEnvelopeTests
         Assert.Equal(
             original.Map.Methods.Select(MethodProjection),
             decoded.Map.Methods.Select(MethodProjection));
-        Assert.Equal(
-            original.Map.UnclassifiedManagedProjectPaths,
-            decoded.Map.UnclassifiedManagedProjectPaths);
-        Assert.Equal(
-            original.Map.OrphanManagedSourcePaths,
-            decoded.Map.OrphanManagedSourcePaths);
-        Assert.Equal(
-            original.Map.DanglingCompileFailProofProjectExemptionPaths,
-            decoded.Map.DanglingCompileFailProofProjectExemptionPaths);
-        Assert.Equal(
-            original.Map.CompileQueryFindings,
-            decoded.Map.CompileQueryFindings);
     }
 
     [Fact]
@@ -61,9 +49,9 @@ public sealed class ScribeTestMapEnvelopeTests
     }
 
     [Fact]
-    public void RejectsSchemaVersionOtherThanOne()
+    public void RejectsRetiredSchemaVersion()
     {
-        var bytes = Rewrite(ValidBytes(), root => root["schema_version"] = 2);
+        var bytes = Rewrite(ValidBytes(), root => root["schema_version"] = 1);
 
         var accepted = ScribeTestMapEnvelope.TryRead(bytes, out _, out var reason);
 
@@ -139,13 +127,6 @@ public sealed class ScribeTestMapEnvelopeTests
                 "tools/tests/ATests.cs",
                 "ATests.First",
                 [TestMapUnknownReason.Other, TestMapUnknownReason.VariablePath]),
-        ],
-        ["tools/tests/Z.csproj", "tools/tests/A.csproj"],
-        ["tools/tests/ZOrphan.cs", "tools/tests/AOrphan.cs"],
-        ["tools/tests/ZProof.csproj", "tools/tests/AProof.csproj"],
-        [
-            new MsBuildCompileFinding("tools/tests/Z.csproj", "z finding"),
-            new MsBuildCompileFinding("tools/tests/A.csproj", "a finding"),
         ]);
 
     private static (string PartitionKey, string SourcePath, string Id, string UnknownReasons)

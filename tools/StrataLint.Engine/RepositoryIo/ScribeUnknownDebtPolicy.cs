@@ -73,7 +73,6 @@ internal static class ScribeUnknownDebtPolicy
             .Select(static method => (method.PartitionKey, method.SourcePath, method.Id))
             .ToHashSet();
         var findings = ImmutableArray.CreateBuilder<ScribeUnknownDebtFinding>();
-        AddManagedTestLayoutFindings(currentMap, findings);
         var introduced = current.UnknownMethods()
             .Where(method => !baselineIdentities.Contains(
                 (method.PartitionKey, method.SourcePath, method.Id)))
@@ -117,7 +116,6 @@ internal static class ScribeUnknownDebtPolicy
     {
         var current = ScribeUnknownDebtBaselineV1.Create(currentMap);
         var findings = ImmutableArray.CreateBuilder<ScribeUnknownDebtFinding>();
-        AddManagedTestLayoutFindings(currentMap, findings);
         if (current.UnknownCount > UnknownDebtToleranceLimit)
         {
             findings.Add(new ScribeUnknownDebtFinding(
@@ -131,41 +129,4 @@ internal static class ScribeUnknownDebtPolicy
         return findings.ToImmutable();
     }
 
-    private static void AddManagedTestLayoutFindings(
-        ScribeTestMap map,
-        ImmutableArray<ScribeUnknownDebtFinding>.Builder findings)
-    {
-        foreach (var finding in map.CompileQueryFindings)
-        {
-            findings.Add(new ScribeUnknownDebtFinding(
-                finding.Path,
-                finding.Message,
-                AdmissionEffect.Block));
-        }
-
-        foreach (var path in map.UnclassifiedManagedProjectPaths)
-        {
-            findings.Add(new ScribeUnknownDebtFinding(
-                path,
-                "managed test project is neither an xUnit project with a direct PackageReference "
-                    + "nor a declared compile-fail proof exemption",
-                AdmissionEffect.Block));
-        }
-
-        foreach (var path in map.OrphanManagedSourcePaths)
-        {
-            findings.Add(new ScribeUnknownDebtFinding(
-                path,
-                "managed source is absent from every tracked project's MSBuild Compile items",
-                AdmissionEffect.Block));
-        }
-
-        foreach (var path in map.DanglingCompileFailProofProjectExemptionPaths)
-        {
-            findings.Add(new ScribeUnknownDebtFinding(
-                path,
-                "declared compile-fail proof exemption does not name an existing tracked project",
-                AdmissionEffect.Block));
-        }
-    }
 }

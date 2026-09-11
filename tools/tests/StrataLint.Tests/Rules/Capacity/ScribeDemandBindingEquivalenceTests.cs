@@ -245,7 +245,7 @@ public sealed partial class ScribeDemandBindingEquivalenceTests(ITestOutputHelpe
     }
 
     [Fact]
-    public void DemandAndEagerPreserveDiscoveryAndAllAuxiliaryMapFields()
+    public void DemandAndEagerPreserveRepositoryDiscoveryCriteria()
     {
         var fixture = Synthetic("""
             class Cases { [Fact] public void Read() { _ = RepositoryAccessor.Discover(RepositoryRootCriterion.Known); } }
@@ -258,21 +258,16 @@ public sealed partial class ScribeDemandBindingEquivalenceTests(ITestOutputHelpe
               };
             }
             """);
-        var map = EqualMaps(fixture, auxiliary: true);
+        var map = EqualMaps(fixture);
         AssertReasons(map, "Cases.Read");
-        Assert.Equal(new[] { "z.csproj", "a.csproj" }, map.UnclassifiedManagedProjectPaths);
-        Assert.Equal(new[] { "z.cs", "a.cs" }, map.OrphanManagedSourcePaths);
-        Assert.Equal(new[] { "proof-z", "proof-a" }, map.DanglingCompileFailProofProjectExemptionPaths);
-        Assert.Equal(new[] { new MsBuildCompileFinding("z", "message z"), new("a", "message a") }, map.CompileQueryFindings);
     }
 
     private ScribeTestMap EqualMaps(
         Fixture fixture,
-        bool auxiliary = false,
         ScribeDemandBindingIsolationTests.Recorder? demandRecorder = null)
     {
-        var eager = Derive(fixture, ScribeBindingStrategy.Eager, auxiliary);
-        var demand = Derive(fixture, ScribeBindingStrategy.Demand, auxiliary, demandRecorder);
+        var eager = Derive(fixture, ScribeBindingStrategy.Eager);
+        var demand = Derive(fixture, ScribeBindingStrategy.Demand, demandRecorder);
         Assert.Equal(Bytes(eager), Bytes(demand));
         output.WriteLine(Encoding.UTF8.GetString(Bytes(eager)));
         return demand;
@@ -300,18 +295,14 @@ public sealed partial class ScribeDemandBindingEquivalenceTests(ITestOutputHelpe
     }
 
     internal static ScribeTestMap Derive(Fixture fixture, ScribeBindingStrategy strategy,
-        bool auxiliary = false, IScribeBindingRecorder? recorder = null) =>
+        IScribeBindingRecorder? recorder = null) =>
         ScribeTestMapDeriver.DeriveSources(
             fixture.Sources, [],
-            auxiliary ? ["z.csproj", "a.csproj"] : [],
-            auxiliary ? ["z.cs", "a.cs"] : [],
-            auxiliary ? ["proof-z", "proof-a"] : [],
-            auxiliary ? [new("z", "message z"), new("a", "message a")] : [],
             fixture.Production, fixture.Context, strategy, recorder);
 
     internal static byte[] Bytes(ScribeTestMap map)
     {
-        var envelope = new ScribeTestMapEnvelope(1, new string('a', 64), new string('b', 64),
+        var envelope = new ScribeTestMapEnvelope(2, new string('a', 64), new string('b', 64),
             new ScribeTestMapProducer(new string('0', 32)),
             new ScribeTestMapEnvironment("fixture", "net10.0", "dotnet", "fixture", "fixture"), map);
         using var document = JsonDocument.Parse(envelope.Write());
@@ -360,7 +351,7 @@ public sealed partial class ScribeDemandBindingEquivalenceTests(ITestOutputHelpe
             middle is null ? [] : ["src/Middle/Middle.csproj"],
             [new("src/Documents/DocumentAssembly.cs", production), new("src/Documents/Attribute.cs", attribute)], null);
         var testProject = new ScribeCompilationProject("tests/Tests.csproj", "<Project />", "Tests",
-            [documents.Path], [new("tests/Cases.cs", tests), new("tests/Xunit.cs", xunit)], null);
+            [documents.Path], [new("tests/Cases.cs", tests), new("tests/Xunit.cs", xunit)], null) { TestPartitionKey = "Tests" };
         ScribeCompilationProject[] projects = middle is null ? [documents, testProject] : [
             documents, testProject, new("src/Middle/Middle.csproj", "<Project />", "Middle", [],
                 [new("src/Middle/Middle.cs", middle), new("src/Middle/Attribute.cs", attribute)], null)];

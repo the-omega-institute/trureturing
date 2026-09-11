@@ -48,7 +48,7 @@ internal sealed record ScribeTestMapEnvelope(
         }
 
         return new ScribeTestMapEnvelope(
-            1,
+            2,
             inputDigest,
             metadataDigest,
             ScribeTestMapProducer.Current,
@@ -84,15 +84,6 @@ internal sealed record ScribeTestMapEnvelope(
                     id = method.Id,
                     unknown_reasons = method.UnknownReasons.Select(static reason => reason.ToString()),
                 }),
-                unclassified_managed_project_paths = Map.UnclassifiedManagedProjectPaths,
-                orphan_managed_source_paths = Map.OrphanManagedSourcePaths,
-                dangling_compile_fail_proof_project_exemption_paths =
-                    Map.DanglingCompileFailProofProjectExemptionPaths,
-                compile_query_findings = Map.CompileQueryFindings.Select(static finding => new
-                {
-                    path = finding.Path,
-                    message = finding.Message,
-                }),
             },
         };
         return StructuredCanonicalWriter.WriteJson(
@@ -114,7 +105,7 @@ internal sealed record ScribeTestMapEnvelope(
             RequireFields(root, "schema_version", "input_digest", "metadata_digest", "producer", "environment", "map");
 
             var schemaVersion = ReadInt32(root, "schema_version");
-            if (schemaVersion != 1)
+            if (schemaVersion != 2)
             {
                 throw new EnvelopeReadException("schema-version");
             }
@@ -187,19 +178,8 @@ internal sealed record ScribeTestMapEnvelope(
 
     private static ScribeTestMap ReadMap(JsonElement map)
     {
-        RequireFields(
-            map,
-            "methods",
-            "unclassified_managed_project_paths",
-            "orphan_managed_source_paths",
-            "dangling_compile_fail_proof_project_exemption_paths",
-            "compile_query_findings");
-        return new ScribeTestMap(
-            ReadMethods(map.GetProperty("methods")),
-            ReadStringList(map, "unclassified_managed_project_paths"),
-            ReadStringList(map, "orphan_managed_source_paths"),
-            ReadStringList(map, "dangling_compile_fail_proof_project_exemption_paths"),
-            ReadFindings(map.GetProperty("compile_query_findings")));
+        RequireFields(map, "methods");
+        return new ScribeTestMap(ReadMethods(map.GetProperty("methods")));
     }
 
     private static IReadOnlyList<ScribeTestMethod> ReadMethods(JsonElement methods)
@@ -233,28 +213,6 @@ internal sealed record ScribeTestMapEnvelope(
         }
 
         return result;
-    }
-
-    private static IReadOnlyList<MsBuildCompileFinding> ReadFindings(JsonElement findings)
-    {
-        RequireArray(findings);
-        var result = new List<MsBuildCompileFinding>();
-        foreach (var finding in findings.EnumerateArray())
-        {
-            RequireFields(finding, "path", "message");
-            result.Add(new MsBuildCompileFinding(
-                ReadString(finding, "path"),
-                ReadString(finding, "message")));
-        }
-
-        return result;
-    }
-
-    private static IReadOnlyList<string> ReadStringList(JsonElement parent, string name)
-    {
-        var values = parent.GetProperty(name);
-        RequireArray(values);
-        return values.EnumerateArray().Select(ReadStringValue).ToArray();
     }
 
     private static string ReadString(JsonElement parent, string name) =>

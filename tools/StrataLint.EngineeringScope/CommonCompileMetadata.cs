@@ -27,11 +27,8 @@ internal static class CommonCompileMetadata
     {
         var destination = Path.Combine(root, RootPath);
         if (Directory.Exists(destination)) Directory.Delete(destination, recursive: true);
-        var projects = ScribeProjectCompilationContext.Create(
-            snapshot.Files.Values.Where(file => file.Path.Value.EndsWith(".csproj", StringComparison.Ordinal)
-                    || file.Path.Value.EndsWith("packages.lock.json", StringComparison.Ordinal))
-                .Select(file => new ScribeTrackedSource(file.Path.Value, file.Text)).ToArray(),
-            new Dictionary<string, string>(), new HashSet<string>()).Projects;
+        var files = snapshot.Files.Values.Select(file => new ScribeTrackedSource(file.Path.Value, file.Text)).ToArray();
+        var projects = ScribeProjectCompilationContext.Create(files, EngineeringProjectRegistry.Read(files)).Projects;
         var assemblies = ReadRegistration(snapshot);
         _ = RegisteredInputs(projects, assemblies).ToArray();
         foreach (var assembly in assemblies)

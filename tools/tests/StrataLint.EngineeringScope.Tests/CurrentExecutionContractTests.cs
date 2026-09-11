@@ -7,6 +7,23 @@ namespace StrataLint.EngineeringScope.Tests;
 public sealed class CurrentExecutionContractTests
 {
     [Fact]
+    public void CompilerOutputIdentityMustMatchProjectRegistration()
+    {
+        using var fixture = new CandidateFixture();
+        var directory = Path.Combine(fixture.Root, CommonBuildOutputs.RootPath);
+        TemporaryFileSystem.Directory.CreateDirectory(directory);
+        var assembly = Path.Combine(directory, Path.GetFileName(typeof(CurrentExecutionContractTests).Assembly.Location));
+        TemporaryFileSystem.File.WriteAllBytes(assembly, File.ReadAllBytes(typeof(CurrentExecutionContractTests).Assembly.Location));
+        TemporaryFileSystem.File.WriteAllText(Path.Combine(directory, "fixture.outputs"),
+            string.Join("\n", new[] { Path.Combine(fixture.Root, CandidateFixture.First), assembly, directory, "unused-assets.json", "reference=", assembly }));
+
+        var failure = Assert.Throws<InvalidDataException>(() => CommonBuildOutputs.Collect(fixture.Root));
+
+        Assert.Contains("compiler assembly identity mismatch", failure.Message, StringComparison.Ordinal);
+        Assert.Contains("First", failure.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void ParentlessRemotelessCandidateRunsEveryProjectOnceAndRetainsEvidence()
     {
         using var fixture = new CandidateFixture();
@@ -106,10 +123,33 @@ public sealed class CurrentExecutionContractTests
                 TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(file)!);
                 TemporaryFileSystem.File.WriteAllText(file, "<Project><PropertyGroup><IsTestProject>true</IsTestProject></PropertyGroup></Project>\n");
             }
+            TemporaryFileSystem.Directory.CreateDirectory(Path.Combine(Root, "Meta"));
+            TemporaryFileSystem.File.WriteAllText(Path.Combine(Root, EngineeringRegistrationFixture.Path),
+                EngineeringRegistrationFixture.Manifest(
+                    new EngineeringProjectFixture(First, "First", "cross-cutting-test", true, ["tools/tests/First/**/*.cs"]),
+                    new EngineeringProjectFixture(Second, "Second", "cross-cutting-test", true, ["tools/tests/Second/**/*.cs"])));
             TemporaryFileSystem.File.WriteAllText(Path.Combine(Root, ".gitignore"), ".lake/\nbuild/\n");
             Git("init", "-q");
             Git("add", ".");
             Git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "parentless");
+        }
+
+        internal void RegisterProofs()
+        {
+            var path = Path.Combine(Root, EngineeringRegistrationFixture.Path);
+            var manifest = System.Text.Json.Nodes.JsonNode.Parse(TemporaryFileSystem.File.ReadAllText(path))!;
+            var projects = manifest["projects"]!.AsArray();
+            foreach (var name in new[] { "CompileFailProof", "BannedApiCompileFailProof" })
+            {
+                var project = $"tools/tests/{name}/{name}.csproj";
+                var full = Path.Combine(Root, project);
+                TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(full)!);
+                TemporaryFileSystem.File.WriteAllText(full, "<Project />\n");
+                var registration = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest(
+                    new EngineeringProjectFixture(project, name, "compile-fail-proof", false, [$"tools/tests/{name}/**/*.cs"])))!;
+                projects.Add(registration["projects"]![0]!.DeepClone());
+            }
+            TemporaryFileSystem.File.WriteAllText(path, manifest.ToJsonString());
         }
 
         internal void WriteTrx(string directory, string outcome)

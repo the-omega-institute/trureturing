@@ -1,6 +1,5 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using System.Xml.Linq;
 
 namespace StrataLint.Engine;
 
@@ -10,7 +9,10 @@ internal sealed record ScribeCompilationProject(
     string AssemblyName,
     IReadOnlyList<string> ProjectReferences,
     IReadOnlyList<ScribeTrackedSource> Sources,
-    string? PackageLockContent);
+    string? PackageLockContent)
+{
+    internal string? TestPartitionKey { get; init; }
+}
 
 internal sealed record ScribeProjectCompilation(
     string ProjectPath,
@@ -27,97 +29,20 @@ internal sealed record ScribeProjectCompilationContext(
 
     internal static ScribeProjectCompilationContext Create(
         IReadOnlyList<ScribeTrackedSource> files,
-        IReadOnlyDictionary<string, string> projectBySourcePath,
-        IReadOnlySet<string> testProjectPaths)
+        EngineeringProjectRegistry registry)
     {
-        var projectFiles = files
-            .Where(static file => file.Path.EndsWith(".csproj", StringComparison.Ordinal))
-            .ToDictionary(static file => file.Path, StringComparer.Ordinal);
-        var sourcesByProject = files
-            .Where(static file => file.Path.EndsWith(".cs", StringComparison.Ordinal))
-            .Where(file => projectBySourcePath.ContainsKey(file.Path))
-            .GroupBy(file => projectBySourcePath[file.Path], StringComparer.Ordinal)
-            .ToDictionary(
-                static group => group.Key,
-                static group => (IReadOnlyList<ScribeTrackedSource>)group
-                    .OrderBy(static source => source.Path, StringComparer.Ordinal)
-                    .ToArray(),
-                StringComparer.Ordinal);
-        var contentByPath = files.ToDictionary(static file => file.Path, StringComparer.Ordinal);
-        var projects = projectFiles.Values
-            .Select(file => ParseProject(
-                file,
-                sourcesByProject.GetValueOrDefault(file.Path) ?? [],
-                contentByPath.GetValueOrDefault(Combine(ProjectDirectory(file.Path), "packages.lock.json"))?.Content))
-            .OrderBy(static project => project.Path, StringComparer.Ordinal)
-            .ToArray();
-        var productionAssemblies = projects
-            .Where(project => !testProjectPaths.Contains(project.Path))
-            .Select(static project => project.AssemblyName)
-            .ToHashSet(StringComparer.Ordinal);
-        return new ScribeProjectCompilationContext(projects, productionAssemblies);
+        var byPath = files.ToDictionary(file => file.Path, StringComparer.Ordinal);
+        var sources = registry.Sources(files);
+        var projects = registry.Projects.Select(project => new ScribeCompilationProject(
+            project.Path, byPath[project.Path].Content, project.Assembly, project.References,
+            sources[project.Path],
+            byPath.GetValueOrDefault(project.Path[..(project.Path.LastIndexOf('/') + 1)] + "packages.lock.json")?.Content)
+            { TestPartitionKey = project.TestPartition }).ToArray();
+        return new ScribeProjectCompilationContext(projects, registry.Projects
+            .Where(project => project.Role == "production")
+            .Select(project => project.Assembly).ToHashSet(StringComparer.Ordinal));
     }
 
-    internal static bool IsXunitProject(string content)
-    {
-        var document = XDocument.Parse(content, LoadOptions.None);
-        return document.Descendants().Any(static element =>
-            element.Name.LocalName == "PackageReference"
-            && string.Equals(
-                (string?)element.Attribute("Include"),
-                "xunit",
-                StringComparison.OrdinalIgnoreCase));
-    }
-
-    private static ScribeCompilationProject ParseProject(
-        ScribeTrackedSource project,
-        IReadOnlyList<ScribeTrackedSource> sources,
-        string? packageLockContent)
-    {
-        var document = XDocument.Parse(project.Content, LoadOptions.None);
-        var assemblyName = document.Descendants()
-            .FirstOrDefault(static element => element.Name.LocalName == "AssemblyName")?.Value.Trim();
-        if (string.IsNullOrEmpty(assemblyName))
-        {
-            assemblyName = Path.GetFileNameWithoutExtension(project.Path);
-        }
-
-        var references = document.Descendants()
-            .Where(static element => element.Name.LocalName == "ProjectReference")
-            .Select(static element => (string?)element.Attribute("Include"))
-            .Where(static include => !string.IsNullOrWhiteSpace(include))
-            .Select(include => Combine(ProjectDirectory(project.Path), include!))
-            .Distinct(StringComparer.Ordinal)
-            .Order(StringComparer.Ordinal)
-            .ToArray();
-        return new ScribeCompilationProject(
-            project.Path,
-            project.Content,
-            assemblyName,
-            references,
-            sources,
-            packageLockContent);
-    }
-
-    private static string ProjectDirectory(string path) =>
-        path.LastIndexOf('/') is var slash && slash >= 0 ? path[..slash] : ".";
-
-    private static string Combine(string directory, string relative)
-    {
-        var segments = new List<string>();
-        foreach (var segment in (directory + "/" + relative.Replace('\\', '/'))
-                     .Split('/', StringSplitOptions.RemoveEmptyEntries))
-        {
-            if (segment == ".") continue;
-            if (segment == "..")
-            {
-                if (segments.Count != 0) segments.RemoveAt(segments.Count - 1);
-                continue;
-            }
-            segments.Add(segment);
-        }
-        return string.Join('/', segments);
-    }
 }
 
 internal static class ScribeProjectCompilationBuilder
@@ -132,7 +57,7 @@ internal static class ScribeProjectCompilationBuilder
     {
         if (context is null) return BuildSynthetic(governedSources);
 
-        var governedByPath = governedSources.ToDictionary(static source => source.Path, StringComparer.Ordinal);
+        var governedByOwner = governedSources.ToDictionary(source => (source.PartitionKey, source.Path));
         var projectsByPath = context.Projects.ToDictionary(static project => project.Path, StringComparer.Ordinal);
         var compilations = new Dictionary<string, CSharpCompilation>(StringComparer.Ordinal);
         var degradations = new Dictionary<string, ScribeMetadataDegradation?>(StringComparer.Ordinal);
@@ -184,6 +109,8 @@ internal static class ScribeProjectCompilationBuilder
         return context.Projects.Select(project =>
         {
             var compilation = compilations[project.Path];
+            var governedByPath = governedByOwner.Where(entry => entry.Key.PartitionKey == project.TestPartitionKey)
+                .ToDictionary(entry => entry.Key.Path, entry => entry.Value, StringComparer.Ordinal);
             var sources = compilation.SyntaxTrees
                 .Where(tree => governedByPath.ContainsKey(tree.FilePath))
                 .Select(tree => (governedByPath[tree.FilePath], tree))
@@ -220,7 +147,7 @@ internal static class ScribeProjectCompilationBuilder
                 Tree: CSharpSyntaxTree.ParseText(source.Content, ParseOptions, source.Path))).ToArray();
             var support = SyntheticSupportTree(parsed.Select(static item => item.Tree.GetRoot()));
             var compilation = CSharpCompilation.Create(
-                AssemblyName(group.Key),
+                SyntheticAssemblyName(group.Key),
                 parsed.Select(static item => item.Tree).Append(support),
                 ScribeMetadataReferenceResolver.PlatformReferences(),
                 CompilationOptions());
@@ -338,7 +265,7 @@ internal static class ScribeProjectCompilationBuilder
             "ScribeSymbolSupport.g.cs");
     }
 
-    private static string AssemblyName(string partitionKey) => partitionKey
+    private static string SyntheticAssemblyName(string partitionKey) => partitionKey
         .Replace('\\', '/')
         .Split('/', StringSplitOptions.RemoveEmptyEntries)
         .LastOrDefault() ?? "Synthetic.Tests";

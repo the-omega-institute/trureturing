@@ -11,50 +11,25 @@ namespace StrataLint.Engine;
 
 internal static class ScribeTestMapDeriver
 {
-    private const string ManagedTestProjectPrefix = "tools/tests/";
     private static readonly ConcurrentDictionary<string, Lazy<ScribeTestMap>> SnapshotDerivations =
         new(StringComparer.Ordinal);
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
-    // These projects are deliberately compiled to fail by preflight. Keep this declaration
-    // removal-only: a new non-xUnit project must first establish its own governed class rather
-    // than silently extending the exception set.
-    internal static readonly IReadOnlySet<string> CompileFailProofProjectExemptions =
-        new HashSet<string>(StringComparer.Ordinal)
-        {
-            "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj",
-            "tools/tests/CompileFailProof/CompileFailProof.csproj",
-        };
-
-    internal static ScribeTestMap DeriveRepository(
-        string repositoryRoot,
-        string? dotnetExecutable = null,
-        TimeSpan? timeout = null)
+    internal static ScribeTestMap DeriveRepository(string repositoryRoot)
     {
-        var files = GitIndexRepositoryFiles.Enumerate(repositoryRoot);
-        var tracked = files
-            .Where(static file => IsTrackedInput(file.RelativePath))
-            .Select(file => new ScribeTrackedSource(
-                file.RelativePath,
-                File.ReadAllText(file.FullPath)))
-            .ToArray();
-        var projectPaths = tracked
-            .Where(static file => file.Path.EndsWith(".csproj", StringComparison.Ordinal))
-            .Select(static file => file.Path);
-        return DeriveTracked(
-            tracked,
-            MsBuildCompileOracle.Query(repositoryRoot, projectPaths, dotnetExecutable, timeout));
+        var tracked = GitIndexRepositoryFiles.Enumerate(repositoryRoot)
+            .Where(file => IsTrackedInput(file.RelativePath))
+            .Select(file => new ScribeTrackedSource(file.RelativePath, File.ReadAllText(file.FullPath))).ToArray();
+        return DeriveTracked(tracked, EngineeringProjectRegistry.Read(tracked));
     }
 
     internal static bool IsDerivationInput(string path) =>
-        IsTrackedInput(path) || MsBuildCompileOracle.IsBuildInput(path);
+        IsTrackedInput(path) || ScribeTestMapEnvironmentProbe.IsBuildInput(path);
 
-    private static bool IsTrackedInput(string path)
-    {
-        return path.EndsWith(".cs", StringComparison.Ordinal)
-            || path.EndsWith(".csproj", StringComparison.Ordinal)
-            || path.EndsWith("packages.lock.json", StringComparison.Ordinal);
-    }
+    private static bool IsTrackedInput(string path) => path == EngineeringProjectRegistry.ManifestPath
+        || path.EndsWith(".cs", StringComparison.Ordinal)
+        || path.EndsWith(".csproj", StringComparison.Ordinal)
+        || path.EndsWith("packages.lock.json", StringComparison.Ordinal);
 
     internal static ScribeTestMap DeriveSnapshot(RepositorySnapshot snapshot) =>
         DeriveSnapshot(snapshot, null);
@@ -67,16 +42,12 @@ internal static class ScribeTestMapDeriver
         var metadataDigest = ScribeTestMapStore.ComputeMetadataDigest(snapshot, describeInputPaths);
         var key = SnapshotDerivationKey(snapshot, metadataDigest);
         var candidate = new Lazy<ScribeTestMap>(
-            () => derive is null ? DeriveSnapshotUncached(snapshot, null, describeInputPaths) : derive(snapshot),
+            () => derive is null ? DeriveSnapshotUncached(snapshot, describeInputPaths) : derive(snapshot),
             LazyThreadSafetyMode.ExecutionAndPublication);
         var derivation = SnapshotDerivations.GetOrAdd(key, candidate);
         try
         {
             var map = derivation.Value;
-            if (map.CompileQueryFindings.Count != 0)
-            {
-                RemoveSnapshotDerivation(key, derivation);
-            }
             if (!ScribeTestMapStore.MetadataDigestMatches(snapshot, metadataDigest, describeInputPaths))
             {
                 RemoveSnapshotDerivation(key, derivation);
@@ -92,39 +63,11 @@ internal static class ScribeTestMapDeriver
 
     internal static ScribeTestMap DeriveSnapshotUncached(
         RepositorySnapshot snapshot,
-        BoundedProcessRunner.ProcessRunner? run,
         Func<IEnumerable<ScribeCompilationProject>, IReadOnlyList<string>>? describeInputPaths = null)
     {
-        var tracked = snapshot.Files.Values
-            .Where(static file => IsTrackedInput(file.Path.Value))
-            .Select(static file => new ScribeTrackedSource(file.Path.Value, file.Text))
-            .ToArray();
-        var projects = tracked
-            .Where(static file => file.Path.EndsWith(".csproj", StringComparison.Ordinal))
-            .Select(static file => file.Path)
-            .ToArray();
-        if (projects.Length == 0)
-        {
-            return DeriveTracked(tracked, new MsBuildCompileMap(
-                new Dictionary<string, string>(StringComparer.Ordinal),
-                []), describeInputPaths: describeInputPaths);
-        }
-
-        try
-        {
-            using var checkout = MsBuildCompileOracle.Materialize(snapshot, IsDerivationInput);
-            return DeriveTracked(tracked, MsBuildCompileOracle.Query(checkout.Root, projects, run: run),
-                describeInputPaths: describeInputPaths);
-        }
-        catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
-        {
-            return DeriveTracked(tracked, new MsBuildCompileMap(
-                new Dictionary<string, string>(StringComparer.Ordinal),
-                projects.Select(project => new MsBuildCompileFinding(
-                    project,
-                    $"MSBuild snapshot materialization failed closed: {exception.Message}"))
-                    .ToArray()), describeInputPaths: describeInputPaths);
-        }
+        var tracked = snapshot.Files.Values.Where(file => IsTrackedInput(file.Path.Value))
+            .Select(file => new ScribeTrackedSource(file.Path.Value, file.Text)).ToArray();
+        return DeriveTracked(tracked, EngineeringProjectRegistry.Read(tracked), describeInputPaths: describeInputPaths);
     }
 
     internal static string SnapshotDerivationKey(
@@ -145,7 +88,7 @@ internal static class ScribeTestMapDeriver
             AppendHashBytes(hash, file.RawBytes.AsSpan());
         }
 
-        // Parent selectors also affect snapshot materialization and metadata resolution.
+        // Remaining environment/metadata cache inputs are a next-layer boundary.
         var environment = Environment.GetEnvironmentVariables()
             .Cast<DictionaryEntry>()
             .OrderBy(static entry => (string)entry.Key, StringComparer.Ordinal)
@@ -189,24 +132,6 @@ internal static class ScribeTestMapDeriver
         ((ICollection<KeyValuePair<string, Lazy<ScribeTestMap>>>)SnapshotDerivations)
             .Remove(new KeyValuePair<string, Lazy<ScribeTestMap>>(key, derivation));
 
-    internal static IReadOnlyList<ScribeTestProjectPartition> DeriveProjectPartitions(
-        IEnumerable<(string Path, string Content)> projectFiles) => projectFiles
-        .Where(static project => ScribeProjectCompilationContext.IsXunitProject(project.Content))
-        .Select(static project => new ScribeTestProjectPartition(
-            ProjectDirectory(project.Path),
-            project.Path))
-        .OrderBy(static partition => partition.Key, StringComparer.Ordinal)
-        .ToArray();
-
-    internal static IReadOnlyList<string> FindUnclassifiedManagedProjects(
-        IEnumerable<(string Path, string Content)> projectFiles) => projectFiles
-        .Where(static project => project.Path.StartsWith(ManagedTestProjectPrefix, StringComparison.Ordinal))
-        .Where(project => !ScribeProjectCompilationContext.IsXunitProject(project.Content)
-            && !CompileFailProofProjectExemptions.Contains(project.Path))
-        .Select(static project => project.Path)
-        .Order(StringComparer.Ordinal)
-        .ToArray();
-
     // #3670:hang-guard 预算的声明写着「never bears a test verdict」,但那只是**声明** ——
     // 只有走 `TestProcessRunner` 时超时才变成 `SkipException`;走 `BoundedProcessRunner`
     // 时它抛 `TimeoutException`,于是**恰好承担了判词**。本判据把声明与路由钉在一起。
@@ -221,17 +146,16 @@ internal static class ScribeTestMapDeriver
     internal static IReadOnlyList<string> FindUnroutedHangGuardCalls(string repositoryRoot)
     {
         var offenders = new List<string>();
-        foreach (var file in GitIndexRepositoryFiles.Enumerate(repositoryRoot))
+        var tracked = GitIndexRepositoryFiles.Enumerate(repositoryRoot)
+            .Where(file => IsTrackedInput(file.RelativePath))
+            .Select(file => new ScribeTrackedSource(file.RelativePath, File.ReadAllText(file.FullPath))).ToArray();
+        var registry = EngineeringProjectRegistry.Read(tracked);
+        var sources = registry.Sources(tracked);
+        foreach (var source in registry.Projects.Where(project => project.IsTest)
+            .SelectMany(project => sources[project.Path]).DistinctBy(source => source.Path))
         {
-            if (!file.RelativePath.StartsWith(ManagedTestProjectPrefix, StringComparison.Ordinal)
-                || !file.RelativePath.EndsWith(".cs", StringComparison.Ordinal)
-                || file.RelativePath.EndsWith("/TestProcessRunner.cs", StringComparison.Ordinal))
-            {
-                continue;
-            }
-
-            var source = File.ReadAllText(file.FullPath);
-            offenders.AddRange(UnroutedHangGuardCalls(file.RelativePath, source));
+            if (!source.Path.EndsWith("/TestProcessRunner.cs", StringComparison.Ordinal))
+                offenders.AddRange(UnroutedHangGuardCalls(source.Path, source.Content));
         }
 
         return offenders.Order(StringComparer.Ordinal).ToArray();
@@ -297,79 +221,26 @@ internal static class ScribeTestMapDeriver
         return count;
     }
 
-    internal static IReadOnlyList<string> FindOrphanManagedSources(
-        IEnumerable<string> sourcePaths,
-        IReadOnlyDictionary<string, string> projectBySourcePath) => sourcePaths
-        .Where(path => !projectBySourcePath.ContainsKey(path))
-        .Order(StringComparer.Ordinal)
-        .ToArray();
-
-    internal static IReadOnlyList<string> FindDanglingCompileFailProofProjectExemptions(
-        IEnumerable<string> projectPaths)
-    {
-        var projects = projectPaths.ToHashSet(StringComparer.Ordinal);
-        return CompileFailProofProjectExemptions
-            .Where(path => !projects.Contains(path))
-            .Order(StringComparer.Ordinal)
-            .ToArray();
-    }
-
-    private static string ProjectDirectory(string projectPath) =>
-        projectPath.LastIndexOf('/') is var slash && slash >= 0 ? projectPath[..slash] : ".";
-
     internal static ScribeTestMap DeriveTracked(
         IReadOnlyList<ScribeTrackedSource> tracked,
-        MsBuildCompileMap compileMap,
+        EngineeringProjectRegistry registry,
         ScribeBindingStrategy bindingStrategy = ScribeBindingStrategy.Demand,
         IScribeBindingRecorder? recorder = null,
         Func<IEnumerable<ScribeCompilationProject>, IReadOnlyList<string>>? describeInputPaths = null)
     {
-        var projectFiles = tracked
-            .Where(static file => file.Path.EndsWith(".csproj", StringComparison.Ordinal))
-            .Select(static file => (file.Path, file.Content))
-            .ToArray();
-        var sources = tracked
-            .Where(static file => file.Path.EndsWith(".cs", StringComparison.Ordinal))
-            .ToArray();
-        var testProjects = DeriveProjectPartitions(projectFiles)
-            .ToDictionary(static project => project.ProjectPath, StringComparer.Ordinal);
-        var testSources = sources
-            .Where(source => compileMap.ProjectBySourcePath.TryGetValue(source.Path, out var project)
-                && testProjects.ContainsKey(project))
-            .Select(source => new TestMapSource(
-                source.Path,
-                source.Content,
-                testProjects[compileMap.ProjectBySourcePath[source.Path]].Key))
-            .ToArray();
-        var compilationContext = ScribeProjectCompilationContext.Create(
-            tracked,
-            compileMap.ProjectBySourcePath,
-            testProjects.Keys.ToHashSet(StringComparer.Ordinal)) with { DescribeMetadataInputs = describeInputPaths };
-        return DeriveSources(
-            testSources,
-            [],
-            FindUnclassifiedManagedProjects(projectFiles),
-            compileMap.Findings.Count == 0
-                ? FindOrphanManagedSources(
-                    sources.Select(static source => source.Path),
-                    compileMap.ProjectBySourcePath)
-                : [],
-            FindDanglingCompileFailProofProjectExemptions(
-                projectFiles.Select(static project => project.Path)),
-            compileMap.Findings,
-            compilationContext.ProductionAssemblies,
-            compilationContext,
-            bindingStrategy,
-            recorder);
+        var context = ScribeProjectCompilationContext.Create(tracked, registry)
+            with { DescribeMetadataInputs = describeInputPaths };
+        var testPaths = registry.Projects.Where(project => project.IsTest).Select(project => project.Path).ToHashSet(StringComparer.Ordinal);
+        var testSources = context.Projects.Where(project => testPaths.Contains(project.Path))
+            .SelectMany(project => project.Sources.Select(source => new TestMapSource(source.Path,
+                source.Content, project.TestPartitionKey!))).ToArray();
+        return DeriveSources(testSources, [], productionAssemblies: context.ProductionAssemblies,
+            compilationContext: context, bindingStrategy: bindingStrategy, recorder: recorder);
     }
 
     internal static ScribeTestMap DeriveSources(
         IEnumerable<TestMapSource> sourceFiles,
         IEnumerable<(string Path, int Line)> indirectProductionSites,
-        IReadOnlyList<string>? unclassifiedManagedProjectPaths = null,
-        IReadOnlyList<string>? orphanManagedSourcePaths = null,
-        IReadOnlyList<string>? danglingCompileFailProofProjectExemptionPaths = null,
-        IReadOnlyList<MsBuildCompileFinding>? compileQueryFindings = null,
         IReadOnlySet<string>? productionAssemblies = null,
         ScribeProjectCompilationContext? compilationContext = null,
         ScribeBindingStrategy bindingStrategy = ScribeBindingStrategy.Demand,
@@ -428,11 +299,7 @@ internal static class ScribeTestMapDeriver
                 .OrderBy(static method => method.PartitionKey, StringComparer.Ordinal)
                 .ThenBy(static method => method.SourcePath, StringComparer.Ordinal)
                 .ThenBy(static method => method.Id, StringComparer.Ordinal)
-                .ToArray(),
-            unclassifiedManagedProjectPaths ?? [],
-            orphanManagedSourcePaths ?? [],
-            danglingCompileFailProofProjectExemptionPaths ?? [],
-            compileQueryFindings ?? []);
+                .ToArray());
     }
 
     private static void InspectMethod(

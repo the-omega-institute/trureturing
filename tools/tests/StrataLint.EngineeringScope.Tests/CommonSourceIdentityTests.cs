@@ -9,7 +9,7 @@ public sealed class CommonSourceIdentityTests
     [InlineData(".sshx-extra.cs", false)]
     [InlineData("local/Other.cs", false)]
     [InlineData("release/Conditional.cs", true)]
-    public void UnrepresentedEvaluatedCompileInputCannotReceiveCandidateEvidence(string source, bool releaseOnly)
+    public void UnrepresentedRegisteredCompileInputCannotReceiveCandidateEvidence(string source, bool releaseOnly)
     {
         using var fixture = new CurrentExecutionContractTests.CandidateFixture();
         WriteProject(fixture.Root, releaseOnly);
@@ -20,11 +20,16 @@ public sealed class CommonSourceIdentityTests
         TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(path)!);
         TemporaryFileSystem.File.WriteAllText(path, "public class AdditionalSource { }\n");
 
+        var manifest = Path.Combine(fixture.Root, EngineeringRegistrationFixture.Path);
+        var registration = TemporaryFileSystem.File.ReadAllText(manifest);
+        TemporaryFileSystem.File.WriteAllText(manifest, registration.Replace("tools/tests/First/**/*.cs",
+            "tools/tests/First/" + source, StringComparison.Ordinal));
         var error = Assert.Throws<InvalidDataException>(() => CommonExecutionEvidence.Candidate(fixture.Root));
 
         Assert.Contains("Compile input is absent from candidate source", error.Message, StringComparison.Ordinal);
         Assert.Contains(source, error.Message, StringComparison.Ordinal);
         TemporaryFileSystem.File.Delete(path);
+        TemporaryFileSystem.File.WriteAllText(manifest, registration);
         Assert.Equal(before, CommonExecutionEvidence.Candidate(fixture.Root));
     }
 

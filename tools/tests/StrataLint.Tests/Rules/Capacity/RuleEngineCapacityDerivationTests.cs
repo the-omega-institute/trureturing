@@ -1,5 +1,7 @@
 using System.Collections.Concurrent;
 using StrataLint.Cli;
+using StrataLint.TestSupport;
+using System.Text.Json.Nodes;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -353,12 +355,21 @@ public sealed class RuleEngineCapacityDerivationTests
     private static RuleFixture FixtureWithUnknownDebt()
     {
         var fixture = new RuleFixture();
+        foreach (var files in new[] { fixture.Files, fixture.Baseline })
+        {
+            const string project = "tools/tests/Synthetic.Tests/Synthetic.Tests.csproj";
+            files[project] = "<Project />";
+            var registration = JsonNode.Parse(files[EngineeringRegistrationFixture.Path])!;
+            registration["projects"]!.AsArray().Add(JsonNode.Parse(EngineeringRegistrationFixture.Manifest(
+                new EngineeringProjectFixture(project, "Synthetic.Tests", "cross-cutting-test", true, [DebtSourcePath])))!["projects"]![0]!.DeepClone());
+            files[EngineeringRegistrationFixture.Path] = registration.ToJsonString();
+        }
         fixture.Baseline[DebtSourcePath] = "// existing debt\n";
         fixture.Files[DebtSourcePath] = "// existing and current debt\n";
         return fixture;
     }
 
-    private static ScribeTestMap EmptyTestMap() => new([], [], [], [], []);
+    private static ScribeTestMap EmptyTestMap() => new([]);
 
     private static ScribeTestMap UnknownTestMap(params string[] methodIds) =>
         new(
@@ -367,11 +378,7 @@ public sealed class RuleEngineCapacityDerivationTests
                     "tools/tests/Synthetic.Tests",
                     "tools/tests/Synthetic.Tests/DebtTests.cs",
                     "DebtTests." + methodId,
-                    [TestMapUnknownReason.Other])).ToArray(),
-            [],
-            [],
-            [],
-            []);
+                    [TestMapUnknownReason.Other])).ToArray());
 
     private sealed class CapacityMemoryStorage : IScribeTestMapStorage
     {

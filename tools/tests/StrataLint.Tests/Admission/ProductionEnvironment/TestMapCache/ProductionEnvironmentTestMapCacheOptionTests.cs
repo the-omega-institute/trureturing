@@ -68,7 +68,7 @@ public sealed class ProductionEnvironmentTestMapCacheOptionTests
         ScribeTestMapEnvironment Describe()
         {
             probes++;
-            return MsBuildCompileOracle.DescribeEnvironment(
+            return ScribeTestMapEnvironmentProbe.DescribeEnvironment(
                 () => failure == "host" ? throw new IOException("host resolution failed") : "/selected/dotnet",
                 _ => new ProcessOutput(failure == "exit" ? 7 : 0, " \n"u8.ToArray(), []),
                 run: (host, arguments, directory, timeout, maximumOutputBytes, standardInput, environment) =>
@@ -258,7 +258,7 @@ public sealed class ProductionEnvironmentTestMapCacheOptionTests
         snapshot.TryGetFile("tools/StrataLint.Engine/CacheChange.cs", out _)
             ? [new ScribeTestMethod("tools/tests/Synthetic.Tests", "tools/tests/Synthetic.Tests/DebtTests.cs",
                 "DebtTests.CurrentDebt", [TestMapUnknownReason.Other])]
-            : [], [], [], [], []);
+            : []);
 
     private sealed class ProcessSpawnCounter : IDisposable
     {

@@ -1,5 +1,6 @@
 using System.Collections.Concurrent;
 using System.Text;
+using StrataLint.TestSupport;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using StrataLint.Engine;
@@ -16,14 +17,14 @@ public sealed class ScribeTestMapStoreTests
     public void DescribeEnvironmentProbesResolvedDotnetHost()
     {
         var hosts = new List<string>();
-        var environment = MsBuildCompileOracle.DescribeEnvironment(
+        var environment = ScribeTestMapEnvironmentProbe.DescribeEnvironment(
             () => "/selected/dotnet",
             run: (host, arguments, directory, timeout, maximumOutputBytes, standardInput, environment) =>
             {
                 hosts.Add(host);
                 Assert.Equal(["--version"], arguments);
                 Assert.NotNull(environment);
-                Assert.Equal(MsBuildCompileOracle.EvaluationEnvironment(), environment);
+                Assert.Equal(ScribeTestMapEnvironmentProbe.EvaluationEnvironment(), environment);
                 return new ProcessOutput(0, " 10.0.100-test\n"u8.ToArray(), []);
             });
 
@@ -45,7 +46,7 @@ public sealed class ScribeTestMapStoreTests
         try
         {
             Environment.SetEnvironmentVariable("DOTNET_HOST_PATH", host);
-            Assert.Equal(host, MsBuildCompileOracle.ResolveDotnetExecutable());
+            Assert.Equal(host, ScribeTestMapEnvironmentProbe.ResolveDotnetExecutable());
         }
         finally
         {
@@ -54,25 +55,11 @@ public sealed class ScribeTestMapStoreTests
     }
 
     [Fact]
-    public void QueryUsesEvaluationEnvironment()
+    public void MissingProjectRegistrationCannotBeReplacedByAnEnvironmentProbe()
     {
-        using var temporary = new TemporaryDirectory();
-        var expected = MsBuildCompileOracle.EvaluationEnvironment();
-        var calls = 0;
-        var result = MsBuildCompileOracle.Query(temporary.Path, ["Test.csproj"], "/fake/dotnet",
-            run: (host, arguments, directory, timeout, maximumOutputBytes, standardInput, environment) =>
-            {
-                calls++;
-                Assert.Equal("/fake/dotnet", host);
-                Assert.Equal(temporary.Path, directory);
-                Assert.Contains("-getItem:Compile", arguments);
-                Assert.NotNull(environment);
-                Assert.Equal(expected, environment);
-                return new ProcessOutput(0, "{\"Items\":{\"Compile\":[]}}"u8.ToArray(), []);
-            });
-
-        Assert.Equal(1, calls);
-        Assert.Empty(result.Findings);
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            RawRepositorySnapshot.Create([RawRepositoryEntry.FromText("Test.csproj", "<Project />")]))).Snapshot;
+        Assert.Throws<InvalidDataException>(() => ScribeTestMapDeriver.DeriveSnapshot(snapshot, _ => []));
     }
 
     [Fact]
@@ -88,7 +75,7 @@ public sealed class ScribeTestMapStoreTests
         expected.Add("DOTNET_NOLOGO", "1");
         expected.Add("DOTNET_SKIP_FIRST_TIME_EXPERIENCE", "1");
 
-        var actual = MsBuildCompileOracle.EvaluationEnvironment();
+        var actual = ScribeTestMapEnvironmentProbe.EvaluationEnvironment();
 
         Assert.Equal(expected.ToArray(), actual.ToArray());
         Assert.IsAssignableFrom<System.Collections.Immutable.IImmutableDictionary<string, string>>(actual);
@@ -101,10 +88,10 @@ public sealed class ScribeTestMapStoreTests
         try
         {
             Environment.SetEnvironmentVariable("LANG", "C");
-            var before = MsBuildCompileOracle.DescribeEnvironment(
+            var before = ScribeTestMapEnvironmentProbe.DescribeEnvironment(
                 () => "/fake/dotnet", _ => new ProcessOutput(0, "10.0.100-test"u8.ToArray(), []));
             Environment.SetEnvironmentVariable("LANG", "en_US.UTF-8");
-            var after = MsBuildCompileOracle.DescribeEnvironment(
+            var after = ScribeTestMapEnvironmentProbe.DescribeEnvironment(
                 () => "/fake/dotnet", _ => new ProcessOutput(0, "10.0.100-test"u8.ToArray(), []));
 
             Assert.NotEqual(before.EvaluationEnvironmentDigest, after.EvaluationEnvironmentDigest);
@@ -191,8 +178,6 @@ public sealed class ScribeTestMapStoreTests
 
         Assert.Equal(2, calls);
         Assert.NotSame(first, second);
-        Assert.Empty(first.CompileQueryFindings);
-        Assert.Empty(second.CompileQueryFindings);
     }
 
     [Fact]
@@ -222,7 +207,7 @@ public sealed class ScribeTestMapStoreTests
     [InlineData(0, " \n")]
     public void DescribeEnvironmentRejectsFailedOrEmptyVersionProbe(int exitCode, string version)
     {
-        Assert.Throws<InvalidOperationException>(() => MsBuildCompileOracle.DescribeEnvironment(
+        Assert.Throws<InvalidOperationException>(() => ScribeTestMapEnvironmentProbe.DescribeEnvironment(
             () => "/selected/dotnet",
             _ => new ProcessOutput(exitCode, Encoding.UTF8.GetBytes(version), [])));
     }
@@ -420,24 +405,14 @@ public sealed class ScribeTestMapStoreTests
     }
 
     [Fact]
-    public void MapWithCompileFindingsIsNotStored()
+    public void MissingRegistrationFailsBeforeCacheOrDerivationCanSupplySuccess()
     {
         var storage = new MemoryStorage();
-        var map = new ScribeTestMap(
-            [],
-            [],
-            [],
-            [],
-            [new MsBuildCompileFinding("src/Test.csproj", "query failed")]);
-
-        var store = new ScribeTestMapStore(storage, TestEnvironment, _ => map);
-        var result = store.GetOrDerive(Snapshot(("src/Test.cs", "class Test {}")));
-
-        Assert.Same(map, result);
+        var store = new ScribeTestMapStore(storage, TestEnvironment, _ =>
+            throw new InvalidOperationException("invalid registration must reject before derivation"));
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(RawRepositorySnapshot.Create([]))).Snapshot;
+        Assert.Throws<InvalidDataException>(() => store.GetOrDerive(snapshot));
         Assert.Equal(0, storage.WriteCount);
-        Assert.Contains(
-            store.Events,
-            static item => item.Outcome == "store-skipped-compile-findings");
     }
 
     [Fact]
@@ -505,16 +480,16 @@ public sealed class ScribeTestMapStoreTests
     private static RepositorySnapshot Snapshot(params (string Path, string Text)[] files)
     {
         var raw = RawRepositorySnapshot.Create(
-            files.Select(static file => RawRepositoryEntry.FromText(file.Path, file.Text)));
+            new[] { ("src/Test.csproj", "<Project />"),
+                (EngineeringRegistrationFixture.Path, EngineeringRegistrationFixture.Manifest(
+                    new EngineeringProjectFixture("src/Test.csproj", "Test", "cross-cutting-test", true, ["src/**/*.cs"]))) }
+                .Concat(files).GroupBy(file => file.Item1).Select(group => group.Last())
+                .Select(static file => RawRepositoryEntry.FromText(file.Item1, file.Item2)));
         return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
     }
 
     private static ScribeTestMap Map(string id) => new(
-        [new ScribeTestMethod("partition", "src/Test.cs", id, [TestMapUnknownReason.Other])],
-        [],
-        [],
-        [],
-        []);
+        [new ScribeTestMethod("partition", "src/Test.cs", id, [TestMapUnknownReason.Other])]);
 
     private sealed class MemoryStorage : IScribeTestMapStorage
     {

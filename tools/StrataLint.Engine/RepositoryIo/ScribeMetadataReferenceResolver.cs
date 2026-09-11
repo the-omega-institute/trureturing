@@ -53,7 +53,11 @@ internal static class ScribeMetadataReferenceResolver
             .Select(Path.GetFileNameWithoutExtension)
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
         ScribeMetadataDegradation? degradation = null;
-        if (ScribeProjectCompilationContext.IsXunitProject(project.ProjectContent))
+        // Existing package-asset requirement, not project classification. NuGet asset
+        // registration is the next layer; roles and membership come from the project registry.
+        if (XDocument.Parse(project.ProjectContent, LoadOptions.None).Descendants().Any(element =>
+                element.Name.LocalName == "PackageReference"
+                && string.Equals((string?)element.Attribute("Include"), "xunit", StringComparison.OrdinalIgnoreCase)))
         {
             var missing = RequiredXunitMetadata
                 .Where(metadata => !assemblyNames.Contains(metadata.Assembly))

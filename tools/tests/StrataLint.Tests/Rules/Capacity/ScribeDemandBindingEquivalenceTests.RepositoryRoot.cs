@@ -35,7 +35,7 @@ public sealed partial class ScribeDemandBindingEquivalenceTests
             class InstanceHelper { public string FindRoot() => ""; }
             """, "public static class Production { public static void Read(string path) { } }");
         var expected = new ScribeTestMap([new("Tests", "tests/Cases.cs", "Cases.Root",
-            expectedReason is { } reason ? [Enum.Parse<TestMapUnknownReason>(reason)] : [])], [], [], [], []);
+            expectedReason is { } reason ? [Enum.Parse<TestMapUnknownReason>(reason)] : [])]);
 
         foreach (var strategy in new[] { ScribeBindingStrategy.Eager, ScribeBindingStrategy.Demand })
         {

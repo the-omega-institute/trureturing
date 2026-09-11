@@ -18,6 +18,7 @@ internal static class CommonBuildOutputs
         var projects = new Dictionary<string, string>(StringComparer.Ordinal);
         var paths = new HashSet<string>(StringComparer.Ordinal);
         var snapshot = CommonExecutionEvidence.Snapshot(root);
+        var registrations = EngineeringProjectRegistry.Read(snapshot).Projects.ToDictionary(project => project.Path, StringComparer.Ordinal);
         foreach (var file in Directory.GetFiles(Path.Combine(root, RootPath), "*.outputs", SearchOption.AllDirectories))
         {
             var lines = File.ReadAllLines(file);
@@ -27,7 +28,7 @@ internal static class CommonBuildOutputs
             var assembly = Relative(lines[1]);
             var directory = Path.TrimEndingDirectorySeparator(Path.GetFullPath(lines[2])) + Path.DirectorySeparatorChar;
             var reference = lines[4]["reference=".Length..];
-            if (!snapshot.TryGetFile(project, out _) || !projects.TryAdd(project, assembly))
+            if (!registrations.TryGetValue(project, out var registration) || !projects.TryAdd(project, assembly))
                 throw new InvalidDataException("missing or duplicate built project: " + project);
             var outputs = lines.Skip(5).Select(Path.GetFullPath)
                 .Where(path => path.StartsWith(directory, StringComparison.Ordinal) || path == reference).Select(Relative).ToArray();
@@ -38,8 +39,8 @@ internal static class CommonBuildOutputs
             using var stream = File.OpenRead(Path.Combine(root, assembly));
             using var pe = new PEReader(stream);
             var metadata = pe.GetMetadataReader();
-            if (metadata.GetString(metadata.GetAssemblyDefinition().Name) != Path.GetFileNameWithoutExtension(assembly))
-                throw new InvalidDataException("compiler assembly identity mismatch: " + assembly);
+            if (metadata.GetString(metadata.GetAssemblyDefinition().Name) != registration.Assembly)
+                throw new InvalidDataException($"compiler assembly identity mismatch: {project}: expected {registration.Assembly}: {assembly}");
             foreach (var path in outputs)
             {
                 if (!File.Exists(Path.Combine(root, path))) throw new InvalidDataException("missing build output: " + path);
