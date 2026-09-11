@@ -54,6 +54,7 @@ internal static class FileMapPolicy
         new Dictionary<string, string>(StringComparer.Ordinal)
         {
             ["report-producer-scope"] = "tools/scripts/report/producer_paths.py",
+            ["JudgeSeedRegistration"] = "tools/scripts/report/dotnet_producer.py",
             ["BackfillInventoryLoader"] = BackfillLoaderPath,
             ["FileMapLoader"] = FileMapLoaderPath,
             ["FrozenStateRecordLoader"] = FrozenStateRecordLoaderPath,

@@ -377,6 +377,16 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
+pattern = "Meta/judge-seed.json"
+kind = "data"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["automation"]
+verified_by = ["JudgeSeedRegistration"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
 pattern = "Meta/registry.yaml"
 kind = "data"
 admission_plane = "judge"

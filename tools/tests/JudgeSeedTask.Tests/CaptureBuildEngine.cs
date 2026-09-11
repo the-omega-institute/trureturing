@@ -3,8 +3,8 @@ using Microsoft.Build.Framework;
 
 namespace JudgeSeedTask.Tests;
 
-// Csc exposes versioned BuildEngine getters; capture reads those through the
-// native task API as well as consuming global properties and diagnostics.
+// Native Csc argument formatting uses this build engine contract.
+// The seed task never queries global properties or reevaluates a project.
 internal sealed class CaptureBuildEngine : IBuildEngine10
 {
     internal Dictionary<string, string> Properties { get; } = new();
