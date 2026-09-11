@@ -104,6 +104,43 @@ public sealed class EngineeringProjectRegistrationTests
         }, topology.Projects.Where(project => project.Registration.Role == "compile-fail-proof").Select(project => project.Path));
     }
 
+
+    [Theory]
+    [InlineData("root_namespace")]
+    [InlineData("namespace_exclude")]
+    [InlineData("global_namespace_exceptions")]
+    public void MissingNamespacePolicyFieldFails(string field)
+    {
+        var manifest = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest(Test()))!;
+        manifest["projects"]![0]!.AsObject().Remove(field);
+        var error = Assert.Throws<InvalidDataException>(() => EngineeringProjectRegistry.Read(
+            Snapshot(manifest.ToJsonString(), (Project, Misleading))));
+        Assert.Contains(field, error.Message);
+    }
+
+    [Theory]
+    [InlineData("root_namespace", "null")]
+    [InlineData("root_namespace", "\"\"")]
+    [InlineData("root_namespace", "\"A..B\"")]
+    [InlineData("root_namespace", "\"A B\"")]
+    [InlineData("root_namespace", "\" A.B\"")]
+    [InlineData("root_namespace", "\"A.B;\"")]
+    [InlineData("namespace_exclude", "null")]
+    [InlineData("namespace_exclude", "[\"../Escape.cs\"]")]
+    [InlineData("namespace_exclude", "[\"tools/A.cs\",\"tools/A.cs\"]")]
+    [InlineData("global_namespace_exceptions", "null")]
+    [InlineData("global_namespace_exceptions", "[\"tools/**/*.cs\"]")]
+    [InlineData("global_namespace_exceptions", "[\"tools/A.cs\",\"tools/A.cs\"]")]
+    [InlineData("global_namespace_exceptions", "[\"../A.cs\"]")]
+    [InlineData("global_namespace_exceptions", "[\"tools/A.txt\"]")]
+    public void MalformedNamespacePolicyFieldFails(string field, string value)
+    {
+        var manifest = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest(Test()))!;
+        manifest["projects"]![0]![field] = System.Text.Json.Nodes.JsonNode.Parse(value);
+        Assert.Throws<InvalidDataException>(() => EngineeringProjectRegistry.Read(
+            Snapshot(manifest.ToJsonString(), (Project, Misleading))));
+    }
+
     private static EngineeringProjectFixture Test() => new(Project, "Explicit.Checks", "cross-cutting-test", true, []);
 
     internal static RepositorySnapshot Snapshot(string? manifest, params (string Path, string Text)[] files) =>

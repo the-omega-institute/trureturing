@@ -15,7 +15,10 @@ internal sealed record EngineeringProjectRegistration(
     string[] References,
     EngineeringProjectOwner? Owner,
     string? OwnedTestAssembly,
-    string? TestPartition)
+    string? TestPartition,
+    string RootNamespace,
+    string[] NamespaceExclude,
+    string[] GlobalNamespaceExceptions)
 {
     internal bool IsTest => Role is "owned-test" or "cross-cutting-test";
 }
@@ -103,6 +106,12 @@ internal sealed class EngineeringProjectRegistry
                     throw new InvalidDataException($"invalid registered test partition: {project.Path}");
                 ValidatePatterns(project.Include, project.Path);
                 ValidatePatterns(project.Exclude, project.Path);
+                if (!IsRootNamespace(project.RootNamespace))
+                    throw new InvalidDataException($"invalid registered root_namespace: {project.Path}: {project.RootNamespace}");
+                ValidatePatterns(project.NamespaceExclude, project.Path);
+                ValidatePatterns(project.GlobalNamespaceExceptions, project.Path);
+                if (project.GlobalNamespaceExceptions.Any(path => path.Contains('*')))
+                    throw new InvalidDataException($"registered global namespace exceptions must be exact source paths: {project.Path}");
                 if (project.References is null || project.References.Any(path => !IsProjectPath(path))
                     || project.References.Distinct(StringComparer.Ordinal).Count() != project.References.Length)
                     throw new InvalidDataException($"invalid or duplicate registered project reference: {project.Path}");
@@ -157,6 +166,38 @@ internal sealed class EngineeringProjectRegistry
         return result;
     }
 
+    // Namespace scope is a declared subset of Compile ownership. A linked source may have
+    // multiple compile owners, but those checking it must agree on namespace and exception.
+    internal IReadOnlyList<(ScribeTrackedSource Source, string RootNamespace, bool AllowGlobalNamespace)>
+        NamespaceSources(IReadOnlyList<ScribeTrackedSource> files)
+    {
+        var sources = Sources(files);
+        var result = new Dictionary<string, (ScribeTrackedSource Source, EngineeringProjectRegistration Project, bool Global)>(StringComparer.Ordinal);
+        foreach (var project in Projects)
+        {
+            var members = sources[project.Path];
+            var excludes = project.NamespaceExclude.Select(FileMapGlob.Create).ToArray();
+            foreach (var pattern in excludes)
+                if (!members.Any(source => pattern.IsMatch(source.Path)))
+                    throw new InvalidDataException($"registered namespace exclusion has no owned source: {project.Path}: {pattern.Pattern}");
+            var checkedSources = members.Where(source => !excludes.Any(pattern => pattern.IsMatch(source.Path))).ToArray();
+            var checkedPaths = checkedSources.Select(source => source.Path).ToHashSet(StringComparer.Ordinal);
+            foreach (var path in project.GlobalNamespaceExceptions)
+                if (!checkedPaths.Contains(path))
+                    throw new InvalidDataException($"registered global namespace exception is not a checked source of {project.Path}: {path}");
+            foreach (var source in checkedSources)
+            {
+                var global = project.GlobalNamespaceExceptions.Contains(source.Path, StringComparer.Ordinal);
+                if (result.TryGetValue(source.Path, out var previous)
+                    && (previous.Project.RootNamespace != project.RootNamespace || previous.Global != global))
+                    throw new InvalidDataException($"conflicting namespace registration for {source.Path}: {previous.Project.Path} and {project.Path}");
+                result[source.Path] = (source, project, global);
+            }
+        }
+        return result.Values.OrderBy(value => value.Source.Path, StringComparer.Ordinal)
+            .Select(value => (value.Source, value.Project.RootNamespace, value.Global)).ToArray();
+    }
+
     private static void ValidatePatterns(string[] patterns, string project)
     {
         if (patterns is null || patterns.Distinct(StringComparer.Ordinal).Count() != patterns.Length)
@@ -171,6 +212,10 @@ internal sealed class EngineeringProjectRegistry
 
     private static bool IsAssembly(string? assembly) => !string.IsNullOrWhiteSpace(assembly)
         && assembly == assembly.Trim() && !assembly.Any(character => character is '/' or '\\' or ':' || char.IsControl(character));
+
+    private static bool IsRootNamespace(string? value) => value is not null && value.Split('.').All(part =>
+        Microsoft.CodeAnalysis.CSharp.SyntaxFacts.IsValidIdentifier(part)
+        && part.All(character => char.IsAsciiLetterOrDigit(character) || character == '_'));
 
     private static bool IsProjectPath(string? path) => path is not null && RepoPath.TryCreate(path, out _)
         && path.EndsWith(".csproj", StringComparison.Ordinal) && !path.Contains(':') && !path.Contains('*');

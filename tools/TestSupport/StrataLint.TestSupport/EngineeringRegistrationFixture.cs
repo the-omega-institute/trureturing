@@ -15,7 +15,10 @@ public sealed record EngineeringProjectFixture(
     string[]? References = null,
     EngineeringOwnerFixture? Owner = null,
     string? OwnedTestAssembly = null,
-    string? TestPartition = null);
+    string? TestPartition = null,
+    string RootNamespace = "Fixture",
+    string[]? NamespaceExclude = null,
+    string[]? GlobalNamespaceExceptions = null);
 
 public static class EngineeringRegistrationFixture
 {
@@ -41,6 +44,9 @@ public static class EngineeringRegistrationFixture
             ci = project.Ci,
             include = project.Include,
             exclude = project.Exclude ?? [],
+            root_namespace = project.RootNamespace,
+            namespace_exclude = project.NamespaceExclude ?? [],
+            global_namespace_exceptions = project.GlobalNamespaceExceptions ?? [],
             references = project.References ?? [],
             owner = project.Owner is null ? null : new { path = project.Owner.Path, assembly = project.Owner.Assembly },
             owned_test_assembly = project.OwnedTestAssembly,

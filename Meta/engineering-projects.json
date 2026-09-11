@@ -18,7 +18,13 @@
       ],
       "owner": null,
       "owned_test_assembly": "StrataLint.Tests",
-      "test_partition": null
+      "test_partition": null,
+      "root_namespace": "StrataLint.Cli",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/StrataLint.Cli/AssemblyInfo.cs",
+        "tools/StrataLint.Cli/Usings.cs"
+      ]
     },
     {
       "path": "tools/StrataLint.Engine/StrataLint.Engine.csproj",
@@ -34,7 +40,12 @@
       ],
       "owner": null,
       "owned_test_assembly": "StrataLint.Engine.Tests",
-      "test_partition": null
+      "test_partition": null,
+      "root_namespace": "StrataLint.Engine",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/StrataLint.Engine/AssemblyInfo.cs"
+      ]
     },
     {
       "path": "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
@@ -51,7 +62,12 @@
       ],
       "owner": null,
       "owned_test_assembly": "StrataLint.EngineeringScope.Tests",
-      "test_partition": null
+      "test_partition": null,
+      "root_namespace": "StrataLint.EngineeringScope",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/StrataLint.EngineeringScope/Properties/AssemblyInfo.cs"
+      ]
     },
     {
       "path": "tools/StrataLint.Lean/StrataLint.Lean.csproj",
@@ -67,7 +83,12 @@
       ],
       "owner": null,
       "owned_test_assembly": "StrataLint.Lean.Tests",
-      "test_partition": null
+      "test_partition": null,
+      "root_namespace": "StrataLint.EngineeringScope",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/StrataLint.Lean/Properties/AssemblyInfo.cs"
+      ]
     },
     {
       "path": "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj",
@@ -84,7 +105,12 @@
       ],
       "owner": null,
       "owned_test_assembly": "StrataLint.Scribe.Documents.Tests",
-      "test_partition": null
+      "test_partition": null,
+      "root_namespace": "StrataLint.Scribe.Documents",
+      "namespace_exclude": [
+        "Blueprint/**/*.scribe.cs"
+      ],
+      "global_namespace_exceptions": []
     },
     {
       "path": "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
@@ -101,7 +127,12 @@
       ],
       "owner": null,
       "owned_test_assembly": "StrataLint.Scribe.Tests",
-      "test_partition": null
+      "test_partition": null,
+      "root_namespace": "StrataLint.Scribe",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/StrataLint.Scribe/AssemblyInfo.cs"
+      ]
     },
     {
       "path": "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
@@ -117,7 +148,12 @@
       ],
       "owner": null,
       "owned_test_assembly": null,
-      "test_partition": null
+      "test_partition": null,
+      "root_namespace": "StrataLint.TestSupport",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/TestSupport/StrataLint.TestSupport/AssemblyInfo.cs"
+      ]
     },
     {
       "path": "tools/Trureturing.Truth/Trureturing.Truth.csproj",
@@ -131,7 +167,10 @@
       "references": [],
       "owner": null,
       "owned_test_assembly": "Trureturing.Truth.Tests",
-      "test_partition": null
+      "test_partition": null,
+      "root_namespace": "Trureturing.Truth",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": []
     },
     {
       "path": "tools/scripts/report/JudgeSeedTask.csproj",
@@ -145,7 +184,10 @@
       "references": [],
       "owner": null,
       "owned_test_assembly": "JudgeSeedTask.Tests",
-      "test_partition": null
+      "test_partition": null,
+      "root_namespace": "StrataLint.JudgeSeed",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": []
     },
     {
       "path": "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj",
@@ -159,7 +201,10 @@
       "references": [],
       "owner": null,
       "owned_test_assembly": null,
-      "test_partition": null
+      "test_partition": null,
+      "root_namespace": "StrataLint.BannedApiCompileFailProof",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": []
     },
     {
       "path": "tools/tests/CompileFailProof/CompileFailProof.csproj",
@@ -175,7 +220,10 @@
       ],
       "owner": null,
       "owned_test_assembly": null,
-      "test_partition": null
+      "test_partition": null,
+      "root_namespace": "StrataLint.CompileFailProof",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": []
     },
     {
       "path": "tools/tests/JudgeSeedTask.Tests/JudgeSeedTask.Tests.csproj",
@@ -195,7 +243,10 @@
         "assembly": "JudgeSeedTask"
       },
       "owned_test_assembly": null,
-      "test_partition": "tools/tests/JudgeSeedTask.Tests"
+      "test_partition": "tools/tests/JudgeSeedTask.Tests",
+      "root_namespace": "JudgeSeedTask.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": []
     },
     {
       "path": "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
@@ -216,7 +267,12 @@
       ],
       "owner": null,
       "owned_test_assembly": null,
-      "test_partition": "tools/tests/StrataLint.ArchitectureTests"
+      "test_partition": "tools/tests/StrataLint.ArchitectureTests",
+      "root_namespace": "StrataLint.ArchitectureTests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.ArchitectureTests/Usings.cs"
+      ]
     },
     {
       "path": "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj",
@@ -236,7 +292,12 @@
         "assembly": "StrataLint.Engine"
       },
       "owned_test_assembly": null,
-      "test_partition": "tools/tests/StrataLint.Engine.Tests"
+      "test_partition": "tools/tests/StrataLint.Engine.Tests",
+      "root_namespace": "StrataLint.Engine.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.Engine.Tests/Usings.cs"
+      ]
     },
     {
       "path": "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
@@ -256,7 +317,10 @@
         "assembly": "StrataLint.EngineeringScope"
       },
       "owned_test_assembly": null,
-      "test_partition": "tools/tests/StrataLint.EngineeringScope.Tests"
+      "test_partition": "tools/tests/StrataLint.EngineeringScope.Tests",
+      "root_namespace": "StrataLint.EngineeringScope.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": []
     },
     {
       "path": "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
@@ -275,7 +339,12 @@
         "assembly": "StrataLint.Lean"
       },
       "owned_test_assembly": null,
-      "test_partition": "tools/tests/StrataLint.Lean.Tests"
+      "test_partition": "tools/tests/StrataLint.Lean.Tests",
+      "root_namespace": "StrataLint.Lean.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.Lean.Tests/Usings.cs"
+      ]
     },
     {
       "path": "tools/tests/StrataLint.Scribe.Documents.Tests/StrataLint.Scribe.Documents.Tests.csproj",
@@ -294,7 +363,10 @@
         "assembly": "StrataLint.Scribe.Documents"
       },
       "owned_test_assembly": null,
-      "test_partition": "tools/tests/StrataLint.Scribe.Documents.Tests"
+      "test_partition": "tools/tests/StrataLint.Scribe.Documents.Tests",
+      "root_namespace": "StrataLint.Scribe.Documents.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": []
     },
     {
       "path": "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
@@ -314,7 +386,12 @@
         "assembly": "StrataLint.Scribe"
       },
       "owned_test_assembly": null,
-      "test_partition": "tools/tests/StrataLint.Scribe.Tests"
+      "test_partition": "tools/tests/StrataLint.Scribe.Tests",
+      "root_namespace": "StrataLint.Scribe.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.Scribe.Tests/Usings.cs"
+      ]
     },
     {
       "path": "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj",
@@ -333,7 +410,12 @@
       ],
       "owner": null,
       "owned_test_assembly": null,
-      "test_partition": "tools/tests/StrataLint.ScriptTests"
+      "test_partition": "tools/tests/StrataLint.ScriptTests",
+      "root_namespace": "StrataLint.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.ScriptTests/Usings.cs"
+      ]
     },
     {
       "path": "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
@@ -353,7 +435,13 @@
         "assembly": "StrataLint"
       },
       "owned_test_assembly": null,
-      "test_partition": "tools/tests/StrataLint.Tests"
+      "test_partition": "tools/tests/StrataLint.Tests",
+      "root_namespace": "StrataLint.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.Tests/AssemblyInfo.cs",
+        "tools/tests/StrataLint.Tests/Usings.cs"
+      ]
     },
     {
       "path": "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj",
@@ -372,7 +460,10 @@
         "assembly": "Trureturing.Truth"
       },
       "owned_test_assembly": null,
-      "test_partition": "tools/tests/Trureturing.Truth.Tests"
+      "test_partition": "tools/tests/Trureturing.Truth.Tests",
+      "root_namespace": "Trureturing.Truth.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": []
     }
   ],
   "historical_projects": []
