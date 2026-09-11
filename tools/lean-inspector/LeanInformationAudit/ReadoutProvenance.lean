@@ -160,6 +160,9 @@ private def boundedMeta (action : MetaM α) : MetaM α :=
 
 private def sameStatement (statement candidate : Expr) : ClosureM Bool := do
   if candidate.hasMVar then throwError "unresolved provenance type"
+  -- Reduce under the active binder context before excluding open propositions:
+  -- family x may discard x and expose the closed registered statement.
+  let candidate ← boundedMeta do instantiateMVars (← whnf candidate)
   if candidate.hasFVar || candidate.hasLooseBVars then return false
   if let some answer := (← get).compared[candidate]? then return answer
   let answer ← boundedDefEq candidate statement
@@ -176,9 +179,8 @@ private def classifyType (statement : Expr) (e : Expr) : ClosureM Unit := do
   | .sort .. | .lit .. | .forallE .. => return
   | _ => pure ()
   let type ← boundedMeta do
-    instantiateMVars (← inferType e)
+    instantiateMVars (← whnf (← inferType e))
   if type.hasMVar then throwError "unresolved provenance type"
-  if type.hasFVar || type.hasLooseBVars then return
   if (← get).classifiedTypes.contains type then return
   modify fun s => { s with classifiedTypes := s.classifiedTypes.insert type }
   let proposition ← boundedMeta (isProp type)

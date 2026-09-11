@@ -79,4 +79,40 @@ check_provenance "JudgeIdentityAPI" using apiOnlyRead expects "forbidden_depende
 def closedStatementRead (_ : Unit) (x : Bool) : Bool := let _ : specificStatement := Eq.refl 137; x
 check_provenance "ClosedStatementInhabitant" using closedStatementRead expects "forbidden_dependency" for specificTruth
 
+-- F1: the binder disappears only after reducing the proposition argument.
+def openAliasFamily (_ : Bool) : Prop := specificStatement
+noncomputable def openAliasDecision (_ : Unit) (x : Bool) : Bool :=
+  if @decide (openAliasFamily x) (Classical.propDecidable _) then x else false
+check_provenance "OpenAliasDecision" using openAliasDecision expects "forbidden_dependency" for specificTruth
+noncomputable def openAliasBinderControl := unrelatedDecisionRead
+check_provenance "OpenAliasBinderControl" using openAliasBinderControl expects "clean" for specificTruth
+
+def structuralAliasFamily (_ : Nat) : Prop := specificStatement
+noncomputable def structuralAliasDecision (_ : Unit) (x : Nat) : Nat :=
+  if @decide (structuralAliasFamily x) (Classical.propDecidable _) then x else 0
+noncomputable def structuralBinderDecision (_ : Unit) (x : Nat) : Nat :=
+  if @decide (x = 138) (Classical.propDecidable _) then x else 0
+run_cmd Elab.Command.liftTermElabM do
+  let env ← getEnv
+  let entry := ((DispositionCensus.structuralProvenanceEntries env).find?
+    (·.theoremName == ``RegistrationStructural.positive)).get!
+  let .defnInfo template := (env.find? ``RegistrationStructural.good).get!
+    | throwError "fixture template"
+  for (readout, label, forbidden) in [
+      (``structuralAliasDecision, "OpenAliasDecisionStructural", true),
+      (``structuralBinderDecision, "OpenAliasBinderControlStructural", false)] do
+    let holder := readout.str "fixtureRealization"
+    addDecl <| .defnDecl {
+      name := holder, levelParams := [], type := template.type
+      value := mkAppN template.value.getAppFn (template.value.getAppArgs.set! 2 (mkConst readout))
+      hints := .abbrev, safety := .safe }
+    let actual ← RegistrationGates.validateStructural
+      { entry with theoremName := ``specificTruth, realizationConst := holder }
+    let ok := if forbidden then
+        (actual.getD "").startsWith "IE-C050 ClosedTruthReadout " &&
+        ((actual.getD "").splitOn " reason=forbidden_dependency provenance=").length == 2
+      else actual.isNone
+    if ok then logInfo m!"[PASS] {label}"
+    else logError m!"[FAIL] {label}: {actual}"
+
 end RegistrationProvenance
