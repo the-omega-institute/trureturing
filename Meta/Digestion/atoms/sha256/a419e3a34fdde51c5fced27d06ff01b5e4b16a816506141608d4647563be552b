@@ -1,0 +1,38 @@
+## 14. Adaptive radius four and the change from counting to messages
+
+Continuation dated 7 September 2026. Sections 1-13 are retained as historical
+increments. The fixed-SRL radius-four construction in Section 11 remains a
+separate, unchanged result. The recovered adaptive construction is now stored
+under AdaptiveRadiusFourData and AdaptiveRadiusFourCertificates, so it does not
+overwrite the concurrently developed fixed-order modules.
+
+The adaptive controller has 881 distinct reachable geometric masks and the
+exact integer potential
+
+\[
+ 1\le w_i\le100000,\quad w_0=100000,\qquad
+ 2500\sum_{i\to j}w_j\le6202w_i.
+\]
+
+Its scalar growth upper bound is 2.4808. The all-domain endpoint has prefactor
+100000, and an explicit four-direction root wrapper has prefactor 400000.
+The 41 coordinates here are the full lexicographic Manhattan disk, with the
+origin in its lexicographic position. This differs from the fixed-SRL payload's
+coordinate enumeration. Masks and message assignments must not be exchanged
+between these two presentations.
+
+Storage was losslessly changed to increasing masks. Each increment literal
+stores 1116 times the mask increment plus six times its weight index plus the
+selected order. Geometric successors are recomputed, never taken from a saved
+edge list. The selected-action version of the existing finite-domain simulation
+is factored out of OrderedGridMemory; the original public all-action statement
+is preserved. ControllerShadow also constructs the history-only lift of a
+coarse state policy and certifies the Section 8 projection diagnostic.
+
+The 2.4808 count bound remains above 2.429. The next construction therefore
+retains the actual child types in the nonlinear vacancy recursion instead of
+reducing all of them to one scalar growth constant. This direction was already
+identified in Section 12 from Vera, Vigoda and Yang [4]. Affine messages and LP
+search are established methods; the proposed new increment is the exact
+whole-box certificate at activity 51/20 on this concrete geometric controller.
+

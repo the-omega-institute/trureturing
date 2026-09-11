@@ -1,0 +1,15 @@
+**定理 68（原始底部进位数的必需下界）。** 固定 \(n>1\)。对于任意 \(k\ge1\) 及任意从 \(kK(n)\) 到 \(K(n^k)\) 的有限实际逐行进位路径，令 \(B(k)\) 为其底零和底一进位的总次数，则
+\[
+B(k)\ge\sum_{p\mid n}|Q_{a_p}(k)|
+>k\sum_{p\mid n}|\delta_{a_p}|-|P(n)|\alpha.
+\]
+若每个 \(k\) 任取一条这样的路径，则
+\[
+\liminf_{k\to\infty}\frac{B(k)}k\ge\sum_{p\mid n}|\delta_{a_p}|.
+\]
+特别地对 5040，
+\[
+B(k)\ge4k-f(4k)+f(2k)-2f(k),\qquad
+\liminf_{k\to\infty}\frac{B(k)}k\ge4(1-\alpha).
+\]
+

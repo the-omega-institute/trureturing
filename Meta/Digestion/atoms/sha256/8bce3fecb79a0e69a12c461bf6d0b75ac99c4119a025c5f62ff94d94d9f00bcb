@@ -1,0 +1,8 @@
+**命题 57（$\Gamma_t$ 及档案端点的完整实际像，repo-derived）。** 给定有限支撑整数剖面 $g$，格类型为 $(a,b,U)\in\mathrm{Attr}_t\times\{0,1\}\times\mathcal P_{\rm fin}(\mathrm{Attr}_t)$，以及定义 22 类型的 $m,M$。三元组 $(g,m,M)$ 是某 $X\in\mathcal B$ 的 $(\Gamma_t(X),m_X,M_X)$，当且仅当：
+
+1. 每个非零格满足 $\epsilon(a)g(a,b,U)>0$，即同格符号一致。
+2. $\sum_{a,b,U}g(a,b,U)=0$，即当前区域平衡。
+3. 每个非零格有 $a\in U$，且 $U\setminus\{a\}$ 中每个属性的时刻严格晚于 $a$。
+4. **后继见证：** 每个非零格 $(a,b,U)$ 及每个 $v\in U\setminus\{a\}$，都有非零格 $(v,b',V')$ 满足 $V'\subseteq U$。
+5. $g\ne0$ 时，$m,M$ 为有限整数且包住全部非零格自身属性的时刻；$g=0$ 时，端点可为空档案的 $(+\infty,-\infty)$，或非空档案的任意有限整数 $m\le M$。
+

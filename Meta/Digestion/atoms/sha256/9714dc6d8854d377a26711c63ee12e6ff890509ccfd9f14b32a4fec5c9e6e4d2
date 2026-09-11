@@ -1,0 +1,3 @@
+## 12.7 产地(母仓第 5.2 条,三项)
+
+- **skill 上下文**:正文写作无 skill,claude 主循环直接实施;评审阶段按 `consensus-rnd:sshx` 的评审三席形态派 codex-cli 席位(本仓政策:席位全为 codex-cli,不用 subagent)。

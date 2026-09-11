@@ -1,0 +1,9 @@
+**28.17 未闭的共同高度与精确范围。** 固定 \(P\) 后,定理 B 只把可能的
+\(G\ge0\) 限制到相对跨度 \(<R\);共同高度 \(T\) 仍无上界。
+该几何区域含无穷多素数指数箱体:对任意充分大的实数 \(Z\ge\max_i h_i\),取
+\[
+b_i=\lceil Z/h_i\rceil-1\in\mathbb Z_{\ge0},\qquad
+c_i=h_i\lceil Z/h_i\rceil\in[Z,Z+h_i).
+\]
+因而 \(\max c_i-\min c_i<\max h_i\le Q<R\),且 \(\min c_i\to\infty\)。
+所以任意大的共同高度均有这种有界形状箱体;这构造的是剩余几何区域中的箱体,

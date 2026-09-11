@@ -1,0 +1,27 @@
+**30.63 定理及证明（原复问题的实最优解与半梯度）。** In the unscaled model let
+\[
+F=V^*V,\quad F_{ij}=\langle f_i,f_j\rangle,\quad y=V^*\chi,\quad
+ y_i=\langle f_i,\chi\rangle=\int_0^1f_i(x)dx.
+\]
+The matrix is real symmetric with \(F\succeq\delta I\), and \(0\le y_i\le1\), hence
+\(\|y\|_2\le\sqrt N\le N\). Orthogonality of the projection in 30.55 gives
+\(Fa^\circ=y\), so its unique real optimizer is \(a^\circ=F^{-1}y\).
+For any real rational candidate \(q\), define the half-gradient \(v(q)=Fq-y\).
+Expansion of \(R_N(q)=1-2y^Tq+q^TFq\) gives \(\nabla R_N(q)=2v(q)\), and
+\[
+R_N(q)-D_N=(q-a^\circ)^TF(q-a^\circ)
+ =v(q)^TF^{-1}v(q)\le\frac{\|v(q)\|_2^2}{\delta}.
+\]
+For completeness, coercivity and Cauchy–Schwarz yield
+\(\delta\|z\|_2^2\le\langle z,Fz\rangle\le\|z\|_2\|Fz\|_2\), so
+\(\|F^{-1}\|_{\rm op}\le1/\delta\). Substituting \(q-a^\circ=F^{-1}v\)
+proves the equality and bound without a real spectral computation.
+For \(s\in\mathbb R\), direct expansion gives
+\[
+R_N(q+se_k)=R_N(q)+2s\,v_k(q)+s^2F_{kk},\qquad
+v_k(q)=\frac{R_N(q+e_k)-R_N(q-e_k)}4.
+\]
+The divisor is four because \(v\) is half the gradient. Complex vectors require conjugate
+transpose in the quadratic gap; the centered real differences alone do not encode all imaginary
+directions. Real reduction of the original complex optimization was proved before using them.
+

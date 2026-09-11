@@ -1,0 +1,777 @@
+      {
+        "level": 2,
+        "text": "20. 唯一分数坐标的精确剩余不等式",
+        "heading": {
+          "byte_start": 55009,
+          "byte_end_exclusive": 55059,
+          "line_start": 1066,
+          "line_end_inclusive": 1066,
+          "byte_count": 50,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "8ee67899fe82028ae27b9c3f984332b20d76adaafcebee4993915a5c7f2d8cd3"
+        },
+        "region": {
+          "byte_start": 55009,
+          "byte_end_exclusive": 56307,
+          "line_start": 1066,
+          "line_end_inclusive": 1089,
+          "byte_count": 1298,
+          "lf_count": 24,
+          "terminal_lf_count": 2,
+          "sha256": "dbe16e30c071470f84b9cc3d6fc9f05a8ebb4dcbb51cac5ba92f253395dac706"
+        },
+        "current_unit_indices": [
+          40
+        ]
+      },
+      {
+        "level": 2,
+        "text": "21. 人工实数网格的反向实例与有界证据",
+        "heading": {
+          "byte_start": 56307,
+          "byte_end_exclusive": 56363,
+          "line_start": 1090,
+          "line_end_inclusive": 1090,
+          "byte_count": 56,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "44b1e215a911c3e3a4cd91ab74bf9c4f8fd1a3b2f00aefa253930c735e8d7079"
+        },
+        "region": {
+          "byte_start": 56307,
+          "byte_end_exclusive": 59521,
+          "line_start": 1090,
+          "line_end_inclusive": 1152,
+          "byte_count": 3214,
+          "lf_count": 63,
+          "terminal_lf_count": 2,
+          "sha256": "2144b1c3e305ad48a2effa3ebc5f292741c5835b293b318946fa3cf3a7563d4b"
+        },
+        "current_unit_indices": [
+          41
+        ]
+      },
+      {
+        "level": 2,
+        "text": "22. 正实二点网格的二坐标全域占优与等号分类",
+        "heading": {
+          "byte_start": 59521,
+          "byte_end_exclusive": 59586,
+          "line_start": 1153,
+          "line_end_inclusive": 1153,
+          "byte_count": 65,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "600fcbe19b32330719ecb25a8194284c6d58cb340f6f7025b147fc019454f5d7"
+        },
+        "region": {
+          "byte_start": 59521,
+          "byte_end_exclusive": 68466,
+          "line_start": 1153,
+          "line_end_inclusive": 1348,
+          "byte_count": 8945,
+          "lf_count": 196,
+          "terminal_lf_count": 2,
+          "sha256": "7cedde6167ac0accf5a4c71ee70f7639fc1da3c15ee51d903eabdaa374bfc9d7"
+        },
+        "current_unit_indices": [
+          42,
+          43,
+          44,
+          45,
+          46
+        ]
+      },
+      {
+        "level": 3,
+        "text": "定义域、精确 LP 与整数最优解",
+        "heading": {
+          "byte_start": 61167,
+          "byte_end_exclusive": 61212,
+          "line_start": 1198,
+          "line_end_inclusive": 1198,
+          "byte_count": 45,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "2878fac805d260172853878f7b87c3371c598bd51f17fb093225b907e47f861d"
+        },
+        "region": {
+          "byte_start": 61167,
+          "byte_end_exclusive": 63377,
+          "line_start": 1198,
+          "line_end_inclusive": 1229,
+          "byte_count": 2210,
+          "lf_count": 32,
+          "terminal_lf_count": 2,
+          "sha256": "2bf60aeafd24999f571e1e2e0f84f09d6595854f17f8e3fecdc6423a124a8695"
+        },
+        "current_unit_indices": [
+          43
+        ]
+      },
+      {
+        "level": 3,
+        "text": "两个实际角点引理与均值方差情形",
+        "heading": {
+          "byte_start": 63377,
+          "byte_end_exclusive": 63427,
+          "line_start": 1230,
+          "line_end_inclusive": 1230,
+          "byte_count": 50,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "eb9576922eada0b9db77e7ee29d5e5d4b8d52ae038e53c1e7843b6a1d4c390cc"
+        },
+        "region": {
+          "byte_start": 63377,
+          "byte_end_exclusive": 64649,
+          "line_start": 1230,
+          "line_end_inclusive": 1251,
+          "byte_count": 1272,
+          "lf_count": 22,
+          "terminal_lf_count": 2,
+          "sha256": "fc1aec0b7f59ad175533e5d76a2ab7bf4e7ada9201597f83c5b899d036db724a"
+        },
+        "current_unit_indices": [
+          44
+        ]
+      },
+      {
+        "level": 3,
+        "text": "剩余情形的内侧割线与 Hermite 上包络",
+        "heading": {
+          "byte_start": 64649,
+          "byte_end_exclusive": 64702,
+          "line_start": 1252,
+          "line_end_inclusive": 1252,
+          "byte_count": 53,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "e76781a38db1e6a7617ff45ddd5475d4d27f1a21047aa178b63de90f8e34ad21"
+        },
+        "region": {
+          "byte_start": 64649,
+          "byte_end_exclusive": 67338,
+          "line_start": 1252,
+          "line_end_inclusive": 1333,
+          "byte_count": 2689,
+          "lf_count": 82,
+          "terminal_lf_count": 2,
+          "sha256": "ef04fb2a6a04f2266dd2210aa619417ef2f9d179c70ac6a31fb6b552354660fd"
+        },
+        "current_unit_indices": [
+          45
+        ]
+      },
+      {
+        "level": 3,
+        "text": "等号恰为上预算的等坐标角点",
+        "heading": {
+          "byte_start": 67338,
+          "byte_end_exclusive": 67382,
+          "line_start": 1334,
+          "line_end_inclusive": 1334,
+          "byte_count": 44,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "1812a172fc877eeaf91bc701268ddeb5794b91886115b989777f8e96af6437c4"
+        },
+        "region": {
+          "byte_start": 67338,
+          "byte_end_exclusive": 68466,
+          "line_start": 1334,
+          "line_end_inclusive": 1348,
+          "byte_count": 1128,
+          "lf_count": 15,
+          "terminal_lf_count": 2,
+          "sha256": "d43d1374ec12048cd72f625bae2c328d9c95dbe7410f0c193da7c1119ae50d4c"
+        },
+        "current_unit_indices": [
+          46
+        ]
+      },
+      {
+        "level": 2,
+        "text": "23. 两个不同素数的严格专门化与适用边界",
+        "heading": {
+          "byte_start": 68466,
+          "byte_end_exclusive": 68525,
+          "line_start": 1349,
+          "line_end_inclusive": 1349,
+          "byte_count": 59,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "258a2569d92e281ef2ee23c437e6d094e8ec4224432278c9b92f2212768eb808"
+        },
+        "region": {
+          "byte_start": 68466,
+          "byte_end_exclusive": 71163,
+          "line_start": 1349,
+          "line_end_inclusive": 1398,
+          "byte_count": 2697,
+          "lf_count": 50,
+          "terminal_lf_count": 2,
+          "sha256": "f755864fff62e1e2cf5be7e960dc1e8d3d94f16190e114aeee05501bb519d85c"
+        },
+        "current_unit_indices": [
+          47
+        ]
+      },
+      {
+        "level": 2,
+        "text": "24. 实际下端角点可行时的全维条件占优",
+        "heading": {
+          "byte_start": 71163,
+          "byte_end_exclusive": 71219,
+          "line_start": 1399,
+          "line_end_inclusive": 1399,
+          "byte_count": 56,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "6ce58d84fbcad0e53349ccfa5655c7f6a5e5762bc7657fa0a8943379d905db05"
+        },
+        "region": {
+          "byte_start": 71163,
+          "byte_end_exclusive": 90086,
+          "line_start": 1399,
+          "line_end_inclusive": 1783,
+          "byte_count": 18923,
+          "lf_count": 385,
+          "terminal_lf_count": 2,
+          "sha256": "79b42ab582f7bdd2c7ef6f65cb70a357a91043ca32ff27e6c61e47f343c6b29d"
+        },
+        "current_unit_indices": [
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67
+        ]
+      },
+      {
+        "level": 3,
+        "text": "定义域、基本解与未使用分数假设的边界",
+        "heading": {
+          "byte_start": 73837,
+          "byte_end_exclusive": 73896,
+          "line_start": 1462,
+          "line_end_inclusive": 1462,
+          "byte_count": 59,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "467c7119bfbe36872f95af88b0f779ac041a014e7e280a0dfb8311fabc53bb8c"
+        },
+        "region": {
+          "byte_start": 73837,
+          "byte_end_exclusive": 77833,
+          "line_start": 1462,
+          "line_end_inclusive": 1504,
+          "byte_count": 3996,
+          "lf_count": 43,
+          "terminal_lf_count": 2,
+          "sha256": "123dc56fc18629d48900f731494fa73cf493d5ce939c5b857c9d41ab88291fbe"
+        },
+        "current_unit_indices": [
+          50,
+          51,
+          52,
+          53
+        ]
+      },
+      {
+        "level": 3,
+        "text": "Hermite 工具与真正分数分支",
+        "heading": {
+          "byte_start": 77833,
+          "byte_end_exclusive": 77873,
+          "line_start": 1505,
+          "line_end_inclusive": 1505,
+          "byte_count": 40,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "317fed5195edb94c9eadf2ecd4044d4a00984dced75f4f4794f4f0d187956a3c"
+        },
+        "region": {
+          "byte_start": 77833,
+          "byte_end_exclusive": 82235,
+          "line_start": 1505,
+          "line_end_inclusive": 1614,
+          "byte_count": 4402,
+          "lf_count": 110,
+          "terminal_lf_count": 2,
+          "sha256": "69dfe7281b19f077fdaaf5af83d878d28fab69df37f6004e77a49d4800a5b869"
+        },
+        "current_unit_indices": [
+          54,
+          55,
+          56,
+          57,
+          58
+        ]
+      },
+      {
+        "level": 3,
+        "text": "集中距离域的两个完整证明与矩公式勘正",
+        "heading": {
+          "byte_start": 82235,
+          "byte_end_exclusive": 82294,
+          "line_start": 1615,
+          "line_end_inclusive": 1615,
+          "byte_count": 59,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "cc0531f3de87ed719a1a58fd6ba07f99e538c34670c81621817bd866ed54f03b"
+        },
+        "region": {
+          "byte_start": 82235,
+          "byte_end_exclusive": 86285,
+          "line_start": 1615,
+          "line_end_inclusive": 1724,
+          "byte_count": 4050,
+          "lf_count": 110,
+          "terminal_lf_count": 2,
+          "sha256": "7bdcf5b3e6990cb2d8af9bf51498d2365ba3e7d16ba4354598d60f54290185f2"
+        },
+        "current_unit_indices": [
+          59,
+          60,
+          61,
+          62,
+          63
+        ]
+      },
+      {
+        "level": 3,
+        "text": "定理与证明：素数平移与尚余区域",
+        "heading": {
+          "byte_start": 86285,
+          "byte_end_exclusive": 86335,
+          "line_start": 1725,
+          "line_end_inclusive": 1725,
+          "byte_count": 50,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "0a07de290133b0a9bcb8aeed20670ef728cacdb2e2234735d4786331e7bdf351"
+        },
+        "region": {
+          "byte_start": 86285,
+          "byte_end_exclusive": 90086,
+          "line_start": 1725,
+          "line_end_inclusive": 1783,
+          "byte_count": 3801,
+          "lf_count": 59,
+          "terminal_lf_count": 2,
+          "sha256": "2a2bfc3e479c463d009b5457d6487d8ac4a7feb5544adeca0349e485b1eea4d2"
+        },
+        "current_unit_indices": [
+          64,
+          65,
+          66,
+          67
+        ]
+      },
+      {
+        "level": 2,
+        "text": "25. 素数逼近的局部障碍与变形三素数族",
+        "heading": {
+          "byte_start": 90086,
+          "byte_end_exclusive": 90142,
+          "line_start": 1784,
+          "line_end_inclusive": 1784,
+          "byte_count": 56,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "b92d3e5f8a6507dc990fbcca174e8883a524d210d396a04a84d47b3cb6d33518"
+        },
+        "region": {
+          "byte_start": 90086,
+          "byte_end_exclusive": 112988,
+          "line_start": 1784,
+          "line_end_inclusive": 2246,
+          "byte_count": 22902,
+          "lf_count": 463,
+          "terminal_lf_count": 2,
+          "sha256": "3554981bb1dfb659f08202fb1842f9b24c9326481b217a54e2e6c09f437fc794"
+        },
+        "current_unit_indices": [
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85
+        ]
+      },
+      {
+        "level": 2,
+        "text": "26. 固定素数箱体的全实数薄层有限归约",
+        "heading": {
+          "byte_start": 112988,
+          "byte_end_exclusive": 113044,
+          "line_start": 2247,
+          "line_end_inclusive": 2247,
+          "byte_count": 56,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "51172362d0d79357422bb0902fb72f242fbba220f8a563e45bd13be7f61dccdc"
+        },
+        "region": {
+          "byte_start": 112988,
+          "byte_end_exclusive": 140394,
+          "line_start": 2247,
+          "line_end_inclusive": 2891,
+          "byte_count": 27406,
+          "lf_count": 645,
+          "terminal_lf_count": 1,
+          "sha256": "9809787260c26b23f3cd8381f61c66a94c49c5d084a75d8d6a66bdecf9f513c0"
+        },
+        "current_unit_indices": [
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111,
+          112,
+          113,
+          114,
+          115
+        ]
+      },
+      {
+        "level": 2,
+        "text": "27. 坐标分离的全薄层严格排除与正整数射线边界",
+        "heading": {
+          "byte_start": 140394,
+          "byte_end_exclusive": 140462,
+          "line_start": 2892,
+          "line_end_inclusive": 2892,
+          "byte_count": 68,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "42bc7aa65f35046bc83821954251e6d1c9aad1c81f3fc5f64cecaccea88e06ef"
+        },
+        "region": {
+          "byte_start": 140394,
+          "byte_end_exclusive": 162267,
+          "line_start": 2892,
+          "line_end_inclusive": 3338,
+          "byte_count": 21873,
+          "lf_count": 447,
+          "terminal_lf_count": 2,
+          "sha256": "ce9e3e291b2232a8b1c83e8f0f5bb2a3cd6b733080387b389e610ab5f801004d"
+        },
+        "current_unit_indices": [
+          116,
+          117,
+          118,
+          119,
+          120,
+          121,
+          122,
+          123,
+          124,
+          125,
+          126,
+          127,
+          128,
+          129,
+          130,
+          131,
+          132,
+          133,
+          134,
+          135
+        ]
+      },
+      {
+        "level": 2,
+        "text": "28. 固定三素数的相对跨度界与非负整数指数射线排除",
+        "heading": {
+          "byte_start": 162267,
+          "byte_end_exclusive": 162341,
+          "line_start": 3339,
+          "line_end_inclusive": 3339,
+          "byte_count": 74,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "381f7f5de00deabe4660834bf750dcb4dba16676fcac48100fabe2055c3c66df"
+        },
+        "region": {
+          "byte_start": 162267,
+          "byte_end_exclusive": 182541,
+          "line_start": 3339,
+          "line_end_inclusive": 3805,
+          "byte_count": 20274,
+          "lf_count": 467,
+          "terminal_lf_count": 2,
+          "sha256": "ba37a1cf9b831f996db96964f72a92401afeb547fd95295fc1492555388ad892"
+        },
+        "current_unit_indices": [
+          136,
+          137,
+          138,
+          139,
+          140,
+          141,
+          142,
+          143,
+          144,
+          145,
+          146,
+          147,
+          148,
+          149,
+          150,
+          151,
+          152,
+          153,
+          154
+        ]
+      },
+      {
+        "level": 2,
+        "text": "29. 共同高度的有限混合、矩判别与所选薄层邻域",
+        "heading": {
+          "byte_start": 182541,
+          "byte_end_exclusive": 182609,
+          "line_start": 3806,
+          "line_end_inclusive": 3806,
+          "byte_count": 68,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "03bdf37c86f6e036c9a4613f1dc1daa2aa6944d93ef6dc304d4f811d2fddff78"
+        },
+        "region": {
+          "byte_start": 182541,
+          "byte_end_exclusive": 209104,
+          "line_start": 3806,
+          "line_end_inclusive": 4361,
+          "byte_count": 26563,
+          "lf_count": 556,
+          "terminal_lf_count": 2,
+          "sha256": "45b99ea284eb2a977d1c8786e8988e3b920222cce27605c4042a6de384300e9c"
+        },
+        "current_unit_indices": [
+          155,
+          156,
+          157,
+          158,
+          159,
+          160,
+          161,
+          162,
+          163,
+          164,
+          165,
+          166,
+          167,
+          168,
+          169,
+          170,
+          171,
+          172,
+          173,
+          174,
+          175,
+          176
+        ]
+      },
+      {
+        "level": 2,
+        "text": "30. 三素数 (2,3,5) 的整箱全薄层邻域与无界共同高度",
+        "heading": {
+          "byte_start": 209104,
+          "byte_end_exclusive": 209175,
+          "line_start": 4362,
+          "line_end_inclusive": 4362,
+          "byte_count": 71,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "e816cd77c135b891d1ee0885bd7b859a283c454d6ed0d4078710db01eb93a144"
+        },
+        "region": {
+          "byte_start": 209104,
+          "byte_end_exclusive": 274562,
+          "line_start": 4362,
+          "line_end_inclusive": 5452,
+          "byte_count": 65458,
+          "lf_count": 1091,
+          "terminal_lf_count": 1,
+          "sha256": "bc5625e05c6e0dee7a59aada2024c74b0386ae87854db0d6d3c2bec8ac9b6749"
+        },
+        "current_unit_indices": [
+          177,
+          178,
+          179,
+          180,
+          181,
+          182,
+          183,
+          184,
+          185,
+          186,
+          187,
+          188,
+          189,
+          190,
+          191,
+          192,
+          193,
+          194,
+          195,
+          196,
+          197,
+          198,
+          199,
+          200,
+          201,
+          202,
+          203,
+          204,
+          205,
+          206,
+          207,
+          208,
+          209,
+          210,
+          211,
+          212,
+          213,
+          214,
+          215,
+          216,
+          217,
+          218,
+          219,
+          220,
+          221,
+          222,
+          223,
+          224,
+          225,
+          226,
+          227
+        ]
+      }
+    ]
+  },
+  "proof_to_primary": [
+    {
+      "address": "30.22",
+      "current_address_index": 167,
+      "primary_correspondence": [
+        {
+          "input": "C88",
+          "pointer": "/conclusion/mathematical_answer/conventions"
+        },
+        {
+          "input": "C88",
+          "pointer": "/conclusion/mathematical_answer/finite_gram_threshold"
+        },
+        {
+          "input": "C88",
+          "pointer": "/conclusion/mathematical_answer/relationship_to_the_old_section_7"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/notation"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_1/types_and_adjoint"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_1/normal_data"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_1/gram_block"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_2/full_expansion"
+        },
+        {
+          "input": "C92",
+          "pointer": "/conclusion/item_1"
+        },
+        {
+          "input": "C92",
+          "pointer": "/conclusion/item_2"
+        }
+      ],
+      "fidelity": "Conjugate-linear-first types and full quadratic expansion; compose/adj/inner/pinv control all adopted formulas."
+    },
+    {
+      "address": "30.23",
+      "current_address_index": 168,
+      "primary_correspondence": [
+        {
+          "input": "C88",
+          "pointer": "/conclusion/mathematical_answer/finite_gram_threshold"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_2/finite_projection"
+        },
+        {
+          "input": "C90",
+          "pointer": "/conclusion/item_2/sharp_threshold_proof"
+        },
+        {
+          "input": "C92",
+          "pointer": "/conclusion/item_2"
+        }
+      ],
+      "fidelity": "Explicit finite orthonormal projection, all minimizers and both directions of the sharp threshold."
+    },

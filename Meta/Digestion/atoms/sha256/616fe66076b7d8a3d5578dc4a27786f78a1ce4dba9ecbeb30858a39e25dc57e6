@@ -1,0 +1,18 @@
+**30.30 定理与证明：有限压缩等于原来的 \(D_N\)。** 令
+\(J_N:\mathbb C^{N+1}\to\ell^2(\mathbb N_0)\) 为前缀等距嵌入，
+\[
+A_N=\operatorname{compose}(\operatorname{adj}(J_N),\operatorname{compose}(A,J_N)).
+\]
+这是 \(h_0,\ldots,h_N\) 的有限 Gram 矩阵，不附加无限维零块。取
+\(V_Nb=\sum_{k=1}^Nb_kh_k\)、\(C_N=\operatorname{compose}(\operatorname{adj}(V_N),V_N)\)、\(g_N=\operatorname{adj}(V_N)\chi\)。有限维换元 \(b_k=ka_k\) 是双射，故
+\[
+\begin{aligned}
+D_N&=\min_{a\in\mathbb C^N}R_N(a)
+=\min_{b\in\mathbb C^N}\|\chi-V_Nb\|^2\\
+&=1-\operatorname{inner}(g_N,\operatorname{pinv}(C_N)g_N)\\
+&=\max\{\delta\ge0:A_N-\delta E_{00}\succeq0\}
+=\min_{x_0=1}\operatorname{inner}(x,A_Nx).
+\end{aligned}
+\]
+最后取 \(x=(1,-b)\)；这是固定一个坐标的变分问题，非单位球上的最小特征值问题。全部最小化 \(b\) 为 \(\operatorname{pinv}(C_N)g_N+\ker C_N\)，最小化 \(a\) 逐坐标除以 \(k\)；相应 \(x\) 用其负号。所有有限核与奇异端点由 30.25 适用。原 \(D_N\) 的定义域仍是 \(N\ge1\)；可另记辅助 \(D_0=1\)，此时 \(A_0=[1]\)、阈值集 \([0,1]\)。有限缩放不建立无界对角乘法 \((a_k)\mapsto(ka_k)\) 在 \(\ell^2\) 上的有界可逆性，也不为无限最小化提供系数解。
+

@@ -1,0 +1,16 @@
+**证明。** 按事件分组的有限和与双射重索引交换，得到 (Z-PROFILE)。\(\Xi\) 的更新来自定理 83 的三个不交档案部分。\(\Gamma_t\) 的精确推送如下：并行为逐格相加；补集为 \((a,b,U)\mapsto(a,1-b,U)\)；空间、时间、来源筛选分别把 \(b\) 乘相应属性的指示函数；因果筛选把 \(b\) 乘 \(\mathbf1_{U\cap Q\ne\varnothing}\)。时间平移 \(k\) 同时将 \(a,U\) 的每个时刻平移。合法时间复合把左格的 \(U\) 换成 \(U\cup\alpha_t[\Omega_Y]\)，右格保持，再相加。置
+\[
+a\diamond_ta'=(p+p',\epsilon\epsilon',\operatorname{pair}(r,r'),\max(n,n')+1)
+\]
+时，乘积把格对推至 \((a\diamond_ta',bb',\{a\diamond_ta'\})\)，系数相乘。同格汇入时相加；已经带符号的系数不再乘一次 \(\epsilon\)。新当前点无后继新点，解释了此处的单元素目标集。全档案端点仍另列于摘要，不能只从当前剖面恢复。各推送逐格由事件定义给出，故在码侧也交换。对于原签名没有列作原语的区域或属性对操作，只运输该已定义操作，不据此扩大原观察语言。
+
+原命题 40、49 分别给两项精确核；定理 81 使其每个上下文观察和所有域测试双向比较，编码单射又使摘要相等双向比较，故得到上述两个码侧核等式。
+
+在正槽域上，原始表、规范表和读数另有准确式
+\[
+(r^T)^*(\operatorname{Enc}(X),\operatorname{Enc}(T))=\operatorname{Enc}(r_X^T),\quad
+\nu^*(\operatorname{Enc}(r))=\operatorname{Enc}(\nu(r)),\quad
+D^*(\operatorname{Enc}(r))=\operatorname{Enc}\left(\prod_p p^{\sum_jG_jr(p,j)}\right).
+\]
+定理 5 的权重依次是 \(1,G_j,G_j\log p\)，编码不改变它们。正槽域亦不因此对补集或丰富乘积封闭：同槽平衡正负对只选正点，补集就读负电荷；将 \(\lambda(2,0)\) 的这种表示与自身相乘，新选正点位于 \((4,0,0)\)，不是素数槽。引文为[《情境时空算术》定义 22–26、命题 39–40、48–49](CONTEXTUAL_SPACETIME_ARITHMETIC.md)及定理 5、25–28。证毕。
+

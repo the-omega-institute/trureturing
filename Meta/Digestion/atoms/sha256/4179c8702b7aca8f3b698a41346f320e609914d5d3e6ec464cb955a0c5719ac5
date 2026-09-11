@@ -1,0 +1,40 @@
+## 2. Literature interface and provenance
+
+Sinclair, Srivastava, Stefankovic and Yin [2, Appendix A] allow an ordering that
+depends on the complete root-to-current path. Their straight-right-left ordering
+and finite-cycle-memory construction give 2.433 at cycle cutoff 26 and 2.429 at
+cycle cutoff 30. The PDF appendix and its boundary-condition convention were
+visually checked. Adaptive ordering itself is therefore prior art.
+
+The radius used here is a Manhattan **spatial radius** for retained deleted
+vertices. It is not the paper's cycle-length cutoff. Comparing the two numerical
+bounds without distinguishing these state semantics would be misleading.
+
+The positive-vector certificate method is also standard. The proposed research
+increment is the concrete, fully specified radius-three ordering separation,
+the narrow all-controller bracket, and its actual geometric simulation. No
+first-formalization priority or literature-wide novelty claim has been established.
+
+The 2026 zero-free theorem uses a family-uniform finite-depth growth quantity,
+including counts up to depth k and a supremum over roots and finite domains.
+A root-only spectral fit with a domain-dependent uncontrolled prefactor would
+not supply that input. Our finite-domain upper count keeps a fixed explicit
+prefactor. Its formal connection to partition functions and the complex block
+contraction theorem remains to be proved.
+
+Repository source audit began at dev cdf5cd4f86a59704197979f49cc40c5e0664ecae;
+the delivery branch starts from refreshed dev
+b89d56d0c9a433f9b714821d2bb1779066c59ede. Searches for Weitz and
+independencePolynomial found no existing owner in the searched repository/code
+index. The existing RationalFarkas owner was read; it proves rational linear
+infeasibility, not the controlled branching or geometric simulation statements.
+
+Cross-author audit included loning's merged PR #5326: behavioral Hankel
+minimality is distinct from determinant preservation. Here, likewise, a smaller
+linear realization cannot replace a geometric path-counting automaton without
+an exact semantic transport. PR #5562 supplies symmetric complex quadratic row
+bounds, whose symmetry assumptions do not apply to directed branching. PR #5405
+reinforces the distinction between finite sample success and all-input coverage.
+The present modules therefore use an explicit all-depth induction and full
+geometric closure, rather than an unproved compression or sampled coverage premise.
+

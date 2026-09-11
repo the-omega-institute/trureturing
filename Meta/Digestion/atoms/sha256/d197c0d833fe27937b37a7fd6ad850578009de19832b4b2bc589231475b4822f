@@ -1,0 +1,25 @@
+## 30. Delivered source endpoint and verification status
+
+ActualGraphLift and FiniteGridZeroFree are the two new Lean owners. Each has
+a canonical Scribe companion; all sixteen explicitly named public declarations
+are covered. ActualGraphLift constructs the neutral message, handles absent
+complex children, transfers the actual pruning/product, and proves the typed
+and four-direction graph steps. FiniteGridZeroFree performs the simultaneous
+strong induction and exposes the quantitative lower bound, nonvanishing,
+explicit interval-width theorem, integer-polynomial version, root increment
+half-plane and arbitrary marked-vacancy bound.
+
+The final nonvanishing theorem is no longer a conditional graph-transfer
+interface. Its only activity premise is membership in the specified common
+neighborhood. The geometry, coefficient rows, holomorphic estimates, and graph
+identities are concrete proof dependencies. This description is about the
+logical shape of the source; it does not upgrade unexecuted dependencies to
+kernel-checked truth.
+
+The supplementary exact replay reuses the previous direct independent-subset
+enumerator. It does not use the deletion recursion to manufacture reference
+partition values, and it does not read any stored result JSON. Across all 512
+subdomains of a 3-by-3 square and 21 exact Gaussian-rational activities in the
+claimed tube, the executed checks include:
+
+- 10752 quantitative partition lower bounds;

@@ -1,0 +1,28 @@
+**30.69 定理及证明（局部严格证书与实际见证提取）。** Define
+\(\operatorname{LocalLess}(N,r,e)\) to require a legal decoded precision \(\eta_e>0\),
+\(\operatorname{VerifyLocal}(N,\eta_e,e)\), and \(u<r\); define
+\(\operatorname{LocalGreater}\) with \(\ell>r\). Invalid decoding gives false.
+For every fixed \(N\ge1,r\in\mathbb Q\), these total predicates satisfy
+\[
+D_N<r\iff\exists e\ \operatorname{LocalLess}(N,r,e),\qquad
+D_N>r\iff\exists e\ \operatorname{LocalGreater}(N,r,e).
+\]
+Soundness follows from the enclosing interval. For completeness generate at
+\(\eta_j=2^{-j}\). If \(D_N<r\), eventually \(u_j-D_N\le u_j-\ell_j<\eta_j<r-D_N\);
+if \(D_N>r\), eventually \(D_N-\ell_j<\eta_j<D_N-r\).
+At equality both strict predicates always fail, even though each fixed-precision generation and
+verification terminates. Finite failure to separate proves no equality. If \(r\le0\), any accepted
+interval gives the greater certificate; if \(r>1\), any gives the less certificate. The case
+\(r=1\) has the same strict meaning.
+
+Witness extraction must respect the clipping \(u=\min(1,B_0)\). If \(u<r\le1\), then
+\(u=B_0<r\), so the encoded \(q\) itself satisfies \(R_N(q)\le B_0<r\).
+For \(r>1\), clipping can make \(u<r\) even for a poor \(q\); instead the zero vector
+always supplies \(R_N(0)=1<r\). In particular, for \(r=1/m\), \(m\ge1\), the original
+candidate and its residual parameters give a certificate of 30.48. In the original scaled Gram model,
+\[
+Z(q)=(1,-q_1,-2q_2,\ldots,-Nq_N),\qquad
+\langle Z(q),(A_N-m^{-1}E_{00})Z(q)\rangle=R_N(q)-1/m<0.
+\]
+The factors \(k\), the leading coordinate one and the strict inequality are essential.
+

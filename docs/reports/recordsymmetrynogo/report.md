@@ -1,0 +1,53 @@
+# Equivariant record symmetry no-go — implementation report
+
+## Provenance and scope
+
+This implementation uses the existing repository theorem
+`D5/S3/Quantum/Matrix/CrossSpeciesConsensus.equivariant_selfAdjoint_eq_smul_id_of_irreducible`.
+No new axiom, `sorry`, `native_decide`, or external numerical oracle is used. The target is a
+conditional algebraic obstruction for finite complex matrix representations. It does not reject
+the quantum research line: it identifies the choice required for an observer-to-objective
+construction, between a reducible shared symmetry and records that break equivariance.
+
+The preregistered escape witness is the binary scalar equation. Mathlib's pinned representation
+API provides `Representation.IsIrreducible`; no separate `IsReducible` definition exists in the
+searched pinned tree, so the reverse statements use `¬ Representation.IsIrreducible`.
+
+## Formal declarations
+
+The new module is `D5/S3/Quantum/Matrix/RecordSymmetryNoGo.lean`.
+
+1. `equivariant_selfAdjoint_idempotent_eq_zero_or_one`: Schur scalarity gives `P = r I`;
+   a diagonal entry of `P² = P` gives `r² = r`; real factorization gives `r = 0 ∨ r = 1`.
+2. `nontrivial_equivariant_selfAdjoint_idempotent_implies_reducible`: contraposition of (1)
+   for a nonzero proper projection.
+3. `two_nonzero_orthogonal_equivariant_records_imply_reducible`: under irreducibility the first
+   nonzero projection is identity, and its orthogonality with the second forces the second to be
+   zero, contradicting its nonzero hypothesis.
+
+The third theorem takes two Hermitian idempotents, equivariance for each, nonzeroness for each,
+and `P * Q = 0`. This is sufficient for the stated pairwise orthogonality consequence.
+
+All public declarations are general symbolic theorems with `utility: none`; none is a bounded
+enumeration, checker, numeric reduction, or certified finite instance. The module's direct frozen
+dependency is the imported CrossSpeciesConsensus theorem above.
+
+## Verification
+
+The source was checked with Lean 4.33.0 and the pinned Mathlib environment. The required serial
+build returned `SERIAL_LEAN status=complete built=0 failed=0`. `make lean-report` produced the
+candidate report with delta `changed=1 added=0 removed=0`, and its axiom closure for the new
+declarations is `Classical.choice`, `Quot.sound`, and `propext`, with no `sorryAx`. `make emit`
+reported `red=0` and `emitted: 0 changed blueprint(s)`. The pre-PR content check at merge-base
+`02374e0e1c52b2751c9f214ad3884bb7e30bad50` reported `DESCRIBE_STATUS ... classified ... red=0`
+and `markdown ... red=0`. `make deposit-uncovered` completed for the module and recorded
+accepted event `fe2173ed0ddb3ba87ca8f674d232532a881dbf2639219edfbe64b7fe3f965942`; the source
+header was subsequently normalized to the canonical seven-line form without changing any
+declaration statement.
+
+## Boundary and constructive reading
+
+The no-go says that a nontrivial family of orthogonal records cannot remain equivariant under a
+shared irreducible symmetry. It therefore exposes a design choice: use a reducible shared
+representation or allow the record projections to break that symmetry. It does not say that
+quantum models fail, nor does it derive either physical premise.

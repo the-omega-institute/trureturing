@@ -1,0 +1,9 @@
+**命题 52（加法双射与差分逆）。** 逐时间相加使 $\mathcal A(R)$ 成为阿贝尔群，且
+
+$$
+P:\mathcal L\longrightarrow\mathcal A(R)
+\quad\text{是加法双射},\qquad
+(P^{-1}C)_n=C_n-C_{n-1}\quad(n\in\mathbb Z).
+\tag{CUM-INVERSE}
+$$
+

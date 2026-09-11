@@ -1,0 +1,59 @@
+### 42.4 核序下的唯一最粗准确表示
+
+**命题 QI-P3（最大准确等价与普遍因子化，repo-derived）。** 定义
+
+$$
+a\equiv_{e,s}a'
+\iff O_{e,s}(a)=O_{e,s}(a'),
+\qquad
+q^*:\mathcal B_e(s)\twoheadrightarrow Q_e^*(s)
+=\mathcal B_e(s)/{\equiv_{e,s}}.
+\tag{QI-EDGE-QUOTIENT}
+$$
+
+表示是满射 $q:\mathcal B_e(s)\twoheadrightarrow Q$；任意到更大集合的函数可先将余域缩到实际像。称 $q$ 准确，是指对每个 $c$ 存在
+
+$$
+E_{c,q}:Q\times\mathcal R_e(s)\to\operatorname{Tag}(V_c),
+\qquad E_{c,q}(q(a),r)=G_c(a\cup r).
+$$
+
+对任意函数 $t$ 记 $\ker t=\{(x,x'):t(x)=t(x')\}$。表示的细化序定义为 $q_1\preceq q_2$ 当且仅当 $\ker q_1\subseteq\ker q_2$，左侧更细；相同核的表示视为同一信息等级后，这是偏序。则
+
+$$
+q\text{ 准确}\iff\ker q\subseteq\ker O_{e,s},
+\qquad Q_e^*(s)\cong O_{e,s}[\mathcal B_e(s)].
+\tag{QI-ACCURATE}
+$$
+
+$\equiv_{e,s}=\ker O_{e,s}$ 是最大的准确等价关系。对每个准确满射 $q$，存在唯一映射
+
+$$
+p:Q\to Q_e^*(s),\qquad q^*=p\circ q.
+\tag{QI-UNIVERSAL}
+$$
+
+**证明（核与准确性）。** 函数相等的自反、对称、传递性给出等价关系。若 $q$ 准确且 $q(a)=q(a')$，则对所有 $r,c$，
+
+$$
+G_c(a\cup r)=E_{c,q}(q(a),r)
+=E_{c,q}(q(a'),r)=G_c(a'\cup r),
+$$
+
+故得核包含。反之，在核包含成立时，集合
+
+$$
+\{((q(a),r),G_c(a\cup r)):
+a\in\mathcal B_e(s),\ r\in\mathcal R_e(s)\}
+$$
+
+就是 $E_{c,q}$ 的图：满射性保证在整个 $Q\times\mathcal R_e(s)$ 上有值，核包含保证单值。取 $q=q^*$ 即得商的准确性；任何准确等价的商也满足此核包含，所以 $\ker O_{e,s}$ 最大。
+
+**证明（实际像与方向）。** 集合 $\{([a],O_{e,s}(a)):a\in\mathcal B_e(s)\}$ 是从商到实际观察像的函数图；定义保证单值和满射，而观察相等恰为同类，故又单射。集合
+
+$$
+\{(q(a),[a]):a\in\mathcal B_e(s)\}
+$$
+
+是 $p$ 的图。准确性保证单值，$q$ 的满射性保证总性，并强制任何满足 (QI-UNIVERSAL) 的映射都有此图，故唯一。这些图直接定义函数，不需在每个纤维上挑选代表。方向是任意准确表示决定最粗商。若另一个表示也具有同一最粗核，两个由这些图给出的映射互逆，得到唯一的相容同构。核严格更小的准确表示可严格粗化到该核，所以不存在两个不可比的最粗准确等价。对字段选择、语法格式或机器编码附加限制，会形成另一个最小化问题。证毕。
+

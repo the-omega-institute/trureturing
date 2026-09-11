@@ -1,0 +1,10 @@
+### 38.6 文献和跨作者复用
+
+Matolcsi、Matszangosz、Varga、Weiner，*Triplets of mutually unbiased bases*，Journal of Algebraic Combinatorics 63, 26 (2026)，DOI `10.1007/s10801-026-01506-x`，Conjecture 3 仍以整个 Szollosi X 家族为目标。本节既没有扩大已认证矩阵球，也没有完成全家族覆盖。
+
+Gocht、McBride、McCreesh、Nordstrom、Prosser、Trimble，*Certifying Solvers for Clique and Maximum Common (Connected) Subgraph Problems*，CP 2020, pp.338-357，DOI `10.1007/978-3-030-58475-7_20`，说明 clique 求解可以输出由 pseudo-Boolean/cutting-planes 检查的证书。本节采用已有的“发现与验证分离”思想，并针对实际六十标签图给出可读的五色和二次恒等式。没有把着色证明或 proof logging 声称为新算法。2026 论文的猜想陈述及这篇方法文献的作者版摘要在本轮重新核对。
+
+跨作者审查包含 loning 研究线 #5892 的实际 `CoefficientDrivenJacobiCharacteristicPolynomial` 公共 theorem：其 hSymmetric 显式保留，未被伪装成由其他假设推得。这里相应地保留真实区间到矩阵包含和全覆盖前提，只消去确实已经实例化的有限 no-partner 前提。
+
+还读取了 AlyciaBHZ #5897 的 `RadiusFourCertificates.lean`：具体整数表先由内核归约验证，再交给既有一般消费者，几何闭包与路径计数输运分开。这里沿用同样的依赖方向，复用 RootTubeStrongUnextendibility 而非再抄一遍相同的图论消费者。两条外部研究线的定理都没有被当作 MUB 的数学假设。
+

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:a958e24af692bcd53960318d761d316adbe4259758f80ccf2dfe90d12a99794a
+  normalized_sha256: sha256:a958e24af692bcd53960318d761d316adbe4259758f80ccf2dfe90d12a99794a
+cas_ref: sha256:a958e24af692bcd53960318d761d316adbe4259758f80ccf2dfe90d12a99794a
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaBridge/FermiMellin.fermi_mellin_identity
+    target_statement_id: sha256:cbb61575270c838e296105ce0f265cc68418ba2fb76f40fe7bec1e5ab7dd411b
+  - gid: D5/S3/Weil/ZetaBridge/FermiMellin.fermi_mellin_product_tendsto_one
+    target_statement_id: sha256:9a75ae35ced7d9fd84fd849aa22f0451d842cf0526eb445907076978214269a6
+  - gid: D5/S3/Weil/ZetaBridge/FermiMellin.salem_mellin_nonvanishing_iff_rh
+    target_statement_id: sha256:a2b5445b4f0a0759fd7e47db6491f68c89483e0a67f1dd478f2a1ff6c767d562
+receipts:
+  unresolved_subitems: []

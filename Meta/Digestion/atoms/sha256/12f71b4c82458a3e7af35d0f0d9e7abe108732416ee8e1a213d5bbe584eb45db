@@ -1,0 +1,8 @@
+### 36.2 成熟文献的具体前提
+
+累积表示与 join 乘法的成熟背景见 Andreas Björklund、Thore Husfeldt、Petteri Kaski、Mikko Koivisto、Jesper Nederlof、Pekka Parviainen，*Fast Zeta Transforms for Lattices with Few Irreducibles*，Proceedings of the Twenty-Third Annual ACM-SIAM Symposium on Discrete Algorithms（SODA 2012），pp. 1436–1444，DOI [10.1137/1.9781611973099.113](https://doi.org/10.1137/1.9781611973099.113)，[作者公开的会议论文 PDF](https://thorehusfeldt.com/wp-content/uploads/2010/08/7c52e3293a74298f.pdf)。本次采用的已核读引文资料对应这份会议版本的 PDF 第 1–2 页：其前提是**有限格**与**系数域 $K$**，式 (1.1) 定义 $\zeta$ 变换，式 (1.2) 给出 Möbius 逆，式 (1.3) 明确通过变换后的逐点乘法表达 join 乘法，正文称 $\zeta$ 为代数同构。这里“逐点”是在变换后的格索引上。该来源并未直接陈述本稿的无限整数时间链、整数空间卷积系数、零左尾与最终常值右尾，亦未包含默认输出延迟；这些由命题 58–53 及 (CUM-AUX-TRANSFORM) 的有限和证明单独承担。上述页码不指向另行出版的 2015 年期刊版本。
+
+代数自同态扭曲的成熟背景见 Donald Yau，*Hom-algebras and homology*，[arXiv:0712.3515v3](https://arxiv.org/abs/0712.3515v3)，2009 年 8 月 6 日修订，[版本 PDF](https://arxiv.org/pdf/0712.3515v3)；arXiv 所列期刊出处为 *Journal of Lie Theory* 19（2009），409–421。已核读资料对应该版本：§2.1（PDF 第 2 页）固定特征零域；§2.3（第 3 页）的式 (2.3.2) 为 $(xy)\alpha(z)=\alpha(x)(yz)$，并明确一般 Hom-associative 定义本身不要求 $\alpha$ 保乘法。定理 2.4（第 3–4 页）、引理 2.5 及推论 2.6(1)（第 4 页）说明自同态扭曲 $\mu_\alpha=\alpha\circ\mu$ 的机制，并另行建立乘法保持式；定理的前提是自同态，不要求可逆。
+
+本稿的对应是 $\mu=\diamond$、$\alpha=\tau_1$、$\mu_\alpha=\odot$。$\tau_1$ 在当前整数剖面类型上确实可逆并保持 $\diamond$，由命题 60 自给证明；这一识别不是 Yau 文中直接陈述的 CSA 结论。尤其不能把文献的域上线性代数前提静默扩张到整数模块，也不能只援引 Hom-associativity 的名称来省掉 (CUM-MULTIPLICATIVE) 的证明。引文资料只说明来源可访问性、定位及假设，不充当本稿数学证明或正式评审结论。
+

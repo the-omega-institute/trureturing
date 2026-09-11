@@ -1,0 +1,3 @@
+**假设 1.3(核可靠且证书存在)**。(i) 若 $\mathrm{Proved}_{\mathfrak A}(P)$,则 $P$ 在 $\mathfrak A$ 的每个模型中成立:$\forall\mathfrak M\models\mathfrak A,\ \mathfrak M\models P$。(ii) 对每个 $\mathrm{Proved}_{\mathfrak A}(P)$,存在含 $P$ 的**证书** $(C,w_C)$:$C\subseteq\mathcal P$ 有限,$w_C:C\to\Pi$,每个 $w_C(Q)$ 满足 $K(w_C(Q),Q)=\mathsf{acc}\wedge\mathrm{ax}(w_C(Q))\subseteq\mathfrak A$ 且 $\mathrm{refs}(w_C(Q))\subseteq C$,并且由 $\mathrm{refs}$ 派生的关系 $\{(Q',Q)\mid Q'\in\mathrm{refs}(w_C(Q))\}$ 在 $C$ 上无环。
+*读法*。(i) 是整座塔的信任根:本卷不证明它,只把它写成前件——它就是「相信核」这件事的精确内容,不是 Lean 公理,是关于核的元假设。(ii) 说「可证」不只是「存在一个被接受的项」,而是「存在一份可以逐条查验、引用封闭、不绕圈的证书」;这是把命题追加进账本(定理 1.15)所需的全部材料。
+

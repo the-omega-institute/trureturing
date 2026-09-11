@@ -1,0 +1,30 @@
+**28.10 一致负裕量在 \(t=R\) 仍严格。** 对 \(x\ge\log2\),
+\[
+-f(x)=\int_0^{e^{-x}}\frac{du}{1-u}\le2e^{-x}.
+\]
+同时对 \(m>0\)、\(\epsilon>0\),
+\[
+f(m+\epsilon)-f(m)=\int_0^\epsilon\frac{du}{e^{m+u}-1}
+\ge e^{-m}(1-e^{-\epsilon}).
+\]
+所有积分均在正定义域。因 \(H\ge\mu=T+(s+t+q)/3\ge T+t/3\),
+有 \(f(H)\ge-2e^{-T-t/3}\)。再用
+\(m_{\rm low}\le T+(S+Q)/2\)、28.8-28.9,得到
+\[
+\Psi-D\ge2e^{-T}\bigl[a-e^{-t/3}\bigr],\qquad
+ e^TG\le-2\bigl[a-e^{-t/3}\bigr].
+\]
+具体地,先用 \(D<2f(m_{\rm low})\)、\(L\ge m_{\rm low}+\epsilon\),
+再应用上述积分差下界;将可能的严格步放宽为 \(\ge\) 不影响结论。
+令
+\[
+B_{\rm tail}=\tfrac32(S+Q)+3\log\!\left(\frac2{1-e^{-\epsilon}}\right).
+\]
+则 \(e^{-B_{\rm tail}/3}=a/2\)。28.3 的 \(+1\) 保证
+\(t\ge R>B_{\rm tail}\),从而 \(e^{-t/3}<a/2\)。于是
+\[
+\boxed{e^TG\le-2[a-e^{-t/3}]<-a<0.}
+\]
+这说明即使前面若干非严格估计取等,\(t=R\) 也不会失去严格裕量。
+没有计算或声称任何数值半径。证毕。
+

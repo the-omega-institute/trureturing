@@ -1,0 +1,53 @@
+**命题 50（遗忘映射与严格核偏序，repo-derived）。** $\Xi$ 由 $\Gamma_t$ 沿自身的时间—位置单元边缘化：
+
+$$
+\begin{aligned}
+W_X(n,p)&=\sum_{\epsilon,r,b,U}
+ \Gamma_t(X)((p,\epsilon,r,n),b,U),\\
+Z_X(n,p)&=\sum_{\epsilon,r,U}
+ \Gamma_t(X)((p,\epsilon,r,n),1,U).
+\end{aligned}
+\tag{TCAU-TS}
+$$
+
+这里的单元恰为 #6684／定义 22 的 $K=\mathbb Z\times\mathbb Z^3$，背景取 $\Omega$、选择取 $A$，三个端点按原定义照搬（$s$ 由支撑取出）。**系数已经含符号，不再乘 $\epsilon$**。对 $U_0$，正确 $W$ 总和为 $0$；若重复乘符号则变成 $2$，与定义 22 不符。
+
+无时间剖面则是沿
+
+$$
+(a,b,U)\longmapsto(\varphi(a),b,\varphi[U])
+\tag{TCAU-FORGET}
+$$
+
+的系数推送，其中 $\varphi[U]$ 为**去重后的集合**。由此及已有边缘化，有严格主链
+
+$$
+\ker(\Gamma_t,m,M)
+\subsetneq\ker(\Gamma_c,m,M,s)
+\subsetneq\ker(\rho_{\rm src},m,M,s)
+\subsetneq\ker\Theta
+\subsetneq\ker\pi
+\subsetneq\ker z
+\subsetneq\ker q.
+\tag{TCAU-CHAIN}
+$$
+
+另外有
+
+$$
+\begin{gathered}
+\ker(\Gamma_t,m,M)\subsetneq\ker\Xi\subsetneq\ker\Theta,\\
+\ker(\rho_{\rm src},m,M,s)\subsetneq\ker\rho_{\rm src}\subsetneq\ker\pi,\\
+{=}\ \subsetneq\ {\cong_h}\ \subsetneq\ker(\Gamma_t,m,M).
+\end{gathered}
+\tag{TCAU-BRANCHES}
+$$
+
+$\ker\Xi$ 与 $\ker(\Gamma_c,m,M,s)$、$\ker(\rho_{\rm src},m,M,s)$ 分别不可比；$\ker\rho_{\rm src}$ 与 $\ker\Theta$ 也不可比。
+
+**证明（映射及包含）。** 将 (TCAU-P) 的有限事件和按 $(t(e),x(e))$ 重分组，背景及选择分别就是定义 22 的 $W,Z$；无需再加权。每个 $e$ 的 $\varphi[U_t^X(e)]=U_X(e)$，自身属性也沿 $\varphi$ 忘时，故有限推送为定义 25 的 $\Gamma_c$。对自身符号及后继集求和得 §27 的 $\rho_{\rm src}$，再沿来源求和得 $\pi$；携带端点即得 $\Theta$。$\Xi\to\Theta$ 为 (TS-SP)，$\pi\to z\to q$ 为既有投影；丢端点得到另一支链。历史同构逐事件保持属性、偏序、区域与选择，因而保持 $U_t$、剖面及端点，编码相等当然给历史同构。
+
+**证明（每条严格边与不可比的见证）。** 下表“相同”总在较粗核侧，“不同”总在较细核侧；只引用已有反例，不重新编号。
+
+| 严格边或两核比较 | 见证及方向 |
+| --- | --- |

@@ -1,0 +1,13 @@
+**证明（像条件充分，明确构造左右尾部）。** 假设 (CUM-IMAGE)。因 $D,H\in\mathcal A(R)$，可取整数 $\ell<u$，使
+
+$$
+D_n=H_{n+1}=0\quad(n<\ell),\qquad
+D_n=D_\infty,\ H_{n+1}=H_\infty\quad(n\ge u)
+$$
+
+其中 $D_\infty,H_\infty\in R$ 为固定常值。在整个左尾 $n<\ell$ 令 $C_n=0$，于是逐点方程成立。
+
+对于右尾，若 $D_\infty\ne0$，像条件给出 $H_\infty\in D_\infty R$，故存在唯一 $Q_\infty\in R$ 使 $D_\infty*Q_\infty=H_\infty$。对全部 $n\ge u$ 取同一个 $C_n=Q_\infty$；因为因子与目标在右尾都恒定，唯一性保证所需商不随 $n$ 变化。若 $D_\infty=0$，像条件迫使 $H_\infty=0$，就在整个右尾令 $C_n=0$。两种右尾都已满足方程及最终常值条件。
+
+剩余只有 $\ell\le n<u$ 的有限多个整数。在其中 $D_n\ne0$ 处取像条件给出的唯一 $R$ 中商，在 $D_n=0$ 处取 $C_n=0$。如此构造的 $C$ 左尾为零、右尾为常值，每个中间值都属于 $R$，所以 $C\in\mathcal A(R)$。命题 58 的有限支撑证明保证其差分是 $\mathcal L$ 中的 $c$。逐点方程对全部整数都成立，(CUM-EQUATION) 及 $P$ 单射给出 $L_d(c)=h$。这里实际只处理两个常值尾部和有限中段，没有对无限多个不受约束的商作选择，也没有把 $R$ 嵌入某个域后作未说明的除法。
+

@@ -1,0 +1,57 @@
+## 11. A concrete radius-four certificate and universal finite separation
+
+The fixed-SRL radius-four closure has 851 distinct geometric states, verified
+reachable from P by an independent set-based traversal. RadiusFourData contains
+the exact masks and a positive integer weight w with
+
+\[
+ 1\le w_i\le20000,\qquad w_0=20000,\qquad
+ 10000\sum_{i\longrightarrow j}w_j\le24827w_i.
+\]
+
+There are 307 distinct weight values. The data share these values losslessly;
+no geometric states are identified. The 41 mask bits refer to lexicographically
+ordered points of the punctured Manhattan disk followed by the origin. All
+2553 state-direction cases reconstruct their successors from memoryStep itself,
+and all 851 row inequalities pass exact integer replay. Minimum row slack is
+zero, which is permitted for this non-strict upper certificate.
+
+Candidate weights came from a numerical proposal, rescaling and monotone
+integer ceiling updates until every row passed. Only the final integer rows
+and geometric closure are mathematical evidence. No eigensolver output is
+assumed in the theorem. Unused actions are outside the finite table's coverage;
+the raw geometric transition remains defined for all six actions.
+
+The existing super-potential induction and exact presentation transport give
+
+\[
+ \boxed{10000^n c_n^{(4)}\le20000\,24827^n,\qquad
+ \mu_4(\mathrm{SRL})\le2.4827.}
+\]
+
+The same bound holds for the actual ordered deletion count of every finite
+integer-grid domain with its parent absent. That endpoint uses raw geometry and
+real domain membership; it never discards a real child because a lookup failed.
+The theorem radiusFour_finite_domain_upper has no supplied growth or finite-table
+coverage hypothesis.
+
+A stronger finite comparison consumes the previous radius-three lower theorem.
+The exact integer comparison
+
+\[
+ 20000\,24827^{700}<25205^{700}
+\]
+
+combines with 5041^n<=2000^n C_n^pi to prove
+
+\[
+ \boxed{c_{700}^{(4,\mathrm{SRL})}<C_{700}^{(3,\pi)}
+ \quad\text{for every history-dependent radius-three controller }\pi.}
+\]
+
+This is the public theorem radiusFour_beats_every_radiusThree_controller.
+The depth 700 is a sufficient choice, not a minimality assertion. The conclusion
+compares the two actual relaxed geometric models. It does not transfer their
+lower bound to the physical grid. The new upper rate remains above the published
+2.429, so no global zero-free improvement is claimed.
+

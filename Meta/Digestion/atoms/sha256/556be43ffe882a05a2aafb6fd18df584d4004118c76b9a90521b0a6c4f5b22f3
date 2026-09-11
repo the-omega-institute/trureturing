@@ -1,0 +1,15 @@
+**命题 40（联合摘要的观察核及像上恢复，repo-derived）。** 对 (TS-LANG) 的完整上下文族，
+
+$$
+\approx_{\rm ts}=\ker\Xi.
+\tag{TS-KERNEL}
+$$
+
+因此 $\Xi$ 在核包含意义下是该指定语言的最粗充分读数。确切地，对任意集合 $H$ 和任意总读数 $h:\mathcal B\to H$，若 $h(X)=h(Y)$ 蕴含全部该语言上下文的严格观察相同，则存在唯一函数
+
+$$
+\kappa:h[\mathcal B]\longrightarrow\mathcal D_{\rm ts},
+\qquad \kappa(h(X))=\Xi(X)\quad(X\in\mathcal B).
+\tag{TS-RECOVERY}
+$$
+

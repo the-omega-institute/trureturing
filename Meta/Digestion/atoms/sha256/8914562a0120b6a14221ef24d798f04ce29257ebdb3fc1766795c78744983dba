@@ -1,0 +1,6 @@
+### 33.1 实施、先验暴露与思考输入
+
+本批属于 caller 的 `consensus-rnd:sshx` 流程，由一个 Codex 实施席以 `codex-cli` 载体在工作树 `/Users/auricstudio/trureturing-csa-upgrade-pr4-0910`、分支 `lane/theory/csa-upgrade-pr4-0910` 落地。该 worker 没有单独调用本地 skill，没有另派子席；输入是 caller 收敛 brief（含 R1-PR4）、完整 `CLAUDE.md`、既有卷文及前批有限核验，故为 `repo-prior-exposed`，不冒充盲推导或独立评审。
+
+原始基线是 `34d73f32f87c9a50af4890ffb5b141ce0af5110b`。开工实际执行 `git fetch origin dev && git merge-tree --write-tree origin/dev HEAD`，退出 0，试合树为 `a31ec0c72dcfff2c53206eaa0e3f1eca8903392c`；随后 `git merge origin/dev` 退出 0，以 fast-forward 合入 `49c7aecf0c64e27d43dc8bea8fd18ca438080c05`。两版卷字节相同，仍为 3251 行，最大编号为定义 25、命题 47、引理 1、反例 D10，故本批续为 §32–33、定义 26、命题 48–51、引理 2、D11–D12、增补 M，没有 rebase。
+

@@ -1,0 +1,54 @@
+**定义 22（联合时间—空间摘要）。** 令
+
+$$
+K=\mathbb Z\times\mathbb Z^3,\qquad
+\mathcal L=\mathbb Z^{(K)}
+=\{c:K\to\mathbb Z:\operatorname{supp}(c)\text{ 有限}\},
+\qquad \varepsilon c=\sum_{(n,p)\in K}c(n,p).
+$$
+
+括号上标只取有限支撑函数；上述求和实际只在有限支撑上进行。记 $\delta_{(n,p)}\in\mathcal L$ 为该联合单元上的单点质量，$\delta_p\in R$ 仍指 §15 的空间单点质量。对 $X=(C,A)\in\mathcal B$ 定义
+
+$$
+\begin{aligned}
+W_X(n,p)&=\sum_{\substack{e\in\Omega_X\\t_X(e)=n,\ x_X(e)=p}}\sigma_X(e),\\
+Z_X(n,p)&=\sum_{\substack{e\in A_X\\t_X(e)=n,\ x_X(e)=p}}\sigma_X(e),\\
+\Xi(X)&=(W_X,Z_X,m_X,M_X,s_X).
+\end{aligned}
+\tag{TS}
+$$
+
+三个端点直接沿用定义 20：$m_X=\min t_X[E_X]$、$M_X=\max t_X[E_X]$、$s_X=\max t_X[\Omega_X]$，其类型分别为 $\mathbb Z\cup\{+\infty\}$、$\mathbb Z\cup\{-\infty\}$、$\mathbb Z\cup\{-\infty\}$。空档案时 $m=+\infty,M=-\infty$，空当前区域时 $s=-\infty$；全部比较在扩展整数全序中进行。因此 $\Xi$ 的值域先置于
+
+$$
+\mathcal L^2\times(\mathbb Z\cup\{+\infty\})
+\times(\mathbb Z\cup\{-\infty\})^2,
+$$
+
+而它的实际像将在命题 37 中完全刻画。$W$ 是当前背景 $\Omega$ 的电荷，$Z$ 是当前选择 $A$ 的电荷，均不计 $E\setminus\Omega$。
+
+旧 $\pi$ 按位置分组时已把时间求和。确切地，定义有限推送 $\operatorname{sp}:\mathcal L\to R$ 为
+
+$$
+\operatorname{sp}(c)(p)=\sum_{n\in\mathbb Z}c(n,p).
+$$
+
+按同一有限事件和重新分组便有
+
+$$
+\pi(X)=(\operatorname{sp}(W_X),\operatorname{sp}(Z_X)),\qquad
+\Theta(X)=((\operatorname{sp}(W_X),\operatorname{sp}(Z_X)),m_X,M_X,s_X).
+\tag{TS-SP}
+$$
+
+所以 $\Xi$ 决定 $\Theta$，反向不成立。直接用 §20.2 末段的已给见证：两份当前区域各有一个所选正点、一个未选负点，位置均为零；正点分别在时刻 $0,5$，负点均在 $9$，另各有不属于当前区域的时刻 $0,10$ 档案点，偏序为空。两者分别有
+
+$$
+\begin{aligned}
+(W_X,Z_X)&=(\delta_{(0,0)}-\delta_{(9,0)},\delta_{(0,0)}),\\
+(W_Y,Z_Y)&=(\delta_{(5,0)}-\delta_{(9,0)},\delta_{(5,0)}),
+\end{aligned}
+$$
+
+而 $\Theta(X)=\Theta(Y)=((0,\delta_0),0,10,9)$。时刻 $0$ 的筛选给 $1,0$。因此 $\ker\Xi\subsetneq\ker\Theta$；$\Xi$ 不是旧 $\Theta$ 的别名。
+

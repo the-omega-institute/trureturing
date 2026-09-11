@@ -1,0 +1,14 @@
+### 38.1 精确定位尚缺的一环
+
+已有 `RootTubeStrongUnextendibility.six_frame_has_cross_error_to_any_covered_point` 接受两个实际 overlap 的保守关系 O 和 B，以及一个全称的 `hNoPartner` 前提：任何 O 中的六元 clique 都没有与全体顶点保持 B 关系的共同伴随标签。
+
+此前的计算程序通过枚举 2403 个第一组六元 clique 检查这个前提。本节交换两个全称量词。对每个可能的额外向量标签 l，令：
+
+```math
+V_l=\{i:B(i,l)\}.
+```
+
+只需为 `O[V_l]` 提供五着色。假如六元 clique 的全部标签都属于 `V_l`，着色就给出 `Fin 6` 到 `Fin 5` 的单射。由此得到 hNoPartner。
+
+这个量词重排和着色原理是标准组合论。实质性新增量是为当前经过几何计算得到的全部六十个邻域提供具体整数证书，并把有限计算从公共定理的假设中移除。
+
