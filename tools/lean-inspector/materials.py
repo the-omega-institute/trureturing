@@ -13,6 +13,7 @@ import stat
 import sys
 import tempfile
 import zipfile
+from typing import BinaryIO, Iterable
 
 
 SPOOL_SCHEMA = "stratalint-lean-inspector-spool-v1"
@@ -44,7 +45,26 @@ def canonical_json(value: object) -> bytes:
 
 
 def statement_address(material: bytes) -> str:
-    return "sha256:" + hashlib.sha256(STATEMENT_DOMAIN + material).hexdigest()
+    return _statement_address((material,))
+
+
+def _statement_address(blocks: Iterable[bytes]) -> str:
+    digest = hashlib.sha256(STATEMENT_DOMAIN)
+    for block in blocks:
+        digest.update(block)
+    return "sha256:" + digest.hexdigest()
+
+
+def verify_material(source: BinaryIO, address: str, target: BinaryIO | None = None) -> None:
+    """Verify a material stream, optionally copying it into a private staging sink."""
+    def blocks() -> Iterable[bytes]:
+        for block in iter(lambda: source.read(1024 * 1024), b""):
+            if target is not None:
+                target.write(block)
+            yield block
+
+    if _statement_address(blocks()) != address:
+        raise ValueError(f"statement material address mismatch: {address}")
 
 
 def require_keys(value: object, expected: set[str], context: str) -> dict:

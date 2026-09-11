@@ -169,7 +169,8 @@ cache_evict() {
   rm -rf -- "$CACHE_ROOT/$address" 2>/dev/null || true
 }
 
-cache_provenance_matches() {
+# A successful helper emits a completed comparison; process failure is unknown.
+cache_provenance_status() {
   local provenance="$1"
   local address="$2"
   local report_sha256="$3"
@@ -183,14 +184,14 @@ import sys
 path, address, report_sha, producer, resident, sources, config = sys.argv[1:]
 try:
     value = json.loads(pathlib.Path(path).read_text(encoding="utf-8"))
-except (OSError, UnicodeError, ValueError, json.JSONDecodeError):
-    raise SystemExit(1)
+except (UnicodeError, json.JSONDecodeError):
+    value = None
 expected_keys = {
     "schema", "side", "mode", "source_side", "input_address",
     "producer_sha256", "repository_inspector_sha256", "lean_sources_sha256",
     "lean_config_sha256", "report_sha256",
 }
-if (set(value) != expected_keys
+if (not isinstance(value, dict) or set(value) != expected_keys
         or value.get("schema") != "stratalint-lean-report-provenance-v1"
         or value.get("side") != "candidate"
         or value.get("source_side") != "candidate"
@@ -201,15 +202,18 @@ if (set(value) != expected_keys
         or value.get("lean_sources_sha256") != sources
         or value.get("lean_config_sha256") != config
         or value.get("report_sha256") != report_sha):
-    raise SystemExit(1)
+    print("mismatch")
+else:
+    print("match")
 PY
 }
 
 # Serve the complete bundle at $output from the cache entry for
 # content address $address, re-verified against repository $root. Sets
-# LAST_REPORT_SHA256 and returns 0 on a verified hit; returns 1 on miss/anomaly
-# (any partial output removed, offending entry evicted), or 2 on destination I/O
-# failure. Never acquires a slot or touches a live bundle.
+# LAST_REPORT_SHA256 and returns 0 on a verified hit; returns 1 on a miss or
+# unavailable check (private output removed; only proven content rejection
+# evicts), or 2 on destination I/O failure. Never acquires a slot or touches a
+# live bundle.
 cache_try_restore() {
   local address="$1"
   local root="$2"
@@ -219,17 +223,32 @@ cache_try_restore() {
   cache_root_trusted || return 1
   local entry="$CACHE_ROOT/$address"
   local report="$entry/raw-lean-report.json"
-  # Completeness: the whole stored bundle must be present before we trust it.
-  [[ -s "$report" && -s "${report}.sha256" \
-    && -s "${report}.input.attestation" && -s "${report}.provenance.json" \
-    && -s "${report}.materials.zip" \
-    && ! -e "${report}.logs" && ! -L "${report}.logs" ]] \
+  # Validate completeness and canonical materials before suppressing production.
+  # The canonical validator distinguishes rejected contents (1) from an
+  # unavailable verifier or I/O failure (2).  Only proven rejection permits
+  # eviction; an unavailable check must fall through to authoritative
+  # production without destroying a reusable entry.
+  local validate_rc=0
+  if python3 "$SCRIPT_DIR/report/lean-report-cache.py" validate "$report"; then
+    validate_rc=0
+  else
+    validate_rc=$?
+  fi
+  if [[ "$validate_rc" == "1" ]]; then
+    cache_evict "$address"
+    return 1
+  elif [[ "$validate_rc" != "0" ]]; then
+    return 1
+  fi
+  [[ ! -e "${report}.logs" && ! -L "${report}.logs" ]] \
     || { cache_evict "$address"; return 1; }
-  local declared="" declared_name=""
-  read -r declared declared_name < "${report}.sha256" || true
+  local declared="" declared_name="" sidecar lines
+  sidecar="$(cat "${report}.sha256")" || return 1
+  read -r declared declared_name <<< "$sidecar"
+  lines="$(awk 'END {print NR}' "${report}.sha256")" || return 1
   [[ "$declared" =~ ^[0-9a-f]{64}$ \
     && "$declared_name" == "raw-lean-report.json" \
-    && "$(awk 'END {print NR}' "${report}.sha256")" == "1" ]] \
+    && "$lines" == "1" ]] \
     || { cache_evict "$address"; return 1; }
   rm -rf -- "$output" "${output}.sha256" "${output}.provenance.json" \
     "${output}.input.attestation" "${output}.materials.zip"
@@ -242,10 +261,10 @@ cache_try_restore() {
       "${output}.input.attestation" "${output}.materials.zip"
     return 2
   fi
-  local actual
-  actual="$(hash_file "$output")"
-  if [[ "$actual" != "$declared" ]]; then
-    cache_evict "$address"
+  local actual hash_rc=0
+  actual="$(hash_file "$output")" || hash_rc=$?
+  if [[ "$hash_rc" != "0" || "$actual" != "$declared" ]]; then
+    [[ "$hash_rc" != "0" ]] || cache_evict "$address"
     rm -rf -- "$output" "${output}.provenance.json" \
       "${output}.input.attestation" "${output}.materials.zip"
     return 1
@@ -253,8 +272,12 @@ cache_try_restore() {
   # Validate the stored provenance before treating an exact-address hit as
   # authoritative.  prepare_bundle rewrites the staged provenance later, so
   # this check must happen here or a damaged cache sidecar could be masked.
-  if ! cache_provenance_matches "${output}.provenance.json" "$address" "$actual"; then
-    cache_evict "$address"
+  local provenance_status provenance_rc=0
+  provenance_status="$(cache_provenance_status "${output}.provenance.json" "$address" "$actual")" || provenance_rc=$?
+  if [[ "$provenance_rc" != "0" || "$provenance_status" != "match" ]]; then
+    if [[ "$provenance_rc" == "0" && "$provenance_status" == "mismatch" ]]; then
+      cache_evict "$address"
+    fi
     rm -rf -- "$output" "${output}.sha256" \
       "${output}.input.attestation" "${output}.provenance.json" \
       "${output}.materials.zip"
@@ -264,9 +287,10 @@ cache_try_restore() {
   write_sidecar "$output" "$actual"
   # Re-derive the repository address from the CURRENT tree and confirm it matches
   # the stored attestation; rejects any key skew or collision. Fail-closed.
+  # This helper uses the same nonzero status for stale inputs and unavailable
+  # evaluation, so failure cannot authorize eviction.
   if ! "$INPUT_HELPER" verify --repository "$root" --report "$output" \
     --producer "$PRODUCER" --inspector "$INSPECTOR" >/dev/null 2>&1; then
-    cache_evict "$address"
     rm -rf -- "$output" "${output}.sha256" "${output}.provenance.json" \
       "${output}.input.attestation" "${output}.materials.zip"
     return 1

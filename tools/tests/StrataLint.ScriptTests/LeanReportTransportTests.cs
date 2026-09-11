@@ -17,6 +17,8 @@ public sealed class LeanReportTransportTests
     [InlineData("missing-archive")]
     [InlineData("corrupt-base")]
     [InlineData("corrupt-delta")]
+    [InlineData("mismatched-base")]
+    [InlineData("mismatched-delta")]
     public void DeltaMergeRejectsMissingOrCorruptMaterialsWithoutPublishing(string damage) => RunDeltaMergeCase(damage);
 
     private static void RunDeltaMergeCase(string scenario)
@@ -36,6 +38,7 @@ public sealed class LeanReportTransportTests
         script, root, scenario = sys.argv[1:]
         root = pathlib.Path(root)
         api = runpy.run_path(script)
+        statement_address = runpy.run_path(str(pathlib.Path(script).with_name('materials.py')))['statement_address']
         baseline, subset, output, plan = [root / name for name in ('base.json', 'subset.json', 'out.json', 'plan.json')]
         def archive(report): return pathlib.Path(str(report) + '.materials.zip')
         def address(data): return 'sha256:' + hashlib.sha256(data).hexdigest()
@@ -50,7 +53,7 @@ public sealed class LeanReportTransportTests
         # More than one allowed read, with a final partial chunk and an empty member.
         large = bytes(range(256)) * 8192 + b'0123456789abcdef\n'
         shared, empty, removed = b'delta material\n' * 1024, b'', b'removed material'
-        large_key, shared_key, empty_key, removed_key = map(address, (large, shared, empty, removed))
+        large_key, shared_key, empty_key, removed_key = map(statement_address, (large, shared, empty, removed))
         stable = record('Stable', [large_key, shared_key])
         changed = record('Changed', [shared_key, empty_key])
         baseline.write_bytes(report([stable, record('Removed', [removed_key]), record('Changed', [removed_key], 'old')]))
@@ -58,8 +61,8 @@ public sealed class LeanReportTransportTests
         plan.write_text(json.dumps(dict(baseline=str(baseline), recheck=['D5.Changed'], removed=['D5.Removed'],
             current={r['module']: dict(path=r['source_path'], source_sha256=r['source_sha256']) for r in (stable, changed)})))
         selected = {large_key: large, shared_key: shared, empty_key: empty}
-        base_materials = {removed_key: removed, shared_key: b'base loses precedence', large_key: large}
-        delta_materials = {empty_key: empty, shared_key: shared, address(b'unused'): b'unused'}
+        base_materials = {removed_key: removed, shared_key: shared, large_key: large}
+        delta_materials = {empty_key: empty, shared_key: shared, statement_address(b'unused'): b'unused'}
         def write_archive(path, materials, compression):
             with zipfile.ZipFile(path, 'w') as z:
                 for key, data in materials.items():
@@ -70,6 +73,8 @@ public sealed class LeanReportTransportTests
                     # Exercise ZIP64 input even when the output needs no ZIP64 header.
                     with z.open(info, 'w', force_zip64=True) as target: target.write(data)
         if scenario == 'missing-member': del base_materials[large_key]
+        if scenario == 'mismatched-base': base_materials[large_key] = b'CRC-valid wrong baseline material'
+        if scenario == 'mismatched-delta': delta_materials[shared_key] = b'CRC-valid wrong subset material'
         write_archive(archive(baseline), base_materials, zipfile.ZIP_STORED)
         write_archive(archive(subset), delta_materials,
                       zipfile.ZIP_STORED if scenario == 'corrupt-delta' else zipfile.ZIP_DEFLATED)
@@ -85,8 +90,16 @@ public sealed class LeanReportTransportTests
         output.write_bytes(b'previous report')
         archive(output).write_bytes(b'previous archive')
         sys.argv = [script, 'merge', str(plan), str(subset), str(output)]
-        if scenario.startswith(('missing-', 'corrupt-')):
-            if scenario.startswith('missing-'):
+        if scenario.startswith(('missing-', 'corrupt-', 'mismatched-')):
+            if scenario.startswith('mismatched-'):
+                for path in (archive(baseline), archive(subset)):
+                    with zipfile.ZipFile(path) as z: assert z.testzip() is None
+                diagnostic = io.StringIO()
+                with contextlib.redirect_stderr(diagnostic):
+                    rc = api['main']()
+                assert rc == 1, f'CRC-valid mismatched material accepted: {scenario}, exit={rc}'
+                assert 'statement material address mismatch' in diagnostic.getvalue()
+            elif scenario.startswith('missing-'):
                 diagnostic = io.StringIO()
                 with contextlib.redirect_stderr(diagnostic): assert api['main']() == 1
                 assert 'statement material is missing for ' + large_key in diagnostic.getvalue()

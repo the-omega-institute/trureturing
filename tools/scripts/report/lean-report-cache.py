@@ -88,9 +88,6 @@ def bundle_metadata(report, transport=False):
         ], text=True).strip().split(" ")
         if coordinates != [provenance["input_address"][7:], repository]:
             raise ValueError("bundle-input-coordinate-mismatch")
-        with zipfile.ZipFile(member(report, ".materials.zip")) as materials:
-            if materials.testzip() is not None:
-                raise ValueError("corrupt-materials-zip")
     return provenance, repository
 
 
@@ -101,6 +98,24 @@ def checked_root(root):
         raise ValueError("cache-root-untrusted")
 
 
+def validate_transport_report(report):
+    # Report and statement owners supply references and byte validation. Reading
+    # each member to EOF also checks its ZIP CRC, in the same bounded pass.
+    owner = delta_owner()
+    modules, _ = owner.parse_json_modules(report)
+    expected = {name for module in modules.values() for name in module["materials"]}
+    with zipfile.ZipFile(member(report, ".materials.zip")) as materials:
+        names = materials.namelist()
+        if len(names) != len(expected) or set(names) != expected:
+            raise ValueError("material-members-mismatch")
+        try:
+            for name in names:
+                with materials.open(name) as source:
+                    owner.materials.verify_material(source, "sha256:" + name[7:])
+        except zipfile.BadZipFile as error:
+            raise ValueError("corrupt-materials-zip") from error
+
+
 def copy_bundle(report, directory, transport):
     bundle_metadata(report, transport)
     target = directory / RAW
@@ -109,7 +124,7 @@ def copy_bundle(report, directory, transport):
     member(target, ".sha256").write_text(digest(target) + "  " + RAW + "\n", encoding="ascii")
     bundle_metadata(target, transport)
     if transport:
-        delta_owner().parse_json_modules(target)
+        validate_transport_report(target)
     return target
 
 
@@ -136,6 +151,8 @@ def stage(args):
         copy_bundle(report, staged, args.transport)
         if entry.exists():
             existing, _ = bundle_metadata(entry / RAW, args.transport)
+            if args.transport:
+                validate_transport_report(entry / RAW)
             if existing["input_address"] != provenance["input_address"]:
                 raise ValueError("cache-entry-address-mismatch")
         else:
@@ -145,6 +162,8 @@ def stage(args):
                 staged.rename(entry)
             except OSError:
                 existing, _ = bundle_metadata(entry / RAW, args.transport)
+                if args.transport:
+                    validate_transport_report(entry / RAW)
                 if existing["input_address"] != provenance["input_address"]:
                     raise
         print(f"LEAN_REPORT_CI_BASELINE status=ready input_address={provenance['input_address']}", file=sys.stderr)
@@ -159,7 +178,7 @@ def pack(report, archive):
     if report.name != RAW or archive.name != asset_name(repository, provenance["producer_sha256"],
             provenance["repository_inspector_sha256"], provenance["lean_config_sha256"]):
         raise ValueError("archive-coordinate-mismatch")
-    delta_owner().parse_json_modules(report)
+    validate_transport_report(report)
     with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_DEFLATED, allowZip64=True) as bundle:
         bundle.comment = json.dumps({"producer_commit_sha": os.environ.get("GITHUB_SHA", ""),
                                     "workflow_run_id": os.environ.get("GITHUB_RUN_ID", "")}).encode("utf-8")
@@ -188,7 +207,7 @@ def unpack(archive, directory):
     if archive.name != asset_name(repository, provenance["producer_sha256"],
             provenance["repository_inspector_sha256"], provenance["lean_config_sha256"]):
         raise ValueError("archive-coordinate-mismatch")
-    delta_owner().parse_json_modules(report)
+    validate_transport_report(report)
 
 
 def asset_inventory(path):
@@ -280,6 +299,10 @@ def main():
             stage(parser.parse_args(values))
         elif command == "name":
             print(asset_name(*values))
+        elif command == "validate":
+            report, = map(pathlib.Path, values)
+            bundle_metadata(report, True)
+            validate_transport_report(report)
         elif command == "pack":
             pack(*map(pathlib.Path, values))
         elif command == "unpack":
