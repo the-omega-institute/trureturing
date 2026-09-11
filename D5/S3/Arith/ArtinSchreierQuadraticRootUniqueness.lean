@@ -1,5 +1,5 @@
 /- GID: D5/S3/Arith/ArtinSchreierQuadraticRootUniqueness
-   generality: I
+   generality: G
    mirror-B: D5/B/S3/Arith/ArtinSchreierQuadraticRootUniqueness
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
