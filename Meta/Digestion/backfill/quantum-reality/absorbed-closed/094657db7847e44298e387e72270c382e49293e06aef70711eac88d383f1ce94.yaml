@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:094657db7847e44298e387e72270c382e49293e06aef70711eac88d383f1ce94
   normalized_sha256: sha256:094657db7847e44298e387e72270c382e49293e06aef70711eac88d383f1ce94
 cas_ref: sha256:094657db7847e44298e387e72270c382e49293e06aef70711eac88d383f1ce94
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Information/CovarianceSumBound.covariance_sum_le_of_variance
+    target_statement_id: sha256:0bee885b269326e283062f89042209a758460edfa4c7f052b02321fef9f0c038
 receipts:
   unresolved_subitems: []
