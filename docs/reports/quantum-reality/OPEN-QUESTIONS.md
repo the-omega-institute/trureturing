@@ -1,3 +1,72 @@
+## 本轮:**`RecordCapacity` 的半单性假设能不能卸掉,以及该走哪条路**(第 20 轮)
+
+仓库 https://github.com/the-omega-institute/trureturing
+本轮全部仓内引用钉在 `852514a48bb4793f9d29270993610c84bf671559`,请按该提交读,不要读 dev tip。
+
+### 为什么是这个靶(而不是又一轮表态)
+
+`TERRAIN-MAP.md` 第三节列五个缺口,**四个标 `物理输入`**(objectivity 本身 /
+cross-species 共享 active symmetry / §17.1–18 量子统计层 / Einstein 方程)。
+按第 3.6 条,机器不替人选第三档目标,那四项等 τ=0 点题。
+**只剩一个标「数学,可做」**,就是本轮的靶。
+
+第 19 轮的「该停」只针对**表态类的整类重裁**,本轮不是表态轮。
+
+### 靶的精确形状(orchestrator 亲验,行号可复核)
+
+`D5/S3/Quantum/Matrix/RecordCapacity.lean`,**已冻结**,`generality: G`:
+
+```
+139: theorem semisimple_commutant_has_record_capacity
+140:     {G n : Type*} [Group G] [Fintype n] [DecidableEq n]
+141:     (U : G →* Matrix n n ℂ) [IsSemisimpleRing (commutant U)] :
+142:     ∃ (k : ℕ) (m : Fin k → ℕ), (∀ b, NeZero (m b)) ∧
+143:       Nonempty (commutant U ≃ₐ[ℂ] ∀ b, Matrix (Fin (m b)) (Fin (m b)) ℂ) ∧ …
+```
+
+其证明一步用 `IsSemisimpleRing.exists_algEquiv_pi_matrix_of_isAlgClosed ℂ (commutant U)`。
+`commutant U`(第 57 行)是 `U` 的实际交换子代数。
+
+**注意地形图的措辞与这段源码不一致,这正是 Q1 的由来**:地形图写「半单性由酉性导出(Maschke)」,
+而该定理里 **`G` 是任意群**(`[Group G]`,无有限性、无紧性、无拓扑),
+**`U` 只是到矩阵的幺半群同态,酉性根本不在假设里**。
+
+### Q1(主问):这条假设卸得掉吗,代价是什么
+
+逐项回答,每项给可复核出处(钉版 mathlib 的声明名与文件,或文献的定理编号):
+
+1. 若**追加**「∀ g, `U g ∈ unitary (Matrix n n ℂ)`」,`IsSemisimpleRing (commutant U)` 是否随之成立?
+2. 两条候选路径哪条对、各要什么前提:
+   **(i) Maschke** —— 需要 `G` 有限或紧(以及特征零/可积分),那对任意群不成立;
+   **(ii) \*-闭包** —— `U g` 酉 ⟹ `A ∈ commutant ⟹ A* ∈ commutant`(因 `g ↦ g⁻¹` 是 `G` 的双射),
+   故 `commutant U` 是 `M_n(ℂ)` 的有限维 \*-子代数,而有限维 C\*-代数半单。
+   **这条对任意群成立,不需要任何有限性** —— 请判断它对不对,若对,地形图第三节的「Maschke」是写错了路。
+3. 钉版 mathlib 给到哪一步:有没有「\*-子代数 / 有限维 C\*-代数 ⟹ `IsSemisimpleRing`」的现成声明或实例?
+   点名声明与文件路径。若只有零散零件,列出最短组合链。
+4. **有没有真障碍**使这条假设是承重的而非可卸的?例如:不假设酉性时 `commutant U` 可以不半单的**具体反例**
+   (给出 `G`、`U`、以及交换子代数的显式形状)。**有反例就直接给**,那比「可以卸掉」更有价值。
+5. 若卸掉假设需要**加**酉性,那是把一条假设换成另一条 —— 请明说净收益是什么
+   (例如:酉性是物理上本来就有的,而半单性是代数技术条件),或者明说「这只是换了个说法,不值得做」。
+
+### Q2(次问,有界):三条从未被裁的来源标签
+
+第 16 轮明确「留作下一轮的具名开项」:`RecordCapacity` 的
+`card_le_finrank_of_idempotent_sum`、`algebra_card_le_finrank`、
+`equivariant_record_card_le_commutant_finrank` 三条仍标 `FromRepo`,**从未被裁过**。
+逐条判 **(a)** 标准结果 / **(b)** 确属本仓推导 / **(c)** 判不了,(a) 须给可复核来源链。
+**(c) 是合法答案。** 这是首次裁,不是第 19 轮所禁的重裁。
+
+### Q3:这次应当在哪里停
+
+若 Q1 的结论是「卸不掉」或「卸掉不值得」,**照直说**,不要为了给出行动项而拼一条路线。
+
+### 不在本轮范围
+
+四项 `物理输入` 缺口;表态类的整类重裁;任何需要跑 Lean / 构建 / 渲染的断言
+(你没有文件系统,凡涉及「跑过什么」一律标 `ASSUMED-UNVERIFIED`)。
+
+---
+
 ## 本轮:**清零之后又长出十七条 —— 表态类真的闭合了吗**(第 19 轮,2026-09-11)
 
 ### 为什么这不是对同一批存量的第四次重问
