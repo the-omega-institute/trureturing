@@ -226,8 +226,6 @@ public sealed class DeltaRuleContext
         RawChangeSet changes,
         MetaEvaluationProfile metaEvaluation,
         VerifiedScribeEmissions? verifiedScribeEmissions,
-        ScribeTestMapStore? testMapStore,
-        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap,
         CandidateCommonResults? commonResults)
     {
         Current = current;
@@ -242,8 +240,6 @@ public sealed class DeltaRuleContext
         RuleImplementationChanged = BaseFactImpact.RuleImplementationChanged(changes);
         MetaEvaluation = metaEvaluation;
         VerifiedScribeEmissions = verifiedScribeEmissions;
-        TestMapStore = testMapStore;
-        DeriveTestMap = deriveTestMap ?? ScribeTestMapDeriver.DeriveSnapshot;
         CommonResults = commonResults;
     }
 
@@ -277,10 +273,6 @@ public sealed class DeltaRuleContext
 
     internal VerifiedScribeEmissions? VerifiedScribeEmissions { get; }
 
-    internal ScribeTestMapStore? TestMapStore { get; }
-
-    internal Func<RepositorySnapshot, ScribeTestMap> DeriveTestMap { get; }
-
     internal static DeltaRuleContext Create(
         RepositorySnapshot current,
         RepositorySnapshot baseline,
@@ -288,9 +280,7 @@ public sealed class DeltaRuleContext
         AcceptedLeanClosure lean,
         RawChangeSet changes,
         MetaClear metaClear,
-        VerifiedScribeEmissions? verifiedScribeEmissions = null,
-        ScribeTestMapStore? testMapStore = null,
-        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null) =>
+        VerifiedScribeEmissions? verifiedScribeEmissions = null) =>
         Create(
             current,
             baseline,
@@ -298,9 +288,7 @@ public sealed class DeltaRuleContext
             lean,
             changes,
             MetaEvaluationProfile.ForClear(metaClear),
-            verifiedScribeEmissions,
-            testMapStore,
-            deriveTestMap);
+            verifiedScribeEmissions);
 
     internal static DeltaRuleContext Create(
         RepositorySnapshot current,
@@ -310,8 +298,6 @@ public sealed class DeltaRuleContext
         RawChangeSet changes,
         MetaEvaluationProfile metaEvaluation,
         VerifiedScribeEmissions? verifiedScribeEmissions = null,
-        ScribeTestMapStore? testMapStore = null,
-        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null,
         CandidateCommonResults? commonResults = null) =>
         new(
             current,
@@ -321,8 +307,6 @@ public sealed class DeltaRuleContext
             changes,
             metaEvaluation,
             verifiedScribeEmissions,
-            testMapStore,
-            deriveTestMap,
             commonResults);
 }
 

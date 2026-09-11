@@ -282,9 +282,6 @@ public sealed class TruthExportContractValidationTests
             Tree40));
     }
 
-    // 独立名而非重载:ScribeTestMapDeriver 按 (TypeName, name) 解析本地调用,
-    // 同名多目标即把每个调用者记为 unknown(SL-003 conservative unknown test method)。
-    // 搬迁到本项目使这些方法成为新身份,故重载必须解开,否则 23 个方法全被 Block。
     private static TruthExportModel ModelOf(
         params TruthExportNode[] nodes) =>
         Model(nodes.ToImmutableArray());

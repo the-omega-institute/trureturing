@@ -367,16 +367,6 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
-pattern = "Meta/compile-metadata.json"
-kind = "data"
-admission_plane = "judge"
-produced_by = "none"
-consumed_by = ["CommonCompileMetadata"]
-verified_by = ["CommonCompileMetadata"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
 pattern = "Meta/domains.yaml"
 kind = "data"
 admission_plane = "judge"

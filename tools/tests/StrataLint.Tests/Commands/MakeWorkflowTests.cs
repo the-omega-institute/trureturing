@@ -422,9 +422,6 @@ public sealed partial class MakeWorkflowTests
     [Fact]
     public void CleanLanesAdapterForwardsTheScopeFlagToTheCli()
     {
-        // 路径写成字面量并内联 FindRoot():ScribeTestMapDeriver 只静态解析
-        // Path.Combine(XxxRepositoryLayout.FindRoot(), "字面量") 这一形式;
-        // 先赋值给 root 或改用常量都会判 VariablePath → unknown → 撞 SL-003 棘轮。
         var script = File.ReadAllText(
             Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/clean-lanes.sh"));
 

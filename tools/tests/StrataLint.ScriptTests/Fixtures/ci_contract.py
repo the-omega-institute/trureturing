@@ -45,7 +45,7 @@ esac
         self.assertTrue(self.gate.is_file(), str(self.gate))
         self.assertTrue(os.access(self.gate, os.X_OK), str(self.gate))
         return subprocess.run([str(self.gate), "--candidate", str(self.root), "--base", "a" * 40,
-            "--candidate-lean-report", str(self.report), "--test-map-cache-root", str(self.root / "test-maps"),
+            "--candidate-lean-report", str(self.report),
             "--judge-dll", str(self.root / "optional-cache/StrataLint.dll")],
             capture_output=True, text=True, env=dict(self.env, **env))
 
@@ -58,7 +58,7 @@ esac
                 calls = (self.root / "calls").read_text().splitlines()[-3:]
                 dll = self.root / "tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll"
                 self.assertEqual("make -C " + str(self.root / "tools") + " dotnet", calls[0])
-                self.assertEqual(f"dotnet {dll} check --protected-base {'a' * 40} --candidate-lean-report {self.report} --test-map-cache-root {self.root / 'test-maps'}", calls[1])
+                self.assertEqual(f"dotnet {dll} check --protected-base {'a' * 40} --candidate-lean-report {self.report}", calls[1])
                 self.assertEqual(f"dotnet {dll} filemap-conform", calls[2])
 
     def test_gate_build_failure_stops_before_checks(self):

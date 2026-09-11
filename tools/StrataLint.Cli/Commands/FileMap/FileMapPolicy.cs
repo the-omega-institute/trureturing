@@ -53,7 +53,6 @@ internal static class FileMapPolicy
     private static readonly IReadOnlyDictionary<string, string> DataVerifierImplementations =
         new Dictionary<string, string>(StringComparer.Ordinal)
         {
-            ["CommonCompileMetadata"] = "tools/StrataLint.EngineeringScope/CommonCompileMetadata.cs",
             ["report-producer-scope"] = "tools/scripts/report/producer_paths.py",
             ["BackfillInventoryLoader"] = BackfillLoaderPath,
             ["FileMapLoader"] = FileMapLoaderPath,
