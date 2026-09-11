@@ -41,7 +41,8 @@ internal static class CiTransport
             throw new ArgumentException("invalid transport stage or immutable execution identity");
         var repository = Environment.GetEnvironmentVariable("GITHUB_REPOSITORY") ?? "";
         var seedStage = stage.EndsWith("-seed", StringComparison.Ordinal);
-        if ((!seedStage || pack) && Git(root, "rev-parse", "HEAD") != commit || Git(root, "status", "--porcelain", "--untracked-files=all").Length != 0)
+        if ((!seedStage || pack) && (Git(root, "rev-parse", "HEAD") != commit
+            || Git(root, "status", "--porcelain", "--untracked-files=all").Length != 0))
             throw new InvalidDataException("transport requires the exact clean candidate commit");
         CommonStageRecord common;
         if (seedStage)

@@ -117,7 +117,7 @@ def main():
     parser.add_argument("--repository", required=True, type=pathlib.Path)
     parser.add_argument("--commit", default="")
     parser.add_argument("--head", default="")
-    parser.add_argument("--stage", choices=("build", "engineering", "current", "delta"))
+    parser.add_argument("--stage", choices=("build", "engineering", "current", "engineering-seed", "current-seed", "delta"))
     parser.add_argument("--archive", type=pathlib.Path)
     parser.add_argument("--run-id", default=os.environ.get("GITHUB_RUN_ID", ""))
     parser.add_argument("--run-attempt", default=os.environ.get("GITHUB_RUN_ATTEMPT", ""))
