@@ -4,6 +4,25 @@
 本轮问的是**同一类问题在另一条已合入 dev 的结果上是否也成立**——这不是席位空闲派题,
 是一个可点名的风险(第 7.10 条:防的必须是发生过的事;它刚发生过一次)。
 
+### 本轮派发状态:**载体不可用,未能派出**(非「无靶」)
+
+三个池依次失败,判词各不相同,**已按纪律停止换池**(换过两次,第三次即为撞墙):
+
+| 池 | 判词 | 语义 |
+|---|---|---|
+| `chrono-chatgpt-pro-pool` | `infrastructure_retry_exhausted` | 在 `selecting_model / page_ready` 间空转四次,从未发出 |
+| `company-chatgpt-pro` | `oracle_mode_required` | 该池要求 `--tag mode:chat\|mode:work`,**runner 不设该标签** ⟹ 经此 runner 结构上不可用 |
+| `chatgpt-pro-pool` | `extraction_failure` | 载体侧随机失败 |
+
+**这不是「本轮无靶」**——Q1 是实靶且有具名风险(见下)。这是 第 5.9 条 的**能力缺口**:
+记具名 open、等灯亮,其余 lane 继续推进。**失败归档已删**,不留空壳被下轮误读为判词。
+
+**已知的四种 nyxid 终态,处置各不相同,不可只看 `QR_ROUND status=failed`**:
+`extraction_failure`(连两次换池)/ 超时 `still dispatched`(**按 task ID 取,禁重投**)/
+`infrastructure_retry_exhausted`(终态,换池)/ `oracle_mode_required`(改调用方式,`retryable: false`)。
+
+**复原条件**:任一池恢复即可按本文件现有 Q1 原样派出,**问题不需重写**。
+
 ### Q1:容量律 `card ≤ Σᵢ mᵢ` 的文献状态
 
 已冻结于 `D5/S3/Quantum/Matrix/RecordCapacity`(PR #6962,已合 dev)。其陈述为:
