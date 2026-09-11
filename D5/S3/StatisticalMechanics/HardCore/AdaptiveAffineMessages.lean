@@ -42,6 +42,19 @@ def rowWitness (i : Fin 881) : Option ClipWitness :=
     some ⟨t, fun d => if mode i d = 0 then 20 / 71
       else if mode i d = 1 then 1 else t / a d⟩
 
+-- Split the finite quantifier before deciding: each leaf is checked by the kernel
+-- in its own auxiliary theorem, without elaborating 881 simultaneous goals.
+local syntax "decide_each" num : tactic
+local macro_rules
+  | `(tactic| decide_each $n:num) => do
+    let k := n.getNat
+    if k ≤ 1 then `(tactic| decide +kernel)
+    else
+      let a := Lean.Syntax.mkNumLit (toString (k / 2))
+      let b := Lean.Syntax.mkNumLit (toString (k - k / 2))
+      `(tactic| exact (Fin.forall_fin_add (m := $a:num) (n := $b:num) _).mpr
+          ⟨by decide_each $a, by decide_each $b⟩)
+
 /-- Every actual geometric row passes an exact rational, whole-box certificate.
 Repeated coefficient pairs are storage sharing only: all 881 geometric rows
 are checked against their own successors, not an assumed quotient tree. -/
@@ -53,8 +66,7 @@ theorem affine_message_certificate :
         (affineCoefficients i).1 (affineCoefficients i).2
         (fun d => (childCoefficients i d).1)
         (fun d => (childCoefficients i d).2) (rowWitness i) := by
-  intro i
-  fin_cases i <;> decide +kernel
+  decide_each 881
 
 /-- The positive affine message associated with an actual geometric state. -/
 noncomputable def affineMessage (i : Fin 881) (x : ℝ) : ℝ :=

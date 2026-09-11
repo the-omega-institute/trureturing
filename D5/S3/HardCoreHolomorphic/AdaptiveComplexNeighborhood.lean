@@ -28,10 +28,26 @@ open D5.S3.StatisticalMechanics.HardCore.AdaptiveAffineMessages
 private def aa (i : Fin 881) : ℝ := (affineCoefficients i).1
 private def bb (i : Fin 881) : ℝ := (affineCoefficients i).2
 
+-- Split the finite quantifier before deciding: each leaf is checked by the kernel
+-- in its own auxiliary theorem, without elaborating 881 simultaneous goals.
+local syntax "decide_each" num : tactic
+local macro_rules
+  | `(tactic| decide_each $n:num) => do
+    let k := n.getNat
+    if k ≤ 1 then `(tactic| decide +kernel)
+    else
+      let a := Lean.Syntax.mkNumLit (toString (k / 2))
+      let b := Lean.Syntax.mkNumLit (toString (k - k / 2))
+      `(tactic| exact (Fin.forall_fin_add (m := $a:num) (n := $b:num) _).mpr
+          ⟨by decide_each $a, by decide_each $b⟩)
+
+private theorem coefficient_upper : ∀ j : Fin 881, (affineCoefficients j).2 ≤ (3:ℚ) := by
+  decide_each 881
+
 /-- The analytic estimate uses this additional exact bound on the same payload.
 The lower bound and slope sign are reused from the existing full-box certificate. -/
 theorem actual_coefficient_bounds (i : Fin 881) : CoeffBound (aa i) (bb i) := by
-  have hb : ∀ j : Fin 881, (affineCoefficients j).2 ≤ (3:ℚ) := by decide +kernel
+  have hb := coefficient_upper
   have h := affine_message_certificate i
   have ha : (0:ℝ) ≤ aa i := by
     dsimp [aa]

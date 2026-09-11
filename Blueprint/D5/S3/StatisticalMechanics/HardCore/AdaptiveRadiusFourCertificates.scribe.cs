@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.StatisticalMechanics.HardCore;
 internal sealed class AdaptiveRadiusFourCertificatesDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Adaptive radius-four geometric coverage and integer branching certificates.",
+        "Adaptive radius-four geometric coverage for the zero-freeness proof.",
         H("Adaptive radius-four certificates"),
         Blocks(
             Describe.Lean(DescribeId.Create("adaptive-r4-mask"),
@@ -22,28 +22,12 @@ internal sealed class AdaptiveRadiusFourCertificatesDocument : IScribeDocumentDe
                 Blocks(Paragraph(Text("The successor is obtained by computing memoryStep and looking up its exact mask. The unused action argument fits the shared counting API; only the selected order is certified. No supplied transition list is trusted."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("adaptive-r4-weight"),
                 DeclarationHandle.Create("D5/S3/StatisticalMechanics/HardCore/AdaptiveRadiusFourCertificates.radiusFourWeight"),
-                H("Integer super-potential"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The positive weight is bounded above by one hundred thousand."))), DescribeRole.Definition),
+                H("Stored integer weight"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The original integer weight payload is retained as a public accessor."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("adaptive-r4-geometry"),
                 DeclarationHandle.Create("D5/S3/StatisticalMechanics/HardCore/AdaptiveRadiusFourCertificates.radiusFour_geometry"),
                 H("Complete selected geometric closure"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("All 881 masks and all 2643 selected direction cases are checked against actual integer-grid updates. A failed lookup cannot be accepted as a blocked move unless that direction is genuinely in the mask."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("adaptive-r4-potential"),
-                DeclarationHandle.Create("D5/S3/StatisticalMechanics/HardCore/AdaptiveRadiusFourCertificates.radiusFour_potential"),
-                H("Exact row inequalities"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Every weighted child sum times 2500 is at most the parent weight times 6202. Positivity, the cap and initial weight are also checked. Numerical eigensolver output is not a premise."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("adaptive-r4-count-upper"),
-                DeclarationHandle.Create("D5/S3/StatisticalMechanics/HardCore/AdaptiveRadiusFourCertificates.radiusFour_count_upper"),
-                H("All states and depths"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The existing branching-potential induction turns the exact rows into an upper bound for every depth and every state."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("adaptive-r4-domain-upper"),
-                DeclarationHandle.Create("D5/S3/StatisticalMechanics/HardCore/AdaptiveRadiusFourCertificates.radiusFour_domain_upper"),
-                H("Uniform actual-domain bound"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Selected-action geometric simulation transfers the bound to every finite domain disjoint from its recorded blockers. The cap is uniform over all states, holes, boundaries and depths."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("adaptive-r4-parent-domain-upper"),
-                DeclarationHandle.Create("D5/S3/StatisticalMechanics/HardCore/AdaptiveRadiusFourCertificates.radiusFour_parent_domain_upper"),
-                H("Parent-deleted domains"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The initial parent-only mask gives a bound for every finite domain with that parent absent."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("adaptive-r4-root-direction"),
                 DeclarationHandle.Create("D5/S3/StatisticalMechanics/HardCore/AdaptiveRadiusFourCertificates.rootDirection"),
                 H("Four root directions"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
@@ -56,9 +40,5 @@ internal sealed class AdaptiveRadiusFourCertificatesDocument : IScribeDocumentDe
                 DeclarationHandle.Create("D5/S3/StatisticalMechanics/HardCore/AdaptiveRadiusFourCertificates.rootCount"),
                 H("Full root deletion count"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Actual domain membership decides root and child availability. Nonroot branches use the same certified adaptive controller."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("adaptive-r4-root-upper"),
-                DeclarationHandle.Create("D5/S3/StatisticalMechanics/HardCore/AdaptiveRadiusFourCertificates.radiusFour_root_upper"),
-                H("Uniform four-neighbor root bound"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("A single prefactor of four hundred thousand covers every finite root domain and every depth. This is a deletion-count theorem; the partition-polynomial identity is separate."))), DescribeRole.Theorem),
-            Paragraph(Text("Exact geometric and integer replay was executed independently of the candidate discovery implementation. Lean elaboration, axiom-print execution and Scribe emission remain unperformed.")))));
+            Paragraph(Text("The finite geometric checks are replayed by Lean's kernel. Resource measurements are recorded separately.")))));
 }
