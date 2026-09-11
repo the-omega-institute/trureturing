@@ -34,7 +34,7 @@ register_information_theorem truth in RegistrationPositive.arena
   variation RegistrationPositive.lawVariation sensitivity RegistrationPositive.slotSensitivity
 
 -- Assertions are commands with named runtime failures, not elaboration failures.
-elab "check_provenance " label:str " using " readout:ident " expects " reason:str : command => do
+elab "check_provenance " label:str " using " readout:ident " expects " reason:str " for " theoremName:ident : command => do
   Elab.Command.liftTermElabM do
     let env ← getEnv
     let n := `RegistrationProvenance ++ readout.getId
@@ -47,6 +47,7 @@ elab "check_provenance " label:str " using " readout:ident " expects " reason:st
     addDecl <| .defnDecl {
       name := holder, levelParams := [], type, value
       hints := .abbrev, safety := .safe }
+    let entry := { entry with theoremName := `RegistrationProvenance ++ theoremName.getId }
     let actual ← RegistrationGates.validateFinite { entry with realizationName := holder }
     let ok := match actual with
       | none => reason.getString == "clean"
@@ -71,14 +72,14 @@ elab "check_provenance " label:str " using " readout:ident " expects " reason:st
     unless ok do throwError "[FAIL] {label.getString}: {actual}"
     logInfo m!"[PASS] {label.getString}"
 
-check_provenance "TheoremTruth" using viaTruth expects "forbidden_dependency"
-check_provenance "AppliedProof" using viaAppliedProof expects "forbidden_dependency"
-check_provenance "ProofConstant" using viaProof expects "forbidden_dependency"
-check_provenance "StatementDecidable" using viaDecision expects "forbidden_dependency"
-check_provenance "TheoremCertificate" using viaCertificate expects "forbidden_dependency"
-check_provenance "StatementIdentity" using viaIdentity expects "forbidden_dependency"
-check_provenance "CleanReadout" using clean expects "clean"
-check_provenance "C050BeforeC021" using constantTruth expects "forbidden_dependency"
+check_provenance "TheoremTruth" using viaTruth expects "forbidden_dependency" for truth
+check_provenance "AppliedProof" using viaAppliedProof expects "forbidden_dependency" for truth
+check_provenance "ProofConstant" using viaProof expects "forbidden_dependency" for truth
+check_provenance "StatementDecidable" using viaDecision expects "forbidden_dependency" for truth
+check_provenance "TheoremCertificate" using viaCertificate expects "forbidden_dependency" for truth
+check_provenance "StatementIdentity" using viaIdentity expects "forbidden_dependency" for truth
+check_provenance "CleanReadout" using clean expects "clean" for truth
+check_provenance "C050BeforeC021" using constantTruth expects "forbidden_dependency" for truth
 
 run_cmd Elab.Command.liftTermElabM do
   let some entry := InformationRegistry.find? (← getEnv) ``truth | throwError "missing entry"
@@ -101,16 +102,16 @@ run_cmd Elab.Command.liftTermElabM do
     name := `RegistrationProvenance.exhausted
     levelParams := [], type, value := mkConst (`RegistrationProvenance.chain |>.num 4999)
     hints := .abbrev, safety := .safe }
-check_provenance "FuelExhaustion" using exhausted expects "incomplete_closure"
+check_provenance "FuelExhaustion" using exhausted expects "incomplete_closure" for truth
 
 -- Unobtainable dependency, isolated to this synthetic environment.
 run_cmd Elab.Command.liftTermElabM do
   addDecl <| .axiomDecl {
     name := `RegistrationProvenance.unavailable
     levelParams := [], type := (← getConstInfo ``clean).type, isUnsafe := false }
-check_provenance "UnavailableDefinition" using unavailable expects "incomplete_closure"
+check_provenance "UnavailableDefinition" using unavailable expects "incomplete_closure" for truth
 noncomputable def unavailableAlias := unavailable
-check_provenance "UnavailableAlias" using unavailableAlias expects "incomplete_closure"
+check_provenance "UnavailableAlias" using unavailableAlias expects "incomplete_closure" for truth
 
 -- The structural command stores a proof constant used by the readout.
 def structuralRead (_ : Unit) (x : Nat) : Nat := let _ := proofSource; x
@@ -129,7 +130,7 @@ run_cmd Elab.Command.liftTermElabM do
   logInfo "[PASS] StructuralForbidden"
 -- A complete clean closure is asserted independently of the collector.
 run_cmd do
-  let actual := RegistrationGates.readoutClosure (← getEnv) ``truth (mkConst ``clean)
+  let actual ← Elab.Command.liftCoreM <| RegistrationGates.readoutClosure (← getEnv) ``truth (mkConst ``clean)
   unless actual == (false, some #["Bool", "PUnit", "RegistrationProvenance.clean", "Unit"]) do
     throwError "[FAIL] CanonicalClosure: {repr actual}"
   logInfo "[PASS] CanonicalClosure"
@@ -139,7 +140,7 @@ run_cmd Elab.Command.liftTermElabM do
     type := .letE `evidence (mkConst ``True) (mkConst ``truth)
       (← getConstInfo ``clean).type false
     value := mkConst ``clean, hints := .abbrev, safety := .safe }
-check_provenance "TypeDependency" using typeTruth expects "forbidden_dependency"
+check_provenance "TypeDependency" using typeTruth expects "forbidden_dependency" for truth
 
 -- 65536 distinct leaves in a balanced term exhaust the expression budget
 -- while using only a handful of constants; no time-based assertion is involved.
@@ -156,7 +157,7 @@ run_cmd Elab.Command.liftTermElabM do
     name := `RegistrationProvenance.expressionExhausted
     levelParams := [], type := (← getConstInfo ``clean).type, value
     hints := .abbrev, safety := .safe }
-check_provenance "ExpressionExhaustion" using expressionExhausted expects "incomplete_closure"
+check_provenance "ExpressionExhaustion" using expressionExhausted expects "incomplete_closure" for truth
 
 abbrev boolArena : StructuralArena := ⟨Bool⟩
 def boolLaw : StructuralPrimitiveLawArena boolArena where
@@ -179,13 +180,13 @@ run_cmd Elab.Command.liftTermElabM do
     name := `RegistrationProvenance.statementDigest, levelParams := [], type := mkConst ``String
     value := mkStrLit entry.statementIdentity, hints := .abbrev, safety := .safe }
 def viaDigest (_ : Unit) (x : Bool) : Bool := let _ := statementDigest; x
-check_provenance "StatementDigest" using viaDigest expects "forbidden_dependency"
+check_provenance "StatementDigest" using viaDigest expects "forbidden_dependency" for truth
 def specificStatement : Prop := (137 : Nat) = 137
 theorem specificTruth : specificStatement := rfl
 noncomputable def genericDecision (_ : Unit) (x : Bool) : Bool :=
   if @decide specificStatement (Classical.propDecidable specificStatement) then x else true
 run_cmd do
-  let (forbidden, closure) := RegistrationGates.readoutClosure (← getEnv)
+  let (forbidden, closure) ← Elab.Command.liftCoreM <| RegistrationGates.readoutClosure (← getEnv)
     ``specificTruth (mkConst ``genericDecision)
   unless forbidden && closure.isSome do
     throwError "[FAIL] AppliedDecidable: {forbidden}, {closure.isSome}"
@@ -194,7 +195,7 @@ noncomputable def parameterDecision (p : Prop) (_ : Bool) : Decidable p := Class
 noncomputable def openDecision (_ : Unit) (x : Bool) : Bool :=
   if @decide specificStatement (parameterDecision specificStatement x) then x else true
 run_cmd do
-  let (forbidden, closure) := RegistrationGates.readoutClosure (← getEnv)
+  let (forbidden, closure) ← Elab.Command.liftCoreM <| RegistrationGates.readoutClosure (← getEnv)
     ``specificTruth (mkConst ``openDecision)
   unless forbidden && closure.isSome do throwError "[FAIL] OpenAppliedDecidable"
   logInfo "[PASS] OpenAppliedDecidable"
@@ -203,7 +204,7 @@ run_cmd do
   for (name, label) in [( ``RegistrationPositive.source, "CleanInlineFinite"),
       (``P2Padding.source, "CleanBranchReadout")] do
     let some entry := InformationRegistry.find? env name | throwError "missing fixture entry"
-    let actual := RegistrationGates.provenanceError env entry.registrationModuleName
+    let actual ← Elab.Command.liftCoreM <| RegistrationGates.provenanceError env entry.registrationModuleName
       entry.effectiveCatalogId entry.theoremName entry.realizationName
     if actual.isSome then logError m!"[FAIL] {label}: {actual}"
     else logInfo m!"[PASS] {label}"
@@ -211,7 +212,7 @@ run_cmd do
   let env ← getEnv
   let entry := ((structuralProvenanceEntries env).find?
     (·.theoremName == ``RegistrationStructural.positive)).get!
-  let actual := RegistrationGates.provenanceError env entry.registrationModule
+  let actual ← Elab.Command.liftCoreM <| RegistrationGates.provenanceError env entry.registrationModule
     entry.canonicalArena entry.theoremName entry.realizationConst
   unless actual.isNone do throwError "[FAIL] CleanInlineStructural: {actual}"
   logInfo "[PASS] CleanInlineStructural"

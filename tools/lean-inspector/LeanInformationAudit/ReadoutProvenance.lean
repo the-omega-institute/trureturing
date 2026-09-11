@@ -2,13 +2,54 @@ import LeanInformationAudit.Sha256
 import Lean
 
 namespace LeanInformationAudit.RegistrationGates
-open Lean
+open Lean Meta
 
 /-- Correctness bounds, independent of machine speed: at most 4096 constants,
 524288 expression nodes, and forwarding recursion with fuel 256.
 Exhaustion always means incomplete, including on the clean path. -/
 def provenanceConstantFuel : Nat := 4096
 def provenanceExpressionFuel : Nat := 524288
+
+/-- These judge APIs cannot supply independent object readouts. Membership is
+by declaration identity, independent of the theorem key's representation. -/
+def provenanceJudgeAPIs : Array Name := #[
+  `LeanInformationAudit.InformationRegistry.entries,
+  `LeanInformationAudit.InformationRegistry.find?,
+  `LeanInformationAudit.InformationRegistry.hasTheorem,
+  `LeanInformationAudit.InformationRegistry.hasOccurrence,
+  `LeanInformationAudit.InformationRegistry.hasUnit,
+  `LeanInformationAudit.InformationRegistryEntry.statementIdentity,
+  `LeanInformationAudit.ExpectedOccurrence.statementIdentity,
+  `LeanInformationAudit.theoremStatementIdentity,
+  `LeanInformationAudit.Sha256.digest, `LeanInformationAudit.Sha256.hex,
+  `LeanInformationAudit.StatementKey.mk, `LeanInformationAudit.StatementKey.statementId,
+  `LeanInformationAudit.ClosedNumericalObligation.mk,
+  `LeanInformationAudit.InfinitePrimitiveObligation.mk,
+  `LeanInformationAudit.UnfaithfulPrimitiveObligation.mk,
+  `LeanInformationAudit.FiniteOccurrenceDisposition.mk,
+  `LeanInformationAudit.StructuralOccurrenceDisposition.mk,
+  `LeanInformationAudit.BoundedFiniteTruncationDisposition.mk,
+  `LeanInformationAudit.UnreachableDisposition.mk]
+
+/-- A fresh, fixed budget per comparison; exceptions propagate to the query's
+incomplete result. Only types and identity data are reduced, never proof values. -/
+private def boundedDefEq (a b : Expr) : MetaM Bool :=
+  withCurrHeartbeats <| withOptions
+    (fun o => (o.set `maxHeartbeats (10000 : Nat)).set `maxRecDepth (1024 : Nat)) do
+      isDefEq a b
+
+/-- One memoized classification pass per readout. Open binder propositions stay
+open: no metavariable synthesis may turn an unrelated decision into this one. -/
+private def sameStatement (statement candidate : Expr) :
+    StateRefT (Std.HashMap Expr Bool) MetaM Bool := do
+  if candidate.hasLooseBVars || candidate.hasFVar then return false
+  if candidate.hasMVar then throwError "unresolved provenance type"
+  if let some answer := (← get)[candidate]? then return answer
+  let answer ← boundedDefEq candidate statement
+  modify (·.insert candidate answer)
+  return answer
+
+initialize registerTraceClass `InformationProvenance.check
 
 /-- Only expose record construction; never reduce a readout or a proof. -/
 private def recordHead (env : Environment) : Nat → Expr → Option Expr
@@ -34,6 +75,24 @@ private def recordHead (env : Environment) : Nat → Expr → Option Expr
       recordHead env fuel (mkAppN field args)
     | _ => some e
 
+/-- The realization supplies the family's carrier annotations. Project these
+schema fields before scanning an inline family, just as readoutFamily projects
+the readout field itself; the arena's Law/DecidableEq fields are not readouts.
+Explicit user let/proof annotations and the body remain raw. -/
+private def familyCarriers (env : Environment) : Nat → Expr → Option Expr
+  | 0, _ => none
+  | fuel + 1, .lam n type body bi => do
+    let type ← if #[
+        `D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature.Index,
+        `D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature.Output,
+        `D5.S3.ConceptDynamics.InformationEscape.Arena.State,
+        `LeanInformationAudit.StructuralPrimitiveSignature.Index,
+        `LeanInformationAudit.StructuralPrimitiveSignature.Output,
+        `LeanInformationAudit.StructuralArena.State].contains (type.getAppFn.constName?.getD .anonymous) then
+      recordHead env 256 type else some type
+    return .lam n type (← familyCarriers env fuel body) bi
+  | _, e => some e
+
 /-- Native and legacy paths share the same raw readout-family extraction. The
 legacy bridge contributes its type's realization argument, never its proof. -/
 private def readoutFamily (env : Environment) (realization : Name) : Option Expr := do
@@ -50,7 +109,7 @@ private def readoutFamily (env : Environment) (realization : Name) : Option Expr
   let name ← value.getAppFn.constName?
   unless name == `D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.mk ||
       name == `LeanInformationAudit.StructuralPrimitiveRealization.mk do none
-  value.getAppArgs[2]?
+  familyCarriers env 256 (← value.getAppArgs[2]?)
 
 private def children (e : Expr) : List Expr :=
   match e with
@@ -81,13 +140,14 @@ private def appliedType (env : Environment) (e : Expr) : Option Expr := do
       type := body.instantiate1 arg
     recordHead env 256 type
 
-/-- Read the proof's closed, fully applied theorem references only when a
-reached proof needs classification. Shared unapplied combinators are not the
-registered proof; their concrete applications and closed proof helpers are. No proof normalization or transitive proof walk occurs. -/
+/-- Track the registered proof's raw dependencies transitively, once and only
+when a reached theorem needs classification. Both worklists have fixed bounds;
+shared unapplied proof combinators are not themselves forbidden proof terms. -/
 private def proofExpressions (env : Environment) (value : Expr) :
-    Option (Std.HashSet Expr) := Id.run do
+    MetaM (Option (Std.HashSet Expr)) := do
   let mut todo := [value]
   let mut proofs : Std.HashSet Expr := {}
+  let mut constants : NameHashSet := {}
   let mut visited : Std.HashSet Expr := {}
   let mut fuel := provenanceExpressionFuel
   while let e :: rest := todo do
@@ -96,9 +156,16 @@ private def proofExpressions (env : Environment) (value : Expr) :
     todo := rest
     if visited.contains e then continue
     visited := visited.insert e
-    if let some info := e.getAppFn.constName?.bind env.find? then
-      if info.isTheorem && !e.hasLooseBVars && e.getAppNumArgs >= info.type.getNumHeadForalls then
+    if let .const name levels := e.getAppFn then
+      let some info := env.find? name | return none
+      if !e.hasLooseBVars && e.getAppNumArgs >= info.type.getNumHeadForalls &&
+          (info.isTheorem || (← isProp info.type)) then
         proofs := proofs.insert e
+        if !constants.contains name then
+          if constants.size >= provenanceConstantFuel then return none
+          constants := constants.insert name
+        if let some value := info.value? (allowOpaque := true) then
+          todo := (value.instantiateLevelParams info.levelParams levels).beta e.getAppArgs :: todo
     todo := children e ++ todo
   return some proofs
 
@@ -106,8 +173,8 @@ private def proofExpressions (env : Environment) (value : Expr) :
 without elaboration, realization enumeration or unfolding proofs. A forbidden
 node stops semantic analysis; only dependency collection continues so a partial
 frontier is never presented as the complete provenance_closure. -/
-def readoutClosure (env : Environment) (theoremName : Name) (readout : Expr) :
-    Bool × Option (Array String) := Id.run do
+private def collectReadout (env : Environment) (theoremName : Name) (readout : Expr) :
+    StateRefT (Std.HashMap Expr Bool) MetaM (Bool × Option (Array String)) := do
   let some theoremInfo := env.find? theoremName | return (false, none)
   let identity := "sha256:" ++ Sha256.hex (toString theoremInfo.type).toUTF8
   let quotedName := toExpr theoremName
@@ -119,6 +186,7 @@ def readoutClosure (env : Environment) (theoremName : Name) (readout : Expr) :
   let mut forbidden := false
   let mut fuel := provenanceExpressionFuel
   while let e :: rest := todo do
+    Core.checkMaxHeartbeats "readout provenance"
     if fuel == 0 then return (forbidden, none)
     fuel := fuel - 1
     todo := rest
@@ -134,13 +202,11 @@ def readoutClosure (env : Environment) (theoremName : Name) (readout : Expr) :
         if info.isTheorem && e.getAppNumArgs >= info.type.getNumHeadForalls then
           if proofTerms.isNone then
             let some value := theoremInfo.value? (allowOpaque := true) | return (false, none)
-            proofTerms := proofExpressions env value
+            proofTerms ← proofExpressions env value
           let some proofs := proofTerms | return (false, none)
           if proofs.contains e then forbidden := true
     if e.isAppOfArity ``Decidable 1 then
-      let some proposition := recordHead env 256 e.getAppArgs[0]! | return (forbidden, none)
-      let some statement := recordHead env 256 theoremInfo.type | return (forbidden, none)
-      if proposition == statement then forbidden := true
+      if !forbidden && (← sameStatement theoremInfo.type e.getAppArgs[0]!) then forbidden := true
     if !forbidden && e.isApp && e.getAppFn.isConst then
       applications := applications.push e
     if let .const name _ := e then
@@ -151,8 +217,24 @@ def readoutClosure (env : Environment) (theoremName : Name) (readout : Expr) :
       let proofDeclaration := match info with
         | .thmInfo _ | .defnInfo _ | .opaqueInfo _ => true
         | _ => false
-      if name == theoremName || (proofDeclaration && info.type == theoremInfo.type) then
+      if name == theoremName || provenanceJudgeAPIs.contains name then forbidden := true
+      -- A user-defined certificate has the same forbidden capability when a
+      -- constructor parameter is Name (or StatementKey), whatever computes it.
+      if let .ctorInfo ctor := info then
+        if ctor.numParams > 256 then return (forbidden, none)
+        let mut type := ctor.type
+        for _ in [:ctor.numParams] do
+          let .forallE _ parameter body _ := type | return (forbidden, none)
+          let some parameter := recordHead env 256 parameter | return (forbidden, none)
+          if parameter.isConstOf ``Name ||
+              parameter.isConstOf `LeanInformationAudit.StatementKey then forbidden := true
+          type := body
+      if !forbidden && proofDeclaration && (← sameStatement theoremInfo.type info.type) then
         forbidden := true
+      -- Literal evidence also covers materialized identities whose API call was
+      -- evaluated before the readout was stored (e.g. String.append fragments).
+      if !forbidden && info.type.isConstOf ``String then
+        if ← boundedDefEq e (mkStrLit identity) then forbidden := true
       todo := info.type :: todo
       match info.value? (allowOpaque := true) with
       | some value => todo := value :: todo
@@ -170,25 +252,35 @@ def readoutClosure (env : Environment) (theoremName : Name) (readout : Expr) :
     for e in applications do
       let some type := appliedType env e | return (false, none)
       if type.isAppOfArity ``Decidable 1 then
-        let some proposition := recordHead env 256 type.getAppArgs[0]! | return (false, none)
-        let some statement := recordHead env 256 theoremInfo.type | return (false, none)
-        if proposition == statement then
+        if ← sameStatement theoremInfo.type type.getAppArgs[0]! then
           forbidden := true
           break
   let names := constants.toArray.map Name.toString |>.qsort (· < ·)
   return (forbidden, some names)
+
+/-- A query owns one fresh Meta context and one classification cache. A total
+200000-heartbeat/1024-depth bound also covers proof scanning and specialization.
+Frozen registrations call this once at registration; the seal consumes metadata. -/
+def readoutClosure (env : Environment) (theoremName : Name) (readout : Expr) :
+    CoreM (Bool × Option (Array String)) := do
+  trace[InformationProvenance.check] "{theoremName}: {readout.getAppFn.constName?}"
+  tryCatchRuntimeEx (do
+    withEnv env <| withCurrHeartbeats <| withOptions
+      (fun o => (o.set `maxHeartbeats (200000 : Nat)).set `maxRecDepth (1024 : Nat)) <|
+      (collectReadout env theoremName readout).run' {} |>.run')
+    (fun _ => pure (false, none))
 
 /-- IE-C050 precedes all readout-value diagnostics, including IE-C021. A family
 is checked as one dependent function, covering every signature index without
 sampling or enumerating realizations. Inline families use the realization owner
 as their address; named families retain the defining constant's address. -/
 def provenanceError (env : Environment) (root catalog theoremName realization : Name) :
-    Option String := Id.run do
+    CoreM (Option String) := do
   let readout := readoutFamily env realization
   let address := readout.bind (·.getAppFn.constName?) |>.getD realization
-  let (forbidden, closure) := match readout with
+  let (forbidden, closure) ← match readout with
     | some e => readoutClosure env theoremName e
-    | none => (false, none)
+    | none => pure (false, none)
   if !forbidden && closure.isSome then return none
   let reason := if closure.isNone then "incomplete_closure" else "forbidden_dependency"
   let payload := match closure with
