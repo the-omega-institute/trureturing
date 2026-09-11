@@ -1,0 +1,8 @@
+**证明。** 定理 73 先给出 \(\{\operatorname{Enc}(x),\operatorname{Enc}(y)\}_Z=\operatorname{Enc}(\{x,y\})\)，再按 Kuratowski 对定义得到有序对的相同等式。并集的语义成员是某个成员的成员，解码恰为 \(\bigcup x\)。对每个 \(y\subseteq x\)，取 \(B=\operatorname{Enc}[y]\)；反向对任意 \(B\subseteq\operatorname{Enc}[x]\)，取 \(y=\operatorname{Dec}[B]\subseteq x\)。这两个操作互逆，故没有遗漏任何子集，幂集与替代使 (Z-POWER) 中的集合存在。积公式随配对公式而得。
+
+语义函数的图定义为语义积的子集，在每个语义自变量处恰有一个值。配对比较及定理 72 的双向成员对应将此条件恰好变成通常函数图条件。于是全部函数恰由 \(\operatorname{Enc}(B^A)\) 的语义成员给出，(Z-EVAL) 由唯一值成立。更明确地，通常外部共轭函数的图是
+\[
+f^{\rm ext}=\{\langle\operatorname{Enc}(a),\operatorname{Enc}(f(a))\rangle:a\in A\}\subseteq A^*\times B^*,
+\]
+而 \(\operatorname{Enc}(f)\) 的语义成员是使用 \(\langle\ ,\ \rangle_Z\) 的配对。它们由逐配对变换及 \(\operatorname{Pack}\) 精确对应；不把通常外部图直接等同于编码图。任意通常函数 \(g:A^*\to B^*\) 都拉回为 \(a\mapsto\operatorname{Dec}(g(\operatorname{Enc}(a)))\)，再共轭回 \(g\)，所以这也包括全部外部函数。\(\operatorname{Enc}(A)\) 是一个码对象，\(A^*=\operatorname{El}(\operatorname{Enc}(A))\) 是其语义成员集。证毕。
+

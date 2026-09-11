@@ -1,0 +1,71 @@
+## 23. Additive charts, multiplicative odds and type-dependent projective flow
+
+This continuation reads dev at 3478a75a07f72d4a71d995bc1071d999ffd2f2bd and
+continues the exact-grid source at 65af741aefefef2a9a5f549b5b0910d23d325dcb.
+The mathematical target remains a common complex zero-free neighborhood through
+activity 51/20. The new analytic construction below gives explicit widths;
+it does not change the preceding finite coefficient or geometric payloads.
+
+Three existing dev sources provide relevant, distinct structures:
+
+* GoldenEulerStepPhaseLaw proves Euler's sine/cosine expression for the prime
+  step phase, unit norm, the golden long-step factorization using phi^2=phi+1,
+  and the loss of adjacent order when only scalar phases are multiplied.
+* PrimeGoldenComplexMode retains a positive amplitude and a phase separately;
+  its norm recovers the amplitude. Its damping hypotheses matter for recovering
+  the prime label from that amplitude.
+* Quantum/Algebra/WeylDisplacement proves the finite-window shift/clock
+  composition law with its symplectic phase, including a genuine two-address
+  anticommutation example. It is a projective operator representation.
+
+These existing results were read as actual source, not inferred from names.
+They are not imported as hard-core inequalities. Spatial grid translations act
+on vertices and configurations, while the following translations act on message
+coordinates. Section 20 supplies the exact observable correspondence between
+the geometric model and these message coordinates.
+
+For a fixed type with Psi(x)=b-a*x, use the odds coordinate
+
+\[
+ q=\frac{x}{b-ax},\qquad m=\frac{\log q}{b}.
+\]
+
+The inverse is f(m)=b exp(bm)/(1+a exp(bm)). The new inverse_odds theorem gives
+q(f(m))=exp(bm) exactly. Thus m -> m+u+iv multiplies the odds by
+exp(bu) exp(ibv): real shifts change the modulus, imaginary shifts rotate phase.
+The modulus identity and exponential factorization are formalized together.
+
+In the original x coordinate, an odds multiplier E acts as
+
+\[
+ T_{k,E}(x)=\frac{Ex}{1+k(E-1)x},\qquad k=a/b.
+\]
+
+Its matrix is [[E,0],[k(E-1),1]]. The exact pole-free composition is
+T_(k,E) composed with T_(k,F)=T_(k,EF). For two different type ratios k,l,
+the difference between the lower-left entries of the two matrix products is
+
+\[
+ \boxed{(k-l)(E-1)(F-1).}
+\tag{23.1}
+\]
+
+Consequently, type-dependent projective transport generally retains ordering
+information that scalar phase multiplication loses. The first two actual
+coefficient pairs give k=2544246/2780973 and l=782543/1650757, with
+k-l=224855659987/510078960729, a nonzero exact rational. For E=F=2 and x=1/2,
+the two projective compositions differ by the exact rational recorded by the
+replay. That diagnostic is outside the small analytic tube below and asserts
+only the algebraic ordering distinction. Equation (23.1) also permits nonzero
+ordering defects for multipliers arbitrarily close to one.
+
+The golden ratio can be used as a step parameter and its quadratic identity
+then gives the existing long-step factorization. No golden-ratio value has
+been shown to optimize the present coefficients or the activity width. The
+real golden ratio, a phase angle, and a logarithmic coordinate are different
+parameters. Likewise, the finite Weyl operator law and the present fractional
+linear action are different representations; no isomorphism between them is
+asserted. A physical wave-particle statement would additionally require a
+specified quantum state space, observables and measurement probabilities.
+The classical hard-core partition is not assigned that interpretation here.
+

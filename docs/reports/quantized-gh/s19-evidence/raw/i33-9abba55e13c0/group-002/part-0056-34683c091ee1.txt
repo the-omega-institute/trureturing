@@ -1,0 +1,800 @@
+      {
+        "level": 3,
+        "text": "解析尾界,不是数值外推",
+        "heading": {
+          "byte_start": 40831,
+          "byte_end_exclusive": 40867,
+          "line_start": 746,
+          "line_end_inclusive": 746,
+          "byte_count": 36,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "02318c1f46cb30b4c7ef004036c447b013651fd383e4ec6f2096ea675daf5004"
+        },
+        "region": {
+          "byte_start": 40831,
+          "byte_end_exclusive": 42104,
+          "line_start": 746,
+          "line_end_inclusive": 766,
+          "byte_count": 1273,
+          "lf_count": 21,
+          "terminal_lf_count": 2,
+          "sha256": "8e876cf073da2343fc3dd80d1b4b4539a3b3d7c5228c7124d41d58755d302f55"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 148,
+            "original_byte_start": 40831,
+            "original_byte_end_exclusive": 40866
+          },
+          {
+            "recovery_span_index": 149,
+            "original_byte_start": 40866,
+            "original_byte_end_exclusive": 42104
+          }
+        ]
+      },
+      {
+        "level": 3,
+        "text": "复现、状态与未履行义务",
+        "heading": {
+          "byte_start": 42104,
+          "byte_end_exclusive": 42142,
+          "line_start": 767,
+          "line_end_inclusive": 767,
+          "byte_count": 38,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "60af16bc02c179fe2ba05c8aede92c54d64bf121c14e20dd8648bfe80cb17aa6"
+        },
+        "region": {
+          "byte_start": 42104,
+          "byte_end_exclusive": 44567,
+          "line_start": 767,
+          "line_end_inclusive": 782,
+          "byte_count": 2463,
+          "lf_count": 16,
+          "terminal_lf_count": 2,
+          "sha256": "9ea06359eb78c4d22c4f07bee10aadf859bd066a16ed40207c511914a5639a53"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 150,
+            "original_byte_start": 42104,
+            "original_byte_end_exclusive": 42171
+          },
+          {
+            "recovery_span_index": 151,
+            "original_byte_start": 42171,
+            "original_byte_end_exclusive": 42235
+          },
+          {
+            "recovery_span_index": 152,
+            "original_byte_start": 42235,
+            "original_byte_end_exclusive": 44060
+          },
+          {
+            "recovery_span_index": 153,
+            "original_byte_start": 44060,
+            "original_byte_end_exclusive": 44144
+          },
+          {
+            "recovery_span_index": 154,
+            "original_byte_start": 44144,
+            "original_byte_end_exclusive": 44354
+          },
+          {
+            "recovery_span_index": 155,
+            "original_byte_start": 44354,
+            "original_byte_end_exclusive": 44397
+          },
+          {
+            "recovery_span_index": 156,
+            "original_byte_start": 44397,
+            "original_byte_end_exclusive": 44401
+          },
+          {
+            "recovery_span_index": 157,
+            "original_byte_start": 44401,
+            "original_byte_end_exclusive": 44430
+          },
+          {
+            "recovery_span_index": 158,
+            "original_byte_start": 44430,
+            "original_byte_end_exclusive": 44565
+          },
+          {
+            "recovery_span_index": 159,
+            "original_byte_start": 44565,
+            "original_byte_end_exclusive": 44567
+          }
+        ]
+      },
+      {
+        "level": 2,
+        "text": "13. 实施收尾的追加记录",
+        "heading": {
+          "byte_start": 44567,
+          "byte_end_exclusive": 44602,
+          "line_start": 783,
+          "line_end_inclusive": 783,
+          "byte_count": 35,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "a3d9cfb31ba9045dd2305a9e608ea129c7efc77f65d0f89cb51f207ab1f42fbe"
+        },
+        "region": {
+          "byte_start": 44567,
+          "byte_end_exclusive": 45757,
+          "line_start": 783,
+          "line_end_inclusive": 788,
+          "byte_count": 1190,
+          "lf_count": 6,
+          "terminal_lf_count": 2,
+          "sha256": "2ad6da00f61b57ea3c779336fa126385af40f39bca484b101008fb9e19116477"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 160,
+            "original_byte_start": 44567,
+            "original_byte_end_exclusive": 45757
+          }
+        ]
+      },
+      {
+        "level": 2,
+        "text": "14. 评审勘误:发布边界与回归核验",
+        "heading": {
+          "byte_start": 45757,
+          "byte_end_exclusive": 45805,
+          "line_start": 789,
+          "line_end_inclusive": 789,
+          "byte_count": 48,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "db5c2606aa084f0356a07beff7d229c7438543bd1e6fb7c165b1c3848c3b766c"
+        },
+        "region": {
+          "byte_start": 45757,
+          "byte_end_exclusive": 50141,
+          "line_start": 789,
+          "line_end_inclusive": 804,
+          "byte_count": 4384,
+          "lf_count": 16,
+          "terminal_lf_count": 2,
+          "sha256": "7a8540e7423219fd89e0a05ffcca9c2afe2e1086c2da4ecd05caaaee2a73673c"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 161,
+            "original_byte_start": 45757,
+            "original_byte_end_exclusive": 50141
+          }
+        ]
+      },
+      {
+        "level": 2,
+        "text": "15. 均值与平方偏差的尖锐因数丰度上包络",
+        "heading": {
+          "byte_start": 50141,
+          "byte_end_exclusive": 50200,
+          "line_start": 805,
+          "line_end_inclusive": 805,
+          "byte_count": 59,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "1c57ee5ed5c1a2f291373a96badfa36ef401405791535fdaf713247a35f27a03"
+        },
+        "region": {
+          "byte_start": 50141,
+          "byte_end_exclusive": 56944,
+          "line_start": 805,
+          "line_end_inclusive": 927,
+          "byte_count": 6803,
+          "lf_count": 123,
+          "terminal_lf_count": 2,
+          "sha256": "bd88367dd67d2af6d123b97ed135c2de2fd6af8405055da97750d8224de084c3"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 162,
+            "original_byte_start": 50141,
+            "original_byte_end_exclusive": 50201
+          },
+          {
+            "recovery_span_index": 163,
+            "original_byte_start": 50201,
+            "original_byte_end_exclusive": 50259
+          },
+          {
+            "recovery_span_index": 164,
+            "original_byte_start": 50259,
+            "original_byte_end_exclusive": 50386
+          },
+          {
+            "recovery_span_index": 165,
+            "original_byte_start": 50386,
+            "original_byte_end_exclusive": 50588
+          },
+          {
+            "recovery_span_index": 166,
+            "original_byte_start": 50588,
+            "original_byte_end_exclusive": 50634
+          },
+          {
+            "recovery_span_index": 167,
+            "original_byte_start": 50634,
+            "original_byte_end_exclusive": 52375
+          },
+          {
+            "recovery_span_index": 168,
+            "original_byte_start": 52375,
+            "original_byte_end_exclusive": 52408
+          },
+          {
+            "recovery_span_index": 169,
+            "original_byte_start": 52408,
+            "original_byte_end_exclusive": 54104
+          },
+          {
+            "recovery_span_index": 170,
+            "original_byte_start": 54104,
+            "original_byte_end_exclusive": 54146
+          },
+          {
+            "recovery_span_index": 171,
+            "original_byte_start": 54146,
+            "original_byte_end_exclusive": 56944
+          }
+        ]
+      },
+      {
+        "level": 3,
+        "text": "固定素数标签、预算与加权度量",
+        "heading": {
+          "byte_start": 50588,
+          "byte_end_exclusive": 50635,
+          "line_start": 809,
+          "line_end_inclusive": 809,
+          "byte_count": 47,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "867c88d888001ea718b7b4a170367bebab32417083328a889bbe359a41d313b8"
+        },
+        "region": {
+          "byte_start": 50588,
+          "byte_end_exclusive": 52375,
+          "line_start": 809,
+          "line_end_inclusive": 846,
+          "byte_count": 1787,
+          "lf_count": 38,
+          "terminal_lf_count": 2,
+          "sha256": "c29d5c768c9673f1735c489b56e48f71b013c63b80719d86b730df3e8dab2bf2"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 166,
+            "original_byte_start": 50588,
+            "original_byte_end_exclusive": 50634
+          },
+          {
+            "recovery_span_index": 167,
+            "original_byte_start": 50634,
+            "original_byte_end_exclusive": 52375
+          }
+        ]
+      },
+      {
+        "level": 3,
+        "text": "强化的二次 Jensen 缺口",
+        "heading": {
+          "byte_start": 52375,
+          "byte_end_exclusive": 52409,
+          "line_start": 847,
+          "line_end_inclusive": 847,
+          "byte_count": 34,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "ab7f7a5a8b37ab15a7b8cd77b19e098f98b38c01ba2fd1b40c7597fb1c7022b8"
+        },
+        "region": {
+          "byte_start": 52375,
+          "byte_end_exclusive": 54104,
+          "line_start": 847,
+          "line_end_inclusive": 875,
+          "byte_count": 1729,
+          "lf_count": 29,
+          "terminal_lf_count": 2,
+          "sha256": "a3ed0980e3a6d9468f836516d19eb6b613591eb4dafe6d2d8d2274d48bd4c558"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 168,
+            "original_byte_start": 52375,
+            "original_byte_end_exclusive": 52408
+          },
+          {
+            "recovery_span_index": 169,
+            "original_byte_start": 52408,
+            "original_byte_end_exclusive": 54104
+          }
+        ]
+      },
+      {
+        "level": 3,
+        "text": "Hermite 上包络及全部等号情形",
+        "heading": {
+          "byte_start": 54104,
+          "byte_end_exclusive": 54147,
+          "line_start": 876,
+          "line_end_inclusive": 876,
+          "byte_count": 43,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "eca82a6bf4b942423e2930c0b29073c87645d186a359ba9535c48523f52bf1a4"
+        },
+        "region": {
+          "byte_start": 54104,
+          "byte_end_exclusive": 56944,
+          "line_start": 876,
+          "line_end_inclusive": 927,
+          "byte_count": 2840,
+          "lf_count": 52,
+          "terminal_lf_count": 2,
+          "sha256": "130233f949cb5bb2ff95b5ddd651205e070a6dfff6c1d03464e65905a5200c83"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 170,
+            "original_byte_start": 54104,
+            "original_byte_end_exclusive": 54146
+          },
+          {
+            "recovery_span_index": 171,
+            "original_byte_start": 54146,
+            "original_byte_end_exclusive": 56944
+          }
+        ]
+      },
+      {
+        "level": 2,
+        "text": "16. 有限指数箱体与预算薄层的充分证书",
+        "heading": {
+          "byte_start": 56944,
+          "byte_end_exclusive": 57000,
+          "line_start": 928,
+          "line_end_inclusive": 928,
+          "byte_count": 56,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "5e3c0f01fc20cb565759eb088a759358ab07d4f9783b7a0a7bc4be01a1eaf037"
+        },
+        "region": {
+          "byte_start": 56944,
+          "byte_end_exclusive": 59751,
+          "line_start": 928,
+          "line_end_inclusive": 973,
+          "byte_count": 2807,
+          "lf_count": 46,
+          "terminal_lf_count": 2,
+          "sha256": "c433ad9245c26eb5017b1da92aa74aecdb0ccfad260ad4dfb99ce5ffffb8d026"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 172,
+            "original_byte_start": 56944,
+            "original_byte_end_exclusive": 57001
+          },
+          {
+            "recovery_span_index": 173,
+            "original_byte_start": 57001,
+            "original_byte_end_exclusive": 57048
+          },
+          {
+            "recovery_span_index": 174,
+            "original_byte_start": 57048,
+            "original_byte_end_exclusive": 57067
+          },
+          {
+            "recovery_span_index": 175,
+            "original_byte_start": 57067,
+            "original_byte_end_exclusive": 58619
+          },
+          {
+            "recovery_span_index": 176,
+            "original_byte_start": 58619,
+            "original_byte_end_exclusive": 58653
+          },
+          {
+            "recovery_span_index": 177,
+            "original_byte_start": 58653,
+            "original_byte_end_exclusive": 59751
+          }
+        ]
+      },
+      {
+        "level": 3,
+        "text": "固定坐标的常数不能丢",
+        "heading": {
+          "byte_start": 58619,
+          "byte_end_exclusive": 58654,
+          "line_start": 954,
+          "line_end_inclusive": 954,
+          "byte_count": 35,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "c72c0fa4d4a060b1a36db4294690e6226648f69cf36a4d289608f2b32d7f4d7a"
+        },
+        "region": {
+          "byte_start": 58619,
+          "byte_end_exclusive": 59751,
+          "line_start": 954,
+          "line_end_inclusive": 973,
+          "byte_count": 1132,
+          "lf_count": 20,
+          "terminal_lf_count": 2,
+          "sha256": "d472a4181cd25c5ca0c499585c87c2dfb86471a3827a5ae717a5884c8181004c"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 176,
+            "original_byte_start": 58619,
+            "original_byte_end_exclusive": 58653
+          },
+          {
+            "recovery_span_index": 177,
+            "original_byte_start": 58653,
+            "original_byte_end_exclusive": 59751
+          }
+        ]
+      },
+      {
+        "level": 2,
+        "text": "17. 5040 证据、已有 KL 关系与未决比较",
+        "heading": {
+          "byte_start": 59751,
+          "byte_end_exclusive": 59804,
+          "line_start": 974,
+          "line_end_inclusive": 974,
+          "byte_count": 53,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "bc64d77fb565804d20e9e2c62631be5604e678ba11e5a61bdbcc012da2d39b6a"
+        },
+        "region": {
+          "byte_start": 59751,
+          "byte_end_exclusive": 65741,
+          "line_start": 974,
+          "line_end_inclusive": 1051,
+          "byte_count": 5990,
+          "lf_count": 78,
+          "terminal_lf_count": 2,
+          "sha256": "bfe73a041ceb288951ee87c9234a1b0cc768a8e799f18e6564ab341b05365303"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 178,
+            "original_byte_start": 59751,
+            "original_byte_end_exclusive": 59805
+          },
+          {
+            "recovery_span_index": 179,
+            "original_byte_start": 59805,
+            "original_byte_end_exclusive": 59809
+          },
+          {
+            "recovery_span_index": 180,
+            "original_byte_start": 59809,
+            "original_byte_end_exclusive": 59842
+          },
+          {
+            "recovery_span_index": 181,
+            "original_byte_start": 59842,
+            "original_byte_end_exclusive": 59844
+          },
+          {
+            "recovery_span_index": 182,
+            "original_byte_start": 59844,
+            "original_byte_end_exclusive": 59860
+          },
+          {
+            "recovery_span_index": 183,
+            "original_byte_start": 59860,
+            "original_byte_end_exclusive": 60027
+          },
+          {
+            "recovery_span_index": 184,
+            "original_byte_start": 60027,
+            "original_byte_end_exclusive": 60093
+          },
+          {
+            "recovery_span_index": 185,
+            "original_byte_start": 60093,
+            "original_byte_end_exclusive": 60136
+          },
+          {
+            "recovery_span_index": 186,
+            "original_byte_start": 60136,
+            "original_byte_end_exclusive": 60190
+          },
+          {
+            "recovery_span_index": 187,
+            "original_byte_start": 60190,
+            "original_byte_end_exclusive": 60659
+          },
+          {
+            "recovery_span_index": 188,
+            "original_byte_start": 60659,
+            "original_byte_end_exclusive": 60708
+          },
+          {
+            "recovery_span_index": 189,
+            "original_byte_start": 60708,
+            "original_byte_end_exclusive": 62760
+          },
+          {
+            "recovery_span_index": 190,
+            "original_byte_start": 62760,
+            "original_byte_end_exclusive": 62797
+          },
+          {
+            "recovery_span_index": 191,
+            "original_byte_start": 62797,
+            "original_byte_end_exclusive": 63228
+          },
+          {
+            "recovery_span_index": 192,
+            "original_byte_start": 63228,
+            "original_byte_end_exclusive": 63582
+          },
+          {
+            "recovery_span_index": 193,
+            "original_byte_start": 63582,
+            "original_byte_end_exclusive": 63584
+          },
+          {
+            "recovery_span_index": 194,
+            "original_byte_start": 63584,
+            "original_byte_end_exclusive": 64220
+          },
+          {
+            "recovery_span_index": 195,
+            "original_byte_start": 64220,
+            "original_byte_end_exclusive": 64406
+          },
+          {
+            "recovery_span_index": 196,
+            "original_byte_start": 64406,
+            "original_byte_end_exclusive": 64436
+          },
+          {
+            "recovery_span_index": 197,
+            "original_byte_start": 64436,
+            "original_byte_end_exclusive": 64529
+          },
+          {
+            "recovery_span_index": 198,
+            "original_byte_start": 64529,
+            "original_byte_end_exclusive": 64545
+          },
+          {
+            "recovery_span_index": 199,
+            "original_byte_start": 64545,
+            "original_byte_end_exclusive": 64660
+          },
+          {
+            "recovery_span_index": 200,
+            "original_byte_start": 64660,
+            "original_byte_end_exclusive": 64750
+          },
+          {
+            "recovery_span_index": 201,
+            "original_byte_start": 64750,
+            "original_byte_end_exclusive": 64822
+          },
+          {
+            "recovery_span_index": 202,
+            "original_byte_start": 64822,
+            "original_byte_end_exclusive": 64889
+          },
+          {
+            "recovery_span_index": 203,
+            "original_byte_start": 64889,
+            "original_byte_end_exclusive": 64998
+          },
+          {
+            "recovery_span_index": 204,
+            "original_byte_start": 64998,
+            "original_byte_end_exclusive": 65741
+          }
+        ]
+      },
+      {
+        "level": 3,
+        "text": "单个边界整数的有界复算",
+        "heading": {
+          "byte_start": 59805,
+          "byte_end_exclusive": 59843,
+          "line_start": 976,
+          "line_end_inclusive": 976,
+          "byte_count": 38,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "bb6e68682fa729a6b80d8839376bf49e45ee5c49b828554c4086487cc33c9e64"
+        },
+        "region": {
+          "byte_start": 59805,
+          "byte_end_exclusive": 60659,
+          "line_start": 976,
+          "line_end_inclusive": 988,
+          "byte_count": 854,
+          "lf_count": 13,
+          "terminal_lf_count": 2,
+          "sha256": "15eb74c10d304429706c4110c8a39f5203ee406518f2048398f012600277486e"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 179,
+            "original_byte_start": 59805,
+            "original_byte_end_exclusive": 59809
+          },
+          {
+            "recovery_span_index": 180,
+            "original_byte_start": 59809,
+            "original_byte_end_exclusive": 59842
+          },
+          {
+            "recovery_span_index": 181,
+            "original_byte_start": 59842,
+            "original_byte_end_exclusive": 59844
+          },
+          {
+            "recovery_span_index": 182,
+            "original_byte_start": 59844,
+            "original_byte_end_exclusive": 59860
+          },
+          {
+            "recovery_span_index": 183,
+            "original_byte_start": 59860,
+            "original_byte_end_exclusive": 60027
+          },
+          {
+            "recovery_span_index": 184,
+            "original_byte_start": 60027,
+            "original_byte_end_exclusive": 60093
+          },
+          {
+            "recovery_span_index": 185,
+            "original_byte_start": 60093,
+            "original_byte_end_exclusive": 60136
+          },
+          {
+            "recovery_span_index": 186,
+            "original_byte_start": 60136,
+            "original_byte_end_exclusive": 60190
+          },
+          {
+            "recovery_span_index": 187,
+            "original_byte_start": 60190,
+            "original_byte_end_exclusive": 60659
+          }
+        ]
+      },
+      {
+        "level": 3,
+        "text": "固定支撑损失不等于任意全局损失",
+        "heading": {
+          "byte_start": 60659,
+          "byte_end_exclusive": 60709,
+          "line_start": 989,
+          "line_end_inclusive": 989,
+          "byte_count": 50,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "cf03d4c5ef817ed7f0f594640e78ad03c14da06d7e4c5a7fadcaa3cb97a8efde"
+        },
+        "region": {
+          "byte_start": 60659,
+          "byte_end_exclusive": 62760,
+          "line_start": 989,
+          "line_end_inclusive": 1027,
+          "byte_count": 2101,
+          "lf_count": 39,
+          "terminal_lf_count": 2,
+          "sha256": "de952e149a1c90d53d698796385b17ab53f2f616beda6c347749716698675599"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 188,
+            "original_byte_start": 60659,
+            "original_byte_end_exclusive": 60708
+          },
+          {
+            "recovery_span_index": 189,
+            "original_byte_start": 60708,
+            "original_byte_end_exclusive": 62760
+          }
+        ]
+      },
+      {
+        "level": 3,
+        "text": "离散对偶比较与来源边界",
+        "heading": {
+          "byte_start": 62760,
+          "byte_end_exclusive": 62798,
+          "line_start": 1028,
+          "line_end_inclusive": 1028,
+          "byte_count": 38,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "5b591298e4c55d556cec4ae17749c35078ed9f17270937e90bb2858ba2cd47ac"
+        },
+        "region": {
+          "byte_start": 62760,
+          "byte_end_exclusive": 65741,
+          "line_start": 1028,
+          "line_end_inclusive": 1051,
+          "byte_count": 2981,
+          "lf_count": 24,
+          "terminal_lf_count": 2,
+          "sha256": "793cef0c8f0b6df58a7a2f4a2755ae44dcb29bd894c91ce5baacd2537481070e"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 190,
+            "original_byte_start": 62760,
+            "original_byte_end_exclusive": 62797
+          },
+          {
+            "recovery_span_index": 191,
+            "original_byte_start": 62797,
+            "original_byte_end_exclusive": 63228
+          },
+          {
+            "recovery_span_index": 192,
+            "original_byte_start": 63228,
+            "original_byte_end_exclusive": 63582
+          },
+          {
+            "recovery_span_index": 193,
+            "original_byte_start": 63582,
+            "original_byte_end_exclusive": 63584
+          },
+          {
+            "recovery_span_index": 194,
+            "original_byte_start": 63584,
+            "original_byte_end_exclusive": 64220
+          },
+          {
+            "recovery_span_index": 195,
+            "original_byte_start": 64220,
+            "original_byte_end_exclusive": 64406
+          },
+          {
+            "recovery_span_index": 196,
+            "original_byte_start": 64406,
+            "original_byte_end_exclusive": 64436
+          },
+          {
+            "recovery_span_index": 197,
+            "original_byte_start": 64436,
+            "original_byte_end_exclusive": 64529
+          },
+          {
+            "recovery_span_index": 198,
+            "original_byte_start": 64529,
+            "original_byte_end_exclusive": 64545
+          },
+          {
+            "recovery_span_index": 199,
+            "original_byte_start": 64545,
+            "original_byte_end_exclusive": 64660
+          },
+          {
+            "recovery_span_index": 200,
+            "original_byte_start": 64660,
+            "original_byte_end_exclusive": 64750
+          },
+          {
+            "recovery_span_index": 201,
+            "original_byte_start": 64750,

@@ -1,0 +1,750 @@
+        {
+          "pair_ref": "abbb6b39a80159aa2ac13a737bef4f547ab766315db49d93e59e3ef93f80db47",
+          "start_byte": 317725,
+          "end_byte_exclusive": 317756
+        }
+      ],
+      "uncovered_spans": [],
+      "uncovered_bytes": 0
+    },
+    {
+      "unit": "32.2",
+      "source_span": {
+        "start_byte": 317756,
+        "end_byte_exclusive": 318939,
+        "start_line": 5994,
+        "end_line_inclusive": 6014,
+        "bytes": 1183,
+        "sha256": "7d2bd49f821cfcdd143ad4a3831954047e16c38e34ec01169add096f3949647f",
+        "git_blob_oid": "71c31600323b199b745830eb17d4d138231bed41",
+        "lf": 21,
+        "terminal_lf": 2,
+        "eof_hex": "bc96e7a081e8afade4b989e380820a0a"
+      },
+      "expected_full_parent_id": "7d2bd49f821cfcdd143ad4a3831954047e16c38e34ec01169add096f3949647f",
+      "full_parent_ref": "7d2bd49f821cfcdd143ad4a3831954047e16c38e34ec01169add096f3949647f",
+      "complete": true,
+      "ordered_parts": [
+        {
+          "pair_ref": "299ca41f34e8cb5a792537fce385fb3cad57d04ad7d86690412934a69423b17e",
+          "start_byte": 317756,
+          "end_byte_exclusive": 318802
+        },
+        {
+          "pair_ref": "02494e2f36cfbed267320651d0f09fe64a352eca3005000b78bf8dba22a5b539",
+          "start_byte": 318802,
+          "end_byte_exclusive": 318939
+        }
+      ],
+      "uncovered_spans": [],
+      "uncovered_bytes": 0
+    },
+    {
+      "unit": "32.3",
+      "source_span": {
+        "start_byte": 318939,
+        "end_byte_exclusive": 320680,
+        "start_line": 6015,
+        "end_line_inclusive": 6062,
+        "bytes": 1741,
+        "sha256": "dbd6480162890f1a2525b9bc89fc1d287988054c4f6ac9e5f127b6075d7f0003",
+        "git_blob_oid": "91f1b08714d97c80aaec88a1be135d3d0798df6d",
+        "lf": 48,
+        "terminal_lf": 2,
+        "eof_hex": "ae9ee99985e8a792e782b9e380820a0a"
+      },
+      "expected_full_parent_id": "dbd6480162890f1a2525b9bc89fc1d287988054c4f6ac9e5f127b6075d7f0003",
+      "full_parent_ref": "dbd6480162890f1a2525b9bc89fc1d287988054c4f6ac9e5f127b6075d7f0003",
+      "complete": true,
+      "ordered_parts": [
+        {
+          "pair_ref": "2c82eb6f13bfdb3fafa4db7d8800e2c0fdcf0dcb583b5f1bb211778a32e9ad44",
+          "start_byte": 318939,
+          "end_byte_exclusive": 319929
+        },
+        {
+          "pair_ref": "add68b01ffeeb185c6476ddacd06426a751dc3723507a03f2361085ac935c06d",
+          "start_byte": 319929,
+          "end_byte_exclusive": 320680
+        }
+      ],
+      "uncovered_spans": [],
+      "uncovered_bytes": 0
+    },
+    {
+      "unit": "32.4",
+      "source_span": {
+        "start_byte": 320680,
+        "end_byte_exclusive": 322113,
+        "start_line": 6063,
+        "end_line_inclusive": 6094,
+        "bytes": 1433,
+        "sha256": "2e93bc388aacb60617f4deb8ee92cb386d3f7829a89d6a96c79c85edb2a9e5bb",
+        "git_blob_oid": "1dcd310ff660fa671461e58f209af83c9702bf3c",
+        "lf": 32,
+        "terminal_lf": 2,
+        "eof_hex": "a5204b4c20e5b7aee9a29de380820a0a"
+      },
+      "expected_full_parent_id": "2e93bc388aacb60617f4deb8ee92cb386d3f7829a89d6a96c79c85edb2a9e5bb",
+      "full_parent_ref": "2e93bc388aacb60617f4deb8ee92cb386d3f7829a89d6a96c79c85edb2a9e5bb",
+      "complete": true,
+      "ordered_parts": [
+        {
+          "pair_ref": "3efe6e4b0dec5a44586e7fe730d4e31f80b581d989cc0f3989c917a68a4282dd",
+          "start_byte": 320680,
+          "end_byte_exclusive": 321591
+        },
+        {
+          "pair_ref": "267ffd09f77c485b29ddb94c970fe3c2fda472f9b1ae720d261a3824d1a7426b",
+          "start_byte": 321591,
+          "end_byte_exclusive": 321823
+        },
+        {
+          "pair_ref": "0d666b8e7af4a47e5237dd415923c25fa9a92de3f933b526b42a835ac68291c5",
+          "start_byte": 321823,
+          "end_byte_exclusive": 322113
+        }
+      ],
+      "uncovered_spans": [],
+      "uncovered_bytes": 0
+    },
+    {
+      "unit": "32.5",
+      "source_span": {
+        "start_byte": 322113,
+        "end_byte_exclusive": 322753,
+        "start_line": 6095,
+        "end_line_inclusive": 6109,
+        "bytes": 640,
+        "sha256": "e377e1dab63f611b1196eee2b3ae84b14602553cc2420c8c229fa35b8987c9da",
+        "git_blob_oid": "eafd3c83c51be0b980fb69eda32147d65705676a",
+        "lf": 15,
+        "terminal_lf": 2,
+        "eof_hex": "bba7e689bfe6ada3e59f9fe380820a0a"
+      },
+      "expected_full_parent_id": "e377e1dab63f611b1196eee2b3ae84b14602553cc2420c8c229fa35b8987c9da",
+      "full_parent_ref": "e377e1dab63f611b1196eee2b3ae84b14602553cc2420c8c229fa35b8987c9da",
+      "complete": true,
+      "ordered_parts": [
+        {
+          "pair_ref": "e377e1dab63f611b1196eee2b3ae84b14602553cc2420c8c229fa35b8987c9da",
+          "start_byte": 322113,
+          "end_byte_exclusive": 322753
+        }
+      ],
+      "uncovered_spans": [],
+      "uncovered_bytes": 0
+    },
+    {
+      "unit": "32.6",
+      "source_span": {
+        "start_byte": 322753,
+        "end_byte_exclusive": 323370,
+        "start_line": 6110,
+        "end_line_inclusive": 6122,
+        "bytes": 617,
+        "sha256": "b8016f367a0b848d8f3a5d8bdadf73985661ade200824b073db6946917e4720f",
+        "git_blob_oid": "0d0027693d8c592ad585b628c7d9a4c33a4e6a20",
+        "lf": 13,
+        "terminal_lf": 2,
+        "eof_hex": "9088e4b8a5e6a0bce587b9e380820a0a"
+      },
+      "expected_full_parent_id": "b8016f367a0b848d8f3a5d8bdadf73985661ade200824b073db6946917e4720f",
+      "full_parent_ref": "b8016f367a0b848d8f3a5d8bdadf73985661ade200824b073db6946917e4720f",
+      "complete": true,
+      "ordered_parts": [
+        {
+          "pair_ref": "b8016f367a0b848d8f3a5d8bdadf73985661ade200824b073db6946917e4720f",
+          "start_byte": 322753,
+          "end_byte_exclusive": 323370
+        }
+      ],
+      "uncovered_spans": [],
+      "uncovered_bytes": 0
+    },
+    {
+      "unit": "32.7",
+      "source_span": {
+        "start_byte": 323370,
+        "end_byte_exclusive": 324190,
+        "start_line": 6123,
+        "end_line_inclusive": 6144,
+        "bytes": 820,
+        "sha256": "849698731bafbc13f7d1dfa78be01f6d27adb62c599c844d5faa1d49f93688bd",
+        "git_blob_oid": "dd224490d0fa776afb6d68d2da613e391adc0280",
+        "lf": 22,
+        "terminal_lf": 2,
+        "eof_hex": "6572746966696361746529e380820a0a"
+      },
+      "expected_full_parent_id": "849698731bafbc13f7d1dfa78be01f6d27adb62c599c844d5faa1d49f93688bd",
+      "full_parent_ref": "849698731bafbc13f7d1dfa78be01f6d27adb62c599c844d5faa1d49f93688bd",
+      "complete": true,
+      "ordered_parts": [
+        {
+          "pair_ref": "199bfadc0f1d27c71b0431ff37f7d447c1bb5fe937294db8a25b86484097ea55",
+          "start_byte": 323370,
+          "end_byte_exclusive": 323517
+        },
+        {
+          "pair_ref": "160cb196739b24aad53e5816bd2699cd4cb61aa71785f3d9489e78df3f86aef9",
+          "start_byte": 323517,
+          "end_byte_exclusive": 324052
+        },
+        {
+          "pair_ref": "a1eb022235c51ceb4ea107571d90e518b95e6c13723d5e60597e5c155c149343",
+          "start_byte": 324052,
+          "end_byte_exclusive": 324190
+        }
+      ],
+      "uncovered_spans": [],
+      "uncovered_bytes": 0
+    },
+    {
+      "unit": "32.8",
+      "source_span": {
+        "start_byte": 324190,
+        "end_byte_exclusive": 326057,
+        "start_line": 6145,
+        "end_line_inclusive": 6182,
+        "bytes": 1867,
+        "sha256": "c883292d5277d0c6ade85e9075c192189846cc0dcccd69df4964efb5afa5be68",
+        "git_blob_oid": "0d7561047e45175fcf208edeecc60326c6c1c767",
+        "lf": 38,
+        "terminal_lf": 2,
+        "eof_hex": "bbb7e6a0bce8af81e6988ee380820a0a"
+      },
+      "expected_full_parent_id": "c883292d5277d0c6ade85e9075c192189846cc0dcccd69df4964efb5afa5be68",
+      "full_parent_ref": "c883292d5277d0c6ade85e9075c192189846cc0dcccd69df4964efb5afa5be68",
+      "complete": true,
+      "ordered_parts": [
+        {
+          "pair_ref": "0602aeede6ca2288b2fe95b9a160cea597dc8f6f9440c5ebfc229c41a7dfc2ad",
+          "start_byte": 324190,
+          "end_byte_exclusive": 324372
+        },
+        {
+          "pair_ref": "3d199987fa6ad77fa23a0135ea1f4a37d77b57d039b06edbf597c8145eba6e59",
+          "start_byte": 324372,
+          "end_byte_exclusive": 325817
+        },
+        {
+          "pair_ref": "4cb172b610451128cf1f493765ab22e58841117b655dbe57f09efd2062617b02",
+          "start_byte": 325817,
+          "end_byte_exclusive": 326057
+        }
+      ],
+      "uncovered_spans": [],
+      "uncovered_bytes": 0
+    },
+    {
+      "unit": "32.9",
+      "source_span": {
+        "start_byte": 326057,
+        "end_byte_exclusive": 326672,
+        "start_line": 6183,
+        "end_line_inclusive": 6193,
+        "bytes": 615,
+        "sha256": "4f18a2d08386ce49af494c9df8eec14f5ee25c691234884c6ec6f938ee4a3fcc",
+        "git_blob_oid": "f61dc8da28b4fea111037a7da44671a2bee9d98e",
+        "lf": 11,
+        "terminal_lf": 2,
+        "eof_hex": "8fa6e8a7812033322e3137e380820a0a"
+      },
+      "expected_full_parent_id": "4f18a2d08386ce49af494c9df8eec14f5ee25c691234884c6ec6f938ee4a3fcc",
+      "full_parent_ref": "4f18a2d08386ce49af494c9df8eec14f5ee25c691234884c6ec6f938ee4a3fcc",
+      "complete": true,
+      "ordered_parts": [
+        {
+          "pair_ref": "4f18a2d08386ce49af494c9df8eec14f5ee25c691234884c6ec6f938ee4a3fcc",
+          "start_byte": 326057,
+          "end_byte_exclusive": 326672
+        }
+      ],
+      "uncovered_spans": [],
+      "uncovered_bytes": 0
+    },
+    {
+      "unit": "32.10",
+      "source_span": {
+        "start_byte": 326672,
+        "end_byte_exclusive": 327440,
+        "start_line": 6194,
+        "end_line_inclusive": 6210,
+        "bytes": 768,
+        "sha256": "8e3302b3311f436c887376e27837b19dad53406374b1fee73e6e593d6451f011",
+        "git_blob_oid": "5f0e73cf85cf702d9aeed5643d6a4390bf11a831",
+        "lf": 17,
+        "terminal_lf": 2,
+        "eof_hex": "8685e983a8e88a82e782b9e380820a0a"
+      },
+      "expected_full_parent_id": "8e3302b3311f436c887376e27837b19dad53406374b1fee73e6e593d6451f011",
+      "full_parent_ref": "8e3302b3311f436c887376e27837b19dad53406374b1fee73e6e593d6451f011",
+      "complete": true,
+      "ordered_parts": [
+        {
+          "pair_ref": "8e3302b3311f436c887376e27837b19dad53406374b1fee73e6e593d6451f011",
+          "start_byte": 326672,
+          "end_byte_exclusive": 327440
+        }
+      ],
+      "uncovered_spans": [],
+      "uncovered_bytes": 0
+    },
+    {
+      "unit": "32.11",
+      "source_span": {
+        "start_byte": 327440,
+        "end_byte_exclusive": 329029,
+        "start_line": 6211,
+        "end_line_inclusive": 6242,
+        "bytes": 1589,
+        "sha256": "b1f9463c07286f8989bbcd5341a00ca3b5a854ce2e5566f8a655bfb576be577a",
+        "git_blob_oid": "7812e0de8cf3884d63056ae0dcd6997dea08f04f",
+        "lf": 32,
+        "terminal_lf": 2,
+        "eof_hex": "2920e79a84e7aca6e58fb7e380820a0a"
+      },
+      "expected_full_parent_id": "b1f9463c07286f8989bbcd5341a00ca3b5a854ce2e5566f8a655bfb576be577a",
+      "full_parent_ref": "b1f9463c07286f8989bbcd5341a00ca3b5a854ce2e5566f8a655bfb576be577a",
+      "complete": true,
+      "ordered_parts": [
+        {
+          "pair_ref": "2a2f111a19707795c46343b33dc80613c71873769f5cd9327f50b57233370a15",
+          "start_byte": 327440,
+          "end_byte_exclusive": 328675
+        },
+        {
+          "pair_ref": "e998c45bd7ae4a5b69d95f9bf088df412f1d541301b4e18d9a91f21c85999b5e",
+          "start_byte": 328675,
+          "end_byte_exclusive": 329029
+        }
+      ],
+      "uncovered_spans": [],
+      "uncovered_bytes": 0
+    },
+    {
+      "unit": "32.12",
+      "source_span": {
+        "start_byte": 329029,
+        "end_byte_exclusive": 329980,
+        "start_line": 6243,
+        "end_line_inclusive": 6260,
+        "bytes": 951,
+        "sha256": "f55a59179ebc4004804f07f4da0c9bf61b9463126dead26f3c1086402a232698",
+        "git_blob_oid": "bbab944daa2487f7042fdfd0cf0fd89668efc99f",
+        "lf": 18,
+        "terminal_lf": 2,
+        "eof_hex": "87aae58aa8e4baa7e7949fe380820a0a"
+      },
+      "expected_full_parent_id": "f55a59179ebc4004804f07f4da0c9bf61b9463126dead26f3c1086402a232698",
+      "full_parent_ref": "f55a59179ebc4004804f07f4da0c9bf61b9463126dead26f3c1086402a232698",
+      "complete": true,
+      "ordered_parts": [
+        {
+          "pair_ref": "f55a59179ebc4004804f07f4da0c9bf61b9463126dead26f3c1086402a232698",
+          "start_byte": 329029,
+          "end_byte_exclusive": 329980
+        }
+      ],
+      "uncovered_spans": [],
+      "uncovered_bytes": 0
+    },
+    {
+      "unit": "32.13",
+      "source_span": {
+        "start_byte": 329980,
+        "end_byte_exclusive": 331435,
+        "start_line": 6261,
+        "end_line_inclusive": 6301,
+        "bytes": 1455,
+        "sha256": "9745764372d22f7f3cdf0da80b6f485cf4c3c8845a3a01798253b1fb2db2a064",
+        "git_blob_oid": "0299e770d7ab9c504795f13c6ffd18c433282ce2",
+        "lf": 41,
+        "terminal_lf": 2,
+        "eof_hex": "302b302b31373d35355c29e380820a0a"
+      },
+      "expected_full_parent_id": "9745764372d22f7f3cdf0da80b6f485cf4c3c8845a3a01798253b1fb2db2a064",
+      "full_parent_ref": "9745764372d22f7f3cdf0da80b6f485cf4c3c8845a3a01798253b1fb2db2a064",
+      "complete": true,
+      "ordered_parts": [
+        {
+          "pair_ref": "1a630a54dfd30c03f84eaf5d813b72e367820439994d30fe203c3ee6630b2c41",
+          "start_byte": 329980,
+          "end_byte_exclusive": 330709
+        },
+        {
+          "pair_ref": "549d4efd0e7d075099b1575c47134158fda566bbae687a7973c8c846408ccc01",
+          "start_byte": 330709,
+          "end_byte_exclusive": 331435
+        }
+      ],
+      "uncovered_spans": [],
+      "uncovered_bytes": 0
+    },
+    {
+      "unit": "32.14",
+      "source_span": {
+        "start_byte": 331435,
+        "end_byte_exclusive": 332670,
+        "start_line": 6302,
+        "end_line_inclusive": 6327,
+        "bytes": 1235,
+        "sha256": "ceebbfd110870c571b8ff3ba0cb2f4c46ebe3835b63568a59e6bac99810a62f6",
+        "git_blob_oid": "0f4143bb9d57df3e3e578315faf8c7f16c098986",
+        "lf": 26,
+        "terminal_lf": 2,
+        "eof_hex": "878de5a48de88a82e782b9e380820a0a"
+      },
+      "expected_full_parent_id": "ceebbfd110870c571b8ff3ba0cb2f4c46ebe3835b63568a59e6bac99810a62f6",
+      "full_parent_ref": "ceebbfd110870c571b8ff3ba0cb2f4c46ebe3835b63568a59e6bac99810a62f6",
+      "complete": true,
+      "ordered_parts": [
+        {
+          "pair_ref": "ceebbfd110870c571b8ff3ba0cb2f4c46ebe3835b63568a59e6bac99810a62f6",
+          "start_byte": 331435,
+          "end_byte_exclusive": 332670
+        }
+      ],
+      "uncovered_spans": [],
+      "uncovered_bytes": 0
+    },
+    {
+      "unit": "32.15",
+      "source_span": {
+        "start_byte": 332670,
+        "end_byte_exclusive": 334967,
+        "start_line": 6328,
+        "end_line_inclusive": 6358,
+        "bytes": 2297,
+        "sha256": "888aa3d042d9c8b2eac307811778226789b138b929462b91539ffd1c440453ad",
+        "git_blob_oid": "515697d9fe2f6cd54fd01d6761017f98c43b1f34",
+        "lf": 31,
+        "terminal_lf": 2,
+        "eof_hex": "6572746966696361746529e380820a0a"
+      },
+      "expected_full_parent_id": "888aa3d042d9c8b2eac307811778226789b138b929462b91539ffd1c440453ad",
+      "full_parent_ref": "888aa3d042d9c8b2eac307811778226789b138b929462b91539ffd1c440453ad",
+      "complete": true,
+      "ordered_parts": [
+        {
+          "pair_ref": "59aa42fa58fe65e04a836c1e7a52c81f848ebc62237173020ccc3de0bae1266a",
+          "start_byte": 332670,
+          "end_byte_exclusive": 334534
+        },
+        {
+          "pair_ref": "3248be5c5a8787d068c50e13a50aa66a6c08d2694fdcceed54ec09d84bca0a3c",
+          "start_byte": 334534,
+          "end_byte_exclusive": 334829
+        },
+        {
+          "pair_ref": "a1eb022235c51ceb4ea107571d90e518b95e6c13723d5e60597e5c155c149343",
+          "start_byte": 334829,
+          "end_byte_exclusive": 334967
+        }
+      ],
+      "uncovered_spans": [],
+      "uncovered_bytes": 0
+    },
+    {
+      "unit": "32.16",
+      "source_span": {
+        "start_byte": 334967,
+        "end_byte_exclusive": 336341,
+        "start_line": 6359,
+        "end_line_inclusive": 6394,
+        "bytes": 1374,
+        "sha256": "dd4c44c5735b92f1bf70af15cd6438e66f11257a6605158e3b0feceedc68f7e9",
+        "git_blob_oid": "963ec421d7bf0cb86b428b0129ce47b821b3e2c1",
+        "lf": 36,
+        "terminal_lf": 2,
+        "eof_hex": "aee59ba0e5ad9020323130e380820a0a"
+      },
+      "expected_full_parent_id": "dd4c44c5735b92f1bf70af15cd6438e66f11257a6605158e3b0feceedc68f7e9",
+      "full_parent_ref": "dd4c44c5735b92f1bf70af15cd6438e66f11257a6605158e3b0feceedc68f7e9",
+      "complete": true,
+      "ordered_parts": [
+        {
+          "pair_ref": "fe42b97cf7003daf8e7c14127151544b64b155a4ea4d7a705e7dc6b93a53e31f",
+          "start_byte": 334967,
+          "end_byte_exclusive": 335272
+        },
+        {
+          "pair_ref": "37d95713c3418c963b39866fcb71757556c42e57fc70371739a69a8b4605fb86",
+          "start_byte": 335272,
+          "end_byte_exclusive": 336341
+        }
+      ],
+      "uncovered_spans": [],
+      "uncovered_bytes": 0
+    },
+    {
+      "unit": "32.17",
+      "source_span": {
+        "start_byte": 336341,
+        "end_byte_exclusive": 337389,
+        "start_line": 6395,
+        "end_line_inclusive": 6414,
+        "bytes": 1048,
+        "sha256": "0b86b421e593430316ac2b34d2ed1925b8d3540a045f5dd53aab1d81592cefe2",
+        "git_blob_oid": "e82914b1bf46c95b8124089b9ec76b9b82ee9f40",
+        "lf": 20,
+        "terminal_lf": 2,
+        "eof_hex": "a0bce59d87e4bf9de79599e380820a0a"
+      },
+      "expected_full_parent_id": "0b86b421e593430316ac2b34d2ed1925b8d3540a045f5dd53aab1d81592cefe2",
+      "full_parent_ref": "0b86b421e593430316ac2b34d2ed1925b8d3540a045f5dd53aab1d81592cefe2",
+      "complete": true,
+      "ordered_parts": [
+        {
+          "pair_ref": "0b86b421e593430316ac2b34d2ed1925b8d3540a045f5dd53aab1d81592cefe2",
+          "start_byte": 336341,
+          "end_byte_exclusive": 337389
+        }
+      ],
+      "uncovered_spans": [],
+      "uncovered_bytes": 0
+    },
+    {
+      "unit": "32.18",
+      "source_span": {
+        "start_byte": 337389,
+        "end_byte_exclusive": 338679,
+        "start_line": 6415,
+        "end_line_inclusive": 6442,
+        "bytes": 1290,
+        "sha256": "40c26d910bc5b3083a9a6f25a5e6fa6673e28d9a99fe6f30523d0466728a1b85",
+        "git_blob_oid": "2bb3d039cb588f661b67be0f42a5f1ca2c955ffb",
+        "lf": 28,
+        "terminal_lf": 2,
+        "eof_hex": "322e313820e68ea8e587bae380820a0a"
+      },
+      "expected_full_parent_id": "40c26d910bc5b3083a9a6f25a5e6fa6673e28d9a99fe6f30523d0466728a1b85",
+      "full_parent_ref": "40c26d910bc5b3083a9a6f25a5e6fa6673e28d9a99fe6f30523d0466728a1b85",
+      "complete": true,
+      "ordered_parts": [
+        {
+          "pair_ref": "c7bfcacde40b4f1f0ba02febc0229203a10736793e580286afb0fdd77d40564a",
+          "start_byte": 337389,
+          "end_byte_exclusive": 337599
+        },
+        {
+          "pair_ref": "93bf0eb4ae65675b2a6e8f61ae660edc12a6cd5c7749f90dd19de4f55535f317",
+          "start_byte": 337599,
+          "end_byte_exclusive": 337856
+        },
+        {
+          "pair_ref": "2dc1680db255b3089cc7e638c115923f9c177874980fcfe5a82dd27bc1bbffe0",
+          "start_byte": 337856,
+          "end_byte_exclusive": 338062
+        },
+        {
+          "pair_ref": "db3fb2d386fd4f4fa1439e37c633a6db2f935719ef867b63ac5095ad04cfb850",
+          "start_byte": 338062,
+          "end_byte_exclusive": 338359
+        },
+        {
+          "pair_ref": "71f1b9f703819b5e8e2754cfe3fadf2e57029bfa9b467b675ac372040b5666c9",
+          "start_byte": 338359,
+          "end_byte_exclusive": 338528
+        },
+        {
+          "pair_ref": "c07111417e8ad2d06301f903a8c9fe4261018a9ea83abc084631dd513eb3ff38",
+          "start_byte": 338528,
+          "end_byte_exclusive": 338679
+        }
+      ],
+      "uncovered_spans": [],
+      "uncovered_bytes": 0
+    },
+    {
+      "unit": "32.21",
+      "source_span": {
+        "start_byte": 338679,
+        "end_byte_exclusive": 339021,
+        "start_line": 6443,
+        "end_line_inclusive": 6446,
+        "bytes": 342,
+        "sha256": "eb671e56db94848864eb4781fd93f61d258cd552dbd43b32c0770b546f789f1e",
+        "git_blob_oid": "c74401a2bbe654194f3f79219e48a16a855e3d74",
+        "lf": 4,
+        "terminal_lf": 2,
+        "eof_hex": "978fe79a84e8a395e9878fe380820a0a"
+      },
+      "expected_full_parent_id": "eb671e56db94848864eb4781fd93f61d258cd552dbd43b32c0770b546f789f1e",
+      "full_parent_ref": "eb671e56db94848864eb4781fd93f61d258cd552dbd43b32c0770b546f789f1e",
+      "complete": true,
+      "ordered_parts": [
+        {
+          "pair_ref": "eb671e56db94848864eb4781fd93f61d258cd552dbd43b32c0770b546f789f1e",
+          "start_byte": 338679,
+          "end_byte_exclusive": 339021
+        }
+      ],
+      "uncovered_spans": [],
+      "uncovered_bytes": 0
+    },
+    {
+      "unit": "32.22",
+      "source_span": {
+        "start_byte": 339021,
+        "end_byte_exclusive": 341658,
+        "start_line": 6447,
+        "end_line_inclusive": 6502,
+        "bytes": 2637,
+        "sha256": "7310cee6ccfd4e15faeb55449779326ea693ae1c1517bfdb042e3e2cf26bb191",
+        "git_blob_oid": "c6e1b834c8d95a3f7a841f8fd4e19d04b4e47247",
+        "lf": 56,
+        "terminal_lf": 2,
+        "eof_hex": "2e3135e2809333322e3137e380820a0a"
+      },
+      "expected_full_parent_id": "7310cee6ccfd4e15faeb55449779326ea693ae1c1517bfdb042e3e2cf26bb191",
+      "full_parent_ref": "7310cee6ccfd4e15faeb55449779326ea693ae1c1517bfdb042e3e2cf26bb191",
+      "complete": true,
+      "ordered_parts": [
+        {
+          "pair_ref": "1a18125637ad0db0198a9ae256eb9b16043066a9fd8c60dbd21fd86bebf55cc2",
+          "start_byte": 339021,
+          "end_byte_exclusive": 339717
+        },
+        {
+          "pair_ref": "05745066716ccacdeb06b5d2ff48c4ab322ee9f2a08b33dfec2b87b496be975b",
+          "start_byte": 339717,
+          "end_byte_exclusive": 341658
+        }
+      ],
+      "uncovered_spans": [],
+      "uncovered_bytes": 0
+    },
+    {
+      "unit": "32.23",
+      "source_span": {
+        "start_byte": 341658,
+        "end_byte_exclusive": 343784,
+        "start_line": 6503,
+        "end_line_inclusive": 6538,
+        "bytes": 2126,
+        "sha256": "93273e4270217e61f05fd544b0573df67698475f24c97e63b42851644a0b152b",
+        "git_blob_oid": "b5913ef1346301bb7cf6281acd6a6a08344f8a9a",
+        "lf": 36,
+        "terminal_lf": 2,
+        "eof_hex": "bf9ee7bbade9878fe8af8de380820a0a"
+      },
+      "expected_full_parent_id": "93273e4270217e61f05fd544b0573df67698475f24c97e63b42851644a0b152b",
+      "full_parent_ref": "93273e4270217e61f05fd544b0573df67698475f24c97e63b42851644a0b152b",
+      "complete": true,
+      "ordered_parts": [
+        {
+          "pair_ref": "86dd05bb0a3edb24f6fc6cedbe5cef5ab918e9726467370be6848b9625e48bee",
+          "start_byte": 341658,
+          "end_byte_exclusive": 342157
+        },
+        {
+          "pair_ref": "84269ed513088e7134eb039d59f07275e73628c5e306ec39c11f86752fab9bc5",
+          "start_byte": 342157,
+          "end_byte_exclusive": 343784
+        }
+      ],
+      "uncovered_spans": [],
+      "uncovered_bytes": 0
+    },
+    {
+      "unit": "32.24",
+      "source_span": {
+        "start_byte": 343784,
+        "end_byte_exclusive": 347263,
+        "start_line": 6539,
+        "end_line_inclusive": 6581,
+        "bytes": 3479,
+        "sha256": "5b7d0ec7406e78533813546c13b42f9662c6d75153defbced56a8aa01fb0bf03",
+        "git_blob_oid": "832f6b1b58f57345f8e5c3b06228fae97f13e376",
+        "lf": 43,
+        "terminal_lf": 1,
+        "eof_hex": "e7aca6e58fb7e8af81e68daee380820a"
+      },
+      "expected_full_parent_id": "5b7d0ec7406e78533813546c13b42f9662c6d75153defbced56a8aa01fb0bf03",
+      "full_parent_ref": null,
+      "complete": false,
+      "ordered_parts": [
+        {
+          "pair_ref": "26d91251df21207803f6596a4a4d7ade71a66ffbada7f1fd970677d38dd1f1ca",
+          "start_byte": 343784,
+          "end_byte_exclusive": 344291
+        },
+        {
+          "pair_ref": "341bb6c12c599c2d10029c605d892c6a0002d55b1aa1e02459f155ae789548de",
+          "start_byte": 344291,
+          "end_byte_exclusive": 344409
+        },
+        {
+          "pair_ref": "6c6da1934f8b89cf9aa2406e058902e509be0629603ec69a680db4cde331fb06",
+          "start_byte": 344411,
+          "end_byte_exclusive": 344529
+        },
+        {
+          "pair_ref": "481a10f217394a7df4185850c5d322d0a6d4cc89792f22ca3f2167de93198fc6",
+          "start_byte": 344531,
+          "end_byte_exclusive": 344649
+        },
+        {
+          "pair_ref": "696851c83492ac651b196b9e762f6fcb95375d2577d1cf2c39e58de2e7833497",
+          "start_byte": 344651,
+          "end_byte_exclusive": 344769
+        },
+        {
+          "pair_ref": "c5bf8477274a2b925ec0c3e61ea331a3ba6079cead82f3f3e9f0d3bca61aee66",
+          "start_byte": 344771,
+          "end_byte_exclusive": 344890
+        },
+        {
+          "pair_ref": "6f624b72c16091da136e044854ea6ce17902556a56c85a398f8136a61c57fda0",
+          "start_byte": 344892,
+          "end_byte_exclusive": 345012
+        },
+        {
+          "pair_ref": "60be58ddefded6ee57503872533c1570e703617ea9b1586924caefd6c7161717",
+          "start_byte": 345014,
+          "end_byte_exclusive": 345134
+        },
+        {
+          "pair_ref": "26b0e2a20828908611065e4f91c31db6243882cba59ab80a7100dd13bbecfbe0",
+          "start_byte": 345136,
+          "end_byte_exclusive": 345256
+        },
+        {
+          "pair_ref": "852ec4ad9d0750ffc49d419edfaecf1f5c4512d2b63d814fc192a0bfe55154b6",
+          "start_byte": 345258,
+          "end_byte_exclusive": 345378
+        },
+        {
+          "pair_ref": "d6cbd446402c318cfe425f01d77a4a01d4bcae786423700f86560c187b2d7e46",
+          "start_byte": 345380,
+          "end_byte_exclusive": 345501
+        },
+        {
+          "pair_ref": "78ed3fa08d0afe20f27db9128db1cb0b4baf7f7e136d199e275c2202898082bc",
+          "start_byte": 345503,
+          "end_byte_exclusive": 345624
+        },
+        {
+          "pair_ref": "f70aa7c9c78fc6f347e7c143e2e1aefd974de73c4283ead3df669793ee7f6a26",
+          "start_byte": 345626,
+          "end_byte_exclusive": 345747
+        },
+        {
+          "pair_ref": "e5c0f8aea4c6ee3d20808687aefba33f8d6a8c4d8653f62d0a1a98189818f671",
+          "start_byte": 345749,
+          "end_byte_exclusive": 345871
+        },
+        {
+          "pair_ref": "cfe7c5cb5364e709d2944b0df8b57f457f86906474c1924ce59269bde068a639",
+          "start_byte": 345873,
+          "end_byte_exclusive": 345996
+        },
+        {
+          "pair_ref": "b55cafb749c1187a3f0015d130f764a5de5dc432d3548111415454866f438706",
+          "start_byte": 345998,
+          "end_byte_exclusive": 346132
+        },
+        {
+          "pair_ref": "01613aa2513164515598959adc81b18723d33df31f3898e67f537fef9ab37f23",
+          "start_byte": 346134,

@@ -1,0 +1,30 @@
+**30.52 定义（全半轴有限距离与两种下界）。** Use the full-half-axis model of 30.27–30.31:
+\[
+\mathcal H=L^2((0,\infty),dx),\quad
+\langle F,G\rangle=\int_0^\infty\overline{F(x)}G(x)\,dx,\quad
+\chi=\mathbf1_{(0,1]},\quad f_k(x)=\{1/(kx)\}.
+\]
+Here \(\mathbb N_0=\{0,1,\ldots\}\), \(N\in\mathbb N_+\), precision
+\(\eta\in\mathbb Q_{>0}\), and a comparison threshold \(r\in\mathbb Q\) may have either sign.
+On the unscaled coefficient space define
+\[
+V:\mathbb C^N\longrightarrow\mathcal H,\quad Va=\sum_{k=1}^Na_kf_k,
+\qquad R_N(a)=\|\chi-Va\|^2,\qquad D_N=\inf_{a\in\mathbb C^N}R_N(a).
+\]
+Composition means applying the right-hand map first; adjoints and pseudoinverses have the
+conjugate-linear-first conventions of 30.22–30.26. The infinite synthesis map still uses
+\(h_0=\chi,h_k=f_k/k\) and \(A=T^*T\); finite nonzero scaling preserves the span,
+but does not identify the two coefficient norms or give a bounded infinite inverse.
+There is no coefficient condition that cancels a tail. With
+\[
+L=L_N=\operatorname{lcm}(1,\ldots,N),\quad
+g_a(t)=\sum_{k=1}^Na_k\{t/k\},\quad b_a=\sum_{k=1}^Na_k/k,
+\]
+the substitution \(t=1/x\) gives exactly
+\[
+R_N(a)=\int_0^\infty|\mathbf1_{[1,\infty)}(t)-g_a(t)|^2\frac{dt}{t^2},
+\qquad \|Va\|^2=\int_0^\infty|g_a(t)|^2\frac{dt}{t^2}.
+\]
+Breakpoints are null sets. A lower bound on \(D_N\) and a coercivity bound
+\(\|Va\|^2\ge\delta\|a\|_2^2\) concern different quantities; neither can replace the other.
+

@@ -1,0 +1,795 @@
+    {
+      "original_insertion_offset": 176184,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 141116,
+        "byte_end_exclusive": 141131,
+        "byte_count": 15,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "c5b80e890daa260114a2aa1999a761e8b876f84e7d50b2acddc223108d944c71"
+      },
+      "kind": "type / grammar metadata",
+      "binding": null,
+      "text": "命题范围。"
+    },
+    {
+      "original_insertion_offset": 176268,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 141134,
+        "byte_end_exclusive": 141166,
+        "byte_count": 32,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "714e602d2742ad0345bab5fb7fb1b870e503798775c451f48a07c187c9232d21"
+      },
+      "kind": "original status metadata",
+      "binding": null,
+      "text": "PAPER_ARGUMENT / repo-derived。"
+    },
+    {
+      "original_insertion_offset": 177507,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 141671,
+        "byte_end_exclusive": 141716,
+        "byte_count": 45,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "a3c5f1b0fb527fe23dc075a7a501445ff5b1299b472d767728eda90b859cf4bf"
+      },
+      "kind": "type metadata",
+      "binding": "27.2",
+      "text": "定义（记号、范围及证明地位）："
+    },
+    {
+      "original_insertion_offset": 178808,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 143017,
+        "byte_end_exclusive": 143062,
+        "byte_count": 45,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "a3c5f1b0fb527fe23dc075a7a501445ff5b1299b472d767728eda90b859cf4bf"
+      },
+      "kind": "type metadata",
+      "binding": "27.3",
+      "text": "定义（记号、范围及证明地位）："
+    },
+    {
+      "original_insertion_offset": 180136,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 144390,
+        "byte_end_exclusive": 144420,
+        "byte_count": 30,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "bacc6c6d2e0f1edd1da00b17fe2cf5dc255b74137ec381e8ba09d447eb9df2fc"
+      },
+      "kind": "type metadata",
+      "binding": "27.4",
+      "text": "定理（命题及证明）："
+    },
+    {
+      "original_insertion_offset": 181585,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 145869,
+        "byte_end_exclusive": 145899,
+        "byte_count": 30,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "bacc6c6d2e0f1edd1da00b17fe2cf5dc255b74137ec381e8ba09d447eb9df2fc"
+      },
+      "kind": "type metadata",
+      "binding": "27.5",
+      "text": "定理（命题及证明）："
+    },
+    {
+      "original_insertion_offset": 182837,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 147151,
+        "byte_end_exclusive": 147181,
+        "byte_count": 30,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "bacc6c6d2e0f1edd1da00b17fe2cf5dc255b74137ec381e8ba09d447eb9df2fc"
+      },
+      "kind": "type metadata",
+      "binding": "27.6",
+      "text": "定理（命题及证明）："
+    },
+    {
+      "original_insertion_offset": 184096,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 148440,
+        "byte_end_exclusive": 148470,
+        "byte_count": 30,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "bacc6c6d2e0f1edd1da00b17fe2cf5dc255b74137ec381e8ba09d447eb9df2fc"
+      },
+      "kind": "type metadata",
+      "binding": "27.7",
+      "text": "定理（命题及证明）："
+    },
+    {
+      "original_insertion_offset": 185186,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 149560,
+        "byte_end_exclusive": 149590,
+        "byte_count": 30,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "bacc6c6d2e0f1edd1da00b17fe2cf5dc255b74137ec381e8ba09d447eb9df2fc"
+      },
+      "kind": "type metadata",
+      "binding": "27.8",
+      "text": "定理（命题及证明）："
+    },
+    {
+      "original_insertion_offset": 186144,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 150548,
+        "byte_end_exclusive": 150578,
+        "byte_count": 30,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "bacc6c6d2e0f1edd1da00b17fe2cf5dc255b74137ec381e8ba09d447eb9df2fc"
+      },
+      "kind": "type metadata",
+      "binding": "27.9",
+      "text": "定理（命题及证明）："
+    },
+    {
+      "original_insertion_offset": 186988,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 151422,
+        "byte_end_exclusive": 151452,
+        "byte_count": 30,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "bacc6c6d2e0f1edd1da00b17fe2cf5dc255b74137ec381e8ba09d447eb9df2fc"
+      },
+      "kind": "type metadata",
+      "binding": "27.10",
+      "text": "定理（命题及证明）："
+    },
+    {
+      "original_insertion_offset": 188335,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 152799,
+        "byte_end_exclusive": 152829,
+        "byte_count": 30,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "bacc6c6d2e0f1edd1da00b17fe2cf5dc255b74137ec381e8ba09d447eb9df2fc"
+      },
+      "kind": "type metadata",
+      "binding": "27.11",
+      "text": "定理（命题及证明）："
+    },
+    {
+      "original_insertion_offset": 190240,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 154734,
+        "byte_end_exclusive": 154764,
+        "byte_count": 30,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "bacc6c6d2e0f1edd1da00b17fe2cf5dc255b74137ec381e8ba09d447eb9df2fc"
+      },
+      "kind": "type metadata",
+      "binding": "27.12",
+      "text": "定理（命题及证明）："
+    },
+    {
+      "original_insertion_offset": 191313,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 155837,
+        "byte_end_exclusive": 155867,
+        "byte_count": 30,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "bacc6c6d2e0f1edd1da00b17fe2cf5dc255b74137ec381e8ba09d447eb9df2fc"
+      },
+      "kind": "type metadata",
+      "binding": "27.13",
+      "text": "定理（命题及证明）："
+    },
+    {
+      "original_insertion_offset": 193064,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 157521,
+        "byte_end_exclusive": 157575,
+        "byte_count": 54,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "e24c3482669ba96f301ec7fb80719e5ec1381159e52f6bfa08ca5931844e9a5b"
+      },
+      "kind": "type metadata",
+      "binding": "27.14",
+      "text": "定理的适用范围（保留原有开放限制）："
+    },
+    {
+      "original_insertion_offset": 193774,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 158178,
+        "byte_end_exclusive": 158208,
+        "byte_count": 30,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "bacc6c6d2e0f1edd1da00b17fe2cf5dc255b74137ec381e8ba09d447eb9df2fc"
+      },
+      "kind": "type metadata",
+      "binding": "27.15",
+      "text": "定理（命题及证明）："
+    },
+    {
+      "original_insertion_offset": 193774,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 158208,
+        "byte_end_exclusive": 158250,
+        "byte_count": 42,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "f53616a9c91256bedfdaed9d05c08824c8021cb25074332644d59deff44692c3"
+      },
+      "kind": "type / grammar metadata",
+      "binding": null,
+      "text": "整箱排除条件与指数乘法记号。"
+    },
+    {
+      "original_insertion_offset": 193871,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 158253,
+        "byte_end_exclusive": 158268,
+        "byte_count": 15,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "800c7cca5da765f48871e1b62d6b45fa303b846928a3cb92dc0cdaba61d7fe95"
+      },
+      "kind": "type / grammar metadata",
+      "binding": null,
+      "text": "对每箱构造"
+    },
+    {
+      "original_insertion_offset": 194974,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 159193,
+        "byte_end_exclusive": 159223,
+        "byte_count": 30,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "bacc6c6d2e0f1edd1da00b17fe2cf5dc255b74137ec381e8ba09d447eb9df2fc"
+      },
+      "kind": "type metadata",
+      "binding": "27.16",
+      "text": "定理（命题及证明）："
+    },
+    {
+      "original_insertion_offset": 194974,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 159223,
+        "byte_end_exclusive": 159259,
+        "byte_count": 36,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "79cedb6859b4a77eda55b7fe553abfd0abcca5c7831432ba2e20f11e9dcf2c40"
+      },
+      "kind": "type / grammar metadata",
+      "binding": null,
+      "text": "有限整数容量与乘法记号。"
+    },
+    {
+      "original_insertion_offset": 195031,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 159265,
+        "byte_end_exclusive": 159271,
+        "byte_count": 6,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "8ff7bb3c095b1fe57c730662da889d174884ffeb2da04a06086a5e4f4350e5f1"
+      },
+      "kind": "grammar metadata",
+      "binding": null,
+      "text": "给定"
+    },
+    {
+      "original_insertion_offset": 195577,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 159802,
+        "byte_end_exclusive": 159811,
+        "byte_count": 9,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "1805fe4a7ba00e924dd3a1170dc8fc198d08ce8dbd7ae827d3d918529bf817e8"
+      },
+      "kind": "grammar metadata",
+      "binding": null,
+      "text": "逐内积"
+    },
+    {
+      "original_insertion_offset": 195770,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 159989,
+        "byte_end_exclusive": 160005,
+        "byte_count": 16,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "5331c8afdbbbe2fc3cf258ae69024400d6d4b6c74aebad3c1d666cc4396a2860"
+      },
+      "kind": "notation provenance grammar",
+      "binding": null,
+      "text": "`255255+255+255`"
+    },
+    {
+      "original_insertion_offset": 196425,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 160337,
+        "byte_end_exclusive": 160367,
+        "byte_count": 30,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "bacc6c6d2e0f1edd1da00b17fe2cf5dc255b74137ec381e8ba09d447eb9df2fc"
+      },
+      "kind": "type metadata",
+      "binding": "27.17",
+      "text": "定理（命题及证明）："
+    },
+    {
+      "original_insertion_offset": 196425,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 160367,
+        "byte_end_exclusive": 160406,
+        "byte_count": 39,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "a11bf40dc9580a1134c2a5f8bd1ffed6d459f0da22348f16741a49f3b6f7ffed"
+      },
+      "kind": "type / grammar metadata",
+      "binding": null,
+      "text": "25 槽编码与两种排列的区别。"
+    },
+    {
+      "original_insertion_offset": 197451,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 161339,
+        "byte_end_exclusive": 161384,
+        "byte_count": 45,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "a3c5f1b0fb527fe23dc075a7a501445ff5b1299b472d767728eda90b859cf4bf"
+      },
+      "kind": "type metadata",
+      "binding": "27.18",
+      "text": "定义（记号、范围及证明地位）："
+    },
+    {
+      "original_insertion_offset": 197451,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 161384,
+        "byte_end_exclusive": 161408,
+        "byte_count": 24,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "42a15f9f7004fc2f097d449529ab317df4864b1feb9fdb870f76832a19218b0e"
+      },
+      "kind": "type / grammar metadata",
+      "binding": null,
+      "text": "条件覆盖的定义。"
+    },
+    {
+      "original_insertion_offset": 198275,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 162042,
+        "byte_end_exclusive": 162054,
+        "byte_count": 12,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "065ebe730735c149481272e67521c43fe838ba2284475ca264522bec00bbd754"
+      },
+      "kind": "type / grammar metadata",
+      "binding": null,
+      "text": "第一类。"
+    },
+    {
+      "original_insertion_offset": 198686,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 162064,
+        "byte_end_exclusive": 162101,
+        "byte_count": 37,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "055411042d7ac2d8819f6fd0aa773eda73ac2c13a29cc889027d73c4ca804ebf"
+      },
+      "kind": "type metadata",
+      "binding": "27.19",
+      "text": "证明附引（附 27.4–27.13）："
+    },
+    {
+      "original_insertion_offset": 198686,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 162101,
+        "byte_end_exclusive": 162122,
+        "byte_count": 21,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "3e4ab34f0b218dd637db0eb356c3d200b96e668d4afcebb4cc549e134da26592"
+      },
+      "kind": "type / grammar metadata",
+      "binding": null,
+      "text": "经典材料附引。"
+    },
+    {
+      "original_insertion_offset": 200053,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 162835,
+        "byte_end_exclusive": 162836,
+        "byte_count": 1,
+        "lf_count": 1,
+        "terminal_lf_count": 1,
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+      },
+      "kind": "paragraph separator metadata",
+      "binding": null,
+      "text": "\n"
+    },
+    {
+      "original_insertion_offset": 201605,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 162911,
+        "byte_end_exclusive": 162989,
+        "byte_count": 78,
+        "lf_count": 2,
+        "terminal_lf_count": 2,
+        "sha256": "89683ac2bda35da807eb9c7931312dd6c954821797e95cd2629ab4519f45ecb2"
+      },
+      "kind": "section type metadata",
+      "binding": "28",
+      "text": "**定义、定理与证明（保留原有证据地位及开放限制）。**\n\n"
+    },
+    {
+      "original_insertion_offset": 201612,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 162996,
+        "byte_end_exclusive": 163041,
+        "byte_count": 45,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "a3c5f1b0fb527fe23dc075a7a501445ff5b1299b472d767728eda90b859cf4bf"
+      },
+      "kind": "type metadata",
+      "binding": "28.1",
+      "text": "定义（记号、范围及证明地位）："
+    },
+    {
+      "original_insertion_offset": 201612,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 163041,
+        "byte_end_exclusive": 163071,
+        "byte_count": 30,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "82735c5279d2fe5e09884c91ba73902bdb34edc23c1e6ea11a12924296ba6f9b"
+      },
+      "kind": "type / grammar metadata",
+      "binding": null,
+      "text": "命题范围与证明地位。"
+    },
+    {
+      "original_insertion_offset": 201698,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 163074,
+        "byte_end_exclusive": 163106,
+        "byte_count": 32,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "714e602d2742ad0345bab5fb7fb1b870e503798775c451f48a07c187c9232d21"
+      },
+      "kind": "original status metadata",
+      "binding": null,
+      "text": "PAPER_ARGUMENT / repo-derived。"
+    },
+    {
+      "original_insertion_offset": 203015,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 163660,
+        "byte_end_exclusive": 163705,
+        "byte_count": 45,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "a3c5f1b0fb527fe23dc075a7a501445ff5b1299b472d767728eda90b859cf4bf"
+      },
+      "kind": "type metadata",
+      "binding": "28.2",
+      "text": "定义（记号、范围及证明地位）："
+    },
+    {
+      "original_insertion_offset": 204585,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 165275,
+        "byte_end_exclusive": 165305,
+        "byte_count": 30,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "bacc6c6d2e0f1edd1da00b17fe2cf5dc255b74137ec381e8ba09d447eb9df2fc"
+      },
+      "kind": "type metadata",
+      "binding": "28.3",
+      "text": "定理（命题及证明）："
+    },
+    {
+      "original_insertion_offset": 204624,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 165344,
+        "byte_end_exclusive": 165350,
+        "byte_count": 6,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "d7a112821adba601c2fed40e7d206bb4c18ac0383b8e19f073118a2c56588753"
+      },
+      "kind": "type / grammar metadata",
+      "binding": null,
+      "text": "其中"
+    },
+    {
+      "original_insertion_offset": 204665,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 165360,
+        "byte_end_exclusive": 165369,
+        "byte_count": 9,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "797fe2ec05617579fd5944c50d6f42c5275f9b09e24e7d8e413cc433ffef8924"
+      },
+      "kind": "type / grammar metadata",
+      "binding": null,
+      "text": "原记号"
+    },
+    {
+      "original_insertion_offset": 205416,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 166099,
+        "byte_end_exclusive": 166129,
+        "byte_count": 30,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "bacc6c6d2e0f1edd1da00b17fe2cf5dc255b74137ec381e8ba09d447eb9df2fc"
+      },
+      "kind": "type metadata",
+      "binding": "28.4",
+      "text": "定理（命题及证明）："
+    },
+    {
+      "original_insertion_offset": 206168,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 166881,
+        "byte_end_exclusive": 166891,
+        "byte_count": 10,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "f1a72a4eeddafe1f7f9cb5dbd488305a7e5466c98cb7ddae713f157cb896dee6"
+      },
+      "kind": "grammar metadata",
+      "binding": null,
+      "text": "这与从 "
+    },
+    {
+      "original_insertion_offset": 206986,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 167690,
+        "byte_end_exclusive": 167720,
+        "byte_count": 30,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "bacc6c6d2e0f1edd1da00b17fe2cf5dc255b74137ec381e8ba09d447eb9df2fc"
+      },
+      "kind": "type metadata",
+      "binding": "28.5",
+      "text": "定理（命题及证明）："
+    },
+    {
+      "original_insertion_offset": 208121,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 168855,
+        "byte_end_exclusive": 168885,
+        "byte_count": 30,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "bacc6c6d2e0f1edd1da00b17fe2cf5dc255b74137ec381e8ba09d447eb9df2fc"
+      },
+      "kind": "type metadata",
+      "binding": "28.6",
+      "text": "定理（命题及证明）："
+    },
+    {
+      "original_insertion_offset": 208976,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 169740,
+        "byte_end_exclusive": 169770,
+        "byte_count": 30,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "bacc6c6d2e0f1edd1da00b17fe2cf5dc255b74137ec381e8ba09d447eb9df2fc"
+      },
+      "kind": "type metadata",
+      "binding": "28.7",
+      "text": "定理（命题及证明）："
+    },
+    {
+      "original_insertion_offset": 210295,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 171089,
+        "byte_end_exclusive": 171119,
+        "byte_count": 30,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "bacc6c6d2e0f1edd1da00b17fe2cf5dc255b74137ec381e8ba09d447eb9df2fc"
+      },
+      "kind": "type metadata",
+      "binding": "28.8",
+      "text": "定理（命题及证明）："
+    },
+    {
+      "original_insertion_offset": 211279,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 172103,
+        "byte_end_exclusive": 172133,
+        "byte_count": 30,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "bacc6c6d2e0f1edd1da00b17fe2cf5dc255b74137ec381e8ba09d447eb9df2fc"
+      },
+      "kind": "type metadata",
+      "binding": "28.9",
+      "text": "定理（命题及证明）："
+    },
+    {
+      "original_insertion_offset": 212145,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 172999,
+        "byte_end_exclusive": 173029,
+        "byte_count": 30,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "bacc6c6d2e0f1edd1da00b17fe2cf5dc255b74137ec381e8ba09d447eb9df2fc"
+      },
+      "kind": "type metadata",
+      "binding": "28.10",
+      "text": "定理（命题及证明）："
+    },
+    {
+      "original_insertion_offset": 213175,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 174059,
+        "byte_end_exclusive": 174089,
+        "byte_count": 30,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "bacc6c6d2e0f1edd1da00b17fe2cf5dc255b74137ec381e8ba09d447eb9df2fc"
+      },
+      "kind": "type metadata",
+      "binding": "28.11",
+      "text": "定理（命题及证明）："
+    },
+    {
+      "original_insertion_offset": 213921,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 174800,
+        "byte_end_exclusive": 174830,
+        "byte_count": 30,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "bacc6c6d2e0f1edd1da00b17fe2cf5dc255b74137ec381e8ba09d447eb9df2fc"
+      },
+      "kind": "type metadata",
+      "binding": "28.12",
+      "text": "定理（命题及证明）："
+    },
+    {
+      "original_insertion_offset": 215109,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 176018,
+        "byte_end_exclusive": 176048,
+        "byte_count": 30,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "bacc6c6d2e0f1edd1da00b17fe2cf5dc255b74137ec381e8ba09d447eb9df2fc"
+      },
+      "kind": "type metadata",
+      "binding": "28.13",
+      "text": "定理（命题及证明）："
+    },
+    {
+      "original_insertion_offset": 216807,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 177635,
+        "byte_end_exclusive": 177665,
+        "byte_count": 30,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "bacc6c6d2e0f1edd1da00b17fe2cf5dc255b74137ec381e8ba09d447eb9df2fc"
+      },
+      "kind": "type metadata",
+      "binding": "28.14",
+      "text": "定理（命题及证明）："
+    },
+    {
+      "original_insertion_offset": 217801,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 178659,
+        "byte_end_exclusive": 178689,
+        "byte_count": 30,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "bacc6c6d2e0f1edd1da00b17fe2cf5dc255b74137ec381e8ba09d447eb9df2fc"
+      },
+      "kind": "type metadata",
+      "binding": "28.15",
+      "text": "定理（命题及证明）："
+    },
+    {
+      "original_insertion_offset": 219379,
+      "current": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "byte_start": 180267,
+        "byte_end_exclusive": 180297,
+        "byte_count": 30,
+        "lf_count": 0,
+        "terminal_lf_count": 0,
+        "sha256": "bacc6c6d2e0f1edd1da00b17fe2cf5dc255b74137ec381e8ba09d447eb9df2fc"
+      },
+      "kind": "type metadata",
+      "binding": "28.16",
+      "text": "定理（命题及证明）："
+    },

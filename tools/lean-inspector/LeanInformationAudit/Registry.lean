@@ -201,6 +201,15 @@ end ExpectedOccurrenceManifest
 def frozenInformationRootId : Name :=
   `D5.S3.ConceptDynamics.InformationEscape.InformationRoot
 
+/-- Companions of imported objects belong to this compilation, not the object's module.
+Lean's private names preserve local source resolution while separating compiled roots.
+The frozen root retains its public declarations: they are part of its frozen statement
+identity and are consumed by SharedInformationRoot and SealBaseline. -/
+def localCompanionName (env : Environment) (owner : Name) (suffix : String) : Name :=
+  let name := owner.str suffix
+  if env.header.mainModule == frozenInformationRootId || !env.isImportedConst owner then name
+  else mkPrivateName env name
+
 def designatedInformationRootId : Name :=
   `D5.S3.ConceptDynamics.InformationEscape.SharedInformationRoot
 

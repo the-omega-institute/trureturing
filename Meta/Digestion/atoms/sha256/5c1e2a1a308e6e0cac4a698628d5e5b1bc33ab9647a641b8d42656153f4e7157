@@ -1,0 +1,15 @@
+**30.25 定理与证明：完成平方、有限核和退化端点。** 对每个实 \(\delta\)，30.23–30.24 给
+\[
+\boxed{\operatorname{inner}((\alpha,b),(B-\delta E_{00})(\alpha,b))
+=\operatorname{inner}(b+\alpha\beta,C(b+\alpha\beta))+(d-\delta)|\alpha|^2.}
+\]
+对非负矩阵，二次型为零当且仅当向量在核中，这由正交特征分解逐项看出。因此当 \(\delta<d\) 时（尤其 \(0\le\delta<d\)），
+\[
+\ker(B-\delta E_{00})=\{0\}\oplus\ker C;
+\]
+此时正定当且仅当 \(\ker C=0\)，即 \(v_1,\ldots,v_N\) 线性无关。当 \(\delta=d\) 时，
+\[
+\ker(B-dE_{00})=\{(\alpha,-\alpha\beta+z):\alpha\in\mathbb C,\ z\in\ker C\}.
+\]
+端点总是奇异，\((1,-\beta)\) 是非零核向量。\(d=0\) 当且仅当 \(u\in M\)，非负阈值集恰为 \(\{0\}\)。\(u=0\) 时 \(a=g=\beta=d=0\)，核公式成为 \(\mathbb C\oplus\ker C\)。\(C=0\) 时所有 \(v_j=0\)、\(g=\beta=0\)、\(d=a\)，端点矩阵为零，低于端点的核为 \(\{0\}\oplus\mathbb C^N\)。\(N=0\) 时系数空间为零维、\(M=\{0\}\)、\(d=a\)，矩阵就是 \([a]\)，阈值集 \([0,a]\)，端点核为 \(\mathbb C\)。\(H=\{0\}\) 时所有向量为零，仍由这些式子覆盖。负的 \(\delta\) 也由完成平方正确处理；30.22 只把所问集合限制为 \(\delta\ge0\)。
+

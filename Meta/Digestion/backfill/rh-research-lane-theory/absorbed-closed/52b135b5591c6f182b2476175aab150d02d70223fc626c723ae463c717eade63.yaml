@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:52b135b5591c6f182b2476175aab150d02d70223fc626c723ae463c717eade63
+  normalized_sha256: sha256:52b135b5591c6f182b2476175aab150d02d70223fc626c723ae463c717eade63
+cas_ref: sha256:52b135b5591c6f182b2476175aab150d02d70223fc626c723ae463c717eade63
+coverage_gids:
+  - gid: D5/S3/Weil/TestFunctions/LiCurvatureFiniteReconstruction.recurrence_eq_toeplitz_ones_quadratic
+    target_statement_id: sha256:8ed2de16038873ac57c3743e02c8fdbb27c025f15d5414f1baddafb0bd82a442
+  - gid: D5/S3/Weil/TestFunctions/LiCurvatureFiniteReconstruction.recurrence_eq_weighted_curvature_sum
+    target_statement_id: sha256:410699535644ce0b5df3892cfafbf8208bf2c17f3498f7d5a2ca7b0625aec2a4
+  - gid: D5/S3/Weil/TestFunctions/LiCurvatureFiniteReconstruction.recurrence_nonneg_of_toeplitz_posSemidef
+    target_statement_id: sha256:25262883940e5d3257d5441ce0324abfc9555b87d1879d856b9385afbdd77c22
+  - gid: D5/S3/Weil/TestFunctions/LiCurvatureFiniteReconstruction.toeplitz_ones_diagonal_count
+    target_statement_id: sha256:33aea3dca3ca02c51b159ff885e49a0a7da7202c6290230e7fbbd1cc0d4556d2
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,14 @@
+## 17. Formal endpoints, replay and the next research step
+
+New formal-source endpoints include clipped_product_bound, checked_row_sound,
+affine_message_certificate, affine_message_positive, affine_polynomial_margin,
+vacancy_mem, affine_full_row_contraction and affine_pruned_row_contraction.
+The finite data, real inequality proofs and geometry all have paired canonical
+Scribe declarations. The historical fixed-order and block-memory modules remain
+unchanged. No artificial finite arena, information score or sealing claim is
+attached to the certificate; the type assignments refer to actual grid masks.
+
+The independent pure-Python verifier reads the current Lean-owned literals,
+reconstructs all successors with integer-coordinate sets, and performs:
+
+- 2643 geometric transition checks and 881 integer growth rows;

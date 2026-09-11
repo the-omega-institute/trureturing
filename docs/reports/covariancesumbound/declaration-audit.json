@@ -1,0 +1,182 @@
+{
+  "module": "D5.S3.Quantum.Information.CovarianceSumBound",
+  "source_path": "D5/S3/Quantum/Information/CovarianceSumBound.lean",
+  "source_sha256": "sha256:ff5fbaa33a52c5f463f763824fed719ae33c39656726b0f8da3f92fc74bdba8f",
+  "declarations_reported": 27,
+  "axiom_union": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "classification_authority": "worker semantic self-review; not a machine classification of proof shape",
+  "declarations": [
+    {
+      "gid": "D5/S3/Quantum/Information/CovarianceSumBound.covariance_self",
+      "statement_id": "sha256:170224111c82899939f37e32b1e19ce82ac5fb116a1e35d3f57d0a252ed00e49",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "proof_shape": "bind-only",
+      "escape_witness": null,
+      "admission_basis": "atom-required-bridge",
+      "direct_frozen_theorem_dependencies": [],
+      "direct_frozen_definition_dependencies": [
+        {
+          "gid": "D5/S3/Quantum/Divergence/QuantumRelativeEntropyDefectComposition.DensityState",
+          "statement_id": "sha256:b8e1957ba4f81600248989dc21f0a107bcdd5ce2e68546c38b9164c4a09ac337",
+          "kind": "def"
+        }
+      ],
+      "utility": "none"
+    },
+    {
+      "gid": "D5/S3/Quantum/Information/CovarianceSumBound.covariance_symm",
+      "statement_id": "sha256:359228b1292c7bf1c84540cb10cbafd7d2e7fd6f4d1c576c4b0985c0f86c232b",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "proof_shape": "bind-only",
+      "escape_witness": null,
+      "admission_basis": "atom-required-bridge",
+      "direct_frozen_theorem_dependencies": [],
+      "direct_frozen_definition_dependencies": [
+        {
+          "gid": "D5/S3/Quantum/Divergence/QuantumRelativeEntropyDefectComposition.DensityState",
+          "statement_id": "sha256:b8e1957ba4f81600248989dc21f0a107bcdd5ce2e68546c38b9164c4a09ac337",
+          "kind": "def"
+        }
+      ],
+      "utility": "none"
+    },
+    {
+      "gid": "D5/S3/Quantum/Information/CovarianceSumBound.variance_nonneg",
+      "statement_id": "sha256:b87817c872ae9a6650f2ca6fa6033b3ede876d399b80637cbf18d745a7abf2b3",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "proof_shape": "bind-only",
+      "escape_witness": null,
+      "admission_basis": "atom-required-bridge",
+      "direct_frozen_theorem_dependencies": [],
+      "direct_frozen_definition_dependencies": [
+        {
+          "gid": "D5/S3/Quantum/Divergence/QuantumRelativeEntropyDefectComposition.DensityState",
+          "statement_id": "sha256:b8e1957ba4f81600248989dc21f0a107bcdd5ce2e68546c38b9164c4a09ac337",
+          "kind": "def"
+        }
+      ],
+      "utility": "none"
+    },
+    {
+      "gid": "D5/S3/Quantum/Information/CovarianceSumBound.abs_covariance_le",
+      "statement_id": "sha256:a3624ad45308f5db4b343a455d2493296865e0cac303b2e5cfcaa579aa05dd44",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "proof_shape": "bind-only",
+      "escape_witness": null,
+      "admission_basis": "atom-required-bridge",
+      "direct_frozen_theorem_dependencies": [],
+      "direct_frozen_definition_dependencies": [
+        {
+          "gid": "D5/S3/Quantum/Divergence/QuantumRelativeEntropyDefectComposition.DensityState",
+          "statement_id": "sha256:b8e1957ba4f81600248989dc21f0a107bcdd5ce2e68546c38b9164c4a09ac337",
+          "kind": "def"
+        }
+      ],
+      "utility": "none"
+    },
+    {
+      "gid": "D5/S3/Quantum/Information/CovarianceSumBound.covariance_sum_le",
+      "statement_id": "sha256:e7b8f3177f040673fb419110b4641b26ce7cba624b1f3fb9799b77fbff89a3f7",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "proof_shape": "bind-only",
+      "escape_witness": null,
+      "admission_basis": "atom-required-bridge",
+      "direct_frozen_theorem_dependencies": [],
+      "direct_frozen_definition_dependencies": [
+        {
+          "gid": "D5/S3/Quantum/Divergence/QuantumRelativeEntropyDefectComposition.DensityState",
+          "statement_id": "sha256:b8e1957ba4f81600248989dc21f0a107bcdd5ce2e68546c38b9164c4a09ac337",
+          "kind": "def"
+        }
+      ],
+      "utility": "none"
+    },
+    {
+      "gid": "D5/S3/Quantum/Information/CovarianceSumBound.covariance_add_right",
+      "statement_id": "sha256:a1e6d7be3837181c2ef11578bc68d5d3f566438be15f073515ae8bab90d87cd8",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "proof_shape": "bind-only",
+      "escape_witness": null,
+      "admission_basis": "atom-required-bridge",
+      "direct_frozen_theorem_dependencies": [],
+      "direct_frozen_definition_dependencies": [
+        {
+          "gid": "D5/S3/Quantum/Divergence/QuantumRelativeEntropyDefectComposition.DensityState",
+          "statement_id": "sha256:b8e1957ba4f81600248989dc21f0a107bcdd5ce2e68546c38b9164c4a09ac337",
+          "kind": "def"
+        }
+      ],
+      "utility": "none"
+    },
+    {
+      "gid": "D5/S3/Quantum/Information/CovarianceSumBound.variance_le_half_width_sq",
+      "statement_id": "sha256:d11dad4543027a5c9b0fe5e3996f30815b7ec1945415b02e81bef29bedc80fde",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "proof_shape": "bind-only",
+      "escape_witness": null,
+      "admission_basis": "atom-required-bridge",
+      "direct_frozen_theorem_dependencies": [],
+      "direct_frozen_definition_dependencies": [
+        {
+          "gid": "D5/S3/Quantum/Divergence/QuantumRelativeEntropyDefectComposition.DensityState",
+          "statement_id": "sha256:b8e1957ba4f81600248989dc21f0a107bcdd5ce2e68546c38b9164c4a09ac337",
+          "kind": "def"
+        }
+      ],
+      "utility": "none"
+    },
+    {
+      "gid": "D5/S3/Quantum/Information/CovarianceSumBound.covariance_sum_le_of_variance",
+      "statement_id": "sha256:0bee885b269326e283062f89042209a758460edfa4c7f052b02321fef9f0c038",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "proof_shape": "bind-only",
+      "escape_witness": null,
+      "admission_basis": "atom-required-bridge",
+      "direct_frozen_theorem_dependencies": [],
+      "direct_frozen_definition_dependencies": [
+        {
+          "gid": "D5/S3/Quantum/Divergence/QuantumRelativeEntropyDefectComposition.DensityState",
+          "statement_id": "sha256:b8e1957ba4f81600248989dc21f0a107bcdd5ce2e68546c38b9164c4a09ac337",
+          "kind": "def"
+        }
+      ],
+      "utility": "none"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4253aaf9bcbb9c7093940de470d9bf2704371aa39812ae4f60f09cca4c2ffcb8
+  normalized_sha256: sha256:4253aaf9bcbb9c7093940de470d9bf2704371aa39812ae4f60f09cca4c2ffcb8
+cas_ref: sha256:4253aaf9bcbb9c7093940de470d9bf2704371aa39812ae4f60f09cca4c2ffcb8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This leaf is the closing interpretation of theorem 252.1, not an independent mathematical proposition. Its reference to height recalls the preceding definition Z=x1 and the middle occupancy from definition 252.1; the warning about automatically generating time or spatial dimensions introduces no defined objects or additional formal claim. The preceding theorem leaf contains the convex-hull equality and pyramid parametrization, both supplied by PathStableSetPolytope. The full previous, current, and next atoms were read through the canonical atom-context command.
+    previous_atom_id: bcd7b062f9d72dd02aa1dd62f58b7e0b0359947fc870f3da3c27f1582896a77a
+    next_atom_id: cc2d8809f2c04d6c5e9d712e8945596d7c9a581113e8e0115902e0be5a42672a

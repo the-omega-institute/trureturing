@@ -323,6 +323,7 @@ def prepareCollisionClasses (record : CatalogRecord) (catalog : Expr)
 
 private def theoremProofs (prepared : PreparedCatalog) : Lean.Elab.Term.TermElabM
     (Array Declaration × SealArenaRecord) := do
+  let env ← getEnv
   let record := prepared.record
   let catalog := prepared.value
   let arena := prepared.arenaValue
@@ -467,7 +468,8 @@ catalog={record.catalogId} pair_budget={pairBudget} limit=65536 seal={record.roo
       let emptyIff ← mkAppOptM ``Finset.card_eq_zero
         #[none, some (← mkAppM ``Catalog.uniqueCapturePairs #[catalog, index])]
       let proof ← mkAppM ``Iff.mp #[emptyIff, zero]
-      let name := if record.localSealNames then theoremName.str "__trivial_in_catalog" else
+      let name := if record.localSealNames then
+        localCompanionName env theoremName "__trivial_in_catalog" else
         catalogQualifiedName record.rootId record.arenaName record.catalogId theoremName
           "__trivial_in_catalog"
       declarations := declarations.push <| .thmDecl {
@@ -531,7 +533,7 @@ catalog={record.catalogId} pair_budget={pairBudget} limit=65536 seal={record.roo
       let lowersProof ← mkAppM ``Iff.mpr #[characterization, positiveProof]
       pure (lowersProof, ← inferType lowersProof)
     let lowersName := if record.localSealNames then
-      theoremName.str "__lowers_escape"
+      localCompanionName env theoremName "__lowers_escape"
     else
       catalogQualifiedName record.rootId record.arenaName record.catalogId theoremName
         "__lowers_escape"
@@ -548,7 +550,7 @@ catalog={record.catalogId} pair_budget={pairBudget} limit=65536 seal={record.roo
     let enrichedProof := mkAppN (mkConst ``And.intro)
       #[theoremType, lowersType, theoremExpr, mkConst lowersName]
     let enrichedName := if record.localSealNames then
-      theoremName.str "__escape_enriched"
+      localCompanionName env theoremName "__escape_enriched"
     else
       catalogQualifiedName record.rootId record.arenaName record.catalogId theoremName
         "__escape_enriched"
@@ -592,7 +594,7 @@ catalog={record.catalogId} pair_budget={pairBudget} limit=65536 seal={record.roo
   let irredundantType ← mkAppM
     (if zeroProofs.isEmpty then ``CatalogIrredundant else `D5.S3.ConceptDynamics.InformationEscape.Catalog.CatalogRedundant) #[catalog]
   let irredundantName := if record.localSealNames then
-    record.arenaName.str suffix
+    localCompanionName env record.arenaName suffix
   else
     catalogQualifiedName record.rootId record.arenaName record.catalogId record.arenaName suffix
   declarations := declarations.push <| .thmDecl {

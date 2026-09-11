@@ -1,0 +1,30 @@
+## 28. Closing the simultaneous induction on actual finite grid domains
+
+This continuation reads dev at 22c63f8d3ae9d1f057506c860e89294f115711ea and
+extends research head 144fbe648f9343da83c78b003e1ec3c09485eec2. The new endpoint
+consumes the actual geometric typing, partition identities and common analytic
+neighborhoods of the preceding sections. None is replaced by a new hypothesis.
+
+For every finite induced square-grid domain V, the candidate source now proves
+
+\[
+ \boxed{
+ z\in U_\epsilon\quad\Longrightarrow\quad
+ |Z_{\rm grid}(V;z)|\ge 2^{-|V|}>0,
+ \qquad\epsilon=10^{-30}.
+ }
+\tag{28.1}
+\]
+
+The explicit Lean statement for nonvanishing uses the equivalent witness form
+
+\[
+ \exists\lambda\in[0,51/20],\quad |z-\lambda|<10^{-30}.
+\]
+
+No bound on |V|, specified root, connectivity, rectangular boundary, preassigned
+message, supplied nonzero partition or caller-provided contraction constant is
+required in the final theorem. The ambient square grid remains infinite; the
+actual vertex domain is finite. The ordinary integer-coefficient independence
+polynomial is handled by its previously proved evaluation identity.
+

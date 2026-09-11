@@ -1,0 +1,19 @@
+{
+  "schema": "s21-logical-entry-v1",
+  "resource": "I35-original",
+  "logical_path": "docs/reports/quantized-gh/support-proof-adoption-s21-0910.json",
+  "original": {
+    "bytes": 237433,
+    "sha256": "100e33c0c3a84ef2735e553839a58007205f9f0c0775c3e5658d36d26c71282e",
+    "lf": 4903,
+    "terminal_lf": 1,
+    "lines": 4903
+  },
+  "origin": {
+    "commit": "4cad15c01592c516efb041f2c4f37bbcc7b709bb",
+    "path": "docs/reports/quantized-gh/support-proof-adoption-s21-0910.json"
+  },
+  "descriptor": "docs/reports/quantized-gh/s21-evidence/I35-original.json",
+  "contract": "docs/reports/quantized-gh/s21-evidence/README.md",
+  "interpretation": "Logical entry only. resource(resource) returns exact original bytes; at(resource, json_pointer) parses the complete original map, not this descriptor."
+}

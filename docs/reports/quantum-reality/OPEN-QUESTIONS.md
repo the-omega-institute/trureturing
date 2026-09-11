@@ -1,3 +1,362 @@
+## 第 16 轮结算:计数界是**经典结果的标准推论**,表态与地图措辞均已更正(2026-09-11)
+
+**产地三项**:无 skill;靶由 orchestrator 写、问题由 **nyxid / ChatGPT Pro 席**回答;
+零 codex 席。下列每条**仓内**读数由 orchestrator 在本机亲验复算,
+每条**文献**读数是席位自报、并注明我核到哪一步为止。
+
+### 载体:第一次真正跑完三个池
+
+此前报的「载体不可用」,真因是派发器 `quantum-reality-round.sh` 直接调 `nyxid oracle ask`、
+绕过本仓自己的 `nyx.sh`,于是没有 `mode:chat` 标签、没有池遍历、没有判词分类、
+没有 task-id 边车(已修,PR 6993)。改走 `nyx.sh` 后本轮实测三池依次为
+`INFRA` → `CARRIER` → **`OK`**;**答出本轮的是第三个池,而旧派发器从不曾到达它。**
+
+本文件此前把 `company-chatgpt-pro` 的 `oracle_mode_required` 归因为「runner 不设 mode 标签」:
+那对**旧派发器**成立、对 `nyx.sh` 不成立。该归因行已就地更正。
+
+### 判词与我的复算
+
+**问的是**:容量律的计数界(`⊕M_{m_b}` 完全正交幂等族 `≤ Σ m_b`)是不是教科书结果,
+以及 `TERRAIN-MAP.md` 里「唯一的定量律」这个措辞站不站得住。
+
+**答:是标准推论,应记 `literature-attested`;措辞应改,但「已知」与「本图内唯一」要分开判。**
+
+推导(可自行复核,不依赖任何页码):令 `A = ∏_b M_{m_b}(ℂ)`,`ℓ_A` 为左 A-模的组成长度。
+正则模分解给出 `ℓ_A(A) = Σ_b m_b`;非零幂等族求和为一给出 `A = ⊕_i A p_i`,
+每个 `A p_i` 非零(含 `p_i = 1·p_i`)故组成长度 ≥ 1;组成长度对有限直和可加,于是
+`|I| ≤ Σ_i ℓ_A(A p_i) = ℓ_A(A) = Σ_b m_b`。
+**预算是正则模的组成长度,不是代数维数 `Σ_b m_b²`;两者不得混写。**
+
+**orchestrator 亲验的三条仓内读数(全部命中,不是转述)**:
+
+| 席位的读数 | 我的复算 |
+|---|---|
+| `RecordCapacity.scribe.cs` 里只有 `sum_range_finrank_of_idempotent_sum` 传 `literature = true`,其余六次走默认 `FromRepo` | ✅ 逐行核对;`Result(...)` 第 7 个参数默认 `false` |
+| 渲染正文 Theorem 1.1 有文献引用,1.2–1.7 全部 `Repository-derived` | ✅ `RecordCapacity.md` 逐条核对 |
+| `matrix_blocks_card_le_sum` 只要求幂等、非零、求和为一,**不要求两两正交** | ✅ 源码假设位逐条核对 |
+
+**席位自报、我未亲验的部分(如实标注)**:Knapp《Advanced Algebra》与 Etingof 等书内的
+**具体页码与定理编号**。我用自己的 fetch 核到了 arXiv 记录 `0901.0827v5`(标题、七位作者、
+math.RT)与既有 note 一致;想从该 PDF 确认章节编号时**失败** —— 其文本流用子集字体编码,
+本机可用的抽取手段解不开。故 L note 支持的是**数学主张**(计数界是 Artin–Wedderburn 配
+Jordan–Hölder 的标准推论,推导已写出),**不是**任何关于「印在哪一页」的主张。
+
+### 处置(已落地)
+
+1. **表态更正**:`matrix_blocks_card_le_sum`、`equivariant_record_card_le_sum`、
+   `semisimple_commutant_has_record_capacity` 三条由 `FromRepo` 改为 `FromLiterature`,
+   指向扩充后的 `D5/L/Quantum/mathlib2026recordcapacity`。
+   **这是漏认前人成果的更正**(第 3.7 条:冒认与漏认同为不诚实)。
+2. **L note 扩充**:加入上述组成长度推导、与仓内版本假设更弱的说明,
+   以及一节明写本 note attest 什么、不 attest 什么。
+3. **地图收窄**:`TERRAIN-MAP.md` 第二节改写,点明两处越界——
+   ①计数对象是**等变幂等分解**,不是「客观记录」,它不认定哪些幂等元是记录、也不给 objectivity;
+   ②`m_b` 是 **commutant 的 Wedderburn 块尺寸**,不是原表示各不可约分量的重数
+   (模块正文本来就写着这条不在形式化范围内)。第一节该行也补齐了记录族的非零/完备/正交/等变条件。
+4. **「唯一」保留但加限定**:标题本就带范围限定(本节只收统一多条结构的定量律),
+   文献已知不否定栏目内唯一性;但已写明**它不得被当作本线新发现的物理定量律**。
+
+### 本轮不新增研究靶
+
+席位明说:本轮没有新的逃逸见证,也不提出新的首冻候选;计数就是已登记的秩和恒等式,
+加上非零像空间维数至少为一,再经忠实作用或代数等价运输。**处置是更正来源登记,
+不是为此重新证明同一计数界。**
+
+### 仍开着的一项(不冒领)
+
+`RecordCapacity` 另外三条(`card_le_finrank_of_idempotent_sum`、`algebra_card_le_finrank`、
+`equivariant_record_card_le_commutant_finrank`)仍标 `FromRepo`。席位**只裁了直接承载本题的三条**,
+没有裁这三条,我也没有独立核过。**不因「看起来也是经典的」就顺手翻**——留作下一轮的具名开项。
+
+---
+
+## 本轮:**同一类风险的第二次自查**(第 16 轮,2026-09-11)
+
+第 15 轮查出 `RecordSymmetryNoGo` 的表态错(`FromRepo` 应为 `FromLiterature`)。
+本轮问的是**同一类问题在另一条已合入 dev 的结果上是否也成立**——这不是席位空闲派题,
+是一个可点名的风险(第 7.10 条:防的必须是发生过的事;它刚发生过一次)。
+
+### 本轮派发状态:**载体不可用,未能派出**(非「无靶」)
+
+三个池依次失败,判词各不相同,**已按纪律停止换池**(换过两次,第三次即为撞墙):
+
+| 池 | 判词 | 语义 |
+|---|---|---|
+| `chrono-chatgpt-pro-pool` | `infrastructure_retry_exhausted` | 在 `selecting_model / page_ready` 间空转四次,从未发出 |
+| `company-chatgpt-pro` | `oracle_mode_required` | **该归因已过期,见本文件顶部第 16 轮结算**:不设 mode 标签的是旧派发器(它绕过 `nyx.sh` 直调 `nyxid oracle ask`),不是 runner 本身;该池今日以 `tag=mode:chat` 正常接收提交 |
+| `chatgpt-pro-pool` | `extraction_failure` | 载体侧随机失败 |
+
+**这不是「本轮无靶」**——Q1 是实靶且有具名风险(见下)。这是 第 5.9 条 的**能力缺口**:
+记具名 open、等灯亮,其余 lane 继续推进。**失败归档已删**,不留空壳被下轮误读为判词。
+
+**已知的四种 nyxid 终态,处置各不相同,不可只看 `QR_ROUND status=failed`**:
+`extraction_failure`(连两次换池)/ 超时 `still dispatched`(**按 task ID 取,禁重投**)/
+`infrastructure_retry_exhausted`(终态,换池)/ `oracle_mode_required`(改调用方式,`retryable: false`)。
+
+**复原条件**:任一池恢复即可按本文件现有 Q1 原样派出,**问题不需重写**。
+
+### Q1:容量律 `card ≤ Σᵢ mᵢ` 的文献状态
+
+已冻结于 `D5/S3/Quantum/Matrix/RecordCapacity`(PR #6962,已合 dev)。其陈述为:
+
+> 设 `U : G →* Matrix n n ℂ`,`commutant U` 半单,由 Wedderburn 取块尺寸 `m`。
+> 则任何由非零、两两正交、求和为单位的**等变**幂等组成的族 `P` 满足 `card I ≤ ∑ b, m b`。
+
+该模块内 Wedderburn 那条已表 `FromLiterature`,**但计数那条仍表 `FromRepo`**。
+
+**要回答三件事**:
+① 「半单代数 `⊕ M_{mᵢ}` 中,完备正交幂等族的基数 ≤ `Σ mᵢ`」这条计数界,文献里已有吗?给出处。
+   (它看起来是 Artin–Wedderburn 之后的标准推论,与「`M_m` 中完备正交幂等族最多 `m` 个」同源。)
+② 若已有,本仓该表 `literature-attested` 并建 L note;若确系本仓推导,表 `repo-derived`。
+③ **更要紧的一问**:`docs/reports/quantum-reality/TERRAIN-MAP.md` 第二节把它称作
+   「**唯一的定量律**」。若①的答案是「已知」,该措辞就是**过度主张**,须改。
+   请直接判:这个称呼站得住吗?
+
+**答「已知、该改措辞」是完全可接受的答案。** 第 15 轮已有一次同类更正,
+本线不因承认而损失什么——因冒领而损失的更多(第 3.7 条:冒认与漏认同为不诚实)。
+
+### 为什么这一轮值得派席
+
+第 15 轮的教训不是「那一条表错了」,是**表态在写作当时无人核**。
+同一形态已出现一次,按 第 7.11 条 该查是否有第二例,而不是等下一次被抓。
+
+### 本线其余状态(不构成本轮问题)
+
+tier-3 四项右栏**已按预算包络停派**:五轮 oracle、四席条件切片,
+「四项变成无条件的」计数为 **0**,边际改进触底(第 2.7 条),根因(需 τ=0 给物理输入)在权限外。
+语料消化继续:`quantum-reality` 定理 229.1 的 FS 记录时间界已证完待合。
+
+## 第 15 轮结算:no-go 应记为 **`literature-attested`**(2026-09-11)
+
+任务 `333503a8-6b9d-4ad6-9d6e-2c927bfc875b` 已回包(超时后按 ID 取得,未重投)。
+
+### ① 文献状态:**已知**,不得标 `suspected-novel`
+
+判词原文:「**数学陈述已知。**它是 Schur 引理的直接推论;在酉表示的语境下,文献还明确给出了
+『不变子空间 ↔ 等变正交投影』的等价表述。**没有依据将这个数学内核标成 suspected-novel**。」
+
+出处:**Etingof 等《Introduction to representation theory》(2011) §1.3, Prop 1.16 / Cor 1.17,
+印刷页 8–9**;**Sophie Morel《MAT 449: Representation theory》(2018) §I.3.4,
+Thm I.3.4.1 / Lemma I.3.4.3, 印刷页 25–26**(后者直接写出该等价)。
+该席同时声明:**未核定最早历史出处**;判 `literature-attested` 不需要先解决首创年代问题。
+
+### ② 与 Zurek / Korbicz 的关系:**不同命题**
+
+- **非 einselection**:Zurek(式 4.21–4.22)的对易对象是**指定的相互作用 Hamiltonian**,
+  不是群作用;本 no-go 须额外指定群作用并要求记录投影逐个与之对易,才谈得上表示论限制。
+- **非 SBS**:Korbicz 等(*Quantum origins of objectivity*, PRA **91**, 032122, 2015)
+  的 SBS 定义(Def 2、式 1–2)**不要求**支撑投影与某个共享不可约群作用对易。
+
+### ③ 该席指出的两处,本线照收
+
+1. **冗余假设**:代数意义的不可约性下,零/一结论**不依赖酉性、自伴性、复数域或有限维性**;
+   去掉多余假设**不会**使它成为新结果。⟹ `RecordSymmetryNoGo` 的假设可收紧,且收紧不增新颖性。
+2. **互信息平台 ≠ objectivity**:Le 与 Olaya-Castro(2019)区分互信息平台 / strong quantum
+   Darwinism / SBS。⟹ **`TERRAIN-MAP.md` 中该行已由「全部经典信息 / objectivity」
+   改为「互信息平台」并加边界注**——那是 orchestrator 先前的过度主张,本轮更正。
+
+### 处置
+
+- `RecordSymmetryNoGo`(已证未合)须将 `AssessedProvenance` 由 `FromRepo`
+  改为 **`FromLiterature`** 并建 L 平面 note,方可落地。**先冻结再补表态是漏认前人成果的入口**,
+  故该模块自证完起一直压着未推,本轮答案到才动。
+
+## 本轮:**文献核对一条 no-go**(第 15 轮,2026-09-11)
+
+自第 14 轮定价表以来,本线新增两条**条件切片**(均已冻结上 dev,物理输入在假设位、`axiom` 计数 0):
+
+| 切片 | GID | 内容 |
+|---|---|---|
+| observer→objective | `D5/S3/Quantum/Information/OrthogonalRecordEntropy` | 记录片段两两正交 ⟹ `I = H(p)`,片段携带指针全部经典信息 |
+| cross-species | `D5/S3/Quantum/Matrix/CrossSpeciesConsensus` | 共享**不可约**表示 + 等变自伴 ⟹ 该可观测量为标量,各 probe 读数相同 |
+
+**把两组假设放在一起,它们相斥**——这是地图暴露的空白(第 3.6 条),也是本轮唯一的问题。
+
+### Q1:下面这条 no-go,文献里已经有了吗?
+
+> 设 `U : G →* Matrix n n ℂ`。若该表示**不可约**,则任何等变的自伴幂等 `P`
+> (`P² = P`、`Pᴴ = P`、`∀g, P·U g = U g·P`)必为 `0` 或 `1`。
+> 故**不存在非平凡的等变正交记录结构**,除非表示**可约**。
+> 物理读法:**objectivity 要求指针基破坏那个共享对称性**。
+
+论证极短(`P = r•1` 由已冻结的 `equivariant_selfAdjoint_eq_smul_id_of_irreducible` 给出,
+`P² = P ⟹ r² = r ⟹ r ∈ {0,1}`),**正因为短,必须先问文献**(第 3.6 条 硬规则①:
+候选进管线前先答「文献里有没有这条陈述」;第 3.7 条:写作即尽调,三态表态不许留白)。
+
+**要回答的三件事**:
+①这条陈述(或其等价形)在文献中是否已有?给出处;
+②它与 Zurek/Korbicz 一系的 einselection、pointer basis、SBS 结果是**同一件事**、**推论**,还是**不同**?
+③若已有,本仓应表 `literature-attested` 并建 L 平面 note;若确系新,表 `suspected-novel`。
+**答「已知」是完全可接受的答案,不要为了让它显得新而含糊。**
+
+### orchestrator 的数值读数(可复算)
+
+commutant 维数:不可约(两个通用酉生成)**恒为 1**,25/25;
+**判别力对照**:块对角可约时 **> 1**,25/25 ⟹ 存在非平凡等变投影。
+
+### 本轮派发状态:**在飞,不得重投**
+
+任务 ID **`333503a8-6b9d-4ad6-9d6e-2c927bfc875b`**,池 `chrono-chatgpt-pro-pool`。
+runner 在 3600s 处超时退出(`QR_ROUND status=failed`),但**超时不等于失败**:
+其判词原文为「still dispatched … Re-check later with `nyxid oracle result <id>`」,
+实时查询 `nyxid oracle result` 返回 `Phase: waiting_response`。
+**下一轮先用该 ID 取结果,不要重新派席**(重投会白费一次派发,且可能撞配额)。
+
+**判在飞的判据(两者不可混)**:归档文件**开头**的 CLI 状态序列是**提交那一刻**的状态,
+不随回包更新,以它判在飞是坏原材料;**实时 `nyxid oracle result` 的 `Phase:` 才是当前状态**。
+
+### 同期在飞
+
+形式化席 `nogo-1` 正在把上述 no-go 及其逆写成 Lean。**本轮的文献答案会决定它的
+`AssessedProvenance` 表态**,故先问,不等它落地。
+
+## 第 14 轮结算:定价表已出,**四项全部卡在物理输入**(2026-09-10)
+
+Q1 问的是「给右栏四项定价,不选」。该席答得清楚,判词存于 `round-14-20260910T225553Z.md`。
+
+### 定价结果
+
+| 右栏项 | 障碍链是否变短 | 承重缺口 |
+|---|---|---|
+| observer → objective 桥 | **变短一环** | 二体偏迹 / 边缘态 / 互信息由「缺」变「已冻结」;objectivity 本身仍未出 |
+| cross-species principle | 无变化 | 为何所有 probe 承载同一 active symmetry、表示为何不可约 |
+| §17.1 / §18 量子统计层 | 无变化 | canonical quantization;`ρ_C ⊗ ρ_β` 是新的制备条件,非观察者假设的逻辑后果 |
+| Einstein 方程 | 无变化 | 为何该张量场是普适几何变量、为何物质以同一应力-能量耦合进入、为何有 backreaction |
+
+**跨四项的收敛结论:承重缺口全是物理输入,不是形式化能力。**
+该席明写不把 Fierz–Pauli / spin-2 冒充成观察者假设的后果。
+
+### orchestrator 复算(不是转述)
+
+- 它独立核出的两个 `statement_id`(`sha256:b39b445e…`、`sha256:35bc509b…`)与我自算一致。
+- 它引的障碍登记逐条对上:本文件 `:134`(objective「不声称已从 observer axiom 推出」)、
+  `:135`(cross-species 需额外结构)、`:136`(§17.1/§18 须 owner 指定物理输入)、
+  `CHARTER.md:42-43`(右栏五项各缺一条可点名的额外公理)。
+- **一处归属错**:它把上述出处标成 issue #6298,实际在这两个仓内文件里(runner 内联喂给它的);
+  **内容成立,归属不成立**。
+- 它拒绝把在飞的 `corrtax-1` 倒算成已冻结成果——**这是正形**。
+
+### 该席自划的核实边界(照录,不代它加强)
+
+**#6298 的评论链它取不到**(公开页只返回主帖与评论入口)。凡依赖评论正文的前提,
+它一律标 `ASSUMED-UNVERIFIED`,并明说不从主帖反推。**这是第二轮报同一件事**(第 12 轮亦然)
+⟹ 承重状态不要放 issue 评论里,放本文件——runner 会内联,它读得到。
+
+### 下一步的选择权仍在 τ=0
+
+定价表说明四项**没有一项**因新冻结而变得「数学上够得着」;唯一松动的 observer→objective
+松的是基础设施环,不是 objectivity 本身。**故仍不代选**(第 3.6 条)。
+若要推进,τ=0 指定四项之一**或给出那条缺失的物理输入**;后者比选项更关键——
+四项的承重缺口都是它。
+
+## 本轮:**恢复派席**(第 14 轮,2026-09-10)
+
+第 13 轮判「无靶」的具体前提——`相关-税恒等式` 所需的二体基础设施在 D5 命中全 0——
+**已不成立**;基础设施是本线自己在这段时间补上的。第 13 轮判词在其当时读数下仍立,
+不作废;本轮是新读数下的新结算(第 2.7 条)。结算评论见 issue #6298。
+
+### 自第 13 轮以来本线新增的冻结(orchestrator 在 origin/dev 上逐条复算)
+
+| 模块 | statement_id |
+|---|---|
+| `D5/S3/Quantum/Information/PartialTraceMutualInformation` | `sha256:b39b445e…` |
+| `D5/S3/Quantum/Divergence/DualAccountFull` | `sha256:35bc509b…` |
+
+前者给出 `partialTraceLeft/Right`、`*_posSemidef`、`trace_*` 与**单参数** `quantumMutualInformation`;
+后者是 §17.2 第三条定理(互无偏语境下免双税 ⟹ 极大混态)。
+源 atom `1e28ba01…` **仍为 `residual-open`**,未冒领整条。
+
+### Q1(本轮唯一问题):给右栏四项定价,**不选**
+
+已派 oracle 一席,问的**不是**「选哪一项」——那是第三档,第 3.6 条 明令机器不选。
+问的是:**上述两个新冻结模块,是否使右栏四项中任何一项的障碍链变短?**
+
+对 observer→objective 桥、cross-species principle、§17.1/§18 量子统计层、Einstein 方程,
+逐项回答三件事:①它的障碍链上,哪些环现在已被仓内冻结定理覆盖(给 GID);
+②哪些环仍缺,缺的是**定义**、**分析引理**还是**物理输入**;
+③若要推进它,**下一个可形式化的最小单元**是什么。
+
+**产出是给 τ=0 用的成本表,选择权不动。** 若某项的答案是「没有变化」,照直说;
+四项全无变化也是合法答案,不要为了有产出而编造进展。
+
+### 同期在飞的形式化席
+
+`corrtax-1`,靶为 atom §17.2 明文所列的**相关-税恒等式** `I(系统:记录) = S(𝒫ρ) + D(ρ‖𝒫ρ)`。
+orchestrator 亲验:秩一捏合 + 预测量相干复制膨胀下,d=2..5 共 160 例
+**max|残差| = 6.661e-16**;判别力对照(`+D` 改 `−D`)**120/120 全败**。
+承重细节:膨胀若改成经典 CQ 态,该式退化为 `I = S(𝒫ρ)` 而不成立。
+**该靶不是第三档**,不需 τ=0 选方向。
+
+## 本轮:**无靶,暂停派席**(第 13 轮,2026-09-10)
+
+第 12 轮的判词**照收**;其四条引用已由 orchestrator 在 `origin/dev` 上逐条复算,全部成立。
+结算评论:issue #6298。本轮**不派席**,理由是没有靶,不是没有席位。
+
+### 结算读数(orchestrator 复算,非转述)
+
+| 第 12 轮的引用 | 复算读数 |
+|---|---|
+| `…ThermalCoefficientFloor.sinh_le_self_mul_cosh_of_nonneg` | `D5/S3/Observer/Fluctuation/ThermalCoefficientFloor.lean:42` 声明,第 71 行有使用 |
+| 其冻结状态片 | 存在,`statement_id sha256:0340cb1ee26dcb999a070578ea6570e5293490432a9b01dd9d39dfc0c1d1428a` |
+| runner 默认池 | `quantum-reality-round.sh:12` = `POOL="${2:-chrono-chatgpt-pro-pool}"` |
+| round-10 归档非仍在飞 | 441 行;`waiting_response` 全文仅 1 次(表头);尾部为「未主张栏」 |
+
+### 未复算(记 `ASSUMED-UNVERIFIED`)
+
+第 12 轮称三种入口均取不到 #6298 的评论链——**未复现其取读失败**;
+其对 pinned mathlib 的检索覆盖面亦未复算。
+
+### 为何不派席
+
+右栏余下四项(observer→objective 桥、cross-species principle、§17.1/§18 量子统计层、
+Einstein 方程)**全部属第三档**,第 3.6 条:**机器不替人选第三档目标**。
+第 3.2 条:**席位空闲不是派题的理由,有逃逸见证的靶才是**。
+第 2.7 条 预算包络:连续投入无边际改进即触底,正解是换 Γ 或换目标。
+**「这条该停」是本线允许的最好答案之一**;硬派一席只会产出一份复述。
+
+### 本线同期的形式化产出(停的是派席,不是这条线)
+
+- `D5/S3/Quantum/Divergence/GibbsVariationalIdentity` —— `log Z = ReTr(Hρ) + S(ρ) + D(ρ‖G)`,已合入 dev。
+- `D5/S3/Quantum/Divergence/SpectralReadoutEntropyEquality` —— 谱读出保熵 ⟺ 读出矩阵对角,已合入 dev(PR #6896)。
+- `observer-quantum-v1` 的 **131 个 atom 已全量分类**为 pointer / bind-only / needs-input / proposition,
+  分类表随 #6896 落地,构成本线此后的选题面。
+
+### 重启条件
+
+**τ=0 点题**:指定右栏四项之一,或给出新的物理输入。写成新的 Q1 填进本文件,
+跑 `tools/scripts/agent/quantum-reality-round.sh` 即续轮,**无需重建任何东西**。
+
+## 本轮:**维持「无靶,暂停派席」**(第 12 轮,2026-09-10)
+
+第 12 轮向 `chatgpt-pro-pool` 派出一席核对,该席**独立维持**第 11 轮的停止判定,
+未被推动派题。判词与三条新读数存于 `round-12-20260910T185807Z.md`。
+**结论未变,故 CHARTER 不动**;本节只记新读数。
+
+### 新读数①:`waiting_response` 的词面命中不证明「仍在飞」
+
+归档文件开头是 CLI 的状态序列(`dispatched / selecting_model / sent / waiting_response`),
+**其后紧接判词正文与收尾**。以裸词面 `waiting_response` 判「该轮仍在飞」是把
+**表头**当**终态**读,属第 8.4 条 所指的坏原材料。判在飞须看该文件是否含判词正文与收尾段,
+或读宿主任务的哨兵退出码,不看表头词。
+
+### 新读数②:runner 默认池不是 `chatgpt-pro-pool`
+
+`quantum-reality-round.sh` 写的是 `POOL="${2:-chrono-chatgpt-pro-pool}"`;
+第二参数可覆盖。故「坏池在默认路径上」不成立,不因此 hotfix。
+**边界**:源码只证默认值,**不认证任一池的运行时健康**;文件存在性检查不是池健康检查。
+
+### 新读数③:第 11 轮所引承重内容已核到
+
+`D5.S3.Observer.Fluctuation.ThermalCoefficientFloor.sinh_le_self_mul_cosh_of_nonneg`
+的声明与其冻结状态片 `Golden/Frozen/state/D5/S3/Observer/Fluctuation/ThermalCoefficientFloor.lean.json`
+均存在于所钉提交。
+
+### 本轮的编号勘误
+
+派发时 runner 被传入**主检出**作 lane-dir,其 `docs/reports/quantum-reality/` 只到第 10 轮,
+故它算出 `round=10`,与本文件当前段(第 11 轮)冲突。该席当场指出此冲突。
+真实轮次为**第 12 轮**,归档按此命名;主检出已恢复干净(第 6.1 条)。
+
 ## 本轮:**无靶,暂停派席**(第 11 轮,2026-09-10)
 
 **判定与第 9、10 轮相同,且本轮无任何推翻**:三个原问题自第 8 轮起全部结算,

@@ -1,0 +1,27 @@
+**31.9 有限带符号测度与绝对收敛矩展开。** 对每个保留节点,令
+\[
+\nu=\left(3-\sum_i y_i\right)\delta_1+\sum_i y_i\delta_{1/p_i},\qquad
+W_n=\int x^n\,d\nu(x),\qquad E_n=2e^{-n\lambda}+e^{-n\eta}.
+\]
+这里 \(\delta_x\) 是点质量,不同于行距离 \(\delta_i\)。\(\nu\) 非负、总质量为 3,
+支撑在 \([0,1]\);零权重可删。其全部正整数矩为
+\[
+W_n=\begin{cases}
+2-\theta+2^{-n}+\theta3^{-n},&\mathrm I,\\
+1-\theta+2^{-n}+3^{-n}+\theta7^{-n},&\mathrm {II}.
+\end{cases}
+\]
+定义有限带符号测度 \(\sigma=2\delta_{e^{-\lambda}}+\delta_{e^{-\eta}}-\nu\),
+则 \(\int x^n\,d\sigma=E_n-W_n\)。31.3 给所有指数原子在 \((0,1]\),
+而有限 \(T\ge a\) 给 \(z=e^{-T}\in(0,1/2]\)。几何级数积分所得
+\(\log(1-zx)=-\sum_{n\ge1}(zx)^n/n\) 在此绝对收敛,因此
+\[
+G_0(z)=-\int\log(1-zx)\,d\sigma(x)
+=\sum_{n\ge1}\frac{E_n-W_n}{n}z^n.
+\]
+两侧正测度各质量 3,故 \(|E_n-W_n|\le3\),足以控制绝对收敛和 \(z\to0\) 的极限。
+符号是“包络指数矩减混合指数矩”,没有反转比较方向。
+同一有限测度表示、绝对收敛及系数绝对值界也适用于任意固定零形状宽域相对薄层:
+取 31.4 的 clipped 最优权重和 31.3 的正偏移即可逐字展开,不要求该薄层是节点。
+上尾权重取全 1;只对节点使用上面的类型 I/II 未截断公式。
+

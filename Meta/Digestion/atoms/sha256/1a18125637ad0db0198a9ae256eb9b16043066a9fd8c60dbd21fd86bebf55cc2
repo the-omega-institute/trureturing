@@ -1,0 +1,17 @@
+**32.22 定理：固定十六节点的解析支撑范围。** 取 32.3 的固定四维箱体
+\(c=(\log32,\log27,\log25,\log49)\)、
+\(d=(\log64,\log81,\log125,\log343)\)，所有对数均为自然对数。
+实际角点满足 \(x_i\in\{c_i,d_i\}\)。仍用严格原域
+\(A=\log1058400<M_0<M_1<\infty\)，闭薄层包含至少两个实际角点。
+令 \(u=M_1\)、\(I=[M_0/4,u/4]\)、\(\mu=u/4\)，并定义
+\[
+\delta_i=\min\{\operatorname{dist}(c_i,I),\operatorname{dist}(d_i,I)\},
+\quad V_0=\sum_{i=1}^4\delta_i^2,\quad
+\rho=\sqrt{V_0/12},\quad L=\mu-\rho,\quad H=\mu+3\rho.
+\]
+对 32.13–32.14 的十六个保留节点，均有
+\[
+0<\log25\le L\le H
+\le\log(222264000/15625)<14\log2<14<16.
+\]
+

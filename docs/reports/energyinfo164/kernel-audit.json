@@ -1,0 +1,200 @@
+{
+  "module_report": {
+    "declarations": [
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "def",
+        "name": "D5.S3.Quantum.Information.CorrelatedGibbsEnergyIdentity.meanEnergy",
+        "name_key": "ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),11:Information),29:CorrelatedGibbsEnergyIdentity),10:meanEnergy)",
+        "statement_id": "sha256:9968a03e56960da489176141fea72cbed63e67cc32e2fe1378c92e3fed11906b",
+        "type_sha256": "sha256:b11c8f1bb1e716bc8e14ce983193785aada04d8890a918d1d9340ecb02072a58"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "def",
+        "name": "D5.S3.Quantum.Information.CorrelatedGibbsEnergyIdentity.thermalState",
+        "name_key": "ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),11:Information),29:CorrelatedGibbsEnergyIdentity),12:thermalState)",
+        "statement_id": "sha256:c2e22ee34d0f1ca2980b540f9d8f8f13364fa370def51a817c01961207ed18c1",
+        "type_sha256": "sha256:ca0d5ee21ff6f8cad9f92e314fca2b330d0d328e61eb48614cbad0446315355b"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "theorem",
+        "name": "D5.S3.Quantum.Information.CorrelatedGibbsEnergyIdentity.energy_information_identity",
+        "name_key": "ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),11:Information),29:CorrelatedGibbsEnergyIdentity),27:energy_information_identity)",
+        "statement_id": "sha256:d9b74e51e96267b236129656cab22128e77a3662968656657a0560da81b358cf",
+        "type_sha256": "sha256:9ba41ad7a7228271a0b016abccd9274d64a334235bb49ee986f494d53470f8b2"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "theorem",
+        "name": "D5.S3.Quantum.Information.CorrelatedGibbsEnergyIdentity.von_neumann_entropy_unitary",
+        "name_key": "ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),11:Information),29:CorrelatedGibbsEnergyIdentity),27:von_neumann_entropy_unitary)",
+        "statement_id": "sha256:a23b087833bbd574a6015785198943413a676a47d70dd93f240b369d8d713b87",
+        "type_sha256": "sha256:68bb5719ccb47a2709f21f4e8b423b31b655ef8f7ea2b03b961a4423159ef0c0"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "theorem",
+        "name": "D5.S3.Quantum.Information.CorrelatedGibbsEnergyIdentity.gibbs_relative_entropy_energy_difference",
+        "name_key": "ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),11:Information),29:CorrelatedGibbsEnergyIdentity),40:gibbs_relative_entropy_energy_difference)",
+        "statement_id": "sha256:0fafcc61468496c5abfe657a8bb007840544dcd90e3f620ac827e129a5970de2",
+        "type_sha256": "sha256:b51879f40fc3d0f51d4c17db4a1a7808b688a2869a551d59fa24480902b6a9f0"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "theorem",
+        "name": "D5.S3.Quantum.Information.CorrelatedGibbsEnergyIdentity.marginal_entropy_change_eq_mutual_information_change",
+        "name_key": "ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),11:Information),29:CorrelatedGibbsEnergyIdentity),52:marginal_entropy_change_eq_mutual_information_change)",
+        "statement_id": "sha256:63ee1c77fc92e86ef57b800aad19e4b976e8fd28fe9478f503393d9b34d2c4aa",
+        "type_sha256": "sha256:8bf2a6bae7e2b307fe682558441427b95ccb88a4bb95100e9f6218d1ffc81d62"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "theorem",
+        "name": "_private.D5.S3.Quantum.Information.CorrelatedGibbsEnergyIdentity.0.D5.S3.Quantum.Information.CorrelatedGibbsEnergyIdentity.unitary_state_one",
+        "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S3),7:Quantum),11:Information),29:CorrelatedGibbsEnergyIdentity),0),2:D5),2:S3),7:Quantum),11:Information),29:CorrelatedGibbsEnergyIdentity),17:unitary_state_one)",
+        "statement_id": "sha256:d0099635ba78e319e816f6e8cf68ba60043fb9de291946b61ed5572bb2aee855",
+        "type_sha256": "sha256:aebf5792f666c862f81e3ebb1762420fb7ffb62e1d496d22987cc1bb23734178"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "theorem",
+        "name": "_private.D5.S3.Quantum.Information.CorrelatedGibbsEnergyIdentity.0.D5.S3.Quantum.Information.CorrelatedGibbsEnergyIdentity.pinching_after_unitary",
+        "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S3),7:Quantum),11:Information),29:CorrelatedGibbsEnergyIdentity),0),2:D5),2:S3),7:Quantum),11:Information),29:CorrelatedGibbsEnergyIdentity),22:pinching_after_unitary)",
+        "statement_id": "sha256:fee2b51a7bfb54e995d2ca1410f18fa798840d190e5a0c3c42c931a2708b9dea",
+        "type_sha256": "sha256:c08f6f1ac528498d9ed252168b0cdf2d7417380895ef16f62305e67400132cee"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "theorem",
+        "name": "D5.S3.Quantum.Information.CorrelatedGibbsEnergyIdentity.thermalState.congr_simp",
+        "name_key": "ns(ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),11:Information),29:CorrelatedGibbsEnergyIdentity),12:thermalState),10:congr_simp)",
+        "statement_id": "sha256:a7f468ef7b69e87468d32c0343fe0696196a462d3b06aaebdca865f1a097e716",
+        "type_sha256": "sha256:1d890760bf5f844b6c4485256110e2ee9947bea0f9917514ef7d88005e5b9e8b"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": false,
+        "kind": "theorem",
+        "name": "D5.S3.Quantum.Information.CorrelatedGibbsEnergyIdentity.thermalState._proof_1",
+        "name_key": "ns(ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),11:Information),29:CorrelatedGibbsEnergyIdentity),12:thermalState),8:_proof_1)",
+        "statement_id": "sha256:873538979c8ffa2691d52edd02bd216b1d537362bcafadbc2155e745124f6412",
+        "type_sha256": "sha256:0fa2813f19a777eb17dd8d440ecb752af17c926e99bc5c0fbe80c5f9ffc467ef"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "theorem",
+        "name": "D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity.unitaryConjugateState.congr_simp",
+        "name_key": "ns(ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),8:Dynamics),42:EntropyProductionCoherenceDeletionIdentity),21:unitaryConjugateState),10:congr_simp)",
+        "statement_id": "sha256:5f6fdff30c18db82ca6ea38ba9b2dedf2b734e12c973df6cc059545933f84467",
+        "type_sha256": "sha256:265d08b992449891fcc2c61af018a2f5e871c3a838153423b79cc57f14c1a731"
+      }
+    ],
+    "imports": [
+      "D5.S3.Quantum.Divergence.GibbsVariationalIdentity",
+      "D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity",
+      "D5.S3.Quantum.Information.PartialTraceMutualInformation",
+      "Init"
+    ],
+    "module": "D5.S3.Quantum.Information.CorrelatedGibbsEnergyIdentity",
+    "source_path": "D5/S3/Quantum/Information/CorrelatedGibbsEnergyIdentity.lean",
+    "source_sha256": "sha256:68f7a261d23826b7319d471388541f618ac22911086f001fd5f386a4c9964ba8"
+  },
+  "named_frozen_prerequisites": [
+    {
+      "gid": "D5/S3/Quantum/Divergence/GibbsVariationalIdentity.gibbsState",
+      "statement_id": "sha256:f892a87bde5011f4627a32ee2080dbc7463d33d90133420b234b8da2d2c4d7da"
+    },
+    {
+      "gid": "D5/S3/Quantum/Divergence/GibbsVariationalIdentity.gibbs_variational_identity",
+      "statement_id": "sha256:895916cae977ded768955734c3e815db72f7049759d4a7a6a6149251df958326"
+    },
+    {
+      "gid": "D5/S3/Quantum/Divergence/QuantumRelativeEntropyDefectComposition.quantumRelativeEntropy",
+      "statement_id": "sha256:1fde73d469bc7e293eef439b271276205450d8758cb7358eaadae794794d8f0a"
+    },
+    {
+      "gid": "D5/S3/Quantum/Divergence/VonNeumannEntropyPinching.vonNeumannEntropy",
+      "statement_id": "sha256:9cf1e21822d8f3f61a5d349f41c4287a3ef43a0e8a600534b28ab8d06f437cd1"
+    },
+    {
+      "gid": "D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity.basisPinchingState",
+      "statement_id": "sha256:097732781ac08f1ec116972e13a88ead78c40c635e33adde60bb7bd8e11c6522"
+    },
+    {
+      "gid": "D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity.unitaryConjugateState",
+      "statement_id": "sha256:9b1299d5fa00a59321b435771bba283a533b7e1e7a071e7d927aae4eb94d4d42"
+    },
+    {
+      "gid": "D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity.entropy_production_coherence_deletion_identity",
+      "statement_id": "sha256:dd08a6058e548162341b4da32bf0bafc5b7b406598c58016d18da2821fa77797"
+    },
+    {
+      "gid": "D5/S3/Quantum/Information/PartialTraceMutualInformation.marginalLeft",
+      "statement_id": "sha256:7579934e8cf68c9a1e1f14470e58e70c66939704953b29e953ae8d75b92bef6a"
+    },
+    {
+      "gid": "D5/S3/Quantum/Information/PartialTraceMutualInformation.marginalRight",
+      "statement_id": "sha256:bb5bad02426b231285a1d49fbc7f66f6f971cf3cd7ef3ee92fc2c21793f14ae7"
+    },
+    {
+      "gid": "D5/S3/Quantum/Information/PartialTraceMutualInformation.quantumMutualInformation",
+      "statement_id": "sha256:650358808a68c73893baf137ee9bae34238244b7e0906ce19e6b5fd68484ad75"
+    }
+  ]
+}

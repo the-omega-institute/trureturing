@@ -1,0 +1,797 @@
+### Archived original bytes [678,879)
+
+Disposition: operational leading fragment.
+
+~~~~~~~~~~~~text
+目标是持续研究整数索引、严格不等号、等号、零余量与量化规则之间的关系,给出明确的算术与量子模型接口及其剩余义务。本轮只回答一条具体问题: ⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [1061,1866)
+
+Disposition: operational provenance / implementation / execution / delivery, inactive archive.
+
+~~~~~~~~~~~~text
+研究 lane 为 `lane/math/quantized-gh-boundaries-0908`,工作树为 `/Users/auricstudio/trureturing-qgh-boundaries`,intake base 为 `45e7b20dd95dd8b2d7b8784392c1814193b80515`。本轮保持该 Git 基线,只增加本卷及其 canonical ingestion 输出,不引入新形式根、私有公理或冻结声明。
+
+这是用户指定的长期核心问题研究线。host 目标轮次无上限,每次载体调用及其重试仍有界;同一症状第二次出现时停止原样重试并查根因。连续两周没有边际数学或证据增益时修订方法,不以增加卷数、有限样本数或计算精度冒充成功。继续由现有 host 驱动,不运行无限 daemon。本次有限增量不完成长期目标 S6;评审、PR 三门与 MERGED 落地由 caller 后续承担,未合并工作仍为 open。
+
+~~~~~~~~~~~~
+
+### Archived original bytes [3371,3429)
+
+Disposition: operational fragment in mixed mathematical passage.
+
+~~~~~~~~~~~~text
+上面的整数恒等式由第 6 节程序作精确检查;⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [3478,3516)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+### 小素数为什么让因数较丰?⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [8131,8302)
+
+Disposition: operational fragment in mixed mathematical passage; type / grammar metadata.
+
+~~~~~~~~~~~~text
+Li 原文 DOI 仅作书目信息,本轮未取得其全文;不把二手核对写成亲读原文。第 6 节直接从导数定义核对本次使用的 Taylor 系数关系。⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [10918,10961)
+
+Disposition: operational fragment in mixed mathematical passage.
+
+~~~~~~~~~~~~text
+;本卷不重做它的反驳或有限证书⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [12281,12300)
+
+Disposition: operational fragment in mixed mathematical passage.
+
+~~~~~~~~~~~~text
+此处代数核对;⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [15164,15332)
+
+Disposition: operational leading fragment.
+
+~~~~~~~~~~~~text
+第 6 节程序还对 \(m=1,2,10,200,1000000\) 用 `Fraction` 检查原矩阵的顺序主子式为正,舍入行列式为 \(-1/m^2\),二次型为 \(-2/m\),退出码 0。⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [15883,15917)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+### 从 Taylor 系数到 Li 回返⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [16573,16585)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+程序认证⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [16631,16659)
+
+Disposition: operational fragment in mixed mathematical passage.
+
+~~~~~~~~~~~~text
+`zeta(deflate=True)` 表示 ⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [16759,16783)
+
+Disposition: mixed passage: preserve listed exact mathematical / citation fragments.
+
+~~~~~~~~~~~~text
+程序中的 `x` 正是 ⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [16795,16796)
+
+Disposition: mixed passage: preserve listed exact mathematical / citation fragments.
+
+~~~~~~~~~~~~text
+,⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [16828,16887)
+
+Disposition: mixed passage: preserve listed exact mathematical / citation fragments.
+
+~~~~~~~~~~~~text
+`ctx.cap=4` 保留到三次幂,已足够计算上面三项;⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [16940,16980)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+### 严格包围与舍入的精确失败⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [16982,17056)
+
+Disposition: operational sentence or fragment.
+
+~~~~~~~~~~~~text
+Python-FLINT 0.8.0 的 Arb,256 位精度,给出下列经球比较确认的⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [17711,17833)
+
+Disposition: operational trailing fragment.
+
+~~~~~~~~~~~~text
+程序还只用 \(r_1,r_2\) 的有理上下界验证 \(L_2-(2U_1^2-1)>0\),作为不依赖区间相关性的精确检查。⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [18421,21726)
+
+Disposition: operational provenance / implementation / execution / delivery, inactive archive.
+
+~~~~~~~~~~~~text
+### 可执行复现
+
+在 `/tmp` 中执行下面完整命令即可复现。依赖固定为 `python-flint==0.8.0`;Python 标准库的 `Fraction` 负责精确有理运算。实施 worker 独立执行同一程序,退出码 0,最后输出 `python-flint=0.8.0 precision=256 cap=4 PASS`。信任边界包括 Python-FLINT 的接口、FLINT/Arb 特殊函数及级数球包围实现、Python 和运行环境;这没有生成 Lean 证明项。
+
+```sh
+uv run --with python-flint==0.8.0 python - <<'PY'
+from fractions import Fraction as F
+from math import floor, prod
+import flint
+from flint import arb, arb_series, ctx
+
+def toeplitz(x, y):
+    return [[F(1), x, y], [x, F(1), x], [y, x, F(1)]]
+
+def det3(a):
+    return (a[0][0] * (a[1][1] * a[2][2] - a[1][2] * a[2][1])
+            - a[0][1] * (a[1][0] * a[2][2] - a[1][2] * a[2][0])
+            + a[0][2] * (a[1][0] * a[2][1] - a[1][1] * a[2][0]))
+
+def witness(a):
+    v = [1, -2, 1]
+    return sum(v[i] * a[i][j] * v[j] for i in range(3) for j in range(3))
+
+def q(x, m):
+    return F(floor(m * x + F(1, 2)), m)
+
+assert prod(p**a for p, a in zip([2, 3, 5, 7], [4, 2, 1, 1])) == 5040
+assert prod(a + 1 for a in [4, 2, 1, 1]) == 60
+assert prod(sum(p**j for j in range(a + 1))
+            for p, a in zip([2, 3, 5, 7], [4, 2, 1, 1])) == 19344
+assert 4181 + 610 + 233 + 13 + 3 == 70 * 3**2 * 2**3 == 5040
+assert 2**4 * 3**2 * 5 * 11 == 7920
+print("arithmetic: 5040, tau=60, sigma=19344, both encodings, 7920 OK")
+
+for m in [1, 2, 10, 200, 1000000]:
+    h, eta, t = F(1, m), F(1, 12 * m), 1 - F(1, 3 * m)
+    r1, r2 = (1 - eta) * t, (1 - eta) * (2 * t*t - 1)
+    assert 0 < (1-r1)/h == F(5, 12)-h/36 < F(1, 2)
+    assert F(1, 2) < (1-r2)/h == F(17, 12)-h/3+h*h/54 < F(3, 2)
+    a = toeplitz(r1, r2)
+    assert 1-r1*r1 > 0 and det3(a) > 0
+    rounded = [[q(x, m) for x in row] for row in a]
+    assert rounded == toeplitz(F(1), 1-h)
+    assert det3(rounded) == -h*h and witness(rounded) == -2*h
+    print("family", m, "PD=True", "det=", det3(rounded), "vTv=", witness(rounded))
+
+ctx.prec, ctx.cap = 256, 4
+t = arb_series([0, 1])
+s = 1 + t
+x = s * (-s * arb.pi().log() / 2).exp() * (s/2).gamma() * (1+t*s.zeta(deflate=True)) / 2
+assert x[0].contains(arb(1)/2)
+f = (x/x[0]).log()
+assert f[1] > 0
+r1, r2 = f[2]/f[1], (2*f[2]+3*f[3])/(2*f[1])
+gap = r2 - (2*r1*r1-1)
+d = 10**18
+endpoints = [(999196806720852614, 999196806720852615),
+             (996790337371607624, 996790337371607625),
+             (1820249309832, 1820249309833)]
+for name, value, (lo, hi) in zip(["r1", "r2", "gap"], [r1, r2, gap], endpoints):
+    assert arb(lo)/d < value and value < arb(hi)/d
+    print(name, str(lo)+"/"+str(d), "< value <", str(hi)+"/"+str(d))
+bounds = [(F(lo, d), F(hi, d)) for lo, hi in endpoints]
+assert 0 < bounds[0][0] < bounds[0][1] < 1
+assert 0 < bounds[1][0] < bounds[1][1] < 1
+assert bounds[1][0] - (2*bounds[0][1]**2-1) > 0
+assert 1-r1*r1 > 0 and (1-r2)*gap > 0
+for (lo, hi), expected in zip(bounds[:2], [F(1), F(199, 200)]):
+    assert q(lo, 200) == q(hi, 200) == expected
+rounded = toeplitz(F(1), F(199, 200))
+assert q(F(1), 200) == 1
+assert det3(rounded) == -F(1, 40000)
+assert witness(rounded) == -F(1, 100)
+print("actual xi: PD=True, Q_200 det=-1/40000, vTv=-1/100")
+print("python-flint="+flint.__version__, "precision="+str(ctx.prec), "cap="+str(ctx.cap), "PASS")
+PY
+```
+
+~~~~~~~~~~~~
+
+### Archived original bytes [21732,21756)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+障碍登记与下一步⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [21758,21783)
+
+Disposition: operational fragment in mixed mathematical passage.
+
+~~~~~~~~~~~~text
+本轮增加的证据是:⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [21951,22027)
+
+Disposition: operational trailing fragment.
+
+~~~~~~~~~~~~text
+以下是本卷的研究义务,不是手写消化状态或新形式工单。⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [22055,22085)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+下一次能改变它的结果⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [22961,23112)
+
+Disposition: operational provenance / implementation / execution / delivery, inactive archive.
+
+~~~~~~~~~~~~text
+| 形式与发布 | 纸面和数值证据,未冻结、未合并 | caller 的独立评审、canonical PR 三门及 MERGED;形式化另按准入处理 |
+~~~~~~~~~~~~
+
+### Archived original bytes [23366,23490)
+
+Disposition: operational trailing fragment.
+
+~~~~~~~~~~~~text
+本轮不重做相邻 #5908、#6160、#6298 所属的 Robin 有限证书、整数资源优化或物理响应 no-go 工作。⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [24752,24773)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+来源核对与产地⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [24779,24812)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+本轮实际核对的数学来源⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [24814,25174)
+
+Disposition: operational provenance / implementation / execution / delivery, inactive archive.
+
+~~~~~~~~~~~~text
+下列六份外部预印本或论文已在本轮成功下载并核对,两个仓内引用则按钉版的本地文件读取。Li DOI 仅是书目链接,没有取得其全文。HTML 用数学 `alttext` 保留公式,PDF 按页提取核对。本地源字节与 SHA-256 收据保存在实施 attempt 工件中;这些下载和提取工具不承担数学正确性。
+
+~~~~~~~~~~~~
+
+### Archived original bytes [25185,25200)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+已检查文本⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [25990,26006)
+
+Disposition: operational fragment in mixed mathematical passage.
+
+~~~~~~~~~~~~text
+,未取得全文⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [26683,26711)
+
+Disposition: operational fragment in mixed mathematical passage.
+
+~~~~~~~~~~~~text
+;未亲读 Robin 1984 原文⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [26879,26901)
+
+Disposition: operational fragment in mixed mathematical passage.
+
+~~~~~~~~~~~~text
+本地同一 HEAD 的 ⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [27228,27249)
+
+Disposition: operational fragment in mixed mathematical passage.
+
+~~~~~~~~~~~~text
+本地同一 HEAD 的⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [27405,27451)
+
+Disposition: mixed passage: preserve listed exact mathematical / citation fragments.
+
+~~~~~~~~~~~~text
+以上文献查询支持判据的准确陈述;⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [27525,31268)
+
+Disposition: operational provenance / implementation / execution / delivery, inactive archive.
+
+~~~~~~~~~~~~text
+### 载体与独立性
+
+本卷由 caller 的 `consensus-rnd:sshx` implementation brief 驱动的 Codex worker 写作,worker 未调用新的 skill 或派出子席。worker 独立读文献、核对纸面代数并运行第 6 节程序,没有读取本轮 thinking 日志或 peer review 工件。这里的“独立复算”指重新执行与核对,也不是实施者给自己签发独立评审批准。先验边界为 Codex `repo-prior-exposed`、oracle `external-prior-exposed`;同轮 peer 输出不作为实施输入,不声称先验无污染。
+
+以下载体事实由 caller 提供,worker 未读取其私人运行日志。六个隔离 thinking 席最终均为 `revise`;caller 经元层收敛保留端点和正规化限制,选择了本卷的小型反驳及实际 ξ 区间证据。**这不表示六席一致批准一个未经修改的旧计划。** 有效 thinking 结果来自 oracle 回退失败后使用的 Codex,不能据此声称模型族多样性。
+
+独立的实际 GPT PRO 咨询已完成,caller 提供的记录为:
+
+| 字段 | 原记录 |
+|---|---|
+| task | `080f1df1-b4cf-4e0a-b1c4-d76dd21fcb1a` |
+| conversation | `conv_b9e496c90a421437` |
+| pool | `chrono-chatgpt-pro-pool` |
+| dispatch model | `chatgpt-5.5-pro` |
+| terminal model | 字面字符串 `6\nPro`,按 JSON 字符串表示为 `"6\\nPro"` |
+| ChatGPT URL | <https://chatgpt.com/c/6a9fe809-5830-83ec-8008-2fa7d47d2d92> |
+
+dispatch 与终态字段是两条不同观测,本卷不据此推断未见的精确后端型号。原 pool 的前两次尝试均以 `page.goto Page crashed` 失败,没有研究产出。另一个 PRO follow-up `e512bb9d-21ac-46f4-8209-9941632be445` 在本次 intake 中为 pending,不能引用为已完成回答。PRO 的建议仍是可错参考输入;第 7 节对 \(T^*T\) 的类型修正明确保留。
+
+本卷的 canonical 摄取命令为:
+
+```sh
+make ingest BASE=45e7b20dd95dd8b2d7b8784392c1814193b80515 SOURCE=docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md
+```
+
+摄取计数、atom 样本和退出码以 worker 结果信封中的实测输出为准,不能把摄取成功写成定理冻结或 PR 已合并。后续评审纠正须明确记下被改判的结论及其证据,已摄取 atom 不手改、不删除。
+
+## 9. 追加勘注: 终态字符串与本次来源
+
+日期 2026-09-08。本次 implementation worker 按 `consensus-rnd:sshx` worker 模式执行,没有派出子席,没有读取 peer 日志,没有提交、推送或操作 PR。以下为参考输入中的纸面论证与数值库证据,不是独立评审批准,也不是 Lean-frozen 定理。长期研究目标保持 active。
+
+**具体勘误,只追加不改旧文:** 第 8 节把 terminal model 当成含字面反斜杠的字符串,这是记录错误。caller 指定的 `pro-map-task-complete.json` 经本次 JSON 解析,其 model 字段的 Unicode codepoints 恰为 `[54,10,80,114,111]`:字符 `6`,一个实际 LF,再接 `Pro`。正确的 JSON 序列化是 `"6\nPro"`,其中只有一个换行转义序列;不是第 8 节所写的含两个反斜杠的序列化。原 JSON SHA256 为 `6274bc727c4a83f7056a8112edee31940604806de34a0c7d4d3413cb32f1c715`。本勘注不据此推断未见的后端型号,不改变第 5-6 节数学。
+
+本次实际源 HEAD 为 `8698bf1a197adb887967cb6722261ea525ea9400`,已经包含 caller 提交的第一卷。`45e7b20dd95dd8b2d7b8784392c1814193b80515` 仅保留为历史 intake 与摄取 BASE。追加前本卷 598 行,源 SHA256 为 `1051e55d93ab1beae2cfc2f4fcee04a6f9c79b1a17792c5ce187286d20b44404`;原文及 62 个已摄入 atom 全部保留。以下使用 [Q]、[Z] 的当前 HEAD 字节,其 SHA256 分别为 `4d38746e7e83ef96bb8c5af3b58f2e6d7a51484f4cbdd673ca4e644fa34bf246`、`2c60183ac740a7426db7f9113b5d769f883382d75bb216e6dfa780c42fca11f7`。
+
+~~~~~~~~~~~~
+
+### Archived original bytes [31322,31353)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+### 坐标独立不指定度量⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [32401,32448)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+### 黄金位是编码,不会新增独立方向⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [33048,33095)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+### Robin 的函数曲率与已有 KL 恒等式⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [33480,33508)
+
+Disposition: operational fragment in mixed mathematical passage.
+
+~~~~~~~~~~~~text
+(本次源约 2210-2460 行)⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [33866,33894)
+
+Disposition: operational fragment in mixed mathematical passage.
+
+~~~~~~~~~~~~text
+截面几何能组织搜索;⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [34024,34062)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+### 既有 Schur 条件的投影解释⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [34933,34970)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+### 两个不同的量化输出空间⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [35485,35549)
+
+Disposition: operational fragment in mixed mathematical passage.
+
+~~~~~~~~~~~~text
+(这里只用 Python 任意精度整数形成行列式乘积。)⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [36199,36232)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+输入认证与完整有限前缀⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [36234,36422)
+
+Disposition: operational leading fragment.
+
+~~~~~~~~~~~~text
+程序 `tools/scripts/agent/xi_quantization.py` 从第 6 节的 completed xi Taylor 公式自身计算 \(x,y,\beta\),不读取理论散文。Python-FLINT 0.8.0、Arb 256 位、`ctx.cap=4`;⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [36729,37010)
+
+Disposition: operational provenance / implementation / execution / delivery, inactive archive.
+
+~~~~~~~~~~~~text
+包围方法是对缩放 Arb 球求 `floor().unique_fmpz()`,再用 Arb 比较严格验证两个有理端点。无法认证时提高精度至最多 2048 位,仍失败则停止;不解析小数显示。程序也重新认证第 6 节全部 \(10^{18}\) 粗控制区间,结果一致。
+
+~~~~~~~~~~~~
+
+### Archived original bytes [37183,37207)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+作 Python 整数计算,⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [37296,37322)
+
+Disposition: operational fragment in mixed mathematical passage.
+
+~~~~~~~~~~~~text
+或只检查 GPU 负候选⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [37325,37352)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+实际运行请求并完成⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [37368,37516)
+
+Disposition: operational fragment in mixed mathematical passage.
+
+~~~~~~~~~~~~text
+,expected、attempted、classified 均为 1399999;unresolved 为 0。每个已完成分辨率还核对 Schur 重建的整系数行列式恒等式。⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [37860,37952)
+
+Disposition: operational fragment in mixed mathematical passage.
+
+~~~~~~~~~~~~text
+首负预测在开跑前已登记,此次枚举确认它;末负与计数是本次新测量。⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [38193,38262)
+
+Disposition: operational trailing fragment.
+
+~~~~~~~~~~~~text
+首末奇异的零向量及各类首末记录都在生成报告内。⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [38443,40866)
+
+Disposition: operational provenance / implementation / execution / delivery, inactive archive; type / grammar metadata.
+
+~~~~~~~~~~~~text
+### 真 MPS 候选与误差账
+
+本次报告来自 Apple M3 Ultra、60 GPU 核、Metal 4、103079215104 字节内存,Python 3.12.13、Torch 2.8.0、NumPy 2.0.2。Torch 导入前设置 `PYTORCH_ENABLE_MPS_FALLBACK=0`,要求 MPS built/available,实际 tensors 位于 `mps:0`。bin 候选为 float32,索引与 \(B\) 符号运算为受支持的 int64;没有在 GPU 上用定宽整数乘行列式。先断言 \(m\le1400000<2^{24}\) 和 \(4(1400001)^2<2^{63}\),再按 65536 行分块分配。复用 `gpu5040.state_store.StateLocks`,在独立外部 state 目录先取 state 锁,再取 per-user GPU/verifier 锁;没有改动或停止既有 gpu5040 工作。
+
+比较 naive `floor(m*t+0.5)` 与 centered-deficit `m-ceil(m*(1-t)-0.5)`。后者的 \(1-t\) 先由高精度有理数形成,再转 float32;仍然只是候选。
+
+| MPS 候选 | 任一 x,y,beta bin 不同的 m 数 | 仅 x,y 任一不同的 m 数 | B 符号/逐项类别不同的 m 数 | Schur 类别不同 |
+|---|---:|---:|---:|---:|
+| naive | 131641 | 116459 | 50715 | 0 |
+| centered | 61386 | 196 | 61 | 0 |
+
+逐坐标 bin 差异为 naive `(x=64006,y=55539,beta=17380)`,centered `(x=55,y=141,beta=61201)`。beta 为负且靠近 -1,所规定的 centered 公式并没有同等改善它。精确不定而 GPU 报非负的数量为 naive 8314、centered 26;精确 PD 而 GPU 报不定分别为 42401、35。报告保留有界 bin/符号样本及完整三类混淆计数。例如 centered 在 \(m=188026\) 将精确 bins \((187875,187422)\) 算成 \((187875,187423)\),把不定报成 PD。因此即使 centered 也不能承担证书。
+
+**历史控制保留:** caller 在派发中给出的旧 MPS smoke 于 \(m=1400000\) 得 naive \((1398876,1395507)\),而精确 bins 是 \((1398876,1395506)\)。这是旧观测,不因新跑而改写。本次当前源码重跑再次得到同一 naive 偏一结果,centered 得精确 bins;两者在这个控制上都报 PD,所以 bin 差异不一定改变类别。控制不计入有限前缀的计数或 digest。
+
+最终主运行 UTC 为 `2026-09-08T12:14:36.796123+00:00` 至 `2026-09-08T12:14:45.828243+00:00`;两端 `torch.mps.synchronize()` 包围的分块总计 0.18041808810085058 秒,含分配/派发,不含 CPU 传输,全部枚举及比较耗时 7.707086249953136 秒。首轮实际 MPS 运行亦完整成功,最终报告是增加符号样本与混淆计数后的新运行,并非挪用旧计时。
+
+### 解析尾界,不是数值外推⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [42104,42171)
+
+Disposition: operational provenance / implementation / execution / delivery, inactive archive.
+
+~~~~~~~~~~~~text
+### 复现、状态与未履行义务
+
+结构化全部证据位于 ⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [42235,44144)
+
+Disposition: operational provenance / implementation / execution / delivery, inactive archive; type / grammar metadata.
+
+~~~~~~~~~~~~text
+,包括有理区间、程序及本地 import SHA256、实际 HEAD、依赖/硬件、逐块计时、范围与样本。程序仅在请求范围完整且无 unresolved 时原子发布报告;失败记录留在外部 state 目录,不能覆盖已有完整报告。CPU-only 模式明确写无 MPS 运行,不能向仓内发表 GPU 主报告。可执行入口为:
+
+```sh
+make -C tools xi-quantization XI_REPORT=/Users/auricstudio/trureturing-qgh-boundaries/docs/reports/xi-quantization-0908.md
+make -C tools xi-quantization XI_MODE=cpu XI_CHUNK=50000 XI_REPORT=/tmp/qgh-xi-quantization-state/cpu-report.md
+make -C tools xi-quantization-test
+```
+
+Make 配方固定 `uv run --python 3.12 --with torch==2.8.0 --with numpy==2.0.2 --with python-flint==0.8.0 python ...`,没有修改全局 Python 或 Codex 配置。主报告内记录展开后的精确命令。完整有序数学流的 SHA256 为 `81e77ccc81333be01c37c6fbb3a8168c37386f8293c18131ad45b9f7776e2b60`:对递增的每个完成 \(m\),以 ASCII 写 `m,kx,ky,kbeta,entrywise_class,schur_class` 后接 LF,无头行;类别字面值为 `indefinite`、`singular`、`pd`,控制另记。这个 digest 不含时间、设备、源码版本等运行元数据,不同设备可以复算比较。
+
+完整 CPU-only 运行与主 MPS 运行的数学 digest 相同。另一份不导入分类实现的独立算式复核使用 512 位 Arb 比较、`divmod` 半格判定、缺额变量行列式及全部主子式,也复现同一计数和 digest,并以显式矩阵二次型核对首末负/零见证。这里的独立是算法与复算路径的独立,不是新增评审席或模型族独立性。9 个聚焦行为测试覆盖半格歧义、正负平局、奇异/不定、任意精度乘积、重建、覆盖缺口、序列化及 GPU 非负漏报;既有 ScriptTests 入口实际执行了这些测试。
+
+本增量将“对这一固定三阶块的所有分辨率”从未执行登记变成⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [44397,44401)
+
+Disposition: operational fragment in mixed mathematical passage.
+
+~~~~~~~~~~~~text
+PRO ⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [44430,44565)
+
+Disposition: operational trailing fragment.
+
+~~~~~~~~~~~~text
+caller 仍负责独立评审、PR 三门与发布;本次 worker 不把任何本地验证称为 MERGED 或 standing-goal satisfaction。⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [44567,50141)
+
+Disposition: operational provenance / implementation / execution / delivery, inactive archive.
+
+~~~~~~~~~~~~text
+## 13. 实施收尾的追加记录
+
+第 12 节已摄入的运行事实继续保留。随后修正报告发布失败的状态记录:即使数学覆盖已完成,发布异常也明确记为 `publication_failed` 并返回非零,保留已完成覆盖与已有报告,不把发布失败说成完整运行。新增的存储失败注入测试使聚焦行为测试总数成为 10;这不改变任何 bin、分类或数学 digest。
+
+因此当前主报告采用终版程序的另一次完整 MPS 运行,UTC 为 `2026-09-08T12:26:31.783258+00:00` 至 `2026-09-08T12:26:40.339952+00:00`,同步 MPS 分块总计 0.162419916363433 秒,枚举/比较 7.136823707958683 秒。全部精确计数、混淆计数和 digest 与第 12 节所记运行相同。终版程序 SHA256 为 `52b0b82da67a608464b3acc189b1449e731e8c6ad4e9cef168978ca22a57908c`;本地 import `gpu5040/state_store.py` 为 `a1eda747e24ea792caac30da136e85ba0beac6dc6f08d53880624b8ac6b1f03a`,Make 入口为 `624482b96b758254c78d31c8dacfa330fd8a775d6beef6412248a17e9aed1cb9`。终版 CPU-only 完整运行也给出同一 digest,且明确没有 MPS 执行。此前的运行来源和计时只作为历史,没有拿来替代终版源码的实跑。
+
+## 14. 评审勘误:发布边界与回归核验
+
+本节是 `consensus-rnd:sshx` 实施修复的 repo-derived 工程证据,不追加数学定理。第 12 节“失败记录不能覆盖已有完整报告”和第 13 节“发布异常保留已有报告”的全称保证不成立,在此明确收窄:共享 `state_store.atomic_write` 先 `os.replace`,后同步目录;只有 replacement 之前的失败保留旧目标字节。quality 席在独立字节相同的夹具中注入 replacement 之后的目录同步错误,观察到非零退出、外部 `publication_failed`,同时目标已是新报告。此时新字节可以可见,掉电后的持久性不确定,没有回滚保证。该反例不表明第 13 节的历史实际 MPS 运行发生过 I/O 失败;其来源、计时和已有 atom 均继续保留。
+
+修复后的报告 schema 为 2。`mathematical_status=complete` 只表示数学认证完成;写入 Markdown 的 `status=publication_unconfirmed` 是发布前快照,成功发布也不改写为自证成功。外部 runtime/stdout 的 `status=complete` 表示报告 writer 已返回,进程退出 0 还要求 runtime 写入返回。报告发布异常仍记 `publication_failed` 和异常类型/消息,保留覆盖、计数与完整数学 digest 并返回非零。若 runtime 记录本身也写失败,stdout 另带 `runtime_record_error` 并返回非零;此前可见的 runtime 同样不能自证自己的最终目录同步。此契约明确区分数学完成、可见字节和 I/O 结果,没有另造事务服务或改写共享 writer。
+
+聚焦 Python 套件现为 11 项。实际共享 writer 的测试覆盖成功、replacement 前失败、replacement 后目录同步失败,以及失败/成功结果记录的目录同步失败;成功和失败两侧都核对三行合成覆盖及独立 CSV digest。尾界测试独立钉住 `error_at_M=7000001/3920000000000` 与 `gap_minus_error=211525460221/6125000000000000000`,并拒绝 `gap-error` 不严格为正、x/y/beta 严格端点达到等号或越界,及独立端点 PD 前提失败。预登记把尾界系数 5 改为 1,实得仅 `test_tail_rational_bound_and_strict_hypotheses` 失败,Python 退出 1 / Make 退出 2,无编译或导入错误;恢复后 11 项全绿。Make 的两个 `.PHONY` 和两条 help 配方合为各一条,已有 `ToolsTargets` 增列两个真实命令,保留并扩充严格 dispatch 断言。实际 `ToolsMakefileIsAThinCompleteDispatchTable` 先复现 `Assert.Single` 的两项失败;修复后该测试、根 Make 薄表、ScriptTests 入口及原有必需 check-fast filters 共 19 项通过,构建零警告、零错误;canonical selftest 通过。这些是本 worker 的执行证据,不冒充独立复审或 PR 准入。
+
+修复终版只重跑一次实际 MPS 完整前缀,复用同一 per-user GPU/verifier 锁并使用独立外部 state;没有另做完整 CPU-only 扫描。UTC 为 `2026-09-08T13:39:56.700277+00:00` 至 `2026-09-08T13:40:04.933080+00:00`,同步 MPS 总计 0.1530874171294272 秒,枚举/比较 6.9315066249109805 秒;命令退出 0,外部 runtime 为 `complete`,无 publication/recording error。重现命令为:
+
+```sh
+make -C tools xi-quantization XI_MODE=mps XI_FIRST=1 XI_LAST=1399999 XI_CHUNK=65536 XI_PRECISION=256 XI_DIGITS=40 XI_STATE=/tmp/qgh-xi-quantization-i3-publication-contract XI_REPORT=/Users/auricstudio/trureturing-qgh-boundaries/docs/reports/xi-quantization-0908.md
+```
+
+相对 `309ff1c32e2ba45af38856c33059dbc5bbd13b55` 的报告,全部数学输入、尾界、1399999 项覆盖、精确计数、首末见证、控制和 GPU 混淆/差异记录均相同,有序 CSV digest 仍为 `81e77ccc81333be01c37c6fbb3a8168c37386f8293c18131ad45b9f7776e2b60`。变化仅为发布契约/schema、真实新运行的时刻/计时、运行路径和代码来源。报告的 `source_head` 是带未提交修复的该 HEAD,实际运行字节由 manifest 绑定:producer SHA256 `6bd7295216e998874ff2b9f47e7145f4224f0a7547e630d0157a295d10089a1d`,Make SHA256 `360891306af6257eaf4b4def814a9cd0ab73e77b452124277e8fe3ff107a63d4`,共享 writer 仍为第 13 节的 SHA256。新 Markdown 报告 SHA256 为 `cf8220d31dd7f878e0381b50527198868669ad9e485bdead5618597662817806`;旧报告留在上述提交,未把旧计时配给新代码。caller 继续负责 judge/content 分区、复制工程修复、独立复审和 PR 三门;此有界修复不宣称 MERGED、RH 进展或长期研究目标完成。
+
+~~~~~~~~~~~~
+
+### Archived original bytes [50259,50386)
+
+Disposition: operational fragment in mixed mathematical passage.
+
+~~~~~~~~~~~~text
+本节落实第 10 节的距离问题,使用已完成实际 GPT PRO 的论证并由实施者逐步核对;产地见第 17 节。⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [50588,50634)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+### 固定素数标签、预算与加权度量⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [52375,52408)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+### 强化的二次 Jensen 缺口⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [54104,54146)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+### Hermite 上包络及全部等号情形⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [57048,57067)
+
+Disposition: operational fragment in mixed mathematical passage.
+
+~~~~~~~~~~~~text
+,无新搜索实现⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [58619,58653)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+### 固定坐标的常数不能丢⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [59809,59842)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+单个边界整数的有界复算⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [59844,59860)
+
+Disposition: operational fragment in mixed mathematical passage.
+
+~~~~~~~~~~~~text
+本次只核验 ⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [60027,60093)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+保存 Python-FLINT 0.8.0 / Arb 256 位的完整可执行计算与⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [60136,60190)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+球比较及包围端点的精确有理比较均认证⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [60659,60708)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+### 固定支撑损失不等于任意全局损失⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [62760,62797)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+### 离散对偶比较与来源边界⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [63228,63582)
+
+Disposition: operational trailing fragment.
+
+~~~~~~~~~~~~text
+caller 提供的两次后续任务 `949095a4-d3a7-4179-b842-f255db211159`、`db06ed96-26f3-47ff-90eb-db97ec4de9d6` 只有载体失败记录(`prompt_delivery_uncertain`;`page.goto Page crashed`),没有数学答案。它们既不证明也不否定优势。本增量未执行所提 GPU 窗口,不把预测当作结果,也不让新搜索依赖缺失结论。⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [63584,64220)
+
+Disposition: operational provenance / implementation / execution / delivery, inactive archive; operational leading fragment.
+
+~~~~~~~~~~~~text
+主要研究输入是 caller 提供的实际 GPT PRO task `14803801-6a68-4b5a-8a76-f6615d838e88` 的 structured conclusion,完成时间 `2026-09-08T13:17:09.406+00:00`,返回 model `chatgpt-5.5-pro`;该输入没有单独提供 conversation id,不补造。实施 worker 没有打开 oracle transcript 或 opaque log_ref,没有新 oracle 调用。caller 的单点 256 位 Arb 读数是支持证据;本 worker 独立重算同一 5040 输入,结果一致。这里独立指证明核对和计算路径,不表示独立评审或模型族多样性;Codex 为 `repo-prior-exposed`。
+
+文献尽调范围明确如下:实施者于 2026-09-08 读取 ⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [64406,64436)
+
+Disposition: operational fragment in mixed mathematical passage.
+
+~~~~~~~~~~~~text
+的摘要页及作者元数据⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [64529,64545)
+
+Disposition: operational fragment in mixed mathematical passage.
+
+~~~~~~~~~~~~text
+PRO 自报亲读⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [64660,64750)
+
+Disposition: operational fragment in mixed mathematical passage.
+
+~~~~~~~~~~~~text
+本 worker 未独立取得这些正文或核对 DOI,不把转述写成亲验。PRO 另报 ⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [64822,64889)
+
+Disposition: type / grammar metadata.
+
+~~~~~~~~~~~~text
+正文获取失败,其一般结果是否覆盖本特例未核实。⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [64998,65741)
+
+Disposition: operational provenance / implementation / execution / delivery, inactive archive.
+
+~~~~~~~~~~~~text
+本次是 `consensus-rnd:sshx` 的委派 implementation,无新增子席或独立评审判词。C17 允许的 continuation 工作树为 `/Users/auricstudio/trureturing-qgh-variance`,分支 `lane/math/quantized-gh-variance-0908`,封存起点 `0b8b5592d56d601d92db36b5f7ef331ef3ed33f1`;原 803 行前缀逐字节保留。源与报告之外仅由以下 canonical 命令生成新 atom/账目,计数由实施结果信封报告:
+
+```sh
+make ingest BASE=0b8b5592d56d601d92db36b5f7ef331ef3ed33f1 SOURCE=arithmetic-boundary-quantization
+```
+
+本轮不新建形式根或修改冻结 Lean,不重做既有有限扫描。独立复审、PR 三门和 MERGED 发布由 caller 负责,尚未交付的环节保持 open;有限追加不完成持续研究目标。
+
+~~~~~~~~~~~~
+
+### Archived original bytes [65880,65937)
+
+Disposition: operational fragment in mixed mathematical passage.
+
+~~~~~~~~~~~~text
+本次追加日期为 2026-09-09,保留此前 1050 行。⟦end of exact byte span⟧
+~~~~~~~~~~~~
+
+### Archived original bytes [69965,69999)
+
+Disposition: operational fragment in mixed mathematical passage.
+
