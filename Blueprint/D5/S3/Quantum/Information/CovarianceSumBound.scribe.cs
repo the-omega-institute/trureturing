@@ -50,7 +50,7 @@ internal sealed class CovarianceSumBoundDocument : IScribeDocumentDefinition
                 Disp(Seq(Abs(C(F.Id("A"), F.Id("B"))), Sp, Le, Sp,
                     Sqrt, Grp(V(F.Id("A")), Sp, V(F.Id("B"))))),
                 literature: true),
-            Result("half-width", "variance_le_halfWidth_sq", "Spectral half-width bound",
+            Result("half-width", "variance_le_half_width_sq", "Spectral half-width bound",
                 "Assume Delta is nonnegative and every spectral value of Hermitian A lies "
                     + "in [c-Delta,c+Delta]. Delta is the half width. Continuous functional "
                     + "calculus bounds the square centered at c, and subtracting the squared "

@@ -135,7 +135,7 @@ private theorem expect_mono (ρ : DensityState n) {A B : Matrix n n ℂ}
 
 open scoped Matrix.Norms.L2Operator in
 /-- Popoviciu bound in a density state. Δ is the HALF width of [c−Δ,c+Δ]. -/
-theorem variance_le_halfWidth_sq (ρ : DensityState n) {A : Matrix n n ℂ}
+theorem variance_le_half_width_sq (ρ : DensityState n) {A : Matrix n n ℂ}
     (hA : A.IsHermitian) {c Δ : ℝ} (_hΔ : 0 ≤ Δ)
     (hspec : ∀ x ∈ spectrum ℝ A, x ∈ Set.Icc (c - Δ) (c + Δ)) :
     variance ρ A ≤ Δ ^ 2 := by
@@ -208,7 +208,7 @@ theorem covariance_sum_le {ι : Type*} (Q : Finset ι)
       (Q.card : ℝ) * b * Δ ^ 2 := by
   apply covariance_sum_le_of_variance Q ρ R b Δ hR _ hsparse
   intro x hx
-  exact variance_le_halfWidth_sq ρ (hR x hx) hΔ (hspec x hx)
+  exact variance_le_half_width_sq ρ (hR x hx) hΔ (hspec x hx)
 
 #print axioms covariance_sum_le
 end D5.S3.Quantum.Information.CovarianceSumBound

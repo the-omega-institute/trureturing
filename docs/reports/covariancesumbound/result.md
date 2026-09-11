@@ -20,7 +20,7 @@ No Lieb–Robinson or light-cone result is proved, and no atom coverage edge is 
 ## Proof and search assessment
 
 The live path is covariance_sum_le → covariance_sum_le_of_variance → abs_covariance_le
-→ centered_pair, together with covariance_sum_le → variance_le_halfWidth_sq →
+→ centered_pair, together with covariance_sum_le → variance_le_half_width_sq →
 expect_mono → expect_nonneg. centered_pair identifies the actual weighted matrix
 inner product with the trace covariance. covariance_self connects both public definitions.
 
@@ -49,12 +49,12 @@ Mathlib is pinned by the repository to v4.33.0.
 
 | Public theorem | proof_shape | Registered obligation and consumer → prerequisite edge |
 | --- | --- | --- |
-| covariance_symm | bind-only | task 1: symmetry of the covariance used by covariance_sum_le |
-| covariance_add_right | bind-only | task 1: additive covariance API used by the registered covariance_sum_le interface |
+| covariance_symm | bind-only | task 1 covariance API → covariance_symm |
+| covariance_add_right | bind-only | task 1 covariance API → covariance_add_right |
 | covariance_self | bind-only | abs_covariance_le → covariance_self |
 | variance_nonneg | bind-only | covariance_sum_le_of_variance → variance_nonneg |
 | abs_covariance_le | bind-only | covariance_sum_le_of_variance → abs_covariance_le |
-| variance_le_halfWidth_sq | bind-only | covariance_sum_le → variance_le_halfWidth_sq |
+| variance_le_half_width_sq | bind-only | covariance_sum_le → variance_le_half_width_sq |
 | covariance_sum_le_of_variance | bind-only | covariance_sum_le → covariance_sum_le_of_variance |
 | covariance_sum_le | bind-only | source theorem 123.2: registered endpoint |
 
