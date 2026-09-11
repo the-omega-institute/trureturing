@@ -17,7 +17,8 @@ internal sealed class FiniteDivisorPartitionZerosDocument : IScribeDocumentDefin
                     + "from degree zero through degree a. The exponent a may be zero.",
                 Eqn(Factor, Seq(Sum, Underscore, Grp(F.Id("j"), Eq, Num(0)),
                     Caret, Grp(A), Sp, Pow(Pow(P, Seq(Minus, S)), F.Id("j")))),
-                DescribeRole.Definition),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Factorization/dlmf2026divisorpartition")), DescribeRole.Definition),
             Entry("partition", "The finite divisor partition function",
                 "For a positive integer N, multiply the local factors over its distinct "
                     + "prime divisors. The exponent in each factor is that prime's multiplicity "
@@ -25,7 +26,8 @@ internal sealed class FiniteDivisorPartitionZerosDocument : IScribeDocumentDefin
                 Eqn(Partition, Seq(Prod, Underscore,
                     Grp(P, Sp, Mid, Sp, F.Id("N"), Comma, Sp, Call("Prime", P)), Sp,
                     Call("localFactor", P, Call("factorization", F.Id("N"), P), S))),
-                DescribeRole.Definition),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Factorization/dlmf2026divisorpartition")), DescribeRole.Definition),
             Entry("local_factor_eq_zero_iff", "The exact local zero lattice",
                 "Let p be prime and a a natural number. A zero has the form two pi i k "
                     + "divided by (a+1) log p, where k is an integer not divisible by a+1. "
@@ -37,31 +39,36 @@ internal sealed class FiniteDivisorPartitionZerosDocument : IScribeDocumentDefin
                     Exists, Sp, F.Id("k"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("Z")), Comma, Sp,
                     S, Sp, Eq, Sp, Phase, Sp, Land, Sp,
                     Neg, Open, A, Plus, Num(1), Sp, Mid, Sp, F.Id("k"), Close)),
-                literature: true),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Factorization/mathlib2026finitedivisorzeros"))),
             Entry("local_factor_zero_re", "A local zero has real part zero",
                 "A root of unity has modulus one. The modulus of p to minus s is p "
                     + "to minus the real part of s. Since a prime p is greater than one, "
                     + "injectivity of the real exponential forces the real part to be zero.",
                 Disp(Seq(Factor, Sp, Eq, Sp, Num(0), Sp, Rightarrow, Sp,
-                    RealPart, Sp, Eq, Sp, Num(0)))),
+                    RealPart, Sp, Eq, Sp, Num(0))),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Factorization/dlmf2026divisorpartition"))),
             Entry("partition_ne_zero_of_re_ne_zero", "Nonvanishing away from the imaginary axis",
                 "If the real part of s is nonzero, every local factor is nonzero. "
                     + "A finite product of nonzero complex numbers is nonzero.",
                 Disp(Seq(RealPart, Sp, Neq, Sp, Num(0), Sp, Rightarrow, Sp,
-                    Partition, Sp, Neq, Sp, Num(0)))),
+                    Partition, Sp, Neq, Sp, Num(0))),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Factorization/dlmf2026divisorpartition"))),
             Entry("partition_zero_re", "Every zero lies on the imaginary axis",
                 "Apply the nonvanishing statement contrapositively to the same finite "
                     + "divisor partition function.",
                 Disp(Seq(Partition, Sp, Eq, Sp, Num(0), Sp, Rightarrow, Sp,
-                    RealPart, Sp, Eq, Sp, Num(0)))))));
+                    RealPart, Sp, Eq, Sp, Num(0))),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Factorization/dlmf2026divisorpartition"))))));
 
     private static DocumentBlock Entry(string declaration, string title, string prose,
-        Formula formula, DescribeRole role = DescribeRole.Theorem, bool literature = false) =>
+        Formula formula, AssessedProvenance provenance, DescribeRole role = DescribeRole.Theorem) =>
         Describe.Lean(DescribeId.Create("finite-divisor-" + declaration.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Module + declaration), H(title), StatementSource.FromAuthor(formula),
-            literature ? AssessedProvenance.FromLiterature(
-                LibraryNoteRef.Create("D5/L/Factorization/mathlib2026finitedivisorzeros"))
-                : AssessedProvenance.FromRepo(),
+            provenance,
             Blocks(Paragraph(Text(prose))), role);
 
     private static Formula P => F.Id("p");
