@@ -15,7 +15,11 @@ public sealed record EngineeringProjectFixture(
     string[]? References = null,
     EngineeringOwnerFixture? Owner = null,
     string? OwnedTestAssembly = null,
-    string? TestPartition = null);
+    string? TestPartition = null,
+    string[]? BuildInputs = null,
+    string[]? ExecutionInputs = null,
+    string[]? ExecutionExcludes = null,
+    string[]? ExecutionEnvironment = null);
 
 public static class EngineeringRegistrationFixture
 {
@@ -42,6 +46,10 @@ public static class EngineeringRegistrationFixture
             include = project.Include,
             exclude = project.Exclude ?? [],
             references = project.References ?? [],
+            build_inputs = project.BuildInputs ?? [],
+            execution_inputs = project.Role is "owned-test" or "cross-cutting-test" ? project.ExecutionInputs ?? [] : (string[]?)null,
+            execution_excludes = project.Role is "owned-test" or "cross-cutting-test" ? project.ExecutionExcludes ?? [] : (string[]?)null,
+            execution_environment = project.Role is "owned-test" or "cross-cutting-test" ? project.ExecutionEnvironment ?? [] : (string[]?)null,
             owner = project.Owner is null ? null : new { path = project.Owner.Path, assembly = project.Owner.Assembly },
             owned_test_assembly = project.OwnedTestAssembly,
             test_partition = project.Role is "owned-test" or "cross-cutting-test"

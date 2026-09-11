@@ -17,10 +17,10 @@ public sealed class SharedBuildContractTests
         TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, log), "built\n");
         StageStep[] Steps(string[] names) => names.Select(name => new StageStep(name,
             name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", log)).ToArray();
-        var started = CommonExecutionEvidence.SealBuild(fixture.Root, CommonExecutionEvidence.Candidate(fixture.Root), [log], Steps(CommonExecutionEvidence.BuildSteps));
+        var started = CommonExecutionEvidence.SealBuild(fixture.Root, CommonExecutionEvidence.Candidate(fixture.Root), fixture.Build().Materials.Select(material => material.Path).Append(log), Steps(CommonExecutionEvidence.BuildSteps));
         TemporaryFileSystem.File.AppendAllText(Path.Combine(fixture.Root, CurrentExecutionContractTests.CandidateFixture.First), "\n");
         CommonExecutionEvidence.Write(fixture.Root, CommonExecutionEvidence.BuildPath, started with { Candidate = CommonExecutionEvidence.Candidate(fixture.Root) });
-        Assert.Equal(0, Program.RunCurrentTests(fixture.Root, (_, results) => { fixture.WriteTrx(results, "Passed"); return 0; }, TextWriter.Null, started));
+        Assert.Throws<InvalidDataException>(() => Program.RunCurrentTests(fixture.Root, (_, _) => throw new InvalidOperationException("must not run"), TextWriter.Null, started));
         CiTransportTests.Report(fixture.Root);
         Assert.Throws<InvalidDataException>(() =>
         {
@@ -98,9 +98,11 @@ public sealed class SharedBuildContractTests
             fi
             if [[ "$1" == test ]]; then
               echo test >> build/events
+              assembly="$2"
               while [[ "$1" != --results-directory ]]; do shift; done
               mkdir -p "$2"
-              cp build/passed/execution.trx "$2/run.trx"
+              if [[ "$assembly" == *Second.dll ]]; then sed 's/First.dll/Second.dll/g' build/passed/execution.trx > "$2/run.trx"
+              else cp build/passed/execution.trx "$2/run.trx"; fi
               [[ "$CONTRACT_FAILURE" != replace-build ]] || sed 's/"round": "/"round": "changed-/' build/ci/build.json > build/changed.json
               [[ ! -f build/changed.json ]] || mv build/changed.json build/ci/build.json
               [[ "$CONTRACT_FAILURE" != test ]]
@@ -145,8 +147,22 @@ public sealed class SharedBuildContractTests
             Assert.Equal(2, events.Count(value => value == "test"));
             Assert.Equal(2, events.Count(value => value == "proof"));
             Assert.Equal(1, events.Count(value => value == "report"));
+            var initial = CommonExecutionEvidence.ValidateTests(root);
+            Assert.True(TemporaryFileSystem.File.Exists(Path.Combine(root, CommonExecutionEvidence.TestSeedPath, "tests.json")));
+            var again = Branch("engineering");
+            Assert.True(again.Exit == 0, again.Text);
+            using var summary = System.Text.Json.JsonDocument.Parse(TemporaryFileSystem.File.ReadAllText(Path.Combine(root, "build/ci/engineering-result.json")));
+            Assert.Equal(0, summary.RootElement.GetProperty("test_projects_executed").GetInt32());
+            Assert.Equal(2, summary.RootElement.GetProperty("test_projects_reused").GetInt32());
+            Assert.True(summary.RootElement.GetProperty("test_seed_saved").GetBoolean());
+            Assert.Equal(initial.Projects.Select(row => row with { Status = "reused" }), CommonExecutionEvidence.ValidateTests(root).Projects);
+            Assert.Equal(2, TemporaryFileSystem.File.ReadAllText(Path.Combine(root, "build/events")).Split('\n').Count(value => value == "test"));
         }
-        else Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, "build/ci/" + first + ".json")));
+        else
+        {
+            Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, "build/ci/" + first + ".json")));
+            Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, CommonExecutionEvidence.TestSeedPath, "tests.json")));
+        }
         Assert.Equal(failure == "replace-build", before != CommonExecutionEvidence.Hash(Path.Combine(root, CommonExecutionEvidence.BuildPath)));
 
         (int Exit, string Text) Branch(string stage) => Process(root, scope,
@@ -184,7 +200,7 @@ public sealed class SharedBuildContractTests
         TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, log), "built once\n");
         StageStep[] Steps(string[] names) => names.Select(name => new StageStep(name,
             name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", log)).ToArray();
-        var build = CommonExecutionEvidence.SealBuild(fixture.Root, CommonExecutionEvidence.Candidate(fixture.Root), [log],
+        var build = CommonExecutionEvidence.SealBuild(fixture.Root, CommonExecutionEvidence.Candidate(fixture.Root), fixture.Build().Materials.Select(material => material.Path).Append(log),
             Steps(CommonExecutionEvidence.BuildSteps));
         CiTransportTests.Report(fixture.Root);
         CommonExecutionEvidence.SealCurrent(fixture.Root, build, Steps(CommonExecutionEvidence.CurrentSteps));

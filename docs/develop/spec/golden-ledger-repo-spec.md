@@ -239,7 +239,7 @@ CI/preflight 的阶段、候选报告/DLL/工程证据交接、退出与缓存�
 
 | 阶段入口 | 必须执行的工作 |
 |---|---|
-| `make -C tools engineering` | solution 与反证工程的 locked restore、候选 warnings-as-errors build、登记为 CI 执行成员的当前工程测试各一次（保留 ScriptTests 排除）、selftest 字节比对、CompileFailProof 与 BannedApi 两项反证编译证明。反证须核对预期诊断,不能以任意编译失败顶替;缓存不得省去所需 restore 或反证检查。 |
+| `make -C tools engineering` | solution 与反证工程的 locked restore、候选 warnings-as-errors build、对当前登记 CI 项目校验输入与成功证据，仅执行无有效同输入证据的项目（保留 ScriptTests 排除）、selftest 字节比对、CompileFailProof 与 BannedApi 两项反证编译证明。反证须核对预期诊断,不能以任意编译失败顶替;缓存不得省去所需 restore 或反证检查。 |
 | `make current` | 增量 Lean build 与报告生产、Scribe、filemap、当前树不变量。复用本轮候选 DLL 与工程产物,不重复 engineering。 |
 | `make delta BASE=<sha>` | 候选相对 base 的分区、保护面、首次冻结、棘轮及其余跨树约束;消费本轮 current 报告与 engineering 证据,不重跑共同工作。 |
 
@@ -247,7 +247,23 @@ CI/preflight 的阶段、候选报告/DLL/工程证据交接、退出与缓存�
 
 工程分类、程序集身份、CI 执行成员、生产属主、测试债务分区、项目引用和 Compile 源 include/exclude（含共享链接）的唯一数据真源为 FILEMAP 登记的 `Meta/engineering-projects.json`。engineering、拓扑、Scribe 工程/源成员与工程证据消费同一严格 reader；禁止从项目/目录名称、`IsTestProject`、xUnit 引用、SDK、MSBuild 求值或源语义自行发现这些事实。登记 glob 可在已跟踪源上展开；缺失、重复、未覆盖输入明确失败并补登记，不作全仓兜底。拓扑债务身份、集合包含/严格收缩棘轮、ScriptTests CI 排除与两项反证编译保持。
 
-本层 engineering 执行候选中登记 `ci=true` 的全部测试各一次，不按 base 选测；后续按影响范围增量调度也只能消费登记，缺登记不得自动发现或退回全仓。Scribe 共用检查亦不得按 base 选测试或检查。delta 只把 base 登记的 CI 测试集合当数据读取；base 尚无 manifest 时使用候选 current/historical 的显式登记寻址历史项目，不执行旧发现器、不设旧格式双读。用**本轮、同一候选身份绑定的 TRX** 确认这些项目已在候选中成功执行。项目被删、漏跑、执行失败或缺少有效成功证据均阻断;历史 TRX、另一候选的成功或重新运行 base 测试不能补证。此核验不再执行测试,也不引入 base 判官。候选正常 dotnet/Lake 编译与真实执行证据仍须保留。当前 Scribe 的 IO/调用图分类、NuGet 包资产及环境解析、其它既有构建/缓存推导尚待下一层登记迁移，不得扩展或冒称已完成；候选对历史源字节的 Roslyn 语义分析不授权 base checkout、restore、产物编译或执行。
+engineering 对候选中每个登记 `ci=true` 测试项目重新验收；按显式登记输入选择需要实际执行的项目，不按 base 选测。先完整验证当前登记、编译产物与输入身份，再验证可选成功种子；只有缺少有效同输入原始证据的项目调用真实 runner，继续使用 Release、无 filter、`--no-build --no-restore`。缺登记、必填字段/明确文件缺失、重复身份、悬空引用或循环在 runner 调用前失败，绝不扩成全执行。glob 的空集合按登记接受；新增、删除、mode 与字节变化进入对应指纹。ScriptTests 保持 `ci:false`，显式本地运行不改变 CI 成员。
+
+delta 从 `EngineeringProjectRegistry.ReadBase(baseline,current)` 读取 base 的显式 CI 集合作为数据。base 尚无 manifest 时由候选 current/historical 登记寻址；历史 v1 base 行只投影成员资格，不要求追补新的执行字段。地板为**当前 candidate/build round 的 accepted-success 覆盖**，可含已验证 `reused` 行。删除项目、改为 `ci:false`、缺行、失败或坏材料仍阻断。JSON 输出 `accepted_base_tests` 的 `project,status,execution_candidate,execution_round`；不得把复用标成 `BASE_FLOOR_EXECUTED`。push 不读取 base、parent 或 remote。本层不改 selftest 两次比对、CompileFailProof 与 BannedApi 两项反证、current 的已有验证；它们的 affected execution 仍待独立完成。
+
+**登记执行输入接口（0911 项目测试层）。** `Meta/engineering-projects.json` 保留 version=1，原项目行增加 `build_inputs`、`execution_inputs`、`execution_excludes`、`execution_environment` 四个 snake_case 字段，不建立另一份项目属主表。当前每行必须提供 `build_inputs` 数组；测试角色必须提供其余三个数组（空也明写），非测试角色必须为 null。`include/exclude` 只声明 C# 编译源，`references` 是编译依赖边；build_inputs 明列 SDK 配置、props、packages.lock 等编译选项材料。严格 reader 不接受未知/重复字段。**脚本 composition 依赖：返回的 script registry reader 原来要求精确 v1 row keys，caller 必须同时扩展这四个 key 与对应校验；不得把整行或整个 manifest 无差别作为所有项目的 cache identity。**
+
+`CommonExecutionEvidence.TestInputs` 是唯一测试输入指纹属主：versioned 固定执行契约 + 本项目相关登记字段 + 显式引用递归编译身份（登记源、项目文件、build_inputs 的 path/mode/SHA256）+ 排序的执行材料 + 明列环境值。candidate、Git commit、build round、run ID 不参与此指纹。登记数组排序规范化；只有本项目及显式 closure 的登记参与。execution_inputs 显式包含 `Meta/engineering-projects.json` 时投影 closure 已寻址项目行；包含 `Meta/FILEMAP.toml` 时投影匹配 closure 已登记路径的 rows 与全局 policy，使用结构化 TOML，不散列整份 manifest 字节。未相关的 row 不导致其它项目失效；登记真的包含整仓材料的项目按其声明承担相应执行成本。该规则只展开白名单，不通过 IO、调用图、MSBuild 或宿主扫描扩张输入。真实登记覆盖缺陷留给后续 CI 暴露后以最小登记修复，不声称语义完备。
+
+每个当前 CI 项目明列 `execution_environment: ["STRATALINT_TEST_ENVIRONMENT"]`；调用方必须在 producer、engineering/current/delta 下游验证时提供一致的非空值，显式描述所用 OS、arch、SDK/runtime 与会影响测试的环境/选项身份。缺值在选择前失败；值改变只失效引用此变量的项目。不得自动探测宿主填补该身份；caller 在组合入口统一接线。输入登记文件中 `global.json` 继续钉现有 SDK，本层不更改它。
+
+**测试证据 v2。** `build/ci/tests.json` 顶层严格为 `version,candidate,round,projects,materials`，version=2；candidate/round 精确绑定本轮验收与当前 build。projects 按登记 path 排序，恰好覆盖所有当前 CI 项目，每行严格为 `project,input_fingerprint,status,execution_candidate,execution_round,results,exit,executed,error`。status 仅 `executed|reused`；后两种执行来源字段永远记录最初物理运行，executed 行必须等于顶层身份，reused 不改写历史。results 为 `build/ci/trx/<original-candidate>/<original-round>/<input-fingerprint>/<invocation-guid>/<project-index>`；重复复用不生成收据链，不覆盖原始 TRX。两种状态都要求原始 exit=0、error=null、executed>0，实际成功 TRX 的 count、登记 assembly 身份及完整材料集合一致。失败、坏 XML、零执行、错误 assembly、infrastructure skip 均阻断。`materials` 行是 `path,sha256`，不得有孤立/重复或未绑定的实际 TRX。
+
+同一 `CommonExecutionEvidence` 验证器由 runner、SealEngineering、ValidateEngineering、transport/downstream 与 delta 消费。本轮 candidate/round、输入或 build/TRX 材料不符是硬失败，不得作为 cache miss 接收；已选择测试失败不重试旧成功补绿。`CommonStages` 摘要另报 `test_projects_executed,test_projects_reused,test_seed_saved`，tests step 表示选择与验收程序执行，零个测试项目实际执行是合法结果。
+
+**成功种子与待接运输接口。** 可选导入目录固定 `build/ci/test-seed/`，里面是根 `tests.json` 与按原始 repo-relative 路径保存的 TRX（即 `build/ci/test-seed/build/ci/trx/...`）。`ImportTestSeed(root,inputs,output)` 只提供逐项目候选证据；旧版本/坏 envelope 全冷，坏/缺单行、指纹不等、缺/坏 TRX 或 assembly 不等仅使该项目冷执行。当前 tests.json 每轮重新产生，保留导入后的最初来源。`ExportTestSeed(root,output,destination=null)` 先验证 engineering 与 tests 成功，再暂存复制、校验并替换目标目录；默认目标就是 test-seed。只有 engineering 验收之后可导出，build 成功不足以产生测试种子。可选保存失败返回 false、打印 `ENGINEERING_TEST_SEED_NOT_SAVED`，不改实际测试结果；验收失败不吞为保存失败。既有 engineering bundle 携带 v2 及原始 TRX，无第二证据通路。
+
+caller 尚须在既有 Actions transport 增加 `.engineering-tests` layer → restore target `build/ci/test-seed`，并接上显式环境身份；本层没有更改 workflow、lean_actions.py 或 dotnet_producer。engineering 成功后才按既定成功 push 分支策略 snapshot/save，与 build-only judge seed 独立。远端 compatibility 继续只取解析 mathlib revision + OS/arch；run ID/attempt 只作快照后缀，PR restore-only，不跨分区 fallback。**这项接线是 pending work，不能称 hosted incrementality 完成。** 完整 composition 的 runtime/engineering/CI、selftest/proof/current affected execution 与稳定验证由 caller 继续；资格仍为 0/16 PR、0/48 小时，不报告总性能或稳定性达标。
 
 **产物、退出与摘要属主。** producer 将报告、候选 DLL、TRX 与工程证据交给下游,每份产物必须能核对其候选身份、来源与完整性。预建 DLL 只可在确认由该候选源码生成后执行;无法确认的缓存产物须弃用并从候选构建。报告生产入口拥有增量生产与校验,消费者只校验和消费交接结果;必需报告或当轮证据缺失、格式错误、候选身份不符即失败,不得在下游静默重跑生产或把未执行记成成功。候选绑定与材料指纹用于验证和增量失效,不得变成远端缓存兼容选择器。
 
@@ -272,8 +288,8 @@ CI/preflight 的阶段、候选报告/DLL/工程证据交接、退出与缓存�
 | 无父提交、无 remote、无 BASE 的 push | engineering/current 完整执行各一次,无基线读取、无 delta。 |
 | PR 无冲突分叉或可快进;脏树、缺失/非法 base、冲突 | 合法候选按 merge-tree 判,无祖先要求;坏输入或不可合并阻断,所有出口清理临时候选。 |
 | 相同候选树/base/工具链的 CI 与 preflight | 检查集及判词一致,共同测试、Lean/report 不重跑,PR 各 job 的 M 一致,delta 的 B 为该 M 第一父。 |
-| 混分区、非法首次冻结、棘轮违规、base 测试项目未成功执行 | delta 逐项阻断,对应合法例放行;既有 delta-only 存量作用域不变。 |
-| 缺报告、交接身份错误、陈旧或另一候选 TRX/DLL | 必需证据校验失败;缓存材料不可用时由 producer 正常重建,不得假绿。 |
+| 混分区、非法首次冻结、棘轮违规、base 测试项目无当前 accepted-success 覆盖 | delta 逐项阻断,对应合法例放行;既有 delta-only 存量作用域不变。 |
+| 缺报告、交接身份错误、不等输入或来源/材料不符的 TRX/DLL | 必需证据校验失败;缓存材料不可用时由 producer 正常重建,不得假绿。 |
 | 同 mathlib 源码变化与纯 metadata 变化 | 前者仅重算受影响闭包;后者 Lean 模块重编与报告模块检查均为零,且保留 .lake。 |
 | mathlib 升级、OS/arch 变化 | 切换隔离分区,不复用跨分区种子;同分区增量结果等于同环境干净生产。 |
 | producer/Lean 选项/语义环境变化,模块增删或材料损坏 | producer 内必要失效及反向依赖重算完整,无旧报告残留或漏检。 |

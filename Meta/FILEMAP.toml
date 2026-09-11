@@ -371,8 +371,8 @@ pattern = "Meta/engineering-projects.json"
 kind = "data"
 admission_plane = "judge"
 produced_by = "none"
-consumed_by = ["EngineeringProjectRegistry"]
-verified_by = ["EngineeringProjectRegistry"]
+consumed_by = ["EngineeringProjectRegistry", "CommonExecutionEvidence"]
+verified_by = ["EngineeringProjectRegistry", "CommonExecutionEvidence"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -417,6 +417,8 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
+# Includes tests.json v2, original TRX and optional test-seed/tests.json + bound
+# original paths. Engineering acceptance owns seed export; Actions only transports.
 pattern = "build/ci/**"
 kind = "generated"
 admission_plane = "judge"

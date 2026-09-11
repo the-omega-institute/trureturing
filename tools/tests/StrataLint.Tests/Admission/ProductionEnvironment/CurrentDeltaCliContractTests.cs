@@ -63,6 +63,8 @@ public sealed class CurrentDeltaCliContractTests
 
     [Theory]
     [InlineData("valid", 0, "")]
+    [InlineData("reused", 0, "")]
+    [InlineData("disabled-base-project", 2, "base test project")]
     [InlineData("premanifest-base", 0, "")]
     [InlineData("premanifest-missing-base-project", 2, "base test project")]
     [InlineData("annotation", 3, "SL-022")]
@@ -114,6 +116,9 @@ public sealed class CurrentDeltaCliContractTests
                 projects.Add(JsonNode.Parse(EngineeringRegistrationFixture.Manifest(new EngineeringProjectFixture(
                     product, "StrataLint.NewProduct", "production", false, [], OwnedTestAssembly: "StrataLint.NewProduct.Tests")))!["projects"]![0]!.DeepClone());
                 break;
+            case "disabled-base-project":
+                projects.Single(item => item!["path"]!.GetValue<string>() == firstProject)!["ci"] = false;
+                break;
             case "missing-base-project":
             case "premanifest-missing-base-project":
                 File.Delete(Path.Combine(root, firstProject));
@@ -142,18 +147,32 @@ public sealed class CurrentDeltaCliContractTests
         }
         const string log = CommonExecutionEvidence.RootPath + "/unit-stage.log";
         Write(log, "fixture common stage succeeded\n");
-        var build = CommonExecutionEvidence.SealBuild(root, CommonExecutionEvidence.Candidate(root), [log],
+        var registered = EngineeringProjectRegistry.Read(CommonExecutionEvidence.Snapshot(root)).Projects.Where(project => project.Ci).ToArray();
+        var inventory = registered.Select(project => new BuiltTestProject(project.Path, "build/ci/bin/" + project.Assembly + ".dll")).ToArray();
+        foreach (var test in inventory) Write(test.Assembly, "synthetic runtime");
+        CommonExecutionEvidence.Write(root, CommonBuildOutputs.TestsPath, inventory);
+        var build = CommonExecutionEvidence.SealBuild(root, CommonExecutionEvidence.Candidate(root), inventory.Select(test => test.Assembly).Append(CommonBuildOutputs.TestsPath).Append(log),
             CommonExecutionEvidence.BuildSteps.Select(name => new StageStep(name, 0, 0, "executed", log)).ToArray());
-        Assert.Equal(0, StrataLint.EngineeringScope.Program.RunCurrentTests(root, (_, results) =>
+        Assert.Equal(0, StrataLint.EngineeringScope.Program.RunCurrentTests(root, (project, results) =>
         {
-            File.WriteAllText(Path.Combine(results, "run.trx"), """
+            var assembly = registered.Single(row => row.Path == project).Assembly;
+            File.WriteAllText(Path.Combine(results, "run.trx"), $$"""
                 <TestRun><Results><UnitTestResult testId="one" testName="Fixture.Runs" outcome="Passed" /></Results>
-                <TestDefinitions><UnitTest id="one" storage="Fixture.dll"><TestMethod className="Fixture" name="Runs" /></UnitTest></TestDefinitions>
+                <TestDefinitions><UnitTest id="one" storage="{{assembly}}.dll"><TestMethod className="Fixture" name="Runs" /></UnitTest></TestDefinitions>
                 <ResultSummary outcome="Completed"><Counters executed="1" passed="1" failed="0" /></ResultSummary></TestRun>
                 """);
             return 0;
         }, TextWriter.Null, build));
         CommonExecutionEvidence.SealEngineering(root, build, CommonExecutionEvidence.EngineeringSteps.Select(name => new StageStep(name, name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", log)).ToArray());
+        if (scenario == "reused")
+        {
+            Assert.True(CommonExecutionEvidence.ExportTestSeed(root, TextWriter.Null));
+            var original = CommonExecutionEvidence.ValidateTests(root);
+            build = CommonExecutionEvidence.SealBuild(root, build.Candidate, build.Materials.Select(material => material.Path), build.Steps);
+            Assert.Equal(0, StrataLint.EngineeringScope.Program.RunCurrentTests(root, (_, _) => throw new InvalidOperationException("equal inputs must reuse"), TextWriter.Null, build));
+            Assert.Equal(original.Projects.Select(row => row with { Status = "reused" }), CommonExecutionEvidence.ValidateTests(root).Projects);
+            CommonExecutionEvidence.SealEngineering(root, build, CommonExecutionEvidence.EngineeringSteps.Select(name => new StageStep(name, name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", log)).ToArray());
+        }
         CommonExecutionEvidence.SealCurrent(root, build, CommonExecutionEvidence.CurrentSteps.Select(name => new StageStep(name, 0, 0, "executed", log)).ToArray());
         switch (scenario)
         {
@@ -172,8 +191,14 @@ public sealed class CurrentDeltaCliContractTests
         {
             Assert.Contains($"ENGINEERING_TEST_PROJECT_REMOVED project={JsonSerializer.Serialize(firstProject)}",
                 console.Output, StringComparison.Ordinal);
-            Assert.Contains($"base test project has no successful candidate execution: {firstProject}",
+            Assert.Contains($"base test project has no current accepted-success coverage: {firstProject}",
                 console.Error, StringComparison.Ordinal);
+        }
+        if (scenario == "reused")
+        {
+            using var json = JsonDocument.Parse(console.Output);
+            Assert.All(json.RootElement.GetProperty("accepted_base_tests").EnumerateArray(), row =>
+                Assert.Equal("reused", row.GetProperty("status").GetString()));
         }
         if (scenario == "annotation")
         {

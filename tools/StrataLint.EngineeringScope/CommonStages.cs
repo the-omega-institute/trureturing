@@ -11,6 +11,9 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
     private readonly List<StageStep> steps = [];
     private string stage = "input";
     private string? candidate;
+    private int? testsExecuted;
+    private int? testsReused;
+    private bool? testSeedSaved;
 
     internal static int Normalize(int raw, bool allowProtectedAnnotation = false) => raw switch
     {
@@ -58,6 +61,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
             _ => [],
         };
         object Summary() => new { stage, candidate, base_sha = baseSha, exit, error = failure, steps,
+            test_projects_executed = testsExecuted, test_projects_reused = testsReused, test_seed_saved = testSeedSaved,
             not_executed = planned.Where(name => !steps.Any(step => step.Name == name)),
             build_evidence = CommonExecutionEvidence.BuildPath, test_evidence = CommonExecutionEvidence.TestsPath,
             engineering_evidence = CommonExecutionEvidence.EngineeringPath,
@@ -105,7 +109,16 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         else build = CommonExecutionEvidence.ValidateBuild(root, buildRound);
         foreach (var project in new[] { "tools/tests/CompileFailProof/CompileFailProof.csproj", "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj" })
             Step("restore-" + Path.GetFileNameWithoutExtension(project), "dotnet", ["restore", project, "--locked-mode"]);
-        Step("tests", "dotnet", [CommonExecutionEvidence.RunnerPath, "--repository", root, "--all", "--build-round", build.Round]);
+        try { Step("tests", "dotnet", [CommonExecutionEvidence.RunnerPath, "--repository", root, "--build-round", build.Round]); }
+        finally
+        {
+            if (File.Exists(Path.Combine(root, CommonExecutionEvidence.TestsPath)))
+            {
+                var tests = CommonExecutionEvidence.Read<TestExecutionRecord>(root, CommonExecutionEvidence.TestsPath);
+                testsExecuted = tests.Projects.Count(project => project.Status == "executed");
+                testsReused = tests.Projects.Count(project => project.Status == "reused");
+            }
+        }
         var first = Step("selftest-first", "dotnet", [CommonExecutionEvidence.CliPath, "selftest"]);
         var second = Step("selftest-second", "dotnet", [CommonExecutionEvidence.CliPath, "selftest"]);
         if (first != second) throw new StageFailure(1, "selftest outputs differ");
@@ -113,6 +126,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         Step("banned-api-proof", "dotnet", ["build", "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj", "--no-restore", "--no-dependencies", "--configuration", "Release"],
             (raw, text) => CompilationProof.ValidateBannedApi(raw, text, File.ReadAllText(Path.Combine(root, "tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"))));
         CommonExecutionEvidence.SealEngineering(root, build, steps.ToArray());
+        testSeedSaved = CommonExecutionEvidence.ExportTestSeed(root, output);
     }
 
     private void Current()

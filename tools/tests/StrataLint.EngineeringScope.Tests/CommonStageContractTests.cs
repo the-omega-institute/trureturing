@@ -375,6 +375,7 @@ public sealed class CommonStageContractTests
             TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(full)!);
             TemporaryFileSystem.File.WriteAllText(full, "fixture binary");
         }
+        fixture.Build();
         Assert.Equal(0, Program.RunCurrentTests(fixture.Root, (_, results) => { fixture.WriteTrx(results, "Passed"); return 0; }, TextWriter.Null));
         var candidate = CommonExecutionEvidence.Read<TestExecutionRecord>(fixture.Root, CommonExecutionEvidence.TestsPath).Candidate;
         CiTransportTests.SealEngineering(fixture.Root, candidate, binaries, CommonExecutionEvidence.EngineeringSteps

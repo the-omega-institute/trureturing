@@ -235,6 +235,7 @@ public sealed class CiTransportTests
 
     private static void Prepare(CurrentExecutionContractTests.CandidateFixture fixture, bool current)
     {
+        fixture.Build();
         Assert.Equal(0, Program.RunCurrentTests(fixture.Root, (_, results) => { fixture.WriteTrx(results, "Passed"); return 0; }, TextWriter.Null));
         TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, Log), "#!/bin/sh\nexit 0\n");
         if (!OperatingSystem.IsWindows())
@@ -248,9 +249,15 @@ public sealed class CiTransportTests
 
     internal static void SealEngineering(string root, string candidate, IEnumerable<string> binaries, StageStep[] steps)
     {
-        var build = CommonExecutionEvidence.SealBuild(root, candidate, binaries, CommonExecutionEvidence.BuildSteps.Select(name => new StageStep(name, name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", steps[0].Log)).ToArray());
-        var tests = CommonExecutionEvidence.Read<TestExecutionRecord>(root, CommonExecutionEvidence.TestsPath);
-        CommonExecutionEvidence.Write(root, CommonExecutionEvidence.TestsPath, tests with { Round = build.Round });
+        var build = CommonExecutionEvidence.ValidateBuild(root);
+        Assert.Equal(candidate, build.Candidate);
+        build = build with { Materials = CommonExecutionEvidence.Materials(root,
+            build.Materials.Select(material => material.Path).Concat(binaries)) };
+        CommonExecutionEvidence.Write(root, CommonExecutionEvidence.BuildPath, build);
+        var list = CommonExecutionEvidence.BundleListPath("build");
+        TemporaryFileSystem.File.WriteAllText(Path.Combine(root, list), string.Join('\0',
+            build.Materials.Select(material => material.Path).Append(CommonExecutionEvidence.BuildPath).Append(list)
+                .Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal)) + "\0");
         CommonExecutionEvidence.SealEngineering(root, build, steps);
     }
 

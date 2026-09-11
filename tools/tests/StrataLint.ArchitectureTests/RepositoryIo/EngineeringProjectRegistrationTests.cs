@@ -47,7 +47,7 @@ public sealed class EngineeringProjectRegistrationTests
     public void SupportAndProofRolesDoNotBecomeTestsFromXunitMetadata()
     {
         var entries = new[] { Test() with { Role = "test-support", Ci = false },
-            Test() with { Path = "proof/p.csproj", Role = "compile-fail-proof", Ci = false } };
+            Test() with { Path = "proof/p.csproj", Assembly = "Proof", Role = "compile-fail-proof", Ci = false } };
         var snapshot = Snapshot(EngineeringRegistrationFixture.Manifest(entries),
             entries.Select(entry => (entry.Path, "<Project><ItemGroup><PackageReference Include=\"xunit\" /></ItemGroup></Project>")).ToArray());
         Assert.Empty(EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadSnapshotProjects(snapshot)).ToArray());
@@ -102,6 +102,56 @@ public sealed class EngineeringProjectRegistrationTests
             "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj",
             "tools/tests/CompileFailProof/CompileFailProof.csproj",
         }, topology.Projects.Where(project => project.Registration.Role == "compile-fail-proof").Select(project => project.Path));
+    }
+
+    [Fact]
+    public void CurrentExecutionDeclarationsAreRequiredButHistoricalBaseMembershipProjectsOldRows()
+    {
+        var old = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest(Test()))!;
+        foreach (var field in new[] { "build_inputs", "execution_inputs", "execution_excludes", "execution_environment" })
+            old["projects"]![0]!.AsObject().Remove(field);
+        var baseline = Snapshot(old.ToJsonString(), (Project, Misleading));
+        var candidate = Snapshot(EngineeringRegistrationFixture.Manifest(Test()), (Project, Misleading));
+        Assert.Throws<InvalidDataException>(() => EngineeringProjectRegistry.Read(baseline));
+        Assert.Equal(Project, Assert.Single(EngineeringProjectRegistry.ReadBase(baseline, candidate).Projects).Path);
+        var current = Assert.Single(EngineeringProjectRegistry.Read(candidate).Projects);
+        Assert.Empty(current.BuildInputs!);
+        Assert.Empty(current.ExecutionInputs!);
+        Assert.Empty(current.ExecutionExcludes!);
+        Assert.Empty(current.ExecutionEnvironment!);
+    }
+
+    [Theory]
+    [InlineData("reference")]
+    [InlineData("cycle")]
+    [InlineData("assembly")]
+    public void ConflictingOrUnresolvedRegistrationFailsBeforeSelection(string defect)
+    {
+        var first = Test();
+        var second = Test() with { Path = "checks/Second.csproj", Assembly = "Second", TestPartition = "Second" };
+        if (defect == "reference") first = first with { References = ["missing/Project.csproj"] };
+        if (defect == "cycle")
+        {
+            first = first with { References = [second.Path] };
+            second = second with { References = [first.Path] };
+        }
+        if (defect == "assembly") second = second with { Assembly = first.Assembly };
+        Assert.Throws<InvalidDataException>(() => EngineeringProjectRegistry.Read(Snapshot(
+            EngineeringRegistrationFixture.Manifest(first, second), (first.Path, Misleading), (second.Path, Misleading))));
+    }
+
+    [Fact]
+    public void CurrentRepositoryExecutionAndBuildInputsExpandOnlyExplicitExistingMaterials()
+    {
+        var snapshot = StrataLint.EngineeringScope.CommonExecutionEvidence.Snapshot(RepositoryLayout.FindRoot());
+        var registry = EngineeringProjectRegistry.Read(snapshot);
+        var paths = snapshot.Files.Keys.Select(path => path.Value).ToArray();
+        foreach (var project in registry.Projects)
+        {
+            Assert.NotEmpty(EngineeringProjectRegistry.ExpandInputs(paths, project.BuildInputs!, [], project.Path));
+            if (project.IsTest)
+                _ = EngineeringProjectRegistry.ExpandInputs(paths, project.ExecutionInputs!, project.ExecutionExcludes!, project.Path);
+        }
     }
 
     private static EngineeringProjectFixture Test() => new(Project, "Explicit.Checks", "cross-cutting-test", true, []);

@@ -18,7 +18,16 @@
       ],
       "owner": null,
       "owned_test_assembly": "StrataLint.Tests",
-      "test_partition": null
+      "test_partition": null,
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/StrataLint.Cli/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null
     },
     {
       "path": "tools/StrataLint.Engine/StrataLint.Engine.csproj",
@@ -34,7 +43,16 @@
       ],
       "owner": null,
       "owned_test_assembly": "StrataLint.Engine.Tests",
-      "test_partition": null
+      "test_partition": null,
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/StrataLint.Engine/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null
     },
     {
       "path": "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
@@ -51,7 +69,16 @@
       ],
       "owner": null,
       "owned_test_assembly": "StrataLint.EngineeringScope.Tests",
-      "test_partition": null
+      "test_partition": null,
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/StrataLint.EngineeringScope/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null
     },
     {
       "path": "tools/StrataLint.Lean/StrataLint.Lean.csproj",
@@ -67,7 +94,16 @@
       ],
       "owner": null,
       "owned_test_assembly": "StrataLint.Lean.Tests",
-      "test_partition": null
+      "test_partition": null,
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/StrataLint.Lean/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null
     },
     {
       "path": "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj",
@@ -84,7 +120,16 @@
       ],
       "owner": null,
       "owned_test_assembly": "StrataLint.Scribe.Documents.Tests",
-      "test_partition": null
+      "test_partition": null,
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/StrataLint.Scribe.Documents/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null
     },
     {
       "path": "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
@@ -101,7 +146,16 @@
       ],
       "owner": null,
       "owned_test_assembly": "StrataLint.Scribe.Tests",
-      "test_partition": null
+      "test_partition": null,
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/StrataLint.Scribe/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null
     },
     {
       "path": "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
@@ -117,7 +171,16 @@
       ],
       "owner": null,
       "owned_test_assembly": null,
-      "test_partition": null
+      "test_partition": null,
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/TestSupport/StrataLint.TestSupport/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null
     },
     {
       "path": "tools/Trureturing.Truth/Trureturing.Truth.csproj",
@@ -131,7 +194,16 @@
       "references": [],
       "owner": null,
       "owned_test_assembly": "Trureturing.Truth.Tests",
-      "test_partition": null
+      "test_partition": null,
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/Trureturing.Truth/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null
     },
     {
       "path": "tools/scripts/report/JudgeSeedTask.csproj",
@@ -145,7 +217,16 @@
       "references": [],
       "owner": null,
       "owned_test_assembly": "JudgeSeedTask.Tests",
-      "test_partition": null
+      "test_partition": null,
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/scripts/report/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null
     },
     {
       "path": "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj",
@@ -159,7 +240,18 @@
       "references": [],
       "owner": null,
       "owned_test_assembly": null,
-      "test_partition": null
+      "test_partition": null,
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/BannedApiCompileFailProof/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null
     },
     {
       "path": "tools/tests/CompileFailProof/CompileFailProof.csproj",
@@ -175,7 +267,18 @@
       ],
       "owner": null,
       "owned_test_assembly": null,
-      "test_partition": null
+      "test_partition": null,
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/CompileFailProof/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null
     },
     {
       "path": "tools/tests/JudgeSeedTask.Tests/JudgeSeedTask.Tests.csproj",
@@ -195,7 +298,23 @@
         "assembly": "JudgeSeedTask"
       },
       "owned_test_assembly": null,
-      "test_partition": "tools/tests/JudgeSeedTask.Tests"
+      "test_partition": "tools/tests/JudgeSeedTask.Tests",
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/JudgeSeedTask.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "tools/scripts/report/JudgeSeedTask.csproj",
+        "tools/scripts/report/packages.lock.json"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ]
     },
     {
       "path": "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
@@ -216,7 +335,35 @@
       ],
       "owner": null,
       "owned_test_assembly": null,
-      "test_partition": "tools/tests/StrataLint.ArchitectureTests"
+      "test_partition": "tools/tests/StrataLint.ArchitectureTests",
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.ArchitectureTests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "tools/**",
+        "D5/**",
+        "Blueprint/**",
+        "Golden/**",
+        "Library/**",
+        "Meta/**",
+        "agents/**",
+        "docs/develop/spec/**",
+        "*.props",
+        "*.json",
+        "*.toml",
+        "Makefile",
+        "lean-toolchain",
+        ".gitignore"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ]
     },
     {
       "path": "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj",
@@ -236,7 +383,22 @@
         "assembly": "StrataLint.Engine"
       },
       "owned_test_assembly": null,
-      "test_partition": "tools/tests/StrataLint.Engine.Tests"
+      "test_partition": "tools/tests/StrataLint.Engine.Tests",
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.Engine.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "tools/tests/StrataLint.Engine.Tests/Fixtures/**"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ]
     },
     {
       "path": "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
@@ -256,7 +418,35 @@
         "assembly": "StrataLint.EngineeringScope"
       },
       "owned_test_assembly": null,
-      "test_partition": "tools/tests/StrataLint.EngineeringScope.Tests"
+      "test_partition": "tools/tests/StrataLint.EngineeringScope.Tests",
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.EngineeringScope.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "tools/scripts/**",
+        "tools/Architecture/**",
+        "tools/**/*.csproj",
+        "tools/**/*.json",
+        "tools/**/*.props",
+        "tools/Makefile",
+        "Makefile",
+        "*.props",
+        "global.json",
+        "lake-manifest.json",
+        "lakefile.toml",
+        "lean-toolchain",
+        ".gitignore",
+        "tools/tests/StrataLint.EngineeringScope.Tests/Fixtures/**"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ]
     },
     {
       "path": "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
@@ -275,7 +465,27 @@
         "assembly": "StrataLint.Lean"
       },
       "owned_test_assembly": null,
-      "test_partition": "tools/tests/StrataLint.Lean.Tests"
+      "test_partition": "tools/tests/StrataLint.Lean.Tests",
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.Lean.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "tools/scripts/worktree/**",
+        "tools/tests/StrataLint.Lean.Tests/Fixtures/**",
+        "global.json",
+        "lake-manifest.json",
+        "lakefile.toml",
+        "lean-toolchain"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ]
     },
     {
       "path": "tools/tests/StrataLint.Scribe.Documents.Tests/StrataLint.Scribe.Documents.Tests.csproj",
@@ -294,7 +504,20 @@
         "assembly": "StrataLint.Scribe.Documents"
       },
       "owned_test_assembly": null,
-      "test_partition": "tools/tests/StrataLint.Scribe.Documents.Tests"
+      "test_partition": "tools/tests/StrataLint.Scribe.Documents.Tests",
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.Scribe.Documents.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ]
     },
     {
       "path": "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
@@ -314,7 +537,30 @@
         "assembly": "StrataLint.Scribe"
       },
       "owned_test_assembly": null,
-      "test_partition": "tools/tests/StrataLint.Scribe.Tests"
+      "test_partition": "tools/tests/StrataLint.Scribe.Tests",
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.Scribe.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "Golden/Projection/**",
+        "tools/tests/StrataLint.Scribe.Tests/Fixtures/**",
+        "D5/**",
+        "Blueprint/**",
+        "Library/**",
+        "Meta/domains.yaml",
+        "Meta/registry.yaml",
+        "tools/scripts/katex/**",
+        "tools/scripts/renderer/**"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ]
     },
     {
       "path": "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj",
@@ -333,7 +579,29 @@
       ],
       "owner": null,
       "owned_test_assembly": null,
-      "test_partition": "tools/tests/StrataLint.ScriptTests"
+      "test_partition": "tools/tests/StrataLint.ScriptTests",
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.ScriptTests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "tools/scripts/**",
+        "tools/Makefile",
+        "Makefile",
+        "*.props",
+        "*.json",
+        "*.toml",
+        "lean-toolchain",
+        "tools/tests/StrataLint.ScriptTests/Fixtures/**"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ]
     },
     {
       "path": "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
@@ -353,7 +621,35 @@
         "assembly": "StrataLint"
       },
       "owned_test_assembly": null,
-      "test_partition": "tools/tests/StrataLint.Tests"
+      "test_partition": "tools/tests/StrataLint.Tests",
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "tools/**",
+        "Golden/**",
+        "Meta/**",
+        "D5/**",
+        "Blueprint/**",
+        "Library/**",
+        "agents/**",
+        "*.props",
+        "*.json",
+        "*.toml",
+        "Makefile",
+        "lean-toolchain",
+        ".gitignore",
+        "docs/develop/spec/**"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ]
     },
     {
       "path": "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj",
@@ -372,7 +668,20 @@
         "assembly": "Trureturing.Truth"
       },
       "owned_test_assembly": null,
-      "test_partition": "tools/tests/Trureturing.Truth.Tests"
+      "test_partition": "tools/tests/Trureturing.Truth.Tests",
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/Trureturing.Truth.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ]
     }
   ],
   "historical_projects": []
