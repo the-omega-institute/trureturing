@@ -172,33 +172,6 @@ internal static class MsBuildCompileOracle
         return new MsBuildCompileMap(owners, findings);
     }
 
-    internal static IReadOnlyList<string> QueryReferencePaths(
-        string repositoryRoot,
-        IEnumerable<string> projectPaths,
-        string? dotnetExecutable = null,
-        TimeSpan? timeout = null,
-        BoundedProcessRunner.ProcessRunner? run = null,
-        string? configuration = null)
-    {
-        var references = new HashSet<string>(StringComparer.Ordinal);
-        var dotnet = dotnetExecutable ?? ResolveDotnetExecutable();
-        var environment = EvaluationEnvironment();
-        foreach (var projectPath in projectPaths.Order(StringComparer.Ordinal))
-        {
-            var output = (run ?? BoundedProcessRunner.Run)(
-                dotnet,
-                QueryArguments(repositoryRoot, projectPath, configuration, includeReferences: true),
-                repositoryRoot,
-                timeout ?? BoundedProcessRunner.HangDetectionBudget,
-                MaximumOutputBytes,
-                environment: environment);
-            if (output.ExitCode != 0)
-                throw new InvalidOperationException($"dotnet msbuild reference query failed for {projectPath}");
-            foreach (var path in ParseReferencePaths(output.StandardOutput)) references.Add(path);
-        }
-        return references.Order(StringComparer.Ordinal).ToArray();
-    }
-
     internal static SnapshotCheckout Materialize(RepositorySnapshot snapshot, Func<string, bool> include)
     {
         var checkout = new SnapshotCheckout();
@@ -225,22 +198,16 @@ internal static class MsBuildCompileOracle
     private static IEnumerable<string> ParseCompilePaths(
         byte[] json,
         string repositoryRoot)
-        => ParseItemPaths(json, "Compile", repositoryRoot);
-
-    private static IEnumerable<string> ParseItemPaths(
-        byte[] json,
-        string itemName,
-        string? repositoryRoot = null)
     {
         using var document = JsonDocument.Parse(StrictUtf8.GetString(json));
         if (!document.RootElement.TryGetProperty("Items", out var items)
-            || !items.TryGetProperty(itemName, out var compile)
+            || !items.TryGetProperty("Compile", out var compile)
             || compile.ValueKind != JsonValueKind.Array)
         {
             throw new JsonException("MSBuild output has no Items.Compile array");
         }
 
-        var root = repositoryRoot is null ? null : CanonicalizePath(repositoryRoot);
+        var root = CanonicalizePath(repositoryRoot);
         foreach (var item in compile.EnumerateArray())
         {
             if (!item.TryGetProperty("FullPath", out var fullPathValue)
@@ -251,11 +218,6 @@ internal static class MsBuildCompileOracle
                 throw new JsonException("MSBuild Compile item has no traversal-free absolute FullPath");
             }
 
-            if (root is null)
-            {
-                yield return CanonicalizePath(fullPath);
-                continue;
-            }
             var relative = Path.GetRelativePath(root, CanonicalizePath(fullPath));
             if (relative != ".." && !relative.StartsWith(".." + Path.DirectorySeparatorChar, StringComparison.Ordinal))
             {
@@ -264,27 +226,7 @@ internal static class MsBuildCompileOracle
         }
     }
 
-    private static IEnumerable<string> ParseReferencePaths(byte[] json)
-    {
-        using var document = JsonDocument.Parse(StrictUtf8.GetString(json));
-        if (!document.RootElement.TryGetProperty("Items", out var items)
-            || !items.TryGetProperty("Reference", out var references)
-            || references.ValueKind != JsonValueKind.Array)
-            throw new JsonException("MSBuild output has no Items.Reference array");
-        foreach (var item in references.EnumerateArray())
-        {
-            var hintValue = item.TryGetProperty("HintPath", out var hint) ? hint.GetString() : null;
-            var value = hintValue is { Length: > 0 } && Path.IsPathFullyQualified(hintValue)
-                ? hintValue
-                : item.TryGetProperty("FullPath", out var full) ? full.GetString() : null;
-            if (value is null || !Path.IsPathFullyQualified(value) || ContainsParentTraversal(value))
-                continue;
-            yield return CanonicalizePath(value);
-        }
-    }
-
-    private static IReadOnlyList<string> QueryArguments(string repositoryRoot, string projectPath, string? configuration,
-        bool includeReferences = false)
+    private static IReadOnlyList<string> QueryArguments(string repositoryRoot, string projectPath, string? configuration)
     {
         var props = FindDirectoryBuildFile(repositoryRoot, projectPath, "Directory.Build.props");
         var targets = FindDirectoryBuildFile(repositoryRoot, projectPath, "Directory.Build.targets");
@@ -292,7 +234,7 @@ internal static class MsBuildCompileOracle
         {
             "msbuild",
             projectPath,
-            includeReferences ? "-getItem:Compile,Reference" : "-getItem:Compile",
+            "-getItem:Compile",
             "-nologo",
             "-noAutoResponse",
             "-nodeReuse:false",

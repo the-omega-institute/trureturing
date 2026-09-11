@@ -10,37 +10,6 @@ namespace StrataLint.Tests;
 
 public sealed class ScribeMetadataHandoffTests
 {
-    [Fact]
-    public void ExportCarriesEvaluatedSdkHintPathReferencesIntoRecipientMetadata()
-    {
-        var root = Directory.CreateTempSubdirectory("metadata-sdk-reference-").FullName;
-        try
-        {
-            var projectPath = Path.Combine(root, "tools/tests/Probe/Probe.csproj");
-            Directory.CreateDirectory(Path.GetDirectoryName(projectPath)!);
-            File.WriteAllText(projectPath, """
-                <Project Sdk="Microsoft.NET.Sdk">
-                  <PropertyGroup><TargetFramework>net10.0</TargetFramework></PropertyGroup>
-                  <ItemGroup><Reference Include="Microsoft.Build" HintPath="$(MSBuildToolsPath)/Microsoft.Build.dll" /></ItemGroup>
-                </Project>
-                """);
-            var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
-                RawRepositorySnapshot.Create([RawRepositoryEntry.FromText(
-                    "tools/tests/Probe/Probe.csproj", File.ReadAllText(projectPath))]))).Snapshot;
-
-            var materials = CommonCompileMetadata.Export(root, snapshot);
-            var record = CommonExecutionEvidence.Read<CompileMetadataRecord>(root, CommonCompileMetadata.ManifestPath);
-            Assert.NotEmpty(record.References!);
-            Assert.All(record.References!, path => Assert.Contains("compile-metadata/references/", path, StringComparison.Ordinal));
-            var describe = CommonCompileMetadata.Load(root, CommonExecutionEvidence.Materials(root, materials));
-            var project = ScribeProjectCompilationContext.Create(
-                snapshot.Files.Values.Select(file => new ScribeTrackedSource(file.Path.Value, file.Text)).ToArray(),
-                new Dictionary<string, string>(), new HashSet<string>()).Projects;
-            Assert.Contains(describe(project), path => path.EndsWith("Microsoft.Build.dll", StringComparison.Ordinal));
-        }
-        finally { Directory.Delete(root, recursive: true); }
-    }
-
     [Theory]
     [InlineData("transport")]
     [InlineData("missing-manifest")]

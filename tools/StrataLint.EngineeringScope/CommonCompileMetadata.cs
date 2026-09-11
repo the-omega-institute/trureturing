@@ -1,10 +1,8 @@
 using StrataLint.Engine;
-using System.Text;
 
 namespace StrataLint.EngineeringScope;
 
-internal sealed record CompileMetadataRecord(int Version, string[] Packages, ExecutionMaterial[] Materials,
-    string[]? References = null);
+internal sealed record CompileMetadataRecord(int Version, string[] Packages, ExecutionMaterial[] Materials);
 
 internal static class CommonCompileMetadata
 {
@@ -32,29 +30,6 @@ internal static class CommonCompileMetadata
         IReadOnlyList<string> Inputs(IEnumerable<ScribeCompilationProject> items) =>
             ScribeMetadataReferenceResolver.DescribeInputPaths(items, Locate);
         var paths = Inputs(projects);
-        // SDK supplied references (for example $(MSBuildToolsPath)/Microsoft.Build.dll)
-        // are resolved by MSBuild evaluation. Carry their bytes as explicit handoff
-        // materials so the recipient never guesses host paths.
-        var evaluatedReferences = MsBuildCompileOracle.QueryReferencePaths(
-            root,
-            projects.Select(static project => project.Path),
-            configuration: "Release")
-            .Where(path => !Path.GetFullPath(path).StartsWith(
-                Path.GetFullPath(root) + Path.DirectorySeparatorChar,
-                StringComparison.Ordinal))
-            .ToArray();
-        var copiedReferences = new List<string>();
-        foreach (var path in evaluatedReferences)
-        {
-            if (!File.Exists(path)) throw new InvalidDataException($"compile metadata reference is unavailable: {path}");
-            var relative = RootPath + "/references/"
-                + Convert.ToHexStringLower(System.Security.Cryptography.SHA256.HashData(Encoding.UTF8.GetBytes(path)))
-                + "/" + Path.GetFileName(path);
-            var target = Path.Combine(root, relative);
-            Directory.CreateDirectory(Path.GetDirectoryName(target)!);
-            File.Copy(path, target, overwrite: true);
-            copiedReferences.Add(relative);
-        }
         foreach (var project in projects)
             if (ScribeMetadataReferenceResolver.Resolve(project, Inputs).Degradation is { } missing)
                 throw new InvalidDataException($"compile metadata is unavailable: {missing.ProjectPath}: {missing.Reason}");
@@ -69,10 +44,8 @@ internal static class CommonCompileMetadata
             File.Copy(path, target, overwrite: true);
             copied.Add(relative);
         }
-        copied.AddRange(copiedReferences);
         CommonExecutionEvidence.Write(root, ManifestPath, new CompileMetadataRecord(1,
-            packages.Keys.Order(StringComparer.Ordinal).ToArray(), CommonExecutionEvidence.Materials(root, copied),
-            copiedReferences.ToArray()));
+            packages.Keys.Order(StringComparer.Ordinal).ToArray(), CommonExecutionEvidence.Materials(root, copied)));
         return copied.Append(ManifestPath).ToArray();
     }
 
@@ -95,14 +68,7 @@ internal static class CommonCompileMetadata
             if (!packages.Contains(key)) throw new InvalidDataException($"compile metadata package was not handed off: {key}");
             return Path.Combine(root, RootPath, "packages", key);
         }
-        return projects => ScribeMetadataReferenceResolver.DescribeInputPaths(projects, Locate)
-            .Concat(record.References ?? [])
-            .Select(path => Path.IsPathFullyQualified(path)
-                ? path
-                : Path.Combine(root, path.Replace('/', Path.DirectorySeparatorChar)))
-            .Distinct(StringComparer.Ordinal)
-            .Order(StringComparer.Ordinal)
-            .ToArray();
+        return projects => ScribeMetadataReferenceResolver.DescribeInputPaths(projects, Locate);
     }
 
     private static string PackageKey(string id, string version) => id.ToLowerInvariant() + "/" + version.ToLowerInvariant();
