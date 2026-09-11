@@ -5,13 +5,15 @@ year: 2003
 title: "A new necessary and sufficient condition for the Riemann hypothesis"
 doi: null
 url: "https://arxiv.org/abs/math/0307215v1"
-claim: "Equation (1.5), Lemma 1.1 and the compact-convergence argument of Proposition 2.1 motivate normalized Pochhammer bounds and an actual-coefficient summable majorant; the initial half-plane Newton reciprocal-zeta identity is proved using the coupled unsigned kernel."
+claim: "The original coefficient normalization, Newton continuation and compact uniformity of Proposition 2.1, including the analytic value at one, yield the sufficient RH direction; the corrected signed Abel and beta estimates transfer unweighted Mertens power bounds to original coefficient decay."
 strata_touched:
   - D5/S3/Analytic/SeriesInequalities/NormalizedPochhammerBounds
   - D5/S3/Analytic/SeriesInequalities/BaezDuarteNewtonMajorant
   - D5/S3/Analytic/SeriesInequalities/BaezDuarteQBounds
   - D5/S3/Weil/Analytic/BaezDuarteNewton
   - D5/S3/Weil/Analytic/BaezDuarteContinuation
+  - D5/S3/Weil/Analytic/BaezDuarteMertensKernel
+  - D5/S3/Weil/Analytic/BaezDuarteMertensTransfer
 license: "No license assertion is made; this note records mathematical facts and bibliographic metadata only."
 triage: anchor
 ---
@@ -151,3 +153,38 @@ are recorded mathematical corrections, not an author-issued erratum. No
 unproved printed identity is imported as a hypothesis. The Abel and beta
 transfer and the RH necessity direction are not claimed by this continuation
 module. Earlier module scope statements above remain historical and exact.
+
+## Signed Mertens transfer at the original coefficient index
+
+BaezDuarteMertensKernel and BaezDuarteMertensTransfer prove the corrected
+coefficient-specific Abel and beta estimates used on printed pages 5 and 6.
+The actual kernel is `f_k(x)=x^(-2)*(1-x^(-2))^k` for x>=1. Its derivative
+is `-2*x^(-3)*(1-x^(-2))^k+2*k*x^(-5)*(1-x^(-2))^(k-1)`, for k>=1.
+For the signed unweighted sum M(x) over `1<=n<=floor(x)`, the proven identity
+is `c_k=-integral_(1,infinity) M(x)*f_k'(x) dx`. The boundary term vanishes,
+and local and improper integrability are proved explicitly. In particular,
+mu(0)=0 removes only the zero term; mu(1)=1 remains present.
+
+For real `0<=a<2`, an eventual `|M(x)|<=A*x^a` bound is extended to x>=1 by
+the actual finite estimate `|M(x)|<=floor(x)<=x`. Put `b=1-a/2>0`. The two
+weighted derivative integrals give
+`A*(Re(B(b,k+1))+k*Re(B(b+1,k)))=A*(1+b)*Re(B(b,k+1))`.
+The inverse-square change of variables is proved with its Jacobian, including
+the factor one half in each kernel integral. The public complex beta recurrence,
+GammaSeq identity and GammaSeq convergence give a positive constant independent
+of k. Thus for all k>=1 the original coefficient satisfies
+`|c_k|<=C*k^(a/2-1)`. Both a global and an eventual signed Mertens hypothesis
+are supported, with exactly the same original arithmetic sum.
+
+These are repo-derived proof implementations and explicit corrections of the
+paper's printed signs, indices and half factor, with no author-issued erratum
+claim. The RH-to-unweighted-Mertens prerequisite and the complete two-direction
+RH iff are not proved by these modules. The completed continuation sufficient
+direction also consumes the original complex coefficient cast binding directly.
+
+The Scribe attribution distinguishes the source's sufficient RH direction and
+Newton continuation from repo-derived representation bindings, the explicit
+regularized multiplier formulation, the corrected kernel identities, and the
+quantitative transfer over all `0<=a<2`. The latter carry repo-derived
+provenance with this same typed Library acknowledgement; they are not claimed
+to be literal separately numbered statements in the paper.

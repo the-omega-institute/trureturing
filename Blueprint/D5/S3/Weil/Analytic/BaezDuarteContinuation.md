@@ -4,15 +4,17 @@
 
 The original coefficient decay gives holomorphic Newton continuation, compact uniformity through one, and standard RH.
 
-For every displayed statement, c is the existing real baezDuarte coefficient, cComplex its original complex finite sum, and P the existing normalizedPochhammer polynomial. H is the open half-plane Re(s)>1/2; F(s) is the tsum of term(s)(k)=c(k)P(k,s/2); partial(N,s) is the sum of these terms over range N. Decay(c) means: for every real epsilon>0 there are real C>0 and natural N>=1 such that for every k>=N, |c(k)|<=C*k^(-3/4+epsilon). DecayHalf uses epsilon/2 instead. Compact(K) below means K is compact and K is a subset of H. All s and k are universally quantified in their stated domains. The entire multiplier riemannZetaOne is mathlib riemannZeta₁, and analyticReciprocal(s)=(s-1)/riemannZeta₁(s).
+For every displayed statement, c is the existing real baezDuarte coefficient, cComplex its original complex finite sum, and P the existing normalizedPochhammer polynomial. H is the open half-plane Re(s)>1/2; F(s) is the tsum of term(s)(k)=c(k)P(k,s/2); partial(N,s) is the sum of these terms over range N. Decay(c) means: for every real epsilon>0 there are real C>0 and natural N>=1 such that for every k>=N, |c(k)|<=C*k^(-3/4+epsilon). For a complex coefficient sequence, Decay uses the complex norm. DecayHalf uses epsilon/2 instead. Compact(K) below means K is compact and K is a subset of H. All s and k are universally quantified in their stated domains. The entire multiplier riemannZetaOne is mathlib riemannZeta₁, and analyticReciprocal(s)=(s-1)/riemannZeta₁(s).
 
 **Theorem 1.1 (Original finite coefficients).**
 
-$$\operatorname{c}\left(k\right)=\operatorname{cComplex}\left(k\right)$$
+$$\operatorname{ofReal}\left(\operatorname{c}\left(k\right)\right)=\operatorname{cComplex}\left(k\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Analytic/BaezDuarteContinuation.baez_duarte_complex_finite_sum` (`✓ std3`). ∎
 
-*Citation.* Luis Báez-Duarte (2003). *A new necessary and sufficient condition for the Riemann hypothesis*. URL: <https://arxiv.org/abs/math/0307215v1>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Luis Báez-Duarte (2003). *A new necessary and sufficient condition for the Riemann hypothesis*. URL: <https://arxiv.org/abs/math/0307215v1>.
 
 *Commentary.*
 
@@ -20,11 +22,13 @@ The cast of the real coefficient equals the original complex binomial sum, using
 
 **Theorem 1.2 (Pointwise absolute convergence).**
 
-$$\operatorname{Decay}\left(c\right)\Rightarrow \operatorname{Summable}\left(\operatorname{term}\left(s\right)\right)$$
+$$\operatorname{Decay}\left(c\right)\land s\in H\Rightarrow \operatorname{Summable}\left(\operatorname{term}\left(s\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Analytic/BaezDuarteContinuation.baez_duarte_newton_summable` (`✓ std3`). ∎
 
-*Citation.* Luis Báez-Duarte (2003). *A new necessary and sufficient condition for the Riemann hypothesis*. URL: <https://arxiv.org/abs/math/0307215v1>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Luis Báez-Duarte (2003). *A new necessary and sufficient condition for the Riemann hypothesis*. URL: <https://arxiv.org/abs/math/0307215v1>.
 
 *Commentary.*
 
@@ -48,7 +52,9 @@ $$\operatorname{Decay}\left(c\right)\Rightarrow \operatorname{TendstoLocallyUnif
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Analytic/BaezDuarteContinuation.baez_duarte_newton_locally_uniform` (`✓ std3`). ∎
 
-*Citation.* Luis Báez-Duarte (2003). *A new necessary and sufficient condition for the Riemann hypothesis*. URL: <https://arxiv.org/abs/math/0307215v1>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Luis Báez-Duarte (2003). *A new necessary and sufficient condition for the Riemann hypothesis*. URL: <https://arxiv.org/abs/math/0307215v1>.
 
 *Commentary.*
 
@@ -72,7 +78,9 @@ $$\operatorname{Decay}\left(c\right)\land s\in H\Rightarrow \operatorname{rieman
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Analytic/BaezDuarteContinuation.baez_duarte_newton_regularized_product` (`✓ std3`). ∎
 
-*Citation.* Luis Báez-Duarte (2003). *A new necessary and sufficient condition for the Riemann hypothesis*. URL: <https://arxiv.org/abs/math/0307215v1>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Luis Báez-Duarte (2003). *A new necessary and sufficient condition for the Riemann hypothesis*. URL: <https://arxiv.org/abs/math/0307215v1>.
 
 *Commentary.*
 
@@ -84,7 +92,9 @@ $$\operatorname{Decay}\left(c\right)\Rightarrow \operatorname{HasSum}\left(\oper
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Analytic/BaezDuarteContinuation.baez_duarte_newton_at_one` (`✓ std3`). ∎
 
-*Citation.* Luis Báez-Duarte (2003). *A new necessary and sufficient condition for the Riemann hypothesis*. URL: <https://arxiv.org/abs/math/0307215v1>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Luis Báez-Duarte (2003). *A new necessary and sufficient condition for the Riemann hypothesis*. URL: <https://arxiv.org/abs/math/0307215v1>.
 
 *Commentary.*
 
@@ -96,7 +106,9 @@ $$\operatorname{Decay}\left(c\right)\land s\in H\Rightarrow \operatorname{HasSum
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Analytic/BaezDuarteContinuation.baez_duarte_newton_reciprocal` (`✓ std3`). ∎
 
-*Citation.* Luis Báez-Duarte (2003). *A new necessary and sufficient condition for the Riemann hypothesis*. URL: <https://arxiv.org/abs/math/0307215v1>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Luis Báez-Duarte (2003). *A new necessary and sufficient condition for the Riemann hypothesis*. URL: <https://arxiv.org/abs/math/0307215v1>.
 
 *Commentary.*
 
@@ -120,7 +132,9 @@ $$\operatorname{Decay}\left(c\right)\land \operatorname{Compact}\left(K\right)\R
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Analytic/BaezDuarteContinuation.baez_duarte_newton_reciprocal_uniform` (`✓ std3`). ∎
 
-*Citation.* Luis Báez-Duarte (2003). *A new necessary and sufficient condition for the Riemann hypothesis*. URL: <https://arxiv.org/abs/math/0307215v1>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Luis Báez-Duarte (2003). *A new necessary and sufficient condition for the Riemann hypothesis*. URL: <https://arxiv.org/abs/math/0307215v1>.
 
 *Commentary.*
 
@@ -144,11 +158,39 @@ $$\operatorname{Decay}\left(c\right)\iff \operatorname{DecayHalf}\left(c\right)$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Analytic/BaezDuarteContinuation.baez_duarte_epsilon_half_iff` (`✓ std3`). ∎
 
-*Citation.* Luis Báez-Duarte (2003). *A new necessary and sufficient condition for the Riemann hypothesis*. URL: <https://arxiv.org/abs/math/0307215v1>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Luis Báez-Duarte (2003). *A new necessary and sufficient condition for the Riemann hypothesis*. URL: <https://arxiv.org/abs/math/0307215v1>.
 
 *Commentary.*
 
 Quantification over every positive epsilon makes the exponents -3/4+epsilon and -3/4+epsilon/2 equivalent. This says nothing about epsilon zero or the boundary line Re(s)=1/2.
+
+**Theorem 1.13 (The original complex finite bound implies RH).**
+
+$$\operatorname{Decay}\left(\operatorname{cComplex}\left(\right)\right)\Rightarrow \operatorname{RiemannHypothesis}\left(\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Analytic/BaezDuarteContinuation.baez_duarte_original_decay_implies_rh` (`✓ std3`). ∎
+
+*Citation.* Luis Báez-Duarte (2003). *A new necessary and sufficient condition for the Riemann hypothesis*. URL: <https://arxiv.org/abs/math/0307215v1>.
+
+*Commentary.*
+
+The same every-positive-epsilon decay bound, now on the norm of the original complex finite sum, implies standard RH. The exact coefficient cast binding converts this hypothesis to the real-coefficient sufficient direction.
+
+**Theorem 1.14 (The raw zeta product away from the pole).**
+
+$$\operatorname{Decay}\left(c\right)\land s\in H\land s\neq 1\Rightarrow \operatorname{riemannZeta}\left(s\right) \operatorname{F}\left(s\right)=1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Analytic/BaezDuarteContinuation.baez_duarte_newton_product_off_one` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Luis Báez-Duarte (2003). *A new necessary and sufficient condition for the Riemann hypothesis*. URL: <https://arxiv.org/abs/math/0307215v1>.
+
+*Commentary.*
+
+For every s in H distinct from one, raw riemannZeta(s)*F(s)=1. This follows from the regularized product and directly supplies the zero-exclusion step used for RH. The pole exception is essential.
 
 ## References
 
@@ -158,12 +200,14 @@ Quantification over every positive epsilon makes the exponents -3/4+epsilon and 
 - Truth anchor: `D5/S3/Weil/Analytic/BaezDuarteContinuation.baez_duarte_newton_at_one`
 - Truth anchor: `D5/S3/Weil/Analytic/BaezDuarteContinuation.baez_duarte_newton_differentiable`
 - Truth anchor: `D5/S3/Weil/Analytic/BaezDuarteContinuation.baez_duarte_newton_locally_uniform`
+- Truth anchor: `D5/S3/Weil/Analytic/BaezDuarteContinuation.baez_duarte_newton_product_off_one`
 - Truth anchor: `D5/S3/Weil/Analytic/BaezDuarteContinuation.baez_duarte_newton_reciprocal`
 - Truth anchor: `D5/S3/Weil/Analytic/BaezDuarteContinuation.baez_duarte_newton_reciprocal_off_one`
 - Truth anchor: `D5/S3/Weil/Analytic/BaezDuarteContinuation.baez_duarte_newton_reciprocal_uniform`
 - Truth anchor: `D5/S3/Weil/Analytic/BaezDuarteContinuation.baez_duarte_newton_regularized_product`
 - Truth anchor: `D5/S3/Weil/Analytic/BaezDuarteContinuation.baez_duarte_newton_summable`
 - Truth anchor: `D5/S3/Weil/Analytic/BaezDuarteContinuation.baez_duarte_newton_uniform`
+- Truth anchor: `D5/S3/Weil/Analytic/BaezDuarteContinuation.baez_duarte_original_decay_implies_rh`
 - Dependency: [D5/S3/Analytic/SeriesInequalities/BaezDuarteNewtonMajorant](../../Analytic/SeriesInequalities/BaezDuarteNewtonMajorant.md)
 - Dependency: [D5/S3/Weil/Analytic/BaezDuarteNewton](BaezDuarteNewton.md)
 - Dependency: [D5/S3/Weil/ZetaBridge/RightHalfStripRiemannReduction](../ZetaBridge/RightHalfStripRiemannReduction.md)
