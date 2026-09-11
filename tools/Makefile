@@ -55,7 +55,7 @@ check-fast:
 	@/bin/bash $(HERE)/scripts/dotnet-test.sh $(HERE)/StrataLint.sln --filter "$(CHECK_FAST_FILTER)"
 
 test:
-	@/bin/bash $(HERE)/scripts/dotnet-test.sh $(HERE)/StrataLint.sln $(if $(TEST_FILTER),--filter "$(TEST_FILTER)",)
+	@/bin/bash $(HERE)/scripts/dotnet-test.sh $(HERE)/StrataLint.sln
 
 census-test:
 	@python3 $(HERE)/lean-inspector/Census/tests/fixtures.py $(if $(CENSUS_TEST_OUT),--output "$(CENSUS_TEST_OUT)",)
