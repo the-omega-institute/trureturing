@@ -103,6 +103,7 @@ public sealed partial class MakeWorkflowTests
         "prime-slab-verify",
         "prime-slab-mutation-test",
         "census-test",
+        "census-frontier-performance",
     ];
 
     [Fact]
