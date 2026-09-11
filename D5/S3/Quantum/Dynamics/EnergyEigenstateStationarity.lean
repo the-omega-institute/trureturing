@@ -8,12 +8,13 @@
 
 import D5.S3.Quantum.PureState.PureStateHandshake
 import D5.S3.Quantum.Information.CovarianceSumBound
+import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 
 set_option autoImplicit false
 noncomputable section
 namespace D5.S3.Quantum.Dynamics.EnergyEigenstateStationarity
 open Matrix
-open scoped Matrix.Norms.Operator MatrixOrder ComplexOrder
+open scoped Matrix.Norms.L2Operator MatrixOrder ComplexOrder
 open D5.S3.Quantum.PureState.PureStateHandshake
 open D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition
 open D5.S3.Quantum.Information.CovarianceSumBound
@@ -69,7 +70,8 @@ theorem energy_eigenstate_stationary (H : Matrix n n ℂ) (hH : H.IsHermitian)
       ring
     rw [hz, Complex.exp_zero]
   constructor
-  · apply NormedSpace.exp_mem_unitary_of_mem_skewAdjoint
+  · let : NormedAlgebra ℚ (Matrix n n ℂ) := NormedAlgebra.restrictScalars ℚ ℂ _
+    apply NormedSpace.exp_mem_unitary_of_mem_skewAdjoint
     apply IsSelfAdjoint.smul_mem_skewAdjoint _ hH.isSelfAdjoint
     change star (-Complex.I * (t : ℂ)) = -(-Complex.I * (t : ℂ))
     simp [Complex.star_def]
