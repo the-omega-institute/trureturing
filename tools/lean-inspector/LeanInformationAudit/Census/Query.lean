@@ -201,7 +201,16 @@ def assess (index : Index) (head : String) (key : StatementKey)
         if let .certified row := row then dispositions := dispositions.push row
   -- Validate every discovered disposition, including alternatives to the chosen row.
   for value in dispositions do discard <| certified index head key value
-  if let some value := dispositions[0]? then return .certified value
+  if let some value := dispositions[0]? then
+    if let .trivialInCatalog payload := value then
+      if payload.context == .structural then
+        let args := (← inferType (← mkConstWithFreshMVarLevels payload.registration)).getAppArgs
+        logZeroCapture {
+          root := payload.root, theoremName := key.theoremName, arena := payload.canonicalArena,
+          «catalog» := payload.catalog, index := payload.index, «realization» := payload.realization,
+          trivialityCertificate := payload.trivialityCertificate,
+          context := .structural payload.registration payload.catalogSeal } args[3]! args[4]!
+    return .certified value
   return .observed {
     owningModule := owner
     root := index.root

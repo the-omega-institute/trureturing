@@ -93,6 +93,26 @@ def CatalogVerdict.suffix : CatalogVerdict → String
   | .irredundant _ => "__catalog_irredundant"
   | .redundant _ => "__catalog_redundant"
 
+/-- Context-specific evidence for the single IE-C007 record. -/
+inductive ZeroCaptureContext where
+  | finite (full without : Nat) (stateEnumeration : Name)
+  | structural (registration catalogSeal : Name)
+  deriving Inhabited
+
+structure ZeroCaptureRecord where
+  root : Name
+  theoremName : Name
+  arena : Name
+  catalog : Name
+  index : Nat
+  realization : Name
+  trivialityCertificate : Name
+  context : ZeroCaptureContext
+  sameKernelCandidates : Array (Name × Nat × Name) := #[]
+  closureCandidates : Array Name := #[]
+  closureCertificate : Option Name := none
+  deriving Inhabited
+
 /-- Computed theorem data retained for summaries and the optional artifact. -/
 structure SealTheoremRecord where
   theoremName : Name
@@ -120,6 +140,7 @@ structure SealArenaRecord where
   catalog : CatalogRecord
   verdict : CatalogVerdict
   collisionClasses : Array (Array Name × Array Name) := #[]
+  stateEnumeration : Option Name := none
   proofMethod : String
   stateCard : Nat
   offDiagonalPairCount : Nat

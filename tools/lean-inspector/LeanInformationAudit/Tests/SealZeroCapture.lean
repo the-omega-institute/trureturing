@@ -1,4 +1,5 @@
-import LeanInformationAudit.SealCommand
+import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
+import LeanInformationAudit.Tests.Seal.ZeroMessage
 
 /-! This negative fixture is isolated because registry entries persist through imports. -/
 
@@ -36,7 +37,9 @@ expect_information_occurrence constantTheorem
   in arena
   from "LeanInformationAudit.Tests.SealZeroCapture"
 
-#guard_msgs (error) in
-#seal_information_theory
+run_cmd do
+  let before := (← get).messages
+  LeanInformationAudit.prepareSealPublication
+  LeanInformationAudit.Tests.checkZeroMessages "finite" 1 before
 
 end LeanInformationAudit.Tests.SealZeroCapture

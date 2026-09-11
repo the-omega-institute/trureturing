@@ -44,6 +44,8 @@ def main():
         path = repository / "tools/lean-inspector/LeanInformationAudit/Tests/Census" / (case + ".lean")
         run([shutil.which("lean", path=env["PATH"]), "-DmaxRecDepth=100000", "-DmaxHeartbeats=0", str(path)],
             directory / "lean" / case, "fixture", cwd=repository, env=env)
+    from tests.trivial_source_fixture import check_trivial_sources
+    check_trivial_sources(repository, directory / "trivial-sources")
     streaming = directory / "streaming"
     prepare(repository, streaming)
     negatives = check_manifest_negatives(repository, streaming) + check_receipts(repository, streaming)

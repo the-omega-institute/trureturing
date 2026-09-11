@@ -1,3 +1,4 @@
+import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import LeanInformationAudit.RegistryTypes
 import LeanInformationAudit.Census.Report
 import LeanInformationAudit.Census.Ownership

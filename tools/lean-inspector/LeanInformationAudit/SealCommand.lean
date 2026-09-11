@@ -74,7 +74,7 @@ def serializeSealArtifact (records : Array SealArenaRecord) : Meta.MetaM String 
         fail
       let expected ← Meta.mkAppM
         (if positive then ``D5.S3.ConceptDynamics.InformationEscape.Catalog.LowersEscape
-          else ``D5.S3.ConceptDynamics.InformationEscape.Catalog.TrivialInCatalog)
+          else `D5.S3.ConceptDynamics.InformationEscape.Catalog.TrivialInCatalog)
         #[catalogValue, ← ProjectionProof.fin row.index record.theorems.size]
       unless ← occurrenceTypeMatches
           (← Meta.inferType (← Meta.mkConstWithFreshMVarLevels row.certificateName))
@@ -150,18 +150,80 @@ def systemCatalogIrredundant (env : Environment) (rootId : Name) : Bool :=
 
 end SealRecords
 
+/-- Resolve the evidence before projecting a context-typed IE-C007 record. -/
+def logZeroCapture (record : ZeroCaptureRecord) (catalogValue index : Expr) : Meta.MetaM Unit := do
+  let checked (name : Name) (expected : Expr) : Meta.MetaM Unit := do
+    let value ← Meta.mkConstWithFreshMVarLevels name
+    unless ← Meta.isDefEq (← Meta.inferType value) expected do
+      throwError "IE-C028 AnalysisCertificateMismatch root={record.root} catalog={record.catalog} component=zero-record expected=typed-evidence actual=different"
+    Meta.checkWithKernel value
+  let finite : Bool := match record.context with | .finite .. => true | .structural .. => false
+  let predicate := if finite then `D5.S3.ConceptDynamics.InformationEscape.Catalog.TrivialInCatalog
+    else `D5.S3.ConceptDynamics.InformationEscape.StructuralCatalog.TrivialInCatalog
+  let certificate ← Meta.mkConstWithFreshMVarLevels record.trivialityCertificate
+  unless ← occurrenceTypeMatches (← Meta.inferType certificate) predicate catalogValue index do
+    throwError "IE-C028 AnalysisCertificateMismatch root={record.root} catalog={record.catalog} component=zero-record expected=triviality actual=different"
+  Meta.checkWithKernel certificate
+  let context ← match record.context with
+    | .finite full without enumeration => do
+      let arena := (← Meta.inferType catalogValue).appArg!
+      checked enumeration (← Meta.mkAppM
+        `D5.S3.ConceptDynamics.InformationEscape.Arena.StateEnumeration #[arena])
+      for (selected, count) in [(← Meta.mkAppM
+          `D5.S3.ConceptDynamics.InformationEscape.Catalog.fullIndexSet #[catalogValue], full),
+          (← Meta.mkAppM `D5.S3.ConceptDynamics.InformationEscape.Catalog.without #[catalogValue, index], without)] do
+        Meta.checkWithKernel (← Meta.mkDecideProof (← Meta.mkEq (← Meta.mkAppM
+          `D5.S3.ConceptDynamics.InformationEscape.Catalog.escapeNumerator #[catalogValue, selected]) (mkNatLit count)))
+      pure <| Json.mkObj [("kind", "finite"), ("full_escape_count", toJson full),
+        ("without_escape_count", toJson without), ("state_enumeration", enumeration.toString)]
+    | .structural registration sealName => do
+      checked sealName (← Meta.mkAppM `LeanInformationAudit.StructuralCatalogSeal #[catalogValue])
+      let evidence ← Meta.mkConstWithFreshMVarLevels registration
+      Meta.checkWithKernel evidence
+      pure <| Json.mkObj [("kind", "structural"), ("registration", registration.toString),
+        ("catalog_seal", sealName.toString)]
+  for (_, peerIndex, proof) in record.sameKernelCandidates do
+    let peer ← ProjectionProof.fin peerIndex (← Meta.reduceEval (← Meta.inferType index).appArg!)
+    let expected ← Meta.mkAppM `D5.S3.ConceptDynamics.InformationEscape.Catalog.KernelEquivalent
+      #[catalogValue, index, peer]
+    let value ← Meta.mkConstWithFreshMVarLevels proof
+    if ← Meta.isDefEq (← Meta.inferType value) expected then checked proof expected
+    else checked proof (← Meta.mkAppM `D5.S3.ConceptDynamics.InformationEscape.Catalog.KernelEquivalent
+      #[catalogValue, peer, index])
+  if let some proof := record.closureCertificate then
+    let bundle ← Meta.mkAppM `D5.S3.ConceptDynamics.InformationEscape.TheoremUnit.primitives
+      #[← Meta.mkAppM `D5.S3.ConceptDynamics.InformationEscape.Catalog.theoremAt #[catalogValue, index]]
+    let kernel ← Meta.mkAppM `D5.S3.ConceptDynamics.CIRPT.PrimitiveBundle.toKernel #[bundle]
+    let closure ← Meta.mkAppM `D5.S3.ConceptDynamics.InformationEscape.Catalog.semanticClosureWithout #[catalogValue, index]
+    checked proof (← Meta.mkAppM ``Membership.mem #[closure, kernel])
+  let json := Json.mkObj [("root", record.root.toString), ("theorem", record.theoremName.toString),
+    ("arena", record.arena.toString), ("catalog", record.catalog.toString), ("index", toJson record.index),
+    ("realization", record.realization.toString), ("triviality_certificate", record.trivialityCertificate.toString),
+    ("context", context), ("same_kernel_candidates", toJson record.sameKernelCandidates),
+    ("closure_candidates", toJson record.closureCandidates), ("closure_certificate", toJson record.closureCertificate)]
+  logInfo s!"IE-C007 ZeroUniqueCapture: {json.compress}"
+
 private def logSummary (record : SealArenaRecord) : CommandElabM Unit := do
   for theoremRecord in record.theorems do
     if theoremRecord.uniqueCaptureCount == 0 then
-      let candidates := record.collisionClasses.filterMap fun (members, _) =>
-        if members.contains theoremRecord.theoremName then
-          some (members.filter (· != theoremRecord.theoremName)) else none
-      let closurePeers := record.theorems.filter (·.theoremName != theoremRecord.theoremName)
-        |>.map (·.theoremName)
-      logInfo s!"IE-C007 ZeroUniqueCapture: theorem {theoremRecord.theoremName} \
-arena {record.catalog.arenaName} full {record.fullEscapeCount} \
-without {theoremRecord.withoutEscapeCount} same_kernel_candidates={(toJson candidates).compress} \
-closure_candidates={(toJson closurePeers).compress} closure_certificate={theoremRecord.closureCertificate}"
+      let some enumeration := record.stateEnumeration | throwError "IE-C009 missing zero enumeration"
+      let mut candidates := #[]
+      for (members, proofs) in record.collisionClasses do
+        for (peer, proof) in (members.extract 1 members.size).zip proofs do
+          let other := if theoremRecord.theoremName == members[0]! then peer else members[0]!
+          if theoremRecord.theoremName == members[0]! || theoremRecord.theoremName == peer then
+            let some row := record.theorems.find? (·.theoremName == other) | throwError "missing peer"
+            candidates := candidates.push (other, row.index, proof)
+      liftTermElabM do
+        logZeroCapture {
+          root := record.catalog.rootId, theoremName := theoremRecord.theoremName,
+          arena := record.catalog.arenaName, «catalog» := record.catalog.catalogName, index := theoremRecord.index,
+          «realization» := theoremRecord.realizationName, trivialityCertificate := theoremRecord.certificateName,
+          context := .finite record.fullEscapeCount theoremRecord.withoutEscapeCount enumeration,
+          sameKernelCandidates := candidates, closureCertificate := theoremRecord.closureCertificate,
+          closureCandidates := record.theorems.filter (·.theoremName != theoremRecord.theoremName) |>.map (·.theoremName)
+        } (← Meta.mkConstWithFreshMVarLevels record.catalog.catalogName)
+          (← ProjectionProof.fin theoremRecord.index record.theorems.size)
     logInfo s!"information seal: arena={record.catalog.arenaName} \
 theorem={theoremRecord.theoremName} unique={theoremRecord.uniqueCaptureCount} \
 method={theoremRecord.proofMethod}"
@@ -350,7 +412,7 @@ def prepareSealPublication : CommandElabM Unit := do
     preflightNames aliasEnv proofs.records declarations
     let stagedEnv ← stageDeclarations (← getEnv) declarations
     let stagedEnv := retainSealRecords stagedEnv proofs.records
-    proofs.records.forM logSummary
+    withEnv stagedEnv <| proofs.records.forM logSummary
     setEnv stagedEnv
   catch error =>
     setEnv baseEnv

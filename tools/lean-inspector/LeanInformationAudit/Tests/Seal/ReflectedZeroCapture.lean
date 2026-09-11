@@ -1,4 +1,5 @@
-import LeanInformationAudit.SealCommand
+import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
+import LeanInformationAudit.Tests.Seal.ZeroMessage
 
 open D5.S3.ConceptDynamics.InformationEscape
 
@@ -45,7 +46,9 @@ expect_information_occurrence target
   in arena
   from "LeanInformationAudit.Tests.Seal.ReflectedZeroCapture"
 
-#guard_msgs (error) in
-#seal_information_theory
+run_cmd do
+  let before := (← get).messages
+  LeanInformationAudit.prepareSealPublication
+  LeanInformationAudit.Tests.checkZeroMessages "finite" 1 before
 
 end LeanInformationAudit.Tests.Seal.ReflectedZeroCapture

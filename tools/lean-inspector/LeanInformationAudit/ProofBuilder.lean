@@ -1,9 +1,6 @@
 import LeanInformationAudit.RegistryTypes
 import LeanInformationAudit.CatalogBuilder
 import LeanInformationAudit.Sha256
-import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
-import D5.S3.ConceptDynamics.InformationEscapeHierarchy.AnalysisLaws
-import D5.S3.ConceptDynamics.InformationEscape.StructuralNovelty
 import D5.S3.ConceptDynamics.InformationEscapeCounting.FusedCorrectness
 -- Enumerations is imported only to expose the production `__state_enumeration` witnesses.
 import D5.S3.ConceptDynamics.InformationEscapeCounting.Enumerations
@@ -16,6 +13,8 @@ open Lean.Meta
 open D5.S3.ConceptDynamics.CIRPT
 open D5.S3.ConceptDynamics.InformationEscape
 
+-- Triviality and analysis constants are resolved in their consuming Environment,
+-- as in ProjectionProof; their libraries are imported by those consumers.
 universe u v w
 
 structure PreparedProofs where
@@ -24,7 +23,7 @@ structure PreparedProofs where
 
 /-- Check catalog/index before reducing a proposition that may be definitionally trivial. -/
 def occurrenceTypeMatches (actual : Expr) (head : Name) (catalog index : Expr) : MetaM Bool := do
-  let equality := head == ``Catalog.TrivialInCatalog && actual.isAppOfArity ``Eq 3
+  let equality := head == `D5.S3.ConceptDynamics.InformationEscape.Catalog.TrivialInCatalog && actual.isAppOfArity ``Eq 3
   let occurrence := if equality then actual.getAppArgs[1]! else actual
   unless occurrence.isAppOfArity (if equality then ``Catalog.uniqueCapturePairs else head) 3 do
     return false
@@ -280,6 +279,48 @@ private def irredundantFromLoweringProofs (catalog : Expr)
     let body ← finCasesValue catalog names 0 names.size index
     mkLambdaFVars #[index] body
 
+/-- Classes are certified by pairwise kernel refinement; addresses are diagnostics. -/
+def prepareCollisionClasses (record : CatalogRecord) (catalog : Expr)
+    (theoremRecords : Array SealTheoremRecord) : MetaM
+    (Array Declaration × Array (Array Name × Array Name)) := do
+  let redundantIndices := (Array.range theoremRecords.size).filter
+    (fun i => theoremRecords[i]!.uniqueCaptureCount == 0)
+  let mut declarations := #[]
+  let mut collisionClasses := #[]
+  let mut classified := #[]
+  for i in redundantIndices do
+    if classified.contains i then continue
+    let mut members := #[record.units[i]!.theoremName]
+    let mut certificates := #[]
+    for j in redundantIndices do
+      if j <= i || classified.contains j then
+        continue
+      let left ← finValue i record.units.size
+      let right ← finValue j record.units.size
+      let proof ← try
+        let refinement (a b : Expr) := do
+          let type ← mkAppM `D5.S3.ConceptDynamics.InformationEscape.Catalog.KernelRefines #[catalog, a, b]
+          try
+            forallTelescopeReducing type fun args goal => do
+              unless ← isDefEq (← inferType args.back!) goal do throwError "nonreflexive"
+              mkLambdaFVars args args.back!
+          catch _ => mkDecideProof type
+        let proof ← mkAppM ``And.intro #[← refinement left right, ← refinement right left]
+        checkWithKernel proof
+        pure (some proof)
+      catch _ => pure none
+      let some proof := proof | continue
+      let name := catalogQualifiedName record.rootId record.arenaName record.catalogId
+        record.arenaName s!"__kernel_collision_{i}_{j}"
+      declarations := declarations.push <| .thmDecl {
+        name, levelParams := [], type := ← mkAppM `D5.S3.ConceptDynamics.InformationEscape.Catalog.KernelEquivalent #[catalog, left, right],
+        value := proof }
+      members := members.push record.units[j]!.theoremName
+      certificates := certificates.push name
+      classified := classified.push j
+    if members.size > 1 then collisionClasses := collisionClasses.push (members, certificates)
+  return (declarations, collisionClasses)
+
 private def theoremProofs (prepared : PreparedCatalog) : Lean.Elab.Term.TermElabM
     (Array Declaration × SealArenaRecord) := do
   let record := prepared.record
@@ -377,6 +418,23 @@ catalog={record.catalogId} pair_budget={pairBudget} limit=65536 seal={record.roo
       expectedCounts uniqueCounts with
   | .ok () => pure ()
   | .error message => throwError message
+  let stateEnumeration ← if redundantIndices.isEmpty then pure none else do
+    match route with
+    | .reflected reflected => pure (some reflected.witness.constName!)
+    | .decide =>
+      let fintype ← mkAppM ``Arena.stateFintype #[arena]
+      let elems ← mkAppOptM ``Fintype.elems #[none, some fintype]
+      let multiset ← whnf (← mkAppM ``Finset.val #[elems])
+      unless multiset.isAppOfArity ``Quot.mk 3 do throwError "IE-C009 state enumeration"
+      let states := multiset.getArg! 2
+      let nodup ← mkDecideProof (← mkAppM ``List.Nodup #[states])
+      let complete ← mkEqRefl elems
+      let value ← mkAppOptM ``Arena.StateEnumeration.mk
+        #[some arena, some states, some nodup, some complete]
+      let name := record.catalogName.str "__zero_state_enumeration"
+      declarations := declarations.push <| .defnDecl {
+        name, levelParams := [], type := ← inferType value, value, hints := .abbrev, safety := .safe }
+      pure (some name)
   for unit in record.units do
     let theoremName := unit.theoremName
     let unitName := unit.unitName
@@ -388,9 +446,6 @@ catalog={record.catalogId} pair_budget={pairBudget} limit=65536 seal={record.roo
       #[unitExpr]
     let primitiveCountExpr ← mkAppM ``primitiveCount #[primitives]
     let primitiveCount ← natValue primitiveCountExpr
-    let stateFintype ← mkAppM
-      `D5.S3.ConceptDynamics.InformationEscape.Arena.stateFintype #[arena]
-    let primitiveKernelAddress ← primitiveKernelAddress stateFintype primitives
     let mut primitiveAxes := #[]
     for (axisName, label) in
         #[( ``PrimitiveAxis.cut, "cut"), (``PrimitiveAxis.flow, "flow"),
@@ -408,7 +463,7 @@ catalog={record.catalogId} pair_budget={pairBudget} limit=65536 seal={record.roo
     if uniqueCount == 0 then
       let some (_, zero) := zeroProofs.find? (·.1 == indexNat)
         | throwError "missing certified zero"
-      let trivialType ← mkAppM ``Catalog.TrivialInCatalog #[catalog, index]
+      let trivialType ← mkAppM `D5.S3.ConceptDynamics.InformationEscape.Catalog.TrivialInCatalog #[catalog, index]
       let emptyIff ← mkAppOptM ``Finset.card_eq_zero
         #[none, some (← mkAppM ``Catalog.uniqueCapturePairs #[catalog, index])]
       let proof ← mkAppM ``Iff.mp #[emptyIff, zero]
@@ -418,9 +473,9 @@ catalog={record.catalogId} pair_budget={pairBudget} limit=65536 seal={record.roo
       declarations := declarations.push <| .thmDecl {
         name, levelParams := [], type := trivialType, value := proof }
       let notLowers ← mkAppM ``Iff.mp #[
-        ← mkAppM ``Catalog.trivialInCatalog_iff_not_lowersEscape #[catalog, index, nondegenerateProof], proof]
+        ← mkAppM `D5.S3.ConceptDynamics.InformationEscape.Catalog.trivialInCatalog_iff_not_lowersEscape #[catalog, index, nondegenerateProof], proof]
       let closure ← mkAppM ``of_not_not #[← mkAppM ``Iff.mp #[
-        ← mkAppM ``not_congr #[← mkAppM ``Catalog.lowersEscape_iff_not_mem_semanticClosureWithout
+        ← mkAppM ``not_congr #[← mkAppM `D5.S3.ConceptDynamics.InformationEscape.Catalog.lowersEscape_iff_not_mem_semanticClosureWithout
           #[catalog, index, nondegenerateProof]], notLowers]]
       let closureCertificate := name.str "closure"
       declarations := declarations.push <| .thmDecl {
@@ -429,7 +484,7 @@ catalog={record.catalogId} pair_budget={pairBudget} limit=65536 seal={record.roo
         theoremName, unitName, realizationName := unit.realizationName, certificate := .trivial name,
         closureCertificate := some closureCertificate,
         registrationModuleName := unit.registrationModuleName, index := indexNat,
-        primitiveCount, primitiveAxes, primitiveKernelAddress, uniqueCaptureCount := 0,
+        primitiveCount, primitiveAxes, primitiveKernelAddress := "", uniqueCaptureCount := 0,
         fullEscapeCount := fullCount, withoutEscapeCount := withoutCount, roleSignatureHistogram := #[],
         proofMethod := match route with
           | .decide => if record.localSealNames then "decide" else "direct"
@@ -512,7 +567,7 @@ catalog={record.catalogId} pair_budget={pairBudget} limit=65536 seal={record.roo
       index := indexNat
       primitiveCount
       primitiveAxes
-      primitiveKernelAddress
+      primitiveKernelAddress := ""
       uniqueCaptureCount := uniqueCount
       fullEscapeCount := fullCount
       withoutEscapeCount := withoutCount
@@ -521,49 +576,21 @@ catalog={record.catalogId} pair_budget={pairBudget} limit=65536 seal={record.roo
         | .decide => if record.localSealNames then "decide" else "direct"
         | .reflected _ => "reflected-fused-counts"
     }
-  let mut collisionClasses := #[]
-  let mut classified := #[]
-  for i in redundantIndices do
-    if classified.contains i then continue
-    let mut members := #[record.units[i]!.theoremName]
-    let mut certificates := #[]
-    for j in redundantIndices do
-      if j <= i || classified.contains j ||
-          theoremRecords[i]!.primitiveKernelAddress != theoremRecords[j]!.primitiveKernelAddress then
-        continue
-      let left ← finValue i record.units.size
-      let right ← finValue j record.units.size
-      let proof ← try
-        let refinement (a b : Expr) := do
-          let type ← mkAppM ``Catalog.KernelRefines #[catalog, a, b]
-          try
-            forallTelescopeReducing type fun args goal => do
-              unless ← isDefEq (← inferType args.back!) goal do throwError "nonreflexive"
-              mkLambdaFVars args args.back!
-          catch _ => mkDecideProof type
-        let proof ← mkAppM ``And.intro #[← refinement left right, ← refinement right left]
-        checkWithKernel proof
-        pure (some proof)
-      catch _ => pure none
-      let some proof := proof | continue
-      let name := catalogQualifiedName record.rootId record.arenaName record.catalogId
-        record.arenaName s!"__kernel_collision_{i}_{j}"
-      declarations := declarations.push <| .thmDecl {
-        name, levelParams := [], type := ← mkAppM ``Catalog.KernelEquivalent #[catalog, left, right],
-        value := proof }
-      members := members.push record.units[j]!.theoremName
-      certificates := certificates.push name
-      classified := classified.push j
-    if members.size > 1 then collisionClasses := collisionClasses.push (members, certificates)
+  let (collisionProofs, collisionClasses) ← prepareCollisionClasses record catalog theoremRecords
+  declarations := declarations ++ collisionProofs
+  let stateFintype ← mkAppM ``Arena.stateFintype #[arena]
+  theoremRecords ← theoremRecords.mapM fun row => do
+    let bundle ← mkAppM ``TheoremUnit.primitives #[mkConst row.unitName]
+    return { row with primitiveKernelAddress := ← primitiveKernelAddress stateFintype bundle }
   let irredundantProof ← if let some (indexNat, zero) := zeroProofs[0]? then do
-      let type ← mkAppM ``Catalog.CatalogRedundant #[catalog]
+      let type ← mkAppM `D5.S3.ConceptDynamics.InformationEscape.Catalog.CatalogRedundant #[catalog]
       let predicate := (← whnf type).appArg!
       mkAppOptM ``Exists.intro
         #[none, some predicate, some (← finValue indexNat record.units.size), some zero]
     else irredundantFromLoweringProofs catalog loweringProofNames
   let suffix := if zeroProofs.isEmpty then "__catalog_irredundant" else "__catalog_redundant"
   let irredundantType ← mkAppM
-    (if zeroProofs.isEmpty then ``CatalogIrredundant else ``Catalog.CatalogRedundant) #[catalog]
+    (if zeroProofs.isEmpty then ``CatalogIrredundant else `D5.S3.ConceptDynamics.InformationEscape.Catalog.CatalogRedundant) #[catalog]
   let irredundantName := if record.localSealNames then
     record.arenaName.str suffix
   else
@@ -585,6 +612,7 @@ catalog={record.catalogId} pair_budget={pairBudget} limit=65536 seal={record.roo
   pure (declarations, {
     catalog := record
     collisionClasses
+    stateEnumeration
     verdict := if zeroProofs.isEmpty then .irredundant irredundantName else .redundant irredundantName
     proofMethod := method
     stateCard

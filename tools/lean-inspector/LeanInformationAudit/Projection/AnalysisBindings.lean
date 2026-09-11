@@ -89,7 +89,7 @@ def validateAnalysisBindings (root : Name) (original reflected arena : Expr)
     unless (match row.certificate with | .positive _ => true | .trivial _ => false) ==
         (row.uniqueCaptureCount > 0) do fail "occurrence-certificate-branch"
     let expectedLowering ← mkAppM
-      (if row.uniqueCaptureCount > 0 then ``Catalog.LowersEscape else ``Catalog.TrivialInCatalog)
+      (if row.uniqueCaptureCount > 0 then ``Catalog.LowersEscape else `D5.S3.ConceptDynamics.InformationEscape.Catalog.TrivialInCatalog)
       #[original, index]
     let actualLowering ← certificateType row.certificateName
     unless ← occurrenceTypeMatches actualLowering expectedLowering.getAppFn.constName!
