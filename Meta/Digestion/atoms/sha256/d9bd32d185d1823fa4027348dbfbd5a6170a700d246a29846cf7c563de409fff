@@ -1,0 +1,38 @@
+**30.58 定义及总终止性证明（网格生成与自然数编码）。** Given \(N\ge1,\eta>0\),
+compute the constants of 30.53–30.56 and choose
+\[
+s=1+\lfloor U_NN/\eta\rfloor,\qquad v=1+\lfloor4\Gamma_0/\eta\rfloor.
+\]
+Since \(s>U_NN/\eta\) and \(s^2\ge s\), \(\kappa_{\rm mesh}<\eta/4\);
+similarly \(\varepsilon<\eta/4\). Hence \(\omega<\eta/2<\eta\), for every positive
+rational precision, including \(\eta>1\). Compute every \(\beta\), its minimum, and the endpoints
+of 30.57. The matrix has \(N^2\) entries with \(N+1\) summands each, its determinant a finite
+permutation sum, and the grid exactly \((2sH_N+1)^N\) points. Every \(B\) is a finite
+rational expression. Integer gcd terminates by decreasing nonzero remainders; lcm follows
+from gcd. Every subsequent operation and loop is finite. This is one total generation
+rule uniform in \(N,\eta\), with explicit coefficient, grid and residual precision bounds;
+it never waits for an unknown real sign. No practical complexity bound is inferred.
+
+Use the natural encodings of 30.47, equivalently
+\[
+\operatorname{Pair}(a,b)=2^a(2b+1)-1,\quad
+\operatorname{Sign}(p)=\begin{cases}2p&p\ge0,\\-2p-1&p<0,\end{cases}\quad
+\operatorname{Rat}(p,d)=\operatorname{Pair}(\operatorname{Sign}(p),d-1),\ d\ge1,
+\]
+\[
+\operatorname{List}()=0,\qquad
+\operatorname{List}(a_1,\ldots,a_n)=1+\operatorname{Pair}(a_1,\operatorname{List}(a_2,\ldots,a_n)).
+\]
+Repeated division of \(n+1\) by two gives its unique odd part \(2b+1\) and exponent \(a\),
+terminating because the positive integer decreases at every division. An even sign code
+\(a\) means \(a/2\); an odd one means \(-(a+1)/2\). Denominators decode positively
+and need not be reduced. A positive list code \(L=2^a(2t+1)\) has tail \(t<L\);
+therefore every natural code decodes to a finite list. Put \(P=2sH_N+1\), \(G=P^N\).
+Integer division gives the unique \(N\) digits (allowing leading zeros)
+\[
+i=\sum_{k=1}^Nd_kP^{k-1},\quad0\le d_k<P,\quad0\le i<G,
+\qquad q(i)_k=(d_k-sH_N)/s.
+\]
+This is a bijection with the grid: digit uniqueness gives injectivity, and the allowed
+numerators yield every digit tuple. It fixes the complete table order without real rounding.
+

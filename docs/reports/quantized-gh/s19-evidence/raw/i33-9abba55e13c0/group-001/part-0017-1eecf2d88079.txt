@@ -1,0 +1,782 @@
+      {
+        "original": {
+          "byte_start": 176226,
+          "byte_end_exclusive": 176268,
+          "line_start": 3138,
+          "line_end_inclusive": 3138,
+          "byte_count": 42,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "5857de90a273df97e5d408d9f6b14d2c254819159e93c4091baa7c7278116615"
+        },
+        "current": {
+          "byte_start": 116769,
+          "byte_end_exclusive": 116811,
+          "line_start": 2306,
+          "line_end_inclusive": 2306,
+          "byte_count": 42,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "5857de90a273df97e5d408d9f6b14d2c254819159e93c4091baa7c7278116615",
+          "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 176268,
+          "byte_end_exclusive": 176496,
+          "line_start": 3138,
+          "line_end_inclusive": 3141,
+          "byte_count": 228,
+          "lf_count": 4,
+          "terminal_lf_count": 1,
+          "sha256": "d2b84c3552fb07435089fdd90d355cf20c92f2cc3e359693dd9ff8c7b3ab3d96"
+        },
+        "current": {
+          "byte_start": 116811,
+          "byte_end_exclusive": 117039,
+          "line_start": 2306,
+          "line_end_inclusive": 2309,
+          "byte_count": 228,
+          "lf_count": 4,
+          "terminal_lf_count": 1,
+          "sha256": "d2b84c3552fb07435089fdd90d355cf20c92f2cc3e359693dd9ff8c7b3ab3d96",
+          "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 176496,
+          "byte_end_exclusive": 176800,
+          "line_start": 3142,
+          "line_end_inclusive": 3144,
+          "byte_count": 304,
+          "lf_count": 3,
+          "terminal_lf_count": 1,
+          "sha256": "662872fa2a63b9e65d172ca90220e011609721d7ebedb789b57617a274fdd337"
+        },
+        "current": {
+          "byte_start": 140643,
+          "byte_end_exclusive": 140947,
+          "line_start": 2896,
+          "line_end_inclusive": 2898,
+          "byte_count": 304,
+          "lf_count": 3,
+          "terminal_lf_count": 1,
+          "sha256": "662872fa2a63b9e65d172ca90220e011609721d7ebedb789b57617a274fdd337",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 176800,
+          "byte_end_exclusive": 176891,
+          "line_start": 3145,
+          "line_end_inclusive": 3145,
+          "byte_count": 91,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "f252b7f11da307eed1100abbecc8dc35367254bcb621aed53d5e178bbf21e96c"
+        },
+        "current": {
+          "byte_start": 216598,
+          "byte_end_exclusive": 216689,
+          "line_start": 3766,
+          "line_end_inclusive": 3766,
+          "byte_count": 91,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "f252b7f11da307eed1100abbecc8dc35367254bcb621aed53d5e178bbf21e96c",
+          "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 176891,
+          "byte_end_exclusive": 176994,
+          "line_start": 3145,
+          "line_end_inclusive": 3147,
+          "byte_count": 103,
+          "lf_count": 3,
+          "terminal_lf_count": 2,
+          "sha256": "b1224229a228494c6135eff5931d31c3ea250933d58dd955c6458f517df6a8b1"
+        },
+        "current": {
+          "byte_start": 140992,
+          "byte_end_exclusive": 141095,
+          "line_start": 2899,
+          "line_end_inclusive": 2901,
+          "byte_count": 103,
+          "lf_count": 3,
+          "terminal_lf_count": 2,
+          "sha256": "b1224229a228494c6135eff5931d31c3ea250933d58dd955c6458f517df6a8b1",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 176994,
+          "byte_end_exclusive": 177500,
+          "line_start": 3148,
+          "line_end_inclusive": 3154,
+          "byte_count": 506,
+          "lf_count": 7,
+          "terminal_lf_count": 2,
+          "sha256": "a8242a4f8e2515ca48cdb5a2ed3493c5c25c805855c278081fad2da0be170465"
+        },
+        "current": {
+          "byte_start": 117211,
+          "byte_end_exclusive": 117717,
+          "line_start": 2317,
+          "line_end_inclusive": 2323,
+          "byte_count": 506,
+          "lf_count": 7,
+          "terminal_lf_count": 2,
+          "sha256": "a8242a4f8e2515ca48cdb5a2ed3493c5c25c805855c278081fad2da0be170465",
+          "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 177500,
+          "byte_end_exclusive": 177507,
+          "line_start": 3155,
+          "line_end_inclusive": 3155,
+          "byte_count": 7,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "4b2a0683fccde8fb439c0143460b14ae64e22507fc06571c0dcfc2b594cccee6"
+        },
+        "current": {
+          "byte_start": 141095,
+          "byte_end_exclusive": 141102,
+          "line_start": 2902,
+          "line_end_inclusive": 2902,
+          "byte_count": 7,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "4b2a0683fccde8fb439c0143460b14ae64e22507fc06571c0dcfc2b594cccee6",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 177507,
+          "byte_end_exclusive": 178801,
+          "line_start": 3155,
+          "line_end_inclusive": 3182,
+          "byte_count": 1294,
+          "lf_count": 28,
+          "terminal_lf_count": 2,
+          "sha256": "46ab30ed8388b17ffc1886381786c5d712d5a8bf9865da87a2a829644324a3c9"
+        },
+        "current": {
+          "byte_start": 141147,
+          "byte_end_exclusive": 142441,
+          "line_start": 2902,
+          "line_end_inclusive": 2929,
+          "byte_count": 1294,
+          "lf_count": 28,
+          "terminal_lf_count": 2,
+          "sha256": "46ab30ed8388b17ffc1886381786c5d712d5a8bf9865da87a2a829644324a3c9",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 178801,
+          "byte_end_exclusive": 178808,
+          "line_start": 3183,
+          "line_end_inclusive": 3183,
+          "byte_count": 7,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "b44376b9c31772a6dcb9ccc6d91327a87c6159d5032d2d54f45cb85879d332d1"
+        },
+        "current": {
+          "byte_start": 142441,
+          "byte_end_exclusive": 142448,
+          "line_start": 2930,
+          "line_end_inclusive": 2930,
+          "byte_count": 7,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "b44376b9c31772a6dcb9ccc6d91327a87c6159d5032d2d54f45cb85879d332d1",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 178808,
+          "byte_end_exclusive": 180129,
+          "line_start": 3183,
+          "line_end_inclusive": 3216,
+          "byte_count": 1321,
+          "lf_count": 34,
+          "terminal_lf_count": 2,
+          "sha256": "2c98e69893ceeaa6689e74af033ec2a609875698c62d05467d72cf814a3dda15"
+        },
+        "current": {
+          "byte_start": 142493,
+          "byte_end_exclusive": 143814,
+          "line_start": 2930,
+          "line_end_inclusive": 2963,
+          "byte_count": 1321,
+          "lf_count": 34,
+          "terminal_lf_count": 2,
+          "sha256": "2c98e69893ceeaa6689e74af033ec2a609875698c62d05467d72cf814a3dda15",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 180129,
+          "byte_end_exclusive": 180136,
+          "line_start": 3217,
+          "line_end_inclusive": 3217,
+          "byte_count": 7,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "d7a253ef4f8cade3ce1032d59c3a21ea822a5b5d22b8d3840ba09d2292f6c473"
+        },
+        "current": {
+          "byte_start": 143814,
+          "byte_end_exclusive": 143821,
+          "line_start": 2964,
+          "line_end_inclusive": 2964,
+          "byte_count": 7,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "d7a253ef4f8cade3ce1032d59c3a21ea822a5b5d22b8d3840ba09d2292f6c473",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 180136,
+          "byte_end_exclusive": 181578,
+          "line_start": 3217,
+          "line_end_inclusive": 3255,
+          "byte_count": 1442,
+          "lf_count": 39,
+          "terminal_lf_count": 2,
+          "sha256": "5a186fb0f6569920542850bf29be2b05abb9e34b52f2fbaad2fa5953fdec0937"
+        },
+        "current": {
+          "byte_start": 143851,
+          "byte_end_exclusive": 145293,
+          "line_start": 2964,
+          "line_end_inclusive": 3002,
+          "byte_count": 1442,
+          "lf_count": 39,
+          "terminal_lf_count": 2,
+          "sha256": "5a186fb0f6569920542850bf29be2b05abb9e34b52f2fbaad2fa5953fdec0937",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 181578,
+          "byte_end_exclusive": 181585,
+          "line_start": 3256,
+          "line_end_inclusive": 3256,
+          "byte_count": 7,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "fbc44aa229c82504d8c1805dbad5f6574c3e4e672e2d8a22c54aa78d1b7bb410"
+        },
+        "current": {
+          "byte_start": 145293,
+          "byte_end_exclusive": 145300,
+          "line_start": 3003,
+          "line_end_inclusive": 3003,
+          "byte_count": 7,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "fbc44aa229c82504d8c1805dbad5f6574c3e4e672e2d8a22c54aa78d1b7bb410",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 181585,
+          "byte_end_exclusive": 182830,
+          "line_start": 3256,
+          "line_end_inclusive": 3280,
+          "byte_count": 1245,
+          "lf_count": 25,
+          "terminal_lf_count": 2,
+          "sha256": "d72ad299da808792534778781b1fe3895ccadc183cc40bdf305ef8a6202026f5"
+        },
+        "current": {
+          "byte_start": 145330,
+          "byte_end_exclusive": 146575,
+          "line_start": 3003,
+          "line_end_inclusive": 3027,
+          "byte_count": 1245,
+          "lf_count": 25,
+          "terminal_lf_count": 2,
+          "sha256": "d72ad299da808792534778781b1fe3895ccadc183cc40bdf305ef8a6202026f5",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 182830,
+          "byte_end_exclusive": 182837,
+          "line_start": 3281,
+          "line_end_inclusive": 3281,
+          "byte_count": 7,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "fc88b7569e9181e03afebb2c787b51b5d4b16739ab35dff0e77a7cade66c7cec"
+        },
+        "current": {
+          "byte_start": 146575,
+          "byte_end_exclusive": 146582,
+          "line_start": 3028,
+          "line_end_inclusive": 3028,
+          "byte_count": 7,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "fc88b7569e9181e03afebb2c787b51b5d4b16739ab35dff0e77a7cade66c7cec",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 182837,
+          "byte_end_exclusive": 184089,
+          "line_start": 3281,
+          "line_end_inclusive": 3311,
+          "byte_count": 1252,
+          "lf_count": 31,
+          "terminal_lf_count": 2,
+          "sha256": "5137a30712aa24a304cef3c52b5fb6cd495138a20f2af4ca9c2b60a86728934f"
+        },
+        "current": {
+          "byte_start": 146612,
+          "byte_end_exclusive": 147864,
+          "line_start": 3028,
+          "line_end_inclusive": 3058,
+          "byte_count": 1252,
+          "lf_count": 31,
+          "terminal_lf_count": 2,
+          "sha256": "5137a30712aa24a304cef3c52b5fb6cd495138a20f2af4ca9c2b60a86728934f",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 184089,
+          "byte_end_exclusive": 184096,
+          "line_start": 3312,
+          "line_end_inclusive": 3312,
+          "byte_count": 7,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "b66f6224c3bfe90a9510e1208f1f6b93593d8557f4b143e3fe2c6ff5cb6b96fb"
+        },
+        "current": {
+          "byte_start": 147864,
+          "byte_end_exclusive": 147871,
+          "line_start": 3059,
+          "line_end_inclusive": 3059,
+          "byte_count": 7,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "b66f6224c3bfe90a9510e1208f1f6b93593d8557f4b143e3fe2c6ff5cb6b96fb",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 184096,
+          "byte_end_exclusive": 185179,
+          "line_start": 3312,
+          "line_end_inclusive": 3338,
+          "byte_count": 1083,
+          "lf_count": 27,
+          "terminal_lf_count": 2,
+          "sha256": "5ecd7b4963a4001d5703b9c2299b3f8be76d7ba7084d3f825a900ebe2ddcea71"
+        },
+        "current": {
+          "byte_start": 147901,
+          "byte_end_exclusive": 148984,
+          "line_start": 3059,
+          "line_end_inclusive": 3085,
+          "byte_count": 1083,
+          "lf_count": 27,
+          "terminal_lf_count": 2,
+          "sha256": "5ecd7b4963a4001d5703b9c2299b3f8be76d7ba7084d3f825a900ebe2ddcea71",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 185179,
+          "byte_end_exclusive": 185186,
+          "line_start": 3339,
+          "line_end_inclusive": 3339,
+          "byte_count": 7,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "d2db59471ade0d0a17a5b471c7fbb5ecd6a2e6f515557c765eaacf4000a2efe5"
+        },
+        "current": {
+          "byte_start": 148984,
+          "byte_end_exclusive": 148991,
+          "line_start": 3086,
+          "line_end_inclusive": 3086,
+          "byte_count": 7,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "d2db59471ade0d0a17a5b471c7fbb5ecd6a2e6f515557c765eaacf4000a2efe5",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 185186,
+          "byte_end_exclusive": 186137,
+          "line_start": 3339,
+          "line_end_inclusive": 3357,
+          "byte_count": 951,
+          "lf_count": 19,
+          "terminal_lf_count": 2,
+          "sha256": "fc665c96d053791554f00fca452fe3256fdca73cc3c9554d50f26d4df22c8120"
+        },
+        "current": {
+          "byte_start": 149021,
+          "byte_end_exclusive": 149972,
+          "line_start": 3086,
+          "line_end_inclusive": 3104,
+          "byte_count": 951,
+          "lf_count": 19,
+          "terminal_lf_count": 2,
+          "sha256": "fc665c96d053791554f00fca452fe3256fdca73cc3c9554d50f26d4df22c8120",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 186137,
+          "byte_end_exclusive": 186144,
+          "line_start": 3358,
+          "line_end_inclusive": 3358,
+          "byte_count": 7,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "94ec5e4a9c0352b0a164d135844de1569b61bc456446c2dd2b94ef87956b0b7e"
+        },
+        "current": {
+          "byte_start": 149972,
+          "byte_end_exclusive": 149979,
+          "line_start": 3105,
+          "line_end_inclusive": 3105,
+          "byte_count": 7,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "94ec5e4a9c0352b0a164d135844de1569b61bc456446c2dd2b94ef87956b0b7e",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 186144,
+          "byte_end_exclusive": 186980,
+          "line_start": 3358,
+          "line_end_inclusive": 3374,
+          "byte_count": 836,
+          "lf_count": 17,
+          "terminal_lf_count": 2,
+          "sha256": "b59dd55ffc4a2e6cd3ab446ff1e95a2d254267a57cd02648cb712ab24d9e84f9"
+        },
+        "current": {
+          "byte_start": 150009,
+          "byte_end_exclusive": 150845,
+          "line_start": 3105,
+          "line_end_inclusive": 3121,
+          "byte_count": 836,
+          "lf_count": 17,
+          "terminal_lf_count": 2,
+          "sha256": "b59dd55ffc4a2e6cd3ab446ff1e95a2d254267a57cd02648cb712ab24d9e84f9",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 186980,
+          "byte_end_exclusive": 186988,
+          "line_start": 3375,
+          "line_end_inclusive": 3375,
+          "byte_count": 8,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "81f2adfae0482945a0a1a3499038c1278685789f1f6945bb3de5c347fb23a43f"
+        },
+        "current": {
+          "byte_start": 150845,
+          "byte_end_exclusive": 150853,
+          "line_start": 3122,
+          "line_end_inclusive": 3122,
+          "byte_count": 8,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "81f2adfae0482945a0a1a3499038c1278685789f1f6945bb3de5c347fb23a43f",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 186988,
+          "byte_end_exclusive": 188327,
+          "line_start": 3375,
+          "line_end_inclusive": 3401,
+          "byte_count": 1339,
+          "lf_count": 27,
+          "terminal_lf_count": 2,
+          "sha256": "fcc160889726933beb8a6ac650c606803d83a604481c01f48e347a43937e7333"
+        },
+        "current": {
+          "byte_start": 150883,
+          "byte_end_exclusive": 152222,
+          "line_start": 3122,
+          "line_end_inclusive": 3148,
+          "byte_count": 1339,
+          "lf_count": 27,
+          "terminal_lf_count": 2,
+          "sha256": "fcc160889726933beb8a6ac650c606803d83a604481c01f48e347a43937e7333",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 188327,
+          "byte_end_exclusive": 188335,
+          "line_start": 3402,
+          "line_end_inclusive": 3402,
+          "byte_count": 8,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "7a96495831c55b6676b9beb2df6f2b529df300870186770e7e78e55dd68f84ff"
+        },
+        "current": {
+          "byte_start": 152222,
+          "byte_end_exclusive": 152230,
+          "line_start": 3149,
+          "line_end_inclusive": 3149,
+          "byte_count": 8,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "7a96495831c55b6676b9beb2df6f2b529df300870186770e7e78e55dd68f84ff",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 188335,
+          "byte_end_exclusive": 190232,
+          "line_start": 3402,
+          "line_end_inclusive": 3443,
+          "byte_count": 1897,
+          "lf_count": 42,
+          "terminal_lf_count": 2,
+          "sha256": "fd59d40249f3a68a82ba4b451d0199d663dd62c07fc2737b5791a8e3e8606cbb"
+        },
+        "current": {
+          "byte_start": 152260,
+          "byte_end_exclusive": 154157,
+          "line_start": 3149,
+          "line_end_inclusive": 3190,
+          "byte_count": 1897,
+          "lf_count": 42,
+          "terminal_lf_count": 2,
+          "sha256": "fd59d40249f3a68a82ba4b451d0199d663dd62c07fc2737b5791a8e3e8606cbb",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 190232,
+          "byte_end_exclusive": 190240,
+          "line_start": 3444,
+          "line_end_inclusive": 3444,
+          "byte_count": 8,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "6df1aa9689717893a52f1a70657ae5f2982fad909a7ef31601ef49500f501f04"
+        },
+        "current": {
+          "byte_start": 154157,
+          "byte_end_exclusive": 154165,
+          "line_start": 3191,
+          "line_end_inclusive": 3191,
+          "byte_count": 8,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "6df1aa9689717893a52f1a70657ae5f2982fad909a7ef31601ef49500f501f04",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 190240,
+          "byte_end_exclusive": 191305,
+          "line_start": 3444,
+          "line_end_inclusive": 3461,
+          "byte_count": 1065,
+          "lf_count": 18,
+          "terminal_lf_count": 2,
+          "sha256": "e653265582f1ec15bc99c2d742fa34489299ff8e2aeacbc51ca1afdecfb11380"
+        },
+        "current": {
+          "byte_start": 154195,
+          "byte_end_exclusive": 155260,
+          "line_start": 3191,
+          "line_end_inclusive": 3208,
+          "byte_count": 1065,
+          "lf_count": 18,
+          "terminal_lf_count": 2,
+          "sha256": "e653265582f1ec15bc99c2d742fa34489299ff8e2aeacbc51ca1afdecfb11380",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 191305,
+          "byte_end_exclusive": 191313,
+          "line_start": 3462,
+          "line_end_inclusive": 3462,
+          "byte_count": 8,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "d36e02f18a8c49c9a6300dffdb8197f97b056ff1062bd814318b40ddc40b0b39"
+        },
+        "current": {
+          "byte_start": 155260,
+          "byte_end_exclusive": 155268,
+          "line_start": 3209,
+          "line_end_inclusive": 3209,
+          "byte_count": 8,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "d36e02f18a8c49c9a6300dffdb8197f97b056ff1062bd814318b40ddc40b0b39",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 191313,
+          "byte_end_exclusive": 192948,
+          "line_start": 3462,
+          "line_end_inclusive": 3494,
+          "byte_count": 1635,
+          "lf_count": 33,
+          "terminal_lf_count": 1,
+          "sha256": "e39ea4044dc5de712196a9a700b7fec2e4c715d1e2f8ce5a7aba58f97c3a91c6"
+        },
+        "current": {
+          "byte_start": 155298,
+          "byte_end_exclusive": 156933,
+          "line_start": 3209,
+          "line_end_inclusive": 3241,
+          "byte_count": 1635,
+          "lf_count": 33,
+          "terminal_lf_count": 1,
+          "sha256": "e39ea4044dc5de712196a9a700b7fec2e4c715d1e2f8ce5a7aba58f97c3a91c6",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 192948,
+          "byte_end_exclusive": 193045,
+          "line_start": 3495,
+          "line_end_inclusive": 3495,
+          "byte_count": 97,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "bb60944e24e28749838f279cb3ed16b805dcd672d411d285ea186bf10dd55f7a"
+        },
+        "current": {
+          "byte_start": 117841,
+          "byte_end_exclusive": 117938,
+          "line_start": 2331,
+          "line_end_inclusive": 2331,
+          "byte_count": 97,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "bb60944e24e28749838f279cb3ed16b805dcd672d411d285ea186bf10dd55f7a",
+          "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 193045,
+          "byte_end_exclusive": 193056,
+          "line_start": 3495,
+          "line_end_inclusive": 3496,
+          "byte_count": 11,
+          "lf_count": 2,
+          "terminal_lf_count": 2,
+          "sha256": "7bd4f29568fe28aff1738b42b08f6e67119d7b68ed828fd6b22b0e57d9f79144"
+        },
+        "current": {
+          "byte_start": 156933,
+          "byte_end_exclusive": 156944,
+          "line_start": 3242,
+          "line_end_inclusive": 3243,
+          "byte_count": 11,
+          "lf_count": 2,
+          "terminal_lf_count": 2,
+          "sha256": "7bd4f29568fe28aff1738b42b08f6e67119d7b68ed828fd6b22b0e57d9f79144",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 193056,
+          "byte_end_exclusive": 193064,
+          "line_start": 3497,
+          "line_end_inclusive": 3497,
+          "byte_count": 8,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "55847c7fda8af1199a76eccca3e9de4606feae98d2db1fcd5cf0e664b8e060d3"
+        },
+        "current": {
+          "byte_start": 156944,
+          "byte_end_exclusive": 156952,
+          "line_start": 3244,
+          "line_end_inclusive": 3244,
+          "byte_count": 8,
+          "lf_count": 0,
+          "terminal_lf_count": 0,
+          "sha256": "55847c7fda8af1199a76eccca3e9de4606feae98d2db1fcd5cf0e664b8e060d3",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        }
+      },
+      {
+        "original": {
+          "byte_start": 193064,
+          "byte_end_exclusive": 193654,
+          "line_start": 3497,
+          "line_end_inclusive": 3506,
+          "byte_count": 590,
+          "lf_count": 9,
+          "terminal_lf_count": 0,
+          "sha256": "b8ded4f1e9232551d1a6640e0652e785d4d5d3f3d4cc87f31c414a666c1eea0f"
+        },
+        "current": {
+          "byte_start": 157006,
+          "byte_end_exclusive": 157596,
+          "line_start": 3244,
+          "line_end_inclusive": 3253,
+          "byte_count": 590,
+          "lf_count": 9,
+          "terminal_lf_count": 0,
+          "sha256": "b8ded4f1e9232551d1a6640e0652e785d4d5d3f3d4cc87f31c414a666c1eea0f",
+          "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+        }
+      },

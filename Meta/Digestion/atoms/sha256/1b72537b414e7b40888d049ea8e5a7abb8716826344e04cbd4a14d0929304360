@@ -1,0 +1,27 @@
+**30.75 定理及证明（必要坐标极限与不充分性的显式反例）。** From 30.73–30.74,
+for every finite complex coefficient family,
+\[
+\left\|\chi-\sum_ka_kf_k\right\|^2\ge\frac{|a_n+\mu(n)|^2}{C_n}\quad(n\ge1).
+\]
+Indeed applying \(\Lambda_n\) to the residual gives \(-\mu(n)-a_n\), and its exact
+norm bound proves the inequality. If finite combinations \(P_j\to\chi\) in norm, then for
+every fixed \(n\), \(|a_n^{(j)}+\mu(n)|\le\sqrt{C_n}\|P_j-\chi\|\to0\).
+Support need not increase monotonically and coefficients may be complex or zero at some stages.
+More generally \(P_j\to h\) gives \(a_n^{(j)}\to\Lambda_n(h)\), so the coordinate
+has a unique continuous extension to the dictionary closure. This does not prove an infinite
+coefficient-series reconstruction theorem. A residual square \(<1/m\) implies the strict
+necessary coordinate bound \(|a_n+\mu(n)|^2<C_n/m\).
+
+The converse to coordinate convergence fails explicitly. For \(j\ge2\), take
+\[
+P_j=-\sum_{k=1}^j\mu(k)f_k+j^3f_{j+1}.
+\]
+Every fixed coordinate is eventually exactly \(-\mu(n)\). In the original model,
+\(\|f_k\|^2=c/k\), \(1\le c\le2\): the lower bound follows by retaining the
+\(x>1\) integral for \(f_1\), and the upper bound was proved in 30.55.
+Thus \(\|j^3f_{j+1}\|\ge j^3/\sqrt{j+1}\ge j^2\), while
+\(\|\chi+\sum_{k=1}^j\mu(k)f_k\|\le1+2j\).
+The reverse triangle inequality gives
+\(\|\chi-P_j\|\ge j^2-2j-1\to\infty\). Necessary coordinate convergence is therefore
+strictly weaker than Hilbert norm convergence or a norm-error certificate.
+

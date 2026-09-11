@@ -1,0 +1,33 @@
+**30.53 定理及证明（周期配对的显式正距离）。** For every complex \(a\),
+\[
+R_N(a)\ge\sigma_N:=\frac3{3L_N^2+3L_N+2}
+ >\frac1{1+(L_N+1)^2}>0,\qquad D_N\ge\sigma_N.
+\]
+Indeed \(L/k\) is an integer, so \(g_a(t+L)=g_a(t)\). On \(0<t<1\),
+\(g_a(t)=b_at\), while the target is zero there and one at \(L+t\).
+The intervals \((0,1)\) and \((L,L+1)\) are disjoint even for \(L=1\).
+Discarding only nonnegative contributions therefore gives
+\[
+R_N(a)\ge\int_0^1\left(\frac{|g_a(t)|^2}{t^2}
+                  +\frac{|1-g_a(t)|^2}{(L+t)^2}\right)dt.
+\]
+Put \(S(t)=t^2+(L+t)^2\). For every \(z\in\mathbb C\), expansion of the modulus square gives
+\[
+\frac{|z|^2}{t^2}+\frac{|1-z|^2}{(L+t)^2}
+=\left(\frac1{t^2}+\frac1{(L+t)^2}\right)
+ \left|z-\frac{t^2}{S(t)}\right|^2+\frac1{S(t)}.
+\]
+Consequently \(R_N(a)\ge\int_0^1S(t)^{-1}dt\). The bound
+\(S(t)\le1+(L+1)^2\) proves the weaker constant. Cauchy–Schwarz applied to
+\(\sqrt S\) and \(1/\sqrt S\) gives
+\[
+1\le\left(\int_0^1S(t)dt\right)\left(\int_0^1\frac{dt}{S(t)}\right),
+\qquad \int_0^1S(t)dt=L^2+L+\frac23.
+\]
+This proves \(\sigma_N\); its strict improvement follows from
+\(3[L^2+2L+2]-(3L^2+3L+2)=3L+4>0\). Take the infimum over all \(a\).
+Only lcm and rational arithmetic define the constant. The first retained integral is exactly
+\(|b_a|^2\), the full original \(x>1\) contribution; the second is from
+\(1/(L+1)<x<1/L\). It is not the entire \(t\ge J\) tail of 30.41.
+The apparent singularity at zero is removed by \(g_a(t)=b_at\); all endpoint values are immaterial.
+

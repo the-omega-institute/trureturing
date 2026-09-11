@@ -1,0 +1,14 @@
+### 定义及开放比较：离散对偶
+
+对于第 16 节的同一箱体,既有可分离离散 Lagrange 基线可写为
+
+\[
+U_{\rm dual}=\inf_{\lambda\ge0}
+\left\{\lambda T_1+\sum_{p\in S}\max_{a\in A_p}
+[g_p(a)-\lambda a\log p]\right\}.
+\]
+
+每个括号给所有预算不超过 \(T_1\) 的配置一个上界。距离证书相对这个最优对偶是否有实用优势仍 **OPEN**;比 Jensen 更紧是已经证明的较弱结论,不能升级为优于 \(U_{\rm dual}\)。
+
+[Liao-Berg, Sharpening Jensen's Inequality](https://arxiv.org/abs/1707.08644) 与 [Rodin, Variance and the Inequality of Arithmetic and Geometric Means](https://arxiv.org/abs/1409.0162) 。后者摘要已陈述普通乘积在同均值、方差下的一个大坐标极值形状。前者 Theorem 1 / Corollary 1.1、后者 Theorem 1 / Remark 1,并提供前者 DOI `10.1080/00031305.2017.1419145`;Pittenger 的 *Sharp mean-variance bounds for Jensen-type inequalities* 的一般结果是否覆盖本特例未核实。以上不支持全球新颖性或文献穷尽声明;本节的函数特例由第 15 节完整短证承担。
+

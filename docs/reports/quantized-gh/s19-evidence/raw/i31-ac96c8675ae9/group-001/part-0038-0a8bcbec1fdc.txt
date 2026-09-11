@@ -1,0 +1,780 @@
+      "heading_id": "original-heading-3",
+      "current_heading_bindings": [
+        {
+          "kind": "heading region",
+          "label": "2. 5040 与小素数: 两种编码不要混在一起",
+          "current": {
+            "byte_start": 767,
+            "byte_end_exclusive": 2411,
+            "line_start": 13,
+            "line_end_inclusive": 65,
+            "byte_count": 1644,
+            "lf_count": 53,
+            "terminal_lf_count": 2,
+            "sha256": "ea11c7f44d754908aeacde909437e3b3e0bee73523fd87fa2793d7251ffa2042"
+          },
+          "cas_path": "Meta/Digestion/atoms/sha256/ea11c7f44d754908aeacde909437e3b3e0bee73523fd87fa2793d7251ffa2042",
+          "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/ea11c7f44d754908aeacde909437e3b3e0bee73523fd87fa2793d7251ffa2042.yaml",
+          "whole_span_byte_exact": true
+        }
+      ],
+      "type_attachment": "Heading grammar attached to the definitions/theorems/proofs and original logical-status limitations in the identified current units",
+      "pending_exception": false
+    },
+    {
+      "original": {
+        "byte_start": 3478,
+        "byte_end_exclusive": 3517,
+        "line_start": 64,
+        "line_end_inclusive": 64,
+        "byte_count": 39,
+        "lf_count": 1,
+        "terminal_lf_count": 1,
+        "sha256": "8cb58a12ca3b8a6f6cc214527c512a65ca7e04b09a8cd008c97751a3bedf18c1"
+      },
+      "level": 3,
+      "text": "小素数为什么让因数较丰?",
+      "recovery": [
+        {
+          "recovery_span_index": 18,
+          "original": {
+            "byte_start": 3478,
+            "byte_end_exclusive": 3516,
+            "line_start": 64,
+            "line_end_inclusive": 64,
+            "byte_count": 38,
+            "lf_count": 0,
+            "terminal_lf_count": 0,
+            "sha256": "5d8ba0035f96998a86f1cd9944efc3703b4767140ff70d98036f494d871963e1"
+          },
+          "current": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 51375,
+            "byte_end_exclusive": 51413,
+            "line_start": 833,
+            "line_end_inclusive": 833,
+            "byte_count": 38,
+            "lf_count": 0,
+            "terminal_lf_count": 0,
+            "sha256": "5d8ba0035f96998a86f1cd9944efc3703b4767140ff70d98036f494d871963e1"
+          }
+        },
+        {
+          "recovery_span_index": 19,
+          "original": {
+            "byte_start": 3516,
+            "byte_end_exclusive": 3517,
+            "line_start": 64,
+            "line_end_inclusive": 64,
+            "byte_count": 1,
+            "lf_count": 1,
+            "terminal_lf_count": 1,
+            "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 2479,
+            "byte_end_exclusive": 2480,
+            "line_start": 66,
+            "line_end_inclusive": 66,
+            "byte_count": 1,
+            "lf_count": 1,
+            "terminal_lf_count": 1,
+            "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+          }
+        }
+      ],
+      "original_section_or_subsection_span": {
+        "byte_start": 3478,
+        "byte_end_exclusive": 5220,
+        "line_start": 64,
+        "line_end_inclusive": 107,
+        "byte_count": 1742,
+        "lf_count": 44,
+        "terminal_lf_count": 2,
+        "sha256": "53794077958098a4eda93eef9052ee7af23ec0d5468c2e76118b38b859c08138"
+      },
+      "current_unit_bindings": [
+        {
+          "byte_start": 2411,
+          "byte_end_exclusive": 4183,
+          "line_start": 66,
+          "line_end_inclusive": 109,
+          "byte_count": 1772,
+          "lf_count": 44,
+          "terminal_lf_count": 2,
+          "sha256": "a41dbe54185bc4fbabb4ec8f9761d68c6e630cf046a448ff1d5ead648f1ba49a"
+        }
+      ],
+      "heading_id": "original-heading-4",
+      "current_heading_bindings": [
+        {
+          "kind": "heading region",
+          "label": "定理（命题与证明）：小素数为什么让因数较丰?",
+          "current": {
+            "byte_start": 2411,
+            "byte_end_exclusive": 4183,
+            "line_start": 66,
+            "line_end_inclusive": 109,
+            "byte_count": 1772,
+            "lf_count": 44,
+            "terminal_lf_count": 2,
+            "sha256": "a41dbe54185bc4fbabb4ec8f9761d68c6e630cf046a448ff1d5ead648f1ba49a"
+          },
+          "cas_path": "Meta/Digestion/atoms/sha256/a41dbe54185bc4fbabb4ec8f9761d68c6e630cf046a448ff1d5ead648f1ba49a",
+          "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/a41dbe54185bc4fbabb4ec8f9761d68c6e630cf046a448ff1d5ead648f1ba49a.yaml",
+          "whole_span_byte_exact": true
+        }
+      ],
+      "type_attachment": "Heading grammar attached to the definitions/theorems/proofs and original logical-status limitations in the identified current units",
+      "pending_exception": false
+    },
+    {
+      "original": {
+        "byte_start": 5220,
+        "byte_end_exclusive": 5263,
+        "line_start": 108,
+        "line_end_inclusive": 108,
+        "byte_count": 43,
+        "lf_count": 1,
+        "terminal_lf_count": 1,
+        "sha256": "93718bf277e9e3960b0eda6b31a311b35432938b528a373edb4cb3b517dacc4b"
+      },
+      "level": 2,
+      "text": "3. RH 等价判据的离散边界图谱",
+      "recovery": [
+        {
+          "recovery_span_index": 20,
+          "original": {
+            "byte_start": 5220,
+            "byte_end_exclusive": 5263,
+            "line_start": 108,
+            "line_end_inclusive": 108,
+            "byte_count": 43,
+            "lf_count": 1,
+            "terminal_lf_count": 1,
+            "sha256": "93718bf277e9e3960b0eda6b31a311b35432938b528a373edb4cb3b517dacc4b"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 4183,
+            "byte_end_exclusive": 4226,
+            "line_start": 110,
+            "line_end_inclusive": 110,
+            "byte_count": 43,
+            "lf_count": 1,
+            "terminal_lf_count": 1,
+            "sha256": "93718bf277e9e3960b0eda6b31a311b35432938b528a373edb4cb3b517dacc4b"
+          }
+        }
+      ],
+      "original_section_or_subsection_span": {
+        "byte_start": 5220,
+        "byte_end_exclusive": 10187,
+        "line_start": 108,
+        "line_end_inclusive": 233,
+        "byte_count": 4967,
+        "lf_count": 126,
+        "terminal_lf_count": 2,
+        "sha256": "599bdc52206a27b876a1053a62ab78fc2e94f2bcb73d0af59f444f28fd92ed09"
+      },
+      "current_unit_bindings": [
+        {
+          "byte_start": 4183,
+          "byte_end_exclusive": 5324,
+          "line_start": 110,
+          "line_end_inclusive": 126,
+          "byte_count": 1141,
+          "lf_count": 17,
+          "terminal_lf_count": 2,
+          "sha256": "12a7456bcdfae7970230281864ecada698bdddc0979a8557aacd5b8aba51d82a"
+        },
+        {
+          "byte_start": 5324,
+          "byte_end_exclusive": 6149,
+          "line_start": 127,
+          "line_end_inclusive": 146,
+          "byte_count": 825,
+          "lf_count": 20,
+          "terminal_lf_count": 2,
+          "sha256": "8b478a638c46c345b79154ca55fad6d2829f18756a44f8806bd76c6cb8dad3ca"
+        },
+        {
+          "byte_start": 6149,
+          "byte_end_exclusive": 6602,
+          "line_start": 147,
+          "line_end_inclusive": 157,
+          "byte_count": 453,
+          "lf_count": 11,
+          "terminal_lf_count": 2,
+          "sha256": "29200050b4fd08cccd1cc857573725a326453823685aae7eebc6fa4687fa6a13"
+        },
+        {
+          "byte_start": 6602,
+          "byte_end_exclusive": 7306,
+          "line_start": 158,
+          "line_end_inclusive": 183,
+          "byte_count": 704,
+          "lf_count": 26,
+          "terminal_lf_count": 2,
+          "sha256": "f1914051a2305a19e562b367300ce86ebc9a03f9b769e9e96fcf6554484b7fe6"
+        },
+        {
+          "byte_start": 7306,
+          "byte_end_exclusive": 8184,
+          "line_start": 184,
+          "line_end_inclusive": 214,
+          "byte_count": 878,
+          "lf_count": 31,
+          "terminal_lf_count": 2,
+          "sha256": "1fe75963de99fe6749b0190d7d196a245f38266ec713f250ed7b3418f334418b"
+        },
+        {
+          "byte_start": 8184,
+          "byte_end_exclusive": 9069,
+          "line_start": 215,
+          "line_end_inclusive": 239,
+          "byte_count": 885,
+          "lf_count": 25,
+          "terminal_lf_count": 2,
+          "sha256": "e474c6c816b87c60919a85653278b1e8fbd094525d6965efd8548a5c325f9bc7"
+        }
+      ],
+      "heading_id": "original-heading-5",
+      "current_heading_bindings": [
+        {
+          "kind": "heading region",
+          "label": "3. RH 等价判据的离散边界图谱",
+          "current": {
+            "byte_start": 4183,
+            "byte_end_exclusive": 5324,
+            "line_start": 110,
+            "line_end_inclusive": 126,
+            "byte_count": 1141,
+            "lf_count": 17,
+            "terminal_lf_count": 2,
+            "sha256": "12a7456bcdfae7970230281864ecada698bdddc0979a8557aacd5b8aba51d82a"
+          },
+          "cas_path": "Meta/Digestion/atoms/sha256/12a7456bcdfae7970230281864ecada698bdddc0979a8557aacd5b8aba51d82a",
+          "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/12a7456bcdfae7970230281864ecada698bdddc0979a8557aacd5b8aba51d82a.yaml",
+          "whole_span_byte_exact": true
+        }
+      ],
+      "type_attachment": "Heading grammar attached to the definitions/theorems/proofs and original logical-status limitations in the identified current units",
+      "pending_exception": false
+    },
+    {
+      "original": {
+        "byte_start": 6271,
+        "byte_end_exclusive": 6294,
+        "line_start": 121,
+        "line_end_inclusive": 121,
+        "byte_count": 23,
+        "lf_count": 1,
+        "terminal_lf_count": 1,
+        "sha256": "f1d096669b912c08321ba4157a6c258052dcf747a1ac284b09b0bc52a6f17c7d"
+      },
+      "level": 3,
+      "text": "Robin 与 Lagarias",
+      "recovery": [
+        {
+          "recovery_span_index": 24,
+          "original": {
+            "byte_start": 6271,
+            "byte_end_exclusive": 6294,
+            "line_start": 121,
+            "line_end_inclusive": 121,
+            "byte_count": 23,
+            "lf_count": 1,
+            "terminal_lf_count": 1,
+            "sha256": "f1d096669b912c08321ba4157a6c258052dcf747a1ac284b09b0bc52a6f17c7d"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 5324,
+            "byte_end_exclusive": 5347,
+            "line_start": 127,
+            "line_end_inclusive": 127,
+            "byte_count": 23,
+            "lf_count": 1,
+            "terminal_lf_count": 1,
+            "sha256": "f1d096669b912c08321ba4157a6c258052dcf747a1ac284b09b0bc52a6f17c7d"
+          }
+        }
+      ],
+      "original_section_or_subsection_span": {
+        "byte_start": 6271,
+        "byte_end_exclusive": 7096,
+        "line_start": 121,
+        "line_end_inclusive": 140,
+        "byte_count": 825,
+        "lf_count": 20,
+        "terminal_lf_count": 2,
+        "sha256": "8b478a638c46c345b79154ca55fad6d2829f18756a44f8806bd76c6cb8dad3ca"
+      },
+      "current_unit_bindings": [
+        {
+          "byte_start": 5324,
+          "byte_end_exclusive": 6149,
+          "line_start": 127,
+          "line_end_inclusive": 146,
+          "byte_count": 825,
+          "lf_count": 20,
+          "terminal_lf_count": 2,
+          "sha256": "8b478a638c46c345b79154ca55fad6d2829f18756a44f8806bd76c6cb8dad3ca"
+        }
+      ],
+      "heading_id": "original-heading-6",
+      "current_heading_bindings": [
+        {
+          "kind": "heading region",
+          "label": "Robin 与 Lagarias",
+          "current": {
+            "byte_start": 5324,
+            "byte_end_exclusive": 6149,
+            "line_start": 127,
+            "line_end_inclusive": 146,
+            "byte_count": 825,
+            "lf_count": 20,
+            "terminal_lf_count": 2,
+            "sha256": "8b478a638c46c345b79154ca55fad6d2829f18756a44f8806bd76c6cb8dad3ca"
+          },
+          "cas_path": "Meta/Digestion/atoms/sha256/8b478a638c46c345b79154ca55fad6d2829f18756a44f8806bd76c6cb8dad3ca",
+          "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/8b478a638c46c345b79154ca55fad6d2829f18756a44f8806bd76c6cb8dad3ca.yaml",
+          "whole_span_byte_exact": true
+        }
+      ],
+      "type_attachment": "Heading grammar attached to the definitions/theorems/proofs and original logical-status limitations in the identified current units",
+      "pending_exception": false
+    },
+    {
+      "original": {
+        "byte_start": 7096,
+        "byte_end_exclusive": 7108,
+        "line_start": 141,
+        "line_end_inclusive": 141,
+        "byte_count": 12,
+        "lf_count": 1,
+        "terminal_lf_count": 1,
+        "sha256": "ea3b6ca31f4d32d6b8a898c721a254144964136e8b8b95f6c59455ceda504db2"
+      },
+      "level": 3,
+      "text": "Nicolas",
+      "recovery": [
+        {
+          "recovery_span_index": 25,
+          "original": {
+            "byte_start": 7096,
+            "byte_end_exclusive": 7108,
+            "line_start": 141,
+            "line_end_inclusive": 141,
+            "byte_count": 12,
+            "lf_count": 1,
+            "terminal_lf_count": 1,
+            "sha256": "ea3b6ca31f4d32d6b8a898c721a254144964136e8b8b95f6c59455ceda504db2"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 6149,
+            "byte_end_exclusive": 6161,
+            "line_start": 147,
+            "line_end_inclusive": 147,
+            "byte_count": 12,
+            "lf_count": 1,
+            "terminal_lf_count": 1,
+            "sha256": "ea3b6ca31f4d32d6b8a898c721a254144964136e8b8b95f6c59455ceda504db2"
+          }
+        }
+      ],
+      "original_section_or_subsection_span": {
+        "byte_start": 7096,
+        "byte_end_exclusive": 7549,
+        "line_start": 141,
+        "line_end_inclusive": 151,
+        "byte_count": 453,
+        "lf_count": 11,
+        "terminal_lf_count": 2,
+        "sha256": "29200050b4fd08cccd1cc857573725a326453823685aae7eebc6fa4687fa6a13"
+      },
+      "current_unit_bindings": [
+        {
+          "byte_start": 6149,
+          "byte_end_exclusive": 6602,
+          "line_start": 147,
+          "line_end_inclusive": 157,
+          "byte_count": 453,
+          "lf_count": 11,
+          "terminal_lf_count": 2,
+          "sha256": "29200050b4fd08cccd1cc857573725a326453823685aae7eebc6fa4687fa6a13"
+        }
+      ],
+      "heading_id": "original-heading-7",
+      "current_heading_bindings": [
+        {
+          "kind": "heading region",
+          "label": "Nicolas",
+          "current": {
+            "byte_start": 6149,
+            "byte_end_exclusive": 6602,
+            "line_start": 147,
+            "line_end_inclusive": 157,
+            "byte_count": 453,
+            "lf_count": 11,
+            "terminal_lf_count": 2,
+            "sha256": "29200050b4fd08cccd1cc857573725a326453823685aae7eebc6fa4687fa6a13"
+          },
+          "cas_path": "Meta/Digestion/atoms/sha256/29200050b4fd08cccd1cc857573725a326453823685aae7eebc6fa4687fa6a13",
+          "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/29200050b4fd08cccd1cc857573725a326453823685aae7eebc6fa4687fa6a13.yaml",
+          "whole_span_byte_exact": true
+        }
+      ],
+      "type_attachment": "Heading grammar attached to the definitions/theorems/proofs and original logical-status limitations in the identified current units",
+      "pending_exception": false
+    },
+    {
+      "original": {
+        "byte_start": 7549,
+        "byte_end_exclusive": 7556,
+        "line_start": 152,
+        "line_end_inclusive": 152,
+        "byte_count": 7,
+        "lf_count": 1,
+        "terminal_lf_count": 1,
+        "sha256": "20e993892bc63a211c62f5e90d1b394e9892e125fb6beec6172b5298d740ad99"
+      },
+      "level": 3,
+      "text": "Li",
+      "recovery": [
+        {
+          "recovery_span_index": 26,
+          "original": {
+            "byte_start": 7549,
+            "byte_end_exclusive": 7556,
+            "line_start": 152,
+            "line_end_inclusive": 152,
+            "byte_count": 7,
+            "lf_count": 1,
+            "terminal_lf_count": 1,
+            "sha256": "20e993892bc63a211c62f5e90d1b394e9892e125fb6beec6172b5298d740ad99"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 6602,
+            "byte_end_exclusive": 6609,
+            "line_start": 158,
+            "line_end_inclusive": 158,
+            "byte_count": 7,
+            "lf_count": 1,
+            "terminal_lf_count": 1,
+            "sha256": "20e993892bc63a211c62f5e90d1b394e9892e125fb6beec6172b5298d740ad99"
+          }
+        }
+      ],
+      "original_section_or_subsection_span": {
+        "byte_start": 7549,
+        "byte_end_exclusive": 8424,
+        "line_start": 152,
+        "line_end_inclusive": 177,
+        "byte_count": 875,
+        "lf_count": 26,
+        "terminal_lf_count": 2,
+        "sha256": "f6d8e7d6ee3582bad08721688f20253cead62b46e14afbded32c796019d9e157"
+      },
+      "current_unit_bindings": [
+        {
+          "byte_start": 6602,
+          "byte_end_exclusive": 7306,
+          "line_start": 158,
+          "line_end_inclusive": 183,
+          "byte_count": 704,
+          "lf_count": 26,
+          "terminal_lf_count": 2,
+          "sha256": "f1914051a2305a19e562b367300ce86ebc9a03f9b769e9e96fcf6554484b7fe6"
+        }
+      ],
+      "heading_id": "original-heading-8",
+      "current_heading_bindings": [
+        {
+          "kind": "heading region",
+          "label": "Li",
+          "current": {
+            "byte_start": 6602,
+            "byte_end_exclusive": 7306,
+            "line_start": 158,
+            "line_end_inclusive": 183,
+            "byte_count": 704,
+            "lf_count": 26,
+            "terminal_lf_count": 2,
+            "sha256": "f1914051a2305a19e562b367300ce86ebc9a03f9b769e9e96fcf6554484b7fe6"
+          },
+          "cas_path": "Meta/Digestion/atoms/sha256/f1914051a2305a19e562b367300ce86ebc9a03f9b769e9e96fcf6554484b7fe6",
+          "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/f1914051a2305a19e562b367300ce86ebc9a03f9b769e9e96fcf6554484b7fe6.yaml",
+          "whole_span_byte_exact": true
+        }
+      ],
+      "type_attachment": "Heading grammar attached to the definitions/theorems/proofs and original logical-status limitations in the identified current units",
+      "pending_exception": false
+    },
+    {
+      "original": {
+        "byte_start": 8424,
+        "byte_end_exclusive": 8455,
+        "line_start": 178,
+        "line_end_inclusive": 178,
+        "byte_count": 31,
+        "lf_count": 1,
+        "terminal_lf_count": 1,
+        "sha256": "a31fcf32e55683ccfd712cef18115a0c9f063b00a1e34af76cbc1ff8b22917a9"
+      },
+      "level": 3,
+      "text": "Nyman-Beurling-Baez-Duarte",
+      "recovery": [
+        {
+          "recovery_span_index": 30,
+          "original": {
+            "byte_start": 8424,
+            "byte_end_exclusive": 8455,
+            "line_start": 178,
+            "line_end_inclusive": 178,
+            "byte_count": 31,
+            "lf_count": 1,
+            "terminal_lf_count": 1,
+            "sha256": "a31fcf32e55683ccfd712cef18115a0c9f063b00a1e34af76cbc1ff8b22917a9"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 7306,
+            "byte_end_exclusive": 7337,
+            "line_start": 184,
+            "line_end_inclusive": 184,
+            "byte_count": 31,
+            "lf_count": 1,
+            "terminal_lf_count": 1,
+            "sha256": "a31fcf32e55683ccfd712cef18115a0c9f063b00a1e34af76cbc1ff8b22917a9"
+          }
+        }
+      ],
+      "original_section_or_subsection_span": {
+        "byte_start": 8424,
+        "byte_end_exclusive": 9302,
+        "line_start": 178,
+        "line_end_inclusive": 208,
+        "byte_count": 878,
+        "lf_count": 31,
+        "terminal_lf_count": 2,
+        "sha256": "1fe75963de99fe6749b0190d7d196a245f38266ec713f250ed7b3418f334418b"
+      },
+      "current_unit_bindings": [
+        {
+          "byte_start": 7306,
+          "byte_end_exclusive": 8184,
+          "line_start": 184,
+          "line_end_inclusive": 214,
+          "byte_count": 878,
+          "lf_count": 31,
+          "terminal_lf_count": 2,
+          "sha256": "1fe75963de99fe6749b0190d7d196a245f38266ec713f250ed7b3418f334418b"
+        }
+      ],
+      "heading_id": "original-heading-9",
+      "current_heading_bindings": [
+        {
+          "kind": "heading region",
+          "label": "Nyman-Beurling-Baez-Duarte",
+          "current": {
+            "byte_start": 7306,
+            "byte_end_exclusive": 8184,
+            "line_start": 184,
+            "line_end_inclusive": 214,
+            "byte_count": 878,
+            "lf_count": 31,
+            "terminal_lf_count": 2,
+            "sha256": "1fe75963de99fe6749b0190d7d196a245f38266ec713f250ed7b3418f334418b"
+          },
+          "cas_path": "Meta/Digestion/atoms/sha256/1fe75963de99fe6749b0190d7d196a245f38266ec713f250ed7b3418f334418b",
+          "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/1fe75963de99fe6749b0190d7d196a245f38266ec713f250ed7b3418f334418b.yaml",
+          "whole_span_byte_exact": true
+        }
+      ],
+      "type_attachment": "Heading grammar attached to the definitions/theorems/proofs and original logical-status limitations in the identified current units",
+      "pending_exception": false
+    },
+    {
+      "original": {
+        "byte_start": 9302,
+        "byte_end_exclusive": 9344,
+        "line_start": 209,
+        "line_end_inclusive": 209,
+        "byte_count": 42,
+        "lf_count": 1,
+        "terminal_lf_count": 1,
+        "sha256": "0179e613e690cfd4ae61f2adbdc8faf665e0a00c464af6f7c21b6db9b1ef2695"
+      },
+      "level": 3,
+      "text": "Baez-Duarte 系数与 Gronwall 对照",
+      "recovery": [
+        {
+          "recovery_span_index": 31,
+          "original": {
+            "byte_start": 9302,
+            "byte_end_exclusive": 9344,
+            "line_start": 209,
+            "line_end_inclusive": 209,
+            "byte_count": 42,
+            "lf_count": 1,
+            "terminal_lf_count": 1,
+            "sha256": "0179e613e690cfd4ae61f2adbdc8faf665e0a00c464af6f7c21b6db9b1ef2695"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 8184,
+            "byte_end_exclusive": 8226,
+            "line_start": 215,
+            "line_end_inclusive": 215,
+            "byte_count": 42,
+            "lf_count": 1,
+            "terminal_lf_count": 1,
+            "sha256": "0179e613e690cfd4ae61f2adbdc8faf665e0a00c464af6f7c21b6db9b1ef2695"
+          }
+        }
+      ],
+      "original_section_or_subsection_span": {
+        "byte_start": 9302,
+        "byte_end_exclusive": 10187,
+        "line_start": 209,
+        "line_end_inclusive": 233,
+        "byte_count": 885,
+        "lf_count": 25,
+        "terminal_lf_count": 2,
+        "sha256": "e474c6c816b87c60919a85653278b1e8fbd094525d6965efd8548a5c325f9bc7"
+      },
+      "current_unit_bindings": [
+        {
+          "byte_start": 8184,
+          "byte_end_exclusive": 9069,
+          "line_start": 215,
+          "line_end_inclusive": 239,
+          "byte_count": 885,
+          "lf_count": 25,
+          "terminal_lf_count": 2,
+          "sha256": "e474c6c816b87c60919a85653278b1e8fbd094525d6965efd8548a5c325f9bc7"
+        }
+      ],
+      "heading_id": "original-heading-10",
+      "current_heading_bindings": [
+        {
+          "kind": "heading region",
+          "label": "Baez-Duarte 系数与 Gronwall 对照",
+          "current": {
+            "byte_start": 8184,
+            "byte_end_exclusive": 9069,
+            "line_start": 215,
+            "line_end_inclusive": 239,
+            "byte_count": 885,
+            "lf_count": 25,
+            "terminal_lf_count": 2,
+            "sha256": "e474c6c816b87c60919a85653278b1e8fbd094525d6965efd8548a5c325f9bc7"
+          },
+          "cas_path": "Meta/Digestion/atoms/sha256/e474c6c816b87c60919a85653278b1e8fbd094525d6965efd8548a5c325f9bc7",
+          "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/e474c6c816b87c60919a85653278b1e8fbd094525d6965efd8548a5c325f9bc7.yaml",
+          "whole_span_byte_exact": true
+        }
+      ],
+      "type_attachment": "Heading grammar attached to the definitions/theorems/proofs and original logical-status limitations in the identified current units",
+      "pending_exception": false
+    },
+    {
+      "original": {
+        "byte_start": 10187,
+        "byte_end_exclusive": 10236,
+        "line_start": 234,
+        "line_end_inclusive": 234,
+        "byte_count": 49,
+        "lf_count": 1,
+        "terminal_lf_count": 1,
+        "sha256": "369bfc281c674203205033a44e224483ff8d8ea17992ee22d7c248ebd21c1ec7"
+      },
+      "level": 2,
+      "text": "4. 整数取整、真实等号与区间判定",
+      "recovery": [
+        {
+          "recovery_span_index": 32,
+          "original": {
+            "byte_start": 10187,
+            "byte_end_exclusive": 10236,
+            "line_start": 234,
+            "line_end_inclusive": 234,
+            "byte_count": 49,
+            "lf_count": 1,
+            "terminal_lf_count": 1,
+            "sha256": "369bfc281c674203205033a44e224483ff8d8ea17992ee22d7c248ebd21c1ec7"
+          },
+          "current": {
+            "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+            "byte_start": 9069,
+            "byte_end_exclusive": 9118,
+            "line_start": 240,
+            "line_end_inclusive": 240,
+            "byte_count": 49,
+            "lf_count": 1,
+            "terminal_lf_count": 1,
+            "sha256": "369bfc281c674203205033a44e224483ff8d8ea17992ee22d7c248ebd21c1ec7"
+          }
+        }
+      ],
+      "original_section_or_subsection_span": {
+        "byte_start": 10187,
+        "byte_end_exclusive": 12157,
+        "line_start": 234,
+        "line_end_inclusive": 268,
+        "byte_count": 1970,
+        "lf_count": 35,
+        "terminal_lf_count": 2,
+        "sha256": "e585f5ccbe859685e62c495b48000aebcdac58a17604ea7db34aedf9cd1b0b1c"
+      },
+      "current_unit_bindings": [
+        {
+          "byte_start": 9069,
+          "byte_end_exclusive": 11086,
+          "line_start": 240,
+          "line_end_inclusive": 278,
+          "byte_count": 2017,
+          "lf_count": 39,
+          "terminal_lf_count": 2,
+          "sha256": "ec8fc11c3c10e16412476b5cc8ab7d64568ad9d85fc18db0eeed2133bf1306c5"
+        }
+      ],
+      "heading_id": "original-heading-11",
+      "current_heading_bindings": [
+        {
+          "kind": "heading region",
+          "label": "4. 整数取整、真实等号与区间判定",
+          "current": {
+            "byte_start": 9069,
+            "byte_end_exclusive": 11086,
+            "line_start": 240,
+            "line_end_inclusive": 278,
+            "byte_count": 2017,
+            "lf_count": 39,
+            "terminal_lf_count": 2,
+            "sha256": "ec8fc11c3c10e16412476b5cc8ab7d64568ad9d85fc18db0eeed2133bf1306c5"
+          },
+          "cas_path": "Meta/Digestion/atoms/sha256/ec8fc11c3c10e16412476b5cc8ab7d64568ad9d85fc18db0eeed2133bf1306c5",
+          "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/ec8fc11c3c10e16412476b5cc8ab7d64568ad9d85fc18db0eeed2133bf1306c5.yaml",
+          "whole_span_byte_exact": true
+        }
+      ],
+      "type_attachment": "Heading grammar attached to the definitions/theorems/proofs and original logical-status limitations in the identified current units",
+      "pending_exception": false
+    },
+    {
+      "original": {
+        "byte_start": 12157,
+        "byte_end_exclusive": 12244,
+        "line_start": 269,
+        "line_end_inclusive": 269,
+        "byte_count": 87,
+        "lf_count": 1,
+        "terminal_lf_count": 1,
+        "sha256": "ef7cce332a520973f329a2d8aff7ee56c4eb023c1ab1dbec4951dbab5a0ed9f5"
+      },

@@ -1,0 +1,17 @@
+**30.6 每个正高度的严格贪心次序。** 零形状时,步长 \(h>0\) 的收益密度是
+\[
+\sigma_T(h)=\frac{f(T+h)-f(T)}h=\frac1h\int_0^h f'(T+s)\,ds.
+\]
+这是 29.13 的同一个经典平均导数论证,与薄层下端点无关。
+若 \(0<h<h'\),前段平均严格大于 \(f'(T+h)\),尾段平均严格小于它,
+因为 \(f'\) 严格递减;把两段按长度加权便得 \(\sigma_T(h')<\sigma_T(h)\)。
+因此每个 \(T>0\) 均有严格次序 \(a,b,c\)。对任意容量 \(v\ge0\),可选最优权重
+\[
+y_1=\operatorname{clip}(v/a),\quad
+y_2=\operatorname{clip}((v-a)/b),\quad
+y_3=\operatorname{clip}((v-a-b)/c),\quad
+\operatorname{clip}(t)=\min(1,\max(0,t)).
+\]
+容量恰在前缀端点时两侧公式一致;\(v\ge Q\) 时全取 1。
+严格密度次序用于零形状,不被假设为任意扰动形状的共同最优次序。
+

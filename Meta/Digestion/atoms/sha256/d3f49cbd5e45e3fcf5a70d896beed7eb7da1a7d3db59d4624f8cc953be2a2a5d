@@ -1,0 +1,33 @@
+**30.59 定义及证明（总谓词 VerifyOpt）。** An optimum certificate is a natural list of exactly
+eight fields
+\[
+(N,\operatorname{Rat}(\eta),s,v,\operatorname{List}(T),i_0,
+ \operatorname{Rat}(\ell),\operatorname{Rat}(u)),
+\]
+where \(T\) consists of \(G=P^N\) rational codes in the order of 30.58.
+Here \(\operatorname{Rat}(\eta)\) means any numerator/positive-denominator encoding of that rational.
+Define \(\operatorname{VerifyOpt}(N,\eta,e)\) to be false for invalid external input,
+malformed shape, internal \(N,\eta\) unequal to the external values, or \(s,v<1\).
+Otherwise recompute \(L,\sigma,K_N,t_N,d_N,\delta,H_N,U_N,Q_0,M_0,\Lambda_0,\Gamma_0\)
+from \(N\), require \(t_N,d_N>0\), and compute \(\kappa_{\rm mesh},\varepsilon,\omega\).
+Require \(\omega<\eta\). The parameters need not equal the particular formulas of 30.58.
+Require table length exactly \(G\); for every index reconstruct \(q(i)\) and require
+\(T_i=B(N,q(i),v+1,v)\). A digest or a supplied subset is insufficient.
+Finally require
+\[
+0\le i_0<G,\quad u=T_{i_0},\quad u\le T_i\ (0\le i<G),\quad
+\ell=\max(\sigma_N,u-\omega),\quad0<\ell\le u\le1,\quad u-\ell<\eta.
+\]
+These requirements define the Boolean predicate completely. Rational comparison reduces
+\(p/d<r/s\) to \(ps<rd\), and equality to \(ps=rd\); addition, multiplication, powers,
+absolute values, floor, ceiling and finite extrema use signed integers and positive denominators.
+All decodings terminate by 30.58; all remaining sums, table checks and comparisons are finite.
+Thus the predicate is total on encoded inputs and uses no logarithm, square root, true residual,
+true Gram matrix, optimizer or infinite-limit oracle. If it accepts, the table is the entire
+minimum of 30.57, so \(0<\ell\le D_N\le u\le1\) and the required width follows.
+Conversely 30.58 produces a passing table and endpoints; choosing the least minimizing index
+resolves ties. Therefore \(\forall N\ge1\ \forall\eta\in\mathbb Q_{>0}\ \exists e\in\mathbb N_0\)
+with \(\operatorname{VerifyOpt}(N,\eta,e)\), by a total generation rule. Finite integer
+semantics, full table coverage and input binding are part of this mathematical definition;
+finite-width overflow, floating substitutions or unchecked compression define different predicates.
+
