@@ -115,9 +115,9 @@ public sealed class SharedBuildRuntimeTests
         Run("dotnet", new[] { "sln", "tools/StrataLint.sln", "add" }.Concat(
             projects.Select(item => $"tools/{item.Item1}/{item.Item1}.csproj").Append(testProject)
                 .Append("tools/scripts/report/JudgeSeedTask.csproj")).ToArray());
-        Run("dotnet", "restore", "tools/StrataLint.sln", "--use-lock-file");
-        Run("dotnet", "restore", proofProject, "--use-lock-file");
-        Run("dotnet", "restore", bannedProject, "--use-lock-file");
+        Run("dotnet", "restore", "tools/StrataLint.sln", "--use-lock-file", "-nr:false");
+        Run("dotnet", "restore", proofProject, "--use-lock-file", "-nr:false");
+        Run("dotnet", "restore", bannedProject, "--use-lock-file", "-nr:false");
         SharedBuildContractTests.Git(root, "add", ".");
         SharedBuildContractTests.Git(root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "runtime fixture");
         using var output = new StringWriter();
@@ -211,10 +211,10 @@ public sealed class SharedBuildRuntimeTests
             Assert.Equal(1, Assert.Single(tests.Projects).Executed);
             Assert.Equal(build.Materials, CommonExecutionEvidence.ValidateBuild(destination).Materials);
             Assert.Empty(TemporaryFileSystem.Directory.EnumerateFiles(destination, "project.assets.json", SearchOption.AllDirectories));
-            var restored = SharedBuildContractTests.Process(destination, "dotnet", ["restore", proofProject, "--locked-mode"]);
+            var restored = SharedBuildContractTests.Process(destination, "dotnet", ["restore", proofProject, "--locked-mode", "-nr:false"]);
             Assert.True(restored.Exit == 0, restored.Text);
             var proof = SharedBuildContractTests.Process(destination, "dotnet",
-                ["build", proofProject, "--no-restore", "--no-dependencies", "--configuration", "Release"]);
+                ["build", proofProject, "--no-restore", "--no-dependencies", "--configuration", "Release", "-nr:false"]);
             Assert.True(CompilationProof.ValidateCapability(proof.Exit, proof.Text), proof.Text);
             Assert.Equal(build.Materials, CommonExecutionEvidence.ValidateBuild(destination).Materials);
         }

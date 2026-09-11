@@ -82,8 +82,9 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         File.Delete(Path.Combine(root, CommonExecutionEvidence.TestsPath));
         var outputs = Path.Combine(root, CommonBuildOutputs.RootPath);
         if (Directory.Exists(outputs)) Directory.Delete(outputs, recursive: true);
-        Step("restore-StrataLint", "dotnet", ["restore", "tools/StrataLint.sln", "--locked-mode"]);
-        Step("build", "dotnet", ["build", "tools/StrataLint.sln", "--configuration", "Release", "--no-restore", "--warnaserror",
+        // Captured restore/build calls own their nodes until the output closes.
+        Step("restore-StrataLint", "dotnet", ["restore", "tools/StrataLint.sln", "--locked-mode", "-nr:false"]);
+        Step("build", "dotnet", ["build", "tools/StrataLint.sln", "--configuration", "Release", "--no-restore", "--warnaserror", "-nr:false",
             "-p:CustomAfterMicrosoftCommonTargets=" + Path.Combine(root, "tools/scripts/ci-build-outputs.targets"),
             "-p:CiRepositoryRoot=" + root, "-p:CiBuildOutputRoot=" + outputs]);
         return CommonExecutionEvidence.SealBuild(root, candidate!, CommonBuildOutputs.Collect(root), steps.ToArray());
@@ -104,13 +105,13 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         }
         else build = CommonExecutionEvidence.ValidateBuild(root, buildRound);
         foreach (var project in new[] { "tools/tests/CompileFailProof/CompileFailProof.csproj", "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj" })
-            Step("restore-" + Path.GetFileNameWithoutExtension(project), "dotnet", ["restore", project, "--locked-mode"]);
+            Step("restore-" + Path.GetFileNameWithoutExtension(project), "dotnet", ["restore", project, "--locked-mode", "-nr:false"]);
         Step("tests", "dotnet", [CommonExecutionEvidence.RunnerPath, "--repository", root, "--all", "--build-round", build.Round]);
         var first = Step("selftest-first", "dotnet", [CommonExecutionEvidence.CliPath, "selftest"]);
         var second = Step("selftest-second", "dotnet", [CommonExecutionEvidence.CliPath, "selftest"]);
         if (first != second) throw new StageFailure(1, "selftest outputs differ");
-        Step("capability-proof", "dotnet", ["build", "tools/tests/CompileFailProof/CompileFailProof.csproj", "--no-restore", "--no-dependencies", "--configuration", "Release"], CompilationProof.ValidateCapability);
-        Step("banned-api-proof", "dotnet", ["build", "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj", "--no-restore", "--no-dependencies", "--configuration", "Release"],
+        Step("capability-proof", "dotnet", ["build", "tools/tests/CompileFailProof/CompileFailProof.csproj", "--no-restore", "--no-dependencies", "--configuration", "Release", "-nr:false"], CompilationProof.ValidateCapability);
+        Step("banned-api-proof", "dotnet", ["build", "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj", "--no-restore", "--no-dependencies", "--configuration", "Release", "-nr:false"],
             (raw, text) => CompilationProof.ValidateBannedApi(raw, text, File.ReadAllText(Path.Combine(root, "tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"))));
         CommonExecutionEvidence.SealEngineering(root, build, steps.ToArray());
     }

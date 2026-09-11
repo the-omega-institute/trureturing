@@ -41,6 +41,40 @@ public sealed class JudgeSeedTests
         Assert.NotEqual(consumer, Material("Consumer"));
     }
 
+    [Fact]
+    public void GeneratedDriverRecoversValidatedTimeAfterCleanStateRestore()
+    {
+        using var fixture = new JudgeSeedFixture();
+        fixture.Prepare();
+        fixture.Build("driver-cold", 2);
+        var driver = fixture.PathOf("build/judge-seed/seed.targets");
+        var bytes = File.ReadAllBytes(driver);
+        var stamp = File.GetLastWriteTimeUtc(driver);
+        fixture.Snapshot();
+        Directory.Delete(fixture.PathOf("build/judge-seed"), recursive: true);
+
+        fixture.Restore();
+
+        Assert.Equal(bytes, File.ReadAllBytes(driver));
+        fixture.Build("driver-clean-state-warm", 0);
+        Assert.Equal(stamp, File.GetLastWriteTimeUtc(driver));
+    }
+
+    [Fact]
+    public void AlteredGeneratedDriverBytesCannotReuseEvenWithPreservedTime()
+    {
+        using var fixture = new JudgeSeedFixture();
+        fixture.Prepare();
+        fixture.Build("driver-before-mutation", 2);
+        const string driver = "build/judge-seed/seed.targets";
+        fixture.WritePreservingTime(driver, File.ReadAllText(fixture.PathOf(driver)) + "\n<!-- altered driver -->\n");
+
+        fixture.Build("driver-altered-bytes", 2);
+        fixture.Build("driver-unchanged-bytes", 0);
+        fixture.Prepare();
+        fixture.Build("driver-regenerated-bytes", 2);
+    }
+
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
@@ -209,6 +243,9 @@ public sealed class JudgeSeedTests
             registry["projects"]![0]!["role"] = "production";
             registry["projects"]![0]!["owned_test_assembly"] = "Library.Tests";
         });
+        fixture.Prepare();
+        fixture.Build("role-only-registry-row", 0);
+        fixture.EditProjects(registry => registry["projects"]![0]!["include"] = new JsonArray("tools/Library/Code.cs"));
         fixture.Prepare();
         fixture.Build("relevant-registry-closure", 2);
         fixture.Snapshot();
