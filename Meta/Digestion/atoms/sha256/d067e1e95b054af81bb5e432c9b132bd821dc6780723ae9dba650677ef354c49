@@ -1,0 +1,27 @@
+## 9. Finite propagation and exact complete prefixes
+
+Let rho(p)=|p_x|+|p_y|. The actual recentering maps satisfy
+
+\[
+ \rho(p)\le\rho(T_d p)+1.
+\]
+
+Consequently, if two blocker sets agree inside radius n+1, their updates agree
+inside radius n when both retention radii are at least n. A point outside that
+larger disk cannot enter the smaller disk in one step. This is the local
+agreement theorem memoryStep_agreeWithin in MemoryLightCone.
+
+Define completeStep using the same deletion/recentering operation without the
+radius filter. For a common history-based ordering, finite_horizon_exact proves
+
+\[
+ \boxed{r\ge n,\quad F\cap B_n=G\cap B_n
+ \quad\Longrightarrow\quad C_r(n,F)=C_\infty(n,G).}
+\]
+
+There is no upper bound on the complete initial blocker set's size. At each
+induction step, availability agrees because the three candidate directions have
+radius one, and child blockers agree on the remaining smaller light cone.
+This result alone is a finite-depth statement. Uniform control over unbounded
+depth is supplied by the next theorem, rather than assumed by exchanging limits.
+

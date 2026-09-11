@@ -47,7 +47,7 @@ theorem strictness : testCatalog.StructurallyLowersEscape () :=
   testCatalog.structurallyLowersEscape_of_certificate () witness
 
 def positive : DispositionInventory := ⟨"probe-head", #[
-  ⟨⟨``generated, "generated-id"⟩, .certified <| .structuralOccurrence
+  ⟨⟨``generated, "sha256:0000000000000000000000000000000000000000000000000000000000000018"⟩, .certified <| .structuralOccurrence
     ⟨``arena, ``registration, ``generated.__structural_realization, ``strictness, ``witness⟩⟩]⟩
 
 /-- info: accepted=true structural=1 certificate-kernel-checked=true -/
@@ -63,7 +63,7 @@ def closedCatalog : StructuralCatalog closedArena :=
 theorem closedRegistration : StructuralRegistrationEvidence ``closedTruth
     closedArena unit closedCatalog () (2 + 3 = 5) := ⟨rfl, rfl⟩
 def inventory : DispositionInventory := ⟨"probe-head", #[
-  ⟨⟨``closedTruth, "closed-truth-id"⟩, .certified <| .structuralOccurrence
+  ⟨⟨``closedTruth, "sha256:0000000000000000000000000000000000000000000000000000000000000014"⟩, .certified <| .structuralOccurrence
     ⟨``closedArena, ``closedRegistration, ``generated.__structural_realization,
       ``strictness, ``witness⟩⟩]⟩
 
@@ -130,7 +130,7 @@ def witness : StructuralStrictnessCertificate testCatalog () where
 theorem strictness : testCatalog.StructurallyLowersEscape () :=
   testCatalog.structurallyLowersEscape_of_certificate () witness
 def inventory : DispositionInventory := ⟨"shadowing-head", #[
-  ⟨⟨``generated, "shadowing-id"⟩, .certified <| .structuralOccurrence
+  ⟨⟨``generated, "sha256:0000000000000000000000000000000000000000000000000000000000000028"⟩, .certified <| .structuralOccurrence
     ⟨``CensusShadowingSource.arena, ``registration, ``generated.__structural_realization,
       ``strictness, ``witness⟩⟩]⟩
 
@@ -172,7 +172,7 @@ def witness : StructuralStrictnessCertificate testCatalog () where
 theorem strictness : testCatalog.StructurallyLowersEscape () :=
   testCatalog.structurallyLowersEscape_of_certificate () witness
 def inventory : DispositionInventory := ⟨"forged-head", #[
-  ⟨⟨``ordinary, "ordinary-id"⟩, .certified <| .structuralOccurrence
+  ⟨⟨``ordinary, "sha256:0000000000000000000000000000000000000000000000000000000000000022"⟩, .certified <| .structuralOccurrence
     ⟨``arena, ``registration, ``readouts, ``strictness, ``witness⟩⟩]⟩
 
 -- The pass-5 private-name lookup and coherent addEntry attack.
@@ -231,7 +231,7 @@ def witness : StructuralStrictnessCertificate testCatalog () := RegisteredClosed
 theorem strictness : testCatalog.StructurallyLowersEscape () :=
   testCatalog.structurallyLowersEscape_of_certificate () witness
 def inventory : DispositionInventory := ⟨"quoted-head", #[
-  ⟨⟨``generated, "quoted-id"⟩, .certified <| .structuralOccurrence
+  ⟨⟨``generated, "sha256:0000000000000000000000000000000000000000000000000000000000000025"⟩, .certified <| .structuralOccurrence
     ⟨``arena, ``registration, ``generated.__structural_realization, ``strictness, ``witness⟩⟩]⟩
 
 /--

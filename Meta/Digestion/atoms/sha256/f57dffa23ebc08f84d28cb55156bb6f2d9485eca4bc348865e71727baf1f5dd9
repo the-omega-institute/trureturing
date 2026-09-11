@@ -1,0 +1,17 @@
+**定理 81（商与严格有限表达式的精确比较）。** 若 \(R\) 是集合 \(A\) 上的等价关系，则
+\[
+\kappa_R:A^*/R^*\longrightarrow (A/R)^*,\qquad
+[\operatorname{Enc}(a)]_{R^*}\longmapsto\operatorname{Enc}([a]_R)
+\tag{Z-QUOT}
+\]
+是双射，并与商映射交换。任意由定义 80 的部分原语构成的固定有限有类型表达式 \(C\)，有
+\[
+\operatorname{dom}(C^*)=\operatorname{Enc}[\operatorname{dom}(C)],\qquad
+\widehat{C^*}(\operatorname{Enc}(a))=
+\begin{cases}\operatorname{ok}^*(\operatorname{Enc}(C(a))),&a\in\operatorname{dom}(C),\\
+\bot^*,&a\notin\operatorname{dom}(C).
+\end{cases}
+\tag{Z-STRICT}
+\]
+多输入时逐分量解释。输入叶可重复，但树、参数及各叶的槽位先固定，再对全部输入断言。
+

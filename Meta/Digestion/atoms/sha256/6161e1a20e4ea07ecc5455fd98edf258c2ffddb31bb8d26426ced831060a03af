@@ -1,0 +1,36 @@
+**定义 23（联合区域语言）。** 对任意预先固定的集合 $B\subseteq K$，令
+
+$$
+F_B(C,A)=(C,\{e\in A:(t(e),x(e))\in B\}).
+$$
+
+它只筛选 $A$，保持整个 $C$，包括 $E,\Omega$、时间、位置、符号、来源和偏序。对每个固定 $k\in\mathbb Z$，$T_k$ 仍是 §3 的全档案时间平移；在 $\mathcal L$ 上记
+
+$$
+(\tau_k c)(n,p)=c(n-k,p).
+$$
+
+有限端点加 $k$，两个无穷哨兵保持原值。定义有限支撑乘积 $\odot:\mathcal L^2\to\mathcal L$ 为
+
+$$
+(c\odot d)(n,r)=
+\sum_{\substack{(a,p)\in\operatorname{supp}(c),\ (b,q)\in\operatorname{supp}(d)\\
+\max(a,b)+1=n,\ p+q=r}}
+c(a,p)d(b,q).
+\tag{TS-PRODUCT}
+$$
+
+求和域是两个有限支撑的 Cartesian 积的子集，结果支撑包含于映射 $((a,p),(b,q))\mapsto(\max(a,b)+1,p+q)$ 的有限像，故类型闭合。这里不假设 $\odot$ 结合，也不把 $\mathcal L$ 在这个乘法下称为旧空间卷积环。
+
+指定签名为
+
+$$
+\Sigma_{\rm ts}=\{\boxplus,\boxtimes,N,\triangleright\}
+\cup\{F_B:B\subseteq K\}\cup\{T_k:k\in\mathbb Z\}.
+\tag{TS-LANG}
+$$
+
+三个二元符号 $\boxplus,\boxtimes,\triangleright$ 的输入类型都是 $\mathcal B^2$，成功输出属于 $\mathcal B$，其中只有 $\triangleright$ 为部分操作；$N,F_B,T_k$ 为 $\mathcal B\to\mathcal B$ 的总操作。上下文沿用定义 16：恒等孔、每个操作的全部参数槽位、其余槽位中任意固定的丰富参数，以及任意有限复合。每个 $B,k$ 及每个丰富参数在一个上下文中固定；参数不限于可由常数符号命名的对象，孔不自动复制，也不限制为某个预定的有限深度。
+
+终端值域取 $\mathbb Z_\bot=(\{1\}\times\mathbb Z)\sqcup\{\bot\}$。上下文 $C$ 的正常结果观察为 $(1,q(C(X)))$，任何一步无定义就观察为 $\bot$，失败严格传播。用 $X\approx_{\rm ts}Y$ 表示全部这些上下文的严格观察相同。签名不含来源、出现身份或因果查询。
+

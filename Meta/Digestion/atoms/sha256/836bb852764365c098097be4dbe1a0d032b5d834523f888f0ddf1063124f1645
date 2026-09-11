@@ -1,0 +1,23 @@
+**30.41 定义与定理：带符号有理残差的精确区间分解和两种尾部。** 以下 \(N\ge1,J\ge2,K\ge1\) 均为整数，\(q=(q_1,\ldots,q_N)\in\mathbb Q^N\) 为任意带符号实有理向量。定义
+\[
+b=b(q)=\sum_{k=1}^Nq_k/k,\quad Q_q=\sum_{k=1}^N|q_k|,\quad M=1+Q_q,
+\]
+\[
+A_j=A_j(q)=1+\sum_{k=1}^Nq_k\lfloor j/k\rfloor,\quad
+d_j=-2A_jb,\quad P_j=\frac{A_j^2}{j(j+1)}+b^2\quad(j\ge1).
+\]
+这里标量 \(A_j\) 不等于 30.29 的算子 \(A\) 或 30.30 的有限 Gram 矩阵 \(A_N\)，下文标量 \(B(N,q,J,K)\) 也不等于 30.22 的 Gram 块 \(B\)。精确公式为
+\[
+\boxed{R_N(q)=b^2+\sum_{j=1}^{J-1}\left(P_j+d_j\log\frac{j+1}{j}\right)+E_J(q),}
+\]
+\[
+E_J(q)=\int_J^\infty\left|1-\sum_{k=1}^Nq_k\{t/k\}\right|^2\frac{dt}{t^2},
+\qquad 0\le E_J(q)\le M^2/J.
+\]
+证明：令 \(t=1/x\)，则 \(dx=dt/t^2\)（反转积分端点），目标函数变为 \(\mathbf1_{[1,\infty)}(t)\)。在 \(0<t<1\)，所有 \(\{t/k\}=t/k\)，残差为 \(-bt\)，贡献 \(\int_0^1b^2dt=b^2\)，正是原 \(x>1\) 的尾部。对 \(j<t<j+1\)，写 \(j=k\ell+r\)、\(0\le r<k\)。因 \(0<(r+t-j)/k<1\)，\(\lfloor t/k\rfloor=\lfloor j/k\rfloor=\ell\)；断点只在整数，测度为零。因此残差为 \(A_j-bt\)，直接积分得到
+\[
+\int_j^{j+1}\frac{(A_j-bt)^2}{t^2}\,dt
+=\frac{A_j^2}{j(j+1)}-2A_jb\log\frac{j+1}{j}+b^2.
+\]
+对剩余 \(t\ge J\)，\(|1-\sum q_k\{t/k\}|\le1+\sum|q_k|=M\)，且 \(\int_J^\infty t^{-2}dt=1/J\)。这个 \(E_J\) 对应 \(0<x<1/J\)，与单独的 \(x>1\) 系数平方尾不同。所有符号都允许为负，未把绝对值改为无符号和。还得到整体可积界 \(R_N(q)\le b^2+M^2\)。上面的展开只对有限 \(j\) 求和；不可把相互抵消的各项拆成几个可能发散的无限级数。
+

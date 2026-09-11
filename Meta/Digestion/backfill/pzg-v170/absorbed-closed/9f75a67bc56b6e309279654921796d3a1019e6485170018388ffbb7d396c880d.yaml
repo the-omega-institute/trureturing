@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9f75a67bc56b6e309279654921796d3a1019e6485170018388ffbb7d396c880d
+  normalized_sha256: sha256:9f75a67bc56b6e309279654921796d3a1019e6485170018388ffbb7d396c880d
+cas_ref: sha256:9f75a67bc56b6e309279654921796d3a1019e6485170018388ffbb7d396c880d
+coverage_gids:
+  - gid: D5/S1/Recurrence/Parity/QCatalanSquareSumParity.hanna_conjecture
+    target_statement_id: sha256:1a74764a59eff2aa5e2bb8a5a92524a6eb4e4b77dcfa47dc7eed23d2c73b1e62
+receipts:
+  unresolved_subitems: []

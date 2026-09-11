@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:1d823302898e7f00573945e01d53d0f9b3f02333c48558fabcd62d583526a94a
+  normalized_sha256: sha256:1d823302898e7f00573945e01d53d0f9b3f02333c48558fabcd62d583526a94a
+cas_ref: sha256:1d823302898e7f00573945e01d53d0f9b3f02333c48558fabcd62d583526a94a
+coverage_gids:
+  - gid: D5/S1/Recurrence/Parity/FactorialSquareExponentSumParity.hanna_conjecture
+    target_statement_id: sha256:f4f31fc4cdf674caa0eebf623ee68d920d7e3cd5def128d470af9ea33620a5d3
+receipts:
+  unresolved_subitems: []

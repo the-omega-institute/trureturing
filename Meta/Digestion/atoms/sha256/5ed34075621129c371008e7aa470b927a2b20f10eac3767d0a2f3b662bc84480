@@ -1,0 +1,45 @@
+## 5. centered rank-one quadratic variety
+
+对 rank-one projector `P` 定义：
+
+```math
+Q=P-I/d.
+```
+
+由 `P^2=P` 直接得到：
+
+```math
+Q^2=(1-2/d)Q+(d-1)d^{-2}I.
+```
+
+在六维：
+
+```math
+\boxed{
+Q^2=\frac23Q+\frac5{36}I.
+}
+```
+
+同时：
+
+```math
+\operatorname{Tr}Q=0,
+\qquad
+\operatorname{Tr}(Q^2)=5/6.
+```
+
+同一 basis 的六个 centered projectors 构成 regular `5`-simplex：
+
+```math
+\operatorname{Tr}(Q_iQ_j)=-1/6
+\quad(i\ne j).
+```
+
+不同 MUB contexts 之间：
+
+```math
+\operatorname{Tr}(Q_iR_j)=0.
+```
+
+一般 `m<=d+1` 上界只利用 plane packing。六维 `m=4` 必须进一步利用 rank-one quadratic variety 与 order-six branch equations 的交。
+

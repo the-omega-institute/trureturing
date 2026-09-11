@@ -51,7 +51,7 @@ case "$kind" in
     while :; do
       out=$(nyxid oracle result "$tid" 2>&1)
       case "$out" in
-        *waiting_response*|*"Task is dispatched"*) : ;;
+        *waiting_response*|*"Task is dispatched"*|*"Task is queued"*|*"Queue position"*) : ;;
         *) printf 'AWAIT_NYX task=%s state=settled at=%s elapsed=%ss\n' "$tid" "$(__stamp)" "$(( $(date +%s) - start ))"
            printf '%s' "$out"; exit 0 ;;
       esac

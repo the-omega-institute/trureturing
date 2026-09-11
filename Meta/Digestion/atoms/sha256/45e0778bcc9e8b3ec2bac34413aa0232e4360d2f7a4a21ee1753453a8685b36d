@@ -1,0 +1,55 @@
+## 17. Formal endpoints, replay and the next research step
+
+New formal-source endpoints include clipped_product_bound, checked_row_sound,
+affine_message_certificate, affine_message_positive, affine_polynomial_margin,
+vacancy_mem, affine_full_row_contraction and affine_pruned_row_contraction.
+The finite data, real inequality proofs and geometry all have paired canonical
+Scribe declarations. The historical fixed-order and block-memory modules remain
+unchanged. No artificial finite arena, information score or sealing claim is
+attached to the certificate; the type assignments refer to actual grid masks.
+
+The independent pure-Python verifier reads the current Lean-owned literals,
+reconstructs all successors with integer-coordinate sets, and performs:
+
+- 2643 geometric transition checks and 881 integer growth rows;
+- 881 exact whole-box affine row checks, including 704 clamped cases and
+  177 nonpositive-residual cases;
+- 21144 exact rational recursion/pruning regressions across all child subsets;
+- six corruption tests, all rejected, including message/type misalignment,
+  a wrong clamp pattern, omitted root deletion, loss of message positivity,
+  a missing state and an unsupported increase of the activity to three.
+
+```sh
+python research/hard_core_weitz/verify_adaptive_affine.py
+```
+
+The final replay was executed twice and produced byte-identical output. It is
+a separate implementation by the same authoring assistant, not independent
+researcher review. Finite regressions supplement the universal clamped-product
+proof; they do not replace it. Source transcription errors were detected by
+exact remote/local blob comparison and corrected before final delivery.
+
+The authoring runtime has no Lean/lake executable. No source elaboration,
+executed axiom closure, Scribe emission or kernel admission is asserted.
+The finite scripts request decide +kernel and contain no new axioms or admits.
+Sections 16.1-16.3 remain a paper transfer requiring independent scrutiny and
+future end-to-end formalization, even if the current real certificate compiles.
+
+The next priority is to formalize the actual finite independent-set identities
+(16.1)-(16.2), the typed holomorphic coordinates and Jacobian, and the
+uniform complex-neighborhood induction. This turns the proposed 2.55 conclusion
+into a complete machine-checkable graph theorem. A quantitative epsilon would
+also be useful, but is distinct from proving its existence. Larger activity
+certificates or larger geometric memories should be pursued only after the
+current actual-graph transfer is independently checked. Improving a scalar
+connective-constant bound is no longer a prerequisite for this message route.
+
+[5] Shuai Shao and Yuxin Sun. *Contraction: A Unified Perspective of Correlation
+Decay and Zero-Freeness of 2-Spin Systems*. Journal of Statistical Physics 185,
+12 (2021); arXiv:1909.04244v3. The real-to-complex extension is prior art; the
+specific finite-type coordinate argument and numerical certificate above are
+spelled out rather than attributed as an already instantiated theorem.
+https://arxiv.org/abs/1909.04244
+https://doi.org/10.1007/s10955-021-02831-0
+
+

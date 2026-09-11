@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/Users/chronoai/trureturing-quantumobs2/docs/reports/qdualaccount/numerical_check.py", line 78, in <module>
+    assert residual < TOL
+AssertionError
+
+EXIT=1

@@ -1,0 +1,3 @@
+**定理 13.7(局部结算)**〔引〕。到截止时刻,open 态一律端化为无效;只有 proved 与 refuted 计票;五个父 atom 的承诺按预登记的三票阈值恰分为 success / failure 两支。
+*出处*。冻结定理 `spectrum_commitment_local_settlement`(GID `…/EscapeSpectrum/SpectrumCommitmentSettlement`)。母仓第 2.7 条「open 不许伪装成进行中赖过截止」。
+

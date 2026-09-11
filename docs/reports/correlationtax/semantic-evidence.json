@@ -1,0 +1,439 @@
+{
+  "D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState": "sha256:b8e1957ba4f81600248989dc21f0a107bcdd5ce2e68546c38b9164c4a09ac337",
+  "D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.quantumRelativeEntropy": "sha256:1fde73d469bc7e293eef439b271276205450d8758cb7358eaadae794794d8f0a",
+  "D5.S3.Quantum.Divergence.VonNeumannEntropyPinching.vonNeumannEntropy": "sha256:9cf1e21822d8f3f61a5d349f41c4287a3ef43a0e8a600534b28ab8d06f437cd1",
+  "D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity.basisPinchingState": "sha256:097732781ac08f1ec116972e13a88ead78c40c635e33adde60bb7bd8e11c6522",
+  "D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity.unitaryConjugateState": "sha256:9b1299d5fa00a59321b435771bba283a533b7e1e7a071e7d927aae4eb94d4d42",
+  "D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity.entropy_production_coherence_deletion_identity": "sha256:dd08a6058e548162341b4da32bf0bafc5b7b406598c58016d18da2821fa77797",
+  "module": {
+    "declarations": [
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "def",
+        "name": "D5.S3.Quantum.Information.CoherentCopyCorrelationTax.coherentCopyState",
+        "name_key": "ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),17:coherentCopyState)",
+        "statement_id": "sha256:aeb939ce591f4b4b92b2c694fd12eaec5519cfed7cb5dbbdfdfebb7d08cabd82",
+        "type_sha256": "sha256:c6e7ba23cf78f4c4a7a4b362b8d75f0fc118706a53779350d4d359d72f92577b"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "theorem",
+        "name": "D5.S3.Quantum.Information.CoherentCopyCorrelationTax.coherent_copy_correlation_tax",
+        "name_key": "ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),29:coherent_copy_correlation_tax)",
+        "statement_id": "sha256:cc3d1a3a93c455ec90e6ccc8a358f94e907eaf02a2e0c1a5f34c37b62f96b90d",
+        "type_sha256": "sha256:127a9907703474de65cbe1a44c54d4bd36e1e77ac9765d9db9e28de61eb341cf"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "theorem",
+        "name": "D5.S3.Quantum.Information.CoherentCopyCorrelationTax.marginalLeft_coherentCopyState",
+        "name_key": "ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),30:marginalLeft_coherentCopyState)",
+        "statement_id": "sha256:c75b3ad7fa845240d03f01dd1cb32d3981385ee15436f138926a3e41d313ed3f",
+        "type_sha256": "sha256:d50d64d98cfa4b4ffae83463496cca4db8385492e1d24e1373bba2d0b5b19ccb"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "theorem",
+        "name": "D5.S3.Quantum.Information.CoherentCopyCorrelationTax.marginalRight_coherentCopyState",
+        "name_key": "ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),31:marginalRight_coherentCopyState)",
+        "statement_id": "sha256:b622f9cf7e54b4d461e53af773af1a79f062ebc900af22eab90c820e1c8b077a",
+        "type_sha256": "sha256:790182f4595eaa4d45a81705be250499f3a8c0c7d58a1035f1ae7b9d3e9d87d1"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "theorem",
+        "name": "D5.S3.Quantum.Information.CoherentCopyCorrelationTax.coherentCopyState_correlated_entry",
+        "name_key": "ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),34:coherentCopyState_correlated_entry)",
+        "statement_id": "sha256:b658d5e5c40386f36fbb63341b5319b75407378685d924bc72928636115f7f4b",
+        "type_sha256": "sha256:092120b198fd69071af3574700bd7f45e568161e330ac75e8bf3145eb7286781"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "theorem",
+        "name": "D5.S3.Quantum.Information.CoherentCopyCorrelationTax.vonNeumannEntropy_coherentCopyState",
+        "name_key": "ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),35:vonNeumannEntropy_coherentCopyState)",
+        "statement_id": "sha256:8f68ce48929d4302539da2f9c53b0d6cebdb066de7b08fb4b507dcb587381932",
+        "type_sha256": "sha256:1f20e30fe49419b72911acbb809d7a03649d0c7f5f898adde53ecb15e5c6d020"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "def",
+        "name": "_private.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.0.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.copyMatrix",
+        "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),0),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),10:copyMatrix)",
+        "statement_id": "sha256:a9bc71ad8b3714176d04645dd741f6d31b10c1573dac70dc71a230d41c9b42fd",
+        "type_sha256": "sha256:634411246eeabb6fe1730d5ab27e0a92558e2a748fd5bb10c02f359d882bdef3"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "theorem",
+        "name": "_private.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.0.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.copyHom_log",
+        "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),0),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),11:copyHom_log)",
+        "statement_id": "sha256:5dd1c38657d41f39c4180d98bacb254edb57f4f644ac4d2d819153700865f5dd",
+        "type_sha256": "sha256:77d5842a600161cce8eb87f61e7419bfbf9a1a24d91cd6d79657ae75bf5b77aa"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "def",
+        "name": "_private.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.0.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.copyIsometry",
+        "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),0),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),12:copyIsometry)",
+        "statement_id": "sha256:3d3962fde499900ddd62ab8fe42ab8a56556c264ad8619c7594f2dc9cfad4454",
+        "type_sha256": "sha256:f1da6216197ff82a6b26da4529b43196c804c94c889cf3dc1e371ff2f1e03d88"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "theorem",
+        "name": "_private.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.0.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.copyMatrix_mul",
+        "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),0),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),14:copyMatrix_mul)",
+        "statement_id": "sha256:0f6f6bcd9c45e47076b8fc28b964dd270f282d07c1a0c029f3104b896a6e13f8",
+        "type_sha256": "sha256:a746d5d84af002df730f3962a9ab01c94738bd812c7604fafa03141428e42dec"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "theorem",
+        "name": "_private.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.0.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.copyMatrix_entry",
+        "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),0),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),16:copyMatrix_entry)",
+        "statement_id": "sha256:947614d28765d1b22263b79c18ef6d090af84208aeea8d842112299d6ae94cd5",
+        "type_sha256": "sha256:15b5b0399369281f6e3f3956cd4cf61f92882e851129aead83d5293d1e39e0bc"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "theorem",
+        "name": "_private.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.0.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.trace_copyMatrix",
+        "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),0),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),16:trace_copyMatrix)",
+        "statement_id": "sha256:e719310fa499f2547ad491080dfa06a56c2a45109e78ee22981d8fe0a4abf69d",
+        "type_sha256": "sha256:6584cf8e3bbcefdd02560436c80928fa53582d604f168b3fd223b82e0f84f5bc"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "theorem",
+        "name": "_private.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.0.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.copyHom_continuous",
+        "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),0),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),18:copyHom_continuous)",
+        "statement_id": "sha256:e74c99027718bf51acbe456b4678bb79b1779400a4608125bf913469bac6adf5",
+        "type_sha256": "sha256:0002d66ccce77d2a6d2c845f1dc3139570ee3a58acca5e3ea597dbbccdbb4ae9"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "theorem",
+        "name": "_private.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.0.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.copyIsometry_star_mul",
+        "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),0),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),21:copyIsometry_star_mul)",
+        "statement_id": "sha256:f37bcca538b7f7723a83fa68bd751350be1934af6cfd47732d23f068a8dbbbce",
+        "type_sha256": "sha256:dc599ecc56430bc3c336bba272649623994029f308c4b3b2f69b46d48187e576"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "theorem",
+        "name": "_private.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.0.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.pinching_entropy_identity",
+        "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),0),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),25:pinching_entropy_identity)",
+        "statement_id": "sha256:3805f3af457fb69f49ccc22f3023fab2435131aa5e25fddcd16ec9252465ecb4",
+        "type_sha256": "sha256:aee2d17edd8b4f53154c35bc55f141806476fa8023f49944c90ebb1c0a484504"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "theorem",
+        "name": "_private.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.0.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.unitaryConjugateState_one",
+        "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),0),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),25:unitaryConjugateState_one)",
+        "statement_id": "sha256:8d399dda84aa392a5aab1221d7a8f50b3691b7b84b6defb43b06ffcc9d1b5bb8",
+        "type_sha256": "sha256:4b49725c852b986f3e694372a5c9485ccbcf6c7ca4ab13effecb8219fcc951f0"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "theorem",
+        "name": "_private.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.0.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.partialTraceLeft_copyMatrix",
+        "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),0),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),27:partialTraceLeft_copyMatrix)",
+        "statement_id": "sha256:f6bd1feab6fc2cad869278a768aa10c535ec5781ba0f75d8ef16009354861a69",
+        "type_sha256": "sha256:0dadbc1a6be136a9aee53ce109cb0df685ef3ba973ed741771882bfa3585df8d"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "theorem",
+        "name": "_private.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.0.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.log_continuous_quasispectrum",
+        "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),0),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),28:log_continuous_quasispectrum)",
+        "statement_id": "sha256:5b53261b3e016b6653d6902f22045b022f2282f63b6462e688b0050c289d3f5c",
+        "type_sha256": "sha256:3bfb1d503e7a82ff2be0a4a1063a18fb93577034cab18e45151ff1073dcc1cec"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "theorem",
+        "name": "_private.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.0.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.partialTraceRight_copyMatrix",
+        "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),0),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),28:partialTraceRight_copyMatrix)",
+        "statement_id": "sha256:8407384a0cf513241be3944f548f63a07599a5bb3485bcea0100c77337a657a9",
+        "type_sha256": "sha256:1d4ba19a73eb484073a6619f10ef480be42fc62bea0f6ab1dfc2888541b79f0f"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "def",
+        "name": "_private.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.0.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.copyHom",
+        "name_key": "ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),0),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),7:copyHom)",
+        "statement_id": "sha256:50c6e756aadad10f2f4f17b6fbf25bf7d3f90e1598f0177395fcb94ced11c280",
+        "type_sha256": "sha256:7a7554e5c8542ff52e9520339c66276a23dd7982fce4f5c9373c65e1f75a5df9"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": false,
+        "kind": "theorem",
+        "name": "D5.S3.Quantum.Information.CoherentCopyCorrelationTax.coherentCopyState._proof_1",
+        "name_key": "ns(ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),17:coherentCopyState),8:_proof_1)",
+        "statement_id": "sha256:8a2acb441cbabc9ab04f7f35cb5602dbc1ca1680e9e567238d96fb1642519c28",
+        "type_sha256": "sha256:ebfb8baaf712fc801a118e86e63a09a8a1714f2da224748588607bde983e42cc"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "theorem",
+        "name": "D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity.unitaryConjugateState.congr_simp",
+        "name_key": "ns(ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),8:Dynamics),42:EntropyProductionCoherenceDeletionIdentity),21:unitaryConjugateState),10:congr_simp)",
+        "statement_id": "sha256:c915fa809cb0d55c4f56878ead9de22828a5cf6066ff7202bdf60328ffd3fe76",
+        "type_sha256": "sha256:265d08b992449891fcc2c61af018a2f5e871c3a838153423b79cc57f14c1a731"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "theorem",
+        "name": "_private.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.0.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.copyMatrix.congr_simp",
+        "name_key": "ns(ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),0),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),10:copyMatrix),10:congr_simp)",
+        "statement_id": "sha256:c3e18f69e9578b7a402364b0f93acedf05339333c15eafaf6bd3f47db6326358",
+        "type_sha256": "sha256:1da57bc43344aa4a07717323ccb5ff76c0957da99b88ca2af966fb9a566ae655"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": false,
+        "kind": "theorem",
+        "name": "_private.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.0.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.copyMatrix.eq_1",
+        "name_key": "ns(ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),0),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),10:copyMatrix),4:eq_1)",
+        "statement_id": "sha256:fbec5b00a3ce4495c886b1a5edab862620670b54564ff008d878a9ddaf62de47",
+        "type_sha256": "sha256:132d4db81b9441ff498f1124341a45b7b68f402cfe32cc91991395683a4f8f3a"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": true,
+        "kind": "theorem",
+        "name": "_private.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.0.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.copyIsometry.congr_simp",
+        "name_key": "ns(ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),0),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),12:copyIsometry),10:congr_simp)",
+        "statement_id": "sha256:c1d1e3c23e81eeb85fbe406649746516b2d3292ee697e6e31bbad7c36ae43701",
+        "type_sha256": "sha256:bd9c956b430fc8e014fe1cba0cecbdfec47a299cfeba541ad78d0433dc12935f"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": false,
+        "kind": "theorem",
+        "name": "_private.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.0.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.copyIsometry.eq_1",
+        "name_key": "ns(ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),0),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),12:copyIsometry),4:eq_1)",
+        "statement_id": "sha256:5400d2391b1992c4f75506ea3881f2d49156f81bdfbbf535f67e55308bde86d3",
+        "type_sha256": "sha256:897e1934da5dcb670323afdb94881cd03416476f5c90cdecd214ca9282a20d38"
+      },
+      {
+        "axioms": [
+          "propext"
+        ],
+        "include_in_statement": false,
+        "kind": "theorem",
+        "name": "_private.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.0.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.copyIsometry_star_mul._simp_1_2",
+        "name_key": "ns(ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),0),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),21:copyIsometry_star_mul),9:_simp_1_2)",
+        "statement_id": "sha256:362c3c3868e11566bbd7ddf90baa2c157d9bf24bdefb45d1ff8ba72f8d46e433",
+        "type_sha256": "sha256:57b29e0d062055bea2da3bab19321743789f2d645e036a2100ac0bd8f6f528bd"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": false,
+        "kind": "theorem",
+        "name": "_private.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.0.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.copyHom._proof_1",
+        "name_key": "ns(ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),0),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),7:copyHom),8:_proof_1)",
+        "statement_id": "sha256:eb348aa97918bb2502a060991657662ffe424697a04fb29497a3345bae01efc8",
+        "type_sha256": "sha256:9c5f23a633b59d4433c7ffc33f7128c057c6fc990cde98150e9e119aa755c09c"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": false,
+        "kind": "theorem",
+        "name": "_private.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.0.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.copyHom._proof_2",
+        "name_key": "ns(ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),0),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),7:copyHom),8:_proof_2)",
+        "statement_id": "sha256:fb07748dfb3f985afb866f92b09ae1e25df8d9c1bb103a0422c4eaf3af39a8d3",
+        "type_sha256": "sha256:1441835dc942a1bca8a4e7e12fabec011210f66b5b02a9c3295a81bc63161622"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": false,
+        "kind": "theorem",
+        "name": "_private.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.0.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.copyHom._proof_3",
+        "name_key": "ns(ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),0),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),7:copyHom),8:_proof_3)",
+        "statement_id": "sha256:d8ea70079aa5e1d2452150141dc080e4455270ddd63df837723f8401ede31e1e",
+        "type_sha256": "sha256:7f638fc26059563f57a3104b9b5e0d8686362705d7b1bfebccc45848358f156b"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": false,
+        "kind": "theorem",
+        "name": "_private.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.0.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.copyHom._proof_4",
+        "name_key": "ns(ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),0),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),7:copyHom),8:_proof_4)",
+        "statement_id": "sha256:0f7332aaf456b24874d7226c45b3251dc44daf5244354dbad7b7c6ae6c7ee040",
+        "type_sha256": "sha256:99933303bf431d229c61b10ea406ab654f3170a6220a0fb7c94c9780ec136b4f"
+      },
+      {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "include_in_statement": false,
+        "kind": "theorem",
+        "name": "_private.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.0.D5.S3.Quantum.Information.CoherentCopyCorrelationTax.copyHom._proof_5",
+        "name_key": "ns(ns(ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),0),2:D5),2:S3),7:Quantum),11:Information),26:CoherentCopyCorrelationTax),7:copyHom),8:_proof_5)",
+        "statement_id": "sha256:7ef5efdbd0d9b707aed20bb6d9163525cd361180f94c0688adaa22a50cffb0fc",
+        "type_sha256": "sha256:17f286d08f479d27b86ea9dacddeb59a1ddc7bea50faaee5f388df03dcd53348"
+      }
+    ],
+    "imports": [
+      "D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity",
+      "D5.S3.Quantum.Information.PartialTraceMutualInformation",
+      "Init"
+    ],
+    "module": "D5.S3.Quantum.Information.CoherentCopyCorrelationTax",
+    "source_path": "D5/S3/Quantum/Information/CoherentCopyCorrelationTax.lean",
+    "source_sha256": "sha256:b5b97dc7fc8b272875921a1943563c5fee89791763dfceb5fdf8bd6b1cc1c90d"
+  },
+  "D5.S3.Quantum.Information.PartialTraceMutualInformation.marginalLeft": "sha256:7579934e8cf68c9a1e1f14470e58e70c66939704953b29e953ae8d75b92bef6a",
+  "D5.S3.Quantum.Information.PartialTraceMutualInformation.marginalRight": "sha256:bb5bad02426b231285a1d49fbc7f66f6f971cf3cd7ef3ee92fc2c21793f14ae7",
+  "D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceLeft": "sha256:68653a556c9228bbd8018884585aa56fe5fce5cd40b4a12a493f4aa319c78f5d",
+  "D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight": "sha256:8fd00cbe799f3e8a3163a296b2ad235e0a251e3e79b744b52197ba12d0343f77",
+  "D5.S3.Quantum.Information.PartialTraceMutualInformation.quantumMutualInformation": "sha256:650358808a68c73893baf137ee9bae34238244b7e0906ce19e6b5fd68484ad75"
+}

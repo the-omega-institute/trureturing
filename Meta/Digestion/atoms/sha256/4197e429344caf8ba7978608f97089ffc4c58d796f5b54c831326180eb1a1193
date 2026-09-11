@@ -1,0 +1,27 @@
+**定理 83（全部档案字段与丰富运算的输出比较）。** 对定义 1–2 的 \(X\)，\(\operatorname{Enc}(X)\) 的语义字段恰为 \(\operatorname{Enc}(C),\operatorname{Enc}(A)\)，其中 \(C\) 的七项及每个函数图、关系图都逐项编码。若事件写作 \(e^*=\operatorname{Enc}(e)\)，则
+\[
+e^*\prec^* f^*\iff e\prec f,\quad
+ t^*(e^*)=\operatorname{Enc}(t(e)),\quad
+(x^*,\sigma^*,\rho^*)(e^*)=\operatorname{Enc}(x(e),\sigma(e),\rho(e)).
+\]
+取 \(\iota_0(e)=(0,e),\iota_1(f)=(1,f),p_{ab}=(2,(a,b))\)。以下给出输出语义成员集的解码式，再逐元素应用 \(\operatorname{Enc}\)：
+\[
+\begin{aligned}
+E_{X\boxplus Y}&=\iota_0[E_X]\sqcup\iota_1[E_Y],&
+\Omega_{X\boxplus Y}&=\iota_0[\Omega_X]\sqcup\iota_1[\Omega_Y],&
+A_{X\boxplus Y}&=\iota_0[A_X]\sqcup\iota_1[A_Y],\\
+E_{X\boxtimes Y}&=\iota_0[E_X]\sqcup\iota_1[E_Y]\sqcup\{p_{ab}:a\in\Omega_X,b\in\Omega_Y\},&
+\Omega_{X\boxtimes Y}&=\{p_{ab}:a\in\Omega_X,b\in\Omega_Y\},&
+A_{X\boxtimes Y}&=\{p_{ab}:a\in A_X,b\in A_Y\}.
+\end{aligned}
+\tag{Z-ARCH}
+\]
+例如首式的码对象是 \(\operatorname{Pack}(\iota_0^*[E_X^*]\cup\iota_1^*[E_Y^*])\)。并行并集复制内部偏序及全部属性。时间复合具有同样三个集合，定义域准确为 \(M_X<m_Y\)，偏序另加入全部左档案到右档案的关系。乘积的新属性准确为
+\[
+\bigl(t(p_{ab}),x(p_{ab}),\sigma(p_{ab}),\rho(p_{ab})\bigr)
+=\bigl(\max(t(a),t(b))+1,x(a)+x(b),\sigma(a)\sigma(b),
+\operatorname{pair}(\rho(a),\rho(b))\bigr),
+\tag{Z-NEW}
+\]
+偏序为两份旧关系加 \(\iota_0(a)\prec p_{ab},\iota_1(b)\prec p_{ab}\) 后的传递闭包。码侧每个输出恰为 (Z-ARCH)、(Z-NEW) 的语义构造。
+

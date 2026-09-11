@@ -1,0 +1,16 @@
+**命题 56（属性配对闭包与观察核，repo-derived）。** 新操作总定义，逐父格的推送为
+
+$$
+((a,b,U),(a',b',U'))\longmapsto
+(a\diamond_t a',\,bb'\mathbf1_P(a,a'),\,\{a\diamond_t a'\}),
+\tag{O-ATTR-PAIR}
+$$
+
+推送系数为两父格系数之积，碰撞时相加；端点为
+$(\min(m_X,m_Y),\max(M_X,M_Y,\gamma(s_X,s_Y)))$，$s$ 由 $\Gamma_t$ 支撑恢复。并且
+
+$$
+\approx_{\Sigma_{\rm mix}^{\rm attr}}=\ker(\Gamma_t,m,M).
+\tag{O-ATTR-KERNEL}
+$$
+

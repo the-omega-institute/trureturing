@@ -1,0 +1,27 @@
+**30.35 定理与完整反例：无限端点的核与系数不达到。** 令尾合成
+\(W:\ell^2(\mathbb N_+)\to H\)，\(Wb=\sum_{k\ge1}b_kh_k\)。有限和属于 \(M\)，连续极限仍在 \(M\)；另一方面每个有限张成向量都在 \(\operatorname{Ran}W\)，故 \(\overline{\operatorname{Ran}W}=M\)。用 30.32 的 \(p\) 及 \(r=\chi-p\)，对每个实 \(\delta\) 有
+\[
+\operatorname{inner}((\alpha,b),(A-\delta E_{00})(\alpha,b))
+=\|\alpha p+Wb\|^2+(d_\infty-\delta)|\alpha|^2.
+\]
+当 \(\delta<d_\infty\) 时核为 \(\{0\}\oplus\ker W\)；端点核恰为
+\[
+\{(\alpha,b):Wb=-\alpha p\}.
+\]
+对有界非负算子，零二次型与核等价，例如由正平方根的范数平方得出。端点存在 \(\alpha\ne0\) 的核向量当且仅当 \(p\in\operatorname{Ran}W\)：一向除以 \(-\alpha\)，反向取一个合成系数。若 \(Wb_p=p\)，端点核可写成 \((\alpha,-\alpha b_p+z)\)、\(z\in\ker W\)。因此闭包投影达到、阈值端点达到、\(\ell^2\) 系数最小化达到是三个不同的陈述。对于此具体分数部分模型，这里没有判定 \(p\in\operatorname{Ran}W\)。
+
+完整的解析反例在另一 Hilbert 空间中给出。取正交单位基 \(w_0,w_1,\ldots\)，令
+\[
+v_k=w_k/k,\qquad p_0=\sum_{k\ge1}w_k/k,\qquad u_0=w_0+p_0.
+\]
+平方可和保证 \(p_0\) 存在，且这些列的平方范数总和有限。尾合成 \(W_0b=\sum b_kw_k/k\)，其范围的闭包为 \(\overline{\operatorname{span}}\{w_k:k\ge1\}\)。\(u_0\) 的闭包投影为 \(p_0\)，全局距离平方为 1；有限前缀距离平方为
+\[
+1+\sum_{k>N}k^{-2}>1,\qquad \inf_N\left(1+\sum_{k>N}k^{-2}\right)=1.
+\]
+若 \(W_0b=p_0\)，逐坐标必有 \(b_k=1\)，不属于 \(\ell^2\)，故系数最小值不达到。全局阈值端点仍为 1。若 \(A^{(0)}\) 是 \(u_0,v_1,v_2,\ldots\) 的 Gram 算子，则
+\[
+\operatorname{inner}((\alpha,b),(A^{(0)}-E_{00})(\alpha,b))
+=\sum_{k\ge1}\frac{|\alpha+b_k|^2}{k^2}.
+\]
+和为零迫使 \(b_k=-\alpha\) 对所有 \(k\) 成立；\(b\in\ell^2\) 迫使 \(\alpha=0,b=0\)。所以无限端点甚至可以没有非零核向量。这里尾块 \(C_0=\operatorname{diag}(k^{-2})\)，\(g_0=(k^{-2})_{k\ge1}\)；解 \(C_0b=g_0\) 同样要求常数序列，故 \(g_0\notin\operatorname{Ran}C_0\)，不能把有限范围/伪逆公式无条件搬到无限块。这一反例不对原分数部分模型作未达到的额外断言。
+

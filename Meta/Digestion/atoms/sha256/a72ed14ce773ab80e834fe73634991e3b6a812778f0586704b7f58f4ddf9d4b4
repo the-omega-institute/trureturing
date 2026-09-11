@@ -1,0 +1,27 @@
+**引理 1（自身属性隔离，repo-derived）。** 固定平衡参数 $U_0=\mathbf i(1)$：当前区域恰有位置 $0$、时刻 $0$、来源 $l_0=\operatorname{leaf}(0)$ 的一正一负两事件，偏序空，只选正事件 $u_+$。对 $v=(p,\epsilon,\tau)$、$\eta\in\{0,1\}$，记 $J_1=\mathrm{id},J_0=N$，以及
+
+$$
+\begin{aligned}
+H_{Q,v,\eta}(X)&=F_{\downarrow Q}(F_{\{p\}}(F_{\{\tau\}}(J_\eta X))),\\
+v^*&=(p,\epsilon,\operatorname{pair}(\tau,l_0)),\\
+f_{v,\eta}^X(Q)&=q\bigl(F_{\downarrow\{v^*\}}(H_{Q,v,\eta}(X)\boxtimes U_0)\bigr).
+\end{aligned}
+\tag{CAU-ISO}
+$$
+
+上式 $F_{\{p\}}$ 是位置筛选，$F_{\{\tau\}}$ 是来源筛选。则
+
+$$
+f_{v,\eta}^X(Q)
+=\sum_{\substack{e\in\Omega_X:\alpha(e)=v,\ b_X(e)=\eta\\U_X(e)\cap Q\ne\varnothing}}\sigma(e).
+\tag{CAU-HIT}
+$$
+
+**证明。** $J_\eta$ 先将原选择位为 $\eta$ 的事件变为所选；接着三个筛选分别检查位置、来源和原来的 $U\cap Q\ne\varnothing$，完整情境不变。$U_0$ 只选 $u_+$，所以新选中事件恰为 $(e,u_+)$，属性为 $(x(e),\sigma(e),\operatorname{pair}(\rho(e),l_0))$，符号仍为 $\sigma(e)$。乘积当前区域为反链，故最后一次因果筛选在这些当前事件上恰等于自身属性筛选。pair 单射与位置、符号坐标一起保证只有 $\alpha(e)=v$ 映到 $v^*$，得 (CAU-HIT)。每个筛选原已在签名内，右乘用的 $U_0\in\mathcal B$ 是定义 16 允许的固定载体参数；所有表达式只有一个孔，不新增原语。证毕。
+
+附录的 $P_\epsilon(Z)$ 简写为 $F_{\downarrow Q_\epsilon}(Z\boxtimes U_0)$，其中固定谓词 $Q_\epsilon=\{(p,\epsilon,r):p\in\mathbb Z^3,r\in T\}$；在该乘积反链上它隔离原选择的符号。它是合法上下文的辅助名称，不是新增操作。不能改用“早时刻单事件参数”：其当前总电荷为 $\pm1$，不在定义 3 的平衡载体中，定义 16 不允许它作参数。
+
+**反例 D6（裸探针抵消，repo-derived）。** 取 $E=\Omega=\{a,b,c,d\}$，位置全 $0$、来源全 $l_0$，符号 $+,-,+,-$，时刻 $0,1,2,2$，严格关系恰为
+$a\prec b,a\prec c,a\prec d,b\prec c,b\prec d$。$X$ 选 $\{a,b\}$，$Y$ 选空集。记 $v_+=(0,+1,l_0),v_-=(0,-1,l_0)$，则 $U(a)=U(b)=\{v_+,v_-\}$。任意 $Q,S,L$ 对 $a,b$ 同取同舍，故
+$q(F_{\downarrow Q}F_SF_LX)=q(F_{\downarrow Q}F_SF_LY)=0$。先取 $N$ 后两侧也相等：原来相差的 $a,b$ 仍抵消；**此时不恒为零**，例如 $Q=\{v_+\},S=\{0\},L=\{l_0\}$ 时两侧均为 $1$。引理 1 用 $v=v_+,\eta=1,Q=\{v_+,v_-\}$ 却分别给 $1,0$；$q(P_+(X)),q(P_+(Y))$ 也为 $1,0$。这些读数由所列四事件逐项求和，附录复核。缺的是裸探针证书的隔离步，**不是核等式被反驳**。
+

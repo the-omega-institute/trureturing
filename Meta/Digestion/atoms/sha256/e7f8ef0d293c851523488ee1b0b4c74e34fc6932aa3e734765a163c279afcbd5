@@ -1,0 +1,41 @@
+## 17. 两个 MUB completions 的 symmetry budget
+
+若 completion contexts `C,D` 彼此 mutually unbiased，则：
+
+```math
+V_C\perp V_D.
+```
+
+对二维 `V_S` 使用 Bessel/Pythagoras：
+
+```math
+\boxed{
+\alpha_S(C)+\alpha_S(D)\le2.
+}
+```
+
+等价地：
+
+```math
+\boxed{
+M_S(C)+M_S(D)\ge4.
+}
+```
+
+更精确的 residual identity 是：
+
+```math
+2-\alpha_S(C)-\alpha_S(D)
+=
+\operatorname{Tr}
+\left(
+\Pi_{V_S}
+(I-\Pi_{V_C}-\Pi_{V_D})
+\right)
+\ge0.
+```
+
+如果 `C` mode-local，则 `alpha_S(C)=2`。任何与它 MUB 的 `D` 必须满足 `alpha_S(D)=0`，即所有 mode probabilities 都为 `1/3`。
+
+这一结论独立于 Fourier-family exclusion，且可以通过仓库现有 `mutually_unbiased_diagonal_planes` 与 purity Pythagoras 形式化。
+

@@ -1,0 +1,15 @@
+**30.45 定理与证明：不读取未知残差的确定精度安排。** 写 \(\Lambda=3|b|M/8\)。对每个整数 \(r\ge1\)，规定
+\[
+J=r+1,\qquad K=r,\qquad B_r=B(N,q,r+1,r).
+\]
+则
+\[
+0\le B_r-R_N(q)\le\frac{M^2}{r+1}+\Lambda9^{1-r}
+\le\frac{M^2+\Lambda}{r}\longrightarrow0.
+\]
+最后用 \(9^{r-1}\ge r\)：\(r=1\) 成立，若对 \(r\) 成立，则 \(9^r\ge9r\ge r+1\)。这证明收敛而没有断言 \(B_r\) 单调。给定任意有理 \(\eta>0\)，显式整数
+\[
+r_\eta=\left\lfloor\frac{M^2+\Lambda}{\eta}\right\rfloor+1
+\]
+满足 \((M^2+\Lambda)/r_\eta<\eta\)，所以同一安排保证 \(B_{r_\eta}-R_N(q)<\eta\)。计算只读有限有理 \(q,\eta\)，不读真实残差或成功余量。
+

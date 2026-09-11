@@ -1,0 +1,793 @@
+    "report_contracts": {
+      "coordinate_rule": "All spans below address the unchanged current report; no source displacement is applied.",
+      "prefixes": [
+        {
+          "stage": "original I14 report, preserved by I19",
+          "span": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 0,
+            "byte_end_exclusive": 38210,
+            "bytes": 38210,
+            "lf": 603,
+            "terminal_lf": 1,
+            "sha256": "8bb7197f4931fdc2337ad7d900a514c588520d2ec48cd273cd69065d0e335db4"
+          },
+          "historical_contract": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 38212,
+            "byte_end_exclusive": 41591,
+            "bytes": 3379,
+            "lf": 63,
+            "terminal_lf": 2,
+            "sha256": "f6bbc72c01b566967070356143cc1fbaa88de68aab067543b40332b10e87d9df"
+          }
+        },
+        {
+          "stage": "pre-I31 / I19 report",
+          "contract": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_report_prefix_recovery"
+          },
+          "span": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 0,
+            "byte_end_exclusive": 47922,
+            "bytes": 47922,
+            "lf": 764,
+            "terminal_lf": 1,
+            "sha256": "a073280a2a3c4382c89d284e9970e5335a33db78b87e49679f413592caa808ce"
+          }
+        },
+        {
+          "stage": "I31 final / I33 input report",
+          "contract": {
+            "map": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+            "pointer": "/report_original_prefix"
+          },
+          "span": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 0,
+            "byte_end_exclusive": 211816,
+            "bytes": 211816,
+            "lf": 3697,
+            "terminal_lf": 1,
+            "sha256": "0820b4f16dd3a4a7edbc0cae4f91a96ed81828509780f28303e50fe4beecaf4f"
+          }
+        },
+        {
+          "stage": "I33 payload before digest footer",
+          "contract": {
+            "map": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+            "pointer": "/report_binding/payload_prefix"
+          },
+          "span": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 0,
+            "byte_end_exclusive": 218261,
+            "bytes": 218261,
+            "lf": 3792,
+            "terminal_lf": 1,
+            "sha256": "e09dd6bb00ed855e860bc4d360659ae14b2e1fc4e5c0570a5fdcca782dababe4"
+          }
+        },
+        {
+          "stage": "I33 final / I36 input report",
+          "contract": {
+            "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+            "pointer": "/recovery/preserved_report_prefix"
+          },
+          "span": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 0,
+            "byte_end_exclusive": 218517,
+            "bytes": 218517,
+            "lf": 3794,
+            "terminal_lf": 1,
+            "sha256": "53035b35dcb1cecdbd4cf87f6dbd92645ed1b17096632f7c789cbc03f97ad617"
+          }
+        },
+        {
+          "stage": "I36 final / I41 input report",
+          "contract": {
+            "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+            "pointer": "/recovery/report_current"
+          },
+          "span": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 0,
+            "byte_end_exclusive": 221717,
+            "bytes": 221717,
+            "lf": 3823,
+            "terminal_lf": 1,
+            "sha256": "c6b5fab2f8a2e6433666ee5af9e72d77ae568c98414cacc04f8bf68686503c9a"
+          }
+        },
+        {
+          "stage": "I41 final, unchanged by I42",
+          "contract": {
+            "map": "docs/reports/quantized-gh/theory-section12-migration-s19-0911.json",
+            "pointer": "/report/current"
+          },
+          "span": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 0,
+            "byte_end_exclusive": 224423,
+            "bytes": 224423,
+            "lf": 3872,
+            "terminal_lf": 1,
+            "sha256": "380990dd23fe36c960a6c5d78c2b96603e2067f27ee4672bc7d931e9793aaf5a"
+          }
+        }
+      ],
+      "I31_report_partition": {
+        "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+        "pointer": "/report_partition"
+      },
+      "I31_final_evidence_append": {
+        "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+        "pointer": "/final_report_evidence_append"
+      },
+      "I33_footer_and_digest_hole": {
+        "contract": {
+          "map": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+          "pointer": "/report_binding"
+        },
+        "digest_owner": {
+          "map": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+          "pointer": ""
+        },
+        "digest_value": "9abba55e13c08d0f784a6c958416c5cfb4245872ad087ccba2f385469f23a8ec",
+        "rule": "The 64 ASCII bytes at report[218374:218438] are the SHA256 of immutable I33, never the I42 map hash. Append the I33 footer template to its 218261-byte payload. Mask only that hole with 64 ASCII zeros for masked_sha256; check the full 218517-byte report separately."
+      },
+      "hash_contracts": [
+        {
+          "map": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+          "pointer": "/hash_contract"
+        },
+        {
+          "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/hash_contract"
+        }
+      ],
+      "I36_adoption_report": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 218517,
+        "byte_end_exclusive": 221717,
+        "bytes": 3200,
+        "lf": 29,
+        "terminal_lf": 1,
+        "sha256": "55a467fe72b70db80dfc25183bff2310c3ea4749b842aa4d24773faa434aa8b9"
+      },
+      "I41_archive": {
+        "map": "docs/reports/quantized-gh/theory-section12-migration-s19-0911.json",
+        "pointer": "/report/append"
+      },
+      "S19_original_primary_table": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 4364,
+        "byte_end_exclusive": 7562,
+        "bytes": 3198,
+        "lf": 34,
+        "terminal_lf": 2,
+        "sha256": "f24cec2669accb8150d0676454f20f0eccfde438ad4eb0f5fa4de6215ad957c8"
+      },
+      "S19_original_primary_identity_and_limits": {
+        "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+        "byte_start": 0,
+        "byte_end_exclusive": 4364,
+        "bytes": 4364,
+        "lf": 57,
+        "terminal_lf": 2,
+        "sha256": "090a4e60dd3e301a14bedc2fa47df56ea7aa5882605b3d1b910514537949572c"
+      },
+      "raw_primary_policy": "Existing primary payloads, pointer values, hashes, table cells, corrections and original serving/retrieval/failure qualifications retain their immutable owner. I42 does not copy or reserialize raw primary inputs into source or report.",
+      "historical_unit_tables": {
+        "I19": {
+          "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+          "byte_start": 41591,
+          "byte_end_exclusive": 47922,
+          "bytes": 6331,
+          "lf": 96,
+          "terminal_lf": 1,
+          "sha256": "0e24fa71fc2c8206686a96e56d963880fcaae5a5f1acb680ead4141364724c75"
+        },
+        "I31": {
+          "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+          "byte_start": 156655,
+          "byte_end_exclusive": 205592,
+          "bytes": 48937,
+          "lf": 518,
+          "terminal_lf": 3,
+          "sha256": "15948ab767cc8ef882d2e0c7c9b58ba7a023861ec2b5c7ccc69fc5ff1ceeacaa"
+        },
+        "rule": "All table rows parsed. They describe their historical source versions and inventories, not new canonical execution or the current source offsets."
+      },
+      "unchanged_embedded_fixed_certificate": {
+        "payload": {
+          "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+          "byte_start": 11287,
+          "byte_end_exclusive": 23705,
+          "bytes": 12418,
+          "lf": 247,
+          "terminal_lf": 1,
+          "sha256": "478bbf361e446eaad6f834c084436ae7aa359f0f83977343be1c6e0c2a837276"
+        },
+        "status": "Historical executable evidence, byte-bound only. Never executed or syntax-replayed by I42."
+      }
+    },
+    "S19_primary_table_composition": {
+      "table": {
+        "map": "docs/reports/quantized-gh/theory-section12-migration-s19-0911.json",
+        "pointer": "/composition/report_contracts/S19_original_primary_table"
+      },
+      "all_rows": [
+        {
+          "address": "30.1",
+          "preserved_table_row": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 4676,
+            "byte_end_exclusive": 4794,
+            "bytes": 118,
+            "lf": 1,
+            "terminal_lf": 1,
+            "sha256": "99cee3528e32ef491177cea6e34b1f7ccc45ce4de4403c297bd5db5023617d91"
+          },
+          "original_disposition": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/155"
+          },
+          "all_original_byte_dispositions": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/155/recovery"
+          },
+          "current_address": {
+            "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+            "pointer": "/addresses/30.1"
+          },
+          "current_disposition": "Mathematical content and attached citations resolve by current_addresses; every operational fragment remains in exact original recovery/report archives."
+        },
+        {
+          "address": "30.2",
+          "preserved_table_row": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 4794,
+            "byte_end_exclusive": 4937,
+            "bytes": 143,
+            "lf": 1,
+            "terminal_lf": 1,
+            "sha256": "cf8e7540e7a3f67c67960f2ee4322d8729234378b81206191df829abfdb8af57"
+          },
+          "original_disposition": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/156"
+          },
+          "all_original_byte_dispositions": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/156/recovery"
+          },
+          "current_address": {
+            "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+            "pointer": "/addresses/30.2"
+          },
+          "current_disposition": "Mathematical content and attached citations resolve by current_addresses; every operational fragment remains in exact original recovery/report archives."
+        },
+        {
+          "address": "30.3",
+          "preserved_table_row": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 4937,
+            "byte_end_exclusive": 5038,
+            "bytes": 101,
+            "lf": 1,
+            "terminal_lf": 1,
+            "sha256": "13559d9d65297affacf4b3c3f3336d2b0c7143e7c5c3152f7489fc9805463f68"
+          },
+          "original_disposition": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/157"
+          },
+          "all_original_byte_dispositions": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/157/recovery"
+          },
+          "current_address": {
+            "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+            "pointer": "/addresses/30.3"
+          },
+          "current_disposition": "Mathematical content and attached citations resolve by current_addresses; every operational fragment remains in exact original recovery/report archives."
+        },
+        {
+          "address": "30.4",
+          "preserved_table_row": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 5038,
+            "byte_end_exclusive": 5156,
+            "bytes": 118,
+            "lf": 1,
+            "terminal_lf": 1,
+            "sha256": "c932f954ba1dfb9cc2ec6160e7c8d021731464e7b4b4821f5d98d7de8e65143c"
+          },
+          "original_disposition": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/158"
+          },
+          "all_original_byte_dispositions": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/158/recovery"
+          },
+          "current_address": {
+            "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+            "pointer": "/addresses/30.4"
+          },
+          "current_disposition": "Mathematical content and attached citations resolve by current_addresses; every operational fragment remains in exact original recovery/report archives."
+        },
+        {
+          "address": "30.5",
+          "preserved_table_row": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 5156,
+            "byte_end_exclusive": 5288,
+            "bytes": 132,
+            "lf": 1,
+            "terminal_lf": 1,
+            "sha256": "1ea27f539c5f8a81ea94cb6c86088bc287d9af47aaa062966c8c8779a88a333d"
+          },
+          "original_disposition": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/159"
+          },
+          "all_original_byte_dispositions": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/159/recovery"
+          },
+          "current_address": {
+            "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+            "pointer": "/addresses/30.5"
+          },
+          "current_disposition": "Mathematical content and attached citations resolve by current_addresses; every operational fragment remains in exact original recovery/report archives."
+        },
+        {
+          "address": "30.6",
+          "preserved_table_row": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 5288,
+            "byte_end_exclusive": 5394,
+            "bytes": 106,
+            "lf": 1,
+            "terminal_lf": 1,
+            "sha256": "1b994a8a7794a09196254ad71643c1cba893cd64175bdaeea2b175af32e8565e"
+          },
+          "original_disposition": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/160"
+          },
+          "all_original_byte_dispositions": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/160/recovery"
+          },
+          "current_address": {
+            "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+            "pointer": "/addresses/30.6"
+          },
+          "current_disposition": "Mathematical content and attached citations resolve by current_addresses; every operational fragment remains in exact original recovery/report archives."
+        },
+        {
+          "address": "30.7",
+          "preserved_table_row": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 5394,
+            "byte_end_exclusive": 5493,
+            "bytes": 99,
+            "lf": 1,
+            "terminal_lf": 1,
+            "sha256": "a7a789cbcf82b076f3204bc473a82e6c09215afe6be6a4506329680acc4098e4"
+          },
+          "original_disposition": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/161"
+          },
+          "all_original_byte_dispositions": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/161/recovery"
+          },
+          "current_address": {
+            "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+            "pointer": "/addresses/30.7"
+          },
+          "current_disposition": "Mathematical content and attached citations resolve by current_addresses; every operational fragment remains in exact original recovery/report archives."
+        },
+        {
+          "address": "30.8",
+          "preserved_table_row": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 5493,
+            "byte_end_exclusive": 5597,
+            "bytes": 104,
+            "lf": 1,
+            "terminal_lf": 1,
+            "sha256": "41e3a411fe3fa77042b32d1041e50eaf79315d4cba6db7830896dbf39cef4765"
+          },
+          "original_disposition": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/162"
+          },
+          "all_original_byte_dispositions": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/162/recovery"
+          },
+          "current_address": {
+            "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+            "pointer": "/addresses/30.8"
+          },
+          "current_disposition": "Mathematical content and attached citations resolve by current_addresses; every operational fragment remains in exact original recovery/report archives."
+        },
+        {
+          "address": "30.9",
+          "preserved_table_row": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 5597,
+            "byte_end_exclusive": 5722,
+            "bytes": 125,
+            "lf": 1,
+            "terminal_lf": 1,
+            "sha256": "caf850172e36962ad56817aef925fe7bbd9a3574ebe48d4259a115d35ea7e1f9"
+          },
+          "original_disposition": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/163"
+          },
+          "all_original_byte_dispositions": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/163/recovery"
+          },
+          "current_address": {
+            "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+            "pointer": "/addresses/30.9"
+          },
+          "current_disposition": "Mathematical content and attached citations resolve by current_addresses; every operational fragment remains in exact original recovery/report archives."
+        },
+        {
+          "address": "30.10",
+          "preserved_table_row": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 5722,
+            "byte_end_exclusive": 5833,
+            "bytes": 111,
+            "lf": 1,
+            "terminal_lf": 1,
+            "sha256": "feb641c8dbcddac1f1da94dd762bbe57caf94c5f72a1418bc48040028b27333c"
+          },
+          "original_disposition": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/164"
+          },
+          "all_original_byte_dispositions": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/164/recovery"
+          },
+          "current_address": {
+            "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+            "pointer": "/addresses/30.10"
+          },
+          "current_disposition": "Mathematical content and attached citations resolve by current_addresses; every operational fragment remains in exact original recovery/report archives."
+        },
+        {
+          "address": "30.11",
+          "preserved_table_row": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 5833,
+            "byte_end_exclusive": 5953,
+            "bytes": 120,
+            "lf": 1,
+            "terminal_lf": 1,
+            "sha256": "a500763cb929bd76b018986c804dedf5a9a610d6b781f5b82e193e91d4920eec"
+          },
+          "original_disposition": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/165"
+          },
+          "all_original_byte_dispositions": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/165/recovery"
+          },
+          "current_address": {
+            "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+            "pointer": "/addresses/30.11"
+          },
+          "current_disposition": "Mathematical content and attached citations resolve by current_addresses; every operational fragment remains in exact original recovery/report archives."
+        },
+        {
+          "address": "30.12",
+          "preserved_table_row": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 5953,
+            "byte_end_exclusive": 6049,
+            "bytes": 96,
+            "lf": 1,
+            "terminal_lf": 1,
+            "sha256": "910d3cc0073f5424b1c765fcfd5570c58af2a1c58a8c5e4892a07f8aa0208cef"
+          },
+          "original_disposition": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/166"
+          },
+          "all_original_byte_dispositions": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/166/recovery"
+          },
+          "current_address": {
+            "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+            "pointer": "/addresses/30.12"
+          },
+          "current_disposition": "Mathematical content and attached citations resolve by current_addresses; every operational fragment remains in exact original recovery/report archives."
+        },
+        {
+          "address": "30.13",
+          "preserved_table_row": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 6049,
+            "byte_end_exclusive": 6160,
+            "bytes": 111,
+            "lf": 1,
+            "terminal_lf": 1,
+            "sha256": "484515f22782010a3991f200c1698586f01e45046a59466c91049b5bdb7b8b4b"
+          },
+          "original_disposition": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/167"
+          },
+          "all_original_byte_dispositions": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/167/recovery"
+          },
+          "current_address": {
+            "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+            "pointer": "/addresses/30.13"
+          },
+          "current_disposition": "Mathematical content and attached citations resolve by current_addresses; every operational fragment remains in exact original recovery/report archives."
+        },
+        {
+          "address": "30.14",
+          "preserved_table_row": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 6160,
+            "byte_end_exclusive": 6266,
+            "bytes": 106,
+            "lf": 1,
+            "terminal_lf": 1,
+            "sha256": "4c56984bf59e3879d5dbfc255550df62181be489684e91f004479ca25edfd5c4"
+          },
+          "original_disposition": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/168"
+          },
+          "all_original_byte_dispositions": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/168/recovery"
+          },
+          "current_address": {
+            "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+            "pointer": "/addresses/30.14"
+          },
+          "current_disposition": "Mathematical content and attached citations resolve by current_addresses; every operational fragment remains in exact original recovery/report archives."
+        },
+        {
+          "address": "30.15",
+          "preserved_table_row": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 6266,
+            "byte_end_exclusive": 6382,
+            "bytes": 116,
+            "lf": 1,
+            "terminal_lf": 1,
+            "sha256": "1b13f6035ba9d9df9e635f3731ab62a46ea897da8d51d9fe02c6dd1a6d74fbfe"
+          },
+          "original_disposition": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/169"
+          },
+          "all_original_byte_dispositions": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/169/recovery"
+          },
+          "current_address": {
+            "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+            "pointer": "/addresses/30.15"
+          },
+          "current_disposition": "Mathematical content and attached citations resolve by current_addresses; every operational fragment remains in exact original recovery/report archives."
+        },
+        {
+          "address": "30.16",
+          "preserved_table_row": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 6382,
+            "byte_end_exclusive": 6514,
+            "bytes": 132,
+            "lf": 1,
+            "terminal_lf": 1,
+            "sha256": "f0712618d1990444a890244d030df84fe6cf80fccc09a7ede2aa4dc0731f84fb"
+          },
+          "original_disposition": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/170"
+          },
+          "all_original_byte_dispositions": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/170/recovery"
+          },
+          "current_address": {
+            "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+            "pointer": "/addresses/30.16"
+          },
+          "current_disposition": "Mathematical content and attached citations resolve by current_addresses; every operational fragment remains in exact original recovery/report archives."
+        },
+        {
+          "address": "30.17",
+          "preserved_table_row": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 6514,
+            "byte_end_exclusive": 6639,
+            "bytes": 125,
+            "lf": 1,
+            "terminal_lf": 1,
+            "sha256": "3cfd906c7daf03b859d9bc99f158c81a8972e24ecba9dbf041dddeade6efc756"
+          },
+          "original_disposition": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/171"
+          },
+          "all_original_byte_dispositions": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/171/recovery"
+          },
+          "current_address": {
+            "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+            "pointer": "/addresses/30.17"
+          },
+          "current_disposition": "Mathematical content and attached citations resolve by current_addresses; every operational fragment remains in exact original recovery/report archives."
+        },
+        {
+          "address": "30.18",
+          "preserved_table_row": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 6639,
+            "byte_end_exclusive": 6778,
+            "bytes": 139,
+            "lf": 1,
+            "terminal_lf": 1,
+            "sha256": "d3f1669e100d7c1e2ff6add93975f7abcb79ea31e7c2332e3e7ef62b9aacdf98"
+          },
+          "original_disposition": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/172"
+          },
+          "all_original_byte_dispositions": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/172/recovery"
+          },
+          "current_address": {
+            "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+            "pointer": "/addresses/30.18"
+          },
+          "current_disposition": "Mathematical content and attached citations resolve by current_addresses; every operational fragment remains in exact original recovery/report archives."
+        },
+        {
+          "address": "30.19",
+          "preserved_table_row": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 6778,
+            "byte_end_exclusive": 6903,
+            "bytes": 125,
+            "lf": 1,
+            "terminal_lf": 1,
+            "sha256": "9fcb0b1752dc755b5ff818648e2af1f62cd97721b07ad6e01f15823581adc826"
+          },
+          "original_disposition": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/173"
+          },
+          "all_original_byte_dispositions": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/173/recovery"
+          },
+          "current_address": {
+            "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+            "pointer": "/addresses/30.19"
+          },
+          "current_disposition": "Mathematical content and attached citations resolve by current_addresses; every operational fragment remains in exact original recovery/report archives."
+        },
+        {
+          "address": "30.20",
+          "preserved_table_row": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 6903,
+            "byte_end_exclusive": 7077,
+            "bytes": 174,
+            "lf": 1,
+            "terminal_lf": 1,
+            "sha256": "62758659e783bd44a353738e1043d6d3c30854a8b278b4dd9b0c5cb81e8aeada"
+          },
+          "original_disposition": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/174"
+          },
+          "all_original_byte_dispositions": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/174/recovery"
+          },
+          "current_address": {
+            "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+            "pointer": "/addresses/30.20"
+          },
+          "current_disposition": "Mathematical content and attached citations resolve by current_addresses; every operational fragment remains in exact original recovery/report archives.",
+          "provenance_disposition": "Primary access/failure/check-count metadata in the original table is report/archive evidence; active 30.20 contains classical mathematical attribution. Retain the I33 provenance-label correction.",
+          "later_archive": {
+            "map": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+            "pointer": "/source_changes/7"
+          },
+          "report_primary_limits": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 1878,
+            "byte_end_exclusive": 4364,
+            "bytes": 2486,
+            "lf": 32,
+            "terminal_lf": 2,
+            "sha256": "9e7994c5f543856302ac6aafd30bcdad847663ea3478f51a6661d4990095f400"
+          }
+        },
+        {
+          "address": "30.21",
+          "preserved_table_row": {
+            "path": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+            "byte_start": 7077,
+            "byte_end_exclusive": 7227,
+            "bytes": 150,
+            "lf": 1,
+            "terminal_lf": 1,
+            "sha256": "469b30837a9300cc3365327033c1c7633f54090cf953719f25aa1a818c5b55a5"
+          },
+          "original_disposition": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/175"
+          },
+          "all_original_byte_dispositions": {
+            "map": "docs/reports/quantized-gh/theory-body-migration-s19-0910.json",
+            "pointer": "/original_numbered_entries/175/recovery"
+          },
+          "current_disposition": "Wholly operational; permanently reserved outside active source. Exact original whole unit resolves through the I31 archive recovery.",
+          "reservation": {
+            "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+            "pointer": "/permanent_reservations"
+          }
+        }
+      ],
+      "rule": "Each exact original table row preserves its complete primary mapping and reuse cell. Its I31 record gives every original mathematical/archival byte disposition; current_address joins into this map current unit spans. Neither historical shortened primary-cell notation nor source-report access metadata is turned into a fabricated JSON pointer."
+    },
+    "primary_address_composition": {
+      "I33": {
+        "all_records": {
+          "map": "docs/reports/quantized-gh/theory-proof-adoption-s19-0910.json",
+          "pointer": "/proof_to_primary"
+        },
+        "record_count": 30,
+        "rule": "For each row, current_address_index identifies the historical I33 address; row.address joins I36 addresses and then this map current units. Every primary_correspondence member, fidelity statement and C90/C92 correction is retained. Source coordinates in I33 belong to I36_original_I33_current."
+      },
+      "I36": {
+        "all_records": {
+          "map": "docs/reports/quantized-gh/finite-distance-dual-adoption-s19-0911.json",
+          "pointer": "/primary_correspondence"
+        },
+        "input_count": 3,
+        "leaf_count": 308,
+        "mathematical_leaf_count": 282,
+        "metadata_only_leaf_count": 26,
+        "rule": "For all 102 C95, 99 C96 and 107 C97 leaves: every proof_addresses member joins I36 addresses to this map current units. Preserve each value_sha256, disposition and scope_note. Metadata-only leaves retain their exact provenance_and_review_limits binding; mixed leaves retain the explicit metadata limitation."
+      },
+      "S19": {
+        "map": "docs/reports/quantized-gh/theory-section12-migration-s19-0911.json",
+        "pointer": "/composition/S19_primary_table_composition"
+      },
+      "entire_inherited_body": {
+        "map": "docs/reports/quantized-gh/theory-section12-migration-s19-0911.json",
+        "pointer": "/composition/inherited_dispositions"
+      },

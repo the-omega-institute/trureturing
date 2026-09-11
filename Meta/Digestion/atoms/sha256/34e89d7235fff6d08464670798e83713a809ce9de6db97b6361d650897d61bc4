@@ -1,0 +1,40 @@
+**30.76 定理及证明（任意字典闭包、遗漏平方自由数与精确整数门槛）。** If \(n\notin A\),
+then \(\Lambda_n\) vanishes on every finite combination from \(A\). For any \(h\in M_A\)
+choose such combinations \(h_j\to h\). Continuity gives
+\(\Lambda_n(h)=\lim_j\Lambda_n(h_j)=0\). Therefore
+\[
+D_A\ge\frac{\mu(n)^2}{C_n},\qquad
+\operatorname{dist}(f_n,M_A)^2\ge\frac1{C_n}.
+\]
+The first follows by applying \(\Lambda_n\) to \(\chi-h\), the second to \(f_n-h\),
+and then taking infima. Hence \(D_A=0\) requires that \(A\) contain every squarefree
+positive integer, including one. Omitting a squareful integer gives only the zero target lower
+bound from this functional; it does not prove zero distance or harmlessness of that omission.
+Every individual dictionary vector is separated from the closed span of all the other parameters.
+For a prime \(p\), the two divisors give
+\[
+C_p=4[(5+1/6)+(5p^2+1/6)]=\frac{60p^2+64}3,
+\quad p\notin A\Longrightarrow D_A\ge\frac3{60p^2+64}.
+\]
+Allowing \(p^2\) or other multiples does not replace the missing parameter \(p\).
+If \(D_A<1/m\), in particular if a finite witness has residual square \(<1/m\), then
+for every prime
+\[
+60p^2+64\le3m\quad\Longrightarrow\quad p\in A.
+\]
+Otherwise the omitted-prime bound would be at least \(1/m\), a contradiction, including
+integer equality at the gate. For a specific witness the actual combined coefficient \(a_p\)
+must be nonzero: if zero, 30.75 and \(\mu(p)=-1\) give the same contradiction even when
+\(p\) is nominally allowed. The gate involves only integer squares, multiplication, addition
+and comparison; no square-root rounding is needed.
+
+This prime condition is not sufficient. The dictionary consisting of one and all positive prime
+powers contains every prime but omits six. Since all four quotients for the divisors of six are
+squarefree,
+\[
+C_6=4\left[5(1+4+9+36)+4/6\right]=3008/3,\qquad D_A\ge3/3008>0.
+\]
+No sufficiency theorem for inclusion of every squarefree integer follows either.
+For the empty dictionary \(M_\varnothing=\{0\},D_\varnothing=1\); all the omission bounds
+remain valid but need not be sharp.
+

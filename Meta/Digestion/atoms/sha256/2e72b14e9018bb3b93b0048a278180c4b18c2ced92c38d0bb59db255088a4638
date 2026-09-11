@@ -1,0 +1,30 @@
+**命题 43（来源语言的观察核，repo-derived）。**
+
+$$
+\approx_{\Sigma_{\rm src}}=\ker\rho_{\rm src}.
+\tag{SRC-EQ}
+$$
+
+**证明。** 充分性按定义 16 归纳，与命题 22 同形：恒等孔保读数；任一基本上下文在两侧使用同一个固定丰富参数，(SRC-UP) 给同一输出读数；有限复合反复应用这些更新，最终 $q$ 由 $z^\rho$ 求和恢复。所有操作总定义，不遗漏部分域。必要性对每个 $p\in\mathbb Z^3,r\in T$ 用签名内的探针
+
+$$
+q(F_pF_{\{r\}}X)=z_X^\rho(p,r),\qquad
+q(F_pF_{\{r\}}NX)=w_X^\rho(p,r)-z_X^\rho(p,r).
+\tag{SRC-REC}
+$$
+
+这里 $F_p$ 按 §16 为位置单点筛选，$F_{\{r\}}$ 是来源单树筛选。第一式恢复 $z^\rho$，两式相加恢复 $w^\rho$；因此观察等价蕴含全部坐标相同。证毕。
+
+**旧见证的新读数（repo-derived）。** 以下只给既有对象追加 (SRC) 读数，数值由定义 8、B1 和 (SRC-UP) 直接计算，附录 `pr3_source` 检查这些等式。记 $l_i=\operatorname{leaf}(i)$。B1 两对象分别有 $\rho_{\rm src}=(0,\delta_{(0,l_7)})$ 与 $(0,\delta_{(0,l_8)})$，故在 $(0,l_7)/(0,l_8)$ 处被分开。§4 的 $X=Y=\mathbf i(1),Z=\mathbf i(2)$ 两括号分别有
+
+$$
+\begin{aligned}
+z_{(X\boxtimes Y)\boxtimes Z}^\rho
+ &=\sum_{j=0}^1\delta_{(0,\operatorname{pair}(\operatorname{pair}(l_0,l_0),l_j))},\\
+z_{X\boxtimes(Y\boxtimes Z)}^\rho
+ &=\sum_{j=0}^1\delta_{(0,\operatorname{pair}(l_0,\operatorname{pair}(l_0,l_j)))}.
+\end{aligned}
+$$
+
+两者 $w^\rho=0$，所列支撑不交，虽 $q=2$ 相同。§18 的来源交换例分别有 $z^\rho=\delta_{(0,\operatorname{pair}(l_7,l_8))}$ 与 $\delta_{(0,\operatorname{pair}(l_8,l_7))}$，同样 $w^\rho=0$。这些事实证明 $\rho_{\rm src}$ 能区分相应对象，**不证明它恢复档案基数**；§4 的 $28/32$ 仍是档案计数，(SRC) 只数当前区域。
+

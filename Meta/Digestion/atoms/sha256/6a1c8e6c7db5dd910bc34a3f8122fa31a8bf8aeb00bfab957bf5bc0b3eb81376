@@ -1,0 +1,10 @@
+**定义 2.4(状态函数)**。对账本 $L$,定义 $s_L:\mathcal P\to\{\mathsf{frozen},\mathsf{refuted},\mathsf{open}\}$:
+
+$$
+s_L(P)=\begin{cases}
+\mathsf{frozen}&P\in\mathrm{Frozen}(L)\\
+\mathsf{refuted}&\neg P\in\mathrm{Frozen}(L)\\
+\mathsf{open}&\text{否则}
+\end{cases}
+$$
+

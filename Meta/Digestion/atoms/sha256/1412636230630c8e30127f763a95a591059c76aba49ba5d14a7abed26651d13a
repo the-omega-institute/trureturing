@@ -1,0 +1,42 @@
+## 15. An exact affine contraction certificate through activity 51/20
+
+Set
+
+\[
+ \Lambda=51/20,
+ \quad L=(1+\Lambda)^{-1}=20/71,
+ \quad\gamma=999/1000,
+ \quad\eta=3/1000.
+\]
+
+For each actual geometric type i, the data supply nonnegative rational a_i and
+rational b_i, with denominator one million, and
+
+\[
+ \Psi_i(x)=b_i-a_ix,
+ \qquad b_i-a_i\ge10577/1000000>0.
+\]
+
+There are 332 distinct coefficient pairs, shared only for storage. Every one
+of the 881 geometric rows is checked using its own actual successor types.
+No behavioral quotient theorem or sampled state-space restriction is assumed.
+An absent direction has child coefficients a=b=0.
+
+For all lambda in [0,Lambda] and all three child values x_d in [L,1], put
+
+\[
+ y=\frac1{1+\lambda\prod_dx_d}.
+\]
+
+The exact certificate proves
+
+\[
+ \boxed{(1-y)\sum_d\Psi_{j_d}(x_d)<\gamma\Psi_i(y).}
+\tag{15.1}
+\]
+
+Zero coefficients are used for absent geometric children. In addition,
+y belongs to [L,1], and every actual message is bounded below by the same
+positive constant. The statement holds on the full probability box, not only
+at the recursion's fixed point or sampled tuples.
+

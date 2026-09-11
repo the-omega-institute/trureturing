@@ -1,0 +1,795 @@
+            "original_byte_end_exclusive": 237347
+          },
+          {
+            "recovery_span_index": 680,
+            "original_byte_start": 237347,
+            "original_byte_end_exclusive": 239082
+          },
+          {
+            "recovery_span_index": 681,
+            "original_byte_start": 239082,
+            "original_byte_end_exclusive": 239090
+          },
+          {
+            "recovery_span_index": 682,
+            "original_byte_start": 239090,
+            "original_byte_end_exclusive": 240017
+          },
+          {
+            "recovery_span_index": 683,
+            "original_byte_start": 240017,
+            "original_byte_end_exclusive": 240025
+          },
+          {
+            "recovery_span_index": 684,
+            "original_byte_start": 240025,
+            "original_byte_end_exclusive": 241072
+          },
+          {
+            "recovery_span_index": 685,
+            "original_byte_start": 241072,
+            "original_byte_end_exclusive": 241080
+          },
+          {
+            "recovery_span_index": 686,
+            "original_byte_start": 241080,
+            "original_byte_end_exclusive": 242322
+          },
+          {
+            "recovery_span_index": 687,
+            "original_byte_start": 242322,
+            "original_byte_end_exclusive": 242330
+          },
+          {
+            "recovery_span_index": 688,
+            "original_byte_start": 242330,
+            "original_byte_end_exclusive": 243401
+          },
+          {
+            "recovery_span_index": 689,
+            "original_byte_start": 243401,
+            "original_byte_end_exclusive": 243409
+          },
+          {
+            "recovery_span_index": 690,
+            "original_byte_start": 243409,
+            "original_byte_end_exclusive": 244727
+          },
+          {
+            "recovery_span_index": 691,
+            "original_byte_start": 244727,
+            "original_byte_end_exclusive": 244735
+          },
+          {
+            "recovery_span_index": 692,
+            "original_byte_start": 244735,
+            "original_byte_end_exclusive": 245895
+          },
+          {
+            "recovery_span_index": 693,
+            "original_byte_start": 245895,
+            "original_byte_end_exclusive": 245903
+          },
+          {
+            "recovery_span_index": 694,
+            "original_byte_start": 245903,
+            "original_byte_end_exclusive": 247454
+          },
+          {
+            "recovery_span_index": 695,
+            "original_byte_start": 247454,
+            "original_byte_end_exclusive": 247520
+          },
+          {
+            "recovery_span_index": 696,
+            "original_byte_start": 247520,
+            "original_byte_end_exclusive": 247539
+          },
+          {
+            "recovery_span_index": 697,
+            "original_byte_start": 247539,
+            "original_byte_end_exclusive": 247543
+          },
+          {
+            "recovery_span_index": 698,
+            "original_byte_start": 247543,
+            "original_byte_end_exclusive": 247642
+          },
+          {
+            "recovery_span_index": 699,
+            "original_byte_start": 247642,
+            "original_byte_end_exclusive": 247650
+          },
+          {
+            "recovery_span_index": 700,
+            "original_byte_start": 247650,
+            "original_byte_end_exclusive": 249349
+          },
+          {
+            "recovery_span_index": 701,
+            "original_byte_start": 249349,
+            "original_byte_end_exclusive": 249408
+          },
+          {
+            "recovery_span_index": 702,
+            "original_byte_start": 249408,
+            "original_byte_end_exclusive": 249488
+          },
+          {
+            "recovery_span_index": 703,
+            "original_byte_start": 249488,
+            "original_byte_end_exclusive": 249493
+          },
+          {
+            "recovery_span_index": 704,
+            "original_byte_start": 249493,
+            "original_byte_end_exclusive": 249494
+          },
+          {
+            "recovery_span_index": 705,
+            "original_byte_start": 249494,
+            "original_byte_end_exclusive": 249534
+          },
+          {
+            "recovery_span_index": 706,
+            "original_byte_start": 249534,
+            "original_byte_end_exclusive": 249535
+          },
+          {
+            "recovery_span_index": 707,
+            "original_byte_start": 249535,
+            "original_byte_end_exclusive": 249543
+          },
+          {
+            "recovery_span_index": 708,
+            "original_byte_start": 249543,
+            "original_byte_end_exclusive": 249600
+          },
+          {
+            "recovery_span_index": 709,
+            "original_byte_start": 249600,
+            "original_byte_end_exclusive": 249821
+          },
+          {
+            "recovery_span_index": 710,
+            "original_byte_start": 249821,
+            "original_byte_end_exclusive": 249843
+          },
+          {
+            "recovery_span_index": 711,
+            "original_byte_start": 249843,
+            "original_byte_end_exclusive": 250345
+          },
+          {
+            "recovery_span_index": 712,
+            "original_byte_start": 250345,
+            "original_byte_end_exclusive": 250544
+          },
+          {
+            "recovery_span_index": 713,
+            "original_byte_start": 250544,
+            "original_byte_end_exclusive": 250618
+          },
+          {
+            "recovery_span_index": 714,
+            "original_byte_start": 250618,
+            "original_byte_end_exclusive": 251274
+          },
+          {
+            "recovery_span_index": 715,
+            "original_byte_start": 251274,
+            "original_byte_end_exclusive": 251282
+          },
+          {
+            "recovery_span_index": 716,
+            "original_byte_start": 251282,
+            "original_byte_end_exclusive": 251705
+          },
+          {
+            "recovery_span_index": 717,
+            "original_byte_start": 251705,
+            "original_byte_end_exclusive": 251804
+          },
+          {
+            "recovery_span_index": 718,
+            "original_byte_start": 251804,
+            "original_byte_end_exclusive": 251805
+          },
+          {
+            "recovery_span_index": 719,
+            "original_byte_start": 251805,
+            "original_byte_end_exclusive": 254299
+          }
+        ]
+      },
+      {
+        "level": 2,
+        "text": "30. 三素数 (2,3,5) 的整箱全薄层邻域与无界共同高度",
+        "heading": {
+          "byte_start": 254299,
+          "byte_end_exclusive": 254370,
+          "line_start": 4745,
+          "line_end_inclusive": 4745,
+          "byte_count": 71,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "e816cd77c135b891d1ee0885bd7b859a283c454d6ed0d4078710db01eb93a144"
+        },
+        "region": {
+          "byte_start": 254299,
+          "byte_end_exclusive": 286339,
+          "line_start": 4745,
+          "line_end_inclusive": 5391,
+          "byte_count": 32040,
+          "lf_count": 647,
+          "terminal_lf_count": 1,
+          "sha256": "f3ec3a87f61732c417abf6f0682e25344421732575191b2379d57addb9cf9024"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 720,
+            "original_byte_start": 254299,
+            "original_byte_end_exclusive": 254371
+          },
+          {
+            "recovery_span_index": 721,
+            "original_byte_start": 254371,
+            "original_byte_end_exclusive": 254378
+          },
+          {
+            "recovery_span_index": 722,
+            "original_byte_start": 254378,
+            "original_byte_end_exclusive": 254417
+          },
+          {
+            "recovery_span_index": 723,
+            "original_byte_start": 254417,
+            "original_byte_end_exclusive": 254420
+          },
+          {
+            "recovery_span_index": 724,
+            "original_byte_start": 254420,
+            "original_byte_end_exclusive": 254473
+          },
+          {
+            "recovery_span_index": 725,
+            "original_byte_start": 254473,
+            "original_byte_end_exclusive": 254618
+          },
+          {
+            "recovery_span_index": 726,
+            "original_byte_start": 254618,
+            "original_byte_end_exclusive": 255468
+          },
+          {
+            "recovery_span_index": 727,
+            "original_byte_start": 255468,
+            "original_byte_end_exclusive": 255475
+          },
+          {
+            "recovery_span_index": 728,
+            "original_byte_start": 255475,
+            "original_byte_end_exclusive": 257345
+          },
+          {
+            "recovery_span_index": 729,
+            "original_byte_start": 257345,
+            "original_byte_end_exclusive": 257352
+          },
+          {
+            "recovery_span_index": 730,
+            "original_byte_start": 257352,
+            "original_byte_end_exclusive": 258142
+          },
+          {
+            "recovery_span_index": 731,
+            "original_byte_start": 258142,
+            "original_byte_end_exclusive": 258149
+          },
+          {
+            "recovery_span_index": 732,
+            "original_byte_start": 258149,
+            "original_byte_end_exclusive": 261125
+          },
+          {
+            "recovery_span_index": 733,
+            "original_byte_start": 261125,
+            "original_byte_end_exclusive": 261132
+          },
+          {
+            "recovery_span_index": 734,
+            "original_byte_start": 261132,
+            "original_byte_end_exclusive": 262528
+          },
+          {
+            "recovery_span_index": 735,
+            "original_byte_start": 262528,
+            "original_byte_end_exclusive": 262535
+          },
+          {
+            "recovery_span_index": 736,
+            "original_byte_start": 262535,
+            "original_byte_end_exclusive": 263365
+          },
+          {
+            "recovery_span_index": 737,
+            "original_byte_start": 263365,
+            "original_byte_end_exclusive": 263372
+          },
+          {
+            "recovery_span_index": 738,
+            "original_byte_start": 263372,
+            "original_byte_end_exclusive": 264573
+          },
+          {
+            "recovery_span_index": 739,
+            "original_byte_start": 264573,
+            "original_byte_end_exclusive": 264627
+          },
+          {
+            "recovery_span_index": 740,
+            "original_byte_start": 264627,
+            "original_byte_end_exclusive": 265061
+          },
+          {
+            "recovery_span_index": 741,
+            "original_byte_start": 265061,
+            "original_byte_end_exclusive": 265068
+          },
+          {
+            "recovery_span_index": 742,
+            "original_byte_start": 265068,
+            "original_byte_end_exclusive": 266669
+          },
+          {
+            "recovery_span_index": 743,
+            "original_byte_start": 266669,
+            "original_byte_end_exclusive": 266676
+          },
+          {
+            "recovery_span_index": 744,
+            "original_byte_start": 266676,
+            "original_byte_end_exclusive": 268476
+          },
+          {
+            "recovery_span_index": 745,
+            "original_byte_start": 268476,
+            "original_byte_end_exclusive": 268573
+          },
+          {
+            "recovery_span_index": 746,
+            "original_byte_start": 268573,
+            "original_byte_end_exclusive": 268748
+          },
+          {
+            "recovery_span_index": 747,
+            "original_byte_start": 268748,
+            "original_byte_end_exclusive": 268756
+          },
+          {
+            "recovery_span_index": 748,
+            "original_byte_start": 268756,
+            "original_byte_end_exclusive": 269198
+          },
+          {
+            "recovery_span_index": 749,
+            "original_byte_start": 269198,
+            "original_byte_end_exclusive": 269210
+          },
+          {
+            "recovery_span_index": 750,
+            "original_byte_start": 269210,
+            "original_byte_end_exclusive": 271087
+          },
+          {
+            "recovery_span_index": 751,
+            "original_byte_start": 271087,
+            "original_byte_end_exclusive": 271245
+          },
+          {
+            "recovery_span_index": 752,
+            "original_byte_start": 271245,
+            "original_byte_end_exclusive": 271246
+          },
+          {
+            "recovery_span_index": 753,
+            "original_byte_start": 271246,
+            "original_byte_end_exclusive": 271254
+          },
+          {
+            "recovery_span_index": 754,
+            "original_byte_start": 271254,
+            "original_byte_end_exclusive": 272301
+          },
+          {
+            "recovery_span_index": 755,
+            "original_byte_start": 272301,
+            "original_byte_end_exclusive": 272309
+          },
+          {
+            "recovery_span_index": 756,
+            "original_byte_start": 272309,
+            "original_byte_end_exclusive": 273028
+          },
+          {
+            "recovery_span_index": 757,
+            "original_byte_start": 273028,
+            "original_byte_end_exclusive": 273036
+          },
+          {
+            "recovery_span_index": 758,
+            "original_byte_start": 273036,
+            "original_byte_end_exclusive": 274387
+          },
+          {
+            "recovery_span_index": 759,
+            "original_byte_start": 274387,
+            "original_byte_end_exclusive": 274395
+          },
+          {
+            "recovery_span_index": 760,
+            "original_byte_start": 274395,
+            "original_byte_end_exclusive": 275511
+          },
+          {
+            "recovery_span_index": 761,
+            "original_byte_start": 275511,
+            "original_byte_end_exclusive": 275519
+          },
+          {
+            "recovery_span_index": 762,
+            "original_byte_start": 275519,
+            "original_byte_end_exclusive": 277007
+          },
+          {
+            "recovery_span_index": 763,
+            "original_byte_start": 277007,
+            "original_byte_end_exclusive": 277015
+          },
+          {
+            "recovery_span_index": 764,
+            "original_byte_start": 277015,
+            "original_byte_end_exclusive": 277752
+          },
+          {
+            "recovery_span_index": 765,
+            "original_byte_start": 277752,
+            "original_byte_end_exclusive": 277760
+          },
+          {
+            "recovery_span_index": 766,
+            "original_byte_start": 277760,
+            "original_byte_end_exclusive": 279060
+          },
+          {
+            "recovery_span_index": 767,
+            "original_byte_start": 279060,
+            "original_byte_end_exclusive": 279121
+          },
+          {
+            "recovery_span_index": 768,
+            "original_byte_start": 279121,
+            "original_byte_end_exclusive": 279146
+          },
+          {
+            "recovery_span_index": 769,
+            "original_byte_start": 279146,
+            "original_byte_end_exclusive": 279150
+          },
+          {
+            "recovery_span_index": 770,
+            "original_byte_start": 279150,
+            "original_byte_end_exclusive": 279312
+          },
+          {
+            "recovery_span_index": 771,
+            "original_byte_start": 279312,
+            "original_byte_end_exclusive": 279320
+          },
+          {
+            "recovery_span_index": 772,
+            "original_byte_start": 279320,
+            "original_byte_end_exclusive": 280152
+          },
+          {
+            "recovery_span_index": 773,
+            "original_byte_start": 280152,
+            "original_byte_end_exclusive": 280160
+          },
+          {
+            "recovery_span_index": 774,
+            "original_byte_start": 280160,
+            "original_byte_end_exclusive": 280202
+          },
+          {
+            "recovery_span_index": 775,
+            "original_byte_start": 280202,
+            "original_byte_end_exclusive": 281340
+          },
+          {
+            "recovery_span_index": 776,
+            "original_byte_start": 281340,
+            "original_byte_end_exclusive": 281443
+          },
+          {
+            "recovery_span_index": 777,
+            "original_byte_start": 281443,
+            "original_byte_end_exclusive": 281444
+          },
+          {
+            "recovery_span_index": 778,
+            "original_byte_start": 281444,
+            "original_byte_end_exclusive": 281490
+          },
+          {
+            "recovery_span_index": 779,
+            "original_byte_start": 281490,
+            "original_byte_end_exclusive": 281491
+          },
+          {
+            "recovery_span_index": 780,
+            "original_byte_start": 281491,
+            "original_byte_end_exclusive": 281499
+          },
+          {
+            "recovery_span_index": 781,
+            "original_byte_start": 281499,
+            "original_byte_end_exclusive": 281564
+          },
+          {
+            "recovery_span_index": 782,
+            "original_byte_start": 281564,
+            "original_byte_end_exclusive": 281567
+          },
+          {
+            "recovery_span_index": 783,
+            "original_byte_start": 281567,
+            "original_byte_end_exclusive": 281729
+          },
+          {
+            "recovery_span_index": 784,
+            "original_byte_start": 281729,
+            "original_byte_end_exclusive": 281819
+          },
+          {
+            "recovery_span_index": 785,
+            "original_byte_start": 281819,
+            "original_byte_end_exclusive": 281917
+          },
+          {
+            "recovery_span_index": 786,
+            "original_byte_start": 281917,
+            "original_byte_end_exclusive": 281969
+          },
+          {
+            "recovery_span_index": 787,
+            "original_byte_start": 281969,
+            "original_byte_end_exclusive": 281988
+          },
+          {
+            "recovery_span_index": 788,
+            "original_byte_start": 281988,
+            "original_byte_end_exclusive": 282479
+          },
+          {
+            "recovery_span_index": 789,
+            "original_byte_start": 282479,
+            "original_byte_end_exclusive": 282495
+          },
+          {
+            "recovery_span_index": 790,
+            "original_byte_start": 282495,
+            "original_byte_end_exclusive": 282858
+          },
+          {
+            "recovery_span_index": 791,
+            "original_byte_start": 282858,
+            "original_byte_end_exclusive": 282962
+          },
+          {
+            "recovery_span_index": 792,
+            "original_byte_start": 282962,
+            "original_byte_end_exclusive": 282963
+          },
+          {
+            "recovery_span_index": 793,
+            "original_byte_start": 282963,
+            "original_byte_end_exclusive": 283922
+          },
+          {
+            "recovery_span_index": 794,
+            "original_byte_start": 283922,
+            "original_byte_end_exclusive": 284028
+          },
+          {
+            "recovery_span_index": 795,
+            "original_byte_start": 284028,
+            "original_byte_end_exclusive": 284029
+          },
+          {
+            "recovery_span_index": 796,
+            "original_byte_start": 284029,
+            "original_byte_end_exclusive": 284030
+          },
+          {
+            "recovery_span_index": 797,
+            "original_byte_start": 284030,
+            "original_byte_end_exclusive": 286339
+          }
+        ]
+      }
+    ],
+    "i33_input": [
+      {
+        "level": 1,
+        "text": "算术边界的量化: 5040、整数判据与回返核舍入",
+        "heading": {
+          "byte_start": 0,
+          "byte_end_exclusive": 63,
+          "line_start": 1,
+          "line_end_inclusive": 1,
+          "byte_count": 63,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "b916a8496d35d919140c5f15117b98c3c4d53d4586bc3979416b72cdbfab3dab"
+        },
+        "region": {
+          "byte_start": 0,
+          "byte_end_exclusive": 238272,
+          "line_start": 1,
+          "line_end_inclusive": 4983,
+          "byte_count": 238272,
+          "lf_count": 4983,
+          "terminal_lf_count": 1,
+          "sha256": "9393b391e41432651264bde9a4e4dfdcb9a9f0eeaa880ab0c4afe502e6967dce"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 0,
+            "original_byte_start": 0,
+            "original_byte_end_exclusive": 14152
+          },
+          {
+            "recovery_span_index": 1,
+            "original_byte_start": 14152,
+            "original_byte_end_exclusive": 14331
+          },
+          {
+            "recovery_span_index": 2,
+            "original_byte_start": 14331,
+            "original_byte_end_exclusive": 18852
+          },
+          {
+            "recovery_span_index": 3,
+            "original_byte_start": 18852,
+            "original_byte_end_exclusive": 20242
+          },
+          {
+            "recovery_span_index": 4,
+            "original_byte_start": 20242,
+            "original_byte_end_exclusive": 31077
+          },
+          {
+            "recovery_span_index": 5,
+            "original_byte_start": 31077,
+            "original_byte_end_exclusive": 31149
+          },
+          {
+            "recovery_span_index": 6,
+            "original_byte_start": 31149,
+            "original_byte_end_exclusive": 72085
+          },
+          {
+            "recovery_span_index": 7,
+            "original_byte_start": 72085,
+            "original_byte_end_exclusive": 72118
+          },
+          {
+            "recovery_span_index": 8,
+            "original_byte_start": 72118,
+            "original_byte_end_exclusive": 141470
+          },
+          {
+            "recovery_span_index": 9,
+            "original_byte_start": 141470,
+            "original_byte_end_exclusive": 141561
+          },
+          {
+            "recovery_span_index": 10,
+            "original_byte_start": 141561,
+            "original_byte_end_exclusive": 184256
+          },
+          {
+            "recovery_span_index": 11,
+            "original_byte_start": 184256,
+            "original_byte_end_exclusive": 184355
+          },
+          {
+            "recovery_span_index": 12,
+            "original_byte_start": 184355,
+            "original_byte_end_exclusive": 236832
+          },
+          {
+            "recovery_span_index": 13,
+            "original_byte_start": 236832,
+            "original_byte_end_exclusive": 236935
+          },
+          {
+            "recovery_span_index": 14,
+            "original_byte_start": 236935,
+            "original_byte_end_exclusive": 237006
+          },
+          {
+            "recovery_span_index": 15,
+            "original_byte_start": 237006,
+            "original_byte_end_exclusive": 237168
+          },
+          {
+            "recovery_span_index": 16,
+            "original_byte_start": 237168,
+            "original_byte_end_exclusive": 238272
+          }
+        ]
+      },
+      {
+        "level": 2,
+        "text": "1. 定义与命题的范围",
+        "heading": {
+          "byte_start": 185,
+          "byte_end_exclusive": 216,
+          "line_start": 5,
+          "line_end_inclusive": 5,
+          "byte_count": 31,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "f47d3932ee49f046ed4416883d12663afccefd4846a5a7605ec2fe63a9501a6b"
+        },
+        "region": {
+          "byte_start": 185,
+          "byte_end_exclusive": 767,
+          "line_start": 5,
+          "line_end_inclusive": 12,
+          "byte_count": 582,
+          "lf_count": 8,
+          "terminal_lf_count": 2,
+          "sha256": "c3c6811051388c97e3b5d0ffbd2d803c311f5382bd6e770ba2a8339277c29f0c"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 0,
+            "original_byte_start": 185,
+            "original_byte_end_exclusive": 767
+          }
+        ]
+      },
+      {
+        "level": 2,
+        "text": "2. 5040 与小素数: 两种编码不要混在一起",
+        "heading": {
+          "byte_start": 767,
+          "byte_end_exclusive": 823,
+          "line_start": 13,
+          "line_end_inclusive": 13,
+          "byte_count": 56,
+          "lf_count": 1,
+          "terminal_lf_count": 1,
+          "sha256": "147ae69dc08364c5ee02de05b707e75fa32f94fa8f40f2f5209620c51cdf09e9"
+        },
+        "region": {
+          "byte_start": 767,
+          "byte_end_exclusive": 4183,
+          "line_start": 13,
+          "line_end_inclusive": 109,
+          "byte_count": 3416,
+          "lf_count": 97,
+          "terminal_lf_count": 2,
+          "sha256": "9c4a67aec42711da36b1132a044b0de77cdd8e99351ec42a91a3b3ccd9d070cb"
+        },
+        "recovery": [
+          {
+            "recovery_span_index": 0,
+            "original_byte_start": 767,
+            "original_byte_end_exclusive": 4183
+          }
+        ]
+      },

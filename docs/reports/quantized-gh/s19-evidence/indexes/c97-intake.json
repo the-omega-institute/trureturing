@@ -1,0 +1,12 @@
+{
+  "schema": "s19-evidence-entry-v1",
+  "resource": "C97-intake",
+  "logical_path": "c97-recovered-prime-support-full-intake-0911.json",
+  "original": {"bytes": 2974, "sha256": "49ba86d66bbbd9994e26730e4214274efa9235bef33387fd87875dea4b85bdb6", "lf": 50, "terminal_lf": 1, "lines": 50},
+  "origin": {"supplied_path": "/tmp/qgh-boundaries-0908/c97-recovered-prime-support-full-intake-0911.json", "identity_owner": "I36", "pointer": "/prerequisite_intake/files/8"},
+  "contract": "docs/reports/quantized-gh/s19-evidence/README.md",
+  "interpretation": "Archive of the complete named original resource. Parts are contiguous raw UTF-8 slices; parse JSON only after reconstruction. Historical fields retain their original owner and values.",
+  "parts": [
+    {"ordinal": 1, "path": "docs/reports/quantized-gh/s19-evidence/raw/c97-intake-49ba86d66bbb/group-001/part-0001-49ba86d66bbb.txt", "byte_start": 0, "byte_end_exclusive": 2974, "line_start": 1, "line_end_inclusive": 50, "bytes": 2974, "sha256": "49ba86d66bbbd9994e26730e4214274efa9235bef33387fd87875dea4b85bdb6", "lf": 50, "terminal_lf": 1, "lines": 50, "context": "\"recorded_at_utc\": \"2026-09-10T16:20:00.729994+00:00\","}
+  ]
+}

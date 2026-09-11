@@ -1,0 +1,35 @@
+**30.57 定理及证明（完整系数网格的双侧最优距离证书）。** For integers \(s,v\ge1\), let
+\[
+\mathcal G_{N,s}=\{(n_1/s,\ldots,n_N/s):-sH_N\le n_k\le sH_N,\ n_k\in\mathbb Z\},
+\quad \kappa_{\rm mesh}=\frac{U_NN}{4s^2},\quad \varepsilon=\frac{\Gamma_0}{v}.
+\]
+Every point of \(\mathcal C_N\) lies within \(1/(2s)\) in each coordinate of a grid point:
+round each \(sx_k\) to a nearest integer. Both boundaries \(\pm sH_N\) are integers,
+so this does not leave the box, even at boundary faces; either tie choice works.
+This proves coverage and does not prescribe evaluating the unknown optimizer.
+Applied to \(a^\circ\), it gives \(q^\circ\) with
+\(R_N(q^\circ)\le D_N+\kappa_{\rm mesh}\). There is also the supplied independent
+continuity bound on the same box:
+\[
+|R_N(x)-R_N(y)|\le4N(1+2NH_N)\|x-y\|_\infty.
+\]
+For its proof use \(\|f_k\|\le2\),
+\(\|\chi-Vx\|,\|\chi-Vy\|\le1+2NH_N\),
+\(\|V(x-y)\|\le2N\|x-y\|_\infty\), and the difference-of-squared-norms inequality.
+The sharper quadratic error above is the one used below.
+
+Define over the entire finite grid
+\[
+\beta(q)=B(N,q,v+1,v),\quad u=\min_{q\in\mathcal G_{N,s}}\beta(q),\quad
+\omega=\kappa_{\rm mesh}+\varepsilon,\qquad \ell=\max(\sigma_N,u-\omega).
+\]
+Every \(\beta(q)\ge R_N(q)\ge D_N\). Conversely,
+\(u\le\beta(q^\circ)\le R_N(q^\circ)+\varepsilon\le D_N+\omega\).
+The zero vector belongs to the grid and \(\beta(0)=1\). Thus
+\[
+0<\ell\le D_N\le u\le1,\qquad u-\ell\le\omega.
+\]
+Both lower-bound terms are justified: \(u-\omega\le D_N\) by coverage and
+\(\sigma_N\le D_N\) by 30.53. A single candidate upper bound, a partial table, or a
+minimum over a set without proved coverage does not justify \(u-\omega\le D_N\).
+

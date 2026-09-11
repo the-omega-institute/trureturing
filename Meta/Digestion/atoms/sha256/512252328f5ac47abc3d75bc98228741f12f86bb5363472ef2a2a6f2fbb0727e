@@ -1,0 +1,4 @@
+### 37.1 产地、先验暴露与分工
+
+本批 skill 上下文为 consensus-rnd:sshx，阶段为 implementation。实施载体是一个 codex-cli worker（自报 GPT-6／Codex），按 caller 的六席收敛 brief 与 GoalArtifact 修订 R1-PR6 在分支 lane/theory/csa-upgrade-pr6-0910 实施；本席实际读取本机该 skill 的 SKILL.md、完整 CLAUDE.md 及指定卷文、附录，未另派子席，属于 repo-prior-exposed。
+

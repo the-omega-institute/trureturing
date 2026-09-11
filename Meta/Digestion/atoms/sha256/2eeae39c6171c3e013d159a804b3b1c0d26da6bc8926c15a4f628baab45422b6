@@ -1,0 +1,18 @@
+**27.12 可选非空域界及射线量词的限制。** 令 \(Q=\sum_i\log p_i\) 固定,
+另定义
+\[
+N_{\rm domain}=\max\left\{0,
+\left\lfloor\frac{Q+\log5040-\sum_i\gamma_i}{\sum_i\alpha_i}\right\rfloor+1\right\}.
+\]
+当 \(n\ge N_{\rm domain}\),有
+\(A(n)=n\sum_i\alpha_i+\sum_i\gamma_i>Q+\log5040\)。
+取 \(M_0=A(n)\)、\(M_1=A(n)+\min_i h_i\),便得到严格正宽度的原可容许薄层:
+下角点在下端点,将任意一个最小步长坐标升高一次的实际角点在上端点。
+因此 \(n\ge\max\{N,N_{\rm domain}\}\) 同时保证原域非空和全域严格排除。
+这里只给一个非空性的充分界,不替代 26.16 的精确非空性判据。
+
+量词顺序是 \(\forall(p,m,r)\ \exists N(p,m,r)\ \forall n\ge N\ \forall\) 可容许薄层;
+不是对所有指数三元组共用一个 \(N\)。每箱裕量为正,没有声称沿整条射线存在远离零的统一裕量。
+本推导只覆盖每个 \(m_i\ge1\) 的固定方向;有零分量的射线不在此定理范围内,
+任意无界指数序列也不必最终落在某个固定正整数方向上。
+

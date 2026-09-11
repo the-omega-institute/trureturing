@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:81939a676bf392a192a1b95efea135349c53f34839002a9eacc37a992990f7ca
+  normalized_sha256: sha256:81939a676bf392a192a1b95efea135349c53f34839002a9eacc37a992990f7ca
+cas_ref: sha256:81939a676bf392a192a1b95efea135349c53f34839002a9eacc37a992990f7ca
+coverage_gids:
+  - gid: D5/S1/Recurrence/Parity/CompositionalSquareAllOddCoefficients.hanna_conjecture
+    target_statement_id: sha256:2a151f78a2198244575ea155a89f94a62de61d06b137e8952cc25cc319fa3a04
+receipts:
+  unresolved_subitems: []

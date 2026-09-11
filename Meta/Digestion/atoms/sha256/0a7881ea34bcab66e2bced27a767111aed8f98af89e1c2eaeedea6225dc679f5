@@ -1,0 +1,29 @@
+## 37. The normalized grid logarithm now measures actual occupation
+
+The square-grid consumer applies the previous normalization F'_V=Z'_V/Z_V,
+actual nonvanishing, and (35.3), obtaining throughout the same ActivityTube
+
+\[
+ \boxed{zF'_V(z)=\frac{M_1(V;z)}{Z_V(z)}
+ =\sum_{v\in V}(1-\alpha(V,v;z)).}
+\tag{37.1}
+\]
+
+At real 0<=lambda<=51/20 this is exactly the finite-PMF expected cardinality,
+with the real mean cast into the complex numbers. The proof transports the
+actual finite sums and weights, rather than postulating an expectation identity.
+At general complex activities, (37.1) remains an analytic quantity; it is not
+assigned probability values.
+
+The already-owned bound |alpha(V,v;z)|<=2 now gives a volume-uniform analytic
+response estimate, also formalized in this increment:
+
+\[
+ \boxed{|zF'_V(z)|\le3|V|.}
+\tag{37.2}
+\]
+
+For nonempty V, this bounds the scaled derivative of F_V/|V| by three on the
+common complex neighborhood. It does not assert that dividing by z is safe at
+zero, or that differentiating a thermodynamic limit is already justified.
+

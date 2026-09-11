@@ -1,0 +1,511 @@
+{
+  "schema": "s20-substantive-navigation-v1",
+  "report_version": "report-S20-I29",
+  "report_path": "docs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md",
+  "report_sections": [
+    {
+      "anchor": "balanced-237-whole-box-all-real-slab-fixed-certificate-s20--c43",
+      "heading": "Balanced (2,3,7): whole-box, all-real-slab fixed certificate (S20 / C43)",
+      "byte_span": [
+        0,
+        2394
+      ],
+      "identity": {
+        "bytes": 2394,
+        "sha256": "620a9d7092a9e59c9cefda39d8025dddd9a0065b79698316f0108dfd4b15eee4",
+        "lf": 8,
+        "terminal_lf": 2,
+        "lines": 8
+      }
+    },
+    {
+      "anchor": "literal-domain-and-overlap-audit",
+      "heading": "Literal-domain and overlap audit",
+      "byte_span": [
+        2394,
+        3958
+      ],
+      "identity": {
+        "bytes": 1564,
+        "sha256": "3c2d5bea2d874dffedcc34c02d86014e0690a676e5de892a264141aaf6eaa223",
+        "lf": 6,
+        "terminal_lf": 2,
+        "lines": 6
+      }
+    },
+    {
+      "anchor": "self-contained-adapted-executable",
+      "heading": "Self-contained adapted executable",
+      "byte_span": [
+        3958,
+        17452
+      ],
+      "identity": {
+        "bytes": 13494,
+        "sha256": "7c1ee55e264cf7d17047c21b9175dc7ac587d0ca6a96e3e9f868ab38c1fcc881",
+        "lf": 282,
+        "terminal_lf": 2,
+        "lines": 282
+      }
+    },
+    {
+      "anchor": "observed-adapted-execution",
+      "heading": "Observed adapted execution",
+      "byte_span": [
+        17452,
+        21522
+      ],
+      "identity": {
+        "bytes": 4070,
+        "sha256": "02a4e1811e88719603f53bf2939d62ad46a52993b371de9b29e0098178b2250e",
+        "lf": 100,
+        "terminal_lf": 2,
+        "lines": 100
+      }
+    },
+    {
+      "anchor": "immutable-prior-evidence-and-limits",
+      "heading": "Immutable prior evidence and limits",
+      "byte_span": [
+        21522,
+        24269
+      ],
+      "identity": {
+        "bytes": 2747,
+        "sha256": "7f6184cf32e4bed59e3a5ec8c4db9a779136a671cebfdb47e61aabd8cf84fb06",
+        "lf": 24,
+        "terminal_lf": 2,
+        "lines": 24
+      }
+    },
+    {
+      "anchor": "focused-classical-source-receipts",
+      "heading": "Focused classical-source receipts",
+      "byte_span": [
+        24269,
+        28168
+      ],
+      "identity": {
+        "bytes": 3899,
+        "sha256": "f23fc5156ad8a1636adc4bea1feb76b28d28e0f5305a3dc78a7ebe467c5373b8",
+        "lf": 20,
+        "terminal_lf": 2,
+        "lines": 20
+      }
+    },
+    {
+      "anchor": "source-identity-and-canonical-ingestion-boundary",
+      "heading": "Source identity and canonical ingestion boundary",
+      "byte_span": [
+        28168,
+        31715
+      ],
+      "identity": {
+        "bytes": 3547,
+        "sha256": "903be5f55299266403bc59f3ae56dc1e9c378d5ae5cf3522049cb2eebacfc429",
+        "lf": 18,
+        "terminal_lf": 2,
+        "lines": 18
+      }
+    },
+    {
+      "anchor": "c72-current-placement-provenance-and-coverage-note",
+      "heading": "C72 current placement, provenance, and coverage note",
+      "byte_span": [
+        31715,
+        39336
+      ],
+      "identity": {
+        "bytes": 7621,
+        "sha256": "720808c81d2eb28dea1ae4fd02627b5da257aa7e352f3c9753c6986767a9ff27",
+        "lf": 42,
+        "terminal_lf": 2,
+        "lines": 42
+      }
+    },
+    {
+      "anchor": "c85--s20-section-31-archival-representation-i29-2026-09-10",
+      "heading": "C85 / S20 section 31 archival representation (I29, 2026-09-10)",
+      "byte_span": [
+        39336,
+        42664
+      ],
+      "identity": {
+        "bytes": 3328,
+        "sha256": "94e99a9d601ec14684ff08722c39317f163381a2e56dacf6b2b3bd4b9d5ac79f",
+        "lf": 12,
+        "terminal_lf": 2,
+        "lines": 12
+      }
+    },
+    {
+      "anchor": "verbatim-relocated-source-payloads",
+      "heading": "Verbatim relocated source payloads",
+      "byte_span": [
+        42664,
+        42704
+      ],
+      "identity": {
+        "bytes": 40,
+        "sha256": "a750c8c713baeca300dff1ca4ebca7db1fe11b9093f0cce1888300bb1090e408",
+        "lf": 2,
+        "terminal_lf": 2,
+        "lines": 2
+      }
+    },
+    {
+      "anchor": "archive-004-311-original-bytes-286409286418",
+      "heading": "Archive 004: 31.1, original bytes [286409,286418)",
+      "byte_span": [
+        42704,
+        42841
+      ],
+      "identity": {
+        "bytes": 137,
+        "sha256": "d1b90dcbe8b96b71dab414241ea178ac3c54c9e867d32a12fae04dd6df195c38",
+        "lf": 8,
+        "terminal_lf": 2,
+        "lines": 8
+      }
+    },
+    {
+      "anchor": "archive-006-311-original-bytes-286457286653",
+      "heading": "Archive 006: 31.1, original bytes [286457,286653)",
+      "byte_span": [
+        42841,
+        43190
+      ],
+      "identity": {
+        "bytes": 349,
+        "sha256": "1761d5d3298112d5ba1c4821ca2a8f029d71a0b61310b3a03a027f641deaf26c",
+        "lf": 11,
+        "terminal_lf": 2,
+        "lines": 11
+      }
+    },
+    {
+      "anchor": "archive-008-311-original-bytes-287807287831",
+      "heading": "Archive 008: 31.1, original bytes [287807,287831)",
+      "byte_span": [
+        43190,
+        43339
+      ],
+      "identity": {
+        "bytes": 149,
+        "sha256": "4382377b5d0accef4be08b091fb756ceca33049450e9bb24ad6bfe1cc9d20127",
+        "lf": 8,
+        "terminal_lf": 2,
+        "lines": 8
+      }
+    },
+    {
+      "anchor": "archive-010-311-original-bytes-287833287856",
+      "heading": "Archive 010: 31.1, original bytes [287833,287856)",
+      "byte_span": [
+        43339,
+        43489
+      ],
+      "identity": {
+        "bytes": 150,
+        "sha256": "ef0e84862d071c719374097a7815607c6e7b506943e6758b340c0ac68938168c",
+        "lf": 8,
+        "terminal_lf": 2,
+        "lines": 8
+      }
+    },
+    {
+      "anchor": "archive-026-318-original-bytes-297435297460",
+      "heading": "Archive 026: 31.8, original bytes [297435,297460)",
+      "byte_span": [
+        43489,
+        43668
+      ],
+      "identity": {
+        "bytes": 179,
+        "sha256": "b4a0d13bee7eb401580d77a529425b286ba177d738b8f505d2518d996daa643f",
+        "lf": 8,
+        "terminal_lf": 2,
+        "lines": 8
+      }
+    },
+    {
+      "anchor": "archive-034-3111-original-bytes-300596300621",
+      "heading": "Archive 034: 31.11, original bytes [300596,300621)",
+      "byte_span": [
+        43668,
+        43849
+      ],
+      "identity": {
+        "bytes": 181,
+        "sha256": "12ebe583f3fd147ea130bb47c6c4b0c3939f9d870eafeeb10a5f65c453c46ced",
+        "lf": 8,
+        "terminal_lf": 2,
+        "lines": 8
+      }
+    },
+    {
+      "anchor": "archive-036-3111-original-bytes-302112302244",
+      "heading": "Archive 036: 31.11, original bytes [302112,302244)",
+      "byte_span": [
+        43849,
+        44195
+      ],
+      "identity": {
+        "bytes": 346,
+        "sha256": "d19e195cc266221af39f40f87189fb3b93c58e16b65790bfa92b91432cba269e",
+        "lf": 9,
+        "terminal_lf": 2,
+        "lines": 9
+      }
+    },
+    {
+      "anchor": "archive-040-3112-original-bytes-303397303445",
+      "heading": "Archive 040: 31.12, original bytes [303397,303445)",
+      "byte_span": [
+        44195,
+        44437
+      ],
+      "identity": {
+        "bytes": 242,
+        "sha256": "509ed07b0934f550d7b6c08ed15ce565957402c76a5e84332a696aa29ab9d261",
+        "lf": 8,
+        "terminal_lf": 2,
+        "lines": 8
+      }
+    },
+    {
+      "anchor": "archive-044-3113-original-bytes-304186304247",
+      "heading": "Archive 044: 31.13, original bytes [304186,304247)",
+      "byte_span": [
+        44437,
+        44680
+      ],
+      "identity": {
+        "bytes": 243,
+        "sha256": "ef5954ce960078074a651c8a46e798cc802c2acc0db1922edf1fc8f0b6322fe7",
+        "lf": 9,
+        "terminal_lf": 2,
+        "lines": 9
+      }
+    },
+    {
+      "anchor": "archive-056-3118-original-bytes-309341309399",
+      "heading": "Archive 056: 31.18, original bytes [309341,309399)",
+      "byte_span": [
+        44680,
+        44907
+      ],
+      "identity": {
+        "bytes": 227,
+        "sha256": "217f809dbe51ae80ce953c809555ec76d84c55efd90c8f82a1083e5748c597e8",
+        "lf": 8,
+        "terminal_lf": 2,
+        "lines": 8
+      }
+    },
+    {
+      "anchor": "archive-062-3120-original-bytes-311489311496",
+      "heading": "Archive 062: 31.20, original bytes [311489,311496)",
+      "byte_span": [
+        44907,
+        45063
+      ],
+      "identity": {
+        "bytes": 156,
+        "sha256": "34446433aabe2ba72b34cb100e49a328640b8a90a9e3c1750cd64e42d8b7ad65",
+        "lf": 8,
+        "terminal_lf": 2,
+        "lines": 8
+      }
+    },
+    {
+      "anchor": "archive-064-3120-original-bytes-311570311592",
+      "heading": "Archive 064: 31.20, original bytes [311570,311592)",
+      "byte_span": [
+        45063,
+        45245
+      ],
+      "identity": {
+        "bytes": 182,
+        "sha256": "31d9343b069841f1176e821fbb875f2091ef7e4781d3887428e84823317bbffc",
+        "lf": 8,
+        "terminal_lf": 2,
+        "lines": 8
+      }
+    },
+    {
+      "anchor": "archive-066-3120-original-bytes-311998312038",
+      "heading": "Archive 066: 31.20, original bytes [311998,312038)",
+      "byte_span": [
+        45245,
+        45450
+      ],
+      "identity": {
+        "bytes": 205,
+        "sha256": "914b7b4ac34a24f502b57c0dbc3ee65a300a8047855bda6d9e7687b312df135e",
+        "lf": 8,
+        "terminal_lf": 2,
+        "lines": 8
+      }
+    },
+    {
+      "anchor": "archive-068-3121-original-bytes-312043312250",
+      "heading": "Archive 068: 31.21, original bytes [312043,312250)",
+      "byte_span": [
+        45450,
+        45850
+      ],
+      "identity": {
+        "bytes": 400,
+        "sha256": "37f636c7da1fc46b847b67a28455e5a471d2a4fd81acc510bab9fea83a963440",
+        "lf": 10,
+        "terminal_lf": 2,
+        "lines": 10
+      }
+    },
+    {
+      "anchor": "archive-070-3121-original-bytes-312401312402",
+      "heading": "Archive 070: 31.21, original bytes [312401,312402)",
+      "byte_span": [
+        45850,
+        46044
+      ],
+      "identity": {
+        "bytes": 194,
+        "sha256": "5d1bd892aab4a95e3bf96bb15da568d262dc9e692eeeb336cf7a1867eb31c860",
+        "lf": 9,
+        "terminal_lf": 2,
+        "lines": 9
+      }
+    },
+    {
+      "anchor": "archive-072-3121-original-bytes-312560312561",
+      "heading": "Archive 072: 31.21, original bytes [312560,312561)",
+      "byte_span": [
+        46044,
+        46238
+      ],
+      "identity": {
+        "bytes": 194,
+        "sha256": "80b8104bbc303cd4cdc308c45d437f6a19f96440c585dbaa1f8f03340a901abb",
+        "lf": 9,
+        "terminal_lf": 2,
+        "lines": 9
+      }
+    },
+    {
+      "anchor": "archive-074-3121-original-bytes-312953312964",
+      "heading": "Archive 074: 31.21, original bytes [312953,312964)",
+      "byte_span": [
+        46238,
+        46442
+      ],
+      "identity": {
+        "bytes": 204,
+        "sha256": "3122f8893b49e1e888167935d5b50ecc79d9614ea1bf16ec66f8607ff57c94a2",
+        "lf": 9,
+        "terminal_lf": 2,
+        "lines": 9
+      }
+    },
+    {
+      "anchor": "archive-076-3121-original-bytes-313032313041",
+      "heading": "Archive 076: 31.21, original bytes [313032,313041)",
+      "byte_span": [
+        46442,
+        46644
+      ],
+      "identity": {
+        "bytes": 202,
+        "sha256": "37f4f54a1e83b1266c09ee152602b2146fad170eb38cb5a6a9d341a11e11f101",
+        "lf": 9,
+        "terminal_lf": 2,
+        "lines": 9
+      }
+    },
+    {
+      "anchor": "archive-078-3121-original-bytes-313241313242",
+      "heading": "Archive 078: 31.21, original bytes [313241,313242)",
+      "byte_span": [
+        46644,
+        46838
+      ],
+      "identity": {
+        "bytes": 194,
+        "sha256": "012be0445ad72f72969da55be12860fbc7d4b410dc6cecd93b7c67d2f1104812",
+        "lf": 9,
+        "terminal_lf": 2,
+        "lines": 9
+      }
+    },
+    {
+      "anchor": "archive-080-3121-original-bytes-313324313460",
+      "heading": "Archive 080: 31.21, original bytes [313324,313460)",
+      "byte_span": [
+        46838,
+        47167
+      ],
+      "identity": {
+        "bytes": 329,
+        "sha256": "cebb362b5af29fe709f3f249642accc279d21b0ea43d12f2843451607b55cbaa",
+        "lf": 10,
+        "terminal_lf": 2,
+        "lines": 10
+      }
+    },
+    {
+      "anchor": "archive-082-3121-original-bytes-313529314731",
+      "heading": "Archive 082: 31.21, original bytes [313529,314731)",
+      "byte_span": [
+        47167,
+        48562
+      ],
+      "identity": {
+        "bytes": 1395,
+        "sha256": "20f863530e73099189525b29260a78ad6c74d838c46f603d0775167f042fe85e",
+        "lf": 25,
+        "terminal_lf": 2,
+        "lines": 25
+      }
+    },
+    {
+      "anchor": "archive-083-3122-original-bytes-314731316737",
+      "heading": "Archive 083: 31.22, original bytes [314731,316737)",
+      "byte_span": [
+        48562,
+        50745
+      ],
+      "identity": {
+        "bytes": 2183,
+        "sha256": "5d03b828f56f7b730844fb27911769d3ceb34ad12a70735d6c039409e4370a66",
+        "lf": 33,
+        "terminal_lf": 2,
+        "lines": 33
+      }
+    },
+    {
+      "anchor": "i29-current-migration-and-producer-receipt",
+      "heading": "I29 current migration and producer receipt",
+      "byte_span": [
+        50745,
+        58191
+      ],
+      "identity": {
+        "bytes": 7446,
+        "sha256": "b42edab0d3a105c3b6e3e439227972caee8b64bfede13f1a35a5756c5f7d1810",
+        "lf": 46,
+        "terminal_lf": 1,
+        "lines": 46
+      }
+    }
+  ],
+  "own_addresses": "docs/reports/quantized-gh/s20-evidence/own-addresses.json",
+  "old_map": "docs/reports/quantized-gh/theory-body-migration-s20-0910.json",
+  "original_link_context": "Report fragments use the original report path; archived source fragments use their named original source path. Raw parts do not acquire new relative-link semantics.",
+  "inherited_source_links": {
+    "navigation": "docs/reports/quantized-gh/balanced-prime-235-all-slabs-0910.md",
+    "api": "docs/reports/quantized-gh/s19-evidence/README.md"
+  },
+  "old_source_parts": "docs/reports/quantized-gh/s20-evidence/old-source.json",
+  "old_map_parts": "docs/reports/quantized-gh/theory-body-migration-s20-0910.json"
+}

@@ -1,3 +1,4 @@
+import LeanInformationAudit.RegistryTypes
 import LeanInformationAudit.Registry
 import D5.S3.ConceptDynamics.InformationEscape.ExactRate
 import Mathlib.Data.Fin.VecNotation
@@ -10,24 +11,6 @@ open Lean.Meta
 open D5.S3.ConceptDynamics.CIRPT
 open D5.S3.ConceptDynamics.InformationEscape
 
-/-- A closed catalog and the canonical theorem-to-index assignment used by the seal. -/
-structure CatalogUnitRecord where
-  theoremName : Name
-  unitName : Name
-  realizationName : Name
-  registrationModuleName : Name
-  index : Nat
-  deriving Inhabited
-
-structure CatalogRecord where
-  rootId : Name
-  catalogId : CatalogId
-  catalogKind : CatalogKind
-  arenaName : Name
-  catalogName : Name
-  units : Array CatalogUnitRecord
-  localSealNames : Bool
-
 structure PreparedCatalog where
   record : CatalogRecord
   arenaValue : Expr
@@ -38,9 +21,9 @@ structure PreparedCatalog where
 private def nameLess (left right : Name) : Bool :=
   left.lt right
 
-private def catalogNameFor (rootId arenaName : Name) (catalogId : CatalogId)
+private def catalogNameFor (env : Environment) (rootId arenaName : Name) (catalogId : CatalogId)
     (localSealNames : Bool) : Name :=
-  if localSealNames then arenaName.str "__information_catalog"
+  if localSealNames then localCompanionName env arenaName "__information_catalog"
   else catalogQualifiedName rootId arenaName catalogId arenaName "__information_catalog"
 
 private def entryArenaValue (entry : InformationRegistryEntry) : MetaM Expr := do
@@ -129,7 +112,7 @@ private def prepareCatalog (rootId arenaName : Name) (localSealNames : Bool)
     registrationModuleName := entry.registrationModuleName
     index
   }
-  let catalogName := catalogNameFor rootId arenaName catalogId localSealNames
+  let catalogName := catalogNameFor (← getEnv) rootId arenaName catalogId localSealNames
   let declaration := .defnDecl {
     name := catalogName
     levelParams := []

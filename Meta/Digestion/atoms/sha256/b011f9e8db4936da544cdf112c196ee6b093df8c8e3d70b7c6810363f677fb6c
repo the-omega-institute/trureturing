@@ -1,0 +1,3 @@
+**定理 1.7(良基与归纳)**〔证〕。$E$ 在有限 $N$ 上无环 $\Rightarrow$ $\mathrm{depth}_L$ 良定,且对任一谓词 $Q$:若 $\forall v\in N,\ (\forall u\in\mathrm{pred}_E(v),Q(u))\to Q(v)$,则 $\forall v\in N,Q(v)$。
+*证明*。有限无环关系的传递闭包是严格偏序,有限严格偏序良基;$\mathrm{depth}$ 是沿该良基序的递归定义,归纳原理即良基归纳。∎
+

@@ -42,3 +42,23 @@
   公式须忠实反映该 Lean 定理的**结论**。
 
 - **不许 sorry、不许私 axiom、不许弱化陈述冒充完成**(第 4 条:账上没有的不冒领)。
+
+- **面集合封闭(deposit 只许动这四类,别的一个文件都不要新增)**:
+  `D5/<GID 路径>.lean` · `Blueprint/<同一 GID 路径>.scribe.cs` ·
+  `Blueprint/<同一 GID 路径>.md` · `Golden/Frozen/{accepted,state}/**`
+  (cover 另加同一 atom 的 `Meta/Digestion/backfill/**` 条目;
+   文献注 `Library/<已注册域>/*.md` 与 `Problems/*.md` 若正文需要则可带。)
+  **实施报告写进 conclusion 或你自己的 run 目录,不要入库。**
+  (2026-09-10 教训:一个席位把实施报告写进 `docs/reports/`,该目录当时已有
+   **72 个文件**,而 SL-003 的**准入**上限是 48(仓库容忍 96)——目录早已处在
+   「容忍但不可准入」的灰区,**任何 lane 只要碰它一下就判红**。判词逐字:
+   `SL-003 docs/reports: directory contains 49 files (admission limit 48,
+   repository tolerance 96; split per CLAUDE.md 8)`。
+   该文件同时越出上列面集合,是双重越界;剔除后三门即绿。)
+
+- **新增文件前先量它所在目录**:`git ls-tree --name-only origin/dev <dir>/ | wc -l`,
+  与 SL-003 的**准入上限**比(上限由属主派生,别抄常数:
+  `grep -oE 'DirectoryFileLimit[[:space:]]*=[[:space:]]*[0-9]+' \
+   tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs`)。
+  **接近或超过就不要往那儿加**,报告里说明并另择已有余量的目录;
+  **不要自行裂别人的桶** —— 那是独立的一层改造,不搭在 deposit lane 上。

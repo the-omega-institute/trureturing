@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e8967732e8800fd3aaf3a3d60df658a84751db456fae2f808927cd6090e95b50
+  normalized_sha256: sha256:e8967732e8800fd3aaf3a3d60df658a84751db456fae2f808927cd6090e95b50
+cas_ref: sha256:e8967732e8800fd3aaf3a3d60df658a84751db456fae2f808927cd6090e95b50
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Errata remark 29.11 corrects the landing address recorded inside candidate theorem 4.102 because the written directory sits above the admission capacity limit, and directs the module into an existing subdirectory. It prescribes placement and asserts nothing about mathematical truth, so no Lean declaration can carry it; 4.102 itself is already absorbed.
+    previous_atom_id: 81939a676bf392a192a1b95efea135349c53f34839002a9eacc37a992990f7ca
+    next_atom_id: null

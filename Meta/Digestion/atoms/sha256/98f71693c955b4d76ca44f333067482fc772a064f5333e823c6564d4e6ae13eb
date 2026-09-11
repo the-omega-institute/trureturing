@@ -1,0 +1,12 @@
+**定理 12（规范化商）。** \(D:(\mathcal R,+,0)\to(\mathbb N_+,\cdot,1)\) 是满射幺半群同态，并且
+\[
+D(r)=D(r')\iff\forall p\ V_p(r)=V_p(r')\iff\nu(r)=\nu(r').
+\]
+每个纤维恰有一个规范表，即 \(K(D(r))=\nu(r)\)。以这个等价关系取商，得到
+\[
+\mathcal R/{\ker D}\simeq(\mathbb N_+,\cdot),\qquad
+(\mathcal C,\oplus,0)\simeq(\mathbb N_+,\cdot),\qquad
+K(mn)=\nu(K(m)+K(n)).
+\]
+这里 \(\ker D\) 指同态的相等关系核。
+

@@ -1,0 +1,13 @@
+**OPEN-COPY。** 令 $\operatorname{Ctx}^{\rm dup}_{\Sigma_{{\rm cau},t}}$ 为使用同一原签名、固定参数、有限项及严格失败传播，但允许重复输入的项语言。精确问题为
+
+$$
+E_q^{\rm dup}(B)\ \Longleftrightarrow\
+\exists\,\text{固定总项 }C\in\operatorname{Ctx}^{\rm dup}_{\Sigma_{{\rm cau},t}}
+\ \forall X\in\mathcal B:\quad q(C(X))=q(F_BX).
+$$
+
+已证 $\operatorname{Tail}(B)\Rightarrow E_q^{\rm dup}(B)$，因为 (O-CONSTRUCTION) 的单孔项属于该扩张；反向以及 $\forall B\subseteq K:E_q^{\rm dup}(B)$ 均未证，记 open。引理 4 的首乘固定旁参数条件不适用于 $X\boxtimes X$，不得移贴单孔必要性。
+
+候选思路（worth 席，经 caller 转述；不作定理）：把输入并行复制 $n$ 份使 $\Gamma_t\mapsto n\Gamma_t$，尝试从目标 q 关于 $n$ 的一次多项式取一次部分，化为有限个单孔读数之差再用引理 4；此归约须独立核验，本批未证。
+
+命题 55 的域不含输入自适应参数、无限项或身份扩签名；命题 57 只给存在性，不给唯一性。D15 划出了新原语超出摘要的具体边界，没有把所有依赖关系的规则一概判为不下降。本批仅为普通 ZFC 推导和有限核验，不新增 Lean、axiom、判官或 schema。

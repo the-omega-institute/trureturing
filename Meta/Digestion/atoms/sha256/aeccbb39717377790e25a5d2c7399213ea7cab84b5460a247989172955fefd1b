@@ -1,0 +1,43 @@
+**29.2 相对形状、真实端点角点和同一比较差。** 全部对数为自然对数,
+内积为通常欧氏内积。固定有限正步长 \(h_i>0\) 和有限相对形状
+\(\xi_i\ge0\)、\(\min_i\xi_i=0\),其中 \(1\le i\le3\)。置
+\[
+X=\sum_i\xi_i,\quad Q=\sum_i h_i,\quad
+c_i(T)=T+\xi_i,\quad d_i(T)=T+\xi_i+h_i,\quad A(T)=3T+X.
+\]
+固定有限 \(u_0<u_1\),要求闭区间 \([u_0,u_1]\) 含至少两个不同的相对角点预算
+\[
+B_e=X+\sum_i e_i h_i,\qquad e\in\{0,1\}^3.
+\]
+这里角点必须来自每行实际选取一个端点,不能用分数混合支撑点代替。
+一般正实步长不保证八个预算两两不同;本节只用上述两预算要求,
+不借用 28.2 的全部子集和互异假设。令
+\[
+M_j(T)=3T+u_j\quad(j=0,1),\qquad r=u_1-X>0.
+\]
+因相对角点预算均至少为 \(X\),两个不同预算保证 \(u_1>X\)。
+平移后的闭薄层 \([M_0,M_1]\) 始终含上述两个角点。
+
+沿用 26.3、27.3 的定义,记 \(f(x)=\log(1-e^{-x})\) 对 \(x>0\),并置
+\[
+D_T=\max_{\substack{0\le y_i\le1\\\sum_i h_i y_i\le r}}
+\sum_i\bigl((1-y_i)f(c_i(T))+y_i f(d_i(T))\bigr).
+\]
+这是同一精确分数背包对偶值;27.3 已说明 26.10-26.11 的匹配证书适用于正实网格。
+置相对均值区间、距离和包络偏移为
+\[
+I_r=[u_0/3,u_1/3],\quad
+\delta_i=\operatorname{dist}(I_r,\{\xi_i,\xi_i+h_i\}),\quad
+\rho=\sqrt{\frac{\sum_i\delta_i^2}{6}},\quad
+\lambda=u_1/3-\rho,\quad\eta=u_1/3+2\rho.
+\]
+则绝对均值为 \(\mu=T+u_1/3\),绝对距离仍为 \(\delta_i\),
+\(V_0=\sum_i\delta_i^2\) 没有额外除以 3,
+\[
+L=T+\lambda,\quad H=T+\eta,\quad
+\Psi_T=f(H)+2f(L),\qquad G_T=D_T-\Psi_T.
+\]
+本节 \(\lambda\) 专指包络偏移,不是 26.3 中优化的价格变量。
+在素数域 \(h_i=\log p_i\)、\(c_i=(b_i+1)h_i\)、\(b_i\in\mathbb Z_{\ge0}\) 时,
+仍精确有 \(G_T=U_{\rm dual}-U_{\rm var}\),共同常数 \(\log E_S\) 抵消。
+

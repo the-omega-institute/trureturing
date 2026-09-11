@@ -1,0 +1,13 @@
+### 下一次写入的准入标准
+
+不再新增零元下界的同义版本、逐行 collision 的初等推论或无消费者的证书包装。优先闭合本轮矩阵主定理的 admission；之后只有两类实际进展值得进入主线：
+
+```text
+1. 用现有 pinching/Pythagoras 接口接通真实饱和几何，
+   并对指定 strict-X branch 构造 context-level affinity 下界证书。
+2. 找到并验证全局正交到逐模正交的具体 polynomial certificate，
+   同时处理非零 guards 和 exceptional locus。
+```
+
+三阶刚性已经给出等号障碍，但仍未提供 strict-X completion 下界或 noncanonical orthogonality 分类。六维四 MUB 的全局不存在性仍然开放于本研究线。
+
