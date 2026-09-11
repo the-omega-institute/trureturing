@@ -150,7 +150,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Necessary div_add_div wrapper for the source add formula on actual histories; RationalQuotient.class_add is its live operation-agreement consumer.",
@@ -243,7 +243,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Necessary div_div_div_eq wrapper for the source div formula on actual histories; RationalQuotient.class_div is its live operation-agreement consumer.",
@@ -321,7 +321,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Necessary inv_div wrapper for the source inv formula on actual histories; RationalQuotient.class_inv is its live operation-agreement consumer.",
@@ -395,7 +395,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Necessary div_mul_div_comm wrapper for the source mul formula on actual histories; RationalQuotient.class_mul is its live operation-agreement consumer.",
@@ -479,7 +479,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Necessary neg_div wrapper for the source neg formula on actual histories; RationalQuotient.class_neg is its live operation-agreement consumer.",
@@ -553,7 +553,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Exposes exactly the source reciprocal guard as the dependent inv input.",
@@ -623,7 +623,7 @@
       "external_dependencies": [],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Uses the standard kernel owner to form the actual quotient without assuming equivalence laws.",
@@ -696,7 +696,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Exposes exactly the source division guard as the dependent div input.",
@@ -769,7 +769,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Names the exact source relation before comparing it with the numerical kernel.",
@@ -841,7 +841,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Implements the specified embedding X maps to (X,U) while retaining X literally.",
@@ -914,7 +914,7 @@
       "external_dependencies": [],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Presents the kernel relation in the source cross-product language; cross_equivalence consumes this reversed interface.",
@@ -987,7 +987,7 @@
       "external_dependencies": [],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Necessary Setoid wrapper for the explicit equivalence part of Proposition 5; no downstream consumer is required for this terminal source API.",
@@ -1064,7 +1064,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Necessary fraction-equality wrapper identifying the source cross relation with readout equality on both guarded denominators.",
@@ -1144,7 +1144,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Necessary upstream division-zero wrapper identifying the partial reciprocal domain numerically.",
@@ -1218,7 +1218,7 @@
       "external_dependencies": [],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Exports the same nonzero characterization under the source division API, on the divisor.",
@@ -1292,7 +1292,7 @@
       "external_dependencies": [],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Proposition 5 explicitly requires reciprocal-domain saturation; this is its necessary equality-transport wrapper.",
@@ -1370,7 +1370,7 @@
       "external_dependencies": [],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Exports Proposition 5 division-domain saturation for numerically equivalent divisors.",
@@ -1442,7 +1442,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Necessary cast wrapper for div_eq_div_iff and div_eq_iff on a source-legal fraction; the stored Int guard must be available in Rat.",
@@ -1518,7 +1518,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Necessary section/readout wrapper for the integer embedding; quotient_exactDivide consumes this projection.",
@@ -1596,7 +1596,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Literal projection companion of the required embedding definition. It is not an independent theorem-admission claim and does not claim a future consumer.",
@@ -1679,7 +1679,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Constructs exactly the source rich sum with actual archives and a proved denominator guard.",
@@ -1764,7 +1764,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Constructs the source guarded division without totalizing its rich domain.",
@@ -1846,7 +1846,7 @@
       "external_dependencies": [],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Constructs the dependent partial inverse on exactly the nonzero-numerator domain.",
@@ -1929,7 +1929,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Constructs the source rich product; the add dependency is proof-only denominator closure, not a change to the multiplication formula.",
@@ -2011,7 +2011,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Constructs source N_Q with the actual event-complement owner.",
@@ -2091,7 +2091,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Names Definition 9 v on the actual pair carrier for the kernel quotient and all readout laws.",
@@ -2158,7 +2158,7 @@
       "external_dependencies": [],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Definition 9 needs both actual histories as data, and the denominator guard as a field. This is the carrier, not a theorem.",
@@ -2224,7 +2224,7 @@
       "external_dependencies": [],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Necessary equality-transport API for the source add congruence clause. It derives from the named exact readout wrapper, not from a claimed escape or a future expression consumer.",
@@ -2305,7 +2305,7 @@
       "external_dependencies": [],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Necessary equality-transport API for the source div congruence clause. It derives from the named exact readout wrapper, not from a claimed escape or a future expression consumer.",
@@ -2386,7 +2386,7 @@
       "external_dependencies": [],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Necessary equality-transport API for the source inv congruence clause. It derives from the named exact readout wrapper, not from a claimed escape or a future expression consumer.",
@@ -2466,7 +2466,7 @@
       "external_dependencies": [],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Necessary equality-transport API for the source mul congruence clause. It derives from the named exact readout wrapper, not from a claimed escape or a future expression consumer.",
@@ -2546,7 +2546,7 @@
       "external_dependencies": [],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Necessary equality-transport API for the source neg congruence clause. It derives from the named exact readout wrapper, not from a claimed escape or a future expression consumer.",
@@ -2623,7 +2623,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Projection returning the stored denominator history. Compiler companion of the required Fraction structure, with no independent theorem, novelty or admission claim.",
@@ -2697,7 +2697,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Generated no-confusion elimination interface. Compiler companion of the required Fraction structure, with no independent theorem, novelty or admission claim.",
@@ -2764,7 +2764,7 @@
       "external_dependencies": null,
       "dependency_capture": {
         "status": "missing-capture",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "No historical capture for this row; both dependency arrays remain null. For captured rows: Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Generated SizeOf instance; no historical edge row was captured. Compiler companion of the required Fraction structure, with no independent theorem, novelty or admission claim.",
@@ -2830,7 +2830,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Generated no-confusion type for the carrier. Compiler companion of the required Fraction structure, with no independent theorem, novelty or admission claim.",
@@ -2902,7 +2902,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Proof projection returning the stored nonzero-denominator guard. Compiler companion of the required Fraction structure, with no independent theorem, novelty or admission claim.",
@@ -2974,7 +2974,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Constructor packaging both histories and the guard. Compiler companion of the required Fraction structure, with no independent theorem, novelty or admission claim.",
@@ -3047,7 +3047,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Kernel recursor eliminating the single-constructor carrier. Compiler companion of the required Fraction structure, with no independent theorem, novelty or admission claim.",
@@ -3121,7 +3121,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Generated recursor wrapper for the carrier. Compiler companion of the required Fraction structure, with no independent theorem, novelty or admission claim.",
@@ -3195,7 +3195,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Generated case-elimination interface. Compiler companion of the required Fraction structure, with no independent theorem, novelty or admission claim.",
@@ -3264,7 +3264,7 @@
       "external_dependencies": [],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Generated index of the single constructor. Compiler companion of the required Fraction structure, with no independent theorem, novelty or admission claim.",
@@ -3331,7 +3331,7 @@
       "external_dependencies": null,
       "dependency_capture": {
         "status": "missing-capture",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "No historical capture for this row; both dependency arrays remain null. For captured rows: Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Generated size computation helper; no historical edge row was captured. Compiler companion of the required Fraction structure, with no independent theorem, novelty or admission claim.",
@@ -3395,7 +3395,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Projection returning the stored numerator history. Compiler companion of the required Fraction structure, with no independent theorem, novelty or admission claim.",
@@ -3462,7 +3462,7 @@
       "external_dependencies": null,
       "dependency_capture": {
         "status": "missing-capture",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "No historical capture for this row; both dependency arrays remain null. For captured rows: Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Generated flattened constructor helper; no historical edge row was captured. Compiler companion of the required Fraction structure, with no independent theorem, novelty or admission claim.",
@@ -3529,7 +3529,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Generated constructor-specific no-confusion interface. Compiler companion of the required Fraction structure, with no independent theorem, novelty or admission claim.",
@@ -3603,7 +3603,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Generated equation describing constructor size. Compiler companion of the required Fraction structure, with no independent theorem, novelty or admission claim.",
@@ -3677,7 +3677,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Generated constructor injectivity theorem. Compiler companion of the required Fraction structure, with no independent theorem, novelty or admission claim.",
@@ -3751,7 +3751,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-richrational.json"
       },
       "api_necessity": "Generated constructor equality characterization. Compiler companion of the required Fraction structure, with no independent theorem, novelty or admission claim.",
@@ -3817,7 +3817,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-rationalquotient.json"
       },
       "api_necessity": "Necessary quotient equality characterization in the source cross-product relation; this is an injectivity wrapper, not escape content.",
@@ -3885,7 +3885,7 @@
       "external_dependencies": [],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-rationalquotient.json"
       },
       "api_necessity": "Uses the upstream field transport owner; the class operation theorems separately prove agreement with the rich formulas.",
@@ -3946,7 +3946,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-rationalquotient.json"
       },
       "api_necessity": "Definition of the fixed source section on every rational, including zero.",
@@ -4013,7 +4013,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-rationalquotient.json"
       },
       "api_necessity": "Definitional application interface of the necessary Setoid wrapper: [R] maps to readout R; used by quotient_exactDivide.",
@@ -4083,7 +4083,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-rationalquotient.json"
       },
       "api_necessity": "Definitional zero-branch companion of the required Rat-coordinate section; the source explicitly specifies 0/1. No independent theorem-admission claim.",
@@ -4151,7 +4151,7 @@
       "external_dependencies": [],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-rationalquotient.json"
       },
       "api_necessity": "Provides the standard equivalence API for the transported field, consumed by each class operation theorem.",
@@ -4218,7 +4218,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-rationalquotient.json"
       },
       "api_necessity": "Necessary injective-field-map wrapper identifying the rich reciprocal guard with nonzero quotient class; total field inverse at zero adds no rich input.",
@@ -4290,7 +4290,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-rationalquotient.json"
       },
       "api_necessity": "Necessary wrapper exposing the positivity/coprimality invariants of Rat on the actual canonical histories.",
@@ -4355,7 +4355,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-rationalquotient.json"
       },
       "api_necessity": "Necessary upstream first-isomorphism construction for this actual quotient. It consumes the section, not all five rich-operation readout proofs.",
@@ -4434,7 +4434,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-rationalquotient.json"
       },
       "api_necessity": "Exports the same quotient-domain identification for division at its divisor argument.",
@@ -4496,7 +4496,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-rationalquotient.json"
       },
       "api_necessity": "Necessary section injectivity API obtained from its established right inverse, without uniqueness claims about arbitrary archives.",
@@ -4553,7 +4553,7 @@
       "external_dependencies": [],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-rationalquotient.json"
       },
       "api_necessity": "Necessary exact Rat uniqueness wrapper for the explicitly required unique reduced integer coordinates; no consumer is invented.",
@@ -4613,7 +4613,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-rationalquotient.json"
       },
       "api_necessity": "Necessary Rat.num_div_den wrapper proving the section used by Setoid.quotientKerEquivOfRightInverse really is a right inverse.",
@@ -4677,7 +4677,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-rationalquotient.json"
       },
       "api_necessity": "Names the source class [R] for the quotient and operation-agreement API.",
@@ -4737,7 +4737,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-rationalquotient.json"
       },
       "api_necessity": "Forms the quotient of the full actual Fraction carrier by its numerical kernel.",
@@ -4803,7 +4803,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-rationalquotient.json"
       },
       "api_necessity": "Necessary field-map wrapper proving the quotient add agrees with the actual source rich add. This is the live consumer of that readout theorem.",
@@ -4878,7 +4878,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-rationalquotient.json"
       },
       "api_necessity": "Necessary field-map wrapper proving the quotient div agrees with the actual source rich div. This is the live consumer of that readout theorem.",
@@ -4953,7 +4953,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-rationalquotient.json"
       },
       "api_necessity": "Necessary field-map wrapper proving the quotient inv agrees with the actual source rich inv. This is the live consumer of that readout theorem.",
@@ -5027,7 +5027,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-rationalquotient.json"
       },
       "api_necessity": "Necessary field-map wrapper proving the quotient mul agrees with the actual source rich mul. This is the live consumer of that readout theorem.",
@@ -5101,7 +5101,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-rationalquotient.json"
       },
       "api_necessity": "Necessary field-map wrapper proving the quotient neg agrees with the actual source rich neg. This is the live consumer of that readout theorem.",
@@ -5169,7 +5169,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-integerexactdivision.json"
       },
       "api_necessity": "Names both conjuncts required for exact integer division; neither is dropped.",
@@ -5233,7 +5233,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-integerexactdivision.json"
       },
       "api_necessity": "Implements the source choice i(k) as an actual balanced canonical history.",
@@ -5302,7 +5302,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-integerexactdivision.json"
       },
       "api_necessity": "Names the integer selected from proved existence/uniqueness under the guard; not a division algorithm.",
@@ -5369,7 +5369,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-integerexactdivision.json"
       },
       "api_necessity": "Necessary Int cancellation/choice and canonical-section wrapper for numerical replacement of exact division. Its actual edges go to spec/unique. There is no evidenced path to/from the half refutation and no live planned expression consumer is claimed.",
@@ -5447,7 +5447,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-integerexactdivision.json"
       },
       "api_necessity": "Necessary equality-transport interface for the exact-domain API; no unrelated half-refutation credit is claimed.",
@@ -5511,7 +5511,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-integerexactdivision.json"
       },
       "api_necessity": "Necessary guard interface for the live exactDivide_loses_product_history family; source canonical unit division is legal.",
@@ -5582,7 +5582,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-integerexactdivision.json"
       },
       "api_necessity": "Necessary choice-specification projection of the required unique-quotient wrapper; consumed by exactDivide_congr and the integral-fraction APIs.",
@@ -5653,7 +5653,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-integerexactdivision.json"
       },
       "api_necessity": "Necessary canonical-representative interface of the exact-quotient/section wrapper, identifying the actual output archive.",
@@ -5731,7 +5731,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-integerexactdivision.json"
       },
       "api_necessity": "Necessary frozen-section wrapper exposing the exact output readout; fraction_exactDivide consumes it.",
@@ -5801,7 +5801,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-integerexactdivision.json"
       },
       "api_necessity": "Necessary uniqueness interface of the same Int cancellation/choice wrapper; consumed by exactDivide_literal, exactDivide_congr and exactDivide_loses_product_history.",
@@ -5871,7 +5871,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-integerexactdivision.json"
       },
       "api_necessity": "Necessary binding of the fraction/integer equation and section readout: the retained pair and chosen output have equal integer value.",
@@ -5957,7 +5957,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-integerexactdivision.json"
       },
       "api_necessity": "Necessary injective-quotient wrapper of the source same-value clause. Histories belong to the unquotiented pair; equality of classes does not retain histories.",
@@ -6043,7 +6043,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-integerexactdivision.json"
       },
       "api_necessity": "Necessary exact upstream fraction/integer equation wrapper for retaining (X,Y) and characterizing its integer value.",
@@ -6113,7 +6113,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-integerexactdivision.json"
       },
       "api_necessity": "Necessary numerical-replacement interface for the integrality guard on legal fraction representatives.",
@@ -6183,7 +6183,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-integerexactdivision.json"
       },
       "api_necessity": "Formal target of the source-required refutation; not an asserted true theorem or an independent instance.",
@@ -6258,7 +6258,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-integerexactdivision.json"
       },
       "api_necessity": "Necessary thin Int divisibility/cancellation wrapper furnishing the unique quotient that exactQuotient selects.",
@@ -6329,7 +6329,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-integerexactdivision.json"
       },
       "api_necessity": "Necessary divisibility/fraction-equality wrapper connecting the source exact guard to an integral readout; no new witness beyond divisibility is created.",
@@ -6420,7 +6420,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-integerexactdivision.json"
       },
       "api_necessity": "Necessary wrapper of the actual product/representative cardinality APIs for the source history-loss boundary, for all d,n including zero. No exact upstream theorem for this whole product-family statement or independent escape is claimed.",
@@ -6518,7 +6518,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-integerexactdivision.json"
       },
       "api_necessity": "Source explicitly contrasts the half domains. The closed negation has certified-instance/refutes utility without a downstream consumer. This refutation supplies no admission credit for unrelated exact-division companions.",
@@ -6603,7 +6603,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-integerexactdivision.json"
       },
       "api_necessity": "Necessary binding of the exact-choice and cardinality wrappers that witnesses the source canonical-output history loss. This general negative family is not a finite positive instance.",
@@ -6684,7 +6684,7 @@
       ],
       "dependency_capture": {
         "status": "captured",
-        "scope": "Historical Expr.getUsedConstants on value and type with auxiliary expansion, filtered to D5-owned constants. External means outside this module within D5; not all Mathlib/Lean constants or a reduced live-proof closure.",
+        "scope": "Observed historical D5 value/type capture: internal arrays expand local auxiliaries; external arrays record direct outside-module D5 constants and omit prerequisites reached only through local helpers. Mathlib/Lean-core constants are omitted; no reduced live-proof closure or proof-shape certification. Exact historical producer implementation is ASSUMED-UNVERIFIED.",
         "artifact": "proof-edges-integerexactdivision.json"
       },
       "api_necessity": "Concrete input of division_domains_equal_refuted; no separate positive-instance credit.",
@@ -6722,7 +6722,7 @@
     }
   ],
   "limits": [
-    "Historical external_dependencies contain D5-filtered constants only; Rat.div_int_inj, Rat.num_div_den and inv_div are absent despite actual source use. Semantic citations are separate.",
+    "Historical internal arrays expand local auxiliaries; observed external_dependencies contain direct outside-module D5 value/type constants and omit helper-reached prerequisites. The six affected rows are RichRational.integerEmbedding, RichRational.add, RichRational.div, RichRational.mul, RationalQuotient.rationalSection and IntegerExactDivision.half. Examples are GeneratedProduct.q_product and ComplementFibers.balancedSection_rightInverse, with existing declaration IDs in semantic_owner_catalog; mul uses add for its guard. Mathlib/Lean-core constants, including Rat.div_int_inj, Rat.num_div_den and inv_div, are also omitted despite actual source use. Authored semantic-owner/use accounting remains separate; no raw export or audit dependency array is supplemented. The exact historical producer implementation is ASSUMED-UNVERIFIED.",
     "Missing capture is null, not an empty dependency set: Fraction._sizeOf_inst, Fraction._sizeOf_1 and Fraction.mk._flat_ctor have no historical edge row.",
     "Proof-shape/admission judgments are authored semantic assessments, not compiler classifications. No claim of reduced live-proof closure follows from value/type constant capture.",
     "The two general history-loss theorems are conservatively bind-only via exact frozen cardinality/readout identities and normalization. No exact upstream whole-family theorem is claimed.",
@@ -7516,7 +7516,7 @@
       "citation_scope": "semantic owner or definitional interface; not a captured D5 edge"
     }
   },
-  "semantic_owner_scope": "Authored source/API citations, checked against unchanged source and existing report identities for D5. These are not compiler edges and are not an exhaustive Mathlib constant closure. Core and simplifier APIs are semantic owners, not claims that their exact symbol occurs in the elaborated term.",
+  "semantic_owner_scope": "Authored source/API citations, checked against unchanged source and existing report identities for D5. These are not compiler edges and are not an exhaustive Mathlib constant closure. Core and simplifier APIs are semantic owners, not claims that their exact symbol occurs in the elaborated term. This accounting also supplies D5 prerequisites omitted from direct external capture when reached through local helpers, including q_product and balancedSection_rightInverse; it does not amend the historical arrays.",
   "accounting_totals": {
     "bind-only": 49,
     "definition": 22,
