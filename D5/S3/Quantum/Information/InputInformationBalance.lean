@@ -14,7 +14,10 @@ import D5.S3.Quantum.Information.PartialTraceMutualInformation
    full license: docs/reports/inoutbalance/physlib-LICENSE.txt.
    Changes: use DensityState, the existing partial traces, and CStarMatrix trace entropy.
    Retire this port when the repository's pinned Mathlib provides equivalent declarations.
-   The trace-to-spectrum calculation follows the imported module's spectral port.
+   The trace-to-spectrum calculation follows the imported module's spectral port from
+   zblore/csd-lean4 revision 13eda16971c66de4bc9f550e418dd4fdf59a5121.
+   Copyright (c) 2026 Zayn Blore. All rights reserved. Apache 2.0 license;
+   full license: docs/reports/qmutualinfo/csd-lean4-LICENSE.txt.
 -/
 
 set_option autoImplicit false
@@ -22,7 +25,7 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Quantum.Information.InputInformationBalance
 
-open scoped BigOperators ComplexOrder MatrixOrder
+open scoped BigOperators ComplexOrder MatrixOrder Matrix
 open Matrix
 open D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition
 open D5.S3.Quantum.Divergence.VonNeumannEntropyPinching
@@ -69,20 +72,32 @@ private theorem nonzero_roots_mul_comm (M : Matrix A B ℂ) (N : Matrix B A ℂ)
       (N * M).charpoly.roots.filter (· ≠ 0) := by
   have h := congrArg (fun p : Polynomial ℂ => p.roots.filter (· ≠ 0))
     (Matrix.charpoly_mul_comm' M N)
-  simpa [Polynomial.roots_mul, Matrix.charpoly_monic, Polynomial.Monic.ne_zero] using h
+  have hz (k : ℕ) : (k • ({0} : Multiset ℂ)).filter (· ≠ 0) = 0 := by
+    apply Multiset.filter_eq_nil.mpr
+    simp
+  simpa [Polynomial.roots_mul, Matrix.charpoly_monic, Polynomial.Monic.ne_zero, hz] using h
+
+private theorem sum_filter_zero (s : Multiset ℂ) (f : ℂ → ℝ) (hf : f 0 = 0) :
+    ((s.filter (· ≠ 0)).map f).sum = (s.map f).sum := by
+  induction s using Multiset.induction_on with
+  | empty => simp
+  | cons z s ih =>
+    by_cases hz : z = 0
+    · subst z; simp [hf, ih]
+    · simp [hz, ih]
 
 private theorem entropy_eq_of_nonzero_roots (rho : DensityState A) (sigma : DensityState B)
     (h : (CStarMatrix.ofMatrix.symm rho.1).charpoly.roots.filter (· ≠ 0) =
       (CStarMatrix.ofMatrix.symm sigma.1).charpoly.roots.filter (· ≠ 0)) :
     vonNeumannEntropy rho = vonNeumannEntropy sigma := by
-  rw [(density_hermitian rho).roots_charpoly_eq_eigenvalues,
-    (density_hermitian sigma).roots_charpoly_eq_eigenvalues] at h
   have hs := congrArg
     (fun s : Multiset ℂ => (s.map (fun z => Real.negMulLog z.re)).sum) h
-  simp only [Multiset.filter_map, Multiset.map_map, Function.comp_apply,
-    RCLike.ofReal_re] at hs
+  rw [sum_filter_zero _ _ (by simp), sum_filter_zero _ _ (by simp),
+    (density_hermitian rho).roots_charpoly_eq_eigenvalues,
+    (density_hermitian sigma).roots_charpoly_eq_eigenvalues] at hs
+  simp only [Multiset.map_map, Function.comp_def] at hs
   rw [entropy_eq_sum, entropy_eq_sum]
-  simpa [Finset.sum, Multiset.sum_map_filter, Real.negMulLog_zero] using hs
+  exact hs
 
 /-- Both complementary marginals of any finite pure density state have the same entropy. -/
 theorem pure_complementary_entropy (rho : DensityState (A × B)) (hp : IsPure rho) :
@@ -91,15 +106,93 @@ theorem pure_complementary_entropy (rho : DensityState (A × B)) (hp : IsPure rh
   let M : Matrix A B ℂ := fun a b => v (a, b)
   have hl : CStarMatrix.ofMatrix.symm (marginalLeft rho).1 = (Mᴴ * M)ᵀ := by
     ext b d
-    simp only [marginalLeft, partialTraceLeft, Matrix.transpose_apply, Matrix.mul_apply,
-      Matrix.conjTranspose_apply, hv, M]
-    exact Finset.sum_congr rfl fun a _ => mul_comm _ _
+    change (∑ a, rho.1 (a, b) (a, d)) = ∑ a, star (v (a, d)) * v (a, b)
+    exact Finset.sum_congr rfl fun a _ => (hv _ _).trans (mul_comm _ _)
   have hr : CStarMatrix.ofMatrix.symm (marginalRight rho).1 = M * Mᴴ := by
     ext a c
-    simp [marginalRight, partialTraceRight, Matrix.mul_apply, hv, M]
+    change (∑ b, rho.1 (a, b) (c, b)) = ∑ b, v (a, b) * star (v (c, b))
+    exact Finset.sum_congr rfl fun b _ => hv _ _
   apply entropy_eq_of_nonzero_roots
   rw [hl, hr, Matrix.charpoly_transpose]
   exact nonzero_roots_mul_comm Mᴴ M
+
+/-- Relabel a density state along an equivalence, retaining every matrix entry. -/
+def relabel {n m : Type*} [Fintype n] [DecidableEq n] [Fintype m] [DecidableEq m]
+    (e : m ≃ n) (rho : DensityState n) : DensityState m := by
+  refine ⟨CStarMatrix.ofMatrix (rho.1.submatrix e e), ?_, ?_⟩
+  · apply map_nonneg CStarMatrix.ofMatrixStarAlgEquiv
+    exact ((Matrix.nonneg_iff_posSemidef.mp
+      (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm rho.2.1)).submatrix e).nonneg
+  · exact (e.sum_comp (fun i => rho.1 i i)).trans rho.2.2
+
+private theorem isPure_relabel {n m : Type*} [Fintype n] [DecidableEq n]
+    [Fintype m] [DecidableEq m] (e : m ≃ n) (rho : DensityState n) (hp : IsPure rho) :
+    IsPure (relabel e rho) := by
+  obtain ⟨v, hv⟩ := hp
+  exact ⟨v ∘ e, fun i j => hv (e i) (e j)⟩
+
+private def arGrouping : (A × R) × B ≃ A × B × R :=
+  (Equiv.prodAssoc A R B).trans
+    (Equiv.prodCongr (Equiv.refl A) (Equiv.prodComm R B))
+
+/-- The AB state is obtained from the single global state by tracing out R. -/
+def stateAB (rho : DensityState (A × B × R)) : DensityState (A × B) :=
+  marginalRight (relabel (Equiv.prodAssoc A B R) rho)
+
+/-- The AR state is obtained from that same global state by tracing out B. -/
+def stateAR (rho : DensityState (A × B × R)) : DensityState (A × R) :=
+  marginalRight (relabel arGrouping rho)
+
+private theorem ab_retains_A (rho : DensityState (A × B × R)) :
+    marginalRight (stateAB rho) = marginalRight rho := by
+  apply Subtype.ext
+  ext a c
+  change (∑ b, ∑ r, rho.1 (a, b, r) (c, b, r)) = ∑ p : B × R, rho.1 (a, p) (c, p)
+  exact (Fintype.sum_prod_type (fun p : B × R => rho.1 (a, p) (c, p))).symm
+
+private theorem ar_retains_A (rho : DensityState (A × B × R)) :
+    marginalRight (stateAR rho) = marginalRight rho := by
+  apply Subtype.ext
+  ext a c
+  change (∑ r, ∑ b, rho.1 (a, b, r) (c, b, r)) = ∑ p : B × R, rho.1 (a, p) (c, p)
+  rw [Fintype.sum_prod_type]
+  exact Finset.sum_comm
+
+private theorem ar_retains_R (rho : DensityState (A × B × R)) :
+    marginalLeft (stateAR rho) =
+      marginalLeft (relabel (Equiv.prodAssoc A B R) rho) := by
+  apply Subtype.ext
+  ext r s
+  change (∑ a, ∑ b, rho.1 (a, b, r) (a, b, s)) =
+    ∑ p : A × B, rho.1 (p.1, p.2, r) (p.1, p.2, s)
+  exact (Fintype.sum_prod_type (fun p : A × B => rho.1 (p.1, p.2, r) (p.1, p.2, s))).symm
+
+private theorem ab_retains_B (rho : DensityState (A × B × R)) :
+    marginalLeft (stateAB rho) = marginalLeft (relabel arGrouping rho) := by
+  apply Subtype.ext
+  ext b d
+  change (∑ a, ∑ r, rho.1 (a, b, r) (a, d, r)) =
+    ∑ p : A × R, rho.1 (p.1, b, p.2) (p.1, d, p.2)
+  exact (Fintype.sum_prod_type (fun p : A × R => rho.1 (p.1, b, p.2) (p.1, d, p.2))).symm
+
+/-- In a pure ABR state, its actual AR and AB mutual informations sum to twice S(A). -/
+theorem input_information_balance (rho : DensityState (A × B × R)) (hp : IsPure rho) :
+    quantumMutualInformation (stateAR rho) + quantumMutualInformation (stateAB rho) =
+      2 * vonNeumannEntropy (marginalRight rho) := by
+  have hAB := pure_complementary_entropy (relabel (Equiv.prodAssoc A B R) rho)
+    (isPure_relabel _ rho hp)
+  have hAR := pure_complementary_entropy (relabel (arGrouping (A := A) (B := B) (R := R)) rho)
+    (isPure_relabel _ rho hp)
+  change vonNeumannEntropy (marginalLeft (relabel (Equiv.prodAssoc A B R) rho)) =
+    vonNeumannEntropy (stateAB rho) at hAB
+  change vonNeumannEntropy (marginalLeft (relabel arGrouping rho)) =
+    vonNeumannEntropy (stateAR rho) at hAR
+  unfold quantumMutualInformation
+  rw [ar_retains_A, ab_retains_A, ar_retains_R, ab_retains_B, hAB, hAR]
+  ring
+
+#print axioms pure_complementary_entropy
+#print axioms input_information_balance
 
 end
 end D5.S3.Quantum.Information.InputInformationBalance
