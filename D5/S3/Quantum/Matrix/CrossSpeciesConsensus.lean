@@ -38,7 +38,7 @@ theorem equivariant_selfAdjoint_eq_smul_id_of_irreducible
         change Matrix.toLinAlgEquiv' A * Matrix.toLinAlgEquiv' (U g) =
           Matrix.toLinAlgEquiv' (U g) * Matrix.toLinAlgEquiv' A
         simpa only [map_mul] using congrArg Matrix.toLinAlgEquiv' (h_equivariant g) }
-  haveI : Representation.IsIrreducible ρ := h_irreducible
+  have : Representation.IsIrreducible ρ := h_irreducible
   obtain ⟨c, hc⟩ :=
     (Representation.IsIrreducible.algebraMap_intertwiningMap_bijective_of_isAlgClosed
       (ρ := ρ)).surjective f
