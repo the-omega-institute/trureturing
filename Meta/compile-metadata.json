@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "assemblies": [
+    {
+      "assembly": "Microsoft.Build",
+      "source": "tools/tests/JudgeSeedTask.Tests/bin/Release/net10.0/Microsoft.Build.dll",
+      "projects": ["tools/scripts/report/JudgeSeedTask.csproj", "tools/tests/JudgeSeedTask.Tests/JudgeSeedTask.Tests.csproj"]
+    },
+    {
+      "assembly": "Microsoft.Build.Framework",
+      "source": "tools/tests/JudgeSeedTask.Tests/bin/Release/net10.0/Microsoft.Build.Framework.dll",
+      "projects": ["tools/scripts/report/JudgeSeedTask.csproj", "tools/tests/JudgeSeedTask.Tests/JudgeSeedTask.Tests.csproj"]
+    },
+    {
+      "assembly": "Microsoft.Build.Utilities.Core",
+      "source": "tools/tests/JudgeSeedTask.Tests/bin/Release/net10.0/Microsoft.Build.Utilities.Core.dll",
+      "projects": ["tools/scripts/report/JudgeSeedTask.csproj", "tools/tests/JudgeSeedTask.Tests/JudgeSeedTask.Tests.csproj"]
+    },
+    {
+      "assembly": "Microsoft.Build.Tasks.Core",
+      "source": "tools/tests/JudgeSeedTask.Tests/bin/Release/net10.0/Microsoft.Build.Tasks.Core.dll",
+      "projects": ["tools/tests/JudgeSeedTask.Tests/JudgeSeedTask.Tests.csproj"]
+    },
+    {
+      "assembly": "Microsoft.Build.Tasks.CodeAnalysis",
+      "source": "tools/tests/JudgeSeedTask.Tests/bin/Release/net10.0/Microsoft.Build.Tasks.CodeAnalysis.dll",
+      "projects": ["tools/scripts/report/JudgeSeedTask.csproj", "tools/tests/JudgeSeedTask.Tests/JudgeSeedTask.Tests.csproj"]
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using System.Text;
+using System.Text.Json;
 using StrataLint.Engine;
 using StrataLint.EngineeringScope;
 using StrataLint.TestSupport;
@@ -17,18 +19,22 @@ public sealed class ScribeMetadataHandoffTests
     [InlineData("missing-reference")]
     [InlineData("corrupt-reference")]
     [InlineData("unbound-reference")]
+    [InlineData("missing-registered-reference")]
+    [InlineData("corrupt-registered-reference")]
+    [InlineData("unbound-registered-reference")]
     public void TransportedClosureRunsRealAnalysisAndRejectsIncompleteEvidence(string scenario)
     {
         var producer = Directory.CreateTempSubdirectory("metadata-producer-").FullName;
         var recipient = Directory.CreateTempSubdirectory("metadata-recipient-").FullName;
         try
         {
-            foreach (var file in Snapshot(true).Files.Values)
+            foreach (var file in RegisteredSnapshot(true).Files.Values)
             {
                 var destination = Path.Combine(producer, file.Path.Value);
                 Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
                 File.WriteAllBytes(destination, file.RawBytes.ToArray());
             }
+            WriteRegisteredAssembly(producer);
             File.WriteAllText(Path.Combine(producer, ".gitignore"), "build/\n**/obj/\n**/bin/\n");
             Git(producer, "init", "-q");
             Git(producer, "add", ".");
@@ -42,6 +48,7 @@ public sealed class ScribeMetadataHandoffTests
                 .Select(name => new StageStep(name, 0, 0, "executed", log)).ToArray());
             var materials = CommonExecutionEvidence.ValidateBuild(producer).Materials;
             Assert.Contains(materials, item => item.Path.EndsWith("/xunit.core.dll", StringComparison.Ordinal));
+            Assert.Contains(materials, item => item.Path.EndsWith("/MetadataFixture.dll", StringComparison.Ordinal));
             var commit = Git(producer, "rev-parse", "HEAD");
             var archive = Path.Combine(producer, "build", "build.tar.gz");
             Assert.Equal(0, Transport("transport-pack", producer, commit, archive));
@@ -59,14 +66,15 @@ public sealed class ScribeMetadataHandoffTests
             Assert.False(Directory.Exists(Path.Combine(recipient, "bin")));
             Assert.False(Directory.Exists(Path.Combine(recipient, ".nuget")));
             Assert.False(Directory.Exists(Path.Combine(recipient, "build/ci/nuget")));
-            var reference = materials.First(item => item.Path.EndsWith("/xunit.core.dll", StringComparison.Ordinal));
+            var reference = materials.First(item => item.Path.EndsWith(scenario.Contains("registered", StringComparison.Ordinal)
+                ? "/MetadataFixture.dll" : "/xunit.core.dll", StringComparison.Ordinal));
             switch (scenario)
             {
                 case "missing-manifest": File.Delete(Path.Combine(recipient, CommonCompileMetadata.ManifestPath)); break;
                 case "unbound-manifest": materials = materials.Where(item => item.Path != CommonCompileMetadata.ManifestPath).ToArray(); break;
-                case "missing-reference": File.Delete(Path.Combine(recipient, reference.Path)); break;
-                case "corrupt-reference": File.WriteAllText(Path.Combine(recipient, reference.Path), "corrupt metadata"); break;
-                case "unbound-reference": materials = materials.Where(item => item != reference).ToArray(); break;
+                case "missing-reference": case "missing-registered-reference": File.Delete(Path.Combine(recipient, reference.Path)); break;
+                case "corrupt-reference": case "corrupt-registered-reference": File.WriteAllText(Path.Combine(recipient, reference.Path), "corrupt metadata"); break;
+                case "unbound-reference": case "unbound-registered-reference": materials = materials.Where(item => item != reference).ToArray(); break;
             }
             if (scenario != "transport")
             {
@@ -82,7 +90,7 @@ public sealed class ScribeMetadataHandoffTests
             foreach (var path in inputs(ScribeProjectCompilationContext.Create(snapshot.Files.Values
                          .Select(file => new ScribeTrackedSource(file.Path.Value, file.Text)).ToArray(),
                          new Dictionary<string, string>(), new HashSet<string>()).Projects))
-                Assert.True(platform.Contains(path) || path.StartsWith(Path.Combine(recipient, "build/ci/compile-metadata/packages")
+                Assert.True(platform.Contains(path) || path.StartsWith(Path.Combine(recipient, "build/ci/compile-metadata")
                     + Path.DirectorySeparatorChar, StringComparison.Ordinal), path);
             var calls = new List<string>();
             ProcessOutput Evaluate(string host, IEnumerable<string> arguments, string root, TimeSpan timeout,
@@ -98,7 +106,7 @@ public sealed class ScribeMetadataHandoffTests
             ScribeTestMap Derive(RepositorySnapshot source) => ScribeTestMapDeriver.DeriveSnapshot(source, inputs,
                 data => ScribeTestMapDeriver.DeriveSnapshotUncached(data, Evaluate, inputs));
             var current = Derive(snapshot);
-            var baseline = Derive(Snapshot(false));
+            var baseline = Derive(RegisteredSnapshot(false));
             Assert.Equal(6, calls.Count);
             Assert.Empty(current.CompileQueryFindings);
             Assert.Empty(baseline.CompileQueryFindings);
@@ -107,6 +115,10 @@ public sealed class ScribeMetadataHandoffTests
             Assert.All(current.Methods, method => Assert.Empty(method.UnknownReasons));
             Assert.Empty(ScribeUnknownDebtPolicy.Evaluate(current, baseline));
             Assert.Throws<InvalidDataException>(() => Derive(Snapshot(true, "0.0.0-not-transported")));
+            Assert.Throws<InvalidDataException>(() => Derive(RegisteredSnapshot(true, "unregistered-reference")));
+            Assert.Throws<InvalidDataException>(() => inputs([new ScribeCompilationProject(
+                "tools/tests/Other/Other.csproj", "<Project><ItemGroup><Reference Include=\"MetadataFixture\" /></ItemGroup></Project>",
+                "Other", [], [], null)]));
         }
         finally
         {
@@ -139,6 +151,81 @@ public sealed class ScribeMetadataHandoffTests
             Assert.False(File.Exists(Path.Combine(root, CommonCompileMetadata.ManifestPath)));
         }
         finally { Directory.Delete(root, recursive: true); }
+    }
+
+    [Theory]
+    [InlineData("missing-registry", "registration is missing")]
+    [InlineData("unregistered-reference", "unregistered compile reference")]
+    [InlineData("missing-material", "registered compile material is unavailable")]
+    [InlineData("project-mismatch", "unregistered compile reference")]
+    [InlineData("source-outside", "invalid registered compile source")]
+    [InlineData("source-absolute", "invalid registered compile source")]
+    [InlineData("project-outside", "invalid registered compile project")]
+    [InlineData("duplicate-assembly", "duplicate registered compile assembly")]
+    [InlineData("duplicate-source", "duplicate registered compile source")]
+    [InlineData("duplicate-project", "duplicate registered compile project")]
+    public void ExplicitRegistrationRejectsIncompleteOrAmbiguousInputs(string scenario, string diagnostic)
+    {
+        var root = Directory.CreateTempSubdirectory("metadata-registration-").FullName;
+        try
+        {
+            if (scenario != "missing-material") WriteRegisteredAssembly(root);
+            var failure = Assert.Throws<InvalidDataException>(() =>
+                CommonCompileMetadata.Export(root, RegisteredSnapshot(true, scenario)));
+            Assert.Contains(diagnostic, failure.Message, StringComparison.Ordinal);
+            Assert.False(File.Exists(Path.Combine(root, CommonCompileMetadata.ManifestPath)));
+        }
+        finally { Directory.Delete(root, recursive: true); }
+    }
+
+    private static void WriteRegisteredAssembly(string root)
+    {
+        using var bytes = new MemoryStream();
+        var result = CSharpCompilation.Create("MetadataFixture",
+            [CSharpSyntaxTree.ParseText("namespace MetadataFixture { public static class Probe { public static bool Ready => true; } }")],
+            ScribeMetadataReferenceResolver.PlatformReferences(),
+            new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)).Emit(bytes);
+        Assert.True(result.Success, string.Join("\n", result.Diagnostics));
+        var path = Path.Combine(root, "tools/tests/Probe/bin/Release/net10.0/MetadataFixture.dll");
+        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+        File.WriteAllBytes(path, bytes.ToArray());
+    }
+
+    private static RepositorySnapshot RegisteredSnapshot(bool addition, string scenario = "valid")
+    {
+        var files = Snapshot(addition).Files.Values.Select(file =>
+        {
+            var text = file.Text;
+            if (file.Path.Value.EndsWith("Probe.csproj", StringComparison.Ordinal))
+                text = text.Replace("</ItemGroup>", "<Reference Include=\""
+                    + (scenario == "unregistered-reference" ? "Unregistered" : "MetadataFixture")
+                    + "\"><HintPath>$(UnresolvedSdkPath)/ignored.dll</HintPath></Reference></ItemGroup>", StringComparison.Ordinal);
+            if (file.Path.Value.EndsWith("Added.cs", StringComparison.Ordinal))
+                text = text.Replace("Xunit.Assert.True(true)", "Xunit.Assert.True(MetadataFixture.Probe.Ready)", StringComparison.Ordinal);
+            return RawRepositoryEntry.FromText(file.Path.Value, text);
+        }).ToList();
+        var source = scenario switch
+        {
+            "source-outside" => "../MetadataFixture.dll",
+            "source-absolute" => "/outside/MetadataFixture.dll",
+            _ => "tools/tests/Probe/bin/Release/net10.0/MetadataFixture.dll",
+        };
+        var project = scenario switch
+        {
+            "project-mismatch" => "tools/tests/Other/Other.csproj",
+            "project-outside" => "../Probe.csproj",
+            _ => "tools/tests/Probe/Probe.csproj",
+        };
+        var entry = new { assembly = "MetadataFixture", source, projects = scenario == "duplicate-project" ? new[] { project, project } : [project] };
+        var entries = scenario switch
+        {
+            "duplicate-assembly" => new[] { entry, entry },
+            "duplicate-source" => [entry, new { assembly = "AnotherFixture", source, projects = new[] { project } }],
+            _ => [entry],
+        };
+        if (scenario != "missing-registry")
+            files.Add(RawRepositoryEntry.FromText("Meta/compile-metadata.json", JsonSerializer.Serialize(new { version = 1, assemblies = entries })));
+        return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(RawRepositorySnapshot.Create(files))).Snapshot;
     }
 
     [Fact]
