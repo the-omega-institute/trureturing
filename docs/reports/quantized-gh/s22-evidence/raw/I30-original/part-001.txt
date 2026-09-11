@@ -1,0 +1,750 @@
+{
+  "schema": "theory-body-migration-s22-v1",
+  "work_target": "/Users/auricstudio/trureturing-qgh-actual-5040-density-order",
+  "repair_base": "d875e980b4835f9750ea39ec50535e441af69aab",
+  "original_scientific_base": "18b4ca2e2f282187c7036b78da9455c2e940b43b",
+  "authority_blob": "7fda0813773083e59b3783843c16b55f560f7805",
+  "source_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+  "report_path": "docs/reports/quantized-gh/actual-5040-density-order-0910.md",
+  "old_report_path": "docs/reports/actual-5040-density-order-0910.md",
+  "offset_convention": "zero-based half-open UTF-8 bytes",
+  "original_source_identity": {
+    "byte_count": 366276,
+    "lf_count": 6952,
+    "sha256": "4247e268cfcc9739cd91fd9fd7228be2ab4845ea249903bbb8876c5175c069d4",
+    "git_blob_oid": "3a7ff618fddb8b24e71f4528d91b50be0ce17dd2"
+  },
+  "current_source_identity": {
+    "byte_count": 363007,
+    "lf_count": 6912,
+    "sha256": "f8a03a26db6d84536dc59ae55cb75e1e699b32fc41bd3dfbca5a0b921db65612",
+    "git_blob_oid": "0b6239f2af0100f3b863b4f6d291b98adb3daa42"
+  },
+  "predecessor_prefix_identity": {
+    "byte_count": 343493,
+    "lf_count": 6499,
+    "sha256": "5357f62fa3c12fa64b365ab529cda9c0b9f0f0a06756643bc93374bb23fef8ad",
+    "git_blob_oid": "9e9abeeaba42a0035855dec90ed66ae326699f62"
+  },
+  "original_report_identity": {
+    "byte_count": 47873,
+    "lf_count": 574,
+    "sha256": "b5470ca5fd695afa499514d41f494c322e524ff05091ba6f09659aad5ab80457",
+    "git_blob_oid": "60f541e963cf508311ffa339ce74bebe90132e22"
+  },
+  "adjusted_report_prefix_identity": {
+    "byte_count": 47876,
+    "lf_count": 574,
+    "sha256": "4b7a6858edbb2bd70bf3f6ca067e5a0537b2e3a8c2616bc022a9ddf18da9199f",
+    "git_blob_oid": "4a5305be8028fe1b13b56d19791a58534cab38de"
+  },
+  "current_report_identity": {
+    "byte_count": 67218,
+    "lf_count": 903,
+    "sha256": "327c35a37ed2ee38cdaab054b2b5096da2080f55482689eacb2b826ff49eae8f",
+    "git_blob_oid": "43a664f7e9323a3a0f42714a094e220ae19732b5"
+  },
+  "report_recovery": {
+    "adjusted_prefix_span": [
+      0,
+      47876
+    ],
+    "remove_current_span": [
+      2608,
+      2611
+    ],
+    "insertion_literal": "../",
+    "insertion_byte_count": 3,
+    "original_scope_note_span": [
+      0,
+      405
+    ],
+    "scope_note_identity": {
+      "byte_count": 405,
+      "lf_count": 2,
+      "sha256": "db53f4eb19e4faec98147d4607f310affe8e631f8f8786ce3700edbfc6b5c59d",
+      "git_blob_oid": "6f8944c6781b8d6889a8430a8c814c5dabdabf13"
+    },
+    "I17_body_identity": {
+      "byte_count": 47468,
+      "lf_count": 572,
+      "sha256": "e506f08fa8ae4dac076c3a7232524e4e7cb8cf016abc706c424a28c7184ef2d6",
+      "git_blob_oid": "2ce3fa2d4cafe282ac5ca6edac198e8a77486f77"
+    },
+    "inert_I17_certificate_identity": {
+      "byte_count": 5081,
+      "lf_count": 101,
+      "sha256": "74ad1e745a48ad77820198c9eb1cab6dc85d905781869857f658167a162ba334",
+      "git_blob_oid": "953f1c6b5db377e42ec82018b6844320e334f7ff"
+    }
+  },
+  "counts": {
+    "original_unit_count": 22,
+    "current_unit_count": 19,
+    "reserved_number_count": 3,
+    "original_source_byte_count": 366276,
+    "retained_original_source_byte_count": 362691,
+    "archived_original_source_byte_count": 3585,
+    "source_addition_byte_count": 316,
+    "coverage_segment_count": 56,
+    "archive_segment_count": 17,
+    "source_addition_segment_count": 30,
+    "citation_rebinding_count": 5
+  },
+  "reserved_numbers": [
+    "33.20",
+    "33.21",
+    "33.22"
+  ],
+  "original_source_coverage": [
+    {
+      "original_span": [
+        0,
+        343589
+      ],
+      "destination": "source",
+      "destination_span": [
+        0,
+        343589
+      ],
+      "sha256": "dd9d34bdead1ad47be80878bd9b6a0d00e2f5da1f327d967d9d68916e93c5afa",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        343589,
+        343631
+      ],
+      "destination": "report",
+      "destination_span": [
+        52265,
+        52307
+      ],
+      "sha256": "dc4b1d8b5bab93982840f3e3c0366feedbd7b36ef116d64c00d06d6c03a74306",
+      "purpose": "type/scope heading metadata",
+      "original_unit": "33.1",
+      "delimiter_lf_count": 1
+    },
+    {
+      "original_span": [
+        343631,
+        343633
+      ],
+      "destination": "source",
+      "destination_span": [
+        343630,
+        343632
+      ],
+      "sha256": "983987033f0e117011e531dc33ad9bb15290bba41a414d830fb5cbdbcda2ff17",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        343633,
+        343743
+      ],
+      "destination": "report",
+      "destination_span": [
+        52404,
+        52514
+      ],
+      "sha256": "73a962d1f444b8c166a7fd6acd31fbea7bc9ce5223658efd5a2d07f619c655c4",
+      "purpose": "stage and implementation attribution",
+      "original_unit": "33.1",
+      "delimiter_lf_count": 0
+    },
+    {
+      "original_span": [
+        343743,
+        344407
+      ],
+      "destination": "source",
+      "destination_span": [
+        343633,
+        344297
+      ],
+      "sha256": "1799268e4b584a3ceb44ea0c46ba395edd00c21e5da58f8f2ce5c59be82a407a",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        344407,
+        344423
+      ],
+      "destination": "report",
+      "destination_span": [
+        52635,
+        52651
+      ],
+      "sha256": "61a52d50840dbb53271e9e6eeeeab5222554cdd63dfd5958dce22b4bf629e70c",
+      "purpose": "user-label attribution; undefined mathematical label retained",
+      "original_unit": "33.1",
+      "delimiter_lf_count": 0
+    },
+    {
+      "original_span": [
+        344423,
+        344548
+      ],
+      "destination": "source",
+      "destination_span": [
+        344297,
+        344422
+      ],
+      "sha256": "da467b009de8c899e023d0f39912ec3bc8b8d967de5498689f0e47e854a98456",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        344548,
+        344566
+      ],
+      "destination": "report",
+      "destination_span": [
+        52766,
+        52784
+      ],
+      "sha256": "144353953163df699e665fad69db5e56c1a96ae1f9c3f6c33685c9d49fb290a2",
+      "purpose": "formal admission non-claim; mathematical scope retained",
+      "original_unit": "33.1",
+      "delimiter_lf_count": 1
+    },
+    {
+      "original_span": [
+        344566,
+        344579
+      ],
+      "destination": "source",
+      "destination_span": [
+        344422,
+        344435
+      ],
+      "sha256": "f3a1781887cb98420d51243080ce1ecb656889145e641cc7cf70aaad74fd1af0",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        344579,
+        344588
+      ],
+      "destination": "source",
+      "destination_span": [
+        344506,
+        344515
+      ],
+      "sha256": "b1eb34d7f5a464226a530ff6f46094aae355c10b72cceaa2190b82fcc70127ef",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        344588,
+        345697
+      ],
+      "destination": "source",
+      "destination_span": [
+        344527,
+        345636
+      ],
+      "sha256": "82e423c346e40919941b823856fa3d62cd59960240cb062f130ee6f2199f826c",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        345697,
+        346710
+      ],
+      "destination": "source",
+      "destination_span": [
+        345645,
+        346658
+      ],
+      "sha256": "fe5a0003353163f93091cc4a84e366c081f276c039509aeb55b521d2ae52ac13",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        346710,
+        347674
+      ],
+      "destination": "source",
+      "destination_span": [
+        346667,
+        347631
+      ],
+      "sha256": "c09f4404c1f03a329dcf8ff15a8533ebedaab7bc4806969bb643340305dba1b0",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        347674,
+        348838
+      ],
+      "destination": "source",
+      "destination_span": [
+        347640,
+        348804
+      ],
+      "sha256": "85c4e116014a0c9f5ce78ecae965f7009ed172523b29de0e0741098267b15982",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        348838,
+        348942
+      ],
+      "destination": "report",
+      "destination_span": [
+        52909,
+        53013
+      ],
+      "sha256": "ffeef347941e10ce18b35bd0aa0228e563cad44508273f936ba1985f9266cd2e",
+      "purpose": "fixed-verification process; full global quadratic proof retained",
+      "original_unit": "33.5",
+      "delimiter_lf_count": 1
+    },
+    {
+      "original_span": [
+        348942,
+        348951
+      ],
+      "destination": "source",
+      "destination_span": [
+        348804,
+        348813
+      ],
+      "sha256": "41e853dab68a94305c01310feb471b5c04a069af16a1f36aa02fea5deae987eb",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        348951,
+        349713
+      ],
+      "destination": "source",
+      "destination_span": [
+        348822,
+        349584
+      ],
+      "sha256": "5157f4bc027e69a48f0ad939e174c2c695a2b1bf17e65fc15a760115a0f2942a",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        349713,
+        350581
+      ],
+      "destination": "source",
+      "destination_span": [
+        349608,
+        350476
+      ],
+      "sha256": "1d344325b31de1c5b44b741291ecfbcbdbf7b96103fee01c4f79f60ea0e556a3",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        350581,
+        350590
+      ],
+      "destination": "source",
+      "destination_span": [
+        350773,
+        350782
+      ],
+      "sha256": "a8532006d5181ae782e3e53a9bdccb90e304491278c9df6189f2e610976fa75e",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        350590,
+        351682
+      ],
+      "destination": "source",
+      "destination_span": [
+        350791,
+        351883
+      ],
+      "sha256": "60d7bc227acec7108beb5d7519ddf06748a31d823bafddd455999dc90bd6727f",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        351682,
+        351691
+      ],
+      "destination": "source",
+      "destination_span": [
+        352107,
+        352116
+      ],
+      "sha256": "f3f46b7345492686c9235b3c163968b5dbdeab509c42dd0080453fa6a3fff869",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        351691,
+        352349
+      ],
+      "destination": "source",
+      "destination_span": [
+        352125,
+        352783
+      ],
+      "sha256": "b895adf97bb4b776fc648fe82bee6d3eb07daeb643e2e86053cefd6f900cd5c5",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        352349,
+        353385
+      ],
+      "destination": "source",
+      "destination_span": [
+        352792,
+        353828
+      ],
+      "sha256": "d6217d06afa6fbc3c8cf522efcea8aa0e6d6e29e432e3a0b073deee30bf84fcf",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        353385,
+        353395
+      ],
+      "destination": "source",
+      "destination_span": [
+        354026,
+        354036
+      ],
+      "sha256": "c6e3d3624083373c4e91ae0de23f1cb60c83d72ad2a3aa949be516724272dc8a",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        353395,
+        354433
+      ],
+      "destination": "source",
+      "destination_span": [
+        354045,
+        355083
+      ],
+      "sha256": "f3ba8bfbd5a74b204daa1b08d67301e907ba294e1e1447b882d2ba9c235d8c74",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        354433,
+        355704
+      ],
+      "destination": "source",
+      "destination_span": [
+        355092,
+        356363
+      ],
+      "sha256": "647cfe1a3ac6bca706dcd52cdccb5c168d7b57511e776840170a0d13fe002713",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        355704,
+        356857
+      ],
+      "destination": "source",
+      "destination_span": [
+        356387,
+        357540
+      ],
+      "sha256": "78f514fc604dacc529c3229821504e94c56c6fdda3ad0b84ba02e9ddd74d975c",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        356857,
+        357595
+      ],
+      "destination": "source",
+      "destination_span": [
+        357549,
+        358287
+      ],
+      "sha256": "34d6d085d8b44ecd7a99ed9a7b59a2b0415844a9ed918f4276cf68e028150146",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        357595,
+        358684
+      ],
+      "destination": "source",
+      "destination_span": [
+        358296,
+        359385
+      ],
+      "sha256": "b8058e5e1de706f50d44e62ab0b46027c1051756f625524e6c186ccb47c93e74",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        358684,
+        359464
+      ],
+      "destination": "source",
+      "destination_span": [
+        359409,
+        360189
+      ],
+      "sha256": "b465b1cb0226a8cde3b92d1d7c3a83d24a3e91a6bebec4fcc662d7ad74b0c070",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        359464,
+        359474
+      ],
+      "destination": "source",
+      "destination_span": [
+        360324,
+        360334
+      ],
+      "sha256": "1a5356ce1691fb2731df49c421160e9ce1849a023c483d264f93ef1f0b1668c0",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        359474,
+        359516
+      ],
+      "destination": "source",
+      "destination_span": [
+        360343,
+        360385
+      ],
+      "sha256": "a33310ee10044401c3108394fd9facca71ca54a260d2f64d2a6e606ce1a404a8",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        359516,
+        359540
+      ],
+      "destination": "report",
+      "destination_span": [
+        53111,
+        53135
+      ],
+      "sha256": "dcba95a20b5f086f7f5e9a3dc02dae9587cc5075cd462b087f720b647bd02d72",
+      "purpose": "erratum heading attribution metadata",
+      "original_unit": "33.17",
+      "delimiter_lf_count": 1
+    },
+    {
+      "original_span": [
+        359540,
+        359960
+      ],
+      "destination": "source",
+      "destination_span": [
+        360401,
+        360821
+      ],
+      "sha256": "57b26ff76f3b4d76014fd43fa241ee4337cf84994695173ab8d0845d3900582e",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        359960,
+        360048
+      ],
+      "destination": "report",
+      "destination_span": [
+        53273,
+        53361
+      ],
+      "sha256": "0e457dea204f240d9f26354d8aa707d6679eebbcb6ff30d3363fe59333b8fa7c",
+      "purpose": "erratum attribution moved; erroneous tokens and explicit correction retained",
+      "original_unit": "33.17",
+      "delimiter_lf_count": 1
+    },
+    {
+      "original_span": [
+        360048,
+        360070
+      ],
+      "destination": "source",
+      "destination_span": [
+        360843,
+        360865
+      ],
+      "sha256": "728c765983d9a9a37cbe5ab0ef7babcb2cce715bcf59d944607394a7d02e3ba5",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        360070,
+        360271
+      ],
+      "destination": "source",
+      "destination_span": [
+        360871,
+        361072
+      ],
+      "sha256": "50e40bab1c2ed8e1e01adaa040264e859ca43cbb5653f9b33dabbf232bcad127",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        360271,
+        360375
+      ],
+      "destination": "report",
+      "destination_span": [
+        53493,
+        53597
+      ],
+      "sha256": "eede5acb3c719f4408ccff865da26898428d1ba2665816b8efa25162d202a437",
+      "purpose": "historical envelope immutability record; mathematical erratum retained",
+      "original_unit": "33.17",
+      "delimiter_lf_count": 1
+    },
+    {
+      "original_span": [
+        360375,
+        360433
+      ],
+      "destination": "source",
+      "destination_span": [
+        361073,
+        361131
+      ],
+      "sha256": "d74bf31e4e74786e35efe451b3579e502b6f6ceb94a066cf8c0c7e13167ba0f0",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        360433,
+        361180
+      ],
+      "destination": "source",
+      "destination_span": [
+        361140,
+        361887
+      ],
+      "sha256": "2ae65fa485b5f69ccf4c6533f915483d812ebb6a6cdec7301777486256d69227",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        361180,
+        362289
+      ],
+      "destination": "source",
+      "destination_span": [
+        361896,
+        363005
+      ],
+      "sha256": "45322460e18a1d7ecefcfb2643a25b738a05e82f04501fcd4e62cb42b37b41bd",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        362289,
+        362334
+      ],
+      "destination": "report",
+      "destination_span": [
+        53719,
+        53764
+      ],
+      "sha256": "4f5547aec528f93defa5d91ad9be5059e50ed0c8935a94735ebd185bfab39c15",
+      "purpose": "sampling non-execution record; classification limit retained",
+      "original_unit": "33.19",
+      "delimiter_lf_count": 1
+    },
+    {
+      "original_span": [
+        362334,
+        362336
+      ],
+      "destination": "source",
+      "destination_span": [
+        363005,
+        363007
+      ],
+      "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+      "purpose": "unchanged mathematical wording"
+    },
+    {
+      "original_span": [
+        362336,
+        362389
+      ],
+      "destination": "report",
+      "destination_span": [
+        53912,
+        53965
+      ],
+      "sha256": "fdd74371a16e5990d4c956494a71b26a406d9732e28e4479137c26c9f32683c5",
+      "purpose": "reserved source numbers and process/citation container; mathematical citations rebound",
+      "original_unit": "33.20",
+      "delimiter_lf_count": 1
+    },
+    {
+      "original_span": [
+        362389,
+        362611
+      ],
+      "destination": "source",
+      "destination_span": [
+        351885,
+        352107
+      ],
+      "sha256": "cbbb248d258da1870cb56fa24cad3658f0e5a5ea0c8ac98cae457dda56bd48d3",
+      "purpose": "fractional-knapsack classical citation"
+    },
+    {
+      "original_span": [
+        362611,
+        362612
+      ],
+      "destination": "report",
+      "destination_span": [
+        54113,
+        54114
+      ],
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "purpose": "reserved source numbers and process/citation container; mathematical citations rebound",
+      "original_unit": "33.20",
+      "delimiter_lf_count": 0
+    },
+    {
+      "original_span": [
+        362612,
+        362808
+      ],
+      "destination": "source",
+      "destination_span": [
+        353830,
+        354026
+      ],
+      "sha256": "f11a3faa7bf904ff59e8b4df9b7d85d0e137566229815bb7c2507a5bbeb0e276",
+      "purpose": "constructive duality classical citation"
+    },
+    {
+      "original_span": [
+        362808,
+        362809
+      ],
+      "destination": "report",
+      "destination_span": [
+        54261,
+        54262
+      ],
+      "sha256": "36a9e7f1c95b82ffb99743e0c5c4ce95d83c9a430aac59f84ef3cbfab6145068",
+      "purpose": "reserved source numbers and process/citation container; mathematical citations rebound",
+      "original_unit": "33.20",
+      "delimiter_lf_count": 1
+    },
+    {
+      "original_span": [
+        362809,

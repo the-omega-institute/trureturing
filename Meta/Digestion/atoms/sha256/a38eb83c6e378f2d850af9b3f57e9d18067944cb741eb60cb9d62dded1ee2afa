@@ -1,0 +1,15 @@
+**33.1 Statement, labels and mathematical status.** This S22/C50 appendix implements
+the completed C44 primary as PAPER_ARGUMENT / repo-derived reference input.
+All logarithms are natural. The ordered prime labels are
+\(\mathcal P=(p_1,p_2,p_3,p_4)=(2,3,5,7)\).
+Subscripts \(p\in\mathcal P\) are prime labels, so \(h_2=\log2\) and
+\(h_3=\log3\); a position \(k\in\{1,2,3,4\}\) instead means \(p_k\).
+This differs from section 32's zero-based positional subscripts.
+The ordinary exponent vector is \((b_2,b_3,b_5,b_7)=(4,2,1,1)\), with
+\(5040=2^4\cdot3^2\cdot5\cdot7\). It is not a Zeckendorf digit string.
+We prove a common optimizer for the specified fractional resource problem at every
+finite height and a fixed obstruction to optimizing its moments separately.
+This is not a sign theorem for \(G=D-\Psi\). GH remains the user's literal,
+mathematically unidentified label. No RH equivalence, proof or progress, encoded
+orthogonality, arbitrary-prime/shape theorem or Lean admission is asserted.
+
