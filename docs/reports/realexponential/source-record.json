@@ -14,10 +14,7 @@
       "selected_source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
       "registered_consumer_edges": [
         {
-          "consumer": {
-            "source_module": "WF84.XiOrder",
-            "source_declaration": "Riemann.riemannXi_entireOfOrderAtMost_one"
-          },
+          "consumer": {"source_module": "WF84.XiOrder", "source_declaration": "Riemann.riemannXi_entireOfOrderAtMost_one"},
           "prerequisite": "Real.sq_le_exp_const_mul_rpow",
           "direction": "consumer -> prerequisite"
         }
@@ -32,18 +29,12 @@
       "selected_source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
       "registered_consumer_edges": [
         {
-          "consumer": {
-            "source_module": "WF84.ExpPolyGrowth",
-            "source_declaration": "Complex.Hadamard.natDegree_le_floor_of_exp_eval_norm_bound"
-          },
+          "consumer": {"source_module": "WF84.ExpPolyGrowth", "source_declaration": "Complex.Hadamard.natDegree_le_floor_of_exp_eval_norm_bound"},
           "prerequisite": "Real.log_growth_of_norm_le_exp_mul_rpow",
           "direction": "consumer -> prerequisite"
         },
         {
-          "consumer": {
-            "source_module": "WF84.OrderSummability",
-            "source_declaration": "Complex.Hadamard.EntireOfOrderAtMost.exists_log_growth"
-          },
+          "consumer": {"source_module": "WF84.OrderSummability", "source_declaration": "Complex.Hadamard.EntireOfOrderAtMost.exists_log_growth"},
           "prerequisite": "Real.log_growth_of_norm_le_exp_mul_rpow",
           "direction": "consumer -> prerequisite"
         }
@@ -58,10 +49,7 @@
       "selected_source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
       "registered_consumer_edges": [
         {
-          "consumer": {
-            "source_module": "WF84.HadamardGrowth",
-            "source_declaration": "Complex.Hadamard.hadamard_factorization_of_growth"
-          },
+          "consumer": {"source_module": "WF84.HadamardGrowth", "source_declaration": "Complex.Hadamard.hadamard_factorization_of_growth"},
           "prerequisite": "Real.exists_norm_le_exp_mul_pow_of_rpow_bound",
           "direction": "consumer -> prerequisite"
         }
@@ -76,10 +64,7 @@
       "selected_source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
       "registered_consumer_edges": [
         {
-          "consumer": {
-            "source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
-            "source_declaration": "Real.exists_norm_le_exp_mul_pow_of_rpow_bound"
-          },
+          "consumer": {"source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth", "source_declaration": "Real.exists_norm_le_exp_mul_pow_of_rpow_bound"},
           "prerequisite": "Real.norm_le_exp_mul_rpow_of_exponent_le",
           "direction": "consumer -> prerequisite"
         }
@@ -94,10 +79,7 @@
       "selected_source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
       "registered_consumer_edges": [
         {
-          "consumer": {
-            "source_module": "WF84.HadamardGrowth",
-            "source_declaration": "Complex.Hadamard.hadamardQuotient_norm_le_exp_rpow_of_growth"
-          },
+          "consumer": {"source_module": "WF84.HadamardGrowth", "source_declaration": "Complex.Hadamard.hadamardQuotient_norm_le_exp_rpow_of_growth"},
           "prerequisite": "Real.exp_mul_rpow_le_exp_mul_rpow_of_le_mul",
           "direction": "consumer -> prerequisite"
         }
@@ -112,10 +94,7 @@
       "selected_source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
       "registered_consumer_edges": [
         {
-          "consumer": {
-            "source_module": "WF84.HadamardGrowth",
-            "source_declaration": "Complex.Hadamard.hadamardQuotient_norm_le_exp_rpow_of_growth"
-          },
+          "consumer": {"source_module": "WF84.HadamardGrowth", "source_declaration": "Complex.Hadamard.hadamardQuotient_norm_le_exp_rpow_of_growth"},
           "prerequisite": "Real.one_add_le_three_mul_one_add_of_le_two_mul_max",
           "direction": "consumer -> prerequisite"
         }
@@ -130,10 +109,7 @@
       "selected_source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
       "registered_consumer_edges": [
         {
-          "consumer": {
-            "source_module": "WF84.HadamardGrowth",
-            "source_declaration": "Complex.Hadamard.hadamardQuotient_norm_le_exp_rpow_of_growth"
-          },
+          "consumer": {"source_module": "WF84.HadamardGrowth", "source_declaration": "Complex.Hadamard.hadamardQuotient_norm_le_exp_rpow_of_growth"},
           "prerequisite": "Real.norm_le_exp_mul_rpow_of_log_growth",
           "direction": "consumer -> prerequisite"
         }
@@ -148,10 +124,7 @@
       "selected_source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
       "registered_consumer_edges": [
         {
-          "consumer": {
-            "source_module": "WF84.LogCountingGrowth",
-            "source_declaration": "Function.locallyFinsuppWithin.logCounting_divisor_le_of_log_growth"
-          },
+          "consumer": {"source_module": "WF84.LogCountingGrowth", "source_declaration": "Function.locallyFinsuppWithin.logCounting_divisor_le_of_log_growth"},
           "prerequisite": "Real.log_norm_le_of_log_one_add_growth_on_sphere",
           "direction": "consumer -> prerequisite"
         }
@@ -166,10 +139,7 @@
       "selected_source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
       "registered_consumer_edges": [
         {
-          "consumer": {
-            "source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
-            "source_declaration": "Real.log_norm_le_of_log_one_add_growth_on_sphere"
-          },
+          "consumer": {"source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth", "source_declaration": "Real.log_norm_le_of_log_one_add_growth_on_sphere"},
           "prerequisite": "Real.log_norm_le_log_one_add_norm",
           "direction": "consumer -> prerequisite"
         }
@@ -184,10 +154,7 @@
       "selected_source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
       "registered_consumer_edges": [
         {
-          "consumer": {
-            "source_module": "WF84.LogCountingGrowth",
-            "source_declaration": "Function.locallyFinsuppWithin.log_two_mul_massClosedBall₀_le_logCounting"
-          },
+          "consumer": {"source_module": "WF84.LogCountingGrowth", "source_declaration": "Function.locallyFinsuppWithin.log_two_mul_massClosedBall₀_le_logCounting"},
           "prerequisite": "Real.log_two_le_log_two_mul_mul_inv_norm_of_norm_le",
           "direction": "consumer -> prerequisite"
         }
@@ -202,10 +169,7 @@
       "selected_source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
       "registered_consumer_edges": [
         {
-          "consumer": {
-            "source_module": "WF84.LogCountingGrowth",
-            "source_declaration": "Function.locallyFinsuppWithin.log_two_mul_massClosedBall₀_le_logCounting"
-          },
+          "consumer": {"source_module": "WF84.LogCountingGrowth", "source_declaration": "Function.locallyFinsuppWithin.log_two_mul_massClosedBall₀_le_logCounting"},
           "prerequisite": "Real.log_nonneg_mul_inv_norm_of_norm_le",
           "direction": "consumer -> prerequisite"
         }
@@ -220,26 +184,17 @@
       "selected_source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
       "registered_consumer_edges": [
         {
-          "consumer": {
-            "source_module": "WF84.HadamardGrowth",
-            "source_declaration": "Complex.Hadamard.hadamard_factorization_of_growth"
-          },
+          "consumer": {"source_module": "WF84.HadamardGrowth", "source_declaration": "Complex.Hadamard.hadamard_factorization_of_growth"},
           "prerequisite": "Real.exists_between_self_and_floor_add_one_same_floor",
           "direction": "consumer -> prerequisite"
         },
         {
-          "consumer": {
-            "source_module": "WF84.HadamardOrder",
-            "source_declaration": "Complex.Hadamard.hadamard_factorization_of_order"
-          },
+          "consumer": {"source_module": "WF84.HadamardOrder", "source_declaration": "Complex.Hadamard.hadamard_factorization_of_order"},
           "prerequisite": "Real.exists_between_self_and_floor_add_one_same_floor",
           "direction": "consumer -> prerequisite"
         },
         {
-          "consumer": {
-            "source_module": "WF84.OrderSummability",
-            "source_declaration": "Complex.Hadamard.EntireOfOrderAtMost.summable_norm_inv_pow_divisorZeroIndex₀"
-          },
+          "consumer": {"source_module": "WF84.OrderSummability", "source_declaration": "Complex.Hadamard.EntireOfOrderAtMost.summable_norm_inv_pow_divisorZeroIndex₀"},
           "prerequisite": "Real.exists_between_self_and_floor_add_one_same_floor",
           "direction": "consumer -> prerequisite"
         }
@@ -254,18 +209,12 @@
       "selected_source_module": "WF84.Base.RealGrowth",
       "registered_consumer_edges": [
         {
-          "consumer": {
-            "source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
-            "source_declaration": "Real.sq_le_exp_const_mul_rpow"
-          },
+          "consumer": {"source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth", "source_declaration": "Real.sq_le_exp_const_mul_rpow"},
           "prerequisite": "Real.le_exp_self",
           "direction": "consumer -> prerequisite"
         },
         {
-          "consumer": {
-            "source_module": "WF84.ZetaOrder",
-            "source_declaration": "Complex.completedRiemannZeta₀_order_one"
-          },
+          "consumer": {"source_module": "WF84.ZetaOrder", "source_declaration": "Complex.completedRiemannZeta₀_order_one"},
           "prerequisite": "Real.le_exp_self",
           "direction": "consumer -> prerequisite"
         }
@@ -281,10 +230,7 @@
       "selected_source_module": "WF84.Base.RealGrowth",
       "registered_consumer_edges": [
         {
-          "consumer": {
-            "source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
-            "source_declaration": "Real.log_growth_of_norm_le_exp_mul_rpow"
-          },
+          "consumer": {"source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth", "source_declaration": "Real.log_growth_of_norm_le_exp_mul_rpow"},
           "prerequisite": "Real.log_one_add_le_add_log_two_of_le_exp",
           "direction": "consumer -> prerequisite"
         }
@@ -299,10 +245,7 @@
       "selected_source_module": "WF84.Base.RealGrowth",
       "registered_consumer_edges": [
         {
-          "consumer": {
-            "source_module": "WF84.Base.RealGrowth",
-            "source_declaration": "Real.log_one_add_le_add_log_two_of_le_exp"
-          },
+          "consumer": {"source_module": "WF84.Base.RealGrowth", "source_declaration": "Real.log_one_add_le_add_log_two_of_le_exp"},
           "prerequisite": "Real.log_one_add_exp_le_add_log_two",
           "direction": "consumer -> prerequisite"
         }
@@ -317,10 +260,7 @@
       "selected_source_module": "WF84.Base.RealGrowth",
       "registered_consumer_edges": [
         {
-          "consumer": {
-            "source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth",
-            "source_declaration": "Real.norm_le_exp_mul_rpow_of_log_growth"
-          },
+          "consumer": {"source_module": "WF84.Analysis.SpecialFunctions.Log.ExpGrowth", "source_declaration": "Real.norm_le_exp_mul_rpow_of_log_growth"},
           "prerequisite": "Real.le_exp_of_log_one_add_le",
           "direction": "consumer -> prerequisite"
         }
@@ -335,66 +275,42 @@
       "selected_source_module": "WF84.OrderCore",
       "registered_consumer_edges": [
         {
-          "consumer": {
-            "source_module": "WF84.Binding",
-            "source_declaration": "WF84.Binding.growth_of_order"
-          },
+          "consumer": {"source_module": "WF84.Binding", "source_declaration": "WF84.Binding.growth_of_order"},
           "prerequisite": "Complex.Hadamard.EntireOfOrderAtMost",
           "direction": "consumer -> prerequisite"
         },
         {
-          "consumer": {
-            "source_module": "WF84.HadamardOrder",
-            "source_declaration": "Complex.Hadamard.hadamard_factorization_of_order"
-          },
+          "consumer": {"source_module": "WF84.HadamardOrder", "source_declaration": "Complex.Hadamard.hadamard_factorization_of_order"},
           "prerequisite": "Complex.Hadamard.EntireOfOrderAtMost",
           "direction": "consumer -> prerequisite"
         },
         {
-          "consumer": {
-            "source_module": "WF84.OrderCore",
-            "source_declaration": "Complex.Hadamard.EntireOfOrderAtMost.exists_bound"
-          },
+          "consumer": {"source_module": "WF84.OrderCore", "source_declaration": "Complex.Hadamard.EntireOfOrderAtMost.exists_bound"},
           "prerequisite": "Complex.Hadamard.EntireOfOrderAtMost",
           "direction": "consumer -> prerequisite"
         },
         {
-          "consumer": {
-            "source_module": "WF84.OrderCore",
-            "source_declaration": "Complex.Hadamard.EntireOfOrderAtMost.differentiable"
-          },
+          "consumer": {"source_module": "WF84.OrderCore", "source_declaration": "Complex.Hadamard.EntireOfOrderAtMost.differentiable"},
           "prerequisite": "Complex.Hadamard.EntireOfOrderAtMost",
           "direction": "consumer -> prerequisite"
         },
         {
-          "consumer": {
-            "source_module": "WF84.OrderSummability",
-            "source_declaration": "Complex.Hadamard.EntireOfOrderAtMost.exists_log_growth"
-          },
+          "consumer": {"source_module": "WF84.OrderSummability", "source_declaration": "Complex.Hadamard.EntireOfOrderAtMost.exists_log_growth"},
           "prerequisite": "Complex.Hadamard.EntireOfOrderAtMost",
           "direction": "consumer -> prerequisite"
         },
         {
-          "consumer": {
-            "source_module": "WF84.OrderSummability",
-            "source_declaration": "Complex.Hadamard.EntireOfOrderAtMost.summable_norm_inv_pow_divisorZeroIndex₀"
-          },
+          "consumer": {"source_module": "WF84.OrderSummability", "source_declaration": "Complex.Hadamard.EntireOfOrderAtMost.summable_norm_inv_pow_divisorZeroIndex₀"},
           "prerequisite": "Complex.Hadamard.EntireOfOrderAtMost",
           "direction": "consumer -> prerequisite"
         },
         {
-          "consumer": {
-            "source_module": "WF84.XiOrder",
-            "source_declaration": "Riemann.riemannXi_entireOfOrderAtMost_one"
-          },
+          "consumer": {"source_module": "WF84.XiOrder", "source_declaration": "Riemann.riemannXi_entireOfOrderAtMost_one"},
           "prerequisite": "Complex.Hadamard.EntireOfOrderAtMost",
           "direction": "consumer -> prerequisite"
         },
         {
-          "consumer": {
-            "source_module": "WF84.XiOrder",
-            "source_declaration": "Riemann.completedRiemannZeta₀_entireOfOrderAtMost_one"
-          },
+          "consumer": {"source_module": "WF84.XiOrder", "source_declaration": "Riemann.completedRiemannZeta₀_entireOfOrderAtMost_one"},
           "prerequisite": "Complex.Hadamard.EntireOfOrderAtMost",
           "direction": "consumer -> prerequisite"
         }
@@ -409,26 +325,17 @@
       "selected_source_module": "WF84.OrderCore",
       "registered_consumer_edges": [
         {
-          "consumer": {
-            "source_module": "WF84.Binding",
-            "source_declaration": "WF84.Binding.growth_of_order"
-          },
+          "consumer": {"source_module": "WF84.Binding", "source_declaration": "WF84.Binding.growth_of_order"},
           "prerequisite": "Complex.Hadamard.EntireOfOrderAtMost.exists_bound",
           "direction": "consumer -> prerequisite"
         },
         {
-          "consumer": {
-            "source_module": "WF84.OrderSummability",
-            "source_declaration": "Complex.Hadamard.EntireOfOrderAtMost.exists_log_growth"
-          },
+          "consumer": {"source_module": "WF84.OrderSummability", "source_declaration": "Complex.Hadamard.EntireOfOrderAtMost.exists_log_growth"},
           "prerequisite": "Complex.Hadamard.EntireOfOrderAtMost.exists_bound",
           "direction": "consumer -> prerequisite"
         },
         {
-          "consumer": {
-            "source_module": "WF84.XiOrder",
-            "source_declaration": "Riemann.riemannXi_entireOfOrderAtMost_one"
-          },
+          "consumer": {"source_module": "WF84.XiOrder", "source_declaration": "Riemann.riemannXi_entireOfOrderAtMost_one"},
           "prerequisite": "Complex.Hadamard.EntireOfOrderAtMost.exists_bound",
           "direction": "consumer -> prerequisite"
         }
@@ -443,18 +350,12 @@
       "selected_source_module": "WF84.OrderCore",
       "registered_consumer_edges": [
         {
-          "consumer": {
-            "source_module": "WF84.HadamardOrder",
-            "source_declaration": "Complex.Hadamard.hadamard_factorization_of_order"
-          },
+          "consumer": {"source_module": "WF84.HadamardOrder", "source_declaration": "Complex.Hadamard.hadamard_factorization_of_order"},
           "prerequisite": "Complex.Hadamard.EntireOfOrderAtMost.differentiable",
           "direction": "consumer -> prerequisite"
         },
         {
-          "consumer": {
-            "source_module": "WF84.OrderSummability",
-            "source_declaration": "Complex.Hadamard.EntireOfOrderAtMost.summable_norm_inv_pow_divisorZeroIndex₀"
-          },
+          "consumer": {"source_module": "WF84.OrderSummability", "source_declaration": "Complex.Hadamard.EntireOfOrderAtMost.summable_norm_inv_pow_divisorZeroIndex₀"},
           "prerequisite": "Complex.Hadamard.EntireOfOrderAtMost.differentiable",
           "direction": "consumer -> prerequisite"
         }
