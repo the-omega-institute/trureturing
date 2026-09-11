@@ -1,6 +1,7 @@
 # 矩形指数窗口内最长 δ-链
 
-一般定理已证明；门链结果在本报告末尾结算。仅处理 377.2。
+本席终局：**成**。一般公式、显式达到构造及规定本地门链均通过，仅处理 377.2。
+这表示实施席目标达成，不表示 PR 已合入；PR 与合并交回 orchestrator。
 实施者为 Codex worker，使用 lean4 skill，单点自查、零独立评审席。
 本报告是席位亲验，不冒充 orchestrator 的复验或共识。
 
@@ -104,4 +105,44 @@ lean-report 前两轮失败在新 Scribe 的编译：先是 DSL 名称应为 Lan
 随后是 ScribeNode 的正文参数需要统一 Blocks。均按实际编译错误修复；
 未改门、预算、检测或冻结模块。构建未被杀，没有遗留被杀的 lake 作业。
 
-最终门链与交接读数待本次运行结束后补在此处。
+最终门链（退出码均为0，未跳门）：
+
+1. serial-lean：status=complete built=1 failed=0 missing=1；missing 表示开跑时的待建数。
+2. make lean-report：delta changed=0 added=1 recheck=1。29个报告声明，16个 included；
+   全部 axiom 闭包之并恰为 Classical.choice、Quot.sound、propext。
+3. make emit：发射1个 Blueprint；六条公开定理均为 std3。
+4. CI Scribe 层：精确 merge-base
+   b5c49d91bd5dc6ddb61a4785f479d1c5c4dcb1b0，
+   DESCRIBE_STATUS case=DESCRIBE-NODES status=classified nodes=11154
+   suspected_novel=0 formula_content_slots=68 formula_statements=32 red=0 observe=5011；
+   `^RED` 行为0。Observe 数不是错误数。
+5. make deposit-uncovered：使用完整 GID
+   D5/S3/Arith/Lattices/RectangularDeltaChain.longest_chain_length；
+   BASE为上述精确SHA。header-check通过，ledger-align changed=0 added=1 conflicts=0，
+   最终 PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED reason=NO_ATOM。
+
+冻结模块 statement_id：
+sha256:00c84271d3559d435ceabb5b521db325e0b4e140d91e2899930b33035fca4fd9。
+主定理 statement_id：
+sha256:2b8021a0f4d43a173214c09398e6b0dabbfe68d7905ab80c3f5b7584ef353f2b。
+Freeze event_hash：
+sha256:6071d20325b4b3f771343550a418d0bad8a5b7cf811599c600614547a10f792d。
+事件的 prerequisite_frozen_node_ids 为空。仅新增本模块的一对冻结工件。
+源 atom 保持未覆盖；本次形态为 deposit-uncovered，不宣称整 atom 已消化。
+
+当前源码 SHA-256 与 report 绑定一致：
+3ad2cd3cc7bacbf283d6122bf1641c4dacb0a5fdef702b6385d7d44fcd8499d5。
+缓存收据为 present、Mathlib/project 两层 warm、stamp_miss=null。
+canonical route 实测返回预登记的 GID/path/S3 与七行骨架。
+build_seconds: null（未单独测量正式串行构建墙钟）。
+
+最终交接：分支 lane/math/deltachainwindow；提交以 runner result.json 为准。
+fetch 后 origin/dev=35be0e20564c9fec39940c37740a03a8917ce4de；
+merge-base仍为上述SHA，git merge-tree试合退出0。
+未开PR、未运行 make pr-open、未合并；远端三 required check 与独立评审未由本席执行。
+没有剩余数学子命题。下一步仅由 orchestrator 复核、开PR并完成合并。
+
+日志根目录：
+/var/folders/wv/ht3wzsj138b4sxl3q4t0xdr40000gn/T/consensus-rnd/sshx/dchain-1/attempt-1。
+关键文件：serial-lean.log、lean-report-3.log、emit.log、scribe-content-checks.log、
+deposit-uncovered.log、module-report.json、probe.py、probe.json。
