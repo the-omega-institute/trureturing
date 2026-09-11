@@ -197,4 +197,19 @@ theorem baez_duarte_epsilon_half_iff :
     simpa only [mul_div_cancel_left₀ ε (by norm_num : (2 : ℝ) ≠ 0)] using
       h (2*ε) (mul_pos (by norm_num) hε)
 
+omit hdecay in
+/-- The original complex finite-coefficient bound itself implies standard RH. -/
+theorem baez_duarte_original_decay_implies_rh
+    (h : ∀ ε : ℝ, 0 < ε → ∃ C : ℝ, 0 < C ∧ ∃ N : ℕ, 1 ≤ N ∧
+      ∀ k : ℕ, N ≤ k →
+        ‖∑ j ∈ Finset.range (k+1), (-1 : ℂ)^j * (Nat.choose k j : ℂ) /
+          riemannZeta ((2*j+2 : ℕ) : ℂ)‖ ≤
+            C * Real.rpow (k : ℝ) (-(3 : ℝ)/4+ε)) : RiemannHypothesis := by
+  apply baez_duarte_decay_implies_rh
+  intro ε hε
+  obtain ⟨C, hC, N, hN, hb⟩ := h ε hε
+  refine ⟨C, hC, N, hN, fun k hk => ?_⟩
+  simpa only [← baez_duarte_complex_finite_sum, Complex.norm_real,
+    Real.norm_eq_abs] using hb k hk
+
 end D5.S3.Weil.Analytic.BaezDuarteContinuation
