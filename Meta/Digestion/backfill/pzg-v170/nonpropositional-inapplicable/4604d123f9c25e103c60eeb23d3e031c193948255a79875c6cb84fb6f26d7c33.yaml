@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4604d123f9c25e103c60eeb23d3e031c193948255a79875c6cb84fb6f26d7c33
+  normalized_sha256: sha256:4604d123f9c25e103c60eeb23d3e031c193948255a79875c6cb84fb6f26d7c33
+cas_ref: sha256:4604d123f9c25e103c60eeb23d3e031c193948255a79875c6cb84fb6f26d7c33
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Errata remark 29.9 corrects the landing address recorded inside candidate theorem 4.132 so that an S1 module does not import S3. It states where a future module must be placed and asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligation stays with 4.132 itself.
+    previous_atom_id: 824db2b2f540b7a266163c5ced75ab982acce9a065a868038e20b6180ae7ee68
+    next_atom_id: e30f7db02edcdc29781a40f7d9a36bb1eed4deff161e5bd55c2d7b9f3261e31f
