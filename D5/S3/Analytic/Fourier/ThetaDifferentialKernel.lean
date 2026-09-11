@@ -108,4 +108,138 @@ theorem omega_eq_series {t : ℝ} (ht : 0 < t) :
   push_cast
   ring
 
+/-- The first derivative written with the zeroth and second theta weights. -/
+def psiFirst (x : ℝ) : ℝ := exp (x / 2) *
+  (thetaSeries 0 (exp (2 * x)) / 2 - 2 * Real.pi * exp (2 * x) * thetaSeries 2 (exp (2 * x)))
+
+/-- The second derivative written with the first three even theta weights. -/
+def psiSecond (x : ℝ) : ℝ := exp (x / 2) *
+  (thetaSeries 0 (exp (2 * x)) / 4 - 6 * Real.pi * exp (2 * x) * thetaSeries 2 (exp (2 * x)) +
+    4 * Real.pi ^ 2 * exp (2 * x) ^ 2 * thetaSeries 4 (exp (2 * x)))
+
+private theorem exp_half_deriv (x : ℝ) :
+    HasDerivAt (fun x : ℝ => exp (x / 2)) (exp (x / 2) / 2) x := by
+  convert! ((hasDerivAt_id x).div_const 2).exp using 1 <;> simp <;> ring
+
+private theorem exp_twice_deriv (x : ℝ) :
+    HasDerivAt (fun x : ℝ => exp (2 * x)) (2 * exp (2 * x)) x := by
+  convert! ((hasDerivAt_id x).const_mul 2).exp using 1 <;> simp <;> ring
+
+private theorem composed_series_deriv (k : ℕ) (x : ℝ) :
+    HasDerivAt (fun x : ℝ => thetaSeries k (exp (2 * x)))
+      (-2 * Real.pi * exp (2 * x) * thetaSeries (k + 2) (exp (2 * x))) x := by
+  convert! (hasDerivAt_thetaSeries k (exp_pos (2 * x))).comp x (exp_twice_deriv x) using 1 <;> ring
+
+/-- The first derivative of the original rescaled theta tail. -/
+theorem hasDerivAt_psi (x : ℝ) : HasDerivAt psi (psiFirst x) x := by
+  rw [show psi = fun x => exp (x / 2) * thetaSeries 0 (exp (2 * x)) from funext psi_eq_series]
+  convert! (exp_half_deriv x).mul (composed_series_deriv 0 x) using 1
+  simp only [psiFirst]
+  ring
+
+/-- The second differentiation uses the same proved local majorants. -/
+theorem hasDerivAt_psiFirst (x : ℝ) : HasDerivAt psiFirst (psiSecond x) x := by
+  have h0 := composed_series_deriv 0 x
+  have h2 := composed_series_deriv 2 x
+  convert! (exp_half_deriv x).mul ((h0.div_const 2).sub
+    (((exp_twice_deriv x).const_mul (2 * Real.pi)).mul h2)) using 1
+  simp only [psiSecond, Pi.sub_apply, Pi.mul_apply]
+  ring
+
+/-- The differential operator applied to the actual theta tail gives Romik's kernel. -/
+theorem romikPhi_eq_differential (x : ℝ) :
+    romikPhi x = deriv (deriv psi) x - psi x / 4 := by
+  have hd : deriv psi = psiFirst := funext (fun y => (hasDerivAt_psi y).deriv)
+  rw [hd, (hasDerivAt_psiFirst x).deriv, romikPhi, omega_eq_series (exp_pos _),
+    psi_eq_series, psiSecond]
+  ring
+
+/-- The theta functional equation after the logarithmic substitution. -/
+theorem theta_exp_neg (x : ℝ) : theta (exp (2 * -x)) = exp x * theta (exp (2 * x)) := by
+  have h := HurwitzZeta.evenKernel_functional_equation (0 : UnitAddCircle) (exp (2 * -x))
+  rw [← HurwitzZeta.evenKernel_eq_cosKernel_of_zero, ← exp_mul] at h
+  have h1 : 2 * -x * (1 / 2 : ℝ) = -x := by ring
+  have h2 : 1 / exp (2 * -x) = exp (2 * x) := by
+    rw [one_div, ← exp_neg]
+    congr 1
+    ring
+  rw [h1, h2] at h
+  simpa only [theta, one_div, ← exp_neg, neg_neg] using! h
+
+/-- The nonsymmetric theta tail has an explicit elementary reflection defect. -/
+theorem psi_reflection (x : ℝ) :
+    psi (-x) = psi x + (exp (x / 2) - exp (-x / 2)) / 2 := by
+  unfold psi
+  rw [theta_exp_neg]
+  have h : exp (-x / 2) * exp x = exp (x / 2) := by
+    rw [← exp_add]
+    congr 1
+    ring
+  linear_combination (theta (exp (2 * x)) / 2) * h
+
+/-- Differentiating the modular reflection identity once. -/
+theorem psiFirst_reflection (x : ℝ) :
+    psiFirst (-x) = -psiFirst x - (exp (x / 2) + exp (-x / 2)) / 4 := by
+  have hl := (hasDerivAt_psi (-x)).comp x (hasDerivAt_neg x)
+  have he := (exp_half_deriv (-x)).comp x (hasDerivAt_neg x)
+  have hr := (hasDerivAt_psi x).add (((exp_half_deriv x).sub he).div_const 2)
+  have hf : (fun x => psi (-x)) = (fun x => psi x + (exp (x / 2) - exp (-x / 2)) / 2) :=
+    funext psi_reflection
+  change HasDerivAt (fun x => psi (-x)) _ x at hl
+  rw [hf] at hl
+  have h := hl.unique hr
+  linarith
+
+/-- The boundary derivative is fixed by modular theta, with no normalization premise. -/
+theorem psi_deriv_zero : deriv psi 0 = -1 / 4 := by
+  rw [(hasDerivAt_psi 0).deriv]
+  have h := psiFirst_reflection 0
+  norm_num at h ⊢
+  linarith
+
+/-- Differentiating the modular reflection identity twice. -/
+theorem psiSecond_reflection (x : ℝ) :
+    psiSecond (-x) = psiSecond x + (exp (x / 2) - exp (-x / 2)) / 8 := by
+  have hl := (hasDerivAt_psiFirst (-x)).comp x (hasDerivAt_neg x)
+  have he := (exp_half_deriv (-x)).comp x (hasDerivAt_neg x)
+  have hr := (hasDerivAt_psiFirst x).neg.sub (((exp_half_deriv x).add he).div_const 4)
+  have hf : (fun x => psiFirst (-x)) =
+      (fun x => -psiFirst x - (exp (x / 2) + exp (-x / 2)) / 4) := funext psiFirst_reflection
+  change HasDerivAt (fun x => psiFirst (-x)) _ x at hl
+  rw [hf] at hl
+  have h := hl.unique hr
+  linarith
+
+/-- Evenness is a consequence of modular differentiation, not part of the definition. -/
+theorem romikPhi_even (x : ℝ) : romikPhi (-x) = romikPhi x := by
+  have hd : deriv psi = psiFirst := funext (fun y => (hasDerivAt_psi y).deriv)
+  simp only [romikPhi_eq_differential, hd, (hasDerivAt_psiFirst _).deriv,
+    psiSecond_reflection, psi_reflection]
+  ring
+
+private theorem romikPhi_eq_source_nonneg {x : ℝ} (hx : 0 ≤ x) :
+    romikPhi x = sourceThetaKernel x := by
+  unfold romikPhi omega sourceThetaKernel
+  rw [← tsum_mul_left]
+  apply tsum_congr
+  intro n
+  rw [abs_of_nonneg hx]
+  have h9 : exp (9 * x / 2) = exp (x / 2) * exp (2 * x) ^ 2 := by
+    rw [← exp_nat_mul, ← exp_add]
+    congr 1
+    ring
+  have h5 : exp (5 * x / 2) = exp (x / 2) * exp (2 * x) := by
+    rw [← exp_add]
+    congr 1
+    ring
+  rw [h9, h5]
+  ring
+
+/-- Identification with the fixed theta kernel on the entire real axis. -/
+theorem romikPhi_eq_source (x : ℝ) : romikPhi x = sourceThetaKernel x := by
+  rcases le_or_gt 0 x with hx | hx
+  · exact romikPhi_eq_source_nonneg hx
+  · rw [← romikPhi_even x, romikPhi_eq_source_nonneg (by linarith)]
+    exact D5.S3.Zeros.Jensen.SourceThetaMomentBounds.source_theta_even x
+
 end D5.S3.Analytic.Fourier.ThetaDifferentialKernel
