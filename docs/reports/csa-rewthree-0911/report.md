@@ -1,167 +1,170 @@
 # RewThree admission and mirror evidence
 
-This is evidence for the retained first-order rewriting API and its Scribe
-selectors. It adds no mathematical declaration, escape witness, atom coverage,
-ZFC conservativity result, model-existence result, or complete CSA construction.
+This is a bounded implementation repair for the source-required rewriting API,
+not independent approval, admission, PR delivery, CSA coverage or whole-goal
+completion. The implementation carrier is one codex-cli worker under the supplied
+consensus-rnd:sshx contract; no delegation or same-round peer output is used.
+The supplied three rejects are prior-round findings against the input HEAD.
 
-The inspected input HEAD is `61900643d4451a784e4e1801baeca5c38d06b6ba`.
-The enclosing Git commit binds this evidence and the corrected Scribe source;
-the immutable PR link supplies the delivery HEAD without a self-referential
-commit hash inside the file. The canonical raw Lean report SHA-256 is
-`3872f6538b16ed92226d98c1199c46cb2d91aa5104b0bb95467a034292eb287b`.
-Its two source bindings are:
+The input HEAD is `a21038f1e0aa38f27fd8fb8ebf4818292be4d104`; the protected BASE is
+`514067737ff46ac3afd2220beed72f5726a179a3`. The repair remains uncommitted.
+The current canonical raw report SHA-256 is
+`d14ccd8d627578d05cf137071e7109b439cd53b71c96a8f74f020ed3e4bfdd2a`.
+The published report evidence includes its adjacent materials archive, input
+attestation and provenance; their hashes and paths are in the repair result.
 
-| Module | Source SHA-256 |
-| --- | --- |
-| `D5.S3.ConceptDynamics.ZfcTermRewriting.RewThree` | `5b780be1e2900eca589caa86bf19ba20debb1253f048d784c08c96c114fd6fe9` |
-| `D5.S3.ConceptDynamics.ZfcTermRewriting.RewThreeCompat` | `0c1f9951f83b9aa86d0c521c97558ca008b315c0a8f29ec1d804b33f88ca20bf` |
-
-## Per-declaration assessment
-
-[declaration-shapes.md](declaration-shapes.md) lists all 40 authored source
-commands with exact local and upstream line ranges.
-[declaration-audit.json](declaration-audit.json) contains all 94 public
-kernel-report records: 84 from RewThree and 10 from Compat. Every record has
-`proof_shape`, direct frozen dependencies with module GID and module/declaration
-`statement_id`, `escape_witness`, `admission_basis`, and concrete API purpose.
-All 34 theorem records have captured kernel dependency evidence. The two
-captured edge files are [RewThree](proof-edges-rewthree.json) and
-[Compat](proof-edges-compat.json).
-
-Authored theorem assessments are `proof_shape: bind-only` and
-`admission_basis: rule-11-upstream-wrapper`. Definitions, classes and syntax
-commands are identified as such, not counted as content theorems. Every row
-records `escape_witness: none`: retained upstream proofs, forwarding selectors,
-class projections and compiler companions receive no new escape credit. This
-follows the source-retention basis recorded in
-`Library/ConceptDynamics/foundation2026firstorder.md`; it does not claim that an
-upstream induction proof was authored as new content in this repository.
-
-The exact Rule-11 upstream source is
-[Foundation/Syntax/Predicate/Rew.lean at 30a16ffa](https://github.com/FormalizedFormalLogic/Foundation/blob/30a16ffa93d79d73ab4d02427fa00f50e039bf29/Foundation/Syntax/Predicate/Rew.lean).
-The complete original file SHA-256 is
-`8df8681a12ebf5ef8700d9710c88fc39bfc35df47ef387e2893df3caf3b69873`.
-Each authored JSON row names its exact upstream declaration. The original
-capacity span 638-953 contains selected command excerpts; it is not a claim
-that the entire span was copied.
-
-The current API/coverage requirement is the addressable rewriting interface:
-term support and language-map laws, the dependent `toEmpty` conversion, indexed
-formula rewriting and its quantifier lift, formula substitution/shift/free,
-and the lawful rewriting classes. The actual document consumer is
-`Blueprint/D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.scribe.cs`, whose 26
-Describe entries use these declarations or the nine explicit Compat selectors.
-The JSON records each operation's concrete purpose. No `Meta/Digestion`
-coverage edge for RewThree was found by the recorded query. This report does
-not infer a live downstream mathematical consumer or indispensability for
-every historical source command merely from its inclusion or documentation.
-
-## Direct frozen prerequisite identities
-
-The four direct imports of RewThree are the four prerequisite nodes recorded
-in its accepted Freeze event
-`e270d8418042f0f91072c2cfa1152d86bbcc879b98c633ba7a2613e07b2d53a4`.
-They are read as existing ledger facts; no event or state fragment was edited.
-
-| Direct imported GID | Module statement_id | Accepted prerequisite node |
+| Module | Current source SHA-256 | Reported / included / public included |
 | --- | --- | --- |
-| `D5/S3/ConceptDynamics/ZfcPredicate/Term` | `sha256:7f065f3ed5bcc99287a955e54e96d33a1face52845baf0ecfd5859153ed9907c` | `097514630677c3d2f2a5f0316dc110efc9400bcc8ee02419e9b2ecadffff38df` |
-| `D5/S3/ConceptDynamics/ZfcPredicate/Quantifier` | `sha256:9d8e54a9610f83fba0cfb38fa3ddfdf9f4a84aa3a146c400070e209e989650e7` | `2051c8de39c88b531fa2aae51b9657f8b96279375c684dae3697fa45d7a20acb` |
-| `D5/S3/ConceptDynamics/ZfcSupport/Function` | `sha256:1d760c225a226c7296c0d54f4d4539c6f35c5109a48683ddbaf422b19d30a1f1` | `55bbcbb2773464cfafe900fb3802d5ada2886dc409217af7dab8e15d6ffa7fde` |
-| `D5/S3/ConceptDynamics/ZfcTermRewriting/RewTwo` | `sha256:dc2255a003ca5bfd6e68302a108db2b1ab2bccbf1a06801eead01148d051f492` | `c3e203c2ecac05cfb4234f0780a479650b450e73f3d1321d1ba6516df335a0a0` |
+| RewThree | `5b780be1e2900eca589caa86bf19ba20debb1253f048d784c08c96c114fd6fe9` | 103 / 85 / 84 |
+| RewThreeCompat | `3234ec076b9b86c09dddb0fb636a0cf9c9718b90ef0d5f593d77f2c6b74e685a` | 10 / 9 / 9 |
 
-This import table is not substituted for proof dependencies. The JSON's
-per-declaration edges come from `Expr.getUsedConstants` on value and type with
-auxiliary expansion, so they also name directly used constants whose owner is
-reached through a transitive import. Pinned Mathlib constants are not mislabeled
-as frozen repository prerequisites.
+## Current declaration accounting
 
-The formula law at RewThree lines 234-235 directly uses
-`LO.FirstOrder.Rew.subst_mbar_zero_comp_shift_eq_free`, owned by RewTwo, with
-declaration `statement_id`
-`sha256:5ed74e5c8d05802c23336020e979feca394e69c22b4a7925f31e8419c1eb7630`.
-Compat directly imports frozen RewThree, whose module `statement_id` is
-`sha256:bf5cbe594ecb8f58bd3db7db4ecf5c5f8e2cccd0d56af5d865d7b9173fa4bc77`;
-each forwarding theorem's exact source declaration identity is listed in JSON.
-Compat itself has no frozen-state fragment in this tree, and this report does
-not call it frozen.
+[declaration-audit.json](declaration-audit.json) accounts for **all 94 current
+included records: 93 public and one private**, with canonical report identities,
+per-declaration proof shape, admission basis, utility, source-command association,
+raw dependencies, auxiliary paths and prerequisite identities.
+[declaration-shapes.md](declaration-shapes.md) lists the **40 authored source
+commands** (31 retained commands and nine selectors). These are not 40 new results.
+All 34 included theorem records remain `bind-only`, with `escape_witness: none`.
+Definitions, classes, recursors, constructors, syntax artifacts and generated
+companions receive no independent content or novelty credit.
 
-## Search and worker capability receipts
+The proposed basis is `rule-11-upstream-wrapper`: exact retained upstream laws
+and the expressly requested addressable API. A generated companion has only its
+parent/module basis, never an independent deposit claim. Every included record
+has `utility: none`: these are general syntax operations/laws or their compiler
+companions, not bounded enumeration, checkers, numeric reductions or certified
+finite instances. No escape witness, future consumer or preimplementation
+chronology is fabricated. The Scribe consumer is documentation, not a live
+mathematical consumer or an atom-required-bridge basis.
 
-[search-receipts.json](search-receipts.json) stores exact commands, stdout,
-stderr and exit codes. These are a current-HEAD re-query in the required order,
-not a reconstructed record of the original pre-implementation search.
+The private included definition is
+`_private.D5.S3.ConceptDynamics.ZfcTermRewriting.RewThree.0.LO.FirstOrder.Semiterm.toEmpty.match_1.splitter`,
+with declaration statement identity
+`sha256:608c6d7e4d1ab9741207a552435d4412960a0ab64bb6be8059a2dc268756e8b6`.
+It is a generated companion of `Semiterm.toEmpty` (local 112-120; upstream
+776-784); `toEmpty.eq_def` points to it. The audit now joins its exact kernel name
+to the historical displayed private name, retaining its captured edges and
+standard-three axiom closure. No invented downstream consumer is needed.
 
-| Stage | Command/capability | Exit | Observed result |
+## Historical captures and current prerequisite scope
+
+The historical [RewThree capture](proof-edges-rewthree.json) and
+[Compat capture](proof-edges-compat.json) remain byte-for-byte unchanged, including
+their original source labels. Those labels are overbroad: **internal edges expand
+auxiliaries, but historical `external_deps` are raw direct D5 constants**.
+[historical-capture-bindings.json](historical-capture-bindings.json) records their
+hashes, source/report provenance and the complete historical included identities.
+It preserves the old **94-public-authored-audit / 95-included** distinction:
+RewThree 85 included, old Compat 10 included. The old audit omitted the private
+splitter; the historical report and capture did not omit it. Seventeen old public
+non-theorem rows were not enumerated by the historical nonauxiliary extractor;
+missing capture never means verified empty dependencies.
+
+[current-prerequisites.lean](current-prerequisites.lean) is a bounded review probe,
+not a change to the repository extractor or harness. It reads exact kernel
+`ConstantInfo` type/value constants with `Expr.getUsedConstants` and records
+all 113 constants in the two current modules (103 + 10), plus 14 reached external
+auxiliaries: **127 captured constants** in
+[current-prerequisites.json](current-prerequisites.json). Its exit code and
+probe/source/log hashes bind the capture. All 94 included rows are captured.
+
+The authored audit traverses only auxiliaries, using the existing extractor's
+`privateToUserName.isInternalDetail` criterion, retaining a witness path to each
+boundary constant. It expands internal and external auxiliaries and stops at
+nonauxiliary constants, including public definitions/theorems. It does not
+claim complete transitive proof closure, beta/zeta/iota reduction, live-path
+necessity, semantic proof-shape classification or exhaustive carrier equivalence.
+Raw direct edges, expanded prerequisites, module-internal boundaries and
+external nonfrozen boundaries are separate fields. Mathlib/core constants are
+not called frozen D5 prerequisites.
+
+| Public declaration | Distinct raw direct frozen constants | Frozen boundaries after auxiliary traversal | Auxiliaries traversed |
 | --- | --- | --- | --- |
-| Worker | `rg --version`, `curl --version`, `lake --version` | 0, 0, 0 | Local text search, network retrieval and Lean tooling are available. |
-| D5 | `rg -n 'fixitr_bvar\|fixitr_fvar\|rew_eq_of_funEqOn\|class Rewriting\|def toEmpty\|app_subst_fbar_zero_comp_shift_eq_free' D5` | 0 | Exact retained declarations and the current forwarding consumer are present. |
-| Pinned Mathlib | Exact-name/type query in `.lake/packages/mathlib/Mathlib` | 1 | No exact queried Foundation names or `SyntacticSemiterm`/`ClosedSemiterm` types. |
-| Pinned Mathlib | Related `relabel`/`subst`/`Term`/`BoundedFormula` query in `Mathlib/ModelTheory/Syntax.lean` | 0 | Related Mathlib syntax APIs exist; this is not a proof that their carriers/interfaces are definitionally equal to Foundation's. |
-| Third party | `curl --location --fail --silent --show-error` for the immutable Foundation source, followed by exact declaration query | 0, 0 | Source retrieved; SHA-256 and exact source line matches recorded. |
+| `Semiterm.fvar?_rew` | 12 | 13 | 3 |
+| `Semiterm.toEmpty` | 5 | 18 | 7 |
+| `Semiterm.emb_toEmpty` | 13 | 20 | 6 |
 
-The Mathlib pin is `db584cd6d46c92f209a44c0f1c829460d327499d` (`v4.33.0`).
-No proved-equivalent bridge from its syntax carrier to the retained Foundation
-`Rew`/`Semiterm`/`LCWQ` interface is supplied by this evidence. The exact D5
-hits are reused by the Compat wrappers; no alternative proofs were added.
-The network probe did not read or modify host Codex configuration.
+These columns are different sets, not monotonically accumulating counts: raw
+auxiliary constants are replaced by their boundary prerequisites. In particular:
 
-## Compat substNotation boundary
+`LO.FirstOrder.Semiterm.fvar?_rew` →
+`_private.D5.S3.ConceptDynamics.ZfcTermRewriting.RewThree.0.LO.FirstOrder.Semiterm.fvar?_rew._simp_1_2` →
+`LO.FirstOrder.Semiterm.fvar?_func`.
 
-`LO.FirstOrder.RewThreeCompat.substNotation` is a parser/macro selector, not a
-substitution theorem. Its source at Compat lines 76-79 repeats the upstream
-grammar and expansion at 872-878: `phi/[terms]` expands to `phi ⇜ ![terms]`.
-The one-entry vector in the displayed formula is explicitly
-`Matrix.vecCons(fvar(0), Matrix.vecEmpty)`; the macro does not turn a single term
-into a substitution function without that vector construction.
+The final endpoint belongs to `D5/S3/ConceptDynamics/ZfcPredicate/Term`, whose
+stored module statement identity is
+`sha256:7f065f3ed5bcc99287a955e54e96d33a1face52845baf0ecfd5859153ed9907c`;
+the declaration identity is
+`sha256:b7f7ba729436926c957302478b8a4128ad5b4ae42956e8407a5a75eb71ae0e5d`.
+`toEmpty` reaches it through `toEmpty._f`, `toEmpty._proof_4` and
+`fvar?_func._simp_1`; `emb_toEmpty` reaches it through the latter two helpers.
+Their additional Term and AdjunctiveSet prerequisites and exact identities are
+listed in the per-declaration JSON, with paths.
 
-The parser kind has a separate namespace, while the token grammar is shared
-with the imported source notation. The claim is limited to the current pinned
-imports and the identical expansion. No parser-equivalence theorem for future
-notation extensions or global absence of parser overlap is claimed.
+Across included roots, 23 distinct auxiliaries are traversed; 21 have no included
+canonical declaration identity and retain explicit nulls. The two remaining
+auxiliaries have actual included report identities. No name-based identity is
+invented. The historical Term simplifier-helper null identities also remain
+explicit in the historical dependency fields. Every current frozen nonauxiliary
+boundary in this bounded traversal resolves to an included report identity.
+Stored frozen module identities are read, not regenerated or rewritten.
 
-## Generation failure and remaining limits
+## Selector and displayed-formula repairs
 
-The earlier `declaration-shapes.md` was empty because `shapes.sh` compared
-short authored names such as `fixitr_bvar` with full event names such as
-`LO.FirstOrder.Rew.fixitr_bvar`. Its prefix removal assumed the Lean namespace
-equaled the D5 module path. That assumption is false for this source transplant.
-[generate-audit.py](generate-audit.py) uses explicit full Lean names, asserts
-all 40 authored joins resolve, and fails if a name is absent. It creates the
-corrected table and JSON without modifying the repository's agent/harness tools.
+`LO.FirstOrder.RewThreeCompat.substNotation` now has the typed interface
+`F n₁ → (Fin n₁ → Semiterm L ξ n₂) → F n₂`, under `LCWQ F` and
+`Rewriting L ξ F ξ F`, and directly abbreviates `Rewriting.subst` (upstream 840).
+The frozen slash grammar (upstream 872-878) still expands `φ/[terms]` to
+`φ ⇜ ![terms]`. Compat registers no second active slash grammar. Its old parser
+artifact and macro companion are historical records; the current included
+selector is a definition with a new canonical statement identity, and no old
+capture is silently rebound to it.
 
-All 34 public theorem records have kernel dependency capture. Seventeen
-non-theorem generated records are outside the nonauxiliary edge extractor;
-their JSON entries say so and do not claim an empty dependency set. Generated
-constructors, projections, recursion helpers and macro companions have no
-independent named upstream declaration. JSON associates their parent source-command
-range when a declaration prefix identifies it; otherwise it leaves the source
-association explicitly absent. All 40 authored commands have exact source ranges.
-Three directly used private Term
-simplifier helpers (`fvar?_bvar._simp_1`, `fvar?_func._simp_1`,
-`fvar?_fvar._simp_1`) have module identities but no independent public
-declaration identity; JSON records `declaration_statement_id: null` for that narrower
-field. No missing identity is fabricated.
+The ordinary singleton and two-term client expressions, without a special
+parser-kind choice, failed `Ambiguous term` before repair (exit 1) and pass with
+Compat imported after repair (exit 0). Separate addressed-selector examples also
+pass (exit 0). The displayed singleton is the explicit vector
+`Matrix.vecCons(fvar(0), Matrix.vecEmpty)`.
 
-The original pre-implementation worker/search receipt is not reconstructed
-here. Current source identity, current capability, source-location evidence,
-and current kernel dependency evidence are available. This documentation
-repair does not modify `RewThree.lean`, the accepted Freeze event, or
-`Golden/Frozen/state`.
+Scribe now quantifies `n,m:Nat` separately from `x:Fin n` for `fixitr_bvar`.
+The exact source instance `n=1,m=2,x=0` passes the focused Lean probe.
+The conjunction-shift display passes the function symbol `shift` to `map`,
+with `Γ:List(S n)`, `LCWQ S` and `SyntacticRewriting L S S` explicit; its map
+form passes a Lean probe without an extra lawful-class hypothesis.
+Every display in the affected RewThree mirror was read against the retained
+source; the three changed displays were inspected after canonical emission.
+The Scribe checker establishes address/provenance and KaTeX acceptance, not
+mathematical type equivalence of author-written formulas.
 
-## Validation receipts
+## Source, frozen state and validation limits
 
-[validation.json](validation.json) records the exact commands, exit codes,
-selected output and log hashes, including failures and their resolutions.
-`make lean`, `make lean-report`, `make emit`, deterministic selftest and the
-header check passed. The Scribe project ran 466 tests successfully; its first
-wrapper invocation omitted a filter and was rejected as an incomplete full
-suite, then the explicit Scribe-filter invocation was accepted.
+The selected Foundation source commands and pin remain
+`30a16ffa93d79d73ab4d02427fa00f50e039bf29`; the full Rew.lean SHA-256 is
+`8df8681a12ebf5ef8700d9710c88fc39bfc35df47ef387e2893df3caf3b69873`.
+The 638-953 span is a locator for selected commands, not a claim that every
+command in that span was copied. RewThree Lean and all Golden/Frozen and
+Meta/Digestion bytes are protected and preserved. RewThree's stored Freeze
+contains 85 included rows and module identity
+`sha256:bf5cbe594ecb8f58bd3db7db4ecf5c5f8e2cccd0d56af5d865d7b9173fa4bc77`.
+Compat remains unfrozen. No deposit, freeze, cover, commit, push or PR mutation
+is part of this repair.
 
-The initial candidate gate rejected two evidence files under the 1000-line
-artifact limit. Compact JSON serialization retained every record and reduced
-those files to 106 and 431 lines. The compact-evidence rerun of
-`make gate GATE_ARGS=--skip-engineering` passed with exit 0 in 132 seconds;
-SL-022 reported the two Scribe protected-surface changes with content checks
-passed. The full engineering suite is not claimed by that invocation, and the
-separate Scribe/selftest results above remain explicit.
+[search-receipts.json](search-receipts.json) and [validation.json](validation.json)
+remain historical receipts, not new executions or retrospective proof of original
+search ordering. D5's exact substitution owner is reused. The pinned Mathlib
+search found related syntax, without an established faithful representation
+bridge. The immutable Foundation source is retrieved for this repair; no host
+configuration, toolchain or pin changes are made.
+[repair-validation.json](repair-validation.json) records current commands, exact
+exit codes, source/report/material bindings, regression dispositions and limits.
+Passing unchanged Scribe full-suite/selftest history is not rerun or promoted to
+current independent semantic approval; current focused checks are separate.
+
+No CSA atom coverage, arithmetic projection completion, pair interpretation,
+concrete ZFC coding, definition elimination, conservativity, model existence or
+relative consistency follows. The complete CSA source through Proposition 68
+remains the overall goal; the initial 15 propositions and 117 entries are not a
+completion denominator. Independent review, caller-owned admission and MERGED
+delivery remain outstanding.

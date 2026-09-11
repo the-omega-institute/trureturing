@@ -77,7 +77,7 @@ compat_rows = [
     ("RewThreeCompat.shifts_cons", "62-64", "859", "bind-only", "Rewriting.shifts_cons"),
     ("RewThreeCompat.shifts_neg", "66-68", "861-862", "bind-only", "Rewriting.shifts_neg"),
     ("RewThreeCompat.emb", "70-72", "864", "definition", "Rewriting.emb"),
-    ("RewThreeCompat.substNotation", "76-79", "872-878", "macro", "substNotation"),
+    ("RewThreeCompat.substNotation", "74-77", "840; 872-878", "definition", "Rewriting.subst"),
 ]
 
 states = {}
@@ -103,6 +103,43 @@ def direct_frozen(externals):
         })
     return result
 
+capture = json.loads((OUT / "current-prerequisites.json").read_text())
+current = {r["constant"]["name"]: r for r in capture["constants"]}
+history = json.loads((OUT / "historical-capture-bindings.json").read_text())
+historical_decls = {(r["module"], r["name"]): r for r in history["declarations"]}
+for mod, binding in history["modules"].items():
+    assert "sha256:" + hashlib.sha256((OUT / binding["edge_file"]).read_bytes()).hexdigest() == binding["edge_sha256"]
+for mod, sha in capture["source_sha256"].items():
+    assert modules[mod]["source_sha256"].removeprefix("sha256:") == sha
+    assert hashlib.sha256((ROOT / (mod.replace(".", "/") + ".lean")).read_bytes()).hexdigest() == sha
+assert capture["exit_code"] == 0
+assert capture["probe_sha256"] == "sha256:" + hashlib.sha256((OUT / "current-prerequisites.lean").read_bytes()).hexdigest()
+
+def identity(ep):
+    mod, name = ep["module"], ep["name"]
+    d = decls.get(mod, {}).get(name)
+    return {**ep, "module_gid": mod.replace(".", "/") if mod else None,
+            "frozen_module_statement_id": states.get(mod),
+            "declaration_statement_id": d["statement_id"] if d and d.get("include_in_statement") else None,
+            "identity_scope": "included canonical report declaration" if d and d.get("include_in_statement") else "no independently included report identity; not fabricated"}
+
+def through_auxiliaries(name):
+    pending = [(ep, [name, ep["name"]]) for ep in current[name]["dependencies"]]
+    seen, leaves, helpers = set(), {}, {}
+    while pending:
+        ep, path = pending.pop(0)
+        n = ep["name"]
+        if n in seen or n == name:
+            continue
+        seen.add(n)
+        if ep["auxiliary"]:
+            assert n in current, f"uncaptured reached auxiliary: {n}"
+            helpers[n] = {**identity(ep), "path": path}
+            pending.extend((dep, path + [dep["name"]]) for dep in current[n]["dependencies"])
+        else:
+            leaves[n] = {**identity(ep), "path": path}
+    return [leaves[n] for n in sorted(leaves)], [helpers[n] for n in sorted(helpers)]
+
 records = []
 for suffix, metadata, edgefile in [
     ("RewThree", source_rows, "proof-edges-rewthree.json"),
@@ -110,7 +147,6 @@ for suffix, metadata, edgefile in [
 ]:
     mod = base + suffix
     edges = json.loads((OUT / edgefile).read_text())
-    (OUT / edgefile).write_text(compact_maps(edges))
     source_index = {}
     for name, local, original, shape, purpose in metadata:
         full = "LO.FirstOrder." + name
@@ -118,9 +154,15 @@ for suffix, metadata, edgefile in [
         source_index[full] = (local, original, shape, purpose)
     assert len(source_index) == len(metadata) and source_index
     for d in modules[mod]["declarations"]:
-        if not d.get("include_in_statement") or d["name"].startswith("_private."):
+        if not d.get("include_in_statement"):
             continue
         name = d["name"]
+        assert name in current, f"current included declaration not captured: {name}"
+        ep = current[name]["constant"]
+        old = historical_decls.get((mod, name))
+        history_key = ep["user_name"] + (" (private)" if name != ep["user_name"] else "")
+        historical_match = old is not None and old["kind"] == d["kind"] and old["statement_id"] == d["statement_id"]
+        leaves, helpers = through_auxiliaries(name)
         meta = source_index.get(name)
         generated = meta is None
         generated_owner = None
@@ -132,7 +174,7 @@ for suffix, metadata, edgefile in [
         else:
             # Generated artifacts have no independent upstream source declaration.
             local, original = None, None
-            owners = [n for n in source_index if name.startswith(n + ".")]
+            owners = [n for n in source_index if ep["user_name"].startswith(n + ".")]
             if owners and "_aux" not in name:
                 generated_owner = max(owners, key=len)
                 local, original = source_index[generated_owner][:2]
@@ -149,9 +191,23 @@ for suffix, metadata, edgefile in [
             "generated_from_source_command": generated_owner,
             "upstream_declaration": upstream_name,
             "upstream_source": upstream,
-            "direct_frozen_dependencies": direct_frozen(edges.get("external_deps", {}).get(name, [])),
-            "module_internal_dependencies": sorted(set(edges.get("edges", {}).get(name, []))),
-            "dependency_capture": "kernel direct value/type constants with auxiliary expansion" if name in edges.get("kinds", {}) else "not enumerated by nonauxiliary extractor; no empty-dependency claim",
+            "visibility": "private" if name.startswith("_private.") else "public",
+            "utility": {"kind": "none", "reason": "General syntax API, retained laws or generated companions; no bounded enumeration, checker, numeric reduction or certified finite instance.", "basis": "not-applicable(kind=none)"},
+            "historical_capture": {
+                "file": edgefile, "key": history_key,
+                "same_statement_and_kind": historical_match,
+                "source_matches_current": history["modules"][mod]["source_sha256"] == modules[mod]["source_sha256"],
+                "dependency_capture": "Internal edges expand auxiliaries; external_deps are raw direct D5 constants. Historical data, not a current expanded external claim.",
+                "captured": historical_match and history_key in edges.get("kinds", {}),
+                "direct_frozen_dependencies": direct_frozen(edges.get("external_deps", {}).get(history_key, [])) if historical_match else None,
+                "module_internal_dependencies": sorted(set(edges.get("edges", {}).get(history_key, []))) if historical_match else None,
+                "limit": "Missing capture is unknown, not a verified empty dependency set. Changed identities do not inherit historical capture."},
+            "current_raw_direct_frozen_dependencies": [identity(e) for e in current[name]["dependencies"] if e["module"] != mod and e["module"] in states],
+            "current_frozen_prerequisites_through_auxiliaries": [e for e in leaves if e["module"] != mod and e["module"] in states],
+            "current_module_internal_dependencies_through_auxiliaries": [e for e in leaves if e["module"] == mod],
+            "current_auxiliaries_expanded": helpers,
+            "current_external_nonfrozen_boundary": [e for e in leaves if e["module"] != mod and e["module"] not in states],
+            "dependency_capture": "Current raw type/value edges in current-prerequisites.json; auxiliary-only traversal, stopping at each nonauxiliary boundary. Not full transitive closure or live-path analysis.",
             "axioms": d["axioms"],
             "escape_witness": "none; upstream retention/forwarding and generated companions receive no new escape credit",
             "admission_basis": "rule-11-upstream-wrapper" if not generated else "generated companion under module rule-11-upstream-wrapper basis; no independent deposit claim",
@@ -160,20 +216,29 @@ for suffix, metadata, edgefile in [
 
 assert sum(r["authored_source_command"] for r in records) == 40
 document = {
-    "schema": "rewthree-declaration-audit-v1",
+    "schema": "rewthree-declaration-audit-v2",
+    "historical_capture_bindings": "historical-capture-bindings.json",
+    "current_capture_sha256": "sha256:" + hashlib.sha256((OUT / "current-prerequisites.json").read_bytes()).hexdigest(),
+    "counts": {"included": len(records), "public": sum(r["visibility"] == "public" for r in records), "private": sum(r["visibility"] == "private" for r in records), "authored_source_commands": 40, "theorems": sum(r["kind"] == "theorem" for r in records)},
     "input_head": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
     "raw_report_sha256": "sha256:" + hashlib.sha256(raw_bytes).hexdigest(),
     "source_sha256": {base + s: modules[base + s]["source_sha256"] for s in ("RewThree", "RewThreeCompat")},
     "scope": "Evidence for the retained rewriting API and its Scribe selectors; not a complete CSA or a new mathematical result.",
+    "reported_excluded_declarations": [
+        {"module": base + suffix, "name": d["name"], "kind": d["kind"],
+         "declaration_statement_id": None, "identity_scope": "excluded by canonical report; no included declaration identity",
+         "current_capture_key": d["name"], "independent_content_credit": False}
+        for suffix in ("RewThree", "RewThreeCompat")
+        for d in modules[base + suffix]["declarations"] if not d.get("include_in_statement")],
     "records": records,
 }
 (OUT / "declaration-audit.json").write_text(compact_maps(document))
 
-lines = ["# RewThree declaration evidence", "", "This table joins source commands to the kernel report by full Lean name. The previous empty table compared unqualified source names with `LO.FirstOrder...` names; it was an evidence-generation failure, not a zero-declaration result.", "", f"Input HEAD: `{document['input_head']}`.", f"Raw Lean report SHA-256: `{document['raw_report_sha256']}`.", "", "The enclosing Git commit binds this artifact. [declaration-audit.json](declaration-audit.json) records every public report declaration, its statement identity, all captured direct frozen dependencies (module GID and module/declaration statement IDs), internal edges, axioms, source mapping, assessment and limitations. These are evidence records, not new mathematics or a complete CSA.", "", "For every authored theorem below, `proof_shape=bind-only`, `escape_witness=none`, and `admission_basis=rule-11-upstream-wrapper`. Definitions, classes and macros use their stated shape and the same upstream basis. The exact upstream is [Foundation Rew.lean at 30a16ffa](" + upstream + ").", "", "| Public source declaration | Kind / proof_shape | Local lines | Exact upstream lines | Direct frozen dependency records |", "| --- | --- | --- | --- | --- |"]
+lines = ["# RewThree declaration evidence", "", "This table joins source commands to the kernel report by full Lean name. The previous empty table compared unqualified source names with `LO.FirstOrder...` names; it was an evidence-generation failure, not a zero-declaration result.", "", f"Input HEAD: `{document['input_head']}`.", f"Raw Lean report SHA-256: `{document['raw_report_sha256']}`.", "", "The input HEAD identifies the pre-repair checkout; source/report hashes bind the current uncommitted repair. [declaration-audit.json](declaration-audit.json) records every included report declaration, including the private toEmpty splitter. Historical raw external edges and current prerequisites through auxiliaries are separate, with exact identities, helper paths, axioms, utility, source mapping and limits. These are evidence records, not new mathematics or a complete CSA.", "", "For every authored theorem below, `proof_shape=bind-only`, `escape_witness=none`, and `admission_basis=rule-11-upstream-wrapper`. Definitions, classes and macros use their stated shape and the same upstream basis. The exact upstream is [Foundation Rew.lean at 30a16ffa](" + upstream + ").", "", "| Public source declaration | Kind / proof_shape | Local lines | Exact upstream lines | Current frozen prerequisites through auxiliaries |", "| --- | --- | --- | --- | --- |"]
 for r in records:
     if not r["authored_source_command"]:
         continue
-    lines.append(f"| `{r['name']}` | {r['kind']} / {r['proof_shape']} | {r['module'].split('.')[-1]}:{r['source_lines']} | {r['upstream_source_lines']} | {len(r['direct_frozen_dependencies'])}; exact GID + statement IDs in JSON |")
-lines += ["", f"Authored source-command rows: **40**. Public kernel-report records: **{len(records)}**. Generated records have no independent source declaration or novelty claim; their JSON entries record the parent source-command range when identified by a declaration prefix, and explicitly identify missing nonauxiliary dependency capture rather than reporting an empty dependency set as verified.", "", "The machine data do not determine proof shape. The bind-only assessment follows the retained-upstream/forwarding basis recorded in `Library/ConceptDynamics/foundation2026firstorder.md`; it does not reclassify upstream induction proofs as newly authored content.", ""]
+    lines.append(f"| `{r['name']}` | {r['kind']} / {r['proof_shape']} | {r['module'].split('.')[-1]}:{r['source_lines']} | {r['upstream_source_lines']} | {len(r['current_frozen_prerequisites_through_auxiliaries'])}; exact GID + statement IDs in JSON |")
+lines += ["", f"Authored source-command rows: **40**. Included kernel-report records: **{len(records)}** (public **{document['counts']['public']}**, private **{document['counts']['private']}**). Historical audit: **94 public records / 95 included**. Generated records have no independent source declaration or novelty claim; their JSON entries record the parent source-command range when identified by a declaration prefix, and separate historical missing captures from current captured edges. All current included rows have capture; no absent generated statement identity is invented.", "", "The machine data do not determine proof shape. The bind-only assessment follows the retained-upstream/forwarding basis recorded in `Library/ConceptDynamics/foundation2026firstorder.md`; it does not reclassify upstream induction proofs as newly authored content.", ""]
 (OUT / "declaration-shapes.md").write_text("\n".join(lines))
-print(f"AUDIT_OK authored=40 public_records={len(records)}")
+print(f"AUDIT_OK authored=40 included={len(records)} public={document['counts']['public']} private={document['counts']['private']}")

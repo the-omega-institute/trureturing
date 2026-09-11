@@ -71,12 +71,10 @@ abbrev emb {ο ξ} [IsEmpty ο] {O F : ℕ → Type*} [LCWQ O] [LCWQ F]
     [Rewriting L ο O ξ F] : O n →ˡᶜ F n :=
   Rewriting.emb (L := L) (n := n) (ο := ο) (ξ := ξ) (O := O) (F := F)
 
-open Lean PrettyPrinter Delaborator
-
-syntax (name := substNotation) term:max "/[" term,* "]" : term
-
-macro_rules (kind := substNotation)
-  | `($φ:term /[$terms:term,*]) => `($φ ⇜ ![$terms,*])
+/-- Addressable typed substitution; slash-vector syntax is supplied by RewThree. -/
+abbrev substNotation {ξ : Type*} [LCWQ F] [Rewriting L ξ F ξ F]
+    (φ : F n₁) (w : Fin n₁ → Semiterm L ξ n₂) : F n₂ :=
+  Rewriting.subst φ w
 
 end RewThreeCompat
 

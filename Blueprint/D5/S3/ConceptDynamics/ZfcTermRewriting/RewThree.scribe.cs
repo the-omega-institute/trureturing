@@ -174,10 +174,11 @@ internal sealed class RewThreeDocument : IScribeDocumentDefinition
             DescribeEntry(
                 "subst-notation",
                 "D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.substNotation",
-                "Slash syntax expands to formula substitution",
+                "Typed substitution selector agrees with slash-vector syntax",
                 SubstNotationFormula(),
-                "The repository compatibility parser selector mirrors the source substNotation macro: "
-                    + "φ/[w] expands to φ ⇜ ![w]. For the one-entry vector used below, ![&0] is "
+                "Under [LCWQ S] and [SyntacticRewriting L S S], the typed compatibility selector "
+                    + "substNotation(φ,w) forwards Rewriting.subst(φ,w). The source slash syntax "
+                    + "φ/[t] expands to φ ⇜ ![t]. For the one-entry vector used below, ![&0] is "
                     + "Matrix.vecCons(fvar(0), Matrix.vecEmpty).",
                 DescribeRole.Definition),
             DescribeEntry(
@@ -218,8 +219,9 @@ internal sealed class RewThreeDocument : IScribeDocumentDefinition
                 "D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.shift_conj_two",
                 "Shifting a conjunction shifts each formula (the canonical selector is RewThreeCompat.shift_conj_two; the source name is shift_conj₂).",
                 ShiftConjFormula(),
-                "The shift of a finite conjunction is the conjunction of the shifted list, including "
-                    + "the empty and singleton cases.",
+                "Under [LCWQ S] and [SyntacticRewriting L S S], for Γ:List(S n), the shift of "
+                    + "a finite conjunction is the conjunction of the list mapped by shift:S n→S n, "
+                    + "including the empty and singleton cases.",
                 DescribeRole.Lemma),
             DescribeEntry(
                 "app-subst-fbar-zero-comp-shift-eq-free",
@@ -253,7 +255,8 @@ internal sealed class RewThreeDocument : IScribeDocumentDefinition
 
     private static Formula FixitrBvarFormula() =>
         Disp(Seq(
-            Forall, Sp, F.Id("n"), Comma, Sp, F.Id("m"), Comma, Sp, F.Id("x"), InMacro, Sp,
+            Forall, Sp, F.Id("n"), Comma, Sp, F.Id("m"), Colon, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
+            Forall, Sp, F.Id("x"), Colon, Sp,
             Call("Fin", F.Id("n")), Comma, Sp,
             Call("fixitr", F.Id("n"), F.Id("m"), Call("bvar", F.Id("x"))), Sp, Eq, Sp,
             Call("bvar", Call("castAdd", F.Id("x"), F.Id("m"))), Dot));
@@ -429,6 +432,7 @@ internal sealed class RewThreeDocument : IScribeDocumentDefinition
     private static Formula SubstNotationFormula() =>
         Disp(Seq(
             Forall, Sp, F.Id("phi"), Colon, Sp, Call("S", D(1)), Comma, Sp,
+            Call("substNotation", F.Id("phi"), VectorZero()), Sp, Eq, Sp,
             F.Id("phi"), Slash, OpenBracket, Call("fvar", D(0)), CloseBracket,
             Sp, Eq, Sp, Call("subst", F.Id("phi"), VectorZero()), Dot));
 
@@ -469,9 +473,12 @@ internal sealed class RewThreeDocument : IScribeDocumentDefinition
 
     private static Formula ShiftConjFormula() =>
         Disp(Seq(
-            Forall, Sp, F.Id("gamma"), Sp,
-            Call("shift", Call("conj", F.Id("gamma"))), Sp, Eq, Sp,
-            Call("conj", Call("map", Call("shift"), F.Id("gamma"))), Dot));
+            OpenBracket, Call("LCWQ", F.Id("S")), CloseBracket, Sp,
+            OpenBracket, Call("SyntacticRewriting", F.Id("L"), F.Id("S"), F.Id("S")), CloseBracket, Sp,
+            Rightarrow, Sp, Forall, Sp, F.Id("n"), Colon, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
+            Forall, Sp, F.Id("Gamma"), Colon, Sp, Call("List", Call("S", F.Id("n"))), Comma, Sp,
+            Call("shift", Call("conj", F.Id("Gamma"))), Sp, Eq, Sp,
+            Call("conj", Call("map", F.Id("shift"), F.Id("Gamma"))), Dot));
 
     private static Formula AppSubstFormula() =>
         Disp(Seq(

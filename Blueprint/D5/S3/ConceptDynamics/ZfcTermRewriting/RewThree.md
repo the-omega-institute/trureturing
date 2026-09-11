@@ -10,7 +10,7 @@ The immutable source map, modification notices, full Apache-2.0 license and reti
 
 **Lemma 1.1 (Fixing bound variables preserves the variable with an enlarged finite index).**
 
-$$\forall n, m, x\in \operatorname{Fin}\left(n\right), \operatorname{fixitr}\left(n, m, \operatorname{bvar}\left(x\right)\right) = \operatorname{bvar}\left(\operatorname{castAdd}\left(x, m\right)\right).$$
+$$\forall n, m: \mathbb{N}, \forall x: \operatorname{Fin}\left(n\right), \operatorname{fixitr}\left(n, m, \operatorname{bvar}\left(x\right)\right) = \operatorname{bvar}\left(\operatorname{castAdd}\left(x, m\right)\right).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.fixitr_bvar` (`✓ std3`). ∎
 
@@ -236,9 +236,9 @@ $$emb: \operatorname{Hom}\left(\operatorname{O}\left(n\right), \operatorname{F}\
 
 The ASCII compatibility selector exposes the source emb connective homomorphism from an empty-label family O to a ξ-labelled family F.
 
-**Definition 1.20 (Slash syntax expands to formula substitution).**
+**Definition 1.20 (Typed substitution selector agrees with slash-vector syntax).**
 
-$$\forall phi: \operatorname{S}\left(1\right), phi/[\operatorname{fvar}\left(0\right)] = \operatorname{subst}\left(phi, \operatorname{Matrix}.\operatorname{vecCons}(\operatorname{fvar}\left(0\right), \operatorname{Matrix}.\operatorname{vecEmpty})\right).$$
+$$\forall phi: \operatorname{S}\left(1\right), \operatorname{substNotation}\left(phi, \operatorname{Matrix}.\operatorname{vecCons}(\operatorname{fvar}\left(0\right), \operatorname{Matrix}.\operatorname{vecEmpty})\right) = phi/[\operatorname{fvar}\left(0\right)] = \operatorname{subst}\left(phi, \operatorname{Matrix}.\operatorname{vecCons}(\operatorname{fvar}\left(0\right), \operatorname{Matrix}.\operatorname{vecEmpty})\right).$$
 
 *Formalization.* `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.substNotation` (`✓ std3`).
 
@@ -246,7 +246,7 @@ $$\forall phi: \operatorname{S}\left(1\right), phi/[\operatorname{fvar}\left(0\r
 
 *Commentary.*
 
-The repository compatibility parser selector mirrors the source substNotation macro: φ/[w] expands to φ ⇜ ![w]. For the one-entry vector used below, ![&0] is Matrix.vecCons(fvar(0), Matrix.vecEmpty).
+Under [LCWQ S] and [SyntacticRewriting L S S], the typed compatibility selector substNotation(φ,w) forwards Rewriting.subst(φ,w). The source slash syntax φ/[t] expands to φ ⇜ ![t]. For the one-entry vector used below, ![&0] is Matrix.vecCons(fvar(0), Matrix.vecEmpty).
 
 **Definition 1.21 (The identity rewrite acts as the identity on formulas).**
 
@@ -298,7 +298,7 @@ With [LCWQ S] and [SyntacticRewriting L S S] as its parameters, the class extend
 
 **Lemma 1.25 (Shifting a conjunction shifts each formula (the canonical selector is RewThreeCompat.shift_conj_two; the source name is shift_conj₂).).**
 
-$$\forall gamma \operatorname{shift}\left(\operatorname{conj}\left(gamma\right)\right) = \operatorname{conj}\left(\operatorname{map}\left(\operatorname{shift}\left(\right), gamma\right)\right).$$
+$$[\operatorname{LCWQ}\left(S\right)] [\operatorname{SyntacticRewriting}\left(L, S, S\right)] \Rightarrow \forall n: \mathbb{N}, \forall Gamma: \operatorname{List}\left(\operatorname{S}\left(n\right)\right), \operatorname{shift}\left(\operatorname{conj}\left(Gamma\right)\right) = \operatorname{conj}\left(\operatorname{map}\left(shift, Gamma\right)\right).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.shift_conj_two` (`✓ std3`). ∎
 
@@ -306,7 +306,7 @@ $$\forall gamma \operatorname{shift}\left(\operatorname{conj}\left(gamma\right)\
 
 *Commentary.*
 
-The shift of a finite conjunction is the conjunction of the shifted list, including the empty and singleton cases.
+Under [LCWQ S] and [SyntacticRewriting L S S], for Γ:List(S n), the shift of a finite conjunction is the conjunction of the list mapped by shift:S n→S n, including the empty and singleton cases.
 
 **Lemma 1.26 (Substituting the first free variable after shifting is free).**
 
