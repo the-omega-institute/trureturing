@@ -1,0 +1,750 @@
+        {
+          "origin_start_byte": 325276,
+          "origin_end_byte_exclusive": 325836,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 326120,
+          "destination_end_byte_exclusive": 326680,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 560,
+            "sha256": "5dcd409893070d3e0de9dc32964ebd147ea125255ff5f71b132a5e2210319570",
+            "git_blob_oid": "fbe47df6a7349870eb9b9dbf107a6b94d8b3d7d8",
+            "lf": 11,
+            "terminal_lf": 0,
+            "eof_hex": "2e3137e380820a0a2a2a33322e313020"
+          }
+        },
+        {
+          "origin_start_byte": 325836,
+          "origin_end_byte_exclusive": 325875,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 326689,
+          "destination_end_byte_exclusive": 326728,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 39,
+            "sha256": "7ecaaf7c499d7ea00c3d4ac8a8738768f9c415af6e2a8da484a27452414c6b32",
+            "git_blob_oid": "f28b04b0061179e00e01d44b2fd5903ce9d46ae6",
+            "lf": 0,
+            "terminal_lf": 0,
+            "eof_hex": "9de7a6bbe58887e68da2e380822a2a20"
+          }
+        },
+        {
+          "origin_start_byte": 325875,
+          "origin_end_byte_exclusive": 326581,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 326742,
+          "destination_end_byte_exclusive": 327448,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 706,
+            "sha256": "e6655a33e5f677dafa32a91cd49dc7829e5842a7f167a3041ee7493c2a539c33",
+            "git_blob_oid": "ee04bed43f64a88183dc3086491b811f8a988763",
+            "lf": 17,
+            "terminal_lf": 0,
+            "eof_hex": "e782b9e380820a0a2a2a33322e313120"
+          }
+        },
+        {
+          "origin_start_byte": 326581,
+          "origin_end_byte_exclusive": 326626,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 327457,
+          "destination_end_byte_exclusive": 327502,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 45,
+            "sha256": "01edcccced00abfe5dc7b02c3cc6fd4a4f9f0383e6ade8bd3fddd87b9a0691a5",
+            "git_blob_oid": "99b931d5dca1c579eeae28f79c2fcf779f210561",
+            "lf": 0,
+            "terminal_lf": 0,
+            "eof_hex": "afe782b9e6af94e8be83e380822a2a20"
+          }
+        },
+        {
+          "origin_start_byte": 326626,
+          "origin_end_byte_exclusive": 327783,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 327516,
+          "destination_end_byte_exclusive": 328673,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 1157,
+            "sha256": "a4977179f0ff8975cc215e6c6ffd8f88745e8517d92f127c7208036414816612",
+            "git_blob_oid": "3f156c51f29134707b52abe03520a0863a33668d",
+            "lf": 26,
+            "terminal_lf": 0,
+            "eof_hex": "84e69c80e5a4a7e88a82e782b9e38082"
+          }
+        },
+        {
+          "origin_start_byte": 327783,
+          "origin_end_byte_exclusive": 327793,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 329027,
+          "destination_end_byte_exclusive": 329037,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 10,
+            "sha256": "a05ee4293a7ef71ad795eb889cdd25a03dd50a430ca0ab36fd2169ba22352778",
+            "git_blob_oid": "f721bb7a68d3f22745774ac0c867e043954f5eca",
+            "lf": 2,
+            "terminal_lf": 0,
+            "eof_hex": "0a0a2a2a33322e313220"
+          }
+        },
+        {
+          "origin_start_byte": 327793,
+          "origin_end_byte_exclusive": 327832,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 329046,
+          "destination_end_byte_exclusive": 329085,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 39,
+            "sha256": "6e7e324b65487ff46eb23eee6aff3cea20dcd0b818494d379dffb4d673294495",
+            "git_blob_oid": "37f0f83279d0f779a1b1cd0de9ad74f2b13bcffe",
+            "lf": 0,
+            "terminal_lf": 0,
+            "eof_hex": "84e5b182e694afe9858de380822a2a20"
+          }
+        },
+        {
+          "origin_start_byte": 327832,
+          "origin_end_byte_exclusive": 328721,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 329099,
+          "destination_end_byte_exclusive": 329988,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 889,
+            "sha256": "a5ed56150113c9e1491f56437eaea9d5352ae45e0cb4882ab7384a36979b2e82",
+            "git_blob_oid": "4654db0935c84e79927517d104f8801dc9203211",
+            "lf": 18,
+            "terminal_lf": 0,
+            "eof_hex": "e7949fe380820a0a2a2a33322e313320"
+          }
+        },
+        {
+          "origin_start_byte": 328721,
+          "origin_end_byte_exclusive": 329076,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 330006,
+          "destination_end_byte_exclusive": 330361,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 355,
+            "sha256": "cd378d8489464d5d4c3fbab65b2d6cb5474d1e612e48ed106c52605d0234093a",
+            "git_blob_oid": "8f7f1f2c3007d9bfd430d0a65f4fdf553fd2ac78",
+            "lf": 7,
+            "terminal_lf": 0,
+            "eof_hex": "84e5ae9ae79a84e5ae9ae79086e6a7bd"
+          }
+        },
+        {
+          "origin_start_byte": 329076,
+          "origin_end_byte_exclusive": 329103,
+          "destination_path": "docs/reports/quantized-gh/actual-5040-fixed-box-0910.md",
+          "destination_start_byte": 96687,
+          "destination_end_byte_exclusive": 96714,
+          "disposition": "archived_inactive",
+          "identity": {
+            "bytes": 27,
+            "sha256": "f25b70bed73dd9c4e11b4891c180d3543225b2fa73ed20985c102213742690e9",
+            "git_blob_oid": "9c7a9bed5561cf6b49d388c885cd5d3d8f475a6f",
+            "lf": 0,
+            "terminal_lf": 0,
+            "eof_hex": "b4a0e695b02047505520e8a18ce58fb7"
+          }
+        },
+        {
+          "origin_start_byte": 329103,
+          "origin_end_byte_exclusive": 329451,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 330361,
+          "destination_end_byte_exclusive": 330709,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 348,
+            "sha256": "88505841e61389bc58bbed6ce7be28c5b156b7b10ac2982f5e28925f1beaed7a",
+            "git_blob_oid": "2e46f193f183da99d54cd5e54badf70f60c0bbdb",
+            "lf": 16,
+            "terminal_lf": 1,
+            "eof_hex": "0a5c656e647b61727261797d0a5c5d0a"
+          }
+        },
+        {
+          "origin_start_byte": 329451,
+          "origin_end_byte_exclusive": 330161,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 330723,
+          "destination_end_byte_exclusive": 331433,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 710,
+            "sha256": "1888be090263c64e43a3c3f00bde1cf6a0c4ff41c3e25b54fe1754cc3e1d5961",
+            "git_blob_oid": "51f4c9b29580f56c44c98ede274b7e8ae432d7a8",
+            "lf": 16,
+            "terminal_lf": 0,
+            "eof_hex": "2b33302b302b31373d35355c29e38082"
+          }
+        },
+        {
+          "origin_start_byte": 330161,
+          "origin_end_byte_exclusive": 330242,
+          "destination_path": "docs/reports/quantized-gh/actual-5040-fixed-box-0910.md",
+          "destination_start_byte": 96922,
+          "destination_end_byte_exclusive": 97003,
+          "disposition": "archived_inactive",
+          "identity": {
+            "bytes": 81,
+            "sha256": "1c508697b4aa8a091d6dc788c31041d95e87c3b3caf69023858168f0d7e6b8e7",
+            "git_blob_oid": "65bbb3bf9777b864bbcd89843703d7a0d447bf02",
+            "lf": 1,
+            "terminal_lf": 0,
+            "eof_hex": "9fe580bce79a84e89684e5b182e38082"
+          }
+        },
+        {
+          "origin_start_byte": 330242,
+          "origin_end_byte_exclusive": 330252,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 331433,
+          "destination_end_byte_exclusive": 331443,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 10,
+            "sha256": "03749d5ac827562234f98afefa0f02fb7b3a9a6392174144dc8ea64e157de441",
+            "git_blob_oid": "d0c43cd0e4dbd9e9e3a515e0cbe471e2e415e160",
+            "lf": 2,
+            "terminal_lf": 0,
+            "eof_hex": "0a0a2a2a33322e313420"
+          }
+        },
+        {
+          "origin_start_byte": 330252,
+          "origin_end_byte_exclusive": 330306,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 331452,
+          "destination_end_byte_exclusive": 331506,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 54,
+            "sha256": "116a56dcac2ca405f5ad88ccccce83eee2b5b8ba303005ceda93e977a80ad71f",
+            "git_blob_oid": "81e9b0299dcd8a3581c3590d93ddc3fa4c40a70d",
+            "lf": 0,
+            "terminal_lf": 0,
+            "eof_hex": "89e79086e7abafe782b9e380822a2a20"
+          }
+        },
+        {
+          "origin_start_byte": 330306,
+          "origin_end_byte_exclusive": 331464,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 331520,
+          "destination_end_byte_exclusive": 332678,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 1158,
+            "sha256": "f00ed34e8960bd931dc35f63612766b6e23f294acbc7ee602c15741dd7dcd11f",
+            "git_blob_oid": "5ef89f37da0d4306372c8c62898e3cefa5ed5552",
+            "lf": 26,
+            "terminal_lf": 0,
+            "eof_hex": "e782b9e380820a0a2a2a33322e313520"
+          }
+        },
+        {
+          "origin_start_byte": 331464,
+          "origin_end_byte_exclusive": 331569,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 332687,
+          "destination_end_byte_exclusive": 332792,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 105,
+            "sha256": "ff5b1ec8938a4aaaea0f91b0f5bab79f6d72f62d831b9b6bb691c21e4ece5592",
+            "git_blob_oid": "5a4e3c25bcce6122d2379539e14246a1df2f483e",
+            "lf": 1,
+            "terminal_lf": 0,
+            "eof_hex": "ade69c89e79086e58cbae997b4e38082"
+          }
+        },
+        {
+          "origin_start_byte": 331569,
+          "origin_end_byte_exclusive": 331719,
+          "destination_path": "docs/reports/quantized-gh/actual-5040-fixed-box-0910.md",
+          "destination_start_byte": 97186,
+          "destination_end_byte_exclusive": 97336,
+          "disposition": "archived_inactive",
+          "identity": {
+            "bytes": 150,
+            "sha256": "2ba5d6712045778caa8ce949c511399e0afec57570082e1ce96b225e2f9e9a2e",
+            "git_blob_oid": "d39086615134370c5d48f2ebc775b232113f53fb",
+            "lf": 2,
+            "terminal_lf": 1,
+            "eof_hex": "e689a7e8a18ce4b880e6aca1e380820a"
+          }
+        },
+        {
+          "origin_start_byte": 331719,
+          "origin_end_byte_exclusive": 333461,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 332792,
+          "destination_end_byte_exclusive": 334534,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 1742,
+            "sha256": "13e6bdb25c39ceed237df2f704c9fc73324182d981c5e459866ba3e0b3e5ab0c",
+            "git_blob_oid": "c1f44acf2501cb4bc157d965690472c3e3b454a5",
+            "lf": 23,
+            "terminal_lf": 2,
+            "eof_hex": "3538323930343736207c0a7e7e7e0a0a"
+          }
+        },
+        {
+          "origin_start_byte": 333461,
+          "origin_end_byte_exclusive": 333740,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 334548,
+          "destination_end_byte_exclusive": 334827,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 279,
+            "sha256": "f8a73d4491defb5cfbf20957dd09836f8cead6cd5ea559ecf890881fc4df0a0f",
+            "git_blob_oid": "f5294bb313a8af33048275aa3f34e28f676af39c",
+            "lf": 3,
+            "terminal_lf": 0,
+            "eof_hex": "5c28473c2d312f313235305c29e38082"
+          }
+        },
+        {
+          "origin_start_byte": 333740,
+          "origin_end_byte_exclusive": 333750,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 334965,
+          "destination_end_byte_exclusive": 334975,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 10,
+            "sha256": "5df7e2535b534a7c77c7706673f2cdba613a9e7227746a9bc0c4277e205a490b",
+            "git_blob_oid": "d613ce374fbd747b2a9fa166545f9934db0ea004",
+            "lf": 2,
+            "terminal_lf": 0,
+            "eof_hex": "0a0a2a2a33322e313620"
+          }
+        },
+        {
+          "origin_start_byte": 333750,
+          "origin_end_byte_exclusive": 334038,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 334984,
+          "destination_end_byte_exclusive": 335272,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 288,
+            "sha256": "526ae0ff0dc6efe3cc9d461419fabf5a036dff91d5618df56043fb391cb33828",
+            "git_blob_oid": "28a4ab9147d019ad4ed456eeb79537719f573bfe",
+            "lf": 12,
+            "terminal_lf": 1,
+            "eof_hex": "2b7a5f335e32292f31327d2e0a5c5d0a"
+          }
+        },
+        {
+          "origin_start_byte": 334038,
+          "origin_end_byte_exclusive": 334464,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 335286,
+          "destination_end_byte_exclusive": 335712,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 426,
+            "sha256": "6a67d3f0d7b52c6b9e45476bc7af4119ba3d4c994078f32e4b88cd5e7610c0e8",
+            "git_blob_oid": "775120b2e6d55b8a6c4f0bcc50792779ca47fd9d",
+            "lf": 8,
+            "terminal_lf": 1,
+            "eof_hex": "e7b2bee7a1aee58886e694afe380820a"
+          }
+        },
+        {
+          "origin_start_byte": 334464,
+          "origin_end_byte_exclusive": 334528,
+          "destination_path": "docs/reports/quantized-gh/actual-5040-fixed-box-0910.md",
+          "destination_start_byte": 97529,
+          "destination_end_byte_exclusive": 97593,
+          "disposition": "archived_inactive",
+          "identity": {
+            "bytes": 64,
+            "sha256": "9cabcc5ebf26d336982d08a6954297a317de9ff5f7fb4371d81b4ff69fb4bea8",
+            "git_blob_oid": "02977ad66fe175bb99fe13c85f7a94ec131b10af",
+            "lf": 1,
+            "terminal_lf": 1,
+            "eof_hex": "e695b4e695b0e993bee68ea5e380820a"
+          }
+        },
+        {
+          "origin_start_byte": 334528,
+          "origin_end_byte_exclusive": 335165,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 335712,
+          "destination_end_byte_exclusive": 336349,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 637,
+            "sha256": "284bb7dd9d30cc7a64060c8d1622ce7deabd5771c91d29761a161909f80fc46c",
+            "git_blob_oid": "24f4eb24dacfe9413b2bcc17d5936e6d962910c0",
+            "lf": 16,
+            "terminal_lf": 0,
+            "eof_hex": "323130e380820a0a2a2a33322e313720"
+          }
+        },
+        {
+          "origin_start_byte": 335165,
+          "origin_end_byte_exclusive": 335210,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 336358,
+          "destination_end_byte_exclusive": 336403,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 45,
+            "sha256": "4142d5dc87161c296831da67b80a1231eb396b3691b2136183c9eacc2e5cbef9",
+            "git_blob_oid": "849dee64e6459b63ea43f66fa80aedaea401b588",
+            "lf": 0,
+            "terminal_lf": 0,
+            "eof_hex": "89e58fb7e8b584e6a0bce380822a2a20"
+          }
+        },
+        {
+          "origin_start_byte": 335210,
+          "origin_end_byte_exclusive": 336190,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 336417,
+          "destination_end_byte_exclusive": 337397,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 980,
+            "sha256": "c133aa2a19354bd331e9ba86d594d4091ddcfc6ee204cbc3f9fce40e418a9acd",
+            "git_blob_oid": "72d705d08f036060ed4e3e4d8d1f8d72f55c47dc",
+            "lf": 20,
+            "terminal_lf": 0,
+            "eof_hex": "e79599e380820a0a2a2a33322e313820"
+          }
+        },
+        {
+          "origin_start_byte": 336190,
+          "origin_end_byte_exclusive": 336202,
+          "destination_path": "docs/reports/quantized-gh/actual-5040-fixed-box-0910.md",
+          "destination_start_byte": 97770,
+          "destination_end_byte_exclusive": 97782,
+          "disposition": "archived_inactive",
+          "identity": {
+            "bytes": 12,
+            "sha256": "85f56448487a6ee4cb23e08550be74223321ada16e0b8c556a7cbb3fad32ad1b",
+            "git_blob_oid": "3e46ca793f7fef4266afbcef34edf261b176cf20",
+            "lf": 0,
+            "terminal_lf": 0,
+            "eof_hex": "e58e9f207072696d61727920"
+          }
+        },
+        {
+          "origin_start_byte": 336202,
+          "origin_end_byte_exclusive": 336223,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 337421,
+          "destination_end_byte_exclusive": 337442,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 21,
+            "sha256": "e251d983438571978c3a312b04f6958d566cf72636bdc924a66c179113b24a62",
+            "git_blob_oid": "1a9a68d5d38a42e7f1c795917e32f15ffa649ce2",
+            "lf": 0,
+            "terminal_lf": 0,
+            "eof_hex": "b0e696b9e6b395e4b88ee58b98e8afaf"
+          }
+        },
+        {
+          "origin_start_byte": 336223,
+          "origin_end_byte_exclusive": 336242,
+          "destination_path": "docs/reports/quantized-gh/actual-5040-fixed-box-0910.md",
+          "destination_start_byte": 97961,
+          "destination_end_byte_exclusive": 97980,
+          "disposition": "archived_inactive",
+          "identity": {
+            "bytes": 19,
+            "sha256": "536f2d4c8b05a69f8ac095c6198cf9a6c1887a4f9e08f0045d9381dc0b5e5fb9",
+            "git_blob_oid": "79fb12a03fa90422e4aef754dd41675dca6edca4",
+            "lf": 0,
+            "terminal_lf": 0,
+            "eof_hex": "8de694b9e58e86e58fb2e58e9fe69687"
+          }
+        },
+        {
+          "origin_start_byte": 336242,
+          "origin_end_byte_exclusive": 336248,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 337442,
+          "destination_end_byte_exclusive": 337448,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 6,
+            "sha256": "b256085a8f5c36db6df36b5a236d7a8ab45277a34e229164cfefd991a82eb6fd",
+            "git_blob_oid": "100c7548c9538e87c78c42d4f1e74d890a9923b4",
+            "lf": 0,
+            "terminal_lf": 0,
+            "eof_hex": "e380822a2a20"
+          }
+        },
+        {
+          "origin_start_byte": 336248,
+          "origin_end_byte_exclusive": 336267,
+          "destination_path": "docs/reports/quantized-gh/actual-5040-fixed-box-0910.md",
+          "destination_start_byte": 98168,
+          "destination_end_byte_exclusive": 98187,
+          "disposition": "archived_inactive",
+          "identity": {
+            "bytes": 19,
+            "sha256": "c73b440d21805f57aadb2f9e3dc7266263d00f22e548deeb0eccdefe3d64d038",
+            "git_blob_oid": "688f1a026d6a6c6c6c5572db1e52c0f1a9fd1104",
+            "lf": 1,
+            "terminal_lf": 1,
+            "eof_hex": "20636f6e636c7573696f6e20e79a840a"
+          }
+        },
+        {
+          "origin_start_byte": 336267,
+          "origin_end_byte_exclusive": 336418,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 337448,
+          "destination_end_byte_exclusive": 337599,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 151,
+            "sha256": "44077f463b28c31e9275633b176eecddf21709eee94a9dc4396a7f214996fcde",
+            "git_blob_oid": "7a40582f6a31038f2e3e0c4e12ad5d5089fa9638",
+            "lf": 5,
+            "terminal_lf": 1,
+            "eof_hex": "646f74335e7b3132397d7d2e0a5c5d0a"
+          }
+        },
+        {
+          "origin_start_byte": 336418,
+          "origin_end_byte_exclusive": 336659,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 337613,
+          "destination_end_byte_exclusive": 337854,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 241,
+            "sha256": "80e33f717c071906c8b481a60e2c1dc170fea036289482907efee721b22ab0f9",
+            "git_blob_oid": "1d65e3092bf76ea567c37acd7c879bb11695d89b",
+            "lf": 6,
+            "terminal_lf": 0,
+            "eof_hex": "31323928312d312f39295d5c29e38082"
+          }
+        },
+        {
+          "origin_start_byte": 336659,
+          "origin_end_byte_exclusive": 336687,
+          "destination_path": "docs/reports/quantized-gh/actual-5040-fixed-box-0910.md",
+          "destination_start_byte": 98366,
+          "destination_end_byte_exclusive": 98394,
+          "disposition": "archived_inactive",
+          "identity": {
+            "bytes": 28,
+            "sha256": "3e0f39a31297cc376cbfb63b599ab56566f7791223d5aa005d69241a88cfe938",
+            "git_blob_oid": "417507b6745806cb63836a2abac46e6c1641d97e",
+            "lf": 1,
+            "terminal_lf": 1,
+            "eof_hex": "e887aae68aa5e79a84e696b9e6b3950a"
+          }
+        },
+        {
+          "origin_start_byte": 336687,
+          "origin_end_byte_exclusive": 336856,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 337891,
+          "destination_end_byte_exclusive": 338060,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 169,
+            "sha256": "8d4b0f0540489545aadb754bf20a92b2c733f12868109ffb5f5454fadf3999d7",
+            "git_blob_oid": "f24e63ff405968a43cb59c710852900020454e50",
+            "lf": 2,
+            "terminal_lf": 1,
+            "eof_hex": "e59091e5a496e58c85e7bb9ce380820a"
+          }
+        },
+        {
+          "origin_start_byte": 336856,
+          "origin_end_byte_exclusive": 337110,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 338103,
+          "destination_end_byte_exclusive": 338357,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 254,
+            "sha256": "c7f5e4d8be22aa4b0cf6b931ecce9064b249af197bd76e6ec7c11aec426e56b9",
+            "git_blob_oid": "6b115fc5da758c52511dd6704776636c8aa79fe5",
+            "lf": 4,
+            "terminal_lf": 1,
+            "eof_hex": "e5a484e79086e5b9b6e58897e380820a"
+          }
+        },
+        {
+          "origin_start_byte": 337110,
+          "origin_end_byte_exclusive": 337231,
+          "destination_path": "docs/reports/quantized-gh/actual-5040-fixed-box-0910.md",
+          "destination_start_byte": 108957,
+          "destination_end_byte_exclusive": 109078,
+          "disposition": "archived_inactive",
+          "identity": {
+            "bytes": 121,
+            "sha256": "17452923608412af42efcab34d0d0430f81235b13ed2ed98e1ea3776b283c064",
+            "git_blob_oid": "99095ba6ebf8b1d103b5b1ef40fa5e6c321db356",
+            "lf": 2,
+            "terminal_lf": 1,
+            "eof_hex": "e7baa7e695b0e88c83e59bb4e380820a"
+          }
+        },
+        {
+          "origin_start_byte": 337231,
+          "origin_end_byte_exclusive": 337545,
+          "destination_path": "docs/reports/quantized-gh/actual-5040-fixed-box-0910.md",
+          "destination_start_byte": 98585,
+          "destination_end_byte_exclusive": 98899,
+          "disposition": "archived_inactive",
+          "identity": {
+            "bytes": 314,
+            "sha256": "b21eae71b328c1ea92a3e32f15d792a28dddd29158a1893973e9e8087ba71a94",
+            "git_blob_oid": "160981d3e8dd8ea36d262d6007e6a7d4de039082",
+            "lf": 4,
+            "terminal_lf": 1,
+            "eof_hex": "e695b0e580bce7aca6e58fb7e380820a"
+          }
+        },
+        {
+          "origin_start_byte": 337545,
+          "origin_end_byte_exclusive": 337546,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 338678,
+          "destination_end_byte_exclusive": 338679,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 1,
+            "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+            "git_blob_oid": "8b137891791fe96927ad78e64b0aad7bded08bdc",
+            "lf": 1,
+            "terminal_lf": 1,
+            "eof_hex": "0a"
+          }
+        },
+        {
+          "origin_start_byte": 337546,
+          "origin_end_byte_exclusive": 339214,
+          "destination_path": "docs/reports/quantized-gh/actual-5040-fixed-box-0910.md",
+          "destination_start_byte": 99083,
+          "destination_end_byte_exclusive": 100751,
+          "disposition": "archived_inactive",
+          "identity": {
+            "bytes": 1668,
+            "sha256": "4b4515e76802e91f956ec04e63de2785119548fe214b27da72bcc064c5cc476d",
+            "git_blob_oid": "177562bb0f7d1bd73f43ce1a1f0a5eea83326cc6",
+            "lf": 21,
+            "terminal_lf": 2,
+            "eof_hex": "ad89e5bc8fe8af81e6988ee380820a0a"
+          }
+        },
+        {
+          "origin_start_byte": 339214,
+          "origin_end_byte_exclusive": 339397,
+          "destination_path": "docs/reports/quantized-gh/actual-5040-fixed-box-0910.md",
+          "destination_start_byte": 100934,
+          "destination_end_byte_exclusive": 101117,
+          "disposition": "archived_inactive",
+          "identity": {
+            "bytes": 183,
+            "sha256": "2ef3a45588358c685e1401e3ccd40408511ab7df5b75bae11e337b40f619375b",
+            "git_blob_oid": "9434e0a54e7ccafe81e79f16963c78537e66737e",
+            "lf": 2,
+            "terminal_lf": 0,
+            "eof_hex": "80820ae78eb0e59cbae8afbbe58f9620"
+          }
+        },
+        {
+          "origin_start_byte": 339397,
+          "origin_end_byte_exclusive": 339575,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 325837,
+          "destination_end_byte_exclusive": 326015,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 178,
+            "sha256": "1457171e01baa3db540f437c0b37fc8edba109a2f0e5e23a2354556e0244df12",
+            "git_blob_oid": "ae1443e68069bedd63d3ee8e4451101beffe4145",
+            "lf": 1,
+            "terminal_lf": 0,
+            "eof_hex": "e58f8ae4baa4e68da2e8aebae8af813b"
+          }
+        },
+        {
+          "origin_start_byte": 339575,
+          "origin_end_byte_exclusive": 339637,
+          "destination_path": "docs/reports/quantized-gh/actual-5040-fixed-box-0910.md",
+          "destination_start_byte": 101301,
+          "destination_end_byte_exclusive": 101363,
+          "disposition": "archived_inactive",
+          "identity": {
+            "bytes": 62,
+            "sha256": "8d0a5aac33f0a5c79822b0a0f12e5f28dfe1cfa792256399245e19f695164586",
+            "git_blob_oid": "62af84c0d5a246815ba811df4a340fda301f0cfd",
+            "lf": 1,
+            "terminal_lf": 0,
+            "eof_hex": "e4b8bae8aebfe997aee99990e588b62c"
+          }
+        },
+        {
+          "origin_start_byte": 339637,
+          "origin_end_byte_exclusive": 339676,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 326016,
+          "destination_end_byte_exclusive": 326055,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 39,
+            "sha256": "4b2b35526dce7a73a8230bbd00b2c26bc66b69f580d30fc36a4d324d3da78b1e",
+            "git_blob_oid": "85ab843f638df8f2b02c9f9bc177d2b121790bce",
+            "lf": 0,
+            "terminal_lf": 0,
+            "eof_hex": "aee4bbb7e6a0bce8af81e6988ee38082"
+          }
+        },
+        {
+          "origin_start_byte": 339676,
+          "origin_end_byte_exclusive": 339684,
+          "destination_path": "docs/reports/quantized-gh/actual-5040-fixed-box-0910.md",
+          "destination_start_byte": 101547,
+          "destination_end_byte_exclusive": 101555,
+          "disposition": "archived_inactive",
+          "identity": {
+            "bytes": 8,
+            "sha256": "ae4892ce1e5e339972064cfcfe666fb38e9b67987ec09d84535d11351a50c4c4",
+            "git_blob_oid": "b354a7d37b3e8b5c29fdbba054a7698444089769",
+            "lf": 1,
+            "terminal_lf": 0,
+            "eof_hex": "0ae8afbbe58f9620"
+          }
+        },
+        {
+          "origin_start_byte": 339684,
+          "origin_end_byte_exclusive": 340016,
+          "destination_path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+          "destination_start_byte": 328695,
+          "destination_end_byte_exclusive": 329027,
+          "disposition": "retained",
+          "identity": {
+            "bytes": 332,
+            "sha256": "41e4e8924a8b25abce19b44ad846d413a3e051fc8fd7787f46c517dad472f320",
+            "git_blob_oid": "9d22386a958e3ac24ce210c63b26318bba693a22",
+            "lf": 2,
+            "terminal_lf": 0,
+            "eof_hex": "475c2920e79a84e7aca6e58fb7e38082"

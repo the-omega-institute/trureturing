@@ -1,0 +1,156 @@
+          "--",
+          "/dev/null",
+          "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/53141233bfaaa957db7667df81f8be4470560bba3a2df8f4acffb86107c804ff.yaml"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "git",
+          "--no-optional-locks",
+          "diff",
+          "--no-index",
+          "--check",
+          "--",
+          "/dev/null",
+          "Meta/Digestion/atoms/sha256/75565eac60ef67c7c8e5cf4d62a63822507e7f75e542612a59a846add84e37ce"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "git",
+          "--no-optional-locks",
+          "diff",
+          "--no-index",
+          "--check",
+          "--",
+          "/dev/null",
+          "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/75565eac60ef67c7c8e5cf4d62a63822507e7f75e542612a59a846add84e37ce.yaml"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "preserved_without_normalization": true,
+    "prior_diagnostics_refs": [
+      {
+        "document": "I32",
+        "json_pointer": "/final_git_checks"
+      },
+      {
+        "document": "I35",
+        "json_pointer": "/new_producer_whitespace_diagnostics"
+      }
+    ]
+  },
+  "errors_and_limits": [
+    {
+      "command": "python3 /var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/qgh0911-i37-s21-table-representation/attempt-1/finalize_representation.py",
+      "exit": 1,
+      "error": "Initial assertion accepted only git diff --no-index --check exits 0/2; actual exit was 3.",
+      "observed_argv": [
+        "git",
+        "--no-optional-locks",
+        "diff",
+        "--no-index",
+        "--check",
+        "--",
+        "/dev/null",
+        "Meta/Digestion/atoms/sha256/41c90b2b5c7115b4bc7e0eb679094e9050882b92862d486665a3e2c34e2faa42"
+      ],
+      "observed_exit": 3,
+      "observed_stdout": "Meta/Digestion/atoms/sha256/41c90b2b5c7115b4bc7e0eb679094e9050882b92862d486665a3e2c34e2faa42:29: new blank line at EOF.\n",
+      "observed_stderr": "",
+      "disposition": "Corrected metadata-only return-code handling and reran structural checks; no report/source/canonical file had been written by the failed finalization, no producer replay or normalization."
+    },
+    {
+      "command": "rg -n 'arithmetic-boundary-quantization|generic-v1' Meta/Backfill/sources/arithmetic-boundary-quantization*",
+      "exit": 1,
+      "error": "zsh: no matches found: Meta/Backfill/sources/arithmetic-boundary-quantization*",
+      "disposition": "Read-only discovery failure; actual source.toml located using bounded rg --files."
+    },
+    {
+      "command": "rg -n 'RunReportFree|\"ingest\"' tools/StrataLint.Cli/CommandDispatcher* tools/StrataLint.Cli/Commands/Digestion/IngestCommand.cs",
+      "exit": 1,
+      "error": "zsh: no matches found: tools/StrataLint.Cli/CommandDispatcher*",
+      "disposition": "Read-only discovery failure; actual dispatcher found by scoped rg over CLI C# sources."
+    },
+    "Some initial large read outputs were truncated; bounded follow-up reads and complete structural traversal recovered the required content. No historical embedded command or external reference was executed.",
+    "No broad tests/build or mathematical evaluation was run. The canonical ingest performed only its normal .NET producer invocation. No browser/rendering build was run."
+  ],
+  "scope_status": {
+    "own_tail_representation_complete": true,
+    "mathematical_reexecution": false,
+    "whole_source_pure": false,
+    "independent_review_approval": false,
+    "s21_merged": false,
+    "goal_complete": false
+  },
+  "remaining_obligations": [
+    "Caller integration of exact pure predecessors into the complete current source; inherited [0,316725) remains byte-identical mixed historical text.",
+    "Fresh independent full-source and representation review, caller sealing and ordinary gates, then predecessor-ordered delivery. This worker provides no approval or Git/PR lifecycle action.",
+    "Standing translated5040/all-height/all-slab/all-prime and related GoalArtifact mathematics remain open with their existing scopes and failures; this finite representation repair adds no theorem, RH, purity or goal-completion claim."
+  ],
+  "repository_return": {
+    "all_changes_unstaged": true,
+    "tracked_changes": [
+      "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+      "docs/reports/quantized-gh/actual-5040-fixed-box-0910.md"
+    ],
+    "new_mapping": "docs/reports/quantized-gh/support-table-representation-s21-0911.json",
+    "new_producer_paths_resolve_from": "new_canonical_pairs",
+    "unexpected_changed_paths": [],
+    "caller_owns_git_and_pr": true,
+    "source_frozen_since_ingest": true
+  },
+  "mapping_self_identity_location": "Worker result.json conclusion.output_map; no circular self-hash in this map.",
+  "final_verification": {
+    "command": "python3 /var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/qgh0911-i37-s21-table-representation/attempt-1/verify_final_map.py",
+    "exit": 0,
+    "immutable_json_references_resolved": 33,
+    "owned_units": 22,
+    "uncovered_bytes": 0,
+    "recovered_original_source_snapshots": 3,
+    "row_comparisons": 16,
+    "source_unchanged_since_sole_ingest": true,
+    "source_report_and_map_bindings_exact": true,
+    "historical_files_unchanged": true,
+    "changed_paths": 9,
+    "expected_changed_paths_exact": true,
+    "staged_diff_empty": true,
+    "git_whitespace_checks": [
+      {
+        "argv": [
+          "git",
+          "--no-optional-locks",
+          "diff",
+          "--check"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "git",
+          "--no-optional-locks",
+          "diff",
+          "--no-index",
+          "--check",
+          "--",
+          "/dev/null",
+          "docs/reports/quantized-gh/support-table-representation-s21-0911.json"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  }
+}
