@@ -5140,3 +5140,769 @@ $$
 任意集合层使用 $\operatorname{Enc}$ 而非仅使用 $\zeta$。由第 72–74 条的成员和有序对运输，显示的函数图成员式正是普通图成员式的翻译；它将语义配对与外部逐字段元组明确区分。第 75–76 条的公式归纳适用于上述每个域、比较、极值及函数求值公式，任意集合参数也一并运输。无限的完整图、任意集合、幂集和全函数集仍分别作为集合按 $\operatorname{Enc}$ 与 $\in_Z$ 解释，不能用一条有限 Zeckendorf 字代替全部集合。
 
 对仅使用这些有效前提的任意有限证明，逐项消去新函数图、域谓词和定义符号，并用这里的普通证明替换新增定理行；所有存在唯一性均已证明，分离和替代展开后仍为原有模式实例。这是定理 239 的定义消去在本组对象上的应用，所以原语言结论仍有 ZFC 证明，不担保全部旧文本的字面合取。给定 $\mathfrak M\models\mathrm{ZFC}$ 时，同一图公式在其内部给出相同结构，并由第 78 条保持每个外部标准有限公式；非标准模型中的自然数、有限性、幂集和函数集均按模型内部解释，不作外部良基递归。该条件解释和定义性保守性不推出无条件的 $\operatorname{Con}(\mathrm{ZFC})$。证毕。
+
+**定义 255（整数实现及两种集合提升）。** 记通常整数环为 $\mathbb Z_o$，记 CSA 第一节的整数实现与第 113 条的带符号数字载体分别为
+$$
+J=(\{0\}\times\omega)\cup(\{1\}\times\omega_{>0}),\qquad
+S=\mathsf Z_{\mathbb Z}.
+$$
+在 $J$ 中置 $0_J=(0,0)$、$1_J=(0,1)$，并定义
+$$
+v:J\longrightarrow\mathbb Z_o,\quad v(0,n)=n,\quad v(1,n)=-n,
+\qquad
+v^{-1}(z)=
+\begin{cases}(0,z),&z\ge0,\\ (1,-z),&z<0.\end{cases}
+$$
+这里非负整数与自然序数按通常数值对应；$v^{-1}$ 的第二坐标取该自然序数。$J$ 的加、乘、负和序沿 $v$ 运输，分别记为 $+_J,\cdot_J,-_J,<_J$。定义
+$$
+b=\operatorname{scode}\circ v:J\longrightarrow S,\qquad
+b^{-1}=v^{-1}\circ\operatorname{ival}:S\longrightarrow J.
+$$
+$S$ 的运算沿用第 113–114 条的 $\oplus_Z,\otimes_Z,\ominus_Z$；置 $c<_Sd$ 当且仅当 $\operatorname{ival}(c)<\operatorname{ival}(d)$，$0_S=\operatorname{scode}(0)$、$1_S=\operatorname{scode}(1)$。以后 CSA 整数常数在 $J$ 字段中指经 $v^{-1}$ 取得的对象，在 $S$ 字段中指相应 $b$ 像；自然序数、事件标签和来源叶参数另按各自类型解释。
+
+复用第 71–78 条的 $\operatorname{Enc},\operatorname{Dec},\mathfrak V_Z,\in_Z$，对 $c\in S$ 分别定义
+$$
+\chi(c)=\operatorname{Enc}(b^{-1}(c)),\qquad
+\mathrm e(c)=\operatorname{Enc}(c),\qquad
+\beta=\operatorname{Enc}\circ b^{-1}\circ\operatorname{Dec}:
+\operatorname{Enc}[S]\longrightarrow\operatorname{Enc}[J].
+$$
+$\chi$ 提升原整数对象，$\mathrm e$ 提升数字对象。另在 $S_{\ge0}=\{c\in S:\operatorname{ival}(c)\ge0\}$ 上定义自然数值提升 $\nu(c)=\operatorname{NatZ}(\operatorname{ival}(c))$。这三个提升所指的集合不同；普通数字、有效码以及有效码的语义成员不作字面认同。
+
+**定理 256（一维同构与旧三维式的类型障碍）。** $v,v^{-1}$ 及 $b,b^{-1}$ 各自互逆。对所有 $z,w\in J$、有限集合 $I$ 和函数 $f:I\to J$，有
+$$
+\begin{gathered}
+b(z+_Jw)=b(z)\oplus_Zb(w),\qquad
+b(z\cdot_Jw)=b(z)\otimes_Zb(w),\qquad
+b(-_Jz)=\ominus_Zb(z),\\
+z<_Jw\iff b(z)<_Sb(w),\qquad
+b(\max_J(z,w))=\max_S(b(z),b(w)),\\
+b(z+_J1_J)=b(z)\oplus_Z1_S,\qquad
+b\left(\sum_{i\in I}^{J} f(i)\right)=\mathop{\bigoplus}_{i\in I}^{Z} b(f(i)).
+\end{gathered}
+$$
+空和分别为 $0_J,0_S$；有限非空集合的最大值和最小值也交换。CSA 的每个电荷 $q\in J$ 的数字表示为 $b(q)=\operatorname{scode}(v(q))$。
+
+有以下集合层面的不等式与域限制：
+$$
+\begin{gathered}
+\operatorname{scode}(0)=\varnothing\notin\mathfrak V_Z,\qquad
+\operatorname{Enc}(\operatorname{scode}(1))\ne\operatorname{NatZ}(1),\\
+\operatorname{Enc}((0,0))\ne\operatorname{NatZ}(0),\qquad
+\operatorname{Enc}[S]\cap\mathsf N_Z=\{\operatorname{NatZ}(0)\}.
+\end{gathered}
+$$
+因此第 142 条用原始带符号数字直接装配语义三元组的式子在空间原点越出第 74 条的有效域；第 143 条不能从该式得到普通 $S^3$ 余域。第 142–143 条仅保留其一维有效内容，三维混合式及据它得出的三维交换由本条和第 255、257–258 条替代。
+
+**证明。** $J$ 的两个分支互斥，且负分支排除零。按 $z$ 的正、负、零分类，直接得到 $v^{-1}v=\operatorname{id}_J$、$vv^{-1}=\operatorname{id}_{\mathbb Z_o}$。复合第 113–114 条的两个逆式得到 $b$ 的双逆。对前三个算术式取 $\operatorname{ival}$，两侧分别成为通常整数的同一和、积、负值，再用其单射性。序式是序的定义；两数最大值由全序的两种大小情形得出，后继由加法式得出。有限和对有限索引集归纳，空集用零式，加入一个新索引用加法式；最值用有限非空归纳及二元最大、最小的交换。
+
+第 69 条的零数字是空函数，其图为 $\varnothing$。第 71 条的每个有效码都是 Kuratowski 对，而每个 Kuratowski 对都非空，故空数字不是有效码。每个非零 $\operatorname{scode}(z)$ 是一个 Kuratowski 对，其每个成员为非空集合，因此不含 $\varnothing$；但每个正有限序数都含 $\varnothing$，零序数自身为空。这证明非零带符号数字不是自然序数，特别是 $\operatorname{scode}(1)\ne1$。第 72 条的单射性及 $\operatorname{NatZ}(n)=\operatorname{Enc}(n)$ 给出第二个不等式及交集式。$(0,0)=\{\{\varnothing\}\}$ 非空，故不是零序数，再用单射性得第三个不等式。$\mathrm e(0_S)=\operatorname{NatZ}(0)$，而 $\chi(0_S)=\operatorname{Enc}(0_J)$，恰显示数字零与原整数零对象的差别。第 74 条的配对只在有效码上定义；即使给 $\operatorname{Dec}$ 域外另取默认值，也没有扩大该配对的声明域。原点的三个原始零数字因此不能作其三个有效参数。证毕。
+
+**定义 257（固定元数元组与变长有限序列）。** 对每个固定 $r\in\omega$，采用通常外部集合元组
+$$
+T_0=\varnothing,\qquad T_1(a_1)=a_1,\qquad
+T_r(a_1,\ldots,a_r)=\langle a_1,T_{r-1}(a_2,\ldots,a_r)\rangle\quad(r\ge2).
+$$
+元数是类型的一部分；$\prod_{i=1}^r A_i$ 指这些 $T_r$ 组成的集合，空积为 $\{T_0\}$。固定元数的投影 $\operatorname{pr}_i^r$ 由上述有序对的唯一分解递归取得；$r=1$ 的投影为恒等，$r=0$ 无投影。对有效码 $c_1,\ldots,c_r$ 定义语义装配
+$$
+T_r^Z(c_1,\ldots,c_r)
+=\operatorname{Enc}(T_r(\operatorname{Dec}(c_1),\ldots,\operatorname{Dec}(c_r))),
+\qquad T_0^Z=\operatorname{Enc}(\varnothing).
+$$
+语义投影只在该固定类型的装配像上定义为
+$$
+\operatorname{pr}_{i,Z}^r(c)=
+\operatorname{Enc}(\operatorname{pr}_i^r(\operatorname{Dec}(c))).
+$$
+在上述固定括号下，普通空间桥取
+$$
+b_3^{\rm can}:J^3\longrightarrow S^3,\qquad
+b_3^{\rm can}(T_3(z_1,z_2,z_3))=T_3(b(z_1),b(z_2),b(z_3)),
+$$
+其目标是普通外部积，三个分量不要求属于 $\mathfrak V_Z$。
+
+若 CSA 的某种固定元组或第 115 条配置元组使用另一括号形 $T_r'$，记其投影为 $\operatorname{pr}_i'$，定义重括号映射
+$$
+\kappa_{r}(u)=T_r(\operatorname{pr}_1'u,\ldots,\operatorname{pr}_r'u),\qquad
+\kappa_{r}^{-1}(v)=T_r'(\operatorname{pr}_1^rv,\ldots,\operatorname{pr}_r^rv).
+$$
+零元两侧均取唯一空元组；对应语义映射为 $\operatorname{Enc}\circ\kappa_r\circ\operatorname{Dec}$。各旧元组的括号保持其原约定，使用本条公式时显式经 $\kappa_r$ 对接。
+
+特别记原 CSA 空间的括号积为 $J_{\rm CSA}^3$，其重括号映射为 $\kappa_3:J_{\rm CSA}^3\to T_3[J,J,J]$，并置
+$$
+b_3=b_3^{\rm can}\circ\kappa_3:J_{\rm CSA}^3\longrightarrow S^3,\qquad
+b_3^{-1}=\kappa_3^{-1}\circ(b_3^{\rm can})^{-1}.
+$$
+从第 261 条起，原 CSA 字段中的 $J^3$ 简记 $J_{\rm CSA}^3$，目标 $S^3$ 取本条的 $T_3$ 括号。于是原空间字段 $x$ 的像实际为 $b_3^{\rm can}\circ\kappa_3\circ x$，逆像恢复原括号。两边逐坐标运算均按各自投影定义；若原括号就是 $T_3$，$\kappa_3$ 为恒等。
+
+可变长序列不用无标签的 $T_r$ 合并，而用函数图
+$$
+s=\{\langle i,a_i\rangle:i<r\},\qquad \operatorname{dom}(s)=r.
+$$
+其逐字段数字图，例如 $a_i\in J$ 时，为 $s^b=\{\langle\zeta(i),b(a_i)\rangle:i<r\}$，定义域为 $\zeta[r]$；长度的数字为 $\zeta(r)$，语义长度为 $\operatorname{NatZ}(r)$。序列值可为任意集合，不要求分量遗传有限。
+
+**定理 258（元组装配、投影与序列图桥）。** 对每个固定有限 $r$ 和任意集合分量 $a_i$，有
+$$
+T_r^Z(\operatorname{Enc}(a_1),\ldots,\operatorname{Enc}(a_r))
+=\operatorname{Enc}(T_r(a_1,\ldots,a_r)).
+$$
+此装配是外部有效分量积到元组码像的双射，逆为解码、原投影、逐分量 $\operatorname{Enc}$。特别地，$T_1^Z(c)=c$，$T_0^Z=\operatorname{NatZ}(0)\ne T_0$，且对 $r\ge2$
+$$
+T_r^Z(c_1,\ldots,c_r)=\langle c_1,T_{r-1}^Z(c_2,\ldots,c_r)\rangle_Z.
+$$
+$b_3^{\rm can}$ 与 $b_3$ 都是双射，逆先逐分量用 $b^{-1}$，后者再以 $\kappa_3^{-1}$ 恢复原 CSA 括号；二者均与各自的逐坐标加法、负号交换。原值及数字值在 $T_3$ 括号下的两个集合提升分别是
+$$
+\begin{aligned}
+T_3^Z(\chi(c_1),\chi(c_2),\chi(c_3))
+ &=\operatorname{Enc}(\kappa_3(b_3^{-1}(T_3(c_1,c_2,c_3)))),\\
+T_3^Z(\mathrm e(c_1),\mathrm e(c_2),\mathrm e(c_3))
+ &=\operatorname{Enc}(T_3(c_1,c_2,c_3)).
+\end{aligned}
+$$
+对任意有限序列 $s$ 如第 257 条，有
+$$
+\operatorname{Enc}(s)=
+\operatorname{Pack}\{\langle\operatorname{NatZ}(i),\operatorname{Enc}(a_i)\rangle_Z:i<r\},
+\qquad
+\operatorname{dom}_Z(\operatorname{Enc}(s))=\operatorname{NatZ}(r).
+$$
+这里 $\operatorname{dom}_Z$ 是普通图定义域的第 74 条语义运输。序列的域、长度和各处求值被保持且反映；数字图 $s^b$ 经其域的 $\operatorname{val}$ 像恢复 $r$，经 $b^{-1}$ 恢复各值。固定元数的单射性不蕴含去掉元数后的单射性。
+
+**证明。** 首式由 $\operatorname{Dec}\operatorname{Enc}=\operatorname{id}$ 得出。第 74 条的语义配对比较使递归式成立。固定元数的投影恢复每个分量，反向投影后重新装配恢复原元组；对 $r\ge2$ 按元数归纳，对 $r=1$ 用恒等，对 $r=0$ 用单点集之间的唯一映射。相同论证给 $\kappa_r$ 两侧恒等式，故不同括号之间确有双射而非字面等式。$b_3^{\rm can}$ 的两个复合逐坐标由第 256 条为恒等，算术式亦逐坐标由该条成立；再复合 $\kappa_3$ 的双逆即得 $b_3$ 的结论。两种集合提升由首式得出；要取得原 CSA 括号的元组码，再对第一式两侧使用 $\operatorname{Enc}\circ\kappa_3^{-1}\circ\operatorname{Dec}$。
+
+序列图的每条边经第 74 条变成 $\langle\operatorname{NatZ}(i),\operatorname{Enc}(a_i)\rangle_Z$。第 73 条将全部这些边恰装为 $\operatorname{Enc}(s)$，没有增加或遗漏成员。原图定义域恰为自然序数 $r$，故语义定义域为其码 $\operatorname{NatZ}(r)$，求值由第 74 条保持反映。外部数字图的域为 $\zeta[r]$，施加 $\operatorname{val}$ 得回 $r$，包括空域时的零长度；每条边的值用 $b^{-1}$ 唯一恢复。最后 $T_0=T_1(\varnothing)$，已是跨元数去标签的碰撞。以上有限性仅限制元数和序列长度，未用于限制 $a_i$ 的成员数。证毕。
+
+**定义 259（多类型部分函数与严格失败）。** 给定有限元数 $r$、集合 $A_i,B_i,A_o,B_o$ 及双射 $b_i:A_i\to B_i$、$b_o:A_o\to B_o$，令 $B=\prod_{i=1}^r b_i$ 是第 257 条的外部元组双射。对部分函数 $f:D\to A_o$、$D\subseteq\prod_i A_i$，定义
+$$
+\operatorname{dom}(f^b)=B[D],\qquad
+f^b(c)=b_o(f(B^{-1}c))\quad(c\in B[D]).
+$$
+参数与变量均占声明的输入槽。若某参数的合法性依赖其余输入，例如 $D_0\subseteq E_X$，此条件属于联合域 $D$，不把它省略为参数本身的固定全域。固定参数特化是在联合图中固定相应坐标；$r=0$ 时唯一输入为 $T_0$，域只能为空或 $\{T_0\}$。
+
+对任意输出集合 $A_o$ 取不交和 $A_o^\bot=\{\operatorname{ok}(y):y\in A_o\}\sqcup\{\bot\}$，各构造器单射且像互斥。严格总化为
+$$
+\widehat f(x)=\begin{cases}\operatorname{ok}(f(x)),&x\in D,\\\bot,&x\notin D.\end{cases}
+$$
+运输成功标签用 $b_o^\bot(\operatorname{ok}(y))=\operatorname{ok}(b_o(y))$，失败标签用 $b_o^\bot(\bot)=\bot$。普通严格复合先求全部子项；任一子项失败即失败，全部成功才检查本节点联合域。特别地，$\operatorname{ok}(0_S)\ne\bot$，空选择的成功值也不是失败。
+
+**定理 260（域、值及原图与数字图的比较）。** 对第 259 条的任意数据及全部 $x\in\prod_i A_i$，有
+$$
+x\in D\iff Bx\in\operatorname{dom}(f^b),\qquad
+f^b(Bx)=b_o(f(x))\quad(x\in D),\qquad
+\operatorname{ran}(f^b)=b_o[\operatorname{ran}(f)].
+$$
+严格总化满足 $\widehat{f^b}(Bx)=b_o^\bot(\widehat f(x))$。令普通图分别为
+$$
+G_f=\{\langle x,f(x)\rangle:x\in D\},\qquad
+G_{f^b}=\{\langle c,f^b(c)\rangle:c\in B[D]\}.
+$$
+对 $c=T_r(c_1,\ldots,c_r)$ 置
+$$
+h_i(c_i)=\operatorname{Enc}(b_i^{-1}(c_i)),\quad
+h_o(d)=\operatorname{Enc}(b_o^{-1}(d)),\quad
+H(c)=T_r^Z(h_1(c_1),\ldots,h_r(c_r)).
+$$
+则两个图码精确满足
+$$
+\begin{aligned}
+\operatorname{Enc}(G_f)
+ &=\operatorname{Pack}\{\langle H(c),h_o(d)\rangle_Z:
+                         \langle c,d\rangle\in G_{f^b}\},\\
+\operatorname{Enc}(G_{f^b})
+ &=\operatorname{Pack}\{\langle\operatorname{Enc}(c),\operatorname{Enc}(d)\rangle_Z:
+                         \langle c,d\rangle\in G_{f^b}\}.
+\end{aligned}
+$$
+前一式所指原函数，后一式所指数字函数；普通 $G_{f^b}$ 又是另一层对象。它们不因所含边有双射而被认作同一个集合。语义定义域分别为 $\operatorname{Enc}(D)$、$\operatorname{Enc}(B[D])$，语义值域分别为 $\operatorname{Enc}(\operatorname{ran}(f))$、$\operatorname{Enc}(b_o[\operatorname{ran}(f)])$。
+
+**证明。** 若 $Bx\in B[D]$，存在 $y\in D$ 使 $Bx=By$，$B$ 单射给 $x=y$；反向直接取像。域内代入定义并用 $B^{-1}B=\operatorname{id}$ 得求值式。每个输出由一个域内输入产生，反向每个 $b_o(f(x))$ 也是新图的值，故值域等式成立。按 $x\in D$ 与否分类，成功用求值式，失败用已证域等价，即得严格总化式。
+
+对任意新边 $\langle c,d\rangle$，$x=B^{-1}c\in D$、$y=b_o^{-1}d=f(x)$，第 258 条给 $H(c)=\operatorname{Enc}(x)$。第 74 条将这条边对应为 $\operatorname{Enc}(\langle x,y\rangle)=\langle H(c),h_o(d)\rangle_Z$。每条原边反向唯一给出新边，故第 73 条的 $\operatorname{Pack}$ 给第一图式。对新边自身应用第 74、73 条得第二式。逐边对应还将“在域内至少有一条边”和“同一输入至多有一条边”分别双向保持；因此语义求值确为所述唯一值，定义域和值域也得到所列式子。空元数、空域照此成立。这里复用第 80–81 条的图与严格失败方法；图本身可以无限，仅元数要求有限。证毕。
+
+**定义 261（独立合法目标与全字段编解码）。** 沿用第 162 条独立的自由有限有序来源树递归。精确地，$\mathsf{Tree}$ 的构造器 $\operatorname{leaf}:\omega\to\mathsf{Tree}$ 与 $\operatorname{pair}:\mathsf{Tree}^2\to\mathsf{Tree}$ 单射、像互斥，每棵树恰由有限次这两种构造得到；$\operatorname{pair}(r,s)=\operatorname{pair}(r',s')$ 当且仅当 $r=r',s=s'$。$\mathsf{Tree}_Z$ 用相同自由条件，叶参数域换为 $\mathsf N_Z=\operatorname{NatZ}[\omega]$。两种树的构造器均指已固定的有限标签集合构造；以下结论对每种满足这些条件的构造分别成立，不从自由条件推断唯一的字面集合实现。外部树构造器 $\operatorname{pair}_Z$ 与第 74 条的语义配对 $\langle\ ,\ \rangle_Z$ 分属不同函数。定义
+$$
+\begin{aligned}
+\tau_Z(\operatorname{leaf}(n))&=\operatorname{leaf}_Z(\operatorname{NatZ}(n)),\\
+\tau_Z(\operatorname{pair}(r,s))&=\operatorname{pair}_Z(\tau_Z(r),\tau_Z(s)),\\
+\tau_Z^{-1}(\operatorname{leaf}_Z(c))&=\operatorname{leaf}(\operatorname{Dec}(c))\quad(c\in\mathsf N_Z),\\
+\tau_Z^{-1}(\operatorname{pair}_Z(r',s'))&=\operatorname{pair}(\tau_Z^{-1}(r'),\tau_Z^{-1}(s')).
+\end{aligned}
+$$
+这些是第 162 条的树递归，独立于该条的旧档案公式。令 $\mathcal H$ 为 CSA 定义 1 的全部有限表示，时间域为 $J$，空间域为 $J^3$，来源域为 $\mathsf{Tree}$，符号标签集记为 $\Sigma_\pm$。标签到整数电荷的映射记为 $\epsilon_J:\Sigma_\pm\to J$，正、负标签分别取 $1_J,-_J1_J$。
+
+独立定义 $\mathcal H_{\rm all}$ 为所有记录
+$$
+Y=((E,\prec,t',x',\sigma,\rho',\Omega),A)
+$$
+组成的集合，其中 $E\subset HF$ 有限，$\prec$ 是 $E$ 上的严格偏序，$A\subseteq\Omega\subseteq E$，全部字段为总函数，且
+$$
+t':E\to S,\quad x':E\to S^3,\quad
+\sigma:E\to\Sigma_\pm,\quad\rho':E\to\mathsf{Tree}_Z,
+\qquad e\prec f\Longrightarrow t'(e)<_St'(f).
+$$
+该定义不以“是某编码的像”作为条件。$\mathcal H_{\rm num}$ 用相同条件但令 $\rho':E\to\mathsf{Tree}$。记录括号使用原 CSA 括号，与第 257 条装配比较时用该条 $\kappa_r$。定义
+$$
+\begin{aligned}
+R_{\rm all}((E,\prec,t,x,\sigma,\rho,\Omega),A)
+ &=((E,\prec,b\circ t,b_3\circ x,\sigma,\tau_Z\circ\rho,\Omega),A),\\
+D_{\rm all}((E,\prec,t',x',\sigma,\rho',\Omega),A)
+ &=((E,\prec,b^{-1}\circ t',b_3^{-1}\circ x',\sigma,\tau_Z^{-1}\circ\rho',\Omega),A).
+\end{aligned}
+$$
+$R_{\rm num},D_{\rm num}$ 将这两式中的来源映射都换成 $\operatorname{id}_{\mathsf{Tree}}$。对不含选择的情境 $C$，$R(C)$ 简记同一七字段映射，因此 $R(C,A)=(R(C),A)$；$D_R(C')$ 同理。为统一量词，以下 $R$ 可取 $R_{\rm num}$ 或 $R_{\rm all}$，相应来源双射记为 $\theta$，来源域记为 $T_R$，相应树配对记为 $\operatorname{pair}_R$；两种情形分别取 $(\theta,T_R,\operatorname{pair}_R)=(\operatorname{id},\mathsf{Tree},\operatorname{pair})$ 与 $(\tau_Z,\mathsf{Tree}_Z,\operatorname{pair}_Z)$。
+
+**定理 262（来源双逆及独立目标的精确恢复）。** 第 261 条的树映射两侧互逆，且保持反映每一条有限的有序子树路径。对任意 $X\in\mathcal H$、$Y\in\mathcal H_{\rm all}$，$R_{\rm all}(X)$ 与 $D_{\rm all}(Y)$ 分别合法，并有
+$$
+D_{\rm all}(R_{\rm all}(X))=X,\qquad
+R_{\rm all}(D_{\rm all}(Y))=Y.
+$$
+所以独立定义的 $\mathcal H_{\rm all}$ 恰为 $R_{\rm all}[\mathcal H]$。数值版同样满足 $D_{\rm num}R_{\rm num}=\operatorname{id}_{\mathcal H}$、$R_{\rm num}D_{\rm num}=\operatorname{id}_{\mathcal H_{\rm num}}$。第 146–147 条受旧空间式影响的档案域和逆，以及第 162–163 条受该数值链影响的档案部分，由本条及第 261 条替代；独立树递归保留。
+
+存在符合上述自由树约定的集合实现，使“只逆时间空间、保持数字来源不动”不但不能恢复原对象，而且输出来源已经越出 $\mathsf{Tree}$。
+
+**证明。** 自由树可以按高度逐层构造，取自然层之并；每层及其并均为集合，有限构造也使树属于 $HF$。对原树高度归纳，叶上用 $\operatorname{Dec}(\operatorname{NatZ}(n))=n$；配对上将两个子树归纳式代入有序构造器，得 $\tau_Z^{-1}\tau_Z=\operatorname{id}$。另对目标树高度归纳，叶参数必为唯一的 $\operatorname{NatZ}(n)$，配对上用两个目标子树的归纳式，得 $\tau_Z\tau_Z^{-1}=\operatorname{id}$。这两个归纳都使用构造器像互斥、各自单射，故没有歧义分支。
+
+对 $w\in\{L,R\}^{<\omega}$ 定义沿路径取子树的部分函数 $r|_w$：空路径取自身；路径首字母要求当前树是 pair，并进入其左或右子树。对 $|w|$ 归纳，空路径立即成立；非空路径在一侧遇叶当且仅当另一侧也遇叶，故失败域相同；遇 pair 则进到同一侧子树，归纳给出
+$$
+r|_w\text{ 有定义}\iff(\tau_Zr)|_w\text{ 有定义},\qquad
+\tau_Z(r|_w)=(\tau_Zr)|_w
+$$
+于共同域。由树映射单射，这也反映指定子树的左右祖先关系。
+
+对任意合法 $X$，字段总性由复合给出，$b$ 的序保持给出目标严格增时条件。反向任意独立目标 $Y$ 的时间、空间和来源值都有指定唯一逆，仍是全函数；序反映使每条原偏序边严格增时。有限性、严格偏序、符号域及 $A\subseteq\Omega\subseteq E$ 均未改变，故 $D_{\rm all}(Y)$ 合法。两个复合逐事件的时间由 $b$ 双逆、位置由 $b_3$ 双逆、来源由刚证树双逆恢复，其余字段逐字相同，所以两个完整记录相等。数值版将来源双逆换成恒等即可。
+
+最后取一种合法的标签实现
+$$
+\operatorname{leaf}(n)=\langle0,n\rangle,\quad
+\operatorname{pair}(r,s)=\langle1,\langle r,s\rangle\rangle,
+\qquad
+\operatorname{leaf}_Z(c)=\langle0,c\rangle,\quad
+\operatorname{pair}_Z(r,s)=\langle1,\langle r,s\rangle\rangle.
+$$
+有序对唯一性保证所需互斥及单射。$\operatorname{NatZ}(0)=\langle0,\varnothing\rangle$ 非空且不含 $\varnothing$，所以不是自然序数。于是 $\operatorname{leaf}_Z(\operatorname{NatZ}(0))$ 既不是自然叶，也不是首标签为一的 pair，故不在 $\mathsf{Tree}$ 中。取一个事件、空偏序、合法零时空字段、来源 $\operatorname{leaf}(0)$ 且 $A=\Omega=\varnothing$，得到合法原表示。其全字段像含该数字叶，若逆映射留下此来源不动就越域，并未恢复 $\operatorname{leaf}(0)$。这是一个满足原约定的实现反例，不将该标签实现规定为唯一集合实现。证毕。
+
+**定理 263（历史群胚的正确逆）。** 采用 CSA 定义 7。原历史群胚的对象为 $\mathcal H$，从 $X$ 到 $Y$ 的态射是任意双射 $h:E_X\to E_Y$，满足对全部 $e,f\in E_X$
+$$
+e\prec_X f\iff h(e)\prec_Yh(f),\qquad
+(t_Y(h(e)),x_Y(h(e)),\sigma_Y(h(e)),\rho_Y(h(e)))=(t_X(e),x_X(e),\sigma_X(e),\rho_X(e)),
+$$
+并满足 $h[\Omega_X]=\Omega_Y$、$h[A_X]=A_Y$；不要求 $h(e)=e$。目标群胚以独立的 $\mathcal H_{\rm all}$ 为对象，使用相应字段的相同条件。则
+$$
+F(X)=R_{\rm all}(X),\quad F(h)=h,\qquad
+G(Y)=D_{\rm all}(Y),\quad G(h)=h
+$$
+给出两侧严格互逆的群胚同构，且
+$$
+F(\operatorname{id}_X)=\operatorname{id}_{F(X)},\qquad
+F(g\circ h)=F(g)\circ F(h),\qquad GF=\operatorname{id},\quad FG=\operatorname{id}.
+$$
+这以 $D_{\rm all}$ 更正第 176–177 条所指名的旧逆；有限表达式的保域结论取第 269 条的准确范围。
+
+**证明。** 对每一事件，时间相等经 $b$ 双射保持反映，空间相等经 $b_3$ 双射保持反映，来源相等经 $\tau_Z$ 双射保持反映，符号相等原样保留。事件集和偏序不改，故每个给定双射 $h$ 满足原态射条件当且仅当满足目标条件；两个集合像条件亦相同。恒等事件映射满足全部条件；两个态射复合时，逐事件字段等式和偏序双向等价可连续代入，集合像等式也连续代入，故复合仍为态射。$h^{-1}$ 由双向条件亦为态射，故确为群胚。$F,G$ 在态射上保持同一个函数，所以保持恒等和复合；对象上的两个复合由第 262 条为恒等，态射上的复合也为恒等，得严格逆式。
+
+若在整体集合解释层把事件外显为 $\operatorname{Enc}[E]$，相应外部事件映射为
+$$
+h^{\rm ext}=\operatorname{Enc}\circ h\circ\operatorname{Dec}:
+\operatorname{Enc}[E_X]\longrightarrow\operatorname{Enc}[E_Y].
+$$
+两个 $\operatorname{Enc}/\operatorname{Dec}$ 逆式直接给恒等和复合；其语义图用第 260 条转换为 $\operatorname{Enc}(h)$。字段层的 $F(h)=h$ 与此有效码事件层的映射有不同载体。上述逆恢复当前完整记录，不断言 CSA 运算本身可逆。证毕。
+
+**定义 264（原 CSA 算子的逐字段数字实例）。** 对第 261 条的每一种 $R$，在独立目标 $\mathcal H_R$ 上作如下定义。所有事件标签取 CSA 的固定集合构造 $\iota_0(e)=(0,e)$、$\iota_1(f)=(1,f)$、$p_{ef}=(2,(e,f))$。标签层不作数值加法，不改变事件或来源叶的身份。
+
+对全部 $Y_0,Y_1\in\mathcal H_R$，$Y_0\boxplus^RY_1$ 的事件集、当前整体、选择分别为
+$$
+\iota_0[E_0]\sqcup\iota_1[E_1],\qquad
+\iota_0[\Omega_0]\sqcup\iota_1[\Omega_1],\qquad
+\iota_0[A_0]\sqcup\iota_1[A_1].
+$$
+四字段逐标签复制，偏序只复制两内部关系。$Y_0\triangleright^RY_1$ 的数据相同，但加入全部左档案到右档案的边，联合域为
+$$
+\mathcal T_R=\{(Y_0,Y_1)\in\mathcal H_R^2:
+\forall e\in E_0\ \forall f\in E_1,\ t'_0(e)<_St'_1(f)\}.
+$$
+$Y_0\boxtimes^RY_1$ 的事件集为
+$$
+\iota_0[E_0]\sqcup\iota_1[E_1]\sqcup
+\{p_{ef}:e\in\Omega_0,\ f\in\Omega_1\}.
+$$
+旧事件字段照抄，全部新事件的字段为
+$$
+\begin{aligned}
+t'(p_{ef})&=\max_S(t'_0(e),t'_1(f))\oplus_Z1_S,\\
+x'(p_{ef})_j&=x'_0(e)_j\oplus_Zx'_1(f)_j\quad(1\le j\le3),\\
+\sigma(p_{ef})&=\sigma_0(e)\sigma_1(f),\\
+\rho'(p_{ef})&=\operatorname{pair}_R(\rho'_0(e),\rho'_1(f)).
+\end{aligned}
+$$
+符号乘法在 $\Sigma_\pm$ 上采用正负标签乘法。偏序为两旧偏序与全部父边 $\iota_0(e)\prec p_{ef}$、$\iota_1(f)\prec p_{ef}$ 的传递闭包。当前整体及选择分别为
+$$
+\Omega_{\boxtimes}^R=\{p_{ef}:e\in\Omega_0,f\in\Omega_1\},\qquad
+A_{\boxtimes}^R=\{p_{ef}:e\in A_0,f\in A_1\}.
+$$
+该乘法的联合域为整个 $\mathcal H_R^2$，当前整体不以所选父对替代。
+
+对全部 $Y=(C',A)\in\mathcal H_R$ 令 $N^RY=(C',\Omega\setminus A)$。对全部 $k'\in S$ 令 $T_{k'}^RY$ 只把每个 $t'(e)$ 换为 $t'(e)\oplus_Zk'$；联合域为 $\mathcal H_R\times S$。定义总电荷
+$$
+q^R(Y)=\mathop{\bigoplus}_{e\in A}^{Z}b(\epsilon_J(\sigma(e))),\qquad
+u^R(C')=\mathop{\bigoplus}_{e\in\Omega}^{Z}b(\epsilon_J(\sigma(e))).
+$$
+数字平衡载体为 $\mathcal B_R=\{Y\in\mathcal H_R:u^R(C')=0_S\}$；原平衡载体仍记为 $\mathcal B\subseteq\mathcal H$。一般补集的定义域是 $\mathcal H_R$，在平衡算术签名中使用其到 $\mathcal B_R$ 的限制。
+
+**定理 265（基本算子的合法域及逐字段交换）。** 对 $R=R_{\rm num},R_{\rm all}$ 各自成立以下全称式。对所有 $X,Y\in\mathcal H$ 和 $k\in J$，并行、乘法、补集、时间平移均合法，且
+$$
+\begin{aligned}
+R(X\boxplus Y)&=R(X)\boxplus^RR(Y),&
+R(X\boxtimes Y)&=R(X)\boxtimes^RR(Y),\\
+R(NX)&=N^RR(X),&R(T_kX)&=T_{b(k)}^RR(X).
+\end{aligned}
+$$
+时间复合满足
+$$
+(X,Y)\in\mathcal T\iff(RX,RY)\in\mathcal T_R,
+\qquad R(X\triangleright Y)=RX\triangleright^RRY\quad((X,Y)\in\mathcal T).
+$$
+这里 $\mathcal T$ 是 CSA 定义 5 的全档案联合域。所有这些等式反向亦由 $D_R$ 成立。电荷及补集满足
+$$
+\begin{gathered}
+q^R(RX)=b(q(X)),\qquad u^R(RC)=b(u(C)),\qquad
+X\in\mathcal B\iff RX\in\mathcal B_R,\\
+q^R(N^R(C',A))=u^R(C')\oplus_Z\ominus_Zq^R(C',A).
+\end{gathered}
+$$
+对固定 $C'$，最后一式对全部 $A\subseteq\Omega$ 等于 $\ominus_Zq^R(C',A)$，当且仅当 $u^R(C')=0_S$。并行、合法时间复合的 $q,u$ 分别相加，乘法的 $q,u$ 分别相乘，因而它们保持平衡。
+
+端点另用与 $J,S$ 不交的 $\pm\infty$ 哨兵。将 $b$ 扩成固定两个哨兵的全序双射 $\bar b$。定义
+$$
+m_X=\min t[E_X],\quad M_X=\max t[E_X],\quad s_X=\max t[\Omega_X],
+$$
+空集合的最小值为 $+\infty$，最大值为 $-\infty$。目标端点用 $S$ 序同样定义，则
+$$
+(m_{RX},M_{RX},s_{RX})=(\bar b(m_X),\bar b(M_X),\bar b(s_X)),
+\qquad (X,Y)\in\mathcal T\iff M_X<m_Y.
+$$
+时间复合合法性不能用当前整体、选择、读数或有限支撑剖面的零性代替。
+
+**证明。** 并行的两标签像互斥，复制字段在两条路径上相同；两内部偏序无跨边，故传递严格且沿边增时。时间复合的守卫对每个 $e\in E_X,f\in E_Y$ 用第 256 条序等价，得域双向等价。加入的全部跨边只从左到右；内部边接跨边仍属全部跨边，故关系传递。守卫使每条跨边增时，域内所得记录合法且逐字段相同。
+
+乘法的三标签像互斥；原、目标都复制两个完整旧档案，并生成恰好相同的全部 $\Omega_X\times\Omega_Y$。任意新事件的时间由第 256 条的最大值和后继式交换；每个空间坐标由第 258 条交换；符号照原乘法，来源用 $\theta(\operatorname{pair}(r,s))=\operatorname{pair}_R(\theta r,\theta s)$。两侧生成边逐对相同。对任意两个结果事件，属于传递闭包当且仅当存在连接它们的有限非空生成边路径；相同生成边给出完全相同的路径，故闭包相等。每条生成边严格增时，路径传递严格增时，排除自环，证明合法性。选择恰由 $A_X\times A_Y$ 决定，两侧亦相同；未选父对依然产生当前事件。
+
+补集只改变 $A$，时移保持事件及偏序，且 $c<_Sd$ 当且仅当 $c\oplus_Zb(k)<_Sd\oplus_Zb(k)$，故时移合法。各时间值的交换由第 256 条加法式给出。有限符号和用同条有限和式得两个电荷式；将 $\Omega$ 分成 $A$ 与其补集，得一般背景减所选公式。若对所有选择等于负号，取空选择即得 $u^R=0_S$；反向直接代入。并行的两不交和可相加；乘积电荷的有限双和分配为两因子的和之积，背景用 $\Omega_X,\Omega_Y$ 作相同运算。因此平衡限制的域和值也精确对应。目标任意对象都由第 262 条唯一解码，故这些结论覆盖独立目标全域，反向式随之成立。
+
+有限非空集合的最值用第 256 条，空集合用固定哨兵，得端点式。两档案均非空时，全档案守卫等价于最大左时刻严格小于最小右时刻；任一档案空时，哨兵序同样使该不等式为真。$s$ 只在 $\Omega$ 上取最大值，不从 $A$ 或非零电荷支撑取值。
+
+具体取两份各含一个孤立事件的档案，时间分别为 $v^{-1}(2)$ 与 $v^{-1}(1)$，位置任取零、符号取正、来源取 $\operatorname{leaf}(0)$，两侧均令 $\Omega=A=\varnothing$。它们合法、平衡，全部当前电荷剖面及 $q,u$ 都为零；但时间守卫要求 $2<1$，为假。数字侧要求 $\operatorname{scode}(2)<_S\operatorname{scode}(1)$，仍为假。此反例由原定义直接成立。第 144–147 条中受影响的基本字段和电荷式以第 255、261–265 条为准，不使用旧三维式作前提。证毕。
+
+**定义 266（实际集合参数、关系参数及参考点运输）。** 对每种第 261 条的 $R$，令
+$$
+\begin{aligned}
+K&=J\times J^3,&K_R&=S\times S^3,&k(t,x)&=(b(t),b_3(x)),\\
+\mathrm{Attr}&=J^3\times\Sigma_\pm\times\mathsf{Tree},&
+\mathrm{Attr}_R&=S^3\times\Sigma_\pm\times T_R,&
+a(x,\sigma,r)&=(b_3(x),\sigma,\theta(r)),\\
+\mathrm{Attr}_t&=\mathrm{Attr}\times J,&
+\mathrm{Attr}_{t,R}&=\mathrm{Attr}_R\times S,&
+a_t(x,\sigma,r,t)&=(b_3(x),\sigma,\theta(r),b(t)).
+\end{aligned}
+$$
+各积均为普通外部积，按各自原括号与第 257 条对接。对任意所列集合参数定义
+$$
+\begin{aligned}
+S_0\subseteq J^3 &: &S_0^R&=b_3[S_0],&
+I\subseteq J &: &I^R&=b[I],\\
+L\subseteq\mathsf{Tree} &: &L^R&=\theta[L],&
+B_0\subseteq K &: &B_0^R&=k[B_0],\\
+P_0\subseteq K^2 &: &P_0^R&=(k\times k)[P_0],&
+P_{\rm sp}\subseteq(J^3)^2 &: &P_{\rm sp}^R&=(b_3\times b_3)[P_{\rm sp}],\\
+Q\subseteq\mathrm{Attr} &: &Q^R&=a[Q],&
+Q_t\subseteq\mathrm{Attr}_t &: &Q_t^R&=a_t[Q_t],\\
+P_t\subseteq\mathrm{Attr}_t^2 &: &P_t^R&=(a_t\times a_t)[P_t].
+\end{aligned}
+$$
+这些像映射各自是对应全幂集之间的双射，逆为相应逆像。参数可无限，有限的只是每份档案。
+
+身份过去参数的联合域是 $\{(X,D_0):X\in\mathcal H,D_0\subseteq E_X\}$，关系限制乘法参数的联合域是
+$$
+\{(X,Y,R_0):X,Y\in\mathcal H, R_0\subseteq\Omega_X\times\Omega_Y\}.
+$$
+字段运输时 $D_0,R_0$ 保持原集合；出现身份单点参数 $e_0\in HF$ 也保持原值。事件重命名 $h:E_X\to E_Y$ 时才分别取 $h[D_0]$、$(h\times h')[R_0]$ 和 $h(e_0)$，最后一式限于 $e_0\in E_X$。各依赖域条件仍包含于联合输入域。
+
+对全部 $o\in J^3$，参考点取 $o^R=b_3(o)$，带参考点记录取 $(o,X)^R=(b_3(o),RX)$。CSA 定义 21 的二元乘法联合域要求两输入参考点相等。对 $L\in\operatorname{Mat}_{3\times3}(J)$、$u\in J^3$，矩阵 $L^R$ 逐元素用 $b$，向量 $u^R=b_3(u)$；目标仿射函数为
+$$
+F^R(c)_i=\left(\mathop{\bigoplus}_{j=1}^{3}L^R_{ij}\otimes_Zc_j\right)\oplus_Zu^R_i,
+\qquad F(x)=Lx+_Ju.
+$$
+矩阵、向量和参考点是不同参数槽。第 257–260 条给每个参数集合、有限矩阵记录及其函数图到 $\operatorname{Enc}$ 语义的桥，不将这里的普通直接像误作整体集合码。
+
+**定理 267（筛选、配对及参数域的交换）。** 对每种 $R$、全部合法输入及第 266 条各自类型的全部参数，以下操作与字段运输交换，并且联合合法域保持且反映。为消除相同记号的参数歧义，各选择条件分别为：空间 $F_{S_0}$ 取 $e\in A$ 且 $x(e)\in S_0$；时间 $F_I$ 取 $t(e)\in I$；来源 $F_L$ 取 $\rho(e)\in L$；联合 $F_{B_0}$ 取 $(t(e),x(e))\in B_0$；身份过去 $F_{\downarrow D_0}$ 取 $\exists d\in D_0\ (e=d\lor e\prec d)$。时间筛选是联合柱集 $F_{I\times J^3}$ 的特化。它们均只改选择，故
+$$
+\begin{gathered}
+R(F_{S_0}X)=F_{S_0^R}^R(RX),\quad
+R(F_IX)=F_{I^R}^R(RX),\quad
+R(F_LX)=F_{L^R}^R(RX),\\
+R(F_{B_0}X)=F_{B_0^R}^R(RX),\qquad
+R(F_{\downarrow D_0}X)=F_{\downarrow D_0}^R(RX).
+\end{gathered}
+$$
+前四式的联合域分别是历史载体与对应全幂集的积；第五式还要求 $D_0\subseteq E_X$。直接出现查询 $H_{e_0}(C,A)=(C,A\cap\{e_0\})$ 对每个 $e_0\in HF$ 总定义，亦满足 $R(H_{e_0}X)=H_{e_0}^R(RX)$。
+
+对 $e\in\Omega_X$ 记 $\alpha_X(e)=(x(e),\sigma(e),\rho(e))$、$\alpha_t^X(e)=(x(e),\sigma(e),\rho(e),t(e))$，并采用 CSA 定义 25–26 的当前后继属性集。则
+$$
+U_{RX}(e)=a[U_X(e)],\qquad U_t^{RX}(e)=a_t[U_t^X(e)].
+$$
+因此对任意 $Q\subseteq\mathrm{Attr}$、$Q_t\subseteq\mathrm{Attr}_t$，
+$$
+R(F_{\downarrow Q}X)=F_{\downarrow Q^R}^R(RX),\qquad
+R(F_{\downarrow Q_t}X)=F_{\downarrow Q_t^R}^R(RX).
+$$
+这些因果筛选中见证始终为 $d\in\Omega_X$，条件分别为 $\alpha_X(d)\in Q$、$\alpha_t^X(d)\in Q_t$，均附 $e\preceq d$；既不把见证域换成 $A_X$，也不换成 $E_X$。若只取事件自身属性的成员谓词，其集合像同样由 $a,a_t$ 运输，但不据此扩大任何既有签名。
+
+关系限制、空间父对、联合父对与含时属性父对分别只在完整乘积中把选择改成
+$$
+\begin{aligned}
+&\{p_{ef}:e\in A_X,f\in A_Y,(e,f)\in R_0\},\\
+&\{p_{ef}:e\in A_X,f\in A_Y,(x_X(e),x_Y(f))\in P_{\rm sp}\},\\
+&\{p_{ef}:e\in A_X,f\in A_Y,((t_X(e),x_X(e)),(t_Y(f),x_Y(f)))\in P_0\},\\
+&\{p_{ef}:e\in A_X,f\in A_Y,(\alpha_t^X(e),\alpha_t^Y(f))\in P_t\}.
+\end{aligned}
+$$
+其符号分别为 $\boxtimes_{R_0},M_{P_{\rm sp}},M_{P_0},\widehat M_{P_t}$，参数类型区分同名符号。除第一种的 $R_0\subseteq\Omega_X\times\Omega_Y$ 依赖域外，其余对全部历史输入和全部所列固定参数总定义。每种操作都满足 $R(O(X,Y))=O^R(RX,RY)$，目标参数分别为 $R_0,P_{\rm sp}^R,P_0^R,P_t^R$；完整背景不带选择掩码。同档案因果配对也满足
+$$
+R(D_\prec X)=D_\prec^R(RX),\qquad
+D_\prec X=X\boxtimes_{R_X}X,\quad
+R_X=\{(e,f)\in\Omega_X^2:e\prec_Xf\}.
+$$
+这是一元原语自身的交换，不把其两个相同输入解释成单孔上下文。
+
+参考点及仿射参数满足
+$$
+\begin{gathered}
+b_3(x+_Jy-_Jo)=b_3(x)\oplus_Z^{(3)}b_3(y)\ominus_Z^{(3)}b_3(o),\\
+F^R\circ b_3=b_3\circ F,\qquad
+R(X\boxtimes_oY)=RX\boxtimes_{b_3(o)}^RRY.
+\end{gathered}
+$$
+最后一式在带参考点记录的共同纤维内解释，参考点不相同则两侧均无定义。整数仿射变换 $F$ 对所有整数矩阵均有正向字段运输，并满足
+$$
+F(x+y-o)=F(x)+F(y)-F(o).
+$$
+整数格点上的全域双向运输恰在 $v[L]\in GL_3(\mathbb Z_o)$ 时成立；非单射情形只保留正向及逆像筛选公式，不合并事件。
+
+**证明。** 第 256、258、262 条使 $b,b_3,\theta$ 均为双射，所以 $z\in S_0$ 当且仅当 $b_3z\in b_3[S_0]$，时间和来源亦然。联合参数用 $k$ 作同一推理，四种选择集合逐事件相同，背景记录由 $R$ 相同。身份过去的事件与关系未变，故其存在见证条件逐事件等价；$D_0\subseteq E_X$ 的域条件也未变。单点查询同理。
+
+任取 $e\in\Omega_X$，目标的每个可达当前事件仍为原来的 $d\in\Omega_X$，其属性为 $a(\alpha_X(d))$，带时属性为 $a_t(\alpha_t^X(d))$；逐元素取像得到两个 $U$ 式，包括属性重复时的去重。双射性给
+$$
+U_X(e)\cap Q\ne\varnothing\iff a[U_X(e)]\cap a[Q]\ne\varnothing,
+$$
+含时式同理，因此两个因果筛选交换。此推理的见证域始终是原定义的 $\Omega$，未从选择或档案其它部分引入见证。
+
+对四种配对操作，任取 $e\in A_X,f\in A_Y$，分别使用事件恒等、$b_3\times b_3$、$k\times k$、$a_t\times a_t$ 的成员等价，得父对被选的条件双向一致。不对称参数仍保留左右槽位。第 265 条已证明完整乘积的全部事件、字段、当前区域与偏序一致，故改变相同选择之后仍是完整记录相等。第一种的参数域因当前区域不变而反映，其余参数像对全幂集双射，故无遗漏合法参数。因果配对的 $R_X$ 由未变的 $\Omega,\prec$ 定义，因而在 $RX$ 中是同一关系，可应用刚证的第一种交换。各筛选或配对仅改选择，故限制到 $\mathcal B$ 时仍保留背景平衡。
+
+参考点式逐坐标用第 256 条加法和负号；参考点相等经 $b_3$ 单射保持反映，故共同纤维的联合域对应。矩阵式每行是三个乘积的有限和，再加向量分量，第 256 条给交换。CSA 命题 35 的仿射恒等式将 $F(x+y-o)$ 和 $F(x)+F(y)-F(o)$ 都展开成 $Lx+Ly-Lo+u$，故同时移动参考点时整个乘积交换。$v[L]\in GL_3(\mathbb Z_o)$ 的充要条件与整数逆取该命题的行列式证明；经 $b$ 逐元素运输不改变该条件。任意矩阵只改变位置而不取事件商，因此仍合法。
+
+若 $F$ 非单射，任意目标区域 $S_1$ 的正确选择条件为 $x(e)\in F^{-1}[S_1]$ 当且仅当 $F(x(e))\in S_1$，给出 CSA 命题 36 的
+$$
+\mathcal F(F_{F^{-1}[S_1]}X)=F_{S_1}(\mathcal F X).
+$$
+它经 $b_3$ 的像继续交换，但不能把任意原区域换成其直接像。确取 $F(x_1,x_2,x_3)=(0,x_2,x_3)$，在 $0$ 与 $(1_J,0_J,0_J)$ 各放一对正负当前事件并只选正事件。原区域 $\{0\}$ 只留下一个正贡献，先运输再筛其像却留下两个；事件始终四个，没有合并身份。固定参考点而仅平移两个因子时，生成位置中平移向量出现两次，先乘再平移只出现一次；共同参考点也须运输才适用仿射式。证毕。
+
+**定理 268（完整观察函数图与有限推送）。** 对每种 $R$，全部 CSA 定义 12、18、20、22、25–26 的观察以及来源双剖面，均有完整函数图的双射运输。明确地，对任意索引双射 $a_I:I\to I_R$，定义系数函数的运输
+$$
+\mathscr T_{a_I}(c)(a_I(i))=b(c(i))\quad(i\in I),\qquad
+\mathscr T_{a_I}:J^I\longrightarrow S^{I_R}.
+$$
+其逆逐点用 $a_I^{-1},b^{-1}$，有限支撑子集恰映到有限支撑子集；完整图为
+$$
+G_{\mathscr T_{a_I}(c)}=\{\langle a_I(i),b(c(i))\rangle:i\in I\}.
+$$
+对空间 $w_X,z_X$ 取 $a_I=b_3$；对联合 $W_X,Z_X$ 取 $a_I=k$；对来源 $w_X^\rho,z_X^\rho$ 取
+$$
+a_I(p,r)=(b_3p,\theta r).
+$$
+对 $\Gamma_c,\Gamma_t$ 的索引分别取
+$$
+\begin{aligned}
+a_{\Gamma,c}(a_0,\eta,U)&=(a(a_0),\zeta(\eta),a[U]),\\
+a_{\Gamma,t}(a_0,\eta,U)&=(a_t(a_0),\zeta(\eta),a_t[U]),
+\end{aligned}
+$$
+其中 $\eta\in\{0,1\}$，$U$ 遍历相应属性域的全部有限子集。目标选择位因此属于 $\zeta[\{0,1\}]$。对上述每个系数观察 $c_X$ 及全部原索引 $i$，数字字段上按相同事件条件定义的观察满足
+$$
+c^R_{RX}(a_I(i))=b(c_X(i)).
+$$
+$\pi$、来源双剖面是两个这种函数的外部元组，$\Theta,\Xi$ 再附第 265 条的端点；其元组码用第 258 条装配。未选事件的 $\eta=0$ 行以及全索引域上值为零的位置均属于完整函数图，不能把该图等同于非零支撑集合。
+
+对有限集合 $B_0$、全部函数 $f:\Omega_X\to B_0$，数字粗观察使用 $B_0^*=\operatorname{Enc}[B_0]$ 和 $f^R(e)=\operatorname{Enc}(f(e))$。则
+$$
+w^R(\operatorname{Enc}(u))=b(w(u)),\qquad
+z^R(\operatorname{Enc}(u))=b(z(u))\quad(u\in B_0).
+$$
+不要求 $f$ 满射。一般地，给定集合 $I_0,I_1$、索引双射 $a_i:I_i\to I_i'$、函数 $g:I_0\to I_1$ 和有限支撑 $c:I_0\to J$，令 $g^R=a_1\circ g\circ a_0^{-1}$，则有限推送满足
+$$
+\mathscr T_{a_1}(g_*c)=g_*^R(\mathscr T_{a_0}(c)),\qquad
+(g_*c)(j)=\sum_{i\in\operatorname{supp}(c),\ g(i)=j}^{J}c(i).
+$$
+目标和用 $\oplus_Z$。这包含 CSA 定义 12 的有限粗化、空间投影、来源投影、属性格推送以及命题 36 的仿射空间推送；粗化的 bin 也以 $\operatorname{Enc}$ 运输。
+
+令 $\mathcal R=J^{(J^3)}$、$\mathcal R_R=S^{(S^3)}$，$\mathcal L=J^{(K)}$、$\mathcal L_R=S^{(K_R)}$。对 CSA 定义 31–33 的累积、差分、辅助乘法、平移与固定因子图，分别使用上述空间及联合索引桥。若 $\mathscr C(C)(b(n))=\mathscr T_{b_3}(C(n))$，则
+$$
+\begin{gathered}
+\mathscr C(Pc)=P^R(\mathscr T_kc),\qquad
+\mathscr T_k(\Delta C)=\Delta^R(\mathscr C C),\\
+\mathscr T_k(c\diamond d)=(\mathscr T_kc)\diamond^R(\mathscr T_kd),\qquad
+\mathscr T_k(c\odot d)=(\mathscr T_kc)\odot^R(\mathscr T_kd),\\
+\mathscr T_k(\tau_hc)=\tau_{b(h)}^R(\mathscr T_kc),\qquad
+\mathscr T_k(L_d(c))=L_{\mathscr T_kd}^R(\mathscr T_kc).
+\end{gathered}
+$$
+这些式子分别对全部 $c,d\in\mathcal L$、$h\in J$、$C\in\mathcal A(\mathcal R)$ 成立，$\Delta C(n)=C(n)-C(n-1_J)$。数字累积目标严格为
+$$
+\mathcal A_R=\{C':S\to\mathcal R_R:
+\exists\ell',u'\in S\ \exists B'\in\mathcal R_R
+\forall n'\in S,
+\ (n'<_S\ell'\Rightarrow C'(n')=0)\land
+ (u'\le_Sn'\Rightarrow C'(n')=B')\}.
+$$
+因此保留左尾零、右尾最终常值，右尾可以非零。辅助 $\diamond^R$ 使用 $\max_S$，延迟 $\odot^R$ 使用 $\max_S\oplus_Z1_S$，二者不混同。$\alpha=\tau_{1_J}$ 相应运输到 $\tau_{1_S}^R$。对全部 $d$，固定因子图是
+$$
+\{\langle\mathscr T_kc,\mathscr T_k(L_d(c))\rangle:c\in\mathcal L\}
+=G_{L_{\mathscr T_kd}^R}.
+$$
+支撑限制 $\mathcal L_{\ge h}$ 恰映为在 $n'<_Sb(h)$ 时逐时间为零的子群；本条只给这些图的交换，不另断言新的核、像分类。
+
+**证明。** $a_I,b$ 的双逆给 $\mathscr T_{a_I}$ 双逆；$c(i)=0_J$ 当且仅当 $b(c(i))=0_S$，故支撑恰为原支撑的 $a_I$ 像。各观察逐项比较如下。空间系数在 $x(e)=p$ 的当前或所选事件上求和，此条件与 $x'(e)=b_3p$ 等价；联合系数再加 $t(e)=n$，与 $k(n,p)$ 等价；来源系数再加 $\rho(e)=r$，与 $\theta r$ 等价。$\Gamma_c$ 的三项条件依次由 $\alpha_{RX}=a\circ\alpha_X$、选择集不变和第 267 条的 $U$ 像式保持反映；$\Gamma_t$ 用含时版本。每一种情况都在两侧对完全相同的事件求和，符号贡献逐个用 $b\epsilon_J$，第 256 条的有限和式给系数等式。包括无贡献索引时的空和，故得到全域函数图等式。格系数本身已经含符号；父格推送时用两个系数之积，不能再乘一次两个属性中的符号。
+
+端点以第 265 条运输。为明确乘积端点，令 $\gamma(s,t)=-\infty$ 当任一参数为 $-\infty$，其余情形令 $\gamma(s,t)=\max_J(s,t)+_J1_J$。新当前区域非空时，全部父对使最高生成时刻恰为 $\gamma(s_X,s_Y)$；为空时两侧均取哨兵。两旧档案都保留，而生成时间晚于各自父事件，故
+$$
+\begin{aligned}
+(m,M,s)_{X\boxtimes Y}
+ &=\bigl(\min(m_X,m_Y),\max(M_X,M_Y,\gamma(s_X,s_Y)),\gamma(s_X,s_Y)\bigr),\\
+(m,M,s)_{X\boxplus Y}
+ &=\bigl(\min(m_X,m_Y),\max(M_X,M_Y),\max(s_X,s_Y)\bigr).
+\end{aligned}
+$$
+合法时间复合有第二式；补集及选择筛选不改端点；时移对有限端点加平移量，对哨兵恒等。$\bar b$ 的全序双射与后继式使每个端点更新逐项交换，故没有用电荷抵消后的支撑替代全档案或当前区域。
+
+粗观察中的 $f(e)=u$ 与 $f^R(e)=\operatorname{Enc}(u)$ 由编码单射等价，每个 bin 包括空 bin 都用同一有限事件和。一般推送中，$i\mapsto a_0(i)$ 是支撑之间的双射，且 $g(i)=j$ 当且仅当 $g^R(a_0i)=a_1j$，有限和重索引即得推送式。连续推送的两种分组都对同一有限集合每项恰计一次。用于属性格时，补集把选择位变为 $\zeta(1-\eta)$，筛选把它变为 $\zeta(\eta\mathbf1_{\text{相应条件}})$；条件由第 267 条对应。并行时格系数相加；时间复合时左当前后继集增添全部右当前属性，集合并与双射像交换；乘法时当前新事件无出边，其后继属性集为自身单点。新属性的坐标、时间、符号、有序来源由第 265 条对应，未选父对留在零选择位行。这些逐事件事实和有限推送式给出实际格更新的交换。
+
+累积在每个 $n\in J$ 只对 $c$ 的有限时间支撑中满足 $t\le_Jn$ 的项求和；序双射把这个条件恰送到 $b(t)\le_Sb(n)$，得累积式。若 $C$ 的左、右尾见证为 $\ell,u,B$，则目标见证为 $b(\ell),b(u),\mathscr T_{b_3}(B)$；反向用各逆，故目标恰为 $\mathcal A_R$。中间整数区间有限，尾部条件保证差分只有有限个非零时间分量，每个空间分量有限支撑，故差分类型正确。$b(n-1_J)=b(n)\oplus_Z\ominus_Z1_S$ 给差分交换。
+
+两个剖面乘法均对有限父支撑对求系数积；位置条件由 $b_3$ 加法式，时间条件分别由最大值式、最大值加后继式保持反映，故有限双和逐项对应。剖面平移由减法式对应，特别是 $\alpha$ 的一格平移。固定 $d$ 后的图式就是延迟乘法式对全部 $c$ 的图集合；固定因子及支撑下界也作为第 259 条的参数槽运输。左侧时间阈值条件经序反映给所述受限域。所有完整观察图及固定因子图的 $\operatorname{Enc}$ 呈现最后用第 260 条，不能以一张有限支撑表替换它们作为集合的完整图。证毕。
+
+**定理 269（全部有限严格项及相应观察关系）。** 固定第 264–268 条中任意一个明确的有类型签名，每个符号连同全部参数槽及联合域一起取相应数字实例。对每棵预先固定的有限有类型语法树 $C$，输入类型为 $\prod_{i=1}^r A_i$，输出类型为 $A_o$，令输入桥为 $B_{\rm in}=\prod_i b_i$、输出桥为 $b_o$；历史类型使用 $R$，整数使用 $b$，空间使用 $b_3$，来源使用 $\theta$，集合参数及观察类型使用第 266、268 条指定的桥。则对全部输入有
+$$
+\operatorname{dom}(C^R)=B_{\rm in}[\operatorname{dom}(C)],\qquad
+C^R(B_{\rm in}x)=b_o(C(x))\quad(x\in\operatorname{dom}(C)),
+$$
+以及严格标签等式
+$$
+\widehat{C^R}(B_{\rm in}x)=b_o^\bot(\widehat C(x)).
+$$
+结论量化于所有有限树，不设共同的深度上界。参数、槽位和树先于输入固定；若一个输入叶出现多次，每处代入同一个输入及其同一个像。
+
+具体对平衡历史，以下每一个签名分别适用，数字签名逐个替换其中原有符号及其参数域：
+$$
+\begin{aligned}
+\Sigma_{\rm arith}&=\{\boxplus,\boxtimes,N\},\\
+\Sigma_{\rm sp}&=\Sigma_{\rm arith}\cup\{F_{S_0}:S_0\subseteq J^3\},\\
+\Sigma_{\rm src}&=\Sigma_{\rm sp}\cup\{F_L:L\subseteq\mathsf{Tree}\},\\
+\Sigma_{\rm st}&=\Sigma_{\rm sp}\cup\{\triangleright\}\cup\{T_h:h\in J\},\\
+\Sigma_{\rm ts}&=\Sigma_{\rm arith}\cup\{\triangleright\}
+ \cup\{F_{B_0}:B_0\subseteq K\}\cup\{T_h:h\in J\},\\
+\Sigma_{\rm ts}^{\rm pair}&=\Sigma_{\rm ts}\cup\{M_{P_0}:P_0\subseteq K^2\},\\
+\Sigma_{\rm cau}&=\Sigma_{\rm src}\cup\Sigma_{\rm st}
+ \cup\{F_{\downarrow Q}:Q\subseteq\mathrm{Attr}\},\\
+\Sigma_{{\rm cau},t}&=\Sigma_{\rm src}\cup\Sigma_{\rm st}
+ \cup\{F_{\downarrow Q_t}:Q_t\subseteq\mathrm{Attr}_t\},\\
+\Sigma_{\rm mix}&=\Sigma_{{\rm cau},t}\cup\{F_{B_0}:B_0\subseteq K\}
+ \cup\{M_{P_0}:P_0\subseteq K^2\},\\
+\Sigma_{\rm mix}^{\rm attr}&=\Sigma_{\rm mix}
+ \cup\{\widehat M_{P_t}:P_t\subseteq\mathrm{Attr}_t^2\}.
+\end{aligned}
+$$
+同一记号的筛选由所示参数类型区分。CSA 定义 16 的一孔上下文取这些签名各自的全部丰富参数、全部槽位及有限复合；定义 34 的复制语言取其原定的 $\Sigma_{{\rm cau},t}$，不自动增添一般联合筛选、属性父对、身份查询或 $D_\prec$。第 267 条对这些额外操作的单独交换不使它们成为未包含它们的签名成员。
+
+以 $q$ 为终端读数、$b$ 为终端双射时，对每个上述签名分别有
+$$
+X\approx_\Sigma Y\iff RX\approx_{\Sigma^R}RY.
+$$
+对于定义 34 的每个固定复制项，其全输入总定义性也被保持反映。更一般的观察关系运输要求所量化上下文与全部参数双向对应，且终端读数使用双射；参数也运输的结论不等于事件重命名后固定同一身份参数的观察不变性。
+
+**证明。** 对给定语法树结构归纳。输入叶由输入桥成立，重复叶仍用同一输入；固定参数叶由其参数桥成立。零元符号的域为唯一空元组的一个子集，第 260 条给域和值的对应。内部节点若有一个失败子项，归纳假设使对应子项同时失败，严格语义使两侧父节点同时失败，与父节点在成功值上是否恒零无关。全部子项成功时，各值由归纳假设对应；本节点若是基本历史操作，用第 265 条的联合域等价和逐字段等式；若是筛选、关系或参考点操作，用第 267 条，特别保留 $D_0\subseteq E_X$、$R_0\subseteq\Omega_X\times\Omega_Y$ 与共同参考点域；若是观察、推送或剖面图，使用第 268 条及第 260 条的相应图桥。守卫失败则两侧同为失败，通过则输出经 $b_o$ 对应，完成归纳。
+
+该归纳是第 81 条方法在这些已逐项证明的原语上的应用，未将抽象共轭定义代替原语域证明。由输入桥满射，正反两向的逐输入结论给域像等式。CSA 定义 16 的基本一孔映射是在某个槽放输入、其它槽放全部允许固定参数；第 266 条的全幂集双射与第 262 条的历史双射使所有参数选择均有逆。反复有限复合仍是上述树，故上下文族正反对应。定义 34 允许重复叶，已由同一归纳覆盖，且未改变其签名。输入桥满射又使“对全部输入有定义”两向等价。
+
+严格观察的成功值满足 $\operatorname{ok}(q(CX))\mapsto\operatorname{ok}(b(q(CX)))$，失败单独映到失败；这个标签映射单射。因此每个对应上下文的观察相等双向等价，再对双向对应的全部上下文量化即得观察关系式。第 265 条的零读数而时间守卫失败的输入，即使外层再取空筛选、$N$ 或乘零因子，也仍由失败子项分支失败。固定身份查询则显示另一边界：将所选事件 $e$ 重命名成 $e'$，查询仍固定为 $H_e$ 时可失去该事件；查询参数同时改为 $H_{e'}$ 才是所证运输。第 144–147、163、177 条受旧数值链影响的有限表达式句由本条的域、签名和量词范围替代。证毕。
+
+**定义 270（完整配置码到历史的确定实现）。** 令 $\mathcal C$ 为第 115 条全部有限有效三元配置 $(P,A,a)$ 的集合，$\mathcal C_Z$ 为其 $\operatorname{Cfg}_Z$ 像。用第 116 条唯一解码映射 $\operatorname{cfgdec}:\mathcal C_Z\to\mathcal C$。若配置三元组的原括号为 $T_3^{\rm cfg}$，则
+$$
+\operatorname{cfgdec}(c)=T_3^{\rm cfg}(P,A,a),\qquad
+\kappa_3(\operatorname{cfgdec}(c))=T_3(P,A,a).
+$$
+第一式中的 $P,A,a$ 由第 115 条三个语义字段恢复；不从任意历史猜出配置。
+
+两条配置实现路径均使用第 130、253 条的同一事件身份：第 253 条原括号下的 $(p,j,0)$、$(p,j,1)$ 分别记为 $e_{p,j}^{+},e_{p,j}^{-}$。在全部配置中该括号与标签规则固定。置 $\ell_p=\ell_Z(A(p))$，$d_a(p,j)=\operatorname{pad}(\zeta(a(p)))(j)$，对 $p\in P,j<\ell_p$ 取这两个事件。原表示 $j_{P,A}(a)=X_{P,A}(a)$ 严格沿用第 130 条；时间零与位置 $\lambda(p,j)$ 在其 CSA 整数实现 $J,J^3$ 中解释。定义
+$$
+H_Z(c)=R_{\rm all}(j_{P,A}(a))\quad
+\text{其中 }(P,A,a)=\operatorname{cfgdec}(c),\qquad
+H_{Z,\rm num}(c)=R_{\rm num}(j_{P,A}(a)).
+$$
+显式地，$H_Z(c)$ 的 $E=\Omega$ 为上述事件集，偏序为空，选择为 $\{e_{p,j}^{+}:d_a(p,j)=1\}$，且
+$$
+\begin{aligned}
+t'(e_{p,j}^{\pm})&=0_S,&x'(e_{p,j}^{\pm})&=b_3(\lambda(p,j)),\\
+\sigma(e_{p,j}^{\pm})&=\pm,&
+\rho'(e_{p,j}^{\pm})&=\operatorname{leaf}_Z(\operatorname{NatZ}(\pi(p,j))).
+\end{aligned}
+$$
+这里 $\pi(p,j)$ 是第 130 条的自然数配对函数；数值版来源为原 $\operatorname{leaf}(\pi(p,j))$。有限的素数标签、索引、容量、状态及配对数值以第 69–70、115 条的 $\zeta$ 或 $\operatorname{NatZ}$ 表示；事件身份本身仍为原有有限集合，需要其集合呈现时取整体 $\operatorname{Enc}$。
+
+跨配置保留外部记录 $K(c)=\langle c,H_Z(c)\rangle$ 及其整体码 $\operatorname{Enc}(K(c))$。另可保留语义记录
+$$
+K_{\rm sem}(c)=\langle c,\operatorname{Enc}(H_Z(c))\rangle_Z.
+$$
+该式两个参数均有效。它所指的是 $\langle\operatorname{Dec}(c),H_Z(c)\rangle$，而 $\operatorname{Enc}(K(c))$ 所指的是 $\langle c,H_Z(c)\rangle$；不把原始历史直接塞进语义配对输入，也不合并这两个不同的记录层。
+
+**定理 271（配置交换、准确恢复边界与 $5040$）。** 对每个有限有效 $(P,A,a)$，有完整记录等式
+$$
+H_Z(\operatorname{Cfg}_Z(P,A,a))=R_{\rm all}(X_{P,A}(a)),\qquad
+H_{Z,\rm num}(\operatorname{Cfg}_Z(P,A,a))=R_{\rm num}(X_{P,A}(a)).
+$$
+固定 $P,A$ 时，两式的历史像均唯一恢复状态 $a$；跨配置则保留 $K(c)$、$\operatorname{Enc}(K(c))$ 或 $K_{\rm sem}(c)$ 可以唯一恢复完整配置。单独裸历史没有跨配置的完整逆。第 145 条的配置恢复句服从第 240 条的边界，并由本条和第 270 条替代重证。
+
+两侧的历史双射也不使 CSA 乘法恢复旧选择。对任一固定合法情境 $C$ 和两个不同选择 $A_0,A_1\subseteq\Omega_C$，乘同一空档案 $0_\varnothing$ 的结果相同，而两个原表示不同；在存在两个选择的平衡情境中同样成立。
+
+对标签 $P=\{2,3,5,7\}$ 及容量 $A=(4,2,1,1)$，第 32 条的算术与第 241 条的容量定义给出
+$$
+M(P,A)=5040=2^4\cdot3^2\cdot5\cdot7,\qquad
+Q(P,A)=(4+1)(2+1)(1+1)(1+1)=60.
+$$
+各轴最大内容是 $4,2,1,1$，逐轴状态数是 $5,3,2,2$。容量向量的索引是素数标签，不是 Fibonacci 数位，故该向量不是 Zeckendorf 零一位串。全部这些自然字段可逐项取 $\zeta$，作为语义自然数时取 $\operatorname{NatZ}$；整数 $5040$ 自身的数字与素数指数的数字仍是不同对象。$M$ 是容量角的标量读数，不是物理成本；$B$ 是独立局部窗口宽度，不含标签及容量元数据；第 253 条的事件数 $2B$ 仅属所指定构造。第 240–254 条的容量、联合预算及极值结论保留其原有假设和比较目标，不由字段表示改变而合并不同最小化问题。
+
+**证明。** 第 116 条使配置码先恢复唯一的 $P,A,a$。按第 270 条逐字段生成，事件身份与原构造使用完全相同的 $p,j$ 及正负标签，偏序同为空，选择均由同一个补零数字 $d_a$ 决定，时间、位置、来源分别为原字段的 $b,b_3,\tau_Z$ 像，符号不变。故两个完整记录相等，数值版把来源像换为恒等即得。固定参数时，第 131 条和第 240 条的状态单射配合第 262 条双逆恢复 $a$。外部记录 $K(c)$ 的第一投影直接给 $c$；整体码先 $\operatorname{Dec}$ 再取第一投影给 $c$；语义记录的第一语义投影也直接给 $c$。再用 $\operatorname{cfgdec}$ 即得完整配置，两个记录层的桥由第 258 条给出。
+
+跨配置的失败用第 240 条的同一构造：$P=\{2\}$、容量分别为三和四、状态均零，有 $\ell_Z(3)=\ell_Z(4)=3$。固定的事件身份规则使两边均为三个相同槽的正负事件，所有字段相同，选择均空。因此 $X_{P,A}(0)=X_{P,A'}(0)$，其 $R_{\rm all},R_{\rm num}$ 像也相同，但容量不同。零容量轴没有事件；分别取 $\{2\}$ 和 $\{3\}$ 且容量、状态均零，两个实现又同为空历史而标签不同。保留第 240 条的反例，没有从三维更正推翻该结算。
+
+乘空档案时，全部 $\Omega_C\times\varnothing$ 为空，当前整体和新选择均空；只留下带标签复制的 $C$，且没有任何字段依赖原选择 $A_i$。故两结果相等。在含一正一负当前事件的零偏序平衡情境中，可取空选择和正事件选择作不同输入，故平衡限制也不能挽救逆。$R$ 是记录双射，只将这组相同输出送为相同数字输出。
+
+第 32 条已给素因数式；第 115 条的状态盒是各整数区间的有限直积，故其基数按第 241 条为 $5\cdot3\cdot2\cdot2=60$。第 32 条还给出容量数字的值序列：$\zeta(4)$ 在定义域 $3$ 上依次取 $1,0,1$，$\zeta(2)$ 在定义域 $2$ 上依次取 $0,1$，$\zeta(1)$ 在定义域 $1$ 上取 $1$，均按低位到高位读取。标签数字中，$\zeta(3)$ 在定义域 $3$ 上依次取 $0,0,1$，$\zeta(5)$ 在定义域 $4$ 上依次取 $0,0,0,1$，$\zeta(7)$ 在定义域 $4$ 上依次取 $0,1,0,1$。这些数字是第 69 条的有限函数图，不将它们等同于第 257 条的外部元组。同样由该条，$\zeta(5040)$ 的占据索引为 $\{2,5,11,13,17\}$，与容量向量的四个素数索引不同。第 70 条确保这些逐字段表示唯一，不能因都使用零一数字而互换索引域。$M,B$ 的含义及 $2B$ 范围直接沿用第 241、253 条；字段双射不改变状态盒、这些函数的值或已证极值的量词。最小标量、最小局部宽度与最少正轴的比较仍按第 240–254 条各自的定义，不把其中一个当作另一个。证毕。
+
+**定义 272（字段呈现与既有集合解释的比较）。** 对第 261 条的 $R=R_{\rm all}$ 或 $R_{\rm num}$，分别记其逆为 $D_R=D_{\rm all}$ 或 $D_{\rm num}$，目标为 $\mathcal H_R$。置
+$$
+\begin{aligned}
+J_R&=\operatorname{Enc}\circ D_R\circ\operatorname{Dec}:
+       \operatorname{Enc}[\mathcal H_R]\longrightarrow\operatorname{Enc}[\mathcal H],\\
+J_R^{-1}&=\operatorname{Enc}\circ R\circ\operatorname{Dec}:
+       \operatorname{Enc}[\mathcal H]\longrightarrow\operatorname{Enc}[\mathcal H_R].
+\end{aligned}
+$$
+这里每个输入先由 $\operatorname{Dec}$ 取得所声明的完整记录，随后才改变其字段；$\operatorname{Enc}[\mathcal H_R]$ 是一个外部集合，区别于单个码 $\operatorname{Enc}(\mathcal H_R)$。特别地，$J_{R_{\rm all}}$ 的来源分量使用 $\tau_Z^{-1}$。所有有效码、集合和成员关系仍分别由第 71–78 条的 $\mathfrak V_Z,\operatorname{Enc},\operatorname{Dec},\in_Z$ 解释，本条不另定义集合宇宙或成员关系。
+
+更一般地，对任意集合双射 $d:A\to B$ 及 $U\subseteq A$，定义
+$$
+\begin{aligned}
+\widetilde d&=\operatorname{Enc}\circ d\circ\operatorname{Dec}:\operatorname{Enc}[A]\to\operatorname{Enc}[B],\\
+\mathcal P(d)(U)&=d[U],\\
+\widetilde{\mathcal P(d)}(c)&=\operatorname{Enc}(d[\operatorname{Dec}(c)])
+\quad(c\in\operatorname{Enc}[\mathcal P(A)]).
+\end{aligned}
+$$
+最后一式的目标为 $\operatorname{Enc}[\mathcal P(B)]$。它同时运输容器和其中对象，区别于只对对象取 $\widetilde d$ 而把容器固定。本条的直接历史实例取 $d=D_R$；参数集合实例取第 266 条各个底层双射。
+
+**定理 273（历史比较与完整集合语义的边界）。** 对两种 $R$ 各自、全部 $X\in\mathcal H$ 及 $c\in\operatorname{Enc}[\mathcal H_R]$，有
+$$
+\begin{gathered}
+J_R(\operatorname{Enc}(RX))=\operatorname{Enc}(X),\qquad
+J_R^{-1}(\operatorname{Enc}(X))=\operatorname{Enc}(RX),\\
+J_R^{-1}(J_R(c))=c,\qquad
+J_R(J_R^{-1}(\operatorname{Enc}(X)))=\operatorname{Enc}(X).
+\end{gathered}
+$$
+对第 272 条的任意 $d:A\to B$、$U\subseteq A$、$a\in A$，精确的集合及成员桥为
+$$
+\begin{gathered}
+\widetilde{\mathcal P(d)}(\operatorname{Enc}(U))
+ =\operatorname{Enc}(d[U])
+ =\operatorname{Pack}\{\widetilde d(\operatorname{Enc}(u)):u\in U\},\\
+\operatorname{Enc}(a)\in_Z\operatorname{Enc}(U)
+\iff\widetilde d(\operatorname{Enc}(a))\in_Z
+                  \widetilde{\mathcal P(d)}(\operatorname{Enc}(U)).
+\end{gathered}
+$$
+因而第 266 条空间、时间、来源、联合区域、属性及其父对的任意集合参数都有这种桥；其中有限档案并不限制参数集合的基数。
+
+更明确地，对每个固定有限 $r$、第 259 条的双射 $b_i:A_i\to B_i$，以及原关系 $Q\subseteq\prod_i A_i$，置 $B=\prod_i b_i$、$Q^b=B[Q]$。则
+$$
+\begin{aligned}
+\operatorname{Enc}(Q)
+ &=\operatorname{Pack}\{
+    T_r^Z(\operatorname{Enc}(b_1^{-1}c_1),\ldots,
+          \operatorname{Enc}(b_r^{-1}c_r)):
+    T_r(c_1,\ldots,c_r)\in Q^b\},\\
+\operatorname{Enc}(Q^b)
+ &=\operatorname{Pack}\{
+    T_r^Z(\operatorname{Enc}(c_1),\ldots,\operatorname{Enc}(c_r)):
+    T_r(c_1,\ldots,c_r)\in Q^b\}.
+\end{aligned}
+$$
+函数图特化为第 260 条，保留完整定义域和值域。历史关系及部分历史操作的图取各历史槽 $b_i=R$、输出槽 $b_o=R$；整数、空间、来源、参数及观察槽取第 255–268 条指定的双射。特别地，对任意部分历史操作 $f:D\subseteq\mathcal H^r\to\mathcal H$ 及其已证对应 $f^R$，令 $R^r$ 为逐槽桥，则
+$$
+\operatorname{Enc}(G_f)=\operatorname{Pack}\{
+\langle T_r^Z(J_R(\operatorname{Enc}(Y_1)),\ldots,J_R(\operatorname{Enc}(Y_r))),
+        J_R(\operatorname{Enc}(Z))\rangle_Z:
+\langle T_r(Y_1,\ldots,Y_r),Z\rangle\in G_{f^R}\}.
+$$
+其域码为 $\operatorname{Enc}(D)$，数字图的域码为 $\operatorname{Enc}(R^r[D])$；这两码由容器与成员一起运输的桥对应，不要求字面相等。完整字段记录先按第 258 条逐字段装配，再按 $J_R$ 比较，所得码恰为原完整记录的 $\operatorname{Enc}$，包括来源字段的逆。
+
+对任意集合 $A,B$ 和每个固定有限原集合论公式 $\varphi(x_1,\ldots,x_r)$，仍有
+$$
+\begin{gathered}
+\mathcal P_Z(\operatorname{Enc}(A))=\operatorname{Enc}(\mathcal P(A)),\qquad
+\operatorname{Fun}_Z(\operatorname{Enc}(A),\operatorname{Enc}(B))=\operatorname{Enc}(B^A),\\
+\varphi(x_1,\ldots,x_r)
+\iff\varphi^Z(\operatorname{Enc}(x_1),\ldots,\operatorname{Enc}(x_r)).
+\end{gathered}
+$$
+这里幂集包含全部子集，函数集包含全部集合函数，参数 $x_i$ 可为任意集合。$R$ 只同构第 261–269 条声明的 CSA 结构；它的定义域不是全部集合，亦不是环境成员关系的自同构。$\mathfrak V_Z$ 是可定义类，不是 ZFC 内含有全部有效码的集合。若 $A\notin HF$，则 $\operatorname{Enc}(A)\notin HF$；特别是无限集合及无限函数图的码不是第 69 条的有限数字，也不是由有限标签和有限字逐有限次装配的遗传有限记录。
+
+**证明。** 首式直接计算为
+$$
+\operatorname{Enc}(D_R(\operatorname{Dec}(\operatorname{Enc}(RX))))
+ =\operatorname{Enc}(D_R(RX))=\operatorname{Enc}(X).
+$$
+对任意目标码 $c$，其解码 $Y$ 属于独立定义的 $\mathcal H_R$；第 262 条给 $R(D_RY)=Y$，故反向复合也为 $c$。另一侧用 $D_R(RX)=X$。这里全字段逆必用 $\tau_Z^{-1}$，其存在唯一性已在第 262 条对独立目标证明。
+
+对任意 $U$，第 73 条使所列 $\operatorname{Pack}$ 解码为 $d[U]$，得到容器式。$d$ 单射给 $a\in U$ 当且仅当 $d(a)\in d[U]$；第 72 条的成员比较给语义成员式。逆桥用 $d^{-1}$，故保持也反映，且所有子集都在该双射中。对每个 $Q^b$ 元组，将各槽逆回原值，第 258 条的装配式恰给该原元组的码；$B$ 双射保证原关系每个成员出现且仅出现一次，第 73 条即给第一关系式。对数字元组自身编码得到第二式；零元情形仍使用 $T_0^Z$。把关系视为函数图，逐边的单值性、定义域与求值比较由第 260 条得出。历史图取 $b_i^{-1}=D_R$，各槽的逆提升正是 $J_R(\operatorname{Enc}(Y_i))$，输出亦同，故得到显示式。原记录若使用其它括号，先经第 257 条的重括号双射，反向装配时再用其逆；未用改变字段来改变记录的集合括号。
+
+最后三个集合语义式直接是第 74、76 条，量词照第 75 条限制在有效码类，并无有限性限制。对每个固定公式的结构归纳中，原子成员式用第 72 条，布尔步骤直接对应，存在量词的正向取 $\operatorname{Enc}(x)$，反向取有效见证的 $\operatorname{Dec}$；因此没有遗漏任意集合见证。若全部有效码组成一个集合，替代将其解码为包含每个集合的集合，与 ZFC 的分离及无全集结论矛盾，故这里只能使用可定义类。第 72 条的遗传有限性双向式又给 $A\notin HF\Rightarrow\operatorname{Enc}(A)\notin HF$。无限图可以逐边呈现为集合，不能因此变成有限字；外层有序对含有限多个成员也不使其传递闭包有限。证毕。
+
+**定理 274（修正语言的受限定义消去）。** 令 $T_{\rm corr}$ 仅在 ZFC 上添加第 255–273 条的新定义符号、其上述普通证明所得性质，以及所用第 69–78、80–81、113–116 条的既有定义性解释。CSA 有限记录、所列原语和参数域按其给定集合公式展开；第 130、131、240–254 条只在所引用的配置、容量和一维读数范围内使用其既有定义与证明，不将未引用的旧断言加为新公理。则此扩充对原集合论语言定义性保守：对每个原语言句子 $\psi$，
+$$
+T_{\rm corr}\vdash\psi\quad\Longrightarrow\quad\mathrm{ZFC}\vdash\psi.
+$$
+部分函数符号只在其已声明域内求值；用全函数语法时须采用第 259 条的不交标签总化，成功值与失败值不同，不能删去域前提。
+
+若外部给定任意 $\mathfrak M\models\mathrm{ZFC}$，全部新图在 $\mathfrak M$ 内解释，其内部有限元组、内部有限树和内部有限历史按同一公式构造。对每个外部标准有限公式 $\varphi$ 和任意模型内参数，先消去新定义得到原公式 $\varphi^-$，再用既有集合解释，有
+$$
+\mathfrak M_{\rm corr}\models\varphi(\vec x)
+\iff\mathfrak M\models\varphi^-(\vec x)
+\iff\mathfrak M_Z\models(\varphi^-)^Z(\operatorname{Enc}^{\mathfrak M}(\vec x)).
+$$
+此处末项逐参数编码；$\mathfrak M_Z$ 的外部载体为模型内部有效码所成的外部类或集合，成员关系使用模型所解释的 $\in_Z$。这些是逐个公式的条件性比较，不是关于全部公式的内部统一真理谓词，也不推出 $\operatorname{Con}(\mathrm{ZFC})$。
+
+旧条款的数学适用边界如下，替代关系只涉及所指子句。第 142–143 条的一维整数双射、序、加法与后继保留，并以第 255–256 条明确 $J$ 与通常整数的关系；原三维语义混合式、其 $S^3$ 余域及依该式得出的三维交换由第 255–258 条替代。第 144–147 条受其影响的字段、合法域、电荷和有限表达式，由第 255、261–269 条分别重建，不能以旧整条充当这些结论的前提。第 145 条的配置交换和恢复由第 270–271 条替代，恢复服从第 240 条，尤其不用第 132 条中已被否定的无参数容量恢复。
+
+第 162–163 条独立的自然叶、有序自由树递归及其结构保持保留；其中依赖旧数值链的档案公式和完整逆由第 261–262 条替代，相应表达式结论由第 264–269 条替代。第 160、164 条的定义消去及模型内解释方法只对本条已证存在唯一的有效定义、已附证明的性质适用；它们在旧三维错误链上的实例由第 272–274 条替代，不由本条断言第 146–159 条全体性质。第 176–177 条保留字段层态射不改变事件双射这一形式，正确的任意事件双射条件及群胚逆由第 263 条给出，逆对象映射为 $D_{\rm all}$，有限复合保域取第 269 条。
+
+第 240–254 条的既有参数恢复边界、容量、联合预算和全局极值保留各自假设与比较目标，不因旧三维式失效而被否定，也不在此重新证明。第 254 条所用 CSA 数值读数只有一维时间与电荷，其数字双射由第 255–256 条接续；其配置及图语义仍由第 115–116、74、80–81 条承担。上述界限不对其它未引用的旧命题作整体断言。
+
+**证明。** 第 255–260 条的图由既有 $\operatorname{scode},\operatorname{ival},\operatorname{Enc},\operatorname{Dec}$ 的定义图、有限元组和分离、替代给出；输入及输出范围已指定，各个逆、装配、投影和部分求值的存在唯一性分别由第 256、258、260 条证明。对任意给定集合域，参数全幂集与完整函数集由第 74 条和 ZFC 幂集、分离构造；没有以有限元数代替图的全域。
+
+对第 261 条所固定、以集合公式给出的标签构造，来源树按有限构造层递归，两构造器互斥单射，故每棵树的递归值存在且唯一；第 262 条给两方向逆。全部有限事件集是 $HF$ 的有限子集，时间、空间、符号、来源均为已构造集合，记录在这些集合的有限图及幂集中分离得到，故 $\mathcal H,\mathcal H_R$ 是集合。$R,D_R$ 逐字段为唯一函数；第 263 条的态射是相应事件积幂集中的双射子集，恒等、逆和复合也由其图公式唯一确定。
+
+第 264–267 条逐个原语以有限集合并、配对、字段求值、筛选和关系的传递闭包定义；传递闭包由有限非空路径存在式在事件积内分离得到。第 265、267 条已经证明每个输出合法的准确联合域，不需要给域外失败伪造一个合法历史。第 268 条的有限支撑和重索引求和、累积及差分由整数运算和有限集合函数构造；完整函数图用替代给出，尾部条件则为分离条件。第 269 条对每个有限项的归纳给存在性条件与唯一值。第 270 条用唯一配置解码和固定事件构造，第 271 条证明配置交换；第 272–273 条只是既有图的复合与像，故也存在且单值。
+
+现在对每个新增关系符号用其定义公式替换；对每个域内函数项，引入新变量表示其值，并合取定义域与唯一值图，避免变量捕获。若需要任意输入处都有项值，则先将图按第 259 条总化，再作同样替换，域外唯一值是带区别标签的失败对象。类函数的消去使用定义公式，不把整个类图当作集合常量；受限函数域和所有求值仍为集合量词。逻辑公理及推理规则经这种定义替换保持有效，定义公理由刚证存在唯一性成为 ZFC 定理，新增定理行用各自上述普通证明替换。对任一有限证明逐行作此替换，得到其原语言结论的 ZFC 证明，故得保守性。
+
+在给定 $\mathfrak M$ 中，使用同一存在唯一性定理的内部解释。因此只使用 $\mathfrak M$ 内部的递归图及内部有限性，不要求模型外看来每棵内部有限树有限，也不在模型外沿其成员关系重新作良基递归。对外部标准有限公式的结构归纳给第一次等价，再由第 78 条的给定模型同构给第二次等价。模型存在性是条件，不由这段解释产生，故没有从保守性推出 ZFC 自身的一致性。
+
+最后，各替代子句都有不经旧三维式的证明链：一维与元组由第 256、258 条，全字段及来源双逆由第 262 条，态射由第 263 条，原语和有限项由第 265、267–269 条，配置由第 116、130、131、240、253 条及第 271 条。第 240–254 条的容量与极值函数定义在自然标签、自然容量和自然状态上；其原证明不以三维语义混合式为前提。第 254 条实际数值字段 $\operatorname{scode}(q)$、$\operatorname{scode}(t)$ 在 CSA 整数实现下分别解释为 $b(q),b(t)$，正是第 256 条；集合图部分由第 74、80–81 条。因而上述替代不改变这些已给证明的数学结论，也不以新的定义消去重新断言其它旧性质。证毕。
