@@ -86,7 +86,7 @@ $$\forall omega, t, x \operatorname{fvarAt}\left(\operatorname{apply}\left(omega
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.fvar_rew` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* FormalizedFormalLogic contributors (2026). *Foundation first-order logic and set theory, revision 30a16ffa*. URL: <https://github.com/FormalizedFormalLogic/Foundation/tree/30a16ffa93d79d73ab4d02427fa00f50e039bf29>.
 
 *Commentary.*
 
@@ -98,7 +98,7 @@ $$\forall t, x \operatorname{fvarAt}\left(\operatorname{bShift}\left(t\right), x
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.fvar_bShift` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* FormalizedFormalLogic contributors (2026). *Foundation first-order logic and set theory, revision 30a16ffa*. URL: <https://github.com/FormalizedFormalLogic/Foundation/tree/30a16ffa93d79d73ab4d02427fa00f50e039bf29>.
 
 *Commentary.*
 
@@ -106,7 +106,7 @@ The bShift operation changes only bound indices, so the set of free variables is
 
 **Definition 1.9 (A term with no free variables is converted to an empty-variable term).**
 
-$$\forall t \operatorname{freeVariables}\left(t\right) = \emptyset \Rightarrow \operatorname{toEmpty}\left(t\right) \in \operatorname{ClosedSemiterm}\left(\right).$$
+$$\begin{aligned}toEmpty: \forall n: \mathbb{N}, \forall t: \operatorname{Semiterm}\left(L, xi, n\right), h: \operatorname{freeVariables}\left(t\right) = \emptyset \Rightarrow \operatorname{ClosedSemiterm}\left(L, n\right)\\\operatorname{toEmpty}\left(\operatorname{bvar}\left(x\right), h\right) = \operatorname{bvar}\left(x\right) \text{where} x: \operatorname{Fin}\left(n\right), h: \operatorname{freeVariables}\left(\operatorname{bvar}\left(x\right)\right) = \emptyset\\\operatorname{toEmpty}\left(\operatorname{fvar}\left(z\right), h\right) = \operatorname{impossible}\left(h\right) \text{where} h: \operatorname{freeVariables}\left(\operatorname{fvar}\left(z\right)\right) = \emptyset\\\operatorname{toEmpty}\left(\operatorname{func}\left(f, v\right), h\right) = \operatorname{func}\left(f, i \mapsto \operatorname{toEmpty}\left(\operatorname{at}\left(v, i\right), hi\right)\right) \text{where} \forall i: \operatorname{Fin}\left(k\right), hi: \operatorname{freeVariables}\left(\operatorname{at}\left(v, i\right)\right) = \emptyset\end{aligned}$$
 
 *Formalization.* `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.toEmpty` (`✓ std3`).
 
@@ -114,7 +114,7 @@ $$\forall t \operatorname{freeVariables}\left(t\right) = \emptyset \Rightarrow \
 
 *Commentary.*
 
-A closed semiterm is recursively retyped as a ClosedSemiterm; the free-variable case is impossible under the empty support hypothesis.
+The dependent definition recurses by cases: a bound variable is returned unchanged, a free-variable case is impossible from its empty-support proof, and a function node is rebuilt from recursively converted arguments, each carrying the empty-support proof derived from the parent.
 
 **Lemma 1.10 (Embedding the empty-variable form recovers the original term).**
 
@@ -130,7 +130,7 @@ The retained structural induction proves that embedding the term produced by toE
 
 **Definition 1.11 (A rewriting action applies rewrites to formulas and respects quantifiers).**
 
-$$\operatorname{Rewriting}\left(L, xi, F, zeta, G\right) = (app: \operatorname{Rew}\left(L, xi, n1, zeta, n2\right) \to \operatorname{Hom}\left(\operatorname{F}\left(n1\right), \operatorname{G}\left(n2\right)\right), \forall omega12: \operatorname{Rew}\left(L, xi, n1, zeta, n2\right), phi: \operatorname{F}\left(n1\right), appAll omega12, phi : \operatorname{app}\left(omega12, \operatorname{forall1}\left(phi\right)\right) = \operatorname{forall1}\left(\operatorname{app}\left(\operatorname{q}\left(omega12\right), phi\right)\right) \land appExs omega12, phi : \operatorname{app}\left(omega12, \operatorname{exists1}\left(phi\right)\right) = \operatorname{exists1}\left(\operatorname{app}\left(\operatorname{q}\left(omega12\right), phi\right)\right)).$$
+$$\operatorname{Rewriting}\left(L, xi, F, zeta, G\right) = (app: \forall n1: \mathbb{N}, n2: \mathbb{N}, \operatorname{Rew}\left(L, xi, n1, zeta, n2\right) \to \operatorname{Hom}\left(\operatorname{F}\left(n1\right), \operatorname{G}\left(n2\right)\right), \forall n1: \mathbb{N}, n2: \mathbb{N}, omega12: \operatorname{Rew}\left(L, xi, n1, zeta, n2\right), phi: \operatorname{F}\left(n1+1\right), \operatorname{appAll}\left(omega12, phi\right): \operatorname{app}\left(omega12, \operatorname{forall1}\left(phi\right)\right) = \operatorname{forall1}\left(\operatorname{app}\left(\operatorname{q}\left(omega12\right), phi\right)\right) \land \operatorname{appExs}\left(omega12, phi\right): \operatorname{app}\left(omega12, \operatorname{exists1}\left(phi\right)\right) = \operatorname{exists1}\left(\operatorname{app}\left(\operatorname{q}\left(omega12\right), phi\right)\right)).$$
 
 *Formalization.* `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.Rewriting` (`✓ std3`).
 
@@ -138,11 +138,11 @@ $$\operatorname{Rewriting}\left(L, xi, F, zeta, G\right) = (app: \operatorname{R
 
 *Commentary.*
 
-A Rewriting instance supplies an action of term rewrites on formulas, with universal and existential quantification transported through the rewrite.
+A Rewriting instance supplies an action of term rewrites on formulas, with universal and existential quantification transported through the rewrite. The app field is indexed by both bound-variable sizes; app_all and app_exs each take φ:F(n1+1) and use the lifted rewrite q(ω):Rew(L,ξ,n1+1,ζ,n2+1).
 
 **Definition 1.12 (Formula substitution is the substitution rewrite action).**
 
-$$subst: \operatorname{F}\left(n1\right) \to \left(\left(\operatorname{Fin}\left(n1\right) \to \operatorname{Semiterm}\left(L, xi, n2\right)\right) \to \operatorname{F}\left(n2\right)\right) = \operatorname{app}\left(\operatorname{RewSubst}\left(w\right), phi\right).$$
+$$\forall n1: \mathbb{N}, n2: \mathbb{N}, phi: \operatorname{F}\left(n1\right), w: \operatorname{Fin}\left(n1\right) \to \operatorname{Semiterm}\left(L, xi, n2\right), \operatorname{subst}\left(phi, w\right) = \operatorname{app}\left(\operatorname{RewSubst}\left(w\right), phi\right).$$
 
 *Formalization.* `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.subst` (`✓ std3`).
 
@@ -150,7 +150,7 @@ $$subst: \operatorname{F}\left(n1\right) \to \left(\left(\operatorname{Fin}\left
 
 *Commentary.*
 
-The formula-level substitution abbreviation applies Rew.subst to a formula through the Rewriting action.
+For every indexed formula φ and substitution vector w:Fin(n1)→Semiterm(L,ξ,n2), the abbreviation subst(φ,w) is exactly app(Rew.subst(w),φ) through the Rewriting action.
 
 **Definition 1.13 (Formula shift is the shift rewrite action).**
 
@@ -164,7 +164,7 @@ $$shift: \operatorname{Hom}\left(\operatorname{F}\left(n\right), \operatorname{F
 
 The shift connective homomorphism applies Rew.shift to formulas while increasing free-variable indices.
 
-**Definition 1.14 (Formula free operation removes the first free-variable slot).**
+**Definition 1.14 (Formula free operation removes the last bound-variable slot).**
 
 $$free: \operatorname{Hom}\left(\operatorname{F}\left(n+1\right), \operatorname{F}\left(n\right)\right) = \operatorname{app}\left(RewFree\right).$$
 
@@ -174,7 +174,7 @@ $$free: \operatorname{Hom}\left(\operatorname{F}\left(n+1\right), \operatorname{
 
 *Commentary.*
 
-The free connective homomorphism applies Rew.free from the n+1 free-variable family to the n family.
+The free connective homomorphism maps the last bound slot to free variable &0 and shifts each existing free variable &m to &(m+1), taking formulas from the n+1 bound-variable context to the n context.
 
 **Definition 1.15 (Formula-list shift maps each member).**
 
@@ -194,7 +194,7 @@ $$\operatorname{shifts}\left([]\right) = [].$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.shifts_nil` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* FormalizedFormalLogic contributors (2026). *Foundation first-order logic and set theory, revision 30a16ffa*. URL: <https://github.com/FormalizedFormalLogic/Foundation/tree/30a16ffa93d79d73ab4d02427fa00f50e039bf29>.
 
 *Commentary.*
 
@@ -206,7 +206,7 @@ $$\operatorname{shifts}\left(\operatorname{cons}\left(phi, Gamma\right)\right) =
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.shifts_cons` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* FormalizedFormalLogic contributors (2026). *Foundation first-order logic and set theory, revision 30a16ffa*. URL: <https://github.com/FormalizedFormalLogic/Foundation/tree/30a16ffa93d79d73ab4d02427fa00f50e039bf29>.
 
 *Commentary.*
 
@@ -218,7 +218,7 @@ $$\operatorname{shifts}\left(\operatorname{negList}\left(Gamma\right)\right) = \
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.shifts_neg` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* FormalizedFormalLogic contributors (2026). *Foundation first-order logic and set theory, revision 30a16ffa*. URL: <https://github.com/FormalizedFormalLogic/Foundation/tree/30a16ffa93d79d73ab4d02427fa00f50e039bf29>.
 
 *Commentary.*
 
@@ -230,7 +230,7 @@ $$emb: \operatorname{Hom}\left(\operatorname{O}\left(n\right), \operatorname{F}\
 
 *Formalization.* `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.emb` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* FormalizedFormalLogic contributors (2026). *Foundation first-order logic and set theory, revision 30a16ffa*. URL: <https://github.com/FormalizedFormalLogic/Foundation/tree/30a16ffa93d79d73ab4d02427fa00f50e039bf29>.
 
 *Commentary.*
 
@@ -238,15 +238,15 @@ The ASCII compatibility selector exposes the source emb connective homomorphism 
 
 **Definition 1.20 (Slash syntax expands to formula substitution).**
 
-$$phi/[w] \mapsto phi subst w.$$
+$$\forall phi: \operatorname{S}\left(1\right), phi/[\operatorname{fvar}\left(0\right)] = \operatorname{subst}\left(phi, \operatorname{Matrix}.\operatorname{vecCons}(\operatorname{fvar}\left(0\right), \operatorname{Matrix}.\operatorname{vecEmpty})\right).$$
 
 *Formalization.* `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.substNotation` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* FormalizedFormalLogic contributors (2026). *Foundation first-order logic and set theory, revision 30a16ffa*. URL: <https://github.com/FormalizedFormalLogic/Foundation/tree/30a16ffa93d79d73ab4d02427fa00f50e039bf29>.
 
 *Commentary.*
 
-The ASCII parser selector mirrors the source substNotation macro: φ/[w] expands to φ ⇜ ![w].
+The repository compatibility parser selector mirrors the source substNotation macro: φ/[w] expands to φ ⇜ ![w]. For the one-entry vector used below, ![&0] is Matrix.vecCons(fvar(0), Matrix.vecEmpty).
 
 **Definition 1.21 (The identity rewrite acts as the identity on formulas).**
 
@@ -286,7 +286,7 @@ If both the bound-variable map and free-variable map are injective, the induced 
 
 **Definition 1.24 (Lawful syntactic rewriting combines identity, composition and injectivity).**
 
-$$\operatorname{LawfulSyntacticRewriting}\left(L, S\right) = \operatorname{ReflectiveRewriting}\left(L, S\right) \land \operatorname{TransitiveRewriting}\left(L, S\right) \land \operatorname{InjMapRewriting}\left(L, S\right).$$
+$$\begin{aligned}\operatorname{LawfulSyntacticRewriting}\left(L, S\right) (L: Language, S: \mathbb{N} \to Type) [\operatorname{LCWQ}\left(S\right)] [\operatorname{SyntacticRewriting}\left(L, S, S\right)]\\\text{extends} (\operatorname{ReflectiveRewriting}\left(L, \mathbb{N}, S\right), \operatorname{TransitiveRewriting}\left(L, \mathbb{N}, S, \mathbb{N}, S, \mathbb{N}, S\right), \operatorname{InjMapRewriting}\left(L, \mathbb{N}, S, \mathbb{N}, S\right)).\end{aligned}$$
 
 *Formalization.* `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.LawfulSyntacticRewriting` (`✓ std3`).
 
@@ -294,7 +294,7 @@ $$\operatorname{LawfulSyntacticRewriting}\left(L, S\right) = \operatorname{Refle
 
 *Commentary.*
 
-The lawful syntactic interface packages reflective, transitive and injective rewriting for the same syntactic formula family.
+With [LCWQ S] and [SyntacticRewriting L S S] as its parameters, the class extends ReflectiveRewriting L ℕ S, TransitiveRewriting L ℕ S ℕ S ℕ S, and InjMapRewriting L ℕ S ℕ S. These are inherited interfaces, not a proposition asserted by an equality.
 
 **Lemma 1.25 (Shifting a conjunction shifts each formula (the canonical selector is RewThreeCompat.shift_conj_two; the source name is shift_conj₂).).**
 
@@ -302,7 +302,7 @@ $$\forall gamma \operatorname{shift}\left(\operatorname{conj}\left(gamma\right)\
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.shift_conj_two` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* FormalizedFormalLogic contributors (2026). *Foundation first-order logic and set theory, revision 30a16ffa*. URL: <https://github.com/FormalizedFormalLogic/Foundation/tree/30a16ffa93d79d73ab4d02427fa00f50e039bf29>.
 
 *Commentary.*
 
@@ -310,15 +310,15 @@ The shift of a finite conjunction is the conjunction of the shifted list, includ
 
 **Lemma 1.26 (Substituting the first free variable after shifting is free).**
 
-$$\forall phi: \operatorname{S}\left(1\right), \operatorname{subst}\left(\operatorname{shift}\left(phi\right), \operatorname{fvar}\left(0\right)\right) = \operatorname{free}\left(phi\right).$$
+$$[\operatorname{LCWQ}\left(S\right)] [\operatorname{SyntacticRewriting}\left(L, S, S\right)] [\operatorname{LawfulSyntacticRewriting}\left(L, S\right)] \Rightarrow \forall phi: \operatorname{S}\left(1\right), \operatorname{subst}\left(\operatorname{shift}\left(phi\right), \operatorname{Matrix}.\operatorname{vecCons}(\operatorname{fvar}\left(0\right), \operatorname{Matrix}.\operatorname{vecEmpty})\right) = \operatorname{free}\left(phi\right).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/ZfcTermRewriting/RewThreeCompat.app_subst_fbar_zero_comp_shift_eq_free` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* FormalizedFormalLogic contributors (2026). *Foundation first-order logic and set theory, revision 30a16ffa*. URL: <https://github.com/FormalizedFormalLogic/Foundation/tree/30a16ffa93d79d73ab4d02427fa00f50e039bf29>.
 
 *Commentary.*
 
-For a one-variable formula, shifting and substituting the zero free variable agrees with the free operation.
+For a one-variable formula, shifting and substituting the zero free variable agrees with the free operation. The substitution vector is the explicit one-entry Matrix.vecCons(fvar(0), Matrix.vecEmpty), and the law is stated under the LCWQ, SyntacticRewriting, and LawfulSyntacticRewriting context.
 
 ## References
 
