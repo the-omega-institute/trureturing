@@ -62,3 +62,11 @@ else
     resource_observe_run_periodic run_engineering_tests
   fi
 fi
+
+# Disposable V1 report-cache coverage probe: close the trigger PR without merging.
+printf '%s\n' 'REPORT_CACHE_V1_PROBE_START'
+/bin/bash "$candidate_root/tools/scripts/dotnet-test.sh" \
+  "$candidate_root/tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj" \
+  --no-build --no-restore \
+  --filter 'FullyQualifiedName~StrataLint.Tests.LeanReportIncrementalReuseTests|FullyQualifiedName~StrataLint.Tests.LeanReportMaterialAddressTests'
+printf '%s\n' 'REPORT_CACHE_V1_PROBE_END wrapper_exit=0'
