@@ -143,7 +143,7 @@ private def judgePayload (info : ConstantInfo) : Bool :=
   | _ => false
 
 private inductive CandidateClass where
-  | prop | instance | family | data
+  | proof | instance | family | data | proposition
   deriving Inhabited, BEq, Repr
 
 private structure ConstantType where
@@ -217,7 +217,7 @@ private def boundedMeta (action : MetaM α) : MetaM α :=
     (fun o => (o.set `maxHeartbeats (10000 : Nat)).set `maxRecDepth (1024 : Nat)) action
 
 /-- Strip the type telescope under rigid binders, then inspect its WHNF result.
-Propositions include proof result types as well as Prop itself. A universe
+Proof result types and proposition-valued type formers are distinct. A universe
 parameter or stuck dependent result stays family-valued: specializing it may
 expose Prop or Decidable. No proof/readout value is evaluated here. -/
 private def constantType (name : Name) : ClosureM ConstantType := do
@@ -228,12 +228,12 @@ private def constantType (name : Name) : ClosureM ConstantType := do
       let result ← whnf result
       match result.getAppFn with
       | .fvar .. | .bvar .. | .proj .. => return .family
-      | .sort .zero => return .prop
+      | .sort .zero => return .proposition
       | .sort (.succ _) => return .data
       | .sort _ => return .family
       | .const n _ =>
         if n == ``Decidable || isClass (← getEnv) n then return .instance
-        if ← isProp result then return .prop
+        if ← isProp result then return .proof
         -- A stuck recursor/definition can reveal a family after specialization.
         if result.hasFVar then
           unless (← getConstInfo n).isInductive do return .family
@@ -257,19 +257,30 @@ private def inferredType (e : Expr) : ClosureM Expr := do
   modify fun s => { s with inferred := s.inferred.insert e type }
   return type
 
+/-- Bounded type-only forwarding preserves open aliases at instances
+transparency. Repeat after iota/projection reduction can reveal another alias. -/
+private def normalizeType : Nat → Expr → MetaM Expr
+  | 0, _ => throwError "provenance type forwarding budget"
+  | fuel + 1, e => withTransparency .instances do
+    let some forwarded := recordHead (← getEnv) 256 e
+      | throwError "provenance type forwarding budget"
+    let type ← instantiateMVars (← whnf forwarded)
+    if type == forwarded then return type
+    normalizeType fuel type
+
 private def reducedType (e : Expr) : ClosureM Expr := do
   if let some type := (← get).reduced[e]? then return type
   let closed := !e.hasFVar && !e.hasLooseBVars && !e.hasMVar
   if closed then
     if let some type := (← get).cache.reduced[e]? then return type
-  let type ← boundedMeta <| withTransparency .default do instantiateMVars (← whnf e)
+  let type ← boundedMeta (normalizeType 256 e)
   if type.hasMVar then throwError "unresolved provenance type"
   modify fun s => { s with
     reduced := s.reduced.insert e type
     cache.reduced := if closed then s.cache.reduced.insert e type else s.cache.reduced }
   return type
 
-/-- Soundness: for closed types, default-transparency WHNF exposes the same
+/-- Soundness: for closed types, type-forwarded instances-transparency WHNF exposes the same
 rigid head in any definitionally equal pair: the same constant (including
 constructors), sort, or binder shape. Thus different rigid heads certify
 inequality before isDefEq. Stuck projections/variables are unknown, never a
@@ -381,12 +392,48 @@ private def addCandidate (type : Expr) : ClosureM Unit := do
   unless type.hasFVar || type.hasLooseBVars do
     modify fun s => { s with candidates := s.candidates.insert type }
 
+private def eligibleClass : CandidateClass → Bool
+  | .proof | .instance | .family => true
+  | .data | .proposition => false
+
+/-- Decide from the head's declared result before inference. In particular,
+Eq/And/etc. form propositions; they do not inhabit them. Rigid locals use their
+binder type, and lets/projections/lambdas retain the open-alias treatment.
+This selection never reduces a proof or a data-valued application. -/
+private def candidateHead : Nat → Expr → ClosureM Bool
+  | 0, _ => throwError "provenance head forwarding budget"
+  | fuel + 1, e => do
+    let args := e.getAppArgs
+    match e.getAppFn with
+    | .const name _ => return eligibleClass (← constantType name).candidateClass
+    | .mdata _ body => candidateHead fuel (mkAppN body args)
+    | .letE _ _ value body _ => candidateHead fuel (mkAppN (body.instantiate1 value) args)
+    | .lam n t b bi =>
+      if args.isEmpty then
+        withLocalDecl n bi t fun x => candidateHead fuel (b.instantiate1 x)
+      else candidateHead fuel (e.getAppFn.beta args)
+    | .proj name index _ =>
+      if let some projection := (getStructureInfo? (← getEnv) name).bind (·.getProjFn? index) then
+        return eligibleClass (← constantType projection).candidateClass
+      let some reduced := recordHead (← getEnv) fuel e
+        | throwError "provenance projection forwarding budget"
+      if reduced == e then return true -- unresolved dependent family
+      candidateHead fuel reduced
+    | .fvar id =>
+      let type := (← id.getDecl).type
+      match type.getAppFn with
+      | .const name _ =>
+        let cls := (← constantType name).candidateClass
+        return cls == .proposition || cls == .family || name == ``Decidable || isClass (← getEnv) name
+      | .sort .. => return false
+      | _ => return true -- dependent binder/family, without inventing a value
+    | _ => return false
+
 private def classifyType (e : Expr) : ClosureM Unit := do
-  match e with
-  | .sort .. | .lit .. | .forallE .. => return
-  | _ => pure ()
-  if let .const name _ := e.getAppFn then
-    if (← constantType name).candidateClass == .data then return
+  -- Unspecialized constants are served by their own cached declared type.
+  -- Universe-specialized constants and applications still need their instance.
+  if let .const _ [] := e then return
+  unless ← candidateHead 256 e do return
   addCandidate (← inferredType e)
 
 private def reach (name : Name) : ClosureM Unit := do
