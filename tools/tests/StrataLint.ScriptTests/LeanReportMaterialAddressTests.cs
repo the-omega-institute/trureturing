@@ -9,11 +9,11 @@ public sealed class LeanReportMaterialAddressTests(ITestOutputHelper output)
     [Theory]
     [InlineData("exact", false)]
     [InlineData("exact", true)]
-    [InlineData("reuse", false)]
-    [InlineData("reuse", true)]
+    [InlineData("inspector-source", false)]
+    [InlineData("inspector-source", true)]
     [InlineData("delta", false)]
     [InlineData("delta", true)]
-    public void CacheReuseRequiresAddressConsistentSelectedMaterial(string mode, bool tampered)
+    public void CacheSelectionRequiresCurrentInputsAndAddressConsistentMaterial(string mode, bool tampered)
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new LeanReportTransportFixture();
@@ -35,12 +35,12 @@ public sealed class LeanReportMaterialAddressTests(ITestOutputHelper output)
         }
         if (mode != "exact")
         {
-            var source = mode == "reuse" ? LeanReportTransportFixture.AuxiliarySource : "Trureturing.lean";
+            var source = mode == "inspector-source" ? LeanReportTransportFixture.AuxiliarySource : "Trureturing.lean";
             fixture.WriteSource(source, File.ReadAllText(Path.Combine(fixture.Repository, source)) + "-- source delta\n");
         }
         var after = fixture.ReadInspectorInputs();
-        Assert.Equal(before.Producer, after.Producer);
-        Assert.Equal(before.Resident, after.Resident);
+        Assert.Equal(mode != "inspector-source", before.Producer == after.Producer);
+        Assert.Equal(mode != "inspector-source", before.Resident == after.Resident);
         Assert.Equal(before.Config, after.Config);
         Assert.Equal(before.Modules, after.Modules);
         Assert.Equal(mode == "exact", before.Pair == after.Pair);
@@ -51,7 +51,11 @@ public sealed class LeanReportMaterialAddressTests(ITestOutputHelper output)
             Assert.NotEqual(before.Sources, after.Sources);
             Assert.NotEqual(before.Repository, after.Repository);
             Assert.False(File.Exists(fixture.CachedReport));
-            Assert.Equal(2, fixture.Input("verify", "--repository", fixture.Repository, "--report", baseline).ExitCode);
+            var stale = fixture.Input("verify", "--repository", fixture.Repository, "--report", baseline);
+            Assert.Equal(2, stale.ExitCode);
+            Assert.Contains(mode == "inspector-source"
+                ? "raw Lean report producer is stale for current repository inputs"
+                : "raw Lean report is stale for current repository inputs", stale.Text, StringComparison.Ordinal);
         }
         if (tampered) fixture.TamperMaterial(baseline);
         AssertNonmaterial(original, baseline);
@@ -63,29 +67,32 @@ public sealed class LeanReportMaterialAddressTests(ITestOutputHelper output)
         var cacheValidation = fixture.Validate(fixture.CachedReport);
         var liveInput = fixture.Input("verify", "--repository", fixture.Repository, "--report", fixture.Output);
         var cacheInput = fixture.Input("verify", "--repository", fixture.Repository, "--report", fixture.CachedReport);
-        var copied = injected.SequenceEqual(File.ReadAllBytes(fixture.Output + ".materials.zip"));
-        output.WriteLine("P1 mode={0} tampered={1}; baseline_validate={2}; make_exit={3}; extractions={4}; copied_injected={5}; live/cache_validate={6}/{7}; live/cache_input={8}/{9}; final={10}",
+        var sameMaterialBytes = injected.SequenceEqual(File.ReadAllBytes(fixture.Output + ".materials.zip"));
+        output.WriteLine("P1 mode={0} tampered={1}; baseline_validate={2}; make_exit={3}; extractions={4}; injected_material_bytes_equal={5}; live/cache_validate={6}/{7}; live/cache_input={8}/{9}; final={10}",
             mode, tampered, validation.ExitCode, result.ExitCode, JsonSerializer.Serialize(fixture.ExtractedModules),
-            copied, liveValidation.ExitCode, cacheValidation.ExitCode, liveInput.ExitCode, cacheInput.ExitCode,
+            sameMaterialBytes, liveValidation.ExitCode, cacheValidation.ExitCode, liveInput.ExitCode, cacheInput.ExitCode,
             string.Join(" | ", result.Text.Split('\n').Where(line => line.StartsWith("LEAN_REPORT_DELTA", StringComparison.Ordinal)
                 || line.Contains("mode=local-exact", StringComparison.Ordinal))));
         if (mode != "exact")
         {
             AssertNonmaterial(original, baseline);
             Assert.Equal(injected, File.ReadAllBytes(baseline + ".materials.zip"));
-            var counts = mode == "reuse" ? "changed=0 added=0 removed=0 recheck=0" : "changed=1 added=0 removed=0 recheck=1";
-            Assert.Contains($"LEAN_REPORT_DELTA_PLAN mode={mode} {counts}", result.Text, StringComparison.Ordinal);
-            Assert.Contains($"LEAN_REPORT_DELTA mode={(tampered ? "full-fallback" : mode)} {counts}", result.Text, StringComparison.Ordinal);
+            var counts = mode == "inspector-source" ? "changed=0 added=0 removed=0 recheck=0" : "changed=1 added=0 removed=0 recheck=1";
+            var planMode = mode == "inspector-source" ? "fallback" : "delta";
+            var productionMode = mode == "inspector-source" || tampered ? "full-fallback" : "delta";
+            Assert.Contains($"LEAN_REPORT_DELTA_PLAN mode={planMode} {counts}", result.Text, StringComparison.Ordinal);
+            Assert.Contains($"LEAN_REPORT_DELTA mode={productionMode} {counts}", result.Text, StringComparison.Ordinal);
         }
         else Assert.Contains(tampered ? "status=miss reason=local-entry-unavailable" : "status=hit mode=local-exact",
             result.Text, StringComparison.Ordinal);
         Assert.Equal(tampered ? 1 : 0, validation.ExitCode);
         if (tampered) Assert.Contains("statement material address mismatch", validation.Text, StringComparison.Ordinal);
-        var expectedExtractions = 1 + (mode == "delta" ? 1 : 0) + (tampered ? 1 : 0);
+        var expectedExtractions = 1 + (mode != "exact" || tampered ? 1 : 0) + (mode == "delta" && tampered ? 1 : 0);
         Assert.Equal(expectedExtractions, fixture.ProducerCalls.Length);
         Assert.Equal(expectedExtractions, fixture.ExtractedModules.Length);
         if (mode == "delta") Assert.Equal(new[] { "Trureturing" }, fixture.ExtractedModules[1]);
-        if (tampered) Assert.Equal(new[] { "D5.Probe", "Trureturing" }, fixture.ExtractedModules[^1].Order(StringComparer.Ordinal));
+        if (mode == "inspector-source" || tampered)
+            Assert.Equal(new[] { "D5.Probe", "Trureturing" }, fixture.ExtractedModules[^1].Order(StringComparer.Ordinal));
         fixture.Success(liveValidation);
         fixture.Success(cacheValidation);
         fixture.Success(liveInput);

@@ -22,7 +22,7 @@ def inputBytes : String := (Json.mkObj [
       ("declarations", Json.arr #[Json.mkObj [
         ("kind", toJson "theorem"),
         ("declaration_name_key", toJson (encodeNameKey `Fixture.pending)),
-        ("statement_id", toJson "id-pending")]])]])]).compress
+        ("statement_id", toJson "sha256:000000000000000000000000000000000000000000000000000000000000001f")]])]])]).compress
 
 /-- info: Except.ok 4 -/
 #guard_msgs in
@@ -57,7 +57,7 @@ run_cmd IO.FS.withTempDir fun dir => do
     throwError "non-frozen theorem was counted"
   let rows ← ofExcept <| projection.getObjValAs? (Array Json) "rows"
   unless rows.size == 4 && rows.all (fun row =>
-      row.getObjValAs? String "statement_id" != .ok "id-pending") do
+      row.getObjValAs? String "statement_id" != .ok "sha256:000000000000000000000000000000000000000000000000000000000000001f") do
     throwError "non-frozen theorem was published"
   let counts ← ofExcept <| projection.getObjVal? "counts"
   unless (← ofExcept <| counts.getObjValAs? Nat "structural_occurrence") == 1 do

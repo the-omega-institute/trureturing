@@ -10,7 +10,7 @@ public sealed class LeanReportIncrementalReuseTests(ITestOutputHelper output)
     [InlineData("valid")]
     [InlineData("invalid-archive")]
     [InlineData("missing-member")]
-    public void AuxiliarySourceDeltaReusesOnlyACompleteBaseline(string damage)
+    public void InspectorSourceDeltaRejectsBaselineAndProducesFreshReport(string damage)
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new LeanReportTransportFixture();
@@ -25,11 +25,14 @@ public sealed class LeanReportIncrementalReuseTests(ITestOutputHelper output)
             Assert.All(report.RootElement.GetProperty("modules").EnumerateArray(),
                 module => Assert.NotEmpty(module.GetProperty("declarations").EnumerateArray()));
 
-        var auxiliary = Path.Combine(fixture.Repository, LeanReportTransportFixture.AuxiliarySource);
-        fixture.WriteSource(LeanReportTransportFixture.AuxiliarySource, File.ReadAllText(auxiliary) + "-- comment-only delta\n");
+        // Inspector sources belong to both source and producer discovery, even
+        // outside the managed modules. This is producer invalidation, not a
+        // reachable source-only, zero-recheck reuse case.
+        var inspectorSource = Path.Combine(fixture.Repository, LeanReportTransportFixture.AuxiliarySource);
+        fixture.WriteSource(LeanReportTransportFixture.AuxiliarySource, File.ReadAllText(inspectorSource) + "-- comment-only delta\n");
         var after = fixture.ReadInspectorInputs();
-        Assert.Equal(before.Producer, after.Producer);
-        Assert.Equal(before.Resident, after.Resident);
+        Assert.NotEqual(before.Producer, after.Producer);
+        Assert.NotEqual(before.Resident, after.Resident);
         Assert.Equal(before.Config, after.Config);
         Assert.NotEqual(before.Sources, after.Sources);
         Assert.NotEqual(before.Repository, after.Repository);
@@ -42,7 +45,7 @@ public sealed class LeanReportIncrementalReuseTests(ITestOutputHelper output)
         Assert.False(File.Exists(current));
         var stale = fixture.Input("verify", "--repository", fixture.Repository, "--report", baseline);
         Assert.Equal(2, stale.ExitCode);
-        Assert.Contains("raw Lean report is stale for current repository inputs", stale.Text, StringComparison.Ordinal);
+        Assert.Contains("raw Lean report producer is stale for current repository inputs", stale.Text, StringComparison.Ordinal);
 
         if (damage != "valid")
         {
@@ -66,20 +69,24 @@ public sealed class LeanReportIncrementalReuseTests(ITestOutputHelper output)
 
         var result = fixture.MakeInspectedReport();
         fixture.Success(result);
-        Assert.Contains("LEAN_REPORT_DELTA_PLAN mode=reuse changed=0 added=0 removed=0 recheck=0", result.Text, StringComparison.Ordinal);
+        // The zero plan counts mean no compatible baseline was selected;
+        // the extraction assertions below require both modules to be produced.
+        Assert.Contains("LEAN_REPORT_DELTA_PLAN mode=fallback changed=0 added=0 removed=0 recheck=0", result.Text, StringComparison.Ordinal);
         var liveValidation = fixture.Validate(fixture.Output);
         var cacheValidation = fixture.Validate(current);
         var liveInput = fixture.Input("verify", "--repository", fixture.Repository, "--report", fixture.Output);
         var cacheInput = fixture.Input("verify", "--repository", fixture.Repository, "--report", current);
-        output.WriteLine("A1 scenario={0} {1}; make_exit={2}; extraction_calls={3}; live_validate={4}; cache_validate={5}; live_verify={6}; cache_verify={7}; baseline_material_copied={8}",
+        output.WriteLine("A1 scenario={0} {1}; make_exit={2}; extraction_calls={3}; live_validate={4}; cache_validate={5}; live_verify={6}; cache_verify={7}; baseline_material_bytes_equal={8}",
             damage, result.Stdout.Split('\n').Single(line => line.StartsWith("LEAN_REPORT_DELTA mode=", StringComparison.Ordinal)),
             result.ExitCode, fixture.ProducerCalls.Length - 1, liveValidation.ExitCode, cacheValidation.ExitCode,
             liveInput.ExitCode, cacheInput.ExitCode, injected.SequenceEqual(File.ReadAllBytes(fixture.Output + ".materials.zip")));
         output.WriteLine("A1 coordinates before={0} after={1}", JsonSerializer.Serialize(before), JsonSerializer.Serialize(after));
 
-        Assert.Contains("LEAN_REPORT_DELTA mode=" + (damage == "valid" ? "reuse" : "full-fallback"), result.Text, StringComparison.Ordinal);
-        Assert.Equal(damage == "valid" ? 1 : 2, fixture.ProducerCalls.Length);
-        if (damage != "valid") Assert.Contains("cached reuse bundle rejected", result.Text, StringComparison.Ordinal);
+        Assert.Contains("LEAN_REPORT_DELTA mode=full-fallback changed=0 added=0 removed=0 recheck=0", result.Text, StringComparison.Ordinal);
+        Assert.Equal(2, fixture.ProducerCalls.Length);
+        Assert.Equal(2, fixture.ExtractedModules.Length);
+        Assert.All(fixture.ExtractedModules, modules =>
+            Assert.Equal(new[] { "D5.Probe", "Trureturing" }, modules.Order(StringComparer.Ordinal)));
         fixture.Success(liveValidation);
         fixture.Success(cacheValidation);
         fixture.Success(liveInput);

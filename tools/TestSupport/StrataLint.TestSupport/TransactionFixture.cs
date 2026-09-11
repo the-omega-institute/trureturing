@@ -413,13 +413,14 @@ internal sealed partial class TransactionFixture
     internal ProcessOutput Run(
         string command,
         string gid = Gid,
-        string atomId = AtomId,
+        string? atomId = AtomId,
         bool staleReport = false,
         bool coverDispositionFailure = false,
         TimeSpan? timeout = null,
         string? baseRevision = null,
         bool rejectDepositHeader = false,
-        bool useCanonicalFrozenQuery = false) =>
+        bool useCanonicalFrozenQuery = false,
+        bool throughMake = false) =>
         TestProcessRunner.Run(
             "/usr/bin/env",
             [
@@ -432,12 +433,16 @@ internal sealed partial class TransactionFixture
                 $"PLAYBOOK_REJECT_DEPOSIT_HEADER={(rejectDepositHeader ? "1" : "0")}",
                 $"PLAYBOOK_USE_CANONICAL_FROZEN_QUERY={(useCanonicalFrozenQuery ? "1" : "0")}",
                 $"PLAYBOOK_REAL_CLI={RealCliPath()}",
-                "/bin/bash",
-                Path.Combine(Root, ScriptPath),
-                command,
-                baseRevision ?? (command == "deposit" ? "HEAD" : "synthetic-base"),
-                atomId,
-                gid,
+                .. (throughMake
+                    ? new[] { "/usr/bin/make", command, $"BASE={baseRevision ?? "HEAD"}", $"GID={gid}" }
+                        .Concat(atomId is null ? [] : new[] { $"ATOM_ID={atomId}" })
+                    : new[]
+                        {
+                            "/bin/bash", Path.Combine(Root, ScriptPath), command,
+                            baseRevision ?? (command is "deposit" or "deposit-uncovered" ? "HEAD" : "synthetic-base"),
+                        }
+                        .Concat(atomId is null ? [] : new[] { atomId })
+                        .Append(gid)),
             ],
             Root,
             timeout ?? BoundedProcessRunner.HangDetectionBudget,
