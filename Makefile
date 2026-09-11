@@ -53,10 +53,10 @@ digestion-readiness:
 	@dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- digest-status --readiness
 
 show-atom:
-	@/bin/bash tools/scripts/cli.sh show-atom --atom-id "$(ATOM_ID)"
+	@test -x tools/StrataLint.Cli/bin/Release/net10.0/StrataLint || dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release >/dev/null; dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- show-atom --atom-id "$(ATOM_ID)"
 
 atom-context:
-	@/bin/bash tools/scripts/cli.sh atom-context --atom-id "$(ATOM_ID)"
+	@test -x tools/StrataLint.Cli/bin/Release/net10.0/StrataLint || dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release >/dev/null; dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- atom-context --atom-id "$(ATOM_ID)"
 
 truth-export:
 	@dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- truth-export --out "$(OUT)" --candidate-lean-report "$(LEAN_REPORT)"
@@ -89,10 +89,10 @@ quarantine-clear:
 	@/bin/bash tools/scripts/ingest.sh quarantine-clear "$(BASE)" "$(ATOM_ID)"
 
 settle:
-	@/bin/bash tools/scripts/cli.sh settle-atom --request "$(REQUEST)" --base "$(BASE)"
+	@test -x tools/StrataLint.Cli/bin/Release/net10.0/StrataLint || dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release >/dev/null; dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- settle-atom --request "$(REQUEST)" --base "$(BASE)"
 
 settle-clear:
-	@/bin/bash tools/scripts/cli.sh settle-atom --clear "$(ATOM_ID)" --base "$(BASE)"
+	@test -x tools/StrataLint.Cli/bin/Release/net10.0/StrataLint || dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release >/dev/null; dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- settle-atom --clear "$(ATOM_ID)" --base "$(BASE)"
 
 worktree:
 	@/bin/bash tools/scripts/worktree-init.sh "$(KIND)" "$(NAME)" "$(WORKTREE_DEST)" "$(BASE)"

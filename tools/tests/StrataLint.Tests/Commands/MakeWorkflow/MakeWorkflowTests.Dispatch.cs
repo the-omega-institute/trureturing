@@ -195,29 +195,21 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(
             $"\t@/bin/bash {IngestScriptPath} mathlib-reanchor \"$(BASE)\"",
             Recipe(makefile, "mathlib-reanchor"));
-        // The four targets that reach the command line delegate in one line each, because the
-        // dispatch table above allows at most one recipe line per target. The build check and the
-        // --no-build invocation live in the script, which is where the behaviour belongs: a fresh
-        // worktree carries no build output, and before this two of five implementation seats on
-        // 2026-09-11 hit a raw process-start exception six times between them while every
-        // implementation brief opens by calling show-atom.
-        foreach (var (target, verb) in new[]
+        // The four targets that reach the command line keep the verb in the Makefile and stay one
+        // recipe line: the dispatch table above allows at most one line per target, and
+        // CliVerbLinkageTests reads the verb out of this file to prove it is registered. The same
+        // line first checks that the build output exists and builds it when it does not, because a
+        // fresh worktree carries none; on 2026-09-11 two of five implementation seats hit a raw
+        // process-start exception six times between them while every brief opens by calling show-atom.
+        foreach (var noBuildTarget in new[] { "show-atom", "atom-context", "settle", "settle-clear" })
         {
-            ("show-atom", "show-atom"),
-            ("atom-context", "atom-context"),
-            ("settle", "settle-atom"),
-            ("settle-clear", "settle-atom"),
-        })
-        {
+            var recipe = Recipe(makefile, noBuildTarget);
+            Assert.Contains("dotnet run --no-build --project", recipe, StringComparison.Ordinal);
             Assert.Contains(
-                $"@/bin/bash tools/scripts/cli.sh {verb} ",
-                Recipe(makefile, target),
+                "@test -x tools/StrataLint.Cli/bin/Release/net10.0/StrataLint || dotnet build",
+                recipe,
                 StringComparison.Ordinal);
         }
-        var cliScript = File.ReadAllText(Path.Combine(root, "tools", "scripts", "cli.sh"));
-        Assert.Contains("dotnet run --no-build --project", cliScript, StringComparison.Ordinal);
-        Assert.Contains("if [ ! -x \"$BINARY\" ]; then", cliScript, StringComparison.Ordinal);
-        Assert.Contains("dotnet build \"$PROJECT\" --configuration Release", cliScript, StringComparison.Ordinal);
         Assert.Contains(
             EchoResidualSummaryScriptPath,
             Recipe(makefile, "echo-residual-summary"),
