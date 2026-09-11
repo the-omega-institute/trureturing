@@ -69,7 +69,7 @@ commutant 为标量就只能有一条。**这是定量代价表,不是待决选�
 
 | 缺口 | 类别 | 说明 |
 |---|---|---|
-| 半单性由酉性导出(Maschke) | **数学**,可做 | `RecordCapacity` 现以 `[IsSemisimpleRing (commutant U)]` 为假设 |
+| 半单性由酉性导出(**⋆-闭包**,非 Maschke) | **数学**,可做,在证 | `RecordCapacity.semisimple_commutant_has_record_capacity` 现以 `[IsSemisimpleRing (commutant U)]` 为假设。该定理的 `G` 是**任意群**(无有限性、无紧性),故 Maschke 路线不适配;正确杠杆是 `U g⁻¹ = (U g)⁻¹ = (U g)*` ⟹ 交换子对伴随封闭 ⟹ 有限维 ⋆-子代数 ⟹ `Ring.jacobson = ⊥` ⟹ 半单(经 `Artinian/Module.lean:650` 的 `isSemisimpleRing_iff_jacobson`)。**酉性是承重的**:不加它则 `G = ℤ`、`U n = [[1,n],[0,1]]` 的交换子为 `ℂ[ε]/(ε²)`,根基非零。 |
 | objectivity 本身(而非「片段信息完整」) | **物理输入** | 需记录/环境分片结构为何出现,观察者假设不给 |
 | cross-species:为何所有 probe 共享同一 active symmetry | **物理输入** | 见 `OPEN-QUESTIONS.md` 第 14 轮定价表 |
 | §17.1 / §18 量子统计层 | **物理输入** | canonical quantization;`ρ_C ⊗ ρ_β` 是新制备条件 |
