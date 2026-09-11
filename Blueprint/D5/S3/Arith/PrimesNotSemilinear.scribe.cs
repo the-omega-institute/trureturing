@@ -16,9 +16,10 @@ internal sealed class PrimesNotSemilinearDocument : IScribeDocumentDefinition
                 H("Nonsemilinearity of the prime set with one adjoined"),
                 StatementSource.FromAuthor(F.Disp(F.Seq(
                     F.Neg,
+                    F.Sp,
                     new Formula.Apply(F.Id("IsSemilinearSet"),
                     [F.Seq(F.OpenBrace, F.D(1), F.CloseBrace, F.Cup, F.Mathbb, F.Grp(F.Id("P")))])))),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("gilles2012unaryprimes")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Arith/gilles2012unaryprimes")),
                 Blocks(
                     Paragraph(Text(
                         "Here P denotes the set of prime natural numbers, and the ambient set is N. "
