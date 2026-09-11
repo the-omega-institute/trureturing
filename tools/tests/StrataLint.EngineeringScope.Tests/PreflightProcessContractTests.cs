@@ -14,6 +14,7 @@ public sealed class PreflightProcessContractTests
         fixture.Write(".gitignore", "build/\n");
         fixture.Write("tools/scripts/ci-stage.sh", """
             #!/bin/bash
+            printf '%s\n' "$1" >> "$CONTRACT_CALLS"
             mkdir -p build/ci
             printf 'build/ci/engineering-paths.nul\0' > build/ci/engineering-paths.nul
             if [[ "$1" == current ]]; then
@@ -24,8 +25,12 @@ public sealed class PreflightProcessContractTests
             fi
             """);
         fixture.Commit();
+        var source = fixture.SourceState();
         var result = fixture.Preflight("pr", fixture.Git("rev-parse", "HEAD").Trim());
         Assert.Equal(2, result.Exit);
+        Assert.Equal(new[] { "engineering", "current" }, fixture.Calls());
+        Assert.Contains("PREFLIGHT_RESULT mode=pr stage=current exit=2 raw_exit=124", result.Text, StringComparison.Ordinal);
+        Assert.Equal(source, fixture.SourceState());
         var lines = result.Text.Split('\n');
         var candidate = lines.Single(line => line.StartsWith("PREFLIGHT_CANDIDATE path=", StringComparison.Ordinal))["PREFLIGHT_CANDIDATE path=".Length..];
         Assert.False(TemporaryFileSystem.Directory.Exists(candidate));
@@ -37,18 +42,59 @@ public sealed class PreflightProcessContractTests
             if (entry.DataStream is { } data)
                 entries.Add(entry.Name, new StreamReader(data).ReadToEnd());
         Assert.Equal("raw cold build output\n", entries["build/ci/logs/current/lean-inspector/build.stdout.log"]);
+        Assert.Equal("{\"stage\":\"current\",\"exit\":2}\n", entries["build/ci/current-result.json"]);
         Assert.DoesNotContain("build/ci/current.json", entries.Keys);
         Assert.DoesNotContain(CommonExecutionEvidence.ReportPath, entries.Keys);
     }
 
-    [Fact]
-    public void DefaultPushRunsCommonStagesOnceWithoutParentOrRemote()
+    [Theory]
+    [InlineData("")]
+    [InlineData("push")]
+    public void DefaultPushRunsCommonStagesOnceWithoutParentOrRemote(string mode)
     {
         using var fixture = new Fixture(File.ReadAllText(
             Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/preflight.sh")));
-        var result = fixture.Preflight("push", "");
+        var source = fixture.SourceState();
+        var result = fixture.Preflight(mode, "");
         Assert.Equal(0, result.Exit);
         Assert.Equal(new[] { "engineering", "current" }, fixture.Calls());
+        Assert.All(fixture.Observations(), observation =>
+        {
+            Assert.Equal(source.Head, observation.Commit);
+            Assert.Equal(source.Tree, observation.Tree);
+            Assert.Equal(source.Tree, observation.IndexTree);
+            Assert.Empty(observation.Parents);
+            Assert.Empty(observation.Status);
+            Assert.Empty(observation.Remotes);
+            Assert.Empty(observation.RemoteRefs);
+            Assert.Single(observation.Arguments);
+        });
+        Assert.Equal(source, fixture.SourceState());
+    }
+
+    [Theory]
+    [InlineData("unstaged")]
+    [InlineData("staged")]
+    [InlineData("untracked")]
+    public void DirtyPushRunsCurrentWorktreeWithoutRequiringBase(string dirty)
+    {
+        using var fixture = new Fixture(File.ReadAllText(
+            Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/preflight.sh")));
+        fixture.MakeDirty(dirty);
+        var source = fixture.SourceState();
+        Assert.NotEmpty(source.Status);
+        var result = fixture.Preflight("push", "not-an-immutable-base");
+        Assert.True(result.Exit == 0, result.Text);
+        Assert.Equal(new[] { "engineering", "current" }, fixture.Calls());
+        Assert.All(fixture.Observations(), observation =>
+        {
+            Assert.Equal(source.Head, observation.Commit);
+            Assert.Equal(source.Tree, observation.Tree);
+            Assert.Equal(source.Status, observation.Status);
+            Assert.Single(observation.Arguments);
+        });
+        Assert.Equal(source, fixture.SourceState());
+        Assert.Equal("dirty", File.ReadAllText(Path.Combine(fixture.Root, dirty == "untracked" ? "untracked" : "tracked")));
     }
 
     [Fact]
@@ -56,36 +102,74 @@ public sealed class PreflightProcessContractTests
     {
         using var fixture = new Fixture(File.ReadAllText(
             Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/preflight.sh")));
-        var fork = fixture.Git("rev-parse", "HEAD").Trim();
-        fixture.Write("base-only", "base data");
-        fixture.Commit();
-        var basis = fixture.Git("rev-parse", "HEAD").Trim();
-        fixture.Git("checkout", "--detach", fork);
-        fixture.Write("head-only", "candidate data");
-        fixture.Commit();
+        var (basis, head, tree) = fixture.Diverge();
+        var source = fixture.SourceState();
         var result = fixture.Preflight("pr", basis);
         Assert.True(result.Exit == 0, result.Text);
         Assert.Equal(new[] { "engineering", "current", "delta" }, fixture.Calls());
         Assert.Contains("merged=yes", result.Text, StringComparison.Ordinal);
+        AssertCandidate(fixture, basis, head, tree, [basis, head]);
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(fixture.Root, "base-only")));
-        Assert.Empty(fixture.Git("status", "--porcelain"));
+        Assert.Equal("candidate data", File.ReadAllText(Path.Combine(fixture.Root, "head-only")));
+        Assert.Equal(source, fixture.SourceState());
         var candidateLine = result.Text.Split('\n').Single(line => line.StartsWith("PREFLIGHT_CANDIDATE path=", StringComparison.Ordinal));
         Assert.False(TemporaryFileSystem.Directory.Exists(candidateLine["PREFLIGHT_CANDIDATE path=".Length..]));
     }
 
+    [Fact]
+    public void EqualBaseAndHeadCreatesCleanCandidateWithOneUniqueParent()
+    {
+        using var fixture = new Fixture(File.ReadAllText(
+            Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/preflight.sh")));
+        var source = fixture.SourceState();
+        var tree = fixture.Git("merge-tree", "--write-tree", source.Head, source.Head).Trim();
+        var result = fixture.Preflight("pr", source.Head);
+        Assert.True(result.Exit == 0, result.Text);
+        Assert.Equal(new[] { "engineering", "current", "delta" }, fixture.Calls());
+        AssertCandidate(fixture, source.Head, source.Head, tree, [source.Head]);
+        Assert.Equal(source, fixture.SourceState());
+    }
+
+    private static void AssertCandidate(Fixture fixture, string basis, string head, string tree, string[] parents)
+    {
+        var observations = fixture.Observations();
+        Assert.All(observations, observation =>
+        {
+            Assert.Equal(tree, observation.Tree);
+            Assert.Equal(tree, observation.IndexTree);
+            Assert.NotEqual(head, observation.Commit);
+            Assert.NotEqual(basis, observation.Commit);
+            Assert.Equal(parents, observation.Parents);
+            Assert.Empty(observation.Status);
+            Assert.Empty(observation.Remotes);
+            Assert.Empty(observation.RemoteRefs);
+            Assert.Equal(observation.Arguments[0] == "delta" ? new[] { "delta", basis } : [observation.Arguments[0]],
+                observation.Arguments);
+        });
+        Assert.Single(observations.Select(observation => observation.Commit).Distinct(StringComparer.Ordinal));
+    }
+
     [Theory]
-    [InlineData("", false)]
-    [InlineData("dev", false)]
-    [InlineData("0000000000000000000000000000000000000000", false)]
-    [InlineData("HEAD", true)]
-    public void InvalidBaseOrUntrackedInputRejectsBeforeStages(string basis, bool dirty)
+    [InlineData("", "")]
+    [InlineData("dev", "")]
+    [InlineData("0000000000000000000000000000000000000000", "")]
+    [InlineData("TREE", "")]
+    [InlineData("BLOB", "")]
+    [InlineData("HEAD", "untracked")]
+    [InlineData("HEAD", "unstaged")]
+    [InlineData("HEAD", "staged")]
+    public void InvalidBaseOrUntrackedInputRejectsBeforeStages(string basis, string dirty)
     {
         using var fixture = new Fixture(File.ReadAllText(
             Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/preflight.sh")));
         if (basis == "HEAD") basis = fixture.Git("rev-parse", "HEAD").Trim();
-        if (dirty) fixture.Write("untracked", "dirty");
+        if (basis == "TREE") basis = fixture.Git("rev-parse", "HEAD^{tree}").Trim();
+        if (basis == "BLOB") basis = fixture.Git("rev-parse", "HEAD:tracked").Trim();
+        if (dirty.Length != 0) fixture.MakeDirty(dirty);
+        var source = fixture.SourceState();
         Assert.Equal(2, fixture.Preflight("pr", basis).Exit);
         Assert.Empty(fixture.Calls());
+        Assert.Equal(source, fixture.SourceState());
     }
 
     [Theory]
@@ -141,21 +225,80 @@ public sealed class PreflightProcessContractTests
         internal string Root => Path.Combine(scratch, "repository");
         private string CallsPath => Path.Combine(scratch, "calls");
         private string GitCallsPath => Path.Combine(scratch, "git-calls");
+        private string ObservationsPath => Path.Combine(scratch, "observations");
         private string? gitBin;
         private string? realGit;
         internal Fixture(string preflightScript)
         {
             TemporaryFileSystem.Directory.CreateDirectory(Root);
             Write("tools/scripts/preflight.sh", preflightScript);
-            Write("tools/scripts/ci-stage.sh", """
-                #!/bin/bash
-                printf '%s\n' "$1" >> "$CONTRACT_CALLS"
-                if [[ -f base-only && -f head-only ]]; then printf 'merged=yes\n'; fi
-                exit "${CONTRACT_EXIT:-0}"
-                """);
+            Write("tracked", "original");
+            WriteStageProbe();
             Git("init", "-q"); Git("config", "user.name", "Fixture"); Git("config", "user.email", "fixture@example.invalid");
             Commit();
         }
+        private void WriteStageProbe()
+        {
+            Write("tools/scripts/ci-stage.sh", """
+                #!/bin/bash
+                set -euo pipefail
+                printf '%s\n' "$1" >> "$CONTRACT_CALLS"
+                observation="$CONTRACT_OBSERVATIONS/$1"
+                mkdir -p "$observation"
+                git rev-parse HEAD > "$observation/commit"
+                git rev-parse 'HEAD^{tree}' > "$observation/tree"
+                git show -s --format=%P HEAD > "$observation/parents"
+                # write-tree updates index caches; observe a copy to preserve dirty push input.
+                cp "$(git rev-parse --git-path index)" "$observation/index"
+                GIT_INDEX_FILE="$observation/index" git write-tree > "$observation/index-tree"
+                git status --porcelain --untracked-files=all > "$observation/status"
+                git remote > "$observation/remotes"
+                git for-each-ref '--format=%(refname)' refs/remotes/ > "$observation/remote-refs"
+                printf '%s\n' "$@" > "$observation/arguments"
+                if [[ -f base-only && -f head-only ]]; then printf 'merged=yes\n'; fi
+                exit "${CONTRACT_EXIT:-0}"
+                """);
+        }
+        internal (string Basis, string Head, string Tree) Diverge()
+        {
+            // B's stage must never run; only H replaces it with the probe.
+            Write("tools/scripts/ci-stage.sh", "#!/bin/bash\nexit 97\n");
+            Commit();
+            var fork = Git("rev-parse", "HEAD").Trim();
+            Write("base-only", "base data"); Commit();
+            var basis = Git("rev-parse", "HEAD").Trim();
+            Git("checkout", "--detach", fork);
+            WriteStageProbe();
+            Write("head-only", "candidate data"); Commit();
+            var head = Git("rev-parse", "HEAD").Trim();
+            Assert.Equal(fork, Git("show", "-s", "--format=%P", basis).Trim());
+            Assert.Equal(fork, Git("show", "-s", "--format=%P", head).Trim());
+            var tree = Git("merge-tree", "--write-tree", basis, head).Trim();
+            Assert.NotEqual(Git("rev-parse", basis + "^{tree}").Trim(), tree);
+            Assert.NotEqual(Git("rev-parse", head + "^{tree}").Trim(), tree);
+            return (basis, head, tree);
+        }
+        internal void MakeDirty(string kind)
+        {
+            Write(kind == "untracked" ? "untracked" : "tracked", "dirty");
+            if (kind == "staged") Git("add", "tracked");
+        }
+        internal (string Head, string Tree, string Index, string Status) SourceState()
+        {
+            var status = Git("status", "--porcelain", "--untracked-files=all");
+            return (Git("rev-parse", "HEAD").Trim(), Git("rev-parse", "HEAD^{tree}").Trim(),
+                Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(File.ReadAllBytes(Path.Combine(Root, ".git/index")))), status);
+        }
+        internal Observation[] Observations() => Calls().Select(stage =>
+        {
+            string Read(string name) => File.ReadAllText(Path.Combine(ObservationsPath, stage, name));
+            string[] Lines(string name) => Read(name).Split('\n', StringSplitOptions.RemoveEmptyEntries);
+            return new Observation(Read("commit").Trim(), Read("tree").Trim(),
+                Read("parents").Split([' ', '\n'], StringSplitOptions.RemoveEmptyEntries),
+                Read("index-tree").Trim(), Read("status"), Lines("remotes"), Lines("remote-refs"), Lines("arguments"));
+        }).ToArray();
+        internal sealed record Observation(string Commit, string Tree, string[] Parents, string IndexTree,
+            string Status, string[] Remotes, string[] RemoteRefs, string[] Arguments);
         internal void Write(string path, string text)
         {
             var full = Path.Combine(Root, path);
@@ -192,7 +335,8 @@ public sealed class PreflightProcessContractTests
         }
         internal (int Exit, string Text, string Error) Preflight(string mode, string basis, string raw = "0")
         {
-            var environment = new Dictionary<string, string> { ["MODE"] = mode, ["BASE"] = basis, ["CONTRACT_CALLS"] = CallsPath, ["CONTRACT_EXIT"] = raw };
+            var environment = new Dictionary<string, string> { ["MODE"] = mode, ["BASE"] = basis, ["CONTRACT_CALLS"] = CallsPath,
+                ["CONTRACT_OBSERVATIONS"] = ObservationsPath, ["CONTRACT_EXIT"] = raw };
             if (gitBin is not null)
             {
                 environment["PATH"] = gitBin + Path.PathSeparator + Environment.GetEnvironmentVariable("PATH");
