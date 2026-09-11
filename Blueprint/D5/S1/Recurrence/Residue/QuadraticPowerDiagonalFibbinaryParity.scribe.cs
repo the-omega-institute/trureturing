@@ -9,7 +9,7 @@ internal sealed class QuadraticPowerDiagonalFibbinaryParityDocument : IScribeDoc
     private const string Prefix =
         "D5/S1/Recurrence/Residue/QuadraticPowerDiagonalFibbinaryParity.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Recurrence/hanna2026a397244");
+        LibraryNoteRef.Create("D5/L/ArithSums/hanna2026a397244");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The positive-index coefficients of OEIS A397244 are odd exactly at twice a Fibbinary number plus one.",

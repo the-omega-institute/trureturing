@@ -13,7 +13,7 @@ motivation_gids:
 ## Problem
 
 OEIS A397244, Paul D. Hanna, gives the following NAME and Fibbinary COMMENT,
-quoted verbatim from `Library/Recurrence/hanna2026a397244.md` and matched to
+quoted verbatim from `Library/ArithSums/hanna2026a397244.md` and matched to
 `oeis-A397244.src` supplied by the orchestrator:
 
 > G.f. A(x) satisfies (2*n) * [x^n] A(x)^(2*n) = (2*n-1) * [x^n] A(x)^(2*n+1) for n > 1.
