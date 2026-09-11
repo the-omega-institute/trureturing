@@ -14,7 +14,7 @@
 
 | 结构 | 所需假设 | GID | statement_id |
 |---|---|---|---|
-| 记录片段携带指针的**全部**经典信息(`I = H(p)`) | 片段态两两正交 | `D5/S3/Quantum/Information/OrthogonalRecordEntropy` | `sha256:cee4de5737b3` |
+| 记录片段达到**互信息平台** `I = H(p)`(**不是**完整 objectivity) | 片段态两两正交、CQ 态 | `D5/S3/Quantum/Information/OrthogonalRecordEntropy` | `sha256:cee4de5737b3` |
 | 所有 probe 对同一可观测量读数**一致** | 共享**不可约**表示 + 可观测量等变 | `D5/S3/Quantum/Matrix/CrossSpeciesConsensus` | `sha256:672f7703c7fa` |
 | **并存客观记录条数 ≤ `Σᵢ mᵢ`** | commutant 半单(Wedderburn 块尺寸 `mᵢ`) | `D5/S3/Quantum/Matrix/RecordCapacity` | `sha256:07d5f082f3b7` |
 | 谱读出**保熵 ⟺ 读出矩阵对角** | 有限维、酉基变换 | `D5/S3/Quantum/Divergence/SpectralReadoutEntropyEquality` | `sha256:733b32d4e8cb` |
@@ -22,6 +22,12 @@
 | 免双税 ⟹ **极大混态** | 两语境互无偏、秩一 | `D5/S3/Quantum/Divergence/DualAccountFull` | `sha256:35bc509bf4b8` |
 | 有初始关联时的能量-信息恒等式 | 两边缘恰为 Gibbs 态、联合酉演化 | `D5/S3/Quantum/Information/CorrelatedGibbsEnergyIdentity` | `sha256:81e5d4c3c545` |
 | `I(A:R) + I(A:B) = 2S(A)` | `ABR` 纯态 | `D5/S3/Quantum/Information/InputInformationBalance` | `sha256:380463defe87` |
+
+> **边界(第 15 轮文献核对后补,不得省略)**:互信息平台 `I = H(p)` **不能单独升级为
+> objectivity 判据**。Le 与 Olaya-Castro(2019)明确区分**互信息平台 / strong quantum
+> Darwinism / SBS** 三层;Korbicz 等(*Quantum origins of objectivity*, PRA **91**, 032122, 2015)
+> 的 SBS 定义**不要求**支撑投影与任何共享群作用对易。仓内该定理带有具体的 CQ 态与正交支撑前提,
+> **脱离这些前提使用即为冒领**。
 
 **基础设施**(上表的共同前置,本身不是物理主张):
 `Information/PartialTraceMutualInformation`(`sha256:b39b445e3b81`,偏迹保密度态 + 单参数互信息)、
