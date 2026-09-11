@@ -4,8 +4,6 @@ import argparse
 import ast
 import json
 import pathlib
-import subprocess
-import sys
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -17,17 +15,49 @@ from Structure.sources import file_digest
 
 
 class StructureReviewTests(unittest.TestCase):
-    def test_large_single_frontier_publication_has_flat_rss(self):
-        probe = pathlib.Path(__file__).with_name("structure_frontier_probe.py")
-        results = [json.loads(subprocess.check_output([sys.executable, "-m", "tests.structure_frontier_probe", str(size)],
-                                                     cwd=probe.parent.parent, text=True))
-                   for size in [1, 128]]
-        print("FRONTIER_RSS " + json.dumps(results), flush=True)
-        self.assertLess(results[1]["rss_bytes"] - results[0]["rss_bytes"], 16 * 1024 ** 2,
-                        "boundedFrontierPublicationRSS")
-        for result in results:
+    def test_large_single_frontier_publication_streams_bounded_reads(self):
+        from Structure.writing import jsonl_elements
+        from tests.structure_frontier_probe import probe
+
+        def bounded_copy(source, out, separator=b","):
+            # Observe the real writer's IO. Small reads are legitimate, but
+            # collecting even bounded chunks before writing is not streaming.
+            consumed = emitted = reads = 0
+
+            class Source:
+                def read(_, size=-1):
+                    nonlocal consumed, reads
+                    self.assertTrue(0 < size <= 64 * 1024, "boundedFrontierReadSize")
+                    self.assertLessEqual(consumed - emitted, 1, "frontierReadAheadBeforeOutput")
+                    block = source.read(size)
+                    consumed += len(block)
+                    reads += bool(block)
+                    return block
+
+            class Output:
+                def write(_, block):
+                    nonlocal emitted
+                    written = out.write(block)
+                    emitted += written
+                    return written
+
+            count = jsonl_elements(Source(), Output(), separator)
+            copies.append((consumed, reads, count))
+            return count
+
+        for size in [1, 128]:
+            copies = []
+            with patch("Structure.graph.jsonl_elements", side_effect=bounded_copy), \
+                 patch("Structure.sidecar.jsonl_elements", side_effect=bounded_copy), \
+                 patch("resource.getrusage", side_effect=AssertionError("functionalFrontierMustNotMeasureRSS")):
+                result = probe(size)
             self.assertEqual(result["reported_elements"], result["elements"])
             self.assertGreater(result["artifact_bytes"], result["frontier_bytes"])
+            self.assertEqual(len(copies), 2, "frontierAndPublicationWriterExecuted")
+            self.assertEqual(copies[0][0], result["frontier_bytes"])
+            self.assertGreater(copies[1][0], result["frontier_bytes"])
+            self.assertEqual([copy[2] for copy in copies], [result["elements"], 1])
+            self.assertTrue(all(copy[1] > 1 for copy in copies), "multiBufferFrontierAndSingleRow")
 
     def graph(self, declarations):
         from Structure.graph import analyse

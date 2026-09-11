@@ -1,9 +1,22 @@
-"""Isolated RSS probe for one frozen root with a disk-backed large frontier."""
+"""One frozen root with a disk-backed large frontier.
 
+The functional suite calls probe() without measuring RSS and checks streaming
+IO progress. This original #6767 context adaptation separates machine memory
+from the functional verdict; the production graph and publication are unchanged.
+
+From Census/, run `python3 -m tests.structure_frontier_probe --compare-rss` for
+the separate performance experiment: fresh processes, 1/128 MiB uncompressed
+frontiers, and RSS growth strictly below 16 MiB. A numeric argument retains the
+single-sample RSS entry point. Measurements describe this host and Python run,
+not CI performance or a universal memory bound.
+"""
+
+import argparse
 import gzip
 import json
 import pathlib
 import resource
+import subprocess
 import sys
 import tempfile
 
@@ -12,7 +25,7 @@ from Structure.graph import analyse
 from Structure.sidecar import publish
 
 
-def probe(mebibytes):
+def probe(mebibytes, *, measure_rss=False):
     with tempfile.TemporaryDirectory() as scratch:
         directory = pathlib.Path(scratch)
         frontier = directory / "frontier.gz"
@@ -45,12 +58,28 @@ def probe(mebibytes):
         rows = directory / "rows.jsonl"
         summary = analyse(DiskFrontier(), [key], rows, [], axioms={key[1:]: []})
         publish(directory, {"schema": "census-structure"}, rows)
-        rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
-        return {"rss_bytes": rss * (1 if sys.platform == "darwin" else 1024),
-                "frontier_bytes": size, "elements": count,
-                "reported_elements": summary["frontier_incidences"],
-                "artifact_bytes": (directory / "census-structure.json").stat().st_size}
+        result = {"frontier_bytes": size, "elements": count,
+                  "reported_elements": summary["frontier_incidences"],
+                  "artifact_bytes": (directory / "census-structure.json").stat().st_size}
+        if measure_rss:
+            rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+            result["rss_bytes"] = rss * (1 if sys.platform == "darwin" else 1024)
+        return result
 
 
 if __name__ == "__main__":
-    print(json.dumps(probe(int(sys.argv[1]))))
+    parser = argparse.ArgumentParser(description=__doc__)
+    mode = parser.add_mutually_exclusive_group(required=True)
+    mode.add_argument("mebibytes", type=int, nargs="?")
+    mode.add_argument("--compare-rss", action="store_true")
+    options = parser.parse_args()
+    if options.compare_rss:
+        results = [json.loads(subprocess.check_output(
+            [sys.executable, "-m", "tests.structure_frontier_probe", str(size)],
+            cwd=pathlib.Path(__file__).resolve().parents[1], text=True)) for size in [1, 128]]
+        growth = results[1]["rss_bytes"] - results[0]["rss_bytes"]
+        within_limit = growth < 16 * 1024 ** 2
+        print(json.dumps({"samples": results, "rss_growth_bytes": growth,
+                          "limit_bytes": 16 * 1024 ** 2, "within_limit": within_limit}), flush=True)
+        raise SystemExit(0 if within_limit else 1)
+    print(json.dumps(probe(options.mebibytes, measure_rss=True)))
