@@ -1,6 +1,6 @@
 # Density-state covariance sum bound
 
-Implementation scope: all four requested mathematical parts. PR creation and merge
+Worker outcome: 成 (implementation stage). All four requested mathematical parts are proved. PR creation and merge
 remain the orchestrator's work. This report does not claim a merged result.
 Producer: Codex implementation worker using lean4; zero independent review seats,
 single-agent self-check. The caller's 600-sample counts were input; the separate
@@ -87,7 +87,7 @@ The exact optimality/equality case of Popoviciu is not separately formalized her
 
 The complete draft compiled with lake env lean on the already stamped hot tree;
 #print axioms covariance_sum_le reported only propext, Classical.choice, Quot.sound.
-No sorry or private axiom is present. Final gate receipts are recorded below when complete.
+No sorry or private axiom is present. Final gate receipts follow below.
 
 One report invocation was accidentally started before serial-lean had finished filling
 baseline caches. It was terminated immediately after discovery, along with its own
@@ -100,3 +100,54 @@ Lean interface repairs: use map_nonneg as a function on the star algebra equival
 make the CStarMatrix-to-Matrix trace coercion explicit; use Matrix.mul_smul instead of
 the similarly named generic rewrite; supply the self-adjoint predicate explicitly to
 CFC rewrites. No statement was weakened to repair a failed proof.
+
+
+## Final local gate receipts
+
+Canonical source sha256:
+ff5fbaa33a52c5f463f763824fed719ae33c39656726b0f8da3f92fc74bdba8f.
+The source-bound report has 27 declarations (including private/generated auxiliaries),
+with 8 public user-facing theorems. The union of all axiom closures is exactly
+Classical.choice, Quot.sound, propext. declaration-audit.json contains the public
+statement identities and the per-theorem assessment.
+
+| Check | Result |
+| --- | --- |
+| Initial serial-lean | exit 0; status=complete built=6 failed=0 missing=6 |
+| Final serial-lean after naming correction | exit 0; status=complete built=1 failed=0 missing=1 |
+| make -C tools dotnet | exit 0; 0 warnings, 0 errors |
+| Final make lean-report | exit 0; delta changed=1 added=0 removed=0 recheck=1 |
+| make emit | exit 0; 1 changed Blueprint, rendered and read |
+| CI-layer scribe-content-checks.sh | exit 0; status=classified red=0 |
+| make deposit-uncovered | exit 0; added=1 changed=0 conflicts=0 |
+
+The Scribe check used the exact merge-base
+ dc78a77a24b7d3b5ad62e96ac30c1f05764c99a0.
+Its summary was DESCRIBE_STATUS case=DESCRIBE-NODES status=classified nodes=11179
+suspected_novel=0 formula_content_slots=68 formula_statements=32 red=0 observe=5012.
+OPEN projection/OBSERVE lines were not treated as red findings.
+
+The deposit used GID
+D5/S3/Quantum/Information/CovarianceSumBound.covariance_sum_le
+and that same immutable base SHA. It reused the valid report, passed
+DEPOSIT_HEADER_CHECKED SL-012, emitted 0 further changes, and returned
+PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED reason=NO_ATOM.
+Frozen module statement_id:
+sha256:764b4acecf70a4ec02895cc386fdc0627662f58d9db718aef3dff79b99818f44.
+Freeze event:
+6a36c5890c5bb4574f9595d6101930a9a562422f6c01ebe339af3f9e98487753.
+
+Post-addition bucket counts: D5 Information=6, Blueprint Information non-md=6,
+Library Quantum=25. Lean header order is canonical; all Lean lines are at most 100
+characters. No governance vocabulary appears in Scribe prose.
+
+No mathematical gap remains in the requested four parts. The row sparsity premise,
+the preparation-time corollary, and a separate optimality/equality-case theorem are
+not proved here. The first is intentionally assumed and the latter two are outside
+this worker's requested scope. No theory volume or atom was created. No PR was opened;
+remote CI and MERGED status remain the orchestrator's responsibility.
+
+Full command logs, including the intentionally terminated premature report, are in
+/var/folders/wv/ht3wzsj138b4sxl3q4t0xdr40000gn/T/consensus-rnd/sshx/covsum-1/attempt-1/.
+The branch is lane/math/covariancesumbound. Final pushed HEAD is recorded in the
+runner result.json rather than introducing a self-referential commit hash here.
