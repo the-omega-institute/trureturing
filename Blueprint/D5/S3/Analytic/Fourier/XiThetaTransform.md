@@ -136,13 +136,11 @@ Lean statement: `D5/S3/Analytic/Fourier/XiThetaTransform.source_theta_fourier_eq
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Fourier/XiThetaTransform.source_theta_fourier_eq_xi` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Dan Romik (2021). *Orthogonal polynomial expansions for the Riemann xi function in the Hermite, Meixner–Pollaczek, and continuous Hahn bases*. URL: <https://doi.org/10.4064/aa200515-10-3>.
+*Citation.* Dan Romik (2021). *Orthogonal polynomial expansions for the Riemann xi function in the Hermite, Meixner–Pollaczek, and continuous Hahn bases*. URL: <https://doi.org/10.4064/aa200515-10-3>.
 
 *Commentary.*
 
-For every complex z, the integral over the real line of sourceThetaKernel(x)*exp(i*z*x) equals xiReading(1/2+i*z). Two integrations by parts on the positive half-line, reflection, and the symmetric Mellin identity prove the result. No division by s*(s-1) occurs, so z=0 and z=plus or minus i/2 are included.
+Romik (1.11), with the all-complex convention Xi(z)=xi(1/2+i*z) from (1.3), states this Fourier identity for the all-real Phi of (1.8). The repository identifies Phi with sourceThetaKernel and proves the integral equals xiReading(1/2+i*z) for every complex z using two integrations by parts, reflection, and the symmetric Mellin identity. No division by s*(s-1) occurs, so z=0 and z=plus or minus i/2 are included.
 
 **Theorem 1.11 (The constant coefficient is one).**
 

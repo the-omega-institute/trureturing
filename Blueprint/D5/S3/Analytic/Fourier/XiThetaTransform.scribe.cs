@@ -85,8 +85,8 @@ internal sealed class XiThetaTransformDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Analytic/Fourier/XiThetaTransform.source_theta_fourier_eq_xi"),
                 H("The all-complex transform to xi"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Analytic/romik2021orthogonal")),
-                Blocks(Paragraph(Text("For every complex z, the integral over the real line of sourceThetaKernel(x)*exp(i*z*x) equals xiReading(1/2+i*z). Two integrations by parts on the positive half-line, reflection, and the symmetric Mellin identity prove the result. No division by s*(s-1) occurs, so z=0 and z=plus or minus i/2 are included."))),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Analytic/romik2021orthogonal")),
+                Blocks(Paragraph(Text("Romik (1.11), with the all-complex convention Xi(z)=xi(1/2+i*z) from (1.3), states this Fourier identity for the all-real Phi of (1.8). The repository identifies Phi with sourceThetaKernel and proves the integral equals xiReading(1/2+i*z) for every complex z using two integrations by parts, reflection, and the symmetric Mellin identity. No division by s*(s-1) occurs, so z=0 and z=plus or minus i/2 are included."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("source-theta-coefficient-zero"),

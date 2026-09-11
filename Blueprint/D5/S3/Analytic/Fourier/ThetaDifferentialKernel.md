@@ -38,13 +38,11 @@ Lean statement: `D5/S3/Analytic/Fourier/ThetaDifferentialKernel.thetaSeries_zero
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Fourier/ThetaDifferentialKernel.thetaSeries_zero` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Dan Romik (2021). *Orthogonal polynomial expansions for the Riemann xi function in the Hermite, Meixner–Pollaczek, and continuous Hahn bases*. URL: <https://doi.org/10.4064/aa200515-10-3>.
+*Citation.* Dan Romik (2021). *Orthogonal polynomial expansions for the Riemann xi function in the Hermite, Meixner–Pollaczek, and continuous Hahn bases*. URL: <https://doi.org/10.4064/aa200515-10-3>.
 
 *Commentary.*
 
-For t > 0, thetaSeries 0 t equals (theta t - 1)/2, where theta is the even Hurwitz kernel at parameter zero.
+Romik (1.6) states the positive-index theta-tail identity for t > 0. Here thetaSeries 0 t equals (theta t - 1)/2; the Lean proof identifies theta with the even Hurwitz kernel at parameter zero.
 
 **Theorem 1.4 (The original differential weight).**
 
@@ -52,13 +50,11 @@ Lean statement: `D5/S3/Analytic/Fourier/ThetaDifferentialKernel.omega_eq_series`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Fourier/ThetaDifferentialKernel.omega_eq_series` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Dan Romik (2021). *Orthogonal polynomial expansions for the Riemann xi function in the Hermite, Meixner–Pollaczek, and continuous Hahn bases*. URL: <https://doi.org/10.4064/aa200515-10-3>.
+*Citation.* Dan Romik (2021). *Orthogonal polynomial expansions for the Riemann xi function in the Hermite, Meixner–Pollaczek, and continuous Hahn bases*. URL: <https://doi.org/10.4064/aa200515-10-3>.
 
 *Commentary.*
 
-For t > 0, omega(t) equals 2*pi^2*t^2*thetaSeries 4 t - 3*pi*t*thetaSeries 2 t. Its definition is the positive-integer Gaussian series in Romik (1.7).
+Romik (1.7) gives the positive-integer Gaussian series for omega at t > 0. Separating its two summable weights gives omega(t) = 2*pi^2*t^2*thetaSeries 4 t - 3*pi*t*thetaSeries 2 t; the repository proves this regrouping.
 
 **Theorem 1.5 (The theta differential identity).**
 
@@ -94,13 +90,11 @@ Lean statement: `D5/S3/Analytic/Fourier/ThetaDifferentialKernel.romikPhi_even`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Fourier/ThetaDifferentialKernel.romikPhi_even` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Dan Romik (2021). *Orthogonal polynomial expansions for the Riemann xi function in the Hermite, Meixner–Pollaczek, and continuous Hahn bases*. URL: <https://doi.org/10.4064/aa200515-10-3>.
+*Citation.* Dan Romik (2021). *Orthogonal polynomial expansions for the Riemann xi function in the Hermite, Meixner–Pollaczek, and continuous Hahn bases*. URL: <https://doi.org/10.4064/aa200515-10-3>.
 
 *Commentary.*
 
-For every real x, romikPhi(-x)=romikPhi(x). The original definition contains no absolute value; the reflection defects in psi and its second derivative cancel.
+Romik (1.9) states Phi(-x)=Phi(x) for every real x, with Phi defined without an absolute value in (1.8). The repository proof differentiates modular reflection: the defects in psi and its second derivative cancel.
 
 **Theorem 1.8 (Identification on the whole real axis).**
 

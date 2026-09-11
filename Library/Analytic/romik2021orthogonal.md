@@ -19,12 +19,16 @@ On page 2 of the Online First text, equations (1.6)–(1.9) use
 `theta(t) = 1 + 2 sum(n>=1) exp(-pi*n^2*t)`,
 `omega(t) = sum(n>=1) (2*pi^2*n^4*t^2 - 3*pi*n^2*t)*exp(-pi*n^2*t)`,
 and `Phi(x) = 2*exp(x/2)*omega(exp(2*x))`.
-The theta modular transformation implies that Phi is even. No absolute value
-occurs in this definition of Phi.
+Equation (1.9) explicitly states `Phi(-x) = Phi(x)` for every real x.
+No absolute value occurs in the definition (1.8). Equation (1.6) also gives
+the positive-index theta-tail identity; separating the two summable weights
+in (1.7) gives the weighted-series formula used in the repository.
 
+Page 1, equation (1.3), defines `Xi(z) = xi(1/2 + i*z)` for `z in C`.
 Page 3, equations (1.10) and (1.11), states the Mellin representation of xi and
-`xi(1/2 + i*z) = integral_R Phi(x)*exp(i*z*x) dx` for complex z, without an
-additional prefactor. The repository derives the differential identity
+`Xi(z) = integral_R Phi(x)*exp(i*z*x) dx`, using that all-complex convention,
+without an additional prefactor. These are published statements; their new
+Lean proofs do not change their literature provenance. The repository derives the differential identity
 `Phi = psi'' - psi/4`, where `psi(x)=exp(x/2)*(theta(exp(2*x))-1)/2`, and
 identifies this original Phi with its fixed even theta kernel. These are
 repository object identifications, not claims that the paper uses repository
