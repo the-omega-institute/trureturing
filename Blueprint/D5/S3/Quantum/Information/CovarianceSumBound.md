@@ -10,7 +10,7 @@ $$\operatorname{E}\left(\rho, A\right) = \Re \operatorname{tr}\left(\rho A\right
 
 *Formalization.* `D5/S3/Quantum/Information/CovarianceSumBound.expectation` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Paolo Gibilisco, Fumio Hiai, Denes Petz (2007). *Quantum covariance, quantum Fisher information and the uncertainty principle*. URL: <https://arxiv.org/abs/0712.1208>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ $$\operatorname{Cov}\left(\rho, A, B\right) = \frac{\operatorname{E}\left(\rho, 
 
 *Formalization.* `D5/S3/Quantum/Information/CovarianceSumBound.covariance` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Paolo Gibilisco, Fumio Hiai, Denes Petz (2007). *Quantum covariance, quantum Fisher information and the uncertainty principle*. URL: <https://arxiv.org/abs/0712.1208>.
 
 *Commentary.*
 
@@ -34,7 +34,7 @@ $$\operatorname{Var}\left(\rho, A\right) = \operatorname{E}\left(\rho, {A}^{2}\r
 
 *Formalization.* `D5/S3/Quantum/Information/CovarianceSumBound.variance` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Paolo Gibilisco, Fumio Hiai, Denes Petz (2007). *Quantum covariance, quantum Fisher information and the uncertainty principle*. URL: <https://arxiv.org/abs/0712.1208>.
 
 *Commentary.*
 
@@ -46,7 +46,7 @@ $$\operatorname{Cov}\left(\rho, A, B\right) = \operatorname{Cov}\left(\rho, B, A
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/CovarianceSumBound.covariance_symm` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Paolo Gibilisco, Fumio Hiai, Denes Petz (2007). *Quantum covariance, quantum Fisher information and the uncertainty principle*. URL: <https://arxiv.org/abs/0712.1208>.
 
 *Commentary.*
 
@@ -58,7 +58,7 @@ $$\operatorname{Cov}\left(\rho, A, B+C\right) = \operatorname{Cov}\left(\rho, A,
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/CovarianceSumBound.covariance_add_right` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Denes Petz (2001). *Covariance and Fisher information in quantum mechanics*. URL: <https://arxiv.org/abs/quant-ph/0106125>.
 
 *Commentary.*
 
@@ -70,7 +70,7 @@ $$\operatorname{Cov}\left(\rho, A, A\right) = \operatorname{Var}\left(\rho, A\ri
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/CovarianceSumBound.covariance_self` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Paolo Gibilisco, Fumio Hiai, Denes Petz (2007). *Quantum covariance, quantum Fisher information and the uncertainty principle*. URL: <https://arxiv.org/abs/0712.1208>.
 
 *Commentary.*
 
@@ -82,7 +82,7 @@ $$0 \le \operatorname{Var}\left(\rho, A\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/CovarianceSumBound.variance_nonneg` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Denes Petz (2001). *Covariance and Fisher information in quantum mechanics*. URL: <https://arxiv.org/abs/quant-ph/0106125>.
 
 *Commentary.*
 
@@ -118,7 +118,7 @@ $$\sum_{x,y \in Q} \lvert \operatorname{Cov}\left(\rho, \operatorname{R}\left(x\
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/CovarianceSumBound.covariance_sum_le_of_variance` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Sheldon Axler (2024). *Linear Algebra Done Right, fourth edition*. URL: <https://linear.axler.net/>.
 
 *Commentary.*
 
@@ -130,7 +130,7 @@ $$\sum_{x,y \in Q} \lvert \operatorname{Cov}\left(\rho, \operatorname{R}\left(x\
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/CovarianceSumBound.covariance_sum_le` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Rajesh Sharma, M. Gupta, G. Kapoor (2010). *Some better bounds on the variance with applications*. URL: <https://jmi.ele-math.com/04-32/Some-better-bounds-on-the-variance-with-applications>.
 
 *Commentary.*
 
