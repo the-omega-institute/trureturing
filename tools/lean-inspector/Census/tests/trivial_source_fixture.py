@@ -12,8 +12,8 @@ def check_trivial_sources(repository, directory):
     directory.mkdir(parents=True, exist_ok=True)
     env = dict(os.environ, IE_PROJECTION_OUTPUT_DIR=str(directory))
     def step(command, label, **kwargs):
-        subprocess.run(command, cwd=repository, env=env, check=True)
-    step(["lake", "env", "lean", "-R", "tools/lean-inspector",
+        subprocess.run(["lake", "env", *command], cwd=repository, env=env, check=True)
+    step(["lean", "-R", "tools/lean-inspector",
           "tools/lean-inspector/LeanInformationAudit/Tests/Census/StructuralSources.lean"], "sources")
     read = lambda name: json.loads((directory / name).read_bytes())
     metadata, request = read("trivial-source-index.json"), read("trivial-source-request.json")
@@ -23,10 +23,7 @@ def check_trivial_sources(repository, directory):
             "key_bound": 1, "scopes": dict(metadata["scopes"]), "cache": directory / "cache",
             "addresses": {key[2]: "sha256:fixture"}, "inputs_for": lambda _: {"key": key},
             "keys_by_id": {key[2]: key}, "entries": [], "source_inputs": [], "hits": [], "misses": [key]}
-    binary = directory / "lean-command"
-    binary.write_text('#!/bin/sh\nexec lake env lean "$@"\n')
-    binary.chmod(0o700)
-    result, _ = run_batches(repository, directory, metadata, request, plan, step, str(binary))
+    result, _ = run_batches(repository, directory, metadata, request, plan, step, "lean")
     cached = read("cache/fixture.json")
     expected = read("trivial-source-output.json")["source_inputs"]
     assert len(expected) == 1 and result["source_inputs"] == cached["source_inputs"] == expected, \

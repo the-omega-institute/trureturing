@@ -148,8 +148,11 @@ run_cmd do
           if count > 0 then
             roles := roles.push
               (String.ofList (bits.toList.map fun bit => if bit then '1' else '0'), count)
-        let certificate ← if row.uniqueCaptureCount > 0 then pure (.positive row.certificate) else do
-          let position ← ProjectionProof.fin i 3
+        let position ← ProjectionProof.fin i 3
+        let certificate ← if row.uniqueCaptureCount > 0 then do
+          return .positive (← ProjectionProof.decide (row.certificate.str "original")
+            (← mkAppM ``Catalog.LowersEscape #[original, position]))
+        else do
           let emptyIff ← mkAppOptM ``Finset.card_eq_zero
             #[none, some (← mkAppM ``Catalog.uniqueCapturePairs #[original, position])]
           let zero ← mkDecideProof (← mkEq
