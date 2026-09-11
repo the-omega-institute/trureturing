@@ -1,0 +1,10 @@
+{
+  "worker_flight_ref": "qgh0912-s23-full-composed-quality-r1-cli-fallback",
+  "attempt": 1,
+  "stage": "review",
+  "result_ref": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/qgh0912-s23-full-composed-quality-r1-cli-fallback/attempt-1/result.json",
+  "result_sha256": "18703b7f6c95ef6eeec1c3151c1ed9bb298f2d00c973b0fde7dbca3371152488",
+  "verdict": "comment",
+  "review_status": "incomplete_no_approval",
+  "artifact_publication": "complete"
+}

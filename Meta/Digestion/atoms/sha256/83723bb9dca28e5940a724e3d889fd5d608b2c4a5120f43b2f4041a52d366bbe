@@ -1,0 +1,29 @@
+**34.6 Both bounds on the actual radius change and the signed argument shifts.**
+The nonnegative shifts and a zero coordinate imply
+\[
+0\le S\le(k-1)\epsilon,\qquad
+\|q\|_2^2=\sum_i\xi_i^2-\frac{S^2}{k}.
+\]
+First, \(\sum_i\xi_i^2\le S^2\), since all cross products are nonnegative.
+Combining this with 34.5 yields
+\[
+|t|\le\frac{\sqrt{(k-1)S^2/k}}{\sqrt{k(k-1)}}=\frac Sk=u.
+\]
+Second, \(\xi_i^2\le\epsilon\xi_i\) gives
+\(\sum_i\xi_i^2\le\epsilon S\), and therefore
+\[
+|t|\le\frac{\sqrt{S(k\epsilon-S)}}{k\sqrt{k-1}}.
+\]
+Both are simultaneous bounds on the same radius difference produced by the
+distances. Their radicands are nonnegative because
+\(0\le S\le(k-1)\epsilon\le k\epsilon\). No positive lower bound on
+\(S\) or \(\epsilon\) was used.
+
+Since \(\mu_\xi-\mu_0=u\), the actual envelope argument shifts are
+\[
+L_\xi-L_0=u-t\ge0,\qquad H_\xi-H_0=u+(k-1)t.
+\]
+The second shift can be negative; it is not assigned a sign in general.
+Neither radius bound is presumed attained, and \(t\) is not a free
+parameter chosen independently of the slab geometry.
+

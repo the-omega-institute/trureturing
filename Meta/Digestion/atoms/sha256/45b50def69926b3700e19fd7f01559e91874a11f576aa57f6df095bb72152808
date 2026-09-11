@@ -1,0 +1,17 @@
+**34.11 The common interval before subtraction and the bound for \(G\).**
+At every point of the full domain of 34.1, 34.8 and 34.10 have already shown
+\[
+d:=D_\xi-D_0\in[0,C],\qquad p:=\Psi_\xi-\Psi_0\in[0,C],
+\qquad C=\frac{(k-1)\epsilon z}{e^m-z}.
+\]
+Only now subtract. Since two numbers in \([0,C]\) differ by at most its
+length, \(-C\le d-p\le C\). Therefore
+\[
+\boxed{|G_\xi-G_0|\le\frac{(k-1)\epsilon z}{e^m-z}.}
+\]
+The loss is this one interval length, not its double. Adding two unsigned
+Lipschitz estimates would lose the separately established paired signs.
+This is a valid uniform common-increment bound; no sharpness or optimal
+Lipschitz constant for \(G\) is claimed, and it does not establish the
+sign of an unperturbed grid.
+

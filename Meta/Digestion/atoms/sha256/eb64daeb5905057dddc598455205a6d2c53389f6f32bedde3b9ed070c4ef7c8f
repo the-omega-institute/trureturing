@@ -1,0 +1,30 @@
+**34.18 Strict uniform buffers and a two-corner endpoint counter-witness.**
+For the bound \(S\le(k-1)\epsilon\), a sufficient shape-uniform target
+buffer for a baseline theorem above \(B_{\rm cut}\) is
+\[
+M_0^\xi>B_{\rm cut}+(k-1)\epsilon.
+\]
+It implies \(M_0^\xi>B_{\rm cut}+S\), hence \(M_0^0>B_{\rm cut}\).
+Alternatively, to cover all target slabs with \(M_0^\xi>B_{\rm cut}\),
+it suffices to prove the baseline theorem on the larger strict domain
+\[
+M_0^0>B_{\rm cut}-(k-1)\epsilon,
+\]
+with its other hypotheses retained. Indeed
+\(M_0^0=M_0^\xi-S>B_{\rm cut}-S\ge B_{\rm cut}-(k-1)\epsilon\).
+These sufficient conditions are strict. Replacing the target buffer by
+a weak inequality can leave \(M_0^0=B_{\rm cut}\) when
+\(S=(k-1)\epsilon\), so the old strict theorem cannot be applied there.
+
+There is a positive-width, two-actual-corner witness to the domain failure.
+Whenever \(A=B_{\rm cut}\), let \(h_*=\min_i h_i>0\).
+The baseline slab \([A,A+h_*]\) contains the lower corner and a corner
+obtained by raising a minimum-step coordinate, at its two endpoints.
+It fails the strict cutoff. For every permitted shape with \(S>0\),
+the translated slab \([A+S,A+S+h_*]\) clears the same fixed cutoff.
+For \(S=(k-1)\epsilon>0\), it also attains equality in the weak uniform
+target-buffer condition just discussed. At \(T=0\) the continuous fixed5040
+family has \(A=B_{\rm cut}=\log1058400\) by 32.3, so this exact witness
+applies. It uses neither an unproved mass/tail sign nor a claim of
+prime-lattice attainability for the translated box.
+
