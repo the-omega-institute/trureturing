@@ -48,11 +48,14 @@ private lemma step_limit_le (L : ι → ℕ) (δ : ι → ℤ) (hδ : ∃ p, δ 
     (p : ι) (hp : δ p ≠ 0) : stepLimit L δ hδ ≤ L p / (δ p).natAbs := by
   exact Finset.inf'_le _ (by simp [active, hp])
 
+omit [Fintype ι] in
 private lemma coordinate_span (L : ι → ℕ) (δ a : ι → ℤ) {n : ℕ}
     (hn : 0 < n) (hc : IsChain L δ a n) (p : ι) :
     (n - 1) * (δ p).natAbs ≤ L p := by
   have hfirst := hc ⟨0, hn⟩ p
   have hlast := hc ⟨n - 1, by omega⟩ p
+  change 0 ≤ a p + ((n - 1 : ℕ) : ℤ) * δ p ∧
+    a p + ((n - 1 : ℕ) : ℤ) * δ p ≤ (L p : ℤ) at hlast
   simp only [Nat.cast_zero, zero_mul, add_zero] at hfirst
   have hspan : ((n - 1 : ℕ) : ℤ) * |δ p| ≤ (L p : ℤ) := by
     rcases le_total 0 (δ p) with hd | hd
@@ -63,12 +66,14 @@ private lemma coordinate_span (L : ι → ℕ) (δ a : ι → ℤ) {n : ℕ}
   rw [← Int.natCast_natAbs] at hspan
   exact_mod_cast hspan
 
+omit [Fintype ι] in
 /-- Every nonzero coordinate bounds the length of every chain. -/
 theorem chain_length_le_coordinate (L : ι → ℕ) (δ a : ι → ℤ) {n : ℕ}
     (hc : IsChain L δ a n) (p : ι) (hp : δ p ≠ 0) :
     n ≤ 1 + L p / (δ p).natAbs := by
   by_cases hn : n = 0
-  · omega
+  · subst n
+    exact Nat.zero_le _
   have hpos : 0 < (δ p).natAbs := Int.natAbs_pos.mpr hp
   have hdiv := (Nat.le_div_iff_mul_le hpos).mpr
     (coordinate_span L δ a (by omega) hc p)
@@ -134,6 +139,7 @@ theorem longest_chain_length (L : ι → ℕ) (δ : ι → ℤ) (hδ : ∃ p, δ
   rintro n ⟨a, ha⟩
   exact chain_length_le L δ a hδ ha
 
+omit [Fintype ι] in
 /-- With no moving coordinate, the lower corner gives sequences of every length. -/
 theorem zero_direction_unbounded (L : ι → ℕ) (δ : ι → ℤ) (hδ : ∀ p, δ p = 0)
     (n : ℕ) : IsChain L δ (fun _ => 0) n := by
