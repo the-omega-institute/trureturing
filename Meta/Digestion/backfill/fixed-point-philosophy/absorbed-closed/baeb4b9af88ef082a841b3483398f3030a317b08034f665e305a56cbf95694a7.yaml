@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:baeb4b9af88ef082a841b3483398f3030a317b08034f665e305a56cbf95694a7
   normalized_sha256: sha256:baeb4b9af88ef082a841b3483398f3030a317b08034f665e305a56cbf95694a7
 cas_ref: sha256:baeb4b9af88ef082a841b3483398f3030a317b08034f665e305a56cbf95694a7
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/DependencyClosureAdmissionAntitone.dependency_closure_admission_antitone
+    target_statement_id: sha256:7286842c48ba08ad1ce733be3aa1988df9d7cc70a6ba66c7f16c668a8903607c
 receipts:
   unresolved_subitems: []
