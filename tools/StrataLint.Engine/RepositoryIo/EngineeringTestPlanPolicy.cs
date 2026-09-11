@@ -25,7 +25,12 @@ internal static class EngineeringTestPlanPolicy
         // Explicit false excludes xUnit-based support libraries (#5516).
         return declarations switch
         {
-            [] => ScribeProjectCompilationContext.IsXunitProject(project.Content),
+            [] => document.Descendants().Any(static element =>
+                element.Name.LocalName == "PackageReference"
+                && string.Equals(
+                    (string?)element.Attribute("Include"),
+                    "xunit",
+                    StringComparison.OrdinalIgnoreCase)),
             [var value] when value.Equals("true", StringComparison.OrdinalIgnoreCase) => true,
             [var value] when value.Equals("false", StringComparison.OrdinalIgnoreCase) => false,
             _ => throw new InvalidDataException(

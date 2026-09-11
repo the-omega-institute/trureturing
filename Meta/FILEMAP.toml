@@ -711,7 +711,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml"
 kind = "data"
-admission_plane = "content"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["TestRegistry"]
 verified_by = ["TestRegistry"]

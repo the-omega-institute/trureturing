@@ -5,11 +5,7 @@ namespace StrataLint.Engine;
 internal static partial class RepositoryRules
 {
     private static bool CapacityAffected(DeltaRuleContext context) =>
-        Changed(context, static path =>
-            !IsCapacityExcluded(path)
-            || path.EndsWith(".cs", StringComparison.Ordinal)
-            || path.EndsWith(".csproj", StringComparison.Ordinal))
-        || Changed(context, ScribeTestMapDeriver.IsDerivationInput);
+        Changed(context, static path => !IsCapacityExcluded(path));
 
     private static bool HeartsAffected(DeltaRuleContext context) =>
         Changed(context, static path =>
