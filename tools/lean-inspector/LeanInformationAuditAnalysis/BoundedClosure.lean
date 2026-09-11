@@ -1,3 +1,4 @@
+import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import LeanInformationAudit.Projection.ProjectionSeal
 import LeanInformationAudit.Tests.Projection.FixtureState
 
@@ -102,13 +103,16 @@ run_cmd do
           #[toExpr root, original, normalized, same, index, zero])
       let mut theorems := #[]
       for name in names, i in [:16] do
-        let some loo := projection.leaveOneOut.find? (·.theoremName == qualified[i]!)
+        let some _loo := projection.leaveOneOut.find? (·.theoremName == qualified[i]!)
           | throwError "missing duplicate leave-one-out"
         let certificateName := catalogQualifiedName root ``arena ``viewCatalog name
-          "__lowers_escape"
-        let some (.thmDecl evidence) := (← get).find? (·.getNames.contains loo.certificate)
-          | throwError "missing duplicate certificate"
-        let _ ← ProjectionProof.proof certificateName evidence.value
+          "__trivial_in_catalog"
+        let position ← ProjectionProof.fin i 16
+        let emptyIff ← mkAppOptM ``Finset.card_eq_zero
+          #[none, some (← mkAppM ``Catalog.uniqueCapturePairs #[original, position])]
+        let zero ← mkDecideProof (← mkEq
+          (← mkAppM ``Catalog.uniqueCaptureCount #[original, position]) (mkNatLit 0))
+        let _ ← ProjectionProof.proof certificateName (← mkAppM ``Iff.mp #[emptyIff, zero])
         let realizationName := catalogQualifiedName root ``arena ``viewCatalog name
           primitiveRealizationSuffix
         let _ ← ProjectionProof.value realizationName
@@ -117,13 +121,17 @@ run_cmd do
           #[← mkAppM ``nativeUnit #[mkNatLit (i / 2)]]
         let address ← primitiveKernelAddress (← mkAppM ``Arena.stateFintype #[arenaValue]) bundle
         theorems := theorems.push {
-          theoremName := name, unitName := qualified[i]!, realizationName, certificateName,
+          theoremName := name, unitName := qualified[i]!, realizationName, certificate := .trivial certificateName,
           registrationModuleName := moduleName, index := i, primitiveCount := 1,
           primitiveAxes := #["cut"], primitiveKernelAddress := address,
           uniqueCaptureCount := 0, fullEscapeCount := 0, withoutEscapeCount := 0,
           roleSignatureHistogram := #[], proofMethod := "reflected-readout" : SealTheoremRecord }
-      let some verdict := projection.certificates.find? (·.1 == "verdict")
-        | throwError "missing duplicate verdict"
+      let verdictType ← mkAppM ``Catalog.CatalogRedundant #[original]
+      let predicate := (← whnf verdictType).appArg!
+      let zero ← mkDecideProof (← mkEq
+        (← mkAppM ``Catalog.uniqueCaptureCount #[original, index]) (mkNatLit 0))
+      let verdict ← ProjectionProof.proof `DuplicateView.catalogRedundant (← mkAppOptM ``Exists.intro
+        #[none, some predicate, some index, some zero])
       let counts : SealArenaRecord := {
         catalog := {
           rootId := root, catalogId := ``viewCatalog, catalogKind := .analysisView,
@@ -132,7 +140,7 @@ run_cmd do
             theoremName := row.theoremName, unitName := row.unitName,
             realizationName := row.realizationName, registrationModuleName := moduleName,
             index := row.index } },
-        irredundantCertificateName := verdict.2, proofMethod := "reflected-readout",
+        verdict := .redundant verdict, proofMethod := "reflected-readout",
         stateCard := 9, offDiagonalPairCount := 72, fullEscapeCount := 0, theorems }
       let counts ← prepareAnalysisQualifiedCounts counts (← get)
       pure ({ counts, projection, analysis, layerChains : AnalysisCatalogRecord }, system)

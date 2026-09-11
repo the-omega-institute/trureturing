@@ -1,3 +1,4 @@
+import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import LeanInformationAudit.Projection.ProjectionSeal
 import D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalCatalog
 import LeanInformationAudit.Tests.Projection.FixtureState
@@ -147,16 +148,28 @@ run_cmd do
           if count > 0 then
             roles := roles.push
               (String.ofList (bits.toList.map fun bit => if bit then '1' else '0'), count)
+        let certificate ← if row.uniqueCaptureCount > 0 then pure (.positive row.certificate) else do
+          let position ← ProjectionProof.fin i 3
+          let emptyIff ← mkAppOptM ``Finset.card_eq_zero
+            #[none, some (← mkAppM ``Catalog.uniqueCapturePairs #[original, position])]
+          let zero ← mkDecideProof (← mkEq
+            (← mkAppM ``Catalog.uniqueCaptureCount #[original, position]) (mkNatLit 0))
+          pure (.trivial (← ProjectionProof.proof (row.certificate.str "trivial")
+            (← mkAppM ``Iff.mp #[emptyIff, zero])))
         theorems := theorems.push {
           theoremName := occurrenceNames[i]!, unitName, realizationName := realizations[i]!,
-          certificateName := row.certificate, registrationModuleName := moduleName,
+          certificate, registrationModuleName := moduleName,
           index := i, primitiveCount := 1, primitiveAxes := #["cut"],
           primitiveKernelAddress := address, uniqueCaptureCount := row.uniqueCaptureCount,
           fullEscapeCount := chain.terminalEscapeCount,
           withoutEscapeCount := row.uniqueCaptureCount + chain.terminalEscapeCount,
           roleSignatureHistogram := roles, proofMethod := "reflected-readout" : SealTheoremRecord }
-      let some verdict := projection.certificates.find? (·.1 == "verdict")
-        | throwError "causal missing verdict certificate"
+      let verdictType ← mkAppM ``Catalog.CatalogRedundant #[original]
+      let predicate := (← whnf verdictType).appArg!
+      let zero ← mkDecideProof (← mkEq
+        (← mkAppM ``Catalog.uniqueCaptureCount #[original, index]) (mkNatLit 0))
+      let verdict ← ProjectionProof.proof `CausalProjection.catalogRedundant (← mkAppOptM ``Exists.intro
+        #[none, some predicate, some index, some zero])
       let counts : SealArenaRecord := {
         catalog := {
           rootId := `Causal, catalogId := ``catalog, catalogKind := .analysisView,
@@ -165,7 +178,7 @@ run_cmd do
             theoremName := row.theoremName, unitName := row.unitName,
             realizationName := row.realizationName, registrationModuleName := moduleName,
             index := row.index } },
-        irredundantCertificateName := verdict.2, proofMethod := "reflected-readout",
+        verdict := .redundant verdict, proofMethod := "reflected-readout",
         stateCard := 48, offDiagonalPairCount := projection.denominator,
         fullEscapeCount := chain.terminalEscapeCount, theorems }
       let counts ← prepareAnalysisQualifiedCounts counts (← get)
