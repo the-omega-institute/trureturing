@@ -121,7 +121,8 @@ run_cmd do
           #[← mkAppM ``nativeUnit #[mkNatLit (i / 2)]]
         let address ← primitiveKernelAddress (← mkAppM ``Arena.stateFintype #[arenaValue]) bundle
         theorems := theorems.push {
-          theoremName := name, unitName := qualified[i]!, realizationName, certificate := .trivial certificateName,
+          theoremName := name, unitName := qualified[i]!, realizationName,
+          certificate := .trivial certificateName,
           registrationModuleName := moduleName, index := i, primitiveCount := 1,
           primitiveAxes := #["cut"], primitiveKernelAddress := address,
           uniqueCaptureCount := 0, fullEscapeCount := 0, withoutEscapeCount := 0,
@@ -130,8 +131,8 @@ run_cmd do
       let predicate := (← whnf verdictType).appArg!
       let zero ← mkDecideProof (← mkEq
         (← mkAppM ``Catalog.uniqueCaptureCount #[original, index]) (mkNatLit 0))
-      let verdict ← ProjectionProof.proof `DuplicateView.catalogRedundant (← mkAppOptM ``Exists.intro
-        #[none, some predicate, some index, some zero])
+      let verdict ← ProjectionProof.proof `DuplicateView.catalogRedundant
+        (← mkAppOptM ``Exists.intro #[none, some predicate, some index, some zero])
       let counts : SealArenaRecord := {
         catalog := {
           rootId := root, catalogId := ``viewCatalog, catalogKind := .analysisView,
