@@ -45,3 +45,5 @@ artifact_kinds:
     path_selectors:
       - "experiments"
       - "formal"
+
+# CI integration probe: registered judge fixture plus content report; expected rejection.
