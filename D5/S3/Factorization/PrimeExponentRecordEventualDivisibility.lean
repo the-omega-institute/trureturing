@@ -15,15 +15,16 @@ import Mathlib.Analysis.Calculus.Deriv.MeanValue
 /-!
 # Eventual divisibility of prime-exponent records
 
-OEIS A384669 attributes to Hal M. Switkay, dated 2025-06-06, the conjecture
-that every positive natural divides all sufficiently large strict records of
-the prime-exponent score. This module proves that statement. The proof is
-repository-derived; no claim of priority is made, and subsequent literature
-has not been systematically searched.
+OEIS A384669 revision #6, submitted by Hal M. Switkay on 2025-06-08, states the
+conjecture that every positive natural divides all sufficiently large strict
+records of the prime-exponent score. This module proves that statement. The
+proof is repository-derived; no claim of priority is made, and subsequent
+literature has not been systematically searched.
 
-The resulting threshold has no explicit closed form here. Intermediate bounds
-`B` and `C` are extracted from eventual real estimates using
-`Classical.choose`, so the proof is nonconstructive.
+The chosen `N` is a sufficient threshold depending on `x` and `d`. This
+implementation obtains intermediate bounds `B` and `C` with `Classical.choose`;
+the module does not extract an executable procedure for computing `N` or
+address the least threshold.
 -/
 
 open scoped BigOperators

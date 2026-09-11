@@ -46,15 +46,17 @@ internal sealed class PrimeExponentRecordEventualDivisibilityDocument
                 "For every real 0<x<1 and every natural d>=1, there is a natural threshold N "
                     + "such that d divides every strict prime-exponent record n>=N. The proof "
                     + "takes the maximum of the prime-power thresholds for the finitely many "
-                    + "prime factors of d. The resulting N has no explicit closed form here: "
-                    + "the intermediate bounds B and C are extracted from eventual real "
-                    + "estimates with Classical.choose, so the proof is nonconstructive.",
+                    + "prime factors of d. The chosen N is a sufficient threshold depending "
+                    + "on x and d. This implementation obtains intermediate bounds B and C "
+                    + "with Classical.choose; the document does not extract an executable "
+                    + "procedure for computing N or address the least threshold.",
                 DescribeRole.Theorem),
             Paragraph(Text(
-                "OEIS A384669 attributes this conjecture to Hal M. Switkay, dated 2025-06-06. "
-                    + "The proofs in this document are repository-derived. No claim of a first "
-                    + "proof or of an unresolved present status is made; subsequent literature "
-                    + "was not systematically searched.")))));
+                "OEIS A384669 revision #6, submitted by Hal M. Switkay on 2025-06-08, "
+                    + "states this conjecture. The proofs in this document are "
+                    + "repository-derived. No claim of a first proof or of an unresolved "
+                    + "present status is made; subsequent literature was not systematically "
+                    + "searched.")))));
 
     private static DocumentBlock.Describe Entry(
         string id,
