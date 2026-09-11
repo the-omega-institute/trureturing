@@ -190,11 +190,13 @@ class PairFixture(PartitionFixture):
         registration["materials"] = []
         write(self.root / "Meta/ReportProducers/lean-report.json", json.dumps(registration))
         write(self.root / "Meta/engineering-projects.json", json.dumps({
-            "version": 1, "projects": [{
+            "version": 1, "rule_build_inputs": [], "projects": [{
                 "path": "tools/scripts/report/JudgeSeedTask.csproj", "assembly": "JudgeSeedTask",
                 "role": "test-support", "ci": False,
                 "include": ["tools/scripts/report/JudgeSeedTask.cs"], "exclude": [], "references": [],
                 "owner": None, "owned_test_assembly": None, "test_partition": None,
+                "root_namespace": "Fixture", "namespace_exclude": [], "global_namespace_exceptions": [],
+                "build_inputs": [], "execution_inputs": None, "execution_excludes": None, "execution_environment": None,
             }], "historical_projects": []}))
         subprocess.run(["git", "init", "--quiet", str(self.root)], check=True, capture_output=True)
         subprocess.run(["git", "-C", str(self.root), "add", "tools"], check=True, capture_output=True)

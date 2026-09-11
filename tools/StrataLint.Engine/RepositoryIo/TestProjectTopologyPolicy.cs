@@ -5,7 +5,7 @@ namespace StrataLint.Engine;
 internal sealed record TestProjectTopologyProject(
     string Path,
     string Content,
-    EngineeringProjectRegistration Registration);
+    EngineeringProjectDeclaration Registration);
 
 internal sealed record TestProjectTopologySnapshot(
     IReadOnlyList<TestProjectTopologyProject> Projects);
@@ -76,13 +76,13 @@ internal static partial class RepositoryRules
     }
 
     internal static TestProjectTopologySnapshot ReadSnapshotProjects(RepositorySnapshot snapshot) =>
-        ReadRegisteredProjects(snapshot, EngineeringProjectRegistry.Read(snapshot));
+        ReadRegisteredProjects(snapshot, EngineeringProjectRegistry.Read(snapshot).Projects);
 
     internal static TestProjectTopologySnapshot ReadBaseProjects(RepositorySnapshot baseline, RepositorySnapshot candidate) =>
         ReadRegisteredProjects(baseline, EngineeringProjectRegistry.ReadBase(baseline, candidate));
 
-    private static TestProjectTopologySnapshot ReadRegisteredProjects(RepositorySnapshot snapshot, EngineeringProjectRegistry registry) =>
-        new(registry.Projects.Select(project => new TestProjectTopologyProject(project.Path,
+    private static TestProjectTopologySnapshot ReadRegisteredProjects(RepositorySnapshot snapshot, IReadOnlyList<EngineeringProjectDeclaration> projects) =>
+        new(projects.Select(project => new TestProjectTopologyProject(project.Path,
             snapshot.Files[RepoPath.CreateKnown(project.Path)].Text, project)).ToArray());
 
     internal static TestProjectTopologyResult EvaluateSnapshots(RepositorySnapshot protectedBase, RepositorySnapshot candidate) =>
@@ -354,7 +354,7 @@ internal static partial class RepositoryRules
                     candidate.AssemblyName)));
     }
 
-    private static bool SameTopologyRegistration(EngineeringProjectRegistration before, EngineeringProjectRegistration after) =>
+    private static bool SameTopologyRegistration(EngineeringProjectDeclaration before, EngineeringProjectDeclaration after) =>
         before.Assembly == after.Assembly && before.Role == after.Role && before.Owner == after.Owner
         && before.OwnedTestAssembly == after.OwnedTestAssembly && before.References.SequenceEqual(after.References);
 
@@ -392,7 +392,7 @@ internal static partial class RepositoryRules
         bool IsTest,
         bool IsOwnedTest,
         ImmutableArray<string> DirectProjectReferences,
-        EngineeringProjectRegistration Registration);
+        EngineeringProjectDeclaration Registration);
 
     private sealed record DebtGraph(
         ImmutableArray<TestProjectTopologyDebt> Debt,

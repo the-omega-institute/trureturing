@@ -6,6 +6,52 @@ namespace StrataLint.Tests;
 
 public sealed class LeanReportProducerInputScriptTests
 {
+    [Theory]
+    [InlineData("root_namespace")]
+    [InlineData("namespace_exclude")]
+    [InlineData("global_namespace_exceptions")]
+    [InlineData("conflicting-namespace")]
+    [InlineData("unowned-exception")]
+    [InlineData("missing-rule-inputs")]
+    public void MissingOrConflictingComposedRegistrationFailsBeforeAddressing(string defect)
+    {
+        using var fixture = new ProducerInputFixture();
+        fixture.EditRegistry(registry =>
+        {
+            if (defect == "conflicting-namespace")
+                registry["projects"]![2]!["include"]!.AsArray().Add("tools/StrataLint.Cli/Fixture.cs");
+            else if (defect == "unowned-exception")
+                registry["projects"]![0]!["global_namespace_exceptions"] = new JsonArray("unowned/Source.cs");
+            else if (defect == "missing-rule-inputs") registry.Remove("rule_build_inputs");
+            else registry["projects"]![0]!.AsObject().Remove(defect);
+        });
+        AssertRegistrationFailure(fixture.Run("address"), ProducerInputFixture.ProjectRegistrationPath);
+    }
+
+    [Fact]
+    public void ComposedNamespaceRegistrationIsAcceptedByProducer()
+    {
+        using var fixture = new ProducerInputFixture();
+        Assert.Equal(fixture.ExpectedAddressBytes(), fixture.Run("address").StandardOutput);
+    }
+
+    [Fact]
+    public void NamespaceAndExecutionPolicyDoNotChangeProducerIdentity()
+    {
+        using var fixture = new ProducerInputFixture();
+        var before = fixture.Address();
+        fixture.EditRegistry(registry =>
+        {
+            var row = registry["projects"]![0]!;
+            row["root_namespace"] = "Changed.Namespace";
+            row["namespace_exclude"] = new JsonArray("tools/StrataLint.Cli/Fixture.cs");
+            row["role"] = "cross-cutting-test";
+            row["ci"] = true;
+            row["test_partition"] = "explicit-checks";
+        });
+        Assert.Equal(before, fixture.Address());
+    }
+
     [Fact]
     public void NativeIncrementalReportEqualsFullReportWithRefutationMaterials()
     {

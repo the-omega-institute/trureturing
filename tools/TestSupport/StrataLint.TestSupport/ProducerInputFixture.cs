@@ -45,6 +45,7 @@ internal sealed class ProducerInputFixture : IDisposable
         references = name == "StrataLint.Cli" ? new[] { EngineProjectPath }
             : name == "StrataLint.Engine" ? new[] { TruthProjectPath } : [],
         role = "test-support", test_partition = (string?)null,
+        root_namespace = name, namespace_exclude = Array.Empty<string>(), global_namespace_exceptions = Array.Empty<string>(),
     };
 
     internal ProducerInputFixture()
@@ -88,7 +89,7 @@ internal sealed class ProducerInputFixture : IDisposable
             Write($"tools/{project}/Fixture.cs", "internal class Fixture { }\n");
         }
         Write(ProjectRegistrationPath, JsonSerializer.Serialize(new
-            { version = 1, projects = ProjectNames.Select(Row), historical_projects = Array.Empty<object>() }));
+            { version = 1, projects = ProjectNames.Select(Row), historical_projects = Array.Empty<object>(), rule_build_inputs = Array.Empty<string>() }));
         Write("Trureturing.lean", "import D5.Probe\n");
         Write("D5/Probe.lean", "def probe := 1\n");
         Write("lean-toolchain", "leanprover/lean4:v4.33.0\n");
@@ -186,7 +187,12 @@ internal sealed class ProducerInputFixture : IDisposable
             "tools/scripts/lean-report-pair.sh", FetcherPath,
             "tools/scripts/worktree/lean-cache-input.sh", "tools/scripts/worktree/lean_cache.py",
         ];
-        var semantics = JsonSerializer.Serialize(new[] { Row("StrataLint.Cli"), Row("StrataLint.Engine"), Row("Trureturing.Truth") });
+        var semantics = JsonSerializer.Serialize(new[] { "StrataLint.Cli", "StrataLint.Engine", "Trureturing.Truth" }.Select(name => new
+        {
+            assembly = name, exclude = Array.Empty<string>(), include = new[] { $"tools/{name}/Fixture.cs" },
+            path = $"tools/{name}/{name}.csproj", references = name == "StrataLint.Cli" ? new[] { EngineProjectPath }
+                : name == "StrataLint.Engine" ? new[] { TruthProjectPath } : [],
+        }));
         var manifest = producerPaths.Select(path => HashFile(path) + "  " + path + "\n")
             .Append(Hash(semantics) + "  @engineering-projects\n").Order(StringComparer.Ordinal);
         var producer = Hash(string.Concat(manifest));

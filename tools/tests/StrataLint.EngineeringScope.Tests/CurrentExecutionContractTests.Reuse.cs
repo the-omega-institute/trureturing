@@ -15,6 +15,7 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("mode", 1)]
     [InlineData("build-option", 1)]
     [InlineData("unrelated-row", 0)]
+    [InlineData("execution-environment", 1)]
     public void RegisteredInputChangesSelectOnlyTheirReferenceClosure(string change, int selected)
     {
         using var fixture = new CandidateFixture();
@@ -25,6 +26,7 @@ public sealed partial class CurrentExecutionContractTests
         {
             rows[0]!["execution_inputs"] = new JsonArray("fixtures/*.txt");
             rows[0]!["build_inputs"] = new JsonArray("options.txt");
+            if (change == "execution-environment") rows[0]!["execution_environment"] = new JsonArray("STRATALINT_TEST_ENVIRONMENT");
             if (change == "reference") rows[1]!["references"] = new JsonArray(CandidateFixture.First);
         });
         fixture.Track();
@@ -40,6 +42,7 @@ public sealed partial class CurrentExecutionContractTests
                 if (OperatingSystem.IsWindows()) return;
                 File.SetUnixFileMode(Path.Combine(fixture.Root, "fixtures/input.txt"), UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
                 break;
+            case "execution-environment": fixture.Write("global.json", "{\"sdk\":{\"version\":\"10.0.104\"}}"); break;
             case "build-option": fixture.Write("options.txt", "changed\n"); break;
             case "unrelated-row":
                 fixture.Write("tools/support/Support.csproj", "<Project />\n");
@@ -328,6 +331,7 @@ public sealed partial class CurrentExecutionContractTests
     private static void AcceptEngineering(CandidateFixture fixture)
     {
         var build = CommonExecutionEvidence.ValidateBuild(fixture.Root);
+        CheckEvidenceFixture.Seal(fixture.Root, "engineering", build);
         CommonExecutionEvidence.SealEngineering(fixture.Root, build, CommonExecutionEvidence.EngineeringSteps.Select(name =>
             new StageStep(name, name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", "build/ci/fixture-build.log")).ToArray());
     }

@@ -16,6 +16,9 @@ public sealed class CurrentDeltaCliContractTests
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
+        fixture.Files["Meta/ci-checks.json"] = CommonCheckRegistrationFixture.Manifest("tools/StrataLint.Scribe/StrataLint.Scribe.csproj");
+        fixture.Files["global.json"] = "{\"sdk\":{\"version\":\"10.0.103\"}}";
+        fixture.Files["tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"] = "// banned-api-proof\n";
         fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical;
         fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
         foreach (var pair in fixture.Files)
@@ -67,6 +70,8 @@ public sealed class CurrentDeltaCliContractTests
     [InlineData("disabled-base-project", 2, "base test project")]
     [InlineData("premanifest-base", 0, "")]
     [InlineData("premanifest-missing-base-project", 2, "base test project")]
+    [InlineData("original-registration-base", 0, "")]
+    [InlineData("original-registration-missing-base-project", 2, "base test project")]
     [InlineData("annotation", 3, "SL-022")]
     [InlineData("mixed", 1, "SL-029")]
     [InlineData("first-freeze", 1, "SL-008")]
@@ -82,10 +87,13 @@ public sealed class CurrentDeltaCliContractTests
         var root = temporary.Path;
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
+        fixture.Files["Meta/ci-checks.json"] = CommonCheckRegistrationFixture.Manifest("tools/StrataLint.Scribe/StrataLint.Scribe.csproj");
+        fixture.Files["global.json"] = "{\"sdk\":{\"version\":\"10.0.103\"}}";
+        fixture.Files["tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"] = "// banned-api-proof\n";
         foreach (var pair in fixture.Files) Write(pair.Key, pair.Value);
         Write(".gitignore", ".lake/\nbuild/\n");
         Write("Meta/FILEMAP.toml", File.ReadAllText(
-            Path.Combine(TestRepositoryLayout.FindRoot(), "Meta/FILEMAP.toml")));
+            Path.Combine(TestRepositoryLayout.FindRoot(), "Meta/FILEMAP.toml")).Replace("\n\n", "\n", StringComparison.Ordinal));
         const string firstProject = "tools/tests/First/First.csproj";
         Write(firstProject, "<Project><PropertyGroup><IsTestProject>true</IsTestProject></PropertyGroup></Project>\n");
         Write("tools/tests/Second/Second.csproj", "<Project><PropertyGroup><IsTestProject>true</IsTestProject></PropertyGroup></Project>\n");
@@ -97,6 +105,15 @@ public sealed class CurrentDeltaCliContractTests
         Write(EngineeringRegistrationFixture.Path, registration.ToJsonString());
         if (scenario.StartsWith("premanifest-", StringComparison.Ordinal))
             File.Delete(Path.Combine(root, EngineeringRegistrationFixture.Path));
+        if (scenario.StartsWith("original-registration-", StringComparison.Ordinal))
+        {
+            var historical = registration.DeepClone();
+            historical.AsObject().Remove("rule_build_inputs");
+            foreach (var row in historical["projects"]!.AsArray())
+                foreach (var field in new[] { "root_namespace", "namespace_exclude", "global_namespace_exceptions" })
+                    row!.AsObject().Remove(field);
+            Write(EngineeringRegistrationFixture.Path, historical.ToJsonString());
+        }
         const string protectedPath = "tools/scripts/probe.sh";
         Git(root, "init", "-q"); Git(root, "add", ".");
         Git(root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "base");
@@ -106,6 +123,7 @@ public sealed class CurrentDeltaCliContractTests
         switch (scenario)
         {
             case "premanifest-base": break;
+            case "original-registration-base": break;
             case "annotation": Write(protectedPath, "#!/bin/sh\nexit 0\n"); break;
             case "mixed": Write("tools/StrataLint.Cli/probe.cs", "// candidate judge\n"); Write(RuleFixture.BlueprintPath, "# changed\n"); break;
             case "first-freeze": Write("Golden/Frozen/accepted/" + new string('a', 64) + ".json", "{}\n"); break;
@@ -121,6 +139,7 @@ public sealed class CurrentDeltaCliContractTests
                 break;
             case "missing-base-project":
             case "premanifest-missing-base-project":
+            case "original-registration-missing-base-project":
                 File.Delete(Path.Combine(root, firstProject));
                 var removed = projects.Single(item => item!["path"]!.GetValue<string>() == firstProject)!;
                 projects.Remove(removed);
@@ -163,6 +182,7 @@ public sealed class CurrentDeltaCliContractTests
                 """);
             return 0;
         }, TextWriter.Null, build));
+        SealChecks("engineering");
         CommonExecutionEvidence.SealEngineering(root, build, CommonExecutionEvidence.EngineeringSteps.Select(name => new StageStep(name, name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", log)).ToArray());
         if (scenario == "reused")
         {
@@ -171,9 +191,28 @@ public sealed class CurrentDeltaCliContractTests
             build = CommonExecutionEvidence.SealBuild(root, build.Candidate, build.Materials.Select(material => material.Path), build.Steps);
             Assert.Equal(0, StrataLint.EngineeringScope.Program.RunCurrentTests(root, (_, _) => throw new InvalidOperationException("equal inputs must reuse"), TextWriter.Null, build));
             Assert.Equal(original.Projects.Select(row => row with { Status = "reused" }), CommonExecutionEvidence.ValidateTests(root).Projects);
-            CommonExecutionEvidence.SealEngineering(root, build, CommonExecutionEvidence.EngineeringSteps.Select(name => new StageStep(name, name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", log)).ToArray());
+            SealChecks("engineering");
+        CommonExecutionEvidence.SealEngineering(root, build, CommonExecutionEvidence.EngineeringSteps.Select(name => new StageStep(name, name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", log)).ToArray());
         }
+        SealChecks("current");
         CommonExecutionEvidence.SealCurrent(root, build, CommonExecutionEvidence.CurrentSteps.Select(name => new StageStep(name, 0, 0, "executed", log)).ToArray());
+        void SealChecks(string stage)
+        {
+            var checks = CommonExecutionEvidence.BeginChecks(root, stage, build, TextWriter.Null);
+            foreach (var id in checks.Ids)
+                checks.Run(id, () => new CheckWork(id switch
+                {
+                    "selftest-pair" => [new("selftest-first", 0, "SELFTEST PASS\n"), new("selftest-second", 0, "SELFTEST PASS\n")],
+                    "capability-proof" => [new("restore-CompileFailProof", 0, "restored"), new(id, 1, "MissingCapability.cs(13,9): error CS7036: missing metaClear\n")],
+                    "banned-api-proof" => [new("restore-BannedApiCompileFailProof", 0, "restored"), new(id, 1, "BannedApiViolations.cs(1,1): error RS0030: banned symbol\n")],
+                    _ => [new(id, 0, id.StartsWith("SL-", StringComparison.Ordinal) ? CommonCheckRegistrationFixture.Predicate(id) : "passed")],
+                }, id == "scribe-describe" ? VerifiedScribeEmissions.Create(CommonExecutionEvidence.Snapshot(root).Files.Values
+                    .Where(file => file.Path.Value.StartsWith("Blueprint/", StringComparison.Ordinal) && file.Path.Value.EndsWith(".scribe.cs", StringComparison.Ordinal))
+                    .Select(file => new ScribeEmissionRecord(file.Path.Value["Blueprint/".Length..^".scribe.cs".Length], file.Path.Value,
+                        DigestionFingerprint.Compute(file.RawBytes.AsSpan()).RawSha256,
+                        file.Path.Value[..^".scribe.cs".Length] + ".md", "sha256:" + new string('a', 64)))).WriteMaterial() : null));
+            checks.Seal();
+        }
         switch (scenario)
         {
             case "missing-report": File.Delete(report); break;
@@ -187,7 +226,7 @@ public sealed class CurrentDeltaCliContractTests
         var exit = CliApplication.Run(["check-delta", "--protected-base", basis, "--candidate-lean-report", report], environment, console);
         Assert.True(exit == expectedExit, $"expected exit {expectedExit}, got {exit}: {console.Output}{console.Error}");
         Assert.Contains(diagnostic, console.Output + console.Error, StringComparison.Ordinal);
-        if (scenario is "missing-base-project" or "premanifest-missing-base-project")
+        if (scenario is "missing-base-project" or "premanifest-missing-base-project" or "original-registration-missing-base-project")
         {
             Assert.Contains($"ENGINEERING_TEST_PROJECT_REMOVED project={JsonSerializer.Serialize(firstProject)}",
                 console.Output, StringComparison.Ordinal);

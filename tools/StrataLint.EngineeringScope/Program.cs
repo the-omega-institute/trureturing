@@ -12,6 +12,8 @@ internal static class Program
     {
         try
         {
+            if (arguments.FirstOrDefault() is "check-seed-export" or "check-seed-import")
+                return CommonExecutionEvidence.CheckSeedCommand(arguments, output);
             if (arguments.FirstOrDefault() == "truth-release-select")
                 return TruthReleaseSelection.Run(arguments, output);
             if (arguments.FirstOrDefault() is "transport-pack" or "transport-verify")
@@ -122,6 +124,7 @@ internal static class Program
     {
         var start = new ProcessStartInfo("dotnet") { WorkingDirectory = root, UseShellExecute = false };
         start.Environment["DOTNET_CLI_UI_LANGUAGE"] = "en-US";
+        start.Environment["CI"] = "true";
         if (Directory.Exists(Path.Combine(root, CommonBuildOutputs.PackagesPath)))
             start.Environment["NUGET_PACKAGES"] = Path.Combine(root, CommonBuildOutputs.PackagesPath);
         foreach (var argument in BuildTestArguments(project, results)) start.ArgumentList.Add(argument);

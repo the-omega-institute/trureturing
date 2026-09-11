@@ -131,6 +131,10 @@ public sealed partial class CurrentExecutionContractTests
                     new EngineeringProjectFixture(First, "First", "cross-cutting-test", true, ["tools/tests/First/**/*.cs"]),
                     new EngineeringProjectFixture(Second, "Second", "cross-cutting-test", true, ["tools/tests/Second/**/*.cs"])));
             TemporaryFileSystem.File.WriteAllText(Path.Combine(Root, ".gitignore"), ".lake/\nbuild/\nbin/\nobj/\n");
+            Write("global.json", "{\"sdk\":{\"version\":\"10.0.103\"}}");
+            Write("Meta/ci-checks.json", CommonCheckRegistrationFixture.Manifest(First));
+            RegisterProofs();
+            Write("tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs", "// banned-api-proof\n");
             Git("init", "-q");
             Git("add", ".");
             Git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "parentless");
@@ -168,6 +172,7 @@ public sealed partial class CurrentExecutionContractTests
             foreach (var name in new[] { "CompileFailProof", "BannedApiCompileFailProof" })
             {
                 var project = $"tools/tests/{name}/{name}.csproj";
+                if (System.Text.Json.Nodes.JsonNode.Parse(manifest)!["projects"]!.AsArray().Any(row => row!["path"]!.ToString() == project)) continue;
                 var full = Path.Combine(Root, project);
                 TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(full)!);
                 TemporaryFileSystem.File.WriteAllText(full, "<Project />\n");

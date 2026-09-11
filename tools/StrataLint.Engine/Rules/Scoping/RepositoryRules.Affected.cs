@@ -14,7 +14,7 @@ internal static partial class RepositoryRules
             || FrozenStatePath.IsUnderRoot(path)
             || path.StartsWith("D5/", StringComparison.Ordinal)
                 && path.EndsWith(".lean", StringComparison.Ordinal))
-        || Changed(context, IsLeanReportProducerInput);
+        || Changed(context, path => IsLeanReportProducerInput(path, context.RegisteredRuleBuildInputs));
 
     private static bool BootstrapAffected(DeltaRuleContext context) =>
         context.Changes.Paths.Any(BootstrapGate.IsProtected);
@@ -35,10 +35,10 @@ internal static partial class RepositoryRules
         Func<string, bool> predicate) =>
         context.Changes.Paths.Any(path => predicate(path.Value));
 
-    internal static bool IsLeanReportProducerInput(string path) =>
+    internal static bool IsLeanReportProducerInput(string path, IReadOnlySet<string> registeredInputs) =>
         path.StartsWith("tools/", StringComparison.Ordinal)
             && !path.StartsWith("tools/tests/", StringComparison.Ordinal)
-        || StrataLintEngineBuildInputs.Contains(path)
+        || StrataLintEngineBuildInputs.Contains(path, registeredInputs)
         || path.StartsWith(".github/workflows/", StringComparison.Ordinal)
         || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path);
 
@@ -47,7 +47,7 @@ internal static partial class RepositoryRules
         RepoPath source) =>
         LeanImportClosure.RepositoryPaths(context.Lean.Report, source)
             .Any(path => context.IsBaseFactAffected(path.Value))
-        || Changed(context, IsLeanReportProducerInput);
+        || Changed(context, path => IsLeanReportProducerInput(path, context.RegisteredRuleBuildInputs));
 
 
 }

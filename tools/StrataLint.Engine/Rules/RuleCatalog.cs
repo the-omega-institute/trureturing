@@ -132,7 +132,8 @@ public sealed class RuleCatalog
         var registration = RegistrationFor(id);
         return registration.Descriptor.Lifecycle is RuleLifecycle.Deferred
             ? new([], registration.Descriptor.DeferredCase)
-            : new(Stamp(registration.Descriptor, registration.Rule.EvaluateCurrent(context)), null);
+            : new((id == RuleId.CreateKnown(15) ? RepositoryPathPolicy.Evaluate(context.Current, context.Policy, registration.Descriptor) : [])
+                .AddRange(Stamp(registration.Descriptor, registration.Rule.EvaluateCurrent(context))), null);
     }
 
     internal SingleRuleEvaluation EvaluateDeltaSingle(RuleId id, DeltaRuleContext context)
@@ -142,6 +143,10 @@ public sealed class RuleCatalog
             ? new([], registration.Descriptor.DeferredCase)
             : new(Stamp(registration.Descriptor, registration.Rule.EvaluateDelta(context)), null);
     }
+
+    internal IEnumerable<RuleId> CurrentPredicateIds => registrations
+        .Where(item => item.Descriptor.Lifecycle is RuleLifecycle.Active && item.Rule.HasCurrentPredicate)
+        .Select(item => item.Descriptor.Id);
 
     internal RuleExecutionOutcome ExecuteCurrent(CurrentRuleContext current) =>
         ExecuteInOrder(current, null, ExecutionOrder, null, null, includeCurrent: true);

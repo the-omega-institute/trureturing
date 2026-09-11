@@ -123,7 +123,8 @@ public sealed class LeanInspectorScriptTests
                 include = new[] { $"tools/{name}/Fixture.cs" }, exclude = Array.Empty<string>(),
                 references = Array.Empty<string>(), owner = (object?)null, owned_test_assembly = (string?)null,
                 test_partition = (string?)null,
-            }), historical_projects = Array.Empty<object>(),
+                root_namespace = "Fixture", namespace_exclude = Array.Empty<string>(), global_namespace_exceptions = Array.Empty<string>(),
+            }), historical_projects = Array.Empty<object>(), rule_build_inputs = Array.Empty<string>(),
         }));
         Write(repository, "Meta/ReportProducers/lean-report.json", JsonSerializer.Serialize(new
         {

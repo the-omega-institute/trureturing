@@ -1,11 +1,9 @@
 schema_version = 2
-
 [residence_policy]
 case_id = "RESIDENCE-EPOCH"
 desired = "data-must-live-outside-tools"
 known_violation_count = 0
 status = "closed"
-
 [[files]]
 pattern = "**/*.props"
 kind = "program"

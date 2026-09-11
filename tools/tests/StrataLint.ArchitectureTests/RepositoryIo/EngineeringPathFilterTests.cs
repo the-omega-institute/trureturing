@@ -43,5 +43,5 @@ public sealed class EngineeringPathFilterTests
         new(path, "<Project><PropertyGroup>" + properties + "</PropertyGroup><ItemGroup>"
             + (xunit ? "<PackageReference Include=\"xunit\" />" : "") + "</ItemGroup></Project>",
             new EngineeringProjectRegistration(path, "Fixture", "cross-cutting-test",
-                path is "tools/tests/A/A.csproj" or "tools/tests/B/B.csproj", [], [], [], null, null, path));
+                path is "tools/tests/A/A.csproj" or "tools/tests/B/B.csproj", [], [], [], null, null, path, "Fixture", [], []));
 }

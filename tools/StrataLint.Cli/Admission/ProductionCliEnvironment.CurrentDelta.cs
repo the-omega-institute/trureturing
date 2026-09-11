@@ -17,6 +17,12 @@ internal sealed partial class ProductionCliEnvironment
         TestProjectExecution[] acceptedBaseTests = [];
         try
         {
+            string? commonRound = null;
+            if (!delta && arguments.Count >= 2 && arguments[^2] == "--common-build-round")
+            {
+                commonRound = arguments[^1];
+                arguments = arguments.Take(arguments.Count - 2).ToArray();
+            }
             var options = ParseCheckArguments(arguments);
             if (options.CandidateLeanReport is null || (!delta && options.ProtectedBase is not null))
                 throw new InvalidOperationException("check-current requires a candidate report and accepts no base; check-delta requires an explicit base and report");
@@ -41,7 +47,7 @@ internal sealed partial class ProductionCliEnvironment
             {
                 var prepared = repository.Prepare(options.ProtectedBase);
                 var baseline = Decode(repository.ReadRevision(prepared.Revision));
-                var baseProjects = EngineeringProjectRegistry.ReadBase(baseline, current).Projects
+                var baseProjects = EngineeringProjectRegistry.ReadBase(baseline, current)
                     .Where(project => project.Ci).Select(project => project.Path).Order(StringComparer.Ordinal).ToArray();
                 removedProjectOutput = string.Concat(baseProjects.Where(path => !current.TryGetFile(path, out _))
                     .Select(path => $"ENGINEERING_TEST_PROJECT_REMOVED project={JsonSerializer.Serialize(path)}\n"));
@@ -65,6 +71,12 @@ internal sealed partial class ProductionCliEnvironment
             }
             else
             {
+                if (commonRound is not null)
+                {
+                    if (Path.GetFullPath(options.CandidateLeanReport, repositoryRoot) != Path.Combine(repositoryRoot, CommonExecutionEvidence.ReportPath))
+                        throw new InvalidDataException("common current requires canonical report material");
+                    return ExecuteCommonCurrent(commonRound, current, policy, lean, report);
+                }
                 var verified = VerifyScribeForAdmission(scribeEmissionVerifier, current, report);
                 result = AdmissionPipeline.CheckCurrent(CurrentRuleContext.Create(current, policy, lean, verified));
                 if (RepositoryCanonicalizer.Validate(current, policy) is CanonicalizationOutcome.InfrastructureFailure failure)

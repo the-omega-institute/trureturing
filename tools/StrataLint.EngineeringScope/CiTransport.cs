@@ -35,14 +35,23 @@ internal static class CiTransport
         var root = Path.GetFullPath(values["--repository"]);
         var stage = values["--stage"];
         var commit = values["--commit"];
-        if (stage is not ("build" or "engineering" or "current") || commit.Length != 40 || !commit.All(char.IsAsciiHexDigit)
+        if (stage is not ("build" or "engineering" or "current" or "engineering-seed" or "current-seed") || commit.Length != 40 || !commit.All(char.IsAsciiHexDigit)
             || !long.TryParse(values["--run-id"], NumberStyles.None, CultureInfo.InvariantCulture, out var run) || run < 1
             || !int.TryParse(values["--run-attempt"], NumberStyles.None, CultureInfo.InvariantCulture, out var attempt) || attempt < 1)
             throw new ArgumentException("invalid transport stage or immutable execution identity");
         var repository = Environment.GetEnvironmentVariable("GITHUB_REPOSITORY") ?? "";
-        if (Git(root, "rev-parse", "HEAD") != commit || Git(root, "status", "--porcelain", "--untracked-files=all").Length != 0)
+        var seedStage = stage.EndsWith("-seed", StringComparison.Ordinal);
+        if ((!seedStage || pack) && Git(root, "rev-parse", "HEAD") != commit || Git(root, "status", "--porcelain", "--untracked-files=all").Length != 0)
             throw new InvalidDataException("transport requires the exact clean candidate commit");
-        var common = stage switch
+        CommonStageRecord common;
+        if (seedStage)
+        {
+            var owner = stage[..^5];
+            if (pack) _ = CommonExecutionEvidence.ExportCheckSeed(root, owner, output);
+            var seed = CommonExecutionEvidence.ValidateCheckSeedBundle(root, owner);
+            common = new(2, seed.Candidate, seed.Round, [], []);
+        }
+        else common = stage switch
         {
             "build" => CommonExecutionEvidence.ValidateBuild(root),
             "current" => CommonExecutionEvidence.ValidateCurrent(root),

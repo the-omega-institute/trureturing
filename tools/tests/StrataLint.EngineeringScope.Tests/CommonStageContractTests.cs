@@ -484,6 +484,7 @@ public sealed class CommonStageContractTests
             Assert.Throws<InvalidDataException>(() => CommonExecutionEvidence.SealCurrent(source.Root, CommonExecutionEvidence.ValidateBuild(source.Root), currentSteps));
             return;
         }
+        CheckEvidenceFixture.Seal(source.Root, "current", CommonExecutionEvidence.ValidateBuild(source.Root));
         CommonExecutionEvidence.SealCurrent(source.Root, CommonExecutionEvidence.ValidateBuild(source.Root), currentSteps);
         var bundle = (TemporaryFileSystem.File.ReadAllText(Path.Combine(source.Root, CommonExecutionEvidence.BundleListPath("current")))
             + TemporaryFileSystem.File.ReadAllText(Path.Combine(source.Root, CommonExecutionEvidence.BundleListPath("engineering"))))

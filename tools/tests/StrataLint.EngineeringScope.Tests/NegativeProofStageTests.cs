@@ -36,6 +36,7 @@ public sealed class NegativeProofStageTests
               printf 'BannedApiViolations.cs(1,1): error RS0030: banned symbol\n'
               exit "$CONTRACT_RAW"
             fi
+            [[ "$2" != selftest ]] || echo "SELFTEST PASS"
             exit 0
             """);
         if (!OperatingSystem.IsWindows())

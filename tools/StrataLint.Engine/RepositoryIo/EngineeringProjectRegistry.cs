@@ -7,6 +7,21 @@ internal sealed record EngineeringSource(string Path, string Content);
 
 internal sealed record EngineeringProjectOwner(string Path, string Assembly);
 
+// Data needed by topology and the base execution floor. Policy owned by other
+// consumers (Compile, namespace, execution reuse) is deliberately absent.
+internal record EngineeringProjectDeclaration(
+    string Path,
+    string Assembly,
+    string Role,
+    bool Ci,
+    string[] References,
+    EngineeringProjectOwner? Owner,
+    string? OwnedTestAssembly,
+    string? TestPartition)
+{
+    internal bool IsTest => Role is "owned-test" or "cross-cutting-test";
+}
+
 internal sealed record EngineeringProjectRegistration(
     string Path,
     string Assembly,
@@ -18,18 +33,20 @@ internal sealed record EngineeringProjectRegistration(
     EngineeringProjectOwner? Owner,
     string? OwnedTestAssembly,
     string? TestPartition,
-    string[]? BuildInputs = null,
-    string[]? ExecutionInputs = null,
-    string[]? ExecutionExcludes = null,
-    string[]? ExecutionEnvironment = null)
-{
-    internal bool IsTest => Role is "owned-test" or "cross-cutting-test";
-}
+    string RootNamespace,
+    string[] NamespaceExclude,
+    string[] GlobalNamespaceExceptions,
+    [property: JsonRequired] string[]? BuildInputs = null,
+    [property: JsonRequired] string[]? ExecutionInputs = null,
+    [property: JsonRequired] string[]? ExecutionExcludes = null,
+    [property: JsonRequired] string[]? ExecutionEnvironment = null)
+    : EngineeringProjectDeclaration(Path, Assembly, Role, Ci, References, Owner, OwnedTestAssembly, TestPartition);
 
 internal sealed record EngineeringProjectManifest(
     int Version,
     EngineeringProjectRegistration[] Projects,
-    EngineeringProjectRegistration[] HistoricalProjects);
+    EngineeringProjectRegistration[] HistoricalProjects,
+    string[] RuleBuildInputs);
 
 // Registration is the authority. Project/source enumeration only checks coverage and expands
 // declared globs; no XML, SDK, source semantics or naming convention creates a registration.
@@ -56,19 +73,63 @@ internal sealed class EngineeringProjectRegistry
         var manifest = files.SingleOrDefault(file => file.Path == ManifestPath)
             ?? throw new InvalidDataException($"missing engineering project registration: {ManifestPath}");
         var registration = Parse(manifest.Content);
-        return Bind(registration.Projects, files.Select(file => file.Path), requireAll: true);
+        var registry = new EngineeringProjectRegistry(Bind(registration.Projects, files.Select(file => file.Path), requireAll: true));
+        _ = registry.ProjectInputs(registry.Projects.Select(project => project.Path), files.Select(file => file.Path), []);
+        return registry;
     }
 
     // A base predating this manifest is still data. Candidate declarations (including explicitly
     // registered historical projects) address those bytes; no old reader or discovery runs.
-    internal static EngineeringProjectRegistry ReadBase(RepositorySnapshot baseline, RepositorySnapshot candidate)
+    internal static IReadOnlyList<EngineeringProjectDeclaration> ReadBase(RepositorySnapshot baseline, RepositorySnapshot candidate)
     {
-        if (baseline.TryGetFile(ManifestPath, out _)) return Read(baseline);
+        if (baseline.TryGetFile(ManifestPath, out var historical))
+        {
+            try
+            {
+                var manifest = JsonSerializer.Deserialize<BaseDeclarations>(historical.Text, BaseOptions);
+                if (manifest is null || manifest.Version != 1 || manifest.Projects is null)
+                    throw new InvalidDataException("invalid base engineering declaration version or projects");
+                ValidateDeclarations(manifest.Projects);
+                return Bind(manifest.Projects, baseline.Files.Keys.Select(path => path.Value), requireAll: true);
+            }
+            catch (JsonException exception)
+            {
+                throw new InvalidDataException($"invalid base engineering declaration: {exception.Message}", exception);
+            }
+        }
         if (!candidate.TryGetFile(ManifestPath, out var file))
             throw new InvalidDataException($"missing engineering project registration: {ManifestPath}");
-        var manifest = Parse(file.Text);
-        return Bind(manifest.Projects.Concat(manifest.HistoricalProjects).ToArray(),
+        var registration = Parse(file.Text);
+        return Bind(registration.Projects.Concat(registration.HistoricalProjects).ToArray(),
             baseline.Files.Keys.Select(path => path.Value), requireAll: false);
+    }
+
+    private sealed record BaseDeclarations(int Version, EngineeringProjectDeclaration[] Projects);
+
+    private static readonly JsonSerializerOptions BaseOptions = new(Options)
+    {
+        // This is a purpose-specific data projection, not the candidate schema.
+        // Every consumed constructor field is still required, including nullable fields.
+        UnmappedMemberHandling = JsonUnmappedMemberHandling.Skip,
+    };
+
+    internal static IReadOnlySet<string> ReadRuleBuildInputs(RepositorySnapshot snapshot)
+    {
+        if (!snapshot.TryGetFile(ManifestPath, out var file))
+            throw new InvalidDataException($"missing engineering project registration: {ManifestPath}");
+        var inputs = Parse(file.Text).RuleBuildInputs;
+        foreach (var input in inputs)
+            if (!snapshot.TryGetFile(input, out _))
+                throw new InvalidDataException($"registered rule build input is absent: {input} (registration {ManifestPath})");
+        return inputs.Append(ManifestPath).ToHashSet(StringComparer.Ordinal);
+    }
+
+    internal static void ValidateInputPaths(string[] paths, string registration)
+    {
+        if (paths is null || paths.Distinct(StringComparer.Ordinal).Count() != paths.Length
+            || paths.Any(path => path is null || !RepoPath.TryCreate(path, out _) || path != path.Trim()
+                || path.Any(character => character is ':' or '*' or '?' || character < 32 || character > 126)))
+            throw new InvalidDataException($"invalid or duplicate input registration: {registration}");
     }
 
     private static EngineeringProjectManifest Parse(string text)
@@ -78,25 +139,10 @@ internal sealed class EngineeringProjectRegistry
             var manifest = JsonSerializer.Deserialize<EngineeringProjectManifest>(text, Options);
             if (manifest is null || manifest.Version != 1 || manifest.Projects is null || manifest.HistoricalProjects is null)
                 throw new InvalidDataException("invalid engineering project registration version or projects");
-            var paths = new HashSet<string>(StringComparer.Ordinal);
+            ValidateInputPaths(manifest.RuleBuildInputs, "rule_build_inputs");
+            ValidateDeclarations(manifest.Projects.Concat(manifest.HistoricalProjects));
             foreach (var project in manifest.Projects.Concat(manifest.HistoricalProjects))
             {
-                if (project is null || !IsProjectPath(project.Path) || !paths.Add(project.Path))
-                    throw new InvalidDataException($"invalid or duplicate engineering project registration: {project?.Path}");
-                if (!IsAssembly(project.Assembly) || project.Role is not
-                    ("production" or "owned-test" or "cross-cutting-test" or "test-support" or "compile-fail-proof"))
-                    throw new InvalidDataException($"invalid engineering identity or role: {project.Path}");
-                if (project.Ci && !project.IsTest)
-                    throw new InvalidDataException($"CI execution requires a registered test role: {project.Path}");
-                if (project.Role == "production" ? !IsAssembly(project.OwnedTestAssembly) : project.OwnedTestAssembly is not null)
-                    throw new InvalidDataException($"invalid registered owned test identity: {project.Path}");
-                if (project.Role == "owned-test"
-                    ? project.Owner is null || !IsProjectPath(project.Owner.Path) || !IsAssembly(project.Owner.Assembly)
-                    : project.Owner is not null)
-                    throw new InvalidDataException($"invalid registered production owner: {project.Path}");
-                if (project.IsTest ? string.IsNullOrWhiteSpace(project.TestPartition)
-                    || project.TestPartition != project.TestPartition.Trim() : project.TestPartition is not null)
-                    throw new InvalidDataException($"invalid registered test partition: {project.Path}");
                 ValidatePatterns(project.Include, project.Path);
                 ValidatePatterns(project.Exclude, project.Path);
                 ValidateMaterials(project.BuildInputs, [], project.Path);
@@ -113,6 +159,12 @@ internal sealed class EngineeringProjectRegistry
                 if (project.References is null || project.References.Any(path => !IsProjectPath(path))
                     || project.References.Distinct(StringComparer.Ordinal).Count() != project.References.Length)
                     throw new InvalidDataException($"invalid or duplicate registered project reference: {project.Path}");
+                if (!IsRootNamespace(project.RootNamespace))
+                    throw new InvalidDataException($"invalid registered root_namespace: {project.Path}: {project.RootNamespace}");
+                ValidatePatterns(project.NamespaceExclude, project.Path);
+                ValidatePatterns(project.GlobalNamespaceExceptions, project.Path);
+                if (project.GlobalNamespaceExceptions.Any(path => path.Contains('*')))
+                    throw new InvalidDataException($"registered global namespace exceptions must be exact source paths: {project.Path}");
             }
             return manifest;
         }
@@ -122,8 +174,35 @@ internal sealed class EngineeringProjectRegistry
         }
     }
 
-    private static EngineeringProjectRegistry Bind(EngineeringProjectRegistration[] declarations,
-        IEnumerable<string> filePaths, bool requireAll)
+    private static void ValidateDeclarations(IEnumerable<EngineeringProjectDeclaration> projects)
+    {
+        var paths = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var project in projects)
+        {
+            if (project is null || !IsProjectPath(project.Path) || !paths.Add(project.Path))
+                throw new InvalidDataException($"invalid or duplicate engineering project registration: {project?.Path}");
+            if (!IsAssembly(project.Assembly) || project.Role is not
+                ("production" or "owned-test" or "cross-cutting-test" or "test-support" or "compile-fail-proof"))
+                throw new InvalidDataException($"invalid engineering identity or role: {project.Path}");
+            if (project.Ci && !project.IsTest)
+                throw new InvalidDataException($"CI execution requires a registered test role: {project.Path}");
+            if (project.Role == "production" ? !IsAssembly(project.OwnedTestAssembly) : project.OwnedTestAssembly is not null)
+                throw new InvalidDataException($"invalid registered owned test identity: {project.Path}");
+            if (project.Role == "owned-test"
+                ? project.Owner is null || !IsProjectPath(project.Owner.Path) || !IsAssembly(project.Owner.Assembly)
+                : project.Owner is not null)
+                throw new InvalidDataException($"invalid registered production owner: {project.Path}");
+            if (project.IsTest ? string.IsNullOrWhiteSpace(project.TestPartition)
+                || project.TestPartition != project.TestPartition.Trim() : project.TestPartition is not null)
+                throw new InvalidDataException($"invalid registered test partition: {project.Path}");
+            if (project.References is null || project.References.Any(path => !IsProjectPath(path))
+                || project.References.Distinct(StringComparer.Ordinal).Count() != project.References.Length)
+                throw new InvalidDataException($"invalid or duplicate registered project reference: {project.Path}");
+        }
+    }
+
+    private static IReadOnlyList<T> Bind<T>(T[] declarations,
+        IEnumerable<string> filePaths, bool requireAll) where T : EngineeringProjectDeclaration
     {
         var paths = filePaths.Where(path => path.EndsWith(".csproj", StringComparison.Ordinal)).ToHashSet(StringComparer.Ordinal);
         var registered = declarations.Select(project => project.Path).ToHashSet(StringComparer.Ordinal);
@@ -136,7 +215,7 @@ internal sealed class EngineeringProjectRegistry
         if (projects.Where(project => project.IsTest).GroupBy(project => project.TestPartition, StringComparer.Ordinal)
             .Any(group => group.Count() != 1))
             throw new InvalidDataException("duplicate registered test partition");
-        return new EngineeringProjectRegistry(projects);
+        return projects;
     }
 
     internal IReadOnlyDictionary<string, IReadOnlyList<EngineeringSource>> Sources(IReadOnlyList<EngineeringSource> files)
@@ -193,6 +272,74 @@ internal sealed class EngineeringProjectRegistry
                 throw new InvalidDataException($"conflicting required registered input and exclusion: {project}: {path}");
     }
 
+    internal IReadOnlySet<string> ProjectInputs(IEnumerable<string> selectedProjects,
+        IEnumerable<string> currentPaths, IEnumerable<string> changedPaths)
+    {
+        var byPath = Projects.ToDictionary(project => project.Path, StringComparer.Ordinal);
+        var selected = new HashSet<string>(StringComparer.Ordinal);
+        var active = new HashSet<string>(StringComparer.Ordinal);
+        void Visit(string path)
+        {
+            if (!byPath.TryGetValue(path, out var project))
+                throw new InvalidDataException($"unregistered producer project reference: {path} (registration {ManifestPath})");
+            if (!active.Add(path))
+                throw new InvalidDataException($"cyclic producer project registration: {path}");
+            if (selected.Add(path))
+                foreach (var reference in project.References) Visit(reference);
+            active.Remove(path);
+        }
+        foreach (var project in selectedProjects) Visit(project);
+        if (selected.GroupBy(path => byPath[path].Assembly, StringComparer.Ordinal).Any(group => group.Count() != 1))
+            throw new InvalidDataException($"conflicting selected producer assembly registration: {ManifestPath}");
+        var current = currentPaths.ToHashSet(StringComparer.Ordinal);
+        var paths = current.Concat(changedPaths).Distinct(StringComparer.Ordinal).ToArray();
+        var inputs = new HashSet<string>(selected, StringComparer.Ordinal);
+        foreach (var path in selected)
+        {
+            var project = byPath[path];
+            foreach (var pattern in project.Include.Where(pattern => !pattern.Contains('*')))
+                if (!current.Contains(pattern))
+                    throw new InvalidDataException($"registered Compile input is absent: {path}: {pattern} (registration {ManifestPath})");
+            var includes = project.Include.Select(FileMapGlob.Create).ToArray();
+            var excludes = project.Exclude.Select(FileMapGlob.Create).ToArray();
+            inputs.UnionWith(paths.Where(source => includes.Any(glob => glob.IsMatch(source))
+                && !excludes.Any(glob => glob.IsMatch(source))));
+        }
+        return inputs;
+    }
+
+    // Namespace scope is a declared subset of Compile ownership. A linked source may have
+    // multiple compile owners, but those checking it must agree on namespace and exception.
+    internal IReadOnlyList<(EngineeringSource Source, string RootNamespace, bool AllowGlobalNamespace)>
+        NamespaceSources(IReadOnlyList<EngineeringSource> files)
+    {
+        var sources = Sources(files);
+        var result = new Dictionary<string, (EngineeringSource Source, EngineeringProjectRegistration Project, bool Global)>(StringComparer.Ordinal);
+        foreach (var project in Projects)
+        {
+            var members = sources[project.Path];
+            var excludes = project.NamespaceExclude.Select(FileMapGlob.Create).ToArray();
+            foreach (var pattern in excludes)
+                if (!members.Any(source => pattern.IsMatch(source.Path)))
+                    throw new InvalidDataException($"registered namespace exclusion has no owned source: {project.Path}: {pattern.Pattern}");
+            var checkedSources = members.Where(source => !excludes.Any(pattern => pattern.IsMatch(source.Path))).ToArray();
+            var checkedPaths = checkedSources.Select(source => source.Path).ToHashSet(StringComparer.Ordinal);
+            foreach (var path in project.GlobalNamespaceExceptions)
+                if (!checkedPaths.Contains(path))
+                    throw new InvalidDataException($"registered global namespace exception is not a checked source of {project.Path}: {path}");
+            foreach (var source in checkedSources)
+            {
+                var global = project.GlobalNamespaceExceptions.Contains(source.Path, StringComparer.Ordinal);
+                if (result.TryGetValue(source.Path, out var previous)
+                    && (previous.Project.RootNamespace != project.RootNamespace || previous.Global != global))
+                    throw new InvalidDataException($"conflicting namespace registration for {source.Path}: {previous.Project.Path} and {project.Path}");
+                result[source.Path] = (source, project, global);
+            }
+        }
+        return result.Values.OrderBy(value => value.Source.Path, StringComparer.Ordinal)
+            .Select(value => (value.Source, value.Project.RootNamespace, value.Global)).ToArray();
+    }
+
     private static void ValidatePatterns(string[] patterns, string project)
     {
         if (patterns is null || patterns.Distinct(StringComparer.Ordinal).Count() != patterns.Length)
@@ -207,6 +354,10 @@ internal sealed class EngineeringProjectRegistry
 
     private static bool IsAssembly(string? assembly) => !string.IsNullOrWhiteSpace(assembly)
         && assembly == assembly.Trim() && !assembly.Any(character => character is '/' or '\\' or ':' || char.IsControl(character));
+
+    private static bool IsRootNamespace(string? value) => value is not null && value.Split('.').All(part =>
+        Microsoft.CodeAnalysis.CSharp.SyntaxFacts.IsValidIdentifier(part)
+        && part.All(character => char.IsAsciiLetterOrDigit(character) || character == '_'));
 
     private static bool IsProjectPath(string? path) => path is not null && RepoPath.TryCreate(path, out _)
         && path.EndsWith(".csproj", StringComparison.Ordinal) && !path.Contains(':') && !path.Contains('*');

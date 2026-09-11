@@ -14,7 +14,9 @@ TASK_PROJECT = pathlib.Path(__file__).with_name("JudgeSeedTask.csproj")
 
 PROJECT_MANIFEST = "Meta/engineering-projects.json"
 PROJECT_FIELDS = {"path", "assembly", "role", "ci", "include", "exclude", "references",
-                  "owner", "owned_test_assembly", "test_partition"}
+                  "owner", "owned_test_assembly", "test_partition",
+                  "root_namespace", "namespace_exclude", "global_namespace_exceptions",
+                  "build_inputs", "execution_inputs", "execution_excludes", "execution_environment"}
 TEST_ROLES = {"owned-test", "cross-cutting-test"}
 
 
@@ -61,10 +63,15 @@ def project_registry(root):
     root = root.resolve()
     try:
         data = json.loads((root / PROJECT_MANIFEST).read_text(), object_pairs_hook=unique_object)
-        if (not isinstance(data, dict) or set(data) != {"version", "projects", "historical_projects"}
+        if (not isinstance(data, dict) or set(data) != {"version", "projects", "historical_projects", "rule_build_inputs"}
                 or type(data["version"]) is not int or data["version"] != 1
                 or not isinstance(data["projects"], list) or not isinstance(data["historical_projects"], list)):
             raise ValueError("invalid engineering manifest schema")
+        inputs = data["rule_build_inputs"]
+        if not isinstance(inputs, list) or any(not isinstance(value, str) for value in inputs) or len(inputs) != len(set(inputs)):
+            raise ValueError("missing or duplicate rule_build_inputs registration")
+        for value in inputs:
+            registered_file(root, value)
         paths = set()
         for row in data["projects"] + data["historical_projects"]:
             if not isinstance(row, dict) or set(row) != PROJECT_FIELDS:
@@ -95,7 +102,7 @@ def project_registry(root):
             valid_partition = isinstance(partition, str) and bool(partition.strip()) and partition == partition.strip()
             if (role in TEST_ROLES and not valid_partition) or (role not in TEST_ROLES and partition is not None):
                 raise ValueError(f"invalid registered test partition: {path}")
-            for field in ("include", "exclude", "references"):
+            for field in ("include", "exclude", "references", "namespace_exclude", "global_namespace_exceptions"):
                 values = row[field]
                 if not isinstance(values, list) or any(not isinstance(value, str) for value in values) or len(values) != len(set(values)):
                     raise ValueError(f"invalid or duplicate registered {field}: {path}")
@@ -105,6 +112,26 @@ def project_registry(root):
                             raise ValueError(f"invalid registered reference: {path}: {value}")
                     else:
                         source_glob(value)
+            # Execution declarations are validated but never enter compile_projection.
+            for field in ("build_inputs", "execution_inputs", "execution_excludes", "execution_environment"):
+                values = row[field]
+                if field != "build_inputs" and role not in TEST_ROLES:
+                    if values is not None:
+                        raise ValueError(f"unexpected registered {field}: {path}")
+                    continue
+                if not isinstance(values, list) or any(not isinstance(value, str) for value in values) or len(values) != len(set(values)):
+                    raise ValueError(f"invalid or duplicate registered {field}: {path}")
+                for value in values:
+                    if field == "execution_environment":
+                        if not re.fullmatch(r"[A-Z_][A-Z0-9_]*", value):
+                            raise ValueError(f"invalid registered execution environment: {path}: {value}")
+                    else:
+                        registered_path(value, pattern=True)
+            namespace = row["root_namespace"]
+            if not isinstance(namespace, str) or not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*", namespace):
+                raise ValueError(f"invalid registered root_namespace: {path}")
+            if any("*" in value for value in row["global_namespace_exceptions"]):
+                raise ValueError(f"registered global namespace exceptions must be exact source paths: {path}")
         rows = {row["path"]: row for row in data["projects"]}
         # The index checks registration coverage; it never selects a producer.
         result = subprocess.run(["git", "-C", str(root), "ls-files", "-z", "--cached"], capture_output=True, text=True)
@@ -116,7 +143,7 @@ def project_registry(root):
             raise ValueError(f"project coverage: unregistered={sorted(projects - set(rows))}; absent={sorted(set(rows) - projects)}")
         assemblies, partitions, covered = set(), set(), set()
         sources = {path for path in tracked if path.endswith(".cs")}
-        materials = {}
+        materials, namespaces = {}, {}
         for path, row in rows.items():
             registered_file(root, path)
             if row["assembly"] in assemblies:
@@ -141,7 +168,20 @@ def project_registry(root):
             selected = {source for source in sources if any(glob.fullmatch(source) for glob in includes)}
             excluded = {source for source in sources if any(glob.fullmatch(source) for glob in excludes)}
             covered.update(selected | excluded)
-            materials[path] = {registered_file(root, source) for source in selected - excluded}
+            members = selected - excluded
+            namespace_excludes = [source_glob(pattern) for pattern in row["namespace_exclude"]]
+            for glob in namespace_excludes:
+                if not any(glob.fullmatch(source) for source in members):
+                    raise ValueError(f"registered namespace exclusion has no owned source: {path}: {glob.pattern}")
+            checked = {source for source in members if not any(glob.fullmatch(source) for glob in namespace_excludes)}
+            if set(row["global_namespace_exceptions"]) - checked:
+                raise ValueError(f"registered global namespace exception is not a checked source: {path}")
+            for source in checked:
+                policy = (row["root_namespace"], source in row["global_namespace_exceptions"])
+                if source in namespaces and namespaces[source] != policy:
+                    raise ValueError(f"conflicting namespace registration: {source}")
+                namespaces[source] = policy
+            materials[path] = {registered_file(root, source) for source in members}
         if sources - covered:
             raise ValueError("unregistered engineering source: " + sorted(sources - covered)[0])
         project_closure(rows, rows)  # Reject cycles even outside the selected scope.
@@ -169,13 +209,20 @@ def project_closure(rows, selected):
     return {path: rows[path] for path in sorted(visited)}
 
 
+def compile_projection(rows):
+    # Only the selected registered compilation contract belongs to producer/compiler
+    # identity. Namespace and test execution/ownership policy have different consumers.
+    return {path: {field: row[field] for field in ("path", "assembly", "include", "exclude", "references")}
+            for path, row in rows.items()}
+
+
 def project_inputs(root, project, registry=None):
     rows, sources = registry if registry is not None else project_registry(root)
     selected = project_closure(rows, [project])
     paths = {pathlib.Path(path) for path in selected}
     for path in selected:
         paths.update(sources[path])
-    return paths, selected
+    return paths, compile_projection(selected)
 
 
 # Compiled seeds belong to the shared build producer. Report identity above
@@ -283,7 +330,7 @@ def prepare_seed(root, sdk_root=None):
     registry = project_registry(root)
     projects = solution_projects(root, registry)
     for project in projects:
-        selected = project_closure(registry[0], [project])
+        selected = compile_projection(project_closure(registry[0], [project]))
         write_if_changed(registration_path(root, root / project),
                          json.dumps(list(selected.values()), sort_keys=True, separators=(",", ":")).encode())
     write_if_changed(root / "build/judge-seed/compiler.json", json.dumps(compiler, sort_keys=True).encode())
@@ -397,9 +444,10 @@ def prepare_task(directory, sdk, registration):
     write_if_changed(directory / "JudgeSeedTask.csproj", ET.tostring(project))
     write_if_changed(directory / "packages.lock.json", json.dumps({"version": 1, "dependencies": {framework: {}}}).encode())
     env = {key: value for key, value in os.environ.items() if key != "CustomAfterMicrosoftCSharpTargets"}
+    # These captured invocations own their MSBuild nodes through output EOF.
     for arguments in (("restore", "--locked-mode"), ("build", "--no-restore", "--configuration", "Release", "--warnaserror")):
         result = subprocess.run(["dotnet", arguments[0], str(directory / "JudgeSeedTask.csproj"), *arguments[1:],
-                                 "-p:ImportDirectoryBuildProps=false", "-p:ImportDirectoryBuildTargets=false"],
+                                 "-nr:false", "-p:ImportDirectoryBuildProps=false", "-p:ImportDirectoryBuildTargets=false"],
                                 env=env, text=True, capture_output=True)
         if result.returncode:
             if "JUDGE_SEED_REGISTRATION" in result.stdout + result.stderr:
@@ -423,6 +471,10 @@ def seed_targets(root, sdk, projects, task, registration, repository):
     }.items():
         ET.SubElement(properties, name).text = str(value)
     materials = ET.SubElement(driver, "ItemGroup")
+    # The generated import participates in MSBuild's incremental input check.
+    # Reconcile its bytes with the receipt before recovering its previous time,
+    # including when preparation recreated it in an empty judge-seed directory.
+    ET.SubElement(materials, "_JudgeSeedRegisteredMaterial", Include=str(root / "build/judge-seed/seed.targets"))
     for path in sorted(repository):
         ET.SubElement(materials, "_JudgeSeedRegisteredMaterial", Include=str(path))
     for project in projects:

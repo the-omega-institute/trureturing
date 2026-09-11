@@ -44,6 +44,8 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
                 throw new InvalidDataException("candidate changed during stage");
             exit = 0;
         }
+        catch (InvalidDataException exception) when (steps.LastOrDefault() is { Status: "failed" } failed)
+        { exit = failed.Exit; failure = exception.Message; }
         catch (StageFailure exception) { exit = exception.Exit; failure = exception.Message; }
         catch (Exception exception) { failure = exception.Message; }
         finally { exit = Summarize(exit, failure, baseSha); }
@@ -76,7 +78,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
     {
         Directory.CreateDirectory(Path.Combine(root, CommonExecutionEvidence.RootPath));
         foreach (var name in stages)
-            foreach (var suffix in new[] { ".json", "-paths.nul", "-transport.json", "-result.json" })
+            foreach (var suffix in new[] { ".json", "-checks.json", "-paths.nul", "-transport.json", "-result.json" })
                 File.Delete(Path.Combine(root, CommonExecutionEvidence.RootPath, name + suffix));
     }
 
@@ -86,8 +88,9 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         File.Delete(Path.Combine(root, CommonExecutionEvidence.TestsPath));
         var outputs = Path.Combine(root, CommonBuildOutputs.RootPath);
         if (Directory.Exists(outputs)) Directory.Delete(outputs, recursive: true);
-        Step("restore-StrataLint", "dotnet", ["restore", "tools/StrataLint.sln", "--locked-mode"]);
-        Step("build", "dotnet", ["build", "tools/StrataLint.sln", "--configuration", "Release", "--no-restore", "--warnaserror",
+        // Captured restore/build calls own their nodes until the output closes.
+        Step("restore-StrataLint", "dotnet", ["restore", "tools/StrataLint.sln", "--locked-mode", "-nr:false"]);
+        Step("build", "dotnet", ["build", "tools/StrataLint.sln", "--configuration", "Release", "--no-restore", "--warnaserror", "-nr:false",
             "-p:CustomAfterMicrosoftCommonTargets=" + Path.Combine(root, "tools/scripts/ci-build-outputs.targets"),
             "-p:CiRepositoryRoot=" + root, "-p:CiBuildOutputRoot=" + outputs]);
         return CommonExecutionEvidence.SealBuild(root, candidate!, CommonBuildOutputs.Collect(root), steps.ToArray());
@@ -107,8 +110,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
             stage = "engineering";
         }
         else build = CommonExecutionEvidence.ValidateBuild(root, buildRound);
-        foreach (var project in new[] { "tools/tests/CompileFailProof/CompileFailProof.csproj", "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj" })
-            Step("restore-" + Path.GetFileNameWithoutExtension(project), "dotnet", ["restore", project, "--locked-mode"]);
+        var checks = CommonExecutionEvidence.BeginChecks(root, "engineering", build, output);
         try { Step("tests", "dotnet", [CommonExecutionEvidence.RunnerPath, "--repository", root, "--build-round", build.Round]); }
         finally
         {
@@ -119,14 +121,37 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
                 testsReused = tests.Projects.Count(project => project.Status == "reused");
             }
         }
-        var first = Step("selftest-first", "dotnet", [CommonExecutionEvidence.CliPath, "selftest"]);
-        var second = Step("selftest-second", "dotnet", [CommonExecutionEvidence.CliPath, "selftest"]);
-        if (first != second) throw new StageFailure(1, "selftest outputs differ");
-        Step("capability-proof", "dotnet", ["build", "tools/tests/CompileFailProof/CompileFailProof.csproj", "--no-restore", "--no-dependencies", "--configuration", "Release"], CompilationProof.ValidateCapability);
-        Step("banned-api-proof", "dotnet", ["build", "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj", "--no-restore", "--no-dependencies", "--configuration", "Release"],
-            (raw, text) => CompilationProof.ValidateBannedApi(raw, text, File.ReadAllText(Path.Combine(root, "tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"))));
-        CommonExecutionEvidence.SealEngineering(root, build, steps.ToArray());
+        checks.Run("selftest-pair", () => new CheckWork([
+            Operation("selftest-first", [CommonExecutionEvidence.CliPath, "selftest"]),
+            Operation("selftest-second", [CommonExecutionEvidence.CliPath, "selftest"])]));
+        foreach (var (id, project) in new[] {
+            ("capability-proof", "tools/tests/CompileFailProof/CompileFailProof.csproj"),
+            ("banned-api-proof", "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj") })
+            checks.Run(id, () =>
+            {
+                var restore = Operation("restore-" + Path.GetFileNameWithoutExtension(project), ["restore", project, "--locked-mode", "-nr:false"]);
+                if (restore.RawExit != 0) return new CheckWork([restore]);
+                return new CheckWork([restore, Operation(id, ["build", project, "--no-restore", "--no-dependencies", "--configuration", "Release", "-nr:false"])]);
+            });
+        _ = checks.Seal();
+        CommonExecutionEvidence.SealEngineering(root, build, steps.Where(step => step.Name == "tests").ToArray());
         testSeedSaved = CommonExecutionEvidence.ExportTestSeed(root, output);
+        _ = CommonExecutionEvidence.ExportCheckSeed(root, "engineering", output);
+    }
+
+    private CheckOperation Operation(string name, string[] arguments)
+    {
+        var result = Capture("dotnet", arguments);
+        output.WriteLine(result.Text);
+        var proof = name == "capability-proof" ? CompilationProof.ValidateCapability(result.Exit, result.Text)
+            : name == "banned-api-proof" ? CompilationProof.ValidateBannedApi(result.Exit, result.Text,
+                File.ReadAllText(Path.Combine(root, "tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"))) : result.Exit == 0;
+        var exit = proof ? 0 : result.Exit is 0 or 1 ? 1 : 2;
+        var log = $"{CommonExecutionEvidence.RootPath}/logs/engineering/{name}.log";
+        Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine(root, log))!);
+        File.WriteAllText(Path.Combine(root, log), result.Text);
+        steps.Add(new(name, result.Exit, exit, exit == 0 ? "executed" : "failed", log));
+        return new(name, result.Exit, result.Text);
     }
 
     private void Current()
@@ -151,22 +176,10 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
             $"STRATALINT_LEAN_REPORT_LOG_DIR={Path.Combine(logs, "lean-inspector")}",
             "make", "--no-print-directory", "lean-report"], defaultTimeout: reportBudget);
         _ = RawLeanReportArtifact.ReadFile(Path.Combine(root, CommonExecutionEvidence.ReportPath), CommonExecutionEvidence.Snapshot(root), validateMaterials: true);
-        var currentSnapshot = CommonExecutionEvidence.Snapshot(root);
-        var checkManifest = CommonExecutionEvidence.ReadCheckManifest(currentSnapshot);
-        var markdown = checkManifest.Single(check => check.Id == "scribe-markdown");
-        var markdownPaths = EngineeringProjectRegistry.ExpandInputs(currentSnapshot.Files.Keys.Select(path => path.Value), markdown.PathInventory, [], markdown.Id);
-        CommonExecutionEvidence.Write(root, CommonExecutionEvidence.ScribeMarkdownPaths, string.Join("\n", markdownPaths) + "\n");
-        Step("scribe", "/bin/bash", ["tools/scripts/workflow/scribe-content-checks.sh", CommonExecutionEvidence.ReportPath, CommonExecutionEvidence.ScribePath, CommonExecutionEvidence.ScribeMarkdownPaths]);
-        Step("filemap", "dotnet", [CommonExecutionEvidence.CliPath, "filemap-conform"]);
-        Step("check-current", "dotnet", [CommonExecutionEvidence.CliPath, "check-current", "--candidate-lean-report", CommonExecutionEvidence.ReportPath]);
-        var checkInputs = CommonExecutionEvidence.CheckInputFingerprints(root, CommonExecutionEvidence.Snapshot(root));
-        var stepInputs = new Dictionary<string, string>(StringComparer.Ordinal)
-        {
-            ["scribe"] = checkInputs["scribe-projections"],
-            ["filemap"] = checkInputs["filemap"],
-            ["check-current"] = checkInputs["SL-001"],
-        };
-        CommonExecutionEvidence.SealCurrent(root, build, steps.ToArray(), stepInputs);
+        Step("check-current", "dotnet", [CommonExecutionEvidence.CliPath, "check-current",
+            "--candidate-lean-report", CommonExecutionEvidence.ReportPath, "--common-build-round", build.Round]);
+        CommonExecutionEvidence.SealCurrent(root, build, steps.ToArray());
+        _ = CommonExecutionEvidence.ExportCheckSeed(root, "current", output);
     }
 
     private void Delta(string? baseSha)
@@ -219,6 +232,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         }
         var start = new ProcessStartInfo(executable) { WorkingDirectory = root, RedirectStandardOutput = true, RedirectStandardError = true, UseShellExecute = false };
         start.Environment["DOTNET_CLI_UI_LANGUAGE"] = "en-US";
+        start.Environment["CI"] = "true";
         if (stage != "build" && Directory.Exists(Path.Combine(root, CommonBuildOutputs.PackagesPath)))
             start.Environment["NUGET_PACKAGES"] = Path.Combine(root, CommonBuildOutputs.PackagesPath);
         foreach (var arg in arguments) start.ArgumentList.Add(arg);

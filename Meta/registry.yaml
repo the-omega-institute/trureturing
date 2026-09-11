@@ -18,9 +18,10 @@ governance_documents:
   - "Golden/gate-authority-roots.toml"
   - "Meta/Digestion/atomizers.toml"
   - "Meta/FILEMAP.toml"
-  - "Meta/engineering-projects.json"
   - "Meta/ReportProducers/lean-report.json"
   - "Meta/ReportProducers/scribe-content.json"
+  - "Meta/ci-checks.json"
+  - "Meta/engineering-projects.json"
   - "docs/CONTRIBUTING.md"
   - "docs/GOVERNANCE.md"
 agent_files:

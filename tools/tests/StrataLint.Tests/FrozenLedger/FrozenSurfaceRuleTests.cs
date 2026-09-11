@@ -35,7 +35,7 @@ public sealed partial class FrozenSurfaceRuleTests
         "tools/scripts/lean-report-pair.sh",
         ".github/workflows/ci-push.yml",
         "Directory.Build.props",
-        "Directory.Build.targets",
+        "tools/Directory.Build.targets",
         "Directory.Packages.props",
         "global.json",
         "lean-toolchain",
@@ -438,7 +438,7 @@ public sealed partial class FrozenSurfaceRuleTests
     [MemberData(nameof(LeanReportProducerInputCategories))]
     public void LeanReportProducerInputPredicateCoversEachCanonicalCategory(string path)
     {
-        Assert.True(RepositoryRules.IsLeanReportProducerInput(path));
+        Assert.True(RepositoryRules.IsLeanReportProducerInput(path, RuleFixture.RegisteredBuildInputs));
     }
 
     [Theory]
@@ -450,7 +450,7 @@ public sealed partial class FrozenSurfaceRuleTests
     [InlineData("tools/tests/StrataLint.Tests/X.cs")]
     public void LeanReportProducerInputPredicateExcludesContentProjectionAndTestPaths(string path)
     {
-        Assert.False(RepositoryRules.IsLeanReportProducerInput(path));
+        Assert.False(RepositoryRules.IsLeanReportProducerInput(path, RuleFixture.RegisteredBuildInputs));
     }
 
     [Theory]

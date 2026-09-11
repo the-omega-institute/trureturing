@@ -294,7 +294,7 @@ public sealed class RuleCatalogAssociationTests
     [InlineData("tools/StrataLint.Engine/Ledger/FrozenAcceptedEventLoader.cs")]
     [InlineData("tools/StrataLint.Engine/Revocation/TrustedRevocationReceipts.cs")]
     [InlineData("tools/StrataLint.Engine/StrataLint.Engine.csproj")]
-    [InlineData("Directory.Build.targets")]
+    [InlineData("tools/Directory.Build.targets")]
     public void SharedRuleImplementationChangesRespectDeltaOnlyRuleScoping(string changedPath)
     {
         var context = new RuleFixture().Build(RawChangeSet.Create([changedPath]));

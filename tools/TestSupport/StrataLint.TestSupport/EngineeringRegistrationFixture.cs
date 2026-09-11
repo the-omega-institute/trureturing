@@ -19,7 +19,10 @@ public sealed record EngineeringProjectFixture(
     string[]? BuildInputs = null,
     string[]? ExecutionInputs = null,
     string[]? ExecutionExcludes = null,
-    string[]? ExecutionEnvironment = null);
+    string[]? ExecutionEnvironment = null,
+    string RootNamespace = "Fixture",
+    string[]? NamespaceExclude = null,
+    string[]? GlobalNamespaceExceptions = null);
 
 public static class EngineeringRegistrationFixture
 {
@@ -37,6 +40,7 @@ public static class EngineeringRegistrationFixture
     public static string Manifest(params EngineeringProjectFixture[] projects) => JsonSerializer.Serialize(new
     {
         version = 1,
+        rule_build_inputs = Array.Empty<string>(),
         projects = projects.Select(project => new
         {
             path = project.Path,
@@ -45,6 +49,9 @@ public static class EngineeringRegistrationFixture
             ci = project.Ci,
             include = project.Include,
             exclude = project.Exclude ?? [],
+            root_namespace = project.RootNamespace,
+            namespace_exclude = project.NamespaceExclude ?? [],
+            global_namespace_exceptions = project.GlobalNamespaceExceptions ?? [],
             references = project.References ?? [],
             build_inputs = project.BuildInputs ?? [],
             execution_inputs = project.Role is "owned-test" or "cross-cutting-test" ? project.ExecutionInputs ?? [] : (string[]?)null,

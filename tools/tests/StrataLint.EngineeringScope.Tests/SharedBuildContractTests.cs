@@ -68,6 +68,7 @@ public sealed class SharedBuildContractTests
     [InlineData("engineering", "test", 1)]
     [InlineData("current", "check-current", 1)]
     [InlineData("current", "replace-build", 2)]
+    [InlineData("current", "missing-current-units", 2)]
     [InlineData("engineering", "replace-build", 2)]
     public void BranchProcessesUseOneBuildInEitherOrderAndPropagateRealExits(string first, string failure, int expected)
     {
@@ -113,9 +114,12 @@ public sealed class SharedBuildContractTests
               sed 's/"round": "/"round": "changed-/' build/ci/build.json > build/changed.json
               mv build/changed.json build/ci/build.json
             fi
+            if [[ "$action" == check-current && "$CONTRACT_FAILURE" != missing-current-units ]]; then
+              cp build/prepared-current-checks.json build/ci/current-checks.json
+            fi
             echo "$action" >> build/events
             [[ "$action" != "$CONTRACT_FAILURE" ]] || exit 1
-            [[ "$action" != selftest ]] || echo deterministic-selftest
+            [[ "$action" != selftest ]] || echo "SELFTEST PASS"
             """);
         File.SetUnixFileMode(Path.Combine(root, "build/bin/dotnet"), UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
         var binaries = new[] { CommonExecutionEvidence.CliPath, CommonExecutionEvidence.RunnerPath, CommonExecutionEvidence.ScribePath,
@@ -129,6 +133,11 @@ public sealed class SharedBuildContractTests
         CiTransportTests.Report(root);
         var build = CommonExecutionEvidence.SealBuild(root, CommonExecutionEvidence.Candidate(root), binaries.Append(CommonBuildOutputs.TestsPath),
             CommonExecutionEvidence.BuildSteps.Select(name => new StageStep(name, 0, 0, "executed", "build/ci/build.log")).ToArray());
+        // The CLI fixture supplies a unit manifest produced by the native common
+        // owner. A shell success without this material must fail, even with an old
+        // same-round result present when the branch starts.
+        CheckEvidenceFixture.Seal(root, "current", build);
+        File.Copy(Path.Combine(root, CommonExecutionEvidence.ChecksPath("current")), Path.Combine(root, "build/prepared-current-checks.json"));
         var before = CommonExecutionEvidence.Hash(Path.Combine(root, CommonExecutionEvidence.BuildPath));
         var scope = Path.Combine(Path.GetDirectoryName(typeof(Program).Assembly.Location)!, "StrataLint.EngineeringScope");
         var environment = new Dictionary<string, string> {
@@ -203,6 +212,7 @@ public sealed class SharedBuildContractTests
         var build = CommonExecutionEvidence.SealBuild(fixture.Root, CommonExecutionEvidence.Candidate(fixture.Root), fixture.Build().Materials.Select(material => material.Path).Append(log),
             Steps(CommonExecutionEvidence.BuildSteps));
         CiTransportTests.Report(fixture.Root);
+        CheckEvidenceFixture.Seal(fixture.Root, "current", build);
         CommonExecutionEvidence.SealCurrent(fixture.Root, build, Steps(CommonExecutionEvidence.CurrentSteps));
         CommonExecutionEvidence.ValidateCurrent(fixture.Root);
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.TestsPath)));
@@ -210,6 +220,7 @@ public sealed class SharedBuildContractTests
         var currentHash = CommonExecutionEvidence.Hash(Path.Combine(fixture.Root, CommonExecutionEvidence.CurrentPath));
         Assert.Equal(0, Program.RunCurrentTests(fixture.Root, (_, directory) => { fixture.WriteTrx(directory, "Passed"); return 0; },
             TextWriter.Null, build));
+        CheckEvidenceFixture.Seal(fixture.Root, "engineering", build);
         CommonExecutionEvidence.SealEngineering(fixture.Root, build, Steps(CommonExecutionEvidence.EngineeringSteps));
         Assert.Equal(currentHash, CommonExecutionEvidence.Hash(Path.Combine(fixture.Root, CommonExecutionEvidence.CurrentPath)));
         CommonExecutionEvidence.ValidateCommon(fixture.Root, [CurrentExecutionContractTests.CandidateFixture.First]);

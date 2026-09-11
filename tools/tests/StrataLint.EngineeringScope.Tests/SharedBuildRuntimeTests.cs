@@ -75,7 +75,8 @@ public sealed class SharedBuildRuntimeTests
             "public class Banned { public string Read() => System.IO.File.ReadAllText(\"unused\"); } // banned-api-proof\n");
         var cliProject = "tools/StrataLint.Cli/StrataLint.Cli.csproj";
         Write(cliProject, File.ReadAllText(Path.Combine(root, cliProject)).Replace("</PropertyGroup>", "<OutputType>Exe</OutputType></PropertyGroup>", StringComparison.Ordinal));
-        Write("tools/StrataLint.Cli/Program.cs", "System.Console.WriteLine(\"deterministic-selftest\");\n");
+        Write("tools/StrataLint.Cli/Program.cs", "System.Console.WriteLine(\"SELFTEST PASS\");\n");
+        Write("Meta/ci-checks.json", CommonCheckRegistrationFixture.Manifest(cliProject));
         const string testProject = "tools/tests/Runtime/Runtime.csproj";
         Write(testProject, """
             <Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net10.0</TargetFramework>
@@ -115,9 +116,9 @@ public sealed class SharedBuildRuntimeTests
         Run("dotnet", new[] { "sln", "tools/StrataLint.sln", "add" }.Concat(
             projects.Select(item => $"tools/{item.Item1}/{item.Item1}.csproj").Append(testProject)
                 .Append("tools/scripts/report/JudgeSeedTask.csproj")).ToArray());
-        Run("dotnet", "restore", "tools/StrataLint.sln", "--use-lock-file");
-        Run("dotnet", "restore", proofProject, "--use-lock-file");
-        Run("dotnet", "restore", bannedProject, "--use-lock-file");
+        Run("dotnet", "restore", "tools/StrataLint.sln", "--use-lock-file", "-nr:false");
+        Run("dotnet", "restore", proofProject, "--use-lock-file", "-nr:false");
+        Run("dotnet", "restore", bannedProject, "--use-lock-file", "-nr:false");
         SharedBuildContractTests.Git(root, "add", ".");
         SharedBuildContractTests.Git(root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "runtime fixture");
         using var output = new StringWriter();
@@ -173,6 +174,17 @@ public sealed class SharedBuildRuntimeTests
         Assert.Equal(1, Assert.Single(CommonExecutionEvidence.ValidateTests(root, [testProject]).Projects).Executed);
         Assert.Equal(build.Round, CommonExecutionEvidence.Read<CommonStageRecord>(root, CommonExecutionEvidence.EngineeringPath).Round);
         Assert.False(File.Exists(Path.Combine(root, CommonExecutionEvidence.CurrentPath)));
+        var originalChecks = CommonExecutionEvidence.ValidateChecks(root, "engineering", build);
+        var reusedEngineering = Stage("engineering-warm", "engineering");
+        Assert.Equal(0, Compilers(reusedEngineering));
+        Assert.DoesNotContain(Calls(), call => call.Contains(" selftest", StringComparison.Ordinal)
+            || call.StartsWith("restore tools/tests/CompileFailProof", StringComparison.Ordinal)
+            || call.StartsWith("restore tools/tests/BannedApiCompileFailProof", StringComparison.Ordinal));
+        Assert.All(CommonExecutionEvidence.ValidateChecks(root, "engineering", build).Units, unit =>
+        {
+            Assert.Equal("reused", unit.Status);
+            Assert.Equal(originalChecks.Units.Single(original => original.Id == unit.Id).Operations, unit.Operations);
+        });
         var runtime = Assert.Single(CommonBuildOutputs.TestAssemblies(root, build));
         Assert.Equal(testProject, runtime.Key);
         Assert.Contains(build.Materials, material => material.Path.EndsWith("/testhost.dll", StringComparison.Ordinal));
@@ -211,10 +223,10 @@ public sealed class SharedBuildRuntimeTests
             Assert.Equal(1, Assert.Single(tests.Projects).Executed);
             Assert.Equal(build.Materials, CommonExecutionEvidence.ValidateBuild(destination).Materials);
             Assert.Empty(TemporaryFileSystem.Directory.EnumerateFiles(destination, "project.assets.json", SearchOption.AllDirectories));
-            var restored = SharedBuildContractTests.Process(destination, "dotnet", ["restore", proofProject, "--locked-mode"]);
+            var restored = SharedBuildContractTests.Process(destination, "dotnet", ["restore", proofProject, "--locked-mode", "-nr:false"]);
             Assert.True(restored.Exit == 0, restored.Text);
             var proof = SharedBuildContractTests.Process(destination, "dotnet",
-                ["build", proofProject, "--no-restore", "--no-dependencies", "--configuration", "Release"]);
+                ["build", proofProject, "--no-restore", "--no-dependencies", "--configuration", "Release", "-nr:false"]);
             Assert.True(CompilationProof.ValidateCapability(proof.Exit, proof.Text), proof.Text);
             Assert.Equal(build.Materials, CommonExecutionEvidence.ValidateBuild(destination).Materials);
         }

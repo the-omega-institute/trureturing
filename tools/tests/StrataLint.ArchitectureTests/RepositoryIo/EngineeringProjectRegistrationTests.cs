@@ -7,6 +7,19 @@ public sealed class EngineeringProjectRegistrationTests
     private const string Project = "odd/LooksLikeProduction.csproj";
     private const string Misleading = "<Project><PropertyGroup><AssemblyName>Wrong</AssemblyName><IsTestProject>false</IsTestProject></PropertyGroup></Project>";
 
+    [Theory]
+    [InlineData("execution_inputs")]
+    [InlineData("execution_excludes")]
+    [InlineData("execution_environment")]
+    public void CurrentNonTestRequiresExplicitNullableExecutionDeclarations(string field)
+    {
+        const string project = "tools/Utility.csproj";
+        var manifest = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest(
+            new EngineeringProjectFixture(project, "Utility", "test-support", false, [])))!;
+        manifest["projects"]![0]!.AsObject().Remove(field);
+        Assert.Throws<InvalidDataException>(() => EngineeringProjectRegistry.Read(Snapshot(manifest.ToJsonString(), (project, "<Project />"))));
+    }
+
     [Fact]
     public void ExplicitClassificationWinsOverNameLocationAndMetadata()
     {
@@ -63,6 +76,68 @@ public sealed class EngineeringProjectRegistrationTests
         Assert.False(baseline.TryGetFile(EngineeringRegistrationFixture.Path, out _));
     }
 
+    // Original version-1 row from 653216143592d41af04f03074f33d07668d8d257.
+    // Deliberately independent of the candidate fixture writer and its namespace policy.
+    private const string PriorRegistration = """
+        {"version":1,"projects":[{
+          "path":"tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
+          "assembly":"StrataLint.ArchitectureTests","role":"cross-cutting-test","ci":true,
+          "include":["tools/tests/StrataLint.ArchitectureTests/**/*.cs"],"exclude":[],
+          "references":["tools/StrataLint.Engine/StrataLint.Engine.csproj",
+            "tools/StrataLint.Cli/StrataLint.Cli.csproj","tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
+            "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+            "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
+            "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"],
+          "owner":null,"owned_test_assembly":null,"test_partition":"tools/tests/StrataLint.ArchitectureTests"
+        }],"historical_projects":[]}
+        """;
+
+    [Fact]
+    public void OriginalTenFieldBaseRegistrationRetainsRemovedProjectInExecutionFloor()
+    {
+        const string path = "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj";
+        var baseline = Snapshot(PriorRegistration, (path, Misleading));
+        var candidate = Snapshot(EngineeringRegistrationFixture.Manifest());
+        Assert.Equal([path], EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadBaseProjects(baseline, candidate)).ToArray());
+        Assert.Empty(EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadSnapshotProjects(candidate)));
+    }
+
+    [Fact]
+    public void BaseDeclarationReadIgnoresPolicyItDoesNotConsume()
+    {
+        const string path = "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj";
+        var manifest = System.Text.Json.Nodes.JsonNode.Parse(PriorRegistration)!;
+        manifest["projects"]![0]!["execution_inputs"] = new System.Text.Json.Nodes.JsonArray("not-consumed");
+        var baseline = Snapshot(manifest.ToJsonString(), (path, Misleading));
+        Assert.Equal([path], EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadBaseProjects(baseline,
+            Snapshot(EngineeringRegistrationFixture.Manifest()))).ToArray());
+    }
+
+    [Theory]
+    [InlineData("path")]
+    [InlineData("assembly")]
+    [InlineData("role")]
+    [InlineData("ci")]
+    [InlineData("references")]
+    [InlineData("owner")]
+    [InlineData("owned_test_assembly")]
+    [InlineData("test_partition")]
+    public void BaseDeclarationReadRequiresEveryConsumedField(string field)
+    {
+        var manifest = System.Text.Json.Nodes.JsonNode.Parse(PriorRegistration)!;
+        manifest["projects"]![0]!.AsObject().Remove(field);
+        var error = Assert.Throws<InvalidDataException>(() => RepositoryRules.ReadBaseProjects(
+            Snapshot(manifest.ToJsonString()), Snapshot(EngineeringRegistrationFixture.Manifest())));
+        Assert.Contains(field, error.Message);
+    }
+
+    [Fact]
+    public void HistoricalProjectionDoesNotRelaxCandidateRegistration()
+    {
+        var error = Assert.Throws<InvalidDataException>(() => RepositoryRules.ReadSnapshotProjects(Snapshot(PriorRegistration)));
+        Assert.Contains("root_namespace", error.Message);
+    }
+
     [Fact]
     public void HistoricalProjectCannotDisappearFromBaseExecutionFloor()
     {
@@ -111,7 +186,7 @@ public sealed class EngineeringProjectRegistrationTests
         var baseline = Snapshot(old.ToJsonString(), (Project, Misleading));
         var candidate = Snapshot(EngineeringRegistrationFixture.Manifest(Test()), (Project, Misleading));
         Assert.Throws<InvalidDataException>(() => EngineeringProjectRegistry.Read(baseline));
-        Assert.Equal(Project, Assert.Single(EngineeringProjectRegistry.ReadBase(baseline, candidate).Projects).Path);
+        Assert.Equal(Project, Assert.Single(EngineeringProjectRegistry.ReadBase(baseline, candidate)).Path);
         var current = Assert.Single(EngineeringProjectRegistry.Read(candidate).Projects);
         Assert.Empty(current.BuildInputs!);
         Assert.Empty(current.ExecutionInputs!);
@@ -150,6 +225,42 @@ public sealed class EngineeringProjectRegistrationTests
             if (project.IsTest)
                 _ = EngineeringProjectRegistry.ExpandInputs(paths, project.ExecutionInputs!, project.ExecutionExcludes!, project.Path);
         }
+    }
+
+    [Theory]
+    [InlineData("root_namespace")]
+    [InlineData("namespace_exclude")]
+    [InlineData("global_namespace_exceptions")]
+    public void MissingNamespacePolicyFieldFails(string field)
+    {
+        var manifest = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest(Test()))!;
+        manifest["projects"]![0]!.AsObject().Remove(field);
+        var error = Assert.Throws<InvalidDataException>(() => EngineeringProjectRegistry.Read(
+            Snapshot(manifest.ToJsonString(), (Project, Misleading))));
+        Assert.Contains(field, error.Message);
+    }
+
+    [Theory]
+    [InlineData("root_namespace", "null")]
+    [InlineData("root_namespace", "\"\"")]
+    [InlineData("root_namespace", "\"A..B\"")]
+    [InlineData("root_namespace", "\"A B\"")]
+    [InlineData("root_namespace", "\" A.B\"")]
+    [InlineData("root_namespace", "\"A.B;\"")]
+    [InlineData("namespace_exclude", "null")]
+    [InlineData("namespace_exclude", "[\"../Escape.cs\"]")]
+    [InlineData("namespace_exclude", "[\"tools/A.cs\",\"tools/A.cs\"]")]
+    [InlineData("global_namespace_exceptions", "null")]
+    [InlineData("global_namespace_exceptions", "[\"tools/**/*.cs\"]")]
+    [InlineData("global_namespace_exceptions", "[\"tools/A.cs\",\"tools/A.cs\"]")]
+    [InlineData("global_namespace_exceptions", "[\"../A.cs\"]")]
+    [InlineData("global_namespace_exceptions", "[\"tools/A.txt\"]")]
+    public void MalformedNamespacePolicyFieldFails(string field, string value)
+    {
+        var manifest = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest(Test()))!;
+        manifest["projects"]![0]![field] = System.Text.Json.Nodes.JsonNode.Parse(value);
+        Assert.Throws<InvalidDataException>(() => EngineeringProjectRegistry.Read(
+            Snapshot(manifest.ToJsonString(), (Project, Misleading))));
     }
 
     private static EngineeringProjectFixture Test() => new(Project, "Explicit.Checks", "cross-cutting-test", true, []);

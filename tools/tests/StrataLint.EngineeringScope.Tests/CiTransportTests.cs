@@ -51,6 +51,7 @@ public sealed class CiTransportTests
         Git(root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "report inputs");
         Prepare(fixture, current: false);
         var build = CommonExecutionEvidence.ValidateBuild(root);
+        CheckEvidenceFixture.Seal(root, "current", build);
         CommonExecutionEvidence.SealCurrent(root, build, Steps(CommonExecutionEvidence.CurrentSteps));
         CommonExecutionEvidence.Write(root, "build/ci/current-result.json", new Dictionary<string, object> {
             ["stage"] = "current", ["exit"] = 0, ["candidate"] = build.Candidate,
@@ -143,8 +144,7 @@ public sealed class CiTransportTests
                 "snapshot", "--repository", root], environment);
             Capture(label + ".log", result.Text);
             Assert.True(result.Exit == 0, result.Text);
-            Assert.Contains("report_ready=" + (ready ? "true" : "false"),
-                TemporaryFileSystem.File.ReadAllText(environment["GITHUB_OUTPUT"]));
+            Assert.True(TemporaryFileSystem.File.ReadAllText(environment["GITHUB_OUTPUT"]).Contains("report_ready=" + (ready ? "true" : "false"), StringComparison.Ordinal), result.Text);
             Assert.Contains(ready ? "\"status\": \"snapshot\"" : "\"status\": \"save-failed\"", result.Text, StringComparison.Ordinal);
             Assert.False(File.Exists(Path.Combine(root, "build/ci/transport.json")));
             Assert.Empty(Directory.GetDirectories(Path.Combine(root, "build/lean-cache"), ".snapshot-*"));
@@ -244,6 +244,7 @@ public sealed class CiTransportTests
         CiTransportTests.SealEngineering(fixture.Root, candidate, [Log], Steps(CommonExecutionEvidence.EngineeringSteps));
         if (!current) return;
         Report(fixture.Root);
+        CheckEvidenceFixture.Seal(fixture.Root, "current", CommonExecutionEvidence.ValidateBuild(fixture.Root));
         CommonExecutionEvidence.SealCurrent(fixture.Root, CommonExecutionEvidence.ValidateBuild(fixture.Root), Steps(CommonExecutionEvidence.CurrentSteps));
     }
 
@@ -258,6 +259,7 @@ public sealed class CiTransportTests
         TemporaryFileSystem.File.WriteAllText(Path.Combine(root, list), string.Join('\0',
             build.Materials.Select(material => material.Path).Append(CommonExecutionEvidence.BuildPath).Append(list)
                 .Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal)) + "\0");
+        CheckEvidenceFixture.Seal(root, "engineering", build);
         CommonExecutionEvidence.SealEngineering(root, build, steps);
     }
 

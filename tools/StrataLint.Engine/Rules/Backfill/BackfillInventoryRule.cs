@@ -117,7 +117,7 @@ internal static partial class BackfillInventoryRule
                 || DigestionCasStore.IsCanonicalPath(path.Value)
                 || path.Value == BackfillInventoryLoader.RelativePath
                 || path.Value == TheoryAtomizerDataLoader.DataPath
-                || DigestionLedgerAligner.IsAtomizerImplementationPath(path.Value)
+                || DigestionLedgerAligner.IsAtomizerImplementationPath(path.Value, context.RegisteredRuleBuildInputs)
                 || path.Value is "Meta/registry.yaml" or "Meta/domains.yaml"
                 || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path.Value)
                 // 理论卷按路径规则治理后,`GovernanceDocuments` 里已无理论路径;

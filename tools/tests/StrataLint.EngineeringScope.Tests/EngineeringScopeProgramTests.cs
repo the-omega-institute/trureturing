@@ -47,6 +47,18 @@ public sealed class EngineeringScopeProgramTests
                 EngineeringRegistrationFixture.Manifest(
                     new EngineeringProjectFixture("tools/tests/Probe/Probe.csproj", "Probe", "cross-cutting-test", true, ["tools/tests/Probe/**/*.cs"], BuildInputs: ["tools/tests/Probe/Dependencies.props"]),
                     new EngineeringProjectFixture("tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj", "StrataLint.ScriptTests", "cross-cutting-test", false, [])));
+            TemporaryFileSystem.File.WriteAllText(Path.Combine(root, "global.json"), "{\"sdk\":{\"version\":\"10.0.103\"}}");
+            TemporaryFileSystem.File.WriteAllText(Path.Combine(root, "Meta/ci-checks.json"), CommonCheckRegistrationFixture.Manifest(project));
+            var registrationPath = Path.Combine(root, EngineeringRegistrationFixture.Path);
+            foreach (var proof in new[] { "CompileFailProof", "BannedApiCompileFailProof" })
+            {
+                var proofProject = $"tools/tests/{proof}/{proof}.csproj";
+                Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine(root, proofProject))!);
+                File.WriteAllText(Path.Combine(root, proofProject), "<Project />");
+                File.WriteAllText(registrationPath, EngineeringRegistrationFixture.Append(File.ReadAllText(registrationPath),
+                    new EngineeringProjectFixture(proofProject, proof, "compile-fail-proof", false, [$"tools/tests/{proof}/**/*.cs"])));
+            }
+            File.WriteAllText(Path.Combine(root, "tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"), "// banned-api-proof\n");
             Run(root, "git", ["init", "-q"]);
             Run(root, "git", ["add", "."]);
             Run(root, "git", ["-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "parentless"]);
@@ -74,6 +86,7 @@ public sealed class EngineeringScopeProgramTests
                 var steps = CommonExecutionEvidence.EngineeringSteps.Select(name => new StageStep(name,
                     name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", "build/ci/probe-build.log")).ToArray();
                 var build = CommonExecutionEvidence.ValidateBuild(root);
+                CheckEvidenceFixture.Seal(root, "engineering", build);
                 CommonExecutionEvidence.SealEngineering(root, build, steps);
                 Assert.True(CommonExecutionEvidence.ExportTestSeed(root, output));
                 TemporaryFileSystem.File.AppendAllText(Path.Combine(root, ".gitignore"), "# unrelated doc-only candidate change\n");
@@ -120,6 +133,7 @@ public sealed class EngineeringScopeProgramTests
             fixture.Build();
             Assert.Equal(0, Program.RunCurrentTests(fixture.Root, (_, directory) => { fixture.WriteTrx(directory, "Passed"); return 0; }, TextWriter.Null));
             var build = CommonExecutionEvidence.ValidateBuild(fixture.Root);
+            CheckEvidenceFixture.Seal(fixture.Root, "engineering", build);
             CommonExecutionEvidence.SealEngineering(fixture.Root, build, CommonExecutionEvidence.EngineeringSteps.Select(step =>
                 new StageStep(step, step.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", "build/ci/fixture-build.log")).ToArray());
             Assert.True(CommonExecutionEvidence.ExportTestSeed(fixture.Root, TextWriter.Null));
