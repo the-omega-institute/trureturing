@@ -7307,3 +7307,556 @@ $$
 非零平衡选择至少需要两个当前事件：空区域只能给零，一个事件的背景为正一或负一而不平衡。因此这个反例确在原平衡载体内。CSA 定义 5 允许把全部时标显式平移任意整数而不改 $q$；相同 $j=0$ 槽表只改事件时刻时，终端指数及终端相位也相同。事件时标因此不是这些终端读数的函数。
 
 有限 von Neumann 序数一满足 $\operatorname{rank}(1)=1\ne\mathscr A(1)$；事件时标还允许负整数，而集合秩是序数。秩函数的适当集合限制之图及相关公式可沿第 71–79 条运输，这既不等于编码对象的环境秩保持不变，也不提供物理时间或物理维数的识别。证毕。
+
+## 295. 有限整数指令族
+
+**定义 295。** 固定有限互异素数标签集 $P$，令 $d=|P|$，并固定非负整数 $r$。为矩阵书写选定 $P$ 的一个顺序，系数坐标按 $1,\ldots,r$ 排列。以下指令族的矩阵及其相关群记为
+$$
+B:\mathbb Z^r\longrightarrow\mathbb Z^P,\qquad
+B=(b_1\ \cdots\ b_r),\qquad
+H=B[\mathbb Z^r],\qquad k=\operatorname{rank}_{\mathbb Q}B,
+$$
+$$
+L_{\rm sat}=(\operatorname{span}_{\mathbb Q}H)\cap\mathbb Z^P,\qquad
+K_B^{\mathbb Z}=\ker B,\qquad
+R_B=\ker(B^{\mathsf T}:\mathbb Z^P\to\mathbb Z^r).
+$$
+$H$ 是实际整数像，$L_{\rm sat}$ 是它的饱和格，$K_B^{\mathbb Z}$ 是整数系数核，$R_B$ 是目标坐标上的整数关系格。零列、重复列、线性相关列及非本原列均允许；不同列号始终是不同标签。
+
+无界有符号字母表与正字母表分别为
+$$
+\Sigma_r=\{1,\ldots,r\}\times\{+1,-1\},\qquad
+\Sigma_r^+=\{(i,+1):1\le i\le r\}.
+$$
+字母 $(i,\epsilon)$ 在整个 $\mathbb Z^P$ 上作用为 $x\mapsto x+\epsilon b_i$。词 $w=\lambda_1\cdots\lambda_m$ 按从左至右的顺序作用，其中 $\lambda_h=(i_h,\epsilon_h)$。令
+$$
+\eta_i(w)=\#\{h:\lambda_h=(i,+1)\}-\#\{h:\lambda_h=(i,-1)\},
+$$
+$$
+q_0=0,\qquad q_j=\sum_{h=1}^j\epsilon_hb_{i_h}\quad(1\le j\le m).
+$$
+这些 $q_j$ 只表示当前词的前缀位移。空词的计数和位移均为零。采用 $\mathbb Z^0=\{0\}$、空直和为零群、空乘积为一的约定；空坐标向量是唯一空函数。这里的无界全域是 $\mathbb Z^P$；$\mathbb N^P$ 已有非负边界，不能代替这个全域。
+
+**证明。** 每个词的长度有限，故计数与位移的和有限。整数矩阵把整数向量送到整数向量，所以每个平移在所述全域内总有值。有限积、矩阵像、核以及有理线性张成与整数格的交均由集合构造确定。$r=0$ 时只有空词与空系数向量，$P=\varnothing$ 时目标群只有空函数；零列在无界域上给恒等作用，却不消去其字母标签。证毕。
+
+## 296. 精确端点与 Smith 不变量
+
+**定理 296。** 对第 295 条的数据及任意起点 $x\in\mathbb Z^P$，词 $w$ 的终点为 $x+B\eta(w)$。有符号词的全部端点恰为 $x+H$，正词的全部端点恰为 $x+B[\mathbb N^r]$；同一起点的两个有符号词终点相等，当且仅当其计数差属于 $K_B^{\mathbb Z}$。
+
+存在整系数可逆矩阵 $U\in\operatorname{GL}_d(\mathbb Z)$、$V\in\operatorname{GL}_r(\mathbb Z)$，满足
+$$
+UBV=D,
+$$
+其中矩形矩阵 $D$ 仅在 $1\le i\le k$ 有非零对角项 $D_{ii}=d_i>0$，且 $d_i\mid d_{i+1}$。在此同一约定下，
+$$
+\begin{aligned}
+H&=U^{-1}(d_1\mathbb Z\times\cdots\times d_k\mathbb Z\times0^{d-k}),\\
+L_{\rm sat}&=U^{-1}(\mathbb Z^k\times0^{d-k}),\\
+K_B^{\mathbb Z}&=V(0^k\times\mathbb Z^{r-k}),\\
+R_B&=U^{\mathsf T}(0^k\times\mathbb Z^{d-k}),\\
+L_{\rm sat}&=\{z\in\mathbb Z^P:m\cdot z=0\text{ 对全部 }m\in R_B\}.
+\end{aligned}
+$$
+因而 $h\in\mathbb Z^P$ 属于 $H$ 当且仅当
+$$
+d_i\mid(Uh)_i\ (i\le k),\qquad (Uh)_j=0\ (j>k),
+$$
+并且
+$$
+L_{\rm sat}/H\cong\bigoplus_{i=1}^k\mathbb Z/d_i\mathbb Z,\qquad
+\mathbb Z^P/H\cong\mathbb Z^{d-k}\oplus\bigoplus_{i=1}^k\mathbb Z/d_i\mathbb Z.
+$$
+故 $[L_{\rm sat}:H]=\prod_{i=1}^k d_i$；$[\mathbb Z^P:H]$ 有限当且仅当 $k=d$，此时等于同一乘积。满秩时 $H=\mathbb Z^P$ 当且仅当全部 $d_i=1$。
+
+令 $\Delta_0=1$，对 $1\le j\le k$ 令 $\Delta_j$ 为 $B$ 的全部 $j$ 阶子式的正最大公因数。则
+$$
+\Delta_j=d_1\cdots d_j,\qquad d_j=\Delta_j/\Delta_{j-1}.
+$$
+$H$ 的一组基为 $U^{-1}d_i e_i$（$1\le i\le k$），其最少抽象生成元数为 $k$。这不保证给定列中有 $k$ 列生成 $H$：矩阵 $[2\ 3]$ 的整数像为 $\mathbb Z$，任一单列都不生成它，而正半群为 $\{0,2,3,4,\ldots\}$。当 $k=0$ 时，$H=L_{\rm sat}=0$、$K_B^{\mathbb Z}=\mathbb Z^r$、$R_B=\mathbb Z^P$，亦包括任一维数为空的情形。这里 $e_i$ 是相应有限坐标中的单位向量；$D,d_i$ 是本条的矩阵记号。
+
+**证明。** 对词长归纳，每次只加上所指有符号列，给出终点式，故所有终点属于所列像的平移。反向，任取 $z\in\mathbb Z^r$，对每个 $i$ 执行 $|z_i|$ 次符号为 $\operatorname{sgn}(z_i)$ 的字母，零计数不执行；全域平移使该词总合法，其终点为 $x+Bz$。非负 $z$ 只需正字母。两个终点相减为 $B(\eta(w)-\eta(v))$，恰给核判据，完成端点的双向包含。
+
+Smith 归约可由整数除法构造。非零矩阵先把一个非零项换到左上并使其为正。对首列和首行作整数除法、整倍加减及交换：能被主元整除的项消去，否则把正余数换作更小主元。首行首列清零后，若主元不整除剩余块中的某项，把该项所在行加到首行，再对相应列作欧几里得除法，又得到严格较小的正主元。正整数严格下降不能无限持续，故最终主元整除剩余块的全部项。对较小的剩余块递归；其中全部整数行列运算保持被前一主元整除，遂得到整除链。零矩阵及空维数立即终止。每次运算及其逆都是整系数初等变换，所以累计得可逆 $U,V$，有理秩恰为非零对角项数。
+
+写 $z=Vy$，则 $Bz=U^{-1}Dy$。整数 $y$ 任意变化，逐坐标给出 $H$ 的显示式；反向任意所列整倍数取 $y_i=(Uh)_i/d_i$、其余为零即有原像。方程 $Dy=0$ 恰强制前 $k$ 个 $y_i$ 为零，给出整数系数核的两个方向。有理张成在 $U$ 坐标中为 $\mathbb Q^k\times0$，与整数格相交正好为 $\mathbb Z^k\times0$。等价地，若 $z$ 在该交中，取 $d_1,\ldots,d_k$ 的公倍数便使其正整数倍进入 $H$；反向若非零整数倍进入 $H$，其末 $d-k$ 个 $U$ 坐标必为零。
+
+转置式为
+$$
+B^{\mathsf T}=V^{-\mathsf T}D^{\mathsf T}U^{-\mathsf T}.
+$$
+故关系向量恰为 $U^{\mathsf T}(0,w)$。它们在 $U^{-1}(\mathbb Z^k,0)$ 上的点积均为零；反向逐一测试 $U^{\mathsf T}e_j$（$j>k$）迫使 $(Uz)_j=0$，证明饱和格的全部关系描述。对角坐标中的逐项取余给两个商同构，核分别正是显示的子格；自由余因子存在时指数无限，否则有限指数为各 $d_i$ 的乘积。
+
+初等行列变换后，每个同阶子式由行列式多线性写成原子式的整数线性组合。再施逆变换，两个方向给相同的整数理想，故最大公因数不变。在 $D$ 中，每个非零 $j$ 阶子式都是 $j$ 个对角因子的乘积；整除链使 $d_1\cdots d_j$ 整除它，而此前 $j$ 项的乘积本身就是一个子式，得到 $\Delta_j$ 及商公式。显示的 $k$ 个向量独立且生成 $H$；任何生成族必须张成其 $k$ 维有理空间，故不能少于 $k$ 个。最后 $3-2=1$，而 $2\mathbb Z,3\mathbb Z$ 均真包含于 $\mathbb Z$；每个至少为二的偶数由二相加，每个至少为三的奇数由三加若干二得到，且非负组合不能得到一。空乘积和零群约定使全部零秩断言成立。这些坐标变换只分类群，不断言保持原标签、容量盒或词成本。证毕。
+
+## 297. 加性寄存器相位与有限有符号行
+
+**定义 297。** 对第 295 条数据，沿用第 50 条的 $\phi=(1+\sqrt5)/2$、$\alpha=\phi^{-1}=\phi-1$，令 $\mathbb T=\mathbb R/\mathbb Z$ 取加法及通常商拓扑。定义
+$$
+\vartheta_P:\mathbb Z^P\longrightarrow\mathbb T^P,\quad
+\vartheta_P(e)=([\phi e_p])_{p\in P},\qquad
+\vartheta_r:\mathbb Z^r\longrightarrow\mathbb T^r,\quad
+\vartheta_r(z)=([\phi z_i])_{i=1}^r,
+$$
+$$
+B_{\mathbb T}:\mathbb T^r\longrightarrow\mathbb T^P,\qquad
+B_{\mathbb T}([t])=[Bt],\qquad
+C_B^{\rm tor}=B_{\mathbb T}(\mathbb T^r).
+$$
+第 296 条的 $U,V$ 诱导环面自同构 $U_{\mathbb T},V_{\mathbb T}$。对任意 $Y\subseteq\mathbb T^P$ 定义其整数特征零化子
+$$
+\operatorname{Ann}(Y)=\{m\in\mathbb Z^P:m\cdot y=0\text{ 于 }\mathbb T\text{，对全部 }y\in Y\},
+\qquad m\cdot y=\sum_{p\in P}m_py_p.
+$$
+
+对 $n\in\mathbb Z$，令 $\ell_{\rm s}(n)=|\zeta(|n|)|$，定义有限有符号行
+$$
+\operatorname{sdrow}(n):\ell_{\rm s}(n)\longrightarrow\{-1,0,1\},\qquad
+\operatorname{sdrow}(n)(j)=\operatorname{sgn}(n)\zeta(|n|)(j),
+$$
+其中 $\operatorname{sgn}(0)=0$，零取空行，有限求和时可把域外数位视为零。该行不是第 69 条的自然总行 $s(m)$；它也不替代第 113 条带标签的 $\operatorname{scode}$ 或第 185 条的槽表映射 $\operatorname{sdig}_P$。
+
+**证明。** 把实代表 $t$ 改为 $t+z$、$z\in\mathbb Z^r$，会把 $Bt$ 改为 $Bt+Bz$，而 $Bz$ 为整数向量，故 $B_{\mathbb T}$ 良定义。它由实线性映射下降而连续，并保持加法；整数特征对代表的独立性同理。$U,V$ 及其整数逆给互逆的连续环面映射。两种 $\vartheta$ 由模一加法保持加法；第 289 条的 $\varpi_P$ 与 $\vartheta_P$ 有同一域、同一余域和完全相同的坐标公式，故两映射相等。空指标情形也都将空函数送到空函数；这不与取空乘积一的 $\chi_\varnothing$ 混用。
+
+第 69–70 条的有限规范数字保证 $\ell_{\rm s}$ 和有限行存在且唯一。零行与零整数码 $0_Z$ 的底层集合均为空函数；区别在映射及类型用途，并非断言这些集合互不相交。非零有限有符号行由符号乘数位得到，而自然总行即使为零，其定义域仍是无限的 $\omega$。本条给定的拓扑在环面上，没有由此为 $\mathbb Z^P$ 或 $H$ 指定拓扑。证毕。
+
+## 298. 精确相位、饱和闭包、零化子与环面核
+
+**定理 298。** 对第 295–297 条数据，固定 Smith 约定 $UBV=D$，本条所有闭包均在通常有限维环面中取。则 $\vartheta_P$ 单射，且
+$$
+\vartheta_P\circ B=B_{\mathbb T}\circ\vartheta_r,\qquad
+\ker(\vartheta_P\circ B)=K_B^{\mathbb Z}.
+$$
+精确相位子群为
+$$
+\vartheta_P(H)=\{[\phi Bz]:z\in\mathbb Z^r\}
+=U_{\mathbb T}^{-1}\left(
+\prod_{i=1}^k\{[\phi d_i n]:n\in\mathbb Z\}\times0^{d-k}\right),
+$$
+它与 $H$ 抽象同构，而
+$$
+\overline{\vartheta_P(H)}
+=\overline{\vartheta_P(B[\mathbb N^r])}
+=C_B^{\rm tor}
+=U_{\mathbb T}^{-1}(\mathbb T^k\times0^{d-k}).
+$$
+$C_B^{\rm tor}$ 是同构且同胚于 $\mathbb T^k$ 的连通紧环面，实 Lie 维数为 $k$。$k>0$ 时精确子群可数无限、真包含且稠密于该环面；$k=0$ 时二者均为零单点。两个闭包中的各系数独立变化，不指定一条预定的字母执行日程。
+
+整数关系与相位满足
+$$
+\operatorname{Ann}(\vartheta_P(H))
+=\operatorname{Ann}(C_B^{\rm tor})=R_B,\qquad
+C_B^{\rm tor}=\{y\in\mathbb T^P:m\cdot y=0\text{ 对全部 }m\in R_B\},
+$$
+$$
+C_B^{\rm tor}\cap\vartheta_P(\mathbb Z^P)=\vartheta_P(L_{\rm sat}),\qquad
+\vartheta_P(L_{\rm sat})/\vartheta_P(H)\cong L_{\rm sat}/H.
+$$
+第一交集等于 $\vartheta_P(H)$ 当且仅当 $H=L_{\rm sat}$。在同一个带标签目标 $\mathbb Z^P$ 中，两指令族的精确相位子群相等当且仅当整数像格相等；闭包相等当且仅当饱和格相等，也当且仅当有理列空间相等。
+
+环面参数核则为
+$$
+\ker B_{\mathbb T}
+=V_{\mathbb T}\left(
+\prod_{i=1}^k(d_i^{-1}\mathbb Z/\mathbb Z)\times\mathbb T^{r-k}\right).
+$$
+其单位连通分支维数为 $r-k$，分支群为 $\prod_{i=1}^k\mathbb Z/d_i\mathbb Z$。这与自由整数系数核 $K_B^{\mathbb Z}$ 分属不同的域。
+
+对起点 $x\in\mathbb Z^P$，精确有符号端点的相位集及其闭包分别为 $\vartheta_P(x)+\vartheta_P(H)$、$\vartheta_P(x)+C_B^{\rm tor}$；后者恰由仿射关系
+$$
+m\cdot y=m\cdot\vartheta_P(x)\qquad(m\in R_B)
+$$
+刻画，并不总是零陪集。对每个整数 $n$，其数位相位公式为
+$$
+[\phi n]=\left[\sum_{j<\ell_{\rm s}(n)}
+\operatorname{sdrow}(n)(j)(-1)^{j+1}\alpha^{j+2}\right].
+$$
+
+**证明。** 整数 $a$ 满足 $[\phi a]=0$ 时，若 $a\ne0$ 就会使 $\phi$ 为有理数，故 $a=0$。逐坐标应用于差向量得 $\vartheta_P$ 单射及复合核等式。整数矩阵与实数乘 $\phi$ 交换，再取模一给交换式。第 296 条的整数像经此单射运输，给精确相位的 Smith 坐标式。
+
+第 53 条的无理旋转结论使 $\{[n\phi]:n\ge0\}$ 在圆周稠密。有限积中的每个非空基本开集含一个开弧积，可分别选择各坐标的非负整数使其命中，故 $\vartheta_r(\mathbb N^r)$ 稠密；包含它的 $\vartheta_r(\mathbb Z^r)$ 也稠密。任取 $B_{\mathbb T}(t)$ 的开邻域，其连续逆像是含 $t$ 的非空开集，必命中上述任一稠密集，所以整个像包含于对应像集的闭包。反向，紧环面的连续像紧，在 Hausdorff 目标内闭，且包含两个像集，故包含它们的闭包。两个方向给闭包等式。
+
+在环面上仍有 $U_{\mathbb T}B_{\mathbb T}V_{\mathbb T}=D_{\mathbb T}$；每个正整数 $d_i$ 的乘法在圆周上满射，因为 $[t/d_i]$ 映到 $[t]$。由此像为显示的 $U_{\mathbb T}^{-1}(\mathbb T^k,0)$。其前 $k$ 个坐标给与 $\mathbb T^k$ 的群同构和同胚，所以连通、紧且维数为 $k$。$k>0$ 时 $H\cong\mathbb Z^k$ 可数无限，而 $\mathbb T^k$ 不可数，故精确子群为真子群。这些推理只求所指定环面中的像与闭包，不把未指定拓扑的整数群作完备化。
+
+若 $m$ 在全部精确像上为零，特别在每个 $\vartheta_P(b_i)$ 上为零，则
+$$
+m\cdot\vartheta_P(b_i)=[\phi(B^{\mathsf T}m)_i]=0.
+$$
+无理性迫使 $B^{\mathsf T}m=0$。反向该整数关系使 $m$ 在每个整数线性组合的相位上为零，故精确像的零化子恰为 $R_B$。特征连续，遂在稠密像上为零当且仅当在闭包上为零。对共同零点集，环面像中的点显然被 $R_B$ 零化；反向用第 296 条的关系基 $U^{\mathsf T}e_j$（$j>k$）测试，迫使 $U_{\mathbb T}y$ 的末坐标为零，故该点属于 $C_B^{\rm tor}$。
+
+若 $y=\vartheta_P(z)$，这些模一关系等价于 $[\phi(m\cdot z)]=0$，又由无理性等价于整数关系 $m\cdot z=0$。第 296 条双向刻画给 $z\in L_{\rm sat}$，证明交集等式的两向。单射同态运输子群商，给所列商同构及相等判据。两个闭包相等则零化子相等，从而饱和格相等；反向饱和格相等给相同整数关系及共同零点集。每个整数像的有理张成也等于其饱和格的有理张成，故得有理列空间的等价。精确像的相等则由同一个 $\vartheta_P$ 的单射性双向拉回。
+
+把环面输入写成 $V_{\mathbb T}u$，核方程恰为 $d_i u_i=0$（$i\le k$），其余坐标任意。前一方程的解正是 $\{[a/d_i]:0\le a<d_i\}$；它们离散有限，后面的 $\mathbb T^{r-k}$ 连通。单位分支对应前面各项为零，商掉它得到显示的有限分支群。平移是环面同胚，故平移闭包等于闭包平移；在相位上减去 $\vartheta_P(x)$ 再测全部关系便得仿射式。
+
+最后使用第 51 条实际递推中的整数 $H_j$：
+$$
+\alpha G_j-H_j=(-1)^{j+1}\alpha^{j+2},\qquad G_{j+1}=G_j+H_j,
+$$
+所以 $\phi G_j-G_{j+1}=(-1)^{j+1}\alpha^{j+2}$。乘以 $|n|$ 的有限规范数字并求和，$G_{j+1}$ 项的总和为整数，模一后消去，得到非负整数公式。负整数整体取负，零取空和，即得全部 $n\in\mathbb Z$ 的公式。$r=0$、$P=\varnothing$ 或 $k=0$ 时，前述各步按空积约定成立：像为零单点，空维目标只有该点，零矩阵的环面核为整个 $\mathbb T^r$。证毕。
+
+## 299. 实际部分指令、有向有限图与正词成本
+
+**定义 299。** 对第 295 条数据，另给容量函数 $A:P\to\mathbb N$ 及有限给定字母表 $\Lambda\subseteq\Sigma_r$，允许 $\Lambda=\varnothing$。沿用第 91、115 条的容量域，记
+$$
+X_A=S(P,A)=\prod_{p\in P}\{0,\ldots,A(p)\},\qquad
+Q=\prod_{p\in P}(A(p)+1).
+$$
+$A(p)$ 为最大内容，$A(p)+1$ 为该坐标含零的状态数。字母 $\lambda=(i,\epsilon)$ 的原子解释为
+$$
+\tau_\lambda(x)=x+\epsilon b_i,\qquad
+\operatorname{Dom}(\tau_\lambda)=\{x\in X_A:x+\epsilon b_i\in X_A\}.
+$$
+更一般的给定平移宏是一个实际部分映射
+$$
+T_\lambda:D_\lambda\longrightarrow X_A,\qquad
+T_\lambda(x)=x+\epsilon b_i,\qquad
+D_\lambda\subseteq\{x\in X_A:x+\epsilon b_i\in X_A\}.
+$$
+若宏由内部有守卫的词指定，$D_\lambda$ 必须是该内部词的完整实际求值域，包含全部内部前缀条件；净列向量不定义这个域。宏词按字母逐步求值，在首个不属于相应域的步骤失败；空词是 $X_A$ 上的恒等映射。此处的内部单位词沿用第 121 条的次序及守卫。
+
+实际图 $\Gamma_T$ 的顶点集为 $X_A$，对每个 $x\in D_\lambda$ 保留一条有向带标签边 $x\xrightarrow{\lambda}T_\lambda(x)$，保留平行标签和环。原子特化的图记为 $\Gamma_{B,A}$，其给定字母表仍为当前 $\Lambda$。逆配对假设指 $\Lambda=\Sigma_r$ 且
+$$
+T_{i,-}=T_{i,+}^{-1}\text{ 作为部分映射},\qquad
+\text{等价地 }D_{i,-}=D_{i,+}+b_i.
+$$
+一般字母表也可另给一个逆标签对合，要求对应部分映射互逆，包括其定义域。
+
+给每个字母一个严格正实权重 $a_\lambda>0$，定义
+$$
+\operatorname{cost}_a(w)=\sum_{h=1}^{|w|}a_{\lambda_h},\qquad
+ d_{T,a}(x,y)=\inf\{\operatorname{cost}_a(w):w\text{ 从 }x\text{ 成功到达 }y\}.
+$$
+值域取扩展非负实数，空可行集的值为 $+\infty$，空词成本为零。本处工作负载就是指定的有序端点对 $(x,y)$。每次宏出现按其给定权重计一次。对于整个 $\mathbb Z^P$ 上的总有符号平移，若两符号权重同为 $c_i>0$，其距离另记为 $d_{B,c}^{\infty}(x,y)$。
+
+**证明。** 有限积计数给 $|X_A|=Q$；空 $P$ 给唯一空函数和 $Q=1$。域包含条件保证每条边两端均在顶点集中。平移限制在任意子集上仍单射，逆平移的域恰为其像 $D_{i,+}+b_i$，所以显示的域等式恰等价于逆配对。有限词的成本为有限正权之和，所有可行成本组成扩展非负实数中的有下确界集合；对空可行集使用已声明约定。因此定义同时固定了字母、实际域、成本及端点任务。证毕。
+
+## 300. 前缀定义域、有向可达性与逆配对边界
+
+**定理 300。** 对第 299 条的词 $w=\lambda_1\cdots\lambda_m$，令 $q_j$ 为第 295 条的前缀位移。原子词的精确定义域为
+$$
+\operatorname{Dom}(w)=
+\prod_{p\in P}\left(
+\left[-\min_{0\le j\le m}q_j(p),\ A(p)-\max_{0\le j\le m}q_j(p)\right]\cap\mathbb Z\right).
+$$
+该域非空当且仅当每个坐标的前缀极差不超过容量：
+$$
+\max_{0\le j\le m}q_j(p)-\min_{0\le j\le m}q_j(p)\le A(p)\qquad(p\in P).
+$$
+域内终值为 $x+q_m$。对一般实际宏域，定义 $D-q=\{x\in\mathbb Z^P:x+q\in D\}$，则精确公式为
+$$
+\operatorname{Dom}(w)=X_A\cap\bigcap_{h=1}^m(D_{\lambda_h}-q_{h-1}),\qquad w(x)=x+q_m.
+$$
+内部单位词的域由其全部单位前缀给出；只检查宏边界的端点一般会扩大定义域。
+
+从 $x$ 到 $y$ 的成功词恰为 $\Gamma_T$ 中从 $x$ 到 $y$ 的有向带标签游走。可达蕴含 $y-x\in H$；若 $\Lambda\subseteq\Sigma_r^+$，还蕴含 $y-x\in B[\mathbb N^r]$。逆配对假设下，可达当且仅当属于同一个无向连通分支。若另行证明每条边都能沿有向路径反向返回，也得到这一连通分支结论；只有相反净增量不够。
+
+每个可达的不同端点对有一条至多 $Q-1$ 个给定字母的有向简单路径；相同端点有空路径。有界可达集的相位像有限且在 $\mathbb T^P$ 中闭。
+
+在单坐标、容量一的第 121 条单位系统中，另行给定两个宏
+$$
+T_+=\operatorname{ev}(++-),\qquad T_-=\operatorname{ev}(-)
+$$
+的净增量虽为 $+1,-1$，却有 $D_+=\varnothing$、$D_-=\{1\}$。其无向底图连通零与一，而零不能有向到达一，两宏不是互逆部分映射。这里 $\operatorname{ev}(u)$ 表示按第 121 条依次求值的词 $u$ 所确定的部分映射。
+
+**证明。** 原子词在前缀 $j$ 后的状态恰为 $x+q_j$。对全部 $j$（包括零）相交条件 $0\le x(p)+q_j(p)\le A(p)$，所得下界为负的最小前缀，上界为容量减最大前缀，即显示区间。各界都是整数，区间含整数恰当于下界不大于上界；有限个坐标独立取值给域非空的充要条件。空词只有 $q_0=0$，还原整个盒；空 $P$ 给空积单点。对宏词归纳：已成功的前缀值为 $x+q_{h-1}$，下一步成功恰当于它属于 $D_{\lambda_h}$，成功后再加其净列。必要与充分都由这一步归纳给出，故得到交集式和终值式。
+
+图中的一条有向边正是一次成功求值，依次读标签把游走变为词，也把成功词变为游走，两者互逆。相加所有边的净增量给整数像的必要条件；只用正字母时计数非负。逆配对使每条边有相反方向的对应边，所以无向游走可按任一指定方向执行。更一般，若已证明每条边可有向返回，则把无向游走中逆向使用的每条边换为其返回路径，也得到有向可达。
+
+对由互逆单位映射组成的内部词，倒序并逐项取逆得到其逆部分映射：原词成功时全部中间状态依逆序返回，故原值域包含于逆词定义域；反向再将逆词倒序取逆，得到相反包含。另给的相反净增量词没有这个前缀论证，不能据净增量判逆。
+
+若一个有向游走两次访问同一顶点，删去两次访问间的非空段，余下后缀仍从完全相同的顶点开始，故其全部实际域条件仍成立。不断删除可得无重复顶点的路径；不同端点时最多访问 $Q$ 个顶点，长度至多 $Q-1$。顶点集与字母表均有限，故简单带标签路径也只有有限条。有限可达集在相位映射下仍有限，Hausdorff 环面中的有限集闭。
+
+反例中 $++-$ 的位移依次为 $0,1,2,1$，极差二超过容量一，所以域为空；从零起第二个加号失败，从一起第一个加号失败。单个减号的域恰为 $\{1\}$，将一送到零。因此唯一有向边为 $1\to0$，零没有可执行的第一步；忘去方向却有一条连接两点的边。这也具体证明宏边界仅看净增量 $+1$ 会错误接受起点零。证毕。
+
+## 301. 无界与有界正成本的取到性
+
+**定理 301。** 在任意集合状态域上给定有限字母表及其实际部分映射，并使每个字母的实权重严格为正。任一可达端点对的词成本下确界都取到；不可达时值为 $+\infty$；相同端点的值为零，且唯一的最小成本词为空词。
+
+对第 299 条无界总有符号平移及对称正权 $c_i$，令 $v=y-x$，并记
+$$
+\mathcal F_{B,v}=\{z\in\mathbb Z^r:Bz=v\},\qquad
+\mathfrak f_c(z)=\sum_{i=1}^r c_i|z_i|.
+$$
+则对全部 $x,y\in\mathbb Z^P$，
+$$
+d_{B,c}^{\infty}(x,y)=
+\begin{cases}
+\displaystyle\min_{z\in\mathcal F_{B,v}}\mathfrak f_c(z),&\mathcal F_{B,v}\ne\varnothing,\\
++\infty,&\mathcal F_{B,v}=\varnothing.
+\end{cases}
+$$
+$r=0$ 时唯一系数向量为空，距离在 $x=y$ 时为零、其余为 $+\infty$。
+
+对有限盒 $X_A$ 上的实际图，$d_{T,a}$ 是该有向带权图的最短路值。不同可达端点间，每个最小成本词均不重复宏边界状态，且长度至多 $Q-1$。此结论不要求相反边权相同；若实际映射另满足逆配对且逆字母权重相同，则距离还对称。若宏只限制同一组有符号平移的实际域、保留对称权 $c_i$，则对 $x,y\in X_A$ 有
+$$
+d_{T,c}(x,y)\ge d_{B,c}^{\infty}(x,y),
+$$
+允许一侧或两侧为 $+\infty$。此处 $d_{T,c}$ 的字母权指 $a_{(i,\epsilon)}=c_i$，给定字母可以只是全部有符号字母的子集。
+
+**证明。** 先证一般有限字母表的取到性，不要求状态域有限。选一个可行词，其成本为 $C_0$。非空有限字母表的最小权重 $\delta$ 存在且严格大于零。成本不超过 $C_0$ 的词长度至多 $\lfloor C_0/\delta\rfloor$，有限字母表上如此有界长度的词只有有限个。其中可行词非空，故成本有最小值；所有未纳入者成本都大于 $C_0$，所以这个值是全局最小值。空字母表只有空词，直接得到所述分类。严格正权使非空词成本大于零，故相同端点唯空词最小。不可达时按空可行集约定取 $+\infty$。
+
+对总有符号平移，计数为 $z$ 的词在第 $i$ 个标签上至少出现 $|z_i|$ 次，故成本不小于 $\mathfrak f_c(z)$。反向，对每个 $Bz=v$，只执行各标签所需符号的 $|z_i|$ 次，全域总性使任一次序都合法，成本恰为 $\mathfrak f_c(z)$。还可直接证明右侧计数最小值存在：选择一个可行词，成本 $C_0$、净计数 $z_0$，则
+$$
+\mathcal F_{B,v,C_0}=\{z\in\mathcal F_{B,v}:\mathfrak f_c(z)\le C_0\}
+$$
+含 $z_0$，而对其中每个 $z$ 都有
+$$
+|z_i|\le\left\lfloor C_0/c_i\right\rfloor.
+$$
+所以此集合包含在一个至多有
+$$
+\prod_{i=1}^r\left(2\left\lfloor C_0/c_i\right\rfloor+1\right)
+$$
+个元素的整数盒内。有限非空子水平集中的最小值是全局最小值，因为域外成本大于 $C_0$。结合前述成本的上下比较就得计数公式；不要求权重为有理数或可公度。$r=0$ 直接判断唯一空向量，完全不调用最小字母权重。$v=0$ 的空词和零向量成本均为零，非零计数或非空词则不能取得更低值。
+
+对有界图另作有限图证明。按第 300 条删除任一非空重复状态段，删掉的整字母成本之和严格为正，故成本严格下降。任意不同可达端点有简单带标签路径，而有限图加有限字母表使所有这类路径构成有限非空集，取其中成本最小者即可。任意非简单词都能降低成本，故每个最小词都简单，长度至多 $Q-1$。这个证明的有限候选来自有限图；在无限图中仅证明路径简单不保证候选有限，无界情形使用的是前面的子水平集论证。逆配对允许逐项反向执行，逆权相同使成本不变，从两个方向得到距离对称，包括不可达情形。
+
+最后每个成功有界宏词，都能在无界系统中用相同标签执行对应总平移，终点和成本不变。因此有界可行词集包含于无界可行词集；取下确界给显示不等式。整数正规形只描述计数纤维，不替换有界系统的实际词与守卫。证毕。
+
+## 302. 乘法标量读数与比较数据
+
+**定义 302。** 固定有限互异素数集 $P$，定义正有理乘法群及其指数读数
+$$
+\mathbb Q_{P,>0}=\left\{\prod_{p\in P}p^{e_p}:e\in\mathbb Z^P\right\}\subseteq\mathbb Q_{>0},
+\qquad
+\Pi_P^{\mathbb Z}:(\mathbb Z^P,+)\longrightarrow(\mathbb Q_{P,>0},\times),
+\qquad \Pi_P^{\mathbb Z}(e)=\prod_{p\in P}p^{e_p}.
+$$
+阿贝尔群的秩指其相应 $\mathbb Z$ 模与 $\mathbb Q$ 张量后的维数；乘法群中整数作用为 $n\cdot q=q^n$。这里的运算是正有理数乘法，盒上的限制则取第 120 条的原标量读数。
+
+四素数比较固定标签顺序 $(2,3,5,7)$，取
+$$
+a=(4,2,1,1)^{\mathsf T},\qquad B_a=a,\qquad B_u=I_4.
+$$
+$B_a$ 是单列指令族，$B_u$ 是四个单位列；有界比较取 $A=a$。单坐标比较固定一个素数标签，使用矩阵 $[1]$、$[2]$ 或 $[2\ 3]$，容量在相应命题中指定为一或三。以下比较的原子族均提供全部正负字母；工作负载比较中每个字母的成本均为一。
+
+**证明。** 有限整数指数乘积总为正有理数。相乘及取乘法逆分别对应指数相加及取负，所以显示集合为正有理乘法群的子群；空 $P$ 给 $\{1\}$。非负且不超过容量的指数属于第 120 条的原域，并使用相同乘积公式。显示矩阵均有有限整数列，容量非负，且单位成本严格为正，故这些数据满足前述各定义。证毕。
+
+## 303. 格、容量、标量与端点负载的区别见证
+
+**定理 303。** 对第 302 条读数，$\Pi_P^{\mathbb Z}$ 是到 $(\mathbb Q_{P,>0},\times)$ 的群同构，逆为 $q\mapsto(v_p(q))_{p\in P}$。其中正有理数 $q=u/v$ 的估值定义为 $v_p(q)=v_p(u)-v_p(v)$，与正整数分式的选择无关。限制到 $H$ 仍给群同构
+$$
+(H,+)\cong(\Pi_P^{\mathbb Z}(H),\times),
+$$
+两群的阿贝尔群秩均为 $k$。限制到 $\mathbb N^P$ 则是到仅由 $P$ 中素数组成的正整数的幺半群同构；限制到 $X_A$ 则恰映到 $\prod_p p^{A(p)}$ 的全部正约数。有限盒没有被指定为加法群，正有理像也不在通常有理加法下取秩。
+
+单列族 $[1]$、$[2]$ 的整数像分别为 $\mathbb Z$、$2\mathbb Z$，相位闭包同为 $\mathbb T$，整数系数核均为零，环面核分别为 $\{0\}$、$\{0,[1/2]\}$。后者精确相位子群在前者中指数为二。族 $[2\ 3]$ 的整数像为 $\mathbb Z$，却无一列单独生成它；容量一时零和一之间没有非平凡边，所以格成员资格不足以推出有界可达。
+
+对四素数数据，$B_a$ 满足
+$$
+H=L_{\rm sat}=\mathbb Za,\qquad k=1,\qquad
+C_{B_a}^{\rm tor}=\{(4t,2t,t,t):t\in\mathbb T\},
+$$
+其整数系数核与环面参数核都平凡。整数关系格为
+$$
+R_{B_a}=\{m\in\mathbb Z^P:4m_2+2m_3+m_5+m_7=0\},
+$$
+一组整数基为 $(1,0,0,-4)$、$(0,1,0,-2)$、$(0,0,1,-1)$。$B_u$ 则有整数像 $\mathbb Z^4$、相位闭包 $\mathbb T^4$、关系格零。
+
+标量与数位分别满足
+$$
+\Pi_P^{\mathbb Z}(a)=2^4 3^2 5\,7=5040,\qquad
+(\zeta(4),\zeta(2),\zeta(1),\zeta(1))=(101,01,1,1),
+$$
+数位按低到高书写，因为 $4=G_2+G_0$、$2=G_1$、$1=G_0$。向量 $a$ 是指数或容量向量，不是零一 Zeckendorf 字。盒 $X_a$ 有六十个状态；原子 $a$ 族只连接零与 $a$，其余五十八个状态孤立，单位族则连接全盒。
+
+对全部 $m\ge0$ 的无界指数，有
+$$
+\Pi_P^{\mathbb Z}(ma)=5040^m,\qquad
+\vartheta_P(ma)=(4[m\phi],2[m\phi],[m\phi],[m\phi]).
+$$
+这些相位的闭包为 $C_{B_a}^{\rm tor}$，但只有 $m=0,1$ 的状态属于 $X_a$。GICT 定义 1.4 及第 287 条在正整数乘积上的标量相位却是 $[\phi 5040^m]$；上述寄存器相位闭包不提供该标量序列的分布结论。
+
+容量三、单位字母成本下，族 $[1]$ 与 $[2\ 3]$ 都连接四个状态，且有同一整数像和相位闭包。对有序工作负载 $(0,2)$，它们的最小成本依次为二、一；对 $(0,1)$，依次为一、二。对族 $[2\ 3]$，从一到二的有界最小成本为三，无界最小成本为二。
+
+对于第 50–62 条在同一圆周及其原有非负幂指标频率下定义的 $5040$ 残差和增量观察，两种协方差矩阵的秩均为三，核均为
+$$
+\operatorname{span}_{\mathbb R}\{(0,0,1,-1)\}.
+$$
+这里指数为正且依次为 $(4,2,1,1)$。协方差秩、相位参数维数、独立指令数与素数标签数各有不同定义。GICT 的观察字段 $(A,Z,G)$、历史索引 $(t,p,j)$、容量 $A(p)$、Fibonacci 权重 $G_j$ 及《情境时空算术》定义 22 的选择电荷 $Z_X$ 也分别保留自己的类型；第 206–207、227–229 条的加权终端值不以无权槽计数替代。
+
+**证明。** 指数相加给 $\Pi_P^{\mathbb Z}(e+f)=\Pi_P^{\mathbb Z}(e)\Pi_P^{\mathbb Z}(f)$。若 $u/v=u'/v'$，清分母并用唯一素因数分解得 $v_p(u)+v_p(v')=v_p(u')+v_p(v)$，所以有理估值良定义。两指数乘积相等时清分母逐素数比较，得指数全相等；在显示目标内逐估值又回到原指数，因此映射单射、满射且有所列逆。限制到子群仍为同构，按第 296 条 $H\cong\mathbb Z^k$，故乘法像的阿贝尔群秩同为 $k$。非负估值恰给所述正整数，逐估值介于零和 $A(p)$ 恰给所述正约数，证明两种限制的精确像。这些都是乘法或幺半群结论，没有对通常有理加法作同构断言。
+
+单列一和二的像、整数核直接由整数乘法给出，环面核由 $t=0$、$2t=0$ 给出；第 298 条或无理旋转给两闭包。$[\phi]$ 不可能等于任何 $[2n\phi]$，否则 $(1-2n)\phi$ 为整数而无理性迫使 $1=2n$；整数商 $\mathbb Z/2\mathbb Z$ 经相位单射给指数二。$3-2=1$ 给 $[2\ 3]$ 的整数像，但其所有非零跳长都超过容量一的两状态差，故没有一条非平凡原子边。
+
+若有理数 $t$ 满足 $ta\in\mathbb Z^4$，其最后坐标为 $t$，故 $t$ 为整数，得到 $\mathbb Za$ 饱和；同一最后坐标也使整数列映射单射，及圆周参数映射 $t\mapsto at$ 单射。解关系式的 $m_7$ 得
+$$
+m=(m_2,m_3,m_5,-4m_2-2m_3-m_5),
+$$
+恰为显示三向量的唯一整数线性组合。第 298 条给其环面像与维数；单位矩阵直接给全格、全环面和零关系格。
+
+乘积直接为 $16\cdot9\cdot5\cdot7=5040$，Fibonacci 初值 $G_0=1,G_1=2,G_2=3$ 给显示的局部字，其相邻不同时为一，故第 70 条保证规范且唯一。有限积给 $|X_a|=5\cdot3\cdot2\cdot2=60$。正原子 $a$ 边要求 $0\le x$ 且 $x+a\le a$，逐坐标迫使 $x=0$；负边同理迫使 $x=a$，故恰一对相反边，其余五十八点孤立。单位移动则能逐坐标朝目标移动，始终位于该坐标两端点之间，故全盒连通。
+
+乘积幂律给 $\Pi_P^{\mathbb Z}(ma)=5040^m$，相位定义给另一个显示公式。第 53 条的单侧旋转稠密性以及 $t\mapsto at$ 的连续紧像使其闭包为该圆周；固定盒的末坐标要求 $0\le m\le1$。GICT 的标量相位只是将正整数 $5040^m$ 代入其定义；无理等差旋转的频率定理不自动适用于这个指数增长的输入序列。
+
+容量三时，$[2\ 3]$ 的全部无向边恰为
+$$
+\{\{0,2\},\{0,3\},\{1,3\}\},
+$$
+且每条都有两个方向。这是连接四点的路径。$0\to2$ 一步可达；$0\to3\to1$ 两步可达而无一步替代。单位族的两任务分别需要二和一步，由每步跳长一的下界及对应单调路径得精确最小值。另一个唯一简单路径 $1\to3\to0\to2$ 长三；第 301 条正成本简单路径结论使它为有界最小值。无界位移一不能由一字母得到，却可用 $+3,-2$ 两字母得到，故无界最小值为二。这两对工作负载给相反的成本次序。
+
+协方差子句使用第 59、62 条的精确 Gram 矩阵结论：不同正指数只有 $\{4,2,1\}$，分组系数在每组必须和为零，故秩为三且核恰为所列重复指数方向。其证明中的中心化残差函数 $S_a(x)=\{ax+\alpha\}-1/2$ 在不同正指数的互不相交跳点集上有各自跳跃，零线性组合逐跳点强制每个不同指数的系数为零。增量版若 $F=\sum_a c_a S_a$ 满足 $F\circ T-F=0$ 几乎处处，$T(x)=x+\alpha$，则每个非零 Fourier 频率的乘因子 $e^{2\pi i l\alpha}-1$ 非零，零均值再迫使常数频率为零，故 $F=0$，得到同样的秩。这解释单个圆周参数上可有秩三的观察协方差，未增加独立相位参数。GICT 定义 1.4、1.7 的标量观察及素数位表，CSA 定义 22 的时间—空间符号和，与第 206、227 条加权、无权求和分别按原公式取值；上述计数并不改变这些定义域。证毕。
+
+## 304. 无界有符号表与固定容量配置的分别编码
+
+**定义 304。** 固定有限素数集 $P$；有界情形另固定 $A:P\to\mathbb N$。沿用第 113–114 条的 $\mathsf Z_{\mathbb Z}$、$\operatorname{scode}$、$\operatorname{ival}$：零只有 $0_Z$ 一个码，正负标签仅附于非零自然数字。定义独立的无界目标集合
+$$
+P_Z^{\rm lab}=\{\operatorname{NatZ}(p):p\in P\},\qquad
+\mathcal V_{P,Z}^{\mathbb Z}
+=\{u:u\text{ 是定义域恰为 }P_Z^{\rm lab}\text{、值属于 }\mathsf Z_{\mathbb Z}\text{ 的普通函数}\}.
+$$
+定义两个外部映射
+$$
+\begin{aligned}
+\gamma_P^\infty &: \mathbb Z^P\longrightarrow\mathcal V_{P,Z}^{\mathbb Z},&
+\gamma_P^\infty(e)(\operatorname{NatZ}(p))&=\operatorname{scode}(e_p),\\
+\delta_P^\infty &: \mathcal V_{P,Z}^{\mathbb Z}\longrightarrow\mathbb Z^P,&
+\delta_P^\infty(u)(p)&=\operatorname{ival}(u(\operatorname{NatZ}(p))).
+\end{aligned}
+$$
+这些表是有限的普通函数图，标签槽使用自然叶，内容槽使用有符号整数码；有符号内容可为负且没有容量上界。表中的普通有序对不混作第 74 条的语义有序对。$P_Z^{\rm lab}$ 用自然叶作标签，而第 95 条的 $P_Z=\zeta[P]$ 仍用自然有限字作标签。
+
+另定义固定容量的精确像
+$$
+\mathcal C_{P,A,Z}=\{\operatorname{Cfg}_Z(P,A,x):x\in X_A\},\qquad
+\gamma_{P,A}:X_A\longrightarrow\mathcal C_{P,A,Z},\quad
+\gamma_{P,A}(x)=\operatorname{Cfg}_Z(P,A,x).
+$$
+对 $c\in\mathcal C_{P,A,Z}$，其三个语义字段按第 115–116 条分别为寄存器标签表、容量表和状态表。前两个字段固定为 $\operatorname{Reg}_Z(P)$、$\operatorname{Tab}_Z(P,A)$；定义
+$$
+\delta_{P,A}(c)(p)=\text{使 }\langle\operatorname{NatZ}(p),\operatorname{NatZ}(n)\rangle_Z
+\text{ 成为 }c\text{ 的第三字段之 }\in_Z\text{ 成员的唯一自然数 }n.
+$$
+这里 $0\le n\le A(p)$，故 $\delta_{P,A}:\mathcal C_{P,A,Z}\to X_A$。这一个码域有 $Q$ 个元素；无界目标则是前述独立定义的全部合法有符号表。
+
+对以上任一对映射，在各自的 $X$ 与码域 $\mathcal C$ 上记编码双射为 $\gamma:X\to\mathcal C$，逆为相应的 $\delta$。给定实际部分映射 $T:D\to X$、$D\subseteq X$，定义
+$$
+T^\gamma:\gamma[D]\longrightarrow\mathcal C,\qquad
+T^\gamma=\gamma\circ T\circ\gamma^{-1}.
+$$
+每个给定字母分别作此共轭，保持相同标签及其权重。无界选择为 $X=\mathbb Z^P$、$\gamma=\gamma_P^\infty$；有界选择为 $X=X_A$、$\gamma=\gamma_{P,A}$。
+
+对任意集合 $X$，原集合的语义码双射另记为
+$$
+\mathcal E_X=\operatorname{Enc}|_X:X\longrightarrow\operatorname{Enc}[X]
+=\operatorname{El}(\operatorname{Enc}(X)),
+$$
+其逆是 $\operatorname{Dec}$ 在该像上的限制。对上述外部编码双射，定义比较映射
+$$
+h_\gamma:\mathcal C\longrightarrow\operatorname{Enc}[X],\qquad
+h_\gamma(c)=\operatorname{Enc}(\gamma^{-1}(c)),\qquad
+h_\gamma^{-1}(z)=\gamma(\operatorname{Dec}(z)).
+$$
+因此 $\operatorname{Enc}(u)$ 编码有符号表 $u$ 本身，而 $h_{\gamma_P^\infty}(u)$ 编码它所表示的原整数向量。二者分别取表及解码向量为输入，不断言结果总不相等；$P=\varnothing$ 时表和原向量都是空函数，两个结果均为 $\operatorname{Enc}(\varnothing)$。
+
+**证明。** 第 70–72 条的自然叶单射性使每个码标签只对应一个 $p$。每个整数有唯一合法有符号码，且每个此种码经 $\operatorname{ival}$ 得整数，所以两个无界映射在所列域内良定义。逐坐标的 $\operatorname{ival}\circ\operatorname{scode}=\operatorname{id}$ 及 $\operatorname{scode}\circ\operatorname{ival}=\operatorname{id}$ 给双逆，完整恒等式见下一条。
+
+有界像中的每个 $c$ 来自一个有效配置。第 116 条的语义字段恢复使第三表中每个码标签有唯一内容，且自然叶的单射性恢复唯一自然数。该自然数正是原状态的对应坐标，故满足容量条件；重装固定的前两表与恢复的第三表得到原配置码。于是编码及所给逆互逆，有限像的大小为 $|X_A|=Q$。$P=\varnothing$ 时两个原状态域各自只有空函数，两个相应像也分别是单点；无界码是空函数，有界码是 $\operatorname{Cfg}_Z(\varnothing,\varnothing,\varnothing)$。分别使用其域和构造，不把两种码对象认作同一个对象，也不从类型用途推断所有码集合在空域处互不相交。
+
+第 71–73 条的 $\operatorname{Enc}$、$\operatorname{Dec}$ 双逆及成员展开给 $\mathcal E_X$ 的精确像和逆；把它与 $\gamma^{-1}$ 复合，立即得到 $h_\gamma$ 与显示的逆。部分映射共轭只在 $\gamma[D]$ 上求值，所以不会对域外值施用 $T$。这些是原有集合编码在指定集合上的限制，不另定义集合递归。证毕。
+
+## 305. 定义域、词成本及原集合语义的精确共轭
+
+**定理 305。** 第 304 条的两类映射分别满足
+$$
+\begin{aligned}
+\delta_P^\infty\circ\gamma_P^\infty&=\operatorname{id}_{\mathbb Z^P},&
+\gamma_P^\infty\circ\delta_P^\infty&=\operatorname{id}_{\mathcal V_{P,Z}^{\mathbb Z}},\\
+\delta_{P,A}\circ\gamma_{P,A}&=\operatorname{id}_{X_A},&
+\gamma_{P,A}\circ\delta_{P,A}&=\operatorname{id}_{\mathcal C_{P,A,Z}}.
+\end{aligned}
+$$
+特别地，无界编码的像恰为独立给定的全部合法有符号表，有界编码的像恰为固定标签和容量的所列配置像。
+
+在两类编码中任选一类，固定其实际状态域 $X$、双射 $\gamma$ 以及有限给定字母表的实际部分映射族。每个词 $w$ 都满足
+$$
+\operatorname{Dom}(w^\gamma)=\gamma[\operatorname{Dom}(w)],\qquad
+w^\gamma(\gamma(x))=\gamma(w(x))\quad(x\in\operatorname{Dom}(w)).
+$$
+每个成功的给定字母前缀、首个失败的给定字母、终值及完整标签序列都逐项对应。若对应字母保持相同严格正实权重，则任意对应端点对的可行词一一对应、成本集合相等，最小词也逐标签相同；空词与不可达情形均包括在内。具体地，两种距离等式各有自己的域：
+$$
+d_{T^\gamma,a}(\gamma_{P,A}(x),\gamma_{P,A}(y))=d_{T,a}(x,y)
+\quad(x,y\in X_A,\ \gamma=\gamma_{P,A}),
+$$
+$$
+d_{B^\gamma,c}(\gamma_P^\infty(x),\gamma_P^\infty(y))
+=d_{B,c}^{\infty}(x,y)
+\quad(x,y\in\mathbb Z^P,\ \gamma=\gamma_P^\infty).
+$$
+第二式的 $B^\gamma$ 指全部总有符号平移的共轭字母族，两符号的权重同为 $c_i>0$；第一式用第 299 条的实际有界族及其权重。
+
+指定复合宏时，共轭运输其完整实际定义域。若还把其内部初等映射逐一共轭，则每个内部前缀及首个失败的初等步骤同样对应。只给最终部分宏的共轭，则保持宏层的成功、失败与终值，不由此指定内部轨迹。
+
+无界有符号表上的平移 $(i,\epsilon)$ 逐项取
+$$
+\gamma_P^\infty(x+\epsilon b_i)(\operatorname{NatZ}(p))
+=\gamma_P^\infty(x)(\operatorname{NatZ}(p))\oplus_Z\operatorname{scode}(\epsilon b_i(p)).
+$$
+有界原子步在全部坐标的盒守卫成功后，新内容的自然行恰为 $\zeta(x(p)+\epsilon b_i(p))$；使用相应 $\operatorname{NatZ}$ 重装状态表，寄存器标签表和容量表保持原值。复合宏的内部守卫仍全部保留。将解码的内容代入第 298 条的有限数位式，所得精确相位与原状态相同。
+
+对任意集合 $x,Y$，原有语义成员仍满足
+$$
+\operatorname{Enc}(x)\in_Z\operatorname{Enc}(Y)\iff x\in Y.
+$$
+对每个固定有限的原集合论公式 $\varphi$，展开全部定义符号并保留全部原参数集合后，第 75–76 条给
+$$
+\varphi(\vec x)\iff\varphi^Z(\operatorname{Enc}(\vec x)).
+$$
+这里右式各参数逐项取码，量词按第 75 条限制到全部有效码。因而前述整数格、关系、函数、权重、环面及已给定拓扑均使用同一完整集合语义。
+
+更明确地，对任意上述实际部分映射 $T:D\to X$，其原图、外部数字图及两个语义图码分别满足
+$$
+G_T=\{\langle x,T(x)\rangle:x\in D\},\qquad
+G_{T^\gamma}=\{\langle\gamma(x),\gamma(T(x))\rangle:x\in D\},
+$$
+$$
+\begin{aligned}
+\operatorname{Enc}(G_T)
+&=\operatorname{Pack}\{\langle h_\gamma(c),h_\gamma(d)\rangle_Z:
+\langle c,d\rangle\in G_{T^\gamma}\},\\
+\operatorname{Enc}(G_{T^\gamma})
+&=\operatorname{Pack}\{\langle\operatorname{Enc}(c),\operatorname{Enc}(d)\rangle_Z:
+\langle c,d\rangle\in G_{T^\gamma}\}.
+\end{aligned}
+$$
+其语义定义域分别为 $\operatorname{Enc}(D)$ 与 $\operatorname{Enc}(\gamma[D])$。外部数字图、原图的语义码及数字图的语义码各按这些比较式取值；原始有符号字段不直接插入语义元组槽。
+
+若在任意集合 $X$ 上明确给定拓扑 $\tau$，则在 $\mathcal E_X[X]$ 上定义
+$$
+\tau^{\mathcal E_X}=\{\mathcal E_X[O]:O\in\tau\}.
+$$
+它是拓扑，且对每个 $S\subseteq X$，
+$$
+\mathcal E_X[\overline S^{\tau}]
+=\overline{\mathcal E_X[S]}^{\tau^{\mathcal E_X}}.
+$$
+此结论运输已给定的拓扑，不额外给整数指令群指定拓扑。无限集合和任意实权重由完整集合语义表达；有限数值字段在各自类型位置使用自然或有符号有限码，正有理权重可使用有限分子和正分母字段。所保持的成本是给定字母的权重和，不指定初等进位路径或物理费用。
+
+**证明。** 对每个 $p\in P$，
+$$
+\delta_P^\infty(\gamma_P^\infty(e))(p)
+=\operatorname{ival}(\operatorname{scode}(e_p))=e_p.
+$$
+反向，任意 $u\in\mathcal V_{P,Z}^{\mathbb Z}$ 的每个值都是合法整数码，所以
+$$
+\operatorname{scode}(\operatorname{ival}(u(\operatorname{NatZ}(p))))
+=u(\operatorname{NatZ}(p)).
+$$
+两表的定义域都恰为 $P_Z^{\rm lab}$，逐项相等即整张函数图相等，得到第二恒等式及独立目标上的满射性。有界情形由第 116 条的语义配对唯一性恢复每个标签的自然内容，所得坐标恰为 $x(p)$，故第一个有界复合为恒等。任意像内配置的前两表固定，第三表的全部且仅有的成员经恢复重装不变，故第二个有界复合也为恒等。空 $P$ 时逐坐标条件为空，两侧各在相应单点域上仍互逆；零内容统一用唯一零码，不增添带正负标签的零。
+
+对一步，$x\in D$ 显然蕴含 $\gamma(x)\in\gamma[D]$；反向若存在 $x'\in D$ 且 $\gamma(x)=\gamma(x')$，由单射得 $x=x'\in D$。域内代入共轭式得
+$$
+T^\gamma(\gamma(x))=\gamma(T(x)).
+$$
+对词长归纳：空词在各自全域是恒等；若前缀成功，两边状态按 $\gamma$ 对应，下一实际域测试由已证一步等价同时成立或同时失败。成功则下一状态仍对应；首个失败则两侧在相同字母位置失败。反向以 $\gamma^{-1}$ 作相同论证，得到域的两个包含、所有前缀及终值式。内部词若也逐步运输，就对该词再作此归纳；只运输最终部分宏时，定义中仅有宏的域和值，未给内部状态。
+
+因此每个有序端点对的可行词以同一标签序列双向对应。对应字母权重不变使有限成本和逐项相等，故成本集合及最小词集合相等。无界总平移的最小值由第 301 条非空可行计数子水平集的有限性取得；有界情形由该条另外的有限图简单路径证明取得。一般集合状态域则用该条有限字母表的有界词长证明。空可行集两侧同为空，距离均为 $+\infty$；同端点两侧均由空词以零成本取到，严格正权排除非空最小词。于是两条带明确定义域的距离等式成立。
+
+第 114 条的整数加法运输给有符号表的逐项显示式。盒守卫成立时新内容非负且不超过容量，第 70 条的自然数值与规范化互逆给唯一自然行；第 115 条以该自然叶重装唯一状态码。每个值与原算术值相同，第 298 条的数位公式就恢复相同模一相位。这个值等式未选择任何规范化的内部步序，也未给这种步序附加成本。
+
+语义成员等价直接是第 72 条。对每个固定有限公式，第 75–76 条的结构归纳以相等和成员为基础，保持布尔运算；量词利用 $\operatorname{Enc}$ 在全部集合与全部有效码之间的双逆，在两个方向对应。把本条全部定义展开为集合图，并把域、权重、环面、拓扑和其余参数一并保留，即得所列公式比较，不把无限对象截为有限字段。对原图一条边，写 $c=\gamma(x)$、$d=\gamma(T(x))$，则
+$$
+h_\gamma(c)=\operatorname{Enc}(x),\qquad h_\gamma(d)=\operatorname{Enc}(T(x)).
+$$
+第 74 条的语义配对把原边编码为 $\langle h_\gamma(c),h_\gamma(d)\rangle_Z$；每条原边与数字边均唯一对应，故第 73 条的 $\operatorname{Pack}$ 给第一图码式。直接编码数字边自身，给第二式。逐边取原定义域和数字定义域，就得到各自语义定义域；此即第 259–260 条在当前单输入状态类型上的比较，包括空域。
+
+最后 $\mathcal E_X$ 是双射，故其直接像保持任意并和有限交，并将 $\varnothing,X$ 分别送到 $\varnothing,\mathcal E_X[X]$，证明显示族确为拓扑。点 $x$ 的开邻域与 $\mathcal E_X(x)$ 的开邻域双向对应，且由单射性，前者与 $S$ 相交当且仅当后者与 $\mathcal E_X[S]$ 相交。逐点使用闭包的邻域判据就得闭包等式的两个方向。此为已经指定拓扑的同胚运输；任意实权重与无限集合使用第 71–78 条原有集合解释，第 79 条的有限字障碍保持。以上没有断言任意实数或集合具有有限字表示，也没有增加集合论的一致性结论。证毕。
