@@ -67,7 +67,8 @@ internal static partial class RepositoryRules
     {
         var files = GitIndexRepositoryFiles.Enumerate(repositoryRoot)
             .Where(file => file.RelativePath == EngineeringProjectRegistry.ManifestPath
-                || file.RelativePath.EndsWith(".csproj", StringComparison.Ordinal))
+                || file.RelativePath.EndsWith(".csproj", StringComparison.Ordinal)
+                || file.RelativePath.EndsWith(".cs", StringComparison.Ordinal))
             .Select(file => new EngineeringSource(file.RelativePath, File.ReadAllText(file.FullPath))).ToArray();
         var registry = EngineeringProjectRegistry.Read(files);
         var byPath = files.ToDictionary(file => file.Path, StringComparer.Ordinal);
