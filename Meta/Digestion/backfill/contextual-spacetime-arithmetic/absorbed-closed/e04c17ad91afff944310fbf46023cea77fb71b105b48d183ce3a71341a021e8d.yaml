@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:e04c17ad91afff944310fbf46023cea77fb71b105b48d183ce3a71341a021e8d
   normalized_sha256: sha256:e04c17ad91afff944310fbf46023cea77fb71b105b48d183ce3a71341a021e8d
 cas_ref: sha256:e04c17ad91afff944310fbf46023cea77fb71b105b48d183ce3a71341a021e8d
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Observation/PartialFunctionDomainObservation.partial_function_domain_counterexample
+    target_statement_id: sha256:2b5850204ecd80db15fecec47679a9ba3a436249f8411b331c8baf0e17a60add
 receipts:
   unresolved_subitems: []
