@@ -58,6 +58,21 @@ abbrev CoordinatePairs (relation : Fin 4 -> Fin 4 -> Prop) (d : Nat) :=
 abbrev DistinctCoordinatePairs (relation : Fin 4 -> Fin 4 -> Prop) (d : Nat) :=
   {p : CoordinatePairs relation d // p.val.1 ≠ p.val.2}
 
+/-- The integral midpoint of two four-grid coordinates. -/
+def midpointCoordinate (a b : Fin 4) : Fin 4 :=
+  ⟨(a.val + b.val) / 2, by omega⟩
+
+/-- The coordinatewise integral midpoint. -/
+def midpoint {d : Nat} (x z : GridPoint d) : GridPoint d :=
+  fun i => midpointCoordinate (x i) (z i)
+
+/-- An oriented nonconstant arithmetic progression in the grid. -/
+abbrev OrientedArithmeticProgression (d : Nat) :=
+  {t : GridPoint d × GridPoint d × GridPoint d //
+    t.1 ≠ t.2.2 ∧ ∀ i,
+      ((t.1 i : Nat) : Int) + ((t.2.2 i : Nat) : Int) =
+        2 * ((t.2.1 i : Nat) : Int)}
+
 private def coordinatePairsEquiv (relation : Fin 4 -> Fin 4 -> Prop) (d : Nat) :
     CoordinatePairs relation d ≃ (Fin d -> {q : Fin 4 × Fin 4 // relation q.1 q.2}) where
   toFun p i := ⟨(p.val.1 i, p.val.2 i), p.property i⟩
@@ -79,6 +94,40 @@ private def diagonalCoordinatePairsEquiv (relation : Fin 4 -> Fin 4 -> Prop)
     apply Subtype.ext
     exact Prod.ext rfl p.property
   right_inv _ := rfl
+
+private def apEndpointEquiv (d : Nat) :
+    DistinctCoordinatePairs SameParity d ≃ OrientedArithmeticProgression d where
+  toFun p := by
+    refine ⟨(p.val.val.1, midpoint p.val.val.1 p.val.val.2, p.val.val.2), p.property, ?_⟩
+    intro i
+    have hparity := p.val.property i
+    unfold SameParity at hparity
+    simp only [midpoint, midpointCoordinate]
+    omega
+  invFun t := by
+    refine ⟨⟨(t.val.1, t.val.2.2), ?_⟩, t.property.1⟩
+    intro i
+    unfold SameParity
+    change (t.val.1 i).val % 2 = (t.val.2.2 i).val % 2
+    have hap := t.property.2 i
+    have hapNat : (t.val.1 i).val + (t.val.2.2 i).val = 2 * (t.val.2.1 i).val := by
+      exact_mod_cast hap
+    omega
+  left_inv p := by
+    apply Subtype.ext
+    apply Subtype.ext
+    rfl
+  right_inv t := by
+    apply Subtype.ext
+    apply Prod.ext
+    · rfl
+    · apply Prod.ext
+      · funext i
+        apply Fin.ext
+        have hap := t.property.2 i
+        simp only [midpoint, midpointCoordinate]
+        omega
+      · rfl
 
 /-- The ordered endpoint codes consist of `8^d - 4^d` nonconstant parity
 pairs and `6^d - 4^d` nonconstant extreme pairs. -/
@@ -110,6 +159,14 @@ theorem endpoint_pair_counts (d : Nat) :
   · apply count_of_relation EqualOrExtreme (fun _ => Or.inl rfl) 6
     decide
 
+/-- There are `8^d - 4^d` oriented nonconstant arithmetic progressions in
+the four-point grid. Reversing the endpoints is the remaining factor of two
+for unordered arithmetic-progression triples. -/
+theorem oriented_arithmetic_progression_count (d : Nat) :
+    Fintype.card (OrientedArithmeticProgression d) = 8 ^ d - 4 ^ d := by
+  rw [Fintype.card_congr (apEndpointEquiv d).symm]
+  exact (endpoint_pair_counts d).1
+
 /-- Once one coordinate spans zero to three, the minor equations force every
 coordinate onto the same four-point line. The two conclusions distinguish the
 two possible non-arithmetic-progression interior points. -/
@@ -134,6 +191,7 @@ theorem extreme_line_coordinate_classification {d : Nat} (x y z : GridPoint d) (
     omega
 
 #print axioms endpoint_pair_counts
+#print axioms oriented_arithmetic_progression_count
 #print axioms extreme_line_coordinate_classification
 
 end D5.S3.Arith.Lattices.FourGridCollinearTriples
