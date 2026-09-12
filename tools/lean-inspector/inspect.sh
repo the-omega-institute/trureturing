@@ -189,7 +189,7 @@ invoke_inspector() {
 
 DELTA_SCRIPT="$INSPECTOR_DIR/delta.py"
 runtime_sha256="$(python3 "$INSPECTOR_DIR/runtime_identity.py" \
-  --repository "$REPOSITORY" --lake "$LAKE")" || runtime_sha256=""
+  --repository "$REPOSITORY" --lake "$LAKE")" || exit 2
 cache_partition="$("$REPOSITORY/tools/scripts/worktree/lean-cache-input.sh" partition-path --repository "$REPOSITORY")" || exit 2
 delta_available=1
 [[ -r "$DELTA_SCRIPT" ]] || delta_available=0

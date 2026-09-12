@@ -111,7 +111,9 @@ internal static partial class CommonExecutionEvidence
         return result;
     }
 
-    private sealed record CheckProducer(string Schema, string[] Scripts, string[] Projects, string[] Materials);
+    // Runtime material is consumed and validated at the Lean producer boundary.
+    private sealed record CheckProducerRuntime(string[] Lean, string[] Python);
+    private sealed record CheckProducer(string Schema, string[] Scripts, string[] Projects, string[] Materials, CheckProducerRuntime? Runtime = null);
     private static CheckProducer ReadProducer(RepositorySnapshot snapshot, string path)
     {
         try
