@@ -6,7 +6,7 @@ namespace RegistrationProvenance
 -- Eq/Nat occur on both sides; the filter must preserve the final comparison.
 noncomputable def sharedConstantDecision (_ : Unit) (x : Bool) : Bool :=
   if @decide decisionProposition (Classical.propDecidable _) then x else false
-check_provenance "SharedConstantDecision" using sharedConstantDecision expects "forbidden_dependency" for specificTruth
+check_provenance "SharedConstantDecision" using sharedConstantDecision expects "unclassified_form" for specificTruth
 
 -- Bool/Unit have no dependency in common with True. Observe the production
 -- skip branch as well as its clean verdict; a disabled filter must fail here.

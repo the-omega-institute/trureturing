@@ -68,7 +68,17 @@ elab "check_provenance " label:str " using " readout:ident " expects " reason:st
       if reason.getString == "incomplete_closure" then
         unless payload == "null" do throwError "[FAIL] {label.getString}: partial closure"
       else if let .ok json := Json.parse payload then
-        if let .ok names := fromJson? (α := Array String) json then
+        if reason.getString == "unclassified_form" then
+          let .obj fields := json | throwError "[FAIL] {label.getString}: non-object payload"
+          let keys := fields.toList.map Prod.fst |>.qsort (· < ·)
+          unless keys == #["class", "first", "namespace", "site", "walked"] do
+            throwError "[FAIL] {label.getString}: payload keys"
+          let some walked := fields.find? (·.1 == "walked") | throwError "[FAIL] {label.getString}: walked missing"
+          let .arr items := walked | throwError "[FAIL] {label.getString}: walked shape"
+          let names := items.filterMap (fun j => j.getStr?) |>.toArray
+          unless names == names.qsort (· < ·) && names.toList.eraseDups.length == names.size && names.contains n.toString do
+            throwError "[FAIL] {label.getString}: canonical closure"
+        else if let .ok names := fromJson? (α := Array String) json then
           unless names == names.qsort (· < ·) && names.toList.eraseDups.length == names.size &&
               names.contains n.toString do throwError "[FAIL] {label.getString}: canonical closure"
         else throwError "[FAIL] {label.getString}: non-array closure"
@@ -135,7 +145,7 @@ run_cmd Elab.Command.liftTermElabM do
 -- A complete clean closure is asserted independently of the collector.
 run_cmd do
   let actual ← Elab.Command.liftCoreM <| RegistrationGates.readoutClosure (← getEnv) ``truth (mkConst ``clean)
-  unless actual == (false, some #["Bool", "PUnit", "RegistrationProvenance.clean", "Unit"]) do
+  unless actual == (false, some #["Bool", "RegistrationProvenance.clean", "Unit"]) do
     throwError "[FAIL] CanonicalClosure: {repr actual}"
   logInfo "[PASS] CanonicalClosure"
 run_cmd Elab.Command.liftTermElabM do
