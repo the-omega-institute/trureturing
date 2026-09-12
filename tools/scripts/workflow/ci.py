@@ -139,6 +139,8 @@ def stage_input(args):
     native_push = ci_plan.native_push()
     if plan is None and changes is None:
         if args.allow_direct:
+            if os.environ.get("GITHUB_EVENT_NAME") or ci_plan.workflow_candidate() is not None:
+                raise ValueError("workflow stage requires explicit complete changed-path input and validated plan")
             return {"required": True}
         if not native_push:
             raise ValueError("explicit complete changed-path input and validated plan are required")

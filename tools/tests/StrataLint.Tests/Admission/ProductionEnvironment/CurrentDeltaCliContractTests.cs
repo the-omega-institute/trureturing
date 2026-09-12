@@ -261,14 +261,8 @@ public sealed class CurrentDeltaCliContractTests(Xunit.Abstractions.ITestOutputH
         fixture.Files["tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"] = "// banned-api-proof\n";
         foreach (var pair in fixture.Files) Write(pair.Key, pair.Value);
         Write(".gitignore", ".lake/\nbuild/\n");
-        // Keep the exact registered rows while representing this large declaration
-        // as inline tables inside the fixture's ordinary artifact capacity envelope.
-        var filemap = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Meta/FILEMAP.toml"))
-            .Split("[[files]]", StringSplitOptions.None);
-        var residence = filemap[0].IndexOf("[residence_policy]", StringComparison.Ordinal);
-        Write("Meta/FILEMAP.toml", filemap[0][..residence] + "files = [\n" + string.Join("\n",
-            filemap.Skip(1).Select(row => "  { " + string.Join(", ", row.Split('\n', StringSplitOptions.RemoveEmptyEntries)) + " },")) +
-            "\n]\n" + filemap[0][residence..]);
+        Write("Meta/FILEMAP.toml", File.ReadAllText(
+            Path.Combine(TestRepositoryLayout.FindRoot(), "Meta/FILEMAP.toml")));
         const string firstProject = "tools/tests/First/First.csproj";
         Write(firstProject, "<Project><PropertyGroup><IsTestProject>true</IsTestProject></PropertyGroup></Project>\n");
         Write("tools/tests/Second/Second.csproj", "<Project><PropertyGroup><IsTestProject>true</IsTestProject></PropertyGroup></Project>\n");

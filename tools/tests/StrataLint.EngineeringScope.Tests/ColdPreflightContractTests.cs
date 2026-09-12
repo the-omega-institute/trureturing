@@ -195,8 +195,7 @@ public sealed class ColdPreflightContractTests
             ["CONTRACT_NATIVE"] = Path.Combine(Path.GetDirectoryName(typeof(Program).Assembly.Location)!, "StrataLint.EngineeringScope"),
             ["CONTRACT_DOTNET"] = realDotnet, ["CONTRACT_EVENTS"] = Path.Combine(fixture.Root, "build/cold-events"),
             ["CI_PLAN_PATH"] = "", ["CI_CHANGES_PATH"] = "", ["CI_PLAN_B64"] = "", ["CI_CHANGES_B64"] = "",
-            ["CI_BUILD_ROUND"] = "", ["CANDIDATE_SHA"] = "", ["CI_WORKFLOW_CANDIDATE_SHA"] = "",
-            ["GITHUB_EVENT_NAME"] = "", ["CI_NEEDS"] = "{}", ["CI_WORKFLOW_INPUTS"] = "null" };
+            ["CI_BUILD_ROUND"] = "", ["CANDIDATE_SHA"] = "", ["GITHUB_EVENT_NAME"] = "", ["CI_NEEDS"] = "{}", ["CI_WORKFLOW_INPUTS"] = "null" };
     }
 
     private static JsonNode Read(string root, string file) => JsonNode.Parse(File.ReadAllText(Path.Combine(root, "build/ci", file)))!;

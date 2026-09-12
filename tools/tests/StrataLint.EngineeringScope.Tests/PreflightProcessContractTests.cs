@@ -388,7 +388,8 @@ public sealed class PreflightProcessContractTests
             // Synthetic repositories must not inherit the caller workflow's
             // fixed-candidate contract. Tests opt into an event explicitly.
             start.Environment["GITHUB_EVENT_NAME"] = "";
-            start.Environment["CI_WORKFLOW_CANDIDATE_SHA"] = "";
+            start.Environment["CANDIDATE_SHA"] = "";
+            start.Environment["CI_WORKFLOW_INPUTS"] = "null";
             foreach (var pair in environment ?? []) start.Environment[pair.Key] = pair.Value;
             using var process = Process.Start(start)!;
             var stdout = process.StandardOutput.ReadToEndAsync(); var stderr = process.StandardError.ReadToEndAsync();
