@@ -30,8 +30,8 @@ The offset is 1 and the first terms are 1, 2, 33, 1264, 80505, 7365456, 89300631
 This lane settles ONLY the parity conjecture. The remaining
 conjectures quoted above,
 on residues modulo three and five,
-are NOT proved, are not claimed,
-and do not appear in the module in any form.
+are NOT proved, are not claimed, and do not appear in the module in any form.
+The modulo-five one is in fact refuted by an exact computation recorded under Triage.
 
 ## Motivation
 
@@ -70,8 +70,9 @@ Coefficients are integral EGF coefficients, `eCoeff f n = n! * coeff n f`.
    `expLinear = composition (fun _ => 1) linear`, the integral EGF coefficients of
    `exp(X exp X)`: its closed form is `∑_k C(m,k) * k^(m-k)`, and modulo two every
    term with `k < m` collapses to `C(m,k) * k`, the `k = m` term is one, and the
-   odd-index binomial sum is `2^(m-1)`, giving `expLinear m ≡ 1 - m (mod 2)`. In
-   particular every even-indexed coefficient is odd.
+   odd-index binomial sum is `2^(m-1)`, giving `expLinear m ≡ 1 - m (mod 2)` for every `m ≥ 2`. In
+   particular every even-indexed coefficient is odd. The congruence is stated with
+   that hypothesis: it fails at `m = 1`, where the coefficient is one.
 4. `iterate` of the reduced identity sequence is 2-periodic modulo two, because
    the frozen `square_mod_two` gives `F ∘ F ≡ X`. Hence `stepK k` fixes the
    identity class modulo two for EVERY k: for even k the inner iterate is the
@@ -94,8 +95,8 @@ the same vanishing constant coefficient would falsify `fixed_unique`.
 - Companions: `A_equation`, `fixed_unique`, `odd_iff_odd`, and the sibling
   specializations.
 - Axioms: every public theorem reports `[propext, Classical.choice, Quot.sound]`.
-- The module's own `aK 5` was evaluated by the Lean kernel in a scratch file and
-  returned 1, 2, 33, 1264, 80505, 7365456, 893006317 at indices 1 through 7, matching the published terms. The
+- The module's own `aK 5` was evaluated in a scratch file by Lean's evaluator (`#eval`, runtime
+  evaluation rather than kernel reduction) and returned 1, 2, 33, 1264, 80505, 7365456, 893006317 at indices 1 through 7, matching the published terms. The
   same check at k = 4 returned 1, 2, 27, 820, 41005, 2933046, which agrees with the
   independently frozen `QuarticEGFFixedPoint` sequence for A396804.
 - Exact rational computation outside Lean reproduced the published terms for
@@ -106,14 +107,17 @@ the same vanishing constant coefficient would falsify `fixed_unique`.
 ## Triage
 
 `theorem`. One universal conjecture of this entry is settled, for a sequence
-proved to satisfy the entry's defining equation. The residue
-conjectures remain open.
+proved to satisfy the entry's defining equation. The modulo-three conjecture is
+not proved here. The modulo-five conjecture is NOT open: an exact computation
+outside Lean gives a(23) ≡ 2 while 23 ≡ 3 (mod 5), so that conjecture is false as
+stated, with n = 23 the least counterexample and n = 24 also failing. This lane
+neither proves nor formalizes that refutation.
 
 ## ASSUMED-UNVERIFIED
 
 The entry text is a snapshot; the implementation seats had no network and did not
 retrieve OEIS or search the literature, so no literature completeness or
-first-publication priority is claimed. The computations recorded under Evidence
+first-publication priority is claimed. The modulo-five counterexample and the computations recorded under Evidence
 ran outside the Lean kernel except for the stated `aK` evaluation; the proved
 content is exactly the public theorems. Identification of this entry's sequence
 with `aK 5` rests on `A_equation` together with `fixed_unique`, not on numerical

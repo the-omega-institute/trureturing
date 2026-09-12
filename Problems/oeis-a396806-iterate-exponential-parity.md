@@ -70,8 +70,9 @@ Coefficients are integral EGF coefficients, `eCoeff f n = n! * coeff n f`.
    `expLinear = composition (fun _ => 1) linear`, the integral EGF coefficients of
    `exp(X exp X)`: its closed form is `∑_k C(m,k) * k^(m-k)`, and modulo two every
    term with `k < m` collapses to `C(m,k) * k`, the `k = m` term is one, and the
-   odd-index binomial sum is `2^(m-1)`, giving `expLinear m ≡ 1 - m (mod 2)`. In
-   particular every even-indexed coefficient is odd.
+   odd-index binomial sum is `2^(m-1)`, giving `expLinear m ≡ 1 - m (mod 2)` for every `m ≥ 2`. In
+   particular every even-indexed coefficient is odd. The congruence is stated with
+   that hypothesis: it fails at `m = 1`, where the coefficient is one.
 4. `iterate` of the reduced identity sequence is 2-periodic modulo two, because
    the frozen `square_mod_two` gives `F ∘ F ≡ X`. Hence `stepK k` fixes the
    identity class modulo two for EVERY k: for even k the inner iterate is the
@@ -94,8 +95,8 @@ the same vanishing constant coefficient would falsify `fixed_unique`.
 - Companions: `A_equation`, `fixed_unique`, `odd_iff_odd`, and the sibling
   specializations.
 - Axioms: every public theorem reports `[propext, Classical.choice, Quot.sound]`.
-- The module's own `aK 6` was evaluated by the Lean kernel in a scratch file and
-  returned 1, 2, 39, 1804, 139625, 15563526, 2301954109 at indices 1 through 7, matching the published terms. The
+- The module's own `aK 6` was evaluated in a scratch file by Lean's evaluator (`#eval`, runtime
+  evaluation rather than kernel reduction) and returned 1, 2, 39, 1804, 139625, 15563526, 2301954109 at indices 1 through 7, matching the published terms. The
   same check at k = 4 returned 1, 2, 27, 820, 41005, 2933046, which agrees with the
   independently frozen `QuarticEGFFixedPoint` sequence for A396804.
 - Exact rational computation outside Lean reproduced the published terms for
