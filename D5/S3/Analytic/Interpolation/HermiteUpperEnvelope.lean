@@ -169,7 +169,7 @@ private theorem quadratic_derivatives (a b c L : ℝ) :
       ring
   have hd2 : deriv (fun t : ℝ => b + 2 * c * (t - L)) = fun _ => 2 * c := by
     funext t
-    simpa using ((((hasDerivAt_id t).sub_const L).const_mul (2*c)).const_add b).deriv
+    simp
   constructor
   · rw [hd]; ring
   · simp [iteratedDeriv_succ, iteratedDeriv_zero, hd, hd2]
@@ -257,5 +257,10 @@ theorem hermite_upper_envelope {k : ℕ} (hk : 2 ≤ k) (x : Fin k → ℝ)
       _ = p H + ((k : ℝ) - 1) * p L :=
         quadratic_sum_of_moments x μ r (f L) (deriv f L) c hsum hVr
       _ = f H + ((k : ℝ) - 1) * f L := by rw [hpH, hpL]
+
+#print axioms hermite_two_point_remainder_on
+#print axioms negative_left_of_double_node
+#print axioms quadratic_sum_of_moments
+#print axioms hermite_upper_envelope
 
 end D5.S3.Analytic.Interpolation.HermiteUpperEnvelope
