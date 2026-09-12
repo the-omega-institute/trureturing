@@ -8,6 +8,21 @@ namespace StrataLint.ArchitectureTests;
 public sealed partial class FileMapPolicyTests
 {
     [Fact]
+    public void LeanReportConfigurationIsAdmittedByRepositoryPathPolicy()
+    {
+        var root = RepositoryLayout.FindRoot();
+        var registry = Assert.IsType<RegistryLoadOutcome.Accepted>(RegistryLoader.Load(
+            File.ReadAllBytes(Path.Combine(root, "Meta/registry.yaml")),
+            File.ReadAllBytes(Path.Combine(root, "Meta/domains.yaml"))));
+
+        Assert.Null(RepositoryPathPolicy.Validate(
+            RepoPath.CreateKnown("Meta/lean-report.toml"), registry.Policy));
+        var entry = Assert.Single(FileMapLoader.LoadRepository(root).Match("Meta/lean-report.toml"));
+        Assert.Equal(FileMapKind.Data, entry.Kind);
+        Assert.Equal(FileMapAdmissionPlane.Judge, entry.AdmissionPlane);
+    }
+
+    [Fact]
     public void ComputationalProjectionsHaveCanonicalFileMapEntries()
     {
         var expectedPaths = new HashSet<string>(

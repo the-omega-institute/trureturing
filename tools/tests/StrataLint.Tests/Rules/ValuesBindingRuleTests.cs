@@ -85,8 +85,10 @@ public sealed class ValuesBindingRuleTests
                 && diagnostic.Message.Contains("expected kind=def, found theorem", StringComparison.Ordinal));
     }
 
-    [Fact]
-    public void ChangedLeanReportDefinitionWakesAndRevalidatesItsStoredSl018Binding()
+    [Theory]
+    [InlineData("Directory.Build.props")]
+    [InlineData("Meta/lean-report.toml")]
+    public void ChangedLeanReportDefinitionWakesAndRevalidatesItsStoredSl018Binding(string path)
     {
         var fixture = Fixture();
         fixture.Reports[RuleFixture.ValuesBindingPath] = new LeanFileReport(
@@ -94,7 +96,7 @@ public sealed class ValuesBindingRuleTests
             [Declaration(kind: "theorem")]);
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
             RuleCatalog.Default.Execute(fixture.Build(
-                RawChangeSet.Create(["Directory.Build.props"]))));
+                RawChangeSet.Create([path]))));
 
         Assert.Contains(
             completed.Capability.Diagnostics,

@@ -41,13 +41,60 @@ done
 [[ -d "$REPOSITORY" ]] || { echo "inspect.sh: repository '$REPOSITORY' is absent" >&2; exit 2; }
 
 REPOSITORY="$(cd "$REPOSITORY" && pwd -P)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+INSPECTOR_DIR="$SCRIPT_DIR"
+INPUT_HELPER="$SCRIPT_DIR/../scripts/report/lean-report-input.sh"
+[[ -x "$INPUT_HELPER" ]] || { echo "inspect.sh: report input helper is absent: $INPUT_HELPER" >&2; exit 2; }
+# Always validate the configured version before touching output, caches or builds,
+# including direct invocations supplied with a precomputed identity tuple.
+compatibility_sha256="$("$INPUT_HELPER" compatibility-token --repository "$REPOSITORY")" || exit 2
+[[ "$compatibility_sha256" =~ ^[0-9a-f]{64}$ ]] \
+  || { echo "inspect.sh: compatibility token is malformed" >&2; exit 2; }
+
+current_input_address="${STRATALINT_REPORT_INPUT_ADDRESS:-}"
+current_repository_sha256="${STRATALINT_REPORT_REPOSITORY_SHA256:-}"
+current_producer_sha256="${STRATALINT_REPORT_PRODUCER_SHA256:-}"
+current_resident_sha256="${STRATALINT_REPORT_RESIDENT_SHA256:-}"
+current_config_sha256="${STRATALINT_REPORT_CONFIG_SHA256:-}"
+if [[ ! "$current_input_address" =~ ^[0-9a-f]{64}$ \
+   || ! "$current_repository_sha256" =~ ^[0-9a-f]{64}$ \
+   || ! "$current_producer_sha256" =~ ^[0-9a-f]{64}$ \
+   || ! "$current_resident_sha256" =~ ^[0-9a-f]{64}$ \
+   || ! "$current_config_sha256" =~ ^[0-9a-f]{64}$ \
+   || "$current_producer_sha256" != "$compatibility_sha256" \
+   || "$current_resident_sha256" != "$compatibility_sha256" ]]; then
+  input_address_output="$("$INPUT_HELPER" address --repository "$REPOSITORY")" \
+    || { echo "inspect.sh: repository input address is unavailable" >&2; exit 2; }
+  address_pattern='^([0-9a-f]{64} ){3}[0-9a-f]{64}$'
+  [[ "$input_address_output" =~ $address_pattern ]] \
+    || { echo "inspect.sh: repository input address is malformed" >&2; exit 2; }
+  current_sources_sha256=""
+  IFS=' ' read -r current_repository_sha256 current_resident_sha256 current_sources_sha256 current_config_sha256 \
+    <<< "$input_address_output"
+  current_producer_sha256="$current_resident_sha256"
+  if command -v sha256sum >/dev/null 2>&1; then
+    current_input_address="$(printf '%s\n' \
+      'schema=stratalint-lean-report-input-v1' \
+      "producer_sha256=$current_producer_sha256" \
+      "repository_inspector_sha256=$current_resident_sha256" \
+      "lean_sources_sha256=$current_sources_sha256" \
+      "lean_config_sha256=$current_config_sha256" | sha256sum | awk '{print $1}')"
+  else
+    current_input_address="$(printf '%s\n' \
+      'schema=stratalint-lean-report-input-v1' \
+      "producer_sha256=$current_producer_sha256" \
+      "repository_inspector_sha256=$current_resident_sha256" \
+      "lean_sources_sha256=$current_sources_sha256" \
+      "lean_config_sha256=$current_config_sha256" | shasum -a 256 | awk '{print $1}')"
+  fi
+fi
+
 if [[ "$OUTPUT" != /* ]]; then OUTPUT="$REPOSITORY/$OUTPUT"; fi
 if [[ -z "$LOG_DIR" ]]; then LOG_DIR="${OUTPUT}.logs"; fi
 if [[ "$LOG_DIR" != /* ]]; then LOG_DIR="$REPOSITORY/$LOG_DIR"; fi
 mkdir -p "$(dirname "$OUTPUT")" "$LOG_DIR"
 rm -rf -- "$OUTPUT" "${OUTPUT}.sha256" "${OUTPUT}.materials" "${OUTPUT}.materials.zip"
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 source "$SCRIPT_DIR/../scripts/lib/resource-observation-lib.sh"
 INSPECTOR="$SCRIPT_DIR/Inspector.lean"
 [[ -f "$INSPECTOR" ]] || { echo "inspect.sh: Lean producer is absent: $INSPECTOR" >&2; exit 2; }
@@ -129,9 +176,6 @@ run_phase() {
 # The cache writer converges the pinned mathlib cache before starting either Lake phase.
 run_phase build "$CACHE_RUN" "$LAKE" build
 
-INSPECTOR_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
-INPUT_HELPER="$INSPECTOR_DIR/../scripts/report/lean-report-input.sh"
-[[ -x "$INPUT_HELPER" ]] || { echo "inspect.sh: module enumerator is absent: $INPUT_HELPER" >&2; exit 2; }
 MODULE_TABLE="$(mktemp "${TMPDIR:-/tmp}/stratalint-modules.XXXXXXXX")"
 "$INPUT_HELPER" modules --repository "$REPOSITORY" > "$MODULE_TABLE"
 
@@ -184,43 +228,6 @@ invoke_inspector() {
 DELTA_SCRIPT="$INSPECTOR_DIR/delta.py"
 delta_available=1
 [[ -r "$DELTA_SCRIPT" ]] || delta_available=0
-current_input_address="${STRATALINT_REPORT_INPUT_ADDRESS:-}"
-current_repository_sha256="${STRATALINT_REPORT_REPOSITORY_SHA256:-}"
-current_producer_sha256="${STRATALINT_REPORT_PRODUCER_SHA256:-}"
-current_resident_sha256="${STRATALINT_REPORT_RESIDENT_SHA256:-}"
-current_config_sha256="${STRATALINT_REPORT_CONFIG_SHA256:-}"
-if [[ ! "$current_input_address" =~ ^[0-9a-f]{64}$ \
-   || ! "$current_repository_sha256" =~ ^[0-9a-f]{64}$ \
-   || ! "$current_producer_sha256" =~ ^[0-9a-f]{64}$ \
-   || ! "$current_resident_sha256" =~ ^[0-9a-f]{64}$ \
-   || ! "$current_config_sha256" =~ ^[0-9a-f]{64}$ ]]; then
-  input_address_output="$("$INPUT_HELPER" address --repository "$REPOSITORY" \
-    --producer "$INSPECTOR_DIR/inspect.sh" --inspector "$INSPECTOR")" \
-    || { echo "inspect.sh: repository input address is unavailable" >&2; exit 2; }
-  address_pattern='^([0-9a-f]{64} ){3}[0-9a-f]{64}$'
-  [[ "$input_address_output" =~ $address_pattern ]] \
-    || { echo "inspect.sh: repository input address is malformed" >&2; exit 2; }
-  current_sources_sha256=""
-  IFS=' ' read -r current_repository_sha256 current_resident_sha256 current_sources_sha256 current_config_sha256 \
-    <<< "$input_address_output"
-  current_producer_sha256="$current_resident_sha256"
-  if command -v sha256sum >/dev/null 2>&1; then
-    current_input_address="$(printf '%s\n' \
-      'schema=stratalint-lean-report-input-v1' \
-      "producer_sha256=$current_producer_sha256" \
-      "repository_inspector_sha256=$current_resident_sha256" \
-      "lean_sources_sha256=$current_sources_sha256" \
-      "lean_config_sha256=$current_config_sha256" | sha256sum | awk '{print $1}')"
-  else
-    current_input_address="$(printf '%s\n' \
-      'schema=stratalint-lean-report-input-v1' \
-      "producer_sha256=$current_producer_sha256" \
-      "repository_inspector_sha256=$current_resident_sha256" \
-      "lean_sources_sha256=$current_sources_sha256" \
-      "lean_config_sha256=$current_config_sha256" | shasum -a 256 | awk '{print $1}')"
-  fi
-fi
-
 DELTA_PLAN="$(mktemp "${TMPDIR:-/tmp}/stratalint-report-delta-plan.XXXXXXXX")"
 DELTA_SUBSET_OUTPUT="$(mktemp "${TMPDIR:-/tmp}/stratalint-report-delta-output.XXXXXXXX")"
 delta_status="fallback"

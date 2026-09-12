@@ -27,6 +27,42 @@ public sealed class ScribeContentChecksScriptTests
             fixture.Invocations);
     }
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void RegisteredInputChangesAndDeletionsSelectChecks(bool deleted)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ScribeContentFixture();
+        fixture.ChangeRegisteredInput(deleted);
+        var result = fixture.RunGate(0);
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(new[] { "projections", "describe-report" }, fixture.Invocations);
+    }
+
+    [Fact]
+    public void UnregisteredScriptDoesNotExpandScribeInputs()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ScribeContentFixture();
+        fixture.AddUnregisteredScript();
+        Assert.Equal(0, fixture.RunGate(0).ExitCode);
+        Assert.Empty(fixture.Invocations);
+    }
+
+    [Fact]
+    public void MissingScribeRegistrationFailsSpecifically()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ScribeContentFixture();
+        fixture.RemoveRegistration();
+        var result = fixture.RunGate(0);
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains("scribe-content-checks", Encoding.UTF8.GetString(result.StandardError));
+        Assert.Contains("Meta/lean-report.toml", Encoding.UTF8.GetString(result.StandardError));
+        Assert.Empty(fixture.Invocations);
+    }
+
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
     private sealed class ScribeContentFixture : IDisposable
     {
@@ -57,6 +93,10 @@ public sealed class ScribeContentChecksScriptTests
                 Path.Combine(TestRepositoryLayout.FindRoot(), CacheInputPath), Path.Combine(repository, CacheInputPath));
             ScriptHarnessScratch.CopyScriptInto(
                 Path.Combine(TestRepositoryLayout.FindRoot(), CacheFetcherPath), Path.Combine(repository, CacheFetcherPath));
+            Write("Meta/lean-report.toml", "compatibility_version = 1\n"
+                + "source_patterns = [\"Trureturing.lean\", \"D5/**/*.lean\"]\n"
+                + "scribe_check_inputs = [\"tools/scripts/worktree/lean-cache-publish.sh\", \"tools/Registered/**/*.cs\"]\n");
+            Write("tools/Registered/Nested/Probe.cs", "// registered input\n");
             Write("tools/lean-inspector/inspect.sh", "#!/bin/bash\n");
             Write("tools/scripts/lean-report-pair.sh", "#!/bin/bash\n");
             // Synthetic producer input; no assertions depend on the repository workflow text.
@@ -90,6 +130,17 @@ public sealed class ScribeContentChecksScriptTests
 
         internal void ChangeFetcher() => ScriptHarnessScratch.AppendScratchText(
             Path.Combine(repository, CacheFetcherPath), "# fetch acceptance changed\n");
+
+        internal void ChangeRegisteredInput(bool deleted)
+        {
+            var path = Path.Combine(repository, "tools/Registered/Nested/Probe.cs");
+            if (deleted) ScriptHarnessScratch.DeleteScratchFile(path);
+            else ScriptHarnessScratch.AppendScratchText(path, "// changed\n");
+        }
+
+        internal void AddUnregisteredScript() => Write("tools/scripts/unrelated.sh", "#!/bin/bash\n");
+        internal void RemoveRegistration() => Write("Meta/lean-report.toml",
+            "compatibility_version = 1\nsource_patterns = [\"Trureturing.lean\", \"D5/**/*.lean\"]\n");
 
         internal ProcessOutput RunGate(int childExit) => TestProcessRunner.Run(
             "/bin/bash",

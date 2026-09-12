@@ -153,12 +153,12 @@ public sealed partial class MakeWorkflowTests
 
     [Fact]
     [UnsupportedOSPlatform("windows")]
-    public void ScribeCoarseGateUsesTheDerivedProducerClosure()
+    public void ScribeCoarseGateUsesRegisteredSupplementalInputs()
     {
         if (OperatingSystem.IsWindows()) return;
 
         using var fixture = new ScribeCoarseGateFixture();
-        fixture.Change(ScribeCoarseGateFixture.DerivedProducerPath);
+        fixture.Change(ScribeCoarseGateFixture.RegisteredInputPath);
 
         var result = fixture.Run();
 
@@ -193,7 +193,7 @@ public sealed partial class MakeWorkflowTests
     [UnsupportedOSPlatform("windows")]
     private sealed class ScribeCoarseGateFixture : IDisposable
     {
-        internal const string DerivedProducerPath = "tools/custom/DerivedProducer.cs";
+        internal const string RegisteredInputPath = "tools/custom/DerivedProducer.cs";
 
         private readonly TemporaryDirectory temporary = new();
         private readonly string binDirectory;
@@ -237,7 +237,7 @@ public sealed partial class MakeWorkflowTests
             Directory.CreateDirectory(Path.GetDirectoryName(inputHelper)!);
             WriteExecutable(
                 inputHelper,
-                $"#!/usr/bin/env bash\n[[ \"${{1:-}}\" == scribe-producer-paths ]] || exit 2\nprintf '%s\\n' '{DerivedProducerPath}'\n");
+                $"#!/usr/bin/env bash\n[[ \"${{1:-}}\" == scribe-input-patterns ]] || exit 2\nprintf '%s\\n' '{RegisteredInputPath}'\n");
             WriteExecutable(
                 Path.Combine(binDirectory, "dotnet"),
                 "#!/usr/bin/env bash\nprintf '%s\\n' \"$*\" >> \"$SCRIBE_LOG\"\n");

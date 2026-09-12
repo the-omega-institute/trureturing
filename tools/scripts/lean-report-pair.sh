@@ -77,12 +77,12 @@ hash_file() {
   fi
 }
 
-fingerprint() {
+report_identity() {
   local root="$1"
   local preimage="$TMP_ROOT/input.preimage"
 
   local repository_address resident_sha256 sources_sha256 config_sha256 address_output
-  address_output="$("$INPUT_HELPER" address --repository "$root" --producer "$PRODUCER" --inspector "$INSPECTOR")" || return 2
+  address_output="$("$INPUT_HELPER" address --repository "$root")" || return 2
   local address_pattern='^([0-9a-f]{64} ){3}[0-9a-f]{64}$'
   [[ "$address_output" =~ $address_pattern ]] \
     || { echo "lean-report-pair: repository input address is malformed" >&2; return 2; }
@@ -271,7 +271,7 @@ cache_try_restore() {
   # Re-derive the repository address from the CURRENT tree and confirm it matches
   # the stored attestation; rejects any key skew or collision. Fail-closed.
   if ! "$INPUT_HELPER" verify --repository "$root" --report "$output" \
-    --producer "$PRODUCER" --inspector "$INSPECTOR" >/dev/null 2>&1; then
+    >/dev/null 2>&1; then
     cache_evict "$address"
     rm -rf -- "$output" "${output}.sha256" "${output}.provenance.json" \
       "${output}.input.attestation" "${output}.materials.zip"
@@ -331,12 +331,8 @@ materialize_report() {
     local cache_rc=$?
     [[ "$cache_rc" == "1" ]] || return "$cache_rc"
   fi
-  # Per-module reuse is disabled. Before enabling it, producer identity must cover
-  # the actually selected MSBuild SDK and dotnet runtime plus the bytes of every
-  # actually loaded NuGet package, analyzer, and source generator (or hash the DLL
-  # that is actually executed). global.json latestMinor can make 10.0.103 select
-  # SDK 10.0.201, so one producer SHA can otherwise execute code built by different
-  # toolchains. Keep production on the complete-report path until that is solved.
+  # Incremental baselines use the same developer-owned compatibility token.
+  # The producer still checks Lean sources, imports, configuration and materials.
   "$SUPERVISOR" --role lean-producer --lean-slot -- \
     env LAKE_BIN="$LAKE_BIN" \
       STRATALINT_REPORT_INPUT_ADDRESS="$input_address" \
@@ -408,7 +404,7 @@ verify_bundle() {
   [[ -s "${output}.materials.zip" ]] \
     || { echo "lean-report-pair: producer left no material archive: $output" >&2; return 2; }
   "$INPUT_HELPER" verify --repository "$root" --report "$output" \
-    --producer "$PRODUCER" --inspector "$INSPECTOR" >/dev/null
+    >/dev/null
 
   printf '{"schema":"stratalint-lean-report-provenance-v1","side":"candidate","mode":"%s","source_side":"candidate","input_address":"sha256:%s","producer_sha256":"%s","repository_inspector_sha256":"%s","lean_sources_sha256":"%s","lean_config_sha256":"%s","report_sha256":"%s"}\n' \
     "$mode" "$input_address" "$producer_sha256" \
@@ -495,12 +491,12 @@ emit_provenance_receipt() {
     "${output}.provenance.json"
 }
 
-candidate_fingerprint="$(fingerprint "$CANDIDATE_ROOT")" || exit 2
-fingerprint_pattern='^([0-9a-f]{64} ){5}[0-9a-f]{64}$'
-[[ "$candidate_fingerprint" =~ $fingerprint_pattern ]] \
-  || { echo "lean-report-pair: candidate fingerprint is malformed" >&2; exit 2; }
+candidate_identity="$(report_identity "$CANDIDATE_ROOT")" || exit 2
+identity_pattern='^([0-9a-f]{64} ){5}[0-9a-f]{64}$'
+[[ "$candidate_identity" =~ $identity_pattern ]] \
+  || { echo "lean-report-pair: candidate identity is malformed" >&2; exit 2; }
 IFS=' ' read -r candidate_address candidate_producer candidate_resident candidate_sources candidate_config candidate_repository \
-  <<< "$candidate_fingerprint"
+  <<< "$candidate_identity"
 printf 'LEAN_REPORT_INPUT side=candidate content_address=sha256:%s producer_sha256=%s repository_inspector_sha256=%s lean_sources_sha256=%s lean_config_sha256=%s\n' \
   "$candidate_address" "$candidate_producer" "$candidate_resident" "$candidate_sources" "$candidate_config"
 
