@@ -32,10 +32,11 @@ def oid(value):
 
 def checkout(root, commit):
     workflow_candidate = os.environ.get("CI_WORKFLOW_CANDIDATE_SHA", "")
-    # A native push has no reusable-workflow candidate input; GitHub exposes
-    # the input variable as an empty string in that event. Reusable callers
-    # must provide a non-empty immutable candidate and are rejected closed.
-    if (workflow_candidate or os.environ.get("GITHUB_EVENT_NAME") != "push") and oid(workflow_candidate) != oid(commit):
+    # The reusable push workflow supplies this immutable candidate input to
+    # its stage jobs. The PR resolver runs in the caller workflow and has no
+    # reusable input; an absent value therefore means that there is nothing
+    # additional to compare, while a supplied value is always checked.
+    if workflow_candidate and oid(workflow_candidate) != oid(commit):
         raise ValueError("checkout does not match the reusable workflow candidate input")
     if run(root, "git", "rev-parse", "HEAD") != oid(commit):
         raise ValueError("checkout does not match the fixed candidate")
