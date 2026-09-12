@@ -6,7 +6,7 @@ using Tomlyn.Model;
 
 namespace StrataLint.Cli;
 
-internal static class SettleAtomCommand
+internal static partial class SettleAtomCommand
 {
     private const string Usage = "USAGE: StrataLint settle-atom --request FILE --base REV | settle-atom --clear ATOM_ID --base REV";
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
@@ -147,12 +147,7 @@ internal static class SettleAtomCommand
 
     private static SettleRequest LoadRequest(ImmutableArray<byte> bytes)
     {
-        if (bytes.IsEmpty || bytes[^1] != (byte)'\n' || bytes.AsSpan().Contains((byte)'\r')
-            || bytes.AsSpan().StartsWith(Encoding.UTF8.Preamble))
-            throw Invalid("REQUEST_ENCODING_INVALID", "request must be strict UTF-8 without BOM/CR and end in LF");
-        string text;
-        try { text = StrictUtf8.GetString(bytes.AsSpan()); }
-        catch (DecoderFallbackException error) { throw Invalid("REQUEST_ENCODING_INVALID", error.Message); }
+        var text = DecodeRequest(bytes);
         TomlTable table;
         try { table = TomlSerializer.Deserialize<TomlTable>(text) ?? throw new FormatException("request is empty"); }
         catch (Exception error) when (error is not OutOfMemoryException) { throw Invalid("REQUEST_TOML_INVALID", error.Message); }
@@ -171,6 +166,17 @@ internal static class SettleAtomCommand
         }
         return new SettleRequest(atomId, RequiredString(table, "justification"),
             Neighbor(table, "previous_atom_id"), Neighbor(table, "next_atom_id"), occurrenceIndex);
+    }
+
+    private static string DecodeRequest(ImmutableArray<byte> bytes)
+    {
+        if (bytes.IsEmpty || bytes[^1] != (byte)'\n' || bytes.AsSpan().Contains((byte)'\r')
+            || bytes.AsSpan().StartsWith(Encoding.UTF8.Preamble))
+            throw Invalid("REQUEST_ENCODING_INVALID", "request must be strict UTF-8 without BOM/CR and end in LF");
+        string text;
+        try { text = StrictUtf8.GetString(bytes.AsSpan()); }
+        catch (DecoderFallbackException error) { throw Invalid("REQUEST_ENCODING_INVALID", error.Message); }
+        return text;
     }
 
     private static string? Neighbor(TomlTable table, string key)

@@ -91,9 +91,10 @@ public sealed partial class SettleBatchCommandTests
     [Fact]
     public void BatchSelectsSecondOccurrenceWithDistinctNeighbors()
     {
-        var fixture = AtomContextFixture.Create(AtomContextFixture.ThreeClaims + "\n## Other\n\nOther.\n\n## Middle\n\nMiddle.\n");
+        var fixture = AtomContextFixture.Create(AtomContextFixture.ThreeClaims + "\n## Other\n\nOther.\n\n");
         var id = AtomContextFixture.Id(fixture.Atomized.Claims[1]);
         var previous = AtomContextFixture.Id(fixture.Atomized.Claims[3]);
+        fixture = fixture with { SourceBytes = fixture.SourceBytes.Concat(fixture.Atomized.Claims[1].RawBytes).ToArray() };
         var request = $"[[requests]]\natom_id = '{id}'\njustification = '{Reason}'\nprevious_atom_id = '{previous}'\nnext_atom_id = 'source-boundary'\noccurrence_index = 2\n";
         using var temporary = new TemporaryDirectory();
         var raw = fixture.RawSnapshot();
