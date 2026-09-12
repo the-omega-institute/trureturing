@@ -84,6 +84,10 @@ $$\neg dominationClause$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/JacoExponentialDominationRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kok-jaco-exponential-domination-refutation` (refuted) by `D5/S0/Certificates/JacoExponentialDominationRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kok-jaco-exponential-domination-refutation","declaration_gid":"D5/S0/Certificates/JacoExponentialDominationRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Johan Kok (2025). *Integer sequences with conjectured relation with certain graph parameters of the family of linear Jaco graphs*. DOI: [10.48550/arXiv.2507.16500](https://doi.org/10.48550/arXiv.2507.16500).

@@ -91,7 +91,10 @@ internal sealed class JacoExponentialDominationRefutationDocument : IScribeDocum
                             + "to a selected vertex. The domination clause is false, which "
                             + "refutes the gamma-set assertion. No conclusion is drawn about "
                             + "the separate p-graphical clause."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kok-jaco-exponential-domination-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula SuccessorGrowthFormula()
     {
