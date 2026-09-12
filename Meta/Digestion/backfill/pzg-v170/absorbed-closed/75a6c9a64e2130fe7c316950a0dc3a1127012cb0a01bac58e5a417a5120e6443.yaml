@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:75a6c9a64e2130fe7c316950a0dc3a1127012cb0a01bac58e5a417a5120e6443
   normalized_sha256: sha256:75a6c9a64e2130fe7c316950a0dc3a1127012cb0a01bac58e5a417a5120e6443
 cas_ref: sha256:75a6c9a64e2130fe7c316950a0dc3a1127012cb0a01bac58e5a417a5120e6443
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Zeros/Repulsion/FejerNearCollisionBound.near_pair_count_bound
+    target_statement_id: sha256:f910b500d6e1f75ae2f10aee6e82c15c84693a55e5ce430562e0be9d439a8749
 receipts:
   unresolved_subitems: []
