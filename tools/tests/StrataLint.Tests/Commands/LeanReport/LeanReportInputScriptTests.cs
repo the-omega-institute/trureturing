@@ -73,7 +73,8 @@ public sealed class LeanReportInputScriptTests
         fixture.Plan(before, before);
         Assert.False(fixture.ActionsPolicy()["save_allowed"]!.GetValue<bool>());
         var original = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), policyPath));
-        var changed = original.Replace("\"refs/heads/dev\",", "\"refs/heads/dev\", \"refs/heads/feature-policy-probe\",", StringComparison.Ordinal);
+        var changed = original.Replace("== \"refs/heads/dev\"",
+            "in (\"refs/heads/dev\", \"refs/heads/feature-policy-probe\")", StringComparison.Ordinal);
         Assert.NotEqual(original, changed);
         fixture.Write(policyPath, changed);
         Assert.True(fixture.ActionsPolicy()["save_allowed"]!.GetValue<bool>());

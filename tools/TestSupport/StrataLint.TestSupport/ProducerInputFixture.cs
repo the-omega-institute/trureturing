@@ -274,15 +274,15 @@ internal sealed class ProducerInputFixture : IDisposable
         var source = TestRepositoryLayout.FindRoot();
         var manifest = JsonNode.Parse(File.ReadAllText(Path.Combine(source, ProjectRegistrationPath)))!.AsObject();
         var rows = manifest["projects"]!.AsArray();
-        var registry = EngineeringProjectRegistry.Read(rows.Select(row =>
-            new EngineeringSource(row!["path"]!.GetValue<string>(), string.Empty))
-            .Prepend(new EngineeringSource(ProjectRegistrationPath, manifest.ToJsonString())).ToArray());
         var inventory = TestProcessRunner.Run("git", ["ls-files", "--cached", "-z", "--", "tools"], source,
             TestBudgets.ScriptProcessHangGuard, 4 * 1024 * 1024);
         Assert.True(inventory.ExitCode == 0, Encoding.UTF8.GetString(inventory.StandardError));
         // Expand registered tool source globs only. BatchWorld supplies its own Blueprint
         // definitions and Lean/content payloads for the injected documents assembly.
-        var available = Encoding.UTF8.GetString(inventory.StandardOutput).Split('\0', StringSplitOptions.RemoveEmptyEntries);
+        var available = Encoding.UTF8.GetString(inventory.StandardOutput).Split('\0', StringSplitOptions.RemoveEmptyEntries)
+            .Where(path => File.Exists(Path.Combine(source, path))).ToArray();
+        var registry = EngineeringProjectRegistry.Read(available.Select(path => new EngineeringSource(path, string.Empty))
+            .Prepend(new EngineeringSource(ProjectRegistrationPath, manifest.ToJsonString())).ToArray());
         var scopes = new[] { LeanRegistrationPath, ScribeRegistrationPath }.ToDictionary(path => path,
             path => JsonNode.Parse(File.ReadAllText(Path.Combine(source, path)))!.AsObject(), StringComparer.Ordinal);
         var roots = scopes.Values.SelectMany(scope => scope["projects"]!.AsArray())

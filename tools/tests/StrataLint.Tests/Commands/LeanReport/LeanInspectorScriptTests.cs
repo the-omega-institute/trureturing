@@ -123,6 +123,8 @@ public sealed class LeanInspectorScriptTests
                 include = new[] { $"tools/{name}/Fixture.cs" }, exclude = Array.Empty<string>(),
                 references = Array.Empty<string>(), owner = (object?)null, owned_test_assembly = (string?)null,
                 test_partition = (string?)null,
+                build_inputs = new[] { "global.json" }, execution_inputs = (string[]?)null,
+                execution_excludes = (string[]?)null, execution_environment = (string[]?)null,
                 root_namespace = "Fixture", namespace_exclude = Array.Empty<string>(), global_namespace_exceptions = Array.Empty<string>(),
             }), historical_projects = Array.Empty<object>(), rule_build_inputs = Array.Empty<string>(),
         }));
