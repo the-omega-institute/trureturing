@@ -183,7 +183,7 @@ jobs:
       # The publish producer only needs the canonical Lean report for the selected
       # gate-verified commit. That commit already passed the "Canonical Lean report
       # production" gate on its dev push, which content-addresses and caches the report
-      # under stratalint-canonical-lean-report-reportcache0909-restored-v1-<address>. Reuse it here instead of
+      # under stratalint-canonical-lean-report-v2-<address>. Reuse it here instead of
       # re-running the whole-tree `make lean-report` (which does not finish in the
       # runner window). If the cache misses or fails to verify, fall through to the
       # full production path below, so this is a pure speed-up, never a trust weakening.
@@ -209,8 +209,8 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: .canonical-lean-report-cache
-          key: stratalint-canonical-lean-report-reportcache0909-restored-v1-${{ steps.lean-report-input.outputs.address }}
-          restore-keys: stratalint-canonical-lean-report-reportcache0909-restored-v1-
+          key: stratalint-canonical-lean-report-v2-${{ steps.lean-report-input.outputs.address }}
+          restore-keys: stratalint-canonical-lean-report-v2-
 
       - name: Serve the canonical Lean report from the cached address
         id: report-reuse

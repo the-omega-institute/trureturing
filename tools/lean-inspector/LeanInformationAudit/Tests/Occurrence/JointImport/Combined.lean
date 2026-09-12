@@ -24,7 +24,7 @@ run_cmd do
     unless occurrence.theoremName == ``shared && occurrence.registrationModuleName == root &&
         occurrence.uniqueCaptureCount == 2 && occurrence.withoutEscapeCount == 2 do
       throwError "joint import changed occurrence evidence: {root}"
-    for name in #[record.catalog.catalogName, record.irredundantCertificateName,
+    for name in #[record.catalog.catalogName, record.verdict.name,
         occurrence.unitName, occurrence.certificateName,
         occurrence.certificateName.getPrefix.str "__escape_enriched"] do
       unless (env.getModuleIdxFor? name).map (env.header.moduleNames[·.toNat]!) == some root do

@@ -123,6 +123,8 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
     try:
         for raw_module in root["modules"]:
             module_keys = {"declarations", "imports", "module", "source_path", "source_sha256"}
+            if "information_registration_errors" in raw_module:
+                module_keys.add("information_registration_errors")
             if "utility_refutation" in raw_module:
                 module_keys.add("utility_refutation")
             module = require_keys(
@@ -140,6 +142,12 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
                 raise ValueError("Inspector spool module binding is malformed or unordered")
             previous_module = module_name
             imports = require_sorted_strings(module["imports"], "Inspector spool imports")
+            registration_errors = module.get("information_registration_errors")
+            if registration_errors is not None and (
+                    not isinstance(registration_errors, list)
+                    or any(not isinstance(item, str) for item in registration_errors)
+                    or registration_errors != sorted(set(registration_errors))):
+                raise ValueError("Inspector registration evidence is malformed")
             refutation = module.get("utility_refutation")
             if refutation is not None:
                 require_keys(refutation, {"claim_gid", "claim_source_path", "claim_source_sha256", "result_gid", "is_closed_negation"},
@@ -218,6 +226,8 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
                 "source_path": source_path,
                 "source_sha256": source_sha256,
             }
+            if registration_errors is not None:
+                report_module["information_registration_errors"] = registration_errors
             if refutation is not None:
                 report_module["utility_refutation"] = refutation
             modules.append(report_module)

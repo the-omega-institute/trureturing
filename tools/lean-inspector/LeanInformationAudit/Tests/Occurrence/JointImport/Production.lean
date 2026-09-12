@@ -13,7 +13,7 @@ run_cmd do
     unless records.size == expected && SealRecords.systemCatalogIrredundant env root do
       throwError "production joint import lost sealed catalogs: {root}"
     for record in records do
-      for name in #[record.catalog.catalogName, record.irredundantCertificateName] ++
+      for name in #[record.catalog.catalogName, record.verdict.name] ++
           record.theorems.flatMap (fun row => #[row.unitName, row.certificateName]) do
         unless (env.getModuleIdxFor? name).map (env.header.moduleNames[·.toNat]!) == some root do
           throwError "production companion has the wrong module owner: {name}"

@@ -102,6 +102,7 @@ structure ModuleReport where
   sourcePath : String
   sourceSha256 : String
   refutation : Option RefutationReport := none
+  informationRegistrationErrors : Array String := #[]
 
 def includeInStatement (name : Name) : ConstantInfo → Bool
   | .thmInfo _ => !(privateToUserName name).isInternalDetail
@@ -249,7 +250,22 @@ def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
     | throw <| IO.userError s!"module not loaded: {input.moduleName}"
   let moduleData := env.header.moduleData[moduleIdx]!
   let environment := env.setExporting false
-  let names := moduleData.constNames.qsort fun left right => encodeName left < encodeName right
+  let metadata := moduleData.constNames.filter fun name =>
+    match name with
+    | .str _ suffix => suffix == "__information_registration_diagnostic"
+    | _ => false
+  let mut informationRegistrationErrors := #[]
+  for name in metadata do
+    match environment.find? name with
+    | some (.defnInfo info) =>
+      match info.type, info.value with
+      | .const ``String [], .lit (.strVal message) =>
+        if !message.isEmpty then informationRegistrationErrors := informationRegistrationErrors.push message
+      | _, _ => throw <| IO.userError s!"invalid registration diagnostic: {name}"
+    | _ => throw <| IO.userError s!"invalid registration diagnostic: {name}"
+  informationRegistrationErrors := sortedUnique informationRegistrationErrors
+  let names := (moduleData.constNames.filter (!metadata.contains ·)).qsort fun left right =>
+    encodeName left < encodeName right
   let declarations ← names.mapM fun name => do
     let some info := environment.find? name
       | throw <| IO.userError s!"declaration missing: {name}"
@@ -283,6 +299,7 @@ def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
         isClosedNegation := valid
       }
   return {
+    informationRegistrationErrors
     declarations
     imports := sortedUnique (moduleData.imports.map (fun item => item.module.toString))
     moduleName := input.moduleName
@@ -332,6 +349,7 @@ def renderModule (report : ModuleReport) : String :=
   "{\"declarations\": ["
     ++ String.intercalate ", " (report.declarations.toList.map renderDeclaration)
     ++ "], \"imports\": " ++ renderStrings report.imports
+    ++ ", \"information_registration_errors\": " ++ renderStrings report.informationRegistrationErrors
     ++ ", \"module\": " ++ jsonString report.moduleName
     ++ ", \"source_path\": " ++ jsonString report.sourcePath
     ++ ", \"source_sha256\": " ++ jsonString report.sourceSha256
