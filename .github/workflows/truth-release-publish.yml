@@ -302,6 +302,8 @@ jobs:
       - name: Produce the canonical Lean report
         id: report
         if: steps.source.outputs.publish_ready == 'true' && steps.report-reuse.outcome != 'success' && steps.report-artifact.outcome != 'success' && steps.report-shared.outcome != 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           set -euo pipefail
