@@ -1,0 +1,1 @@
+**定理 440.2。** 上述编码是可定义总类函数且单射，每个原集合及每个有效码均满足两向逆式；$X\to X^*$ 是双射，$X^*=\operatorname{El}(\operatorname{Enc}(X))$，$\operatorname{El}$ 与 $\operatorname{Pack}$ 在所列域上互逆。这些结论不要求原集合有限或可数。

@@ -1,0 +1,1 @@
+**假设 437.3。** 现在明确把候选域限制为 $\{a,b\}$，给定 $T\in\mathbb N$、$\lambda_t>0$、常数 $\kappa>0$ 和初态 $i_0\in\{a,b\}$，每阶段全部转换合法，终端自由且终端费零。路径 $i_1,\ldots,i_T$ 的费用为 $\sum_{t=1}^T[c_t(i_t)+\kappa\mathbf1_{i_t\ne i_{t-1}}]$，其中 $c_t=c_{\lambda_t}$。令 $V_t(i)$ 为以 $i$ 结束的最小累计费用，不可达记 $+\infty$。

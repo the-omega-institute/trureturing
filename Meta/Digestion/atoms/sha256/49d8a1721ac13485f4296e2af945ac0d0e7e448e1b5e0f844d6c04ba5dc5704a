@@ -1,0 +1,36 @@
+**定理 405.1。** 对任意拓扑空间 $(X,\tau_X)$，取第 378.5 条的运输拓扑
+$$
+\tau_X^*=\{e_X[U]:U\in\tau_X\}.
+$$
+$e_X$ 为同胚，且
+$$
+\mathscr B_{X^*}=\{e_X[A]:A\in\mathscr B_X\}.
+$$
+整个 $\sigma$ 代数码、其成员码族与实际外部子集族满足
+$$
+\operatorname{El}(\operatorname{Enc}(\mathscr B_X))
+=\operatorname{Enc}[\mathscr B_X],\qquad
+\mathscr B_{X^*}=\{\operatorname{El}(c):c\in\operatorname{Enc}[\mathscr B_X]\}.
+$$
+将 $\mathscr B_X$ 换成 $\tau_X$，同样得到整个拓扑码、开集码族及外部拓扑的比较。$\chi_{X,Y}$ 是普通运输乘积 $X^*\times Y^*$ 与原乘积的运输 $(X\times Y)^*$ 之间的同胚。对任意指定域的函数，连续性及 Borel 性均保持并反映。
+
+**证明。** 双射的直接像保持空集、全集、任意并、有限交与相对补集，故 $\tau_X^*$ 是拓扑，开集的双向对应给同胚。子集族 $\{e_X[A]:A\in\mathscr B_X\}$ 是包含 $\tau_X^*$ 的 $\sigma$ 代数，因此包含 $\mathscr B_{X^*}$。反向，$\{e_X^{-1}[B]:B\in\mathscr B_{X^*}\}$ 是包含 $\tau_X$ 的 $\sigma$ 代数，故包含 $\mathscr B_X$；再取双射像便得另一包含。两者相等。对 $\mathscr B_X$ 这个集合先应用第 402.2 条取得其成员码族，再对每个成员码展开 $\operatorname{El}$，就得到实际外部 Borel 子集族。拓扑的两式由同一成员公式成立。
+
+普通乘积映射 $e_X\times e_Y$ 将基本开矩形 $U\times V$ 双向对应到 $e_X[U]\times e_Y[V]$，所以是原普通乘积到普通运输乘积的同胚。而
+$$
+\chi_{X,Y}=e_{X\times Y}\circ(e_X\times e_Y)^{-1}
+$$
+中的 $e_{X\times Y}$ 使用原乘积拓扑的运输，也为同胚，因此 $\chi$ 是所述同胚。结合第 403.1 条，普通外部关系图的 Borel 性和其在 $(X\times Y)^*$ 中的成员码像的 Borel 性准确相应。
+
+对任意 $f:D\to Y$ 及 $B\subseteq Y$，逐点解码给
+$$
+(f^*)^{-1}(e_Y[B])=e_D[f^{-1}(B)].
+$$
+用开集判据和刚证的整个 Borel $\sigma$ 代数比较，分别得到连续性、Borel 性的两个方向。第 404.1 条已说明所有假设存在的外部函数也能解码，所以这些判据覆盖全部函数。
+
+若 $D\subseteq X$ 使用子空间拓扑，则
+$$
+e_X[U\cap D]=e_X[U]\cap e_X[D]\qquad(U\in\tau_X)
+$$
+证明 $D$ 的运输拓扑正是 $D^*$ 的子空间拓扑，即使 $D$ 在 $X$ 中并非 Borel。关于环境乘积中图为 Borel 的断言另经上述乘积同胚比较，不把它改成单纯的子空间断言。证毕。
+

@@ -1,0 +1,8 @@
+**证明。** 全部 \(y_p>0\)。逐行凹性、第 15 节及其方差单调性给出
+
+\[
+U_{\rm dual}-\log E_S=\sum_p\mathbb E f(X_p)
+\le\sum_pf(y_p)\le\Psi_k(\mu,\overline V)
+\le\Psi_k(\mu,V_0).
+\]
+

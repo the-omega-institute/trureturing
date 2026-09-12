@@ -1,0 +1,12 @@
+**定理 410.1。** 对任意集合 $X,Y$，语义幂集和全函数空间准确为
+$$
+\mathcal P_Z(\operatorname{Enc}(X))
+=\operatorname{Pack}\{\operatorname{Pack}(B):B\subseteq\operatorname{Enc}[X]\}
+=\operatorname{Enc}(\mathcal P(X)),
+$$
+$$
+\operatorname{Fun}_Z(\operatorname{Enc}(X),\operatorname{Enc}(Y))
+=\operatorname{Enc}(Y^X).
+$$
+第一式的 $B$ 遍历全部环境子集，第二式遍历全部函数。第 390–409 条的全部载体、关系、商、指标族、拓扑、Borel $\sigma$ 代数、函数与测度图及其所量化的全部子集和函数空间都是 ZFC 集合。
+

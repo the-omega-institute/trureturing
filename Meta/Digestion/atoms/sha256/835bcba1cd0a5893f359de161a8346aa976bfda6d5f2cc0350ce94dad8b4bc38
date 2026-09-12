@@ -1,0 +1,14 @@
+**命题 388.3。** 每个失败三元组的定理 384.1 见证以 $\nu_i=\operatorname{NatZ}(n_i)$ 运输，仍满足
+$$
+\nu_0\ne\nu_1,\qquad P_J^*z^*(\nu_0)=P_J^*z^*(\nu_1),
+$$
+$$
+\left\{V_L^*P_L^*z^*(\nu_i+_{\mathsf N}\operatorname{NatZ}(h)):i\in\{0,1\}\right\}
+=\{\operatorname{NatZ}(0),\operatorname{NatZ}(G_{L-1})\}.
+$$
+此外对全部 $c,d\in K^*$，
+$$
+d=T^*c\iff\forall L\ge1,\ \langle P_L^*c,P_L^*d\rangle\in\mathscr R_L^\square.
+$$
+$\mathscr R_L^\square$ 在 $V_L^*$ 坐标下保留定理 379.2 的所有环边及额外边、全部原自然见证、一位必要充分增量，以及 $\operatorname{Enc}(u),\operatorname{Enc}(v)$ 两个输入。固定一位图中的三次零观察仍无真实轨道。
+

@@ -1,0 +1,12 @@
+**定理 394.1。** $\mathcal F_n$ 是 Borel 等价关系，每个类至多有 $L_n$ 个点，并有
+$$
+\mathcal F_n\subseteq\mathcal F_{n+1},\qquad
+\bigcup_{n\in\omega}\mathcal F_n=E_R.
+$$
+$\mathcal G_n$ 是 Borel 等价关系，每个类至多有 $2L_n$ 个点，并有
+$$
+\mathcal G_n\subseteq\mathcal G_{n+1},\qquad
+\bigcup_{n\in\omega}\mathcal G_n=E_T.
+$$
+所以这两个无限载体上的轨道等价关系均超有限。
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ddc4c31e71e2cc04d7927b90d88e3da446eadfc00e8b176ed58108b3c83807b1
+  normalized_sha256: sha256:ddc4c31e71e2cc04d7927b90d88e3da446eadfc00e8b176ed58108b3c83807b1
+cas_ref: sha256:ddc4c31e71e2cc04d7927b90d88e3da446eadfc00e8b176ed58108b3c83807b1
+coverage_gids:
+  - gid: D5/S3/Analytic/Interpolation/HermiteEnvelopeEquality.hermite_envelope_equality
+    target_statement_id: sha256:70126db820f83571b62984182afa39da6134b312d02372a67faa98793c926962
+receipts:
+  unresolved_subitems: []

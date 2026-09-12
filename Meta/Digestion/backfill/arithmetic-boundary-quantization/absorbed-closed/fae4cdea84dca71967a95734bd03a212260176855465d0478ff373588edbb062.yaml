@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:fae4cdea84dca71967a95734bd03a212260176855465d0478ff373588edbb062
+  normalized_sha256: sha256:fae4cdea84dca71967a95734bd03a212260176855465d0478ff373588edbb062
+cas_ref: sha256:fae4cdea84dca71967a95734bd03a212260176855465d0478ff373588edbb062
+coverage_gids:
+  - gid: D5/S3/Analytic/Interpolation/FractionalBranchGeometry.fractional_mean_branch
+    target_statement_id: sha256:1d96c8c580cb5a92565eb09b11c81509e430eb0de1745aee7883ad3e87e1a610
+receipts:
+  unresolved_subitems: []

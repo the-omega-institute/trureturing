@@ -1,0 +1,28 @@
+**证明。** 设 $A$ 为 Borel 集且 $\lambda(A\mathbin\triangle R^{-1}A)=0$。若 $0<\lambda(A)<1$，定义整个 Borel 域上的概率
+$$
+\nu(B)=\frac{\lambda(B\cap A)}{\lambda(A)}.
+$$
+可数可加性来自不交并与交 $A$ 交换。平移不变性给 $\lambda(RA\mathbin\triangle A)=0$，并且
+$$
+\lambda(R^{-1}B\cap A)=\lambda(B\cap RA)=\lambda(B\cap A).
+$$
+后一个等号因两个集合的对称差包含于零测集 $RA\mathbin\triangle A$。故 $\nu$ 是 $R$ 不变概率，定理 397.1 迫使 $\nu=\lambda$；但 $\nu(A)=1\ne\lambda(A)$，矛盾。这证明遍历性，精确不变的 Borel 集是其中的特例。
+
+对所述任意 $f$ 和每个有理数 $q$，令 $A_q=\{t:f(t)<q\}$。它 Borel 且精确 $R$ 不变，所以 $\lambda(A_q)\in\{0,1\}$。$f$ 在每一点取有限实值，故
+$$
+\bigcup_{n\ge1}A_n=\mathbb T,\qquad
+\bigcap_{n\ge1}A_{-n}=\varnothing.
+$$
+从下、从上连续性及二值性分别给某个有理阈值的子水平集质量为一、另一个质量为零。子水平族递增，因此
+$$
+c=\inf\{q\in\mathbb Q:\lambda(A_q)=1\}
+$$
+为有限实数。若 $q<c$，该子水平不能有质量一，所以质量零；若 $q>c$，下确界性质给某个质量一的有理阈值严格小于 $q$，故 $\lambda(A_q)=1$。有理数的稠密性使
+$$
+\{f<c\}=\bigcup_{\substack{q\in\mathbb Q\\q<c}}A_q,\qquad
+\{f>c\}=\bigcup_{\substack{q\in\mathbb Q\\q>c}}(\mathbb T\setminus A_q).
+$$
+两者均为可数个 Borel 零测集的并，所以 $f=c$ 几乎处处。若另有 $c'$，两个质量一的常值纤维的交仍质量一，取交中的一点便得 $c=c'$。
+
+这不把不变性或几乎处处条件省去。任一轨道是可数个闭单点的并，故 Borel 且零测；它的指示函数 Borel、不变，并在该轨道与其非空补集上分别取一与零。因此不变 Borel 函数不必处处常值。证毕。
+
