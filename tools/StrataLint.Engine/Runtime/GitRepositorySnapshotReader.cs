@@ -41,23 +41,29 @@ internal static class GitRepositorySnapshotReader
 
             var fullPath = Path.Combine(root, path);
             var info = new FileInfo(fullPath);
-            if (info.LinkTarget is not null || (info.Attributes & FileAttributes.ReparsePoint) != 0)
+            // FileInfo.Attributes is -1 for a missing path on .NET, whose bit
+            // pattern includes ReparsePoint.  Check absence before the
+            // reparse test, while retaining a dangling symlink whose
+            // LinkTarget is still available even when its target is absent.
+            var linkTarget = info.LinkTarget;
+            if (!info.Exists && linkTarget is null)
+            {
+                continue;
+            }
+
+            if (linkTarget is not null || (info.Attributes & FileAttributes.ReparsePoint) != 0)
             {
                 symlinkPaths.Add(path);
                 entries.Add(new RawRepositoryEntry(
                     path,
-                    ImmutableArray.CreateRange(StrictUtf8.GetBytes(info.LinkTarget ?? string.Empty))));
-                continue;
+                    ImmutableArray.CreateRange(StrictUtf8.GetBytes(linkTarget ?? string.Empty))));
             }
-
-            if (!info.Exists)
+            else
             {
-                continue;
+                entries.Add(new RawRepositoryEntry(
+                    path,
+                    ImmutableArray.CreateRange(File.ReadAllBytes(fullPath))));
             }
-
-            entries.Add(new RawRepositoryEntry(
-                path,
-                ImmutableArray.CreateRange(File.ReadAllBytes(fullPath))));
         }
 
         foreach (var path in entries.Select(static entry => entry.Path))
