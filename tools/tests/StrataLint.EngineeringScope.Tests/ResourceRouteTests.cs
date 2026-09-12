@@ -7,26 +7,51 @@ using Xunit;
 namespace StrataLint.EngineeringScope.Tests;
 
 [Collection("Engineering scope process boundary")]
-public sealed class ResourceRouteTests
+public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper testOutput)
 {
-    [Fact]
-    public void NoResourceStageRetainsGitIdentityAndClearsAcceptance()
+    [Theory]
+    [InlineData("build")]
+    [InlineData("engineering")]
+    [InlineData("current")]
+    [InlineData("delta")]
+    public void NoResourceStageRetainsGitIdentityAndClearsAcceptance(string stage)
     {
         using var fixture = new ResourceFixture([]);
-        fixture.Write(CommonExecutionEvidence.CurrentPath, "stale");
-        fixture.Write(CommonExecutionEvidence.ChecksPath("current"), "stale");
-        fixture.Write(CommonExecutionEvidence.CheckSeedPath("current") + "/keep", "optional");
+        if (stage == "delta") fixture.PrPlan();
+        var acceptance = CommonExecutionEvidence.RootPath + "/" + stage + ".json";
+        fixture.Write(acceptance, "stale");
+        fixture.Write(CommonExecutionEvidence.ChecksPath(stage), "stale");
+        fixture.Write(CommonExecutionEvidence.CheckSeedPath(stage) + "/keep", "optional");
         using var output = new StringWriter();
-        Assert.True(fixture.Run("current", output) == 0, output.ToString());
-        var result = JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, "build/ci/current-result.json")))!;
+        Assert.True(fixture.Run(stage, output) == 0, output.ToString());
+        var result = JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, "build/ci/" + stage + "-result.json")))!;
+        testOutput.WriteLine("COMMON_NO_WORK_SUMMARY " + result.ToJsonString());
         Assert.Equal(fixture.Commit, result["git_candidate"]!["commit"]!.ToString());
         Assert.Equal("not-required", result["status"]!.ToString());
         Assert.Empty(result["steps"]!.AsArray());
         Assert.Empty(result["artifacts"]!.AsArray());
-        Assert.DoesNotContain("STAGE_PROCESS ", output.ToString(), StringComparison.Ordinal);
-        Assert.False(File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.CurrentPath)));
-        Assert.False(File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.ChecksPath("current"))));
-        Assert.Equal("optional", File.ReadAllText(Path.Combine(fixture.Root, CommonExecutionEvidence.CheckSeedPath("current"), "keep")));
+        Assert.Empty(result["not_executed"]!.AsArray());
+        Assert.Equal(stage == "engineering" ? new[] { "tests", "selftest-pair", "capability-proof", "banned-api-proof" }
+            : stage == "build" ? ["restore-StrataLint", "build"] : stage == "delta" ? ["check-delta"]
+            : ["lean-report", "scribe", "filemap", "check-current"],
+            result["not_required"]!.AsArray().Select(value => value!.ToString()));
+        if (stage == "engineering")
+            Assert.Equal(new[] { "not-required", "not-required", "not-required" },
+                result["check_units"]!.AsArray().Select(unit => unit!["status"]!.ToString()));
+        var processes = output.ToString().Split('\n').Where(line => line.StartsWith("STAGE_PROCESS ", StringComparison.Ordinal))
+            .Select(line => JsonNode.Parse(line["STAGE_PROCESS ".Length..])!).ToArray();
+        if (stage == "delta")
+        {
+            var validation = Assert.Single(processes);
+            Assert.Equal("git", validation["command"]!.ToString());
+            Assert.Equal(new[] { "cat-file", "-t", result["base_sha"]!.ToString() },
+                validation["arguments"]!.AsArray().Select(value => value!.ToString()));
+            Assert.Equal(0, validation["child_exit"]!["code"]!.GetValue<int>());
+        }
+        else Assert.Empty(processes);
+        Assert.False(File.Exists(Path.Combine(fixture.Root, acceptance)));
+        Assert.False(File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.ChecksPath(stage))));
+        Assert.Equal("optional", File.ReadAllText(Path.Combine(fixture.Root, CommonExecutionEvidence.CheckSeedPath(stage), "keep")));
     }
 
     [Theory]
@@ -43,6 +68,10 @@ public sealed class ResourceRouteTests
         using var output = new StringWriter();
         Assert.True(fixture.Run("current", output) == 0, output.ToString());
         var current = CommonExecutionEvidence.ValidateCurrent(fixture.Root);
+        var summaryPath = Path.Combine(fixture.Root, "build/ci/current-result.json");
+        var summary = JsonNode.Parse(File.ReadAllText(summaryPath))!;
+        Assert.Empty(summary["not_executed"]!.AsArray());
+        Assert.DoesNotContain(summary["not_required"]!.AsArray(), name => name!.ToString() == resource);
         Assert.Equal(new[] { resource }, current.Steps.Select(step => step.Name));
         var launched = File.ReadAllLines(Path.Combine(fixture.Root, "build/launched"));
         Assert.Single(launched);
@@ -55,6 +84,9 @@ public sealed class ResourceRouteTests
             Assert.True(fixture.Run("current", warm) == 0, warm.ToString());
             Assert.Single(File.ReadAllLines(Path.Combine(fixture.Root, "build/launched")));
             Assert.Equal("reused", Assert.Single(CommonExecutionEvidence.Read<CommonCheckRecord>(fixture.Root, CommonExecutionEvidence.ChecksPath("current")).Units).Status);
+            summary = JsonNode.Parse(File.ReadAllText(summaryPath))!;
+            Assert.Empty(summary["not_executed"]!.AsArray());
+            Assert.Equal("reused", Assert.Single(summary["steps"]!.AsArray())!["status"]!.ToString());
         }
     }
 
@@ -389,7 +421,8 @@ public sealed class ResourceRouteTests
         {
             var executable = Path.Combine(Path.GetDirectoryName(typeof(Program).Assembly.Location)!, "StrataLint.EngineeringScope");
             var result = SharedBuildContractTests.Process(Root, executable,
-                [stage, "--repository", Root, .. planned ? new[] { "--plan", Plan, "--changes", Changes } : []],
+                [stage, "--repository", Root, .. planned ? new[] { "--plan", Plan, "--changes", Changes } : [],
+                    .. stage == "delta" ? new[] { "--base", JsonNode.Parse(File.ReadAllText(Plan))!["base"]!.ToString() } : []],
                 new Dictionary<string, string> { ["PATH"] = processPath! }, TestBudgets.WorkflowProcessHangGuard);
             output.Write(result.Text);
             if (Environment.GetEnvironmentVariable("CI_RESOURCE_ROUTE_EVIDENCE") is { Length: > 0 } evidence)
