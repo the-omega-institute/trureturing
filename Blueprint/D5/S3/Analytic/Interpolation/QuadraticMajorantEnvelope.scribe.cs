@@ -69,7 +69,7 @@ internal sealed class QuadraticMajorantEnvelopeDocument : IScribeDocumentDefinit
                 DeclarationHandle.Create("D5/S3/Analytic/Interpolation/QuadraticMajorantEnvelope.logValue_le_majorant"),
                 H("The majorant on the positive interval"),
                 StatementSource.FromAuthor(Disp(ImpliesFrom(Seq(NodeDomain, Sp, Land, Sp,
-                    D(0), Lt, T, Le, U), Seq(Fn(T), Le, P(T))))),
+                    D(0), Lt, T, Sp, Le, Sp, U), Seq(Fn(T), Sp, Le, Sp, P(T))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Assume 0<L<H and 0<t<=H. The quadratic has zero third derivative, agrees with f in value and derivative at L, and agrees in value at H. The positive third derivative of f gives the Hermite majorant. The interval includes 0<t<L: the sign to the left of the double node follows from repeated mean value and Rolle arguments on the positive interval spanned by t, L, and H. At L and H equality holds. No bound beyond H is asserted."))),
@@ -104,7 +104,7 @@ internal sealed class QuadraticMajorantEnvelopeDocument : IScribeDocumentDefinit
                 DescribeId.Create("weighted-logarithmic-majorant-bound"),
                 DeclarationHandle.Create("D5/S3/Analytic/Interpolation/QuadraticMajorantEnvelope.weighted_majorant_bound"),
                 H("The weighted logarithmic bound"),
-                StatementSource.FromAuthor(Disp(Seq(SumOf(Fn(X)), Le, Corrected))),
+                StatementSource.FromAuthor(Disp(Seq(SumOf(Fn(X)), Sp, Le, Sp, Corrected))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "In addition to the reference domain and moment equalities, assume every weight is nonnegative and every support point satisfies 0<x(i)<=H. Multiplying f(x(i))<=P(x(i)) by w(i), summing, and using the exact majorant sum gives the bound. The weighted variance W is not required to be in the domain of psiK(k,m,W); only the reference variance V appears as an envelope argument."))),
@@ -113,8 +113,8 @@ internal sealed class QuadraticMajorantEnvelopeDocument : IScribeDocumentDefinit
                 DescribeId.Create("weighted-envelope-variance-floor"),
                 DeclarationHandle.Create("D5/S3/Analytic/Interpolation/QuadraticMajorantEnvelope.weighted_le_psiK_of_variance_ge"),
                 H("A variance floor removes the correction"),
-                StatementSource.FromAuthor(Disp(ImpliesFrom(Seq(V, Le, W),
-                    Seq(SumOf(Fn(X)), Le, Psi)))),
+                StatementSource.FromAuthor(Disp(ImpliesFrom(Seq(V, Sp, Le, Sp, W),
+                    Seq(SumOf(Fn(X)), Sp, Le, Sp, Psi)))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Under all assumptions of the weighted logarithmic bound, additionally assume V<=W. Since a<0, the correction a(W-V) is nonpositive, so the weighted logarithmic sum is at most psiK(k,m,V). Equality of the variances is allowed."))),
@@ -135,7 +135,7 @@ internal sealed class QuadraticMajorantEnvelopeDocument : IScribeDocumentDefinit
     private static Formula P(Formula t) => Call("P", t);
     private static Formula Square(Formula t) => Seq(Open, t, Close, Caret, Grp(D(2)));
     private static Formula SumOf(Formula t) => Seq(Sum, Underscore,
-        Grp(F.Id("i"), InMacro, F.Id("I")), Call("w", F.Id("i")), Sp, t);
+        Grp(F.Id("i"), Sp, InMacro, Sp, F.Id("I")), Call("w", F.Id("i")), Sp, t);
     private static Formula ImpliesFrom(Formula premise, Formula result) => Seq(
         Open, premise, Close, Sp, Implies, Sp, result);
     private static Formula NodeDomain => Seq(D(0), Lt, L, Lt, U);
