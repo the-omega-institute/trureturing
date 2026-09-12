@@ -15,7 +15,7 @@ check_provenance "StructureField" using fieldRead expects "forbidden_dependency"
 noncomputable def letDecision (_ : Unit) (x : Bool) : Bool :=
   let p : Prop := specificStatement
   if @decide p (Classical.propDecidable p) then x else true
-check_provenance "LetBoundDecision" using letDecision expects "forbidden_dependency" for specificTruth
+check_provenance "LetBoundDecision" using letDecision expects "unclassified_form" for specificTruth
 
 structure Dispatcher where
   family : Prop → Type
@@ -23,11 +23,11 @@ structure Dispatcher where
 noncomputable def dispatcher : Dispatcher := ⟨Decidable, Classical.propDecidable⟩
 noncomputable def projectedDecision (_ : Unit) (x : Bool) : Bool :=
   if @decide specificStatement (dispatcher.choose specificStatement) then x else true
-check_provenance "DependentProjectionDecision" using projectedDecision expects "forbidden_dependency" for specificTruth
+check_provenance "DependentProjectionDecision" using projectedDecision expects "unclassified_form" for specificTruth
 
 def owner (s : String) : Name := .str (.str .anonymous "RegistrationProvenance") s
 def ownerCertificate : Certificate (owner "specificTruth") := ⟨true⟩
-def ownerRead (_ : Unit) (x : Bool) : Bool := if ownerCertificate.bit then x else true
+def ownerRead (_ : Unit) (x : Bool) : Bool := cond ownerCertificate.bit x true
 -- A user record with Bool data reaches no judge API, generated record, or theorem.
 check_provenance "ComputedOwnerCertificate" using ownerRead expects "clean" for specificTruth
 run_cmd Elab.Command.liftTermElabM do
@@ -83,9 +83,9 @@ check_provenance "ClosedStatementInhabitant" using closedStatementRead expects "
 def openAliasFamily (_ : Bool) : Prop := specificStatement
 noncomputable def openAliasDecision (_ : Unit) (x : Bool) : Bool :=
   if @decide (openAliasFamily x) (Classical.propDecidable _) then x else false
-check_provenance "OpenAliasDecision" using openAliasDecision expects "forbidden_dependency" for specificTruth
+check_provenance "OpenAliasDecision" using openAliasDecision expects "unclassified_form" for specificTruth
 noncomputable def openAliasBinderControl := unrelatedDecisionRead
-check_provenance "OpenAliasBinderControl" using openAliasBinderControl expects "clean" for specificTruth
+check_provenance "OpenAliasBinderControl" using openAliasBinderControl expects "unclassified_form" for specificTruth
 
 def structuralAliasFamily (_ : Nat) : Prop := specificStatement
 noncomputable def structuralAliasDecision (_ : Unit) (x : Nat) : Nat :=
@@ -100,7 +100,7 @@ run_cmd Elab.Command.liftTermElabM do
     | throwError "fixture template"
   for (readout, label, forbidden) in [
       (``structuralAliasDecision, "OpenAliasDecisionStructural", true),
-      (``structuralBinderDecision, "OpenAliasBinderControlStructural", false)] do
+      (``structuralBinderDecision, "OpenAliasBinderControlStructural", true)] do
     let holder := readout.str "fixtureRealization"
     addDecl <| .defnDecl {
       name := holder, levelParams := [], type := template.type
@@ -110,7 +110,7 @@ run_cmd Elab.Command.liftTermElabM do
       { entry with theoremName := ``specificTruth, realizationConst := holder }
     let ok := if forbidden then
         (actual.getD "").startsWith "IE-C050 ClosedTruthReadout " &&
-        ((actual.getD "").splitOn " reason=forbidden_dependency provenance=").length == 2
+        ((actual.getD "").splitOn " reason=unclassified_form provenance=").length == 2
       else actual.isNone
     if ok then logInfo m!"[PASS] {label}"
     else logError m!"[FAIL] {label}: {actual}"

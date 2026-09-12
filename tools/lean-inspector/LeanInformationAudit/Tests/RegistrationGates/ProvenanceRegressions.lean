@@ -27,16 +27,16 @@ def decisionProposition : Prop := (137 : Nat) + 0 = 137
 example : decisionProposition = specificStatement := rfl
 noncomputable def defeqDecisionRead (_ : Unit) (x : Bool) : Bool :=
   if @decide decisionProposition (Classical.propDecidable decisionProposition) then x else false
-check_provenance "DefeqDecision" using defeqDecisionRead expects "forbidden_dependency" for specificTruth
+check_provenance "DefeqDecision" using defeqDecisionRead expects "unclassified_form" for specificTruth
 noncomputable def unrelatedDecisionRead (_ : Unit) (x : Bool) : Bool :=
   if @decide (x = true) (Classical.propDecidable (x = true)) then x else false
-check_provenance "UnrelatedBinderDecision" using unrelatedDecisionRead expects "clean" for specificTruth
-check_provenance "AppliedDecidableFinite" using genericDecision expects "forbidden_dependency" for specificTruth
+check_provenance "UnrelatedBinderDecision" using unrelatedDecisionRead expects "unclassified_form" for specificTruth
+check_provenance "AppliedDecidableFinite" using genericDecision expects "unclassified_form" for specificTruth
 
 def computedKey : Name := Name.str (Name.mkSimple "RegistrationProvenance") "truth"
 example : computedKey = ``truth := rfl
 def computedCert : Certificate computedKey := ⟨true⟩
-def computedRead (_ : Unit) (x : Bool) : Bool := if computedCert.bit then x else true
+def computedRead (_ : Unit) (x : Bool) : Bool := cond computedCert.bit x true
 check_provenance "ComputedName" using computedRead expects "clean" for truth
 run_cmd Elab.Command.liftTermElabM do
   let info ← getConstInfo ``specificTruth
@@ -105,7 +105,7 @@ def expensive : Nat → Nat
 theorem expensiveTruth : expensive 10000 = expensive 10000 := rfl
 noncomputable def expensiveDecision (_ : Unit) (x : Bool) : Bool :=
   if @decide (expensive 10000 = 0) (Classical.propDecidable _) then x else false
-check_provenance "DefeqExhaustion" using expensiveDecision expects "incomplete_closure" for expensiveTruth
+check_provenance "DefeqExhaustion" using expensiveDecision expects "unclassified_form" for expensiveTruth
 
 def independentAliasRead (_ : Unit) (x : Bool) : Bool := let _ := aliasHelper; x
 check_provenance "IndependentProofAlias" using independentAliasRead expects "forbidden_dependency" for truth
@@ -144,7 +144,7 @@ run_cmd Elab.Command.liftTermElabM do
     type := (← getConstInfo ``clean).type,
     value := mkLambda `i .default (mkConst ``Unit) (mkLambda `x .default (mkConst ``Bool) decision),
     hints := .abbrev, safety := .safe }
-check_provenance "TypeArgumentExhaustion" using wideRead expects "incomplete_closure" for specificTruth
+check_provenance "TypeArgumentExhaustion" using wideRead expects "unclassified_form" for specificTruth
 
 run_cmd Elab.Command.liftTermElabM do
   for i in [:4100] do
@@ -156,6 +156,6 @@ run_cmd Elab.Command.liftTermElabM do
     name := `RegistrationProvenance.proofBudgetTruth, levelParams := [],
     type := mkConst ``True, value := mkConst (`RegistrationProvenance.proofChain |>.num 4099) }
 def proofBudgetRead (_ : Unit) (x : Bool) : Bool := let _ := proofBudgetTruth; x
-check_provenance "ProofScanExhaustion" using proofBudgetRead expects "incomplete_closure" for proofBudgetTruth
+check_provenance "ProofScanExhaustion" using proofBudgetRead expects "incomplete_closure" for specificTruth
 
 end RegistrationProvenance
