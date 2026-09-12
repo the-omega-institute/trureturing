@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S1/Recurrence/Invariants/RestrictedGrowthLabelOccurrences
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [Mathlib.Order.Interval.Finset.Nat, Mathlib.Algebra.BigOperators.Group.Finset.Piecewise, Mathlib.Data.List.Count]
+   anchors: [Mathlib.Order.Interval.Finset.Nat, Mathlib.Algebra.BigOperators.Group.Finset.Piecewise, Mathlib.Data.List.Count, Mathlib.Data.Nat.Choose.Basic]
    utility: none
    digest: Label occurrences in restricted-growth words, counted by final block deficit. -/
 
@@ -10,6 +10,7 @@ import Mathlib.Order.Interval.Finset.Nat
 import Mathlib.Data.List.Count
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
+import Mathlib.Data.Nat.Choose.Basic
 
 namespace D5.S1.Recurrence.Invariants.RestrictedGrowthLabelOccurrences
 
@@ -187,5 +188,24 @@ private theorem card_near_step (n : ℕ) (hn : 0 < n) :
         · rintro ⟨hw, hx⟩
           exact ⟨⟨hw, by omega⟩, hx⟩
       simp [Finset.sum_ite, card_top_words, heq]
+
+/-- RGFs of length `n+1` with exactly one repetition are counted by a pair
+of indices: the repetition time and its previously introduced label. -/
+theorem card_near_words (n : ℕ) :
+    ((words (n + 1)).filter fun w => maxLabel w = n).card = (n + 1).choose 2 := by
+  induction n with
+  | zero => simp [words, maxLabel]
+  | succ n ih =>
+    have hfilter : ((words (n + 1)).filter fun w => maxLabel w + 1 = n + 1) =
+        ((words (n + 1)).filter fun w => maxLabel w = n) := by
+      ext w
+      simp only [Finset.mem_filter]
+      constructor
+      · rintro ⟨hw, h⟩
+        exact ⟨hw, by omega⟩
+      · rintro ⟨hw, h⟩
+        exact ⟨hw, by omega⟩
+    rw [card_near_step (n + 1) (by omega), hfilter, ih]
+    rw [Nat.choose_succ_succ' (n + 1) 1, Nat.choose_one_right]
 
 end D5.S1.Recurrence.Invariants.RestrictedGrowthLabelOccurrences
