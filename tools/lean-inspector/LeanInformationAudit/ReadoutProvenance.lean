@@ -279,6 +279,12 @@ structure ProvenanceCounters where
   visits : Nat := 0
   memoHits : Nat := 0
   chargedVisits : Nat := 0
+  /-- Nodes of a cached summary rechecked against the current statement. -/
+  recheckedNodes : Nat := 0
+  /-- Child edges (application/binder spines) inspected while rechecking. -/
+  spineArguments : Nat := 0
+  /-- Canonical-expression comparisons performed while rechecking. -/
+  canonicalizations : Nat := 0
   deriving Inhabited, Repr
 
 -- Ordinary environment extensions are compilation-local and not serialized.
@@ -308,6 +314,20 @@ private structure WalkState where
 
 private abbrev WalkM := StateRefT WalkState CoreM
 
+-- Every pass over a summary is charged to the same per-query expression fuel
+-- as syntax construction.  In particular, a cache hit must not make the
+-- statement fold free: otherwise a large cached summary could be replayed
+-- without consuming the bound that protects the allowlist check.
+private def chargeSummaryWork (update : ProvenanceCounters → ProvenanceCounters) :
+    WalkM Bool := do
+  if (← get).exprFuel == 0 then
+    modify fun s => { s with incomplete := true }
+    return false
+  modify fun s => { s with
+    exprFuel := s.exprFuel - 1
+    counters := update s.counters }
+  return true
+
 private def noteUnclassified (u : Unclassified) : WalkM Unit := do
   if (← get).unclassified |>.isNone then modify fun s => { s with unclassified := some u }
 
@@ -323,8 +343,19 @@ private def visitSummary (env : Environment) (origin : Name) (summary : Summary)
   let statement := (← get).statement
   let mut containsStatement : Array Bool := #[]
   for node in summary.nodes do
-    containsStatement := containsStatement.push (node.canonical == statement ||
-      node.children.any (fun i => containsStatement[i]!))
+    unless ← chargeSummaryWork (fun counters =>
+      { counters with recheckedNodes := counters.recheckedNodes + 1 }) do
+      return
+    unless ← chargeSummaryWork (fun counters =>
+      { counters with canonicalizations := counters.canonicalizations + 1 }) do
+      return
+    let mut mentions := node.canonical == statement
+    for child in node.children do
+      unless ← chargeSummaryWork (fun counters =>
+        { counters with spineArguments := counters.spineArguments + 1 }) do
+        return
+      mentions := mentions || containsStatement[child]!
+    containsStatement := containsStatement.push mentions
   if summary.incomplete then modify fun s => { s with incomplete := true }
   let mut pending := summary.roots.toList
   while !(← get).forbidden do
@@ -449,7 +480,7 @@ private def collectReadout (env : Environment) (theoremName address : Name) (rea
   modifyEnv (summaryCache.setState · state.summaries)
   modifyEnv (countersCache.setState · counters)
   trace[InformationProvenance.check]
-    "theorem={theoremName} P_constants_summarised={counters.summarisedConstants} visits={counters.visits} memo_hits={counters.memoHits} charged_visits={counters.chargedVisits}"
+    "theorem={theoremName} P_constants_summarised={counters.summarisedConstants} visits={counters.visits} memo_hits={counters.memoHits} charged_visits={counters.chargedVisits} rechecked_nodes={counters.recheckedNodes} spine_arguments={counters.spineArguments} canonicalizations={counters.canonicalizations}"
   let names := state.walked.toArray.map Name.toString |>.qsort (· < ·)
   return (WalkResult.mk state.forbidden state.unclassified state.incomplete names)
 

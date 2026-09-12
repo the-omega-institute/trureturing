@@ -25,14 +25,19 @@ run_cmd Elab.Command.liftCoreM do
       summarisedConstants := total.summarisedConstants + counts.summarisedConstants
       visits := total.visits + counts.visits
       memoHits := total.memoHits + counts.memoHits
-      chargedVisits := total.chargedVisits + counts.chargedVisits }
+      chargedVisits := total.chargedVisits + counts.chargedVisits
+      recheckedNodes := total.recheckedNodes + counts.recheckedNodes
+      spineArguments := total.spineArguments + counts.spineArguments
+      canonicalizations := total.canonicalizations + counts.canonicalizations }
     logInfo m!"InformationRootCounters theorem={entry.theoremName} P_constants_summarised={counts.summarisedConstants} visits={counts.visits} memo_hits={counts.memoHits} charged_visits={counts.chargedVisits}"
   unless total.memoHits > 0 do throwError "[FAIL] InformationRootCountBudget: no summary reuse"
-  logInfo m!"InformationRootCounters total registrations={entries.size} P_constants_summarised={total.summarisedConstants} visits={total.visits} memo_hits={total.memoHits} charged_visits={total.chargedVisits}"
-  -- Fixed bounds above the measured 319 summaries / 23279 syntax visits.
-  -- They are independent of production fuel constants and of wall time.
+  logInfo m!"InformationRootCounters total registrations={entries.size} P_constants_summarised={total.summarisedConstants} visits={total.visits} memo_hits={total.memoHits} charged_visits={total.chargedVisits} rechecked_nodes={total.recheckedNodes} spine_arguments={total.spineArguments} canonicalizations={total.canonicalizations}"
+  -- Fixed bounds above the measured 319 summaries / 23828 syntax visits and
+  -- the charged statement-fold work. They are independent of wall time.
   unless total.summarisedConstants <= 384 && total.visits <= 28000 &&
-      total.visits >= entries.size && total.chargedVisits <= 23000 do
+      total.visits >= entries.size && total.chargedVisits <= 90000 &&
+      total.recheckedNodes <= 20000 && total.spineArguments <= 28000 &&
+      total.canonicalizations <= 20000 do
     throwError "[FAIL] InformationRootCountBudget: {repr total}"
   let mut emissions : Nat := 0
   for entry in (← getTraces).toArray[firstTrace:] do
@@ -43,3 +48,26 @@ run_cmd Elab.Command.liftCoreM do
   logInfo "[PASS] InformationRootCountBudget"
   logInfo "[PASS] ProvenanceTraceCounters"
   logInfo "[PASS] CompilationLocalMemo"
+
+-- Reusing syntax still performs statement-dependent folds and decision work.
+-- Require measured work on a warmed query, not just a count of memo misses.
+run_cmd Elab.Command.liftCoreM do
+  let root := `D5.S3.ConceptDynamics.InformationEscape.InformationRoot
+  let some entry := (InformationRegistry.entries (← getEnv)).find?
+      (·.registrationModuleName == root) | throwError "missing root registration"
+  let firstTrace := (← getTraces).size
+  let _ ← withOptions (·.set `trace.InformationProvenance.check true) <|
+    provenanceErrorCurrent root entry.effectiveCatalogId entry.theoremName entry.realizationName
+  let counts ← getProvenanceCounters
+  let mut accounted := false
+  for trace in (← getTraces).toArray[firstTrace:] do
+    let message ← trace.msg.toString
+    let count (key : String) : Nat :=
+      if message.contains s!"{key}=" then
+        (((message.splitOn s!"{key}=").getLast!).splitOn " ").head!.toNat?.getD 0
+      else 0
+    if count "rechecked_nodes" > 0 && count "spine_arguments" > 0 &&
+        count "canonicalizations" > 0 then accounted := true
+  unless counts.memoHits > 0 && counts.summarisedConstants == 0 && accounted do
+    throwError "[FAIL] ProvenanceMemoWorkAccounting: reused syntax work is unreported"
+  logInfo "[PASS] ProvenanceMemoWorkAccounting"
