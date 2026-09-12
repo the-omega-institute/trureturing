@@ -230,6 +230,7 @@ public sealed partial class ResourceAdapterTests
         return new() { ["PATH"] = bin, ["CI_PLAN_PATH"] = fixture.Plan, ["CI_CHANGES_PATH"] = fixture.Changes,
             ["GITHUB_EVENT_NAME"] = "", ["GITHUB_EVENT_PATH"] = "",
             ["CI_PLAN_B64"] = "", ["CI_CHANGES_B64"] = "", ["CI_NEEDS"] = "{}", ["CI_WORKFLOW_INPUTS"] = "null",
+            ["CANDIDATE_SHA"] = "",
             ["GITHUB_OUTPUT"] = Path.Combine(fixture.Root, "build/adapter-output") };
     }
 

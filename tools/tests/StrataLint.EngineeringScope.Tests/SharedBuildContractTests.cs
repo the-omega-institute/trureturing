@@ -344,6 +344,11 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
     {
         var start = new ProcessStartInfo(executable) { WorkingDirectory = root, RedirectStandardOutput = true, RedirectStandardError = true };
         foreach (var argument in arguments) start.ArgumentList.Add(argument);
+        // Keep synthetic fixture processes independent from the outer GitHub
+        // workflow's candidate identity. Individual tests opt in explicitly.
+        start.Environment["GITHUB_EVENT_NAME"] = "";
+        start.Environment["CANDIDATE_SHA"] = "";
+        start.Environment["CI_WORKFLOW_INPUTS"] = "null";
         foreach (var pair in environment ?? new Dictionary<string, string>()) start.Environment[pair.Key] = pair.Value;
         using var process = System.Diagnostics.Process.Start(start)!;
         using var deadline = new CancellationTokenSource(hangGuard ?? TestBudgets.ScriptProcessHangGuard);
