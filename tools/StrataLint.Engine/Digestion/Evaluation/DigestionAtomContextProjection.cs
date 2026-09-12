@@ -110,7 +110,7 @@ internal static class DigestionAtomContextProjection
             var byId = byAtomId
                 .Where(static group => group.Count() == 1)
                 .ToDictionary(static group => group.Key, static group => group.Single(), StringComparer.Ordinal);
-            var stream = MaterializedStream(document, byHash, byId, atomizer, rules);
+            var stream = MaterializedStream(document, byHash, byId, atomizer, rules, snapshot);
             return new SourceStream(source, stream, byHash, byAtomId);
         }
         catch (Exception error) when (error is FormatException or InvalidOperationException or ArgumentException)
@@ -165,7 +165,8 @@ internal static class DigestionAtomContextProjection
         ILookup<string, DigestionLedgerEntry> byHash,
         IReadOnlyDictionary<string, DigestionLedgerEntry> byId,
         TheoryAtomizer atomizer,
-        TheoryAtomizerRules rules)
+        TheoryAtomizerRules rules,
+        RepositorySnapshot snapshot)
     {
         var stream = ImmutableArray.CreateBuilder<DigestionAtom>();
         var pending = new Stack<DigestionAtom>(document.Claims.OrderByDescending(static atom => atom.StartByte));
@@ -184,7 +185,7 @@ internal static class DigestionAtomContextProjection
                 && plan.Parent.EndByte == atom.EndByte && plan.Parent.Fingerprints == atom.Fingerprints).ToArray();
             if (emitted.Length > 1) throw new FormatException("duplicate clause plans for source span");
             var plan = emitted.SingleOrDefault()
-                ?? DigestionDecomposition.Plan(entry, atom.RawBytes, atomizer, rules);
+                ?? DigestionDecomposition.Plan(entry, atom.RawBytes, atomizer, rules, snapshot);
             var materialized = DigestionDecomposition.Materialize(entry, plan, byId);
             if (!materialized.NewEntries.IsEmpty)
                 throw new FormatException($"chain atom is absent for parent {entry.AtomId}");

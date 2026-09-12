@@ -413,7 +413,7 @@ public sealed partial class DigestionAlignmentTests
         Assert.Equal(DigestionReceiptAlignment.Seen, alignment.AlignmentFor(childId));
         Assert.Empty(alignment.Findings);
         Assert.Contains($"ingest clause chain parent {parentId} lacks verified clause-plan proof", exception.Message);
-        Assert.Contains("parent CAS blob has no clause plan", exception.Message);
+        Assert.Contains("clause plan has no proper claim decomposition", exception.Message);
     }
 
     [Fact]

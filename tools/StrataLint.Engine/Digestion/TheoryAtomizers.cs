@@ -55,6 +55,7 @@ internal sealed record DigestionClausePlan
     internal DigestionAtom Parent { get; }
     internal ImmutableArray<DigestionSegment> Segments { get; }
     internal ImmutableArray<DigestionAtom> Children { get; }
+    internal bool IsExplicit { get; init; }
 
     internal DigestionClausePlan(DigestionAtom parent, ImmutableArray<DigestionAtom> children)
         : this(parent, children.Select(static child => new DigestionSegment(DigestionSegmentKind.Claim, child)).ToImmutableArray()) { }
