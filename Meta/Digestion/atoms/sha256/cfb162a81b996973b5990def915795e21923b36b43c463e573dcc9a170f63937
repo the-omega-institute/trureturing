@@ -1,0 +1,10 @@
+**定理 370.5。** 对集合 $Y$ 上的指定拓扑 $\tau$，定义
+$$
+\tau^*=\{\operatorname{Enc}[U]:U\in\tau\}.
+$$
+则 $\operatorname{enc}_Y:(Y,\tau)\to(Y^*,\tau^*)$ 为同胚。指定源、目标拓扑时，定理 370.3 的 $f$ 连续当且仅当 $f^*$ 连续；不连续性、闭包、稠密性、固定指标的序列或网收敛也保持并反映。特别定理 363.3 的唯一延拓在运输侧存在当且仅当 $\theta\in W_A$，存在时为
+$$
+F_{A,\theta}^*(\operatorname{Enc}(x))=\operatorname{Enc}(F_{A,\theta}(x))
+$$
+从坐标 $(X_A^{\rm cap})^*$ 到通常圆周的运输 $\mathbb T^*$。定理 368.1 的联合延拓在运输侧存在当且仅当 $J_A$ 有限。
+

@@ -1,0 +1,21 @@
+**定理 370.6。** 在 $\mathbb T^*$ 上取普通实值距离
+$$
+d_{\mathbb T}^*(c,d)=d_{\mathbb T}(\operatorname{Dec}(c),\operatorname{Dec}(d))
+\quad(c,d\in\mathbb T^*).
+$$
+则 $\operatorname{enc}_{\mathbb T}$ 为等距双射，该度量诱导通常圆周拓扑的运输。第 366.2 条的数值误差精确保留为
+$$
+\sup_{c\in B^*}d_{\mathbb T}^*
+\bigl((\chi_\theta|_B)^*(c),(\chi_{r^{(k)}}^{\rm cap}|_B)^*(c)\bigr)
+=\sup_{u\in B}d_{\mathbb T}\bigl(\chi_\theta(u),\chi_{r^{(k)}}^{\rm cap}(u)\bigr)
+\le2^{-k-1}.
+$$
+
+**证明。** 解码双射将非负性、分离性、对称性和三角不等式逐项拉回，故所列函数是度量，且
+$$
+d_{\mathbb T}^*(\operatorname{Enc}(s),\operatorname{Enc}(t))=d_{\mathbb T}(s,t).
+$$
+每个球恰是相应原球的直接像，所以度量拓扑正是定理 370.5 的运输。对每个 $c\in B^*$ 有唯一 $u\in B$ 使 $c=\operatorname{Enc}(u)$，共轭值解码为原观察值；两边所取距离的实数集合因此完全相同，故上确界相等，再用定理 366.2。数值相等来自此指定度量，而非仅由同胚推出。
+
+同理在 $\mathbb R^*$ 上定义 $|\operatorname{Dec}(c)-\operatorname{Dec}(d)|$，即可将定理 363.3 的实和余项界 $R_N(A,\theta)$ 逐值保留。若要编码距离函数自身及实数序关系的图，可另按定理 370.3 编码它们的精确图；本条显示的度量值仍是普通实数。证毕。
+

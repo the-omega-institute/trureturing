@@ -1,0 +1,13 @@
+**定理 370.10。** 为区分活跃集合 $J=J_A$，将第 255–256 条及 [CSA 第一节、第四节定义 8、第六节定义 9／命题 5](CONTEXTUAL_SPACETIME_ARITHMETIC.md) 的原整数载体在本节记为 $J_{\rm int}$。其原集合为 $J_{\rm int}=(\{0\}\times\omega)\cup(\{1\}\times(\omega\setminus\{0\}))$。原双射和整数数字双射为
+$$
+v:J_{\rm int}\leftrightarrow\mathbb Z_o,\qquad
+b_{\rm int}=\operatorname{scode}\circ v,\qquad
+b_{\rm int}^{-1}=v^{-1}\circ\operatorname{ival}.
+$$
+原固定丰富截面在既约 $a/b$、$b>0$ 处为
+$$
+\sigma_{\rm CSA}(a/b)
+=(\mathbf i(v^{-1}(a)),\mathbf i(v^{-1}(b)))\in\mathcal Q^{\rm rich}.
+$$
+$\sigma_{\rm CSA}\circ\operatorname{qdec}$ 恰将 $\mathsf{RatFld}$ 双射到此截面像，其逆在且仅在该像上为 $\operatorname{qenc}\circ\operatorname{qval}_{\rm CSA}$。
+

@@ -1,0 +1,25 @@
+**定理 370.8。** 第 332 条的有限字段双射仍有且仅有下列精确域：
+$$
+\operatorname{qenc}:\mathbb Q\leftrightarrow\mathsf{RatFld}:\operatorname{qdec},\qquad
+\operatorname{penc}:\mathsf D_{\rm rat}\leftrightarrow\mathsf{RatPhaseFld}:\operatorname{pdec}.
+$$
+既约 $a/b$，$b>0$，用 $T_2(\operatorname{scode}(a),\zeta(b))$；有理相位的唯一既约代表 $0\le a<b$ 用 $T_2(\zeta(a),\zeta(b))$。两者的零字段均为 $T_2(0_Z,\zeta(1))$。圆周中的有理值须先在 $j_{\rm rat}[\mathsf D_{\rm rat}]$ 上取 $j_{\rm rat}^{-1}$ 才能使用相位字段。
+
+对于 $u\in B$ 和定义 366.1 的总行 $r^{(k)}$，置
+$$
+s=\operatorname{rec}_{\rm reg}(u),\qquad
+t=\operatorname{prec}_{\rm rat}(\rho(r^{(k)})).
+$$
+则
+$$
+E_d(s,t)=E_{\rm fin}^{d}(s,t|_{\operatorname{dom}(s)})
+=\operatorname{penc}(\chi^{\rm rat}_{\rho(r^{(k)})}(u)).
+$$
+对任意独立有限样本 $a\in\mathsf{FinCoef}$，有限求值的充要域条件仍为
+$$
+\operatorname{supp}(u)\subseteq\operatorname{dom}(a)
+\iff\operatorname{dom}(s)\subseteq
+\operatorname{dom}(\operatorname{fprec}_{\rm rat}(a)).
+$$
+域外没有值；严格总化的失败值与成功零值不等。
+

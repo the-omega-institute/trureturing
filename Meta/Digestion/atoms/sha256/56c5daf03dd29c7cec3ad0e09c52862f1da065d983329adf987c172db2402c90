@@ -1,0 +1,8 @@
+**定义 365.1。** $\tau_{\mathbb Q}^{B}$ 为全部总有理行 $r\in\mathbb Q^\omega$ 的通常圆周观察 $\chi_r^{\rm cap}|_B$ 所生成的初始拓扑，即其开集逆像的有限交的任意并。保留第 324、340 条的实际联合目标
+$$
+X_+=\mathbb T^\omega\times\mathbb T^{\Theta_{\rm rat}},\qquad
+\operatorname{Ev}_+(u)=\bigl(\Psi_{\rm reg}(u),
+(j_{\rm rat}(\chi_\vartheta^{\rm rat}(u)))_{\vartheta\in\Theta_{\rm rat}}\bigr)
+$$
+及 $\tau_{+,A}$；目标为所列完整乘积。
+
