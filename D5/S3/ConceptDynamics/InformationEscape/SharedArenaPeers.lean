@@ -27,8 +27,7 @@ namespace D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers
 open RegistrationTemplates
 open D5.S3.ConceptDynamics.InformationEscapeArenas
 
-/- Selection: docs/reports/regprog-m3-0910/pr-body.md.
-The separation template supplies both readouts; the bridges only
+/- The separation template supplies both readouts; the bridges only
 transport statement shapes through existing fiber/factorization results.
 No primitive reads theorem truth or proof data. Each arena keeps its gold peer. -/
 
@@ -273,26 +272,31 @@ run_cmd do
           throwError "measured catalog differs at occurrence {unit.theoremName}"
     logInfo m!"MAXIMAL_CATALOG_VALIDATED: {prepared.record.arenaName}; occurrences={prepared.record.units.size}"
 
--- Expected negative finding: the actual maximal seal rejects zero unique capture.
-/-- error: IE-C007 ZeroUniqueCapture: theorem D5.S3.ConceptDynamics.Interventions.CounterfactualIdentifiabilityCriterion.boolean_counterfactual_not_identifiable arena D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.interventionArena full 0 without 0 -/
+-- Zero capture is an informational disposition. Both complete catalogs seal as redundant.
 #guard_msgs (error) in
 #seal_information_theory
-
--- Exercise the other complete arena through the same proof builder; the global seal
--- stops at the first failure. This neither changes membership nor publishes a seal.
-/-- error: IE-C007 ZeroUniqueCapture: theorem D5.S3.ConceptDynamics.InterventionLaws.ObservationInterventionKernelStrictness.intervention_kernel_strictly_finer_than_observation arena D5.S3.ConceptDynamics.InformationEscapeArenas.ObservationIntervention.observationInterventionArena full 24 without 24 -/
-#guard_msgs (error) in
-open LeanInformationAudit in
-run_cmd do
-  let catalogs ← prepareCatalogs
-  let some other := catalogs[1]? | throwError "missing second maximal catalog"
-  discard <| prepareProofs #[other]
 
 open Lean Meta LeanInformationAudit in
 run_meta do
   let env ← getEnv
-  unless (SealRecords.forRoot env env.header.mainModule).isEmpty do
-    throwError "a rejected seal publishes no certificates"
+  let records := SealRecords.forRoot env env.header.mainModule
+  unless records.map (·.theorems.size) == #[5, 2] &&
+      records.map (·.fullEscapeCount) == #[0, 24] do
+    throwError "expected both complete maximal catalogs with unchanged escape counts"
+  for record in records do
+    unless (match record.verdict with
+        | .redundant certificate => env.contains certificate
+        | .irredundant _ => false) do
+      throwError "zero-capture catalog requires a published redundancy certificate"
+    for occurrence in record.theorems do
+      unless occurrence.uniqueCaptureCount == 0 &&
+          occurrence.withoutEscapeCount == record.fullEscapeCount &&
+          (match occurrence.certificate with
+          | .trivial certificate => env.contains certificate
+          | .positive _ => false) do
+        throwError "every peer requires a zero-capture triviality certificate"
+  if SealRecords.systemCatalogIrredundant env env.header.mainModule then
+    throwError "redundant maximal catalogs cannot certify system irredundancy"
   let index ← CensusQuery.indexScope env.header.mainModule
   let head ← IO.Process.output { cmd := "git", args := #["rev-parse", "HEAD"] }
   unless head.exitCode == 0 do throwError "cannot read checkout identity"
@@ -301,9 +305,11 @@ run_meta do
   for entry in entries do
     let key : StatementKey := ⟨entry.theoremName, theoremStatementIdentity env entry.theoremName⟩
     match ← CensusQuery.assess index head.stdout.trimAscii.toString key with
-    | .observed _ =>
-        logInfo m!"CENSUS_QUERY_OBSERVED: {entry.theoremName}; eligible=true; registered=true; positive=false; trivial=true"
-    | _ => throwError "rejected maximal catalog unexpectedly certifies {entry.theoremName}"
+    | .certified (.trivialInCatalog payload) =>
+        unless payload.root == env.header.mainModule do
+          throwError "triviality certificate belongs to a different root"
+        logInfo m!"CENSUS_QUERY_TRIVIAL: {entry.theoremName}; registered=true; positive=false"
+    | _ => throwError "maximal catalog lacks certified triviality for {entry.theoremName}"
 
 #print axioms D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual.__information_unit
 #print axioms D5.S3.ConceptDynamics.Interventions.CounterfactualKernelStrictlyFiner.counterfactual_kernel_strictly_finer.__information_unit
