@@ -55,107 +55,16 @@ append_producer_manifest_entry() {
   printf '%s\0%s\0' "$relative" "$path" >> "${manifest}.requests"
 }
 
-producer_declared_paths() {
-  local relative
-  for relative in \
-    tools/lean-inspector/inspect.sh \
-    tools/lean-inspector/Inspector.lean \
-    tools/lean-inspector/delta.py \
-    tools/lean-inspector/materials.py \
-    tools/lean-inspector/report_cache.py \
-    tools/lean-inspector/runtime_identity.py \
-    tools/scripts/worktree/lean_cache.py \
-    tools/scripts/report/lean-report-input.sh \
-    tools/scripts/lean-report-pair.sh; do
-    if [[ -f "$REPOSITORY/$relative" \
-      || ( "$relative" == "tools/lean-inspector/inspect.sh" && -n "$PRODUCER_OVERRIDE" ) \
-      || ( "$relative" == "tools/lean-inspector/Inspector.lean" && -n "$INSPECTOR_OVERRIDE" ) ]]; then
-      printf '%s\n' "$relative"
-    fi
-  done
-}
-
-producer_reachable_script_paths() {
-  python3 "$SCRIPT_DIRECTORY/producer_paths.py" "$REPOSITORY" "${1:-lean-report}" "$TMP_ROOT/producer-semantics"
-}
-producer_compile_paths() {
-  local scope="${1:-lean-report}"
-  local project json
-  local projects=()
-  if [[ "$scope" == "scribe-content" ]]; then
-    projects=(
-      tools/StrataLint.Scribe/StrataLint.Scribe.csproj
-      tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj
-      tools/StrataLint.Engine/StrataLint.Engine.csproj
-      tools/Trureturing.Truth/Trureturing.Truth.csproj)
-  else
-    return 1
-  fi
-  for project in "${projects[@]}"; do
-    [[ -f "$REPOSITORY/$project" ]] || return 1
-    json="$TMP_ROOT/$(basename "$project").compile.json"
-    if ! (
-      cd "$REPOSITORY" || exit 1
-      dotnet msbuild "$REPOSITORY/$project" -getItem:Compile \
-        -verbosity:quiet -nologo
-    ) > "$json" 2> "$json.stderr"; then
-      printf 'lean-report-input: producer Compile evaluation failed: %s\n' "$REPOSITORY/$project" >&2
-      # MSBuild can write errors to stdout even when -getItem requests JSON.
-      cat "$json.stderr" "$json" >&2
-      return 1
-    fi
-    python3 - "$REPOSITORY" "$json" <<'PY' || return 1
-import json
-import pathlib
-import sys
-
-root = pathlib.Path(sys.argv[1]).resolve()
-items = json.loads(pathlib.Path(sys.argv[2]).read_text(encoding="utf-8"))["Items"]["Compile"]
-if not items:
-    raise SystemExit(1)
-for item in items:
-    path = pathlib.Path(item["FullPath"]).resolve()
-    try:
-        relative = path.relative_to(root)
-    except ValueError:
-        raise SystemExit(1)
-    if not path.is_file():
-        raise SystemExit(1)
-    print(relative.as_posix())
-PY
-  done
+registered_producer_paths() {
+  python3 "$SCRIPT_DIRECTORY/producer_paths.py" "$REPOSITORY" "$1" "$TMP_ROOT/producer-semantics"
 }
 
 complete_producer_paths() {
-  local script_paths="$TMP_ROOT/producer-script-paths"
-  producer_reachable_script_paths lean-report > "$script_paths" || return 1
-  { cat "$script_paths"; producer_declared_paths; } | sort -u
-}
-
-scribe_declared_paths() {
-  local relative
-  for relative in \
-    tools/StrataLint.Scribe/StrataLint.Scribe.csproj \
-    tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj \
-    tools/StrataLint.Scribe.Documents/packages.lock.json \
-    tools/StrataLint.Scribe/packages.lock.json; do
-    [[ -f "$REPOSITORY/$relative" ]] && printf '%s\n' "$relative"
-  done
+  registered_producer_paths lean-report
 }
 
 complete_scribe_producer_paths() {
-  local compile_paths="$TMP_ROOT/scribe-compile-paths"
-  local script_paths="$TMP_ROOT/scribe-script-paths"
-  local lean_paths="$TMP_ROOT/lean-producer-paths"
-  producer_compile_paths scribe-content > "$compile_paths" || return 1
-  producer_reachable_script_paths scribe-content > "$script_paths" || return 1
-  complete_producer_paths > "$lean_paths" || return 1
-  {
-    cat "$compile_paths"
-    cat "$script_paths"
-    cat "$lean_paths"
-    scribe_declared_paths
-  } | sort -u
+  registered_producer_paths scribe-content
 }
 
 producer_sha256() {

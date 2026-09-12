@@ -46,7 +46,7 @@ theorem refute : Not (1 = (2 : Nat)) := by decide
         self.cache = self.root / "build/cache"
         self.baseline = self.cache / ("a" * 64) / "raw-lean-report.json"
         # These identities hold the fixture's producer/configuration fixed; the
-        # real executable-closure mutations are exercised by ProducerIsolationTests.
+        # registered producer mutations are exercised by native report input tests.
         self.identity = "b" * 64
 
     def source(self, name, text):

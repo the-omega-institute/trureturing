@@ -100,10 +100,10 @@ pr-watch:
 
 MODE ?= push
 current:
-	@/bin/bash tools/scripts/ci-stage.sh current
+	@CI_PLAN_PATH="$(CI_PLAN_PATH)" CI_CHANGES_PATH="$(CI_CHANGES_PATH)" /bin/bash tools/scripts/ci-stage.sh current
 
 delta:
-	@/bin/bash tools/scripts/ci-stage.sh delta "$(BASE)"
+	@CI_PLAN_PATH="$(CI_PLAN_PATH)" CI_CHANGES_PATH="$(CI_CHANGES_PATH)" /bin/bash tools/scripts/ci-stage.sh delta "$(BASE)"
 
 preflight:
 	@MODE="$(MODE)" BASE="$(BASE)" /bin/bash tools/scripts/preflight.sh

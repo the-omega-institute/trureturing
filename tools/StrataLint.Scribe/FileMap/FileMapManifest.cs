@@ -37,7 +37,8 @@ internal sealed record FileMapEntry
         string artifactId,
         string? mode,
         string runtimeDisposition,
-        string? historyRequirement)
+        string? historyRequirement,
+        ImmutableArray<string> require)
     {
         glob = FileMapGlob.Create(pattern);
         Pattern = pattern;
@@ -51,6 +52,7 @@ internal sealed record FileMapEntry
         Mode = mode;
         RuntimeDisposition = runtimeDisposition;
         HistoryRequirement = historyRequirement;
+        Require = require;
     }
 
     internal string Pattern { get; }
@@ -75,6 +77,8 @@ internal sealed record FileMapEntry
 
     internal string? HistoryRequirement { get; }
 
+    internal ImmutableArray<string> Require { get; }
+
     internal bool Matches(string path) => glob.IsMatch(path);
 }
 
@@ -82,41 +86,47 @@ internal sealed class FileMapManifest
 {
     internal FileMapManifest(
         FileMapResidencePolicy residencePolicy,
-        ImmutableArray<FileMapEntry> entries)
+        ImmutableArray<FileMapEntry> entries,
+        ImmutableArray<FileMapResource> resources)
     {
         ResidencePolicy = residencePolicy;
         Entries = entries;
+        Resources = resources;
     }
 
     internal FileMapResidencePolicy ResidencePolicy { get; }
 
     internal ImmutableArray<FileMapEntry> Entries { get; }
 
+    internal ImmutableArray<FileMapResource> Resources { get; }
+
     internal ImmutableArray<FileMapEntry> Match(string path) =>
         Entries.Where(entry => entry.Matches(path)).ToImmutableArray();
 }
 
-internal static class FileMapLoader
+internal static partial class FileMapLoader
 {
     internal const string RelativePath = AdmissionPlanePolicy.FileMapPath;
 
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     private static readonly Regex NamePattern = new(
-        "^[A-Za-z][A-Za-z0-9.-]*$",
+        "\\A[A-Za-z][A-Za-z0-9.-]*\\z",
         RegexOptions.CultureInvariant | RegexOptions.NonBacktracking);
     private static readonly string[] EntryKeys =
-        ["admission_plane", "artifact_id", "consumed_by", "kind", "pattern", "produced_by", "runtime_disposition", "verified_by"];
+        ["admission_plane", "artifact_id", "consumed_by", "kind", "pattern", "produced_by", "require", "runtime_disposition", "verified_by"];
     private static readonly string[] ResidenceEntryKeys =
-        ["admission_plane", "artifact_id", "consumed_by", "kind", "pattern", "produced_by", "residence_violation", "runtime_disposition", "verified_by"];
+        ["admission_plane", "artifact_id", "consumed_by", "kind", "pattern", "produced_by", "require", "residence_violation", "runtime_disposition", "verified_by"];
     private static readonly string[] RunLocalEntryKeys =
-        ["admission_plane", "artifact_id", "consumed_by", "history_requirement", "kind", "mode", "pattern", "produced_by", "runtime_disposition", "verified_by"];
+        ["admission_plane", "artifact_id", "consumed_by", "history_requirement", "kind", "mode", "pattern", "produced_by", "require", "runtime_disposition", "verified_by"];
     private static readonly string[] GeneratedArtifactEntryKeys = RunLocalEntryKeys;
 
     internal static FileMapManifest LoadRepository(string repositoryRoot)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         var path = Path.Combine(repositoryRoot, RelativePath);
-        return Parse(File.ReadAllBytes(path), path);
+        var manifest = Parse(File.ReadAllBytes(path), path);
+        ValidateResourceFiles(manifest, repositoryRoot);
+        return manifest;
     }
 
     internal static FileMapManifest Parse(ReadOnlySpan<byte> bytes, string location)
@@ -148,6 +158,8 @@ internal static class FileMapLoader
         TomlTable root;
         try
         {
+            // Dynamic TomlTable deserialization alone accepts duplicate keys.
+            _ = Tomlyn.Parsing.SyntaxParser.ParseStrict(text, sourceName: location, validate: true);
             root = TomlSerializer.Deserialize<TomlTable>(text)
                 ?? throw Invalid(location, "TOML decoded to null");
         }
@@ -156,13 +168,19 @@ internal static class FileMapLoader
             throw new FileMapParseException(location, $"invalid TOML: {exception.Message}", exception);
         }
 
-        RequireExactKeys(root, location, "files", "residence_policy", "schema_version");
-        if (root["schema_version"] is not long schemaVersion || schemaVersion != 2)
+        RequireExactKeys(root, location, "files", "resources", "residence_policy", "schema_version");
+        if (root["schema_version"] is not long schemaVersion || schemaVersion != 3)
         {
-            throw Invalid(location, "schema_version must be 2");
+            throw Invalid(location, "schema_version must be 3");
         }
 
-        if (root["files"] is not TomlTableArray files || files.Count == 0)
+        var files = root["files"] switch
+        {
+            TomlTableArray array => array.ToArray(),
+            TomlArray array when array.All(static value => value is TomlTable) => array.Cast<TomlTable>().ToArray(),
+            _ => [],
+        };
+        if (files.Length == 0)
         {
             throw Invalid(location, "files must contain at least one entry");
         }
@@ -195,7 +213,12 @@ internal static class FileMapLoader
             throw Invalid(location, "artifact_id values other than none must be unique");
         }
 
-        return new FileMapManifest(residencePolicy, entries);
+        var resources = ParseResources(root, location);
+        var ids = resources.Select(static resource => resource.Id).ToHashSet(StringComparer.Ordinal);
+        foreach (var entry in entries)
+            foreach (var id in entry.Require)
+                if (!ids.Contains(id)) throw Invalid(entry.Pattern, $"unknown resource {id}");
+        return new FileMapManifest(residencePolicy, entries, resources);
     }
 
     private static FileMapResidencePolicy ParseResidencePolicy(
@@ -330,15 +353,17 @@ internal static class FileMapLoader
             artifactId,
             mode,
             runtimeDisposition,
-            historyRequirement);
+            historyRequirement,
+            RequiredNames(table, "require", pattern, allowEmpty: true));
     }
 
     private static ImmutableArray<string> RequiredNames(
         TomlTable table,
         string key,
-        string location)
+        string location,
+        bool allowEmpty = false)
     {
-        if (!table.TryGetValue(key, out var raw) || raw is not TomlArray array || array.Count == 0)
+        if (!table.TryGetValue(key, out var raw) || raw is not TomlArray array || (!allowEmpty && array.Count == 0))
         {
             throw Invalid(location, $"{key} must be a non-empty string array");
         }

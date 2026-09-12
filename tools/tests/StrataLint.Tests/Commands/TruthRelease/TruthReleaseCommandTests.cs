@@ -342,7 +342,8 @@ public sealed class TruthReleaseCommandTests
         ReviewRegressionTests.RunGit(repositoryRoot, "rev-parse", revision).Trim();
 
     private static string FileMap() => """
-        schema_version = 2
+        schema_version = 3
+        resources = []
 
         [residence_policy]
         case_id = "RESIDENCE-EPOCH"
@@ -352,6 +353,7 @@ public sealed class TruthReleaseCommandTests
 
         [[files]]
         pattern = "Blueprint/**/*.md"
+        require = []
         kind = "generated"
         admission_plane = "content"
         produced_by = "ScribeEmitter"
@@ -362,6 +364,7 @@ public sealed class TruthReleaseCommandTests
 
         [[files]]
         pattern = "Blueprint/**/*.scribe.cs"
+        require = []
         kind = "data"
         admission_plane = "content"
         produced_by = "none"

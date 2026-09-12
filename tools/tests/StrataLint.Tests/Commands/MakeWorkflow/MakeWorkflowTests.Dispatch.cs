@@ -247,8 +247,24 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("make -C tools xi-quantization [", helpRecipe, StringComparison.Ordinal);
         Assert.Contains("make -C tools xi-quantization-test ", helpRecipe, StringComparison.Ordinal);
         var testRecipe = Recipe(makefile, "test");
-        Assert.Contains("scripts/dotnet-test.sh $(HERE)/StrataLint.sln", testRecipe, StringComparison.Ordinal);
-        Assert.DoesNotContain("--filter", testRecipe, StringComparison.Ordinal);
+        Assert.Contains("TEST_PROJECT ?= $(HERE)/StrataLint.sln", makefile, StringComparison.Ordinal);
+        Assert.Contains("scripts/dotnet-test.sh \"$(TEST_PROJECT)\"", testRecipe, StringComparison.Ordinal);
+        Assert.Contains("$(if $(TEST_FILTER),--filter \"$(TEST_FILTER)\",)", testRecipe, StringComparison.Ordinal);
+        foreach (var selected in OperatingSystem.IsWindows() ? Array.Empty<bool>() : new[] { false, true })
+        {
+            const string project = "selected tests/Probe.csproj";
+            const string filter = "FullyQualifiedName=Probe.First|FullyQualifiedName=Probe.Second";
+            var dispatch = TestProcessRunner.Run("/usr/bin/env",
+                ["-u", "MAKEFLAGS", "-u", "MAKEOVERRIDES", "-u", "TEST_PROJECT", "-u", "TEST_FILTER",
+                    "make", "--no-print-directory", "-n", "-C", "tools", "test", .. selected
+                    ? new[] { $"TEST_PROJECT={project}", $"TEST_FILTER={filter}" }
+                    : new[] { "TEST_FILTER=" }],
+                root, TestBudgets.ScriptProcessHangGuard, 64 * 1024);
+            Assert.True(dispatch.ExitCode == 0, Encoding.UTF8.GetString(dispatch.StandardError));
+            var expected = $"/bin/bash {root}/tools/scripts/dotnet-test.sh \"{(selected ? project : root + "/tools/StrataLint.sln")}\""
+                + (selected ? $" --filter \"{filter}\"" : "");
+            Assert.Equal(expected, Encoding.UTF8.GetString(dispatch.StandardOutput).Trim());
+        }
         var dotnetTest = File.ReadAllText(Path.Combine(root, "tools", "scripts", "dotnet-test.sh"));
         Assert.Contains("dotnet test \"$@\"", dotnetTest, StringComparison.Ordinal);
         Assert.Contains(

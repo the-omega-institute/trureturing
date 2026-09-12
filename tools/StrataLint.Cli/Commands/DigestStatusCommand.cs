@@ -38,10 +38,11 @@ internal static class DigestStatusCommand
             }
 
             var snapshot = Decode(repository.ReadCurrent());
+            var registeredInputs = EngineeringProjectRegistry.ReadRuleBuildInputs(snapshot);
             var changes = options.BaselineRevision is null
                 ? repository.ReadCurrentChanges()
                 : repository.ReadChanges(options.BaselineRevision);
-            var scope = DigestionEvaluationScopes.ForChanges(changes, ImplementationPath);
+            var scope = DigestionEvaluationScopes.ForChanges(changes, ImplementationPath, registeredInputs);
 
             if (options.FormalizeCandidates)
             {
@@ -128,7 +129,7 @@ internal static class DigestStatusCommand
                 baselineDocument = BackfillInventoryLoader.LoadBaseline(baselineSnapshot);
             }
 
-            var ruleImplementationChanged = BaseFactImpact.RuleImplementationChanged(changes);
+            var ruleImplementationChanged = BaseFactImpact.RuleImplementationChanged(changes, registeredInputs);
             bool IsBaseFactAffected(string path) =>
                 BaseFactImpact.IsAffected(changes, ruleImplementationChanged, path);
             var casEvaluation = DigestionCasStore.Evaluate(
@@ -205,13 +206,14 @@ internal static class DigestStatusCommand
         string baselineRevision)
     {
         var snapshot = Decode(repository.ReadCurrent());
+        var registeredInputs = EngineeringProjectRegistry.ReadRuleBuildInputs(snapshot);
         var baseline = Decode(repository.ReadRevision(baselineRevision));
         var changes = repository.ReadChanges(baselineRevision);
         var leanReport = leanReportSource.Load(snapshot);
-        var ruleImplementationChanged = BaseFactImpact.RuleImplementationChanged(changes);
+        var ruleImplementationChanged = BaseFactImpact.RuleImplementationChanged(changes, registeredInputs);
         bool IsBaseFactAffected(string path) =>
             BaseFactImpact.IsAffected(changes, ruleImplementationChanged, path);
-        var scope = DigestionEvaluationScopes.ForChanges(changes, ImplementationPath);
+        var scope = DigestionEvaluationScopes.ForChanges(changes, ImplementationPath, registeredInputs);
         var document = BackfillInventoryLoader.Load(snapshot, scope, changes);
         scribeEmissionVerifier.Verify(snapshot, leanReport, changes);
         var evaluation = DigestionStatusEvaluator.Evaluate(

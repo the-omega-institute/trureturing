@@ -34,9 +34,10 @@ public sealed partial class MakeWorkflowTests
         File.WriteAllText(dll, "candidate binary");
         WriteExecutable(Path.Combine(bin, "git"), "#!/bin/bash\nexit 93\n");
         WriteExecutable(Path.Combine(bin, "dotnet"), "#!/bin/bash\nprintf '%s\\n' \"$*\" >> \"$SCRIBE_LOG\"\n");
-        var result = TestProcessRunner.Run("/bin/bash",
-            ["-c", "PATH=\"$1:/usr/bin:/bin\" SCRIBE_LOG=\"$2\" BASE=unavailable exec /bin/bash \"$3\" \"$4\" \"$5\"",
-             "scribe", bin, log, script, report, dll], root, BoundedProcessRunner.HangDetectionBudget, 64 * 1024);
+        ProcessOutput Run(params string[] selection) => TestProcessRunner.Run("/usr/bin/env",
+            [$"PATH={bin}:/usr/bin:/bin", $"SCRIBE_LOG={log}", "BASE=unavailable",
+             "/bin/bash", script, report, dll, .. selection], root, BoundedProcessRunner.HangDetectionBudget, 64 * 1024);
+        var result = Run();
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
         Assert.Equal(new[]
         {
@@ -44,9 +45,22 @@ public sealed partial class MakeWorkflowTests
             $"{dll} describe-report --check",
             $"{dll} markdown-check --report {report}",
         }, File.ReadAllLines(log));
-        var rejected = TestProcessRunner.Run("/bin/bash", [script, report, dll, new string('a', 40)],
-            root, BoundedProcessRunner.HangDetectionBudget, 64 * 1024);
-        Assert.Equal(2, rejected.ExitCode);
-        Assert.Equal(3, File.ReadAllLines(log).Length);
+        foreach (var invalid in new[] { new string('a', 40), root, "" })
+        {
+            var rejected = Run(invalid);
+            Assert.True(rejected.ExitCode == 2, Encoding.UTF8.GetString(rejected.StandardError));
+            Assert.Contains("PATHS_FILE must be a readable regular file", Encoding.UTF8.GetString(rejected.StandardError), StringComparison.Ordinal);
+            Assert.Equal(3, File.ReadAllLines(log).Length);
+        }
+        var paths = Path.Combine(root, "selected paths.txt");
+        File.WriteAllText(paths, "Blueprint/D5/Probe.md\n");
+        var selected = Run(paths);
+        Assert.True(selected.ExitCode == 0, Encoding.UTF8.GetString(selected.StandardError));
+        Assert.Equal(new[]
+        {
+            $"{dll} projections --check --report {report}",
+            $"{dll} describe-report --check",
+            $"{dll} markdown-check --report {report} --paths-from {paths}",
+        }, File.ReadAllLines(log).Skip(3));
     }
 }

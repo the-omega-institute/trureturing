@@ -89,6 +89,7 @@ class CacheFixture:
         self.root = pathlib.Path(self.temp.name)
         self.env = dict(os.environ, GITHUB_RUN_ID="17", GITHUB_RUN_ATTEMPT="2",
                         GITHUB_EVENT_NAME="push", GITHUB_REF="refs/heads/dev",
+                        CI_WORKFLOW_INPUTS="", GITHUB_EVENT_PATH="",
                         STRATALINT_CHECK_SUCCEEDED="true", STRATALINT_CACHE_WRITES="true",
                         HOME=str(self.root),
                         GITHUB_OUTPUT=str(self.root / "outputs"), GITHUB_ENV=str(self.root / "environment"))
@@ -138,7 +139,28 @@ class Contracts(CacheFixture, unittest.TestCase):
         return self.git("rev-parse", "HEAD")
 
     def test_resolver_fixes_merge_and_first_parent_before_merge_ref_moves(self):
+        self.env["GITHUB_EVENT_NAME"] = "pull_request_target"
         self.git("init", "-q")
+        (self.root / "Meta").mkdir()
+        (self.root / "Meta/FILEMAP.toml").write_text('''schema_version = 3
+resources = []
+[residence_policy]
+case_id = "fixture"
+desired = "registered"
+known_violation_count = 0
+status = "compliant"
+[[files]]
+pattern = "lake-manifest.json"
+require = []
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["fixture"]
+verified_by = ["fixture"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+''')
+        self.git("add", "Meta/FILEMAP.toml")
         base = self.commit("base")
         self.git("checkout", "-qb", "topic")
         (self.root / "lake-manifest.json").write_text("{}")
@@ -167,10 +189,18 @@ class Contracts(CacheFixture, unittest.TestCase):
     def test_reusable_input_cannot_fall_back_to_event_sha_when_empty(self):
         self.git("init", "-q")
         commit = self.commit("candidate")
-        for candidate, expected in (("", 2), ("b" * 40, 2), (commit, 0)):
+        for candidate, expected in (("", 2), (None, 2), (19, 2), ("b" * 40, 2), (commit, 0)):
             result = self.run_tool(CI, "checkout", "--commit", commit, env=dict(self.env,
                 CI_WORKFLOW_INPUTS=json.dumps({"candidate_sha": candidate})))
             self.assertEqual(expected, result.returncode, result.stderr)
+
+    def test_native_checkout_accepts_empty_actions_input_context(self):
+        self.git("init", "-q")
+        commit = self.commit("candidate")
+        for inputs in (None, {}):
+            result = self.run_tool(CI, "checkout", "--commit", commit, env=dict(self.env,
+                CI_WORKFLOW_INPUTS=json.dumps(inputs)))
+            self.assertEqual(0, result.returncode, result.stderr)
 
     def seed(self):
         (self.root / ".lake/build/lib").mkdir(parents=True)
@@ -279,7 +309,7 @@ class Contracts(CacheFixture, unittest.TestCase):
                     self.assertEqual((expected, dict(cwd=self.root, check=True)), calls[-1])
                     self.assertFalse((self.root / "build/ci/nuget").exists())
                     self.assertFalse((self.root / "environment").exists())
-        extract.assert_called_once_with(self.root, args.archive)
+            extract.assert_called_once_with(self.root, args.archive, args.stage)
         self.assertEqual(3, len(calls))
 
 

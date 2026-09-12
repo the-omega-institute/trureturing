@@ -9,6 +9,6 @@
     </PropertyGroup>
     <MakeDir Directories="$([System.IO.Path]::GetDirectoryName('$(_CiManifest)'))" />
     <WriteLinesToFile File="$(_CiManifest)" Overwrite="true"
-      Lines="$(MSBuildProjectFullPath);$(TargetPath);$(TargetDir);$(ProjectAssetsFile);reference=$(_CiReference);@(FileWrites->'%(FullPath)')" />
+      Lines="$(MSBuildProjectFullPath);$(TargetPath);$(TargetDir);packages=$(NuGetPackageRoot);reference=$(_CiReference);@(FileWrites->'%(FullPath)')" />
   </Target>
 </Project>

@@ -12,18 +12,30 @@ internal static class Program
     {
         try
         {
+            if (arguments.FirstOrDefault() is "check-seed-export" or "check-seed-import")
+                return CommonExecutionEvidence.CheckSeedCommand(arguments, output);
             if (arguments.FirstOrDefault() == "truth-release-select")
                 return TruthReleaseSelection.Run(arguments, output);
             if (arguments.FirstOrDefault() is "transport-pack" or "transport-verify")
                 return CiTransport.Run(arguments, output);
             if (arguments.FirstOrDefault() is "build" or "engineering" or "current" or "delta")
             {
-                if (arguments.Count is not (3 or 5) || arguments[1] != "--repository"
-                    || arguments.Count == 5 && !(arguments[0] == "delta" && arguments[3] == "--base"
-                        || arguments[0] == "engineering" && arguments[3] == "--build-round"))
-                    throw new ArgumentException("stage --repository ROOT [--base SHA | --build-round ROUND]");
-                return new CommonStages(Path.GetFullPath(arguments[2]), output).Run(arguments[0], arguments.Count == 5 && arguments[3] == "--base" ? arguments[4] : null,
-                    arguments.Count == 5 && arguments[3] == "--build-round" ? arguments[4] : null);
+                if (arguments.Count < 3 || arguments[1] != "--repository")
+                    throw new ArgumentException("stage --repository ROOT [--base SHA | --build-round ROUND] [--plan FILE --changes FILE]");
+                string? baseSha = null, stageBuildRound = null, plan = null, changes = null;
+                for (var i = 3; i < arguments.Count; i += 2)
+                {
+                    if (i + 1 >= arguments.Count) throw new ArgumentException("stage options must be name/value pairs");
+                    switch (arguments[i])
+                    {
+                        case "--base" when arguments[0] == "delta" && baseSha is null: baseSha = arguments[i + 1]; break;
+                        case "--build-round" when arguments[0] == "engineering" && stageBuildRound is null: stageBuildRound = arguments[i + 1]; break;
+                        case "--plan" when plan is null: plan = arguments[i + 1]; break;
+                        case "--changes" when changes is null: changes = arguments[i + 1]; break;
+                        default: throw new ArgumentException("invalid stage option: " + arguments[i]);
+                    }
+                }
+                return new CommonStages(Path.GetFullPath(arguments[2]), output).Run(arguments[0], baseSha, stageBuildRound, plan, changes);
             }
             if (arguments.FirstOrDefault() == "verify-trx")
             {
@@ -39,16 +51,16 @@ internal static class Program
                 return 0;
             }
             string? buildRound = null;
-            if (arguments.Count == 5 && arguments[3] == "--build-round")
+            if (arguments.Count == 4 && arguments[2] == "--build-round")
             {
-                buildRound = arguments[4];
-                arguments = arguments.Take(3).ToArray();
+                buildRound = arguments[3];
+                arguments = arguments.Take(2).ToArray();
             }
-            var repository = RepositoryOption(arguments, allowAll: true);
-            var build = buildRound is null ? null : CommonExecutionEvidence.ValidateBuild(repository, buildRound);
-            var testAssemblies = build is null ? null : CommonBuildOutputs.TestAssemblies(repository, build);
-            return RunCurrentTests(repository, (project, results) => RunTests(repository,
-                testAssemblies is null ? project : testAssemblies[project], results), output, build);
+            var repository = RepositoryOption(arguments);
+            var build = CommonExecutionEvidence.ValidateBuild(repository, buildRound);
+            var inputs = CommonExecutionEvidence.TestInputs(repository, CommonExecutionEvidence.Snapshot(repository));
+            var testAssemblies = CommonExecutionEvidence.ValidateTestBuild(repository, build, inputs);
+            return RunCurrentTests(repository, (project, results) => RunTests(repository, testAssemblies[project], results), output, build);
         }
         catch (Exception exception)
         {
@@ -57,10 +69,8 @@ internal static class Program
         }
     }
 
-    private static string RepositoryOption(IReadOnlyList<string> arguments, bool allowAll = false)
+    private static string RepositoryOption(IReadOnlyList<string> arguments)
     {
-        if (allowAll && arguments.Count == 3 && arguments.Count(static argument => argument == "--all") == 1)
-            arguments = arguments.Where(static argument => argument != "--all").ToArray();
         return arguments.Count == 2 && arguments[0] == "--repository" && !string.IsNullOrWhiteSpace(arguments[1])
             ? Path.GetFullPath(arguments[1])
             : throw new ArgumentException("options must be exactly --repository value");
@@ -69,16 +79,26 @@ internal static class Program
     internal static int RunCurrentTests(string root, Func<string, string, int> run, TextWriter output, CommonStageRecord? build = null)
     {
         var candidate = CommonExecutionEvidence.Candidate(root);
-        var projects = EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadSnapshotProjects(CommonExecutionEvidence.Snapshot(root)));
-        if (projects.Length == 0) throw new InvalidDataException("candidate contains zero test projects");
-        var round = build?.Round ?? Guid.NewGuid().ToString("N");
+        var inputs = CommonExecutionEvidence.TestInputs(root, CommonExecutionEvidence.Snapshot(root));
+        build ??= CommonExecutionEvidence.ValidateBuild(root);
+        CommonExecutionEvidence.ValidateStartedBuild(root, build, candidate);
+        _ = CommonExecutionEvidence.ValidateTestBuild(root, build, inputs);
+        File.Delete(Path.Combine(root, CommonExecutionEvidence.TestsPath));
+        var reused = CommonExecutionEvidence.ImportTestSeed(root, inputs, output);
+        var projects = inputs.Keys.Order(StringComparer.Ordinal).ToArray();
         var invocation = Guid.NewGuid().ToString("N");
         var records = new List<TestProjectExecution>();
-        output.WriteLine($"ENGINEERING_TEST_PLAN state=full selected={projects.Length} candidate={candidate}");
+        output.WriteLine($"ENGINEERING_TEST_PLAN state=registered selected={projects.Length - reused.Count} reused={reused.Count} candidate={candidate}");
         foreach (var project in projects)
         {
+            if (reused.TryGetValue(project, out var prior))
+            {
+                records.Add(prior);
+                output.WriteLine($"ENGINEERING_TEST_REUSED project={JsonSerializer.Serialize(project)} origin_candidate={prior.ExecutionCandidate} origin_round={prior.ExecutionRound}");
+                continue;
+            }
             output.WriteLine($"ENGINEERING_TEST_PROJECT project={JsonSerializer.Serialize(project)}");
-            var relative = $"{CommonExecutionEvidence.RootPath}/trx/{invocation}/{records.Count}";
+            var relative = $"{CommonExecutionEvidence.RootPath}/trx/{candidate}/{build.Round}/{inputs[project].Fingerprint}/{invocation}/{records.Count}";
             var directory = Path.Combine(root, relative);
             Directory.CreateDirectory(directory);
             var exit = 2;
@@ -92,21 +112,31 @@ internal static class Program
                 if (exit != 0) failure = $"dotnet test exit={exit}";
             }
             catch (Exception exception) { failure = exception.Message; }
-            records.Add(new(project, relative, exit, executed, failure));
+            records.Add(new(project, inputs[project].Fingerprint, "executed", candidate, build.Round, relative, exit, executed, failure));
             output.WriteLine($"ENGINEERING_TEST_EXECUTED project={JsonSerializer.Serialize(project)} raw_exit={exit} executed={executed} error={JsonSerializer.Serialize(failure)}");
         }
         var paths = records.SelectMany(record => Directory.GetFiles(Path.Combine(root, record.Results), "*.trx"))
             .Select(path => Path.GetRelativePath(root, path).Replace('\\', '/'));
         CommonExecutionEvidence.Write(root, CommonExecutionEvidence.TestsPath,
-            new TestExecutionRecord(1, candidate, round, records.ToArray(), CommonExecutionEvidence.Materials(root, paths)));
+            new TestExecutionRecord(2, candidate, build.Round, records.ToArray(), CommonExecutionEvidence.Materials(root, paths)));
         if (CommonExecutionEvidence.Candidate(root) != candidate) throw new InvalidDataException("candidate changed during test execution");
-        return records.Any(static record => record.Exit != 0 || record.Error is not null || record.Executed == 0) ? 1 : 0;
+        CommonExecutionEvidence.ValidateStartedBuild(root, build, candidate);
+        try { CommonExecutionEvidence.ValidateTests(root); }
+        catch (Exception exception)
+        {
+            output.WriteLine($"ENGINEERING_TEST_EVIDENCE_FAILED {exception.Message}");
+            return 1;
+        }
+        return 0;
     }
 
     private static int RunTests(string root, string project, string results)
     {
         var start = new ProcessStartInfo("dotnet") { WorkingDirectory = root, UseShellExecute = false };
         start.Environment["DOTNET_CLI_UI_LANGUAGE"] = "en-US";
+        start.Environment["CI"] = "true";
+        // Synthetic test repositories supply their own candidate identity.
+        start.Environment.Remove("CANDIDATE_SHA");
         if (Directory.Exists(Path.Combine(root, CommonBuildOutputs.PackagesPath)))
             start.Environment["NUGET_PACKAGES"] = Path.Combine(root, CommonBuildOutputs.PackagesPath);
         foreach (var argument in BuildTestArguments(project, results)) start.ArgumentList.Add(argument);
@@ -139,7 +169,7 @@ internal static class Program
         {
             var count = evidence.CountAssembly(assembly);
             if (count == 0) throw new InvalidDataException($"TRX has no executed identity from required assembly {assembly}");
-            output.WriteLine($"ENGINEERING_BASE_FLOOR_EXECUTED assembly={assembly} evidence=trx executed={count}");
+            output.WriteLine($"TEST_ASSEMBLY_EVIDENCE_ACCEPTED assembly={assembly} evidence=trx executed={count}");
         }
         if (required.Count == 0) output.WriteLine($"TEST_EVIDENCE_ACCEPTED evidence=trx executed={evidence.Executed}");
         return 0;

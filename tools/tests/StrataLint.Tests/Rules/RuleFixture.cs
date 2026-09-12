@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Security.Cryptography;
 using System.Text;
 using StrataLint.Cli;
+using StrataLint.TestSupport;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -124,7 +125,18 @@ internal sealed partial class RuleFixture
                 """ + "\n",
             [BannedApiCompileFailProofProjectPath] = "<Project Sdk=\"Microsoft.NET.Sdk\" />\n",
             [CompileFailProofProjectPath] = "<Project Sdk=\"Microsoft.NET.Sdk\" />\n",
+            [EngineeringRegistrationFixture.Path] = EngineeringRegistrationFixture.Manifest(
+                new EngineeringProjectFixture(ScribeProjectPath, "StrataLint.Scribe", "production", false,
+                    ["Blueprint/**/*.scribe.cs", "tools/StrataLint.Scribe/**/*.cs", "tools/StrataLint.Engine/**/*.cs", "tools/StrataLint.Cli/**/*.cs"],
+                    OwnedTestAssembly: "StrataLint.Scribe.Tests"),
+                new EngineeringProjectFixture(BannedApiCompileFailProofProjectPath, "BannedApiCompileFailProof", "compile-fail-proof", false, ["tools/tests/BannedApiCompileFailProof/**/*.cs"]),
+                new EngineeringProjectFixture(CompileFailProofProjectPath, "CompileFailProof", "compile-fail-proof", false, ["tools/tests/CompileFailProof/**/*.cs"])),
         };
+        var registration = System.Text.Json.Nodes.JsonNode.Parse(Files[EngineeringRegistrationFixture.Path])!;
+        registration["rule_build_inputs"] = new System.Text.Json.Nodes.JsonArray(
+            RegisteredBuildInputs.Select(path => System.Text.Json.Nodes.JsonValue.Create(path)).ToArray());
+        Files[EngineeringRegistrationFixture.Path] = registration.ToJsonString();
+        foreach (var path in RegisteredBuildInputs) Files.TryAdd(path, path == "global.json" ? "{}" : "<Project />");
         Baseline = new Dictionary<string, string>(Files, StringComparer.Ordinal);
         Reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
         {
@@ -156,6 +168,11 @@ internal sealed partial class RuleFixture
         Baseline[ValuesKernelBindingValidator.RelativePath] = Files[ValuesKernelBindingValidator.RelativePath];
         Changes = new List<string> { BlueprintPath };
     }
+
+    internal static IReadOnlySet<string> RegisteredBuildInputs { get; } = new HashSet<string>(StringComparer.Ordinal)
+    {
+        "global.json", "Directory.Build.props", "Directory.Build.targets", "tools/Directory.Build.targets", "Directory.Packages.props",
+    };
 
     internal Dictionary<string, string> Files { get; }
 
@@ -298,26 +315,19 @@ internal sealed partial class RuleFixture
             suppliedPolicy,
             verifiedScribeEmissions);
 
-    internal DeltaRuleContext Build(
-        RawChangeSet changes,
-        ValidatedPolicy? suppliedPolicy = null,
-        VerifiedScribeEmissions? verifiedScribeEmissions = null) =>
-        Build(changes, suppliedPolicy, verifiedScribeEmissions, includeProjectFiles: true);
-
     internal DeltaRuleContext BuildScopeProbe(
         RawChangeSet changes,
         ValidatedPolicy? suppliedPolicy = null,
         VerifiedScribeEmissions? verifiedScribeEmissions = null) =>
-        Build(changes, suppliedPolicy, verifiedScribeEmissions, includeProjectFiles: false);
+        Build(changes, suppliedPolicy, verifiedScribeEmissions);
 
-    private DeltaRuleContext Build(
+    internal DeltaRuleContext Build(
         RawChangeSet changes,
-        ValidatedPolicy? suppliedPolicy,
-        VerifiedScribeEmissions? verifiedScribeEmissions,
-        bool includeProjectFiles)
+        ValidatedPolicy? suppliedPolicy = null,
+        VerifiedScribeEmissions? verifiedScribeEmissions = null)
     {
-        var current = Decode(Files, includeProjectFiles);
-        var baseline = Decode(Baseline, includeProjectFiles);
+        var current = Decode(Files);
+        var baseline = Decode(Baseline);
         var policy = suppliedPolicy;
         if (policy is null)
         {
@@ -609,12 +619,9 @@ internal sealed partial class RuleFixture
     }
 
     private static RepositorySnapshot Decode(
-        IReadOnlyDictionary<string, string> files,
-        bool includeProjectFiles = true)
+        IReadOnlyDictionary<string, string> files)
     {
         var raw = RawRepositorySnapshot.Create(files
-            .Where(pair => includeProjectFiles
-                || !pair.Key.EndsWith(".csproj", StringComparison.Ordinal))
             .Select(pair =>
         {
             var bytes = ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(pair.Value));

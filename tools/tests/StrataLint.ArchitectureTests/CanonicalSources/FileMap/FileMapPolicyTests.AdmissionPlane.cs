@@ -1,69 +1,9 @@
 using StrataLint.Cli;
-using StrataLint.Engine;
-using StrataLint.Scribe;
 
 namespace StrataLint.ArchitectureTests;
 
 public sealed partial class FileMapPolicyTests
 {
-    [Fact]
-    public void RegisteredTestPolicyFixtureIsJudgeData()
-    {
-        const string path = "tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml";
-        var root = RepositoryLayout.FindRoot();
-        Assert.True(File.Exists(Path.Combine(root, path)));
-        var manifest = FileMapLoader.LoadRepository(root);
-
-        var entry = Assert.Single(manifest.Match(path));
-
-        Assert.Equal(path, entry.Pattern);
-        Assert.Equal(FileMapKind.Data, entry.Kind);
-        Assert.Equal(["TestRegistry"], entry.ConsumedBy.ToArray());
-        Assert.Equal(["TestRegistry"], entry.VerifiedBy.ToArray());
-        Assert.Equal(FileMapAdmissionPlane.Judge, entry.AdmissionPlane);
-        Assert.Empty(FileMapPolicy.InspectDirectoryKinds(manifest, [path]));
-    }
-
-    [Fact]
-    public void RegisteredTestPolicyFixtureAndJudgePathAreJudgeOnly()
-    {
-        var root = RepositoryLayout.FindRoot();
-        string[] paths =
-        [
-            "tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml",
-            "tools/StrataLint.Engine/RepositoryIo/AdmissionPlanePolicy.cs",
-        ];
-        Assert.All(paths, path => Assert.True(File.Exists(Path.Combine(root, path))));
-
-        var decision = AdmissionPlanePolicy.Evaluate(
-            File.ReadAllBytes(Path.Combine(root, FileMapLoader.RelativePath)),
-            paths);
-
-        Assert.Equal(AdmissionPlaneClassification.JudgeOnly, decision.Classification);
-        Assert.True(decision.IsAdmissible);
-        Assert.Empty(decision.Code);
-    }
-
-    [Fact]
-    public void RegisteredLeanContentAndJudgePathRemainMixedAndRejected()
-    {
-        var root = RepositoryLayout.FindRoot();
-        string[] paths =
-        [
-            "D5/S0/Carrier/Ring.lean",
-            "tools/StrataLint.Engine/RepositoryIo/AdmissionPlanePolicy.cs",
-        ];
-        Assert.All(paths, path => Assert.True(File.Exists(Path.Combine(root, path))));
-
-        var decision = AdmissionPlanePolicy.Evaluate(
-            File.ReadAllBytes(Path.Combine(root, FileMapLoader.RelativePath)),
-            paths);
-
-        Assert.Equal(AdmissionPlaneClassification.Mixed, decision.Classification);
-        Assert.False(decision.IsAdmissible);
-        Assert.Equal("ADMISSION-PLANE-MIXED", decision.Code);
-    }
-
     [Fact]
     public void AdmissionPlaneIsAcceptedByTheStrictLoader()
     {
@@ -152,6 +92,7 @@ public sealed partial class FileMapPolicyTests
         string kind,
         string admissionPlane) => $$"""
         [[files]]
+        require = []
         pattern = "{{pattern}}"
         kind = "{{kind}}"
         admission_plane = "{{admissionPlane}}"

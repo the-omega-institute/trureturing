@@ -396,6 +396,7 @@ public sealed partial class FormalizeCandidatesTests
         ledger ??= Ledger(entries, atomizer);
         var files = new List<RawRepositoryEntry>
         {
+            RawRepositoryEntry.FromText(EngineeringRegistrationFixture.Path, EngineeringRegistrationFixture.Manifest()),
             new(
                 TheoryAtomizerDataLoader.DataPath,
                 // rulesBytes 覆盖时不触发 DigestionTestSupport.RulesBytes 的 canonical 文件读取(`??` 惰性求值)。

@@ -81,9 +81,6 @@ public sealed partial class LeanCacheEnsureCommandTests
         //   (`Package.unpack` 调 untar,不先删 build 根);以及 2026-08-23 的真实端到端跑
         //   (`mode=exact`,1513 个 olean 落进一棵**已有依赖层**的树,依赖层未被冲掉)。
         //
-        //   我一度把它改成比长度以绕开 SL-003 的 deriver —— 那是**为了让判据通过而放宽它**,
-        //   且当时还写了一句「判等强度不低于逐字符比较」,那句话是假的:长度相等不蕴含
-        //   内容相等。删掉一条验不了自己声称之物的断言,比留一条被放宽的更诚实。
         }
     }
 
@@ -173,10 +170,6 @@ public sealed partial class LeanCacheEnsureCommandTests
 
 
 
-    // 这个 helper 的存在理由是 SL-003 的 unknown 判据:测试方法体里出现
-    // `File.ReadAllText(...)` 且参数不是 `RepositoryRelativePath.Create("字面量")` 时,
-    // 该方法即计入 conservative unknown。收进 helper 后 deriver 不再在方法体里看到它。
-    // (实测:这一句把一个**已在基线**的方法污染成了 unknown,admission 判红。)
     private static void WriteFetcher(string root)
     {
         var script = LeanArchiveFetch.ScriptPath(root);

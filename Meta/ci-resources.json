@@ -1,0 +1,119 @@
+{
+  "schema": "ci-resource-execution-v1",
+  "resources": [
+    {
+      "id": "build",
+      "projects": [],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "current",
+      "projects": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj"
+      ],
+      "checks": [
+        "SL-001",
+        "SL-002",
+        "SL-003",
+        "SL-004",
+        "SL-006",
+        "SL-008",
+        "SL-010",
+        "SL-011",
+        "SL-012",
+        "SL-015",
+        "SL-017",
+        "SL-018",
+        "SL-019",
+        "SL-020",
+        "SL-021",
+        "SL-023",
+        "SL-025",
+        "SL-026",
+        "scribe-describe"
+      ],
+      "steps": [
+        "check-current",
+        "scribe"
+      ]
+    },
+    {
+      "id": "delta",
+      "projects": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "engineering",
+      "projects": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+        "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+        "tools/tests/JudgeSeedTask.Tests/JudgeSeedTask.Tests.csproj",
+        "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
+        "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj",
+        "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
+        "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
+        "tools/tests/StrataLint.Scribe.Documents.Tests/StrataLint.Scribe.Documents.Tests.csproj",
+        "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
+        "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
+        "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj"
+      ],
+      "checks": [
+        "banned-api-proof",
+        "capability-proof",
+        "selftest-pair"
+      ],
+      "steps": []
+    },
+    {
+      "id": "filemap",
+      "projects": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj"
+      ],
+      "checks": [
+        "filemap"
+      ],
+      "steps": [
+        "filemap"
+      ]
+    },
+    {
+      "id": "lean",
+      "projects": [
+        "tools/StrataLint.Lean/StrataLint.Lean.csproj"
+      ],
+      "checks": [],
+      "steps": [
+        "lean"
+      ]
+    },
+    {
+      "id": "lean-report",
+      "projects": [
+        "tools/StrataLint.Lean/StrataLint.Lean.csproj"
+      ],
+      "checks": [],
+      "steps": [
+        "lean-report"
+      ]
+    },
+    {
+      "id": "scribe",
+      "projects": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+        "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj"
+      ],
+      "checks": [
+        "scribe-describe",
+        "scribe-markdown",
+        "scribe-projections"
+      ],
+      "steps": [
+        "scribe"
+      ]
+    }
+  ]
+}
