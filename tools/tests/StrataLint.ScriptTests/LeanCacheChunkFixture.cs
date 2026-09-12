@@ -34,10 +34,8 @@ internal sealed class LeanCacheChunkFixture : IDisposable
             ScriptHarnessScratch.CopyScriptInto(
                 Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree", name),
                 Path.Combine(Path.GetDirectoryName(script)!, name));
-        // The chunk contract exercises the v2 Python release transport. Keep the
-        // historical shell path as the fixture's public entry point because that
-        // is the path consumed by the workflow, but make the delegation explicit.
-        Write(script, "#!/usr/bin/env bash\nexec python3 \"$(dirname \"$0\")/lean_cache_release.py\" \"$@\"\n");
+        // The chunk contract exercises the v2 Python release transport through
+        // the exact shell entry point consumed by Make and the workflow.
         Write(Path.Combine(repository, "lake-manifest.json"), JsonSerializer.Serialize(new
         {
             packages = new[] { new { name = "mathlib", rev = Revision, inputRev = "requested-tag" } },

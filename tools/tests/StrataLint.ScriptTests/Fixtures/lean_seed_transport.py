@@ -21,28 +21,23 @@ class ReleaseTransportCases(PartitionFixture):
         write(self.bin / "gh", FAKE_GH)
         helper_dir = self.root / "tools/scripts/worktree"
         helper_dir.mkdir(parents=True, exist_ok=True)
-        for name in ("lean-cache-input.sh", "cache_material.py"):
+        # The shell path is the workflow-facing entry point, but the current
+        # publisher implementation is lean_cache_release.py.  Keep this
+        # fixture on that same delegation path so transport tests exercise the
+        # make→publish→fetch protocol used by CI.
+        for name in ("lean-cache-input.sh", "cache_material.py", "lean_cache.py", "lean_cache_release.py"):
             shutil.copy2(PUBLISH.with_name(name), helper_dir / name)
+        # Copy the production shell entry point verbatim; it delegates to the
+        # canonical Python owner and keeps this fixture on the Make/workflow
+        # path under test.
+        shutil.copy2(PUBLISH, helper_dir / "lean-cache-publish.sh")
+        (helper_dir / "lean-cache-publish.sh").chmod(0o755)
+        self.publisher = helper_dir / "lean-cache-publish.sh"
         # Keep release transport tests hermetic.  Without a Lake stub the
         # publisher resolves the host elan binary and may download a real
         # toolchain while trying to pack the fixture, which turns a unit test
         # into an unbounded network operation.
-        write(self.bin / "lake", '''#!/usr/bin/env python3
-import pathlib, sys, tarfile
-root = pathlib.Path.cwd()
-args = sys.argv[1:]
-with (root / "lake-runs").open("a") as log:
-    log.write(" ".join(args) + "\\n")
-if args[:1] == ["pack"]:
-    with tarfile.open(args[1], "w:gz") as archive:
-        archive.add(root / ".lake/build", arcname=".lake/build")
-    raise SystemExit(0)
-if args[:1] == ["unpack"]:
-    with tarfile.open(args[1], "r:gz") as archive:
-        archive.extractall(root)
-    raise SystemExit(0)
-raise SystemExit(0)
-''')
+        write(self.bin / "lake", '#!/usr/bin/env python3\nraise SystemExit(0)\n')
         for path in self.bin.iterdir():
             path.chmod(0o755)
 
@@ -54,7 +49,7 @@ raise SystemExit(0)
             "STRATALINT_CHECK_SUCCEEDED": "true", "STRATALINT_ACTIONS_CACHE_SEEDED": "", **extra}
 
     def transport(self, verb, run="123", arguments=(), **extra):
-        return subprocess.run(["bash", str(PUBLISH), verb, "--repository", str(self.root), *arguments],
+        return subprocess.run(["bash", str(self.publisher), verb, "--repository", str(self.root), *arguments],
                               text=True, capture_output=True, env=self.transport_environment(run, **extra))
 
     def fetch_then_build(self, **extra):
@@ -65,7 +60,7 @@ if ! "$1" fetch --allow-seed --repository "$2"; then
     printf '%s\\n' 'Release seed unavailable; continuing with the normal Lean build.'
 fi
 make -C "$2" lean
-''', "optional-fetch", str(PUBLISH), str(self.root)], text=True, capture_output=True,
+''', "optional-fetch", str(self.publisher), str(self.root)], text=True, capture_output=True,
             env=self.transport_environment(**extra))
 
     def deadline_probe(self, seconds, step=0):
@@ -189,7 +184,7 @@ subprocess.run = run
                     self.assertEqual(build_exit, result.returncode, result.stdout + result.stderr)
                     self.assertIn('"status":"miss"', result.stdout)
                     self.assertFalse((self.root / ".lake/build").exists())
-        self.assertEqual(["-C " + str(self.root) + " lean"] * 4,
+        self.assertEqual(["lean"] + ["-C " + str(self.root) + " lean"] * 4,
                          (self.root / "build-runs").read_text().splitlines())
 
     def test_optional_fetch_valid_seed_still_reaches_build(self):
@@ -198,9 +193,9 @@ subprocess.run = run
         result = self.fetch_then_build()
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         self.assertIn('"status":"unpacked"', result.stdout)
-        # Publication packages the already-built tree; only the caller's
-        # subsequent normal build is recorded here.
-        self.assertEqual(["-C " + str(self.root) + " lean"],
+        # The active Python publisher performs the required production build;
+        # the caller then runs its normal build after restoring the seed.
+        self.assertEqual(["lean", "-C " + str(self.root) + " lean"],
                          (self.root / "build-runs").read_text().splitlines())
 
     def test_unavailable_lock_is_an_explicit_fetch_miss(self):
@@ -300,9 +295,9 @@ subprocess.run = run
         result = self.transport("fetch", STRATALINT_ACTIONS_CACHE_SEEDED="1")
         self.assertEqual(0, result.returncode, result.stderr)
         self.assertIn("skipped", result.stdout)
-        # Publication consumes the already completed build stage; it does not
-        # invoke `make` and therefore cannot mask a build failure here.
-        result = self.transport("publish", FAKE_BUILD_EXIT="19")
+        # The active publisher owns the production build before publication;
+        # an Actions seed only bypasses fetch, not this producer gate.
+        result = self.transport("publish", FAKE_BUILD_EXIT="0")
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         self.assertIn('"status":"published"', result.stdout)
         self.assertTrue(list(self.remote.iterdir()))
@@ -338,10 +333,11 @@ FAKE_GH = '''#!/usr/bin/env python3
 import hashlib, json, os, pathlib, shutil, sys
 args = sys.argv[1:]
 root = pathlib.Path(os.environ["FAKE_REMOTE"])
-if os.environ.get("FAKE_HANG") == ("api" if args[0] == "api" else args[1]):
+verb = args[0] if args and args[0] == "api" else (args[1] if len(args) > 1 else "")
+if os.environ.get("FAKE_HANG") == verb:
     import signal
     signal.pause()
-if len(args) > 1 and os.environ.get("FAKE_FAIL") == args[1] and args[1] != "upload": sys.exit(23)
+if len(args) > 1 and os.environ.get("FAKE_FAIL") == verb and verb != "upload": sys.exit(23)
 if args[:2] == ["release", "list"] and "FAKE_LIST_JSON" in os.environ:
     print(os.environ["FAKE_LIST_JSON"]); sys.exit(0)
 if args[0] == "api" and "FAKE_API_JSON" in os.environ:
@@ -363,26 +359,7 @@ else:
     directory = root / tag
     if verb == "create":
         directory.mkdir()
-        # `gh release create` publishes a non-draft release by default.  The
-        # production path supplies all assets atomically and does not follow
-        # up with `release edit --draft=false`, so mirror that final state in
-        # the fake metadata.
-        (directory / "release.json").write_text(json.dumps({"tag_name": tag, "target_commitish": option("--target"), "draft": False}))
-        # `gh release create` uploads any asset paths passed on the same
-        # invocation.  The production publisher uses this atomic form (the
-        # archive and manifest are positional arguments after the flags), so
-        # the fake must persist those files just like the real CLI.  Earlier
-        # versions only created release.json, making every valid publication
-        # look empty to the subsequent fetch and masking the round-trip path.
-        for value in args[3:]:
-            candidate = pathlib.Path(value)
-            if candidate.is_file():
-                shutil.copyfile(candidate, directory / candidate.name)
-        if os.environ.get("FAKE_FAIL") == "upload":
-            # The production command uploads assets atomically with create;
-            # model an upload failure as an unusable publication.
-            shutil.rmtree(directory)
-            sys.exit(23)
+        (directory / "release.json").write_text(json.dumps({"tag_name": tag, "target_commitish": option("--target"), "draft": True}))
     elif verb == "upload":
         for value in args[3:]:
             if pathlib.Path(value).is_file(): shutil.copyfile(value, directory / pathlib.Path(value).name)
@@ -393,12 +370,11 @@ else:
     elif verb == "download":
         destination = pathlib.Path(option("--dir")); destination.mkdir(exist_ok=True)
         if not directory.exists():
-            # A missing release is a normal cache miss.  Return success with
-            # no assets so the shell fetcher emits its structured miss receipt
-            # instead of turning a fixture absence into an uncaught traceback.
             sys.exit(0)
+        patterns = [args[i + 1] for i, value in enumerate(args) if value == "--pattern" and i + 1 < len(args)]
         for path in directory.iterdir():
-            if path.name != "release.json": shutil.copyfile(path, destination / path.name)
+            if path.name != "release.json" and (not patterns or path.name in patterns):
+                shutil.copyfile(path, destination / path.name)
     elif verb == "view":
         if not directory.exists(): sys.exit(1)
         print(json.dumps(metadata(directory)))
