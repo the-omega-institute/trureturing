@@ -1,4 +1,5 @@
 import LeanInformationAudit.ReadoutProvenance
+import LeanInformationAudit.SealCommand
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import Mathlib.Logic.Equiv.Defs
 
@@ -34,6 +35,10 @@ def ctorRead (_ : Unit) (x : Bool) : Bool :=
 set_option linter.style.nameCheck false in
 def generated.__information_unit : Bool := true
 def generatedRead (_ : Unit) (x : Bool) : Bool := cond generated.__information_unit x false
+
+def payloadProjectionRead (_ : Unit) (x : Bool) : Bool :=
+  let _ := fun payload : LeanInformationAudit.SealedOccurrenceState => payload.theoremName
+  x
 
 noncomputable def classicalRead (_ : Unit) (x : Bool) : Bool :=
   if @decide (x = true) (Classical.propDecidable _) then x else false
@@ -130,6 +135,7 @@ run_cmd Elab.Command.liftCoreM do
     ("ClosedStatementInhabitant", ``binderRead, "forbidden_dependency", ""),
     ("CtorDecisionOfStatement", ``ctorRead, "forbidden_dependency", ""),
     ("JudgeGeneratedCompanions", ``generatedRead, "forbidden_dependency", ""),
+    ("JudgePayloadParameterProjection", ``payloadProjectionRead, "forbidden_dependency", ""),
     ("ClassicalDirect", ``classicalRead, "unclassified_form", "classical_choice"),
     ("TypeBeforeClassicalData", ``typeBeforeClassicalRead, "unclassified_form", "classical_choice"),
     ("UnclassifiedPayloadParses", ``payloadRead, "unclassified_form", "classical_choice"),

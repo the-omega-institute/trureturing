@@ -95,9 +95,8 @@ private def generatedAddress : Name → Bool
   | .num parent _ => generatedAddress parent
   | .anonymous => false
 
-private def judgePayload (info : ConstantInfo) : Bool :=
-  match info with
-  | .ctorInfo ctor => #[
+private def judgePayloadType (name : Name) : Bool :=
+  #[
       `LeanInformationAudit.InformationRegistryEntry, `LeanInformationAudit.ExpectedOccurrence,
       `LeanInformationAudit.CatalogUnitRecord, `LeanInformationAudit.CatalogRecord,
       `LeanInformationAudit.SealTheoremRecord, `LeanInformationAudit.SealArenaRecord,
@@ -108,7 +107,11 @@ private def judgePayload (info : ConstantInfo) : Bool :=
       `LeanInformationAudit.UnreachableElaborationEvidence,
       `LeanInformationAudit.AnalysisDisposition, `LeanInformationAudit.CensusAssessment,
       `LeanInformationAudit.AnalysisObservation, `LeanInformationAudit.DispositionInventory,
-      `LeanInformationAudit.TruncationCertification].contains ctor.induct
+      `LeanInformationAudit.TruncationCertification].contains name
+
+private def judgePayload (info : ConstantInfo) : Bool :=
+  match info with
+  | .ctorInfo ctor => judgePayloadType ctor.induct
   | _ => false
 
 private def stripMData : Expr → Expr
@@ -362,7 +365,7 @@ private def visitSummary (env : Environment) (origin : Name) (summary : Summary)
             (t.getAppFn.constName?.getD `statement_mentioning_type) "protected:current" origin)
       if let some typeIndex := node.children[0]? then checkU summary.nodes[typeIndex]!
     | .proj n _ _ =>
-      if provenanceJudgeAPIs.contains n || generatedAddress n || (env.find? n).any judgePayload then
+      if provenanceJudgeAPIs.contains n || generatedAddress n || judgePayloadType n then
         modify fun s => { s with forbidden := true }
     | .mvar _ => modify fun s => { s with incomplete := true }
     | _ => pure ()
