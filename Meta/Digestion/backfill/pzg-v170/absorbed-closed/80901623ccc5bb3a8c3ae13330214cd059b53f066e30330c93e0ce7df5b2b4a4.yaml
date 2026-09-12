@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:80901623ccc5bb3a8c3ae13330214cd059b53f066e30330c93e0ce7df5b2b4a4
   normalized_sha256: sha256:80901623ccc5bb3a8c3ae13330214cd059b53f066e30330c93e0ce7df5b2b4a4
 cas_ref: sha256:80901623ccc5bb3a8c3ae13330214cd059b53f066e30330c93e0ce7df5b2b4a4
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S1/Words/GoldenMechanicalWord.golden_mechanical_letter_eq_one_iff
+    target_statement_id: sha256:9e19f864271dab1f1d431ba11449be125b30ade4b23e2441dffb10b08b490b9f
 receipts:
   unresolved_subitems: []

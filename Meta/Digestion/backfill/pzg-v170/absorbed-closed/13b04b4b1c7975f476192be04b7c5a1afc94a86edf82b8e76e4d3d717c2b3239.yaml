@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:13b04b4b1c7975f476192be04b7c5a1afc94a86edf82b8e76e4d3d717c2b3239
   normalized_sha256: sha256:13b04b4b1c7975f476192be04b7c5a1afc94a86edf82b8e76e4d3d717c2b3239
 cas_ref: sha256:13b04b4b1c7975f476192be04b7c5a1afc94a86edf82b8e76e4d3d717c2b3239
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S1/Digit/PrimeAxis/PrimeAxisNormalizationUnique.normalized_prime_axis_add_unique
+    target_statement_id: sha256:0854fd0f57f6f177c114e6ecac4e54e625ef2f8951ab9fac4cc8d6a2a5491eea
 receipts:
   unresolved_subitems: []
