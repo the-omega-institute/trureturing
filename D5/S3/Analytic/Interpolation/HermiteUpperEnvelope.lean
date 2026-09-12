@@ -174,4 +174,88 @@ private theorem quadratic_derivatives (a b c L : ℝ) :
   · rw [hd]; ring
   · simp [iteratedDeriv_succ, iteratedDeriv_zero, hd, hd2]
 
+private theorem quadratic_sum_of_moments {k : ℕ} (x : Fin k → ℝ) (μ r a b c : ℝ)
+    (hsum : ∑ i, x i = (k : ℝ) * μ)
+    (hvar : ∑ i, (x i - μ)^2 = (k : ℝ) * ((k : ℝ) - 1) * r^2) :
+    let p := fun t => a + b * (t - (μ - r)) + c * (t - (μ - r))^2
+    ∑ i, p (x i) = p (μ + ((k : ℝ) - 1) * r) + ((k : ℝ) - 1) * p (μ - r) := by
+  have hcenter : ∑ i, (x i - μ) = 0 := by
+    rw [Finset.sum_sub_distrib]
+    simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+    linarith
+  have hfirst : ∑ i, (x i - (μ - r)) = (k : ℝ) * r := by
+    rw [Finset.sum_sub_distrib]
+    simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+    rw [hsum]
+    ring
+  have hsecond : ∑ i, (x i - (μ - r))^2 = (k : ℝ)^2 * r^2 := by
+    simp_rw [show ∀ i, (x i - (μ - r))^2 = (x i - μ)^2 + 2*r*(x i - μ) + r^2
+      from fun i => by ring]
+    rw [Finset.sum_add_distrib, Finset.sum_add_distrib, ← Finset.mul_sum, hcenter, hvar]
+    simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+    ring
+  dsimp only
+  rw [Finset.sum_add_distrib, Finset.sum_add_distrib, ← Finset.mul_sum, ← Finset.mul_sum,
+    hfirst, hsecond]
+  simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+  ring
+
+/-- The mean and total squared deviation give an upper bound for the logarithmic sum. -/
+theorem hermite_upper_envelope {k : ℕ} (hk : 2 ≤ k) (x : Fin k → ℝ)
+    (hx : ∀ i, 0 < x i) :
+    let μ := (∑ i, x i) / (k : ℝ)
+    let V := ∑ i, (x i - μ)^2
+    let r := Real.sqrt (V / ((k : ℝ) * ((k : ℝ) - 1)))
+    let L := μ - r
+    let H := μ + ((k : ℝ) - 1) * r
+    ∑ i, Real.log (1 - Real.exp (-x i)) ≤
+      Real.log (1 - Real.exp (-H)) + ((k : ℝ) - 1) * Real.log (1 - Real.exp (-L)) := by
+  let μ := (∑ i, x i) / (k : ℝ)
+  let V := ∑ i, (x i - μ)^2
+  let r := Real.sqrt (V / ((k : ℝ) * ((k : ℝ) - 1)))
+  let L := μ - r
+  let H := μ + ((k : ℝ) - 1) * r
+  let f := fun t : ℝ => Real.log (1 - Real.exp (-t))
+  change ∑ i, f (x i) ≤ f H + ((k : ℝ) - 1) * f L
+  have hkR : (2 : ℝ) ≤ k := by exact_mod_cast hk
+  have hkpos : (0 : ℝ) < k := by linarith
+  have hden : (0 : ℝ) < (k : ℝ) * ((k : ℝ) - 1) :=
+    mul_pos hkpos (by linarith)
+  have hsum : ∑ i, x i = (k : ℝ) * μ := by dsimp [μ]; field_simp
+  have hV : 0 ≤ V := Finset.sum_nonneg (fun i _ => sq_nonneg (x i - μ))
+  by_cases hVz : V = 0
+  · have hequal (i : Fin k) : x i = μ := by
+      have hsq : (x i - μ)^2 ≤ V :=
+        Finset.single_le_sum (fun j _ => sq_nonneg (x j - μ)) (Finset.mem_univ i)
+      rw [hVz] at hsq
+      exact sub_eq_zero.mp (sq_eq_zero_iff.mp (le_antisymm hsq (sq_nonneg _)))
+    have hr : r = 0 := by simp [r, hVz]
+    simp only [hequal, L, H, hr, mul_zero, add_zero, sub_zero,
+      Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+    exact le_of_eq (by ring)
+  · have hr : 0 < r := Real.sqrt_pos.mpr (div_pos (lt_of_le_of_ne hV (Ne.symm hVz)) hden)
+    have hVr : V = (k : ℝ) * ((k : ℝ) - 1) * r^2 := by
+      rw [Real.sq_sqrt (div_nonneg hV hden.le)]
+      field_simp [ne_of_gt hkpos, ne_of_gt (by linarith : (0 : ℝ) < (k : ℝ) - 1)]
+    have hbounds := HermiteMomentBounds.hermite_moment_bounds hk x hx
+    change 0 < L ∧ ∀ i, x i ≤ H at hbounds
+    have hHL : H - L = (k : ℝ) * r := by dsimp [H, L]; ring
+    have hLH : L < H := sub_pos.mp (hHL.symm ▸ mul_pos hkpos hr)
+    have hHLne : H - L ≠ 0 := (sub_pos.mpr hLH).ne'
+    let c := (f H - f L - deriv f L * (H - L)) / (H - L)^2
+    let p := fun t => f L + deriv f L * (t - L) + c * (t - L)^2
+    have hp : ContDiff ℝ 3 p := by dsimp [p]; fun_prop
+    have hpL : p L = f L := by simp [p]
+    have hpH : p H = f H := by dsimp [p, c]; field_simp [hHLne]; ring
+    have hpd := quadratic_derivatives (f L) (deriv f L) c L
+    have hlog := LogOneSubExpDerivatives.log_one_sub_exp_derivatives
+    have hpoint (i : Fin k) : f (x i) ≤ p (x i) :=
+      hermite_majorant L H (x i) f p hbounds.1 hLH (hx i) (hbounds.2 i)
+        hlog.1 hp hpd.2 hpL hpd.1 hpH (fun t ht => (hlog.2 t ht).2.2.2)
+    calc
+      ∑ i, f (x i) ≤ ∑ i, p (x i) := Finset.sum_le_sum (fun i _ => hpoint i)
+      _ = p H + ((k : ℝ) - 1) * p L :=
+        quadratic_sum_of_moments x μ r (f L) (deriv f L) c hsum hVr
+      _ = f H + ((k : ℝ) - 1) * f L := by rw [hpH, hpL]
+
 end D5.S3.Analytic.Interpolation.HermiteUpperEnvelope
