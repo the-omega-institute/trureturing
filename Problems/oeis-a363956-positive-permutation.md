@@ -25,10 +25,9 @@ do not decide it. The task is surjectivity of the actual greedy recursion.
 
 ## Gap
 
-The main entry and one-hop A363504/A351495 entries were read on 2026-09-10;
-each states its permutation claim as a conjecture without a proof. Bounded
-repository, pinned Mathlib, GitHub Lean-code and arXiv searches found no proof
-of the target claim. These searches do not establish priority.
+A363956 and the related A363504/A351495 entries state their permutation
+claims as conjectures without proofs. No priority is claimed for the
+repository proof.
 
 ## Route
 
@@ -49,8 +48,7 @@ stronger intermediate result. Finite prefix omissions provide neither witness.
 D5/S3/Arith/OmegaGreedyPermutation.lean proves sequence_initial,
 sequence_positive, sequence_injective, sequence_greedy and a363956_surjective.
 The definition uses a finite used-set recursion and a natural infimum. Fairness
-and surjectivity are derived, never assumed. Kernel and repository build
-receipts are in [历史记录](https://github.com/the-omega-institute/trureturing/blob/6c97ad12ce/docs/reports/a363956-0910.md).
+and surjectivity are derived, never assumed.
 
 ## Triage
 

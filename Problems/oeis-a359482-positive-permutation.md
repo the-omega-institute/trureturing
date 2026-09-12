@@ -28,11 +28,9 @@ the least-unused rule; the claimed omission must be a theorem about that rule.
 
 ## Gap
 
-The implementation seat read the OEIS internal entry and Angelini's blog
-F section with Hans/Hasler corrections on 2026-09-10. They give conjectures,
-prefixes and programs, but no proof of the single-digit exclusion. The
-bounded repository, pinned Mathlib, GitHub Lean-code and arXiv searches in
-the source note found no target proof. This does not establish priority.
+The OEIS entry and Angelini's blog, including the Hans/Hasler corrections,
+give conjectures, prefixes and programs but no proof of single-digit exclusion.
+The repository proof makes no priority claim.
 
 ## Route
 
@@ -54,11 +52,9 @@ Legal(10,99), and Legal(99,889) are mandatory positive controls for that directi
 
 The module D5/S3/Arith/SumInConcatenation.lean proves no_small_successor,
 sequence_greedy, sequence_pos, sequence_legal, sequence_tail_ge_ten, and
-not_positive_permutation. The three controls were kernel-checked with
-decide before the general proof. The original state/used-set recursion and
-its least-unused characterization are present in Lean. All public theorems
-use only the standard three axioms. Build and freeze receipts are recorded
-in [历史记录](https://github.com/the-omega-institute/trureturing/blob/6c97ad12ce/docs/reports/a359482-0910.md).
+not_positive_permutation. The three controls are kernel-checked with decide.
+The original state/used-set recursion and its least-unused characterization
+are present in Lean. All public theorems use only the standard three axioms.
 
 ## Triage
 

@@ -54,7 +54,6 @@
 | `SealCommand.lean` | 先在局部环境 kernel-check，再一次发布环境；JSON 为输出 | 保留原子性，增强文件发布与编译产物绑定 |
 | `README.md`、缓存归属文档 | 私有工作树、禁止 symlink 共享 `.lake`、已有 clonefile/donor | 不以移除互斥锁或共享可写目录换性能 |
 | `.github/workflows/ci.yml` | 缓存 restore 步骤中有失败会阻断 required job 的路径 | 单独处理可选缓存传输失败；真正检查失败仍阻断 |
-| [历史记录](https://github.com/the-omega-institute/trureturing/blob/6c97ad12ce/docs/reports/lean-cache-ownership.md) | 明确承认缺少真实 Lake 缺失 olean 修复测试 | P0 必须补真实集成测试，不用 fake runner 结果代替 |
 
 上述为源码审查，不是耗时排行。必须先测量各阶段 wall time、CPU、RSS、读写与锁等待，再决定并行度和批量大小。源码显示重复工作，不自动证明它是部署环境的最大耗时。
 
@@ -635,7 +634,6 @@ registry 的持久化扩展与公开/私有模块迁移也要测试。不能因�
 [S6] `tools/lean-inspector/LeanInformationAudit/SealCommand.lean`。  
 [S7] `D5/S3/ConceptDynamics/InformationEscape/ExactRate.lean`。  
 [S8] `docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md`。  
-[S9] [历史记录](https://github.com/the-omega-institute/trureturing/blob/6c97ad12ce/docs/reports/lean-cache-ownership.md)。
 [S10] `.github/workflows/ci.yml`。  
 [S11] Lean 官方《Source Files and Modules》：`https://lean-lang.org/doc/reference/latest/Source-Files-and-Modules/`。  
 [S12] Lean 官方《Lake》：`https://lean-lang.org/doc/reference/latest/Build-Tools-and-Distribution/Lake/`。  
