@@ -1,0 +1,15 @@
+**证明。** $\operatorname{unrec}_{\rm reg}$ 在全部独立状态记录域上恢复唯一有限支撑带符号总函数，$L_F$ 给有理数，定理 332.2 和 335.2 给两个合法输出及解码恒等。由双射的子集限制，容量记录域的逆恰恢复 $B_A^{\rm cap}$，这正是定理 341.2 的限制。命题 352.3 的有限系数记录存储有理相位；例如 $\varepsilon_0$ 与零的相位求值相等，但未取模一的读数分别为一和零。所以该相位输出不能替代第一式所需的有理值。
+
+对既约 $q=a/b$，$a\in\mathbb Z_o,b\ge1$，定理 332.2 的桥给
+$$
+\sigma_{\rm CSA}(q)
+=(\mathbf i(v^{-1}(a)),\mathbf i(v^{-1}(b))),\qquad
+\operatorname{qval}_{\rm CSA}(\sigma_{\rm CSA}(q))=q.
+$$
+这里使用 [CSA 定义 8–9、命题 5](CONTEXTUAL_SPACETIME_ARITHMETIC.md) 的实际 $J$ 对象与丰富截面。恒等式 $q(\mathbf i(z))=z$ 逐槽恢复 $v^{-1}(a),v^{-1}(b)$；$b>0$ 保证分母非零，再用 $v$ 双逆得到所列读数。于是
+$$
+\sigma_{\rm CSA}\circ\operatorname{qdec}:
+\mathsf{RatFld}\longrightarrow\sigma_{\rm CSA}[\mathbb Q]
+$$
+是双射，逆在这个精确像上为 $\operatorname{qenc}\circ\operatorname{qval}_{\rm CSA}$。一个复合由读数恒等和字段双逆给出，另一个把像点写成唯一的 $\sigma_{\rm CSA}(q)$ 后同样还原。它不从任意丰富输入重建其被读数遗忘的历史。证毕。
+

@@ -1,0 +1,39 @@
+**30.67 定理及证明（正定近似、精确有理解与梯度控制）。** Let
+\(E_F=\widetilde F-F\). For complex \(z\),
+\[
+|(E_Fz)_i|\le\theta\sum_j|z_j|,\quad
+\|E_Fz\|_2^2\le N\theta^2(\sum_j|z_j|)^2\le N^2\theta^2\|z\|_2^2.
+\]
+Thus \(\|E_F\|_{\rm op}\le N\theta\) and \(\|\widetilde y-y\|_2\le N\theta\).
+For every \(z\),
+\[
+\langle z,\widetilde Fz\rangle\ge(\delta-N\theta)\|z\|_2^2
+ \ge(\delta/2)\|z\|_2^2.
+\]
+So \(\widetilde F\) is positive definite and invertible. Cauchy–Schwarz in this last
+inequality gives \(\|\widetilde F^{-1}\|_{\rm op}\le2/\delta\).
+An explicit finite rational solve is Cramer's formula
+\[
+q_j=\frac{\det\widetilde F^{(j)}}{\det\widetilde F},
+\]
+where column \(j\) in \(\widetilde F^{(j)}\) is replaced by \(\widetilde y\).
+All determinants are finite rational permutation sums and the denominator is nonzero by the
+proved positivity. The finite cofactor identity
+\(\widetilde F\operatorname{adjugate}(\widetilde F)=\det(\widetilde F)I\)
+proves \(\widetilde Fq=\widetilde y\) exactly. This is a rational approximation system,
+not an exact-real solve for \(Fq=y\).
+Because \(|y_i|\le1\), \(\theta\le1\), and entry errors are at most \(\theta\),
+\(\|\widetilde y\|_2\le2N\). Hence
+\[
+\|q\|_2\le(2/\delta)2N=H_{\rm gen},\qquad
+\sum_k|q_k|\le N\|q\|_2\le Q_{\rm gen}.
+\]
+Using the exact rational system,
+\[
+v(q)=(F-\widetilde F)q+(\widetilde y-y),\qquad
+\|v(q)\|_2\le N\theta H_{\rm gen}+N\theta=C_{\rm gen}\theta\le\tau.
+\]
+It also follows that \(R_N(q)-D_N\le\tau^2/\delta\), although the local predicate
+recomputes its own evidence rather than trusting this generator argument. True norms and true
+matrix errors in this proof are never needed as algorithm inputs.
+

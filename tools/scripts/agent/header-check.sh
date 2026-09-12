@@ -82,7 +82,7 @@ __main() {
   if [ "${1:-}" = "--dirs" ]; then
     shift
     [ $# -gt 0 ] || { echo "usage: header-check.sh --dirs <dir>..." >&2; return 2; }
-    _owner=tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs
+    _selfdir=$(cd "$(dirname "$0")" && pwd); _owner=$(cd "$_selfdir/../../.." 2>/dev/null && pwd)/tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs
     dirlimit=$(grep -oE 'DirectoryFileLimit[[:space:]]*=[[:space:]]*[0-9]+' "$_owner" 2>/dev/null \
                | grep -oE '[0-9]+' | head -1)
     case "$dirlimit" in
@@ -94,7 +94,33 @@ __main() {
         echo "  · $d  <- 目录不存在(新建桶),余量 $dirlimit"
         continue
       fi
-      n=$(ls -1 "$d" 2>/dev/null | wc -l | tr -d ' ')
+      # 只数真门会数的路径。权威谓词是 RepositoryRules.Structure.cs 的
+      # IsDirectoryCapacityExcluded / IsCapacityExcluded(:111-118),且
+      # CapacityPathsByDirectory(:125) 遍历的是**文件路径**并按其所在目录分组 ——
+      # 子目录不计入父目录。旧版 `ls -1 | wc -l` 把子目录与被排除文件一并数入,
+      # 于是把 Blueprint 桶(每模块 .scribe.cs + .md 两个文件)报成实际的两倍,
+      # 曾据此误阻一份已完成、零 sorry 的形式化(见本次修复的 PR 正文)。
+      # 路径必须先规范到仓根:调用方可能传绝对路径,而下面的模式是仓库相对形。
+      # 首版修复漏了这一步 —— 与被修的原 bug 同类(假定路径形状)。
+      # 目录的仓库相对形直接问 git 要(`--show-prefix`),不做前缀剥离:
+      # macOS 的 /var -> /private/var 符号链接会让 --show-toplevel 与 find 的输出
+      # 对不上,自测的绝对路径一项据此实测失败过(10/48 vs 5/48)。
+      _reldir=$(cd "$d" 2>/dev/null && git rev-parse --show-prefix 2>/dev/null)
+      n=$(find "$d" -maxdepth 1 -type f 2>/dev/null | while IFS= read -r _f; do
+            _r="${_reldir}$(basename "$_f")"
+            case "$_r" in
+              (docs/develop/*) continue ;;
+              (lake-manifest.json) continue ;;
+              (Meta/BACKFILL.yaml) continue ;;
+              (Meta/Digestion/backfill/*) continue ;;
+              (Meta/Digestion/atomizers.toml) continue ;;
+              (Meta/Digestion/atoms/sha256/*) continue ;;
+              (Golden/Frozen/accepted/*) continue ;;
+              (Golden/Frozen/state/*) continue ;;
+              (Blueprint/*.md) continue ;;
+            esac
+            printf 'x\n'
+          done | wc -l | tr -d ' ')
       if [ "$n" -ge "$dirlimit" ]; then
         echo "  ✗ $d  有 $n 项,已达/超 SL-003 准入上限 $dirlimit —— **不要往这里加文件**"
         echo "      → 正解:改用有余量的已注册域,或按第 4.8 条 裂子桶"
@@ -168,7 +194,7 @@ print(len(t.split(chr(10)))-(1 if t.endswith(chr(10)) else 0))" "$f")
     #   同一症状第二次即修根因:存规则,不存实例值。
     #   判据仍是 **Count > limit**(即 limit 个文件合法,limit+1 才红)。
     #   读不到即 fail closed —— 一个默默猜容量上限的助手比一个停下来的更坏。
-    _owner=tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs
+    _selfdir=$(cd "$(dirname "$0")" && pwd); _owner=$(cd "$_selfdir/../../.." 2>/dev/null && pwd)/tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs
     dirlimit=$(grep -oE 'DirectoryFileLimit[[:space:]]*=[[:space:]]*[0-9]+' "$_owner" 2>/dev/null \
                | grep -oE '[0-9]+' | head -1)
     case "$dirlimit" in
@@ -203,4 +229,42 @@ print(len(t.split(chr(10)))-(1 if t.endswith(chr(10)) else 0))" "$f")
   [ "$bad" = 0 ] && echo "header-check: 全部合规" || echo "header-check: 有不合规项，**不要 deposit**"
   return $bad
 }
+
+__selftest() {
+  local t; t=$(mktemp -d); local fail=0
+  # 合成一个仓(需要 git rev-parse --show-toplevel 可解)
+  ( cd "$t" && git init -q . )
+  mkdir -p "$t/Blueprint/X" "$t/Blueprint/X/sub" "$t/Library/Y" "$t/D5/S3/Z" "$t/D5/S3/Z/sub"
+  local i
+  for i in $(seq 1 5); do : > "$t/Blueprint/X/m$i.scribe.cs"; : > "$t/Blueprint/X/m$i.md"; done
+  for i in $(seq 1 48); do : > "$t/Library/Y/n$i.md"; done
+  for i in 1 2 3; do : > "$t/D5/S3/Z/a$i.lean"; done
+  local ck
+  ck() { # ck <期望片段> <目录…>
+    local want=$1; shift
+    local got; got=$( cd "$t" && bash "$_SELF" --dirs "$@" 2>&1 | head -1 )
+    case "$got" in
+      (*"$want"*) echo "  ok   $* -> $got" ;;
+      (*) echo "  FAIL $* 期望含 [$want] 实得 [$got]"; fail=1 ;;
+    esac
+  }
+  # ① Blueprint 桶:5 模块 = 5 .scribe.cs + 5 .md + 1 子目录 = 11 个条目,只应数 5
+  ck "5/" Blueprint/X
+  # ② 真阳性必须保留:48 项即报红,不许因本次修复变绿
+  ck "不要往这里加文件" Library/Y
+  # ③ 子目录不计入父目录
+  ck "3/" D5/S3/Z
+  # ④ 绝对路径调用与相对路径同结果(首版修复在此处漏过)
+  local abs; abs=$( cd "$t" && bash "$_SELF" --dirs "$t/Blueprint/X" 2>&1 | head -1 )
+  case "$abs" in
+    (*"5/"*) echo "  ok   绝对路径 -> $abs" ;;
+    (*) echo "  FAIL 绝对路径 期望含 [5/] 实得 [$abs]"; fail=1 ;;
+  esac
+  rm -rf "$t"
+  [ "$fail" = 0 ] && echo "header-check --selftest: 全部通过" || echo "header-check --selftest: 有失败"
+  return $fail
+}
+
+_SELF="$(cd "$(dirname "$0")" && pwd)/$(basename "$0")"
+if [ "${1:-}" = "--selftest" ]; then __selftest; exit $?; fi
 __main "$@"

@@ -1,0 +1,27 @@
+**定义 342.1。** 在 ZFC 中，沿用第 3、9–10、69–70 条的 $G_0=1,G_1=2,G_{n+2}=G_{n+1}+G_n$、完整窗口 $\mathcal W_n$ 及有限自然数字 $\zeta$。固定任意 $A:\omega\to\omega$，使用定义 337.1 的
+$$
+X_A^{\rm cap}=\prod_{n\in\omega}D_n,\qquad
+D_n=\{k\in\mathbb Z_o:0\le k\le A_n\},\qquad
+B_A^{\rm cap}=X_A^{\rm cap}\cap\mathsf V_{\rm reg}.
+$$
+每个 $A_n$ 有限；两个载体中的点均为定义域恰为 $\omega$ 的总函数，只有 $B_A^{\rm cap}$ 要求有限支撑。第 299 条的有限配置 $X_A=S(P,A)$ 保持其原域。定义新的总有理系数行及第 330 条的特化
+$$
+r^F_n=\frac1{G_n},\qquad r^F\in\mathbb Q^\omega,\qquad
+L_F=L_{r^F}:\mathsf V_{\rm reg}\to\mathbb Q.
+$$
+记 $\iota_{\mathbb Q}:\mathbb Q\hookrightarrow\mathbb R$ 为通常包含，目标实直线取通常拓扑。有限容量状态的实读数、实部分和与扩展总和为
+$$
+\ell_F=\iota_{\mathbb Q}\circ(L_F|_{B_A^{\rm cap}}),\qquad
+P^F_N(x)=\iota_{\mathbb Q}\left(\sum_{n=0}^{N}\frac{x_n}{G_n}\right),
+$$
+$$
+S_F(x)=\sup_{N\in\omega}P^F_N(x)\in[0,+\infty],\qquad
+M_F(A)=S_F(A)=\sup_{N\in\omega}\sum_{n=0}^{N}\frac{A_n}{G_n}.
+$$
+这里 $x\in X_A^{\rm cap}$，容量角按定义 337.1 作逐点整数包含；非负有理数在实不等式中均经 $\iota_{\mathbb Q}$ 识别。无有限上界的上确界取 $+\infty$，此扩展值域暂不指定拓扑。对每个有限实数 $c$，分别定义
+$$
+L^F_{A,c}=\{u\in B_A^{\rm cap}:\ell_F(u)=c\},\qquad
+T^F_{A,c}=\{x\in X_A^{\rm cap}:S_F(x)=c\}.
+$$
+$L^F_{A,c}$ 即使置于 $X_A^{\rm cap}$ 中仍只含有限支撑状态。以上符号不改变第 338 条的 $P_N,S_A,M_A,\ell_A,L_{A,c},F_{A,c}$。
+

@@ -1,0 +1,18 @@
+**证明。** 固定满足 $\mathsf U_F(A)$ 的同一个 $\epsilon>0$。给定 $q\in\mathbb Q_{\ge0}$ 和截止指标 $N$，$q=0$ 时取总零函数。若 $q>0$，选整数 $k\ge1$ 使 $q/k\le\epsilon$，并把 $q/k$ 写成既约正分数 $a/b$。从 $N$ 开始，反复以同一分母 $b$ 及上一次选中的指标为新截止指标，得到
+$$
+N<n_1<\cdots<n_k,\qquad
+b\mid G_{n_j},\qquad \frac{A_{n_j}}{G_{n_j}}\ge\epsilon.
+$$
+只作这 $k$ 次选择。令
+$$
+u_{n_j}=a(G_{n_j}/b)\quad(1\le j\le k),\qquad
+u_n=0\quad(n\notin\{n_1,\ldots,n_k\}).
+$$
+整除保证每个所填值为整数，并有
+$$
+0<u_{n_j}=(q/k)G_{n_j}\le\epsilon G_{n_j}\le A_{n_j}.
+$$
+因此全部容量界成立，支撑有限且在 $N$ 之后，而 $\ell_F(u)=k(q/k)=q$。这证明填充。
+
+在任意尾上，以 $d=1$ 重复选取 $h$ 个严格增加的指标，其总容量质量至少为 $h\epsilon$。任意给定实上界都被充分大的 $h$ 超过，所以每条尾质量无有限上界。若只假设 $\mathsf{Fill}_F(A)$，对任意正整数 $h$ 在该尾填出值 $h$；其有限支撑质量不超过该尾容量质量。让 $h$ 任意大同样证明发散。证毕。
+

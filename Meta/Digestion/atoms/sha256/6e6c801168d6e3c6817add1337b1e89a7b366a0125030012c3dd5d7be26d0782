@@ -1,0 +1,27 @@
+**定理 370.3。** 对任意集合 $Y,Z$、$D\subseteq Y$ 和实际函数 $f:D\to Z$，其完整集合共轭为
+$$
+f^*:\operatorname{Enc}[D]\to Z^*,\qquad
+f^*(\operatorname{Enc}(x))=\operatorname{Enc}(f(x))\quad(x\in D).
+$$
+有精确域及值域等式
+$$
+x\in D\iff\operatorname{Enc}(x)\in\operatorname{Enc}[D],\qquad
+\operatorname{ran}(f^*)=\operatorname{Enc}[\operatorname{ran}(f)].
+$$
+其普通图与原图的语义码分别为
+$$
+G_f=\{\langle x,f(x)\rangle:x\in D\},\qquad
+\Gamma_f^*=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle:x\in D\},
+$$
+
+$$
+\operatorname{Enc}(G_f)
+=\operatorname{Pack}\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle_Z:x\in D\},
+$$
+
+$$
+\operatorname{El}(\operatorname{Enc}(G_f))
+=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle_Z:x\in D\}.
+$$
+$G_f,\Gamma_f^*$ 使用普通有序对；后两式使用语义有序对。语义定义域是单个码 $\operatorname{Enc}(D)$，外部共轭域是成员像 $\operatorname{Enc}[D]$。
+

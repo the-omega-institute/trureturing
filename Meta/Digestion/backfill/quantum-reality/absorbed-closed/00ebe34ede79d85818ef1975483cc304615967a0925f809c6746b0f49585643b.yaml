@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:00ebe34ede79d85818ef1975483cc304615967a0925f809c6746b0f49585643b
+  normalized_sha256: sha256:00ebe34ede79d85818ef1975483cc304615967a0925f809c6746b0f49585643b
+cas_ref: sha256:00ebe34ede79d85818ef1975483cc304615967a0925f809c6746b0f49585643b
+coverage_gids:
+  - gid: D5/S3/QuantumBounds/FubiniStudyRecordTime.record_time_lower_bound
+    target_statement_id: sha256:5c37cb23e38e88b40d77f1bc24fba19d532be479b028026115d0d19874dfb823
+receipts:
+  unresolved_subitems: []

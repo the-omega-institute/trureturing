@@ -1,0 +1,18 @@
+**35.3 Proposition (Individual irrationality and Haar probability).** If
+\(\alpha_i=u/v\in\mathbb Q\), positivity permits positive integers \(u,v\)
+with \(v\log p_0=u\log p_i\). Exponentiating gives
+\(p_0^v=p_i^u\), contradicting unique prime factorization. Thus each
+\(\alpha_i\) is irrational. This proves no rational independence of
+\(1,\alpha_1,\ldots,\alpha_d\).
+
+The integer orbit is a subgroup of \(\mathbb T^d\). If two sequences from
+that subgroup converge, continuity of subtraction puts the difference of
+their limits in its closure. Hence \(H\) is a closed subgroup. It is compact
+and metrizable, as a closed subset of a compact metrizable torus. The classical
+Haar theorem supplies a unique translation-invariant regular Borel probability
+\(\mu_H\). No connectedness or ambient positive-volume premise is used.
+
+Mathematical citation: Christopher White,
+*Ergodic Theory and Topological Groups*, Theorem 1.1 (Haar probability
+and invariance).
+

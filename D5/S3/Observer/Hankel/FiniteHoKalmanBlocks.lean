@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Observer/Hankel/FiniteHoKalmanBlocks
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Finite sampled Hankel blocks determine an exact realization in reachable coordinates. -/
 
 import Mathlib.LinearAlgebra.Matrix.Adjugate

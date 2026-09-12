@@ -1,0 +1,86 @@
+**定理 290。** 对全部 $X\in\mathcal B$，$R_P(X)\in\mathsf Q_P$，并且
+$$
+R_P=\rho_P\circ\operatorname{pr}_Z\circ\Xi,
+$$
+其中 $\Xi$ 与其第二字段投影 $\operatorname{pr}_Z$ 取自《情境时空算术》定义 22。在第 227 条的原域 $\mathcal C_P^{\rm tb}$ 上，有
+$$
+q_{X,P}=q_X,\qquad
+\mathsf V_PR_P(X)=\delta_X^G,\qquad
+E_{X,P}^{T}=\mathbf a_X^{G,T},\qquad
+E_{X,P}^{\infty}=\mathbf a_X^{G,\infty}.
+$$
+原 CSA 无权标量满足
+$$
+q(X)=\varepsilon Z_X
+=\sum_{t\in\mathbb Z,\ p\in P,\ j\in\omega}q_{X,P}(t,p,j)
++\sum_{\substack{t\in\mathbb Z\\y\notin\lambda[P\times\omega]}}Z_X(t,y).
+$$
+特别地，对 $X\in\mathcal B_P^{\rm sel}$，
+$$
+q(X)=\sum_{p\in P}(\Sigma_P\mathsf U_PR_P(X))(p).
+$$
+此式不能把 $\mathsf U_P$ 换为 $\mathsf V_P$。任意 $X\in\mathcal B$ 都有第 287 条的标量观察 $\Gamma_{\mathbb Z}(q(X))$。终端寄存器的另一条比较链只有在 $E_{X,P}^{\infty}\ge0$ 时才进入 GICT 定义 1.7 的正整数规范表与乘积域：此时可先取容量 $E_{X,P}^{\infty}$，再取逐行 $s((E_{X,P}^{\infty})_p)$、$N_P(E_{X,P}^{\infty})$ 及其 $\Gamma_+$；指定容量 $A$ 时还须 $E_{X,P}^{\infty}\le A$。有负坐标的终端向量仍有符号码与 $\varpi_P$ 相位，素数乘积则属于 $\mathbb Q_{>0}$，不属于原正整数解码的输入域。
+
+$R_P:\mathcal B\to\mathsf Q_P$ 满射，且每个像值都有背景逐单元为零的有限平衡代表。并行加法及合法的有守卫时间复合满足
+$$
+R_P(X\boxplus Y)=R_P(X)+R_P(Y),\qquad
+R_P(X\triangleright Y)=R_P(X)+R_P(Y).
+$$
+第二式只在《情境时空算术》定义 5 的全档案守卫内成立。对原补集 $N$，精确公式为
+$$
+R_P(NX)=w_{X,P}-R_P(X).
+$$
+在 $\mathcal C_P^{\rm pb}$ 上，$R_P(NX)=-R_P(X)$，因而全部加权时间表和前缀指数也取负；仅在 $\mathcal C_P^{\rm tb}$ 上时，只保证终端指数的负号式。
+
+第 229 条的加权商链满足
+$$
+\Theta_P\circ\pi_P^G=\Sigma_P\circ\Theta_P^{G,\rm pf},\qquad
+\varpi_P\circ\Theta_P\circ\pi_P^G
+=\varpi_P\circ\Sigma_P\circ\Theta_P^{G,\rm pf}.
+$$
+这里定义域是 $\mathcal H_P^G$，中间终端商是 $\mathcal C_P^{\rm tb}/\equiv_P$；$\mathcal H_P^G$ 取第 227 条的加权前缀等价关系。
+
+**证明。** 《情境时空算术》定义 22 给
+$$
+Z_X(t,y)=\sum_{\substack{e\in A_X\\t_X(e)=t,\ x_X(e)=y}}\sigma_X(e).
+$$
+其非零支撑包含于有限像 $(t_X,x_X)[A_X]$。映射
+$$
+(t,p,j)\longmapsto(t,\lambda(p,j))=(t,(p,j,0))
+$$
+单射：输出相等依次迫使 $t,p,j$ 相等。因此上述有限支撑的逆像有限，至多含 $|A_X|$ 个单元，且每项为整数。这证明 $R_P(X)\in\mathsf Q_P$；对任意 $c\in\mathcal L$ 同一单射论证给 $\rho_Pc\in\mathsf Q_P$。将选择集换为有限当前区域 $\Omega_X$，也证明 $w_{X,P}$ 有限支撑。代入 $\Xi$ 的第二字段即得因子化。对 $X\in\mathcal C_P^{\rm tb}$，限制公式与第 227 条的 $q_X$ 逐单元相同；再用第 228 条的有限和换序，即得加权时间表、全部前缀及终端等式。
+
+把选择事件的有限符号和先按 $(t,y)$ 分组，再分为槽内与槽外两部分，就得到 $q(X)=\varepsilon Z_X$ 及显示分解。$\mathcal B_P^{\rm sel}$ 上第二部分为零，第一部分恰为先无权求槽和、再求时间和、最后求素数和。一般 $X$ 的槽外净选择电荷可以被 $R_P$ 遗忘；原 CSA 没有给每一个空间位置指定素数槽标签。
+
+任给 $h\in\mathsf Q_P$。对每个非零单元 $(t,p,j)$，取 $|h(t,p,j)|$ 对互异事件 $e_{t,p,j,r,+},e_{t,p,j,r,-}$，其中 $1\le r\le|h(t,p,j)|$。事件身份使用 CSA 定义 1 的有限整数码和有序元组，因而属于 $HF$；两符号标签及各索引使身份互异。每对同在时刻 $t$、位置 $\lambda(p,j)$，符号分别为正、负，来源都取 $\operatorname{leaf}(0)$。令 $E=\Omega$ 为全部事件，严格偏序为空，每对只选符号为 $\operatorname{sgn}(h(t,p,j))$ 的一个事件。事件数为
+$$
+2\sum_{t,p,j}|h(t,p,j)|<\infty.
+$$
+空偏序满足时间递增条件；每对背景电荷为零，故当前区域在每个联合单元都平衡，尤其全局平衡。选择电荷恰为 $h$，所以所得 $X_h\in\mathcal B$ 且 $R_P(X_h)=h$。其槽外背景与选择电荷均为零，各前缀逐槽平衡，故实际上 $X_h\in\mathcal C_P^{\rm pb}$。$h=0$ 取空档案；$P=\varnothing$ 时 $\mathsf Q_P$ 只有零表，也由空档案实现。取 $j=0$ 的这一构造就是第 229 条的时间表代表构造，不需要新的来源树递归。
+
+CSA 定义 4 的带标签并集不改变各事件的时间、位置、符号及被选身份，在每个单元复制两个有限和，因此给并行加法公式。CSA 命题 2 保证其合法且保持平衡。定义 5 的时间复合在
+$$
+\forall e\in E_X\ \forall f\in E_Y,\quad t_X(e)<t_Y(f)
+$$
+内只增加跨档案偏序边，不改变上述属性，所以给同一相加公式。两档案都非空时，此守卫等价于 $M_X<m_Y$；空输入按全称命题的空真解释，也与定义 22 所用扩展整数端点一致。这里不把选择事件的端点替代全档案端点，也不暗中平移时标。相加的对象是观察值；带身份标签的丰富表示本身并未因此成为交换群。
+
+原补集由 CSA 定义 2–3 及命题 1 在当前区域内取 $\Omega_X\setminus A_X$。这两个选择集分割 $\Omega_X$，逐单元有限和给
+$$
+Z_{NX}(t,y)=W_X(t,y)-Z_X(t,y).
+$$
+限制后便得补集公式。在 $\mathcal C_P^{\rm pb}$ 上，第 198、228 条以相邻背景前缀之差给槽上 $W_X=0$，定义 193 又给槽外 $W_X=0$，所以整段槽历史取负。仅有第 185 条的终端逐槽平衡时，只能在先对时间求和后消去背景，再取 $G_j$ 加权和，故只保证终端负号。具体反例取同一槽 $\lambda(p,0)$ 上的两个事件，正事件在时刻零、未选负事件在时刻一，选择只含正事件；令 $E=\Omega$，来源相同、偏序为空。背景总和及该槽终端背景均为零，但
+$$
+R_P(X)=e_{0,p,0},\qquad R_P(NX)=-e_{1,p,0}\ne-R_P(X).
+$$
+故全局平衡乃至终端逐槽平衡都不足以给逐时负号。
+
+为区分无权标量与加权指数，取非空 $P$ 及 $p\in P$，以刚证构造分别实现
+$$
+h=e_{t,p,1},\qquad h'=2e_{t,p,0}.
+$$
+$G_1=2,G_0=1$ 使二者的加权时间表相同，在 $(t,p)$ 均为二，而无权和分别为一、二。两代表都没有槽外净电荷，故其原 $q(X)$ 分别为一、二；加权终端和相位也不能恢复这个标量。若有符号原始行的终端加权指数非负，第 10 条仍直接给其指数值的规范行；这不提供从负系数原始行出发的非负进位路径。非负实际路径的值保持只使用第 21 条的原有域。
+
+终端向量非负时，第 10–12 条及唯一分解使规范表、正整数乘积及第 287 条的 $\Gamma_+$ 都有定义；容量条件正是第 115 条的逐坐标上界。负指数的有限素数乘积是正有理数；唯一分解还表明存在负素数估值时它不是整数。
+
+最后，显示的商等式直接是第 229 条的自然交换式及其与 $\varpi_P$ 的复合。第 200–201 条只供给抽象求和分裂 $\Sigma_P\iota_P=\operatorname{id}$ 与时间循环分解；第 198–201 条的无权前缀商不能替代这里的加权商。整个比较只涉及相同事件和，不给丰富档案的逆向恢复。证毕。
+

@@ -1,0 +1,6 @@
+**定理 315。** $\operatorname{scal}_{\rm reg}$ 为 $(\mathsf V_{\rm reg},+)$ 到 $(\mathbb Q_{>0},\cdot)$ 的群同构，且 $\operatorname{scal}_{\rm reg}(u_{5040})=5040$。在第 314 条指定的目标拓扑下，它对 $\tau_\Psi$ 及 $\tau_{\rm coord}$ 都在零状态处不连续；任意固定 $j$ 上，它限制到 $\mathbb Z_o\varepsilon_j$，赋予从 $\tau_\Psi$ 继承的子空间拓扑时，已在零处不连续。三种状态拓扑满足
+$$
+\tau_\Psi\subsetneq\tau_{\rm coord}\subsetneq\tau_{\rm disc}.
+$$
+这些断言不提供标量幂相位序列 $[5040^k\phi]$ 的分布、新物理维数或完备化结论。
+

@@ -13,18 +13,15 @@ theorem nondegenerate : lawArena.Nondegenerate := Evidence.structuralLawNondegen
 structural_theorem parity in lawArena
   realization Evidence.structuralReadouts nondegeneracy nondegenerate :=
   fun n => Nat.mod_lt n (by decide)
-theorem truth : True := True.intro
-
-def constantUnit : StructuralTheoremUnit arena where
-  PrimitiveIndex := Unit
-  primitiveIndexFintype := inferInstance
-  primitiveKernel _ := ⟨fun _ _ => True, ⟨fun _ => trivial, fun _ => trivial, fun _ _ => trivial⟩⟩
-  Statement := True
-  proof := truth
+def constantReadouts : StructuralPrimitiveRealization arena lawArena.signature :=
+  ⟨fun _ _ => (0 : Nat)⟩
+structural_theorem truth in lawArena
+  realization constantReadouts nondegeneracy nondegenerate :=
+  fun _ => (by decide : (0 : Nat) < 2)
 
 abbrev firstCatalog : StructuralCatalog arena :=
   ⟨Fin 2, inferInstance, inferInstance,
-    fun i => if i = 0 then parity.__structural_unit else constantUnit⟩
+    fun i => if i = 0 then parity.__structural_unit else truth.__structural_unit⟩
 
 abbrev secondCatalog : StructuralCatalog arena := firstCatalog
 
@@ -32,7 +29,7 @@ theorem firstRegistration : StructuralRegistrationEvidence ``parity arena
     parity.__structural_unit firstCatalog 0 (∀ n : Nat, n % 2 < 2) := ⟨rfl, rfl⟩
 
 theorem secondRegistration : StructuralRegistrationEvidence ``truth arena
-    constantUnit secondCatalog 1 True := ⟨rfl, rfl⟩
+    truth.__structural_unit secondCatalog 1 (∀ _ : Nat, (0 : Nat) < 2) := ⟨rfl, rfl⟩
 
 def witness : StructuralStrictnessCertificate firstCatalog 0 where
   inclusion := by intro x y h i _; exact h i (Set.mem_univ i)
@@ -42,7 +39,7 @@ def witness : StructuralStrictnessCertificate firstCatalog 0 where
     intro i ne p
     fin_cases i
     · exact (ne rfl).elim
-    · trivial
+    · rfl
   full_separates := by
     intro h
     have impossible := h 0 (Set.mem_univ 0) ()

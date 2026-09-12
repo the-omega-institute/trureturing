@@ -1,0 +1,16 @@
+**定理 366.2。** 上述各行及其序列为总函数，$(r^{(k)})_{k\in\omega}\in(\mathbb Q^\omega)^\omega$，且
+$$
+0\le b_n-r_n^{(k)}<\frac1{K_{n,k}},
+$$
+
+$$
+\sup_{u\in B}d_{\mathbb T}\bigl(\chi_\theta(u),\chi_{r^{(k)}}^{\rm cap}(u)\bigr)
+\le\sum_{n=0}^{\infty}\frac{A_n}{K_{n,k}}
+\le\sum_{n=0}^{\infty}2^{-n-k-2}=2^{-k-1}.
+$$
+其量词为 $\forall A\,\forall\theta\,\exists(r^{(k)})_{k\in\omega}$；该序列依赖 $A,\theta$。对每个 $A\in\omega^\omega$，
+$$
+\tau_{\mathbb R}^{B}=\tau_{\mathbb Q}^{B}=\tau_{+,A}.
+$$
+这里每个 $A_n$ 有限，不要求 $A$ 一致有界，也不要求状态支撑大小有统一上界。
+

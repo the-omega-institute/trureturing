@@ -5,7 +5,7 @@ year: 2026
 title: Foundation first-order logic and set theory, revision 30a16ffa
 doi: null
 url: https://github.com/FormalizedFormalLogic/Foundation/tree/30a16ffa93d79d73ab4d02427fa00f50e039bf29
-claim: Licensed logic, predicate-term syntax, entailment and finite-support prerequisites for first-order developments.
+claim: Licensed logic, predicate-term and finite formula syntax, entailment, finite support, language maps, empty-domain elimination and unique choice for first-order developments.
 strata_touched:
   - D5/S3/ConceptDynamics/ZfcEntailment/CalculusOne
   - D5/S3/ConceptDynamics/ZfcEntailment/CalculusTwo
@@ -14,10 +14,12 @@ strata_touched:
   - D5/S3/ConceptDynamics/ZfcFiniteCollections/Finset
   - D5/S3/ConceptDynamics/ZfcFiniteCollections/List
   - D5/S3/ConceptDynamics/ZfcFiniteCollections/Matrix
+  - D5/S3/ConceptDynamics/ZfcFiniteCollections/OrderDense
   - D5/S3/ConceptDynamics/ZfcFiniteCollections/Quotient
   - D5/S3/ConceptDynamics/ZfcFiniteData/Fin
   - D5/S3/ConceptDynamics/ZfcFiniteData/Nat
   - D5/S3/ConceptDynamics/ZfcFiniteData/NatMatrix
+  - D5/S3/ConceptDynamics/ZfcLanguageSupport/Empty
   - D5/S3/ConceptDynamics/ZfcLanguageSupport/NotationClass
   - D5/S3/ConceptDynamics/ZfcLogic/ForcingRelation
   - D5/S3/ConceptDynamics/ZfcLogic/LogicSymbolOne
@@ -36,7 +38,13 @@ strata_touched:
   - D5/S3/ConceptDynamics/ZfcPropositional/IntEntailmentTwo
   - D5/S3/ConceptDynamics/ZfcSupport/AdjunctiveSet
   - D5/S3/ConceptDynamics/ZfcSupport/Function
+  - D5/S3/ConceptDynamics/ZfcSupport/UniqueChoice
+  - D5/S3/ConceptDynamics/ZfcSyntax/FormulaOne
+  - D5/S3/ConceptDynamics/ZfcSyntax/FormulaTwo
   - D5/S3/ConceptDynamics/ZfcTermRewriting/RewOne
+  - D5/S3/ConceptDynamics/ZfcTermRewriting/RewTwo
+  - D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree
+  - D5/S3/ConceptDynamics/ZfcTermRewriting/RewFour
 license: Apache-2.0
 triage: anchor
 ---
@@ -53,22 +61,29 @@ Copyright and attribution remain with the upstream contributors. Original author
 required source notices are preserved. The upstream distribution has no NOTICE file.
 The complete unmodified Apache-2.0 license follows below.
 
-The installed layer contains 30 modules from 22 immutable upstream source files,
-with 3,814 Lean source lines (including headers and blank lines). Its source footprint
-is 30 Lean files, 30 Scribe sources and 30 Markdown twins, plus this shared note:
-91 files. The table lists exactly the installed Lean paths; each `strata_touched`
-GID resolves to its corresponding `.lean` path.
+The table records the Foundation source ancestry of the installed Lean paths;
+each `strata_touched` GID resolves to its Lean/Scribe/Markdown triple.
 
-Each row preserves the original source path, SHA-256 and capacity span. Only selected
-command excerpts within those spans are copied; neither whole-file nor whole-span
-verbatim copying is asserted. Resolve each original path relative to the immutable
+Each row preserves the original source path, SHA-256 and capacity span. Selected command excerpts within those spans are copied, with the Mathlib-derived
+OrderDense existence proof explicitly distinguished below; neither whole-file nor
+whole-span verbatim copying is asserted. Resolve each original path relative to the immutable
 upstream revision linked above. This is a source transplant, with no installed
 upstream package dependency or package-pin change.
 
 The layer supplies logic symbols, semantic and forcing-relation interfaces, entailment
 and propositional calculi, predicate-language and term syntax, rewriting support and
-finite-data utilities for first-order developments. References in the Scribe prose to
-a concrete pair interpretation describe intended downstream use. This layer does not
+finite-data utilities for first-order developments. FormulaOne supplies the actual
+finite inductive first-order formula carrier with arbitrary relation arities, separate
+free variables and finite bound-variable indices, connectives, quantifiers, negation,
+structural recursion, complexity and conditional decidable equality. FormulaTwo adds
+finite free-variable support, bounds for natural-number variables and language maps
+with connective and quantifier preservation. This formula construction/support pair
+depends only on the frozen D5 Term/Quantifier APIs and pinned Mathlib; FormulaTwo also
+imports FormulaOne. These general APIs have independent mathematical use before the
+later term/formula rewriting and CSA graph-elimination layers.
+
+References in the Scribe prose to a concrete pair interpretation describe intended
+downstream use. This layer does not
 install a pair-language or pair-interpretation interface, establish ZFC conservativity
 or a relative-consistency bridge, construct the full CSA, or prove ZFC model existence
 or absolute consistency. Internal HF/omega, finite archives, CSA arithmetic and
@@ -76,9 +91,39 @@ rational/Cauchy-sequence constructions, and the complete CSA defining-graph and
 elimination obligations are outside this layer's scope. It does not identify an
 internal nonstandard carrier with a Lean type or establish source-atom coverage.
 
+The Empty/UniqueChoice support pair supplies equality of every map from an empty
+domain with its eliminator, and the chosen witness and specification of a proved
+unique existence on an arbitrary sort. It assumes no model of ZFC and does not
+establish full definitional conservativity. These are general API utilities
+(`utility: none`), with individually necessary rule-11 upstream-wrapper candidates
+and one compiler-generated exact-command companion. Generation supplies no new
+escape, proof-value, liveness or indispensability credit. The two Lean theorem
+names `Classical.choose!_spec` and `Classical.choose!_eq_iff_right` remain in prose
+with their typed formulas; `choose_uniq` is the legal direct selector. This pair has
+independent support meaning before the separate countable-filter and CSA
+interpretation layers. OrderDense supplies the countable dense-family filter API,
+including the empty family and membership of the prescribed initial element.
+The empty-family interface is the existence theorem specialized to the empty set;
+the separate `Order.PFilter.IsGeneric.empty` convenience instance is omitted.
+Its bundled density and genericity definitions follow Foundation. Its existence
+proof is a direct application of pinned Mathlib `Order.idealOfCofinals`,
+`Order.mem_idealOfCofinals` and `Order.cofinal_meets_idealOfCofinals` on the dual
+preorder, indexed by the family subtype using `Set.Countable.toEncodable`.
+`Order.PFilter` wraps the resulting ideal without changing its carrier.
+The local bridge is Mathlib-derived; it does not retain Foundation's sequence,
+choice or descending-chain construction and asserts no identity of chosen filters.
+Mathlib revision `db584cd6d46c92f209a44c0f1c829460d327499d` supplies
+`Mathlib/Order/Ideal.lean`, `Mathlib/Order/PFilter.lean` and
+`Mathlib/Data/Set/Countable.lean` under Apache-2.0, with attribution to their
+Mathlib contributors and source copyright notices.
+RewFour supplies seven lawful rewriting/substitution identities over arbitrary
+signatures. Both are retained prerequisite APIs; neither establishes the complete
+CSA defining graphs, definition elimination, conservativity or model existence.
+
 Modifications are canonical headers, import reduction/relocation, source-command excerpts,
 capacity scope boundaries and restricting attribute target lists to needed relation
-projections. The retained mathematical command bodies remain upstream bytes.
+projections. The retained Foundation command bodies remain upstream bytes, except for the
+OrderDense generic-filter existence proof described below.
 
 The Semantics selection omits precisely the optional `Semantics.Top (Set M)`
 instance command at `Foundation/Logic/Semantics.lean:251` (the upstream authored
@@ -89,6 +134,43 @@ particular, the original `simpa [NotModels, set_models_iff]` remains in the
 nonemptiness proof. Compiler normalization helpers are generated from the retained
 proof source; their ownership does not establish a need for the omitted instance.
 The capacity span below locates the excerpts and includes this explicit exclusion.
+
+The FormulaOne selection omits the optional upstream theorem
+`LO.FirstOrder.Semiformula.neg_allClosure`. The retained formula carrier and support
+commands preserve their original mathematical bodies and hypotheses; this exclusion
+belongs to the selected excerpts within FormulaOne's capacity span below.
+
+RewTwo supplies variable-domain lifts, binder shifts, `shift`, `free`, `fix`,
+their bound/free-variable laws, composition and substitution identities, q-lifts
+and finite `fixitr` iteration on actual first-order terms. It retains the supplied
+source commands and hypotheses except the optional `LO.FirstOrder.Rew.q_emb`.
+The supplied selection input is SHA-256
+`6639a4bd42da9b1cd99728d18f301d367f0a75c3afd0728373ce35c8ef55335c` (6,268 bytes);
+the installed source, after that omission, is SHA-256
+`b68465527cc3e61f7f31322848f3421d60b533f8195861822bb7ed2b98a91652`. These source digests are distinct from
+the complete upstream-file digest in the table. Historical 49-occurrence evidence
+associated with source SHA-256
+`d46397c4c5fb43b10a44c0596f5d7ab181e5e11a42ccd326611abe066825b2e8`
+is historical association evidence only; current identities require the current
+source-bound canonical report. Its 33 rule-11 upstream-wrapper proposals and 16
+generated-source/API associations confer no new escape, liveness or
+indispensability credit. Theorems remain bind-only; definitions and other
+non-theorems have null proof shape. These general APIs do not prove the CSA
+set-coding, defining-graph elimination or ZFC conservativity bridge.
+
+RewThree extends the term rewriting support with finite `fixitr` laws, term
+extensionality over free variables, language-map compatibility, free-variable
+propagation, conversion of closed terms to `ClosedSemiterm`, formula rewriting
+interfaces, notation and lawful syntactic rewriting identities. The supplied
+selection input is SHA-256
+`5b780be1e2900eca589caa86bf19ba20debb1253f048d784c08c96c114fd6fe9` (10,210 bytes),
+and the installed source has the same SHA-256. These declarations are retained
+as source-command excerpts from the capacity span below; their theorem
+observations are bind-only and the individually justified basis is
+`rule-11-upstream-wrapper`. No new escape, liveness or indispensability credit
+is claimed, and this support layer does not establish a pair interpretation,
+defining-graph elimination, ZFC conservativity or consistency/model-existence
+bridge.
 
 Retirement: replace a transplanted API by a direct Mathlib reference when the repository's pin
 provides a proved-equivalent syntax/theory/proof/definability API and its faithful bridge
@@ -114,6 +196,10 @@ elaborates. Upstream PR acceptance alone is insufficient.
 | D5/S3/ConceptDynamics/ZfcFiniteCollections/Finset.lean | Foundation/Vorspiel/Finset/Basic.lean | 1–88 | 34c9b64196d84407927c2d8c9332cd07c91cfca871b243acf1bed717c8a27746 |
 | D5/S3/ConceptDynamics/ZfcSupport/Function.lean | Foundation/Vorspiel/Function.lean | 1–18 | b6eb4a72d46ac6f11b3ff3951b95f4cfe1b03498f290ad46b9bd75cc626ef796 |
 | D5/S3/ConceptDynamics/ZfcTermRewriting/RewOne.lean | Foundation/Syntax/Predicate/Rew.lean | 1–320 | 8df8681a12ebf5ef8700d9710c88fc39bfc35df47ef387e2893df3caf3b69873 |
+| D5/S3/ConceptDynamics/ZfcTermRewriting/RewTwo.lean | Foundation/Syntax/Predicate/Rew.lean | 321–637; selected commands exclude `LO.FirstOrder.Rew.q_emb` | 8df8681a12ebf5ef8700d9710c88fc39bfc35df47ef387e2893df3caf3b69873 |
+| D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.lean | Foundation/Syntax/Predicate/Rew.lean | 638–953 | 8df8681a12ebf5ef8700d9710c88fc39bfc35df47ef387e2893df3caf3b69873 |
+| D5/S3/ConceptDynamics/ZfcTermRewriting/RewFour.lean | Foundation/Syntax/Predicate/Rew.lean | 954–1080; seven commands at 955–989 | 8df8681a12ebf5ef8700d9710c88fc39bfc35df47ef387e2893df3caf3b69873 |
+| D5/S3/ConceptDynamics/ZfcFiniteCollections/OrderDense.lean | Foundation/Vorspiel/Order/Dense.lean | density/genericity interface at 102, 108–110, 116–118, 145–146; existence statement at 150–152, proof via pinned Mathlib | 7acf47a3c5b4344f98b9d319a3cac93d0a4b80fa135feb19bfd46c838c2ccce0 |
 | D5/S3/ConceptDynamics/ZfcMinimalLogic/MinimalEntailmentOne.lean | Foundation/Propositional/Entailment/Minimal.lean | 1–320 | aa8c65b4a9a1c4cb1b5148ea65d159302b11dbcc839bba1184e422413808b8f1 |
 | D5/S3/ConceptDynamics/ZfcMinimalLogic/MinimalEntailmentTwo.lean | Foundation/Propositional/Entailment/Minimal.lean | 321–639 | aa8c65b4a9a1c4cb1b5148ea65d159302b11dbcc839bba1184e422413808b8f1 |
 | D5/S3/ConceptDynamics/ZfcMinimalLogic/MinimalEntailmentThree.lean | Foundation/Propositional/Entailment/Minimal.lean | 640–959 | aa8c65b4a9a1c4cb1b5148ea65d159302b11dbcc839bba1184e422413808b8f1 |
@@ -126,6 +212,10 @@ elaborates. Upstream PR acceptance alone is insufficient.
 | D5/S3/ConceptDynamics/ZfcFiniteData/NatMatrix.lean | Foundation/Vorspiel/Nat/Matrix.lean | 1–86 | 1a1cc8e8d58a586247f408c20d31a4acc0ee7a84d6ab45998c082adf95a382ce |
 | D5/S3/ConceptDynamics/ZfcFiniteCollections/Quotient.lean | Foundation/Vorspiel/Quotient.lean | 1–44 | d0ee23b967dffb1fce05e4e6eeab82dcf3c583361dba0a31f8c85a12c6b34ef5 |
 | D5/S3/ConceptDynamics/ZfcLogic/ForcingRelation.lean | Foundation/Logic/ForcingRelation.lean | 1–155 | 1ccea85946aa4604136ec39cbd413ed475d315a4cd5eca5aaae9b63095ca035c |
+| D5/S3/ConceptDynamics/ZfcSyntax/FormulaOne.lean | Foundation/FirstOrder/Basic/Syntax/Formula.lean | 1–320 | 6726460b455fa93f42cd9c1849cf25bf7013cd4d349e7afada5e3678f05162c3 |
+| D5/S3/ConceptDynamics/ZfcSyntax/FormulaTwo.lean | Foundation/FirstOrder/Basic/Syntax/Formula.lean | 321–587 | 6726460b455fa93f42cd9c1849cf25bf7013cd4d349e7afada5e3678f05162c3 |
+| D5/S3/ConceptDynamics/ZfcLanguageSupport/Empty.lean | Foundation/Vorspiel/Empty.lean | 9 (retained mathematical commands) | f3b5429d4ec0c230a633b343a6ac8cdd079d56c1eaa5812994c95dfd487ab985 |
+| D5/S3/ConceptDynamics/ZfcSupport/UniqueChoice.lean | Foundation/Vorspiel/ExistsUnique.lean | 11–18 (retained mathematical commands) | 9326800a0ed419feaa0dd7ebfe63de62371d728b0c4ee5b84b3f093d7e7f871e |
 
 ## Apache-2.0 license
 

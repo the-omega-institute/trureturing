@@ -1,0 +1,15 @@
+**定义 302。** 固定有限互异素数集 $P$，定义正有理乘法群及其指数读数
+$$
+\mathbb Q_{P,>0}=\left\{\prod_{p\in P}p^{e_p}:e\in\mathbb Z^P\right\}\subseteq\mathbb Q_{>0},
+\qquad
+\Pi_P^{\mathbb Z}:(\mathbb Z^P,+)\longrightarrow(\mathbb Q_{P,>0},\times),
+\qquad \Pi_P^{\mathbb Z}(e)=\prod_{p\in P}p^{e_p}.
+$$
+阿贝尔群的秩指其相应 $\mathbb Z$ 模与 $\mathbb Q$ 张量后的维数；乘法群中整数作用为 $n\cdot q=q^n$。这里的运算是正有理数乘法，盒上的限制则取第 120 条的原标量读数。
+
+四素数比较固定标签顺序 $(2,3,5,7)$，取
+$$
+a=(4,2,1,1)^{\mathsf T},\qquad B_a=a,\qquad B_u=I_4.
+$$
+$B_a$ 是单列指令族，$B_u$ 是四个单位列；有界比较取 $A=a$。单坐标比较固定一个素数标签，使用矩阵 $[1]$、$[2]$ 或 $[2\ 3]$，容量在相应命题中指定为一或三。以下比较的原子族均提供全部正负字母；工作负载比较中每个字母的成本均为一。
+

@@ -1,0 +1,28 @@
+**证明。** 第 72 条的双逆使 $\operatorname{enc}_Y$ 的逆恰为 $\operatorname{Dec}|_{Y^*}$。因此 $f^*=\operatorname{enc}_Z\circ f\circ\operatorname{Dec}|_{\operatorname{Enc}[D]}$ 在声明域有唯一值；其原像只能是 $D$ 中的点，给域等价和逐值的像等式。对子集 $H\subseteq D$，同一式立即给 $(f|_H)^*=f^*|_{\operatorname{Enc}[H]}$，包括空域。对原图逐边使用第 74 条
+$$
+\operatorname{Enc}(\langle x,z\rangle)
+=\langle\operatorname{Enc}(x),\operatorname{Enc}(z)\rangle_Z
+$$
+并展开成员，再用 $\operatorname{Pack}$ 与 $\operatorname{El}$ 的双逆，得到两条语义图式。外部共轭图按普通函数图定义，故其有序对仍是普通对。
+
+对多输入函数，第 257–260 条的固定元数比较逐配对给
+$$
+\operatorname{Enc}(T_r(x_1,\ldots,x_r))
+=T_r^Z(\operatorname{Enc}(x_1),\ldots,\operatorname{Enc}(x_r)).
+$$
+这由构造 $T_r$ 所用有限配对的归纳及上述配对式得到。因而可以将普通积 $T_r[Y_1^*,\ldots,Y_r^*]$ 通过
+$$
+T_r(c_1,\ldots,c_r)\longmapsto
+\operatorname{Enc}(T_r(\operatorname{Dec}(c_1),\ldots,\operatorname{Dec}(c_r)))
+$$
+双射到 $\operatorname{Enc}[T_r[Y_1,\ldots,Y_r]]$，逆由解码原元组再逐分量编码给出。二者通过此双射比较，不作字面认同；若输入受联合条件 $D$ 限制，就将这个双射限制到满足同一解码条件的子集。
+
+特别 $\operatorname{Eval}^*$、$\operatorname{Approx}^*$、$\operatorname{Ext}_A^*$、$\operatorname{Ext}^*$ 的精确域依次为
+$$
+\operatorname{Enc}[V\times\mathbb T^\omega],\qquad
+\operatorname{Enc}[\omega^\omega\times\mathbb T^\omega\times\omega],\qquad
+\operatorname{Enc}[W_A\times X_A^{\rm cap}],\qquad
+\operatorname{Enc}[D_{\rm ext}].
+$$
+输出依次在 $\mathbb T^*$、$(\mathbb Q^\omega)^*$、$\mathbb T^*$、$\mathbb T^*$ 中，值分别为对应原值的 $\operatorname{Enc}$；有界求值再把首域限制到 $B_A^{\rm cap}$。这些实例保留全部总行、全乘积点以及第 370.1 条的联合域条件。证毕。
+

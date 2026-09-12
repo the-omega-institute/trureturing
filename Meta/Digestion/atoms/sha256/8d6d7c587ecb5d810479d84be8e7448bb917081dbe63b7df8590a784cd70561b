@@ -1,0 +1,7 @@
+**定义 123（指令在 Zeckendorf 数位上的共轭）。** 对 \(u\in\mathsf W_Z\) 定义部分变换
+\[
+\operatorname{succ}_Z(u)=\zeta(\operatorname{val}(u)+1),\qquad
+\operatorname{pred}_Z(u)=\zeta(\operatorname{val}(u)-1)
+\]
+，其定义域分别为全部 \(u\) 及满足 \(\operatorname{val}(u)>0\) 的 \(u\)。在 \(\mathsf D(P,A)\) 上，\(\widehat\iota_p\) 只将第 \(p\) 行替换为 \(\operatorname{succ}_Z(d(p))\)，并要求 \(\operatorname{val}(d(p))<A(p)\)；\(\widehat\delta_p\) 类似地使用 \(\operatorname{pred}_Z\)，并要求 \(\operatorname{val}(d(p))>0\)。由此得到 \(\widehat{\operatorname{ev}}_A(d,w)\)。
+

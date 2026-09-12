@@ -1,0 +1,20 @@
+**33.6 Strict order at every finite height and at the scaled endpoint.** Integrate
+the continuous strict derivative inequality in 33.5 from 0 to \(z>0\).
+Because \(s_i(0)=s_j(0)=0\), this gives
+\[
+s_2-s_3>z/200000,\qquad s_3-s_5>z/500,\qquad s_5-s_7>z/100.
+\]
+Dividing by \(z\) gives the three strict scaled gaps for \(w\).
+At \(z=0\), differentiation of \(s_i-s_j\) instead gives
+\(w_i(0)-w_j(0)=(s_i-s_j)'(0)>\delta_{ij}\).
+Finally \(s_7'>0\) and \(s_7(0)=0\), so
+\[
+s_2(z)>s_3(z)>s_5(z)>s_7(z)>0\quad(0<z\le1),
+\]
+\[
+w_2(z)-w_3(z)>1/200000,\quad w_3(z)-w_5(z)>1/500,
+\quad w_5(z)-w_7(z)>1/100\quad(0\le z\le1).
+\]
+Also \(w_7(0)=A_7/h_7>0\). None of these scaled bounds attains equality,
+including at \(z=0\) and \(z=1\); the constants are not claimed sharp.
+

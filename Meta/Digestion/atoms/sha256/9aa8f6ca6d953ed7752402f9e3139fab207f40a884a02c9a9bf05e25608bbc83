@@ -1,0 +1,30 @@
+**定义 336.1。** 只使用第 71–78、255–260、318–320 条的全集合解释。对任意集合 $X$ 保留
+$$
+X^*=\operatorname{Enc}[X]=\operatorname{El}(\operatorname{Enc}(X)),\qquad
+\operatorname{enc}_X=\operatorname{Enc}|_X:X\to X^*.
+$$
+对本附录任一已给双射 $b_X:X\to C_X$，分别定义原对象提升和数字对象提升
+$$
+h_X(c)=\operatorname{Enc}(b_X^{-1}(c)),\qquad
+e_X(c)=\operatorname{Enc}(c)\quad(c\in C_X).
+$$
+总求值 $E$ 的第 260 条特化取元数二，实际数据为
+$$
+(A_1,A_2,A_o)=(\mathsf V_{\rm reg},\Theta_{\rm rat},\mathsf D_{\rm rat}),\qquad
+(B_1,B_2,B_o)=(\mathsf{Rec}_{\rm reg},\mathsf{ProbeRec},\mathsf{RatPhaseFld}),
+$$
+$$
+(b_1,b_2,b_o)=(\operatorname{rec}_{\rm reg},\operatorname{prec}_{\rm rat},\operatorname{penc}),\qquad
+B_{\rm in}(T_2(u,\theta))=T_2(b_1(u),b_2(\theta)).
+$$
+原函数域为完整 $T_2[A_1,A_2]$，数字函数域为完整 $T_2[B_1,B_2]$。令 $G_E,G_{E_d}$ 是它们的普通函数图，且对 $c=T_2(c_1,c_2)$ 定义
+$$
+h_1(c_1)=\operatorname{Enc}(\operatorname{unrec}_{\rm reg}(c_1)),\qquad
+h_2(c_2)=\operatorname{Enc}(\operatorname{unprec}_{\rm rat}(c_2)),
+$$
+$$
+h_o(d)=\operatorname{Enc}(\operatorname{pdec}(d)),\qquad
+H_{\rm in}(c)=T_2^Z(h_1(c_1),h_2(c_2)).
+$$
+$E_{\rm fin}$ 的特化则取 $A_2=\mathsf{FinCoef},B_2=\mathsf{FinProbeRec},b_2=\operatorname{fprec}_{\rm rat}$，联合域恰为第 334 条的 $D_{\rm fin}$，数字域恰为 $D_{\rm fin}^{d}$；其余两槽不变。
+

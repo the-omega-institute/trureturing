@@ -1,0 +1,23 @@
+**33.19 Failure to commute optimization and momentwise maximization.** For fixed
+\(r\ge0\), let \(M_n(r)=\max_{y\in K_r}J_n(y)\), which exists by compactness.
+The uniform bound in 33.16 also bounds \(M_n\), so
+\[
+\max_{y\in K_r}\sum_{n\ge1}\frac{z^n}{n}J_n(y)
+\le\sum_{n\ge1}\frac{z^n}{n}M_n(r)
+\]
+is an inequality between finite quantities for \(0\le z\le1\).
+At \(r=h_2\), evaluate the left side at its unique \(y^*\). Every difference
+\(M_n-J_n(y^*)\) is nonnegative, and 33.18 gives the strict bound
+\[
+\sum_{n\ge1}\frac{z^n}{n}M_n-
+\max_{y\in K_{h_2}}\mathcal L_z(y)
+\ge\frac{z^2}{2}h_2(a_{3,2}-a_{2,2})>0\quad(0<z\le1).
+\]
+Therefore maximizing the full logarithmic sum does not commute with separately
+maximizing every moment. For \(z>0\), equality in the general inequality holds
+exactly when the full optimizer also maximizes every \(J_n\), since all weights
+\(z^n/n\) are positive. Equality holds at \(r=0\) and \(r\ge H_4\), where zero
+or full vectors maximize every moment. At \(z=0\) both sides are zero for all
+\(r\ge0\). No classification at other capacities or of other second-moment
+pairs is asserted. No additional moment order has been sampled.
+

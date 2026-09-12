@@ -1,0 +1,20 @@
+**定义 193（终端逐槽观察商）。** 对有限素数集 \(P\)，令
+\[
+\mathcal C_P^{\rm tb}
+=\{X\in\mathcal B:
+ W_X(t,y)=Z_X(t,y)=0\text{ 若 }y\notin\lambda[P\times\omega],
+ \ X\text{ 终端逐槽平衡}\}.
+\]
+对 \(X,Y\in\mathcal C_P^{\rm tb}\) 定义
+\[
+X\equiv_PY
+\iff
+V_P^{\mathbb Z}(r_X)=V_P^{\mathbb Z}(r_Y).
+\tag{Z-OBS-EQ}
+\]
+置
+\[
+\mathcal C_P^+=\mathcal C_P^{\rm tb}\cap\mathcal B_\lambda^+.
+\]
+若再要求 \(X,Y\in\mathcal C_P^+\)，记所得限制关系为 \(\equiv_P^+\)。
+

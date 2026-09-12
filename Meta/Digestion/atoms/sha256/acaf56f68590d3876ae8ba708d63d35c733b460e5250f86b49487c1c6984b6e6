@@ -1,0 +1,23 @@
+**定义 165（素数支撑上的自由指数幺半群）。** 对有限互异素数集 \(P\)，置
+\[
+\mathsf E(P)=\omega^P,
+\qquad
+\mathbf 0_P(p)=0,
+\qquad
+(a\boxplus_P b)(p)=a(p)+b(p).
+\]
+定义其素数标量像
+\[
+\mathsf M(P)=\left\{\prod_{p\in P}p^{a(p)}:a\in\mathsf E(P)\right\}
+\subseteq\mathbb N_+,
+\]
+以及
+\[
+\Pi_P^{\infty}(a)=\prod_{p\in P}p^{a(p)}.
+\]
+沿用定义 133 的 \(\mathsf D_{\infty}(P)=\mathsf W_Z^P\) 及其逐行规范加法 \(\boxplus_Z\)。有限容量盒通过包含映射
+\[
+\jmath_A:S(P,A)\hookrightarrow\mathsf E(P)
+\]
+嵌入该自由指数幺半群。
+

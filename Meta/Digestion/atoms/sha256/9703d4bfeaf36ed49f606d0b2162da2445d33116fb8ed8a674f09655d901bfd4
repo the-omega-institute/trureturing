@@ -1,0 +1,67 @@
+**定理 339.1。** 设 $M_A=+\infty$。对每个 $c\in\mathbb D_+$，有
+$$
+\overline{L_{A,c}}^{X_A^{\rm cap}}
+=\{x\in X_A^{\rm cap}:S_A(x)\le c\},\qquad
+\overline{L_{A,c}}^{B_A^{\rm cap}}
+=\{u\in B_A^{\rm cap}:\ell_A(u)\le c\}.
+$$
+若 $c\in\mathbb R\setminus\mathbb D_+$，则 $L_{A,c}$ 及其两个闭包均为空。对任意 $A$，
+$$
+L_{A,0}=F_{A,0}=\{0\},\qquad
+\{x\in X_A^{\rm cap}:S_A(x)\le0\}=\{0\}.
+$$
+在发散情形，每个正二进有理水平 $L_{A,c}$ 非空，并在两个载体中都不闭。因此对所有 $A$ 和实数 $c$，
+$$
+L_{A,c}\text{ 在 }B_A^{\rm cap}\text{ 中闭}
+\iff M_A<+\infty\ \text{ 或 }\ c\notin\mathbb D_+\setminus\{0\}.
+$$
+这些公式允许任意长的零容量间隔，不要求 $J_A$ 最终包含全部指标，也不要求容量有共同上界。
+
+**证明。** 先设 $c\in\mathbb D_+$。若 $S_A(x)>c$，包括 $S_A(x)=+\infty$，上确界定义给 $N$ 使 $P_N(x)>c$。任何与 $x$ 在此前缀一致的非负状态，其总和至少为 $P_N(x)$，故 $C_{\{0,\ldots,N\}}(x)$ 不交 $L_{A,c}$。这证明环境闭包包含于所列子水平集。
+
+反向取 $S_A(x)\le c$ 及 $x$ 的任意邻域。取其中的精确柱集 $C_I(x)$，$I$ 有限且允许为空。写 $c=a_0/2^q$，$a_0,q\in\omega$，先选 $N\ge q$ 且 $I\subseteq\{0,\ldots,N\}$，再置
+$$
+a=P_N(x),\qquad d=c-a\ge0.
+$$
+于是
+$$
+2^Na=\sum_{n=0}^{N}2^{N-n}x_n\in\mathbb Z_o,\qquad
+2^Nd=a_0 2^{N-q}-2^Na\in\mathbb Z_o.
+$$
+若 $d=0$，截断 $x^{(N)}$ 已在 $C_I(x)\cap L_{A,c}$。
+
+若 $d>0$，令 $T_N=0$，并对 $j>N$ 定义
+$$
+T_j=\sum_{n=N+1}^{j}A_n2^{-n}.
+$$
+删去有限前缀后容量质量仍发散，故存在最小 $m>N$ 满足 $T_m\ge d$。最小性给
+$$
+T_{m-1}<d\le T_m=T_{m-1}+A_m2^{-m}.
+$$
+定义末坐标填充值
+$$
+b=2^m(d-T_{m-1}).
+$$
+由 $m>N$ 及 $2^Nd\in\mathbb Z_o$ 得 $2^md\in\mathbb Z_o$；又
+$$
+2^mT_{m-1}=\sum_{n=N+1}^{m-1}A_n2^{m-n}\in\mathbb Z_o,
+$$
+所以 $b$ 为整数。首次越过阈值的两个不等式给 $0<b\le A_m$，从而 $1\le b\le A_m$。令
+$$
+u_n=\begin{cases}
+x_n,&n\le N,\\
+A_n,&N<n<m,\\
+b,&n=m,\\
+0,&n>m.
+\end{cases}
+$$
+每一分支都在 $D_n$ 中，支撑包含于 $\{0,\ldots,m\}$，而 $u|_I=x|_I$。此外
+$$
+\ell_A(u)=a+T_{m-1}+b2^{-m}=a+d=c.
+$$
+因此任一邻域均遇到 $L_{A,c}$，得到环境闭包的反向包含。零容量坐标在中间分支只填零；若末坐标容量为零便不可能首次越过正缺额，故构造也包含任意稀疏间隔。空 $I$ 只需选择 $N\ge q$，并无额外条件。
+
+对任一子空间 $B\subseteq X$ 及 $E\subseteq B$，点 $b\in B$ 的邻域为环境邻域与 $B$ 的交；因 $E\subseteq B$，它遇到 $E$ 当且仅当原环境邻域遇到 $E$。所以 $\overline E^{B}=B\cap\overline E^{X}$。用于当前 $L_{A,c}$，并用 $S_A|_{B_A^{\rm cap}}=\ell_A$，即得相对闭包式。
+
+任一有限状态的值以包含支撑的前缀通分，为非负整数除以 $2^N$，故属于 $\mathbb D_+$。因此所有负数以及所有非二进有理实数的有限状态水平都为空，两个闭包也为空。零总和迫使每个非负项 $2^{-n}x_n$ 为零，故每个坐标为零；反向零状态的总和为零，得到所有零水平公式。在发散情形，正二进有理 $c$ 的已证填充构造应用于 $x=0$，把零放入两个闭包中；它不在等值集内。因此水平非空而不闭。结合定理 338.2 的可和情形以及零水平和空水平，得到最后的充要分类。证毕。
+

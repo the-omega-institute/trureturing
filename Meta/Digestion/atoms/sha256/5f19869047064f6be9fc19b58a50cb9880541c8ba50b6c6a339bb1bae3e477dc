@@ -1,0 +1,12 @@
+**定义 80（有类型的图共轭）。** 对任意集合载体 \(A\) 记 \(A^*=\operatorname{Enc}[A]\)。对关系 \(R\subseteq\prod_{i=1}^r A_i\)，定义通常外部关系
+\[
+R^*=\{(\operatorname{Enc}(a_1),\ldots,\operatorname{Enc}(a_r)):(a_1,\ldots,a_r)\in R\}.
+\]
+对部分函数 \(f:D_f\to B\)、\(D_f\subseteq\prod_iA_i\)，定义
+\[
+\operatorname{dom}(f^*)=D_f^*,\qquad
+f^*(\operatorname{Enc}(\boldsymbol a))=\operatorname{Enc}(f(\boldsymbol a)).
+\tag{Z-CONJ}
+\]
+这里 \(\operatorname{Enc}(\boldsymbol a)\) 在多自变量位置约定为逐分量编码；作为一个集合元组的码则用语义配对表示。每个固定集合参数也逐一编码。若写 \(f_Z\) 作用于语义元组，是定理 74 所给的同一图的内部呈现。成功标签取 \(\operatorname{ok}^*(c)=\operatorname{Enc}(\operatorname{ok}(\operatorname{Dec}(c)))\)，失败标签取 \(\bot^*=\operatorname{Enc}(\bot)\)。引文为[《情境时空算术》定义 16–17、QI-D2](CONTEXTUAL_SPACETIME_ARITHMETIC.md)及定理 74。
+

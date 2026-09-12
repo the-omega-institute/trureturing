@@ -1,0 +1,20 @@
+**定义 332.1。** 沿用第 69–70、113–114、255 条的 $\mathsf W_Z,S,\zeta,\operatorname{val},\operatorname{scode},\operatorname{ival}$，其中 $0_Z=0_S=\varnothing$。所有字段对使用第 257 条的普通外部 $T_2$。独立定义
+$$
+\mathsf{RatFld}
+=\{T_2(c,d):c\in S,\ d\in\mathsf W_Z,\ \operatorname{val}(d)>0,\
+\gcd(|\operatorname{ival}(c)|,\operatorname{val}(d))=1\},
+$$
+$$
+\mathsf{RatPhaseFld}
+=\{T_2(c,d):c,d\in\mathsf W_Z,\
+0\le\operatorname{val}(c)<\operatorname{val}(d),\
+\gcd(\operatorname{val}(c),\operatorname{val}(d))=1\}.
+$$
+两者都由合法性谓词定义，不用某映射的像定义。置
+$$
+\operatorname{qdec}(T_2(c,d))=\frac{\operatorname{ival}(c)}{\operatorname{val}(d)},\qquad
+\operatorname{pdec}(T_2(c,d))=
+\left[\frac{\operatorname{val}(c)}{\operatorname{val}(d)}\right]_{\rm rat}.
+$$
+对 $q\in\mathbb Q$ 的既约表示 $a/b$、$a\in\mathbb Z_o,b\ge1$，定义 $\operatorname{qenc}(q)=T_2(\operatorname{scode}(a),\zeta(b))$。对 $\delta\in\mathsf D_{\rm rat}$ 的 $[0,1)$ 代表的既约表示 $a/b$，定义 $\operatorname{penc}(\delta)=T_2(\zeta(a),\zeta(b))$。
+

@@ -1,0 +1,8 @@
+**证明。** 对逐点有限支撑表，\(\Sigma_P\) 是加法同态；时间零点只有一个非零时刻，故 \(\Sigma_P(\iota_Pz)=z\)，从而满射并得到短正合列。由定义
+\[
+\Sigma_P(c^{\circ})=\Sigma_Pc-\Sigma_P(\iota_P\Sigma_Pc)=0,
+\]
+所以分解存在。若 \(c=\iota_Pz+k=\iota_Pz'+k'\) 且 \(k,k'\in\mathsf K_P\)，应用 \(\Sigma_P\) 得 \(z=z'\)，再得 \(k=k'\)，故唯一。
+
+由定理 197，\(\mathbf a_X^\infty=\Sigma_P(\delta_X)\)，所以 \(\mathfrak T_P=\Sigma_P\circ\Theta_P^{\rm pf}\)。定理 199 给出前者为满射群同态，且其核经 \(\Theta_P^{\rm pf}\) 恰对应 \(\mathsf K_P\)。前缀等价蕴含终端表相同，故到定义 193 的终端商的映射良定义；定理 192 对任意 \(z\in\mathbb Z^P\) 给出前缀逐槽平衡代表，故该映射满射。定理 194 将其终端商识别为 \(\mathbb Z^P\)，并且复合读数为 \(\mathfrak T_P\)。时间零点嵌入给出该扩张的分裂，核的元素正是终端总和为零而前缀可能非零的时间循环。证毕。
+

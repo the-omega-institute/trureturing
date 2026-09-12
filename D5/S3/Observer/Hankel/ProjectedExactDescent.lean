@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Observer/Hankel/ProjectedExactDescent
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Global one-step descent propagates through every driven time step. -/
 
 import D5.S3.Observer.Hankel.ProjectedRealizationError

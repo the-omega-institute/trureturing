@@ -1,0 +1,41 @@
+**30.72 定义及证明（Möbius 函数与四阶梯探针的六个矩）。** Retain the full Hilbert model
+of 30.52. For any \(A\subseteq\mathbb N_+\), define
+\[
+V_A^{\rm fin}=\left\{\sum_{k\in A}a_kf_k:a_k\in\mathbb C,\ a\text{ has finite support}\right\},
+\quad M_A=\overline{V_A^{\rm fin}}^{\mathcal H},\quad
+D_A=\inf_{h\in M_A}\|\chi-h\|^2.
+\]
+Coefficients not in a finite support are zero; repeated occurrences of a parameter are combined.
+The Möbius function has \(\mu(1)=1\), \(\mu(n)=0\) when a prime square divides \(n\),
+and \(\mu(n)=(-1)^r\) for a product of \(r\) distinct primes. Unique factorization gives
+\[
+\sum_{d\mid n}\mu(d)=\prod_{p\mid n}(1-1)
+ =\begin{cases}1&n=1,\\0&n>1.\end{cases}
+\]
+For \(n=1\) the product is empty. Define, with arbitrary endpoint values,
+\[
+w(s)=\begin{cases}
+1&-1/2<s<-1/4,\\-3&-1/4<s<0,\\3&0<s<1/4,\\-1&1/4<s<1/2,\\0&\text{otherwise},
+\end{cases}\quad I_d=(d-1/2,d+1/2),\quad\psi_d(t)=w(t-d),\quad d\ge1.
+\]
+The six exact moments are
+\[
+\int_{\mathbb R}w=0,\quad\int_{\mathbb R}sw=0,\quad\int_0^\infty w=1/2,
+\qquad\int_{\mathbb R}w^2=5,\quad\int_{\mathbb R}sw^2=0,\quad\int_{\mathbb R}s^2w^2=1/6.
+\]
+Indeed \(w\) is odd and \(w^2\) even, proving the first and fifth identities. The other four are
+\[
+\int sw=2\left[3\int_0^{1/4}s\,ds-\int_{1/4}^{1/2}s\,ds\right]
+ =2(3/32-3/32)=0,\qquad \int_0^\infty w=3/4-1/4=1/2,
+\]
+\[
+\int w^2=2(9/4+1/4)=5,\qquad
+\int s^2w^2=2\left[9\int_0^{1/4}s^2ds+\int_{1/4}^{1/2}s^2ds\right]
+ =2(9/192+7/192)=1/6.
+\]
+Since \(I_d\subset(0,\infty)\), translation and expansion of \((d+s)^2\) give
+\[
+\int_0^\infty\psi_d=0,\quad\int_0^\infty t\psi_d=0,\quad
+\int_0^\infty t^2\psi_d(t)^2dt=5d^2+1/6.
+\]
+

@@ -1,0 +1,32 @@
+**定义 299。** 对第 295 条数据，另给容量函数 $A:P\to\mathbb N$ 及有限给定字母表 $\Lambda\subseteq\Sigma_r$，允许 $\Lambda=\varnothing$。沿用第 91、115 条的容量域，记
+$$
+X_A=S(P,A)=\prod_{p\in P}\{0,\ldots,A(p)\},\qquad
+Q=\prod_{p\in P}(A(p)+1).
+$$
+$A(p)$ 为最大内容，$A(p)+1$ 为该坐标含零的状态数。字母 $\lambda=(i,\epsilon)$ 的原子解释为
+$$
+\tau_\lambda(x)=x+\epsilon b_i,\qquad
+\operatorname{Dom}(\tau_\lambda)=\{x\in X_A:x+\epsilon b_i\in X_A\}.
+$$
+更一般的给定平移宏是一个实际部分映射
+$$
+T_\lambda:D_\lambda\longrightarrow X_A,\qquad
+T_\lambda(x)=x+\epsilon b_i,\qquad
+D_\lambda\subseteq\{x\in X_A:x+\epsilon b_i\in X_A\}.
+$$
+若宏由内部有守卫的词指定，$D_\lambda$ 必须是该内部词的完整实际求值域，包含全部内部前缀条件；净列向量不定义这个域。宏词按字母逐步求值，在首个不属于相应域的步骤失败；空词是 $X_A$ 上的恒等映射。此处的内部单位词沿用第 121 条的次序及守卫。
+
+实际图 $\Gamma_T$ 的顶点集为 $X_A$，对每个 $x\in D_\lambda$ 保留一条有向带标签边 $x\xrightarrow{\lambda}T_\lambda(x)$，保留平行标签和环。原子特化的图记为 $\Gamma_{B,A}$，其给定字母表仍为当前 $\Lambda$。逆配对假设指 $\Lambda=\Sigma_r$ 且
+$$
+T_{i,-}=T_{i,+}^{-1}\text{ 作为部分映射},\qquad
+\text{等价地 }D_{i,-}=D_{i,+}+b_i.
+$$
+一般字母表也可另给一个逆标签对合，要求对应部分映射互逆，包括其定义域。
+
+给每个字母一个严格正实权重 $a_\lambda>0$，定义
+$$
+\operatorname{cost}_a(w)=\sum_{h=1}^{|w|}a_{\lambda_h},\qquad
+ d_{T,a}(x,y)=\inf\{\operatorname{cost}_a(w):w\text{ 从 }x\text{ 成功到达 }y\}.
+$$
+值域取扩展非负实数，空可行集的值为 $+\infty$，空词成本为零。本处工作负载就是指定的有序端点对 $(x,y)$。每次宏出现按其给定权重计一次。对于整个 $\mathbb Z^P$ 上的总有符号平移，若两符号权重同为 $c_i>0$，其距离另记为 $d_{B,c}^{\infty}(x,y)$。
+

@@ -1,0 +1,18 @@
+**定理 324.2。** $\Psi_{\rm reg}$、$\operatorname{Ev}_{\rm rat}$、$\operatorname{Ev}_+$ 均为单射同态，且
+$$
+\Psi_{\rm reg}=\pi_1\circ\operatorname{Ev}_+,\qquad
+\operatorname{Ev}_{\rm rat}=\pi_2\circ\operatorname{Ev}_+.
+$$
+对每个 $H\le\mathsf V_{\rm reg}$，在定义 324.1 的实际环境拓扑中有
+$$
+\overline{\operatorname{Ev}_{\rm rat}[H]}^{Y_{\rm rat}}
+\cap\operatorname{Ev}_{\rm rat}[\mathsf V_{\rm reg}]
+=\operatorname{Ev}_{\rm rat}[H],
+$$
+$$
+\overline{\operatorname{Ev}_+[H]}^{X_+}
+\cap\operatorname{Ev}_+[\mathsf V_{\rm reg}]
+=\operatorname{Ev}_+[H].
+$$
+这些是精确状态像上的迹等式，不声称整个像在环境乘积中闭。
+

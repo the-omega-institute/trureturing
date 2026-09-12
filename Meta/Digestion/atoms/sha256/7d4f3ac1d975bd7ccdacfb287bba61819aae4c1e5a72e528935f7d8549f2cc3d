@@ -1,0 +1,18 @@
+**定理 278（外层基数与全部语义成员的分离）。** 对任意集合 $x$，
+$$
+\operatorname{size}_{\rm out}(\operatorname{Enc}(x))
+ =\begin{cases}1,&x=\varnothing,\\2,&x\ne\varnothing,\end{cases}
+\qquad
+\operatorname{size}_{\rm sem}(\operatorname{Enc}(x))=|x|.
+$$
+同时
+$$
+\operatorname{Card}_Z(\operatorname{Enc}(x))=\operatorname{Enc}(|x|),\qquad
+\operatorname{Rank}_Z(\operatorname{Enc}(x))=\operatorname{Enc}(\operatorname{rk}(x)).
+$$
+因此无限集合的码具有两个环境成员，却具有与原集合等势的全部语义成员；它不属于 $HF$。
+
+**证明。** Kuratowski 对 $\langle a,b\rangle=\{\{a\},\{a,b\}\}$ 在 $a=b$ 时恰有一个成员，否则恰有两个。自然分支为 $\langle0,\zeta(n)\rangle$；$\zeta(n)=0$ 当且仅当 $n=0$，故此分支恰在 $x=\varnothing$ 时为单成员。非自然分支为 $\langle1,B\rangle$，其中 $B=\operatorname{Enc}[x]$。每个有效码都是非空有序对，所以 $\varnothing\notin B$；而 $1=\{\varnothing\}$，故 $B\ne1$，该分支总有两个成员。
+
+第 72 条给 $\operatorname{El}(\operatorname{Enc}(x))=\operatorname{Enc}[x]$，且 $\operatorname{Enc}|_x$ 是从 $x$ 到该集合的双射，故语义大小等于 $|x|$。后两个公式由 $\operatorname{Dec}\operatorname{Enc}=\operatorname{id}$ 代入定义得到；它们分别是通常基数与秩定义的第 76 条语义解释。无限集合不属于 $HF$，第 72 条的遗传有限性双向式使其码也不属于 $HF$。有限外层基数因此不能代替传递闭包的有限性。证毕。
+

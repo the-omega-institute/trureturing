@@ -1,0 +1,20 @@
+**定理 147（统一编码算子的双射与定理 145 的补足）。** \(\operatorname{Code}_Z\) 与 \(\operatorname{Dec}_Z\) 在各自定义域上互为逆，并且对任意有限情境表示 \(X=(C,A)\)
+\[
+\operatorname{Dec}_Z(\operatorname{Code}_Z(X))=X,
+\qquad
+q_Z(\operatorname{Code}_Z(X))=\operatorname{scode}(q(X)),
+\qquad
+u_Z(\operatorname{Code}_Z(X))=\operatorname{scode}(u(C)).
+\]
+对任意有限 CSA 表达式 \(\mathscr E\) 及其有效情境表示输入 \(X\)，有
+\[
+\operatorname{Code}_Z(\mathscr E(X))
+ =\mathscr E_Z(\operatorname{Code}_Z(X)),
+\tag{Z-EXPR-CONJ}
+\]
+且两侧同时有定义或同时无定义；成功时由 \(\operatorname{Dec}_Z\) 得到相同的原情境。于是定理 145 中的 \(\operatorname{Code}_Z\) 由定义 146 唯一确定，原交换式在该定义下成立。
+
+**证明。** 定理 143 给出 \(\iota_Z\) 与 \(\iota_Z^{-1}\) 以及 \(\iota_Z^{(3)}\) 与 \((\iota_Z^{(3)})^{-1}\) 的互逆性，因此事件集、关系、标签和来源不变时，定义 146 的两个复合恰逐字段恢复。定理 144 给出时间序、空间加法、后继和有符号电荷的逐项共轭，故两个数值读数等式成立。
+
+对表达式的树高作归纳。叶、常量和集合构造由定义成立；若子表达式有一个无定义，归纳假设使两侧同时无定义，严格求值遂使父表达式也无定义。若所有子表达式有定义，定理 143、144 使每个守卫在两侧等价，且每个输出字段由对应共轭原语得到；因此父节点输出满足 (Z-EXPR-CONJ)。归纳覆盖有限树的全部节点，最后用 \(\operatorname{Dec}_Z\) 的互逆性得到成功结果相同。证毕。
+

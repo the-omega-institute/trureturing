@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0e5d4e8f8fb172fdadc6b20af7b6d3f1b6277d7f872909c8813aec9f587efabf
+  normalized_sha256: sha256:0e5d4e8f8fb172fdadc6b20af7b6d3f1b6277d7f872909c8813aec9f587efabf
+cas_ref: sha256:0e5d4e8f8fb172fdadc6b20af7b6d3f1b6277d7f872909c8813aec9f587efabf
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/PatternAvoidance/ArcherBourneDecomposition.card_avoids_312_321_cube_2143_eq_compositions
+    target_statement_id: sha256:0b11566d73bb835bf28a7823994c691383ee3e60e299cf2f7c24802f91be0e5e
+receipts:
+  unresolved_subitems: []

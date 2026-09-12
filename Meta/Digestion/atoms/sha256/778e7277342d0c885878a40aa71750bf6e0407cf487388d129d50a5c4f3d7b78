@@ -1,0 +1,10 @@
+**定理 58（最大公因数共振与全部滞后）。** 对正整数 \(a,b\) 和任意整数 \(h\)，定义 57 的极限均存在。各 \(R_a\) 的频率平均为零；若 \(g=\gcd(a,b)\)、\(B_2(t)=t^2-t+1/6\)，则
+\[
+\Gamma_{ab}(h)=\frac{g^2}{2ab}
+B_2\!\left(\left\{\frac{b-a-ab h}{g}\alpha\right\}\right),\qquad
+\Sigma(a,a)=\frac1{12},
+\]
+\[
+\Lambda_{ab}(h)=2\Gamma_{ab}(h)-\Gamma_{ab}(h-1)-\Gamma_{ab}(h+1).
+\]
+

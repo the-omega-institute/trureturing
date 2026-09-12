@@ -1,0 +1,31 @@
+**定义 308。** 对任意子群 $H\le\mathsf V_{\rm reg}$ 和有限 $I\subseteq\omega$，置
+$$
+H_I=\operatorname{res}^{\mathbb Z}_I[H]\le\mathbb Z_o^I,\qquad
+\operatorname{Sat}(H)=(\operatorname{span}_{\mathbb Q}H)\cap\mathsf V_{\rm reg},
+$$
+其中有理张成在 $\mathsf V_{{\rm reg},\mathbb Q}$ 中取有限有理线性组合。对 $\Lambda\le\mathbb Z_o^I$，有限维饱和定义为
+$$
+\operatorname{Sat}(\Lambda)=(\operatorname{span}_{\mathbb Q}\Lambda)\cap\mathbb Z_o^I
+\quad\text{于 }\mathbb Q^I.
+$$
+定义
+$$
+L_{\rm fin}(H)=\{u\in\mathsf V_{\rm reg}:\operatorname{res}^{\mathbb Z}_Iu\in\operatorname{Sat}(H_I)
+\text{ 对每个有限 }I\subseteq\omega\},
+$$
+$$
+\mathcal K_{\rm reg}(H)=\overline{\Psi_{\rm reg}(H)}^{\mathsf X_{\rm reg}},\qquad
+\mathcal A_{\rm fin}(H)=\{a\in\mathsf V_{\rm reg}:\sum_na_nh_n=0\text{ 对每个 }h\in H\}.
+$$
+这里 $h_n$ 为一般状态 $h$ 的第 $n$ 坐标。对 $a,u\in\mathsf V_{\rm reg}$、$x\in\mathsf X_{\rm reg}$ 定义
+$$
+\langle a,u\rangle=\sum_na_nu_n\in\mathbb Z_o,\qquad
+\operatorname{char}_{\rm reg,a}(x)=\sum_na_nx_n\in\mathbb T.
+$$
+两和均由 $a$ 的有限支撑限定；前一尖括号在本处表示整数点积，集合图中的有序对按各自图公式解释。有限维记号为
+$$
+\operatorname{Ann}_I(\Lambda)=\{a\in\mathbb Z_o^I:a\cdot\lambda=0\text{ 对每个 }\lambda\in\Lambda\},\qquad
+C_I(\Lambda)=\overline{\Psi_I(\Lambda)}^{\mathbb T^I}.
+$$
+$C_I$ 只表示本条有限指标闭包，不改变旧单孔项 $C_B$ 的意义。$\operatorname{char}_{\rm reg,a}$ 是有限整数特征，不占用第 255 条的 $\chi$。
+

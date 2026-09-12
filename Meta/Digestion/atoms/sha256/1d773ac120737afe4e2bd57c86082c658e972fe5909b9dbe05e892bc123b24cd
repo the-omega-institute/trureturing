@@ -1,0 +1,22 @@
+**定义 206（三轴槽历史群与两级收缩）。** 对有限素数集 \(P\)，定义三轴有限支撑群
+\[
+\mathsf Q_P=\mathbb Z^{(\mathbb Z\times P\times\omega)}.
+\]
+其一个基元记为 \(e_{t,p,j}\)，在 \((t,p,j)\) 处取一、其余处取零。对 \(q\in\mathsf Q_P\) 定义槽到寄存器的 Fibonacci 加权收缩
+\[
+\mathsf V_P(q)(t,p)=\sum_{j\ge0}G_jq(t,p,j),
+\qquad
+\mathsf V_P:\mathsf Q_P\longrightarrow\mathsf J_P,
+\tag{Z-SLOT-TO-REGISTER}
+\]
+以及无权槽计数
+\[
+\mathsf U_P(q)(t,p)=\sum_{j\ge0}q(t,p,j).
+\]
+终端收缩定义为
+\[
+\mathsf C_P=\Sigma_P\circ\mathsf V_P:\mathsf Q_P\longrightarrow\mathbb Z^P.
+\tag{Z-SLOT-TO-TERM}
+\]
+于是 \(t\)、\(p\)、\(j\) 分别是时间轴、素数寄存器轴和寄存器内部的 Zeckendorf 位置轴；\(\mathsf V_P\) 忘却位置轴的原始表示而保留 Fibonacci 数值，\(\mathsf C_P\) 再忘却时间轴而保留终端寄存器指数。
+

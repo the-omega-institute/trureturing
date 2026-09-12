@@ -1,0 +1,23 @@
+**31.4 每个正高度的零形状贪心次序。** 对任意 \(T>0\) 和 \(h>0\),
+\[
+\sigma_T(h)=\frac{f(T+h)-f(T)}h=\frac1h\int_0^h f'(T+s)\,ds,
+\qquad f'(x)=\frac1{e^x-1}>0,\quad f''(x)<0.
+\]
+若 \(h<h'\),初段导数平均严格大于 \(f'(T+h)\),尾段平均严格小于它;
+按两段长度加权,得 \(\sigma_T(h')<\sigma_T(h)\)。因此本节的
+\(a<b<c\) 在所有正高度都有严格收益密度次序 \(a,b,c\)。
+对任意容量 \(v\ge0\),最优权重可选为
+\[
+y_1=\operatorname{clip}(v/a),\quad
+y_2=\operatorname{clip}((v-a)/b),\quad
+y_3=\operatorname{clip}((v-a-b)/c),\quad
+\operatorname{clip}(s)=\min(1,\max(0,s)).
+\]
+其依据是 27.3 的匹配证书:写收益 \(g_i=f(T+h_i)-f(T)\),对可行 \(y\) 和
+价格 \(s\ge0\),有 \(\sum_i y_i g_i\le sv+\sum_i(g_i-sh_i)_+\)。
+令 \(s\) 为最后部分填充行的密度,上列权重使每一步取等。
+容量 0 取全下端点和 \(s\ge\max_i\sigma_i\);容量 \(v\ge Q\) 取全上端点及
+\(s=0\)。前缀端点的左右公式一致,不要求最优解真正分数。
+唯一可能的折点 \(a,a+b,Q\) 都是本三元组的角点偏移。
+此固定次序只用于零形状;扰动传递不假定它继续最优。
+

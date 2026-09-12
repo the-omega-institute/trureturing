@@ -1,0 +1,50 @@
+**定理 338.2。** 对所有容量函数 $A$，以下四项等价：
+$$
+M_A<+\infty
+\iff\ell_A\text{ 在零处连续}
+\iff\ell_A\text{ 在 }B_A^{\rm cap}\text{ 上连续}
+\iff\ell_A\text{ 有到 }X_A^{\rm cap}\text{ 的连续实值延拓}.
+$$
+在这些条件下，唯一延拓是 $S_A$；令
+$$
+R_N=\sum_{n>N}A_n2^{-n}=M_A-P_N(A),
+$$
+则 $R_N\to0$，且
+$$
+0\le S_A(x)-P_N(x)\le R_N\quad(x\in X_A^{\rm cap}),\qquad
+\sup_{x\in X_A^{\rm cap}}|S_A(x)-P_N(x)|=R_N.
+$$
+所以 $P_N\to S_A$ 一致收敛。若 $x,y$ 在 $\{0,\ldots,N\}$ 上相等，则
+$$
+|S_A(x)-S_A(y)|\le R_N.
+$$
+此时每个 $L_{A,c}$ 在 $B_A^{\rm cap}$ 中闭，每个 $F_{A,c}$ 在 $X_A^{\rm cap}$ 中闭，且
+$$
+\overline{L_{A,c}}^{X_A^{\rm cap}}\subseteq F_{A,c}.
+$$
+不论 $M_A$ 有限与否，每个有限实数 $c$ 的子水平集 $\{x:S_A(x)\le c\}$ 都在 $X_A^{\rm cap}$ 中闭。
+
+**证明。** 每个 $P_N$ 只依赖有限个离散坐标，故连续。非负项使其递增；若 $u$ 有限支撑，取包含支撑的前缀后部分和恒等于 $\ell_A(u)$，因而 $S_A|_{B_A^{\rm cap}}=\ell_A$。上确界的定义给
+$$
+\{x:S_A(x)\le c\}
+=\bigcap_{N\in\omega}\{x:P_N(x)\le c\}.
+$$
+右侧是闭集的交；$c<0$ 时两边均为空。这不使用扩展值域上的连续性。
+
+若 $M_A<+\infty$，所有部分和由 $M_A$ 控制，故 $S_A$ 实值。对 $K\ge N$，
+$$
+0\le P_K(x)-P_N(x)
+\le\sum_{n=N+1}^{K}A_n2^{-n}.
+$$
+对 $K$ 取上确界得尾界。容量部分和趋向 $M_A$，所以 $R_N\to0$。令 $x=A$ 即取得上界，证明显示的上确界等式及一致收敛。这也是[Weierstrass 判别法](https://en.wikipedia.org/wiki/Weierstrass_M-test)对连续函数 $x\mapsto2^{-n}x_n$ 及同域控制项 $A_n2^{-n}$ 的应用。
+
+若 $x,y$ 前缀相等，记其共同部分和为 $a$，则两个总和都在 $[a,a+R_N]$，故差的绝对值至多 $R_N$。任给 $\epsilon>0$，选 $R_N<\epsilon$，前缀柱集就是使读数变化小于 $\epsilon$ 的邻域，直接证明 $S_A$ 连续；限制给 $\ell_A$ 连续及零处连续。
+
+反向设 $M_A=+\infty$。给定任意有限 $I\subseteq\omega$，删去 $I$ 的容量质量至多为有限数 $\sum_{n\in I}A_n2^{-n}$，故存在有限 $F\subseteq\omega\setminus I$ 使
+$$
+\sum_{n\in F}A_n2^{-n}\ge1.
+$$
+例如取充分长的容量前缀再删去 $I$ 即可。令 $u_n=A_n$ 当 $n\in F$，否则为零。它在每个坐标满足界，有有限支撑，在 $I$ 上等于零，而 $\ell_A(u)\ge1$。每个零邻域包含某个 $C_I(0)\cap B_A^{\rm cap}$，因此没有零邻域的像包含于 $(-1/2,1/2)$，零处连续性失败。任何连续实值延拓的限制都连续；任一处处连续的函数也在零处连续。这与已证正向一起给四项等价。
+
+在可和情形，两连续实值延拓在稠密子集 $B_A^{\rm cap}$ 上相等。其等值集闭，因为实直线 Hausdorff：若两值不同，可取不交的实邻域，其逆像交为排除等值集的开邻域。故等值集包含稠密集的闭包，即全空间，证明唯一性。实单点闭，其逆像给两种等值集的闭性；$L_{A,c}\subseteq F_{A,c}$ 再给环境闭包的包含。若 $M_A=+\infty$，虽仍有扩展函数 $S_A$，但它在容量角取 $+\infty$，不是实值延拓。证毕。
+

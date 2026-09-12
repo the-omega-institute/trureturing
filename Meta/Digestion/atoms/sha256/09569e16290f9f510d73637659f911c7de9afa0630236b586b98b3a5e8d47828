@@ -1,0 +1,13 @@
+**定理 118（寄存器轴与数位轴的双射）。** \(\operatorname{dig}_{P,A}\) 是双射，并且
+\[
+|\mathsf D(P,A)|=|S(P,A)|=\prod_{p\in P}(A(p)+1).
+\]
+若 \(a,b\in S(P,A)\)，则
+\[
+a=b\iff\forall p\in P,\quad
+\operatorname{dig}_{P,A}(a)(p)=\operatorname{dig}_{P,A}(b)(p).
+\]
+在此直积中，素数 \(p\) 选择寄存器因子，Zeckendorf 索引 \(j\) 选择该因子内部的数位；任何交换二者的表达都不是同一有序对。
+
+**证明。** 定理 70 的 \(\zeta\) 在 \(\omega\) 与 \(\mathsf W_Z\) 之间双射。逐个 \(p\) 应用该双射得到直积双射，容量不等式在 \(\operatorname{val}\) 下等价。有限直积计数给基数公式，逐分量的双射给等价式。\(p\) 和 \(j\) 分别属于直积的外层和内层，故有序索引的两轴保持不变。证毕。
+

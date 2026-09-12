@@ -1,0 +1,25 @@
+**35.14 Unique rounding, finite positivity discard and actual boxes.** For
+every integer \(n\ge1\), each \(n\alpha_i\) is irrational, hence never a
+half-integer. Its nearest integer is unique. Set
+\[
+m_0(n)=n,\qquad
+m_i(n)=\lfloor n\alpha_i+1/2\rfloor\ (i>0),\qquad
+c_i=m_i(n)h_i.
+\]
+As \(n\to\infty\), all \(m_i(n)\to\infty\), because all \(\alpha_i>0\).
+Choose a finite \(n_0\) after which every \(m_i(n)\ge1\). For \(n\ge n_0\),
+\[
+b_i(n)=m_i(n)-1\in\mathbb Z_{\ge0},\qquad
+C_i=\{c_i,c_i+h_i\}=\{m_i(n)h_i,(m_i(n)+1)h_i\}.
+\]
+These are actual logarithms of adjacent integer prime powers. In the source's
+original exponent convention the box is \(b_i\in\{m_i-1,m_i\}\), and its
+lower-corner integer is
+\[
+N_n=\prod_{i=0}^{k-1}p_i^{m_i(n)-1}.
+\]
+Only the finite initial indices with a nonpositive \(m_i\) are removed;
+write \(B_Q^{\rm valid}=B_Q\cap[n_0,\infty)\). This retains all density
+and eventual syndeticity conclusions of 35.8-35.11. No exponent enumeration
+or numerical first valid index is supplied by the construction.
+

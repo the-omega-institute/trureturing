@@ -1,0 +1,15 @@
+**定理 192（任意有限带符号槽表的 CSA 实现）。** 对任意 \(r\in\mathcal R_{P,\mathbb Z}\)，存在有限情境 \(X_r=(C_r,A_r)\in\mathcal B\)，满足
+\[
+B_{X_r}(p,j)=0\quad\text{对所有 }p,j,
+\qquad
+r_{X_r}(p,j)=r(p,j).
+\tag{Z-SIGNED-REALIZE}
+\]
+可以进一步要求所有事件时刻均为 \(0\)、偏序为空、所有事件位置都在 \(\lambda[P\times\omega]\)，且 \(X_r\) 前缀逐槽平衡。其有理素数幂读数为
+\[
+\operatorname{Rat}_P(r_{X_r})
+ =\operatorname{Rat}_P(r)
+ =\prod_{p\in P}p^{V_P^{\mathbb Z}(r)(p)}.
+\]
+当 \(r\) 含有负系数时，\(X_r\notin\mathcal B_\lambda^+\)；其带符号观察仍由定理 186–191 精确给出。
+

@@ -1,0 +1,7 @@
+**定义 127（配置之间的指令路径）。** 对 \(a,b\in S(P,A)\) 定义
+\[
+\operatorname{Path}_{P,A}(a,b)
+=\{w\in\mathcal U_P^*:\operatorname{ev}_A(a,w)=b\}.
+\]
+这里词本身保留其字母次序；路径关系只在整词成功时成立。状态关系 \(a=b\)、规范数字关系 \(\operatorname{dig}_{P,A}(a)=\operatorname{dig}_{P,A}(b)\) 与路径关系是三种不同的关系。
+

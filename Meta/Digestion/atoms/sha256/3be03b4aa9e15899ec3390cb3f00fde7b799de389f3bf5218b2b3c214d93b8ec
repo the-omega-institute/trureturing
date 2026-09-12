@@ -1,0 +1,25 @@
+**定理 131（CSA 实现与乘积读数）。** 对每个 \(a\in S(P,A)\)，\(X_{P,A}(a)\in\mathcal B_\lambda^+\)，且
+\[
+W_{X_{P,A}(a)}(0,\lambda(p,j))=0,\qquad
+Z_{X_{P,A}(a)}(0,\lambda(p,j))=d_a(p,j)
+\quad(p\in P,\ j<\ell_p),
+\]
+其余时空单元的 \(W,Z\) 均为零。映射
+\[
+a\longmapsto X_{P,A}(a)
+\]
+是单射；并且
+\[
+q(X_{P,A}(a))=\sum_{p\in P}\sum_{j<\ell_p}d_a(p,j),
+\]
+以及
+\[
+\operatorname{NatZ}\left(
+\prod_{p\in P}p^{\,\sum_{j<\ell_p}G_j
+Z_{X_{P,A}(a)}(0,\lambda(p,j))}
+\right)
+=\operatorname{NatZ}(\Pi_P(a)).
+\tag{Z-CSA-PRODUCT}
+\]
+因此 CSA 的无权选择读数是所有占据 Zeckendorf 数位的和，而按 \(G_j\) 加权后再按素数作指数化，才得到配置的普通整数乘积。
+

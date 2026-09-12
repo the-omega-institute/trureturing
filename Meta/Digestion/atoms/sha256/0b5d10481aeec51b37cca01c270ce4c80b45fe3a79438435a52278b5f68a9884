@@ -1,0 +1,6 @@
+**证明。** 第 70–72 条的自然叶单射性使每个码标签只对应一个 $p$。每个整数有唯一合法有符号码，且每个此种码经 $\operatorname{ival}$ 得整数，所以两个无界映射在所列域内良定义。逐坐标的 $\operatorname{ival}\circ\operatorname{scode}=\operatorname{id}$ 及 $\operatorname{scode}\circ\operatorname{ival}=\operatorname{id}$ 给双逆，完整恒等式见下一条。
+
+有界像中的每个 $c$ 来自一个有效配置。第 116 条的语义字段恢复使第三表中每个码标签有唯一内容，且自然叶的单射性恢复唯一自然数。该自然数正是原状态的对应坐标，故满足容量条件；重装固定的前两表与恢复的第三表得到原配置码。于是编码及所给逆互逆，有限像的大小为 $|X_A|=Q$。$P=\varnothing$ 时两个原状态域各自只有空函数，两个相应像也分别是单点；无界码是空函数，有界码是 $\operatorname{Cfg}_Z(\varnothing,\varnothing,\varnothing)$。分别使用其域和构造，不把两种码对象认作同一个对象，也不从类型用途推断所有码集合在空域处互不相交。
+
+第 71–73 条的 $\operatorname{Enc}$、$\operatorname{Dec}$ 双逆及成员展开给 $\mathcal E_X$ 的精确像和逆；把它与 $\gamma^{-1}$ 复合，立即得到 $h_\gamma$ 与显示的逆。部分映射共轭只在 $\gamma[D]$ 上求值，所以不会对域外值施用 $T$。这些是原有集合编码在指定集合上的限制，不另定义集合递归。证毕。
+

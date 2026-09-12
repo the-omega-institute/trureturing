@@ -1,0 +1,33 @@
+**定理 66（加权幂输送与素数标签的作用）。** 对 \(n>1\)，令 \(\operatorname{rad}(n)=\prod_{p\mid n}p\)，则
+\[
+\mathcal L_n(k)=\log\frac{\mathcal A(n)^k}{\mathcal A(n^k)},\qquad
+\lim_{k\to\infty}\frac{\mathcal L_n(k)}k
+=\log\mathcal A(n)-\alpha\log n,
+\]
+\[
+-\alpha\log\operatorname{rad}(n)
+<\mathcal L_n(k)-k(\log\mathcal A(n)-\alpha\log n)
+<(1-\alpha)\log\operatorname{rad}(n).
+\]
+特别地 \(\mathcal A(5040)=840\)、\(\operatorname{rad}(5040)=210\)，其漂移为 \(\log840-\alpha\log5040\)。这个 840 按定义是算术加权观察值；定理 39 的 840 按定义是另一个条件偏序模型的历史基数。
+
+\(M_{5040}(k)\) 按定理 61 的表行依次取
+\[
+1/3,\quad35/3,\quad1,\quad35,\quad2/3,\quad70/3,\quad2,\quad70,
+\]
+各频率与对应表行相同。将七标签换为十一，保留对应指数后，全部向量电荷、联合字频率、有界系数关系与协方差按标签对应保持；上述倍率中的 \(35\) 换为 \(55\)，对数漂移增加
+\[
+(1-\alpha)\log(11/7).
+\]
+
+**证明。** 对定义 65 的有限积取对数，定理 52 的 \(Q\) 公式给第一等式。加权相位余项为
+\(\sum_{p\mid n}(x_{a_p}(k)-\alpha)\log p\)。每个 \(\log p>0\)、\(0<x_{a_p}(k)<1\)，且支撑非空，故求和得到两个严格界，除以 \(k\) 得漂移。定理 60 的 \(f\) 值给
+\(\mathcal A(5040)=2^3\cdot3\cdot5\cdot7=840\)。两种 840 的数值相等由各自乘积与定理 39 的计数分别证明，不需要将它们的定义域相同化。
+
+相邻倍率满足
+\[
+\log M_n(k)=\mathcal L_n(k+1)-\mathcal L_n(k),\qquad
+M_n(k)=\frac{\mathcal A(n)\mathcal A(n^k)}{\mathcal A(n^{k+1})}.
+\]
+将表中每个指数向量代入素数积即得八个有理数；素因数分解唯一性使它们互异，故频率逐项运输。定理 52、54–59、64 的向量公式只用指数值及相等指数的分组，重标记不会改变它们。加权读数则用实际素数：两个指数一的同步坐标合并为 \(\log35\)，换标签后为 \(\log55\)；其漂移系数为 \(1-\alpha\)，故得到精确增量。证毕。
+

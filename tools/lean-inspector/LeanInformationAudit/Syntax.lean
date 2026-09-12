@@ -8,6 +8,25 @@ open Lean.Elab.Command
 open Lean.Elab.Term
 open Lean.Meta
 
+/-- Retain construction ownership before the builtin elaborator's structure eta
+compaction loses it. Metadata has no effect on kernel typing or definitional equality.
+Only live forwarding-head traversal consumes this marker; unused arguments do not. -/
+private def markArenaConstruction (elaborator : TermElab) : TermElab := fun stx expected => do
+  let value ← elaborator stx expected
+  let type ← whnfR (← inferType value)
+  if type.isAppOf `D5.S3.ConceptDynamics.InformationEscape.Arena ||
+      type.isAppOf `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena then
+    return mkAnnotation arenaConstructionMarker value
+  return value
+
+@[term_elab Lean.Parser.Term.structInst]
+private def elabArenaConstruction : TermElab :=
+  markArenaConstruction Lean.Elab.Term.StructInst.elabStructInst
+
+@[term_elab Lean.Parser.Term.structInstDefault]
+private def elabDefaultArenaConstruction : TermElab :=
+  markArenaConstruction Lean.Elab.Term.StructInst.elabStructInstDefault
+
 private def declarationName (id : TSyntax `ident) : CommandElabM Name := do
   let name := id.getId
   if (`_root_).isPrefixOf name then
@@ -17,12 +36,13 @@ private def declarationName (id : TSyntax `ident) : CommandElabM Name := do
 private def absoluteIdentFrom (ref : Syntax) (name : Name) : Ident :=
   mkIdentFrom ref (`_root_ ++ name)
 
-private def ensureRegisterableName (env : Environment) (theoremName : Name) :
+private def ensureRegisterableName (env : Environment) (entry : InformationRegistryEntry) :
     CommandElabM Unit := do
-  if isCompanionName theoremName then
-    throwError "IE-C011 GeneratedCertificateRegistered: {theoremName}"
-  if InformationRegistry.hasTheorem env theoremName then
-    throwError "IE-C002 DuplicateRegistration: {theoremName}"
+  if isCompanionName entry.theoremName then
+    throwError "IE-C011 GeneratedCertificateRegistered: {entry.theoremName}"
+  let duplicates := (InformationRegistry.entries env).filter (·.theoremName == entry.theoremName)
+  unless duplicates.isEmpty do
+    throwError (duplicateRegistrationError entry (duplicates.push entry))
 
 private def resolveTheorem (id : TSyntax `ident) : CommandElabM Name := do
   let theoremName <- try
@@ -33,6 +53,17 @@ private def resolveTheorem (id : TSyntax `ident) : CommandElabM Name := do
   match (← getEnv).find? theoremName with
   | some (.thmInfo _) => pure theoremName
   | _ => throwErrorAt id "IE-C001 UnregisteredTheoremUnit: {theoremName}"
+
+private def witnessName (id : Option (TSyntax `ident)) : CommandElabM Name := do
+  match id with
+  | none => return .anonymous
+  | some id =>
+    try liftCoreM <| realizeGlobalConstNoOverloadWithInfo id
+    catch _ => declarationName id
+
+private def optionalWitnessName (stx : Syntax) : CommandElabM Name := do
+  if stx.getNumArgs != 2 then return .anonymous
+  witnessName (some ⟨stx[1]⟩)
 
 private def registerEntry (entry : InformationRegistryEntry) : CommandElabM Unit := do
   registerValidatedEntry entry
@@ -47,28 +78,19 @@ private def resolveArena (id : TSyntax `ident) : CommandElabM Name := do
   catch _ =>
     throwErrorAt id "IE-C003 ArenaResolutionFailed: {id.getId}"
 
-private def ensureOccurrenceRegisterable (env : Environment) (rootId objectArenaName : Name)
-    (catalogId : CatalogId) (theoremName unitName realizationName : Name) :
-    CommandElabM Unit := do
-  if isCompanionName theoremName then
-    throwError "IE-C011 GeneratedCertificateRegistered: {theoremName}"
-  if InformationRegistry.hasOccurrence env objectArenaName theoremName then
-    throwError "IE-C002 DuplicateRegistration: {theoremName}"
-  for generatedName in #[unitName, realizationName] do
+private def ensureOccurrenceRegisterable (env : Environment)
+    (entry : InformationRegistryEntry) : CommandElabM Unit := do
+  if isCompanionName entry.theoremName then
+    throwError "IE-C011 GeneratedCertificateRegistered: {entry.theoremName}"
+  let duplicates := (InformationRegistry.entries env).filter
+    (·.occurrenceKey == entry.occurrenceKey)
+  unless duplicates.isEmpty do
+    throwError (duplicateRegistrationError entry (duplicates.push entry))
+  for generatedName in #[entry.unitName, entry.realizationName] do
     if env.contains generatedName then
-      let prospective : InformationRegistryEntry := {
-        theoremName
-        unitName
-        arenaName := objectArenaName
-        realizationName
-        catalogId
-        registrationModuleName := rootId
-        objectArenaName
-        localRegistrationNames := false
-      }
-      throwError (qualifiedNameCollisionError rootId catalogId generatedName
-        (qualifiedNameCollisionEntries (InformationRegistry.entries env)
-          generatedName prospective))
+      throwError (qualifiedNameCollisionError entry.registrationModuleName
+        entry.effectiveCatalogId generatedName
+        (qualifiedNameCollisionEntries (InformationRegistry.entries env) generatedName entry))
 
 private def addExpectedOccurrence (theoremId arenaId : TSyntax `ident)
     (registrationModule statementIdentityOverride : String) : CommandElabM Unit := do
@@ -142,38 +164,40 @@ private def checkNativeStatement (theoremName arenaName realizationName : Name)
 elab "information_theorem " theoremId:ident ppLine
     "in " arenaId:ident ppLine
     "primitives " primitives:term ppLine
+    variation:("variation " ident)? sensitivity:("sensitivity " ident)?
     ": " statement:term " := " proof:term : command => do
     let theoremName <- declarationName theoremId
-    ensureRegisterableName (← getEnv) theoremName
     let arenaName <- try
       liftCoreM <| realizeGlobalConstNoOverloadWithInfo arenaId
     catch _ =>
       throwErrorAt arenaId "IE-C003 ArenaResolutionFailed: {arenaId.getId}"
     let realizationName := theoremName.str primitiveRealizationSuffix
+    let unitName := theoremName.str theoremUnitSuffix
+    let entry ← liftTermElabM <| prepareRegistrationEntry (← getEnv) {
+      theoremName, unitName, arenaName, realizationName }
+    ensureRegisterableName (← getEnv) entry
     let realizationId := absoluteIdentFrom theoremId realizationName
     elabCommand (← `(command| def $realizationId :
         D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization
           ($arenaId:ident).signature := $primitives))
     checkNativeStatement theoremName arenaName realizationName statement
     elabCommand (← `(command| theorem $theoremId : $statement := $proof))
-    let unitName := theoremName.str theoremUnitSuffix
     let unitId := absoluteIdentFrom theoremId unitName
     elabCommand (← `(command| def $unitId :
         D5.S3.ConceptDynamics.InformationEscape.TheoremUnit ($arenaId:ident).toArena :=
       { primitives := ($realizationId:ident).toPrimitiveBundle
         Statement := $statement
         proof := $theoremId }))
-    registerEntry {
-      theoremName
-      unitName
-      arenaName
-      realizationName
+    registerEntry { entry with
+      variationWitness := ← optionalWitnessName (← getRef)[9]
+      sensitivityWitness := ← optionalWitnessName (← getRef)[10]
     }
 
 syntax (name := registerInformationTheoremCmd)
   "register_information_theorem " ident ppLine
     "in " ident ppLine
-    "primitives " term " realization " ident : command
+    "primitives " term " realization " ident
+    (" variation " ident)? (" sensitivity " ident)? : command
 
 @[command_elab registerInformationTheoremCmd]
 private def elabRegisterInformationTheorem : CommandElab := fun stx => do
@@ -182,7 +206,6 @@ private def elabRegisterInformationTheorem : CommandElab := fun stx => do
     let primitiveTerm : TSyntax `term := ⟨stx[5]⟩
     let realizationId : TSyntax `ident := ⟨stx[7]⟩
     let theoremName <- resolveTheorem theoremId
-    ensureRegisterableName (← getEnv) theoremName
     let arenaName <- try
       liftCoreM <| realizeGlobalConstNoOverloadWithInfo arenaId
     catch _ =>
@@ -191,6 +214,10 @@ private def elabRegisterInformationTheorem : CommandElab := fun stx => do
       liftCoreM <| realizeGlobalConstNoOverloadWithInfo realizationId
     catch _ =>
       throwError "IE-C006 StatementProofMismatch: {theoremName}"
+    let unitName := localCompanionName (← getEnv) theoremName theoremUnitSuffix
+    let entry ← liftTermElabM <| prepareRegistrationEntry (← getEnv) {
+      theoremName, unitName, arenaName, realizationName }
+    ensureRegisterableName (← getEnv) entry
     match (← getEnv).find? realizationName with
     | some (.thmInfo _) => pure ()
     | _ => throwError "IE-C006 StatementProofMismatch: {theoremName}"
@@ -211,19 +238,19 @@ private def elabRegisterInformationTheorem : CommandElab := fun stx => do
     unless validLegacy do
       throwError "IE-C006 StatementProofMismatch: {theoremName}"
     checkRealizationBundle theoremName arenaName legacyArgs[2]! primitiveTerm
-    let unitName := theoremName.str theoremUnitSuffix
-    let unitId := absoluteIdentFrom theoremId unitName
+    let unitId := absoluteIdentFrom theoremId (privateToUserName unitName)
     let unitType <- `(term|
       D5.S3.ConceptDynamics.InformationEscape.TheoremUnit ($arenaId:ident).toArena)
     let unitValue <- `(term|
       D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit
         $realizationId:ident $theoremId:ident)
-    elabCommand (← `(command| def $unitId : $unitType := $unitValue))
-    registerEntry {
-      theoremName
-      unitName
-      arenaName
-      realizationName
+    if isPrivateName unitName then
+      elabCommand (← `(command| private def $unitId : $unitType := $unitValue))
+    else
+      elabCommand (← `(command| def $unitId : $unitType := $unitValue))
+    registerEntry { entry with
+      variationWitness := ← optionalWitnessName stx[8]
+      sensitivityWitness := ← optionalWitnessName stx[9]
     }
 
 syntax (name := informationTheoremOccurrenceCmd)
@@ -232,6 +259,7 @@ syntax (name := informationTheoremOccurrenceCmd)
     "object_arena " ident ppLine
     "catalog " ident ppLine
     "primitives " term ppLine
+    ("variation " ident)? ("sensitivity " ident)?
     ": " term " := " term : command
 
 @[command_elab informationTheoremOccurrenceCmd]
@@ -241,8 +269,8 @@ private def elabInformationTheoremOccurrence : CommandElab := fun stx => do
   let objectArenaId : TSyntax `ident := ⟨stx[5]⟩
   let catalogId := catalogIdFrom ⟨stx[7]⟩
   let primitiveTerm : TSyntax `term := ⟨stx[9]⟩
-  let statementTerm : TSyntax `term := ⟨stx[11]⟩
-  let proofTerm : TSyntax `term := ⟨stx[13]⟩
+  let statementTerm : TSyntax `term := ⟨stx[13]⟩
+  let proofTerm : TSyntax `term := ⟨stx[15]⟩
   let theoremName <- declarationName theoremId
   let lawArenaName <- resolveArena lawArenaId
   let objectArenaName <- resolveArena objectArenaId
@@ -251,8 +279,18 @@ private def elabInformationTheoremOccurrence : CommandElab := fun stx => do
     theoremUnitSuffix
   let realizationName := catalogQualifiedName rootId objectArenaName catalogId theoremName
     primitiveRealizationSuffix
-  ensureOccurrenceRegisterable (← getEnv) rootId objectArenaName catalogId theoremName
-    unitName realizationName
+  let entry ← liftTermElabM <| prepareRegistrationEntry (← getEnv) {
+    theoremName
+    unitName
+    arenaName := lawArenaName
+    realizationName
+    catalogId
+    catalogKind := .canonicalMaximal
+    registrationModuleName := rootId
+    objectArenaName
+    localRegistrationNames := false
+  }
+  ensureOccurrenceRegisterable (← getEnv) entry
   let realizationId := absoluteIdentFrom theoremId realizationName
   elabCommand (← `(command| def $realizationId :
       D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization
@@ -266,16 +304,9 @@ private def elabInformationTheoremOccurrence : CommandElab := fun stx => do
     D5.S3.ConceptDynamics.InformationEscape.TheoremUnit.mk
       ($realizationId:ident).toPrimitiveBundle $statementTerm $theoremId)
   elabCommand (← `(command| def $unitId : $unitType := $unitValue))
-  registerEntry {
-    theoremName
-    unitName
-    arenaName := lawArenaName
-    realizationName
-    catalogId
-    catalogKind := .canonicalMaximal
-    registrationModuleName := rootId
-    objectArenaName
-    localRegistrationNames := false
+  registerEntry { entry with
+    variationWitness := ← optionalWitnessName stx[10]
+    sensitivityWitness := ← optionalWitnessName stx[11]
   }
 
 syntax (name := registerInformationTheoremOccurrenceCmd)
@@ -283,7 +314,8 @@ syntax (name := registerInformationTheoremOccurrenceCmd)
     "in " ident ppLine
     "object_arena " ident ppLine
     "catalog " ident ppLine
-    "primitives " term " realization " ident : command
+    "primitives " term " realization " ident
+    (" variation " ident)? (" sensitivity " ident)? : command
 
 @[command_elab registerInformationTheoremOccurrenceCmd]
 private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx => do
@@ -296,6 +328,23 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
   let theoremName <- resolveTheorem theoremId
   let lawArenaName <- resolveArena lawArenaId
   let objectArenaName <- resolveArena objectArenaId
+  let rootId := (← getEnv).header.mainModule
+  let unitName := catalogQualifiedName rootId objectArenaName catalogId theoremName
+    theoremUnitSuffix
+  let realizationName := catalogQualifiedName rootId objectArenaName catalogId theoremName
+    primitiveRealizationSuffix
+  let entry ← liftTermElabM <| prepareRegistrationEntry (← getEnv) {
+    theoremName
+    unitName
+    arenaName := lawArenaName
+    realizationName
+    catalogId
+    catalogKind := .canonicalMaximal
+    registrationModuleName := rootId
+    objectArenaName
+    localRegistrationNames := false
+  }
+  ensureOccurrenceRegisterable (← getEnv) entry
   let suppliedRealizationName <- try
     liftCoreM <| realizeGlobalConstNoOverloadWithInfo realizationId
   catch _ =>
@@ -303,13 +352,6 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
   let suppliedRealizationInfo <- match (← getEnv).find? suppliedRealizationName with
   | some (.thmInfo info) => pure info
   | _ => throwError "IE-C006 StatementProofMismatch: {theoremName}"
-  let rootId := (← getEnv).header.mainModule
-  let unitName := catalogQualifiedName rootId objectArenaName catalogId theoremName
-    theoremUnitSuffix
-  let realizationName := catalogQualifiedName rootId objectArenaName catalogId theoremName
-    primitiveRealizationSuffix
-  ensureOccurrenceRegisterable (← getEnv) rootId objectArenaName catalogId theoremName
-    unitName realizationName
   let theoremExpr <- liftTermElabM <| mkConstWithFreshMVarLevels theoremName
   let theoremType <- liftTermElabM do
     instantiateMVars (← whnfR (← inferType theoremExpr))
@@ -343,16 +385,9 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
     D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit
       $qualifiedRealizationId:ident $theoremId:ident)
   elabCommand (← `(command| def $unitId : $unitType := $unitValue))
-  registerEntry {
-    theoremName
-    unitName
-    arenaName := lawArenaName
-    realizationName
-    catalogId
-    catalogKind := .canonicalMaximal
-    registrationModuleName := rootId
-    objectArenaName
-    localRegistrationNames := false
+  registerEntry { entry with
+    variationWitness := ← optionalWitnessName stx[12]
+    sensitivityWitness := ← optionalWitnessName stx[13]
   }
 
 end LeanInformationAudit

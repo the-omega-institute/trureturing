@@ -1,0 +1,17 @@
+**证明。** 第 317 条的两个原双射在全部原域有双逆。若 $s$ 属于容量像，它的逆必是该像所由来的容量状态；反向若逆在 $B_A^{\rm cap}$，再编码恢复 $s$，故 $s$ 属于像。对 $d$ 同理。限制两对双逆即得所列互逆式，定义域没有扩张。
+
+有限配置的 $R_{A,I}$ 限制并以 $p_i$ 重索引，$Z_{A,I}$ 在 $I$ 外补零。两向均保留 $0\le u_i\le A_i$，逐坐标复合为恒等。空 $I$ 时原配置是空函数，零扩展是定义域 $\omega$ 的总零状态，反向限制又为空。第 304–305、341.2 条的配置码双逆在同一 $P_I,A_I$ 上适用，代入得显示复合的双逆和精确像；零容量标签仍由 $P_I$ 保留。对这些双射分别使用 $\{b[U]:U\in\tau\}$，任意并及有限交的直接像论证与定理 370.5 相同，给所选拓扑下的同胚。
+
+记录 $\operatorname{rec}_{\rm reg}(u)$ 只列有限个非零内容边，总数字图 $\operatorname{dig}_{\rm reg}(u)$ 则在每个素数标签都有一条边，包括零内容。在完整集合解释中，原状态图及数字图分别满足
+$$
+\operatorname{Enc}(u)
+=\operatorname{Pack}\{\langle\operatorname{NatZ}(n),\operatorname{Enc}(u_n)\rangle_Z:n\in\omega\},
+$$
+
+$$
+\operatorname{Enc}(\operatorname{dig}_{\rm reg}(u))
+=\operatorname{Pack}\{\langle\operatorname{Enc}(\lambda_{\rm reg}(n)),
+\operatorname{Enc}(\operatorname{scode}(u_n))\rangle_Z:n\in\omega\}.
+$$
+第二式编码的是原始标签 $\lambda_{\rm reg}(n)=\zeta(p_n)$ 和带符号字本身，第一式编码的是原指标和原整数值。它们由第 74 条逐边得到，正体现定理 370.4 的两种提升；任意零坐标边都未删除。证毕。
+

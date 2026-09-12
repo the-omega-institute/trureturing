@@ -1,0 +1,14 @@
+**证明。** 取 $A_n=1$、$\theta_n=[2^{-n-2}]$，则 $M(A,\theta)=1/2$。令 $\alpha=\sqrt2-1\in(0,1)$，并定义总状态
+$$
+x_n=\lfloor2^{n+1}\alpha\rfloor-2\lfloor2^n\alpha\rfloor.
+$$
+将 $2^n\alpha$ 写成整数加 $[0,1)$ 中的小数，双倍的小数下取整为零或一，故 $x_n\in\{0,1\}$，$x\in X$。有限望远镜和给
+$$
+\sum_{n=0}^N x_n2^{-n-2}
+=\frac{\lfloor2^{N+1}\alpha\rfloor}{2^{N+2}}
+-\frac{\lfloor\alpha\rfloor}{2}
+=\frac{\lfloor2^{N+1}\alpha\rfloor}{2^{N+2}}
+\longrightarrow\frac\alpha2.
+$$
+最后一步的误差小于 $2^{-N-2}$。若 $\sqrt2=a/b$ 为正分母既约分数，则 $a^2=2b^2$ 使 $a$ 为偶数，代回又使 $b$ 为偶数，矛盾。因此 $\alpha/2$ 无理。若 $[\alpha/2]=[q]$ 且 $q\in\mathbb Q$，则 $\alpha/2-q$ 为整数，又矛盾。定理 363.3 给 $F_{A,\theta}(x)=[\alpha/2]$，而每个有限状态的输出都是有限有理和的类。第 332 条的 $\operatorname{penc}$ 只定义在 $\mathsf D_{\rm rat}$，不能用于这个延拓值。证毕。
+

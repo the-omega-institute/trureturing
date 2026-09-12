@@ -1,0 +1,12 @@
+**定义 367.1。** 令
+$$
+\mathcal H=\operatorname{Hom}_{\rm alg}(V,\mathbb T)
+=\{h\in\mathbb T^V:h(u+v)=h(u)+h(v)\text{ 对全部 }u,v\in V\}.
+$$
+在 $V$ 上定义拓扑 $\tau_{\mathcal H}^{V}$：其开集是全部形如
+$$
+\bigcap_{j=1}^m h_j^{-1}(O_j),\qquad
+m\in\omega,\ h_j\in\mathcal H,\ O_j\subseteq\mathbb T\text{ 通常开},
+$$
+的集合的任意并。空交为 $V$，空并为空集。该定义不预先对 $h_j$ 施加连续性条件。另令 $\tau_{\mathbb Q}^{V}$ 为全部 $\chi_r^{\rm cap}:V\to\mathbb T$、$r\in\mathbb Q^\omega$ 按同一方式生成的拓扑。
+

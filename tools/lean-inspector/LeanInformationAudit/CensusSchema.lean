@@ -13,6 +13,7 @@ structure Counts where
   observed : Nat := 0
   observedQueryCompleted : Nat := 0
   observedQueryIncomplete : Nat := 0
+  trivialInCatalog : Nat := 0
   finiteOccurrence : Nat := 0
   structuralOccurrence : Nat := 0
   boundedFiniteTruncation : Nat := 0
@@ -35,6 +36,7 @@ def Counts.addEntry (counts : Counts)
   | .certified disposition =>
     let counts := { counts with certified := counts.certified + 1 }
     match disposition with
+    | .trivialInCatalog _ => { counts with trivialInCatalog := counts.trivialInCatalog + 1 }
     | .finiteOccurrence _ => { counts with finiteOccurrence := counts.finiteOccurrence + 1 }
     | .structuralOccurrence _ =>
       { counts with structuralOccurrence := counts.structuralOccurrence + 1 }
@@ -59,6 +61,7 @@ def Counts.fields (counts : Counts) : List (String × Nat) := [
   ("observed", counts.observed),
   ("observed_query_completed", counts.observedQueryCompleted),
   ("observed_query_incomplete", counts.observedQueryIncomplete),
+  ("trivial_in_catalog", counts.trivialInCatalog),
   ("finite_occurrence", counts.finiteOccurrence),
   ("structural_occurrence", counts.structuralOccurrence),
   ("bounded_finite_truncation", counts.boundedFiniteTruncation),
@@ -104,6 +107,24 @@ def parseRow (row : Json) (queryScope : Option ImportClosureScope := none) : Exc
     exactFields row ["theorem_name", "statement_id", "class", "payload"]
     let payload ← row.getObjVal? "payload"
     match className with
+    | "trivial_in_catalog" =>
+      exactFields payload ["root", "canonical_arena", "catalog", "index", "registration",
+        "realization", "catalog_seal", "triviality_certificate", "context"]
+      let context ← payload.getObjVal? "context"
+      let context ← match ← stringField context "kind" with
+        | "structural" => do
+          exactFields context ["kind"]
+          pure TrivialCatalogContext.structural
+        | "finite" => do
+          exactFields context ["kind", "nondegeneracy_certificate", "state_enumeration_certificate"]
+          pure <| TrivialCatalogContext.finite (← nameField context "nondegeneracy_certificate")
+            (← nameField context "state_enumeration_certificate")
+        | _ => throw "context"
+      return .certified <| .trivialInCatalog ⟨← nameField payload "root",
+        ← nameField payload "canonical_arena", ← nameField payload "catalog",
+        ← payload.getObjValAs? Nat "index", ← nameField payload "registration",
+        ← nameField payload "realization", ← nameField payload "catalog_seal",
+        ← nameField payload "triviality_certificate", context⟩
     | "finite_occurrence" =>
       exactFields payload ["canonical_arena", "registration", "realization",
         "nondegeneracy_certificate", "state_enumeration_certificate"]

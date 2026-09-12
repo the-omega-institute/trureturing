@@ -1,0 +1,43 @@
+**定义 257（固定元数元组与变长有限序列）。** 对每个固定 $r\in\omega$，采用通常外部集合元组
+$$
+T_0=\varnothing,\qquad T_1(a_1)=a_1,\qquad
+T_r(a_1,\ldots,a_r)=\langle a_1,T_{r-1}(a_2,\ldots,a_r)\rangle\quad(r\ge2).
+$$
+元数是类型的一部分；$\prod_{i=1}^r A_i$ 指这些 $T_r$ 组成的集合，空积为 $\{T_0\}$。固定元数的投影 $\operatorname{pr}_i^r$ 由上述有序对的唯一分解递归取得；$r=1$ 的投影为恒等，$r=0$ 无投影。对有效码 $c_1,\ldots,c_r$ 定义语义装配
+$$
+T_r^Z(c_1,\ldots,c_r)
+=\operatorname{Enc}(T_r(\operatorname{Dec}(c_1),\ldots,\operatorname{Dec}(c_r))),
+\qquad T_0^Z=\operatorname{Enc}(\varnothing).
+$$
+语义投影只在该固定类型的装配像上定义为
+$$
+\operatorname{pr}_{i,Z}^r(c)=
+\operatorname{Enc}(\operatorname{pr}_i^r(\operatorname{Dec}(c))).
+$$
+在上述固定括号下，普通空间桥取
+$$
+b_3^{\rm can}:J^3\longrightarrow S^3,\qquad
+b_3^{\rm can}(T_3(z_1,z_2,z_3))=T_3(b(z_1),b(z_2),b(z_3)),
+$$
+其目标是普通外部积，三个分量不要求属于 $\mathfrak V_Z$。
+
+若 CSA 的某种固定元组或第 115 条配置元组使用另一括号形 $T_r'$，记其投影为 $\operatorname{pr}_i'$，定义重括号映射
+$$
+\kappa_{r}(u)=T_r(\operatorname{pr}_1'u,\ldots,\operatorname{pr}_r'u),\qquad
+\kappa_{r}^{-1}(v)=T_r'(\operatorname{pr}_1^rv,\ldots,\operatorname{pr}_r^rv).
+$$
+零元两侧均取唯一空元组；对应语义映射为 $\operatorname{Enc}\circ\kappa_r\circ\operatorname{Dec}$。各旧元组的括号保持其原约定，使用本条公式时显式经 $\kappa_r$ 对接。
+
+特别记原 CSA 空间的括号积为 $J_{\rm CSA}^3$，其重括号映射为 $\kappa_3:J_{\rm CSA}^3\to T_3[J,J,J]$，并置
+$$
+b_3=b_3^{\rm can}\circ\kappa_3:J_{\rm CSA}^3\longrightarrow S^3,\qquad
+b_3^{-1}=\kappa_3^{-1}\circ(b_3^{\rm can})^{-1}.
+$$
+从第 261 条起，原 CSA 字段中的 $J^3$ 简记 $J_{\rm CSA}^3$，目标 $S^3$ 取本条的 $T_3$ 括号。于是原空间字段 $x$ 的像实际为 $b_3^{\rm can}\circ\kappa_3\circ x$，逆像恢复原括号。两边逐坐标运算均按各自投影定义；若原括号就是 $T_3$，$\kappa_3$ 为恒等。
+
+可变长序列不用无标签的 $T_r$ 合并，而用函数图
+$$
+s=\{\langle i,a_i\rangle:i<r\},\qquad \operatorname{dom}(s)=r.
+$$
+其逐字段数字图，例如 $a_i\in J$ 时，为 $s^b=\{\langle\zeta(i),b(a_i)\rangle:i<r\}$，定义域为 $\zeta[r]$；长度的数字为 $\zeta(r)$，语义长度为 $\operatorname{NatZ}(r)$。序列值可为任意集合，不要求分量遗传有限。
+

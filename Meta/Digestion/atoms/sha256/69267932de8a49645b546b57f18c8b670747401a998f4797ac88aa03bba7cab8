@@ -1,0 +1,44 @@
+**定理 311。** 对 $H,K\le\mathsf V_{\rm reg}$，有
+$$
+\operatorname{Sat}(H)=\{u\in\mathsf V_{\rm reg}:mu\in H\text{ 对某个整数 }m>0\},\qquad
+H\subseteq\operatorname{Sat}(H)\subseteq L_{\rm fin}(H),
+$$
+$$
+L_{\rm fin}(H)=\bigcap_{a\in\mathcal A_{\rm fin}(H)}\ker\langle a,-\rangle,\qquad
+\mathcal K_{\rm reg}(H)=\bigcap_{a\in\mathcal A_{\rm fin}(H)}\ker\operatorname{char}_{\rm reg,a}.
+$$
+$L_{\rm fin}(H)$ 饱和，且
+$$
+\mathcal A_{\rm fin}(L_{\rm fin}(H))=\mathcal A_{\rm fin}(H),\qquad
+L_{\rm fin}(L_{\rm fin}(H))=L_{\rm fin}(H).
+$$
+$H$ 饱和当且仅当代数商群 $\mathsf V_{\rm reg}/H$ 无挠。称 $a\in\mathcal A_{\rm fin}(H)$ 且 $\langle a,u\rangle\ne0$ 为 $u$ 与 $H$ 的有限支撑整数分离子。对 $G=H$ 或 $G=\operatorname{Sat}(H)$，分别有
+$$
+L_{\rm fin}(H)=G
+\iff\text{每个 }u\notin G\text{ 都有这样的分离子}
+\iff G\text{ 在 }\tau_\Psi\text{ 中闭}.
+$$
+特别地，$L_{\rm fin}(H)=H$ 的充要条件是 $H$ 饱和且每个 $u\notin\operatorname{Sat}(H)$ 可被如此分离，不能仅以饱和代替此合取。
+
+对每个有限 $I$，有
+$$
+H_I\subseteq\operatorname{res}^{\mathbb Z}_I[L_{\rm fin}(H)]\subseteq\operatorname{Sat}(H_I),\qquad
+\operatorname{Sat}(\operatorname{res}^{\mathbb Z}_I[L_{\rm fin}(H)])=\operatorname{Sat}(H_I),
+$$
+$$
+\operatorname{Sat}(\operatorname{res}^{\mathbb Z}_I[\operatorname{Sat}(H)])=\operatorname{Sat}(H_I).
+$$
+下列四条件等价：$\mathcal K_{\rm reg}(H)=\mathcal K_{\rm reg}(K)$；对每个有限 $I$ 有 $\operatorname{Sat}(H_I)=\operatorname{Sat}(K_I)$；$L_{\rm fin}(H)=L_{\rm fin}(K)$；$\mathcal A_{\rm fin}(H)=\mathcal A_{\rm fin}(K)$。此外
+$$
+\mathcal K_{\rm reg}(H)=\mathsf X_{\rm reg}
+\iff L_{\rm fin}(H)=\mathsf V_{\rm reg}
+\iff\mathcal A_{\rm fin}(H)=\{0\}
+\iff\forall I\subseteq\omega\text{ 有限},\quad\operatorname{Sat}(H_I)=\mathbb Z_o^I.
+$$
+若 $H$ 的所有元素具有一个共同有限支撑集 $I_0$，则 $L_{\rm fin}(H)=\operatorname{Sat}(H)$；特别适用于有限生成 $H$。实际有限支撑子群的限制则满足
+$$
+\operatorname{Sat}_{\mathsf V_I}(H\cap\mathsf V_I)
+=\operatorname{Sat}(H)\cap\mathsf V_I.
+$$
+左侧饱和在 $\mathsf V_I$ 的有理张成环境中取。第 309 条此时应用于经限制识别的 $H\cap\mathsf V_I$，其环境环面为 $I$ 外为零的闭子群，一般不能换成投影 $H_I$。例如 $H=\mathbb Z_o(\varepsilon_0+\varepsilon_1)$ 在 $\{0\}$ 上投影为全整数群，而 $H\cap\mathsf V_{\{0\}}=0$；$\varepsilon_0$ 通过该 $H$ 的每个单坐标饱和检验，却不通过 $\{0,1\}$ 检验。
+

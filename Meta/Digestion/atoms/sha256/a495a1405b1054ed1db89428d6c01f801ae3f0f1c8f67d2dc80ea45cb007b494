@@ -1,0 +1,27 @@
+**定义 196（时间增量表与前缀积分）。** 对有限素数集 \(P\)，令
+\[
+\mathsf J_P=\mathbb Z^{(\mathbb Z\times P)}
+\]
+为有限支撑的时间—寄存器增量表。令 \(X\) 为定义 193 所要求的槽支撑情境，定义
+\[
+\delta_X(t,p)=\sum_{j\ge0}Z_X(t,\lambda(p,j)),
+\qquad
+\mathbf a_X^T(p)=\sum_{s\le T}\delta_X(s,p),
+\qquad
+\mathbf a_X^\infty(p)=\sum_{t\in\mathbb Z}\delta_X(t,p).
+\tag{Z-TEMPORAL-PROFILE}
+\]
+有限性保证上述和均为有限整数和。等价地，若 \(r_X^T\) 是定义 185 的前缀槽表，则
+\[
+\mathbf a_X^T=V_P^{\mathbb Z}(r_X^T),
+\qquad
+\mathbf a_X^\infty=V_P^{\mathbb Z}(r_X).
+\]
+定义
+\[
+\mathsf I_P(c)(T,p)=\sum_{s\le T}c(s,p),
+\qquad
+\Sigma_P(c)(p)=\sum_{t\in\mathbb Z}c(t,p)
+\quad(c\in\mathsf J_P).
+\]
+

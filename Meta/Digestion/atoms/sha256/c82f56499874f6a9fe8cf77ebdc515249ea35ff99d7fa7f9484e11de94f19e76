@@ -1,0 +1,29 @@
+**定义 202（时间增量表的全 Zeckendorf 呈现）。** 令
+\[
+I_{P,Z}=\mathsf Z_{\mathbb Z}\times\operatorname{NatZ}[P],
+\qquad
+\mathsf J_{P,Z}=\mathsf Z_{\mathbb Z}^{(I_{P,Z})},
+\]
+其中上标表示有限支撑函数。对 \(d,e\in\mathsf J_{P,Z}\) 定义逐点运算
+\[
+(d\boxplus_Z^{\rm pt}e)(u,v)=d(u,v)\oplus_Ze(u,v),
+\qquad
+(\ominus_Z^{\rm pt}d)(u,v)=\ominus_Zd(u,v).
+\]
+定义
+\[
+\operatorname{TCode}_P:\mathsf J_P\longrightarrow\mathsf J_{P,Z}
+\]
+为
+\[
+\operatorname{TCode}_P(c)(\operatorname{scode}(t),\operatorname{NatZ}(p))
+ =\operatorname{scode}(c(t,p))
+\quad(t\in\mathbb Z,p\in P),
+\tag{Z-TEMPORAL-CODE}
+\]
+并令其在 \(I_{P,Z}\) 的其余位置取 \(0_Z\)。定义逆映射
+\[
+\operatorname{TDec}_P(d)(t,p)
+ =\operatorname{ival}\bigl(d(\operatorname{scode}(t),\operatorname{NatZ}(p))\bigr).
+\]
+

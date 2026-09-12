@@ -1,0 +1,14 @@
+**定理 278（外层基数与全部语义成员的分离）。** 对任意集合 $x$，
+$$
+\operatorname{size}_{\rm out}(\operatorname{Enc}(x))
+ =\begin{cases}1,&x=\varnothing,\\2,&x\ne\varnothing,\end{cases}
+\qquad
+\operatorname{size}_{\rm sem}(\operatorname{Enc}(x))=|x|.
+$$
+同时
+$$
+\operatorname{Card}_Z(\operatorname{Enc}(x))=\operatorname{Enc}(|x|),\qquad
+\operatorname{Rank}_Z(\operatorname{Enc}(x))=\operatorname{Enc}(\operatorname{rk}(x)).
+$$
+因此无限集合的码具有两个环境成员，却具有与原集合等势的全部语义成员；它不属于 $HF$。
+

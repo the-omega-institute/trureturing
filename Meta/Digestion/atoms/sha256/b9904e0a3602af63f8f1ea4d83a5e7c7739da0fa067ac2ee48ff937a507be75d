@@ -1,0 +1,72 @@
+**定理 267（筛选、配对及参数域的交换）。** 对每种 $R$、全部合法输入及第 266 条各自类型的全部参数，以下操作与字段运输交换，并且联合合法域保持且反映。为消除相同记号的参数歧义，各选择条件分别为：空间 $F_{S_0}$ 取 $e\in A$ 且 $x(e)\in S_0$；时间 $F_I$ 取 $t(e)\in I$；来源 $F_L$ 取 $\rho(e)\in L$；联合 $F_{B_0}$ 取 $(t(e),x(e))\in B_0$；身份过去 $F_{\downarrow D_0}$ 取 $\exists d\in D_0\ (e=d\lor e\prec d)$。时间筛选是联合柱集 $F_{I\times J^3}$ 的特化。它们均只改选择，故
+$$
+\begin{gathered}
+R(F_{S_0}X)=F_{S_0^R}^R(RX),\quad
+R(F_IX)=F_{I^R}^R(RX),\quad
+R(F_LX)=F_{L^R}^R(RX),\\
+R(F_{B_0}X)=F_{B_0^R}^R(RX),\qquad
+R(F_{\downarrow D_0}X)=F_{\downarrow D_0}^R(RX).
+\end{gathered}
+$$
+前四式的联合域分别是历史载体与对应全幂集的积；第五式还要求 $D_0\subseteq E_X$。直接出现查询 $H_{e_0}(C,A)=(C,A\cap\{e_0\})$ 对每个 $e_0\in HF$ 总定义，亦满足 $R(H_{e_0}X)=H_{e_0}^R(RX)$。
+
+对 $e\in\Omega_X$ 记 $\alpha_X(e)=(x(e),\sigma(e),\rho(e))$、$\alpha_t^X(e)=(x(e),\sigma(e),\rho(e),t(e))$，并采用 CSA 定义 25–26 的当前后继属性集。则
+$$
+U_{RX}(e)=a[U_X(e)],\qquad U_t^{RX}(e)=a_t[U_t^X(e)].
+$$
+因此对任意 $Q\subseteq\mathrm{Attr}$、$Q_t\subseteq\mathrm{Attr}_t$，
+$$
+R(F_{\downarrow Q}X)=F_{\downarrow Q^R}^R(RX),\qquad
+R(F_{\downarrow Q_t}X)=F_{\downarrow Q_t^R}^R(RX).
+$$
+这些因果筛选中见证始终为 $d\in\Omega_X$，条件分别为 $\alpha_X(d)\in Q$、$\alpha_t^X(d)\in Q_t$，均附 $e\preceq d$；既不把见证域换成 $A_X$，也不换成 $E_X$。若只取事件自身属性的成员谓词，其集合像同样由 $a,a_t$ 运输，但不据此扩大任何既有签名。
+
+关系限制、空间父对、联合父对与含时属性父对分别只在完整乘积中把选择改成
+$$
+\begin{aligned}
+&\{p_{ef}:e\in A_X,f\in A_Y,(e,f)\in R_0\},\\
+&\{p_{ef}:e\in A_X,f\in A_Y,(x_X(e),x_Y(f))\in P_{\rm sp}\},\\
+&\{p_{ef}:e\in A_X,f\in A_Y,((t_X(e),x_X(e)),(t_Y(f),x_Y(f)))\in P_0\},\\
+&\{p_{ef}:e\in A_X,f\in A_Y,(\alpha_t^X(e),\alpha_t^Y(f))\in P_t\}.
+\end{aligned}
+$$
+其符号分别为 $\boxtimes_{R_0},M_{P_{\rm sp}},M_{P_0},\widehat M_{P_t}$，参数类型区分同名符号。除第一种的 $R_0\subseteq\Omega_X\times\Omega_Y$ 依赖域外，其余对全部历史输入和全部所列固定参数总定义。每种操作都满足 $R(O(X,Y))=O^R(RX,RY)$，目标参数分别为 $R_0,P_{\rm sp}^R,P_0^R,P_t^R$；完整背景不带选择掩码。同档案因果配对也满足
+$$
+R(D_\prec X)=D_\prec^R(RX),\qquad
+D_\prec X=X\boxtimes_{R_X}X,\quad
+R_X=\{(e,f)\in\Omega_X^2:e\prec_Xf\}.
+$$
+这是一元原语自身的交换，不把其两个相同输入解释成单孔上下文。
+
+参考点及仿射参数满足
+$$
+\begin{gathered}
+b_3(x+_Jy-_Jo)=b_3(x)\oplus_Z^{(3)}b_3(y)\ominus_Z^{(3)}b_3(o),\\
+F^R\circ b_3=b_3\circ F,\qquad
+R(X\boxtimes_oY)=RX\boxtimes_{b_3(o)}^RRY.
+\end{gathered}
+$$
+最后一式在带参考点记录的共同纤维内解释，参考点不相同则两侧均无定义。整数仿射变换 $F$ 对所有整数矩阵均有正向字段运输，并满足
+$$
+F(x+y-o)=F(x)+F(y)-F(o).
+$$
+整数格点上的全域双向运输恰在 $v[L]\in GL_3(\mathbb Z_o)$ 时成立；非单射情形只保留正向及逆像筛选公式，不合并事件。
+
+**证明。** 第 256、258、262 条使 $b,b_3,\theta$ 均为双射，所以 $z\in S_0$ 当且仅当 $b_3z\in b_3[S_0]$，时间和来源亦然。联合参数用 $k$ 作同一推理，四种选择集合逐事件相同，背景记录由 $R$ 相同。身份过去的事件与关系未变，故其存在见证条件逐事件等价；$D_0\subseteq E_X$ 的域条件也未变。单点查询同理。
+
+任取 $e\in\Omega_X$，目标的每个可达当前事件仍为原来的 $d\in\Omega_X$，其属性为 $a(\alpha_X(d))$，带时属性为 $a_t(\alpha_t^X(d))$；逐元素取像得到两个 $U$ 式，包括属性重复时的去重。双射性给
+$$
+U_X(e)\cap Q\ne\varnothing\iff a[U_X(e)]\cap a[Q]\ne\varnothing,
+$$
+含时式同理，因此两个因果筛选交换。此推理的见证域始终是原定义的 $\Omega$，未从选择或档案其它部分引入见证。
+
+对四种配对操作，任取 $e\in A_X,f\in A_Y$，分别使用事件恒等、$b_3\times b_3$、$k\times k$、$a_t\times a_t$ 的成员等价，得父对被选的条件双向一致。不对称参数仍保留左右槽位。第 265 条已证明完整乘积的全部事件、字段、当前区域与偏序一致，故改变相同选择之后仍是完整记录相等。第一种的参数域因当前区域不变而反映，其余参数像对全幂集双射，故无遗漏合法参数。因果配对的 $R_X$ 由未变的 $\Omega,\prec$ 定义，因而在 $RX$ 中是同一关系，可应用刚证的第一种交换。各筛选或配对仅改选择，故限制到 $\mathcal B$ 时仍保留背景平衡。
+
+参考点式逐坐标用第 256 条加法和负号；参考点相等经 $b_3$ 单射保持反映，故共同纤维的联合域对应。矩阵式每行是三个乘积的有限和，再加向量分量，第 256 条给交换。CSA 命题 35 的仿射恒等式将 $F(x+y-o)$ 和 $F(x)+F(y)-F(o)$ 都展开成 $Lx+Ly-Lo+u$，故同时移动参考点时整个乘积交换。$v[L]\in GL_3(\mathbb Z_o)$ 的充要条件与整数逆取该命题的行列式证明；经 $b$ 逐元素运输不改变该条件。任意矩阵只改变位置而不取事件商，因此仍合法。
+
+若 $F$ 非单射，任意目标区域 $S_1$ 的正确选择条件为 $x(e)\in F^{-1}[S_1]$ 当且仅当 $F(x(e))\in S_1$，给出 CSA 命题 36 的
+$$
+\mathcal F(F_{F^{-1}[S_1]}X)=F_{S_1}(\mathcal F X).
+$$
+它经 $b_3$ 的像继续交换，但不能把任意原区域换成其直接像。确取 $F(x_1,x_2,x_3)=(0,x_2,x_3)$，在 $0$ 与 $(1_J,0_J,0_J)$ 各放一对正负当前事件并只选正事件。原区域 $\{0\}$ 只留下一个正贡献，先运输再筛其像却留下两个；事件始终四个，没有合并身份。固定参考点而仅平移两个因子时，生成位置中平移向量出现两次，先乘再平移只出现一次；共同参考点也须运输才适用仿射式。证毕。
+

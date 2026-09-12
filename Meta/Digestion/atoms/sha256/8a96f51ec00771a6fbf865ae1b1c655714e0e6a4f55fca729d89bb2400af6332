@@ -1,0 +1,29 @@
+**定义 130（配置的平衡时空实现）。** 固定有限配置 \((P,A)\)。令
+\[
+\pi(p,j)=\frac{(p+j)(p+j+1)}2+j
+\]
+为 \(\omega\times\omega\) 上的 Cantor 配对函数，并令
+\[
+\ell_p=\ell_Z(A(p)),\qquad d_a(p,j)=
+\begin{cases}
+\zeta(a(p))(j),&j<\ell_p,\\
+0,&j\ge\ell_p.
+\end{cases}
+\]
+对每个 \(p\in P\)、\(j<\ell_p\) 和 \(\epsilon\in\{+1,-1\}\) 取互异事件 \(e_{p,j}^{\epsilon}\)。令
+\[
+E_a=\Omega_a=\{e_{p,j}^{\epsilon}:p\in P,\ j<\ell_p,\ \epsilon\in\{+1,-1\}\},
+\quad \prec_a=\varnothing,
+\]
+\[
+t(e_{p,j}^{\epsilon})=0,\quad
+x(e_{p,j}^{\epsilon})=\lambda(p,j),\quad
+\sigma(e_{p,j}^{\epsilon})=\epsilon,\quad
+\rho(e_{p,j}^{\epsilon})=\operatorname{leaf}(\pi(p,j)),
+\]
+并令
+\[
+A_a=\{e_{p,j}^{+1}:d_a(p,j)=1\}.
+\]
+由此得到情境表示 \(X_{P,A}(a)=(C_a,A_a)\)。
+

@@ -24,7 +24,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
     [InlineData("ATOMIZER_NONE")]
     [InlineData("SOURCE_MISSING")]
     [InlineData("OCCURRENCE_MISSING")]
-    [InlineData("OCCURRENCE_AMBIGUOUS")]
+    [InlineData("OCCURRENCE_INDEX_REQUIRED")]
     [InlineData("REQUEST_KEYS_INVALID")]
     [InlineData("REQUEST_VALUE_BLANK")]
     [InlineData("REQUEST_TOML_INVALID")]
@@ -57,7 +57,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
                 source with { SourceId = "second", Entries = [target with { SourceId = "second" }] }]) };
         }
         if (code == "OCCURRENCE_MISSING") fixture = fixture with { SourceBytes = Encoding.UTF8.GetBytes("Other text.\n") };
-        if (code == "OCCURRENCE_AMBIGUOUS") fixture = fixture with { SourceBytes = fixture.SourceBytes.Concat(fixture.SourceBytes).ToArray() };
+        if (code == "OCCURRENCE_INDEX_REQUIRED") fixture = fixture with { SourceBytes = fixture.SourceBytes.Concat(fixture.SourceBytes).ToArray() };
         request = code switch
         {
             "ATOM_ABSENT" => request.Replace(target.AtomId, new string('f', 64), StringComparison.Ordinal),
@@ -72,6 +72,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
             "REQUEST_VALUE_BLANK" => request.Replace(Reason, "   ", StringComparison.Ordinal),
             "REQUEST_TOML_INVALID" => "atom_id = [\n",
             "REQUEST_ENCODING_INVALID" => request.Replace("\n", "\r\n", StringComparison.Ordinal),
+            "OCCURRENCE_INDEX_REQUIRED" => request,
             _ => request,
         };
         var raw = code == "SOURCE_MISSING" ? fixture.RawSnapshot(false) : fixture.RawSnapshot();
@@ -87,6 +88,58 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
         Assert.StartsWith("SETTLE_INVALID " + code, result.Error, StringComparison.Ordinal);
         Assert.Equal(before, Image(temporary));
         Assert.Equal(0, applyCalls);
+    }
+
+    [Fact]
+    public void SettleSelectsRepeatedOccurrenceAndWritesIt()
+    {
+        var fixture = AtomContextFixture.Create();
+        var target = fixture.Ledger.RequireDigestionEntries().Single(entry => entry.AtomId == AtomContextFixture.Id(fixture.Atomized.Claims[1]));
+        fixture = fixture with { SourceBytes = fixture.SourceBytes.Concat(fixture.SourceBytes).ToArray() };
+        var context = DigestionAtomContextProjection.ResolveOccurrences(fixture.Snapshot(), fixture.Ledger, target.AtomId)[1];
+        var request = $"atom_id = '{target.AtomId}'\njustification = '{Reason}'\nprevious_atom_id = '{context.Previous!.Value.AtomId}'\nnext_atom_id = '{context.Next!.Value.AtomId}'\noccurrence_index = 2\n";
+        using var temporary = new TemporaryDirectory();
+        var raw = fixture.RawSnapshot();
+        WriteFiles(temporary.Path, raw);
+        var result = Run(temporary.Path, raw, request);
+        Assert.True(result.Success, result.Error);
+    }
+
+    [Fact]
+    public void SettleRejectsOutOfRangeOccurrenceIndex()
+    {
+        var fixture = AtomContextFixture.Create();
+        var target = fixture.Ledger.RequireDigestionEntries().Single(entry => entry.AtomId == AtomContextFixture.Id(fixture.Atomized.Claims[1]));
+        fixture = fixture with { SourceBytes = fixture.SourceBytes.Concat(fixture.SourceBytes).ToArray() };
+        var request = $"atom_id = '{target.AtomId}'\njustification = '{Reason}'\nprevious_atom_id = '{AtomContextFixture.Id(fixture.Atomized.Claims[0])}'\nnext_atom_id = '{AtomContextFixture.Id(fixture.Atomized.Claims[2])}'\noccurrence_index = 99\n";
+        var result = Run("/synthetic", fixture.RawSnapshot(), request);
+        Assert.False(result.Success);
+        Assert.StartsWith("SETTLE_INVALID OCCURRENCE_INDEX_INVALID", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void SettleRepeatedOccurrenceStillRejectsWrongAdjacency()
+    {
+        var fixture = AtomContextFixture.Create();
+        var target = fixture.Ledger.RequireDigestionEntries().Single(entry => entry.AtomId == AtomContextFixture.Id(fixture.Atomized.Claims[1]));
+        fixture = fixture with { SourceBytes = fixture.SourceBytes.Concat(fixture.SourceBytes).ToArray() };
+        var request = $"atom_id = '{target.AtomId}'\njustification = '{Reason}'\nprevious_atom_id = '{new string('f', 64)}'\nnext_atom_id = '{AtomContextFixture.Id(fixture.Atomized.Claims[2])}'\noccurrence_index = 2\n";
+        using var temporary = new TemporaryDirectory();
+        var raw = fixture.RawSnapshot();
+        WriteFiles(temporary.Path, raw);
+        var result = Run(temporary.Path, raw, request);
+        Assert.False(result.Success);
+        Assert.StartsWith("SETTLE_INVALID CONTEXT_MISMATCH", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void SettleRejectsOccurrenceIndexForSingleton()
+    {
+        var fixture = AtomContextFixture.Create();
+        var target = fixture.Ledger.RequireDigestionEntries().Single(entry => entry.AtomId == AtomContextFixture.Id(fixture.Atomized.Claims[1]));
+        var result = Run("/synthetic", fixture.RawSnapshot(), Request(fixture, target.AtomId) + "occurrence_index = 2\n");
+        Assert.False(result.Success);
+        Assert.StartsWith("SETTLE_INVALID REQUEST_KEYS_INVALID", result.Error, StringComparison.Ordinal);
     }
 
     [Theory]

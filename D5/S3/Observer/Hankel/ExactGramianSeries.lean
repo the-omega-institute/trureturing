@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Observer/Hankel/ExactGramianSeries
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Actual infinite Gramian series converge, solve Stein equations, and are positive definite under full observation. -/
 
 import D5.S3.Observer.Hankel.BalancedSteinEnergy

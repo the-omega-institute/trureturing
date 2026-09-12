@@ -1,0 +1,14 @@
+**定理 143（时空坐标算术的 Zeckendorf 共轭）。** \(\iota_Z:\mathbb Z_{\mathrm{code}}\to\mathsf Z_{\mathbb Z}\) 是双射，并且对所有整数 \(z,z'\)
+\[
+\iota_Z(z+z')=\iota_Z(z)\boxplus_Z^{\mathbb Z}\iota_Z(z'),
+\qquad
+z<z'\iff\iota_Z(z)<_Z^{\mathbb Z}\iota_Z(z').
+\]
+\(\iota_Z^{(3)}\) 是 \(\mathbb Z^3\) 与 \((\mathsf Z_{\mathbb Z})^3\) 的双射，并保持逐坐标加法。若 \(t<t'\)，则
+\[
+\iota_Z(t'+1)=\operatorname{succ}_{\mathbb Z,Z}(\iota_Z(t'))
+\]
+其中 \(\operatorname{succ}_{\mathbb Z,Z}(c)=\operatorname{scode}(\operatorname{ival}(c)+1)\)。因此 CSA 中的时间守卫、空间平移和乘积位置更新都能只用带符号 Zeckendorf 码表达。
+
+**证明。** \(\operatorname{scode}\) 与 \(\operatorname{ival}\) 互为双射，且 \(\mathbb Z_{\mathrm{code}}\) 与通常整数由定义给出的符号双射，所以 \(\iota_Z\) 双射。定理 114 的环同构等式给第一式，序关系由 \(\operatorname{ival}\) 的定义给出。有限直积保持双射和逐坐标运算，得三维结论。后继式是 \(\operatorname{succ}_{\mathbb Z,Z}\) 的定义。CSA 的时间复合守卫只使用整数严格序，空间位置只使用逐坐标加法，乘积的新时刻只使用二者最大值再加一，故上述各式逐项替换后保持。证毕。
+
