@@ -444,7 +444,7 @@ theorem actual_residuals_of_preparation
         (profile a) (by simp [profile, mass])
     have hma : (realSqrt (M a : ℝ)) ≠ 0 := by
       dsimp [realSqrt]
-      exact_mod_cast (Real.sqrt_pos.2 (by exact_mod_cast hM)).ne' 
+      exact_mod_cast (Real.sqrt_pos.2 (by exact_mod_cast hM)).ne'
     have hsq : (realSqrt (M a : ℝ)) * (realSqrt (M a : ℝ)) = (M a : ℂ) := by
       dsimp [realSqrt]
       norm_cast
