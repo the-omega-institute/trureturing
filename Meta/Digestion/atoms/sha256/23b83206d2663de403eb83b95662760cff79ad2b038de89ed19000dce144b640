@@ -1,0 +1,27 @@
+**34.19 Recovery of the published three-dimensional constants.** For
+\(k=3\), all \(a_i=0\), and \(T_{\min}=\log2\), one has
+\[
+m=0,\qquad d_{\min}=1-\tfrac12=\tfrac12,\qquad
+|e^T(G_\xi-G_0)|\le4\epsilon.
+\]
+The zero coordinate and \(0\le\xi_i\le\epsilon\) are as in 34.1.
+Use the separately published positive-width two-corner wider domains:
+30.2 and 30.11 for \((\log2,\log3,\log5)\), and 31.2 and 31.13 for
+\((\log2,\log3,\log7)\). The baseline margins, closed radii and retained
+strict margins are exactly
+\[
+(\eta,\epsilon_{\max},\gamma)
+=(1/60,1/480,1/120)\quad\text{for }(2,3,5),
+\]
+\[
+(\eta,\epsilon_{\max},\gamma)
+=(1/40,1/320,1/80)\quad\text{for }(2,3,7).
+\]
+Indeed \((\eta-\eta/2)d_{\min}/2=\eta/8\) in dimension three.
+Thus 34.16 recovers 30.16 and 31.17, including closed radius and
+\(T=\log2\) simultaneously. Their finite-node sign certificates are
+inherited facts, not re-executed or independently revalidated in this layer.
+Their strict-width and two-corner hypotheses remain in force.
+Intersection with the original strict 5040 domain is legitimate because
+these particular baselines already hold on their respective wider domains.
+

@@ -1,0 +1,24 @@
+**34.5 Centered endpoint displacement and distance Lipschitz bound.** For
+corresponding slabs define
+\[
+u=S/k,\qquad q=\xi-u\mathbf1=\Pi\xi,\qquad t=\rho_\xi-\rho_0.
+\]
+The perturbed interval is \(I+u\). Translating both arguments in a distance
+back by \(u\) shows
+\[
+\Delta_i^\xi=\operatorname{dist}(I,\{c_i+q_i,d_i+q_i\}).
+\]
+For every \(v\in I\), \(w\in C_i\), the triangle inequality gives
+\(|v-(w+q_i)|\le|v-w|+|q_i|\). Taking infima gives
+\(\Delta_i^\xi\le\Delta_i^0+|q_i|\); reversing the translation gives the
+opposite inequality. Consequently
+\[
+|\Delta_i^\xi-\Delta_i^0|\le|q_i|,\qquad
+|t|\le\frac{\|\Delta^\xi-\Delta^0\|_2}{\sqrt{k(k-1)}}
+\le\frac{\|q\|_2}{\sqrt{k(k-1)}}.
+\]
+The first norm comparison is the reverse triangle inequality. No nearest
+endpoint is selected for differentiation. These statements include distance
+ties, switches of the nearest endpoint, vanishing distances and either zero
+norm. They impose no stable critical-node topology.
+

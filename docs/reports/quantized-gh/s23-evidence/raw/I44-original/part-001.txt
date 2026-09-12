@@ -1,0 +1,750 @@
+{
+  "schema": "S23-owned-body-migration/1",
+  "flight": "qgh0911-i44-s23-owned-body-repair",
+  "attempt": 1,
+  "stage": "implementation",
+  "base": "d79a2cd3cd3d5881dce26df9cee8266de9ae61e7",
+  "scope": {
+    "changed_units": [
+      "34.7",
+      "34.19",
+      "34.20",
+      "34.21",
+      "34.22"
+    ],
+    "current_owned_bindings": 23,
+    "section34_units": 22,
+    "broader_integration": false,
+    "authority": "C117; authoritative CLAUDE 3.8 and 5.11",
+    "self_identity": "External final envelope only; no self hash included"
+  },
+  "source": {
+    "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+    "bytes": 392486,
+    "LF": 7545,
+    "terminal_LF_bytes": 1,
+    "sha256": "72c87c810126d23ea157a7687ba99768ecbd7e8a56720df8437d8f27289cb98f"
+  },
+  "report": {
+    "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+    "bytes": 81031,
+    "LF": 1027,
+    "terminal_LF_bytes": 1,
+    "sha256": "ccbd900ac38f091bf22cbbe6bf38ac8e7699e85558cba5a8fe17e32848e0932a"
+  },
+  "report_partition": [
+    {
+      "role": "immutable I20 report prefix",
+      "span": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 0,
+        "end_byte": 64694,
+        "start_line": 1,
+        "bytes": 64694,
+        "LF": 710,
+        "terminal_LF_bytes": 1,
+        "sha256": "536c310803bbc8933cc1f2ca0dabd176eb7e83482d2611e9c31d591b733c8653"
+      }
+    },
+    {
+      "role": "appended overlay prose, labels or separators",
+      "span": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 64694,
+        "end_byte": 68186,
+        "start_line": 711,
+        "bytes": 3492,
+        "LF": 59,
+        "terminal_LF_bytes": 2,
+        "sha256": "957cd51b9ab48001dfd92e2b0fe7ca71a933c08751d087648b4669de825fc48a"
+      }
+    },
+    {
+      "role": "inert opening fence for 34.7",
+      "span": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 68186,
+        "end_byte": 68199,
+        "start_line": 770,
+        "bytes": 13,
+        "LF": 1,
+        "terminal_LF_bytes": 1,
+        "sha256": "57046e361ef9ffdae91d5d9cdd85d7758f6cce2609c780529eab96c71d198d20"
+      }
+    },
+    {
+      "role": "exact original whole-unit payload 34.7",
+      "span": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 68199,
+        "end_byte": 69536,
+        "start_line": 771,
+        "bytes": 1337,
+        "LF": 43,
+        "terminal_LF_bytes": 2,
+        "sha256": "6dccf987a67fb0e8b694e0ec3b4a4628d495e72c1120f993bf006832769b693b"
+      }
+    },
+    {
+      "role": "inert closing fence for 34.7",
+      "span": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 69536,
+        "end_byte": 69545,
+        "start_line": 814,
+        "bytes": 9,
+        "LF": 1,
+        "terminal_LF_bytes": 1,
+        "sha256": "f1b45d25955cdb727880f2a2d85e71519a5c6a227fe287496a2f85c6b9dc79f0"
+      }
+    },
+    {
+      "role": "appended overlay prose, labels or separators",
+      "span": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 69545,
+        "end_byte": 69567,
+        "start_line": 815,
+        "bytes": 22,
+        "LF": 3,
+        "terminal_LF_bytes": 2,
+        "sha256": "0135ad97b57591d4e1c87b7fcdb91b731c91751c7442dae8e53ed84212c8dd83"
+      }
+    },
+    {
+      "role": "inert opening fence for 34.19",
+      "span": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 69567,
+        "end_byte": 69580,
+        "start_line": 818,
+        "bytes": 13,
+        "LF": 1,
+        "terminal_LF_bytes": 1,
+        "sha256": "57046e361ef9ffdae91d5d9cdd85d7758f6cce2609c780529eab96c71d198d20"
+      }
+    },
+    {
+      "role": "exact original whole-unit payload 34.19",
+      "span": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 69580,
+        "end_byte": 70731,
+        "start_line": 819,
+        "bytes": 1151,
+        "LF": 27,
+        "terminal_LF_bytes": 2,
+        "sha256": "23b83206d2663de403eb83b95662760cff79ad2b038de89ed19000dce144b640"
+      }
+    },
+    {
+      "role": "inert closing fence for 34.19",
+      "span": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 70731,
+        "end_byte": 70740,
+        "start_line": 846,
+        "bytes": 9,
+        "LF": 1,
+        "terminal_LF_bytes": 1,
+        "sha256": "f1b45d25955cdb727880f2a2d85e71519a5c6a227fe287496a2f85c6b9dc79f0"
+      }
+    },
+    {
+      "role": "appended overlay prose, labels or separators",
+      "span": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 70740,
+        "end_byte": 70762,
+        "start_line": 847,
+        "bytes": 22,
+        "LF": 3,
+        "terminal_LF_bytes": 2,
+        "sha256": "443919227dfb5cc1e7c225a8329a852bfed6e5d0f3077b88d204842a98988b8e"
+      }
+    },
+    {
+      "role": "inert opening fence for 34.20",
+      "span": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 70762,
+        "end_byte": 70775,
+        "start_line": 850,
+        "bytes": 13,
+        "LF": 1,
+        "terminal_LF_bytes": 1,
+        "sha256": "57046e361ef9ffdae91d5d9cdd85d7758f6cce2609c780529eab96c71d198d20"
+      }
+    },
+    {
+      "role": "exact original whole-unit payload 34.20",
+      "span": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 70775,
+        "end_byte": 72326,
+        "start_line": 851,
+        "bytes": 1551,
+        "LF": 37,
+        "terminal_LF_bytes": 2,
+        "sha256": "cd9e13c4541a34e6b9f0d0f709a2395f08a1dbe4cde75c86fac9509afd8f6af2"
+      }
+    },
+    {
+      "role": "inert closing fence for 34.20",
+      "span": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 72326,
+        "end_byte": 72335,
+        "start_line": 888,
+        "bytes": 9,
+        "LF": 1,
+        "terminal_LF_bytes": 1,
+        "sha256": "f1b45d25955cdb727880f2a2d85e71519a5c6a227fe287496a2f85c6b9dc79f0"
+      }
+    },
+    {
+      "role": "appended overlay prose, labels or separators",
+      "span": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 72335,
+        "end_byte": 72357,
+        "start_line": 889,
+        "bytes": 22,
+        "LF": 3,
+        "terminal_LF_bytes": 2,
+        "sha256": "9aaf0260c5458fce511b592ddafa80a6a0c9aad3e94273f0d90ee58826a009f2"
+      }
+    },
+    {
+      "role": "inert opening fence for 34.21",
+      "span": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 72357,
+        "end_byte": 72370,
+        "start_line": 892,
+        "bytes": 13,
+        "LF": 1,
+        "terminal_LF_bytes": 1,
+        "sha256": "57046e361ef9ffdae91d5d9cdd85d7758f6cce2609c780529eab96c71d198d20"
+      }
+    },
+    {
+      "role": "exact original whole-unit payload 34.21",
+      "span": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 72370,
+        "end_byte": 74639,
+        "start_line": 893,
+        "bytes": 2269,
+        "LF": 36,
+        "terminal_LF_bytes": 2,
+        "sha256": "0215cfc7e259f4f71c33315cfb0b6d3877f083db9d7f0bf1be8c1e9884320eef"
+      }
+    },
+    {
+      "role": "inert closing fence for 34.21",
+      "span": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 74639,
+        "end_byte": 74648,
+        "start_line": 929,
+        "bytes": 9,
+        "LF": 1,
+        "terminal_LF_bytes": 1,
+        "sha256": "f1b45d25955cdb727880f2a2d85e71519a5c6a227fe287496a2f85c6b9dc79f0"
+      }
+    },
+    {
+      "role": "appended overlay prose, labels or separators",
+      "span": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 74648,
+        "end_byte": 74670,
+        "start_line": 930,
+        "bytes": 22,
+        "LF": 3,
+        "terminal_LF_bytes": 2,
+        "sha256": "f36700179c7d15707ef54f4b88ed5d2fccbddf7330f7db353e895432e4fefea5"
+      }
+    },
+    {
+      "role": "inert opening fence for 34.22",
+      "span": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 74670,
+        "end_byte": 74683,
+        "start_line": 933,
+        "bytes": 13,
+        "LF": 1,
+        "terminal_LF_bytes": 1,
+        "sha256": "57046e361ef9ffdae91d5d9cdd85d7758f6cce2609c780529eab96c71d198d20"
+      }
+    },
+    {
+      "role": "exact original whole-unit payload 34.22",
+      "span": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 74683,
+        "end_byte": 76575,
+        "start_line": 934,
+        "bytes": 1892,
+        "LF": 28,
+        "terminal_LF_bytes": 1,
+        "sha256": "08f48005a85a5e450c3ec8117b04f0f59c6fd2008b0749dc77b88607532e010b"
+      }
+    },
+    {
+      "role": "inert closing fence for 34.22",
+      "span": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 76575,
+        "end_byte": 76584,
+        "start_line": 962,
+        "bytes": 9,
+        "LF": 1,
+        "terminal_LF_bytes": 1,
+        "sha256": "f1b45d25955cdb727880f2a2d85e71519a5c6a227fe287496a2f85c6b9dc79f0"
+      }
+    },
+    {
+      "role": "appended current ingest and verification overlay",
+      "span": {
+        "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+        "start_byte": 76584,
+        "end_byte": 81031,
+        "start_line": 963,
+        "bytes": 4447,
+        "LF": 65,
+        "terminal_LF_bytes": 1,
+        "sha256": "a2baaf27aa8b981e9527489e3e342bd25f7dd7ce46fcbc6f4393b914db620c26"
+      }
+    }
+  ],
+  "original_I20_source": {
+    "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+    "revision": "d79a2cd3cd3d5881dce26df9cee8266de9ae61e7",
+    "bytes": 394297,
+    "LF": 7571,
+    "terminal_LF_bytes": 1,
+    "sha256": "06331627e46c9e19fbb784282b192d521cb953e4c9a34fb421f74c44c0655b9b"
+  },
+  "immutable_report_prefix": {
+    "path": "docs/reports/quantized-gh/dimension-general-transfer-0910.md",
+    "start_byte": 0,
+    "end_byte": 64694,
+    "start_line": 1,
+    "bytes": 64694,
+    "LF": 710,
+    "terminal_LF_bytes": 1,
+    "sha256": "536c310803bbc8933cc1f2ca0dabd176eb7e83482d2611e9c31d591b733c8653"
+  },
+  "unchanged_inherited_prefix": {
+    "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+    "start_byte": 0,
+    "end_byte": 366276,
+    "start_line": 1,
+    "bytes": 366276,
+    "LF": 6952,
+    "terminal_LF_bytes": 1,
+    "sha256": "4247e268cfcc9739cd91fd9fd7228be2ab4845ea249903bbb8876c5175c069d4"
+  },
+  "source_structure": [
+    {
+      "role": "inherited source before owned 33.22",
+      "span": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "start_byte": 0,
+        "end_byte": 365021,
+        "start_line": 1,
+        "bytes": 365021,
+        "LF": 6936,
+        "terminal_LF_bytes": 2,
+        "sha256": "55fa9196132542510e53471466b0bd98a5f27bfd9a2bc5a72f47734eae8cca0c"
+      }
+    },
+    {
+      "role": "owned inherited 33.22, including original one-byte LF extension",
+      "current_ref": "#/current_bindings/0"
+    },
+    {
+      "role": "structural section34 heading; no standalone canonical claim",
+      "span": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "start_byte": 366277,
+        "end_byte": 366362,
+        "start_line": 6954,
+        "bytes": 85,
+        "LF": 2,
+        "terminal_LF_bytes": 2,
+        "sha256": "d6f3dc2502630f694e1c5148fd9e72a50eec2a0db666f528dac4a17e42da0b55"
+      }
+    },
+    {
+      "role": "all 22 current numbered section34 units",
+      "current_refs": [
+        "#/current_bindings/1",
+        "#/current_bindings/2",
+        "#/current_bindings/3",
+        "#/current_bindings/4",
+        "#/current_bindings/5",
+        "#/current_bindings/6",
+        "#/current_bindings/7",
+        "#/current_bindings/8",
+        "#/current_bindings/9",
+        "#/current_bindings/10",
+        "#/current_bindings/11",
+        "#/current_bindings/12",
+        "#/current_bindings/13",
+        "#/current_bindings/14",
+        "#/current_bindings/15",
+        "#/current_bindings/16",
+        "#/current_bindings/17",
+        "#/current_bindings/18",
+        "#/current_bindings/19",
+        "#/current_bindings/20",
+        "#/current_bindings/21",
+        "#/current_bindings/22"
+      ]
+    }
+  ],
+  "current_bindings": [
+    {
+      "unit": "33.22",
+      "source": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "start_byte": 365021,
+        "end_byte": 366277,
+        "start_line": 6937,
+        "bytes": 1256,
+        "LF": 17,
+        "terminal_LF_bytes": 2,
+        "sha256": "1f6668018872cd25aff86027ef947bc52d558f55c6d7a2e09c7ec6d0f8b58af1"
+      },
+      "provenance": "established supplied binding; fixed current verification",
+      "binding": {
+        "cas": {
+          "path": "Meta/Digestion/atoms/sha256/1f6668018872cd25aff86027ef947bc52d558f55c6d7a2e09c7ec6d0f8b58af1",
+          "bytes": 1256,
+          "LF": 17,
+          "terminal_LF_bytes": 2,
+          "sha256": "1f6668018872cd25aff86027ef947bc52d558f55c6d7a2e09c7ec6d0f8b58af1"
+        },
+        "yaml": {
+          "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/1f6668018872cd25aff86027ef947bc52d558f55c6d7a2e09c7ec6d0f8b58af1.yaml",
+          "bytes": 328,
+          "LF": 7,
+          "terminal_LF_bytes": 1,
+          "sha256": "0065154cf6593c560f9c38a9e0ba91aafc6a4385674c853e537bd3281b73d43a"
+        },
+        "parsed_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:1f6668018872cd25aff86027ef947bc52d558f55c6d7a2e09c7ec6d0f8b58af1",
+            "normalized_sha256": "sha256:1f6668018872cd25aff86027ef947bc52d558f55c6d7a2e09c7ec6d0f8b58af1"
+          },
+          "coverage_gids": [],
+          "cas_ref": "sha256:1f6668018872cd25aff86027ef947bc52d558f55c6d7a2e09c7ec6d0f8b58af1",
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "children_field_present": false,
+        "chain_field_present": false,
+        "whole_source_equal": true
+      }
+    },
+    {
+      "unit": "34.1",
+      "source": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "start_byte": 366362,
+        "end_byte": 368014,
+        "start_line": 6956,
+        "bytes": 1652,
+        "LF": 37,
+        "terminal_LF_bytes": 2,
+        "sha256": "dd68f0730c98c89ef33a2ec50847db5721427fe5ca2d887397dbc6192e8f91e6"
+      },
+      "provenance": "established supplied binding; fixed current verification",
+      "binding": {
+        "cas": {
+          "path": "Meta/Digestion/atoms/sha256/dd68f0730c98c89ef33a2ec50847db5721427fe5ca2d887397dbc6192e8f91e6",
+          "bytes": 1652,
+          "LF": 37,
+          "terminal_LF_bytes": 2,
+          "sha256": "dd68f0730c98c89ef33a2ec50847db5721427fe5ca2d887397dbc6192e8f91e6"
+        },
+        "yaml": {
+          "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/dd68f0730c98c89ef33a2ec50847db5721427fe5ca2d887397dbc6192e8f91e6.yaml",
+          "bytes": 328,
+          "LF": 7,
+          "terminal_LF_bytes": 1,
+          "sha256": "167628bf41fb61d1e98a557f72276336d25609d11576a670236aa0cd2fd63023"
+        },
+        "parsed_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:dd68f0730c98c89ef33a2ec50847db5721427fe5ca2d887397dbc6192e8f91e6",
+            "normalized_sha256": "sha256:dd68f0730c98c89ef33a2ec50847db5721427fe5ca2d887397dbc6192e8f91e6"
+          },
+          "coverage_gids": [],
+          "cas_ref": "sha256:dd68f0730c98c89ef33a2ec50847db5721427fe5ca2d887397dbc6192e8f91e6",
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "children_field_present": false,
+        "chain_field_present": false,
+        "whole_source_equal": true
+      }
+    },
+    {
+      "unit": "34.2",
+      "source": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "start_byte": 368014,
+        "end_byte": 369855,
+        "start_line": 6993,
+        "bytes": 1841,
+        "LF": 43,
+        "terminal_LF_bytes": 2,
+        "sha256": "e4d64c544bb4326dc3beb89a509b294fa827330903d4af3871ef8049159afb06"
+      },
+      "provenance": "established supplied binding; fixed current verification",
+      "binding": {
+        "cas": {
+          "path": "Meta/Digestion/atoms/sha256/e4d64c544bb4326dc3beb89a509b294fa827330903d4af3871ef8049159afb06",
+          "bytes": 1841,
+          "LF": 43,
+          "terminal_LF_bytes": 2,
+          "sha256": "e4d64c544bb4326dc3beb89a509b294fa827330903d4af3871ef8049159afb06"
+        },
+        "yaml": {
+          "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/e4d64c544bb4326dc3beb89a509b294fa827330903d4af3871ef8049159afb06.yaml",
+          "bytes": 328,
+          "LF": 7,
+          "terminal_LF_bytes": 1,
+          "sha256": "83b9897dabfeccb8127e7a1bbfcc46e9917b0e6921c5412f21e8e5f55cb28f64"
+        },
+        "parsed_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:e4d64c544bb4326dc3beb89a509b294fa827330903d4af3871ef8049159afb06",
+            "normalized_sha256": "sha256:e4d64c544bb4326dc3beb89a509b294fa827330903d4af3871ef8049159afb06"
+          },
+          "coverage_gids": [],
+          "cas_ref": "sha256:e4d64c544bb4326dc3beb89a509b294fa827330903d4af3871ef8049159afb06",
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "children_field_present": false,
+        "chain_field_present": false,
+        "whole_source_equal": true
+      }
+    },
+    {
+      "unit": "34.3",
+      "source": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "start_byte": 369855,
+        "end_byte": 371095,
+        "start_line": 7036,
+        "bytes": 1240,
+        "LF": 26,
+        "terminal_LF_bytes": 2,
+        "sha256": "680f29f98e4e79240c33df86d3827f62b0255e6c1cd7abb1513a1f4b09dd12dd"
+      },
+      "provenance": "established supplied binding; fixed current verification",
+      "binding": {
+        "cas": {
+          "path": "Meta/Digestion/atoms/sha256/680f29f98e4e79240c33df86d3827f62b0255e6c1cd7abb1513a1f4b09dd12dd",
+          "bytes": 1240,
+          "LF": 26,
+          "terminal_LF_bytes": 2,
+          "sha256": "680f29f98e4e79240c33df86d3827f62b0255e6c1cd7abb1513a1f4b09dd12dd"
+        },
+        "yaml": {
+          "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/680f29f98e4e79240c33df86d3827f62b0255e6c1cd7abb1513a1f4b09dd12dd.yaml",
+          "bytes": 328,
+          "LF": 7,
+          "terminal_LF_bytes": 1,
+          "sha256": "6253475552fac69ea49aa653902b54030c34aca1b05515ba4314f5a98f966def"
+        },
+        "parsed_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:680f29f98e4e79240c33df86d3827f62b0255e6c1cd7abb1513a1f4b09dd12dd",
+            "normalized_sha256": "sha256:680f29f98e4e79240c33df86d3827f62b0255e6c1cd7abb1513a1f4b09dd12dd"
+          },
+          "coverage_gids": [],
+          "cas_ref": "sha256:680f29f98e4e79240c33df86d3827f62b0255e6c1cd7abb1513a1f4b09dd12dd",
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "children_field_present": false,
+        "chain_field_present": false,
+        "whole_source_equal": true
+      }
+    },
+    {
+      "unit": "34.4",
+      "source": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "start_byte": 371095,
+        "end_byte": 372592,
+        "start_line": 7062,
+        "bytes": 1497,
+        "LF": 36,
+        "terminal_LF_bytes": 2,
+        "sha256": "e2bb546e34c44df4757dcc6ed08bc18f942ebe3fdf7d37c303d07a883a18adf2"
+      },
+      "provenance": "established supplied binding; fixed current verification",
+      "binding": {
+        "cas": {
+          "path": "Meta/Digestion/atoms/sha256/e2bb546e34c44df4757dcc6ed08bc18f942ebe3fdf7d37c303d07a883a18adf2",
+          "bytes": 1497,
+          "LF": 36,
+          "terminal_LF_bytes": 2,
+          "sha256": "e2bb546e34c44df4757dcc6ed08bc18f942ebe3fdf7d37c303d07a883a18adf2"
+        },
+        "yaml": {
+          "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/e2bb546e34c44df4757dcc6ed08bc18f942ebe3fdf7d37c303d07a883a18adf2.yaml",
+          "bytes": 328,
+          "LF": 7,
+          "terminal_LF_bytes": 1,
+          "sha256": "0d22e145ae5613297a2af32775641310025419eb30b8503ca16c6372c8864306"
+        },
+        "parsed_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:e2bb546e34c44df4757dcc6ed08bc18f942ebe3fdf7d37c303d07a883a18adf2",
+            "normalized_sha256": "sha256:e2bb546e34c44df4757dcc6ed08bc18f942ebe3fdf7d37c303d07a883a18adf2"
+          },
+          "coverage_gids": [],
+          "cas_ref": "sha256:e2bb546e34c44df4757dcc6ed08bc18f942ebe3fdf7d37c303d07a883a18adf2",
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "children_field_present": false,
+        "chain_field_present": false,
+        "whole_source_equal": true
+      }
+    },
+    {
+      "unit": "34.5",
+      "source": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "start_byte": 372592,
+        "end_byte": 373557,
+        "start_line": 7098,
+        "bytes": 965,
+        "LF": 24,
+        "terminal_LF_bytes": 2,
+        "sha256": "f56d9ad933bf3f8c3e1606f7e5c38018ba47ea31a110277bf2033390c51f06f1"
+      },
+      "provenance": "established supplied binding; fixed current verification",
+      "binding": {
+        "cas": {
+          "path": "Meta/Digestion/atoms/sha256/f56d9ad933bf3f8c3e1606f7e5c38018ba47ea31a110277bf2033390c51f06f1",
+          "bytes": 965,
+          "LF": 24,
+          "terminal_LF_bytes": 2,
+          "sha256": "f56d9ad933bf3f8c3e1606f7e5c38018ba47ea31a110277bf2033390c51f06f1"
+        },
+        "yaml": {
+          "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/f56d9ad933bf3f8c3e1606f7e5c38018ba47ea31a110277bf2033390c51f06f1.yaml",
+          "bytes": 328,
+          "LF": 7,
+          "terminal_LF_bytes": 1,
+          "sha256": "1e57a3191f221ddaf637193f6f8bec1eab8b10808fcc99f3866b89c0eb20319e"
+        },
+        "parsed_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:f56d9ad933bf3f8c3e1606f7e5c38018ba47ea31a110277bf2033390c51f06f1",
+            "normalized_sha256": "sha256:f56d9ad933bf3f8c3e1606f7e5c38018ba47ea31a110277bf2033390c51f06f1"
+          },
+          "coverage_gids": [],
+          "cas_ref": "sha256:f56d9ad933bf3f8c3e1606f7e5c38018ba47ea31a110277bf2033390c51f06f1",
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "children_field_present": false,
+        "chain_field_present": false,
+        "whole_source_equal": true
+      }
+    },
+    {
+      "unit": "34.6",
+      "source": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "start_byte": 373557,
+        "end_byte": 374616,
+        "start_line": 7122,
+        "bytes": 1059,
+        "LF": 29,
+        "terminal_LF_bytes": 2,
+        "sha256": "83723bb9dca28e5940a724e3d889fd5d608b2c4a5120f43b2f4041a52d366bbe"
+      },
+      "provenance": "established supplied binding; fixed current verification",
+      "binding": {
+        "cas": {
+          "path": "Meta/Digestion/atoms/sha256/83723bb9dca28e5940a724e3d889fd5d608b2c4a5120f43b2f4041a52d366bbe",
+          "bytes": 1059,
+          "LF": 29,
+          "terminal_LF_bytes": 2,
+          "sha256": "83723bb9dca28e5940a724e3d889fd5d608b2c4a5120f43b2f4041a52d366bbe"
+        },
+        "yaml": {
+          "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/83723bb9dca28e5940a724e3d889fd5d608b2c4a5120f43b2f4041a52d366bbe.yaml",
+          "bytes": 328,
+          "LF": 7,
+          "terminal_LF_bytes": 1,
+          "sha256": "29afcc32989b995def78ae6c3af90c1cc2d27226cd147a5e52e21dd13119ad91"
+        },
+        "parsed_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:83723bb9dca28e5940a724e3d889fd5d608b2c4a5120f43b2f4041a52d366bbe",
+            "normalized_sha256": "sha256:83723bb9dca28e5940a724e3d889fd5d608b2c4a5120f43b2f4041a52d366bbe"
+          },
+          "coverage_gids": [],
+          "cas_ref": "sha256:83723bb9dca28e5940a724e3d889fd5d608b2c4a5120f43b2f4041a52d366bbe",
+          "receipts": {
+            "unresolved_subitems": []
+          }
+        },
+        "children_field_present": false,
+        "chain_field_present": false,
+        "whole_source_equal": true
+      }
+    },
+    {
+      "unit": "34.7",
+      "source": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "start_byte": 374616,
+        "end_byte": 375946,
+        "start_line": 7151,
+        "bytes": 1330,
+        "LF": 43,
+        "terminal_LF_bytes": 2,
+        "sha256": "32d914ac75f2a980560e718053e45d4a6351bbdebc0b4975ee2a96951b522cb2"
+      },
+      "provenance": "single I44 ingest",
+      "binding": {
+        "cas": {
+          "path": "Meta/Digestion/atoms/sha256/32d914ac75f2a980560e718053e45d4a6351bbdebc0b4975ee2a96951b522cb2",
+          "bytes": 1330,
+          "LF": 43,
+          "terminal_LF_bytes": 2,
+          "sha256": "32d914ac75f2a980560e718053e45d4a6351bbdebc0b4975ee2a96951b522cb2"
+        },
+        "yaml": {
+          "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/32d914ac75f2a980560e718053e45d4a6351bbdebc0b4975ee2a96951b522cb2.yaml",
+          "bytes": 328,
+          "LF": 7,
+          "terminal_LF_bytes": 1,
+          "sha256": "0d0c9cb715ae656dea22969d094e73f31f3ba42103c1fb024aa25532542a71ec"
+        },
+        "parsed_yaml": {
+          "fingerprints": {
+            "raw_sha256": "sha256:32d914ac75f2a980560e718053e45d4a6351bbdebc0b4975ee2a96951b522cb2",
+            "normalized_sha256": "sha256:32d914ac75f2a980560e718053e45d4a6351bbdebc0b4975ee2a96951b522cb2"

@@ -1,0 +1,64 @@
+{
+  "at_utc": "2026-09-11T14:59:26.704210+00:00",
+  "PR": 7054,
+  "url": "https://github.com/the-omega-institute/trureturing/pull/7054",
+  "state": "MERGED",
+  "actual_MERGED": true,
+  "head": "45bdaff2e7608bd31734046146f5710de0041133",
+  "merge_commit": "1f5f54ba9cdba9486e1c8170ccd627cadcd9ce25",
+  "merged_at": "2026-09-11T14:55:19Z",
+  "base": "dev",
+  "canonical_primitive": "make pr-open HEAD=lane/math/quantized-gh-composed-s22-0911 MESSAGE=/tmp/qgh-boundaries-0908/s22-pr-message-0911.md AUTO_MERGE=1",
+  "canonical_host": 33286,
+  "host_terminal_chunk": "baa0f3",
+  "host_exit": 0,
+  "never_wait_host_again": true,
+  "required_checks": {
+    "Candidate harness engineering checks": {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-11T14:43:17Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/the-omega-institute/trureturing/actions/runs/34610708408/job/103300198242",
+      "name": "Candidate harness engineering checks",
+      "startedAt": "2026-09-11T14:32:19Z",
+      "status": "COMPLETED",
+      "workflowName": "admission"
+    },
+    "Canonical Lean report production": {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-11T14:53:11Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/the-omega-institute/trureturing/actions/runs/34610708408/job/103300198003",
+      "name": "Canonical Lean report production",
+      "startedAt": "2026-09-11T14:32:19Z",
+      "status": "COMPLETED",
+      "workflowName": "admission"
+    },
+    "Content-addressed dev baseline admission": {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-11T14:55:04Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/the-omega-institute/trureturing/actions/runs/34610708408/job/103307227026",
+      "name": "Content-addressed dev baseline admission",
+      "startedAt": "2026-09-11T14:53:15Z",
+      "status": "COMPLETED",
+      "workflowName": "admission"
+    }
+  },
+  "all_required_checks_SUCCESS": true,
+  "observed_required_contract_ref": "/tmp/qgh-boundaries-0908/s22-pr7054-required-check-contract-0911.json",
+  "original_GitHub_observation_ref": "/tmp/qgh-boundaries-0908/s22-pr7054-terminal-github-observation-0911.json",
+  "complete_observation_read_chunk": "3bc4ba",
+  "original_lifecycle_output_ref": "/tmp/qgh-boundaries-0908/s22-pr-create-watch-original-output-0911.txt",
+  "original_lifecycle_output_identity": {
+    "bytes": 34760,
+    "LF": 393,
+    "sha256": "3004df0238a2826649ff64092d25b52c06aaea6fad947542ed573ca1d2b76b12"
+  },
+  "sealed_reviewed_source_ref": "/tmp/qgh-boundaries-0908/s22-reviewed-identical-byte-seal-0911.json",
+  "main_checkout_synced": false,
+  "foreign_main_checkout_unchanged": true,
+  "mathematical_program_executions": 0,
+  "private_diagnostics_opened": false,
+  "whole_goal_complete": false
+}

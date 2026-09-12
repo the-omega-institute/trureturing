@@ -1,0 +1,19 @@
+**34.13 Corners, equal totals, zero width and full saturation/slack.** One
+actual corner suffices for the analytical theorem, including a corner
+at either endpoint and \(M_0=M_1\). Two distinct corner vectors may have
+the same total for arbitrary steps. For example, if \(h_1=h_2=h>0\),
+the corners with just coordinate 1 or just coordinate 2 raised have total
+\(A+h\); the zero-width slab \([A+h,A+h]\) contains both. Translation
+preserves these two vectors and their equal totals separately. This example
+does not extend the positive-width sign domains of sections 30 or 31.
+
+Write \(r=M_1-A\ge0\) and \(Q=\sum_i h_i>0\). At \(r=0\), positivity of
+every \(h_i\) forces \(\mathcal P=\{0\}\), so \(D=\sum_i f(c_i)\).
+At \(r=Q\), and also at every slack capacity \(r>Q\), \(\mathcal P=[0,1]^k\).
+Since \(f(d_i)>f(c_i)\), its maximum is \(D=\sum_i f(d_i)\) at the full
+upper vector. Tight full saturation and slack above it are both covered.
+For \(0<r<Q\), the pointwise proof in 34.8 covers all feasible weights,
+including fractional or integer optimizers, density ties and nonunique faces.
+Changing \(M_0\), even below zero, introduces no lower mixture constraint.
+The upper budget is finite at each point but has no uniform finite upper bound.
+
