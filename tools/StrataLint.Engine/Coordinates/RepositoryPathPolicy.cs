@@ -134,10 +134,13 @@ internal static partial class RepositoryPathPolicy
             return Sl000(value, $"path must match exactly one FILEMAP entry; matches={matches.Length}");
         if (value.StartsWith(ReportsRootPath, StringComparison.Ordinal) && entry.Pattern != value)
             return Sl000(value, "docs/reports files require an exact FILEMAP entry");
+        if ((!value.Contains('/') || value.StartsWith(AgentFilesRootPath, StringComparison.Ordinal))
+            && entry.Pattern != value)
+            return Sl000(value, "root files and agent charters require an exact FILEMAP entry");
 
         // Non-coordinate files derive membership solely from FILEMAP. Coordinate
         // planes still pass their canonical path, GID and domain checks below.
-        if ((!value.Contains('/') || value.StartsWith(AgentFilesRootPath, StringComparison.Ordinal) || entry.Pattern == value)
+        if (entry.Pattern == value
             && !value.StartsWith("D5/", StringComparison.Ordinal)
             && !value.StartsWith("Blueprint/", StringComparison.Ordinal)
             && !value.StartsWith("Evidence/", StringComparison.Ordinal)

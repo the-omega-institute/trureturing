@@ -7,6 +7,46 @@ namespace StrataLint.Tests;
 
 public sealed class AdmissionTests
 {
+    [Theory]
+    [InlineData("global.json", "global.*")]
+    [InlineData("agents/adversary.md", "agents/adversary.*")]
+    public void RootAndAgentCharterGlobsBlockAdmission(string path, string pattern)
+    {
+        var literal = Evaluate(path);
+        Assert.True(literal is AdmissionOutcome.Admitted or AdmissionOutcome.ProtectedSurfaceChange,
+            literal is AdmissionOutcome.RuleRejected failure
+                ? string.Join('\n', failure.Diagnostics.Select(static diagnostic => diagnostic.Render()))
+                : literal.ToString());
+
+        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(Evaluate(pattern));
+        var diagnostic = Assert.Single(rejected.Diagnostics.Where(static item => item.AdmissionEffect is AdmissionEffect.Block));
+        Assert.Equal("SL-000", diagnostic.RuleId.Value);
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Equal(path, diagnostic.Path);
+        Assert.Equal("root files and agent charters require an exact FILEMAP entry", diagnostic.Message);
+        Assert.Equal(Assert.IsType<AdmissionOutcome.ProtectedSurfaceChange>(literal).Sl022Diagnostics.ToArray(),
+            rejected.Diagnostics.Where(static item => item.RuleId == RuleId.CreateKnown(22)).ToArray());
+
+        AdmissionOutcome Evaluate(string registration)
+        {
+            var fixture = new RuleFixture();
+            fixture.AddBackfillTargets();
+            var fileMap = TestFileMap.Canonical.Replace(
+                $"pattern = \"{path}\"", $"pattern = \"{registration}\"", StringComparison.Ordinal);
+            var policy = PolicyLoadAssert.Accepted(RepositoryPolicyLoader.Load(
+                Encoding.UTF8.GetBytes(fileMap), Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
+            Assert.Equal(registration, Assert.Single(policy.Manifest.Match(path)).Pattern);
+            fixture.Files[path] = "{}\n";
+            fixture.Files["Meta/FILEMAP.toml"] = Encoding.UTF8.GetString(policy.CanonicalFileMapBytes.AsSpan());
+            var changes = RawChangeSet.Create([path, "Meta/FILEMAP.toml"]);
+            var context = fixture.Build(changes, policy);
+            var bootstrap = Assert.IsType<BootstrapOutcome.ProtectedSurfaceVerificationRequired>(BootstrapGate.Evaluate(changes));
+
+            return AdmissionPipeline.EvaluateProtectedSurface(
+                context.Current, context.Baseline, policy, context.Lean, changes, bootstrap.ChangeSet);
+        }
+    }
+
     [Fact]
     public void CertificateRecordsExecutedSkippedAndDeferredRulesWithoutMasquerading()
     {

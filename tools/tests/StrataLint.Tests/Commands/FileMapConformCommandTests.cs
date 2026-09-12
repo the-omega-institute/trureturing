@@ -5,6 +5,41 @@ namespace StrataLint.Tests;
 
 public sealed class FileMapConformCommandTests
 {
+    [Theory]
+    [InlineData("global.json", "global.*")]
+    [InlineData("agents/adversary.md", "agents/adversary.*")]
+    public void RootAndAgentCharterGlobsReachConformanceGuard(string path, string pattern)
+    {
+        using var fixture = new TemporaryDirectory();
+        Directory.CreateDirectory(Path.Combine(fixture.Path, "Meta"));
+        var subject = Path.Combine(fixture.Path, path);
+        Directory.CreateDirectory(Path.GetDirectoryName(subject)!);
+        File.WriteAllText(subject, "registered file\n");
+        var fileMapPath = Path.Combine(fixture.Path, "Meta/FILEMAP.toml");
+        File.WriteAllText(fileMapPath, TestFileMap.Canonical);
+        File.WriteAllText(Path.Combine(fixture.Path, "Meta/domains.yaml"), TestFileMap.Domains);
+        File.WriteAllText(Path.Combine(fixture.Path, ".gitignore"),
+            ".caller-review-prompt.md\n.echo-review.md\n.sshx-*\n/Generated/echo-residuals/\n");
+        ReviewRegressionTests.RunGit(fixture.Path, "init");
+        ReviewRegressionTests.RunGit(fixture.Path, "add", ".");
+        var literal = FileMapConformCommand.Run([], fixture.Path);
+        Assert.Empty(literal.Error);
+        Assert.DoesNotContain($"FILEMAP-PATH-POLICY {path}:", literal.Output, StringComparison.Ordinal);
+
+        File.WriteAllText(fileMapPath, TestFileMap.Canonical.Replace(
+            $"pattern = \"{path}\"", $"pattern = \"{pattern}\"", StringComparison.Ordinal));
+        var result = FileMapConformCommand.Run([], fixture.Path);
+
+        const string message = "root files and agent charters require an exact FILEMAP entry";
+        var diagnostic = $"FILEMAP-PATH-POLICY {path}: {message}\n";
+        Assert.Equal(1, result.ExitCode);
+        Assert.Empty(result.Error);
+        Assert.Contains(diagnostic, result.Output, StringComparison.Ordinal);
+        // The small fixture has unrelated inventory findings; broadening this populated
+        // entry must add exactly the shared path-policy diagnostic and no other finding.
+        Assert.Equal(literal.Output, result.Output.Replace(diagnostic, string.Empty, StringComparison.Ordinal));
+    }
+
     [Fact]
     public void TrackedInventoryIncludesDirectoryAndDanglingLinksWithoutTraversingThem()
     {

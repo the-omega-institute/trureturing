@@ -41,6 +41,45 @@ public sealed class RepositoryPolicyTests
     }
 
     [Theory]
+    [InlineData("global.json", "global.*", "global.json")]
+    [InlineData("global.json", "global.*", "global.txt")]
+    [InlineData("agents/adversary.md", "agents/adversary.*", "agents/adversary.md")]
+    [InlineData("agents/adversary.md", "agents/adversary.*", "agents/adversary.txt")]
+    public void RootAndAgentCharterGlobsAreRejected(string registeredPath, string pattern, string path)
+    {
+        var policy = PolicyLoadAssert.Accepted(Load(TestFileMap.Canonical.Replace(
+            $"pattern = \"{registeredPath}\"", $"pattern = \"{pattern}\"", StringComparison.Ordinal))).Policy;
+        Assert.Equal(pattern, Assert.Single(policy.Manifest.Match(path)).Pattern);
+        Assert.Empty(FileMapPolicy.InspectCoverage(policy.Manifest, [path]));
+        Assert.DoesNotContain(FileMapPolicy.InspectPatternPopulation(policy.Manifest, [path]),
+            finding => finding.Path == pattern);
+
+        var issue = Assert.IsType<RepositoryPathIssue>(RepositoryPathPolicy.Validate(RepoPath.CreateKnown(path), policy));
+
+        Assert.Equal("SL-000", issue.RuleId.Value);
+        Assert.Equal(path, issue.Path);
+        Assert.Equal("root files and agent charters require an exact FILEMAP entry", issue.Message);
+    }
+
+    [Theory]
+    [InlineData("global.json", "global.txt")]
+    [InlineData("agents/adversary.md", "agents/adversary.txt")]
+    public void RootAndAgentCharterExactEntriesRemainRequired(string registeredPath, string widerPath)
+    {
+        var policy = PolicyLoadAssert.Accepted(Load(TestFileMap.Canonical)).Policy;
+        Assert.Equal(registeredPath, Assert.Single(policy.Manifest.Match(registeredPath)).Pattern);
+        Assert.Null(RepositoryPathPolicy.Validate(RepoPath.CreateKnown(registeredPath), policy));
+        var issue = Assert.IsType<RepositoryPathIssue>(RepositoryPathPolicy.Validate(RepoPath.CreateKnown(widerPath), policy));
+        Assert.Equal("SL-000", issue.RuleId.Value);
+        Assert.Contains("matches=0", issue.Message, StringComparison.Ordinal);
+
+        // FILEMAP alone supplies membership, including a newly registered literal name.
+        var widerPolicy = PolicyLoadAssert.Accepted(Load(TestFileMap.Canonical.Replace(
+            $"pattern = \"{registeredPath}\"", $"pattern = \"{widerPath}\"", StringComparison.Ordinal))).Policy;
+        Assert.Null(RepositoryPathPolicy.Validate(RepoPath.CreateKnown(widerPath), widerPolicy));
+    }
+
+    [Theory]
     [InlineData("😀", "😀")]
     [InlineData("\\U0001F600", "😀")]
     [InlineData("\\U00010000\\U0010FFFF", "\U00010000\U0010FFFF")]
