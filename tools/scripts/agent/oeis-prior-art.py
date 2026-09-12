@@ -74,7 +74,19 @@ LEANPROOFS = os.environ.get("OEIS_LEANPROOFS_REPO", "plby/lean-proofs")
 # after a validated fetch. A file left by any other writer — a partial
 # extraction, an older implementation, a hand-made fixture — is refetched
 # rather than believed.
-CACHE_MARKER = "# oeis-prior-art cache v2; validated untruncated tree\n"
+CACHE_SCHEMA = "oeis-prior-art/cache/v3"
+
+
+def cache_marker(repo: str) -> str:
+    """Provenance line binding a cache file to the corpus it was fetched from.
+
+    A global marker is forgeable across corpora: two repositories whose names
+    differ only where '/' becomes '_' share a cache path, and a file carrying a
+    corpus-independent marker would then be trusted for the wrong corpus and
+    produce a confident no-indexed-path result. The marker names the repository
+    and the schema, and the reader requires an exact match.
+    """
+    return f"# {CACHE_SCHEMA} repo={repo} validated-untruncated-tree\n"
 
 
 class Failure(Exception):
@@ -120,17 +132,22 @@ def fetch_tree(repo: str, min_paths: int) -> list[str]:
     """
     import time
 
-    slug = repo.replace("/", "_")
-    if slug == repo or not slug:
-        raise Failure(f"could not derive a cache slug for {repo!r}")
+    # The slug is only a filename; the provenance marker below, not the slug,
+    # is what binds a cache file to its corpus.
+    import hashlib
+
+    if "/" not in repo:
+        raise Failure(f"repository {repo!r} is not in owner/name form")
+    slug = repo.replace("/", "_") + "-" + hashlib.sha256(repo.encode()).hexdigest()[:12]
     cached = cache_dir() / f"{slug}.paths"
+    marker = cache_marker(repo)
 
     if cached.is_file():
         age_min = (time.time() - cached.stat().st_mtime) / 60.0
         if age_min < ttl_minutes():
             text = cached.read_text()
-            if text.startswith(CACHE_MARKER):
-                paths = text[len(CACHE_MARKER):].splitlines()
+            if text.startswith(marker):
+                paths = text[len(marker):].splitlines()
                 if len(paths) >= min_paths:
                     return paths
             # falls through to refetch: unmarked, or shorter than the corpus
@@ -159,7 +176,7 @@ def fetch_tree(repo: str, min_paths: int) -> list[str]:
                       f"{min_paths} this corpus is known to hold; refusing to trust it")
 
     tmp = cached.with_suffix(".partial")
-    tmp.write_text(CACHE_MARKER + "\n".join(paths) + "\n")
+    tmp.write_text(marker + "\n".join(paths) + "\n")
     tmp.replace(cached)          # publish atomically, only after validation
     return paths
 
@@ -252,4 +269,11 @@ if __name__ == "__main__":
         sys.exit(main(sys.argv))
     except Failure as exc:
         print(f"oeis-prior-art: {exc}", file=sys.stderr)
+        sys.exit(2)
+    except Exception as exc:               # noqa: BLE001 - deliberate catch-all
+        # An unexpected shape or an I/O error must still be a loud failure with
+        # the documented exit code, never a traceback that a caller might read
+        # as something other than "this probe could not answer".
+        print(f"oeis-prior-art: unexpected failure: {type(exc).__name__}: {exc}",
+              file=sys.stderr)
         sys.exit(2)
