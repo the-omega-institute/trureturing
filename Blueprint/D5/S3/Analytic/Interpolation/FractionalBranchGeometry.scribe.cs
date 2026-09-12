@@ -108,6 +108,6 @@ internal sealed class FractionalBranchGeometryDocument : IScribeDocumentDefiniti
     private static Formula MinDistance => Call("min", Seq(A, Minus, C), Seq(Dpoint, Minus, M));
     private static Formula Mixture => Seq(Open, D(1), Minus, Theta, Close, Fn(C), Plus, Theta, Fn(Dpoint));
     private static Formula SumOther(Formula f) => Seq(Sum, Underscore,
-        Grp(F.Id("i"), Neq, F.Id("j")), f);
+        Grp(F.Id("i"), Sp, Neq, Sp, F.Id("j")), f);
     private static Formula SumAll(Formula f) => Seq(Sum, Underscore, Grp(F.Id("i")), f);
 }
