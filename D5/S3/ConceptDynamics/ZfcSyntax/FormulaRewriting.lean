@@ -37,7 +37,21 @@ def rewAux ⦃n₁ n₂ : ℕ⦄ (ω : Rew L ξ₁ n₁ ξ₂ n₂) : Semiformul
 
 private lemma rewAux_neg (ω : Rew L ξ₁ n₁ ξ₂ n₂) (φ : Semiformula L ξ₁ n₁) :
     rewAux ω (∼φ) = ∼rewAux ω φ :=
-  by induction φ using Semiformula.rec' generalizing n₂ <;> simp [*, rewAux]
+  by
+    induction φ using Semiformula.rec' generalizing n₂ with
+    | hverum | hfalsum | hrel | hnrel => rfl
+    | hand φ ψ ihφ ihψ =>
+      change rewAux ω (∼φ) ⋎ rewAux ω (∼ψ) = ∼rewAux ω φ ⋎ ∼rewAux ω ψ
+      exact congrArg₂ (· ⋎ ·) (ihφ ω) (ihψ ω)
+    | hor φ ψ ihφ ihψ =>
+      change rewAux ω (∼φ) ⋏ rewAux ω (∼ψ) = ∼rewAux ω φ ⋏ ∼rewAux ω ψ
+      exact congrArg₂ (· ⋏ ·) (ihφ ω) (ihψ ω)
+    | hall φ ih =>
+      change ∃¹ rewAux ω.q (∼φ) = ∃¹ ∼rewAux ω.q φ
+      exact congrArg (∃¹ ·) (ih ω.q)
+    | hexs φ ih =>
+      change ∀¹ rewAux ω.q (∼φ) = ∀¹ ∼rewAux ω.q φ
+      exact congrArg (∀¹ ·) (ih ω.q)
 
 def rew (ω : Rew L ξ₁ n₁ ξ₂ n₂) : Semiformula L ξ₁ n₁ →ˡᶜ Semiformula L ξ₂ n₂ where
   toTr := rewAux ω
@@ -46,7 +60,9 @@ def rew (ω : Rew L ξ₁ n₁ ξ₂ n₂) : Semiformula L ξ₁ n₁ →ˡᶜ S
   map_neg' := by exact rewAux_neg ω
   map_and' := fun φ ψ ↦ rfl
   map_or' := fun φ ψ ↦ rfl
-  map_imply' := fun φ ψ ↦ by simp [imp_eq, rewAux_neg, rewAux, ←neg_eq]
+  map_imply' := fun φ ψ ↦ by
+    change rewAux ω (∼φ) ⋎ rewAux ω ψ = ∼rewAux ω φ ⋎ rewAux ω ψ
+    rw [rewAux_neg]
 
 instance : Rewriting L ξ (Semiformula L ξ) ζ (Semiformula L ζ) where
   app := rew
@@ -63,14 +79,14 @@ private lemma map_inj {b : Fin n₁ → Fin n₂} {f : ξ₁ → ξ₂}
   | rel r v => fun φ ↦
     match φ with
     | rel s w => by
-      simp only [rew_rel, rel.injEq, and_imp]
+      simp -implicitDefEqProofs only [rew_rel, rel.injEq, and_imp]
       rintro rfl; simp only [heq_eq_eq, true_and]; rintro rfl h; simp only [true_and]
       funext i; exact Rew.map_inj hb hf (congr_fun h i)
     | nrel _ _ | ⊤ | ⊥ | _ ⋏ _ | _ ⋎ _ | ∀¹ _ | ∃¹ _ => by simp
   | nrel r v => fun φ ↦
     match φ with
     | nrel s w => by
-      simp only [rew_nrel, nrel.injEq, and_imp]
+      simp -implicitDefEqProofs only [rew_nrel, nrel.injEq, and_imp]
       rintro rfl; simp only [heq_eq_eq, true_and]; rintro rfl h; simp only [true_and]
       funext i; exact Rew.map_inj hb hf (congr_fun h i)
      | rel _ _ | ⊤ | ⊥ | _ ⋏ _ | _ ⋎ _ | ∀¹ _ | ∃¹ _ => by simp
@@ -104,11 +120,11 @@ private lemma map_inj {b : Fin n₁ → Fin n₂} {f : ξ₁ → ξ₂}
     | rel _ _ | nrel _ _ | ⊤ | ⊥ | _ ⋏ _ | _ ⋎ _ | ∀¹ _ => by simp
 
 instance : ReflectiveRewriting L ξ (Semiformula L ξ) where
-  id_app (φ) := by induction φ using rec' <;> simp [*, Function.comp_def]
+  id_app (φ) := by induction φ using rec' <;> simp [*]
 
 instance : TransitiveRewriting L ξ₁ (Semiformula L ξ₁) ξ₂ (Semiformula L ξ₂) ξ₃ (Semiformula L ξ₃) where
   comp_app {n₁ n₂ n₃ ω₁₂ ω₂₃ φ} := by
-    induction φ using rec' generalizing n₂ n₃ <;> simp [Rew.comp_app, Rew.q_comp, *, Function.comp_def]
+    induction φ using rec' generalizing n₂ n₃ <;> simp [Rew.comp_app, Rew.q_comp, *]
 
 instance : InjMapRewriting L ξ (Semiformula L ξ) ζ (Semiformula L ζ) where
   smul_map_injective := map_inj
@@ -121,13 +137,13 @@ lemma fvar?_rew [DecidableEq ξ₁] [DecidableEq ξ₂]
   case hverum => simp [FVar?] at h
   case hfalsum => simp [FVar?] at h
   case hrel n k r v =>
-    have : ∃ i, (ω (v i)).FVar? x := by simpa [rew_rel, fvar?_rel] using h
+    have : ∃ i, (ω (v i)).FVar? x := by simpa -implicitDefEqProofs only [rew_rel, fvar?_rel] using h
     rcases this with ⟨i, hi⟩
     rcases Semiterm.fvar?_rew hi with (h | ⟨z, hi, hz⟩)
     · left; exact h
     · right; exact ⟨z, by simpa using ⟨i, hi⟩, hz⟩
   case hnrel n k r v =>
-    have : ∃ i, (ω (v i)).FVar? x := by simpa [rew_nrel, fvar?_rel] using h
+    have : ∃ i, (ω (v i)).FVar? x := by simpa -implicitDefEqProofs only [rew_nrel, fvar?_nrel] using h
     rcases this with ⟨i, hi⟩
     rcases Semiterm.fvar?_rew hi with (h | ⟨z, hi, hz⟩)
     · left; exact h
@@ -178,12 +194,12 @@ lemma rew_eq_of_funEqOn [DecidableEq ξ₁] {ω₁ ω₂ : Rew L ξ₁ n₁ ξ�
   case hverum => simp
   case hfalsum => simp
   case hrel =>
-    simp only [rew_rel, rel.injEq, heq_eq_eq, true_and]
+    simp -implicitDefEqProofs only [rew_rel, rel.injEq, heq_eq_eq, true_and]
     funext i
     exact Semiterm.rew_eq_of_funEqOn _ _ _ hb
       (hf.of_subset fun x hx ↦ fvar?_rel.mpr ⟨i, hx⟩)
   case hnrel =>
-    simp only [rew_nrel, nrel.injEq, heq_eq_eq, true_and]
+    simp -implicitDefEqProofs only [rew_nrel, nrel.injEq, heq_eq_eq, true_and]
     funext i
     exact Semiterm.rew_eq_of_funEqOn _ _ _ hb
       (hf.of_subset fun x hx ↦ fvar?_nrel.mpr ⟨i, hx⟩)
@@ -202,10 +218,10 @@ lemma rew_eq_of_funEqOn [DecidableEq ξ₁] {ω₁ ω₂ : Rew L ξ₁ n₁ ξ�
 
 private lemma not_fvar?_fixitr_fvSup (φ : Proposition L) : ¬(Rew.fixitr 0 φ.fvSup ▹ φ).FVar? x := by
   rw [Rew.eq_bind (Rew.fixitr 0 φ.fvSup)]
-  simp only [Function.comp_def, Rew.fixitr_bvar, Rew.fixitr_fvar, Fin.natAdd_mk, zero_add]
+  simp -congrConsts only [Function.comp_def, Rew.fixitr_bvar, Rew.fixitr_fvar, Fin.natAdd_mk, zero_add]
   intro h
   rcases fvar?_rew h with (⟨z, hz⟩ | ⟨z, hz, hx⟩)
-  · simp at hz
+  · simp -congrConsts at hz
   · have : z < φ.fvSup := lt_fvSup_of_fvar? hz
     simp [this] at hx
 
@@ -214,51 +230,52 @@ def univCl' (φ : Proposition L) : Proposition L := ∀¹* (@Rew.fixitr L 0 φ.f
 @[simp] lemma fvarList_univCl' (φ : Proposition L) : φ.univCl'.freeVariables = ∅ := by
   ext x
   suffices x ∉ φ.univCl'.freeVariables by simpa
-  simpa [univCl'] using not_fvar?_fixitr_fvSup φ
+  change x ∉ (∀¹* (@Rew.fixitr L 0 φ.fvSup ▹ φ)).freeVariables
+  simpa using not_fvar?_fixitr_fvSup φ
 
 def toEmpty [DecidableEq ξ] {n : ℕ} : (φ : Semiformula L ξ n) → φ.freeVariables = ∅ → Semisentence L n
-  |  rel R v, h => rel R fun i ↦ (v i).toEmpty <| by
-    revert i; simpa [freeVariables_rel, Finset.biUnion_eq_empty] using h
-  | nrel R v, h => nrel R fun i ↦ (v i).toEmpty <| by
-    revert i; simpa [freeVariables_nrel, Finset.biUnion_eq_empty] using h
+  |  rel R v, h => rel R fun i ↦ (v i).toEmpty (Finset.biUnion_eq_empty.mp h i (Finset.mem_univ i))
+  | nrel R v, h => nrel R fun i ↦ (v i).toEmpty (Finset.biUnion_eq_empty.mp h i (Finset.mem_univ i))
   |        ⊤, _ => ⊤
   |        ⊥, _ => ⊥
   |    φ ⋏ ψ, h =>
-    φ.toEmpty (by simp [show φ.freeVariables = ∅ ∧ ψ.freeVariables = ∅ by simpa [Finset.union_eq_empty] using h]) ⋏
-    ψ.toEmpty (by simp [show φ.freeVariables = ∅ ∧ ψ.freeVariables = ∅ by simpa [Finset.union_eq_empty] using h])
+    φ.toEmpty (Finset.union_eq_empty.mp h).1 ⋏ ψ.toEmpty (Finset.union_eq_empty.mp h).2
   |    φ ⋎ ψ, h =>
-    φ.toEmpty (by simp [show φ.freeVariables = ∅ ∧ ψ.freeVariables = ∅ by simpa [Finset.union_eq_empty] using h]) ⋎
-    ψ.toEmpty (by simp [show φ.freeVariables = ∅ ∧ ψ.freeVariables = ∅ by simpa [Finset.union_eq_empty] using h])
-  |     ∀¹ φ, h => ∀¹ φ.toEmpty (by simpa using h)
-  |     ∃¹ φ, h => ∃¹ φ.toEmpty (by simpa using h)
+    φ.toEmpty (Finset.union_eq_empty.mp h).1 ⋎ ψ.toEmpty (Finset.union_eq_empty.mp h).2
+  |     ∀¹ φ, h => ∀¹ φ.toEmpty h
+  |     ∃¹ φ, h => ∃¹ φ.toEmpty h
 
 @[simp] lemma emb_toEmpty [DecidableEq ξ] (φ : Semiformula L ξ n) (hp : φ.freeVariables = ∅) : Rewriting.emb (φ.toEmpty hp) = φ := by
   induction φ using rec' with
   | hall φ ih =>
-    simp only [toEmpty, Rewriting.emb, Rewriting.app_all]
+    dsimp only [toEmpty]
+    simp -congrConsts only [Rewriting.emb, Rewriting.app_all]
     congr 1
     calc
       _ = (Rew.emb : Rew L Empty _ ξ _) ▹ φ.toEmpty hp := Rewriting.smul_ext' (by
         rw [Rew.emb, Rew.q_map]
         apply Rew.ext
         · intro i
-          cases i using Fin.cases <;> simp [Rew.emb, Function.comp_def]
+          cases i using Fin.cases <;> simp -congrConsts [Rew.emb, Function.comp_def]
         · intro x; exact x.elim)
       _ = φ := ih hp
   | hexs φ ih =>
-    simp only [toEmpty, Rewriting.emb, Rewriting.app_exs]
+    dsimp only [toEmpty]
+    simp -congrConsts only [Rewriting.emb, Rewriting.app_exs]
     congr 1
     calc
       _ = (Rew.emb : Rew L Empty _ ξ _) ▹ φ.toEmpty hp := Rewriting.smul_ext' (by
         rw [Rew.emb, Rew.q_map]
         apply Rew.ext
         · intro i
-          cases i using Fin.cases <;> simp [Rew.emb, Function.comp_def]
+          cases i using Fin.cases <;> simp -congrConsts [Rew.emb, Function.comp_def]
         · intro x; exact x.elim)
       _ = φ := ih hp
-  | _ => simp [toEmpty, Function.comp_def, *]
+  | _ =>
+    dsimp only [toEmpty]
+    simp -congrConsts -implicitDefEqProofs [*]
 
-def univCl (φ : Proposition L) : Sentence L := φ.univCl'.toEmpty (by simp)
+def univCl (φ : Proposition L) : Sentence L := φ.univCl'.toEmpty (fvarList_univCl' φ)
 
 section
 variable {L₁ : Language.{u₁}} {L₂ : Language.{u₂}} {Φ : L₁ →ᵥ L₂}
