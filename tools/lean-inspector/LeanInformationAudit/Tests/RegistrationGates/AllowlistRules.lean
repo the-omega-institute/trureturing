@@ -163,4 +163,41 @@ run_cmd Elab.Command.liftCoreM do
 -- The public query remains usable without a MetaM interpreter.
 example : Environment → Name → Expr → CoreM (Bool × Option (Array String)) := readoutClosure
 
+-- Keep the proof inline: elaborating a source definition can outline it into
+-- a proof constant, which lets E2 mask deletion of the E4/E5 shape guards.
+run_cmd Elab.Command.liftCoreM do
+  let env ← getEnv
+  let some targetInfo := env.find? ``target | throwError "target missing"
+  let some proof := targetInfo.value? | throwError "target proof missing"
+  let some (.defnInfo templateInfo) := env.find? ``template | throwError "template missing"
+  for original in #[``binderRead, ``ctorRead] do
+    let some info := env.find? original | throwError "original fixture missing"
+    let some value := info.value? | throwError "original fixture value missing"
+    let outlined := value.getUsedConstants.filter fun n =>
+      (env.find? n).any (fun i => i.type == targetInfo.type)
+    unless !outlined.isEmpty do throwError "expected an outlined proof in {original}"
+    logInfo m!"OutlinedProof fixture={original} proofs={outlined}"
+  let bodies := #[
+    ("InlineClosedStatementInhabitant",
+      Expr.letE `evidence targetInfo.type proof (mkConst ``Bool.true) true),
+    ("InlineCtorDecisionOfStatement",
+      mkAppN (mkConst ``Decidable.decide) #[targetInfo.type,
+        mkAppN (mkConst ``Decidable.isTrue) #[targetInfo.type, proof]])]
+  for (label, body) in bodies do
+    try
+      let readout := mkLambda `index .default (mkConst ``Unit)
+        (mkLambda `state .default (mkConst ``Bool) body)
+      let holder := `AllowlistRules |>.str label
+      addDecl <| .defnDecl {
+        name := holder, levelParams := [], type := templateInfo.type
+        value := templateInfo.value.replace fun e =>
+          if e == mkConst ``cleanRead then some readout else none
+        hints := .abbrev, safety := .safe }
+      let actual ← provenanceErrorCurrent env.header.mainModule `catalog ``target holder
+      let some message := actual | throwError "missing forbidden diagnostic"
+      unless (message.splitOn " ")[4]? == some "reason=forbidden_dependency" do
+        throwError "expected forbidden_dependency, got {message}"
+      logInfo m!"[PASS] {label}"
+    catch ex => logError m!"[FAIL] {label}: {ex.toMessageData}"
+
 end AllowlistRules
