@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Two-item greedy allocations have explicit coordinates and obey a ratio exchange inequality. -/
+   digest: Two-item greedy coordinates and the return-to-weight ratio exchange inequality. -/
 
 import D5.S3.Analytic.Knapsack.FractionalKnapsackDual
 
@@ -28,7 +28,7 @@ theorem greedyFill_pair (w : ι → ℝ) (a b : ι) (hab : a ≠ b) (B : ℝ) :
   funext i
   by_cases ha : w a ≤ B <;> by_cases hb : w b ≤ B - w a <;>
     by_cases hia : i = a <;> by_cases hib : i = b <;>
-    simp_all [greedyFill, Function.update_apply]
+    simp [greedyFill, ha, hb, Function.update_apply, hia, hib]
 
 /-- The first coordinate depends only on the first weight and the budget. -/
 theorem greedyFill_pair_apply_left (w : ι → ℝ) (a b : ι) (hab : a ≠ b) (B : ℝ) :
