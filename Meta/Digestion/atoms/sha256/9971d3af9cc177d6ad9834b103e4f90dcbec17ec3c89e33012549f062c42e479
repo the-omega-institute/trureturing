@@ -1,0 +1,1 @@
+**定理 1.7(良基与归纳)**〔证〕。$E$ 在有限 $N$ 上无环 $\Rightarrow$ $\mathrm{depth}_L$ 良定,且对任一谓词 $Q$:若 $\forall v\in N,\ (\forall u\in\mathrm{pred}_E(v),Q(u))\to Q(v)$,则 $\forall v\in N,Q(v)$。
