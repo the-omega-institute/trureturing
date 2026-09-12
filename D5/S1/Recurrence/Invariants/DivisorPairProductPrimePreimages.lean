@@ -2,19 +2,12 @@
    generality: G
    mirror-B: D5/B/S1/Recurrence/Invariants/DivisorPairProductPrimePreimages
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [Mathlib.NumberTheory.ArithmeticFunction.Misc, Mathlib.Data.Finset.NatDivisors, Mathlib.Data.Nat.Factorization.PrimePow, Mathlib.Data.Nat.Squarefree, Mathlib.RingTheory.MvPolynomial.Symmetric.Defs, Mathlib.Algebra.Ring.GeomSum]
+   anchors: [mathlib/module/Mathlib.NumberTheory.ArithmeticFunction.Misc, mathlib/module/Mathlib.RingTheory.MvPolynomial.Symmetric.Defs]
    utility: none
-   digest: A prime divisor-pair product sum of a composite has exactly its composite and prime preimages. -/
+   digest: Prime divisor-pair sums at composites have exactly their composite and prime preimages. -/
 
 import Mathlib.NumberTheory.ArithmeticFunction.Misc
-import Mathlib.Data.Finset.NatDivisors
-import Mathlib.Data.Nat.Factorization.PrimePow
-import Mathlib.Data.Nat.Squarefree
 import Mathlib.RingTheory.MvPolynomial.Symmetric.Defs
-import Mathlib.Algebra.Ring.GeomSum
-import Mathlib.Tactic.GCongr
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
