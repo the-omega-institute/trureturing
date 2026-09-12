@@ -122,4 +122,38 @@ theorem card_top_words (n : ℕ) :
       exact ⟨topWord_mem n, maxLabel_topWord n⟩
   simp [heq]
 
+private theorem nearFiber (n m : ℕ) (hn : 0 < n) (hm : m ≤ n) :
+    ((Finset.Icc 1 (m + 1)).filter fun x => max x m = n).card =
+      if m = n then n else if m + 1 = n then 1 else 0 := by
+  by_cases hmn : m = n
+  · subst m
+    have heq : (Finset.Icc 1 (n + 1)).filter (fun x => max x n = n) =
+        Finset.Icc 1 n := by
+      ext x
+      simp only [Finset.mem_filter, Finset.mem_Icc]
+      omega
+    rw [heq, Nat.card_Icc]
+    simp
+  · by_cases hnext : m + 1 = n
+    · have heq : (Finset.Icc 1 (m + 1)).filter (fun x => max x m = n) =
+          {n} := by
+        ext x
+        simp only [Finset.mem_filter, Finset.mem_Icc, Finset.mem_singleton]
+        omega
+      rw [heq]
+      simp [hmn, hnext]
+    · have heq : (Finset.Icc 1 (m + 1)).filter (fun x => max x m = n) =
+          ∅ := by
+        ext x
+        simp only [Finset.mem_filter, Finset.mem_Icc]
+        constructor
+        · rintro ⟨⟨_, hx⟩, hmax⟩
+          have hbound : max x m ≤ m + 1 := max_le (by omega) (by omega)
+          have hfalse : False := by omega
+          exact hfalse.elim
+        · intro h
+          simp at h
+      rw [heq]
+      simp [hmn, hnext]
+
 end D5.S1.Recurrence.Invariants.RestrictedGrowthLabelOccurrences
