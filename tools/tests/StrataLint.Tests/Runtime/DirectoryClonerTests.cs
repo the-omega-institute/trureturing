@@ -20,9 +20,7 @@ public sealed class DirectoryClonerTests
         var result = cloner.Clone("source", "target");
 
         Assert.False(result.Succeeded);
-        Assert.False(result.Retryable);
         Assert.Null(result.Errno);
-        Assert.Equal(0, result.Attempts);
         Assert.Equal(0, nativeCalls);
     }
 
@@ -31,13 +29,15 @@ public sealed class DirectoryClonerTests
     [InlineData(4)]   // EINTR
     [InlineData(35)]  // EAGAIN
     [InlineData(16)]  // EBUSY
-    [InlineData(999)] // undocumented: bounded retry preserves evidence for the unknown incident
-    public void TransientAndUnknownErrnosAreRetryable(int errno)
+    [InlineData(999)]
+    public void NativeFailurePreservesErrno(int errno)
     {
+        var nativeCalls = 0;
         var cloner = new ApfsDirectoryCloner(
             isMacOS: static () => true,
             cloneFile: (_, _, _) =>
             {
+                nativeCalls++;
                 Marshal.SetLastPInvokeError(errno);
                 return -1;
             });
@@ -45,8 +45,7 @@ public sealed class DirectoryClonerTests
         var result = cloner.Clone("source", "target");
 
         Assert.False(result.Succeeded);
-        Assert.True(result.Retryable);
         Assert.Equal(errno, result.Errno);
-        Assert.Equal(1, result.Attempts);
+        Assert.Equal(1, nativeCalls);
     }
 }

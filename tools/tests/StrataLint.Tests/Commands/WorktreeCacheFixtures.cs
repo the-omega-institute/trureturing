@@ -14,7 +14,7 @@ internal sealed class RecordingDirectoryCloner : IDirectoryCloner
         Invocations.Add((source, target));
         return FailureReason is null
             ? new ApfsDirectoryCloner().Clone(source, target)
-            : new(false, false, null, 0, FailureReason);
+            : new(false, null, FailureReason);
     }
 }
 
