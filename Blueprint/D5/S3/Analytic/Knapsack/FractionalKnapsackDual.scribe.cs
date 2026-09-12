@@ -11,7 +11,7 @@ internal sealed class FractionalKnapsackDualDocument : IScribeDocumentDefinition
         H("Fractional knapsack and its dual price"),
         Blocks(
             Paragraph(Text(
-                "Let I be an arbitrary finite index type with decidable equality, and let w and v be real functions on I. Write C for cost, V for return, D for the scalar dual value, and F for the feasible set at a real budget B.")),
+                "Let I be an arbitrary finite index type with decidable equality, and let w and v be real functions on I. Write C for cost, V for return, D for the scalar dual value, and F for the feasible set at a real budget B. For the first two theorems, assume that all weights are strictly positive, all returns are nonnegative, and B is nonnegative.")),
             Paragraph(Math(Disp(DefinitionsFormula()))),
             Paragraph(Math(Disp(FeasibleFormula()))),
             Describe.Lean(
@@ -76,7 +76,7 @@ internal sealed class FractionalKnapsackDualDocument : IScribeDocumentDefinition
 
     private static Formula FeasibleFormula() => Seq(
         F.Id("F"), Sp, Eq, Sp, OpenBrace,
-        F.Id("t"), Colon, F.Id("I"), Sp, To, Sp, Call("Real"), Sp, Mid, Sp,
+        F.Id("t"), Colon, F.Id("I"), Sp, To, Sp, Mathbb, Grp(F.Id("R")), Sp, Mid, Sp,
         Open, Forall, Sp, F.Id("i"), Sp, InMacro, Sp, F.Id("I"), Comma, Sp,
         D(0), Sp, Le, Sp, Call("t", F.Id("i")), Sp, Le, Sp, D(1), Close,
         Sp, Land, Sp, Call("C", F.Id("t")), Sp, Le, Sp, F.Id("B"), CloseBrace);
@@ -88,7 +88,7 @@ internal sealed class FractionalKnapsackDualDocument : IScribeDocumentDefinition
         Formula g = Seq(F.Id("g"), Underscore, Grp(l));
         return Seq(
             Exists, Sp, l, Colon, Call("List", F.Id("I")), Comma, Sp,
-            Exists, Sp, p, Colon, Call("Real"), Comma, Sp,
+            Exists, Sp, p, Colon, Mathbb, Grp(F.Id("R")), Comma, Sp,
             Call("Nodup", l), Sp, Land, Sp, Call("set", l), Sp, Eq, Sp, F.Id("I"),
             Sp, Land, Sp, Call("Sorted", l), Sp, Land, Sp, g, Sp, InMacro, Sp, F.Id("F"),
             Sp, Land, Sp, D(0), Sp, Le, Sp, p,
