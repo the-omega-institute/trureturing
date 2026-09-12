@@ -6,6 +6,33 @@ namespace StrataLint.Tests;
 
 public sealed partial class FormalizeCandidatesTests
 {
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public void ReadinessReportsDiagnosticsAlongsideExistingGaps(bool includeSource)
+    {
+        var entry = Entry("source", "removed-claim", "theorem", "16.32",
+            atomizer: AtomizerRegistry.GenericId);
+        const string currentSource = "# Synthetic\n\n**theorem 99.1**。Other。\n";
+        var status = Run([entry], includeCas: false, atomizer: AtomizerRegistry.GenericId, arguments: [],
+            currentSource: currentSource, includeSource: includeSource);
+        var readiness = Run([entry], includeCas: false, atomizer: AtomizerRegistry.GenericId, arguments: ["--readiness"],
+            currentSource: currentSource, includeSource: includeSource);
+
+        Assert.False(status.Success);
+        Assert.StartsWith("DIGEST_STATUS_INVALID count=", status.Error);
+        Assert.Contains("GAP atom=removed-claim code=coverage-gid-missing ", status.Error);
+        Assert.DoesNotContain("source-occurrence-missing", status.Error);
+        Assert.DoesNotContain("READINESS_SOURCE_UNAVAILABLE", status.Error);
+        Assert.False(readiness.Success);
+        Assert.Empty(readiness.Output);
+        var diagnostic = includeSource
+            ? "GAP atom=removed-claim code=source-occurrence-missing detail=\"source\"\n"
+            : "READINESS_SOURCE_UNAVAILABLE source=source code=SOURCE_MISSING "
+                + "detail=\"source_id=source source_path=synthetic/source.md\"\n";
+        Assert.Equal(status.Error + diagnostic, readiness.Error);
+    }
+
     [Fact]
     public void ReadinessReportsUnavailableSourceWithoutChangingSuccessOrReadingHistory()
     {
