@@ -53,7 +53,13 @@ public sealed partial class LeanReportInputScriptTests
                     || relative.StartsWith("Blueprint/", StringComparison.Ordinal)
                     || relative == "Trureturing.lean") continue;
                 var destination = Path.Combine(root, relative);
-                if (TemporaryFileSystem.File.Exists(destination)) continue;
+                if (TemporaryFileSystem.File.Exists(destination))
+                {
+                    // Preserve the admission fixture's entries while registering the copied producer inputs.
+                    if (relative == "Meta/FILEMAP.toml")
+                        TemporaryFileSystem.File.AppendAllText(destination, "\n" + Registration + "\n");
+                    continue;
+                }
                 TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
                 TemporaryFileSystem.File.WriteAllBytes(destination, TemporaryFileSystem.File.ReadAllBytes(path));
             }
