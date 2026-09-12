@@ -1,0 +1,396 @@
+/- GID: D5/S3/Arith/GoldenResource/A279609DoublingRefutation
+   generality: I
+   mirror-B: D5/B/S3/Arith/GoldenResource/A279609DoublingRefutation
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: kind=certified-instance; basis=refutes=atom:f1e442dc23de02562417cb024f7fc6712689168f5b16fee22b387bf678d18ca5; result=D5/S3/Arith/GoldenResource/A279609DoublingRefutation.result; claim=D5/S3/Arith/GoldenResource/A279609DoublingRefutation.claim
+   digest: A certified adjacent pair of colossally abundant integers refutes the proposed doubling inequality. -/
+
+import D5.S3.Arith.GoldenResource.FirstLayerMarginalAntitone
+
+/- Library-search audit trail (2026-09-13):
+   1. D5 searches for the four witness numerals, the exact price-window shape,
+      adjacency, and the harmonic-exponential floor expression found no theorem
+      proving this instance. Existing price-interval and threshold declarations are
+      reused. A PCRE word-boundary search for goldenUpperPrice found two files.
+   2. Pinned Mathlib searches found no A279609 or colossal-abundance result and no
+      witness numeral. Real logarithm comparison, factorization reconstruction,
+      exponential bounds, and sigma multiplicativity declarations are reused.
+   3. GitHub Lean-code searches for A279609, both witness integers, colossally
+      abundant, goldenUpperPrice, and the combined floor shape returned no hit.
+      The positive-control query Real.exp_bound returned thirty-six hits. -/
+
+namespace D5.S3.Arith.GoldenResource.A279609DoublingRefutation
+
+open D5.S3.Arith.GoldenResourceOptimalInteger
+
+noncomputable section
+
+private theorem marginal_lt_reference
+    (x p : ℝ) (d e : ℕ)
+    (hx : 1 < x) (hp : 1 < p) (hd : 0 < d) (_he : 0 < e)
+    (hxpow : x ^ d < (255 / 254 : ℝ) ^ e)
+    (hppow : (2 : ℝ) ^ e < p ^ d) :
+    Real.log x / Real.log p < Real.log (255 / 254) / Real.log 2 := by
+  have hlogp : 0 < Real.log p := Real.log_pos hp
+  have hlogtwo : 0 < Real.log (2 : ℝ) := Real.log_pos (by norm_num)
+  have hlogref : 0 < Real.log (255 / 254 : ℝ) := Real.log_pos (by norm_num)
+  have hxy : (d : ℝ) * Real.log x < (e : ℝ) * Real.log (255 / 254 : ℝ) := by
+    have h := Real.log_lt_log (pow_pos (by positivity) _) hxpow
+    simpa only [Real.log_pow] using h
+  have hp2 : (e : ℝ) * Real.log 2 < (d : ℝ) * Real.log p := by
+    have h := Real.log_lt_log (pow_pos (by positivity) _) hppow
+    simpa only [Real.log_pow] using h
+  have hdreal : (0 : ℝ) < d := by exact_mod_cast hd
+  have hscaled :
+      (d : ℝ) * (Real.log x * Real.log 2) <
+        (d : ℝ) * (Real.log (255 / 254 : ℝ) * Real.log p) := by
+    calc
+      (d : ℝ) * (Real.log x * Real.log 2) =
+          ((d : ℝ) * Real.log x) * Real.log 2 := by ring
+      _ < ((e : ℝ) * Real.log (255 / 254 : ℝ)) * Real.log 2 :=
+        mul_lt_mul_of_pos_right hxy hlogtwo
+      _ = Real.log (255 / 254 : ℝ) * ((e : ℝ) * Real.log 2) := by ring
+      _ < Real.log (255 / 254 : ℝ) * ((d : ℝ) * Real.log p) :=
+        mul_lt_mul_of_pos_left hp2 hlogref
+      _ = (d : ℝ) * (Real.log (255 / 254 : ℝ) * Real.log p) := by ring
+  have hcross := lt_of_mul_lt_mul_left hscaled hdreal.le
+  exact (div_lt_div_iff₀ hlogp hlogtwo).mpr hcross
+
+private theorem reference_lt_marginal
+    (x p : ℝ) (d e : ℕ)
+    (hx : 1 < x) (hp : 1 < p) (hd : 0 < d) (_he : 0 < e)
+    (hppow : p ^ d < (2 : ℝ) ^ e)
+    (hxpow : (255 / 254 : ℝ) ^ e < x ^ d) :
+    Real.log (255 / 254) / Real.log 2 < Real.log x / Real.log p := by
+  have hlogx : 0 < Real.log x := Real.log_pos hx
+  have hlogp : 0 < Real.log p := Real.log_pos hp
+  have hlogtwo : 0 < Real.log (2 : ℝ) := Real.log_pos (by norm_num)
+  have hp2 : (d : ℝ) * Real.log p < (e : ℝ) * Real.log 2 := by
+    have h := Real.log_lt_log (pow_pos (by positivity) _) hppow
+    simpa only [Real.log_pow] using h
+  have hxy : (e : ℝ) * Real.log (255 / 254 : ℝ) < (d : ℝ) * Real.log x := by
+    have h := Real.log_lt_log (pow_pos (by positivity) _) hxpow
+    simpa only [Real.log_pow] using h
+  have hdreal : (0 : ℝ) < d := by exact_mod_cast hd
+  have hscaled :
+      (d : ℝ) * (Real.log (255 / 254 : ℝ) * Real.log p) <
+        (d : ℝ) * (Real.log x * Real.log 2) := by
+    calc
+      (d : ℝ) * (Real.log (255 / 254 : ℝ) * Real.log p) =
+          Real.log (255 / 254 : ℝ) * ((d : ℝ) * Real.log p) := by ring
+      _ < Real.log (255 / 254 : ℝ) * ((e : ℝ) * Real.log 2) :=
+        mul_lt_mul_of_pos_left hp2 (Real.log_pos (by norm_num))
+      _ = ((e : ℝ) * Real.log (255 / 254 : ℝ)) * Real.log 2 := by ring
+      _ < ((d : ℝ) * Real.log x) * Real.log 2 :=
+        mul_lt_mul_of_pos_right hxy hlogtwo
+      _ = (d : ℝ) * (Real.log x * Real.log 2) := by ring
+  have hcross := lt_of_mul_lt_mul_left hscaled hdreal.le
+  exact (div_lt_div_iff₀ hlogtwo hlogp).mpr hcross
+
+private theorem golden_marginal_lt_reference
+    (p a : ℕ) (x : ℝ) (d e : ℕ)
+    (hshape : goldenLayerMarginal p a = Real.log x / Real.log p)
+    (hx : 1 < x) (hp : 1 < (p : ℝ)) (hd : 0 < d) (he : 0 < e)
+    (hxpow : x ^ d < (255 / 254 : ℝ) ^ e)
+    (hppow : (2 : ℝ) ^ e < (p : ℝ) ^ d) :
+    goldenLayerMarginal p a < goldenLayerMarginal 2 7 := by
+  rw [hshape]
+  have h := marginal_lt_reference x p d e hx hp hd he hxpow hppow
+  norm_num [goldenLayerMarginal] at h ⊢
+  exact h
+
+private theorem reference_lt_golden_marginal
+    (p a : ℕ) (x : ℝ) (d e : ℕ)
+    (hshape : goldenLayerMarginal p a = Real.log x / Real.log p)
+    (hx : 1 < x) (hp : 1 < (p : ℝ)) (hd : 0 < d) (he : 0 < e)
+    (hppow : (p : ℝ) ^ d < (2 : ℝ) ^ e)
+    (hxpow : (255 / 254 : ℝ) ^ e < x ^ d) :
+    goldenLayerMarginal 2 7 < goldenLayerMarginal p a := by
+  rw [hshape]
+  have h := reference_lt_marginal x p d e hx hp hd he hppow hxpow
+  norm_num [goldenLayerMarginal] at h ⊢
+  exact h
+
+private theorem m_price_window_rational_separation :
+    (goldenLayerMarginal 3 5 < goldenLayerMarginal 2 7 ∧
+      goldenLayerMarginal 5 3 < goldenLayerMarginal 2 7 ∧
+      goldenLayerMarginal 7 3 < goldenLayerMarginal 2 7 ∧
+      goldenLayerMarginal 11 2 < goldenLayerMarginal 2 7 ∧
+      goldenLayerMarginal 13 2 < goldenLayerMarginal 2 7 ∧
+      goldenLayerMarginal 17 2 < goldenLayerMarginal 2 7 ∧
+      goldenLayerMarginal 19 2 < goldenLayerMarginal 2 7 ∧
+      goldenLayerMarginal 23 2 < goldenLayerMarginal 2 7 ∧
+      goldenLayerMarginal 29 2 < goldenLayerMarginal 2 7 ∧
+      goldenLayerMarginal 31 2 < goldenLayerMarginal 2 7 ∧
+      goldenLayerMarginal 37 2 < goldenLayerMarginal 2 7 ∧
+      goldenLayerMarginal 41 2 < goldenLayerMarginal 2 7 ∧
+      goldenLayerMarginal 43 2 < goldenLayerMarginal 2 7 ∧
+      goldenLayerMarginal 47 1 < goldenLayerMarginal 2 7) ∧
+    (goldenLayerMarginal 2 7 < goldenLayerMarginal 2 6 ∧
+      goldenLayerMarginal 2 7 < goldenLayerMarginal 3 4 ∧
+      goldenLayerMarginal 2 7 < goldenLayerMarginal 5 2 ∧
+      goldenLayerMarginal 2 7 < goldenLayerMarginal 7 2 ∧
+      goldenLayerMarginal 2 7 < goldenLayerMarginal 11 1 ∧
+      goldenLayerMarginal 2 7 < goldenLayerMarginal 13 1 ∧
+      goldenLayerMarginal 2 7 < goldenLayerMarginal 17 1 ∧
+      goldenLayerMarginal 2 7 < goldenLayerMarginal 19 1 ∧
+      goldenLayerMarginal 2 7 < goldenLayerMarginal 23 1 ∧
+      goldenLayerMarginal 2 7 < goldenLayerMarginal 29 1 ∧
+      goldenLayerMarginal 2 7 < goldenLayerMarginal 31 1 ∧
+      goldenLayerMarginal 2 7 < goldenLayerMarginal 37 1 ∧
+      goldenLayerMarginal 2 7 < goldenLayerMarginal 41 1 ∧
+      goldenLayerMarginal 2 7 < goldenLayerMarginal 43 1) := by
+  have h3u : goldenLayerMarginal 3 5 < goldenLayerMarginal 2 7 := by
+    apply golden_marginal_lt_reference 3 5 (364 / 363) 1 1 <;>
+      norm_num [goldenLayerMarginal]
+  have h5u : goldenLayerMarginal 5 3 < goldenLayerMarginal 2 7 := by
+    apply golden_marginal_lt_reference 5 3 (156 / 155) 1 2 <;>
+      norm_num [goldenLayerMarginal]
+  have h7u : goldenLayerMarginal 7 3 < goldenLayerMarginal 2 7 := by
+    apply golden_marginal_lt_reference 7 3 (400 / 399) 1 1 <;>
+      norm_num [goldenLayerMarginal]
+  have h11u : goldenLayerMarginal 11 2 < goldenLayerMarginal 2 7 := by
+    apply golden_marginal_lt_reference 11 2 (133 / 132) 1 2 <;>
+      norm_num [goldenLayerMarginal]
+  have h13u : goldenLayerMarginal 13 2 < goldenLayerMarginal 2 7 := by
+    apply golden_marginal_lt_reference 13 2 (183 / 182) 1 2 <;>
+      norm_num [goldenLayerMarginal]
+  have h17u : goldenLayerMarginal 17 2 < goldenLayerMarginal 2 7 := by
+    apply golden_marginal_lt_reference 17 2 (307 / 306) 1 1 <;>
+      norm_num [goldenLayerMarginal]
+  have h19u : goldenLayerMarginal 19 2 < goldenLayerMarginal 2 7 := by
+    apply golden_marginal_lt_reference 19 2 (381 / 380) 1 1 <;>
+      norm_num [goldenLayerMarginal]
+  have h23u : goldenLayerMarginal 23 2 < goldenLayerMarginal 2 7 := by
+    apply golden_marginal_lt_reference 23 2 (553 / 552) 1 1 <;>
+      norm_num [goldenLayerMarginal]
+  have h29u : goldenLayerMarginal 29 2 < goldenLayerMarginal 2 7 := by
+    apply golden_marginal_lt_reference 29 2 (871 / 870) 1 1 <;>
+      norm_num [goldenLayerMarginal]
+  have h31u : goldenLayerMarginal 31 2 < goldenLayerMarginal 2 7 := by
+    apply golden_marginal_lt_reference 31 2 (993 / 992) 1 1 <;>
+      norm_num [goldenLayerMarginal]
+  have h37u : goldenLayerMarginal 37 2 < goldenLayerMarginal 2 7 := by
+    apply golden_marginal_lt_reference 37 2 (1407 / 1406) 1 1 <;>
+      norm_num [goldenLayerMarginal]
+  have h41u : goldenLayerMarginal 41 2 < goldenLayerMarginal 2 7 := by
+    apply golden_marginal_lt_reference 41 2 (1723 / 1722) 1 1 <;>
+      norm_num [goldenLayerMarginal]
+  have h43u : goldenLayerMarginal 43 2 < goldenLayerMarginal 2 7 := by
+    apply golden_marginal_lt_reference 43 2 (1893 / 1892) 1 1 <;>
+      norm_num [goldenLayerMarginal]
+  have h47u : goldenLayerMarginal 47 1 < goldenLayerMarginal 2 7 := by
+    apply golden_marginal_lt_reference 47 1 (48 / 47) 2 11 <;>
+      norm_num [goldenLayerMarginal]
+  have h2l : goldenLayerMarginal 2 7 < goldenLayerMarginal 2 6 :=
+    golden_layer_strict_decrease Nat.prime_two (by norm_num) (by norm_num)
+  have h3l : goldenLayerMarginal 2 7 < goldenLayerMarginal 3 4 := by
+    apply reference_lt_golden_marginal 3 4 (121 / 120) 1 2 <;>
+      norm_num [goldenLayerMarginal]
+  have h5l : goldenLayerMarginal 2 7 < goldenLayerMarginal 5 2 := by
+    apply reference_lt_golden_marginal 5 2 (31 / 30) 1 3 <;>
+      norm_num [goldenLayerMarginal]
+  have h7l : goldenLayerMarginal 2 7 < goldenLayerMarginal 7 2 := by
+    apply reference_lt_golden_marginal 7 2 (57 / 56) 1 3 <;>
+      norm_num [goldenLayerMarginal]
+  have h11l : goldenLayerMarginal 2 7 < goldenLayerMarginal 11 1 := by
+    apply reference_lt_golden_marginal 11 1 (12 / 11) 1 4 <;>
+      norm_num [goldenLayerMarginal]
+  have h13l : goldenLayerMarginal 2 7 < goldenLayerMarginal 13 1 := by
+    apply reference_lt_golden_marginal 13 1 (14 / 13) 1 4 <;>
+      norm_num [goldenLayerMarginal]
+  have h17l : goldenLayerMarginal 2 7 < goldenLayerMarginal 17 1 := by
+    apply reference_lt_golden_marginal 17 1 (18 / 17) 1 5 <;>
+      norm_num [goldenLayerMarginal]
+  have h19l : goldenLayerMarginal 2 7 < goldenLayerMarginal 19 1 := by
+    apply reference_lt_golden_marginal 19 1 (20 / 19) 1 5 <;>
+      norm_num [goldenLayerMarginal]
+  have h23l : goldenLayerMarginal 2 7 < goldenLayerMarginal 23 1 := by
+    apply reference_lt_golden_marginal 23 1 (24 / 23) 1 5 <;>
+      norm_num [goldenLayerMarginal]
+  have h29l : goldenLayerMarginal 2 7 < goldenLayerMarginal 29 1 := by
+    apply reference_lt_golden_marginal 29 1 (30 / 29) 1 5 <;>
+      norm_num [goldenLayerMarginal]
+  have h31l : goldenLayerMarginal 2 7 < goldenLayerMarginal 31 1 := by
+    apply reference_lt_golden_marginal 31 1 (32 / 31) 1 5 <;>
+      norm_num [goldenLayerMarginal]
+  have h37l : goldenLayerMarginal 2 7 < goldenLayerMarginal 37 1 := by
+    apply reference_lt_golden_marginal 37 1 (38 / 37) 1 6 <;>
+      norm_num [goldenLayerMarginal]
+  have h41l : goldenLayerMarginal 2 7 < goldenLayerMarginal 41 1 := by
+    apply reference_lt_golden_marginal 41 1 (42 / 41) 1 6 <;>
+      norm_num [goldenLayerMarginal]
+  have h43l : goldenLayerMarginal 2 7 < goldenLayerMarginal 43 1 := by
+    apply reference_lt_golden_marginal 43 1 (44 / 43) 2 11 <;>
+      norm_num [goldenLayerMarginal]
+  exact ⟨⟨h3u, h5u, h7u, h11u, h13u, h17u, h19u, h23u, h29u, h31u, h37u,
+    h41u, h43u, h47u⟩, ⟨h2l, h3l, h5l, h7l, h11l, h13l, h17l, h19l, h23l,
+    h29l, h31l, h37l, h41l, h43l⟩⟩
+
+private def mFactors : ℕ →₀ ℕ :=
+  Finsupp.single 2 6 + Finsupp.single 3 4 + Finsupp.single 5 2 +
+  Finsupp.single 7 2 + Finsupp.single 11 1 + Finsupp.single 13 1 +
+  Finsupp.single 17 1 + Finsupp.single 19 1 + Finsupp.single 23 1 +
+  Finsupp.single 29 1 + Finsupp.single 31 1 + Finsupp.single 37 1 +
+  Finsupp.single 41 1 + Finsupp.single 43 1
+
+private theorem m_factorization :
+    mFactors = (395622702669701707200 : ℕ).factorization := by
+  have hprime : ∀ p ∈ mFactors.support, p.Prime := by
+    intro p hp
+    rw [Finsupp.mem_support_iff] at hp
+    by_cases h2 : p = 2; · subst p; norm_num
+    by_cases h3 : p = 3; · subst p; norm_num
+    by_cases h5 : p = 5; · subst p; norm_num
+    by_cases h7 : p = 7; · subst p; norm_num
+    by_cases h11 : p = 11; · subst p; norm_num
+    by_cases h13 : p = 13; · subst p; norm_num
+    by_cases h17 : p = 17; · subst p; norm_num
+    by_cases h19 : p = 19; · subst p; norm_num
+    by_cases h23 : p = 23; · subst p; norm_num
+    by_cases h29 : p = 29; · subst p; norm_num
+    by_cases h31 : p = 31; · subst p; norm_num
+    by_cases h37 : p = 37; · subst p; norm_num
+    by_cases h41 : p = 41; · subst p; norm_num
+    by_cases h43 : p = 43; · subst p; norm_num
+    simp [mFactors, h2, h3, h5, h7, h11, h13, h17, h19, h23, h29, h31,
+      h37, h41, h43] at hp
+  apply (Nat.eq_factorization_iff (by norm_num) hprime).mpr
+  simp only [mFactors]
+  repeat' rw [Finsupp.prod_add_index' (by simp) (by simp [pow_add])]
+  simp
+
+open D5.S3.Arith.GoldenResource.GoldenResourcePriceInterval
+open D5.S3.Arith.GoldenResource.GoldenResourceThresholdCriterion
+open D5.S3.Arith.GoldenResource.GoldenSmallestMissingPrime
+
+/-- The first witness integer has a nonempty golden-resource price window. -/
+theorem m_price_window :
+    goldenUpperPrice 395622702669701707200 ≤
+      goldenLowerPrice 395622702669701707200 := by
+  rcases m_price_window_rational_separation with
+    ⟨⟨h3u, h5u, h7u, h11u, h13u, h17u, h19u, h23u, h29u, h31u, h37u,
+      h41u, h43u, h47u⟩,
+     ⟨h2l, h3l, h5l, h7l, h11l, h13l, h17l, h19l, h23l, h29l, h31l,
+      h37l, h41l, h43l⟩⟩
+  have hfac2 : (395622702669701707200 : ℕ).factorization 2 = 6 := by
+    rw [← m_factorization]
+    norm_num [mFactors]
+  have hfac3 : (395622702669701707200 : ℕ).factorization 3 = 4 := by
+    rw [← m_factorization]
+    norm_num [mFactors]
+  have hfac5 : (395622702669701707200 : ℕ).factorization 5 = 2 := by
+    rw [← m_factorization]
+    norm_num [mFactors]
+  have hfac7 : (395622702669701707200 : ℕ).factorization 7 = 2 := by
+    rw [← m_factorization]
+    norm_num [mFactors]
+  have hfac11 : (395622702669701707200 : ℕ).factorization 11 = 1 := by
+    rw [← m_factorization]
+    norm_num [mFactors]
+  have hfac13 : (395622702669701707200 : ℕ).factorization 13 = 1 := by
+    rw [← m_factorization]
+    norm_num [mFactors]
+  have hfac17 : (395622702669701707200 : ℕ).factorization 17 = 1 := by
+    rw [← m_factorization]
+    norm_num [mFactors]
+  have hfac19 : (395622702669701707200 : ℕ).factorization 19 = 1 := by
+    rw [← m_factorization]
+    norm_num [mFactors]
+  have hfac23 : (395622702669701707200 : ℕ).factorization 23 = 1 := by
+    rw [← m_factorization]
+    norm_num [mFactors]
+  have hfac29 : (395622702669701707200 : ℕ).factorization 29 = 1 := by
+    rw [← m_factorization]
+    norm_num [mFactors]
+  have hfac31 : (395622702669701707200 : ℕ).factorization 31 = 1 := by
+    rw [← m_factorization]
+    norm_num [mFactors]
+  have hfac37 : (395622702669701707200 : ℕ).factorization 37 = 1 := by
+    rw [← m_factorization]
+    norm_num [mFactors]
+  have hfac41 : (395622702669701707200 : ℕ).factorization 41 = 1 := by
+    rw [← m_factorization]
+    norm_num [mFactors]
+  have hfac43 : (395622702669701707200 : ℕ).factorization 43 = 1 := by
+    rw [← m_factorization]
+    norm_num [mFactors]
+  have prime_dvd_m_cases : ∀ {p : ℕ}, p.Prime →
+      p ∣ 395622702669701707200 →
+      p = 2 ∨ p = 3 ∨ p = 5 ∨ p = 7 ∨ p = 11 ∨ p = 13 ∨
+      p = 17 ∨ p = 19 ∨ p = 23 ∨ p = 29 ∨ p = 31 ∨
+      p = 37 ∨ p = 41 ∨ p = 43 := by
+    intro p hp hpm
+    have hpos : 0 < mFactors p := by
+      rw [m_factorization]
+      exact hp.factorization_pos_of_dvd (by norm_num) hpm
+    by_cases h2 : p = 2; · subst p; simp
+    by_cases h3 : p = 3; · subst p; simp
+    by_cases h5 : p = 5; · subst p; simp
+    by_cases h7 : p = 7; · subst p; simp
+    by_cases h11 : p = 11; · subst p; simp
+    by_cases h13 : p = 13; · subst p; simp
+    by_cases h17 : p = 17; · subst p; simp
+    by_cases h19 : p = 19; · subst p; simp
+    by_cases h23 : p = 23; · subst p; simp
+    by_cases h29 : p = 29; · subst p; simp
+    by_cases h31 : p = 31; · subst p; simp
+    by_cases h37 : p = 37; · subst p; simp
+    by_cases h41 : p = 41; · subst p; simp
+    by_cases h43 : p = 43; · subst p; simp
+    simp [mFactors, h2, h3, h5, h7, h11, h13, h17, h19, h23, h29, h31,
+      h37, h41, h43] at hpos
+  apply (colossally_abundant_iff_price_interval_nonempty (by norm_num)).mp
+  refine ⟨goldenLayerMarginal 2 7, ?_,
+    (golden_resource_optimal_iff_layer_thresholds ?_ (by norm_num)).mpr ⟨?_, ?_⟩⟩
+  · norm_num [goldenLayerMarginal]
+    positivity
+  · norm_num [goldenLayerMarginal]
+    positivity
+  · intro p hp
+    by_cases hpm : p ∣ 395622702669701707200
+    · rcases prime_dvd_m_cases hp hpm with
+        rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl
+      · simpa [hfac2]
+      · simpa [hfac3] using h3u.le
+      · simpa [hfac5] using h5u.le
+      · simpa [hfac7] using h7u.le
+      · simpa [hfac11] using h11u.le
+      · simpa [hfac13] using h13u.le
+      · simpa [hfac17] using h17u.le
+      · simpa [hfac19] using h19u.le
+      · simpa [hfac23] using h23u.le
+      · simpa [hfac29] using h29u.le
+      · simpa [hfac31] using h31u.le
+      · simpa [hfac37] using h37u.le
+      · simpa [hfac41] using h41u.le
+      · simpa [hfac43] using h43u.le
+    · rw [Nat.factorization_eq_zero_of_not_dvd hpm]
+      have hp47 : 47 ≤ p := by
+        by_contra hnot
+        have hlt : p < 47 := by omega
+        interval_cases p <;> norm_num at hp
+        all_goals norm_num at hpm
+      simpa using golden_layer_marginal_one_threshold_of_le hp (by norm_num) hp47 h47u.le
+  · intro p hp hpm
+    rcases prime_dvd_m_cases hp hpm with
+      rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl
+    · simpa [hfac2] using h2l.le
+    · simpa [hfac3] using h3l.le
+    · simpa [hfac5] using h5l.le
+    · simpa [hfac7] using h7l.le
+    · simpa [hfac11] using h11l.le
+    · simpa [hfac13] using h13l.le
+    · simpa [hfac17] using h17l.le
+    · simpa [hfac19] using h19l.le
+    · simpa [hfac23] using h23l.le
+    · simpa [hfac29] using h29l.le
+    · simpa [hfac31] using h31l.le
+    · simpa [hfac37] using h37l.le
+    · simpa [hfac41] using h41l.le
+    · simpa [hfac43] using h43l.le
+
+end
+
+end D5.S3.Arith.GoldenResource.A279609DoublingRefutation
