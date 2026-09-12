@@ -171,7 +171,83 @@ private theorem greedy_data (w v : ι → ℝ) (hw : ∀ i, 0 < w i)
             sub_nonpos.mpr ((div_le_iff₀ (hw i)).mp (hmax i hi))
           rw [hother i hi, mul_zero, max_eq_left hcoef]
 
+private theorem optimal_values_of_attainment [Fintype ι]
+    (w v : ι → ℝ) (B λ : ℝ) (t : ι → ℝ) (ht : Feasible w B t)
+    (hλ : 0 ≤ λ) (heq : objective v t = dualValue w v B λ) :
+    sSup (objective v '' {u | Feasible w B u}) = objective v t ∧
+      (⨅ p : {p : ℝ // 0 ≤ p}, dualValue w v B p) = objective v t := by
+  constructor
+  · apply IsGreatest.csSup_eq
+    refine ⟨⟨t, ht, rfl⟩, ?_⟩
+    rintro z ⟨u, hu, rfl⟩
+    rw [heq]
+    exact weak_duality w v B λ hλ u hu
+  · change sInf (Set.range (fun p : {p : ℝ // 0 ≤ p} => dualValue w v B p)) = _
+    apply IsLeast.csInf_eq
+    refine ⟨⟨⟨λ, hλ⟩, heq.symm⟩, ?_⟩
+    rintro z ⟨p, rfl⟩
+    exact weak_duality w v B p p.property t ht
+
+/-- A decreasing-ratio ordering yields a feasible greedy maximizer and an attaining dual price. -/
+theorem greedy_attains_duality [Fintype ι] (w v : ι → ℝ) (B : ℝ)
+    (hw : ∀ i, 0 < w i) (hv : ∀ i, 0 ≤ v i) (hB : 0 ≤ B) :
+    ∃ (l : List ι) (λ : ℝ),
+      l.Nodup ∧ l.toFinset = Finset.univ ∧
+      l.Pairwise (fun i j => v j / w j ≤ v i / w i) ∧
+      Feasible w B (greedyFill w l B) ∧ 0 ≤ λ ∧
+      λ * (B - ∑ i, w i * greedyFill w l B i) = 0 ∧
+      (∀ i, (v i - λ * w i) * greedyFill w l B i = max 0 (v i - λ * w i)) ∧
+      objective v (greedyFill w l B) = dualValue w v B λ ∧
+      sSup (objective v '' {t | Feasible w B t}) = objective v (greedyFill w l B) ∧
+      (⨅ p : {p : ℝ // 0 ≤ p}, dualValue w v B p) = objective v (greedyFill w l B) := by
+  obtain ⟨l, λ, h⟩ := greedy_data w v hw hv Finset.univ B hB
+  have ht : Feasible w B (greedyFill w l B) :=
+    ⟨fun i => h.box i (Finset.mem_univ i), h.budget⟩
+  have hcoord (i : ι) := h.coordinate i (Finset.mem_univ i)
+  have heq : objective v (greedyFill w l B) = dualValue w v B λ := by
+    have hs := Finset.sum_congr (s₁ := Finset.univ) rfl (fun i _ => hcoord i)
+    have hid : (∑ i, (v i - λ * w i) * greedyFill w l B i) =
+        objective v (greedyFill w l B) - λ * ∑ i, w i * greedyFill w l B i := by
+      simp only [objective, sub_mul, Finset.sum_sub_distrib, mul_assoc, Finset.mul_sum]
+    rw [hid] at hs
+    dsimp [dualValue]
+    nlinarith [h.slack]
+  exact ⟨l, λ, h.nodup, h.covers, h.sorted, ht, h.price_nonneg, h.slack, hcoord, heq,
+    optimal_values_of_attainment w v B λ (greedyFill w l B) ht h.price_nonneg heq⟩
+
+/-- With enough budget, filling every item is optimal and the zero price attains the dual. -/
+theorem full_budget_optimum [Fintype ι] (w v : ι → ℝ) (B : ℝ)
+    (hv : ∀ i, 0 ≤ v i) (hcapacity : (∑ i, w i) ≤ B) :
+    Feasible w B (fun _ => 1) ∧
+      sSup (objective v '' {t | Feasible w B t}) = ∑ i, v i ∧
+      (⨅ p : {p : ℝ // 0 ≤ p}, dualValue w v B p) = ∑ i, v i ∧
+      dualValue w v B 0 = ∑ i, v i := by
+  have ht : Feasible w B (fun _ => 1) := by
+    constructor
+    · intro i; exact ⟨zero_le_one, le_rfl⟩
+    · simpa using hcapacity
+  have hd : dualValue w v B 0 = ∑ i, v i := by
+    simp [dualValue, max_eq_right (hv _)]
+  have ho : objective v (fun _ => 1) = ∑ i, v i := by simp [objective]
+  have hopt := optimal_values_of_attainment w v B 0 (fun _ => 1) ht le_rfl (ho.trans hd.symm)
+  exact ⟨ht, hopt.1.trans ho, hopt.2.trans ho, hd⟩
+
+/-- The fractional-knapsack supremum equals the infimum over nonnegative scalar prices. -/
+theorem fractional_knapsack_strong_duality [Fintype ι] (w v : ι → ℝ) (B : ℝ)
+    (hw : ∀ i, 0 < w i) (hv : ∀ i, 0 ≤ v i) (hB : 0 ≤ B) :
+    sSup (objective v '' {t | Feasible w B t}) =
+      ⨅ p : {p : ℝ // 0 ≤ p}, dualValue w v B p := by
+  by_cases hcapacity : (∑ i, w i) ≤ B
+  · obtain ⟨_, hp, hd, _⟩ := full_budget_optimum w v B hv hcapacity
+    exact hp.trans hd.symm
+  · obtain ⟨l, λ, _, _, _, _, _, _, _, _, hp, hd⟩ :=
+      greedy_attains_duality w v B hw hv hB
+    exact hp.trans hd.symm
+
 #print axioms weak_duality
 #print axioms greedy_data
+#print axioms greedy_attains_duality
+#print axioms full_budget_optimum
+#print axioms fractional_knapsack_strong_duality
 
 end D5.S3.Analytic.Knapsack.FractionalKnapsackDual
