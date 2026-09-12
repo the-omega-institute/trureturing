@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S1/Recurrence/Invariants/TrinomialOddDiagonalRationalSeries
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [Mathlib.RingTheory.PowerSeries.Expand, Mathlib.RingTheory.PowerSeries.Inverse, Mathlib.RingTheory.PowerSeries.WellKnown]
+   anchors: [mathlib/module/Mathlib.RingTheory.PowerSeries.Expand, mathlib/module/Mathlib.RingTheory.PowerSeries.Inverse, mathlib/module/Mathlib.RingTheory.PowerSeries.WellKnown]
    utility: none
    digest: Odd trinomial diagonals have Schulte's rational generating series. -/
 
