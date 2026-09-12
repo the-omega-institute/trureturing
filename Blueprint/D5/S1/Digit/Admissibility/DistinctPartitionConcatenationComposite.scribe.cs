@@ -9,7 +9,7 @@ internal sealed class DistinctPartitionConcatenationCompositeDocument : IScribeD
     private const string Prefix =
         "D5/S1/Digit/Admissibility/DistinctPartitionConcatenationComposite.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Arith/murthy2005a110454");
+        LibraryNoteRef.Create("D5/L/Digit/murthy2005a110454");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The only positive indices without an eligible composite concatenation are one, two, and four.",
