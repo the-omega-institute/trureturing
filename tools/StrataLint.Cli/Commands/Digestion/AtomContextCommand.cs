@@ -41,9 +41,10 @@ internal static class AtomContextCommand
         var writer = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
         var first = contexts[0];
         writer.WriteLine($"ATOM_CONTEXT atom_id={first.Target.AtomId} source_id={first.SourceId} source_path={first.SourcePath} atomizer={first.Atomizer} occurrences={contexts.Length}");
-        foreach (var context in contexts)
+        for (var ordinal = 0; ordinal < contexts.Length; ordinal++)
         {
-            writer.WriteLine($"OCCURRENCE index={context.Index}/{context.Count} {NeighborToken("PREVIOUS", context.Previous, context.PreviousBoundaryReason)} {NeighborToken("NEXT", context.Next, context.NextBoundaryReason)}");
+            var context = contexts[ordinal];
+            writer.WriteLine($"OCCURRENCE index={ordinal + 1} stream_index={context.Index}/{context.Count} {NeighborToken("PREVIOUS", context.Previous, context.PreviousBoundaryReason)} {NeighborToken("NEXT", context.Next, context.NextBoundaryReason)}");
             WriteNeighbor(writer, "CURRENT", context.Current, null);
             if (context.Previous is { } previous) WriteText(writer, "PREVIOUS", previous.RawBytes);
             WriteText(writer, "CURRENT", context.Current.RawBytes);

@@ -73,8 +73,8 @@ public sealed class AtomContextCommandTests
         Assert.True(result.Success, result.Error);
         Assert.Contains("occurrences=2\n", result.Output, StringComparison.Ordinal);
         Assert.Equal(2, result.Output.Split("OCCURRENCE index=", StringSplitOptions.None).Length - 1);
-        Assert.Contains("OCCURRENCE index=2/6 PREVIOUS atom_id=", result.Output, StringComparison.Ordinal);
-        Assert.Contains("OCCURRENCE index=5/6 PREVIOUS atom_id=", result.Output, StringComparison.Ordinal);
+        Assert.Contains("OCCURRENCE index=1 stream_index=2/6 PREVIOUS atom_id=", result.Output, StringComparison.Ordinal);
+        Assert.Contains("OCCURRENCE index=2 stream_index=5/6 PREVIOUS atom_id=", result.Output, StringComparison.Ordinal);
     }
 
     [Fact]
