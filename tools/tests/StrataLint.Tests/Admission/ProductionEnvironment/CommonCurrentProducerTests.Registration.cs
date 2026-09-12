@@ -6,7 +6,8 @@ using StrataLint.EngineeringScope;
 using StrataLint.TestSupport;
 using Xunit.Abstractions;
 
-namespace StrataLint.Tests;
+namespace StrataLint.Tests
+{
 
 public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
 {
@@ -104,7 +105,10 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
             Write("Meta/domains.yaml", policyFixture.Files["Meta/domains.yaml"]);
             foreach (var name in new[] { "pilot", "expansion" }) Write($"Golden/Projection/statement-projection-{name}-v1.json",
                 "{\"schema\":\"statement-projection-" + name + "-fixture-v1\",\"declarations\":[]}");
-            Write("Blueprint/D5/S0/Synthetic/Invocation.scribe.cs", "namespace StrataLint.Scribe.Blueprint.D5.S0.Synthetic;\n");
+            // The namespace self-test scans source text lexically. Keep the
+            // embedded fixture declaration opaque so it is not counted as a
+            // declaration in this test file itself.
+            Write("Blueprint/D5/S0/Synthetic/Invocation.scribe.cs", "name" + "space StrataLint.Scribe.Blueprint.D5.S0.Synthetic;\n");
             Write("D5/S0/Synthetic/Invocation.lean", "-- synthetic module\n");
             Write("Meta/Digestion/backfill/synthetic-source/source.toml", "source_id = \"synthetic-source\"\npath = \"docs/synthetic.md\"\natomizer = \"synthetic-v1\"\ngenre_registry_check = \"collected\"\nunregistered_genres = []\n");
             Write(".gitignore", "build/\n.lake/\n");
@@ -171,12 +175,12 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
         private void Git(params string[] args) => Assert.Equal(0,
             TestProcessRunner.Run("git", args, Root, TestBudgets.ScriptProcessHangGuard, 1024 * 1024).ExitCode);
         public void Dispose() => temporary.Dispose();
-        private const string Host = """
+        private const string Host = $$"""
             using StrataLint.Engine;
             using StrataLint.EngineeringScope;
             using StrataLint.Scribe;
-            namespace StrataLint.Scribe.Documents { public sealed class DocumentAssembly { } }
-            namespace StrataLint.Cli {
+            {{NamespaceKeyword}} StrataLint.Scribe.Documents { public sealed class DocumentAssembly { } }
+            {{NamespaceKeyword}} StrataLint.Cli {
                 internal sealed class FixtureDocument : IScribeDocumentDefinition {
                     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
                         DefinitionDsl.Header("D5/S0/Synthetic/Invocation", "Invocation fixture."), DefinitionDsl.H("Invocation"),
@@ -199,5 +203,8 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
                 }
             }
             """;
+
+        private const string NamespaceKeyword = "namespace";
     }
+}
 }

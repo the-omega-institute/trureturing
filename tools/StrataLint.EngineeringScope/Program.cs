@@ -142,6 +142,7 @@ internal static class Program
         // outer identity check.  Tests that exercise this input set it
         // explicitly in their child environment.
         start.Environment.Remove("CI_WORKFLOW_CANDIDATE_SHA");
+        start.Environment.Remove("CANDIDATE_SHA");
         if (Directory.Exists(Path.Combine(root, CommonBuildOutputs.PackagesPath)))
             start.Environment["NUGET_PACKAGES"] = Path.Combine(root, CommonBuildOutputs.PackagesPath);
         foreach (var argument in BuildTestArguments(project, results)) start.ArgumentList.Add(argument);
