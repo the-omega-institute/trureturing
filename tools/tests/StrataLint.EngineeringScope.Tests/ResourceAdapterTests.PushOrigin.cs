@@ -172,8 +172,8 @@ public sealed partial class ResourceAdapterTests
         SharedBuildContractTests.Git(fixture.Root, "reset", "--hard", parentless);
         Assert.Empty(SharedBuildContractTests.Git(fixture.Root, "remote"));
         var environment = EnvironmentFor(fixture);
-        environment["GITHUB_EVENT_NAME"] = "push";
-        environment["GITHUB_EVENT_PATH"] = Path.Combine(fixture.Root, "build/absent-event.json");
+        environment["GITHUB_EVENT_NAME"] = "";
+        environment["GITHUB_EVENT_PATH"] = "";
         environment["CI_PLAN_PATH"] = "";
         environment["CI_CHANGES_PATH"] = "";
         fixture.Write("fixtures/selected.txt", "uncommitted current input\n");
@@ -189,6 +189,39 @@ public sealed partial class ResourceAdapterTests
         Assert.DoesNotContain("--changes", arguments);
         Assert.DoesNotContain("--base", arguments);
         Assert.False(File.Exists(PushPlanPath(fixture)));
+    }
+
+    [Theory]
+    [InlineData("native-missing-event")]
+    [InlineData("native-event")]
+    [InlineData("reusable-event")]
+    public void WorkflowCommonCurrentCannotFallBackToDirectExecution(string invocation)
+    {
+        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        var environment = EnvironmentFor(fixture);
+        if (invocation == "native-missing-event") environment["GITHUB_EVENT_NAME"] = "push";
+        else
+        {
+            SetPushEvent(fixture, environment, SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^1"));
+            if (invocation == "reusable-event")
+            {
+                environment["GITHUB_EVENT_NAME"] = "pull_request_target";
+                environment["CI_WORKFLOW_INPUTS"] = new JsonObject { ["candidate_sha"] = fixture.Commit }.ToJsonString();
+            }
+        }
+        environment["CI_PLAN_PATH"] = "";
+        environment["CI_CHANGES_PATH"] = "";
+        fixture.Write("tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll", "fixture");
+        var dotnet = Path.Combine(environment["PATH"], "dotnet");
+        File.WriteAllText(dotnet, "#!/bin/bash\nprintf 'launched\\n' > build/native-launched\nexit 1\n");
+        SharedBuildContractTests.Process(fixture.Root, "/bin/chmod", ["+x", dotnet]);
+        var result = Shell(fixture, ["current"], environment);
+        Assert.Equal(2, result.Exit);
+        Assert.Contains("CI_INPUT_FAILED", result.Text, StringComparison.Ordinal);
+        Assert.Equal("failed", Summary(fixture, "current")["status"]!.ToString());
+        Assert.False(File.Exists(Path.Combine(fixture.Root, "build/native-launched")));
+        Assert.False(File.Exists(PushPlanPath(fixture)));
+        Assert.False(File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.CurrentPath)));
     }
 
     [Theory]
