@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S1/Recurrence/Invariants/RestrictedGrowthLabelOccurrences
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [Mathlib.Order.Interval.Finset.Nat, Mathlib.Algebra.BigOperators.Group.Finset.Piecewise, Mathlib.Data.List.Count, Mathlib.Data.Nat.Choose.Basic]
+   anchors: [Mathlib.Order.Interval.Finset.Nat, Mathlib.Algebra.BigOperators.Group.Finset.Piecewise, Mathlib.Algebra.BigOperators.Ring.Finset, Mathlib.Data.List.Count, Mathlib.Data.Nat.Choose.Basic]
    utility: none
    digest: Label occurrences in restricted-growth words, counted by final block deficit. -/
 
@@ -10,6 +10,7 @@ import Mathlib.Order.Interval.Finset.Nat
 import Mathlib.Data.List.Count
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
+import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Data.Nat.Choose.Basic
 
 namespace D5.S1.Recurrence.Invariants.RestrictedGrowthLabelOccurrences
@@ -206,7 +207,7 @@ private theorem card_max_step (N p : ℕ) (hp : 0 < p) :
       exact hf
     _ = p * ((words N).filter fun w => maxLabel w = p).card +
         ((words N).filter fun w => maxLabel w + 1 = p).card := by
-      simp [Finset.sum_ite, Finset.sum_const, Nat.nsmul_eq_mul, heq, mul_comm]
+      simp [Finset.sum_ite, Finset.sum_const, heq, mul_comm]
 
 private theorem card_near_step (n : ℕ) (hn : 0 < n) :
     ((words (n + 1)).filter fun w => maxLabel w = n).card =
@@ -415,6 +416,31 @@ private theorem T_near_step (n : ℕ) (hn : 0 < n) :
       exact countFiber n hn w hw
     _ = n + 2 + ((words n).filter fun w => maxLabel w + 1 = n).card := by
       simp [Finset.sum_ite, card_top_words, heq]
+
+private theorem T_second_step (k : ℕ) :
+    T (k + 3) (k + 1) =
+      2 + (k + 2) * T (k + 2) (k + 1) +
+        (k + 2).choose 2 + (k + 2).choose 3 + 3 * (k + 2).choose 4 := by
+  calc
+    T (k + 3) (k + 1) = (words (k + 2)).sum (fun w =>
+        (Finset.Icc 1 (maxLabel w + 1)).sum fun x => (x :: w).count (k + 1)) := by
+      simpa only [show k + 3 = k + 2 + 1 by omega, T] using
+        sum_words_succ (k + 2) (fun w => w.count (k + 1))
+    _ = (words (k + 2)).sum (fun w =>
+        (k + 2) * w.count (k + 1) +
+          (if maxLabel w = k + 2 then 2 else 0) +
+          (if maxLabel w = k + 1 then 1 else 0) +
+          (if maxLabel w = k then 1 else 0)) := by
+      apply Finset.sum_congr rfl
+      intro w hw
+      exact secondLabelFiber k w hw
+    _ = 2 + (k + 2) * T (k + 2) (k + 1) +
+        (k + 2).choose 2 + (k + 2).choose 3 + 3 * (k + 2).choose 4 := by
+      simp [T, Finset.sum_add_distrib, ← Finset.mul_sum, Finset.sum_ite,
+        Finset.sum_const, card_top_words,
+        card_near_words (k + 1), card_two_repeat_words k]
+      simp only [show k + 1 + 1 = k + 2 by omega]
+      omega
 
 /-- Mathar's first OEIS A270236 conjecture, with the exact natural-number
 division and the source's quantifier `n > 1`. -/
