@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:26781ebd39b62694dc27f9139d1fb072a3fb006fc46cf217344593d0cc3a237b
+  normalized_sha256: sha256:26781ebd39b62694dc27f9139d1fb072a3fb006fc46cf217344593d0cc3a237b
+cas_ref: sha256:26781ebd39b62694dc27f9139d1fb072a3fb006fc46cf217344593d0cc3a237b
+coverage_gids:
+  - gid: D5/S3/Arith/RationalCompositionParityPeriodTen.even_at_even_index_of_generating_function
+    target_statement_id: sha256:9c7009ef467cacd20286ca0bb1949ec9b0bc27a1e38b532558e4fa299a0d8904
+  - gid: D5/S3/Arith/RationalCompositionParityPeriodTen.even_at_odd_index_iff_of_generating_function
+    target_statement_id: sha256:263a2a2f5146e909b72e0e6963db438a7b8140063208394d8788d90baa9ea169
+receipts:
+  unresolved_subitems: []
