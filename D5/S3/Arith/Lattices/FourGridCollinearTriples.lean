@@ -110,6 +110,30 @@ theorem endpoint_pair_counts (d : Nat) :
   · apply count_of_relation EqualOrExtreme (fun _ => Or.inl rfl) 6
     decide
 
+/-- Once one coordinate spans zero to three, the minor equations force every
+coordinate onto the same four-point line. The two conclusions distinguish the
+two possible non-arithmetic-progression interior points. -/
+theorem extreme_line_coordinate_classification {d : Nat} (x y z : GridPoint d) (k : Fin d)
+    (hx : x k = 0) (hz : z k = 3) (hcol : Collinear x y z) :
+    (y k = 1 -> ∀ i,
+      (x i = y i ∧ y i = z i) ∨
+        (x i = 0 ∧ y i = 1 ∧ z i = 3) ∨
+        (x i = 3 ∧ y i = 2 ∧ z i = 0)) ∧
+    (y k = 2 -> ∀ i,
+      (x i = y i ∧ y i = z i) ∨
+        (x i = 0 ∧ y i = 2 ∧ z i = 3) ∨
+        (x i = 3 ∧ y i = 1 ∧ z i = 0)) := by
+  constructor
+  · intro hy i
+    have h := hcol i k
+    rw [hx, hy, hz] at h
+    omega
+  · intro hy i
+    have h := hcol i k
+    rw [hx, hy, hz] at h
+    omega
+
 #print axioms endpoint_pair_counts
+#print axioms extreme_line_coordinate_classification
 
 end D5.S3.Arith.Lattices.FourGridCollinearTriples
