@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S1/Recurrence/Invariants/TrinomialOddDiagonalRationalSeries
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [Mathlib.RingTheory.PowerSeries.Expand, Mathlib.RingTheory.PowerSeries.Inverse, Mathlib.RingTheory.PowerSeries.WellKnown, Mathlib.Tactic.LinearCombination]
+   anchors: [Mathlib.RingTheory.PowerSeries.Expand, Mathlib.RingTheory.PowerSeries.Inverse, Mathlib.RingTheory.PowerSeries.WellKnown, Mathlib.Tactic.LinearCombination, Mathlib.Tactic.Ring]
    utility: none
    digest: Odd trinomial diagonals have Schulte's rational generating series. -/
 
@@ -10,6 +10,7 @@ import Mathlib.RingTheory.PowerSeries.Expand
 import Mathlib.RingTheory.PowerSeries.Inverse
 import Mathlib.RingTheory.PowerSeries.WellKnown
 import Mathlib.Tactic.LinearCombination
+import Mathlib.Tactic.Ring
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -39,7 +40,8 @@ def a (n : Nat) : Rat :=
 
 open PowerSeries
 
-example (n : Nat) :
+/-- The Schulte diagonal is an odd coefficient of a geometric power series. -/
+theorem odd_trinomial_diagonal_coeff (n : Nat) :
     coeff (2 * n + 3)
         ((1 - X ^ 2 * (1 + X + X ^ 2 : PowerSeries Rat))⁻¹) =
       ∑ j ∈ range (n / 2 + 1), trinomial (n + 1 - j) (2 * j + 1) := by
@@ -109,5 +111,82 @@ example (n : Nat) :
               simp
             · simp)
         _ < 2 * j + 1 := by omega
+
+/-- Werner Schulte's 2015 conjecture on OEIS A077864. -/
+theorem schulte_a077864 (n : Nat) :
+    a n = ∑ j ∈ range (n / 2 + 1), trinomial (n + 1 - j) (2 * j + 1) := by
+  let minus : PowerSeries Rat := 1 - X ^ 2 - X ^ 3 - X ^ 4
+  let plus : PowerSeries Rat := 1 - X ^ 2 + X ^ 3 - X ^ 4
+  let G : PowerSeries Rat := minus⁻¹
+  let reflected : PowerSeries Rat := rescale (-1) G
+  let expanded : PowerSeries Rat := expand 2 (by decide) generatingSeries
+  have hminus : G * minus = 1 := by
+    exact PowerSeries.inv_mul_cancel minus (by simp [minus])
+  have hplus : reflected * plus = 1 := by
+    have h := congrArg (rescale (-1 : Rat)) hminus
+    have hreflect : rescale (-1 : Rat) minus = plus := by
+      dsimp only [minus, plus]
+      simp only [map_sub, map_one, map_pow, rescale_neg_one_X]
+      ring
+    simpa only [map_mul, map_one, reflected, hreflect] using h
+  have hexpanded : expanded * (minus * plus) = 1 := by
+    have h := congrArg (expand 2 (by decide : 2 ≠ 0) (R := Rat))
+      (PowerSeries.inv_mul_cancel
+        ((1 - X) * (1 - X - 2 * X ^ 2 - X ^ 3) : PowerSeries Rat) (by simp))
+    simp only [map_mul, map_sub, map_one, map_ofNat, map_pow, expand_X] at h
+    change expanded * (minus * plus) = 1
+    rw [show expanded = expand 2 (by decide) generatingSeries by rfl]
+    rw [show generatingSeries =
+        ((1 - X) * (1 - X - 2 * X ^ 2 - X ^ 3) : PowerSeries Rat)⁻¹ by
+      rfl]
+    convert h using 1
+    all_goals
+      dsimp only [minus, plus]
+      ring
+  have hproduct : (G * reflected) * (minus * plus) = 1 := by
+    calc
+      (G * reflected) * (minus * plus) = (G * minus) * (reflected * plus) := by ring
+      _ = 1 := by rw [hminus, hplus, one_mul]
+  have hdenom : minus * plus ≠ 0 := by
+    intro hzero
+    have h := congrArg constantCoeff hzero
+    norm_num [minus, plus] at h
+  have heq : expanded = G * reflected := by
+    apply mul_right_cancel₀ hdenom
+    exact hexpanded.trans hproduct.symm
+  have hodd : 2 * X ^ 3 * expanded = G - reflected := by
+    calc
+      2 * X ^ 3 * expanded = 2 * X ^ 3 * (G * reflected) := by rw [heq]
+      _ = G * (reflected * plus) - (G * minus) * reflected := by
+        dsimp only [minus, plus]
+        ring
+      _ = G - reflected := by rw [hminus, hplus, mul_one, one_mul]
+  have hcoeff := congrArg (coeff (2 * n + 3)) hodd
+  dsimp only [reflected] at hcoeff
+  rw [show 2 * X ^ 3 * expanded = X ^ 3 * (PowerSeries.C 2 * expanded) by
+    simp only [map_ofNat]; ring] at hcoeff
+  simp only [coeff_X_pow_mul', if_pos (by omega : 3 ≤ 2 * n + 3),
+    coeff_C_mul, map_sub, coeff_rescale] at hcoeff
+  have hindex : 2 * n + 3 - 3 = 2 * n := by omega
+  rw [hindex] at hcoeff
+  dsimp only [expanded] at hcoeff
+  rw [coeff_expand_mul] at hcoeff
+  have hsign : (-1 : Rat) ^ (2 * n + 3) = -1 := by
+    rw [show 2 * n + 3 = 2 * (n + 1) + 1 by omega, pow_add, pow_mul]
+    norm_num
+  rw [hsign] at hcoeff
+  have haG : a n = coeff (2 * n + 3) G := by
+    dsimp only [a]
+    linear_combination hcoeff / 2
+  have hGform :
+      G = (1 - X ^ 2 * (1 + X + X ^ 2 : PowerSeries Rat))⁻¹ := by
+    dsimp only [G, minus]
+    congr 1
+    ring
+  rw [hGform] at haG
+  exact haG.trans (odd_trinomial_diagonal_coeff n)
+
+#print axioms odd_trinomial_diagonal_coeff
+#print axioms schulte_a077864
 
 end D5.S1.Recurrence.Invariants.TrinomialOddDiagonalRationalSeries
