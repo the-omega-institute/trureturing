@@ -57,7 +57,7 @@ jobs:
       STRATALINT_CACHE_WRITES: 'false'
       CI_PLAN_PATH: build/ci/plan.json
       CI_CHANGES_PATH: build/ci/changes.json
-      CI_NEEDS: ${{ toJSON(needs) }}
+      CI_NEEDS: '{"resolve":{"result":${{ toJSON(needs.resolve.result) }}},"push":{"result":${{ toJSON(needs.push.result) }}}}'
       CI_CHANGES_B64: ${{ needs.resolve.outputs.changes_b64 }}
       CI_PLAN_B64: ${{ needs.resolve.outputs.plan_b64 }}
     steps:

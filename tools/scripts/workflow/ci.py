@@ -30,20 +30,14 @@ def oid(value):
     return value
 
 
-def checkout(root, commit, allow_missing_candidate=False):
-    workflow_candidate = os.environ.get("CI_WORKFLOW_CANDIDATE_SHA", "")
-    # The reusable push workflow supplies this immutable candidate input to
-    # its stage jobs. The PR resolver explicitly opts out because it runs in
-    # the caller workflow, before reusable inputs exist. Every stage job keeps
-    # the fail-closed requirement when the input is absent.
-    event_name = os.environ.get("GITHUB_EVENT_NAME", "")
-    # Unit/integration fixtures deliberately clear the event name; in that
-    # local mode an inherited CI candidate must not constrain their synthetic
-    # repositories. Real workflow invocations always set an event name.
-    if workflow_candidate and event_name and oid(workflow_candidate) != oid(commit):
-        raise ValueError("checkout does not match the reusable workflow candidate input")
-    if not workflow_candidate and not allow_missing_candidate and event_name and event_name != "push":
-        raise ValueError("reusable workflow candidate input is required")
+def checkout(root, commit):
+    # A reusable workflow receives an immutable candidate explicitly.  An
+    # empty or mismatched input must fail closed; never silently substitute the
+    # event SHA when the caller supplied a candidate contract.
+    import ci_plan
+    supplied = ci_plan.workflow_candidate()
+    if supplied is not None and supplied != commit:
+        raise ValueError("reusable workflow candidate_sha must match checkout")
     if run(root, "git", "rev-parse", "HEAD") != oid(commit):
         raise ValueError("checkout does not match the fixed candidate")
     for remote in run(root, "git", "remote").splitlines():
@@ -62,8 +56,7 @@ def resolve(root, head):
     if len(fields) != 3 or fields[2] != oid(head):
         raise ValueError("merge candidate is absent or does not contain the triggering PR head")
     candidate, base, _ = map(oid, fields)
-    # The resolver is the caller workflow, before reusable inputs exist.
-    checkout(root, candidate, allow_missing_candidate=True)
+    checkout(root, candidate)
     import ci_plan
     outputs(ci_plan.plan_pr(root, candidate, base, head))
 
