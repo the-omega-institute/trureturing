@@ -38,4 +38,41 @@ theorem mem_words_succ (n : ℕ) (w : List ℕ) (x : ℕ) :
   · rintro ⟨hw, hlo, hhi⟩
     exact ⟨w, hw, x, ⟨hlo, hhi⟩, rfl⟩
 
+theorem maxLabel_cons (w : List ℕ) (x : ℕ) :
+    maxLabel (x :: w) = max x (maxLabel w) := rfl
+
+theorem maxLabel_le_length (n : ℕ) (w : List ℕ) (hw : w ∈ words n) :
+    maxLabel w ≤ n := by
+  induction n generalizing w with
+  | zero =>
+    have heq := (mem_words_zero w).mp hw
+    simp [heq, maxLabel]
+  | succ n ih =>
+    cases w with
+    | nil => simp [words] at hw
+    | cons x v =>
+      obtain ⟨hv, _, hx⟩ := (mem_words_succ n v x).mp hw
+      have hb := ih v hv
+      rw [maxLabel_cons]
+      exact max_le (by omega) (by omega)
+
+/-- A finite-fiber sum for the next RGF label, valid for arbitrary weights. -/
+theorem sum_words_succ (n : ℕ) (f : List ℕ → ℕ) :
+    (words (n + 1)).sum f =
+      (words n).sum (fun w => (Finset.Icc 1 (maxLabel w + 1)).sum fun x => f (x :: w)) := by
+  have hdisj : (↑(words n) : Set (List ℕ)).PairwiseDisjoint
+      (fun w => (Finset.Icc 1 (maxLabel w + 1)).image fun x => x :: w) := by
+    intro w _ v _ hne
+    apply Finset.disjoint_left.mpr
+    intro z hz hz'
+    obtain ⟨x, _, rfl⟩ := Finset.mem_image.mp hz
+    obtain ⟨y, _, heq⟩ := Finset.mem_image.mp hz'
+    exact hne (List.cons.inj heq).2.symm
+  rw [words, Finset.sum_biUnion hdisj]
+  apply Finset.sum_congr rfl
+  intro w _
+  rw [Finset.sum_image]
+  intro a _ b _ h
+  exact (List.cons.inj h).1
+
 end D5.S1.Recurrence.Invariants.RestrictedGrowthLabelOccurrences
