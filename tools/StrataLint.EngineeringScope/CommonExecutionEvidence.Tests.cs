@@ -17,6 +17,7 @@ internal static partial class CommonExecutionEvidence
         var projects = registry.Projects.ToDictionary(project => project.Path, StringComparer.Ordinal);
         var paths = snapshot.Files.Keys.Select(path => path.Value).ToArray();
         var compile = new Dictionary<string, string>(StringComparer.Ordinal);
+        var materials = new Dictionary<string, object>(StringComparer.Ordinal);
         // Validate ALL current declarations before selection, including disabled tests.
         var buildInputs = projects.Values.ToDictionary(project => project.Path, project =>
             EngineeringProjectRegistry.ExpandInputs(paths, project.BuildInputs!, [], project.Path), StringComparer.Ordinal);
@@ -105,13 +106,17 @@ internal static partial class CommonExecutionEvidence
 
         object Material(string path)
         {
+            // Projects share one content/mode record per file in this snapshot.
+            if (materials.TryGetValue(path, out var cached)) return cached;
             // Compile registrations must name concrete compile/options materials.
             if (path is EngineeringProjectRegistry.ManifestPath or "Meta/FILEMAP.toml")
                 throw new InvalidDataException($"register relevant inputs directly, not the whole registration manifest: {path}");
             var file = snapshot.Files[RepoPath.CreateKnown(path)];
             var executable = !OperatingSystem.IsWindows() && (File.GetUnixFileMode(Path.Combine(root, path))
                 & (UnixFileMode.UserExecute | UnixFileMode.GroupExecute | UnixFileMode.OtherExecute)) != 0;
-            return new { path, mode = executable ? "executable" : "regular", sha256 = Convert.ToHexStringLower(SHA256.HashData(file.RawBytes.AsSpan())) };
+            var material = new { path, mode = executable ? "executable" : "regular", sha256 = Convert.ToHexStringLower(SHA256.HashData(file.RawBytes.AsSpan())) };
+            materials.Add(path, material);
+            return material;
         }
     }
 
