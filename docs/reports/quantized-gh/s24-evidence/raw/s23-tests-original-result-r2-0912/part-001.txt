@@ -1,0 +1,399 @@
+{
+  "conclusion": {
+    "verdict": "approve",
+    "worker_flight_ref": "qgh0912-s23-full-composed-tests-r2",
+    "attempt": 1,
+    "retry_budget": 1,
+    "stage": "review",
+    "role": "tests",
+    "carrier": "codex-cli",
+    "prior_exposure": "repo-prior-exposed",
+    "scope": "Approve this supplied C196 candidate for source fidelity and authorized fixed representation verification. No new mathematical validation, source delivery, CI/MERGED or whole-goal completion is claimed.",
+    "identity": {
+      "work_target": "/Users/auricstudio/trureturing-qgh-pure-s23",
+      "supplied_branch": "lane/math/quantized-gh-composed-s23-0911",
+      "supplied_starting_HEAD": "1f5f54ba9cdba9486e1c8170ccd627cadcd9ce25",
+      "packet": {
+        "path": "/tmp/qgh-boundaries-0908/s23-full-composed-review-r2-c196-0912.tar.xz",
+        "bytes": 17583816,
+        "sha256": "a7ef1526c6a82fcc96d5d0fb83381255ba9b14f3aca92219dd97651702cab113"
+      },
+      "inputs": {
+        "manifest.json": {
+          "bytes": 842891,
+          "sha256": "b19a01a05479b49f72245a022e0c143955fa45c07c488b6c1e66d0717d82a82c"
+        },
+        "candidate-paths.json": {
+          "bytes": 665215,
+          "sha256": "4b8bd7404aad34b228459daf9021d5740cd8243cfaa782634ecd298013f412fb"
+        },
+        "candidate-current-identities.json": {
+          "bytes": 1241586,
+          "sha256": "b00e2d83284238408df6b51168af32b7865baa4ca3f9d88020e7685867809306"
+        },
+        "current-delta-paths.json": {
+          "bytes": 38973,
+          "sha256": "b99adffe461232174f58ac82a259b5dc917df587afbe50ebd8dc781c32b2c85a"
+        },
+        "control/current-goal.json": {
+          "bytes": 814863,
+          "sha256": "a623dc6f601510ba3595ba05561af0c903e85bfd28b2f5e393a7d5446f400bb1"
+        }
+      },
+      "candidate_paths": 2459,
+      "current_delta_paths": 133,
+      "source": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "bytes": 440285,
+        "LF": 8740,
+        "sha256": "75e41aeca17b0343d6ecb5cb16e6cee13d7a64f8f798556921351e855c3e6af9",
+        "S22_prefix_bytes": 414248,
+        "S22_prefix_sha256": "709b3de5f38ef393313f2c9c29e2f1afa3435fef7d7455fb8e5202bb01a31122",
+        "chapter34_bytes": 26037
+      },
+      "authority": {
+        "CLAUDE_bytes": 291069,
+        "AGENTS_mode": "120000",
+        "AGENTS_raw_bytes": 9,
+        "AGENTS_relative_target": "CLAUDE.md",
+        "materialized_as_symlink": true
+      }
+    },
+    "reading_coverage": {
+      "sequence": "Complete current CLAUDE first; entire current source and complete current S19-S23 public APIs during read-only intake; complete GoalArtifact, harness, SKILL, worker spec, CONTEXT and indispensable original inputs before verdict.",
+      "whole_source": {
+        "semantic_byte_ranges": [
+          [
+            0,
+            440285
+          ]
+        ],
+        "LF_lines": [
+          1,
+          8740
+        ],
+        "whole_units": 345,
+        "inherited_units": 323,
+        "chapter34_units": 22,
+        "structural_headings": 4,
+        "omitted_ranges": [],
+        "proofs_tables_qualifiers_read": true
+      },
+      "authority_and_goal": {
+        "CLAUDE": 291069,
+        "SKILL": 63278,
+        "CODEX_WORKER_SPEC": 29223,
+        "CONTEXT": 3335,
+        "tests_brief": 11381,
+        "goal_bytes": 814863,
+        "constraints": 196,
+        "success_criteria": 51,
+        "revisions": 191,
+        "complete": true
+      },
+      "original_sources": {
+        "distinct_bodies": 37,
+        "aggregate_bytes": 10344938,
+        "coverage": "Exact identity-to-covered-paragraph mappings plus every distinct original passage; complete 339530-byte supplemental source projection. Includes I18/I20/I44 and all inherited source versions."
+      },
+      "indispensable_evidence": {
+        "complete": true,
+        "scope": "All 93 recovered public resources; complete original reports and map prose/schema; nine repaired S22 reports; all 27 named S22 inputs; xi program, state_store and Makefile; I51 formal result/intake/current audit; original R1 results/intakes; exact before-I52 and before-I53 records; complete I53 public checker; current ownership/navigation contracts. Raw mathematical programs were read as inert text.",
+        "evidence_file_occurrences": 268,
+        "distinct_prose_reading": "2246319-byte unique projection covered by its first 306009 bytes and the complete 1548380-byte remaining projection; exact duplicate identity mappings retained. The remaining projection removes generated hash headings and exhaustively types 199 repetitive inventory rows, not mathematical prose.",
+        "typed_JSON_traversal": {
+          "objects": 60727,
+          "arrays": 15173,
+          "strings": 103466,
+          "mechanical_strings": 93038,
+          "integers": 180190,
+          "booleans": 11496,
+          "nulls": 1186,
+          "floats": 23
+        },
+        "additional_primary_formula_leaves_read": 28,
+        "hashing_is_not_semantic_reading": true
+      },
+      "literature": {
+        "selected_original_PDF_pages": {
+          "HKUST": [
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "Stanford": [
+            6,
+            16,
+            17,
+            20,
+            21,
+            22,
+            26,
+            27,
+            28,
+            30,
+            31,
+            33,
+            44
+          ],
+          "Doikov": [
+            1,
+            2,
+            3,
+            4,
+            9
+          ],
+          "Boyd_book": [
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            647,
+            648,
+            649
+          ]
+        },
+        "coverage": "38 selected pages; 34 exact mappings to fully read original extracts, four additional pages read completely. HKUST pages2-11 and Doikov pages2-3 also visually read to recover formula glyphs. All four complete PDF identities verified; no full-book semantic-reading claim."
+      },
+      "truncation_recovery": [
+        "Current CLAUDE window18 reread completely.",
+        "Worker-spec initial combined windows0/1 reread completely.",
+        "Historical source projection window17 reread completely.",
+        "Evidence remaining combined0-3 display truncated the middle; windows1/2 reread completely.",
+        "All later bounded prose windows read without unrecovered truncation. Metadata-only truncated displays were not counted as semantic reading."
+      ],
+      "genuine_omissions": [
+        "The separate original C47/I18 failure error stream is not supplied; no raw stream was fabricated.",
+        "The expressly excluded historical diagnostic member was not opened or sought elsewhere and is not a mathematical premise.",
+        "Noncited PDF pages, opaque referents, private logs/transcripts and excluded newer mathematical work were not read."
+      ],
+      "unread_indispensable_supplied_bodies": []
+    },
+    "source_fidelity": {
+      "authorized_edits": [
+        {
+          "unit": "34.1",
+          "current_source_span": [
+            414333,
+            415866
+          ],
+          "original_unit_bytes": 1652,
+          "current_unit_bytes": 1533,
+          "edit": "Remove exactly original unit bytes[28,147), the 119-byte opening S23/C55/C47 implementation attribution."
+        },
+        {
+          "unit": "34.16",
+          "current_source_span": [
+            431493,
+            432712
+          ],
+          "original_unit_bytes": 1272,
+          "current_unit_bytes": 1219,
+          "edit": "Replace exactly original unit bytes[773,827), the 54-byte provenance clause, with one period. etadmin=eta*dmin remains."
+        }
+      ],
+      "preservation": "The exact S22 prefix and every mathematical byte outside the two authorized spans survive. All other 20 chapter34 units are unchanged. Historical33.22 extra LF retains its original owner; historical33.20 references in34.21 resolve in original I44.",
+      "whole_source_assessment": [
+        {
+          "sections": "1-14",
+          "assessment": "Encoding versus chosen inner product, PSD/PD and singular endpoints, entrywise versus Schur rounding, xi finite-prefix/tail scope and numerical-library status remain distinct."
+        },
+        {
+          "sections": "15-29",
+          "assessment": "Positive support, variance and moment normalizations, finite grids versus prime lattices, strict/closed endpoints, finite slab reductions, coordinate separation, relative spread and common-height mixture qualifications retain their original domains and proofs."
+        },
+        {
+          "sections": "30-33",
+          "assessment": "Separate balanced (2,3,5)/(2,3,7) results, conjugation corrections, finite/infinite distance distinctions, full fixed5040 support table/proof, density order, nonunique prices, mass-four normalization and formal limiting endpoints remain intact."
+        },
+        {
+          "sections": "34.1-34.22",
+          "assessment": "Nonnegative premises before squaring in34.7, paired increments in34.11, full inverse-image family and strict cutoff/endpoints in34.15-34.18, one-corner zero-sign obstruction and continuous-versus-prime-point distinction remain intact.34.20 still assumes the full wider-domain translated5040 baseline; S21 fixedT=0 and S22 density order do not prove it."
+        }
+      ],
+      "historical_literature_error": "Doikov PDF pp.2-3 retains the general affine-sign inconsistency. The source uses the zero-affine endpoint case and supplies its own Jensen argument; no validation of the erroneous general display is inferred.",
+      "excluded_inferences": "No GH definition, RH/Robin progress, arbitrary-prime result, encoded orthogonality, kernel proof, novelty, hidden model authentication, sterile priors or model-family diversity is added. C181/C185 and newer/exhausted mathematics are excluded; C195 supplies no result."
+    },
+    "verification": {
+      "current_public_APIs": "S19, S20, S21, S22 and S23 verify passed once; no passed top-level current check was repeated.",
+      "current_api_units": {
+        "S20": 282,
+        "S21": 304,
+        "S22": 323,
+        "S23": 345
+      },
+      "S20_repair": {
+        "anchors": 33,
+        "descendant_pairs": 78,
+        "repaired_spans": [
+          [
+            0,
+            58191
+          ],
+          [
+            39336,
+            58191
+          ],
+          [
+            42664,
+            50745
+          ]
+        ],
+        "consumer": "S20Evidence.section",
+        "report_sha256": "29d239c8f3f0bb3cde6bc8fb780360856955846ecc8c48ffe1f7f16b218a73c6",
+        "full_recipe_identity": {
+          "bytes": 4892,
+          "LF": 99,
+          "terminal_LF": true,
+          "sha256": "1c9fd967dd44c0558c3cc2c96d8869ce0983d6068e296f2936f4eda9aa697aa1"
+        }
+      },
+      "originals": "Seven separately supplied originals equal the recovered I18/I20/I44 source/report bodies and I44 map. I44 source392486/report81031/map297471 bytes retain original schema, theorem/proof/verdict/error bytes and final LFs; C47 payload15073 versus transcription15074 preserves the delimiter distinction.",
+      "canonical_scopes": {
+        "S21": {
+          "roots": 304,
+          "catalog": 452,
+          "reachable": 431,
+          "historical_only": 21
+        },
+        "S22": {
+          "roots": 323,
+          "catalog": 494,
+          "reachable": 450,
+          "historical_only": 44
+        },
+        "S23": {
+          "roots": 345,
+          "catalog": 525,
+          "reachable": 472,
+          "historical_only": 53
+        }
+      },
+      "canonical_and_capacity": "All525 named cached pairs and53 ordered chains checked. Canonical delta is exactly58 original imported paths/OIDs/modes plus4 authorized I51 producer paths. Zero ingest here. New evidence<=800LF, raw parts<=750LF and new directories<=40 direct files; full source is the explicit exception.",
+      "additional_consumers": {
+        "ordinary_file_bytes": 440285,
+        "S22_file_span_bytes": 414248,
+        "inherited_unit_pointers_resolved": 261,
+        "I37_document_refs_resolved": 33,
+        "I44_original_spans": 399,
+        "I44_original_pointer_edges": 209,
+        "raw_payload_ids": [
+          "symbolic_program",
+          "original_execution_receipt",
+          "preregistered_gate",
+          "C47_raw_envelope",
+          "I18_ingest_command",
+          "historical_LF_relations",
+          "I18_file_inventory"
+        ],
+        "whole_section_hierarchy": {
+          "21": {
+            "headings": 30,
+            "aliases": 2
+          },
+          "22": {
+            "headings": 10,
+            "aliases": 0
+          },
+          "23": {
+            "headings": 22,
+            "aliases": 0
+          }
+        },
+        "hierarchy_mismatches": []
+      },
+      "current_source_links": {
+        "local_links": 19,
+        "distinct_targets": 11,
+        "all_targets_mapped": true
+      },
+      "archive": "All2757 manifest records bound;2459 completed current-member checks reused and298 additional members hashed. All2715 non-diagnostic original R1 members, including its manifest, preserved. Seven before-I52 and four before-I53 archive identities agree. S19-S22 executable API blocks match the supplied pre-S23 versions.",
+      "command_exit_evidence": [
+        {
+          "command": "python3 -B /tmp/qgh0912-s23-tests-r2-intake/check_public.py",
+          "exit": 0,
+          "scope": "Five current public verify calls and93 resource recoveries."
+        },
+        {
+          "command": "python3 -B /tmp/qgh0912-s23-tests-r2-intake/public-section-check.py /tmp/qgh0912-s23-tests-r2-intake/candidate",
+          "exit": 0,
+          "scope": "Complete published I53 recipe and real S20 sections."
+        },
+        {
+          "command": "python3 -B /tmp/qgh0912-s23-tests-r2-intake/check_supplement.py",
+          "exit": 1,
+          "scope": "Seven originals, two edits, canonical closure/chains and133 delta checks passed; final API comparison selected an incorrect historical S19 baseline."
+        },
+        {
+          "command": "python3 -B /tmp/qgh0912-s23-tests-r2-intake/check_code_history.py",
+          "exit": 0,
+          "scope": "Correct supplied pre-S23 API baselines; isolated recovery."
+        },
+        {
+          "command": "python3 -B /tmp/qgh0912-s23-tests-r2-intake/check_remaining_identities.py",
+          "exit": 1,
+          "scope": "Manifest/dependency/before-archive checks passed; scratch unanchored fence extraction failed. Subsequent isolated line-anchored extraction matched all4892 recipe bytes; exact archive identity-report assembly exited0."
+        },
+        {
+          "command": "python3 -B /tmp/qgh0912-s23-tests-r2-intake/check_remaining_consumers.py",
+          "exit": 0,
+          "scope": "Whole-file/prefix behavior, original spans/pointers, inherited consumers and full S21-S23 section hierarchy."
+        },
+        {
+          "command": "python3 -B -",
+          "exit": 0,
+          "scope": "Final source-link check after excluding LaTeX/code; all19 local links resolve. PDF text/selected-page rendering and complete coverage accounting also finished."
+        }
+      ],
+      "reviewer_errors": "Scratch basename collision was corrected before affected execution. Incorrect S19 historical baseline, guessed unextracted manifest/goal and S22 alias, missing scratch import path, unanchored fence regex, transparent PDF views and LaTeX false link were corrected without candidate changes. Missing-fontTools warnings were addressed by rendered reading, without installation. No candidate defect is inferred from these reviewer errors.",
+      "execution_limits": "CPU fixed text/JSON/byte/schema/reference checks and PDF rendering only. No mathematical program/certificate/replay, numerical or symbolic evaluation, search, enumeration, factorization, GPU, agent/delegation, install, build/Lean/preflight, Git mutation or lifecycle action."
+    },
+    "findings": [],
+    "BlockingAuthority": {
+      "rule": "A blocker requires both a current C196/authority contract and concrete violating candidate evidence.",
+      "current_grounded_blockers": 0,
+      "assessment": "No such conjunctive failure remains in this reviewed candidate. The historical S20 full-section defect is repaired and the full checker is published; original quality zero-coverage is a historical worker omission, not approval evidence or a source defect."
+    },
+    "historical_verdicts": {
+      "I44": {
+        "architecture": "approve",
+        "quality": "reject",
+        "tests": "approve"
+      },
+      "S22_original_R1": {
+        "architecture": "reject",
+        "quality": "comment",
+        "tests": "reject"
+      },
+      "S23_original_R1": {
+        "architecture": "approve",
+        "quality": "comment",
+        "tests": "reject"
+      },
+      "S23_original_quality_coverage": {
+        "source_bytes": 0,
+        "units": 0
+      },
+      "boundary": "Original I18/I20/I44 errors and verdict bytes, I44 incomplete34.1/34.16 migration,986/542 checks and the symbolic run remain separately attributed history. I52 duplicate checker execution and I53/caller preparation errors remain documented. None supplies this vote."
+    },
+    "reasoning_discipline": {
+      "mature_frame": "Immutable version ownership, lossless composition, dependency closure and actual consumer contracts.",
+      "known_good_form": "Exact prefix plus tail, explicitly bounded historical resources, whole-unit inverses and complete section ranges.",
+      "symmetric_aesthetic_assessment": "Shared-prefix reuse avoids redundant source copies; explicit histories add navigation complexity. Exact inverses, preserved owners and real consumer results materially support this form. Neither elegance nor historical approvals offset a concrete omission.",
+      "verified_premises": "Complete current-source and indispensable supplied-evidence reading, identities, exact edits, preserved originals, canonical scopes and current consumer behavior stated above.",
+      "unknown_premises": "Historical executions remain attributed; no fresh numerical regeneration, external literature refresh, remote state or hidden model provenance. The full wider-domain translated5040 hypothesis remains unproved.",
+      "depth_stop": "Stop at the authorized source-fidelity and representation verdict; caller owns further formal intake and any lifecycle decision."
+    }
+  },
+  "log_ref": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/qgh0912-s23-full-composed-tests-r2/attempt-1/worker.stdout.log"
+}

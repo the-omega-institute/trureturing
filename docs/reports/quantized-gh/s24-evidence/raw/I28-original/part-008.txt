@@ -1,0 +1,594 @@
+        "chain_atoms": []
+      }
+    }
+  ],
+  "historical_canonical_preservation": {
+    "all_source_ledger_files_exact": true,
+    "all_source_referenced_cas_exact": true,
+    "original_s24_pair_count": 31,
+    "both_34_22_lf_variants_exact": true,
+    "ledger_files_identity_manifest_sha256": "abd5569398e89a12df25c5768ad7c13a02d6f21eaacaf909b068d1c9d40cdc75",
+    "cas_objects_identity_manifest_sha256": "f8019ae0eb5722a354548f7e5cb9919a86898d8a29db12ef0debfce5f5b1caf0"
+  },
+  "canonical_whitespace": {
+    "per_path": [
+      {
+        "path": "Meta/Digestion/atoms/sha256/02af4e04d7470336acbc724c709f18d59f9acd179dec1dcb0a33a7a16ede4c56",
+        "exit_code": 3,
+        "diagnostic": "Meta/Digestion/atoms/sha256/02af4e04d7470336acbc724c709f18d59f9acd179dec1dcb0a33a7a16ede4c56:23: new blank line at EOF.\n"
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/03ae2a3ea6b2f37896585deb4de070551ef6ebc20b01c337a8fdc3a9882786f4",
+        "exit_code": 3,
+        "diagnostic": "Meta/Digestion/atoms/sha256/03ae2a3ea6b2f37896585deb4de070551ef6ebc20b01c337a8fdc3a9882786f4:18: new blank line at EOF.\n"
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/0685e4aeb5cabce713a10ab53cc8dfc9028b834058d34e77b9b424a8c333352b",
+        "exit_code": 3,
+        "diagnostic": "Meta/Digestion/atoms/sha256/0685e4aeb5cabce713a10ab53cc8dfc9028b834058d34e77b9b424a8c333352b:33: new blank line at EOF.\n"
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/06aeda7fe41f5e7171ebc46fad632e349d779e82ced44176e76ff000364223b1",
+        "exit_code": 3,
+        "diagnostic": "Meta/Digestion/atoms/sha256/06aeda7fe41f5e7171ebc46fad632e349d779e82ced44176e76ff000364223b1:18: new blank line at EOF.\n"
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/0717c82f8846c7fb4526401c4dbecbb6e3e25696978e1b2664c12f6791f1fb43",
+        "exit_code": 3,
+        "diagnostic": "Meta/Digestion/atoms/sha256/0717c82f8846c7fb4526401c4dbecbb6e3e25696978e1b2664c12f6791f1fb43:33: new blank line at EOF.\n"
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/0cf8b5394e0a5d90456b3ef68e8e52336845ff65c1b6927a8c46f06aaef41ae4",
+        "exit_code": 3,
+        "diagnostic": "Meta/Digestion/atoms/sha256/0cf8b5394e0a5d90456b3ef68e8e52336845ff65c1b6927a8c46f06aaef41ae4:14: new blank line at EOF.\n"
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/18da0f20342fca66a1e2ca4f0196662748c0f7f39b5042b647fc9f2640c92fac",
+        "exit_code": 3,
+        "diagnostic": "Meta/Digestion/atoms/sha256/18da0f20342fca66a1e2ca4f0196662748c0f7f39b5042b647fc9f2640c92fac:14: new blank line at EOF.\n"
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/19ec23e93d9c4cbd395f6676a322f4c8c8f5cbbff7837f1b368e5afe701fe7fd",
+        "exit_code": 3,
+        "diagnostic": "Meta/Digestion/atoms/sha256/19ec23e93d9c4cbd395f6676a322f4c8c8f5cbbff7837f1b368e5afe701fe7fd:19: new blank line at EOF.\n"
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/23d2939f971d78b065430e66e7131fd22f01e3326f6b4ea717f227a52dd58679",
+        "exit_code": 3,
+        "diagnostic": "Meta/Digestion/atoms/sha256/23d2939f971d78b065430e66e7131fd22f01e3326f6b4ea717f227a52dd58679:35: new blank line at EOF.\n"
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/293a529d0918955f198f007bccae14a2ac5153e2b8f7ee2207a7dd02e37d2c5a",
+        "exit_code": 3,
+        "diagnostic": "Meta/Digestion/atoms/sha256/293a529d0918955f198f007bccae14a2ac5153e2b8f7ee2207a7dd02e37d2c5a:24: new blank line at EOF.\n"
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/3f9aa790dd1c0d5cc6027be2e131ac039be967538951efb6ed279e8724c3620f",
+        "exit_code": 3,
+        "diagnostic": "Meta/Digestion/atoms/sha256/3f9aa790dd1c0d5cc6027be2e131ac039be967538951efb6ed279e8724c3620f:26: new blank line at EOF.\n"
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/4f40e2b7f9c17bf564b907158441baac2967d38f8a694fc07fa5d868f12e404f",
+        "exit_code": 3,
+        "diagnostic": "Meta/Digestion/atoms/sha256/4f40e2b7f9c17bf564b907158441baac2967d38f8a694fc07fa5d868f12e404f:28: new blank line at EOF.\n"
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/57fdca17050bca0060c14485b8a6c83401a8752b5ec3d24998b3d6f4e2c3d950",
+        "exit_code": 3,
+        "diagnostic": "Meta/Digestion/atoms/sha256/57fdca17050bca0060c14485b8a6c83401a8752b5ec3d24998b3d6f4e2c3d950:16: new blank line at EOF.\n"
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/5b4f0393027cd8afbb0b332027303da7f1fa4d65a33206df4fb28c1a281056e2",
+        "exit_code": 3,
+        "diagnostic": "Meta/Digestion/atoms/sha256/5b4f0393027cd8afbb0b332027303da7f1fa4d65a33206df4fb28c1a281056e2:28: new blank line at EOF.\n"
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/616dc4ec9e50ffbed77a3bd427d802a6a60549d7699b5ab3981ec9bb2e276579",
+        "exit_code": 3,
+        "diagnostic": "Meta/Digestion/atoms/sha256/616dc4ec9e50ffbed77a3bd427d802a6a60549d7699b5ab3981ec9bb2e276579:27: new blank line at EOF.\n"
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/6b0f7d720e64167a3e147c64d0afcca3aa43c7ad8ab331d439a49100340b5787",
+        "exit_code": 3,
+        "diagnostic": "Meta/Digestion/atoms/sha256/6b0f7d720e64167a3e147c64d0afcca3aa43c7ad8ab331d439a49100340b5787:25: new blank line at EOF.\n"
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/6e2fc9eba12f69ff66c2479b4effa34ffdfebf6d02465cf14009d3094f749a29",
+        "exit_code": 3,
+        "diagnostic": "Meta/Digestion/atoms/sha256/6e2fc9eba12f69ff66c2479b4effa34ffdfebf6d02465cf14009d3094f749a29:18: new blank line at EOF.\n"
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/79ae32ff683224947215a09b8c64b2a6f79cbab250a96e5632f3511e29d76884",
+        "exit_code": 3,
+        "diagnostic": "Meta/Digestion/atoms/sha256/79ae32ff683224947215a09b8c64b2a6f79cbab250a96e5632f3511e29d76884:22: new blank line at EOF.\n"
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/7cf40fc63902da128f888a1e5a697f4d519420595c1a0805058cb10f5d54ebe6",
+        "exit_code": 3,
+        "diagnostic": "Meta/Digestion/atoms/sha256/7cf40fc63902da128f888a1e5a697f4d519420595c1a0805058cb10f5d54ebe6:20: new blank line at EOF.\n"
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/81bbc40b9057b1b74549206a07a976f85debf9f60c68e3a77f325cb23c32cd37",
+        "exit_code": 3,
+        "diagnostic": "Meta/Digestion/atoms/sha256/81bbc40b9057b1b74549206a07a976f85debf9f60c68e3a77f325cb23c32cd37:11: new blank line at EOF.\n"
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/830a9f6f0497f7fbb56b3c367c9775eedea26f52fecee9c7a175824b31983e5b",
+        "exit_code": 3,
+        "diagnostic": "Meta/Digestion/atoms/sha256/830a9f6f0497f7fbb56b3c367c9775eedea26f52fecee9c7a175824b31983e5b:3: new blank line at EOF.\n"
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/982a21de857de3a3c288eeed81bbaa902470b8772edf0ab8406e44f7b4e5c557",
+        "exit_code": 3,
+        "diagnostic": "Meta/Digestion/atoms/sha256/982a21de857de3a3c288eeed81bbaa902470b8772edf0ab8406e44f7b4e5c557:40: new blank line at EOF.\n"
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/a75b0df62025f60c9af2dc96d1d752a9f8df61e0fcbf1ecc68ede2a6e1095bb0",
+        "exit_code": 3,
+        "diagnostic": "Meta/Digestion/atoms/sha256/a75b0df62025f60c9af2dc96d1d752a9f8df61e0fcbf1ecc68ede2a6e1095bb0:19: new blank line at EOF.\n"
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/bfcc5ff42bb9ea58045c1fe4e691f933ce572ee215d1a572f17402ee9954ee8d",
+        "exit_code": 3,
+        "diagnostic": "Meta/Digestion/atoms/sha256/bfcc5ff42bb9ea58045c1fe4e691f933ce572ee215d1a572f17402ee9954ee8d:35: new blank line at EOF.\n"
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/c6f188da5eee3134566c548c63cdce99f77e208ff2891a0a7fe4e0ef769fd8d1",
+        "exit_code": 3,
+        "diagnostic": "Meta/Digestion/atoms/sha256/c6f188da5eee3134566c548c63cdce99f77e208ff2891a0a7fe4e0ef769fd8d1:22: new blank line at EOF.\n"
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/d57abb7fc55c504ba893c62e63fb34b80f8a4f7b230096bec12c0e2c92491878",
+        "exit_code": 3,
+        "diagnostic": "Meta/Digestion/atoms/sha256/d57abb7fc55c504ba893c62e63fb34b80f8a4f7b230096bec12c0e2c92491878:15: new blank line at EOF.\n"
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/e02a368d229a28d5d7728be9d8c651626b488baf5c2262db41ef5a209ebbc825",
+        "exit_code": 3,
+        "diagnostic": "Meta/Digestion/atoms/sha256/e02a368d229a28d5d7728be9d8c651626b488baf5c2262db41ef5a209ebbc825:20: new blank line at EOF.\n"
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/e3e3dd5267832be64e3a407208eb2e8d8f3861718a093938e0e9e7514209963f",
+        "exit_code": 3,
+        "diagnostic": "Meta/Digestion/atoms/sha256/e3e3dd5267832be64e3a407208eb2e8d8f3861718a093938e0e9e7514209963f:25: new blank line at EOF.\n"
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/e7967618bd2ddd9e03ca3e35a86e5d8a9254d1ccce8ce949326f7b78c7b750f2",
+        "exit_code": 3,
+        "diagnostic": "Meta/Digestion/atoms/sha256/e7967618bd2ddd9e03ca3e35a86e5d8a9254d1ccce8ce949326f7b78c7b750f2:15: new blank line at EOF.\n"
+      },
+      {
+        "path": "Meta/Digestion/atoms/sha256/ea086cf94204cb71185651f34d490167c82b7bc805788b85f500b932f6af54f4",
+        "exit_code": 3,
+        "diagnostic": "Meta/Digestion/atoms/sha256/ea086cf94204cb71185651f34d490167c82b7bc805788b85f500b932f6af54f4:20: new blank line at EOF.\n"
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/02af4e04d7470336acbc724c709f18d59f9acd179dec1dcb0a33a7a16ede4c56.yaml",
+        "exit_code": 1,
+        "diagnostic": ""
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/03ae2a3ea6b2f37896585deb4de070551ef6ebc20b01c337a8fdc3a9882786f4.yaml",
+        "exit_code": 1,
+        "diagnostic": ""
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/0685e4aeb5cabce713a10ab53cc8dfc9028b834058d34e77b9b424a8c333352b.yaml",
+        "exit_code": 1,
+        "diagnostic": ""
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/06aeda7fe41f5e7171ebc46fad632e349d779e82ced44176e76ff000364223b1.yaml",
+        "exit_code": 1,
+        "diagnostic": ""
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/0717c82f8846c7fb4526401c4dbecbb6e3e25696978e1b2664c12f6791f1fb43.yaml",
+        "exit_code": 1,
+        "diagnostic": ""
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/0cf8b5394e0a5d90456b3ef68e8e52336845ff65c1b6927a8c46f06aaef41ae4.yaml",
+        "exit_code": 1,
+        "diagnostic": ""
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/18da0f20342fca66a1e2ca4f0196662748c0f7f39b5042b647fc9f2640c92fac.yaml",
+        "exit_code": 1,
+        "diagnostic": ""
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/19ec23e93d9c4cbd395f6676a322f4c8c8f5cbbff7837f1b368e5afe701fe7fd.yaml",
+        "exit_code": 1,
+        "diagnostic": ""
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/23d2939f971d78b065430e66e7131fd22f01e3326f6b4ea717f227a52dd58679.yaml",
+        "exit_code": 1,
+        "diagnostic": ""
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/293a529d0918955f198f007bccae14a2ac5153e2b8f7ee2207a7dd02e37d2c5a.yaml",
+        "exit_code": 1,
+        "diagnostic": ""
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/3f9aa790dd1c0d5cc6027be2e131ac039be967538951efb6ed279e8724c3620f.yaml",
+        "exit_code": 1,
+        "diagnostic": ""
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/4f40e2b7f9c17bf564b907158441baac2967d38f8a694fc07fa5d868f12e404f.yaml",
+        "exit_code": 1,
+        "diagnostic": ""
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/57fdca17050bca0060c14485b8a6c83401a8752b5ec3d24998b3d6f4e2c3d950.yaml",
+        "exit_code": 1,
+        "diagnostic": ""
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/5b4f0393027cd8afbb0b332027303da7f1fa4d65a33206df4fb28c1a281056e2.yaml",
+        "exit_code": 1,
+        "diagnostic": ""
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/616dc4ec9e50ffbed77a3bd427d802a6a60549d7699b5ab3981ec9bb2e276579.yaml",
+        "exit_code": 1,
+        "diagnostic": ""
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/6b0f7d720e64167a3e147c64d0afcca3aa43c7ad8ab331d439a49100340b5787.yaml",
+        "exit_code": 1,
+        "diagnostic": ""
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/6e2fc9eba12f69ff66c2479b4effa34ffdfebf6d02465cf14009d3094f749a29.yaml",
+        "exit_code": 1,
+        "diagnostic": ""
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/79ae32ff683224947215a09b8c64b2a6f79cbab250a96e5632f3511e29d76884.yaml",
+        "exit_code": 1,
+        "diagnostic": ""
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/7cf40fc63902da128f888a1e5a697f4d519420595c1a0805058cb10f5d54ebe6.yaml",
+        "exit_code": 1,
+        "diagnostic": ""
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/81bbc40b9057b1b74549206a07a976f85debf9f60c68e3a77f325cb23c32cd37.yaml",
+        "exit_code": 1,
+        "diagnostic": ""
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/830a9f6f0497f7fbb56b3c367c9775eedea26f52fecee9c7a175824b31983e5b.yaml",
+        "exit_code": 1,
+        "diagnostic": ""
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/982a21de857de3a3c288eeed81bbaa902470b8772edf0ab8406e44f7b4e5c557.yaml",
+        "exit_code": 1,
+        "diagnostic": ""
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/a75b0df62025f60c9af2dc96d1d752a9f8df61e0fcbf1ecc68ede2a6e1095bb0.yaml",
+        "exit_code": 1,
+        "diagnostic": ""
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/bfcc5ff42bb9ea58045c1fe4e691f933ce572ee215d1a572f17402ee9954ee8d.yaml",
+        "exit_code": 1,
+        "diagnostic": ""
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/c6f188da5eee3134566c548c63cdce99f77e208ff2891a0a7fe4e0ef769fd8d1.yaml",
+        "exit_code": 1,
+        "diagnostic": ""
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/d57abb7fc55c504ba893c62e63fb34b80f8a4f7b230096bec12c0e2c92491878.yaml",
+        "exit_code": 1,
+        "diagnostic": ""
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/e02a368d229a28d5d7728be9d8c651626b488baf5c2262db41ef5a209ebbc825.yaml",
+        "exit_code": 1,
+        "diagnostic": ""
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/e3e3dd5267832be64e3a407208eb2e8d8f3861718a093938e0e9e7514209963f.yaml",
+        "exit_code": 1,
+        "diagnostic": ""
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/e7967618bd2ddd9e03ca3e35a86e5d8a9254d1ccce8ce949326f7b78c7b750f2.yaml",
+        "exit_code": 1,
+        "diagnostic": ""
+      },
+      {
+        "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/ea086cf94204cb71185651f34d490167c82b7bc805788b85f500b932f6af54f4.yaml",
+        "exit_code": 1,
+        "diagnostic": ""
+      }
+    ],
+    "exit_distribution": {
+      "3": 30,
+      "1": 30
+    },
+    "diagnostic_path_count": 30
+  },
+  "source_report_whitespace": {
+    "exit_code": 2,
+    "diagnostic": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md:8222: new blank line at EOF.\n"
+  },
+  "mapping_whitespace": {
+    "exit_code": 1,
+    "diagnostic": ""
+  },
+  "changed_paths": [
+    {
+      "git_status": " M",
+      "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md"
+    },
+    {
+      "git_status": " M",
+      "path": "docs/reports/quantized-gh/near-balanced-recurrence-0910.md"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/atoms/sha256/02af4e04d7470336acbc724c709f18d59f9acd179dec1dcb0a33a7a16ede4c56"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/atoms/sha256/03ae2a3ea6b2f37896585deb4de070551ef6ebc20b01c337a8fdc3a9882786f4"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/atoms/sha256/0685e4aeb5cabce713a10ab53cc8dfc9028b834058d34e77b9b424a8c333352b"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/atoms/sha256/06aeda7fe41f5e7171ebc46fad632e349d779e82ced44176e76ff000364223b1"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/atoms/sha256/0717c82f8846c7fb4526401c4dbecbb6e3e25696978e1b2664c12f6791f1fb43"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/atoms/sha256/0cf8b5394e0a5d90456b3ef68e8e52336845ff65c1b6927a8c46f06aaef41ae4"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/atoms/sha256/18da0f20342fca66a1e2ca4f0196662748c0f7f39b5042b647fc9f2640c92fac"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/atoms/sha256/19ec23e93d9c4cbd395f6676a322f4c8c8f5cbbff7837f1b368e5afe701fe7fd"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/atoms/sha256/23d2939f971d78b065430e66e7131fd22f01e3326f6b4ea717f227a52dd58679"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/atoms/sha256/293a529d0918955f198f007bccae14a2ac5153e2b8f7ee2207a7dd02e37d2c5a"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/atoms/sha256/3f9aa790dd1c0d5cc6027be2e131ac039be967538951efb6ed279e8724c3620f"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/atoms/sha256/4f40e2b7f9c17bf564b907158441baac2967d38f8a694fc07fa5d868f12e404f"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/atoms/sha256/57fdca17050bca0060c14485b8a6c83401a8752b5ec3d24998b3d6f4e2c3d950"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/atoms/sha256/5b4f0393027cd8afbb0b332027303da7f1fa4d65a33206df4fb28c1a281056e2"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/atoms/sha256/616dc4ec9e50ffbed77a3bd427d802a6a60549d7699b5ab3981ec9bb2e276579"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/atoms/sha256/6b0f7d720e64167a3e147c64d0afcca3aa43c7ad8ab331d439a49100340b5787"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/atoms/sha256/6e2fc9eba12f69ff66c2479b4effa34ffdfebf6d02465cf14009d3094f749a29"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/atoms/sha256/79ae32ff683224947215a09b8c64b2a6f79cbab250a96e5632f3511e29d76884"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/atoms/sha256/7cf40fc63902da128f888a1e5a697f4d519420595c1a0805058cb10f5d54ebe6"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/atoms/sha256/81bbc40b9057b1b74549206a07a976f85debf9f60c68e3a77f325cb23c32cd37"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/atoms/sha256/830a9f6f0497f7fbb56b3c367c9775eedea26f52fecee9c7a175824b31983e5b"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/atoms/sha256/982a21de857de3a3c288eeed81bbaa902470b8772edf0ab8406e44f7b4e5c557"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/atoms/sha256/a75b0df62025f60c9af2dc96d1d752a9f8df61e0fcbf1ecc68ede2a6e1095bb0"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/atoms/sha256/bfcc5ff42bb9ea58045c1fe4e691f933ce572ee215d1a572f17402ee9954ee8d"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/atoms/sha256/c6f188da5eee3134566c548c63cdce99f77e208ff2891a0a7fe4e0ef769fd8d1"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/atoms/sha256/d57abb7fc55c504ba893c62e63fb34b80f8a4f7b230096bec12c0e2c92491878"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/atoms/sha256/e02a368d229a28d5d7728be9d8c651626b488baf5c2262db41ef5a209ebbc825"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/atoms/sha256/e3e3dd5267832be64e3a407208eb2e8d8f3861718a093938e0e9e7514209963f"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/atoms/sha256/e7967618bd2ddd9e03ca3e35a86e5d8a9254d1ccce8ce949326f7b78c7b750f2"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/atoms/sha256/ea086cf94204cb71185651f34d490167c82b7bc805788b85f500b932f6af54f4"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/02af4e04d7470336acbc724c709f18d59f9acd179dec1dcb0a33a7a16ede4c56.yaml"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/03ae2a3ea6b2f37896585deb4de070551ef6ebc20b01c337a8fdc3a9882786f4.yaml"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/0685e4aeb5cabce713a10ab53cc8dfc9028b834058d34e77b9b424a8c333352b.yaml"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/06aeda7fe41f5e7171ebc46fad632e349d779e82ced44176e76ff000364223b1.yaml"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/0717c82f8846c7fb4526401c4dbecbb6e3e25696978e1b2664c12f6791f1fb43.yaml"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/0cf8b5394e0a5d90456b3ef68e8e52336845ff65c1b6927a8c46f06aaef41ae4.yaml"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/18da0f20342fca66a1e2ca4f0196662748c0f7f39b5042b647fc9f2640c92fac.yaml"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/19ec23e93d9c4cbd395f6676a322f4c8c8f5cbbff7837f1b368e5afe701fe7fd.yaml"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/23d2939f971d78b065430e66e7131fd22f01e3326f6b4ea717f227a52dd58679.yaml"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/293a529d0918955f198f007bccae14a2ac5153e2b8f7ee2207a7dd02e37d2c5a.yaml"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/3f9aa790dd1c0d5cc6027be2e131ac039be967538951efb6ed279e8724c3620f.yaml"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/4f40e2b7f9c17bf564b907158441baac2967d38f8a694fc07fa5d868f12e404f.yaml"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/57fdca17050bca0060c14485b8a6c83401a8752b5ec3d24998b3d6f4e2c3d950.yaml"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/5b4f0393027cd8afbb0b332027303da7f1fa4d65a33206df4fb28c1a281056e2.yaml"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/616dc4ec9e50ffbed77a3bd427d802a6a60549d7699b5ab3981ec9bb2e276579.yaml"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/6b0f7d720e64167a3e147c64d0afcca3aa43c7ad8ab331d439a49100340b5787.yaml"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/6e2fc9eba12f69ff66c2479b4effa34ffdfebf6d02465cf14009d3094f749a29.yaml"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/79ae32ff683224947215a09b8c64b2a6f79cbab250a96e5632f3511e29d76884.yaml"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/7cf40fc63902da128f888a1e5a697f4d519420595c1a0805058cb10f5d54ebe6.yaml"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/81bbc40b9057b1b74549206a07a976f85debf9f60c68e3a77f325cb23c32cd37.yaml"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/830a9f6f0497f7fbb56b3c367c9775eedea26f52fecee9c7a175824b31983e5b.yaml"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/982a21de857de3a3c288eeed81bbaa902470b8772edf0ab8406e44f7b4e5c557.yaml"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/a75b0df62025f60c9af2dc96d1d752a9f8df61e0fcbf1ecc68ede2a6e1095bb0.yaml"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/bfcc5ff42bb9ea58045c1fe4e691f933ce572ee215d1a572f17402ee9954ee8d.yaml"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/c6f188da5eee3134566c548c63cdce99f77e208ff2891a0a7fe4e0ef769fd8d1.yaml"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/d57abb7fc55c504ba893c62e63fb34b80f8a4f7b230096bec12c0e2c92491878.yaml"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/e02a368d229a28d5d7728be9d8c651626b488baf5c2262db41ef5a209ebbc825.yaml"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/e3e3dd5267832be64e3a407208eb2e8d8f3861718a093938e0e9e7514209963f.yaml"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/e7967618bd2ddd9e03ca3e35a86e5d8a9254d1ccce8ce949326f7b78c7b750f2.yaml"
+    },
+    {
+      "git_status": "??",
+      "path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/ea086cf94204cb71185651f34d490167c82b7bc805788b85f500b932f6af54f4.yaml"
+    },
+    {
+      "git_status": "??",
+      "path": "docs/reports/quantized-gh/theory-body-migration-s24-0910.json"
+    }
+  ],
+  "final_analytical_assessment": {
+    "complete_repaired_section_reread": true,
+    "all_30_original_entry_correspondences_rechecked": true,
+    "mathematical_statements_proofs_quantifiers_normalizations_endpoints_conditional_and_open_scopes_preserved": true,
+    "retained_inline_and_display_math_bytes_exact": true,
+    "retained_wording_projection_exact": true,
+    "no_new_mathematics_or_easier_assumption": true,
+    "local_fresh_mathematics_obstructions": [],
+    "math_scope_note": "35.29 remains at its original number with an explicit reference to existing proofs. The reference adds no proof step and does not promote any listed open obligation. 35.28 citations attach to actual supporting proofs; its historical attribution and all process text remain recoverable in the report."
+  }
+}

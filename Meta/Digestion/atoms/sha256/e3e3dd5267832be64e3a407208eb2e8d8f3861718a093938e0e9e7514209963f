@@ -1,0 +1,25 @@
+**35.13 Proposition (Generic irrational rotations refute a uniform maximum-gap inference).**
+Fix \(Q\ge3\), any integer \(R\ge1\), and \(r=1/Q\). Choose an irrational
+\[
+0<\beta<\min\bigl(r,(1-2r)/(R+1)\bigr).
+\]
+For integers \(\ell\ge0\), let
+\(t_\ell=\lfloor(\ell+r)/\beta\rfloor+1\). For \(0\le j<R\),
+\[
+\ell+r<(t_\ell+j)\beta<\ell+r+R\beta<\ell+1-r.
+\]
+The first strict upper estimate follows from
+\(t_\ell\beta<\ell+r+\beta\); equality there would make \(\beta\) rational.
+Every one of the \(R\) consecutive positive indices
+\(t_\ell,\ldots,t_\ell+R-1\) consequently avoids
+\(\{n\ge1:\|n\beta\|_{\mathbb T}<r\}\). These blocks occur arbitrarily
+late because \(t_\ell\to\infty\). Nevertheless 1 is a return, since
+\(\beta<r\), and the one-dimensional result gives density \(2/Q\).
+There are returns on either side of sufficiently late empty blocks, so
+their enclosing consecutive returns differ by at least \(R+1\).
+Taking \(R=Q\) disproves a generic maximum-gap bound \(Q\) in dimension one;
+arbitrary \(R\) rules out any bound depending only on \(Q\) across all
+irrational steps. The rotation changes with \(R\), so this is consistent
+with 35.11 for each fixed rotation. It is not a counterexample for any fixed
+prime tuple and does not refute a separately proved prime-specific estimate.
+

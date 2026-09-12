@@ -1,0 +1,14 @@
+**35.1 Theorem (Statement and inherited scope).** For every fixed ordered list of distinct primes \(p_0,\ldots,p_{k-1}\), every
+integer \(k\ge2\), and every fixed integer \(Q\ge3\), the strict simultaneous
+return set defined in 35.2 has positive natural density on its actual compact
+orbit closure, uniformly over consecutive blocks. Its density is at least
+\(Q^{-(k-1)}\), its forward returns are syndetic with a rotation-dependent
+bound, and nearest rounding produces actual nonnegative integer exponent boxes.
+Their distinct lower-corner integers have counting function
+\((d_Q/(k\log p_0))\log X+o(\log X)\). The proof is given in 35.3-35.18.
+No joint independence of reciprocal prime logarithms is assumed.
+
+Sections 30.17 and 31.18 already give qualitative homogeneous approximation
+near zero relative shape. Sections 30.16 and 31.17 are the only inherited sign inputs
+to the applications in 35.19-35.23, after their domains are checked.
+
