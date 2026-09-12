@@ -483,7 +483,8 @@ class InspectorTests(PairFixture, unittest.TestCase):
         self.lake.chmod(0o755)
         self.core = self.root / "runtime/lib/lean/Init.olean"
         write(self.core, "compiled core fixture")
-        write(self.core.with_suffix(".ilean"), json.dumps({"directImports": []}))
+        write(self.root / "runtime/lib/lean/Lean.olean", "compiled Lean fixture")
+        write(self.root / "runtime/lib/lean/libleanshared.so", "shared runtime fixture")
 
     def pair(self, **extra):
         return subprocess.run([str(self.root / "tools/scripts/lean-report-pair.sh"),
@@ -538,21 +539,13 @@ class InspectorTests(PairFixture, unittest.TestCase):
         result = self.pair(LAKE_EXPECT_NO_LAKE="1")
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
 
-    def test_actual_runtime_dependency_change_reinspects_inside_same_partition(self):
+    def test_declared_runtime_material_change_reinspects_inside_same_partition(self):
         first = self.pair()
         self.assertEqual(0, first.returncode, first.stdout + first.stderr)
         write(self.core, "changed compiled core fixture")
         second = self.pair()
         self.assertEqual(0, second.returncode, second.stdout + second.stderr)
         self.assertIn("LEAN_REPORT_DELTA mode=delta changed=0 added=0 removed=0 recheck=2", second.stdout)
-
-    def test_unknown_runtime_disables_reuse_but_allows_real_full_production(self):
-        self.core.with_suffix(".ilean").unlink()
-        for unused in range(2):
-            result = self.pair()
-            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
-            self.assertIn("LEAN_REPORT_DELTA mode=full-fallback", result.stdout)
-        self.assertEqual([], self.seeds())
 
     def test_inspector_real_failure_blocks_even_when_report_seed_exists(self):
         self.assertEqual(0, self.pair().returncode)

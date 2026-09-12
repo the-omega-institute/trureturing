@@ -9,7 +9,6 @@ if args == ["build"]:
     if os.environ.get("LAKE_EXPECT_NO_LAKE") and (root/".lake").exists(): sys.exit(29)
     sys.exit(int(os.environ.get("LAKE_BUILD_FAIL", "0")))
 if "--print-prefix" in args: print(pathlib.Path(__file__).parent.parent); sys.exit(0)
-if "--deps" in args: print(pathlib.Path(__file__).parent.parent/"lib/lean/Init.olean"); sys.exit(0)
 if os.environ.get("LAKE_INSPECT_FAIL"): sys.exit(int(os.environ["LAKE_INSPECT_FAIL"]))
 output = pathlib.Path(args[args.index("--output")+1])
 modules = []
