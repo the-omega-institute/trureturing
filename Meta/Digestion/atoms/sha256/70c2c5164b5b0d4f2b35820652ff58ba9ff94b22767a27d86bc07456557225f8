@@ -1,0 +1,14 @@
+**定理 416.2（实际两间隔、平衡与非最终周期）。** 对全部 $L\ge1,m\ge1$，
+$$
+n_{L,m+1}-n_{L,m}=A_L+b_Lw_m.
+$$
+实际额外重置的间隔集合恰为 $\{G_{L+1},G_{L+2}\}$，两个间隔都发生无穷多次。字 $w$ 不含 $00$，任意两个等长有限块的一的数目相差至多一；一和零的频率分别为 $\alpha$ 与 $1-\alpha$，且 $w$ 非最终周期。更准确地，对每个 $m\ge1,k\ge0$，
+$$
+\sum_{j=0}^{k-1}w_{m+j}=\lfloor(m+k)\alpha\rfloor-\lfloor m\alpha\rfloor
+=\lfloor k\alpha+\{m\alpha\}\rfloor,
+$$
+$$
+\left|\sum_{j=0}^{k-1}w_{m+j}-k\alpha\right|<1.
+$$
+$k\ge1$ 时块和的两个可能值 $\lfloor k\alpha\rfloor,\lceil k\alpha\rceil$ 都出现。
+

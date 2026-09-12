@@ -1,0 +1,1 @@
+**定义 438.5。** 对原表示集合 $W$ 给满射语义函数 $\sigma:W\to S$。规范化 $N:W\to W$ 满足 $N^2=N$、$\sigma N=\sigma$，且 $\sigma(w)=\sigma(w')$ 蕴含 $N(w)=N(w')$。令规范形域 $F=\{w:N(w)=w\}$。

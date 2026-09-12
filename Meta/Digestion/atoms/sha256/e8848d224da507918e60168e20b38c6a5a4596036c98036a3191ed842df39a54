@@ -1,0 +1,6 @@
+**定义 440.8。** 对费用域 $V=\mathbb R_{\ge0}^d$，运输零、加法和序为
+$$
+0_V^*=\operatorname{Enc}(0_V),\quad\operatorname{Enc}(v)\oplus\operatorname{Enc}(w)=\operatorname{Enc}(v+w),\quad\operatorname{Enc}(v)\preceq_Z\operatorname{Enc}(w)\iff v\preceq w.
+$$
+实数加乘、自然数到实数的嵌入、自然对数及其正实定义域同样逐图运输，例如 $\ln_Z(\operatorname{Enc}(x))=\operatorname{Enc}(\ln x)$，$x>0$。$\lambda,\kappa$、初态费、边费、终端费和任务概率都使用其原集合码；只有实际自然数使用 $\operatorname{NatZ}$。逐坐标实数码与单个向量码通过 $\Psi$ 比较。
+

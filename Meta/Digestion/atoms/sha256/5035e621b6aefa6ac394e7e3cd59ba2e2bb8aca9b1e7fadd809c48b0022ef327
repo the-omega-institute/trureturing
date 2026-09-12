@@ -1,0 +1,11 @@
+**证明。** 对 $c$ 置 $p_L=\operatorname{Dec}(c_L)$。共轭定义使
+$$
+\pi_{L+1,L}^*(c_{L+1})=c_L
+\iff \pi_{L+1,L}(p_{L+1})=p_L.
+$$
+这对每个 $L\ge1$ 双向成立，故 $\Psi_Y$ 的像落在 $\mathscr Q^*$ 当且仅当 $c\in\widehat{\mathscr Q}$，得到准确限制及双逆。任意子集 $S\subseteq X$ 的子空间拓扑运输等于 $S^*\subseteq X^*$ 的子空间拓扑，因为每个子空间开集 $S\cap U$ 的像恰为 $S^*\cap\operatorname{Enc}[U]$。于是定理 387.2 的同胚限制仍为同胚。定理 380.2 的 $\mathcal U$ 同胚经第 378.5 条共轭，再与 $\Psi_Q^{-1}$ 复合，给所列恢复式；逐坐标代入得到 $P_L^*c$。
+
+对关系层，$\chi$ 将普通码对限制同胚到 $\mathscr R_L^*$。它与两个坐标的限制交换：在 $\langle\operatorname{Enc}(p),\operatorname{Enc}(q)\rangle$ 处两路都给 $\operatorname{Enc}(\langle p|_L,q|_L\rangle)$。因此每个相容关系族都逐坐标解码成定义 380.1 的 $\mathscr Q_R$ 元素，反向每个原相容关系族都编码回来。定理 380.2 使其恰来自唯一 $\langle x,Tx\rangle$，外部普通码对即为 $\langle\operatorname{Enc}(x),T^*(\operatorname{Enc}(x))\rangle$。逐层双逆使 $\Phi_R$ 与所列 $\Phi_R^{-1}$ 的两个复合均为恒等。对 $\widehat{\mathscr Q}_R$ 中任意族，分别用 $\widehat{\mathcal U}^{-1}$ 恢复两族坐标，得到唯一的 $c,d\in K^*$；全部层关系条件强制 $d=T^*c$，所以这也给普通图映射的逆。这证明图及全部逆极限量词的两方向。各 $\chi_L$ 的同胚性、定理 387.2 的任意积桥及子空间限制给 $\Phi_R$ 的同胚性；恢复图的两个方向逐坐标连续，给图上的同胚。
+
+具体地，这些同胚对每个子集 $S$ 保留闭包，对每个集合指标的网保留收敛，对所列空间之间每个函数保留并反映连续性：开集逆像按第 378.5 条等于原开集逆像的编码像；一个邻域与编码子集相交当且仅当解码邻域与原子集相交，故闭包条件相同；网最终处于邻域的量词也在同一对应下相同。单个拓扑码、开集码族和外部拓扑分别按定理 387.2 的两次成员展开解释。证毕。
+

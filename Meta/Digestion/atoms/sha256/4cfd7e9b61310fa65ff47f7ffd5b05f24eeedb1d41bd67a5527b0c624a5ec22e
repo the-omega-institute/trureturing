@@ -1,0 +1,39 @@
+**定理 376.1。** 对每个整数 $m\ge2$，不存在连续映射 $M:K_{\rm infdig}\to K_{\rm infdig}$ 使
+$$
+M(z_{\rm infdig}(n))=z_{\rm infdig}(mn)\qquad(n\in\omega).
+$$
+在共同有限核心拓扑上，每个固定 $m\ge0$ 的 $n\mapsto mn$ 连续；当 $m\ge2$ 时，它对 $d_{\rm digit}$ 不一致连续。非负整数乘数中恰有零和一取得到全紧载体的连续延拓，且各自唯一。
+
+**证明。** 固定任意 $m\ge2$，置 $c_0=-\phi/m$、$c=[c_0]$。若 $c=[-k\phi]$、$k\ge1$，则 $(mk-1)\phi\in m\mathbb Z$。这里 $mk-1$ 非零，与 $\phi$ 无理矛盾。因此 $c\notin E$，定理 372.4 给唯一的 $x\in K_{\rm infdig}$ 满足 $H_{\rm infdig}(x)=c$。
+
+对每个 $h\ge1$ 定义
+$$
+\delta_h=\frac1{8m(h+1)},\qquad
+U_h^+=\{[c_0+t]:\delta_h/2<t<\delta_h\},\qquad
+U_h^-=\{[c_0+t]:-\delta_h<t<-\delta_h/2\}.
+$$
+这是两条非空圆周开弧。第 53 条用于无理旋转步长 $\phi$、初相位零，给每条弧有无穷多个自然指标访问。因此可以递归地在每一侧选严格递增的 $n_h^+,n_h^-$，使 $\gamma(n_h^\pm)\in U_h^\pm$。相应局部偏移 $t_h^\pm$ 在显示的小区间内唯一，且趋于零，所以两列相位都趋于 $c$。
+
+两列 $z_{\rm infdig}(n_h^\pm)$ 都趋于同一个 $x$。确实，每个收敛子序列的极限由连续性具有相位 $c$，故只能是 $x$。若某一列不趋于 $x$，则存在 $x$ 的开邻域使该列在其闭补集中有无限子序列；紧性给其中一个收敛子序列，其极限仍在闭补集，矛盾。
+
+乘后相位为
+$$
+\gamma(mn_h^\pm)=[-\phi+mt_h^\pm]=[a+mt_h^\pm].
+$$
+由于 $0<mt_h^+<1/8$、$-1/8<mt_h^-<0$，这两相位均不是 $[a]=[b]$，它们在 $(a,b)$ 内的代表分别为 $a+mt_h^+$ 与 $b+mt_h^-$。第 371.2 条的有限实值严格落于该区间；区间中代表唯一，故
+$$
+F_{\rm infdig}(z_{\rm infdig}(mn_h^+))=a+mt_h^+\longrightarrow a,
+$$
+$$
+F_{\rm infdig}(z_{\rm infdig}(mn_h^-))=b+mt_h^-\longrightarrow b.
+$$
+如果 $M$ 存在，$F_{\rm infdig}\circ M$ 在 $x$ 的连续性会使这两个极限均等于 $F_{\rm infdig}(M(x))$，但 $b-a=1$，矛盾。
+
+再对 $F_{\rm infdig}$ 使用同样的紧性论证；它在 $a,b$ 处的纤维分别唯一为 $u,v$，所以
+$$
+z_{\rm infdig}(mn_h^+)\to u,\qquad z_{\rm infdig}(mn_h^-)\to v.
+$$
+两列输入的 $d_K$ 距离趋于零，输出距离却趋于 $d_K(u,v)=1$。取距离阈值 $1/2$，直接否定数字度量的一致连续性。
+
+圆周映射 $[t]\mapsto[mt]$ 对 $\rho$ 为 $m$-Lipschitz：取实现输入距离的整数 $k$，输出距离不超过 $|m(s-t-k)|$。它连续并将 $\gamma[\omega]$ 映入自身，限制后由第 373.2 条的核心同胚得 $n\mapsto mn$ 连续。$m=0$ 的延拓为常值 $x\mapsto z_{\rm infdig}(0)$，$m=1$ 的延拓为恒等；两者连续，密度给唯一性。以上两侧构造对每个任意固定的 $m\ge2$ 都成立，遂完成全部非负整数乘数的分类。证毕。
+

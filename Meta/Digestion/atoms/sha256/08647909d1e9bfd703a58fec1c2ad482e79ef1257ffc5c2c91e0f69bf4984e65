@@ -1,0 +1,10 @@
+**定理 377.1。** 在乘积拓扑下，不存在连续映射
+$$
+\operatorname{Add}:K_{\rm infdig}\times K_{\rm infdig}\to K_{\rm infdig}
+$$
+满足全部 $\operatorname{Add}(z_{\rm infdig}(n),z_{\rm infdig}(k))=z_{\rm infdig}(n+k)$；也不存在连续映射
+$$
+\operatorname{Mul}:K_{\rm infdig}\times K_{\rm infdig}\to K_{\rm infdig}
+$$
+满足全部 $\operatorname{Mul}(z_{\rm infdig}(n),z_{\rm infdig}(k))=z_{\rm infdig}(nk)$。共同核心拓扑的乘积上，二元加法连续，每个固定自然平移的连续延拓为 $T_{\rm infdig}^h$。
+

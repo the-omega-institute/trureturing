@@ -1,0 +1,7 @@
+**定义 374.1。** 在正整数域上沿用第 287、325 条的
+$$
+\mathscr A(n)=\lfloor\log_\phi n\rfloor,\qquad
+\Gamma_+(n)=(\mathscr A(n),\zeta(n),[n\phi]).
+$$
+尺度值域取离散拓扑，有限正规范字取经 $\operatorname{pad}$ 嵌入 $K_{\rm infdig}$ 的拓扑，圆周取通常拓扑。这保留 [GICT 定义 1.4、1.7](GICT.md) 的正标量尺度、规范字与标量相位。
+

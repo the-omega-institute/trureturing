@@ -1,0 +1,1 @@
+**定理 436.3。** 若 $V\subseteq U$ 且每个 $u\in U$ 有 $v\in V$ 满足 $v\preceq u$，则 $\operatorname{Min}U=\operatorname{Min}V$。

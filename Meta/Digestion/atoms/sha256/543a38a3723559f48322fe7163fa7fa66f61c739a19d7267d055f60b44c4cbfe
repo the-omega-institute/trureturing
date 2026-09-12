@@ -1,0 +1,25 @@
+**定义 371.1。** 在通常 ZFC 中，$\omega$ 仍为 von Neumann 自然数集合。沿用第 3、9、50、69–70 条的
+$$
+G_0=1,\qquad G_1=2,\qquad G_{j+2}=G_{j+1}+G_j,\qquad
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},\qquad r=-\alpha.
+$$
+有限规范字 $\zeta(n)$ 按低位到高位排列，$\zeta(0)=\varnothing$，且 $\alpha^2+\alpha=1$。定义
+$$
+K_{\rm infdig}=\{x:\omega\to\{0,1\}:\forall j\in\omega,\ x_jx_{j+1}=0\},\qquad
+z_{\rm infdig}(n)=\operatorname{pad}(\zeta(n)),
+$$
+$$
+d_K(x,y)=\sum_{j\ge0}2^{-j-1}|x_j-y_j|,\qquad
+F_{\rm infdig}(x)=\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j,
+$$
+$$
+\pi:\mathbb R\to\mathbb T=\mathbb R/\mathbb Z,\quad \pi(t)=[t],\qquad
+H_{\rm infdig}=\pi\circ F_{\rm infdig},\qquad \gamma(n)=[n\phi].
+$$
+二元数字取离散拓扑，$K_{\rm infdig}$ 取乘积的子空间拓扑，$\mathbb T$ 取通常圆周拓扑。另记
+$$
+a=-\alpha=1-\phi,\qquad b=\alpha^2=2-\phi,\qquad I=[a,b],\qquad
+q=-\alpha^3=3-2\phi,\qquad u=(10)^\omega,\qquad v=(01)^\omega.
+$$
+这里 $q$ 是实数，$u,v$ 是低位到高位的无限交替函数；$z_{\rm infdig}(0)$ 是总零函数。第 22、51 条的 $f,H_j$、第 11 条的 $K(n)$ 及第 287 条的素数位表 $F(P,A,e)$ 保持各自原定义。
+
