@@ -498,6 +498,7 @@ theorem two_point_grid_dominance (c d : Fin 2 → ℝ) (M₀ M₁ : ℝ)
         (d 0 - c 0 ≤ M₁ - c 0 - c 1) := by
       constructor <;> intro <;> linarith
     simp only [hguard]
+    split_ifs <;> simp_all
   · rw [hB₁] at hh'
     by_cases hfirst : d 1 - c 1 ≤ B <;>
       by_cases hsecond : d 0 - c 0 ≤ B - (d 1 - c 1) <;>
