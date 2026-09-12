@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f5797b4a6b951cc382eb11486c7b0a5581d13757a6d481d8fccf042059d2c1aa
+  normalized_sha256: sha256:f5797b4a6b951cc382eb11486c7b0a5581d13757a6d481d8fccf042059d2c1aa
+cas_ref: sha256:f5797b4a6b951cc382eb11486c7b0a5581d13757a6d481d8fccf042059d2c1aa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「评注 27.708(T1 判决卷:黑窗强判与分水岭定形)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 5da05c66335a2a17f5fe43f0f6f12fbc2781e3123aac3ec0ac7bfb4db31c2ae3
+    next_atom_id: 6c420f46b503e2ac8e4dedd5bbd6fbd2a3ba1eb40a3847d0ea2c7f9d41a4f71e

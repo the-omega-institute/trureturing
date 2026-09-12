@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f549e456c8a9389e252260ee4e810afe9bdfac1cefd8acf2b44f90eb0e07c9da
+  normalized_sha256: sha256:f549e456c8a9389e252260ee4e810afe9bdfac1cefd8acf2b44f90eb0e07c9da
+cas_ref: sha256:f549e456c8a9389e252260ee4e810afe9bdfac1cefd8acf2b44f90eb0e07c9da
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「五　Z-5 预登记:反证收口(`ZeroInfinitude/ExplicitFormulaObstruction`,绑 Z-1/2/3 与 Z-4)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: cb4a64c689c411ed5e9f9934a77b34cc438f973738a1f6abc8f9dc6b5c7366c8
+    next_atom_id: 34605d354643095b914a4e465fdef7d2473055a73f9cf194a6f380e3ad69eb20

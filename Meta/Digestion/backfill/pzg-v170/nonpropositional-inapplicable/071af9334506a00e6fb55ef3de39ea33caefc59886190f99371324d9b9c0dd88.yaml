@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:071af9334506a00e6fb55ef3de39ea33caefc59886190f99371324d9b9c0dd88
+  normalized_sha256: sha256:071af9334506a00e6fb55ef3de39ea33caefc59886190f99371324d9b9c0dd88
+cas_ref: sha256:071af9334506a00e6fb55ef3de39ea33caefc59886190f99371324d9b9c0dd88
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「评注 27.713(C8 首排卷:率谱二分)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: b3fb8f48a9ad655f408b0d56ddbddc6c7e1911a30f826d09536961f30b65a0ef
+    next_atom_id: e2febb242a9e565fd50638f17911793618211fbdba1ae4d74d4ae5f4332ffc4a

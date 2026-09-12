@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cbf0b325df5d955811a2de653f43f5fd58b6b6ee74583df385f1d0bbf4bccc0b
+  normalized_sha256: sha256:cbf0b325df5d955811a2de653f43f5fd58b6b6ee74583df385f1d0bbf4bccc0b
+cas_ref: sha256:cbf0b325df5d955811a2de653f43f5fd58b6b6ee74583df385f1d0bbf4bccc0b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「评注 27.623(硬格侦察)〔边界定理 + 双信道普查 + 定形〕」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: ff62d689d9bdeb27e00673ba8b1cbcae66e36582c49fa240cb36c0358efb5686
+    next_atom_id: 0e69633e375fcf8ccba7441306b8988a0e229b69f4bd71842a61a9b85966a8ce
