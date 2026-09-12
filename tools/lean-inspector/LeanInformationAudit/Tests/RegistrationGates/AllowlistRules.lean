@@ -74,6 +74,10 @@ inductive Direction where | left | right
 def constructorPropRead (_ : Unit) (x : Bool) : Bool :=
   if @decide (Direction.left = Direction.left) (.isTrue rfl) then x else false
 
+def memoRelay (_ : Unit) (x : Bool) : Bool := keepProof target x
+def memoFirst (_ : Unit) (x : Bool) : Bool := memoRelay () x
+def memoSecond (_ : Unit) (x : Bool) : Bool := memoRelay () x
+
 -- A separate compilation unit keeps one rejected fixture from hiding other
 -- mutation results behind a failed import. The registration integration
 -- fixtures exercise the finite and structural command paths separately.
@@ -145,5 +149,18 @@ run_cmd Elab.Command.liftCoreM do
   unless actual == (false, some #["AllowlistRules.cleanRead", "Bool", "Unit"]) do
     throwError "[FAIL] ExternalLeafNotTraversed: {repr actual}"
   logInfo "[PASS] ExternalLeafNotTraversed"
+
+run_cmd Elab.Command.liftCoreM do
+  check "MemoPrimeDifferentStatement" ``memoFirst ``otherTarget "clean"
+  try
+    check "MemoRechecksStatement" ``memoSecond ``target "forbidden_dependency"
+    let counters ← getProvenanceCounters
+    unless counters.memoHits > 0 && counters.summarisedConstants <= 1 do
+      throwError "no shared summary reuse: {repr counters}"
+    logInfo "[PASS] MemoReuseAcrossRegistrations"
+  catch ex => logError m!"[FAIL] MemoReuseAcrossRegistrations: {ex.toMessageData}"
+
+-- The public query remains usable without a MetaM interpreter.
+example : Environment → Name → Expr → CoreM (Bool × Option (Array String)) := readoutClosure
 
 end AllowlistRules

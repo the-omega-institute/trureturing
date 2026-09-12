@@ -189,12 +189,102 @@ private structure Unclassified where
   siteName : Name
 
 private inductive Position where | dataPos | proofPos | typePos
-  deriving BEq
+  deriving BEq, Hashable, Inhabited
+
+-- These summaries contain syntax and its fixed classifications, never a verdict
+-- for a registered statement. Child indices precede their parents, so subterm
+-- membership is recomputed by a linear fold without walking Expr trees again.
+private structure SyntaxNode where
+  expr : Expr
+  canonical : Expr
+  position : Position
+  children : Array Nat
+  prop : Bool
+  pContent : Bool
+  declaredType : Option Expr
+  deriving Inhabited
+
+private structure Summary where
+  nodes : Array SyntaxNode := #[]
+  roots : Array Nat := #[]
+  visits : Nat := 0
+  incomplete : Bool := false
+  deriving Inhabited
+
+private structure SummaryBuild where
+  summary : Summary := {}
+  indices : Std.HashMap (Expr × Position) Nat := {}
+  fuel : Nat
+
+private abbrev SummaryM := StateRefT SummaryBuild CoreM
+
+private partial def summariseExpr (env : Environment) (pos : Position) (raw : Expr) :
+    SummaryM (Option Nat) := do
+  let s ← get
+  if s.fuel == 0 then
+    modify fun s => { s with summary.incomplete := true }
+    return none
+  if s.summary.visits % 256 == 0 then Core.checkMaxHeartbeats
+  modify fun s => { s with fuel := s.fuel - 1, summary.visits := s.summary.visits + 1 }
+  let e := stripMData raw
+  if let some i := (← get).indices[(e, pos)]? then return some i
+  let inputs : Array (Position × Expr) := match e with
+    | .app f a => #[(pos, f), (pos, a)]
+    | .lam _ t b _ | .forallE _ t b _ => #[(.typePos, t), (pos, b)]
+    | .letE _ t v b _ => #[(.typePos, t), (pos, v), (pos, b)]
+    | .proj _ _ b => #[(pos, b)]
+    | _ => #[]
+  let mut children := #[]
+  for (childPos, child) in inputs do
+    if let some i ← summariseExpr env childPos child then children := children.push i
+  let ownContent := match e with
+    | .const n _ => inProtected env n && !env.isProjectionFn n &&
+        (env.find? n).any (fun info => match info with
+          | .defnInfo _ | .opaqueInfo _ | .thmInfo _ => true
+          | _ => false)
+    | _ => false
+  let nodes := (← get).summary.nodes
+  let pContent := ownContent || children.any (fun i => nodes[i]!.pContent)
+  let declaredType := e.constName?.bind (fun n => (env.find? n).map (fun i => eraseLevels i.type))
+  let node : SyntaxNode := ⟨e, eraseLevels e, pos, children, ← propLooking env e, pContent, declaredType⟩
+  modify fun s => { s with
+    summary.nodes := s.summary.nodes.push node
+    indices := s.indices.insert (e, pos) nodes.size }
+  return some nodes.size
+
+private def summarise (env : Environment) (inputs : Array (Position × Expr)) (fuel : Nat) :
+    CoreM Summary := do
+  let action : SummaryM Unit := do
+    for (pos, e) in inputs do
+      if let some i ← summariseExpr env pos e then
+        modify fun s => { s with summary.roots := s.summary.roots.push i }
+  let (_, state) ← action.run { fuel }
+  return state.summary
+
+/-- Counts for the last query; visits count syntax scanned to create summaries,
+while chargedVisits also counts traversal of reused summaries against the fuel. -/
+structure ProvenanceCounters where
+  summarisedConstants : Nat := 0
+  visits : Nat := 0
+  memoHits : Nat := 0
+  chargedVisits : Nat := 0
+  deriving Inhabited, Repr
+
+-- Ordinary environment extensions are compilation-local and not serialized.
+private initialize summaryCache : EnvExtension (Std.HashMap Name Summary) ←
+  registerEnvExtension (pure {})
+private initialize countersCache : EnvExtension ProvenanceCounters ←
+  registerEnvExtension (pure {})
+
+def getProvenanceCounters : CoreM ProvenanceCounters := do
+  return countersCache.getState (← getEnv)
 
 private structure WalkState where
   theoremName : Name
   statement : Expr
   decision : Expr
+  summaries : Std.HashMap Name Summary := {}
+  counters : ProvenanceCounters := {}
   visited : Std.HashSet Expr := {}
   walked : NameHashSet := {}
   queued : NameHashSet := {}
@@ -218,36 +308,34 @@ private def queue (n : Name) (pos : Position) (site : Name) : WalkM Unit := do
 
 private def compareCanonical (a b : Expr) : Bool := eraseLevels a == eraseLevels b
 
-private def hasPContent (env : Environment) (e : Expr) : Bool :=
-  let rec go : Expr → Bool
-    | .const n _ =>
-      inProtected env n && !env.isProjectionFn n && match env.find? n with
-      | some (.defnInfo _) | some (.opaqueInfo _) | some (.thmInfo _) => true
-      | _ => false
-    | .app f a => go f || go a
-    | .lam _ t b _ | .forallE _ t b _ => go t || go b
-    | .letE _ t v b _ => go t || go v || go b
-    | .mdata _ b => go b
-    | .proj _ _ b => go b
-    | _ => false
-  go e
-
-private partial def visit (env : Environment) : Position → Name → Expr → WalkM Unit
-  | pos, origin, e => do
-    let s ← get
-    if s.forbidden then return
-    if s.exprFuel == 0 then modify fun s => { s with incomplete := true }; return
+private def visitSummary (env : Environment) (origin : Name) (summary : Summary) : WalkM Unit := do
+  let statement := (← get).statement
+  let mut containsStatement : Array Bool := #[]
+  for node in summary.nodes do
+    containsStatement := containsStatement.push (node.canonical == statement ||
+      node.children.any (fun i => containsStatement[i]!))
+  if summary.incomplete then modify fun s => { s with incomplete := true }
+  let mut pending := summary.roots.toList
+  while !(← get).forbidden do
+    let some index := pending.head? | break
+    pending := pending.tail!
+    if (← get).exprFuel == 0 then
+      modify fun s => { s with incomplete := true }
+      break
     modify fun s => { s with exprFuel := s.exprFuel - 1 }
-    let e := stripMData e
-    if (← get).visited.contains e then return
+    let node := summary.nodes[index]!
+    let e := node.expr
+    if (← get).visited.contains e then continue
     modify fun s => { s with visited := s.visited.insert e }
-    let dataPos := pos == .dataPos
-    let checkU (x : Expr) : WalkM Unit := do
-      if dataPos && (← propLooking env x) && closed x && hasPContent env x then
-        noteUnclassified (Unclassified.mk "closed_decision" (x.getAppFn.constName?.getD `closed_decision) "protected:D5" origin)
-    if dataPos && closed e && containsExpr (← get).statement e && e != (← get).statement then
-      noteUnclassified (Unclassified.mk "statement_subterm" (e.getAppFn.constName?.getD `statement_subterm) "protected:current" origin)
-    checkU e
+    let dataPos := node.position == .dataPos
+    let checkU (x : SyntaxNode) : WalkM Unit := do
+      if dataPos && x.prop && closed x.expr && x.pContent then
+        noteUnclassified (Unclassified.mk "closed_decision"
+          (x.expr.getAppFn.constName?.getD `closed_decision) "protected:D5" origin)
+    if dataPos && closed e && containsStatement[index]! && node.canonical != statement then
+      noteUnclassified (Unclassified.mk "statement_subterm"
+        (e.getAppFn.constName?.getD `statement_subterm) "protected:current" origin)
+    checkU node
     match e with
     | .const n _ =>
       let info := env.find? n
@@ -263,56 +351,60 @@ private partial def visit (env : Environment) : Position → Name → Expr → W
             if let some h := resultHead i.type then
               if decisionFamily.contains h && !listedProducers.contains n then
                 noteUnclassified (Unclassified.mk "unlisted_decision_producer" n (namespaceLabel env n) origin)
-      if let some i := info then
-        if compareCanonical i.type (← get).statement || compareCanonical i.type (← get).decision then
+      if let some type := node.declaredType then
+        if type == (← get).statement || type == (← get).decision then
           modify fun s => { s with forbidden := true }
-        if inProtected env n && !(← get).queued.contains n then queue n pos origin
+        if inProtected env n && !(← get).queued.contains n then queue n node.position origin
       else modify fun s => { s with incomplete := true }
-    | .app f a =>
+    | .app _ _ =>
       let args := e.getAppArgs
       if let .const head _ := e.getAppFn then
         if (head == ``Decidable.isTrue || head == ``Decidable.isFalse) && args.size > 0 then
           if compareCanonical args[0]! (← get).statement then modify fun s => { s with forbidden := true }
-      visit env pos origin f; visit env pos origin a
-    | .lam _ t b _ =>
+    | .lam _ t _ _ | .forallE _ t _ _ | .letE _ t _ _ _ =>
       if compareCanonical t (← get).statement || compareCanonical t (← get).decision then
         modify fun s => { s with forbidden := true }
-      else if containsExpr (← get).statement t then
-        noteUnclassified (Unclassified.mk "statement_mentioning_type" (t.getAppFn.constName?.getD `statement_mentioning_type) "protected:current" origin)
-      if dataPos then checkU t
-      visit env .typePos origin t; visit env pos origin b
-    | .forallE _ t b _ =>
-      if compareCanonical t (← get).statement || compareCanonical t (← get).decision then
-        modify fun s => { s with forbidden := true }
-      else if containsExpr (← get).statement t then
-        noteUnclassified (Unclassified.mk "statement_mentioning_type" (t.getAppFn.constName?.getD `statement_mentioning_type) "protected:current" origin)
-      if dataPos then checkU t
-      visit env .typePos origin t; visit env pos origin b
-    | .letE _ t v b _ =>
-      if compareCanonical t (← get).statement || compareCanonical t (← get).decision then
-        modify fun s => { s with forbidden := true }
-      else if containsExpr (← get).statement t then
-        noteUnclassified (Unclassified.mk "statement_mentioning_type" (t.getAppFn.constName?.getD `statement_mentioning_type) "protected:current" origin)
-      if dataPos then checkU t
-      visit env .typePos origin t; visit env pos origin v; visit env pos origin b
-    | .mdata _ b => visit env pos origin b
-    | .proj n _ b =>
+      else if let some typeIndex := node.children[0]? then
+        if containsStatement[typeIndex]! then
+          noteUnclassified (Unclassified.mk "statement_mentioning_type"
+            (t.getAppFn.constName?.getD `statement_mentioning_type) "protected:current" origin)
+      if let some typeIndex := node.children[0]? then checkU summary.nodes[typeIndex]!
+    | .proj n _ _ =>
       if provenanceJudgeAPIs.contains n || generatedAddress n || (env.find? n).any judgePayload then
         modify fun s => { s with forbidden := true }
-      visit env pos origin b
+    | .mvar _ => modify fun s => { s with incomplete := true }
     | _ => pure ()
+    pending := node.children.toList ++ pending
+
+private def visit (env : Environment) (pos : Position) (origin : Name) (e : Expr) : WalkM Unit := do
+  let summary ← summarise env #[(pos, e)] (← get).exprFuel
+  modify fun s => { s with counters.visits := s.counters.visits + summary.visits }
+  visitSummary env origin summary
 
 private def process (env : Environment) : WalkM Unit := do
   while !(← get).forbidden do
-    let some (n, pos, site) := (← get).pending.head? | break
+    let some (n, _, _) := (← get).pending.head? | break
     modify fun s => { s with pending := s.pending.tail! }
-    let some info := env.find? n | modify fun s => { s with incomplete := true }; continue
-    if let some value := info.value? (allowOpaque := true) then
-      let valuePos := match info with | .thmInfo _ => .proofPos | _ => .dataPos
-      visit env .typePos n info.type
-      visit env valuePos n value
-    else if !isCtorOrInductive env n && !#[`propext, `Classical.choice, `Quot.sound].contains n then
+    if (← get).exprFuel == 0 then
       modify fun s => { s with incomplete := true }
+      break
+    let some info := env.find? n | modify fun s => { s with incomplete := true }; continue
+    let summary ← if let some cached := (← get).summaries[n]? then do
+        modify fun s => { s with counters.memoHits := s.counters.memoHits + 1 }
+        pure cached
+      else do
+        let summary ← if let some value := info.value? (allowOpaque := true) then
+            let valuePos := match info with | .thmInfo _ => .proofPos | _ => .dataPos
+            summarise env #[(.typePos, info.type), (valuePos, value)] (← get).exprFuel
+          else pure { incomplete := !isCtorOrInductive env n &&
+            !#[`propext, `Classical.choice, `Quot.sound].contains n }
+        modify fun s => { s with
+          counters.summarisedConstants := s.counters.summarisedConstants + 1
+          counters.visits := s.counters.visits + summary.visits }
+        if !summary.incomplete then
+          modify fun s => { s with summaries := s.summaries.insert n summary }
+        pure summary
+    visitSummary env n summary
 
 private structure WalkResult where
   forbidden : Bool
@@ -327,7 +419,13 @@ private def collectReadout (env : Environment) (theoremName : Name) (readout : E
   let computation : WalkM Unit := do
     visit env .dataPos (readout.getAppFn.constName?.getD theoremName) readout
     process env
-  let (_, state) ← computation.run { theoremName := theoremName, statement := statement, decision := decision }
+  let (_, state) ← computation.run {
+    theoremName, statement, decision, summaries := summaryCache.getState env }
+  let counters := { state.counters with chargedVisits := provenanceExpressionFuel - state.exprFuel }
+  modifyEnv (summaryCache.setState · state.summaries)
+  modifyEnv (countersCache.setState · counters)
+  trace[InformationProvenance.check]
+    "theorem={theoremName} P_constants_summarised={counters.summarisedConstants} visits={counters.visits} memo_hits={counters.memoHits} charged_visits={counters.chargedVisits}"
   let names := state.walked.toArray.map Name.toString |>.qsort (· < ·)
   return (WalkResult.mk state.forbidden state.unclassified state.incomplete names)
 
@@ -338,8 +436,9 @@ private def safeCollect (env : Environment) (theoremName : Name) (readout : Expr
 private def readoutClosureCurrent (theoremName : Name) (readout : Expr) : CoreM (Bool × Option (Array String)) := do
   let env ← getEnv
   let r ← safeCollect env theoremName readout
+  if r.forbidden || r.unclassified.isSome then return (true, some r.walked)
   if r.incomplete then return (false, none)
-  return (r.forbidden || r.unclassified.isSome, some r.walked)
+  return (false, some r.walked)
 
 def readoutClosure (env : Environment) (theoremName : Name) (readout : Expr) : CoreM (Bool × Option (Array String)) :=
   withEnv env (readoutClosureCurrent theoremName readout)
