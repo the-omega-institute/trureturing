@@ -65,9 +65,10 @@ decreasing_by all_goals omega
 
 /-- Number of adjacent `U,D` pairs in a word. -/
 def peaks : List Step -> Nat
-  | a :: b :: w => (if a = U /\ b = D then 1 else 0) + peaks (b :: w)
-  | _ => 0
-termination_by w => w.length
+  | [] => 0
+  | a :: w => match w with
+    | [] => 0
+    | b :: _ => (if a = U /\ b = D then 1 else 0) + peaks w
 
 /-- The peak-counted Schroeder triangle A060693. -/
 def T (n k : Nat) : Nat :=
@@ -129,6 +130,206 @@ private theorem schroeder_spec (n : Nat) :
                     rw [hsD, if_pos rfl, hsU, if_neg (by decide)]
                     have := hp.2.2 r
                     omega
+
+private theorem first_return_unique {i j : Nat} {q1 q2 p1 p2 : List Step}
+    (hq1 : q1 ∈ schroeder i) (hq2 : q2 ∈ schroeder j)
+    (h : U :: q1 ++ D :: p1 = U :: q2 ++ D :: p2) : q1 = q2 /\ p1 = p2 := by
+  have hs1 := schroeder_spec i q1 hq1
+  have hs2 := schroeder_spec j q2 hq2
+  have happ : q1 ++ D :: p1 = q2 ++ D :: p2 := (List.cons.inj h).2
+  have hlength : q1.length = q2.length := by
+    apply Nat.le_antisymm
+    · by_contra hn
+      have hlt : q2.length < q1.length := by omega
+      have ht := congrArg (List.take (q2.length + 1)) happ.symm
+      have hleft : (q2 ++ D :: p2).take (q2.length + 1) = q2 ++ [D] := by
+        rw [List.take_append, List.take_of_length_le (by omega)]
+        simp
+      have hright : (q1 ++ D :: p1).take (q2.length + 1) =
+          q1.take (q2.length + 1) := by
+        rw [List.take_append_of_le_length (by omega)]
+      rw [hleft, hright] at ht
+      have hnonneg := hs1.2.2 (q2.length + 1)
+      rw [← ht] at hnonneg
+      simp only [List.count_append, List.count_singleton, hs2.2.1,
+        show (D == U) = false by rfl, show (D == D) = true by rfl,
+        Bool.false_eq_true, if_false, if_true] at hnonneg
+      omega
+    · by_contra hn
+      have hlt : q1.length < q2.length := by omega
+      have ht := congrArg (List.take (q1.length + 1)) happ
+      have hleft : (q1 ++ D :: p1).take (q1.length + 1) = q1 ++ [D] := by
+        rw [List.take_append, List.take_of_length_le (by omega)]
+        simp
+      have hright : (q2 ++ D :: p2).take (q1.length + 1) =
+          q2.take (q1.length + 1) := by
+        rw [List.take_append_of_le_length (by omega)]
+      rw [hleft, hright] at ht
+      have hnonneg := hs2.2.2 (q1.length + 1)
+      rw [← ht] at hnonneg
+      simp only [List.count_append, List.count_singleton, hs1.2.1,
+        show (D == U) = false by rfl, show (D == D) = true by rfl,
+        Bool.false_eq_true, if_false, if_true] at hnonneg
+      omega
+  obtain ⟨hq, hp⟩ := List.append_inj happ hlength
+  exact ⟨hq, (List.cons.inj hp).2⟩
+
+/-- A Schroeder word together with its membership proof at semilength `n`. -/
+abbrev SchroederPath (n : Nat) := {w : List Step // w ∈ schroeder n}
+
+private def assembleFirstReturn (n : Nat) :
+    SchroederPath n ⊕ (Sigma fun i : Fin (n + 1) =>
+      SchroederPath i × SchroederPath (n - i)) -> SchroederPath (n + 1)
+  | Sum.inl p => ⟨H :: p.1, by
+      rw [schroeder]
+      exact mem_union_left _ (mem_image.mpr ⟨p.1, p.2, rfl⟩)⟩
+  | Sum.inr ⟨i, q, p⟩ => ⟨U :: q.1 ++ D :: p.1, by
+      rw [schroeder]
+      apply mem_union_right
+      apply mem_biUnion.mpr
+      refine ⟨i, mem_univ i, mem_image.mpr ⟨(q.1, p.1), ?_, rfl⟩⟩
+      exact mem_product.mpr ⟨q.2, p.2⟩⟩
+
+/-- First-return decomposition of a nonempty Schroeder path. The left summand starts
+with `H`; the dependent right summand is `U,Q,D,P`, indexed by the semilength of `Q`. -/
+noncomputable def firstReturnEquiv (n : Nat) :
+    SchroederPath (n + 1) ≃
+      SchroederPath n ⊕ (Sigma fun i : Fin (n + 1) =>
+        SchroederPath i × SchroederPath (n - i)) := by
+  apply (Equiv.ofBijective (assembleFirstReturn n) ?_).symm
+  constructor
+  · intro a b hab
+    cases a with
+    | inl p1 =>
+        cases b with
+        | inl p2 =>
+            apply congrArg Sum.inl
+            apply Subtype.ext
+            exact (List.cons.inj (congrArg Subtype.val hab)).2
+        | inr s2 =>
+            rcases s2 with ⟨i2, q2, p2⟩
+            have hw := congrArg Subtype.val hab
+            have hbad : H = U := (List.cons.inj hw).1
+            contradiction
+    | inr s1 =>
+        rcases s1 with ⟨i1, q1, p1⟩
+        cases b with
+        | inl p2 =>
+            have hw := congrArg Subtype.val hab
+            have hbad : U = H := (List.cons.inj hw).1
+            contradiction
+        | inr s2 =>
+            rcases s2 with ⟨i2, q2, p2⟩
+            have hw := congrArg Subtype.val hab
+            have hu := first_return_unique q1.2 q2.2 hw
+            have hs1 := schroeder_spec i1 q1.1 q1.2
+            have hs2 := schroeder_spec i2 q2.1 q2.2
+            have hiNat : (i1 : Nat) = (i2 : Nat) := by
+              rw [hu.1] at hs1
+              omega
+            have hi : i1 = i2 := Fin.ext hiNat
+            subst i2
+            have hq : q1 = q2 := Subtype.ext hu.1
+            have hp : p1 = p2 := Subtype.ext hu.2
+            subst q2
+            subst p2
+            rfl
+  · intro w
+    have hw0 : w.1 ∈
+        (schroeder n).image (H :: .) ∪
+          univ.biUnion (fun i : Fin (n + 1) =>
+            ((schroeder i).product (schroeder (n - i))).image
+              (fun qp => U :: qp.1 ++ D :: qp.2)) := by
+      have heq : schroeder (n + 1) =
+          (schroeder n).image (H :: .) ∪
+            univ.biUnion (fun i : Fin (n + 1) =>
+              ((schroeder i).product (schroeder (n - i))).image
+                (fun qp => U :: qp.1 ++ D :: qp.2)) := by
+        rw [schroeder]
+      exact heq ▸ w.2
+    rcases mem_union.mp hw0 with hw | hw
+    · rcases mem_image.mp hw with ⟨p, hp, hpw⟩
+      refine ⟨Sum.inl ⟨p, hp⟩, ?_⟩
+      apply Subtype.ext
+      exact hpw
+    · simp only [mem_biUnion, mem_univ, true_and] at hw
+      rcases hw with ⟨i, hi⟩
+      rcases mem_image.mp hi with ⟨qp, hqp, hpw⟩
+      refine ⟨Sum.inr ⟨i, ⟨qp.1, (mem_product.mp hqp).1⟩,
+        ⟨qp.2, (mem_product.mp hqp).2⟩⟩, ?_⟩
+      apply Subtype.ext
+      exact hpw
+
+/-- Peak count under first return. An empty inside path makes the enclosing `U,D`
+itself a peak; a nonempty inside path contributes only its own peaks. -/
+theorem first_return_peaks {i n : Nat} {q p : List Step}
+    (hq : q ∈ schroeder i) (_hp : p ∈ schroeder n) :
+    peaks (U :: q ++ D :: p) = peaks q + peaks p + if i = 0 then 1 else 0 := by
+  have hs := schroeder_spec i q hq
+  have hD : ∀ r : List Step, peaks (D :: r) = peaks r := by
+    intro r
+    cases r with
+    | nil => rfl
+    | cons a r => cases a <;> simp [peaks]
+  have happ : ∀ r : List Step, r ≠ [] -> r.getLast? ≠ some U ->
+      peaks (r ++ D :: p) = peaks r + peaks p := by
+    intro r
+    induction r with
+    | nil => simp
+    | cons a r ih =>
+        intro _ hlast
+        cases r with
+        | nil =>
+            cases a with
+            | U => simp at hlast
+            | D => simpa [peaks] using hD p
+            | H => simpa [peaks] using hD p
+        | cons b r =>
+            rw [List.cons_append]
+            change (if a = U /\ b = D then 1 else 0) + peaks ((b :: r) ++ D :: p) =
+              (if a = U /\ b = D then 1 else 0) + peaks (b :: r) + peaks p
+            rw [ih (by simp) (by simpa using hlast)]
+            omega
+  by_cases hi : i = 0
+  · subst i
+    have hq0 : q = [] := by simpa [schroeder] using hq
+    subst q
+    simp only [List.singleton_append]
+    rw [show peaks (U :: D :: p) = 1 + peaks (D :: p) by rfl, hD]
+    change 1 + peaks p = 0 + peaks p + 1
+    omega
+  · have hqne : q ≠ [] := by
+      intro hzero
+      subst q
+      simp [weight] at hs
+      omega
+    have hlast : q.getLast? ≠ some U := by
+      intro hu
+      have hmem : U ∈ q.getLast? := by simp [hu]
+      let r0 := q.dropLast
+      have hdecomp : r0 ++ [U] = q :=
+        List.dropLast_append_getLast? U hmem
+      have hnonneg := hs.2.2 r0.length
+      rw [← hdecomp, List.take_append_of_le_length (by simp)] at hnonneg
+      rw [List.take_length] at hnonneg
+      have hbalance := hs.2.1
+      rw [← hdecomp] at hbalance
+      simp only [List.count_append, List.count_singleton,
+        show (U == U) = true by rfl, show (U == D) = false by rfl,
+        Bool.false_eq_true, if_true, if_false] at hbalance
+      omega
+    obtain ⟨a, r, rfl⟩ := List.exists_cons_of_ne_nil hqne
+    have hhead : a ≠ D := by
+      intro ha
+      subst a
+      have hnonneg := hs.2.2 1
+      simp at hnonneg
+    cases a with
+    | U =>
+        simpa [peaks, hi] using happ (U :: r) (by simp) hlast
+    | D => contradiction
+    | H =>
+        simpa [peaks, hi] using happ (H :: r) (by simp) hlast
 
 set_option maxRecDepth 100000 in
 example : T 1 0 = 1 := by decide +kernel
