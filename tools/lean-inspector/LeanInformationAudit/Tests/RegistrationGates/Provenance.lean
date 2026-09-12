@@ -80,8 +80,8 @@ elab "check_provenance " label:str " using " readout:ident " expects " reason:st
           unless keys == #["class", "first", "namespace", "site", "walked"] do
             throwError "[FAIL] {label.getString}: payload keys"
           let some walked := fields.get? "walked" | throwError "[FAIL] {label.getString}: walked missing"
-          let .arr items := walked | throwError "[FAIL] {label.getString}: walked shape"
-          let names := items.filterMap (fun j => j.getStr?) |>.toArray
+          let .ok names := fromJson? (α := Array String) walked
+            | throwError "[FAIL] {label.getString}: walked shape"
           unless names == names.qsort (· < ·) && names.toList.eraseDups.length == names.size && names.contains n.toString do
             throwError "[FAIL] {label.getString}: canonical closure"
         else if let .ok names := fromJson? (α := Array String) json then
