@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0f423f40dfc3b93574d587e9f09c6f57e73268ba7fa5a9c1cdfe25679a0afeb6
+  normalized_sha256: sha256:0f423f40dfc3b93574d587e9f09c6f57e73268ba7fa5a9c1cdfe25679a0afeb6
+cas_ref: sha256:0f423f40dfc3b93574d587e9f09c6f57e73268ba7fa5a9c1cdfe25679a0afeb6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Remark 27.793 is only a filing marker that places four Luca-Patel candidate theorems and an errata case immediately below it. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with 5.90-5.94.
+    previous_atom_id: 86b0d3fafa1a7a2fbc2415b9b02c4f29d94d64b627ea89ba742fdf605d760f5d
+    next_atom_id: 7f6e746446c459fe637d89ad68dce39979864f7771d85990c645e350160f680e

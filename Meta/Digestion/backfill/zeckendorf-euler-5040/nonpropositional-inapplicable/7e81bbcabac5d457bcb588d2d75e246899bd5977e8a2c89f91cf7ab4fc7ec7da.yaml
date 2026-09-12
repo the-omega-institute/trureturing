@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7e81bbcabac5d457bcb588d2d75e246899bd5977e8a2c89f91cf7ab4fc7ec7da
+  normalized_sha256: sha256:7e81bbcabac5d457bcb588d2d75e246899bd5977e8a2c89f91cf7ab4fc7ec7da
+cas_ref: sha256:7e81bbcabac5d457bcb588d2d75e246899bd5977e8a2c89f91cf7ab4fc7ec7da
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This atom records an open limitation in SL-031 ownership representation and the repository split used to avoid it. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with H-3a, H-3b, H-3c, and their owning declarations.
+    previous_atom_id: eff3e6430935a9851e2407c2cc089baa0d21506c055e2ea967d96ea248859301
+    next_atom_id: null

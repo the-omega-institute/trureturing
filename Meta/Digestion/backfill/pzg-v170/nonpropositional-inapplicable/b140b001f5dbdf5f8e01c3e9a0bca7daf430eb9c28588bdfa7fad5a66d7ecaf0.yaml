@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b140b001f5dbdf5f8e01c3e9a0bca7daf430eb9c28588bdfa7fad5a66d7ecaf0
+  normalized_sha256: sha256:b140b001f5dbdf5f8e01c3e9a0bca7daf430eb9c28588bdfa7fad5a66d7ecaf0
+cas_ref: sha256:b140b001f5dbdf5f8e01c3e9a0bca7daf430eb9c28588bdfa7fad5a66d7ecaf0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Remark 27.795 is only a filing marker that places an Erdos 313 errata case and five candidate theorems immediately below it. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with 4.90-4.95.
+    previous_atom_id: ba7aa3b3e83a2f1ac27b431f7379fa97ba83dabadbe045499fea080af75883a5
+    next_atom_id: 39602b5fdcfda1f5c2284724b91f0fa252d01e21969fc0980c847da250ccf3fc

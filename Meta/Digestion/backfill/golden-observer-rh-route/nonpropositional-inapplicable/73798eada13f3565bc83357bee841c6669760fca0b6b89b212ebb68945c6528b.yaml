@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:73798eada13f3565bc83357bee841c6669760fca0b6b89b212ebb68945c6528b
+  normalized_sha256: sha256:73798eada13f3565bc83357bee841c6669760fca0b6b89b212ebb68945c6528b
+cas_ref: sha256:73798eada13f3565bc83357bee841c6669760fca0b6b89b212ebb68945c6528b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: The budget-and-settlement atom prescribes implementation-seat, deposit, cover, import, and public-assumption handling. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with G-g-4, G-g-5, and G-g-6.
+    previous_atom_id: abd15064cddd6bf17b0697cf0e0856b225ac4d2b378d42384b8e650a80f9c766
+    next_atom_id: af73ef4009c9d99f453360cab2b9a5ffdcc032b0b402121e79b95ee31bc7612f
