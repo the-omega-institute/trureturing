@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1c9eff022a6192cf2b029b6bd10ebc769c550c3ec7e66fccc97a4ef41930dbad
+  normalized_sha256: sha256:1c9eff022a6192cf2b029b6bd10ebc769c550c3ec7e66fccc97a4ef41930dbad
+cas_ref: sha256:1c9eff022a6192cf2b029b6bd10ebc769c550c3ec7e66fccc97a4ef41930dbad
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「评注 27.704(R2 一战第二纸:域-环判据)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 8d133704b122b8bed67ae767cd6163df07940857e9b76895498942c3b692ab35
+    next_atom_id: 0376be00796b1ae7ce32a3fdd8848033c5371cbd0b7f0b4a1d2fad551ba0f787

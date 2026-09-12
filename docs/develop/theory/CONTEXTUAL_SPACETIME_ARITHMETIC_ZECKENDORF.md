@@ -12173,3 +12173,568 @@ $$
 一个只使用上述定义与已证性质的有限证明，可逐一以对应图公式消去新符号，并以本节及所引用定理的普通证明替换新定理行。展开后的每个分离实例仍是原语言的分离实例，每个替代实例仍是原语言对唯一值图的替代实例。第 78 条的定义消去遂给保守性。
 
 若外部已经给定模型 $\mathfrak M$，在其内部作同一递归及图定义，第 78 条给内部集合与内部有效码的双向比较。其有限字按模型的内部自然数和内部有限性解释，幂集及函数集按模型内部含义解释，不与全部外部子集或函数识别。上述归纳每次作用于一个外部标准有限公式，因而既没有断言模型存在，也没有合成一个同时判定全部公式的内部真理谓词。证毕。
+
+## 379. 有限窗口的准确后继图与逐步进位界
+
+**定义 379.1。** 以下有限窗口命题在通常 ZFC 中使用原 von Neumann 自然数集合 $\omega$，并局部简记第 371、375 条的
+$$
+K=K_{\rm infdig},\quad z=z_{\rm infdig},\quad F=F_{\rm infdig},\quad
+H=H_{\rm infdig},\quad T=T_{\rm infdig}.
+$$
+$G_j,\phi,\alpha,r,a,b,I,q,u,v$ 均取定义 371.1 的值，$\eta_j=(-1)^{j+1}\alpha^{j+2}=\phi G_j-G_{j+1}$。对每个 $L\in\omega$，定义
+$$
+\mathsf X_L=\{p:L\to\{0,1\}:\forall j\ (j+1<L\Rightarrow p_jp_{j+1}=0)\},
+\qquad V_L(p)=\sum_{j<L}G_jp_j,
+$$
+$$
+P_L:K\to\mathsf X_L,\qquad P_L(x)=x|_L,\qquad
+C_p=P_L^{-1}(\{p\}).
+$$
+$\mathsf X_0=\{\varnothing\}$，各 $\mathsf X_L$ 取离散拓扑。第 9–10、69–70、343.1 条在这个相同窗口域上给出 $V_L:\mathsf X_L\leftrightarrow\{0,\ldots,G_L-1\}$；将 $p$ 补零所得总函数恰为 $z(V_L(p))$。特别，每个 $P_L$ 满射，$C_p$ 非空且开闭。对 $L\ge1$，定义
+$$
+\beta_L=G_{L-1}-1,\qquad
+\mathscr R_L=\{\langle P_Lx,P_LTx\rangle:x\in K\}\subseteq\mathsf X_L\times\mathsf X_L.
+$$
+这里及以下没有下标 $Z$ 的有序对均为普通 Kuratowski 有序对。
+
+**定理 379.2。** 对每个 $L\ge1$，在 $V_L$ 的坐标下，$\mathscr R_L$ 恰为
+$$
+\{\langle s,s+1\rangle:0\le s<G_L-1\}
+\ \cup\ \{\langle G_L-1,0\rangle,\langle\beta_L,0\rangle\}.
+$$
+唯一出度二的状态为 $\beta_L$，唯一入度二的状态为零；其余各出度、入度均为一。所有边都有原自然数核心中的见证。存在唯一函数 $g_L:\mathsf X_{L+1}\to\mathsf X_L$ 使 $P_LT=g_LP_{L+1}$，不存在函数 $\mathsf X_L\to\mathsf X_L$ 使 $P_LT$ 经 $P_L$ 分解，即使只要求该等式对全部 $z(n)$ 成立。
+
+**证明。** 若长度 $L$ 的前缀中已有首次 $00$，设其位置为 $j\le L-2$。定义 375.1 已完全确定输出前缀。第 375.2 条证明中的交替低前缀值为 $G_j-1$，故清除它并在位置 $j$ 置一，使窗口值准确增加一。输出仍是合法窗口，故属于所列的非末端环边。
+
+若前缀内没有 $00$，合法性又排除 $11$，此前缀只能交替。末位为一时，其值由第 375.2 条同一交替和式为 $G_L-1$，而 $x_L=0$ 被合法性强制；首次 $00$ 若存在就在位置至少 $L$，所以输出前 $L$ 位全零。完全交替而无首次 $00$ 的输入也按定义输出总零函数。
+
+交替前缀末位为零时，删去末零所得长度 $L-1$ 的前缀末位为一，其值为 $\beta_L$；$L=1$ 时删后为空，值同样为零。若 $x_L=0$，首次 $00$ 在 $L-1$，输出前缀仅第 $L-1$ 位为一，值为 $G_{L-1}=\beta_L+1$。若 $x_L=1$，首次 $00$ 不会早于 $L$，或根本不存在，输出前缀全零。这穷尽全部输入，并且每种输出只用到输入前 $L+1$ 位。
+
+对 $0\le s<G_L-1$，原自然输入 $n=s$ 及 $Tz(s)=z(s+1)$ 实现环边 $s\to s+1$。$n=G_L-1$ 的后继是 $G_L$，其唯一非零数字在位置 $L$，实现末边 $G_L-1\to0$。令
+$$
+n'=\beta_L+G_L=G_{L+1}-1.
+$$
+它的规范行由值为 $\beta_L$ 的交替前缀、位置 $L$ 的一以及更高的零组成；前缀末位零使连接合法。$n'+1=G_{L+1}$ 的低 $L$ 位全零，故 $n'$ 实现额外边。$\beta_L$ 与 $n'$ 的低 $L$ 位相同，其后继窗口值分别为 $G_{L-1}$ 和零，二者不同。这同时排除核心上的 $L$ 位分解。$P_{L+1}$ 满射和已证的逐前缀确定性给 $g_L$ 的存在唯一性。
+
+因 $\beta_L<G_L-1$ 且 $G_{L-1}>0$，额外边与所有环边不同，只给 $\beta_L$ 多一个输出、给零多一个输入；其余度数保持为一。证毕。
+
+**命题 379.3。** 对所有 $L\ge1,h\ge0$ 及 $x,y\in K$，
+$$
+P_{L+h}x=P_{L+h}y\quad\Longrightarrow\quad P_LT^hx=P_LT^hy.
+$$
+$L=1$ 时观测边恰为 $0\to1,1\to0,0\to0$。$L=6$ 时 $\beta_6=12$，分支前缀为低位到高位的 $101010$，两输出为 $000001$、$000000$，分别由 $12\to13$、$33\to34$ 实现。
+
+**证明。** $h=0$ 是原等式。$h>0$ 时连续应用定理 379.2 的一步结论，所需输入深度依次为 $L+h,L+h-1,\ldots,L+1$，所得输出深度依次为 $L+h-1,\ldots,L$，每次所用输出深度均至少为一。于是第 $h$ 步给所列等式，此证明不使用相位分割。
+
+$G_0=1,G_1=2$ 使第一张图直接成为所列三边。递推给 $G_5=13,G_6=21,G_7=34$，且 $12=G_0+G_2+G_4=1+3+8$，故前缀及两见证均由定理 379.2 的公式得到。证毕。
+
+## 380. 相容窗口的逆极限与全部深度的图恢复
+
+**定义 380.1。** 对 $J\ge L\ge1$，令 $\pi_{J,L}:\mathsf X_J\to\mathsf X_L$ 为限制映射，并定义
+$$
+\mathscr Q=\left\{p\in\prod_{L\in\omega_{>0}}\mathsf X_L:
+\forall L\ge1,\ \pi_{L+1,L}(p_{L+1})=p_L\right\},
+\qquad \mathcal U(x)=(P_Lx)_{L\ge1}.
+$$
+积取有限离散因子的乘积拓扑，$\mathscr Q$ 取其子空间拓扑。对观测关系也使用限制双坐标的连接映射，置
+$$
+\mathscr Q_R=\left\{(p_L,q_L)_{L\ge1}\in\prod_{L\ge1}\mathscr R_L:
+\forall L\ge1,\ \pi_{L+1,L}(p_{L+1})=p_L\ \land\
+\pi_{L+1,L}(q_{L+1})=q_L\right\}.
+$$
+
+**定理 380.2。** $\mathcal U:K\to\mathscr Q$ 是同胚。对任意 $x,y\in K$，
+$$
+y=Tx\quad\Longleftrightarrow\quad
+\forall L\ge1,\ \langle P_Lx,P_Ly\rangle\in\mathscr R_L.
+$$
+因此普通图 $G_T\subseteq K\times K$ 经全部窗口对映射同胚到 $\mathscr Q_R$。
+
+**证明。** 对相容族 $p$ 定义 $x_j=p_{j+1}(j)$。反复使用相邻层相容性得到 $\pi_{J,L}(p_J)=p_L$ 对所有 $J\ge L$ 成立，故 $x|_L=p_L$。相邻坐标的合法性在 $p_{j+2}$ 中成立，所以 $x\in K$。这给 $\mathcal U$ 的逆，两个复合逐坐标均为恒等。每个 $P_L$ 连续，故 $\mathcal U$ 连续；逆的第 $j$ 坐标只读取 $p_{j+1}(j)$，有限个输出坐标只读取有限个输入坐标，所以逆也连续。
+
+图等价的正向就是 $\mathscr R_L$ 的定义。反向，若 $x$ 首次 $00$ 在 $j$，则对每个 $L\ge j+2$，定理 379.2 的首次 $00$ 情形使 $P_Lx$ 只有唯一的后继前缀 $P_LTx$。假设的关系成员条件于是给 $P_Ly=P_LTx$；这些深度无界，故 $y=Tx$。若 $x=u$，所有奇数长度前缀均交替且末位一；若 $x=v$，所有偶数长度前缀均交替且末位一。相应无界深度上唯一输出都是零前缀，因而两种情形均强制 $y=z(0)=Tx$。
+
+连接映射确实将 $\mathscr R_J$ 送入 $\mathscr R_L$：用同一个见证 $x$ 限制两个坐标即可；每条低层边也可用其见证提升到任意高层。任意 $\mathscr Q_R$ 的元素分别恢复唯一的 $x,y\in K$，图等价又使 $y=Tx$。逐层配对与拆对是乘积拓扑的同胚，故 $\mathcal U\times\mathcal U$ 在 $G_T$ 上的限制及其逆均连续，给最后结论。证毕。
+
+**命题 380.3。** 固定图 $\mathscr R_1$ 的路径 $0\to0\to0$ 不能成为任何 $x,Tx,T^2x$ 的前三个一位观察。
+
+**证明。** 假设 $x_0=(Tx)_0=0$。若 $x_1=0$，首次 $00$ 就在零，定义 375.1 给 $(Tx)_0=1$，矛盾。因此 $x_1=1$，合法性迫使 $x_2=0$，首次 $00$ 若存在就在位置至少二；若不存在，$x=v$。两种情形都使 $Tx$ 的前两位为 $00$，从而 $(T^2x)_0=1$，不能为零。所需的两条边均为 $0\to0$，此边本身确在 $\mathscr R_1$，由命题 379.3 给出。因此逐时独立选择一个固定图的分支不保证真实轨道存在。证毕。
+
+## 381. 定向分裂点与有限柱集的完整端点公式
+
+**定义 381.1。** 记 $E_m=[-m\phi]$，$m\ge1$。第 372.4 条的实纤维与指标枚举给
+$$
+H^{-1}(\{E_1\})=\{u,v\},\qquad
+H^{-1}(\{E_m\})=\{w0v,w10v\}\quad(m\ge2),
+$$
+其中 $w$ 是唯一的有限块字，$t=L(w)$ 满足 $m=G_{t+1}-N_w$。定义定向原像
+$$
+e_1^-=v,\qquad e_1^+=u,
+$$
+$$
+(e_m^-,e_m^+)=
+\begin{cases}
+(w10v,w0v),&t\text{ 为偶数},\\
+(w0v,w10v),&t\text{ 为奇数}
+\end{cases}
+\qquad(m\ge2).
+$$
+圆周的正向为实数增加的方向；负侧为从较小局部实坐标趋近，正侧为从较大局部实坐标趋近。对 $p\in\mathsf X_L,L\ge1$，将其补成完整块字
+$$
+c(p)=\begin{cases}p,&p_{L-1}=0,\\p0,&p_{L-1}=1,\end{cases}
+\qquad d(p)=L+p_{L-1},\qquad S_p=\sum_{j<L}\eta_jp_j,
+$$
+并置 $I_p=S_p+r^{d(p)}I=[\ell_p,b_p]$。
+
+**定理 381.2。** 对每个 $L\ge1$，$\{I_p:p\in\mathsf X_L\}$ 是 $I$ 的有限闭区间分割，各区间长为 $\alpha^{d(p)}<1$，内部两两不交。准确的圆周切点集为
+$$
+B_L=\{E_m:1\le m\le G_L\}.
+$$
+若 $[\ell_p]=E_i,[b_p]=E_j$，令 $A_p=\pi((\ell_p,b_p))$，即从 $E_i$ 正向至 $E_j$ 的该条开弧，则
+$$
+C_p=H^{-1}(A_p)\ \cup\ \{e_i^+,e_j^-\}.
+$$
+每条开弧内部的分裂相位的两个原像都属于 $C_p$；左端只含正侧原像，右端只含负侧原像。两个实端点 $a,b$ 合成的圆周接缝也服从此式。
+
+**证明。** 第 372.3 条在同一数字前缀域上准确给 $C_p=c(p)K$ 及 $F[C_p]=I_p$，末位一后的零是合法性强制的，后面可接任意合法尾。第 372.2 条的端点唯一性又给：$d(p)$ 偶时，$C_p$ 内取得下、上端点的点分别为 $c(p)u,c(p)v$；$d(p)$ 奇时，两者交换。长度因 $b-a=1$ 为 $\alpha^{d(p)}$，严格介于零和一之间。
+
+不同 $p$ 的完整块字不可比较，否则它们的前 $L$ 位相同。第 372.3 条的不可比较块交公式使不同像区间至多交于一个端点。全部柱集分割 $K$，而 $F[K]=I$，故这些正长度区间覆盖 $I$ 并按端点相接。另一区间不可能包含 $I_p$ 的内点，即使只把这个点作为自身端点，也会因自身正长度及该点为 $I_p$ 内点而造成内部重叠。因此每个 $I_p$ 内点的整个实纤维都在 $C_p$ 中。
+
+在未加公共块前缀时，$10$ 分支的值域 $[a,q]$ 从负侧接近 $q$，$0$ 分支的值域 $[q,b]$ 从正侧接近 $q$。第 372.2 条确定它们在共同端点的原像为 $10v,0v$。加上长 $t$ 的 $w$ 后，仿射式 $f_w(s)=S_w+r^ts$ 在 $t$ 偶时保向、奇时反向，正好给定义 381.1 的两个定向原像。在接缝，趋于 $b$ 的负侧原像为 $v$，从 $a$ 的正侧离开的原像为 $u$。
+
+对 $m\ge2$，上述两个无限字首次不同的位置恰为 $t$，所以其 $L$ 位前缀不同当且仅当 $t<L$。第 372.4 条的准确指标域为：$t=0$ 恰给 $m=2$；$t\ge1$ 时恰给
+$$
+G_t+1\le m\le G_{t+1}.
+$$
+因此 $t<L$ 当且仅当 $m\le G_L$。接缝两原像已经在位置零不同，所以在每个正深度都被分开。不同 $m$ 的相位由 $\phi$ 无理两两不同。
+
+任一内部区间分割点由两侧区间各取一个原像，两个原像属于不同柱集，故该点必为所列二点值；反向，一对被 $L$ 位分开的原像只能落在不同区间的交点。这使内部切点恰为 $E_2,\ldots,E_{G_L}$；再加入接缝 $E_1$ 得到 $B_L$。每个区间长小于一，$\pi$ 在其上单射，故其投影就是一条没有其他切点的闭弧。已有方向分类使下端的柱集原像恰为 $e_i^+$，上端恰为 $e_j^-$。内点的全纤维归属已证；像弧外不可能有此柱集的点。这证明完整集合等式及两个端点的包含、排除，包括接缝。通常 $[0,1)$ 代表的截断不增加任何切点。证毕。
+
+## 382. 任意单侧提升的极限与平移柱集
+
+**定理 382.1。** 固定 $m\ge1$。若圆周点列从 $E_m$ 的严格负侧趋于 $E_m$，任意逐项选择的 $H$ 原像都趋于 $e_m^-$；从严格正侧趋近时，任意这样的原像列都趋于 $e_m^+$。对所有 $m\ge1,h\ge0$，
+$$
+T^h(e_{m+h}^-)=e_m^-,\qquad T^h(e_{m+h}^+)=e_m^+.
+$$
+对 $1\le k\le h$，则有
+$$
+T^h(e_k^-)=T^h(e_k^+)=z(h-k).
+$$
+
+**证明。** 选正深度 $D$ 使 $m\le G_D$。定理 381.2 将 $E_m$ 两侧的小开弧分别置于其负侧、正侧相邻 $D$ 柱集的开弧内部；$B_D$ 有限，故可取不含其他切点的局部邻域。任意负侧提升列最终全部处于负侧那个开闭柱集。紧性使每个子序列有收敛子序列；连续性使每个此类极限相位为 $E_m$，闭性使极限仍在该柱集，端点公式使唯一可能为 $e_m^-$。若整列不收敛于它，在某个邻域的闭补集中有无限子序列，紧性又给一个不等于它的极限，矛盾。正侧完全同理。接缝使用趋于 $b$ 的负侧实代表和趋于 $a$ 的正侧实代表，同样由唯一端点纤维得到结论。此论证也允许点列本身经过其他分裂相位，未限制所选原像。
+
+取 $\varepsilon_n>0$ 趋零，使 $E_{m+h}\pm[\varepsilon_n]$ 在对应局部侧，并由 $H$ 满射任取原像 $x_n^\pm$。前一结论给 $x_n^\pm\to e_{m+h}^\pm$。第 375.3 条迭代的半共轭式给
+$$
+H(T^hx_n^\pm)=E_m\pm[\varepsilon_n].
+$$
+旋转保留局部方向，刚证的任意提升极限因而给 $T^hx_n^\pm\to e_m^\pm$。$T^h$ 连续，极限唯一，故得到两个保向等式，$h=0$ 也包含其中。若 $k\le h$，输出相位为 $[(h-k)\phi]$，第 372.4 条在原自然数 $h-k$ 处的单点纤维迫使两个输出都为 $z(h-k)$。证毕。
+
+**定理 382.2。** 对所有 $L\ge1,h\ge0,p\in\mathsf X_L$，按定理 381.2 写其弧端指标为 $i,j$，则
+$$
+(T^h)^{-1}(C_p)
+=H^{-1}(A_p-[h\phi])\ \cup\ \{e_{i+h}^+,e_{j+h}^-\}.
+$$
+这组逆像柱集的准确切点集为
+$$
+B_{L,h}=\{E_m:h+1\le m\le h+G_L\}.
+$$
+
+**证明。** 半共轭使 $H(T^hx)\in A_p$ 当且仅当 $H(x)\in A_p-[h\phi]$；定理 381.2 使开弧内的整个输出纤维属于 $C_p$，所以开弧部分的逆像恰为显示的整纤维逆像。输出在左端 $E_i$ 时，输入相位必为 $E_{i+h}$，其原像只有 $e_{i+h}^-,e_{i+h}^+$；定理 382.1 使它们分别送至 $e_i^-,e_i^+$，故其中恰正号者进入 $C_p$。右端同理恰负号者进入。开弧外且不是端点的相位不给成员，证明全部集合等式。
+
+原来的每个切点确实隔开两个不同的 $L$ 前缀，其平移后的两原像仍被保向送到这两个前缀，故每个 $E_{h+1},\ldots,E_{h+G_L}$ 都是实际切点。集合等式排除其他切点；特别 $k\le h$ 的两原像虽已合并到自然核心，但其相位不在这个切点表中，不造成新增边界。证毕。
+
+## 383. 精确预测的充分条件与两个细窗端点
+
+**定理 383.1。** 对全部 $L\ge1,h\ge0,J\ge L$，若 $G_J\ge G_L+h$，则存在唯一函数
+$$
+f_{L,h,J}:\mathsf X_J\to\mathsf X_L,\qquad
+P_LT^h=f_{L,h,J}P_J.
+$$
+它在每个 $p\in\mathsf X_J$ 上准确为
+$$
+f_{L,h,J}(p)=P_Lz(V_J(p)+h).
+$$
+
+**证明。** 由不等式，$B_{L,h}\subseteq B_J$。任取 $J$ 柱集 $C_p$，其开弧内部连通且不含 $B_J$，所以不含 $B_{L,h}$。圆周去掉有限切点 $B_{L,h}$ 的每个连通分支恰为定理 382.2 某个平移柱集的开弧，因此 $C_p$ 的内部弧包含于其中唯一一条。该平移开弧上的全部 $H$ 原像都属于相应逆像柱集，包括细窗内部所有分裂相位的两个原像。
+
+再分别处理细窗的两个端点。其左端包含且仅包含该相位的正侧原像。若这个端点也是 $B_{L,h}$ 的切点，细窗内部位于其正侧，含该内部的平移柱集按定理 382.2 正好包含此正侧原像。若它不是平移切点，则它处于同一平移开弧的内部，该弧包含此相位的全部原像。故左端在两种情形下都被包含。
+
+细窗右端包含且仅包含负侧原像。若是平移切点，细窗内部位于其负侧，相邻的同一平移柱集包含该负侧原像；若不是平移切点，则整个端点纤维位于同一平移开弧，仍被包含。接缝的正、负侧归属已经由定理 381.2 确定，上述两论证在接缝也成立。这样整个 $C_p$，包括两个端点，确实位于一个 $(T^h)^{-1}(C_q)$ 中，而非仅其弧内部位于其中。
+
+所以 $P_LT^h$ 在每个 $P_J$ 纤维上恒定，定义出所需函数。$P_J$ 满射使函数唯一。取纤维中的补零代表 $z(V_J(p))$，用第 375.3 条在全部原自然数上的 $T^hz(n)=z(n+h)$，即得显示的求值公式。这里使用的是圆周开弧的连通性及完整端点公式。证毕。
+
+## 384. 预测深度的必要性与每个失败三元组的自然见证
+
+**定理 384.1。** 对每个 $L\ge1,h\ge0,J\ge L$，以下三条件等价：
+$$
+\exists f\in\mathsf X_L^{\mathsf X_J}\ \forall x\in K,\quad P_LT^hx=f(P_Jx),
+$$
+$$
+\exists f\in\mathsf X_L^{\mathsf X_J}\ \forall n\in\omega,\quad
+P_Lz(n+h)=f(P_Jz(n)),
+$$
+$$
+G_J\ge G_L+h.
+$$
+若 $M=G_L+h>G_J$，令 $t\ge1$ 为唯一满足 $G_t<M\le G_{t+1}$ 的自然数，置 $s=G_{t+1}-M$、$N=L+h$。则下列两个有限自然数给出第二条件失败的见证：
+$$
+n_0=s+\sum_{\substack{k\in\omega\\t+2+2k<N}}G_{t+2+2k},\qquad
+n_1=s+G_t+\sum_{\substack{k\in\omega\\t+3+2k<N}}G_{t+3+2k}.
+$$
+它们满足
+$$
+n_0\ne n_1,\qquad P_Jz(n_0)=P_Jz(n_1),
+$$
+$$
+\{V_L(P_Lz(n_0+h)),V_L(P_Lz(n_1+h))\}=\{0,G_{L-1}\}.
+$$
+
+**证明。** 第三个条件由定理 383.1 推出第一个；第一个限制到 $z[\omega]$，由第 375.3 条推出第二个。为证逆向，设 $M>G_J$。由于 $J\ge L$ 且 $G_j$ 严格递增，必有 $h\ge1,M\ge3$。定理 381.2 使 $e_M^-,e_M^+$ 具有相同的 $J$ 前缀；定理 382.1 将其第 $h$ 次像分别送到 $e_{G_L}^-,e_{G_L}^+$，二者的 $L$ 前缀不同。这已经排除 $K$ 上的分解，下面给出有限核心上的明确见证。
+
+严格递增、无界的 $G_t$ 使所列 $t$ 存在唯一。由 $G_{t+1}-G_t=G_{t-1}$，
+$$
+0\le s<G_{t-1}.
+$$
+取 $\mathsf X_{t-1}$ 中值为 $s$ 的唯一窗口，在其后添零得长 $t$ 的完整块字 $w$。于是 $N_w=s$，第 372.4 条的准确枚举给
+$$
+\xi=w0v,\qquad \xi'=w10v,\qquad
+\{\xi,\xi'\}=\{e_M^-,e_M^+\}.
+$$
+若 $J\ge t+1$ 则 $G_J\ge G_{t+1}\ge M$，矛盾，故 $J\le t$。两字首次不同恰在位置 $t$，所以它们的 $J$ 前缀相同。
+
+每个 $G_{k+1}-G_k\ge1$，逐项相加给
+$$
+G_N=G_{L+h}\ge G_L+h=M>G_J.
+$$
+故 $J<N$；又 $G_t<M\le G_N$，所以 $t<N$。将 $\xi,\xi'$ 截到 $N$ 位：$\xi$ 在公共 $w$ 后的非零位置为 $t+2,t+4,\ldots$，$\xi'$ 的新非零位置为 $t,t+3,t+5,\ldots$。因此它们的 $N$ 窗口值正是显示的 $n_0,n_1$。求和指标集均有限，空和取零；截后补零仍合法。第 10、70 条的唯一性给
+$$
+P_Nz(n_0)=P_N\xi,\qquad P_Nz(n_1)=P_N\xi'.
+$$
+因 $t<N$，这两个 $N$ 窗口不同，故其值不同；因 $J\le t$，两个自然输入的 $J$ 窗口相同。
+
+现在只使用命题 379.3 已独立证明的粗界 $N=L+h$，得到
+$$
+P_LT^hz(n_0)=P_LT^h\xi,\qquad
+P_LT^hz(n_1)=P_LT^h\xi'.
+$$
+右侧分别为 $e_{G_L}^-,e_{G_L}^+$ 的两个 $L$ 窗口，次序允许交换。$E_{G_L}$ 的公共块前缀为 $0^{L-1}$：$L=1$ 时这是空块字并给 $G_1=2$；$L\ge2$ 时长 $L-1$、值零的块字由第 372.4 条给指标 $G_L$。其两原像的 $L$ 前缀于是为 $0^L$ 与 $0^{L-1}1$，窗口值为零和 $G_{L-1}$。再代入 $T^hz(n_i)=z(n_i+h)$ 即得全部见证等式。相同输入前缀却有不同输出前缀排除第二条件，三条件遂等价。证毕。
+
+**命题 384.2。** 在 $K$ 和全部原自然核心上，预测 $h$ 步后的 $L$ 位所需的准确最小深度都是
+$$
+J_{\min}(L,h)=\min\{J\in\omega:J\ge L\ \land\ G_J\ge G_L+h\}.
+$$
+此集合非空且 $J_{\min}(L,h)\le L+h$。$h=0$ 时恰为 $L$；$h=1$ 时恰为 $L+1$；$L=1$ 时准确条件为 $G_J\ge h+2$。等号 $G_J=G_L+h$ 属于可预测情形。例如 $J_{\min}(6,13)=7$，而粗界为十九。对任何固定 $J\ge L$，没有只用该 $J$ 窗口而同时预测所有未来时刻 $L$ 窗口的函数族。
+
+**证明。** 上一证明已给 $G_{L+h}\ge G_L+h$，故候选集非空，自然数良序使最小值存在。定理 384.1 逐个深度给其必要充分性。$h=0$ 时 $J=L$ 满足；$h=1$ 时 $J=L$ 失败而 $G_{L+1}\ge G_L+1$ 使 $J=L+1$ 成功。代入 $G_1=2$ 得一位条件；定理 383.1 的非严格不等式包含等号。$G_6=21,G_7=34=21+13$ 给所列例子，$6+13=19$ 为粗界。最后固定 $J\ge L$，取原自然数 $h=G_J-G_L+1$，则 $G_L+h=G_J+1$，定理 384.1 连核心上的该单一时刻都排除，因而也排除覆盖全部时刻的函数族。证毕。
+
+## 385. 窗口理论的集合域、全部子集与全部函数
+
+**定义 385.1。** 全部编码使用第 71–74、378.2 条的同一个 $\operatorname{Enc},\operatorname{Dec},\mathfrak V_Z,\in_Z,\operatorname{El},\operatorname{Pack}$，自然叶仍为 $\operatorname{NatZ}(n)=\langle0,\zeta(n)\rangle$。对任意集合 $X$，沿用
+$$
+X^*=\operatorname{Enc}[X],\qquad e_X=\operatorname{enc}_X:X\to X^*,\qquad
+f^*=e_Y\circ f\circ e_D^{-1}:D^*\to Y^*\quad(f:D\to Y).
+$$
+$e_D^{-1}$ 恰为 $\operatorname{Dec}|_{D^*}$；$\operatorname{Dec}$ 的有效域仍仅为 $\mathfrak V_Z$。单个集合码 $\operatorname{Enc}(X)$ 的语义成员集为 $X^*$。
+
+**命题 385.2。** 第 379–384 条的全部窗口、柱集、观测关系、限制映射、逆极限、定向点族、弧、平移逆像、预测函数、见证函数及各自的全图均为 ZFC 集合。其全部子集、全部函数空间、各乘积和拓扑也为集合，适用第 71–79、318–320、378 条的通用解释。
+
+**证明。** 命题 378.1 已在相同域上给 $K,z,F,H,T,\mathbb T$ 及其图为集合。$\mathsf X_L$ 是 $\{0,1\}^L$ 上按合法性分离的子集；自然数递归给 $G$ 和每个有限和，替代给 $(L,p)\mapsto V_L(p)$ 的联合图，其域恰为 $\{(L,p):L\in\omega,\ p\in\mathsf X_L\}$。限制操作给 $P_L,\pi_{J,L}$，后者的联合参数域明确为 $J\ge L\ge1$。替代和分离给其全部图、$C_p$ 及 $\mathscr R_L$。
+
+自然数递归给 $(h,x)\mapsto T^hx$ 的图，域为 $\omega\times K$。定理 372.4 的唯一块字及定义 381.1 的奇偶分支使 $m\mapsto e_m^\pm$ 在 $\omega_{>0}$ 上有唯一值，替代给两个总图。所有弧、切点、逆像是实数或圆周、$K$ 的子集，因而由分离取得。任意集合指标族的积可表示为指标集到全部因子之并的函数集的一个子集；因子族由替代存在，故这里的 $\prod_L\mathsf X_L$、$\prod_L\mathscr R_L$ 及其相容子集 $\mathscr Q,\mathscr Q_R$ 均为集合。
+
+定理 383.1 给每个成功参数三元组上预测函数的唯一全图，替代收集这些图；在失败域 $\{(L,h,J):L\ge1,h\ge0,J\ge L,G_J<G_L+h\}$ 上，定理 384.1 的唯一 $t$ 及有限和给两个见证函数的图。预测深度函数由非空自然子集的最小值给出唯一输出。各载体的全部子集是其幂集，全部函数是相应积的幂集内满足总性与唯一值的图；拓扑是载体幂集的子集。有限柱集基及其任意并族由幂集、并集与替代构造。以上始终只在集合上构造，未以有效码真类或全部集合为一个状态集合。证毕。
+
+**定理 385.3。** 对任意集合 $X,Y$，包括空集合，下列操作是全部外部子集及全部外部函数之间的双射：
+$$
+\mathcal P(X)\longleftrightarrow\mathcal P(X^*),\qquad
+U\longmapsto\operatorname{Enc}[U],\quad B\longmapsto\operatorname{Dec}[B],
+$$
+$$
+Y^X\longleftrightarrow(Y^*)^{X^*},\qquad
+f\longmapsto f^*,\quad
+ g\longmapsto\bigl(x\mapsto\operatorname{Dec}(g(\operatorname{Enc}(x)))\bigr).
+$$
+语义子集及语义函数空间仍准确为
+$$
+\mathcal P_Z(\operatorname{Enc}(X))=\operatorname{Enc}(\mathcal P(X)),\qquad
+\operatorname{Fun}_Z(\operatorname{Enc}(X),\operatorname{Enc}(Y))
+=\operatorname{Enc}(Y^X).
+$$
+其中每个 $B\subseteq X^*$ 的对应子集码为 $\operatorname{Pack}(B)$，且
+$$
+\operatorname{El}(\operatorname{Pack}(B))=B,\qquad
+\operatorname{Pack}(\operatorname{El}(c))=c\quad(c\in\mathfrak V_Z).
+$$
+这些双射用于 $K,\mathsf X_L,\mathscr Q,\mathscr Q_R,\mathbb T$ 及其任意子集时，没有有限性或可定义性限制。
+
+**证明。** 第 72 条的两向逆使 $\operatorname{Dec}[\operatorname{Enc}[U]]=U$，也使 $\operatorname{Enc}[\operatorname{Dec}[B]]=B$；后式的每个解码对象在 $X$ 中，因为 $B\subseteq X^*$。替代保证两个像都是集合，故双射作用于完整的幂集。第 73 条使所列子集码恰解码为 $\operatorname{Dec}[B]$，其两向式在此实际域上直接成立。第 74 条的语义幂集定义遍历这些全部 $B$，所以给显示的整个幂集码。
+
+对任意 $g:X^*\to Y^*$，每个 $g(\operatorname{Enc}(x))$ 都有唯一解码且在 $Y$ 中，替代给显示的函数 $X\to Y$。先解码再共轭，对 $c=\operatorname{Enc}(x)$ 的值为
+$$
+\operatorname{Enc}(\operatorname{Dec}(g(c)))=g(c).
+$$
+先共轭再解码，在每个 $x$ 处得到 $f(x)$。所以全部函数逐一对应。第 74 条的语义配对保留函数图的每个输入存在唯一输出条件，故语义函数空间正是 $\operatorname{Enc}(Y^X)$。$X=\varnothing$ 时两侧函数集各有唯一空函数；$X\ne\varnothing,Y=\varnothing$ 时两侧函数集均为空；两者同时空仍属第一种情形。子集和 $\operatorname{Pack}$ 的空例直接来自第 73 条，故没有排除空载体。证毕。
+
+## 386. 观察关系、普通积与完整总图的分别运输
+
+**定理 386.1。** 对任意集合 $X,Y$，使用第 378.4 条的双射
+$$
+\chi_{X,Y}:X^*\times Y^*\to(X\times Y)^*,\qquad
+\chi_{X,Y}(c,d)=\langle c,d\rangle_Z,
+$$
+其逆只在 $(X\times Y)^*$ 上，并为
+$$
+\chi_{X,Y}^{-1}(\operatorname{Enc}(\langle x,y\rangle))
+=\langle\operatorname{Enc}(x),\operatorname{Enc}(y)\rangle.
+$$
+对每个关系 $R\subseteq X\times Y$，定义其普通外部关系
+$$
+R^\square=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(y)\rangle:
+\langle x,y\rangle\in R\}\subseteq X^*\times Y^*.
+$$
+则有
+$$
+\chi_{X,Y}[R^\square]=\operatorname{Enc}[R],\qquad
+\operatorname{Enc}(R)=\operatorname{Pack}(\chi_{X,Y}[R^\square]).
+$$
+对第 379–384 条的每个函数 $f:D\to Y$，其普通共轭图与原图码分别为
+$$
+G_{f^*}=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle:x\in D\},
+$$
+$$
+\operatorname{Enc}(G_f)
+=\operatorname{Pack}\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle_Z:x\in D\},
+\qquad \operatorname{El}(\operatorname{Enc}(G_f))=\operatorname{Enc}[G_f].
+$$
+外部共轭的域为 $D^*$，单个原图码的语义域为 $\operatorname{Enc}(D)$，语义值域为 $\operatorname{Enc}(\operatorname{ran}f)$。任取 $D'\subseteq D$，
+$$
+(f|_{D'})^*=f^*|_{(D')^*},\qquad
+\operatorname{ev}_Z(\operatorname{Enc}(G_f),\operatorname{Enc}(x))
+=\operatorname{Enc}(f(x))\quad(x\in D).
+$$
+域外无图边，空域仍使用同样公式。
+
+**证明。** 第 74、378.4 条在任意集合上给 $\langle\operatorname{Enc}(x),\operatorname{Enc}(y)\rangle_Z=\operatorname{Enc}(\langle x,y\rangle)$ 及两个实际积域间的双逆。将等式逐边用于 $R$ 得第一个关系式，再以第 73 条的 $\operatorname{Pack}$ 双逆得到单个关系码。$\chi$ 的逆逐对解码并分解原普通对，其所列定义域不扩张到任意有效码。
+
+把 $R$ 取为 $G_f\subseteq D\times Y$，共轭的值式给其普通图；逐边语义配对再用 $\operatorname{Pack}$ 给原图码。第 378.3 条的精确图域、值域与语义求值在同一个 $D,Y$ 上适用。限制到 $D'$ 正好只留输入在 $D'$ 的边，故共轭限制等式成立。$D'=\varnothing$ 时两边为空外部图，原图码为 $\operatorname{Pack}(\varnothing)=\operatorname{NatZ}(0)$，没有在域外添值。
+
+特别取 $R=\mathscr R_L$，这将有限观测关系的普通码坐标图送到 $\operatorname{Enc}[\mathscr R_L]$；取 $R=G_T$，得到真实后继图的相同桥。若原联合域是某个 $D\subseteq X\times Y$，桥的限制域准确为 $D^\square$，像准确为 $D^*$，不能仅以两个坐标分别合法代替 $D$ 的成员条件。若编码普通外部图 $G_{f^*}$ 自身，输入输出对象已是码，仍各再施一次 $\operatorname{Enc}$；这是按第 378.8 条编码另一个普通集合图的操作，不替代显示的 $\operatorname{Enc}(G_f)$。证毕。
+
+**定理 386.2。** 全部窗口映射的外部共轭具有准确的域和求值：
+$$
+P_L^*:K^*\to\mathsf X_L^*,\quad P_L^*(\operatorname{Enc}(x))=\operatorname{Enc}(x|_L),
+$$
+$$
+\pi_{J,L}^*:\mathsf X_J^*\to\mathsf X_L^*,\quad
+\pi_{J,L}^*(\operatorname{Enc}(p))=\operatorname{Enc}(p|_L)\quad(J\ge L\ge1),
+$$
+$$
+V_L^*:\mathsf X_L^*\to\{\operatorname{NatZ}(s):s<G_L\},\quad
+V_L^*(\operatorname{Enc}(p))=\operatorname{NatZ}(V_L(p)),
+$$
+$$
+T^*:K^*\to K^*,\quad T^*(\operatorname{Enc}(x))=\operatorname{Enc}(Tx),\qquad
+z^*:\omega^*\to K^*,\quad z^*(\operatorname{NatZ}(n))=\operatorname{Enc}(z(n)).
+$$
+$V_L^*$ 的逆在且仅在所列有限自然叶集上为
+$$
+\operatorname{NatZ}(s)\longmapsto\operatorname{Enc}(P_Lz(s))\qquad(s<G_L).
+$$
+对每个 $x\in K$ 和 $p\in\mathsf X_L$，完整图码分别为
+$$
+\operatorname{Enc}(x)=\operatorname{Pack}
+\{\langle\operatorname{NatZ}(j),\operatorname{NatZ}(x_j)\rangle_Z:j\in\omega\},
+$$
+$$
+\operatorname{Enc}(p)=\operatorname{Pack}
+\{\langle\operatorname{NatZ}(j),\operatorname{NatZ}(p_j)\rangle_Z:j<L\}.
+$$
+它们保留每个零值边；$L=0$ 时第二式为空字的码。原始空字 $\zeta(0)$、语义空集 $\operatorname{NatZ}(0)$ 和总零图 $z(0)$ 具有各自的域与成员。有限窗口、有限规范字及自然叶遗传有限，而 $K$ 的每个点作为总图及其完整码均不遗传有限。
+
+**证明。** 所列各共轭由定义 385.1 代入原函数得到，每个输入码只在指定成员像上解码。窗口双射使 $V_L$ 在 $s<G_L$ 处的逆为 $P_Lz(s)$；逐向代入 $V_L$ 和补零代表的恒等式，再编码即得显示双逆，域外不声称逆值。
+
+每个总图对全部 $j\in\omega$ 有唯一边 $\langle j,x_j\rangle$，每个有限窗口对全部 $j<L$ 有唯一边 $\langle j,p_j\rangle$。应用定理 386.1 的逐边编码和 $\operatorname{Enc}(j)=\operatorname{NatZ}(j)$ 给两个公式，数字为零时仍有该条边。$L=0$ 时普通窗口为空函数，其码为 $\operatorname{NatZ}(0)$。原始空字本身是空集合，第 71 条的所有有效码都是非空 Kuratowski 对，故该空字不是有效码；总零函数则仍有每个输入 $j$ 的边。
+
+有限窗口与规范字都是有限个自然数对的有限图，故遗传有限；其码的遗传有限性及自然叶的结论使用第 70、72 条。$K$ 中每个总图有无限多个互异首坐标边，故非有限，更不在 $HF$ 中；第 72 条的 $\operatorname{Enc}(x)\in HF\iff x\in HF$ 使完整码也不遗传有限。证毕。
+
+## 387. 任意乘积桥、拓扑与相容族的逆极限运输
+
+**定义 387.1。** 对任意集合指标 $A$ 和集合族 $(Y_i)_{i\in A}$，令
+$$
+\mathscr P_Y=\prod_{i\in A}Y_i,\qquad
+\widehat{\mathscr P}_Y=\prod_{i\in A}Y_i^*.
+$$
+定义积比较
+$$
+\Psi_Y:\widehat{\mathscr P}_Y\to\mathscr P_Y^*,\qquad
+\Psi_Y(c)=\operatorname{Enc}\bigl(i\mapsto\operatorname{Dec}(c_i)\bigr).
+$$
+各坐标的解码只用在 $Y_i^*$ 上。给每个 $Y_i$ 一个拓扑时，$\mathscr P_Y$ 取乘积拓扑，$\widehat{\mathscr P}_Y$ 取逐因子运输拓扑的乘积，$\mathscr P_Y^*$ 取原乘积拓扑的运输。
+
+**定理 387.2。** $\Psi_Y$ 是双射，其逆在 $\mathscr P_Y^*$ 上为
+$$
+\Psi_Y^{-1}(\operatorname{Enc}(p))=(\operatorname{Enc}(p_i))_{i\in A}.
+$$
+对任意所指定因子拓扑，它也是同胚。这里包括空指标集以及有空因子的情形。原指标与编码指标的全图由
+$$
+\operatorname{Enc}(p)=\operatorname{Pack}
+\{\langle\operatorname{Enc}(i),\operatorname{Enc}(p_i)\rangle_Z:i\in A\}
+$$
+比较，不把索引 $i$ 和索引码 $\operatorname{Enc}(i)$ 当作同一对象。
+
+**证明。** $c_i\in Y_i^*$ 给唯一 $\operatorname{Dec}(c_i)\in Y_i$，替代给其 $A$ 域上的总图，故 $\Psi_Y$ 良定义。应用显示的逆后，第 $i$ 坐标为 $\operatorname{Enc}(\operatorname{Dec}(c_i))=c_i$；反向给 $\operatorname{Enc}(i\mapsto p_i)=\operatorname{Enc}(p)$。这证明两个复合恒等，且逆仅在积的成员像上使用。$A=\varnothing$ 时原积和外部因子积均有唯一空函数，$\Psi_Y$ 将它送到 $\operatorname{Enc}(\varnothing)$；有空因子时两积均空，同一空映射仍为双射。
+
+对一般空间 $(X,\tau)$，第 378.5 条在任意拓扑上给
+$$
+\tau^*=\{\operatorname{Enc}[U]:U\in\tau\},\qquad
+ e_X:(X,\tau)\simeq(X^*,\tau^*),
+$$
+$$
+\operatorname{El}(\operatorname{Enc}(\tau))=\operatorname{Enc}[\tau],\qquad
+\tau^*=\{\operatorname{El}(c):c\in\operatorname{Enc}[\tau]\}.
+$$
+因子积中的基本开集只限制某个有限 $D\subseteq A$，形如 $p_i\in U_i$ 对所有 $i\in D$。逐坐标编码使其恰对应 $c_i\in\operatorname{Enc}[U_i]$ 的基本开集；正逆均将这些基条件一一对应。再与 $e_{\mathscr P_Y}$ 的运输同胚复合，就得 $\Psi_Y$ 连续且逆连续，包含空积的拓扑。
+
+最后原 $p$ 的每条普通边为 $\langle i,p_i\rangle$，定理 386.1 给显示全图码。若改用普通索引集 $A^*$，相应外部族为 $\operatorname{Enc}(i)\mapsto\operatorname{Enc}(p_i)$；它与原索引的码值族通过 $e_A$ 重索引，再通过语义配对与 $\operatorname{Pack}$ 得单个族码。这逐项保留全部指标。证毕。
+
+**定理 387.3。** 定义运输窗口的外部逆极限
+$$
+\widehat{\mathscr Q}=
+\left\{c\in\prod_{L\in\omega_{>0}}\mathsf X_L^*:
+\forall L\ge1,\ \pi_{L+1,L}^*(c_{L+1})=c_L\right\}.
+$$
+将 $\Psi_Y$ 用于 $A=\omega_{>0},Y_L=\mathsf X_L$，它的限制恰为同胚
+$$
+\Psi_Q:\widehat{\mathscr Q}\longleftrightarrow\mathscr Q^*.
+$$
+相应的窗口恢复同胚为
+$$
+\widehat{\mathcal U}=\Psi_Q^{-1}\circ\mathcal U^*:K^*\to\widehat{\mathscr Q},
+\qquad \widehat{\mathcal U}(c)=(P_L^*c)_{L\ge1}.
+$$
+令 $\chi_L=\chi_{\mathsf X_L,\mathsf X_L}$，并定义全部相容关系族的集合
+$$
+\widehat{\mathscr Q}_R=
+\left\{(a_L,b_L)_{L\ge1}\in\prod_{L\ge1}\mathscr R_L^\square:
+\forall L\ge1,\quad
+\pi_{L+1,L}^*(a_{L+1})=a_L\ \land\
+\pi_{L+1,L}^*(b_{L+1})=b_L\right\}.
+$$
+它与单个原关系族的成员像之间有同胚
+$$
+\Phi_R:\widehat{\mathscr Q}_R\to\mathscr Q_R^*,\qquad
+\Phi_R((a_L,b_L)_L)
+=\operatorname{Enc}\bigl(L\mapsto
+\operatorname{Dec}(\chi_L(a_L,b_L))\bigr),
+$$
+$$
+\Phi_R^{-1}(\operatorname{Enc}(r'))
+=\bigl(\chi_L^{-1}(\operatorname{Enc}(r'_L))\bigr)_{L\ge1}
+\qquad(r'\in\mathscr Q_R).
+$$
+同时普通图 $G_{T^*}\subseteq K^*\times K^*$ 通过
+$$
+\langle c,d\rangle\longmapsto
+\bigl(\langle P_L^*c,P_L^*d\rangle\bigr)_{L\ge1}
+$$
+同胚到 $\widehat{\mathscr Q}_R$。以上各层均取声明的乘积及子空间拓扑，$\Phi_R^{-1}$ 仅在 $\mathscr Q_R^*$ 上使用。
+
+**证明。** 对 $c$ 置 $p_L=\operatorname{Dec}(c_L)$。共轭定义使
+$$
+\pi_{L+1,L}^*(c_{L+1})=c_L
+\iff \pi_{L+1,L}(p_{L+1})=p_L.
+$$
+这对每个 $L\ge1$ 双向成立，故 $\Psi_Y$ 的像落在 $\mathscr Q^*$ 当且仅当 $c\in\widehat{\mathscr Q}$，得到准确限制及双逆。任意子集 $S\subseteq X$ 的子空间拓扑运输等于 $S^*\subseteq X^*$ 的子空间拓扑，因为每个子空间开集 $S\cap U$ 的像恰为 $S^*\cap\operatorname{Enc}[U]$。于是定理 387.2 的同胚限制仍为同胚。定理 380.2 的 $\mathcal U$ 同胚经第 378.5 条共轭，再与 $\Psi_Q^{-1}$ 复合，给所列恢复式；逐坐标代入得到 $P_L^*c$。
+
+对关系层，$\chi$ 将普通码对限制同胚到 $\mathscr R_L^*$。它与两个坐标的限制交换：在 $\langle\operatorname{Enc}(p),\operatorname{Enc}(q)\rangle$ 处两路都给 $\operatorname{Enc}(\langle p|_L,q|_L\rangle)$。因此每个相容关系族都逐坐标解码成定义 380.1 的 $\mathscr Q_R$ 元素，反向每个原相容关系族都编码回来。定理 380.2 使其恰来自唯一 $\langle x,Tx\rangle$，外部普通码对即为 $\langle\operatorname{Enc}(x),T^*(\operatorname{Enc}(x))\rangle$。逐层双逆使 $\Phi_R$ 与所列 $\Phi_R^{-1}$ 的两个复合均为恒等。对 $\widehat{\mathscr Q}_R$ 中任意族，分别用 $\widehat{\mathcal U}^{-1}$ 恢复两族坐标，得到唯一的 $c,d\in K^*$；全部层关系条件强制 $d=T^*c$，所以这也给普通图映射的逆。这证明图及全部逆极限量词的两方向。各 $\chi_L$ 的同胚性、定理 387.2 的任意积桥及子空间限制给 $\Phi_R$ 的同胚性；恢复图的两个方向逐坐标连续，给图上的同胚。
+
+具体地，这些同胚对每个子集 $S$ 保留闭包，对每个集合指标的网保留收敛，对所列空间之间每个函数保留并反映连续性：开集逆像按第 378.5 条等于原开集逆像的编码像；一个邻域与编码子集相交当且仅当解码邻域与原子集相交，故闭包条件相同；网最终处于邻域的量词也在同一对应下相同。单个拓扑码、开集码族和外部拓扑分别按定理 387.2 的两次成员展开解释。证毕。
+
+## 388. 全部时间参数、自然见证与锐界的编码共轭
+
+**定义 388.1。** 记 $\mathsf N_Z=\omega^*=\{\operatorname{NatZ}(n):n\in\omega\}$。使用第 70、77 条在自然叶上的原算术运输，记其加法和序为 $+_{\mathsf N},\le_{\mathsf N}$。令
+$$
+\mathsf G:\mathsf N_Z\to\mathsf N_Z,\qquad
+\mathsf G(\operatorname{NatZ}(j))=\operatorname{NatZ}(G_j).
+$$
+它是原递推函数 $G$ 的共轭，其单个完整图码为
+$$
+\operatorname{Enc}(G)=\operatorname{Pack}
+\{\langle\operatorname{NatZ}(j),\operatorname{NatZ}(G_j)\rangle_Z:j\in\omega\}.
+$$
+迭代指数 $h$ 先取原自然数；使用自然叶作时间参数时，经 $\operatorname{Dec}|_{\mathsf N_Z}$ 取同一个 $h$。
+
+**定理 388.2。** 对所有原自然参数 $L\ge1,h\ge0,J\ge L$，有
+$$
+(T^*)^h=e_KT^he_K^{-1}.
+$$
+以下两个断言都等价于 $G_J\ge G_L+h$：
+$$
+\exists g\in(\mathsf X_L^*)^{\mathsf X_J^*}\ \forall c\in K^*,\quad
+P_L^*((T^*)^hc)=g(P_J^*c),
+$$
+$$
+\exists g\in(\mathsf X_L^*)^{\mathsf X_J^*}\ \forall \nu\in\mathsf N_Z,\quad
+P_L^*z^*(\nu+_{\mathsf N}\operatorname{NatZ}(h))
+=g(P_J^*z^*(\nu)).
+$$
+成功时该 $g$ 唯一，为 $f_{L,h,J}^*$。其参数判据完整编码为
+$$
+\mathsf G(\operatorname{NatZ}(L))+_{\mathsf N}\operatorname{NatZ}(h)
+\le_{\mathsf N}\mathsf G(\operatorname{NatZ}(J)).
+$$
+因此同一结论也量化全部 $\lambda,\eta,\iota\in\mathsf N_Z$ 满足
+$\operatorname{NatZ}(1)\le_{\mathsf N}\lambda\le_{\mathsf N}\iota$，分别取
+$L=\operatorname{Dec}(\lambda),h=\operatorname{Dec}(\eta),J=\operatorname{Dec}(\iota)$。最小深度码为 $\operatorname{NatZ}(J_{\min}(L,h))$。
+
+**证明。** $h=0$ 时双逆给恒等；由 $h$ 到 $h+1$，在复合中消去 $e_K^{-1}e_K$ 即得第一式。定理 385.3 使每个候选 $g$ 唯一解码为 $f:\mathsf X_J\to\mathsf X_L$，也使每个这样的 $f$ 共轭回来。将 $c=e_K(x)$ 代入，显示的第一分解等式恰为 $P_LT^hx=f(P_Jx)$ 的编码，单射性给反向。
+
+每个 $\nu\in\mathsf N_Z$ 唯一为 $\operatorname{NatZ}(n)$，自然叶加法给 $\nu+_{\mathsf N}\operatorname{NatZ}(h)=\operatorname{NatZ}(n+h)$，故第二断言恰为对全部原自然数的第二分解断言。定理 384.1 给两者与不等式等价。$P_J$ 在自然核心上也满到 $\mathsf X_J$，因为每个 $p$ 有 $z(V_J(p))$ 作代表，所以核心式同样强制候选函数唯一；其共轭为 $f_{L,h,J}^*$。
+
+第 70 条保留自然加法与序，$\mathsf G$ 保留每个递推值，因此编码判据与原不等式两向相同。全部自然叶解码恰遍历原 $\omega$，没有缩短 $h,L,J$ 的量词。最小性是在所有候选深度上满足判据并且不超过其他满足者的自然序条件，序保持及双射使其码准确为所列值。证毕。
+
+**命题 388.3。** 每个失败三元组的定理 384.1 见证以 $\nu_i=\operatorname{NatZ}(n_i)$ 运输，仍满足
+$$
+\nu_0\ne\nu_1,\qquad P_J^*z^*(\nu_0)=P_J^*z^*(\nu_1),
+$$
+$$
+\left\{V_L^*P_L^*z^*(\nu_i+_{\mathsf N}\operatorname{NatZ}(h)):i\in\{0,1\}\right\}
+=\{\operatorname{NatZ}(0),\operatorname{NatZ}(G_{L-1})\}.
+$$
+此外对全部 $c,d\in K^*$，
+$$
+d=T^*c\iff\forall L\ge1,\ \langle P_L^*c,P_L^*d\rangle\in\mathscr R_L^\square.
+$$
+$\mathscr R_L^\square$ 在 $V_L^*$ 坐标下保留定理 379.2 的所有环边及额外边、全部原自然见证、一位必要充分增量，以及 $\operatorname{Enc}(u),\operatorname{Enc}(v)$ 两个输入。固定一位图中的三次零观察仍无真实轨道。
+
+**证明。** 将定理 384.1 的有限和所定义的 $n_0,n_1$ 各取自然叶；单射性保留它们的不同，$P_J,z$ 的逐点共轭式保留共同输入，叶算术与 $V_L^*$ 的值式保留所列两个输出。其有限求和的每个指标和每个 $G_j$ 都由原自然数及 $\mathsf G$ 表示，因此没有把无限数字点冒充成有限自然数。
+
+对图式令 $c=\operatorname{Enc}(x),d=\operatorname{Enc}(y)$，按 $\mathscr R_L^\square$ 的定义，右侧准确等价于定理 380.2 的所有层关系条件，左侧准确等价于 $y=Tx$，故两向成立。$V_L^*$ 与 $V_L$ 双射相容，使每条原边及唯一分支、汇合状态准确运输；定理 379.2 的自然输入 $s,\beta_L,\beta_L+G_L$ 各有对应自然叶。两交替输入因 $\operatorname{Enc}$ 单射仍不同，其后继由共轭仍同为 $\operatorname{Enc}(z(0))$。若运输侧的固定一位路径可实现，解码该输入及其两次迭代就实现命题 380.3 排除的路径，矛盾。最后，两交替输入有相同后继且零属于像，所以 $T^*$ 与 $T$ 一样不能代替自然叶上的 Peano 后继；自然算术仍是第 70、77 条的原运输。证毕。
+
+## 389. 全量词比较、定义消去与有限字的边界
+
+**定理 389.1。** 将第 379–388 条定义展开为其集合图及精确定义域后，对每个固定有限原集合论公式 $\theta(x_1,\ldots,x_r)$ 和任意集合参数，第 75 条的翻译满足
+$$
+\forall x_1\cdots\forall x_r,\qquad
+\theta(x_1,\ldots,x_r)
+\iff\theta^Z(\operatorname{Enc}(x_1),\ldots,\operatorname{Enc}(x_r)).
+$$
+比较包含全部子集、全部函数、全部关系、全部拓扑、全部集合指标乘积与相容族，以及全部原自然数时间、窗口和见证参数。第 379–388 条的肯定及否定命题均在所列原域及编码域上保持并反映。添加这些定义及其已证性质为 ZFC 的定义性保守扩展，保留每个固定分离与替代实例。
+
+**证明。** 命题 385.2 给全部新对象为集合及各定义图的存在唯一性；逆映射各在定理 385–387 条所列实际像上使用。函数项可换成新变元及其图约束，部分域必须一起保留，所以每个断言成为原集合论公式。第 72 条的单射性给等号原子的两方向，第 72 条的语义成员定义给
+$$
+\operatorname{Enc}(x)\in_Z\operatorname{Enc}(y)\iff x\in y.
+$$
+对固定公式作结构归纳：否定及布尔联结词从子公式双向等价得到；原存在见证 $x$ 编码为有效见证，反向有效见证 $c$ 解码为原集合见证；全称量词正向任取有效码再解码，反向任取原集合再编码，均应用归纳假设。无界量词限制到可定义类谓词 $c\in\mathfrak V_Z$，没有引入普遍集合。任意集合参数在归纳每一步保留。
+
+定理 385.3 已明确使全部外部子集及全部函数对应；定理 386.1 将关系和完整函数图放在正确的积域，定理 387.2–387.3 又使所有指标、所有积点及相容条件逐项对应，故这些受限量词不遗漏任何候选。拓扑及开集族是集合，其编码、成员像和外部拓扑分别由定理 387.2 给出。连续性的所有开集量词以及逆极限的所有坐标条件遂均属于上述公式比较。特别，因子函数的不存在性、有限自然见证与一切端点条件也在同一比较中保持。
+
+第 77 条已将各 ZFC 公理及两个模式逐实例运输。对含本节新符号的分离实例，先展开这些符号，原分离在给定集合 $X$ 内取得由该固定公式定义的全部成员；逐成员编码正好给对应语义子集。对替代实例，语义的每个输入存在唯一有效输出经解码成为原集合上的存在唯一条件，原替代给像集合，再编码即得语义像，单射性保留唯一性。任意一个有限扩展证明中，逐行消去定义，将新定理行换为其普通证明，模式行换为展开后的原 ZFC 模式实例，便得到原语言证明。这是第 78、378.14 条及 [CSA 命题 15](CONTEXTUAL_SPACETIME_ARITHMETIC.md) 的同一定义消去在这些实际新图上的应用，证明所称保守性。证毕。
+
+**命题 389.2。** 若外部已给定 $\mathfrak M\models\mathrm{ZFC}$，同一内部定义给其对象与内部有效码之间的外部双射，并保留每个外部标准有限公式。内部自然数、有限字、幂集、函数空间、拓扑和逆极限都按 $\mathfrak M$ 的含义解释。环境中的任意集合，甚至 $\mathcal P(\omega)$，不能全体单射编码成有限字；$K$ 也不可数。完整 CSA 配置仍以整个配置对象编码，有限窗口或标量相位没有恢复被其遗忘的配置数据。
+
+**证明。** 第 71–78 条的定义图及其存在唯一性在 $\mathfrak M$ 内成立，故内部 $\operatorname{Enc}$ 在每个外部对象上有唯一内部值，内部单射及语义成员比较给所列外部双射。定理 389.1 的结构归纳对每个外部标准有限公式仍逐步成立；这里是在模型内解释已证的递归图，并不对可能外部非良基的模型成员关系另作外部递归。内部有限字不必外部有限，内部幂集、函数集和相容族不必穷尽外部的全部同类对象。此结论始终以已给模型为条件，不推出模型存在或无条件一致性，逐公式归纳也不形成统一内部真理谓词。
+
+有限字母表上每个固定长度的字集有限，全部有限字因而可数。若 $\mathcal P(\omega)$ 单射入这些字，再取自然数编号，就得到到 $\omega$ 的单射；在其像上取唯一逆，像外取空集，便给满射 $g:\omega\to\mathcal P(\omega)$。分离所得 $D=\{n\in\omega:n\notin g(n)\}$ 与每个 $g(n)$ 在第 $n$ 处不同，矛盾。对 $K$，每个 $b':\omega\to\{0,1\}$ 都给合法函数 $x_{2j}=b'_j,x_{2j+1}=0$，且这个映射单射；二进序列的任意自然数枚举都遗漏逐对角取反的序列，故 $K$ 不可数。因此通用 $\operatorname{Enc}$ 的无限或任意集合输出不能都成为有限字，这与第 79、378.9 条的边界相同。
+
+[CSA 定义 1–3](CONTEXTUAL_SPACETIME_ARITHMETIC.md) 的配置 $X=(C,A)$ 包含档案、偏序、时间、位置、符号、来源、当前区域与选择，电荷只求和所选符号。取空档案的配置，以及单事件档案但当前区域、选择均为空的配置；后者时间和位置取零、符号取正、来源取固定叶、偏序为空。两者均合法且当前整体平衡，所选电荷同为零，但档案不同。第 72 条使两完整配置码不同，任何只依赖该电荷的数字或相位观察却相同。因而保留全部集合语义不使有限观察变为完整配置的逆，有限窗口逆极限所恢复的对象准确是 $K$ 的整个数字函数。证毕。

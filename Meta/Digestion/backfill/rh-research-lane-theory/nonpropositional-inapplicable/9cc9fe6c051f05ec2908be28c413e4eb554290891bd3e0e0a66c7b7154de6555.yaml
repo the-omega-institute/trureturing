@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9cc9fe6c051f05ec2908be28c413e4eb554290891bd3e0e0a66c7b7154de6555
+  normalized_sha256: sha256:9cc9fe6c051f05ec2908be28c413e4eb554290891bd3e0e0a66c7b7154de6555
+cas_ref: sha256:9cc9fe6c051f05ec2908be28c413e4eb554290891bd3e0e0a66c7b7154de6555
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 1, reading 「黄金二阶 Magnus 采样、时间色散与壳层商拓扑」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 3121a017fd53214961c4d1880b98c07909dbdf888175d14f3b3840694fc1f3cf
+    next_atom_id: 67e4d8c5d7033dfbeb3b9245403eff8caeaa6717cf2d3b614b057db1fb913380

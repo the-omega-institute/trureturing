@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5224232b783ee5dcc481f07cde03257fbc3ec357f9c9d998141067b715ececb7
+  normalized_sha256: sha256:5224232b783ee5dcc481f07cde03257fbc3ec357f9c9d998141067b715ececb7
+cas_ref: sha256:5224232b783ee5dcc481f07cde03257fbc3ec357f9c9d998141067b715ececb7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「评注 27.752(M4 卷:次冠机制闭合)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 83a190f4f3668ac91d1801e5e01918d5b8bd53960580d406ab7e78c15723d1c6
+    next_atom_id: 683c9d1303ac1baf71ac16e71fe1e69c75e49bcb89daa20c862eae83f582d667

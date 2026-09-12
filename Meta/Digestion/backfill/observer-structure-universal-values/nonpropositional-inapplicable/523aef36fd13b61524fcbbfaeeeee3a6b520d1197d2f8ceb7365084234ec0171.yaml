@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:523aef36fd13b61524fcbbfaeeeee3a6b520d1197d2f8ceb7365084234ec0171
+  normalized_sha256: sha256:523aef36fd13b61524fcbbfaeeeee3a6b520d1197d2f8ceb7365084234ec0171
+cas_ref: sha256:523aef36fd13b61524fcbbfaeeeee3a6b520d1197d2f8ceb7365084234ec0171
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「5.2 已知疑点〔全部主表条目均为 `ASSUMED-UNVERIFIED`;本节只列已知具体疑点〕」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 94fb5d4c8e14b3d7e647d3871c0787484b222f3ccfd499c7deb8ad746183dc2e
+    next_atom_id: b55e04c0650b6070db21f4bcf339fae9fbfa0ffc133ea0e91dce7c2f167e7659

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:61380644d87e65df61de930afd14804daeeecb7d377d686a6a8e7f346a6e41df
+  normalized_sha256: sha256:61380644d87e65df61de930afd14804daeeecb7d377d686a6a8e7f346a6e41df
+cas_ref: sha256:61380644d87e65df61de930afd14804daeeecb7d377d686a6a8e7f346a6e41df
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「二　M3-a 预登记:指定谱值对使离线轨道贡献为负(`PrescribedPairNegativeOrbit`)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: e9cb8e6ca0ac73d60c0efb33c1a39899da98039546cb7af44245e6790e846f72
+    next_atom_id: d3919ff03314455a6a43a2ffbfed64ea468544b18aca1514d87de6570e6f56d4
