@@ -130,7 +130,7 @@ public sealed class SharedBuildRuntimeTests
             set -euo pipefail
             echo "$*" >> build/dotnet-calls
             if [[ "$1" == *StrataLint.EngineeringScope.dll ]]; then shift; exec "$CONTRACT_SCOPE" "$@"; fi
-            if [[ "$1" == build ]]; then exec "$CONTRACT_DOTNET" "$@" -v:diag; fi
+            if [[ "$1" == build ]]; then exec "$CONTRACT_DOTNET" "$@" -v:minimal -clp:PerformanceSummary; fi
             exec "$CONTRACT_DOTNET" "$@"
             """);
         File.SetUnixFileMode(Path.Combine(root, "build/bin/dotnet"), UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
@@ -138,7 +138,10 @@ public sealed class SharedBuildRuntimeTests
             ["PATH"] = Path.Combine(physicalRoot, "build/bin") + Path.PathSeparator + Environment.GetEnvironmentVariable("PATH"),
             ["CONTRACT_SCOPE"] = scope, ["CONTRACT_DOTNET"] = dotnet,
             ["DOTNET_CLI_UI_LANGUAGE"] = "en-US",
-            ["GITHUB_RUN_ID"] = "17", ["GITHUB_RUN_ATTEMPT"] = "2", ["GITHUB_EVENT_NAME"] = "push",
+            ["CI_PLAN_PATH"] = "", ["CI_CHANGES_PATH"] = "", ["CI_PLAN_B64"] = "", ["CI_CHANGES_B64"] = "",
+            ["CI_WORKFLOW_INPUTS"] = "null", ["CI_NEEDS"] = "{}", ["CI_BUILD_ROUND"] = "", ["CANDIDATE_SHA"] = "",
+            ["GITHUB_RUN_ID"] = "17", ["GITHUB_RUN_ATTEMPT"] = "2", ["GITHUB_EVENT_NAME"] = "",
+            ["GITHUB_EVENT_PATH"] = "", ["CI_PUSH_BEFORE"] = "", ["CI_PUSH_AFTER"] = "",
             ["GITHUB_REF"] = "refs/heads/integration-ci-current-stability-0909-tests", ["STRATALINT_CACHE_WRITES"] = "true",
             ["STRATALINT_CHECK_SUCCEEDED"] = "false", ["STRATALINT_BUILD_SUCCEEDED"] = "true" };
         var cold = Stage("cold", "build");
@@ -253,7 +256,11 @@ public sealed class SharedBuildRuntimeTests
             Assert.True(result.Exit == 0, result.Text);
         }
         string[] Calls() => File.ReadAllLines(Path.Combine(root, "build/dotnet-calls"));
-        static int Compilers(string text) => Regex.Matches(text, "Task \\\"Csc\\\"(?: \\(TaskId:\\d+\\))?").Count;
+        static int Compilers(string text) => Regex.Matches(text,
+                @"(?m)^Task Performance Summary:\r?\n(?<tasks>(?:[^\r\n]+\r?\n)*)")
+            .SelectMany(summary => Regex.Matches(summary.Groups["tasks"].Value,
+                @"(?m)^[^\r\n]*\bCsc[ \t]+(?<calls>[0-9]+)[ \t]+calls\r?$"))
+            .Sum(task => int.Parse(task.Groups["calls"].Value, System.Globalization.CultureInfo.InvariantCulture));
         string Stage(string label, string stage, int expected = 0)
         {
             File.Delete(Path.Combine(root, "build/dotnet-calls"));
@@ -277,8 +284,9 @@ public sealed class SharedBuildRuntimeTests
         }
         void Cache(string command, params string[] arguments)
         {
+            var cacheEnvironment = new Dictionary<string, string>(environment) { ["GITHUB_EVENT_NAME"] = "push" };
             var result = SharedBuildContractTests.Process(physicalRoot, "python3",
-                new[] { "tools/scripts/worktree/lean_actions.py", command, "--repository", physicalRoot, "--layers", "judge" }.Concat(arguments).ToArray(), environment);
+                new[] { "tools/scripts/worktree/lean_actions.py", command, "--repository", physicalRoot, "--layers", "judge" }.Concat(arguments).ToArray(), cacheEnvironment);
             Assert.True(result.Exit == 0, result.Text);
         }
     }
