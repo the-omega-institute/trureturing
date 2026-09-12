@@ -88,6 +88,10 @@ $$\forall n: \mathbb{N}, (1 \le n) \implies (\operatorname{intCast}\left(n\right
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Residue/DiagonalVanishingIndexDivisibility.hanna_conjecture_a300732` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a300732-diagonal-index-divisibility` (proved) by `D5/S1/Recurrence/Residue/DiagonalVanishingIndexDivisibility.hanna_conjecture_a300732`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a300732-diagonal-index-divisibility","declaration_gid":"D5/S1/Recurrence/Residue/DiagonalVanishingIndexDivisibility.hanna_conjecture_a300732","resolution_kind":"proved"} -->
+
 *Citation.* Paul D. Hanna (2016). *OEIS A266489, A300732, A300733, A292394, and A300734: vanishing-diagonal index divisibility*. URL: <https://oeis.org/A266489>.
 
 *Commentary.*
@@ -99,6 +103,10 @@ Use e(m)=2*m and k=1 in the normalized family. The interpretation of the source'
 $$\forall n: \mathbb{N}, (1 \le n) \implies (\operatorname{intCast}\left(n\right) \mid \operatorname{a}\left((m: \mathbb{N} \mapsto (3) \cdot (m)), n\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Residue/DiagonalVanishingIndexDivisibility.hanna_conjecture_a300733` (`✓ std3`). ∎
+
+*Resolves.* `Problems/oeis-a300733-diagonal-index-divisibility` (proved) by `D5/S1/Recurrence/Residue/DiagonalVanishingIndexDivisibility.hanna_conjecture_a300733`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a300733-diagonal-index-divisibility","declaration_gid":"D5/S1/Recurrence/Residue/DiagonalVanishingIndexDivisibility.hanna_conjecture_a300733","resolution_kind":"proved"} -->
 
 *Citation.* Paul D. Hanna (2016). *OEIS A266489, A300732, A300733, A292394, and A300734: vanishing-diagonal index divisibility*. URL: <https://oeis.org/A266489>.
 
@@ -112,6 +120,10 @@ $$\forall n: \mathbb{N}, (1 \le n) \implies ((\operatorname{intCast}\left(n\righ
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Residue/DiagonalVanishingIndexDivisibility.hanna_conjecture_a292394` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a292394-diagonal-index-divisibility` (proved) by `D5/S1/Recurrence/Residue/DiagonalVanishingIndexDivisibility.hanna_conjecture_a292394`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a292394-diagonal-index-divisibility","declaration_gid":"D5/S1/Recurrence/Residue/DiagonalVanishingIndexDivisibility.hanna_conjecture_a292394","resolution_kind":"proved"} -->
+
 *Citation.* Paul D. Hanna (2016). *OEIS A266489, A300732, A300733, A292394, and A300734: vanishing-diagonal index divisibility*. URL: <https://oeis.org/A266489>.
 
 *Commentary.*
@@ -123,6 +135,10 @@ Use e(m)=m^2 and k=2. The exponent-divisibility hypothesis is reflexive.
 $$\forall n: \mathbb{N}, (1 \le n) \implies ((\operatorname{intCast}\left(n\right))^{2} \mid \operatorname{a}\left((m: \mathbb{N} \mapsto (2) \cdot ((m)^{2})), n\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Residue/DiagonalVanishingIndexDivisibility.hanna_conjecture_a300734` (`✓ std3`). ∎
+
+*Resolves.* `Problems/oeis-a300734-diagonal-index-divisibility` (proved) by `D5/S1/Recurrence/Residue/DiagonalVanishingIndexDivisibility.hanna_conjecture_a300734`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a300734-diagonal-index-divisibility","declaration_gid":"D5/S1/Recurrence/Residue/DiagonalVanishingIndexDivisibility.hanna_conjecture_a300734","resolution_kind":"proved"} -->
 
 *Citation.* Paul D. Hanna (2016). *OEIS A266489, A300732, A300733, A292394, and A300734: vanishing-diagonal index divisibility*. URL: <https://oeis.org/A266489>.
 
@@ -147,6 +163,10 @@ For p=2 and n>1, the frozen exponent (p-1)*(n-1)+1 equals n. NegativePowerDiagon
 $$\forall n: \mathbb{N}, (1 \le n) \implies (\operatorname{intCast}\left(n\right) \mid \operatorname{frozen}\left(2, n\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Residue/DiagonalVanishingIndexDivisibility.hanna_conjecture_a266489` (`✓ std3`). ∎
+
+*Resolves.* `Problems/oeis-a266489-diagonal-index-divisibility` (proved) by `D5/S1/Recurrence/Residue/DiagonalVanishingIndexDivisibility.hanna_conjecture_a266489`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a266489-diagonal-index-divisibility","declaration_gid":"D5/S1/Recurrence/Residue/DiagonalVanishingIndexDivisibility.hanna_conjecture_a266489","resolution_kind":"proved"} -->
 
 *Citation.* Paul D. Hanna (2016). *OEIS A266489, A300732, A300733, A292394, and A300734: vanishing-diagonal index divisibility*. URL: <https://oeis.org/A266489>.
 
