@@ -1,0 +1,17 @@
+**36.32 Every 237 tube box inherits its separate whole-domain sign.** Fix
+\(p=(2,3,7)\) and \(0<\epsilon\le1/320\). Again each full-tube tuple has
+\(T=\min_i m_i*h_i\ge\log2\) and \(c_i=T+\xi_i\) with
+\(0\le\xi_i\le\epsilon\) and \(\min_i\xi_i=0\). The **separate**
+supplied paper theorem 31.17 proves \(\exp(T)*G<-1/80\) for every finite
+\(T\ge\log2\), closed shape radius \(1/320\), and every positive-width
+two-corner slab of its wider domain. Thus every such slab in every counted
+237 tube box obeys
+\[
+\exp(T)*G<-1/80.
+\]
+The same closed endpoints, saturation and slack cases are included by that
+theorem, with support checked in 36.29. This is not substitution of a new
+prime into the 235 theorem. The supplied whole-domain paper estimates
+30.16 and 31.17 are premises of these applications; the applications do not
+independently establish their finite-node certificate bounds.
+

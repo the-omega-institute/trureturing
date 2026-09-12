@@ -1,0 +1,25 @@
+**36.24 Shifted coefficient, unbounded translated heights and coset limitation.**
+For \(\epsilon>0\), 36.23 and \(\log(X/K)=\log X-\log K\) give the same
+positive leading coefficient \(\kappa_\epsilon/(k*h_0)\) for the shifted
+family. Its ratio to \(S_P(X)\) has exactly the leading factor in 36.21;
+ordinary and logarithmic densities are zero. In a full exponent cube its
+count remains \(O(R)\): for each reference translated integer \(q_0\), the
+same length-\(2*\epsilon/h_i\) branch bound applies, and the boundary set is
+finite. Put \(\tau=\min_i(c_i-a_i)=\min_i q_i*h_i\). For any fixed finite
+\(U\), tuples with \(\tau\le U\) have \(q_i*h_i\le U+\epsilon\), so
+are finite in number. The positive logarithmic asymptotic therefore forces
+infinitely many tuples at unbounded translated height, not merely repeats
+of boundary tuples. At positive threshold width the strict/closed correction
+is finite too: apply the two-solution subtraction proof of 36.10 to the
+integer coordinates \(q_i\), whose nonnegative domain only restricts choices.
+
+Integer baselines are essential to the unchanged coefficient argument.
+For arbitrary real offsets, using reference integer \(m_0=n\) would put
+the rotation in the coset \(\theta+H\), where
+\(\theta_i=(a_i-a_0)/h_i\). Indeed the translated coordinate difference is
+\(h_i*(m_i-n*\alpha_i-\theta_i)\). Here, with integer baselines,
+\(\theta_i=r_i-r_0*\alpha_i\), hence \(\theta\bmod\mathbb Z^d
+=-r_0*\alpha\in H\). The exact integer bijection of 36.23 is stronger
+than a coset argument. No equal-coefficient or positivity assertion for
+arbitrary real-offset cosets is being made.
+

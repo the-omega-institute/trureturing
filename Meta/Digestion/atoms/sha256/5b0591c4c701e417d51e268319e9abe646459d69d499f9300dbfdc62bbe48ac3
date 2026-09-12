@@ -1,0 +1,19 @@
+**36.38 Classical inputs and specialized mathematical boundaries.**
+Existence and uniqueness of normalized regular Haar measure, the complex
+Stone-Weierstrass theorem, unique prime factorization and elementary integer
+linear algebra are classical inputs. The classical closed-subgroup framework
+is attributed in the supplied literature context to the real Lie-group theorem recalled in Helge
+Glöckner's *Non-Lie subgroups in Lie groups over local fields of positive
+characteristic*. The needed torus-specific annihilator, rational tangent,
+finite-component and Haar-chart conclusions are proved in 36.2-36.5.
+The distribution context is attributed to Tom Meyerovitch,
+*Well-distribution of Polynomial maps on locally compact groups*,
+arXiv:2210.01429v2, Proposition 3.2 and Lemma 5.3. The stated homomorphism
+result uses the **closure** of the image. The required specialized uniform
+character and discontinuous-observable arguments are proved in 36.11-36.12.
+The complete-family multiplicity, boundary, counting, volume, baseline and
+application arguments are repo-derived paper deductions, not novelty claims.
+The scoped sign inputs 30.16 and 31.17 and conditional transfer input 34.20
+are inherited repo-derived paper results, not classical \(G\)-sign theorems;
+they remain repo-derived deductions.
+

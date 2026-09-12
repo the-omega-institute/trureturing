@@ -1,0 +1,22 @@
+**36.2 Pairwise irrationality and the integer annihilator.** Set
+\(\alpha_i=h_0/h_i\) for \(1\le i\le d\), and in
+\(\mathbb T^d=(\mathbb R/\mathbb Z)^d\) let
+\[
+H=\overline{\{n*\alpha:n\in\mathbb Z\}},\qquad
+\Lambda=\{\ell\in\mathbb Z^d:\ell\mathbin{\cdot}\alpha\in\mathbb Z\}.
+\]
+The closure of a subgroup is a subgroup, so \(H\) is a compact abelian group;
+\(\mu_H\) denotes its normalized regular Haar probability measure. If
+\(h_i/h_j=u/v\) for distinct indices and positive integers \(u,v\), then
+\(p_i^v=p_j^u\), contradicting unique prime factorization. Thus every such
+ratio, including each \(\alpha_i\), is irrational. This does not prove joint
+rational independence of \(1,\alpha_1,\ldots,\alpha_d\).
+
+For \(\ell\in\mathbb Z^d\), write
+\(\chi_\ell(x)=\exp(2*\pi*\mathrm i*(\ell\mathbin{\cdot}x))\).
+Continuity and orbit density show that \(\chi_\ell|_H=1\) exactly when
+\(\ell\in\Lambda\). Its Haar integral then equals 1. Otherwise choose
+\(v\in H\) with \(\chi_\ell(v)\ne1\); translating the integral multiplies
+it by \(\chi_\ell(v)\) without changing it, so its integral is zero. These
+character facts include finite-order characters on disconnected \(H\).
+

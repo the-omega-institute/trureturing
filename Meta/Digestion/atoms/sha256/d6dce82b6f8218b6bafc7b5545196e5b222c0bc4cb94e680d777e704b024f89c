@@ -1,0 +1,21 @@
+**36.15 All-branch index count and exact logarithmic size.** Let \(F(t)\) count
+all valid width-at-most-\(\epsilon\) tuples with
+\(1\le m_0\le\lfloor t\rfloor\), and set \(F(t)=0\) for \(t<1\). The
+exact correspondence and finite positivity discard in 36.7 give
+\[
+F(t)=\sum_{1\le n\le\lfloor t\rfloor}w_\epsilon(n*\alpha)-J(t)
+=\kappa_\epsilon*t+o(t),
+\]
+where \(J(t)\) is the nonnegative count of invalid initial branches. It is
+bounded independently of \(t\) and eventually constant. There are at most
+\(B_\epsilon\) valid tuples at every reference index. For **each** such
+tuple with \(m_0=n\),
+\[
+\log N(m)=k*n*h_0-S_h+R(m),\qquad
+R(m)=\sum_{i=1}^d\Delta_i,\qquad |R(m)|\le d*\epsilon.
+\]
+This follows by summing \(c_i=n*h_0+\Delta_i\) and subtracting \(S_h\).
+It applies to every branch, including branches with non-nearest integers.
+Neither \(R(m)\) nor \(N(m)\) is assumed to have a common monotone ordering
+as the reference index changes.
+

@@ -1,0 +1,29 @@
+**36.28 Wider two-corner domain and all LP endpoint cases.** The wider domain
+consists of every finite \(M_0<M_1\) whose closed budget interval contains
+at least two actual endpoint-corner totals
+\(A+\sum_i e_i*h_i\), \(e\in\{0,1\}^k\). These are distinct: equality
+of two totals exponentiates to equality of prime products, forcing \(e=e'\).
+Actual corners are endpoint choices, not fractional mixtures. The domain
+permits negative lower budgets, corner equality at either endpoint, saturation
+\(M_1\ge A+S_h\), and arbitrary finite upper slack.
+
+Two distinct corners imply \(M_1>A\), hence \(r_{\rm cap}>0\). More
+generally, if \(r_{\rm cap}<0\), the polytope is empty and this appendix
+assigns it no finite maximum or \(G\) sign. At \(r_{\rm cap}=0\), it consists
+only of \(y=0\) and \(D=\sum_i f(c_i)\); an admitted corner can only be
+the lower corner, so the two-corner sign hypotheses fail. At
+\(0<r_{\rm cap}<S_h\), it is nonempty and compact, its continuous objective
+attains a maximum, and every maximizer uses full capacity. To prove the last
+claim, all gains \(f(c_i+h_i)-f(c_i)\) are strictly positive; any feasible
+vector with slack and some \(y_i<1\) can be increased slightly to improve it.
+At \(r_{\rm cap}=S_h\) or \(r_{\rm cap}>S_h\), the unique maximizing
+vector is \(\mathbf1\), and \(D=\sum_i f(c_i+h_i)\); extra capacity leaves
+this value unchanged. Possible ties of gain-per-cost ratios or nonunique
+interior maximizers need no greedy order for any argument here. Envelope
+values may still change with the budgets in the saturated regime.
+
+Closed corner inclusions and distance-branch switches are retained throughout.
+Zero-width budget slabs \(M_0=M_1\) are excluded from the stated sign domain;
+with distinct prime corner totals they cannot contain two corners. A one-corner
+or zero-variance support statement does not enlarge a two-corner sign theorem.
+
