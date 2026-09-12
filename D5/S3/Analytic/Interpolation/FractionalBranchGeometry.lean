@@ -74,6 +74,7 @@ theorem fractional_mean_branch {k : ℕ} (hk : 2 ≤ k) (j : Fin k) (t : Fin k �
     exact div_pos (Finset.sum_pos (fun i _ => hy i) ⟨j, Finset.mem_univ j⟩) hkpos
   have hvariance := hsplit (fun x => (x - μ) ^ 2)
   have hdomain := coordinate_variance_domain hk y hy
+  dsimp only at hdomain
   rw [hmean, hvariance] at hdomain
   have hstrict := logValue_strictConcaveOn.2 hc (hc.trans hcd) hcd.ne
     (show 0 < 1 - θ by linarith [hθ.2]) hθ.1 (by ring)
@@ -81,7 +82,7 @@ theorem fractional_mean_branch {k : ℕ} (hk : 2 ≤ k) (j : Fin k) (t : Fin k �
   change _ < ∑ i, logValue (y i) ∧ _
   refine ⟨?_, ?_, ?_⟩
   · rw [hsplit logValue]
-    exact add_lt_add_right hstrict _
+    exact add_lt_add_of_lt_of_le hstrict le_rfl
   · apply sum_logValue_le_psiK hk y hy hμ hmean.le
     · rw [hmean, hvariance]
     · exact hdomain.2
