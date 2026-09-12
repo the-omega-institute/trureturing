@@ -13,6 +13,10 @@ internal sealed record DigestionReadinessRecord(
 
 internal static class DigestionReadinessQuery
 {
+    internal static ImmutableArray<(string AtomId, DigestionGap Gap)> SourceOccurrenceGaps(
+        IEnumerable<DigestionEntryEvaluation> entries,
+        Func<string, DigestionAtomContextProjection.SourceStream> materializeSource) => [];
+
     private static readonly ImmutableDictionary<string, int> ActionPriorities =
         new Dictionary<string, int>(StringComparer.Ordinal)
         {

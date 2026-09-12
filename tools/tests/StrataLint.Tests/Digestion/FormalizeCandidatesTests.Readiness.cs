@@ -19,7 +19,8 @@ public sealed partial class FormalizeCandidatesTests
         using var json = JsonDocument.Parse(missing.Output);
         var readiness = Assert.Single(json.RootElement.GetProperty("entries").EnumerateArray());
         Assert.Equal("not-formalizable", readiness.GetProperty("action").GetString());
-        Assert.Empty(readiness.GetProperty("ordered_blockers").EnumerateArray());
+        Assert.Equal(["non-assertion-ast-kind:none"], readiness.GetProperty("ordered_blockers")
+            .EnumerateArray().Select(static item => item.GetString()));
         Assert.Equal("GAP atom=removed-claim code=source-occurrence-missing detail=\"source\"\n", missing.Error);
         Assert.Empty(present.Error);
     }
