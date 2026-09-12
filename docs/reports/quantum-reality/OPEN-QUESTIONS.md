@@ -32,6 +32,25 @@ orchestrator 独立复核:`sorry` 0、自定义 `axiom` 0、G 只 import G(`Reco
 **下一轮若无 τ=0 点题,记「本轮无靶,暂停派席」,不为了有产出而把物理输入当数学题派。**
 另:**不得再以 `pool` 参数绕过 `BAD_SCRIPTS`**(见本单同日的载体更正)。
 
+### 本线当前的瓶颈是冻结,不是选题(dev `1dc1faa837` 读数)
+
+复查 `e79baa101c → 1dc1faa837` 的 44 个提交:量子面**新增 5 个模块、新增冻结状态片 0 个**,
+五个都是 `Tomography/MUB/`(复 Hadamard / 相对 Gram cocycle / 双补全 / 亲和度阈值),
+与第三节四项物理输入**一项不沾**,故地形未动。
+
+但同一次普查给出更要紧的一组数:
+
+```
+Quantum 模块 253    已冻结 240    未冻结 13(全部在 Tomography/MUB/)
+```
+
+按 第 1.3 条,只有冻结才进真值 DAG;未冻结模块对本线地形图零贡献——
+既进不了 `TERRAIN-MAP` 第一节,也当不了下一层的前置。
+**故本线下一步的正解不是找靶,是把已写好的冻掉**:
+其中 11 个(`utility: none`,不缺头)已在一条批量补冻 lane 内;
+`ComplexHadamardCocycleGauge` 与 `MUBCompletionRelativeGramEquivalence` 是该 lane 切出后才落 dev 的,须补一轮。
+补冻合入前,「11 个将被冻结」是计划不是事实,不得计入。
+
 ---
 
 ## 本轮:**`RecordCapacity` 的半单性假设能不能卸掉,以及该走哪条路**(第 20 轮)
