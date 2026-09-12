@@ -7,8 +7,6 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Words.Compositions;
 internal sealed class ResidualPermutationSignDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Words/Compositions/ResidualPermutationSign.";
-    private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Words/codex2026a392714residual");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Interlaced prefix intervals have signed permutation sum supported only at identity.",
@@ -83,7 +81,7 @@ internal sealed class ResidualPermutationSignDocument : IScribeDocumentDefinitio
         string prose, DescribeRole role) => Describe.Lean(
         DescribeId.Create("residual-sign-" + name.Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-        AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
+        AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
 
     private static Formula Q(params Formula[] items)
     {

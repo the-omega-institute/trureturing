@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:396cc78ba5f56a353baa8392d5716f675765f0530953979a2970bde787b24754
+  normalized_sha256: sha256:396cc78ba5f56a353baa8392d5716f675765f0530953979a2970bde787b24754
+cas_ref: sha256:396cc78ba5f56a353baa8392d5716f675765f0530953979a2970bde787b24754
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「评注 27.688(桥一:形态学定理化;C2 封族)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: b20283d32b38feae515ad1a4e5a457bb58a91fc5e1fbab1183974f28a36e7de8
+    next_atom_id: c90890a6f6bfe4fc7334b6ca095f90517038dfe0cb61008b14c1ffc9208ff1b9

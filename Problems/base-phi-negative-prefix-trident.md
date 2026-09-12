@@ -73,14 +73,38 @@ although they remain close to that form. It exhibits the first `V_G`, the first
 
 ## Gap
 
-- Frozen digits are nonnegative Fibonacci-index coordinates; `beta^-(N)` uses
-  negative powers of phi and is not represented.
-- No theorem currently converts a canonical Zeckendorf expansion to the
-  two-sided base-phi expansion.
-- The paper's morphisms `f, g, h`, the parameterized sequence families
-  `V_F, V_G, V_H`, and the union-of-three data are absent.
-- Existing return-word theorems concern factors of the frozen golden word; it
-  remains to prove that negative-prefix cylinders land in those exact subshifts.
+- The two-sided base-phi expansion is represented: `BasePhiNegative` carries
+  `basePhiValue`, `BasePhiNegativeExpansion`, `negativeDigit`,
+  `reachesNegativeDepth`, `NegativePrefixOccurs` and `occurrenceSet`, and
+  `BasePhiCanonicalExpansion` proves `basePhiExpansion_existsUnique` and
+  `canonical_two_sided_digits_unique`.
+- A partial Zeckendorf bridge exists, and it is conditional and one-sided:
+  `BasePhiCarryTransducer` proves `carrySkipRun_zeckendorf` (the carry-skip
+  run's positive component, unconditional), `mem_rawToZeckendorf_iff` (under
+  `CanonicalRaw`) and `nonnegative_digit_iff_mem_zeckendorf_of_realizes`, whose
+  hypothesis is `realizes : forall N, CarrySkipRealizes expansion N` and whose
+  conclusion covers only nonnegative exponents. **The obligation stands**: no
+  theorem yet converts a canonical Zeckendorf expansion to the two-sided
+  base-phi expansion without that hypothesis.
+- The three families are present as first-difference words: `GapFamily`,
+  `fibonacciGapLetter`, `familyLetter` (`F`, `G = bF`, `H = aF`),
+  `gapSequence`, `vForFamily`, `LucasPair`, `prefixMultiplicity`,
+  `CoreLucasWitness`. The paper's substitutions `f, g, h` themselves are not
+  formalized; the families are characterized by their first-difference words
+  instead, which is the paper's own equivalent description.
+- A six-state prefix machine exists: `FrontierPhase`
+  (`F0o, F1o, F0e, G1e, G0o, H0e`), its ten transitions
+  `FrontierPhaseTransition`, the base cases `PrefixPhaseMachineFor`
+  (`[0]` to `<F0o,4,3>`, `[1]` to `<F1o,7,4>`), and `FrontierReturnWord`.
+- The reading question is settled by `BasePhiNegativePrefixPaddedReading`:
+  `NegativePrefixOccurs` carries the extra conjunct
+  `reachesNegativeDepth expansion N w.length`, which is not the paper's reading.
+  Under that conjunct the paper's own Proposition 7.8 d) identity
+  `R_{.01} = R_{.010}` fails, with symmetric difference exactly `{2, 3, 4}`;
+  under the zero-padded reading it holds and is a corollary of canonicality.
+- What remains open is the classification itself. Existing return-word theorems
+  concern factors of the frozen golden word; it remains to prove that
+  negative-prefix cylinders land in those exact subshifts.
 
 ## Route
 
@@ -126,6 +150,40 @@ For all admissible `w` of length at most 14:
 The first Evidence goal is to validate the finite transducer and discover its
 states, not to certify the infinite conjecture from samples.
 
+Steps 1 and 2 of the protocol above have been run, and step 3 only in the
+degenerate form of classifying every word directly rather than inferring from a
+training prefix. Step 4 -- verification on a disjoint tail and the
+return-word/factor invariant checks -- and step 5 have NOT been run.
+
+The reproducible part of this is already in the repository:
+`Evidence/D5/S1/Words/BasePhiNegativePrefixTrident.result.json` records a scan
+with `limit 2000000`, `max_prefix 14`, `min_exponent_guard -96`, and
+`method: exact integer-pair arithmetic in Z[phi]`, classifying
+`single_family 986`, `three_family 1595`, `unresolved_count 0`. That artifact
+also records `01` with 633438 occurrences against `010` with 633435 -- a
+difference of exactly 3, which is the `{2, 3, 4}` that
+`occurrenceSet_prefix01_symmDiff_prefix010` now proves, and which that artifact
+reports as `matched: true` for both words.
+
+`ASSUMED-UNVERIFIED` -- the following were run outside the repository and their
+programs are not committed here, so a reader cannot recompute them: an
+independent enumeration to `1 <= N <= 4,000,000` over the same 2,581 admissible
+words of length at most 14, by two implementations agreeing on `20,000 x 10`
+digits; and the selector counts below. The counts that the committed artifact
+does cover -- 986 single, 1595 trident, 0 unresolved, and 987 admissible words
+at length 14 -- agree with that independent run. What was additionally
+measured: window
+`1 <= N <= 4,000,000`, all 2,581 admissible `w` of length at most 14, exact
+integer arithmetic in `Z[phi]` (two independent implementations agreeing on
+`20,000 x 10` digits). Every occurrence set is a single family member or a union
+of three, and every step pair is a pair of consecutive Lucas numbers; zero
+violations. Leading-component families: `F` 1232, `G` 979, `H` 370. Under the
+zero-padded reading the frozen `frontierFamily` selector has zero
+counterexamples and `dataFrontierFamily` has 276; under the
+`reachesNegativeDepth` reading the two are exactly exchanged. This does not
+settle the conjecture; the window is finite.
+
+
 ## Triage
 
 `theorem`. The missing two-sided conversion is substantial, but the repository
@@ -136,9 +194,24 @@ return-gap ingredients suggested by the conjecture's shape.
 
 - The paper's phrase "union of three" has a unique intended formal
   parameterization and does not require extra overlap/multiplicity conventions.
+- The frozen return-word theorems apply after a finite shift/intercept change;
+  this is the main bridge to prove.
+- Novelty of the intermediate bridge theorems is unassessed.
+- Post-v1 literature status: arXiv:2305.08349 has one version only (15 May
+  2023) and was published as Communications in Mathematics 33 (2025) no. 2; a
+  search for a later proof of the conjecture returned nothing. That search was
+  the orchestrator's own and is not machine-checkable, so the question of
+  whether the conjecture was resolved elsewhere stays `ASSUMED-UNVERIFIED`.
 - A bounded-state transducer from WDigits to every fixed negative prefix exists
-  in a form compatible with current definitions.
-- The frozen golden return-word theorems apply after a finite shift/intercept
-  change; this is the main bridge to prove.
-- Whether the conjecture was resolved after arXiv v1 is unverified, and any
-  novelty of intermediate bridge theorems is unassessed.
+  in a form compatible with current definitions. **This obligation stands**: the
+  frozen `FrontierPhase` machine is not it. That machine consumes the prefix
+  word and emits a phase with Lucas parameters (`PrefixPhaseMachineFor`,
+  `FrontierPhaseTransition`); it does not convert Zeckendorf digits into
+  negative-position digits.
+- Separately, and not discharging the line above: the `FrontierPhase` machine
+  reproduces the measured Lucas step pair `(a, b)` for every admissible `w` of
+  length at most 14 over `1 <= N <= 4,000,000`, with zero counterexamples under
+  both readings. Whether it does so for every `w` is unverified and is part of
+  the conjecture.
+- `prefixMultiplicity` (single iff `w` begins with `1`, else a trident) has zero
+  counterexamples in the same window; it is not proved for all `w`.

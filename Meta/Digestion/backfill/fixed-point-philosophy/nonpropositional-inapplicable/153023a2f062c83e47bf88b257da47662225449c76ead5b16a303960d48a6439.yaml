@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:153023a2f062c83e47bf88b257da47662225449c76ead5b16a303960d48a6439
+  normalized_sha256: sha256:153023a2f062c83e47bf88b257da47662225449c76ead5b16a303960d48a6439
+cas_ref: sha256:153023a2f062c83e47bf88b257da47662225449c76ead5b16a303960d48a6439
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This provenance bullet records authorship, literature-search ownership, model-family separation, and the limits of reviewer diversity. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with the X-A-X-J candidate set.
+    previous_atom_id: 9714dc6d8854d377a26711c63ee12e6ff890509ccfd9f14b32a4fec5c9e6e4d2
+    next_atom_id: 0b386a085f6df2a1b7926acfc72b1378d0ad203a5d88fe2834b7102b70ba5c7d

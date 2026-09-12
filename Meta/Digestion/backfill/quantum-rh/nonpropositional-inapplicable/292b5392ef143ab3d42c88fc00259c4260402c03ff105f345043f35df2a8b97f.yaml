@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:292b5392ef143ab3d42c88fc00259c4260402c03ff105f345043f35df2a8b97f
+  normalized_sha256: sha256:292b5392ef143ab3d42c88fc00259c4260402c03ff105f345043f35df2a8b97f
+cas_ref: sha256:292b5392ef143ab3d42c88fc00259c4260402c03ff105f345043f35df2a8b97f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 3, reading 「证明」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms. The same heading line occurs 2 times in the source and shares this single ledger entry; this settlement is written against occurrence index one, whose neighbours are the entries immediately before and after it in the atom stream.'
+    previous_atom_id: fb1c38b64efe553d45ac383d0721cd76c7b64279dcff96cd63865be615fbdfb5
+    next_atom_id: 5a83942976dab5fe835ab5112237169a3f9e950e1bfeeed50929b6b87a28b7ac

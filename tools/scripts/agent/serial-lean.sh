@@ -48,10 +48,6 @@ missing=$(comm -23 \
       | sed 's|^\./||; s|\.olean$||' | sort))
 
 count=$(printf '%s' "$missing" | grep -c . || true)
-if [ "$count" -eq 0 ]; then
-  echo "SERIAL_LEAN status=complete built=0 failed=0 missing=0 tree=$TREE"
-  exit 0
-fi
 
 built=0; failed=0
 while IFS= read -r stem; do
@@ -63,8 +59,42 @@ while IFS= read -r stem; do
   fi
 done <<< "$missing"
 
+# Phase 2: lake's own staleness. Phase 1 only knows D5 oleans that are absent; a
+# plain `lake build` (which `make lean-report` runs unconditionally, with lake's
+# full parallelism) also rebuilds the `Trureturing` root, the LeanInformationAudit
+# library and its tests, and any module whose trace no longer matches. Measured
+# 2026-09-12 on a lane seeded from a donor behind dev: phase 1 reported nothing
+# missing while `lake build` still started eight lean processes. `lake build
+# --no-build` lists those targets without building them; build each alone.
+# The query names the first stale leaf on each path, so a deep dependency chain
+# surfaces one layer per pass (measured 2026-09-12: 11, 62, 28, ... targets per
+# pass, 169 targets over six passes on a freshly seeded lane). Passes are
+# bounded only by progress: a pass that builds nothing while the list is still
+# non-empty is a real failure, not a slow convergence.
+stale_built=0; passes=0
+while :; do
+  passes=$((passes+1))
+  if [ "$passes" -gt 200 ]; then
+    failed=$((failed+1)); echo "SERIAL_LEAN_FAILED stale-targets-did-not-converge passes=$passes"; break
+  fi
+  stale=$(cd "$TREE" && "$lake_bin" build --no-build 2>&1 | grep '^- ' | sed 's/^- //' || true)
+  [ -n "$stale" ] || break
+  pass_built=0
+  while IFS= read -r target; do
+    [ -n "$target" ] || continue
+    if ( cd "$TREE" && timeout "$BUDGET" "$lake_bin" build "$target" ) >/dev/null 2>&1; then
+      stale_built=$((stale_built+1)); pass_built=$((pass_built+1))
+    else
+      failed=$((failed+1)); echo "SERIAL_LEAN_FAILED target=$target"
+    fi
+  done <<< "$stale"
+  if [ "$pass_built" -eq 0 ]; then
+    failed=$((failed+1)); echo "SERIAL_LEAN_FAILED stale-targets-made-no-progress pass=$passes"; break
+  fi
+done
+
 if [ "$failed" -eq 0 ]; then
-  echo "SERIAL_LEAN status=complete built=$built failed=0 missing=$count tree=$TREE"; exit 0
+  echo "SERIAL_LEAN status=complete built=$built failed=0 missing=$count stale_built=$stale_built tree=$TREE"; exit 0
 fi
-echo "SERIAL_LEAN status=partial built=$built failed=$failed missing=$count tree=$TREE"
+echo "SERIAL_LEAN status=partial built=$built failed=$failed missing=$count stale_built=$stale_built tree=$TREE"
 exit 1

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ddef8ccd4f4530687541bbb373f47673778d1d38bd0aad8597b036088ee90e5f
+  normalized_sha256: sha256:ddef8ccd4f4530687541bbb373f47673778d1d38bd0aad8597b036088ee90e5f
+cas_ref: sha256:ddef8ccd4f4530687541bbb373f47673778d1d38bd0aad8597b036088ee90e5f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This atom contains only the recommended narrative source-file placement for the volume. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with the substantive atoms that follow in that volume.
+    previous_atom_id: e247571dc3a355b56afb85ac43e91577ef99da2027cb9b5e3e6c2b4b2e01fa63
+    next_atom_id: 2428c58c9d78463552e6762518e359bb52bd8ce113dcb3608d0ffee1ecb3c4df

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:399d5969bba34c9333d92492b4080d54d965bf95965deb2aa733b1efb4f0445b
+  normalized_sha256: sha256:399d5969bba34c9333d92492b4080d54d965bf95965deb2aa733b1efb4f0445b
+cas_ref: sha256:399d5969bba34c9333d92492b4080d54d965bf95965deb2aa733b1efb4f0445b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「二　M3-e′ 预登记:截断 separator 去掉 `hIm`(同模块第二条公开定理)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 19b5c97ec4806dceb608c0c6121456c6d6de8e95f0d35a115125ec813a0b3898
+    next_atom_id: e42d152b6a30430194e7e51296937b7d62ab1260f9b5eba6c409db8c87fd9e32

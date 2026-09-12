@@ -51,21 +51,51 @@ internal static class DigestionAtomContextProjection
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(ledger);
+        ValidateAtomId(atomId);
+        var target = RequireTarget(ledger.RequireDigestionEntries(), atomId);
+        try
+        {
+            return MaterializeSource(snapshot, ledger, target.SourceId).ResolveOccurrences(atomId);
+        }
+        catch (DigestionAtomContextException error) when (error.Code == DigestionAtomContextError.SOURCE_MISSING)
+        {
+            // Legacy diagnostics name the ledger target's path, even if source metadata differs.
+            throw new DigestionAtomContextException(DigestionAtomContextError.SOURCE_MISSING,
+                $"source_id={target.SourceId} source_path={target.SourcePath}");
+        }
+    }
+
+    private static void ValidateAtomId(string atomId)
+    {
         if (string.IsNullOrWhiteSpace(atomId) || !DigestionFingerprint.IsCanonicalSha256("sha256:" + atomId))
             throw new DigestionAtomContextException(DigestionAtomContextError.ARGUMENTS_INVALID,
                 "atom_id must be 64 lowercase hexadecimal characters");
-        var entries = ledger.RequireDigestionEntries();
+    }
+
+    private static DigestionLedgerEntry RequireTarget(IEnumerable<DigestionLedgerEntry> entries, string atomId)
+    {
         var targets = entries.Where(entry => entry.AtomId == atomId).ToArray();
         if (targets.Length == 0)
             throw new DigestionAtomContextException(DigestionAtomContextError.ATOM_ABSENT, $"atom_id={atomId}");
         if (targets.Length != 1)
             throw new DigestionAtomContextException(DigestionAtomContextError.ATOM_AMBIGUOUS, $"atom_id={atomId}");
-        var target = targets[0];
-        var sources = ledger.RequireDigestionSources().Where(source => source.SourceId == target.SourceId).ToArray();
-        if (sources.Length != 1 || !snapshot.TryGetFile(sources[0].SourcePath, out var file))
+        return targets[0];
+    }
+
+    /// <summary>Materializes a source once; callers retain the immutable result for membership and context queries.</summary>
+    internal static SourceStream MaterializeSource(
+        RepositorySnapshot snapshot, BackfillInventoryDocument ledger, string sourceId)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        ArgumentNullException.ThrowIfNull(ledger);
+        var sources = ledger.RequireDigestionSources().Where(source => source.SourceId == sourceId).ToArray();
+        if (sources.Length != 1)
             throw new DigestionAtomContextException(DigestionAtomContextError.SOURCE_MISSING,
-                $"source_id={target.SourceId} source_path={target.SourcePath}");
+                $"source_id={sourceId}");
         var source = sources[0];
+        if (!snapshot.TryGetFile(source.SourcePath, out var file))
+            throw new DigestionAtomContextException(DigestionAtomContextError.SOURCE_MISSING,
+                $"source_id={source.SourceId} source_path={source.SourcePath}");
         if (source.Atomizer == AtomizerRegistry.NoAtomizerId)
             throw new DigestionAtomContextException(DigestionAtomContextError.ATOMIZER_NONE,
                 $"source_id={source.SourceId}");
@@ -74,28 +104,59 @@ internal static class DigestionAtomContextProjection
             var rules = TheoryAtomizerDataLoader.Load(snapshot);
             var atomizer = AtomizerRegistry.Require(source.Atomizer).Atomize;
             var document = atomizer(file.RawBytes.AsSpan(), rules);
+            var entries = ledger.RequireDigestionEntries();
             var byHash = entries.ToLookup(static entry => entry.Fingerprints.RawSha256, StringComparer.Ordinal);
-            var byId = entries.GroupBy(static entry => entry.AtomId, StringComparer.Ordinal)
+            var byAtomId = entries.ToLookup(static entry => entry.AtomId, StringComparer.Ordinal);
+            var byId = byAtomId
                 .Where(static group => group.Count() == 1)
                 .ToDictionary(static group => group.Key, static group => group.Single(), StringComparer.Ordinal);
-            var stream = MaterializedStream(document, byHash, byId, atomizer, rules);
-            var matches = Enumerable.Range(0, stream.Length)
-                .Where(index => stream[index].Fingerprints.RawSha256 == target.Fingerprints.RawSha256).ToArray();
-            if (matches.Length == 0)
-                throw new DigestionAtomContextException(DigestionAtomContextError.OCCURRENCE_MISSING,
-                    $"atom_id={atomId} source_id={source.SourceId}");
-            var contexts = ImmutableArray.CreateBuilder<DigestionAtomContext>(matches.Length);
-            foreach (var position in matches)
-                contexts.Add(new DigestionAtomContext(target,
-                    position == 0 ? null : Neighbor(stream[position - 1], byHash),
-                    Neighbor(stream[position], byHash),
-                    position + 1 == stream.Length ? null : Neighbor(stream[position + 1], byHash),
-                    position + 1, stream.Length, source.SourceId, source.SourcePath, source.Atomizer));
-            return contexts.ToImmutable();
+            var stream = MaterializedStream(document, byHash, byId, atomizer, rules, snapshot);
+            return new SourceStream(source, stream, byHash, byAtomId);
         }
         catch (Exception error) when (error is FormatException or InvalidOperationException or ArgumentException)
         {
             throw new DigestionAtomContextException(DigestionAtomContextError.OCCURRENCE_MISSING, error.Message);
+        }
+    }
+
+    internal sealed class SourceStream(
+        DigestionLedgerSource source,
+        ImmutableArray<DigestionAtom> stream,
+        ILookup<string, DigestionLedgerEntry> byHash,
+        ILookup<string, DigestionLedgerEntry> byAtomId)
+    {
+        internal string SourceId => source.SourceId;
+        internal string SourcePath => source.SourcePath;
+        internal string Atomizer => source.Atomizer;
+        internal ImmutableArray<DigestionAtom> Atoms => stream;
+        internal ImmutableArray<string> AtomIds { get; } =
+            [.. stream.Select(atom => FindEntry(atom, byHash)?.AtomId ?? atom.Fingerprints.RawSha256[7..])];
+
+        internal ImmutableArray<DigestionAtomContext> ResolveOccurrences(string atomId)
+        {
+            ValidateAtomId(atomId);
+            var target = RequireTarget(byAtomId[atomId], atomId);
+            try
+            {
+                var matches = Enumerable.Range(0, stream.Length)
+                    .Where(index => target.SourceId == source.SourceId
+                        && stream[index].Fingerprints.RawSha256 == target.Fingerprints.RawSha256).ToArray();
+                if (matches.Length == 0)
+                    throw new DigestionAtomContextException(DigestionAtomContextError.OCCURRENCE_MISSING,
+                        $"atom_id={atomId} source_id={source.SourceId}");
+                var contexts = ImmutableArray.CreateBuilder<DigestionAtomContext>(matches.Length);
+                foreach (var position in matches)
+                    contexts.Add(new DigestionAtomContext(target,
+                        position == 0 ? null : Neighbor(stream[position - 1], byHash),
+                        Neighbor(stream[position], byHash),
+                        position + 1 == stream.Length ? null : Neighbor(stream[position + 1], byHash),
+                        position + 1, stream.Length, source.SourceId, source.SourcePath, source.Atomizer));
+                return contexts.ToImmutable();
+            }
+            catch (Exception error) when (error is FormatException or InvalidOperationException or ArgumentException)
+            {
+                throw new DigestionAtomContextException(DigestionAtomContextError.OCCURRENCE_MISSING, error.Message);
+            }
         }
     }
 
@@ -104,7 +165,8 @@ internal static class DigestionAtomContextProjection
         ILookup<string, DigestionLedgerEntry> byHash,
         IReadOnlyDictionary<string, DigestionLedgerEntry> byId,
         TheoryAtomizer atomizer,
-        TheoryAtomizerRules rules)
+        TheoryAtomizerRules rules,
+        RepositorySnapshot snapshot)
     {
         var stream = ImmutableArray.CreateBuilder<DigestionAtom>();
         var pending = new Stack<DigestionAtom>(document.Claims.OrderByDescending(static atom => atom.StartByte));
@@ -123,7 +185,7 @@ internal static class DigestionAtomContextProjection
                 && plan.Parent.EndByte == atom.EndByte && plan.Parent.Fingerprints == atom.Fingerprints).ToArray();
             if (emitted.Length > 1) throw new FormatException("duplicate clause plans for source span");
             var plan = emitted.SingleOrDefault()
-                ?? DigestionDecomposition.Plan(entry, atom.RawBytes, atomizer, rules);
+                ?? DigestionDecomposition.Plan(entry, atom.RawBytes, atomizer, rules, snapshot);
             var materialized = DigestionDecomposition.Materialize(entry, plan, byId);
             if (!materialized.NewEntries.IsEmpty)
                 throw new FormatException($"chain atom is absent for parent {entry.AtomId}");

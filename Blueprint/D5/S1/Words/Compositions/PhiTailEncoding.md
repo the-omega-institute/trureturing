@@ -14,8 +14,6 @@ $$\operatorname {length}\left(\operatorname {tailWord}\left(n, p, hn\right)\righ
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Codex implementation worker (2026). *A392714 Phi tail encoding — bounded reversed words*. URL: <https://arxiv.org/html/2605.11137v1>.
-
 *Commentary.*
 
 The reversed tail is indexed by Fin (2*n-1), so ofFn gives exactly that length.
@@ -28,8 +26,6 @@ $$- n < \operatorname {tailWord}\left(n, p, hn\right) < n$$
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Codex implementation worker (2026). *A392714 Phi tail encoding — bounded reversed words*. URL: <https://arxiv.org/html/2605.11137v1>.
-
 *Commentary.*
 
 Fixing zero and injectivity of a permutation exclude the lower endpoint; the Fin range bound gives the upper endpoint.
@@ -41,8 +37,6 @@ $$\operatorname {p}\left(inphi\right) \implies \operatorname {residualBounds}\le
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Compositions/PhiTailEncoding.mem_phi_tailWord_bounds` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* Codex implementation worker (2026). *A392714 Phi tail encoding — bounded reversed words*. URL: <https://arxiv.org/html/2605.11137v1>.
 
 *Commentary.*
 

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6d6fdd80701dbbb48681e3a22eae14d1b969177a2a17c79b565d12cd9bfc6b52
+  normalized_sha256: sha256:6d6fdd80701dbbb48681e3a22eae14d1b969177a2a17c79b565d12cd9bfc6b52
+cas_ref: sha256:6d6fdd80701dbbb48681e3a22eae14d1b969177a2a17c79b565d12cd9bfc6b52
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「档位与文献」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 70fa91a909338a200ae674a09b58c12fc46b05ed7a3e7f5217b0983b343212f3
+    next_atom_id: 4e61f430f27572fd1dea6058abee2d7a6b8e76631d2188e3db5a37f0b4150070

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d6603465727f40ef74c77d506da83bfaa7990bbf58a8ab8b1c7fa1a611080e90
+  normalized_sha256: sha256:d6603465727f40ef74c77d506da83bfaa7990bbf58a8ab8b1c7fa1a611080e90
+cas_ref: sha256:d6603465727f40ef74c77d506da83bfaa7990bbf58a8ab8b1c7fa1a611080e90
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「二　G-b 预登记:局部因子的解析性与最小模零点判据(同模块)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 00445dec8c173ae851ac1269b7db9504b6d6266fee95132178233b63e511d1d3
+    next_atom_id: 5d41f0bc89a83c85d48a01fa43e4ac68c3ed223f07913c5708a3e6e6530b7c6a
