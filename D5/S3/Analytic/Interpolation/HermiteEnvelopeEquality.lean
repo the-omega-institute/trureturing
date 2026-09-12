@@ -112,7 +112,8 @@ private theorem hermite_strict_majorant (L H x : ℝ) (f p : ℝ → ℝ)
     linarith
   · exact (hxLne rfl).elim
   · rcases lt_or_eq_of_le hxH with hxH' | rfl
-    · obtain ⟨ξ, hξ, hrem, hneg⟩ := HermiteUpperEnvelope.hermite_two_point_remainder_on isOpen_Ioi L H x
+    · obtain ⟨ξ, hξ, hrem, hneg⟩ :=
+      HermiteUpperEnvelope.hermite_two_point_remainder_on isOpen_Ioi L H x
         (fun t ht => hL.trans_le ht.1) f p ⟨hLx, hxH'⟩ hf hp.contDiffOn
         (fun t _ => hzero t) hvalL hderL hvalH (fun t ht => hpos t (hL.trans ht.1))
       linarith
@@ -138,7 +139,7 @@ private theorem quadratic_derivatives (a b c L : ℝ) :
 
 private theorem quadratic_sum_of_moments {k : ℕ} (x : Fin k → ℝ) (μ r a b c : ℝ)
     (hsum : ∑ i, x i = (k : ℝ) * μ)
-    (hvar : ∑ i, (x i - μ)^2 = (k : ℝ) * ((k : ℝ) - 1) * r^2) :
+    (hvar : ∑ i, (x i - μ) ^ 2 = (k : ℝ) * ((k : ℝ) - 1) * r ^ 2) :
     let p := fun t => a + b * (t - (μ - r)) + c * (t - (μ - r))^2
     ∑ i, p (x i) = p (μ + ((k : ℝ) - 1) * r) + ((k : ℝ) - 1) * p (μ - r) := by
   have hcenter : ∑ i, (x i - μ) = 0 := by
@@ -165,5 +166,117 @@ private theorem quadratic_sum_of_moments {k : ℕ} (x : Fin k → ℝ) (μ r a b
 
 #print axioms negative_left_of_double_node
 #print axioms hermite_strict_majorant
+
+/-- For positive variance, equality holds exactly on the two moment nodes;
+there is then one upper coordinate and every other coordinate is the lower node. -/
+theorem hermite_envelope_equality {k : ℕ} (hk : 2 ≤ k) (x : Fin k → ℝ)
+    (hx : ∀ i, 0 < x i) :
+    let μ := (∑ i, x i) / (k : ℝ)
+    let V := ∑ i, (x i - μ)^2
+    let r := Real.sqrt (V / ((k : ℝ) * ((k : ℝ) - 1)))
+    let L := μ - r
+    let H := μ + ((k : ℝ) - 1) * r
+    0 < V →
+      ((∑ i, Real.log (1 - Real.exp (-x i)) =
+        Real.log (1 - Real.exp (-H)) + ((k : ℝ) - 1) * Real.log (1 - Real.exp (-L))) ↔
+        ∀ i, x i = L ∨ x i = H) ∧
+      ((∀ i, x i = L ∨ x i = H) →
+        ∃ j, x j = H ∧ ∀ i, i ≠ j → x i = L) := by
+  classical
+  let μ := (∑ i, x i) / (k : ℝ)
+  let V := ∑ i, (x i - μ)^2
+  let r := Real.sqrt (V / ((k : ℝ) * ((k : ℝ) - 1)))
+  let L := μ - r
+  let H := μ + ((k : ℝ) - 1) * r
+  let f := fun t : ℝ => Real.log (1 - Real.exp (-t))
+  change 0 < V → ((∑ i, f (x i) = f H + ((k : ℝ) - 1) * f L) ↔
+    ∀ i, x i = L ∨ x i = H) ∧ _
+  intro hV
+  have hkR : (2 : ℝ) ≤ k := by exact_mod_cast hk
+  have hkpos : (0 : ℝ) < k := by linarith
+  have hden : (0 : ℝ) < (k : ℝ) * ((k : ℝ) - 1) :=
+    mul_pos hkpos (by linarith)
+  have hsum : ∑ i, x i = (k : ℝ) * μ := by dsimp [μ]; field_simp
+  have hr : 0 < r := Real.sqrt_pos.mpr (div_pos hV hden)
+  have hVr : V = (k : ℝ) * ((k : ℝ) - 1) * r^2 := by
+    rw [Real.sq_sqrt (div_nonneg hV.le hden.le)]
+    field_simp [ne_of_gt hkpos, ne_of_gt (by linarith : (0 : ℝ) < (k : ℝ) - 1)]
+  have hbounds := HermiteMomentBounds.hermite_moment_bounds hk x hx
+  change 0 < L ∧ ∀ i, x i ≤ H at hbounds
+  have hHL : H - L = (k : ℝ) * r := by dsimp [H, L]; ring
+  have hLH : L < H := sub_pos.mp (hHL.symm ▸ mul_pos hkpos hr)
+  have hHLne : H - L ≠ 0 := (sub_pos.mpr hLH).ne'
+  let c := (f H - f L - deriv f L * (H - L)) / (H - L)^2
+  let p := fun t => f L + deriv f L * (t - L) + c * (t - L)^2
+  have hp : ContDiff ℝ 3 p := by dsimp [p]; fun_prop
+  have hpL : p L = f L := by simp [p]
+  have hpH : p H = f H := by dsimp [p, c]; field_simp [hHLne]; ring
+  have hpd := quadratic_derivatives (f L) (deriv f L) c L
+  have hlog := LogOneSubExpDerivatives.log_one_sub_exp_derivatives
+  have hstrict (i : Fin k) (hiL : x i ≠ L) (hiH : x i ≠ H) : f (x i) < p (x i) :=
+    hermite_strict_majorant L H (x i) f p hbounds.1 hLH (hx i) (hbounds.2 i)
+      hiL hiH hlog.1 hp hpd.2 hpL hpd.1 hpH (fun t ht => (hlog.2 t ht).2.2.2)
+  have hpoint (i : Fin k) : f (x i) ≤ p (x i) := by
+    by_cases hiL : x i = L
+    · rw [hiL, hpL]
+    by_cases hiH : x i = H
+    · rw [hiH, hpH]
+    exact (hstrict i hiL hiH).le
+  have hpsum : ∑ i, p (x i) = f H + ((k : ℝ) - 1) * f L := by
+    calc
+      _ = p H + ((k : ℝ) - 1) * p L :=
+        quadratic_sum_of_moments x μ r (f L) (deriv f L) c hsum hVr
+      _ = _ := by rw [hpH, hpL]
+  constructor
+  · constructor
+    · intro heq i
+      have hgap : ∑ j, (p (x j) - f (x j)) = 0 := by
+        rw [Finset.sum_sub_distrib, hpsum, heq, sub_self]
+      have hi := (Finset.sum_eq_zero_iff_of_nonneg
+        (fun j (_ : j ∈ Finset.univ) => sub_nonneg.mpr (hpoint j))).mp hgap i
+          (Finset.mem_univ i)
+      by_contra hn
+      push Not at hn
+      have := hstrict i hn.1 hn.2
+      linarith
+    · intro hnodes
+      calc
+        _ = ∑ i, p (x i) := Finset.sum_congr rfl (fun i _ => by
+          rcases hnodes i with hi | hi
+          · rw [hi, hpL]
+          · rw [hi, hpH])
+        _ = _ := hpsum
+  · intro hnodes
+    let S := Finset.univ.filter (fun i => x i = H)
+    have hcount : (S.card : ℝ) * (H - L) = H - L := by
+      calc
+        _ = ∑ i, (if x i = H then H - L else 0) := by
+          simp [S, Finset.sum_ite]
+          ring
+        _ = ∑ i, (x i - L) := Finset.sum_congr rfl (fun i _ => by
+          rcases hnodes i with hi | hi
+          · rw [hi, if_neg (ne_of_lt hLH), sub_self]
+          · rw [hi, if_pos rfl])
+        _ = H - L := by
+          rw [Finset.sum_sub_distrib]
+          simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+          rw [hsum]
+          dsimp [L, H]
+          ring
+    have hcardR : (S.card : ℝ) = 1 := by nlinarith [sub_pos.mpr hLH]
+    have hcard : S.card = 1 := by exact_mod_cast hcardR
+    obtain ⟨j, hj⟩ := Finset.card_eq_one.mp hcard
+    have hjH : x j = H := by
+      have : j ∈ S := by rw [hj]; exact Finset.mem_singleton_self j
+      exact (Finset.mem_filter.mp this).2
+    refine ⟨j, hjH, ?_⟩
+    intro i hij
+    rcases hnodes i with hi | hi
+    · exact hi
+    · have : i ∈ S := Finset.mem_filter.mpr ⟨Finset.mem_univ i, hi⟩
+      rw [hj, Finset.mem_singleton] at this
+      exact (hij this).elim
+
+#print axioms hermite_envelope_equality
 
 end D5.S3.Analytic.Interpolation.HermiteEnvelopeEquality
