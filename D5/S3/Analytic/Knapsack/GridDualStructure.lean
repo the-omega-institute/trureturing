@@ -68,7 +68,7 @@ theorem grid_dual_eq_fill_sup (c d : ι → ℝ) (M : ℝ)
     (hc : ∀ i, 0 < c i) (hcd : ∀ i, c i < d i) (hM : ∑ i, c i ≤ M) :
     gridDualK c d M = sSup (fillValue c d '' {a | FillFeasible c d M a}) := by
   classical
-  haveI : Nonempty {p : ℝ // 0 ≤ p} := ⟨⟨0, le_rfl⟩⟩
+  have : Nonempty {p : ℝ // 0 ≤ p} := ⟨⟨0, le_rfl⟩⟩
   let w := fun i => d i - c i
   let v := fun i => logValue (d i) - logValue (c i)
   let B := M - ∑ i, c i
@@ -82,27 +82,28 @@ theorem grid_dual_eq_fill_sup (c d : ι → ℝ) (M : ℝ)
     rintro _ ⟨p, rfl⟩
     exact add_nonneg (mul_nonneg p.property hB)
       (Finset.sum_nonneg (fun i _ => le_max_left _ _))
-  obtain ⟨l, p, _, _, _, ha, _, _, _, _, hsup, _⟩ :=
-    FractionalKnapsackDual.greedy_attains_duality w v B hw hv hB
   have hne : (FractionalKnapsackDual.objective v ''
-      {a | FractionalKnapsackDual.Feasible w B a}).Nonempty := ⟨_, _, ha, rfl⟩
+      {a | FractionalKnapsackDual.Feasible w B a}).Nonempty := by
+    refine ⟨_, (fun _ => 0), ?_, rfl⟩
+    exact ⟨fun _ => ⟨le_rfl, zero_le_one⟩, by simpa using hB⟩
   have hbounded : BddAbove (FractionalKnapsackDual.objective v ''
       {a | FractionalKnapsackDual.Feasible w B a}) := by
     refine ⟨∑ i, v i, ?_⟩
     rintro _ ⟨a, ha, rfl⟩
     exact Finset.sum_le_sum (fun i _ => mul_le_of_le_one_right (hv i) (ha.1 i).2)
-  have htranslate := (OrderIso.addLeft (∑ i, logValue (c i))).map_csSup hne hbounded
+  have htranslate := (OrderIso.addLeft (∑ i, logValue (c i))).map_csSup' hne hbounded
   rw [gridDualK]
   simp only [grid_dual_value_translate]
   rw [← add_ciInf hb, ← FractionalKnapsackDual.fractional_knapsack_strong_duality
     w v B hw hv hB]
+  change (∑ i, logValue (c i)) + _ = sSup _ at htranslate
   rw [htranslate]
   congr 1
   ext z
   simp only [mem_image]
   constructor
   · rintro ⟨y, ⟨a, ha, rfl⟩, rfl⟩
-    exact ⟨a, ha, (fill_value_translate c d a).symm⟩
+    exact ⟨a, ha, fill_value_translate c d a⟩
   · rintro ⟨a, ha, rfl⟩
     exact ⟨_, ⟨a, ha, rfl⟩, (fill_value_translate c d a).symm⟩
 
@@ -133,7 +134,7 @@ theorem slack_fill_improvable (c d : ι → ℝ) (M : ℝ) (a : ι → ℝ) (j :
   have heb : (d j - c j) * ε ≤ M - ∑ i, c i - ∑ i, (d i - c i) * a i := by
     have h := (le_div_iff₀ hw).mp (min_le_right (1 - a j)
       ((M - ∑ i, c i - ∑ i, (d i - c i) * a i) / (d j - c j)))
-    simpa only [mul_comm] using h
+    simpa only [ε, mul_comm] using h
   let b := fun i => a i + if i = j then ε else 0
   have hs (q : ι → ℝ) : (∑ i, q i * b i) = (∑ i, q i * a i) + q j * ε := by
     simp [b, mul_add, Finset.sum_add_distrib, mul_ite]
@@ -149,7 +150,7 @@ theorem slack_fill_improvable (c d : ι → ℝ) (M : ℝ) (a : ι → ℝ) (j :
   · rw [fill_value_translate, fill_value_translate]
     unfold FractionalKnapsackDual.objective
     rw [hs]
-    exact lt_add_of_pos_right _ (mul_pos hv he)
+    nlinarith [mul_pos hv he]
 
 /-- Every optimal fill with an unfilled positive row saturates its budget. -/
 theorem fractional_optimum_saturates (c d : ι → ℝ) (M : ℝ) (a : ι → ℝ) (j : ι)
