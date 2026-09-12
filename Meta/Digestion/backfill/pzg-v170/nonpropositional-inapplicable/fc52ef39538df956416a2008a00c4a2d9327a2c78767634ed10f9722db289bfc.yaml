@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fc52ef39538df956416a2008a00c4a2d9327a2c78767634ed10f9722db289bfc
+  normalized_sha256: sha256:fc52ef39538df956416a2008a00c4a2d9327a2c78767634ed10f9722db289bfc
+cas_ref: sha256:fc52ef39538df956416a2008a00c4a2d9327a2c78767634ed10f9722db289bfc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Remark 27.818 corrects only which declarations own the already classified escape witnesses in candidate theorems 9.14 and 9.15. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with 9.14 and 9.15.
+    previous_atom_id: 003f8db8e5d154bac9b5e4867c04a5b3653bd6068eea5aa48a40aa51c43290b5
+    next_atom_id: 55eda7442458e8227972a6a2aee621aa6bf00653eca82f04d8e7a1aa68bf8b4d

@@ -28,7 +28,21 @@ export LC_ALL=C
 
 DRY=0
 if [ "${1:-}" = "--dry-run" ]; then DRY=1; shift; fi
-DONOR="${1:-/Users/chronoai/trureturing}"
+# donor 默认取**本仓库自己的主工作树**,而不是另一台驱动机的路径。
+# 旧默认是 /Users/chronoai/trureturing;本机没有该目录,于是不带参数调用一律走
+# `status=no-source reason=not-a-worktree` 退 2 —— 比 lane_free.sh 的静默好在它会出声,
+# 但默认值指向别人的机器仍然是错的,而正确的 donor 本来就可从 git 推出来:
+# `git worktree list --porcelain` 的第一条就是主工作树,即 make worktree 的 clonefile 源。
+if [ "$#" -ge 1 ]; then
+  DONOR="$1"
+else
+  DONOR=$(git -C "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)" worktree list --porcelain 2>/dev/null \
+          | awk '/^worktree /{print substr($0,10); exit}')
+  [ -n "$DONOR" ] || {
+    echo "DONOR_BACKFILL status=no-source donor=0 best=0 copied=0 reason=cannot-derive-main-worktree"
+    exit 2
+  }
+fi
 
 if [ ! -d "$DONOR/.git" ] && [ ! -f "$DONOR/.git" ]; then
   echo "DONOR_BACKFILL status=no-source donor=0 best=0 copied=0 reason=not-a-worktree"

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:17d12aa459c3ef1e4cfea20fb55ba0da53fd57862306ceb5e9cb45523dde6cfd
+  normalized_sha256: sha256:17d12aa459c3ef1e4cfea20fb55ba0da53fd57862306ceb5e9cb45523dde6cfd
+cas_ref: sha256:17d12aa459c3ef1e4cfea20fb55ba0da53fd57862306ceb5e9cb45523dde6cfd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: The honesty-boundary atom records a preregistration-process correction and explicitly makes no new mathematical claim. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with the L2a-L2c candidate statements.
+    previous_atom_id: cf1195dcfbc1c905a6c0722c83a6254eadf209375593fd3695406af800f17aae
+    next_atom_id: a03003dedb08e7b3053bff64d1558a38cd18b071b356b716362a5de502c5f912
