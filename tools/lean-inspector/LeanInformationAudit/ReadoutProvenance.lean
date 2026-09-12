@@ -119,16 +119,6 @@ private def eraseLevels (e : Expr) : Expr :=
   let params := (collectLevelParams {} e).params.toList
   stripMData (e.instantiateLevelParams params (params.map fun _ => .zero))
 
-private def containsExpr (needle hay : Expr) : Bool :=
-  if eraseLevels hay == eraseLevels needle then true else
-    match hay with
-    | .app f a => containsExpr needle f || containsExpr needle a
-    | .lam _ t b _ | .forallE _ t b _ => containsExpr needle t || containsExpr needle b
-    | .letE _ t v b _ => containsExpr needle t || containsExpr needle v || containsExpr needle b
-    | .mdata _ b => containsExpr needle b
-    | .proj _ _ b => containsExpr needle b
-    | _ => false
-
 private def closed (e : Expr) : Bool := !e.hasLooseBVars && !e.hasFVar && !e.hasMVar
 
 private def telescopeResult : Expr → Expr
@@ -224,7 +214,7 @@ private partial def summariseExpr (env : Environment) (pos : Position) (raw : Ex
   if s.fuel == 0 then
     modify fun s => { s with summary.incomplete := true }
     return none
-  if s.summary.visits % 256 == 0 then Core.checkMaxHeartbeats
+  if s.summary.visits % 256 == 0 then Core.checkMaxHeartbeats "readout provenance"
   modify fun s => { s with fuel := s.fuel - 1, summary.visits := s.summary.visits + 1 }
   let e := stripMData raw
   if let some i := (← get).indices[(e, pos)]? then return some i
