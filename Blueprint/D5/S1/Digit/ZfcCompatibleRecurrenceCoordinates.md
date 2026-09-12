@@ -21,4 +21,3 @@ The proof performs a genuine two-step induction and exposes the recurrence decom
 ## References
 
 - Truth anchor: `D5/S1/Digit/ZfcCompatibleRecurrenceCoordinates.recurrence_two_coordinate_reconstruction`
-- Dependency: [D5/S1/Digit/Raw](Raw.md)
