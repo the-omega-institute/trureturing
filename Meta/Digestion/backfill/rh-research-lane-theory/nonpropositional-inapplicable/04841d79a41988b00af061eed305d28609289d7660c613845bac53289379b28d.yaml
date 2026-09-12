@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:04841d79a41988b00af061eed305d28609289d7660c613845bac53289379b28d
+  normalized_sha256: sha256:04841d79a41988b00af061eed305d28609289d7660c613845bac53289379b28d
+cas_ref: sha256:04841d79a41988b00af061eed305d28609289d7660c613845bac53289379b28d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「从波动直觉到 RH 路线中的可证明链条」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 8adb94c3b155a6e9d22fe1d235185f414016eb4f76e8e9a855f76c2dd6c99660
+    next_atom_id: fd3676c596866ad71c34dda953d281f91f03b6b9d52753b8f51feb8192f5cc20

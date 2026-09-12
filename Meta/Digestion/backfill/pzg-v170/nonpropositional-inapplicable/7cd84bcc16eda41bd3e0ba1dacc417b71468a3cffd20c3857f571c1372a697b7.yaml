@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7cd84bcc16eda41bd3e0ba1dacc417b71468a3cffd20c3857f571c1372a697b7
+  normalized_sha256: sha256:7cd84bcc16eda41bd3e0ba1dacc417b71468a3cffd20c3857f571c1372a697b7
+cas_ref: sha256:7cd84bcc16eda41bd3e0ba1dacc417b71468a3cffd20c3857f571c1372a697b7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「评注 27.578(能量与力)〔semantic·词典层 + 墙;铁款"力不冒充通道"执行〕」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 50266238c3f4fdd6aa66e340031addc54f52c9ef410f507c4fd62a539ba0b350
+    next_atom_id: 2b21031aae9b2b80c222c196abe66acf5961a137f4c13b551980d4745b936fe6

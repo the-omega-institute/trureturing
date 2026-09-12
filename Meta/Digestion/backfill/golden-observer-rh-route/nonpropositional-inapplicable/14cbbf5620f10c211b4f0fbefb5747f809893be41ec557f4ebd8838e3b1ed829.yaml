@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:14cbbf5620f10c211b4f0fbefb5747f809893be41ec557f4ebd8838e3b1ed829
+  normalized_sha256: sha256:14cbbf5620f10c211b4f0fbefb5747f809893be41ec557f4ebd8838e3b1ed829
+cas_ref: sha256:14cbbf5620f10c211b4f0fbefb5747f809893be41ec557f4ebd8838e3b1ed829
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「二　G-g-8 预登记:线外零点只能是局部因子零点(同模块第二条公开定理)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: f3c9b3b432e72927dd927eab708509a3610ac1b4966dc42819e74f4b733cb454
+    next_atom_id: 61d30d3ad16128d9e88b5e56ca2b9871078c4300b9875df2b90aeaa60be3d82b

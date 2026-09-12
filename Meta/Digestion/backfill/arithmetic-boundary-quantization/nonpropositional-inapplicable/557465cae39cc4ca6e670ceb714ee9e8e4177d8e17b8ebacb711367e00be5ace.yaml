@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:557465cae39cc4ca6e670ceb714ee9e8e4177d8e17b8ebacb711367e00be5ace
+  normalized_sha256: sha256:557465cae39cc4ca6e670ceb714ee9e8e4177d8e17b8ebacb711367e00be5ace
+cas_ref: sha256:557465cae39cc4ca6e670ceb714ee9e8e4177d8e17b8ebacb711367e00be5ace
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「11. 三片 Schur 坐标的正交几何与量化」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: f2638303e2ec5c8083edbac9c9a62444bf158d81140924505a70155e6966d769
+    next_atom_id: 89683ac2bda35da807eb9c7931312dd6c954821797e95cd2629ab4519f45ecb2

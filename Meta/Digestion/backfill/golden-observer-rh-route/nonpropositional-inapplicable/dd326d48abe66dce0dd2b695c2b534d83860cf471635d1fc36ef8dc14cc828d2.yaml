@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dd326d48abe66dce0dd2b695c2b534d83860cf471635d1fc36ef8dc14cc828d2
+  normalized_sha256: sha256:dd326d48abe66dce0dd2b695c2b534d83860cf471635d1fc36ef8dc14cc828d2
+cas_ref: sha256:dd326d48abe66dce0dd2b695c2b534d83860cf471635d1fc36ef8dc14cc828d2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「一　G-g-7 预登记:线上零点二分(`GoldenGermWindowLineDichotomy`,落 `D5/S3/Analytic/GermWindow/`)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: f2e132b12a9595f0d79a69641bc984472c0044f83d8695844e4dc3b78ea0877c
+    next_atom_id: 0d0940efe78786222f27fc29b1a9534118d09dd3ccc2dc111fa3e3ba8ba14982

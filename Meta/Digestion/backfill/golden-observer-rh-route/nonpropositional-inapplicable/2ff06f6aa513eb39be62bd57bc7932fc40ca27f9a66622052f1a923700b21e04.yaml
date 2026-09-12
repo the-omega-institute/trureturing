@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2ff06f6aa513eb39be62bd57bc7932fc40ca27f9a66622052f1a923700b21e04
+  normalized_sha256: sha256:2ff06f6aa513eb39be62bd57bc7932fc40ca27f9a66622052f1a923700b21e04
+cas_ref: sha256:2ff06f6aa513eb39be62bd57bc7932fc40ca27f9a66622052f1a923700b21e04
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「一　Z-6 预登记:固定宽度窗零点(`ZeroInfinitude/WindowZero`,同桶第四个模块)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: fd8f0d620118ef0863ac98bb462318ec3f271bd0ff703209916ee13d027dd706
+    next_atom_id: 98cc5079d423cdcc035dfe18ec97c0c589004066285349bb838c24db56fe1dae

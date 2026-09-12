@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f0e3352f490ca7df9146b165e51cd1c9c9a3d5d9cf63fae1d4e65b51bdd88444
+  normalized_sha256: sha256:f0e3352f490ca7df9146b165e51cd1c9c9a3d5d9cf63fae1d4e65b51bdd88444
+cas_ref: sha256:f0e3352f490ca7df9146b165e51cd1c9c9a3d5d9cf63fae1d4e65b51bdd88444
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「评注 27.781(通式兴亡卷:v2.0)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 35b395b50dd4394dc2dbdf6a04ab1dd8cce2c95e7d1c712508712d4f892a83b8
+    next_atom_id: b374fbf8b29e5c03a5751b1039839d77ba55077551f5287d979eefaa09b85476

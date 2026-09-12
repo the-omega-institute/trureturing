@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f6366e3f347d9085ebbfad89d7d33ff15b1208ff9a7fe1954f70700da7bcdb5c
+  normalized_sha256: sha256:f6366e3f347d9085ebbfad89d7d33ff15b1208ff9a7fe1954f70700da7bcdb5c
+cas_ref: sha256:f6366e3f347d9085ebbfad89d7d33ff15b1208ff9a7fe1954f70700da7bcdb5c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「评注 27.564(SIC 弧四:cocycle 定理、扭挠定谳与 d = 19 预注册)〔定理·证 + 证书 + 候式〕」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 1cb98c55da7ed44ced84fc68492cb728425136fc220cb71f727ed3cd045fc6e1
+    next_atom_id: c9c4c2cf911883eaf6d8628f6845b82cc8324268c9032d5ef3013f3a24919198

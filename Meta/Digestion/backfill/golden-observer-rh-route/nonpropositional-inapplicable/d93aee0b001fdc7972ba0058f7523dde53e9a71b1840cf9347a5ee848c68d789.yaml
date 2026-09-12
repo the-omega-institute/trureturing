@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d93aee0b001fdc7972ba0058f7523dde53e9a71b1840cf9347a5ee848c68d789
+  normalized_sha256: sha256:d93aee0b001fdc7972ba0058f7523dde53e9a71b1840cf9347a5ee848c68d789
+cas_ref: sha256:d93aee0b001fdc7972ba0058f7523dde53e9a71b1840cf9347a5ee848c68d789
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「一　G-c-L1 预登记:尾项界与条件化归约(`D5/S3/Analytic/GermWindow/GermZeroCertificateReduction`)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: fe204c7af5594c1bf1d163716d1284b29bcbda0209684d17ce73ad3472e0415e
+    next_atom_id: 6b9a18d50ae975db4d25c93af4c66cb9e7d427f0f50dd7dd4582d9452af8f723
