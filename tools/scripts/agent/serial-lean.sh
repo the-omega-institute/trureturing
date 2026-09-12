@@ -39,7 +39,13 @@ while :; do
   if [ "$passes" -gt 200 ]; then
     failed=$((failed+1)); echo "SERIAL_LEAN_FAILED stale-targets-did-not-converge passes=$passes"; break
   fi
-  stale=$(cd "$TREE" && "$lake_runner" lake build --no-build 2>&1 | grep '^- ' | sed 's/^- //' || true)
+  query_output=$(cd "$TREE" && "$lake_runner" lake build --no-build 2>&1)
+  query_rc=$?
+  stale=$(printf '%s\n' "$query_output" | grep '^- ' | sed 's/^- //' || true)
+  if [ "$query_rc" -ne 0 ] && [ -z "$stale" ]; then
+    printf '%s\n' "$query_output" >&2
+    fail "stale-query-failed"
+  fi
   [ -n "$stale" ] || break
   pass_built=0
   while IFS= read -r target; do
