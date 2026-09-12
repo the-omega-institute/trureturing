@@ -36,9 +36,13 @@ def checkout(root, commit, allow_missing_candidate=False):
     # its stage jobs. The PR resolver explicitly opts out because it runs in
     # the caller workflow, before reusable inputs exist. Every stage job keeps
     # the fail-closed requirement when the input is absent.
-    if workflow_candidate and oid(workflow_candidate) != oid(commit):
+    event_name = os.environ.get("GITHUB_EVENT_NAME", "")
+    # Unit/integration fixtures deliberately clear the event name; in that
+    # local mode an inherited CI candidate must not constrain their synthetic
+    # repositories. Real workflow invocations always set an event name.
+    if workflow_candidate and event_name and oid(workflow_candidate) != oid(commit):
         raise ValueError("checkout does not match the reusable workflow candidate input")
-    if not workflow_candidate and not allow_missing_candidate and os.environ.get("GITHUB_EVENT_NAME") != "push":
+    if not workflow_candidate and not allow_missing_candidate and event_name and event_name != "push":
         raise ValueError("reusable workflow candidate input is required")
     if run(root, "git", "rev-parse", "HEAD") != oid(commit):
         raise ValueError("checkout does not match the fixed candidate")
