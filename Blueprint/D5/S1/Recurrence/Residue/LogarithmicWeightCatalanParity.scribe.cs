@@ -16,9 +16,9 @@ internal sealed class LogarithmicWeightCatalanParityDocument : IScribeDocumentDe
         H("Logarithmic-Weight Coefficients Modulo Three"),
         Blocks(
             Paragraph(Text("The NAME and both conjecture COMMENTS are quoted in hanna2026a397349. "
-                + "This lane settles only the modulo-three clause. The separate claim that a(n) "
-                + "is odd exactly at powers of two remains open: parity_conjecture is an "
-                + "unproved proposition definition, not a theorem or resolution claim.")),
+                + "Only the modulo-three statement is proved below. The separate statement that a(n) "
+                + "is odd exactly at powers of two is not proved: parity_conjecture is a "
+                + "proposition definition carrying no proof, and is not a theorem.")),
             Paragraph(Text("Write a for the module's function from natural numbers to integers. "
                 + "The displayed mod denotes the remainder operation: integer remainder for "
                 + "a(n) mod 3, natural-number remainder for n mod 2. The words if, then, else "
@@ -27,12 +27,12 @@ internal sealed class LogarithmicWeightCatalanParityDocument : IScribeDocumentDe
                 + "Define a(k)=1 if k=1 and (3*k^2-1)*s(k) otherwise; "
                 + "b(m)=1 if m<=1 and 3*m*s(m) otherwise. For n>=2, s_eq_sum gives "
                 + "s(n)=sum over 1<=k<n of a(k)*b(n-k). No uniqueness or formal "
-                + "identification with the logarithmic generating function is claimed here.")),
+                + "identification with the logarithmic generating function is proved here.")),
             Node("hanna_conjecture_a397349_mod_three", "Hanna's modulo-three conjecture",
                 ConjectureFormula(),
                 "For m>=2, b_mod_three uses the explicit factor of three in b(m). "
                 + "In s_eq_sum only k=n-1 survives modulo three, since b(1)=1; "
-                + "the escape witness s_mod_three proves s(n) mod 3 = a(n-1) mod 3. "
+                + "the lemma s_mod_three proves s(n) mod 3 = a(n-1) mod 3. "
                 + "The factor 3*n^2-1 has remainder 2, so a_mod_three_step gives "
                 + "a(n) mod 3 = (2*(a(n-1) mod 3)) mod 3. Induction from a(1)=1 "
                 + "proves the displayed alternation. This argument does not prove the "
