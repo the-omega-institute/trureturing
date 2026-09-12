@@ -14,6 +14,7 @@ strata_touched:
   - D5/S3/ConceptDynamics/ZfcFiniteCollections/Finset
   - D5/S3/ConceptDynamics/ZfcFiniteCollections/List
   - D5/S3/ConceptDynamics/ZfcFiniteCollections/Matrix
+  - D5/S3/ConceptDynamics/ZfcFiniteCollections/OrderDense
   - D5/S3/ConceptDynamics/ZfcFiniteCollections/Quotient
   - D5/S3/ConceptDynamics/ZfcFiniteData/Fin
   - D5/S3/ConceptDynamics/ZfcFiniteData/Nat
@@ -43,6 +44,7 @@ strata_touched:
   - D5/S3/ConceptDynamics/ZfcTermRewriting/RewOne
   - D5/S3/ConceptDynamics/ZfcTermRewriting/RewTwo
   - D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree
+  - D5/S3/ConceptDynamics/ZfcTermRewriting/RewFour
 license: Apache-2.0
 triage: anchor
 ---
@@ -59,15 +61,12 @@ Copyright and attribution remain with the upstream contributors. Original author
 required source notices are preserved. The upstream distribution has no NOTICE file.
 The complete unmodified Apache-2.0 license follows below.
 
-The installed layer contains 36 modules from 25 immutable upstream source files,
-with 4,749 Lean source lines (including headers and blank lines). Its source footprint
-is 36 Lean files, 36 Scribe sources and 36 Markdown twins, plus this shared note:
-109 files. The table lists exactly the installed Lean paths; each `strata_touched`
-GID resolves to its corresponding Lean/Scribe/Markdown triple.
+The table records the Foundation source ancestry of the installed Lean paths;
+each `strata_touched` GID resolves to its Lean/Scribe/Markdown triple.
 
-Each row preserves the original source path, SHA-256 and capacity span. Only selected
-command excerpts within those spans are copied; neither whole-file nor whole-span
-verbatim copying is asserted. Resolve each original path relative to the immutable
+Each row preserves the original source path, SHA-256 and capacity span. Selected command excerpts within those spans are copied, with the Mathlib-derived
+OrderDense existence proof explicitly distinguished below; neither whole-file nor
+whole-span verbatim copying is asserted. Resolve each original path relative to the immutable
 upstream revision linked above. This is a source transplant, with no installed
 upstream package dependency or package-pin change.
 
@@ -102,11 +101,29 @@ escape, proof-value, liveness or indispensability credit. The two Lean theorem
 names `Classical.choose!_spec` and `Classical.choose!_eq_iff_right` remain in prose
 with their typed formulas; `choose_uniq` is the legal direct selector. This pair has
 independent support meaning before the separate countable-filter and CSA
-interpretation layers. OrderDense remains preserved outside this installed layer.
+interpretation layers. OrderDense supplies the countable dense-family filter API,
+including the empty family and membership of the prescribed initial element.
+The empty-family interface is the existence theorem specialized to the empty set;
+the separate `Order.PFilter.IsGeneric.empty` convenience instance is omitted.
+Its bundled density and genericity definitions follow Foundation. Its existence
+proof is a direct application of pinned Mathlib `Order.idealOfCofinals`,
+`Order.mem_idealOfCofinals` and `Order.cofinal_meets_idealOfCofinals` on the dual
+preorder, indexed by the family subtype using `Set.Countable.toEncodable`.
+`Order.PFilter` wraps the resulting ideal without changing its carrier.
+The local bridge is Mathlib-derived; it does not retain Foundation's sequence,
+choice or descending-chain construction and asserts no identity of chosen filters.
+Mathlib revision `db584cd6d46c92f209a44c0f1c829460d327499d` supplies
+`Mathlib/Order/Ideal.lean`, `Mathlib/Order/PFilter.lean` and
+`Mathlib/Data/Set/Countable.lean` under Apache-2.0, with attribution to their
+Mathlib contributors and source copyright notices.
+RewFour supplies seven lawful rewriting/substitution identities over arbitrary
+signatures. Both are retained prerequisite APIs; neither establishes the complete
+CSA defining graphs, definition elimination, conservativity or model existence.
 
 Modifications are canonical headers, import reduction/relocation, source-command excerpts,
 capacity scope boundaries and restricting attribute target lists to needed relation
-projections. The retained mathematical command bodies remain upstream bytes.
+projections. The retained Foundation command bodies remain upstream bytes, except for the
+OrderDense generic-filter existence proof described below.
 
 The Semantics selection omits precisely the optional `Semantics.Top (Set M)`
 instance command at `Foundation/Logic/Semantics.lean:251` (the upstream authored
@@ -181,6 +198,8 @@ elaborates. Upstream PR acceptance alone is insufficient.
 | D5/S3/ConceptDynamics/ZfcTermRewriting/RewOne.lean | Foundation/Syntax/Predicate/Rew.lean | 1–320 | 8df8681a12ebf5ef8700d9710c88fc39bfc35df47ef387e2893df3caf3b69873 |
 | D5/S3/ConceptDynamics/ZfcTermRewriting/RewTwo.lean | Foundation/Syntax/Predicate/Rew.lean | 321–637; selected commands exclude `LO.FirstOrder.Rew.q_emb` | 8df8681a12ebf5ef8700d9710c88fc39bfc35df47ef387e2893df3caf3b69873 |
 | D5/S3/ConceptDynamics/ZfcTermRewriting/RewThree.lean | Foundation/Syntax/Predicate/Rew.lean | 638–953 | 8df8681a12ebf5ef8700d9710c88fc39bfc35df47ef387e2893df3caf3b69873 |
+| D5/S3/ConceptDynamics/ZfcTermRewriting/RewFour.lean | Foundation/Syntax/Predicate/Rew.lean | 954–1080; seven commands at 955–989 | 8df8681a12ebf5ef8700d9710c88fc39bfc35df47ef387e2893df3caf3b69873 |
+| D5/S3/ConceptDynamics/ZfcFiniteCollections/OrderDense.lean | Foundation/Vorspiel/Order/Dense.lean | density/genericity interface at 102, 108–110, 116–118, 145–146; existence statement at 150–152, proof via pinned Mathlib | 7acf47a3c5b4344f98b9d319a3cac93d0a4b80fa135feb19bfd46c838c2ccce0 |
 | D5/S3/ConceptDynamics/ZfcMinimalLogic/MinimalEntailmentOne.lean | Foundation/Propositional/Entailment/Minimal.lean | 1–320 | aa8c65b4a9a1c4cb1b5148ea65d159302b11dbcc839bba1184e422413808b8f1 |
 | D5/S3/ConceptDynamics/ZfcMinimalLogic/MinimalEntailmentTwo.lean | Foundation/Propositional/Entailment/Minimal.lean | 321–639 | aa8c65b4a9a1c4cb1b5148ea65d159302b11dbcc839bba1184e422413808b8f1 |
 | D5/S3/ConceptDynamics/ZfcMinimalLogic/MinimalEntailmentThree.lean | Foundation/Propositional/Entailment/Minimal.lean | 640–959 | aa8c65b4a9a1c4cb1b5148ea65d159302b11dbcc839bba1184e422413808b8f1 |
