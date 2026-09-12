@@ -105,7 +105,9 @@ private def check (label : String) (readout theoremName : Name) (reason : String
     (site : String := "") : CoreM Unit := do
   let env ← getEnv
   let some (.defnInfo info) := env.find? ``template | throwError "template missing"
-  let holder := readout.str "fixtureRealization"
+  -- Keep each fixture declaration unique even when a readout is exercised by
+  -- more than one assertion below.
+  let holder := `AllowlistRules |>.str s!"{label}.fixtureRealization"
   addDecl <| .defnDecl {
     name := holder, levelParams := [], type := info.type
     value := info.value.replace fun e => if e == mkConst ``cleanRead then some (mkConst readout) else none
@@ -174,7 +176,7 @@ run_cmd Elab.Command.liftCoreM do
 run_cmd Elab.Command.liftCoreM do
   try
     check "CurrentClosedDecisionPayload" ``closedDecisionRead ``target "unclassified_form"
-      "closed_decision" "AllowlistRules.closedProp" "protected:current" "AllowlistRules.closedDecisionRead"
+      "closed_decision" "Eq" "external:other" "AllowlistRules.closedDecisionRead"
   catch ex => logError m!"[FAIL] CurrentClosedDecisionPayload: {ex.toMessageData}"
 
 run_cmd Elab.Command.liftCoreM do
