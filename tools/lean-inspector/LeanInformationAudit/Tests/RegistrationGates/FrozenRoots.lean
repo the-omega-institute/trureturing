@@ -9,18 +9,18 @@ open Lean
 -- Inspect published diagnostics even when registration itself compiles successfully.
 run_cmd do
   let env := (← getEnv).setExporting false
-  let roots := #[
+  let roots : Array (Name × Nat) := #[
     (`D5.S3.ConceptDynamics.InformationEscape.InformationRoot, 11),
     (`D5.S3.ConceptDynamics.InformationEscape.SharedInformationRoot, 0),
     (`D5.S3.ConceptDynamics.InformationEscape.TemplateShadow, 10),
     (`D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalRegistration, 2),
     (`LeanInformationAudit.Tests.Seal.M3, 7)]
-  let mut total := 0
+  let mut total : Nat := 0
   for (root, expected) in roots do
     let some idx := env.getModuleIdx? root
       | throwError "[FAIL] FrozenRootsCompile: module not loaded: {root}"
-    let mut checked := 0
-    let mut findings := 0
+    let mut checked : Nat := 0
+    let mut findings : Nat := 0
     for name in env.header.moduleData[idx]!.constNames do
       unless name.getString! == "__information_registration_diagnostic" do continue
       let some (.defnInfo info) := env.find? name
