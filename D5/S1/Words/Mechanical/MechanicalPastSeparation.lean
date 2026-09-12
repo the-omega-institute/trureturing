@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S1/Words/Mechanical/MechanicalPastSeparation
    mirror-E: none(waiver:no-numeric-experiment-declared)
-   anchors: [mathlib/module/Mathlib.Algebra.Order.Floor.Ring]
+   anchors: []
    digest: Actual lower and upper irrational mechanical traces have an exact two-site
      disagreement, giving a sharp prediction threshold even with the entire past. -/
 
