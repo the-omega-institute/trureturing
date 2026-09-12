@@ -952,8 +952,52 @@ private noncomputable def apMarkedTriple_ne_extremeMarkedTriple {d : Nat}
         simp [y, extremeInterior, extremeInteriorCoordinate, hx, hz, hq] at hsum hbval <;>
           omega
 
+private noncomputable def geometricCodeEquiv (d : Nat) :
+    GeometricCode d ≃ CollinearTriples d × Bool :=
+  Equiv.ofBijective codeToMarkedTriple (by
+    constructor
+    · intro c₁ c₂ h
+      rcases c₁ with t | q <;> rcases c₂ with u | r
+      · exact congrArg Sum.inl (apMarkedTriple_injective h)
+      · exact False.elim (apMarkedTriple_ne_extremeMarkedTriple t r h)
+      · exact False.elim (apMarkedTriple_ne_extremeMarkedTriple u q h.symm)
+      · exact congrArg Sum.inr (extremeMarkedTriple_injective h)
+    · rintro ⟨s, mark⟩
+      obtain ⟨c, hc⟩ := codeToTriple_surjective s
+      by_cases hm : (codeToMarkedTriple c).2 = mark
+      · refine ⟨c, ?_⟩
+        exact Prod.ext hc hm
+      · refine ⟨reverseGeometricCode c, ?_⟩
+        rw [codeToMarkedTriple_reverse]
+        apply Prod.ext
+        · exact hc
+        · cases hcode : (codeToMarkedTriple c).2 <;> cases hmark : mark <;>
+            simp [hcode, hmark] at hm ⊢)
+
+/-- The number of unordered collinear triples in the four-point `d`-grid
+satisfies the conjectured Mathar formula without introducing division. -/
+theorem mathar_collinear_triples (d : ℕ) :
+    2 * matharCount d = 8 ^ d + 2 * 6 ^ d - 3 * 4 ^ d := by
+  classical
+  have hcard := Fintype.card_congr (geometricCodeEquiv d)
+  simp only [GeometricCode, Fintype.card_sum, Fintype.card_prod,
+    Fintype.card_bool] at hcard
+  have htriples : Fintype.card (CollinearTriples d) = matharCount d := by
+    rw [Fintype.card_coe]
+    rfl
+  rw [oriented_arithmetic_progression_count, (endpoint_pair_counts d).2, htriples] at hcard
+  have hfourEight : 4 ^ d ≤ 8 ^ d := Nat.pow_le_pow_left (by omega) d
+  have hfourSix : 4 ^ d ≤ 6 ^ d := Nat.pow_le_pow_left (by omega) d
+  omega
+
+example (d : ℕ) :
+    matharCount d = (8 ^ d + 2 * 6 ^ d - 3 * 4 ^ d) / 2 := by
+  have h := mathar_collinear_triples d
+  omega
+
 #print axioms endpoint_pair_counts
 #print axioms oriented_arithmetic_progression_count
 #print axioms extreme_line_coordinate_classification
+#print axioms mathar_collinear_triples
 
 end D5.S3.Arith.Lattices.FourGridCollinearTriples
