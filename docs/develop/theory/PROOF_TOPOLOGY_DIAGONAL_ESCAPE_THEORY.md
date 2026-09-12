@@ -940,3 +940,203 @@ D5/S3/ConceptDynamics/ObservationTopology/PrimitiveEscapeStrictRefinement.lean
 \text{拓扑记录这种增长在何种观察下可见。}
 }
 \]
+
+
+---
+
+# 第二十一部：机械历史的精确残差、存储容量与预测
+
+本部把第 1、7、8、15 部的核与目标恢复问题具体化到 #6881 的历史一致性方向。取任意无理数 $0<\alpha<1$，不固定黄金斜率，也不限制窗口长度为 Fibonacci 数。这里区分三个对象：实际发生的字、字的无损表示，以及与后继交换的自主状态表示。后两者不能仅由相同的状态数相互替代。
+
+## 21.1 实际历史，而非独立边见证
+
+固定实截距 $\rho$，设
+
+$$
+a_{\alpha,\rho}(i)=\lfloor\rho+(i+1)\alpha\rfloor-\lfloor\rho+i\alpha\rfloor,
+\qquad i\in\mathbb N.
+$$
+
+它取值于 $\{0,1\}$。定义全部实际长度 $n$ 字的集合
+
+$$
+W_n=\{(a_{\alpha,\rho}(i+k))_{0\le k<n}:i\in\mathbb N\}.
+$$
+
+同一字在不同位置出现仍只计一个元素。任何 $W_{n+h}$ 的截断来自同一个起点；反向，每个 $W_n$ 的起点都产生一个 $W_{n+h}$ 延伸。因此前缀映射 $\pi_{n,h}:W_{n+h}\to W_n$ 满射。
+
+已有 `MechanicalFactorComplexity.lower_mechanical_factor_complexity` 给出 $|W_n|=n+1$。`MechanicalHistoryCapacity.image_ofFn` 证明有限函数表示与该既有 List 表示逐字相同，再运输基数结论。当 $h>0$，$n+h+1>n+1$，故 $\pi_{n,h}$ 不可能单射。选择两条不同长字的实际起点，得到
+
+$$
+\exists i,j,\quad W_n(i)=W_n(j),\qquad W_{n+h}(i)\ne W_{n+h}(j).
+$$
+
+这不是给有限图增加一条假定的边，而是给出具有共同短历史的两个实际自然数起点。对应声明为 `actual_future_collision`。经典 Sturmian 特殊词与禁止词背景见 G. Fici, *A Characterization of Bispecial Sturmian Words*, arXiv:1204.1672, 2012；这里不把经典 $n+1$ 复杂度或其分支推论重新声称为发现。
+
+## 21.2 存储定理与 21、60、64 的不同来源
+
+**定理。** 对任意有限集合 $X$，存在无损 $b$ 位二进制编码当且仅当 $|X|\le2^b$。
+
+**证明。** 必要性为单射基数不等式。充分性选择 $X\simeq\operatorname{Fin}(|X|)$ 和 $\{0,1\}^b\simeq\operatorname{Fin}(2^b)$，在中间使用初始区间包含。没有对更新规则施加条件。对应 `bit_encoding_iff`。因此
+
+$$
+W_n\text{ 可无损编码为 }b\text{ 位}\iff n+1\le2^b.
+$$
+
+这是一条适用于全部 $n,b$ 的曲线。$|W_{59}|=60$、$|W_{63}|=64$、$|W_{64}|=65$ 是其不同点；六位足以编码 $W_{63}$，不足以编码 $W_{64}$。对应 `history_bit_encoding_iff` 与 `six_bit_history_cutoff`。
+
+#6881 的另一对象是容量盒
+
+$$
+C_{5040}=\{0,\ldots,4\}\times\{0,1,2\}\times\{0,1\}\times\{0,1\}.
+$$
+
+它有 $5\cdot3\cdot2\cdot2=60$ 个状态，最少需要六个二进制位，每个单射六位编码均留下恰好四个未用码字。对应 `capacity5040_card`、`capacity5040_min_bits`、`capacity5040_unused`。
+
+相对地，六个 Zeckendorf 数位禁止相邻两个 1，因而其合法窗口数是 $G_6=21$；原始六位二进制字段的全部码字数才是 $2^6=64$。这里的逻辑是
+
+$$
+\text{载体与约束}\longrightarrow |X|\longrightarrow\min\{b:|X|\le2^b\},
+$$
+
+而不是 $21\to34\to55\to60\to64$ 的动力递推。容量盒和某个历史集合即使等势，也没有因此得到保持后继的共轭。Fibonacci 深度字典属于另一项必须保留读数与端点的结构定理。
+
+## 21.3 有限存储不蕴含有限自主动力闭合
+
+**定理。** 上述无理机械字不存在有限的精确自主状态模型。
+
+**证明。** 假设有限 $C$ 上存在固定更新 $F:C\to C$、输出 $o:C\to\{0,1\}$ 和状态序列 $q:\mathbb N\to C$，满足
+
+$$
+q(i+1)=F(q(i)),\qquad o(q(i))=a_{\alpha,\rho}(i).
+$$
+
+若两个起点状态相同，归纳得到其所有后续状态相同，因而任意长度的输出字相同。为每个 $W_n$ 元素选择一个实际起点并取该起点状态，得到单射 $W_n\hookrightarrow C$，所以 $n+1\le|C|$ 对所有 $n$ 成立。取 $n=|C|$ 即矛盾。对应 `model_capacity_bound` 与 `no_finite_autonomous_model`。证毕。
+
+该结论排除全部有限容量，而不只 60 或 64。它不排除有外部输入的自动机、DFAO、含外部时钟的系统或一般可计算生成。无损地记录一个固定有限目标，与用固定有限自主状态永远精确更新，是不同数学要求。
+
+## 21.4 不使用分裂公理的两侧轨迹
+
+对整数 $m,t$ 定义实际双向机械轨迹
+
+$$
+\ell_m(t)=\lfloor(t+1-m)\alpha\rfloor-\lfloor(t-m)\alpha\rfloor,
+$$
+$$
+u_m(t)=\lceil(t+1-m)\alpha\rceil-\lceil(t-m)\alpha\rceil.
+$$
+
+**定理。** 它们均为二值轨迹，且
+
+$$
+\ell_m(t)\ne u_m(t)\iff t\in\{m-1,m\}.
+$$
+
+**证明。** 当整数 $k\ne0$，$k\alpha$ 非整数，故 $\lceil k\alpha\rceil=\lfloor k\alpha\rfloor+1$。在 $t\notin\{m-1,m\}$ 时两个修正相消。在另外两个时刻，分别直接得到
+
+$$
+(\ell_m(m-1),\ell_m(m))=(1,0),\qquad
+(u_m(m-1),u_m(m))=(0,1).
+$$
+
+普通 floor 增量不等式给出下机械轨迹二值性，上轨迹由两点交换得到。时间平移满足 $\ell_m(t+1)=\ell_{m-1}(t)$ 及同样的上轨迹公式。对应 `MechanicalPastSeparation.disagree_iff`、`lower_binary`、`upper_binary`、`lower_shift`、`upper_shift`。证毕。
+
+所以这里有实际轨迹、实际后继和完整的共同见证，没有把待证的分裂行为放入结构字段当作公理。
+
+## 21.5 整个过去不能改善统一的覆盖阈值
+
+令 $\mathrm{PastEq}_J(v,w)$ 表示所有起点 $t\le0$ 的长度 $J$ 窗口都相同；特别地，当前窗口包括采样位置 $0,\ldots,J-1$。令 $\mathrm{SegmentEq}_{L,h}$ 表示起点 $0,\ldots,h$ 的全部长度 $L$ 窗口都相同。
+
+**定理。** 对 $L>0$，在上一节定义的双侧边界轨道上，
+
+$$
+[\forall v,w,\ \mathrm{PastEq}_J(v,w)\Rightarrow
+\mathrm{SegmentEq}_{L,h}(v,w)]\iff L+h\le J.
+$$
+
+**证明。** 若 $L+h\le J$，目标中的所有采样位置已在当前窗口中，该方向对任意轨迹成立。否则取 $m=L+h>J$。对每个 $t\le0$ 和 $0\le k<J$，$t+k\le J-1<m-1$，因此整个过去的所有观察相同。但终点窗口的最后一个采样位置 $h+L-1=m-1$ 恰有分歧。对应 `whole_past_prediction_iff` 与其显式见证 `invisible_past_visible_future`。证毕。
+
+这是一条所有无理斜率都成立的完整量词结论。它同时指出“历史很长”与“目标相关的核已经消失”不是同一件事。越过两点后两条轨迹的后续读数重新相同，但此前整段的差异并未消失，也不能把完整双向轨迹说成同一个状态。
+
+这里的 $J,L$ 是机械字采样长度，**不是未经证明替换后的 Zeckendorf 数位深度**。#6881 的原理论字典 $P_L\leftrightarrow B_{G_L-1}$ 若以完整端点约定运输，则对应阈值变为 $G_J\ge G_L+h$；该完整字典在本部源码中未重新建立。已有 `MechanicalGoldenBridge.lowerMechanicalWord_golden` 只提供相应黄金首字母的桥接，不能替代全部无限位字典。
+
+## 21.6 进一步推论：任意采样位置的精确目标判据
+
+下面直接从两点分歧定理推导，不再限制采样为连续窗口。给定任意集合 $A,B\subseteq\mathbb Z$，分别表示已观测位置与目标位置，定义
+
+$$
+D(A)=\{m:m-1\in A\ \text{或}\ m\in A\}=A\cup(A+1).
+$$
+
+比较的是同一个边界 $m$ 的实际两侧 $(\ell_m,u_m)$。由第 21.4 节，它们在 $A$ 上相等当且仅当 $m\notin D(A)$。所以全部目标相关的边界对残差，精确为
+
+$$
+\boxed{R(A;B)=D(B)\setminus D(A).}
+$$
+
+因此，在这整族实际成对边界上，
+
+$$
+\boxed{\text{已知 }A\text{ 足以确定目标 }B\iff D(B)\subseteq D(A).}
+$$
+
+加入新观察集合 $C$ 时，
+
+$$
+R(A\cup C;B)=R(A;B)\setminus D(C).
+$$
+
+这把本卷的目标残差公式具体化为可计算的整数集合关系。对应 `MechanicalBoundarySampling.residual_eq`、`pair_target_recovery_iff` 与 `residual_after_samples`。它分析完整的同边界两侧族，但**不冒充任意两个不同相位之间的全状态恢复判据**。
+
+连续观察是其特例：对自然数 $J,M$，取 $A=\{t:t<J\}$、$B=\{0,\ldots,M-1\}$，得到
+
+$$
+R(A;B)=\{m:J<m\le M\}.
+$$
+
+对应 `past_to_segment_residual`；其元素数为 $(M-J)_+$。空目标区间也成立。这里 $A$ 表示完整标量采样过去；它与 $\mathrm{PastEq}_J$ 的采样并集等同需要 $J>0$，不能把空窗口的过去误当成所有负时间样本。
+
+**有限采样下界。** 若有限采样集合 $S$ 区分某个有限边界指标集合 $R$ 中的每一对，则
+
+$$
+R\subseteq S\cup(S+1),\qquad |R|\le2|S|.
+$$
+
+所以至少需要 $\lceil|R|/2\rceil$ 次点观察。证明为上一判据加上有限并集基数不等式；对应 `boundary_probe_lower_bound`。这只是这族真实残差对的必要下界，不声称已经构造所有相位上的最优观察器。
+
+## 21.7 对一般数学定理的解释及后续承重问题
+
+设全部背景假设定义相容域 $\mathcal S_\Gamma$，已有事实为读数 $E$，目标为 $F$。问题仍是
+
+$$
+\ker(E|_{\mathcal S_\Gamma})\subseteq\ker(F|_{\mathcal S_\Gamma}),
+$$
+
+而非恢复整个 $\mathcal S_\Gamma$ 中的对象。值域应先限制为实际像；已有 `HistoryPayloadFactorization.ker_beta_subset_ker_payload_iff_unique_factorization` 给出包含空域情形的唯一因子判据，不需要重复另建通用真源。
+
+第 21.6 节说明，真实推进可以是推导一个目标残差的封闭表达式，并证明新事实究竟删除哪部分残差，而不只是给已知事实添加名称。功能可观察性文献也区分目标函数恢复和全状态恢复：C. Kravaris, *On Functional Observability of Nonlinear Systems and the Design of Functional Observers with Assignable Error Dynamics*, arXiv:2501.00167, 后刊于 IFAC-PapersOnLine 59(19), 668–673 (2025)；I. Krauss, V. G. Lopez, M. A. Müller, *On Sample-Based Functional Observability of Linear Systems*, IEEE Control Systems Letters 9, 1393–1398 (2025), arXiv:2506.23744。本文没有把它们的连续微分或线性秩条件套用于上述离散系统。
+
+第 21.8 节将进一步排除一个看似自然、但错误的充分性推广。下一项需要独立证明的具体结构是：构造无限 Zeckendorf 载体到机械 itinerary 的双向字典，逐一保持自然数核心、读数、时间平移及每个分裂端点的侧别。完成后才能把这里的全斜率采样定理运输成 #6881 的全部数位深度预测定理，而不是只比较 Fibonacci 基数。再下一项是完整分类无限过去的相容纤维，并在全载体上检验稀疏观察的充分性；当前成对边界判据及 $|R|\le2|S|$ 为其提供必要条件，但没有预设该条件对全载体充分。
+
+
+## 21.8 再进一步：边界覆盖不是全状态恢复的充分条件
+
+**定理。** 即使 $D(B)\subseteq D(A)$，不同边界或相位之间也可能出现相同已知观察、不同目标值。
+
+**证明。** 对任意 $1/4<\alpha<1/3$，取两条实际下机械轨迹 $v=\ell_0$、$w=\ell_{-2}$。由
+
+$$
+\lfloor\alpha\rfloor=\lfloor2\alpha\rfloor=\lfloor3\alpha\rfloor=0,
+\qquad \lfloor4\alpha\rfloor=\lfloor5\alpha\rfloor=1,
+$$
+
+得到
+
+$$
+(v(0),v(1),v(2))=(0,0,0),\qquad
+(w(0),w(1),w(2))=(0,1,0).
+$$
+
+令 $A=\{0,2\}$、$B=\{1\}$，则 $D(B)=\{1,2\}\subseteq\{0,1,2,3\}=D(A)$，但 $v|_A=w|_A$ 且 $v|_B\ne w|_B$。对应 `boundary_cover_not_full_recovery`。该族对区间内的每个无理斜率成立，并非脱离机械系统的任意反例。证毕。
+
+因此第 21.6 节的精确判据必须保持其成对边界作用域。全局正向定理还必须处理不同相位分量得到相同观察字的情形。正确的进一步问题不是继续假设边界覆盖充分，而是刻画带有观察字标签的相位分割：同一个观察字的所有分量必须在目标上取同一个值。这重新落在本卷已有的核包含判据中，并给出了具体必须处理的非局部障碍。
