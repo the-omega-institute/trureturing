@@ -45,6 +45,8 @@ internal static class CiTransport
             || Git(root, "status", "--porcelain", "--untracked-files=all").Length != 0))
             throw new InvalidDataException("transport requires the exact clean candidate commit");
         CommonStageRecord common;
+        CommonStageRecord? build = null;
+        CommonExecutionEvidence.ValidationScope? validation = null;
         if (seedStage)
         {
             var owner = stage[..^5];
@@ -52,19 +54,20 @@ internal static class CiTransport
             var seed = CommonExecutionEvidence.ValidateCheckSeedBundle(root, owner);
             common = new(2, seed.Candidate, seed.Round, [], []);
         }
+        else if (stage == "current")
+            (common, build, validation) = CommonExecutionEvidence.ValidateCurrentForTransport(root);
         else common = stage switch
         {
             "build" => CommonExecutionEvidence.ValidateBuild(root),
-            "current" => CommonExecutionEvidence.ValidateCurrent(root),
             _ => CommonExecutionEvidence.ValidateEngineering(root),
         };
         var manifestPath = ManifestPath(stage);
         if (pack)
         {
-            var paths = ListedFiles(root, stage, common).Where(path => path != manifestPath).ToArray();
+            var paths = ListedFiles(root, stage, common, build).Where(path => path != manifestPath).ToArray();
             CommonExecutionEvidence.Write(root, manifestPath, new CiTransportRecord(1, stage, common.Candidate, common.Round,
                 commit, run, attempt, repository, paths.Select(path => new TransportMaterial(path,
-                    CommonExecutionEvidence.Hash(Path.Combine(root, path)), Mode(Path.Combine(root, path)))).ToArray()));
+                    MaterialHash(path), Mode(Path.Combine(root, path)))).ToArray()));
             var archive = Path.GetFullPath(values["--archive"]);
             if (archive.StartsWith(Path.Combine(root, CommonExecutionEvidence.RootPath) + Path.DirectorySeparatorChar, StringComparison.Ordinal))
                 throw new ArgumentException("archive must be outside the stage evidence directory");
@@ -89,24 +92,27 @@ internal static class CiTransport
             if (record.Version != 1 || record.Stage != stage || record.Candidate != common.Candidate || record.Round != common.Round
                 || record.Commit != commit || record.RunId != run || record.RunAttempt != attempt || record.Repository != repository)
                 throw new InvalidDataException("transport candidate, stage, or upstream execution mismatch");
-            if (!ListedFiles(root, stage, common).Where(path => path != manifestPath).SequenceEqual(record.Materials.Select(material => material.Path)))
+            if (!ListedFiles(root, stage, common, build).Where(path => path != manifestPath).SequenceEqual(record.Materials.Select(material => material.Path)))
                 throw new InvalidDataException("transport does not contain the complete stage file list");
             foreach (var material in record.Materials)
-                if (CommonExecutionEvidence.Hash(Path.Combine(root, material.Path)) != material.Sha256 || Mode(Path.Combine(root, material.Path)) != material.Mode)
+                if (MaterialHash(material.Path) != material.Sha256 || Mode(Path.Combine(root, material.Path)) != material.Mode)
                     throw new InvalidDataException("transport hash or mode mismatch: " + material.Path);
         }
         output.WriteLine($"CI_TRANSPORT stage={stage} candidate={common.Candidate} round={common.Round} commit={commit} run_id={run} run_attempt={attempt} status={(pack ? "packed" : "verified")}");
         return 0;
+
+        string MaterialHash(string path) => validation is null ? CommonExecutionEvidence.Hash(Path.Combine(root, path))
+            : validation.Hash(Path.Combine(root, path));
     }
 
-    private static string[] ListedFiles(string root, string stage, CommonStageRecord common)
+    private static string[] ListedFiles(string root, string stage, CommonStageRecord common, CommonStageRecord? build)
     {
         var text = File.ReadAllText(Path.Combine(root, CommonExecutionEvidence.BundleListPath(stage)));
         if (!text.EndsWith('\0')) throw new InvalidDataException("stage transport list is not NUL terminated");
         var declared = text.Split('\0', StringSplitOptions.RemoveEmptyEntries);
         if (!stage.EndsWith("-seed", StringComparison.Ordinal))
         {
-            var materials = stage == "current" ? CommonExecutionEvidence.ValidateBuild(root).Materials.Concat(common.Materials)
+            var materials = stage == "current" ? (build ?? throw new InvalidDataException("missing validated current build")).Materials.Concat(common.Materials)
                 : common.Materials.Where(material => stage != "engineering" || material.Path != CommonExecutionEvidence.BuildPath);
             var expected = CommonExecutionEvidence.CanonicalBundlePaths(root, stage,
                 materials.Select(material => material.Path).Append(CommonExecutionEvidence.RootPath + "/" + stage + ".json"));

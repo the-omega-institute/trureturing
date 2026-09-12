@@ -42,8 +42,9 @@ internal static partial class CommonExecutionEvidence
     }
 
     internal static IReadOnlyDictionary<string, string> CheckInputFingerprints(string root, RepositorySnapshot snapshot, bool currentReport = false,
-        IReadOnlyCollection<string>? selectedIds = null, string? executionEnvironment = null)
+        IReadOnlyCollection<string>? selectedIds = null, string? executionEnvironment = null, ValidationScope? validation = null)
     {
+        validation ??= new ValidationScope(snapshot);
         var files = snapshot.Files.Values.Select(item => new EngineeringSource(item.Path.Value, item.Text)).ToArray();
         var registry = EngineeringProjectRegistry.Read(files);
         var checks = ReadCheckManifest(snapshot, registry).Where(check => selectedIds is null || selectedIds.Contains(check.Id)).ToArray();
@@ -54,8 +55,21 @@ internal static partial class CommonExecutionEvidence
         string? reportValue = null;
         if (currentReport && checks.Any(check => check.ReportInputs.Length != 0))
         {
-            _ = RawLeanReportArtifact.ReadFile(Path.Combine(root, ReportPath), snapshot, validateMaterials: true);
-            reportValue = Hash(Path.Combine(root, ReportPath));
+            validation.Report(Path.Combine(root, ReportPath));
+            reportValue = validation.Hash(Path.Combine(root, ReportPath));
+        }
+        var materials = new Dictionary<string, object>(StringComparer.Ordinal);
+        object Material(string path)
+        {
+            if (!materials.TryGetValue(path, out var value))
+            {
+                var item = snapshot.Files[RepoPath.CreateKnown(path)];
+                var executable = !OperatingSystem.IsWindows() && (File.GetUnixFileMode(Path.Combine(root, path))
+                    & (UnixFileMode.UserExecute | UnixFileMode.GroupExecute | UnixFileMode.OtherExecute)) != 0;
+                value = new { path, mode = executable ? "executable" : "regular", sha256 = Convert.ToHexStringLower(SHA256.HashData(item.RawBytes.AsSpan())) };
+                materials.Add(path, value);
+            }
+            return value;
         }
         var result = new Dictionary<string, string>(StringComparer.Ordinal);
         foreach (var check in checks)
@@ -87,13 +101,6 @@ internal static partial class CommonExecutionEvidence
                 governance = check.Id == "selftest-pair" ? new { project.Role, project.Ci, project.Owner, project.OwnedTestAssembly, project.TestPartition, project.RootNamespace,
                     project.NamespaceExclude, project.GlobalNamespaceExceptions } : null,
             };
-            object Material(string path)
-            {
-                var item = snapshot.Files[RepoPath.CreateKnown(path)];
-                var executable = !OperatingSystem.IsWindows() && (File.GetUnixFileMode(Path.Combine(root, path))
-                    & (UnixFileMode.UserExecute | UnixFileMode.GroupExecute | UnixFileMode.OtherExecute)) != 0;
-                return new { path, mode = executable ? "executable" : "regular", sha256 = Convert.ToHexStringLower(SHA256.HashData(item.RawBytes.AsSpan())) };
-            }
             result.Add(check.Id, Digest(new { contract = "common-check-execution-v2", registration = check,
                 projects = selected.Order(StringComparer.Ordinal).Select(name => ProjectProjection(projects[name])),
                 materials = materialPaths.Order(StringComparer.Ordinal).Select(Material),

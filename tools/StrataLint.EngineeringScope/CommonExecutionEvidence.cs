@@ -180,11 +180,11 @@ internal static partial class CommonExecutionEvidence
     internal static CommonStageRecord ValidateBuild(string root, string? round = null) =>
         ValidateBuild(root, Candidate(root), round);
 
-    private static CommonStageRecord ValidateBuild(string root, string candidate, string? round)
+    private static CommonStageRecord ValidateBuild(string root, string candidate, string? round, ValidationScope? validation = null)
     {
         var record = Read<CommonStageRecord>(root, BuildPath);
         if (string.IsNullOrWhiteSpace(record.Round)) throw new InvalidDataException("missing build round");
-        ValidateRecord(root, record, candidate, round ?? record.Round);
+        ValidateRecord(root, record, candidate, round ?? record.Round, validation);
         RequirePassed(record.Steps, record.Projects is null ? BuildSteps : record.Projects.SelectMany(_ => BuildSteps).ToArray());
         if (record.Projects is { Length: 0 }) throw new InvalidDataException("empty build project selection");
         if (record.Selection is not null)
@@ -195,14 +195,14 @@ internal static partial class CommonExecutionEvidence
             if (record.Projects is null || !record.Projects.SequenceEqual(plan.Projects)) throw new InvalidDataException("build differs from declared resource projects");
         }
         else if (record.Projects is not null && !record.Projects.SequenceEqual(
-                     EngineeringProjectRegistry.Read(Snapshot(root)).Projects.Where(project => project.Ci).Select(project => project.Path).Order(StringComparer.Ordinal)))
+                     EngineeringProjectRegistry.Read(validation?.Snapshot ?? Snapshot(root)).Projects.Where(project => project.Ci).Select(project => project.Path).Order(StringComparer.Ordinal)))
             throw new InvalidDataException("default build differs from registered CI projects");
         return record;
     }
 
-    internal static void ValidateStartedBuild(string root, CommonStageRecord started, string candidate)
+    internal static void ValidateStartedBuild(string root, CommonStageRecord started, string candidate, ValidationScope? validation = null)
     {
-        var completed = ValidateBuild(root, candidate, started.Round);
+        var completed = ValidateBuild(root, candidate, started.Round, validation);
         if (started.Candidate != candidate || !completed.Steps.SequenceEqual(started.Steps) || !completed.Materials.SequenceEqual(started.Materials))
             throw new InvalidDataException("build receipt changed during branch execution");
     }
@@ -257,12 +257,12 @@ internal static partial class CommonExecutionEvidence
         return (ValidateCurrent(root, build, snapshot), engineering, build);
     }
 
-    private static void ValidateRecord(string root, CommonStageRecord record, string candidate, string round)
+    private static void ValidateRecord(string root, CommonStageRecord record, string candidate, string round, ValidationScope? validation = null)
     {
         if (record.Version != 2 || record.Candidate != candidate || record.Round != round)
             throw new InvalidDataException("common evidence candidate identity or round mismatch");
         RequirePassed(record.Steps);
-        ValidateMaterials(root, record.Materials);
+        ValidateMaterials(root, record.Materials, validation);
         if (record.Steps.Any(step => !record.Materials.Any(material => material.Path == step.Log)))
             throw new InvalidDataException("common step has no bound operation log");
     }
@@ -291,11 +291,12 @@ internal static partial class CommonExecutionEvidence
         return paths.Concat(logs).Append(BundleListPath(stage)).Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToArray();
     }
 
-    internal static void ValidateMaterials(string root, IEnumerable<ExecutionMaterial> materials)
+    internal static void ValidateMaterials(string root, IEnumerable<ExecutionMaterial> materials, ValidationScope? validation = null)
     {
         foreach (var material in materials)
         {
-            if (!RepoPath.TryCreate(material.Path, out _) || Hash(Path.Combine(root, material.Path)) != material.Sha256)
+            if (!RepoPath.TryCreate(material.Path, out _)
+                || (validation is null ? Hash(Path.Combine(root, material.Path)) : validation.Hash(Path.Combine(root, material.Path))) != material.Sha256)
                 throw new InvalidDataException($"artifact integrity mismatch: {material.Path}");
         }
     }
