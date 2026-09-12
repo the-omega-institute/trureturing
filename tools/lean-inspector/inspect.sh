@@ -62,7 +62,7 @@ fi
 [[ -n "$LAKE" && "$LAKE" == /* && -x "$LAKE" ]] \
   || { echo "inspect.sh: an absolute executable lake path is required (set LAKE_BIN)" >&2; exit 2; }
 CACHE_RUN="$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh"
-[[ -x "$CACHE_RUN" ]] || { echo "inspect.sh: cache writer is absent: $CACHE_RUN" >&2; exit 2; }
+[[ -x "$CACHE_RUN" ]] || { echo "inspect.sh: cache reader is absent: $CACHE_RUN" >&2; exit 2; }
 
 finish_inspector() {
   local rc=$?
@@ -126,7 +126,7 @@ run_phase() {
   fi
 }
 
-# The cache writer converges the pinned mathlib cache before starting either Lake phase.
+# Both Lake phases use the canonical reader and private build outputs.
 run_phase build "$CACHE_RUN" "$LAKE" build
 
 INSPECTOR_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"

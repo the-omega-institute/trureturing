@@ -13,16 +13,6 @@ internal sealed record DirectoryCloneResult(
     int Attempts,
     string? Message);
 
-internal sealed record ClonefileReceipt(
-    int Attempts,
-    IReadOnlyList<int> Errnos,
-    string? CleanupError)
-{
-    internal static ClonefileReceipt NotRun { get; } = new(0, [], null);
-
-    internal int? LastErrno => Errnos.Count == 0 ? null : Errnos[^1];
-}
-
 internal interface IDirectoryCloner
 {
     DirectoryCloneResult Clone(string source, string target);

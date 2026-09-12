@@ -21,7 +21,7 @@ internal static class LeanCacheBudgetPolicy
     /// 本次是对该到期的**重新收口**,不是「改大让它绿」:型别不变、论证重走、读数更新、复审线重算。
     ///
     /// **域**:`LeanCacheProvisioner` 的三个具名消费点 —— `LeanCommandBudget`(承重,
-    /// `worktree with-cache-writer` 包裹的任意 Lake 命令)、`DirectoryCopyBudget`
+    /// `worktree with-cache-reader` 包裹的任意 Lake 命令)、`DirectoryCopyBudget`
     /// (`cp -R` 回退,实测 0 次发生)、`DependencyFetchBudget`(`lake exe cache get`,
     /// 走到 3 次且差两个数量级)。后两者的继承依据与到期条件写在各自的访问器上。
     ///

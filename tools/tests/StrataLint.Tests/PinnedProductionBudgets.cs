@@ -17,8 +17,4 @@ public static class PinnedProductionBudgets
     public static readonly TimeSpan BoundedProcessRunnerBudget = BoundedProcessRunner.HangDetectionBudget; // pinned-production-constant: direct production declaration
     public static readonly TimeSpan LeanCacheProvisionBudget = TimeSpan.FromSeconds(LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds); // pinned-production-constant: LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds
     public static readonly TimeSpan LeanCacheProvisionCeiling = TimeSpan.FromSeconds(LeanCacheProvisioner.MaxProvisionBudgetSeconds); // pinned-production-constant: direct production declaration
-    public static readonly TimeSpan LeanCacheRetryOne = LeanCacheProvisioner.CloneRetryBackoffs[0]; // pinned-production-constant: direct production declaration
-    public static readonly TimeSpan LeanCacheRetryTwo = LeanCacheProvisioner.CloneRetryBackoffs[1]; // pinned-production-constant: direct production declaration
-    public static readonly TimeSpan LeanCacheRetryThree = LeanCacheProvisioner.CloneRetryBackoffs[2]; // pinned-production-constant: direct production declaration
-    public static readonly TimeSpan LeanCacheRetryFour = LeanCacheProvisioner.CloneRetryBackoffs[3]; // pinned-production-constant: direct production declaration
 }
