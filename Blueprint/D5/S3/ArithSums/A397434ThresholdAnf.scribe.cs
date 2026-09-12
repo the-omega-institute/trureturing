@@ -8,18 +8,23 @@ internal sealed class A397434ThresholdAnfDocument : IScribeDocumentDefinition
     private static readonly LibraryNoteRef Oeis =
         LibraryNoteRef.Create("D5/L/ArithSums/oeis2026a397434");
     private static readonly LibraryNoteRef ThresholdAnf =
-        LibraryNoteRef.Create("D5/L/ArithSums/meaux2019threshold");
+        LibraryNoteRef.Create("D5/L/ArithSums/meaux2021threshold");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The threshold Boolean ANF support counts at adjacent dimensions agree "
+        "The reduced-coefficient count sequence has adjacent values equal "
             + "exactly when the lower dimension is two modulo four.",
-        H("A397434: adjacent threshold ANF support counts"),
+        H("A397434: adjacent reduced-coefficient counts"),
         Blocks(
             Paragraph(Text(
-                "For n variables, take the Boolean function that is one when at least "
-                    + "ceil(n/2) variables are one. Its algebraic normal form over GF(2) "
-                    + "has one squarefree monomial for each supported subset, and a(n) "
-                    + "is the cardinality of this support.")),
+                "The Lean module defines a(n) from reducedCoeffBit, and "
+                    + "thresholdAnfSupport filters that same reduced bit. It proves the "
+                    + "adjacent classification for this reduced-coefficient count "
+                    + "sequence. The intended identification with the OEIS ANF support "
+                    + "counts uses Meaux's ANF coefficient reduction, stated separately "
+                    + "below, but the main proof does not consume that declaration; the "
+                    + "Boolean-function -> Mobius-coefficients -> reduced-bit -> "
+                    + "support-count semantic bridge is therefore not machine-closed "
+                    + "in this module.")),
             Describe.Lean(
                 DescribeId.Create("threshold-anf-coefficient-reduction"),
                 DeclarationHandle.Create(
@@ -44,10 +49,11 @@ internal sealed class A397434ThresholdAnfDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(Oeis),
                 Blocks(
                     Paragraph(Text(
-                        "Grouping supported subsets by degree identifies their cardinality "
-                            + "with the binomially weighted count defining a. The two "
-                            + "cardinality statements are used when deriving the exact "
-                            + "difference between adjacent even and odd rows.")),
+                        "The direct definitions identify the filtered reduced-bit "
+                            + "support cardinality with the binomially weighted count "
+                            + "defining a. The two cardinality statements are used when "
+                            + "deriving the exact difference between adjacent even and "
+                            + "odd rows.")),
                     Paragraph(Text(
                         "For an even lower dimension 2m, the difference is twice a nonnegative "
                             + "binomial sum over degrees d for which both choose(d-1,m) and "

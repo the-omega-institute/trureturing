@@ -4,7 +4,7 @@
    mirror-E: none(waiver:general-symbolic-proof-no-numeric-artifact)
    anchors: []
    utility: none
-   digest: Adjacent threshold ANF support counts agree exactly at indices two modulo four. -/
+   digest: Proves the adjacent classification for the count sequence defined by reducedCoeffBit; thresholdAnfSupport filters that same reduced bit. The semantic identification with OEIS ANF support counts relies on Meaux's ANF coefficient reduction, stated separately as threshold_anf_coefficient_reduction, but that declaration is not consumed by the main proof, so the Boolean-function -> Mobius-coefficients -> reduced-bit -> support-count bridge is not machine-closed here. -/
 
 import Mathlib
 
@@ -95,7 +95,7 @@ theorem threshold_support_card (n t : Nat) :
     (Finset.sum_powerset_apply_card (f := fun d => reducedCoeffBit t d)
       (x := (Finset.univ : Finset (Fin n))))
 
-/-- The OEIS sequence value is the cardinality of the threshold ANF support. -/
+/-- The reduced-coefficient count is the cardinality of its filtered support. -/
 theorem a_eq_threshold_support_card (n : Nat) :
     a n = (thresholdAnfSupport n ((n + 1) / 2)).card := by
   exact (threshold_support_card n ((n + 1) / 2)).symm

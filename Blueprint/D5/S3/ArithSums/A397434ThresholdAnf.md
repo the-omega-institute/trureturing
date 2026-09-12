@@ -1,10 +1,10 @@
-# A397434: adjacent threshold ANF support counts
+# A397434: adjacent reduced-coefficient counts
 
 ## Abstract
 
-The threshold Boolean ANF support counts at adjacent dimensions agree exactly when the lower dimension is two modulo four.
+The reduced-coefficient count sequence has adjacent values equal exactly when the lower dimension is two modulo four.
 
-For n variables, take the Boolean function that is one when at least ceil(n/2) variables are one. Its algebraic normal form over GF(2) has one squarefree monomial for each supported subset, and a(n) is the cardinality of this support.
+The Lean module defines a(n) from reducedCoeffBit, and thresholdAnfSupport filters that same reduced bit. It proves the adjacent classification for this reduced-coefficient count sequence. The intended identification with the OEIS ANF support counts uses Meaux's ANF coefficient reduction, stated separately below, but the main proof does not consume that declaration; the Boolean-function -> Mobius-coefficients -> reduced-bit -> support-count semantic bridge is therefore not machine-closed in this module.
 
 **Theorem 1.1 (Threshold coefficients reduce to one binomial coefficient).**
 
@@ -12,7 +12,7 @@ $$\forall t \in \mathbb{N},\; \forall d \in \mathbb{N},\; \left(1 \le t \land 1 
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/A397434ThresholdAnf.threshold_anf_coefficient_reduction` (`✓ std3`). ∎
 
-*Citation.* Pierrick Meaux (2019). *On the Fast Algebraic Immunity of Majority Functions*. URL: <https://eprint.iacr.org/2019/999>.
+*Citation.* Pierrick Meaux (2021). *On the Fast Algebraic Immunity of Threshold Functions*. DOI: [10.1007/s12095-021-00505-y](https://doi.org/10.1007/s12095-021-00505-y).
 
 *Commentary.*
 
@@ -30,7 +30,7 @@ $$\forall n \in \mathbb{N},\; 1 \le n \Rightarrow \left(a\left(n\right) = a\left
 
 *Commentary.*
 
-Grouping supported subsets by degree identifies their cardinality with the binomially weighted count defining a. The two cardinality statements are used when deriving the exact difference between adjacent even and odd rows.
+The direct definitions identify the filtered reduced-bit support cardinality with the binomially weighted count defining a. The two cardinality statements are used when deriving the exact difference between adjacent even and odd rows.
 
 For an even lower dimension 2m, the difference is twice a nonnegative binomial sum over degrees d for which both choose(d-1,m) and choose(d,m) are odd. This degree set is empty for odd m; for positive even m it contains m+1, making the sum positive.
 

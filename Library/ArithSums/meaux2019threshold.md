@@ -5,28 +5,25 @@ year: 2019
 title: On the Fast Algebraic Immunity of Majority Functions
 doi: null
 url: https://eprint.iacr.org/2019/999
-claim: For positive threshold and degree, the threshold-function ANF coefficient is the parity of one binomial coefficient.
+claim: "The 2019 ePrint is the source cited as [Méa19], Theorem 1; the exact theorem body and coefficient formula remain ASSUMED-UNVERIFIED here."
 strata_touched:
   - D5/S3/ArithSums/A397434ThresholdAnf
 license: citation-only
 triage: anchor
 ---
 
-# Algebraic normal forms of threshold functions
+# Méaux 2019: fast algebraic immunity of majority functions
 
-Pierrick Meaux's *On the Fast Algebraic Immunity of Majority Functions*,
-Cryptology ePrint Archive 2019/999, states Theorem 1 on the algebraic normal
-form of threshold functions. For positive threshold `t` and positive degree
-`d`, the coefficient is the parity of `choose(d-1,t-1)`.
+Pierrick Méaux's 2019 ePrint *On the Fast Algebraic Immunity of Majority
+Functions* is the work cited as `[Méa19]`. Méaux's separate 2021 single-author
+paper labels its Lemma 2 `([Méa19], Theorem 1)`; it is not a Carlet--Méaux
+paper and it is not a publication-year variant of the direct-sums article.
 
-Carlet and Meaux restate the result as Lemma 2 in their later study of direct
-sums of monomials and threshold functions. The source record cites this as
-Meaux (2021), Lemma 2, and records its attribution to Meaux (2019), Theorem 1.
+**ASSUMED-UNVERIFIED:** the complete 2019 ePrint text was not independently
+verified in this run, so this card does not assert the detailed content of its
+Theorem 1. The local Lean coefficient declaration uses the separate 2021 card
+as its provenance locator.
 
-The local Lean theorem implements this coefficient reduction rather than
-claiming it as new mathematical content. The subsequent adjacent-row identity
-and parity classification are repository derivations.
-
-## Verified locator
+## Locator
 
 - URL: https://eprint.iacr.org/2019/999
