@@ -58,7 +58,6 @@ import os
 import re
 import subprocess
 import sys
-import tempfile
 from pathlib import Path
 
 ANUM = re.compile(r"\A[0-9]{6}\Z")
@@ -66,28 +65,16 @@ ANUM_IN_PATH = re.compile(r"A[0-9]{6}")
 CONCEPT_MODULE = re.compile(r"\ASequencelib/[A-Z][A-Za-z]+\.lean\Z")
 FC_OEIS = re.compile(r"\AFormalConjectures/OEIS/([0-9]+)\.lean\Z")
 
+# Measured 2026-09-13. A corpus that has moved materially away from these is not
+# one this probe knows how to read, and it says so rather than reporting a miss.
+SEQUENCELIB_PATHS = 26336
+SEQUENCELIB_ANUMS = 25465
+FORMALCONJ_PATHS = 1733
+FORMALCONJ_OEIS = 227
+
 SEQUENCELIB = os.environ.get("OEIS_SEQUENCELIB_REPO", "provables/sequencelib")
 FORMALCONJ = os.environ.get("OEIS_FORMALCONJ_REPO", "google-deepmind/formal-conjectures")
 LEANPROOFS = os.environ.get("OEIS_LEANPROOFS_REPO", "plby/lean-proofs")
-
-# A cache is trusted only if it carries this marker, written by this version
-# after a validated fetch. A file left by any other writer — a partial
-# extraction, an older implementation, a hand-made fixture — is refetched
-# rather than believed.
-CACHE_SCHEMA = "oeis-prior-art/cache/v3"
-
-
-def cache_marker(repo: str) -> str:
-    """Provenance line binding a cache file to the corpus it was fetched from.
-
-    A global marker is forgeable across corpora: two repositories whose names
-    differ only where '/' becomes '_' share a cache path, and a file carrying a
-    corpus-independent marker would then be trusted for the wrong corpus and
-    produce a confident no-indexed-path result. The marker names the repository
-    and the schema, and the reader requires an exact match.
-    """
-    return f"# {CACHE_SCHEMA} repo={repo} validated-untruncated-tree\n"
-
 
 class Failure(Exception):
     """Any condition under which a miss could not be trusted."""
@@ -106,53 +93,20 @@ def run(argv: list[str]) -> str:
     return proc.stdout
 
 
-def cache_dir() -> Path:
-    raw = os.environ.get("OEIS_PRIOR_ART_CACHE") or os.path.join(
-        tempfile.gettempdir(), "oeis-prior-art"
-    )
-    path = Path(raw)
-    path.mkdir(parents=True, exist_ok=True)
-    return path
-
-
-def ttl_minutes() -> int:
-    raw = os.environ.get("OEIS_PRIOR_ART_TTL_MIN", "720")
-    if not raw.isdigit():
-        raise Failure(f"OEIS_PRIOR_ART_TTL_MIN must be a whole number of minutes, got: {raw!r}")
-    return int(raw)
-
-
-def fetch_tree(repo: str, min_paths: int) -> list[str]:
+def fetch_tree(repo: str, expected: int) -> list[str]:
     """Return every path in a repository's default-branch tree.
 
-    Fails closed on a truncated tree, on a short tree, and on any cache whose
-    provenance marker is absent: a truncated or partial tree turns every miss
-    into a false negative, which is the single failure this probe exists to
-    prevent.
+    There is deliberately no cache. A cache is a pure optimisation here — this
+    probe runs once before a seat is dispatched, not in a loop — and it brought
+    an entire trust surface with it: provenance markers, freshness, atomic
+    publication, temporary files, key collisions, partial writes. Every one of
+    those is a way for a stale or partial tree to become a confident miss, which
+    is the single failure this probe exists to prevent. Fetching each time costs
+    a few seconds and removes the surface.
+
+    Fails closed on a truncated tree and on a tree materially smaller than the
+    corpus is known to be.
     """
-    import time
-
-    # The slug is only a filename; the provenance marker below, not the slug,
-    # is what binds a cache file to its corpus.
-    import hashlib
-
-    if "/" not in repo:
-        raise Failure(f"repository {repo!r} is not in owner/name form")
-    slug = repo.replace("/", "_") + "-" + hashlib.sha256(repo.encode()).hexdigest()[:12]
-    cached = cache_dir() / f"{slug}.paths"
-    marker = cache_marker(repo)
-
-    if cached.is_file():
-        age_min = (time.time() - cached.stat().st_mtime) / 60.0
-        if age_min < ttl_minutes():
-            text = cached.read_text()
-            if text.startswith(marker):
-                paths = text[len(marker):].splitlines()
-                if len(paths) >= min_paths:
-                    return paths
-            # falls through to refetch: unmarked, or shorter than the corpus
-            # is known to be. Never trusted on line count alone.
-
     branch = run(["gh", "repo", "view", repo, "--json", "defaultBranchRef",
                   "-q", ".defaultBranchRef.name"]).strip()
     if not branch:
@@ -170,14 +124,14 @@ def fetch_tree(repo: str, min_paths: int) -> list[str]:
     if "tree" not in tree:
         raise Failure(f"{repo} tree response has no 'tree' key")
 
-    paths = [entry["path"] for entry in tree["tree"]]
-    if len(paths) < min_paths:
-        raise Failure(f"{repo} yielded {len(paths)} paths, fewer than the "
-                      f"{min_paths} this corpus is known to hold; refusing to trust it")
+    try:
+        paths = [entry["path"] for entry in tree["tree"]]
+    except (KeyError, TypeError) as exc:
+        raise Failure(f"{repo} tree contains an entry without a path: {exc}") from exc
 
-    tmp = cached.with_suffix(".partial")
-    tmp.write_text(marker + "\n".join(paths) + "\n")
-    tmp.replace(cached)          # publish atomically, only after validation
+    if len(paths) < expected * 0.8:
+        raise Failure(f"{repo} returned {len(paths)} paths against roughly {expected} "
+                      "expected; the corpus changed shape and a miss would mean nothing")
     return paths
 
 
@@ -193,24 +147,32 @@ def main(argv: list[str]) -> int:
             raise Failure(f"not an A-number: {raw!r} (expected A followed by exactly six digits)")
         anums.append(text)
 
-    # Environment is validated up front too, so a bad TTL or an unusable cache
-    # directory fails before any query rather than at the first cache hit.
-    ttl_minutes()
-    cache_dir()
-
-    sl_paths = fetch_tree(SEQUENCELIB, 20000)
-    fc_paths = fetch_tree(FORMALCONJ, 1000)
+    sl_paths = fetch_tree(SEQUENCELIB, SEQUENCELIB_PATHS)
+    fc_paths = fetch_tree(FORMALCONJ, FORMALCONJ_PATHS)
 
     sl_anums = {m.group(0) for p in sl_paths for m in [ANUM_IN_PATH.search(p)] if m}
-    if not sl_anums:
-        raise Failure(f"no A-number occurs in any {SEQUENCELIB} path; its layout changed")
+    # A non-empty check would pass a corpus that had been half-renamed, leaving
+    # the queried A-number outside the shape this probe knows how to read. The
+    # count is compared against the measured one instead.
+    if len(sl_anums) < SEQUENCELIB_ANUMS * 0.8:
+        raise Failure(f"{SEQUENCELIB} exposes {len(sl_anums)} A-numbers in paths against "
+                      f"roughly {SEQUENCELIB_ANUMS} expected; its layout changed and a "
+                      "miss would mean nothing")
     sl_max = max(sl_anums)
     sl_named = sum(1 for p in sl_paths if CONCEPT_MODULE.match(p))
 
     fc_index = {m.group(1): p for p in fc_paths for m in [FC_OEIS.match(p)] if m}
-    if not fc_index:
-        raise Failure(f"no FormalConjectures/OEIS/<decimal>.lean path occurs in "
-                      f"{FORMALCONJ}; its layout changed and a miss would mean nothing")
+    # KNOWN LIMIT, recorded rather than papered over: a size comparison catches a
+    # wholesale rename but not a small migration. Moving two files out of
+    # FormalConjectures/OEIS/ leaves 225 of 227 and passes this check, while a
+    # query for one of those two now reports no indexed path. Detecting that
+    # needs per-query evidence that the corpus was searched in the shape the
+    # query assumes, which this probe does not have. The RESULT block's refusal
+    # to claim absence is what carries the risk in the meantime.
+    if len(fc_index) < FORMALCONJ_OEIS * 0.8:
+        raise Failure(f"{FORMALCONJ} exposes {len(fc_index)} OEIS statements against "
+                      f"roughly {FORMALCONJ_OEIS} expected; its layout changed and a "
+                      "miss would mean nothing")
 
     hits = 0
     above_range = 0
