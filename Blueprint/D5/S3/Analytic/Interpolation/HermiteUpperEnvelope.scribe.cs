@@ -17,7 +17,7 @@ internal sealed class HermiteUpperEnvelopeDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(BridgeFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Let s be an open subset of the real line containing the closed interval from L to H, and let x lie strictly between L and H. Assume f and p are three times continuously differentiable on s, the third derivative of p is zero on s, p and f agree in value and first derivative at L, and they agree in value at H. If the third derivative of f is positive between the nodes, there is a point z strictly between them with the following remainder and strict sign. A smooth extension near the closed interval permits the usual Hermite remainder formula to apply."))),
+                    "Let s be an open subset of the real line containing the closed interval from L to H, and let x lie strictly between L and H. Assume f and p are three times continuously differentiable on s, the third derivative of p is zero on s, p and f agree in value and first derivative at L, and they agree in value at H. If the third derivative of f is positive between the nodes, there is a point z strictly between them with the following remainder and strict sign. Replacing f-p by a globally smooth function agreeing near the closed interval permits the usual Hermite remainder formula to apply."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("hermite-upper-envelope"),
