@@ -1,0 +1,16 @@
+**定义 335.1。** 定义实际值域
+$$
+L_\phi=\{\phi q:q\in\mathbb Q\}\subseteq\mathbb R,\qquad
+C_\phi=\{[\phi q]:q\in\mathbb Q\}\subseteq\mathbb T.
+$$
+使用第 69–70 条不同的有限标签 $\zeta(0),\zeta(1)$，独立定义两个普通字段域
+$$
+\mathsf{Coeff}_\phi=\{T_2(\zeta(0),r):r\in\mathsf{RatFld}\},\qquad
+\mathsf{Phase}_\phi=\{T_2(\zeta(1),r):r\in\mathsf{RatFld}\}.
+$$
+解码器分别为
+$$
+\operatorname{cdec}_\phi(T_2(\zeta(0),r))=\phi\operatorname{qdec}(r),\qquad
+\operatorname{gdec}_\phi(T_2(\zeta(1),r))=[\phi\operatorname{qdec}(r)].
+$$
+

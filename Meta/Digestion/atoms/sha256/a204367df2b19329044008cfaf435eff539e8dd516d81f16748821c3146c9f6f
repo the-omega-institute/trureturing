@@ -1,0 +1,35 @@
+**定理 288。** 第 287 条的正整数观察像恰为图
+$$
+\Gamma_+[\mathbb N_{>0}]
+=\{(\mathscr A(\operatorname{val}u),u,[\phi\operatorname{val}u]):u\in\mathsf W_Z^+\},
+$$
+其到中间坐标 $\mathsf W_Z^+$ 的投影是双射。对 $n>0$，置 $\ell=|\zeta(n)|=\ell_Z(n)$，则
+$$
+\mathscr A(n)\in\{\ell-1,\ell\},\qquad
+\mathscr A(n)=\ell\iff n\ge\phi^\ell.
+$$
+两个尺度值均能达到。若 $u=\zeta(n)$，则第 51 条的相位换算为
+$$
+\gamma(n)=\left[\sum_{j<\ell}(-1)^{j+1}u(j)\alpha^{j+2}\right].
+$$
+空字的同一公式给 $\gamma(0)=0$。有符号整数的尺度读取绝对值，负整数的相位为其绝对值相位的群逆。$\gamma_{\mathbb Z}$ 是单射；对任意固定有限集合 $Q$ 及函数 $H:\mathbb T\to Q$，$H\circ\gamma_{\mathbb Z}$ 都不能单射表示全部整数。
+
+按第 287 条的指标配对，将第 11 条的 $K$ 视为同一权值索引上的表，则
+$$
+F(P,A,e)=K(N_P(e)).
+$$
+零素数表解码为一，有限自然空字解码为零。固定已知的 $P,A$ 时，$N_P:S(P,A)\to\mathbb N_{>0}$ 单射；对全部有限配置，整数 $N\ge1$ 的纤维恰为
+$$
+\{(P,A,e):P\subseteq\operatorname{Pr}\text{ 有限},\
+\{p:v_p(N)>0\}\subseteq P,\
+ e_p=v_p(N),\ A(p)\ge e_p\ (p\in P)\}.
+$$
+每轴的状态数为 $A(p)+1$。
+
+令第 51 条的整数位移为 $L(n)=\lfloor(n+1)\phi\rfloor-1$。当 $n>0$ 时，
+$$
+|\zeta(L(n))|=\ell+1,\qquad
+\mathscr A(L(n))-\mathscr A(n)\in\{0,1,2\},
+$$
+且三个增量都可达到。
+

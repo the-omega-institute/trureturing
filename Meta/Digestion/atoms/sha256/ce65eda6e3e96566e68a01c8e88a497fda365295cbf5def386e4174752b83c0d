@@ -1,0 +1,18 @@
+**定理 173（数位索引、寄存器指数与素数指数的三层分离）。** 对固定 \(P\) 及局部行族 \((u_p)_{p\in P}\)，全局标量码可写为
+\[
+\widehat\Pi_Z(\operatorname{Reg}_Z(P),(u_p)_{p\in P})
+ =\operatorname{NatZ}\left(
+   \prod_{p\in P}p^{\operatorname{ev}_G(F_{u_p})}
+  \right).
+\tag{Z-THREE-LAYERS}
+\]
+其中：\(j\) 只决定一个 Fibonacci 基位置 \(G_j\)；\(\operatorname{ev}_G(F_{u_p})\) 是寄存器 \(p\) 的整数指数；外层幂 \(p^{\operatorname{ev}_G(F_{u_p})}\) 才是素数的通常指数运算。若对两个局部行逐行相加并规范化，则
+\[
+p^{\operatorname{ev}_G(F_{u_p}+F_{v_p})}
+ =p^{\operatorname{ev}_G(F_{u_p})}
+  p^{\operatorname{ev}_G(F_{v_p})}.
+\]
+因此“指数由 Zeckendorf 组成”表示指数的表示方式改变；它不把 Fibonacci 位置指标本身变成素数幂指数，也不把位置相加替代数值评价。
+
+**证明。** 定义 171 给出每个局部行的评价，定义 119 的全局乘积再对各寄存器取素数幂，故 (Z-THREE-LAYERS) 直接成立。第一层等式是定义 171 的有限和评价；第二层由普通整数幂的 \(p^{r+s}=p^rp^s\)；两者合并即得所示式。若把 \(j+k\) 代替 \(G_jG_k\)，定理 172 的 \(G_1^2\ne G_2\) 给出反例，所以位置指标不能承担第二层或第三层的含义。证毕。
+

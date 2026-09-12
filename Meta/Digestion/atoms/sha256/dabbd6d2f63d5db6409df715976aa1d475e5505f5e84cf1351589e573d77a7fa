@@ -1,0 +1,31 @@
+**定理 248（标量阈值反演、记录点与最少正轴数）。** 若 $q=1$，则所有 $b,K$ 上 $m_{1,K}(b)=1$，且 $\mathcal P_{1,K}=\mathcal P_1=\{(0,1)\}$。若 $q>1,K=0$，则 $m_{q,0}$ 的域与 $\mathcal P_{q,0}$ 均为空。对 $K\ge1,q\ge1$，$m_{q,K}$ 的域为
+$$
+\{b:\mathcal C_K(b)\ge q\}=\{b\in\mathbb N:b\ge b_0(q,K)\},
+$$
+其中按定理 233，
+$$
+b_0(q,K)=
+\begin{cases}
+\min\{s:q\le2^s\},&q\le2^K,\\
+K-1+\ell_Z\!\left(\left\lceil q/2^{K-1}\right\rceil-1\right),&q>2^K.
+\end{cases}
+$$
+在其域内，
+$$
+\mathcal J(N,b,K)\ge q\iff N\ge m_{q,K}(b),
+$$
+$m_{q,K}(b)$ 随 $b$ 非增，且
+$$
+\mathcal P_{q,K}=
+\{(b_0,m_{q,K}(b_0))\}\cup
+\{(b,m_{q,K}(b)):b>b_0,\ m_{q,K}(b)<m_{q,K}(b-1)\}.
+$$
+每个记录点的达到配置必须恰用宽度 $b$，不能只用更小宽度。
+
+对 $N\ge1,b\ge0,q\ge1$，令 $\kappa_q(N,b)$ 为满足 $M\le N,B\le b,Q\ge q$ 的配置的最少正轴数，在没有这样的配置时无定义。它由同一个联合函数反演为
+$$
+\kappa_q(N,b)=
+\min\{j\in\{0,\ldots,\min(b,a_N)\}:\mathcal J(N,b,j)\ge q\}.
+$$
+右边为空恰表示不可行；若另限轴数至多 $K$，就在同一式中把上界改为 $\min(K,b,a_N)$。
+

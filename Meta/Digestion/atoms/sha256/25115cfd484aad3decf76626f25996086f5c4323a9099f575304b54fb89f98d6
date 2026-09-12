@@ -1,0 +1,21 @@
+**定理 224（终端商的最小轴生成集）。** 对任意 \(t\in\mathbb Z\)、\(p\in P\)、\(j\in\omega\)，有
+\[
+\overline e_{t,p,j}=G_j\,\overline e_p.
+\tag{Z-TERMINAL-INSTRUCTION-REDUCTION}
+\]
+因此
+\[
+\mathsf Q_P/\ker\mathsf C_P
+ =\bigoplus_{p\in P}\mathbb Z\,\overline e_p
+ \cong\mathbb Z^P,
+\tag{Z-TERMINAL-RANK}
+\]
+且 \(\{\overline e_p:p\in P\}\) 是该自由阿贝尔群的基。任何生成该终端商的指令族至少含有 \(|P|\) 个元素；恰由这 \(|P|\) 个轴基元即可生成全部终端指令类。对 5040 配置，终端商的秩为四；容量角的五个局部槽位经过商化后满足
+\[
+\overline e_{0,2,2}=3\overline e_2,\qquad
+\overline e_{0,2,0}=\overline e_2,\qquad
+\overline e_{0,3,1}=2\overline e_3,\qquad
+\overline e_{0,5,0}=\overline e_5,\qquad
+\overline e_{0,7,0}=\overline e_7.
+\]
+

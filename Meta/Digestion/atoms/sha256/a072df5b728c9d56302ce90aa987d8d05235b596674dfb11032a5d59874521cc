@@ -1,0 +1,12 @@
+**定义 321.1。** 在 ZFC 中沿用第 255、306–307 条的通常整数 $\mathbb Z_o$、有限支撑总状态群 $\mathsf V_{\rm reg}$、基 $(\varepsilon_n)_{n\in\omega}$、完整圆周乘积 $\mathsf X_{\rm reg}=\mathbb T^\omega$ 及 $\Psi_{\rm reg}$，不改变其定义域。另定义加法商群和全部系数序列
+$$
+\mathsf D_{\rm rat}=\mathbb Q/\mathbb Z_o,\qquad
+j_{\rm rat}:\mathsf D_{\rm rat}\to\mathbb T,\quad [q]_{\rm rat}\mapsto[q],\qquad
+\Theta_{\rm rat}=(\mathsf D_{\rm rat})^\omega.
+$$
+$[q]_{\rm rat}$ 表示有理数的整数平移类，$[x]$ 表示实数的整数平移类。每个 $\theta\in\Theta_{\rm rat}$ 都是定义域恰为 $\omega$ 的总函数，不要求有限支撑。对 $u\in\mathsf V_{\rm reg}$ 定义
+$$
+\chi^{\rm rat}_\theta(u)=\sum_{n\in\operatorname{supp}(u)}u_n\theta_n\in\mathsf D_{\rm rat}.
+$$
+整数倍按加法群解释，空和为零；本条特征的上标区分第 255 条的原整数提升 $\chi$。
+

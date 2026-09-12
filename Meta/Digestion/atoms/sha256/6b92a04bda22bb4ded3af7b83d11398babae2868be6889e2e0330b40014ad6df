@@ -1,0 +1,37 @@
+**定义 333.1。** 复用第 316–317 条的独立状态域 $\mathsf{Rec}_{\rm reg}$ 及双射 $\operatorname{rec}_{\rm reg},\operatorname{unrec}_{\rm reg}$，不另建状态记录类型。由第 306 条的递增素数枚举和第 95–96 条的素数数字双射，定义标签运输
+$$
+\lambda_{\rm reg}:\omega\to\mathsf{Pr}_Z,\qquad
+\lambda_{\rm reg}(n)=\zeta(p_n),\qquad
+\operatorname{idx}_{\rm reg}(a)=\text{满足 }p_n=\operatorname{val}(a)\text{ 的唯一 }n.
+$$
+因此对每个有限 $I\subseteq\omega$，有 $\lambda_{\rm reg}[I]=\mathsf{Lab}_I^{\rm reg}$。独立定义
+$$
+\mathsf{ProbeRec}=\{t:t\text{ 是从 }\mathsf{Pr}_Z\text{ 到 }\mathsf{RatPhaseFld}\text{ 的总函数}\},
+$$
+$$
+\mathsf{FinCoef}=\{a:a\text{ 是从某个有限 }F\subseteq\omega
+\text{ 到 }\mathsf D_{\rm rat}\text{ 的函数，且 }\operatorname{dom}(a)=F\},
+$$
+$$
+\mathsf{FinProbeRec}=\{c:c\text{ 是从 }\mathsf{Pr}_Z
+\text{ 到 }\mathsf{RatPhaseFld}\text{ 的有限部分函数}\}.
+$$
+后两类保留其有限域上的零值，空图合法。定义
+$$
+\operatorname{prec}_{\rm rat}(\theta)(\lambda_{\rm reg}(n))
+=\operatorname{penc}(\theta_n),\qquad
+\operatorname{unprec}_{\rm rat}(t)_n
+=\operatorname{pdec}(t(\lambda_{\rm reg}(n))),
+$$
+$$
+\operatorname{dom}(\operatorname{fprec}_{\rm rat}(a))
+=\lambda_{\rm reg}[\operatorname{dom}(a)],\qquad
+\operatorname{fprec}_{\rm rat}(a)(\lambda_{\rm reg}(n))=\operatorname{penc}(a(n)),
+$$
+$$
+\operatorname{dom}(\operatorname{unfprec}_{\rm rat}(c))
+=\operatorname{idx}_{\rm reg}[\operatorname{dom}(c)],\qquad
+\operatorname{unfprec}_{\rm rat}(c)(n)=\operatorname{pdec}(c(\lambda_{\rm reg}(n))).
+$$
+有限映射的值式仅在各自显示的域上使用。总系数 $\theta$ 的域仍为 $\omega$；记录的域是原始素数字集 $\mathsf{Pr}_Z$，二者通过 $\lambda_{\rm reg}$ 运输，不作字面认同。
+

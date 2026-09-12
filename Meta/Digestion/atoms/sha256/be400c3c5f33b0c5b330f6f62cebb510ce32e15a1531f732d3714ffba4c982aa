@@ -1,0 +1,36 @@
+**证明。** 置 $D=T(x)$、$\mu=\max(\aleph_0,|D|)$。令
+$$
+L=\omega\cup\bigcup_{n\in\omega}T(\operatorname{NatZ}(n)).
+$$
+每个自然叶属于 $HF$，其含根传递闭包有限。$\omega$ 和各个 $T(\operatorname{NatZ}(n))$ 都传递，传递集合的并仍传递；ZFC 中可数个有限集合的并至多可数，加上 $\omega$ 后 $L$ 恰可数。对 $y\in D\setminus\omega$ 置 $B_y=\operatorname{Enc}[y]$，并取
+$$
+U=L\cup\operatorname{Enc}[D]\cup
+ \bigcup_{y\in D\setminus\omega}
+ \{B_y,\{1\},\{1,B_y\}\}.
+$$
+替代保证 $\operatorname{Enc}[D]$、每个 $B_y$ 以及以 $D\setminus\omega$ 为索引的显示集合族都是集合；并集公理给 $U$ 是集合。$L$ 可数，$\operatorname{Enc}[D]$ 的基数至多 $|D|$，最后一项至多是 $|D|$ 个三元集合之并，故 $|U|\le\mu$。
+
+逐种元素核对传递性。$L$ 的元素的成员仍在 $L$。$y\in D\cap\omega$ 的码是自然叶，其全部成员都在 $T(\operatorname{NatZ}(y))\subseteq L$。$y\in D\setminus\omega$ 的码 $\langle1,B_y\rangle$ 的成员为 $\{1\}$、$\{1,B_y\}$，这两个集合已加入 $U$；它们的成员 $1,B_y$ 也在 $U$，其中 $1\in\omega\subseteq L$。最后，$B_y$ 的每个成员是某个 $z\in y$ 的码；$D$ 传递使 $z\in D$，故该码仍在 $\operatorname{Enc}[D]$。这涵盖 $U$ 的全部元素，所以 $U$ 传递。此外 $x\in D$，故 $\operatorname{Enc}(x)\in U$。最小性给
+$$
+T(\operatorname{Enc}(x))\subseteq U,
+$$
+得到统一上界。
+
+对任意 $y\in D\setminus\omega$，存在从 $x$ 到 $y$ 的有限成员链。链上每个集合都不属于 $\omega$，因为有限序数的全部传递成员仍是有限序数。对链上的每一步 $z\in w$，非自然编码给
+$$
+\operatorname{Enc}(z)\in B_w\in\{1,B_w\}\in\operatorname{Enc}(w).
+$$
+将链中每一步替换为此三步成员链，就得到从 $\operatorname{Enc}(x)$ 到 $\operatorname{Enc}(y)$ 的有限成员链。若原链长度为零，则 $y=x$，由含根约定直接成立。因此
+$$
+\operatorname{Enc}[D\setminus\omega]\subseteq T(\operatorname{Enc}(x)).
+$$
+这里只嵌入非自然节点。编码单射由此给出
+$$
+|D\setminus\omega|\le |T(\operatorname{Enc}(x))|.
+$$
+含根传递闭包有限当且仅当集合遗传有限：从有限遗传构造取各级成员的并仍有限；反向，若闭包有限，基础公理使其成员图无环，有限图的成员链长度有有限上界，由秩递推得闭包中各元素均有有限秩，逐秩为有限集合的遗传有限构造。若 $x\notin HF$，第 72 条使 $\operatorname{Enc}(x)\notin HF$，故源、目标闭包都无限。置 $\nu=|T(\operatorname{Enc}(x))|\ge\aleph_0$，上述注入给 $|D\setminus\omega|\le\nu$，而 $|D\cap\omega|\le\aleph_0\le\nu$。ZFC 的无限基数加法给 $|D|\le\nu+\nu=\nu$，即
+$$
+|D|\le |T(\operatorname{Enc}(x))|.
+$$
+此时 $|D|$ 也无限，统一上界中的 $\max(\aleph_0,|D|)$ 等于 $|D|$；两向不等式得到结论。证毕。
+

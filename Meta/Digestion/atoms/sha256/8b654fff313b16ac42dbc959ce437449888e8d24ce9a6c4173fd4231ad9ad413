@@ -1,0 +1,19 @@
+**定理 341.2。** $R_{A,I}$ 与 $Z_{A,I}$ 互逆，包括空 $I$。因此该有限域经第 91–92、95–96、115–116、304–305 条与相应有限配置、素数标签数字及配置码准确对应，并有
+$$
+|B_{A,I}^{\rm cap}|=\prod_{i\in I}(A_i+1).
+$$
+在固定标签、容量和解释函数下，第 98 条的有限状态位数结论适用于这个有限配置。两映射的限制分别为到 $\mathsf{Rec}_A^{\rm cap}$ 和 $\mathsf{Dig}_A^{\rm cap}$ 的双射，所列逆在各自像上与它们双向复合为恒等。
+
+对定义 341.1 的每个拓扑载体，$\operatorname{enc}_Y$ 为同胚，逆恰为 $\operatorname{Dec}|_{Y^*}$，且对每个 $E\subseteq Y$ 有
+$$
+\overline{\operatorname{Enc}[E]}^{\tau^*}
+=\operatorname{Enc}[\overline E^{\tau}],\qquad
+\tau^*=\{\operatorname{El}(c):c\in\operatorname{El}(\operatorname{Enc}(\tau))\}.
+$$
+指定源、目标拓扑后，$f$ 连续当且仅当 $f^*$ 连续；收敛及不连续同样保持并反映。特别当 $M_A<+\infty$ 时，唯一连续实延拓运输为
+$$
+S_A^*:(X_A^{\rm cap})^*\longrightarrow\mathbb R^*,\qquad
+S_A^*(\operatorname{Enc}(x))=\operatorname{Enc}(S_A(x)),
+$$
+目标是通常实拓扑的运输，不将每个输出改为有限有理字段。第 337–340 节的全部等式、成员、闭包和连续性断言均在相应载体与拓扑上运输，保持每个固定有限集合论公式的双向比较。
+

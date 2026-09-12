@@ -1,0 +1,56 @@
+**定义 304。** 固定有限素数集 $P$；有界情形另固定 $A:P\to\mathbb N$。沿用第 113–114 条的 $\mathsf Z_{\mathbb Z}$、$\operatorname{scode}$、$\operatorname{ival}$：零只有 $0_Z$ 一个码，正负标签仅附于非零自然数字。定义独立的无界目标集合
+$$
+P_Z^{\rm lab}=\{\operatorname{NatZ}(p):p\in P\},\qquad
+\mathcal V_{P,Z}^{\mathbb Z}
+=\{u:u\text{ 是定义域恰为 }P_Z^{\rm lab}\text{、值属于 }\mathsf Z_{\mathbb Z}\text{ 的普通函数}\}.
+$$
+定义两个外部映射
+$$
+\begin{aligned}
+\gamma_P^\infty &: \mathbb Z^P\longrightarrow\mathcal V_{P,Z}^{\mathbb Z},&
+\gamma_P^\infty(e)(\operatorname{NatZ}(p))&=\operatorname{scode}(e_p),\\
+\delta_P^\infty &: \mathcal V_{P,Z}^{\mathbb Z}\longrightarrow\mathbb Z^P,&
+\delta_P^\infty(u)(p)&=\operatorname{ival}(u(\operatorname{NatZ}(p))).
+\end{aligned}
+$$
+这些表是有限的普通函数图，标签槽使用自然叶，内容槽使用有符号整数码；有符号内容可为负且没有容量上界。表中的普通有序对不混作第 74 条的语义有序对。$P_Z^{\rm lab}$ 用自然叶作标签，而第 95 条的 $P_Z=\zeta[P]$ 仍用自然有限字作标签。
+
+另定义固定容量的精确像
+$$
+\mathcal C_{P,A,Z}=\{\operatorname{Cfg}_Z(P,A,x):x\in X_A\},\qquad
+\gamma_{P,A}:X_A\longrightarrow\mathcal C_{P,A,Z},\quad
+\gamma_{P,A}(x)=\operatorname{Cfg}_Z(P,A,x).
+$$
+对 $c\in\mathcal C_{P,A,Z}$，其三个语义字段按第 115–116 条分别为寄存器标签表、容量表和状态表。前两个字段固定为 $\operatorname{Reg}_Z(P)$、$\operatorname{Tab}_Z(P,A)$；定义
+$$
+\delta_{P,A}(c)(p)=\text{使 }\langle\operatorname{NatZ}(p),\operatorname{NatZ}(n)\rangle_Z
+\text{ 成为 }c\text{ 的第三字段之 }\in_Z\text{ 成员的唯一自然数 }n.
+$$
+这里 $0\le n\le A(p)$，故 $\delta_{P,A}:\mathcal C_{P,A,Z}\to X_A$。这一个码域有 $Q$ 个元素；无界目标则是前述独立定义的全部合法有符号表。
+
+对以上任一对映射，在各自的 $X$ 与码域 $\mathcal C$ 上记编码双射为 $\gamma:X\to\mathcal C$，逆为相应的 $\delta$。给定实际部分映射 $T:D\to X$、$D\subseteq X$，定义
+$$
+T^\gamma:\gamma[D]\longrightarrow\mathcal C,\qquad
+T^\gamma=\gamma\circ T\circ\gamma^{-1}.
+$$
+每个给定字母分别作此共轭，保持相同标签及其权重。无界选择为 $X=\mathbb Z^P$、$\gamma=\gamma_P^\infty$；有界选择为 $X=X_A$、$\gamma=\gamma_{P,A}$。
+
+对任意集合 $X$，原集合的语义码双射另记为
+$$
+\mathcal E_X=\operatorname{Enc}|_X:X\longrightarrow\operatorname{Enc}[X]
+=\operatorname{El}(\operatorname{Enc}(X)),
+$$
+其逆是 $\operatorname{Dec}$ 在该像上的限制。对上述外部编码双射，定义比较映射
+$$
+h_\gamma:\mathcal C\longrightarrow\operatorname{Enc}[X],\qquad
+h_\gamma(c)=\operatorname{Enc}(\gamma^{-1}(c)),\qquad
+h_\gamma^{-1}(z)=\gamma(\operatorname{Dec}(z)).
+$$
+因此 $\operatorname{Enc}(u)$ 编码有符号表 $u$ 本身，而 $h_{\gamma_P^\infty}(u)$ 编码它所表示的原整数向量。二者分别取表及解码向量为输入，不断言结果总不相等；$P=\varnothing$ 时表和原向量都是空函数，两个结果均为 $\operatorname{Enc}(\varnothing)$。
+
+**证明。** 第 70–72 条的自然叶单射性使每个码标签只对应一个 $p$。每个整数有唯一合法有符号码，且每个此种码经 $\operatorname{ival}$ 得整数，所以两个无界映射在所列域内良定义。逐坐标的 $\operatorname{ival}\circ\operatorname{scode}=\operatorname{id}$ 及 $\operatorname{scode}\circ\operatorname{ival}=\operatorname{id}$ 给双逆，完整恒等式见下一条。
+
+有界像中的每个 $c$ 来自一个有效配置。第 116 条的语义字段恢复使第三表中每个码标签有唯一内容，且自然叶的单射性恢复唯一自然数。该自然数正是原状态的对应坐标，故满足容量条件；重装固定的前两表与恢复的第三表得到原配置码。于是编码及所给逆互逆，有限像的大小为 $|X_A|=Q$。$P=\varnothing$ 时两个原状态域各自只有空函数，两个相应像也分别是单点；无界码是空函数，有界码是 $\operatorname{Cfg}_Z(\varnothing,\varnothing,\varnothing)$。分别使用其域和构造，不把两种码对象认作同一个对象，也不从类型用途推断所有码集合在空域处互不相交。
+
+第 71–73 条的 $\operatorname{Enc}$、$\operatorname{Dec}$ 双逆及成员展开给 $\mathcal E_X$ 的精确像和逆；把它与 $\gamma^{-1}$ 复合，立即得到 $h_\gamma$ 与显示的逆。部分映射共轭只在 $\gamma[D]$ 上求值，所以不会对域外值施用 $T$。这些是原有集合编码在指定集合上的限制，不另定义集合递归。证毕。
+

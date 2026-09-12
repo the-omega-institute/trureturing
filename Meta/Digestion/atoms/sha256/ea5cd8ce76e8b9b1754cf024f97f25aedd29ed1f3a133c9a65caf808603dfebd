@@ -1,0 +1,30 @@
+**定理 226（定理 191 的前缀群元与定理 194 的字符类型更正）。** 固定有限素数集 $P$。在定理 191 的终端逐槽平衡及 $r_X\ge0$ 假设下，$a_X=V_P^{\mathbb Z}(r_X)\in\mathbb N^P$ 及该条的终端群元、带符号码和有理读数结论均成立。若再有前缀逐槽平衡，对任意整数 $T$，令 $a_X^T=V_P^{\mathbb Z}(r_X^T)\in\mathbb Z^P$，则补集前缀对应的无条件群元为
+$$
+\Gamma_P^{-1}(-a_X^T)=[(a_X^T)^-,(a_X^T)^+].
+$$
+具体地，
+$$
+\operatorname{sdig}_P(r_{\mathsf cX}^T)
+=\operatorname{sdig}^{\rm gp}_P\bigl([(a_X^T)^-,(a_X^T)^+]\bigr),
+$$
+$$
+\operatorname{Rat}_P(r_{\mathsf cX}^T)
+=\operatorname{Rat}^{\rm gp}_P\bigl([(a_X^T)^-,(a_X^T)^+]\bigr)
+=\operatorname{Rat}_P(r_X^T)^{-1}.
+$$
+仅当 $a_X^T\ge0$ 时，才可把此群元写成 $[0,a_X^T]$。终端非负条件本身不保证该前缀条件。
+
+定理 194 的 $\Theta_P$ 仍是群同构，但其中写作 $\operatorname{Rat}_P\circ\Theta_P$ 的字符应替换为有类型的复合
+$$
+\operatorname{Rat}^{\rm gp}_P\circ\Gamma_P^{-1}\circ\Theta_P:
+\mathcal C_P^{\rm tb}/\equiv_P\longrightarrow\mathbb Q_{>0},
+\qquad
+[X]\longmapsto\operatorname{Rat}_P(r_X).
+$$
+其像为 $P$ 支撑的正有理素数幂群。正子商的自然映射
+$$
+\mathcal C_P^+/\equiv_P^+\longrightarrow\mathcal C_P^{\rm tb}/\equiv_P,
+\qquad [X]_+\longmapsto[X]
+$$
+是单射幺半群映射，经 $\Theta_P$ 的像恰为 $\mathbb N^P$；$P\ne\varnothing$ 时该像不是子群。
+

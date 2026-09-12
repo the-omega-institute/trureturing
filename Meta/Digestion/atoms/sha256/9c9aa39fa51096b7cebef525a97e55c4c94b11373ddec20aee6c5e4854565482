@@ -1,0 +1,10 @@
+**定理 334.2。** 在两种输入积之间，$\operatorname{rec}_{\rm reg}\times\operatorname{fprec}_{\rm rat}$ 将 $D_{\rm fin}$ 双射到恰好 $D_{\rm fin}^{d}$，且
+$$
+E_{\rm fin}^{d}(\operatorname{rec}_{\rm reg}(u),\operatorname{fprec}_{\rm rat}(a))
+=\operatorname{penc}(E_{\rm fin}(u,a)).
+$$
+显示的有限分数公式总落在 $\mathsf{RatPhaseFld}$。对任意总探针记录有
+$$
+E_d(s,t)=E_{\rm fin}^{d}(s,t|_{\operatorname{dom}(s)}).
+$$
+

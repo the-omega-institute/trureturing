@@ -1,0 +1,24 @@
+**定理 134（指数加法、Zeckendorf 进位与乘积同态）。** 对任意 \(a,b\in\mathsf E(P)\)，
+\[
+\operatorname{dig}^{\infty}_P(a\boxplus_P b)
+=\operatorname{dig}^{\infty}_P(a)\boxplus_Z
+ \operatorname{dig}^{\infty}_P(b),
+\]
+其中 \(\operatorname{dig}^{\infty}_P(a)(p)=\zeta(a(p))\)。并且
+\[
+\Pi_P(a\boxplus_P b)=\Pi_P(a)\Pi_P(b).
+\tag{Z-EXP-ADD}
+\]
+若 \((a,b)\in\operatorname{Dom}_{P,A}\)，则两边仍属于 \(S(P,A)\)；若不在该定义域，规范提升仍在 \(\mathsf D_\infty(P)\) 中有值，但不再是给定容量盒的状态。Zeckendorf 乘法中的系数必须使用 \(G_iG_j\)，不能以 \(G_{i+j}\) 取代；例如
+\[
+G_1G_1=4\ne3=G_2.
+\]
+
+**证明。** 固定 \(p\)。定理 70 的 \(\operatorname{Norm}\) 满足
+\[
+\operatorname{val}\bigl(\operatorname{Norm}(\operatorname{pad}(\zeta(a(p)))
++\operatorname{pad}(\zeta(b(p))))\bigr)
+=a(p)+b(p),
+\]
+故逐行比较给第一式。对素数指数使用 \(p^{r+s}=p^rp^s\)，对有限 \(P\) 相乘即得 (Z-EXP-ADD)。容量条件正好是每个规范行的值不超过 \(A(p)\)，所以给出定义域的充要性。最后，若以 \(G_{i+j}\) 代表两个占据数位的乘法贡献，在 \(i=j=1\) 时会把真实值 \(G_1G_1=4\) 错写成 \(G_2=3\)；因此该替换与定理 70 的数值乘法不相容。证毕。
+

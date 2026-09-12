@@ -1,0 +1,7 @@
+**定义 176（有限情境历史群胚及其 Zeckendorf 版本）。** 令 \(\mathbf{Hist}_{\rm fin}\) 的对象为所有有限有效情境表示 \(X=(C,A)\)，态射为保持并反映事件身份、偏序、全部属性、来源树和选择集的历史同构。令 \(\mathbf{Hist}_{Z,\rm fin}^{\rm all}\) 的对象为定义 162 的全数值编码像，态射为保持相应编码字段的同构。定义
+\[
+\mathcal F_Z(X)=\operatorname{Code}^{\rm all}_Z(X),
+\qquad
+\mathcal F_Z(h)=h.
+\]
+

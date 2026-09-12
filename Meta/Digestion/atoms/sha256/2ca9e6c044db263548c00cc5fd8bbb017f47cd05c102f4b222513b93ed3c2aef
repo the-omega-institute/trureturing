@@ -1,0 +1,36 @@
+**定理 336.2。** $h_X$ 的像恰为 $X^*$，逆在且仅在 $X^*$ 上为 $b_X\circ\operatorname{Dec}$；$e_X$ 的像恰为 $C_X^*$，逆在且仅在 $C_X^*$ 上为 $\operatorname{Dec}$。总求值的两个图码精确为
+$$
+\operatorname{Enc}(G_E)
+=\operatorname{Pack}\{\langle H_{\rm in}(c),h_o(d)\rangle_Z:
+\langle c,d\rangle\in G_{E_d}\},
+$$
+$$
+\operatorname{Enc}(G_{E_d})
+=\operatorname{Pack}\{\langle\operatorname{Enc}(c),\operatorname{Enc}(d)\rangle_Z:
+\langle c,d\rangle\in G_{E_d}\}.
+$$
+其语义定义域分别是
+$$
+\operatorname{Enc}(T_2[\mathsf V_{\rm reg},\Theta_{\rm rat}]),\qquad
+\operatorname{Enc}(T_2[\mathsf{Rec}_{\rm reg},\mathsf{ProbeRec}]),
+$$
+且
+$$
+\operatorname{ev}_Z(\operatorname{Enc}(G_E),
+T_2^Z(\operatorname{Enc}(u),\operatorname{Enc}(\theta)))
+=\operatorname{Enc}(E(u,\theta)).
+$$
+有限求值的相同两图式使用定义 336.1 的有限特化，语义域分别恰为 $\operatorname{Enc}(D_{\rm fin})$、$\operatorname{Enc}(D_{\rm fin}^{d})$，其严格失败按第 259–260 条保持。
+
+对 $X=Y_{\rm rat}$ 或 $X=X_+$ 取第 324 条实际的完整乘积拓扑 $\tau_X$，令
+$$
+\tau_X^*=\{\operatorname{Enc}[O]:O\in\tau_X\}.
+$$
+分别取 $F=\operatorname{Ev}_{\rm rat}$ 或 $F=\operatorname{Ev}_+$，定义 $F^*=\operatorname{enc}_X\circ F\circ\operatorname{enc}_{\mathsf V_{\rm reg}}^{-1}$，则对每个子群有
+$$
+\overline{F^*[H^*]}^{\tau_X^*}
+\cap F^*[\mathsf V_{\rm reg}^*]
+=F^*[H^*].
+$$
+本附录的全部定义、等式、成员谓词及量词，在新符号展开后按第 75–78 条保留每个固定有限集合论公式的双向比较。
+

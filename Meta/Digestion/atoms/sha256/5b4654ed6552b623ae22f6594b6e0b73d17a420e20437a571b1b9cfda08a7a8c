@@ -1,0 +1,12 @@
+**定理 240（平衡实现的参数恢复边界及对定理 132 的更正）。** 定义 130 的单个编码档案一般不能跨配置恢复完整的标签集、容量函数和状态表；定理 132 中关于这种无参数恢复的断言以本条替代。该条的第一式
+$$
+\operatorname{Enc}(X_{P,A}(a))=\operatorname{Enc}(C_a,A_a)
+$$
+仍成立。固定 $P,A$ 后，$a\mapsto X_{P,A}(a)$ 及其与 $\operatorname{Enc}$ 的复合仍为单射；若同一单位词 $w$ 在 $a,b\in S(P,A)$ 上均有值，则仍有
+$$
+\operatorname{Cfg}_Z(P,A,\operatorname{ev}_A(a,w))
+=\operatorname{Cfg}_Z(P,A,\operatorname{ev}_A(b,w))
+\iff \operatorname{ev}_A(a,w)=\operatorname{ev}_A(b,w).
+$$
+完整配置可由既有 $\operatorname{Cfg}_Z(P,A,a)$ 恢复，或在保留 $P,A$ 参数时由实现恢复状态。已知所观察的是容量角时，加权指数观察还可恢复正容量约化；任意当前状态的同一观察则不足以恢复容量配置。
+

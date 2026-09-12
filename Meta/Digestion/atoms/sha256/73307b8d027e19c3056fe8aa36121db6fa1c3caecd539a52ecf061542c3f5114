@@ -1,0 +1,20 @@
+**定义 338.1。** 对 $x\in X_A^{\rm cap}$ 和 $N\in\omega$ 定义
+$$
+P_N(x)=\sum_{n=0}^{N}2^{-n}x_n,\qquad
+S_A(x)=\sup_{N\in\omega}P_N(x)\in[0,+\infty],\qquad
+M_A=S_A(A)=\sum_{n=0}^{\infty}A_n2^{-n}.
+$$
+扩展非负实数中的上确界按序定义；无有限上界时取 $+\infty$。不为这个扩展值域另指定拓扑。有限状态上的实读数为
+$$
+\ell_A:B_A^{\rm cap}\longrightarrow\mathbb R,\qquad
+\ell_A=\iota_{\rm dy}\circ(\ell_{\rm dy}|_{B_A^{\rm cap}}),
+$$
+其中 $\ell_{\rm dy}:\mathsf V_{\rm reg}\to\mathbb Z_o[1/2]$ 是第 312–313 条的有限和，$\iota_{\rm dy}:\mathbb Z_o[1/2]\hookrightarrow\mathbb R$ 是通常包含。目标 $\mathbb R$ 取通常拓扑；若把实际值域看成二进有理数，则取其实子空间拓扑。
+
+置 $\mathbb D_+=\{a/2^q:a,q\in\omega\}$。对每个实数 $c$，分别定义
+$$
+L_{A,c}=\{u\in B_A^{\rm cap}:\ell_A(u)=c\},\qquad
+F_{A,c}=\{x\in X_A^{\rm cap}:S_A(x)=c\}.
+$$
+$L_{A,c}$ 即使作为 $X_A^{\rm cap}$ 的子集也仍只含有限支撑状态；$F_{A,c}$ 不施加支撑限制。以下未标明更细拓扑的闭包使用定理 337.2 的相等拓扑。
+

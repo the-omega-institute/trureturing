@@ -1,0 +1,12 @@
+**定理 356.1。** 沿用定义 338.1 的 $\ell_A:B_A^{\rm cap}\to\mathbb R$、$S_A:X_A^{\rm cap}\to[0,+\infty]$ 和 $M_A$，实直线始终取通常拓扑。则
+$$
+M_A<+\infty
+\iff\ell_A\text{ 在 }(B_A^{\rm cap},\tau_{+,A})\text{ 的零处连续}
+\iff\ell_A\text{ 在 }(B_A^{\rm cap},\tau_{+,A})\text{ 上连续}
+$$
+$$
+\iff\exists F:(X_A^{\rm cap},\tau_{\rm coord,A}^{X})\to\mathbb R
+\text{ 连续且 }F|_{B_A^{\rm cap}}=\ell_A.
+$$
+有限质量时这个连续延拓唯一，恰为实值的 $S_A$。无限质量时 $\ell_A$ 在 $\tau_{+,A}$ 的每一点都不连续。这里不排除不连续的集合函数延拓，也不对一般扩展实值域宣称连续性。
+

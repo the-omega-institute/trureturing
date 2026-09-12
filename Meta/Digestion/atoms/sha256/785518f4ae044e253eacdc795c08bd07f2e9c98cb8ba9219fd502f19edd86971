@@ -1,0 +1,22 @@
+**定义 272（字段呈现与既有集合解释的比较）。** 对第 261 条的 $R=R_{\rm all}$ 或 $R_{\rm num}$，分别记其逆为 $D_R=D_{\rm all}$ 或 $D_{\rm num}$，目标为 $\mathcal H_R$。置
+$$
+\begin{aligned}
+J_R&=\operatorname{Enc}\circ D_R\circ\operatorname{Dec}:
+       \operatorname{Enc}[\mathcal H_R]\longrightarrow\operatorname{Enc}[\mathcal H],\\
+J_R^{-1}&=\operatorname{Enc}\circ R\circ\operatorname{Dec}:
+       \operatorname{Enc}[\mathcal H]\longrightarrow\operatorname{Enc}[\mathcal H_R].
+\end{aligned}
+$$
+这里每个输入先由 $\operatorname{Dec}$ 取得所声明的完整记录，随后才改变其字段；$\operatorname{Enc}[\mathcal H_R]$ 是一个外部集合，区别于单个码 $\operatorname{Enc}(\mathcal H_R)$。特别地，$J_{R_{\rm all}}$ 的来源分量使用 $\tau_Z^{-1}$。所有有效码、集合和成员关系仍分别由第 71–78 条的 $\mathfrak V_Z,\operatorname{Enc},\operatorname{Dec},\in_Z$ 解释，本条不另定义集合宇宙或成员关系。
+
+更一般地，对任意集合双射 $d:A\to B$ 及 $U\subseteq A$，定义
+$$
+\begin{aligned}
+\widetilde d&=\operatorname{Enc}\circ d\circ\operatorname{Dec}:\operatorname{Enc}[A]\to\operatorname{Enc}[B],\\
+\mathcal P(d)(U)&=d[U],\\
+\widetilde{\mathcal P(d)}(c)&=\operatorname{Enc}(d[\operatorname{Dec}(c)])
+\quad(c\in\operatorname{Enc}[\mathcal P(A)]).
+\end{aligned}
+$$
+最后一式的目标为 $\operatorname{Enc}[\mathcal P(B)]$。它同时运输容器和其中对象，区别于只对对象取 $\widetilde d$ 而把容器固定。本条的直接历史实例取 $d=D_R$；参数集合实例取第 266 条各个底层双射。
+

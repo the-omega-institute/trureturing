@@ -1,0 +1,10 @@
+**定理 225（定理 188 的逐时刻正域更正）。** 设 $X\in\mathcal B_\lambda^+$，且背景在所有素数槽上终端逐槽平衡。此处可取包含全部非零槽投影的有限素数集 $P$，在该 $P$ 上使用定义 185。定理 188 的终端结论 $r_X\ge0$、$r_{\mathsf cX}=-r_X\le0$ 成立，但其中以 $r_X=0$ 判定补集仍在正槽域的充分性不成立。正确的全局充要条件为
+$$
+\mathsf cX\in\mathcal B_\lambda^+
+\iff Z_X\equiv0\ \land\ W_X\equiv0,
+$$
+其中恒零是指整个时间—空间函数。若进一步 $X\in\mathcal C_P^{\rm pb}$，则 $W_X\equiv0$，并恢复
+$$
+\mathsf cX\in\mathcal B_\lambda^+\iff r_X=0.
+$$
+

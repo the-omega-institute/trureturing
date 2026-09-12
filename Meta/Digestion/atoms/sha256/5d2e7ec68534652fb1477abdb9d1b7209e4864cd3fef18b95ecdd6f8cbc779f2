@@ -1,0 +1,27 @@
+**证明。** 若 $\eta_A(x)\in\eta_A[D]$，有 $y\in D$ 使 $\eta_A(x)=\eta_A(y)$，单射性给 $x=y\in D$；反向是直接像定义。域内代入双逆得到求值式。每个共轭输出恰为某个 $x\in D$ 的 $\eta_B(f(x))$，每个这样的值都出现，给值域等式的两向。
+
+共轭图中的边 $(c,d)$ 唯一确定 $x=\eta_A^{-1}(c)\in D$ 和 $y=\eta_B^{-1}(d)=f(x)$；反向每条原边唯一给该共轭边。第 74 条给
+$$
+\operatorname{Enc}(\langle x,y\rangle)
+=\langle\operatorname{Enc}(x),\operatorname{Enc}(y)\rangle_Z.
+$$
+所以第一图式的花括号集合恰为 $\operatorname{Enc}[G_f]$，第 72–73 条的成员展开与 $\operatorname{Pack}$ 双逆给 $\operatorname{Enc}(G_f)$。直接将同一配对式用于数字边自身，得到第二图式。此亦为第 260 条在 $T_1(x)=x$ 上的精确特化，没有改变元组惯例。
+
+图的定义域是至少出现在一条边的首坐标集合，函数性要求每个这样的坐标恰有一个次坐标。配对恒等式及 $\operatorname{Enc},\operatorname{Dec}$ 双逆保持并反映这两个条件，故得两语义域及语义求值，读取次坐标同样得语义值域。外部共轭按定义使用有效码作为普通图的两个坐标，域为成员像 $D^*$；另一方面第 72 条使图码的 $\operatorname{El}$ 为逐原边编码的集合，第 74 条将它写成所列语义对族。由此证明所有对象各自的比较式，不从角色区分推出所有特殊输入下集合两两不等。将原域改为 $E$ 恰选中 $\eta_A[E]$ 上的边，值式不变，故限制公式成立，亦包括空域。
+
+对 $g_u$，输入双射取第 96 条的 $p\mapsto\zeta(p)$，输出双射取 $\operatorname{scode}:\mathbb Z_o\to S$；逐标签求值给共轭恰为 $d_u$。输入逆为 $\operatorname{val}$，普通素数是自然序数，所以 $\operatorname{Enc}(p)=\operatorname{NatZ}(p)$，第一图码式给所列 $\operatorname{Enc}(g_u)$。对 $g_u^J$，输出改用 $b:J\to S$，由于
+$$
+b(v^{-1}(u_n))=\operatorname{scode}(u_n),
+$$
+共轭仍为 $d_u$，但原值提升恰为 $\chi(c)$，给第二个素数图式。直接编码 $d_u,r_u$ 的普通边，输出用 $\mathrm e(c)=\operatorname{Enc}(c)$，得到两个数字图式。最后对 $u$ 的每条索引边应用语义配对，再对全部边应用 $\operatorname{Pack}$，即得索引图式。总图的每个零坐标边均参与这些集合，有限支撑不截掉它们。各实际域由第 316–317 条的总性或部分性确定；将域限制为所列有限集合只筛选对应边，故全部限制式和相应语义域也成立。
+
+第一个寄存器特化的值式是第 317 条限制交换式；记录双射满到独立目标，故它对每个记录成立，有限空 $I$ 也给唯一空图。另两特化将各自的输出双射代入共轭定义即得；其逆只是 $\operatorname{Dec}$ 在指定像上的限制。因此第一图码式对输出 $d$ 使用 $\operatorname{Enc}(\operatorname{Dec}(d))=d$，第二图码式则编码输出对象本身而使用 $\operatorname{Enc}(d)$。再用已证限制结论，所有 $E$ 情形精确成立。
+
+全部语义对的两个参数都由 $\operatorname{Enc},\operatorname{NatZ},\chi$ 或 $\mathrm e$ 产生，绝不直接输入原始零 $0_S=\varnothing$。第 255–256 条给
+$$
+\mathrm e(0_S)=\operatorname{NatZ}(0),\qquad
+\chi(0_S)=\operatorname{Enc}(0_J),\qquad
+0_J=(0,0)\ne0,
+$$
+而普通数值提升为 $\operatorname{Enc}(\operatorname{ival}(0_S))=\operatorname{NatZ}(0)$。这同时处理零输入的相等与不等边界，所有配对仍在第 74 条的有效域内。证毕。
+

@@ -1,0 +1,8 @@
+**定理 325.2。** 对任意已声明的读数 $R:A_R\to B_R$、$A_R\subseteq\mathsf V_{\rm reg}$，联合评价像上有精确恢复
+$$
+R_+:\operatorname{Ev}_+[A_R]\to B_R,\qquad
+R_+=R\circ\Psi_{\rm reg}^{-1}\circ\pi_1,
+\qquad R_+(\operatorname{Ev}_+(u))=R(u).
+$$
+这里 $\Psi_{\rm reg}^{-1}$ 只在第 307 条的像 $\Psi_{\rm reg}[\mathsf V_{\rm reg}]$ 上定义。特别地，对每个 $n\in\omega$，取 $R(u)=\Gamma_{\mathbb Z}(u_n)$ 保留该坐标的完整三轴读数；取 $A_R=\{u:u_n>0\}$ 及 $R(u)=\Gamma_+(u_n)$ 保留正整数特化。
+

@@ -1,0 +1,21 @@
+**证明。** 自由树可以按高度逐层构造，取自然层之并；每层及其并均为集合，有限构造也使树属于 $HF$。对原树高度归纳，叶上用 $\operatorname{Dec}(\operatorname{NatZ}(n))=n$；配对上将两个子树归纳式代入有序构造器，得 $\tau_Z^{-1}\tau_Z=\operatorname{id}$。另对目标树高度归纳，叶参数必为唯一的 $\operatorname{NatZ}(n)$，配对上用两个目标子树的归纳式，得 $\tau_Z\tau_Z^{-1}=\operatorname{id}$。这两个归纳都使用构造器像互斥、各自单射，故没有歧义分支。
+
+对 $w\in\{L,R\}^{<\omega}$ 定义沿路径取子树的部分函数 $r|_w$：空路径取自身；路径首字母要求当前树是 pair，并进入其左或右子树。对 $|w|$ 归纳，空路径立即成立；非空路径在一侧遇叶当且仅当另一侧也遇叶，故失败域相同；遇 pair 则进到同一侧子树，归纳给出
+$$
+r|_w\text{ 有定义}\iff(\tau_Zr)|_w\text{ 有定义},\qquad
+\tau_Z(r|_w)=(\tau_Zr)|_w
+$$
+于共同域。由树映射单射，这也反映指定子树的左右祖先关系。
+
+对任意合法 $X$，字段总性由复合给出，$b$ 的序保持给出目标严格增时条件。反向任意独立目标 $Y$ 的时间、空间和来源值都有指定唯一逆，仍是全函数；序反映使每条原偏序边严格增时。有限性、严格偏序、符号域及 $A\subseteq\Omega\subseteq E$ 均未改变，故 $D_{\rm all}(Y)$ 合法。两个复合逐事件的时间由 $b$ 双逆、位置由 $b_3$ 双逆、来源由刚证树双逆恢复，其余字段逐字相同，所以两个完整记录相等。数值版将来源双逆换成恒等即可。
+
+最后取一种合法的标签实现
+$$
+\operatorname{leaf}(n)=\langle0,n\rangle,\quad
+\operatorname{pair}(r,s)=\langle1,\langle r,s\rangle\rangle,
+\qquad
+\operatorname{leaf}_Z(c)=\langle0,c\rangle,\quad
+\operatorname{pair}_Z(r,s)=\langle1,\langle r,s\rangle\rangle.
+$$
+有序对唯一性保证所需互斥及单射。$\operatorname{NatZ}(0)=\langle0,\varnothing\rangle$ 非空且不含 $\varnothing$，所以不是自然序数。于是 $\operatorname{leaf}_Z(\operatorname{NatZ}(0))$ 既不是自然叶，也不是首标签为一的 pair，故不在 $\mathsf{Tree}$ 中。取一个事件、空偏序、合法零时空字段、来源 $\operatorname{leaf}(0)$ 且 $A=\Omega=\varnothing$，得到合法原表示。其全字段像含该数字叶，若逆映射留下此来源不动就越域，并未恢复 $\operatorname{leaf}(0)$。这是一个满足原约定的实现反例，不将该标签实现规定为唯一集合实现。证毕。
+

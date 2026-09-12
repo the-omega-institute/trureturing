@@ -1,0 +1,15 @@
+**定理 116（配置码的唯一恢复与类型分离）。** 有效配置码属于 \(\mathfrak V_Z\)，且映射
+\[
+(P,A,a)\longmapsto\operatorname{Cfg}_Z(P,A,a)
+\]
+在所有有限配置上是单射。对每个有效配置有
+\[
+\begin{aligned}
+\operatorname{El}(\operatorname{Reg}_Z(P))
+ &=\{\operatorname{NatZ}(p):p\in P\},\\
+\operatorname{El}(\operatorname{Tab}_Z(P,f))
+ &=\{\langle\operatorname{NatZ}(p),\operatorname{NatZ}(f(p))\rangle_Z:p\in P\}.
+\end{aligned}
+\]
+故由配置码可唯一恢复 \(P\)、容量函数 \(A\) 和状态 \(a\)。尤其，标签数字、容量数字和当前内容数字虽都使用同一 \(\zeta\)，但不能因数字相同而互换其类型位置。
+

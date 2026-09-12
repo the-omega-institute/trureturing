@@ -1,0 +1,23 @@
+**定理 301。** 在任意集合状态域上给定有限字母表及其实际部分映射，并使每个字母的实权重严格为正。任一可达端点对的词成本下确界都取到；不可达时值为 $+\infty$；相同端点的值为零，且唯一的最小成本词为空词。
+
+对第 299 条无界总有符号平移及对称正权 $c_i$，令 $v=y-x$，并记
+$$
+\mathcal F_{B,v}=\{z\in\mathbb Z^r:Bz=v\},\qquad
+\mathfrak f_c(z)=\sum_{i=1}^r c_i|z_i|.
+$$
+则对全部 $x,y\in\mathbb Z^P$，
+$$
+d_{B,c}^{\infty}(x,y)=
+\begin{cases}
+\displaystyle\min_{z\in\mathcal F_{B,v}}\mathfrak f_c(z),&\mathcal F_{B,v}\ne\varnothing,\\
++\infty,&\mathcal F_{B,v}=\varnothing.
+\end{cases}
+$$
+$r=0$ 时唯一系数向量为空，距离在 $x=y$ 时为零、其余为 $+\infty$。
+
+对有限盒 $X_A$ 上的实际图，$d_{T,a}$ 是该有向带权图的最短路值。不同可达端点间，每个最小成本词均不重复宏边界状态，且长度至多 $Q-1$。此结论不要求相反边权相同；若实际映射另满足逆配对且逆字母权重相同，则距离还对称。若宏只限制同一组有符号平移的实际域、保留对称权 $c_i$，则对 $x,y\in X_A$ 有
+$$
+d_{T,c}(x,y)\ge d_{B,c}^{\infty}(x,y),
+$$
+允许一侧或两侧为 $+\infty$。此处 $d_{T,c}$ 的字母权指 $a_{(i,\epsilon)}=c_i$，给定字母可以只是全部有符号字母的子集。
+

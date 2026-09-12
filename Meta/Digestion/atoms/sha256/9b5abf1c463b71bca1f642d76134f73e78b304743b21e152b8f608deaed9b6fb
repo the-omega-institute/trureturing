@@ -1,0 +1,17 @@
+**定理 263（历史群胚的正确逆）。** 采用 CSA 定义 7。原历史群胚的对象为 $\mathcal H$，从 $X$ 到 $Y$ 的态射是任意双射 $h:E_X\to E_Y$，满足对全部 $e,f\in E_X$
+$$
+e\prec_X f\iff h(e)\prec_Yh(f),\qquad
+(t_Y(h(e)),x_Y(h(e)),\sigma_Y(h(e)),\rho_Y(h(e)))=(t_X(e),x_X(e),\sigma_X(e),\rho_X(e)),
+$$
+并满足 $h[\Omega_X]=\Omega_Y$、$h[A_X]=A_Y$；不要求 $h(e)=e$。目标群胚以独立的 $\mathcal H_{\rm all}$ 为对象，使用相应字段的相同条件。则
+$$
+F(X)=R_{\rm all}(X),\quad F(h)=h,\qquad
+G(Y)=D_{\rm all}(Y),\quad G(h)=h
+$$
+给出两侧严格互逆的群胚同构，且
+$$
+F(\operatorname{id}_X)=\operatorname{id}_{F(X)},\qquad
+F(g\circ h)=F(g)\circ F(h),\qquad GF=\operatorname{id},\quad FG=\operatorname{id}.
+$$
+这以 $D_{\rm all}$ 更正第 176–177 条所指名的旧逆；有限表达式的保域结论取第 269 条的准确范围。
+

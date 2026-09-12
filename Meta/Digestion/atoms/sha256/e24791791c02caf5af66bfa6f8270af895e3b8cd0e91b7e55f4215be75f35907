@@ -1,0 +1,26 @@
+**定理 263（历史群胚的正确逆）。** 采用 CSA 定义 7。原历史群胚的对象为 $\mathcal H$，从 $X$ 到 $Y$ 的态射是任意双射 $h:E_X\to E_Y$，满足对全部 $e,f\in E_X$
+$$
+e\prec_X f\iff h(e)\prec_Yh(f),\qquad
+(t_Y(h(e)),x_Y(h(e)),\sigma_Y(h(e)),\rho_Y(h(e)))=(t_X(e),x_X(e),\sigma_X(e),\rho_X(e)),
+$$
+并满足 $h[\Omega_X]=\Omega_Y$、$h[A_X]=A_Y$；不要求 $h(e)=e$。目标群胚以独立的 $\mathcal H_{\rm all}$ 为对象，使用相应字段的相同条件。则
+$$
+F(X)=R_{\rm all}(X),\quad F(h)=h,\qquad
+G(Y)=D_{\rm all}(Y),\quad G(h)=h
+$$
+给出两侧严格互逆的群胚同构，且
+$$
+F(\operatorname{id}_X)=\operatorname{id}_{F(X)},\qquad
+F(g\circ h)=F(g)\circ F(h),\qquad GF=\operatorname{id},\quad FG=\operatorname{id}.
+$$
+这以 $D_{\rm all}$ 更正第 176–177 条所指名的旧逆；有限表达式的保域结论取第 269 条的准确范围。
+
+**证明。** 对每一事件，时间相等经 $b$ 双射保持反映，空间相等经 $b_3$ 双射保持反映，来源相等经 $\tau_Z$ 双射保持反映，符号相等原样保留。事件集和偏序不改，故每个给定双射 $h$ 满足原态射条件当且仅当满足目标条件；两个集合像条件亦相同。恒等事件映射满足全部条件；两个态射复合时，逐事件字段等式和偏序双向等价可连续代入，集合像等式也连续代入，故复合仍为态射。$h^{-1}$ 由双向条件亦为态射，故确为群胚。$F,G$ 在态射上保持同一个函数，所以保持恒等和复合；对象上的两个复合由第 262 条为恒等，态射上的复合也为恒等，得严格逆式。
+
+若在整体集合解释层把事件外显为 $\operatorname{Enc}[E]$，相应外部事件映射为
+$$
+h^{\rm ext}=\operatorname{Enc}\circ h\circ\operatorname{Dec}:
+\operatorname{Enc}[E_X]\longrightarrow\operatorname{Enc}[E_Y].
+$$
+两个 $\operatorname{Enc}/\operatorname{Dec}$ 逆式直接给恒等和复合；其语义图用第 260 条转换为 $\operatorname{Enc}(h)$。字段层的 $F(h)=h$ 与此有效码事件层的映射有不同载体。上述逆恢复当前完整记录，不断言 CSA 运算本身可逆。证毕。
+

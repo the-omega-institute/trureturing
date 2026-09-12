@@ -1,0 +1,10 @@
+**定理 283（全部无限原秩的精确环境秩）。** 每个无限序数 $\alpha$ 唯一写为 $\lambda+n$，其中 $\lambda$ 是非零极限序数，$n<\omega$。对任意 $x\notin HF$，若 $\operatorname{rk}(x)=\lambda+n$，则
+$$
+\operatorname{rk}(\operatorname{Enc}(x))=\lambda+(3n+2).
+$$
+这里 $3n+2$ 在有限自然数中计算，再作为序数从右侧加到 $\lambda$。特别地，记 $r(x)=\operatorname{rk}(\operatorname{Enc}(x))$，有
+$$
+r(\omega)=\omega+2,\qquad r(\{\omega\})=\omega+5.
+$$
+该一般公式的适用域是无限原秩，有限秩仍按第 71、279 条的分支处理。
+

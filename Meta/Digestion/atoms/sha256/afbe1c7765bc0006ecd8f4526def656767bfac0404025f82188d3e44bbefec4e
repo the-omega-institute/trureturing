@@ -1,0 +1,12 @@
+**定理 282（层级集合性与全部遗传基数截层的像）。** 对每个集合序数 $\alpha$，$V_\alpha$ 是传递集合，且
+$$
+x\in V_\alpha\iff\operatorname{rk}(x)<\alpha.
+$$
+每个 $m<\omega$ 的 $V_m$ 有限，$V_\omega=HF$。对每个无限基数 $\kappa$，$H_\kappa$ 是集合，并有
+$$
+H_\kappa\subseteq V_\kappa,\qquad
+H_{\aleph_0}=HF,\qquad
+\operatorname{Enc}[H_\kappa]=\mathfrak V_Z\cap H_\kappa.
+$$
+最后一式对可数、不可数正则及奇异无限基数均成立。
+

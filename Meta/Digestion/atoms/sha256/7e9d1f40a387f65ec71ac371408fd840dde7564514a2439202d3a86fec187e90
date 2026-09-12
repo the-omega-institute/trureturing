@@ -1,0 +1,92 @@
+**定理 291。** 令 $D=\{[m\phi]:m\in\mathbb Z\}\subseteq\mathbb T$。第 289 条的 $\varpi_P$ 是单射群同态，精确像及其在积拓扑中的闭包分别为
+$$
+\varpi_P[\mathbb Z^P]=D^P,\qquad
+\overline{\varpi_P[\mathbb Z^P]}=\mathbb T^P.
+$$
+$P\ne\varnothing$ 时这个像可数且为真子集；$P=\varnothing$ 时域、像和闭包都是单点。点时映射 $\widehat\varpi_P$ 也是单射群同态，因而
+$$
+\ker\widehat\Psi_P=\ker\mathsf V_P,\qquad
+\ker\Psi_P=\ker\mathsf C_P.
+$$
+对任意 $q\in\mathsf Q_P$，有精确相位公式
+$$
+\widehat\Psi_P(q)(t,p)
+=\left[\sum_j(-1)^{j+1}\alpha^{j+2}q(t,p,j)\right],
+\qquad
+\Psi_P(q)_p
+=\left[\sum_{t,j}(-1)^{j+1}\alpha^{j+2}q(t,p,j)\right].
+$$
+因此，对任意 $q,q'\in\mathsf Q_P$，
+$$
+\widehat\Psi_P(q)=\widehat\Psi_P(q')
+\iff\mathsf V_P(q)=\mathsf V_P(q'),\qquad
+\Psi_P(q)=\Psi_P(q')\iff\mathsf C_P(q)=\mathsf C_P(q').
+$$
+第 207 条的两个具体核在这里分别给
+$$
+\ker\widehat\Psi_P
+=\left\langle e_{t,p,1}-2e_{t,p,0},\
+e_{t,p,j+2}-e_{t,p,j+1}-e_{t,p,j}
+:t\in\mathbb Z,\ p\in P,\ j\in\omega\right\rangle_{\mathbb Z},
+$$
+$$
+\ker\Psi_P=\ker\mathsf V_P\oplus\mathsf L_P,\qquad
+\mathsf L_P=\langle e_{t,p,0}-e_{0,p,0}:t\ne0,\ p\in P\rangle_{\mathbb Z}.
+$$
+在加权前缀商 $\mathcal H_P^G$ 上，终端相位的零核为
+$$
+\ker(\varpi_P\circ\Sigma_P\circ\Theta_P^{G,\rm pf})
+=(\Theta_P^{G,\rm pf})^{-1}(\mathsf K_P),
+\qquad \mathsf K_P=\ker\Sigma_P.
+$$
+这些相等式以及闭包结论均可沿第 71–79 条的原集合解释运输；闭包使用第 289 条指定的运输拓扑。
+
+**证明。** 模一加法使两种 $\varpi$ 都保持加法及零。若 $[m\phi]=0$ 且 $m\in\mathbb Z$，则 $m\phi$ 为整数，$\phi$ 的无理性迫使 $m=0$。逐坐标应用便得 $\varpi_P$ 与 $\widehat\varpi_P$ 单射；点时像的支撑包含于原时间表支撑，故目标类型确实为有限支撑圆周表。对两种复合分别使用单射性，即得零核及相等关系核的结论。
+
+每个 $p\in P$ 的整数可独立选择，所以 $\varpi_P$ 的精确像恰为 $D^P$。有限个可数集之积可数。第 53 条取无理角 $\alpha$，给 $\{[k\alpha]:k\in\mathbb N\}$ 在圆周中稠密；整数 $k$ 满足 $[k\alpha]=[k\phi]$，所以 $D$ 稠密。每个非空基本开盒在各坐标有非空开集，逐坐标选取 $D$ 的一个点便命中该开盒，证明有限积中的闭包为整个环面。非空 $P$ 时，固定一个坐标为 $[1/2]$、其余坐标为零的点不在像内：$m=0$ 不能给 $[1/2]$，而非零整数 $m$ 若满足 $m\phi\in\mathbb Z+1/2$，会使 $\phi$ 有理。因此像为真子集；环面还包含一份不可数圆周。空 $P$ 的空函数唯一，所有断言退化为单点情形。
+
+第 51 条已给整数 $H_j$ 及恒等式
+$$
+\alpha G_j-H_j=(-1)^{j+1}\alpha^{j+2}.
+$$
+由于 $G_j\in\mathbb Z$，有
+$$
+[\phi G_j]=[\alpha G_j]
+=[(-1)^{j+1}\alpha^{j+2}].
+$$
+乘以任意整数 $q(t,p,j)$ 并作有限和，分别得到点时与终端的两式，负系数同样合法。$H_j$ 是第 51 条的第二递推整数权值；它不是第 206 条的无权槽计数 $\mathsf U_P$。第 207 条已经证明 $\ker\mathsf V_P$ 的生成元及 $\ker\mathsf C_P$ 的直和分解，代入已得的核相等式即可。第 229 条给 $\Theta_P^{G,\rm pf}$ 同构，$\varpi_P$ 单射又使商上零核恰为 $\mathsf K_P$ 的逆像。空 $P$ 时生成集为空，各核都是零群。
+
+这些核关系说明相位只读取相应的加权值。对第 12 条的非负表规范化，逐素数值不变，故相位不变；若给定第 21 条的非负实际进位路径，也由该条的值保持得到同一结论。这里的有符号群关系不是从任意负系数行出发的非负归约算法。
+
+为明确集合解释中的比较，直接应用第 74 条：对集合函数 $f:S\to Y$ 与 $x\in S$，
+$$
+\operatorname{ev}_Z(\operatorname{Enc}(f),\operatorname{Enc}(x))
+=\operatorname{Enc}(f(x)).
+$$
+所以第 289–290 条每个有类型的复合都在语义求值下交换。通常外部共轭图与编码图分别是
+$$
+f^{\rm ext}
+=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle:x\in S\},
+$$
+$$
+\operatorname{Enc}(f)
+=\operatorname{Pack}\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle_Z:x\in S\}.
+$$
+前者用通常外部配对，后者用语义配对再作 $\operatorname{Pack}$，不能把两图直接等同。若 $\tau$ 是 $S$ 上的拓扑，第 72 条逐成员给
+$$
+\tau^*=\{\operatorname{Enc}[U]:U\in\tau\}
+=\{\operatorname{El}(c):c\in\operatorname{El}(\operatorname{Enc}(\tau))\}.
+$$
+因此 $\operatorname{Enc}(\tau)$ 本身及其语义成员集，都不直接等于外部开集族 $\tau^*$。编码的双射性使 $\tau^*$ 含空集和 $S^*$，且保任意并与有限交，故它确是 $S^*$ 上的拓扑。
+
+对 $B\subseteq S$ 和 $x\in S$，$\operatorname{Enc}(x)$ 的每个 $\tau^*$ 开邻域恰为某个 $x$ 的 $\tau$ 开邻域 $U$ 的像。由双射性，$\operatorname{Enc}[U]$ 与 $\operatorname{Enc}[B]$ 相交当且仅当 $U$ 与 $B$ 相交。按闭包的邻域判据，得到
+$$
+\overline{\operatorname{Enc}[B]}^{\tau^*}
+=\operatorname{Enc}[\overline B^{\tau}].
+$$
+这是第 72–76 条在当前拓扑上的应用。函数两端都取运输拓扑时，开集逆像的同一对应给连续性运输；群运算、子群及陪集则用第 74 条的配对与求值运输。因此当前环面的闭包及下条的圆周子群、陪集都保留。$\operatorname{Enc}(\overline B^{\tau})$ 是码对象，其语义成员集才是上式右侧。
+
+完整实圆周、拓扑及其全部子集都按这个既有 $\operatorname{Enc}/\operatorname{Dec}/\in_Z$ 解释处理。第 77–78 条的公式、公理模式和给定模型的边界仍适用，第 79 条的有限字障碍也仍适用；一个相位有有限描述不蕴含其集合码是有限自然数字。非空 $P$ 时，有限支撑总函数 $q$ 在无限索引域的每个零值处也有图边，其总图不能与有限非零记录混同。
+
+所证稠密性是指定拓扑中的闭包结论，不是把离散整数群的完备化认作环面。固定有限容量的状态相位像有限，因环面为 Hausdorff 空间而闭。全素数的规范有限支撑表仍由第 11–12、208 条处理，每个具体表落入某个有限 $P$；本条的相位像量词只涉及有限 $P$。证毕。
+
