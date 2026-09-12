@@ -91,6 +91,11 @@ public sealed class ColdPreflightContractTests
         Assert.False(File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.CliPath)));
         var environment = EnvironmentFor(fixture);
         environment["MODE"] = mode; environment["BASE"] = baseline;
+        if (mode == "push" && resource == "none")
+        {
+            environment["CI_PUSH_BEFORE"] = baseline;
+            environment["CI_PUSH_AFTER"] = fixture.Commit;
+        }
         var result = SharedBuildContractTests.Process(fixture.Root, "/bin/bash", ["tools/scripts/preflight.sh"], environment, TestBudgets.WorkflowProcessHangGuard);
         ReleaseConsumerContractTests.Capture(fixture.Root, "cold-" + mode + "-" + resource, result);
         var root = fixture.Root;

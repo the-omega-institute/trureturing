@@ -99,7 +99,10 @@ public sealed partial class ResourceAdapterTests
         fixture.Write(change == "untracked" ? "docs/untracked.md" : "docs/note.md", "local documentation\n");
         if (change == "staged") SharedBuildContractTests.Git(fixture.Root, "add", "docs/note.md");
         var state = LocalState(fixture);
-        var result = LocalPreflight(fixture, LocalEnvironment(fixture, required: false));
+        var environment = LocalEnvironment(fixture, required: false);
+        environment["CI_PUSH_BEFORE"] = fixture.Commit;
+        environment["CI_PUSH_AFTER"] = fixture.Commit;
+        var result = LocalPreflight(fixture, environment);
         Assert.True(result.Exit == 0, result.Text);
         Assert.Equal(state, LocalState(fixture));
         Assert.Null(PushSelection(fixture)["candidate"]!["tree"]);
@@ -235,6 +238,26 @@ public sealed partial class ResourceAdapterTests
         }
         Assert.Single(File.ReadAllLines(Path.Combine(fixture.Root, "build/launched")));
         RetainLocal(fixture, "stale-" + defect, result);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void DefaultLocalScopeChecksUnverifiedCommittedCodeEvenWithDirtyDocs(bool dirtyDocs)
+    {
+        using var fixture = LocalFixture();
+        fixture.Write("fixtures/selected.txt", "unverified committed code\n");
+        fixture.CommitPlan();
+        if (dirtyDocs) fixture.Write("docs/note.md", "dirty documentation\n");
+        var state = LocalState(fixture);
+        var result = LocalPreflight(fixture, LocalEnvironment(fixture, required: true));
+        Assert.True(result.Exit == 0, result.Text);
+        Assert.Equal(state, LocalState(fixture));
+        Assert.Contains("fixtures/selected.txt", Strings(PushSelection(fixture)["paths"]!, "path"));
+        Assert.Equal(new[] { "filemap" }, Strings(PushSelection(fixture)["execution"]!["steps"]!));
+        Assert.Equal(new[] { "dotnet filemap-conform" }, File.ReadAllLines(Path.Combine(fixture.Root, "build/launched")));
+        Assert.Equal("completed", Summary(fixture, "current")["status"]!.ToString());
+        RetainLocal(fixture, "default-unverified-code-" + dirtyDocs, result);
     }
 
     private static ResourceRouteTests.ResourceFixture LocalFixture()

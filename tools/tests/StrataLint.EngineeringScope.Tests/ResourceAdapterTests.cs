@@ -207,7 +207,7 @@ public sealed partial class ResourceAdapterTests
         var environment = EnvironmentFor(fixture);
         environment["CI_PLAN_PATH"] = "build/ci/absent-plan.json";
         environment["CI_CHANGES_PATH"] = "build/ci/absent-changes.json";
-        environment["GITHUB_EVENT_NAME"] = "push";
+        SetPushEvent(fixture, environment, SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^1"));
         var result = Route(fixture, "build", environment);
         Assert.True(result.Exit == 0, result.Text);
         Assert.Equal("not-required", Summary(fixture, "build")["status"]!.ToString());
@@ -225,9 +225,10 @@ public sealed partial class ResourceAdapterTests
         {
             var found = SharedBuildContractTests.Process(fixture.Root, "/bin/bash", ["-c", "command -v " + tool]);
             Assert.True(found.Exit == 0, found.Text);
-            File.CreateSymbolicLink(Path.Combine(bin, tool), found.Text.Trim());
+            if (!File.Exists(Path.Combine(bin, tool))) File.CreateSymbolicLink(Path.Combine(bin, tool), found.Text.Trim());
         }
         return new() { ["PATH"] = bin, ["CI_PLAN_PATH"] = fixture.Plan, ["CI_CHANGES_PATH"] = fixture.Changes,
+            ["GITHUB_EVENT_NAME"] = "", ["GITHUB_EVENT_PATH"] = "",
             ["CI_PLAN_B64"] = "", ["CI_CHANGES_B64"] = "", ["CI_NEEDS"] = "{}", ["CI_WORKFLOW_INPUTS"] = "null",
             ["GITHUB_OUTPUT"] = Path.Combine(fixture.Root, "build/adapter-output") };
     }
