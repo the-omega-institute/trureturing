@@ -40,7 +40,7 @@ public sealed class LeanReportPairScriptTests
     }
 
     [Fact]
-    public void InvokedProducerBytesParticipateInTheInputAddress()
+    public void InvokedProducerEditsKeepVersionOnlyInputAddress()
     {
         using var fixture = new LeanReportPairFixture();
         Assert.Equal(0, fixture.Run().ExitCode);
@@ -55,7 +55,7 @@ public sealed class LeanReportPairScriptTests
         using var second = fixture.ReadCandidateProvenance();
 
         Assert.Equal(2, fixture.ProducerInvocationCount);
-        Assert.NotEqual(firstAddress, second.RootElement.GetProperty("input_address").GetString());
+        Assert.Equal(firstAddress, second.RootElement.GetProperty("input_address").GetString());
     }
 
     [Fact]
@@ -84,16 +84,16 @@ public sealed class LeanReportPairScriptTests
     }
 
     [Fact]
-    public void FailedFingerprintStopsBeforeCacheEnsureOrProducer()
+    public void InvalidCompatibilityVersionStopsBeforeCacheEnsureOrProducer()
     {
         using var fixture = new LeanReportPairFixture();
-        fixture.BreakProducerClosureEvaluation();
+        fixture.InvalidateCompatibilityVersion();
 
         var result = fixture.Run();
 
         Assert.Equal(2, result.ExitCode);
         Assert.Empty(result.StandardOutput);
-        Assert.Contains("producer closure is unavailable", Encoding.UTF8.GetString(result.StandardError));
+        Assert.Contains("compatibility_version", Encoding.UTF8.GetString(result.StandardError));
         Assert.Empty(fixture.CacheEnsureLakeStates);
         Assert.Equal(0, fixture.ProducerInvocationCount);
         Assert.False(fixture.CandidateLakeExists);
@@ -197,18 +197,6 @@ public sealed class LeanReportPairScriptTests
         Assert.False(fixture.CandidateLakeExists);
     }
 
-    [Fact]
-    public void PairScriptPinsPerModuleReuseOff()
-    {
-        var script = File.ReadAllText(Path.Combine(
-            TestRepositoryLayout.FindRoot(), "tools", "scripts", "lean-report-pair.sh"));
-
-        Assert.Contains("Per-module reuse is disabled", script, StringComparison.Ordinal);
-        Assert.DoesNotContain("--module-cache-report", script, StringComparison.Ordinal);
-        Assert.DoesNotContain("--module-cache-manifest", script, StringComparison.Ordinal);
-        Assert.DoesNotContain("--modules-file", script, StringComparison.Ordinal);
-    }
-
     private sealed class LeanReportPairFixture : IDisposable
     {
         private readonly TemporaryDirectory temporary = new();
@@ -310,8 +298,8 @@ public sealed class LeanReportPairScriptTests
 
         internal void DeleteCacheEnsure() => File.Delete(CacheEnsurePath);
 
-        internal void BreakProducerClosureEvaluation() =>
-            File.AppendAllText(Path.Combine(candidateRoot, CliProjectPath), "<");
+        internal void InvalidateCompatibilityVersion() =>
+            File.Delete(Path.Combine(candidateRoot, LeanReportInputScriptTests.CompatibilityPath));
 
         internal void StubAddress(string output)
         {
@@ -354,6 +342,7 @@ public sealed class LeanReportPairScriptTests
 
         private static void InitializeRepository(string root)
         {
+            LeanReportInputScriptTests.InstallReportConfiguration(root);
             Directory.CreateDirectory(Path.Combine(root, "D5"));
             Directory.CreateDirectory(Path.Combine(root, "tools", "lean-inspector"));
             File.WriteAllText(

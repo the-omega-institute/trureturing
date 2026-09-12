@@ -1,0 +1,24 @@
+# Developer-owned report producer compatibility. Bump deliberately when cached
+# reports and incremental baselines must no longer be reused with this producer.
+compatibility_version = 1
+
+# Report sources also define the inspector's module enumeration. The compiled
+# Lean cache retains its broader source scope, including Inspector Lean files.
+source_patterns = ["Trureturing.lean", "D5/**/*.lean"]
+
+# Supplemental inputs for the existing Scribe checks, formerly discovered from
+# Compile items and script calls. These select checks; their bytes are not hashed.
+scribe_check_inputs = [
+  "Meta/lean-report.toml",
+  "tools/Trureturing.Truth/**",
+  "tools/scripts/lean-report-pair.sh",
+  "tools/scripts/lib/resource-observation-lib.sh",
+  "tools/scripts/report/lean-report-ci-baseline.sh",
+  "tools/scripts/report/report-supervisor.sh",
+  "tools/scripts/workflow/install-lean-toolchain.sh",
+  "tools/scripts/workflow/judge-content-address.sh",
+  "tools/scripts/worktree/lean-cache-ensure.sh",
+  "tools/scripts/worktree/lean-cache-input.sh",
+  "tools/scripts/worktree/lean-cache-publish.sh",
+  "tools/scripts/worktree/lean-cache-run.sh"
+]
