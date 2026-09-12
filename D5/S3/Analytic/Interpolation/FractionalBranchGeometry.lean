@@ -90,7 +90,126 @@ theorem fractional_mean_branch {k : ℕ} (hk : 2 ≤ k) (j : Fin k) (t : Fin k �
     · exact (psiK_strictAnti_variance hk hμ hV₀ hlt hdomain.2).le
     · rw [heq]
 
+/-- A residual variance gap forces the two endpoints to straddle the whole mean interval. -/
+theorem residual_distance_geometry {μ₀ μ c d z W V₀ : ℝ} (hμ : μ₀ < μ)
+    (hz : z ∈ Ioo c d) (hsmall : (z - μ) ^ 2 + W < V₀)
+    (hlarge : V₀ ≤ gridDistance μ₀ μ c d ^ 2 + W) :
+    let v := gridDistance μ₀ μ c d
+    |z - μ| < v ∧ c < μ₀ ∧ μ < d ∧ v = min (μ₀ - c) (d - μ) ∧ 0 < v := by
+  dsimp only
+  let v := gridDistance μ₀ μ c d
+  have hv0 : 0 ≤ v := le_min Metric.infDist_nonneg Metric.infDist_nonneg
+  have hsv : |z - μ| < v := by nlinarith [sq_abs (z - μ), abs_nonneg (z - μ)]
+  have hv : 0 < v := (abs_nonneg _).trans_lt hsv
+  have hleft {u : ℝ} (hu : u ∈ Icc μ₀ μ) : v ≤ |c - u| :=
+    (min_le_left _ _).trans (by simpa [Real.dist_eq] using
+      (Metric.infDist_le_dist_of_mem hu : Metric.infDist c (Icc μ₀ μ) ≤ dist c u))
+  have hright {u : ℝ} (hu : u ∈ Icc μ₀ μ) : v ≤ |d - u| :=
+    (min_le_right _ _).trans (by simpa [Real.dist_eq] using
+      (Metric.infDist_le_dist_of_mem hu : Metric.infDist d (Icc μ₀ μ) ≤ dist d u))
+  have hca : c < μ₀ := by
+    by_contra hn
+    have hac : μ₀ ≤ c := le_of_not_gt hn
+    by_cases hcm : c ≤ μ
+    · have hd0 := Metric.infDist_zero_of_mem (show c ∈ Icc μ₀ μ from ⟨hac, hcm⟩)
+      have hh : v ≤ 0 := by
+        dsimp [v, gridDistance]
+        rw [hd0]
+        exact min_le_left _ _
+      linarith
+    · have hh := hleft (show μ ∈ Icc μ₀ μ from ⟨hμ.le, le_rfl⟩)
+      rw [abs_of_nonneg (by linarith : 0 ≤ c - μ)] at hh
+      linarith [le_abs_self (z - μ), hz.1]
+  have hmd : μ < d := by
+    by_contra hn
+    have hdm : d ≤ μ := le_of_not_gt hn
+    by_cases had : μ₀ ≤ d
+    · have hd0 := Metric.infDist_zero_of_mem (show d ∈ Icc μ₀ μ from ⟨had, hdm⟩)
+      have hh : v ≤ 0 := by
+        dsimp [v, gridDistance]
+        rw [hd0]
+        exact min_le_right _ _
+      linarith
+    · have hh := hright (show μ₀ ∈ Icc μ₀ μ from ⟨le_rfl, hμ.le⟩)
+      rw [abs_of_nonpos (by linarith : d - μ₀ ≤ 0)] at hh
+      linarith [neg_le_abs (z - μ), hz.2]
+  have hdistc : Metric.infDist c (Icc μ₀ μ) = μ₀ - c := by
+    apply le_antisymm
+    · simpa [Real.dist_eq, abs_of_nonpos (sub_nonpos.mpr hca.le)] using
+        (Metric.infDist_le_dist_of_mem (show μ₀ ∈ Icc μ₀ μ from ⟨le_rfl, hμ.le⟩) :
+          Metric.infDist c (Icc μ₀ μ) ≤ dist c μ₀)
+    · apply (Metric.le_infDist (show (Icc μ₀ μ).Nonempty from ⟨μ₀, le_rfl, hμ.le⟩)).mpr
+      intro u hu
+      rw [Real.dist_eq, abs_of_nonpos (by linarith [hu.1] : c - u ≤ 0)]
+      linarith [hu.1]
+  have hdistd : Metric.infDist d (Icc μ₀ μ) = d - μ := by
+    apply le_antisymm
+    · simpa [Real.dist_eq, abs_of_nonneg (sub_nonneg.mpr hmd.le)] using
+        (Metric.infDist_le_dist_of_mem (show μ ∈ Icc μ₀ μ from ⟨hμ.le, le_rfl⟩) :
+          Metric.infDist d (Icc μ₀ μ) ≤ dist d μ)
+    · apply (Metric.le_infDist (show (Icc μ₀ μ).Nonempty from ⟨μ, hμ.le, le_rfl⟩)).mpr
+      intro u hu
+      rw [Real.dist_eq, abs_of_nonneg (by linarith [hu.2] : 0 ≤ d - u)]
+      linarith [hu.2]
+  exact ⟨hsv, hca, hmd, by simp only [gridDistance, hdistc, hdistd], hv⟩
+
+/-- The actual lower-corner budget yields a positive nested pair of analytic support points. -/
+theorem fractional_residual_support {k : ℕ} (hk : 2 ≤ k) (j : Fin k) (t : Fin k → ℝ)
+    {c d θ μ₀ μ V₀ : ℝ} (hc : 0 < c) (hcd : c < d) (hθ : θ ∈ Ioo 0 1)
+    (hμ : μ₀ < μ)
+    (hbudget : (1 - θ) * c + θ * d + ∑ i ∈ Finset.univ.erase j, t i = (k : ℝ) * μ)
+    (hlower : (k : ℝ) * μ₀ ≤ c + ∑ i ∈ Finset.univ.erase j, t i)
+    (hsmall : ((1 - θ) * c + θ * d - μ) ^ 2 +
+      ∑ i ∈ Finset.univ.erase j, (t i - μ) ^ 2 < V₀)
+    (hlarge : V₀ ≤ gridDistance μ₀ μ c d ^ 2 +
+      ∑ i ∈ Finset.univ.erase j, (t i - μ) ^ 2) :
+    let z := (1 - θ) * c + θ * d
+    let s := z - μ
+    let v := gridDistance μ₀ μ c d
+    let n := (k : ℝ) - 1
+    let A := ((k : ℝ) * v + s) / n
+    let c' := μ - A
+    let d' := μ + v
+    |s| < v ∧ c < μ₀ ∧ μ < d ∧ v = min (μ₀ - c) (d - μ) ∧
+      (k : ℝ) * v ≤ ((k : ℝ) - 1) * (μ - c) - s ∧
+      (0 < c ∧ c ≤ c' ∧ c' < μ - v ∧ μ - v < z ∧ z < μ + v ∧ μ + v = d' ∧ d' ≤ d) := by
+  dsimp only
+  let z := (1 - θ) * c + θ * d
+  let s := z - μ
+  let v := gridDistance μ₀ μ c d
+  have hz : z ∈ Ioo c d := by
+    dsimp [z]
+    constructor <;> nlinarith [hθ.1, hθ.2]
+  obtain ⟨hsv, hca, hmd, hvform, hv⟩ := residual_distance_geometry hμ hz hsmall hlarge
+  have hvl : v ≤ μ₀ - c := by rw [show v = min (μ₀ - c) (d - μ) from hvform]; exact min_le_left _ _
+  have hvr : v ≤ d - μ := by rw [show v = min (μ₀ - c) (d - μ) from hvform]; exact min_le_right _ _
+  have hkR : (2 : ℝ) ≤ k := by exact_mod_cast hk
+  have hn : (0 : ℝ) < (k : ℝ) - 1 := by linarith
+  have hkv : (k : ℝ) * v ≤ ((k : ℝ) - 1) * (μ - c) - s := by
+    have hmul := mul_le_mul_of_nonneg_left hvl (show (0 : ℝ) ≤ k by linarith)
+    dsimp [s, z]
+    nlinarith [hbudget, hlower]
+  have hs := abs_lt.mp hsv
+  have hAupper : ((k : ℝ) * v + s) / ((k : ℝ) - 1) ≤ μ - c :=
+    (div_le_iff₀ hn).mpr (by nlinarith [hkv])
+  have hAlower : v < ((k : ℝ) * v + s) / ((k : ℝ) - 1) :=
+    (lt_div_iff₀ hn).mpr (by dsimp [s]; nlinarith [hs.1])
+  refine ⟨hsv, hca, hmd, hvform, hkv, hc, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  · change c ≤ μ - ((k : ℝ) * v + s) / ((k : ℝ) - 1)
+    linarith
+  · change μ - ((k : ℝ) * v + s) / ((k : ℝ) - 1) < μ - v
+    linarith
+  · change μ - v < z
+    linarith [hs.1]
+  · change z < μ + v
+    linarith [hs.2]
+  · exact Eq.refl _
+  · change μ + v ≤ d
+    linarith
+
 #print axioms logValue_strictConcaveOn
 #print axioms fractional_mean_branch
+#print axioms residual_distance_geometry
+#print axioms fractional_residual_support
 
 end D5.S3.Analytic.Interpolation.FractionalBranchGeometry
