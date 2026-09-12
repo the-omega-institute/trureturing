@@ -10,13 +10,13 @@ open Lean
 run_cmd do
   let env := (← getEnv).setExporting false
   let roots := #[
-    `D5.S3.ConceptDynamics.InformationEscape.InformationRoot,
-    `D5.S3.ConceptDynamics.InformationEscape.SharedInformationRoot,
-    `D5.S3.ConceptDynamics.InformationEscape.TemplateShadow,
-    `D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalRegistration,
-    `LeanInformationAudit.Tests.Seal.M3]
+    (`D5.S3.ConceptDynamics.InformationEscape.InformationRoot, 11),
+    (`D5.S3.ConceptDynamics.InformationEscape.SharedInformationRoot, 0),
+    (`D5.S3.ConceptDynamics.InformationEscape.TemplateShadow, 10),
+    (`D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalRegistration, 2),
+    (`LeanInformationAudit.Tests.Seal.M3, 7)]
   let mut total := 0
-  for root in roots do
+  for (root, expected) in roots do
     let some idx := env.getModuleIdx? root
       | throwError "[FAIL] FrozenRootsCompile: module not loaded: {root}"
     let mut checked := 0
@@ -33,6 +33,8 @@ run_cmd do
         logInfo m!"{message}"
     total := total + findings
     logInfo m!"FrozenRootsCompile root={root} registrations={checked} IE-C050={findings}"
+    unless checked == expected do
+      logError m!"[FAIL] FrozenRootMetadataCount: {root}: {checked} != {expected}"
   unless total == 0 do
     throwError "[FAIL] FrozenRootsCompile: {total} IE-C050 findings"
   logInfo "[PASS] FrozenRootsCompile"
