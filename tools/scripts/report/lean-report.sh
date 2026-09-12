@@ -10,15 +10,10 @@ LAKE_BIN="${LAKE_BIN:-$(command -v lake || true)}"
 [[ -n "$LAKE_BIN" && "$LAKE_BIN" == /* && -x "$LAKE_BIN" ]] \
   || { echo "lean-report.sh: an absolute lake executable is required" >&2; exit 2; }
 
-# Local opt-in: warm the same host/UID-scoped, content-addressed report
-# cache that local-harness-gate exports (identical default path), so a repeat run of
-# an unchanged tree restores the canonical report instead of re-running the Lean
-# producer under the serialized global slot. Never enabled in CI (which leaves the
-# env unset), so CI report production stays byte-for-byte unchanged; the pair helper
-# ignores the env when unset and fail-closes on any cache root it does not own.
-if [[ "${CI:-}" != "true" && "${CI:-}" != "1" ]]; then
-  export STRATALINT_REPORT_CACHE_ROOT="${STRATALINT_REPORT_CACHE_ROOT:-${XDG_CACHE_HOME:-$HOME/.cache}/stratalint-lean-report-cache}"
-fi
+# The report cache has its own store; all .lake staging still follows pair ensure.
+source "$ROOT/tools/scripts/report/lean-report-cache.sh"
+export STRATALINT_REPORT_CACHE_ROOT="$(report_cache_root)"
+export STRATALINT_REPORT_CACHE_REMOTE="${STRATALINT_REPORT_CACHE_REMOTE:-1}"
 
 exec "$PAIR" \
   --producer "$INSPECTOR" \

@@ -46,6 +46,8 @@ public sealed partial class MakeWorkflowTests
     [
         "help",
         "test",
+        "lean-report-cache-from-github",
+        "lean-report-cache-to-github",
         "lean-cache-ensure",
         "lean-cache-to-github-without-mathlib",
         "lean-cache-from-github-without-mathlib",
@@ -103,6 +105,7 @@ public sealed partial class MakeWorkflowTests
         "prime-slab-verify",
         "prime-slab-mutation-test",
         "census-test",
+        "census-frontier-performance",
     ];
 
     [Fact]

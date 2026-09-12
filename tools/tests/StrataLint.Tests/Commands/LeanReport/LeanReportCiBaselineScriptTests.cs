@@ -235,6 +235,36 @@ internal static class LeanReportCiBaselineScriptContract
 
     private static string RunDeltaPlan(string temporaryPath, string cache, string moduleTable = "")
     {
+        // Authored synthetic cohorts include import and non-imported claim relations.
+        // Fixture source presence follows the scenario's explicit current table.
+        LeanReportRegistrationFixture.Install(temporaryPath);
+        (string Id, string[] DependsOn)[] cohorts =
+        [
+            ("A", []), ("B", ["A", "S"]), ("C", ["A", "B"]), ("D", []),
+            ("E", ["B"]), ("F", ["B", "C"]), ("G", ["E", "F"]), ("H", ["A"]),
+            ("I", ["H"]), ("J", ["G", "I"]), ("S", []), ("T", ["S"]), ("U", ["D"]),
+        ];
+        var currentNames = moduleTable.Split('\n', StringSplitOptions.RemoveEmptyEntries)
+            .Select(line => line.Split('\t')[0]).ToHashSet(StringComparer.Ordinal);
+        foreach (var (id, _) in cohorts)
+            if (!currentNames.Contains(id)) File.Delete(Path.Combine(temporaryPath, id + ".lean"));
+        var emptyPaths = new { include = Array.Empty<object>(), exclude = Array.Empty<string>() };
+        var declaration = new
+        {
+            schema_version = 1,
+            report_modules = new { include = new[] { new { pattern = "*.lean", optional = true } }, exclude = Array.Empty<string>() },
+            inspector_sources = emptyPaths, config_inputs = emptyPaths,
+            producer_scopes = new Dictionary<string, object>
+            {
+                ["lean-report"] = new { include = new[] {
+                    new { pattern = LeanReportRegistrationFixture.ManifestPath, optional = false },
+                    new { pattern = LeanReportRegistrationFixture.LoaderPath, optional = false } }, exclude = Array.Empty<string>() },
+                ["scribe-content"] = emptyPaths,
+            },
+            impact_cohorts = cohorts.Select(item => new { id = item.Id, members = new[] { item.Id + ".lean" },
+                exclude = Array.Empty<string>(), depends_on = item.DependsOn }),
+        };
+        File.WriteAllText(Path.Combine(temporaryPath, LeanReportRegistrationFixture.ManifestPath), JsonSerializer.Serialize(declaration));
         var modules = Path.Combine(temporaryPath, "modules.tsv");
         var plan = Path.Combine(temporaryPath, "plan.json");
         File.WriteAllText(modules, moduleTable, new UTF8Encoding(false));
@@ -243,7 +273,7 @@ internal static class LeanReportCiBaselineScriptContract
             [Path.Combine(TestRepositoryLayout.FindRoot(), "tools/lean-inspector/delta.py"), "plan",
                 temporaryPath, cache, new string('b', 64), Producer, Resident, Config, modules, plan],
             temporaryPath, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
-        Assert.Equal(0, delta.ExitCode);
+        Assert.True(delta.ExitCode == 0, Encoding.UTF8.GetString(delta.StandardError));
         return plan;
     }
 

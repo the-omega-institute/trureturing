@@ -17,16 +17,6 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
-pattern = "*.json"
-kind = "program"
-admission_plane = "judge"
-produced_by = "none"
-consumed_by = ["automation"]
-verified_by = ["make-gate"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
 pattern = "*.lean"
 kind = "truth"
 admission_plane = "content"
@@ -688,6 +678,36 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
+pattern = "global.json"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["automation"]
+verified_by = ["make-gate"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "lake-manifest.json"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["automation"]
+verified_by = ["make-gate"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "lean-report-inputs.json"
+kind = "data"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["lean-inspector"]
+verified_by = ["LeanReportSelection"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
 pattern = "lean-toolchain"
 kind = "program"
 admission_plane = "judge"
@@ -881,6 +901,16 @@ runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "tools/tests/StrataLint.*/**/*.trx"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["dotnet"]
+verified_by = ["dotnet-test"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "tools/tests/StrataLint.ScriptTests/lean_report_selection_fixture.py"
 kind = "program"
 admission_plane = "judge"
 produced_by = "none"

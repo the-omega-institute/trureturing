@@ -270,11 +270,12 @@ def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
     let some info := environment.find? name
       | throw <| IO.userError s!"declaration missing: {name}"
     let axioms ← collectAxiomsShared environment cache name
-    let statement := encodeStatement info
     let materialIndex ← materialCounter.get
     materialCounter.set (materialIndex + 1)
     let materialFile := s!"{materialIndex}.statement"
-    IO.FS.writeFile (materialSpool / materialFile) statement
+    IO.FS.withFile (materialSpool / materialFile) .write fun handle => do
+      handle.putStr (encodeStatement info)
+      handle.flush
     return {
       axioms := sortedUnique (axioms.map Name.toString)
       includeInStatement := includeInStatement name info

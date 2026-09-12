@@ -79,7 +79,6 @@ hash_file() {
 
 fingerprint() {
   local root="$1"
-  local preimage="$TMP_ROOT/input.preimage"
 
   local repository_address resident_sha256 sources_sha256 config_sha256 address_output
   address_output="$("$INPUT_HELPER" address --repository "$root" --producer "$PRODUCER" --inspector "$INSPECTOR")" || return 2
@@ -89,15 +88,10 @@ fingerprint() {
   IFS=' ' read -r repository_address resident_sha256 sources_sha256 config_sha256 <<< "$address_output"
   local producer_sha256="$resident_sha256"
 
-  {
-    printf '%s\n' "schema=stratalint-lean-report-input-v1"
-    printf 'producer_sha256=%s\n' "$producer_sha256"
-    printf 'repository_inspector_sha256=%s\n' "$resident_sha256"
-    printf 'lean_sources_sha256=%s\n' "$sources_sha256"
-    printf 'lean_config_sha256=%s\n' "$config_sha256"
-  } > "$preimage" || return 2
-  local input_sha256
-  input_sha256="$(hash_file "$preimage")" || return 2
+  local coordinates input_sha256
+  coordinates="$("$INPUT_HELPER" coordinates "$producer_sha256" "$resident_sha256" "$sources_sha256" "$config_sha256")" || return 2
+  [[ "${coordinates#* }" == "$repository_address" ]] || return 2
+  input_sha256="${coordinates%% *}"
   printf '%s %s %s %s %s %s\n' \
     "$input_sha256" \
     "$producer_sha256" \
@@ -175,7 +169,8 @@ cache_evict() {
   rm -rf -- "$CACHE_ROOT/$address" 2>/dev/null || true
 }
 
-cache_provenance_matches() {
+# A successful helper emits a completed comparison; process failure is unknown.
+cache_provenance_status() {
   local provenance="$1"
   local address="$2"
   local report_sha256="$3"
@@ -189,14 +184,14 @@ import sys
 path, address, report_sha, producer, resident, sources, config = sys.argv[1:]
 try:
     value = json.loads(pathlib.Path(path).read_text(encoding="utf-8"))
-except (OSError, UnicodeError, ValueError, json.JSONDecodeError):
-    raise SystemExit(1)
+except (UnicodeError, json.JSONDecodeError):
+    value = None
 expected_keys = {
     "schema", "side", "mode", "source_side", "input_address",
     "producer_sha256", "repository_inspector_sha256", "lean_sources_sha256",
     "lean_config_sha256", "report_sha256",
 }
-if (set(value) != expected_keys
+if (not isinstance(value, dict) or set(value) != expected_keys
         or value.get("schema") != "stratalint-lean-report-provenance-v1"
         or value.get("side") != "candidate"
         or value.get("source_side") != "candidate"
@@ -207,15 +202,18 @@ if (set(value) != expected_keys
         or value.get("lean_sources_sha256") != sources
         or value.get("lean_config_sha256") != config
         or value.get("report_sha256") != report_sha):
-    raise SystemExit(1)
+    print("mismatch")
+else:
+    print("match")
 PY
 }
 
 # Serve the complete bundle at $output from the cache entry for
 # content address $address, re-verified against repository $root. Sets
-# LAST_REPORT_SHA256 and returns 0 on a verified hit; returns 1 on miss/anomaly
-# (any partial output removed, offending entry evicted), or 2 on destination I/O
-# failure. Never acquires a slot or touches a live bundle.
+# LAST_REPORT_SHA256 and returns 0 on a verified hit; returns 1 on a miss or
+# unavailable check (private output removed; only proven content rejection
+# evicts), or 2 on destination I/O failure. Never acquires a slot or touches a
+# live bundle.
 cache_try_restore() {
   local address="$1"
   local root="$2"
@@ -225,17 +223,32 @@ cache_try_restore() {
   cache_root_trusted || return 1
   local entry="$CACHE_ROOT/$address"
   local report="$entry/raw-lean-report.json"
-  # Completeness: the whole stored bundle must be present before we trust it.
-  [[ -s "$report" && -s "${report}.sha256" \
-    && -s "${report}.input.attestation" && -s "${report}.provenance.json" \
-    && -s "${report}.materials.zip" \
-    && ! -e "${report}.logs" && ! -L "${report}.logs" ]] \
+  # Validate completeness and canonical materials before suppressing production.
+  # The canonical validator distinguishes rejected contents (1) from an
+  # unavailable verifier or I/O failure (2).  Only proven rejection permits
+  # eviction; an unavailable check must fall through to authoritative
+  # production without destroying a reusable entry.
+  local validate_rc=0
+  if python3 "$SCRIPT_DIR/report/lean-report-cache.py" validate "$report"; then
+    validate_rc=0
+  else
+    validate_rc=$?
+  fi
+  if [[ "$validate_rc" == "1" ]]; then
+    cache_evict "$address"
+    return 1
+  elif [[ "$validate_rc" != "0" ]]; then
+    return 1
+  fi
+  [[ ! -e "${report}.logs" && ! -L "${report}.logs" ]] \
     || { cache_evict "$address"; return 1; }
-  local declared="" declared_name=""
-  read -r declared declared_name < "${report}.sha256" || true
+  local declared="" declared_name="" sidecar lines
+  sidecar="$(cat "${report}.sha256")" || return 1
+  read -r declared declared_name <<< "$sidecar"
+  lines="$(awk 'END {print NR}' "${report}.sha256")" || return 1
   [[ "$declared" =~ ^[0-9a-f]{64}$ \
     && "$declared_name" == "raw-lean-report.json" \
-    && "$(awk 'END {print NR}' "${report}.sha256")" == "1" ]] \
+    && "$lines" == "1" ]] \
     || { cache_evict "$address"; return 1; }
   rm -rf -- "$output" "${output}.sha256" "${output}.provenance.json" \
     "${output}.input.attestation" "${output}.materials.zip"
@@ -248,10 +261,10 @@ cache_try_restore() {
       "${output}.input.attestation" "${output}.materials.zip"
     return 2
   fi
-  local actual
-  actual="$(hash_file "$output")"
-  if [[ "$actual" != "$declared" ]]; then
-    cache_evict "$address"
+  local actual hash_rc=0
+  actual="$(hash_file "$output")" || hash_rc=$?
+  if [[ "$hash_rc" != "0" || "$actual" != "$declared" ]]; then
+    [[ "$hash_rc" != "0" ]] || cache_evict "$address"
     rm -rf -- "$output" "${output}.provenance.json" \
       "${output}.input.attestation" "${output}.materials.zip"
     return 1
@@ -259,8 +272,12 @@ cache_try_restore() {
   # Validate the stored provenance before treating an exact-address hit as
   # authoritative.  prepare_bundle rewrites the staged provenance later, so
   # this check must happen here or a damaged cache sidecar could be masked.
-  if ! cache_provenance_matches "${output}.provenance.json" "$address" "$actual"; then
-    cache_evict "$address"
+  local provenance_status provenance_rc=0
+  provenance_status="$(cache_provenance_status "${output}.provenance.json" "$address" "$actual")" || provenance_rc=$?
+  if [[ "$provenance_rc" != "0" || "$provenance_status" != "match" ]]; then
+    if [[ "$provenance_rc" == "0" && "$provenance_status" == "mismatch" ]]; then
+      cache_evict "$address"
+    fi
     rm -rf -- "$output" "${output}.sha256" \
       "${output}.input.attestation" "${output}.provenance.json" \
       "${output}.materials.zip"
@@ -270,9 +287,10 @@ cache_try_restore() {
   write_sidecar "$output" "$actual"
   # Re-derive the repository address from the CURRENT tree and confirm it matches
   # the stored attestation; rejects any key skew or collision. Fail-closed.
+  # This helper uses the same nonzero status for stale inputs and unavailable
+  # evaluation, so failure cannot authorize eviction.
   if ! "$INPUT_HELPER" verify --repository "$root" --report "$output" \
     --producer "$PRODUCER" --inspector "$INSPECTOR" >/dev/null 2>&1; then
-    cache_evict "$address"
     rm -rf -- "$output" "${output}.sha256" "${output}.provenance.json" \
       "${output}.input.attestation" "${output}.materials.zip"
     return 1
@@ -283,7 +301,8 @@ cache_try_restore() {
 
 # Atomically publish the fully-materialised bundle at $output under $address.
 # No-op unless caching is enabled and the complete bundle exists. Entries are
-# content-addressed and immutable, so a concurrent winner is tolerated.
+# content-addressed and immutable, so a concurrent winner is tolerated. A write
+# failure returns 1 for the caller's optional-cache diagnostic.
 cache_store() {
   local address="$1"
   local output="$2"
@@ -294,14 +313,14 @@ cache_store() {
     || return 0
   local entry="$CACHE_ROOT/$address"
   [[ -e "$entry" ]] && return 0
-  mkdir -p "$CACHE_ROOT" 2>/dev/null || return 0
+  mkdir -p "$CACHE_ROOT" 2>/dev/null || return 1
   # Lock the root to this UID (harmless if we already own a 0700 dir; a no-op fail
   # if some other user pre-created it, in which case the trust check below refuses
   # to store). Never write into a root we cannot secure.
   chmod 700 "$CACHE_ROOT" 2>/dev/null || true
-  cache_root_trusted || return 0
+  cache_root_trusted || return 1
   local tmp
-  tmp="$(mktemp -d "$CACHE_ROOT/.tmp.$$.XXXXXXXX" 2>/dev/null)" || return 0
+  tmp="$(mktemp -d "$CACHE_ROOT/.tmp.$$.XXXXXXXX" 2>/dev/null)" || return 1
   local report="$tmp/raw-lean-report.json"
   # Best-effort: any copy or sidecar-write failure discards the temp and leaves the
   # gate untouched (never fails admission on a cache-write error).
@@ -311,10 +330,13 @@ cache_store() {
     && cp "${output}.materials.zip" "${report}.materials.zip" \
     && printf '%s  raw-lean-report.json\n' "$(hash_file "$report")" > "${report}.sha256"; }; then
     rm -rf -- "$tmp"
-    return 0
+    return 1
   fi
-  if [[ -e "$entry" ]] || ! mv "$tmp" "$entry" 2>/dev/null; then
+  if [[ -e "$entry" ]]; then
     rm -rf -- "$tmp"
+  elif ! mv "$tmp" "$entry" 2>/dev/null; then
+    rm -rf -- "$tmp"
+    return 1
   fi
   return 0
 }
@@ -325,18 +347,34 @@ materialize_report() {
   local address="$3"
   # Cache lookup precedes any slot acquisition or producer run.
   if cache_try_restore "$address" "$root" "$output"; then
+    printf 'LEAN_REPORT_CACHE status=hit mode=local-exact input_address=sha256:%s\n' "$address" >&2
     LAST_REPORT_MODE="cached"
     return 0
   else
     local cache_rc=$?
     [[ "$cache_rc" == "1" ]] || return "$cache_rc"
   fi
-  # Per-module reuse is disabled. Before enabling it, producer identity must cover
-  # the actually selected MSBuild SDK and dotnet runtime plus the bytes of every
-  # actually loaded NuGet package, analyzer, and source generator (or hash the DLL
-  # that is actually executed). global.json latestMinor can make 10.0.103 select
-  # SDK 10.0.201, so one producer SHA can otherwise execute code built by different
-  # toolchains. Keep production on the complete-report path until that is solved.
+  printf 'LEAN_REPORT_CACHE status=miss reason=local-entry-unavailable input_address=sha256:%s\n' "$address" >&2
+  # Optional acquisition never touches .lake. A compatible local entry can avoid
+  # remote transfer; a source-stale seed is consumed only by inspect.sh/delta.py.
+  if [[ "${STRATALINT_REPORT_CACHE_REMOTE:-0}" == "1" && -n "$CACHE_ROOT" ]]; then
+    if "$BASH" "$SCRIPT_DIR/report/lean-report-cache.sh" fetch --repository "$root" \
+      --producer "$PRODUCER" --inspector "$INSPECTOR"; then
+      if cache_try_restore "$address" "$root" "$output"; then
+        LAST_REPORT_MODE="cached"
+        return 0
+      else
+        local cache_rc=$?
+        [[ "$cache_rc" == "1" ]] || return "$cache_rc"
+      fi
+    else
+      local acquisition_rc=$?
+      [[ "$acquisition_rc" != "2" ]] || return 2
+      printf 'LEAN_REPORT_CACHE status=miss reason=acquisition-failed fallback=producer\n' >&2
+    fi
+  fi
+  # Inspector uses the registered impact cohorts for compatible source-delta seeds.
+  # Native Lake incrementality and cache writer ownership remain unchanged.
   "$SUPERVISOR" --role lean-producer --lean-slot -- \
     env LAKE_BIN="$LAKE_BIN" \
       STRATALINT_REPORT_INPUT_ADDRESS="$input_address" \
@@ -516,5 +554,6 @@ publish_bundle "$candidate_staged_output" "$CANDIDATE_OUTPUT"
 emit_provenance_receipt \
   "$CANDIDATE_OUTPUT" "$candidate_mode" "$candidate_address" "$candidate_report_sha256"
 if [[ "$candidate_mode" == "produced" ]]; then
-  cache_store "$candidate_address" "$CANDIDATE_OUTPUT"
+  cache_store "$candidate_address" "$CANDIDATE_OUTPUT" \
+    || printf 'LEAN_REPORT_CACHE status=miss reason=cache-write-failed\n' >&2
 fi

@@ -14,6 +14,7 @@ public sealed partial class LeanReportInputScriptTests
         using var fixture = new LeanReportInputFixture();
         const string dependency = "tools/scripts/worktree/fetch-input.sh";
         fixture.WriteSource(dependency, "#!/usr/bin/env bash\n");
+        fixture.RegisterProducer(dependency);
         fixture.Append(CachePublishScriptPath, "\nsource \"$SCRIPT_DIR/fetch-input.sh\"\n");
 
         var complete = fixture.RunCommand(command);
@@ -63,28 +64,17 @@ public sealed partial class LeanReportInputScriptTests
     }
 
     [Theory]
-    [InlineData("msbuild")]
-    [InlineData("sdk")]
+    [InlineData("malformed")]
+    [InlineData("missing")]
     public void AddressFailurePreservesProjectAndRawDiagnostic(string failure)
     {
         using var fixture = new LeanReportInputFixture();
-        if (failure == "msbuild") fixture.BreakProducerClosureEvaluation();
-        else fixture.UseUnavailableRepositorySdk();
-        var raw = fixture.EvaluateCliProject();
-        Assert.NotEqual(0, raw.ExitCode);
-        Assert.NotEmpty(raw.StandardOutput.Concat(raw.StandardError));
-
+        if (failure == "malformed") fixture.BreakProducerClosureEvaluation();
+        else fixture.RemoveSource("lean-report-inputs.json");
         var result = fixture.AddressFromRepository();
-
         Assert.Equal(2, result.ExitCode);
         Assert.Empty(result.StandardOutput);
-        var diagnostic = Encoding.UTF8.GetString(result.StandardError);
-        Assert.Contains(fixture.CliProject, diagnostic, StringComparison.Ordinal);
-        foreach (var stream in new[] { raw.StandardOutput, raw.StandardError })
-        {
-            if (stream.Length > 0)
-                Assert.Contains(Encoding.UTF8.GetString(stream), diagnostic, StringComparison.Ordinal);
-        }
+        Assert.Contains("lean-report-inputs.json", Encoding.UTF8.GetString(result.StandardError));
     }
 
     [Fact]
@@ -108,20 +98,6 @@ public sealed partial class LeanReportInputScriptTests
         private const string UnavailableSdk =
             "{\"sdk\":{\"version\":\"99.0.100\",\"rollForward\":\"disable\"}}\n";
 
-        internal string CliProject
-        {
-            get
-            {
-                var physicalPath = TestProcessRunner.Run(
-                    "pwd", ["-P"], repository,
-                    BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
-                Assert.Equal(0, physicalPath.ExitCode);
-                return Path.Combine(
-                    Encoding.UTF8.GetString(physicalPath.StandardOutput).TrimEnd('\r', '\n'),
-                    CliProjectPath);
-            }
-        }
-
         internal ProcessOutput AddressFromRepository() => Run("address", repository);
 
         internal void RemoveSource(string relativePath) => File.Delete(Path.Combine(repository, relativePath));
@@ -134,15 +110,6 @@ public sealed partial class LeanReportInputScriptTests
             return Run("address", directory);
         }
 
-        internal void UseUnavailableRepositorySdk() => Write("global.json", UnavailableSdk);
-
-        internal ProcessOutput EvaluateCliProject() => TestProcessRunner.Run(
-            "dotnet",
-            ["msbuild", CliProject, "-getItem:Compile", "-verbosity:quiet", "-nologo"],
-            repository,
-            BoundedProcessRunner.HangDetectionBudget,
-            1024 * 1024);
-
         internal byte[] ExpectedAddressBytes()
         {
             // The synthetic fixture's inputs are independent of the helper's output.
@@ -154,14 +121,18 @@ public sealed partial class LeanReportInputScriptTests
                 "Directory.Build.props", "Directory.Packages.props", "global.json",
                 inspectorScriptPath, inspectorSourcePath, InputHelperPath,
                 PairScriptPath, SupervisorScriptPath, CiBaselineScriptPath,
+                "tools/scripts/report/lean-report-cache.sh",
                 CacheEnsureScriptPath, CachePublishScriptPath,
                 "tools/scripts/worktree/lean-cache-input.sh",
                 ResourceObservationLibraryPath, ToolchainInstallerPath,
-                JudgeContentAddressPath, ScribeContentChecksPath, WorkflowPath,
+                JudgeContentAddressPath,
+                LeanReportRegistrationFixture.ManifestPath, LeanReportRegistrationFixture.LoaderPath,
                 EngineLockPath, CliLockPath, TruthLockPath,
             ];
             var producerManifest = string.Concat(producerPaths.Select(path =>
-                $"{Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(Path.Combine(repository, path))))}  {path}\n")
+                $"{Convert.ToHexStringLower(SHA256.HashData(path == LeanReportRegistrationFixture.ManifestPath
+                    ? Encoding.ASCII.GetBytes(LeanReportRegistrationFixture.LeanProjection + "\n")
+                    : File.ReadAllBytes(Path.Combine(repository, path))))}  {path}\n")
                 .Order(StringComparer.Ordinal));
             var producer = Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(producerManifest)));
             var sources = ManifestHash("Trureturing.lean", "D5/Probe.lean", inspectorSourcePath);
