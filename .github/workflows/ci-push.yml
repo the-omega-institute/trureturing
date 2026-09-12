@@ -220,6 +220,17 @@ jobs:
           key: ${{ steps.keys.outputs.engineering_key }}
       - if: always()
         run: python3 tools/scripts/workflow/ci.py summary --repository "$GITHUB_WORKSPACE" --stage engineering
+      - name: Retain failed engineering diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-engineering-diagnostics-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            build/ci/engineering-result.json
+            build/ci/logs/engineering
+            build/ci/trx
+          if-no-files-found: warn
+          retention-days: 7
 
   current:
     name: current
