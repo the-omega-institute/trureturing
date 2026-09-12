@@ -872,6 +872,86 @@ private noncomputable def extremeMarkedTriple_injective {d : Nat} :
     rw [hreverse] at hmark
     cases hq : orientationMark x z <;> simp [hq] at hmark
 
+private noncomputable def apMarkedTriple_ne_extremeMarkedTriple {d : Nat}
+    (t : OrientedArithmeticProgression d)
+    (q : DistinctCoordinatePairs EqualOrExtreme d × Bool) :
+    apMarkedTriple t ≠ extremeMarkedTriple q := by
+  classical
+  intro heq
+  let a := t.val.1
+  let b := t.val.2.1
+  let c := t.val.2.2
+  let x := q.1.val.val.1
+  let z := q.1.val.val.2
+  let y := extremeInterior q.2 x z
+  have hac : a ≠ c := t.property.1
+  have hab : a ≠ b := by
+    intro h
+    apply hac
+    funext i
+    apply Fin.ext
+    have hi := t.property.2 i
+    change ((a i : Nat) : Int) + ((c i : Nat) : Int) =
+      2 * ((b i : Nat) : Int) at hi
+    rw [h] at hi ⊢
+    omega
+  have hbc : b ≠ c := by
+    intro h
+    apply hac
+    funext i
+    apply Fin.ext
+    have hi := t.property.2 i
+    change ((a i : Nat) : Int) + ((c i : Nat) : Int) =
+      2 * ((b i : Nat) : Int) at hi
+    rw [h] at hi
+    omega
+  have hxz : x ≠ z := q.1.property
+  have hcoord : ∃ k, x k ≠ z k := by
+    by_contra h
+    simp only [not_exists, not_not] at h
+    exact hxz (funext h)
+  let k := Classical.choose hcoord
+  have hk : x k ≠ z k := Classical.choose_spec hcoord
+  have hkrel := q.1.val.property k
+  change EqualOrExtreme (x k) (z k) at hkrel
+  have hkextreme :
+      (x k).val = 0 ∧ (z k).val = 3 ∨ (x k).val = 3 ∧ (z k).val = 0 := by
+    rcases hkrel with hEq | hExtreme | hExtreme
+    · exact False.elim (hk hEq)
+    · exact Or.inl hExtreme
+    · exact Or.inr hExtreme
+  have hkxy : x k ≠ y k := by
+    intro h
+    have hv := congrArg Fin.val h
+    change (x k).val = (extremeInteriorCoordinate q.2 (x k) (z k)).val at hv
+    rcases hkextreme with ⟨hx, hz⟩ | ⟨hx, hz⟩ <;>
+      cases hq : q.2 <;> simp [extremeInteriorCoordinate, hx, hz, hq] at hv
+  have hkyz : y k ≠ z k := by
+    intro h
+    have hv := congrArg Fin.val h
+    change (extremeInteriorCoordinate q.2 (x k) (z k)).val = (z k).val at hv
+    rcases hkextreme with ⟨hx, hz⟩ | ⟨hx, hz⟩ <;>
+      cases hq : q.2 <;> simp [extremeInteriorCoordinate, hx, hz, hq] at hv
+  have hxy : x ≠ y := fun h => hkxy (congrFun h k)
+  have hyz : y ≠ z := fun h => hkyz (congrFun h k)
+  have hfin := congrArg (fun p => p.1.val) heq
+  change {a, b, c} = {x, y, z} at hfin
+  have hbmem : b ∈ ({x, y, z} : Finset (GridPoint d)) := by rw [← hfin]; simp
+  simp only [Finset.mem_insert, Finset.mem_singleton] at hbmem
+  have hsum := congrArg
+    (fun s : Finset (GridPoint d) => ∑ p ∈ s, ((p k : Nat) : Int)) hfin
+  simp [hab, hac, hbc, hxy, hxz, hyz] at hsum
+  have hap := t.property.2 k
+  change ((a k : Nat) : Int) + ((c k : Nat) : Int) =
+    2 * ((b k : Nat) : Int) at hap
+  rcases hbmem with hb | hb | hb
+  all_goals
+    have hbval := congrArg (fun p : GridPoint d => (p k).val) hb
+    rcases hkextreme with ⟨hx, hz⟩ | ⟨hx, hz⟩ <;>
+      cases hq : q.2 <;>
+        simp [y, extremeInterior, extremeInteriorCoordinate, hx, hz, hq] at hsum hbval <;>
+          omega
+
 #print axioms endpoint_pair_counts
 #print axioms oriented_arithmetic_progression_count
 #print axioms extreme_line_coordinate_classification
