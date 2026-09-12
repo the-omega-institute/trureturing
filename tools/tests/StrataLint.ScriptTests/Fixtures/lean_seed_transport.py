@@ -360,7 +360,11 @@ else:
     directory = root / tag
     if verb == "create":
         directory.mkdir()
-        (directory / "release.json").write_text(json.dumps({"tag_name": tag, "target_commitish": option("--target"), "draft": True}))
+        # `gh release create` publishes a non-draft release by default.  The
+        # production path supplies all assets atomically and does not follow
+        # up with `release edit --draft=false`, so mirror that final state in
+        # the fake metadata.
+        (directory / "release.json").write_text(json.dumps({"tag_name": tag, "target_commitish": option("--target"), "draft": False}))
         # `gh release create` uploads any asset paths passed on the same
         # invocation.  The production publisher uses this atomic form (the
         # archive and manifest are positional arguments after the flags), so
