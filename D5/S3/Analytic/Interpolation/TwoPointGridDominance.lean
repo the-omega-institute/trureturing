@@ -55,9 +55,9 @@ private theorem gridDistance_le {a b c d x m : ℝ}
     gridDistance a b c d ≤ |x - m| := by
   rcases hx with rfl | rfl
   · exact (min_le_left _ _).trans (by
-      simpa only [Real.dist_eq] using Metric.infDist_le_dist_of_mem hm (x := c))
+      simpa only [Real.dist_eq] using Metric.infDist_le_dist_of_mem hm (x := x))
   · exact (min_le_right _ _).trans (by
-      simpa only [Real.dist_eq] using Metric.infDist_le_dist_of_mem hm (x := d))
+      simpa only [Real.dist_eq] using Metric.infDist_le_dist_of_mem hm (x := x))
 
 /-- A single positive actual corner already places the distance variance in the envelope domain. -/
 theorem two_point_grid_domain (c d : Fin 2 → ℝ) (M₀ M₁ : ℝ)
@@ -66,8 +66,11 @@ theorem two_point_grid_domain (c d : Fin 2 → ℝ) (M₀ M₁ : ℝ)
     0 < M₁ / 2 ∧ 0 ≤ varianceFloor c d M₀ M₁ ∧
       varianceFloor c d M₀ M₁ < 2 * (M₁ / 2) ^ 2 := by
   obtain ⟨⟨x, y⟩, hx, hy, hlo, hhi⟩ := hne
-  have hxpos : 0 < x := hx.elim (fun h => h ▸ hc 0) (fun h => h ▸ (hc 0).trans (hcd 0))
-  have hypos : 0 < y := hy.elim (fun h => h ▸ hc 1) (fun h => h ▸ (hc 1).trans (hcd 1))
+  dsimp only at hx hy hlo hhi
+  have hxpos : 0 < x :=
+    hx.elim (fun h => h.symm ▸ hc 0) (fun h => h.symm ▸ (hc 0).trans (hcd 0))
+  have hypos : 0 < y :=
+    hy.elim (fun h => h.symm ▸ hc 1) (fun h => h.symm ▸ (hc 1).trans (hcd 1))
   let m := (x + y) / 2
   have hm : m ∈ Icc (M₀ / 2) (M₁ / 2) := ⟨by dsimp [m]; linarith, by dsimp [m]; linarith⟩
   have h0 := gridDistance_le hx hm
