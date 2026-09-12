@@ -37,9 +37,30 @@ the pinned Lean environment and emits source-bound canonical JSON plus a SHA-256
 sidecar; `check` consumes the candidate report without invoking Lean. Baseline and fork-point
 state remain Git object snapshots used by repository rules.
 
-`worktree` fetches a remote base and creates the worktree with no `.lake` directory.
-The canonical Lean wrapper materializes a private cache on demand, using an APFS
-`clonefile(2)` donor copy on macOS when possible and `lake exe cache get` otherwise;
-`make lean-cache-ensure` is an explicit, optional prewarm target. The cache is never
-shared through a symlink, and worktree creation restores locked .NET dependencies
-unless `--skip-restore` is explicit.
+`worktree` fetches a remote base and creates a worktree without `.lake`.
+`make lean-cache-ensure` materializes private dependency sources. `make lean` and
+`make lean-report` use native Lake artifact reads and restore ordinary `.lake/build`
+outputs. Missing artifacts rebuild locally. Mathlib downloads live in each tree's
+`.lake/mathlib-cache`; CI's GitHub release cache remains a separate private fallback.
+Worktree creation restores locked .NET dependencies unless `--skip-restore` is explicit.
+
+Only `make warm-donor` in the physical, clean main `dev` checkout publishes the local
+shared store. It holds an exclusive warmer lock and the main `.lake` lock across
+pull, ensure, build and publication. Locks live in canonical Git metadata, independent
+of temporary-directory settings. Native Lake staging preserves older input
+mappings; a bulk clone/copy detaches artifacts from mutable build outputs before
+publication. Complete artifacts precede atomic per-file mapping replacement, so
+readers remain usable during warming and failed publication preserves prior reads.
+
+The shared store is `<git-common-dir>/stratalint-lake/lean-<version>/<os>-<arch>`.
+Lake owns all content hashes; commits and manifest metadata do not partition it.
+Normal commands, including main-checkout builds, clear inherited writer and cache
+path overrides. On macOS, sandbox-exec denies writes to the canonical shared
+subtree for the command and its descendants, forcing hardlink restores to copy.
+If a package explicitly enables cache writes, a
+Lake build rejected for writing the shared store retries once with a private artifact
+cache; shared write denial remains in force.
+Shared mode and warming currently require macOS with sandbox-exec. Other platforms
+use private caches when no shared store exists and explicitly reject shared mode.
+Existing private build outputs remain usable; donor cloning and reverse publication
+are removed. `.lake` and its build/package/cache directories must not be symlinks.

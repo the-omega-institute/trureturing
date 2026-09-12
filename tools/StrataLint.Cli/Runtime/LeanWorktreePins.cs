@@ -220,10 +220,8 @@ internal static class LeanCacheStamp
 
 internal sealed class LeanCacheGuard : IDisposable
 {
-    private const int LockShared = 1;
     private const int LockExclusive = 2;
     private const int LockNonBlocking = 4;
-    private const int LockUnlock = 8;
     private const uint LockFileFailImmediately = 1;
     private const uint LockFileExclusiveLock = 2;
     private readonly FileStream stream;
@@ -231,9 +229,47 @@ internal sealed class LeanCacheGuard : IDisposable
 
     private LeanCacheGuard(FileStream stream) => this.stream = stream;
 
-    internal static LeanCacheGuard? TryAcquireShared(string lake) => TryAcquire(lake, shared: true);
+    internal int Descriptor => stream.SafeFileHandle.DangerousGetHandle().ToInt32();
 
-    internal static LeanCacheGuard? TryAcquireExclusive(string lake) => TryAcquire(lake, shared: false);
+    internal bool HasWriterSession()
+    {
+        if (OperatingSystem.IsWindows()) return false;
+        stream.Position = 0;
+        using var reader = new StreamReader(stream, leaveOpen: true);
+        var line = reader.ReadLine();
+        if (line is null) return false;
+        if (!int.TryParse(line, System.Globalization.NumberStyles.None,
+            System.Globalization.CultureInfo.InvariantCulture, out var group) || group <= 1)
+            throw new InvalidOperationException("invalid cache writer session in " + stream.Name);
+        if (Kill(-group, 0) == 0) return true;
+        if (Marshal.GetLastPInvokeError() != 3) // ESRCH: the original process group is gone.
+            throw new InvalidOperationException("cannot inspect cache writer session " + group);
+        // Foreground tools such as timeout can start another group in the same session.
+        // A departed leader does not release the reservation while that writer remains.
+        var processes = System.Diagnostics.Process.GetProcesses();
+        try
+        {
+            foreach (var process in processes)
+            {
+                var session = GetSession(process.Id);
+                if (session == group) return true;
+                if (session < 0 && Marshal.GetLastPInvokeError() != 3)
+                    throw new InvalidOperationException("cannot inspect cache writer session membership");
+            }
+            return false;
+        }
+        finally { foreach (var process in processes) process.Dispose(); }
+    }
+
+    internal void SetInheritable(bool inherit)
+    {
+        if (Fcntl(Descriptor, 2, inherit ? 0 : 1) < 0) // F_SETFD, FD_CLOEXEC
+            throw new IOException("cannot transfer cache writer guard to child");
+    }
+
+    internal void ClearExitedSession() => stream.SetLength(0);
+
+    internal static LeanCacheGuard? TryAcquireExclusive(string lake, string directory) => TryAcquire(lake, directory);
 
     internal static string PhysicalPath(string path)
     {
@@ -254,18 +290,15 @@ internal sealed class LeanCacheGuard : IDisposable
             {
                 _ = UnlockFile(stream.SafeFileHandle, 0, 0, 1, 0);
             }
-            else
-            {
-                _ = Flock(stream.SafeFileHandle, LockUnlock);
-            }
+            // POSIX flock follows the open file description. Closing our descriptor keeps
+            // the startup guard held by an inherited launcher; LOCK_UN would release both.
             locked = false;
         }
         stream.Dispose();
     }
 
-    private static LeanCacheGuard? TryAcquire(string lake, bool shared)
+    private static LeanCacheGuard? TryAcquire(string lake, string directory)
     {
-        var directory = Path.Combine(Path.GetTempPath(), "stratalint-lean-cache-guards");
         Directory.CreateDirectory(directory);
         var address = Convert.ToHexStringLower(SHA256.HashData(
             Encoding.UTF8.GetBytes(PhysicalPath(lake))));
@@ -276,29 +309,38 @@ internal sealed class LeanCacheGuard : IDisposable
                 Path.Combine(directory, address + ".lock"),
                 FileMode.OpenOrCreate,
                 FileAccess.ReadWrite,
-                FileShare.ReadWrite | FileShare.Delete);
+                FileShare.ReadWrite | FileShare.Delete,
+                bufferSize: 1);
         }
         catch (IOException)
         {
             return null;
         }
         var acquired = OperatingSystem.IsWindows()
-            ? TryLockWindows(stream.SafeFileHandle, shared)
+            ? TryLockWindows(stream.SafeFileHandle)
             : Flock(
                 stream.SafeFileHandle,
-                (shared ? LockShared : LockExclusive) | LockNonBlocking) == 0;
-        if (acquired) return new LeanCacheGuard(stream);
+                LockExclusive | LockNonBlocking) == 0;
+        if (acquired)
+        {
+            var guard = new LeanCacheGuard(stream);
+            try
+            {
+                if (!guard.HasWriterSession()) return guard;
+            }
+            catch { guard.Dispose(); throw; }
+        }
         stream.Dispose();
         return null;
     }
 
-    private static bool TryLockWindows(SafeFileHandle handle, bool shared)
+    private static bool TryLockWindows(SafeFileHandle handle)
     {
         var overlapped = Marshal.AllocHGlobal(Marshal.SizeOf<NativeOverlapped>());
         try
         {
             Marshal.StructureToPtr(default(NativeOverlapped), overlapped, false);
-            var flags = LockFileFailImmediately | (shared ? 0u : LockFileExclusiveLock);
+            var flags = LockFileFailImmediately | LockFileExclusiveLock;
             return LockFileEx(handle, flags, 0, 1, 0, overlapped);
         }
         finally
@@ -323,6 +365,15 @@ internal sealed class LeanCacheGuard : IDisposable
 
     [DllImport("libc", EntryPoint = "flock", SetLastError = true)]
     private static extern int Flock(SafeFileHandle handle, int operation);
+
+    [DllImport("libc", EntryPoint = "fcntl", SetLastError = true)]
+    private static extern int Fcntl(int descriptor, int command, int flags);
+
+    [DllImport("libc", EntryPoint = "kill", SetLastError = true)]
+    private static extern int Kill(int process, int signal);
+
+    [DllImport("libc", EntryPoint = "getsid", SetLastError = true)]
+    private static extern int GetSession(int process);
 
     [DllImport("libc", EntryPoint = "realpath", SetLastError = true)]
     private static extern IntPtr RealPath([MarshalAs(UnmanagedType.LPUTF8Str)] string path, IntPtr buffer);
@@ -371,9 +422,11 @@ internal sealed class LeanCacheWriterGuard : IDisposable
         this.guard = guard;
     }
 
-    internal static LeanCacheWriterGuard? TryAcquire(string lake)
+    internal LeanCacheGuard ProcessGuard => guard ?? throw new ObjectDisposedException(nameof(LeanCacheWriterGuard));
+
+    internal static LeanCacheWriterGuard? TryAcquire(string lake, string directory)
     {
-        var guard = LeanCacheGuard.TryAcquireExclusive(lake);
+        var guard = LeanCacheGuard.TryAcquireExclusive(lake, directory);
         return guard is null ? null : new LeanCacheWriterGuard(lake, guard);
     }
 
@@ -395,213 +448,9 @@ internal sealed class LeanCacheWriterGuard : IDisposable
     }
 }
 
-internal static class LeanCacheBusyProbe
-{
-    internal static bool IsBusy(string root, IWorktreeProcessRunner runner)
-    {
-        ProcessOutput output;
-        try
-        {
-            output = runner.Run(
-                "lsof",
-                ["-Fpcn", "-a", "-d", "cwd"],
-                Path.GetTempPath(),
-                BoundedProcessRunner.HangDetectionBudget);
-        }
-        catch (Exception exception) when (exception is IOException
-            or UnauthorizedAccessException
-            or InvalidOperationException
-            or TimeoutException)
-        {
-            return false;
-        }
-        if (output.ExitCode != 0) return false;
-
-        var target = LeanCacheGuard.PhysicalPath(root).TrimEnd(Path.DirectorySeparatorChar)
-            + Path.DirectorySeparatorChar;
-        string? command = null;
-        foreach (var line in Encoding.UTF8.GetString(output.StandardOutput).Split('\n'))
-        {
-            if (line.StartsWith('c'))
-            {
-                command = line[1..];
-                continue;
-            }
-            if (!line.StartsWith('n') || !IsLeanWriter(command)) continue;
-            var cwd = LeanCacheGuard.PhysicalPath(line[1..]).TrimEnd(Path.DirectorySeparatorChar)
-                + Path.DirectorySeparatorChar;
-            if (cwd.StartsWith(target, StringComparison.Ordinal)) return true;
-        }
-        return false;
-    }
-
-    private static bool IsLeanWriter(string? command) => command is not null
-        && (command.Contains("lake", StringComparison.OrdinalIgnoreCase)
-            || command.Contains("lean", StringComparison.OrdinalIgnoreCase));
-}
-
-internal sealed class LeanCacheDonorSelection : IDisposable
-{
-    private LeanCacheGuard? guard;
-
-    internal LeanCacheDonorSelection(
-        string? donor,
-        string? notice,
-        LeanCacheGuard? guard = null,
-        OleanWarmthInspection? projectWarmth = null)
-    {
-        Donor = donor;
-        Notice = notice;
-        this.guard = guard;
-        ProjectWarmth = projectWarmth;
-    }
-
-    internal string? Donor { get; }
-
-    internal string? Notice { get; }
-
-    internal OleanWarmthInspection? ProjectWarmth { get; }
-
-    internal LeanCacheGuard? TakeGuard()
-    {
-        var owned = guard;
-        guard = null;
-        return owned;
-    }
-
-    public void Dispose() => guard?.Dispose();
-}
-
 internal static class GitWorktreeInventory
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
-
-    internal static LeanCacheDonorSelection SelectDonor(
-        string repositoryRoot,
-        LeanPinSet basePins,
-        IWorktreeProcessRunner runner) =>
-        SelectDonor(
-            repositoryRoot,
-            basePins,
-            runner,
-            FileSystemLeanCacheStateProbe.Instance,
-            requireProjectWarm: false);
-
-    internal static LeanCacheDonorSelection SelectDonor(
-        string repositoryRoot,
-        LeanPinSet basePins,
-        IWorktreeProcessRunner runner,
-        ILeanCacheStateProbe stateProbe,
-        bool requireProjectWarm)
-    {
-        ArgumentNullException.ThrowIfNull(stateProbe);
-        var targetRoot = LeanCacheGuard.PhysicalPath(repositoryRoot);
-        var ordered = ReadRoots(repositoryRoot, runner)
-            .Select(LeanCacheGuard.PhysicalPath)
-            .Where(root => !string.Equals(root, targetRoot, StringComparison.Ordinal))
-            .Distinct(StringComparer.Ordinal);
-        var sawCache = false;
-        var sawMismatch = false;
-        var sawSymlink = false;
-        var sawInvalidStamp = false;
-        var sawBusy = false;
-        var sawColdProject = false;
-        var sawProjectProbeFailure = false;
-        var unreadable = new List<string>();
-
-        foreach (var root in ordered)
-        {
-            var cache = Path.Combine(root, ".lake");
-            if (!Directory.Exists(cache)) continue;
-            sawCache = true;
-            try
-            {
-                if (File.GetAttributes(cache).HasFlag(FileAttributes.ReparsePoint))
-                {
-                    sawSymlink = true;
-                    continue;
-                }
-            }
-            catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
-            {
-                unreadable.Add($"{root}: {exception.Message}");
-                continue;
-            }
-
-            var pins = LeanPinSet.TryReadWorktree(root, out var reason);
-            if (pins is null)
-            {
-                unreadable.Add($"{root}: {reason}");
-                continue;
-            }
-
-            if (!basePins.HasSameBytes(pins))
-            {
-                sawMismatch = true;
-                continue;
-            }
-
-            if (!LeanCacheStamp.Matches(cache, basePins, out var stampReason))
-            {
-                sawInvalidStamp = true;
-                unreadable.Add($"{root}: {stampReason}");
-                continue;
-            }
-
-            var guard = LeanCacheGuard.TryAcquireShared(cache);
-            if (guard is null)
-            {
-                sawBusy = true;
-                continue;
-            }
-
-            var verifiedPins = LeanPinSet.TryReadWorktree(root, out _);
-            if (verifiedPins is null
-                || !basePins.HasSameBytes(verifiedPins)
-                || !LeanCacheStamp.Matches(cache, basePins, out _)
-                || LeanCacheBusyProbe.IsBusy(root, runner))
-            {
-                guard.Dispose();
-                sawBusy = true;
-                continue;
-            }
-
-            var project = stateProbe.ProbeOleans(
-                Path.Combine(cache, "build", "lib", "lean"));
-            if (requireProjectWarm)
-            {
-                if (!project.IsWarm)
-                {
-                    guard.Dispose();
-                    sawColdProject |= project.State == OleanWarmth.Cold;
-                    sawProjectProbeFailure |= project.State == OleanWarmth.ProbeFailed;
-                    if (project.Error is not null) unreadable.Add($"{root}: {project.Error}");
-                    continue;
-                }
-            }
-
-            return new LeanCacheDonorSelection(Path.GetFullPath(root), null, guard, project);
-        }
-
-        var notice = sawMismatch
-            ? "existing .lake donor pin bytes do not match the requested base"
-            : sawInvalidStamp
-                ? $"existing .lake donor producer stamp is unusable ({string.Join("; ", unreadable)})"
-                : sawProjectProbeFailure
-                    ? $"existing .lake donor project warmth could not be enumerated ({string.Join("; ", unreadable)})"
-                : sawColdProject
-                    ? "existing .lake donor has no project olean"
-                : sawBusy
-                    ? "existing .lake donor is busy; refusing a non-quiescent copy"
-            : sawSymlink
-                ? "existing .lake donor is a symlink; shared Lean caches are forbidden"
-                : unreadable.Count > 0
-                    ? $"existing .lake donor is unusable ({string.Join("; ", unreadable)})"
-                    : sawCache
-                        ? "existing .lake donor has no readable pin files"
-                        : "no existing worktree contains .lake";
-        return new LeanCacheDonorSelection(null, notice);
-    }
 
     internal static void FetchRemoteBase(
         string repositoryRoot,
@@ -625,22 +474,6 @@ internal static class GitWorktreeInventory
             ["fetch", "--prune", candidateRemote],
             runner,
             $"git fetch {candidateRemote} failed");
-    }
-
-    private static IReadOnlyList<string> ReadRoots(
-        string repositoryRoot,
-        IWorktreeProcessRunner runner)
-    {
-        var result = RunGit(
-            repositoryRoot,
-            ["worktree", "list", "--porcelain", "-z"],
-            runner,
-            "could not enumerate git worktrees");
-        var fields = StrictUtf8.GetString(result.StandardOutput).Split('\0');
-        return fields
-            .Where(static field => field.StartsWith("worktree ", StringComparison.Ordinal))
-            .Select(static field => Path.GetFullPath(field["worktree ".Length..]))
-            .ToArray();
     }
 
     private static ProcessOutput RunGit(

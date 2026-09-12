@@ -10,6 +10,14 @@ internal interface IWorktreeProcessRunner
         string workingDirectory,
         TimeSpan timeout);
 
+    ProcessOutput RunWithEnvironment(
+        string fileName,
+        IReadOnlyList<string> arguments,
+        string workingDirectory,
+        TimeSpan timeout,
+        IReadOnlyDictionary<string, string> environment) =>
+        throw new NotSupportedException("This process runner does not support an isolated child environment.");
+
     StreamedProcessOutput<T> RunStreaming<T>(
         string fileName,
         IReadOnlyList<string> arguments,
@@ -26,6 +34,15 @@ internal interface IWorktreeProcessRunner
 
 internal sealed class ProductionWorktreeProcessRunner : IWorktreeProcessRunner
 {
+    public ProcessOutput RunWithEnvironment(
+        string fileName,
+        IReadOnlyList<string> arguments,
+        string workingDirectory,
+        TimeSpan timeout,
+        IReadOnlyDictionary<string, string> environment) =>
+        BoundedProcessRunner.Run(fileName, arguments, workingDirectory, timeout,
+            64 * 1024 * 1024, environment: environment);
+
     public StreamedProcessOutput<T> RunStreaming<T>(
         string fileName,
         IReadOnlyList<string> arguments,

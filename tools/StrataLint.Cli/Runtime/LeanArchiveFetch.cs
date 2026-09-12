@@ -86,7 +86,7 @@ internal static class LeanArchiveFetch
                 null,
                 null,
                 null,
-                $"archive fetch did not run: {exception.Message}",
+                $"archive fetch failed: {exception.Message}",
                 null);
         }
 
