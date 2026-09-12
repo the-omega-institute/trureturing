@@ -7,9 +7,13 @@
    digest: First returns of peak-marked Schroeder paths prove Schulte's alternating moment. -/
 
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Data.Finset.Card
+import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Data.Fintype.Fin
 import Mathlib.Data.Fintype.List
+import Mathlib.Logic.Equiv.Prod
+import Mathlib.Logic.Equiv.Sum
 
 open Finset
 open scoped BigOperators
@@ -330,6 +334,231 @@ theorem first_return_peaks {i n : Nat} {q p : List Step}
     | D => contradiction
     | H =>
         simpa [peaks, hi] using happ (H :: r) (by simp) hlast
+
+/-- The peak triangle recurrence obtained by separating a path at its first return.
+The `Fin n` sum enumerates inside semilengths `1, ..., n` by `i + 1`. -/
+theorem T_first_return_recurrence (n k : Nat) :
+    T (n + 1) k =
+      T n k + (if 0 < k then T n (k - 1) else 0) +
+        ∑ i : Fin n, ∑ j : Fin (k + 1),
+          T (i + 1) j * T (n - (i + 1)) (k - j) := by
+  classical
+  have hT (a b : Nat) :
+      T a b = Fintype.card {p : SchroederPath a // peaks p.1 = b} := by
+    let e : (↥((schroeder a).filter (fun w => peaks w = b))) ≃
+        {p : SchroederPath a // peaks p.1 = b} :=
+      { toFun := fun w =>
+          ⟨⟨w.1, (mem_filter.mp w.2).1⟩, (mem_filter.mp w.2).2⟩
+        invFun := fun p =>
+          ⟨p.1.1, mem_filter.mpr ⟨p.1.2, p.2⟩⟩
+        left_inv := fun _ => rfl
+        right_inv := fun _ => rfl }
+    change ((schroeder a).filter (fun w => peaks w = b)).card = _
+    simpa only [Fintype.card_coe] using Fintype.card_congr e
+  have hcard :
+      Fintype.card {w : SchroederPath (n + 1) // peaks w.1 = k} =
+        Fintype.card {s : SchroederPath n ⊕
+            (Sigma fun i : Fin (n + 1) =>
+              SchroederPath i × SchroederPath (n - i)) //
+          (match s with
+            | Sum.inl p => peaks p.1
+            | Sum.inr ⟨i, q, p⟩ =>
+                peaks q.1 + peaks p.1 + if i = 0 then 1 else 0) = k} := by
+    symm
+    apply Fintype.card_congr
+    apply (firstReturnEquiv n).symm.subtypeEquiv
+    intro s
+    cases s with
+    | inl p =>
+        change peaks p.1 = k ↔ peaks (H :: p.1) = k
+        cases p.1 with
+        | nil => rfl
+        | cons a r => cases a <;> simp [peaks]
+    | inr s =>
+        rcases s with ⟨i, q, p⟩
+        change peaks q.1 + peaks p.1 + (if i = 0 then 1 else 0) = k ↔
+          peaks (U :: q.1 ++ D :: p.1) = k
+        rw [first_return_peaks q.2 p.2]
+        have hif : (if i = 0 then 1 else 0) =
+            if (i : Nat) = 0 then 1 else 0 := by
+          by_cases hi : i = 0
+          · subst i
+            simp
+          · have hiv : (i : Nat) ≠ 0 := fun h => hi (Fin.ext h)
+            simp [hi, hiv]
+        rw [hif]
+  have hsplit :
+      Fintype.card {s : SchroederPath n ⊕
+          (Sigma fun i : Fin (n + 1) =>
+            SchroederPath i × SchroederPath (n - i)) //
+        (match s with
+          | Sum.inl p => peaks p.1
+          | Sum.inr ⟨i, q, p⟩ =>
+              peaks q.1 + peaks p.1 + if i = 0 then 1 else 0) = k} =
+        Fintype.card {p : SchroederPath n // peaks p.1 = k} +
+          Fintype.card {s : Sigma fun i : Fin (n + 1) =>
+              SchroederPath i × SchroederPath (n - i) //
+            peaks s.2.1.1 + peaks s.2.2.1 +
+              (if s.1 = 0 then 1 else 0) = k} := by
+    calc
+      _ = Fintype.card
+          ({p : SchroederPath n // peaks p.1 = k} ⊕
+            {s : Sigma fun i : Fin (n + 1) =>
+                SchroederPath i × SchroederPath (n - i) //
+              peaks s.2.1.1 + peaks s.2.2.1 +
+                (if s.1 = 0 then 1 else 0) = k}) :=
+        Fintype.card_congr Equiv.subtypeSum
+      _ = _ := Fintype.card_sum
+  have hsigma :
+      Fintype.card {s : Sigma fun i : Fin (n + 1) =>
+          SchroederPath i × SchroederPath (n - i) //
+        peaks s.2.1.1 + peaks s.2.2.1 +
+          (if s.1 = 0 then 1 else 0) = k} =
+        ∑ i : Fin (n + 1),
+          Fintype.card {qp : SchroederPath i × SchroederPath (n - i) //
+            peaks qp.1.1 + peaks qp.2.1 +
+              (if i = 0 then 1 else 0) = k} := by
+    let e : {s : Sigma fun i : Fin (n + 1) =>
+        SchroederPath i × SchroederPath (n - i) //
+          peaks s.2.1.1 + peaks s.2.2.1 +
+            (if s.1 = 0 then 1 else 0) = k} ≃
+        Sigma fun i : Fin (n + 1) =>
+          {qp : SchroederPath i × SchroederPath (n - i) //
+            peaks qp.1.1 + peaks qp.2.1 +
+              (if i = 0 then 1 else 0) = k} :=
+      { toFun := fun s => ⟨s.1.1, ⟨s.1.2, s.2⟩⟩
+        invFun := fun s => ⟨⟨s.1, s.2.1⟩, s.2.2⟩
+        left_inv := fun _ => rfl
+        right_inv := fun _ => rfl }
+    calc
+      _ = Fintype.card (Sigma fun i : Fin (n + 1) =>
+          {qp : SchroederPath i × SchroederPath (n - i) //
+            peaks qp.1.1 + peaks qp.2.1 +
+              (if i = 0 then 1 else 0) = k}) := Fintype.card_congr e
+      _ = _ := Fintype.card_sigma
+  have hconv (a b c : Nat) :
+      Fintype.card {qp : SchroederPath a × SchroederPath b //
+        peaks qp.1.1 + peaks qp.2.1 = c} =
+        ∑ j : Fin (c + 1), T a j * T b (c - j) := by
+    let S := {qp : SchroederPath a × SchroederPath b //
+      peaks qp.1.1 + peaks qp.2.1 = c}
+    let f : S -> Nat := fun qp => peaks qp.1.1.1
+    have hf (qp : S) : f qp < c + 1 := by
+      dsimp [f]
+      omega
+    let partition : S ≃ Sigma fun j : Fin (c + 1) => {qp : S // f qp = j} :=
+      (Equiv.sigmaSubtypeFiberEquiv f (fun j : Nat => j < c + 1) hf).symm.trans
+        (Equiv.sigmaCongrLeft' Fin.equivSubtype.symm)
+    let e (j : Fin (c + 1)) : {qp : S // f qp = j} ≃
+        {q : SchroederPath a // peaks q.1 = j} ×
+          {p : SchroederPath b // peaks p.1 = c - j} :=
+      { toFun := fun qp =>
+          ⟨⟨qp.1.1.1, qp.2⟩, ⟨qp.1.1.2, by
+            have hs := qp.1.2
+            have hq := qp.2
+            change peaks qp.1.1.1.1 = (j : Nat) at hq
+            rw [hq] at hs
+            omega⟩⟩
+        invFun := fun qp =>
+          ⟨⟨(qp.1.1, qp.2.1), by
+              rw [qp.1.2, qp.2.2]
+              exact Nat.add_sub_of_le (Nat.le_of_lt_succ j.isLt)⟩,
+            qp.1.2⟩
+        left_inv := by
+          intro qp
+          apply Subtype.ext
+          apply Subtype.ext
+          rfl
+        right_inv := by
+          intro qp
+          apply Prod.ext <;> apply Subtype.ext <;> rfl }
+    calc
+      Fintype.card S = Fintype.card (Sigma fun j : Fin (c + 1) =>
+          {qp : S // f qp = j}) := Fintype.card_congr partition
+      _ = ∑ j : Fin (c + 1),
+          Fintype.card {qp : S // f qp = j} := Fintype.card_sigma
+      _ = ∑ j : Fin (c + 1),
+          Fintype.card {q : SchroederPath a // peaks q.1 = j} *
+            Fintype.card {p : SchroederPath b // peaks p.1 = c - j} := by
+        apply Finset.sum_congr rfl
+        intro j _
+        rw [Fintype.card_congr (e j), Fintype.card_prod]
+      _ = _ := by
+        apply Finset.sum_congr rfl
+        intro j _
+        rw [← hT, ← hT]
+  have hzero :
+      Fintype.card {qp : SchroederPath 0 × SchroederPath n //
+        peaks qp.1.1 + peaks qp.2.1 + 1 = k} =
+        if 0 < k then T n (k - 1) else 0 := by
+    by_cases hk : 0 < k
+    · rw [if_pos hk]
+      let e : {qp : SchroederPath 0 × SchroederPath n //
+          peaks qp.1.1 + peaks qp.2.1 + 1 = k} ≃
+          {p : SchroederPath n // peaks p.1 = k - 1} :=
+        { toFun := fun qp => ⟨qp.1.2, by
+              have hq0 : qp.1.1.1 = [] := by
+                simpa [schroeder] using qp.1.1.2
+              have heq := qp.2
+              rw [hq0] at heq
+              change 0 + peaks qp.1.2.1 + 1 = k at heq
+              omega⟩
+          invFun := fun p =>
+            ⟨(⟨[], by simp [schroeder]⟩, p.1), by
+              change 0 + peaks p.1 + 1 = k
+              rw [p.2]
+              omega⟩
+          left_inv := by
+            intro qp
+            apply Subtype.ext
+            apply Prod.ext
+            · apply Subtype.ext
+              simpa [schroeder] using qp.1.1.2
+            · rfl
+          right_inv := fun _ => rfl }
+      rw [Fintype.card_congr e, ← hT]
+    · have hk0 : k = 0 := by omega
+      subst k
+      rw [if_neg (by omega)]
+      exact Fintype.card_eq_zero_iff.mpr ⟨fun qp => by omega⟩
+  have hpos (i : Fin n) :
+      Fintype.card {qp : SchroederPath i.succ × SchroederPath (n - i.succ) //
+        peaks qp.1.1 + peaks qp.2.1 +
+          (if i.succ = (0 : Fin (n + 1)) then 1 else 0) = k} =
+        ∑ j : Fin (k + 1),
+          T (i + 1) j * T (n - (i + 1)) (k - j) := by
+    simpa using hconv (i + 1) (n - (i + 1)) k
+  calc
+    T (n + 1) k =
+        Fintype.card {w : SchroederPath (n + 1) // peaks w.1 = k} := hT _ _
+    _ = Fintype.card {s : SchroederPath n ⊕
+          (Sigma fun i : Fin (n + 1) =>
+            SchroederPath i × SchroederPath (n - i)) //
+        (match s with
+          | Sum.inl p => peaks p.1
+          | Sum.inr ⟨i, q, p⟩ =>
+              peaks q.1 + peaks p.1 + if i = 0 then 1 else 0) = k} := hcard
+    _ = Fintype.card {p : SchroederPath n // peaks p.1 = k} +
+          Fintype.card {s : Sigma fun i : Fin (n + 1) =>
+              SchroederPath i × SchroederPath (n - i) //
+            peaks s.2.1.1 + peaks s.2.2.1 +
+              (if s.1 = 0 then 1 else 0) = k} := hsplit
+    _ = T n k + ∑ i : Fin (n + 1),
+          Fintype.card {qp : SchroederPath i × SchroederPath (n - i) //
+            peaks qp.1.1 + peaks qp.2.1 +
+              (if i = 0 then 1 else 0) = k} := by rw [← hT, hsigma]
+    _ = _ := by
+      rw [Fin.sum_univ_succ]
+      change T n k +
+          (Fintype.card {qp : SchroederPath 0 × SchroederPath n //
+              peaks qp.1.1 + peaks qp.2.1 + 1 = k} +
+            ∑ i : Fin n,
+              Fintype.card {qp : SchroederPath i.succ × SchroederPath (n - i.succ) //
+                peaks qp.1.1 + peaks qp.2.1 +
+                  (if i.succ = (0 : Fin (n + 1)) then 1 else 0) = k}) = _
+      rw [hzero]
+      simp_rw [hpos]
+      omega
 
 set_option maxRecDepth 100000 in
 example : T 1 0 = 1 := by decide +kernel
