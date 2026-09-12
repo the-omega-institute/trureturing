@@ -261,6 +261,102 @@ theorem actual_pair_bound_strict {c d t u x y M₀ M₁ : ℝ}
     change _ < psiTwo m V at hp
     rwa [heq] at hp
 
+/-- A decreasing-density pair bounds the exact grid dual. -/
+theorem grid_dual_le_greedy_pair (c d : Fin 2 → ℝ) (M : ℝ)
+    (hc : ∀ i, 0 < c i) (hcd : ∀ i, c i < d i) (hbase : c 0 + c 1 ≤ M)
+    (hratio : (logValue (d 1) - logValue (c 1)) / (d 1 - c 1) ≤
+      (logValue (d 0) - logValue (c 0)) / (d 0 - c 0)) :
+    gridDual c d M ≤ logValue (c 0) + logValue (c 1) +
+      objective (fun i => logValue (d i) - logValue (c i))
+        (greedyFill (fun i => d i - c i) [0, 1] (M - c 0 - c 1)) := by
+  let w := fun i => d i - c i
+  let v := fun i => logValue (d i) - logValue (c i)
+  let B := M - c 0 - c 1
+  have hw (i : Fin 2) : 0 < w i := sub_pos.mpr (hcd i)
+  have hv (i : Fin 2) : 0 ≤ v i :=
+    sub_nonneg.mpr (logValue_strictMono (hc i) ((hc i).trans (hcd i)) (hcd i)).le
+  have hB : 0 ≤ B := by dsimp [B]; linarith
+  obtain ⟨l, price, hnodup, hcover, _, _, _, _, _, _, hsup, _⟩ :=
+    greedy_attains_duality w v B hw hv hB
+  have hl : l = [0, 1] ∨ l = [1, 0] := by
+    apply List.perm_pair.mp
+    apply List.perm_of_nodup_nodup_toFinset_eq hnodup (by simp)
+    rw [hcover]
+    ext i
+    fin_cases i <;> simp
+  have heq := grid_dual_eq_fractional_sup c d M hc hcd
+    (by simpa only [Fin.sum_univ_two] using hbase)
+  have hbudget : M - ∑ i, c i = B := by simp [B, Fin.sum_univ_two]; ring
+  rw [hbudget] at heq
+  change gridDual c d M = (∑ i, logValue (c i)) +
+    sSup (objective v '' {a | Feasible w B a}) at heq
+  rw [hsup, Fin.sum_univ_two] at heq
+  rw [heq]
+  suffices ho : objective v (greedyFill w l B) ≤ objective v (greedyFill w [0, 1] B) by
+    exact add_le_add le_rfl ho
+  rcases hl with hl | hl
+  · rw [hl]
+  · rw [hl]
+    exact greedyFill_pair_swap w v 0 1 (by decide) B (hw 0) (hw 1) hB hratio
+
+/-- The actual-corner condition is preserved when the two coordinates are exchanged. -/
+theorem corners_swap_nontrivial (c d : Fin 2 → ℝ) (M₀ M₁ : ℝ)
+    (htwo : (corners c d M₀ M₁).Nontrivial) :
+    (corners ![c 1, c 0] ![d 1, d 0] M₀ M₁).Nontrivial := by
+  obtain ⟨⟨x, y⟩, hx, ⟨z, w⟩, hz, hne⟩ := htwo
+  refine ⟨(y, x), ?_, (w, z), ?_, ?_⟩
+  · exact ⟨hx.2.1, hx.1, by linarith [hx.2.2.1], by linarith [hx.2.2.2]⟩
+  · exact ⟨hz.2.1, hz.1, by linarith [hz.2.2.1], by linarith [hz.2.2.2]⟩
+  · intro he
+    apply hne
+    have hp := Prod.mk.inj he
+    exact Prod.ext hp.2 hp.1
+
+/-- Exchanging the two coordinate labels leaves the grid dual unchanged. -/
+theorem grid_dual_swap (c d : Fin 2 → ℝ) (M : ℝ) :
+    gridDual ![c 1, c 0] ![d 1, d 0] M = gridDual c d M := by
+  apply congrArg sInf
+  congr 1
+  funext p
+  simp only [gridDualValue, Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.cons_val_fin_one]
+  ring
+
+/-- Every positive two-point grid with two actual slab corners obeys the distance envelope. -/
+theorem two_point_grid_dominance (c d : Fin 2 → ℝ) (M₀ M₁ : ℝ)
+    (hc : ∀ i, 0 < c i) (hcd : ∀ i, c i < d i) (hM : M₀ < M₁)
+    (htwo : (corners c d M₀ M₁).Nontrivial) :
+    gridDual c d M₁ ≤ psiTwo (M₁ / 2) (varianceFloor c d M₀ M₁) := by
+  have hbase : c 0 + c 1 ≤ M₁ := by
+    obtain ⟨⟨x, y⟩, hx⟩ := htwo.nonempty
+    have hx0 : c 0 ≤ x := hx.1.elim (fun h => h.ge) (fun h => (hcd 0).le.trans h.ge)
+    have hy0 : c 1 ≤ y := hx.2.1.elim (fun h => h.ge) (fun h => (hcd 1).le.trans h.ge)
+    linarith [hx.2.2.2]
+  have hordered (c d : Fin 2 → ℝ) (hc : ∀ i, 0 < c i) (hcd : ∀ i, c i < d i)
+      (hb : c 0 + c 1 ≤ M₁) (ht : (corners c d M₀ M₁).Nontrivial)
+      (hr : (logValue (d 1) - logValue (c 1)) / (d 1 - c 1) ≤
+        (logValue (d 0) - logValue (c 0)) / (d 0 - c 0)) :
+      gridDual c d M₁ ≤ psiTwo (M₁ / 2) (varianceFloor c d M₀ M₁) := by
+    have hg := grid_dual_le_greedy_pair c d M₁ hc hcd hb hr
+    have ha := ordered_fill_bound (hc 0) (hcd 0) (hc 1) (hcd 1) hM hb ht
+    have hw : (fun i => d i - c i) = ![d 0 - c 0, d 1 - c 1] := by
+      funext i; fin_cases i <;> simp
+    have hv : (fun i => logValue (d i) - logValue (c i)) =
+        ![logValue (d 0) - logValue (c 0), logValue (d 1) - logValue (c 1)] := by
+      funext i; fin_cases i <;> simp
+    rw [hw, hv] at hg
+    exact hg.trans (by simpa only [varianceFloor, Fin.sum_univ_two] using ha)
+  rcases le_total
+      ((logValue (d 1) - logValue (c 1)) / (d 1 - c 1))
+      ((logValue (d 0) - logValue (c 0)) / (d 0 - c 0)) with hr | hr
+  · exact hordered c d hc hcd hbase htwo hr
+  · have hs := hordered ![c 1, c 0] ![d 1, d 0]
+      (by intro i; fin_cases i <;> simp [hc])
+      (by intro i; fin_cases i <;> simp [hcd])
+      (by simpa [add_comm] using hbase) (corners_swap_nontrivial c d M₀ M₁ htwo) hr
+    rw [grid_dual_swap] at hs
+    simpa [varianceFloor, Fin.sum_univ_two, add_comm] using hs
+
 #print axioms psiTwo_strictMono_mean
 #print axioms pair_value_spread_strict
 #print axioms fractional_row_bound_strict
@@ -268,5 +364,13 @@ theorem actual_pair_bound_strict {c d t u x y M₀ M₁ : ℝ}
 #print axioms pair_bound_strict
 #print axioms gridDistance_lt_upper
 #print axioms actual_pair_bound_strict
+
+#print axioms grid_dual_le_greedy_pair
+
+#print axioms corners_swap_nontrivial
+
+#print axioms grid_dual_swap
+
+#print axioms two_point_grid_dominance
 
 end D5.S3.Analytic.Interpolation.TwoPointGridDominanceFinal
