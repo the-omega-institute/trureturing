@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The two-point grid dual obeys the distance envelope with equality exactly at the diagonal. -/
+   digest: Two-point grid dominance and the exact diagonal equality criterion. -/
 
 import D5.S3.Analytic.Interpolation.TwoPointGridDominanceBound
 import D5.S3.Analytic.Knapsack.GreedyFillPair
@@ -441,6 +441,84 @@ theorem ordered_fill_bound_strict {c d t u M₀ M₁ : ℝ}
     convert hh using 1 <;>
       simp only [if_neg hfirst] <;> ring
 
+/-- The distance envelope is strict when the upper-budget diagonal is absent. -/
+theorem two_point_grid_strict_of_no_diagonal (c d : Fin 2 → ℝ) (M₀ M₁ : ℝ)
+    (hc : ∀ i, 0 < c i) (hcd : ∀ i, c i < d i) (hM : M₀ < M₁)
+    (htwo : (corners c d M₀ M₁).Nontrivial)
+    (hdiag : ¬((M₁ / 2 = c 0 ∨ M₁ / 2 = d 0) ∧
+      (M₁ / 2 = c 1 ∨ M₁ / 2 = d 1))) :
+    gridDual c d M₁ < psiTwo (M₁ / 2) (varianceFloor c d M₀ M₁) := by
+  have hbase : c 0 + c 1 ≤ M₁ := by
+    obtain ⟨⟨x, y⟩, hx⟩ := htwo.nonempty
+    have hx0 : c 0 ≤ x := hx.1.elim (fun h => h.ge) (fun h => (hcd 0).le.trans h.ge)
+    have hy0 : c 1 ≤ y := hx.2.1.elim (fun h => h.ge) (fun h => (hcd 1).le.trans h.ge)
+    linarith [hx.2.2.2]
+  have hordered (c d : Fin 2 → ℝ) (hc : ∀ i, 0 < c i) (hcd : ∀ i, c i < d i)
+      (hb : c 0 + c 1 ≤ M₁) (ht : (corners c d M₀ M₁).Nontrivial)
+      (hd : ¬((M₁ / 2 = c 0 ∨ M₁ / 2 = d 0) ∧
+        (M₁ / 2 = c 1 ∨ M₁ / 2 = d 1)))
+      (hr : (logValue (d 1) - logValue (c 1)) / (d 1 - c 1) ≤
+        (logValue (d 0) - logValue (c 0)) / (d 0 - c 0)) :
+      gridDual c d M₁ < psiTwo (M₁ / 2) (varianceFloor c d M₀ M₁) := by
+    have hg := grid_dual_le_greedy_pair c d M₁ hc hcd hb hr
+    have ha := ordered_fill_bound_strict (hc 0) (hcd 0) (hc 1) (hcd 1) hM hb ht hd
+    have hw : (fun i => d i - c i) = ![d 0 - c 0, d 1 - c 1] := by
+      funext i; fin_cases i <;> simp
+    have hv : (fun i => logValue (d i) - logValue (c i)) =
+        ![logValue (d 0) - logValue (c 0), logValue (d 1) - logValue (c 1)] := by
+      funext i; fin_cases i <;> simp
+    rw [hw, hv] at hg
+    exact hg.trans_lt (by simpa only [varianceFloor, Fin.sum_univ_two] using ha)
+  rcases le_total
+      ((logValue (d 1) - logValue (c 1)) / (d 1 - c 1))
+      ((logValue (d 0) - logValue (c 0)) / (d 0 - c 0)) with hr | hr
+  · exact hordered c d hc hcd hbase htwo hdiag hr
+  · have hs := hordered ![c 1, c 0] ![d 1, d 0]
+      (by intro i; fin_cases i <;> simp [hc])
+      (by intro i; fin_cases i <;> simp [hcd])
+      (by simpa [add_comm] using hbase) (corners_swap_nontrivial c d M₀ M₁ htwo)
+      (by intro h; exact hdiag ⟨h.2, h.1⟩) hr
+    rw [grid_dual_swap] at hs
+    simpa [varianceFloor, Fin.sum_univ_two, add_comm] using hs
+
+/-- Equality holds exactly when both endpoint sets contain the upper-budget mean. -/
+theorem two_point_grid_equality (c d : Fin 2 → ℝ) (M₀ M₁ : ℝ)
+    (hc : ∀ i, 0 < c i) (hcd : ∀ i, c i < d i) (hM : M₀ < M₁)
+    (htwo : (corners c d M₀ M₁).Nontrivial) :
+    gridDual c d M₁ = psiTwo (M₁ / 2) (varianceFloor c d M₀ M₁) ↔
+      (M₁ / 2, M₁ / 2) ∈ ({c 0, d 0} : Set ℝ) ×ˢ ({c 1, d 1} : Set ℝ) := by
+  constructor
+  · intro heq
+    have hd : (M₁ / 2 = c 0 ∨ M₁ / 2 = d 0) ∧
+        (M₁ / 2 = c 1 ∨ M₁ / 2 = d 1) := by
+      by_contra hn
+      exact (ne_of_lt (two_point_grid_strict_of_no_diagonal c d M₀ M₁ hc hcd hM htwo hn)) heq
+    simpa only [mem_prod, mem_insert_iff, mem_singleton_iff] using hd
+  · intro hd
+    have hd' : (M₁ / 2 = c 0 ∨ M₁ / 2 = d 0) ∧
+        (M₁ / 2 = c 1 ∨ M₁ / 2 = d 1) := by
+      simpa only [mem_prod, mem_insert_iff, mem_singleton_iff] using hd
+    have hm : M₁ / 2 ∈ Icc (M₀ / 2) (M₁ / 2) := ⟨by linarith, le_rfl⟩
+    have hdist (i : Fin 2) : gridDistance (M₀ / 2) (M₁ / 2) (c i) (d i) = 0 := by
+      have hi : M₁ / 2 = c i ∨ M₁ / 2 = d i := by
+        fin_cases i
+        · exact hd'.1
+        · exact hd'.2
+      apply le_antisymm _ (gridDistance_nonneg _ _ _ _)
+      rcases hi with hi | hi
+      · have hz : Metric.infDist (c i) (Icc (M₀ / 2) (M₁ / 2)) = 0 :=
+          Metric.infDist_zero_of_mem (hi ▸ hm)
+        exact (min_le_left _ _).trans_eq hz
+      · have hz : Metric.infDist (d i) (Icc (M₀ / 2) (M₁ / 2)) = 0 :=
+          Metric.infDist_zero_of_mem (hi ▸ hm)
+        exact (min_le_right _ _).trans_eq hz
+    have hV : varianceFloor c d M₀ M₁ = 0 := by simp [varianceFloor, hdist]
+    have hcorner := corner_le_grid_dual c d M₁ (fun _ => M₁ / 2)
+      (by intro i; fin_cases i; exact hd'.1; exact hd'.2)
+      (by simp only [Fin.sum_univ_two]; linarith)
+    apply le_antisymm (two_point_grid_dominance c d M₀ M₁ hc hcd hM htwo)
+    simpa [hV, psiTwo, Fin.sum_univ_two, two_mul] using hcorner
+
 #print axioms psiTwo_strictMono_mean
 #print axioms pair_value_spread_strict
 #print axioms fractional_row_bound_strict
@@ -460,5 +538,9 @@ theorem ordered_fill_bound_strict {c d t u M₀ M₁ : ℝ}
 #print axioms closed_row_bound_strict
 
 #print axioms ordered_fill_bound_strict
+
+#print axioms two_point_grid_strict_of_no_diagonal
+
+#print axioms two_point_grid_equality
 
 end D5.S3.Analytic.Interpolation.TwoPointGridDominanceFinal
