@@ -4,11 +4,11 @@
 
 A decreasing return-to-weight ratio orders a greedy maximizer, and a threshold price attains the dual minimum.
 
-Let I be an arbitrary finite index type with decidable equality, and let w and v be real functions on I. Write C for cost, V for return, D for the scalar dual value, and F for the feasible set at a real budget B.
+Let I be an arbitrary finite index type with decidable equality, and let w and v be real functions on I. Write C for cost, V for return, D for the scalar dual value, and F for the feasible set at a real budget B. For the first two theorems, assume that all weights are strictly positive, all returns are nonnegative, and B is nonnegative.
 
 $\operatorname{C}\left(t\right) = \sum_{i \in I} \operatorname{w}\left(i\right)\operatorname{t}\left(i\right), \operatorname{V}\left(t\right) = \sum_{i \in I} \operatorname{v}\left(i\right)\operatorname{t}\left(i\right), \operatorname{D}\left(p\right) = pB+\sum_{i \in I} \max(0,\operatorname{v}\left(i\right)-p\operatorname{w}\left(i\right))$
 
-$F = \{t:I \to \operatorname{Real}\left(\right) \mid (\forall i \in I, 0 \le \operatorname{t}\left(i\right) \le 1) \land \operatorname{C}\left(t\right) \le B\}$
+$F = \{t:I \to \mathbb{R} \mid (\forall i \in I, 0 \le \operatorname{t}\left(i\right) \le 1) \land \operatorname{C}\left(t\right) \le B\}$
 
 **Theorem 1.1 (Equality of primal and dual values).**
 
@@ -24,7 +24,7 @@ Assume every weight is strictly positive, every return is nonnegative, and B is 
 
 **Theorem 1.2 (A greedy allocation and a minimizing price).**
 
-$$\exists l:\operatorname{List}\left(I\right), \exists p:\operatorname{Real}\left(\right), \operatorname{Nodup}\left(l\right) \land \operatorname{set}\left(l\right) = I \land \operatorname{Sorted}\left(l\right) \land g_{l} \in F \land 0 \le p \land p(B-\operatorname{C}\left(g_{l}\right)) = 0 \land (\forall i \in I, (\operatorname{v}\left(i\right)-p\operatorname{w}\left(i\right))g_{l}(i) = \max(0,\operatorname{v}\left(i\right)-p\operatorname{w}\left(i\right))) \land \operatorname{V}\left(g_{l}\right) = \operatorname{D}\left(p\right) \land \operatorname{sup}_{t \in F} \operatorname{V}\left(t\right) = \operatorname{V}\left(g_{l}\right) \land \operatorname{inf}_{p \ge 0} \operatorname{D}\left(p\right) = \operatorname{V}\left(g_{l}\right)$$
+$$\exists l:\operatorname{List}\left(I\right), \exists p:\mathbb{R}, \operatorname{Nodup}\left(l\right) \land \operatorname{set}\left(l\right) = I \land \operatorname{Sorted}\left(l\right) \land g_{l} \in F \land 0 \le p \land p(B-\operatorname{C}\left(g_{l}\right)) = 0 \land (\forall i \in I, (\operatorname{v}\left(i\right)-p\operatorname{w}\left(i\right))g_{l}(i) = \max(0,\operatorname{v}\left(i\right)-p\operatorname{w}\left(i\right))) \land \operatorname{V}\left(g_{l}\right) = \operatorname{D}\left(p\right) \land \operatorname{sup}_{t \in F} \operatorname{V}\left(t\right) = \operatorname{V}\left(g_{l}\right) \land \operatorname{inf}_{p \ge 0} \operatorname{D}\left(p\right) = \operatorname{V}\left(g_{l}\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Knapsack/FractionalKnapsackDual.greedy_attains_duality` (`✓ std3`). ∎
 
