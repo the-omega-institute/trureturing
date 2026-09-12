@@ -1,0 +1,21 @@
+# The legacy admission workflow was replaced by ci-pr.yml and ci-push.yml.
+# Keep this path as a disabled tombstone so pull_request_target events cannot
+# select the removed candidate/base implementation while GitHub refreshes the
+# default-branch workflow registry.
+name: CI legacy admission (disabled)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  retired:
+    # Deliberately unreachable ref: this job is a registry tombstone, not a
+    # runnable fallback.  Keep the guard non-constant so actionlint accepts it.
+    if: github.ref == 'refs/heads/__legacy_admission_disabled__'
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - name: Legacy workflow retired
+        run: exit 1
