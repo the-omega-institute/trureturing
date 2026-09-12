@@ -1,0 +1,13 @@
+**定理 371.2。** $d_K$ 是给出上述拓扑的度量，$K_{\rm infdig}$ 紧，$z_{\rm infdig}[\omega]$ 稠密。$F_{\rm infdig}:K_{\rm infdig}\to\mathbb R$ 和 $H_{\rm infdig}:K_{\rm infdig}\to\mathbb T$ 连续；若 $x_j=y_j$ 对所有 $j<L$ 成立，则
+$$
+d_K(x,y)\le2^{-L},\qquad
+|F_{\rm infdig}(x)-F_{\rm infdig}(y)|\le\alpha^L.
+$$
+对每个 $n\in\omega$，
+$$
+F_{\rm infdig}(z_{\rm infdig}(n))
+=n\alpha-f(n)=n\phi-(n+f(n))\in(a,b),\qquad
+H_{\rm infdig}(z_{\rm infdig}(n))=\gamma(n).
+$$
+$H_{\rm infdig}$ 是相对于 $z_{\rm infdig}$ 的唯一连续圆周值延拓。
+

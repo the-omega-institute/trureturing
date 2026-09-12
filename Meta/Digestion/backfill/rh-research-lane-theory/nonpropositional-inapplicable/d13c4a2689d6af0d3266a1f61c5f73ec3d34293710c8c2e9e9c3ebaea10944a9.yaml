@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d13c4a2689d6af0d3266a1f61c5f73ec3d34293710c8c2e9e9c3ebaea10944a9
+  normalized_sha256: sha256:d13c4a2689d6af0d3266a1f61c5f73ec3d34293710c8c2e9e9c3ebaea10944a9
+cas_ref: sha256:d13c4a2689d6af0d3266a1f61c5f73ec3d34293710c8c2e9e9c3ebaea10944a9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This atom records the proposed GID and append placement for the TimeOrderedPrimeMemoryCocycle material. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with the timed-event definitions and propositions that follow.
+    previous_atom_id: 111ad8e553ae43646b792c83ad7cc970bfae738d4effcea8c52927114f2911ab
+    next_atom_id: cb6a92f43d516f284f123cfa259079f3d92c1295f58e5805a8aafddca81a17b1

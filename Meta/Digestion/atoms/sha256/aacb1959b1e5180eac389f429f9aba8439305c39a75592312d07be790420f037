@@ -1,0 +1,13 @@
+**定义 380.1。** 对 $J\ge L\ge1$，令 $\pi_{J,L}:\mathsf X_J\to\mathsf X_L$ 为限制映射，并定义
+$$
+\mathscr Q=\left\{p\in\prod_{L\in\omega_{>0}}\mathsf X_L:
+\forall L\ge1,\ \pi_{L+1,L}(p_{L+1})=p_L\right\},
+\qquad \mathcal U(x)=(P_Lx)_{L\ge1}.
+$$
+积取有限离散因子的乘积拓扑，$\mathscr Q$ 取其子空间拓扑。对观测关系也使用限制双坐标的连接映射，置
+$$
+\mathscr Q_R=\left\{(p_L,q_L)_{L\ge1}\in\prod_{L\ge1}\mathscr R_L:
+\forall L\ge1,\ \pi_{L+1,L}(p_{L+1})=p_L\ \land\
+\pi_{L+1,L}(q_{L+1})=q_L\right\}.
+$$
+

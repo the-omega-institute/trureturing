@@ -1,0 +1,8 @@
+其余情形取 \(t_p=1\) 于 \(J\),\(t_j=\theta\),其它为零,预算恰好饱和。取 \(\lambda_* =\rho_j>0\),前缀的 \(\Delta_p-\lambda_*\ell_p\ge0\),后缀的该量 \(\le0\),第 \(j\) 项为零。于是每一步上界都取等,具体为
+
+\[
+Q(\lambda_*)=F_b+\sum_{p\in J}\Delta_p+
+\lambda_*(B-\sum_{p\in J}\ell_p)
+=F_b+\sum_{p\in J}\Delta_p+\theta\Delta_j.
+\]
+

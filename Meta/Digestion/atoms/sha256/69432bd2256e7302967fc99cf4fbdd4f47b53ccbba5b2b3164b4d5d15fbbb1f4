@@ -1,0 +1,10 @@
+**定理 383.1。** 对全部 $L\ge1,h\ge0,J\ge L$，若 $G_J\ge G_L+h$，则存在唯一函数
+$$
+f_{L,h,J}:\mathsf X_J\to\mathsf X_L,\qquad
+P_LT^h=f_{L,h,J}P_J.
+$$
+它在每个 $p\in\mathsf X_J$ 上准确为
+$$
+f_{L,h,J}(p)=P_Lz(V_J(p)+h).
+$$
+

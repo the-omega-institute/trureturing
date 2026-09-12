@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5cda203fc8eb36239d7308d5b2e75a3972d977fbf60f1ce0d192d1b7717c042a
+  normalized_sha256: sha256:5cda203fc8eb36239d7308d5b2e75a3972d977fbf60f1ce0d192d1b7717c042a
+cas_ref: sha256:5cda203fc8eb36239d7308d5b2e75a3972d977fbf60f1ce0d192d1b7717c042a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This atom records proposed GID placement and Candidate status for four declarations. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with the presentation, symmetry, unitarity, and Krein-index statements that follow.
+    previous_atom_id: 36fc5366b7d14e4fec73a3faea526b094eef81a15b5365d17e6d5ab995758c49
+    next_atom_id: d3908bc4b1b9fd07ce76c2576238d70a4a82ccba23afe323afe69f8f7efbffc8

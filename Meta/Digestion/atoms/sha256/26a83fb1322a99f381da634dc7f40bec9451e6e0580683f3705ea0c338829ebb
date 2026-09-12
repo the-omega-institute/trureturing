@@ -1,0 +1,14 @@
+**定义 420.1（预测二·相位与分裂点）。** 置
+$$
+\phi=\frac{1+\sqrt5}{2},\quad \alpha=\phi^{-1},\quad r=-\alpha,\quad
+a=-\alpha,\quad b=\alpha^2,\quad I=[a,b],\quad q_0=-\alpha^3,
+\quad u=(10)^\omega,\quad v=(01)^\omega.
+$$
+$\mathbb T=\mathbb R/\mathbb Z$ 取通常圆周拓扑，$[t]$ 表示 $t$ 的整数平移类。定义
+$$
+\eta_j=\phi G_j-G_{j+1}=-\alpha^2r^j,\qquad
+F(x)=\sum_{j\ge0}\eta_jx_j,\qquad H(x)=[F(x)],\qquad
+E_m=[-m\phi]\quad(m\ge1).
+$$
+有限块字是块 $0,10$ 的有限串联，允许空字。其数字长度为 $t$，数值为 $s=\sum_{j<t}G_jw_j$，有符号值为 $S_w=\sum_{j<t}\eta_jw_j$。
+

@@ -1,0 +1,69 @@
+**定理 418.2（普通积、完整图与全部候选域）。** 对任意集合 $A,B$，包括空集合，令
+$$
+J_{A,B}:A^*\times B^*\longrightarrow\operatorname{Enc}[A\times B],\qquad
+J_{A,B}(\langle c,d\rangle)=\langle c,d\rangle_Z.
+$$
+它是双射。对任意 $D\subseteq A$ 及任意实际函数 $g:D\to B$，令
+$$
+g^*:D^*\to B^*,\qquad g^*(\operatorname{Enc}(a))=\operatorname{Enc}(g(a)),
+$$
+$$
+G_g=\{\langle a,g(a)\rangle:a\in D\},\qquad
+\Gamma_g^*=\{\langle\operatorname{Enc}(a),\operatorname{Enc}(g(a))\rangle:a\in D\}.
+$$
+则
+$$
+\operatorname{El}(\operatorname{Enc}(G_g))=J_{A,B}[\Gamma_g^*],\qquad
+\operatorname{Enc}(G_g)=\operatorname{Pack}(J_{A,B}[\Gamma_g^*]),
+$$
+$$
+\operatorname{dom}(g^*)=\operatorname{Enc}[D],\quad
+\operatorname{ran}(g^*)=\operatorname{Enc}[\operatorname{ran}(g)],\quad
+\operatorname{dom}_Z(\operatorname{Enc}(G_g))=\operatorname{Enc}(D),\quad
+\operatorname{ran}_Z(\operatorname{Enc}(G_g))=\operatorname{Enc}(\operatorname{ran}(g)).
+$$
+对每个 $H\subseteq D$，$(g|_H)^*=g^*|_{\operatorname{Enc}[H]}$。求值、域上总性、单射、满射及函数相等均保持并反映，陪域仍为指定的 $B^*$。进一步有
+$$
+\mathcal P(A^*)=\{\operatorname{Enc}[S]:S\subseteq A\},\qquad
+(B^*)^{A^*}=\{g^*:g\in B^A\},
+$$
+$$
+\mathcal P_Z(\operatorname{Enc}(A))
+=\operatorname{Enc}(\mathcal P(A))
+=\operatorname{Pack}\{\operatorname{Pack}(H):H\subseteq A^*\},\qquad
+\bigcup_Z\operatorname{Enc}(A)=\operatorname{Enc}(\bigcup A).
+$$
+语义积、全函数空间及求值采用定理 74 的原式
+$$
+\operatorname{Enc}(A\times B)
+=\operatorname{Pack}\{\langle c,d\rangle_Z:c\in A^*,d\in B^*\},\qquad
+\operatorname{Fun}_Z(\operatorname{Enc}(A),\operatorname{Enc}(B))
+=\operatorname{Enc}(B^A),
+$$
+$$
+\operatorname{ev}_Z(\operatorname{Enc}(g),\operatorname{Enc}(a))
+=\operatorname{Enc}(g(a))\quad(g\in B^A,\ a\in A).
+$$
+这些等式遍历全部环境子集及函数；语义函数空间是单个码，外部全函数空间则由上述普通图组成。
+
+对每个固定元数 $r\in\omega$，使用定义 257 的原括号
+$$
+T_0=\varnothing,\qquad T_1(a)=a,\qquad
+T_r(a_1,\ldots,a_r)=\langle a_1,T_{r-1}(a_2,\ldots,a_r)\rangle\quad(r\ge2).
+$$
+固定元数组装桥为
+$$
+J_r(T_r(c_1,\ldots,c_r))
+=\operatorname{Enc}(T_r(\operatorname{Dec}(c_1),\ldots,\operatorname{Dec}(c_r))).
+$$
+它双射于普通分量积 $T_r[A_1^*,\ldots,A_r^*]$ 与 $\operatorname{Enc}[T_r[A_1,\ldots,A_r]]$；联合域 $D\subseteq T_r[A_1,\ldots,A_r]$ 对应于其准确逆像 $J_r^{-1}(\operatorname{Enc}[D])$。任意固定元数关系由此桥及全子集对应运输，任意集合索引族由全函数对应运输。若原元组使用另一括号 $T'_r$，令 $\kappa_r$ 按原投影取分量再以 $T_r$ 重组；到原括号码的桥为
+$$
+\operatorname{Enc}\circ\kappa_r^{-1}\circ\operatorname{Dec}\circ J_r.
+$$
+对任意 $k\in\omega$ 和任意集合值有限函数 $v:k\to A$，
+$$
+\operatorname{Enc}(v)=\operatorname{Pack}\{\langle\operatorname{NatZ}(j),\operatorname{Enc}(v(j))\rangle_Z:j<k\},\qquad
+\operatorname{dom}_Z(\operatorname{Enc}(v))=\operatorname{NatZ}(k).
+$$
+因此全部二元有限字及其长度均保留，包括含 $11$ 的字；出现语言只是相应完整字空间中的子集。
+

@@ -1,0 +1,10 @@
+替代分布与原型 \((H_0,L_0,\ldots,L_0)\) 的总质量同为 \(k\)、一次矩同为 \(k\mu\),二次矩之差为 \(M-V_0\),故
+
+\[
+U_{\rm dual}-\log E_S
+\le\sum_p\mathbb E f(Z_p)
+\le\sum_p\mathbb E P(Z_p)
+=\Psi_k(\mu,V_0)+a(M-V_0)
+\le\Psi_k(\mu,V_0).
+\]
+

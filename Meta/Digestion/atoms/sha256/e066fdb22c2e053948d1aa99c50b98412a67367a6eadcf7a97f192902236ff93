@@ -1,0 +1,11 @@
+**定义 428.4（预测十·一元情境与条件代价）。** 对载体 $K$ 和符号集 $\mathcal A$，取部分签名的元数恒为一，运算在唯一输入 $x$ 上为 $\operatorname{ok}(S_a(x))$ 当 $x\in D_a$，否则为 $\bot$。一孔生成元由符号、孔位及全部孔外参数组成；这里唯一孔位为 $0\in\{0\}$，孔外参数为从空集到 $K$ 的唯一函数。严格一步在失败上保持失败，在成功上应用该运算。情境函数族定义为实际字解释的像
+$$
+\mathcal C=\{x\mapsto\operatorname{Run}(w,x):w\in\mathcal A^{<\omega}\}.
+$$
+定义 $x\simeq_L y$ 当且仅当对所有 $C\in\mathcal C$，对 $C(x),C(y)$ 作标记 $P_L$ 观察所得值相同。
+
+若另给函数 $\lambda:\mathcal A\to\mathbb R_{\ge0}$，定义句法字代价
+$$
+\operatorname{cost}_\lambda(a_1\cdots a_k)=\sum_{i=1}^k\lambda(a_i).
+$$
+

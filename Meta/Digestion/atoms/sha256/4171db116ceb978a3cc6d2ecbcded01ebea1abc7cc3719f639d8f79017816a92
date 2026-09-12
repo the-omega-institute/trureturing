@@ -1,0 +1,20 @@
+**定义 429.1（预测十一·同一全集合编码）。** 取第 71–74、378.2、385.1 条的同一可定义类函数，对每个集合 $x$，
+$$
+\operatorname{Enc}(x)=
+\begin{cases}
+\operatorname{NatZ}(n)=\langle0,\zeta(n)\rangle,&x=n\in\omega,\\
+\langle1,\operatorname{Enc}[x]\rangle,&x\notin\omega.
+\end{cases}
+$$
+这里 $\operatorname{Enc}[x]=\{\operatorname{Enc}(y):y\in x\}$。有效码类为
+$$
+\mathfrak V_Z=\{c:\exists x\ c=\operatorname{Enc}(x)\},
+$$
+$\operatorname{Dec}$ 为仅在该类上使用的唯一逆。对有效 $c,d$ 及任意集合 $B\subseteq\mathfrak V_Z$，定义
+$$
+d\in_Zc\iff\operatorname{Dec}(d)\in\operatorname{Dec}(c),\qquad
+\operatorname{El}(c)=\operatorname{Enc}[\operatorname{Dec}(c)],\qquad
+\operatorname{Pack}(B)=\operatorname{Enc}(\operatorname{Dec}[B]).
+$$
+对任意集合 $X$，令 $X^*=\operatorname{Enc}[X]$，$e_X=\operatorname{Enc}|X:X\to X^*$。
+

@@ -1,0 +1,15 @@
+**命题 421.2（预测三·实际图及独立进位界）。** $T:K\to K$ 连续且满射，$Tz(n)=z(n+1)$，$T^{-1}\{z(0)\}=\{u,v\}$，每个非零行有唯一前驱。对所有 $h\in\omega$，
+$$
+H(T^hx)=H(x)+[h\phi],\qquad T^hz(n)=z(n+h).
+$$
+对每个 $L\ge1,h\ge0$，
+$$
+P_{L+h}x=P_{L+h}y\Longrightarrow P_LT^hx=P_LT^hy.
+$$
+在 $V_L$ 坐标中，$R_L$ 恰含所有边
+$$
+s\longrightarrow s+1\quad(0\le s<G_L-1),\qquad
+G_L-1\longrightarrow0,\qquad \beta_L\longrightarrow0.
+$$
+每条边均有自然见证：循环边取 $z(s)$，附加边取 $z(\beta_L+G_L)=z(G_{L+1}-1)$。唯一分支是 $\beta_L$，唯一汇合点是零。$P_LT$ 恰需一个额外输入位：它经 $P_{L+1}$ 分解而不经 $P_L$ 分解。$L=1$ 时全部边为 $0\to1,1\to0,0\to0$。
+

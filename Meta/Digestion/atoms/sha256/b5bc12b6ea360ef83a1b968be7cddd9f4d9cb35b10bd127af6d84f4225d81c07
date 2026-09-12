@@ -1,0 +1,23 @@
+**定理 418.4（实际后继、半开计数与所有零边的运输）。** 自然叶上的后继为
+$$
+S^*(\operatorname{NatZ}(n))=\operatorname{NatZ}(n+1)
+=\langle0,\operatorname{Norm}(\operatorname{pad}(\zeta(n))+\mathbf e_0)\rangle,
+$$
+其中 $\mathbf e_0$ 是零位单位数字行，区别于辅助入时刻 $e_{L,0}$。对全部 $L\ge1,n\ge0$，
+$$
+\operatorname{NatZ}(n)\in_Z\operatorname{Enc}(E_L)
+\Longleftrightarrow
+\bigl(q_L^*(\operatorname{NatZ}(n))=\operatorname{NatZ}(\beta_L)
+\ \land\ q_L^*(S^*(\operatorname{NatZ}(n)))=\operatorname{NatZ}(0)\bigr).
+$$
+参数 $L$ 及所有联合输入按定理 418.2 的积桥处理。定理 414.1、415.2 的存在唯一性在运输侧仍对全部正确域上的函数成立；定理 417.2 的计数式包含 $N=0$ 并保持半开约定。对每个 $n\in\omega$，
+$$
+G_{z(n)}=\{\langle j,z(n)_j\rangle:j\in\omega\},\qquad
+\Gamma_{z(n)}^*=\{\langle\operatorname{NatZ}(j),\operatorname{NatZ}(z(n)_j)\rangle:j\in\omega\},
+$$
+$$
+\operatorname{Enc}(G_{z(n)})
+=\operatorname{Pack}\{\langle\operatorname{NatZ}(j),\operatorname{NatZ}(z(n)_j)\rangle_Z:j\in\omega\}.
+$$
+尤其 $n=0$ 时三式仍保留每个 $j$ 的零值边。这些总图及其码不是遗传有限集合。
+

@@ -147,9 +147,24 @@ internal static class DigestStatusCommand
                 changes: changes,
                 isBaseFactAffected: IsBaseFactAffected,
                 projectedStatusChanges: changes);
+            var readinessDiagnostics = string.Empty;
+            if (options.Readiness)
+            {
+                var sourceGaps = DigestionReadinessQuery.SourceOccurrenceGaps(
+                    evaluation.Entries,
+                    sourceId => DigestionAtomContextProjection.MaterializeSource(snapshot, document, sourceId),
+                    out var unreadableSources);
+                readinessDiagnostics = string.Concat(sourceGaps.Select(static item =>
+                    $"GAP atom={item.AtomId} code={item.Gap.Code} detail={RenderDetail(item.Gap.Detail)}\n"))
+                    + string.Concat(unreadableSources.Select(static source =>
+                        $"READINESS_SOURCE_UNAVAILABLE source={source.SourceId} code={source.Code} "
+                        + $"detail={RenderDetail(source.Detail)}\n"));
+            }
+
             if (evaluation.HasReceiptIntegrityFailure)
             {
-                return InvalidEvaluation(evaluation);
+                var invalid = InvalidEvaluation(evaluation);
+                return invalid with { Error = invalid.Error + readinessDiagnostics };
             }
 
             DigestionFrontierProjection? frontier = null;
@@ -168,7 +183,7 @@ internal static class DigestStatusCommand
                     true,
                     RenderReadiness(DigestionReadinessQuery.Classify(
                         frontier!)),
-                    string.Empty);
+                    readinessDiagnostics);
             }
 
             var age = options.ResidualSummary || options.Json
