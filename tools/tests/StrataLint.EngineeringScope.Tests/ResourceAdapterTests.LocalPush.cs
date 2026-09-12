@@ -240,8 +240,7 @@ public sealed partial class ResourceAdapterTests
     private static ResourceRouteTests.ResourceFixture LocalFixture()
     {
         var fixture = new ResourceRouteTests.ResourceFixture(["filemap"]);
-        foreach (var path in new[] { "tools/scripts/preflight.sh", "tools/scripts/ci-stage.sh" })
-            fixture.Write(path, File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), path)));
+        ColdPreflightContractTests.Configure(fixture);
         var map = File.ReadAllText(Path.Combine(fixture.Root, "Meta/FILEMAP.toml"));
         var index = map.IndexOf("[[files]]", StringComparison.Ordinal);
         var row = map[index..];
@@ -255,8 +254,7 @@ public sealed partial class ResourceAdapterTests
         fixture.Write(CommonExecutionEvidence.CheckManifestPath, checks.ToJsonString());
         fixture.Write("docs/note.md", "original docs\n");
         fixture.CommitPlan();
-        // The shared candidate fixture seeds a synthetic build receipt. No-work
-        // cases must start without it; required cases explicitly prepare theirs.
+        // Both no-work and required cases start cold; preflight owns any build.
         File.Delete(Path.Combine(fixture.Root, CommonExecutionEvidence.BuildPath));
         return fixture;
     }
@@ -271,7 +269,7 @@ public sealed partial class ResourceAdapterTests
 
     private static Dictionary<string, string> LocalEnvironment(ResourceRouteTests.ResourceFixture fixture, bool required)
     {
-        var environment = EnvironmentFor(fixture);
+        var environment = required ? ColdPreflightContractTests.EnvironmentFor(fixture) : EnvironmentFor(fixture);
         environment["MODE"] = "push";
         environment["BASE"] = "not-an-immutable-base";
         environment["CANDIDATE_SHA"] = "";
@@ -279,25 +277,6 @@ public sealed partial class ResourceAdapterTests
         environment["CI_PLAN_PATH"] = "";
         environment["CI_CHANGES_PATH"] = "";
         environment["GIT_OPTIONAL_LOCKS"] = "0";
-        if (required)
-        {
-            fixture.Processes();
-            fixture.Write(CommonExecutionEvidence.RunnerPath, "dispatch marker");
-            var apphost = Path.Combine(Path.GetDirectoryName(typeof(Program).Assembly.Location)!, "StrataLint.EngineeringScope");
-            environment["LOCAL_NATIVE_RUNNER"] = apphost;
-            var dotnet = Path.Combine(environment["PATH"], "dotnet");
-            File.WriteAllText(dotnet, """
-                #!/bin/bash
-                set -euo pipefail
-                if [[ "$1" == tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll ]]; then
-                  shift
-                  exec "$LOCAL_NATIVE_RUNNER" "$@"
-                fi
-                [[ "$1" == tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll && "$2" == filemap-conform ]]
-                printf 'dotnet filemap-conform\n' >> build/launched
-                """);
-            SharedBuildContractTests.Process(fixture.Root, "/bin/chmod", ["+x", dotnet]);
-        }
         return environment;
     }
 

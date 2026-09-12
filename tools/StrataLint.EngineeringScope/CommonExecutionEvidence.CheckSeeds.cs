@@ -19,7 +19,7 @@ internal static partial class CommonExecutionEvidence
             document = Read<JsonElement>(seedRoot, "checks.json");
             if (!document.EnumerateObject().Select(property => property.Name).Order(StringComparer.Ordinal)
                 .SequenceEqual(new[] { "candidate", "round", "stage", "units", "version" })
-                || document.GetProperty("version").GetInt32() != 1 || document.GetProperty("stage").GetString() != stage)
+                || document.GetProperty("version").GetInt32() != 2 || document.GetProperty("stage").GetString() != stage)
                 throw new InvalidDataException("invalid common seed envelope");
             candidate = document.GetProperty("candidate").GetString()!;
             round = document.GetProperty("round").GetString()!;
@@ -37,6 +37,8 @@ internal static partial class CommonExecutionEvidence
             {
                 var row = rows.Single(row => row.ValueKind == JsonValueKind.Object && row.TryGetProperty("id", out var key) && key.GetString() == id);
                 var unit = row.Deserialize<CheckUnitResult>(JsonOptions) ?? throw new InvalidDataException("missing common seed unit: " + id);
+                if (unit.ExecutionEnvironment != ExecutionEnvironment(root))
+                    throw new InvalidDataException("common seed execution environment differs from local environment: " + id);
                 ValidateCheckUnit(seedRoot, root, snapshot, unit, inputs[id], candidate, round);
                 foreach (var material in unit.Materials)
                 {
@@ -128,7 +130,7 @@ internal static partial class CommonExecutionEvidence
     {
         var seed = Path.Combine(root, CheckSeedPath(stage));
         var record = Read<CommonCheckRecord>(seed, "checks.json");
-        if (record.Version != 1 || record.Stage != stage || !ValidCandidate(record.Candidate) || !ValidRound(record.Round)
+        if (record.Version != 2 || record.Stage != stage || !ValidCandidate(record.Candidate) || !ValidRound(record.Round)
             || record.Units is null || record.Units.Any(unit => unit.Materials is null))
             throw new InvalidDataException("invalid common seed bundle identity");
         var materials = Read<ExecutionMaterial[]>(seed, "materials.json");

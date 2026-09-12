@@ -7,7 +7,7 @@ namespace StrataLint.EngineeringScope;
 internal sealed record CheckOperation(string Name, int RawExit, string Output);
 internal sealed record CheckWork(CheckOperation[] Operations, string? Data = null);
 internal sealed record CheckUnitResult(string Id, string InputFingerprint, string Status, string Result,
-    string ExecutionCandidate, string ExecutionRound, StageStep[] Operations,
+    string ExecutionCandidate, string ExecutionRound, string ExecutionEnvironment, StageStep[] Operations,
     string? Data, string? Report, ExecutionMaterial[] Materials);
 internal sealed record CommonCheckRecord(int Version, string Stage, string Candidate, string Round, CheckUnitResult[] Units);
 internal sealed record CheckDiagnostic(string Rule, string Title, DisplaySeverity Severity, AdmissionEffect Effect, string Path, string Message);
@@ -32,10 +32,11 @@ internal static partial class CommonExecutionEvidence
         var ids = selectedIds ?? CheckIds(stage, registrations);
         if (ids.Distinct(StringComparer.Ordinal).Count() != ids.Length || ids.Except(CheckIds(stage, registrations)).Any())
             throw new InvalidDataException("unregistered selected common units");
-        var inputs = CheckInputFingerprints(root, snapshot, currentReport: stage == "current", selectedIds: ids);
+        var environment = ExecutionEnvironment(root);
+        var inputs = CheckInputFingerprints(root, snapshot, currentReport: stage == "current", selectedIds: ids, executionEnvironment: environment);
         ValidateStartedBuild(root, build, Candidate(root));
         File.Delete(Path.Combine(root, ChecksPath(stage)));
-        return new(root, stage, build, snapshot, registrations, inputs, output, ids);
+        return new(root, stage, build, snapshot, registrations, inputs, environment, output, ids);
     }
 
     // This is the existing common owner, split by responsibility. Only a validated
@@ -48,16 +49,17 @@ internal static partial class CommonExecutionEvidence
         private readonly RepositorySnapshot snapshot;
         private readonly IReadOnlyList<RegisteredCommonCheck> registrations;
         private readonly IReadOnlyDictionary<string, string> inputs;
+        private readonly string environment;
         private readonly Dictionary<string, CheckUnitResult> reused;
         private readonly Dictionary<string, CheckUnitResult> completed = new(StringComparer.Ordinal);
         private readonly string invocation;
         internal string[] Ids { get; }
         internal IReadOnlyCollection<CheckUnitResult> Completed => completed.Values;
         internal CheckExecution(string root, string stage, CommonStageRecord build, RepositorySnapshot snapshot,
-            IReadOnlyList<RegisteredCommonCheck> registrations, IReadOnlyDictionary<string, string> inputs, TextWriter output, string[] ids)
+            IReadOnlyList<RegisteredCommonCheck> registrations, IReadOnlyDictionary<string, string> inputs, string environment, TextWriter output, string[] ids)
         {
             this.root = root; this.stage = stage; this.build = build; this.snapshot = snapshot;
-            this.registrations = registrations; this.inputs = inputs;
+            this.registrations = registrations; this.inputs = inputs; this.environment = environment;
             Ids = ids;
             invocation = $"{RootPath}/check-material/{build.Candidate}/{build.Round}/{Guid.NewGuid():N}";
             reused = ImportCheckSeed(root, stage, snapshot, inputs, output);
@@ -124,7 +126,7 @@ internal static partial class CommonExecutionEvidence
             var materials = Materials(root, operations.Select(operation => operation.Log)
                 .Concat(data is null ? [] : new[] { data })
                 .Concat(report is null ? [] : ReportPaths.Select(path => report + path[ReportPath.Length..])));
-            var unit = new CheckUnitResult(id, inputs[id], "executed", id == "selftest-pair" ? "equal" : "passed", build.Candidate, build.Round, operations, data, report, materials);
+            var unit = new CheckUnitResult(id, inputs[id], "executed", id == "selftest-pair" ? "equal" : "passed", build.Candidate, build.Round, environment, operations, data, report, materials);
             ValidateCheckUnit(root, root, snapshot, unit, inputs[id], build.Candidate, build.Round);
             completed.Add(id, unit);
             return unit;
@@ -162,7 +164,7 @@ internal static partial class CommonExecutionEvidence
 
         internal CommonCheckRecord Seal()
         {
-            var record = new CommonCheckRecord(1, stage, build.Candidate, build.Round,
+            var record = new CommonCheckRecord(2, stage, build.Candidate, build.Round,
                 Ids.Select(id => completed.TryGetValue(id, out var unit) ? unit
                     : throw new InvalidDataException("required common unit did not run: " + id)).ToArray());
             ValidateStartedBuild(root, build, Candidate(root));
@@ -178,17 +180,27 @@ internal static partial class CommonExecutionEvidence
         if (record.Stage != stage) throw new InvalidDataException("common check stage mismatch");
         var snapshot = Snapshot(root);
         var ids = selectedIds ?? CheckIds(stage, ReadCheckManifest(snapshot));
-        ValidateCheckRecord(root, record, snapshot, CheckInputFingerprints(root, snapshot, currentReport: stage == "current", selectedIds: ids), build.Candidate, build.Round, ids);
+        // Transport validates the retained execution. Local reuse separately requires
+        // this consumer's environment, including OS/architecture binary isolation.
+        ValidateCheckRecord(root, record, snapshot, null, build.Candidate, build.Round, ids);
         return record;
     }
     private static void ValidateCheckRecord(string root, CommonCheckRecord record, RepositorySnapshot snapshot,
-        IReadOnlyDictionary<string, string> inputs, string candidate, string round, string[] expected)
+        IReadOnlyDictionary<string, string>? inputs, string candidate, string round, string[] expected)
     {
-        if (record.Version != 1 || !ValidCandidate(record.Candidate) || !ValidRound(record.Round) || record.Candidate != candidate || record.Round != round || record.Units is null || record.Units.Any(unit => unit is null))
+        if (record.Version != 2 || !ValidCandidate(record.Candidate) || !ValidRound(record.Round) || record.Candidate != candidate || record.Round != round || record.Units is null || record.Units.Any(unit => unit is null))
             throw new InvalidDataException("common check candidate or round mismatch");
         if (!expected.SequenceEqual(record.Units.Select(unit => unit.Id)))
             throw new InvalidDataException("missing, duplicated or unordered common check result");
-        foreach (var unit in record.Units) ValidateCheckUnit(root, root, snapshot, unit, inputs[unit.Id], candidate, round);
+        var originalInputs = new Dictionary<string, IReadOnlyDictionary<string, string>>(StringComparer.Ordinal);
+        foreach (var unit in record.Units)
+        {
+            ValidateExecutionEnvironment(root, unit.ExecutionEnvironment);
+            if (inputs is null && !originalInputs.ContainsKey(unit.ExecutionEnvironment))
+                originalInputs.Add(unit.ExecutionEnvironment, CheckInputFingerprints(root, snapshot, currentReport: record.Stage == "current",
+                    selectedIds: expected, executionEnvironment: unit.ExecutionEnvironment));
+            ValidateCheckUnit(root, root, snapshot, unit, (inputs ?? originalInputs[unit.ExecutionEnvironment])[unit.Id], candidate, round);
+        }
         foreach (var check in ReadCheckManifest(snapshot).Where(check => expected.Contains(check.Id) && UsesScribe(check)))
             if (record.Stage == "current" && !SameScribeMaterial(root, record.Units.Single(unit => unit.Id == check.Id),
                 record.Units.Single(unit => unit.Id == "scribe-describe")))
@@ -197,6 +209,7 @@ internal static partial class CommonExecutionEvidence
     private static void ValidateCheckUnit(string materialRoot, string sourceRoot, RepositorySnapshot snapshot,
         CheckUnitResult unit, string fingerprint, string candidate, string round)
     {
+        ValidateExecutionEnvironment(sourceRoot, unit.ExecutionEnvironment);
         if (unit.Operations is null || unit.Materials is null || unit.Operations.Any(operation => operation is null || operation.Log is null)
             || unit.Materials.Any(material => material is null || material.Path is null))
             throw new InvalidDataException("missing common unit materials: " + unit.Id);

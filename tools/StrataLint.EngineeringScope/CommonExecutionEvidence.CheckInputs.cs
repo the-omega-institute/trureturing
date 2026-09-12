@@ -7,6 +7,9 @@ namespace StrataLint.EngineeringScope;
 
 internal static partial class CommonExecutionEvidence
 {
+    private const string ExecutionOptions = "Release;no-build;no-restore;unfiltered;trx;language=en-US;CI=true";
+    private sealed record CheckEnvironment(string Os, string Arch, string Sdk, string Runtime, string Options, string? Processors);
+
     // This describes the running managed process and declared SDK, not installed host
     // dependencies. The same function supplies tests, common stages and downstream readers.
     internal static string ExecutionEnvironment(string root)
@@ -15,14 +18,31 @@ internal static partial class CommonExecutionEvidence
             : OperatingSystem.IsWindows() ? "windows" : throw new InvalidDataException("unsupported execution OS");
         var arch = RuntimeInformation.ProcessArchitecture.ToString().ToLowerInvariant();
         if (arch is not ("arm64" or "x64")) throw new InvalidDataException("unsupported execution architecture: " + arch);
-        using var config = JsonDocument.Parse(File.ReadAllText(Path.Combine(root, "global.json")));
-        var sdk = config.RootElement.GetProperty("sdk").GetProperty("version").GetString();
-        if (string.IsNullOrWhiteSpace(sdk)) throw new InvalidDataException("missing declared execution SDK: global.json");
+        var sdk = DeclaredExecutionSdk(root);
         return JsonSerializer.Serialize(new { os, arch, sdk, runtime = Environment.Version.ToString(),
-            options = "Release;no-build;no-restore;unfiltered;trx;language=en-US;CI=true", processors = Environment.GetEnvironmentVariable("DOTNET_PROCESSOR_COUNT") });
+            options = ExecutionOptions, processors = Environment.GetEnvironmentVariable("DOTNET_PROCESSOR_COUNT") });
     }
 
-    internal static IReadOnlyDictionary<string, string> CheckInputFingerprints(string root, RepositorySnapshot snapshot, bool currentReport = false, IReadOnlyCollection<string>? selectedIds = null)
+    private static string DeclaredExecutionSdk(string root)
+    {
+        using var config = JsonDocument.Parse(File.ReadAllText(Path.Combine(root, "global.json")));
+        var sdk = config.RootElement.GetProperty("sdk").GetProperty("version").GetString();
+        return !string.IsNullOrWhiteSpace(sdk) ? sdk : throw new InvalidDataException("missing declared execution SDK: global.json");
+    }
+
+    private static void ValidateExecutionEnvironment(string root, string environment)
+    {
+        if (string.IsNullOrWhiteSpace(environment)) throw new InvalidDataException("missing original execution environment");
+        var value = JsonSerializer.Deserialize<CheckEnvironment>(environment, JsonOptions);
+        if (value is null || value.Os is not ("macos" or "linux" or "windows") || value.Arch is not ("arm64" or "x64")
+            || value.Sdk != DeclaredExecutionSdk(root) || !Version.TryParse(value.Runtime, out _) || value.Options != ExecutionOptions
+            || value.Processors is not null && (!int.TryParse(value.Processors, System.Globalization.NumberStyles.None,
+                System.Globalization.CultureInfo.InvariantCulture, out var processors) || processors <= 0))
+            throw new InvalidDataException("invalid original execution environment");
+    }
+
+    internal static IReadOnlyDictionary<string, string> CheckInputFingerprints(string root, RepositorySnapshot snapshot, bool currentReport = false,
+        IReadOnlyCollection<string>? selectedIds = null, string? executionEnvironment = null)
     {
         var files = snapshot.Files.Values.Select(item => new EngineeringSource(item.Path.Value, item.Text)).ToArray();
         var registry = EngineeringProjectRegistry.Read(files);
@@ -30,7 +50,7 @@ internal static partial class CommonExecutionEvidence
         var sources = registry.Sources(files);
         var paths = snapshot.Files.Keys.Select(path => path.Value).ToArray();
         var projects = registry.Projects.ToDictionary(project => project.Path, StringComparer.Ordinal);
-        var environment = ExecutionEnvironment(root);
+        var environment = executionEnvironment ?? ExecutionEnvironment(root);
         string? reportValue = null;
         if (currentReport && checks.Any(check => check.ReportInputs.Length != 0))
         {

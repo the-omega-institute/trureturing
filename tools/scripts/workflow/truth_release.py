@@ -143,6 +143,12 @@ def prepare(root, area, repository):
                 print("TRUTH_RELEASE_INPUT_UNAVAILABLE " + json.dumps({"run_id": selected["run_id"], "reason": str(error)}))
                 evidence["runs"] = [run for run in evidence["runs"] if run["id"] != selected["run_id"]]
                 continue
+            # Native verification binds these exact steps to the retained resource plan.
+            current = json.loads((candidate / "build/ci/current.json").read_text())
+            if not any(step["name"] == "lean-report" for step in current["steps"]):
+                print("TRUTH_RELEASE_REPORT_NOT_REQUIRED " + json.dumps({"run_id": selected["run_id"]}))
+                evidence["runs"] = [run for run in evidence["runs"] if run["id"] != selected["run_id"]]
+                continue
             result = assemble(candidate, area, selected)
             outputs({**result, "publish_ready": True})
             return

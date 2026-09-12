@@ -88,6 +88,18 @@ if [[ -f "$ROOT/tools/scripts/lib/resource-observation-lib.sh" ]]; then
   resource_observe preflight-start "$CANDIDATE" || true
 fi
 cd "$CANDIDATE"
+# Engineering normally owns the canonical build. A current-only plan needs the
+# same producer before engineering records its honest not-required result.
+build_without_engineering="$(python3 -B - "$CI_PLAN_PATH" <<'PY'
+import json, sys
+stages = json.load(open(sys.argv[1]))["stages"]
+print("yes" if stages["build"]["status"] == "required" and stages["engineering"]["status"] == "not-required" else "no")
+PY
+)"
+if [[ "$build_without_engineering" == yes ]]; then
+  stage=build
+  /bin/bash tools/scripts/ci-stage.sh "$stage"
+fi
 for stage in engineering current; do
   /bin/bash tools/scripts/ci-stage.sh "$stage"
 done
