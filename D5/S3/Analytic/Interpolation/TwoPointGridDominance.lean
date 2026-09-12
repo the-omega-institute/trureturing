@@ -10,6 +10,8 @@ import D5.S3.Analytic.Interpolation.HermiteEnvelopeEquality
 import D5.S3.Analytic.Knapsack.FractionalKnapsackDual
 import Mathlib.Topology.MetricSpace.HausdorffDistance
 import Mathlib.Analysis.Convex.Deriv
+import Mathlib.Algebra.Order.Group.CompleteLattice
+import Batteries.Tactic.OpenPrivate
 
 open Set
 open scoped BigOperators
@@ -103,7 +105,89 @@ theorem two_actual_corners_lower_mem {c d t u M₀ M₁ : ℝ}
     rcases hy₁ with rfl | rfl <;> rcases hy₂ with rfl | rfl <;>
     first | exact hxy rfl | linarith
 
+private theorem logValue_strictMono : StrictMonoOn logValue (Ioi 0) := by
+  intro x hx y hy hxy
+  apply Real.log_lt_log
+  · exact sub_pos.mpr (by simpa using Real.exp_lt_exp.mpr (neg_neg_of_pos hx))
+  · exact sub_lt_sub_left (Real.exp_lt_exp.mpr (neg_lt_neg hxy)) 1
+
+private theorem logValue_strictConcave : StrictConcaveOn ℝ (Ioi 0) logValue := by
+  have hlog := LogOneSubExpDerivatives.log_one_sub_exp_derivatives
+  apply strictConcaveOn_of_deriv2_neg (convex_Ioi 0) hlog.1.continuousOn
+  intro x hx
+  have hxpos : 0 < x := interior_subset hx
+  have hsecond := (hlog.2 x hxpos).2.1
+  have he : 0 < Real.exp x - 1 := sub_pos.mpr (Real.one_lt_exp_iff.mpr hxpos)
+  have hneg : -Real.exp x / (Real.exp x - 1) ^ 2 < 0 :=
+    div_neg_of_neg_of_pos (neg_neg_of_pos (Real.exp_pos x)) (sq_pos_of_pos he)
+  simpa only [logValue, iteratedDeriv_succ, iteratedDeriv_zero,
+    Function.iterate_succ_apply, Function.iterate_zero, id_eq] using hsecond.trans_lt hneg
+
+private theorem gridDualValue_translate (c d : Fin 2 → ℝ) (M price : ℝ) :
+    gridDualValue c d M price = (∑ i, logValue (c i)) +
+      Knapsack.FractionalKnapsackDual.dualValue (fun i => d i - c i)
+        (fun i => logValue (d i) - logValue (c i)) (M - ∑ i, c i) price := by
+  have hmax (i : Fin 2) :
+      max (logValue (c i) - price * c i) (logValue (d i) - price * d i) =
+        logValue (c i) - price * c i +
+          max 0 (logValue (d i) - logValue (c i) - price * (d i - c i)) := by
+    rw [add_max]
+    congr 1 <;> ring
+  simp only [gridDualValue, hmax, Knapsack.FractionalKnapsackDual.dualValue,
+    Finset.sum_add_distrib, Finset.sum_sub_distrib, ← Finset.mul_sum]
+  ring
+
+/-- Pricing either endpoint bounds every actual corner satisfying the upper budget. -/
+theorem corner_le_grid_dual (c d : Fin 2 → ℝ) (M : ℝ) (x : Fin 2 → ℝ)
+    (hx : ∀ i, x i = c i ∨ x i = d i) (hM : ∑ i, x i ≤ M) :
+    (∑ i, logValue (x i)) ≤ gridDual c d M := by
+  haveI : Nonempty {p : ℝ // 0 ≤ p} := ⟨⟨0, le_rfl⟩⟩
+  apply le_ciInf
+  intro p
+  have hi (i : Fin 2) : logValue (x i) - (p : ℝ) * x i ≤
+      max (logValue (c i) - (p : ℝ) * c i)
+        (logValue (d i) - (p : ℝ) * d i) := by
+    rcases hx i with h | h
+    · rw [h]; exact le_max_left _ _
+    · rw [h]; exact le_max_right _ _
+  have hs := Finset.sum_le_sum (s := Finset.univ) (fun i _ => hi i)
+  rw [Finset.sum_sub_distrib, ← Finset.mul_sum] at hs
+  have hb := mul_le_mul_of_nonneg_left hM p.property
+  dsimp [gridDualValue]
+  linarith
+
+/-- Subtracting the lower endpoints identifies the grid dual with fractional knapsack. -/
+theorem grid_dual_eq_fractional_sup (c d : Fin 2 → ℝ) (M : ℝ)
+    (hc : ∀ i, 0 < c i) (hcd : ∀ i, c i < d i) (hM : ∑ i, c i ≤ M) :
+    gridDual c d M = (∑ i, logValue (c i)) +
+      sSup (Knapsack.FractionalKnapsackDual.objective
+        (fun i => logValue (d i) - logValue (c i)) ''
+        {a | Knapsack.FractionalKnapsackDual.Feasible (fun i => d i - c i)
+          (M - ∑ i, c i) a}) := by
+  haveI : Nonempty {p : ℝ // 0 ≤ p} := ⟨⟨0, le_rfl⟩⟩
+  have hw (i : Fin 2) : 0 < d i - c i := sub_pos.mpr (hcd i)
+  have hv (i : Fin 2) : 0 ≤ logValue (d i) - logValue (c i) :=
+    sub_nonneg.mpr (logValue_strictMono (hc i) ((hc i).trans (hcd i)) (hcd i)).le
+  have hb : 0 ≤ M - ∑ i, c i := sub_nonneg.mpr hM
+  have hbounded : BddBelow (range (fun p : {p : ℝ // 0 ≤ p} =>
+      Knapsack.FractionalKnapsackDual.dualValue (fun i => d i - c i)
+        (fun i => logValue (d i) - logValue (c i)) (M - ∑ i, c i) p)) := by
+    refine ⟨0, ?_⟩
+    rintro _ ⟨p, rfl⟩
+    exact add_nonneg (mul_nonneg p.property hb)
+      (Finset.sum_nonneg (fun i _ => le_max_left _ _))
+  simp only [gridDual, gridDualValue_translate]
+  rw [← add_ciInf hbounded]
+  rw [Knapsack.FractionalKnapsackDual.fractional_knapsack_strong_duality
+    (fun i => d i - c i) (fun i => logValue (d i) - logValue (c i))
+    (M - ∑ i, c i) hw hv hb]
+
+open private hermite_strict_majorant quadratic_derivatives
+  from D5.S3.Analytic.Interpolation.HermiteEnvelopeEquality
+
 #print axioms two_point_grid_domain
 #print axioms two_actual_corners_lower_mem
+#print axioms corner_le_grid_dual
+#print axioms grid_dual_eq_fractional_sup
 
 end D5.S3.Analytic.Interpolation.TwoPointGridDominance
