@@ -261,6 +261,31 @@ private theorem m_factorization :
   repeat' rw [Finsupp.prod_add_index' (by simp) (by simp [pow_add])]
   simp
 
+private theorem prime_dvd_m_cases {p : ℕ} (hp : p.Prime)
+    (hpm : p ∣ 395622702669701707200) :
+    p = 2 ∨ p = 3 ∨ p = 5 ∨ p = 7 ∨ p = 11 ∨ p = 13 ∨
+    p = 17 ∨ p = 19 ∨ p = 23 ∨ p = 29 ∨ p = 31 ∨
+    p = 37 ∨ p = 41 ∨ p = 43 := by
+  have hpos : 0 < mFactors p := by
+    rw [m_factorization]
+    exact hp.factorization_pos_of_dvd (by norm_num) hpm
+  by_cases h2 : p = 2; · subst p; simp
+  by_cases h3 : p = 3; · subst p; simp
+  by_cases h5 : p = 5; · subst p; simp
+  by_cases h7 : p = 7; · subst p; simp
+  by_cases h11 : p = 11; · subst p; simp
+  by_cases h13 : p = 13; · subst p; simp
+  by_cases h17 : p = 17; · subst p; simp
+  by_cases h19 : p = 19; · subst p; simp
+  by_cases h23 : p = 23; · subst p; simp
+  by_cases h29 : p = 29; · subst p; simp
+  by_cases h31 : p = 31; · subst p; simp
+  by_cases h37 : p = 37; · subst p; simp
+  by_cases h41 : p = 41; · subst p; simp
+  by_cases h43 : p = 43; · subst p; simp
+  simp [mFactors, h2, h3, h5, h7, h11, h13, h17, h19, h23, h29, h31,
+    h37, h41, h43] at hpos
+
 open D5.S3.Arith.GoldenResource.GoldenResourcePriceInterval
 open D5.S3.Arith.GoldenResource.GoldenResourceThresholdCriterion
 open D5.S3.Arith.GoldenResource.GoldenSmallestMissingPrime
@@ -316,31 +341,6 @@ theorem m_price_window :
   have hfac43 : (395622702669701707200 : ℕ).factorization 43 = 1 := by
     rw [← m_factorization]
     norm_num [mFactors]
-  have prime_dvd_m_cases : ∀ {p : ℕ}, p.Prime →
-      p ∣ 395622702669701707200 →
-      p = 2 ∨ p = 3 ∨ p = 5 ∨ p = 7 ∨ p = 11 ∨ p = 13 ∨
-      p = 17 ∨ p = 19 ∨ p = 23 ∨ p = 29 ∨ p = 31 ∨
-      p = 37 ∨ p = 41 ∨ p = 43 := by
-    intro p hp hpm
-    have hpos : 0 < mFactors p := by
-      rw [m_factorization]
-      exact hp.factorization_pos_of_dvd (by norm_num) hpm
-    by_cases h2 : p = 2; · subst p; simp
-    by_cases h3 : p = 3; · subst p; simp
-    by_cases h5 : p = 5; · subst p; simp
-    by_cases h7 : p = 7; · subst p; simp
-    by_cases h11 : p = 11; · subst p; simp
-    by_cases h13 : p = 13; · subst p; simp
-    by_cases h17 : p = 17; · subst p; simp
-    by_cases h19 : p = 19; · subst p; simp
-    by_cases h23 : p = 23; · subst p; simp
-    by_cases h29 : p = 29; · subst p; simp
-    by_cases h31 : p = 31; · subst p; simp
-    by_cases h37 : p = 37; · subst p; simp
-    by_cases h41 : p = 41; · subst p; simp
-    by_cases h43 : p = 43; · subst p; simp
-    simp [mFactors, h2, h3, h5, h7, h11, h13, h17, h19, h23, h29, h31,
-      h37, h41, h43] at hpos
   apply (colossally_abundant_iff_price_interval_nonempty (by norm_num)).mp
   refine ⟨goldenLayerMarginal 2 7, ?_,
     (golden_resource_optimal_iff_layer_thresholds ?_ (by norm_num)).mpr ⟨?_, ?_⟩⟩
@@ -390,6 +390,240 @@ theorem m_price_window :
     · simpa [hfac37] using h37l.le
     · simpa [hfac41] using h41l.le
     · simpa [hfac43] using h43l.le
+
+private def nFactors : ℕ →₀ ℕ := mFactors + Finsupp.single 2 1
+
+private theorem n_factorization :
+    nFactors = (791245405339403414400 : ℕ).factorization := by
+  have hprime : ∀ p ∈ nFactors.support, p.Prime := by
+    intro p hp
+    rw [Finsupp.mem_support_iff] at hp
+    by_cases h2 : p = 2; · subst p; norm_num
+    by_cases h3 : p = 3; · subst p; norm_num
+    by_cases h5 : p = 5; · subst p; norm_num
+    by_cases h7 : p = 7; · subst p; norm_num
+    by_cases h11 : p = 11; · subst p; norm_num
+    by_cases h13 : p = 13; · subst p; norm_num
+    by_cases h17 : p = 17; · subst p; norm_num
+    by_cases h19 : p = 19; · subst p; norm_num
+    by_cases h23 : p = 23; · subst p; norm_num
+    by_cases h29 : p = 29; · subst p; norm_num
+    by_cases h31 : p = 31; · subst p; norm_num
+    by_cases h37 : p = 37; · subst p; norm_num
+    by_cases h41 : p = 41; · subst p; norm_num
+    by_cases h43 : p = 43; · subst p; norm_num
+    simp [nFactors, mFactors, h2, h3, h5, h7, h11, h13, h17, h19, h23,
+      h29, h31, h37, h41, h43] at hp
+  apply (Nat.eq_factorization_iff (by norm_num) hprime).mpr
+  simp only [nFactors, mFactors]
+  repeat' rw [Finsupp.prod_add_index' (by simp) (by simp [pow_add])]
+  simp
+
+private theorem prime_dvd_n_cases {p : ℕ} (hp : p.Prime)
+    (hpn : p ∣ 791245405339403414400) :
+    p = 2 ∨ p = 3 ∨ p = 5 ∨ p = 7 ∨ p = 11 ∨ p = 13 ∨
+    p = 17 ∨ p = 19 ∨ p = 23 ∨ p = 29 ∨ p = 31 ∨
+    p = 37 ∨ p = 41 ∨ p = 43 := by
+  have hpos : 0 < nFactors p := by
+    rw [n_factorization]
+    exact hp.factorization_pos_of_dvd (by norm_num) hpn
+  by_cases h2 : p = 2; · subst p; simp
+  by_cases h3 : p = 3; · subst p; simp
+  by_cases h5 : p = 5; · subst p; simp
+  by_cases h7 : p = 7; · subst p; simp
+  by_cases h11 : p = 11; · subst p; simp
+  by_cases h13 : p = 13; · subst p; simp
+  by_cases h17 : p = 17; · subst p; simp
+  by_cases h19 : p = 19; · subst p; simp
+  by_cases h23 : p = 23; · subst p; simp
+  by_cases h29 : p = 29; · subst p; simp
+  by_cases h31 : p = 31; · subst p; simp
+  by_cases h37 : p = 37; · subst p; simp
+  by_cases h41 : p = 41; · subst p; simp
+  by_cases h43 : p = 43; · subst p; simp
+  simp [nFactors, mFactors, h2, h3, h5, h7, h11, h13, h17, h19, h23,
+    h29, h31, h37, h41, h43] at hpos
+
+private theorem n_shared_endpoint_rational_separation :
+    (goldenLayerMarginal 2 8 < goldenLayerMarginal 2 7 ∧
+      goldenLayerMarginal 3 5 < goldenLayerMarginal 2 7 ∧
+      goldenLayerMarginal 5 3 < goldenLayerMarginal 2 7 ∧
+      goldenLayerMarginal 7 3 < goldenLayerMarginal 2 7 ∧
+      goldenLayerMarginal 11 2 < goldenLayerMarginal 2 7 ∧
+      goldenLayerMarginal 13 2 < goldenLayerMarginal 2 7 ∧
+      goldenLayerMarginal 17 2 < goldenLayerMarginal 2 7 ∧
+      goldenLayerMarginal 19 2 < goldenLayerMarginal 2 7 ∧
+      goldenLayerMarginal 23 2 < goldenLayerMarginal 2 7 ∧
+      goldenLayerMarginal 29 2 < goldenLayerMarginal 2 7 ∧
+      goldenLayerMarginal 31 2 < goldenLayerMarginal 2 7 ∧
+      goldenLayerMarginal 37 2 < goldenLayerMarginal 2 7 ∧
+      goldenLayerMarginal 41 2 < goldenLayerMarginal 2 7 ∧
+      goldenLayerMarginal 43 2 < goldenLayerMarginal 2 7 ∧
+      goldenLayerMarginal 47 1 < goldenLayerMarginal 2 7) ∧
+    (goldenLayerMarginal 2 7 ≤ goldenLayerMarginal 2 7 ∧
+      goldenLayerMarginal 2 7 < goldenLayerMarginal 3 4 ∧
+      goldenLayerMarginal 2 7 < goldenLayerMarginal 5 2 ∧
+      goldenLayerMarginal 2 7 < goldenLayerMarginal 7 2 ∧
+      goldenLayerMarginal 2 7 < goldenLayerMarginal 11 1 ∧
+      goldenLayerMarginal 2 7 < goldenLayerMarginal 13 1 ∧
+      goldenLayerMarginal 2 7 < goldenLayerMarginal 17 1 ∧
+      goldenLayerMarginal 2 7 < goldenLayerMarginal 19 1 ∧
+      goldenLayerMarginal 2 7 < goldenLayerMarginal 23 1 ∧
+      goldenLayerMarginal 2 7 < goldenLayerMarginal 29 1 ∧
+      goldenLayerMarginal 2 7 < goldenLayerMarginal 31 1 ∧
+      goldenLayerMarginal 2 7 < goldenLayerMarginal 37 1 ∧
+      goldenLayerMarginal 2 7 < goldenLayerMarginal 41 1 ∧
+      goldenLayerMarginal 2 7 < goldenLayerMarginal 43 1) := by
+  rcases m_price_window_rational_separation with
+    ⟨⟨h3u, h5u, h7u, h11u, h13u, h17u, h19u, h23u, h29u, h31u, h37u,
+      h41u, h43u, h47u⟩,
+     ⟨_, h3l, h5l, h7l, h11l, h13l, h17l, h19l, h23l, h29l, h31l,
+      h37l, h41l, h43l⟩⟩
+  have h2u : goldenLayerMarginal 2 8 < goldenLayerMarginal 2 7 :=
+    golden_layer_strict_decrease Nat.prime_two (by norm_num) (by norm_num)
+  exact ⟨⟨h2u, h3u, h5u, h7u, h11u, h13u, h17u, h19u, h23u, h29u, h31u,
+    h37u, h41u, h43u, h47u⟩, ⟨le_rfl, h3l, h5l, h7l, h11l, h13l, h17l,
+    h19l, h23l, h29l, h31l, h37l, h41l, h43l⟩⟩
+
+private theorem n_thresholds_and_m_upper :
+    (∀ p : ℕ, p.Prime →
+      goldenLayerMarginal p ((395622702669701707200 : ℕ).factorization p + 1) ≤
+        goldenLayerMarginal 2 7) ∧
+    (∀ p : ℕ, p.Prime →
+      goldenLayerMarginal p ((791245405339403414400 : ℕ).factorization p + 1) ≤
+        goldenLayerMarginal 2 7) ∧
+    (∀ p : ℕ, p.Prime → p ∣ 791245405339403414400 →
+      goldenLayerMarginal 2 7 ≤
+        goldenLayerMarginal p ((791245405339403414400 : ℕ).factorization p)) := by
+  rcases m_price_window_rational_separation with
+    ⟨⟨h3u, h5u, h7u, h11u, h13u, h17u, h19u, h23u, h29u, h31u, h37u,
+      h41u, h43u, h47u⟩, _⟩
+  rcases n_shared_endpoint_rational_separation with
+    ⟨⟨h2nu, _, _, _, _, _, _, _, _, _, _, _, _, _, _⟩,
+     ⟨h2nl, h3l, h5l, h7l, h11l, h13l, h17l, h19l, h23l, h29l, h31l,
+      h37l, h41l, h43l⟩⟩
+  have hmUpper : ∀ p : ℕ, p.Prime →
+      goldenLayerMarginal p ((395622702669701707200 : ℕ).factorization p + 1) ≤
+        goldenLayerMarginal 2 7 := by
+    intro p hp
+    by_cases hpm : p ∣ 395622702669701707200
+    · rcases prime_dvd_m_cases hp hpm with
+        rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl
+      · simp [← m_factorization, mFactors]
+      · simpa [← m_factorization, mFactors] using h3u.le
+      · simpa [← m_factorization, mFactors] using h5u.le
+      · simpa [← m_factorization, mFactors] using h7u.le
+      · simpa [← m_factorization, mFactors] using h11u.le
+      · simpa [← m_factorization, mFactors] using h13u.le
+      · simpa [← m_factorization, mFactors] using h17u.le
+      · simpa [← m_factorization, mFactors] using h19u.le
+      · simpa [← m_factorization, mFactors] using h23u.le
+      · simpa [← m_factorization, mFactors] using h29u.le
+      · simpa [← m_factorization, mFactors] using h31u.le
+      · simpa [← m_factorization, mFactors] using h37u.le
+      · simpa [← m_factorization, mFactors] using h41u.le
+      · simpa [← m_factorization, mFactors] using h43u.le
+    · rw [Nat.factorization_eq_zero_of_not_dvd hpm]
+      have hp47 : 47 ≤ p := by
+        by_contra hnot
+        have hlt : p < 47 := by omega
+        interval_cases p <;> norm_num at hp
+        all_goals norm_num at hpm
+      simpa using golden_layer_marginal_one_threshold_of_le hp (by norm_num) hp47 h47u.le
+  have hnUpper : ∀ p : ℕ, p.Prime →
+      goldenLayerMarginal p ((791245405339403414400 : ℕ).factorization p + 1) ≤
+        goldenLayerMarginal 2 7 := by
+    intro p hp
+    by_cases hpn : p ∣ 791245405339403414400
+    · rcases prime_dvd_n_cases hp hpn with
+        rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl
+      · simpa [← n_factorization, nFactors, mFactors] using h2nu.le
+      · simpa [← n_factorization, nFactors, mFactors] using h3u.le
+      · simpa [← n_factorization, nFactors, mFactors] using h5u.le
+      · simpa [← n_factorization, nFactors, mFactors] using h7u.le
+      · simpa [← n_factorization, nFactors, mFactors] using h11u.le
+      · simpa [← n_factorization, nFactors, mFactors] using h13u.le
+      · simpa [← n_factorization, nFactors, mFactors] using h17u.le
+      · simpa [← n_factorization, nFactors, mFactors] using h19u.le
+      · simpa [← n_factorization, nFactors, mFactors] using h23u.le
+      · simpa [← n_factorization, nFactors, mFactors] using h29u.le
+      · simpa [← n_factorization, nFactors, mFactors] using h31u.le
+      · simpa [← n_factorization, nFactors, mFactors] using h37u.le
+      · simpa [← n_factorization, nFactors, mFactors] using h41u.le
+      · simpa [← n_factorization, nFactors, mFactors] using h43u.le
+    · rw [Nat.factorization_eq_zero_of_not_dvd hpn]
+      have hp47 : 47 ≤ p := by
+        by_contra hnot
+        have hlt : p < 47 := by omega
+        interval_cases p <;> norm_num at hp
+        all_goals norm_num at hpn
+      simpa using golden_layer_marginal_one_threshold_of_le hp (by norm_num) hp47 h47u.le
+  have hnLower : ∀ p : ℕ, p.Prime → p ∣ 791245405339403414400 →
+      goldenLayerMarginal 2 7 ≤
+        goldenLayerMarginal p ((791245405339403414400 : ℕ).factorization p) := by
+    intro p hp hpn
+    rcases prime_dvd_n_cases hp hpn with
+      rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl
+    · simpa [← n_factorization, nFactors, mFactors] using h2nl
+    · simpa [← n_factorization, nFactors, mFactors] using h3l.le
+    · simpa [← n_factorization, nFactors, mFactors] using h5l.le
+    · simpa [← n_factorization, nFactors, mFactors] using h7l.le
+    · simpa [← n_factorization, nFactors, mFactors] using h11l.le
+    · simpa [← n_factorization, nFactors, mFactors] using h13l.le
+    · simpa [← n_factorization, nFactors, mFactors] using h17l.le
+    · simpa [← n_factorization, nFactors, mFactors] using h19l.le
+    · simpa [← n_factorization, nFactors, mFactors] using h23l.le
+    · simpa [← n_factorization, nFactors, mFactors] using h29l.le
+    · simpa [← n_factorization, nFactors, mFactors] using h31l.le
+    · simpa [← n_factorization, nFactors, mFactors] using h37l.le
+    · simpa [← n_factorization, nFactors, mFactors] using h41l.le
+    · simpa [← n_factorization, nFactors, mFactors] using h43l.le
+  exact ⟨hmUpper, hnUpper, hnLower⟩
+
+/-- The doubled witness has a nonempty price window whose lower endpoint is the
+upper endpoint of the first witness. -/
+theorem n_price_window_and_shared_endpoint :
+    goldenUpperPrice 791245405339403414400 ≤
+        goldenLowerPrice 791245405339403414400 ∧
+      goldenLowerPrice 791245405339403414400 =
+        goldenUpperPrice 395622702669701707200 := by
+  rcases n_thresholds_and_m_upper with ⟨hmUpper, hnUpper, hnLower⟩
+  have hrefPos : 0 < goldenLayerMarginal 2 7 := by
+    norm_num [goldenLayerMarginal]
+    positivity
+  have hnCA : IsColossallyAbundant 791245405339403414400 :=
+    ⟨goldenLayerMarginal 2 7, hrefPos,
+      (golden_resource_optimal_iff_layer_thresholds hrefPos (by norm_num)).mpr
+        ⟨hnUpper, hnLower⟩⟩
+  refine ⟨(colossally_abundant_iff_price_interval_nonempty (by norm_num)).mp hnCA, ?_⟩
+  have hnLowerEq : goldenLowerPrice 791245405339403414400 =
+      goldenLayerMarginal 2 7 := by
+    have hs : (791245405339403414400 : ℕ).primeFactors.Nonempty := by simp
+    rw [goldenLowerPrice, dif_pos hs]
+    apply le_antisymm
+    · have hmem : 2 ∈ (791245405339403414400 : ℕ).primeFactors :=
+        Nat.prime_two.mem_primeFactors (by norm_num) (by norm_num)
+      have hle := Finset.inf'_le
+        (fun p => goldenLayerMarginal p ((791245405339403414400 : ℕ).factorization p)) hmem
+      have hfac2 : (791245405339403414400 : ℕ).factorization 2 = 7 := by
+        rw [← n_factorization]
+        norm_num [nFactors, mFactors]
+      rw [hfac2] at hle
+      exact hle
+    · apply Finset.le_inf' hs
+      intro p hp
+      exact hnLower p (Nat.prime_of_mem_primeFactors hp)
+        (Nat.dvd_of_mem_primeFactors hp)
+  have hmUpperEq : goldenUpperPrice 395622702669701707200 =
+      goldenLayerMarginal 2 7 := by
+    obtain ⟨p, hp, heq, hall⟩ := golden_upper_price_spec
+      (n := 395622702669701707200) (by norm_num)
+    apply le_antisymm
+    · rw [heq]
+      exact hmUpper p hp
+    · have h := hall 2 Nat.prime_two
+      simpa [← m_factorization, mFactors] using h
+  exact hnLowerEq.trans hmUpperEq.symm
 
 end
 
