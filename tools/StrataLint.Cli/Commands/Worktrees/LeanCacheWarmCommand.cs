@@ -20,9 +20,9 @@ internal static class LeanCacheWarmCommand
                 throw new PlatformNotSupportedException("Shared cache warming requires the verified macOS reader guard.");
             var pins = ReadPins(root);
             var policy = LeanProcessPolicy.Create(root, pins, runner);
-            using var warmer = LeanCacheWriterGuard.TryAcquire(policy.SharedRoot)
+            using var warmer = LeanCacheWriterGuard.TryAcquire(policy.SharedRoot, policy.LockDirectory)
                 ?? throw new InvalidOperationException("shared cache warmer is busy");
-            using var guard = LeanCacheWriterGuard.TryAcquire(Path.Combine(root, ".lake"))
+            using var guard = LeanCacheWriterGuard.TryAcquire(Path.Combine(root, ".lake"), policy.LockDirectory)
                 ?? throw new InvalidOperationException("private main .lake writer guard is busy");
             RequireMainDev(root, runner);
             LeanCacheProvisioner.RequirePrivateLake(root);

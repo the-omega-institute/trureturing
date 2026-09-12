@@ -13,6 +13,7 @@ internal sealed class LeanProcessPolicy : IWorktreeProcessRunner
     internal string Root { get; }
     internal string SharedRoot { get; }
     internal string SharedCache { get; }
+    internal string LockDirectory => Path.Combine(Path.GetDirectoryName(SharedRoot)!, "stratalint-lake-locks");
     internal string Cache { get; }
     internal string LakeExecutable { get; }
     internal bool SharedReader => Cache == SharedCache;

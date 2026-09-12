@@ -83,7 +83,7 @@ public sealed class SharedLakeCacheTests
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new SharedLakeFixture();
-        using var guard = LeanCacheWriterGuard.TryAcquire(Path.Combine(fixture.Reader, ".lake"));
+        using var guard = LeanCacheWriterGuard.TryAcquire(Path.Combine(fixture.Reader, ".lake"), fixture.LockDirectory);
         Assert.NotNull(guard);
         Assert.False(fixture.Command(fixture.Reader, "ensure-cache").Success);
         Assert.False(fixture.Command(fixture.Reader, "with-cache-reader", "--", "lake", "build").Success);
@@ -116,12 +116,40 @@ public sealed class SharedLakeCacheTests
     {
         if (!OperatingSystem.IsMacOS()) return;
         using var fixture = new SharedLakeFixture();
-        using var held = LeanCacheWriterGuard.TryAcquire(Path.Combine(fixture.Main, ".git", "stratalint-lake"));
+        using var held = LeanCacheWriterGuard.TryAcquire(Path.Combine(fixture.Main, ".git", "stratalint-lake"), fixture.LockDirectory);
         Assert.NotNull(held);
         var rejected = fixture.Command(fixture.Main, "warm-cache");
         Assert.False(rejected.Success);
         Assert.Contains("busy", rejected.Error);
         Assert.True(fixture.Command(fixture.Reader, "with-cache-reader", "--", "lake", "build").Success);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void TemporaryDirectoryOverridesCannotBypassWriterLocks(bool warming)
+    {
+        if (!OperatingSystem.IsMacOS()) return;
+        using var fixture = new SharedLakeFixture();
+        var target = warming ? Path.Combine(fixture.Main, ".git", "stratalint-lake")
+            : Path.Combine(fixture.Reader, ".lake");
+        using var held = LeanCacheWriterGuard.TryAcquire(target, fixture.LockDirectory);
+        Assert.NotNull(held);
+        var previous = Environment.GetEnvironmentVariable("TMPDIR");
+        var alternate = Path.Combine(fixture.Main, ".git", "alternate-tmp");
+        Directory.CreateDirectory(alternate);
+        try
+        {
+            Environment.SetEnvironmentVariable("TMPDIR", alternate);
+            var result = warming ? fixture.Command(fixture.Main, "warm-cache")
+                : fixture.Command(fixture.Reader, "ensure-cache");
+            Assert.False(result.Success);
+            Assert.Contains("busy", result.Error);
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable("TMPDIR", previous);
+        }
     }
 
     [Fact]
@@ -181,6 +209,7 @@ internal sealed class SharedLakeFixture : IDisposable
     internal string Main { get; }
     internal string Reader { get; }
     internal string Lake { get; }
+    internal string LockDirectory => Path.Combine(Main, ".git", "stratalint-lake-locks");
 
     internal SharedLakeFixture()
     {

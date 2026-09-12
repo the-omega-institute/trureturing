@@ -220,7 +220,6 @@ internal static class LeanCacheStamp
 
 internal sealed class LeanCacheGuard : IDisposable
 {
-    private const int LockShared = 1;
     private const int LockExclusive = 2;
     private const int LockNonBlocking = 4;
     private const int LockUnlock = 8;
@@ -231,9 +230,7 @@ internal sealed class LeanCacheGuard : IDisposable
 
     private LeanCacheGuard(FileStream stream) => this.stream = stream;
 
-    internal static LeanCacheGuard? TryAcquireShared(string lake) => TryAcquire(lake, shared: true);
-
-    internal static LeanCacheGuard? TryAcquireExclusive(string lake) => TryAcquire(lake, shared: false);
+    internal static LeanCacheGuard? TryAcquireExclusive(string lake, string directory) => TryAcquire(lake, directory);
 
     internal static string PhysicalPath(string path)
     {
@@ -263,9 +260,8 @@ internal sealed class LeanCacheGuard : IDisposable
         stream.Dispose();
     }
 
-    private static LeanCacheGuard? TryAcquire(string lake, bool shared)
+    private static LeanCacheGuard? TryAcquire(string lake, string directory)
     {
-        var directory = Path.Combine(Path.GetTempPath(), "stratalint-lean-cache-guards");
         Directory.CreateDirectory(directory);
         var address = Convert.ToHexStringLower(SHA256.HashData(
             Encoding.UTF8.GetBytes(PhysicalPath(lake))));
@@ -283,22 +279,22 @@ internal sealed class LeanCacheGuard : IDisposable
             return null;
         }
         var acquired = OperatingSystem.IsWindows()
-            ? TryLockWindows(stream.SafeFileHandle, shared)
+            ? TryLockWindows(stream.SafeFileHandle)
             : Flock(
                 stream.SafeFileHandle,
-                (shared ? LockShared : LockExclusive) | LockNonBlocking) == 0;
+                LockExclusive | LockNonBlocking) == 0;
         if (acquired) return new LeanCacheGuard(stream);
         stream.Dispose();
         return null;
     }
 
-    private static bool TryLockWindows(SafeFileHandle handle, bool shared)
+    private static bool TryLockWindows(SafeFileHandle handle)
     {
         var overlapped = Marshal.AllocHGlobal(Marshal.SizeOf<NativeOverlapped>());
         try
         {
             Marshal.StructureToPtr(default(NativeOverlapped), overlapped, false);
-            var flags = LockFileFailImmediately | (shared ? 0u : LockFileExclusiveLock);
+            var flags = LockFileFailImmediately | LockFileExclusiveLock;
             return LockFileEx(handle, flags, 0, 1, 0, overlapped);
         }
         finally
@@ -371,9 +367,9 @@ internal sealed class LeanCacheWriterGuard : IDisposable
         this.guard = guard;
     }
 
-    internal static LeanCacheWriterGuard? TryAcquire(string lake)
+    internal static LeanCacheWriterGuard? TryAcquire(string lake, string directory)
     {
-        var guard = LeanCacheGuard.TryAcquireExclusive(lake);
+        var guard = LeanCacheGuard.TryAcquireExclusive(lake, directory);
         return guard is null ? null : new LeanCacheWriterGuard(lake, guard);
     }
 

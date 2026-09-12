@@ -18,10 +18,10 @@ internal static class LeanCacheEnsureCommand
         {
             var pins = LeanPinSet.TryReadWorktree(root, out var reason)
                 ?? throw new InvalidOperationException(reason);
-            using var guard = LeanCacheWriterGuard.TryAcquire(Path.Combine(root, ".lake"))
-                ?? throw new InvalidOperationException("private .lake writer guard is busy");
             LeanCacheProvisioner.RequirePrivateLake(root);
             var policy = LeanProcessPolicy.Create(root, pins, runner);
+            using var guard = LeanCacheWriterGuard.TryAcquire(Path.Combine(policy.Root, ".lake"), policy.LockDirectory)
+                ?? throw new InvalidOperationException("private .lake writer guard is busy");
             var receipt = LeanCacheProvisioner.Ensure(policy, pins, guard);
             if (!runCommand) return new(true, receipt, string.Empty);
             var result = policy.Run(command[0], command.Skip(1).ToArray(), policy.Root,

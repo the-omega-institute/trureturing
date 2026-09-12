@@ -46,7 +46,8 @@ Worktree creation restores locked .NET dependencies unless `--skip-restore` is e
 
 Only `make warm-donor` in the physical, clean main `dev` checkout publishes the local
 shared store. It holds an exclusive warmer lock and the main `.lake` lock across
-pull, ensure, build and publication. Native Lake staging preserves older input
+pull, ensure, build and publication. Locks live in canonical Git metadata, independent
+of temporary-directory settings. Native Lake staging preserves older input
 mappings; a bulk clone/copy detaches artifacts from mutable build outputs before
 publication. Complete artifacts precede atomic per-file mapping replacement, so
 readers remain usable during warming and failed publication preserves prior reads.
@@ -55,7 +56,8 @@ The shared store is `<git-common-dir>/stratalint-lake/lean-<version>/<os>-<arch>
 Lake owns all content hashes; commits and manifest metadata do not partition it.
 Normal commands, including main-checkout builds, clear inherited writer and cache
 path overrides. On macOS, sandbox-exec denies writes to the canonical shared
-subtree for the command and its descendants, forcing hardlink restores to copy. If a package explicitly enables cache writes, a
+subtree for the command and its descendants, forcing hardlink restores to copy.
+If a package explicitly enables cache writes, a
 Lake build rejected for writing the shared store retries once with a private artifact
 cache; shared write denial remains in force.
 Shared mode and warming currently require macOS with sandbox-exec. Other platforms
