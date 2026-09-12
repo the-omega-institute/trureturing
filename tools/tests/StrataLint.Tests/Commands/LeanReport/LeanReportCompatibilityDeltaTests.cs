@@ -1,3 +1,4 @@
+using System.IO.Compression;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -51,13 +52,13 @@ public sealed class LeanReportCompatibilityDeltaTests
         {
             ["claim_source_path"] = "D5/A.lean", ["claim_source_sha256"] = modules[1]!["source_sha256"]!.DeepClone(),
         };
-        var oldAddress = Hash(Encoding.UTF8.GetBytes("old synthetic report address"));
+        var oldAddress = CacheAddress(fields);
         var cache = Path.Combine(root, "cache");
         var report = $"cache/{oldAddress}/raw-lean-report.json";
         Write(report, new JsonObject { ["modules"] = modules, ["schema"] = "stratalint-raw-lean-report-v2" }.ToJsonString());
         var reportHash = Hash(File.ReadAllBytes(Path.Combine(root, report)));
         Write(report + ".sha256", $"{reportHash}  raw-lean-report.json\n");
-        Write(report + ".materials.zip", "synthetic materials\n");
+        using (ZipFile.Open(Path.Combine(root, report + ".materials.zip"), ZipArchiveMode.Create)) { }
         Write(report + ".input.attestation", "schema=stratalint-lean-report-input-attestation-v1\n"
             + $"repository_input_sha256={fields[0]}\nproducer_sha256={fields[1]}\nreport_sha256={reportHash}\n");
         Write(report + ".provenance.json", JsonSerializer.Serialize(new
@@ -86,7 +87,7 @@ public sealed class LeanReportCompatibilityDeltaTests
         var plan = Path.Combine(root, "plan.json");
         var result = TestProcessRunner.Run("python3",
             [Path.Combine(TestRepositoryLayout.FindRoot(), "tools/lean-inspector/delta.py"), "plan",
-                root, cache, fields[0], fields[1], fields[1], fields[3], table, plan], root,
+                root, cache, CacheAddress(fields), fields[1], fields[1], fields[3], table, plan], root,
             BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
         using var document = JsonDocument.Parse(File.ReadAllBytes(plan));
@@ -119,4 +120,8 @@ public sealed class LeanReportCompatibilityDeltaTests
     }
 
     private static string Hash(byte[] bytes) => Convert.ToHexStringLower(SHA256.HashData(bytes));
+
+    private static string CacheAddress(string[] fields) => Hash(Encoding.UTF8.GetBytes(
+        $"schema=stratalint-lean-report-input-v1\nproducer_sha256={fields[1]}\n"
+        + $"repository_inspector_sha256={fields[1]}\nlean_sources_sha256={fields[2]}\nlean_config_sha256={fields[3]}\n"));
 }
