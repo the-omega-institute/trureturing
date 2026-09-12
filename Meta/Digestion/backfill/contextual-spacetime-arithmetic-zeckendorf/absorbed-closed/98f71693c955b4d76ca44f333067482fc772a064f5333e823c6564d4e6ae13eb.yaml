@@ -1,0 +1,21 @@
+fingerprints:
+  raw_sha256: sha256:98f71693c955b4d76ca44f333067482fc772a064f5333e823c6564d4e6ae13eb
+  normalized_sha256: sha256:98f71693c955b4d76ca44f333067482fc772a064f5333e823c6564d4e6ae13eb
+cas_ref: sha256:98f71693c955b4d76ca44f333067482fc772a064f5333e823c6564d4e6ae13eb
+coverage_gids:
+  - gid: D5/S1/Digit/Normalize.canonicalRaw_unique
+    target_statement_id: sha256:ffef2b78657d19d06f891f5f5160a8ca79aa96b6e08b2a9c3aca96b7aa52f5d9
+  - gid: D5/S1/Digit/Normalize.normalize_eq_rawOfZeckendorf
+    target_statement_id: sha256:37b0a31f617dbe18b76648177239e65c37ff0320d9f8e0e6c27afb899c5f08e1
+  - gid: D5/S1/Digit/Normalize.rawValue_normalize
+    target_statement_id: sha256:1b373b1dd34fc811be37c263466245d84c8870b77b31317cd489255a74aa4fa8
+  - gid: D5/S1/Digit/PrimeAxisAddition.prime_axis_addition_spec
+    target_statement_id: sha256:a23c639bb7d0b7244e8d237835a05fb4bf57833d8e54cab8f4b31cd62d7c497f
+  - gid: D5/S1/Digit/PrimeAxisEncoding.primeAxisEncoding
+    target_statement_id: sha256:6269035f14e166bcf156403561751185bdd5b7f7d73767f6bf8d194aa0587409
+  - gid: D5/S1/Digit/PrimeAxisEncoding.primeAxisEncoding_coe
+    target_statement_id: sha256:76f3f4bd65a9a62fdd405d157d2ee843106f23a340b456b4e0b486892eb323b6
+  - gid: D5/S1/Digit/Raw.rawValue_add
+    target_statement_id: sha256:91d1dcdd561f0ed29f011360ff0564b5fc6a4ad8805ab98c115c99025a1ac6d8
+receipts:
+  unresolved_subitems: []

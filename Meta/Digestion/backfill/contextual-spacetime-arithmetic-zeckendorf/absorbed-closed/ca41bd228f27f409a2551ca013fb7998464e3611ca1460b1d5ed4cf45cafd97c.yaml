@@ -1,0 +1,23 @@
+fingerprints:
+  raw_sha256: sha256:ca41bd228f27f409a2551ca013fb7998464e3611ca1460b1d5ed4cf45cafd97c
+  normalized_sha256: sha256:ca41bd228f27f409a2551ca013fb7998464e3611ca1460b1d5ed4cf45cafd97c
+cas_ref: sha256:ca41bd228f27f409a2551ca013fb7998464e3611ca1460b1d5ed4cf45cafd97c
+coverage_gids:
+  - gid: D5/S1/Deficit/ChargedCarryPath.betaDigits_sub_chargedReduces
+    target_statement_id: sha256:704a1a057a9a52f8af86b0f01f0e03610b3339aa1a228a670dfc02ae8bec67d0
+  - gid: D5/S1/Deficit/ChargedCarryPath.charged_normal_form_unique
+    target_statement_id: sha256:9b1f5a8948f580d24b157eab8c04ff3f37f82397054e112c688653a228868569
+  - gid: D5/S1/Deficit/ChargedCarryPath.charged_normalize_exists
+    target_statement_id: sha256:e9b502c58671d244c1327ec61445df091056366845afe2c73cd49010761cecc3
+  - gid: D5/S1/Deficit/Cocycles/AdditiveCarryCocycle.section_carry_cocycle
+    target_statement_id: sha256:4a931266d7e22261e7758f8d12cb0d171c8ec1bd5a1ee5c4db0758e4bcd84cbc
+  - gid: D5/S1/Digit/Normalize.canonicalRaw_unique
+    target_statement_id: sha256:ffef2b78657d19d06f891f5f5160a8ca79aa96b6e08b2a9c3aca96b7aa52f5d9
+  - gid: D5/S1/Digit/PrimeAxisEncoding.canonicalRawValueEquiv
+    target_statement_id: sha256:78aa532033b64da2a1c2ac18e8359b0c5fbdf6e844fd21c2cb9cbf7ba0a758f8
+  - gid: D5/S1/Scale/Embedding.embedding
+    target_statement_id: sha256:cb9006a9e40ec45ded5903d39b04f68ebca81215b6a65525236cd2d76412143c
+  - gid: D5/S1/Scale/Fibonacci.golden_phi_pow_eq_fib_pair
+    target_statement_id: sha256:d216732e11d7a2e479d9c2c4667ce688b4f5a7eb54e80c6bce46e6858e22e2be
+receipts:
+  unresolved_subitems: []

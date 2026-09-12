@@ -2,7 +2,11 @@ fingerprints:
   raw_sha256: sha256:2a522a5b0660b8f7ed83e1dd852938e0e4d9a17f5c50d5ca4416851f3579ec25
   normalized_sha256: sha256:2a522a5b0660b8f7ed83e1dd852938e0e4d9a17f5c50d5ca4416851f3579ec25
 cas_ref: sha256:2a522a5b0660b8f7ed83e1dd852938e0e4d9a17f5c50d5ca4416851f3579ec25
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S1/Scale/Embedding.embedding
+    target_statement_id: sha256:cb9006a9e40ec45ded5903d39b04f68ebca81215b6a65525236cd2d76412143c
+  - gid: D5/S1/Scale/Fibonacci.golden_phi_pow_eq_fib_pair
+    target_statement_id: sha256:d216732e11d7a2e479d9c2c4667ce688b4f5a7eb54e80c6bce46e6858e22e2be
 receipts:
   unresolved_subitems: []
   chain_atoms:
