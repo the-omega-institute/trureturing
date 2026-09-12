@@ -4,11 +4,11 @@
 
 Prime values of the second elementary symmetric divisor function have exactly two preimages when attained at composites.
 
-All variables range over the natural numbers. The function S2 sums the products of unordered pairs of distinct positive divisors.
+All variables range over the natural numbers. The function S2 is the second elementary symmetric function of the finite divisor multiset.
 
 **Definition 1.1 (The second elementary symmetric divisor function).**
 
-$$\forall n \in \mathbb{N}, \left(S_{2}\right)\left(n\right) = \sum_{d \mid n, e \mid n, d < e} d \cdot e$$
+$$\forall n \in \mathbb{N}, \left(S_{2}\right)\left(n\right) = \operatorname{esymm}(2,(\operatorname{divisors}(n)))$$
 
 *Formalization.* `D5/S1/Recurrence/Invariants/DivisorPairProductPrimePreimages.S2` (`✓ std3`).
 
@@ -16,7 +16,7 @@ $$\forall n \in \mathbb{N}, \left(S_{2}\right)\left(n\right) = \sum_{d \mid n, e
 
 *Commentary.*
 
-For each n, S2(n) is the sum of d times e over positive divisors d and e of n with d less than e.
+For each n, S2(n) is the second elementary symmetric function of the finite divisor multiset divisors(n), with divisors(0) empty and hence S2(0)=0. This is OEIS A119616's %N verbatim: second elementary symmetric function of divisors. Equivalently, it is the sum of d times e over unordered pairs of distinct divisors, or (sigma_1(n)^2 - sigma_2(n))/2 as in A119616 %F; the module proves the latter identity internally.
 
 **Theorem 1.2 (Classification of composite prime-value arguments).**
 

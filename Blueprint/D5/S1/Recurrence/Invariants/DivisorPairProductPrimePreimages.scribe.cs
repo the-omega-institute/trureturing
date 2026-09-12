@@ -16,11 +16,15 @@ internal sealed class DivisorPairProductPrimePreimagesDocument : IScribeDocument
         H("Prime Divisor-Pair Sums and Their Preimages"),
         Blocks(
             Paragraph(Text(
-                "All variables range over the natural numbers. The function S2 sums the "
-                + "products of unordered pairs of distinct positive divisors.")),
+                "All variables range over the natural numbers. The function S2 is the second "
+                + "elementary symmetric function of the finite divisor multiset.")),
             Node("S2", "The second elementary symmetric divisor function", DefinitionFormula(),
-                "For each n, S2(n) is the sum of d times e over positive divisors d and e "
-                + "of n with d less than e.", DescribeRole.Definition,
+                "For each n, S2(n) is the second elementary symmetric function of the finite "
+                + "divisor multiset divisors(n), with divisors(0) empty and hence S2(0)=0. "
+                + "This is OEIS A119616's %N verbatim: second elementary symmetric function "
+                + "of divisors. Equivalently, it is the sum of d times e over unordered pairs "
+                + "of distinct divisors, or (sigma_1(n)^2 - sigma_2(n))/2 as in A119616 %F; "
+                + "the module proves the latter identity internally.", DescribeRole.Definition,
                 AssessedProvenance.FromLiterature(Source)),
             Node("eq_two_mul_prime_of_composite_of_s2_prime",
                 "Classification of composite prime-value arguments", ClassificationFormula(),
@@ -52,12 +56,8 @@ internal sealed class DivisorPairProductPrimePreimagesDocument : IScribeDocument
     private static Formula DefinitionFormula()
     {
         var n = F.Id("n");
-        var d = F.Id("d");
-        var e = F.Id("e");
-        var indices = Seq(d, Sp, Mid, Sp, n, Comma, Sp, e, Sp, Mid, Sp, n,
-            Comma, Sp, d, Sp, Lt, Sp, e);
-        var sum = Seq(Sum, Underscore, Grp(indices), Sp, Multiply(d, e));
-        return Universal(n, Equal(S2(n), sum));
+        var divisorMultiset = Parenthesized(Call("divisors", n));
+        return Universal(n, Equal(S2(n), Call("esymm", D(2), divisorMultiset)));
     }
 
     private static Formula ClassificationFormula()

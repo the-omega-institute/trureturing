@@ -24,6 +24,13 @@ OEIS A119616, NAME:
 
 > Second elementary symmetric function of divisors of n.
 
+Accordingly, `S2(n)` is defined here verbatim as `e_2(divisors(n))`, the
+second elementary symmetric function of the finite divisor multiset. Lean's
+`Nat.divisors 0` is empty, so this definition gives `S2(0)=0`. For positive
+`n`, it is equivalently the sum of `d*e` over unordered pairs of distinct
+divisors, or `(sigma_1(n)^2 - sigma_2(n))/2` as recorded in A119616 %F; these
+are equivalent descriptions, not the adopted definition.
+
 The adopted reading is: for every composite `n` for which `p = S2(n)` is
 prime, `{m >= 1 : S2(m) = p} = {n, p}`. This is the only reading consistent
 with both "at least twice" and "exactly twice": the identity `S2(p) = p`
@@ -46,12 +53,15 @@ MathSciNet were not verified in that search.
 
 ## Route
 
-The divisor identity is `2*S2(n) = sigma_1(n)^2 - sigma_2(n)`. If a prime
-power `p^a` with `a >= 2` divides `n`, the two sigma values have a common
-factor: for even `a` use `sigma_1(p^a)`; for odd `a` and odd `p` use
-`1+p^2+...+p^(a-1)`; for `p=2` and odd `a` use `(2^(a+1)-1)/3`. The factor
-is too large and too small to be compatible with prime `S2(n)`, so `n` is
-squarefree.
+Starting from the verbatim definition `S2(n)=e_2(divisors(n))`, the module
+internally proves the equivalent divisor identity
+`2*S2(n) = sigma_1(n)^2 - sigma_2(n)` from A119616 %F. For positive `n`, the
+same definition is also the sum of `d*e` over unordered pairs of distinct
+divisors. If a prime power `p^a` with `a >= 2` divides `n`, the two sigma
+values have a common factor: for even `a` use `sigma_1(p^a)`; for odd `a`
+and odd `p` use `1+p^2+...+p^(a-1)`; for `p=2` and odd `a` use
+`(2^(a+1)-1)/3`. The factor is too large and too small to be compatible with
+prime `S2(n)`, so `n` is squarefree.
 
 For squarefree `n` with at least two odd prime factors, parity forces `S2(n)`
 to be composite. The all-odd case uses the parity of `C(2^k,2)`. For
@@ -74,7 +84,11 @@ the proof route.
 ## Evidence
 
 - Lean module: `D5/S1/Recurrence/Invariants/DivisorPairProductPrimePreimages.lean`.
-- Public definition: `S2`.
+- Public definition: `S2 n := n.divisors.val.esymm 2`, matching A119616 %N;
+  `Nat.divisors 0` is empty and therefore `S2 0 = 0`.
+- The pair-product sum and `2*S2(n) = sigma_1(n)^2 - sigma_2(n)` are
+  equivalent descriptions from A119616 %F; the latter is proved internally,
+  without a public bind-only identity theorem.
 - Classification theorem: `eq_two_mul_prime_of_composite_of_s2_prime`.
 - Resolution theorem: `seidov_conjecture`.
 - Both theorem axiom closures are std3: `propext`, `Classical.choice`, and
