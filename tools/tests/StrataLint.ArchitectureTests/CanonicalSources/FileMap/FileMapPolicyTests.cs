@@ -258,7 +258,9 @@ public sealed partial class FileMapPolicyTests
         Assert.Empty(FileMapPolicy.InspectPatternPopulation(manifest, []));
         Assert.Empty(FileMapPolicy.InspectCoverage(manifest, [path]));
         var decision = AdmissionPlanePolicy.Evaluate(
-            Encoding.UTF8.GetBytes("schema_version = 2\n" + entry),
+            RawRepositorySnapshot.Create([]),
+            RawRepositorySnapshot.Create([RawRepositoryEntry.FromText(
+                AdmissionPlanePolicy.FileMapPath, "schema_version = 2\n" + entry)]),
             [path]);
         Assert.True(decision.IsAdmissible);
         Assert.Equal(AdmissionPlaneClassification.ContentOnly, decision.Classification);
