@@ -102,6 +102,201 @@ private theorem schroeder_spec (n : Nat) : ∀ w ∈ schroeder n, weight w = 2 *
                     rw [hsD, if_pos rfl, hsU, if_neg (by decide)]
                     have := hp.2.2 r
                     omega
+theorem mem_schroeder_iff (n : Nat) (w : List Step) : w ∈ schroeder n ↔
+    (weight w = 2 * n ∧ w.count U = w.count D ∧ PrefixNonnegative w) := by
+  have hfirst : ∀ (b : Nat) (r : List Step), 0 < b →
+      (∀ i, i < r.length → (r.take i).count D ≤ (r.take i).count U + b) →
+      r.count D = r.count U + b → ∃ q p, r = q ++ D :: p ∧
+        q.count D = q.count U + (b - 1) ∧
+        (∀ i, i < q.length → (q.take i).count D < (q.take i).count U + b) ∧
+        p.count U = p.count D ∧ PrefixNonnegative p := by
+    intro b r hb
+    induction r generalizing b with
+    | nil => intro _ h; simp at h; omega
+    | cons a r ih =>
+        intro hstrict hcount
+        cases a with
+        | H =>
+            have hs : ∀ i, i < r.length → (r.take i).count D ≤ (r.take i).count U + b := by
+              intro i hi
+              have h := hstrict (i + 1) (by simp; omega)
+              rw [List.take_succ_cons] at h
+              simp [List.count_cons] at h
+              simpa using h
+            have hc : r.count D = r.count U + b := by simpa using hcount
+            rcases ih b hb hs hc with ⟨q, p, heq, hq, hqs, hp, hps⟩
+            refine ⟨H :: q, p, ?_, ?_, ?_, hp, hps⟩
+            · rw [heq, List.cons_append]
+            · simp [List.count_cons] at hq ⊢
+              exact hq
+            · intro i hi
+              cases i with
+              | zero => simpa using hb
+              | succ i =>
+                  rw [List.take_succ_cons]
+                  simp [List.count_cons]
+                  exact hqs i (by simpa using hi)
+        | D =>
+            by_cases hb1 : b = 1
+            · have hpbal : r.count D = r.count U := by
+                subst b
+                simp [List.count_cons] at hcount
+                omega
+              have hpp : PrefixNonnegative r := by
+                intro i
+                by_cases hi : i < r.length
+                · have h := hstrict (i + 1) (by simp; omega)
+                  rw [List.take_succ_cons] at h
+                  simp [List.count_cons] at h
+                  omega
+                · rw [List.take_of_length_le (by omega)]
+                  exact hpbal.le
+              refine ⟨[], r, by simp, by simp [hb1], by simp, hpbal.symm, hpp⟩
+            · have hb' : 0 < b - 1 := by omega
+              have hs : ∀ i, i < r.length → (r.take i).count D ≤ (r.take i).count U + (b - 1) := by
+                intro i hi
+                have h := hstrict (i + 1) (by simp; omega)
+                rw [List.take_succ_cons] at h
+                simp [List.count_cons] at h
+                omega
+              have hc : r.count D = r.count U + (b - 1) := by
+                simp [List.count_cons] at hcount
+                omega
+              rcases ih (b - 1) hb' hs hc with ⟨q, p, heq, hq, hqs, hp, hps⟩
+              refine ⟨D :: q, p, ?_, ?_, ?_, hp, hps⟩
+              · rw [heq, List.cons_append]
+              · simp [List.count_cons] at hq ⊢
+                omega
+              · intro i hi
+                cases i with
+                | zero => simpa using hb
+                | succ i =>
+                    rw [List.take_succ_cons]
+                    simp [List.count_cons]
+                    have hh := hqs i (by simpa using hi)
+                    omega
+        | U =>
+            have hs : ∀ i, i < r.length → (r.take i).count D ≤ (r.take i).count U + (b + 1) := by
+              intro i hi
+              have h := hstrict (i + 1) (by simp; omega)
+              rw [List.take_succ_cons] at h
+              simp [List.count_cons] at h
+              omega
+            have hc : r.count D = r.count U + (b + 1) := by
+              simp [List.count_cons] at hcount
+              omega
+            rcases ih (b + 1) (by omega) hs hc with ⟨q, p, heq, hq, hqs, hp, hps⟩
+            refine ⟨U :: q, p, ?_, ?_, ?_, hp, hps⟩
+            · rw [heq, List.cons_append]
+            · simp [List.count_cons] at hq ⊢
+              omega
+            · intro i hi
+              cases i with
+              | zero => simpa using hb
+              | succ i =>
+                  rw [List.take_succ_cons]
+                  simp [List.count_cons]
+                  have hh := hqs i (by simpa using hi)
+                  omega
+  constructor
+  · exact schroeder_spec n w
+  · intro hw
+    have hweight : ∀ z : List Step, weight z = z.count U + z.count D + 2 * z.count H := by
+      intro z
+      induction z with
+      | nil => simp [weight]
+      | cons a z ih =>
+          simp only [weight] at ih ⊢
+          cases a <;> simp [List.count_cons, stepWeight, Nat.add_assoc, Nat.add_left_comm, Nat.add_comm] at * <;> omega
+    have hzero : ∀ z : List Step, weight z = 0 → z = [] := by
+      intro z
+      induction z with
+      | nil => intro; rfl
+      | cons a z ih =>
+          intro hz
+          cases a <;> simp [weight, stepWeight] at hz
+    induction n using Nat.strong_induction_on generalizing w with
+    | h n ih =>
+        cases n with
+        | zero =>
+            have hz := hzero w (by simpa using hw.1)
+            subst w
+            simp [schroeder]
+        | succ n =>
+            cases w with
+            | nil => simp [weight] at hw
+            | cons a r =>
+                cases a with
+                | D =>
+                    have hbad := hw.2.2 1
+                    simp at hbad
+                | H =>
+                    have hrweight : weight r = 2 * n := by
+                      have hwweight := hw.1
+                      change 2 + weight r = 2 * (n + 1) at hwweight
+                      omega
+                    have hrprefix : PrefixNonnegative r := by
+                      intro i
+                      have h := hw.2.2 (i + 1)
+                      rw [List.take_succ_cons] at h
+                      simpa using h
+                    have hrmem := ih n (by omega) r
+                      ⟨hrweight, by simpa using hw.2.1, hrprefix⟩
+                    rw [schroeder]
+                    exact mem_union_left _ (mem_image.mpr ⟨r, hrmem, rfl⟩)
+                | U =>
+                    have hstrict : ∀ i, i < r.length →
+                        (r.take i).count D ≤ (r.take i).count U + 1 := by
+                      intro i hi
+                      have h := hw.2.2 (i + 1)
+                      rw [List.take_succ_cons] at h
+                      simp at h
+                      omega
+                    have hcount : r.count D = r.count U + 1 := by
+                      simpa using hw.2.1.symm
+                    rcases hfirst 1 r (by omega) hstrict hcount with
+                      ⟨q, p, heq, hqdiff, hqstrict, hpbal, hpp⟩
+                    have hqbal : q.count U = q.count D := by
+                      simpa using hqdiff.symm
+                    have hqprefix : PrefixNonnegative q := by
+                      intro i
+                      by_cases hi : i < q.length
+                      · have h := hqstrict i hi
+                        omega
+                      · rw [List.take_of_length_le (by omega)]
+                        exact hqbal.symm.le
+                    let i : Nat := q.count U + q.count H
+                    let j : Nat := p.count U + p.count H
+                    have hqweight : weight q = 2 * i := by
+                      dsimp [i]
+                      rw [hweight, hqbal]
+                      omega
+                    have hpweight : weight p = 2 * j := by
+                      dsimp [j]
+                      rw [hweight, hpbal.symm]
+                      omega
+                    have hsplit : weight (U :: (q ++ D :: p)) = 2 + weight q + weight p := by
+                      simp [weight, List.map_append, List.sum_append, stepWeight,
+                        Nat.add_assoc, Nat.add_comm, Nat.add_left_comm]
+                    have htotal : 2 * (n + 1) = 2 + weight q + weight p := by
+                      calc
+                        2 * (n + 1) = weight (U :: r) := hw.1.symm
+                        _ = weight (U :: (q ++ D :: p)) := by rw [heq]
+                        _ = 2 + weight q + weight p := hsplit
+                    have hij : i + j = n := by
+                      rw [hqweight, hpweight] at htotal
+                      omega
+                    have hi : i < n + 1 := by omega
+                    have hji : n - i = j := by omega
+                    have hqmem := ih i hi q ⟨hqweight, hqbal, hqprefix⟩
+                    have hpmem := ih (n - i) (by omega) p ⟨by simpa [hji] using hpweight, hpbal, hpp⟩
+                    rw [schroeder]
+                    apply mem_union_right
+                    apply mem_biUnion.mpr
+                    refine ⟨⟨i, hi⟩, mem_univ _, ?_⟩
+                    apply mem_image.mpr
+                    refine ⟨(q, p), mem_product.mpr ⟨hqmem, hpmem⟩, ?_⟩
+                    exact congrArg (fun z => U :: z) heq.symm
 private theorem first_return_unique {i j : Nat} {q1 q2 p1 p2 : List Step}
     (hq1 : q1 ∈ schroeder i) (hq2 : q2 ∈ schroeder j)
     (h : U :: q1 ++ D :: p1 = U :: q2 ++ D :: p2) : q1 = q2 /\ p1 = p2 := by
@@ -795,4 +990,5 @@ set_option maxRecDepth 100000 in
 example : T 1 0 = 1 /\ T 1 1 = 1 /\ T 2 0 = 2 /\ T 2 1 = 3 /\ T 2 2 = 1 := by decide +kernel
 #print axioms T_first_return_recurrence
 #print axioms schulte_a060693
+#print axioms mem_schroeder_iff
 end D5.S1.Recurrence.Invariants.SchroederPeakAlternatingQuadraticMoment
