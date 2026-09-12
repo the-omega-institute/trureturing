@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4a0bd213ea252e9193ac852d10813795cde39870bfe6cb8f7d5e64a0b1c92893
+  normalized_sha256: sha256:4a0bd213ea252e9193ac852d10813795cde39870bfe6cb8f7d5e64a0b1c92893
+cas_ref: sha256:4a0bd213ea252e9193ac852d10813795cde39870bfe6cb8f7d5e64a0b1c92893
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「评注 27.602(双生落网:Galois 伙伴星座之实测发现)〔搜捕·三锁定谳 + 结构判读;单条目〕」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 1fdace1f7359115a824181505a0a81186ec4963334d48931be6f52a1b604a8e0
+    next_atom_id: df4c78fe975e2b527462bcf115c092bb11411675875669ff619d392238a72b0d

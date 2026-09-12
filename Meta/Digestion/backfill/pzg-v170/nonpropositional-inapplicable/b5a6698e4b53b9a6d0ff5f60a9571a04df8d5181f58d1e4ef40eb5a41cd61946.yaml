@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b5a6698e4b53b9a6d0ff5f60a9571a04df8d5181f58d1e4ef40eb5a41cd61946
+  normalized_sha256: sha256:b5a6698e4b53b9a6d0ff5f60a9571a04df8d5181f58d1e4ef40eb5a41cd61946
+cas_ref: sha256:b5a6698e4b53b9a6d0ff5f60a9571a04df8d5181f58d1e4ef40eb5a41cd61946
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「候查清单变动(周期终态)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 8833c0f1598c4d3a801f532c4db3ee20cd7316071341609da5da52e4ea1a1904
+    next_atom_id: 63f3e1050558248fc55eacd443c3fa60018af296a48a789b15f6f21b359fb474

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:daac345cee9aa7171824558185849ab3f0951e13bc93f1d38d653435bb683ae7
+  normalized_sha256: sha256:daac345cee9aa7171824558185849ab3f0951e13bc93f1d38d653435bb683ae7
+cas_ref: sha256:daac345cee9aa7171824558185849ab3f0951e13bc93f1d38d653435bb683ae7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「评注 27.707(T1 仪器卷:Schur–Weyl 块和计算器)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: dbc3f4189639f577ea4da2517359336ed43b13da9470ffa5fde32d8696dea6f7
+    next_atom_id: 5da05c66335a2a17f5fe43f0f6f12fbc2781e3123aac3ec0ac7bfb4db31c2ae3
