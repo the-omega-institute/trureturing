@@ -181,7 +181,7 @@ jobs:
         run: dotnet restore candidate/tools/StrataLint.sln --locked-mode
       - name: Run candidate engineering tests with resource observation
         shell: bash
-        run: python3 candidate/tools/scripts/workflow/checked-ci-identity.py --repository candidate --run-engineering
+        run: /bin/bash candidate/tools/scripts/workflow/engineering-test-execution-harness.sh "$GITHUB_WORKSPACE/candidate"
 
       - name: Run candidate selftest twice and compare bytes
         shell: bash

@@ -112,7 +112,8 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--repository", required=True, type=Path)
     parser.add_argument("--acquire-pinned", action="store_true")
-    parser.add_argument("--run-engineering", action="store_true")
+    parser.add_argument("--engineering-arguments", action="store_true",
+        help="emit validated make arguments, with the identity observation on stderr")
     parser.add_argument("--planning-before")
     parser.add_argument("--planning-head")
     parser.add_argument("--paths", action="store_true")
@@ -132,7 +133,8 @@ def main():
     except (ValueError, KeyError, TypeError, OSError, subprocess.CalledProcessError) as error:
         print("CI_CHECKED_IDENTITY_INVALID " + str(error), file=sys.stderr)
         return 2
-    print("CI_CHECKED_IDENTITY " + json.dumps(result, sort_keys=True), flush=True)
+    print("CI_CHECKED_IDENTITY " + json.dumps(result, sort_keys=True),
+        file=sys.stderr if arguments.engineering_arguments else sys.stdout, flush=True)
     if arguments.github_output:
         with open(os.environ["GITHUB_OUTPUT"], "a") as output:
             for name in ("protected_base", "push_before", "push_after", "tested_head", "planning_mode"):
@@ -146,11 +148,12 @@ def main():
                 "STRATALINT_PUSH_HEAD": result["push_after"],
             }.items():
                 output.write(name + "=" + (value or "") + "\n")
-    if arguments.run_engineering:
+    if arguments.engineering_arguments:
         event = "push" if result["event"] == "push" else "pull-request"
         before = result["push_before"] if event == "push" else result["protected_base"]
-        return subprocess.call(["/bin/bash", str(arguments.repository.resolve() / "tools/scripts/workflow/engineering-test-execution-harness.sh"),
-            str(arguments.repository.resolve()), event, before, result["tested_head"]])
+        print("HEAD=" + result["tested_head"])
+        print("EVENT=" + event)
+        print(("BEFORE=" if event == "push" else "BASE=") + before)
     return 0
 
 
