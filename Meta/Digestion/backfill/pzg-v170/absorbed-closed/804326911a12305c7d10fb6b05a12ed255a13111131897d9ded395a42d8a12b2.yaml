@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:804326911a12305c7d10fb6b05a12ed255a13111131897d9ded395a42d8a12b2
   normalized_sha256: sha256:804326911a12305c7d10fb6b05a12ed255a13111131897d9ded395a42d8a12b2
 cas_ref: sha256:804326911a12305c7d10fb6b05a12ed255a13111131897d9ded395a42d8a12b2
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S1/Dynamics/CodeLedgerIdentity.same_state_iff_same_code_and_ledger
+    target_statement_id: sha256:e1f90fa7f1f402d13131c59157f2505b4d3469e1dff1f1f6fc02cca0f4127d10
 receipts:
   unresolved_subitems: []
