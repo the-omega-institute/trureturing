@@ -3,6 +3,7 @@ import LeanInformationAudit.SealCommand
 import LeanInformationAudit.StructuralRealization
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import Mathlib.Logic.Equiv.Defs
+import LeanInformationAuditAnalysis.Tests.AllowlistSources
 
 open Lean LeanInformationAudit.RegistrationGates
 open D5.S3.ConceptDynamics.InformationEscape
@@ -140,6 +141,8 @@ private def check (label : String) (readout theoremName : Name) (reason : String
 run_cmd Elab.Command.liftCoreM do
   let cases : Array (String × Name × String × String) := #[
     ("CleanReadout", ``cleanRead, "clean", ""),
+    ("ImportedLibraryPrivateProof", ``ImportedAllowlistSources.proofRead, "forbidden_dependency", ""),
+    ("ImportedLibraryCleanData", ``ImportedAllowlistSources.cleanRead, "clean", ""),
     ("TheoremTruth", ``theoremRead, "forbidden_dependency", ""),
     ("IndependentProofConstant", ``independentProofRead, "forbidden_dependency", ""),
     ("ClosedStatementInhabitant", ``binderRead, "forbidden_dependency", ""),

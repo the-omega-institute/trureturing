@@ -161,12 +161,30 @@ private def isCtorOrInductive (env : Environment) (n : Name) : Bool :=
   | _ => false
 
 private def moduleName (env : Environment) (n : Name) : Name :=
-  (env.getModuleIdxFor? n).map (env.header.moduleNames[·.toNat]!) |>.getD env.header.mainModule
+  (env.getModuleIdxFor? n).map (env.header.modules[·.toNat]!.module) |>.getD env.header.mainModule
+
+-- Lean orders imported modules after their dependencies. Protect every module
+-- importing a protected module, regardless of its library or declaration names.
+-- Missing import metadata is protected too; it cannot justify an external leaf.
+private def classifyModules (env : Environment) : Std.HashMap Name Bool := Id.run do
+  let mut classes : Std.HashMap Name Bool := {}
+  for index in [:env.header.modules.size] do
+    let name := env.header.modules[index]!.module
+    let inherited := match env.header.moduleData[index]? with
+      | none => true
+      | some data => data.imports.any (fun i => classes[i.module]?.getD true)
+    classes := classes.insert name
+      (name.getRoot == `D5 || name.getRoot == `LeanInformationAudit || inherited)
+  return classes
+
+private initialize moduleScopeCache : EnvExtension (Option (Std.HashMap Name Bool)) ←
+  registerEnvExtension (pure none)
 
 private def inProtected (env : Environment) (n : Name) : Bool :=
   if (env.getModuleIdxFor? n).isNone then true else
     let m := moduleName env n
-    m == env.header.mainModule || m.getRoot == `D5 || m.getRoot == `LeanInformationAudit
+    m == env.header.mainModule ||
+      ((moduleScopeCache.getState env).bind (·[m]?)).getD true
 
 private def namespaceLabel (env : Environment) (n : Name) : String :=
   if n.getRoot == `Classical then "external:Classical"
@@ -413,6 +431,9 @@ private structure WalkResult where
   walked : Array String
 
 private def collectReadout (env : Environment) (theoremName : Name) (readout : Expr) : CoreM WalkResult := do
+  let scope := (moduleScopeCache.getState env).getD (classifyModules env)
+  let env := moduleScopeCache.setState env (some scope)
+  modifyEnv (moduleScopeCache.setState · (some scope))
   let some theoremInfo := env.find? theoremName | return { forbidden := false, unclassified := none, incomplete := true, walked := #[] }
   let statement := eraseLevels theoremInfo.type
   let decision := mkApp (mkConst ``Decidable) statement
