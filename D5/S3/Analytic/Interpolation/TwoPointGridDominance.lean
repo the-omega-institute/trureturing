@@ -148,7 +148,7 @@ private theorem gridDualValue_translate (c d : Fin 2 → ℝ) (M price : ℝ) :
   ring
 
 /-- Pricing either endpoint bounds every actual corner satisfying the upper budget. -/
-theorem corner_le_grid_dual (c d : Fin 2 → ℝ) (M : ℝ) (x : Fin 2 → ℝ)
+private theorem corner_le_grid_dual (c d : Fin 2 → ℝ) (M : ℝ) (x : Fin 2 → ℝ)
     (hx : ∀ i, x i = c i ∨ x i = d i) (hM : ∑ i, x i ≤ M) :
     (∑ i, logValue (x i)) ≤ gridDual c d M := by
   haveI : Nonempty {p : ℝ // 0 ≤ p} := ⟨⟨0, le_rfl⟩⟩
@@ -167,7 +167,7 @@ theorem corner_le_grid_dual (c d : Fin 2 → ℝ) (M : ℝ) (x : Fin 2 → ℝ)
   linarith
 
 /-- Subtracting the lower endpoints identifies the grid dual with fractional knapsack. -/
-theorem grid_dual_eq_fractional_sup (c d : Fin 2 → ℝ) (M : ℝ)
+private theorem grid_dual_eq_fractional_sup (c d : Fin 2 → ℝ) (M : ℝ)
     (hc : ∀ i, 0 < c i) (hcd : ∀ i, c i < d i) (hM : ∑ i, c i ≤ M) :
     gridDual c d M = (∑ i, logValue (c i)) +
       sSup (Knapsack.FractionalKnapsackDual.objective
@@ -436,6 +436,15 @@ private theorem fractional_row_bound {c d t u M₀ M₁ θ : ℝ}
   have hvm : v < m := by linarith
   exact ((add_le_add hinner (le_refl (logValue t))).trans hh).trans
     (pair_value_spread (Real.sqrt_nonneg _) hrad hvm)
+
+-- Positive grids and two different actual corners inhabit the hypotheses.
+example : (∀ i : Fin 2, 0 < (![1, 1] : Fin 2 → ℝ) i) ∧
+    (∀ i : Fin 2, (![1, 1] : Fin 2 → ℝ) i < (![2, 2] : Fin 2 → ℝ) i) ∧
+    (2 : ℝ) < 3 ∧ (corners ![1, 1] ![2, 2] 2 3).Nontrivial := by
+  refine ⟨?_, ?_, by norm_num, ?_⟩
+  · intro i; fin_cases i <;> norm_num
+  · intro i; fin_cases i <;> norm_num
+  · refine ⟨(1, 1), ?_, (1, 2), ?_, ?_⟩ <;> norm_num [corners]
 
 #print axioms fractional_row_bound
 #print axioms psiTwo_mono_mean
