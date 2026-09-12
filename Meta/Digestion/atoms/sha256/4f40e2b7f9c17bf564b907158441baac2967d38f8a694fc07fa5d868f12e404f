@@ -1,0 +1,28 @@
+**35.15 Proposition (Errors, minimum height, total height and relative shape).** For
+\(n\in B_Q^{\rm valid}\), nearest rounding and the strict return condition give
+\[
+\Delta_0=0,\qquad\Delta_i=c_i-nh_0,
+\qquad |\Delta_i|<h_i/Q\quad(i>0).
+\]
+Define separately
+\[
+T_n=\min_i c_i,\qquad\xi_i=c_i-T_n,\qquad A_n=\sum_i c_i,
+\qquad R_n=\sum_{i=1}^{d}\Delta_i.
+\]
+The coordinate \(\Delta_0=0\) and the strict error bounds imply
+\[
+nh_0-h_{\max}/Q<T_n\le nh_0,\qquad
+\min_i\xi_i=0,\quad\xi_i\ge0,\quad
+\max_i\xi_i=\max_i\Delta_i-\min_i\Delta_i<2h_{\max}/Q.
+\]
+Summing the coordinates instead gives the exact identity and separate error
+\[
+A_n=knh_0+R_n,\qquad |R_n|<E_Q.
+\]
+Thus \(T_n\to\infty\) and \(A_n\ge kT_n\to\infty\) along the selected
+indices. For fixed \(Q\) these statements give a uniform neighborhood of
+zero shape; they do not claim that the shapes of every successive selected
+box converge to zero. That stronger convergence belongs to a separate
+approximation subsequence or to a different target, not to a varying-\(Q\)
+limit silently inserted into this theorem.
+

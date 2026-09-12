@@ -1,0 +1,19 @@
+**35.9 Proposition (Strict half-open-cell lower bound).** Represent torus points uniquely
+in \([0,1)^d\) and partition it into the \(Q^d\) Borel half-open cubes
+\[
+C_j=\prod_{i=1}^d[j_i/Q,(j_i+1)/Q),\qquad 0\le j_i<Q.
+\]
+The sets \(H\cap C_j\) form a disjoint exhaustive Borel partition of \(H\).
+Some member \(A\) has \(\mu_H(A)\ge Q^{-d}>0\). Choose \(a\in A\).
+For every \(x\in A\), the chosen representatives of \(x_i,a_i\) are in
+the same half-open interval of length \(1/Q\), so
+\(|x_i-a_i|<1/Q\), strictly. Circle distance is at most this real distance.
+It follows that \(A-a\subseteq U_Q\). Since \(a\in H\), Haar invariance gives
+\[
+\boxed{d_Q\ge\mu_H(A-a)=\mu_H(A)\ge Q^{-(k-1)}>0.}
+\]
+No positive ambient Lebesgue measure of \(A\) is needed. Any coordinate
+marginal also gives \(d_Q\le2/Q\). For \(k=2\), 35.7 gives \(H=\mathbb T\)
+and \(d_Q=2/Q\). For larger \(k\), the value \((2/Q)^{k-1}\) is justified
+under a separately established full-torus hypothesis; it is not inferred here.
+

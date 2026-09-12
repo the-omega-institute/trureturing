@@ -1,0 +1,10 @@
+{
+"schema":"s24-evidence-entry-v1",
+"resource":"report-I28-original",
+"original":{"bytes":114566,"lf":1145,"lines":1145,"terminal_lf":1,"sha256":"3f93d5d5669a6a9d37cc82900060ac531ddb9d90a330ebeb0fd7a5121519ccb3","git_blob_oid":"d78df9e5186a181ba1922605843701f9592acd9a"},
+"origin":{"commit":"dfa2e326f89297712c23ad3b780acf67b4deee4d","path":"docs/reports/quantized-gh/near-balanced-recurrence-0910.md"},
+"contract":"docs/reports/quantized-gh/s24-evidence/README.md",
+"interpretation":"Concatenate raw UTF-8 parts in order without separators before parsing. Exact original bytes, schema, errors, EOF and link owners remain unchanged.",
+"parts":[{"ordinal":1,"path":"docs/reports/quantized-gh/s24-evidence/raw/report-I28-original/part-001.txt","byte_span":[0,96804],"line_span":[1,750],"bytes":96804,"lf":750,"lines":750,"terminal_lf":2,"sha256":"a6bcbc4749ef69ab928157c52c189826dce0aac3c1f5ffe01b246a855eceeacf","git_blob_oid":"dd6e62acc6fdc2135f5e5bead31c55b0f3ea3ae4"},{"ordinal":2,"path":"docs/reports/quantized-gh/s24-evidence/raw/report-I28-original/part-002.txt","byte_span":[96804,114566],"line_span":[751,1145],"bytes":17762,"lf":395,"lines":395,"terminal_lf":1,"sha256":"f8bf6f6e79a6f66409805f1f9eb757c472842a7181843efae9da51b478585653","git_blob_oid":"85dc3637460080801f74facad1eabe5b193a8892"}],
+"logical_path":"docs/reports/quantized-gh/near-balanced-recurrence-0910.md"
+}
