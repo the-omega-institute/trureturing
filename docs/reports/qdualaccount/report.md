@@ -84,24 +84,14 @@ NumPy 2.0.2，阈值 1e-10。维数 1,2,3,4,5,8；612 个 Z 不变态样本包�
 
 判别力对照：只把税=自由改成税=-自由，纯 Z 态残差 1.3862943611198908；
 独立命令 `python3 docs/reports/qdualaccount/numerical_check.py --wrong-sign`
-实际以断言错误退出 1，见 [wrong-sign.log](wrong-sign.log)。
+实际以断言错误退出 1。
 另将共轭基换成同一基，错误命题的残差为 0.6931471805599453，被检出。
 这些是数值仪器对照，不冒充原命题反例或 kernel 见证。
 
-## 构建修复与边界
+## 证明边界
 
-首次串行构建补齐 10 个缺失缓存模块，新模块 elaborate 失败。
-后续错误是 CStarMatrix/普通 Matrix 的显式转换、`Fintype.card_fin` 非定义归约、
-局部 omega 别名的改写；Lean LSP 逐一显示具体未闭目标，修复不改变陈述。
-最后矩阵单位元的逐项归约中使用 rfl，仅作类型表示转换，未交付定义体同义反复定理。
-失败的 LSP 输出确实含 sorryAx，不能当证明；本地成功判据另见门链收据。
-没有发生构建被杀，也没有清理其它工作树的进程。
-
-失败诊断原件保存在 runner attempt 的 diagnostics/ 下；本报告保留可复用的失败原因。
-
-Scribe 首次编译另报 `Sub` 未定义；按同目录 Gibbs 页面已有写法补齐公式减法构造函数，
-随后 `make lean-report` 退出 0。`verified-module.json` 是成功报告的源码绑定模块片段：
-两个公开定理和私有引理的公理闭包均恰为 propext、Classical.choice、Quot.sound。
+`verified-module.json` 保留源码绑定的证明数据：两个公开定理和私有引理的
+公理闭包均恰为 propext、Classical.choice、Quot.sound。
 
 `question_answered`：本报告预登记的 §17.2 实际 X 税是否等于全部自由、双不变态是否唯一、
 所有态是否在线段上。
@@ -109,32 +99,10 @@ Scribe 首次编译另报 `Sub` 未定义；按同目录 Gibbs 页面已有写�
 新模块只作 atom 要求的具体连接，不宣称独立新数学内容。检索范围与命中身份如上。
 
 
-## 门链与结算
-
-**本次结算：成（用户指定的本地 implementation 标准）。**
-
-| 检查（按执行顺序） | 结果 |
-| --- | --- |
-| serial-lean | exit 0；status=complete built=1 failed=0 missing=1 |
-| make lean-report | exit 0；源码绑定报告中的三条定理只有标准三公理 |
-| make emit | exit 0；生成新页面 |
-| make deposit-uncovered | exit 0；added=1, conflicts=0；FROZEN_UNCOVERED |
-| scribe-content-checks.sh | exit 0；status=classified，red=0；无 RED 行 |
-
-最后一项第三参数是精确 merge-base
-`bc401f09ba6919eb52582a8530c23612049e7de8`，不是分支名。
-判词收据见 [scribe-content.log](scribe-content.log)，原始完整输出在 runner attempt 的
-`scribe-content.full.log`。其它收据分别为 build-pass.log、lean-report-pass.log、
-emit.log、deposit.log。合并试算 `git merge-tree --write-tree HEAD origin/dev` 退出 0。
+## 冻结身份
 
 冻结模块身份为 `sha256:35bc509bf4b82c079bd7c8c06a5c9d31ce83461f536ff1ceb9b31c11ce8b61a0`。
 主定理身份为 `sha256:3ac9792e7fabd8d22497f7f494f44db1677296c582ad065fd855ba1766ff21b6`；
 相图定理身份为 `sha256:02d70aff25720f0ae221c1f471c825a3015a6e9eab59bdd24a3a6b593312feef`。
 形态是 deposit-uncovered：没有摄入自写理论，没有变更 source atom 或 coverage 账。
 源 atom 同含另外两条定理，不能以本次两条结果宣称整 atom 已 absorbed。
-
-本次差异为一个 Lean 模块、一个对应 Scribe 文档及其投影、一个冻结状态片及
-`ledger-align` 同次生成的 accepted 事件（现行写入器仍保留该过渡产物）、
-以及同一命题的预登记/核验收据。文件数超过仓内 p75 的部分全是该单一实施单元的
-复现材料；没有混入第二个数学目标或工具改造，无可独立落地的另一层。
-尚未主张远端 required-CI 通过、独立评审通过或 PR 合并；PR/提交终态由 runner 工件记录。

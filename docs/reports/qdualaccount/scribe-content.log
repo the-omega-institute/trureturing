@@ -1,4 +1,0 @@
-BASE=bc401f09ba6919eb52582a8530c23612049e7de8
-DESCRIBE_STATUS case=DESCRIBE-NODES status=classified nodes=11069 suspected_novel=0 formula_content_slots=66 formula_statements=32 red=0 observe=4983
-RED_COUNT=0
-EXIT=0

@@ -1,4 +1,4 @@
-# A396808 模 3 精确支持：实施记录
+# A396808 模 3 精确支持：证明与数值数据
 
 产地：Codex 实施席，使用 lean4 skill；单席直接实施与自查，未作独立评审，未主张多模型共识。任务由用户 brief 给定；用户已有探针在下面另行亲跑核验。
 
@@ -44,25 +44,10 @@
 5. 消失带加上 n=2,3,4 的私有边界推导，证明 `R_source`。由源方程唯一性得到整数序列的模三约化等于 R，再由配对计数结算统一分类。
 6. `supports_disjoint` 由排序指标唯一性排除一个对角配对和一个严格递增配对具有相同幂和。最终定理在配对支持为真的分支直接调用它排除三幂支持，故不交结论在活推导路径上。
 
-## 构建记录
+## 验证数据
 
-各批证明历史均已 commit、push：严格前缀桥 `ee184f7e60`；Artin–Schreier 与配对唯一性 `853919f53d`；系数计数 `7e91e2660b`；迹次数界 `384c07c4e9`；完整定理 `29b313119e`。对应 bridge.log、sparse.log、trace.log、complete.log 保留。草稿 Lean 文件已合并到正式模块，旧快照可由提交历史取得。
-
-第一次热树 Lean 尝试中的整数约化 `exact_mod_cast` 未关闭环同态 map_mul goal，已改用 `simpa using congrArg ...` 后通过。完整定理与 `R_source` 的 `#print axioms` 均只返回 `[propext, Classical.choice, Quot.sound]`。不存在 sorry、自设 axiom 或 native_decide。
-
-`make lean-cache-ensure` EXIT=0：status=seeded，method=clonefile，donor=/Users/chronoai/trureturing，clonefile_attempts=1，stamp_miss=null，mathlib_olean_state=warm，project_olean_state=warm，mathlib_missing_olean_files=0，pin_sha256=sha256:6c4c682ffba051b5744fe7a75ccc99d7f3b20227b3b026f392f3315be0adaa4e。
-
-正式 `make lean` EXIT=0，耗时 220.484420334 秒。runner attempt 目录的 make-lean.log 与 make-lean-receipt.json 保留原始输出和计时。`make lean-report` EXIT=0，耗时 64.241444375 秒。`make emit` EXIT=0，耗时 51.766635541 秒，生成同名 Blueprint 镜像。指定 `scribe-content-checks.sh` EXIT=0，耗时 23.671711708 秒；Describe `red=0`，KaTeX `judged=1 formula(s)=1 red=0`。脚本按本次 delta 调用 describe-report 与 markdown-check；未改 Golden/Projection 或 producer，故 projections --check 分支未唤醒。
-
-`make deposit-uncovered GID=D5/S3/Arith/TernaryTraceSupport.a396808_mod_three BASE=2d8af6a6dd0beb23d4c3a4ac86fc2ea2b263a363` EXIT=0，耗时 85.228565208 秒。内部 header-check 通过、emit 无变化，`ledger-align --add` 读数 `added=1 conflicts=0`；结尾 `reason=NO_ATOM`。未创建或覆盖 atom。
-
-冻结事件 event_hash: `sha256:b920195f85ebb897de035ff4702ca56d779cd90868e0d4a22b3264ada2d958bd`；模块 statement_id: `sha256:ce777b56d280ca0833c4b953081538f632507b098a650ba243a4d44a2d42625e`。完整命令/退出码/计时见 gate-receipts.json，原始日志位于该 runner attempt 目录。未运行 make preflight。
-
-交付前 `gh pr list --state open --search A396808` 返回 []；本地 rg 仅有原奇偶模块及本模块命中。`make pr-open` 已建立 [PR #6785](https://github.com/the-omega-institute/trureturing/pull/6785)，该同步原语负责等待远端必需检查；CI 最终退出码及判词由 runner 的 make-pr-open-receipt.json 与 make-pr-open.log 留档。
-
-## 交付状态
-
-成：统一的无限分类定理已证明并冻结，`make lean` EXIT=0，无 sorry、私设 axiom 或 native_decide，PR #6785 已开出。按用户给定三态条件结算；数值核对未计作证明。远端 CI 的实际结果另见 runner 结果封套，不把 PR 已开出或本地门通过表述为远端已绿。
+[gate-receipts.json](gate-receipts.json) 保留验证命令、退出码和计时；
+正式结果对应 [PR #6785](https://github.com/the-omega-institute/trureturing/pull/6785)。
 
 ## 逐公开定理审计
 

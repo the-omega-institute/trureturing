@@ -1,2 +1,0 @@
-'_private._stdin.0.D5.S3.Arith.TernaryTraceSupport.R_source' depends on axioms: [propext, Classical.choice, Quot.sound]
-'D5.S3.Arith.TernaryTraceSupport.a396808_mod_three' depends on axioms: [propext, Classical.choice, Quot.sound]
