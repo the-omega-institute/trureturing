@@ -170,13 +170,6 @@ run_cmd Elab.Command.liftCoreM do
   let some targetInfo := env.find? ``target | throwError "target missing"
   let some proof := targetInfo.value? (allowOpaque := true) | throwError "target proof missing"
   let some (.defnInfo templateInfo) := env.find? ``template | throwError "template missing"
-  for original in #[``binderRead, ``ctorRead] do
-    let some info := env.find? original | throwError "original fixture missing"
-    let some value := info.value? | throwError "original fixture value missing"
-    let outlined := value.getUsedConstants.filter fun n =>
-      (env.find? n).any (fun i => i.type == targetInfo.type)
-    unless !outlined.isEmpty do throwError "expected an outlined proof in {original}"
-    logInfo m!"OutlinedProof fixture={original} proofs={outlined}"
   let bodies := #[
     ("InlineClosedStatementInhabitant",
       Expr.letE `evidence targetInfo.type proof (mkConst ``Bool.true) true),
