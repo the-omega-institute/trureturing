@@ -625,6 +625,196 @@ theorem n_price_window_and_shared_endpoint :
       simpa [← m_factorization, mFactors] using h
   exact hnLowerEq.trans hmUpperEq.symm
 
+private theorem strict_m_lower_and_n_upper :
+    (∀ p : ℕ, p.Prime → p ∣ 395622702669701707200 →
+      goldenLayerMarginal 2 7 <
+        goldenLayerMarginal p ((395622702669701707200 : ℕ).factorization p)) ∧
+    (∀ p : ℕ, p.Prime →
+      goldenLayerMarginal p ((791245405339403414400 : ℕ).factorization p + 1) <
+        goldenLayerMarginal 2 7) := by
+  rcases m_price_window_rational_separation with
+    ⟨_, ⟨h2l, h3l, h5l, h7l, h11l, h13l, h17l, h19l, h23l, h29l, h31l,
+      h37l, h41l, h43l⟩⟩
+  rcases n_shared_endpoint_rational_separation with
+    ⟨⟨h2u, h3u, h5u, h7u, h11u, h13u, h17u, h19u, h23u, h29u, h31u,
+      h37u, h41u, h43u, h47u⟩, _⟩
+  constructor
+  · intro p hp hpm
+    rcases prime_dvd_m_cases hp hpm with
+      rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl
+    · simpa [← m_factorization, mFactors] using h2l
+    · simpa [← m_factorization, mFactors] using h3l
+    · simpa [← m_factorization, mFactors] using h5l
+    · simpa [← m_factorization, mFactors] using h7l
+    · simpa [← m_factorization, mFactors] using h11l
+    · simpa [← m_factorization, mFactors] using h13l
+    · simpa [← m_factorization, mFactors] using h17l
+    · simpa [← m_factorization, mFactors] using h19l
+    · simpa [← m_factorization, mFactors] using h23l
+    · simpa [← m_factorization, mFactors] using h29l
+    · simpa [← m_factorization, mFactors] using h31l
+    · simpa [← m_factorization, mFactors] using h37l
+    · simpa [← m_factorization, mFactors] using h41l
+    · simpa [← m_factorization, mFactors] using h43l
+  · intro p hp
+    by_cases hpn : p ∣ 791245405339403414400
+    · rcases prime_dvd_n_cases hp hpn with
+        rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl
+      · simpa [← n_factorization, nFactors, mFactors] using h2u
+      · simpa [← n_factorization, nFactors, mFactors] using h3u
+      · simpa [← n_factorization, nFactors, mFactors] using h5u
+      · simpa [← n_factorization, nFactors, mFactors] using h7u
+      · simpa [← n_factorization, nFactors, mFactors] using h11u
+      · simpa [← n_factorization, nFactors, mFactors] using h13u
+      · simpa [← n_factorization, nFactors, mFactors] using h17u
+      · simpa [← n_factorization, nFactors, mFactors] using h19u
+      · simpa [← n_factorization, nFactors, mFactors] using h23u
+      · simpa [← n_factorization, nFactors, mFactors] using h29u
+      · simpa [← n_factorization, nFactors, mFactors] using h31u
+      · simpa [← n_factorization, nFactors, mFactors] using h37u
+      · simpa [← n_factorization, nFactors, mFactors] using h41u
+      · simpa [← n_factorization, nFactors, mFactors] using h43u
+    · rw [Nat.factorization_eq_zero_of_not_dvd hpn]
+      have hp47 : 47 ≤ p := by
+        by_contra hnot
+        have hlt : p < 47 := by omega
+        interval_cases p <;> norm_num at hp
+        all_goals norm_num at hpn
+      rcases hp47.eq_or_lt with rfl | hlt
+      · simpa using h47u
+      · exact (golden_layer_marginal_one_strictAnti (by norm_num) hp hlt).trans h47u
+
+private theorem critical_price_optimizer_trichotomy
+    {k : ℕ} (hk : 1 ≤ k) {mu : ℝ} (hmu : 0 < mu)
+    (hopt : IsGoldenResourceOptimal mu k) :
+    (goldenLayerMarginal 2 7 < mu → k ∣ 395622702669701707200) ∧
+    (mu < goldenLayerMarginal 2 7 → 791245405339403414400 ∣ k) ∧
+    (mu = goldenLayerMarginal 2 7 →
+      395622702669701707200 ∣ k ∧ k ∣ 791245405339403414400) := by
+  rcases n_thresholds_and_m_upper with ⟨hmUpper, _, hnLower⟩
+  rcases strict_m_lower_and_n_upper with ⟨hmLowerStrict, hnUpperStrict⟩
+  rcases (golden_resource_optimal_iff_layer_thresholds hmu hk).mp hopt with
+    ⟨hkUpper, hkLower⟩
+  have hk0 : k ≠ 0 := by omega
+  constructor
+  · intro hrefMu
+    apply (Nat.factorization_le_iff_dvd hk0 (by norm_num)).mp
+    intro p
+    by_cases hp : p.Prime
+    · by_contra hnot
+      have hlt : (395622702669701707200 : ℕ).factorization p < k.factorization p := by
+        omega
+      have hpdvd : p ∣ k := Nat.dvd_of_factorization_pos (by omega)
+      have hmono : goldenLayerMarginal p (k.factorization p) ≤
+          goldenLayerMarginal p ((395622702669701707200 : ℕ).factorization p + 1) := by
+        have hle : (395622702669701707200 : ℕ).factorization p + 1 ≤
+            k.factorization p := by omega
+        rcases hle.eq_or_lt with heq | hstrict
+        · rw [heq]
+        · exact (golden_layer_strict_decrease hp (by omega) hstrict).le
+      have hleMu : mu ≤ goldenLayerMarginal 2 7 :=
+        (hkLower p hp hpdvd).trans (hmono.trans (hmUpper p hp))
+      exact (not_lt_of_ge hleMu) hrefMu
+    · simp [Nat.factorization_eq_zero_of_not_prime k hp]
+  constructor
+  · intro hMuRef
+    apply (Nat.factorization_le_iff_dvd (by norm_num) hk0).mp
+    intro p
+    by_cases hp : p.Prime
+    · by_contra hnot
+      have hlt : k.factorization p <
+          (791245405339403414400 : ℕ).factorization p := by omega
+      have hpdvd : p ∣ 791245405339403414400 :=
+        Nat.dvd_of_factorization_pos (by omega)
+      have hmono :
+          goldenLayerMarginal p ((791245405339403414400 : ℕ).factorization p) ≤
+            goldenLayerMarginal p (k.factorization p + 1) := by
+        have hle : k.factorization p + 1 ≤
+            (791245405339403414400 : ℕ).factorization p := by omega
+        rcases hle.eq_or_lt with heq | hstrict
+        · rw [heq]
+        · exact (golden_layer_strict_decrease hp (by omega) hstrict).le
+      have hRefMu : goldenLayerMarginal 2 7 ≤ mu :=
+        (hnLower p hp hpdvd).trans (hmono.trans (hkUpper p hp))
+      exact (not_lt_of_ge hRefMu) hMuRef
+    · simp [Nat.factorization_eq_zero_of_not_prime 791245405339403414400 hp]
+  · intro hMuEq
+    constructor
+    · apply (Nat.factorization_le_iff_dvd (by norm_num) hk0).mp
+      intro p
+      by_cases hp : p.Prime
+      · by_contra hnot
+        have hlt : k.factorization p <
+            (395622702669701707200 : ℕ).factorization p := by omega
+        have hpdvd : p ∣ 395622702669701707200 :=
+          Nat.dvd_of_factorization_pos (by omega)
+        have hmono :
+            goldenLayerMarginal p ((395622702669701707200 : ℕ).factorization p) ≤
+              goldenLayerMarginal p (k.factorization p + 1) := by
+          have hle : k.factorization p + 1 ≤
+              (395622702669701707200 : ℕ).factorization p := by omega
+          rcases hle.eq_or_lt with heq | hstrict
+          · rw [heq]
+          · exact (golden_layer_strict_decrease hp (by omega) hstrict).le
+        have hRef : goldenLayerMarginal p
+            ((395622702669701707200 : ℕ).factorization p) ≤
+              goldenLayerMarginal 2 7 := by
+          calc
+            _ ≤ goldenLayerMarginal p (k.factorization p + 1) := hmono
+            _ ≤ mu := hkUpper p hp
+            _ = goldenLayerMarginal 2 7 := hMuEq
+        exact (not_lt_of_ge hRef) (hmLowerStrict p hp hpdvd)
+      · simp [Nat.factorization_eq_zero_of_not_prime 395622702669701707200 hp]
+    · apply (Nat.factorization_le_iff_dvd hk0 (by norm_num)).mp
+      intro p
+      by_cases hp : p.Prime
+      · by_contra hnot
+        have hlt : (791245405339403414400 : ℕ).factorization p <
+            k.factorization p := by omega
+        have hpdvd : p ∣ k := Nat.dvd_of_factorization_pos (by omega)
+        have hmono : goldenLayerMarginal p (k.factorization p) ≤
+            goldenLayerMarginal p
+              ((791245405339403414400 : ℕ).factorization p + 1) := by
+          have hle : (791245405339403414400 : ℕ).factorization p + 1 ≤
+              k.factorization p := by omega
+          rcases hle.eq_or_lt with heq | hstrict
+          · rw [heq]
+          · exact (golden_layer_strict_decrease hp (by omega) hstrict).le
+        have hRef : goldenLayerMarginal 2 7 ≤
+            goldenLayerMarginal p
+              ((791245405339403414400 : ℕ).factorization p + 1) := by
+          calc
+            _ = mu := hMuEq.symm
+            _ ≤ goldenLayerMarginal p (k.factorization p) := hkLower p hp hpdvd
+            _ ≤ _ := hmono
+        exact (not_le_of_gt (hnUpperStrict p hp)) hRef
+      · simp [Nat.factorization_eq_zero_of_not_prime k hp]
+
+/-- No colossally abundant integer lies strictly between the two witnesses. -/
+theorem no_colossally_abundant_between :
+    ∀ k : ℕ, 395622702669701707200 < k →
+      k < 791245405339403414400 → ¬ IsColossallyAbundant k := by
+  intro k hmk hkn hkCA
+  obtain ⟨mu, hmu, hopt⟩ := hkCA
+  rcases critical_price_optimizer_trichotomy (by omega) hmu hopt with
+    ⟨habove, hbelow, hequal⟩
+  rcases lt_trichotomy (goldenLayerMarginal 2 7) mu with hrefMu | hrefEq | hMuRef
+  · have hkdm := habove hrefMu
+    have hle := Nat.le_of_dvd (by norm_num) hkdm
+    omega
+  · rcases hequal hrefEq.symm with ⟨hmdk, hkdn⟩
+    obtain ⟨a, rfl⟩ := hmdk
+    have ha : a ∣ 2 := by
+      apply (Nat.mul_dvd_mul_iff_left (by norm_num :
+        0 < (395622702669701707200 : ℕ))).mp
+      convert hkdn using 1 <;> norm_num
+    rcases (Nat.dvd_prime Nat.prime_two).mp ha with rfl | rfl
+    · norm_num at hmk
+    · norm_num at hkn
+  · have hndk := hbelow hMuRef
+    have hle := Nat.le_of_dvd (by omega) hndk
+    omega
+
 end
 
 end D5.S3.Arith.GoldenResource.A279609DoublingRefutation
