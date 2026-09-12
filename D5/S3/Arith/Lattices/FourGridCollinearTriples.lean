@@ -171,29 +171,6 @@ theorem oriented_arithmetic_progression_count (d : Nat) :
   rw [Fintype.card_congr (apEndpointEquiv d).symm]
   exact (endpoint_pair_counts d).1
 
-/-- Once one coordinate spans zero to three, the minor equations force every
-coordinate onto the same four-point line. The two conclusions distinguish the
-two possible non-arithmetic-progression interior points. -/
-theorem extreme_line_coordinate_classification {d : Nat} (x y z : GridPoint d) (k : Fin d)
-    (hx : x k = 0) (hz : z k = 3) (hcol : Collinear x y z) :
-    (y k = 1 -> ∀ i,
-      (x i = y i ∧ y i = z i) ∨
-        (x i = 0 ∧ y i = 1 ∧ z i = 3) ∨
-        (x i = 3 ∧ y i = 2 ∧ z i = 0)) ∧
-    (y k = 2 -> ∀ i,
-      (x i = y i ∧ y i = z i) ∨
-        (x i = 0 ∧ y i = 2 ∧ z i = 3) ∨
-        (x i = 3 ∧ y i = 1 ∧ z i = 0)) := by
-  constructor
-  · intro hy i
-    have h := hcol i k
-    rw [hx, hy, hz] at h
-    omega
-  · intro hy i
-    have h := hcol i k
-    rw [hx, hy, hz] at h
-    omega
-
 private noncomputable def collinearTripleFinset (d : Nat) : Finset (Finset (GridPoint d)) := by
   classical
   exact ((Finset.univ : Finset (GridPoint d)).powersetCard 3).filter IsCollinearTriple
@@ -203,6 +180,7 @@ private abbrev CollinearTriples (d : Nat) := ↥(collinearTripleFinset d)
 private noncomputable def orientationMark {d : Nat} (x z : GridPoint d) : Bool :=
   decide ((Fintype.equivFin (GridPoint d)) x < (Fintype.equivFin (GridPoint d)) z)
 
+set_option linter.defProp false in
 private def orientationMark_reverse {d : Nat} {x z : GridPoint d} (h : x ≠ z) :
     orientationMark z x = !orientationMark x z := by
   have hne : (Fintype.equivFin (GridPoint d)) x ≠ (Fintype.equivFin (GridPoint d)) z :=
@@ -419,6 +397,7 @@ private def reverseGeometricCode {d : Nat} : GeometricCode d → GeometricCode d
   | Sum.inl t => Sum.inl (reverseArithmeticProgression t)
   | Sum.inr q => Sum.inr (reverseExtremeCode q)
 
+set_option linter.defProp false in
 private noncomputable def codeToMarkedTriple_reverse {d : Nat} (c : GeometricCode d) :
     codeToMarkedTriple (reverseGeometricCode c) =
       ((codeToMarkedTriple c).1, !(codeToMarkedTriple c).2) := by
@@ -457,6 +436,7 @@ private noncomputable def codeToMarkedTriple_reverse {d : Nat} (c : GeometricCod
       tauto
     · exact orientationMark_reverse q.1.property
 
+set_option linter.defProp false in
 set_option maxHeartbeats 800000 in
 private noncomputable def codeToTriple_surjective {d : Nat} (s : CollinearTriples d) :
     ∃ c : GeometricCode d, (codeToMarkedTriple c).1 = s := by
@@ -595,8 +575,13 @@ private noncomputable def codeToTriple_surjective {d : Nat} (s : CollinearTriple
     have habc := hcol a b c ha hb hc
     rcases hp.2.2 with hb1 | hb2
     · have hb1' : b k = 1 := by apply Fin.ext; exact hb1
-      have hpattern :=
-        (extreme_line_coordinate_classification a b c k ha0 hc3 habc).1 hb1'
+      have hpattern (i : Fin d) :
+          (a i = b i ∧ b i = c i) ∨
+            (a i = 0 ∧ b i = 1 ∧ c i = 3) ∨
+            (a i = 3 ∧ b i = 2 ∧ c i = 0) := by
+        have hi := habc i k
+        rw [ha0, hb1', hc3] at hi
+        omega
       have hrel (i : Fin d) : EqualOrExtreme (a i) (c i) := by
         rcases hpattern i with hconstant | hforward | hreverse
         · exact Or.inl (hconstant.1.trans hconstant.2)
@@ -609,7 +594,7 @@ private noncomputable def codeToTriple_surjective {d : Nat} (s : CollinearTriple
         apply Fin.ext
         rcases hpattern i with hconstant | hforward | hreverse
         · simp [extremeInterior, extremeInteriorCoordinate, ← hconstant.1,
-            ← hconstant.2] <;> omega
+            ← hconstant.2]; omega
         · simp [extremeInterior, extremeInteriorCoordinate, hforward]
         · simp [extremeInterior, extremeInteriorCoordinate, hreverse]
       let p : DistinctCoordinatePairs EqualOrExtreme d := ⟨⟨(a, c), hrel⟩, hac⟩
@@ -619,8 +604,13 @@ private noncomputable def codeToTriple_surjective {d : Nat} (s : CollinearTriple
       rw [← hinterior]
       exact hset
     · have hb2' : b k = 2 := by apply Fin.ext; exact hb2
-      have hpattern :=
-        (extreme_line_coordinate_classification a b c k ha0 hc3 habc).2 hb2'
+      have hpattern (i : Fin d) :
+          (a i = b i ∧ b i = c i) ∨
+            (a i = 0 ∧ b i = 2 ∧ c i = 3) ∨
+            (a i = 3 ∧ b i = 1 ∧ c i = 0) := by
+        have hi := habc i k
+        rw [ha0, hb2', hc3] at hi
+        omega
       have hrel (i : Fin d) : EqualOrExtreme (a i) (c i) := by
         rcases hpattern i with hconstant | hforward | hreverse
         · exact Or.inl (hconstant.1.trans hconstant.2)
@@ -633,7 +623,7 @@ private noncomputable def codeToTriple_surjective {d : Nat} (s : CollinearTriple
         apply Fin.ext
         rcases hpattern i with hconstant | hforward | hreverse
         · simp [extremeInterior, extremeInteriorCoordinate, ← hconstant.1,
-            ← hconstant.2] <;> omega
+            ← hconstant.2]; omega
         · simp [extremeInterior, extremeInteriorCoordinate, hforward]
         · simp [extremeInterior, extremeInteriorCoordinate, hreverse]
       let p : DistinctCoordinatePairs EqualOrExtreme d := ⟨⟨(a, c), hrel⟩, hac⟩
@@ -653,6 +643,7 @@ private noncomputable def codeToTriple_surjective {d : Nat} (s : CollinearTriple
   · exact makeExtreme z x y hzmem hxmem hymem hyz.symm (by rw [hsxyz]; ext; simp; tauto) hp
   · exact makeExtreme z y x hzmem hymem hxmem hxz.symm (by rw [hsxyz]; ext; simp; tauto) hp
 
+set_option linter.defProp false in
 private noncomputable def apMarkedTriple_injective {d : Nat} :
     Function.Injective (apMarkedTriple : OrientedArithmeticProgression d →
       CollinearTriples d × Bool) := by
@@ -737,6 +728,7 @@ private noncomputable def apMarkedTriple_injective {d : Nat} :
     rw [hreverse] at hmark
     cases hq : orientationMark x z <;> simp [hq] at hmark
 
+set_option linter.defProp false in
 private noncomputable def extremeMarkedTriple_injective {d : Nat} :
     Function.Injective (extremeMarkedTriple :
       DistinctCoordinatePairs EqualOrExtreme d × Bool → CollinearTriples d × Bool) := by
@@ -872,6 +864,7 @@ private noncomputable def extremeMarkedTriple_injective {d : Nat} :
     rw [hreverse] at hmark
     cases hq : orientationMark x z <;> simp [hq] at hmark
 
+set_option linter.defProp false in
 private noncomputable def apMarkedTriple_ne_extremeMarkedTriple {d : Nat}
     (t : OrientedArithmeticProgression d)
     (q : DistinctCoordinatePairs EqualOrExtreme d × Bool) :
@@ -997,7 +990,6 @@ example (d : ℕ) :
 
 #print axioms endpoint_pair_counts
 #print axioms oriented_arithmetic_progression_count
-#print axioms extreme_line_coordinate_classification
 #print axioms mathar_collinear_triples
 
 end D5.S3.Arith.Lattices.FourGridCollinearTriples
