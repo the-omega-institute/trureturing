@@ -51,6 +51,7 @@ internal static class DigestionAtomContextProjection
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(ledger);
+        ValidateAtomId(atomId);
         var target = RequireTarget(ledger.RequireDigestionEntries(), atomId);
         try
         {
@@ -64,11 +65,15 @@ internal static class DigestionAtomContextProjection
         }
     }
 
-    private static DigestionLedgerEntry RequireTarget(IEnumerable<DigestionLedgerEntry> entries, string atomId)
+    private static void ValidateAtomId(string atomId)
     {
         if (string.IsNullOrWhiteSpace(atomId) || !DigestionFingerprint.IsCanonicalSha256("sha256:" + atomId))
             throw new DigestionAtomContextException(DigestionAtomContextError.ARGUMENTS_INVALID,
                 "atom_id must be 64 lowercase hexadecimal characters");
+    }
+
+    private static DigestionLedgerEntry RequireTarget(IEnumerable<DigestionLedgerEntry> entries, string atomId)
+    {
         var targets = entries.Where(entry => entry.AtomId == atomId).ToArray();
         if (targets.Length == 0)
             throw new DigestionAtomContextException(DigestionAtomContextError.ATOM_ABSENT, $"atom_id={atomId}");
@@ -125,25 +130,33 @@ internal static class DigestionAtomContextProjection
         internal string Atomizer => source.Atomizer;
         internal ImmutableArray<DigestionAtom> Atoms => stream;
         internal ImmutableArray<string> AtomIds { get; } =
-            [.. stream.Select(atom => Neighbor(atom, byHash).AtomId)];
+            [.. stream.Select(atom => FindEntry(atom, byHash)?.AtomId ?? atom.Fingerprints.RawSha256[7..])];
 
         internal ImmutableArray<DigestionAtomContext> ResolveOccurrences(string atomId)
         {
+            ValidateAtomId(atomId);
             var target = RequireTarget(byAtomId[atomId], atomId);
-            var matches = Enumerable.Range(0, stream.Length)
-                .Where(index => target.SourceId == source.SourceId
-                    && stream[index].Fingerprints.RawSha256 == target.Fingerprints.RawSha256).ToArray();
-            if (matches.Length == 0)
-                throw new DigestionAtomContextException(DigestionAtomContextError.OCCURRENCE_MISSING,
-                    $"atom_id={atomId} source_id={source.SourceId}");
-            var contexts = ImmutableArray.CreateBuilder<DigestionAtomContext>(matches.Length);
-            foreach (var position in matches)
-                contexts.Add(new DigestionAtomContext(target,
-                    position == 0 ? null : Neighbor(stream[position - 1], byHash),
-                    Neighbor(stream[position], byHash),
-                    position + 1 == stream.Length ? null : Neighbor(stream[position + 1], byHash),
-                    position + 1, stream.Length, source.SourceId, source.SourcePath, source.Atomizer));
-            return contexts.ToImmutable();
+            try
+            {
+                var matches = Enumerable.Range(0, stream.Length)
+                    .Where(index => target.SourceId == source.SourceId
+                        && stream[index].Fingerprints.RawSha256 == target.Fingerprints.RawSha256).ToArray();
+                if (matches.Length == 0)
+                    throw new DigestionAtomContextException(DigestionAtomContextError.OCCURRENCE_MISSING,
+                        $"atom_id={atomId} source_id={source.SourceId}");
+                var contexts = ImmutableArray.CreateBuilder<DigestionAtomContext>(matches.Length);
+                foreach (var position in matches)
+                    contexts.Add(new DigestionAtomContext(target,
+                        position == 0 ? null : Neighbor(stream[position - 1], byHash),
+                        Neighbor(stream[position], byHash),
+                        position + 1 == stream.Length ? null : Neighbor(stream[position + 1], byHash),
+                        position + 1, stream.Length, source.SourceId, source.SourcePath, source.Atomizer));
+                return contexts.ToImmutable();
+            }
+            catch (Exception error) when (error is FormatException or InvalidOperationException or ArgumentException)
+            {
+                throw new DigestionAtomContextException(DigestionAtomContextError.OCCURRENCE_MISSING, error.Message);
+            }
         }
     }
 

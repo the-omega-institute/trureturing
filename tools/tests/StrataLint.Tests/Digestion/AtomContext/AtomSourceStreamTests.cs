@@ -92,6 +92,36 @@ public sealed class AtomSourceStreamTests
     }
 
     [Fact]
+    public void MaterializedAtomIdsDoNotReadUnrelatedLedgerStatus()
+    {
+        var fixture = Create();
+        var snapshot = fixture.Snapshot();
+        fixture = fixture.WithEntries(fixture.Ledger.RequireDigestionEntries().Select(entry =>
+            entry.AtomId != Id(fixture.Atomized.Claims[^1]) ? entry : entry with
+            {
+                ProjectedStatus = new((DigestionMigrationState)(-1), DigestionTruthState.Open),
+            }));
+        var stream = DigestionAtomContextProjection.MaterializeSource(snapshot, fixture.Ledger, "source");
+        Assert.Equal(fixture.Atomized.Claims.Select(Id), stream.AtomIds);
+        var first = DigestionAtomContextProjection.Resolve(snapshot, fixture.Ledger, Id(fixture.Atomized.Claims[0]));
+        AssertContextEqual(first, Assert.Single(stream.ResolveOccurrences(first.Target.AtomId)));
+        Assert.Equal((1, 3), (first.Index, first.Count));
+    }
+
+    [Fact]
+    public void LegacyNeighborStatusFailureKeepsTypedError()
+    {
+        var fixture = Create();
+        var snapshot = fixture.Snapshot();
+        fixture = fixture.WithEntries(fixture.Ledger.RequireDigestionEntries().Select(entry => entry with
+        {
+            ProjectedStatus = new((DigestionMigrationState)(-1), DigestionTruthState.Open),
+        }));
+        AssertError(DigestionAtomContextError.OCCURRENCE_MISSING, new ArgumentOutOfRangeException("value").Message,
+            () => DigestionAtomContextProjection.Resolve(snapshot, fixture.Ledger, Id(fixture.Atomized.Claims[0])));
+    }
+
+    [Fact]
     public void LegacySourceErrorsKeepTargetPathAndValidationPrecedence()
     {
         var fixture = Create();
