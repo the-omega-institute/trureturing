@@ -220,7 +220,7 @@ private def compareCanonical (a b : Expr) : Bool := eraseLevels a == eraseLevels
 private def hasPContent (env : Environment) (e : Expr) : Bool :=
   let rec go : Expr → Bool
     | .const n _ =>
-      inProtected env n && match env.find? n with
+      inProtected env n && !env.isProjectionFn n && match env.find? n with
       | some (.defnInfo _) | some (.opaqueInfo _) | some (.thmInfo _) => true
       | _ => false
     | .app f a => go f || go a
