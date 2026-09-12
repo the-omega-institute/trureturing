@@ -1,0 +1,14 @@
+**35.12 Proposition (Dirichlet's first return is a different assertion).** Place the
+\(Q^d+1\) points \(j\alpha\), \(0\le j\le Q^d\), in the half-open cubes
+of 35.9. Two share a cube. Subtract the smaller index from the larger to get
+an integer \(q\) with
+\[
+1\le q\le Q^d,\qquad
+\max_i\|q\alpha_i\|_{\mathbb T}<1/Q.
+\]
+Thus the first positive return from 0 is at most \(Q^{k-1}\). This is the
+classical simultaneous Dirichlet pigeonhole argument. Applying it to a
+translated block again gives a difference of two indices, which need not
+belong to that block. It proves neither \(L\le Q^{k-1}\) nor the location
+of the first rounded box surviving positivity or the strict original cutoff.
+

@@ -1,0 +1,9 @@
+{
+"schema":"s24-evidence-entry-v1",
+"resource":"s24-pure-tail-tests-result-r2-0910",
+"original":{"bytes":6120,"lf":1,"lines":1,"terminal_lf":1,"sha256":"3a01850887dce8e3502b1426cbc929b02a43c2b490480992a49837e23fb63631","git_blob_oid":"56f93ea17ecc83236a9683f34f9a5659f2578fb2"},
+"origin":{"supplied_path":"/tmp/qgh-boundaries-0908/s24-pure-tail-tests-result-r2-0910.json","scope":"Original scoped result/intake; no fresh S24 vote and no referents opened by this publication."},
+"contract":"docs/reports/quantized-gh/s24-evidence/README.md",
+"interpretation":"Concatenate raw UTF-8 parts in order without separators before parsing. Exact original bytes, schema, errors, EOF and link owners remain unchanged.",
+"parts":[{"ordinal":1,"path":"docs/reports/quantized-gh/s24-evidence/raw/s24-pure-tail-tests-result-r2-0910/part-001.txt","byte_span":[0,6120],"line_span":[1,1],"bytes":6120,"lf":1,"lines":1,"terminal_lf":1,"sha256":"3a01850887dce8e3502b1426cbc929b02a43c2b490480992a49837e23fb63631","git_blob_oid":"56f93ea17ecc83236a9683f34f9a5659f2578fb2"}]
+}

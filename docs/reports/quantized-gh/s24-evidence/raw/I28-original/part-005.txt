@@ -1,0 +1,750 @@
+      "mathematical_correspondence": "Positive return-time open cover, finite nonempty J, L=max J, every m>=0 forward block, rotation dependence and finite-removal invariance unchanged; no evaluated numerical L. Tao Lecture 3 Lemma 1/Theorem 2 attached from 35.28.",
+      "edit_ids": [
+        "E016",
+        "E017"
+      ]
+    },
+    {
+      "original_unit": "35.12",
+      "original_numbered_span": {
+        "start_byte": 406181,
+        "end_byte": 406857,
+        "byte_count": 676,
+        "lf_count": 14,
+        "sha256": "89092d884dde0aa31073e0933eb519b98d58bcef6e6ba883c018e84f28183230",
+        "cas_path": "Meta/Digestion/atoms/sha256/89092d884dde0aa31073e0933eb519b98d58bcef6e6ba883c018e84f28183230",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/89092d884dde0aa31073e0933eb519b98d58bcef6e6ba883c018e84f28183230.yaml",
+        "yaml_sha256": "sha256:724952471c2361e6d26ab77a16098afd54adbcc849ddf2ef9d818144b9c55ba1"
+      },
+      "current_unit": "35.12",
+      "current_numbered_span": {
+        "start_byte": 406392,
+        "end_byte": 407082,
+        "byte_count": 690,
+        "lf_count": 14,
+        "sha256": "18da0f20342fca66a1e2ca4f0196662748c0f7f39b5042b647fc9f2640c92fac"
+      },
+      "number_permanently_reserved_externally": false,
+      "mathematical_correspondence": "Dirichlet Q^d+1-point pigeonhole, strict return with 1<=q<=Q^d, translated-block difference caveat; no inference of max-gap bound or first positive/cutoff-valid box.",
+      "edit_ids": [
+        "E018"
+      ]
+    },
+    {
+      "original_unit": "35.13",
+      "original_numbered_span": {
+        "start_byte": 406857,
+        "end_byte": 408140,
+        "byte_count": 1283,
+        "lf_count": 25,
+        "sha256": "25b109d840983b1ee5d1b8e4f56cb843fc913da79145602697ec9d7306b85ef8",
+        "cas_path": "Meta/Digestion/atoms/sha256/25b109d840983b1ee5d1b8e4f56cb843fc913da79145602697ec9d7306b85ef8",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/25b109d840983b1ee5d1b8e4f56cb843fc913da79145602697ec9d7306b85ef8.yaml",
+        "yaml_sha256": "sha256:a68efdabc5024da3c28e90bf566f74c1ec5af575ec6af38cf8e7c4151f8c7e50"
+      },
+      "current_unit": "35.13",
+      "current_numbered_span": {
+        "start_byte": 407082,
+        "end_byte": 408379,
+        "byte_count": 1297,
+        "lf_count": 25,
+        "sha256": "e3e3dd5267832be64e3a407208eb2e8d8f3861718a093938e0e9e7514209963f"
+      },
+      "number_permanently_reserved_externally": false,
+      "mathematical_correspondence": "Generic irrational beta construction for every Q>=3,R>=1, strict endpoints and arbitrary late R-long empty blocks, first return 1, density 2/Q and gaps >=R+1 unchanged. Rotation varies with R; not a fixed-prime counterexample.",
+      "edit_ids": [
+        "E019"
+      ]
+    },
+    {
+      "original_unit": "35.14",
+      "original_numbered_span": {
+        "start_byte": 408140,
+        "end_byte": 409172,
+        "byte_count": 1032,
+        "lf_count": 25,
+        "sha256": "05895ee00dec22977c8e3c8d04d9f60fd213def466910630b8f7ac2e2b0e2361",
+        "cas_path": "Meta/Digestion/atoms/sha256/05895ee00dec22977c8e3c8d04d9f60fd213def466910630b8f7ac2e2b0e2361",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/05895ee00dec22977c8e3c8d04d9f60fd213def466910630b8f7ac2e2b0e2361.yaml",
+        "yaml_sha256": "sha256:e3ac3eed3120de4d5e23fb029086e3f73c920759fa35fca66309823af094124b"
+      },
+      "current_unit": "35.14",
+      "current_numbered_span": {
+        "start_byte": 408379,
+        "end_byte": 409401,
+        "byte_count": 1022,
+        "lf_count": 24,
+        "sha256": "293a529d0918955f198f007bccae14a2ac5153e2b8f7ee2207a7dd02e37d2c5a"
+      },
+      "number_permanently_reserved_externally": false,
+      "mathematical_correspondence": "Unique nearest rounding for all n>=1, finite positivity discard, actual adjacent prime-power endpoints, exponent convention b=m-1 and N_n definition unchanged. No numerical first-valid index supplied remains; enumeration process phrase archived.",
+      "edit_ids": [
+        "E020",
+        "E021"
+      ]
+    },
+    {
+      "original_unit": "35.15",
+      "original_numbered_span": {
+        "start_byte": 409172,
+        "end_byte": 410233,
+        "byte_count": 1061,
+        "lf_count": 28,
+        "sha256": "bcfa3305dece95d01940b5f496f88bb561b53fbdd20f7a01963f3d8d43396a38",
+        "cas_path": "Meta/Digestion/atoms/sha256/bcfa3305dece95d01940b5f496f88bb561b53fbdd20f7a01963f3d8d43396a38",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/bcfa3305dece95d01940b5f496f88bb561b53fbdd20f7a01963f3d8d43396a38.yaml",
+        "yaml_sha256": "sha256:0bba8261286627ddfcca06ce73a285379c2cefd3f1ecb357f6d61fdc9b245a1e"
+      },
+      "current_unit": "35.15",
+      "current_numbered_span": {
+        "start_byte": 409401,
+        "end_byte": 410476,
+        "byte_count": 1075,
+        "lf_count": 28,
+        "sha256": "4f40e2b7f9c17bf564b907158441baac2967d38f8a694fc07fa5d868f12e404f"
+      },
+      "number_permanently_reserved_externally": false,
+      "mathematical_correspondence": "Strict coordinate errors, minimum T_n versus total A_n, nonnegative relative shape with max<2h_max/Q, exact A_n=knh0+R_n and |R_n|<E_Q unchanged. Fixed-Q neighborhood does not assert successive convergence or shrinking targets.",
+      "edit_ids": [
+        "E022"
+      ]
+    },
+    {
+      "original_unit": "35.16",
+      "original_numbered_span": {
+        "start_byte": 410233,
+        "end_byte": 411154,
+        "byte_count": 921,
+        "lf_count": 20,
+        "sha256": "1caa772d44c00156d5e90d8906662419d41c8bdc979d84cb1101670737c30ab1",
+        "cas_path": "Meta/Digestion/atoms/sha256/1caa772d44c00156d5e90d8906662419d41c8bdc979d84cb1101670737c30ab1",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/1caa772d44c00156d5e90d8906662419d41c8bdc979d84cb1101670737c30ab1.yaml",
+        "yaml_sha256": "sha256:cde5f87d945be0c77a5a33c6836e386120bb6be202c971a0e0742bec4a2175a3"
+      },
+      "current_unit": "35.16",
+      "current_numbered_span": {
+        "start_byte": 410476,
+        "end_byte": 411401,
+        "byte_count": 925,
+        "lf_count": 20,
+        "sha256": "ea086cf94204cb71185651f34d490167c82b7bc805788b85f500b932f6af54f4"
+      },
+      "number_permanently_reserved_externally": false,
+      "mathematical_correspondence": "Monotone floors, strict reference exponent, exact integer-ratio bound for all n'>n>=n0, distinct positive prime-coordinate heights and exact log N_n identity/error constant 1 retained.",
+      "edit_ids": [
+        "E023",
+        "E024"
+      ]
+    },
+    {
+      "original_unit": "35.17",
+      "original_numbered_span": {
+        "start_byte": 411154,
+        "end_byte": 412379,
+        "byte_count": 1225,
+        "lf_count": 28,
+        "sha256": "96691b71341894fb4c332bf9ee26a4b26e40cc3adeeb9796828bce2711b7a01d",
+        "cas_path": "Meta/Digestion/atoms/sha256/96691b71341894fb4c332bf9ee26a4b26e40cc3adeeb9796828bce2711b7a01d",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/96691b71341894fb4c332bf9ee26a4b26e40cc3adeeb9796828bce2711b7a01d.yaml",
+        "yaml_sha256": "sha256:b61f0e958d510d565485fcec4595610f94f5633d2d120e7cd28ee99d88058a69"
+      },
+      "current_unit": "35.17",
+      "current_numbered_span": {
+        "start_byte": 411401,
+        "end_byte": 412640,
+        "byte_count": 1239,
+        "lf_count": 28,
+        "sha256": "5b4f0393027cd8afbb0b332027303da7f1fa4d65a33206df4fb28c1a281056e2"
+      },
+      "number_permanently_reserved_externally": false,
+      "mathematical_correspondence": "Real-cutoff counting, finite positivity removal, strict/equality endpoints in fixed-width squeeze, O(1) interval count and coefficient d_Q/(kh0), injectivity, finite extra discards and fixed parameters retained.",
+      "edit_ids": [
+        "E025"
+      ]
+    },
+    {
+      "original_unit": "35.18",
+      "original_numbered_span": {
+        "start_byte": 412379,
+        "end_byte": 413247,
+        "byte_count": 868,
+        "lf_count": 22,
+        "sha256": "0465b39e0e1feba2c917e4141f7811822c00d950625246ad87a0164ac2a205b3",
+        "cas_path": "Meta/Digestion/atoms/sha256/0465b39e0e1feba2c917e4141f7811822c00d950625246ad87a0164ac2a205b3",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/0465b39e0e1feba2c917e4141f7811822c00d950625246ad87a0164ac2a205b3.yaml",
+        "yaml_sha256": "sha256:62e0f2059f86edd185a28bce513ae4de24336dae50cf5413516105e188521313"
+      },
+      "current_unit": "35.18",
+      "current_numbered_span": {
+        "start_byte": 412640,
+        "end_byte": 413522,
+        "byte_count": 882,
+        "lf_count": 22,
+        "sha256": "79ae32ff683224947215a09b8c64b2a6f79cbab250a96e5632f3511e29d76884"
+      },
+      "number_permanently_reserved_externally": false,
+      "mathematical_correspondence": "Eventually consecutive selected indices, rotation-dependent L, floor inequality proof, exponent/log gaps and divergent additive integer gap lower bound unchanged.",
+      "edit_ids": [
+        "E026"
+      ]
+    },
+    {
+      "original_unit": "35.19",
+      "original_numbered_span": {
+        "start_byte": 413247,
+        "end_byte": 414908,
+        "byte_count": 1661,
+        "lf_count": 35,
+        "sha256": "c9d01d238f9486f8bc64a1582adb5b01109624f9594aa12578806802d0c9bc37",
+        "cas_path": "Meta/Digestion/atoms/sha256/c9d01d238f9486f8bc64a1582adb5b01109624f9594aa12578806802d0c9bc37",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/c9d01d238f9486f8bc64a1582adb5b01109624f9594aa12578806802d0c9bc37.yaml",
+        "yaml_sha256": "sha256:b0f74d7a9746d0681ee1c98c9991d7a19025d5ba58cbeac646f7774140a19965"
+      },
+      "current_unit": "35.19",
+      "current_numbered_span": {
+        "start_byte": 413522,
+        "end_byte": 415196,
+        "byte_count": 1674,
+        "lf_count": 35,
+        "sha256": "bfcc5ff42bb9ea58045c1fe4e691f933ce572ee215d1a572f17402ee9954ee8d"
+      },
+      "number_permanently_reserved_externally": false,
+      "mathematical_correspondence": "Definition for separate 235/237 triples, actual distinct corner totals with factorization proof, all finite wider slabs admitting two corners, negative M0/endpoints/zero radius/saturation/slack retained. Upper-budget-only LP, chosen Euclidean metric, V0 sum without extra /3, rho^2=V0/6 and inherited 30.2/31.2 retained.",
+      "edit_ids": [
+        "E027"
+      ]
+    },
+    {
+      "original_unit": "35.20",
+      "original_numbered_span": {
+        "start_byte": 414908,
+        "end_byte": 416131,
+        "byte_count": 1223,
+        "lf_count": 26,
+        "sha256": "de488bb4cb58e275cd103c3fe5fa51164c7456b838eeb59d6ad768393a3a615e",
+        "cas_path": "Meta/Digestion/atoms/sha256/de488bb4cb58e275cd103c3fe5fa51164c7456b838eeb59d6ad768393a3a615e",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/de488bb4cb58e275cd103c3fe5fa51164c7456b838eeb59d6ad768393a3a615e.yaml",
+        "yaml_sha256": "sha256:0616de163f7fc7452f0b7526bc182b4ae0408d52e670f8febbf9f7de1d195d2a"
+      },
+      "current_unit": "35.20",
+      "current_numbered_span": {
+        "start_byte": 415196,
+        "end_byte": 416433,
+        "byte_count": 1237,
+        "lf_count": 26,
+        "sha256": "3f9aa790dd1c0d5cc6027be2e131ac039be967538951efb6ed279e8724c3620f"
+      },
+      "number_permanently_reserved_externally": false,
+      "mathematical_correspondence": "M1>A_n, nonempty compact LP feasibility, attained maximum, nonempty wider domain and admitted-corner variance proof yielding H_env>=L_env>=T_n>0 retained, including all stated endpoint and degenerate cases.",
+      "edit_ids": [
+        "E028"
+      ]
+    },
+    {
+      "original_unit": "35.21",
+      "original_numbered_span": {
+        "start_byte": 416131,
+        "end_byte": 417528,
+        "byte_count": 1397,
+        "lf_count": 36,
+        "sha256": "df299104bc10ec47c75081e651e6b884b63684310aa602e63066addf26162361",
+        "cas_path": "Meta/Digestion/atoms/sha256/df299104bc10ec47c75081e651e6b884b63684310aa602e63066addf26162361",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/df299104bc10ec47c75081e651e6b884b63684310aa602e63066addf26162361.yaml",
+        "yaml_sha256": "sha256:ac0595cfa0f2ec9eaa00d0616d4ec2eefd4a1a68ff89cd3600d229cc317a9a9c"
+      },
+      "current_unit": "35.21",
+      "current_numbered_span": {
+        "start_byte": 416433,
+        "end_byte": 417778,
+        "byte_count": 1345,
+        "lf_count": 35,
+        "sha256": "23d2939f971d78b065430e66e7131fd22f01e3326f6b4ea717f227a52dd58679"
+      },
+      "number_permanently_reserved_externally": false,
+      "mathematical_correspondence": "Positive exponential-series remainder proves exp(2)>7 and log5,log7<2. Separate Q1920/radius1/480/scaled-1/120 and Q1280/radius1/320/scaled-1/80 arguments retained; closed inherited radii, strict constructed radii, T>=log2, endpoint/saturation cases and scaled-only scope unchanged.",
+      "edit_ids": [
+        "E029",
+        "E030"
+      ]
+    },
+    {
+      "original_unit": "35.22",
+      "original_numbered_span": {
+        "start_byte": 417528,
+        "end_byte": 419374,
+        "byte_count": 1846,
+        "lf_count": 40,
+        "sha256": "d7d00fef3fd7ac64a6442ac12bbfe866a5ecc81b73af5e2c371d29bc36688369",
+        "cas_path": "Meta/Digestion/atoms/sha256/d7d00fef3fd7ac64a6442ac12bbfe866a5ecc81b73af5e2c371d29bc36688369",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/d7d00fef3fd7ac64a6442ac12bbfe866a5ecc81b73af5e2c371d29bc36688369.yaml",
+        "yaml_sha256": "sha256:e7f1009d5b27bc80c17dfdf368fb5f2c10c321773cbe2195933a4ecabd7e4441"
+      },
+      "current_unit": "35.22",
+      "current_numbered_span": {
+        "start_byte": 417778,
+        "end_byte": 419638,
+        "byte_count": 1860,
+        "lf_count": 40,
+        "sha256": "982a21de857de3a3c288eeed81bbaa902470b8772edf0ab8406e44f7b4e5c557"
+      },
+      "number_permanently_reserved_externally": false,
+      "mathematical_correspondence": "Strict original cutoff S_h+log5040<M0, second-largest corner total and iff A_n>log2+log5040 proof, empty continuous equality, 10080 prime factorization and impossible equality for each triple, finite discard and both exact counting coefficients retained.",
+      "edit_ids": [
+        "E031"
+      ]
+    },
+    {
+      "original_unit": "35.23",
+      "original_numbered_span": {
+        "start_byte": 419374,
+        "end_byte": 421073,
+        "byte_count": 1699,
+        "lf_count": 33,
+        "sha256": "c0c761b00328e1099199e9df76c83695583795971d56d0afc0f2158d4b9b65a3",
+        "cas_path": "Meta/Digestion/atoms/sha256/c0c761b00328e1099199e9df76c83695583795971d56d0afc0f2158d4b9b65a3",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/c0c761b00328e1099199e9df76c83695583795971d56d0afc0f2158d4b9b65a3.yaml",
+        "yaml_sha256": "sha256:eb3f96a2d484f2dae4b4c3141212b7394ba64797bf7650a5ea0996a3343d3036"
+      },
+      "current_unit": "35.23",
+      "current_numbered_span": {
+        "start_byte": 419638,
+        "end_byte": 421351,
+        "byte_count": 1713,
+        "lf_count": 33,
+        "sha256": "0717c82f8846c7fb4526401c4dbecbb6e3e25696978e1b2664c12f6791f1fb43"
+      },
+      "number_permanently_reserved_externally": false,
+      "mathematical_correspondence": "Section34 k=3/a=0/Tmin=log2 paired scaled loss<=4 epsilon; shifted budgets and inverse-cutoff caveat retained. Separate wider signs precede intersection. D,Psi in [3f(T),0], interval length (not twice length), uniform |G|<=-3f(T)->0, no fixed unscaled margin and infinity only a limit retained.",
+      "edit_ids": [
+        "E032"
+      ]
+    },
+    {
+      "original_unit": "35.24",
+      "original_numbered_span": {
+        "start_byte": 421073,
+        "end_byte": 422217,
+        "byte_count": 1144,
+        "lf_count": 23,
+        "sha256": "a779423bf7d5fcab3299a936dd439e7e83f21ceaf63aaba172c18478a9f91c42",
+        "cas_path": "Meta/Digestion/atoms/sha256/a779423bf7d5fcab3299a936dd439e7e83f21ceaf63aaba172c18478a9f91c42",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/a779423bf7d5fcab3299a936dd439e7e83f21ceaf63aaba172c18478a9f91c42.yaml",
+        "yaml_sha256": "sha256:646658f9a963e45823bd9fe73c344a6d42423af045f809339d8b41789f155ac2"
+      },
+      "current_unit": "35.24",
+      "current_numbered_span": {
+        "start_byte": 421351,
+        "end_byte": 422509,
+        "byte_count": 1158,
+        "lf_count": 23,
+        "sha256": "02af4e04d7470336acbc724c709f18d59f9acd179dec1dcb0a33a7a16ede4c56"
+      },
+      "number_permanently_reserved_externally": false,
+      "mathematical_correspondence": "Positive reference-exponent density versus zero natural and logarithmic integer densities, convergent reciprocal geometric majorant, zero full k-exponent-cube proportion and constructed-subfamily/finite-removal qualifications unchanged.",
+      "edit_ids": [
+        "E033"
+      ]
+    },
+    {
+      "original_unit": "35.25",
+      "original_numbered_span": {
+        "start_byte": 422217,
+        "end_byte": 422957,
+        "byte_count": 740,
+        "lf_count": 15,
+        "sha256": "e29172d9a75c0913e95ce9111797609964173ca7dd07992173bbb18ba61022e1",
+        "cas_path": "Meta/Digestion/atoms/sha256/e29172d9a75c0913e95ce9111797609964173ca7dd07992173bbb18ba61022e1",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/e29172d9a75c0913e95ce9111797609964173ca7dd07992173bbb18ba61022e1.yaml",
+        "yaml_sha256": "sha256:b2943c8cb24e303766bdcdad7bb4aeaf5ad2185a7f1472ec625d3d07f610e46e"
+      },
+      "current_unit": "35.25",
+      "current_numbered_span": {
+        "start_byte": 422509,
+        "end_byte": 423263,
+        "byte_count": 754,
+        "lf_count": 15,
+        "sha256": "d57abb7fc55c504ba893c62e63fb34b80f8a4f7b230096bec12c0e2c92491878"
+      },
+      "number_permanently_reserved_externally": false,
+      "mathematical_correspondence": "Fibonacci numerical cutoffs inherit both limits; sparse n=F_j orbit sampling and equality to d_Q remain unproved. All formulas and distinctions unchanged.",
+      "edit_ids": [
+        "E034"
+      ]
+    },
+    {
+      "original_unit": "35.26",
+      "original_numbered_span": {
+        "start_byte": 422957,
+        "end_byte": 423967,
+        "byte_count": 1010,
+        "lf_count": 16,
+        "sha256": "fabfcccb0207fe1b86148bc2e696ff3b5ab3fcc0c35b0ee5140394de120339d8",
+        "cas_path": "Meta/Digestion/atoms/sha256/fabfcccb0207fe1b86148bc2e696ff3b5ab3fcc0c35b0ee5140394de120339d8",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/fabfcccb0207fe1b86148bc2e696ff3b5ab3fcc0c35b0ee5140394de120339d8.yaml",
+        "yaml_sha256": "sha256:db8dfd6999af5570b472a5b96c03ba397ecad7c598dc34f3528300d55a566e35"
+      },
+      "current_unit": "35.26",
+      "current_numbered_span": {
+        "start_byte": 423263,
+        "end_byte": 424287,
+        "byte_count": 1024,
+        "lf_count": 16,
+        "sha256": "57fdca17050bca0060c14485b8a6c83401a8752b5ec3d24998b3d6f4e2c3d950"
+      },
+      "number_permanently_reserved_externally": false,
+      "mathematical_correspondence": "Stipulated Zeckendorf bijection and exact equality of every finite numerical-order count retained; digit-length cutoff caveat, digit-prefix cylinders, changed weights and arbitrary reorderings retain separate analysis requirements.",
+      "edit_ids": [
+        "E035"
+      ]
+    },
+    {
+      "original_unit": "35.27",
+      "original_numbered_span": {
+        "start_byte": 423967,
+        "end_byte": 425153,
+        "byte_count": 1186,
+        "lf_count": 18,
+        "sha256": "a1b0a3edd9856382c2428f9b8f45a18f2967f8a80cf7d941868b106ad73ea522",
+        "cas_path": "Meta/Digestion/atoms/sha256/a1b0a3edd9856382c2428f9b8f45a18f2967f8a80cf7d941868b106ad73ea522",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/a1b0a3edd9856382c2428f9b8f45a18f2967f8a80cf7d941868b106ad73ea522.yaml",
+        "yaml_sha256": "sha256:8382295911c39667572a329f1173feba4db9376169d3473d881a859d76ed98f4"
+      },
+      "current_unit": "35.27",
+      "current_numbered_span": {
+        "start_byte": 424287,
+        "end_byte": 425487,
+        "byte_count": 1200,
+        "lf_count": 18,
+        "sha256": "03ae2a3ea6b2f37896585deb4de070551ef6ebc20b01c337a8fdc3a9882786f4"
+      },
+      "number_permanently_reserved_externally": false,
+      "mathematical_correspondence": "All irrational one-dimensional interval frequencies equal circle length, including golden ratio; approximation/discrepancy/spacing metrics remain separate. Chosen Euclidean metric, no induced orthogonality or KL identity, and slice/slab/cutoff/cylinder distinctions retained.",
+      "edit_ids": [
+        "E036"
+      ]
+    },
+    {
+      "original_unit": "35.28",
+      "original_numbered_span": {
+        "start_byte": 425153,
+        "end_byte": 427383,
+        "byte_count": 2230,
+        "lf_count": 32,
+        "sha256": "b217cd18672354a1804147f863f2f6d7b1af958f5a8379f61b72998c1b84d249",
+        "cas_path": "Meta/Digestion/atoms/sha256/b217cd18672354a1804147f863f2f6d7b1af958f5a8379f61b72998c1b84d249",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/b217cd18672354a1804147f863f2f6d7b1af958f5a8379f61b72998c1b84d249.yaml",
+        "yaml_sha256": "sha256:b22e8bf7ee0012937024e6415f54996fa2210625965b1a1837dcc2a422e808c2"
+      },
+      "current_unit": null,
+      "current_numbered_span": null,
+      "number_permanently_reserved_externally": true,
+      "mathematical_correspondence": "Whole original attribution/access entry archived verbatim and number permanently reserved. Meaningful White, Meyerovitch and Tao citations attached to 35.3,35.5,35.11. Classical factorization/compactness/Stone-Weierstrass/character/Dirichlet/geometric/exponential/floor/squeeze steps remain in original active proofs. Provenance and novelty/priority/access classifications remain historical report material.",
+      "edit_ids": [
+        "E037"
+      ]
+    },
+    {
+      "original_unit": "35.29",
+      "original_numbered_span": {
+        "start_byte": 427383,
+        "end_byte": 429706,
+        "byte_count": 2323,
+        "lf_count": 33,
+        "sha256": "ce89a2e5cdd3237ba2af8cab7ad2c127afc1dce8ef687f4bbed5c8df23f91d44",
+        "cas_path": "Meta/Digestion/atoms/sha256/ce89a2e5cdd3237ba2af8cab7ad2c127afc1dce8ef687f4bbed5c8df23f91d44",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/ce89a2e5cdd3237ba2af8cab7ad2c127afc1dce8ef687f4bbed5c8df23f91d44.yaml",
+        "yaml_sha256": "sha256:41c4c0ce018b0dc2b7abd1d77bc903fcd23b30457e347fa9ff859843b4315eb5"
+      },
+      "current_unit": "35.29",
+      "current_numbered_span": {
+        "start_byte": 425487,
+        "end_byte": 426629,
+        "byte_count": 1142,
+        "lf_count": 18,
+        "sha256": "6e2fc9eba12f69ff66c2479b4effa34ffdfebf6d02465cf14009d3094f749a29"
+      },
+      "number_permanently_reserved_externally": false,
+      "mathematical_correspondence": "Mathematical scope retained at original number: recurrence/counting requires no G sign; no evaluated d_Q without H, gap/first box/discrepancy/shrinking target/nonzero-shape density/continuous prime translation supplied; generic-versus-prime distinction, sparse/code questions, all five named open sign/stability scopes and no RH theorem/equivalence retained. Task/review/model/ticket/goal status archived; undefined GH label remains explicit in report. Added proof cross-reference only identifies existing 35.3-35.18 arguments.",
+      "edit_ids": [
+        "E038",
+        "E039",
+        "E040",
+        "E041",
+        "E042"
+      ]
+    },
+    {
+      "original_unit": "35.30",
+      "original_numbered_span": {
+        "start_byte": 429706,
+        "end_byte": 432403,
+        "byte_count": 2697,
+        "lf_count": 39,
+        "sha256": "ee3f593f0642a2fe6b17cafeeb26a6ba47421f510f683dd126639bc34c4961bb",
+        "cas_path": "Meta/Digestion/atoms/sha256/ee3f593f0642a2fe6b17cafeeb26a6ba47421f510f683dd126639bc34c4961bb",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/ee3f593f0642a2fe6b17cafeeb26a6ba47421f510f683dd126639bc34c4961bb.yaml",
+        "yaml_sha256": "sha256:9b35013c66fbca98ce5bf36999227406a749e7c2bf550f193c12e30e94681308"
+      },
+      "current_unit": null,
+      "current_numbered_span": null,
+      "number_permanently_reserved_externally": true,
+      "mathematical_correspondence": "Entire implementation/canonical/handoff record archived verbatim and number permanently reserved. No theorem statement or proof removed: prefix identities, links, invocation, execution claims and delivery/review boundaries are historical report evidence.",
+      "edit_ids": [
+        "E043"
+      ]
+    }
+  ],
+  "citation_rebindings": [
+    {
+      "original_unit": "35.28",
+      "current_unit": "35.3",
+      "locator": "White Theorem 1.1",
+      "kind": "existing mathematical attribution; no fresh retrieval or premise"
+    },
+    {
+      "original_unit": "35.28",
+      "current_unit": "35.5",
+      "locator": "Meyerovitch Proposition 3.2 and Lemma 5.3",
+      "kind": "existing mathematical attribution; no fresh retrieval or premise"
+    },
+    {
+      "original_unit": "35.28",
+      "current_unit": "35.11",
+      "locator": "Tao Lecture 3 Lemma 1/Theorem 2",
+      "kind": "existing mathematical attribution; no fresh retrieval or premise"
+    }
+  ],
+  "permanently_reserved_external_numbers": [
+    "35.28",
+    "35.30"
+  ],
+  "inherited_boundary_span": {
+    "unit": "34.22",
+    "start_byte": 392405,
+    "end_byte": 394298,
+    "byte_count": 1893,
+    "lf_count": 29,
+    "sha256": "bc9cc8b53b8b09a3646a83542a3ccc29d452211aadbf4af7de1b4d904d83e3ae",
+    "active_bytes_unchanged": true,
+    "historical_one_less_lf_cas": "08f48005a85a5e450c3ec8117b04f0f59c6fd2008b0749dc77b88607532e010b",
+    "current_cas": "bc9cc8b53b8b09a3646a83542a3ccc29d452211aadbf4af7de1b4d904d83e3ae"
+  },
+  "analytical_fidelity": {
+    "completed_before_edit": true,
+    "all_original_entries_inspected": true,
+    "proofs_rewritten": false,
+    "assumptions_weakened": false,
+    "mathematical_clause_projection": "All original mathematical blocks remain byte-identical except enumerated type, citation-voice, connective and scope attachment metadata; each semantic split is explicitly described per edit and entry. Complete original source is recovered independently of this analytical assertion.",
+    "inherited_reads": [
+      "30.2-30.3",
+      "30.16-30.19",
+      "31.2-31.3",
+      "31.17-31.20",
+      "complete section 34"
+    ],
+    "proof_audit_of_entire_predecessor": false
+  },
+  "pending": [
+    "Inherited 394297-byte mixed prefix remains unchanged and is not claimed pure.",
+    "C82 shared section-7 proof obligation remains separate; C83 and all other actual-PRO mathematical questions remain live.",
+    "S19-to-S25 ordered integration must transfer the completed pure predecessor and obtain fresh full current-source review and ordinary MERGED gates; S24 follows S23 MERGED.",
+    "No final delivery, RH, Lean/kernel-freeze, model-family diversity or standing-goal completion."
+  ],
+  "canonical_producer": {
+    "state": "completed",
+    "required_invocation": "make ingest BASE=e3c946d63039999549b4bf47f33d255854456560 SOURCE=arithmetic-boundary-quantization",
+    "actual_argv": [
+      "make",
+      "ingest",
+      "BASE=e3c946d63039999549b4bf47f33d255854456560",
+      "SOURCE=arithmetic-boundary-quantization"
+    ],
+    "invocation_count": 1,
+    "exit_code": 0,
+    "stdout": "INGEST residual_open_added=30 skipped_existing=335 coarse_fallbacks=0 open_genres=0 cas_objects_written=30 ledger_changed=true\n",
+    "stdout_identity": {
+      "byte_count": 127,
+      "lf_count": 1,
+      "sha256": "7259b29b4b7bfbfd9d8ce240d376789a7cc23649d561f3767f224d5ade4de0c8"
+    },
+    "stderr_identity": {
+      "byte_count": 0,
+      "lf_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "emitted_counts": {
+      "residual_open_added_count": 30,
+      "skipped_existing_count": 335,
+      "coarse_fallback_count": 0,
+      "open_genre_count": 0,
+      "cas_objects_written_count": 30,
+      "ledger_changed": true
+    },
+    "manual_canonical_edit_count": 0
+  },
+  "current_report": {
+    "byte_count": 114566,
+    "lf_count": 1145,
+    "sha256": "3f93d5d5669a6a9d37cc82900060ac531ddb9d90a330ebeb0fd7a5121519ccb3"
+  },
+  "new_report_execution_record": {
+    "report_start_byte": 109064,
+    "report_end_byte": 114566,
+    "byte_count": 5502,
+    "lf_count": 90,
+    "sha256": "d08e609eea2b04a2c4f68dd97ddaa67eedd19d7cf4b5dee6eb863cfc3b28e8f9"
+  },
+  "canonical_current_numbered_bindings": [
+    {
+      "unit": "35.1",
+      "atom_id": "0cf8b5394e0a5d90456b3ef68e8e52336845ff65c1b6927a8c46f06aaef41ae4",
+      "cas_path": "Meta/Digestion/atoms/sha256/0cf8b5394e0a5d90456b3ef68e8e52336845ff65c1b6927a8c46f06aaef41ae4",
+      "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/0cf8b5394e0a5d90456b3ef68e8e52336845ff65c1b6927a8c46f06aaef41ae4.yaml",
+      "source_start_byte": 394382,
+      "source_end_byte": 395326,
+      "cas_identity": {
+        "byte_count": 944,
+        "lf_count": 14,
+        "sha256": "0cf8b5394e0a5d90456b3ef68e8e52336845ff65c1b6927a8c46f06aaef41ae4"
+      },
+      "yaml_identity": {
+        "byte_count": 328,
+        "lf_count": 7,
+        "sha256": "7ba320a947a0ef93fdaed02d3e92c7c87ae2f9d75549fe73d4ba3dc499ecb304"
+      },
+      "yaml_fields": {
+        "raw_sha256": "0cf8b5394e0a5d90456b3ef68e8e52336845ff65c1b6927a8c46f06aaef41ae4",
+        "normalized_sha256": "0cf8b5394e0a5d90456b3ef68e8e52336845ff65c1b6927a8c46f06aaef41ae4",
+        "cas_ref": "sha256:0cf8b5394e0a5d90456b3ef68e8e52336845ff65c1b6927a8c46f06aaef41ae4",
+        "children": [],
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "chain_atoms": []
+      },
+      "old_atom_id": "771b0f25b9e534ffc3d3ecc8a0aacf1cfcc0e53297a84d0d71e43d4c6788887e",
+      "whole_source_span_equal_complete_cas": true,
+      "unexplained_normalization": false
+    },
+    {
+      "unit": "35.2",
+      "atom_id": "616dc4ec9e50ffbed77a3bd427d802a6a60549d7699b5ab3981ec9bb2e276579",
+      "cas_path": "Meta/Digestion/atoms/sha256/616dc4ec9e50ffbed77a3bd427d802a6a60549d7699b5ab3981ec9bb2e276579",
+      "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/616dc4ec9e50ffbed77a3bd427d802a6a60549d7699b5ab3981ec9bb2e276579.yaml",
+      "source_start_byte": 395326,
+      "source_end_byte": 396456,
+      "cas_identity": {
+        "byte_count": 1130,
+        "lf_count": 27,
+        "sha256": "616dc4ec9e50ffbed77a3bd427d802a6a60549d7699b5ab3981ec9bb2e276579"
+      },
+      "yaml_identity": {
+        "byte_count": 328,
+        "lf_count": 7,
+        "sha256": "cba56cf4e21a8ac99761d25520a6e2537a4488d4591675657950d10ef7a9af7b"
+      },
+      "yaml_fields": {
+        "raw_sha256": "616dc4ec9e50ffbed77a3bd427d802a6a60549d7699b5ab3981ec9bb2e276579",
+        "normalized_sha256": "616dc4ec9e50ffbed77a3bd427d802a6a60549d7699b5ab3981ec9bb2e276579",
+        "cas_ref": "sha256:616dc4ec9e50ffbed77a3bd427d802a6a60549d7699b5ab3981ec9bb2e276579",
+        "children": [],
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "chain_atoms": []
+      },
+      "old_atom_id": "70be913cb5e94f6f79ca54847909b0e5b91fe96ac10efdde3cea454d09b49f0f",
+      "whole_source_span_equal_complete_cas": true,
+      "unexplained_normalization": false
+    },
+    {
+      "unit": "35.3",
+      "atom_id": "06aeda7fe41f5e7171ebc46fad632e349d779e82ced44176e76ff000364223b1",
+      "cas_path": "Meta/Digestion/atoms/sha256/06aeda7fe41f5e7171ebc46fad632e349d779e82ced44176e76ff000364223b1",
+      "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/06aeda7fe41f5e7171ebc46fad632e349d779e82ced44176e76ff000364223b1.yaml",
+      "source_start_byte": 396456,
+      "source_end_byte": 397412,
+      "cas_identity": {
+        "byte_count": 956,
+        "lf_count": 18,
+        "sha256": "06aeda7fe41f5e7171ebc46fad632e349d779e82ced44176e76ff000364223b1"
+      },
+      "yaml_identity": {
+        "byte_count": 328,
+        "lf_count": 7,
+        "sha256": "ddad022f49d84b940fa66a06992759fbba1506dafd648e4f7a2f855973ee9c3f"
+      },
+      "yaml_fields": {
+        "raw_sha256": "06aeda7fe41f5e7171ebc46fad632e349d779e82ced44176e76ff000364223b1",
+        "normalized_sha256": "06aeda7fe41f5e7171ebc46fad632e349d779e82ced44176e76ff000364223b1",
+        "cas_ref": "sha256:06aeda7fe41f5e7171ebc46fad632e349d779e82ced44176e76ff000364223b1",
+        "children": [],
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "chain_atoms": []
+      },
+      "old_atom_id": "990fa0ab0a0ae1c94facc569facf781d7d2b158fec56e7bad314c5c251ad957e",
+      "whole_source_span_equal_complete_cas": true,
+      "unexplained_normalization": false
+    },
+    {
+      "unit": "35.4",
+      "atom_id": "c6f188da5eee3134566c548c63cdce99f77e208ff2891a0a7fe4e0ef769fd8d1",
+      "cas_path": "Meta/Digestion/atoms/sha256/c6f188da5eee3134566c548c63cdce99f77e208ff2891a0a7fe4e0ef769fd8d1",
+      "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/c6f188da5eee3134566c548c63cdce99f77e208ff2891a0a7fe4e0ef769fd8d1.yaml",
+      "source_start_byte": 397412,
+      "source_end_byte": 398433,
+      "cas_identity": {
+        "byte_count": 1021,
+        "lf_count": 22,
+        "sha256": "c6f188da5eee3134566c548c63cdce99f77e208ff2891a0a7fe4e0ef769fd8d1"
+      },
+      "yaml_identity": {
+        "byte_count": 328,
+        "lf_count": 7,
+        "sha256": "9f4df5c442d8cc40208170c1369f3622477e9aeda11d7266eedb78cfeac009bd"
+      },
+      "yaml_fields": {
+        "raw_sha256": "c6f188da5eee3134566c548c63cdce99f77e208ff2891a0a7fe4e0ef769fd8d1",
+        "normalized_sha256": "c6f188da5eee3134566c548c63cdce99f77e208ff2891a0a7fe4e0ef769fd8d1",
+        "cas_ref": "sha256:c6f188da5eee3134566c548c63cdce99f77e208ff2891a0a7fe4e0ef769fd8d1",
+        "children": [],
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "chain_atoms": []
+      },
+      "old_atom_id": "a878e1b5ffc8e1616f9ef7a999891687b780af72f49fe1d18b8a01b8451678ce",
+      "whole_source_span_equal_complete_cas": true,
+      "unexplained_normalization": false
+    },
+    {
+      "unit": "35.5",
+      "atom_id": "6b0f7d720e64167a3e147c64d0afcca3aa43c7ad8ab331d439a49100340b5787",
+      "cas_path": "Meta/Digestion/atoms/sha256/6b0f7d720e64167a3e147c64d0afcca3aa43c7ad8ab331d439a49100340b5787",
+      "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/6b0f7d720e64167a3e147c64d0afcca3aa43c7ad8ab331d439a49100340b5787.yaml",
+      "source_start_byte": 398433,
+      "source_end_byte": 399754,
+      "cas_identity": {
+        "byte_count": 1321,
+        "lf_count": 25,
+        "sha256": "6b0f7d720e64167a3e147c64d0afcca3aa43c7ad8ab331d439a49100340b5787"
+      },
+      "yaml_identity": {
+        "byte_count": 328,
+        "lf_count": 7,
+        "sha256": "b083ec0efef9282df39fd1f5516be42c4113c10bdc544f041c42bb6b3e9ce086"
+      },
+      "yaml_fields": {
+        "raw_sha256": "6b0f7d720e64167a3e147c64d0afcca3aa43c7ad8ab331d439a49100340b5787",
+        "normalized_sha256": "6b0f7d720e64167a3e147c64d0afcca3aa43c7ad8ab331d439a49100340b5787",
+        "cas_ref": "sha256:6b0f7d720e64167a3e147c64d0afcca3aa43c7ad8ab331d439a49100340b5787",
+        "children": [],
+        "coverage_gids": [],
+        "unresolved_subitems": [],
+        "chain_atoms": []
+      },
+      "old_atom_id": "1ca358cfd4427b86866254df9176d3d0ecc019db38eb0dacc04cd2f569c85a45",
+      "whole_source_span_equal_complete_cas": true,
+      "unexplained_normalization": false
+    },
+    {
+      "unit": "35.6",
+      "atom_id": "7cf40fc63902da128f888a1e5a697f4d519420595c1a0805058cb10f5d54ebe6",

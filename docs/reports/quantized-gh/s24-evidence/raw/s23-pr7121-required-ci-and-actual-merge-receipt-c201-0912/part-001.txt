@@ -1,0 +1,94 @@
+{
+  "at_utc": "2026-09-11T21:31:40.029953+00:00",
+  "PR": 7121,
+  "url": "https://github.com/the-omega-institute/trureturing/pull/7121",
+  "state": "MERGED",
+  "merged_at": "2026-09-11T21:28:48Z",
+  "head": "d6ccbbd956af57eb856c5ec1936d3f1221e18caf",
+  "merge_commit": "ce86420779706418a8f51a5ba6dfc83c527259e8",
+  "base_ref": "dev",
+  "required_contract_ref": "/tmp/qgh-boundaries-0908/s23-pr7121-required-contract-c201-0912.json",
+  "required_strict": false,
+  "required_checks": [
+    {
+      "name": "Candidate harness engineering checks",
+      "id": 103425366887,
+      "app_id": 15368,
+      "head_sha": "d6ccbbd956af57eb856c5ec1936d3f1221e18caf",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/the-omega-institute/trureturing/actions/runs/34648645119/job/103425366887",
+      "started_at": "2026-09-11T21:17:42Z",
+      "completed_at": "2026-09-11T21:28:35Z"
+    },
+    {
+      "name": "Canonical Lean report production",
+      "id": 103425366638,
+      "app_id": 15368,
+      "head_sha": "d6ccbbd956af57eb856c5ec1936d3f1221e18caf",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/the-omega-institute/trureturing/actions/runs/34648645119/job/103425366638",
+      "started_at": "2026-09-11T21:17:42Z",
+      "completed_at": "2026-09-11T21:20:48Z"
+    },
+    {
+      "name": "Content-addressed dev baseline admission",
+      "id": 103426220927,
+      "app_id": 15368,
+      "head_sha": "d6ccbbd956af57eb856c5ec1936d3f1221e18caf",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/the-omega-institute/trureturing/actions/runs/34648645119/job/103426220927",
+      "started_at": "2026-09-11T21:20:53Z",
+      "completed_at": "2026-09-11T21:22:45Z"
+    }
+  ],
+  "all_current_required_checks_success_with_matching_app_and_head": true,
+  "run": {
+    "id": 34648645119,
+    "event": "pull_request_target",
+    "path": ".github/workflows/ci.yml",
+    "head_sha": "d6ccbbd956af57eb856c5ec1936d3f1221e18caf",
+    "status": "completed",
+    "conclusion": "success",
+    "run_attempt": 1,
+    "html_url": "https://github.com/the-omega-institute/trureturing/actions/runs/34648645119"
+  },
+  "canonical_make_exit": 0,
+  "canonical_watch_result": "PR_WATCH_RESULT pr=7121 outcome=green",
+  "terminal_host": 27715,
+  "never_wait_terminal_host_again": true,
+  "canonical_lifecycle_ref": "/tmp/qgh-boundaries-0908/s23-canonical-pr-open-c201-0912.json",
+  "actual_merge_path_identity_ref": "/tmp/qgh-boundaries-0908/s23-actual-merge-reviewed-path-identity-check-c201-0912.json",
+  "all133_reviewed_delta_paths_exactly_preserved_in_merge": true,
+  "source_sha256": "75e41aeca17b0343d6ecb5cb16e6cee13d7a64f8f798556921351e855c3e6af9",
+  "source_bytes": 440285,
+  "source_LF": 8740,
+  "source_units": 345,
+  "source_review_settlement_ref": "/tmp/qgh-boundaries-0908/s23-r2-all-intakes-source-approval-and-target-release-0912.json",
+  "method_violations": [
+    {
+      "role": "quality",
+      "original_ref": "/tmp/qgh-boundaries-0908/s23-quality-original-result-r2-0912.json",
+      "event": "1834 inherited canonical files physically read contrary to C186.",
+      "waived": false,
+      "candidate_source_defect_established": false
+    },
+    {
+      "role": "architecture",
+      "original_ref": "/tmp/qgh-boundaries-0908/s23-architecture-cli-fallback-original-result-r2-0912.json",
+      "event": "Prohibited supplied historical public CI-excerpt bytes reconstructed/written; reviewer reports parsing failed before semantic reading and no use for approval.",
+      "waived": false,
+      "candidate_source_defect_established": false
+    }
+  ],
+  "new_mathematical_validation": false,
+  "source_delivery_complete": true,
+  "source_delivery_scope": "S23 exact fully reviewed supplied source and representation; no whole-goal or RH completion.",
+  "next": "Ordered S24 composition on this actual merge, then fresh full review, ordinary gates and actual merge; S25-S26 and17pending groups remain.",
+  "goal_status": "active",
+  "whole_goal_complete": false,
+  "PR6741": "CLOSED/unmerged/neverreopen",
+  "private_diagnostics_opened": false
+}

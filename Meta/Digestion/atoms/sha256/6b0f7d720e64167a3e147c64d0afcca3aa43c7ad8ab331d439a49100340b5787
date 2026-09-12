@@ -1,0 +1,25 @@
+**35.5 Proposition (Stone-Weierstrass passage to continuous functions).** Finite complex
+linear combinations of the restricted characters form a unital algebra:
+products add their integer indices and complex conjugation negates them.
+The coordinate characters separate distinct torus points, hence separate
+points of \(H\). The complex Stone-Weierstrass theorem makes this algebra
+uniformly dense in \(C(H)\). Given \(f\in C(H)\) and \(\varepsilon>0\),
+choose a finite character combination \(P\) with
+\(\|f-P\|_\infty<\varepsilon\). Its orbit averages converge uniformly by
+35.4, while both its integral error and average error relative to \(f\)
+are at most \(\varepsilon\). Consequently
+\[
+\limsup_{M\to\infty}\sup_{x\in H}
+\left|\frac1M\sum_{n=1}^M f(x+n\alpha)-\int_H f\,d\mu_H\right|
+\le2\varepsilon.
+\]
+Letting \(\varepsilon\downarrow0\) proves uniform continuous
+equidistribution on the actual group \(H\). This is the classical character
+form of the Weyl criterion, here proved in the precise form needed.
+
+Mathematical citation: Tom Meyerovitch,
+*Well-distribution of polynomial maps on locally compact groups*,
+arXiv:2210.01429v2, Proposition 3.2 (PDF page 8), for Haar distribution
+on the closure of a homomorphism's image, and Lemma 5.3 (PDF page 11),
+for the compact metrizable abelian character criterion.
+

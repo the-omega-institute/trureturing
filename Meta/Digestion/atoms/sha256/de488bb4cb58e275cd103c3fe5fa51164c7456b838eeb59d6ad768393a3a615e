@@ -1,0 +1,26 @@
+**35.20 Feasibility, nonempty wider domains and positive support.** The least
+corner total is \(A_n\). Two distinct admitted totals imply \(M_1>A_n\),
+so \(y=0\) is feasible in 35.19. The feasible polytope is closed and bounded;
+its objective is continuous on positive endpoints, so \(D\) exists as an
+attained finite maximum. The wider domain itself is nonempty: the closed
+interval between the largest two corner totals has positive width and
+contains both of them. This does not yet check the original strict cutoff.
+
+For an admitted corner \(v\), let \(\bar v=\sum_i v_i/3\in I\) and
+\(w_i=v_i-T_n\ge0\). Then
+\[
+\sum_i\operatorname{dist}(I,C_i)^2\le\sum_i(v_i-\bar v)^2
+=\sum_i w_i^2-3(\bar v-T_n)^2
+\le6(\bar v-T_n)^2.
+\]
+The last step uses \(\sum_iw_i^2\le(\sum_iw_i)^2=9(\bar v-T_n)^2\),
+valid also when some \(w_i=0\). It follows that
+\[
+0\le\rho\le\bar v-T_n\le\mu-T_n,\qquad
+H_{\rm env}\ge L_{\rm env}\ge T_n>0.
+\]
+Thus both envelope arguments and all prime-power endpoints have positive
+support. The proof includes budget endpoints at corners, negative lower
+budgets, zero radius, saturated LPs, ties of optimal mixtures and any finite
+upper slack; no stable greedy order or critical-node topology is assumed.
+

@@ -1,0 +1,14 @@
+{
+"schema":"s24-supplied-input-identities-v1",
+"original_inputs":[
+{"path":"/tmp/qgh-boundaries-0908/s24-explicit-original-increment-for-composition-c201-0912/original-inputs/original-i28-map.json","identity":{"bytes":250090,"lf":5844,"lines":5844,"terminal_lf":1,"sha256":"a8dc3eccb549a2790b47fcdd6aa4ccf29f92785a2901739c408e712339f904ca","git_blob_oid":"28cf715469c65a7e4716cb287bce61bd111c6f10"}},
+{"path":"/tmp/qgh-boundaries-0908/s24-explicit-original-increment-for-composition-c201-0912/original-inputs/original-i28-report.md","identity":{"bytes":114566,"lf":1145,"lines":1145,"terminal_lf":1,"sha256":"3f93d5d5669a6a9d37cc82900060ac531ddb9d90a330ebeb0fd7a5121519ccb3","git_blob_oid":"d78df9e5186a181ba1922605843701f9592acd9a"}},
+{"path":"/tmp/qgh-boundaries-0908/s24-explicit-original-increment-for-composition-c201-0912/original-inputs/original-i28-source.md","identity":{"bytes":426629,"lf":8222,"lines":8222,"terminal_lf":2,"sha256":"7818afcbb4ed1894090a7200a4eaf9b4d503e16d18a4a9f0fc7fd4de97df7d45","git_blob_oid":"a34e487a3ff4e56f6a8cc3ee17ad9c7fbcd5a561"}},
+{"path":"/tmp/qgh-boundaries-0908/s24-explicit-original-increment-for-composition-c201-0912/original-inputs/original-pre-i28-report.md","identity":{"bytes":88644,"lf":565,"lines":565,"terminal_lf":1,"sha256":"d2f8da398f59f3e89190a53dd3c8a0313b88f5d5896f5377bbc2c460b4ce20d4","git_blob_oid":"0a6da6961b95c0b965ff889b3d0feca72465d8af"}},
+{"path":"/tmp/qgh-boundaries-0908/s24-explicit-original-increment-for-composition-c201-0912/original-inputs/original-pre-i28-source.md","identity":{"bytes":432403,"lf":8304,"lines":8304,"terminal_lf":1,"sha256":"09702761d0d445ab798d54d6a1d26394394aa330e219400617ea46373871dc71","git_blob_oid":"dda5f698e62e2b9f30562ea7ee6d07d9136db909"}},
+{"path":"/tmp/qgh-boundaries-0908/s24-explicit-original-increment-for-composition-c201-0912/original-inputs/owned-chapter35.md","identity":{"bytes":32331,"lf":650,"lines":650,"terminal_lf":2,"sha256":"800c0028c287ddb41bb49448ba250a7f09b3bbe03cf15a41738b3c7721ec26d1","git_blob_oid":"95bb8890a19628ff7facc0b684a44847e9b22896"}}
+],
+"actual_predecessor":{"path":"/tmp/qgh-boundaries-0908/s24-actual-s23-predecessor-preparation-c202-0912/merged-s23-source.md","identity":{"bytes":440285,"lf":8740,"lines":8740,"terminal_lf":1,"sha256":"75e41aeca17b0343d6ecb5cb16e6cee13d7a64f8f798556921351e855c3e6af9","git_blob_oid":"a31e65915bed487d4566d1547bbc52b0e365d9b3"}},
+"historical_cache":{"path":"/tmp/qgh-boundaries-0908/s23-full-composed-review-r2-c196-0912.tar.xz","sha256":"a7ef1526c6a82fcc96d5d0fb83381255ba9b14f3aca92219dd97651702cab113"},
+"imports_manifest":{"path":"/tmp/qgh-boundaries-0908/s24-explicit-original-increment-for-composition-c201-0912/manifest.json","identity":{"bytes":91723,"lf":1902,"lines":1902,"terminal_lf":1,"sha256":"78cb163d44c1466045f88fa996dedab6fc9f3f8096f56ef57eec0615a5c656ea","git_blob_oid":"815e2c7232c744c98a4da6ff7f17fcaffec4741b"}}
+}
