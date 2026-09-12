@@ -238,4 +238,25 @@ private theorem count_top_of_mem (n : ℕ) (hn : 0 < n) (w : List ℕ)
       omega
     simp [hm, count_eq_zero_of_maxLabel_lt w n hlt]
 
+private theorem countFiber (n : ℕ) (hn : 0 < n) (w : List ℕ)
+    (hw : w ∈ words n) :
+    (Finset.Icc 1 (maxLabel w + 1)).sum (fun x => (x :: w).count n) =
+      if maxLabel w = n then n + 2 else if maxLabel w + 1 = n then 1 else 0 := by
+  have hsum : (Finset.Icc 1 (maxLabel w + 1)).sum (fun x => (x :: w).count n) =
+      (Finset.Icc 1 (maxLabel w + 1)).card * w.count n +
+        (Finset.Icc 1 (maxLabel w + 1)).sum (fun x => if x = n then 1 else 0) := by
+    simp only [List.count_cons, beq_iff_eq, Finset.sum_add_distrib,
+      Finset.sum_const, Nat.nsmul_eq_mul]
+  rw [hsum, count_top_of_mem n hn w hw]
+  by_cases hm : maxLabel w = n
+  · have h1 : 1 ≤ n := hn
+    simp [hm, Finset.mem_Icc, Nat.card_Icc, h1]
+  · by_cases hnear : maxLabel w + 1 = n
+    · have hn0 : n ≠ 0 := by omega
+      simp [hm, hnear, Finset.mem_Icc, Nat.card_Icc, hn0]
+    · have hfar : maxLabel w + 1 < n := by
+        have hb := maxLabel_le_length n w hw
+        omega
+      simp [hm, hnear, hfar, Finset.mem_Icc, Nat.card_Icc]
+
 end D5.S1.Recurrence.Invariants.RestrictedGrowthLabelOccurrences
