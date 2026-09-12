@@ -326,6 +326,50 @@ private theorem count_top_of_mem (n : ℕ) (hn : 0 < n) (w : List ℕ)
       omega
     simp [hm, count_eq_zero_of_maxLabel_lt w n hlt]
 
+private theorem sum_count_fiber (w : List ℕ) (p : ℕ) (hp : 0 < p) :
+    (Finset.Icc 1 (maxLabel w + 1)).sum (fun x => (x :: w).count p) =
+      (maxLabel w + 1) * w.count p +
+        (if p ≤ maxLabel w + 1 then 1 else 0) := by
+  have hsum : (Finset.Icc 1 (maxLabel w + 1)).sum (fun x => (x :: w).count p) =
+      (Finset.Icc 1 (maxLabel w + 1)).card * w.count p +
+        (Finset.Icc 1 (maxLabel w + 1)).sum (fun x => if x = p then 1 else 0) := by
+    simp only [List.count_cons, beq_iff_eq, Finset.sum_add_distrib,
+      Finset.sum_const, Nat.nsmul_eq_mul]
+  rw [hsum]
+  simp [Nat.card_Icc, Finset.mem_Icc, show 1 ≤ p from hp]
+
+private theorem count_topWord_pred (k : ℕ) :
+    (topWord (k + 2)).count (k + 1) = 1 := by
+  have hne : k + 2 ≠ k + 1 := by omega
+  have hzero := count_eq_zero_of_maxLabel_lt (topWord k) (k + 1)
+    (by simp [maxLabel_topWord])
+  simp [topWord, hzero]
+
+private theorem secondLabelFiber (k : ℕ) (w : List ℕ)
+    (hw : w ∈ words (k + 2)) :
+    (Finset.Icc 1 (maxLabel w + 1)).sum (fun x => (x :: w).count (k + 1)) =
+      (k + 2) * w.count (k + 1) +
+        (if maxLabel w = k + 2 then 2 else 0) +
+        (if maxLabel w = k + 1 then 1 else 0) +
+        (if maxLabel w = k then 1 else 0) := by
+  rw [sum_count_fiber w (k + 1) (by omega)]
+  have hb := maxLabel_le_length (k + 2) w hw
+  by_cases htop : maxLabel w = k + 2
+  · have heq := eq_topWord_of_maxLabel_eq (k + 2) w hw htop
+    have hc : w.count (k + 1) = 1 := by simpa [heq] using count_topWord_pred k
+    simp [htop, hc]
+  · by_cases hnear : maxLabel w = k + 1
+    · simp [hnear]
+    · by_cases hdouble : maxLabel w = k
+      · have hc : w.count (k + 1) = 0 := count_eq_zero_of_maxLabel_lt w (k + 1)
+          (by omega)
+        simp [hdouble, hc]
+      · have hsmall : maxLabel w < k := by omega
+        have hc : w.count (k + 1) = 0 := count_eq_zero_of_maxLabel_lt w (k + 1)
+          (by omega)
+        simp [hc, htop, hnear, hdouble]
+        omega
+
 private theorem countFiber (n : ℕ) (hn : 0 < n) (w : List ℕ)
     (hw : w ∈ words n) :
     (Finset.Icc 1 (maxLabel w + 1)).sum (fun x => (x :: w).count n) =
