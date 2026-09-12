@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Finite fractional knapsack admits a greedy maximizer and an attaining nonnegative dual price. -/
+   digest: Greedy allocation attains the finite fractional-knapsack primal and dual optima. -/
 
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Finset.Max
@@ -35,8 +35,8 @@ def Feasible [Fintype ι] (w : ι → ℝ) (B : ℝ) (t : ι → ℝ) : Prop :=
 def objective [Fintype ι] (v t : ι → ℝ) : ℝ := ∑ i, v i * t i
 
 /-- The upper bound obtained by pricing the budget and maximizing each box coordinate. -/
-def dualValue [Fintype ι] (w v : ι → ℝ) (B λ : ℝ) : ℝ :=
-  λ * B + ∑ i, max 0 (v i - λ * w i)
+def dualValue [Fintype ι] (w v : ι → ℝ) (B price : ℝ) : ℝ :=
+  price * B + ∑ i, max 0 (v i - price * w i)
 
 private theorem box_bound (c t : ℝ) (ht : t ∈ Set.Icc 0 1) :
     c * t ≤ max 0 c := by
@@ -46,14 +46,14 @@ private theorem box_bound (c t : ℝ) (ht : t ∈ Set.Icc 0 1) :
   · rw [max_eq_left hc]
     exact mul_nonpos_of_nonpos_of_nonneg hc ht.1
 
-private theorem weak_duality [Fintype ι] (w v : ι → ℝ) (B λ : ℝ)
-    (hλ : 0 ≤ λ) (t : ι → ℝ) (ht : Feasible w B t) :
-    objective v t ≤ dualValue w v B λ := by
+private theorem weak_duality [Fintype ι] (w v : ι → ℝ) (B price : ℝ)
+    (hprice : 0 ≤ price) (t : ι → ℝ) (ht : Feasible w B t) :
+    objective v t ≤ dualValue w v B price := by
   have hsum := Finset.sum_le_sum (s := Finset.univ)
-    (fun i _ => box_bound (v i - λ * w i) (t i) (ht.1 i))
-  have hbudget := mul_le_mul_of_nonneg_left ht.2 hλ
-  have hid : (∑ i, (v i - λ * w i) * t i) =
-      objective v t - λ * ∑ i, w i * t i := by
+    (fun i _ => box_bound (v i - price * w i) (t i) (ht.1 i))
+  have hbudget := mul_le_mul_of_nonneg_left ht.2 hprice
+  have hid : (∑ i, (v i - price * w i) * t i) =
+      objective v t - price * ∑ i, w i * t i := by
     simp only [objective, sub_mul, Finset.sum_sub_distrib, mul_assoc,
       Finset.mul_sum]
   rw [hid] at hsum
@@ -61,21 +61,21 @@ private theorem weak_duality [Fintype ι] (w v : ι → ℝ) (B λ : ℝ)
   linarith
 
 private structure GreedyData (w v : ι → ℝ) (B : ℝ)
-    (s : Finset ι) (l : List ι) (λ : ℝ) : Prop where
+    (s : Finset ι) (l : List ι) (price : ℝ) : Prop where
   nodup : l.Nodup
   covers : l.toFinset = s
   sorted : l.Pairwise (fun i j => v j / w j ≤ v i / w i)
-  price_nonneg : 0 ≤ λ
-  price_source : λ = 0 ∨ ∃ i ∈ s, λ = v i / w i
+  price_nonneg : 0 ≤ price
+  price_source : price = 0 ∨ ∃ i ∈ s, price = v i / w i
   box : ∀ i ∈ s, greedyFill w l B i ∈ Set.Icc 0 1
   budget : (∑ i ∈ s, w i * greedyFill w l B i) ≤ B
-  slack : λ * (B - ∑ i ∈ s, w i * greedyFill w l B i) = 0
+  slack : price * (B - ∑ i ∈ s, w i * greedyFill w l B i) = 0
   coordinate : ∀ i ∈ s,
-    (v i - λ * w i) * greedyFill w l B i = max 0 (v i - λ * w i)
+    (v i - price * w i) * greedyFill w l B i = max 0 (v i - price * w i)
 
 private theorem greedy_data (w v : ι → ℝ) (hw : ∀ i, 0 < w i)
     (hv : ∀ i, 0 ≤ v i) (s : Finset ι) :
-    ∀ B : ℝ, 0 ≤ B → ∃ l λ, GreedyData w v B s l λ := by
+    ∀ B : ℝ, 0 ≤ B → ∃ l price, GreedyData w v B s l price := by
   induction s using Finset.induction_on_max_value (fun i => v i / w i) with
   | empty =>
     intro B hB
@@ -84,19 +84,19 @@ private theorem greedy_data (w v : ι → ℝ) (hw : ∀ i, 0 < w i)
   | insert a s ha hmax ih =>
     intro B hB
     by_cases hfit : w a ≤ B
-    · obtain ⟨l, λ, h⟩ := ih (B - w a) (sub_nonneg.mpr hfit)
+    · obtain ⟨l, price, h⟩ := ih (B - w a) (sub_nonneg.mpr hfit)
       have hal : a ∉ l := by
         intro hal
         exact ha (h.covers ▸ List.mem_toFinset.mpr hal)
       have hsorted : (a :: l).Pairwise (fun i j => v j / w j ≤ v i / w i) :=
         List.pairwise_cons.mpr ⟨fun i hi => hmax i (h.covers ▸ List.mem_toFinset.mpr hi),
           h.sorted⟩
-      have hλ : λ ≤ v a / w a := by
+      have hprice : price ≤ v a / w a := by
         rcases h.price_source with hz | ⟨i, hi, rfl⟩
         · rw [hz]; exact div_nonneg (hv a) (hw a).le
         · exact hmax i hi
-      have hcoef : 0 ≤ v a - λ * w a :=
-        sub_nonneg.mpr ((le_div_iff₀ (hw a)).mp hλ)
+      have hcoef : 0 ≤ v a - price * w a :=
+        sub_nonneg.mpr ((le_div_iff₀ (hw a)).mp hprice)
       have hself : greedyFill w (a :: l) B a = 1 := by simp [greedyFill, hfit]
       have hother (i : ι) (hi : i ∈ s) :
           greedyFill w (a :: l) B i = greedyFill w l (B - w a) i := by
@@ -107,7 +107,7 @@ private theorem greedy_data (w v : ι → ℝ) (hw : ∀ i, 0 < w i)
         rw [Finset.sum_insert ha, hself, mul_one]
         congr 1
         exact Finset.sum_congr rfl (fun i hi => by rw [hother i hi])
-      refine ⟨a :: l, λ, {
+      refine ⟨a :: l, price, {
         nodup := List.nodup_cons.mpr ⟨hal, h.nodup⟩
         covers := by simp [h.covers]
         sorted := hsorted
@@ -172,8 +172,8 @@ private theorem greedy_data (w v : ι → ℝ) (hw : ∀ i, 0 < w i)
           rw [hother i hi, mul_zero, max_eq_left hcoef]
 
 private theorem optimal_values_of_attainment [Fintype ι]
-    (w v : ι → ℝ) (B λ : ℝ) (t : ι → ℝ) (ht : Feasible w B t)
-    (hλ : 0 ≤ λ) (heq : objective v t = dualValue w v B λ) :
+    (w v : ι → ℝ) (B price : ℝ) (t : ι → ℝ) (ht : Feasible w B t)
+    (hprice : 0 ≤ price) (heq : objective v t = dualValue w v B price) :
     sSup (objective v '' {u | Feasible w B u}) = objective v t ∧
       (⨅ p : {p : ℝ // 0 ≤ p}, dualValue w v B p) = objective v t := by
   constructor
@@ -181,39 +181,39 @@ private theorem optimal_values_of_attainment [Fintype ι]
     refine ⟨⟨t, ht, rfl⟩, ?_⟩
     rintro z ⟨u, hu, rfl⟩
     rw [heq]
-    exact weak_duality w v B λ hλ u hu
+    exact weak_duality w v B price hprice u hu
   · change sInf (Set.range (fun p : {p : ℝ // 0 ≤ p} => dualValue w v B p)) = _
     apply IsLeast.csInf_eq
-    refine ⟨⟨⟨λ, hλ⟩, heq.symm⟩, ?_⟩
+    refine ⟨⟨⟨price, hprice⟩, heq.symm⟩, ?_⟩
     rintro z ⟨p, rfl⟩
     exact weak_duality w v B p p.property t ht
 
 /-- A decreasing-ratio ordering yields a feasible greedy maximizer and an attaining dual price. -/
 theorem greedy_attains_duality [Fintype ι] (w v : ι → ℝ) (B : ℝ)
     (hw : ∀ i, 0 < w i) (hv : ∀ i, 0 ≤ v i) (hB : 0 ≤ B) :
-    ∃ (l : List ι) (λ : ℝ),
+    ∃ (l : List ι) (price : ℝ),
       l.Nodup ∧ l.toFinset = Finset.univ ∧
       l.Pairwise (fun i j => v j / w j ≤ v i / w i) ∧
-      Feasible w B (greedyFill w l B) ∧ 0 ≤ λ ∧
-      λ * (B - ∑ i, w i * greedyFill w l B i) = 0 ∧
-      (∀ i, (v i - λ * w i) * greedyFill w l B i = max 0 (v i - λ * w i)) ∧
-      objective v (greedyFill w l B) = dualValue w v B λ ∧
+      Feasible w B (greedyFill w l B) ∧ 0 ≤ price ∧
+      price * (B - ∑ i, w i * greedyFill w l B i) = 0 ∧
+      (∀ i, (v i - price * w i) * greedyFill w l B i = max 0 (v i - price * w i)) ∧
+      objective v (greedyFill w l B) = dualValue w v B price ∧
       sSup (objective v '' {t | Feasible w B t}) = objective v (greedyFill w l B) ∧
       (⨅ p : {p : ℝ // 0 ≤ p}, dualValue w v B p) = objective v (greedyFill w l B) := by
-  obtain ⟨l, λ, h⟩ := greedy_data w v hw hv Finset.univ B hB
+  obtain ⟨l, price, h⟩ := greedy_data w v hw hv Finset.univ B hB
   have ht : Feasible w B (greedyFill w l B) :=
     ⟨fun i => h.box i (Finset.mem_univ i), h.budget⟩
   have hcoord (i : ι) := h.coordinate i (Finset.mem_univ i)
-  have heq : objective v (greedyFill w l B) = dualValue w v B λ := by
+  have heq : objective v (greedyFill w l B) = dualValue w v B price := by
     have hs := Finset.sum_congr (s₁ := Finset.univ) rfl (fun i _ => hcoord i)
-    have hid : (∑ i, (v i - λ * w i) * greedyFill w l B i) =
-        objective v (greedyFill w l B) - λ * ∑ i, w i * greedyFill w l B i := by
+    have hid : (∑ i, (v i - price * w i) * greedyFill w l B i) =
+        objective v (greedyFill w l B) - price * ∑ i, w i * greedyFill w l B i := by
       simp only [objective, sub_mul, Finset.sum_sub_distrib, mul_assoc, Finset.mul_sum]
     rw [hid] at hs
     dsimp [dualValue]
     nlinarith [h.slack]
-  exact ⟨l, λ, h.nodup, h.covers, h.sorted, ht, h.price_nonneg, h.slack, hcoord, heq,
-    optimal_values_of_attainment w v B λ (greedyFill w l B) ht h.price_nonneg heq⟩
+  exact ⟨l, price, h.nodup, h.covers, h.sorted, ht, h.price_nonneg, h.slack, hcoord, heq,
+    optimal_values_of_attainment w v B price (greedyFill w l B) ht h.price_nonneg heq⟩
 
 /-- With enough budget, filling every item is optimal and the zero price attains the dual. -/
 theorem full_budget_optimum [Fintype ι] (w v : ι → ℝ) (B : ℝ)
@@ -241,7 +241,7 @@ theorem fractional_knapsack_strong_duality [Fintype ι] (w v : ι → ℝ) (B : 
   by_cases hcapacity : (∑ i, w i) ≤ B
   · obtain ⟨_, hp, hd, _⟩ := full_budget_optimum w v B hv hcapacity
     exact hp.trans hd.symm
-  · obtain ⟨l, λ, _, _, _, _, _, _, _, _, hp, hd⟩ :=
+  · obtain ⟨l, price, _, _, _, _, _, _, _, _, hp, hd⟩ :=
       greedy_attains_duality w v B hw hv hB
     exact hp.trans hd.symm
 
