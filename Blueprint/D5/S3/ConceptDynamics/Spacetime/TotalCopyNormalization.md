@@ -62,7 +62,7 @@ Lean statement: `D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.Normaliz
 
 *Commentary.*
 
-A closed subtree folds to its successful complete value. A positive-count unary node retains its operation. A positive-count binary node preserves both ordered children and changes temporal to parallel. Exact correctness uses old-event injections with the fixed integer shift of each occurrence path. Two input-bearing temporal children are obstructed by one shared inactive history with distinct events at minus L and plus L. A fixed nonempty opposite archive is obstructed by arbitrarily early or late inactive events. Each surviving temporal node therefore has a closed empty-archive side. Its temporal and parallel values are literally equal, retaining the same tags, attributes, causal relation, current region and selection.
+A closed subtree folds to its successful complete value. A positive-count unary node retains its operation. A positive-count binary node preserves both ordered children and changes temporal to parallel. Every target of this relation is temporal-free: the closed and input cases are free, unary nodes inherit the child property, and binary nodes inherit both child properties while removing the temporal tag. Exact correctness uses old-event injections with the fixed integer shift of each occurrence path. Two input-bearing temporal children are obstructed by one shared inactive history with distinct events at minus L and plus L. A fixed nonempty opposite archive is obstructed by arbitrarily early or late inactive events. Each surviving temporal node therefore has a closed empty-archive side. Its temporal and parallel values are literally equal, retaining the same tags, attributes, causal relation, current region and selection.
 
 **Definition 1.6 (Every Def16 word has exactly one input occurrence).**
 
@@ -99,6 +99,8 @@ Lean statement: `D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.total_co
 *Commentary.*
 
 Every finite positive-count diagonally total copy tree admits a temporal-free normal tree with the same ordered occurrences and exactly the same diagonal Option denotation. The normal tree succeeds for every independent assignment. Every occurrence has a fixed temporal-free Def16 word, exact folded-tree reification, exact independent slice denotation and total evaluation on every input. The common zero has empty archive, current region and selection. There is one complete value Z of the original tree at zero, and every slice at zero is literally that same Z. Z itself may have a nonempty archive. Applying the theorem to wordToCopy of any total Def16 word gives a total temporal-free word with exactly the same denotation on every input, including the common zero value.
+
+Normalization constructs the relation and the guarded evaluation equality. Course-of-values induction on the relation supplies temporal-freedom of its target, which guarantees totality for every independent assignment and the complete zero values used in the slices.
 
 Exact anonymous Def16 derivation using the private bridge in this owner:
 

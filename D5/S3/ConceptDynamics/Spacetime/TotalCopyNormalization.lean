@@ -29,7 +29,7 @@ abbrev SourceTimedAttribute := (Fin 3 → Int) × {s : Int // s = 1 ∨ s = -1} 
 
 /-- The source order is position, signed integer, source tree, time. -/
 def sourceAttributeEquiv : Attributes 3 ≃ SourceTimedAttribute where
-  toFun a := (a.position, ⟨if a.positive then 1 else -1, by cases a.positive <;> simp⟩,
+  toFun a := (a.position, (if a.positive then ⟨1, Or.inl rfl⟩ else ⟨-1, Or.inr rfl⟩),
     a.source, a.time)
   invFun a := ⟨a.2.2.2, a.1, decide (a.2.1.val = 1), a.2.2.1⟩
   left_inv a := by cases a with | mk t p b r => cases b <;> rfl
@@ -41,6 +41,8 @@ private def filterBalanced (P : (c : Context 3) → c.Event → Prop) (x : B) : 
   ⟨⟨x.val.1, ⟨x.val.2.val.filter (P x.val.1),
     (Finset.filter_subset _ _).trans x.val.2.property⟩⟩, x.property⟩
 
+set_option genSizeOfSpec false in
+set_option genInjectivity false in
 inductive Unary where
   | complement
   | spatial (S : Set (Fin 3 → Int))
@@ -48,9 +50,10 @@ inductive Unary where
   | causal (Q : Set SourceTimedAttribute)
   | shift (k : Int)
 
+set_option genSizeOfSpec false in
+set_option genInjectivity false in
 inductive Binary where
   | parallel | product | temporal
-  deriving DecidableEq
 
 /-- Every filter changes only selection; targets are current, possibly unselected. -/
 def unary : Unary → B → B
@@ -73,6 +76,8 @@ abbrev nativeSignature : PartialSignature B (Unary ⊕ Binary) where
   operation | .inl f, xs => some (unary f (xs 0))
             | .inr f, xs => binary f (xs 0) (xs 1)
 
+set_option genSizeOfSpec false in
+set_option genInjectivity false in
 /-- The index counts occurrences in left-to-right order, including repeated inputs. -/
 inductive CopyTerm : Nat → Type where
   | input : CopyTerm 1
@@ -137,14 +142,20 @@ private def pathShift : {n : Nat} → CopyTerm n → Fin n → Int
   | _, .unary f a, i => pathShift a i + unaryShift f
   | _, .binary _ a b, i => Fin.addCases (pathShift a) (pathShift b) i
 
+private theorem pathShift_unary {n : Nat} (f : Unary) (a : CopyTerm n) (i : Fin n) :
+    pathShift (.unary f a) i = pathShift a i + unaryShift f := by
+  conv_lhs =>
+    delta pathShift
+    rw [CopyTerm.brecOn.eq (motive := fun n _ => Fin n → Int) (.unary f a)]
+  delta pathShift._f CopyTerm.brecOn.go pathShift CopyTerm.brecOn
+  rfl
+
 private theorem unary_persistence (f : Unary) (X : B) :
     ∃ e : X.val.1.Event ↪ (unary f X).val.1.Event, ∀ a,
       ((unary f X).val.1.archive.attributes (e a)).time =
         (X.val.1.archive.attributes a).time + unaryShift f := by
-  cases f <;> exact ⟨Function.Embedding.refl _, fun _ => by simp [unary, unaryShift,
-    filterBalanced, complementBalanced, complementRich, LeafSquareReadout.sourceFilterBalanced,
-    LeafSquareReadout.sourceFilter, TemporalComposition.shiftRich, TemporalComposition.shiftContext,
-    TemporalComposition.shiftArchive]⟩
+  cases f <;> exact ⟨Function.Embedding.refl _, fun _ => by
+    first | rfl | exact (Int.add_zero _).symm⟩
 
 private theorem binary_persistence (f : Binary) (X Y Z : B) (h : binary f X Y = some Z) :
     ∃ l : X.val.1.Event ↪ Z.val.1.Event, ∃ r : Y.val.1.Event ↪ Z.val.1.Event,
@@ -185,7 +196,8 @@ private theorem archive_path_persistence {n : Nat} (C : CopyTerm n) (i : Fin n) 
   induction C generalizing Y with
   | input =>
     cases Option.some.inj h
-    exact ⟨Function.Embedding.refl _, fun _ => by simp [pathShift]⟩
+    refine ⟨Function.Embedding.refl _, fun _ => ?_⟩
+    exact (Int.add_zero _).symm
   | param => exact Fin.elim0 i
   | unary f a ih =>
     obtain ⟨v, hv, rfl⟩ := unary_success f a X Y h
@@ -193,15 +205,22 @@ private theorem archive_path_persistence {n : Nat} (C : CopyTerm n) (i : Fin n) 
     obtain ⟨j, hj⟩ := unary_persistence f v
     refine ⟨e.trans j, fun x => ?_⟩
     rw [Function.Embedding.trans_apply, hj, he]
-    simp [pathShift, add_assoc]
+    rw [pathShift_unary]
+    exact add_assoc _ _ _
   | binary f a b iha ihb =>
     obtain ⟨v, w, hv, hw, hz⟩ := subtree_success f a b X Y h
     obtain ⟨l, r, hl, hr⟩ := binary_persistence f v w Y hz
     refine Fin.addCases (fun i => ?_) (fun i => ?_) i
     · obtain ⟨e, he⟩ := iha i v hv
-      exact ⟨e.trans l, fun x => by simpa [pathShift] using (hl (e x)).trans (he x)⟩
+      refine ⟨e.trans l, fun x => ?_⟩
+      change _ = _ + Fin.addCases (motive := fun _ => Int) (pathShift a) (pathShift b) _
+      simpa only [Fin.addCases_left, Function.Embedding.trans_apply]
+        using (hl (e x)).trans (he x)
     · obtain ⟨e, he⟩ := ihb i w hw
-      exact ⟨e.trans r, fun x => by simpa [pathShift] using (hr (e x)).trans (he x)⟩
+      refine ⟨e.trans r, fun x => ?_⟩
+      change _ = _ + Fin.addCases (motive := fun _ => Int) (pathShift a) (pathShift b) _
+      simpa only [Fin.addCases_right, Function.Embedding.trans_apply]
+        using (hr (e x)).trans (he x)
 
 private def inactiveCode : Bool ↪ HF :=
   ⟨fun b => IntegerRepresentatives.eventName 0 b,
@@ -214,8 +233,9 @@ private def inactive (lo hi : Int) : B :=
   let c := TaggedPresentation.contextOf inactiveCode
     (fun b => (⟨if b then hi else lo, 0, true, FreeMagma.of 0⟩ : Attributes 3))
     (fun _ _ => False) (fun _ h => h) (fun _ _ _ h _ => h) (fun _ _ h => h.elim) ∅
-  ⟨⟨c, emptySelection c⟩, by simp [Balanced, background, charge, c,
-    TaggedPresentation.contextOf]⟩
+  ⟨⟨c, emptySelection c⟩, by
+    change (∑ e ∈ (∅ : Finset c.Event), contribution c e) = 0
+    exact Finset.sum_empty⟩
 
 private theorem inactive_times_spec (lo hi : Int) :
     ∃ X : B, X.val.1.current = ∅ ∧ X.val.2.val = ∅ ∧
@@ -223,7 +243,7 @@ private theorem inactive_times_spec (lo hi : Int) :
         X.val.1.archive.events = {l.val, r.val} ∧
         (X.val.1.archive.attributes l).time = lo ∧
         (X.val.1.archive.attributes r).time = hi := by
-  refine ⟨inactive lo hi, by simp [inactive, TaggedPresentation.contextOf], rfl,
+  refine ⟨inactive lo hi, rfl, rfl,
     TaggedPresentation.eventEquiv inactiveCode false,
     TaggedPresentation.eventEquiv inactiveCode true, ?_, ?_, ?_, ?_⟩
   · intro h
@@ -231,9 +251,9 @@ private theorem inactive_times_spec (lo hi : Int) :
     cases this
   · change TaggedPresentation.events inactiveCode = {inactiveCode false, inactiveCode true}
     simp [TaggedPresentation.events, Fintype.univ_bool, Finset.pair_comm]
-  · dsimp [inactive, TaggedPresentation.contextOf, TaggedPresentation.archiveOf]
+  · delta inactive TaggedPresentation.contextOf TaggedPresentation.archiveOf
     simp only [Equiv.symm_apply_apply, Bool.false_eq_true, ↓reduceIte]
-  · dsimp [inactive, TaggedPresentation.contextOf, TaggedPresentation.archiveOf]
+  · delta inactive TaggedPresentation.contextOf TaggedPresentation.archiveOf
     simp only [Equiv.symm_apply_apply, ↓reduceIte]
 
 private theorem temporal_success (X Y Z : B) (h : binary .temporal X Y = some Z) :
@@ -270,7 +290,7 @@ private theorem temporal_node_has_closed_empty_side {n m : Nat}
     rw [hf, hl] at guard
     have := le_max_right 0 (pathShift b i - s)
     change s < -L + pathShift b i at guard
-    dsimp [L] at guard
+    change s < -max 0 (pathShift b i - s) + pathShift b i at guard
     omega
   · by_cases hm : m = 0
     · subst m
@@ -291,7 +311,7 @@ private theorem temporal_node_has_closed_empty_side {n m : Nat}
       rw [hf, hr] at guard
       have := le_max_right 0 (s - pathShift a i)
       change L + pathShift a i < s at guard
-      dsimp [L] at guard
+      change max 0 (s - pathShift a i) + pathShift a i < s at guard
       omega
     · let i : Fin n := ⟨0, by omega⟩
       let j : Fin m := ⟨0, by omega⟩
@@ -305,7 +325,8 @@ private theorem temporal_node_has_closed_empty_side {n m : Nat}
       rw [hf, hg, hl, hr] at guard
       have hL := le_max_left 0 (pathShift b j - pathShift a i)
       have hgap := le_max_right 0 (pathShift b j - pathShift a i)
-      dsimp [L] at guard
+      change max 0 (pathShift b j - pathShift a i) + pathShift a i <
+        -max 0 (pathShift b j - pathShift a i) + pathShift b j at guard
       omega
 
 
@@ -369,22 +390,34 @@ inductive Normalizes : {n : Nat} → CopyTerm n → CopyTerm n → Prop where
       (hp : 0 < n + m) (f : Binary) (ha : Normalizes a a') (hb : Normalizes b b') :
       Normalizes (.binary f a b) (.binary (withoutTemporal f) a' b')
 
+private theorem normalizes_temporal_free {n : Nat} {C N : CopyTerm n}
+    (h : Normalizes C N) : TemporalFree N := by
+  refine Normalizes.brecOn (motive := fun _ N _ => TemporalFree N) h ?_
+  intro n C N h below
+  cases below with
+  | closed => trivial
+  | input => trivial
+  | unary _ _ _ _ hf => exact hf
+  | binary _ f _ _ _ hfa _ hfb =>
+    refine ⟨?_, hfa, hfb⟩
+    cases f <;> intro he <;> cases he
+
 private theorem normalize_closed (C : CopyTerm 0) (h : DiagonalTotal C) :
-    ∃ N, Normalizes C N ∧ TemporalFree N ∧ ∀ X, evalDiagonal C X = evalDiagonal N X := by
+    ∃ N, Normalizes C N ∧ ∀ X, evalDiagonal C X = evalDiagonal N X := by
   obtain ⟨z, hz⟩ := h zero
-  exact ⟨.param z, .closed C z hz, True.intro,
+  exact ⟨.param z, .closed C z hz,
     fun X => (closed_eval_constant C X).trans hz⟩
 
 private theorem normalize_total_correct {n : Nat} (C : CopyTerm n) (h : DiagonalTotal C) :
-    ∃ N, Normalizes C N ∧ TemporalFree N ∧ ∀ X, evalDiagonal C X = evalDiagonal N X := by
+    ∃ N, Normalizes C N ∧ ∀ X, evalDiagonal C X = evalDiagonal N X := by
   induction C with
-  | input => exact ⟨.input, .input, True.intro, fun _ => rfl⟩
+  | input => exact ⟨.input, .input, fun _ => rfl⟩
   | param x => exact normalize_closed (.param x) h
   | @unary n f a ih =>
     by_cases hn : n = 0
     · subst n; exact normalize_closed (.unary f a) h
-    · obtain ⟨N, hN, hf, he⟩ := ih (total_unary f a h)
-      refine ⟨.unary f N, .unary (by omega) f hN, hf, fun X => ?_⟩
+    · obtain ⟨N, hN, he⟩ := ih (total_unary f a h)
+      refine ⟨.unary f N, .unary (by omega) f hN, fun X => ?_⟩
       exact congrArg (Option.map (unary f)) (he X)
   | @binary n m f a b iha ihb =>
     by_cases hz : n + m = 0
@@ -392,10 +425,10 @@ private theorem normalize_total_correct {n : Nat} (C : CopyTerm n) (h : Diagonal
       have hm : m = 0 := by omega
       subst n; subst m; exact normalize_closed (.binary f a b) h
     · obtain ⟨ha, hb⟩ := total_binary f a b h
-      obtain ⟨N, hN, hfN, heN⟩ := iha ha
-      obtain ⟨M, hM, hfM, heM⟩ := ihb hb
+      obtain ⟨N, hN, heN⟩ := iha ha
+      obtain ⟨M, hM, heM⟩ := ihb hb
       refine ⟨.binary (withoutTemporal f) N M, .binary (by omega) f hN hM,
-        ⟨by cases f <;> simp [withoutTemporal], hfN, hfM⟩, fun X => ?_⟩
+        fun X => ?_⟩
       obtain ⟨Y, hY⟩ := h X
       obtain ⟨v, w, hv, hw, hh⟩ := subtree_success f a b X Y hY
       change (evalDiagonal a X).bind (fun x => (evalDiagonal b X).bind (binary f x)) =
@@ -517,7 +550,9 @@ private theorem zeroValue_correct {n : Nat} (C : CopyTerm n) (h : TemporalFree C
     evalDiagonal C zero = some (zeroValue C) := by
   obtain ⟨z, hz⟩ := temporal_free_total C h (fun _ => zero)
   change evalDiagonal C zero = some z at hz
-  simp only [zeroValue, hz, Option.getD_some]
+  delta zeroValue
+  rw [hz]
+  rfl
 
 /-- Keep one ordered occurrence and replace each off-path subtree by its complete zero value. -/
 def foldedSlice : {n : Nat} → (C : CopyTerm n) → Fin n → CopyTerm 1
@@ -542,14 +577,25 @@ private theorem sliceWord_reify {n : Nat} (C : CopyTerm n) (i : Fin n) :
   | input => rfl
   | param => exact Fin.elim0 i
   | unary f a ih =>
-    simpa [sliceWord, wordToCopy, List.foldl_append, extendCopy, unaryGenerator, foldedSlice]
-      using congrArg (CopyTerm.unary f) (ih i)
+    change (sliceWord a i ++ [unaryGenerator f]).foldl extendCopy .input = _
+    rw [List.foldl_append]
+    exact congrArg (CopyTerm.unary f) (ih i)
   | binary f a b iha ihb =>
+    change wordToCopy (Fin.addCases
+      (fun j => sliceWord a j ++ [binaryGenerator f 0 (zeroValue b)])
+      (fun j => sliceWord b j ++ [binaryGenerator f 1 (zeroValue a)]) i) =
+      Fin.addCases (motive := fun _ => CopyTerm 1)
+        (fun j => CopyTerm.binary f (foldedSlice a j) (.param (zeroValue b)))
+        (fun j => CopyTerm.binary f (.param (zeroValue a)) (foldedSlice b j)) i
     refine Fin.addCases (fun j => ?_) (fun j => ?_) i
-    · simpa [sliceWord, foldedSlice, wordToCopy, List.foldl_append, extendCopy, binaryGenerator]
-        using congrArg (fun t => CopyTerm.binary f t (.param (zeroValue b))) (iha j)
-    · simpa [sliceWord, foldedSlice, wordToCopy, List.foldl_append, extendCopy, binaryGenerator]
-        using congrArg (fun t => CopyTerm.binary f (.param (zeroValue a)) t) (ihb j)
+    · simp only [Fin.addCases_left]
+      change (sliceWord a j ++ [binaryGenerator f 0 (zeroValue b)]).foldl extendCopy .input = _
+      rw [List.foldl_append]
+      exact congrArg (fun t => CopyTerm.binary f t (.param (zeroValue b))) (iha j)
+    · simp only [Fin.addCases_right]
+      change (sliceWord b j ++ [binaryGenerator f 1 (zeroValue a)]).foldl extendCopy .input = _
+      rw [List.foldl_append]
+      exact congrArg (fun t => CopyTerm.binary f (.param (zeroValue a)) t) (ihb j)
 
 /-- The selected occurrence receives X; every other occurrence receives the actual empty history. -/
 def sliceAssignment {n : Nat} (i : Fin n) (X : B) : Fin n → B :=
@@ -563,9 +609,15 @@ private theorem foldedSlice_correct {n : Nat} (C : CopyTerm n) (i : Fin n)
   | param => exact Fin.elim0 i
   | unary f a ih => exact congrArg (Option.map (unary f)) (ih i h)
   | @binary n m f a b iha ihb =>
+    change evalDiagonal (Fin.addCases (motive := fun _ => CopyTerm 1)
+      (fun j => CopyTerm.binary f (foldedSlice a j) (.param (zeroValue b)))
+      (fun j => CopyTerm.binary f (.param (zeroValue a)) (foldedSlice b j)) i) X = _
     refine Fin.addCases (fun j => ?_) (fun j => ?_) i
     · have hl : (fun k : Fin n => sliceAssignment (j.castAdd m) X (k.castAdd m)) =
-          sliceAssignment j X := by funext k; simp [sliceAssignment, Fin.ext_iff]
+          sliceAssignment j X := by
+        funext k
+        delta sliceAssignment
+        simp only [Fin.ext_iff, Fin.val_castAdd]
       have hr : (fun k : Fin m => sliceAssignment (j.castAdd m) X (k.natAdd n)) =
           fun _ => zero := by
         funext k
@@ -574,8 +626,9 @@ private theorem foldedSlice_correct {n : Nat} (C : CopyTerm n) (i : Fin n)
           have := congrArg Fin.val he
           simp at this
           omega
-        simp [sliceAssignment, hh]
-      simp only [foldedSlice, Fin.addCases_left]
+        delta sliceAssignment
+        exact if_neg hh
+      simp only [Fin.addCases_left]
       change (evalDiagonal (foldedSlice a j) X).bind (fun x => binary f x (zeroValue b)) = _
       rw [iha j h.2.1]
       change _ = (eval a _).bind (fun x => (eval b _).bind (binary f x))
@@ -589,10 +642,14 @@ private theorem foldedSlice_correct {n : Nat} (C : CopyTerm n) (i : Fin n)
           have := congrArg Fin.val he
           simp at this
           omega
-        simp [sliceAssignment, hh]
+        delta sliceAssignment
+        exact if_neg hh
       have hr : (fun k : Fin m => sliceAssignment (j.natAdd n) X (k.natAdd n)) =
-          sliceAssignment j X := by funext k; simp [sliceAssignment, Fin.ext_iff]
-      simp only [foldedSlice, Fin.addCases_right]
+          sliceAssignment j X := by
+        funext k
+        delta sliceAssignment
+        simp only [Fin.ext_iff, Fin.val_natAdd, Nat.add_left_cancel_iff]
+      simp only [Fin.addCases_right]
       change (evalDiagonal (foldedSlice b j) X).bind (binary f (zeroValue a)) = _
       rw [ihb j h.2.2]
       change _ = (eval a _).bind (fun x => (eval b _).bind (binary f x))
@@ -602,26 +659,32 @@ private theorem foldedSlice_correct {n : Nat} (C : CopyTerm n) (i : Fin n)
 private theorem sliceWord_free {n : Nat} (C : CopyTerm n) (i : Fin n) (h : TemporalFree C) :
     WordTemporalFree (sliceWord C i) := by
   induction C with
-  | input => simp [sliceWord, WordTemporalFree]
+  | input =>
+    exact fun _ h => (List.not_mem_nil h).elim
   | param => exact Fin.elim0 i
   | unary f a ih =>
+    change WordTemporalFree (sliceWord a i ++ [unaryGenerator f])
     intro g hg
-    simp only [sliceWord, List.mem_append, List.mem_singleton] at hg
+    simp only [List.mem_append, List.mem_singleton] at hg
     rcases hg with hg | rfl
     · exact ih i h g hg
-    · simp [unaryGenerator]
+    · intro he
+      cases he
   | binary f a b iha ihb =>
+    change WordTemporalFree (Fin.addCases
+      (fun j => sliceWord a j ++ [binaryGenerator f 0 (zeroValue b)])
+      (fun j => sliceWord b j ++ [binaryGenerator f 1 (zeroValue a)]) i)
     refine Fin.addCases (fun j => ?_) (fun j => ?_) i
     · intro g hg
-      simp only [sliceWord, Fin.addCases_left, List.mem_append, List.mem_singleton] at hg
+      simp only [Fin.addCases_left, List.mem_append, List.mem_singleton] at hg
       rcases hg with hg | rfl
       · exact iha j h.2.1 g hg
-      · simpa [binaryGenerator] using h.1
+      · exact fun he => h.1 (Sum.inr.inj he)
     · intro g hg
-      simp only [sliceWord, Fin.addCases_right, List.mem_append, List.mem_singleton] at hg
+      simp only [Fin.addCases_right, List.mem_append, List.mem_singleton] at hg
       rcases hg with hg | rfl
       · exact ihb j h.2.2 g hg
-      · simpa [binaryGenerator] using h.1
+      · exact fun he => h.1 (Sum.inr.inj he)
 
 private theorem slice_word_correct {n : Nat} (C : CopyTerm n) (h : TemporalFree C) (i : Fin n) :
     ∃ w : List (Generator nativeSignature), WordTemporalFree w ∧
@@ -648,7 +711,8 @@ theorem total_copy_normalization {n : Nat} (C : CopyTerm n) (_hp : 0 < n)
         (∀ i X, ∃ Y, contextDenote nativeSignature (w i) X = some Y) ∧
         (∃ Z, evalDiagonal C zero = some Z ∧
           ∀ i, contextDenote nativeSignature (w i) zero = some Z) := by
-  obtain ⟨N, hN, hf, he⟩ := normalize_total_correct C ht
+  obtain ⟨N, hN, he⟩ := normalize_total_correct C ht
+  have hf := normalizes_temporal_free hN
   have slices := fun i : Fin n => slice_word_correct N hf i
   choose w hw hr hd hs using slices
   refine ⟨zero_empty.1, zero_empty.2.1, zero_empty.2.2, N, hN, hf, he,
@@ -656,7 +720,9 @@ theorem total_copy_normalization {n : Nat} (C : CopyTerm n) (_hp : 0 < n)
   obtain ⟨Z, hZ⟩ := ht zero
   refine ⟨Z, hZ, fun i => ?_⟩
   rw [hd]
-  have hz : sliceAssignment i zero = fun _ => zero := by funext j; simp [sliceAssignment]
+  have hz : sliceAssignment i zero = fun _ => zero := by
+    funext j
+    exact ite_self zero
   rw [hz]
   exact (he zero).symm.trans hZ
 
