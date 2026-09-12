@@ -101,7 +101,8 @@ def memoSecond (_ : Unit) (x : Bool) : Bool := memoRelay () x
 -- mutation results behind a failed import. The registration integration
 -- fixtures exercise the finite and structural command paths separately.
 private def check (label : String) (readout theoremName : Name) (reason : String)
-    (formClass : String := "") : CoreM Unit := do
+    (formClass : String := "") (first : String := "") (ns : String := "")
+    (site : String := "") : CoreM Unit := do
   let env ← getEnv
   let some (.defnInfo info) := env.find? ``template | throwError "template missing"
   let holder := readout.str "fixtureRealization"
@@ -128,6 +129,9 @@ private def check (label : String) (readout theoremName : Name) (reason : String
         throwError "wrong payload keys"
       unless formClass.isEmpty || payload.getObjValAs? String "class" == .ok formClass do
         throwError "wrong class: {payload}"
+      for (key, expected) in [("first", first), ("namespace", ns), ("site", site)] do
+        unless expected.isEmpty || payload.getObjValAs? String key == .ok expected do
+          throwError "wrong {key}: expected {expected}, got {payload}"
       let .ok names := payload.getObjValAs? (Array String) "walked" | throwError "invalid walked names"
       unless names == names.qsort (· < ·) && names.toList.eraseDups.length == names.size do
         throwError "noncanonical walked names"
@@ -166,6 +170,35 @@ run_cmd Elab.Command.liftCoreM do
   for (label, readout, reason, formClass) in cases do
     try check label readout ``target reason formClass
     catch ex => logError m!"[FAIL] {label}: {ex.toMessageData}"
+
+run_cmd Elab.Command.liftCoreM do
+  try
+    check "CurrentClosedDecisionPayload" ``closedDecisionRead ``target "unclassified_form"
+      "closed_decision" "AllowlistRules.closedProp" "protected:current" "AllowlistRules.closedDecisionRead"
+  catch ex => logError m!"[FAIL] CurrentClosedDecisionPayload: {ex.toMessageData}"
+
+run_cmd Elab.Command.liftCoreM do
+  try
+    let env ← getEnv
+    let some (.defnInfo templateInfo) := env.find? ``template | throwError "template missing"
+    let some (.defnInfo readoutInfo) := env.find? ``classicalRead | throwError "readout missing"
+    let holder := `AllowlistRules.inlineClassicalRealization
+    addDecl <| .defnDecl {
+      name := holder, levelParams := [], type := templateInfo.type
+      value := templateInfo.value.replace fun e =>
+        if e == mkConst ``cleanRead then some readoutInfo.value else none
+      hints := .abbrev, safety := .safe }
+    let some message ← provenanceErrorCurrent env.header.mainModule `catalog ``target holder
+      | throwError "missing diagnostic"
+    let .ok payload := Json.parse ((message.splitOn " provenance=").getLast!)
+      | throwError "invalid payload"
+    unless (message.splitOn " ")[3]? == some s!"readout={holder}" &&
+        payload.getObjValAs? String "first" == .ok "Classical.propDecidable" &&
+        payload.getObjValAs? String "namespace" == .ok "external:Classical" &&
+        payload.getObjValAs? String "site" == .ok holder.toString do
+      throwError "wrong inline payload: {message}"
+    logInfo "[PASS] InlineReadoutPayloadAddress"
+  catch ex => logError m!"[FAIL] InlineReadoutPayloadAddress: {ex.toMessageData}"
 
 run_cmd Elab.Command.liftCoreM do
   let actual ← readoutClosure (← getEnv) ``target (mkConst ``cleanRead)

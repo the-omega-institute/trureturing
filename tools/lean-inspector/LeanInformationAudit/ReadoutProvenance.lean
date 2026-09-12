@@ -187,10 +187,10 @@ private def inProtected (env : Environment) (n : Name) : Bool :=
       ((moduleScopeCache.getState env).bind (·[m]?)).getD true
 
 private def namespaceLabel (env : Environment) (n : Name) : String :=
-  if n.getRoot == `Classical then "external:Classical"
-  else if inProtected env n then
+  if inProtected env n then
     if moduleName env n == env.header.mainModule then "protected:current"
-    else if n.getRoot == `LeanInformationAudit then "protected:judge" else "protected:D5"
+    else if (moduleName env n).getRoot == `LeanInformationAudit then "protected:judge" else "protected:D5"
+  else if n.getRoot == `Classical then "external:Classical"
   else "external:other"
 
 private structure Unclassified where
@@ -343,10 +343,12 @@ private def visitSummary (env : Environment) (origin : Name) (summary : Summary)
     let checkU (x : SyntaxNode) : WalkM Unit := do
       if dataPos && x.prop && closed x.expr && x.pContent then
         noteUnclassified (Unclassified.mk "closed_decision"
-          (x.expr.getAppFn.constName?.getD `closed_decision) "protected:D5" origin)
+          (x.expr.getAppFn.constName?.getD `closed_decision)
+          (namespaceLabel env (x.expr.getAppFn.constName?.getD origin)) origin)
     if dataPos && closed e && containsStatement[index]! && node.canonical != statement then
       noteUnclassified (Unclassified.mk "statement_subterm"
-        (e.getAppFn.constName?.getD `statement_subterm) "protected:current" origin)
+        (e.getAppFn.constName?.getD `statement_subterm)
+        (namespaceLabel env (e.getAppFn.constName?.getD origin)) origin)
     checkU node
     match e with
     | .const n _ =>
@@ -356,7 +358,7 @@ private def visitSummary (env : Environment) (origin : Name) (summary : Summary)
       if provenanceJudgeAPIs.contains n || generatedAddress n || info.any judgePayload then
         modify fun s => { s with forbidden := true }
       if dataPos && n.getRoot == `Classical then
-        noteUnclassified (Unclassified.mk "classical_choice" n "external:Classical" origin)
+        noteUnclassified (Unclassified.mk "classical_choice" n (namespaceLabel env n) origin)
       if dataPos && !inProtected env n then
         if let some i := info then
           if !Lean.Meta.isInstanceCore env n then
@@ -383,7 +385,8 @@ private def visitSummary (env : Environment) (origin : Name) (summary : Summary)
       if let some typeIndex := node.children[0]? then
         if !exactType && containsStatement[typeIndex]! then
           noteUnclassified (Unclassified.mk "statement_mentioning_type"
-            (t.getAppFn.constName?.getD `statement_mentioning_type) "protected:current" origin)
+            (t.getAppFn.constName?.getD `statement_mentioning_type)
+            (namespaceLabel env (t.getAppFn.constName?.getD origin)) origin)
       if let some typeIndex := node.children[0]? then checkU summary.nodes[typeIndex]!
     | .proj n _ _ =>
       if provenanceJudgeAPIs.contains n || generatedAddress n || judgePayloadType n then
@@ -430,7 +433,7 @@ private structure WalkResult where
   incomplete : Bool
   walked : Array String
 
-private def collectReadout (env : Environment) (theoremName : Name) (readout : Expr) : CoreM WalkResult := do
+private def collectReadout (env : Environment) (theoremName address : Name) (readout : Expr) : CoreM WalkResult := do
   let scope := (moduleScopeCache.getState env).getD (classifyModules env)
   let env := moduleScopeCache.setState env (some scope)
   modifyEnv (moduleScopeCache.setState · (some scope))
@@ -438,7 +441,7 @@ private def collectReadout (env : Environment) (theoremName : Name) (readout : E
   let statement := eraseLevels theoremInfo.type
   let decision := mkApp (mkConst ``Decidable) statement
   let computation : WalkM Unit := do
-    visit env .dataPos (readout.getAppFn.constName?.getD theoremName) readout
+    visit env .dataPos address readout
     process env
   let (_, state) ← computation.run {
     theoremName, statement, decision, summaries := summaryCache.getState env }
@@ -450,13 +453,13 @@ private def collectReadout (env : Environment) (theoremName : Name) (readout : E
   let names := state.walked.toArray.map Name.toString |>.qsort (· < ·)
   return (WalkResult.mk state.forbidden state.unclassified state.incomplete names)
 
-private def safeCollect (env : Environment) (theoremName : Name) (readout : Expr) : CoreM WalkResult :=
-  tryCatchRuntimeEx (collectReadout env theoremName readout)
+private def safeCollect (env : Environment) (theoremName address : Name) (readout : Expr) : CoreM WalkResult :=
+  tryCatchRuntimeEx (collectReadout env theoremName address readout)
     (fun _ => pure { forbidden := false, unclassified := none, incomplete := true, walked := #[] })
 
 private def readoutClosureCurrent (theoremName : Name) (readout : Expr) : CoreM (Bool × Option (Array String)) := do
   let env ← getEnv
-  let r ← safeCollect env theoremName readout
+  let r ← safeCollect env theoremName (readout.getAppFn.constName?.getD `readout) readout
   if r.forbidden || r.unclassified.isSome then return (true, some r.walked)
   if r.incomplete then return (false, none)
   return (false, some r.walked)
@@ -475,7 +478,7 @@ def provenanceErrorCurrent (root catalog theoremName realization : Name) : CoreM
   let readout := readoutFamily env realization
   let address := readout.bind (·.getAppFn.constName?) |>.getD realization
   let result ← match readout with
-    | some e => safeCollect env theoremName e
+    | some e => safeCollect env theoremName address e
     | none => pure { forbidden := false, unclassified := none, incomplete := true, walked := #[] }
   if !result.forbidden && result.unclassified.isNone && !result.incomplete then return none
   let reason := if result.forbidden then "forbidden_dependency"
