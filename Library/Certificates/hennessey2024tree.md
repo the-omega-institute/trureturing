@@ -31,7 +31,7 @@ statement and transition, not its truth or the repository's counterexample.
 Only the printed conjecture is at issue; no conclusion about the rest of
 the paper, the author's intended claim, or a corrected formula is asserted.
 
-The recorded bounded literature review is in [历史记录](https://github.com/the-omega-institute/trureturing/blob/6c97ad12ce/docs/reports/tripod-nim-0910/report.md).
+The recorded bounded literature review is in [archived report](https://github.com/the-omega-institute/trureturing/blob/6c97ad12ce/docs/reports/tripod-nim-0910/report.md).
 No priority for the counterexample is claimed.
 
 ## Verified locator

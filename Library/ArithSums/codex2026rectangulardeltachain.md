@@ -33,5 +33,5 @@ Conversely the first and last chain points in any moving coordinate differ by
 The zero direction admits sequences of arbitrary length.
 
 The search and verification scope is recorded in
-[历史记录](https://github.com/the-omega-institute/trureturing/blob/6c97ad12ce/docs/reports/deltachainwindow/preregistration.md) and the accompanying result report.
+[archived report](https://github.com/the-omega-institute/trureturing/blob/6c97ad12ce/docs/reports/deltachainwindow/preregistration.md) and the accompanying result report.
 This is an elementary general proof, with no claim of a new mathematical discovery.

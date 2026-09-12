@@ -58,7 +58,7 @@ not_positive_permutation. The three controls were kernel-checked with
 decide before the general proof. The original state/used-set recursion and
 its least-unused characterization are present in Lean. All public theorems
 use only the standard three axioms. Build and freeze receipts are recorded
-in [历史记录](https://github.com/the-omega-institute/trureturing/blob/6c97ad12ce/docs/reports/a359482-0910.md).
+in [archived report](https://github.com/the-omega-institute/trureturing/blob/6c97ad12ce/docs/reports/a359482-0910.md).
 
 ## Triage
 

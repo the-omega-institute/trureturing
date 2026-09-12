@@ -24,7 +24,7 @@ Its source is
 `D5/S1/Words/Compositions/AlternatingResidualBridge.lean`, specifically
 `encode_rule_iff`, `encode_injective`, and `encoded_product_sign_sum`.
 The prerequisite is `ResidualPermutationSign.signed_residual_sum` in the same directory.
-The implementation report is [历史记录](https://github.com/the-omega-institute/trureturing/blob/6c97ad12ce/docs/reports/a392714bridge/report.md).
+The implementation report is [archived report](https://github.com/the-omega-institute/trureturing/blob/6c97ad12ce/docs/reports/a392714bridge/report.md).
 
 For permutations a,b of 1,…,m, form w=(a₁,−b₁,…,aₘ,−bₘ,0).
 Write Aᵢ and Bᵢ for their prefix sums. The height before block i is Aᵢ₋₁−Bᵢ₋₁.
