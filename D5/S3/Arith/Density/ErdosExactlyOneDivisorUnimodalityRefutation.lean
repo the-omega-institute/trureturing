@@ -95,10 +95,126 @@ theorem hasDensity_of_periodic (A : Set ℕ) (P : ℕ) (hP : 0 < P)
 /-- There is exactly one eligible divisor when precisely one member of the finite interval
 `(n, m)` divides `N`. -/
 def exactlyOneDivisorIn (n m N : ℕ) : Prop :=
-  ∃! d : {d // d ∈ Finset.Ioo n m}, (d : ℕ) ∣ N
+  ∃! d, n < d ∧ d < m ∧ d ∣ N
 
 private def intervalPeriod (n m : ℕ) : ℕ :=
   (Finset.Ioo n m).lcm id
+
+/-- The natural density of integers having exactly one divisor in `(n, m)`, with junk value zero
+if the density does not exist. The periodic-density theorem proves existence for every `n, m`. -/
+def epsOne (n m : ℕ) : ℝ :=
+  if h : ∃ delta, hasDensity {N | exactlyOneDivisorIn n m N} delta then h.choose else 0
+
+/-- Weak unimodality on the natural-number tail beginning at `lo`. -/
+def Unimodal (f : ℕ → ℝ) (lo : ℕ) : Prop :=
+  ∃ m0, lo ≤ m0 ∧
+    (∀ a b, lo ≤ a → a ≤ b → b ≤ m0 → f a ≤ f b) ∧
+    (∀ a b, m0 ≤ a → a ≤ b → f b ≤ f a)
+
+/-- Erdős's 1979 suggestion that, for every `n`, the density is unimodal as `m` ranges over
+`m > n + 1`. -/
+def claim : Prop :=
+  ∀ n : ℕ, Unimodal (fun m => epsOne n m) (n + 2)
+
+/-- The exact densities at `(n,m) = (2,6), (2,7), (2,8)` form a strict valley, refuting the
+unimodality claim. -/
+theorem result : ¬claim := by
+  have hperiodPositive (n m : ℕ) : 0 < intervalPeriod n m := by
+    apply Nat.pos_of_ne_zero
+    rw [intervalPeriod, Finset.lcm_ne_zero_iff]
+    intro d hd
+    simp only [id_eq]
+    have hdpos := (Finset.mem_Ioo.mp hd).1
+    omega
+  have hperiodic (n m : ℕ) :
+      Periodic (fun N => exactlyOneDivisorIn n m N) (intervalPeriod n m) := by
+    intro N
+    apply propext
+    constructor
+    · rintro ⟨d, ⟨hdn, hdm, hdN⟩, hunique⟩
+      have hdP : d ∣ intervalPeriod n m := by
+        unfold intervalPeriod
+        rcases Finset.dvd_lcm (α := ℕ) (f := id) (Finset.mem_Ioo.mpr ⟨hdn, hdm⟩) with ⟨k, hk⟩
+        exact ⟨k, hk⟩
+      refine ⟨d, ⟨hdn, hdm, (Nat.dvd_add_iff_left hdP).mpr hdN⟩, ?_⟩
+      intro e he
+      have heP : e ∣ intervalPeriod n m := by
+        unfold intervalPeriod
+        rcases Finset.dvd_lcm (α := ℕ) (f := id)
+            (Finset.mem_Ioo.mpr ⟨he.1, he.2.1⟩) with ⟨k, hk⟩
+        exact ⟨k, hk⟩
+      exact hunique e ⟨he.1, he.2.1, (Nat.dvd_add_iff_left heP).mp he.2.2⟩
+    · rintro ⟨d, ⟨hdn, hdm, hdN⟩, hunique⟩
+      have hdP : d ∣ intervalPeriod n m := by
+        unfold intervalPeriod
+        rcases Finset.dvd_lcm (α := ℕ) (f := id) (Finset.mem_Ioo.mpr ⟨hdn, hdm⟩) with ⟨k, hk⟩
+        exact ⟨k, hk⟩
+      refine ⟨d, ⟨hdn, hdm, (Nat.dvd_add_iff_left hdP).mp hdN⟩, ?_⟩
+      intro e he
+      have heP : e ∣ intervalPeriod n m := by
+        unfold intervalPeriod
+        rcases Finset.dvd_lcm (α := ℕ) (f := id)
+            (Finset.mem_Ioo.mpr ⟨he.1, he.2.1⟩) with ⟨k, hk⟩
+        exact ⟨k, hk⟩
+      exact hunique e ⟨he.1, he.2.1, (Nat.dvd_add_iff_left heP).mpr he.2.2⟩
+  have hperiodDensity (n m : ℕ) :
+      hasDensity {N | exactlyOneDivisorIn n m N}
+        (((Finset.range (intervalPeriod n m)).filter
+          (exactlyOneDivisorIn n m)).card / (intervalPeriod n m : ℝ)) := by
+    simpa only [Set.mem_ofPred_eq] using
+      hasDensity_of_periodic {N | exactlyOneDivisorIn n m N} (intervalPeriod n m)
+        (hperiodPositive n m) (hperiodic n m)
+  have heps (n m : ℕ) :
+      epsOne n m =
+        (((Finset.range (intervalPeriod n m)).filter
+          (exactlyOneDivisorIn n m)).card / (intervalPeriod n m : ℝ)) := by
+    have hdensity := hperiodDensity n m
+    rw [epsOne, dif_pos ⟨_, hdensity⟩]
+    exact tendsto_nhds_unique (Exists.choose_spec ⟨_, hdensity⟩) hdensity
+  have hexact (n m N : ℕ) :
+      exactlyOneDivisorIn n m N ↔
+        ((Finset.Ioo n m).filter fun d => d ∣ N).card = 1 := by
+    simp only [exactlyOneDivisorIn, Finset.card_eq_one_iff_existsUnique,
+      Finset.mem_filter, Finset.mem_Ioo, and_assoc]
+  have h6 : epsOne 2 6 = 13 / 30 := by
+    rw [heps]
+    have hP6 : intervalPeriod 2 6 = 60 := by decide
+    have hc6 : ((Finset.range 60).filter (exactlyOneDivisorIn 2 6)).card = 26 := by
+      rw [Finset.filter_congr fun N _ => hexact 2 6 N]
+      decide
+    rw [hP6, hc6]
+    norm_num
+  have h7 : epsOne 2 7 = 11 / 30 := by
+    rw [heps]
+    have hP7 : intervalPeriod 2 7 = 60 := by decide
+    have hc7 : ((Finset.range 60).filter (exactlyOneDivisorIn 2 7)).card = 22 := by
+      rw [Finset.filter_congr fun N _ => hexact 2 7 N]
+      decide
+    rw [hP7, hc7]
+    norm_num
+  have h8 : epsOne 2 8 = 13 / 35 := by
+    rw [heps]
+    have hP8 : intervalPeriod 2 8 = 420 := by decide
+    have hc8 : ((Finset.range 420).filter (exactlyOneDivisorIn 2 8)).card = 156 := by
+      rw [Finset.filter_congr fun N _ => hexact 2 8 N]
+      set_option maxRecDepth 100000 in decide
+    rw [hP8, hc8]
+    norm_num
+  intro hclaim
+  obtain ⟨m0, _, hincreasing, hdecreasing⟩ := hclaim 2
+  by_cases hpeak : 7 ≤ m0
+  · have h67 := hincreasing 6 7 (by norm_num) (by norm_num) hpeak
+    change epsOne 2 6 ≤ epsOne 2 7 at h67
+    rw [h6, h7] at h67
+    norm_num at h67
+  · have hm0 : m0 ≤ 7 := by omega
+    have h78 := hdecreasing 7 8 hm0 (by norm_num)
+    change epsOne 2 8 ≤ epsOne 2 7 at h78
+    rw [h7, h8] at h78
+    norm_num at h78
+
+#print axioms hasDensity_of_periodic
+#print axioms result
 
 end
 
