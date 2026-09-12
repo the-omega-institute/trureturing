@@ -38,6 +38,9 @@ def generatedRead (_ : Unit) (x : Bool) : Bool := cond generated.__information_u
 noncomputable def classicalRead (_ : Unit) (x : Bool) : Bool :=
   if @decide (x = true) (Classical.propDecidable _) then x else false
 noncomputable def payloadRead := classicalRead
+noncomputable def typeBeforeClassicalRead (_ : Unit) (x : Bool) : Bool :=
+  let _ : Classical.propDecidable = Classical.propDecidable := rfl
+  if @decide (x = true) (Classical.propDecidable _) then x else false
 noncomputable def bothRead (_ : Unit) (x : Bool) : Bool :=
   let _ := Classical.propDecidable
   keepProof target x
@@ -128,6 +131,7 @@ run_cmd Elab.Command.liftCoreM do
     ("CtorDecisionOfStatement", ``ctorRead, "forbidden_dependency", ""),
     ("JudgeGeneratedCompanions", ``generatedRead, "forbidden_dependency", ""),
     ("ClassicalDirect", ``classicalRead, "unclassified_form", "classical_choice"),
+    ("TypeBeforeClassicalData", ``typeBeforeClassicalRead, "unclassified_form", "classical_choice"),
     ("UnclassifiedPayloadParses", ``payloadRead, "unclassified_form", "classical_choice"),
     ("ForbiddenWinsOverUnclassified", ``bothRead, "forbidden_dependency", ""),
     ("UnlistedProducer", ``unlistedRead, "unclassified_form", "unlisted_decision_producer"),

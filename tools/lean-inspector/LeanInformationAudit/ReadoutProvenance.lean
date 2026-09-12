@@ -275,7 +275,7 @@ private structure WalkState where
   decision : Expr
   summaries : Std.HashMap Name Summary := {}
   counters : ProvenanceCounters := {}
-  visited : Std.HashSet Expr := {}
+  visited : Std.HashSet (Expr × Position) := {}
   walked : NameHashSet := {}
   queued : NameHashSet := {}
   pending : List (Name × Position × Name) := []
@@ -315,8 +315,9 @@ private def visitSummary (env : Environment) (origin : Name) (summary : Summary)
     modify fun s => { s with exprFuel := s.exprFuel - 1 }
     let node := summary.nodes[index]!
     let e := node.expr
-    if (← get).visited.contains e then continue
-    modify fun s => { s with visited := s.visited.insert e }
+    let occurrence := (e, node.position)
+    if (← get).visited.contains occurrence then continue
+    modify fun s => { s with visited := s.visited.insert occurrence }
     let dataPos := node.position == .dataPos
     let checkU (x : SyntaxNode) : WalkM Unit := do
       if dataPos && x.prop && closed x.expr && x.pContent then
