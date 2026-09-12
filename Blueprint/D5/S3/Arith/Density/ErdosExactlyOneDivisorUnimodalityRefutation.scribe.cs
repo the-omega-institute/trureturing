@@ -10,7 +10,7 @@ internal sealed class ErdosExactlyOneDivisorUnimodalityRefutationDocument
     private const string Prefix =
         "D5/S3/Arith/Density/ErdosExactlyOneDivisorUnimodalityRefutation.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Density/tenenbaum2013unconventional");
+        LibraryNoteRef.Create("D5/L/Analytic/tenenbaum2013unconventional");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Exact periodic densities refute unimodality of the one-divisor interval density.",
