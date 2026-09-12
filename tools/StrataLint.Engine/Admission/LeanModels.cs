@@ -68,6 +68,10 @@ public sealed record LeanFileReport(
     string? Error = null)
 {
     internal LeanRefutationEvidence? Refutation { get; init; }
+
+    // Null means the producer does not supply registration evidence. It is only
+    // admissible outside the protected-base candidate delta.
+    internal ImmutableArray<string>? InformationRegistrationErrors { get; init; } = [];
 }
 
 public sealed class LeanAxiomReport
