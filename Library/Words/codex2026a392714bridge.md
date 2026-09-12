@@ -24,7 +24,6 @@ Its source is
 `D5/S1/Words/Compositions/AlternatingResidualBridge.lean`, specifically
 `encode_rule_iff`, `encode_injective`, and `encoded_product_sign_sum`.
 The prerequisite is `ResidualPermutationSign.signed_residual_sum` in the same directory.
-The implementation report is [archived report](https://github.com/the-omega-institute/trureturing/blob/6c97ad12ce/docs/reports/a392714bridge/report.md).
 
 For permutations a,b of 1,…,m, form w=(a₁,−b₁,…,aₘ,−bₘ,0).
 Write Aᵢ and Bᵢ for their prefix sums. The height before block i is Aᵢ₋₁−Bᵢ₋₁.
@@ -39,4 +38,4 @@ This does not identify that product with the sign of an ambient contribution
 permutation. The general classification of unpaired words and the bridge
 from Φ(n) remain to be proved. No resolution of the original conjecture is claimed.
 The source context is arXiv:2605.11137v1, Remark 4; the corresponding statement
-is still called a conjecture in v2, Remark 5. Current OEIS access returned HTTP 403.
+is still called a conjecture in v2, Remark 5.

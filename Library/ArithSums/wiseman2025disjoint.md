@@ -19,17 +19,14 @@ triage: anchor
 doi: null
 url: https://oeis.org/A384350
 
-Read all fields from https://oeis.org/A384350/internal and
-https://oeis.org/A384318/internal on 2026-09-10. Their COMMENTS explicitly say
-“Conjecture” for the characterization by more than one disjoint strict
-partition family. A384350 counts subsets of an initial interval; A384318
-counts strict partitions of a prescribed total. Their displayed revisions
-were 2025-10-20 and 2025-06-11 respectively.
+The COMMENTS in https://oeis.org/A384350/internal and
+https://oeis.org/A384318/internal label the characterization by more than one
+disjoint strict partition family a conjecture. A384350 counts subsets of an
+initial interval; A384318 counts strict partitions of a prescribed total.
 
-Also read https://oeis.org/A384322/internal (NAME, revision 2025-07-27) and
-https://oeis.org/A384317/internal (FORMULA and cross-references, revision
-2025-05-28). They state the correspondence without providing a proof.
-These locators attest the question and its terminology, not a published proof.
+The NAME in https://oeis.org/A384322/internal and the FORMULA in
+https://oeis.org/A384317/internal state the correspondence without a proof.
+These sources establish the question and its terminology.
 
 ## Mathematical scope
 
@@ -44,15 +41,11 @@ block, contradicting disjointness. Conversely, an outside subset sum permits
 replacement of one singleton block. This is a pointwise statement for every S;
 no sequence coefficients or independent product of block counts are asserted.
 
-## Search boundary
+## Proof scope
 
-The implementation report [archived report](https://github.com/the-omega-institute/trureturing/blob/6c97ad12ce/docs/reports/a384350-0910/report.md) records the
-repository, pinned Mathlib, Loogle, GitHub and arXiv searches. The triage seat
-reported searches in five full PDFs, without a page-by-page review. This worker
-additionally searched extracted text of arXiv:2601.10227 (15 pages) and
-2206.04261 (28 pages), reading matching contexts. The former p.3 Proposition 1
-and the latter p.2 discuss reducing an already refinable part to two missing
-parts; they do not prove the disjoint-family implication used here.
+Proposition 1 on p.3 of arXiv:2601.10227 and p.2 of arXiv:2206.04261 discuss
+reducing an already refinable part to two missing parts; they do not prove
+the disjoint-family implication used here.
 
 No exhaustive literature absence or global novelty is claimed. Unopened
 paper content remains ASSUMED-UNVERIFIED.

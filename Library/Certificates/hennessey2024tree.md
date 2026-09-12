@@ -13,9 +13,8 @@ triage: anchor
 
 # Tree and Tripod Nim
 
-Source: https://arxiv.org/pdf/2401.07943v1. The rendered printed pages 28
-and 30 were inspected. The arXiv history lists v1, submitted on 15 January
-2024 at 20:15:55 UTC. The PDF title page carries the date September 2023.
+Source: https://arxiv.org/pdf/2401.07943v1, printed pages 28 and 30.
+The arXiv version is dated 15 January 2024; the title page is dated September 2023.
 
 Section 9.3 uses k rows and 2n+k columns. Rows are processed from bottom
 to top, with lower rows representing smaller entries. The transition first
@@ -31,7 +30,6 @@ statement and transition, not its truth or the repository's counterexample.
 Only the printed conjecture is at issue; no conclusion about the rest of
 the paper, the author's intended claim, or a corrected formula is asserted.
 
-The recorded bounded literature review is in [archived report](https://github.com/the-omega-institute/trureturing/blob/6c97ad12ce/docs/reports/tripod-nim-0910/report.md).
 No priority for the counterexample is claimed.
 
 ## Verified locator

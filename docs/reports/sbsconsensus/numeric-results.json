@@ -1,9 +1,0 @@
-{
-  "seed": 6298,
-  "numpy": "2.0.2",
-  "orthogonal_cases": 240,
-  "max_abs_I_minus_H": 1.0547118733938987e-15,
-  "general_cases": 120,
-  "general_strict_I_lt_H": 120,
-  "general_min_H_minus_I": 0.10033510189355399
-}
