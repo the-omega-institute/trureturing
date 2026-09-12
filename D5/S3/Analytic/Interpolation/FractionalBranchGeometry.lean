@@ -6,7 +6,7 @@
    utility: none
    digest: A fractional row has a strict mean envelope and nested positive residual support. -/
 
-import D5.S3.Analytic.Interpolation.QuadraticMajorantEnvelope
+import D5.S3.Analytic.Interpolation.EnvelopeKMonotone
 
 open Set
 open scoped Topology
@@ -207,9 +207,41 @@ theorem fractional_residual_support {k : ℕ} (hk : 2 ≤ k) (j : Fin k) (t : Fi
   · change μ + v ≤ d
     linarith
 
+/-- A fractional row enters the strict mean-envelope branch or the nested-support branch. -/
+theorem fractional_branch_alternative {k : ℕ} (hk : 2 ≤ k) (j : Fin k) (t : Fin k → ℝ)
+    {c d θ μ₀ μ V₀ : ℝ} (hc : 0 < c) (hcd : c < d) (ht : ∀ i, i ≠ j → 0 < t i)
+    (hθ : θ ∈ Ioo 0 1) (hμ : μ₀ < μ)
+    (hbudget : (1 - θ) * c + θ * d + ∑ i ∈ Finset.univ.erase j, t i = (k : ℝ) * μ)
+    (hlower : (k : ℝ) * μ₀ ≤ c + ∑ i ∈ Finset.univ.erase j, t i)
+    (hV₀ : 0 ≤ V₀)
+    (hlarge : V₀ ≤ gridDistance μ₀ μ c d ^ 2 +
+      ∑ i ∈ Finset.univ.erase j, (t i - μ) ^ 2) :
+    let z := (1 - θ) * c + θ * d
+    let y := Function.update t j z
+    let s := z - μ
+    let V := s ^ 2 + ∑ i ∈ Finset.univ.erase j, (t i - μ) ^ 2
+    let v := gridDistance μ₀ μ c d
+    let c' := μ - ((k : ℝ) * v + s) / ((k : ℝ) - 1)
+    let d' := μ + v
+    (V₀ ≤ V ∧
+      (1 - θ) * logValue c + θ * logValue d +
+          ∑ i ∈ Finset.univ.erase j, logValue (t i) < ∑ i, logValue (y i) ∧
+        ∑ i, logValue (y i) ≤ psiK k μ V ∧ psiK k μ V ≤ psiK k μ V₀) ∨
+    (V < V₀ ∧ |s| < v ∧ c < μ₀ ∧ μ < d ∧ v = min (μ₀ - c) (d - μ) ∧
+      (k : ℝ) * v ≤ ((k : ℝ) - 1) * (μ - c) - s ∧
+      (0 < c ∧ c ≤ c' ∧ c' < μ - v ∧ μ - v < z ∧ z < μ + v ∧ μ + v = d' ∧ d' ≤ d)) := by
+  dsimp only
+  by_cases hfloor : V₀ ≤ ((1 - θ) * c + θ * d - μ) ^ 2 +
+      ∑ i ∈ Finset.univ.erase j, (t i - μ) ^ 2
+  · exact Or.inl ⟨hfloor, fractional_mean_branch hk j t hc hcd ht hθ hbudget hV₀ hfloor⟩
+  · exact Or.inr ⟨lt_of_not_ge hfloor,
+      fractional_residual_support hk j t hc hcd hθ hμ hbudget hlower
+        (lt_of_not_ge hfloor) hlarge⟩
+
 #print axioms logValue_strictConcaveOn
 #print axioms fractional_mean_branch
 #print axioms residual_distance_geometry
 #print axioms fractional_residual_support
+#print axioms fractional_branch_alternative
 
 end D5.S3.Analytic.Interpolation.FractionalBranchGeometry
