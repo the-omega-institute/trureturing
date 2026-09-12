@@ -1,0 +1,24 @@
+**34.9 The envelope increment is nonnegative even if its high argument decreases.**
+On positive support \(f''(x)=-e^x/(e^x-1)^2<0\). Reuse 26.5's function
+\[
+F(\mu,r)=(k-1)f(\mu-r)+f(\mu+(k-1)r),\qquad r\ge0,\quad\mu-r>0.
+\]
+With \(L=\mu-r\), \(H=\mu+(k-1)r\),
+\[
+F_\mu=(k-1)f'(L)+f'(H)>0,\qquad
+F_r=(k-1)(f'(H)-f'(L))\le0.
+\]
+If the actual change \(t\ge0\), then \(u\ge t\), so both argument shifts
+\(u-t\) and \(u+(k-1)t\) are nonnegative. Increasing \(f\) proves
+\(\Psi_\xi\ge\Psi_0\).
+
+If \(t<0\), first increase the mean from \(\mu_0\) to \(\mu_0+u\) at
+radius \(\rho_0\); then decrease the radius to the actual
+\(\rho_\xi=\rho_0+t\ge0\) at the new mean. Each operation weakly increases
+\(F\). Along the first segment the lower support is \(L_0+v\ge m+T\)
+for \(0\le v\le u\). Along the second it is at least \(L_0+u\ge m+T\),
+and the radius remains nonnegative, so \(H\ge L>0\).
+All calculus therefore stays in the valid domain, including a final
+radius zero. In particular, a negative value of \(H_\xi-H_0\) does not
+invalidate the nonnegative total envelope increment.
+

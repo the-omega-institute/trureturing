@@ -1,0 +1,552 @@
+{
+  "conclusion": {
+    "verdict": "reject",
+    "worker_flight_ref": "qgh0912-s23-full-composed-tests-r1",
+    "role": "tests",
+    "carrier": "codex-cli",
+    "attempt": 1,
+    "retry_budget": 1,
+    "exposure": "repo-prior-exposed",
+    "scope": "Complete I51 S23 source-fidelity review; current fixed-byte consumers and indispensable evidence. No independent mathematical validation or delivery approval.",
+    "input_identity": {
+      "repository": "https://github.com/the-omega-institute/trureturing",
+      "work_target": "/Users/auricstudio/trureturing-qgh-pure-s23",
+      "branch": "lane/math/quantized-gh-composed-s23-0911",
+      "starting_HEAD": "1f5f54ba9cdba9486e1c8170ccd627cadcd9ce25",
+      "candidate_state": "unstaged, unsealed, unpublished",
+      "archive": {
+        "path": "/tmp/qgh-boundaries-0908/s23-full-composed-review-dispatch-r1-0912.tar.xz",
+        "bytes": 10879688,
+        "sha256": "902116a6337253eabb47b4addef836733c367dd8739017c0145e0d5504f7345c"
+      },
+      "manifest": {
+        "bytes": 730415,
+        "LF": 13592,
+        "sha256": "2725fa1838a481d36161dcedddb52666b68c3d8346f76937eb4c841a4f14664e"
+      },
+      "candidate_path_map": {
+        "bytes": 635622,
+        "LF": 2453,
+        "sha256": "a2fe4459d9203511e39215a70c3ffbba48e061544cb53632bafde0e736a92331",
+        "current_paths": 2445,
+        "authority": "Only the top candidate-paths.json defines current physical paths; inner references receive transport prefixes without changing logical owners."
+      },
+      "source": {
+        "path": "docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+        "bytes": 440285,
+        "lf": 8740,
+        "lines": 8740,
+        "terminal_lf": 1,
+        "sha256": "75e41aeca17b0343d6ecb5cb16e6cee13d7a64f8f798556921351e855c3e6af9",
+        "git_blob_oid": "a31e65915bed487d4566d1547bbc52b0e365d9b3"
+      },
+      "prefix": {
+        "byte_span": [
+          0,
+          414248
+        ],
+        "bytes": 414248,
+        "lf": 8150,
+        "lines": 8150,
+        "terminal_lf": 2,
+        "sha256": "709b3de5f38ef393313f2c9c29e2f1afa3435fef7d7455fb8e5202bb01a31122",
+        "git_blob_oid": "fc7f039ae2749f3449f4483bf41746ba34d32e0c"
+      },
+      "chapter34_tail": {
+        "byte_span": [
+          414248,
+          440285
+        ],
+        "bytes": 26037,
+        "lf": 590,
+        "lines": 590,
+        "terminal_lf": 1,
+        "sha256": "3ec90ee5825b7bfa35341ee3a4b7a8cadf5c742bb1c372f17e6b0198169e43ec",
+        "git_blob_oid": "5c40b247f762a0d4bcabcd2a33c5c6139f9fd889"
+      }
+    },
+    "reading_coverage": {
+      "required_inputs": "Read READ_FIRST.md, complete control/current-goal.json (186 constraints, 51 criteria, full harness, 181 revisions), full authority/current-CLAUDE.md, authority/SKILL.md, authority/CODEX_WORKER_SPEC.md and authority/CONTEXT.md before substantive review. Applied the supplied review skill and CLAUDE 5.11 roster/retry override; no redelegation.",
+      "whole_source": {
+        "bytes": 440285,
+        "LF": 8740,
+        "decoded_characters": 321400,
+        "whole_units": 345,
+        "inherited_units": 323,
+        "new_units": 22,
+        "structural_headings": 4,
+        "method": "Read every mathematical section, table, proof and qualifier across the entire source, including the full prefix. Hashing was separate integrity evidence. No current source body omitted."
+      },
+      "indispensable_bodies": "Read the full original I18/I20/I44 source/report versions and I44 map, all S19-S22 source/report/map versions, current S19-S23 public contracts and complete executable API blocks, current S23 descriptors and evidence, I51 formal conclusion/intake, current caller audit and its public fixed-check code, preparation errors and original S23 inputs. Exact previously read spans were matched, with every novel span subsequently read; historical mathematical programs remained inert.",
+      "repaired_S22_reports": [
+        "xi-quantization",
+        "5040-variance",
+        "real-grid-dual",
+        "integer-ratio-grid",
+        "prime-slab-finite-design",
+        "prime-slab-corner-order",
+        "prime-coordinate-separation",
+        "relative-prime-spread-proof",
+        "common-height-finite-mixtures"
+      ],
+      "original_inputs": "Read all 27 named S22 input bodies, three original xi files, six source versions, primary theorem envelopes and their audits/notation/gates/literature records, S19 C88/C90/C92/C93/C95/C96/C97 conclusions and intake, and supplied historical settlements/receipts. Supplied lifecycle receipts were treated only as fixed historical content; no lifecycle was queried.",
+      "exhaustive_processing": {
+        "reading_inventory_files": 61,
+        "queued_characters_covered": 1068777,
+        "canonical_inventory_rows_typed": 192,
+        "I44_nodes_visited": 6880,
+        "I44_span_records_consumed": 399,
+        "I44_internal_references_consumed": 209,
+        "other_original_map_nodes": {
+          "dict": 44021,
+          "string": 65622,
+          "integer": 144222,
+          "boolean": 5661,
+          "list": 11452,
+          "null": 725,
+          "float": 7
+        },
+        "remaining_long_map_strings": 483,
+        "repetitive_YAML_strings_grammar_checked": 99,
+        "manifest_records_visited": 2715,
+        "manifest_member_identities_checked": 2714,
+        "qualification": "Every repetitive record was visited with type/schema/identity checks; novel prose was read. Manifest hashing is not claimed as semantic reading of every transport member."
+      },
+      "PDF_scope": [
+        {
+          "document": "HKUST, 11-page PDF",
+          "sha256": "02a501415b8472ca147d17d6e5369d7889f7b2aeba7b9ba37082e7dbebdefa7d",
+          "pages_read": [
+            4,
+            5,
+            6,
+            7
+          ],
+          "limit": "Extracted prose read; mathematical glyphs are garbled as control characters. Complete glyph-level or visual proof inspection is not claimed."
+        },
+        {
+          "document": "Stanford, 44-page PDF",
+          "sha256": "c172569e16a24039ac7dd0ae9d1ee743e31eb6a9369eac38206b758cbe76903b",
+          "pages_read": [
+            6,
+            16,
+            26,
+            27
+          ]
+        },
+        {
+          "document": "Doikov, 9-page PDF",
+          "sha256": "aed2706ef6ca94ed020d359de05be9a18784e3fc0ceb4fefef31c23c34a37f8b",
+          "pages_read": [
+            2,
+            3
+          ]
+        },
+        {
+          "document": "Boyd, 714-page PDF",
+          "sha256": "40d976c83c18cce1900eff8c41bd5ad408c102b813af39d05ff85678ccf8d76e",
+          "pages_read": [
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            647,
+            648,
+            649
+          ],
+          "also_read": "Complete supplied selected-text excerpt."
+        }
+      ],
+      "genuine_omissions": [
+        "Unselected PDF pages were outside the declared literature reading scope. HKUST mathematical glyphs remain unreadable in the available extraction; no new classical-proof validation is claimed.",
+        "One explicitly diagnostic transport member was deliberately unopened. Private/opaque diagnostics and prohibited newer or exhausted mathematical papers were not used.",
+        "The separate original historical error stream is absent from the supplied evidence; it was not reconstructed or fabricated."
+      ],
+      "truncation_recovery": "All truncated required authority/source/evidence prose was recovered through bounded rereads. Later C88 and C93 display cuts were recovered at exact text boundaries. Truncated manifest output was replaced by exhaustive typed record processing; truncated repetitive map YAML was covered by all 99 strict grammar checks. No required prose reading claim rests on truncated search output."
+    },
+    "findings": [
+      {
+        "id": "TESTS-S20-FULL-SECTION-1",
+        "severity": "blocking",
+        "title": "Three current S20 section anchors return only parent introductions, omitting their child sections.",
+        "source_address": {
+          "logical_resource": "report-S20-I29",
+          "path": "docs/reports/quantized-gh/balanced-prime-237-all-slabs-0910.md",
+          "sha256": "29d239c8f3f0bb3cde6bc8fb780360856955846ecc8c48ffe1f7f16b218a73c6",
+          "line": 513,
+          "complete_byte_span": [
+            42664,
+            50745
+          ]
+        },
+        "current_consumer": "S20Evidence.section(anchor), docs/reports/quantized-gh/s20-evidence/README.md:187; navigation.json /report_sections/0, /report_sections/8, /report_sections/9.",
+        "BlockingAuthority": {
+          "conjunct_1": {
+            "goal_term": "control/current-goal.json /constraints/185 (C186)",
+            "required_text": "Review the ENTIRE source and every indispensable original evidence body ... all inherited current contracts/versions and raw proof/error/verdict/LF records.",
+            "current_contract": "docs/reports/quantized-gh/s20-evidence/README.md:50 promises every substantive report heading/explicit anchor with its complete original interval and section(anchor) returning the whole original section. The dispatch explicitly requires full-section anchors and real section consumers."
+          },
+          "conjunct_2": {
+            "observed_failure": "The real section(\"verbatim-relocated-source-payloads\") call returns exactly 40 bytes, \"### Verbatim relocated source payloads\\n\\n\", at [42664,42704). The complete section continues through 22 child Archive headings to the next peer heading at 50745 and contains 8081 bytes. Two other parent anchors are likewise incomplete.",
+            "verification": "Independent fence-aware heading-boundary comparison called the actual public consumers and compared their returned bytes to complete sections ending at the next equal-or-higher-level heading."
+          }
+        },
+        "instances": [
+          {
+            "anchor": "balanced-237-whole-box-all-real-slab-fixed-certificate-s20--c43",
+            "heading": "Balanced (2,3,7): whole-box, all-real-slab fixed certificate (S20 / C43)",
+            "level": 1,
+            "declared_span": [
+              0,
+              2394
+            ],
+            "complete_span": [
+              0,
+              58191
+            ],
+            "consumer_bytes": 2394,
+            "complete_bytes": 58191
+          },
+          {
+            "anchor": "c85--s20-section-31-archival-representation-i29-2026-09-10",
+            "heading": "C85 / S20 section 31 archival representation (I29, 2026-09-10)",
+            "level": 2,
+            "declared_span": [
+              39336,
+              42664
+            ],
+            "complete_span": [
+              39336,
+              58191
+            ],
+            "consumer_bytes": 3328,
+            "complete_bytes": 18855
+          },
+          {
+            "anchor": "verbatim-relocated-source-payloads",
+            "heading": "Verbatim relocated source payloads",
+            "level": 3,
+            "declared_span": [
+              42664,
+              42704
+            ],
+            "complete_span": [
+              42664,
+              50745
+            ],
+            "consumer_bytes": 40,
+            "complete_bytes": 8081
+          }
+        ],
+        "verification_strength": "The existing public verify() passes because it checks the declared slice and hash; README.md:218-219 does not independently check section completeness. A matching hash of an incomplete declared slice cannot establish the whole-section contract.",
+        "trust_boundary": "Eligible trusted-party representation omission at a current consumer; no malicious-actor premise.",
+        "scope_and_attribution": "Inherited current defect, not attributed to the two I51 placement edits. All original child bodies remain recoverable; no mathematical byte loss is alleged. Historical approval does not discharge the current contract.",
+        "caller_owned_resolution": "Correct the three current navigation spans and corresponding identities against the original heading hierarchy, and verify the real section consumers return complete intervals. Preserve the original report, historical contracts and unchanged public API blocks; this reviewer made no repair."
+      }
+    ],
+    "preservation_results": {
+      "two_edits": [
+        {
+          "unit": "34.1",
+          "original_unit_removed_span": [
+            28,
+            147
+          ],
+          "removed_bytes": 119,
+          "replacement": "",
+          "current_unit_span": [
+            414333,
+            415866
+          ]
+        },
+        {
+          "unit": "34.16",
+          "original_unit_removed_span": [
+            773,
+            827
+          ],
+          "removed_bytes": 54,
+          "replacement": ".",
+          "current_unit_span": [
+            431493,
+            432712
+          ]
+        }
+      ],
+      "mathematical_bytes": "All bytes outside the two authorized spans survive; all other 20 chapter34 units are unchanged. Preserve etadmin=eta*dmin, nonnegative premises before squaring in 34.7, paired nonnegative increments in 34.11, strict/closed radius and endpoint conditions, the full inverse-image family in 34.15-34.18, one-corner zero-sign obstruction, and continuous translations versus actual prime-exponent points.",
+      "mathematical_scope": "All inherited domains, support tables, proofs, notation corrections, mass/probability distinctions and classical limitations remain. The full wider-domain translated5040 baseline in 34.20 is an unproved additional hypothesis; S21 fixed T=0 and S22 density order do not supply it. No new proof or certificate computation was attempted.",
+      "historical_ownership": "Historical 33.22 extra LF retains original I44 ownership at byte 366276; it is not a 23rd chapter34 unit. The 34.21 reference to historical 33.20 resolves in original I44 [362336,363708); removed operational prose is not restored.",
+      "original_resources": {
+        "source-I44-original": {
+          "bytes": 392486,
+          "lf": 7545,
+          "terminal_lf": 1,
+          "sha256": "72c87c810126d23ea157a7687ba99768ecbd7e8a56720df8437d8f27289cb98f"
+        },
+        "report-I44-original": {
+          "bytes": 81031,
+          "lf": 1027,
+          "terminal_lf": 1,
+          "sha256": "ccbd900ac38f091bf22cbbe6bf38ac8e7699e85558cba5a8fe17e32848e0932a"
+        },
+        "I44-original": {
+          "bytes": 297471,
+          "lf": 8149,
+          "terminal_lf": 1,
+          "sha256": "6326cebb30b7d4afaa9612f21edf9735a853e758bbe2e173bec2a1d8166db2b2"
+        },
+        "source-I20-original": {
+          "bytes": 394297,
+          "lf": 7571,
+          "terminal_lf": 1,
+          "sha256": "06331627e46c9e19fbb784282b192d521cb953e4c9a34fb421f74c44c0655b9b"
+        },
+        "report-I20-original": {
+          "bytes": 64694,
+          "lf": 710,
+          "terminal_lf": 1,
+          "sha256": "536c310803bbc8933cc1f2ca0dabd176eb7e83482d2611e9c31d591b733c8653"
+        },
+        "source-I18-original": {
+          "bytes": 394284,
+          "lf": 7571,
+          "terminal_lf": 1,
+          "sha256": "c15b9e6371968fe6a19c8cd6a1a45142a60af4696290da1a317359d0aaf71bde"
+        },
+        "report-I18-original": {
+          "bytes": 61054,
+          "lf": 653,
+          "terminal_lf": 1,
+          "sha256": "2f81c1c77d82de715739243b1d3c2aa2a747ec8f130700f16be831ff2e66e7f8"
+        }
+      },
+      "consumer_preservation": "Complete source/unit inverses, raw-part assembly, original schemas/pointers, at/resolve/span/resource consumers, version aliases and owner rules checked. S22 source-composed-I50 uses its exact 414248-byte file_span; ordinary file remains whole-file. Both changed S22 contracts have exact before archives. S19-S22 executable blocks are unchanged. The section-completeness finding is the stated exception.",
+      "canonical": {
+        "delta_paths": 118,
+        "original_import_paths": 58,
+        "verified_import_modes": "100644; all 58 actual target paths regular and non-executable",
+        "original_import_OIDs": "All 58 match the supplied original path/OID records",
+        "authorized_producer_paths": 4,
+        "catalog_pairs": 525,
+        "whole_unit_roots": 345,
+        "reachable_pairs": 472,
+        "historical_only_pairs": 53,
+        "retained_ordered_chains": 53,
+        "S22_scope": {
+          "roots": 323,
+          "catalog": 494,
+          "reachable": 450,
+          "historical_only": 44
+        },
+        "S21_scope": {
+          "roots": 304,
+          "catalog": 452,
+          "reachable": 431,
+          "historical_only": 21
+        },
+        "method": "Only explicitly named inherited cached canonical bodies consumed; no ingest or fabricated canonical data."
+      },
+      "capacity": {
+        "maximum_new_evidence_LF": 750,
+        "maximum_raw_part_LF": 750,
+        "maximum_new_directory_direct_files": 27,
+        "full_source": "Explicit source exception."
+      },
+      "historical_error_fidelity": "I18/I20/I44 original errors and verdicts remain byte recoverable. The 15074-byte historical fenced transcription includes its delimiter LF; the original payload is 15073 bytes without that LF. Historical 986/542 checks and symbolic observations were read, never replayed."
+    },
+    "command_exit_evidence": [
+      {
+        "command": "python3 -B - (external scratch driver of the fully read S19-S23 public APIs)",
+        "exit_code": 0,
+        "result": "PUBLIC_CHECKS_COMPLETE; each current top-level check ran once. Fixed-snapshot resource memoization was external; public API bytes unchanged.",
+        "counts": {
+          "S19": {
+            "raw_resources": 15,
+            "named_versions": 12,
+            "json_pointer_records": 1656,
+            "primary_scalar_hashes": 308,
+            "span_records": 15496,
+            "hashed_span_records": 14821,
+            "span_owner_rules": 105
+          },
+          "S20": {
+            "versions": 14,
+            "whole_units": 282,
+            "structural_regions": 1,
+            "own_addresses": 22,
+            "report_sections": 33,
+            "source": {
+              "bytes": 364059,
+              "sha256": "47880f8a0b5b96b7fa2178c5a92284da6ec8b112b33c6e14236719f6963c3d00",
+              "lf": 7128,
+              "terminal_lf": 2,
+              "lines": 7128
+            }
+          },
+          "S21": {
+            "versions": 19,
+            "aliases": 24,
+            "whole_units": 304,
+            "structural_regions": 2,
+            "source": {
+              "bytes": 394734,
+              "sha256": "b462e745a0ef7241a41d138c9bd7169105202bc41ec4cfa38e5674c3cac2023c",
+              "lf": 7737,
+              "terminal_lf": 1,
+              "lines": 7737
+            }
+          },
+          "S22": {
+            "versions": 13,
+            "aliases": 9,
+            "whole_units": 323,
+            "structural_regions": 3,
+            "source": {
+              "bytes": 414248,
+              "sha256": "709b3de5f38ef393313f2c9c29e2f1afa3435fef7d7455fb8e5202bb01a31122",
+              "lf": 8150,
+              "terminal_lf": 2,
+              "lines": 8150
+            }
+          },
+          "S23": {
+            "versions": 20,
+            "aliases": 9,
+            "whole_units": 345,
+            "structural_regions": 4,
+            "source": {
+              "bytes": 440285,
+              "sha256": "75e41aeca17b0343d6ecb5cb16e6cee13d7a64f8f798556921351e855c3e6af9",
+              "lf": 8740,
+              "terminal_lf": 1,
+              "lines": 8740
+            }
+          }
+        }
+      },
+      {
+        "command": "python3 -B fixed_integrity.py",
+        "exit_code": 0,
+        "result": "118 delta identities; 58 imports; four producer paths; seven exact recovered originals; two before archives; two literal edits; complete typed inverses, references, canonical closure and capacity checks passed."
+      },
+      {
+        "command": "python3 -B navigation_integrity.py",
+        "exit_code": 0,
+        "result": "Audit completed and reported three S20 contract failures; exit 0 denotes successful audit execution, not all sections passing.",
+        "stages": [
+          {
+            "stage": 19,
+            "declared_sections": 251,
+            "original_headings": 250,
+            "missing_headings": 0,
+            "incomplete_sections": 0
+          },
+          {
+            "stage": 20,
+            "declared_sections": 33,
+            "original_headings": 33,
+            "missing_headings": 0,
+            "incomplete_sections": 3
+          },
+          {
+            "stage": 21,
+            "declared_sections": 30,
+            "original_headings": 30,
+            "missing_headings": 0,
+            "incomplete_sections": 0
+          },
+          {
+            "stage": 22,
+            "declared_sections": 10,
+            "original_headings": 10,
+            "missing_headings": 0,
+            "incomplete_sections": 0
+          },
+          {
+            "stage": 23,
+            "declared_sections": 22,
+            "original_headings": 22,
+            "missing_headings": 0,
+            "incomplete_sections": 0
+          }
+        ]
+      },
+      {
+        "command": "python3 -B - (fixed package/dependency identity audit)",
+        "exit_code": 0,
+        "result": "2715 manifest records visited; 2714 member identities checked, one diagnostic excluded; all 2445 mapped paths declared; 34 dependency identities and 60 relative links resolved."
+      },
+      {
+        "command": "python3 -B - (58 explicit import lstat mode checks)",
+        "exit_code": 0,
+        "result": "58 regular files, zero executable paths; all Git modes 100644."
+      },
+      {
+        "command": "python3 -B - (six declared original source-version span checks)",
+        "exit_code": 0,
+        "result": "S12/S13/S14/S16/S17/S18 bytes, LF counts and SHA256 identities passed."
+      }
+    ],
+    "errors_and_limits": {
+      "reviewer_errors": "A recovery lookup used classical_dependency instead of external_classical_dependency (ValueError, exit 1); corrected bounded read succeeded. A snippet began inside a UTF-8 code point (UnicodeDecodeError, exit 1); reread from the known heading boundary succeeded. A later rg used two nonexistent prerequisite/scope filenames (exit 2); discovery and corrected paths succeeded. Initial materialization completion exit was unavailable after session loss; subsequent current-path and consumer checks establish the resulting view, not that missing exit.",
+      "PDF_extraction": "Extraction exited 0 with fontTools/CFF warnings; the HKUST glyph limitation remains explicit. No renderer installation or mathematical evaluation was performed.",
+      "I51_and_preparation_history": "Preserved supplied implementation path/container errors, StopIteration, KeyError and interrupted first consumer run (130/KeyboardInterrupt), followed by the documented continuation. Preserved caller unsupported --help exit 64 and Path.write_text(newline=...) TypeError with their corrections. No missing raw stream was fabricated.",
+      "verification_boundary": "Fixed text/JSON/schema/byte/reference checks only. No mathematical programs, calculators, CAS, enumeration of mathematical cases, prime tests, factorization, optimization, certificate execution, historical replay, broad build/Lean/preflight, install, GPU, daemon, local model, native agent, redelegation, remote or lifecycle query/action."
+    },
+    "historical_votes": [
+      {
+        "stage": "Original I44",
+        "architecture": "approve",
+        "quality": "reject",
+        "tests": "approve",
+        "qualification": "Original incomplete 34.1/34.16 migration remains historical."
+      },
+      {
+        "stage": "Original S22 review R1",
+        "architecture": "reject",
+        "quality": "comment",
+        "tests": "reject"
+      },
+      {
+        "stage": "Original S22 review R2",
+        "architecture": "approve",
+        "quality": "approve",
+        "tests": "approve",
+        "qualification": "Historical votes; not this I51 verdict."
+      }
+    ],
+    "nonblocking_historical_note": {
+      "source": "Doikov supplied PDF page 3; inherited source section 26; prior S22 QUALITY-P1",
+      "observation": "The extracted proof mixes f(t)+at+b with convex-combination terms using f(x)-ax-b; page 2 states the minus convention. The inherited current use sets a=b=0 and retains its own Jensen proof. This preserves a historical source erratum, not a new mathematical validation or current rejection basis."
+    },
+    "reasoning_discipline": {
+      "mature_frame": "Lossless archival representation, explicit source-version ownership, contract testing and independent completeness oracles.",
+      "known_good_form": "Exact immutable original bytes, explicit bounded predecessor spans and a section consumer whose interval includes the heading and all descendants through the next peer/ancestor heading.",
+      "symmetric_aesthetic_assessment": [
+        {
+          "candidate": "Approve on exact identities and passed public checks",
+          "assessment": "mixed",
+          "reason": "The source/version representation is coherent and recoverable, but three section names promise more content than their current intervals return; approving would leave a locatable contract defect."
+        },
+        {
+          "candidate": "Reject for bounded navigation repair while preserving original bodies and APIs",
+          "assessment": "beautiful",
+          "reason": "Corrects the three inconsistent declarations at their existing consumer without duplicating historical sources or expanding into mathematical validation."
+        }
+      ],
+      "verified_premises": "Source identities, exact edits, original recovery, current contract text, actual returned section bytes, heading boundaries, import metadata and modes, canonical closure and capacity were checked. The rejection uses no assumed mathematical premise.",
+      "unknown_premises": "HKUST glyph-level classical proof reading and the absent separate historical error stream are not verified. The translated5040 baseline remains explicitly unproved. None supplies the rejection premise.",
+      "depth_stop": "Stopped after completing assigned whole-source/evidence coverage and resolving current consumer completeness. No passed top-level check was repeated, no historical mathematics replayed and no broader repair or lifecycle review undertaken."
+    },
+    "publication_scope": "Worker-owned review result and completion sentinel only. No source/evidence edit, staging, commit, push, branch change, source delivery, CI/MERGED or whole-goal completion claim. Caller owns subsequent intake and delivery.",
+    "visible_inputs": {
+      "prior_disclosure": "repo-prior-exposed",
+      "sources": "Inherited repository AGENTS/CLAUDE context and the fixed supplied review package; current top-level path map governs physical resolution. No same-round peer result was consumed.",
+      "authentication": "No prior-sterility, hidden-model or model-family-diversity authentication claimed."
+    }
+  },
+  "log_ref": "/var/folders/7r/h8yjr2y927n8m2kh38c18n9w0000gp/T/consensus-rnd/sshx/qgh0912-s23-full-composed-tests-r1/attempt-1/worker.stdout.log"
+}

@@ -1,12 +1,12 @@
 # S22 composed predecessor evidence
 
-The original S22 [source prefix](../../../develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md), bytes `[0,414248)`, is exactly the complete 394734-byte merged S21 prefix followed immediately by the complete 19514-byte I30 S22 pure tail: 414248 bytes, 8150 LF, SHA256 `709b3de5f38ef393313f2c9c29e2f1afa3435fef7d7455fb8e5202bb01a31122`. No mathematical byte was edited. [composition.json](composition.json) declares the original owners and every current interval.
+The [active source](../../../develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md) is exactly the complete 394734-byte merged S21 prefix followed immediately by the complete 19514-byte I30 S22 pure tail: 414248 bytes, 8150 LF, SHA256 `709b3de5f38ef393313f2c9c29e2f1afa3435fef7d7455fb8e5202bb01a31122`. No mathematical byte was edited. [composition.json](composition.json) declares the original owners and every current interval.
 
 ## Original version ownership
 
 | Resource | Exact meaning | Representation |
 | --- | --- | --- |
-| source-composed-I50 | Exact original S22 source, 414248 bytes | Checked file_span `[0,414248)` |
+| source-composed-I50 | Entire growing candidate, 414248 bytes | Ordinary whole file |
 | source-S21-merged / source-composed-I48 | Original merged S21, 394734 bytes | Checked file_span `[0,394734)` |
 | tail-S22-I30 | Complete original 19514-byte pure tail | Checked file_span `[394734,414248)` |
 | source-I30-current | Original I30 output, 363007 bytes | [Exact shared-prefix composition](source-I30-current.json) |

@@ -1,0 +1,27 @@
+**34.16 Complete closed-radius statement and retained margins.** Under the
+separate baseline hypothesis of 34.15, for every \(0\le\gamma\le\eta\),
+\[
+0\le\epsilon\le\frac{(\eta-\gamma)d_{\min}}{k-1}
+\quad\Longrightarrow\quad
+\boxed{e^TG_\xi<-\gamma\quad
+\text{on every }\mathcal W_{T,\xi},\ T_{\min}\le T<\infty.}
+\]
+Indeed \((k-1)\epsilon/d_{\min}\le\eta-\gamma\), and substitution into
+the strict inequality in 34.15 proves the assertion. In particular,
+\[
+\epsilon\le\frac{\eta\,d_{\min}}{2(k-1)}
+\quad\Longrightarrow\quad e^TG_\xi<-\eta/2,
+\qquad
+\epsilon\le\frac{\eta\,d_{\min}}{k-1}
+\quad\Longrightarrow\quad e^TG_\xi<0.
+\]
+The raw primary token etadmin denotes the product eta*dmin, explicitly
+\(\eta\,d_{\min}\), as fixed by the preceding general \(\gamma\) formula;
+the raw token is preserved in the provenance report. It is not a new symbol.
+The endpoints \(\epsilon=(\eta-\gamma)d_{\min}/(k-1)\) and
+\(T=T_{\min}\) may hold simultaneously without losing strictness.
+The case \(\gamma=\eta\) requires \(\epsilon=0\) and recovers the baseline;
+\(\gamma=0\) retains strict negativity. These are pointwise strict bounds
+throughout the admitted finite domain. They do not assert that a limiting
+supremum over that domain is strictly below the same right-hand side.
+
