@@ -52,8 +52,74 @@ theorem intervention_bridge : LegacyPrimitiveRealization interventionArena
     (∃ M N : DeterministicBoolSCM, Int M = Int N ∧ CF M ≠ CF N) interventionRealization :=
   ⟨(separationLegacy interventionArena.toArena Int CF).equivalence⟩
 
+-- Law-variation witness at the registered signature: the actual realization satisfies
+-- the law and a constant realization of the same signature fails it.
+theorem intervention_law_sensitive : interventionArena.Law interventionRealization ∧
+    ¬ interventionArena.Law ⟨(fun i _ => interventionRealization.readout i noEffectModel), Fin.elim0⟩ := by
+  refine ⟨intervention_bridge.equivalence.mp intervention_strictly_weaker_than_counterfactual, ?_⟩
+  rintro ⟨_, _, _, h⟩; exact h rfl
+
+-- Slot sensitivity: two-class readouts keyed on the no-effect model let each readout
+-- slot alone flip the law while the other slot and the (empty) anchors stay fixed.
+def interventionKey (M : DeterministicBoolSCM) : Bool := decide (M = noEffectModel)
+
+def interventionKeyedCounterfactual : PrimitiveRealization interventionSignature where
+  readout | .intervention => fun _ _ _ => 0
+          | .counterfactual => fun M _ _ _ => interventionKey M
+  anchor := Fin.elim0
+
+def interventionConstantCounterfactual : PrimitiveRealization interventionSignature where
+  readout | .intervention => fun _ _ _ => 0
+          | .counterfactual => fun _ _ _ _ => true
+  anchor := Fin.elim0
+
+def interventionKeyedBoth : PrimitiveRealization interventionSignature where
+  readout | .intervention => fun M _ _ => if interventionKey M then 0 else 1
+          | .counterfactual => fun M _ _ _ => interventionKey M
+  anchor := Fin.elim0
+
+theorem interventionKeyedCounterfactual_law :
+    interventionArena.Law interventionKeyedCounterfactual :=
+  ⟨noEffectModel, flipEffectModel, rfl, by
+    show (fun (_ _ _ : Bool) => interventionKey noEffectModel) ≠
+      (fun (_ _ _ : Bool) => interventionKey flipEffectModel)
+    decide⟩
+
+theorem interventionConstantCounterfactual_not_law :
+    ¬ interventionArena.Law interventionConstantCounterfactual :=
+  fun ⟨_, _, _, h⟩ => h rfl
+
+theorem interventionKeyedBoth_not_law : ¬ interventionArena.Law interventionKeyedBoth := by
+  rintro ⟨M, N, hInt, hCF⟩
+  apply hCF
+  have h : (if interventionKey M then 0 else 1) = (if interventionKey N then 0 else 1) :=
+    congrFun (congrFun hInt true) true
+  show (fun (_ _ _ : Bool) => interventionKey M) = (fun (_ _ _ : Bool) => interventionKey N)
+  cases hM : interventionKey M <;> cases hN : interventionKey N <;> simp_all
+
+theorem intervention_slot_sensitive :
+    LeanInformationAudit.FiniteSlotSensitivity interventionArena := by
+  constructor
+  · intro i
+    cases i
+    · refine ⟨interventionKeyedCounterfactual, interventionKeyedBoth, ?_, ?_, ?_⟩
+      · intro j hj; cases j
+        · exact (hj rfl).elim
+        · rfl
+      · intro j; exact Fin.elim0 j
+      · exact ⟨fun _ => interventionKeyedBoth_not_law, fun _ => interventionKeyedCounterfactual_law⟩
+    · refine ⟨interventionKeyedCounterfactual, interventionConstantCounterfactual, ?_, ?_, ?_⟩
+      · intro j hj; cases j
+        · rfl
+        · exact (hj rfl).elim
+      · intro j; exact Fin.elim0 j
+      · exact ⟨fun _ => interventionConstantCounterfactual_not_law,
+          fun _ => interventionKeyedCounterfactual_law⟩
+  · intro i; exact Fin.elim0 i
+
 register_information_theorem intervention_strictly_weaker_than_counterfactual in interventionArena
   primitives interventionRealization.toPrimitiveBundle realization intervention_bridge
+  variation intervention_law_sensitive sensitivity intervention_slot_sensitive
 expect_information_occurrence intervention_strictly_weaker_than_counterfactual in interventionArena
   from "D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers"
 
@@ -65,6 +131,7 @@ theorem finer_bridge : LegacyPrimitiveRealization interventionArena
   exact ⟨And.right, fun h => ⟨counterfactual_eq_implies_interventional_eq, h⟩⟩
 register_information_theorem counterfactual_kernel_strictly_finer in interventionArena
   primitives interventionRealization.toPrimitiveBundle realization finer_bridge
+  variation intervention_law_sensitive sensitivity intervention_slot_sensitive
 expect_information_occurrence counterfactual_kernel_strictly_finer in interventionArena
   from "D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers"
 
@@ -80,6 +147,7 @@ theorem fiber_bridge : LegacyPrimitiveRealization interventionArena
     exact ⟨allSingleWorldMarginals M, M, N, rfl, hInt.symm, hCF⟩
 register_information_theorem boolean_counterfactual_varies_on_coupling_fiber in interventionArena
   primitives interventionRealization.toPrimitiveBundle realization fiber_bridge
+  variation intervention_law_sensitive sensitivity intervention_slot_sensitive
 expect_information_occurrence boolean_counterfactual_varies_on_coupling_fiber in interventionArena
   from "D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers"
 
@@ -94,6 +162,7 @@ theorem not_identifiable_bridge : LegacyPrimitiveRealization interventionArena
   rfl
 register_information_theorem boolean_counterfactual_not_identifiable in interventionArena
   primitives interventionRealization.toPrimitiveBundle realization not_identifiable_bridge
+  variation intervention_law_sensitive sensitivity intervention_slot_sensitive
 expect_information_occurrence boolean_counterfactual_not_identifiable in interventionArena
   from "D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers"
 
@@ -112,6 +181,7 @@ theorem target_bridge : LegacyPrimitiveRealization interventionArena
   exact ⟨And.right, fun h => ⟨fun _ _ hsame => hsame, h⟩⟩
 register_information_theorem interventional_marginal_sufficient_but_counterfactual_joint_not
   in interventionArena primitives interventionRealization.toPrimitiveBundle realization target_bridge
+  variation intervention_law_sensitive sensitivity intervention_slot_sensitive
 expect_information_occurrence interventional_marginal_sufficient_but_counterfactual_joint_not in interventionArena
   from "D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers"
 
@@ -130,11 +200,6 @@ theorem intervention_gold_kernel_equal : ∀ x y,
 theorem intervention_nondegenerate : interventionArena.toArena.Nondegenerate := by decide
 def interventionEnumeration : Arena.StateEnumeration interventionArena.toArena :=
   interventionArena.__state_enumeration
-
-theorem intervention_law_sensitive : interventionArena.Law interventionRealization ∧
-    ¬ interventionArena.Law ⟨(fun i _ => interventionRealization.readout i noEffectModel), Fin.elim0⟩ := by
-  refine ⟨intervention_bridge.equivalence.mp intervention_strictly_weaker_than_counterfactual, ?_⟩
-  rintro ⟨_, _, _, h⟩; exact h rfl
 
 -- Order matches the canonical seal's theorem-name order; checked below against its builder.
 def interventionCatalog : Catalog interventionArena.toArena := Catalog.ofVector ![
@@ -168,8 +233,70 @@ def observationRealization : PrimitiveRealization observationInterventionSignatu
 theorem observation_bridge : LegacyPrimitiveRealization observationInterventionArena
     (∃ M N : DeterministicBoolSCM, Obs M = Obs N ∧ Int M ≠ Int N) observationRealization :=
   ⟨(separationLegacy observationInterventionArena.toArena Obs Int).equivalence⟩
+
+theorem observation_law_sensitive : observationInterventionArena.Law observationRealization ∧
+    ¬ observationInterventionArena.Law ⟨(fun i _ => observationRealization.readout i xCausesYModel), Fin.elim0⟩ := by
+  refine ⟨observation_bridge.equivalence.mp observation_strictly_weaker_than_intervention, ?_⟩
+  rintro ⟨_, _, _, h⟩; exact h rfl
+
+def observationKey (M : DeterministicBoolSCM) : Bool := decide (M = xCausesYModel)
+
+def observationKeyedIntervention : PrimitiveRealization observationInterventionSignature where
+  readout | .observation => fun _ _ => (false, false)
+          | .intervention => fun M _ _ => (observationKey M, false)
+  anchor := Fin.elim0
+
+def observationConstantIntervention : PrimitiveRealization observationInterventionSignature where
+  readout | .observation => fun _ _ => (false, false)
+          | .intervention => fun _ _ _ => (false, false)
+  anchor := Fin.elim0
+
+def observationKeyedBoth : PrimitiveRealization observationInterventionSignature where
+  readout | .observation => fun M _ => (observationKey M, false)
+          | .intervention => fun M _ _ => (observationKey M, false)
+  anchor := Fin.elim0
+
+theorem observationKeyedIntervention_law :
+    observationInterventionArena.Law observationKeyedIntervention :=
+  ⟨xCausesYModel, yCausesXModel, rfl, by
+    show (fun (_ _ : Bool) => (observationKey xCausesYModel, false)) ≠
+      (fun (_ _ : Bool) => (observationKey yCausesXModel, false))
+    decide⟩
+
+theorem observationConstantIntervention_not_law :
+    ¬ observationInterventionArena.Law observationConstantIntervention :=
+  fun ⟨_, _, _, h⟩ => h rfl
+
+theorem observationKeyedBoth_not_law : ¬ observationInterventionArena.Law observationKeyedBoth := by
+  rintro ⟨M, N, hObs, hInt⟩
+  apply hInt
+  have h : observationKey M = observationKey N := congrArg Prod.fst (congrFun hObs true)
+  show (fun (_ _ : Bool) => (observationKey M, false)) = (fun (_ _ : Bool) => (observationKey N, false))
+  rw [h]
+
+theorem observation_slot_sensitive :
+    LeanInformationAudit.FiniteSlotSensitivity observationInterventionArena := by
+  constructor
+  · intro i
+    cases i
+    · refine ⟨observationKeyedIntervention, observationKeyedBoth, ?_, ?_, ?_⟩
+      · intro j hj; cases j
+        · exact (hj rfl).elim
+        · rfl
+      · intro j; exact Fin.elim0 j
+      · exact ⟨fun _ => observationKeyedBoth_not_law, fun _ => observationKeyedIntervention_law⟩
+    · refine ⟨observationKeyedIntervention, observationConstantIntervention, ?_, ?_, ?_⟩
+      · intro j hj; cases j
+        · rfl
+        · exact (hj rfl).elim
+      · intro j; exact Fin.elim0 j
+      · exact ⟨fun _ => observationConstantIntervention_not_law,
+          fun _ => observationKeyedIntervention_law⟩
+  · intro i; exact Fin.elim0 i
+
 register_information_theorem observation_strictly_weaker_than_intervention in observationInterventionArena
   primitives observationRealization.toPrimitiveBundle realization observation_bridge
+  variation observation_law_sensitive sensitivity observation_slot_sensitive
 expect_information_occurrence observation_strictly_weaker_than_intervention in observationInterventionArena
   from "D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers"
 
@@ -194,6 +321,7 @@ theorem profile_bridge : LegacyPrimitiveRealization observationInterventionArena
     funext x; exact congrFun h (some x)
 register_information_theorem intervention_kernel_strictly_finer_than_observation
   in observationInterventionArena primitives observationRealization.toPrimitiveBundle realization profile_bridge
+  variation observation_law_sensitive sensitivity observation_slot_sensitive
 expect_information_occurrence intervention_kernel_strictly_finer_than_observation in observationInterventionArena
   from "D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers"
 
@@ -211,11 +339,6 @@ theorem observation_gold_kernel_equal : ∀ x y,
 theorem observation_nondegenerate : observationInterventionArena.toArena.Nondegenerate := by decide
 def observationEnumeration : Arena.StateEnumeration observationInterventionArena.toArena :=
   observationInterventionArena.__state_enumeration
-
-theorem observation_law_sensitive : observationInterventionArena.Law observationRealization ∧
-    ¬ observationInterventionArena.Law ⟨(fun i _ => observationRealization.readout i xCausesYModel), Fin.elim0⟩ := by
-  refine ⟨observation_bridge.equivalence.mp observation_strictly_weaker_than_intervention, ?_⟩
-  rintro ⟨_, _, _, h⟩; exact h rfl
 
 def observationCatalog : Catalog observationInterventionArena.toArena := Catalog.ofVector ![
   intervention_kernel_strictly_finer_than_observation.__information_unit,
@@ -338,5 +461,7 @@ run_meta do
 #print axioms interventionEnumeration
 #print axioms observationEnumeration
 #print axioms all_peers_trivial
+#print axioms intervention_slot_sensitive
+#print axioms observation_slot_sensitive
 
 end D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers
