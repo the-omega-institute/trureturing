@@ -1,0 +1,7 @@
+**定理 380.2。** $\mathcal U:K\to\mathscr Q$ 是同胚。对任意 $x,y\in K$，
+$$
+y=Tx\quad\Longleftrightarrow\quad
+\forall L\ge1,\ \langle P_Lx,P_Ly\rangle\in\mathscr R_L.
+$$
+因此普通图 $G_T\subseteq K\times K$ 经全部窗口对映射同胚到 $\mathscr Q_R$。
+

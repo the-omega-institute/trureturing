@@ -1,0 +1,21 @@
+**定义 379.1。** 以下有限窗口命题在通常 ZFC 中使用原 von Neumann 自然数集合 $\omega$，并局部简记第 371、375 条的
+$$
+K=K_{\rm infdig},\quad z=z_{\rm infdig},\quad F=F_{\rm infdig},\quad
+H=H_{\rm infdig},\quad T=T_{\rm infdig}.
+$$
+$G_j,\phi,\alpha,r,a,b,I,q,u,v$ 均取定义 371.1 的值，$\eta_j=(-1)^{j+1}\alpha^{j+2}=\phi G_j-G_{j+1}$。对每个 $L\in\omega$，定义
+$$
+\mathsf X_L=\{p:L\to\{0,1\}:\forall j\ (j+1<L\Rightarrow p_jp_{j+1}=0)\},
+\qquad V_L(p)=\sum_{j<L}G_jp_j,
+$$
+$$
+P_L:K\to\mathsf X_L,\qquad P_L(x)=x|_L,\qquad
+C_p=P_L^{-1}(\{p\}).
+$$
+$\mathsf X_0=\{\varnothing\}$，各 $\mathsf X_L$ 取离散拓扑。第 9–10、69–70、343.1 条在这个相同窗口域上给出 $V_L:\mathsf X_L\leftrightarrow\{0,\ldots,G_L-1\}$；将 $p$ 补零所得总函数恰为 $z(V_L(p))$。特别，每个 $P_L$ 满射，$C_p$ 非空且开闭。对 $L\ge1$，定义
+$$
+\beta_L=G_{L-1}-1,\qquad
+\mathscr R_L=\{\langle P_Lx,P_LTx\rangle:x\in K\}\subseteq\mathsf X_L\times\mathsf X_L.
+$$
+这里及以下没有下标 $Z$ 的有序对均为普通 Kuratowski 有序对。
+
