@@ -5,7 +5,7 @@ namespace StrataLint.Engine;
 
 internal sealed record BackfillInventoryValidationContext(
     RepositorySnapshot Current,
-    RepositorySnapshot Baseline,
+    RepositorySnapshot? Baseline,
     ValidatedPolicy Policy,
     AcceptedLeanClosure? Lean,
     RawChangeSet? Changes = null,
@@ -139,7 +139,8 @@ internal static partial class BackfillInventoryRule
             return true;
         }
 
-        var document = context.BackfillCandidateDeltaSession.GetDocument(context.Changes);
+        var document = context.ProtectedBase is null ? BackfillInventoryLoader.Load(context.Current)
+            : context.BackfillCandidateDeltaSession.GetDocument(context.Changes);
         return BackfillDeltaImpactResolver.HasPotentialStatementDependants(
             document,
             context.Changes);
@@ -157,12 +158,12 @@ internal static partial class BackfillInventoryRule
         {
             document = changes is null
                 ? BackfillInventoryLoader.Load(context.Current)
-                : context.BackfillCandidateDeltaSession.GetDocument(changes);
+                : context.BackfillCandidateDeltaSession!.GetDocument(changes);
             if (changes is not null)
             {
                 var impact = BackfillDeltaImpactResolver.Resolve(
                     context.Current,
-                    context.Baseline,
+                    context.ProtectedBase!,
                     context.Lean.Report,
                     document,
                     changes);
@@ -172,7 +173,7 @@ internal static partial class BackfillInventoryRule
                     .Select(static path => path.Value)
                     .ToHashSet(StringComparer.Ordinal);
                 isBaseFactAffected = affectedPaths.Contains;
-                document = context.BackfillCandidateDeltaSession.GetDocument(evaluationChanges);
+                document = context.BackfillCandidateDeltaSession!.GetDocument(evaluationChanges);
             }
         }
         catch (FormatException exception)
@@ -183,7 +184,7 @@ internal static partial class BackfillInventoryRule
         return EvaluateDocument(
             new BackfillInventoryValidationContext(
                 context.Current,
-                context.Baseline,
+                context.ProtectedBase,
                 context.Policy,
                 context.Lean,
                 receiptVerificationChanges,
@@ -453,7 +454,7 @@ internal static partial class BackfillInventoryRule
 
         try
         {
-            var baselineDocument = context.BaselineDocument ?? LoadBaselineDocument(context.Baseline);
+            var baselineDocument = context.BaselineDocument ?? (context.Baseline is null ? null : LoadBaselineDocument(context.Baseline));
             var evaluation = DigestionStatusEvaluator.Evaluate(
                 context.Changes is null
                     ? DigestionEvaluationScope.FullScan

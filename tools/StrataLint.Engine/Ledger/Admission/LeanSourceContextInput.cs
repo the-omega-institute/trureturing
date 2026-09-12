@@ -47,9 +47,8 @@ internal sealed class LeanSourceContextInput
         StringComparer.Ordinal).ToImmutableArray();
 
     internal static LeanSourceContextInput Load(byte[] bytes, RepositorySnapshot current,
-        RepositorySnapshot protectedBase)
+        RepositorySnapshot? protectedBase)
     {
-        ArgumentNullException.ThrowIfNull(protectedBase);
         try
         {
             using var json = JsonDocument.Parse(bytes);

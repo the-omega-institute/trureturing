@@ -19,12 +19,13 @@ internal static partial class RepositoryRules
 
     private static ImmutableHashSet<RepoPath> ScribeNarrativeMoves(RuleEvaluationContext context)
     {
+        if (context.ProtectedBase is null) return [];
         var comparer = new ScribeNarrativeByteComparer();
         var deleted = context.Changes.Entries
             .Where(entry => entry.Kind is RawChangeKind.Deleted
                 && IsBlueprintPath(entry.Path.Value, ".scribe.cs")
-                && context.Baseline.Files.ContainsKey(entry.Path))
-            .GroupBy(entry => context.Baseline.Files[entry.Path].RawBytes, comparer)
+                && context.ProtectedBase.Files.ContainsKey(entry.Path))
+            .GroupBy(entry => context.ProtectedBase.Files[entry.Path].RawBytes, comparer)
             .ToDictionary(group => group.Key, group => group.Count(), comparer);
         // Ambiguous equal-byte groups are judged in full, including one deletion and two adds.
         return context.Changes.Entries

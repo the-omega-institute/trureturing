@@ -7,8 +7,9 @@ PRODUCER=""
 LAKE_BIN=""
 CANDIDATE_ROOT=""
 CANDIDATE_OUTPUT=""
-# Omitted BASE has the same meaning as admission: the checked object's first parent.
-SOURCE_BASE="${STRATALINT_SOURCE_BASE:-HEAD^1}"
+SOURCE_BASE="${STRATALINT_SOURCE_BASE:-}"
+PUSH_BEFORE="${STRATALINT_PUSH_BEFORE:-}"
+PUSH_HEAD="${STRATALINT_PUSH_HEAD:-}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 SUPERVISOR="$SCRIPT_DIR/report/report-supervisor.sh"
 INPUT_HELPER="$SCRIPT_DIR/report/lean-report-input.sh"
@@ -22,6 +23,8 @@ while [[ $# -gt 0 ]]; do
     --producer) PRODUCER="$2"; shift 2 ;;
     --lake-bin) LAKE_BIN="$2"; shift 2 ;;
     --base) SOURCE_BASE="$2"; shift 2 ;;
+    --push-before) PUSH_BEFORE="$2"; shift 2 ;;
+    --push-head) PUSH_HEAD="$2"; shift 2 ;;
     --candidate-root) CANDIDATE_ROOT="$2"; shift 2 ;;
     --candidate-output) CANDIDATE_OUTPUT="$2"; shift 2 ;;
     *) echo "lean-report-pair: unknown argument '$1'" >&2; exit 2 ;;
@@ -43,6 +46,17 @@ done
 
 PRODUCER="$(cd "$(dirname "$PRODUCER")" && pwd -P)/$(basename "$PRODUCER")"
 CANDIDATE_ROOT="$(cd "$CANDIDATE_ROOT" && pwd -P)"
+SOURCE_ARGS=()
+if [[ -n "$PUSH_BEFORE" || -n "$PUSH_HEAD" ]]; then
+  [[ -z "$SOURCE_BASE" ]] || { echo "lean-report-pair: choose protected base or push range" >&2; exit 2; }
+  python3 "$CANDIDATE_ROOT/tools/scripts/workflow/checked-ci-identity.py" --repository "$CANDIDATE_ROOT" \
+    --paths --planning-before "$PUSH_BEFORE" --planning-head "$PUSH_HEAD" >/dev/null || exit 2
+  SOURCE_ARGS=(--push-before "$PUSH_BEFORE" --push-head "$PUSH_HEAD")
+else
+  [[ -n "$SOURCE_BASE" ]] || { echo "lean-report-pair: explicit protected base or push range is required" >&2; exit 2; }
+  SOURCE_BASE="$(git -C "$CANDIDATE_ROOT" rev-parse --verify "${SOURCE_BASE}^{commit}")" || exit 2
+  SOURCE_ARGS=(--base "$SOURCE_BASE")
+fi
 INSPECTOR="$(dirname "$PRODUCER")/Inspector.lean"
 [[ -f "$INSPECTOR" ]] \
   || { echo "lean-report-pair: producer Inspector.lean is absent" >&2; exit 2; }
@@ -273,7 +287,10 @@ cache_try_restore() {
   write_sidecar "$output" "$actual"
   # Re-derive the repository address from the CURRENT tree and confirm it matches
   # the stored attestation; rejects any key skew or collision. Fail-closed.
-  if ! "$INPUT_HELPER" verify --repository "$root" --report "$output" \
+  # Source context belongs to this B or P/H and is prepared and verified below.
+  # Restore candidate report material before demanding that context sibling.
+  if ! STRATALINT_SOURCE_BASE="" STRATALINT_PUSH_BEFORE="" STRATALINT_PUSH_HEAD="" \
+    "$INPUT_HELPER" verify --repository "$root" --report "$output" \
     --producer "$PRODUCER" --inspector "$INSPECTOR" >/dev/null 2>&1; then
     cache_evict "$address"
     rm -rf -- "$output" "${output}.sha256" "${output}.provenance.json" \
@@ -353,7 +370,7 @@ materialize_report() {
   # SDK 10.0.201, so one producer SHA can otherwise execute code built by different
   # toolchains. Keep production on the complete-report path until that is solved.
   "$SUPERVISOR" --role lean-producer --lean-slot -- \
-    env LAKE_BIN="$LAKE_BIN" STRATALINT_SOURCE_BASE="$SOURCE_BASE" \
+    env LAKE_BIN="$LAKE_BIN" STRATALINT_SOURCE_BASE="$SOURCE_BASE" STRATALINT_PUSH_BEFORE="$PUSH_BEFORE" STRATALINT_PUSH_HEAD="$PUSH_HEAD" \
       STRATALINT_REPORT_INPUT_ADDRESS="$input_address" \
       STRATALINT_REPORT_REPOSITORY_SHA256="$repository_sha256" \
       STRATALINT_REPORT_PRODUCER_SHA256="$producer_sha256" \
@@ -423,7 +440,7 @@ verify_bundle() {
   [[ -s "${output}.materials.zip" ]] \
     || { echo "lean-report-pair: producer left no material archive: $output" >&2; return 2; }
   "$INPUT_HELPER" verify --repository "$root" --report "$output" \
-    --producer "$PRODUCER" --inspector "$INSPECTOR" --base "$SOURCE_BASE" >/dev/null
+    --producer "$PRODUCER" --inspector "$INSPECTOR" "${SOURCE_ARGS[@]}" >/dev/null
 
   printf '{"schema":"stratalint-lean-report-provenance-v1","side":"candidate","mode":"%s","source_side":"candidate","input_address":"sha256:%s","producer_sha256":"%s","repository_inspector_sha256":"%s","lean_sources_sha256":"%s","lean_config_sha256":"%s","report_sha256":"%s"}\n' \
     "$mode" "$input_address" "$producer_sha256" \
@@ -473,7 +490,7 @@ prepare_bundle() {
   local mode="$LAST_REPORT_MODE"
   local report_sha256="$LAST_REPORT_SHA256"
   "$BASH" "$root/tools/lean-inspector/source-context.sh" prepare \
-    --repository "$root" --report "$staged_output" --base "$SOURCE_BASE" --lake "$LAKE_BIN"
+    --repository "$root" --report "$staged_output" "${SOURCE_ARGS[@]}" --lake "$LAKE_BIN"
   write_provenance \
     "$staged_output" "$mode" "$input_address" \
     "$producer_sha256" "$resident_sha256" "$sources_sha256" \

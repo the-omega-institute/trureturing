@@ -689,10 +689,7 @@ public sealed partial class MakeWorkflowTests
             mathGate,
             StringComparison.Ordinal);
         Assert.Contains(ScribeContentChecksScriptPath, preflight, StringComparison.Ordinal);
-        Assert.Contains(
-            "STRATALINT_SCRIBE_BASE=\"$BASE_SHA\"",
-            preflight,
-            StringComparison.Ordinal);
+        // Native preflight/Scribe caller tests verify the explicit push range transport.
     }
 
     [Fact]

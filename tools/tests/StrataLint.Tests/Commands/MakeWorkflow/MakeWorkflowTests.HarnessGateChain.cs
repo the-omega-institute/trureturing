@@ -43,7 +43,9 @@ public sealed partial class MakeWorkflowTests
             #!/usr/bin/env bash
             if [[ "${1:-}" == -C ]]; then shift 2; fi
             case "$*" in
-              "cat-file -e {{baseRevision}}^{commit}"|"ls-files --others --exclude-standard -z") exit 0 ;;
+              "cat-file -e {{baseRevision}}^{commit}"|"ls-files --others --exclude-standard -z"|"diff --name-only --no-renames -z {{baseRevision}} {{baseRevision}} --") exit 0 ;;
+              "cat-file -t {{baseRevision}}") printf 'commit\n' ;;
+              "rev-parse --verify HEAD"|"rev-parse --verify HEAD^{commit}") printf '%s\n' '{{baseRevision}}' ;;
               "diff --name-only --no-renames -z {{baseRevision}} --") printf 'Blueprint/D5/Probe.scribe.cs\0' ;;
               *) echo "unexpected git invocation: $*" >&2; exit 90 ;;
             esac
@@ -552,7 +554,7 @@ public sealed partial class MakeWorkflowTests
               "rev-parse HEAD^1") printf '%040d\n' 1 ;;
               "merge-base 0000000000000000000000000000000000000001 0000000000000000000000000000000000000002") printf '%040d\n' 1 ;;
               "merge-base --is-ancestor "*) exit 0 ;;
-              "cat-file -e {{GateForkSha}}^{commit}"|"diff --name-only --no-renames -z {{GateForkSha}} --"|"ls-files --others --exclude-standard -z") exit 0 ;;
+              "cat-file -e {{GateForkSha}}^{commit}"|"diff --name-only --no-renames -z {{GateForkSha}} {{GateCandidateSha}} --"|"diff --name-only --no-renames -z {{GateCandidateSha}} --"|"ls-files --others --exclude-standard -z") exit 0 ;;
               *) echo "unexpected git invocation: $*" >&2; exit 90 ;;
             esac
             """);
@@ -613,7 +615,7 @@ public sealed partial class MakeWorkflowTests
               "merge-base --is-ancestor {{baseTipSha}} {{candidateSha}}") exit {{(diverged ? 1 : 0)}} ;;
               "merge-base --is-ancestor {{forkSha}} {{candidateSha}}") exit 0 ;;
               "merge-base --is-ancestor {{forkSha}} HEAD") exit 0 ;;
-              "cat-file -e {{forkSha}}^{commit}"|"diff --name-only --no-renames -z {{forkSha}} --"|"ls-files --others --exclude-standard -z") exit 0 ;;
+              "cat-file -e {{forkSha}}^{commit}"|"diff --name-only --no-renames -z {{forkSha}} {{candidateSha}} --"|"diff --name-only --no-renames -z {{candidateSha}} --"|"ls-files --others --exclude-standard -z") exit 0 ;;
               merge\ *) printf 'mutated\n' > "$PREFLIGHT_GIT_STATE" ;;
               *) echo "unexpected git invocation: $*" >&2; exit 90 ;;
             esac
@@ -646,7 +648,10 @@ public sealed partial class MakeWorkflowTests
             esac
             if [[ "${2:-}" == selftest ]]; then printf 'selftest\n'; exit 0; fi
             if [[ "${2:-}" == check ]]; then
-              if [[ -n "${PREFLIGHT_EXPECTED_GATE_BASE:-}" && "$*" != *" --protected-base $PREFLIGHT_EXPECTED_GATE_BASE "* ]]; then exit 94; fi
+              if [[ -n "${BEFORE:-}" ]]; then
+                [[ "$*" == *" --push-before $BEFORE "* && "$*" == *" --push-head "* ]] || exit 94
+                [[ "$*" != *" --protected-base "* ]] || exit 94
+              elif [[ -n "${PREFLIGHT_EXPECTED_GATE_BASE:-}" && "$*" != *" --protected-base $PREFLIGHT_EXPECTED_GATE_BASE "* ]]; then exit 94; fi
               exit "$PREFLIGHT_ADMISSION_RC"
             fi
             if [[ "${2:-}" == filemap-conform ]]; then exit 0; fi
@@ -671,6 +676,13 @@ public sealed partial class MakeWorkflowTests
                 BASE=*) gate_base="${arg#BASE=}" ;;
               esac
             done
+            if [[ "$target" == engineering-tests ]]; then
+              [[ -z "${STRATALINT_PUSH_BEFORE:-}${STRATALINT_PUSH_HEAD:-}${STRATALINT_SOURCE_BASE:-}${STRATALINT_SCRIBE_BASE:-}" ]] || exit 96
+            fi
+            if [[ ( "$target" == lean-report || "$target" == gate ) && -n "${BEFORE:-}" ]]; then
+              [[ "${STRATALINT_PUSH_BEFORE:-}" == "$BEFORE" && -n "${STRATALINT_PUSH_HEAD:-}" ]] || exit 96
+              [[ -z "${STRATALINT_SOURCE_BASE:-}${STRATALINT_SCRIBE_BASE:-}" ]] || exit 96
+            fi
             if [[ "$target" == lean-report ]]; then
               report="$PREFLIGHT_CANDIDATE_ROOT/.lake/build/stratalint/raw-lean-report.json"
               mkdir -p "$(dirname "$report")"
@@ -711,6 +723,8 @@ public sealed partial class MakeWorkflowTests
         File.WriteAllText(Path.Combine(producerDirectory, "Inspector.lean"), "fixture\n");
         var workflowDirectory = Path.Combine(candidateRoot, "tools", "scripts", "workflow");
         Directory.CreateDirectory(workflowDirectory);
+        File.Copy(Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/workflow/checked-ci-identity.py"),
+            Path.Combine(workflowDirectory, "checked-ci-identity.py"));
         File.Copy(
             Path.Combine(TestRepositoryLayout.FindRoot(), ScribeContentChecksScriptPath),
             Path.Combine(workflowDirectory, "scribe-content-checks.sh"));

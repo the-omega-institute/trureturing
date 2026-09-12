@@ -79,10 +79,18 @@ public sealed partial class EngineeringPathFilterTests
     }
 
     [Fact]
-    public void ExecutorPreservesNativeFailure()
+    public void SelectedProjectFailureDoesNotRetryTheWholeSolution()
     {
-        var plan = EngineeringTestPlanPolicy.EvaluateOrdinary(["tools/StrataLint.Engine/Code.cs"], Manifest());
-        Assert.Equal(97, EngineeringTestExecutor.Execute(plan, _ => 97));
+        var plan = EngineeringTestPlanPolicy.EvaluateOrdinary(["tools/StrataLint.Scribe/DocumentEmitter.cs"], Manifest());
+        Assert.Equal(EngineeringTestPlanKind.Selected, plan.Kind);
+        var calls = new System.Collections.Concurrent.ConcurrentBag<string>();
+        var exit = EngineeringTestExecutor.Execute(plan, project =>
+        {
+            calls.Add(project.ProjectPath);
+            return project.ProjectPath == ArchitectureTestsProject ? 17 : 23;
+        });
+        Assert.Equal(17, exit);
+        Assert.Equal([ArchitectureTestsProject, ScribeTestsProject], calls.Order(StringComparer.Ordinal).ToArray());
     }
 
     [Fact]

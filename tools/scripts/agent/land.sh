@@ -1,15 +1,17 @@
 #!/usr/bin/env bash
 # 统一落地器(铸器,替代 sed 克隆链;器律③)
-# 用法: land.sh LANE BRANCH MSGFILE [--wait-pr N] [--cover ATOM GID]...
+# 用法: land.sh LANE BRANCH MSGFILE [--before OID | --skip-preflight] [--wait-pr N] [--cover ATOM GID]...
 # 语义: [等待 PR N 合入] → cd LANE → checkout/建 BRANCH(自 origin/dev,已存在则合 dev)
 #       → make lean-report(合 dev 可能带进新 D5 模块)→ 逐对 make cover
 #       → preflight(locale 熔断)→ builder commit → push → pr-open → 等 MERGED。
 #       零 cover 对 = 纯 deposit 分支照落。
 set -x
-L="${LAND_LOG_DIR:-${TMPDIR:-/tmp}/land-logs}"; mkdir -p "$L/flights"
+L="${LAND_LOG_DIR:-${TMPDIR:-/tmp}/land-logs}"
 LANE=$1; BRANCH=$2; MSG=$3; shift 3
-WAITPR=""; COVERS=()
+WAITPR=""; COVERS=(); BEFORE="${BEFORE:-}"; LOCAL_PREFLIGHT=1
 while [ $# -gt 0 ]; do case "$1" in
+  --before) BEFORE=$2; shift 2;;
+  --skip-preflight) LOCAL_PREFLIGHT=0; shift;;
   --wait-pr) WAITPR=$2; shift 2;;
   --cover) COVERS+=("$2	$3"); shift 3;;
   *) echo "UNKNOWN_ARG $1"; exit 64;; esac; done
@@ -17,6 +19,12 @@ TAG=$(basename "$MSG" .msg)
 [ -d "$LANE/.git" ] || [ -f "$LANE/.git" ] || { echo "BAD_LANE=$LANE"; exit 88; }
 [ -r "$MSG" ] && [ -s "$MSG" ] || { echo "BAD_MSG=$MSG"; exit 89; }
 MSG="$(cd "$(dirname "$MSG")" && pwd -P)/$(basename "$MSG")"
+if [ "$LOCAL_PREFLIGHT" -eq 1 ]; then
+  (cd "$LANE" && BEFORE="$BEFORE" /bin/bash tools/scripts/preflight.sh --validate-range-only) || exit 2
+else
+  echo LOCAL_PREFLIGHT_NOT_RUN explicit_skip=1
+fi
+mkdir -p "$L/flights"
 dotnet run \
   --project "$LANE/tools/StrataLint.Cli/StrataLint.Cli.csproj" \
   --configuration Release \
@@ -55,13 +63,19 @@ for pair in "${COVERS[@]}"; do
   echo "COVER_EXIT=$C atom=${A:17:8}"
   [ "$C" -eq 0 ] || { echo HALT_COVER_RED; exit 93; }
 done
-make preflight BASE="$BASE" > "$L/flights/$TAG-preflight.log" 2>&1; P=$?; echo "PREFLIGHT_EXIT=$P"
+if [ "$LOCAL_PREFLIGHT" -eq 1 ]; then
+make preflight BASE="$BASE" BEFORE="$BEFORE" > "$L/flights/$TAG-preflight.log" 2>&1; P=$?; echo "PREFLIGHT_EXIT=$P"
 if [ "$P" -ne 0 ]; then
+  if grep -qE '^PREFLIGHT_.*INVALID' "$L/flights/$TAG-preflight.log" \
+    || ! grep -qE '\[FAIL\]' "$L/flights/$TAG-preflight.log"; then
+    echo HALT_PREFLIGHT_UNRESOLVED; exit 94
+  fi
   # 本机负载伪影豁免(#3670):该具名测试的 120s 子进程超时属机器性能型判词,CI 云端为权威
   N=$(grep -E "\[FAIL\]" "$L/flights/$TAG-preflight.log" | grep -v LeanCachePublish | grep -cv "PreflightEngineeringScopeUsesCompleteCandidateDeltaAcrossMultipleCommits" || true)
   echo "NONLOCALE=$N"; [ "$N" -eq 0 ] || { echo HALT_REAL_RED; exit 94; }
   R=$(grep -cE "^RULE_REJECTED" "$L/flights/$TAG-preflight.log" || true)
   echo "RULE_REJECTED_LINES=$R"; [ "$R" -eq 0 ] || { echo HALT_ADMISSION_RED; exit 94; }
+fi
 fi
 git add -A || { echo HALT_LAND_STAGE; exit 98; }
 if git diff --cached --quiet; then

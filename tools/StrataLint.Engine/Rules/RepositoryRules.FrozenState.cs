@@ -171,7 +171,9 @@ internal static partial class RepositoryRules
             var currentAdjacency = LeanImportAdjacency.Build(context.Current, context.Lean);
             // RuleEvaluationContext has no baseline report, only the baseline source snapshot.
             // CLAUDE.md rule 19 keeps base at SHA/object-diff level without checkout or compilation.
-            var baselineAdjacency = LeanImportAdjacency.BuildFromSources(context.Baseline);
+            var baselineAdjacency = context.ProtectedBase is { } baseline
+                ? LeanImportAdjacency.BuildFromSources(baseline)
+                : ImmutableDictionary<RepoPath, ImmutableArray<RepoPath>>.Empty;
             var currentDependents = ReverseDependencies(currentAdjacency);
             var baselineDependents = ReverseDependencies(baselineAdjacency);
             var affectedModules = changedModules.ToHashSet();
@@ -258,7 +260,7 @@ internal static partial class RepositoryRules
         FrozenStateRecord currentRecord,
         ImmutableArray<RuleFinding>.Builder findings)
     {
-        if (!context.Baseline.Files.TryGetValue(currentFile.Path, out var baselineFile))
+        if (context.ProtectedBase is null || !context.ProtectedBase.Files.TryGetValue(currentFile.Path, out var baselineFile))
         {
             return;
         }

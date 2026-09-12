@@ -85,7 +85,7 @@ internal static partial class RepositoryRules
     }
 
     private static ImmutableArray<RuleFinding> Bootstrap(RuleEvaluationContext context) =>
-        context.Changes.Paths
+        context.ProtectedBase is null ? [] : context.Changes.Paths
             .Where(BootstrapGate.IsProtected)
             .Select(static path => new RuleFinding(path.Value, BootstrapGate.ProtectedSurfaceMessage))
             .ToImmutableArray();

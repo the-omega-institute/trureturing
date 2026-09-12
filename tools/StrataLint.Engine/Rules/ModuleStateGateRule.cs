@@ -53,7 +53,7 @@ internal static class ModuleStateGateRule
         change.Kind is RawChangeKind.Added
         && IsD5Lean(change.Path.Value)
         && context.Current.Files.ContainsKey(change.Path)
-        && !context.Baseline.Files.ContainsKey(change.Path);
+        && context.ProtectedBase is { } baseline && !baseline.Files.ContainsKey(change.Path);
 
     private static bool IsD5Lean(string path) =>
         path.StartsWith("D5/", StringComparison.Ordinal)

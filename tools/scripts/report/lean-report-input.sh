@@ -7,13 +7,17 @@ COMMAND="${1:-}"
 if [[ -n "$COMMAND" ]]; then shift; fi
 REPOSITORY=""
 REPORT=""
-SOURCE_BASE=""
+SOURCE_BASE="${STRATALINT_SOURCE_BASE:-}"
+PUSH_BEFORE="${STRATALINT_PUSH_BEFORE:-}"
+PUSH_HEAD="${STRATALINT_PUSH_HEAD:-}"
 PRODUCER_OVERRIDE=""
 INSPECTOR_OVERRIDE=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --repository) REPOSITORY="$2"; shift 2 ;;
     --base) SOURCE_BASE="$2"; shift 2 ;;
+    --push-before) PUSH_BEFORE="$2"; shift 2 ;;
+    --push-head) PUSH_HEAD="$2"; shift 2 ;;
     --report) REPORT="$2"; shift 2 ;;
     --producer) PRODUCER_OVERRIDE="$2"; shift 2 ;;
     --inspector) INSPECTOR_OVERRIDE="$2"; shift 2 ;;
@@ -195,7 +199,16 @@ case "$COMMAND" in
     ;;
 esac
 
-if [[ "$COMMAND" == verify && -n "$SOURCE_BASE" ]]; then
-  "$BASH" "$REPOSITORY/tools/lean-inspector/source-context.sh" verify \
-    --repository "$REPOSITORY" --report "$REPORT" --base "$SOURCE_BASE"
+if [[ "$COMMAND" == verify ]]; then
+  SOURCE_ARGS=()
+  if [[ -n "$PUSH_BEFORE" || -n "$PUSH_HEAD" ]]; then
+    [[ -z "$SOURCE_BASE" ]] || { echo "lean-report-input: choose protected base or push range" >&2; exit 2; }
+    SOURCE_ARGS=(--push-before "$PUSH_BEFORE" --push-head "$PUSH_HEAD")
+  elif [[ -n "$SOURCE_BASE" ]]; then
+    SOURCE_ARGS=(--base "$SOURCE_BASE")
+  fi
+  if [[ ${#SOURCE_ARGS[@]} -gt 0 ]]; then
+    "$BASH" "$REPOSITORY/tools/lean-inspector/source-context.sh" verify \
+      --repository "$REPOSITORY" --report "$REPORT" "${SOURCE_ARGS[@]}"
+  fi
 fi

@@ -11,7 +11,7 @@ internal static class SnapshotAdmissionCore
 {
     internal static SnapshotAdmissionEvaluation Evaluate(
         RepositorySnapshot current,
-        RepositorySnapshot baseline,
+        RepositorySnapshot? baseline,
         LeanAxiomReport currentReport,
         RawChangeSet changes,
         BootstrapOutcome bootstrap,
@@ -19,7 +19,8 @@ internal static class SnapshotAdmissionCore
         AdmissionCheckTiming? timing = null,
         ScribeTestMapStore? testMapStore = null,
         Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null,
-        LeanSourceContextInput? sourceContext = null)
+        LeanSourceContextInput? sourceContext = null,
+        ImmutableArray<RepoPath>? sourcePaths = null)
     {
         var phaseTiming = timing ?? AdmissionCheckTiming.Disabled;
         try
@@ -79,7 +80,7 @@ internal static class SnapshotAdmissionCore
                                 MeasureCanonicalization,
                                 testMapStore,
                                 deriveTestMap,
-                                sourceContext),
+                                sourceContext, sourcePaths),
                             BootstrapOutcome.ProtectedSurfaceVerificationRequired protectedSurfaceVerification =>
                                 AdmissionPipeline.EvaluateProtectedSurface(
                                     current,
@@ -94,7 +95,7 @@ internal static class SnapshotAdmissionCore
                                     MeasureCanonicalization,
                                     testMapStore,
                                     deriveTestMap,
-                                    sourceContext),
+                                    sourceContext, sourcePaths),
                             _ => throw new InvalidOperationException("unknown bootstrap outcome"),
                         };
                     }

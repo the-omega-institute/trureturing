@@ -157,13 +157,23 @@ internal static partial class RepositoryRules
         ScribeTestMap GetMap(RepositorySnapshot snapshot) => context.TestMapStore is null
             ? deriveSnapshot(snapshot)
             : context.TestMapStore.GetOrDerive(snapshot);
+        if (context.ProtectedBase is null)
+        {
+            var findings = RepositoryCapacityAudit.InspectFiles(context.Current.Files.Values
+                .Select(file => (file.Path.Value, file.Text))).Select(finding =>
+                    new RuleFinding(finding.Path, finding.Message)).ToImmutableArray();
+            if (context.Changes.Paths.Any(path => ScribeTestMapDeriver.IsDerivationInput(path.Value)))
+                findings = findings.AddRange(ScribeUnknownDebtPolicy.InspectCurrent(GetMap(context.Current))
+                    .Select(finding => new RuleFinding(finding.Path, finding.Message, finding.Effect)));
+            return findings;
+        }
         if (context.Changes.Paths.Any(static path =>
                 ScribeTestMapDeriver.IsDerivationInput(path.Value)))
         {
             var currentDerivation = Task.Run(() => GetMap(context.Current));
-            var baselineDerivation = ReferenceEquals(context.Current, context.Baseline)
+            var baselineDerivation = ReferenceEquals(context.Current, context.ProtectedBase)
                 ? currentDerivation
-                : Task.Run(() => GetMap(context.Baseline));
+                : Task.Run(() => GetMap(context.ProtectedBase));
             return EvaluateCapacityAsync(context, currentDerivation, baselineDerivation)
                 .GetAwaiter()
                 .GetResult();
@@ -235,7 +245,7 @@ internal static partial class RepositoryRules
                 //
                 // 检测不降级:超线仍然出 finding,无辜者那条是 Observe;全仓检测由 push
                 // 侧的 capacity-audit 承担。第20条要的正是这个形状:窄化阻断须以加强检测为对价。
-                var baselineLineCount = context.Baseline.Files.TryGetValue(path, out var baselineFile)
+                var baselineLineCount = context.ProtectedBase!.Files.TryGetValue(path, out var baselineFile)
                     ? CountArtifactLines(baselineFile.Text)
                     : 0;
                 findings.Add(lineCount > baselineLineCount
@@ -261,7 +271,7 @@ internal static partial class RepositoryRules
         }
 
         var directories = CapacityPathsByDirectory(context.Current.Files.Keys);
-        var baselineDirectories = CapacityPathsByDirectory(context.Baseline.Files.Keys);
+        var baselineDirectories = CapacityPathsByDirectory(context.ProtectedBase!.Files.Keys);
 
         // Occupancy is counted over the whole tree so the number reported is the real one, but
         // only buckets this change touches are reported. DirectoryToleranceLimit above was added

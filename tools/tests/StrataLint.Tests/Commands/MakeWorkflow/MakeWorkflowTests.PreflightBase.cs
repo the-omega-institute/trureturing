@@ -77,7 +77,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("git cat-file -t \"$BASE\"", script, StringComparison.Ordinal);
         Assert.Contains("git merge-base --is-ancestor \"$BASE\" HEAD", script, StringComparison.Ordinal);
         Assert.Contains("CANDIDATE_SHA=\"$(git rev-parse HEAD)\"", script, StringComparison.Ordinal);
-        Assert.Contains("STRATALINT_SCRIBE_BASE=\"$BASE_SHA\"", script, StringComparison.Ordinal);
+        Assert.Contains("STRATALINT_PUSH_BEFORE=\"$ENGINEERING_BEFORE\"", script, StringComparison.Ordinal);
         Assert.Contains("make gate BASE=\"$BASE_SHA\" GATE_ARGS=\"--skip-engineering\"", script, StringComparison.Ordinal);
         Assert.DoesNotContain("BASE_REF", script, StringComparison.Ordinal);
         Assert.DoesNotContain("BASE_TIP_SHA", script, StringComparison.Ordinal);
@@ -112,6 +112,7 @@ public sealed partial class MakeWorkflowTests
                 $"git:cat-file -t {GateForkSha}",
                 $"git:merge-base --is-ancestor {GateForkSha} HEAD",
                 "git:rev-parse HEAD",
+                "git:rev-parse --verify HEAD",
                 "dotnet:restore tools/tests/CompileFailProof/CompileFailProof.csproj --locked-mode",
             ],
             result.Invocations);
@@ -140,50 +141,105 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal($"<{GateCandidateSha}>\n", Encoding.UTF8.GetString(commandLine.StandardOutput));
     }
 
-    [Fact]
-    public void PreflightCallSitesMaterializeTheHeadParentSha()
+    [Theory]
+    [InlineData("deliver", "missing")]
+    [InlineData("deliver", "invalid")]
+    [InlineData("deliver", "unavailable")]
+    [InlineData("land", "missing")]
+    [InlineData("land", "invalid")]
+    [InlineData("land", "unavailable")]
+    public void DeliveryCallersRejectMissingRangeBeforeDerivation(string caller, string mode)
     {
-        var root = TestRepositoryLayout.FindRoot();
-        var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
-        var playbook = File.ReadAllText(Path.Combine(root, "tools/scripts/workflow/playbook-workflows.sh"));
-        var land = File.ReadAllText(Path.Combine(root, "tools/scripts/agent/land.sh"));
-        var formalize = File.ReadAllText(Path.Combine(root, "skills/codex-formalize/SKILL.md"));
-        var ingest = File.ReadAllText(Path.Combine(root, "skills/codex-theory-ingest/SKILL.md"));
-        const string invocation = "make preflight BASE=\"$(git rev-parse HEAD^1)\"";
+        if (OperatingSystem.IsWindows()) return;
+        var (process, calls) = RunDeliveryCaller(caller, mode);
+        Assert.Equal(2, process.ExitCode);
+        Assert.Contains("PREFLIGHT_PUSH_RANGE_INVALID", Encoding.UTF8.GetString(process.StandardError));
+        Assert.DoesNotContain(calls, call => call.StartsWith("make:", StringComparison.Ordinal)
+            || call.StartsWith("dotnet:", StringComparison.Ordinal));
+    }
 
-        Assert.Contains("make preflight BASE=<40-hex-sha>", makefile, StringComparison.Ordinal);
-        Assert.Contains(invocation, playbook, StringComparison.Ordinal);
-        var landLines = land.Split('\n');
-        var materialization = Array.FindIndex(
-            landLines,
-            static line => line.StartsWith("BASE=$(git rev-parse ", StringComparison.Ordinal));
-        var preflight = Array.FindIndex(
-            landLines,
-            static line => line.Contains("make preflight", StringComparison.Ordinal));
-        Assert.True(materialization >= 0 && materialization < preflight);
-        Assert.Contains("BASE=\"$BASE\"", landLines[preflight], StringComparison.Ordinal);
-        Assert.DoesNotContain("$(git rev-parse", landLines[preflight], StringComparison.Ordinal);
-        Assert.DoesNotContain("BASE=$BASE", landLines[preflight], StringComparison.Ordinal);
-        var formalizePreflightLines = formalize.Split('\n')
-            .Where(static line => line.Contains("make preflight", StringComparison.Ordinal))
-            .ToArray();
-        var ingestPreflightLines = ingest.Split('\n')
-            .Where(static line => line.Contains("make preflight", StringComparison.Ordinal))
-            .ToArray();
-        Assert.Equal(2, formalizePreflightLines.Length);
-#pragma warning disable xUnit2013 // The exact numeric call-site count is part of this repository-reading contract.
-        Assert.Equal(1, ingestPreflightLines.Length);
-#pragma warning restore xUnit2013
-        Assert.All(
-            formalizePreflightLines,
-            line => Assert.Contains(invocation, line, StringComparison.Ordinal));
-        Assert.All(
-            ingestPreflightLines,
-            line => Assert.Contains(invocation, line, StringComparison.Ordinal));
-        Assert.DoesNotContain(
-            "make preflight BASE=$(git merge-base",
-            formalize + ingest,
-            StringComparison.Ordinal);
+    [Theory]
+    [InlineData("deliver", 2)]
+    [InlineData("land", 94)]
+    public void DeliveryCallersPropagateBeforeAndPreserveConfigurationFailure(string caller, int expected)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var (process, calls) = RunDeliveryCaller(caller, "valid");
+        Assert.True(process.ExitCode == expected, Encoding.UTF8.GetString(process.StandardOutput)
+            + Encoding.UTF8.GetString(process.StandardError));
+        Assert.Contains(calls, call => call.StartsWith("make:preflight BASE=", StringComparison.Ordinal)
+            && call.Contains(" BEFORE=", StringComparison.Ordinal));
+        Assert.DoesNotContain(calls, call => call.StartsWith("git:add", StringComparison.Ordinal)
+            || call.StartsWith("git:push", StringComparison.Ordinal) || call.StartsWith("git:commit", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void DeliveryExplicitPreflightSkipReportsNotRun()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var (process, calls) = RunDeliveryCaller("deliver", "skip");
+        Assert.True(process.ExitCode == 0, Encoding.UTF8.GetString(process.StandardError));
+        Assert.Contains("LOCAL_PREFLIGHT_NOT_RUN explicit_skip=1", Encoding.UTF8.GetString(process.StandardOutput));
+        Assert.DoesNotContain(calls, call => call.StartsWith("make:preflight", StringComparison.Ordinal));
+    }
+
+    [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
+    private static (ProcessOutput Process, string[] Calls) RunDeliveryCaller(string caller, string mode)
+    {
+        using var fixture = new TemporaryDirectory();
+        var root = fixture.Path;
+        var source = TestRepositoryLayout.FindRoot();
+        foreach (var relative in new[] { "Makefile", "tools/scripts/preflight.sh",
+            "tools/scripts/workflow/playbook-workflows.sh", "tools/scripts/agent/land.sh" })
+        {
+            var target = Path.Combine(root, relative);
+            Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+            File.Copy(Path.Combine(source, relative), target);
+        }
+        RunScenarioGit(root, "init", "--quiet");
+        RunScenarioGit(root, "add", ".");
+        RunScenarioGit(root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
+            "commit", "--quiet", "--no-gpg-sign", "-m", "fixture");
+        var before = RunScenarioGitForOutput(root, "rev-parse", "HEAD").Trim();
+        var bin = Path.Combine(root, "bin");
+        Directory.CreateDirectory(bin);
+        var log = Path.Combine(root, "calls");
+        File.WriteAllText(Path.Combine(root, "message.msg"), "fixture\n");
+        Directory.CreateDirectory(Path.Combine(root, "Generated"));
+        File.WriteAllText(Path.Combine(root, "Generated/truth-graph.v1.json"), "{\"truth\":{\"nodes\":[]}}");
+        WriteExecutable(Path.Combine(bin, "make"), """
+            #!/usr/bin/env bash
+            printf 'make:%s\n' "$*" >> "$DELIVERY_CALLS"
+            if [[ "$1" == preflight ]]; then
+              [[ "$*" == "preflight BASE=$DELIVERY_BEFORE BEFORE=$DELIVERY_BEFORE" ]] || exit 71
+              echo 'PREFLIGHT_PUSH_RANGE_INVALID reason=configuration-fixture' >&2
+              exit 2
+            fi
+            """);
+        WriteExecutable(Path.Combine(bin, "dotnet"), """
+            #!/usr/bin/env bash
+            printf 'dotnet:%s\n' "$*" >> "$DELIVERY_CALLS"
+            """);
+        WriteExecutable(Path.Combine(bin, "git"), """
+            #!/usr/bin/env bash
+            printf 'git:%s\n' "$*" >> "$DELIVERY_CALLS"
+            case "$1" in
+              fetch|checkout|merge) exit 0 ;;
+              add|commit|push) exit 89 ;;
+            esac
+            if [[ "$*" == 'rev-parse origin/dev' ]]; then printf '%s\n' "$DELIVERY_BEFORE"; exit 0; fi
+            exec /usr/bin/git "$@"
+            """);
+        var value = mode == "invalid" ? "HEAD^1" : mode == "unavailable" ? new string('a', 40)
+            : mode is "missing" or "skip" ? "" : before;
+        string[] command = caller == "deliver" ? ["/usr/bin/make", "--no-print-directory", "deliver-check", $"BASE={before}"]
+            : ["/bin/bash", Path.Combine(root, "tools/scripts/agent/land.sh"), root, "fixture", Path.Combine(root, "message.msg")];
+        var result = TestProcessRunner.Run("env", ["-u", "MAKEFLAGS", "-u", "MAKELEVEL",
+            $"PATH={bin}:{Environment.GetEnvironmentVariable("PATH")}", $"BEFORE={value}",
+            $"PREFLIGHT={(mode == "skip" ? 0 : 1)}", $"LAND_LOG_DIR={Path.Combine(root, "logs")}",
+            $"DELIVERY_CALLS={log}", $"DELIVERY_BEFORE={before}", .. command], root,
+            BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
+        return (result, File.Exists(log) ? File.ReadAllLines(log) : []);
     }
 
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
@@ -211,7 +267,7 @@ public sealed partial class MakeWorkflowTests
                 [[ "$PREFLIGHT_BASE_MODE" != ancestor-check-failed ]] || exit 91
                 exit 0
                 ;;
-              "rev-parse HEAD") printf '%s\n' '{{GateCandidateSha}}' ;;
+              "rev-parse HEAD"|"rev-parse --verify HEAD") printf '%s\n' '{{GateCandidateSha}}' ;;
               *) exit 97 ;;
             esac
             """);

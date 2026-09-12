@@ -87,18 +87,65 @@ def checked_identity(repository, environment, acquire_pinned=False):
         run_attempt=required("GITHUB_RUN_ATTEMPT"), job=required("GITHUB_JOB"))
 
 
+def planning_paths(repository, before, head):
+    """Transport complete Git endpoint paths; registered manifests own selection."""
+    def git(*args):
+        return subprocess.run(["git", *args], cwd=repository, check=True, capture_output=True).stdout
+    if not all(isinstance(oid, str) and re.fullmatch(r"(?:[0-9a-f]{40}|[0-9a-f]{64})", oid)
+               for oid in (before, head)) or len(before) != len(head):
+        raise ValueError("immutable before/head OIDs are required")
+    if git("rev-parse", "--verify", "HEAD^{commit}").decode().strip() != head:
+        raise ValueError("head differs from checked HEAD")
+    if before == "0" * len(before):
+        paths = git("ls-files", "--cached", "--others", "--exclude-standard", "-z").split(b"\0")
+        paths = [path for path in paths if path and (repository / os.fsdecode(path)).is_file()]
+    else:
+        if git("cat-file", "-t", before).strip() != b"commit":
+            raise ValueError("before is not a commit")
+        paths = git("diff", "--name-only", "--no-renames", "-z", before, head, "--").split(b"\0")
+        paths += git("diff", "--name-only", "--no-renames", "-z", head, "--").split(b"\0")
+        paths += git("ls-files", "--others", "--exclude-standard", "-z").split(b"\0")
+    return sorted(set(path for path in paths if path))
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--repository", required=True, type=Path)
     parser.add_argument("--acquire-pinned", action="store_true")
     parser.add_argument("--run-engineering", action="store_true")
+    parser.add_argument("--planning-before")
+    parser.add_argument("--planning-head")
+    parser.add_argument("--paths", action="store_true")
+    parser.add_argument("--github-output", action="store_true")
+    parser.add_argument("--github-env", action="store_true")
     arguments = parser.parse_args()
+    if arguments.paths:
+        try:
+            paths = planning_paths(arguments.repository, arguments.planning_before, arguments.planning_head)
+        except (ValueError, OSError, subprocess.CalledProcessError) as error:
+            print("PUSH_RANGE_INVALID " + str(error), file=sys.stderr)
+            return 2
+        sys.stdout.buffer.write(b"".join(path + b"\0" for path in paths))
+        return 0
     try:
         result = checked_identity(arguments.repository, os.environ, arguments.acquire_pinned)
     except (ValueError, KeyError, TypeError, OSError, subprocess.CalledProcessError) as error:
         print("CI_CHECKED_IDENTITY_INVALID " + str(error), file=sys.stderr)
         return 2
     print("CI_CHECKED_IDENTITY " + json.dumps(result, sort_keys=True), flush=True)
+    if arguments.github_output:
+        with open(os.environ["GITHUB_OUTPUT"], "a") as output:
+            for name in ("protected_base", "push_before", "push_after", "tested_head", "planning_mode"):
+                output.write(name + "=" + (result[name] or "") + "\n")
+    if arguments.github_env:
+        with open(os.environ["GITHUB_ENV"], "a") as output:
+            for name, value in {
+                "STRATALINT_SOURCE_BASE": result["protected_base"],
+                "STRATALINT_SCRIBE_BASE": result["protected_base"],
+                "STRATALINT_PUSH_BEFORE": result["push_before"],
+                "STRATALINT_PUSH_HEAD": result["push_after"],
+            }.items():
+                output.write(name + "=" + (value or "") + "\n")
     if arguments.run_engineering:
         event = "push" if result["event"] == "push" else "pull-request"
         before = result["push_before"] if event == "push" else result["protected_base"]

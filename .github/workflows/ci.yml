@@ -245,7 +245,7 @@ jobs:
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 45
     outputs:
-      baseline_sha: ${{ steps.base.outputs.sha }}
+      baseline_sha: ${{ steps.identity.outputs.protected_base }}
     steps:
       - name: Check out candidate with history
         id: checkout-merge
@@ -275,8 +275,9 @@ jobs:
           head_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD)"
           test -n "$head_sha"
       - name: Record checked tree and actual workflow identity
+        id: identity
         shell: bash
-        run: python3 candidate/tools/scripts/workflow/checked-ci-identity.py --repository candidate
+        run: python3 candidate/tools/scripts/workflow/checked-ci-identity.py --repository candidate --github-env --github-output
       - name: Fail closed when merge result is unavailable
         if: always() && steps.checkout-merge.outcome != 'success'
         shell: bash
@@ -313,19 +314,6 @@ jobs:
       - name: Build candidate tools before Lean report production
         shell: bash
         run: make -C candidate/tools dotnet
-      - name: Resolve checked merge result's protected parent
-        id: base
-        shell: bash
-        run: |
-          set -euo pipefail
-          # PR merge refs and dev push commits both carry their protected base as
-          # the checked object's first parent, so the verdict has no event-payload input.
-          sha="$(git -C candidate rev-parse HEAD^1)"
-          if [[ -z "$sha" || "$sha" =~ ^0+$ ]]; then
-            printf '%s\n' "checked object has no content-addressable base SHA" >&2
-            exit 1
-          fi
-          echo "sha=$sha" >> "$GITHUB_OUTPUT"
       - name: Resolve candidate Lean build input addresses
         id: lean-input
         shell: bash
@@ -386,11 +374,11 @@ jobs:
           done
           helper="$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-input.sh"
           # 缓存条目对候选树重新验一次地址与报告哈希;不符即整体回落,不静默使用。
-          "$helper" verify --repository "$GITHUB_WORKSPACE/candidate" --report "$source" --base "${{ steps.base.outputs.sha }}"
+          "$helper" verify --repository "$GITHUB_WORKSPACE/candidate" --report "$source"
           # Verification established that any missing context is unused. Publish
           # its empty sibling without requiring a Lean installation on this hit.
           python3 "$GITHUB_WORKSPACE/candidate/tools/lean-inspector/source-context.py" \
-            --repository "$GITHUB_WORKSPACE/candidate" --report "$source" --base "${{ steps.base.outputs.sha }}"
+            --repository "$GITHUB_WORKSPACE/candidate" --report "$source"
           producer="$(awk -F= '$1 == "producer_sha256" {print $2}' "${source}.input.attestation")"
           sources="${{ steps.lean-input.outputs.sources_sha256 }}"
           config="${{ steps.lean-input.outputs.config_sha256 }}"
@@ -508,10 +496,8 @@ jobs:
           test -x "$pair_producer"
           reports="$RUNNER_TEMP/raw-lean-reports"
           mkdir -p "$reports"
-          # 只产受审的 post-merge 侧。base 是同一 merge 对象的受保护第一父提交,
-          # 只参与 admission gate 的 diff 语义,不再为它编译或上传第二份 Lean 报告。
+          # The verified identity step exports PR B or complete push P/H. Only candidate Lean executes.
           "$pair_producer" \
-            --base "${{ steps.base.outputs.sha }}" \
             --producer "$producer" \
             --lake-bin "$HOME/.elan/bin/lake" \
             --candidate-root "$GITHUB_WORKSPACE/candidate" \
@@ -535,7 +521,7 @@ jobs:
           cp -R "${source}.logs" "${target}.logs" 2>/dev/null || true
           "$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-input.sh" verify \
             --repository "$GITHUB_WORKSPACE/candidate" \
-            --report "$target" --base "${{ steps.base.outputs.sha }}"
+            --report "$target"
 
       # pull_request_target runs get a token without cache-write scope, so this save can only ever fail there: run 31389667812 logged "cache write denied: token has no writable scopes". The two saves below already carry this exact guard; this one was missing it, so every PR attempted a write it could not perform. dev-push runs do write it successfully (run 31389340892).
       # 命中报告缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;分层 lake cache exact hit 时对应 key 也已存在。三个 save 只在真正跑过生产路径时执行。
@@ -548,7 +534,7 @@ jobs:
       - name: Run complete mathematical content checks
         shell: bash
         env:
-          STRATALINT_SCRIBE_BASE: ${{ steps.base.outputs.sha }}
+          STRATALINT_SCRIBE_BASE: ${{ steps.identity.outputs.protected_base }}
         run: |
           set -euo pipefail
           report="$RUNNER_TEMP/raw-lean-reports/candidate-lean-report.json"
@@ -581,8 +567,6 @@ jobs:
     needs: lean-inspect
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 20
-    env:
-      DEV_BASELINE_SHA: ${{ needs.lean-inspect.outputs.baseline_sha }}
     steps:
       - name: Check out candidate with history
         id: checkout-merge
@@ -612,8 +596,9 @@ jobs:
           head_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD)"
           test -n "$head_sha"
       - name: Record checked tree and actual workflow identity
+        id: identity
         shell: bash
-        run: python3 candidate/tools/scripts/workflow/checked-ci-identity.py --repository candidate
+        run: python3 candidate/tools/scripts/workflow/checked-ci-identity.py --repository candidate --github-env --github-output
       - name: Fail closed when merge result is unavailable
         if: always() && steps.checkout-merge.outcome != 'success'
         shell: bash
@@ -715,7 +700,6 @@ jobs:
           set +e
           "$gate" \
             --candidate "$GITHUB_WORKSPACE/candidate" \
-            --base "$DEV_BASELINE_SHA" \
             --candidate-lean-report "$RUNNER_TEMP/raw-lean-reports/candidate-lean-report.json" \
             ${cache_args[@]+"${cache_args[@]}"} \
             "${judge_args[@]}" \

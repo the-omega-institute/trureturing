@@ -21,7 +21,8 @@ internal static class FrozenPairRule
         var changedEvents = new HashSet<RepoPath>();
         foreach (var change in context.Changes.Entries.Where(change => IsPairPath(change.Path.Value)))
         {
-            context.Baseline.Files.TryGetValue(change.Path, out var before);
+            RepositoryFile? before = null;
+            context.ProtectedBase?.Files.TryGetValue(change.Path, out before);
             context.Current.Files.TryGetValue(change.Path, out var after);
             if (before is not null && after is not null
                 && before.RawBytes.AsSpan().SequenceEqual(after.RawBytes.AsSpan()))
@@ -29,6 +30,7 @@ internal static class FrozenPairRule
                 continue;
             }
 
+            if (context.ProtectedBase is null && after is null) continue;
             if (before is null && after is null
                 || after is null && change.Kind is not RawChangeKind.Deleted)
             {
@@ -95,7 +97,7 @@ internal static class FrozenPairRule
         // A previously broken state remains outside this invariant's transition boundary.
         var atRisk = selectors.Where(selector =>
             context.Current.Files.ContainsKey(FrozenStatePath.FromModulePath(selector))
-            && (!context.Baseline.Files.ContainsKey(FrozenStatePath.FromModulePath(selector))
+            && (context.ProtectedBase is null || !context.ProtectedBase.Files.ContainsKey(FrozenStatePath.FromModulePath(selector))
                 || removedHashes.ContainsKey(selector))).ToHashSet();
         if (atRisk.Count == 0)
         {

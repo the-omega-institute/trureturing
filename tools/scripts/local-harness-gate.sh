@@ -8,6 +8,9 @@ BASE_REF="origin/dev"
 OBSERVED_BASE_REF=""
 SKIP_ENGINEERING=0
 TEST_MAP_CACHE_ARGS=()
+SOURCE_ARGS=()
+PUSH_BEFORE="${STRATALINT_PUSH_BEFORE:-}"
+PUSH_HEAD="${STRATALINT_PUSH_HEAD:-}"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -122,12 +125,21 @@ trap 'exit 130' INT
 trap 'exit 143' TERM
 
 prepare_base() {
+  if [[ -n "$PUSH_BEFORE" || -n "$PUSH_HEAD" ]]; then
+    python3 "$CANDIDATE_ROOT/tools/scripts/workflow/checked-ci-identity.py" --repository "$CANDIDATE_ROOT" \
+      --paths --planning-before "$PUSH_BEFORE" --planning-head "$PUSH_HEAD" >/dev/null || return 2
+    SOURCE_ARGS=(--push-before "$PUSH_BEFORE" --push-head "$PUSH_HEAD")
+    printf '[local-gate] current push before=%s head=%s\n' "$PUSH_BEFORE" "$PUSH_HEAD" >&2
+    return 0
+  fi
   admission_resolve_base "$CANDIDATE_ROOT" "$BASE_REF" || return 1
+  SOURCE_ARGS=(--base "$BASE_SHA")
 
   printf '[local-gate] candidate=%s base=%s\n' "$CANDIDATE_ROOT" "$BASE_SHA" >&2
 }
 
 run_stage setup prepare_base
+unset STRATALINT_PUSH_BEFORE STRATALINT_PUSH_HEAD STRATALINT_SOURCE_BASE STRATALINT_SCRIBE_BASE
 
 if [[ "$SKIP_ENGINEERING" == "1" ]]; then
   record_timing local engineering-dotnet skipped 0
@@ -156,7 +168,7 @@ export STRATALINT_REPORT_CACHE_ROOT="${STRATALINT_REPORT_CACHE_ROOT:-${XDG_CACHE
 CANDIDATE_REPORT="$CANDIDATE_ROOT/.lake/build/stratalint/raw-lean-report.json"
 run_stage lean-reports \
   "$PAIR_PRODUCER" \
-  --base "$BASE_SHA" \
+  "${SOURCE_ARGS[@]}" \
   --producer "$PRODUCER" \
   --lake-bin "$LAKE_BIN" \
   --candidate-root "$CANDIDATE_ROOT" \
@@ -167,7 +179,7 @@ admission_started="$(date +%s)"
 set +e
   STRATALINT_TIMING="$SHARED_TIMING_FILE" "$GATE" \
   --candidate "$CANDIDATE_ROOT" \
-  --base "$BASE_SHA" \
+  "${SOURCE_ARGS[@]}" \
   --candidate-lean-report "$CANDIDATE_REPORT" \
   ${TEST_MAP_CACHE_ARGS[@]+"${TEST_MAP_CACHE_ARGS[@]}"}
 gate_rc=$?

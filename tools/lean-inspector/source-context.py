@@ -32,9 +32,11 @@ def git_blob(data):
 
 
 class Preparation:
-    def __init__(self, repository, report, base, scratch, lake):
+    def __init__(self, repository, report, base, scratch, lake, push_before=None, push_head=None):
         self.repository, self.report, self.base = repository, report, base
         self.scratch, self.lake = scratch, lake
+        self.input_args = (["--push-before", push_before, "--push-head", push_head]
+                           if push_before is not None else ["--base", base])
         self.producer = repository / "tools/lean-inspector/SourceContext.lean"
         self.cli = repository / "tools/StrataLint.Cli/StrataLint.Cli.csproj"
         self.queries = self.interfaces = self.external_bytes = self.external_queries = 0
@@ -48,7 +50,7 @@ class Preparation:
 
     def demands(self, context):
         result = subprocess.run(["dotnet", "run", "--project", str(self.cli), "--configuration", "Release",
-            "--no-build", "--no-restore", "--no-launch-profile", "--", "lean-source-input", "--base", self.base,
+            "--no-build", "--no-restore", "--no-launch-profile", "--", "lean-source-input", *self.input_args,
             "--report", str(self.report), "--context", str(context)], cwd=self.repository,
             text=True, capture_output=True)
         if result.returncode:
@@ -276,18 +278,23 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--repository", type=Path, required=True)
     parser.add_argument("--report", type=Path, required=True)
-    parser.add_argument("--base", required=True)
+    parser.add_argument("--base", default=os.environ.get("STRATALINT_SOURCE_BASE") or None)
+    parser.add_argument("--push-before", default=os.environ.get("STRATALINT_PUSH_BEFORE") or None)
+    parser.add_argument("--push-head", default=os.environ.get("STRATALINT_PUSH_HEAD") or None)
     parser.add_argument("--lake", default=os.environ.get("LAKE_BIN", "lake"))
     parser.add_argument("--verify", action="store_true")
     args = parser.parse_args()
     repository, report = args.repository.resolve(), args.report.resolve()
-    resolved = subprocess.run(["git", "rev-parse", "--verify", args.base + "^{commit}"],
-                              cwd=repository, text=True, capture_output=True, check=True)
-    args.base = resolved.stdout.strip()
+    if (args.base is None) == (args.push_before is None) or (args.push_before is None) != (args.push_head is None):
+        parser.error("require --base or explicit --push-before and --push-head")
+    if args.base is not None:
+        resolved = subprocess.run(["git", "rev-parse", "--verify", args.base + "^{commit}"],
+                                  cwd=repository, text=True, capture_output=True, check=True)
+        args.base = resolved.stdout.strip()
     output = Path(str(report) + ".source-context.json")
     with tempfile.TemporaryDirectory(prefix="lean-source-context-") as temporary:
         scratch = Path(temporary)
-        preparation = Preparation(repository, report, args.base, scratch, args.lake)
+        preparation = Preparation(repository, report, args.base, scratch, args.lake, args.push_before, args.push_head)
         context = scratch / "context.json"
         empty = dict(schema=SCHEMA, files=[], registrations=[])
         context.write_bytes(output.read_bytes() if output.exists() else json.dumps(empty).encode())

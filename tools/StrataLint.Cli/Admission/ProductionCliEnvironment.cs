@@ -5,14 +5,20 @@ using StrataLint.Scribe;
 
 namespace StrataLint.Cli;
 
-internal sealed record PreparedRepository(string Revision, RawChangeSet Changes);
+internal sealed record PreparedRepository(string? ProtectedRevision, RawChangeSet Changes,
+    ImmutableArray<RepoPath>? SourcePaths = null)
+{
+    internal string Revision => ProtectedRevision
+        ?? throw new InvalidOperationException("current push check has no protected comparison revision");
+}
 
 internal sealed record FrozenRevisionIdentity(string Revision, string CommitOid, string TreeOid);
 
 internal sealed record CheckArguments(
     string? ProtectedBase,
     string? CandidateLeanReport,
-    string? TestMapCacheRoot);
+    string? TestMapCacheRoot,
+    string? PushBefore = null, string? PushHead = null);
 
 internal sealed class AdmissionCheckTiming(TimeProvider timeProvider, bool enabled = true)
 {
@@ -180,6 +186,9 @@ internal interface IRepositoryGateway
 
     PreparedRepository Prepare(string? protectedBase);
 
+    PreparedRepository PreparePush(string before, string head) =>
+        throw new InvalidOperationException("push planning is not supported by this repository gateway");
+
     FrozenRevisionIdentity ResolveCurrentRevision();
 
     RawRepositorySnapshot ReadCurrent();
@@ -292,8 +301,12 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 () =>
                 {
                     var options = ParseCheckArguments(arguments);
-                    var prepared = repository.Prepare(options.ProtectedBase);
-                    var bootstrap = BootstrapGate.Evaluate(prepared.Changes);
+                    var prepared = options.PushBefore is { } before
+                        ? repository.PreparePush(before, options.PushHead!)
+                        : repository.Prepare(options.ProtectedBase);
+                    var bootstrap = prepared.ProtectedRevision is null
+                        ? BootstrapGate.CurrentTree()
+                        : BootstrapGate.Evaluate(prepared.Changes);
                     return (
                         Options: options,
                         Prepared: prepared,
@@ -324,12 +337,12 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 "repository-read",
                 () => (
                     Current: repository.ReadCurrent(),
-                    Baseline: repository.ReadRevision(prepared.Revision)));
+                    Baseline: prepared.ProtectedRevision is null ? null : repository.ReadRevision(prepared.ProtectedRevision)));
             var currentRaw = rawSnapshots.Current;
             var baselineRaw = rawSnapshots.Baseline;
             var admissionPlane = timing.Measure(
                 "admission-plane",
-                () => EvaluateAdmissionPlane(currentRaw, prepared.Changes),
+                () => EvaluateAdmissionPlane(currentRaw, prepared.Changes, requireSinglePlane: prepared.ProtectedRevision is not null),
                 static result => result is not null);
             if (admissionPlane is not null)
             {
@@ -341,7 +354,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 () =>
                 {
                     var current = Decode(currentRaw);
-                    var baseline = Decode(baselineRaw);
+                    var baseline = baselineRaw is null ? null : Decode(baselineRaw);
                     return (Current: current, Baseline: baseline);
                 });
             var current = snapshots.Current;
@@ -369,7 +382,8 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 timing,
                 testMapStore,
                 DeriveTestMap,
-                sourceContext).Outcome;
+                sourceContext,
+                prepared.SourcePaths).Outcome;
         }
         catch (Exception exception)
         {
@@ -523,6 +537,8 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
         string? protectedBase = null;
         string? candidateLeanReport = null;
         string? testMapCacheRoot = null;
+        string? pushBefore = null;
+        string? pushHead = null;
         for (var index = 0; index < arguments.Count; index += 2)
         {
             if (index + 1 >= arguments.Count)
@@ -535,10 +551,14 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 "--protected-base" when protectedBase is null => 0,
                 "--candidate-lean-report" when candidateLeanReport is null => 1,
                 "--test-map-cache-root" when testMapCacheRoot is null => 2,
+                "--push-before" when pushBefore is null => 3,
+                "--push-head" when pushHead is null => 4,
                 _ => throw CheckUsage(),
             };
             switch (target)
             {
+                case 3: pushBefore = arguments[index + 1]; break;
+                case 4: pushHead = arguments[index + 1]; break;
                 case 0:
                     protectedBase = arguments[index + 1];
                     break;
@@ -555,11 +575,13 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
             }
         }
 
-        return new CheckArguments(protectedBase, candidateLeanReport, testMapCacheRoot);
+        if ((pushBefore is null) != (pushHead is null) || pushBefore is not null && protectedBase is not null)
+            throw CheckUsage();
+        return new CheckArguments(protectedBase, candidateLeanReport, testMapCacheRoot, pushBefore, pushHead);
     }
 
     private static InvalidOperationException CheckUsage() => new(
-        "USAGE: StrataLint check [--protected-base REV] "
+        "USAGE: StrataLint check [--protected-base REV | --push-before OID --push-head OID] "
         + "[--test-map-cache-root DIR] --candidate-lean-report FILE");
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>

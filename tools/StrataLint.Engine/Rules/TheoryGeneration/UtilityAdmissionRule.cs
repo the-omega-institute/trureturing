@@ -70,26 +70,29 @@ internal static class UtilityAdmissionRule
     }
 
     private static IEnumerable<RepoPath> SelectedPaths(RuleEvaluationContext context) =>
-        context.Changes.Paths.Where(path =>
+        context.ProtectedBase is null
+            ? context.Changes.Paths.Where(path => IsD5Lean(path.Value) && context.Current.Files.ContainsKey(path)
+                && (!FrozenStatePath.TryFromModulePath(path, out var statePath) || !context.Current.Files.ContainsKey(statePath)))
+            : context.Changes.Paths.Where(path =>
             context.Current.Files.TryGetValue(path, out var current)
             && (FrozenStatePath.IsUnderRoot(path.Value)
-                ? !context.Baseline.Files.ContainsKey(path)
+                ? !context.ProtectedBase.Files.ContainsKey(path)
                 : IsD5Lean(path.Value)
                     && !IsBaselineFrozen(context, path)
-                    && (!context.Baseline.Files.TryGetValue(path, out var baseline)
+                    && (!context.ProtectedBase.Files.TryGetValue(path, out var baseline)
                         || !current.RawBytes.AsSpan().SequenceEqual(baseline.RawBytes.AsSpan()))));
 
     private static bool IsBaselineFrozen(RuleEvaluationContext context, RepoPath path) =>
         IsD5Lean(path.Value)
         && FrozenStatePath.TryFromModulePath(path, out var statePath)
-        && context.Baseline.Files.ContainsKey(statePath);
+        && context.ProtectedBase is { } baseline && baseline.Files.ContainsKey(statePath);
 
     private static void AddClassificationFindings(
         RuleEvaluationContext context,
         RepoPath path,
         ImmutableArray<RuleFinding>.Builder findings)
     {
-        if (!context.Baseline.Files.TryGetValue(path, out var baseline)
+        if (context.ProtectedBase is null || !context.ProtectedBase.Files.TryGetValue(path, out var baseline)
             || !context.Current.Files.TryGetValue(path, out var current))
         {
             return;
@@ -139,12 +142,13 @@ internal static class UtilityAdmissionRule
         RuleEvaluationContext context,
         ImmutableArray<RuleFinding>.Builder findings)
     {
+        if (context.ProtectedBase is null) return;
         foreach (var path in context.Changes.Paths
                      .Where(static path => IsD5Lean(path.Value))
                      .OrderBy(static path => path.Value, StringComparer.Ordinal))
         {
             if (!FrozenStatePath.TryFromModulePath(path, out var statePath)
-                || !context.Baseline.Files.ContainsKey(statePath)
+                || !context.ProtectedBase.Files.ContainsKey(statePath)
                 || !IsChangedUtilityHeader(context, path))
             {
                 continue;
@@ -158,12 +162,12 @@ internal static class UtilityAdmissionRule
 
     private static bool IsChangedUtilityHeader(RuleEvaluationContext context, RepoPath path)
     {
-        if (!IsD5Lean(path.Value))
+        if (context.ProtectedBase is null || !IsD5Lean(path.Value))
         {
             return false;
         }
 
-        var baselineValid = TryGetUtility(context.Baseline, path, out var baselineUtility);
+        var baselineValid = TryGetUtility(context.ProtectedBase, path, out var baselineUtility);
         var currentValid = TryGetUtility(context.Current, path, out var currentUtility);
         if (!baselineValid || !currentValid)
         {

@@ -530,6 +530,50 @@ public sealed partial class TestProjectTopologyPolicyTests
     }
 
     [Fact]
+    public void RegisteredProjectMaterialChangesUseTheirOwnComparisonManifest()
+    {
+        var protectedBase = Registered("<Description>baseline</Description>");
+        var candidate = Registered("<Description>candidate metadata</Description>");
+        var result = TestProjectTopologyPolicy.EvaluateSnapshots(protectedBase, candidate);
+        Assert.True(result.IsAccepted, result.Message);
+        AssertDebtFreeComparison(protectedBase, candidate, result.BaseDebt, result.CandidateDebt);
+        Assert.Throws<InvalidDataException>(() => AssertHasDebtFreePair(
+            protectedBase, EngineeringInputManifest.Read(candidate), result.BaseDebt));
+
+        static RepositorySnapshot Registered(string property)
+        {
+            var projects = new[] { Production("Good", "Good", extraProperty: property),
+                OwnedTest("Good.Tests", "Good.Tests", "../../Good/Good.csproj") };
+            var manifest = System.Text.Json.JsonSerializer.Serialize(new
+            {
+                schema_version = 1,
+                projects = projects.Select(project => new
+                {
+                    path = project.Path, assembly = project.Assembly, role = project.Role,
+                    sha256 = Convert.ToHexStringLower(System.Security.Cryptography.SHA256.HashData(
+                        System.Text.Encoding.UTF8.GetBytes(project.Content))),
+                    references = project.References, inputs = new[] { project.Path },
+                }),
+                inputs = projects.Select(project => new { patterns = new[] { project.Path }, projects = new[] { project.Path } }),
+            });
+            return Decode(RawRepositorySnapshot.Create(projects.Select(project =>
+                RawRepositoryEntry.FromText(project.Path, project.Content)).Concat([
+                RawRepositoryEntry.FromText("Meta/FILEMAP.toml", """
+                    [[files]]
+                    pattern = "Meta/EngineeringInputs.json"
+                    kind = "program"
+                    admission_plane = "judge"
+                    runtime_disposition = "committed-source"
+                    artifact_id = "EngineeringInputManifest"
+                    consumed_by = ["EngineeringInputManifest"]
+                    verified_by = ["EngineeringInputManifest"]
+                    """),
+                RawRepositoryEntry.FromText("Meta/EngineeringInputs.json", manifest),
+            ])));
+        }
+    }
+
+    [Fact]
     public void CurrentRepositoryCandidateDeltaIsAcceptedByTheSameRatchet()
     {
         var root = RepositoryLayout.FindRoot();
@@ -560,8 +604,7 @@ public sealed partial class TestProjectTopologyPolicyTests
                     "orphan-owned-project",
                     "owned-test-to-owned-test-reference",
                 }));
-        AssertHasDebtFreePair(protectedBase, EngineeringInputManifest.Read(candidate), result.BaseDebt);
-        AssertHasDebtFreePair(candidate, EngineeringInputManifest.Read(candidate), result.CandidateDebt);
+        AssertDebtFreeComparison(protectedBase, candidate, result.BaseDebt, result.CandidateDebt);
     }
 
     [Fact]
@@ -674,6 +717,14 @@ public sealed partial class TestProjectTopologyPolicyTests
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+
+    private static void AssertDebtFreeComparison(RepositorySnapshot protectedBase, RepositorySnapshot candidate,
+        IReadOnlyList<TestProjectTopologyDebt> baseDebt, IReadOnlyList<TestProjectTopologyDebt> candidateDebt)
+    {
+        var manifest = EngineeringInputManifest.Read(candidate);
+        AssertHasDebtFreePair(protectedBase, manifest.ReadComparison(protectedBase), baseDebt);
+        AssertHasDebtFreePair(candidate, manifest, candidateDebt);
+    }
 
     private static void AssertHasDebtFreePair(
         RepositorySnapshot snapshot,

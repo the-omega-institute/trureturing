@@ -4,7 +4,9 @@
 set -euo pipefail
 
 CANDIDATE_ROOT="."
-BASE_REF=""
+BASE_REF="${STRATALINT_SOURCE_BASE:-}"
+PUSH_BEFORE="${STRATALINT_PUSH_BEFORE:-}"
+PUSH_HEAD="${STRATALINT_PUSH_HEAD:-}"
 CANDIDATE_LEAN_REPORT=""
 JUDGE_DLL=""
 TEST_MAP_CACHE_ROOT=""
@@ -13,6 +15,8 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
     --candidate) CANDIDATE_ROOT="$2"; shift 2 ;;
     --base) BASE_REF="$2"; shift 2 ;;
+    --push-before) PUSH_BEFORE="$2"; shift 2 ;;
+    --push-head) PUSH_HEAD="$2"; shift 2 ;;
     --candidate-lean-report) CANDIDATE_LEAN_REPORT="$2"; shift 2 ;;
     --judge-dll) JUDGE_DLL="$2"; shift 2 ;;
     --test-map-cache-root)
@@ -22,7 +26,15 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-[[ -n "$BASE_REF" ]] || { echo "harness-gate: --base REV is required" >&2; exit 2; }
+INPUT_ARGS=()
+if [[ -n "$PUSH_BEFORE" || -n "$PUSH_HEAD" ]]; then
+  [[ -z "$BASE_REF" && -n "$PUSH_BEFORE" && -n "$PUSH_HEAD" ]] \
+    || { echo "harness-gate: choose complete push range or protected base" >&2; exit 2; }
+  INPUT_ARGS=(--push-before "$PUSH_BEFORE" --push-head "$PUSH_HEAD")
+else
+  [[ -n "$BASE_REF" ]] || { echo "harness-gate: explicit base or push range is required" >&2; exit 2; }
+  INPUT_ARGS=(--protected-base "$BASE_REF")
+fi
 [[ -n "$CANDIDATE_LEAN_REPORT" ]] \
   || { echo "harness-gate: --candidate-lean-report FILE is required" >&2; exit 2; }
 [[ -d "$CANDIDATE_ROOT" ]] \
@@ -107,7 +119,7 @@ else
   mark cached-judge
 fi
 
-check_args=(--protected-base "$BASE_REF" --candidate-lean-report "$CANDIDATE_LEAN_REPORT")
+check_args=("${INPUT_ARGS[@]}" --candidate-lean-report "$CANDIDATE_LEAN_REPORT")
 if [[ -n "$TEST_MAP_CACHE_ROOT" ]]; then
   check_args+=(--test-map-cache-root "$TEST_MAP_CACHE_ROOT")
 fi

@@ -12,23 +12,33 @@ internal static class LeanSourceInputCommand
     {
         try
         {
-            if (arguments.Count is not (4 or 6) || arguments[0] != "--base" || arguments[2] != "--report"
-                || arguments.Count == 6 && arguments[4] != "--context")
-                throw new FormatException("USAGE: StrataLint lean-source-input --base REV --report FILE [--context FILE]");
+            var options = new Dictionary<string, string>(StringComparer.Ordinal);
+            for (var index = 0; index < arguments.Count; index += 2)
+                if (index + 1 >= arguments.Count || arguments[index] is not ("--base" or "--push-before"
+                    or "--push-head" or "--report" or "--context") || !options.TryAdd(arguments[index], arguments[index + 1]))
+                    throw new FormatException("invalid lean-source-input arguments");
+            if (!options.TryGetValue("--report", out var reportPath)
+                || options.ContainsKey("--base") == options.ContainsKey("--push-before")
+                || options.ContainsKey("--push-before") != options.ContainsKey("--push-head"))
+                throw new FormatException("USAGE: StrataLint lean-source-input (--base REV | --push-before OID --push-head OID) --report FILE [--context FILE]");
+            var prepared = options.TryGetValue("--push-before", out var before)
+                ? repository.PreparePush(before, options["--push-head"]) : null;
             var current = Decode(repository.ReadCurrent());
-            var baseline = Decode(repository.ReadRevision(arguments[1]));
-            var contextFile = arguments.Count == 6 ? arguments[5] : arguments[3] + ".source-context.json";
+            var baseline = options.TryGetValue("--base", out var baseRevision)
+                ? Decode(repository.ReadRevision(baseRevision)) : null;
+            var contextFile = options.GetValueOrDefault("--context", reportPath + ".source-context.json");
             var input = File.Exists(contextFile)
                 ? LeanSourceContextInput.Load(File.ReadAllBytes(contextFile), current, baseline)
                 : LeanSourceContextInput.Empty;
-            var changes = repository.ReadChanges(arguments[1]);
-            foreach (var path in NativeDecideSourceRule.SelectedPaths(current, baseline, changes))
+            var paths = prepared?.SourcePaths ?? NativeDecideSourceRule.SelectedPaths(current, baseline,
+                repository.ReadChanges(baseRevision!)).ToImmutableArray();
+            foreach (var path in paths)
                 _ = NativeDecideSourceRule.Inspect(current, path, input);
-            var baseView = FrozenLedgerBaseViewReader.Read(baseline);
-            if (!baseView.ActiveByPath.IsEmpty && EffectiveLeanPins.TryRead(baseline, out var oldPins)
+            var baseView = baseline is null ? null : FrozenLedgerBaseViewReader.Read(baseline);
+            if (baseline is not null && baseView is not null && !baseView.ActiveByPath.IsEmpty && EffectiveLeanPins.TryRead(baseline, out var oldPins)
                 && EffectiveLeanPins.TryRead(current, out var newPins) && oldPins != newPins)
             {
-                var report = RawLeanReportArtifact.ReadFile(arguments[3], current);
+                var report = RawLeanReportArtifact.ReadFile(reportPath, current);
                 var truth = DagLedgerCommandPreparation.BuildTruth(current, report);
                 var states = LeanTruthStates.Resolve(current, truth.Lean);
                 var adjacency = LeanImportAdjacency.Build(current, truth.Lean);
@@ -46,7 +56,8 @@ internal static class LeanSourceInputCommand
                 throw new FormatException(string.Join("; ", input.MalformedRows));
             var requests = input.Requests.Select(request =>
             {
-                var snapshot = request.Side == "current" ? current : baseline;
+                var snapshot = request.Side == "current" ? current : baseline
+                    ?? throw new FormatException("protected source demand requires a protected base");
                 var path = RepoPath.CreateKnown(request.Path);
                 var file = snapshot.Files[path];
                 return new
@@ -58,13 +69,13 @@ internal static class LeanSourceInputCommand
                     producerSha256 = LeanSourceContextInput.ProducerHash(current),
                     configurationSha256 = LeanSourceContextInput.ConfigurationHash(current),
                     graphSha256 = LeanSourceContextInput.GraphHash(snapshot, path),
-                    referenceConfigurationSha256 = LeanSourceContextInput.ConfigurationHash(baseline),
+                    referenceConfigurationSha256 = baseline is null ? "" : LeanSourceContextInput.ConfigurationHash(baseline),
                     managed = LeanSourceContextInput.InterfaceSources(snapshot, path).Select(source => new {
                         module = LeanImportClosure.ModuleName(source.Path), path = source.Path.Value, source = source.Text,
                         sourceSha256 = LeanSourceContextInput.SourceHash(source),
                     }).ToArray(),
-                    referenceToolchain = baseline.TryGetFile("lean-toolchain", out var toolchain) ? toolchain.Text.Trim() : "",
-                    referenceManifest = baseline.TryGetFile("lake-manifest.json", out var manifest) ? manifest.Text : "{}",
+                    referenceToolchain = baseline is not null && baseline.TryGetFile("lean-toolchain", out var toolchain) ? toolchain.Text.Trim() : "",
+                    referenceManifest = baseline is not null && baseline.TryGetFile("lake-manifest.json", out var manifest) ? manifest.Text : "{}",
                     currentManifest = current.TryGetFile("lake-manifest.json", out var candidateManifest) ? candidateManifest.Text : "{}",
                     currentToolchain = current.TryGetFile("lean-toolchain", out var currentToolchain) ? currentToolchain.Text.Trim() : "",
                 };

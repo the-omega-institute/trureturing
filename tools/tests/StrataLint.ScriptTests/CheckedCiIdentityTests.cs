@@ -91,11 +91,20 @@ public sealed class CheckedCiIdentityTests
             payload.write_text(json.dumps(data))
         if change == 'default-workflow': environment['GITHUB_WORKFLOW_SHA'] = base
         if change == 'missing-workflow': environment.pop('GITHUB_WORKFLOW_SHA')
-        result=subprocess.run(['python3', script, '--repository', str(root), *extra],
+        environment.update(GITHUB_OUTPUT=str(root/'outputs'), GITHUB_ENV=str(root/'environment'))
+        result=subprocess.run(['python3', script, '--repository', str(root), '--github-output', '--github-env', *extra],
             cwd=root, env=environment, text=True, capture_output=True)
         assert (result.returncode == 0) == (accepted == 'yes'), (result.returncode, result.stdout, result.stderr)
         if accepted == 'yes':
             row=json.loads(result.stdout.removeprefix('CI_CHECKED_IDENTITY '))
+            exported=dict(line.split('=', 1) for line in (root/'environment').read_text().splitlines())
+            outputs=dict(line.split('=', 1) for line in (root/'outputs').read_text().splitlines())
+            assert exported['STRATALINT_SOURCE_BASE'] == ('' if event == 'push' else base)
+            assert exported['STRATALINT_SCRIBE_BASE'] == ('' if event == 'push' else base)
+            assert exported['STRATALINT_PUSH_BEFORE'] == (data['before'] if event == 'push' else '')
+            assert exported['STRATALINT_PUSH_HEAD'] == (merge if event == 'push' else '')
+            assert outputs['protected_base'] == ('' if event == 'push' else base)
+            assert outputs['planning_mode'] == ('initial' if change == 'initial' else 'endpoints')
             assert row['tested_head'] == merge
             assert row['protected_base'] == (None if event == 'push' else base)
             if event == 'push': assert row['push_before'] == data['before'] and row['push_after'] == merge

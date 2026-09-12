@@ -305,7 +305,13 @@ cover_row() {
 cd "$ROOT"
 case "$COMMAND" in
   deliver-check)
-    make lean-report
+    case "${PREFLIGHT:-1}" in
+      1) /bin/bash "$ROOT/tools/scripts/preflight.sh" --validate-range-only ;;
+      0) printf 'LOCAL_PREFLIGHT_NOT_RUN explicit_skip=1\n' ;;
+      *) echo 'PLAYBOOK_INVALID PREFLIGHT must be 0 or 1' >&2; exit 2 ;;
+    esac
+    BASE="$(git rev-parse --verify "${BASE}^{commit}")"
+    make lean-report BASE="$BASE"
     make emit
     make align-digestion-status BASE="$BASE"
     run_digest_status
@@ -313,7 +319,9 @@ case "$COMMAND" in
     verify_added_frozen_events_v5
     align_delivery_ledger
     run_digest_status
-    make preflight BASE="$(git rev-parse HEAD^1)"
+    if [[ "${PREFLIGHT:-1}" == 1 ]]; then
+      make preflight BASE="$BASE" BEFORE="$BEFORE"
+    fi
     verify_added_frozen_events_v5
     ;;
   deposit)

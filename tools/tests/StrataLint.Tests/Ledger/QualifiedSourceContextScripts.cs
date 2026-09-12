@@ -162,7 +162,8 @@ internal static class QualifiedSourceContextScripts
 
 
     production.Preparation.compiler_query = fixture_compiler_query
-    sys.argv = [str(script), "--repository", str(repository), "--report", report, "--base", baseline]
+    source_args = ["--push-before", baseline, "--push-head", arguments[0]] if mode == "push" else ["--base", baseline]
+    sys.argv = [str(script), "--repository", str(repository), "--report", report, *source_args]
     if mode == "offline":
         sys.argv.append("--verify")
     production.main()

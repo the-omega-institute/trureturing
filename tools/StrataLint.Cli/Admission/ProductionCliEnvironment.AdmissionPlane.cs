@@ -19,7 +19,7 @@ internal sealed partial class ProductionCliEnvironment
 
     internal static AdmissionOutcome? EvaluateAdmissionPlane(
         RawRepositorySnapshot candidate,
-        RawChangeSet changes)
+        RawChangeSet changes, bool requireSinglePlane = true)
     {
         ArgumentNullException.ThrowIfNull(candidate);
         ArgumentNullException.ThrowIfNull(changes);
@@ -27,7 +27,7 @@ internal sealed partial class ProductionCliEnvironment
         var decision = AdmissionPlanePolicy.Evaluate(
             candidate,
             changedPaths.Select(static path => path.Value).ToImmutableArray());
-        if (decision.IsAdmissible)
+        if (decision.IsAdmissible || !requireSinglePlane && decision.Classification is AdmissionPlaneClassification.Mixed)
         {
             return null;
         }

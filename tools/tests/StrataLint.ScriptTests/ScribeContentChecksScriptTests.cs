@@ -106,6 +106,36 @@ public sealed class ScribeContentChecksScriptTests
             .Split('\0', StringSplitOptions.RemoveEmptyEntries).Order(StringComparer.Ordinal));
     }
 
+    [Theory]
+    [InlineData("earlier")]
+    [InlineData("nonancestor")]
+    [InlineData("initial")]
+    public void PushPlanningCarriesCompleteRangeToRegisteredScribe(string mode)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ScribeContentFixture();
+        var before = fixture.PreparePush(mode);
+        var result = fixture.RunGate(0, before, fixture.Head);
+        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+        Assert.Contains("markdown-check", fixture.Invocations);
+        Assert.Contains("Blueprint/D5/old file.md", Encoding.UTF8.GetString(fixture.MarkdownInput).Split('\0'));
+        if (mode != "initial") Assert.Equal(["markdown-check"], fixture.Invocations);
+    }
+
+    [Theory]
+    [InlineData("", "")]
+    [InlineData("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "")]
+    [InlineData("missing", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+    public void InvalidPushPlanningStopsBeforeScribe(string before, string head)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ScribeContentFixture();
+        var result = fixture.RunGate(0, before, head);
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains("PUSH_RANGE_INVALID", Encoding.UTF8.GetString(result.StandardError));
+        Assert.Empty(fixture.Invocations);
+    }
+
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
     private sealed class ScribeContentFixture : IDisposable
     {
@@ -136,6 +166,8 @@ public sealed class ScribeContentChecksScriptTests
                 Path.Combine(TestRepositoryLayout.FindRoot(), CacheInputPath), Path.Combine(repository, CacheInputPath));
             ScriptHarnessScratch.CopyScriptInto(
                 Path.Combine(TestRepositoryLayout.FindRoot(), CacheFetcherPath), Path.Combine(repository, CacheFetcherPath));
+            const string planning = "tools/scripts/workflow/checked-ci-identity.py";
+            ScriptHarnessScratch.CopyScriptInto(Path.Combine(TestRepositoryLayout.FindRoot(), planning), Path.Combine(repository, planning));
             Write("tools/lean-inspector/Registry.lean", "def fixture := 1\n");
             Write("Blueprint/D5/old file.md", "text\n");
             Write("required.data", "required input\n");
@@ -233,14 +265,31 @@ public sealed class ScribeContentChecksScriptTests
         internal void ChangeFetcher() => ScriptHarnessScratch.AppendScratchText(
             Path.Combine(repository, CacheFetcherPath), "# fetch acceptance changed\n");
 
-        internal ProcessOutput RunGate(int childExit) => TestProcessRunner.Run(
+        internal string Head => RunGit("rev-parse", "HEAD").Trim();
+
+        internal string PreparePush(string mode)
+        {
+            if (mode == "initial") return new string('0', 40);
+            var before = mode == "nonancestor" ? RunGit("commit-tree", RunGit("rev-parse", "HEAD^{tree}").Trim(),
+                "-m", "unrelated P").Trim() : baseline;
+            Change("Blueprint/D5/old file.md");
+            RunGit("add", ".");
+            RunGit("commit", "--quiet", "-m", "earlier markdown");
+            Change("README.md");
+            RunGit("add", ".");
+            RunGit("commit", "--quiet", "-m", "H");
+            return before;
+        }
+
+        internal ProcessOutput RunGate(int childExit, string? before = null, string? head = null) => TestProcessRunner.Run(
             "/bin/bash",
             ["-c", "ORIGINAL_PATH=\"$PATH\" PATH=\"$1:$PATH\" SCRIBE_LOG=\"$2\" "
                 + "SCRIBE_EXIT=\"$3\" STRATALINT_SCRIBE_BASE=\"$6\" NATIVE_CLI=\"$7\" "
+                + "STRATALINT_PUSH_BEFORE=\"$8\" STRATALINT_PUSH_HEAD=\"$9\" "
                 + "exec /bin/bash \"$4\" \"$5\" scribe-fixture",
                 "scribe-fetcher-delta", bin, log, childExit.ToString(CultureInfo.InvariantCulture),
-                Path.Combine(repository, ContentChecksPath), report, baseline,
-                Path.Combine(AppContext.BaseDirectory, "StrataLint.dll")],
+                Path.Combine(repository, ContentChecksPath), report, before is null ? baseline : "",
+                Path.Combine(AppContext.BaseDirectory, "StrataLint.dll"), before ?? "", head ?? ""],
             repository, TestBudgets.ScriptProcessHangGuard, 1024 * 1024);
 
         private string RunGit(params string[] arguments)
