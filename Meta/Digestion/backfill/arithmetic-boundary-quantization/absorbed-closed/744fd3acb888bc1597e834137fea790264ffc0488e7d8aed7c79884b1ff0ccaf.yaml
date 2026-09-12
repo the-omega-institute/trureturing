@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:744fd3acb888bc1597e834137fea790264ffc0488e7d8aed7c79884b1ff0ccaf
+  normalized_sha256: sha256:744fd3acb888bc1597e834137fea790264ffc0488e7d8aed7c79884b1ff0ccaf
+cas_ref: sha256:744fd3acb888bc1597e834137fea790264ffc0488e7d8aed7c79884b1ff0ccaf
+coverage_gids:
+  - gid: D5/S3/Analytic/Interpolation/FractionalBranchGeometry.residual_distance_geometry
+    target_statement_id: sha256:a8e3cbe133fb556aacb00ab63caed346143d9cf2442fce99be647131c8c242d8
+  - gid: D5/S3/Analytic/Interpolation/HermiteMomentBounds.hermite_moment_bounds
+    target_statement_id: sha256:c6ad6c5410e7e7947c6f68f4ee537f8cbfcbdee49d098ef669b9a30837bed6a7
+  - gid: D5/S3/Analytic/Interpolation/QuadraticMajorantEnvelope.weighted_le_psiK_of_variance_ge
+    target_statement_id: sha256:72b688054d6ee3201acdf8e754a09370f604a37e0b84d1c7880696a022a0fff8
+  - gid: D5/S3/Analytic/Interpolation/TwoPointGridDominanceBound.secant_contract
+    target_statement_id: sha256:24c1194165ffe24f5e22b915f654d50afeaa048f1960b8c2a08e9506c149a778
+receipts:
+  unresolved_subitems: []
