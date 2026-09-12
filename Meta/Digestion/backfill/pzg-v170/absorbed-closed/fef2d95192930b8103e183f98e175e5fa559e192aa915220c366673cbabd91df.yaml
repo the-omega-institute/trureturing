@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:fef2d95192930b8103e183f98e175e5fa559e192aa915220c366673cbabd91df
   normalized_sha256: sha256:fef2d95192930b8103e183f98e175e5fa559e192aa915220c366673cbabd91df
 cas_ref: sha256:fef2d95192930b8103e183f98e175e5fa559e192aa915220c366673cbabd91df
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Factorization/FactorDensityHighlyCompositeCounterexample.switkay_expanded_claim_false
+    target_statement_id: sha256:0e35827819160a5b42ea792b60ef8bd8103ee4ac12938842d141cf96e38a91d4
 receipts:
   unresolved_subitems: []
