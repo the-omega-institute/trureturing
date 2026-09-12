@@ -146,7 +146,9 @@ class Contracts(CacheFixture, unittest.TestCase):
         merge = self.git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
                          "commit-tree", "HEAD^{tree}", "-p", base, "-p", head, "-m", "merge")
         self.git("checkout", "--detach", merge)
-        result = self.run_tool(CI, "resolve", "--head", head)
+        result = self.run_tool(CI, "resolve", "--head", head,
+                               env=dict(self.env, CI_WORKFLOW_CANDIDATE_SHA=merge,
+                                        GITHUB_EVENT_NAME="pull_request_target"))
         self.assertEqual(0, result.returncode, result.stderr)
         outputs = dict(line.split("=", 1) for line in (self.root / "outputs").read_text().splitlines())
         self.assertEqual(merge, outputs["candidate_sha"])
@@ -169,7 +171,7 @@ class Contracts(CacheFixture, unittest.TestCase):
         commit = self.commit("candidate")
         for candidate, expected in (("", 2), ("b" * 40, 2), (commit, 0)):
             result = self.run_tool(CI, "checkout", "--commit", commit, env=dict(self.env,
-                CI_WORKFLOW_INPUTS=json.dumps({"candidate_sha": candidate})))
+                CI_WORKFLOW_CANDIDATE_SHA=candidate, GITHUB_EVENT_NAME="pull_request_target"))
             self.assertEqual(expected, result.returncode, result.stderr)
 
     def seed(self):

@@ -524,7 +524,7 @@ public sealed partial class ResourceAdapterTests
         var environment = EnvironmentFor(fixture);
         environment["GITHUB_EVENT_NAME"] = "push";
         environment["GITHUB_EVENT_PATH"] = Path.Combine(fixture.Root, "build/absent-event.json");
-        environment["CI_WORKFLOW_INPUTS"] = new JsonObject { ["candidate_sha"] = fixture.Commit }.ToJsonString();
+        environment["CI_WORKFLOW_CANDIDATE_SHA"] = fixture.Commit;
         var result = Route(fixture, "current", environment);
         Assert.True(result.Exit == 0, result.Text);
         Assert.Equal("pr", Summary(fixture, "current")["scope"]!["mode"]!.ToString());

@@ -31,12 +31,12 @@ def oid(value):
 
 
 def checkout(root, commit):
-    inputs = json.loads(os.environ.get("CI_WORKFLOW_INPUTS", "null"))
-    if inputs not in (None, ""):
-        if not isinstance(inputs, dict):
-            raise ValueError("workflow inputs must be an object")
-        if "candidate_sha" in inputs and oid(inputs["candidate_sha"]) != oid(commit):
-            raise ValueError("checkout does not match the reusable workflow candidate input")
+    workflow_candidate = os.environ.get("CI_WORKFLOW_CANDIDATE_SHA", "")
+    # A native push has no reusable-workflow candidate input; GitHub exposes
+    # the input variable as an empty string in that event. Reusable callers
+    # must provide a non-empty immutable candidate and are rejected closed.
+    if (workflow_candidate or os.environ.get("GITHUB_EVENT_NAME") != "push") and oid(workflow_candidate) != oid(commit):
+        raise ValueError("checkout does not match the reusable workflow candidate input")
     if run(root, "git", "rev-parse", "HEAD") != oid(commit):
         raise ValueError("checkout does not match the fixed candidate")
     for remote in run(root, "git", "remote").splitlines():

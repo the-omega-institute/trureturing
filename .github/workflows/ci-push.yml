@@ -38,7 +38,7 @@ permissions:
 
 env:
   CANDIDATE_SHA: ${{ inputs.candidate_sha || github.sha }}
-  CI_WORKFLOW_INPUTS: ${{ toJSON(inputs) }}
+  CI_WORKFLOW_CANDIDATE_SHA: ${{ inputs.candidate_sha }}
   STRATALINT_CACHE_WRITES: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-')) && inputs.candidate_sha == '' }}
   CI_CHANGES_PATH: build/ci/changes.json
   CI_PLAN_PATH: build/ci/plan.json
@@ -376,4 +376,3 @@ jobs:
             build/ci/logs/current
           if-no-files-found: warn
           retention-days: 7
-
