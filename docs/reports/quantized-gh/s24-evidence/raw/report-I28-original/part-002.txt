@@ -1,0 +1,395 @@
+#### E016: original 35.11, bytes [405234, 405283)
+
+Mathematical type/heading metadata only; original number and retained claims/proofs remain.
+
+~~~~~text
+**35.11 Rotation-dependent forward syndeticity.**
+~~~~~
+
+#### E018: original 35.12, bytes [406181, 406241)
+
+Mathematical type/heading metadata only; original number and retained claims/proofs remain.
+
+~~~~~text
+**35.12 Dirichlet's first return is a different assertion.**
+~~~~~
+
+#### E019: original 35.13, bytes [406857, 406935)
+
+Mathematical type/heading metadata only; original number and retained claims/proofs remain.
+
+~~~~~text
+**35.13 Generic irrational rotations refute a uniform maximum-gap inference.**
+~~~~~
+
+#### E020: original 35.14, bytes [408140, 408210)
+
+Mathematical type/heading metadata only; original number and retained claims/proofs remain.
+
+~~~~~text
+**35.14 Unique rounding, finite positivity discard and actual boxes.**
+~~~~~
+
+#### E021: original 35.14, bytes [409083, 409170)
+
+Remove enumeration process statement, retaining the identical mathematical limitation on a numerical first valid index.
+
+~~~~~text
+No exponent enumeration
+or numerical first valid index is supplied by the construction.
+~~~~~
+
+#### E022: original 35.15, bytes [409172, 409238)
+
+Mathematical type/heading metadata only; original number and retained claims/proofs remain.
+
+~~~~~text
+**35.15 Errors, minimum height, total height and relative shape.**
+~~~~~
+
+#### E023: original 35.16, bytes [410233, 410311)
+
+Mathematical type/heading metadata only; original number and retained claims/proofs remain.
+
+~~~~~text
+**35.16 Monotone exponents, strict integer order and exact logarithmic size.**
+~~~~~
+
+#### E024: original 35.16, bytes [411023, 411042)
+
+Remove request-context adjective only; the exact error and uniform absolute constant 1 are unchanged.
+
+~~~~~text
+the requested error
+~~~~~
+
+#### E025: original 35.17, bytes [411154, 411203)
+
+Mathematical type/heading metadata only; original number and retained claims/proofs remain.
+
+~~~~~text
+**35.17 Full squeeze proof of integer counting.**
+~~~~~
+
+#### E026: original 35.18, bytes [412379, 412457)
+
+Mathematical type/heading metadata only; original number and retained claims/proofs remain.
+
+~~~~~text
+**35.18 Bounded exponent and log-size gaps, divergent additive integer gaps.**
+~~~~~
+
+#### E027: original 35.19, bytes [413247, 413312)
+
+Mathematical type/heading metadata only; original number and retained claims/proofs remain.
+
+~~~~~text
+**35.19 The exact three-coordinate comparison and wider domain.**
+~~~~~
+
+#### E028: original 35.20, bytes [414908, 414975)
+
+Mathematical type/heading metadata only; original number and retained claims/proofs remain.
+
+~~~~~text
+**35.20 Feasibility, nonempty wider domains and positive support.**
+~~~~~
+
+#### E029: original 35.21, bytes [416131, 416174)
+
+Mathematical type/heading metadata only; original number and retained claims/proofs remain.
+
+~~~~~text
+**35.21 Two scoped strict scaled margins.**
+~~~~~
+
+#### E030: original 35.21, bytes [416321, 416388)
+
+Archive method/execution description; exp(2)>7 proof and both log inequalities are unchanged.
+
+~~~~~text
+, analytically, without numerical
+logarithms or an exponent search.
+~~~~~
+
+#### E031: original 35.22, bytes [417528, 417587)
+
+Mathematical type/heading metadata only; original number and retained claims/proofs remain.
+
+~~~~~text
+**35.22 Exact strict original-domain threshold and 10080.**
+~~~~~
+
+#### E032: original 35.23, bytes [419374, 419450)
+
+Mathematical type/heading metadata only; original number and retained claims/proofs remain.
+
+~~~~~text
+**35.23 Wider estimates precede cutoff intersection; unscaled gaps vanish.**
+~~~~~
+
+#### E033: original 35.24, bytes [421073, 421106)
+
+Mathematical type/heading metadata only; original number and retained claims/proofs remain.
+
+~~~~~text
+**35.24 Three density meanings.**
+~~~~~
+
+#### E034: original 35.25, bytes [422217, 422293)
+
+Mathematical type/heading metadata only; original number and retained claims/proofs remain.
+
+~~~~~text
+**35.25 Fibonacci cutoffs are inherited limits, not sparse orbit sampling.**
+~~~~~
+
+#### E035: original 35.26, bytes [422957, 423032)
+
+Mathematical type/heading metadata only; original number and retained claims/proofs remain.
+
+~~~~~text
+**35.26 Numerical-order Zeckendorf recoding preserves every finite count.**
+~~~~~
+
+#### E036: original 35.27, bytes [423967, 424040)
+
+Mathematical type/heading metadata only; original number and retained claims/proofs remain.
+
+~~~~~text
+**35.27 Golden-ratio frequency, other metrics and chosen orthogonality.**
+~~~~~
+
+#### E037: original 35.28, bytes [425153, 427383)
+
+Entire original entry is historical attribution/access or implementation evidence; citations reattach to corresponding proofs.
+
+~~~~~text
+**35.28 Classical attribution and exact source-access limits.** Unique prime
+factorization, Haar existence/uniqueness, compactness, Stone-Weierstrass,
+the character/Weyl criterion and Dirichlet pigeonholing are classical tools.
+C64 attributes Haar probability and invariance to Christopher White,
+*Ergodic Theory and Topological Groups*, Theorem 1.1. It attributes Haar
+distribution on the closure of a homomorphism's image to Tom Meyerovitch,
+*Well-distribution of polynomial maps on locally compact groups*,
+arXiv:2210.01429v2, Proposition 3.2 (PDF page 8), and the compact metrizable
+abelian character criterion to Lemma 5.3 (PDF page 11). For minimal recurrence
+and torus return sets it cites Terence Tao's *254A Lecture 3*, Lemma 1 and
+Theorem 2. The specialized restricted-group/null-boundary/half-open-cell
+combination, rounded prime-box counting and scoped \(G\) applications are
+the repo-derived paper deductions written out here, with no novelty or
+priority claim. The finite geometric series, elementary exponential series,
+floor inequalities and squeeze arguments are classical elementary steps.
+
+The complete primary reports successful retrieval of the pinned raw Markdown
+and rendered GitHub page at d79a2cd3cd3d5881dce26df9cee8266de9ae61e7,
+focused checking of 30.1-30.3, 30.16-30.19, 31.1-31.2, 31.17-31.20 and relevant
+section 34 statements; it expressly does not claim a whole-paper audit or
+independent source byte-hash verification. Its retrieval of the Meyerovitch
+PDF, screenshots of the indicated closure notation, Tao's lecture and White's
+university-hosted notes is worker-reported evidence. It is not caller-independent
+retrieval or retrieval performed by I22. C64 reports a supplementary Steif PDF
+HTTP 403 and attempted Meyerovitch HTML HTTP 404; neither unavailable text
+supports a premise. Caller EoM attempts timed out, as supplied in this brief.
+No missing URL, screenshot or hash is reconstructed. I22's fresh consultation
+is of this pinned local source and the explicitly supplied complete C64
+response; new external reference accesses are zero, since no new premise
+requires a focused lookup. These classical attributions do not independently
+certify the inherited specialized \(G\) estimates.
+
+~~~~~
+
+#### E038: original 35.29, bytes [427383, 427449)
+
+Mathematical type/heading metadata only; original number and retained claims/proofs remain.
+
+~~~~~text
+**35.29 Primary identity and remaining mathematical obligations.**
+~~~~~
+
+#### E039: original 35.29, bytes [427449, 428434)
+
+Archive complete primary identity, model display and carrier history verbatim; retain all following mathematical scope at 35.29.
+
+~~~~~text
+ The supplied
+completed actual-PRO C64 task is 72c4fe58-e7c0-4e6a-ab0f-fb5d446ecb48,
+flight qgh0910-pro-near-balanced-recurrence-capacity-recovery,
+caller attempt 1/retry budget 0. Its complete raw response is 25631 bytes,
+SHA256 4402fa6cc3d85c184f775a34441488dbcc7c8276ffb81fca3d7bba8219ba3604.
+The caller-supplied captured task display was 6/Pro. This is display evidence;
+no independent invocation-specific selector observation or serving-identity
+telemetry was available, and neither requested model nor pool label attests
+hidden serving identity. There is no sterile-prior or model-diversity claim.
+The supplied carrier history remains: C62 was terminally abstained after
+navigation failure without mathematics; C63 was prepared, never dispatched,
+and superseded before launch after company capacity was exhausted; C64 used
+the distinct capacity-recovery flight. No C56 or other failed task is revived,
+no retry budget reset, and no current review vote or live merge state read.
+
+~~~~~
+
+#### E040: original 35.29, bytes [428626, 428701)
+
+Archive review status only.
+
+~~~~~text
+ This primary proved verdict is still
+subject to independent source review.
+~~~~~
+
+#### E041: original 35.29, bytes [429300, 429398)
+
+Retain every named open mathematical scope; ticket identities and undefined user label move to explicit report provenance.
+
+~~~~~text
+ in their assigned scopes, including C61, C53,
+C54 and C56. GH remains the user's undefined label.
+~~~~~
+
+#### E042: original 35.29, bytes [429422, 429705)
+
+Retain no-RH-theorem/equivalence scope; archive research/verification/freeze/goal status. Added proof reference points only to existing proofs, with no new reasoning.
+
+~~~~~text
+a negative difference of the supplied upper bounds is an RH theorem,
+an RH-equivalent criterion or RH progress. No exhaustive literature audit,
+novelty, priority, independent certificate verification or kernel freeze is
+claimed; the standing continuous research goal remains active.
+~~~~~
+
+#### E043: original 35.30, bytes [429706, 432403)
+
+Entire original entry is historical attribution/access or implementation evidence; citations reattach to corresponding proofs.
+
+~~~~~text
+**35.30 Implementation, report and canonical handoff boundary.** This is the
+single Codex CLI I22 implementation flight
+qgh0910-i22-near-balanced-recurrence, attempt 1, retry budget 1, under the
+caller-pinned consensus-rnd:sshx 1.0.0-beta.42 SKILL.md and
+CODEX_WORKER_SPEC.md, with CLAUDE 5.11 and the explicit no-delegation brief.
+The work target is /Users/auricstudio/trureturing-qgh-recurrence, branch
+lane/math/quantized-gh-recurrence-0910, immutable BASE
+d79a2cd3cd3d5881dce26df9cee8266de9ae61e7. The complete predecessor prefix is
+preserved: 394297 bytes, 7571 LF, SHA256
+06331627e46c9e19fbb784282b192d521cb953e4c9a34fb421f74c44c0655b9b.
+Historical source, CAS, YAML and report bytes, including partial/table atoms
+and terminal-LF variants, retain their original identities. This layer adds
+only section 35, the [single provenance and binding report](../../reports/quantized-gh/near-balanced-recurrence-0910.md),
+and the actual outputs of one canonical invocation on the finished source:
+~~~text
+make ingest BASE=d79a2cd3cd3d5881dce26df9cee8266de9ae61e7 SOURCE=arithmetic-boundary-quantization
+~~~
+The report preserves the exact C64 response as inert tilde-fenced text,
+separately identifies its delimiter-only LF, maps every new numbered unit to
+primary fields, and records whole-span CAS coverage, inherited 34.22 LF
+extension, actual children/chains if emitted, links and whitespace diagnostics.
+Byte/hash/JSON/span checks and make orchestration are structural evidence,
+not theorem proof. Mathematical code execution, sampled orbits, exponent/prime
+enumeration, historical certificates or tests replayed, CPU candidate
+generation, GPU work and runtime-state reads/writes are all zero in this flight.
+There are no tool, producer, Lean or frozen edits or broad builds/cache warmup.
+
+The worker is repo-prior-exposed. No other worktree, live source/review target,
+caller transcript, task registry, worker envelope or log/log_ref content is
+an input; the explicitly supplied complete C64 response is the permitted
+previous-stage mathematical input. No delegation, worker/oracle launch,
+independent review panel or lifecycle/termination authority is exercised.
+At this I22 handoff the changes are unstaged and not independently reviewed;
+this describes this handoff, not future delivery status. Caller sealing,
+public verification, independent review and ordinary gates remain required,
+and final S24 delivery must follow S23 MERGED. Canonical ingestion is not
+Lean absorption, independent approval, MERGED delivery or completion of the
+standing goal. The report and final structured envelope expose any coverage
+or whitespace failure without hand-editing canonical data or repeating ingest.
+~~~~~
+
+### I28 execution and final representation evidence
+
+After the complete pre-edit correspondence and fixed fidelity checks passed,
+I28 executed exactly once on the finished source:
+~~~text
+make ingest BASE=e3c946d63039999549b4bf47f33d255854456560 SOURCE=arithmetic-boundary-quantization
+~~~
+Exit 0; complete stdout (127 bytes), with empty stderr:
+~~~text
+INGEST residual_open_added=30 skipped_existing=335 coarse_fallbacks=0 open_genres=0 cas_objects_written=30 ledger_changed=true
+~~~
+The invocation used the repository producer unchanged. Its source SHA256 was
+7818afcbb4ed1894090a7200a4eaf9b4d503e16d18a4a9f0fc7fd4de97df7d45 both before
+and after execution. No second ingest or manual canonical edit occurred.
+
+The repaired source has 426629 bytes / 8222 LF. The complete source recovery
+map has 77 disjoint, exhaustive original-byte spans: 423643 original bytes
+remain in the source and 8760 original bytes are exact archival payloads.
+There are 38 explicitly listed additions comprising 2986 current-source bytes
+of type/heading, citation and connective/proof-reference metadata. All 43
+edits were analytically mapped before editing. Recovery yields exactly the
+original 432403 bytes / 8304 LF / SHA256
+09702761d0d445ab798d54d6a1d26394394aa330e219400617ea46373871dc71.
+The 394297-byte source and 88644-byte report prefixes remain exact. Every
+retained inline and displayed mathematical expression is byte-identical,
+and retained-wording projections agree entry by entry. Those byte checks
+support, and do not replace, the complete analytical content correspondence
+and the subsequent full reread of the repaired section. No mathematical
+clause is uncovered and no local need for fresh mathematics was identified.
+
+All 28 current numbered S24 spans have complete whole CAS/YAML bindings.
+The unchanged inherited 34.22 boundary supplies a twenty-ninth whole binding.
+The producer additionally emits a two-member chain for 35.29: whole parent
+6e2fc9eba12f69ff66c2479b4effa34ffdfebf6d02465cf14009d3094f749a29,
+then ordered members
+e7967618bd2ddd9e03ca3e35a86e5d8a9254d1ccce8ce949326f7b78c7b750f2
+and 830a9f6f0497f7fbb56b3c367c9775eedea26f52fecee9c7a175824b31983e5b.
+Their 1006 and 136 bytes concatenate exactly to the 1142-byte parent.
+The chain is an actual `receipts.chain_atoms` list, not an assumed `children`
+structure. All new `coverage_gids` and `unresolved_subitems` lists are empty;
+there are no unexplained producer objects or normalization differences.
+The mapping lists all 30 new CAS/YAML pairs and every old/new numbered-span
+identity, plus the unchanged boundary and all 63 changed paths.
+
+Fixed preservation checks compared all 500 historical source-ledger files
+(499 YAML bindings and source.toml) to immutable Git blob identities and all
+499 referenced CAS files to their SHA256 identities. All remain exact,
+including the original 31 S24/boundary pairs and both 34.22 terminal-LF
+variants. The current 1893-byte boundary is still the 1892-byte predecessor
+CAS followed by exactly one LF. Earlier active source bytes are unchanged;
+this is representation evidence, not a proof audit of every predecessor.
+
+Whitespace observations are retained as actual nonzero check outcomes.
+All 30 new CAS no-index checks exit 3 with a blank-EOF diagnostic; all 30 new
+YAML no-index checks exit 1 without a diagnostic. The mapping's no-index
+check exits 1 without a diagnostic. The source/report diff check exits 2
+with exactly:
+~~~text
+docs/develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md:8222: new blank line at EOF.
+~~~
+The original trailing separator of 35.29 is retained at the new source EOF;
+the byte map explicitly accounts for it. Canonical objects preserve these
+whole source spans and their terminal LF bytes. No trimming, manual canonical
+repair or second ingest is used to suppress these diagnostics. Ordinary
+repository gates and their disposition remain caller-owned and pending.
+
+Two local tooling issues were observed and recovered without changing science
+or canonical data: a scoped rg discovery command named nonexistent
+tools/StrataLint (rg reported an OS error, while the surrounding head pipeline
+returned 0); bounded reads of the actual StrataLint.Cli files followed. The
+first fixed-fidelity helper run exited 1 at receipt publication because a
+Path was concatenated with a string. Only that attempt-local expression was
+corrected and the full fixed verifier reran with exit 0. An initially
+truncated aggregate prerequisite read was also recovered with bounded reads.
+The complete target CLAUDE.md, agents/CONTEXT.md and pinned beta.42 SKILL.md
+and CODEX_WORKER_SPEC.md were read before target actions; no applicable nested
+instructions were found in the inspected path ancestors.
+
+Only necessary byte/recovery/span/JSON/YAML/link/Git checks and the single
+ingest were run. No mathematical program, prime/exponent/orbit/candidate
+enumeration, historical certificate/test/ingest/pilot/fixed-xi replay, fresh
+literature retrieval, GPU/runtime/daemon work, broad build/cache/Lean/preflight,
+new test, other physical target, peer log or task registry was used. All worker
+scratch and execution receipts belong to this runner-owned attempt directory.
+There is no staging, commit, push, branch change, PR/issue/comment action or
+delegation. The two authored modifications, one new mapping and 60 canonical
+additions are returned unstaged. Fresh current-source review, the C82
+predecessor obligation, ordered pure-prefix integration and MERGED remain
+pending as stated above.

@@ -1,0 +1,22 @@
+**35.4 Restricted characters and uniform geometric sums.** For
+\(\ell\in\mathbb Z^d\), restrict the character
+\(\chi_\ell(x)=\exp(2\pi\mathrm i\,\ell\cdot x)\) to \(H\), and let
+\(w=\chi_\ell(\alpha)\). If \(w=1\), this character is 1 on the entire
+integer orbit and, by continuity, on \(H\). Its integral and every orbit
+average are therefore 1. If \(w\ne1\), Haar invariance gives
+\[
+\int_H\chi_\ell\,d\mu_H=w\int_H\chi_\ell\,d\mu_H,
+\qquad\text{so}\qquad\int_H\chi_\ell\,d\mu_H=0.
+\]
+For every \(x\in H\) and integer \(M\ge1\), the geometric-sum identity is
+\[
+\frac1M\sum_{n=1}^M\chi_\ell(x+n\alpha)
+=\chi_\ell(x)\frac{w(1-w^M)}{M(1-w)},\qquad
+\left|\frac1M\sum_{n=1}^M\chi_\ell(x+n\alpha)\right|
+\le\frac2{M|1-w|}.
+\]
+The bound is uniform in \(x\). Nontrivial roots of unity \(w\ne1\), which
+can occur for characters of disconnected closures, are covered by this same
+calculation. A nonzero ambient \(\ell\) may restrict to the trivial character;
+the \(w=1\) case handles that possibility explicitly.
+

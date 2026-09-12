@@ -1,0 +1,20 @@
+**35.11 Proposition (Rotation-dependent forward syndeticity).** The relatively open
+neighborhood \(U_Q\) is nonempty, since it contains 0. By 35.6 every positive
+forward orbit meets it. Thus \(\{U_Q-j\alpha:j\ge1\}\) covers \(H\).
+Compactness gives a finite nonempty set \(J\subseteq\mathbb Z_{\ge1}\)
+whose corresponding sets still cover \(H\). Define
+\(L=L(\alpha,Q)=\max J\). For every integer \(m\ge0\), some \(j\in J\)
+satisfies \(m\alpha\in U_Q-j\alpha\). Hence
+\[
+B_Q\cap\{m+1,\ldots,m+L\}\ne\varnothing.
+\]
+The positive choice of \(j\) proves a forward-return statement. Consecutive
+members of \(B_Q\) differ by at most \(L\). Removing finitely many indices
+preserves this bound for sufficiently late blocks and preserves both natural
+density and the uniform block limit: the block count changes by at most the
+total number removed, independently of its starting index. This proof gives
+existence of \(L\); it evaluates no numerical maximum-gap bound.
+
+Mathematical citation: Terence Tao, *254A Lecture 3*, Lemma 1 and
+Theorem 2 (minimal recurrence and torus return sets).
+

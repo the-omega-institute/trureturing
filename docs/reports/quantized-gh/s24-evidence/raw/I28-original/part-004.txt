@@ -1,0 +1,750 @@
+      "sha256": "69052e35bf2369b664a597f5dbb4194e8cabcbd1428b066637cc21905419a360"
+    },
+    {
+      "edit_id": "E028",
+      "source_start_byte": 415196,
+      "source_end_byte": 415277,
+      "category": "type_metadata",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "byte_count": 81,
+      "lf_count": 0,
+      "sha256": "fcb506a6bf708468058f435d8a65f325190f195a49de6400da3db18130a63599"
+    },
+    {
+      "edit_id": "E029",
+      "source_start_byte": 416433,
+      "source_end_byte": 416490,
+      "category": "type_metadata",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "byte_count": 57,
+      "lf_count": 0,
+      "sha256": "4592d970495446643356f91914dc5e8b6bf9cfd826057528a87af8399f0652c2"
+    },
+    {
+      "edit_id": "E030",
+      "source_start_byte": 416637,
+      "source_end_byte": 416638,
+      "category": "operational_split",
+      "reason": "Archive method/execution description; exp(2)>7 proof and both log inequalities are unchanged.",
+      "byte_count": 1,
+      "lf_count": 0,
+      "sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8"
+    },
+    {
+      "edit_id": "E031",
+      "source_start_byte": 417778,
+      "source_end_byte": 417851,
+      "category": "type_metadata",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "byte_count": 73,
+      "lf_count": 0,
+      "sha256": "610c106344acf678759ad73ee6573512b6b4c0d1eefa8e5d0aaf5c185bc3fdf1"
+    },
+    {
+      "edit_id": "E032",
+      "source_start_byte": 419638,
+      "source_end_byte": 419728,
+      "category": "type_metadata",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "byte_count": 90,
+      "lf_count": 0,
+      "sha256": "c815db18700221f2b29159db0ae428fd969cb8a6243fcb28550a3664d3dd9fd0"
+    },
+    {
+      "edit_id": "E033",
+      "source_start_byte": 421351,
+      "source_end_byte": 421398,
+      "category": "type_metadata",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "byte_count": 47,
+      "lf_count": 0,
+      "sha256": "98f89786ac5bb54350ade21b2e7dee293e69685bc8d574e7d3c295e1a4f7fef5"
+    },
+    {
+      "edit_id": "E034",
+      "source_start_byte": 422509,
+      "source_end_byte": 422599,
+      "category": "type_metadata",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "byte_count": 90,
+      "lf_count": 0,
+      "sha256": "9c82d3748cff47808a09bcf1d598f705f16fef74415d1ed5cc644f0344116eef"
+    },
+    {
+      "edit_id": "E035",
+      "source_start_byte": 423263,
+      "source_end_byte": 423352,
+      "category": "type_metadata",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "byte_count": 89,
+      "lf_count": 0,
+      "sha256": "b0dc6c32865dcf1a943525ca5c710c9b4b82f6b1bff16596cab69131a0b0a822"
+    },
+    {
+      "edit_id": "E036",
+      "source_start_byte": 424287,
+      "source_end_byte": 424374,
+      "category": "type_metadata",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "byte_count": 87,
+      "lf_count": 0,
+      "sha256": "c468fca1d26642255cbdf281c2236db005f96645cffa951fad066f72ca9b6ce2"
+    },
+    {
+      "edit_id": "E038",
+      "source_start_byte": 425487,
+      "source_end_byte": 425551,
+      "category": "type_metadata",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "byte_count": 64,
+      "lf_count": 0,
+      "sha256": "8508ae4328e44f3b5427382278e69bb1c9b3a0bac20ccaf283dbb1be26e2a44d"
+    },
+    {
+      "edit_id": "E039",
+      "source_start_byte": 425551,
+      "source_end_byte": 425552,
+      "category": "operational_split",
+      "reason": "Archive complete primary identity, model display and carrier history verbatim; retain all following mathematical scope at 35.29.",
+      "byte_count": 1,
+      "lf_count": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "edit_id": "E041",
+      "source_start_byte": 426343,
+      "source_end_byte": 426369,
+      "category": "operational_split",
+      "reason": "Retain every named open mathematical scope; ticket identities and undefined user label move to explicit report provenance.",
+      "byte_count": 26,
+      "lf_count": 0,
+      "sha256": "09ba7ac57655f13e5d53ea08ed4ae426648dd0f8bcc718df918542cbfe66b7a4"
+    },
+    {
+      "edit_id": "E042",
+      "source_start_byte": 426393,
+      "source_end_byte": 426628,
+      "category": "operational_split",
+      "reason": "Retain no-RH-theorem/equivalence scope; archive research/verification/freeze/goal status. Added proof reference points only to existing proofs, with no new reasoning.",
+      "byte_count": 235,
+      "lf_count": 5,
+      "sha256": "ef9805fcc8fba19dfb8c5558aa8fb10d2d168c04a29eee7d25ed19de2ab077b7"
+    }
+  ],
+  "new_report_additions_before_execution_record": [
+    {
+      "report_start_byte": 88644,
+      "report_end_byte": 93722,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 5078,
+      "lf_count": 80,
+      "sha256": "5b47e73cd328bac6c0879d7e0e0f8efee51f47419d535f62902f5898a4258e7a"
+    },
+    {
+      "report_start_byte": 93761,
+      "report_end_byte": 93939,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 178,
+      "lf_count": 8,
+      "sha256": "f662d2a84c181e5c5ca12e9cd8776031acd4a9a41c6965e4d4ac3d4fd162703f"
+    },
+    {
+      "report_start_byte": 94060,
+      "report_end_byte": 94272,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 212,
+      "lf_count": 7,
+      "sha256": "297fb3d5ddd0d1b8784704ef7aaa2842ebe10042aaeadb80ffa7f87b0de8bca2"
+    },
+    {
+      "report_start_byte": 94416,
+      "report_end_byte": 94592,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 176,
+      "lf_count": 8,
+      "sha256": "f529ea841281cabac3541db75f0a08298786df5f977734b3925f6a5815eb2dae"
+    },
+    {
+      "report_start_byte": 94824,
+      "report_end_byte": 94985,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 161,
+      "lf_count": 8,
+      "sha256": "0ecdf7f0772c15ab3379d9f6d3655fb4dedab5ea4247de16eb4bd3bf9f793bdb"
+    },
+    {
+      "report_start_byte": 95039,
+      "report_end_byte": 95200,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 161,
+      "lf_count": 8,
+      "sha256": "8485122a3b6aa1f33de390d2d22dde049a4e333798f632ce2fe6c7a9677bd841"
+    },
+    {
+      "report_start_byte": 95255,
+      "report_end_byte": 95416,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 161,
+      "lf_count": 8,
+      "sha256": "877573ee82bbd1aa28c6de52fe6df2f3cadab171fbd30832deb5c9c51b3a133b"
+    },
+    {
+      "report_start_byte": 95474,
+      "report_end_byte": 95635,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 161,
+      "lf_count": 8,
+      "sha256": "7d144c2ae6642f4df36e05dffa236e1583de2c4a7cae0dfe43397c39fa92317e"
+    },
+    {
+      "report_start_byte": 95694,
+      "report_end_byte": 95855,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 161,
+      "lf_count": 8,
+      "sha256": "fcb7dbc298678b8a4cdc434482beb04e7a06e3e1c86c6ab7e259cb1172f1341e"
+    },
+    {
+      "report_start_byte": 95914,
+      "report_end_byte": 96075,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 161,
+      "lf_count": 8,
+      "sha256": "554db092284d3da88d4f1e6dd2f3379e39d287cd4394286aa41e7d2e13701952"
+    },
+    {
+      "report_start_byte": 96126,
+      "report_end_byte": 96287,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 161,
+      "lf_count": 8,
+      "sha256": "1c85ce1eeb941fdb4e573b91503ddc7bfe74c8d182052a100c5700f5cb5c6224"
+    },
+    {
+      "report_start_byte": 96348,
+      "report_end_byte": 96509,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 161,
+      "lf_count": 8,
+      "sha256": "eab53fc0c4f12f673bcb96c30fe9806ac376f53b14d867d10c60673a1d9ac5cc"
+    },
+    {
+      "report_start_byte": 96552,
+      "report_end_byte": 96714,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 162,
+      "lf_count": 8,
+      "sha256": "b719f51c02582e556d132865fdac949ed0d1d62c4897948ef9dad41cde000ebc"
+    },
+    {
+      "report_start_byte": 96796,
+      "report_end_byte": 96958,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 162,
+      "lf_count": 8,
+      "sha256": "6f991489c0f4302ab893358d69dc4f8f2013ff7191ecc21b4277d65bdc311cc8"
+    },
+    {
+      "report_start_byte": 97007,
+      "report_end_byte": 97169,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 162,
+      "lf_count": 8,
+      "sha256": "6ee3fce492b4992ebf9ef1df24186d37094c089030bda39879ed3df2db37a3fa"
+    },
+    {
+      "report_start_byte": 97229,
+      "report_end_byte": 97391,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 162,
+      "lf_count": 8,
+      "sha256": "f2969096febe74c0c2ea59324bddd11ca6113612d5906fe2226d83597c1dbdfa"
+    },
+    {
+      "report_start_byte": 97469,
+      "report_end_byte": 97631,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 162,
+      "lf_count": 8,
+      "sha256": "cad78c20b227b29f5faa73efbbbb8eeab735ea35536eb71d4d28a4cf52397c65"
+    },
+    {
+      "report_start_byte": 97701,
+      "report_end_byte": 97891,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 190,
+      "lf_count": 8,
+      "sha256": "73c329a0f658d0c7f99a94043ed10d32d06caee0966ae5d66dfcb9b43c70dd13"
+    },
+    {
+      "report_start_byte": 97978,
+      "report_end_byte": 98140,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 162,
+      "lf_count": 8,
+      "sha256": "15fd733a488260fd1ab172c617a7f4b3f1e0fb4628af2286ff64523035e2631d"
+    },
+    {
+      "report_start_byte": 98206,
+      "report_end_byte": 98368,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 162,
+      "lf_count": 8,
+      "sha256": "73d4f461a84e3f6471798d1ba0b03ca76a6802b85e5e068f175953f43864ac59"
+    },
+    {
+      "report_start_byte": 98446,
+      "report_end_byte": 98618,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 172,
+      "lf_count": 8,
+      "sha256": "3f5d50f774fb9141c7560b43261361ce87ce2490503f3af16784e0f4f604b32d"
+    },
+    {
+      "report_start_byte": 98637,
+      "report_end_byte": 98799,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 162,
+      "lf_count": 8,
+      "sha256": "1a93e2589f8cf0c8bc9bac7a562588c3ab412e864f100e0e667eae8a5fe9f06c"
+    },
+    {
+      "report_start_byte": 98848,
+      "report_end_byte": 99010,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 162,
+      "lf_count": 8,
+      "sha256": "2cd2910c18e06192a96eba5043c9801a6a9b3c4c7094a6e40e7ba1df7d4fdb68"
+    },
+    {
+      "report_start_byte": 99088,
+      "report_end_byte": 99250,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 162,
+      "lf_count": 8,
+      "sha256": "741014b658e12951775c5de04a4070b69944fc6d5a411dc8a2edc0050b7127ba"
+    },
+    {
+      "report_start_byte": 99315,
+      "report_end_byte": 99477,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 162,
+      "lf_count": 8,
+      "sha256": "b1e8543397dea60ef1ba9f0fe1336e47c1d2d086bf4b52ff0cc08911013ddd29"
+    },
+    {
+      "report_start_byte": 99544,
+      "report_end_byte": 99706,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 162,
+      "lf_count": 8,
+      "sha256": "d5f904e53c1489dc952afdba62a3be702c7559f9e9cf244adb61c66df6bb9c9f"
+    },
+    {
+      "report_start_byte": 99749,
+      "report_end_byte": 99913,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 164,
+      "lf_count": 8,
+      "sha256": "55102128e5727aff417ee90bdf52b4de866580197e7d7a1c5662afb95d785fc0"
+    },
+    {
+      "report_start_byte": 99980,
+      "report_end_byte": 100142,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 162,
+      "lf_count": 8,
+      "sha256": "ff28a6a5e7cc0b8b21b6b1eb5a4d666343c683becbf6987e42a5e53db673d0c5"
+    },
+    {
+      "report_start_byte": 100201,
+      "report_end_byte": 100363,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 162,
+      "lf_count": 8,
+      "sha256": "bb35f2b9efab8e05952331143aa01050ff67ade806216ec336e7c50da61b455d"
+    },
+    {
+      "report_start_byte": 100439,
+      "report_end_byte": 100601,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 162,
+      "lf_count": 8,
+      "sha256": "5d00a54027e6a36172673e729cd6ee2ec3c932a6289f5a40145fbee5ec1e4e28"
+    },
+    {
+      "report_start_byte": 100634,
+      "report_end_byte": 100796,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 162,
+      "lf_count": 8,
+      "sha256": "9be444e9d45d893c164c0406de3180f14c713a9a047e2f9e3ba6bcd876ae4a22"
+    },
+    {
+      "report_start_byte": 100872,
+      "report_end_byte": 101034,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 162,
+      "lf_count": 8,
+      "sha256": "28621e44f415b146f769c8be363fe1d8653a6c582a6ef554cfb8660ffd596e6d"
+    },
+    {
+      "report_start_byte": 101109,
+      "report_end_byte": 101271,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 162,
+      "lf_count": 8,
+      "sha256": "c6c09279b4ab5d3b949bb75c723c16f32a4f8cb7af1ac72c7ffc3e0d1f8adfce"
+    },
+    {
+      "report_start_byte": 101344,
+      "report_end_byte": 101541,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 197,
+      "lf_count": 8,
+      "sha256": "787a34efb3fd4df009ecbd19e74ec2d08b4bc3d30dc1b38df29f812195d2d296"
+    },
+    {
+      "report_start_byte": 103771,
+      "report_end_byte": 103932,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 161,
+      "lf_count": 7,
+      "sha256": "014c9cd7fb651c369b44f0d00fff875825246b3e0551a6b4cf917ba17ccfe5a6"
+    },
+    {
+      "report_start_byte": 103998,
+      "report_end_byte": 104197,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 199,
+      "lf_count": 8,
+      "sha256": "b1f426f81afcc86965243064a5d49373a05d75579ec6b2ead04cd90b29a54aa0"
+    },
+    {
+      "report_start_byte": 105182,
+      "report_end_byte": 105279,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 97,
+      "lf_count": 7,
+      "sha256": "5a25807a999639a18493919cd345cb7fddebe7ca1f90ab476b3772c4c146c718"
+    },
+    {
+      "report_start_byte": 105354,
+      "report_end_byte": 105547,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 193,
+      "lf_count": 8,
+      "sha256": "0d2a8400270c228fb1767e4a6284251dfafe24966fc0b4af40379fd00e83201a"
+    },
+    {
+      "report_start_byte": 105645,
+      "report_end_byte": 105882,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 237,
+      "lf_count": 8,
+      "sha256": "f496f01189726090338f0f7f91652ec23cce81ba03549804d162ce78e96d9d60"
+    },
+    {
+      "report_start_byte": 106165,
+      "report_end_byte": 106361,
+      "category": "historical_disposition_and_archive_framing",
+      "byte_count": 196,
+      "lf_count": 7,
+      "sha256": "90a8db2106d4e44eac5e19e0a0584add2637549bc469362901e373ed97773680"
+    },
+    {
+      "report_start_byte": 109058,
+      "report_end_byte": 109064,
+      "category": "archive_framing",
+      "byte_count": 6,
+      "lf_count": 1,
+      "sha256": "fc0771e55db67f94883b629455d7dcbd4828c22a56708bbfd8872ab6c5e6f236"
+    }
+  ],
+  "numbered_entry_correspondence": [
+    {
+      "original_unit": "35.1",
+      "original_numbered_span": {
+        "start_byte": 394382,
+        "end_byte": 395812,
+        "byte_count": 1430,
+        "lf_count": 21,
+        "sha256": "771b0f25b9e534ffc3d3ecc8a0aacf1cfcc0e53297a84d0d71e43d4c6788887e",
+        "cas_path": "Meta/Digestion/atoms/sha256/771b0f25b9e534ffc3d3ecc8a0aacf1cfcc0e53297a84d0d71e43d4c6788887e",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/771b0f25b9e534ffc3d3ecc8a0aacf1cfcc0e53297a84d0d71e43d4c6788887e.yaml",
+        "yaml_sha256": "sha256:cc1dd7f95228066c273339a22f9313c88ae00c8d7b0ce3d81b39024bc8929f82"
+      },
+      "current_unit": "35.1",
+      "current_numbered_span": {
+        "start_byte": 394382,
+        "end_byte": 395326,
+        "byte_count": 944,
+        "lf_count": 14,
+        "sha256": "0cf8b5394e0a5d90456b3ef68e8e52336845ff65c1b6927a8c46f06aaef41ae4"
+      },
+      "number_permanently_reserved_externally": false,
+      "mathematical_correspondence": "Fixed k>=2, distinct ordered primes, fixed integer Q>=3; actual-group density, lower bound, rotation-dependent syndeticity, rounded actual boxes and logarithmic coefficient. No joint reciprocal-log independence. Dependencies 30.17/31.18 and sign-only 30.16/31.17 retained; proof remains 35.3-35.18.",
+      "edit_ids": [
+        "E001",
+        "E002",
+        "E003",
+        "E004"
+      ]
+    },
+    {
+      "original_unit": "35.2",
+      "original_numbered_span": {
+        "start_byte": 395812,
+        "end_byte": 396929,
+        "byte_count": 1117,
+        "lf_count": 27,
+        "sha256": "70be913cb5e94f6f79ca54847909b0e5b91fe96ac10efdde3cea454d09b49f0f",
+        "cas_path": "Meta/Digestion/atoms/sha256/70be913cb5e94f6f79ca54847909b0e5b91fe96ac10efdde3cea454d09b49f0f",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/70be913cb5e94f6f79ca54847909b0e5b91fe96ac10efdde3cea454d09b49f0f.yaml",
+        "yaml_sha256": "sha256:86ca5422afc1b1ebd23e2a94a0ffa1af639ad561e53f83953e4c343453b31391"
+      },
+      "current_unit": "35.2",
+      "current_numbered_span": {
+        "start_byte": 395326,
+        "end_byte": 396456,
+        "byte_count": 1130,
+        "lf_count": 27,
+        "sha256": "616dc4ec9e50ffbed77a3bd427d802a6a60549d7699b5ab3981ec9bb2e276579"
+      },
+      "number_permanently_reserved_externally": false,
+      "mathematical_correspondence": "All parameter, Haar, strict U_Q/B_Q, h_i, S_h, E_Q, T_n and A_n definitions retained. Proper/disconnected H allowed; earlier slab Q distinguished from fixed recurrence Q.",
+      "edit_ids": [
+        "E005"
+      ]
+    },
+    {
+      "original_unit": "35.3",
+      "original_numbered_span": {
+        "start_byte": 396929,
+        "end_byte": 397740,
+        "byte_count": 811,
+        "lf_count": 14,
+        "sha256": "990fa0ab0a0ae1c94facc569facf781d7d2b158fec56e7bad314c5c251ad957e",
+        "cas_path": "Meta/Digestion/atoms/sha256/990fa0ab0a0ae1c94facc569facf781d7d2b158fec56e7bad314c5c251ad957e",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/990fa0ab0a0ae1c94facc569facf781d7d2b158fec56e7bad314c5c251ad957e.yaml",
+        "yaml_sha256": "sha256:9944a20b7df0d37f15f5a30ba1cc8cbbff89112be412fea0f23f832377013c8a"
+      },
+      "current_unit": "35.3",
+      "current_numbered_span": {
+        "start_byte": 396456,
+        "end_byte": 397412,
+        "byte_count": 956,
+        "lf_count": 18,
+        "sha256": "06aeda7fe41f5e7171ebc46fad632e349d779e82ced44176e76ff000364223b1"
+      },
+      "number_permanently_reserved_externally": false,
+      "mathematical_correspondence": "Individual irrationality by unique factorization, no joint independence inference; subgroup closure, compact metrizability and Haar existence/uniqueness/invariance unchanged. White Theorem 1.1 citation attached from 35.28.",
+      "edit_ids": [
+        "E006",
+        "E007"
+      ]
+    },
+    {
+      "original_unit": "35.4",
+      "original_numbered_span": {
+        "start_byte": 397740,
+        "end_byte": 398747,
+        "byte_count": 1007,
+        "lf_count": 22,
+        "sha256": "a878e1b5ffc8e1616f9ef7a999891687b780af72f49fe1d18b8a01b8451678ce",
+        "cas_path": "Meta/Digestion/atoms/sha256/a878e1b5ffc8e1616f9ef7a999891687b780af72f49fe1d18b8a01b8451678ce",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/a878e1b5ffc8e1616f9ef7a999891687b780af72f49fe1d18b8a01b8451678ce.yaml",
+        "yaml_sha256": "sha256:14f6fd377cc85d2fb2ba4d5743f47a57e8d007eb95ac09ee629097d25ff56c82"
+      },
+      "current_unit": "35.4",
+      "current_numbered_span": {
+        "start_byte": 397412,
+        "end_byte": 398433,
+        "byte_count": 1021,
+        "lf_count": 22,
+        "sha256": "c6f188da5eee3134566c548c63cdce99f77e208ff2891a0a7fe4e0ef769fd8d1"
+      },
+      "number_permanently_reserved_externally": false,
+      "mathematical_correspondence": "Restricted characters: w=1 includes nonzero ambient characters restricting trivially; w!=1 includes roots of unity. Haar integral, exact geometric sum, uniform 2/(M|1-w|) bound and all quantifiers unchanged.",
+      "edit_ids": [
+        "E008"
+      ]
+    },
+    {
+      "original_unit": "35.5",
+      "original_numbered_span": {
+        "start_byte": 398747,
+        "end_byte": 399748,
+        "byte_count": 1001,
+        "lf_count": 19,
+        "sha256": "1ca358cfd4427b86866254df9176d3d0ecc019db38eb0dacc04cd2f569c85a45",
+        "cas_path": "Meta/Digestion/atoms/sha256/1ca358cfd4427b86866254df9176d3d0ecc019db38eb0dacc04cd2f569c85a45",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/1ca358cfd4427b86866254df9176d3d0ecc019db38eb0dacc04cd2f569c85a45.yaml",
+        "yaml_sha256": "sha256:4275ee929b81580ac1ab10ce3285bdfc7781dd392c2193731b0c62c0969016df"
+      },
+      "current_unit": "35.5",
+      "current_numbered_span": {
+        "start_byte": 398433,
+        "end_byte": 399754,
+        "byte_count": 1321,
+        "lf_count": 25,
+        "sha256": "6b0f7d720e64167a3e147c64d0afcca3aa43c7ad8ab331d439a49100340b5787"
+      },
+      "number_permanently_reserved_externally": false,
+      "mathematical_correspondence": "Unital conjugation-closed separating algebra, Stone-Weierstrass approximation, uniform limsup<=2 epsilon and actual-H equidistribution unchanged. Meyerovitch Proposition 3.2/PDF p8 and Lemma 5.3/PDF p11 attached from 35.28.",
+      "edit_ids": [
+        "E009",
+        "E010"
+      ]
+    },
+    {
+      "original_unit": "35.6",
+      "original_numbered_span": {
+        "start_byte": 399748,
+        "end_byte": 400919,
+        "byte_count": 1171,
+        "lf_count": 20,
+        "sha256": "fb0f343a14ca270674bb5f009e683c3596e988683592e7881d80fb91ac440979",
+        "cas_path": "Meta/Digestion/atoms/sha256/fb0f343a14ca270674bb5f009e683c3596e988683592e7881d80fb91ac440979",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/fb0f343a14ca270674bb5f009e683c3596e988683592e7881d80fb91ac440979.yaml",
+        "yaml_sha256": "sha256:bf0a214546aee89c113dd8944b01dd13ef223e2de65607a687ebe518325f4714"
+      },
+      "current_unit": "35.6",
+      "current_numbered_span": {
+        "start_byte": 399754,
+        "end_byte": 400939,
+        "byte_count": 1185,
+        "lf_count": 20,
+        "sha256": "7cf40fc63902da128f888a1e5a697f4d519420595c1a0805058cb10f5d54ebe6"
+      },
+      "number_permanently_reserved_externally": false,
+      "mathematical_correspondence": "Full Haar support via finite subcover, continuous distance cutoff, positive uniform visit lower bound, arbitrary nonnegative starting index and dense positive forward tails unchanged.",
+      "edit_ids": [
+        "E011"
+      ]
+    },
+    {
+      "original_unit": "35.7",
+      "original_numbered_span": {
+        "start_byte": 400919,
+        "end_byte": 402148,
+        "byte_count": 1229,
+        "lf_count": 19,
+        "sha256": "7ba3a7853ea5d93d4f66c76adc1f23d21fd972e577cfc40ce49cc8f76ab8d539",
+        "cas_path": "Meta/Digestion/atoms/sha256/7ba3a7853ea5d93d4f66c76adc1f23d21fd972e577cfc40ce49cc8f76ab8d539",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/7ba3a7853ea5d93d4f66c76adc1f23d21fd972e577cfc40ce49cc8f76ab8d539.yaml",
+        "yaml_sha256": "sha256:c1c9d8d2e90828f4d41fe9e6da5f7ff3d8ffa5ed3820c78f315cea60c80c97bc"
+      },
+      "current_unit": "35.7",
+      "current_numbered_span": {
+        "start_byte": 400939,
+        "end_byte": 402182,
+        "byte_count": 1243,
+        "lf_count": 19,
+        "sha256": "19ec23e93d9c4cbd395f6676a322f4c8c8f5cbbff7837f1b368e5afe701fe7fd"
+      },
+      "number_permanently_reserved_externally": false,
+      "mathematical_correspondence": "Coordinate surjectivity proof via small subgroup elements/mesh; Haar pushforward is circle length and point fibers null. Marginals do not imply independence or ambient-volume statements.",
+      "edit_ids": [
+        "E012"
+      ]
+    },
+    {
+      "original_unit": "35.8",
+      "original_numbered_span": {
+        "start_byte": 402148,
+        "end_byte": 403534,
+        "byte_count": 1386,
+        "lf_count": 33,
+        "sha256": "27b63b689c3345dd315444ac843e6f2b439be2ff044153f4289a38911df9ffe8",
+        "cas_path": "Meta/Digestion/atoms/sha256/27b63b689c3345dd315444ac843e6f2b439be2ff044153f4289a38911df9ffe8",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/27b63b689c3345dd315444ac843e6f2b439be2ff044153f4289a38911df9ffe8.yaml",
+        "yaml_sha256": "sha256:795f0c43e925b6d9f641c3bf9553a90917b0cdbb1fe4fde146f648008ee42e9b"
+      },
+      "current_unit": "35.8",
+      "current_numbered_span": {
+        "start_byte": 402182,
+        "end_byte": 403582,
+        "byte_count": 1400,
+        "lf_count": 33,
+        "sha256": "0685e4aeb5cabce713a10ab53cc8dfc9028b834058d34e77b9b424a8c333352b"
+      },
+      "number_permanently_reserved_externally": false,
+      "mathematical_correspondence": "Strict-neighborhood relative boundary lies in finitely many null coordinate fibers; cutoff inequalities, shrinking-strip finite-measure limit, uniform all-x and consecutive-block limits unchanged.",
+      "edit_ids": [
+        "E013"
+      ]
+    },
+    {
+      "original_unit": "35.9",
+      "original_numbered_span": {
+        "start_byte": 403534,
+        "end_byte": 404517,
+        "byte_count": 983,
+        "lf_count": 19,
+        "sha256": "19e6c08ae490b1aaecfb1b1d42777ff40d9aaa706ce1002b1555f455ed546467",
+        "cas_path": "Meta/Digestion/atoms/sha256/19e6c08ae490b1aaecfb1b1d42777ff40d9aaa706ce1002b1555f455ed546467",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/19e6c08ae490b1aaecfb1b1d42777ff40d9aaa706ce1002b1555f455ed546467.yaml",
+        "yaml_sha256": "sha256:61d3fa1700f9ce2d029712a62f2b03f48305a541fda724808365e90e7a6482dd"
+      },
+      "current_unit": "35.9",
+      "current_numbered_span": {
+        "start_byte": 403582,
+        "end_byte": 404579,
+        "byte_count": 997,
+        "lf_count": 19,
+        "sha256": "a75b0df62025f60c9af2dc96d1d752a9f8df61e0fcbf1ecc68ede2a6e1095bb0"
+      },
+      "number_permanently_reserved_externally": false,
+      "mathematical_correspondence": "Q^d half-open cells, representatives with strict differences <1/Q, translate inclusion and lower bound Q^(-(k-1)) retained; upper 2/Q, exact k=2 and conditional full-torus value retained.",
+      "edit_ids": [
+        "E014"
+      ]
+    },
+    {
+      "original_unit": "35.10",
+      "original_numbered_span": {
+        "start_byte": 404517,
+        "end_byte": 405234,
+        "byte_count": 717,
+        "lf_count": 11,
+        "sha256": "9dcaaab8f936a1e712e70bceefaa7385d07b7b8c2d3481715316dd3d74417966",
+        "cas_path": "Meta/Digestion/atoms/sha256/9dcaaab8f936a1e712e70bceefaa7385d07b7b8c2d3481715316dd3d74417966",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/9dcaaab8f936a1e712e70bceefaa7385d07b7b8c2d3481715316dd3d74417966.yaml",
+        "yaml_sha256": "sha256:79773a513b073aad0fec45f44a16d6cb61de201824cfd0a8e529f3c8c575b593"
+      },
+      "current_unit": "35.10",
+      "current_numbered_span": {
+        "start_byte": 404579,
+        "end_byte": 405310,
+        "byte_count": 731,
+        "lf_count": 11,
+        "sha256": "81bbc40b9057b1b74549206a07a976f85debf9f60c68e3a77f325cb23c32cd37"
+      },
+      "number_permanently_reserved_externally": false,
+      "mathematical_correspondence": "Nonprime example alpha=(beta,beta+1/2), irrational beta, dense even/odd subsequences, exactly two circles and proper disconnected subgroup proof retained as a proposition. No claim about any actual prime closure.",
+      "edit_ids": [
+        "E015"
+      ]
+    },
+    {
+      "original_unit": "35.11",
+      "original_numbered_span": {
+        "start_byte": 405234,
+        "end_byte": 406181,
+        "byte_count": 947,
+        "lf_count": 17,
+        "sha256": "d91b8566a5440e341a0e2835165c07aec704940dc2e0ba2a713f805d8d56ea0f",
+        "cas_path": "Meta/Digestion/atoms/sha256/d91b8566a5440e341a0e2835165c07aec704940dc2e0ba2a713f805d8d56ea0f",
+        "yaml_path": "Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/d91b8566a5440e341a0e2835165c07aec704940dc2e0ba2a713f805d8d56ea0f.yaml",
+        "yaml_sha256": "sha256:e8c6ee136882189b9bc46de4e7f33bb2b6f343b4b8fe7893de1dd925ee70c88e"
+      },
+      "current_unit": "35.11",
+      "current_numbered_span": {
+        "start_byte": 405310,
+        "end_byte": 406392,
+        "byte_count": 1082,
+        "lf_count": 20,
+        "sha256": "e02a368d229a28d5d7728be9d8c651626b488baf5c2262db41ef5a209ebbc825"
+      },
+      "number_permanently_reserved_externally": false,

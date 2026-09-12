@@ -1,0 +1,15 @@
+**35.29 Theorem (Recurrence and counting: mathematical scope).**
+The fixed-prime/fixed-\(Q\) recurrence and counting arguments have no residual
+mathematical premise beyond the classical tools proved or attributed above;
+they do not depend on any \(G\) sign. No numerical \(d_Q\) beyond its bounds
+is asserted without identifying \(H\); no evaluated gap bound, first valid
+box, discrepancy rate, shrinking target, arbitrary nonzero-shape density or
+continuously realizable prime-lattice translation family is supplied. General
+prime-data gap estimates remain distinct from the generic rotation example.
+Sparse Fibonacci sampling and changed code order/weighting retain their
+separate questions. Full translated/wider-domain 5040, uniform-third-prime,
+density/optimizer-stability, arbitrary-fixed-prime-triple and arbitrary-shape
+sign obligations remain open in their assigned scopes. Neither recurrence nor
+a negative difference of the supplied upper bounds is an RH theorem
+or an RH-equivalent criterion.
+

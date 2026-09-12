@@ -1,0 +1,23 @@
+{
+"schema":"s24-actual-base-ledger-overlay-v1",
+"original_path":"Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/28df2a866cf2599b3db54e34a9b48622ab51e31ddcc65c6494f6335459d7b223.yaml",
+"current_path":"Meta/Digestion/backfill/arithmetic-boundary-quantization/absorbed-closed/28df2a866cf2599b3db54e34a9b48622ab51e31ddcc65c6494f6335459d7b223.yaml",
+"original_bytes_ref":"/tmp/qgh-boundaries-0908/s24-actual-s23-predecessor-preparation-c202-0912/original-residual-row-before-upstream-cover.yaml",
+"current_bytes_ref":"/tmp/qgh-boundaries-0908/s24-actual-s23-predecessor-preparation-c202-0912/actual-absorbed-closed-row-after-upstream-cover.yaml",
+"current_bytes":489,
+"current_LF":9,
+"current_sha256":"cea5227ecf8458fee4be38260c64d4738e3c2ddff9def2b289a0a38196b97ca7",
+"current_git_metadata":"100644 blob a4e19855681718483b68a9466aff742d9fb476e1\tMeta/Digestion/backfill/arithmetic-boundary-quantization/absorbed-closed/28df2a866cf2599b3db54e34a9b48622ab51e31ddcc65c6494f6335459d7b223.yaml",
+"source_commit":"8bb29066da2be2fcf7e39858e3bf63ce6997929b",
+"source_commit_subject":"math: freeze and cover two-point slab support",
+"scope":"Observed upstream ledger movement, not caller formalization or fresh mathematical validation. Preserve current closed row; preserve old residual row only in exact historical source evidence. Do not restore a duplicate residual-open alias.",
+"current_identity":{"bytes":489,"lf":9,"lines":9,"terminal_lf":1,"sha256":"cea5227ecf8458fee4be38260c64d4738e3c2ddff9def2b289a0a38196b97ca7","git_blob_oid":"a4e19855681718483b68a9466aff742d9fb476e1"},
+"historical_identity":{"bytes":328,"lf":7,"lines":7,"terminal_lf":1,"sha256":"db554c6d14e561b6d034c99cf0b0569aeceb3002d19e8a7a2eddace929ba7265","git_blob_oid":"260195f8577ced5d3ccdbe720d14f35250c04a7f"},
+"historical_resource":"upstream-residual-before-cover",
+"current_resource":"upstream-closed-current",
+"inherited_cache_path_count":2459,
+"current_cached_path_metadata_count":2458,
+"identical_current_paths":2457,
+"authority_changed_separately":true,
+"new_formalization":false
+}

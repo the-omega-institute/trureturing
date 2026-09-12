@@ -1,0 +1,33 @@
+**35.23 Wider estimates precede cutoff intersection; unscaled gaps vanish.**
+In section 34 take \(k=3\), baseline offsets \(a_i=0\) and
+\(T_{\min}=\log2\). Its paired-increment theorem gives
+\(|e^T(G_\xi-G_0)|\le4\epsilon\) when \(\epsilon=\max_i\xi_i\).
+The budget correspondence adds \(S_\xi=\sum_i\xi_i\) to both endpoints
+and preserves endpoint corners. But
+\[
+M_0^\xi>S_h+\log5040
+\quad\Longleftrightarrow\quad
+M_0^0>S_h+\log5040-S_\xi,
+\]
+which need not imply the old fixed cutoff. As 34.17-34.19 require, one
+first applies the separate triple-specific wider-domain sign theorem, then
+intersects with \(\mathscr S_n\). Transfer alone provides no baseline sign,
+and a theorem restricted to the old cutoff would not suffice for all these
+inverse-image slabs. The signs in 35.21 consume only 30.16 and 31.17.
+
+There is a uniform direct estimate independent of the relative slab. Since
+\(f\) is increasing and negative on \((0,\infty)\), all endpoint arguments
+and both envelope arguments being at least \(T_n\) imply
+\[
+D,\Psi\in[3f(T_n),0],\qquad
+\boxed{|G|\le-3f(T_n)=-3\log(1-e^{-T_n})\longrightarrow0.}
+\]
+The interval bound for \(D\) holds for every feasible mixture and therefore
+for its maximum. The bound for \(\Psi\) uses its total weight 3. Their
+difference is bounded by the length of that same interval, not twice its
+length. This is uniform over all admitted wider-domain slabs, and hence
+over the original intersections. By 35.22 there are actual original slabs
+at unbounded heights, so no unscaled negative margin bounded away from zero
+can hold on this family. The constants constrain \(e^{T_n}G\). Infinite
+height, or \(e^{-T_n}=0\), is a limit and never an admitted parameter.
+
