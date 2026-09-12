@@ -383,3 +383,244 @@ GC6 对全部非零整数周期的排除，形式化了容量数与动力回归�
 5. 本仓 `D5/S1/Scale/FibonacciEigen.lean`、`D5/S1/Phase/CharacterAverage.lean`；
    `CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md` 第 413–431 节。
    PR #7288 与 #7326 的新增理论均明确区分普通证明和新增 Lean/kernel 认证。
+
+---
+
+## 9. 整数纤维、截面依赖与规范双面的乘法作用
+
+### 9.1 文献定位与第 8 节的解释修正
+
+第 8 节的恒等式 GC11–GC12 保持原声明域，其非交换差额是指定取整截面及事件起点的性质。不能从该差额单独推出黄金对象的内禀手性或观察无关的不可逆性。本节给出更换截面后同时恢复乘法组合的精确构造，并证明这不是旧动力系统的一次共同坐标共轭。
+
+Carlitz–Scoville–Hoggatt 的经典复合定理已把 Wythoff 映射的任意字复合写成两个 Fibonacci 系数和一个字相关常数。Allouche–Dekking [9.9.1, 定理 1、推论 2] 明确陈述此结果。因此，单独发现 Beatty 复合的常数修正不构成本项目的新颖性依据。本节的目标是区分三种数学性质：全纤维上的更新下降、选定截面的不变性，以及保持加法的截面是否存在。
+
+### 9.2 两个实嵌入与同一整数的完整纤维
+
+直接使用现役 `D5/S0/Carrier/Ring.lean` 的
+
+$$
+\mathcal O=\mathbb Z[\varphi],\qquad
+z=a+b\varphi,\quad \varphi^2=\varphi+1.
+$$
+
+现役 `Conj.lean`、`Embedding.lean` 给出两个实嵌入：
+
+$$
+z_+=a+b\varphi,\qquad z_*=a+b\psi,\qquad \psi=-\alpha.
+$$
+
+二者都属于实数域；它们不是复数的实部与虚部。普通整数的标准复嵌入仍具有零虚部。这里的双面结构作用于所选的黄金整数表示。其差满足
+
+$$
+z_+-z_*=\sqrt5\,b.
+$$
+
+选整数读出 $\pi(a+b\varphi)=b$。完整纤维为
+
+$$
+\boxed{\pi^{-1}(n)=\{k+n\varphi:k\in\mathbb Z\}.}\tag{GS1}
+$$
+
+`equal_integer_fiber` 证明 $\pi x=\pi y$ 当且仅当 $y=x+k$，其中 $k$ 为普通整数。这精确表达了“一个整数读出收束多个表示”。它没有把这些表示自动认作同一个物理对象或同一条历史。
+
+令 $u=c+d\varphi$。乘法后的读出为
+
+$$
+\pi(u(k+n\varphi))=(c+d)n+dk.
+$$
+
+由此得到全纤维的充要条件：
+
+$$
+\boxed{
+\exists f:\mathbb Z\to\mathbb Z\ \forall z\in\mathcal O,
+\quad \pi(uz)=f(\pi z)
+\quad\Longleftrightarrow\quad d=0.
+}\tag{GS2}
+$$
+
+证明：充分性取 $f(n)=cn$；必要性比较同属零纤维的 $z=0,1$，得到 $d=0$。对应 `multiplication_descends_iff`。当 $d\ne0$，上述输出对 $k$ 是单射；`fiber_output_injective` 因而给出每个纤维内无限多个不同的一步输出。
+
+同一情况下，`present_future_injective` 证明联合读出
+
+$$
+\boxed{z\longmapsto(\pi z,\pi(uz))\text{ 是单射}.}\tag{GS3}
+$$
+
+因为两次读出分别确定 $n$ 和 $(c+d)n+dk$，且 $d\ne0$，从而唯一确定 $k$。这将“当下的收束”和“未来使隐藏方向显现”放在同一个实际环对象上。
+
+### 9.3 任意截面的精确缺陷
+
+对每个实数 $\rho$，定义
+
+$$
+q_\rho(n)=\lfloor n\alpha+\rho\rfloor,\qquad
+s_\rho(n)=q_\rho(n)+n\varphi,\qquad
+r_\rho(n)=n\alpha-q_\rho(n).
+$$
+
+$s_\rho$ 从每个纤维选择一个代表，满足 $\pi s_\rho(n)=n$，且
+
+$$
+-\rho\le r_\rho(n)<1-\rho,\qquad (s_\rho(n))_*=-r_\rho(n).
+$$
+
+一旦 $n$ 与 $\rho$ 固定，第二坐标被公式确定；该选定截面内没有额外自由参数。定义
+
+$$
+P_u^\rho(n)=\pi(u s_\rho(n)),\qquad
+c_u^\rho(n)=q_\rho(P_u^\rho(n))-(u s_\rho(n)).a.
+$$
+
+对任意黄金整数乘子 $u$、任意实 $\rho$ 和任意整数 $n$，有
+
+$$
+\boxed{
+ c_u^\rho(n)=\lfloor u_*r_\rho(n)+\rho\rfloor,\qquad
+ s_\rho(P_u^\rho(n))=u s_\rho(n)+c_u^\rho(n).
+}\tag{GS4}
+$$
+
+证明：乘法使内部实嵌入乘以 $u_*$；分离已知整数坐标再取整，得到第一式。第二式逐个整数坐标展开即可。对应 `carry_eq_floor`、`relift_defect`。因此
+
+$$
+\boxed{
+ P_u^\rho(P_v^\rho(n))
+ =P_{uv}^\rho(n)+u.b\,c_v^\rho(n),
+}\tag{GS5}
+$$
+
+$$
+\boxed{
+ P_u^\rho P_v^\rho(n)-P_v^\rho P_u^\rho(n)
+ =u.b\,c_v^\rho(n)-v.b\,c_u^\rho(n).
+}\tag{GS6}
+$$
+
+证明：将 GS4 代入 $u s_\rho(P_v^\rho(n))$，展开分配律，最后取 $\varphi$ 坐标；交换 $u,v$ 并使用环乘法交换律，得到第二式。对应 `projected_compose`、`projected_commutator`。这组定理遍历所有 $u,v\in\mathcal O$，没有将其限为 Fibonacci 层乘子，也没有排除 $n=0$。
+
+### 9.4 中心截面使整个收缩乘子族同时闭合
+
+当 $\rho=1/2$，无理性排除半整数端点，故
+
+$$
+|r_{1/2}(n)|<1/2\qquad(n\in\mathbb Z).
+$$
+
+于是对任意 $u\in\mathcal O$，若 $|u_*|\le1$，则
+
+$$
+\boxed{c_u^{1/2}(n)=0,\qquad
+s_{1/2}(P_u^{1/2}(n))=u s_{1/2}(n).}\tag{GS7}
+$$
+
+证明：$u_*r_{1/2}(n)+1/2$ 严格落在 $(0,1)$，取整为零。对应 `centered_carry_zero`、`centered_lift_projected`。
+
+这是一张所有内部收缩乘子共同保留的截面。乘子族 $\{u:|u_*|\le1\}$ 对乘法闭合；任意有限字 $u_1,\ldots,u_t$ 在此截面上的复合，等于其环乘积的投影：
+
+$$
+\boxed{
+P_{u_1}^{1/2}\cdots P_{u_t}^{1/2}(n)
+=P_{u_1\cdots u_t}^{1/2}(n).
+}\tag{GS8}
+$$
+
+对应 `contractive_mul`、`run_lift`、`run_eq_projected_product`。由此得到同时交换性。GS7–GS8 只作用于选定代表集，不削弱 GS2 对完整纤维的否定结论。
+
+### 9.5 全部分辨率共同不变窗口的锐利范围
+
+对 $0\le\rho\le1$，取闭实区间 $W_\rho=[-\rho,1-\rho]$。令 $d_L=\psi^{L+2}$。则
+
+$$
+\boxed{
+\forall L\ge0,\ d_LW_\rho\subseteq W_\rho
+\quad\Longleftrightarrow\quad
+\frac{1-\alpha}{2}\le\rho\le\frac{1+\alpha}{2}.
+}\tag{GS9}
+$$
+
+证明：正收缩 $\alpha^2$ 保留每个包含零的 $W_\rho$。负收缩 $-q$ 保留该窗口的充要条件为
+
+$$
+q(1-\rho)\le\rho,\qquad q\rho\le1-\rho.
+$$
+
+代入最大的负向层收缩 $q=\alpha^3$；其余同奇偶层再乘 $\alpha^2$。利用 $\alpha^3=2\alpha-1$，两端恰化为 GS9。对应 `all_resolutions_iff`、`sharp_offset_interval`；超出范围时第1层已失败。
+
+GS9 明确量化于整个闭实窗口。半开截面及整数轨道的端点问题不能由此省略。中心截面和下一节的规范截面都有独立的直接取整证明，不依赖把闭区间与半开区间混用。
+
+### 9.6 与现役 betaGolden 的对象相等，而非新造双面模型
+
+现役 `BetaBeattyClosedForms` 与 `ZeckendorfDisplacementReading` 已证明
+
+$$
+S(n)=\lfloor(n+1)\varphi\rfloor-1,\qquad
+\betaReal(n)=S(n)-n\psi.
+$$
+
+将 $\varphi=1+\alpha$ 代入，并使用既有实嵌入的单射性，得到
+
+$$
+\boxed{
+\betaGolden(n)=s_\alpha(n)
+=\lfloor(n+1)\alpha\rfloor+n\varphi,
+\qquad n\in\mathbb N.
+}\tag{GS10}
+$$
+
+对应 `canonical_lift_eq_betaGolden`。其两个实读出正是现役的 `betaReal` 与 `betaContraction`，不需要另外赋予整数一个复虚部。
+
+令 $u_L=\varphi^{L+2}$，$U_L(n)=P_{u_L}^{\alpha}(n)$。直接残余界证明所有层级的规范截面修正为零，因此
+
+$$
+\boxed{U_K(U_L(n))=U_{K+L+2}(n),\qquad n\in\mathbb Z.}\tag{GS11}
+$$
+
+在自然数输入上，输出非负，且
+
+$$
+\boxed{\betaGolden(U_L(n))=\varphi^{L+2}\betaGolden(n).}\tag{GS12}
+$$
+
+对应 `canonical_layer_compose`、`betaGolden_scale_covariance`；源码明确证明整数输出非负及转回自然数的类型转换。GS12 直接接到现役规范对象，但不替代第415.2节关于实际额外复位事件的完整数位模式证明。
+
+第8节的返回枚举则满足另一条准确关系：
+
+$$
+\boxed{T_L(m)=A_L+U_L(m-1).}\tag{GS13}
+$$
+
+对应 `entry_as_anchored_canonical_shift`。输入减一和输出加 $A_L$ 使用不同的锚定，不能将 $T_L$ 的复合当作规范尺度 $U_L$ 的复合。当旧 $T_K,T_L$ 的 GC12 差额非零时，`no_common_injective_intertwiner` 证明不存在一个共同单射 $f$ 同时满足 $fT_K=U_Kf$ 和 $fT_L=U_Lf$。证明仅用规范映射交换及 $f$ 的单射性：若存在，该旧映射对也必须交换，矛盾。因而改变截面不是保留旧操作的一次重命名。
+
+### 9.7 保持乘法后仍不能免费保留普通整数加法
+
+是否可以选择更好的截面，既保持整数加法，又在非整数黄金乘子下不变？答案是否定的。对任意加法同态 $s:\mathbb Z\to\mathcal O$，若 $\pi s(n)=n$，则对于任意 $u$ 且 $u.b\ne0$，
+
+$$
+\boxed{\neg\,\forall n\in\mathbb Z,
+\quad u s(n)=s(\pi(u s(n))).}\tag{GS14}
+$$
+
+证明：设 $s(1)=a+\varphi$，加法性给 $s(n)=n(a+\varphi)$。将 $n=1$ 代入不变性，比较两坐标，得到
+
+$$
+u.b\,(a^2+a-1)=0.
+$$
+
+于是整数 $a$ 满足 $a^2+a=1$，不可能。对应 `no_additive_invariant_section`。
+
+GS2、GS7、GS14 合在一起区分了三项能力：完整纤维上的单值预测、非加性代表集内的乘法闭合、兼容普通整数加法的闭合。第一项在非整数乘子下失败；第二项对整个收缩族可实现；第三项再次失败。它们的量词与载体明确不同，不能相互替换。
+
+### 9.8 形式化范围与可执行研究的下一条桥
+
+本节四个新增源模块为 `GoldenClockSectionAlgebra`、`GoldenClockWindowCriterion`、`GoldenClockCanonicalSection`、`GoldenClockFiberObstruction`，均在 `D5/S3/Observer/GoldenPrimeCircle/` 下，每个有同名 Blueprint Scribe。证明脚本复用现役环、共轭、实嵌入和规范 Beatty 公式。它们不包含把目标结论放进输入结构的假设字段；普通推导与精确有限复算已进行，新增源尚未在本工作环境中运行 Lean/lake 或 Scribe 编译，因此不声称已冻结或 kernel 认证。
+
+2026 年 Schaeffer–Shallit–Zorcic [9.9.2, 定理9、推论11] 给出同一二次域中非齐次 Beatty 图的 Ostrowski 同步自动机，以及带加法的一阶理论的可判定性。因此下一步可将固定代数截面偏移和固定黄金乘子的进位/纤维关系，编译为有限自动机，再让 Lean 检查其识别语言是否与本节的整数关系一致。成功标准是全输入识别等价与证书检查正确性，而非有限前缀拟合。
+
+该文的可判定范围允许常数乘法，不能由此直接得到变量乘法、任意实数偏移或全部可变 Fibonacci 层级的统一判定器。本节的全层级窗口证明仍是独立的解析与代数归纳。尚未执行 Walnut，也没有交付该自动机接口。下一阶段首先应完成现有 Lean 源的实际编译，再选择一个固定乘子族与代数偏移的真实待证命题，避免重做文献已有的机械恒等式。
+
+### 9.9 参考文献与复用锚点
+
+1. J.-P. Allouche and F. M. Dekking, *Generalized Beatty sequences and complementary triples*, Moscow Journal of Combinatorics and Number Theory 8 (2019), 325–341; arXiv:1809.03424v3，定理1及推论2。https://arxiv.org/abs/1809.03424
+2. L. Schaeffer, J. Shallit and S. Zorcic, *Beatty Sequences for a Quadratic Irrational: Decidability and Applications*, arXiv:2402.08331v3，2026-04-02，定理9及推论11。https://arxiv.org/html/2402.08331v3
+3. 本仓 `D5/S0/Carrier/Ring.lean`、`Conj.lean`、`Norm.lean`；`D5/S1/Scale/Embedding.lean`、`Fibonacci.lean`；`D5/S1/Deficit/DoubleFaceLength.lean`、`Beatty/BetaBeattyClosedForms.lean`、`ZeckendorfDisplacementReading.lean`。
