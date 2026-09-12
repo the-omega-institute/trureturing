@@ -265,9 +265,43 @@ jobs:
           printf 'path=%s\n' "$served" >> "$GITHUB_OUTPUT"
           printf '%s\n' 'canonical Lean report served from the gate artifact' >> "$GITHUB_STEP_SUMMARY"
 
+      # A Release runner may have neither the Actions entry nor the gate
+      # artifact. Try the existing shared report-only release consumer before
+      # spending time on optional Lean warming. The shared fetch may return a
+      # compatible stale seed; only the exact current input address, complete
+      # transport staging, and the existing source-input verifier can serve the
+      # assembly. Any miss, stale seed, corrupt bundle, or unavailable transfer
+      # falls through to the unchanged warm/ensure/producer path below.
+      - name: Fetch and validate an exact shared Lean report
+        id: report-shared
+        if: steps.source.outputs.publish_ready == 'true' && steps.report-reuse.outcome != 'success' && steps.report-artifact.outcome != 'success'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          source "$GITHUB_WORKSPACE/tools/scripts/report/lean-report-cache.sh"
+          cache_root="$(report_cache_root)"
+          helper="$GITHUB_WORKSPACE/tools/scripts/report/lean-report-input.sh"
+          address_output="$("$helper" address --repository "$GITHUB_WORKSPACE")"
+          read -r _ producer sources config <<< "$address_output"
+          # The shared cache uses pair A; the Actions cache key remains repository R.
+          coordinates="$("$helper" coordinates "$producer" "$producer" "$sources" "$config")"
+          address_dir="${coordinates%% *}"
+          make lean-report-cache-from-github
+          source="$cache_root/$address_dir/raw-lean-report.json"
+          test -s "$source"
+          served="$(python3 "$GITHUB_WORKSPACE/tools/scripts/report/lean-report-cache.py" stage \
+            --transport --bundle "$source" --staging-directory "$RUNNER_TEMP/release-shared-lean-report")"
+          "$GITHUB_WORKSPACE/tools/scripts/report/lean-report-input.sh" verify \
+            --repository "$GITHUB_WORKSPACE" --report "$served"
+          printf 'path=%s\n' "$served" >> "$GITHUB_OUTPUT"
+          printf '%s\n' 'exact shared canonical Lean report served before warming' >> "$GITHUB_STEP_SUMMARY"
+
       - name: Produce the canonical Lean report
         id: report
-        if: steps.source.outputs.publish_ready == 'true' && steps.report-reuse.outcome != 'success' && steps.report-artifact.outcome != 'success'
+        if: steps.source.outputs.publish_ready == 'true' && steps.report-reuse.outcome != 'success' && steps.report-artifact.outcome != 'success' && steps.report-shared.outcome != 'success'
         shell: bash
         run: |
           set -euo pipefail
@@ -288,7 +322,7 @@ jobs:
           COMMIT_ON_PROTECTED_DEV: ${{ steps.identity.outputs.commit_on_protected_dev }}
           SOURCE_COMMIT: ${{ steps.source.outputs.source_commit }}
           SOURCE_TREE: ${{ steps.identity.outputs.source_tree }}
-          REPORT_PATH: ${{ steps.report-reuse.outputs.path || steps.report-artifact.outputs.path || steps.report.outputs.path }}
+          REPORT_PATH: ${{ steps.report-reuse.outputs.path || steps.report-artifact.outputs.path || steps.report-shared.outputs.path || steps.report.outputs.path }}
         shell: bash
         run: |
           set -euo pipefail
