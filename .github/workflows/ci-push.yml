@@ -37,6 +37,7 @@ permissions:
   actions: read
 
 env:
+  CI_WORKFLOW_INPUTS: ${{ contains(toJSON(inputs), '"candidate_sha":') && format('{{"candidate_sha":{0}}}', toJSON(inputs.candidate_sha)) || '{}' }}
   CANDIDATE_SHA: ${{ inputs.candidate_sha || github.sha }}
   STRATALINT_CACHE_WRITES: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-')) && inputs.candidate_sha == '' }}
   CI_CHANGES_PATH: build/ci/changes.json
@@ -48,8 +49,6 @@ env:
 jobs:
   build:
     name: build
-    env:
-      CI_NEEDS: ${{ toJSON(needs) }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 120
     outputs:
@@ -122,7 +121,7 @@ jobs:
     needs: build
     if: always() && (needs.build.result != 'success' || !cancelled())
     env:
-      CI_NEEDS: ${{ toJSON(needs) }}
+      CI_NEEDS: '{"build":{"result":${{ toJSON(needs.build.result) }}}}'
       CI_BUILD_ROUND: ${{ needs.build.outputs.round }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 120
@@ -223,7 +222,7 @@ jobs:
     needs: build
     if: always() && (needs.build.result != 'success' || !cancelled())
     env:
-      CI_NEEDS: ${{ toJSON(needs) }}
+      CI_NEEDS: '{"build":{"result":${{ toJSON(needs.build.result) }}}}'
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 360
     outputs:
