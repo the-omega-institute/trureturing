@@ -326,7 +326,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
             var baselineRaw = rawSnapshots.Baseline;
             var admissionPlane = timing.Measure(
                 "admission-plane",
-                () => EvaluateAdmissionPlane(currentRaw, prepared.Changes),
+                () => EvaluateAdmissionPlane(baselineRaw, currentRaw, prepared.Changes),
                 static result => result is not null);
             if (admissionPlane is not null)
             {
