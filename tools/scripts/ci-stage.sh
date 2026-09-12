@@ -3,6 +3,8 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)"
 cd "$ROOT"
 stage="${1:-}"
+PLAN_PATH="${CI_PLAN_PATH:-}"
+CHANGES_PATH="${CI_CHANGES_PATH:-}"
 runner=tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll
 finish() {
   local raw=$?
@@ -18,13 +20,24 @@ if [[ -n "${PREFLIGHT_DEADLINE_AT:-}" ]]; then
   [[ "$PREFLIGHT_DEADLINE_AT" =~ ^[0-9]{1,11}$ ]] || exit 2
   [[ "$PREFLIGHT_DEADLINE_AT" -gt "$(date +%s)" ]] || { echo 'PREFLIGHT_BUDGET_EXHAUSTED owner=outer-deadline' >&2; exit 2; }
 fi
+stage_options=()
+if [[ -n "$PLAN_PATH" || -n "$CHANGES_PATH" ]]; then
+  [[ -n "$PLAN_PATH" && -n "$CHANGES_PATH" && -f "$PLAN_PATH" && -f "$CHANGES_PATH" ]] || exit 2
+  stage_options+=(--plan "$PLAN_PATH" --changes "$CHANGES_PATH")
+  mkdir -p build/ci
+  no_work_args=(python3 -B tools/scripts/workflow/ci.py no-work --repository "$ROOT" --commit "$(git rev-parse HEAD)" --changes "$CHANGES_PATH" --plan "$PLAN_PATH" --stage "$stage" --output "build/ci/${stage}-no-work.json")
+  if "${no_work_args[@]}" >/tmp/ci-no-work-output.$$ 2>/tmp/ci-no-work-error.$$; then
+    cat /tmp/ci-no-work-output.$$; rm -f /tmp/ci-no-work-output.$$ /tmp/ci-no-work-error.$$; exit 0
+  fi
+  rm -f /tmp/ci-no-work-output.$$ /tmp/ci-no-work-error.$$
+fi
 case "$stage" in
   build|engineering)
     [[ $# == 1 ]] || exit 2
     export CI=true DOTNET_CLI_UI_LANGUAGE=en-US
     if [[ "$stage" == engineering && -n "${CI_BUILD_ROUND:-}" ]]; then
       [[ -f "$runner" ]] || exit 2
-      dotnet "$runner" "$stage" --repository "$ROOT" --build-round "$CI_BUILD_ROUND"
+      dotnet "$runner" "$stage" --repository "$ROOT" "${stage_options[@]}" --build-round "$CI_BUILD_ROUND"
       exit $?
     fi
     python3 tools/scripts/report/dotnet_producer.py prepare "$ROOT"
@@ -36,15 +49,15 @@ case "$stage" in
     /bin/bash tools/scripts/report/report-supervisor.sh --role ci-bootstrap-build -- \
       dotnet build tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj --configuration Release --no-restore --warnaserror -nr:false \
         -p:CustomAfterMicrosoftCommonTargets="$ROOT/tools/scripts/ci-build-outputs.targets"
-    dotnet "$runner" "$stage" --repository "$ROOT"
+    dotnet "$runner" "$stage" --repository "$ROOT" "${stage_options[@]}"
     ;;
   current)
     [[ $# == 1 && -f "$runner" ]] || exit 2
-    dotnet "$runner" current --repository "$ROOT"
+    dotnet "$runner" current --repository "$ROOT" "${stage_options[@]}"
     ;;
   delta)
     [[ $# == 2 && -f "$runner" ]] || exit 2
-    dotnet "$runner" delta --repository "$ROOT" --base "$2"
+    dotnet "$runner" delta --repository "$ROOT" --base "$2" "${stage_options[@]}"
     ;;
   *) exit 2 ;;
 esac

@@ -70,6 +70,8 @@ internal sealed class JudgeSeedFixture : IDisposable
         owner = (object?)null, owned_test_assembly = role == "production" ? assembly + ".Tests" : null,
         test_partition = (string?)null,
         root_namespace = assembly, namespace_exclude = Array.Empty<string>(), global_namespace_exceptions = Array.Empty<string>(),
+        build_inputs = Array.Empty<string>(), execution_inputs = (string[]?)null,
+        execution_excludes = (string[]?)null, execution_environment = (string[]?)null,
     };
 
     internal void EditProjects(Action<JsonObject> change)

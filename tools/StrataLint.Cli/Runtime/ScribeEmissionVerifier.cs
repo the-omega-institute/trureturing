@@ -92,16 +92,17 @@ internal sealed class ProductionScribeEmissionVerifier : IScribeEmissionVerifier
         return verifyMaterialized(materialized.Root, report, frozenState, frozenStatements);
     }
 
-    private static VerifiedScribeEmissions VerifyMaterialized(
+    internal static VerifiedScribeEmissions VerifyMaterialized(
         Assembly documentsAssembly,
         string repositoryRoot,
         LeanAxiomReport report,
         FrozenStateCatalog? frozenState,
-        FrozenStatementIndex? frozenStatements)
+        FrozenStatementIndex? frozenStatements,
+        IReadOnlyList<DocumentDefinition>? definitions = null)
     {
         var error = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
-        return ScribeEmitter.Verify(documentsAssembly, repositoryRoot, error, report,
-                frozenState, frozenStatements)
+        return (definitions is null ? ScribeEmitter.Verify(documentsAssembly, repositoryRoot, error, report,
+                frozenState, frozenStatements) : ScribeEmitter.Verify(repositoryRoot, error, report, definitions))
             ?? throw new InvalidOperationException(
                 "Scribe emission verification failed: " + error.ToString().Trim());
     }

@@ -64,8 +64,12 @@ if [[ "$MODE" == pr ]]; then
   [[ "$TREE_SHA" =~ ^[0-9a-fA-F]{40}$ ]] || fail_input invalid-merge-tree
   TEMPORARY="$(mktemp -d "${TMPDIR:-/tmp}/ci-preflight.XXXXXXXX")"
   CANDIDATE="$TEMPORARY/candidate"
-  git clone --quiet --shared --no-checkout "$ROOT" "$CANDIDATE"
-  git -C "$CANDIDATE" read-tree --reset -u "$TREE_SHA"
+  git clone --quiet --shared --no-checkout --origin origin "$ROOT" "$CANDIDATE"
+  # Bind the merged tree to its protected first parent and triggering head.
+  CANDIDATE_SHA="$(git -C "$CANDIDATE" -c user.name=Preflight -c user.email=preflight@example.invalid \
+    commit-tree "$TREE_SHA" -p "$BASE_SHA" -p "$HEAD_SHA" -m 'Preflight candidate')"
+  git -C "$CANDIDATE" checkout --quiet --detach "$CANDIDATE_SHA"
+  git -C "$CANDIDATE" remote remove origin
   printf 'PREFLIGHT_CANDIDATE path=%s\n' "$CANDIDATE"
 fi
 if [[ -f "$ROOT/tools/scripts/lib/resource-observation-lib.sh" ]]; then

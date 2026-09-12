@@ -443,6 +443,7 @@ public sealed class CommonStageContractTests
             TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(full)!);
             TemporaryFileSystem.File.WriteAllText(full, "fixture binary");
         }
+        fixture.Build();
         Assert.Equal(0, Program.RunCurrentTests(fixture.Root, (_, results) => { fixture.WriteTrx(results, "Passed"); return 0; }, TextWriter.Null));
         var candidate = CommonExecutionEvidence.Read<TestExecutionRecord>(fixture.Root, CommonExecutionEvidence.TestsPath).Candidate;
         CiTransportTests.SealEngineering(fixture.Root, candidate, binaries, CommonExecutionEvidence.EngineeringSteps
@@ -551,6 +552,7 @@ public sealed class CommonStageContractTests
             Assert.Throws<InvalidDataException>(() => CommonExecutionEvidence.SealCurrent(source.Root, CommonExecutionEvidence.ValidateBuild(source.Root), currentSteps));
             return;
         }
+        CheckEvidenceFixture.Seal(source.Root, "current", CommonExecutionEvidence.ValidateBuild(source.Root));
         CommonExecutionEvidence.SealCurrent(source.Root, CommonExecutionEvidence.ValidateBuild(source.Root), currentSteps);
         var bundle = (TemporaryFileSystem.File.ReadAllText(Path.Combine(source.Root, CommonExecutionEvidence.BundleListPath("current")))
             + TemporaryFileSystem.File.ReadAllText(Path.Combine(source.Root, CommonExecutionEvidence.BundleListPath("engineering"))))

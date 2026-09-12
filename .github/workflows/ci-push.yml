@@ -2,12 +2,24 @@ name: CI current
 
 on:
   push:
-    branches: [dev]
+    branches: [dev, 'integration-**']
   workflow_call:
     inputs:
       candidate_sha:
         required: true
         type: string
+      changes_b64:
+        required: false
+        type: string
+        default: ''
+      plan_b64:
+        required: false
+        type: string
+        default: ''
+      plan_resources:
+        required: false
+        type: string
+        default: ''
     outputs:
       engineering_artifact_id:
         value: ${{ jobs.engineering.outputs.artifact_id }}
@@ -33,7 +45,12 @@ permissions:
 env:
   CANDIDATE_SHA: ${{ inputs.candidate_sha || github.sha }}
   CI_WORKFLOW_INPUTS: ${{ toJSON(inputs) }}
-  STRATALINT_CACHE_WRITES: ${{ github.event_name == 'push' && github.ref == 'refs/heads/dev' && inputs.candidate_sha == '' }}
+  STRATALINT_CACHE_WRITES: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-')) && inputs.candidate_sha == '' }}
+  CI_CHANGES_PATH: build/ci/changes.json
+  CI_PLAN_PATH: build/ci/plan.json
+  CI_CHANGES_B64: ${{ inputs.changes_b64 }}
+  CI_PLAN_B64: ${{ inputs.plan_b64 }}
+  CI_PLAN_RESOURCES: ${{ inputs.plan_resources }}
 
 jobs:
   build:
@@ -52,6 +69,15 @@ jobs:
           ref: ${{ env.CANDIDATE_SHA }}
           persist-credentials: false
       - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
+      - name: Materialize validated resource plan
+        shell: bash
+        run: |
+          if [[ -n "$CI_CHANGES_B64" && -n "$CI_PLAN_B64" ]]; then
+            mkdir -p build/ci
+            printf '%s' "$CI_CHANGES_B64" | base64 --decode > "$CI_CHANGES_PATH"
+            printf '%s' "$CI_PLAN_B64" | base64 --decode > "$CI_PLAN_PATH"
+            python3 -B tools/scripts/workflow/ci.py validate-plan --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA" --changes "$CI_CHANGES_PATH" --plan "$CI_PLAN_PATH"
+          fi
       - uses: actions/setup-dotnet@v4
         with:
           global-json-file: global.json
@@ -71,8 +97,10 @@ jobs:
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --layers judge --judge-key "$JUDGE_KEY"
       - run: make -C tools ci-build
       - id: pack
+        if: env.CI_PLAN_RESOURCES != 'false'
         run: python3 tools/scripts/workflow/ci.py pack --repository "$GITHUB_WORKSPACE" --stage build --commit "$CANDIDATE_SHA" --archive "$RUNNER_TEMP/ci-build.tar.gz"
       - id: upload
+        if: steps.pack.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.pack.outputs.artifact_name }}
@@ -97,7 +125,7 @@ jobs:
   engineering:
     name: engineering
     needs: build
-    if: always() && (needs.build.result != 'success' || !cancelled())
+    if: inputs.plan_resources != 'false' && always() && (needs.build.result != 'success' || !cancelled())
     env:
       CI_BUILD_ROUND: ${{ needs.build.outputs.round }}
     runs-on: ubuntu-24.04-arm
@@ -122,6 +150,15 @@ jobs:
           ref: ${{ env.CANDIDATE_SHA }}
           persist-credentials: false
       - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
+      - name: Materialize validated resource plan
+        shell: bash
+        run: |
+          if [[ -n "$CI_CHANGES_B64" && -n "$CI_PLAN_B64" ]]; then
+            mkdir -p build/ci
+            printf '%s' "$CI_CHANGES_B64" | base64 --decode > "$CI_CHANGES_PATH"
+            printf '%s' "$CI_PLAN_B64" | base64 --decode > "$CI_PLAN_PATH"
+            python3 -B tools/scripts/workflow/ci.py validate-plan --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA" --changes "$CI_CHANGES_PATH" --plan "$CI_PLAN_PATH"
+          fi
       - uses: actions/setup-dotnet@v4
         with:
           global-json-file: global.json
@@ -147,8 +184,10 @@ jobs:
       - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - run: make -C tools engineering
       - id: pack
+        if: env.CI_PLAN_RESOURCES != 'false'
         run: python3 tools/scripts/workflow/ci.py pack --repository "$GITHUB_WORKSPACE" --stage engineering --commit "$CANDIDATE_SHA" --archive "$RUNNER_TEMP/ci-engineering.tar.gz"
       - id: upload
+        if: steps.pack.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.pack.outputs.artifact_name }}
@@ -162,7 +201,7 @@ jobs:
   current:
     name: current
     needs: build
-    if: always() && (needs.build.result != 'success' || !cancelled())
+    if: inputs.plan_resources != 'false' && always() && (needs.build.result != 'success' || !cancelled())
     runs-on: ubuntu-24.04-arm
     # Match the existing six-hour normal Lean envelope at the hosted job ceiling.
     # Setup, checks and transport also consume this job's time.
@@ -188,6 +227,15 @@ jobs:
           ref: ${{ env.CANDIDATE_SHA }}
           persist-credentials: false
       - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
+      - name: Materialize validated resource plan
+        shell: bash
+        run: |
+          if [[ -n "$CI_CHANGES_B64" && -n "$CI_PLAN_B64" ]]; then
+            mkdir -p build/ci
+            printf '%s' "$CI_CHANGES_B64" | base64 --decode > "$CI_CHANGES_PATH"
+            printf '%s' "$CI_PLAN_B64" | base64 --decode > "$CI_PLAN_PATH"
+            python3 -B tools/scripts/workflow/ci.py validate-plan --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA" --changes "$CI_CHANGES_PATH" --plan "$CI_PLAN_PATH"
+          fi
       - uses: actions/setup-dotnet@v4
         with:
           global-json-file: global.json
@@ -246,8 +294,10 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: make current
       - id: pack
+        if: env.CI_PLAN_RESOURCES != 'false'
         run: python3 tools/scripts/workflow/ci.py pack --repository "$GITHUB_WORKSPACE" --stage current --commit "$CANDIDATE_SHA" --archive "$RUNNER_TEMP/ci-current.tar.gz"
       - id: upload
+        if: steps.pack.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.pack.outputs.artifact_name }}
@@ -256,29 +306,29 @@ jobs:
           compression-level: 0
           retention-days: 14
       - id: snapshot
-        if: github.event_name == 'push' && github.ref == 'refs/heads/dev' && inputs.candidate_sha == ''
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-')) && inputs.candidate_sha == ''
         env:
           STRATALINT_CHECK_SUCCEEDED: 'true'
         run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE"
-      - if: github.event_name == 'push' && github.ref == 'refs/heads/dev' && inputs.candidate_sha == '' && steps.snapshot.outputs.dependency_ready == 'true'
+      - if: github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-')) && inputs.candidate_sha == '' && steps.snapshot.outputs.dependency_ready == 'true'
         continue-on-error: true
         uses: actions/cache/save@v4
         with:
           path: ${{ steps.keys.outputs.dependency_path }}
           key: ${{ steps.keys.outputs.dependency_key }}
-      - if: github.event_name == 'push' && github.ref == 'refs/heads/dev' && inputs.candidate_sha == '' && steps.snapshot.outputs.project_ready == 'true'
+      - if: github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-')) && inputs.candidate_sha == '' && steps.snapshot.outputs.project_ready == 'true'
         continue-on-error: true
         uses: actions/cache/save@v4
         with:
           path: ${{ steps.keys.outputs.project_path }}
           key: ${{ steps.keys.outputs.project_key }}
-      - if: github.event_name == 'push' && github.ref == 'refs/heads/dev' && inputs.candidate_sha == '' && steps.snapshot.outputs.report_ready == 'true'
+      - if: github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-')) && inputs.candidate_sha == '' && steps.snapshot.outputs.report_ready == 'true'
         continue-on-error: true
         uses: actions/cache/save@v4
         with:
           path: ${{ steps.keys.outputs.report_path }}
           key: ${{ steps.keys.outputs.report_key }}
-      - if: github.event_name == 'push' && github.ref == 'refs/heads/dev' && inputs.candidate_sha == '' && steps.elan.outputs.cache-hit != 'true' && steps.keys.outputs.elan_key != ''
+      - if: github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-')) && inputs.candidate_sha == '' && steps.elan.outputs.cache-hit != 'true' && steps.keys.outputs.elan_key != ''
         continue-on-error: true
         uses: actions/cache/save@v4
         with:

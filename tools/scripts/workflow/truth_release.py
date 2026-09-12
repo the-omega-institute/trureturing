@@ -65,7 +65,7 @@ def restore_candidate(root, area, selected):
             if transfer.namelist() != ["ci-current.tar.gz"]:
                 raise ValueError("selected push artifact has unexpected contents")
             transfer.extract("ci-current.tar.gz", temporary)
-        extract(target, pathlib.Path(temporary) / "ci-current.tar.gz")
+        extract(target, pathlib.Path(temporary) / "ci-current.tar.gz", "current")
     subprocess.run(["dotnet", RUNNER, "transport-verify", "--repository", str(target), "--stage", "current", "--commit", commit,
                     "--run-id", str(selected["run_id"]), "--run-attempt", str(selected["run_attempt"])], cwd=target, check=True)
     return target

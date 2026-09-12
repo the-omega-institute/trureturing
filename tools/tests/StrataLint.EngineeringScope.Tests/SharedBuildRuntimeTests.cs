@@ -5,6 +5,7 @@ using Xunit;
 
 namespace StrataLint.EngineeringScope.Tests;
 
+[Collection("Engineering scope process boundary")]
 public sealed class SharedBuildRuntimeTests
 {
     [Fact]
@@ -75,7 +76,8 @@ public sealed class SharedBuildRuntimeTests
             "public class Banned { public string Read() => System.IO.File.ReadAllText(\"unused\"); } // banned-api-proof\n");
         var cliProject = "tools/StrataLint.Cli/StrataLint.Cli.csproj";
         Write(cliProject, File.ReadAllText(Path.Combine(root, cliProject)).Replace("</PropertyGroup>", "<OutputType>Exe</OutputType></PropertyGroup>", StringComparison.Ordinal));
-        Write("tools/StrataLint.Cli/Program.cs", "System.Console.WriteLine(\"deterministic-selftest\");\n");
+        Write("tools/StrataLint.Cli/Program.cs", "System.Console.WriteLine(\"SELFTEST PASS\");\n");
+        Write("Meta/ci-checks.json", CommonCheckRegistrationFixture.Manifest(cliProject));
         const string testProject = "tools/tests/Runtime/Runtime.csproj";
         Write(testProject, """
             <Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net10.0</TargetFramework>
@@ -86,7 +88,8 @@ public sealed class SharedBuildRuntimeTests
             <ProjectReference Include="../../StrataLint.Cli/StrataLint.Cli.csproj" />
             <ProjectReference Include="../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" />
             <ProjectReference Include="../../StrataLint.Lean/StrataLint.Lean.csproj" />
-            <ProjectReference Include="../../StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj" /></ItemGroup></Project>
+            <ProjectReference Include="../../StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj" />
+            <ProjectReference Include="../../scripts/report/JudgeSeedTask.csproj" /></ItemGroup></Project>
             """);
         Write("tools/tests/Runtime/RuntimeTests.cs", """
             public class RuntimeTests {
@@ -103,7 +106,7 @@ public sealed class SharedBuildRuntimeTests
                 item.Item2, "production", false, [$"tools/{item.Item1}/**/*.cs"], OwnedTestAssembly: "Runtime"))
             .Concat(new[] {
                 new EngineeringProjectFixture(testProject, "Runtime", "cross-cutting-test", true, ["tools/tests/Runtime/**/*.cs"],
-                    References: projects.Select(item => $"tools/{item.Item1}/{item.Item1}.csproj").ToArray()),
+                    References: projects.Select(item => $"tools/{item.Item1}/{item.Item1}.csproj").Append("tools/scripts/report/JudgeSeedTask.csproj").ToArray()),
                 new EngineeringProjectFixture(proofProject, "CompileFailProof", "compile-fail-proof", false,
                     ["tools/tests/CompileFailProof/**/*.cs"], References: [cliProject]),
                 new EngineeringProjectFixture(bannedProject, "BannedApiCompileFailProof", "compile-fail-proof", false,
@@ -111,11 +114,7 @@ public sealed class SharedBuildRuntimeTests
                 new EngineeringProjectFixture("tools/scripts/report/JudgeSeedTask.csproj", "JudgeSeedTask", "production", false,
                     ["tools/scripts/report/JudgeSeedTask.cs"], OwnedTestAssembly: "JudgeSeedTask.Tests"),
             }).ToArray()));
-        Run("dotnet", "new", "sln", "--name", "StrataLint", "--format", "sln", "--output", "tools");
-        Run("dotnet", new[] { "sln", "tools/StrataLint.sln", "add" }.Concat(
-            projects.Select(item => $"tools/{item.Item1}/{item.Item1}.csproj").Append(testProject)
-                .Append("tools/scripts/report/JudgeSeedTask.csproj")).ToArray());
-        Run("dotnet", "restore", "tools/StrataLint.sln", "--use-lock-file", "-nr:false");
+        Run("dotnet", "restore", testProject, "--use-lock-file", "-nr:false");
         Run("dotnet", "restore", proofProject, "--use-lock-file", "-nr:false");
         Run("dotnet", "restore", bannedProject, "--use-lock-file", "-nr:false");
         SharedBuildContractTests.Git(root, "add", ".");
@@ -173,6 +172,17 @@ public sealed class SharedBuildRuntimeTests
         Assert.Equal(1, Assert.Single(CommonExecutionEvidence.ValidateTests(root, [testProject]).Projects).Executed);
         Assert.Equal(build.Round, CommonExecutionEvidence.Read<CommonStageRecord>(root, CommonExecutionEvidence.EngineeringPath).Round);
         Assert.False(File.Exists(Path.Combine(root, CommonExecutionEvidence.CurrentPath)));
+        var originalChecks = CommonExecutionEvidence.ValidateChecks(root, "engineering", build);
+        var reusedEngineering = Stage("engineering-warm", "engineering");
+        Assert.Equal(0, Compilers(reusedEngineering));
+        Assert.DoesNotContain(Calls(), call => call.Contains(" selftest", StringComparison.Ordinal)
+            || call.StartsWith("restore tools/tests/CompileFailProof", StringComparison.Ordinal)
+            || call.StartsWith("restore tools/tests/BannedApiCompileFailProof", StringComparison.Ordinal));
+        Assert.All(CommonExecutionEvidence.ValidateChecks(root, "engineering", build).Units, unit =>
+        {
+            Assert.Equal("reused", unit.Status);
+            Assert.Equal(originalChecks.Units.Single(original => original.Id == unit.Id).Operations, unit.Operations);
+        });
         var runtime = Assert.Single(CommonBuildOutputs.TestAssemblies(root, build));
         Assert.Equal(testProject, runtime.Key);
         Assert.Contains(build.Materials, material => material.Path.EndsWith("/testhost.dll", StringComparison.Ordinal));
@@ -187,7 +197,7 @@ public sealed class SharedBuildRuntimeTests
         {
             SharedBuildContractTests.Git(root, "clone", "--quiet", "--no-hardlinks", root, destination);
             var extraction = SharedBuildContractTests.Process(destination, "python3", ["-c",
-                "import pathlib,sys; sys.path.insert(0, sys.argv[1]); import ci; ci.extract(pathlib.Path(sys.argv[2]), pathlib.Path(sys.argv[3]))",
+                "import pathlib,sys; sys.path.insert(0, sys.argv[1]); import ci; ci.extract(pathlib.Path(sys.argv[2]), pathlib.Path(sys.argv[3]), 'build')",
                 Path.Combine(repository, "tools/scripts/workflow"), destination, archive]);
             Assert.True(extraction.Exit == 0, extraction.Text);
             Directory.Move(root, offline);

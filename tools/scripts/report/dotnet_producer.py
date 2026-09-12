@@ -15,7 +15,8 @@ TASK_PROJECT = pathlib.Path(__file__).with_name("JudgeSeedTask.csproj")
 PROJECT_MANIFEST = "Meta/engineering-projects.json"
 PROJECT_FIELDS = {"path", "assembly", "role", "ci", "include", "exclude", "references",
                   "owner", "owned_test_assembly", "test_partition",
-                  "root_namespace", "namespace_exclude", "global_namespace_exceptions"}
+                  "root_namespace", "namespace_exclude", "global_namespace_exceptions",
+                  "build_inputs", "execution_inputs", "execution_excludes", "execution_environment"}
 TEST_ROLES = {"owned-test", "cross-cutting-test"}
 
 
@@ -111,6 +112,21 @@ def project_registry(root):
                             raise ValueError(f"invalid registered reference: {path}: {value}")
                     else:
                         source_glob(value)
+            # Execution declarations are validated but never enter compile_projection.
+            for field in ("build_inputs", "execution_inputs", "execution_excludes", "execution_environment"):
+                values = row[field]
+                if field != "build_inputs" and role not in TEST_ROLES:
+                    if values is not None:
+                        raise ValueError(f"unexpected registered {field}: {path}")
+                    continue
+                if not isinstance(values, list) or any(not isinstance(value, str) for value in values) or len(values) != len(set(values)):
+                    raise ValueError(f"invalid or duplicate registered {field}: {path}")
+                for value in values:
+                    if field == "execution_environment":
+                        if not re.fullmatch(r"[A-Z_][A-Z0-9_]*", value):
+                            raise ValueError(f"invalid registered execution environment: {path}: {value}")
+                    else:
+                        registered_path(value, pattern=True)
             namespace = row["root_namespace"]
             if not isinstance(namespace, str) or not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*", namespace):
                 raise ValueError(f"invalid registered root_namespace: {path}")

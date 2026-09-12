@@ -24,7 +24,16 @@
       "global_namespace_exceptions": [
         "tools/StrataLint.Cli/AssemblyInfo.cs",
         "tools/StrataLint.Cli/Usings.cs"
-      ]
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/StrataLint.Cli/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null
     },
     {
       "path": "tools/StrataLint.Engine/StrataLint.Engine.csproj",
@@ -45,7 +54,16 @@
       "namespace_exclude": [],
       "global_namespace_exceptions": [
         "tools/StrataLint.Engine/AssemblyInfo.cs"
-      ]
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/StrataLint.Engine/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null
     },
     {
       "path": "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
@@ -67,7 +85,16 @@
       "namespace_exclude": [],
       "global_namespace_exceptions": [
         "tools/StrataLint.EngineeringScope/Properties/AssemblyInfo.cs"
-      ]
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/StrataLint.EngineeringScope/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null
     },
     {
       "path": "tools/StrataLint.Lean/StrataLint.Lean.csproj",
@@ -88,7 +115,16 @@
       "namespace_exclude": [],
       "global_namespace_exceptions": [
         "tools/StrataLint.Lean/Properties/AssemblyInfo.cs"
-      ]
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/StrataLint.Lean/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null
     },
     {
       "path": "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj",
@@ -110,7 +146,16 @@
       "namespace_exclude": [
         "Blueprint/**/*.scribe.cs"
       ],
-      "global_namespace_exceptions": []
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/StrataLint.Scribe.Documents/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null
     },
     {
       "path": "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
@@ -132,7 +177,16 @@
       "namespace_exclude": [],
       "global_namespace_exceptions": [
         "tools/StrataLint.Scribe/AssemblyInfo.cs"
-      ]
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/StrataLint.Scribe/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null
     },
     {
       "path": "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
@@ -153,7 +207,16 @@
       "namespace_exclude": [],
       "global_namespace_exceptions": [
         "tools/TestSupport/StrataLint.TestSupport/AssemblyInfo.cs"
-      ]
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/TestSupport/StrataLint.TestSupport/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null
     },
     {
       "path": "tools/Trureturing.Truth/Trureturing.Truth.csproj",
@@ -170,7 +233,16 @@
       "test_partition": null,
       "root_namespace": "Trureturing.Truth",
       "namespace_exclude": [],
-      "global_namespace_exceptions": []
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/Trureturing.Truth/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null
     },
     {
       "path": "tools/scripts/report/JudgeSeedTask.csproj",
@@ -187,7 +259,16 @@
       "test_partition": null,
       "root_namespace": "StrataLint.JudgeSeed",
       "namespace_exclude": [],
-      "global_namespace_exceptions": []
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/scripts/report/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null
     },
     {
       "path": "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj",
@@ -204,7 +285,18 @@
       "test_partition": null,
       "root_namespace": "StrataLint.BannedApiCompileFailProof",
       "namespace_exclude": [],
-      "global_namespace_exceptions": []
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/BannedApiCompileFailProof/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null
     },
     {
       "path": "tools/tests/CompileFailProof/CompileFailProof.csproj",
@@ -223,7 +315,18 @@
       "test_partition": null,
       "root_namespace": "StrataLint.CompileFailProof",
       "namespace_exclude": [],
-      "global_namespace_exceptions": []
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/CompileFailProof/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null
     },
     {
       "path": "tools/tests/JudgeSeedTask.Tests/JudgeSeedTask.Tests.csproj",
@@ -246,7 +349,23 @@
       "test_partition": "tools/tests/JudgeSeedTask.Tests",
       "root_namespace": "JudgeSeedTask.Tests",
       "namespace_exclude": [],
-      "global_namespace_exceptions": []
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/JudgeSeedTask.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "tools/scripts/report/JudgeSeedTask.csproj",
+        "tools/scripts/report/packages.lock.json"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ]
     },
     {
       "path": "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
@@ -272,6 +391,34 @@
       "namespace_exclude": [],
       "global_namespace_exceptions": [
         "tools/tests/StrataLint.ArchitectureTests/Usings.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.ArchitectureTests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "tools/**",
+        "D5/**",
+        "Blueprint/**",
+        "Golden/**",
+        "Library/**",
+        "Meta/**",
+        "agents/**",
+        "docs/develop/spec/**",
+        "*.props",
+        "*.json",
+        "*.toml",
+        "Makefile",
+        "lean-toolchain",
+        ".gitignore"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
       ]
     },
     {
@@ -297,6 +444,21 @@
       "namespace_exclude": [],
       "global_namespace_exceptions": [
         "tools/tests/StrataLint.Engine.Tests/Usings.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.Engine.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "tools/tests/StrataLint.Engine.Tests/Fixtures/**"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
       ]
     },
     {
@@ -320,7 +482,35 @@
       "test_partition": "tools/tests/StrataLint.EngineeringScope.Tests",
       "root_namespace": "StrataLint.EngineeringScope.Tests",
       "namespace_exclude": [],
-      "global_namespace_exceptions": []
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.EngineeringScope.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "tools/scripts/**",
+        "tools/Architecture/**",
+        "tools/**/*.csproj",
+        "tools/**/*.json",
+        "tools/**/*.props",
+        "tools/Makefile",
+        "Makefile",
+        "*.props",
+        "global.json",
+        "lake-manifest.json",
+        "lakefile.toml",
+        "lean-toolchain",
+        ".gitignore",
+        "tools/tests/StrataLint.EngineeringScope.Tests/Fixtures/**"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ]
     },
     {
       "path": "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
@@ -344,6 +534,26 @@
       "namespace_exclude": [],
       "global_namespace_exceptions": [
         "tools/tests/StrataLint.Lean.Tests/Usings.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.Lean.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "tools/scripts/worktree/**",
+        "tools/tests/StrataLint.Lean.Tests/Fixtures/**",
+        "global.json",
+        "lake-manifest.json",
+        "lakefile.toml",
+        "lean-toolchain"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
       ]
     },
     {
@@ -366,7 +576,20 @@
       "test_partition": "tools/tests/StrataLint.Scribe.Documents.Tests",
       "root_namespace": "StrataLint.Scribe.Documents.Tests",
       "namespace_exclude": [],
-      "global_namespace_exceptions": []
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.Scribe.Documents.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ]
     },
     {
       "path": "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
@@ -391,6 +614,29 @@
       "namespace_exclude": [],
       "global_namespace_exceptions": [
         "tools/tests/StrataLint.Scribe.Tests/Usings.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.Scribe.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "Golden/Projection/**",
+        "tools/tests/StrataLint.Scribe.Tests/Fixtures/**",
+        "D5/**",
+        "Blueprint/**",
+        "Library/**",
+        "Meta/domains.yaml",
+        "Meta/registry.yaml",
+        "tools/scripts/katex/**",
+        "tools/scripts/renderer/**"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
       ]
     },
     {
@@ -415,6 +661,28 @@
       "namespace_exclude": [],
       "global_namespace_exceptions": [
         "tools/tests/StrataLint.ScriptTests/Usings.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.ScriptTests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "tools/scripts/**",
+        "tools/Makefile",
+        "Makefile",
+        "*.props",
+        "*.json",
+        "*.toml",
+        "lean-toolchain",
+        "tools/tests/StrataLint.ScriptTests/Fixtures/**"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
       ]
     },
     {
@@ -441,6 +709,34 @@
       "global_namespace_exceptions": [
         "tools/tests/StrataLint.Tests/AssemblyInfo.cs",
         "tools/tests/StrataLint.Tests/Usings.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "tools/**",
+        "Golden/**",
+        "Meta/**",
+        "D5/**",
+        "Blueprint/**",
+        "Library/**",
+        "agents/**",
+        "*.props",
+        "*.json",
+        "*.toml",
+        "Makefile",
+        "lean-toolchain",
+        ".gitignore",
+        "docs/develop/spec/**"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
       ]
     },
     {
@@ -463,7 +759,20 @@
       "test_partition": "tools/tests/Trureturing.Truth.Tests",
       "root_namespace": "Trureturing.Truth.Tests",
       "namespace_exclude": [],
-      "global_namespace_exceptions": []
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/Trureturing.Truth.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ]
     }
   ],
   "historical_projects": [],

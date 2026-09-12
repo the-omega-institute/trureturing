@@ -5,6 +5,7 @@ using Xunit;
 
 namespace StrataLint.EngineeringScope.Tests;
 
+[Collection("Engineering scope process boundary")]
 public sealed class NegativeProofStageTests
 {
     public static TheoryData<string, int, int> RejectedExits()
@@ -36,6 +37,7 @@ public sealed class NegativeProofStageTests
               printf 'BannedApiViolations.cs(1,1): error RS0030: banned symbol\n'
               exit "$CONTRACT_RAW"
             fi
+            [[ "$2" != selftest ]] || echo "SELFTEST PASS"
             exit 0
             """);
         if (!OperatingSystem.IsWindows())

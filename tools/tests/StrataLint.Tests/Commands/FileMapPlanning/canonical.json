@@ -1,0 +1,117 @@
+{
+  "filemap": "schema_version = 3\nresources = [\n  { id = \"build\", stage = \"build\", owner = \"tools/owner.py\", prerequisites = [], tools = [\"dotnet\"], cache_layers = [], materials = [] },\n  { id = \"engineering\", stage = \"engineering\", owner = \"tools/owner.py\", prerequisites = [\"build\"], tools = [\"dotnet\"], cache_layers = [\"judge\"], materials = [] },\n  { id = \"filemap\", stage = \"current\", owner = \"tools/owner.py\", prerequisites = [\"build\"], tools = [\"dotnet\"], cache_layers = [], materials = [] },\n  { id = \"lean-report\", stage = \"current\", owner = \"tools/owner.py\", prerequisites = [], tools = [\"lake\"], cache_layers = [\"dependency\", \"project\", \"report\"], materials = [] },\n]\n\n[residence_policy]\ncase_id = \"RESIDENCE-EPOCH\"\ndesired = \"data-must-live-outside-tools\"\nknown_violation_count = 0\nstatus = \"closed\"\n\n[[files]]\npattern = \"D5/**/*.lean\"\nrequire = [\"lean-report\"]\nkind = \"program\"\nadmission_plane = \"judge\"\nproduced_by = \"none\"\nconsumed_by = [\"reader\"]\nverified_by = [\"dotnet-test\"]\nartifact_id = \"none\"\nruntime_disposition = \"committed-source\"\n\n[[files]]\npattern = \"Meta/FILEMAP.toml\"\nrequire = [\"filemap\"]\nkind = \"program\"\nadmission_plane = \"judge\"\nproduced_by = \"none\"\nconsumed_by = [\"reader\"]\nverified_by = [\"dotnet-test\"]\nartifact_id = \"none\"\nruntime_disposition = \"committed-source\"\n\n[[files]]\npattern = \"README.md\"\nrequire = []\nkind = \"program\"\nadmission_plane = \"judge\"\nproduced_by = \"none\"\nconsumed_by = [\"reader\"]\nverified_by = [\"dotnet-test\"]\nartifact_id = \"none\"\nruntime_disposition = \"committed-source\"\n\n[[files]]\npattern = \"docs/reports/**\"\nrequire = []\nkind = \"program\"\nadmission_plane = \"judge\"\nproduced_by = \"none\"\nconsumed_by = [\"reader\"]\nverified_by = [\"dotnet-test\"]\nartifact_id = \"none\"\nruntime_disposition = \"committed-source\"\n\n[[files]]\npattern = \"one/*.txt\"\nrequire = [\"filemap\"]\nkind = \"program\"\nadmission_plane = \"judge\"\nproduced_by = \"none\"\nconsumed_by = [\"reader\"]\nverified_by = [\"dotnet-test\"]\nartifact_id = \"none\"\nruntime_disposition = \"committed-source\"\n\n[[files]]\npattern = \"tools/**\"\nrequire = [\"engineering\"]\nkind = \"program\"\nadmission_plane = \"judge\"\nproduced_by = \"none\"\nconsumed_by = [\"reader\"]\nverified_by = [\"dotnet-test\"]\nartifact_id = \"none\"\nruntime_disposition = \"committed-source\"\n",
+  "resources": [
+    {
+      "id": "build",
+      "stage": "build",
+      "owner": "tools/owner.py",
+      "prerequisites": [],
+      "tools": [
+        "dotnet"
+      ],
+      "cache_layers": [],
+      "materials": []
+    },
+    {
+      "id": "engineering",
+      "stage": "engineering",
+      "owner": "tools/owner.py",
+      "prerequisites": [
+        "build"
+      ],
+      "tools": [
+        "dotnet"
+      ],
+      "cache_layers": [
+        "judge"
+      ],
+      "materials": []
+    },
+    {
+      "id": "filemap",
+      "stage": "current",
+      "owner": "tools/owner.py",
+      "prerequisites": [
+        "build"
+      ],
+      "tools": [
+        "dotnet"
+      ],
+      "cache_layers": [],
+      "materials": []
+    },
+    {
+      "id": "lean-report",
+      "stage": "current",
+      "owner": "tools/owner.py",
+      "prerequisites": [],
+      "tools": [
+        "lake"
+      ],
+      "cache_layers": [
+        "dependency",
+        "project",
+        "report"
+      ],
+      "materials": []
+    }
+  ],
+  "cases": [
+    {
+      "path": "README.md",
+      "require": []
+    },
+    {
+      "path": "docs/reports/白 纸.md",
+      "require": []
+    },
+    {
+      "path": "D5/Ring.lean",
+      "require": [
+        "lean-report"
+      ]
+    },
+    {
+      "path": "D5/a/b/Ring.lean",
+      "require": [
+        "lean-report"
+      ]
+    },
+    {
+      "path": "one/a.txt",
+      "require": [
+        "filemap"
+      ]
+    },
+    {
+      "path": "one/a/b.txt",
+      "require": null
+    },
+    {
+      "path": "D5/a/Ring.leanx",
+      "require": null
+    },
+    {
+      "path": "other.md",
+      "require": null
+    },
+    {
+      "path": "docs/reports/a/b.md",
+      "require": []
+    },
+    {
+      "path": "one/white\t纸\n.txt",
+      "require": [
+        "filemap"
+      ]
+    },
+    {
+      "path": "docs/reports/astral-😀.md",
+      "require": []
+    },
+    {
+      "path": "D5/line\n/Ring.lean",
+      "require": null
+    }
+  ]
+}

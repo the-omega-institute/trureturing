@@ -58,23 +58,37 @@ def resolve(root, head):
     outputs({"candidate_sha": candidate, "base_sha": base})
 
 
-def extract(root, archive):
+def extract(root, archive, stage):
     with tarfile.open(archive) as source:
         members = source.getmembers()
         for member in members:
             path = pathlib.PurePosixPath(member.name)
-            if path.is_absolute() or ".." in path.parts or not (member.isfile() or member.isdir()):
+            if (path.is_absolute() or any(part in ("", ".", "..") for part in member.name.split("/"))
+                    or not member.isfile()):
                 raise ValueError("invalid stage archive member")
             if not (member.name.startswith("build/ci/") or member.name.startswith("tools/") and (
                     "/bin/Release/" in member.name or re.search(r"/obj/Release/[^/]+/ref/[^/]+\.dll$", member.name))
-                    or member.name.startswith(".lake/build/stratalint/raw-lean-report.json")):
+                    or member.name.startswith(".lake/build/stratalint/raw-lean-report.json")
+                    or stage == "current" and member.name == "Meta/ci-checks.json"):
                 raise ValueError("unexpected stage archive destination")
+            if any((root / parent).is_symlink() for parent in (path, *path.parents)):
+                raise ValueError("symlink stage archive destination")
+        # This is the native producer's transport list, not another stage selector.
+        # Native transport-verify still owns schema, identity, hash and mode verdicts.
+        manifest = f"build/ci/{stage}-transport.json"
+        names = [member.name for member in members]
+        if len(names) != len(set(names)):
+            raise ValueError("duplicate stage archive member")
+        with source.extractfile(manifest) as stream:
+            declared = [item["path"] for item in json.load(stream)["materials"]]
+        if len(declared) != len(set(declared)) or set(names) != set(declared) | {manifest}:
+            raise ValueError("stage archive differs from declared transport materials")
         source.extractall(root, members=members)
 
 
 def transport(args):
     if args.command == "restore":
-        extract(args.repository, args.archive)
+        extract(args.repository, args.archive, args.stage)
     command = ["dotnet", RUNNER, "transport-pack" if args.command == "pack" else "transport-verify",
                "--repository", str(args.repository), "--stage", args.stage, "--commit", oid(args.commit),
                "--run-id", args.run_id, "--run-attempt", args.run_attempt]
@@ -99,10 +113,16 @@ def advisory(root, branch):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=("resolve", "checkout", "pack", "restore", "verify", "advisory", "summary"))
+    parser.add_argument("command", choices=("resolve", "checkout", "pack", "restore", "verify", "advisory", "summary",
+                                           "plan", "pr-paths", "validate-plan", "no-work", "validate-no-work"))
     parser.add_argument("--repository", required=True, type=pathlib.Path)
     parser.add_argument("--commit", default="")
     parser.add_argument("--head", default="")
+    parser.add_argument("--base", default="")
+    parser.add_argument("--changes", type=pathlib.Path)
+    parser.add_argument("--plan", type=pathlib.Path)
+    parser.add_argument("--result", type=pathlib.Path)
+    parser.add_argument("--output", type=pathlib.Path)
     parser.add_argument("--stage", choices=("build", "engineering", "current", "delta"))
     parser.add_argument("--archive", type=pathlib.Path)
     parser.add_argument("--run-id", default=os.environ.get("GITHUB_RUN_ID", ""))
@@ -110,7 +130,10 @@ def main():
     args = parser.parse_args()
     args.repository = args.repository.resolve()
     try:
-        if args.command == "resolve": resolve(args.repository, args.head)
+        if args.command in ("plan", "pr-paths", "validate-plan", "no-work", "validate-no-work"):
+            import ci_plan
+            print(json.dumps(ci_plan.command(args), sort_keys=True, ensure_ascii=False))
+        elif args.command == "resolve": resolve(args.repository, args.head)
         elif args.command == "checkout": checkout(args.repository, args.commit)
         elif args.command in ("pack", "restore", "verify"): transport(args)
         elif args.command == "advisory": advisory(args.repository, args.head)

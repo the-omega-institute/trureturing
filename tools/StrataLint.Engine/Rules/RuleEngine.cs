@@ -132,20 +132,44 @@ internal interface IRepositoryRule
 
 public sealed class CurrentRuleContext
 {
-    private CurrentRuleContext(RepositorySnapshot current, ValidatedPolicy policy, AcceptedLeanClosure lean, VerifiedScribeEmissions? emissions)
+    private CurrentRuleContext(RepositorySnapshot current, ValidatedPolicy policy, AcceptedLeanClosure lean,
+        VerifiedScribeEmissions? emissions, CurrentRuleSelection? selection)
     {
         Current = current;
         Policy = policy;
         Lean = lean;
         VerifiedScribeEmissions = emissions;
+        Selection = selection;
     }
 
     internal RepositorySnapshot Current { get; }
     internal ValidatedPolicy Policy { get; }
     internal AcceptedLeanClosure Lean { get; }
     internal VerifiedScribeEmissions? VerifiedScribeEmissions { get; }
+    internal CurrentRuleSelection? Selection { get; }
     internal static CurrentRuleContext Create(RepositorySnapshot current, ValidatedPolicy policy, AcceptedLeanClosure lean, VerifiedScribeEmissions? emissions = null) =>
-        new(current, policy, lean, emissions);
+        new(current, policy, lean, emissions, null);
+
+    internal static CurrentRuleContext Create(RepositorySnapshot current, ValidatedPolicy policy,
+        AcceptedLeanClosure lean, VerifiedScribeEmissions? emissions, CurrentRuleSelection selection) =>
+        new(current, policy, lean, emissions, selection);
+}
+
+// A validated producer may restrict current execution to affected registered rules. The
+// catalog remains the sole executor; no host or shell discovery is involved.
+internal sealed class CurrentRuleSelection
+{
+    private CurrentRuleSelection(ImmutableHashSet<RuleId> selected) => Selected = selected;
+    internal ImmutableHashSet<RuleId> Selected { get; }
+    internal static CurrentRuleSelection Create(string[] registered, string[] selected)
+    {
+        var expected = RuleCatalog.Default.CurrentPredicateIds.Select(id => id.Value).Order(StringComparer.Ordinal);
+        if (!registered.Order(StringComparer.Ordinal).SequenceEqual(expected)
+            || selected.Distinct(StringComparer.Ordinal).Count() != selected.Length
+            || selected.Any(id => !registered.Contains(id, StringComparer.Ordinal)))
+            throw new InvalidDataException("invalid current predicate registration or selection");
+        return new(selected.Select(id => RuleId.CreateKnown(int.Parse(id.AsSpan(3), System.Globalization.CultureInfo.InvariantCulture))).ToImmutableHashSet());
+    }
 }
 
 internal sealed class RuleApplicabilityContext

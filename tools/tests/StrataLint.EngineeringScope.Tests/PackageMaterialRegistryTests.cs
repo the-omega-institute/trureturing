@@ -268,6 +268,10 @@ public sealed class PackageMaterialRegistryTests
         internal void PrepareProjects(bool allPackages = false)
         {
             var repository = TestRepositoryLayout.FindRoot();
+            foreach (var path in new[] { "tools/tests/CompileFailProof/CompileFailProof.csproj",
+                "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj",
+                "tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs" })
+                File.Delete(Path.Combine(Root, path));
             var registrations = new List<EngineeringProjectFixture>();
             foreach (var assembly in new[] { CommonExecutionEvidence.CliPath, CommonExecutionEvidence.RunnerPath,
                          CommonExecutionEvidence.LeanProducerPath, CommonExecutionEvidence.ScribePath })
@@ -275,9 +279,10 @@ public sealed class PackageMaterialRegistryTests
                 var directory = assembly[..assembly.IndexOf("/bin/", StringComparison.Ordinal)];
                 Project(directory + "/" + Path.GetFileName(directory) + ".csproj", assembly, Path.Combine(repository, assembly), false);
             }
-            foreach (var project in new[] { CurrentExecutionContractTests.CandidateFixture.First, CurrentExecutionContractTests.CandidateFixture.Second })
-                Project(project, Path.GetDirectoryName(project) + "/bin/Release/net10.0/" + Path.GetFileName(typeof(PackageMaterialRegistryTests).Assembly.Location),
-                    typeof(PackageMaterialRegistryTests).Assembly.Location, true);
+            foreach (var (project, binary) in new[] {
+                (CurrentExecutionContractTests.CandidateFixture.First, typeof(PackageMaterialRegistryTests).Assembly.Location),
+                (CurrentExecutionContractTests.CandidateFixture.Second, typeof(EngineeringProjectFixture).Assembly.Location) })
+                Project(project, Path.GetDirectoryName(project) + "/bin/Release/net10.0/" + Path.GetFileName(binary), binary, true);
             Write(EngineeringRegistrationFixture.Path, EngineeringRegistrationFixture.Manifest(registrations.ToArray()));
             SharedBuildContractTests.Git(Root, "add", ".");
             SharedBuildContractTests.Git(Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "package collection fixture");

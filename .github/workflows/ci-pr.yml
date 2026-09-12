@@ -19,6 +19,9 @@ jobs:
     outputs:
       candidate_sha: ${{ steps.resolve.outputs.candidate_sha }}
       base_sha: ${{ steps.resolve.outputs.base_sha }}
+      changes_b64: ${{ steps.resolve.outputs.changes_b64 }}
+      plan_b64: ${{ steps.resolve.outputs.plan_b64 }}
+      plan_resources: ${{ steps.resolve.outputs.plan_resources }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -28,7 +31,14 @@ jobs:
       - id: resolve
         env:
           PR_HEAD: ${{ github.event.pull_request.head.sha }}
-        run: python3 tools/scripts/workflow/ci.py resolve --repository "$GITHUB_WORKSPACE" --head "$PR_HEAD"
+        run: |
+          mkdir -p build/ci
+          python3 tools/scripts/workflow/ci.py resolve --repository "$GITHUB_WORKSPACE" --head "$PR_HEAD"
+          python3 -B tools/scripts/workflow/ci.py pr-paths --repository "$GITHUB_WORKSPACE" --commit "$(git rev-parse HEAD)" --base "$(git rev-parse HEAD^1)" --head "$PR_HEAD" --output build/ci/changes.json
+          python3 -B tools/scripts/workflow/ci.py plan --repository "$GITHUB_WORKSPACE" --commit "$(git rev-parse HEAD)" --changes build/ci/changes.json --output build/ci/plan.json
+          echo "changes_b64=$(base64 -w0 build/ci/changes.json)" >> "$GITHUB_OUTPUT"
+          echo "plan_b64=$(base64 -w0 build/ci/plan.json)" >> "$GITHUB_OUTPUT"
+          echo "plan_resources=$(python3 -c 'import json; print("true" if json.load(open("build/ci/plan.json"))["resources"] else "false")')" >> "$GITHUB_OUTPUT"
 
   push:
     name: push
@@ -36,17 +46,22 @@ jobs:
     uses: ./.github/workflows/ci-push.yml
     with:
       candidate_sha: ${{ needs.resolve.outputs.candidate_sha }}
+      changes_b64: ${{ needs.resolve.outputs.changes_b64 }}
+      plan_b64: ${{ needs.resolve.outputs.plan_b64 }}
+      plan_resources: ${{ needs.resolve.outputs.plan_resources }}
 
   delta:
     name: delta
     needs: [resolve, push]
-    if: always() && (needs.resolve.result != 'success' || needs.push.result != 'success' || !cancelled())
+    if: always() && needs.resolve.outputs.plan_resources == 'true' && (needs.resolve.result != 'success' || needs.push.result != 'success' || !cancelled())
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 60
     env:
       CANDIDATE_SHA: ${{ needs.resolve.outputs.candidate_sha }}
       BASE_SHA: ${{ needs.resolve.outputs.base_sha }}
       STRATALINT_CACHE_WRITES: 'false'
+      CI_PLAN_PATH: build/ci/plan.json
+      CI_CHANGES_PATH: build/ci/changes.json
     steps:
       - name: Require successful prerequisites
         shell: bash
@@ -64,6 +79,16 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
       - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
+      - name: Materialize validated resource plan
+        shell: bash
+        env:
+          CHANGES_B64: ${{ needs.resolve.outputs.changes_b64 }}
+          PLAN_B64: ${{ needs.resolve.outputs.plan_b64 }}
+        run: |
+          mkdir -p build/ci
+          printf '%s' "$CHANGES_B64" | base64 --decode > build/ci/changes.json
+          printf '%s' "$PLAN_B64" | base64 --decode > build/ci/plan.json
+          python3 -B tools/scripts/workflow/ci.py validate-plan --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA" --changes build/ci/changes.json --plan build/ci/plan.json
       - uses: actions/setup-dotnet@v4
         with:
           global-json-file: global.json

@@ -8,6 +8,7 @@ using Xunit;
 
 namespace StrataLint.EngineeringScope.Tests;
 
+[Collection("Engineering scope process boundary")]
 public sealed class CiTransportTests
 {
     [Fact]
@@ -20,37 +21,14 @@ public sealed class CiTransportTests
         var evidence = Environment.GetEnvironmentVariable("CI_REPORT_SNAPSHOT_EVIDENCE");
         // Reuse the nonempty synthetic statement producer, not its manually
         // authored current/transport records. C# owns the actual handoff below.
-        var inputs = SharedBuildContractTests.Process(root, "python3", ["-B", "-c", """
-            import pathlib, shutil, sys
-            repository, root, relative = map(pathlib.Path, sys.argv[1:])
-            sys.path.insert(0, str(repository / 'tools/tests/StrataLint.ScriptTests/Fixtures'))
-            from report_snapshot_contract import SnapshotContracts
-            case = SnapshotContracts()
-            case.setUp()
-            try:
-                fixture = case.prepare_report()
-                result = fixture.pair()
-                print(result.stdout + result.stderr)
-                assert result.returncode == 0
-                sys.path.insert(0, str(repository / 'tools/lean-inspector'))
-                from report_cache import copy_bundle, seed_valid
-                from lean_cache import partition_path
-                for name in ('D5', 'Trureturing.lean', 'lakefile.toml', 'lake-manifest.json', 'lean-toolchain'):
-                    source, target = fixture.root / name, root / name
-                    if source.is_dir(): shutil.copytree(source, target)
-                    else: shutil.copyfile(source, target)
-                copy_bundle(fixture.output, root / relative)
-                assert seed_valid(root / relative, partition_path(root))
-            finally:
-                case.doCleanups()
-            """, repository, root, CommonExecutionEvidence.ReportPath],
-            hangGuard: TestBudgets.WorkflowProcessHangGuard);
+        var inputs = ProduceReport(root);
         Capture("inputs.log", inputs.Text);
         Assert.True(inputs.Exit == 0, inputs.Text);
         Git(root, "add", "D5", "Trureturing.lean", "lakefile.toml", "lake-manifest.json", "lean-toolchain");
         Git(root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "report inputs");
         Prepare(fixture, current: false);
         var build = CommonExecutionEvidence.ValidateBuild(root);
+        CheckEvidenceFixture.Seal(root, "current", build);
         CommonExecutionEvidence.SealCurrent(root, build, Steps(CommonExecutionEvidence.CurrentSteps));
         CommonExecutionEvidence.Write(root, "build/ci/current-result.json", new Dictionary<string, object> {
             ["stage"] = "current", ["exit"] = 0, ["candidate"] = build.Candidate,
@@ -136,6 +114,35 @@ public sealed class CiTransportTests
             environment["CANDIDATE_SHA"] = commit;
         }
 
+        // Bind each malformed current record into the transport so these cases
+        // exercise the consumer contract beyond the outer file hash check.
+        foreach (var defect in new[] { "version-one", "version-three", "candidate", "round", "missing-step", "missing-report-step", "reused-report" })
+        {
+            var current = CommonExecutionEvidence.Read<CommonStageRecord>(root, CommonExecutionEvidence.CurrentPath);
+            var changed = defect switch
+            {
+                "version-one" => current with { Version = 1 },
+                "version-three" => current with { Version = 3 },
+                "candidate" => current with { Candidate = new string('a', 64) },
+                "missing-step" => current with { Steps = current.Steps.Where(step => step.Name != "filemap").ToArray() },
+                "missing-report-step" => current with { Steps = current.Steps.Where(step => step.Name != "lean-report").ToArray() },
+                "reused-report" => current with { Steps = current.Steps.Select(step => step.Name == "lean-report" ? step with { Status = "reused" } : step).ToArray() },
+                _ => current with { Round = current.Round + "-stale" },
+            };
+            CommonExecutionEvidence.Write(root, CommonExecutionEvidence.CurrentPath, changed);
+            var transport = CommonExecutionEvidence.Read<CiTransportRecord>(root, "build/ci/current-transport.json");
+            CommonExecutionEvidence.Write(root, "build/ci/current-transport.json", transport with
+            {
+                Materials = transport.Materials.Select(material => material.Path == CommonExecutionEvidence.CurrentPath
+                    ? material with { Sha256 = CommonExecutionEvidence.Hash(Path.Combine(root, material.Path)) } : material).ToArray(),
+            });
+            Snapshot(defect, ready: false);
+            foreach (var item in saved) Assert.Equal(item.Value, File.ReadAllBytes(item.Key));
+            File.WriteAllBytes(Path.Combine(root, CommonExecutionEvidence.CurrentPath), currentBytes);
+            File.WriteAllBytes(transportPath, transportBytes);
+            CommonExecutionEvidence.ValidateCurrent(root);
+        }
+
         void Snapshot(string label, bool ready)
         {
             File.Delete(environment["GITHUB_OUTPUT"]);
@@ -143,8 +150,7 @@ public sealed class CiTransportTests
                 "snapshot", "--repository", root], environment);
             Capture(label + ".log", result.Text);
             Assert.True(result.Exit == 0, result.Text);
-            Assert.Contains("report_ready=" + (ready ? "true" : "false"),
-                TemporaryFileSystem.File.ReadAllText(environment["GITHUB_OUTPUT"]));
+            Assert.True(TemporaryFileSystem.File.ReadAllText(environment["GITHUB_OUTPUT"]).Contains("report_ready=" + (ready ? "true" : "false"), StringComparison.Ordinal), result.Text);
             Assert.Contains(ready ? "\"status\": \"snapshot\"" : "\"status\": \"save-failed\"", result.Text, StringComparison.Ordinal);
             Assert.False(File.Exists(Path.Combine(root, "build/ci/transport.json")));
             Assert.Empty(Directory.GetDirectories(Path.Combine(root, "build/lean-cache"), ".snapshot-*"));
@@ -156,6 +162,94 @@ public sealed class CiTransportTests
             Directory.CreateDirectory(evidence);
             File.WriteAllText(Path.Combine(evidence, name), text);
         }
+    }
+
+    [Fact]
+    public void CurrentCliTransportRoundTripRetainsRegistrationAndRejectsInvalidBundles()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        Prepare(fixture, current: false);
+        var root = fixture.Root;
+        var repository = TestRepositoryLayout.FindRoot();
+        var runtime = Path.GetDirectoryName(CommonExecutionEvidence.RunnerPath)!;
+        Directory.CreateDirectory(Path.Combine(root, runtime));
+        var binaries = Directory.GetFiles(Path.Combine(repository, runtime)).Select(file =>
+        {
+            var relative = runtime + "/" + Path.GetFileName(file);
+            File.Copy(file, Path.Combine(root, relative));
+            return relative;
+        }).ToArray();
+        SealEngineering(root, CommonExecutionEvidence.Candidate(root), binaries, Steps(CommonExecutionEvidence.EngineeringSteps));
+        Report(root);
+        CheckEvidenceFixture.Seal(root, "current", CommonExecutionEvidence.ValidateBuild(root));
+        CommonExecutionEvidence.SealCurrent(root, CommonExecutionEvidence.ValidateBuild(root), Steps(CommonExecutionEvidence.CurrentSteps));
+        var commit = Git(root, "rev-parse", "HEAD");
+        var archive = Path.Combine(root, "build/current.tgz");
+        var packed = Cli("pack", root, archive);
+        Assert.True(packed.Exit == 0, packed.Text);
+        Assert.Contains("status=packed", packed.Text);
+
+        var target = Path.Combine(root, "build/destination");
+        Git(root, "clone", "--quiet", "--no-hardlinks", root, target);
+        var restored = Cli("restore", target, archive);
+        Assert.True(restored.Exit == 0, restored.Text);
+        Assert.Contains("status=verified", restored.Text);
+        Assert.Equal(File.ReadAllBytes(Path.Combine(root, "Meta/ci-checks.json")),
+            File.ReadAllBytes(Path.Combine(target, "Meta/ci-checks.json")));
+        Assert.Contains(CommonExecutionEvidence.ValidateCurrent(target).Materials, material => material.Path == "Meta/ci-checks.json");
+        Assert.Equal(File.GetUnixFileMode(Path.Combine(root, Log)), File.GetUnixFileMode(Path.Combine(target, Log)));
+
+        foreach (var defect in new[] { "extra", "extra-meta", "escape", "absolute", "symlink", "hardlink", "mode", "hash", "candidate", "round", "missing-registration" })
+        {
+            var damaged = Path.Combine(root, "build/" + defect + ".tgz");
+            using (var input = new GZipStream(File.OpenRead(archive), CompressionMode.Decompress))
+            using (var reader = new TarReader(input))
+            using (var output = new GZipStream(File.Create(damaged), CompressionLevel.Fastest))
+            using (var writer = new TarWriter(output))
+            {
+                while (reader.GetNextEntry(copyData: true) is { } entry)
+                {
+                    if (defect == "missing-registration" && entry.Name == "Meta/ci-checks.json") continue;
+                    if (entry.Name == Log && defect == "mode") entry.Mode ^= UnixFileMode.UserExecute;
+                    if (entry.Name == Log && defect == "hash") entry.DataStream = new MemoryStream("corrupt"u8.ToArray());
+                    if (entry.Name == CommonExecutionEvidence.CurrentPath && defect is "candidate" or "round")
+                    {
+                        var record = CommonExecutionEvidence.Read<CommonStageRecord>(root, CommonExecutionEvidence.CurrentPath);
+                        var node = System.Text.Json.Nodes.JsonNode.Parse(File.ReadAllText(Path.Combine(root, entry.Name)))!;
+                        node[defect] = defect == "candidate" ? new string('a', 64) : record.Round + "-stale";
+                        entry.DataStream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(node.ToJsonString()));
+                    }
+                    writer.WriteEntry(entry);
+                }
+                var extra = defect switch { "extra" => "build/ci/undeclared", "extra-meta" => "Meta/undeclared.json",
+                    "escape" => "../escaped", "absolute" => "/escaped", "symlink" or "hardlink" => "build/ci/link", _ => null };
+                if (extra is not null)
+                {
+                    var type = defect == "symlink" ? TarEntryType.SymbolicLink : defect == "hardlink" ? TarEntryType.HardLink : TarEntryType.RegularFile;
+                    var entry = new PaxTarEntry(type, extra);
+                    if (type == TarEntryType.RegularFile) entry.DataStream = new MemoryStream("extra"u8.ToArray());
+                    else entry.LinkName = Log;
+                    writer.WriteEntry(entry);
+                }
+            }
+            var rejected = Cli("restore", target, damaged);
+            Assert.True(rejected.Exit == 2, defect + ": " + rejected.Text);
+            Assert.DoesNotContain("status=verified", rejected.Text);
+            Assert.False(File.Exists(Path.Combine(target, "build/ci/undeclared")));
+            var recovered = Cli("restore", target, archive);
+            Assert.True(recovered.Exit == 0, recovered.Text);
+        }
+        foreach (var (wrongCommit, run, attempt) in new[] { (commit, "18", "2"), (commit, "17", "3"), (new string('a', 40), "17", "2") })
+        {
+            var rejected = Cli("verify", target, archive, wrongCommit, run, attempt);
+            Assert.True(rejected.Exit == 2, rejected.Text);
+        }
+
+        (int Exit, string Text) Cli(string command, string destination, string bundle, string? candidate = null, string run = "17", string attempt = "2") =>
+            SharedBuildContractTests.Process(destination, "python3", ["-B", Path.Combine(repository, "tools/scripts/workflow/ci.py"),
+                command, "--repository", destination, "--stage", "current", "--commit", candidate ?? commit,
+                "--run-id", run, "--run-attempt", attempt, "--archive", bundle], hangGuard: TestBudgets.WorkflowProcessHangGuard);
     }
 
     [Fact]
@@ -235,6 +329,7 @@ public sealed class CiTransportTests
 
     private static void Prepare(CurrentExecutionContractTests.CandidateFixture fixture, bool current)
     {
+        fixture.Build();
         Assert.Equal(0, Program.RunCurrentTests(fixture.Root, (_, results) => { fixture.WriteTrx(results, "Passed"); return 0; }, TextWriter.Null));
         TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, Log), "#!/bin/sh\nexit 0\n");
         if (!OperatingSystem.IsWindows())
@@ -243,15 +338,53 @@ public sealed class CiTransportTests
         CiTransportTests.SealEngineering(fixture.Root, candidate, [Log], Steps(CommonExecutionEvidence.EngineeringSteps));
         if (!current) return;
         Report(fixture.Root);
+        CheckEvidenceFixture.Seal(fixture.Root, "current", CommonExecutionEvidence.ValidateBuild(fixture.Root));
         CommonExecutionEvidence.SealCurrent(fixture.Root, CommonExecutionEvidence.ValidateBuild(fixture.Root), Steps(CommonExecutionEvidence.CurrentSteps));
     }
 
     internal static void SealEngineering(string root, string candidate, IEnumerable<string> binaries, StageStep[] steps)
     {
-        var build = CommonExecutionEvidence.SealBuild(root, candidate, binaries, CommonExecutionEvidence.BuildSteps.Select(name => new StageStep(name, name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", steps[0].Log)).ToArray());
-        var tests = CommonExecutionEvidence.Read<TestExecutionRecord>(root, CommonExecutionEvidence.TestsPath);
-        CommonExecutionEvidence.Write(root, CommonExecutionEvidence.TestsPath, tests with { Round = build.Round });
+        var build = CommonExecutionEvidence.ValidateBuild(root);
+        Assert.Equal(candidate, build.Candidate);
+        build = build with { Materials = CommonExecutionEvidence.Materials(root,
+            build.Materials.Select(material => material.Path).Concat(binaries)) };
+        CommonExecutionEvidence.Write(root, CommonExecutionEvidence.BuildPath, build);
+        var list = CommonExecutionEvidence.BundleListPath("build");
+        TemporaryFileSystem.File.WriteAllText(Path.Combine(root, list), string.Join('\0',
+            build.Materials.Select(material => material.Path).Append(CommonExecutionEvidence.BuildPath).Append(list)
+                .Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal)) + "\0");
+        CheckEvidenceFixture.Seal(root, "engineering", build);
         CommonExecutionEvidence.SealEngineering(root, build, steps);
+    }
+
+    internal static (int Exit, string Text) ProduceReport(string root)
+    {
+        var repository = TestRepositoryLayout.FindRoot();
+        return SharedBuildContractTests.Process(root, "python3", ["-B", "-c", """
+            import pathlib, shutil, sys
+            repository, root, relative = map(pathlib.Path, sys.argv[1:])
+            sys.path.insert(0, str(repository / 'tools/tests/StrataLint.ScriptTests/Fixtures'))
+            from report_snapshot_contract import SnapshotContracts
+            case = SnapshotContracts()
+            case.setUp()
+            try:
+                fixture = case.prepare_report()
+                result = fixture.pair()
+                print(result.stdout + result.stderr)
+                assert result.returncode == 0
+                sys.path.insert(0, str(repository / 'tools/lean-inspector'))
+                from report_cache import copy_bundle, seed_valid
+                from lean_cache import partition_path
+                for name in ('D5', 'Trureturing.lean', 'lakefile.toml', 'lake-manifest.json', 'lean-toolchain'):
+                    source, target = fixture.root / name, root / name
+                    if source.is_dir(): shutil.copytree(source, target)
+                    else: shutil.copyfile(source, target)
+                copy_bundle(fixture.output, root / relative)
+                assert seed_valid(root / relative, partition_path(root))
+            finally:
+                case.doCleanups()
+            """, repository, root, CommonExecutionEvidence.ReportPath],
+            hangGuard: TestBudgets.WorkflowProcessHangGuard);
     }
 
     internal static void Report(string root)

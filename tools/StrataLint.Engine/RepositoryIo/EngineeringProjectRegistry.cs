@@ -35,7 +35,11 @@ internal sealed record EngineeringProjectRegistration(
     string? TestPartition,
     string RootNamespace,
     string[] NamespaceExclude,
-    string[] GlobalNamespaceExceptions)
+    string[] GlobalNamespaceExceptions,
+    [property: JsonRequired] string[]? BuildInputs = null,
+    [property: JsonRequired] string[]? ExecutionInputs = null,
+    [property: JsonRequired] string[]? ExecutionExcludes = null,
+    [property: JsonRequired] string[]? ExecutionEnvironment = null)
     : EngineeringProjectDeclaration(Path, Assembly, Role, Ci, References, Owner, OwnedTestAssembly, TestPartition);
 
 internal sealed record EngineeringProjectManifest(
@@ -69,7 +73,9 @@ internal sealed class EngineeringProjectRegistry
         var manifest = files.SingleOrDefault(file => file.Path == ManifestPath)
             ?? throw new InvalidDataException($"missing engineering project registration: {ManifestPath}");
         var registration = Parse(manifest.Content);
-        return new(Bind(registration.Projects, files.Select(file => file.Path), requireAll: true));
+        var registry = new EngineeringProjectRegistry(Bind(registration.Projects, files.Select(file => file.Path), requireAll: true));
+        _ = registry.ProjectInputs(registry.Projects.Select(project => project.Path), files.Select(file => file.Path), []);
+        return registry;
     }
 
     // A base predating this manifest is still data. Candidate declarations (including explicitly
@@ -139,6 +145,20 @@ internal sealed class EngineeringProjectRegistry
             {
                 ValidatePatterns(project.Include, project.Path);
                 ValidatePatterns(project.Exclude, project.Path);
+                ValidateMaterials(project.BuildInputs, [], project.Path);
+                if (project.IsTest)
+                {
+                    ValidateMaterials(project.ExecutionInputs, project.ExecutionExcludes, project.Path);
+                    if (project.ExecutionEnvironment is null || project.ExecutionEnvironment.Any(name =>
+                            string.IsNullOrWhiteSpace(name) || !name.All(character => char.IsAsciiLetterOrDigit(character) || character == '_'))
+                        || project.ExecutionEnvironment.Distinct(StringComparer.Ordinal).Count() != project.ExecutionEnvironment.Length)
+                        throw new InvalidDataException($"missing or invalid registered execution environment: {project.Path}");
+                }
+                else if (project.ExecutionInputs is not null || project.ExecutionExcludes is not null || project.ExecutionEnvironment is not null)
+                    throw new InvalidDataException($"execution inputs require a test role: {project.Path}");
+                if (project.References is null || project.References.Any(path => !IsProjectPath(path))
+                    || project.References.Distinct(StringComparer.Ordinal).Count() != project.References.Length)
+                    throw new InvalidDataException($"invalid or duplicate registered project reference: {project.Path}");
                 if (!IsRootNamespace(project.RootNamespace))
                     throw new InvalidDataException($"invalid registered root_namespace: {project.Path}: {project.RootNamespace}");
                 ValidatePatterns(project.NamespaceExclude, project.Path);
@@ -221,6 +241,35 @@ internal sealed class EngineeringProjectRegistry
         var unregistered = sources.FirstOrDefault(source => !covered.Contains(source.Path));
         if (unregistered is not null) throw new InvalidDataException($"unregistered engineering source: {unregistered.Path}");
         return result;
+    }
+
+    internal static string[] ExpandInputs(IEnumerable<string> paths, string[] includes, string[] excludes, string project)
+    {
+        var available = paths.ToHashSet(StringComparer.Ordinal);
+        var include = includes.Select(FileMapGlob.Create).ToArray();
+        var exclude = excludes.Select(FileMapGlob.Create).ToArray();
+        foreach (var path in includes.Where(pattern => !pattern.Contains('*')))
+            if (!available.Contains(path)) throw new InvalidDataException($"registered input is absent: {project}: {path}");
+        return available.Where(path => include.Any(pattern => pattern.IsMatch(path))
+            && !exclude.Any(pattern => pattern.IsMatch(path))).Order(StringComparer.Ordinal).ToArray();
+    }
+
+    private static void ValidateMaterials(string[]? includes, string[]? excludes, string project)
+    {
+        foreach (var patterns in new[] { includes, excludes })
+        {
+            if (patterns is null || patterns.Distinct(StringComparer.Ordinal).Count() != patterns.Length)
+                throw new InvalidDataException($"missing or duplicate registered execution/build inputs: {project}");
+            foreach (var pattern in patterns)
+            {
+                if (pattern is null || pattern.Contains(':'))
+                    throw new InvalidDataException($"invalid registered input: {project}: {pattern}");
+                _ = FileMapGlob.Create(pattern);
+            }
+        }
+        foreach (var path in includes!.Where(pattern => !pattern.Contains('*')))
+            if (excludes!.Any(pattern => FileMapGlob.Create(pattern).IsMatch(path)))
+                throw new InvalidDataException($"conflicting required registered input and exclusion: {project}: {path}");
     }
 
     internal IReadOnlySet<string> ProjectInputs(IEnumerable<string> selectedProjects,

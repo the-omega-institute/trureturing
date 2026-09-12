@@ -196,6 +196,7 @@ class PairFixture(PartitionFixture):
                 "include": ["tools/scripts/report/JudgeSeedTask.cs"], "exclude": [], "references": [],
                 "owner": None, "owned_test_assembly": None, "test_partition": None,
                 "root_namespace": "Fixture", "namespace_exclude": [], "global_namespace_exceptions": [],
+                "build_inputs": [], "execution_inputs": None, "execution_excludes": None, "execution_environment": None,
             }], "historical_projects": []}))
         subprocess.run(["git", "init", "--quiet", str(self.root)], check=True, capture_output=True)
         subprocess.run(["git", "-C", str(self.root), "add", "tools"], check=True, capture_output=True)

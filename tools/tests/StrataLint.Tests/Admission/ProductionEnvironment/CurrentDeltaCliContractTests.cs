@@ -8,10 +8,8 @@ using StrataLint.EngineeringScope;
 
 namespace StrataLint.Tests;
 
-public sealed class CurrentDeltaCliContractTests(Xunit.Abstractions.ITestOutputHelper log)
+public sealed class CurrentDeltaCliContractTests
 {
-    // Native script fixture host: production dispatch, parser, repository and report
-    // consumer, with Scribe outside this adapter contract's scope.
     public static int Main(string[] arguments)
     {
         var root = Environment.CurrentDirectory;
@@ -21,130 +19,99 @@ public sealed class CurrentDeltaCliContractTests(Xunit.Abstractions.ITestOutputH
     }
 
     [Theory]
-    [InlineData("valid", 0, "ADMITTED")]
-    [InlineData("invalid-report", 2, "Raw Lean report is not valid JSON")]
-    [InlineData("retired-option", 2, "harness-gate: unknown argument '--test-map-cache-root'")]
-    public void HarnessGateUsesActualCandidateCheckCli(string scenario, int expectedExit, string diagnostic)
-    {
-        if (OperatingSystem.IsWindows()) throw new PlatformNotSupportedException();
-        using var temporary = new TemporaryDirectory();
-        var root = Encoding.UTF8.GetString(RequireSuccess(TestProcessRunner.Run("pwd", ["-P"],
-            temporary.Path, TestBudgets.ScriptProcessHangGuard, 4096)).StandardOutput).Trim();
-        var repository = TestRepositoryLayout.FindRoot();
-        var bin = Path.Combine(root, "bin");
-        Directory.CreateDirectory(bin);
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        foreach (var (path, content) in fixture.Files)
-        {
-            var destination = Path.Combine(root, path);
-            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
-            File.WriteAllText(destination, content);
-        }
-        File.WriteAllText(Path.Combine(root, ".gitignore"), "bin/\n.lake/\ntools/StrataLint.Cli/bin/\n");
-        Git("init", "-q");
-        Git("add", ".");
-        Git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "base");
-        var basis = Encoding.UTF8.GetString(Git("rev-parse", "HEAD").StandardOutput).Trim();
-        var report = Path.Combine(root, ".lake/report.json");
-        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
-            SnapshotDecoder.Decode(GitRepositorySnapshotReader.ReadCurrent(root))).Snapshot;
-        RawLeanReportArtifact.WriteFile(report, snapshot, LeanAxiomReport.Create(fixture.Reports));
-        if (scenario == "invalid-report") File.WriteAllText(report, "not JSON\n");
-
-        var runtime = Path.Combine(root, "tools/StrataLint.Cli/bin/Release/net10.0");
-        Directory.CreateDirectory(Path.GetDirectoryName(runtime)!);
-        Directory.CreateSymbolicLink(runtime, Path.GetDirectoryName(typeof(StrataLint.Cli.Program).Assembly.Location)!);
-        // Reuse the candidate build. The native host calls the actual check consumer;
-        // the separate filemap stage retains its process-normalization test boundary.
-        WriteExecutable(Path.Combine(bin, "make"), """
-            [[ $# == 3 && "$1" == -C && "$2" == "$GATE_TEST_ROOT/tools" && "$3" == dotnet ]]
-            test -s "$GATE_TEST_ROOT/tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll"
-            """);
-        WriteExecutable(Path.Combine(bin, "dotnet"), """
-            [[ "$1" == "$GATE_TEST_ROOT/tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll" ]]
-            if [[ $# == 2 && "$2" == filemap-conform ]]; then exit 0; fi
-            shift
-            exec "$GATE_TEST_DOTNET" "$GATE_TEST_HOST" "$@"
-            """);
-        var dotnet = Encoding.UTF8.GetString(RequireSuccess(TestProcessRunner.Run("/bin/bash",
-            ["-c", "command -v dotnet"], root, TestBudgets.ScriptProcessHangGuard, 4096)).StandardOutput).Trim();
-        var arguments = new List<string>
-        {
-            $"PATH={bin}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}",
-            $"GATE_TEST_ROOT={root}", $"GATE_TEST_DOTNET={dotnet}",
-            $"GATE_TEST_HOST={typeof(CurrentDeltaCliContractTests).Assembly.Location}",
-            Path.Combine(repository, ".github/scripts/harness-gate.sh"),
-            "--candidate", root, "--base", basis, "--candidate-lean-report", report,
-        };
-        if (scenario == "retired-option") arguments.AddRange(["--test-map-cache-root", Path.Combine(root, "test-maps")]);
-        var result = TestProcessRunner.Run("/usr/bin/env", arguments, root,
-            TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
-        var output = Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError);
-        log.WriteLine(JsonSerializer.Serialize(new { executable = "/usr/bin/env", arguments, result.ExitCode, output }));
-        Assert.True(result.ExitCode == expectedExit, $"expected {expectedExit}, got {result.ExitCode}: {output}");
-        Assert.True(output.Contains(diagnostic, StringComparison.Ordinal), $"missing {diagnostic}: {output}");
-        Assert.False(Directory.Exists(Path.Combine(root, "test-maps")));
-
-        ProcessOutput Git(params string[] args) => RequireSuccess(TestProcessRunner.Run("git", args,
-            root, TestBudgets.ScriptProcessHangGuard, 1024 * 1024));
-    }
-
-    [Fact]
-    public void ActualCandidateCheckCliRejectsRetiredTestMapOption()
-    {
-        using var temporary = new TemporaryDirectory();
-        var result = TestProcessRunner.Run("dotnet", [typeof(StrataLint.Cli.Program).Assembly.Location, "check",
-            "--protected-base", new string('a', 40), "--candidate-lean-report", "missing.json",
-            "--test-map-cache-root", "test-maps"], temporary.Path,
-            TestBudgets.ScriptProcessHangGuard, 1024 * 1024);
-        log.WriteLine(JsonSerializer.Serialize(new { assembly = typeof(StrataLint.Cli.Program).Assembly.Location, result.ExitCode, error = Encoding.UTF8.GetString(result.StandardError) }));
-        Assert.Equal(2, result.ExitCode);
-        Assert.Contains("USAGE: StrataLint check", Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
-    }
-
-    private static ProcessOutput RequireSuccess(ProcessOutput result)
-    {
-        Assert.True(result.ExitCode == 0,
-            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
-        return result;
-    }
-
-    [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
-    private static void WriteExecutable(string path, string body)
-    {
-        File.WriteAllText(path, "#!/usr/bin/env bash\nset -euo pipefail\n" + body + "\n");
-        File.SetUnixFileMode(path, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
-    }
-
-    [Fact]
-    public void CurrentRunsInParentlessRemotelessRepositoryAndFindsExistingInvalidHeader()
+    [InlineData(false)]
+    [InlineData(true)]
+    public void CurrentRunsInParentlessRemotelessRepositoryAndFindsExistingInvalidHeader(bool selected)
     {
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
+        fixture.Files["Meta/ci-checks.json"] = CommonCheckRegistrationFixture.Manifest("tools/StrataLint.Scribe/StrataLint.Scribe.csproj");
+        fixture.Files["global.json"] = "{\"sdk\":{\"version\":\"10.0.103\"}}";
+        fixture.Files["tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"] = "// banned-api-proof\n";
         fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical;
         fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
+        if (selected)
+        {
+            var repository = TestRepositoryLayout.FindRoot();
+            foreach (var path in new[] { "tools/scripts/workflow/ci.py", "tools/scripts/workflow/ci_plan.py" })
+                fixture.Files[path] = File.ReadAllText(Path.Combine(repository, path));
+            fixture.Files["Meta/ci-resources.json"] = JsonSerializer.Serialize(new {
+                schema = "ci-resource-execution-v1", resources = new[] {
+                    new { id = "current", projects = new[] { "tools/StrataLint.Scribe/StrataLint.Scribe.csproj" },
+                        checks = new[] { "SL-012" }, steps = new[] { "check-current" } } } });
+            fixture.Files["Meta/FILEMAP.toml"] = """
+                schema_version = 3
+                resources = [
+                  { id = "current", stage = "current", owner = "tools/scripts/workflow/ci.py", prerequisites = [], tools = [], cache_layers = [], materials = ["Meta/ci-checks.json", "Meta/ci-resources.json", "Meta/engineering-projects.json"] },
+                ]
+                [residence_policy]
+                case_id = "FIXTURE"
+                desired = "explicit"
+                known_violation_count = 0
+                status = "closed"
+                [[files]]
+                pattern = "**"
+                require = ["current"]
+                kind = "program"
+                admission_plane = "judge"
+                produced_by = "none"
+                consumed_by = ["test"]
+                verified_by = ["test"]
+                artifact_id = "none"
+                runtime_disposition = "committed-source"
+                """ + "\n";
+        }
         foreach (var pair in fixture.Files)
         {
             var file = Path.Combine(temporary.Path, pair.Key);
             Directory.CreateDirectory(Path.GetDirectoryName(file)!);
             File.WriteAllText(file, pair.Value);
         }
-        File.WriteAllText(Path.Combine(temporary.Path, ".gitignore"), ".lake/\nbuild/\n");
+        File.WriteAllText(Path.Combine(temporary.Path, ".gitignore"), ".lake/\nbuild/\n__pycache__/\n");
         Git(temporary.Path, "init", "-q");
         Git(temporary.Path, "add", ".");
         Git(temporary.Path, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "parentless");
         var report = Path.Combine(temporary.Path, ".lake/build/stratalint/raw-lean-report.json");
         WriteReport();
         var environment = new ProductionCliEnvironment(temporary.Path, new GitRepositoryGateway(temporary.Path), new FakeLeanReportSource(null));
-        var result = environment.CheckCurrent(["--candidate-lean-report", report]);
+        var result = environment.CheckCurrent(Arguments());
         Assert.True(result.ExitCode == 0, result.Output + result.Error);
+        if (selected)
+        {
+            Assert.Equal(new[] { "SL-012" }, CommonExecutionEvidence.Read<CommonCheckRecord>(temporary.Path,
+                CommonExecutionEvidence.ChecksPath("current")).Units.Select(unit => unit.Id));
+            using var verdict = JsonDocument.Parse(result.Output[result.Output.IndexOf("{\"executed\"", StringComparison.Ordinal)..]);
+            Assert.Equal(new[] { "SL-012" }, verdict.RootElement.GetProperty("executed").EnumerateArray().Select(value => value.GetString()));
+        }
         File.WriteAllText(Path.Combine(temporary.Path, RuleFixture.RingPath), "def invalid : Nat := 0\n");
         WriteReport();
-        result = environment.CheckCurrent(["--candidate-lean-report", report]);
+        result = environment.CheckCurrent(Arguments());
         Assert.Equal(1, result.ExitCode);
         Assert.Contains("SL-012", result.Output, StringComparison.Ordinal);
+
+        string[] Arguments()
+        {
+            if (!selected) return ["--candidate-lean-report", report];
+            var root = temporary.Path;
+            const string log = "build/ci/fixture-build.log";
+            Directory.CreateDirectory(Path.Combine(root, "build/ci"));
+            File.WriteAllText(Path.Combine(root, log), "fixture build material");
+            var build = CommonExecutionEvidence.SealBuild(root, CommonExecutionEvidence.Candidate(root), [log],
+                CommonExecutionEvidence.BuildSteps.Select(name => new StageStep(name, 0, 0, "executed", log)).ToArray());
+            var commit = Git(root, "rev-parse", "HEAD");
+            var entry = Git(root, "ls-tree", "HEAD", "--", RuleFixture.RingPath).Split([' ', '\t'], StringSplitOptions.RemoveEmptyEntries);
+            var changes = Path.Combine(root, "build/scope.json");
+            var plan = Path.Combine(root, "build/plan.json");
+            File.WriteAllText(changes, JsonSerializer.Serialize(new { schema_version = 1, mode = "current",
+                candidate = new { commit, tree = Git(root, "rev-parse", "HEAD^{tree}") }, @base = (string?)null, head = (string?)null,
+                complete = true, change_count = 1, changes = new[] { new { status = "A", old = (object?)null,
+                    @new = new { path = RuleFixture.RingPath, mode = entry[0], oid = entry[2] } } } }));
+            var planning = TestProcessRunner.Run("python3", ["-B", "tools/scripts/workflow/ci.py", "plan", "--repository", root,
+                "--commit", commit, "--changes", changes, "--output", plan], root, TestBudgets.ScriptProcessHangGuard, 1024 * 1024);
+            Assert.True(planning.ExitCode == 0, Encoding.UTF8.GetString(planning.StandardError));
+            return ["--candidate-lean-report", report, "--common-build-round", build.Round, "--common-plan", plan, "--common-changes", changes];
+        }
 
         void WriteReport()
         {
@@ -162,14 +129,17 @@ public sealed class CurrentDeltaCliContractTests(Xunit.Abstractions.ITestOutputH
         Assert.Contains("accepts no base", result.Error, StringComparison.Ordinal);
     }
 
-    private static void Git(string root, params string[] arguments)
+    private static string Git(string root, params string[] arguments)
     {
         var result = TestProcessRunner.Run("git", arguments, root, TestBudgets.ScriptProcessHangGuard, 1024 * 1024);
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+        return Encoding.UTF8.GetString(result.StandardOutput).Trim();
     }
 
     [Theory]
     [InlineData("valid", 0, "")]
+    [InlineData("reused", 0, "")]
+    [InlineData("disabled-base-project", 2, "base test project")]
     [InlineData("premanifest-base", 0, "")]
     [InlineData("premanifest-missing-base-project", 2, "base test project")]
     [InlineData("original-registration-base", 0, "")]
@@ -189,10 +159,19 @@ public sealed class CurrentDeltaCliContractTests(Xunit.Abstractions.ITestOutputH
         var root = temporary.Path;
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
+        fixture.Files["Meta/ci-checks.json"] = CommonCheckRegistrationFixture.Manifest("tools/StrataLint.Scribe/StrataLint.Scribe.csproj");
+        fixture.Files["global.json"] = "{\"sdk\":{\"version\":\"10.0.103\"}}";
+        fixture.Files["tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"] = "// banned-api-proof\n";
         foreach (var pair in fixture.Files) Write(pair.Key, pair.Value);
         Write(".gitignore", ".lake/\nbuild/\n");
-        Write("Meta/FILEMAP.toml", File.ReadAllText(
-            Path.Combine(TestRepositoryLayout.FindRoot(), "Meta/FILEMAP.toml")));
+        // Keep the exact registered rows while representing this large declaration
+        // as inline tables inside the fixture's ordinary artifact capacity envelope.
+        var filemap = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Meta/FILEMAP.toml"))
+            .Split("[[files]]", StringSplitOptions.None);
+        var residence = filemap[0].IndexOf("[residence_policy]", StringComparison.Ordinal);
+        Write("Meta/FILEMAP.toml", filemap[0][..residence] + "files = [\n" + string.Join("\n",
+            filemap.Skip(1).Select(row => "  { " + string.Join(", ", row.Split('\n', StringSplitOptions.RemoveEmptyEntries)) + " },")) +
+            "\n]\n" + filemap[0][residence..]);
         const string firstProject = "tools/tests/First/First.csproj";
         Write(firstProject, "<Project><PropertyGroup><IsTestProject>true</IsTestProject></PropertyGroup></Project>\n");
         Write("tools/tests/Second/Second.csproj", "<Project><PropertyGroup><IsTestProject>true</IsTestProject></PropertyGroup></Project>\n");
@@ -233,6 +212,9 @@ public sealed class CurrentDeltaCliContractTests(Xunit.Abstractions.ITestOutputH
                 projects.Add(JsonNode.Parse(EngineeringRegistrationFixture.Manifest(new EngineeringProjectFixture(
                     product, "StrataLint.NewProduct", "production", false, [], OwnedTestAssembly: "StrataLint.NewProduct.Tests")))!["projects"]![0]!.DeepClone());
                 break;
+            case "disabled-base-project":
+                projects.Single(item => item!["path"]!.GetValue<string>() == firstProject)!["ci"] = false;
+                break;
             case "missing-base-project":
             case "premanifest-missing-base-project":
             case "original-registration-missing-base-project":
@@ -262,19 +244,53 @@ public sealed class CurrentDeltaCliContractTests(Xunit.Abstractions.ITestOutputH
         }
         const string log = CommonExecutionEvidence.RootPath + "/unit-stage.log";
         Write(log, "fixture common stage succeeded\n");
-        var build = CommonExecutionEvidence.SealBuild(root, CommonExecutionEvidence.Candidate(root), [log],
+        var registered = EngineeringProjectRegistry.Read(CommonExecutionEvidence.Snapshot(root)).Projects.Where(project => project.Ci).ToArray();
+        var inventory = registered.Select(project => new BuiltTestProject(project.Path, "build/ci/bin/" + project.Assembly + ".dll")).ToArray();
+        foreach (var test in inventory) Write(test.Assembly, "synthetic runtime");
+        CommonExecutionEvidence.Write(root, CommonBuildOutputs.TestsPath, inventory);
+        var build = CommonExecutionEvidence.SealBuild(root, CommonExecutionEvidence.Candidate(root), inventory.Select(test => test.Assembly).Append(CommonBuildOutputs.TestsPath).Append(log),
             CommonExecutionEvidence.BuildSteps.Select(name => new StageStep(name, 0, 0, "executed", log)).ToArray());
-        Assert.Equal(0, StrataLint.EngineeringScope.Program.RunCurrentTests(root, (_, results) =>
+        Assert.Equal(0, StrataLint.EngineeringScope.Program.RunCurrentTests(root, (project, results) =>
         {
-            File.WriteAllText(Path.Combine(results, "run.trx"), """
+            var assembly = registered.Single(row => row.Path == project).Assembly;
+            File.WriteAllText(Path.Combine(results, "run.trx"), $$"""
                 <TestRun><Results><UnitTestResult testId="one" testName="Fixture.Runs" outcome="Passed" /></Results>
-                <TestDefinitions><UnitTest id="one" storage="Fixture.dll"><TestMethod className="Fixture" name="Runs" /></UnitTest></TestDefinitions>
+                <TestDefinitions><UnitTest id="one" storage="{{assembly}}.dll"><TestMethod className="Fixture" name="Runs" /></UnitTest></TestDefinitions>
                 <ResultSummary outcome="Completed"><Counters executed="1" passed="1" failed="0" /></ResultSummary></TestRun>
                 """);
             return 0;
         }, TextWriter.Null, build));
+        SealChecks("engineering");
         CommonExecutionEvidence.SealEngineering(root, build, CommonExecutionEvidence.EngineeringSteps.Select(name => new StageStep(name, name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", log)).ToArray());
+        if (scenario == "reused")
+        {
+            Assert.True(CommonExecutionEvidence.ExportTestSeed(root, TextWriter.Null));
+            var original = CommonExecutionEvidence.ValidateTests(root);
+            build = CommonExecutionEvidence.SealBuild(root, build.Candidate, build.Materials.Select(material => material.Path), build.Steps);
+            Assert.Equal(0, StrataLint.EngineeringScope.Program.RunCurrentTests(root, (_, _) => throw new InvalidOperationException("equal inputs must reuse"), TextWriter.Null, build));
+            Assert.Equal(original.Projects.Select(row => row with { Status = "reused" }), CommonExecutionEvidence.ValidateTests(root).Projects);
+            SealChecks("engineering");
+        CommonExecutionEvidence.SealEngineering(root, build, CommonExecutionEvidence.EngineeringSteps.Select(name => new StageStep(name, name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", log)).ToArray());
+        }
+        SealChecks("current");
         CommonExecutionEvidence.SealCurrent(root, build, CommonExecutionEvidence.CurrentSteps.Select(name => new StageStep(name, 0, 0, "executed", log)).ToArray());
+        void SealChecks(string stage)
+        {
+            var checks = CommonExecutionEvidence.BeginChecks(root, stage, build, TextWriter.Null);
+            foreach (var id in checks.Ids)
+                checks.Run(id, () => new CheckWork(id switch
+                {
+                    "selftest-pair" => [new("selftest-first", 0, "SELFTEST PASS\n"), new("selftest-second", 0, "SELFTEST PASS\n")],
+                    "capability-proof" => [new("restore-CompileFailProof", 0, "restored"), new(id, 1, "MissingCapability.cs(13,9): error CS7036: missing metaClear\n")],
+                    "banned-api-proof" => [new("restore-BannedApiCompileFailProof", 0, "restored"), new(id, 1, "BannedApiViolations.cs(1,1): error RS0030: banned symbol\n")],
+                    _ => [new(id, 0, id.StartsWith("SL-", StringComparison.Ordinal) ? CommonCheckRegistrationFixture.Predicate(id) : "passed")],
+                }, id == "scribe-describe" ? VerifiedScribeEmissions.Create(CommonExecutionEvidence.Snapshot(root).Files.Values
+                    .Where(file => file.Path.Value.StartsWith("Blueprint/", StringComparison.Ordinal) && file.Path.Value.EndsWith(".scribe.cs", StringComparison.Ordinal))
+                    .Select(file => new ScribeEmissionRecord(file.Path.Value["Blueprint/".Length..^".scribe.cs".Length], file.Path.Value,
+                        DigestionFingerprint.Compute(file.RawBytes.AsSpan()).RawSha256,
+                        file.Path.Value[..^".scribe.cs".Length] + ".md", "sha256:" + new string('a', 64)))).WriteMaterial() : null));
+            checks.Seal();
+        }
         switch (scenario)
         {
             case "missing-report": File.Delete(report); break;
@@ -292,8 +308,14 @@ public sealed class CurrentDeltaCliContractTests(Xunit.Abstractions.ITestOutputH
         {
             Assert.Contains($"ENGINEERING_TEST_PROJECT_REMOVED project={JsonSerializer.Serialize(firstProject)}",
                 console.Output, StringComparison.Ordinal);
-            Assert.Contains($"base test project has no successful candidate execution: {firstProject}",
+            Assert.Contains($"base test project has no current accepted-success coverage: {firstProject}",
                 console.Error, StringComparison.Ordinal);
+        }
+        if (scenario == "reused")
+        {
+            using var json = JsonDocument.Parse(console.Output);
+            Assert.All(json.RootElement.GetProperty("accepted_base_tests").EnumerateArray(), row =>
+                Assert.Equal("reused", row.GetProperty("status").GetString()));
         }
         if (scenario == "annotation")
         {

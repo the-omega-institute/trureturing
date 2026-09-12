@@ -49,7 +49,11 @@ public sealed class JudgeSeedTopologyTests
         var registrations = manifest["projects"]!.AsArray();
         foreach (var item in registrations.ToArray())
             if (!paths.Contains(item!["path"]!.GetValue<string>())) registrations.Remove(item);
-        return Decode(files.Append(RawRepositoryEntry.FromText(EngineeringProjectRegistry.ManifestPath, manifest.ToJsonString())));
+        var literalInputs = registrations.SelectMany(item => item!["include"]!.AsArray())
+            .Select(item => item!.GetValue<string>()).Where(path => !path.Contains('*') && !paths.Contains(path))
+            .Distinct(StringComparer.Ordinal).Select(path => RawRepositoryEntry.FromText(path,
+                File.ReadAllText(Path.Combine(RepositoryLayout.FindRoot(), path))));
+        return Decode(files.Concat(literalInputs).Append(RawRepositoryEntry.FromText(EngineeringProjectRegistry.ManifestPath, manifest.ToJsonString())));
     }
 
     private static RepositorySnapshot Decode(IEnumerable<RawRepositoryEntry> entries) =>

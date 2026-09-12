@@ -7,6 +7,19 @@ public sealed class EngineeringProjectRegistrationTests
     private const string Project = "odd/LooksLikeProduction.csproj";
     private const string Misleading = "<Project><PropertyGroup><AssemblyName>Wrong</AssemblyName><IsTestProject>false</IsTestProject></PropertyGroup></Project>";
 
+    [Theory]
+    [InlineData("execution_inputs")]
+    [InlineData("execution_excludes")]
+    [InlineData("execution_environment")]
+    public void CurrentNonTestRequiresExplicitNullableExecutionDeclarations(string field)
+    {
+        const string project = "tools/Utility.csproj";
+        var manifest = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest(
+            new EngineeringProjectFixture(project, "Utility", "test-support", false, [])))!;
+        manifest["projects"]![0]!.AsObject().Remove(field);
+        Assert.Throws<InvalidDataException>(() => EngineeringProjectRegistry.Read(Snapshot(manifest.ToJsonString(), (project, "<Project />"))));
+    }
+
     [Fact]
     public void ExplicitClassificationWinsOverNameLocationAndMetadata()
     {
@@ -47,7 +60,7 @@ public sealed class EngineeringProjectRegistrationTests
     public void SupportAndProofRolesDoNotBecomeTestsFromXunitMetadata()
     {
         var entries = new[] { Test() with { Role = "test-support", Ci = false },
-            Test() with { Path = "proof/p.csproj", Role = "compile-fail-proof", Ci = false } };
+            Test() with { Path = "proof/p.csproj", Assembly = "Proof", Role = "compile-fail-proof", Ci = false } };
         var snapshot = Snapshot(EngineeringRegistrationFixture.Manifest(entries),
             entries.Select(entry => (entry.Path, "<Project><ItemGroup><PackageReference Include=\"xunit\" /></ItemGroup></Project>")).ToArray());
         Assert.Empty(EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadSnapshotProjects(snapshot)).ToArray());
@@ -151,6 +164,39 @@ public sealed class EngineeringProjectRegistrationTests
     }
 
     [Fact]
+    public void TrackedTopologyIncludesExplicitCompileMaterialsOutsideTheProjectDirectory()
+    {
+        using var repository = new TemporaryDirectory();
+        const string source = "linked/ActualInput.cs";
+        Write(Project, Misleading);
+        Write(source, "namespace Fixture; public sealed class ActualInput {}\n");
+        Write(EngineeringRegistrationFixture.Path, EngineeringRegistrationFixture.Manifest(Test() with { Include = [source] }));
+        Git("init", "-q");
+        Git("add", ".");
+
+        var topology = RepositoryRules.ReadTrackedProjects(repository.Path);
+        Assert.Equal(Project, Assert.Single(topology.Projects).Path);
+        Assert.Equal(Misleading, topology.Projects[0].Content);
+        Assert.Equal([Project], EngineeringTestPlanPolicy.Evaluate(topology).ToArray());
+
+        // An existing but untracked source cannot discharge a declared Compile input.
+        Git("rm", "--cached", source);
+        var error = Assert.Throws<InvalidDataException>(() => RepositoryRules.ReadTrackedProjects(repository.Path));
+        Assert.Contains("registered Compile input is absent", error.Message);
+        Assert.Contains(source, error.Message);
+
+        void Write(string path, string content)
+        {
+            var full = Path.Combine(repository.Path, path);
+            Directory.CreateDirectory(Path.GetDirectoryName(full)!);
+            File.WriteAllText(full, content);
+        }
+
+        void Git(params string[] arguments) => Assert.Equal(0, TestProcessRunner.Run("git", arguments,
+            repository.Path, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024).ExitCode);
+    }
+
+    [Fact]
     public void RepositoryRegistrationKeepsScriptCiExclusionAndBothProofProjects()
     {
         var topology = RepositoryRules.ReadTrackedProjects(RepositoryLayout.FindRoot());
@@ -164,6 +210,55 @@ public sealed class EngineeringProjectRegistrationTests
         }, topology.Projects.Where(project => project.Registration.Role == "compile-fail-proof").Select(project => project.Path));
     }
 
+    [Fact]
+    public void CurrentExecutionDeclarationsAreRequiredButHistoricalBaseMembershipProjectsOldRows()
+    {
+        var old = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest(Test()))!;
+        foreach (var field in new[] { "build_inputs", "execution_inputs", "execution_excludes", "execution_environment" })
+            old["projects"]![0]!.AsObject().Remove(field);
+        var baseline = Snapshot(old.ToJsonString(), (Project, Misleading));
+        var candidate = Snapshot(EngineeringRegistrationFixture.Manifest(Test()), (Project, Misleading));
+        Assert.Throws<InvalidDataException>(() => EngineeringProjectRegistry.Read(baseline));
+        Assert.Equal(Project, Assert.Single(EngineeringProjectRegistry.ReadBase(baseline, candidate)).Path);
+        var current = Assert.Single(EngineeringProjectRegistry.Read(candidate).Projects);
+        Assert.Empty(current.BuildInputs!);
+        Assert.Empty(current.ExecutionInputs!);
+        Assert.Empty(current.ExecutionExcludes!);
+        Assert.Empty(current.ExecutionEnvironment!);
+    }
+
+    [Theory]
+    [InlineData("reference")]
+    [InlineData("cycle")]
+    [InlineData("assembly")]
+    public void ConflictingOrUnresolvedRegistrationFailsBeforeSelection(string defect)
+    {
+        var first = Test();
+        var second = Test() with { Path = "checks/Second.csproj", Assembly = "Second", TestPartition = "Second" };
+        if (defect == "reference") first = first with { References = ["missing/Project.csproj"] };
+        if (defect == "cycle")
+        {
+            first = first with { References = [second.Path] };
+            second = second with { References = [first.Path] };
+        }
+        if (defect == "assembly") second = second with { Assembly = first.Assembly };
+        Assert.Throws<InvalidDataException>(() => EngineeringProjectRegistry.Read(Snapshot(
+            EngineeringRegistrationFixture.Manifest(first, second), (first.Path, Misleading), (second.Path, Misleading))));
+    }
+
+    [Fact]
+    public void CurrentRepositoryExecutionAndBuildInputsExpandOnlyExplicitExistingMaterials()
+    {
+        var snapshot = StrataLint.EngineeringScope.CommonExecutionEvidence.Snapshot(RepositoryLayout.FindRoot());
+        var registry = EngineeringProjectRegistry.Read(snapshot);
+        var paths = snapshot.Files.Keys.Select(path => path.Value).ToArray();
+        foreach (var project in registry.Projects)
+        {
+            Assert.NotEmpty(EngineeringProjectRegistry.ExpandInputs(paths, project.BuildInputs!, [], project.Path));
+            if (project.IsTest)
+                _ = EngineeringProjectRegistry.ExpandInputs(paths, project.ExecutionInputs!, project.ExecutionExcludes!, project.Path);
+        }
+    }
 
     [Theory]
     [InlineData("root_namespace")]

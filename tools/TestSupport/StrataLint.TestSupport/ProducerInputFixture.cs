@@ -45,6 +45,8 @@ internal sealed class ProducerInputFixture : IDisposable
         references = name == "StrataLint.Cli" ? new[] { EngineProjectPath }
             : name == "StrataLint.Engine" ? new[] { TruthProjectPath } : [],
         role = "test-support", test_partition = (string?)null,
+        build_inputs = Array.Empty<string>(), execution_inputs = (string[]?)null,
+        execution_excludes = (string[]?)null, execution_environment = (string[]?)null,
         root_namespace = name, namespace_exclude = Array.Empty<string>(), global_namespace_exceptions = Array.Empty<string>(),
     };
 

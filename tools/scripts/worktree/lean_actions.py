@@ -11,13 +11,18 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import tarfile
 
 from lean_cache import binary_platform, partition_path, resolved_mathlib
 from lean_cache_release import cache_guard
 from cache_material import files, sha
 
 LAYERS = ("dependency", "project", "report")
-ALL_LAYERS = (*LAYERS, "judge")
+# Execution evidence is deliberately opt-in.  The existing default cache
+# layers remain unchanged; callers request these layers when the native
+# engineering/current seed owners have produced their exports.
+EXECUTION_LAYERS = ("engineering", "current")
+ALL_LAYERS = (*LAYERS, "judge", *EXECUTION_LAYERS)
 
 
 def actions_keys(root: pathlib.Path) -> dict:
@@ -33,7 +38,8 @@ def actions_keys(root: pathlib.Path) -> dict:
     if not re.fullmatch(r"[0-9]+", run) or not re.fullmatch(r"[0-9]+", attempt):
         raise ValueError("snapshot keys require GITHUB_RUN_ID and GITHUB_RUN_ATTEMPT")
     writer_allowed = (os.environ.get("GITHUB_EVENT_NAME") == "push"
-                  and os.environ.get("GITHUB_REF") == "refs/heads/dev"
+                  and (os.environ.get("GITHUB_REF") == "refs/heads/dev"
+                       or os.environ.get("GITHUB_REF", "").startswith("refs/heads/integration-"))
                   and os.environ.get("STRATALINT_CACHE_WRITES", "true") == "true")
     result = {"mathlib_revision": revision, "os": system, "arch": machine,
               "partition": partition_path(root),
@@ -46,6 +52,10 @@ def actions_keys(root: pathlib.Path) -> dict:
         prefix = f"lean-{layer}-v3-{revision}-{system}-{machine}-"
         result[layer] = {"restore_prefix": prefix, "key": f"{prefix}{run}-{attempt}",
                          "path": "build/lean-cache/" + layer, "target": path}
+    for layer in EXECUTION_LAYERS:
+        prefix = f"lean-{layer}-seed-v1-{revision}-{system}-{machine}-"
+        result[layer] = {"restore_prefix": prefix, "key": f"{prefix}{run}-{attempt}",
+                         "path": "build/lean-cache/" + layer, "stage": layer + "-seed"}
     result["release_prefix"] = f"lean-cache-v2-{revision}-{system}-{machine}-"
     return result
 
@@ -94,10 +104,32 @@ def snapshot_report(root, partition, destination):
     current = json.loads(bound_bytes("build/ci/current.json"))
     if (not isinstance(summary, dict) or summary.get("stage") != "current" or summary.get("exit") != 0
             or summary.get("current_evidence") != "build/ci/current.json"
-            or not isinstance(current, dict) or current.get("version") != 1
+            or not isinstance(current, dict) or current.get("version") != 2
             or current.get("candidate") != transport["candidate"] or current.get("round") != transport["round"]
             or summary.get("candidate") != current["candidate"]):
         raise ValueError("current report handoff mismatch")
+    required_steps = ["lean-report", "scribe", "filemap", "check-current"]
+    selection = current.get("selection")
+    if selection is not None:
+        sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "workflow"))
+        from ci_plan import make_plan, same_record
+        if not isinstance(selection, dict) or set(selection) != {"plan", "changes"}:
+            raise ValueError("invalid current resource selection")
+        for selected in selection.values():
+            if pathlib.PurePosixPath(selected).is_absolute() or any(part in ("", ".", "..") for part in selected.split("/")):
+                raise ValueError("invalid current selection material")
+            bound_bytes(selected)
+        plan = json.loads(bound_bytes(selection["plan"]))
+        if not same_record(plan, make_plan(root, transport["commit"], root / selection["changes"])):
+            raise ValueError("current selection differs from validated scope")
+        required_steps = plan["execution"]["steps"]
+    if ([step.get("name") for step in current["steps"]] != required_steps
+            or any(step.get("raw_exit") != 0 or step.get("exit") != 0
+                   or not (step.get("status") == "executed" or step.get("status") == "reused"
+                           and step.get("name") in ("scribe", "filemap", "check-current")) for step in current["steps"])
+            or "lean-report" not in required_steps
+            or summary.get("report") != ".lake/build/stratalint/raw-lean-report.json"):
+        raise ValueError("current report requires complete selected obligations")
     relative = summary["report"]
     if pathlib.PurePosixPath(relative).is_absolute() or any(part in ("", ".", "..") for part in relative.split("/")):
         raise ValueError("invalid current report path")
@@ -136,6 +168,113 @@ def snapshot_report(root, partition, destination):
     return inventory
 
 
+def snapshot_execution(root, layer, keys, destination):
+    """Export one native execution seed and make its declared members cacheable.
+
+    The native runner owns seed selection, validation, provenance, and the
+    NUL material list.  Actions only transports the resulting files.
+    """
+    spec = keys[layer]
+    commit = os.environ.get("CANDIDATE_SHA", "")
+    if commit and not re.fullmatch(r"[0-9a-f]{40}", commit):
+        raise ValueError("CANDIDATE_SHA must be a 40-character commit identity")
+    if not commit:
+        result = subprocess.run(["git", "-C", str(root), "rev-parse", "HEAD"], capture_output=True, text=True, check=True)
+        commit = result.stdout.strip()
+    runner = root / "tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll"
+    if not runner.is_file():
+        raise ValueError("native execution transport runner is unavailable")
+    destination.mkdir(parents=True, exist_ok=True)
+    descriptor, archive_name = tempfile.mkstemp(prefix=f".{layer}-transport-", suffix=".tgz", dir=destination.parent)
+    os.close(descriptor)
+    archive = pathlib.Path(archive_name)
+    command = ["dotnet", str(runner), "transport-pack", "--repository", str(root),
+               "--stage", spec["stage"], "--commit", commit,
+               "--run-id", os.environ["GITHUB_RUN_ID"],
+               "--run-attempt", os.environ["GITHUB_RUN_ATTEMPT"], "--archive", str(archive)]
+    try:
+        try:
+            subprocess.run(command, cwd=root, check=True, capture_output=True, text=True)
+        except subprocess.CalledProcessError as error:
+            status = subprocess.run(["git", "-C", str(root), "status", "--porcelain", "--untracked-files=all"], capture_output=True, text=True)
+            detail = (error.stderr or error.stdout or str(error)).strip()
+            raise ValueError(detail + ("; status=" + status.stdout.strip() if status.stdout.strip() else "")) from error
+        with tarfile.open(archive, "r:gz") as source:
+            for member in source.getmembers():
+                path = pathlib.PurePosixPath(member.name)
+                if (not member.isfile() or path.is_absolute() or any(part in ("", ".", "..") for part in member.name.split("/"))):
+                    raise ValueError("native execution transport contains an invalid member")
+                target = destination / path
+                target.parent.mkdir(parents=True, exist_ok=True)
+                with source.extractfile(member) as stream:
+                    if stream is None:
+                        raise ValueError("native execution transport member has no data")
+                    target.write_bytes(stream.read())
+                if os.name != "nt":
+                    target.chmod(member.mode & 0o7777)
+    finally:
+        archive.unlink(missing_ok=True)
+        archive.with_name(archive.name + ".tmp").unlink(missing_ok=True)
+    inventory = files(destination)
+    transport = json.loads((destination / "build/ci" / (spec["stage"] + "-transport.json")).read_text())
+    if transport.get("commit") != commit or transport.get("run_id") != int(os.environ["GITHUB_RUN_ID"]):
+        raise ValueError("native execution transport identity mismatch")
+    if transport.get("run_attempt") != int(os.environ["GITHUB_RUN_ATTEMPT"]):
+        raise ValueError("native execution transport attempt mismatch")
+    return inventory
+
+
+def restore_execution(root, layer, keys, staged):
+    spec = keys[layer]
+    transport_path = staged / "build/ci" / (spec["stage"] + "-transport.json")
+    transport = json.loads(transport_path.read_text())
+    if (not isinstance(transport, dict) or transport.get("stage") != spec["stage"]
+            or not re.fullmatch(r"[0-9a-f]{40}", transport.get("commit", ""))):
+        raise ValueError("invalid native execution transport identity")
+    runner = root / "tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll"
+    if not runner.is_file():
+        raise ValueError("native execution transport runner is unavailable")
+    inventory = files(staged)
+    # Native validation must inspect the complete staged bundle before any
+    # optional seed material can replace destination evidence.
+    try:
+        subprocess.run(["dotnet", str(runner), "transport-verify", "--repository", str(staged),
+                        "--stage", spec["stage"], "--commit", transport["commit"],
+                        "--run-id", str(transport["run_id"]), "--run-attempt", str(transport["run_attempt"])],
+                       cwd=root, check=True, capture_output=True, text=True)
+    except subprocess.CalledProcessError as error:
+        detail = (error.stderr or error.stdout or str(error)).strip()
+        raise ValueError("native execution transport rejected staged seed: " + detail) from error
+    # Native verification owns the accepted material list; the copying adapter
+    # must not extend it with extra rows from the outer Actions inventory.
+    declared = {item["path"] for item in transport["materials"]}
+    if {item["path"] for item in inventory} != declared | {transport_path.relative_to(staged).as_posix()}:
+        raise ValueError("execution seed differs from declared transport materials")
+    with tempfile.TemporaryDirectory(prefix=".transport-rollback-", dir=root.parent) as rollback:
+        rollback_root = pathlib.Path(rollback)
+        backups = []
+        installed = []
+        try:
+            for item in inventory:
+                source = staged / item["path"]
+                destination = root / item["path"]
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                if destination.exists():
+                    backup = rollback_root / item["path"]
+                    backup.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.move(destination, backup)
+                    backups.append((destination, backup))
+                shutil.copy2(source, destination)
+                installed.append(destination)
+        except Exception:
+            for destination in installed:
+                destination.unlink(missing_ok=True)
+            for destination, backup in reversed(backups):
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                shutil.move(backup, destination)
+            raise
+
+
 def validate_judge_registration(root, layers):
     if "judge" in layers:
         sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "report"))
@@ -157,7 +296,9 @@ def snapshot(root, keys, layers=LAYERS, registry=None):
             with tempfile.TemporaryDirectory(prefix=".snapshot-", dir=target.parent) as temporary:
                 staged = pathlib.Path(temporary)
                 with cache_guard(root, shared=True):
-                    if layer == "report":
+                    if layer in EXECUTION_LAYERS:
+                        inventory = snapshot_execution(root, layer, keys, staged / "data")
+                    elif layer == "report":
                         inventory = snapshot_report(root, keys["partition"], staged / "data")
                     elif layer == "judge":
                         sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "report"))
@@ -199,7 +340,7 @@ def restore(root, keys, matched, layers=LAYERS, registry=None):
                     or manifest.get("layer") != layer or manifest.get("key") != key
                     or manifest.get("files") != files(cached / "data", expected=manifest["files"])):
                 raise ValueError("Actions seed identity or material integrity mismatch")
-            target = root / spec["target"]
+            target = root / spec.get("target", ".")
             with cache_guard(root):
                 target.parent.mkdir(parents=True, exist_ok=True)
                 with tempfile.TemporaryDirectory(prefix=".actions-", dir=target.parent) as temporary:
@@ -219,12 +360,15 @@ def restore(root, keys, matched, layers=LAYERS, registry=None):
                                    and pathlib.PurePosixPath(item["path"]).parent.parent.as_posix() == keys["partition"]]
                         if not reports or not any(seed_valid(report, keys["partition"]) for report in reports):
                             raise ValueError("Actions report cache has no valid complete seed")
-                    if target.exists():
-                        shutil.rmtree(target)
-                    staged.rename(target)
+                    if layer in EXECUTION_LAYERS:
+                        restore_execution(root, layer, keys, staged)
+                    else:
+                        if target.exists():
+                            shutil.rmtree(target)
+                        staged.rename(target)
             project_seeded |= layer == "project"
             receipt(layer, "restored", key=key, partition=keys["partition"])
-        except (OSError, ValueError, TypeError, KeyError) as error:
+        except (OSError, ValueError, TypeError, KeyError, subprocess.CalledProcessError) as error:
             receipt(layer, "miss", reason=str(error))
     # Release supplies the project layer. Dependency-only and report-only hits
     # must not suppress a missing project layer's same-partition fallback.
@@ -263,7 +407,7 @@ def main():
     except ProjectRegistrationError as error:
         print(str(error), file=sys.stderr)
         return 2
-    except (OSError, ValueError, TypeError, KeyError) as error:
+    except (OSError, ValueError, TypeError, KeyError, subprocess.CalledProcessError) as error:
         receipt("all", "unavailable", reason=str(error))
         if args.command == "restore" and "project" in args.layers:
             output({"STRATALINT_ACTIONS_CACHE_SEEDED": "0"}, "GITHUB_ENV")

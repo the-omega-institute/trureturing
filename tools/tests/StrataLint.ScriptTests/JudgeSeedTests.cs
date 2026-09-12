@@ -5,43 +5,6 @@ namespace StrataLint.Tests;
 public sealed class JudgeSeedTests
 {
     [Fact]
-    public void CompileRegistrationMaterialUsesOnlyTheSelectedProjectProjection()
-    {
-        using var fixture = new JudgeSeedFixture();
-        string Material(string project) => File.ReadAllText(fixture.PathOf(
-            $"build/judge-seed/registrations/tools/{project}/{project}.csproj.json"));
-        fixture.Prepare();
-        var library = Material("Library");
-        var consumer = Material("Consumer");
-        fixture.EditProjects(registry =>
-        {
-            var row = registry["projects"]![0]!;
-            row["root_namespace"] = "Changed.Namespace";
-            row["namespace_exclude"] = new JsonArray("tools/Library/Code.cs");
-            row["role"] = "cross-cutting-test";
-            row["ci"] = true;
-            row["test_partition"] = "explicit-checks";
-            registry["rule_build_inputs"] = new JsonArray("Directory.Build.props");
-        });
-        fixture.Prepare();
-        Assert.Equal(library, Material("Library"));
-        Assert.Equal(consumer, Material("Consumer"));
-        fixture.EditProjects(registry => registry["projects"]![1]!["assembly"] = "UnrelatedToLibrary");
-        fixture.Prepare();
-        Assert.Equal(library, Material("Library"));
-        Assert.NotEqual(consumer, Material("Consumer"));
-        consumer = Material("Consumer");
-        fixture.EditProjects(registry => registry["projects"]![0]!["include"] = new JsonArray("tools/Library/Code.cs"));
-        fixture.Prepare();
-        Assert.NotEqual(library, Material("Library"));
-        Assert.NotEqual(consumer, Material("Consumer"));
-        consumer = Material("Consumer");
-        fixture.EditProjects(registry => registry["projects"]![1]!["references"] = new JsonArray());
-        fixture.Prepare();
-        Assert.NotEqual(consumer, Material("Consumer"));
-    }
-
-    [Fact]
     public void GeneratedDriverRecoversValidatedTimeAfterCleanStateRestore()
     {
         using var fixture = new JudgeSeedFixture();
@@ -73,6 +36,47 @@ public sealed class JudgeSeedTests
         fixture.Build("driver-unchanged-bytes", 0);
         fixture.Prepare();
         fixture.Build("driver-regenerated-bytes", 2);
+    }
+
+    [Fact]
+    public void CompileRegistrationMaterialUsesOnlyTheSelectedProjectProjection()
+    {
+        using var fixture = new JudgeSeedFixture();
+        string Material(string project) => File.ReadAllText(fixture.PathOf(
+            $"build/judge-seed/registrations/tools/{project}/{project}.csproj.json"));
+        fixture.Prepare();
+        var library = Material("Library");
+        var consumer = Material("Consumer");
+        fixture.EditProjects(registry =>
+        {
+            var row = registry["projects"]![0]!;
+            row["root_namespace"] = "Changed.Namespace";
+            row["namespace_exclude"] = new JsonArray("tools/Library/Code.cs");
+            row["role"] = "cross-cutting-test";
+            row["ci"] = true;
+            row["test_partition"] = "explicit-checks";
+            row["execution_inputs"] = new JsonArray();
+            row["execution_excludes"] = new JsonArray();
+            row["execution_environment"] = new JsonArray("STRATALINT_TEST_ENVIRONMENT");
+            row["build_inputs"] = new JsonArray("Directory.Build.props");
+            registry["rule_build_inputs"] = new JsonArray("Directory.Build.props");
+        });
+        fixture.Prepare();
+        Assert.Equal(library, Material("Library"));
+        Assert.Equal(consumer, Material("Consumer"));
+        fixture.EditProjects(registry => registry["projects"]![1]!["assembly"] = "UnrelatedToLibrary");
+        fixture.Prepare();
+        Assert.Equal(library, Material("Library"));
+        Assert.NotEqual(consumer, Material("Consumer"));
+        consumer = Material("Consumer");
+        fixture.EditProjects(registry => registry["projects"]![0]!["include"] = new JsonArray("tools/Library/Code.cs"));
+        fixture.Prepare();
+        Assert.NotEqual(library, Material("Library"));
+        Assert.NotEqual(consumer, Material("Consumer"));
+        consumer = Material("Consumer");
+        fixture.EditProjects(registry => registry["projects"]![1]!["references"] = new JsonArray());
+        fixture.Prepare();
+        Assert.NotEqual(consumer, Material("Consumer"));
     }
 
     [Theory]
