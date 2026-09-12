@@ -2,18 +2,13 @@
    generality: G
    mirror-B: D5/B/S1/Recurrence/Invariants/RestrictedGrowthLabelOccurrences
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [Mathlib.Order.Interval.Finset.Nat, Mathlib.Data.List.Count, Mathlib.Algebra.BigOperators.Group.Finset.Basic, Mathlib.Algebra.BigOperators.Group.Finset.Piecewise, Mathlib.Algebra.BigOperators.Ring.Finset, Mathlib.Data.Nat.Choose.Basic, Mathlib.Tactic.Ring, Mathlib.Tactic.NormNum, Mathlib.Tactic.IntervalCases]
+   anchors: [mathlib/module/Mathlib.Order.Interval.Finset.Nat, mathlib/module/Mathlib.Algebra.BigOperators.Ring.Finset, mathlib/module/Mathlib.Tactic.Ring, mathlib/module/Mathlib.Tactic.IntervalCases]
    utility: none
    digest: Label occurrences in restricted-growth words, counted by final block deficit. -/
 
 import Mathlib.Order.Interval.Finset.Nat
-import Mathlib.Data.List.Count
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
 import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.Data.Nat.Choose.Basic
 import Mathlib.Tactic.Ring
-import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.IntervalCases
 
 namespace D5.S1.Recurrence.Invariants.RestrictedGrowthLabelOccurrences
