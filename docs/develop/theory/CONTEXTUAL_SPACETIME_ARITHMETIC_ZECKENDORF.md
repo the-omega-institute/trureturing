@@ -6341,3 +6341,341 @@ $$
 边界子句由秩直接判定：$\operatorname{rk}(\omega)=\omega<\omega+1$，故 $\omega\in V_{\omega+1}$；第 283 条给 $r(\omega)=\omega+2$，故它的码不在 $V_{\omega+1}$。于是 $\operatorname{Enc}[V_{\omega+1}]$ 包含一个不在 $\mathfrak V_Z\cap V_{\omega+1}$ 的元素，后继层的普遍像等式为假。
 
 最后，$HF$ 传递，且其中每个集合有限。若 $(HF,\in\cap HF^2)$ 满足无穷公理，则其中存在一个内部归纳集 $I\in HF$。传递性使内部空集只能是环境空集，内部的序数后继也正是 $z\cup\{z\}$；这些有限集合都在 $HF$ 中。因此在环境中按 $n<\omega$ 归纳，零属于 $I$，$n\in I$ 推出 $n+1\in I$，得到 $\omega\subseteq I$，与 $I$ 有限矛盾。源结构不满足无穷公理，由已证公式比较，目标结构也不满足。若额外假设某个源限制结构满足 ZFC，则对每个公理及每个分离、替代实例应用同一公式比较，得到目标满足相应实例；这个条件性运输没有给出源模型的存在性。证毕。
+
+
+**定理 285（自然叶及有限数字图的精确遗传大小）。** 沿用第 277 条的含根传递闭包 $T(x)=\operatorname{TC}(\{x\})$ 与 $h(x)=|T(x)|$。对 $n\in\omega$，置 $\ell=\ell_Z(n)$、$\epsilon_j=\operatorname{pad}(\zeta(n))_j$，其中 $\ell_Z$ 如第 98 条。则
+$$
+h(\operatorname{NatZ}(n))=
+\begin{cases}
+3,&n=0,\\
+7,&n=1,\\
+4\ell-1+\epsilon_0(1-\epsilon_2),&n\ge2,
+\end{cases}
+\qquad
+h(\zeta(n))=h(\operatorname{NatZ}(n))-2.
+$$
+特别地，$5040$ 的低位到高位规范字为 $001001000001010001$，其支撑为 $\{2,5,11,13,17\}$，且
+$$
+\ell_Z(5040)=|\zeta(5040)|=18,\qquad
+h(\zeta(5040))=69,\qquad
+h(\operatorname{NatZ}(5040))=71,\qquad h(5040)=5041.
+$$
+这里 $|\zeta(5040)|$ 取有限函数图的外层基数，$h$ 取所指集合的含根传递闭包大小。令 $\phi=(1+\sqrt5)/2$。对 $n\ge2$，有
+$$
+4\log_\phi n-5<h(\operatorname{Enc}(n))\le4\log_\phi n+4.
+$$
+因此自然序数族在 $n\to\infty$ 时满足
+$$
+h(\operatorname{Enc}(n))=4\log_\phi n+O(1)
+=\Theta(\log h(n)).
+$$
+
+**证明。** 第 10 条的完整窗口双射与第 69 条的截尾条件表明，非零数字的长度恰为 $\ell_Z(n)$，且
+$$
+G_{\ell-1}\le n<G_\ell.
+$$
+所有索引和位值均为实际有限 von Neumann 序数，有序对取第 69 条的 Kuratowski 对。由秩递归，
+$$
+\operatorname{rk}(\langle a,b\rangle)
+=\operatorname{rk}(\{\{a\},\{a,b\}\})
+=\max(\operatorname{rk}(a),\operatorname{rk}(b))+2.
+$$
+
+先设 $n\ge2$，故 $\ell\ge2$。记
+$$
+a_j=\{j\},\qquad d_j=\{j,\epsilon_j\},\qquad
+p_j=\{a_j,d_j\}=\langle j,\epsilon_j\rangle,
+$$
+并置
+$$
+u=\zeta(n)=\{p_j:j<\ell\},\qquad
+v=\{0,u\},\qquad c=\operatorname{NatZ}(n)=\{1,v\},
+$$
+$$
+K=\{j:j<\ell\}\cup\{a_j,d_j,p_j:j<\ell\}.
+$$
+$K\cup\{u,v,c\}$ 含根 $c$ 且传递：索引的成员是更小索引，位值属于 $\{0,1\}\subseteq\{j:j<\ell\}$，其余每个节点的成员也已列出。反向，沿 $c,v,u,p_j,a_j$ 的成员链可到达每个 $p_j,a_j,d_j,j$；$u,v,c$ 本身也可达。因此两向包含给出
+$$
+T(c)=K\cup\{u,v,c\}.
+$$
+同理，$K\cup\{u\}$ 传递且含 $u$，而其每个节点可由 $u$ 沿上述链到达，故
+$$
+T(u)=K\cup\{u\}.
+$$
+
+当 $\ell\ge3$ 时，先不加入 $p_j$。其余节点的去重并集为
+$$
+O\cup\mathcal A\cup\mathcal D,
+\qquad
+O=\{j:j<\ell\},\quad
+\mathcal A=\{a_j:1\le j<\ell\},\quad
+\mathcal D=\{d_j:2\le j<\ell\}.
+$$
+三组分别有 $\ell,\ell-1,\ell-2$ 个节点，且两两不交。的确，$a_j$ 为单元素集合，$j\ge1$ 时它不是唯一的单元素序数 $1=\{0\}$；不同 $a_j$ 由其唯一成员区分。$d_j$ 含两个不同的序数成员且含 $j\ge2$，所以不是唯一的二元素序数 $2=\{0,1\}$，也不等于任何 $a_i$；不同 $d_j$ 的最大序数成员 $j$ 不同。全部低索引省略项满足
+$$
+a_0=1,\qquad
+ d_0=\begin{cases}1,&\epsilon_0=0,\\2,&\epsilon_0=1,\end{cases}
+\qquad
+ d_1=\begin{cases}2,&\epsilon_1=0,\\a_1,&\epsilon_1=1,\end{cases}
+$$
+均已在该并集中。因此这一阶段恰有 $3\ell-3$ 个节点。
+
+对 $j\ge1$，$p_j$ 含非序数成员 $a_j$；上一阶段的每个节点则只含序数成员，故这些 $p_j$ 全部新增。Kuratowski 对的单射性使它们彼此不同，也不等于 $p_0$。若 $\epsilon_0=0$，则
+$$
+p_0=\{1\}=a_1.
+$$
+若 $\epsilon_0=1$，则 $p_0=\{1,2\}$，它既不是序数也不是单元素集合。它与某个 $d_j$ 相等，当且仅当最大成员为 $j=2$ 且另一个成员为 $\epsilon_2=1$。因而此时唯一可能的旧节点碰撞为
+$$
+p_0=d_2\iff\epsilon_2=1.
+$$
+由此，索引 $0,1,2$ 的退化和跨组重合已全部计入，并得
+$$
+|K|=(3\ell-3)+(\ell-1)+\epsilon_0(1-\epsilon_2)
+=4\ell-4+\epsilon_0(1-\epsilon_2).
+$$
+
+末位为一，故最高索引的图边 $p_{\ell-1}$ 的秩为 $\ell+1$，$K$ 中所有节点的秩都不超过它。由秩递归，$u,v,c$ 的秩依次为 $\ell+2,\ell+3,\ell+4$，所以它们是恰好三个互异的新节点。两个闭包等式因而给出
+$$
+h(c)=4\ell-1+\epsilon_0(1-\epsilon_2),\qquad
+h(u)=h(c)-2.
+$$
+
+零、一及长度二的情形直接按实际集合处理。$n=0$ 时，$u=0$、$v=1$、$c=\{1\}$，所以
+$$
+T(c)=\{0,1,\{1\}\},\qquad T(u)=\{0\}.
+$$
+这三个节点的秩分别为零、一、二，给出 $h(c)=3$、$h(u)=1$。$n=1$ 时，令 $p=\{1,2\}$，则 $u=\{p\}$，并有
+$$
+T(c)=\{0,1,2,p,u,v,c\},\qquad
+T(u)=\{0,1,2,p,u\}.
+$$
+第一个列表的七个节点秩依次为 $0,1,2,3,4,5,6$，两组都传递且逐节点可达，故 $h(c)=7$、$h(u)=5$。若 $\ell=2$，规范性及末位条件强制数位为 $(0,1)$，即 $n=2$。置 $a=\{1\}$、$b=\{a\}$，此时
+$$
+a_0=d_0=1,\qquad a_1=d_1=p_0=a,\qquad p_1=b,\qquad
+u=\{a,b\},
+$$
+$$
+T(c)=\{0,1,a,b,u,v,c\},\qquad T(u)=\{0,1,a,b,u\}.
+$$
+七节点秩仍依次为零至六，故大小也是七与五。窗口外 $\epsilon_2=0$，$\epsilon_0=0$，代入 $n\ge2$ 的公式给 $4\cdot2-1=7$。零和一则由各自的分支给出，不能代入仅对 $n\ge2$ 声明的分支。
+
+由第 3 条的固定递推，
+$$
+5040=G_{17}+G_{13}+G_{11}+G_5+G_2
+=4181+610+233+13+3,\qquad G_{18}=6765.
+$$
+五个占据索引不相邻，第 10 条的唯一性遂认定所列十八位字为规范字。此时 $\epsilon_0=0$、$\epsilon_2=1$，已证公式给出自然叶大小 $71$、数字图大小 $69$。函数图的各有序对由索引区分，所以其外层基数为十八。普通有限序数满足
+$$
+T(n)=\{0,\ldots,n\},\qquad h(n)=n+1,
+$$
+因而 $h(5040)=5041$。
+
+最后，由 $\phi^2=\phi+1$、$G_0=1$、$G_1=2$，在 $j=0,1$ 核对初值并用同一加法递推归纳，得到
+$$
+\phi^j\le G_j\le\phi^{j+1}\qquad(j\ge0).
+$$
+结合非零数字窗口的两端，有 $\phi^{\ell-1}\le n<\phi^{\ell+1}$，故
+$$
+\log_\phi n-1<\ell_Z(n)\le\log_\phi n+1.
+$$
+对 $n\ge2$，精确式给 $4\ell-1\le h(\operatorname{NatZ}(n))\le4\ell$。代入长度的两端不等式，再用第 71 条的 $\operatorname{Enc}(n)=\operatorname{NatZ}(n)$，得到所述两个显式对数界。它们与 $h(n)=n+1$ 同时给出有界误差式和对数达阶式。证毕。
+
+
+**定理 286（全部遗传有限集合的统一大小界及渐近达阶）。** 对每个正整数 $N$，集合
+$$
+\mathcal A_N=\{x\in HF:h(x)=N\}
+$$
+有限且非空，且对其中每个 $x$，$h(\operatorname{Enc}(x))$ 为正整数。因此最大值
+$$
+M(N)=\max\{h(\operatorname{Enc}(x)):x\in\mathcal A_N\}
+$$
+存在。对任意 $x\in HF$，置 $N=h(x)$、$H=h(\operatorname{Enc}(x))$。$N=1$ 时 $x=0$、$H=3$；当 $N\ge2$ 时，令 $\phi=(1+\sqrt5)/2$，则
+$$
+\log_2N\le H\le
+\min\{5N,\ 3N+12\log_2N,\ 3N+6\log_\phi N+6\}.
+$$
+令 $b_0=\{1\}$、$b_{r+1}=\{b_r\}$。对全部 $r\ge0$，$b_r\notin\omega$，且
+$$
+h(b_r)=r+3,\qquad h(\operatorname{Enc}(b_r))=3r+11=3h(b_r)+2.
+$$
+因而统一上界的线性主系数 $3$ 不能替换为任何 $a<3$ 再加一个仅依赖 $N$ 的 $o(N)$ 余项；结合第 285 条的自然序数族，对数下阶与线性上阶均能达到。对 $N\ge3$，
+$$
+3N+2\le M(N)\le
+\min\{5N,\ 3N+12\log_2N,\ 3N+6\log_\phi N+6\},
+\qquad
+\lim_{N\to\infty}\frac{M(N)}N=3.
+$$
+此外，包含式 $\operatorname{Enc}[T(x)]\subseteq T(\operatorname{Enc}(x))$ 对全部 $HF$ 集合并不成立，$x=2$ 已是反例。
+
+**证明。** 先证明有限性与最大值的存在。第 72 条使 $x\in HF$ 的编码也属于 $HF$，故其含根闭包大小为正整数。若 $\operatorname{rk}(x)=s<\omega$，有限集合的秩递归表明：秩为正整数 $t$ 的集合含有秩恰为 $t-1$ 的成员。逐次选择这种成员直到空集，得到属于 $T(x)$ 的 $s+1$ 个秩互异节点。因此
+$$
+\operatorname{rk}(x)\le h(x)-1.
+$$
+有限累积层由 $V_0=\varnothing$、$V_{j+1}=\mathcal P(V_j)$ 递归，逐层有限。若 $h(x)=N$，则 $\operatorname{rk}(x)<N$，即 $x\in V_N$。于是 $\mathcal A_N\subseteq V_N$ 有限。另一方面，有限序数 $N-1$ 满足 $h(N-1)=N$，故 $\mathcal A_N$ 非空。大小函数在这个有限非空集合上取正整数值，最大值 $M(N)$ 因而存在。这一步未使用任何编码大小的统一界。若 $N=1$，上述秩界给 $\operatorname{rk}(x)=0$，所以 $x=0$，第 285 条给 $H=3$。
+
+固定任意 $x\in HF$，记 $T=T(x)$。$T$ 有限非空且传递。取其中秩最小的元素；若它非空，其成员仍在 $T$ 中且秩更小，矛盾。因此 $0\in T$。由传递性，$T\cap\omega$ 为非空有限初段；存在唯一最大自然数 $m$，使
+$$
+T\cap\omega=\{0,\ldots,m\}.
+$$
+置 $k=|T\setminus\omega|$、$L=\ell_Z(m)$，则
+$$
+N=m+1+k.
+$$
+
+对非自然父节点 $w$，置 $B_w=\operatorname{Enc}[w]$。当 $z\in w$ 时，第 71 条给出实际成员链
+$$
+\operatorname{Enc}(z)\in B_w\in\{1,B_w\}\in\operatorname{Enc}(w).
+$$
+从 $x$ 到任意 $y\in T\setminus\omega$ 存在有限源成员链，且其每个节点都非自然；否则自然序数的传递性会使后代 $y$ 也是自然数。逐步运输该链，并在 $y=x$ 时取零步链，得到
+$$
+\operatorname{Enc}[T\setminus\omega]\subseteq T(\operatorname{Enc}(x)).
+$$
+第 72 条的单射性遂给 $k\le H$。对最大自然数 $m$，到达它的源链的全部严格祖先也非自然：若其中有自然数 $q$，则 $m<q\in T\cap\omega$，违反最大性。当根就是 $m$ 时仍取零步链。故 $\operatorname{NatZ}(m)=\operatorname{Enc}(m)$ 可达；目标闭包传递，其最小性进一步给出
+$$
+T(\operatorname{NatZ}(m))\subseteq T(\operatorname{Enc}(x)).
+$$
+
+第 285 条包括零、一例外的精确式给 $H\ge L+1$。由 $G_0=1$、$G_1=2$ 及递推归纳，$G_j\le2^j$：两初值成立，且归纳步的和至多为 $2^{j+1}+2^j\le2^{j+2}$。窗口上端和整数性于是给
+$$
+m+1\le G_L\le2^L\le2^{H-1}.
+$$
+对正整数 $H$，$H\le2^{H-1}$ 也由初值 $H=1$ 及 $H+1\le2H$ 归纳成立。结合 $k\le H$，得
+$$
+N=m+1+k\le2^{H-1}+H\le2^H,
+$$
+从而 $\log_2N\le H$。这里只使用非自然后代与最大自然叶的可达性。
+
+为证上界，定义共享自然叶池
+$$
+\mathcal L_m=\bigcup_{0\le n\le m}T(\operatorname{NatZ}(n)).
+$$
+它传递，且含 $0,1,A$，其中 $A=\{1\}$。先准确计算三个小值。第 285 条给 $|\mathcal L_0|=3$。$T(\operatorname{NatZ}(1))$ 的七个节点中不含 $A$：其唯一秩二节点是 $2$，而 $2\ne A$。与零叶的闭包合并恰添 $A$，故 $|\mathcal L_1|=8$。再置 $D=\{1,2\}$、$B=\{A\}$，并对 $n\ge1$ 记
+$$
+u_n=\zeta(n),\qquad v_n=\{0,u_n\},\qquad c_n=\operatorname{NatZ}(n).
+$$
+则 $\mathcal L_2$ 恰由六个核心节点 $0,1,2,A,D,B$ 及 $u_1,v_1,c_1,u_2,v_2,c_2$ 组成。核心中唯一同秩的两组为秩二的 $2,A$ 与秩三的 $D,B$，每组都由成员数区分。外壳的秩分别为四、五、六，且
+$$
+u_1=\{D\}\ne\{A,B\}=u_2.
+$$
+由 $u_1,u_2\ne0$，外延性给 $v_1\ne v_2$；同理 $v_1,v_2\ne1$ 给 $c_1\ne c_2$。所以六个外壳彼此不同，也不等于核心中的节点，得到
+$$
+|\mathcal L_0|=3,\qquad |\mathcal L_1|=8,\qquad |\mathcal L_2|=12.
+$$
+
+若 $m\ge3$，则 $L\ge3$。置
+$$
+a_j=\{j\},\qquad d_{j,b}=\{j,b\},\qquad
+p_{j,b}=\{a_j,d_{j,b}\}\quad(b\in\{0,1\}).
+$$
+所有 $n\le m$ 的数字长度不超过 $L$。若索引 $L-1$ 出现在其中某个截尾函数图中，它必为末位，故该位只能为一。取共享核心
+$$
+\begin{aligned}
+R_L={}&\{j:j<L\}\cup\{a_j:1\le j<L\}\\
+&\cup\{d_{j,b}:2\le j\le L-2,\ b\in\{0,1\}\}\cup\{d_{L-1,1}\}\\
+&\cup\{p_{j,b}:1\le j\le L-2,\ b\in\{0,1\}\}\cup\{p_{L-1,1}\}.
+\end{aligned}
+$$
+空索引区间表示空集。按序数、$a$、$d$、$p$ 四类计数，各类大小至多为 $L,L-1,2L-5,2L-3$，故
+$$
+|R_L|\le6L-9.
+$$
+所有低索引省略项由下列实际相等式恢复：
+$$
+a_0=d_{0,0}=1,\qquad d_{0,1}=d_{1,0}=2,\qquad
+d_{1,1}=a_1,\qquad p_{0,0}=a_1,\qquad p_{0,1}=d_{2,1}.
+$$
+当 $L=3$ 时 $d_{2,1}$ 为已列的末位项，当 $L>3$ 时它为已列的内部项，所以这个碰撞在边界处也被计入。各 $p$ 的成员 $a,d$ 均在核心中，各 $a,d$ 的成员为所列索引或 $0,1$，序数成员则是更小索引。因此 $R_L$ 传递，并覆盖所有这些有限数字图的图边及其传递后代。零叶的图、外壳、根分别为 $0,1,a_1$，均已在核心中；对每个 $1\le n\le m$，至多再加 $u_n,v_n,c_n$ 三个节点，就得到包含全部自然叶根的传递集合。于是
+$$
+|\mathcal L_m|\le3m+6L-9\qquad(m\ge3).
+$$
+这里使用传递覆盖的基数上界；覆盖可以包含不属于实际池的节点，各组也允许重复，不将此式当作精确池大小。
+
+对全部 $L\ge3$，普通递推归纳给
+$$
+G_{L-1}\ge3L-7.
+$$
+其初值 $L=3,4$ 分别为 $3\ge2$ 与 $5=5$；从 $L\ge4$ 到下一项的增量为 $G_{L-2}\ge3$，足以保持右侧每步增加三的不等式。由窗口下端 $m\ge G_{L-1}$，有 $6L-9\le2m+5$，所以
+$$
+|\mathcal L_m|\le5(m+1).
+$$
+三个小值 $3,8,12$ 也分别满足这个不等式。
+
+非自然节点每个至多再需三个节点。令
+$$
+U=\mathcal L_m\cup
+\bigcup_{y\in T\setminus\omega}
+\{B_y,\{1,B_y\},\operatorname{Enc}(y)\},
+\qquad B_y=\operatorname{Enc}[y].
+$$
+非自然码的两个成员为 $A\in\mathcal L_m$ 和已列的 $\{1,B_y\}$；后者的成员为 $1,B_y$；$B_y$ 的任意成员是某个 $z\in y\subseteq T$ 的码。$z$ 自然时，其码在 $\mathcal L_m$ 中；$z$ 非自然时，其码在并集的对应项中。因此 $U$ 传递，且按根是否自然，两种情形下都含 $\operatorname{Enc}(x)$。传递闭包的最小性给
+$$
+H\le|U|\le|\mathcal L_m|+3k
+\le5(m+1)+3k\le5N.
+$$
+
+保留同一覆盖的较精细计数，有
+$$
+H\le3N+\rho(m),\qquad
+\rho(m)=\begin{cases}
+0,&m=0,\\
+2,&m=1,\\
+3,&m=2,\\
+6\ell_Z(m)-12,&m\ge3.
+\end{cases}
+$$
+由 $G_{j+2}=G_{j+1}+G_j\ge2G_j$，以 $G_0=1$、$G_1=2\ge\sqrt2$ 分别沿偶数和奇数索引归纳，得 $G_j\ge2^{j/2}$。当 $m\ge3$ 时，窗口下端给 $m\ge2^{(L-1)/2}$，因而
+$$
+L\le1+2\log_2m,\qquad
+\rho(m)\le12\log_2m-6\le12\log_2N.
+$$
+对 $m=0,1,2$，在 $N\ge2$ 时局部余项 $0,2,3$ 也分别不超过 $12\log_2N$。于是
+$$
+H\le3N+12\log_2N.
+$$
+另一方面，各个小值及 $m\ge3$ 均满足 $\rho(m)\le6L$。当 $m\ge1$ 时，第 285 条证明中的 $\phi$ 递推界给 $L\le\log_\phi m+1\le\log_\phi N+1$；$m=0$ 时 $L=0$。故另有
+$$
+H\le3N+6\log_\phi N+6.
+$$
+三个统一上界同时成立，取最小值便得所述结论。
+
+对塔族，$b_r$ 始终是唯一成员非零的单元素集合，故它不等于唯一的单元素序数 $1=\{0\}$，也不是其它有限序数。由秩递归，$\operatorname{rk}(b_r)=r+2$，且
+$$
+T(b_r)=\{0,1,b_0,\ldots,b_r\},
+$$
+各节点秩互异，所以 $h(b_r)=r+3$。记 $e=\operatorname{NatZ}(1)$、$c_r=\operatorname{Enc}(b_r)$。第 285 条的七节点闭包 $T(e)$ 不含 $A=\{1\}$，而
+$$
+c_0=\langle1,\{e\}\rangle.
+$$
+直接展开其配对并沿成员链到达各节点，得到
+$$
+T(c_0)=T(e)\cup\{A,\{e\},\{1,\{e\}\},c_0\}.
+$$
+右侧传递且含根，故反向包含也成立。后三个新增节点的秩分别为七、八、九，超过 $T(e)$ 中全部节点的秩；$A$ 的缺失已由秩二节点 $2\ne A$ 核对。因此 $h(c_0)=7+4=11$。由第 71 条，
+$$
+c_{r+1}=\langle1,\{c_r\}\rangle.
+$$
+$A$ 已属于 $T(c_r)$。展开配对、用传递性及逐节点可达性，得
+$$
+T(c_{r+1})=T(c_r)\cup
+\{\{c_r\},\{1,\{c_r\}\},c_{r+1}\}.
+$$
+这三个节点的秩恰比旧根高一、二、三，所以彼此不同，且没有新旧碰撞。归纳得
+$$
+h(c_r)=11+3r=3h(b_r)+2.
+$$
+
+若存在 $a<3$ 及仅依赖源大小的函数 $f(N)=o(N)$，使所有充分大的源大小及其全部 $HF$ 集合满足 $H\le aN+f(N)$，则对每个充分大的整数 $N$ 代入 $b_{N-3}$，得到
+$$
+(3-a)N+2\le f(N).
+$$
+除以 $N$ 并令 $N\to\infty$，与 $3-a>0$ 矛盾。第 285 条的自然序数族达到对数阶，此塔族达到线性阶，故所述两端的阶均达到。
+
+对于先前已证明存在的 $M(N)$，当 $N\ge3$ 时，$b_{N-3}\in\mathcal A_N$ 给 $M(N)\ge3N+2$；把三个统一上界应用到 $\mathcal A_N$ 的各元素再取最大值，得到 $M(N)$ 的上界。两种对数余项除以 $N$ 均趋于零，夹逼即得 $M(N)/N\to3$。此为渐近主系数结论，不蕴含逐点上界 $H\le3N$；事实上刚证的塔族已反驳该逐点式。上述结论也未断言有限乘法常数五最优。
+
+最后取 $x=2$。有 $1\in T(2)$，而第 285 条的两个小值闭包表明 $\operatorname{Enc}(1)$ 与 $\operatorname{Enc}(2)$ 的秩都为六。第 72 条的单射性使二者不同；任一根以外的传递后代，其秩严格小于根。因此
+$$
+\operatorname{Enc}(1)\notin T(\operatorname{Enc}(2)),\qquad
+\operatorname{Enc}[T(2)]\nsubseteq T(\operatorname{Enc}(2)).
+$$
+这给出所述反例，也表明下界证明所用的可达性不能加强成全体源后代的编码包含。证毕。
+
