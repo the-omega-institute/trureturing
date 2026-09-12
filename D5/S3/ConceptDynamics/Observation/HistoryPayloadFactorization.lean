@@ -10,6 +10,7 @@ import D5.S0.Rewriting.Quotients.SplitSurjectionFactorization
 import Mathlib.Data.Setoid.Basic
 import Mathlib.Data.Set.Image
 import Mathlib.Data.Set.Restrict
+import Mathlib.Topology.Sheaves.SheafCondition.UniqueGluing
 import Mathlib.Topology.Sheaves.SheafOfFunctions
 
 set_option autoImplicit false
