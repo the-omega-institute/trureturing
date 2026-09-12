@@ -146,10 +146,43 @@ theorem coordinate_variance_domain {k : ℕ} (hk : 2 ≤ k) (x : Fin k → ℝ)
   have hbound := (div_lt_iff₀ hden).mp hsq
   nlinarith [hbound]
 
+/-- A positive coordinate vector is bounded using an upper mean budget and a variance floor. -/
+theorem sum_logValue_le_psiK {k : ℕ} (hk : 2 ≤ k) (x : Fin k → ℝ)
+    (hx : ∀ i, 0 < x i) {μ₁ V₀ : ℝ} (hμ₁ : 0 < μ₁)
+    (hmean : (∑ i, x i) / (k : ℝ) ≤ μ₁)
+    (hfloor : V₀ ≤ ∑ i, (x i - (∑ j, x j) / (k : ℝ)) ^ 2)
+    (hfloorDomain : V₀ < (k : ℝ) * ((k : ℝ) - 1) * μ₁ ^ 2) :
+    ∑ i, logValue (x i) ≤ psiK k μ₁ V₀ := by
+  letI : Nontrivial (Fin k) := Fin.nontrivial_iff_two_le.mpr hk
+  let m := (∑ i, x i) / (k : ℝ)
+  let V := ∑ i, (x i - m) ^ 2
+  have hkR : (2 : ℝ) ≤ k := by exact_mod_cast hk
+  have hkpos : (0 : ℝ) < k := by linarith
+  have hden : (0 : ℝ) < (k : ℝ) * ((k : ℝ) - 1) := mul_pos hkpos (by linarith)
+  have hm : 0 < m := div_pos
+    (Finset.sum_pos (fun i _ => hx i) Finset.univ_nonempty) hkpos
+  have hdomain := coordinate_variance_domain hk x hx
+  change 0 ≤ V ∧ V < (k : ℝ) * ((k : ℝ) - 1) * m ^ 2 at hdomain
+  have hVupper : V < (k : ℝ) * ((k : ℝ) - 1) * μ₁ ^ 2 :=
+    hdomain.2.trans_le (mul_le_mul_of_nonneg_left (by nlinarith [hmean]) hden.le)
+  have hraise : psiK k m V ≤ psiK k μ₁ V := by
+    rcases lt_or_eq_of_le hmean with hlt | heq
+    · exact (psiK_strictMono_mean hk hm hlt hdomain.2).le
+    · change m = μ₁ at heq
+      rw [heq]
+  have hlower : psiK k μ₁ V ≤ psiK k μ₁ V₀ :=
+    (radius_envelope_strictAnti hk μ₁).antitoneOn
+      ⟨Real.sqrt_nonneg _, radius_lt_mean hk hμ₁ hfloorDomain⟩
+      ⟨Real.sqrt_nonneg _, radius_lt_mean hk hμ₁ hVupper⟩
+      (Real.sqrt_le_sqrt ((div_le_div_iff_of_pos_right hden).mpr hfloor))
+  exact (show ∑ i, logValue (x i) ≤ psiK k m V from
+    HermiteUpperEnvelope.hermite_upper_envelope hk x hx).trans (hraise.trans hlower)
+
 #print axioms psiK_strictMono_mean
 #print axioms radius_envelope_hasDerivAt
 #print axioms radius_envelope_strictAnti
 #print axioms psiK_strictAnti_variance
 #print axioms coordinate_variance_domain
+#print axioms sum_logValue_le_psiK
 
 end D5.S3.Analytic.Interpolation.EnvelopeKMonotone
