@@ -77,8 +77,8 @@ update-renderer-contract:
 clean-lanes:
 	@/bin/bash $(HERE)/scripts/clean-lanes.sh --base "$(BASE)" $(if $(filter 1,$(FORCE)),--force,)
 
+settle-batch:
+	@test -n "$${SETTLE_BATCH_REQUESTS}" && test -n "$${SETTLE_BATCH_BASE}" || { printf '%s\n' 'SETTLE_BATCH_INPUT_INVALID REQUESTS and BASE are required' >&2; exit 2; }; cd "$(REPOSITORY)" && dotnet run --project "$(HERE)/StrataLint.Cli/StrataLint.Cli.csproj" --configuration Release -- settle-batch --requests "$${SETTLE_BATCH_REQUESTS}" --base "$${SETTLE_BATCH_BASE}"
 settle-batch: export SETTLE_BATCH_REQUESTS := $(value REQUESTS)
 settle-batch: export SETTLE_BATCH_BASE := $(value BASE)
-settle-batch:
-	@test -n "$${SETTLE_BATCH_REQUESTS}" && test -n "$${SETTLE_BATCH_BASE}" || { printf '%s\n' 'SETTLE_BATCH_INPUT_INVALID REQUESTS and BASE are required' >&2; exit 2; }
-	@cd "$(REPOSITORY)" && dotnet run --project "$(HERE)/StrataLint.Cli/StrataLint.Cli.csproj" --configuration Release -- settle-batch --requests "$${SETTLE_BATCH_REQUESTS}" --base "$${SETTLE_BATCH_BASE}"
+unexport REQUESTS

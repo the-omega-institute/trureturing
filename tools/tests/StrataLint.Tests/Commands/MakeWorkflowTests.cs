@@ -85,6 +85,7 @@ public sealed partial class MakeWorkflowTests
     private static readonly string[] ToolsTargets =
     [
         "help",
+        "settle-batch",
         "dotnet",
         "check-fast",
         "test",
