@@ -12,7 +12,7 @@ public sealed class Sl017LiteratureScopeTests
         """;
 
     [Fact]
-    public void Sl017ReportsInvalidLiteratureWhenManagedLeanChanges()
+    public void Sl017UnchangedInvalidLiteratureIsIgnoredOnManagedLeanDelta()
     {
         var fixture = Fixture();
         var changedPath = RuleFixture.ValuesBindingPath;
@@ -21,9 +21,26 @@ public sealed class Sl017LiteratureScopeTests
             RuleCatalog.Default.Execute(fixture.Build(RawChangeSet.Create([changedPath])))).Capability;
 
         Assert.Contains(RuleId.CreateKnown(17), completed.ExecutedRules);
-        Assert.Contains(
+        Assert.DoesNotContain(
             completed.Diagnostics,
             diagnostic => diagnostic.RuleId == RuleId.CreateKnown(17));
+    }
+
+    [Fact]
+    public void Sl017ReportsInvalidLiteratureWhenQueriesChange()
+    {
+        var fixture = Fixture();
+
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(
+                fixture.Build(RawChangeSet.Create(["Library/queries.yaml"])))).Capability;
+
+        Assert.Contains(RuleId.CreateKnown(17), completed.ExecutedRules);
+        Assert.Contains(
+            completed.Diagnostics,
+            diagnostic => diagnostic.RuleId == RuleId.CreateKnown(17)
+                && diagnostic.Path == "Library/queries.yaml"
+                && diagnostic.Message.Contains("invalid or duplicate query id", StringComparison.Ordinal));
     }
 
     [Fact]
@@ -40,7 +57,9 @@ public sealed class Sl017LiteratureScopeTests
         Assert.Contains(RuleId.CreateKnown(17), completed.ExecutedRules);
         Assert.Contains(
             completed.Diagnostics,
-            diagnostic => diagnostic.RuleId == RuleId.CreateKnown(17));
+            diagnostic => diagnostic.RuleId == RuleId.CreateKnown(17)
+                && diagnostic.Path == "Library/queries.yaml"
+                && diagnostic.Message.Contains("invalid or duplicate query id", StringComparison.Ordinal));
     }
 
     private static RuleFixture Fixture()
