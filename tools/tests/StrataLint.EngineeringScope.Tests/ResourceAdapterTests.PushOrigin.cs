@@ -656,7 +656,7 @@ public sealed partial class ResourceAdapterTests
         var parents = eventBefore is null ? SharedBuildContractTests.Git(fixture.Root, "show", "-s", "--format=%P", fixture.Commit) : "";
         var before = eventBefore ?? (parents.Length == 0 ? new string('0', 40) : parents.Split(' ', StringSplitOptions.RemoveEmptyEntries)[0]);
         var environment = EnvironmentFor(fixture);
-        if (eventBefore is null && !string.IsNullOrEmpty(SharedBuildContractTests.Git(fixture.Root, "status", "--porcelain", "--untracked-files=all")))
+        if (eventBefore is null && !string.IsNullOrEmpty(SharedBuildContractTests.Git(fixture.Root, "--no-optional-locks", "status", "--porcelain", "--untracked-files=all")))
             return PlannerWithEnvironment(fixture, environment, "push-plan");
         SetPushEvent(fixture, environment, before);
         return PlannerWithEnvironment(fixture, environment, "push-plan");

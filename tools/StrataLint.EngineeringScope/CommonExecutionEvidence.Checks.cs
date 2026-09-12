@@ -175,19 +175,23 @@ internal static partial class CommonExecutionEvidence
     }
 
     internal static CommonCheckRecord ValidateChecks(string root, string stage, CommonStageRecord build, string[]? selectedIds = null)
+        => ValidateChecks(root, stage, build, selectedIds, new ValidationScope(Snapshot(root)));
+
+    private static CommonCheckRecord ValidateChecks(string root, string stage, CommonStageRecord build, string[]? selectedIds, ValidationScope validation)
     {
         var record = Read<CommonCheckRecord>(root, ChecksPath(stage));
         if (record.Stage != stage) throw new InvalidDataException("common check stage mismatch");
-        var snapshot = Snapshot(root);
+        var snapshot = validation.Snapshot;
         var ids = selectedIds ?? CheckIds(stage, ReadCheckManifest(snapshot));
         // Transport validates the retained execution. Local reuse separately requires
         // this consumer's environment, including OS/architecture binary isolation.
-        ValidateCheckRecord(root, record, snapshot, null, build.Candidate, build.Round, ids);
+        ValidateCheckRecord(root, record, snapshot, null, build.Candidate, build.Round, ids, validation);
         return record;
     }
     private static void ValidateCheckRecord(string root, CommonCheckRecord record, RepositorySnapshot snapshot,
-        IReadOnlyDictionary<string, string>? inputs, string candidate, string round, string[] expected)
+        IReadOnlyDictionary<string, string>? inputs, string candidate, string round, string[] expected, ValidationScope? validation = null)
     {
+        validation ??= new ValidationScope(snapshot);
         if (record.Version != 2 || !ValidCandidate(record.Candidate) || !ValidRound(record.Round) || record.Candidate != candidate || record.Round != round || record.Units is null || record.Units.Any(unit => unit is null))
             throw new InvalidDataException("common check candidate or round mismatch");
         if (!expected.SequenceEqual(record.Units.Select(unit => unit.Id)))
@@ -198,8 +202,8 @@ internal static partial class CommonExecutionEvidence
             ValidateExecutionEnvironment(root, unit.ExecutionEnvironment);
             if (inputs is null && !originalInputs.ContainsKey(unit.ExecutionEnvironment))
                 originalInputs.Add(unit.ExecutionEnvironment, CheckInputFingerprints(root, snapshot, currentReport: record.Stage == "current",
-                    selectedIds: expected, executionEnvironment: unit.ExecutionEnvironment));
-            ValidateCheckUnit(root, root, snapshot, unit, (inputs ?? originalInputs[unit.ExecutionEnvironment])[unit.Id], candidate, round);
+                    selectedIds: expected, executionEnvironment: unit.ExecutionEnvironment, validation: validation));
+            ValidateCheckUnit(root, root, snapshot, unit, (inputs ?? originalInputs[unit.ExecutionEnvironment])[unit.Id], candidate, round, validation);
         }
         foreach (var check in ReadCheckManifest(snapshot).Where(check => expected.Contains(check.Id) && UsesScribe(check)))
             if (record.Stage == "current" && !SameScribeMaterial(root, record.Units.Single(unit => unit.Id == check.Id),
@@ -207,8 +211,9 @@ internal static partial class CommonExecutionEvidence
                 throw new InvalidDataException("predicate Scribe material differs from current producer: " + check.Id);
     }
     private static void ValidateCheckUnit(string materialRoot, string sourceRoot, RepositorySnapshot snapshot,
-        CheckUnitResult unit, string fingerprint, string candidate, string round)
+        CheckUnitResult unit, string fingerprint, string candidate, string round, ValidationScope? validation = null)
     {
+        validation ??= new ValidationScope(snapshot);
         ValidateExecutionEnvironment(sourceRoot, unit.ExecutionEnvironment);
         if (unit.Operations is null || unit.Materials is null || unit.Operations.Any(operation => operation is null || operation.Log is null)
             || unit.Materials.Any(material => material is null || material.Path is null))
@@ -228,7 +233,7 @@ internal static partial class CommonExecutionEvidence
             || !required.SequenceEqual(unit.Materials.Select(material => material.Path).Order(StringComparer.Ordinal))
             || required.Any(path => !path.StartsWith(prefix, StringComparison.Ordinal)))
             throw new InvalidDataException("missing or contradictory common material: " + unit.Id);
-        ValidateMaterials(materialRoot, unit.Materials);
+        ValidateMaterials(materialRoot, unit.Materials, validation);
         var operations = unit.Operations;
         string Log(int index) => File.ReadAllText(Path.Combine(materialRoot, operations[index].Log));
         bool Names(params string[] names) => names.SequenceEqual(operations.Select(operation => operation.Name));
@@ -248,8 +253,8 @@ internal static partial class CommonExecutionEvidence
         if (!accepted) throw new InvalidDataException("common check validation failed: " + unit.Id);
         if (unit.Report is not null)
         {
-            _ = RawLeanReportArtifact.ReadFile(Path.Combine(materialRoot, unit.Report), snapshot, validateMaterials: true);
-            if (Hash(Path.Combine(materialRoot, unit.Report)) != Hash(Path.Combine(sourceRoot, ReportPath)))
+            validation.Report(Path.Combine(materialRoot, unit.Report));
+            if (validation.Hash(Path.Combine(materialRoot, unit.Report)) != validation.Hash(Path.Combine(sourceRoot, ReportPath)))
                 throw new InvalidDataException("original common report differs from current validated report: " + unit.Id);
         }
         if (unit.Id.StartsWith("SL-", StringComparison.Ordinal)) _ = ReadPredicate(materialRoot, unit);
