@@ -1,0 +1,10 @@
+**定理 375.2。** $T_{\rm infdig}:K_{\rm infdig}\to K_{\rm infdig}$ 是唯一满足
+$$
+T_{\rm infdig}(z_{\rm infdig}(n))=z_{\rm infdig}(n+1)\qquad(n\in\omega)
+$$
+的连续映射。它满射，并有
+$$
+T_{\rm infdig}^{-1}(\{z_{\rm infdig}(0)\})=\{u,v\};
+$$
+其余每一点恰有一个前驱。
+

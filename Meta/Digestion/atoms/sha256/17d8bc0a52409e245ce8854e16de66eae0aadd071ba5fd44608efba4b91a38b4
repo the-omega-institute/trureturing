@@ -1,0 +1,36 @@
+**命题 402.2。** 上述类函数在全部原 ZFC 集合上有定义、单射，且对全部集合 $X$、全部有效码 $c$ 及全部集合 $B\subseteq\mathfrak V_Z$，有
+$$
+\operatorname{Dec}(\operatorname{Enc}(X))=X,\qquad
+\operatorname{Enc}(\operatorname{Dec}(c))=c,
+$$
+$$
+\operatorname{El}(\operatorname{Enc}(X))=\operatorname{Enc}[X],\qquad
+\operatorname{El}(\operatorname{Pack}(B))=B,\qquad
+\operatorname{Pack}(\operatorname{El}(c))=c.
+$$
+$e_X$ 是逆为 $\operatorname{Dec}|_{X^*}$ 的双射。映射 $A\mapsto e_X[A]$ 与 $B\mapsto\operatorname{Dec}[B]$ 给 $\mathcal P(X)$ 与 $\mathcal P(X^*)$ 的双射。有效码类是真类。
+
+**证明。** 所用递归准确为第 71 条的两分支：
+$$
+\operatorname{Enc}(x)=
+\begin{cases}
+\operatorname{NatZ}(x)=\langle0,\zeta(x)\rangle,&x\in\omega,\\
+\langle1,\{\operatorname{Enc}(y):y\in x\}\rangle,&x\notin\omega.
+\end{cases}
+$$
+其全域性不要求一个宇宙集合。固定任意 $x$，在含 $x$ 的传递集合 $\operatorname{TC}(\{x\})$ 上取严格超过全部成员秩的集合序数界。从空函数开始，在后继步为当前秩的元素赋值；自然数使用第一分支，非自然元素使用其已赋值的全部成员像。成员的秩严格较小，故该像存在。极限步取此前图的并。分离、替代、并集及集合序数递归保证每一步和最终函数图都是集合。两个传递定义域上的解，在交集上按成员归纳相等：自然值已固定，其余值由相等的成员像决定。因此“存在这样的集合函数且在 $x$ 处取 $c$”为总而单值的一阶定义，与秩界无关。这正是第 71 条的定义图。
+
+第 72 条的单射性适用于任意秩：对 $\max(\operatorname{rank}(x),\operatorname{rank}(y))$ 作超限归纳，不同标签由普通对的单射性不可能相等；两个自然分支相等，由定理 70 的 $\operatorname{val}$ 与 $\zeta$ 互逆得 $x=y$；两个非自然分支相等时，对每个 $u\in x$ 有 $v\in y$ 使 $\operatorname{Enc}(u)=\operatorname{Enc}(v)$，成员最大秩下降，故 $u=v$。反向同理，外延性给 $x=y$。所以有效码恰有一个原像，$\operatorname{Dec}$ 是该逆图。语义成员的准确条件是
+$$
+d\in_Zc\iff\operatorname{Dec}(d)\in\operatorname{Dec}(c).
+$$
+替代及双逆立即给所列成员像与 $\operatorname{Pack}(B)=\operatorname{Enc}(\operatorname{Dec}[B])$ 的双逆式。限制到 $X$ 得 $e_X$ 的双射性。任意 $A\subseteq X$ 的像是 $X^*$ 的子集；任意 $B\subseteq X^*$ 的逐项解码是 $X$ 的子集；双逆逐元素证明两个子集操作也互逆。
+
+若 $\mathfrak V_Z$ 是集合，对其应用解码替代就得到包含每个集合的集合 $U$。分离出 $D=\{x\in U:x\notin x\}$，因 $D\in U$ 而有 $D\in D\iff D\notin D$，矛盾。因此只对每个集合使用上述集合图和集合像。
+
+第 73 条的规范分支在这里仍不可省略。若
+$$
+B=\{\operatorname{NatZ}(m):m<n\}
+$$
+对某个 $n\in\omega$ 成立，则 $\operatorname{Dec}[B]=n$，故 $\operatorname{Pack}(B)=\operatorname{NatZ}(n)$，且这样的 $n$ 唯一。其余情形解码非自然，才有 $\operatorname{Pack}(B)=\langle1,B\rangle$。第一情形的竞争节点 $\langle1,B\rangle$ 若有效，其非自然解码却与 $n$ 有全部相同成员，外延性迫使它等于 $n$，矛盾。故语义空集为 $\operatorname{NatZ}(0)$。原始空字 $\zeta(0)=\varnothing$ 不是有效码，因为递归的每个输出都是非空 Kuratowski 对，不能把该空字直接放进语义配对。证毕。
+

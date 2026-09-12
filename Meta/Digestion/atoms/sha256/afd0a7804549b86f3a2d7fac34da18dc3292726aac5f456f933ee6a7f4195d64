@@ -1,0 +1,11 @@
+**定义 425.4（预测七·有限深度关系）。** 对全运算族 $I$ 和读数 $q$，令
+$$
+x\equiv_d y\iff\forall w\in U^{<\omega}\ (|w|\le d\Rightarrow
+q(\operatorname{runWord}(I,w,x))=q(\operatorname{runWord}(I,w,y))).
+$$
+递归签名的指定陪域及值定义为
+$$
+\Sigma_0=A,\quad\Sigma_{d+1}=A\times\Sigma_d^U,\qquad
+\sigma_0(x)=q(x),\quad\sigma_{d+1}(x)=(q(x),u\mapsto\sigma_d(I_ux)).
+$$
+

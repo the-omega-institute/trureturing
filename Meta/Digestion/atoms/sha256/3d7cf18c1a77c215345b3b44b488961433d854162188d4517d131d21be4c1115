@@ -1,0 +1,42 @@
+**定理 387.3。** 定义运输窗口的外部逆极限
+$$
+\widehat{\mathscr Q}=
+\left\{c\in\prod_{L\in\omega_{>0}}\mathsf X_L^*:
+\forall L\ge1,\ \pi_{L+1,L}^*(c_{L+1})=c_L\right\}.
+$$
+将 $\Psi_Y$ 用于 $A=\omega_{>0},Y_L=\mathsf X_L$，它的限制恰为同胚
+$$
+\Psi_Q:\widehat{\mathscr Q}\longleftrightarrow\mathscr Q^*.
+$$
+相应的窗口恢复同胚为
+$$
+\widehat{\mathcal U}=\Psi_Q^{-1}\circ\mathcal U^*:K^*\to\widehat{\mathscr Q},
+\qquad \widehat{\mathcal U}(c)=(P_L^*c)_{L\ge1}.
+$$
+令 $\chi_L=\chi_{\mathsf X_L,\mathsf X_L}$，并定义全部相容关系族的集合
+$$
+\widehat{\mathscr Q}_R=
+\left\{(a_L,b_L)_{L\ge1}\in\prod_{L\ge1}\mathscr R_L^\square:
+\forall L\ge1,\quad
+\pi_{L+1,L}^*(a_{L+1})=a_L\ \land\
+\pi_{L+1,L}^*(b_{L+1})=b_L\right\}.
+$$
+它与单个原关系族的成员像之间有同胚
+$$
+\Phi_R:\widehat{\mathscr Q}_R\to\mathscr Q_R^*,\qquad
+\Phi_R((a_L,b_L)_L)
+=\operatorname{Enc}\bigl(L\mapsto
+\operatorname{Dec}(\chi_L(a_L,b_L))\bigr),
+$$
+$$
+\Phi_R^{-1}(\operatorname{Enc}(r'))
+=\bigl(\chi_L^{-1}(\operatorname{Enc}(r'_L))\bigr)_{L\ge1}
+\qquad(r'\in\mathscr Q_R).
+$$
+同时普通图 $G_{T^*}\subseteq K^*\times K^*$ 通过
+$$
+\langle c,d\rangle\longmapsto
+\bigl(\langle P_L^*c,P_L^*d\rangle\bigr)_{L\ge1}
+$$
+同胚到 $\widehat{\mathscr Q}_R$。以上各层均取声明的乘积及子空间拓扑，$\Phi_R^{-1}$ 仅在 $\mathscr Q_R^*$ 上使用。
+

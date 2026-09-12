@@ -1,0 +1,16 @@
+**证明。** 对总零状态，每个 $n\in\omega$ 都有不同的一条普通边 $\langle n,0\rangle$，所以其图无限，虽然 $\operatorname{rec}_{\rm reg}(0)$ 是空记录。定理 370.7 的逐边式仍含所有这些边。对任意总行同样有
+$$
+\operatorname{Enc}(\theta)
+=\operatorname{Pack}\{\langle\operatorname{NatZ}(n),\operatorname{Enc}(\theta_n)\rangle_Z:n\in\omega\},
+$$
+
+$$
+\operatorname{Enc}(A)
+=\operatorname{Pack}\{\langle\operatorname{NatZ}(n),\operatorname{NatZ}(A_n)\rangle_Z:n\in\omega\}.
+$$
+每个零相位或零容量也有其边。
+
+无限 $J_A$ 时，本节 $X$ 恰是第 362.5 条的同一个 $X_A^{\rm cap}$，故该条的二值序列注入直接适用：将任意 $z\in\{0,1\}^\omega$ 放在 $J_A$ 的递增枚举处，其余填零，给 $X$ 中一个点，读回这些坐标恢复 $z$。Cantor 对角论证使二值序列不可数，有限字母表上有限字的集合却是可数个有限长度层的并，故不存在将全部 $X$ 单射到有限字的函数。总有理探针在本节仍恰是第 333.2 条的 $\Theta_{\rm rat}$，该条用总半类行族得到的有限字不可能性也在同域适用；其嵌入到 $\mathbb T^\omega$ 后仍单射，所以全部总圆周行同样不能这样表示。
+
+$\operatorname{Enc}$ 使用原有完整集合解释，不施加有限字条件。第 370.11 条的全部子集和函数双向对应及本条的全部边公式因此同时成立。证毕。
+

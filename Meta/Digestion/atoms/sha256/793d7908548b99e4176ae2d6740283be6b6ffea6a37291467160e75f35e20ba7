@@ -1,0 +1,1 @@
+**定理 437.2。** 令 $\Delta=1+\lambda\ln2$。$\kappa>\Delta$ 时 $c_0$ 唯一最优；$\kappa=\Delta$ 时最优者恰为 $c_0,a$；$0\le\kappa<\Delta$ 时 $a$ 唯一最优。

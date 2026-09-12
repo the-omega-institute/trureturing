@@ -1,0 +1,27 @@
+**定理 404.1。** 设 $D\subseteq X$，$f:D\to Y$ 为任意函数。令 $G_f=\{\langle x,f(x)\rangle:x\in D\}$。其外部函数在准确的域 $D^*=e_X[D]$ 上为
+$$
+f^*=e_Y\circ f\circ e_X^{-1},\qquad
+\Gamma_{f^*}=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle:x\in D\}.
+$$
+原图的完整码为
+$$
+\operatorname{Enc}(G_f)=
+\operatorname{Pack}\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle_Z:x\in D\}.
+$$
+其语义域、语义值域分别为 $\operatorname{Enc}(D)$、$\operatorname{Enc}(f[D])$，且对每个 $x\in D$，
+$$
+\operatorname{ev}_Z(\operatorname{Enc}(G_f),\operatorname{Enc}(x))
+=\operatorname{Enc}(f(x)).
+$$
+若编码的是外部图自身，则准确为
+$$
+\operatorname{Enc}(\Gamma_{f^*})=
+\operatorname{Pack}\{\langle\operatorname{Enc}(c),
+\operatorname{Enc}(f^*(c))\rangle_Z:c\in D^*\}.
+$$
+全部外部函数均能唯一反向解码。
+
+**证明。** 对 $c\in D^*$ 唯一写 $c=e_X(x)$、$x\in D$，共轭给唯一值 $e_Y(f(x))$，从而得普通外部图。第 403.1 条逐边将普通对转为语义对，再以 $\operatorname{Pack}$ 取得原图码，正是定理 378.3 的图式。一个有效输入有语义图边当且仅当它为某个 $x\in D$ 的码；输出集合恰为 $f[D]$ 的成员码。因此域、值域及逐点求值都准确如式。域外没有边，空域时图、域和值域的语义码都为 $\operatorname{Enc}(\varnothing)$。
+
+外部图自身是另一个普通集合，其输入对象已是 $c$，输出对象已是 $f^*(c)$；应用同一逐边公式时必须再编码这两个对象，遂得最后一式。不能因某个对象已经是有效码就略去这次编码。任意 $h:D^*\to Y^*$ 拉回为 $x\mapsto\operatorname{Dec}(h(e_X(x)))$，其输出在 $Y$，共轭回去逐点为 $h$。反向拉回一个共轭也逐点为 $f$。这里没有函数可定义性的附加条件。证毕。
+

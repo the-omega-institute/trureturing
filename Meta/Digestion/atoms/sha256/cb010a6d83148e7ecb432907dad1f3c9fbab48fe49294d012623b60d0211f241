@@ -1,0 +1,7 @@
+**定义 402.1。** 沿用第 71–74 条及定义 378.2 的同一个 $\operatorname{Enc},\operatorname{Dec},\mathfrak V_Z,\in_Z,\operatorname{El},\operatorname{Pack}$。对任意集合 $X$，局部记
+$$
+X^*=\operatorname{Enc}[X]=\operatorname{El}(\operatorname{Enc}(X)),\qquad
+e_X=\operatorname{enc}_X=\operatorname{Enc}|_X:X\longrightarrow X^*.
+$$
+无下标有序对始终为普通 Kuratowski 对；$\langle c,d\rangle_Z$ 始终为第 74 条的语义对，其两个参数都须属于有效码类。原集合 $X$、单个集合码 $\operatorname{Enc}(X)$ 和外部成员集合 $X^*$ 分别按这些定义使用。
+

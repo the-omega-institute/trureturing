@@ -1,0 +1,12 @@
+**定义 387.1。** 对任意集合指标 $A$ 和集合族 $(Y_i)_{i\in A}$，令
+$$
+\mathscr P_Y=\prod_{i\in A}Y_i,\qquad
+\widehat{\mathscr P}_Y=\prod_{i\in A}Y_i^*.
+$$
+定义积比较
+$$
+\Psi_Y:\widehat{\mathscr P}_Y\to\mathscr P_Y^*,\qquad
+\Psi_Y(c)=\operatorname{Enc}\bigl(i\mapsto\operatorname{Dec}(c_i)\bigr).
+$$
+各坐标的解码只用在 $Y_i^*$ 上。给每个 $Y_i$ 一个拓扑时，$\mathscr P_Y$ 取乘积拓扑，$\widehat{\mathscr P}_Y$ 取逐因子运输拓扑的乘积，$\mathscr P_Y^*$ 取原乘积拓扑的运输。
+

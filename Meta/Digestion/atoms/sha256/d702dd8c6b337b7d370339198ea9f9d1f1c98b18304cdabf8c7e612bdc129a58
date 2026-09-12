@@ -1,0 +1,17 @@
+**定义 392.1。** 对每个 $n\in\omega$，令
+$$
+\ell_n=\frac1{n+2},\qquad U_n=\{[t]:0<t<\ell_n\},
+$$
+$$
+j_n=\min\{j\ge1:j\text{ 为奇数且 }\alpha^{j+2}<\ell_n\},\quad
+h_n=\alpha^{j_n+2},\quad Q_n=G_{j_n},
+$$
+$$
+M_n=\lfloor1/h_n\rfloor,\qquad B_n=Q_nM_n,\qquad L_n=B_n+1.
+$$
+从定向旋转图的每条边 $t\to Rt$ 中，准确删去源点 $t\in U_n$ 的边，保留其余边。忽略剩余边的方向，以有限路径连通定义 $\mathcal F_n$，零长度路径允许；在 $K$ 上定义
+$$
+x\mathrel{\mathcal G_n}y\iff Hx\mathrel{\mathcal F_n}Hy.
+$$
+该删边条件作用于源点，$0$ 不属于任何 $U_n$。
+

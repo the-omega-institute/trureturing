@@ -1,0 +1,16 @@
+**定义 428.1（预测十·带邻位条件的设置运算）。** 令标签集 $\mathcal A=\omega\times\{0,1\}$。对 $a=(j,b)$，$\operatorname{set}_a(x)$ 是仅将第 $j$ 位改为 $b$ 的总二值行。定义部分函数
+$$
+D_a=\{x\in K:\operatorname{set}_a(x)\in K\},\qquad
+S_a:D_a\to K,\quad S_a(x)=\operatorname{set}_a(x).
+$$
+对有限字 $w=a_1\cdots a_k\in\mathcal A^{<\omega}$，令
+$$
+D_{\varnothing}=K,\quad f_{\varnothing}=\operatorname{id}_K,\qquad
+D_{wa}=\{x\in D_w:f_w(x)\in D_a\},\quad f_{wa}(x)=S_a(f_w(x)).
+$$
+严格总化从 $\operatorname{ok}(x)$ 开始依次作用各字母；成功状态仅在相应域内继续，否则成为 $\bot$，$\bot$ 在一切字母下保持 $\bot$。记末态为 $\operatorname{Run}(w,x)$，并令
+$$
+\operatorname{Exec}=\{(w,x)\in\mathcal A^{<\omega}\times K:x\in D_w\}.
+$$
+记 $\kappa(w,x)$ 为最小失败尝试编号 $i\in\{1,\ldots,k\}$，若没有失败则为另设的符号 $\infty$。对 $L\in\omega$，令 $O_{L,w}(x)$ 为末态的标记 $P_L$ 观察，即成功时为 $\operatorname{ok}(P_Lf_w(x))$，失败时为 $\bot$。
+
