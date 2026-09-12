@@ -738,12 +738,12 @@ public sealed partial class LeanReportInputScriptTests
             [
                 "bash", script, command, "--repository", repository, "--report", report,
             ]);
-            return TestProcessRunner.Run(
-                "env",
-                arguments,
-                workingDirectory ?? temporary.Path,
-                BoundedProcessRunner.HangDetectionBudget,
-                1024 * 1024);
+            // Explicit working directories exercise SDK resolution in the real launcher.
+            if (workingDirectory is not null)
+                return TestProcessRunner.Run("env", arguments, workingDirectory,
+                    BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
+            return RunWithBuiltInputCli(["env", .. arguments], temporary.Path,
+                BoundedProcessRunner.HangDetectionBudget);
         }
 
         private void Write(string relativePath, string contents)

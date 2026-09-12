@@ -6,6 +6,29 @@ namespace StrataLint.Tests;
 
 public sealed partial class LeanReportInputScriptTests
 {
+    internal static ProcessOutput RunWithBuiltInputCli(
+        IReadOnlyList<string> arguments, string workingDirectory, TimeSpan hangGuard) =>
+        TestProcessRunner.Run("/bin/bash",
+            ["-c", """
+                set -euo pipefail
+                # The test project's CLI reference is built by the canonical test build.
+                # Reuse only that immutable program; every selector still reads this invocation's inputs.
+                export BATCH_NATIVE_CLI="$1"
+                shift
+                dotnet() {
+                  if [[ "${1:-}" == run && " $* " == *' -- filemap-conform --input-scopes '* ]]; then
+                    while [[ "$1" != -- ]]; do shift; done
+                    shift
+                    command dotnet "$BATCH_NATIVE_CLI" "$@"
+                  else
+                    command dotnet "$@"
+                  fi
+                }
+                export -f dotnet
+                exec "$@"
+                """, "lean-input-fixture", Path.Combine(AppContext.BaseDirectory, "StrataLint.dll"),
+                .. arguments], workingDirectory, hangGuard, 1024 * 1024);
+
     internal static void CopyBatchProducerInputs(string root)
     {
         using var fixture = new LeanReportInputFixture();
@@ -14,22 +37,9 @@ public sealed partial class LeanReportInputScriptTests
 
     internal static void AttestBatchReport(string root, string report)
     {
-        var result = TestProcessRunner.Run("/bin/bash",
-            ["-c", """
-                # The canonical build supplies the CLI; bootstrap still selects and hashes real inputs.
-                export BATCH_NATIVE_CLI="$1"
-                dotnet() {
-                  [[ "$1" == run ]] || return 2
-                  while [[ $# -gt 0 && "$1" != -- ]]; do shift; done
-                  [[ $# -gt 0 ]] || return 2
-                  shift
-                  command dotnet "$BATCH_NATIVE_CLI" "$@"
-                }
-                export -f dotnet
-                exec /bin/bash "$2" address --repository "$3"
-                """, "batch-report-input", Path.Combine(AppContext.BaseDirectory, "StrataLint.dll"),
-                Path.Combine(root, InputHelperPath), root], root,
-            TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
+        var result = RunWithBuiltInputCli(
+            ["/bin/bash", Path.Combine(root, InputHelperPath), "address", "--repository", root],
+            root, TestBudgets.WorkflowProcessHangGuard);
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
         var fields = Fields(result);
         var hash = Convert.ToHexStringLower(SHA256.HashData(TemporaryFileSystem.File.ReadAllBytes(report)));

@@ -288,9 +288,9 @@ public sealed class LeanReportPairScriptTests
             int cacheEnsureExitCode = 0,
             bool signalPairAfterReceipt = false)
         {
-            return TestProcessRunner.Run(
-                "env",
+            return LeanReportInputScriptTests.RunWithBuiltInputCli(
                 [
+                    "env",
                     $"STRATALINT_SUPERVISOR_ROOT={Path.Combine(temporary.Path, "supervisor")}",
                     $"STUB_LEAN_CACHE_ENSURE_LOG={cacheEnsureLog}",
                     $"STUB_LEAN_CACHE_ENSURE_EXIT_CODE={cacheEnsureExitCode}",
@@ -304,8 +304,7 @@ public sealed class LeanReportPairScriptTests
                     "--candidate-output", candidateReport,
                 ],
                 temporary.Path,
-                BoundedProcessRunner.HangDetectionBudget,
-                1024 * 1024);
+                BoundedProcessRunner.HangDetectionBudget);
         }
 
         internal void DeleteCacheEnsure() => File.Delete(CacheEnsurePath);
