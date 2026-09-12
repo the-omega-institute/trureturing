@@ -20,7 +20,7 @@ def viaTruth (_ : Unit) (x : Bool) : Bool := let _ := truth; x
 def viaAppliedProof (_ : Unit) (x : Bool) : Bool := let _ := numberProof 0; x
 def viaProof (_ : Unit) (x : Bool) : Bool := let _ := proofSource; x
 def viaDecision (_ : Unit) (x : Bool) : Bool := if @decide True statementDecision then x else true
-def viaCertificate (_ : Unit) (x : Bool) : Bool := if certificate.bit then true else x
+def viaCertificate (_ : Unit) (x : Bool) : Bool := cond certificate.bit true x
 def viaIdentity (_ : Unit) (x : Bool) : Bool := let _ := identitySource; x
 def constantTruth (_ : Unit) (_ : Bool) : Bool := @decide True (.isTrue truth)
 def clean (_ : Unit) (x : Bool) : Bool := x

@@ -360,9 +360,9 @@ def provenanceErrorCurrent (root catalog theoremName realization : Name) : CoreM
   if !result.forbidden && result.unclassified.isNone && !result.incomplete then return none
   let reason := if result.forbidden then "forbidden_dependency"
     else if result.unclassified.isSome then "unclassified_form" else "incomplete_closure"
-  let payload := if result.incomplete && result.unclassified.isNone then Json.null
+  let payload := if result.forbidden then Json.arr (result.walked.map Json.str)
     else if let some u := result.unclassified then unclassifiedJson u result.walked
-    else Json.arr (result.walked.map Json.str)
+    else Json.null
   return some s!"IE-C050 ClosedTruthReadout key={root}/{catalog}/{theoremName} readout={address} reason={reason} provenance={payload.compress}"
 
 def provenanceError (env : Environment) (root catalog theoremName realization : Name) : CoreM (Option String) :=
