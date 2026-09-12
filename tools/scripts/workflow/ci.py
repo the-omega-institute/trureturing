@@ -31,6 +31,20 @@ def oid(value):
 
 
 def checkout(root, commit):
+    # A reusable workflow receives an immutable candidate explicitly.  An
+    # empty or mismatched input must fail closed; never silently substitute the
+    # event SHA when the caller supplied a candidate contract.
+    encoded_inputs = os.environ.get("CI_WORKFLOW_INPUTS", "")
+    if encoded_inputs:
+        try:
+            workflow_inputs = json.loads(encoded_inputs)
+        except json.JSONDecodeError as error:
+            raise ValueError("workflow inputs are malformed") from error
+        if (not isinstance(workflow_inputs, dict)
+                or "candidate_sha" not in workflow_inputs
+                or not re.fullmatch(r"[0-9a-f]{40}", workflow_inputs["candidate_sha"])
+                or workflow_inputs["candidate_sha"] != commit):
+            raise ValueError("reusable workflow candidate_sha must be a nonempty immutable SHA matching checkout")
     if run(root, "git", "rev-parse", "HEAD") != oid(commit):
         raise ValueError("checkout does not match the fixed candidate")
     for remote in run(root, "git", "remote").splitlines():
