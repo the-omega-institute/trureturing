@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Fractional grid prices lie below the two-coordinate distance envelope. -/
+   digest: Fractional rows and ordered fills obey the distance envelope. -/
 
 import D5.S3.Analytic.Interpolation.TwoPointGridDominance
 
@@ -56,46 +56,6 @@ private theorem logValue_strictConcave : StrictConcaveOn ℝ (Ioi 0) logValue :=
     div_neg_of_neg_of_pos (neg_neg_of_pos (Real.exp_pos x)) (sq_pos_of_pos he)
   simpa only [logValue, iteratedDeriv_succ, iteratedDeriv_zero,
     Function.iterate_succ_apply, Function.iterate_zero, id_eq] using hsecond.trans_lt hneg
-
-private theorem gridDualValue_translate (c d : Fin 2 → ℝ) (M price : ℝ) :
-    gridDualValue c d M price = (∑ i, logValue (c i)) +
-      Knapsack.FractionalKnapsackDual.dualValue (fun i => d i - c i)
-        (fun i => logValue (d i) - logValue (c i)) (M - ∑ i, c i) price := by
-  have hmax (i : Fin 2) :
-      max (logValue (c i) - price * c i) (logValue (d i) - price * d i) =
-        logValue (c i) - price * c i +
-          max 0 (logValue (d i) - logValue (c i) - price * (d i - c i)) := by
-    rw [add_max]
-    congr 1 <;> ring
-  simp only [gridDualValue, hmax, Knapsack.FractionalKnapsackDual.dualValue,
-    Finset.sum_add_distrib, Finset.sum_sub_distrib, ← Finset.mul_sum]
-  ring
-
-/-- Subtracting the lower endpoints identifies the grid dual with fractional knapsack. -/
-theorem grid_dual_eq_fractional_sup (c d : Fin 2 → ℝ) (M : ℝ)
-    (hc : ∀ i, 0 < c i) (hcd : ∀ i, c i < d i) (hM : ∑ i, c i ≤ M) :
-    gridDual c d M = (∑ i, logValue (c i)) +
-      sSup (Knapsack.FractionalKnapsackDual.objective
-        (fun i => logValue (d i) - logValue (c i)) ''
-        {a | Knapsack.FractionalKnapsackDual.Feasible (fun i => d i - c i)
-          (M - ∑ i, c i) a}) := by
-  haveI : Nonempty {p : ℝ // 0 ≤ p} := ⟨⟨0, le_rfl⟩⟩
-  have hw (i : Fin 2) : 0 < d i - c i := sub_pos.mpr (hcd i)
-  have hv (i : Fin 2) : 0 ≤ logValue (d i) - logValue (c i) :=
-    sub_nonneg.mpr (logValue_strictMono (hc i) ((hc i).trans (hcd i)) (hcd i)).le
-  have hb : 0 ≤ M - ∑ i, c i := sub_nonneg.mpr hM
-  have hbounded : BddBelow (range (fun p : {p : ℝ // 0 ≤ p} =>
-      Knapsack.FractionalKnapsackDual.dualValue (fun i => d i - c i)
-        (fun i => logValue (d i) - logValue (c i)) (M - ∑ i, c i) p)) := by
-    refine ⟨0, ?_⟩
-    rintro _ ⟨p, rfl⟩
-    exact add_nonneg (mul_nonneg p.property hb)
-      (Finset.sum_nonneg (fun i _ => le_max_left _ _))
-  simp only [gridDual, gridDualValue_translate]
-  rw [← add_ciInf hbounded]
-  rw [Knapsack.FractionalKnapsackDual.fractional_knapsack_strong_duality
-    (fun i => d i - c i) (fun i => logValue (d i) - logValue (c i))
-    (M - ∑ i, c i) hw hv hb]
 
 open private hermite_strict_majorant quadratic_derivatives
   from D5.S3.Analytic.Interpolation.HermiteEnvelopeEquality
@@ -443,71 +403,6 @@ theorem ordered_fill_bound {c d t u M₀ M₁ : ℝ}
       simp [Knapsack.FractionalKnapsackDual.objective,
         Knapsack.FractionalKnapsackDual.greedyFill, Fin.sum_univ_two, hfirst] <;> ring
 
-/-- The fractional price optimum is bounded by the envelope of the grid distances. -/
-theorem two_point_grid_dominance (c d : Fin 2 → ℝ) (M₀ M₁ : ℝ)
-    (hc : ∀ i, 0 < c i) (hcd : ∀ i, c i < d i) (hM : M₀ < M₁)
-    (htwo : (corners c d M₀ M₁).Nontrivial) :
-    gridDual c d M₁ ≤ psiTwo (M₁ / 2) (varianceFloor c d M₀ M₁) := by
-  have hbase : (∑ i, c i) ≤ M₁ := by
-    obtain ⟨⟨x, y⟩, hx, _, _, _⟩ := htwo
-    have hcx : c 0 ≤ x := hx.1.elim (fun h => h.ge) (fun h => (hcd 0).le.trans h.ge)
-    have hcy : c 1 ≤ y := hx.2.1.elim (fun h => h.ge) (fun h => (hcd 1).le.trans h.ge)
-    simp only [Fin.sum_univ_two]
-    linarith [hx.2.2.2]
-  let w := fun i => d i - c i
-  let v := fun i => logValue (d i) - logValue (c i)
-  let B := M₁ - ∑ i, c i
-  obtain ⟨l, p, hn, hcover, _, _, _, _, _, _, hsup, _⟩ :=
-    Knapsack.FractionalKnapsackDual.greedy_attains_duality w v B
-      (fun i => sub_pos.mpr (hcd i))
-      (fun i => sub_nonneg.mpr
-        (logValue_strictMono (hc i) ((hc i).trans (hcd i)) (hcd i)).le)
-      (sub_nonneg.mpr hbase)
-  rw [grid_dual_eq_fractional_sup c d M₁ hc hcd hbase, hsup]
-  have hlen : l.length = 2 := by
-    rw [← List.toFinset_card_of_nodup hn, hcover]
-    simp
-  obtain ⟨i, j, rfl⟩ := List.length_eq_two.mp hlen
-  have hne : i ≠ j := by simpa using hn
-  have hh := ordered_fill_bound (hc 0) (hcd 0) (hc 1) (hcd 1) hM
-    (by simpa only [Fin.sum_univ_two] using hbase) htwo
-  have hswap : {p : ℝ × ℝ | (p.1 = c 1 ∨ p.1 = d 1) ∧ (p.2 = c 0 ∨ p.2 = d 0) ∧
-      M₀ ≤ p.1 + p.2 ∧ p.1 + p.2 ≤ M₁}.Nontrivial := by
-    obtain ⟨⟨x, y⟩, hx, ⟨z, q⟩, hz, hne⟩ := htwo
-    refine ⟨(y, x), ?_, (q, z), ?_, ?_⟩
-    · exact ⟨hx.2.1, hx.1, by linarith [hx.2.2.1], by linarith [hx.2.2.2]⟩
-    · exact ⟨hz.2.1, hz.1, by linarith [hz.2.2.1], by linarith [hz.2.2.2]⟩
-    · intro he
-      apply hne
-      have hp := Prod.mk.inj he
-      exact Prod.ext hp.2 hp.1
-  have hh' := ordered_fill_bound (hc 1) (hcd 1) (hc 0) (hcd 0) hM
-    (by simpa only [Fin.sum_univ_two, add_comm] using hbase) hswap
-  have hB₀ : B = M₁ - c 0 - c 1 := by dsimp [B]; rw [Fin.sum_univ_two]; ring
-  have hB₁ : M₁ - c 1 - c 0 = B := by rw [hB₀]; ring
-  fin_cases i <;> fin_cases j
-  · exact (hne (Eq.refl _)).elim
-  · have hw : w = ![d 0 - c 0, d 1 - c 1] := by funext i; fin_cases i <;> simp [w]
-    have hv : v = ![logValue (d 0) - logValue (c 0), logValue (d 1) - logValue (c 1)] := by
-      funext i; fin_cases i <;> simp [v]
-    convert hh using 1 <;>
-      simp [hw, hv, hB₀, varianceFloor, Fin.sum_univ_two,
-        Knapsack.FractionalKnapsackDual.objective,
-        Knapsack.FractionalKnapsackDual.greedyFill, sub_le_iff_le_add]
-    have hguard : (d 0 ≤ M₁ - c 0 - c 1 + c 0) ↔
-        (d 0 - c 0 ≤ M₁ - c 0 - c 1) := by
-      constructor <;> intro <;> linarith
-    simp only [hguard]
-    split_ifs <;> simp_all
-  · rw [hB₁] at hh'
-    by_cases hfirst : d 1 - c 1 ≤ B <;>
-      by_cases hsecond : d 0 - c 0 ≤ B - (d 1 - c 1) <;>
-      convert hh' using 1 <;>
-      simp [Knapsack.FractionalKnapsackDual.objective,
-        Knapsack.FractionalKnapsackDual.greedyFill, Fin.sum_univ_two,
-        w, v, varianceFloor, hfirst, hsecond, add_comm] <;> ring
-  · exact (hne (Eq.refl _)).elim
-
 #print axioms psiTwo_mono_mean
 #print axioms pair_value_spread
 #print axioms inner_secant_quadratic_moments
@@ -517,6 +412,5 @@ theorem two_point_grid_dominance (c d : Fin 2 → ℝ) (M₀ M₁ : ℝ)
 #print axioms fractional_row_bound
 #print axioms actual_pair_bound
 #print axioms ordered_fill_bound
-#print axioms two_point_grid_dominance
 
 end D5.S3.Analytic.Interpolation.TwoPointGridDominanceBound
