@@ -190,16 +190,13 @@ public sealed class CommonStageContractTests
     {
         using var fixture = new CurrentExecutionContractTests.CandidateFixture();
         PrepareCurrent(fixture);
-        var emitted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
-        using var watcher = new FileSystemWatcher(Path.Combine(fixture.Root, "build"), "producer-started");
-        watcher.Created += (_, _) => emitted.TrySetResult();
-        watcher.EnableRaisingEvents = true;
+        var marker = Path.Combine(fixture.Root, "build/producer-started");
         using var deadline = new CancellationTokenSource();
         using var output = new StringWriter();
         // Capture creates its stage timer after starting the producer and before
         // starting either reader. The marker follows both writes, so cancellation
         // here leaves emitted bytes unread without depending on reader scheduling.
-        var clock = new OutputBoundaryClock(emitted.Task, deadline);
+        var clock = new OutputBoundaryClock(() => TemporaryFileSystem.File.Exists(marker), deadline);
         var run = Task.Run(() => new CommonStages(fixture.Root, output, deadline.Token,
             timeProvider: clock).Run("current", null));
         try
@@ -213,7 +210,12 @@ public sealed class CommonStageContractTests
         finally
         {
             deadline.Cancel();
-            await run;
+            try { await run.WaitAsync(TestBudgets.ScriptProcessHangGuard); }
+            catch (TimeoutException exception)
+            {
+                throw new SkipException("infrastructure-hang-guard expired during output boundary fixture cleanup: " + exception.Message);
+            }
+            clock.ThrowIfMarkerGuardExpired();
         }
         using var summary = System.Text.Json.JsonDocument.Parse(TemporaryFileSystem.File.ReadAllText(
             Path.Combine(fixture.Root, CommonExecutionEvidence.RootPath, "current-result.json")));
@@ -228,13 +230,81 @@ public sealed class CommonStageContractTests
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.CurrentPath)));
     }
 
-    private sealed class OutputBoundaryClock(Task emitted, CancellationTokenSource deadline) : TimeProvider
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public async Task OutputBoundaryRecognizesPersistentMarker(bool alreadyPresent)
     {
+        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        var marker = Path.Combine(fixture.Root, "output-marker");
+        if (alreadyPresent) TemporaryFileSystem.File.WriteAllText(marker, "");
+        var waiting = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        using var deadline = new CancellationTokenSource();
+        var clock = new OutputBoundaryClock(() =>
+        {
+            var exists = TemporaryFileSystem.File.Exists(marker);
+            if (!exists) waiting.TrySetResult();
+            return exists;
+        }, deadline);
+        var timer = Task.Run(() => clock.CreateTimer(_ => { }, null,
+            Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan));
+        try
+        {
+            if (!alreadyPresent)
+            {
+                await waiting.Task.WaitAsync(TestBudgets.ScriptProcessHangGuard);
+                Assert.False(deadline.IsCancellationRequested);
+                TemporaryFileSystem.File.WriteAllText(marker, "");
+            }
+            using var completed = await timer.WaitAsync(TestBudgets.ScriptProcessHangGuard);
+            clock.ThrowIfMarkerGuardExpired();
+            Assert.True(deadline.IsCancellationRequested);
+        }
+        catch (TimeoutException exception)
+        {
+            throw new SkipException("infrastructure-hang-guard expired for marker handshake fixture: " + exception.Message);
+        }
+        finally
+        {
+            TemporaryFileSystem.File.WriteAllText(marker, "");
+            try { (await timer.WaitAsync(TestBudgets.ScriptProcessHangGuard)).Dispose(); }
+            catch (TimeoutException exception)
+            {
+                throw new SkipException("infrastructure-hang-guard expired during marker handshake cleanup: " + exception.Message);
+            }
+        }
+    }
+
+    [Fact]
+    public void OutputBoundaryMissingMarkerRemainsInfrastructureFailureAfterCancellation()
+    {
+        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        var marker = Path.Combine(fixture.Root, "absent-output-marker");
+        using var deadline = new CancellationTokenSource();
+        var clock = new OutputBoundaryClock(() => TemporaryFileSystem.File.Exists(marker), deadline);
+        using var timer = clock.CreateTimer(_ => { }, null, Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan);
+        Assert.True(deadline.IsCancellationRequested);
+        var failure = Assert.Throws<SkipException>(clock.ThrowIfMarkerGuardExpired);
+        Assert.StartsWith("infrastructure-hang-guard expired for output boundary marker", failure.Message, StringComparison.Ordinal);
+    }
+
+    private sealed class OutputBoundaryClock(Func<bool> emitted, CancellationTokenSource deadline) : TimeProvider
+    {
+        private bool markerGuardExpired;
+
         public override ITimer CreateTimer(TimerCallback callback, object? state, TimeSpan dueTime, TimeSpan period)
         {
-            emitted.WaitAsync(TestBudgets.ScriptProcessHangGuard).GetAwaiter().GetResult();
+            markerGuardExpired = !SpinWait.SpinUntil(emitted, TestBudgets.ScriptProcessHangGuard);
+            // Even a fixture timeout must let Capture kill/reap its real process.
+            // Report it outside Run, whose exception policy owns stage failures.
             deadline.Cancel();
             return base.CreateTimer(callback, state, dueTime, period);
+        }
+
+        internal void ThrowIfMarkerGuardExpired()
+        {
+            if (markerGuardExpired)
+                throw new SkipException("infrastructure-hang-guard expired for output boundary marker");
         }
     }
 
@@ -243,27 +313,25 @@ public sealed class CommonStageContractTests
     {
         using var fixture = new CurrentExecutionContractTests.CandidateFixture();
         PrepareCurrent(fixture);
-        var started = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
-        using var watcher = new FileSystemWatcher(Path.Combine(fixture.Root, "build"), "producer-started");
-        watcher.Created += (_, _) => started.TrySetResult();
-        watcher.EnableRaisingEvents = true;
+        var marker = Path.Combine(fixture.Root, "build", "producer-started");
         using var deadline = new CancellationTokenSource();
         using var output = new StringWriter();
         var run = Task.Run(() => new CommonStages(fixture.Root, output, deadline.Token).Run("current", null));
         try
         {
-            await started.Task.WaitAsync(TestBudgets.ScriptProcessHangGuard);
+            if (!SpinWait.SpinUntil(() => TemporaryFileSystem.File.Exists(marker), TestBudgets.ScriptProcessHangGuard))
+                throw new TimeoutException("producer-started marker is absent");
             deadline.Cancel();
             Assert.Equal(2, await run.WaitAsync(TestBudgets.ScriptProcessHangGuard));
         }
         catch (TimeoutException exception)
         {
-            throw new SkipException("infrastructure-hang-guard expired for current stage fixture: " + exception.Message);
+            throw new InvalidOperationException("infrastructure-hang-guard expired for current stage fixture: " + exception.Message, exception);
         }
         finally
         {
             deadline.Cancel();
-            await run;
+            await run.WaitAsync(TestBudgets.ScriptProcessHangGuard);
         }
         using var summary = System.Text.Json.JsonDocument.Parse(TemporaryFileSystem.File.ReadAllText(
             Path.Combine(fixture.Root, CommonExecutionEvidence.RootPath, "current-result.json")));
@@ -375,6 +443,7 @@ public sealed class CommonStageContractTests
             TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(full)!);
             TemporaryFileSystem.File.WriteAllText(full, "fixture binary");
         }
+        fixture.Build();
         Assert.Equal(0, Program.RunCurrentTests(fixture.Root, (_, results) => { fixture.WriteTrx(results, "Passed"); return 0; }, TextWriter.Null));
         var candidate = CommonExecutionEvidence.Read<TestExecutionRecord>(fixture.Root, CommonExecutionEvidence.TestsPath).Candidate;
         CiTransportTests.SealEngineering(fixture.Root, candidate, binaries, CommonExecutionEvidence.EngineeringSteps
@@ -483,6 +552,7 @@ public sealed class CommonStageContractTests
             Assert.Throws<InvalidDataException>(() => CommonExecutionEvidence.SealCurrent(source.Root, CommonExecutionEvidence.ValidateBuild(source.Root), currentSteps));
             return;
         }
+        CheckEvidenceFixture.Seal(source.Root, "current", CommonExecutionEvidence.ValidateBuild(source.Root));
         CommonExecutionEvidence.SealCurrent(source.Root, CommonExecutionEvidence.ValidateBuild(source.Root), currentSteps);
         var bundle = (TemporaryFileSystem.File.ReadAllText(Path.Combine(source.Root, CommonExecutionEvidence.BundleListPath("current")))
             + TemporaryFileSystem.File.ReadAllText(Path.Combine(source.Root, CommonExecutionEvidence.BundleListPath("engineering"))))

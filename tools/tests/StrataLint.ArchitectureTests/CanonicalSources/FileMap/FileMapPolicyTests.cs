@@ -8,6 +8,41 @@ namespace StrataLint.ArchitectureTests;
 public sealed partial class FileMapPolicyTests
 {
     [Fact]
+    public void CommonExecutionManifestsHaveRegisteredDataVerifiers()
+    {
+        var root = RepositoryLayout.FindRoot();
+        var manifest = FileMapLoader.LoadRepository(root);
+        string[] paths = ["Meta/ci-checks.json", "Meta/engineering-projects.json"];
+        Assert.All(paths, path =>
+        {
+            var entry = Assert.Single(manifest.Match(path));
+            Assert.Equal(FileMapKind.Data, entry.Kind);
+            Assert.Contains("CommonExecutionEvidence", entry.VerifiedBy);
+        });
+
+        var findings = FileMapPolicy.InspectRepository(root);
+
+        Assert.DoesNotContain(findings, finding =>
+            paths.Contains(finding.Path, StringComparer.Ordinal)
+            && finding.Code is "FILEMAP-DATA-VERIFIER" or "FILEMAP-DATA-VERIFIER-DANGLING");
+    }
+
+    [Theory]
+    [InlineData("lean-report")]
+    [InlineData("scribe-content")]
+    public void ReportProducerScopesHaveRegisteredDataVerifier(string scope)
+    {
+        var root = RepositoryLayout.FindRoot();
+        var manifest = FileMapLoader.LoadRepository(root);
+        var entry = Assert.Single(manifest.Match($"Meta/ReportProducers/{scope}.json"));
+
+        Assert.Equal(FileMapKind.Data, entry.Kind);
+        Assert.Equal(FileMapAdmissionPlane.Judge, entry.AdmissionPlane);
+        Assert.Equal("report-producer-scope", Assert.Single(entry.VerifiedBy));
+        Assert.Equal("committed-source", entry.RuntimeDisposition);
+    }
+
+    [Fact]
     public void ComputationalProjectionsHaveCanonicalFileMapEntries()
     {
         var expectedPaths = new HashSet<string>(

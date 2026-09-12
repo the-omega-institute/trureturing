@@ -65,7 +65,7 @@ def restore_candidate(root, area, selected):
             if transfer.namelist() != ["ci-current.tar.gz"]:
                 raise ValueError("selected push artifact has unexpected contents")
             transfer.extract("ci-current.tar.gz", temporary)
-        extract(target, pathlib.Path(temporary) / "ci-current.tar.gz")
+        extract(target, pathlib.Path(temporary) / "ci-current.tar.gz", "current")
     subprocess.run(["dotnet", RUNNER, "transport-verify", "--repository", str(target), "--stage", "current", "--commit", commit,
                     "--run-id", str(selected["run_id"]), "--run-attempt", str(selected["run_attempt"])], cwd=target, check=True)
     return target
@@ -141,6 +141,12 @@ def prepare(root, area, repository):
                 candidate = restore_candidate(root, area, selected)
             except (OSError, ValueError, subprocess.SubprocessError, tarfile.TarError, zipfile.BadZipFile) as error:
                 print("TRUTH_RELEASE_INPUT_UNAVAILABLE " + json.dumps({"run_id": selected["run_id"], "reason": str(error)}))
+                evidence["runs"] = [run for run in evidence["runs"] if run["id"] != selected["run_id"]]
+                continue
+            # Native verification binds these exact steps to the retained resource plan.
+            current = json.loads((candidate / "build/ci/current.json").read_text())
+            if not any(step["name"] == "lean-report" for step in current["steps"]):
+                print("TRUTH_RELEASE_REPORT_NOT_REQUIRED " + json.dumps({"run_id": selected["run_id"]}))
                 evidence["runs"] = [run for run in evidence["runs"] if run["id"] != selected["run_id"]]
                 continue
             result = assemble(candidate, area, selected)

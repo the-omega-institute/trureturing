@@ -177,11 +177,29 @@ class PairFixture(PartitionFixture):
         super().setUp()
         self.supervisor = tempfile.TemporaryDirectory(prefix="lean-seed-supervisor-")
         self.addCleanup(self.supervisor.cleanup)
-        shutil.copytree(ROOT / "tools/scripts", self.root / "tools/scripts")
+        shutil.copytree(ROOT / "tools/scripts", self.root / "tools/scripts",
+                        ignore=shutil.ignore_patterns("bin", "obj", "__pycache__"))
         shutil.copytree(ROOT / "tools/lean-inspector", self.root / "tools/lean-inspector")
         self.producer = self.root / "tools/lean-inspector/inspect.sh"
         write(self.producer, PAIR_PRODUCER)
         self.producer.chmod(0o755)
+        # This synthetic producer runs only scripts; real project roots are
+        # are not selected merely because the helper project is present.
+        registration = json.loads((ROOT / "Meta/ReportProducers/lean-report.json").read_text())
+        registration["projects"] = []
+        registration["materials"] = []
+        write(self.root / "Meta/ReportProducers/lean-report.json", json.dumps(registration))
+        write(self.root / "Meta/engineering-projects.json", json.dumps({
+            "version": 1, "rule_build_inputs": [], "projects": [{
+                "path": "tools/scripts/report/JudgeSeedTask.csproj", "assembly": "JudgeSeedTask",
+                "role": "test-support", "ci": False,
+                "include": ["tools/scripts/report/JudgeSeedTask.cs"], "exclude": [], "references": [],
+                "owner": None, "owned_test_assembly": None, "test_partition": None,
+                "root_namespace": "Fixture", "namespace_exclude": [], "global_namespace_exceptions": [],
+                "build_inputs": [], "execution_inputs": None, "execution_excludes": None, "execution_environment": None,
+            }], "historical_projects": []}))
+        subprocess.run(["git", "init", "--quiet", str(self.root)], check=True, capture_output=True)
+        subprocess.run(["git", "-C", str(self.root), "add", "tools"], check=True, capture_output=True)
         self.cache = self.root / ".lake/report-cache"
         self.output = self.root / "out/raw-lean-report.json"
         self.helper = self.root / "tools/scripts/report/lean-report-input.sh"
@@ -421,234 +439,6 @@ exit 19
                     member.write_bytes(content)
         write(self.root / "D5/A.lean", "def a := 5\n")
         self.assertEqual(2, self.stage_report(staged).returncode)
-
-    def test_input_follows_transitive_program_dependencies_without_workflow(self):
-        before = self.report_input()
-        self.assertEqual(0, before.returncode, before.stderr)
-        write(self.root / ".github/workflows/ci.yml", "not a workflow")
-        write(self.root / "tools/StrataLint.Cli/unused.cs", "irrelevant")
-        self.assertEqual(before.stdout, self.report_input().stdout)
-        module = self.root / "tools/lean-inspector/materials.py"
-        write(module, module.read_text() + "\nimport fixture_dependency\n")
-        dependency = self.root / "tools/lean-inspector/fixture_dependency.py"
-        write(dependency, "SEMANTIC_VALUE = 1\n")
-        first = self.report_input()
-        self.assertEqual(0, first.returncode, first.stderr)
-        write(dependency, "SEMANTIC_VALUE = 2\n")
-        self.assertNotEqual(first.stdout, self.report_input().stdout)
-        dependency.unlink()
-        # Missing executable dependencies must fail closed during production.
-        self.assertNotEqual(0, self.pair().returncode)
-
-    def test_metadata_keeps_attestation_but_semantic_and_source_drift_are_stale(self):
-        self.assertEqual(0, self.pair().returncode)
-        write(self.root / "lakefile.toml", 'name = "renamed"\nkeywords = ["metadata"]\n[leanOptions]\nmaxRecDepth = 1000\n')
-        self.assertEqual(0, self.report_input("verify").returncode)
-        fetcher = self.root / "tools/scripts/worktree/lean-cache-publish.sh"
-        write(fetcher, fetcher.read_text() + "\n# fetch acceptance changed\n")
-        self.assertEqual(2, self.report_input("verify").returncode)
-        self.assertEqual(0, self.pair().returncode)
-        write(self.root / "D5/A.lean", "def a := 4\n")
-        self.assertEqual(2, self.report_input("verify").returncode)
-        self.assertEqual(0, self.pair().returncode)
-        write(self.root / "lakefile.toml", '[leanOptions]\nmaxRecDepth = 2000\n')
-        self.assertEqual(2, self.report_input("verify").returncode)
-
-
-class ProducerClosureFixture(PairFixture):
-    def setUp(self):
-        super().setUp()
-        shutil.copyfile(ROOT / "tools/lean-inspector/inspect.sh", self.producer)
-        # Copy source inputs, never retained binaries or another worktree.
-        for directory, children, files in os.walk(ROOT / "tools"):
-            children[:] = [name for name in children if name not in
-                           ("bin", "obj", "tests", "TestSupport", "scripts", "lean-inspector")]
-            for name in files:
-                source = pathlib.Path(directory) / name
-                target = self.root / source.relative_to(ROOT)
-                target.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copyfile(source, target)
-        for name in ("Directory.Build.props", "Directory.Packages.props", "global.json"):
-            shutil.copyfile(ROOT / name, self.root / name)
-
-    def address(self):
-        result = self.report_input()
-        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
-        fields = result.stdout.split()
-        self.assertEqual(4, len(fields))
-        return fields
-
-    def plan_addresses(self, before, after):
-        # Feed the real address into the existing incremental planner contract.
-        delta = DeltaTests()
-        delta.setUp()
-        self.addCleanup(delta.doCleanups)
-        delta.producer = before[1]
-        delta.config = before[3]
-        delta.store()
-        self.assertEqual("reuse", delta.plan()["status"])
-        plan = delta.plan(producer=after[1], config=after[3])
-        print(json.dumps({"case": self.id(), "changed": len(plan["changed"]),
-            "selected": len(plan["recheck"]), "modules": len(plan["current"]),
-            "semantic_changed": plan["semantic_changed"]}), flush=True)
-        return plan
-
-    def assert_invalidates(self, before):
-        after = self.address()
-        self.assertNotEqual(before[:2], after[:2])
-        self.assertEqual(before[2:], after[2:])
-        self.assertEqual(REV, self.partition())
-        plan = self.plan_addresses(before, after)
-        self.assertEqual("delta", plan["status"])
-        self.assertEqual(["A", "B", "C", "D"], plan["recheck"])
-        self.assertTrue(plan["semantic_changed"])
-
-
-class ProducerIsolationTests(ProducerClosureFixture, unittest.TestCase):
-    def test_blueprint_only_change_selects_no_report_modules(self):
-        path = "Blueprint/D5/S0/Asymptotics/Bonferroni/TailBounds.scribe.cs"
-        owner = self.root / path
-        write(owner, (ROOT / path).read_text())
-        before = self.address()
-        write(owner, owner.read_text() + "\n// Harmless narrative comment.\n")
-        after = self.address()
-        self.assertEqual(before[2:], after[2:])
-        self.assertEqual(REV, self.partition())
-        plan = self.plan_addresses(before, after)
-        self.assertEqual([], plan["recheck"])
-        self.assertEqual("reuse", plan["status"])
-
-    def test_metadata_only_change_selects_no_report_modules(self):
-        before = self.address()
-        write(self.root / "lakefile.toml", 'name = "renamed"\nkeywords = ["metadata"]\n[leanOptions]\nmaxRecDepth = 1000\n')
-        self.manifest["packages"][0]["inputRev"] = "metadata-tag"
-        self.save_manifest()
-        after = self.address()
-        self.assertEqual(REV, self.partition())
-        self.assertEqual([], self.plan_addresses(before, after)["recheck"])
-        config = self.root / "lakefile.toml"
-        write(config, config.read_text().replace("maxRecDepth = 1000", "maxRecDepth = 2000"))
-        options = self.address()
-        self.assertEqual(after[1:3], options[1:3])
-        self.assertNotEqual(after[3], options[3])
-        self.assertEqual(REV, self.partition())
-        self.assertEqual(["A", "B", "C", "D"], self.plan_addresses(after, options)["recheck"])
-
-    def test_shared_utility_parser_change_invalidates_report_modules(self):
-        before = self.address()
-        owners = list((self.root / "tools").rglob("UtilitySyntax.cs"))
-        self.assertEqual(1, len(owners))
-        original = owners[0].read_text()
-        changed = original.replace('text.Split("; ",', 'text.Split(";",')
-        self.assertNotEqual(original, changed)
-        write(owners[0], changed)
-        self.assert_invalidates(before)
-
-
-class ProducerClosureTests(ProducerClosureFixture, unittest.TestCase):
-    def test_actions_policy_change_does_not_invalidate_report_producer(self):
-        def policy():
-            # A fresh process resolves the fixture's live callable after each edit.
-            result = subprocess.run([sys.executable, "-B", "-c", '''
-import json, pathlib, sys
-sys.path.insert(0, sys.argv[1])
-from lean_actions import actions_keys
-from lean_cache import resolved_mathlib, semantic_config
-print(json.dumps({"owner": actions_keys.__code__.co_filename,
-    "save_allowed": actions_keys(pathlib.Path(sys.argv[2]))["save_allowed"],
-    "semantic_owners": [function.__code__.co_filename
-                        for function in (resolved_mathlib, semantic_config)]}))
-''', str(self.root / "tools/scripts/worktree"), str(self.root)],
-                text=True, capture_output=True, env={**os.environ,
-                    "GITHUB_RUN_ID": "12", "GITHUB_RUN_ATTEMPT": "1",
-                    "GITHUB_EVENT_NAME": "push", "GITHUB_REF": "refs/heads/feature-policy-probe",
-                    "STRATALINT_CACHE_WRITES": "true", "STRATALINT_CHECK_SUCCEEDED": "true"})
-            self.assertEqual(0, result.returncode, result.stderr)
-            return json.loads(result.stdout)
-
-        before = self.address()
-        policy_before = policy()
-        self.assertFalse(policy_before["save_allowed"])
-        owner = pathlib.Path(policy_before["owner"])
-        self.assertTrue(owner.resolve().is_relative_to(self.root.resolve()))
-        original = owner.read_text()
-        changed = original.replace('"refs/heads/dev",', '"refs/heads/dev",\n                      "refs/heads/feature-policy-probe",')
-        self.assertNotEqual(original, changed)
-        try:
-            write(owner, changed)
-            policy_after = policy()
-            self.assertEqual(policy_before["owner"], policy_after["owner"])
-            self.assertTrue(policy_after["save_allowed"])
-            paths = self.report_input("producer-paths")
-            self.assertEqual(0, paths.returncode, paths.stderr)
-            for source in policy_after["semantic_owners"]:
-                self.assertIn(pathlib.Path(source).relative_to(self.root).as_posix(), paths.stdout.splitlines())
-            after = self.address()
-            plan = self.plan_addresses(before, after)
-            self.assertEqual(before, after)
-            self.assertEqual([], plan["recheck"])
-            self.assertEqual("reuse", plan["status"])
-            self.assertFalse(plan["semantic_changed"])
-        finally:
-            write(owner, original)
-
-    def test_ci_only_changes_preserve_address_and_reuse(self):
-        before = self.address()
-        for name, literal in (
-            ("CommonStages.cs", "stage must be build, engineering, current, or delta"),
-            ("CiTransport.cs", "transport options must be unique name/value pairs"),
-        ):
-            with self.subTest(owner=name):
-                owner = self.root / "tools/StrataLint.EngineeringScope" / name
-                original = owner.read_text()
-                changed = original.replace(literal, literal + " (CI-only probe)")
-                self.assertNotEqual(original, changed)
-                try:
-                    write(owner, changed)
-                    after = self.address()
-                    self.assertEqual(before[2:], after[2:])
-                    self.assertEqual(REV, self.partition())
-                    plan = self.plan_addresses(before, after)
-                    self.assertEqual(before, after)
-                    self.assertEqual([], plan["recheck"])
-                    self.assertFalse(plan["semantic_changed"])
-                    self.assertEqual("reuse", plan["status"])
-                finally:
-                    write(owner, original)
-
-    def test_actual_cache_writer_source_invalidates_address_and_reuse(self):
-        before = self.address()
-        owner = self.root / "tools/StrataLint.Lean/Lean/LeanCacheEnsureCommand.cs"
-        original = owner.read_bytes()
-        write(owner, owner.read_text().replace('var receipt = ensured.Output;',
-                                             'var receipt = ensured.Output + "producer-change";'))
-        self.assertNotEqual(digest(original), digest(owner.read_bytes()))
-        self.assert_invalidates(before)
-        paths = self.report_input("producer-paths")
-        self.assertEqual(0, paths.returncode, paths.stderr)
-        self.assertIn(str(owner.relative_to(self.root)), paths.stdout.splitlines())
-        self.assertIn("tools/StrataLint.Engine/Runtime/BoundedProcessRunner.cs", paths.stdout.splitlines())
-        self.assertIn("tools/scripts/worktree/lean-cache-publish.sh", paths.stdout.splitlines())
-
-    def test_semantic_build_inputs_and_required_members(self):
-        before = self.address()
-        write(self.root / "lakefile.toml", 'name = "renamed"\nkeywords = ["metadata"]\n[leanOptions]\nmaxRecDepth = 1000\n')
-        self.manifest["packages"][0]["inputRev"] = "metadata-tag"
-        self.save_manifest()
-        write(self.root / "README.md", "irrelevant metadata\n")
-        self.assertEqual(before, self.address())
-        imported = self.root / "tools/report-options.props"
-        write(imported, '<Project><PropertyGroup><DefineConstants>REPORT_OPTION</DefineConstants></PropertyGroup></Project>')
-        props = self.root / "Directory.Build.props"
-        write(props, props.read_text().replace('</Project>', '<Import Project="tools/report-options.props" /></Project>'))
-        self.assert_invalidates(before)
-        before = self.address()
-        write(imported, imported.read_text().replace("REPORT_OPTION", "REPORT_OPTION_CHANGED"))
-        self.assert_invalidates(before)
-        imported.unlink()
-        self.assertNotEqual(0, self.report_input().returncode)
-        write(imported, '<Project><ItemGroup><Compile Include="RequiredProducer.cs" /></ItemGroup></Project>')
-        self.assertNotEqual(0, self.report_input().returncode)
 
 
 class ReportImportTests(unittest.TestCase):

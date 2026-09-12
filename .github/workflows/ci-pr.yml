@@ -19,6 +19,8 @@ jobs:
     outputs:
       candidate_sha: ${{ steps.resolve.outputs.candidate_sha }}
       base_sha: ${{ steps.resolve.outputs.base_sha }}
+      changes_b64: ${{ steps.resolve.outputs.changes_b64 }}
+      plan_b64: ${{ steps.resolve.outputs.plan_b64 }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -28,14 +30,17 @@ jobs:
       - id: resolve
         env:
           PR_HEAD: ${{ github.event.pull_request.head.sha }}
-        run: python3 tools/scripts/workflow/ci.py resolve --repository "$GITHUB_WORKSPACE" --head "$PR_HEAD"
+        run: python3 -B tools/scripts/workflow/ci.py resolve --repository "$GITHUB_WORKSPACE" --head "$PR_HEAD"
 
   push:
     name: push
     needs: resolve
+    if: always()
     uses: ./.github/workflows/ci-push.yml
     with:
       candidate_sha: ${{ needs.resolve.outputs.candidate_sha }}
+      changes_b64: ${{ needs.resolve.outputs.changes_b64 }}
+      plan_b64: ${{ needs.resolve.outputs.plan_b64 }}
 
   delta:
     name: delta
@@ -47,50 +52,55 @@ jobs:
       CANDIDATE_SHA: ${{ needs.resolve.outputs.candidate_sha }}
       BASE_SHA: ${{ needs.resolve.outputs.base_sha }}
       STRATALINT_CACHE_WRITES: 'false'
+      CI_PLAN_PATH: build/ci/plan.json
+      CI_CHANGES_PATH: build/ci/changes.json
+      CI_NEEDS: ${{ toJSON(needs) }}
+      CI_CHANGES_B64: ${{ needs.resolve.outputs.changes_b64 }}
+      CI_PLAN_B64: ${{ needs.resolve.outputs.plan_b64 }}
     steps:
-      - name: Require successful prerequisites
-        shell: bash
-        env:
-          RESOLVE_RESULT: ${{ needs.resolve.result }}
-          PUSH_RESULT: ${{ needs.push.result }}
-        run: |
-          if [ "$RESOLVE_RESULT" != success ] || [ "$PUSH_RESULT" != success ]; then
-            echo "::error::resolve result is $RESOLVE_RESULT, push result is $PUSH_RESULT; delta did not run."
-            exit 1
-          fi
       - uses: actions/checkout@v4
         with:
-          ref: ${{ env.CANDIDATE_SHA }}
+          ref: ${{ env.CANDIDATE_SHA || github.sha }}
           fetch-depth: 0
           persist-credentials: false
       - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
+      - id: route
+        name: Validate delta prerequisites and resource plan
+        run: python3 -B tools/scripts/workflow/ci.py stage-input --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA" --stage delta --base "$BASE_SHA"
       - uses: actions/setup-dotnet@v4
+        if: steps.route.outputs.dotnet == 'true'
         with:
           global-json-file: global.json
       - uses: actions/download-artifact@v4
+        if: steps.route.outputs.current_required == 'true'
         with:
           artifact-ids: ${{ needs.push.outputs.artifact_id }}
           path: ${{ runner.temp }}/current
           merge-multiple: true
       - name: Validate completed current branch
+        if: steps.route.outputs.current_required == 'true'
         env:
           UPSTREAM_RUN: ${{ needs.push.outputs.run_id }}
           UPSTREAM_ATTEMPT: ${{ needs.push.outputs.run_attempt }}
         run: python3 tools/scripts/workflow/ci.py restore --repository "$GITHUB_WORKSPACE" --stage current --commit "$CANDIDATE_SHA" --run-id "$UPSTREAM_RUN" --run-attempt "$UPSTREAM_ATTEMPT" --archive "$RUNNER_TEMP/current/ci-current.tar.gz"
       - uses: actions/download-artifact@v4
+        if: steps.route.outputs.engineering_required == 'true'
         with:
           artifact-ids: ${{ needs.push.outputs.engineering_artifact_id }}
           path: ${{ runner.temp }}/engineering
           merge-multiple: true
       - name: Validate completed engineering branch
+        if: steps.route.outputs.engineering_required == 'true'
         env:
           UPSTREAM_RUN: ${{ needs.push.outputs.engineering_run_id }}
           UPSTREAM_ATTEMPT: ${{ needs.push.outputs.engineering_run_attempt }}
         run: python3 tools/scripts/workflow/ci.py restore --repository "$GITHUB_WORKSPACE" --stage engineering --commit "$CANDIDATE_SHA" --run-id "$UPSTREAM_RUN" --run-attempt "$UPSTREAM_ATTEMPT" --archive "$RUNNER_TEMP/engineering/ci-engineering.tar.gz"
-      - run: make delta BASE="$BASE_SHA"
+      - if: steps.route.outputs.required == 'true'
+        run: make delta BASE="$BASE_SHA"
       - name: Branch grammar advisory
+        if: steps.route.outputs.required == 'true'
         env:
           PR_HEAD_BRANCH: ${{ github.event.pull_request.head.ref }}
         run: python3 tools/scripts/workflow/ci.py advisory --repository "$GITHUB_WORKSPACE" --head "$PR_HEAD_BRANCH"
-      - if: always() && needs.resolve.result == 'success' && needs.push.result == 'success'
+      - if: always()
         run: python3 tools/scripts/workflow/ci.py summary --repository "$GITHUB_WORKSPACE" --stage delta

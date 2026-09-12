@@ -15,7 +15,7 @@ internal static class StrataLintEngineBuildInputs
         ProjectDirectory + "/Coordinates/RepositoryPathPolicy.cs";
     private const string RepositoryPathPolicyPathsPath =
         ProjectDirectory + "/Coordinates/RepositoryPathPolicy.Paths.cs";
-    internal static bool Contains(string path)
+    internal static bool Contains(string path, IReadOnlySet<string> registeredInputs)
     {
         if (path == ProjectPath
             || path.StartsWith(ProjectDirectory + "/", StringComparison.Ordinal)
@@ -24,10 +24,10 @@ internal static class StrataLintEngineBuildInputs
             return true;
         }
 
-        return IsInheritedBuildInput(path);
+        return registeredInputs.Contains(path);
     }
 
-    internal static bool ContainsRuleImplementation(string path)
+    internal static bool ContainsRuleImplementation(string path, IReadOnlySet<string> registeredInputs)
     {
         if (ContainsRuleSource(path))
         {
@@ -43,7 +43,7 @@ internal static class StrataLintEngineBuildInputs
             return true;
         }
 
-        return IsInheritedBuildInput(path);
+        return registeredInputs.Contains(path);
     }
 
     internal static bool ContainsRuleSource(string path) =>
@@ -65,25 +65,4 @@ internal static class StrataLintEngineBuildInputs
         || path.StartsWith("Blueprint/", StringComparison.Ordinal)
             && path.EndsWith(".scribe.cs", StringComparison.Ordinal);
 
-    private static bool IsInheritedBuildInput(string path)
-    {
-        var separator = path.LastIndexOf('/');
-        var directory = separator < 0 ? string.Empty : path[..separator];
-        if (!IsAncestor(directory, ProjectDirectory))
-        {
-            return false;
-        }
-
-        var fileName = path[(separator + 1)..];
-        return fileName == "global.json"
-            || fileName.StartsWith("Directory.Build.", StringComparison.Ordinal)
-            || fileName.StartsWith("Directory.Packages.", StringComparison.Ordinal)
-            || fileName.Equals("NuGet.Config", StringComparison.OrdinalIgnoreCase)
-            || fileName == "packages.lock.json";
-    }
-
-    private static bool IsAncestor(string directory, string descendant) =>
-        directory.Length == 0
-        || descendant == directory
-        || descendant.StartsWith(directory + "/", StringComparison.Ordinal);
 }

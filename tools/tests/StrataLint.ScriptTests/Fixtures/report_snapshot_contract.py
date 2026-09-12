@@ -46,6 +46,7 @@ output.write_text('''))
         (self.root / ".gitignore").write_text("*\n")
         for args in (("init", "-q"), ("add", "-f", ".gitignore", "D5", "Trureturing.lean",
                      "lakefile.toml", "lake-manifest.json", "lean-toolchain"),
+                     ("add", "-u", "--", "tools"),
                      ("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "candidate")):
             subprocess.run(["git", "-C", str(self.root), *args], check=True, capture_output=True)
         self.env.update(CANDIDATE_SHA=subprocess.check_output(
@@ -67,7 +68,7 @@ output.write_text('''))
             return [{"path": path, "sha256": hashlib.sha256((self.root / path).read_bytes()).hexdigest()}
                     for path in sorted(paths)]
         current = self.root / "build/ci/current.json"
-        current.write_text(json.dumps({"version": 1, "candidate": candidate, "round": round_id,
+        current.write_text(json.dumps({"version": 2, "candidate": candidate, "round": round_id,
             "steps": [{"name": name, "raw_exit": 0, "exit": 0, "status": "executed", "log": "build/ci/fixture.log"}
                       for name in ("lean-report", "scribe", "filemap", "check-current")], "materials": materials(paths)}))
         (self.root / "build/ci/current-transport.json").write_text(json.dumps({"version": 1, "stage": "current",

@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -96,8 +97,9 @@ public sealed class LeanInspectorScriptTests
 
     private static void InstallProducerInputs(string repository)
     {
-        Write(repository, "global.json", "{}\n");
-        foreach (var project in new[] { "StrataLint.Lean", "StrataLint.Engine", "Trureturing.Truth" })
+        Write(repository, "global.json", File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "global.json")));
+        string[] projects = ["StrataLint.Lean", "StrataLint.Engine", "Trureturing.Truth"];
+        foreach (var project in projects)
         {
             Write(repository, $"tools/{project}/{project}.csproj", "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
             Write(repository, $"tools/{project}/Fixture.cs", "// fixture\n");
@@ -113,6 +115,33 @@ public sealed class LeanInspectorScriptTests
         Write(repository, "lakefile.toml", "name = \"Fixture\"\n");
         Write(repository, "lake-manifest.json",
             "{\"packages\":[{\"name\":\"mathlib\",\"rev\":\"0123456789abcdef0123456789abcdef01234567\"}]}\n");
+        Write(repository, "Meta/engineering-projects.json", JsonSerializer.Serialize(new
+        {
+            version = 1, projects = projects.Select(name => new
+            {
+                path = $"tools/{name}/{name}.csproj", assembly = name, role = "test-support", ci = false,
+                include = new[] { $"tools/{name}/Fixture.cs" }, exclude = Array.Empty<string>(),
+                references = Array.Empty<string>(), owner = (object?)null, owned_test_assembly = (string?)null,
+                test_partition = (string?)null,
+                build_inputs = new[] { "global.json" }, execution_inputs = (string[]?)null,
+                execution_excludes = (string[]?)null, execution_environment = (string[]?)null,
+                root_namespace = "Fixture", namespace_exclude = Array.Empty<string>(), global_namespace_exceptions = Array.Empty<string>(),
+            }), historical_projects = Array.Empty<object>(), rule_build_inputs = Array.Empty<string>(),
+        }));
+        Write(repository, "Meta/ReportProducers/lean-report.json", JsonSerializer.Serialize(new
+        {
+            schema = "report-producer-scope-v1", projects = new[] { "tools/StrataLint.Lean/StrataLint.Lean.csproj" },
+            materials = new[] { "global.json" }, scripts = new[]
+            {
+                InspectorScript, InspectorSource, MaterialCompactor, InputScript, ResourceObservationLibrary, CacheRunScript,
+                "tools/scripts/worktree/lean-cache-input.sh", "tools/scripts/worktree/lean_cache.py",
+                "tools/scripts/report/producer_paths.py", "tools/scripts/report/dotnet_producer.py",
+                "tools/lean-inspector/delta.py", "tools/lean-inspector/runtime_identity.py", "tools/lean-inspector/report_cache.py",
+            },
+        }));
+        Write(repository, ".gitignore", "**/bin/\n**/obj/\n**/__pycache__/\n");
+        Assert.Equal(0, Run("git", ["init", "--quiet"], repository).ExitCode);
+        Assert.Equal(0, Run("git", ["add", "."], repository).ExitCode);
     }
 
     private static void Write(string root, string relative, string contents)
