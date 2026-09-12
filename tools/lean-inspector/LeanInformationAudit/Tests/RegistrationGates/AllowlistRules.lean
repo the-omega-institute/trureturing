@@ -50,10 +50,10 @@ def equivRead (_ : Unit) (x : Bool) : Bool :=
   if @decide (x = true) ((Equiv.refl Bool).decidableEq x true) then x else false
 
 def subtermRead (_ : Unit) (x : Bool) : Bool :=
-  let _ : Option ((137 : Nat) = 137) := none
+  let _ : Option (PLift ((137 : Nat) = 137)) := none
   x
 def mentioningTypeRead (_ : Unit) (x : Bool) : Bool :=
-  let _ : Option (Option ((137 : Nat) = 137)) := none
+  let _ : Option (Option (PLift ((137 : Nat) = 137))) := none
   x
 def closedProp : Prop := (138 : Nat) = 138
 def closedDecisionRead (_ : Unit) (x : Bool) : Bool :=
