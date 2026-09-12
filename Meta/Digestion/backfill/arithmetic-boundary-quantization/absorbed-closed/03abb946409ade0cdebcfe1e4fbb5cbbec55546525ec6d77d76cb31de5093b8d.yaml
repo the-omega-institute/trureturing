@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:03abb946409ade0cdebcfe1e4fbb5cbbec55546525ec6d77d76cb31de5093b8d
+  normalized_sha256: sha256:03abb946409ade0cdebcfe1e4fbb5cbbec55546525ec6d77d76cb31de5093b8d
+cas_ref: sha256:03abb946409ade0cdebcfe1e4fbb5cbbec55546525ec6d77d76cb31de5093b8d
+coverage_gids:
+  - gid: D5/S3/Analytic/Interpolation/LogOneSubExpDerivatives.log_one_sub_exp_derivatives
+    target_statement_id: sha256:efe86c77127a7e21e2ba95c9489401c0e06ba5f0ccf7f8a3e424f3624ac38e79
+receipts:
+  unresolved_subitems: []
