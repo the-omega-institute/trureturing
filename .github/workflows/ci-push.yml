@@ -2,7 +2,7 @@ name: CI current
 
 on:
   push:
-    branches: ['integration-**']
+    branches: [dev, 'integration-**']
   workflow_call:
     inputs:
       candidate_sha:
