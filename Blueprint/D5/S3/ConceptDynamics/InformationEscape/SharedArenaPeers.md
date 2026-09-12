@@ -114,31 +114,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.observ
 
 The actual realization satisfies the law and a constant realization of the same signature fails it.
 
-**Theorem 1.10 (Intervention capture before peers).**
-
-Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.intervention_before_peers`
-
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.intervention_before_peers` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Each occurrence alone captures 240 ordered state pairs; this measurement registers and seals no singleton.
-
-**Theorem 1.11 (Observation capture before peers).**
-
-Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.observation_before_peers`
-
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.observation_before_peers` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Each occurrence alone captures 968 ordered state pairs; this measurement registers and seals no singleton.
-
-**Theorem 1.12 (All occurrences are trivial in their shared catalogs).**
+**Theorem 1.10 (All occurrences are trivial in their shared catalogs).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.all_peers_trivial`
 
@@ -150,7 +126,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.all_pe
 
 Every occurrence has zero unique capture because a real peer has the same agreement kernel.
 
-**Theorem 1.13 (No occurrence lowers shared escape).**
+**Theorem 1.11 (No occurrence lowers shared escape).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.no_peer_lowers_escape`
 
@@ -170,12 +146,10 @@ The maximal seal succeeds on both complete catalogs with a redundant verdict: ev
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.fiber_bridge`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.finer_bridge`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.interventionCatalog`
-- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.intervention_before_peers`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.intervention_law_sensitive`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.no_peer_lowers_escape`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.not_identifiable_bridge`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.observationCatalog`
-- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.observation_before_peers`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.observation_law_sensitive`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.profile_bridge`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.target_bridge`
