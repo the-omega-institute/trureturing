@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f06087282cf49f95f1df812e8280d7bcd31fd775d085832214ca23cb3668c4e1
+  normalized_sha256: sha256:f06087282cf49f95f1df812e8280d7bcd31fd775d085832214ca23cb3668c4e1
+cas_ref: sha256:f06087282cf49f95f1df812e8280d7bcd31fd775d085832214ca23cb3668c4e1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: The proof-shape boundary preregisters how H-1 and H-2 must be classified and landed if their implementation is bind-only. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with H-1 and H-2.
+    previous_atom_id: 49a57854cb7d65c25139f10432ddc59ffd291f0d19122a1856d24576329b28d8
+    next_atom_id: a4759a369cc1d2f3d9c0a67a3a6e3e37a58769aa5dedfe882850ed02a6c9512b

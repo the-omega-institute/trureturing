@@ -372,7 +372,9 @@ public sealed partial class FormalizeCandidatesTests
         VerifiedScribeEmissions? scribeEmissions = null,
         string atomizer = AtomizerRegistry.PzgId,
         IReadOnlyList<string>? arguments = null,
-        byte[]? rulesBytes = null)
+        byte[]? rulesBytes = null,
+        string? currentSource = null,
+        bool includeSource = true)
     {
         var sources = entries
             .GroupBy(static entry => entry.SourceId, StringComparer.Ordinal)
@@ -402,11 +404,11 @@ public sealed partial class FormalizeCandidatesTests
                 ImmutableArray.CreateRange(rulesBytes ?? DigestionTestSupport.RulesBytes)),
         };
         AddLedgerFiles(files, ledger);
-        foreach (var source in sources)
+        foreach (var source in includeSource ? sources : [])
         {
             files.Add(new RawRepositoryEntry(
                 $"synthetic/{source.SourceId}.md",
-                source.RawBytes));
+                currentSource is null ? source.RawBytes : [.. Encoding.UTF8.GetBytes(currentSource)]));
         }
         if (includeCas)
         {
