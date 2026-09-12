@@ -162,7 +162,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/SharedArenaPeers.no_pee
 
 Nondegeneracy turns empty unique capture into failure of LowersEscape for all seven occurrences.
 
-The maximal seal rejects with IE-C007. The module checks that rejection and assesses each registered occurrence as observed. Registration does not confer a finite-occurrence certificate; these catalogs report a negative admission result.
+The maximal seal succeeds on both complete catalogs with a redundant verdict: every occurrence is certified trivial in its catalog and carries one finite IE-C007 zero-unique-capture record (intervention full 0 and without 0; observation-intervention full 24 and without 24). Each catalog publishes a redundancy certificate, no occurrence receives positive admission, system irredundancy is refuted for this root, and the census query certifies triviality for all seven occurrences.
 
 ## References
 
