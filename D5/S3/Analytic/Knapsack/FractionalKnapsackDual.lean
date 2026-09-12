@@ -227,7 +227,8 @@ theorem full_budget_optimum [Fintype ι] (w v : ι → ℝ) (B : ℝ)
     · intro i; exact ⟨zero_le_one, le_rfl⟩
     · simpa using hcapacity
   have hd : dualValue w v B 0 = ∑ i, v i := by
-    simp [dualValue, max_eq_right (hv _)]
+    simp only [dualValue, zero_mul, sub_zero, zero_add]
+    exact Finset.sum_congr rfl (fun i _ => max_eq_right (hv i))
   have ho : objective v (fun _ => 1) = ∑ i, v i := by simp [objective]
   have hopt := optimal_values_of_attainment w v B 0 (fun _ => 1) ht le_rfl (ho.trans hd.symm)
   exact ⟨ht, hopt.1.trans ho, hopt.2.trans ho, hd⟩
@@ -249,5 +250,10 @@ theorem fractional_knapsack_strong_duality [Fintype ι] (w v : ι → ℝ) (B : 
 #print axioms greedy_attains_duality
 #print axioms full_budget_optimum
 #print axioms fractional_knapsack_strong_duality
+
+#check (0 : Fin 2)
+#check (show (∀ _i : Fin 2, (0 : ℝ) < 1) ∧
+    (∀ _i : Fin 2, (0 : ℝ) ≤ 1) ∧ (0 : ℝ) ≤ 1 from
+  ⟨fun _ => zero_lt_one, fun _ => zero_le_one, zero_le_one⟩)
 
 end D5.S3.Analytic.Knapsack.FractionalKnapsackDual
