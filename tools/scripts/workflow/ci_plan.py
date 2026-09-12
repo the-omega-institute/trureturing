@@ -193,6 +193,47 @@ def oid(value):
     return value
 
 
+ZERO_OID = "0" * 40
+
+
+def event_oid(value, allow_zero=False):
+    if not isinstance(value, str) or not re.fullmatch(r"[0-9a-f]{40}", value):
+        raise ValueError("push event endpoint must be a 40-hex object identity")
+    if value == ZERO_OID and not allow_zero:
+        raise ValueError("push event endpoint must be nonzero")
+    return value
+
+
+def native_push():
+    inputs = strict_json_bytes(os.environ.get("CI_WORKFLOW_INPUTS", "null").encode())
+    if inputs not in (None, "") and not isinstance(inputs, dict):
+        raise ValueError("workflow inputs must be an object")
+    return os.environ.get("GITHUB_EVENT_NAME") == "push" and not (inputs or {}).get("candidate_sha")
+
+
+def push_endpoints(before=None, after=None):
+    """The event owns native endpoints; explicit local ranges have no event."""
+    fixed = None
+    if native_push():
+        event_path = os.environ.get("GITHUB_EVENT_PATH")
+        if not event_path:
+            raise ValueError("native push requires the actual fixed event input")
+        event = strict_json(pathlib.Path(event_path))
+        if not isinstance(event, dict):
+            raise ValueError("native push event must be an object")
+        fixed = (event_oid(event.get("before"), allow_zero=True), event_oid(event.get("after")))
+    # Supplied copies may agree with the event, but cannot replace it. Do not
+    # combine a partial CLI pair with a partial environment pair.
+    for p, h in ((before, after), (os.environ.get("CI_PUSH_BEFORE"), os.environ.get("CI_PUSH_AFTER"))):
+        if not p and not h:
+            continue
+        pair = (event_oid(p, allow_zero=True), event_oid(h))
+        if fixed is not None and pair != fixed:
+            raise ValueError("push endpoints differ from the fixed event or explicit input")
+        fixed = pair
+    return fixed
+
+
 def git(root, *args):
     # Missing objects are input failures, including in partial clones. Planning
     # must never turn an object read into an implicit fetch from a remote.
@@ -371,39 +412,53 @@ def entry_changes(before, after):
             for p in sorted(before.keys() | after.keys()) if before.get(p) != after.get(p)]
 
 
-def push_paths(root, commit):
+def local_paths(root, commit, before=None):
     identity = candidate(root, commit)
-    # Raw commit headers retain the real parents even at a shallow boundary.
-    # All reads after resolving HEAD use that fixed OID, including explicit ^1.
-    headers = git(root, "cat-file", "commit", commit).split(b"\n\n", 1)[0].split(b"\n")
-    parents = [oid(line[7:].decode("ascii")) for line in headers if line.startswith(b"parent ")]
-    parent = parents[0] if parents else None
-    if parent is not None:
-        try:
-            if git(root, "cat-file", "-t", parent).strip() != b"commit":
-                raise ValueError("first parent is not a commit")
-            if oid(git(root, "rev-parse", "--verify", commit + "^1").decode().strip()) != parent:
-                raise ValueError("first parent identity mismatch")
-        except (ValueError, subprocess.SubprocessError) as error:
-            raise ValueError(f"PUSH_PARENT_UNAVAILABLE: candidate {commit} requires first parent {parent}; missing object or shallow ancestry") from error
-        changes = diff_paths(root, parent, commit)
+    effective = worktree_entries(root)
+    worktree = entry_changes(tree_entries(root, identity["tree"]), effective)
+    if before is None:
+        # HEAD is not passing-check evidence. Without an explicit complete range,
+        # select every current input, plus removed dirty endpoints for ownership.
+        changes = entry_changes({}, effective) + [row for row in worktree if row["new"] is None]
     else:
+        changes = entry_changes(tree_entries(root, commit_tree(root, oid(before))), effective)
+    origin = {"kind": "local-current-input" if before is None else "local-range", "before": before, "after": commit,
+              "worktree": worktree}
+    data = {"schema_version": 1, "mode": "push", "candidate": {"commit": commit, "tree": None},
+            "base": None, "head": None, "origin": origin,
+            "complete": True, "change_count": len(changes), "changes": changes}
+    change_paths(data)
+    return data
+
+
+def push_paths(root, commit, before, after):
+    """Plan the complete immutable push range supplied by the event."""
+    commit = checked_head(root, commit)
+    before = event_oid(before, allow_zero=True)
+    after = event_oid(after)
+    if after != commit:
+        raise ValueError("push event after does not match checked-out HEAD")
+    identity = candidate(root, after)
+    if before == ZERO_OID:
+        # A zero-before push is an explicit initial registered-current-input
+        # mode.  It is not an empty diff and does not depend on H's parents.
         changes = [{"status": "A", "old": None, "new": {"path": p, **entry}}
                    for p, entry in tree_entries(root, identity["tree"]).items()]
-    origin = {"kind": "first-parent" if parent else "initial-tree", "parent": parent}
-    if git(root, "status", "--porcelain=v1", "-z", "--untracked-files=all"):
-        effective = worktree_entries(root)
-        local = entry_changes(tree_entries(root, identity["tree"]), effective)
-        if local:
-            # The existing scope fingerprint binds this HEAD-relative material.
-            # There is no committed tree identity for the local candidate.
-            identity = {"commit": commit, "tree": None}
-            origin["worktree"] = local
-            before = tree_entries(root, candidate(root, parent)["tree"]) if parent else {}
-            changes = entry_changes(before, effective)
+        kind = "initial-registered-current-input"
+    else:
+        try:
+            available = git(root, "cat-file", "-t", before).strip() == b"commit"
+        except subprocess.SubprocessError as error:
+            raise ValueError(f"PUSH_BEFORE_UNAVAILABLE: event.before {before} is unavailable") from error
+        if not available:
+            raise ValueError(f"PUSH_BEFORE_UNAVAILABLE: event.before {before} is not an available commit")
+        changes = diff_paths(root, before, after)
+        kind = "event-range"
+    origin = {"kind": kind, "before": before, "after": after}
     data = {"schema_version": 1, "mode": "push", "candidate": identity, "base": None, "head": None,
-            "origin": origin,
-            "complete": True, "change_count": len(changes), "changes": changes}
+            "origin": origin, "complete": True, "change_count": len(changes), "changes": changes}
+    if git(root, "status", "--porcelain=v1", "-z", "--untracked-files=all"):
+        raise ValueError("push checkout is dirty; event range must be evaluated against checked-out HEAD")
     change_paths(data)
     return data
 
@@ -431,7 +486,21 @@ def make_plan(root, commit, changes_file):
         raise ValueError("invalid changed scope version/mode")
     exact(data["candidate"], {"commit", "tree"}, "candidate")
     paths = change_paths(data)
-    actual = push_paths(root, checked_head(root, commit)) if push else None
+    actual = None
+    if native_push():
+        if not push:
+            raise ValueError("native push requires its validated event endpoint origin")
+        actual = push_paths(root, checked_head(root, commit), *push_endpoints())
+        if not same_record(data["origin"], actual["origin"]):
+            raise ValueError("native push origin differs from the fixed event input")
+    elif push:
+        origin = data["origin"]
+        if not isinstance(origin, dict):
+            raise ValueError("push origin must be an object")
+        if origin.get("kind") in {"local-current-input", "local-range"}:
+            actual = local_paths(root, checked_head(root, commit), origin.get("before"))
+        else:
+            actual = push_paths(root, checked_head(root, commit), origin.get("before"), origin.get("after"))
     if data["candidate"] != (actual["candidate"] if push else candidate(root, commit)):
         raise ValueError("changed scope candidate identity mismatch")
     if data["mode"] != "pr":
@@ -440,11 +509,11 @@ def make_plan(root, commit, changes_file):
     if push or data["mode"] == "pr":
         actual = actual if push else pr_paths(root, commit, data["base"], data["head"])
         if push and not same_record(data["origin"], actual["origin"]):
-            raise ValueError("push origin does not match candidate's actual first parent/initial tree")
+            raise ValueError("push origin does not match candidate's actual immutable event endpoints")
         key = lambda row: json.dumps(row, sort_keys=True, ensure_ascii=True)
         if sorted(map(key, actual["changes"])) != sorted(map(key, data["changes"])):
             raise ValueError(f"incomplete or mismatched {'push' if push else 'PR'} changed-path list")
-    local = push and "worktree" in actual["origin"]
+    local = push and actual["origin"].get("kind") in {"local-current-input", "local-range"}
     tree = tree_entries(root, candidate(root, commit)["tree"])
     if local:
         for record in actual["origin"]["worktree"]:
@@ -650,82 +719,22 @@ def plan_pr(root, commit, base, head):
             "plan_b64": base64.b64encode(plan.read_bytes()).decode("ascii")}
 
 
-def plan_push(root, commit="", plan=None, changes=None):
+def plan_push(root, commit="", plan=None, changes=None, before=None, after=None):
     commit = checked_head(root, commit)
     changes = changes or root / "build/ci/changes.json"
     plan = plan or root / "build/ci/plan.json"
-    write(changes, push_paths(root, commit))
+    endpoints = push_endpoints(before, after)
+    if native_push():
+        value = push_paths(root, commit, *endpoints)
+    else:
+        if endpoints is not None and endpoints[1] != commit:
+            raise ValueError("explicit local range after must match checked-out HEAD")
+        value = local_paths(root, commit, None if endpoints is None or endpoints[0] == ZERO_OID else endpoints[0])
+    write(changes, value)
     value = make_plan(root, commit, changes)
     write(plan, value)
     validate_plan(root, commit, plan, changes)
     return {"candidate_sha": commit, "origin": value["origin"], "complete": True}
-
-
-def stage_input(args):
-    root, stage = args.repository, args.stage
-    validate_stage(root, stage, args.base)
-    needs = strict_json_bytes(os.environ.get("CI_NEEDS", "{}").encode())
-    if not isinstance(needs, dict):
-        raise ValueError("CI_NEEDS must be a job-result object")
-    for job, result in needs.items():
-        if not isinstance(result, dict) or result.get("result") != "success":
-            raise ValueError("required prerequisite did not succeed: " + job)
-    commit = checked_head(root, args.commit or os.environ.get("CANDIDATE_SHA", ""))
-    plan = args.plan or (pathlib.Path(os.environ["CI_PLAN_PATH"]) if os.environ.get("CI_PLAN_PATH") else None)
-    changes = args.changes or (pathlib.Path(os.environ["CI_CHANGES_PATH"]) if os.environ.get("CI_CHANGES_PATH") else None)
-    encoded_plan, encoded_changes = os.environ.get("CI_PLAN_B64", ""), os.environ.get("CI_CHANGES_B64", "")
-    if encoded_plan or encoded_changes:
-        if not encoded_plan or not encoded_changes:
-            raise ValueError("both serialized plan and changed-path input are required")
-        plan, changes = root / "build/ci/plan.json", root / "build/ci/changes.json"
-        # Decode both before writing either; strict object/identity checks follow.
-        values = [strict_json_bytes(base64.b64decode(value, validate=True)) for value in (encoded_plan, encoded_changes)]
-        for destination, value in zip((plan, changes), values):
-            write(destination, value)
-    inputs = strict_json_bytes(os.environ.get("CI_WORKFLOW_INPUTS", "null").encode())
-    if inputs not in (None, "") and not isinstance(inputs, dict):
-        raise ValueError("workflow inputs must be an object")
-    native_push = os.environ.get("GITHUB_EVENT_NAME") == "push" and not (inputs or {}).get("candidate_sha")
-    if plan is None and changes is None:
-        if args.allow_direct:
-            return {"required": True}
-        if not native_push:
-            raise ValueError("explicit complete changed-path input and validated plan are required")
-    plan = root / plan if plan is not None else None
-    changes = root / changes if changes is not None else None
-    if (native_push and not encoded_plan and not encoded_changes
-            and (plan is None or not plan.is_file()) and (changes is None or not changes.is_file())):
-        plan = plan or root / "build/ci/plan.json"
-        changes = changes or root / "build/ci/changes.json"
-        plan_push(root, commit, plan, changes)
-    value = validate_plan(root, commit, plan, changes)
-    if native_push and value["mode"] != "push":
-        raise ValueError("native push requires its validated first-parent/initial-tree origin")
-    if stage == "delta" and (value["mode"] != "pr" or value["base"] != args.base):
-        raise ValueError("delta requires the validated plan's explicit immutable base")
-    requirements = stage_requirements(root, value, stage)
-    result = {"required": requirements["required"], "cache_layers": " ".join(requirements["cache_layers"]),
-              "dotnet": "dotnet" in requirements["tools"], "lake": "lake" in requirements["tools"],
-              "artifact_required": requirements["required"],
-              "report_required": stage == "current" and "lean-report" in value["execution"]["steps"]}
-    for upstream in ("build", "engineering", "current"):
-        result[upstream + "_required"] = requirements["required"] and value["stages"][upstream]["status"] == "required"
-    if not requirements["required"]:
-        clear_stages = ("build", "engineering", "current") if stage == "build" else (stage,)
-        for name in clear_stages:
-            for suffix in (".json", "-checks.json", "-paths.nul", "-transport.json", "-result.json", "-no-work.json"):
-                (root / "build/ci" / (name + suffix)).unlink(missing_ok=True)
-        if stage in ("build", "engineering"):
-            (root / "build/ci/tests.json").unlink(missing_ok=True)
-        if stage in ("build", "current"):
-            (root / "build/ci/scribe-markdown.paths").unlink(missing_ok=True)
-        receipt = no_work(value, stage)
-        write(root / "build/ci" / (stage + "-no-work.json"), receipt)
-        write(root / "build/ci" / (stage + "-result.json"), {
-            "stage": stage, "candidate": commit, "git_candidate": value["candidate"], "scope": value,
-            "status": "not-required", "exit": 0, "error": None, "steps": [], "artifacts": [],
-            "report": None, "current_evidence": None, "base_sha": args.base or None})
-    return result
 
 
 def command(args):
