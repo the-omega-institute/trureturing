@@ -11478,3 +11478,698 @@ $$
 无限 $J_A$ 时，本节 $X$ 恰是第 362.5 条的同一个 $X_A^{\rm cap}$，故该条的二值序列注入直接适用：将任意 $z\in\{0,1\}^\omega$ 放在 $J_A$ 的递增枚举处，其余填零，给 $X$ 中一个点，读回这些坐标恢复 $z$。Cantor 对角论证使二值序列不可数，有限字母表上有限字的集合却是可数个有限长度层的并，故不存在将全部 $X$ 单射到有限字的函数。总有理探针在本节仍恰是第 333.2 条的 $\Theta_{\rm rat}$，该条用总半类行族得到的有限字不可能性也在同域适用；其嵌入到 $\mathbb T^\omega$ 后仍单射，所以全部总圆周行同样不能这样表示。
 
 $\operatorname{Enc}$ 使用原有完整集合解释，不施加有限字条件。第 370.11 条的全部子集和函数双向对应及本条的全部边公式因此同时成立。证毕。
+
+## 371. 无限合法数字的紧载体与带符号相位延拓
+
+**定义 371.1。** 在通常 ZFC 中，$\omega$ 仍为 von Neumann 自然数集合。沿用第 3、9、50、69–70 条的
+$$
+G_0=1,\qquad G_1=2,\qquad G_{j+2}=G_{j+1}+G_j,\qquad
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},\qquad r=-\alpha.
+$$
+有限规范字 $\zeta(n)$ 按低位到高位排列，$\zeta(0)=\varnothing$，且 $\alpha^2+\alpha=1$。定义
+$$
+K_{\rm infdig}=\{x:\omega\to\{0,1\}:\forall j\in\omega,\ x_jx_{j+1}=0\},\qquad
+z_{\rm infdig}(n)=\operatorname{pad}(\zeta(n)),
+$$
+$$
+d_K(x,y)=\sum_{j\ge0}2^{-j-1}|x_j-y_j|,\qquad
+F_{\rm infdig}(x)=\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j,
+$$
+$$
+\pi:\mathbb R\to\mathbb T=\mathbb R/\mathbb Z,\quad \pi(t)=[t],\qquad
+H_{\rm infdig}=\pi\circ F_{\rm infdig},\qquad \gamma(n)=[n\phi].
+$$
+二元数字取离散拓扑，$K_{\rm infdig}$ 取乘积的子空间拓扑，$\mathbb T$ 取通常圆周拓扑。另记
+$$
+a=-\alpha=1-\phi,\qquad b=\alpha^2=2-\phi,\qquad I=[a,b],\qquad
+q=-\alpha^3=3-2\phi,\qquad u=(10)^\omega,\qquad v=(01)^\omega.
+$$
+这里 $q$ 是实数，$u,v$ 是低位到高位的无限交替函数；$z_{\rm infdig}(0)$ 是总零函数。第 22、51 条的 $f,H_j$、第 11 条的 $K(n)$ 及第 287 条的素数位表 $F(P,A,e)$ 保持各自原定义。
+
+**定理 371.2。** $d_K$ 是给出上述拓扑的度量，$K_{\rm infdig}$ 紧，$z_{\rm infdig}[\omega]$ 稠密。$F_{\rm infdig}:K_{\rm infdig}\to\mathbb R$ 和 $H_{\rm infdig}:K_{\rm infdig}\to\mathbb T$ 连续；若 $x_j=y_j$ 对所有 $j<L$ 成立，则
+$$
+d_K(x,y)\le2^{-L},\qquad
+|F_{\rm infdig}(x)-F_{\rm infdig}(y)|\le\alpha^L.
+$$
+对每个 $n\in\omega$，
+$$
+F_{\rm infdig}(z_{\rm infdig}(n))
+=n\alpha-f(n)=n\phi-(n+f(n))\in(a,b),\qquad
+H_{\rm infdig}(z_{\rm infdig}(n))=\gamma(n).
+$$
+$H_{\rm infdig}$ 是相对于 $z_{\rm infdig}$ 的唯一连续圆周值延拓。
+
+**证明。** 度量级数绝对收敛；对称性逐项成立，不同函数至少有一个不同坐标，其正权保证距离非零。逐坐标三角不等式相加给三角不等式。前 $L$ 位相同给尾和界 $2^{-L}$，而 $d_K(x,y)<2^{-L}$ 强制所有 $j<L$ 的坐标相同，因为其中每个权至少为 $2^{-L}$。有限坐标柱集和度量球因而生成同一拓扑。
+
+给定 $K_{\rm infdig}$ 中的序列，先取第零坐标恒定的无限子序列，再依次取每个下一坐标恒定的无限子序列；取对角子序列。每个坐标最终恒定，得到函数 $x$。每对相邻坐标同时稳定后仍不同时为一，故 $x\in K_{\rm infdig}$。给定 $\varepsilon>0$，取 $2^{-L}<\varepsilon$，对角子序列最终在前 $L$ 位与 $x$ 相同，故收敛到 $x$。这证明序列紧性，度量空间的序列紧性与紧性等价，故载体紧。
+
+对 $x\in K_{\rm infdig}$ 置 $N_L=\sum_{j<L}G_jx_j$。截到前 $L$ 位再补零仍合法，即使末位为一，新添的下一位也是零。第 10、69–70 条的有限规范唯一性给这个函数恰为 $z_{\rm infdig}(N_L)$，其中 $L=0$ 给总零函数。它与 $x$ 的距离不超过 $2^{-L}$，故有限核心稠密。
+
+由 $1-\alpha=\alpha^2$，
+$$
+\sum_{j\ge L}\alpha^{j+2}=\frac{\alpha^{L+2}}{1-\alpha}=\alpha^L.
+$$
+这同时给 $F_{\rm infdig}$ 的一致尾界和两点差的所述估计。有限部分和是连续坐标函数的线性组合，一致极限连续；与连续商映射 $\pi$ 复合给 $H_{\rm infdig}$ 连续。
+
+在有限核心上，直接使用第 51 条在原自然数域上的恒等式
+$$
+\alpha G_j-H_j=(-1)^{j+1}\alpha^{j+2},\qquad
+G_{j+1}=G_j+H_j,\qquad
+f(n)=\sum_jH_jz_{\rm infdig}(n)_j=\lfloor(n+1)\alpha\rfloor.
+$$
+按有限支撑求和即得显示的 $F_{\rm infdig}$ 值；第 51 条的 $-\alpha^2<f(n)-n\alpha<\alpha$ 给严格区间，包括 $n=0$。整数 $n+f(n)$ 在取模一时消去，得到与第 287–288 条相同的有限标量相位。这使用 $G_j=F_{j+2}$ 的权值次序，与 [GICT 第 4.2 条](GICT.md) 的 Fibonacci 下标按权值对应。最后，两个连续圆周值映射的相等集合在 Hausdorff 目标下为闭集；若均延拓 $\gamma$，该集合包含稠密核心，故等于整个载体。证毕。
+
+## 372. 实区间纤维、全部柱集交与圆周纤维
+
+**定义 372.1。** 将合法无限数字唯一地解析为块 $0$ 与 $10$。有限块字 $w$ 允许为空，其展开后的数字长度记为 $L(w)$，并置
+$$
+N_w=\sum_{j<L(w)}G_jw_j,\qquad
+S_w=\sum_{j<L(w)}(-1)^{j+1}\alpha^{j+2}w_j,\qquad
+f_w(t)=S_w+r^{L(w)}t.
+$$
+空块字的 $N_w,S_w,L(w)$ 均为零，$f_w$ 为恒等。记 $[w]_K$ 为以 $w$ 开头的块柱集；对任意合法有限数字前缀 $p$，也以 $[p]_K$ 表示具有该数字前缀的柱集，并以 $S_p$ 表示其有限带符号和。这里的方括号柱集带下标 $K$，模一类仍记为 $[t]$。
+
+**定理 372.2。** 有
+$$
+F_{\rm infdig}[K_{\rm infdig}]=I,\qquad
+F_{\rm infdig}^{-1}(\{a\})=\{u\},\qquad
+F_{\rm infdig}^{-1}(\{b\})=\{v\}.
+$$
+每个 $t\in\mathbb R\setminus I$ 的纤维为空，特别
+$$
+F_{\rm infdig}^{-1}(\{1\})=\varnothing.
+$$
+区间内部的二点纤维恰为
+$$
+F_{\rm infdig}^{-1}(\{f_w(q)\})=\{w0v,w10v\}
+$$
+所列各项，其中 $w$ 遍历全部有限块字；每个二点值对应唯一的 $w$。每个
+$$
+t\in I\setminus\{f_w(q):w\text{ 为有限块字}\}
+$$
+的纤维恰有一点。
+
+**证明。** 偶数位置的系数为负，奇数位置的系数为正。两种单独满和为
+$$
+-\sum_{k\ge0}\alpha^{2k+2}=-\alpha=a,\qquad
+\sum_{k\ge0}\alpha^{2k+3}=\alpha^2=b.
+$$
+更准确地，
+$$
+F_{\rm infdig}(x)-a
+=\sum_{k\ge0}\alpha^{2k+2}(1-x_{2k})+
+\sum_{k\ge0}\alpha^{2k+3}x_{2k+1},
+$$
+$$
+b-F_{\rm infdig}(x)
+=\sum_{k\ge0}\alpha^{2k+2}x_{2k}+
+\sum_{k\ge0}\alpha^{2k+3}(1-x_{2k+1}).
+$$
+各项非负且各权严格为正。第一式为零当且仅当 $x=u$，第二式为零当且仅当 $x=v$。两者均合法，因此上下界及端点唯一性成立，域外纤维为空。由于 $b<1$，特别得到所列实数一的空纤维。
+
+初位为零时消去一个数字，初位为一时由合法性消去 $10$ 两个数字；重复这一操作给唯一块解析。将绝对收敛级数按首块拆分，得
+$$
+f_0(t)=rt,\qquad f_{10}(t)=-\alpha^2+r^2t,
+$$
+$$
+f_0(I)=[q,b],\qquad f_{10}(I)=[a,q],\qquad
+f_0(b)=f_{10}(b)=q,\qquad f_0(a)=b,\qquad f_{10}(a)=a.
+$$
+这些等式均由 $\alpha^2+\alpha=1$ 代入端点得到。任给 $t\in I$，在包含它的分支区间中选择一个，取该仿射分支在 $I$ 中的唯一逆像，再对逆像重复。若落在共同边界，可固定选择 $0$ 分支。前 $k$ 次选择连接成块字 $w_k$，残值 $t_k\in I$ 满足
+$$
+t=S_{w_k}+r^{L(w_k)}t_k,\qquad L(w_k)\ge k.
+$$
+残项绝对值不超过 $\alpha^k\max(|a|,|b|)$，趋于零。所有选择的连接给合法无限字，其有限部分和趋于 $t$，所以 $t$ 是 $F_{\rm infdig}$ 的值，证明整个区间的满性。
+
+对任意块前缀 $w$ 和合法尾 $y$，拆分级数给
+$$
+F_{\rm infdig}(wy)=f_w(F_{\rm infdig}(y)),\qquad
+f_{ws}=f_w\circ f_s.
+$$
+若两个不同无限字取同一实值，其块解析在一个有限公共前缀 $w$ 后首次分别走向 $0$ 与 $10$。$f_w$ 单射，两个分支的区间只交于 $q$，故两条分支后的尾值都必须为 $b$。端点唯一性迫使两个尾均为 $v$，原两字因而恰为 $w0v,w10v$。反向这两个字由分支端点式确有同值。
+
+不存在三点纤维：在三个不同块序列首次不全相同的块位置，两条分支都被占据；它们若同值，则该值为此处分界值，而每条分支均只有上述唯一尾。总原像遂至多两个。二点值不能为端点，因为端点唯一；其两个原像有唯一的最长公共块前缀，故对应的 $w$ 唯一。满性和这一分类使区间中其余每个值恰有一个原像。证毕。
+
+**定理 372.3。** 块柱集的值域为 $F_{\rm infdig}[[w]_K]=f_w(I)$。两个块前缀可比较时，较长前缀的值域包含于较短前缀的值域，交集为较长者的值域。不可比较时，在交换两者的次序后唯一写为 $w0s$ 与 $w10t$；此时两个值域相交当且仅当 $s,t$ 都是 $v$ 的块解析前缀，且非空交恰为 $\{f_w(q)\}$。
+
+对任意长度为 $L$ 的合法数字前缀 $p$，值域准确为
+$$
+F_{\rm infdig}[[p]_K]=
+\begin{cases}
+I,&L=0,\\
+S_p+r^L I,&L>0\text{ 且末位为 }0,\\
+S_p+r^{L+1}I,&L>0\text{ 且末位为 }1.
+\end{cases}
+$$
+所有数字柱集值域的交均由上述块分类确定。
+
+**证明。** 块连接恒等式与定理 372.2 的满性给第一式；前缀可比较时，较长柱集是较短柱集的子集，故得嵌套及交式。不可比较时，两个祖先分支的值域只交于 $f_w(q)$，而它们各自取得该值的唯一字分别是 $w0v,w10v$。后继柱集包含这两个字，分别恰当 $s,t$ 是 $v$ 的块前缀，证明充要条件及交值。
+
+空数字前缀不施加限制。末位零的合法数字前缀完整解析为块字，其后可接任意合法尾，所以值域为 $S_p+r^LI$。末位一时下一位被强制为零，补上这个零形成完整块字 $p0$，且 $[p]_K=[p0]_K$、$S_{p0}=S_p$、$L(p0)=L+1$。于是得第三式。特别 $[1]_K=[10]_K$。将两个任意数字前缀各按此法转为块前缀，已经证明的全部块交分类即适用。证毕。
+
+**定理 372.4。** $H_{\rm infdig}$ 满射到圆周。其二点纤维的值恰为
+$$
+E=\{[-m\phi]:m\ge1\},
+$$
+在其余每个圆周点的纤维恰有一点。特别对每个 $n\in\omega$，
+$$
+H_{\rm infdig}^{-1}(\{[n\phi]\})=\{z_{\rm infdig}(n)\}.
+$$
+
+**证明。** 置 $\eta_j=\phi G_j-G_{j+1}$。第 51 条的两个递推恒等式给
+$$
+\eta_j=(-1)^{j+1}\alpha^{j+2},\qquad
+\eta_{L+1}=-r^Lq.
+$$
+因 $S_w=\sum_{j<L}\eta_jw_j$，取模一得
+$$
+[f_w(q)]=[\phi(N_w-G_{L+1})]\qquad(L=L(w)).
+$$
+空块字给 $L=0,N_w=0$，对应 $m=G_1=2$。对 $L\ge1$，长度为 $L$ 的块字恰为末位零的合法数字字；去掉这个末零，得到长度为 $L-1$ 的完整合法窗。直接在第 343.1 条的同一有限窗域上应用其唯一值定理，$N_w$ 恰逐一取遍
+$$
+0,1,\ldots,G_{L-1}-1.
+$$
+所以 $m=G_{L+1}-N_w$ 恰逐一取遍 $G_L+1,\ldots,G_{L+1}$。$L=1$ 的区间仅含三；各后续区间相邻不交，且 $G_L$ 无界，故穷尽全部 $m\ge3$。
+
+由 $b-a=1$，$\pi$ 在 $(a,b)$ 上单射，且 $I$ 内唯一额外的模一识别为 $a$ 与 $b$。区间 $I$ 已是满值域，故 $H_{\rm infdig}$ 满射。这两个端点的共同相位为 $[-\phi]$，对应 $m=1$，原像为 $\{u,v\}$。其余每个圆周点在 $(a,b)$ 有唯一代表，实纤维分类与前述枚举遂给全部圆周纤维。$\phi$ 无理保证不同正整数 $m$ 给不同相位。若 $[n\phi]=[-m\phi]$ 且 $n\ge0,m\ge1$，则正整数倍 $(n+m)\phi$ 为整数，矛盾。故自然轨道不遇到 $E$，而定理 371.2 已给其原像 $z_{\rm infdig}(n)$，得到所列单点纤维，包括零相位。证毕。
+
+## 373. 有限核心的同一拓扑与不同度量一致结构
+
+**定义 373.1。** 在 $\omega$ 上分别取 $z_{\rm infdig}$ 向 $K_{\rm infdig}$ 及 $\gamma$ 向通常圆周的拉回拓扑，记为 $\tau_{\rm digit},\tau_{\rm phase}$。定义
+$$
+\rho([s],[t])=\min_{k\in\mathbb Z}|s-t-k|,\qquad
+d_{\rm digit}(n,k)=d_K(z_{\rm infdig}(n),z_{\rm infdig}(k)),
+$$
+$$
+d_{\rm phase}(n,k)=\rho(\gamma(n),\gamma(k)).
+$$
+一个度量 $d$ 的一致结构指包含某个 $\{(x,y):d(x,y)<\varepsilon\}$、$\varepsilon>0$ 的全部二元关系。
+
+**定理 373.2。** $\tau_{\rm digit}=\tau_{\rm phase}$，两者分别由 $d_{\rm digit},d_{\rm phase}$ 给出；此拓扑没有孤立点。两个度量的完备化分别为 $K_{\rm infdig}$ 和 $\mathbb T$，但两种一致结构不相同。从 $d_{\rm digit}$ 到 $d_{\rm phase}$ 的恒等映射一致连续，反向恒等映射不一致连续。
+
+**证明。** $H_{\rm infdig}$ 连续且 $\gamma=H_{\rm infdig}\circ z_{\rm infdig}$，故相位拉回开集均为数字拉回开集。反向，给定开集 $U\subseteq K_{\rm infdig}$ 及 $z_{\rm infdig}(n)\in U$。定理 372.4 的单点纤维保证
+$$
+\gamma(n)\notin H_{\rm infdig}[K_{\rm infdig}\setminus U].
+$$
+右侧为紧集的连续像，在 Hausdorff 圆周中闭，故其补集 $V$ 是含 $\gamma(n)$ 的开集，且 $H_{\rm infdig}^{-1}(V)\subseteq U$。在核心上拉回，$\gamma^{-1}(V)$ 包含 $n$ 且包含于 $z_{\rm infdig}^{-1}(U)$。逐点取并，得反向拓扑包含。
+
+对每个 $n$，当 $j\ge|\zeta(n)|+1$ 时，令 $n_j=n+G_j$。新增第 $j$ 位与全部旧非零位之间至少隔一个零，故由有限规范唯一性，$z_{\rm infdig}(n_j)$ 恰在第 $j$ 位与 $z_{\rm infdig}(n)$ 不同。因此
+$$
+d_{\rm digit}(n_j,n)=2^{-j-1}\longrightarrow0,\qquad n_j\ne n.
+$$
+每一点都有不同点趋近，证明无孤立点。
+
+$\rho$ 的最小值由与 $s-t$ 最近的整数取得，换代表只平移所取整数，故良定义。距离为零恰当两类相同；将两次取到最小值的整数相加，再用实直线三角不等式，得到圆周三角不等式。小于 $1/2$ 的球为通常开弧，故这是通常圆周的度量。$z_{\rm infdig}$ 单射，$\phi$ 无理又使 $\gamma$ 单射，故两个拉回均为度量，并给相应拓扑。
+
+上述两个嵌入按定义为等距嵌入。$K_{\rm infdig}$ 紧；圆周是紧区间 $[0,1]$ 的连续像，也紧。紧度量空间中的 Cauchy 序列有收敛子序列，而 Cauchy 条件使整个序列有同一极限，所以两目标均完备。第 371.2 条给数字核心稠密；对任意圆周开集，其 $H_{\rm infdig}$ 原像由满性和连续性是非空开集，必遇到数字核心，故自然相位轨道亦稠密。于是这两个完备目标分别是所声明度量的完备化。
+
+紧度量域上的连续映射 $H_{\rm infdig}$ 一致连续：否则存在某个 $\varepsilon>0$ 及 $x_k,y_k$ 满足 $d_K(x_k,y_k)\to0$、$\rho(H_{\rm infdig}x_k,H_{\rm infdig}y_k)\ge\varepsilon$；紧性给 $x_k$ 的一个收敛子序列，该子序列上 $y_k$ 趋于同一点，连续性矛盾。限制到核心得正向恒等映射一致连续。
+
+令 $a_L,b_L\in\omega$ 分别为 $u,v$ 截到前 $L$ 位的 Fibonacci 值。其补零规范行逐坐标互补于前 $L$ 位，故
+$$
+d_{\rm digit}(a_L,b_L)=\sum_{j<L}2^{-j-1}=1-2^{-L}.
+$$
+它们分别趋于 $u,v$，相位距离却趋于 $\rho([a],[b])=0$。若反向恒等映射一致连续，取输出距离阈值 $1/2$ 就与这两列相矛盾。因此两种一致结构不同。证毕。
+
+**定理 373.3。** $H_{\rm infdig}:K_{\rm infdig}\to\mathbb T$ 是连续商映射，不是同胚且无连续右逆。$K_{\rm infdig}$ 与 $\mathbb T$ 之间不存在任何同胚。
+
+**证明。** 满射已证。闭子集在紧载体中紧，其连续像在圆周中闭，故 $H_{\rm infdig}$ 为闭映射。若 $H_{\rm infdig}^{-1}(B)$ 闭，满性给 $B=H_{\rm infdig}[H_{\rm infdig}^{-1}(B)]$ 闭；结合连续性并取补集，就是商拓扑判据。端点二点纤维使它不单射。
+
+$K_{\rm infdig}$ 的每个连通子集在每个离散坐标的连续投影下均为单点，故其中任意两点的全部坐标相同，该子集至多一点。圆周是区间的连续像，连通且不止一点。从圆周到 $K_{\rm infdig}$ 的每个连续映射遂为常值，不可能与 $H_{\rm infdig}$ 复合为圆周恒等。相同的连通性差别也排除任何同胚。证毕。
+
+## 374. 正标量尺度的联合观察拓扑
+
+**定义 374.1。** 在正整数域上沿用第 287、325 条的
+$$
+\mathscr A(n)=\lfloor\log_\phi n\rfloor,\qquad
+\Gamma_+(n)=(\mathscr A(n),\zeta(n),[n\phi]).
+$$
+尺度值域取离散拓扑，有限正规范字取经 $\operatorname{pad}$ 嵌入 $K_{\rm infdig}$ 的拓扑，圆周取通常拓扑。这保留 [GICT 定义 1.4、1.7](GICT.md) 的正标量尺度、规范字与标量相位。
+
+**定理 374.2。** $(\mathscr A,z_{\rm infdig})$、$(\mathscr A,\gamma)$ 和 $\Gamma_+$ 各自诱导正整数集的离散拓扑。在定理 373.2 的共同核心拓扑的正整数子空间上，$\mathscr A$ 及取离散自然值的 $n\mapsto|\zeta(n)|$ 在每个点均不连续。
+
+**证明。** 对固定尺度 $k$，其纤维是 $[\phi^k,\phi^{k+1})$ 内的整数，故有限。固定该纤维中的 $n$；相位单射使有限多个其他相位均不同于 $\gamma(n)$，取一个避开它们的圆周邻域即可在纤维内隔离 $n$。数字一侧，为每个不同有限字选一个不同坐标，取这些有限多个坐标所确定的柱邻域，也能在纤维内隔离 $n$。与尺度开单点 $\{k\}$ 联合，就使两种联合观察均拉回单点 $\{n\}$ 为开集。任意子集是单点并，故诱导拓扑离散；添上另一观察分量后 $\Gamma_+$ 仍离散。
+
+对每个固定 $n>0$，第 373.2 条的 $n_j=n+G_j$ 在共同核心拓扑中趋于 $n$，但其规范字长度恰为 $j+1$，且 $G_j\to\infty$，所以 $\mathscr A(n_j)\to\infty$。向离散目标的连续性会要求趋近序列最终取与 $n$ 相同的值，故两个观察在该点都不连续。
+
+零点仍只使用第 287 条的 $\mathscr A_{\mathbb Z}^{\bot}(0)=\bot$；有符号观察 $\Gamma_{\mathbb Z}$ 的其余尺度为 $\mathscr A(|m|)$，字分量为原有三个符号情形的 $\operatorname{scode}(m)$。这里没有实数 $\log0$。上述离散性属于正标量整数域；若沿配置的标量函数拉回，标量相同的两个配置在每个观察分量均相同，便不能由这些拉回开集分开。因此该定理不给全部配置域的离散性。证毕。
+
+## 375. 连续后继、两个交替极限与全部前驱
+
+**定义 375.1。** 若 $x\in K_{\rm infdig}$ 有相邻零，令 $j$ 为满足 $x_j=x_{j+1}=0$ 的最小指标，定义
+$$
+(T_{\rm infdig}x)_i=
+\begin{cases}
+0,&i<j,\\
+1,&i=j,\\
+x_i,&i>j.
+\end{cases}
+$$
+若不存在这样的 $j$，定义 $T_{\rm infdig}x=z_{\rm infdig}(0)$。
+
+**定理 375.2。** $T_{\rm infdig}:K_{\rm infdig}\to K_{\rm infdig}$ 是唯一满足
+$$
+T_{\rm infdig}(z_{\rm infdig}(n))=z_{\rm infdig}(n+1)\qquad(n\in\omega)
+$$
+的连续映射。它满射，并有
+$$
+T_{\rm infdig}^{-1}(\{z_{\rm infdig}(0)\})=\{u,v\};
+$$
+其余每一点恰有一个前驱。
+
+**证明。** 合法字没有 $11$；若也没有 $00$，每两个相邻数字恰互补，故恰为 $u$ 或 $v$。若首次 $00$ 在 $j$，则 $j$ 以下的前缀 $p_j$ 交替，且 $j>0$ 时末位为一。这样的长度 $j$ 前缀唯一。其 Fibonacci 值 $V_j$ 满足
+$$
+V_0=0,\qquad V_1=1,\qquad V_j=G_{j-1}+V_{j-2}\quad(j\ge2).
+$$
+归纳给 $V_j=G_j-1$：前两个初值成立，归纳步为 $G_{j-1}+G_{j-2}-1=G_j-1$。清除此前缀并在 $j$ 处置一，因 $j+1$ 处保持零且低位全零而合法。有限核心总有尾部 $00$，此操作的值增加 $G_j-V_j=1$；第 70 条的唯一性使输出为 $z_{\rm infdig}(n+1)$，也就是第 101–102 条在原有限字域上的后继。$j=0$ 时前缀为空，此式包括总零函数到 $z_{\rm infdig}(1)$ 的情形。
+
+在首次 $00$ 为 $j$ 的点，固定前 $j+2$ 个输入坐标就固定首次位置。给定需要固定的输出前 $L$ 位，再固定相应输入的前 $\max(L,j+2)$ 位，输出前缀便确定，所以在那里连续。对 $u$，若另一输入与它的前 $L+1$ 位相同，则首次 $00$ 若存在，其指标至少为 $L$，输出的前 $L$ 位全零；不存在时输出也是总零函数。因此输出趋于 $T_{\rm infdig}u=z_{\rm infdig}(0)$。对 $v$，其前 $L+1$ 位同样没有 $00$，同一推论给输出前 $L$ 位全零，证明在 $v$ 也连续。
+
+任给 $y\ne z_{\rm infdig}(0)$，令 $j$ 为其第一个一的位置。定义 $x$ 在 $j$ 以下为上述 $p_j$，在 $j$ 处为零，在 $j$ 以上与 $y$ 相同。$y_{j+1}=0$，故 $x$ 首次 $00$ 恰在 $j$；低位交替与尾部均合法，连接处也合法，且 $T_{\rm infdig}x=y$。每个前驱若有首次 $00$，该指标必须等于输出首次一的位置 $j$，其交替低前缀及其余尾部又都被迫取刚定义的值；无 $00$ 的输入只输出零，故该非零前驱唯一。有首次 $00$ 的输出含一，不能为零；无 $00$ 的两个输入都输出零，给准确零纤维并证明满性。最后，连续映射到 Hausdorff 载体若在稠密核心相同则处处相同，故延拓唯一。证毕。
+
+**定理 375.3。** 对所有 $x\in K_{\rm infdig}$，
+$$
+H_{\rm infdig}(T_{\rm infdig}x)=H_{\rm infdig}(x)+[\phi].
+$$
+每个固定 $h\in\omega$ 的迭代 $T_{\rm infdig}^h$ 是 $z_{\rm infdig}(n)\mapsto z_{\rm infdig}(n+h)$ 的唯一连续延拓，包括 $h=0$。三元组 $(K_{\rm infdig},z_{\rm infdig}(0),T_{\rm infdig})$ 不满足通常自然数结构的后继条件，$T_{\rm infdig}$ 也不是任何 $\mathbb Z$ 作用的生成元。
+
+**证明。** 在有限核心上，由后继公式及第 371.2 条，显示的两边均为 $[(n+1)\phi]$。两边都是连续圆周值映射，密度使等式在全载体成立。特别在两个交替点处是 $[-\phi]+[\phi]=0$。对 $h$ 归纳，连续复合及有限核心的后继式给所述迭代，唯一性仍由密度给出。
+
+$u\ne v$ 有同一后继，且零属于后继像；这分别违反通常自然数后继的单射性及零不属于后继像的条件。一个 $\mathbb Z$ 作用中，整数一的作用必须以整数负一的作用为逆，故必须双射，$T_{\rm infdig}$ 不能充当它。[GICT 第 6.41 条](GICT.md) 中的 $\mathbb Z$ 作用所需可逆性在这个后继上不成立。证毕。
+
+## 376. 每个整数乘数的两侧极限障碍
+
+**定理 376.1。** 对每个整数 $m\ge2$，不存在连续映射 $M:K_{\rm infdig}\to K_{\rm infdig}$ 使
+$$
+M(z_{\rm infdig}(n))=z_{\rm infdig}(mn)\qquad(n\in\omega).
+$$
+在共同有限核心拓扑上，每个固定 $m\ge0$ 的 $n\mapsto mn$ 连续；当 $m\ge2$ 时，它对 $d_{\rm digit}$ 不一致连续。非负整数乘数中恰有零和一取得到全紧载体的连续延拓，且各自唯一。
+
+**证明。** 固定任意 $m\ge2$，置 $c_0=-\phi/m$、$c=[c_0]$。若 $c=[-k\phi]$、$k\ge1$，则 $(mk-1)\phi\in m\mathbb Z$。这里 $mk-1$ 非零，与 $\phi$ 无理矛盾。因此 $c\notin E$，定理 372.4 给唯一的 $x\in K_{\rm infdig}$ 满足 $H_{\rm infdig}(x)=c$。
+
+对每个 $h\ge1$ 定义
+$$
+\delta_h=\frac1{8m(h+1)},\qquad
+U_h^+=\{[c_0+t]:\delta_h/2<t<\delta_h\},\qquad
+U_h^-=\{[c_0+t]:-\delta_h<t<-\delta_h/2\}.
+$$
+这是两条非空圆周开弧。第 53 条用于无理旋转步长 $\phi$、初相位零，给每条弧有无穷多个自然指标访问。因此可以递归地在每一侧选严格递增的 $n_h^+,n_h^-$，使 $\gamma(n_h^\pm)\in U_h^\pm$。相应局部偏移 $t_h^\pm$ 在显示的小区间内唯一，且趋于零，所以两列相位都趋于 $c$。
+
+两列 $z_{\rm infdig}(n_h^\pm)$ 都趋于同一个 $x$。确实，每个收敛子序列的极限由连续性具有相位 $c$，故只能是 $x$。若某一列不趋于 $x$，则存在 $x$ 的开邻域使该列在其闭补集中有无限子序列；紧性给其中一个收敛子序列，其极限仍在闭补集，矛盾。
+
+乘后相位为
+$$
+\gamma(mn_h^\pm)=[-\phi+mt_h^\pm]=[a+mt_h^\pm].
+$$
+由于 $0<mt_h^+<1/8$、$-1/8<mt_h^-<0$，这两相位均不是 $[a]=[b]$，它们在 $(a,b)$ 内的代表分别为 $a+mt_h^+$ 与 $b+mt_h^-$。第 371.2 条的有限实值严格落于该区间；区间中代表唯一，故
+$$
+F_{\rm infdig}(z_{\rm infdig}(mn_h^+))=a+mt_h^+\longrightarrow a,
+$$
+$$
+F_{\rm infdig}(z_{\rm infdig}(mn_h^-))=b+mt_h^-\longrightarrow b.
+$$
+如果 $M$ 存在，$F_{\rm infdig}\circ M$ 在 $x$ 的连续性会使这两个极限均等于 $F_{\rm infdig}(M(x))$，但 $b-a=1$，矛盾。
+
+再对 $F_{\rm infdig}$ 使用同样的紧性论证；它在 $a,b$ 处的纤维分别唯一为 $u,v$，所以
+$$
+z_{\rm infdig}(mn_h^+)\to u,\qquad z_{\rm infdig}(mn_h^-)\to v.
+$$
+两列输入的 $d_K$ 距离趋于零，输出距离却趋于 $d_K(u,v)=1$。取距离阈值 $1/2$，直接否定数字度量的一致连续性。
+
+圆周映射 $[t]\mapsto[mt]$ 对 $\rho$ 为 $m$-Lipschitz：取实现输入距离的整数 $k$，输出距离不超过 $|m(s-t-k)|$。它连续并将 $\gamma[\omega]$ 映入自身，限制后由第 373.2 条的核心同胚得 $n\mapsto mn$ 连续。$m=0$ 的延拓为常值 $x\mapsto z_{\rm infdig}(0)$，$m=1$ 的延拓为恒等；两者连续，密度给唯一性。以上两侧构造对每个任意固定的 $m\ge2$ 都成立，遂完成全部非负整数乘数的分类。证毕。
+
+## 377. 总二元运算与核心加法、固定平移
+
+**定理 377.1。** 在乘积拓扑下，不存在连续映射
+$$
+\operatorname{Add}:K_{\rm infdig}\times K_{\rm infdig}\to K_{\rm infdig}
+$$
+满足全部 $\operatorname{Add}(z_{\rm infdig}(n),z_{\rm infdig}(k))=z_{\rm infdig}(n+k)$；也不存在连续映射
+$$
+\operatorname{Mul}:K_{\rm infdig}\times K_{\rm infdig}\to K_{\rm infdig}
+$$
+满足全部 $\operatorname{Mul}(z_{\rm infdig}(n),z_{\rm infdig}(k))=z_{\rm infdig}(nk)$。共同核心拓扑的乘积上，二元加法连续，每个固定自然平移的连续延拓为 $T_{\rm infdig}^h$。
+
+**证明。** 若 $\operatorname{Add}$ 存在，与连续对角映射 $x\mapsto(x,x)$ 复合便连续延拓倍二映射，违反定理 376.1 的 $m=2$ 情形。若 $\operatorname{Mul}$ 存在，沿连续映射 $x\mapsto(x,z_{\rm infdig}(2))$ 限制，又得到同一个被排除的倍二延拓。
+
+圆周加法满足
+$$
+\rho(s+t,s'+t')\le\rho(s,s')+\rho(t,t')\qquad(s,t,s',t'\in\mathbb T),
+$$
+由实数代表的三角不等式及整数平移可得，因而联合连续。其在 $\gamma[\omega]\times\gamma[\omega]$ 上的值仍在 $\gamma[\omega]$，且 $\gamma(n)+\gamma(k)=\gamma(n+k)$。通过 $\gamma$ 与共同核心之间的同胚，得到核心二元加法连续。固定平移的延拓已由定理 375.3 给出。
+
+第 70 条的有限字算术及全部通常自然数等式保持在其原有限域上。所证不存在性排除的是这个特定紧载体上延拓自然算术的连续总二元运算，因而也排除这样的连续总半环结构；它不涉及其他载体的算术结构。证毕。
+
+## 378. 全集合运输及标量、配置与容量的精确含义
+
+**命题 378.1。** $K_{\rm infdig}$、$z_{\rm infdig},F_{\rm infdig},H_{\rm infdig},T_{\rm infdig}$ 的全部图、上述实数及圆周纤维、柱集、拓扑和度量、各乘积以及所量化的全部子集族与函数空间，均为 ZFC 集合。它们适用第 71–78、318–320 条的一般全集合解释。
+
+**证明。** $\{0,1\}^\omega$ 由函数集构造存在，在其中按相邻合法性分离便得 $K_{\rm infdig}$。自然数递归给 $G_j$ 及有限和，有限规范字的唯一性与替代给 $z_{\rm infdig}$ 的图。实数是集合；圆周是实数按整数差关系的集合商，每个等价类为实数的子集，全部类由替代构成集合。
+
+$F_{\rm infdig}$ 的每个部分和由有限求和存在唯一，绝对收敛及实完备性给每个输入唯一极限，替代给其全图；$H_{\rm infdig}$ 是集合函数的复合。相邻零指标集合若非空则有最小自然数，否则使用指定总零函数，故 $T_{\rm infdig}$ 在每个输入有唯一输出，替代同样给全图。两种度量的级数及圆周距离的最小值也存在唯一，故是各自积域上的实值集合函数。
+
+纤维、柱集、有限核心及其所有指定子空间由分离取得。乘积、任意两个集合之间的全部函数集、每个载体的幂集都由 ZFC 集合构造取得。拓扑是幂集的子集；所有柱集形成集合，其任意并族仍由幂集、并集与替代形成集合。序列、连续映射和一致连续映射的全体再由相应函数集上的谓词分离。这满足第 71–78、318–320 条以及 [CSA 命题 14–15](CONTEXTUAL_SPACETIME_ARITHMETIC.md) 的集合条件，未将全部集合组成一个集合。证毕。
+
+**定义 378.2。** 保持第 69、71–74 条的同一可定义类函数
+$$
+\operatorname{Enc}(x)=
+\begin{cases}
+\operatorname{NatZ}(x)=\langle0,\zeta(x)\rangle,&x\in\omega,\\
+\langle1,\operatorname{Enc}[x]\rangle,&x\notin\omega,
+\end{cases}
+$$
+及有效码类 $\mathfrak V_Z$、其上的逆 $\operatorname{Dec}$、语义成员 $\in_Z$、$\operatorname{El},\operatorname{Pack}$ 与语义配对 $\langle\ ,\ \rangle_Z$。对任意集合 $X$，记
+$$
+X^*=\operatorname{Enc}[X]=\operatorname{El}(\operatorname{Enc}(X)),\qquad
+\operatorname{enc}_X=\operatorname{Enc}|_X:X\to X^*.
+$$
+对集合函数 $f:D\to Y$，记普通图 $G_f=\{\langle x,f(x)\rangle:x\in D\}$，定义外部共轭
+$$
+f^*=\operatorname{enc}_Y\circ f\circ\operatorname{Dec}|_{D^*}:D^*\to Y^*.
+$$
+
+**定理 378.3。** $\operatorname{enc}_X$ 是双射，逆恰为 $\operatorname{Dec}|_{X^*}$。对每个上述 $f$，
+$$
+G_{f^*}=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle:x\in D\},
+$$
+$$
+\operatorname{Enc}(G_f)
+=\operatorname{Pack}\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle_Z:x\in D\},\qquad
+\operatorname{El}(\operatorname{Enc}(G_f))=\operatorname{Enc}[G_f].
+$$
+外部共轭的域为 $D^*$；原图码的语义域、语义值域分别为 $\operatorname{Enc}(D)$、$\operatorname{Enc}(\operatorname{ran}f)$，且
+$$
+\operatorname{ev}_Z(\operatorname{Enc}(G_f),\operatorname{Enc}(x))
+=\operatorname{Enc}(f(x))\qquad(x\in D).
+$$
+这些式子包括空域，域外没有图边。
+
+对每个 $x\in K_{\rm infdig}$，
+$$
+\operatorname{Enc}(x)=\operatorname{Pack}
+\{\langle\operatorname{NatZ}(j),\operatorname{NatZ}(x_j)\rangle_Z:j\in\omega\}.
+$$
+特别，$z_{\rm infdig}^*:\omega^*\to K_{\rm infdig}^*$ 满足
+$$
+z_{\rm infdig}^*(\operatorname{NatZ}(n))=\operatorname{Enc}(z_{\rm infdig}(n)).
+$$
+有限字和自然叶遗传有限；这些总函数图及其完整码均不遗传有限，即使它们只有有限支撑。
+
+**证明。** 第 72 条在任意集合及有效码上给编码与解码的双逆和成员像恒等式，直接限制得到第一断言。对 $x\in D$，共轭在 $\operatorname{Enc}(x)$ 处唯一取 $\operatorname{Enc}(f(x))$，这给以普通有序对组成的外部图。第 74 条的恒等式
+$$
+\langle\operatorname{Enc}(x),\operatorname{Enc}(y)\rangle_Z
+=\operatorname{Enc}(\langle x,y\rangle)
+$$
+使原图的逐边编码恰为所列语义对。第 73 条的 $\operatorname{Pack}$ 将这一成员像恢复为单个原图码，得第二图式；再用第 72 条得 $\operatorname{El}$ 式。语义域中的成员恰为有边的输入码，语义值域中的成员恰为有边的输出码，故分别编码 $D$ 与 $\operatorname{ran}f$。逐边唯一输出就是语义求值式。若 $D=\varnothing$，边集合为空，$\operatorname{Pack}(\varnothing)=\operatorname{Enc}(\varnothing)$；语义域和值域都是这个空集码，外部域则为空集，所有式子仍成立。
+
+总数字函数 $x$ 的普通图对每个 $j\in\omega$ 均有且仅有 $\langle j,x_j\rangle$，输入输出都是自然数，故以 $\operatorname{NatZ}$ 代替各自的 $\operatorname{Enc}$ 就得到显示的总图码。零值边同样出现；特别总零函数的每个 $\langle j,0\rangle$ 都保留。不同 $j$ 给不同边，所以任何这样的总图都无限，因而不属于 $HF$。第 72 条给 $\operatorname{Enc}(x)\in HF\iff x\in HF$，故全码也不遗传有限。有限字及自然叶的遗传有限性直接使用第 70 条。
+
+原始空字 $\zeta(0)=\varnothing$ 不是有效码：第 71 条的每个有效码都是非空 Kuratowski 对。语义空集为 $\operatorname{NatZ}(0)$，所以原始空字不能直接作语义配对的参数。单个载体码 $\operatorname{Enc}(X)$、其外部成员像 $X^*$、有限字及总图各有上述定义；这些角色差别不蕴含所有特殊输入下的值都两两不等。证毕。
+
+**定理 378.4。** 对任意集合 $X,Y$，乘积比较
+$$
+\chi_{X,Y}:X^*\times Y^*\longrightarrow(X\times Y)^*,\qquad
+\chi_{X,Y}(c,d)=\operatorname{Enc}(\langle\operatorname{Dec}(c),\operatorname{Dec}(d)\rangle)
+=\langle c,d\rangle_Z
+$$
+是双射，其逆为
+$$
+\chi_{X,Y}^{-1}(\operatorname{Enc}(\langle x,y\rangle))
+=\langle\operatorname{Enc}(x),\operatorname{Enc}(y)\rangle.
+$$
+右侧是普通有序对。二元函数 $f:X\times Y\to Z$ 在外部乘积上的对应为 $f^*\circ\chi_{X,Y}$。
+
+**证明。** 任给 $c\in X^*,d\in Y^*$，解码取得唯一的 $x\in X,y\in Y$，故显示的码在目标中，配对等式由第 74 条给出。将此码代入所列逆，得到 $\langle\operatorname{Enc}(\operatorname{Dec}(c)),\operatorname{Enc}(\operatorname{Dec}(d))\rangle=\langle c,d\rangle$。反向，任给目标的 $\operatorname{Enc}(\langle x,y\rangle)$，先取逆再取正向，得到原码。唯一解码及普通对的唯一分解保证逆良定义，证明双逆。最后
+$$
+(f^*\circ\chi_{X,Y})(\operatorname{Enc}(x),\operatorname{Enc}(y))
+=\operatorname{Enc}(f(x,y)),
+$$
+所以二元输入的普通码对和原普通对的单个码通过这个比较相接。证毕。
+
+**定理 378.5。** 对每个指定拓扑空间 $(X,\tau_X)$，定义
+$$
+\tau_X^*=\{\operatorname{Enc}[U]:U\in\tau_X\}.
+$$
+则 $\operatorname{enc}_X:(X,\tau_X)\to(X^*,\tau_X^*)$ 是同胚。对函数 $f:D\to Y$，域 $D$ 取已指定的拓扑或相应子空间拓扑，对每个 $O\subseteq Y$ 及 $S\subseteq X$ 有
+$$
+(f^*)^{-1}(\operatorname{Enc}[O])=\operatorname{Enc}[f^{-1}(O)],\qquad
+\overline{\operatorname{Enc}[S]}^{\tau_X^*}=\operatorname{Enc}[\overline S^{\tau_X}].
+$$
+因此连续性、收敛与闭包均保持并反映。$\chi_{X,Y}$ 是运输拓扑的乘积与乘积拓扑的运输之间的同胚，且
+$$
+\operatorname{El}(\operatorname{Enc}(\tau_X))=\operatorname{Enc}[\tau_X],\qquad
+\tau_X^*=\{\operatorname{El}(c):c\in\operatorname{Enc}[\tau_X]\}.
+$$
+
+**证明。** 双射的直接像保持空集、全集、任意并及有限交；交式的反向包含由单射性使同一个像点的原像相等。因此 $\tau_X^*$ 满足拓扑公理，开集的两向对应给同胚。任意 $c\in D^*$ 唯一写为 $\operatorname{Enc}(x)$；$f^*(c)\in\operatorname{Enc}[O]$ 当且仅当 $f(x)\in O$，于是得原像式。开集判据立即给连续性的两个方向。
+
+点 $\operatorname{Enc}(x)$ 的每个开邻域唯一为某个含 $x$ 的开集 $U$ 的像，此邻域遇到 $\operatorname{Enc}[S]$ 当且仅当 $U$ 遇到 $S$。闭包的邻域判据给显示闭包式。对同一指标集的序列或网，最终处于邻域的条件也在这两方向对应，故收敛保持并反映。
+
+乘积同胚 $\operatorname{enc}_X\times\operatorname{enc}_Y$ 将基本开矩形 $U\times V$ 送到 $\operatorname{Enc}[U]\times\operatorname{Enc}[V]$。结合
+$$
+\chi_{X,Y}=\operatorname{enc}_{X\times Y}\circ
+(\operatorname{enc}_X\times\operatorname{enc}_Y)^{-1}
+$$
+得所述乘积比较同胚。最后将第 72 条的成员像式先用于拓扑这个集合，得到开集码族，再逐个用于开集码，得到外部开集族。因而单个拓扑码、开集的码族、外部拓扑分别按显示的两次成员展开解释。证毕。
+
+**定理 378.6。** 对任意普通实值度量空间 $(X,d)$，在 $X^*$ 上定义外部实值距离
+$$
+d_{\rm ext}(c,c')=d(\operatorname{Dec}(c),\operatorname{Dec}(c')).
+$$
+它是度量，$\operatorname{enc}_X$ 为等距双射。对每个 $\varepsilon>0$，
+$$
+\{(c,c'):d_{\rm ext}(c,c')<\varepsilon\}
+=(\operatorname{enc}_X\times\operatorname{enc}_X)
+[\{(x,x'):d(x,x')<\varepsilon\}].
+$$
+一致结构、一致连续性、Cauchy 序列与度量完备化在这项比较下均保持并反映。分别用于 $d_K,\rho,d_{\rm digit},d_{\rm phase}$ 时，保留第 373.2 条的两个不同一致结构及其各自完备化。
+
+完整编码的距离为
+$$
+d^*:(X\times X)^*\to\mathbb R^*,\qquad
+d^*(\chi_{X,X}(c,c'))=\operatorname{Enc}(d_{\rm ext}(c,c')).
+$$
+其零、加法及序均取实数结构的运输；解码后才是上述普通实值度量。
+
+**证明。** 非负性及对称性由原距离给出，距离为零当且仅当解码相同，当且仅当两个码相同。三角不等式在三个解码点处直接为原三角不等式，所以 $d_{\rm ext}$ 为实值度量，且代入两点编码即得等距式。逐对代入定义给所列邻近关系式，故所有包含这些关系的一致结构元素也准确对应。
+
+对任意序列和 $\varepsilon>0$，所有充分靠后项的两两距离小于 $\varepsilon$ 在两侧完全相同，故 Cauchy 条件双向相同；极限同样由到一个点的距离趋零保持反映。若 $i:X\to\widehat X$ 为稠密等距嵌入且 $\widehat X$ 完备，将其共轭成 $i^*:X^*\to\widehat X^*$。等距性由距离定义给出，稠密性由第 378.5 条给出，而 $\widehat X^*$ 中每个 Cauchy 序列解码后在 $\widehat X$ 收敛，再编码得极限，故是相应完备化。反向解码证明相同结论，也给一致连续性的全部 $\varepsilon$、$\delta$ 条件双向对应。
+
+在 $\omega^*$ 上分别取
+$$
+(d_{\rm digit})_{\rm ext}(\operatorname{NatZ}(n),\operatorname{NatZ}(k))=d_{\rm digit}(n,k),\qquad
+(d_{\rm phase})_{\rm ext}(\operatorname{NatZ}(n),\operatorname{NatZ}(k))=d_{\rm phase}(n,k).
+$$
+其完备化便分别是带 $(d_K)_{\rm ext}$ 的 $K_{\rm infdig}^*$ 和带 $\rho_{\rm ext}$ 的 $\mathbb T^*$；第 373.2 条的反向不一致连续序列也逐项编码，仍给反例。
+
+最后，$d^*$ 是作为二元图的原距离函数的共轭，所以其值为实数对象的码。令 $0_{\mathbb R}^*=\operatorname{Enc}(0)$，并沿 $\operatorname{enc}_{\mathbb R}$ 运输实加法及实序，其三角不等式就是原三角不等式的编码。目标为 $\mathbb R^*$ 的这个函数不是以通常实数算术解释的普通实值度量；与 $\operatorname{Dec}|_{\mathbb R^*}$ 复合并通过 $\chi_{X,X}$ 才恢复 $d_{\rm ext}$。证毕。
+
+**定理 378.7。** 对每个集合函数 $f:D\to Y$ 和每个 $y\in Y$，包括原像为空的情形，
+$$
+(f^*)^{-1}(\{\operatorname{Enc}(y)\})=\operatorname{Enc}[f^{-1}(\{y\})].
+$$
+第 371–377 条的存在、唯一性、全部纤维、商映射、无连续右逆与全部连续算术延拓不存在性，在精确的运输域上均保持并反映。
+
+**证明。** 左侧元素唯一写成 $\operatorname{Enc}(x)$、$x\in D$。它在左侧当且仅当 $\operatorname{Enc}(f(x))=\operatorname{Enc}(y)$，由单射性当且仅当 $f(x)=y$，恰为右侧条件。这给所有纤维式，包括空集。
+
+具体地，$F_{\rm infdig}^*:K_{\rm infdig}^*\to\mathbb R^*$ 的像为 $\operatorname{Enc}[I]$，在其外每个实数码处纤维为空，特别在 $\operatorname{Enc}(1)$ 处为空；端点纤维分别为 $\{\operatorname{Enc}(u)\},\{\operatorname{Enc}(v)\}$，每个分裂值的纤维为对应两字的编码像。$H_{\rm infdig}^*:K_{\rm infdig}^*\to\mathbb T^*$ 的二点值域恰为 $\operatorname{Enc}[E]$，$T_{\rm infdig}^*:K_{\rm infdig}^*\to K_{\rm infdig}^*$ 的零纤维恰为 $\{\operatorname{Enc}(u),\operatorname{Enc}(v)\}$。其余纤维由同一等式保持准确大小。
+
+任意函数 $g:X^*\to Y^*$，不附加可定义性限制，都唯一解码为
+$$
+\widetilde g(x)=\operatorname{Dec}(g(\operatorname{Enc}(x)))\quad(x\in X).
+$$
+其函数图由替代取得，再正向共轭恰还原 $g$。反向每个原函数经共轭、解码也还原。因此函数候选的存在与唯一性在两侧双向对应；第 378.5 条又使连续性双向对应。满性和开集原像的充要条件保持商映射判据。一个运输侧连续右逆解码后会成为原映射的连续右逆，反向亦然。
+
+对 $K_{\rm infdig}^*$ 上任意候选乘数延拓，上述解码在 $z_{\rm infdig}(n)$ 处的值被其在 $\operatorname{Enc}(z_{\rm infdig}(n))$ 处的值准确决定，故延拓条件不变。二元候选 $g:K_{\rm infdig}^*\times K_{\rm infdig}^*\to K_{\rm infdig}^*$ 先通过 $\chi_{K_{\rm infdig},K_{\rm infdig}}^{-1}$ 视为原积域成员像上的函数，再解码；等价地直接取
+$$
+(x,y)\longmapsto\operatorname{Dec}(g(\operatorname{Enc}(x),\operatorname{Enc}(y))).
+$$
+乘积同胚保证其连续，核心等式完全还原。故若运输侧有连续总加法、乘法、被排除的乘数延拓或连续截面，原侧也有，分别与第 373、376–377 条矛盾。已存在的 $H_{\rm infdig},T_{\rm infdig}^h$ 及其唯一性则正向编码并反向解码证明。这个论证量化全部候选函数，因而同时保留肯定与否定断言。证毕。
+
+**定理 378.8。** 若另外给定字段双射 $b_D:D\to C_D$、$b_Y:Y\to C_Y$，置
+$$
+f^d=b_Y\circ f\circ b_D^{-1},\qquad
+h_D(c)=\operatorname{Enc}(b_D^{-1}(c)),\qquad e_D(c)=\operatorname{Enc}(c),
+$$
+并在输出槽相应置 $h_Y,e_Y$。则 $h_D$ 的像为 $D^*$，其逆在该像上为 $b_D\circ\operatorname{Dec}$；$e_D$ 的像为 $\operatorname{Enc}[C_D]$，其逆在该像上为 $\operatorname{Dec}$。输出槽有对应的两个精确逆域，且
+$$
+\operatorname{Enc}(G_f)
+=\operatorname{Pack}\{\langle h_D(c),h_Y(d)\rangle_Z:\langle c,d\rangle\in G_{f^d}\},
+$$
+$$
+\operatorname{Enc}(G_{f^d})
+=\operatorname{Pack}\{\langle\operatorname{Enc}(c),\operatorname{Enc}(d)\rangle_Z:
+\langle c,d\rangle\in G_{f^d}\}.
+$$
+这些式子分别编码原对象图与数字对象图，包括 $d$ 自身已经是某个码的情形。
+
+**证明。** 对 $c\in C_D$，先取 $h_D$ 再用 $b_D\circ\operatorname{Dec}$，得到 $b_D(b_D^{-1}(c))=c$；对 $z\in D^*$，反向复合给 $\operatorname{Enc}(\operatorname{Dec}(z))=z$。这同时给像及双逆。$e_D$ 的两复合直接是 $\operatorname{Enc},\operatorname{Dec}$ 在 $C_D$ 及其成员像上的双逆。将 $D,C_D,b_D$ 换为 $Y,C_Y,b_Y$ 给输出侧同样的结论。
+
+数字边 $\langle c,d\rangle\in G_{f^d}$ 唯一对应原输入 $b_D^{-1}(c)$ 及原输出 $b_Y^{-1}(d)=f(b_D^{-1}(c))$。反向每条原边也给唯一数字边。代入第 378.3 条的语义配对图式，得到第一式。直接将数字边本身作为普通集合有序对编码，得到第二式；因此在第二式中，即使 $d$ 已是码，也仍须取作为集合对象的 $\operatorname{Enc}(d)$。
+
+对部分联合域 $D\subseteq X_1\times X_2$，若各槽双射为 $b_1,b_2$，必须取
+$$
+C_D=(b_1\times b_2)[D],\qquad b_D=(b_1\times b_2)|_D.
+$$
+其原输入提升为
+$$
+h_D(\langle c_1,c_2\rangle)
+=\langle\operatorname{Enc}(b_1^{-1}(c_1)),
+\operatorname{Enc}(b_2^{-1}(c_2))\rangle_Z.
+$$
+两槽分别合法不能替代 $\langle c_1,c_2\rangle\in C_D$ 的联合条件，双逆逐边保持整个域。更多固定元数按第 257–260 条的 $T_r,T_r^Z$ 递归配对，给相同结论。若原域要求某个零值图边而输入缺失它，则原输入不在域中，其数字像也不在域中；不能由缺失边得到成功的零值。若另用互不相同的 $\operatorname{ok}$ 与 $\bot$ 作严格总化，域内输出和域外失败各自经编码，单射性仍使成功零不等于失败。证毕。
+
+**命题 378.9。** 第 332、335 条的四对字段双射保持精确的原域：
+$$
+\operatorname{qenc}:\mathbb Q\leftrightarrow\mathsf{RatFld}:\operatorname{qdec},\qquad
+\operatorname{penc}:\mathbb Q/\mathbb Z\leftrightarrow\mathsf{RatPhaseFld}:\operatorname{pdec},
+$$
+$$
+\operatorname{cenc}_\phi:\phi\mathbb Q\leftrightarrow\mathsf{Coeff}_\phi:\operatorname{cdec}_\phi,\qquad
+\operatorname{genc}_\phi:C_\phi\leftrightarrow\mathsf{Phase}_\phi:\operatorname{gdec}_\phi,
+\qquad C_\phi=\{[\phi q']:q'\in\mathbb Q\}.
+$$
+这里 $\mathbb Q/\mathbb Z$ 为第 332 条的 $\mathsf D_{\rm rat}$，每个箭头的逆都只在所列另一端使用。每个有限 $\gamma(n)$ 可用 $\operatorname{genc}_\phi$；但
+$$
+F_{\rm infdig}(z_{\rm infdig}(1))=\phi-2\notin\phi\mathbb Q,\qquad
+[1/2]\notin C_\phi.
+$$
+全体 $F_{\rm infdig}$、$H_{\rm infdig}$ 的输出分别使用完整实数及完整圆周解释。$K_{\rm infdig}$ 不可数，不存在将其全部点单射表示为有限字的函数。
+
+**证明。** 所列四对双逆分别直接使用第 332.2、335.2 条在各自完整独立字段域上的定理，未扩大任一编码器的定义域。$n\in\omega\subseteq\mathbb Q$，故 $\gamma(n)=[\phi n]\in C_\phi$。$z_{\rm infdig}(1)$ 仅第零位为一，其实值为 $-\alpha^2=\phi-2$；若等于 $\phi q'$、$q'\in\mathbb Q$，则 $(1-q')\phi=2$，$q'=1$ 不可能，$q'\ne1$ 则迫使 $\phi$ 有理，矛盾。
+
+若 $[1/2]=[\phi q']$，则 $\phi q'-1/2\in\mathbb Z$。$q'=0$ 时不成立，$q'\ne0$ 时又迫使 $\phi$ 有理，故不存在这样的有理乘数。第 372.4 条已证 $H_{\rm infdig}$ 满射到整个圆周，所以其一般值域不能缩为 $C_\phi$；完整实数域也容纳刚给的 $F_{\rm infdig}$ 值。全对象编码不要求这些值有上述有限字段。
+
+将任意二进序列 $b':\omega\to\{0,1\}$ 送到 $x_{2j}=b'_j,x_{2j+1}=0$，得到 $K_{\rm infdig}$ 中的点，且此映射单射。二进序列集不可数：任何序列枚举 $b'^{(0)},b'^{(1)},\ldots$ 都遗漏 $d_j=1-b'^{(j)}_j$。每个固定有限长度的二进字集有限，全部有限字是这些有限集的可数并，故可数。因此不存在所述有限字单射；完整 $\operatorname{Enc}$ 仍按全集合定义作用于每一点。证毕。
+
+**命题 378.10。** 记通常整数为 $\mathbb Z_o$，使用第 255–256 条的
+$$
+J=(\{0\}\times\omega)\cup(\{1\}\times\omega_{>0}),\qquad
+v:J\leftrightarrow\mathbb Z_o,\quad v(0,n)=n,\quad v(1,n)=-n,
+$$
+$$
+S=\mathsf Z_{\mathbb Z},\qquad b=\operatorname{scode}\circ v:J\leftrightarrow S.
+$$
+对 $c\in S$，三个提升分别为
+$$
+\operatorname{Enc}(v^{-1}(\operatorname{ival}(c))),\qquad
+\operatorname{Enc}(\operatorname{ival}(c)),\qquad
+\operatorname{Enc}(c).
+$$
+它们的像分别为 $J^*,\mathbb Z_o^*,S^*$，逆分别在这三个像上为
+$$
+\operatorname{scode}\circ v\circ\operatorname{Dec},\qquad
+\operatorname{scode}\circ\operatorname{Dec},\qquad
+\operatorname{Dec}.
+$$
+CSA 的电荷、时间摘要与联合时空摘要保持各自原对象及实际像，不能由标量相位恢复整个事件对象；第 93 条的历史指标 $(t,p,j)$ 分别是时间、素数标签及数位位置，不是 GICT 的尺度、规范字、相位三个观察值。
+
+**证明。** $v$ 和 $b$ 的双逆直接取第 255–256 条，$\operatorname{scode},\operatorname{ival}$ 的双逆取第 113–114 条。将它们代入第 378.8 条的原对象和数字对象提升，得到第一、第三个像与逆；将 $\operatorname{ival}:S\to\mathbb Z_o$ 代入同一构造，得到第二个像与逆。每个复合先解码再使用相应原逆，恢复原字；反向先恢复原对象再编码，也恢复原码。非负数值按第 255 条约定与自然序数对应，但原 $J$ 对象仍用 $v^{-1}$，没有由数值相等抹去对象的配对。
+
+[CSA 定义 1–3、8](CONTEXTUAL_SPACETIME_ARITHMETIC.md) 的 $X=(C,A)$ 保留档案 $E_X$、当前区域 $\Omega_X$、所选集合 $A_X$ 以及事件的符号、位置、时间和偏序；$q(X)$ 只对 $A_X$ 中的事件符号作有限和。将其送入通常整数即用 $v(q(X))$。即使给定该和，也不能恢复未选事件或档案中的其余事件；例如一份取空档案，另一份取单事件档案 $E=\{e\}$，两份都取 $\Omega=A=\varnothing$；单事件的时间、位置取各自零，符号取正，来源取固定叶，偏序为空。两份均满足当前整体平衡条件，选择电荷均为零，档案却不同。继而任何只依赖这个电荷的字或相位也不能区分它们。
+
+在 CSA 定义 20 中，将其空间摘要 $\pi(X)$ 在此记为 $\pi_{\rm CSA}(X)$，则
+$$
+\Theta(X)=(\pi_{\rm CSA}(X),m_X,M_X,s_X),\qquad
+m_X=\min t_X[E_X],\quad M_X=\max t_X[E_X],\quad s_X=\max t_X[\Omega_X].
+$$
+端点类型分别为 $\mathbb Z\cup\{+\infty\}$、$\mathbb Z\cup\{-\infty\}$、$\mathbb Z\cup\{-\infty\}$，空档案取 $m_X=+\infty,M_X=-\infty$，空当前区域取 $s_X=-\infty$。定义域为原 $\mathcal B$，值域取准确的 $\mathcal T=\Theta[\mathcal B]$，不取任意端点积；非空档案必须有有限 $m_X\le M_X$，非空当前区域还满足 $m_X\le s_X\le M_X$。
+
+CSA 定义 22 的联合摘要仍为
+$$
+\Xi(X)=(W_X,Z_X,m_X,M_X,s_X),
+$$
+$$
+W_X(t,y)=\sum_{\substack{e\in\Omega_X\\t_X(e)=t,\ x_X(e)=y}}\sigma_X(e),\qquad
+Z_X(t,y)=\sum_{\substack{e\in A_X\\t_X(e)=t,\ x_X(e)=y}}\sigma_X(e).
+$$
+两个函数有限支撑，前者读当前背景，后者读当前选择，均不计档案中 $E_X\setminus\Omega_X$ 的事件。所列公式保留原端点和原实际像 $\Xi[\mathcal B]$；它们的函数图可按第 378.3 条完整编码。第 93 条的 $(t,p,j)$ 是有限历史表的索引，而 $\Gamma_+(n)$ 的三分量是同一个正标量 $n$ 的三个函数值，两者由不同自变量及求值公式给出。证毕。
+
+**命题 378.11。** 对第 91、115–116 条的有限配置，取有限素数集 $P$、单独给定的容量函数 $C_{\rm cap}:P\to\omega$，以及当前内容
+$$
+S(P,C_{\rm cap})=\{e:P\to\omega:\forall p\in P,\ e(p)\le C_{\rm cap}(p)\},\qquad
+N_P(e)=\prod_{p\in P}p^{e(p)}.
+$$
+固定 $P,C_{\rm cap}$ 时标量函数单射。跨全部有限配置时，对每个 $N\ge1$，其准确纤维为
+$$
+\left\{(P,C_{\rm cap},e):\begin{array}{l}
+P\subseteq\operatorname{Pr}\text{ 有限},\quad\{p:\nu_p(N)>0\}\subseteq P,\\
+e(p)=\nu_p(N)\text{ 对每个 }p\in P,\quad C_{\rm cap}(p)\ge\nu_p(N)
+\end{array}\right\}.
+$$
+因此标量、其无限补零字、相位及 $\Gamma_+$ 均不恢复未指定的标签与容量；完整配置码仍单射。零素数内容表的标量为一，而自然数零的规范字值为零。
+
+**证明。** 这里的域恰为第 287–288 条的全部有限三元配置，只将其容量参数 $A$ 记为 $C_{\rm cap}$。第 288 条已由素数唯一分解证明上述准确纤维的两方向：标量等于 $N$ 强制每个内容为 $\nu_p(N)$，反向这些内容及所有正赋值素数的出现保证乘积为 $N$；容量只需容纳内容。直接使用该原域上的纤维定理，固定 $P,C_{\rm cap}$ 后便只剩唯一可能的 $e$。
+
+空配置和 $P=\{2\},C_{\rm cap}(2)=e(2)=0$ 都给标量一。再固定 $P=\{2\},e(2)=0$，分别取容量零与一，也给同一标量。这些三元配置不同，第 115–116 条的完整配置码因分别保存标签、容量、内容而仍不同；只通过 $N_P(e)$ 的任何复合观察在它们上均相同。有限表全零时每个素数因子为一，包括空积一；自然零则由 $\zeta(0)=\varnothing$ 的空 Fibonacci 和表示为零，且零不在这种正素数乘积的像中。证毕。
+
+**命题 378.12。** 对有序标签 $(2,3,5,7)$ 和当前内容 $(4,2,1,1)$，有
+$$
+N_P(e)=2^4\cdot3^2\cdot5\cdot7=5040,
+$$
+$$
+(\zeta(2),\zeta(3),\zeta(5),\zeta(7))=(01,001,0001,0101),\qquad
+(\zeta(4),\zeta(2),\zeta(1),\zeta(1))=(101,01,1,1).
+$$
+标量 $5040$ 自身的规范字占据位置 $\{2,5,11,13,17\}$。其标量相位为 $[5040\phi]$，指数的加性相位为 $[8\phi]$，两者不同；按素数索引取倒 Fibonacci 权的读数与二进权读数分别为
+$$
+4+\frac22+\frac13+\frac15=\frac{83}{15},\qquad
+4+\frac22+\frac14+\frac18=\frac{43}{8}.
+$$
+
+若容量恰为 $(4,2,1,1)$，该指定盒有六十个状态，与 $5040$ 的全部正约数双射；若在全部素数指标后补零容量，整个容量乘积仍是这个盒。容量 $(5,2,1,1)$ 允许同一当前标量，却有七十二个状态。将当前标量乘二会超出原容量盒。
+
+**证明。** 第 32、341.3–341.4、351.1 条的标量、字及读数均使用同一四标签与同一当前内容，故在此准确域上直接取其结论。逐标签的字也由 $2=G_1,3=G_2,5=G_3,7=G_1+G_3$ 与第 70 条唯一性给出。指数四个字分别由 $4=G_0+G_2,2=G_1,1=G_0$ 得到。标量的不同展开是
+$$
+G_2+G_5+G_{11}+G_{13}+G_{17}=3+13+233+610+4181=5040,
+$$
+位置两两不相邻，故是同一唯一规范字。相位差为 $[5032\phi]$；非零整数倍 $5032\phi$ 不可能为整数，证明两相位不同。倒 Fibonacci 与二进读数按素数序号取 $1/G_i$ 与 $2^{-i}$，而指数内部数字按数位 $j$ 取 $G_j$，三个权值定义保持分别的指标。
+
+第 91–92、341.2–341.3 条在固定容量盒上给状态数 $(4+1)(2+1)(1+1)(1+1)=60$ 及约数双射。零尾容量迫使所有尾内容为零，因此全乘积没有额外状态。将第一容量改为五，当前内容四仍合法，而计数改为 $6\cdot3\cdot2\cdot2=72$。素数唯一分解使当前标量乘二后在素数二处的内容为五，超过原容量四。由此，六十状态的断言属于显示的标签和容量，并非只由当前标量 $5040$ 决定。证毕。
+
+**命题 378.13。** 对已给标签、容量、字段边界及解释函数的有限配置，置
+$$
+Q=\prod_{p\in P}(C_{\rm cap}(p)+1),\qquad
+M=\prod_{p\in P}p^{C_{\rm cap}(p)},\qquad
+\ell_Z(A)=\min\{\ell\ge0:A<G_\ell\}.
+$$
+第 98 条的五种准确宽度在同一有限域上分别为
+$$
+\begin{array}{c|c}
+\text{任意单射状态码}&\lceil\log_2Q\rceil\\
+\text{独立二进字段}&\sum_{p\in P}\lceil\log_2(C_{\rm cap}(p)+1)\rceil\\
+\text{字面指数 Zeckendorf 窗口}&\sum_{p\in P}\ell_Z(C_{\rm cap}(p))\\
+\text{字面乘积二进窗口}&\lceil\log_2(M+1)\rceil\\
+\text{标量自身 Zeckendorf 窗口}&\ell_Z(M)
+\end{array}
+$$
+第 378.12 条的六十状态盒中，这五个数依次为 $6,7,7,13,18$。空配置状态宽零，但标量一的两种字面窗口均宽一；零容量字段宽零。这些是有上述已知参数的有限表示宽度，不是算法空间、程序长度或运算次数的界，也不是无限总函数的字长界。
+
+**证明。** 该域正是第 97–98 条的有限盒及五种表示类型，故直接用其准确宽度定理。其计数条件为任意状态码须有 $2^B\ge Q$，独立字段须逐字段单射；有限枚举及各字段二进展开分别达到两种下界。其字面窗口条件是第 10 条的完整长度 $\ell$ 窗表示 $[0,G_\ell-1]$，最高实际出现位不能删去；乘积像即使稀疏仍包含最大值 $M$。这些是原定理的同一计数域和最高位条件。
+
+对指定盒，$Q=60,M=5040$，所以 $2^5<60\le2^6$ 给第一宽度六。四个独立字段宽为 $3,2,1,1$，和为七；指数窗口宽也为 $\ell_Z(4)=3,\ell_Z(2)=2,\ell_Z(1)=1,\ell_Z(1)=1$，和为七。$2^{12}\le5040<2^{13}$ 给乘积二进宽十三；$G_{17}=4181\le5040<G_{18}=6765$ 给其 Zeckendorf 宽十八。空积的 $Q=M=1$ 分别给状态宽零与字面乘积宽一，容量零满足 $0<G_0=1$，故其窗口及二进字段宽均为零。其余对象大小不在上述五个有限域计数中。证毕。
+
+**定理 378.14。** 展开第 371–378 条的新定义后，对每个固定有限集合论公式 $\varphi(x_1,\ldots,x_r)$ 及任意集合参数，都有第 75–78 条的双向比较
+$$
+\varphi(x_1,\ldots,x_r)
+\iff\varphi^Z(\operatorname{Enc}(x_1),\ldots,\operatorname{Enc}(x_r)).
+$$
+量词包含全部子集与全部函数，特别
+$$
+\mathcal P_Z(\operatorname{Enc}(X))=\operatorname{Enc}(\mathcal P(X)),\qquad
+\operatorname{Fun}_Z(\operatorname{Enc}(X),\operatorname{Enc}(Y))
+=\operatorname{Enc}(Y^X).
+$$
+这些定义及已证性质为 ZFC 的定义性保守扩展，保留每个固定的分离及替代实例。若外部给定 $\mathfrak M\models\mathrm{ZFC}$，同样比较按其内部幂集、函数集及有限对象解释，对每个外部标准有限公式成立；该条件命题不构造模型，不给无条件一致性，也不给统一内部真理谓词。
+
+**证明。** 命题 378.1 及各函数的存在唯一性将每个新符号表达为集合图，部分函数则携带精确的域谓词。第 72 条的单射性给等号原子的两个方向，同条的语义成员式给
+$$
+\operatorname{Enc}(x)\in_Z\operatorname{Enc}(y)\iff x\in y.
+$$
+对所固定公式作结构归纳，否定及各布尔联结词由子公式的两向等价得到。存在量词的原见证编码为有效码见证，反向任意有效码见证解码为原集合见证；全称量词正向对任意有效码解码，反向对任意原集合编码，均用归纳假设。全部参数原样保留，翻译量词限于类谓词 $c\in\mathfrak V_Z$，没有把有效码类当作集合。
+
+明确核对子集量词：任意 $U\subseteq X$ 产生 $\operatorname{Enc}[U]\subseteq X^*$；任意 $B\subseteq X^*$ 由替代解码为 $\operatorname{Dec}[B]\subseteq X$，两次操作的双逆使所有子集都出现。第 73–74 条的 $\operatorname{Pack}$ 和语义幂集正把这些成员集合对应到子集码，得到显示的幂集式。任意 $g:X^*\to Y^*$ 均由第 378.7 条解码为 $Y^X$ 的元素，再共轭还原；反向亦然。逐边配对和输入的存在唯一输出条件保持函数图谓词，给全部函数集式，包括无限数字点、所有实值函数及所有连续性反例所量化的候选。这里没有将量词限于有限对象或可定义对象。
+
+一个只使用上述定义与已证性质的有限证明，可逐一以对应图公式消去新符号，并以本节及所引用定理的普通证明替换新定理行。展开后的每个分离实例仍是原语言的分离实例，每个替代实例仍是原语言对唯一值图的替代实例。第 78 条的定义消去遂给保守性。
+
+若外部已经给定模型 $\mathfrak M$，在其内部作同一递归及图定义，第 78 条给内部集合与内部有效码的双向比较。其有限字按模型的内部自然数和内部有限性解释，幂集及函数集按模型内部含义解释，不与全部外部子集或函数识别。上述归纳每次作用于一个外部标准有限公式，因而既没有断言模型存在，也没有合成一个同时判定全部公式的内部真理谓词。证毕。
