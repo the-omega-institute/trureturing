@@ -2,17 +2,15 @@
    generality: G
    mirror-B: D5/B/S1/Digit/Admissibility/DistinctPartitionConcatenationComposite
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Algebra.Order.BigOperators.Group.Finset, mathlib/module/Mathlib.Data.Finset.Powerset, mathlib/module/Mathlib.Data.Finset.Sort, mathlib/module/Mathlib.Data.List.Permutation, mathlib/module/Mathlib.Data.Nat.Digits.Defs, mathlib/module/Mathlib.Data.Nat.Prime.Basic, mathlib/module/Mathlib.Tactic.NormNum]
+   anchors: [mathlib/module/Mathlib.Algebra.Order.BigOperators.Group.Finset, mathlib/module/Mathlib.Data.Finset.Powerset, mathlib/module/Mathlib.Data.Finset.Sort, mathlib/module/Mathlib.Data.List.Permutation, mathlib/module/Mathlib.Data.Nat.Digits.Defs, mathlib/module/Mathlib.Data.Nat.Prime.Basic]
    utility: none
-   digest: Every nonexceptional positive index has an eligible composite concatenation of distinct partition parts. -/
+   digest: Each nonexceptional index admits a composite concatenation of distinct parts. -/
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Data.Finset.Powerset
 import Mathlib.Data.Finset.Sort
 import Mathlib.Data.List.Permutation
 import Mathlib.Data.Nat.Digits.Defs
 import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.Tactic.NormNum
-import Lean.Elab.Tactic.Omega
 
 /-!
 # Distinct-partition concatenations
