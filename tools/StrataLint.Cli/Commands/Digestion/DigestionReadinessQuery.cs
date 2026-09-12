@@ -15,8 +15,10 @@ internal static class DigestionReadinessQuery
 {
     internal static ImmutableArray<(string AtomId, DigestionGap Gap)> SourceOccurrenceGaps(
         IEnumerable<DigestionEntryEvaluation> entries,
-        Func<string, DigestionAtomContextProjection.SourceStream> materializeSource)
+        Func<string, DigestionAtomContextProjection.SourceStream> materializeSource,
+        out ImmutableArray<(string SourceId, DigestionAtomContextError Code, string Detail)> unreadable)
     {
+        unreadable = [];
         var gaps = ImmutableArray.CreateBuilder<(string AtomId, DigestionGap Gap)>();
         var eligible = entries.Where(static item => item.DerivedStatus is
             { Migration: DigestionMigrationState.Residual, Truth: DigestionTruthState.Open }

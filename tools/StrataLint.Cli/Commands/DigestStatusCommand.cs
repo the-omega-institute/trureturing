@@ -166,7 +166,8 @@ internal static class DigestStatusCommand
             {
                 var sourceGaps = DigestionReadinessQuery.SourceOccurrenceGaps(
                     evaluation.Entries,
-                    sourceId => DigestionAtomContextProjection.MaterializeSource(snapshot, document, sourceId));
+                    sourceId => DigestionAtomContextProjection.MaterializeSource(snapshot, document, sourceId),
+                    out _);
                 return new CommandResult(
                     true,
                     RenderReadiness(DigestionReadinessQuery.Classify(

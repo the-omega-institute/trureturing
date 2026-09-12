@@ -9,6 +9,47 @@ namespace StrataLint.Tests;
 public sealed class DigestionReadinessOccurrenceTests
 {
     [Theory]
+    [InlineData("SOURCE_MISSING")]
+    [InlineData("ATOMIZER_NONE")]
+    [InlineData("OCCURRENCE_MISSING")]
+    public void UnreadableSourceReportsDiagnosticWithoutMissingOccurrenceGaps(string code)
+    {
+        var fixture = Create();
+        var error = new DigestionAtomContextException(Enum.Parse<DigestionAtomContextError>(code), "source unreadable");
+        var calls = 0;
+
+        var gaps = DigestionReadinessQuery.SourceOccurrenceGaps(
+            fixture.Ledger.RequireDigestionEntries().Select(entry => Evaluate(entry)), _ =>
+            {
+                calls++;
+                throw error;
+            }, out var unreadable);
+
+        Assert.Empty(gaps);
+        Assert.Equal(("source", error.Code, error.Message), Assert.Single(unreadable));
+        Assert.Equal(1, calls);
+    }
+
+    [Fact]
+    public void UnreadableSourceDoesNotHideOtherSourcesMissingOccurrences()
+    {
+        var fixture = Create();
+        var entry = fixture.Ledger.RequireDigestionEntries()[0];
+        var missingSource = entry with { SourceId = "missing-source" };
+        fixture = fixture with { SourceBytes = [] };
+        var snapshot = fixture.Snapshot();
+
+        var gaps = DigestionReadinessQuery.SourceOccurrenceGaps(
+            [Evaluate(missingSource), Evaluate(entry)], sourceId => sourceId == "missing-source"
+                ? throw new DigestionAtomContextException(DigestionAtomContextError.SOURCE_MISSING, sourceId)
+                : DigestionAtomContextProjection.MaterializeSource(snapshot, fixture.Ledger, sourceId),
+            out var unreadable);
+
+        Assert.Equal("source", Assert.Single(gaps).Gap.Detail);
+        Assert.Equal("missing-source", Assert.Single(unreadable).SourceId);
+    }
+
+    [Theory]
     [InlineData("Residual", "Open")]
     [InlineData("Partial", "Closed")]
     public void MissingOccurrenceReportsNonFatalGapForEligibleStatus(
@@ -52,9 +93,10 @@ public sealed class DigestionReadinessOccurrenceTests
         {
             calls++;
             return DigestionAtomContextProjection.MaterializeSource(snapshot, fixture.Ledger, sourceId);
-        });
+        }, out var unreadable);
 
         Assert.Empty(gaps);
+        Assert.Empty(unreadable);
         Assert.Equal(1, calls);
     }
 
@@ -94,18 +136,21 @@ public sealed class DigestionReadinessOccurrenceTests
 
         var gap = Assert.Single(DigestionReadinessQuery.SourceOccurrenceGaps(
             [Evaluate(other.Entries[0])], sourceId =>
-                DigestionAtomContextProjection.MaterializeSource(snapshot, ledger, sourceId)));
+                DigestionAtomContextProjection.MaterializeSource(snapshot, ledger, sourceId), out var unreadable));
 
         Assert.Equal(entry.AtomId, gap.AtomId);
         Assert.Equal("other", gap.Gap.Detail);
+        Assert.Empty(unreadable);
     }
 
     private static ImmutableArray<(string AtomId, DigestionGap Gap)> Query(
         AtomContextFixture fixture, IEnumerable<DigestionEntryEvaluation> entries)
     {
         var snapshot = fixture.Snapshot();
-        return DigestionReadinessQuery.SourceOccurrenceGaps(entries, sourceId =>
-            DigestionAtomContextProjection.MaterializeSource(snapshot, fixture.Ledger, sourceId));
+        var gaps = DigestionReadinessQuery.SourceOccurrenceGaps(entries, sourceId =>
+            DigestionAtomContextProjection.MaterializeSource(snapshot, fixture.Ledger, sourceId), out var unreadable);
+        Assert.Empty(unreadable);
+        return gaps;
     }
 
     private static DigestionEntryEvaluation Evaluate(DigestionLedgerEntry entry, DigestionStatus? status = null) =>

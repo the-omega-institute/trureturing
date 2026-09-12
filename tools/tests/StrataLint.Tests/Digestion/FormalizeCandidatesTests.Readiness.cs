@@ -7,6 +7,22 @@ namespace StrataLint.Tests;
 public sealed partial class FormalizeCandidatesTests
 {
     [Fact]
+    public void ReadinessReportsUnavailableSourceWithoutChangingSuccessOrReadingHistory()
+    {
+        var history = new FakeAtomHistorySource(() => throw new InvalidOperationException("history must not be read"));
+
+        var result = DigestAgeFixture.Create().Run(history, "--readiness");
+
+        Assert.True(result.Success, result.Error);
+        Assert.Equal(0, history.Calls);
+        Assert.Equal("READINESS_SOURCE_UNAVAILABLE source=source-a code=SOURCE_MISSING "
+            + "detail=\"source_id=source-a source_path=synthetic/source-a.md\"\n", result.Error);
+        Assert.DoesNotContain("source-occurrence-missing", result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        Assert.Single(json.RootElement.GetProperty("entries").EnumerateArray());
+    }
+
+    [Fact]
     public void ReadinessReportsMissingSourceOccurrenceWithoutChangingActionOrSuccess()
     {
         var entry = Entry("source", "removed-claim", "theorem", "16.30",
