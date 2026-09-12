@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e2b3f2ce4fc4ce3bd2dfab2420ff0acc40b5b27c961492b0c6839f536e49730f
+  normalized_sha256: sha256:e2b3f2ce4fc4ce3bd2dfab2420ff0acc40b5b27c961492b0c6839f536e49730f
+cas_ref: sha256:e2b3f2ce4fc4ce3bd2dfab2420ff0acc40b5b27c961492b0c6839f536e49730f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section 113 contains only a proposed module-location tree for later formalization. It prescribes placement and asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with sections 338 onward and their candidate declarations.
+    previous_atom_id: 4870f88403b0d65c4bb32b3516929e2f4859465e856ccb98802b397011cf6458
+    next_atom_id: 73867850e3e26cbf59e7a10f00b972547e3c2e5ba0f0994a41303b091ce7e983

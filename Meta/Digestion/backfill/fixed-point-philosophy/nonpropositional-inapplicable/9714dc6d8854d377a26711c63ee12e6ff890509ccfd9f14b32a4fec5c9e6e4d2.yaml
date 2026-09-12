@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9714dc6d8854d377a26711c63ee12e6ff890509ccfd9f14b32a4fec5c9e6e4d2
+  normalized_sha256: sha256:9714dc6d8854d377a26711c63ee12e6ff890509ccfd9f14b32a4fec5c9e6e4d2
+cas_ref: sha256:9714dc6d8854d377a26711c63ee12e6ff890509ccfd9f14b32a4fec5c9e6e4d2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section 12.7 and its first bullet record only the skill context and review-seat workflow for the batch. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with the X-A-X-J candidate set.
+    previous_atom_id: 0e9b3ad281e4c6c62d4065c239a51f525126a54a72cdce19329fa76de109f2c6
+    next_atom_id: 153023a2f062c83e47bf88b257da47662225449c76ead5b16a303960d48a6439

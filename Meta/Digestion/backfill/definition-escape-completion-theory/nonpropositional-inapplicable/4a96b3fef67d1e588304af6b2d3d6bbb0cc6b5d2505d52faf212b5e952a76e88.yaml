@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4a96b3fef67d1e588304af6b2d3d6bbb0cc6b5d2505d52faf212b5e952a76e88
+  normalized_sha256: sha256:4a96b3fef67d1e588304af6b2d3d6bbb0cc6b5d2505d52faf212b5e952a76e88
+cas_ref: sha256:4a96b3fef67d1e588304af6b2d3d6bbb0cc6b5d2505d52faf212b5e952a76e88
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: The discipline note records the review workflow and second-source prohibition for subsumption decisions. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with obligations 5 and 6 and their mapped frozen declarations.
+    previous_atom_id: f0c2ae3d9f7b7dd5cd5230f143e20bbc7540811060d393d49c221adfaff839bc
+    next_atom_id: 4c3a213f96aa9169a1eeb9e3419501b24d8289bc5186c204d2e9bb9e35f93382
