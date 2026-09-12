@@ -6,7 +6,6 @@
    utility: none
    digest: Every Fibonacci recurrence observation has two integer coordinates, with an explicit reconstruction formula. -/
 
-import D5.S1.Digit.Raw
 import Mathlib.Tactic
 
 set_option autoImplicit false
