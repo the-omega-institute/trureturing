@@ -31,12 +31,13 @@ def oid(value):
 
 
 def checkout(root, commit):
-    inputs = json.loads(os.environ.get("CI_WORKFLOW_INPUTS", "null"))
-    if inputs not in (None, ""):
-        if not isinstance(inputs, dict):
-            raise ValueError("workflow inputs must be an object")
-        if "candidate_sha" in inputs and oid(inputs["candidate_sha"]) != oid(commit):
-            raise ValueError("checkout does not match the reusable workflow candidate input")
+    # A reusable workflow receives an immutable candidate explicitly.  An
+    # empty or mismatched input must fail closed; never silently substitute the
+    # event SHA when the caller supplied a candidate contract.
+    import ci_plan
+    supplied = ci_plan.workflow_candidate()
+    if supplied is not None and supplied != commit:
+        raise ValueError("reusable workflow candidate_sha must match checkout")
     if run(root, "git", "rev-parse", "HEAD") != oid(commit):
         raise ValueError("checkout does not match the fixed candidate")
     for remote in run(root, "git", "remote").splitlines():
@@ -138,6 +139,8 @@ def stage_input(args):
     native_push = ci_plan.native_push()
     if plan is None and changes is None:
         if args.allow_direct:
+            if os.environ.get("GITHUB_EVENT_NAME") or ci_plan.workflow_candidate() is not None:
+                raise ValueError("workflow stage requires explicit complete changed-path input and validated plan")
             return {"required": True}
         if not native_push:
             raise ValueError("explicit complete changed-path input and validated plan are required")

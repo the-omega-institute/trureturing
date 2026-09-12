@@ -204,11 +204,20 @@ def event_oid(value, allow_zero=False):
     return value
 
 
-def native_push():
-    inputs = strict_json_bytes(os.environ.get("CI_WORKFLOW_INPUTS", "null").encode())
-    if inputs not in (None, "") and not isinstance(inputs, dict):
+def workflow_candidate():
+    inputs = strict_json_bytes((os.environ.get("CI_WORKFLOW_INPUTS") or "null").encode())
+    if inputs is None or inputs == {}:
+        return None
+    if not isinstance(inputs, dict):
         raise ValueError("workflow inputs must be an object")
-    return os.environ.get("GITHUB_EVENT_NAME") == "push" and not (inputs or {}).get("candidate_sha")
+    try:
+        return oid(inputs.get("candidate_sha"))
+    except ValueError as error:
+        raise ValueError("reusable workflow candidate_sha must be a nonempty immutable SHA") from error
+
+
+def native_push():
+    return os.environ.get("GITHUB_EVENT_NAME") == "push" and workflow_candidate() is None
 
 
 def push_endpoints(before=None, after=None):

@@ -54,9 +54,7 @@ jobs:
       STRATALINT_CACHE_WRITES: 'false'
       CI_PLAN_PATH: build/ci/plan.json
       CI_CHANGES_PATH: build/ci/changes.json
-      CI_NEEDS: ${{ toJSON(needs) }}
-      CI_CHANGES_B64: ${{ needs.resolve.outputs.changes_b64 }}
-      CI_PLAN_B64: ${{ needs.resolve.outputs.plan_b64 }}
+      CI_NEEDS: '{"resolve":{"result":${{ toJSON(needs.resolve.result) }}},"push":{"result":${{ toJSON(needs.push.result) }}}}'
     steps:
       - uses: actions/checkout@v4
         with:
@@ -66,6 +64,9 @@ jobs:
       - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
       - id: route
         name: Validate delta prerequisites and resource plan
+        env:
+          CI_CHANGES_B64: ${{ needs.resolve.outputs.changes_b64 }}
+          CI_PLAN_B64: ${{ needs.resolve.outputs.plan_b64 }}
         run: python3 -B tools/scripts/workflow/ci.py stage-input --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA" --stage delta --base "$BASE_SHA"
       - uses: actions/setup-dotnet@v4
         if: steps.route.outputs.dotnet == 'true'
