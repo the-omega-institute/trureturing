@@ -55,21 +55,21 @@ def validateAnalysisBindings (root : Name) (original reflected arena : Expr)
     fail "arena-counts"
   let indices := counts.theorems.map (·.index) |>.qsort (· < ·)
   unless indices == Array.range counts.theorems.size do fail "occurrence-index-domain"
-  let some verdict := projection.certificates.find? (·.1 == "verdict")
-    | fail "verdict-certificate"
-  let actualVerdict ← certificateType counts.irredundantCertificateName
+  let positive := projection.verdict == "irredundant"
+  unless (match counts.verdict with | .irredundant _ => true | .redundant _ => false) == positive do
+    fail "verdict-branch"
+  let actualVerdict ← certificateType counts.verdict.name
   let expectedVerdict ← mkAppM
     (if projection.verdict == "irredundant" then ``CatalogIrredundant else ``Catalog.CatalogRedundant)
     #[original]
-  unless (← isDefEq actualVerdict expectedVerdict) ||
-      (← isDefEq actualVerdict (← certificateType verdict.2)) do fail "verdict-proposition"
-  unless counts.irredundantCertificateName ==
-      expectedName metadata.arenaName "__catalog_irredundant" do fail "verdict-qualification"
+  unless ← isDefEq actualVerdict expectedVerdict do fail "verdict-proposition"
+  unless counts.verdict.name ==
+      expectedName metadata.arenaName counts.verdict.suffix do fail "verdict-qualification"
   for row in counts.theorems do
     unless row.proofMethod == counts.proofMethod do fail "proof-method"
     unless row.unitName == expectedName row.theoremName theoremUnitSuffix &&
         row.realizationName == expectedName row.theoremName primitiveRealizationSuffix &&
-        row.certificateName == expectedName row.theoremName "__lowers_escape" do
+        row.certificateName == expectedName row.theoremName row.certificate.suffix do
       fail "occurrence-qualification"
     let unit ← mkConstWithFreshMVarLevels row.unitName
     let index ← ProjectionProof.fin row.index counts.theorems.size
@@ -86,13 +86,14 @@ def validateAnalysisBindings (root : Name) (original reflected arena : Expr)
         row.withoutEscapeCount == node.escapeCount &&
         row.fullEscapeCount + row.uniqueCaptureCount == row.withoutEscapeCount &&
         row.fullEscapeCount == counts.fullEscapeCount do fail "occurrence-counts"
-    let expectedLowering ← mkAppM ``Catalog.LowersEscape #[original, index]
-    let expectedLowering ← if row.uniqueCaptureCount > 0 then pure expectedLowering else
-      mkAppM ``Not #[expectedLowering]
+    unless (match row.certificate with | .positive _ => true | .trivial _ => false) ==
+        (row.uniqueCaptureCount > 0) do fail "occurrence-certificate-branch"
+    let expectedLowering ← mkAppM
+      (if row.uniqueCaptureCount > 0 then ``Catalog.LowersEscape else `D5.S3.ConceptDynamics.InformationEscape.Catalog.TrivialInCatalog)
+      #[original, index]
     let actualLowering ← certificateType row.certificateName
-    unless (← isDefEq actualLowering expectedLowering) ||
-        (← isDefEq actualLowering (← certificateType loo.certificate)) do
-      fail "occurrence-certificate-proposition"
+    unless ← occurrenceTypeMatches actualLowering expectedLowering.getAppFn.constName!
+        original index do fail "occurrence-certificate-proposition"
     let bundle ← mkAppM ``TheoremUnit.primitives #[unit]
     let bundleIndex ← mkAppM ``PrimitiveBundle.Index #[bundle]
     let bundleFintype ← mkAppM ``PrimitiveBundle.indexFintype #[bundle]

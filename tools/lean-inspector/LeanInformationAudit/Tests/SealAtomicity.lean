@@ -1,3 +1,4 @@
+import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import LeanInformationAudit.SealCommand
 
 open D5.S3.ConceptDynamics.InformationEscape
@@ -55,9 +56,10 @@ expect_information_occurrence zeroTheorem
   in zeroArena
   from "LeanInformationAudit.Tests.SealAtomicity"
 
-/-- error: IE-C007 ZeroUniqueCapture: theorem
-LeanInformationAudit.Tests.SealAtomicity.zeroTheorem arena
-LeanInformationAudit.Tests.SealAtomicity.zeroArena full 2 without 2 -/
+theorem zeroTheorem.__trivial_in_catalog : True := by trivial
+
+/-- error: IE-C009 ProofConstructionFailed: LeanInformationAudit.Tests.SealAtomicity.zeroTheorem.__trivial_in_catalog
+generated name collision -/
 #guard_msgs (error) in
 #seal_information_theory
 

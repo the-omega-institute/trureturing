@@ -61,10 +61,11 @@ elab "#census_validate " requestPath:str " using " membershipPath:str
       let mut rowSources : Array ProvenanceSource := #[]
       try
         let row ← assess index head key (some owner.toName)
-        -- assess already validates every certified disposition. Only structural
-        -- occurrences can return source inputs; the other branches return #[]
-        -- and would repeat the same completed validation just to collect it.
-        if let .certified (.structuralOccurrence _) := row then
+        let structural : Bool := match row with
+            | .certified (.structuralOccurrence _) => true
+            | .certified (.trivialInCatalog value) => value.context == .structural
+            | _ => false
+        if structural then
           rowSources ← validateEvidenceSources index.root
             ⟨head, #[⟨key, row⟩]⟩ (some modules)
         let json := dispositionRowJson ⟨key, row⟩

@@ -1,8 +1,9 @@
+import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import LeanInformationAudit.RegistryTypes
 import LeanInformationAudit.Census.Report
 import LeanInformationAudit.Census.Ownership
 import LeanInformationAudit.SealCommand
-import LeanInformationAudit.StructuralRealization
+import LeanInformationAudit.StructuralRegistrationGates
 import LeanInformationAudit.Sha256
 import Lean.Parser.Module
 
@@ -21,6 +22,11 @@ structure StructuralRegistrationEvidence (theoremName : Name) (arena : Structura
     (statement : Prop) : Prop where
   membership : catalogValue.theoremAt index = unit
   statement_eq : unit.Statement = statement
+
+/-- A computational classification for every structural catalog member. -/
+structure StructuralCatalogSeal {arena : StructuralArena.{u}}
+    (catalogValue : StructuralCatalog.{u, v, w} arena) where
+  classification : ∀ i, Decidable (catalogValue.StructurallyLowersEscape i)
 
 /-- A directionally explicit bounded comparison. The reverse direction is a
 separate transfer obligation, checked only for the transferred constructor. -/
@@ -112,19 +118,23 @@ def censusRootModules (env : Environment) (root : Name) : Array Name := Id.run d
 
 /-- An imported seal is usable only when its catalog covers every in-scope peer. -/
 def finiteSealInScope? (env : Environment) (modules : Array Name)
-    (theoremName arena : Name) : Option Name := Id.run do
+    (theoremName arena : Name) : Option (SealArenaRecord × SealTheoremRecord) := Id.run do
   let peers := (InformationRegistry.entries env).filter fun entry =>
     modules.contains entry.registrationModuleName && entry.canonicalObjectArenaName == arena
+  let peers := peers.qsort (fun a b => a.theoremName.lt b.theoremName)
   for record in SealRecords.entries env do
     if !modules.contains record.catalog.rootId || record.catalog.arenaName != arena then continue
-    unless record.theorems.size == peers.size && peers.all (fun peer =>
-        record.theorems.any (·.theoremName == peer.theoremName)) do continue
+    unless record.catalog.catalogKind == .canonicalMaximal && record.theorems.size == peers.size &&
+        (record.theorems.zipIdx).all (fun (row, i) =>
+          row.index == i && peers[i]?.map (·.theoremName) == some row.theoremName) do continue
     if let some occurrence := record.theorems.find? (·.theoremName == theoremName) then
-      return some occurrence.certificateName
+      return some (record, occurrence)
   return none
 
 private def validateFinite (modules : Array Name) (key : StatementKey)
-    (payload : FiniteOccurrenceDisposition key) : MetaM Unit := do
+    (payload : FiniteOccurrenceDisposition key)
+    (trivial : Option (TrivialInCatalogDisposition key) := none) : MetaM Unit := do
+  let className := if trivial.isSome then "trivial_in_catalog" else "finite_occurrence"
   let env ← getEnv
   let candidates := InformationRegistry.entries env |>.filter fun entry =>
     modules.contains entry.registrationModuleName && entry.theoremName == key.theoremName &&
@@ -144,16 +154,47 @@ private def validateFinite (modules : Array Name) (key : StatementKey)
   for (field, name) in [("canonical_arena", payload.canonicalArena),
       ("registration", payload.registration), ("realization", payload.realization),
       ("law_arena", registration.arenaName)] do
-    discard <| constant modules key "finite_occurrence" field name
-  let some sealed := finiteSealInScope? env modules key.theoremName payload.canonicalArena
-    | failClass key "finite_occurrence" "maximal_catalog_seal"
-  let certificate ← constant modules key "finite_occurrence" "seal_certificate" sealed
+    discard <| constant modules key className field name
+  let some (record, occurrence) :=
+      finiteSealInScope? env modules key.theoremName payload.canonicalArena
+    | failClass key className "maximal_catalog_seal"
+  let certificate ← constant modules key className "seal_certificate" occurrence.certificateName
+  let catalogValue ← constant modules key className "catalog" record.catalog.catalogName
+  let index ← ProjectionProof.fin occurrence.index record.theorems.size
+  for row in record.theorems do
+    let some peer := (InformationRegistry.entries env).find? fun peer =>
+        peer.theoremName == row.theoremName && peer.canonicalObjectArenaName == payload.canonicalArena
+      | failClass key className "catalog.membership"
+    match ← validatePersistedEntry env peer with
+    | .error message => throwError message
+    | .ok () => pure ()
+    let unit ← constant modules key className "catalog.unit" row.unitName
+    unless (← isDefEq unit (← mkConstWithFreshMVarLevels peer.unitName)) &&
+        (← isDefEq (← mkConstWithFreshMVarLevels row.realizationName)
+          (← mkConstWithFreshMVarLevels peer.realizationName)) &&
+        (← isDefEq unit (← mkAppM ``Catalog.theoremAt
+          #[catalogValue, ← ProjectionProof.fin row.index record.theorems.size])) do
+      failClass key className "catalog.membership"
+  if let some value := trivial then
+    unless value.root == record.catalog.rootId && value.catalog == record.catalog.catalogName &&
+        value.index == occurrence.index && value.catalogSeal == record.verdict.name &&
+        value.trivialityCertificate == occurrence.certificateName do
+      failClass key className "classification_seal"
+    unless (match occurrence.certificate with | .trivial _ => true | _ => false) &&
+        (match record.verdict with | .redundant _ => true | _ => false) do
+      failClass key className "classification_branch"
+    discard <| typed modules key className "catalog_seal" value.catalogSeal
+      (← mkAppM ``Catalog.CatalogRedundant #[catalogValue])
+  let expected ← mkAppM
+    (if trivial.isSome then ``Catalog.TrivialInCatalog else ``Catalog.LowersEscape) #[catalogValue, index]
+  unless ← occurrenceTypeMatches (← inferType certificate) expected.getAppFn.constName!
+      catalogValue index do failClass key className "seal_certificate.proposition"
   checkWithKernel certificate
   let lawArena ← mkConstWithFreshMVarLevels registration.arenaName
   let arena ← mkAppM ``PrimitiveLawArena.toArena #[lawArena]
-  let _ ← typed modules key "finite_occurrence" "nondegeneracy_certificate"
+  let _ ← typed modules key className "nondegeneracy_certificate"
     payload.nondegeneracyCertificate (← mkAppM ``Arena.Nondegenerate #[arena])
-  let _ ← typed modules key "finite_occurrence" "state_enumeration_certificate"
+  let _ ← typed modules key className "state_enumeration_certificate"
     payload.stateEnumerationCertificate (← mkAppM ``Arena.StateEnumeration #[arena])
 
 private def inRoot (env : Environment) (modules : Array Name) (name : Name) : IO Bool :=
@@ -173,7 +214,8 @@ open Elab Command Term
 /-- Generate the statement, proof declaration and compiled unit as one transaction.
 There is no command that registers a pre-existing theorem. -/
 elab "structural_theorem " theoremId:ident " in " lawArenaId:ident
-    " realization " realizationTerm:term " nondegeneracy " certificateId:ident
+    " realization " realizationTerm:term certificateId:(" nondegeneracy " ident)?
+    domainId:(" domain " ident)? sensitivityId:(" sensitivity " ident)?
     " := " proofTerm:term : command => do
   let rawName := theoremId.getId.eraseMacroScopes
   let currentNamespace ← getCurrNamespace
@@ -186,7 +228,15 @@ elab "structural_theorem " theoremId:ident " in " lawArenaId:ident
     if before.contains name then throwError "structural declaration already exists: {name}"
   try
     let lawArenaName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo lawArenaId
-    let certificateName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo certificateId
+    let resolveOptional (stx : Syntax) : CommandElabM Name := do
+      if stx.getNumArgs != 2 then return .anonymous
+      let id := stx[1]
+      try liftCoreM <| realizeGlobalConstNoOverloadWithInfo id
+      catch _ => return id.getId.eraseMacroScopes
+    let command ← getRef
+    let certificateName ← resolveOptional command[6]
+    let domainName ← resolveOptional command[7]
+    let sensitivityWitness ← resolveOptional command[8]
     let entry ← liftTermElabM do
       let modules := censusRootModules (← getEnv) (← getEnv).header.mainModule
       let key : StatementKey := ⟨theoremName, ""⟩
@@ -201,8 +251,6 @@ elab "structural_theorem " theoremId:ident " in " lawArenaId:ident
       for entry in structuralRegistry.getState before do
         if entry.canonicalArena == canonicalArena && entry.lawArenaConst != lawArenaName then
           failClass key className "realization.canonical_law_arena"
-      let _ ← typed modules key className "law.nondegeneracy" certificateName
-        (← mkAppM ``StructuralPrimitiveLawArena.Nondegenerate #[lawArena])
       let signature ← mkAppM ``StructuralPrimitiveLawArena.signature #[lawArena]
       let realizationType ← mkAppM ``StructuralPrimitiveRealization #[arena, signature]
       let realized ← elabTermEnsuringType realizationTerm realizationType
@@ -246,10 +294,14 @@ elab "structural_theorem " theoremId:ident " in " lawArenaId:ident
         proofExpr := proof
         levelParams := levelParams
         certificateName := certificateName
+        sensitivityWitness
+        domainName
         registrationModule := before.header.mainModule
         canonicalArena := canonicalArena
         lawArenaSyntax := lawArenaId.raw.reprint.getD ""
         realizationSyntax := realizationTerm.raw.reprint.getD "" } : StructuralProvenanceEntry)
+    liftTermElabM do
+      RegistrationGates.publishDiagnostic entry.unitConst (← RegistrationGates.validateStructural entry)
     modifyEnv fun env => structuralRegistry.addEntry env entry
   catch error =>
     setEnv before
@@ -341,7 +393,8 @@ private def validateProvenanceSyntax (modules : Array Name)
             sourceDeclName ns declaration[1][0].getId == entry.theoremName then
           return ← reject
       else if let `(command| structural_theorem $theoremId:ident in $lawId:ident
-          realization $realizationTerm:term nondegeneracy $_:ident := $_:term) := command then
+          realization $realizationTerm:term $[nondegeneracy $_:ident]?
+          $[domain $_:ident]? $[sensitivity $_:ident]? := $_:term) := command then
         if sourceDeclName ns theoremId.getId == entry.theoremName then
           if found then return ← reject
           unless lawId.raw.reprint == some entry.lawArenaSyntax &&
@@ -394,7 +447,7 @@ private def validateStructuralProvenance (root : Name) (head : String) (modules 
     let value ← constant modules key className field name
     unless ← inRoot env modules name do failClass key className s!"{field}.root_membership"
     checkWithKernel value
-  let lawArena ← mkConstWithFreshMVarLevels entry.lawArenaConst
+  let lawArena ← mkConstWithLevelParams entry.lawArenaConst
   let lawType ← inferType lawArena
   unless lawType.isAppOfArity ``StructuralPrimitiveLawArena 1 &&
       lawType.getAppArgs[0]!.isConstOf entry.canonicalArena do
@@ -403,8 +456,10 @@ private def validateStructuralProvenance (root : Name) (head : String) (modules 
     if modules.contains other.registrationModule && other.canonicalArena == entry.canonicalArena &&
         other.lawArenaConst != entry.lawArenaConst then
       failClass key className "realization.canonical_law_arena"
-  let _ ← typed modules key className "realization.law_nondegeneracy" entry.certificateName
-    (← mkAppM ``StructuralPrimitiveLawArena.Nondegenerate #[lawArena])
+  unless entry.domainName.isAnonymous do
+    discard <| constant modules key className "realization.domain" entry.domainName
+  let some _ ← RegistrationGates.structuralNondegenerate? entry lawArena
+    | failClass key className "realization.law_nondegeneracy"
   let registration ← constant modules key className "registration" payload.registration
   let registrationType ← inferType registration
   unless registrationType.isAppOfArity ``StructuralRegistrationEvidence 6 do
@@ -413,9 +468,17 @@ private def validateStructuralProvenance (root : Name) (head : String) (modules 
     failClass key className "realization.compiled_kernels"
   validateProvenanceSyntax modules entry
 
+def structuralIndexList (key : StatementKey) (indexType fintype : Expr) : MetaM Expr := do
+  let members ← mkAppOptM ``Fintype.elems #[some indexType, some fintype]
+  let value ← whnf (← mkAppM ``Finset.val #[members])
+  unless value.isAppOfArity ``Quot.mk 3 do
+    failClass key "trivial_in_catalog" "catalog.index_enumeration"
+  return value.getArg! 2
+
 private def validateStructural (root : Name) (head : String) (modules : Array Name)
     (registrations : Array (Name × Expr)) (key : StatementKey)
-    (theoremProof statement : Expr) (payload : StructuralOccurrenceDisposition key) : MetaM ProvenanceSource := do
+    (theoremProof statement : Expr) (payload : StructuralOccurrenceDisposition key)
+    (trivial : Option (TrivialInCatalogDisposition key) := none) : MetaM ProvenanceSource := do
   let className := "structural_occurrence"
   let source ← validateStructuralProvenance root head modules key payload
   unless ← inRoot (← getEnv) modules payload.registration do
@@ -451,19 +514,20 @@ private def validateStructural (root : Name) (head : String) (modules : Array Na
   let compiled ← mkAppM ``StructuralPrimitiveRealization.toTheoremUnit
     #[realized, statement, theoremProof]
   unless ← isDefEq unit compiled do failClass key className "realization.compiled_kernels"
-  let strictness ← mkAppM ``StructuralCatalog.StructurallyLowersEscape #[catalogValue, index]
-  let witnessType ← mkAppM ``StructuralStrictnessCertificate #[catalogValue, index]
-  for (field, name, expected) in
-      [("strictness_certificate", payload.strictnessCertificate, strictness),
-       ("witness_certificate", payload.witnessCertificate, witnessType)] do
-    unless (← getEnv).contains name do
-      throwError s!"IE-C038 MissingStructuralWitness theorem={key.theoremName} \
-arena={payload.canonicalArena} missing={field}"
-    let value ← constant modules key className field name
-    unless ← isDefEq (← inferType value) expected do
-      throwError s!"IE-C038 MissingStructuralWitness theorem={key.theoremName} \
-arena={payload.canonicalArena} missing={field}"
-    checkWithKernel value
+  if trivial.isNone then
+    let strictness ← mkAppM ``StructuralCatalog.StructurallyLowersEscape #[catalogValue, index]
+    let witnessType ← mkAppM ``StructuralStrictnessCertificate #[catalogValue, index]
+    for (field, name, expected) in
+        [("strictness_certificate", payload.strictnessCertificate, strictness),
+         ("witness_certificate", payload.witnessCertificate, witnessType)] do
+      unless (← getEnv).contains name do
+        throwError s!"IE-C038 MissingStructuralWitness theorem={key.theoremName} \
+  arena={payload.canonicalArena} missing={field}"
+      let value ← constant modules key className field name
+      unless ← isDefEq (← inferType value) expected do
+        throwError s!"IE-C038 MissingStructuralWitness theorem={key.theoremName} \
+  arena={payload.canonicalArena} missing={field}"
+      checkWithKernel value
   let peers := registrations.filter fun (_, type) =>
     type.getAppArgs[1]!.isConstOf payload.canonicalArena
   let indexType ← mkAppM ``StructuralCatalog.Index #[catalogValue]
@@ -471,6 +535,29 @@ arena={payload.canonicalArena} missing={field}"
   let cardinality ← mkAppOptM ``Fintype.card #[some indexType, some indexFintype]
   let size : Nat ← reduceEval cardinality
   unless size == peers.size do failClass key className "maximal_catalog_membership"
+  let expectedPeers := (structuralProvenanceEntries (← getEnv)).filter fun entry =>
+    modules.contains entry.registrationModule && entry.canonicalArena == payload.canonicalArena
+  unless peers.size == expectedPeers.size do
+    failClass key className "maximal_catalog_membership"
+  for entry in expectedPeers do
+    let mut matchingPeers :=  #[]
+    for peer in peers do
+      if (← reduceEval peer.2.getAppArgs[0]! : Name) == entry.theoremName then
+        matchingPeers := matchingPeers.push peer
+    unless matchingPeers.size == 1 do failClass key className "maximal_catalog_membership"
+    let (name, type) := matchingPeers[0]!
+    let peerKey : StatementKey := ⟨entry.theoremName,
+      theoremStatementIdentity (← getEnv) entry.theoremName⟩
+    discard <| validateStructuralProvenance root head modules peerKey
+      ⟨payload.canonicalArena, name, entry.realizationConst, .anonymous, .anonymous⟩
+    let peerProof ← constant modules peerKey className "theorem" entry.theoremName
+    let peerStatement ← inferType peerProof
+    let realized ← constant modules peerKey className "realization" entry.realizationConst
+    let compiled ← mkAppM ``StructuralPrimitiveRealization.toTheoremUnit
+      #[realized, peerStatement, peerProof]
+    unless (← isDefEq type.getAppArgs[2]! compiled) &&
+        (← isDefEq type.getAppArgs[5]! peerStatement) do
+      failClass key className "maximal_catalog_membership"
   let indexDecidableEq ← mkAppM ``StructuralCatalog.indexDecidableEq #[catalogValue]
   withLetDecl `censusIndexDecidableEq (← inferType indexDecidableEq) indexDecidableEq fun inst =>
     withNewLocalInstances #[inst] 0 do
@@ -487,6 +574,32 @@ arena={payload.canonicalArena} missing={field}"
           try
             checkWithKernel (← mkDecideProof distinct)
           catch _ => failClass key className "duplicate_catalog_index"
+  if let some value := trivial then
+    let fail := failClass key "trivial_in_catalog"
+    unless modules.contains value.root && catalogValue.isConstOf value.catalog &&
+        value.index < size do fail "classification_seal"
+    let sealValue ← typed modules key "trivial_in_catalog" "catalog_seal" value.catalogSeal
+      (← mkAppM ``StructuralCatalogSeal #[catalogValue])
+    let env ← getEnv
+    let owner := env.getModuleIdxFor? value.catalogSeal |>.map
+      (env.header.moduleNames[·.toNat]!) |>.getD env.header.mainModule
+    unless owner == value.root do fail "classification_seal.root"
+    let sealScope := censusRootModules env value.root
+    for (name, type) in peers do
+      unless ← inRoot env sealScope name do fail "classification_seal.membership"
+      let branch ← whnf (← mkAppM ``StructuralCatalogSeal.classification
+        #[sealValue, type.getAppArgs[4]!])
+      unless branch.isAppOf ``Decidable.isFalse || branch.isAppOf ``Decidable.isTrue do
+        fail "classification_seal.incomplete"
+    let list ← structuralIndexList key indexType indexFintype
+    let expectedIndex ← mkAppM ``List.get #[list, ← ProjectionProof.fin value.index size]
+    unless ← isDefEq index expectedIndex do fail "catalog.index"
+    let certificate ← typed modules key "trivial_in_catalog" "triviality_certificate"
+      value.trivialityCertificate (← mkAppM ``StructuralCatalog.TrivialInCatalog #[catalogValue, index])
+    unless ← occurrenceTypeMatches (← inferType certificate) ``StructuralCatalog.TrivialInCatalog
+        catalogValue index do fail "triviality_certificate.index"
+    let classification ← whnf (← mkAppM ``StructuralCatalogSeal.classification #[sealValue, index])
+    unless classification.isAppOf ``Decidable.isFalse do fail "classification_branch"
   return source
 
 private def validateBounded (modules : Array Name) (key : StatementKey) (statement : Expr)
@@ -635,6 +748,16 @@ def validateEvidenceSources (root : Name) (inventory : DispositionInventory)
     match entry.2 with
     | .certified disposition =>
       match disposition with
+      | .trivialInCatalog payload =>
+        match payload.context with
+        | .finite nondegenerate enumeration =>
+          validateFinite modules key ⟨payload.canonicalArena, payload.registration,
+            payload.realization, nondegenerate, enumeration⟩ (some payload)
+        | .structural =>
+          let source ← validateStructural root inventory.headSha modules registrations
+            key theoremExpr statement ⟨payload.canonicalArena, payload.registration,
+              payload.realization, .anonymous, .anonymous⟩ (some payload)
+          unless sources.contains source do sources := sources.push source
       | .finiteOccurrence payload => validateFinite modules key payload
       | .structuralOccurrence payload =>
         let source ← validateStructural root inventory.headSha modules registrations

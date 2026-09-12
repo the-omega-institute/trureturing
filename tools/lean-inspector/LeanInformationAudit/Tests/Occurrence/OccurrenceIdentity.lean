@@ -64,8 +64,7 @@ register_information_theorem sharedTheorem
   primitives realizationB.toPrimitiveBundle
   realization legacyB
 
-/-- error: IE-C002 DuplicateRegistration:
-LeanInformationAudit.Tests.OccurrenceIdentity.sharedTheorem -/
+/-- error: IE-C002 DuplicateRegistration object_arena=LeanInformationAudit.Tests.OccurrenceIdentity.objectA theorem_name=LeanInformationAudit.Tests.OccurrenceIdentity.sharedTheorem registration_modules=["LeanInformationAudit.Tests.Occurrence.OccurrenceIdentity"] count=2 -/
 #guard_msgs (error) in
 register_information_theorem sharedTheorem
   in lawA
@@ -90,7 +89,7 @@ run_cmd do
   let env <- getEnv
   let root := env.header.mainModule
   let theoremName := `LeanInformationAudit.Tests.OccurrenceIdentity.sharedTheorem
-  let contents := serializeSealArtifact (SealRecords.forRoot env root)
+  let contents ← Lean.Elab.Command.liftTermElabM <| serializeSealArtifact (SealRecords.forRoot env root)
   let json <- match Json.parse contents with
     | .ok value => pure value
     | .error message => throwError message

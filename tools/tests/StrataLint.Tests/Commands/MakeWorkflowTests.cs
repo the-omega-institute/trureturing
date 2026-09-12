@@ -80,6 +80,7 @@ public sealed partial class MakeWorkflowTests
         "preflight",
         "gate",
         "census",
+        "census-derivational",
     ];
 
     private static readonly string[] ToolsTargets =
