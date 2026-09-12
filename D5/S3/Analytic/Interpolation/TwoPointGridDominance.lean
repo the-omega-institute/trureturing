@@ -111,6 +111,16 @@ private theorem logValue_strictMono : StrictMonoOn logValue (Ioi 0) := by
   · exact sub_pos.mpr (by simpa using Real.exp_lt_exp.mpr (neg_neg_of_pos hx))
   · exact sub_lt_sub_left (Real.exp_lt_exp.mpr (neg_lt_neg hxy)) 1
 
+private theorem psiTwo_mono_mean {m n V : ℝ} (hmn : m ≤ n)
+    (hL : Real.sqrt (V / 2) < m) : psiTwo m V ≤ psiTwo n V := by
+  unfold psiTwo
+  apply add_le_add
+  · exact logValue_strictMono.monotoneOn (sub_pos.mpr hL)
+      (sub_pos.mpr (hL.trans_le hmn)) (by linarith)
+  · have hm : 0 < m + Real.sqrt (V / 2) := by linarith [Real.sqrt_nonneg (V / 2)]
+    have hn : 0 < n + Real.sqrt (V / 2) := by linarith [Real.sqrt_nonneg (V / 2)]
+    exact logValue_strictMono.monotoneOn hm hn (by linarith)
+
 private theorem logValue_strictConcave : StrictConcaveOn ℝ (Ioi 0) logValue := by
   have hlog := LogOneSubExpDerivatives.log_one_sub_exp_derivatives
   apply strictConcaveOn_of_deriv2_neg (convex_Ioi 0) hlog.1.continuousOn
@@ -185,6 +195,7 @@ theorem grid_dual_eq_fractional_sup (c d : Fin 2 → ℝ) (M : ℝ)
 open private hermite_strict_majorant quadratic_derivatives
   from D5.S3.Analytic.Interpolation.HermiteEnvelopeEquality
 
+#print axioms psiTwo_mono_mean
 #print axioms two_point_grid_domain
 #print axioms two_actual_corners_lower_mem
 #print axioms corner_le_grid_dual
