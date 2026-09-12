@@ -1,0 +1,22 @@
+**36.36 5040 cutoff nonemptiness and the remaining sign boundary.** Here the
+fixed original cutoff is
+\(B_{\rm cut}=S_h+\log5040=\log1058400\). The exact budget inverse image
+for \(S_\xi=\sum_i\xi_i\) is 36.30:
+\(M_0^\xi>B_{\rm cut}\) corresponds to
+\(M_0^0>B_{\rm cut}-S_\xi\). A baseline sign theorem only above
+\(B_{\rm cut}\) would cover just
+\(M_0^\xi>B_{\rm cut}+S_\xi\), not the entire target original domain.
+Only the wider-domain premise explicitly retained in 36.35 allows the
+conditional transferred sign to be intersected afterward with the original
+cutoff. No same-cutoff equivalence is assumed.
+
+Every shifted-5040 tuple satisfies
+\(A\ge\sum_i a_i=\log1058400>\log2+\log5040\), since
+\(1058400=5040*(2*3*5*7)>2*5040\). With \(h_*=\log2\), the top-two-corner
+proof of 36.33 makes its original domain nonempty, including the baseline.
+There are therefore zero exclusions from this shifted family for original
+domain nonemptiness. This statement and its positive-width counting are
+unconditional. Its proposed \(1/4000\) scaled all-slab margin remains
+conditional on C61, as in 36.35. No full C61 result is supplied, consumed or
+inferred.
+

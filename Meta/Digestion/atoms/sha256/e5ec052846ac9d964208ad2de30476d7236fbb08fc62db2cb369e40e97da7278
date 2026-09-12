@@ -1,0 +1,29 @@
+**36.1 Fixed data, complete family and theorem.** All
+logarithms are natural. Fix an ordered list of distinct primes
+\(p_0,\ldots,p_{k-1}\), an integer \(k\ge2\), and a finite real
+\(0<\epsilon<\infty\). Write \(d=k-1\), \(h_i=\log p_i>0\),
+\(S_h=\sum_{i=0}^d h_i\), and \(h_{\max}=\max_i h_i\). For every
+\(m\in\mathbb Z_{\ge1}^k\), define
+\[
+c_i=m_i*h_i,\quad T(m)=\min_i c_i,\quad A(m)=\sum_i c_i,\quad
+\operatorname{width}(m)=\max_i c_i-\min_i c_i,\quad
+N(m)=\prod_{i=0}^d p_i^{m_i-1}.
+\]
+Let \(C_\epsilon(X)\) count all these tuples with
+\(\operatorname{width}(m)\le\epsilon\) and \(N(m)\le X\), for real \(X>0\).
+Unique factorization makes this also a count of distinct ordinary integers.
+The theorem proved below is
+\[
+C_\epsilon(X)=\frac{\kappa_\epsilon}{k*h_0}*\log X+o(\log X),
+\qquad \kappa_\epsilon>0.
+\]
+Here \(\kappa_\epsilon\) is the bounded multiplicity mean on the actual
+orbit closure defined in 36.2 and 36.6, not a visit probability. Its ratio
+\(\kappa_\epsilon/h_0\) is independent of the reference prime. Every branch
+of the fixed-width family is counted; section 35's selected nearest-rounding
+Bohr family is only a source of a lower bound. Every asymptotic fixes the
+prime list and \(\epsilon\). The explicit higher-dimensional volume formula
+is conditional on a full orbit closure; no such hypothesis enters the main
+theorem. The shifted-5040 count is unconditional, while its proposed full
+wider-domain \(G\) margin stays conditional on C61 throughout this appendix.
+

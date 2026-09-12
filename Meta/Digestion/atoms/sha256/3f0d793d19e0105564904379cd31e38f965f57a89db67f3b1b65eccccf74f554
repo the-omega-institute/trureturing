@@ -1,0 +1,18 @@
+**36.7 Exact every-branch correspondence and positivity cutoff.** For an integer
+reference exponent \(n\ge1\), take \(x=\{n*\alpha\}\) and set
+\[
+m_0=n,\qquad m_i=\lfloor n*\alpha_i\rfloor+j_i.
+\]
+Then \(m_i*h_i=n*h_0+\Delta_i\). Thus contributing branches are in bijection
+with all integer tuples at reference coordinate \(n\) whose width is at most
+\(\epsilon\), before the remaining positivity restrictions. Conversely,
+every such tuple gives the unique branch
+\(j_i=m_i-\lfloor n*\alpha_i\rfloor\). Since
+\(m_i*h_i\ge n*h_0-\epsilon\), every branch is a valid positive tuple once
+\(n*h_0>\epsilon\), equivalently for all
+\(n\ge\lfloor\epsilon/h_0\rfloor+1\). At equality the lower estimate alone
+does not certify positivity; the finitely many earlier indices are handled
+by imposing \(m_i\ge1\) exactly. There are at most \(B_\epsilon\) branches
+per such index, so the invalid initial tuples form a finite set. No nearest
+rounding, single-branch choice or presumed monotonic order of boxes is used.
+

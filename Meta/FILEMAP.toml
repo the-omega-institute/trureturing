@@ -590,6 +590,215 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
+# Preserves the original sixty-four fixed 2,3,5 certificate results.
+pattern = "docs/reports/quantized-gh/balanced-235-results.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Checks the eight prescribed 2,3,5 nodes and rational all-moment proof constants.
+pattern = "docs/reports/quantized-gh/balanced-235.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Preserves the original twenty-one fixed common-height results.
+pattern = "docs/reports/quantized-gh/common-height-results.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Checks fixed common-height proof constants and finite-moment polynomial identities.
+pattern = "docs/reports/quantized-gh/common-height.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Checks the fixed projection, Bernoulli, carry and slot identities.
+pattern = "docs/reports/quantized-gh/coordinate-separation.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Checks the existing prime-corner constant input and fixed slot-design bounds.
+pattern = "docs/reports/quantized-gh/finite-design.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Preserves all seventy-one original fixed-5040 eligibility records and endpoint data.
+pattern = "docs/reports/quantized-gh/fixed-5040-node-results.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Preserves the original sixteen-node fixed-5040 sign and density results.
+pattern = "docs/reports/quantized-gh/fixed-5040-sign-results.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Preserves every original fixed-5040 distance, variance, radius and support enclosure.
+pattern = "docs/reports/quantized-gh/fixed-5040-support-results.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Checks the sixteen fixed-5040 support intervals with outward rational arithmetic.
+pattern = "docs/reports/quantized-gh/fixed-5040-support.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Checks the single fixed-5040 box, its complete slot partition and prescribed sign bins.
+pattern = "docs/reports/quantized-gh/fixed-5040.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Preserves the original integer-ratio grid inputs, eight configurations and Arb result.
+pattern = "docs/reports/quantized-gh/integer-ratio-grid-results.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Checks the fixed integer-ratio real grid and its strict Arb gap.
+pattern = "docs/reports/quantized-gh/integer-ratio-grid.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Preserves the artificial grid configuration table and strict gap measurements.
+pattern = "docs/reports/quantized-gh/real-grid-results.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Checks all eight configurations and enclosures of the fixed artificial real grid.
+pattern = "docs/reports/quantized-gh/real-grid.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Preserves the original single-5040 strict rational enclosure table.
+pattern = "docs/reports/quantized-gh/variance-5040-results.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Checks the four mean-variance bounds for the single integer 5040.
+pattern = "docs/reports/quantized-gh/variance-5040.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Preserves fixed xi resolution classifications, windows, GPU errors and original measurements.
+pattern = "docs/reports/quantized-gh/xi-resolution-results.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Checks the original three-observation xi intervals and exact rounding witness.
+pattern = "docs/reports/quantized-gh/xi-three-observations.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
 # Preserves the 5,7,11 search window and eight reflected interval records.
 pattern = "docs/reports/quantized-gh/prime-slab-5711-window-0910.json"
 kind = "data"

@@ -1,0 +1,31 @@
+**36.33 Strict SUM cutoff, equality and exact finite exclusions.** For a fixed
+distinct-prime box put \(h_* =\min_i h_i\). Its largest and second-largest
+corner totals are \(A+S_h\) and \(A+S_h-h_*\): lowering the top corner
+by a nonempty subset subtracts at least \(h_*\), attained by a minimum
+step. A slab with two corners has lower endpoint at most the second-largest
+total. Therefore a positive-width two-corner slab with
+\(S_h+\log5040<M_0<M_1\) exists **if and only if**
+\[
+A>h_*+\log5040.
+\]
+Necessity follows from \(S_h+\log5040<M_0\le A+S_h-h_*\).
+For sufficiency, the closed slab \([A+S_h-h_*,A+S_h]\) has positive width,
+two endpoint corners and lower endpoint strictly above the cutoff. Equality
+\(A=h_*+\log5040\) gives an empty original domain despite closed corner
+inclusion. This is a condition on the **sum** \(A\), not on \(T\).
+
+For either triple 235 or 237, \(h_*=\log2\). Let
+\(\mathcal F_{P,\epsilon}=\{m\ge1:\operatorname{width}(m)\le\epsilon,
+A(m)\le\log2+\log5040\}\). This is finite: each positive coordinate
+is at most the displayed bound, so each integer exponent is bounded.
+The exact number of excluded boxes up to \(X\) is
+\(\sum_{m\in\mathcal F_{P,\epsilon}}\mathbf1_{\{N(m)\le X\}}\);
+its eventual value is \(\#\mathcal F_{P,\epsilon}\), not an evaluated
+enumeration. Subtract precisely this finite count from \(C_\epsilon(X)\).
+At the respective radii in 36.31-36.32 the remaining boxes all have nonempty
+original domain and the stated sign for every admitted original slab. Their
+count remains
+\((\kappa_\epsilon/(3*\log2))*\log X+o(\log X)\), using the corresponding
+actual orbit closure. This does not count all possible negative boxes outside
+the chosen tube.
+

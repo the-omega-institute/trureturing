@@ -1,0 +1,270 @@
+{
+  "primary_task": "8cfd404d-43c8-42f9-a5be-22e0811bc05a",
+  "primary_envelope_sha256": "5ad15f1f87730e33edd6ef2e9045aa4255a4a85efb1e456312b438da91c5288c",
+  "base_certificate_checks": 34,
+  "fixed_checks": 64,
+  "checks": [
+    {
+      "name": "log 2: strict rational enclosure",
+      "passed": true
+    },
+    {
+      "name": "log 3: strict rational enclosure",
+      "passed": true
+    },
+    {
+      "name": "log 5: strict rational enclosure",
+      "passed": true
+    },
+    {
+      "name": "exp lower polynomial x=19/100, degree=2",
+      "passed": true
+    },
+    {
+      "name": "exp lower polynomial x=2/3, degree=2",
+      "passed": true
+    },
+    {
+      "name": "exp lower polynomial x=3/10, degree=3",
+      "passed": true
+    },
+    {
+      "name": "exp lower polynomial x=19/20, degree=3",
+      "passed": true
+    },
+    {
+      "name": "exp lower polynomial x=29/100, degree=3",
+      "passed": true
+    },
+    {
+      "name": "exp lower polynomial x=7/6, degree=5",
+      "passed": true
+    },
+    {
+      "name": "exp lower polynomial x=12/25, degree=3",
+      "passed": true
+    },
+    {
+      "name": "exp lower polynomial x=13/10, degree=4",
+      "passed": true
+    },
+    {
+      "name": "exp lower polynomial x=3/5, degree=3",
+      "passed": true
+    },
+    {
+      "name": "exp lower polynomial x=3/2, degree=5",
+      "passed": true
+    },
+    {
+      "name": "exp lower polynomial x=23/25, degree=4",
+      "passed": true
+    },
+    {
+      "name": "exp lower polynomial x=31/20, degree=5",
+      "passed": true
+    },
+    {
+      "name": "exp lower polynomial x=3/4, degree=3",
+      "passed": true
+    },
+    {
+      "name": "j=3: lower squared R bound",
+      "passed": true
+    },
+    {
+      "name": "j=3: upper squared R bound",
+      "passed": true
+    },
+    {
+      "name": "j=4: lower squared R bound",
+      "passed": true
+    },
+    {
+      "name": "j=4: upper squared R bound",
+      "passed": true
+    },
+    {
+      "name": "j=5: lower squared R bound",
+      "passed": true
+    },
+    {
+      "name": "j=5: upper squared R bound",
+      "passed": true
+    },
+    {
+      "name": "j=6: lower squared R bound",
+      "passed": true
+    },
+    {
+      "name": "j=6: upper squared R bound",
+      "passed": true
+    },
+    {
+      "name": "j=7: lower squared R bound",
+      "passed": true
+    },
+    {
+      "name": "j=7: upper squared R bound",
+      "passed": true
+    },
+    {
+      "name": "j=1: all-moment majorization and margin",
+      "passed": true
+    },
+    {
+      "name": "j=2: all-moment majorization and margin",
+      "passed": true
+    },
+    {
+      "name": "j=3: all-moment majorization and margin",
+      "passed": true
+    },
+    {
+      "name": "j=4: all-moment majorization and margin",
+      "passed": true
+    },
+    {
+      "name": "j=5: all-moment majorization and margin",
+      "passed": true
+    },
+    {
+      "name": "j=6: all-moment majorization and margin",
+      "passed": true
+    },
+    {
+      "name": "j=7: all-moment majorization and margin",
+      "passed": true
+    },
+    {
+      "name": "slot 10: all-moment majorization and margin",
+      "passed": true
+    },
+    {
+      "name": "primary 34-certificate accounting",
+      "passed": true
+    },
+    {
+      "name": "node 1: exact nearest-endpoint branches",
+      "passed": true
+    },
+    {
+      "name": "node 2: exact nearest-endpoint branches",
+      "passed": true
+    },
+    {
+      "name": "node 3: exact nearest-endpoint branches",
+      "passed": true
+    },
+    {
+      "name": "node 4: exact nearest-endpoint branches",
+      "passed": true
+    },
+    {
+      "name": "node 5: exact nearest-endpoint branches",
+      "passed": true
+    },
+    {
+      "name": "node 6: exact nearest-endpoint branches",
+      "passed": true
+    },
+    {
+      "name": "node 7: exact nearest-endpoint branches",
+      "passed": true
+    },
+    {
+      "name": "node 8: exact nearest-endpoint branches",
+      "passed": true
+    },
+    {
+      "name": "all 18 fixed reflected eligibility tests retain only slot 10",
+      "passed": true
+    },
+    {
+      "name": "log-ratio weight bounds from integer powers",
+      "passed": true
+    },
+    {
+      "name": "j=1 strict atom cube bound",
+      "passed": true
+    },
+    {
+      "name": "j=2 and slot 10 squared R bounds",
+      "passed": true
+    },
+    {
+      "name": "node 2: lambda and eta strict floors",
+      "passed": true
+    },
+    {
+      "name": "node 3: lambda and eta strict floors",
+      "passed": true
+    },
+    {
+      "name": "node 4: lambda and eta strict floors",
+      "passed": true
+    },
+    {
+      "name": "node 5: lambda and eta strict floors",
+      "passed": true
+    },
+    {
+      "name": "node 6: lambda and eta strict floors",
+      "passed": true
+    },
+    {
+      "name": "node 7: lambda and eta strict floors",
+      "passed": true
+    },
+    {
+      "name": "node 8: lambda and eta strict floors",
+      "passed": true
+    },
+    {
+      "name": "j=1: endpoint first moment / largest-two-mass certificate",
+      "passed": true
+    },
+    {
+      "name": "j=2: endpoint first moment / largest-two-mass certificate",
+      "passed": true
+    },
+    {
+      "name": "j=3: endpoint first moment / largest-two-mass certificate",
+      "passed": true
+    },
+    {
+      "name": "j=4: endpoint first moment / largest-two-mass certificate",
+      "passed": true
+    },
+    {
+      "name": "j=5: endpoint first moment / largest-two-mass certificate",
+      "passed": true
+    },
+    {
+      "name": "j=6: endpoint first moment / largest-two-mass certificate",
+      "passed": true
+    },
+    {
+      "name": "j=7: endpoint first moment / largest-two-mass certificate",
+      "passed": true
+    },
+    {
+      "name": "slot 10: endpoint first moment / largest-two-mass certificate",
+      "passed": true
+    },
+    {
+      "name": "radius and uniform strict negative margin",
+      "passed": true
+    },
+    {
+      "name": "previous conservative neighborhood radius",
+      "passed": true
+    }
+  ],
+  "CPU_candidate_search": false,
+  "GPU_dispatches": 0,
+  "independent_review": false,
+  "scope": "Fixed rational/linear-log certificate checks and caller paper audit; no sampled heights, moment sweep, prime-exponent generation or RH proof.",
+  "notation_note": "Raw payload token 2^83^7 is retained in the original; the integer comparison checked here is 5^8 < 2^8 * 3^7.",
+  "source_result_sha256": "b43f792c6cb531a0df491580ba7e34c2024d15aca0d6a9cb63c75167214ca0f8"
+}

@@ -1,0 +1,34 @@
+**36.35 The 5040 transfer remains conditional on C61's wider-domain premise.**
+Use exactly the baseline in 36.26. For a tuple in its shifted tube set
+\[
+\tau=\min_i(c_i-a_i)\ge0,\qquad \xi_i=c_i-a_i-\tau,
+\qquad c_i=a_i+\tau+\xi_i.
+\]
+Then \(\min_i\xi_i=0\) and \(0\le\xi_i\le\epsilon\). The common
+translation \(\tau\) is distinct from actual lower height
+\(T(m)=\min_i c_i\): indeed
+\(\tau+\log25\le T(m)\le\tau+\log25+\epsilon\).
+At the baseline \(\tau=0\) but \(T=\log25\). Also
+\(A=\log1058400+4*\tau+S_\xi\) and \(S_h=\log(2*3*5*7)\).
+
+The supplied general-dimensional transfer 34.20 gives, on corresponding
+wider two-corner slabs, the unconditional loss estimate
+\[
+|\exp(\tau)*(G_\xi-G_0)|\le\epsilon/8.
+\]
+Its constant is \((k-1)/(\exp(\min a)-1)=3/(25-1)=1/8\), for finite
+\(\tau\ge0\). **If C61 establishes**
+\(\exp(\tau)*G_0<-1/2000\) for every such finite height and every finite
+positive-width two-corner slab of \(c_i^0=a_i+\tau\) on the entire wider
+domain, then and only under that premise the transfer yields
+\[
+\exp(\tau)*G_\xi<-1/2000+\epsilon/8\le-1/4000
+\qquad(0\le\epsilon\le1/500).
+\]
+Strictness survives at the closed radius, since the baseline inequality is
+strict. This conditional consequence applies to every shifted-tube branch,
+including its height-zero baseline and finite boundary corrections. The
+counting theorem for that family was proved unconditionally in 36.23-36.26;
+counting and transfer do not prove the C61 premise. Section 32's fixed-box
+cutoff certificate and section 33's density ordering do not supply it.
+

@@ -1,0 +1,31 @@
+**36.26 Actual 5040 arithmetic and the exact small-width edge.** Take
+\(p=(2,3,5,7)\), \(r=(5,3,2,2)\), and
+\(a=(5*\log2,3*\log3,2*\log5,2*\log7)\).
+The ordinary prime exponents of the baseline integer are \(r-\mathbf1
+=(4,2,1,1)\). The explicit arithmetic is
+\[
+5040=2^4*3^2*5*7,
+\qquad K=2^5*3^3*5^2*7^2=1058400=5040*(2*3*5*7).
+\]
+Thus \(N(r)=5040\), whereas the interior scaling factor is \(K=1058400\).
+Also \(a=(\log32,\log27,\log25,\log49)\),
+\(\min_i a_i=\log25\), and \(\sum_i a_i=\log1058400\).
+The zero-width count is exactly \(C_{a,0}(X)=\mathbf1_{\{X\ge5040\}}\).
+
+For \(0\le\epsilon<\log2\), a boundary tuple in 36.23 with some \(q_i=0\)
+must have all \(q_j=0\), since any positive \(q_j\) gives
+\(q_j*h_j\ge\log2>\epsilon\). All \(r_i\) are positive, so this single
+boundary tuple is allowed. Therefore for every \(X>0\),
+\[
+C_{a,\epsilon}(X)=C_\epsilon(X/1058400)+\mathbf1_{\{X\ge5040\}}
+\qquad(0\le\epsilon<\log2).
+\]
+In particular this covers radius \(1/500\). At \(\epsilon=\log2\), the
+additional boundary vector \(q=(1,0,0,0)\) is valid and yields
+\(N(q+r)=2*5040=10080\); the baseline-only correction must not be extended
+to that endpoint. Every fixed positive width has the previously proved
+positive logarithmic coefficient. This attainable-tube result does not make
+positive-height exact common translation attainable on the prime lattice:
+such translation would require equal positive integer multiples of distinct
+prime logarithms, excluded in 36.25.
+
