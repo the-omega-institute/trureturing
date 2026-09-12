@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:55eda7442458e8227972a6a2aee621aa6bf00653eca82f04d8e7a1aa68bf8b4d
   normalized_sha256: sha256:55eda7442458e8227972a6a2aee621aa6bf00653eca82f04d8e7a1aa68bf8b4d
 cas_ref: sha256:55eda7442458e8227972a6a2aee621aa6bf00653eca82f04d8e7a1aa68bf8b4d
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Factorization/PrimePowers/FiniteCosetPartitionMaximalIndexMultiplicity.prime_dvd_card_maximalIndex
+    target_statement_id: sha256:ce85c4bb45c2c0d9d34293a6a09bad44e38a3945e74616dd89e82d24ba50dc77
 receipts:
   unresolved_subitems: []

@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:8016854635fdd4ba756e1a4499664df9ca70cb48c900d29592beb203675a5df9
   normalized_sha256: sha256:8016854635fdd4ba756e1a4499664df9ca70cb48c900d29592beb203675a5df9
 cas_ref: sha256:8016854635fdd4ba756e1a4499664df9ca70cb48c900d29592beb203675a5df9
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/GraphColoring/OddPrimePerfectOneFactorization.odd_prime_perfect_one_factorization
+    target_statement_id: sha256:0c3ec6e93c35133e157b847dc194dbf78f63839621d7d10af8f3970c1274b694
 receipts:
   unresolved_subitems: []
