@@ -307,9 +307,6 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          lake exe cache get || printf '%s\n' 'mathlib cache get missed; lake build/report will fill remaining dependencies'
-          make lean-cache-from-github-without-mathlib \
-            || printf '%s\n' 'repository Lean build cache was unavailable; canonical report production will fill remaining dependencies'
           make lean-report
           report="$GITHUB_WORKSPACE/.lake/build/stratalint/raw-lean-report.json"
           test -s "$report"
