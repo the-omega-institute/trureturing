@@ -9138,3 +9138,431 @@ $$
 单射直接像保持交：同一像点的两个原像由单射相等，故反向包含也成立。将此用于第 324 条的两个迹等式，即得显示的两个运输迹。$\tau_X^*$ 是外部开集族；单个拓扑码 $\operatorname{Enc}(\tau_X)$ 的语义成员是开集码，而这些码逐个经 $\operatorname{El}$ 才给 $\tau_X^*$，按第 320 条处理。$G_{E_d}$、单个 $\operatorname{Enc}(G_{E_d})$ 与外部语义成员集 $\operatorname{El}(\operatorname{Enc}(G_{E_d}))$ 也保持各自角色；同样不把 $\operatorname{Enc}(X)$ 与 $\operatorname{Enc}[X]$ 识别。
 
 最后第 72 条给 $\operatorname{Enc}(x)\in_Z\operatorname{Enc}(A)$ 当且仅当 $x\in A$；这包括子群成员及零化子中“对全部 $h\in H$”的条件。将全部新函数展开为已证明总性或精确部分域的图后，第 75–76 条的固定公式结构归纳适用：等号由单射，成员由刚述等价，布尔联结词保持等价，存在见证编码、有效见证解码给量词的两个方向。因而全部子群、总探针及环境点的量化都保留，不只是有限测试的量化。第 77–78 条继而给所有原 ZFC 公理及分离、替代的每个固定翻译实例和定义性保守性。给定 $\mathfrak M\models\mathrm{ZFC}$ 时用其内部定义，非标准有限性及内部函数空间仍按第 78 条的条件理解。这不是统一内部真理谓词、任意集合或实数的有限字表示，也不推出无条件一致性或模型存在。证毕。
+## 337. 逐坐标有限容量与黄金观察的精确拓扑
+
+**定义 337.1。** 在 ZFC 中，沿用第 236、255、306–307 条的 $\phi=(1+\sqrt5)/2$、通常整数 $\mathbb Z_o$、递增素数枚举 $(p_n)_{n\in\omega}$、有限支撑总状态群 $\mathsf V_{\rm reg}$、单位状态 $\varepsilon_n$ 及 $\Psi_{\rm reg}$。这里 $\omega$ 包括零，自然数在整数值中按通常非负值识别。固定任意容量函数 $A:\omega\to\omega$，每个 $A_n$ 是有限自然数，定义
+$$
+D_n=\{k\in\mathbb Z_o:0\le k\le A_n\},\qquad
+J_A=\{n\in\omega:A_n>0\},
+$$
+$$
+X_A^{\rm cap}=\prod_{n\in\omega}D_n,\qquad
+B_A^{\rm cap}=\{u\in X_A^{\rm cap}:\operatorname{supp}(u)\text{ 有限}\}
+=X_A^{\rm cap}\cap\mathsf V_{\rm reg}.
+$$
+两载体中的点都是定义域恰为 $\omega$ 的总函数；$X_A^{\rm cap}$ 无支撑限制。容量函数按上述自然数到整数的逐点包含给容量角，仍记为 $A\in X_A^{\rm cap}$。第 299 条有限素数域上的 $X_A=S(P,A)$ 保持原义。
+
+各 $D_n$ 取离散拓扑，$X_A^{\rm cap}$ 取乘积拓扑 $\tau_{\rm coord,A}^{X}$，$B_A^{\rm cap}$ 取其子空间拓扑 $\tau_{\rm coord,A}^{B}$。对有限 $I\subseteq\omega$ 和 $x\in X_A^{\rm cap}$ 记精确柱集
+$$
+C_I(x)=\{y\in X_A^{\rm cap}:y_i=x_i\ (i\in I)\};
+$$
+$C_\varnothing(x)=X_A^{\rm cap}$。令 $\mathbb T=\mathbb R/\mathbb Z$ 取通常商拓扑，独立定义全乘积上的黄金映射
+$$
+\Psi_A:X_A^{\rm cap}\longrightarrow\mathbb T^\omega,\qquad
+\Psi_A(x)_n=[\phi x_n].
+$$
+目标取完整乘积拓扑。记其初始拓扑为 $\tau_{\Psi,A}^{X}$，在 $B_A^{\rm cap}$ 上由 $\Psi_A|_{B_A^{\rm cap}}=\Psi_{\rm reg}|_{B_A^{\rm cap}}$ 诱导的初始拓扑为 $\tau_{\Psi,A}^{B}$。
+
+**定理 337.2。** $\Psi_A$ 是到
+$$
+\prod_{n\in\omega}\{[\phi k]:k\in D_n\}\subseteq\mathbb T^\omega
+$$
+的同胚，右侧取环境的子空间拓扑。因而
+$$
+\tau_{\Psi,A}^{X}=\tau_{\rm coord,A}^{X},\qquad
+\tau_{\Psi,A}^{B}=\tau_{\rm coord,A}^{B}
+=\tau_{\rm coord}|_{B_A^{\rm cap}}
+=\tau_\Psi|_{B_A^{\rm cap}}.
+$$
+$X_A^{\rm cap}$ 紧且 Hausdorff，$B_A^{\rm cap}$ 在其中稠密，并有
+$$
+B_A^{\rm cap}=X_A^{\rm cap}\iff J_A\text{ 有限}.
+$$
+此时载体有限离散，大小为 $\prod_{n\in J_A}(A_n+1)$。若 $A\equiv0$，载体是只含总零函数的单点集。
+
+**证明。** 若 $[\phi k]=[\phi l]$，则 $\phi(k-l)\in\mathbb Z$。第 236 条的无理性使 $k-l=0$，故每个坐标映射单射；它按定义满到自己的像。通常圆周是 Hausdorff 空间，每个有限子空间离散：对其中一点与其余每一点分别取排除后者的开邻域，有限相交后只留下所选点。因此 $D_n$ 到其相位像的双射及逆都连续，包括 $A_n=0$ 的单点情形。
+
+逐坐标使用这些双射给两个乘积间的双逆。乘积拓扑的基只限制有限个坐标，所以两方向的柱集逆像均为开集，两个乘积映射均连续。同一柱集说明相位像因子的乘积拓扑恰是它在 $\mathbb T^\omega$ 中的子空间拓扑。于是 $\Psi_A$ 为所称同胚，其初始拓扑等于原乘积拓扑。限制到 $B_A^{\rm cap}$ 得第二个相等。离散整数乘积在 $X_A^{\rm cap}$ 上的子空间基也是这些柱集；初始开集的限制满足
+$$
+B_A^{\rm cap}\cap\Psi_{\rm reg}^{-1}(O)
+=(\Psi_{\rm reg}|_{B_A^{\rm cap}})^{-1}(O),
+$$
+所以恰得到第 306 条两种拓扑的限制。
+
+不同点在某坐标取不同值，该坐标的两个精确柱集不交，证明 Hausdorff 性。下面直接证明本可数有限因子积的紧性，所用基为经典[乘积拓扑的有限坐标基](https://en.wikipedia.org/wiki/Product_topology)。设有开覆盖 $\mathcal U$ 无有限子覆盖。全空间按第零坐标分成有限个柱集，至少一个仍无有限子覆盖；选择具有此性质的最小坐标值。已选到第 $n$ 坐标时，再按第 $n+1$ 坐标分成有限个子柱集。若它们都有有限子覆盖，其有限并就覆盖父柱集，矛盾，故仍可选最小的坏子柱集。自然数递归给出 $x\in X_A^{\rm cap}$，其每个所选前缀柱集均无有限子覆盖。然而某个 $U\in\mathcal U$ 含 $x$，并包含一个 $C_I(x)$。取 $N$ 包含 $I$ 的全部坐标，则所选的 $C_{\{0,\ldots,N\}}(x)\subseteq U$ 有单成员子覆盖，矛盾；空 $I$ 时任取 $N$ 即可。故紧性成立。
+
+定义截断 $x^{(N)}_n=x_n$ 当 $n\le N$，否则为零。它满足全部容量界，属于 $B_A^{\rm cap}$，并最终与 $x$ 在任意有限 $I$ 上一致。因此 $x^{(N)}\to x$，每个非空基本开集都遇到 $B_A^{\rm cap}$，证明稠密。若 $J_A$ 有限，每个点的支撑都包含于它，固定这些坐标便孤立该点，有限积计数给所列大小。若 $J_A$ 无限，容量角的支撑恰为 $J_A$，故在 $X_A^{\rm cap}\setminus B_A^{\rm cap}$。所有因子都含零，$A\equiv0$ 时只有总零函数；这与空指标积中的唯一空函数经补零相对应，但总零函数的图与空图不同。证毕。
+
+## 338. 容量可和性、连续实延拓与两种等值集
+
+**定义 338.1。** 对 $x\in X_A^{\rm cap}$ 和 $N\in\omega$ 定义
+$$
+P_N(x)=\sum_{n=0}^{N}2^{-n}x_n,\qquad
+S_A(x)=\sup_{N\in\omega}P_N(x)\in[0,+\infty],\qquad
+M_A=S_A(A)=\sum_{n=0}^{\infty}A_n2^{-n}.
+$$
+扩展非负实数中的上确界按序定义；无有限上界时取 $+\infty$。不为这个扩展值域另指定拓扑。有限状态上的实读数为
+$$
+\ell_A:B_A^{\rm cap}\longrightarrow\mathbb R,\qquad
+\ell_A=\iota_{\rm dy}\circ(\ell_{\rm dy}|_{B_A^{\rm cap}}),
+$$
+其中 $\ell_{\rm dy}:\mathsf V_{\rm reg}\to\mathbb Z_o[1/2]$ 是第 312–313 条的有限和，$\iota_{\rm dy}:\mathbb Z_o[1/2]\hookrightarrow\mathbb R$ 是通常包含。目标 $\mathbb R$ 取通常拓扑；若把实际值域看成二进有理数，则取其实子空间拓扑。
+
+置 $\mathbb D_+=\{a/2^q:a,q\in\omega\}$。对每个实数 $c$，分别定义
+$$
+L_{A,c}=\{u\in B_A^{\rm cap}:\ell_A(u)=c\},\qquad
+F_{A,c}=\{x\in X_A^{\rm cap}:S_A(x)=c\}.
+$$
+$L_{A,c}$ 即使作为 $X_A^{\rm cap}$ 的子集也仍只含有限支撑状态；$F_{A,c}$ 不施加支撑限制。以下未标明更细拓扑的闭包使用定理 337.2 的相等拓扑。
+
+**定理 338.2。** 对所有容量函数 $A$，以下四项等价：
+$$
+M_A<+\infty
+\iff\ell_A\text{ 在零处连续}
+\iff\ell_A\text{ 在 }B_A^{\rm cap}\text{ 上连续}
+\iff\ell_A\text{ 有到 }X_A^{\rm cap}\text{ 的连续实值延拓}.
+$$
+在这些条件下，唯一延拓是 $S_A$；令
+$$
+R_N=\sum_{n>N}A_n2^{-n}=M_A-P_N(A),
+$$
+则 $R_N\to0$，且
+$$
+0\le S_A(x)-P_N(x)\le R_N\quad(x\in X_A^{\rm cap}),\qquad
+\sup_{x\in X_A^{\rm cap}}|S_A(x)-P_N(x)|=R_N.
+$$
+所以 $P_N\to S_A$ 一致收敛。若 $x,y$ 在 $\{0,\ldots,N\}$ 上相等，则
+$$
+|S_A(x)-S_A(y)|\le R_N.
+$$
+此时每个 $L_{A,c}$ 在 $B_A^{\rm cap}$ 中闭，每个 $F_{A,c}$ 在 $X_A^{\rm cap}$ 中闭，且
+$$
+\overline{L_{A,c}}^{X_A^{\rm cap}}\subseteq F_{A,c}.
+$$
+不论 $M_A$ 有限与否，每个有限实数 $c$ 的子水平集 $\{x:S_A(x)\le c\}$ 都在 $X_A^{\rm cap}$ 中闭。
+
+**证明。** 每个 $P_N$ 只依赖有限个离散坐标，故连续。非负项使其递增；若 $u$ 有限支撑，取包含支撑的前缀后部分和恒等于 $\ell_A(u)$，因而 $S_A|_{B_A^{\rm cap}}=\ell_A$。上确界的定义给
+$$
+\{x:S_A(x)\le c\}
+=\bigcap_{N\in\omega}\{x:P_N(x)\le c\}.
+$$
+右侧是闭集的交；$c<0$ 时两边均为空。这不使用扩展值域上的连续性。
+
+若 $M_A<+\infty$，所有部分和由 $M_A$ 控制，故 $S_A$ 实值。对 $K\ge N$，
+$$
+0\le P_K(x)-P_N(x)
+\le\sum_{n=N+1}^{K}A_n2^{-n}.
+$$
+对 $K$ 取上确界得尾界。容量部分和趋向 $M_A$，所以 $R_N\to0$。令 $x=A$ 即取得上界，证明显示的上确界等式及一致收敛。这也是[Weierstrass 判别法](https://en.wikipedia.org/wiki/Weierstrass_M-test)对连续函数 $x\mapsto2^{-n}x_n$ 及同域控制项 $A_n2^{-n}$ 的应用。
+
+若 $x,y$ 前缀相等，记其共同部分和为 $a$，则两个总和都在 $[a,a+R_N]$，故差的绝对值至多 $R_N$。任给 $\epsilon>0$，选 $R_N<\epsilon$，前缀柱集就是使读数变化小于 $\epsilon$ 的邻域，直接证明 $S_A$ 连续；限制给 $\ell_A$ 连续及零处连续。
+
+反向设 $M_A=+\infty$。给定任意有限 $I\subseteq\omega$，删去 $I$ 的容量质量至多为有限数 $\sum_{n\in I}A_n2^{-n}$，故存在有限 $F\subseteq\omega\setminus I$ 使
+$$
+\sum_{n\in F}A_n2^{-n}\ge1.
+$$
+例如取充分长的容量前缀再删去 $I$ 即可。令 $u_n=A_n$ 当 $n\in F$，否则为零。它在每个坐标满足界，有有限支撑，在 $I$ 上等于零，而 $\ell_A(u)\ge1$。每个零邻域包含某个 $C_I(0)\cap B_A^{\rm cap}$，因此没有零邻域的像包含于 $(-1/2,1/2)$，零处连续性失败。任何连续实值延拓的限制都连续；任一处处连续的函数也在零处连续。这与已证正向一起给四项等价。
+
+在可和情形，两连续实值延拓在稠密子集 $B_A^{\rm cap}$ 上相等。其等值集闭，因为实直线 Hausdorff：若两值不同，可取不交的实邻域，其逆像交为排除等值集的开邻域。故等值集包含稠密集的闭包，即全空间，证明唯一性。实单点闭，其逆像给两种等值集的闭性；$L_{A,c}\subseteq F_{A,c}$ 再给环境闭包的包含。若 $M_A=+\infty$，虽仍有扩展函数 $S_A$，但它在容量角取 $+\infty$，不是实值延拓。证毕。
+
+**命题 338.3。** 可和性不能把上述环境闭包包含改成等号，也不要求 $J_A$ 有限；目标改取离散拓扑会改变连续性结论。
+
+**证明。** 取 $A_0=0$、$A_n=1$ 对全部 $n\ge1$。几何级数给 $M_A=1$；任一有限支撑状态可取 $N\ge1$ 包含其支撑，遂有
+$$
+\ell_A(u)\le\sum_{n=1}^{N}2^{-n}=1-2^{-N}<1.
+$$
+所以 $L_{A,1}=\varnothing$，但容量角属于 $F_{A,1}$，环境闭包包含严格。再取 $A_n=1$ 对所有 $n$，则 $J_A=\omega$ 而 $M_A=2$，定理 338.2 给连续实延拓。在此载体上 $\varepsilon_n\to0$，却有 $\ell_A(\varepsilon_n)=2^{-n}\ne0$；若目标离散，开单点 $\{0\}$ 的逆像不可能为零邻域，故同一映射在零处不连续。证毕。
+
+## 339. 发散容量下有限状态等值集的锐闭包
+
+**定理 339.1。** 设 $M_A=+\infty$。对每个 $c\in\mathbb D_+$，有
+$$
+\overline{L_{A,c}}^{X_A^{\rm cap}}
+=\{x\in X_A^{\rm cap}:S_A(x)\le c\},\qquad
+\overline{L_{A,c}}^{B_A^{\rm cap}}
+=\{u\in B_A^{\rm cap}:\ell_A(u)\le c\}.
+$$
+若 $c\in\mathbb R\setminus\mathbb D_+$，则 $L_{A,c}$ 及其两个闭包均为空。对任意 $A$，
+$$
+L_{A,0}=F_{A,0}=\{0\},\qquad
+\{x\in X_A^{\rm cap}:S_A(x)\le0\}=\{0\}.
+$$
+在发散情形，每个正二进有理水平 $L_{A,c}$ 非空，并在两个载体中都不闭。因此对所有 $A$ 和实数 $c$，
+$$
+L_{A,c}\text{ 在 }B_A^{\rm cap}\text{ 中闭}
+\iff M_A<+\infty\ \text{ 或 }\ c\notin\mathbb D_+\setminus\{0\}.
+$$
+这些公式允许任意长的零容量间隔，不要求 $J_A$ 最终包含全部指标，也不要求容量有共同上界。
+
+**证明。** 先设 $c\in\mathbb D_+$。若 $S_A(x)>c$，包括 $S_A(x)=+\infty$，上确界定义给 $N$ 使 $P_N(x)>c$。任何与 $x$ 在此前缀一致的非负状态，其总和至少为 $P_N(x)$，故 $C_{\{0,\ldots,N\}}(x)$ 不交 $L_{A,c}$。这证明环境闭包包含于所列子水平集。
+
+反向取 $S_A(x)\le c$ 及 $x$ 的任意邻域。取其中的精确柱集 $C_I(x)$，$I$ 有限且允许为空。写 $c=a_0/2^q$，$a_0,q\in\omega$，先选 $N\ge q$ 且 $I\subseteq\{0,\ldots,N\}$，再置
+$$
+a=P_N(x),\qquad d=c-a\ge0.
+$$
+于是
+$$
+2^Na=\sum_{n=0}^{N}2^{N-n}x_n\in\mathbb Z_o,\qquad
+2^Nd=a_0 2^{N-q}-2^Na\in\mathbb Z_o.
+$$
+若 $d=0$，截断 $x^{(N)}$ 已在 $C_I(x)\cap L_{A,c}$。
+
+若 $d>0$，令 $T_N=0$，并对 $j>N$ 定义
+$$
+T_j=\sum_{n=N+1}^{j}A_n2^{-n}.
+$$
+删去有限前缀后容量质量仍发散，故存在最小 $m>N$ 满足 $T_m\ge d$。最小性给
+$$
+T_{m-1}<d\le T_m=T_{m-1}+A_m2^{-m}.
+$$
+定义末坐标填充值
+$$
+b=2^m(d-T_{m-1}).
+$$
+由 $m>N$ 及 $2^Nd\in\mathbb Z_o$ 得 $2^md\in\mathbb Z_o$；又
+$$
+2^mT_{m-1}=\sum_{n=N+1}^{m-1}A_n2^{m-n}\in\mathbb Z_o,
+$$
+所以 $b$ 为整数。首次越过阈值的两个不等式给 $0<b\le A_m$，从而 $1\le b\le A_m$。令
+$$
+u_n=\begin{cases}
+x_n,&n\le N,\\
+A_n,&N<n<m,\\
+b,&n=m,\\
+0,&n>m.
+\end{cases}
+$$
+每一分支都在 $D_n$ 中，支撑包含于 $\{0,\ldots,m\}$，而 $u|_I=x|_I$。此外
+$$
+\ell_A(u)=a+T_{m-1}+b2^{-m}=a+d=c.
+$$
+因此任一邻域均遇到 $L_{A,c}$，得到环境闭包的反向包含。零容量坐标在中间分支只填零；若末坐标容量为零便不可能首次越过正缺额，故构造也包含任意稀疏间隔。空 $I$ 只需选择 $N\ge q$，并无额外条件。
+
+对任一子空间 $B\subseteq X$ 及 $E\subseteq B$，点 $b\in B$ 的邻域为环境邻域与 $B$ 的交；因 $E\subseteq B$，它遇到 $E$ 当且仅当原环境邻域遇到 $E$。所以 $\overline E^{B}=B\cap\overline E^{X}$。用于当前 $L_{A,c}$，并用 $S_A|_{B_A^{\rm cap}}=\ell_A$，即得相对闭包式。
+
+任一有限状态的值以包含支撑的前缀通分，为非负整数除以 $2^N$，故属于 $\mathbb D_+$。因此所有负数以及所有非二进有理实数的有限状态水平都为空，两个闭包也为空。零总和迫使每个非负项 $2^{-n}x_n$ 为零，故每个坐标为零；反向零状态的总和为零，得到所有零水平公式。在发散情形，正二进有理 $c$ 的已证填充构造应用于 $x=0$，把零放入两个闭包中；它不在等值集内。因此水平非空而不闭。结合定理 338.2 的可和情形以及零水平和空水平，得到最后的充要分类。证毕。
+
+**命题 339.2。** 逐坐标容量有限不足以保证 $\ell_A$ 连续；有限状态水平为空不意味着相应全乘积水平为空；定理 339.1 的闭包式不适用于有符号无界状态群。
+
+**证明。** 取 $A_n=2^n$。每个容量有限而 $M_A=\sum_n1=+\infty$。状态 $v_n=2^n\varepsilon_n$ 属于 $B_A^{\rm cap}$，满足 $\ell_A(v_n)=1$；每个固定有限坐标集最终避开 $n$，所以 $v_n\to0$，直接见证零处不连续。在同一全乘积中令 $x_{2k}=1$ 对 $k\ge1$，其余坐标为零，则
+$$
+S_A(x)=\sum_{k=1}^{\infty}4^{-k}=\frac13.
+$$
+若 $1/3=a/2^q$，则 $2^q=3a$，与 $3$ 不整除 $2^q$ 矛盾。因此 $L_{A,1/3}=\varnothing$，但 $F_{A,1/3}$ 含 $x$。
+
+在第 312–313 条的有符号群中，
+$$
+q_N^{\rm dy}=\varepsilon_0-2^{N+1}\varepsilon_{N+1},\qquad
+\ell_{\rm dy}(q_N^{\rm dy})=0,\qquad
+q_N^{\rm dy}\longrightarrow\varepsilon_0,
+$$
+收敛同时对第 306 条的两种源拓扑成立，而 $\ell_{\rm dy}(\varepsilon_0)=1$。故把零水平闭包说成非正读数子水平集在该群上为假。其负坐标使每个 $q_N^{\rm dy}$ 都不属于任何 $B_A^{\rm cap}$，不能充当上述容量填充见证。第 315 条的严格拓扑包含也仍以无界有符号群为域；定理 337.2 只比较各有限容量因子的乘积及其有限支撑子空间。证毕。
+
+## 340. 全部有理系数观察与既有联合拓扑的限制
+
+**定义 340.1。** 沿用第 321 条的 $\mathsf D_{\rm rat}=\mathbb Q/\mathbb Z_o$、$j_{\rm rat}:\mathsf D_{\rm rat}\to\mathbb T$、$\Theta_{\rm rat}=(\mathsf D_{\rm rat})^\omega$ 和 $\chi^{\rm rat}_\theta$。定义逐坐标商映射
+$$
+\rho:\mathbb Q^\omega\longrightarrow\Theta_{\rm rat},\qquad
+\rho(r)_n=[r_n]_{\rm rat}.
+$$
+对每个 $r\in\mathbb Q^\omega$，保留整个有理系数序列而不要求其有限支撑，置
+$$
+\chi_r^{\rm cap}=j_{\rm rat}\circ\chi^{\rm rat}_{\rho(r)}:
+\mathsf V_{\rm reg}\longrightarrow\mathbb T,
+\qquad
+\chi_r^{\rm cap}(u)=\left[\sum_{n\in\operatorname{supp}(u)}r_nu_n\right].
+$$
+在容量状态上定义
+$$
+E_A^{\rm cap}:B_A^{\rm cap}\longrightarrow
+\mathbb T^\omega\times\mathbb T^{\mathbb Q^\omega},\qquad
+E_A^{\rm cap}(u)=\bigl(\Psi_{\rm reg}(u),(\chi_r^{\rm cap}(u))_{r\in\mathbb Q^\omega}\bigr),
+$$
+目标取完整乘积拓扑。另以第 324 条的 $\operatorname{Ev}_+:\mathsf V_{\rm reg}\to X_+$ 和第 329 条的 $\tau_+$ 定义
+$$
+\tau_{+,A}=\tau_+|_{B_A^{\rm cap}}
+=\{(\operatorname{Ev}_+|_{B_A^{\rm cap}})^{-1}(O):O\subseteq X_+\text{ 开}\}.
+$$
+此处两个联合评价的环境分别按 $\mathbb Q^\omega$ 和 $\Theta_{\rm rat}$ 索引，不作字面认同。上述求和只在有限支撑状态上求值，不由此给任意 $x\in X_A^{\rm cap}$ 赋无穷和。
+
+**定理 340.2。** $\rho$ 为满射，且 $E_A^{\rm cap}$ 的初始拓扑恰为 $\tau_{+,A}$。有
+$$
+\tau_{\rm coord,A}^{B}\subseteq\tau_{+,A},\qquad
+\tau_{\rm coord,A}^{B}=\tau_{+,A}\iff J_A\text{ 有限}.
+$$
+若只保留 $r\in\mathbb Q^\omega$ 中有限支撑的系数序列，连同相同黄金首分量所诱导的初始拓扑对每个 $A$ 都等于 $\tau_{\rm coord,A}^{B}$。
+
+**证明。** 每个有理剩余类恰有一个代表落在 $[0,1)\cap\mathbb Q$：对任一代表 $q$ 取 $q-\lfloor q\rfloor$，更换代表为 $q+m$ 只使下取整增加同一整数 $m$，所以所得不变；两个此区间的数若相差整数，其差的绝对值小于一，故只能为零。逐坐标取这个唯一代表，得到函数
+$$
+s_{\rm rat}:\Theta_{\rm rat}\longrightarrow\mathbb Q^\omega,\qquad
+0\le s_{\rm rat}(\theta)_n<1,\qquad
+\rho(s_{\rm rat}(\theta))=\theta.
+$$
+因此 $\rho$ 满射。有限和与整数倍通过商映射交换，所以定义 340.1 的两种 $\chi_r^{\rm cap}$ 写法相等。整数改变系数不改变它们；在两个状态支撑的有限并上求和又给可加性，亦即第 321 条同态性的这个复合。其限制仅作为 $B_A^{\rm cap}$ 上的观察，不把容量盒声明为群。
+
+逐一比较初始拓扑的生成开集。黄金坐标在两个评价中相同。对每个 $r\in\mathbb Q^\omega$，其圆周坐标观察等于既有评价的 $\theta=\rho(r)$ 坐标；对每个 $\theta\in\Theta_{\rm rat}$，其既有圆周观察等于新评价的 $r=s_{\rm rat}(\theta)$ 坐标。故两族观察的开集逆像集合完全相同，重复出现的坐标不添加开集。完整乘积的开集由有限坐标开柱集的任意并组成，其逆像由这些生成开集的有限交和任意并组成。因此两个初始拓扑相等，且恰为所定义的 $\tau_{+,A}$。这个论证不要求两个环境乘积相等，也不要求 $s_{\rm rat}\rho$ 在 $\mathbb Q^\omega$ 上为恒等。
+
+第 324 条 $\Psi_{\rm reg}=\pi_1\circ\operatorname{Ev}_+$ 保留黄金观察，第 329 条的初始拓扑定义以及定理 337.2 遂给 $\tau_{\rm coord,A}^{B}\subseteq\tau_{+,A}$。若 $J_A$ 有限，前者已离散，任何更细拓扑均与它相等。若 $J_A$ 无限，以递增次序列为 $n_0<n_1<\cdots$，则 $A_{n_k}\ge1$，所以 $\varepsilon_{n_k}\in B_A^{\rm cap}$ 且 $\varepsilon_{n_k}\to0$ 在坐标拓扑中成立。取全部坐标上 $r_n=1/2$，则
+$$
+\chi_r^{\rm cap}(\varepsilon_{n_k})=[1/2]\quad\text{对每个 }k,
+\qquad\chi_r^{\rm cap}(0)=0_{\mathbb T}.
+$$
+通常圆周中可取含零而不含 $[1/2]$ 的开集。其逆像按定义为 $\tau_{+,A}$ 的零邻域，却不含任何 $\varepsilon_{n_k}$，因而不是坐标零邻域。故包含严格。
+
+最后，若 $r$ 有限支撑，固定其全部支撑坐标就固定有限和，所以 $\chi_r^{\rm cap}|_{B_A^{\rm cap}}$ 在坐标拓扑中连续。这样的全部观察与黄金首分量共同诱导的拓扑不细于坐标拓扑；黄金首分量又已诱导整个坐标拓扑，因此相等。证毕。
+
+**命题 340.3。** 当 $J_A$ 无限时，上述有理特征的有限求值公式不总能以无穷圆周级数延至 $X_A^{\rm cap}$。在 $\tau_{+,A}$ 中，定理 339.1 的旧拓扑闭包公式也不总成立。
+
+**证明。** 仍以 $(n_k)$ 递增枚举 $J_A$，取 $x_n=1$ 当 $n\in J_A$，否则为零，故 $x\in X_A^{\rm cap}$。对常数系数 $r_n=1/2$，求和到第 $n_k$ 坐标的圆周部分和为 $[(k+1)/2]$，交替取 $[1/2]$ 与零。两个常值子列极限不同，在 Hausdorff 圆周中不可能构成收敛序列的子列。因此按指标前缀定义的圆周级数不收敛，有限支撑公式没有给该点赋值。
+
+再取 $A_n=2^n$ 及 $r_n=2^{-n-1}$。对每个 $u\in B_A^{\rm cap}$ 有
+$$
+\chi_r^{\rm cap}(u)=[\ell_A(u)/2].
+$$
+所以 $L_{A,1}$ 包含于 $\tau_{+,A}$ 的闭集 $(\chi_r^{\rm cap})^{-1}(\{[1/2]\})\cap B_A^{\rm cap}$：特征在此拓扑中连续，圆周单点闭。这个闭集不含零，故零不在 $L_{A,1}$ 的 $\tau_{+,A}$ 闭包中。定理 339.1 却将零放在其坐标闭包中。这证明改变观察拓扑会改变该闭包问题，且比较使用的仍是同一有限状态水平。证毕。
+
+## 341. 容量层的既有集合运输与 5040 特化
+
+**定义 341.1。** 对有限 $I\subseteq\omega$，置
+$$
+P_I=\{p_i:i\in I\},\qquad A_I(p_i)=A_i,\qquad
+B_{A,I}^{\rm cap}=\{u\in B_A^{\rm cap}:\operatorname{supp}(u)\subseteq I\}.
+$$
+定义 $R_{A,I}:B_{A,I}^{\rm cap}\to S(P_I,A_I)$ 为 $R_{A,I}(u)(p_i)=u_i$；其反向映射 $Z_{A,I}$ 在指标 $i\in I$ 处取所给素数值，在 $I$ 外补零。自然数值与非负整数值仍按定义 337.1 识别。
+
+只在 $B_A^{\rm cap}\subseteq\mathsf V_{\rm reg}$ 上使用第 316–317 条的两个映射，记精确像为
+$$
+\mathsf{Rec}_A^{\rm cap}=\operatorname{rec}_{\rm reg}[B_A^{\rm cap}],\qquad
+\mathsf{Dig}_A^{\rm cap}=\operatorname{dig}_{\rm reg}[B_A^{\rm cap}].
+$$
+两像的逆分别取 $\operatorname{unrec}_{\rm reg}|_{\mathsf{Rec}_A^{\rm cap}}$ 与 $\operatorname{undig}_{\rm reg}|_{\mathsf{Dig}_A^{\rm cap}}$。
+
+对以下任一指定集合载体 $Y$ 及其指定拓扑 $\tau$，仅复用第 318–320、336 条的完整集合解释：
+$$
+Y^*=\operatorname{Enc}[Y]=\operatorname{El}(\operatorname{Enc}(Y)),\qquad
+\operatorname{enc}_Y=\operatorname{Enc}|_Y:Y\to Y^*,\qquad
+\tau^*=\{\operatorname{Enc}[U]:U\in\tau\}.
+$$
+这里的载体包括容量层的 $X_A^{\rm cap},B_A^{\rm cap}$、它们的有限配置与记录像、通常实直线、圆周及所列完整观察乘积；对 $B_A^{\rm cap}$ 分别使用已相等的坐标与黄金拓扑，或明确另取 $\tau_{+,A}$。有理序列、容量函数及扩展总和的图也作为完整集合取 $\operatorname{Enc}$，不要求存在有限记录。对已给函数 $f:Y\to Z$ 记
+$$
+f^*=\operatorname{enc}_Z\circ f\circ\operatorname{enc}_Y^{-1}:Y^*\to Z^*.
+$$
+部分域 $D\subseteq Y$ 时，精确共轭域相应为 $\operatorname{Enc}[D]$。
+
+**定理 341.2。** $R_{A,I}$ 与 $Z_{A,I}$ 互逆，包括空 $I$。因此该有限域经第 91–92、95–96、115–116、304–305 条与相应有限配置、素数标签数字及配置码准确对应，并有
+$$
+|B_{A,I}^{\rm cap}|=\prod_{i\in I}(A_i+1).
+$$
+在固定标签、容量和解释函数下，第 98 条的有限状态位数结论适用于这个有限配置。两映射的限制分别为到 $\mathsf{Rec}_A^{\rm cap}$ 和 $\mathsf{Dig}_A^{\rm cap}$ 的双射，所列逆在各自像上与它们双向复合为恒等。
+
+对定义 341.1 的每个拓扑载体，$\operatorname{enc}_Y$ 为同胚，逆恰为 $\operatorname{Dec}|_{Y^*}$，且对每个 $E\subseteq Y$ 有
+$$
+\overline{\operatorname{Enc}[E]}^{\tau^*}
+=\operatorname{Enc}[\overline E^{\tau}],\qquad
+\tau^*=\{\operatorname{El}(c):c\in\operatorname{El}(\operatorname{Enc}(\tau))\}.
+$$
+指定源、目标拓扑后，$f$ 连续当且仅当 $f^*$ 连续；收敛及不连续同样保持并反映。特别当 $M_A<+\infty$ 时，唯一连续实延拓运输为
+$$
+S_A^*:(X_A^{\rm cap})^*\longrightarrow\mathbb R^*,\qquad
+S_A^*(\operatorname{Enc}(x))=\operatorname{Enc}(S_A(x)),
+$$
+目标是通常实拓扑的运输，不将每个输出改为有限有理字段。第 337–340 节的全部等式、成员、闭包和连续性断言均在相应载体与拓扑上运输，保持每个固定有限集合论公式的双向比较。
+
+**证明。** 限制并重索引后，每个 $p_i$ 恰取得一个介于零和 $A_i$ 之间的值，所以 $R_{A,I}$ 的值在第 91 条的完整有限盒内。零扩展保留这些界，并在 $I$ 外为零，故 $Z_{A,I}$ 的值在 $B_{A,I}^{\rm cap}$。在每个指标或素数标签处取值，两个复合各自还原原函数；$I=\varnothing$ 时原配置是空函数，扩展为总零函数，反向限制仍为空。有限积计数给大小，素数唯一分解使这个配置的标量像是 $\prod_{i\in I}p_i^{A_i}$ 的全部正约数，零容量标签仍须由 $P_I$ 保留。第 95–96 条使用原始标签 $\zeta(p_i)$，第 115–116 条的配置码使用自然叶 $\operatorname{NatZ}(p_i)$ 及分开的容量、内容表，第 304–305 条的配置双逆因而在恰此域上适用。
+
+具体地，复合 $\gamma_{P_I,A_I}\circ R_{A,I}$ 的像恰为 $\mathcal C_{P_I,A_I,Z}$，逆为 $Z_{A,I}\circ\delta_{P_I,A_I}$；代入两对双逆就得到两个恒等式。若 $Q_I=\prod_{i\in I}(A_i+1)$，单射二进状态码须有 $2^b\ge Q_I$ 个字，枚举这个有限集合又以 $\lceil\log_2 Q_I\rceil$ 位达到下界。这是第 98 条的相同有限状态结论；其独立字段及字面 Zeckendorf 窗口结论亦取同一 $P_I,A_I$，并保留该条关于标签、容量、边界及解释函数已给定的条件，不把这些位数用于任意全乘积对象。
+
+第 317 条的双逆在全部 $\mathsf V_{\rm reg}$ 及其独立目标上成立。限制一个双射到子集时，其逆限制到子集的像就仍互逆：若 $r=\operatorname{rec}_{\rm reg}(u)$ 且 $u\in B_A^{\rm cap}$，逆还原的正是这个 $u$；反向每个像元素都有这样的原像。对总数字图同理。这给精确逆域，无须扩张任一旧记录映射。进一步，若在两个像上分别使用 $\{\operatorname{rec}_{\rm reg}[U]:U\in\tau\}$、$\{\operatorname{dig}_{\rm reg}[U]:U\in\tau\}$，两个限制都是同胚；取 $\tau=\tau_{\Psi,A}^{B}$ 时恰为第 318 条记录拓扑和总数字拓扑的子空间限制，取 $\tau=\tau_{+,A}$ 时则是另一个明确运输的拓扑。
+
+核对全集合解释的条件：容量函数属于 $\omega^\omega$，容量状态由 $\mathbb Z_o^\omega$ 上的界条件分离，有限支撑载体再由分离得到。有理序列及全部观察环境是所列函数集，圆周和有理剩余类是集合商。非负扩展实数可用实数非负部分另加一个固定标签构造；部分和的图由有限求和给出，上确界存在唯一使 $S_A$ 的图及各水平由替代、分离得到。拓扑是载体幂集的子集，全部有限柱集及其任意并均构成集合。这正满足第 71–78、320、336 条及 [CSA 第十一节命题 14–15](CONTEXTUAL_SPACETIME_ARITHMETIC.md) 的集合条件。这里只限制旧的可定义类函数 $\operatorname{Enc}$，没有收集全部集合为一个集合。
+
+第 72 条给 $\operatorname{enc}_Y$ 的双射及所列逆。双射直接像保持任意并、空集、全集及有限交，后一项的反向包含由单射性保证，因此 $\tau^*$ 是拓扑，两个方向的开集完全对应。点 $\operatorname{Enc}(y)$ 的开邻域恰为某个含 $y$ 的开集 $U$ 的像；它遇到 $\operatorname{Enc}[E]$ 当且仅当 $U$ 遇到 $E$，所以闭包的邻域判据给显示的两个方向。这是第 305、320 条的同一运输，直接应用到本条已经核对的载体。对拓扑这个集合，第 72 条先给 $\operatorname{El}(\operatorname{Enc}(\tau))=\{\operatorname{Enc}(U):U\in\tau\}$，再逐个展开开集码的成员才得到 $\tau^*$；单个拓扑码不充当外部开集族。
+
+对函数 $f:Y\to Z$ 和目标开集 $O$，有
+$$
+(f^*)^{-1}(\operatorname{Enc}[O])=\operatorname{Enc}[f^{-1}(O)].
+$$
+所以双向开集对应给连续性等价，其否定也等价；同一邻域对应给固定指标序列或网的收敛等价。部分函数仅在 $D$ 的子空间上使用这个论证，域运输为 $\operatorname{Enc}[D]$，不增加域外值。第 319 条的原图码仍为
+$$
+\operatorname{Enc}(G_f)
+=\operatorname{Pack}\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle_Z:x\in D\},
+$$
+语义域是单个码 $\operatorname{Enc}(D)$，外部共轭域却为成员像 $\operatorname{Enc}[D]$；外部共轭的普通图用普通有序对。特别 $S_A$ 在可和情形的输出用 $\operatorname{Enc}(S_A(x))$，在一般情形则作为扩展值图使用相同全编码。若 $u\in B_A^{\rm cap}$，从其有限记录得到实读数的共轭为
+$$
+r\longmapsto\operatorname{Enc}(\ell_A(\operatorname{unrec}_{\rm reg}(r)))
+\quad(r\in\mathsf{Rec}_A^{\rm cap}).
+$$
+它不为 $X_A^{\rm cap}\setminus B_A^{\rm cap}$ 引入记录。
+
+同胚运输把稠密性、闭包式、严格拓扑包含及所有具体反例带到各自像上。唯一实延拓也保持唯一：若 $\widetilde S:(X_A^{\rm cap})^*\to\mathbb R^*$ 是运输侧的连续延拓，则 $\operatorname{Dec}|_{\mathbb R^*}\circ\widetilde S\circ\operatorname{enc}_{X_A^{\rm cap}}$ 是定理 338.2 的原连续实延拓，故只能是 $S_A$；再作正向共轭即得 $\widetilde S=S_A^*$。
+
+最后对任意集合 $x,y$，第 72 条给
+$$
+\operatorname{Enc}(x)=\operatorname{Enc}(y)\iff x=y,\qquad
+\operatorname{Enc}(x)\in_Z\operatorname{Enc}(y)\iff x\in y.
+$$
+固定一个有限集合论公式，展开本层全部定义，保留包括 $A$、二进权、所有源与目标、拓扑在内的全部参数，再应用第 75–78 条：等号、成员由上式，布尔联结词由等价保持，存在见证由编码正向传递、有效码由解码反向传递，全称量词也分别对任意集合编码和对任意有效码解码。这给每个固定公式的双向比较，量词包括所有容量函数、全乘积点、实输出及完整有理系数序列。有限证明中的新定义逐一消去、定理行用其普通证明替代，仍是既有定义性保守扩展。证毕。
+
+**命题 341.3。** 第 312 条的指数状态 $u_{5040}=4\varepsilon_0+2\varepsilon_1+\varepsilon_2+\varepsilon_3$ 满足
+$$
+u_{5040}\in B_A^{\rm cap}
+\iff A_0\ge4,\ A_1\ge2,\ A_2\ge1,\ A_3\ge1.
+$$
+在此域上其标量为 $5040$，其二进读数为 $43/8$。若 $A=(4,2,1,1,0,\ldots)$，则 $B_A^{\rm cap}=X_A^{\rm cap}$ 与六十个正约数的配置双射，且
+$$
+M_A=\frac{43}{8},\qquad
+L_{A,43/8}=F_{A,43/8}=\{u_{5040}\}.
+$$
+若 $M_A=+\infty$ 且所列四界成立，则 $u_{5040}\in L_{A,43/8}$，并有
+$$
+\overline{L_{A,43/8}}^{X_A^{\rm cap}}
+=\{x:S_A(x)\le43/8\},\qquad
+\overline{L_{A,43/8}}^{B_A^{\rm cap}}
+=\{u:\ell_A(u)\le43/8\}.
+$$
+右侧两集合分别在所标明的载体内取点。
+
+**证明。** 四个非零坐标的下界正是成员条件，其余坐标为零，总满足非负容量。由第 32、303、313–315 条，
+$$
+\operatorname{scal}_{\rm reg}(u_{5040})=2^4\cdot3^2\cdot5\cdot7=5040,\qquad
+\ell_A(u_{5040})=4+\frac22+\frac14+\frac18=\frac{43}{8}.
+$$
+指定有限容量时，定理 337.2 及定理 341.2 给整个载体，状态数为 $5\cdot3\cdot2\cdot2=60$；第 92 条的素数分解双射把它送到 $5040$ 的全部正约数。容量质量由同一有限和得到。若某状态达到这个最大质量，则
+$$
+0=M_A-\ell_A(u)=\sum_{n=0}^{3}2^{-n}(A_n-u_n).
+$$
+每项非负且权严格为正，故全部 $u_n=A_n$，得到唯一顶点 $u_{5040}$；其余坐标已被零容量固定。发散情形则将正二进有理数 $43/8$ 代入定理 339.1，得到显示的两个锐闭包，零在这两个闭包中而不在水平本身。证毕。
+
+**命题 341.4。** 上述表示保留指数状态、标量、数位权及观察值的不同定义；任意全容量对象的完整集合表示不等于有限字表示。
+
+**证明。** 第 32、69–70、113 条给低位到高位的指数绝对值字
+$$
+(\zeta(4),\zeta(2),\zeta(1),\zeta(1))=(101,01,1,1),
+$$
+非零带符号内容则为 $(+,101),(+,01),(+,1),(+,1)$。这来自 $4=G_0+G_2$、$2=G_1$、$1=G_0$。标量自身的规范字占据位置却为 $\{2,5,11,13,17\}$，因为
+$$
+G_2+G_5+G_{11}+G_{13}+G_{17}=3+13+233+610+4181=5040
+$$
+且位置互不相邻。素数标签 $(2,3,5,7)$ 在原始字段中分别使用 $\zeta(2),\zeta(3),\zeta(5),\zeta(7)$，语义配置槽中使用相应 $\operatorname{NatZ}$；容量值和当前内容值占不同槽，不因值相同而变为同一字段。普通整数、CSA 的 $J$ 整数对象与带符号字仍按第 255–256 条的各自比较映射解释。
+
+对 $u\in B_A^{\rm cap}$，其标量是正整数 $s=\prod_{n\in\operatorname{supp}(u)}p_n^{u_n}$。第 287 条及 [GICT 定义 1.4、1.7](GICT.md) 的正标量观察为
+$$
+\Gamma_+(s)=(\lfloor\log_\phi s\rfloor,\zeta(s),[\phi s]),
+$$
+其中首分量对应 GICT 的尺度函数，第三分量对应其标量相位函数。寄存器黄金观察的第 $n$ 分量却为 $[\phi u_n]$，二进读数为 $\sum_n2^{-n}u_n$；这里的 $2^{-n}$ 与每个指数数字中的 Fibonacci 权 $G_j$ 由不同公式给定。CSA 定义 3、22 的 $q$ 和 $Z_X(t,y)$ 是所选事件符号的有限和，第 93 条的历史索引 $(t,p,j)$ 则分别为时间、素数标签、数位位置。上述函数的求值式各自保留这些域和参数，不把 GICT 的三个观察值等同于三个历史指标或新增物理坐标。
+
+每个定义域为 $\omega$ 的总函数图都有每个 $n$ 对应的一条边，不同首坐标使这些边互异，所以即使总零函数的图也无限。整个自然容量函数的码可按第 74、319 条写为
+$$
+\operatorname{Enc}(A)
+=\operatorname{Pack}\{\langle\operatorname{NatZ}(n),\operatorname{NatZ}(A_n)\rangle_Z:n\in\omega\},
+$$
+这里 $A$ 指原自然值函数；对整数值全乘积点则使用
+$$
+\operatorname{Enc}(x)
+=\operatorname{Pack}\{\langle\operatorname{NatZ}(n),\operatorname{Enc}(x_n)\rangle_Z:n\in\omega\}.
+$$
+两个式子都编码全部图边，未删去零边。$\operatorname{Enc}(B_A^{\rm cap})$ 是载体的单个码，$\operatorname{Enc}[B_A^{\rm cap}]$ 是其外部语义成员像，$\operatorname{rec}_{\rm reg}(u)$ 则只是某个有限支撑状态的有限非零记录；第 318–320、336 条给它们各自的逆与成员规则。
+
+若 $J_A$ 无限，按其递增枚举 $(n_k)$，将任意 $b\in\{0,1\}^\omega$ 送到 $x_{n_k}=b_k$、其余坐标为零的容量点，给 $\{0,1\}^\omega$ 到 $X_A^{\rm cap}$ 的单射。此二进序列集不可数：任何枚举 $(b^{(k)})$ 都遗漏序列 $b_k=1-b^{(k)}_k$。而有限字母表的每个固定长度字集有限，其可数并可数。因此不存在将全部 $X_A^{\rm cap}$ 点单射表示为有限字的方式，这是第 79 条的 Cantor 障碍在当前容量域上的应用。完整 $\operatorname{Enc}$ 保留集合语义，不声称提供这种有限字编码。
+
+若外部给定 $\mathfrak M\models\mathrm{ZFC}$，以上集合与定义按其内部有限性、幂集和函数集解释，第 78 条的双逆及每个外部标准有限公式的比较适用。这个条件比较没有构造 $\mathfrak M$，没有证明无条件 $\operatorname{Con}(\mathrm{ZFC})$，也没有定义任意集合的有效成员算法或同时判定全部公式的内部真理谓词：使用的分别是集合存在与唯一性以及逐个固定公式的归纳方案。证毕。
