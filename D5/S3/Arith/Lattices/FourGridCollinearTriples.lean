@@ -457,6 +457,202 @@ private noncomputable def codeToMarkedTriple_reverse {d : Nat} (c : GeometricCod
       tauto
     · exact orientationMark_reverse q.1.property
 
+set_option maxHeartbeats 800000 in
+private noncomputable def codeToTriple_surjective {d : Nat} (s : CollinearTriples d) :
+    ∃ c : GeometricCode d, (codeToMarkedTriple c).1 = s := by
+  classical
+  have hsfilter := s.property
+  change s.val ∈
+    ((Finset.univ : Finset (GridPoint d)).powersetCard 3).filter IsCollinearTriple at hsfilter
+  rw [Finset.mem_filter, Finset.mem_powersetCard] at hsfilter
+  rcases Finset.card_eq_three.mp hsfilter.2.1 with ⟨x, y, z, hxy, hxz, hyz, hsxyz⟩
+  have hxmem : x ∈ s.val := by rw [hsxyz]; simp
+  have hymem : y ∈ s.val := by rw [hsxyz]; simp
+  have hzmem : z ∈ s.val := by rw [hsxyz]; simp
+  have hcol (a b c : GridPoint d) (ha : a ∈ s.val) (hb : b ∈ s.val)
+      (hc : c ∈ s.val) : Collinear a b c :=
+    hsfilter.2.2 a ha b hb c hc
+  have hxyz := hcol x y z hxmem hymem hzmem
+  have hcoord : ∃ k, x k ≠ y k := by
+    by_contra h
+    simp only [not_exists, not_not] at h
+    exact hxy (funext h)
+  let k := Classical.choose hcoord
+  have hkxy : x k ≠ y k := Classical.choose_spec hcoord
+  have hkxz : x k ≠ z k := by
+    intro hk
+    apply hxz
+    funext i
+    apply Fin.ext
+    have hi := hxyz i k
+    rw [hk] at hi
+    simp only [sub_self, mul_zero, zero_eq_mul] at hi
+    rcases hi with hcoeff | hdiff
+    · exfalso
+      apply hkxy
+      have hyzK : y k = z k := by
+        apply Fin.ext
+        exact_mod_cast sub_eq_zero.mp hcoeff
+      exact hk.trans hyzK.symm
+    · have hzxI : (z i).val = (x i).val := by
+        exact_mod_cast sub_eq_zero.mp hdiff
+      exact hzxI.symm
+  have hkyz : y k ≠ z k := by
+    intro hk
+    apply hyz
+    funext i
+    apply Fin.ext
+    have hi := hxyz i k
+    rw [hk] at hi
+    have hcoeff : ((z k : Nat) : Int) - ((x k : Nat) : Int) ≠ 0 := by
+      apply sub_ne_zero.mpr
+      exact_mod_cast (show (z k).val ≠ (x k).val from fun h => hkxz (Fin.ext h.symm))
+    have hdiff :
+        (((z k : Nat) : Int) - ((x k : Nat) : Int)) *
+            ((((y i : Nat) : Int) - ((x i : Nat) : Int)) -
+              (((z i : Nat) : Int) - ((x i : Nat) : Int))) = 0 := by
+      linear_combination hi
+    rcases mul_eq_zero.mp hdiff with hzero | hzero
+    · exact False.elim (hcoeff hzero)
+    · have hyzI : ((y i : Nat) : Int) = ((z i : Nat) : Int) := by linarith
+      exact_mod_cast hyzI
+  let APAt (a b c : GridPoint d) : Prop :=
+    ((((b k : Nat) : Int) - ((a k : Nat) : Int) = 1 ∧
+        ((c k : Nat) : Int) - ((a k : Nat) : Int) = 2) ∨
+      (((b k : Nat) : Int) - ((a k : Nat) : Int) = -1 ∧
+        ((c k : Nat) : Int) - ((a k : Nat) : Int) = -2))
+  let ExtremeAt (a b c : GridPoint d) : Prop :=
+    (a k).val = 0 ∧ (c k).val = 3 ∧ ((b k).val = 1 ∨ (b k).val = 2)
+  have hpivot :
+      APAt x y z ∨ APAt x z y ∨ APAt y x z ∨
+      ExtremeAt x y z ∨ ExtremeAt x z y ∨ ExtremeAt y x z ∨
+      ExtremeAt y z x ∨ ExtremeAt z x y ∨ ExtremeAt z y x := by
+    dsimp only [APAt, ExtremeAt]
+    have hkxyv : (x k).val ≠ (y k).val := fun h => hkxy (Fin.ext h)
+    have hkxzv : (x k).val ≠ (z k).val := fun h => hkxz (Fin.ext h)
+    have hkyzv : (y k).val ≠ (z k).val := fun h => hkyz (Fin.ext h)
+    have horder :
+        ((x k).val < (y k).val ∧ (y k).val < (z k).val) ∨
+        ((x k).val < (z k).val ∧ (z k).val < (y k).val) ∨
+        ((y k).val < (x k).val ∧ (x k).val < (z k).val) ∨
+        ((y k).val < (z k).val ∧ (z k).val < (x k).val) ∨
+        ((z k).val < (x k).val ∧ (x k).val < (y k).val) ∨
+        ((z k).val < (y k).val ∧ (y k).val < (x k).val) := by
+      omega
+    rcases horder with h | h | h | h | h | h
+    · have hc : APAt x y z ∨ ExtremeAt x y z := by
+        dsimp only [APAt, ExtremeAt]
+        omega
+      exact hc.elim Or.inl (fun he => Or.inr (Or.inr (Or.inr (Or.inl he))))
+    · have hc : APAt x z y ∨ ExtremeAt x z y := by
+        dsimp only [APAt, ExtremeAt]
+        omega
+      exact hc.elim (fun ha => Or.inr (Or.inl ha))
+        (fun he => Or.inr (Or.inr (Or.inr (Or.inr (Or.inl he)))))
+    · have hc : APAt y x z ∨ ExtremeAt y x z := by
+        dsimp only [APAt, ExtremeAt]
+        omega
+      exact hc.elim (fun ha => Or.inr (Or.inr (Or.inl ha)))
+        (fun he => Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl he))))))
+    · have hc : APAt x z y ∨ ExtremeAt y z x := by
+        dsimp only [APAt, ExtremeAt]
+        omega
+      exact hc.elim (fun ha => Or.inr (Or.inl ha))
+        (fun he => Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inl he)))))))
+    · have hc : APAt y x z ∨ ExtremeAt z x y := by
+        dsimp only [APAt, ExtremeAt]
+        omega
+      exact hc.elim (fun ha => Or.inr (Or.inr (Or.inl ha)))
+        (fun he => Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr
+          (Or.inr (Or.inl he))))))))
+    · have hc : APAt x y z ∨ ExtremeAt z y x := by
+        dsimp only [APAt, ExtremeAt]
+        omega
+      exact hc.elim Or.inl
+        (fun he => Or.inr (Or.inr (Or.inr (Or.inr (Or.inr (Or.inr
+          (Or.inr (Or.inr he))))))))
+  have makeAP (a b c : GridPoint d) (ha : a ∈ s.val) (hb : b ∈ s.val)
+      (hc : c ∈ s.val) (hac : a ≠ c) (hset : {a, b, c} = s.val)
+      (hp : APAt a b c) :
+      ∃ code : GeometricCode d, (codeToMarkedTriple code).1 = s := by
+    have habc := hcol a b c ha hb hc
+    have hap (i : Fin d) :
+        ((a i : Nat) : Int) + ((c i : Nat) : Int) = 2 * ((b i : Nat) : Int) := by
+      have hi := habc i k
+      rcases hp with ⟨hbk, hck⟩ | ⟨hbk, hck⟩ <;>
+        rw [hbk, hck] at hi <;> norm_num at hi ⊢ <;> linarith
+    let t : OrientedArithmeticProgression d := ⟨(a, b, c), hac, hap⟩
+    refine ⟨Sum.inl t, ?_⟩
+    apply Subtype.ext
+    change {a, b, c} = s.val
+    exact hset
+  have makeExtreme (a b c : GridPoint d) (ha : a ∈ s.val) (hb : b ∈ s.val)
+      (hc : c ∈ s.val) (hac : a ≠ c) (hset : {a, b, c} = s.val)
+      (hp : ExtremeAt a b c) :
+      ∃ code : GeometricCode d, (codeToMarkedTriple code).1 = s := by
+    have ha0 : a k = 0 := by apply Fin.ext; exact hp.1
+    have hc3 : c k = 3 := by apply Fin.ext; exact hp.2.1
+    have habc := hcol a b c ha hb hc
+    rcases hp.2.2 with hb1 | hb2
+    · have hb1' : b k = 1 := by apply Fin.ext; exact hb1
+      have hpattern :=
+        (extreme_line_coordinate_classification a b c k ha0 hc3 habc).1 hb1'
+      have hrel (i : Fin d) : EqualOrExtreme (a i) (c i) := by
+        rcases hpattern i with hconstant | hforward | hreverse
+        · exact Or.inl (hconstant.1.trans hconstant.2)
+        · exact Or.inr (Or.inl ⟨by simpa using congrArg Fin.val hforward.1,
+            by simpa using congrArg Fin.val hforward.2.2⟩)
+        · exact Or.inr (Or.inr ⟨by simpa using congrArg Fin.val hreverse.1,
+            by simpa using congrArg Fin.val hreverse.2.2⟩)
+      have hinterior : b = extremeInterior false a c := by
+        funext i
+        apply Fin.ext
+        rcases hpattern i with hconstant | hforward | hreverse
+        · simp [extremeInterior, extremeInteriorCoordinate, ← hconstant.1,
+            ← hconstant.2] <;> omega
+        · simp [extremeInterior, extremeInteriorCoordinate, hforward]
+        · simp [extremeInterior, extremeInteriorCoordinate, hreverse]
+      let p : DistinctCoordinatePairs EqualOrExtreme d := ⟨⟨(a, c), hrel⟩, hac⟩
+      refine ⟨Sum.inr (p, false), ?_⟩
+      apply Subtype.ext
+      change {a, extremeInterior false a c, c} = s.val
+      rw [← hinterior]
+      exact hset
+    · have hb2' : b k = 2 := by apply Fin.ext; exact hb2
+      have hpattern :=
+        (extreme_line_coordinate_classification a b c k ha0 hc3 habc).2 hb2'
+      have hrel (i : Fin d) : EqualOrExtreme (a i) (c i) := by
+        rcases hpattern i with hconstant | hforward | hreverse
+        · exact Or.inl (hconstant.1.trans hconstant.2)
+        · exact Or.inr (Or.inl ⟨by simpa using congrArg Fin.val hforward.1,
+            by simpa using congrArg Fin.val hforward.2.2⟩)
+        · exact Or.inr (Or.inr ⟨by simpa using congrArg Fin.val hreverse.1,
+            by simpa using congrArg Fin.val hreverse.2.2⟩)
+      have hinterior : b = extremeInterior true a c := by
+        funext i
+        apply Fin.ext
+        rcases hpattern i with hconstant | hforward | hreverse
+        · simp [extremeInterior, extremeInteriorCoordinate, ← hconstant.1,
+            ← hconstant.2] <;> omega
+        · simp [extremeInterior, extremeInteriorCoordinate, hforward]
+        · simp [extremeInterior, extremeInteriorCoordinate, hreverse]
+      let p : DistinctCoordinatePairs EqualOrExtreme d := ⟨⟨(a, c), hrel⟩, hac⟩
+      refine ⟨Sum.inr (p, true), ?_⟩
+      apply Subtype.ext
+      change {a, extremeInterior true a c, c} = s.val
+      rw [← hinterior]
+      exact hset
+  rcases hpivot with hp | hp | hp | hp | hp | hp | hp | hp | hp
+  · exact makeAP x y z hxmem hymem hzmem hxz (by rw [hsxyz]) hp
+  · exact makeAP x z y hxmem hzmem hymem hxy (by rw [hsxyz]; ext; simp; tauto) hp
+  · exact makeAP y x z hymem hxmem hzmem hyz (by rw [hsxyz]; ext; simp; tauto) hp
+  · exact makeExtreme x y z hxmem hymem hzmem hxz (by rw [hsxyz]) hp
+  · exact makeExtreme x z y hxmem hzmem hymem hxy (by rw [hsxyz]; ext; simp; tauto) hp
+  · exact makeExtreme y x z hymem hxmem hzmem hyz (by rw [hsxyz]; ext; simp; tauto) hp
+  · exact makeExtreme y z x hymem hzmem hxmem hxy.symm (by rw [hsxyz]; ext; simp; tauto) hp
+  · exact makeExtreme z x y hzmem hxmem hymem hyz.symm (by rw [hsxyz]; ext; simp; tauto) hp
+  · exact makeExtreme z y x hzmem hymem hxmem hxz.symm (by rw [hsxyz]; ext; simp; tauto) hp
+
 #print axioms endpoint_pair_counts
 #print axioms oriented_arithmetic_progression_count
 #print axioms extreme_line_coordinate_classification
