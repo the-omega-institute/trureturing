@@ -6,7 +6,6 @@ root_files:
   - "CLAUDE.md"
   - "Directory.Build.props"
   - "Directory.Packages.props"
-  - "LICENSE"
   - "Makefile"
   - "README.md"
   - "Trureturing.lean"
