@@ -7,8 +7,6 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Words.Compositions;
 internal sealed class PhiTailEncodingDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Words/Compositions/PhiTailEncoding.";
-    private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Words/codex2026a392714bridge2");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Admissible A392714 permutations produce bounded reversed tail words.",
@@ -36,7 +34,7 @@ internal sealed class PhiTailEncodingDocument : IScribeDocumentDefinition
         string prose, DescribeRole role) => Describe.Lean(
         DescribeId.Create("phi-tail-" + name.Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-        AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
+        AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
     private static Formula V(string name) => F.Id(name);
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(Q(Operatorname, Grp(V(name))), [.. args]);
