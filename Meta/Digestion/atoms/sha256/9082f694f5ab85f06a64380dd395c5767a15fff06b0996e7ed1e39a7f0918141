@@ -1,0 +1,12 @@
+**证明。** 每个 $L\ge1$ 的窗口包含首位，故全窗口未来相等蕴含 $\iota$ 相等，定理 423.2 给 $x=y$；自然情形再由 $z$ 单射得到。若 $R$ 保持观察且被 $s$ 保持，从 $xRy$ 归纳得 $s^tx\,R\,s^ty$ 对每个 $t$ 成立，故全未来相同，进而 $x=y$。相等关系自身满足两项条件，故为最大者。若 $a(x)=a(y)$，由交换式归纳得到所有 $a(s^tx)=a(s^ty)$，再应用 $d$ 得全未来相同，故 $a$ 单射。$\omega$ 无限，$K$ 包含其单射像 $z[\omega]$，所以它们均不能单射到有限集合。
+
+对动态闭包，空字求值恢复 $q$，给出第一个因子。若两个全行为相等，则在每个 $u::w$ 上相等，这恰是从 $I_ux,I_uy$ 开始的每个后续字的观察相等，故动态闭包纤维封闭。
+
+现取 $q=\operatorname{forget}\circ a$。对字长归纳：空字保持 $a$ 相等；首字母 $u$ 先由封闭性保持相等，再对余字应用归纳假设。因此
+$$
+a(x)=a(y)\Longrightarrow
+\forall w\in U^{<\omega}\quad
+q(\operatorname{runWord}(I,w,x))=q(\operatorname{runWord}(I,w,y)).
+$$
+这在 $a[X]$ 上定义唯一因子 $f(a(x))=\operatorname{DynClosure}(q,I)(x)$。对每个 $c\in C\setminus a[X]$，令 $f(c)$ 为常值函数 $w\mapsto\operatorname{forget}(c)$。该赋值在精确域上存在，和像内定义一起给出全函数 $C\to A^{U^{<\omega}}$，并给出所需因子等式。若 $X$ 为空，像内条件为空，像外的同一公式仍定义因子；若此时 $A$ 为空，已有 $\operatorname{forget}:C\to A$ 又强制 $C$ 为空，因子仍存在。最后对单点字母表归纳得 $\operatorname{runWord}(I,w,x)=s^{|w|}x$，每个自然数都是某个字长，故两个核恰相同。证毕。
+

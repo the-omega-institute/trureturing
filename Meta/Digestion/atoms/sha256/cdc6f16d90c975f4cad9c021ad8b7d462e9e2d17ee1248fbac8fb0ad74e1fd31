@@ -1,0 +1,23 @@
+**命题 418.3（全部实际对象与精确联合定义域）。** 前述各对象均为 ZFC 集合。它们的联合图具有如下准确的定义域与所指定的陪域：
+$$
+\begin{gathered}
+z:\omega\times\omega\to\{0,1\},\qquad
+q,U:\mathbb P\times\omega\to\omega,\qquad
+\beta:\mathbb P\to\omega,\\
+\{\langle L,n\rangle:L\in\mathbb P,n\in E_L\}\subseteq\mathbb P\times\omega,\qquad
+n:\mathbb P\times\mathbb P\to\omega,\qquad
+e,C:\mathbb P\times\omega\to\omega,\qquad
+w:\mathbb P\to\{0,1\},\\
+\operatorname{dom}(\operatorname{Block})=\mathbb P\times\omega,\qquad
+\operatorname{dom}(B)=\{\langle k,x\rangle:k\in\omega,0\le x<1\},\\
+\operatorname{dom}(c)=\{\langle k,i\rangle:k\in\omega,0\le i\le k+1\},\qquad
+\operatorname{dom}(I)=\{\langle k,i\rangle:k\in\omega,0\le i\le k\},\\
+p:\omega\to\omega,\qquad
+\operatorname{dom}(\operatorname{freq})=\{\langle k,v\rangle:k\in\omega,v\in\mathcal L_k\},\\
+\Lambda,\delta,s,t:\mathbb P\to\mathbb R,\qquad
+D:\mathbb P\times\omega\to\mathbb R,\qquad
+(L,N)\longmapsto C_L(N)/N:\mathbb P\times\mathbb P\to\mathbb R.
+\end{gathered}
+$$
+其中联合 $z(n,j)$ 表示 $z(n)_j$，联合 $n(L,m)$ 表示 $n_{L,m}$，不是另造自然数集合。$\operatorname{Block}(m,k)$ 与 $B_k(x)$ 的值均是域为 $k$ 的完整二元字。$h(L,N)=\lfloor N/\Lambda_L\rfloor$ 及定理 417.2 的指标函数均在 $\mathbb P\times\omega$ 上。全部语言、相位集、严格递增候选枚举、候选计数函数、趋近子序列、实界参数、相关幂集及函数空间均适用定理 418.2。
+

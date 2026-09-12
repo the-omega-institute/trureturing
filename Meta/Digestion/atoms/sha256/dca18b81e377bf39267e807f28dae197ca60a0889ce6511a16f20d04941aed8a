@@ -1,0 +1,7 @@
+**定义 424.1（预测六·有限整段轨迹）。** 对 $L\ge1,h\ge0$，定义
+$$
+Q_{L,h}(x)=(P_LT^tx)_{0\le t\le h},\qquad
+\mathcal Q_{L,h}=Q_{L,h}[K],\qquad E_{L,h}=\ker Q_{L,h}.
+$$
+$\ker f=\{(x,y):f(x)=f(y)\}$ 总在 $f$ 的完整定义域平方上取值。
+

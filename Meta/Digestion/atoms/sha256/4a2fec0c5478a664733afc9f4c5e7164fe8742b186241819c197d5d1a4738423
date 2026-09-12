@@ -1,0 +1,22 @@
+**命题 378.10。** 记通常整数为 $\mathbb Z_o$，使用第 255–256 条的
+$$
+J=(\{0\}\times\omega)\cup(\{1\}\times\omega_{>0}),\qquad
+v:J\leftrightarrow\mathbb Z_o,\quad v(0,n)=n,\quad v(1,n)=-n,
+$$
+$$
+S=\mathsf Z_{\mathbb Z},\qquad b=\operatorname{scode}\circ v:J\leftrightarrow S.
+$$
+对 $c\in S$，三个提升分别为
+$$
+\operatorname{Enc}(v^{-1}(\operatorname{ival}(c))),\qquad
+\operatorname{Enc}(\operatorname{ival}(c)),\qquad
+\operatorname{Enc}(c).
+$$
+它们的像分别为 $J^*,\mathbb Z_o^*,S^*$，逆分别在这三个像上为
+$$
+\operatorname{scode}\circ v\circ\operatorname{Dec},\qquad
+\operatorname{scode}\circ\operatorname{Dec},\qquad
+\operatorname{Dec}.
+$$
+CSA 的电荷、时间摘要与联合时空摘要保持各自原对象及实际像，不能由标量相位恢复整个事件对象；第 93 条的历史指标 $(t,p,j)$ 分别是时间、素数标签及数位位置，不是 GICT 的尺度、规范字、相位三个观察值。
+

@@ -1,0 +1,18 @@
+**定义 378.2。** 保持第 69、71–74 条的同一可定义类函数
+$$
+\operatorname{Enc}(x)=
+\begin{cases}
+\operatorname{NatZ}(x)=\langle0,\zeta(x)\rangle,&x\in\omega,\\
+\langle1,\operatorname{Enc}[x]\rangle,&x\notin\omega,
+\end{cases}
+$$
+及有效码类 $\mathfrak V_Z$、其上的逆 $\operatorname{Dec}$、语义成员 $\in_Z$、$\operatorname{El},\operatorname{Pack}$ 与语义配对 $\langle\ ,\ \rangle_Z$。对任意集合 $X$，记
+$$
+X^*=\operatorname{Enc}[X]=\operatorname{El}(\operatorname{Enc}(X)),\qquad
+\operatorname{enc}_X=\operatorname{Enc}|_X:X\to X^*.
+$$
+对集合函数 $f:D\to Y$，记普通图 $G_f=\{\langle x,f(x)\rangle:x\in D\}$，定义外部共轭
+$$
+f^*=\operatorname{enc}_Y\circ f\circ\operatorname{Dec}|_{D^*}:D^*\to Y^*.
+$$
+

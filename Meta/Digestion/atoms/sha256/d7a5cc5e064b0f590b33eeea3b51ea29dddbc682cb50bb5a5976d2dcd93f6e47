@@ -1,0 +1,22 @@
+**定理 378.7。** 对每个集合函数 $f:D\to Y$ 和每个 $y\in Y$，包括原像为空的情形，
+$$
+(f^*)^{-1}(\{\operatorname{Enc}(y)\})=\operatorname{Enc}[f^{-1}(\{y\})].
+$$
+第 371–377 条的存在、唯一性、全部纤维、商映射、无连续右逆与全部连续算术延拓不存在性，在精确的运输域上均保持并反映。
+
+**证明。** 左侧元素唯一写成 $\operatorname{Enc}(x)$、$x\in D$。它在左侧当且仅当 $\operatorname{Enc}(f(x))=\operatorname{Enc}(y)$，由单射性当且仅当 $f(x)=y$，恰为右侧条件。这给所有纤维式，包括空集。
+
+具体地，$F_{\rm infdig}^*:K_{\rm infdig}^*\to\mathbb R^*$ 的像为 $\operatorname{Enc}[I]$，在其外每个实数码处纤维为空，特别在 $\operatorname{Enc}(1)$ 处为空；端点纤维分别为 $\{\operatorname{Enc}(u)\},\{\operatorname{Enc}(v)\}$，每个分裂值的纤维为对应两字的编码像。$H_{\rm infdig}^*:K_{\rm infdig}^*\to\mathbb T^*$ 的二点值域恰为 $\operatorname{Enc}[E]$，$T_{\rm infdig}^*:K_{\rm infdig}^*\to K_{\rm infdig}^*$ 的零纤维恰为 $\{\operatorname{Enc}(u),\operatorname{Enc}(v)\}$。其余纤维由同一等式保持准确大小。
+
+任意函数 $g:X^*\to Y^*$，不附加可定义性限制，都唯一解码为
+$$
+\widetilde g(x)=\operatorname{Dec}(g(\operatorname{Enc}(x)))\quad(x\in X).
+$$
+其函数图由替代取得，再正向共轭恰还原 $g$。反向每个原函数经共轭、解码也还原。因此函数候选的存在与唯一性在两侧双向对应；第 378.5 条又使连续性双向对应。满性和开集原像的充要条件保持商映射判据。一个运输侧连续右逆解码后会成为原映射的连续右逆，反向亦然。
+
+对 $K_{\rm infdig}^*$ 上任意候选乘数延拓，上述解码在 $z_{\rm infdig}(n)$ 处的值被其在 $\operatorname{Enc}(z_{\rm infdig}(n))$ 处的值准确决定，故延拓条件不变。二元候选 $g:K_{\rm infdig}^*\times K_{\rm infdig}^*\to K_{\rm infdig}^*$ 先通过 $\chi_{K_{\rm infdig},K_{\rm infdig}}^{-1}$ 视为原积域成员像上的函数，再解码；等价地直接取
+$$
+(x,y)\longmapsto\operatorname{Dec}(g(\operatorname{Enc}(x),\operatorname{Enc}(y))).
+$$
+乘积同胚保证其连续，核心等式完全还原。故若运输侧有连续总加法、乘法、被排除的乘数延拓或连续截面，原侧也有，分别与第 373、376–377 条矛盾。已存在的 $H_{\rm infdig},T_{\rm infdig}^h$ 及其唯一性则正向编码并反向解码证明。这个论证量化全部候选函数，因而同时保留肯定与否定断言。证毕。
+
