@@ -635,7 +635,7 @@ registry 的持久化扩展与公开/私有模块迁移也要测试。不能因�
 [S6] `tools/lean-inspector/LeanInformationAudit/SealCommand.lean`。  
 [S7] `D5/S3/ConceptDynamics/InformationEscape/ExactRate.lean`。  
 [S8] `docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md`。  
-[S9] [历史记录](https://github.com/the-omega-institute/trureturing/blob/6c97ad12ce/docs/reports/lean-cache-ownership.md)。  
+[S9] [历史记录](https://github.com/the-omega-institute/trureturing/blob/6c97ad12ce/docs/reports/lean-cache-ownership.md)。
 [S10] `.github/workflows/ci.yml`。  
 [S11] Lean 官方《Source Files and Modules》：`https://lean-lang.org/doc/reference/latest/Source-Files-and-Modules/`。  
 [S12] Lean 官方《Lake》：`https://lean-lang.org/doc/reference/latest/Build-Tools-and-Distribution/Lake/`。  
