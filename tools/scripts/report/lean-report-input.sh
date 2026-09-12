@@ -7,33 +7,20 @@ COMMAND="${1:-}"
 if [[ -n "$COMMAND" ]]; then shift; fi
 REPOSITORY=""
 REPORT=""
-PRODUCER_OVERRIDE=""
-INSPECTOR_OVERRIDE=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --repository) REPOSITORY="$2"; shift 2 ;;
     --report) REPORT="$2"; shift 2 ;;
-    --producer) PRODUCER_OVERRIDE="$2"; shift 2 ;;
-    --inspector) INSPECTOR_OVERRIDE="$2"; shift 2 ;;
     *) echo "lean-report-input: unknown argument '$1'" >&2; exit 2 ;;
   esac
 done
 
 [[ "$COMMAND" == "address" || "$COMMAND" == "verify" || "$COMMAND" == "modules" \
-  || "$COMMAND" == "producer-paths" || "$COMMAND" == "scribe-producer-paths" ]] \
-  || { echo "usage: lean-report-input.sh address|verify|modules|producer-paths|scribe-producer-paths --repository DIR [--report FILE] [--producer FILE] [--inspector FILE]" >&2; exit 2; }
+  || "$COMMAND" == "compatibility-token" || "$COMMAND" == "scribe-input-patterns" ]] \
+  || { echo "usage: lean-report-input.sh address|verify|modules|compatibility-token|scribe-input-patterns --repository DIR [--report FILE]" >&2; exit 2; }
 [[ -n "$REPOSITORY" && "$REPOSITORY" == /* && -d "$REPOSITORY" ]] \
   || { echo "lean-report-input: --repository requires an absolute directory" >&2; exit 2; }
-[[ -z "$PRODUCER_OVERRIDE" || ( "$PRODUCER_OVERRIDE" == /* && -f "$PRODUCER_OVERRIDE" ) ]] \
-  || { echo "lean-report-input: --producer requires an absolute file" >&2; exit 2; }
-[[ -z "$INSPECTOR_OVERRIDE" || ( "$INSPECTOR_OVERRIDE" == /* && -f "$INSPECTOR_OVERRIDE" ) ]] \
-  || { echo "lean-report-input: --inspector requires an absolute file" >&2; exit 2; }
 REPOSITORY="$(cd "$REPOSITORY" && pwd -P)"
-if [[ "$COMMAND" == "verify" ]]; then
-  [[ -n "$REPORT" && "$REPORT" == /* && -s "$REPORT" ]] \
-    || { echo "lean-report-input: raw Lean report is missing; run make lean-report first" >&2; exit 2; }
-fi
-
 TMP_ROOT="$(mktemp -d "${TMPDIR:-/tmp}/stratalint-report-input.XXXXXXXX")"
 cleanup() { rm -rf -- "$TMP_ROOT"; }
 trap cleanup EXIT
@@ -41,283 +28,111 @@ trap cleanup EXIT
 SCRIPT_DIRECTORY="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 source "$SCRIPT_DIRECTORY/../worktree/lean-cache-input.sh"
 
-append_producer_manifest_entry() {
-  local manifest="$1"
-  local relative="$2"
-  local path="$REPOSITORY/$relative"
-  if [[ "$relative" == "tools/lean-inspector/inspect.sh" && -n "$PRODUCER_OVERRIDE" ]]; then
-    path="$PRODUCER_OVERRIDE"
-  elif [[ "$relative" == "tools/lean-inspector/Inspector.lean" && -n "$INSPECTOR_OVERRIDE" ]]; then
-    path="$INSPECTOR_OVERRIDE"
-  fi
-  [[ -f "$path" ]] \
-    || { echo "lean-report-input: repository input is absent: $path" >&2; return 2; }
-  printf '%s\0%s\0' "$relative" "$path" >> "${manifest}.requests"
-}
-
-producer_declared_paths() {
-  local relative
-  for relative in \
-    tools/StrataLint.Cli/StrataLint.Cli.csproj \
-    tools/StrataLint.Engine/StrataLint.Engine.csproj \
-    tools/Trureturing.Truth/Trureturing.Truth.csproj \
-    Directory.Build.props \
-    Directory.Build.targets \
-    Directory.Packages.props \
-    tools/lean-inspector/inspect.sh \
-    tools/lean-inspector/Inspector.lean \
-    tools/lean-inspector/delta.py \
-    tools/lean-inspector/materials.py \
-    tools/scripts/report/lean-report-input.sh \
-    tools/scripts/lean-report-pair.sh \
-    tools/StrataLint.Engine/packages.lock.json \
-    tools/StrataLint.Cli/packages.lock.json \
-    tools/Trureturing.Truth/packages.lock.json \
-    global.json; do
-    if [[ -f "$REPOSITORY/$relative" \
-      || ( "$relative" == "tools/lean-inspector/inspect.sh" && -n "$PRODUCER_OVERRIDE" ) \
-      || ( "$relative" == "tools/lean-inspector/Inspector.lean" && -n "$INSPECTOR_OVERRIDE" ) ]]; then
-      printf '%s\n' "$relative"
-    fi
-  done
-}
-
-producer_reachable_script_paths() {
-  local scope="${1:-lean-report}"
-  python3 - "$REPOSITORY" "$scope" <<'PY'
+# One canonical, dependency-free reader for the registered manifest. The closed
+# TOML subset is documented in the report contract; no SDK/MSBuild evaluation or
+# executable-byte discovery participates in report compatibility.
+python3 - "$REPOSITORY" "$COMMAND" "$TMP_ROOT" <<'PY' || exit 2
+import hashlib
+import json
 import pathlib
 import re
 import sys
 
-root = pathlib.Path(sys.argv[1]).resolve()
-scope = sys.argv[2]
-inspector_entrypoint = pathlib.PurePosixPath("tools/lean-inspector/inspect.sh")
-inspector_root = root / "tools" / "lean-inspector"
-if scope == "lean-report":
-    entrypoints = (
-        pathlib.PurePosixPath(".github/workflows/ci.yml"),
-        inspector_entrypoint,
-        pathlib.PurePosixPath("tools/scripts/lean-report-pair.sh"),
-        pathlib.PurePosixPath("tools/scripts/report/lean-report-input.sh"),
-        # LeanArchiveFetch.Run enters this script from C#, outside shell references.
-        pathlib.PurePosixPath("tools/scripts/worktree/lean-cache-publish.sh"),
-    )
-elif scope == "scribe-content":
-    entrypoints = (
-        pathlib.PurePosixPath(".github/workflows/ci.yml"),
-        pathlib.PurePosixPath("tools/scripts/workflow/scribe-content-checks.sh"),
-    )
-else:
-    raise SystemExit(f"lean-report-input: unknown producer scope: {scope}")
-reference_pattern = re.compile(
-    r"(?P<path>(?:\$[A-Za-z_][A-Za-z0-9_]*|\$\{[A-Za-z_][A-Za-z0-9_]*\}|[A-Za-z0-9_.-]+)"
-    r"(?:/[A-Za-z0-9_.$@{}+-]+)+\.sh)(?![A-Za-z0-9_.])"
-)
+root = pathlib.Path(sys.argv[1])
+command = sys.argv[2]
+scratch = pathlib.Path(sys.argv[3])
+manifest = "Meta/lean-report.toml"
 
+try:
+    text = (root / manifest).read_bytes().decode("utf-8")
+    # Selectors cannot contain '#'; comments and whitespace have no identity.
+    text = re.sub(r"#[^\n]*", "", text)
+    values = {}
+    decoder = json.JSONDecoder()
+    while text.strip():
+        match = re.match(r"\s*([a-z_]+)[ \t]*=[ \t]*", text)
+        if match is None:
+            raise ValueError("invalid assignment")
+        key = match[1]
+        if key not in {"compatibility_version", "source_patterns", "scribe_check_inputs"} or key in values:
+            raise ValueError(f"unknown or duplicate key: {key}")
+        value_text = text[match.end():]
+        value, end = decoder.raw_decode(value_text)
+        if key == "compatibility_version" and not re.fullmatch(r"[1-9][0-9]*", value_text[:end]):
+            raise ValueError("compatibility_version must be a positive decimal integer")
+        values[key] = value
+        text = value_text[end:]
+        if text and not re.match(r"[ \t]*\r?\n", text):
+            raise ValueError(f"unexpected bytes after {key}")
+    version = values.get("compatibility_version")
+    if type(version) is not int or version <= 0:
+        raise ValueError("compatibility_version is missing or is not a positive integer")
 
-def source_text(relative):
-    path = root.joinpath(*relative.parts).resolve()
-    try:
-        path.relative_to(root)
-    except ValueError as error:
-        raise SystemExit(f"lean-report-input: producer script escaped repository: {relative}") from error
-    if relative == inspector_entrypoint and not path.is_file() and not inspector_root.exists():
-        return None
-    if not path.is_file():
-        raise SystemExit(f"lean-report-input: reachable producer input is absent: {relative}")
-    text = path.read_text(encoding="utf-8")
-    if relative == pathlib.PurePosixPath(".github/workflows/ci.yml"):
-        start_marker = "  lean-inspect:\n"
-        end_marker = "  baseline-admission:\n"
-        if start_marker not in text or end_marker not in text:
-            raise SystemExit("lean-report-input: Lean-report workflow job boundaries are absent")
-        text = text[text.index(start_marker):text.index(end_marker)]
-    return text
+    def patterns(key):
+        items = values.get(key)
+        if (not isinstance(items, list) or not items
+                or any(not isinstance(item, str) or not item
+                       or not re.fullmatch(r"[A-Za-z0-9_./*?-]+", item)
+                       or item.startswith("/") or ".." in item.split("/")
+                       or "." in item.split("/") or "//" in item for item in items)
+                or len(items) != len(set(items))):
+            raise ValueError(f"{key} must register unique relative path patterns")
+        return items
 
-
-def normalize(reference, source):
-    if "/candidate/" in reference:
-        reference = reference.split("/candidate/", 1)[1]
-    elif reference.startswith("candidate/"):
-        reference = reference[len("candidate/"):]
-    elif reference.startswith("$"):
-        reference = reference.split("/", 1)[1]
-        if reference.startswith("candidate/"):
-            reference = reference[len("candidate/"):]
-    if reference.startswith(("tools/", ".github/")):
-        candidate = pathlib.PurePosixPath(reference)
+    sources = patterns("source_patterns")
+    token = hashlib.sha256(
+        f"schema=stratalint-lean-report-compatibility\nversion={version}\n".encode("utf-8")
+    ).hexdigest()
+    (scratch / "compatibility").write_text(token + "\n", encoding="ascii")
+    if command == "compatibility-token":
+        print(token)
+    elif command == "scribe-input-patterns":
+        try:
+            print("\n".join(patterns("scribe_check_inputs")))
+        except ValueError as error:
+            raise ValueError(f"scribe-content-checks: {error}") from error
     else:
-        candidate = source.parent.joinpath(pathlib.PurePosixPath(reference))
-    normalized = pathlib.PurePosixPath(pathlib.PurePosixPath(candidate).as_posix())
-    parts = []
-    for part in normalized.parts:
-        if part in ("", "."):
-            continue
-        if part == "..":
-            if not parts:
-                raise SystemExit(f"lean-report-input: producer script escaped repository: {reference}")
-            parts.pop()
-        else:
-            parts.append(part)
-    return pathlib.PurePosixPath(*parts)
-
-
-pending = list(entrypoints)
-reachable = set()
-while pending:
-    source = pending.pop()
-    if source in reachable:
-        continue
-    text = source_text(source)
-    if text is None:
-        continue
-    reachable.add(source)
-    for match in reference_pattern.finditer(text):
-        if text[max(0, match.start() - 3):match.start()] == "://":
-            continue
-        referenced = normalize(match.group("path"), source)
-        if referenced not in reachable:
-            pending.append(referenced)
-
-for relative in sorted(reachable, key=lambda path: path.as_posix().encode("utf-8")):
-    print(relative.as_posix())
+        paths = []
+        for pattern in sources:
+            selected = sorted((path for path in root.glob(pattern)
+                               if path.is_file() and not path.is_symlink()),
+                              key=lambda path: path.as_posix().encode("utf-8"))
+            if not selected and not any(char in pattern for char in "*?"):
+                raise ValueError(f"registered report source is absent: {pattern}")
+            paths.extend(path.relative_to(root).as_posix() for path in selected)
+        if len(paths) != len(set(paths)):
+            raise ValueError("overlapping source_patterns")
+        if not paths or any(not path.endswith(".lean") or "\t" in path or "\n" in path for path in paths):
+            raise ValueError("source_patterns must select Lean module paths")
+        (scratch / "modules").write_text("".join(
+            path[:-5].replace("/", ".") + "\t" + path + "\n" for path in paths), encoding="utf-8")
+except (OSError, UnicodeError, ValueError) as error:
+    print(f"lean-report-input: {manifest} compatibility_version/config invalid: {error}", file=sys.stderr)
+    sys.exit(2)
 PY
-}
 
-producer_compile_paths() {
-  local scope="${1:-lean-report}"
-  local project json
-  local projects=()
-  if [[ "$scope" == "lean-report" ]]; then
-    projects=(
-      tools/StrataLint.Cli/StrataLint.Cli.csproj
-      tools/StrataLint.Engine/StrataLint.Engine.csproj
-      tools/Trureturing.Truth/Trureturing.Truth.csproj)
-  elif [[ "$scope" == "scribe-content" ]]; then
-    projects=(
-      tools/StrataLint.Scribe/StrataLint.Scribe.csproj
-      tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj
-      tools/StrataLint.Engine/StrataLint.Engine.csproj
-      tools/Trureturing.Truth/Trureturing.Truth.csproj)
-  else
-    return 1
-  fi
-  for project in "${projects[@]}"; do
-    [[ -f "$REPOSITORY/$project" ]] || return 1
-    json="$TMP_ROOT/$(basename "$project").compile.json"
-    if ! (
-      cd "$REPOSITORY" || exit 1
-      dotnet msbuild "$REPOSITORY/$project" -getItem:Compile \
-        -verbosity:quiet -nologo
-    ) > "$json" 2> "$json.stderr"; then
-      printf 'lean-report-input: producer Compile evaluation failed: %s\n' "$REPOSITORY/$project" >&2
-      # MSBuild can write errors to stdout even when -getItem requests JSON.
-      cat "$json.stderr" "$json" >&2
-      return 1
-    fi
-    python3 - "$REPOSITORY" "$json" <<'PY' || return 1
-import json
-import pathlib
-import sys
+if [[ "$COMMAND" == "verify" ]]; then
+  [[ -n "$REPORT" && "$REPORT" == /* && -s "$REPORT" ]] \
+    || { echo "lean-report-input: raw Lean report is missing; run make lean-report first" >&2; exit 2; }
+fi
 
-root = pathlib.Path(sys.argv[1]).resolve()
-items = json.loads(pathlib.Path(sys.argv[2]).read_text(encoding="utf-8"))["Items"]["Compile"]
-if not items:
-    raise SystemExit(1)
-for item in items:
-    path = pathlib.Path(item["FullPath"]).resolve()
-    try:
-        relative = path.relative_to(root)
-    except ValueError:
-        raise SystemExit(1)
-    if not path.is_file():
-        raise SystemExit(1)
-    print(relative.as_posix())
-PY
-  done
-}
-
-complete_producer_paths() {
-  local compile_paths="$TMP_ROOT/producer-compile-paths"
-  local script_paths="$TMP_ROOT/producer-script-paths"
-  local lean_paths="$TMP_ROOT/producer-lean-paths"
-  producer_compile_paths lean-report > "$compile_paths" || return 1
-  producer_reachable_script_paths lean-report > "$script_paths" || return 1
-  lean_inspector_source_paths > "$lean_paths" || return 1
-  { cat "$compile_paths"; cat "$script_paths"; cat "$lean_paths"; producer_declared_paths; } | sort -u
-}
-
-scribe_declared_paths() {
-  local relative
-  for relative in \
-    tools/StrataLint.Scribe/StrataLint.Scribe.csproj \
-    tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj \
-    tools/StrataLint.Scribe.Documents/packages.lock.json \
-    tools/StrataLint.Scribe/packages.lock.json; do
-    [[ -f "$REPOSITORY/$relative" ]] && printf '%s\n' "$relative"
-  done
-}
-
-complete_scribe_producer_paths() {
-  local compile_paths="$TMP_ROOT/scribe-compile-paths"
-  local script_paths="$TMP_ROOT/scribe-script-paths"
-  local lean_paths="$TMP_ROOT/lean-producer-paths"
-  producer_compile_paths scribe-content > "$compile_paths" || return 1
-  producer_reachable_script_paths scribe-content > "$script_paths" || return 1
-  complete_producer_paths > "$lean_paths" || return 1
-  {
-    cat "$compile_paths"
-    cat "$script_paths"
-    cat "$lean_paths"
-    scribe_declared_paths
-  } | sort -u
-}
-
-producer_sha256() {
-  local manifest="$1"
-  local relative
-  : > "$manifest"
-  : > "${manifest}.unsorted"
-  : > "${manifest}.unsorted.requests"
-  local producer_paths="$TMP_ROOT/producer-paths"
-  complete_producer_paths > "$producer_paths" \
-    || { echo "lean-report-input: producer closure is unavailable" >&2; return 2; }
-  while IFS= read -r relative; do
-    append_producer_manifest_entry "${manifest}.unsorted" "$relative" || return 2
-  done < "$producer_paths"
-  materialize_manifest "${manifest}.unsorted" || return 2
-  sort "${manifest}.unsorted" > "$manifest" || return 2
-  rm -f -- "${manifest}.unsorted"
-  hash_file "$manifest"
-}
-
-managed_modules() {
-  [[ -f "$REPOSITORY/Trureturing.lean" && -d "$REPOSITORY/D5" ]] \
-    || { echo "lean-report-input: managed Lean roots are absent" >&2; return 2; }
-  printf 'Trureturing\tTrureturing.lean\n'
-  find "$REPOSITORY/D5" -type f -name '*.lean' -print \
-    | sed "s#^$REPOSITORY/##" \
-    | sort \
-    | while IFS= read -r path; do
-        module="${path%.lean}"
-        printf '%s\t%s\n' "${module//\//.}" "$path"
-      done
-}
-
-# Repository address preimage v1 hashes the resident inspector producer,
-# Trureturing.lean + D5/**/*.lean + tools/lean-inspector/**/*.lean sources,
-# and the Lean toolchain/lake configuration as three named SHA-256 fields.
+# Digest-shaped producer/resident fields are the same version-derived token.
+# Report sources exclude Inspector; the Lean config preimage is shared with the
+# compiled-cache helper without changing its source scope or configuration.
 repository_address() {
-  local resident_manifest="$TMP_ROOT/resident-inspector.manifest"
   local preimage="$TMP_ROOT/repository-input.preimage"
-  local resident_sha256 sources_sha256 config_sha256 lean_input
+  local sources_manifest="$TMP_ROOT/report-sources.manifest"
+  local resident_sha256 sources_sha256 config_sha256 module path
 
+  resident_sha256="$(cat "$TMP_ROOT/compatibility")" || return 2
   prepare_memo
-  resident_sha256="$(producer_sha256 "$resident_manifest")" || return 2
-  lean_input="$(lean_cache_address)" || return 2
-  [[ "$lean_input" =~ ^[0-9a-f]{64}\ [0-9a-f]{64}$ ]] \
-    || { echo "lean-report-input: Lean input address is malformed" >&2; return 2; }
-  read -r sources_sha256 config_sha256 <<< "$lean_input"
+  : > "${sources_manifest}.requests"
+  while IFS=$'\t' read -r module path; do
+    append_manifest_entry "$sources_manifest" "$path" || return 2
+  done < "$TMP_ROOT/modules"
+  materialize_manifest "$sources_manifest" || return 2
+  sources_sha256="$(hash_file "$sources_manifest")" || return 2
+  config_sha256="$(lean_config_sha256)" || return 2
 
   {
     printf '%s\n' "schema=stratalint-lean-report-repository-input-v1"
@@ -351,15 +166,10 @@ case "$COMMAND" in
     repository_address
     ;;
   modules)
-    managed_modules
+    cat "$TMP_ROOT/modules"
     ;;
-  producer-paths)
-    complete_producer_paths \
-      || { echo "lean-report-input: producer compile closure is unavailable" >&2; exit 2; }
-    ;;
-  scribe-producer-paths)
-    complete_scribe_producer_paths \
-      || { echo "lean-report-input: Scribe producer closure is unavailable" >&2; exit 2; }
+  compatibility-token|scribe-input-patterns)
+    # Already emitted by the canonical manifest reader above.
     ;;
   verify)
     verify_report_sha

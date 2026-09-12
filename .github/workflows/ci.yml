@@ -283,6 +283,20 @@ jobs:
             printf '%s\n' "cannot check out push commit $GITHUB_SHA; admission fails closed" >&2
           fi
           exit 1
+      - name: Resolve candidate canonical Lean report address
+        id: lean-report-input
+        shell: bash
+        run: |
+          set -euo pipefail
+          helper="$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-input.sh"
+          test -x "$helper"
+          address_output="$("$helper" address --repository "$GITHUB_WORKSPACE/candidate")"
+          address_pattern='^([0-9a-f]{64} ){3}[0-9a-f]{64}$'
+          [[ "$address_output" =~ $address_pattern ]] || { echo 'Lean report input address is malformed' >&2; exit 2; }
+          read -r address producer_sha256 sources_sha256 config_sha256 <<< "$address_output"
+          echo "address=$address" >> "$GITHUB_OUTPUT"
+          echo "sources_sha256=$sources_sha256" >> "$GITHUB_OUTPUT"
+          echo "config_sha256=$config_sha256" >> "$GITHUB_OUTPUT"
       - name: Install pinned SDK for statement projection reconciliation
         uses: actions/setup-dotnet@v4
         with:
@@ -336,21 +350,6 @@ jobs:
           dependency_sha256="$("$helper" dependency-address --repository "$GITHUB_WORKSPACE/candidate")"
           [[ "$dependency_sha256" =~ ^[0-9a-f]{64}$ ]]
           echo "dependency_sha256=$dependency_sha256" >> "$GITHUB_OUTPUT"
-      - name: Probe candidate canonical Lean report address
-        id: lean-report-input
-        shell: bash
-        run: |
-          set -euo pipefail
-          helper="$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-input.sh"
-          address_pattern='^([0-9a-f]{64} ){3}[0-9a-f]{64}$'
-          if test -x "$helper" \
-            && address_output="$("$helper" address --repository "$GITHUB_WORKSPACE/candidate")" \
-            && [[ "$address_output" =~ $address_pattern ]]; then
-            echo "address=${address_output%% *}" >> "$GITHUB_OUTPUT"
-          else
-            printf '%s\n' '::warning::Report address unavailable; treating report cache as a miss'
-          fi
-
       # 精确 key 命中仍直接复用;prefix restore 只提供陈旧 delta 基线,不算 cache hit。adapter 与现行 delta 机器重验报告、provenance、materials 与 producer logs;
       # 任一项不可信就不给 cache root,沿原路径全量生产。下游仍逐模块核对 source_sha256,故陈旧报告不能被静默接受。
       - name: Restore canonical Lean report by input address
@@ -377,7 +376,7 @@ jobs:
           source="$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json"
           reports="$RUNNER_TEMP/raw-lean-reports"
           mkdir -p "$reports"
-          # verify 需要 .sha256 旁文件(lean-report-input.sh:100),故一并要求存在。
+          # verify also requires the SHA sidecar and the complete report bundle.
           for suffix in '' .sha256 .input.attestation .provenance.json .materials.zip; do
             test -s "${source}${suffix}"
           done
@@ -385,8 +384,8 @@ jobs:
           # 缓存条目对候选树重新验一次地址与报告哈希;不符即整体回落,不静默使用。
           "$helper" verify --repository "$GITHUB_WORKSPACE/candidate" --report "$source"
           producer="$(awk -F= '$1 == "producer_sha256" {print $2}' "${source}.input.attestation")"
-          sources="${{ steps.lean-input.outputs.sources_sha256 }}"
-          config="${{ steps.lean-input.outputs.config_sha256 }}"
+          sources="${{ steps.lean-report-input.outputs.sources_sha256 }}"
+          config="${{ steps.lean-report-input.outputs.config_sha256 }}"
           input="$(printf 'schema=stratalint-lean-report-input-v1\nproducer_sha256=%s\nrepository_inspector_sha256=%s\nlean_sources_sha256=%s\nlean_config_sha256=%s\n' \
             "$producer" "$producer" "$sources" "$config" | sha256sum | cut -d ' ' -f 1)"
           jq -e -s --arg producer "$producer" --arg sources "$sources" --arg config "$config" \
