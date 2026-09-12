@@ -5699,7 +5699,15 @@ IE-C048；本码仅在 Law-variation 见证成立后判定，故每个登记至�
 readout 定义依赖已注册 theorem 的 truth、proof term 或 theorem-specific certificate／statement
 identity 时触发，将 AC-CIRPT-011 落为 fail-closed 诊断：provenance 检查须取 readout 定义的传递
 常量闭包，闭包不得到达该 theorem、其 proof、该 statement 的 `Decidable` instances 或上述身份来源；
-闭包无法完整取得亦按本码失败；readout 含判官允许表之外的形式时亦按本码失败（`reason=unclassified_form`），由作者改写 readout 或经判官层变更扩展允许表，不要求判官证明完备。本码适用于 finite 与 structural 两条注册路径。
+闭包在 `D5` 与判官命名空间边界截断：边界外的常量（core、Std、Mathlib）由 import 无环性归入数据层，
+作为叶节点，只按名称与声明类型检查；受保护常量沿 value 遍历，受保护 theorem 的 proof 仅在 proof position 遍历。
+闭包无法完整取得亦按本码失败；readout 含判官允许表之外的形式时亦按本码失败（`reason=unclassified_form`），
+由作者改写 readout 或经判官层变更扩展允许表，不要求判官证明完备。
+准入的实例产生器以名称成员关系构成封闭允许表；表外的 decision producer 按 `reason=unclassified_form`、
+`class=unlisted_decision_producer` 失败，允许表仅经判官层变更逐例扩展，不推断成员。
+判定优先序为 `forbidden_dependency > unclassified_form > incomplete_closure > clean`；
+`unclassified_form` 的 `provenance_closure` 须为含 `class, first, namespace, site, walked` 的 compact JSON object，
+字段含义与各 reason 的 payload 类型按第 31 节。本码适用于 finite 与 structural 两条注册路径。
 优先序 `IE-C050 > IE-C021`：IE-C021（常值 `true` readout）是本码的特例，同一登记同时命中时只发 IE-C050。
 定义完成；消费者随判官层落地，当前无机器消费者。
 
@@ -8345,7 +8353,7 @@ IE-C045--IE-C047 仍为 reserved/open，不进入三表，也不得由现有 com
 | IE-C044 | `DispositionCensusMismatch` | frozen report 的 `statement_id` 不唯一、coverage/totals/flag 不精确，或 observation root/owner/scope/completion/candidates 不符 |
 | IE-C048 | `RealizationIgnoredByLaw` | finite／structural 注册缺少同 signature、声明 intervention domain 内的 kernel-checked Law-variation witness；结构路径两 realizations 均须在 Γ domain，Iff.rfl 不算见证 |
 | IE-C049 | `UnusedPrimitiveInBundle` | signature 的 readout index／anchor 不在 Law 的 exact generated slot support 中，删除后 Law 在声明域外延不变而 bundle kernel 改变；优先序 `IE-C048 > IE-C049`，IE-C048 触发时不判 |
-| IE-C050 | `ClosedTruthReadout` | readout 传递常量闭包到达注册 theorem、其 truth／proof、statement 的 Decidable instances 或 theorem-specific certificate／statement identity，或闭包无法完整取得，或 readout 含判官允许表之外的形式（`reason=unclassified_form`）；优先序 `IE-C050 > IE-C021`，同时命中只发本码 |
+| IE-C050 | `ClosedTruthReadout` | readout 传递常量闭包按本码的命名空间边界截断后到达注册 theorem、其 truth／proof、statement 的 Decidable instances 或 theorem-specific certificate／statement identity，或闭包无法完整取得，或 readout 含判官允许表之外的形式（`reason=unclassified_form`）；判定优先序 `forbidden_dependency > unclassified_form > incomplete_closure > clean`；优先序 `IE-C050 > IE-C021`，同时命中只发本码 |
 
 | code | exact deterministic message shape |
 |---|---|
@@ -8379,15 +8387,26 @@ IE-C045--IE-C047 仍为 reserved/open，不进入三表，也不得由现有 com
 | IE-C044 | `head_sha, component, expected, actual` |
 | IE-C048 | `root_id, catalog_id, theorem_name, law_arena, signature, intervention_domain, reason` |
 | IE-C049 | `root_id, catalog_id, theorem_name, signature, primitive, slot_support` |
-| IE-C050 | `root_id, catalog_id, theorem_name, readout, reason, provenance_closure` |
+| IE-C050 | `root_id, catalog_id, theorem_name, readout, reason, provenance_closure`；`provenance_closure` 按 reason 分别为 array（`forbidden_dependency`）、object（`unclassified_form`）或 `null`（`incomplete_closure`） |
 
 IE-C048 的 `reason` 取 `missing_witness`／`invalid_witness`／`signature_mismatch`／`outside_domain`；
 IE-C049 的 `primitive` 标识 signature 内的 readout index 或 anchor，`slot_support` 是 exact generated support。
 sensitivity 见证缺失或未通过 kernel 检查时，`primitive` 取首个无有效见证的 readout index 或 anchor，
 `slot_support` 取已通过 kernel 检查的见证所覆盖的 primitive 集合（checked support），不是语义 exact support；
 判官不枚举 realization 补全语义支持，两个字段不得为 `null`。
-IE-C050 的 `reason` 取 `forbidden_dependency`／`incomplete_closure`／`unclassified_form`；判官只放行其允许表认得的 readout 形式（数据层常量、类型不触及定理模块与 arena 命名空间的证明常量、显式列举的实例产生器、由这些构成的表达式），认不出的形式以 `unclassified_form` 失败并点名首个未识别常量或形式，不以定义等价证明「未触及」；`provenance_closure` 是 readout
-定义的传递常量闭包，按 canonical sort 输出，闭包不完整时为 `null`。
+IE-C050 的 `reason` 取 `forbidden_dependency`／`unclassified_form`／`incomplete_closure`，
+判定优先序为 `forbidden_dependency > unclassified_form > incomplete_closure > clean`；
+判官只放行其允许表认得的 readout 形式（数据层常量、类型不触及定理模块与 arena 命名空间的证明常量、
+按名称显式列举的实例产生器、由这些构成的表达式），认不出的形式以 `unclassified_form` 失败，
+不以定义等价证明「未触及」；表外的 decision producer 取 `class=unlisted_decision_producer`，
+允许表仅经判官层变更逐例扩展，不推断成员。
+`provenance_closure` 的闭包遍历按 IE-C050 的 `D5` 与判官命名空间边界截断契约；
+`reason=forbidden_dependency` 时为按 canonical sort 输出的 compact JSON array，`reason=incomplete_closure` 时为 `null`。
+`reason=unclassified_form` 时为 compact JSON object，键按 canonical sort 排列为 `class, first, namespace, site, walked`：
+`class` 取 `classical_choice`／`unlisted_decision_producer`／`statement_subterm`／`statement_mentioning_type`／`closed_decision`；
+`first` 点名首个未识别常量或形式；`namespace` 取 `protected:D5`／`protected:judge`／`protected:current`／`external:Classical`／`external:other`；
+`site` 是其 body 含该常量或形式的受保护常量，或 readout 地址；`walked` 是停止前已访问名称按 canonical sort 排列的 array。
+message 须为表中六个 token，`provenance={provenance_closure}` 按 reason 承载上述 array、object 或 `null`。
 
 所有 arrays 使用 canonical sort 后的 compact JSON；`expected`／`actual` 若是 structured value
 也使用 canonical compact JSON，不退化为不确定的人类散文。reserved IE-C045--IE-C047 只有在
