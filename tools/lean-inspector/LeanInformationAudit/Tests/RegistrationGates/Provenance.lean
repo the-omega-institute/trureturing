@@ -59,6 +59,12 @@ elab "check_provenance " label:str " using " readout:ident " expects " reason:st
           (message.splitOn s!" reason={reason.getString} provenance=").length == 2 &&
           (message.splitOn "IE-C021").length == 1
     if let some message := actual then
+      let tokens := message.splitOn " "
+      unless tokens.length == 6 && tokens[0]! == "IE-C050" &&
+          tokens[1]! == "ClosedTruthReadout" && tokens[2]!.startsWith "key=" &&
+          tokens[3]!.startsWith "readout=" && tokens[4]!.startsWith "reason=" &&
+          tokens[5]!.startsWith "provenance=" do
+        throwError "[FAIL] {label.getString}: expected six diagnostic tokens"
       let pieces := message.splitOn " provenance="
       let payload := pieces.getLast!
       let expectedKey := s!"key={entry.registrationModuleName}/{entry.effectiveCatalogId}/{entry.theoremName}"
