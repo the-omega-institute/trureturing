@@ -2,12 +2,16 @@
    generality: G
    mirror-B: D5/B/S3/Arith/Lattices/FourGridCollinearTriples
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [Mathlib.Data.Fintype.BigOperators, Mathlib.Data.Finset.Powerset]
+   anchors: [Mathlib.Data.Fintype.BigOperators, Mathlib.Data.Finset.Powerset,
+     Mathlib.Tactic.LinearCombination, Mathlib.Tactic.Linarith, Mathlib.Tactic.Ring]
    utility: none
    digest: Coordinatewise endpoint codes count arithmetic and four-point line candidates. -/
 
 import Mathlib.Data.Finset.Powerset
 import Mathlib.Data.Fintype.BigOperators
+import Mathlib.Tactic.LinearCombination
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Ring
 
 namespace D5.S3.Arith.Lattices.FourGridCollinearTriples
 
@@ -189,6 +193,83 @@ theorem extreme_line_coordinate_classification {d : Nat} (x y z : GridPoint d) (
     have h := hcol i k
     rw [hx, hy, hz] at h
     omega
+
+private noncomputable def collinearTripleFinset (d : Nat) : Finset (Finset (GridPoint d)) := by
+  classical
+  exact ((Finset.univ : Finset (GridPoint d)).powersetCard 3).filter IsCollinearTriple
+
+private abbrev CollinearTriples (d : Nat) := ↥(collinearTripleFinset d)
+
+private noncomputable def orientationMark {d : Nat} (x z : GridPoint d) : Bool :=
+  decide ((Fintype.equivFin (GridPoint d)) x < (Fintype.equivFin (GridPoint d)) z)
+
+private noncomputable def apMarkedTriple {d : Nat} (t : OrientedArithmeticProgression d) :
+    CollinearTriples d × Bool := by
+  classical
+  let x := t.val.1
+  let y := t.val.2.1
+  let z := t.val.2.2
+  have hxz : x ≠ z := t.property.1
+  have hxy : x ≠ y := by
+    intro h
+    apply hxz
+    funext i
+    apply Fin.ext
+    have hi := t.property.2 i
+    change ((x i : Nat) : Int) + ((z i : Nat) : Int) =
+      2 * ((y i : Nat) : Int) at hi
+    rw [h] at hi ⊢
+    omega
+  have hyz : y ≠ z := by
+    intro h
+    apply hxz
+    funext i
+    apply Fin.ext
+    have hi := t.property.2 i
+    change ((x i : Nat) : Int) + ((z i : Nat) : Int) =
+      2 * ((y i : Nat) : Int) at hi
+    rw [h] at hi
+    omega
+  have hbase : Collinear x y z := by
+    intro i j
+    have hi := t.property.2 i
+    have hj := t.property.2 j
+    change ((x i : Nat) : Int) + ((z i : Nat) : Int) =
+      2 * ((y i : Nat) : Int) at hi
+    change ((x j : Nat) : Int) + ((z j : Nat) : Int) =
+      2 * ((y j : Nat) : Int) at hj
+    have hi' : ((z i : Nat) : Int) - ((x i : Nat) : Int) =
+        2 * (((y i : Nat) : Int) - ((x i : Nat) : Int)) := by
+      linarith
+    have hj' : ((z j : Nat) : Int) - ((x j : Nat) : Int) =
+        2 * (((y j : Nat) : Int) - ((x j : Nat) : Int)) := by
+      linarith
+    rw [hi', hj']
+    ring
+  refine (⟨{x, y, z}, ?_⟩, orientationMark x z)
+  change {x, y, z} ∈
+    ((Finset.univ : Finset (GridPoint d)).powersetCard 3).filter IsCollinearTriple
+  rw [Finset.mem_filter, Finset.mem_powersetCard]
+  refine ⟨⟨by simp, by simp [hxy, hxz, hyz]⟩, ?_⟩
+  refine ⟨by simp [hxy, hxz, hyz], ?_⟩
+  intro a ha b hb c hc
+  simp only [Finset.mem_insert, Finset.mem_singleton] at ha hb hc
+  rcases ha with (rfl | rfl | rfl) <;>
+    rcases hb with (rfl | rfl | rfl) <;>
+      rcases hc with (rfl | rfl | rfl)
+  all_goals
+    unfold Collinear
+    intro i j
+    first
+    | exact hbase i j
+    | exact hbase j i
+    | exact (hbase i j).symm
+    | exact (hbase j i).symm
+    | linear_combination hbase i j
+    | linear_combination -hbase i j
+    | linear_combination hbase j i
+    | linear_combination -hbase j i
+    | ring
 
 #print axioms endpoint_pair_counts
 #print axioms oriented_arithmetic_progression_count
