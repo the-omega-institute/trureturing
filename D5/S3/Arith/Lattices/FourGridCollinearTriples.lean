@@ -737,6 +737,141 @@ private noncomputable def apMarkedTriple_injective {d : Nat} :
     rw [hreverse] at hmark
     cases hq : orientationMark x z <;> simp [hq] at hmark
 
+private noncomputable def extremeMarkedTriple_injective {d : Nat} :
+    Function.Injective (extremeMarkedTriple :
+      DistinctCoordinatePairs EqualOrExtreme d × Bool → CollinearTriples d × Bool) := by
+  classical
+  intro q r hqr
+  let x := q.1.val.val.1
+  let z := q.1.val.val.2
+  let y := extremeInterior q.2 x z
+  let X := r.1.val.val.1
+  let Z := r.1.val.val.2
+  let Y := extremeInterior r.2 X Z
+  have hxz : x ≠ z := q.1.property
+  have hcoord : ∃ k, x k ≠ z k := by
+    by_contra h
+    simp only [not_exists, not_not] at h
+    exact hxz (funext h)
+  let k := Classical.choose hcoord
+  have hk : x k ≠ z k := Classical.choose_spec hcoord
+  have hkrel := q.1.val.property k
+  change EqualOrExtreme (x k) (z k) at hkrel
+  have hkextreme :
+      (x k).val = 0 ∧ (z k).val = 3 ∨ (x k).val = 3 ∧ (z k).val = 0 := by
+    rcases hkrel with hEq | hExtreme | hExtreme
+    · exact False.elim (hk hEq)
+    · exact Or.inl hExtreme
+    · exact Or.inr hExtreme
+  have hkxy : x k ≠ y k := by
+    intro h
+    have hv := congrArg Fin.val h
+    change (x k).val = (extremeInteriorCoordinate q.2 (x k) (z k)).val at hv
+    rcases hkextreme with ⟨hx, hz⟩ | ⟨hx, hz⟩ <;>
+      cases hq : q.2 <;> simp [extremeInteriorCoordinate, hx, hz, hq] at hv
+  have hkyz : y k ≠ z k := by
+    intro h
+    have hv := congrArg Fin.val h
+    change (extremeInteriorCoordinate q.2 (x k) (z k)).val = (z k).val at hv
+    rcases hkextreme with ⟨hx, hz⟩ | ⟨hx, hz⟩ <;>
+      cases hq : q.2 <;> simp [extremeInteriorCoordinate, hx, hz, hq] at hv
+  have hxy : x ≠ y := fun h => hkxy (congrFun h k)
+  have hyz : y ≠ z := fun h => hkyz (congrFun h k)
+  have hnotXY : ¬EqualOrExtreme (x k) (y k) := by
+    intro hrel
+    rcases hrel with hEq | hExtreme | hExtreme
+    · exact hkxy hEq
+    · rcases hExtreme with ⟨hx0, hy3⟩
+      have hv : (y k).val =
+          (extremeInteriorCoordinate q.2 (x k) (z k)).val := rfl
+      rcases hkextreme with ⟨hx, hz⟩ | ⟨hx, hz⟩ <;>
+        cases hq : q.2 <;>
+          simp [extremeInteriorCoordinate, hx, hz, hq] at hv <;> omega
+    · rcases hExtreme with ⟨hx3, hy0⟩
+      have hv : (y k).val =
+          (extremeInteriorCoordinate q.2 (x k) (z k)).val := rfl
+      rcases hkextreme with ⟨hx, hz⟩ | ⟨hx, hz⟩ <;>
+        cases hq : q.2 <;>
+          simp [extremeInteriorCoordinate, hx, hz, hq] at hv <;> omega
+  have hnotYX : ¬EqualOrExtreme (y k) (x k) := by
+    intro hrel
+    apply hnotXY
+    rcases hrel with hEq | hExtreme | hExtreme
+    · exact Or.inl hEq.symm
+    · exact Or.inr (Or.inr ⟨hExtreme.2, hExtreme.1⟩)
+    · exact Or.inr (Or.inl ⟨hExtreme.2, hExtreme.1⟩)
+  have hnotYZ : ¬EqualOrExtreme (y k) (z k) := by
+    intro hrel
+    rcases hrel with hEq | hExtreme | hExtreme
+    · exact hkyz hEq
+    · rcases hExtreme with ⟨hy0, hz3⟩
+      have hv : (y k).val =
+          (extremeInteriorCoordinate q.2 (x k) (z k)).val := rfl
+      rcases hkextreme with ⟨hx, hz⟩ | ⟨hx, hz⟩ <;>
+        cases hq : q.2 <;>
+          simp [extremeInteriorCoordinate, hx, hz, hq] at hv <;> omega
+    · rcases hExtreme with ⟨hy3, hz0⟩
+      have hv : (y k).val =
+          (extremeInteriorCoordinate q.2 (x k) (z k)).val := rfl
+      rcases hkextreme with ⟨hx, hz⟩ | ⟨hx, hz⟩ <;>
+        cases hq : q.2 <;>
+          simp [extremeInteriorCoordinate, hx, hz, hq] at hv <;> omega
+  have hnotZY : ¬EqualOrExtreme (z k) (y k) := by
+    intro hrel
+    apply hnotYZ
+    rcases hrel with hEq | hExtreme | hExtreme
+    · exact Or.inl hEq.symm
+    · exact Or.inr (Or.inr ⟨hExtreme.2, hExtreme.1⟩)
+    · exact Or.inr (Or.inl ⟨hExtreme.2, hExtreme.1⟩)
+  have hfin := congrArg (fun p => p.1.val) hqr
+  have hmark := congrArg Prod.snd hqr
+  change {x, y, z} = {X, Y, Z} at hfin
+  change orientationMark x z = orientationMark X Z at hmark
+  have hXmem : X ∈ ({x, y, z} : Finset (GridPoint d)) := by rw [hfin]; simp
+  have hZmem : Z ∈ ({x, y, z} : Finset (GridPoint d)) := by rw [hfin]; simp
+  simp only [Finset.mem_insert, Finset.mem_singleton] at hXmem hZmem
+  have hrrel := r.1.val.property k
+  change EqualOrExtreme (X k) (Z k) at hrrel
+  have hXZ : X ≠ Z := r.1.property
+  have hendpoints : (X = x ∧ Z = z) ∨ (X = z ∧ Z = x) := by
+    rcases hXmem with hX | hX | hX <;> rcases hZmem with hZ | hZ | hZ
+    · exact False.elim (hXZ (hX.trans hZ.symm))
+    · rw [hX, hZ] at hrrel
+      exact False.elim (hnotXY hrrel)
+    · exact Or.inl ⟨hX, hZ⟩
+    · rw [hX, hZ] at hrrel
+      exact False.elim (hnotYX hrrel)
+    · exact False.elim (hXZ (hX.trans hZ.symm))
+    · rw [hX, hZ] at hrrel
+      exact False.elim (hnotYZ hrrel)
+    · exact Or.inr ⟨hX, hZ⟩
+    · rw [hX, hZ] at hrrel
+      exact False.elim (hnotZY hrrel)
+    · exact False.elim (hXZ (hX.trans hZ.symm))
+  rcases hendpoints with ⟨hX, hZ⟩ | ⟨hX, hZ⟩
+  · have hcenter : y = Y := by
+      have hymem : y ∈ ({X, Y, Z} : Finset (GridPoint d)) := by rw [← hfin]; simp
+      simp only [Finset.mem_insert, Finset.mem_singleton] at hymem
+      grind
+    have hchoice : q.2 = r.2 := by
+      by_contra hchoice
+      have hv := congrArg (fun p : GridPoint d => (p k).val) hcenter
+      change (extremeInteriorCoordinate q.2 (x k) (z k)).val =
+        (extremeInteriorCoordinate r.2 (X k) (Z k)).val at hv
+      rw [hX, hZ] at hv
+      rcases hkextreme with ⟨hx, hz⟩ | ⟨hx, hz⟩ <;>
+        cases hq : q.2 <;> cases hr : r.2 <;>
+          simp [extremeInteriorCoordinate, hx, hz, hq, hr] at hv hchoice
+    apply Prod.ext
+    · apply Subtype.ext
+      apply Subtype.ext
+      exact Prod.ext hX.symm hZ.symm
+    · exact hchoice
+  · rw [hX, hZ] at hmark
+    have hreverse := orientationMark_reverse hxz
+    rw [hreverse] at hmark
+    cases hq : orientationMark x z <;> simp [hq] at hmark
+
 #print axioms endpoint_pair_counts
 #print axioms oriented_arithmetic_progression_count
 #print axioms extreme_line_coordinate_classification
