@@ -1,11 +1,13 @@
 using System.Diagnostics;
+using System.Text.Json;
 using StrataLint.TestSupport;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace StrataLint.EngineeringScope.Tests;
 
 [Collection("Engineering scope process boundary")]
-public sealed class SharedBuildContractTests
+public sealed class SharedBuildContractTests(ITestOutputHelper output)
 {
     [Theory]
     [InlineData("engineering")]
@@ -68,6 +70,9 @@ public sealed class SharedBuildContractTests
     [InlineData("current", "", 0)]
     [InlineData("engineering", "", 0)]
     [InlineData("engineering", "test", 1)]
+    [InlineData("engineering", "selftest", 1)]
+    [InlineData("engineering", "selftest-mismatch", 2)]
+    [InlineData("engineering", "capability-proof", 1)]
     [InlineData("current", "check-current", 1)]
     [InlineData("current", "replace-build", 2)]
     [InlineData("current", "missing-current-units", 2)]
@@ -95,6 +100,7 @@ public sealed class SharedBuildContractTests
               [[ " $* " == *' --no-dependencies '* ]] || exit 92
               echo proof >> build/events
               if [[ "$2" == */CompileFailProof/CompileFailProof.csproj ]]; then
+                [[ "$CONTRACT_FAILURE" != capability-proof ]] || exit 1
                 echo 'MissingCapability.cs(13,9): error CS7036: missing metaClear'
               else echo 'BannedApiViolations.cs(1,1): error RS0030: banned symbol'; fi
               exit 1
@@ -102,10 +108,12 @@ public sealed class SharedBuildContractTests
             if [[ "$1" == test ]]; then
               echo test >> build/events
               assembly="$2"
+              source=build/passed/execution.trx
+              [[ "$CONTRACT_FAILURE" != test ]] || source=build/failed/execution.trx
               while [[ "$1" != --results-directory ]]; do shift; done
               mkdir -p "$2"
-              if [[ "$assembly" == *Second.dll ]]; then sed 's/First.dll/Second.dll/g' build/passed/execution.trx > "$2/run.trx"
-              else cp build/passed/execution.trx "$2/run.trx"; fi
+              if [[ "$assembly" == *Second.dll ]]; then sed 's/First.dll/Second.dll/g' "$source" > "$2/run.trx"
+              else cp "$source" "$2/run.trx"; fi
               [[ "$CONTRACT_FAILURE" != replace-build ]] || sed 's/"round": "/"round": "changed-/' build/ci/build.json > build/changed.json
               [[ ! -f build/changed.json ]] || mv build/changed.json build/ci/build.json
               [[ "$CONTRACT_FAILURE" != test ]]
@@ -122,6 +130,9 @@ public sealed class SharedBuildContractTests
             echo "$action" >> build/events
             [[ "$action" != "$CONTRACT_FAILURE" ]] || exit 1
             [[ "$action" != selftest ]] || echo "SELFTEST PASS"
+            if [[ "$action" == selftest && "$CONTRACT_FAILURE" == selftest-mismatch ]]; then
+              wc -l < build/events
+            fi
             """);
         File.SetUnixFileMode(Path.Combine(root, "build/bin/dotnet"), UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
         var binaries = new[] { CommonExecutionEvidence.CliPath, CommonExecutionEvidence.RunnerPath, CommonExecutionEvidence.ScribePath,
@@ -132,6 +143,7 @@ public sealed class SharedBuildContractTests
             new BuiltTestProject(CurrentExecutionContractTests.CandidateFixture.Second, binaries[4]) });
         Write("build/ci/build.log", "shared production\n");
         fixture.WriteTrx(Path.Combine(root, "build/passed"), "Passed");
+        fixture.WriteTrx(Path.Combine(root, "build/failed"), "Failed");
         CiTransportTests.Report(root);
         var build = CommonExecutionEvidence.SealBuild(root, CommonExecutionEvidence.Candidate(root), binaries.Append(CommonBuildOutputs.TestsPath),
             CommonExecutionEvidence.BuildSteps.Select(name => new StageStep(name, 0, 0, "executed", "build/ci/build.log")).ToArray());
@@ -157,25 +169,82 @@ public sealed class SharedBuildContractTests
             var events = TemporaryFileSystem.File.ReadAllText(Path.Combine(root, "build/events")).Split('\n');
             Assert.Equal(2, events.Count(value => value == "test"));
             Assert.Equal(2, events.Count(value => value == "proof"));
+            Assert.Equal(2, events.Count(value => value == "selftest"));
             Assert.Equal(1, events.Count(value => value == "report"));
+            var fresh = EngineeringSummary("fresh");
+            Assert.Equal("completed", fresh.GetProperty("status").GetString());
+            Assert.Empty(fresh.GetProperty("not_executed").EnumerateArray());
+            Assert.Empty(fresh.GetProperty("not_required").EnumerateArray());
+            AssertUnits(fresh, ["executed", "executed", "executed"]);
+            foreach (var proof in fresh.GetProperty("steps").EnumerateArray().Where(step => step.GetProperty("name").GetString()!.EndsWith("proof", StringComparison.Ordinal)))
+            {
+                Assert.Equal(1, proof.GetProperty("raw_exit").GetInt32());
+                Assert.Equal(0, proof.GetProperty("exit").GetInt32());
+            }
             var initial = CommonExecutionEvidence.ValidateTests(root);
             Assert.True(TemporaryFileSystem.File.Exists(Path.Combine(root, CommonExecutionEvidence.TestSeedPath, "tests.json")));
             var again = Branch("engineering");
             Assert.True(again.Exit == 0, again.Text);
-            using var summary = System.Text.Json.JsonDocument.Parse(TemporaryFileSystem.File.ReadAllText(Path.Combine(root, "build/ci/engineering-result.json")));
-            Assert.Equal(0, summary.RootElement.GetProperty("test_projects_executed").GetInt32());
-            Assert.Equal(2, summary.RootElement.GetProperty("test_projects_reused").GetInt32());
-            Assert.True(summary.RootElement.GetProperty("test_seed_saved").GetBoolean());
+            var summary = EngineeringSummary("warm");
+            Assert.Equal(0, summary.GetProperty("test_projects_executed").GetInt32());
+            Assert.Equal(2, summary.GetProperty("test_projects_reused").GetInt32());
+            Assert.True(summary.GetProperty("test_seed_saved").GetBoolean());
+            Assert.Empty(summary.GetProperty("not_executed").EnumerateArray());
+            Assert.Empty(summary.GetProperty("not_required").EnumerateArray());
+            AssertUnits(summary, ["reused", "reused", "reused"]);
+            Assert.Equal(fresh.GetProperty("check_units").EnumerateArray().Select(unit => unit.GetProperty("execution_round").GetString()),
+                summary.GetProperty("check_units").EnumerateArray().Select(unit => unit.GetProperty("execution_round").GetString()));
+            Assert.Equal(fresh.GetProperty("check_units").EnumerateArray().Select(unit => unit.GetProperty("execution_candidate").GetString()),
+                summary.GetProperty("check_units").EnumerateArray().Select(unit => unit.GetProperty("execution_candidate").GetString()));
             Assert.Equal(initial.Projects.Select(row => row with { Status = "reused" }), CommonExecutionEvidence.ValidateTests(root).Projects);
             Assert.Equal(2, TemporaryFileSystem.File.ReadAllText(Path.Combine(root, "build/events")).Split('\n').Count(value => value == "test"));
+            Assert.Equal(events, TemporaryFileSystem.File.ReadAllText(Path.Combine(root, "build/events")).Split('\n'));
         }
         else
         {
             Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, "build/ci/" + first + ".json")));
             Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, CommonExecutionEvidence.TestSeedPath, "tests.json")));
+            if (first == "engineering" && failure != "replace-build")
+            {
+                var summary = EngineeringSummary("failed-" + failure);
+                Assert.Equal("failed", summary.GetProperty("status").GetString());
+                Assert.Equal(expected, summary.GetProperty("exit").GetInt32());
+                Assert.Null(summary.GetProperty("engineering_evidence").GetString());
+                Assert.Empty(summary.GetProperty("not_required").EnumerateArray());
+                Assert.False(File.Exists(Path.Combine(root, CommonExecutionEvidence.ChecksPath("engineering"))));
+                var unreached = failure == "test" ? new[] { "selftest-pair", "capability-proof", "banned-api-proof" }
+                    : failure == "capability-proof" ? ["banned-api-proof"] : ["capability-proof", "banned-api-proof"];
+                Assert.Equal(unreached, summary.GetProperty("not_executed").EnumerateArray().Select(value => value.GetString()));
+                AssertUnits(summary, failure == "test" ? ["not-executed", "not-executed", "not-executed"]
+                    : failure == "capability-proof" ? ["executed", "failed", "not-executed"] : ["failed", "not-executed", "not-executed"]);
+                if (failure == "test")
+                {
+                    var step = Assert.Single(summary.GetProperty("steps").EnumerateArray());
+                    Assert.Equal("tests", step.GetProperty("name").GetString());
+                    Assert.Equal(1, step.GetProperty("raw_exit").GetInt32());
+                    Assert.Equal(1, step.GetProperty("exit").GetInt32());
+                    Assert.Equal("failed", step.GetProperty("status").GetString());
+                    Assert.Equal(new[] { "test", "test" }, File.ReadAllLines(Path.Combine(root, "build/events")));
+                }
+                if (failure == "selftest-mismatch")
+                    Assert.All(summary.GetProperty("steps").EnumerateArray(), step => Assert.Equal(0, step.GetProperty("raw_exit").GetInt32()));
+            }
         }
         Assert.Equal(failure == "replace-build", before != CommonExecutionEvidence.Hash(Path.Combine(root, CommonExecutionEvidence.BuildPath)));
 
+        JsonElement EngineeringSummary(string phase)
+        {
+            var json = File.ReadAllText(Path.Combine(root, "build/ci/engineering-result.json"));
+            output.WriteLine("COMMON_ENGINEERING_SUMMARY phase=" + phase + " " + json);
+            using var document = JsonDocument.Parse(json);
+            return document.RootElement.Clone();
+        }
+        static void AssertUnits(JsonElement summary, string[] statuses)
+        {
+            var units = summary.GetProperty("check_units").EnumerateArray().ToArray();
+            Assert.Equal(new[] { "selftest-pair", "capability-proof", "banned-api-proof" }, units.Select(unit => unit.GetProperty("id").GetString()));
+            Assert.Equal(statuses, units.Select(unit => unit.GetProperty("status").GetString()));
+        }
         (int Exit, string Text) Branch(string stage) => Process(root, scope,
             new[] { stage, "--repository", root }.Concat(stage == "engineering" ? ["--build-round", build.Round] : Array.Empty<string>()).ToArray(), environment);
         void Write(string path, string text)
