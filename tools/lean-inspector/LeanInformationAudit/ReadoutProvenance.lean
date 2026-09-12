@@ -348,6 +348,9 @@ private def visitSummary (env : Environment) (origin : Name) (summary : Summary)
       if let some type := node.declaredType then
         if type == (← get).statement || type == (← get).decision then
           modify fun s => { s with forbidden := true }
+        else if (type.find? (fun e => stripMData e == statement)).isSome then
+          noteUnclassified (Unclassified.mk "statement_mentioning_type"
+            n (namespaceLabel env n) origin)
         if inProtected env n && !(← get).queued.contains n then queue n node.position origin
       else modify fun s => { s with incomplete := true }
     | .app _ _ =>
@@ -391,8 +394,10 @@ private def process (env : Environment) : WalkM Unit := do
         let summary ← if let some value := info.value? (allowOpaque := true) then
             let valuePos := match info with | .thmInfo _ => .proofPos | _ => .dataPos
             summarise env #[(.typePos, info.type), (valuePos, value)] (← get).exprFuel
-          else pure { incomplete := !isCtorOrInductive env n &&
-            !#[`propext, `Classical.choice, `Quot.sound].contains n }
+          else do
+            let summary ← summarise env #[(.typePos, info.type)] (← get).exprFuel
+            pure { summary with incomplete := summary.incomplete || !isCtorOrInductive env n &&
+              !#[`propext, `Classical.choice, `Quot.sound].contains n }
         modify fun s => { s with
           counters.summarisedConstants := s.counters.summarisedConstants + 1
           counters.visits := s.counters.visits + summary.visits }

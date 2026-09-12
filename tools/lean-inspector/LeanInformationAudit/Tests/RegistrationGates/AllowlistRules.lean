@@ -1,5 +1,6 @@
 import LeanInformationAudit.ReadoutProvenance
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.StructuralRealization
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import Mathlib.Logic.Equiv.Defs
 
@@ -63,6 +64,15 @@ def subtermRead (_ : Unit) (x : Bool) : Bool :=
 def mentioningTypeRead (_ : Unit) (x : Bool) : Bool :=
   let _ : Option (Option (PLift ((137 : Nat) = 137))) := none
   x
+structure StatementBox where
+  evidence : PLift ((137 : Nat) = 137)
+  bit : Bool
+def constructorSignature : LeanInformationAudit.StructuralPrimitiveSignature where
+  Index := PLift ((137 : Nat) = 137)
+  indexFintype := Fintype.ofSubsingleton ⟨rfl⟩
+  Output := fun _ => StatementBox
+def constructorRealization : LeanInformationAudit.StructuralPrimitiveRealization
+    ⟨Bool⟩ constructorSignature := ⟨StatementBox.mk⟩
 def closedProp : Prop := (138 : Nat) = 138
 def closedDecisionRead (_ : Unit) (x : Bool) : Bool :=
   if @decide closedProp (inferInstanceAs (Decidable ((138 : Nat) = 138))) then x else false
@@ -202,5 +212,20 @@ run_cmd Elab.Command.liftCoreM do
         throwError "expected forbidden_dependency, got {message}"
       logInfo m!"[PASS] {label}"
     catch ex => logError m!"[FAIL] {label}: {ex.toMessageData}"
+
+run_cmd Elab.Command.liftCoreM do
+  let label := "ValuelessConstructorDeclaredType"
+  try
+    let actual ← provenanceErrorCurrent (← getEnv).header.mainModule `catalog
+      ``target ``constructorRealization
+    let some message := actual | throwError "missing declared-type diagnostic"
+    unless (message.splitOn " ")[4]? == some "reason=unclassified_form" do
+      throwError "expected unclassified_form, got {message}"
+    let .ok payload := Json.parse ((message.splitOn " provenance=").getLast!)
+      | throwError "invalid payload"
+    unless payload.getObjValAs? String "class" == .ok "statement_mentioning_type" do
+      throwError "expected statement_mentioning_type, got {payload}"
+    logInfo m!"[PASS] {label}"
+  catch ex => logError m!"[FAIL] {label}: {ex.toMessageData}"
 
 end AllowlistRules
