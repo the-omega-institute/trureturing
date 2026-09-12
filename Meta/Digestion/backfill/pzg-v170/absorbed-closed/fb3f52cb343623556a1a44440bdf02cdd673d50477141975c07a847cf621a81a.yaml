@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:fb3f52cb343623556a1a44440bdf02cdd673d50477141975c07a847cf621a81a
   normalized_sha256: sha256:fb3f52cb343623556a1a44440bdf02cdd673d50477141975c07a847cf621a81a
 cas_ref: sha256:fb3f52cb343623556a1a44440bdf02cdd673d50477141975c07a847cf621a81a
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Weil/SpectralHilbert.labeled_zeta_inner
+    target_statement_id: sha256:d1271f0d4f4e3394f8d165dc88a36ad3097ec54b31d142c558f87460c3b000d5
 receipts:
   unresolved_subitems: []
