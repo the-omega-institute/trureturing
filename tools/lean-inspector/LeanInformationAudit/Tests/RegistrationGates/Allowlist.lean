@@ -30,4 +30,13 @@ def closedPredicateRead (_ : Unit) (x : Bool) : Bool :=
   x
 check_provenance "ClosedPredicateArgumentAdmitted" using closedPredicateRead expects "clean" for specificTruth
 
+def equivDecisionRead (_ : Unit) (x : Bool) : Bool :=
+  if @decide (x = true) ((Equiv.refl Bool).decidableEq x true) then x else false
+check_provenance "EquivDecidableEqAdmitted" using equivDecisionRead expects "clean" for specificTruth
+
+def unlistedProducerRead (_ : Unit) (x : Bool) : Bool :=
+  let d : DecidableEq Bool := Function.Injective.decidableEq (f := fun b : Bool => b) (fun _ _ h => h)
+  if @decide (x = true) (d x true) then x else false
+check_provenance "UnlistedProducer" using unlistedProducerRead expects "unclassified_form" for specificTruth
+
 end RegistrationProvenance

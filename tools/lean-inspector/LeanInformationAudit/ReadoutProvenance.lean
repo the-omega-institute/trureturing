@@ -146,7 +146,7 @@ private def listedProducers : Array Name := #[
   ``Decidable.isTrue, ``Decidable.isFalse, ``decidable_of_iff, ``decidable_of_iff',
   ``decidable_of_bool, ``decidable_of_decidable_of_iff, ``decidable_of_decidable_of_eq,
   ``decEq, ``Nat.decEq, ``Nat.decLt, ``Nat.decLe, ``Bool.decEq,
-  ``instDecidableEqOfLawfulBEq, ``inferInstance]
+  ``instDecidableEqOfLawfulBEq, ``inferInstance, `Equiv.decidableEq]
 
 private def appliedType (env : Environment) (e : Expr) : Option Expr := do
   let .const n levels := e.getAppFn | none
