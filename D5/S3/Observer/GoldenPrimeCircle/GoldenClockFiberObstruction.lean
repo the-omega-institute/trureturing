@@ -52,4 +52,14 @@ theorem fiber_output_injective (u : GoldenInt) (hu : u.b ≠ 0) (n : ℤ) :
   apply mul_left_cancel₀ hu
   linarith
 
+/-- One present and one future integer readout determine the whole golden integer.
+The present readout alone has an infinite fiber; the nonrational multiplier separates it. -/
+theorem present_future_injective (u : GoldenInt) (hu : u.b ≠ 0) :
+    Function.Injective (fun z : GoldenInt => (z.b, (u * z).b)) := by
+  rintro ⟨a, b⟩ ⟨c, d⟩ h
+  have hb : b = d := congrArg Prod.fst h
+  subst d
+  have hac : a = c := fiber_output_injective u hu b (congrArg Prod.snd h)
+  exact GoldenInt.ext hac rfl
+
 end D5.S3.Observer.GoldenPrimeCircle.GoldenClockFiberObstruction
