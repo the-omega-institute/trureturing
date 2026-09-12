@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:03f88c72b5a4b3fe44178588cb4919052f7120859e45365425b97c07f7944270
   normalized_sha256: sha256:03f88c72b5a4b3fe44178588cb4919052f7120859e45365425b97c07f7944270
 cas_ref: sha256:03f88c72b5a4b3fe44178588cb4919052f7120859e45365425b97c07f7944270
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Analytic/Knapsack/GridDualStructure.fractional_optimum_matching_price
+    target_statement_id: sha256:c9f23babe31f801ee9822d7b197cf1d186e5492cde6718da08f397b8be50da8d
 receipts:
   unresolved_subitems: []

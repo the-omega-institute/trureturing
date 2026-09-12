@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:ec8af71a344bb3909d59f2da06e9395340b655f0557b53a988dce82538d1543f
   normalized_sha256: sha256:ec8af71a344bb3909d59f2da06e9395340b655f0557b53a988dce82538d1543f
 cas_ref: sha256:ec8af71a344bb3909d59f2da06e9395340b655f0557b53a988dce82538d1543f
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Analytic/Knapsack/FillExtremePoints.extreme_fill_at_most_one_fractional
+    target_statement_id: sha256:e04cc7a53475c1420e271f1f92a7d80fd311c898bda4b1f5d0044c529e371c0e
 receipts:
   unresolved_subitems: []

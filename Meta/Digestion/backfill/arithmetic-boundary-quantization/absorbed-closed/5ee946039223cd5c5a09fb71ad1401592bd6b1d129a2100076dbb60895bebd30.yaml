@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:5ee946039223cd5c5a09fb71ad1401592bd6b1d129a2100076dbb60895bebd30
   normalized_sha256: sha256:5ee946039223cd5c5a09fb71ad1401592bd6b1d129a2100076dbb60895bebd30
 cas_ref: sha256:5ee946039223cd5c5a09fb71ad1401592bd6b1d129a2100076dbb60895bebd30
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Analytic/Interpolation/FractionalBranchGeometry.logValue_strictConcaveOn
+    target_statement_id: sha256:1efbd0ce779ae1cb896014fc9d384cf81da865fa45a44c1fa97698120310be9c
 receipts:
   unresolved_subitems: []
