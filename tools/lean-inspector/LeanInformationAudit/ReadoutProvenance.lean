@@ -273,18 +273,26 @@ private partial def visit (env : Environment) : Position → Name → Expr → W
         if (head == ``Decidable.isTrue || head == ``Decidable.isFalse) && args.size > 0 then
           if compareCanonical args[0]! (← get).statement then modify fun s => { s with forbidden := true }
       visit env pos origin f; visit env pos origin a
-    | .lam _ t b _ => visit env pos origin t; visit env pos origin b
+    | .lam _ t b _ =>
+      if compareCanonical t (← get).statement || compareCanonical t (← get).decision then
+        modify fun s => { s with forbidden := true }
+      else if containsExpr (← get).statement t then
+        noteUnclassified (Unclassified.mk "statement_mentioning_type" (t.getAppFn.constName?.getD `statement_mentioning_type) "protected:current" origin)
+      if dataPos then checkU t
+      visit env .typePos origin t; visit env pos origin b
     | .forallE _ t b _ =>
       if compareCanonical t (← get).statement || compareCanonical t (← get).decision then
         modify fun s => { s with forbidden := true }
       else if containsExpr (← get).statement t then
         noteUnclassified (Unclassified.mk "statement_mentioning_type" (t.getAppFn.constName?.getD `statement_mentioning_type) "protected:current" origin)
+      if dataPos then checkU t
       visit env .typePos origin t; visit env pos origin b
     | .letE _ t v b _ =>
       if compareCanonical t (← get).statement || compareCanonical t (← get).decision then
         modify fun s => { s with forbidden := true }
       else if containsExpr (← get).statement t then
         noteUnclassified (Unclassified.mk "statement_mentioning_type" (t.getAppFn.constName?.getD `statement_mentioning_type) "protected:current" origin)
+      if dataPos then checkU t
       visit env .typePos origin t; visit env pos origin v; visit env pos origin b
     | .mdata _ b => visit env pos origin b
     | .proj n _ b =>
