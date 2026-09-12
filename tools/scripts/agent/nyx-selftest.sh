@@ -21,14 +21,20 @@ __selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**
   chk OK         answer-contains-error-word '{"verdict":"reject","note":"Error: in their proof"}'
   chk OK         answer-multiline-err-later "$(printf 'line one\nError: quoted from their log')"
   # 阴性:载体侧失败必须各自可辨,不得混成一个
-  chk EXTRACTION carrier-extraction         'Error: Task failed (extraction_failure).'
+  chk EXTRACTION carrier-extraction         'Error: Task failed (extraction_failure).' 1
   chk CARRIER    carrier-unknown-reason     'Error: Task failed (composer_draft_conflict).' 1
   chk CARRIER    carrier-future-reason      'Error: Task failed (some_reason_not_yet_invented).' 1
   chk UNKNOWN    carrier-named-reason-zero-exit 'Error: Task failed (composer_draft_conflict).' 0
   chk INFRA      carrier-infra-exhausted    "$(printf '%s\n' 'Attempts: 4 (infrastructure retries 3/3)' \
     'Error: Task failed (infrastructure_retry_exhausted).')" 1
-  chk QUOTA      carrier-quota-429          'Error: HTTP 429 {"error":"oracle_quota_exceeded"}'
-  chk NOFILE     carrier-prompt-missing     'Error: Failed to read prompt'
+  chk QUOTA      carrier-quota-429          'Error: HTTP 429 {"error":"oracle_quota_exceeded"}' 1
+  chk NOFILE     carrier-prompt-missing     'Error: Failed to read prompt' 2
+  # Failed carrier commands return nonzero; contradictory bare Error/rc=0 stays closed.
+  chk UNKNOWN carrier-extraction-zero-exit 'Error: Task failed (extraction_failure).' 0
+  chk UNKNOWN carrier-infra-zero-exit 'Error: Task failed (infrastructure_retry_exhausted).' 0
+  chk UNKNOWN carrier-quota-zero-exit 'Error: HTTP 429 oracle_quota_exceeded' 0
+  chk UNKNOWN carrier-nofile-zero-exit 'Error: Failed to read prompt' 0
+  chk UNKNOWN carrier-answer-with-failed-exit '{"verdict":"approve"}' 7
   # 载体投递失败:失败文本是 payload 的**末行**
   chk DELIVERY   carrier-delivery-timeout   "$(printf '%s\n' 'Attempts: 1 (infrastructure retries 0/3)' \
     'Message delivery timed out. Please try again.Retry')" 1
@@ -196,6 +202,7 @@ __selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**
           printf 'Task submitted: %s\n' "$id"; return 0;;
         result)
           case "$response" in
+            payload) printf '%s\n' "$NYX_TEST_PAYLOAD"; return "$NYX_TEST_PAYLOAD_RC";;
             extraction) echo 'Error: Task failed (extraction_failure).'; return 1;;
             composer)
               echo 'Error: Task failed (composer_draft_conflict).'; return 1;;
@@ -254,7 +261,8 @@ __selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**
     run_env=("TMPDIR=$run_dir" 'NYX_CLI=__nyx_fake_cli' 'NYX_POOL=' 'NYX_LIMIT=' 'NYX_BAD_SCRIPTS=cdp-1.3' 'NYX_TAG=mode:chat'
       'NYX_POLL_SECONDS=0' 'NYX_POLL_ROUNDS=2' "NYX_TEST_DIR=$run_dir" "NYX_TEST_OUT=$run_out" "NYX_TEST_ROWS=$run_rows"
       'NYX_TEST_SIGNAL=' 'NYX_TEST_CANCEL=' 'NYX_TEST_WRITE_ERROR=' 'NYX_TEST_UNIQUE_IDS='
-      'NYX_TEST_RELEASE_ERROR=' 'NYX_TEST_LIST_ERROR=' 'NYX_TEST_EXPECT_TAG=mode:chat' 'AWAIT_TICK=0' 'AWAIT_DEADLINE=5400' "$@")
+      'NYX_TEST_RELEASE_ERROR=' 'NYX_TEST_LIST_ERROR=' 'NYX_TEST_EXPECT_TAG=mode:chat'
+      'NYX_TEST_PAYLOAD=' 'NYX_TEST_PAYLOAD_RC=0' 'AWAIT_TICK=0' 'AWAIT_DEADLINE=5400' "$@")
     if [ "$run_name" = ask-default-unset-filter ]; then
       local setting_index
       for setting_index in "${!run_env[@]}"; do
@@ -610,6 +618,67 @@ __selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**
   run_case await-vote-guidance-fallback "$traversal"
   check_guidance EXTRACTION "$id1" 'a fresh ask may be tried later'
   chke "0|first,second|yes" await-guidance-fallback-settles "$run_rc|$(joined "$run_dir/submits")|$(if cmp -s "$run_out" "$run_out.settled"; then echo yes; fi)"
+  # ARCH-1: diagnostic quotations are answer bytes, across the actual consumer paths.
+  local category diagnostic payload
+  while IFS='|' read -r category diagnostic; do
+    payload="{\"verdict\":\"approve\",\"note\":\"The retry correctly handles $diagnostic.\"}"
+    chk OK "arch1-classifier-$category" "$payload" 0
+    run_case "ask-arch1-$category" "${rows_one/answer/payload}"$'\n'"$third" "NYX_TEST_PAYLOAD=Attempts: 1 (infrastructure retries 0/3)
+$payload"
+    check_run "0|EXIT=0|first|$id1|$id1||NYX_OK"
+    chke 'yes|no|1' "$run_name-answer" "$(if grep -qxF "$payload" "$run_out"; then echo yes; fi)|$(if grep -q '^NYX_UNSTABLE ' "$run_dir/stdout"; then echo yes; else echo no; fi)|$(grep -c '^EXIT=' "$run_out")"
+    cp "$run_out" "$run_dir/prior"
+    run_name="fetch-arch1-$category"; run_args=(fetch "$id1" "$run_out")
+    run_child > "$run_dir/stdout" 2>&1; run_rc=$?
+    check_run "0|EXIT=0|first|$id1|$id1,$id1||NYX_OK"
+    chke 'yes|yes|no|1' "$run_name-answer-history" "$(if grep -qxF "$payload" "$run_out"; then echo yes; fi)|$(if tail -n +2 "$run_out.history" | cmp -s - "$run_dir/prior"; then echo yes; fi)|$(if grep -q '^NYX_UNSTABLE ' "$run_dir/stdout"; then echo yes; else echo no; fi)|$(grep -c '^EXIT=' "$run_out")"
+    run_case "await-vote-arch1-$category" "${rows_one/answer/payload}"$'\n'"$third" "NYX_TEST_PAYLOAD=Attempts: 1 (infrastructure retries 0/3)
+$payload"
+    chke "0|first|$id1|yes|no|1" "$run_name-settles" "$run_rc|$(joined "$run_dir/submits")|$(joined "$run_dir/polls")|$(if cmp -s "$run_out" "$run_out.settled" && grep -qxF "$payload" "$run_out.settled"; then echo yes; else echo no; fi)|$(if grep -q '^NYX_UNSTABLE ' "$run_dir/stdout"; then echo yes; else echo no; fi)|$(grep -c '^EXIT=' "$run_out")"
+  done <<'NYX_DIAGNOSTIC_QUOTATIONS'
+quota-token|oracle_quota_exceeded
+http-429|HTTP 429
+nofile|Failed to read prompt
+extraction|extraction_failure
+infra|infrastructure_retry_exhausted
+carrier|Error: Task failed (composer_draft_conflict)
+uncertain|Error: Task failed (prompt_delivery_uncertain)
+delivery|Message delivery timed out. Please try again.Retry
+error|Error: forbidden
+NYX_DIAGNOSTIC_QUOTATIONS
+  # The same result path with real failure evidence must never settle a vote or replay
+  # a known task after a failed observation. These controls also pin rc=0 bare errors.
+  while IFS='|' read -r category diagnostic; do
+    payload="Error: $diagnostic"
+    for setting in NYX_TEST_PAYLOAD_RC=0 NYX_TEST_PAYLOAD_RC=7; do
+      run_case "ask-arch1-error-$category-${setting##*=}" "${rows_one/answer/payload}"$'\n'"$third" "NYX_TEST_PAYLOAD=$payload" "$setting"
+      check_run "1|EXIT=1|first|$id1|$id1||NYX_UNKNOWN"
+      check_guidance UNKNOWN "$id1" "Resume the same task: nyx.sh fetch $id1"
+      run_name="fetch-arch1-error-$category-${setting##*=}"; run_args=(fetch "$id1" "$run_out")
+      run_child > "$run_dir/stdout" 2>&1; run_rc=$?
+      check_run "1|EXIT=1|first|$id1|$id1,$id1||NYX_UNKNOWN"
+      run_case "await-vote-arch1-error-$category-${setting##*=}" "${rows_one/answer/payload}"$'\n'"$third" "NYX_TEST_PAYLOAD=$payload" "$setting"
+      chke "1|first|$id1|no|1" "$run_name-stops" "$run_rc|$(joined "$run_dir/submits")|$(joined "$run_dir/polls")|$(if [ -f "$run_out.settled" ]; then echo yes; else echo no; fi)|$(grep -c '^EXIT=' "$run_out")"
+    done
+  done <<'NYX_FAILED_OBSERVATIONS'
+quota|HTTP 429 oracle_quota_exceeded
+infra|GET /oracle/tasks failed: infrastructure_retry_exhausted
+unknown|forbidden
+NYX_FAILED_OBSERVATIONS
+  for category in extraction_failure infrastructure_retry_exhausted; do
+    payload=$(printf '%s\n' 'Attempts: 1 (infrastructure retries 0/3)' "Error: Task failed ($category).")
+    run_case "ask-arch1-metadata-error-$category" "${rows_one/answer/payload}"$'\n'"$third" "NYX_TEST_PAYLOAD=$payload"
+    check_run "1|EXIT=1|first|$id1|$id1||NYX_UNKNOWN"
+  done
+  for category in UNCERTAIN DELIVERY; do
+    diagnostic='Error: Task failed (prompt_delivery_uncertain).'
+    [ "$category" != DELIVERY ] || diagnostic='Message delivery timed out. Please try again.Retry'
+    payload=$(printf '%s\n' 'Quoted prior failure: extraction_failure' "$diagnostic")
+    chk "$category" "arch1-terminal-precedence-$category" "$payload" 1
+    run_case "ask-arch1-terminal-$category" "${rows_one/answer/payload}"$'\n'"$third" "NYX_TEST_PAYLOAD=$payload" NYX_TEST_PAYLOAD_RC=1
+    check_run "1|EXIT=1|first|$id1|$id1||NYX_$category"
+    check_guidance "$category" "$id1" "Resume the same task: nyx.sh fetch $id1"
+  done
   rm -rf "$testroot"
   [ $fail -eq 0 ] && echo "SELFTEST_OK cases=$cases" || echo "SELFTEST_FAIL cases=$cases"
   return $fail

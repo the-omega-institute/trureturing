@@ -232,13 +232,7 @@ __verdict_of_payload() {  # 判**取回的文本**,不判文件 —— 活判决
   # 分界:载体是否把答案交回来了,与 worker 判词是 approve 还是 reject **无关**;
   # 故只认 nyxid CLI 自己的错误形态,不因答案里出现 "Error:" 字样而误判(见 --selftest 阴性对照)。
   local r="$1" cli_rc="${2:-0}" first last
-  case "$r" in
-    *oracle_quota_exceeded*|*"HTTP 429"*) echo QUOTA;      return;;
-    *"Failed to read prompt"*)            echo NOFILE;     return;;
-    *extraction_failure*)                 echo EXTRACTION; return;;
-    *infrastructure_retry_exhausted*)     echo INFRA;      return;;
-  esac
-  # Delivery tokens need CLI failure evidence; successful answers can quote them.
+  # Diagnostic tokens need CLI failure evidence; successful answers can quote them.
   # NyxID 0d7afdaa docs/ORACLE_RELAY.md:395-410 forbids uncertain post-send replay;
   # "Message delivery timed out" has no upstream safe-retry promise either.
   [ -n "$r" ] || { echo UNKNOWN; return; }
@@ -258,9 +252,20 @@ __verdict_of_payload() {  # 判**取回的文本**,不判文件 —— 活判决
       [ "$last" = "Message delivery timed out. Please try again.Retry" ] || { echo DELIVERY; return; };;
   esac
   if [ "$cli_rc" -ne 0 ]; then   # 只认 CLI 非零退出;exit 0 时末行即便是该诊断原文也是答案(复核 attempt 2 反例)
+    # Terminal recovery instructions take precedence over quotations of earlier failures.
     case "$last" in
       *"Task failed (prompt_delivery_uncertain)"*) echo UNCERTAIN; return;;
       *"Message delivery timed out"*) echo DELIVERY; return;;
+    esac
+    # Classify the final CLI diagnostic, never tokens elsewhere in the returned answer.
+    case "$last" in
+      "Error:"*)
+        case "$last" in
+          *oracle_quota_exceeded*|*"HTTP 429"*) echo QUOTA; return;;
+          *"Failed to read prompt"*) echo NOFILE; return;;
+          *extraction_failure*) echo EXTRACTION; return;;
+          *infrastructure_retry_exhausted*) echo INFRA; return;;
+        esac;;
     esac
   fi
   # **规则,不是名单**(第 4.9 条:harness 存规则,不存代表元)。
@@ -277,8 +282,14 @@ __verdict_of_payload() {  # 判**取回的文本**,不判文件 —— 活判决
     case "$last" in
       "Error: Task failed ("*")"*) echo CARRIER; return;;
     esac
+    echo UNKNOWN; return
   fi
-  first=${r%%$'\n'*}
+  # The CLI may prefix its result with metadata. A bare Error after that prelude
+  # contradicts rc=0; prose/JSON quoting a diagnostic is still a successful answer.
+  first=$(printf '%s\n' "$r" | awk '
+    /^Attempts: [0-9]+ \(infrastructure retries [0-9]+\/[0-9]+\)$/ {next}
+    /^Conversation: https?:\/\/[^[:space:]]+$/ {next}
+    NF {print; exit}')
   case "$first" in "Error:"*) echo UNKNOWN; return;; esac
   echo OK
 }
