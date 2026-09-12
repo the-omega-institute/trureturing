@@ -161,12 +161,12 @@ private theorem greedy_data (w v : ι → ℝ) (hw : ∀ i, 0 < w i)
       · intro i hi
         rcases Finset.mem_insert.mp hi with rfl | hi
         · rw [hself]
-          exact ⟨div_nonneg hB (hw a).le,
-            ((div_lt_one (hw a)).mpr (lt_of_not_ge hfit)).le⟩
+          exact ⟨div_nonneg hB (hw i).le,
+            ((div_lt_one (hw i)).mpr (lt_of_not_ge hfit)).le⟩
         · rw [hother i hi]; exact ⟨le_rfl, zero_le_one⟩
       · intro i hi
         rcases Finset.mem_insert.mp hi with rfl | hi
-        · rw [div_mul_cancel₀ _ (hw a).ne', sub_self, zero_mul, max_self]
+        · rw [div_mul_cancel₀ _ (hw i).ne', sub_self, zero_mul, max_self]
         · have hcoef : v i - (v a / w a) * w i ≤ 0 :=
             sub_nonpos.mpr ((div_le_iff₀ (hw i)).mp (hmax i hi))
           rw [hother i hi, mul_zero, max_eq_left hcoef]
