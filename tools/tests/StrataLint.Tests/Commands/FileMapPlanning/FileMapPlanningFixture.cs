@@ -118,7 +118,8 @@ internal sealed class FileMapPlanningFixture : IDisposable
     internal ProcessOutput Cli(string command, params string[] args)
     {
         var realGit = Encoding.UTF8.GetString(Run("/bin/sh", ["-c", "command -v git"]).StandardOutput).Trim();
-        return Run("/usr/bin/env", ["PATH=" + Bin + Path.PathSeparator + Environment.GetEnvironmentVariable("PATH"),
+        return Run("/usr/bin/env", [.. CiFixtureEnvironment.LocalAssignments,
+            "PATH=" + Bin + Path.PathSeparator + Environment.GetEnvironmentVariable("PATH"),
             "PLAN_CALLS=" + Calls, "PLAN_REAL_GIT=" + realGit, "PYTHONDONTWRITEBYTECODE=1",
             "python3", "-B", Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/workflow/ci.py"),
             command, "--repository", Root, .. args]);

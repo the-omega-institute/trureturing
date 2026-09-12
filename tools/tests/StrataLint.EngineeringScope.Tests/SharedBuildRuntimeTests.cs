@@ -22,6 +22,8 @@ public sealed class SharedBuildRuntimeTests
         // This fixture exercises transport without a network package source.
         Write("NuGet.Config", "<configuration><packageSources><clear /></packageSources></configuration>\n");
         Write("global.json", File.ReadAllText(Path.Combine(repository, "global.json")));
+        // Match the repository's SDK policy: commit identity is not compiler input.
+        Write("Directory.Build.props", "<Project><PropertyGroup><EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries></PropertyGroup></Project>\n");
         Write("tools/scripts/ci-build-outputs.targets", File.ReadAllText(Path.Combine(repository, "tools/scripts/ci-build-outputs.targets")));
         Write(PackageMaterialRegistry.RelativePath, JsonSerializer.Serialize(new {
             schemaVersion = 1, packageRootSource = "build-output:NuGetPackageRoot",
@@ -102,6 +104,14 @@ public sealed class SharedBuildRuntimeTests
                 }
             }
             """);
+        const string excludedProject = "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj";
+        Write(excludedProject, """
+            <Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net10.0</TargetFramework>
+            <IsTestProject>true</IsTestProject><RestorePackagesWithLockFile>true</RestorePackagesWithLockFile></PropertyGroup>
+            <ItemGroup><PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+            <PackageReference Include="xunit" Version="2.9.3" /><PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" /></ItemGroup></Project>
+            """);
+        Write("tools/tests/StrataLint.ScriptTests/Unselected.cs", "namespace Fixture; public class Unselected { [Xunit.Fact] public void Runs() => Xunit.Assert.Equal(\"Fixture\", typeof(Unselected).Namespace); }\n");
         Write(EngineeringRegistrationFixture.Path, EngineeringRegistrationFixture.Manifest(
             projects.Select(item => new EngineeringProjectFixture($"tools/{item.Item1}/{item.Item1}.csproj",
                 item.Item2, "production", false, [$"tools/{item.Item1}/**/*.cs"], OwnedTestAssembly: "Runtime"))
@@ -114,10 +124,13 @@ public sealed class SharedBuildRuntimeTests
                     ["tools/tests/BannedApiCompileFailProof/**/*.cs"]),
                 new EngineeringProjectFixture("tools/scripts/report/JudgeSeedTask.csproj", "JudgeSeedTask", "production", false,
                     ["tools/scripts/report/JudgeSeedTask.cs"], OwnedTestAssembly: "JudgeSeedTask.Tests"),
+                new EngineeringProjectFixture(excludedProject, "StrataLint.ScriptTests", "cross-cutting-test", false,
+                    ["tools/tests/StrataLint.ScriptTests/**/*.cs"]),
             }).ToArray()));
         Run("dotnet", "restore", testProject, "--use-lock-file", "-nr:false");
         Run("dotnet", "restore", proofProject, "--use-lock-file", "-nr:false");
         Run("dotnet", "restore", bannedProject, "--use-lock-file", "-nr:false");
+        Run("dotnet", "restore", excludedProject, "--use-lock-file", "-nr:false");
         SharedBuildContractTests.Git(root, "add", ".");
         SharedBuildContractTests.Git(root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "runtime fixture");
         using var output = new StringWriter();
@@ -150,6 +163,7 @@ public sealed class SharedBuildRuntimeTests
         Assert.Equal(new[] { "restore-StrataLint", "build" }, build.Steps.Select(step => step.Name));
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, CommonExecutionEvidence.EngineeringPath)));
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, CommonExecutionEvidence.TestsPath)));
+        Assert.False(File.Exists(Path.Combine(root, "build/judge-seed/receipts", excludedProject + ".seed.json")));
         Cache("snapshot");
         var manifest = Path.Combine(root, "build/lean-cache/judge/manifest.json");
         Assert.True(File.Exists(manifest));
@@ -167,6 +181,8 @@ public sealed class SharedBuildRuntimeTests
         var fresh = CommonExecutionEvidence.ValidateBuild(root);
         Assert.NotEqual(build.Round, fresh.Round);
         build = fresh;
+        Cache("snapshot"); // Warm Build also seals the obj bytes refreshed by normal MSBuild.
+        Assert.True(File.Exists(manifest));
         Assert.False(File.Exists(Path.Combine(root, CommonExecutionEvidence.EngineeringPath)));
         Assert.False(File.Exists(Path.Combine(root, CommonExecutionEvidence.TestsPath)));
         environment["CI_BUILD_ROUND"] = build.Round;
@@ -237,6 +253,26 @@ public sealed class SharedBuildRuntimeTests
             if (TemporaryFileSystem.Directory.Exists(offline)) Directory.Move(offline, root);
             TemporaryFileSystem.Directory.Delete(destination, recursive: true);
         }
+        // The next candidate explicitly requests a project absent from the seed.
+        // Restore the original subset into a clean build and compile just that addition.
+        var registration = System.Text.Json.Nodes.JsonNode.Parse(File.ReadAllText(Path.Combine(root, EngineeringRegistrationFixture.Path)))!;
+        registration["projects"]!.AsArray().Single(project => project!["path"]!.GetValue<string>() == excludedProject)!["ci"] = true;
+        Write(EngineeringRegistrationFixture.Path, registration.ToJsonString());
+        SharedBuildContractTests.Git(root, "add", EngineeringRegistrationFixture.Path);
+        SharedBuildContractTests.Git(root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "request previously unselected test project");
+        foreach (var project in projects.Select(item => "tools/" + item.Item1).Append("tools/tests/Runtime").Append("tools/scripts/report"))
+            foreach (var kind in new[] { "bin", "obj" }) Directory.Delete(Path.Combine(root, project, kind), recursive: true);
+        Directory.Delete(Path.Combine(root, "build/judge-seed"), recursive: true);
+        Cache("restore", "--judge-key", key);
+        environment["CI_BUILD_ROUND"] = "";
+        var expanded = Stage("expanded-selection", "build");
+        Assert.Contains("\"status\": \"installed\"", expanded, StringComparison.Ordinal);
+        Assert.Equal(1, Compilers(expanded));
+        var expandedBuild = CommonExecutionEvidence.ValidateBuild(root);
+        Assert.Equal(new[] { testProject, excludedProject }, expandedBuild.Projects);
+        Assert.Contains(excludedProject, CommonBuildOutputs.TestAssemblies(root, expandedBuild).Keys);
+        Assert.True(File.Exists(Path.Combine(root, "build/judge-seed/receipts", excludedProject + ".seed.json")));
+        Cache("snapshot");
         Cache("restore", "--judge-key", key);
         Write("tools/StrataLint.Cli/Program.cs", "not valid C#\n");
         Stage("wrong-candidate", "build", expected: 1);
@@ -288,6 +324,7 @@ public sealed class SharedBuildRuntimeTests
             var result = SharedBuildContractTests.Process(physicalRoot, "python3",
                 new[] { "tools/scripts/worktree/lean_actions.py", command, "--repository", physicalRoot, "--layers", "judge" }.Concat(arguments).ToArray(), cacheEnvironment);
             Assert.True(result.Exit == 0, result.Text);
+            if (command == "snapshot") Assert.Contains("judge_ready=true", result.Text, StringComparison.Ordinal);
         }
     }
 }

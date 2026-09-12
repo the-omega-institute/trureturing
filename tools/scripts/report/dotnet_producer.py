@@ -254,7 +254,7 @@ def seed_receipt(status, **fields):
 
 def solution_projects(root, registry=None):
     rows, _ = registry if registry is not None else project_registry(root)
-    # Build participation is separate from CI test execution (including ScriptTests).
+    # Prepare compiler hooks for registered projects; this does not select build roots.
     return [pathlib.Path(path) for path in sorted(rows) if rows[path]["role"] != "compile-fail-proof"]
 
 
@@ -355,10 +355,18 @@ def _prepare_seed(root, projects, registration, sdk, repository):
     cached = root / ".judge-binaries"
     if cached.exists():
         try:
-            manifest = json.loads((cached / "material.json").read_text())
-            if not isinstance(manifest, dict) or set(manifest) != {"root"} or manifest["root"] != str(root):
+            manifest = json.loads((cached / "material.json").read_text(), object_pairs_hook=unique_object)
+            if (not isinstance(manifest, dict) or set(manifest) != {"root", "projects"}
+                    or manifest["root"] != str(root)):
                 raise ValueError("unsupported checkout relocation")
-            for relative in projects:
+            saved = manifest["projects"]
+            registered = {str(project) for project in projects}
+            if (not isinstance(saved, list) or not saved or any(not isinstance(path, str) for path in saved)
+                    or saved != sorted(set(saved)) or not set(saved).issubset(registered)):
+                raise ValueError("invalid registered seed project selection")
+            # An optional seed can cover fewer projects than the next build. Its
+            # declared members are verified; other projects compile normally.
+            for relative in map(pathlib.Path, saved):
                 source = cached / "data" / (str(relative) + ".seed")
                 project = root / relative
                 destination = project.parent / "obj"
@@ -552,21 +560,62 @@ def seal(capture):
         seed_receipt("save-failed", project=str(project.relative_to(root)), reason=str(error))
 
 
+def build_seed_projects(root, registry):
+    """Consume the native build's sealed roots, never discover roots from receipts."""
+    build = json.loads((root / "build/ci/build.json").read_text(), object_pairs_hook=unique_object)
+    roots = build.get("projects") if isinstance(build, dict) else None
+    if (not isinstance(build, dict) or build.get("version") != 2 or not isinstance(roots, list) or not roots
+            or any(not isinstance(path, str) for path in roots) or len(roots) != len(set(roots))):
+        raise ValueError("missing or invalid sealed build project selection")
+    selected = project_closure(registry[0], roots)
+    if any(row["role"] == "compile-fail-proof" for row in selected.values()):
+        raise ValueError("invalid compile-fail proof in sealed build project selection")
+    return [pathlib.Path(path) for path in selected]
+
+
+def validate_compiled_receipt(project, receipt):
+    """Check the declared successful compiler material before exporting a seed."""
+    try:
+        value = json.loads(receipt.read_text(), object_pairs_hook=unique_object)
+        if (not isinstance(value, dict) or set(value) != {"semantics", "inputs", "outputs", "material"}
+                or not isinstance(value["semantics"], dict)
+                or set(value["semantics"]) != {"arguments", "environment", "runtime", "configuration"}
+                or any(item is not None and not isinstance(item, str) for item in value["semantics"].values())
+                or not isinstance(value["inputs"], dict) or not value["inputs"]
+                or not isinstance(value["outputs"], dict) or not value["outputs"]):
+            raise ValueError("missing compiler inputs, outputs or material")
+        seed_files(project.parent / "obj", expected=value["material"])
+        for path, item in value["inputs"].items():
+            if (not isinstance(item, dict) or set(item) != {"sha256", "mtime_ns"}
+                    or type(item["mtime_ns"]) is not int):
+                raise ValueError("invalid compiler input material")
+        for path, expected in list(value["outputs"].items()) + [(path, item["sha256"]) for path, item in value["inputs"].items()]:
+            if (not pathlib.Path(path).is_absolute() or not isinstance(expected, str)
+                    or not re.fullmatch(r"[0-9a-f]{64}", expected)
+                    or hashlib.sha256(pathlib.Path(path).read_bytes()).hexdigest() != expected):
+                raise ValueError("compiled material integrity mismatch: " + path)
+    except (OSError, ValueError, KeyError, TypeError) as error:
+        raise ValueError(f"invalid compiled seed receipt: {project}: {error}") from error
+
+
 def stage_seed(root, destination, registry=None):
-    """Only registered build projects; no proofs, TRX, reports or stage verdicts."""
+    """Only the sealed build's registered closure; no proofs or execution verdicts."""
     root = root.resolve()
-    for relative in solution_projects(root, registry):
+    registry = registry if registry is not None else project_registry(root)
+    projects = build_seed_projects(root, registry)
+    for relative in projects:
         project = root / relative
         receipt = receipt_path(root, project)
         if not receipt.is_file():
             raise ValueError(f"no successful compiled seed receipt: {relative}")
+        validate_compiled_receipt(project, receipt)
         target = destination / "data" / relative.parent
         target.mkdir(parents=True, exist_ok=True)
         shutil.copy2(receipt, target / (project.name + ".seed"))
         shutil.copytree(project.parent / "obj", target / "obj", symlinks=True,
                         ignore=shutil.ignore_patterns("judge-seed-inputs.xml"))
     shutil.copytree(root / "build/judge-seed/task", destination / "data/build/judge-seed/task", symlinks=True)
-    manifest = {"root": str(root.resolve())}
+    manifest = {"root": str(root), "projects": [str(project) for project in projects]}
     (destination / "material.json").write_text(json.dumps(manifest, sort_keys=True) + "\n")
 
 

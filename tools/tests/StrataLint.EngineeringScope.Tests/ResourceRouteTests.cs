@@ -312,6 +312,7 @@ public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper test
     {
         internal const string Foo = "tools/Foo/Foo.csproj";
         internal const string Bar = "tools/Bar/Bar.csproj";
+        private readonly CiFixtureEnvironment environment;
         private readonly CurrentExecutionContractTests.CandidateFixture fixture = new();
         private string? processPath = Environment.GetEnvironmentVariable("PATH");
         private readonly string? physicalRoot;
@@ -340,6 +341,7 @@ public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper test
                 packages = new[] { new { packagePath = "xunit/2.9.3", include = new[] { "xunit.nuspec" }, exclude = Array.Empty<string>() } } }));
             Register();
             CommitPlan();
+            environment = new CiFixtureEnvironment();
         }
         private void Register()
         {
@@ -465,6 +467,10 @@ public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper test
             Assert.True(result.Exit == 0, result.Text);
             return result.Text.Trim();
         }
-        public void Dispose() => fixture.Dispose();
+        public void Dispose()
+        {
+            try { fixture.Dispose(); }
+            finally { environment.Dispose(); }
+        }
     }
 }
