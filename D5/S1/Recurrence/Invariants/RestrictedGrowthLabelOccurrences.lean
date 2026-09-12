@@ -259,4 +259,57 @@ private theorem countFiber (n : ℕ) (hn : 0 < n) (w : List ℕ)
         omega
       simp [hm, hnear, hfar, Finset.mem_Icc, Nat.card_Icc]
 
+private theorem T_near_step (n : ℕ) (hn : 0 < n) :
+    T (n + 1) n = n + 2 +
+      ((words n).filter fun w => maxLabel w + 1 = n).card := by
+  have heq : ((words n).filter (fun w => maxLabel w ≠ n)).filter
+      (fun w => maxLabel w + 1 = n) =
+      (words n).filter (fun w => maxLabel w + 1 = n) := by
+    ext w
+    simp only [Finset.mem_filter]
+    constructor
+    · rintro ⟨⟨hw, _⟩, hx⟩
+      exact ⟨hw, hx⟩
+    · rintro ⟨hw, hx⟩
+      exact ⟨⟨hw, by omega⟩, hx⟩
+  calc
+    T (n + 1) n = (words n).sum (fun w =>
+        (Finset.Icc 1 (maxLabel w + 1)).sum fun x => (x :: w).count n) := by
+      rw [T, sum_words_succ]
+    _ = (words n).sum (fun w =>
+        if maxLabel w = n then n + 2 else if maxLabel w + 1 = n then 1 else 0) := by
+      apply Finset.sum_congr rfl
+      intro w hw
+      exact countFiber n hn w hw
+    _ = n + 2 + ((words n).filter fun w => maxLabel w + 1 = n).card := by
+      simp [Finset.sum_ite, card_top_words, heq]
+
+/-- Mathar's first OEIS A270236 conjecture, with the exact natural-number
+division and the source's quantifier `n > 1`. -/
+theorem mathar_f1 (n : ℕ) (hn : 1 < n) :
+    T n (n - 1) = 2 + n * (n - 1) / 2 := by
+  obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le (by omega : 2 ≤ n)
+  have hstep := T_near_step (k + 1) (by omega)
+  have hfilter : ((words (k + 1)).filter (fun w => maxLabel w + 1 = k + 1)) =
+      ((words (k + 1)).filter fun w => maxLabel w = k) := by
+    ext w
+    simp only [Finset.mem_filter]
+    constructor
+    · rintro ⟨hw, h⟩
+      exact ⟨hw, by omega⟩
+    · rintro ⟨hw, h⟩
+      exact ⟨hw, by omega⟩
+  have hchoose : (k + 2).choose 2 = (k + 1) + (k + 1).choose 2 := by
+    simpa only [Nat.choose_one_right] using Nat.choose_succ_succ' (k + 1) 1
+  rw [show 2 + k = k + 2 by omega, show k + 2 - 1 = k + 1 by omega]
+  calc
+    T (k + 2) (k + 1) = 2 + (k + 2).choose 2 := by
+      rw [hstep, hfilter, card_near_words k]
+      omega
+    _ = 2 + (k + 2) * (k + 1) / 2 := by
+      rw [Nat.choose_two_right]
+      congr 1
+
+#print axioms mathar_f1
+
 end D5.S1.Recurrence.Invariants.RestrictedGrowthLabelOccurrences
