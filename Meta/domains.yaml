@@ -53,9 +53,6 @@ domains:
   Deficit:
     stratum: S1
     definition: Normalized beta deficits and signed carry accounting of golden addition.
-  Density:
-    stratum: S3
-    definition: Natural-density statements for periodic arithmetic sets and interval-divisor counting functions.
   Depth:
     stratum: S1
     definition: Finite-resolution depth combining logarithmic scale, Zeckendorf support size, and quantized phase.
