@@ -269,6 +269,7 @@ private def irredundantFromLoweringProofs (catalog : Expr)
 
 private def theoremProofs (prepared : PreparedCatalog) : Lean.Elab.Term.TermElabM
     (Array Declaration × SealArenaRecord) := do
+  let env ← getEnv
   let record := prepared.record
   let catalog := prepared.value
   let arena := prepared.arenaValue
@@ -441,7 +442,7 @@ full {fullCount} without {withoutCounts[firstZero]!}"
       let lowersProof ← mkAppM ``Iff.mpr #[characterization, positiveProof]
       pure (lowersProof, ← inferType lowersProof)
     let lowersName := if record.localSealNames then
-      theoremName.str "__lowers_escape"
+      localCompanionName env theoremName "__lowers_escape"
     else
       catalogQualifiedName record.rootId record.arenaName record.catalogId theoremName
         "__lowers_escape"
@@ -458,7 +459,7 @@ full {fullCount} without {withoutCounts[firstZero]!}"
     let enrichedProof := mkAppN (mkConst ``And.intro)
       #[theoremType, lowersType, theoremExpr, mkConst lowersName]
     let enrichedName := if record.localSealNames then
-      theoremName.str "__escape_enriched"
+      localCompanionName env theoremName "__escape_enriched"
     else
       catalogQualifiedName record.rootId record.arenaName record.catalogId theoremName
         "__escape_enriched"
@@ -489,7 +490,7 @@ full {fullCount} without {withoutCounts[firstZero]!}"
   let irredundantProof ← irredundantFromLoweringProofs catalog loweringProofNames
   let irredundantType ← inferType irredundantProof
   let irredundantName := if record.localSealNames then
-    record.arenaName.str "__catalog_irredundant"
+    localCompanionName env record.arenaName "__catalog_irredundant"
   else
     catalogQualifiedName record.rootId record.arenaName record.catalogId record.arenaName
       "__catalog_irredundant"

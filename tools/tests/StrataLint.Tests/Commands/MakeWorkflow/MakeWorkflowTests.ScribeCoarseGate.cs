@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json;
 using System.Runtime.Versioning;
 using StrataLint.Engine;
 
@@ -191,6 +192,64 @@ public sealed partial class MakeWorkflowTests
     }
 
     [UnsupportedOSPlatform("windows")]
+    private static void WriteSelectorAwareDotnetShim(string binDirectory, string body)
+    {
+        var path = Environment.GetEnvironmentVariable("PATH")
+            ?? throw new InvalidOperationException("PATH is unavailable");
+        var cli = Path.Combine(AppContext.BaseDirectory, "StrataLint.dll");
+        static string Quote(string value) => "'" + value.Replace("'", "'\"'\"'", StringComparison.Ordinal) + "'";
+        WriteExecutable(Path.Combine(binDirectory, "dotnet"), $$"""
+            #!/usr/bin/env bash
+            # Transport only the launcher; FILEMAP selection executes in the candidate CLI.
+            if [[ "${1:-}" == run && " $* " == *' -- filemap-conform --input-scopes '* ]]; then
+              while [[ "$1" != -- ]]; do shift; done
+              shift
+              PATH={{Quote(path)}} exec dotnet {{Quote(cli)}} "$@"
+            fi
+            """ + "\n" + body);
+    }
+
+    [UnsupportedOSPlatform("windows")]
+    private static void WriteScribeInputRegistration(string repository)
+    {
+        var meta = Path.Combine(repository, "Meta");
+        Directory.CreateDirectory(meta);
+        File.WriteAllText(Path.Combine(meta, "FILEMAP.toml"), """
+            schema_version = 2
+            [residence_policy]
+            case_id = "RESIDENCE-EPOCH"
+            desired = "data-must-live-outside-tools"
+            known_violation_count = 0
+            status = "closed"
+            [[files]]
+            pattern = "Meta/LeanInputs.json"
+            kind = "program"
+            admission_plane = "judge"
+            produced_by = "none"
+            consumed_by = ["LeanInputManifest"]
+            verified_by = ["LeanInputManifest"]
+            artifact_id = "LeanInputManifest"
+            runtime_disposition = "committed-source"
+            """ + "\n");
+        object Input(params string[] patterns) => new
+            { patterns, exclude = Array.Empty<string>(), optional_root = (string?)null, min_matches = 0 };
+        object Scope(string name, string[] includes, params object[] inputs) => new { name, includes, inputs };
+        File.WriteAllText(Path.Combine(meta, "LeanInputs.json"), JsonSerializer.Serialize(new
+        {
+            schema_version = 1,
+            scopes = new[]
+            {
+                Scope("scribe-producer", [], Input(ScribeCoarseGateFixture.DerivedProducerPath)),
+                Scope("scribe-projections", ["scribe-producer"], Input("Golden/Projection/*.json")),
+                Scope("scribe-describe", ["scribe-producer"], Input("D5/**/*.lean", "Trureturing.lean",
+                    "lean-toolchain", "lake-manifest.json", "lakefile.toml", "Library/*/*.md",
+                    "Meta/Digestion/backfill/**/*.yaml", "Problems/*.md", "Blueprint/**/*.scribe.cs")),
+                Scope("scribe-markdown", [], Input("Blueprint/**/*.scribe.cs", "Blueprint/**/*.md")),
+            },
+        }) + "\n");
+    }
+
+    [UnsupportedOSPlatform("windows")]
     private sealed class ScribeCoarseGateFixture : IDisposable
     {
         internal const string DerivedProducerPath = "tools/custom/DerivedProducer.cs";
@@ -228,19 +287,14 @@ public sealed partial class MakeWorkflowTests
                 script,
                 UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
 
-            var inputHelper = Path.Combine(
-                Repository,
-                "tools",
-                "scripts",
-                "report",
-                "lean-report-input.sh");
-            Directory.CreateDirectory(Path.GetDirectoryName(inputHelper)!);
-            WriteExecutable(
-                inputHelper,
-                $"#!/usr/bin/env bash\n[[ \"${{1:-}}\" == scribe-producer-paths ]] || exit 2\nprintf '%s\\n' '{DerivedProducerPath}'\n");
-            WriteExecutable(
-                Path.Combine(binDirectory, "dotnet"),
-                "#!/usr/bin/env bash\nprintf '%s\\n' \"$*\" >> \"$SCRIBE_LOG\"\n");
+            WriteScribeInputRegistration(Repository);
+            WriteSelectorAwareDotnetShim(
+                binDirectory,
+                """
+                set -euo pipefail
+                [[ "$1" == "$SCRIBE_DLL" ]] || exit 2
+                printf '%s\n' "$*" >> "$SCRIBE_LOG"
+                """);
             File.WriteAllText(
                 Path.Combine(Repository, "global.json"),
                 "{}\n",
@@ -276,7 +330,7 @@ public sealed partial class MakeWorkflowTests
             "/bin/bash",
             [
                 "-c",
-                "PATH=\"$1:/usr/bin:/bin\" SCRIBE_LOG=\"$2\" "
+                "PATH=\"$1:$PATH\" SCRIBE_LOG=\"$2\" SCRIBE_DLL=\"$5\" "
                     + "exec /bin/bash \"$3\" \"$4\" \"$5\" \"$6\"",
                 "scribe-coarse-gate",
                 binDirectory,

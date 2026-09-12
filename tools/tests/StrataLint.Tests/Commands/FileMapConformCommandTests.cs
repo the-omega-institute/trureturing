@@ -1,10 +1,125 @@
 using StrataLint.Cli;
 using StrataLint.Engine;
+using System.Text;
+using System.Text.Json;
 
 namespace StrataLint.Tests;
 
 public sealed class FileMapConformCommandTests
 {
+    [Theory]
+    [InlineData("tools/scripts/worktree/lean-cache-run.sh", "scribe-projections,scribe-describe")]
+    [InlineData("tools/lean-inspector/LeanInformationAudit/Registry.lean", "scribe-projections,scribe-describe")]
+    [InlineData("tools/lean-inspector/Census/resources.py", "")]
+    [InlineData("tools/StrataLint.Scribe/Vendor/Katex/README.md", "")]
+    [InlineData("tools/StrataLint.Scribe/Vendor/Katex/katex.min.js", "scribe-projections,scribe-describe")]
+    [InlineData("D5/Removed.lean", "scribe-projections,scribe-describe")]
+    [InlineData("Golden/Projection/removed.json", "scribe-projections")]
+    [InlineData("Blueprint/D5/Removed.scribe.cs", "scribe-describe,scribe-markdown")]
+    [InlineData("Blueprint/D5/Removed.md", "scribe-markdown")]
+    [InlineData("Library/Test/removed.md", "scribe-describe")]
+    public void NativeScribeImpactPreservesDifferentiatedChecks(string path, string expected)
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var result = TestProcessRunner.Run("dotnet",
+            [Path.Combine(AppContext.BaseDirectory, "StrataLint.dll"), "filemap-conform",
+             "--input-scopes", "scribe-projections,scribe-describe,scribe-markdown", "--repository", root,
+             "--match-paths", path], root, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
+        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+        using var selected = JsonDocument.Parse(result.StandardOutput);
+        Assert.Equal(expected.Split(',', StringSplitOptions.RemoveEmptyEntries),
+            selected.RootElement.EnumerateObject().Where(scope => scope.Value.GetArrayLength() != 0)
+                .Select(scope => scope.Name));
+    }
+
+    [Fact]
+    public void NativeKatexResourceIsRequiredAtScribeOwner()
+    {
+        const string resource = "tools/StrataLint.Scribe/Vendor/Katex/katex.min.js";
+        var root = TestRepositoryLayout.FindRoot();
+        ProcessOutput Select(string repository, string scopes) => TestProcessRunner.Run("dotnet",
+            [Path.Combine(AppContext.BaseDirectory, "StrataLint.dll"), "filemap-conform",
+             "--input-scopes", scopes, "--repository", repository], root,
+            BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
+        var complete = Select(root, "scribe-runtime,producer,lean-sources,lean-config");
+        Assert.True(complete.ExitCode == 0, Encoding.UTF8.GetString(complete.StandardError));
+        using var selected = JsonDocument.Parse(complete.StandardOutput);
+        var scribe = selected.RootElement.GetProperty("scribe-runtime").EnumerateArray()
+            .Select(item => item.GetString()!).ToArray();
+        Assert.Contains(resource, scribe);
+        foreach (var scope in new[] { "producer", "lean-sources", "lean-config" })
+            Assert.DoesNotContain(resource, selected.RootElement.GetProperty(scope).EnumerateArray()
+                .Select(item => item.GetString()));
+
+        // Copy declared material to an isolated repository; the candidate CLI
+        // consumes the real registration before and after loss of the resource.
+        using var fixture = new TemporaryDirectory();
+        foreach (var path in scribe)
+        {
+            var destination = Path.Combine(fixture.Path, path);
+            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+            File.Copy(Path.Combine(root, path), destination);
+        }
+        var resourcePath = Path.Combine(fixture.Path, resource);
+        var bytes = File.ReadAllBytes(resourcePath);
+        Assert.Equal(0, Select(fixture.Path, "scribe-runtime").ExitCode);
+        File.Delete(resourcePath);
+        var missing = Select(fixture.Path, "scribe-runtime");
+        Assert.Equal(2, missing.ExitCode);
+        Assert.Empty(missing.StandardOutput);
+        var diagnostic = Encoding.UTF8.GetString(missing.StandardError);
+        Assert.Contains(resource, diagnostic, StringComparison.Ordinal);
+        Assert.Contains("requires at least 1 input(s), found 0", diagnostic, StringComparison.Ordinal);
+        File.WriteAllBytes(resourcePath, bytes);
+        Assert.Equal(0, Select(fixture.Path, "scribe-runtime").ExitCode);
+    }
+
+    [Theory]
+    [InlineData("none", 0, "")]
+    [InlineData("missing-input", 2, "required.sh")]
+    [InlineData("missing-scope", 2, "impact")]
+    [InlineData("duplicate-scope", 2, "impact")]
+    [InlineData("duplicate-input", 2, "Docs/deleted.md")]
+    public void DeclaredImpactMatchesChangedPathsAndValidatesRegistration(string defect, int exit, string diagnostic)
+    {
+        using var fixture = new TemporaryDirectory();
+        WriteAdmissionPlaneFixture(fixture.Path, "admission_plane = \"judge\"\n", "Meta/LeanInputs.json");
+        var filemap = Path.Combine(fixture.Path, "Meta/FILEMAP.toml");
+        File.WriteAllText(filemap, File.ReadAllText(filemap)
+            .Replace("kind = \"data\"", "kind = \"program\"", StringComparison.Ordinal)
+            .Replace("[\"reader\"]", "[\"LeanInputManifest\"]", StringComparison.Ordinal)
+            .Replace("[\"SnapshotDecoder\"]", "[\"LeanInputManifest\"]", StringComparison.Ordinal)
+            .Replace("artifact_id = \"none\"", "artifact_id = \"LeanInputManifest\"", StringComparison.Ordinal));
+        if (defect != "missing-input") File.WriteAllText(Path.Combine(fixture.Path, "required.sh"), "input\n");
+        object Input(string[] patterns, int minimum) => new
+        {
+            patterns, exclude = new[] { "Docs/ignored/**" }, optional_root = (string?)null, min_matches = minimum,
+        };
+        var inputs = new List<object> { Input(["required.sh"], 1), Input(["Docs/**/*.md"], 0) };
+        if (defect == "duplicate-input") inputs.Add(Input(["Docs/deleted.md"], 0));
+        var scope = new { name = "impact", includes = Array.Empty<string>(), inputs };
+        File.WriteAllText(Path.Combine(fixture.Path, "Meta/LeanInputs.json"), JsonSerializer.Serialize(new
+        {
+            schema_version = 1,
+            scopes = defect == "missing-scope" ? [] : defect == "duplicate-scope" ? new[] { scope, scope } : [scope],
+        }) + "\n");
+
+        var result = FileMapConformCommand.Run(
+            ["--input-scopes", "impact", "--repository", fixture.Path, "--match-paths",
+             "Docs/deleted.md", "Docs/ignored/readme.md", "Unrelated.cs", "Docs/new file.md"], fixture.Path);
+
+        Assert.Equal(exit, result.ExitCode);
+        if (exit != 0)
+        {
+            Assert.Contains(diagnostic, result.Error, StringComparison.Ordinal);
+            Assert.Empty(result.Output);
+            return;
+        }
+        using var selected = JsonDocument.Parse(result.Output);
+        Assert.Equal(["Docs/deleted.md", "Docs/new file.md"],
+            selected.RootElement.GetProperty("impact").EnumerateArray().Select(item => item.GetString()));
+    }
+
     [Fact]
     public void MissingAdmissionPlaneIsReportedAsAPolicyFinding()
     {

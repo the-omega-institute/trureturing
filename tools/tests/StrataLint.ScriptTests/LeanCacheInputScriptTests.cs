@@ -115,6 +115,31 @@ public sealed class LeanCacheInputScriptTests
         }
     }
 
+    [Theory]
+    [InlineData("address", "Meta/FILEMAP.toml")]
+    [InlineData("address", "Meta/LeanInputs.json")]
+    [InlineData("dependency-address", "Meta/FILEMAP.toml")]
+    [InlineData("dependency-address", "Meta/LeanInputs.json")]
+    public void MissingCacheRegistrationNamesTheObject(string command, string path)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new LeanInputFixture();
+        fixture.RemoveInput(path);
+        var result = fixture.RunLeaf(command);
+        Assert.Equal(2, result.ExitCode);
+        Assert.Empty(result.Output);
+        Assert.Contains(path, result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DeclaredOptionalLibraryMayBeAbsent()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new LeanInputFixture();
+        fixture.RemoveInput("tools/lean-inspector");
+        Assert.Equal($"{fixture.ExpectedSources} {fixture.ExpectedConfig}\n", fixture.ReadAddresses());
+    }
+
     [Fact]
     public void ExistingLeanInputAddressesStayByteIdentical()
     {
@@ -201,9 +226,10 @@ public sealed class LeanCacheInputScriptTests
             reportCalls = Path.Combine(temporary.Path, "report.calls");
             lakeCalls = Path.Combine(temporary.Path, "lake.calls");
             publishedManifest = Path.Combine(temporary.Path, "published.manifest");
-            candidateLeaf = Path.Combine(temporary.Path, "candidate-leaf.sh");
+            candidateLeaf = Path.Combine(TestRepositoryLayout.FindRoot(), LeafPath);
             foreach (var directory in new[] { repository, bin, payload, Path.Combine(repository, ".lake/build") })
                 ScriptHarnessScratch.EnsureDirectory(directory);
+            WriteRegistration();
             Write("Trureturing.lean", "import D5.Zeta\n");
             Write("D5/Zeta.lean", "theorem zeta : True := by trivial\n");
             Write("D5/Alpha/Nested.lean", "def nested := 1\n");
@@ -218,12 +244,19 @@ public sealed class LeanCacheInputScriptTests
             Write("tools/StrataLint.Engine/CanonicalWriter.cs", "// report only\n");
             ScriptHarnessScratch.CopyScriptInto(
                 Path.Combine(TestRepositoryLayout.FindRoot(), PublisherPath), Path.Combine(repository, PublisherPath));
-            ScriptHarnessScratch.CopyScriptInto(
-                Path.Combine(TestRepositoryLayout.FindRoot(), LeafPath), candidateLeaf);
             WriteStub(Path.Combine(repository, LeafPath), "exec /bin/bash \"$LEAN_INPUT_CANDIDATE\" \"$@\"");
             WriteStub(Path.Combine(repository, "tools/scripts/report/lean-report-input.sh"),
                 "printf 'called\\n' >> \"$LEAN_INPUT_REPORT_CALLS\"\nexit 73");
-            WriteStub(Path.Combine(bin, "dotnet"), "printf 'unexpected MSBuild call\\n' >&2\nexit 74");
+
+            WriteStub(Path.Combine(bin, "dotnet"), """
+                # The canonical build supplies the CLI; keep native selection in each call.
+                [[ "$1" == run ]] || exit 2
+                while [[ $# -gt 0 && "$1" != -- ]]; do shift; done
+                [[ $# -gt 0 ]] || exit 2
+                shift
+                PATH="$ORIGINAL_PATH" exec dotnet "$NATIVE_CLI" "$@"
+                """);
+
             WriteStub(Path.Combine(bin, "lake"), """
                 printf '%s\n' "$1" >> "$LEAN_INPUT_LAKE_CALLS"
                 case "$1" in
@@ -283,6 +316,44 @@ public sealed class LeanCacheInputScriptTests
                   *) exit 81 ;;
                 esac
                 """);
+            // Keep memo eligibility inside this fixture even when TMPDIR is under a checkout.
+            var initialized = Run("git", "init", "--quiet");
+            Assert.True(initialized.ExitCode == 0, initialized.Text);
+        }
+
+        private void WriteRegistration()
+        {
+            Write("Meta/FILEMAP.toml", """
+                schema_version = 2
+                [residence_policy]
+                case_id = "RESIDENCE-EPOCH"
+                desired = "data-must-live-outside-tools"
+                known_violation_count = 0
+                status = "closed"
+                [[files]]
+                pattern = "Meta/LeanInputs.json"
+                kind = "program"
+                admission_plane = "judge"
+                produced_by = "none"
+                consumed_by = ["LeanInputManifest"]
+                verified_by = ["LeanInputManifest"]
+                artifact_id = "LeanInputManifest"
+                runtime_disposition = "committed-source"
+                """ + "\n");
+            object Input(string[] patterns, string? optional = null) => new
+                { patterns, exclude = Array.Empty<string>(), optional_root = optional, min_matches = 1 };
+            object Scope(string name, string[] includes, params object[] inputs) => new { name, includes, inputs };
+            Write("Meta/LeanInputs.json", JsonSerializer.Serialize(new
+            {
+                schema_version = 1,
+                scopes = new[]
+                {
+                    Scope("lean-sources", [], Input(["Trureturing.lean"]), Input(["D5/**/*.lean"]),
+                        Input(["tools/lean-inspector/**/*.lean"], "tools/lean-inspector")),
+                    Scope("lean-dependencies", [], Input(["lean-toolchain"]), Input(["lake-manifest.json"])),
+                    Scope("lean-config", ["lean-dependencies"], Input(["lakefile.toml", "lakefile.lean"])),
+                },
+            }) + "\n");
         }
 
         internal Dictionary<string, string> Inputs { get; } = new(StringComparer.Ordinal);
@@ -307,10 +378,12 @@ public sealed class LeanCacheInputScriptTests
 
         internal void RemoveInput(string path)
         {
-            if (path == "D5")
+            if (path is "D5" or "tools/lean-inspector")
             {
-                var result = Run("/bin/mv", Path.Combine(repository, "D5"), Path.Combine(repository, "absent-D5"));
+                var result = Run("/bin/mv", Path.Combine(repository, path), Path.Combine(repository, "absent-library"));
                 Assert.Equal(0, result.ExitCode);
+                foreach (var input in Inputs.Keys.Where(input => input.StartsWith(path + "/", StringComparison.Ordinal)).ToArray())
+                    Inputs.Remove(input);
                 return;
             }
             foreach (var relative in path == "lakefiles" ? new[] { "lakefile.toml", "lakefile.lean" } : new[] { path })
@@ -349,6 +422,8 @@ public sealed class LeanCacheInputScriptTests
                 new[]
                 {
                     $"PATH={bin}:{Environment.GetEnvironmentVariable("PATH")}",
+                    $"ORIGINAL_PATH={Environment.GetEnvironmentVariable("PATH")}",
+                    $"NATIVE_CLI={Path.Combine(AppContext.BaseDirectory, "StrataLint.dll")}",
                     $"LEAN_INPUT_CANDIDATE={candidateLeaf}",
                     $"LEAN_INPUT_REPORT_CALLS={reportCalls}",
                     $"LEAN_INPUT_LAKE_CALLS={lakeCalls}",

@@ -149,6 +149,17 @@ end ExpectedOccurrenceManifest
 def frozenInformationRootId : Name :=
   `D5.S3.ConceptDynamics.InformationEscape.InformationRoot
 
+/-- Local registration companions belong to this compiling module. Keep the
+historical frozen root and locally declared owners public; an imported owner's
+companions must not collide with another root's declarations. Occurrence-qualified
+companions use `catalogQualifiedName` instead. -/
+def localCompanionName (env : Environment) (owner : Name) (suffix : String) : Name :=
+  let name := owner.str suffix
+  if env.mainModule == frozenInformationRootId || !env.isImportedConst owner then
+    name
+  else
+    mkPrivateName env name
+
 def designatedInformationRootId : Name :=
   `D5.S3.ConceptDynamics.InformationEscape.SharedInformationRoot
 
