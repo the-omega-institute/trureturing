@@ -18,7 +18,7 @@ internal sealed class FactorialSquareDivisibilityPrimePowerDocument : IScribeDoc
             H("The exact exponent is characterized by prime powers"),
             StatementSource.FromAuthor(StatementFormula()),
             AssessedProvenance.FromLiterature(
-                LibraryNoteRef.Create("D5/L/Recurrence/murthy2004a096127")),
+                LibraryNoteRef.Create("D5/L/Factorization/murthy2004a096127")),
             Blocks(Paragraph(Text(
                 "Legendre's formula converts each factorial divisibility into a prime-valuation "
                 + "inequality. Base-p digit-sum submultiplicativity bounds the valuation for "
