@@ -2,13 +2,14 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using StrataLint.Engine;
+using Xunit.Abstractions;
 
 namespace StrataLint.Tests;
 
 // Contract for the opt-in content-addressed report cache. Hits re-verify against
 // the current tree; anomalies evict and reproduce. Stubs drive the real cache and
 // input scripts without Mathlib, the Lean slot, or the report supervisor.
-public sealed class LeanReportCacheTests
+public sealed class LeanReportCacheTests(ITestOutputHelper output)
 {
     private const string RawReportPath = "tools/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs";
     private const string CanonicalWriterPath = "tools/Trureturing.Truth/StructuredCanonicalWriter.cs";
@@ -103,9 +104,7 @@ public sealed class LeanReportCacheTests
 
         var result = world.RunPair(cacheEnabled: false, omitProducerLogs: true);
 
-        Assert.NotEqual(0, result.ExitCode);
-        Assert.Equal(1, world.ProducerRunCount);
-        Assert.False(world.LiveBundleExists());
+        AssertProducerLogsRejected(result, world);
     }
 
     [Fact]
@@ -116,9 +115,7 @@ public sealed class LeanReportCacheTests
 
         var result = world.RunPair(cacheEnabled: false, producerLogsAsFile: true);
 
-        Assert.NotEqual(0, result.ExitCode);
-        Assert.Equal(1, world.ProducerRunCount);
-        Assert.False(world.LiveBundleExists());
+        AssertProducerLogsRejected(result, world);
     }
 
     [Fact]
@@ -129,9 +126,24 @@ public sealed class LeanReportCacheTests
 
         var result = world.RunPair(cacheEnabled: false, emptyProducerLogs: true);
 
-        Assert.NotEqual(0, result.ExitCode);
+        AssertProducerLogsRejected(result, world);
+    }
+
+    private void AssertProducerLogsRejected(ProcessOutput result, CacheWorld world)
+    {
+        output.WriteLine(
+            $"Pair exit={result.ExitCode}, producer runs={world.ProducerRunCount}, slot acquisitions={world.SlotAcquireCount}\n"
+                + $"stdout:\n{Encoding.UTF8.GetString(result.StandardOutput)}\n"
+                + $"stderr:\n{Encoding.UTF8.GetString(result.StandardError)}");
+
+        Assert.Equal(2, result.ExitCode);
         Assert.Equal(1, world.ProducerRunCount);
+        Assert.Equal(1, world.SlotAcquireCount);
         Assert.False(world.LiveBundleExists());
+        Assert.Contains(
+            "lean-report-pair: producer left no log sidecar:",
+            Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.Ordinal);
     }
 
     [Fact]
