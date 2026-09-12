@@ -1,0 +1,23 @@
+**35.24 Three density meanings.** The positive density \(d_Q\) concerns the
+one-dimensional reference exponent \(n\). Let
+\(\mathcal N_Q=\{N_n:n\in B_Q^{\rm valid}\}\). Its counting function is
+of order \(\log X\) by 35.17 and \(d_Q>0\), so its ordinary natural
+integer density is zero:
+\(\#(\mathcal N_Q\cap[1,X])/X\to0\). Its logarithmic integer density is
+also zero, with the usual definition
+\[
+\lim_{X\to\infty}\frac1{\log X}
+\sum_{\substack{N\in\mathcal N_Q\\N\le X}}\frac1N=0.
+\]
+Indeed validity gives \(N_n\ge p_0^{n-1}\), so the sum over the entire
+selected tail is bounded by the convergent geometric series
+\(\sum_{n\ge n_0}p_0^{-(n-1)}\). Logarithmic growth of a counting function
+does not mean positive logarithmic density among integers.
+
+In full exponent space, among \(b\in\{0,\ldots,R\}^k\) the constructed
+family has at most \(R+1\) points, since \(b_0=n-1\) determines \(n\).
+Its proportion is at most \((R+1)^{1-k}\to0\) for \(k\ge2\).
+These statements describe the constructed subfamily, not all boxes that
+might satisfy a \(G\) inequality. Finite validity/cutoff removal does not
+change any of these density conclusions.
+
