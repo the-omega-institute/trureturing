@@ -216,8 +216,7 @@ noncomputable def firstReturnEquiv (n : Nat) : SchroederPath (n + 1) ≃
       refine ⟨Sum.inr ⟨i, ⟨qp.1, (mem_product.mp hqp).1⟩, ⟨qp.2, (mem_product.mp hqp).2⟩⟩, ?_⟩
       apply Subtype.ext
       exact hpw
-/-- Under first return, an empty inside path makes the enclosing `U,D` a peak. -/
-theorem first_return_peaks {i n : Nat} {q p : List Step}
+private theorem first_return_peaks {i n : Nat} {q p : List Step}
     (hq : q ∈ schroeder i) (_hp : p ∈ schroeder n) : peaks (U :: q ++ D :: p) = peaks q + peaks p + if i = 0 then 1 else 0 := by
   have hs := schroeder_spec i q hq
   have hD : ∀ r : List Step, peaks (D :: r) = peaks r := by
@@ -794,7 +793,6 @@ theorem schulte_a060693 (n : Nat) : (∑ k : Fin (n + 1), (-1 : Int) ^ (k : Nat)
           ring
 set_option maxRecDepth 100000 in
 example : T 1 0 = 1 /\ T 1 1 = 1 /\ T 2 0 = 2 /\ T 2 1 = 3 /\ T 2 2 = 1 := by decide +kernel
-#print axioms first_return_peaks
 #print axioms T_first_return_recurrence
 #print axioms schulte_a060693
 end D5.S1.Recurrence.Invariants.SchroederPeakAlternatingQuadraticMoment
