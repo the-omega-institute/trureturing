@@ -198,7 +198,9 @@ subprocess.run = run
         result = self.fetch_then_build()
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         self.assertIn('"status":"unpacked"', result.stdout)
-        self.assertEqual(["lean", "-C " + str(self.root) + " lean"],
+        # Publication packages the already-built tree; only the caller's
+        # subsequent normal build is recorded here.
+        self.assertEqual(["-C " + str(self.root) + " lean"],
                          (self.root / "build-runs").read_text().splitlines())
 
     def test_unavailable_lock_is_an_explicit_fetch_miss(self):
@@ -359,6 +361,16 @@ else:
     if verb == "create":
         directory.mkdir()
         (directory / "release.json").write_text(json.dumps({"tag_name": tag, "target_commitish": option("--target"), "draft": True}))
+        # `gh release create` uploads any asset paths passed on the same
+        # invocation.  The production publisher uses this atomic form (the
+        # archive and manifest are positional arguments after the flags), so
+        # the fake must persist those files just like the real CLI.  Earlier
+        # versions only created release.json, making every valid publication
+        # look empty to the subsequent fetch and masking the round-trip path.
+        for value in args[3:]:
+            candidate = pathlib.Path(value)
+            if candidate.is_file():
+                shutil.copyfile(candidate, directory / candidate.name)
     elif verb == "upload":
         for value in args[3:]:
             if pathlib.Path(value).is_file(): shutil.copyfile(value, directory / pathlib.Path(value).name)
