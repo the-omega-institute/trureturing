@@ -151,6 +151,13 @@ public sealed partial class ResourceAdapterTests
             if (registration == "checks") data["checks"]!.AsArray().Single(r => r!["id"]!.ToString() == "filemap")!["report_inputs"] = new JsonArray(new JsonObject { ["artifact"] = "required-report" });
             fixture.Write(path, data.ToJsonString());
         }
+        if (registration == "execution")
+        {
+            // Stale stat metadata must not let an observation refresh the index.
+            // The tracked file's content remains unchanged.
+            var note = Path.Combine(fixture.Root, "docs/note.md");
+            File.SetLastWriteTimeUtc(note, File.GetLastWriteTimeUtc(note).AddMinutes(-1));
+        }
         var state = LocalState(fixture);
         var result = PushPlan(fixture);
         Assert.Equal(state, LocalState(fixture));
