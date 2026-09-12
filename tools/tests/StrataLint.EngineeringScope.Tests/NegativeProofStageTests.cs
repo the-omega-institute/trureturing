@@ -5,6 +5,7 @@ using Xunit;
 
 namespace StrataLint.EngineeringScope.Tests;
 
+[Collection("Engineering scope process boundary")]
 public sealed class NegativeProofStageTests
 {
     public static TheoryData<string, int, int> RejectedExits()
@@ -21,6 +22,7 @@ public sealed class NegativeProofStageTests
     public async Task UnexpectedExitRetainsRawValueAndCannotProveRejection(string proof, int raw, int expected)
     {
         using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        fixture.RegisterProofs();
         var bin = Path.Combine(fixture.Root, "build", "bin");
         TemporaryFileSystem.Directory.CreateDirectory(bin);
         var shim = Path.Combine(bin, "dotnet");
@@ -35,6 +37,7 @@ public sealed class NegativeProofStageTests
               printf 'BannedApiViolations.cs(1,1): error RS0030: banned symbol\n'
               exit "$CONTRACT_RAW"
             fi
+            [[ "$2" != selftest ]] || echo "SELFTEST PASS"
             exit 0
             """);
         if (!OperatingSystem.IsWindows())

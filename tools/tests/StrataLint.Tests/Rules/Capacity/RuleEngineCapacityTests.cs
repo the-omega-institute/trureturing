@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
+using StrataLint.TestSupport;
 
 namespace StrataLint.Tests;
 
@@ -37,7 +38,8 @@ public sealed class RuleEngineCapacityTests
     public void Sl003DoesNotTreatTheSingleSourceDigestionLedgerAsASplittableModule()
     {
         var fixture = new RuleFixture();
-        for (var index = 0; index < RepositoryRules.DirectoryFileLimit - 2; index++)
+        // domains, registry and engineering-projects are the three counted Meta files.
+        for (var index = 0; index < RepositoryRules.DirectoryFileLimit - 3; index++)
         {
             var path = $"Meta/Capacity{index:00}.txt";
             fixture.Files[path] = "fixture\n";

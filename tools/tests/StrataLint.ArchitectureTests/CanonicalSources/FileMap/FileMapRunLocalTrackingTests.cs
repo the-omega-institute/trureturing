@@ -55,6 +55,7 @@ public sealed class FileMapRunLocalTrackingTests
 
     private const string DataKeyedRunLocalEntry = """
         [[files]]
+        require = []
         pattern = "Generated/partitions/*.md"
         kind = "generated"
         admission_plane = "content"
@@ -68,6 +69,7 @@ public sealed class FileMapRunLocalTrackingTests
 
     private const string DataKeyedCommittedSourceEntry = """
         [[files]]
+        require = []
         pattern = "Blueprint/**/*.md"
         kind = "generated"
         admission_plane = "content"
@@ -83,7 +85,8 @@ public sealed class FileMapRunLocalTrackingTests
         FileMapLoader.Parse(
             Encoding.UTF8.GetBytes(
                 """
-                schema_version = 2
+                schema_version = 3
+                resources = []
 
                 [residence_policy]
                 case_id = "RESIDENCE-EPOCH"

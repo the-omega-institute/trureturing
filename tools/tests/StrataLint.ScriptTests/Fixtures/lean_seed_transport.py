@@ -19,6 +19,14 @@ class ReleaseTransportCases(PartitionFixture):
         write(self.root / ".lake/build/lib/lean/D5/A.olean", "locally-produced-olean")
         write(self.bin / "make", '#!/bin/sh\nprintf "%s\\n" "$*" >> "$FAKE_BUILD_LOG"\nexit "${FAKE_BUILD_EXIT:-0}"\n')
         write(self.bin / "gh", FAKE_GH)
+        helper_dir = self.root / "tools/scripts/worktree"
+        helper_dir.mkdir(parents=True, exist_ok=True)
+        # Exercise the production shell entry point with its declared transport
+        # dependencies in the fixture repository.
+        for name in ("lean-cache-publish.sh", "cache_material.py", "lean_cache.py", "lean_cache_release.py"):
+            shutil.copy2(PUBLISH.with_name(name), helper_dir / name)
+        self.publisher = helper_dir / "lean-cache-publish.sh"
+        self.publisher.chmod(0o755)
         for path in self.bin.iterdir():
             path.chmod(0o755)
 
@@ -30,7 +38,7 @@ class ReleaseTransportCases(PartitionFixture):
             "STRATALINT_CHECK_SUCCEEDED": "true", "STRATALINT_ACTIONS_CACHE_SEEDED": "", **extra}
 
     def transport(self, verb, run="123", arguments=(), **extra):
-        return subprocess.run(["bash", str(PUBLISH), verb, "--repository", str(self.root), *arguments],
+        return subprocess.run(["bash", str(self.publisher), verb, "--repository", str(self.root), *arguments],
                               text=True, capture_output=True, env=self.transport_environment(run, **extra))
 
     def fetch_then_build(self, **extra):
@@ -41,7 +49,7 @@ if ! "$1" fetch --allow-seed --repository "$2"; then
     printf '%s\\n' 'Release seed unavailable; continuing with the normal Lean build.'
 fi
 make -C "$2" lean
-''', "optional-fetch", str(PUBLISH), str(self.root)], text=True, capture_output=True,
+''', "optional-fetch", str(self.publisher), str(self.root)], text=True, capture_output=True,
             env=self.transport_environment(**extra))
 
     def deadline_probe(self, seconds, step=0):
@@ -270,13 +278,17 @@ subprocess.run = run
         self.assertEqual(0, self.transport("fetch").returncode)
         self.assertTrue((self.root / ".lake/build/lib/lean/D5/A.olean").is_file())
 
-    def test_actions_seed_skips_release_and_real_build_failure_blocks_save(self):
+    def test_actions_seed_skips_fetch_but_publication_requires_successful_build(self):
         result = self.transport("fetch", STRATALINT_ACTIONS_CACHE_SEEDED="1")
         self.assertEqual(0, result.returncode, result.stderr)
         self.assertIn("skipped", result.stdout)
         result = self.transport("publish", FAKE_BUILD_EXIT="19")
         self.assertEqual(19, result.returncode, result.stdout + result.stderr)
         self.assertEqual([], list(self.remote.iterdir()))
+        result = self.transport("publish", FAKE_BUILD_EXIT="0")
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status":"published"', result.stdout)
+        self.assertTrue(list(self.remote.iterdir()))
 
     def test_pr_cannot_publish_even_after_a_successful_build(self):
         result = self.transport("publish", GITHUB_EVENT_NAME="pull_request_target")
@@ -309,10 +321,11 @@ FAKE_GH = '''#!/usr/bin/env python3
 import hashlib, json, os, pathlib, shutil, sys
 args = sys.argv[1:]
 root = pathlib.Path(os.environ["FAKE_REMOTE"])
-if os.environ.get("FAKE_HANG") == ("api" if args[0] == "api" else args[1]):
+verb = args[0] if args and args[0] == "api" else (args[1] if len(args) > 1 else "")
+if os.environ.get("FAKE_HANG") == verb:
     import signal
     signal.pause()
-if len(args) > 1 and os.environ.get("FAKE_FAIL") == args[1] and args[1] != "upload": sys.exit(23)
+if len(args) > 1 and os.environ.get("FAKE_FAIL") == verb and verb != "upload": sys.exit(23)
 if args[:2] == ["release", "list"] and "FAKE_LIST_JSON" in os.environ:
     print(os.environ["FAKE_LIST_JSON"]); sys.exit(0)
 if args[0] == "api" and "FAKE_API_JSON" in os.environ:
@@ -344,8 +357,12 @@ else:
         (directory / "release.json").write_text(json.dumps(value))
     elif verb == "download":
         destination = pathlib.Path(option("--dir")); destination.mkdir(exist_ok=True)
+        if not directory.exists():
+            sys.exit(0)
+        patterns = [args[i + 1] for i, value in enumerate(args) if value == "--pattern" and i + 1 < len(args)]
         for path in directory.iterdir():
-            if path.name != "release.json": shutil.copyfile(path, destination / path.name)
+            if path.name != "release.json" and (not patterns or path.name in patterns):
+                shutil.copyfile(path, destination / path.name)
     elif verb == "view":
         if not directory.exists(): sys.exit(1)
         print(json.dumps(metadata(directory)))

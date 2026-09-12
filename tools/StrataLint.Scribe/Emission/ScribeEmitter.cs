@@ -156,6 +156,11 @@ public static class ScribeEmitter
             frozenStatements: frozenStatements).Verification;
     }
 
+    internal static VerifiedScribeEmissions? Verify(string repositoryRoot, TextWriter error,
+        LeanAxiomReport report, IReadOnlyList<DocumentDefinition> definitions) =>
+        Run(repositoryRoot, check: true, TextWriter.Null, error, _ => report,
+            validateRepository: true, tolerateAbsentDocuments: false, suppliedDefinitions: definitions).Verification;
+
     private static ScribeEmissionRun Run(
         string repositoryRoot,
         bool check,

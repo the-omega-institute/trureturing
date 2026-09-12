@@ -84,6 +84,23 @@ public sealed class GitRepositoryGatewayRevisionTests
     }
 
     [Fact]
+    public void ReadCurrentOmitsDeletedTrackedFileAndIncludesRenamedFile()
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        File.WriteAllText(Path.Combine(repository.Path, "old.txt"), "retained bytes\n");
+        File.WriteAllText(Path.Combine(repository.Path, "deleted.txt"), "deleted bytes\n");
+        ReviewRegressionTests.RunGit(repository.Path, "add", ".");
+        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "snapshot fixture");
+        File.Move(Path.Combine(repository.Path, "old.txt"), Path.Combine(repository.Path, "new.txt"));
+        File.Delete(Path.Combine(repository.Path, "deleted.txt"));
+
+        var snapshot = new GitRepositoryGateway(repository.Path).ReadCurrent();
+
+        AssertEntry(Assert.Single(snapshot.Entries), "new.txt", "retained bytes\n");
+    }
+
+    [Fact]
     public void ReadCurrentChangesReportsOnlyWorkingTreeDeltaFromHead()
     {
         using var repository = new TemporaryDirectory();

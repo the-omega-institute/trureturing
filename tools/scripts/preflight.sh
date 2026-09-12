@@ -64,20 +64,47 @@ if [[ "$MODE" == pr ]]; then
   [[ "$TREE_SHA" =~ ^[0-9a-fA-F]{40}$ ]] || fail_input invalid-merge-tree
   TEMPORARY="$(mktemp -d "${TMPDIR:-/tmp}/ci-preflight.XXXXXXXX")"
   CANDIDATE="$TEMPORARY/candidate"
-  git clone --quiet --shared --no-checkout "$ROOT" "$CANDIDATE"
-  git -C "$CANDIDATE" read-tree --reset -u "$TREE_SHA"
+  git clone --quiet --shared --no-checkout --origin origin "$ROOT" "$CANDIDATE"
+  # Bind the merged tree to its protected first parent and triggering head.
+  CANDIDATE_SHA="$(git -C "$CANDIDATE" -c user.name=Preflight -c user.email=preflight@example.invalid \
+    commit-tree "$TREE_SHA" -p "$BASE_SHA" -p "$HEAD_SHA" -m 'Preflight candidate')"
+  git -C "$CANDIDATE" checkout --quiet --detach "$CANDIDATE_SHA"
+  git -C "$CANDIDATE" remote remove origin
+  stage=plan
+  python3 -B "$CANDIDATE/tools/scripts/workflow/ci.py" pr-plan --repository "$CANDIDATE" \
+    --commit "$CANDIDATE_SHA" --base "$BASE_SHA" --head "$HEAD_SHA"
+  export CANDIDATE_SHA
+  export CI_PLAN_PATH="$CANDIDATE/build/ci/plan.json"
+  export CI_CHANGES_PATH="$CANDIDATE/build/ci/changes.json"
   printf 'PREFLIGHT_CANDIDATE path=%s\n' "$CANDIDATE"
+else
+  stage=plan
+  python3 -B tools/scripts/workflow/ci.py push-plan --repository "$ROOT" ${CANDIDATE_SHA:+--commit "$CANDIDATE_SHA"}
+  export CI_PLAN_PATH="$ROOT/build/ci/plan.json"
+  export CI_CHANGES_PATH="$ROOT/build/ci/changes.json"
 fi
 if [[ -f "$ROOT/tools/scripts/lib/resource-observation-lib.sh" ]]; then
   source "$ROOT/tools/scripts/lib/resource-observation-lib.sh"
   resource_observe preflight-start "$CANDIDATE" || true
 fi
 cd "$CANDIDATE"
+# Engineering normally owns the canonical build. A current-only plan needs the
+# same producer before engineering records its honest not-required result.
+build_without_engineering="$(python3 -B - "$CI_PLAN_PATH" <<'PY'
+import json, sys
+stages = json.load(open(sys.argv[1]))["stages"]
+print("yes" if stages["build"]["status"] == "required" and stages["engineering"]["status"] == "not-required" else "no")
+PY
+)"
+if [[ "$build_without_engineering" == yes ]]; then
+  stage=build
+  /bin/bash tools/scripts/ci-stage.sh "$stage"
+fi
 for stage in engineering current; do
   /bin/bash tools/scripts/ci-stage.sh "$stage"
 done
 if [[ "$MODE" == pr ]]; then
-  stage=delta
+  stage="delta"
   /bin/bash tools/scripts/ci-stage.sh delta "$BASE_SHA"
 fi
 stage=complete
