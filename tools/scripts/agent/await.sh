@@ -13,7 +13,7 @@
 #   await.sh vote <brief> <out> [max]        Submit and await a vote (default max 4).
 #   退出码契约:seat/nyx/make —— 0 条件成立(make 只看哨兵出现,不看其值)、124 超 AWAIT_DEADLINE;
 #   vote —— 0 settled(NYX_OK,答案已落 <out>.settled)、6 UNCERTAIN(不重投,打印 task id)、1 DELIVERY(不重投)、
-#   2 参数/IO 错误、124 超时、125 重试耗尽(EXTRACTION/QUOTA/BUSY 各轮均失败)、其余=转发 nyx.sh 的失败/信号状态。
+#   2 参数/IO 错误、124 超时、125 重试耗尽(safe terminal/pre-submit failures 各轮均失败)、其余=转发 nyx.sh 的失败/信号状态。
 #   通用:缺必需参数(\${x:?})由 shell 以 1 退出;未知动词 usage 退出 2。
 # 环境:AWAIT_DEADLINE(秒,默认 5400)、AWAIT_TICK(秒,默认 20)
 #
@@ -74,7 +74,7 @@ case "$kind" in
     done ;;
   vote)
     # Follow nyx's command verdict, including traversal. Only TIMEOUT needs fetch;
-    # EXTRACTION/QUOTA/BUSY retry; UNCERTAIN/DELIVERY stop with recovery references.
+    # Safe terminal/pre-submit failures retry; UNCERTAIN/DELIVERY stop with recovery references.
     brief="${1:?brief}"; out="${2:?outfile}"; maxn="${3:-4}"
     [[ "$maxn" =~ ^[0-9]+$ ]] && [ "$maxn" -gt 0 ] && [ "$maxn" -le 2147483647 ] 2>/dev/null || exit 2
     rm -f "$out.settled" || exit 2
@@ -84,8 +84,10 @@ case "$kind" in
       args=(ask "$brief" "$out")
       : > "$out.log" || exit 2
       while :; do
+        log_line=$(( $(wc -l < "$out.log") + 1 ))
         bash "$__TOOLDIR/nyx.sh" "${args[@]}" >> "$out.log" 2>&1; rc=$?
-        verdict=$(awk '/^NYX_(OK|EXTRACTION|QUOTA|BUSY|TIMEOUT|DELIVERY|UNCERTAIN|NOFILE|UNKNOWN|EXPIRED|NOPOOL|LOCKBUSY|ERR|IO|CANCELLED)( |$)/ {v=$1} END {print v}' "$out.log")
+        sed -n "${log_line},\$p" "$out.log" | grep '^NYX_UNSTABLE ' || :
+        verdict=$(awk '/^NYX_(OK|EXTRACTION|INFRA|CARRIER|PRECHECK|QUOTA|BUSY|TIMEOUT|DELIVERY|UNCERTAIN|NOFILE|UNKNOWN|EXPIRED|NOPOOL|LOCKBUSY|ERR|IO|CANCELLED)( |$)/ {v=$1} END {print v}' "$out.log")
         [ "$rc" -eq 3 ] && [ "$verdict" = NYX_TIMEOUT ] || break
         tid=$(bash "$__TOOLDIR/nyx.sh" taskid "$out") || exit 2
         if __deadline_hit; then
@@ -101,11 +103,13 @@ case "$kind" in
       fi
       case "$verdict" in
         NYX_UNCERTAIN|NYX_DELIVERY)
-          tid=$(bash "$__TOOLDIR/nyx.sh" taskid "$out") || exit 2
+          # Only this attempt's diagnostic can attribute an uncertain submission.
+          tid=$(awk '/^NYX_(UNCERTAIN|DELIVERY) / {for (i=2; i<=NF; i++) if ($i ~ /^task=/) {t=$i; sub(/^task=/,"",t)}} END {print t}' "$out.log")
+          tid="${tid:-<none>}"
           printf 'AWAIT_VOTE attempt=%s task=%s state=stopped verdict=%s at=%s\n' "$n" "$tid" "$verdict" "$(__stamp)"
           [ "$verdict" != NYX_UNCERTAIN ] || exit 6
           exit 1 ;;
-        NYX_EXTRACTION|NYX_QUOTA|NYX_BUSY)
+        NYX_EXTRACTION|NYX_INFRA|NYX_CARRIER|NYX_PRECHECK|NYX_LOCKBUSY|NYX_QUOTA|NYX_BUSY)
           # Keep the existing minute-scale backoff between fresh submissions.
           back=$(( 60 * n ))
           printf 'AWAIT_VOTE attempt=%s state=retry verdict=%s at=%s backoff=%ss\n' "$n" "$verdict" "$(__stamp)" "$back"

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Sourced by nyx.sh --selftest so fixtures exercise its internal functions.
+# shellcheck disable=SC2329 # Fake commands are exported for invocation in child shells.
 
 __selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**:`__classify` 的 OK 分支要求
   # `tail -1 = EXIT=0`,而 `EXIT=` 是**分类之后**才追加的 —— 在 ask 的活判决里该分支
@@ -7,7 +8,7 @@ __selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**
   # 该错配无运行期信号(答案就在文件里,只有退出码是错的),故必须由对照钉住。
   local fail=0 cases=0 got
   # shellcheck disable=SC2034 # Dynamically scoped input to nyx.sh's __rank_pools.
-  local BAD_SCRIPTS=cdp-1.3
+  local BAD_SCRIPTS=cdp-1.3 LIMIT=''
   chk() {  # chk <expected> <name> <payload> [CLI exit status]
     cases=$((cases+1))
     got=$(__verdict_of_payload "$3" "${4:-0}" 2>/dev/null)
@@ -55,7 +56,7 @@ __selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**
   # Script 列解析的阳性/阴性对照:缺省 pool 的选择依赖它,解析错了就诊断错了。
   chkv() {  # chkv <期望> <名字> <表格文本>
     cases=$((cases+1))
-    got=$(printf '%s\n' "$3" | __script_ver_parse)
+    got=$(printf '%s\n' "$3" | __pool_stats_parse fixture | cut -d'|' -f2)
     if [ "$got" = "$1" ]; then printf '  ok   %-30s %s\n' "$2" "${got:-<empty>}"
     else printf '  FAIL %-30s expected=%s got=%s\n' "$2" "$1" "${got:-<none>}"; fail=1; fi
   }
@@ -138,6 +139,9 @@ __selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**
     local slug script online dispatched capacity queued response id i
     printf '%s\n' "$*" >> "$NYX_TEST_DIR/calls"
     [ "$1" = oracle ] || return 97
+    if [ "$2 $3" = 'pool list' ] && [ "${NYX_TEST_LIST_ERROR:-}" = 1 ]; then
+      echo 'Error: pool discovery unavailable'; return 7
+    fi
     [ "$2" != result ] || printf '%s\n' "$3" >> "$NYX_TEST_DIR/polls"
     while IFS='|' read -r slug script online dispatched capacity queued response id; do
       if [ "$2 $3" = 'pool list' ]; then
@@ -149,6 +153,24 @@ __selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**
       else [ "$3" = "$slug" ] || continue; fi
       case "$2" in
         status)
+          printf '%s\n' status >> "$NYX_TEST_DIR/status-$slug"
+          i=$(wc -l < "$NYX_TEST_DIR/status-$slug")
+          if [ "$i" -gt 1 ]; then
+            printf '%s|%s\n' "$slug" "$(if [ -d "$NYX_TEST_DIR/nyx-ask-$slug.lock" ]; then echo locked; else echo unlocked; fi)" >> "$NYX_TEST_DIR/refreshes"
+            case "$response" in
+              late-read) echo 'Error: status transport unavailable'; return 7;;
+              alternating-read) if [ "$((i%2))" -eq 0 ]; then echo 'Error: status transport unavailable'; return 7; fi;;
+              late-parse) capacity=garbled;;
+              late-offline) online=0;;
+              late-full) dispatched="$capacity";;
+              late-zero) capacity=0;;
+              late-filter) script=cdp-1.3-old;;
+              late-script) script='';;
+              late-shrink) capacity=1; dispatched=1;;
+              late-expiry) echo 'Error: session has expired'; return 1;;
+            esac
+          fi
+          if [ "$response" = full-then-free ] && [ "$i" -eq 1 ]; then dispatched="$capacity"; fi
           if [ "$response" = expired ] || { [ "$response" = late-expired ] && [ -s "$NYX_TEST_DIR/submits" ]; }; then
             echo 'Error: session has expired'; return 1
           fi
@@ -158,7 +180,7 @@ __selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**
             printf '│ w%s ┆ 1 ┆ - ┆ %s │\n' "$i" "$script"; i=$((i+1))
           done; return 0;;
         ask)
-          [ "$4" = --file ] && [ -r "$5" ] && [ "$6" = --tag ] && [ "$7" = mode:chat ] && [ "$8" = --no-wait ] || return 97
+          [ "$4" = --file ] && [ -r "$5" ] && [ "$6" = --tag ] && [ "$7" = "${NYX_TEST_EXPECT_TAG:-mode:chat}" ] && [ "$8" = --no-wait ] || return 97
           cmp -s "$5" "$NYX_TEST_DIR/expected-brief" || return 97
           printf '%s\n' "$slug" >> "$NYX_TEST_DIR/submits"
           if [ "${NYX_TEST_UNIQUE_IDS:-}" = 1 ]; then id="${id%-*}-$(printf '%012d' "$(wc -l < "$NYX_TEST_DIR/submits")")"; fi
@@ -167,6 +189,8 @@ __selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**
             nofile) echo 'Error: Failed to read prompt'; return 2;;
             unknown) echo 'Error: forbidden'; return 7;;
             noid) echo 'Accepted without an id'; return 0;;
+            submit-uncertain) echo 'Error: Task failed (prompt_delivery_uncertain).'; return 1;;
+            submit-delivery) echo 'Message delivery timed out. Please try again.Retry'; return 1;;
             id-write-error) rm "$NYX_TEST_OUT.taskid"; command mkdir "$NYX_TEST_OUT.taskid";;
           esac
           printf 'Task submitted: %s\n' "$id"; return 0;;
@@ -189,6 +213,9 @@ __selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**
             resume) if [ "$(wc -l < "$NYX_TEST_DIR/polls")" -le 2 ]; then echo 'Phase: waiting_response'; else echo '{"ok":true}'; fi;;
             barrier) printf 'ready\n' > "$NYX_TEST_DIR/ready"; IFS= read -r response < "$NYX_TEST_DIR/release"; echo '{"ok":true}';;
             result-error) echo 'Unexpected transport failure'; return 1;;
+            result-rate-limit) echo 'Error: HTTP 429 oracle_quota_exceeded'; return 1;;
+            result-observation-infra) echo 'Error: GET /oracle/tasks failed: infrastructure_retry_exhausted'; return 1;;
+            result-zero-exit-failure) echo 'Error: Task failed (extraction_failure).'; return 0;;
             transient|transient-forever)
               if [ "$response" = transient-forever ] || [ "$(wc -l < "$NYX_TEST_DIR/polls")" -le 1 ]; then
                 echo "Error: GET /oracle/tasks/$id failed: error sending request for url (https://example.invalid/oracle/tasks/$id): client error (Connect): operation timed out"; return 1
@@ -215,16 +242,25 @@ __selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**
     mkdir "$run_dir" || return 1
     printf 'fixture brief\n' > "$run_dir/brief"
     cp "$run_dir/brief" "$run_dir/expected-brief"
-    : > "$run_dir/calls"; : > "$run_dir/submits"; : > "$run_dir/polls"
+    : > "$run_dir/calls"; : > "$run_dir/submits"; : > "$run_dir/polls"; : > "$run_dir/sleeps"
     case "$run_name" in
       ask-output-init-error) mkdir "$run_out";;
       ask-sidecar-init-error) mkdir "$run_out.taskid";;
+      ask-first-locked) mkdir "$run_dir/nyx-ask-first.lock";;
+      ask-*-stale) printf '%s\n' "$id3" > "$run_out.taskid";;
       *foreign*|ask-lockbusy) mkdir "$run_dir/nyx-ask-second.lock";;
       await-vote-*) printf '%s\n' "$id3" > "$run_out.taskid"; printf 'EXIT=1\n' > "$run_out"; : > "$run_out.settled";;
     esac
     run_env=("TMPDIR=$run_dir" 'NYX_CLI=__nyx_fake_cli' 'NYX_POOL=' 'NYX_LIMIT=' 'NYX_BAD_SCRIPTS=cdp-1.3' 'NYX_TAG=mode:chat'
       'NYX_POLL_SECONDS=0' 'NYX_POLL_ROUNDS=2' "NYX_TEST_DIR=$run_dir" "NYX_TEST_OUT=$run_out" "NYX_TEST_ROWS=$run_rows"
-      'NYX_TEST_SIGNAL=' 'NYX_TEST_CANCEL=' 'NYX_TEST_WRITE_ERROR=' 'NYX_TEST_UNIQUE_IDS=' 'AWAIT_TICK=0' 'AWAIT_DEADLINE=5400' "$@")
+      'NYX_TEST_SIGNAL=' 'NYX_TEST_CANCEL=' 'NYX_TEST_WRITE_ERROR=' 'NYX_TEST_UNIQUE_IDS='
+      'NYX_TEST_RELEASE_ERROR=' 'NYX_TEST_LIST_ERROR=' 'NYX_TEST_EXPECT_TAG=mode:chat' 'AWAIT_TICK=0' 'AWAIT_DEADLINE=5400' "$@")
+    if [ "$run_name" = ask-default-unset-filter ]; then
+      local setting_index
+      for setting_index in "${!run_env[@]}"; do
+        case "${run_env[$setting_index]}" in NYX_BAD_SCRIPTS=*) unset 'run_env[setting_index]';; esac
+      done
+    fi
     run_script="$0"
     run_args=(ask "$run_dir/brief" "$run_out")
     case "$run_name" in fetch-*) run_args=(fetch "$id1" "$run_out");; esac
@@ -238,13 +274,19 @@ __selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**
   run_child() (
     # No real nyxid call or wall-clock delay can escape a selftest child.
     nyxid() { echo NYX_TEST_UNEXPECTED_CLI >&2; return 97; }
-    sleep() { :; }
+    sleep() { printf '%s\n' "$*" >> "$NYX_TEST_DIR/sleeps"; }
+    rmdir() {
+      printf '%s\n' "$*" >> "$NYX_TEST_DIR/releases"
+      if [ "$NYX_TEST_RELEASE_ERROR" = 1 ] && [ "$1" = "$NYX_TEST_DIR/nyx-ask-first.lock" ]; then return 1; fi
+      command rmdir "$@"
+    }
     printf() {
       if [ "$BASH_SUBSHELL" -eq 0 ] && [ "$NYX_TEST_WRITE_ERROR" = submit ] && [[ "${2:-}" = 'Task submitted:'* ]]; then return 1; fi
       command printf "$@"
     }
     mkdir() {
       local rc
+      printf '%s\n' "$*" >> "$NYX_TEST_DIR/lock-attempts"
       if [ "$NYX_TEST_CANCEL" = foreign ] && [ "$1" = "$NYX_TEST_DIR/nyx-ask-second.lock" ]; then
         kill -s "$NYX_TEST_SIGNAL" "$$"; return 1
       fi
@@ -252,7 +294,8 @@ __selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**
       if [ "$rc" -eq 0 ] && [ "$NYX_TEST_CANCEL" = owned ]; then kill -s "$NYX_TEST_SIGNAL" "$$"; fi
       return "$rc"
     }
-    export -f __nyx_fake_cli nyxid sleep mkdir printf
+    export -f __nyx_fake_cli nyxid sleep mkdir rmdir printf
+    [ "$run_name" != ask-default-unset-filter ] || unset NYX_BAD_SCRIPTS
     env "${run_env[@]}" bash "$run_script" "${run_args[@]}"
   )
   joined() { if [ -f "$1" ]; then awk 'NF {printf "%s%s", sep, $0; sep=","}' "$1"; fi; }
@@ -260,7 +303,7 @@ __selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**
     local last='' next verdict actual
     [ ! -f "$run_out" ] || last=$(tail -1 "$run_out")
     next=$(awk '/^NYX_NEXT_POOL / {sub(/^after=/,"",$2); printf "%s%s", sep, $2; sep=","}' "$run_dir/stdout")
-    verdict=$(awk '/^NYX_(OK|EXTRACTION|INFRA|CARRIER|QUOTA|NOFILE|UNKNOWN|DELIVERY|UNCERTAIN|NOPOOL|BUSY|EXPIRED|LOCKBUSY|TIMEOUT|IO|ERR|CANCELLED)( |$)/ {v=$1} END {print v}' "$run_dir/stdout")
+    verdict=$(awk '/^NYX_(OK|EXTRACTION|INFRA|CARRIER|QUOTA|NOFILE|UNKNOWN|DELIVERY|UNCERTAIN|NOPOOL|BUSY|EXPIRED|LOCKBUSY|PRECHECK|TIMEOUT|IO|ERR|CANCELLED)( |$)/ {v=$1} END {print v}' "$run_dir/stdout")
     actual="$run_rc|$last|$(joined "$run_dir/submits")|$(joined "$run_out.taskid")|$(joined "$run_dir/polls")|$next|$verdict"
     chke "$1" "$run_name" "$actual"
     [ "$actual" = "$1" ] || cat "$run_dir/stdout"
@@ -352,7 +395,7 @@ __selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**
   run_case ask-zero-capacity "${rows_one/|0|1|/|0|0|}"
   check_run '4|EXIT=4|||||NYX_NOPOOL'
   run_case ask-unknown-inflight "${rows_one/|0|1|/|0|?|}" NYX_POOL=first NYX_LIMIT=100
-  check_run '4|EXIT=4|||||NYX_UNKNOWN'
+  check_run '4|EXIT=4|||||NYX_PRECHECK'
   for response in ask-missing-brief fetch-invalid-id; do
     run_case "$response" "$rows_one"
     check_run '2|EXIT=2|||||NYX_ERR'
@@ -429,6 +472,144 @@ __selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**
   run_case await-vote-quote-prompt-uncertain "${rows_one/answer/quote-prompt-uncertain}"$'\n'"$third"
   chke "0|first|$id1|yes" await-vote-quote-prompt-uncertain \
     "$run_rc|$(joined "$run_dir/submits")|$(joined "$run_dir/polls")|$(if cmp -s "$run_out" "$run_out.settled" && grep -qF '{"verdict":"approve","note":"Error: Task failed (prompt_delivery_uncertain)."}' "$run_out.settled"; then echo yes; else echo no; fi)"
+  # Fresh observations, invocation-local failures and recovery guidance are CLI behaviors.
+  check_guidance() {  # expected outcome | current task ID (empty means none) | action phrase
+    chke yes "$run_name-guidance" "$(if grep '^NYX_UNSTABLE ' "$run_dir/stdout" |
+      grep -F "outcome=$1 task=${2:-<none>} " | grep -F 'Oracle service is unstable' |
+      grep -F '本次结果不代表永久不可用' | grep -F 'a future invocation re-evaluates services' |
+      grep -qF "$3"; then echo yes; fi)"
+  }
+  check_admission() {
+    chke '' "$run_name-no-admission-sleeps" "$(joined "$run_dir/sleeps")"
+    chke 'first|locked,second|locked' "$run_name-refresh-under-lock" "$(joined "$run_dir/refreshes")"
+    chke 'released|1' "$run_name-release-and-sentinel" "$(if [ ! -d "$run_dir/nyx-ask-first.lock" ] &&
+      [ ! -d "$run_dir/nyx-ask-second.lock" ]; then echo released; fi)|$(grep -c '^EXIT=' "$run_out")"
+  }
+  local outcome tid
+  for response in late-read late-parse late-offline late-full late-zero late-filter late-script late-shrink late-expiry; do
+    outcome=PRECHECK
+    case "$response" in late-full|late-shrink) outcome=BUSY;; late-expiry) outcome=EXPIRED;; esac
+    run_case "ask-admission-$response" "${traversal/extraction/$response}"
+    check_run "0|EXIT=0|second|$id2|$id2|first|NYX_OK"
+    check_admission
+    check_guidance "$outcome" '' 'a fresh ask may be tried later'
+  done
+  run_case ask-first-locked "$traversal"
+  check_run "0|EXIT=0|second|$id2|$id2|first|NYX_OK"
+  chke '' locked-candidate-no-sleeps "$(joined "$run_dir/sleeps")"
+  chke 'first,second' locked-candidate-one-attempt "$(sed "s|$run_dir/nyx-ask-||; s/\.lock$//" "$run_dir/lock-attempts" | awk 'NF {printf "%s%s", sep, $0; sep=","}')"
+  chke 'foreign|released|1' locked-candidate-ownership "$(if [ -d "$run_dir/nyx-ask-first.lock" ]; then echo foreign; fi)|$(if [ ! -d "$run_dir/nyx-ask-second.lock" ]; then echo released; fi)|$(grep -c '^EXIT=' "$run_out")"
+  check_guidance LOCKBUSY '' 'a fresh ask may be tried later'
+  run_case ask-release-io "${traversal/extraction/late-offline}" NYX_TEST_RELEASE_ERROR=1
+  check_run '2|EXIT=2|||||NYX_IO'
+  chke no release-io-stops "$(if grep -q '^NYX_NEXT_POOL ' "$run_dir/stdout"; then echo yes; else echo no; fi)"
+  run_case ask-full-ranks-after-usable "${traversal/first|v|2|0/first|v|2|2}"
+  check_run "0|EXIT=0|second|$id2|$id2||NYX_OK"
+  run_case ask-limit-ranking "second|v|2|0|2|0|answer|$id2"$'\n'"first|v|3|1|3|0|answer|$id1" NYX_LIMIT=1
+  check_run "0|EXIT=0|second|$id2|$id2||NYX_OK"
+  run_case ask-limit-admission "first|v|2|1|2|0|answer|$id1" NYX_LIMIT=1
+  check_run '3|EXIT=3|||||NYX_BUSY'
+  chke '' limit-admission-no-sleeps "$(joined "$run_dir/sleeps")"
+  run_case ask-limit-cannot-exceed-capacity "first|v|1|1|1|0|answer|$id1" NYX_LIMIT=9
+  check_run '3|EXIT=3|||||NYX_BUSY'
+  run_case ask-explicit-waits-for-capacity "${rows_one/answer/full-then-free}" NYX_POOL=first
+  check_run "0|EXIT=0|first|$id1|$id1||NYX_OK"
+  chke 20 explicit-capacity-sleep "$(joined "$run_dir/sleeps")"
+  run_case ask-explicit-bounded-lock "second|v|1|0|1|0|answer|$id2" NYX_POOL=second
+  # Reuse the same invocation with a foreign lock to measure only the explicit wait.
+  mkdir "$run_dir/nyx-ask-second.lock"
+  : > "$run_dir/submits"; : > "$run_dir/polls"
+  run_child > "$run_dir/stdout" 2>&1; run_rc=$?
+  check_run "3|EXIT=3||$id2|||NYX_LOCKBUSY"
+  chke '120|5' explicit-lock-bounded-sleeps "$(wc -l < "$run_dir/sleeps" | tr -d ' ')|$(sort -u "$run_dir/sleeps")"
+  run_case ask-explicit-bounded-full "first|v|1|1|1|0|answer|$id1" NYX_POOL=first
+  check_run '3|EXIT=3|||||NYX_BUSY'
+  chke '30|20' explicit-full-bounded-sleeps "$(wc -l < "$run_dir/sleeps" | tr -d ' ')|$(sort -u "$run_dir/sleeps")"
+  run_case ask-custom-tag "$rows_one" NYX_TAG=mode:work NYX_TEST_EXPECT_TAG=mode:work
+  check_run "0|EXIT=0|first|$id1|$id1||NYX_OK"
+  run_case ask-custom-poll "${rows_one/answer/timeout}" NYX_POLL_ROUNDS=3 NYX_POLL_SECONDS=7
+  check_run "3|EXIT=3|first|$id1|$id1,$id1,$id1||NYX_TIMEOUT"
+  chke '7,7,7' explicit-poll-controls "$(joined "$run_dir/sleeps")"
+  for response in empty unset; do
+    run_case "ask-default-$response-filter" "first|cdp-1.3-old|1|0|1|0|answer|$id1" NYX_BAD_SCRIPTS=
+    check_run "0|EXIT=0|first|$id1|$id1||NYX_OK"
+  done
+  run_case ask-auto-recovery "first|cdp-1.3-old|1|0|1|0|extraction|$id1" NYX_BAD_SCRIPTS=
+  check_run "1|EXIT=1|first|$id1|$id1||NYX_EXTRACTION"
+  check_guidance EXTRACTION "$id1" 'a fresh ask may be tried later'
+  cp "$run_out" "$run_dir/prior"
+  run_env+=("NYX_TEST_ROWS=first|cdp-1.3-old|1|0|1|0|answer|$id2")
+  run_child > "$run_dir/stdout" 2>&1; run_rc=$?
+  run_name=ask-auto-recovered
+  check_run "0|EXIT=0|first,first|$id1,$id2|$id1,$id2||NYX_OK"
+  chke '2|yes|1' recovery-rediscovers-and-preserves-history "$(grep -c '^oracle pool list$' "$run_dir/calls")|$(if tail -n +2 "$run_out.history" | cmp -s - "$run_dir/prior"; then echo yes; fi)|$(grep -c '^EXIT=' "$run_out")"
+  run_case ask-discovery-unavailable "$rows_one" NYX_TEST_LIST_ERROR=1
+  check_run '4|EXIT=4|||||NYX_NOPOOL'
+  check_guidance NOPOOL '' 'a fresh ask may be tried later'
+  run_env+=('NYX_TEST_LIST_ERROR=')
+  run_child > "$run_dir/stdout" 2>&1; run_rc=$?
+  run_name=ask-discovery-recovered
+  check_run "0|EXIT=0|first|$id1|$id1||NYX_OK"
+  run_case ask-all-terminal-fail "${traversal/answer/extraction}"
+  check_run "1|EXIT=1|first,second|$id1,$id2|$id1,$id2|first|NYX_EXTRACTION"
+  chke yes all-candidates-explicit-non-success "$(if grep -q '^NYX_UNSTABLE pool=<candidates> outcome=ALL_UNAVAILABLE checked=2 no candidate yielded an answer in this invocation; untried pools are not declared failed' "$run_dir/stdout"; then echo yes; fi)"
+  run_case ask-fallback-bytes "$traversal"
+  printf 'Task submitted: %s\nError: Task failed (extraction_failure).\nTask submitted: %s\n{"ok":true}\nEXIT=0\n' "$id1" "$id2" > "$run_dir/expected-output"
+  chke yes fallback-raw-bytes "$(if cmp -s "$run_out" "$run_dir/expected-output"; then echo yes; fi)"
+  chke no fallback-no-exhaustion-guidance "$(if grep -q 'outcome=ALL_UNAVAILABLE' "$run_dir/stdout"; then echo yes; else echo no; fi)"
+  for response in noid unknown submit-uncertain submit-delivery; do
+    run_case "ask-$response-stale" "${rows_one/answer/$response}"$'\n'"$third"
+    outcome=UNKNOWN; expected=1
+    case "$response" in unknown) expected=7;; submit-uncertain) outcome=UNCERTAIN;; submit-delivery) outcome=DELIVERY;; esac
+    check_run "$expected|EXIT=$expected|first|$id3|||NYX_$outcome"
+    check_guidance "$outcome" '' 'Reconcile uncertain submission'
+    chke no "$run_name-no-stale-recovery" "$(if grep '^NYX_UNSTABLE ' "$run_dir/stdout" | grep -qF "$id3"; then echo yes; else echo no; fi)"
+  done
+  for response in timeout result-error result-rate-limit result-observation-infra result-zero-exit-failure prompt-uncertain delivery; do
+    run_case "ask-recovery-$response" "${rows_one/answer/$response}"$'\n'"$third"
+    outcome=UNKNOWN
+    case "$response" in timeout) outcome=TIMEOUT;; prompt-uncertain) outcome=UNCERTAIN;; delivery) outcome=DELIVERY;; esac
+    check_guidance "$outcome" "$id1" "Resume the same task: nyx.sh fetch $id1"
+    chke 'first|no|1' "$run_name-do-not-replay" "$(joined "$run_dir/submits")|$(if grep -q 'outcome=ALL_UNAVAILABLE\|a fresh ask may be tried later' "$run_dir/stdout"; then echo yes; else echo no; fi)|$(grep -c '^EXIT=' "$run_out")"
+    cp "$run_out" "$run_dir/prior"
+    run_args=(fetch "$id1" "$run_out"); run_env+=("NYX_TEST_ROWS=$rows_one")
+    run_child > "$run_dir/stdout" 2>&1; run_rc=$?
+    chke '0|first|yes|1' "$run_name-fetch-preserves" "$run_rc|$(joined "$run_dir/submits")|$(if tail -n +2 "$run_out.history" | cmp -s - "$run_dir/prior"; then echo yes; fi)|$(grep -c '^EXIT=' "$run_out")"
+  done
+  for response in infra composer alternating-read late-read; do
+    run_case "await-vote-safe-$response" "${rows_one/answer/$response}"
+    outcome=INFRA; expected='125|first,first'
+    case "$response" in
+      composer) outcome=CARRIER;;
+      alternating-read) outcome=PRECHECK; expected='125|';;
+      late-read) outcome=PRECHECK; expected='4|';;
+    esac
+    chke "$expected|no|60" "$run_name-bounded-retry" "$run_rc|$(joined "$run_dir/submits")|$(if [ -f "$run_out.settled" ]; then echo yes; else echo no; fi)|$(joined "$run_dir/sleeps")"
+    chke yes "$run_name-verdict" "$(if grep -q "state=retry verdict=NYX_$outcome" "$run_dir/stdout"; then echo yes; fi)"
+    if [ "$outcome" = PRECHECK ]; then check_guidance PRECHECK '' 'a fresh ask may be tried later'
+    else check_guidance "$outcome" "$id1" 'a fresh ask may be tried later'; fi
+  done
+  for response in noid result-error result-rate-limit timeout prompt-uncertain delivery submit-uncertain submit-delivery; do
+    run_case "await-vote-guidance-$response" "${rows_one/answer/$response}"$'\n'"$third" AWAIT_DEADLINE=0
+    outcome=UNKNOWN; expected=1; tid="$id1"
+    case "$response" in
+      noid) tid='';;
+      timeout) outcome=TIMEOUT; expected=124;;
+      prompt-uncertain) outcome=UNCERTAIN; expected=6;;
+      delivery) outcome=DELIVERY;;
+      submit-uncertain) outcome=UNCERTAIN; expected=6; tid='';;
+      submit-delivery) outcome=DELIVERY; tid='';;
+    esac
+    if [ -n "$tid" ]; then check_guidance "$outcome" "$tid" "nyx.sh fetch $tid"
+    else check_guidance "$outcome" '' 'Reconcile uncertain submission'; fi
+    chke "$expected|first|no" "$run_name-no-replay" "$run_rc|$(joined "$run_dir/submits")|$(if [ -f "$run_out.settled" ]; then echo yes; else echo no; fi)"
+    case "$response" in submit-uncertain|submit-delivery)
+      chke yes "$run_name-no-old-task" "$(if grep -q 'task=<none> state=stopped' "$run_dir/stdout" && ! grep '^NYX_UNSTABLE ' "$run_dir/stdout" | grep -qF "$id3"; then echo yes; fi)";;
+    esac
+  done
+  run_case await-vote-guidance-fallback "$traversal"
+  check_guidance EXTRACTION "$id1" 'a fresh ask may be tried later'
+  chke "0|first,second|yes" await-guidance-fallback-settles "$run_rc|$(joined "$run_dir/submits")|$(if cmp -s "$run_out" "$run_out.settled"; then echo yes; fi)"
   rm -rf "$testroot"
   [ $fail -eq 0 ] && echo "SELFTEST_OK cases=$cases" || echo "SELFTEST_FAIL cases=$cases"
   return $fail
