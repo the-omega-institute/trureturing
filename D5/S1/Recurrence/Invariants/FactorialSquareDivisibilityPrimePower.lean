@@ -2,13 +2,14 @@
    generality: G
    mirror-B: D5/B/S1/Recurrence/Invariants/FactorialSquareDivisibilityPrimePower
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [Mathlib.Data.Nat.Choose.Multinomial, Mathlib.Data.Nat.Factorization.PrimePow, Mathlib.NumberTheory.Padics.PadicVal.Basic, Mathlib.Tactic.Linarith]
+   anchors: [Mathlib.Data.Nat.Choose.Factorization, Mathlib.Data.Nat.Choose.Multinomial, Mathlib.Data.Nat.Digits.Lemmas, Mathlib.Data.Nat.Factorization.PrimePow, Mathlib.Tactic.Linarith]
    utility: none
    digest: Prime-power exactness for factorial-square divisibility via prime valuations and base-p digits. -/
 
+import Mathlib.Data.Nat.Choose.Factorization
 import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.Data.Nat.Digits.Lemmas
 import Mathlib.Data.Nat.Factorization.PrimePow
-import Mathlib.NumberTheory.Padics.PadicVal.Basic
 import Mathlib.Tactic.Linarith
 
 open scoped Nat
