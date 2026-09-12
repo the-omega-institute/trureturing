@@ -158,6 +158,56 @@ private theorem nearFiber (n m : ℕ) (hn : 0 < n) (hm : m ≤ n) :
       rw [heq]
       simp [hmn, hnext]
 
+private theorem nearFiberAny (n m : ℕ) (hn : 0 < n) :
+    ((Finset.Icc 1 (m + 1)).filter fun x => max x m = n).card =
+      if m = n then n else if m + 1 = n then 1 else 0 := by
+  by_cases hm : m ≤ n
+  · exact nearFiber n m hn hm
+  · have heq : (Finset.Icc 1 (m + 1)).filter (fun x => max x m = n) = ∅ := by
+      ext x
+      simp only [Finset.mem_filter, Finset.mem_Icc]
+      constructor
+      · rintro ⟨_, hmax⟩
+        have hle : m ≤ max x m := le_max_right x m
+        omega
+      · intro h
+        simp at h
+    rw [heq]
+    simp [show m ≠ n by omega, show m + 1 ≠ n by omega]
+
+private theorem card_max_step (N p : ℕ) (hp : 0 < p) :
+    ((words (N + 1)).filter fun w => maxLabel w = p).card =
+      p * ((words N).filter fun w => maxLabel w = p).card +
+        ((words N).filter fun w => maxLabel w + 1 = p).card := by
+  have heq : ((words N).filter (fun w => maxLabel w ≠ p)).filter
+      (fun w => maxLabel w + 1 = p) =
+      (words N).filter (fun w => maxLabel w + 1 = p) := by
+    ext w
+    simp only [Finset.mem_filter]
+    constructor
+    · rintro ⟨⟨hw, _⟩, h⟩
+      exact ⟨hw, h⟩
+    · rintro ⟨hw, h⟩
+      exact ⟨⟨hw, by omega⟩, h⟩
+  calc
+    _ = (words (N + 1)).sum (fun w => if maxLabel w = p then 1 else 0) :=
+      Finset.card_filter _ _
+    _ = (words N).sum (fun w =>
+        (Finset.Icc 1 (maxLabel w + 1)).sum fun x =>
+          if maxLabel (x :: w) = p then 1 else 0) := sum_words_succ N _
+    _ = (words N).sum (fun w =>
+        if maxLabel w = p then p else if maxLabel w + 1 = p then 1 else 0) := by
+      apply Finset.sum_congr rfl
+      intro w _
+      have hf := nearFiberAny p (maxLabel w) hp
+      change (Finset.Icc 1 (maxLabel w + 1)).sum
+        (fun x => if max x (maxLabel w) = p then 1 else 0) = _
+      rw [← Finset.card_filter]
+      exact hf
+    _ = p * ((words N).filter fun w => maxLabel w = p).card +
+        ((words N).filter fun w => maxLabel w + 1 = p).card := by
+      simp [Finset.sum_ite, Finset.sum_const, Nat.nsmul_eq_mul, heq, mul_comm]
+
 private theorem card_near_step (n : ℕ) (hn : 0 < n) :
     ((words (n + 1)).filter fun w => maxLabel w = n).card =
       n + ((words n).filter fun w => maxLabel w + 1 = n).card := by
