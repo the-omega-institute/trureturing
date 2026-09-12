@@ -7860,3 +7860,658 @@ $$
 第 74 条的语义配对把原边编码为 $\langle h_\gamma(c),h_\gamma(d)\rangle_Z$；每条原边与数字边均唯一对应，故第 73 条的 $\operatorname{Pack}$ 给第一图码式。直接编码数字边自身，给第二式。逐边取原定义域和数字定义域，就得到各自语义定义域；此即第 259–260 条在当前单输入状态类型上的比较，包括空域。
 
 最后 $\mathcal E_X$ 是双射，故其直接像保持任意并和有限交，并将 $\varnothing,X$ 分别送到 $\varnothing,\mathcal E_X[X]$，证明显示族确为拓扑。点 $x$ 的开邻域与 $\mathcal E_X(x)$ 的开邻域双向对应，且由单射性，前者与 $S$ 相交当且仅当后者与 $\mathcal E_X[S]$ 相交。逐点使用闭包的邻域判据就得闭包等式的两个方向。此为已经指定拓扑的同胚运输；任意实权重与无限集合使用第 71–78 条原有集合解释，第 79 条的有限字障碍保持。以上没有断言任意实数或集合具有有限字表示，也没有增加集合论的一致性结论。证毕。
+
+## 306. 有符号有限支撑总状态与三种拓扑
+
+**定义 306。** 沿用第 19、236 条固定的黄金比 $\phi=(1+\sqrt5)/2$、第 255 条的通常有符号整数值 $\mathbb Z_o$，以 $(p_n)_{n\in\omega}$ 按递增次序枚举第 3 条的普通正素数集 $\operatorname{Pr}$。定义
+$$
+\mathsf E_{\rm reg}=\mathbb Z_o^\omega,\qquad
+\mathsf V_{\rm reg}=\{u:\omega\to\mathbb Z_o:\operatorname{supp}(u)=\{n:u_n\ne0\}\text{ 有限}\},
+$$
+$$
+\mathsf V_{{\rm reg},\mathbb Q}
+=\{u:\omega\to\mathbb Q:\{n:u_n\ne0\}\text{ 有限}\}.
+$$
+它们的元素都是总函数；加法、负元及零逐点定义。置 $\varepsilon_n(j)=1$ 当 $j=n$，否则为零。写 $u=\sum_nu_n\varepsilon_n$ 时，只对有限个非零项求和。总函数的图与只列非零值的有限记录分属不同载体。
+
+沿用第 297 条的加法圆周 $\mathbb T=\mathbb R/\mathbb Z$ 及其通常商拓扑，令
+$$
+\mathsf X_{\rm reg}=\mathbb T^\omega
+$$
+取完整可数乘积及乘积拓扑，不施加有限支撑条件。对任意有限 $I\subseteq\omega$，包括空集，定义限制和零扩展
+$$
+\operatorname{res}^{\mathbb Z}_I:\mathsf E_{\rm reg}\to\mathbb Z_o^I,\quad u\mapsto u|_I,\qquad
+\operatorname{res}^{\mathbb T}_I:\mathsf X_{\rm reg}\to\mathbb T^I,\quad x\mapsto x|_I,
+$$
+$$
+\mathsf V_I=\{u\in\mathsf V_{\rm reg}:\operatorname{supp}(u)\subseteq I\},\qquad
+\operatorname{zext}^{\mathbb Z}_I:\mathbb Z_o^I\to\mathsf V_I,\quad
+\operatorname{zext}^{\mathbb Z}_I(w)_n=
+\begin{cases}w_n,&n\in I,\\0,&n\notin I,\end{cases}
+$$
+$$
+\operatorname{zext}^{\mathbb T}_I:\mathbb T^I\to\mathsf X_{\rm reg},\quad
+\operatorname{zext}^{\mathbb T}_I(y)_n=
+\begin{cases}y_n,&n\in I,\\0_{\mathbb T},&n\notin I.\end{cases}
+$$
+$\mathbb Z_o^I$ 与 $\mathsf V_I$ 仅经所列限制、零扩展互相识别；$\operatorname{res}^{\mathbb Z}_I$ 用于状态时，其定义域限制到 $\mathsf V_{\rm reg}$。定义相位映射
+$$
+\Psi_{\rm reg}:\mathsf V_{\rm reg}\to\mathsf X_{\rm reg},\quad
+\Psi_{\rm reg}(u)_n=[\phi u_n],\qquad
+\Psi_I:\mathbb Z_o^I\to\mathbb T^I,\quad
+\Psi_I(w)_i=[\phi w_i].
+$$
+在 $\mathsf V_{\rm reg}$ 上分别定义
+$$
+\tau_\Psi=\{\Psi_{\rm reg}^{-1}(O):O\subseteq\mathsf X_{\rm reg}\text{ 开}\},
+$$
+$\tau_{\rm coord}$ 为从离散整数群的乘积 $\prod_{n\in\omega}(\mathbb Z_o,\text{离散})$ 限制所得的子空间拓扑，$\tau_{\rm disc}$ 为状态集的离散拓扑。空指标积为单点群，唯一元素为空函数；未另作说明的群商只取代数意义。
+
+**证明。** 有限 $I$ 上的整数函数零扩展后支撑包含于 $I$，限制后还原每个值；$\mathsf V_I$ 内的状态在 $I$ 外已为零，先限制再扩展也还原每个值。圆周零扩展同样与限制在其像上互逆。映射逆像保持任意并、有限交及空集和全集，所以 $\tau_\Psi$ 确为拓扑；另两者由子空间和离散拓扑定义得到。上述函数集及其支撑条件均为通常集合构造。证毕。
+
+## 307. 精确全相位与有限可逆词
+
+**定理 307。** $\mathsf V_{\rm reg}$ 是以 $(\varepsilon_n)$ 为基的可数无限自由阿贝尔群。$\Psi_{\rm reg}$ 和 $\Psi_I$ 均为单射同态，且
+$$
+\operatorname{res}^{\mathbb T}_I\circ\Psi_{\rm reg}
+=\Psi_I\circ\operatorname{res}^{\mathbb Z}_I
+\quad\text{于 }\mathsf V_{\rm reg}.
+$$
+$\Psi_{\rm reg}$ 是 $(\mathsf V_{\rm reg},\tau_\Psi)$ 到其相位像子空间的同胚。给定任意增量集 $\mathcal S\subseteq\mathsf V_{\rm reg}$ 和起点 $u_0$，若每个 $s,-s$ 在每个状态都允许、没有守卫，且仅允许有限词，则精确可达集为
+$$
+u_0+\langle\mathcal S\rangle_{\mathbb Z},
+$$
+其中生成子群只含有限整数线性组合。
+
+**证明。** 两状态之和的支撑包含在两支撑的有限并中，负元保持支撑，逐点整数运算遂给阿贝尔群。每个状态有第 306 条的有限基展开，在每个 $n$ 处取值即恢复该项系数，故展开唯一。对任意阿贝尔群及任意基向量赋值，以相应整数倍的有限和定义同态；唯一展开使其良定义，且任何延拓同态都必须如此取值。这是自由性。每个有限支撑包含于某个 $\{0,\ldots,m\}$；每个这样的状态子集与 $\mathbb Z_o^{m+1}$ 双射。有限个可数集的积可数，ZFC 中可数个可数集之并可数，而所有 $\varepsilon_n$ 互异，故状态集可数无限。
+
+模一加法给两个相位映射的同态性。若 $[\phi(u_n-v_n)]=0$，则 $\phi(u_n-v_n)$ 为整数；第 236 条证明的无理性迫使 $u_n=v_n$。逐坐标得全相位和有限相位单射，空 $I$ 是单点情形。限制交换式由取值成立。像的子空间开集恰为环境开集与像的交，其逆像恰为 $\tau_\Psi$，结合单射即得同胚。
+
+一个有限词的位移是有限个带符号增量之和，故属于生成子群；反向将任一有限整数线性组合的每个系数展开成有限次相应 $s$ 或 $-s$，全部中间状态由全域无守卫假设允许，遂实现该位移。这证明可达集的双向包含，不给有守卫、单向、有界词长或无限执行的可达断言。证毕。
+
+## 308. 全局饱和、有限观察约束与零化子
+
+**定义 308。** 对任意子群 $H\le\mathsf V_{\rm reg}$ 和有限 $I\subseteq\omega$，置
+$$
+H_I=\operatorname{res}^{\mathbb Z}_I[H]\le\mathbb Z_o^I,\qquad
+\operatorname{Sat}(H)=(\operatorname{span}_{\mathbb Q}H)\cap\mathsf V_{\rm reg},
+$$
+其中有理张成在 $\mathsf V_{{\rm reg},\mathbb Q}$ 中取有限有理线性组合。对 $\Lambda\le\mathbb Z_o^I$，有限维饱和定义为
+$$
+\operatorname{Sat}(\Lambda)=(\operatorname{span}_{\mathbb Q}\Lambda)\cap\mathbb Z_o^I
+\quad\text{于 }\mathbb Q^I.
+$$
+定义
+$$
+L_{\rm fin}(H)=\{u\in\mathsf V_{\rm reg}:\operatorname{res}^{\mathbb Z}_Iu\in\operatorname{Sat}(H_I)
+\text{ 对每个有限 }I\subseteq\omega\},
+$$
+$$
+\mathcal K_{\rm reg}(H)=\overline{\Psi_{\rm reg}(H)}^{\mathsf X_{\rm reg}},\qquad
+\mathcal A_{\rm fin}(H)=\{a\in\mathsf V_{\rm reg}:\sum_na_nh_n=0\text{ 对每个 }h\in H\}.
+$$
+这里 $h_n$ 为一般状态 $h$ 的第 $n$ 坐标。对 $a,u\in\mathsf V_{\rm reg}$、$x\in\mathsf X_{\rm reg}$ 定义
+$$
+\langle a,u\rangle=\sum_na_nu_n\in\mathbb Z_o,\qquad
+\operatorname{char}_{\rm reg,a}(x)=\sum_na_nx_n\in\mathbb T.
+$$
+两和均由 $a$ 的有限支撑限定；前一尖括号在本处表示整数点积，集合图中的有序对按各自图公式解释。有限维记号为
+$$
+\operatorname{Ann}_I(\Lambda)=\{a\in\mathbb Z_o^I:a\cdot\lambda=0\text{ 对每个 }\lambda\in\Lambda\},\qquad
+C_I(\Lambda)=\overline{\Psi_I(\Lambda)}^{\mathbb T^I}.
+$$
+$C_I$ 只表示本条有限指标闭包，不改变旧单孔项 $C_B$ 的意义。$\operatorname{char}_{\rm reg,a}$ 是有限整数特征，不占用第 255 条的 $\chi$。
+
+**证明。** 限制为同态，故 $H_I$ 为子群；有限线性组合及有理张成是集合。点积与圆周和均只涉及有限坐标，圆周中取整数倍与代表选择无关。有限个连续坐标同态之和连续，故 $\operatorname{char}_{\rm reg,a}$ 是连续同态。空 $I$ 的各群为零单点，定义仍有意义。证毕。
+
+## 309. 有限投影子群的基、相位与饱和
+
+**定理 309。** 设 $I\subseteq\omega$ 有限，$d=|I|$，$\Lambda\le\mathbb Z_o^I$。$\Lambda$ 有有限整数基 $\lambda_1,\ldots,\lambda_r$，其中 $0\le r\le d$。按 $I$ 递增排列坐标，令 $\mathbf M_{\Lambda,I}:\mathbb Z_o^r\to\mathbb Z_o^I$ 以这些基为列，$\mathbf M_{\Lambda,I,\mathbb T}:\mathbb T^r\to\mathbb T^I$ 为所诱导的连续同态，$W_{\Lambda,I}=\operatorname{span}_{\mathbb R}\Lambda$，$\operatorname{quot}_I:\mathbb R^I\to\mathbb T^I$ 为逐坐标商映射。按 $W_{\Lambda,I}$ 所用的通常实坐标解释各 $\lambda_j$，另定义实线性扩张
+$$
+\mathbf M_{\Lambda,I,\mathbb R}:\mathbb R^r\to\mathbb R^I,\qquad
+\mathbf M_{\Lambda,I,\mathbb R}(t)=\sum_{j=1}^r t_j\lambda_j.
+$$
+所列环面映射逐坐标为 $(\mathbf M_{\Lambda,I,\mathbb T}(x))_i=\sum_{j=1}^r(\lambda_j)_i x_j$，其中 $x\in\mathbb T^r$、$i\in I$。则
+$$
+C_I(\Lambda)=\mathbf M_{\Lambda,I,\mathbb T}(\mathbb T^r)
+=\operatorname{quot}_I(W_{\Lambda,I})
+=\{x\in\mathbb T^I:a\cdot x=0_{\mathbb T}\text{ 对每个 }a\in\operatorname{Ann}_I(\Lambda)\},
+$$
+$$
+C_I(\Lambda)\cap\Psi_I(\mathbb Z_o^I)
+=\Psi_I(\operatorname{Sat}(\Lambda)),\qquad
+\operatorname{Sat}(\Lambda)=\{w\in\mathbb Z_o^I:a\cdot w=0\text{ 对每个 }a\in\operatorname{Ann}_I(\Lambda)\}.
+$$
+从通常有限环面的商 $\mathbb T^r/\ker\mathbf M_{\Lambda,I,\mathbb T}$ 及欧氏子空间的商 $W_{\Lambda,I}/(W_{\Lambda,I}\cap\mathbb Z_o^I)$ 到此像的自然双射，均为到 $\mathbb T^I$ 中子空间拓扑的同胚。对同一 $I$ 上两个子群，有限相位闭包相等当且仅当饱和相等；闭包为全 $\mathbb T^I$ 当且仅当有理秩为 $d$。所有断言包括 $I=\varnothing$ 和 $r=0$。
+
+**证明。** 先对 $d$ 归纳证明有限基存在。零维子群为零，基为空。整数群的非零子群有最小正元 $m$；将任一元素除以 $m$，余数仍在子群且位于 $[0,m)$，故为零，子群为 $m\mathbb Z_o$。对 $d$ 维子群投影到最后一坐标，其核是 $d-1$ 维整数群的子群，有归纳给出的基。若投影为零，该基已生成原子群；否则选最后坐标为投影正生成元 $m$ 的一个元素。任意元素减去其适当整数倍即落入核，故添加这一元素就生成全群。一个关系先读最后坐标，使新元素系数为零，再用核基独立性使其余系数为零。因而得到至多 $d$ 元的整数基；清分母也证明这些列有理独立。
+
+现在只使用第 296、298 条的有限矩阵结论。具体取第 295 条的有限素数集 $P=\{p_i:i\in I\}$，按 $i$ 递增排序；该条的列数取本条 $r$，矩阵取
+$$
+B_{p_i,j}=(\lambda_j)_i\qquad(i\in I,\ 1\le j\le r).
+$$
+重标 $i\leftrightarrow p_i$ 将本条 $\mathbb Z_o^I,\mathbb T^I,\Lambda,\operatorname{Sat}(\Lambda),\operatorname{Ann}_I(\Lambda)$ 分别对应到那两条的 $\mathbb Z^P,\mathbb T^P,H,L_{\rm sat},R_B$；有理秩 $k=r$。同一重标将 $\Psi_I$ 对应到 $\vartheta_P$，$\mathbf M_{\Lambda,I,\mathbb T}$ 对应到 $B_{\mathbb T}$。它们的整数、实数和圆周坐标运算及通常有限积拓扑都逐项对应。因此第 298 条给相位闭包、圆周共同零点集和精确相位交集，第 296 条给整数共同零点集。
+
+对 $z\in\mathbb Z_o^r$，两种列和逐坐标相同，故 $\mathbf M_{\Lambda,I,\mathbb R}(z)=\mathbf M_{\Lambda,I}(z)$，此等式中输入与输出的整数坐标均按通常嵌入解释为实数。对 $t\in\mathbb R^r$ 及 $i\in I$，有
+$$
+\bigl(\operatorname{quot}_I(\mathbf M_{\Lambda,I,\mathbb R}(t))\bigr)_i
+=\left[\sum_{j=1}^r t_j(\lambda_j)_i\right]
+=\sum_{j=1}^r(\lambda_j)_i[t_j]
+=\bigl(\mathbf M_{\Lambda,I,\mathbb T}(([t_j])_{j=1}^r)\bigr)_i.
+$$
+若把 $t$ 换成 $t+z$、$z\in\mathbb Z_o^r$，实像之差为 $\mathbf M_{\Lambda,I}(z)\in\mathbb Z_o^I$，所以所得圆周像与代表选择无关。每个环面参数都有逐坐标实提升，每个实参数又给一个环面参数，故上式给出环面像与实像取商的两个包含。实像的每个元素是基向量的有限实线性组合，因而属于 $W_{\Lambda,I}$；反向，每个 $\Lambda$ 元素都是这些基的整数线性组合，将任一有限实线性组合展开并合并各基的系数，就得到 $\mathbf M_{\Lambda,I,\mathbb R}$ 的一个实输入。因此
+$$
+\mathbf M_{\Lambda,I,\mathbb T}(\mathbb T^r)
+=\operatorname{quot}_I(\mathbf M_{\Lambda,I,\mathbb R}[\mathbb R^r])
+=\operatorname{quot}_I(W_{\Lambda,I}),
+$$
+补上显示式中的实子空间描述。这里没有对无限矩阵应用 Smith 归约。
+
+环面参数商的自然映射为连续双射，其定义域为紧空间的商，目标为 Hausdorff 空间的子空间。紧空间的闭子集仍紧，连续像在 Hausdorff 空间内闭，故此双射为闭映射，逆连续。对实子空间商，第 296 条的同一整数可逆 $U$ 将 $W_{\Lambda,I}$ 及其整数交分别送到 $\mathbb R^r\times0$、$\mathbb Z_o^r\times0$，且 $U$ 与其逆均连续，因而诱导商空间同胚。逐坐标映射 $\mathbb R^r\to\mathbb T^r$ 是开映射：单坐标开集之像的逆像是它的全部整数平移之并，有限积再用矩形开集基。它遂将 $\mathbb R^r/\mathbb Z_o^r$ 同胚到 $\mathbb T^r$，再由 $U^{-1}$ 得所述像。
+
+两个闭包相等时，与 $\Psi_I(\mathbb Z_o^I)$ 相交，并用第 307 条单射性，得饱和相等。反向，子群包含于其饱和，而每个饱和元素为原子群的有限有理组合，故相同饱和给相同实张成，再用像公式得闭包相等。第 298 条的 $U_{\mathbb T}^{-1}(\mathbb T^r\times0)$ 描述给满环面当且仅当 $r=d$。空维及零秩时所有相关像、实子空间及商都是相应零单点。
+
+有限秩自由阿贝尔群的子群结构与整数矩阵结构属于经典有限代数，可参见 [Stacks Project，主理想整环上的模结构，0ASL](https://stacks.math.columbia.edu/tag/0ASL) 的有限模结构背景；此处子群有限生成已由归纳证明，矩阵结论严格采用第 296、298 条。商拓扑及紧到 Hausdorff 的论证是通常有限维拓扑，上述证明不需要无限维分类定理。证毕。
+
+## 310. 全部有限柱集与修正的精确状态迹
+
+**定理 310。** 对 $H\le\mathsf V_{\rm reg}$、$x\in\mathsf X_{\rm reg}$，有
+$$
+x\in\mathcal K_{\rm reg}(H)
+\iff
+\operatorname{res}^{\mathbb T}_Ix\in C_I(H_I)
+\text{ 对每个有限 }I\subseteq\omega.
+$$
+上式及 $L_{\rm fin}(H)$ 的定义条件都等价于只检查 $I_m=\{0,\ldots,m\}$、$m\in\omega$。对状态 $u\in\mathsf V_{\rm reg}$，相应条件还等价于
+$$
+\forall I\subseteq\omega\text{ 有限}\quad
+\exists m_I\in\mathbb Z_o\ (m_I>0)\quad\exists h^{(I)}\in H:\quad
+\operatorname{res}^{\mathbb Z}_I(m_Iu)=\operatorname{res}^{\mathbb Z}_Ih^{(I)}.
+$$
+于是
+$$
+\mathcal K_{\rm reg}(H)\cap\Psi_{\rm reg}(\mathsf V_{\rm reg})
+=\Psi_{\rm reg}(L_{\rm fin}(H)),\qquad
+\overline H^{\tau_\Psi}=L_{\rm fin}(H).
+$$
+每个 $H_I$ 有限生成。若 $H=\langle\mathcal S\rangle_{\mathbb Z}$，则对每个固定有限 $I$，存在 $\mathcal S$ 的有限子集，其投影生成 $H_I$；这不提供对全部 $I$ 同时有效的一个有限子集、寻找它的程序或词长界。
+
+**证明。** 若 $x$ 属于环境闭包，取任一有限限制点的开邻域，其连续逆像为 $x$ 的开邻域，必与 $\Psi_{\rm reg}(H)$ 相交，故限制点属于 $C_I(H_I)$。反向，$x$ 的每个开邻域包含一个含 $x$ 的基本柱集 $(\operatorname{res}^{\mathbb T}_I)^{-1}(O)$，其中 $I$ 有限、$O\subseteq\mathbb T^I$ 开。有限闭包条件使 $O$ 与 $\Psi_I(H_I)$ 相交；其交点来自某个 $h\in H$ 的限制，第 307 条交换式使 $\Psi_{\rm reg}(h)$ 落入该柱集。因此每个邻域均与相位子群相交，得到反向。空 $I$ 的非空柱集为全积，由 $0\in H$ 命中。
+
+每个有限 $I$ 包含于某个 $I_m$。进一步限制是连续映射，故 $I_m$ 上的闭包条件推出 $I$ 上条件；有理线性组合进一步限制仍为相应投影元素的有理组合，故饱和条件也向下限制。反向因 $I_m$ 本身有限而成立。
+
+代入 $x=\Psi_{\rm reg}(u)$，第 307 条交换式和第 309 条精确相位交集使每个条件恰等价于 $u|_I\in\operatorname{Sat}(H_I)$。在有限有理表达中清去公共正分母，得到 $m_Iu|_I\in H_I$，再按投影像定义提升为某个 $h^{(I)}\in H$。反向将显示等式除以 $m_I$ 即为有理表达。见证均可依赖 $I$；不能交换成一个全局倍数和一个全局状态。这证明局部倍数条件和环境交集式的两个方向。子空间中闭包等于环境闭包与子空间的交，由第 307 条同胚拉回，就得状态闭包公式。
+
+第 309 条给 $H_I$ 的有限基。将这些基元分别提升到 $H$，每个提升是 $\mathcal S$ 中有限多个元素的整数线性组合；所用元素的有限并仍有限，其投影生成群既包含该基又包含于 $H_I$，故等于 $H_I$。这是对每个 $I$ 分别成立的存在证明。柱集基、邻域及诱导拓扑属于经典乘积拓扑；基本术语可参见 [Stacks Project，拓扑基本概念，004E](https://stacks.math.columbia.edu/tag/004E)，这里所需的柱集闭包判据已在两方向直接证明。证毕。
+
+## 311. 分离、闭性与有限观察闭包的等价分类
+
+**定理 311。** 对 $H,K\le\mathsf V_{\rm reg}$，有
+$$
+\operatorname{Sat}(H)=\{u\in\mathsf V_{\rm reg}:mu\in H\text{ 对某个整数 }m>0\},\qquad
+H\subseteq\operatorname{Sat}(H)\subseteq L_{\rm fin}(H),
+$$
+$$
+L_{\rm fin}(H)=\bigcap_{a\in\mathcal A_{\rm fin}(H)}\ker\langle a,-\rangle,\qquad
+\mathcal K_{\rm reg}(H)=\bigcap_{a\in\mathcal A_{\rm fin}(H)}\ker\operatorname{char}_{\rm reg,a}.
+$$
+$L_{\rm fin}(H)$ 饱和，且
+$$
+\mathcal A_{\rm fin}(L_{\rm fin}(H))=\mathcal A_{\rm fin}(H),\qquad
+L_{\rm fin}(L_{\rm fin}(H))=L_{\rm fin}(H).
+$$
+$H$ 饱和当且仅当代数商群 $\mathsf V_{\rm reg}/H$ 无挠。称 $a\in\mathcal A_{\rm fin}(H)$ 且 $\langle a,u\rangle\ne0$ 为 $u$ 与 $H$ 的有限支撑整数分离子。对 $G=H$ 或 $G=\operatorname{Sat}(H)$，分别有
+$$
+L_{\rm fin}(H)=G
+\iff\text{每个 }u\notin G\text{ 都有这样的分离子}
+\iff G\text{ 在 }\tau_\Psi\text{ 中闭}.
+$$
+特别地，$L_{\rm fin}(H)=H$ 的充要条件是 $H$ 饱和且每个 $u\notin\operatorname{Sat}(H)$ 可被如此分离，不能仅以饱和代替此合取。
+
+对每个有限 $I$，有
+$$
+H_I\subseteq\operatorname{res}^{\mathbb Z}_I[L_{\rm fin}(H)]\subseteq\operatorname{Sat}(H_I),\qquad
+\operatorname{Sat}(\operatorname{res}^{\mathbb Z}_I[L_{\rm fin}(H)])=\operatorname{Sat}(H_I),
+$$
+$$
+\operatorname{Sat}(\operatorname{res}^{\mathbb Z}_I[\operatorname{Sat}(H)])=\operatorname{Sat}(H_I).
+$$
+下列四条件等价：$\mathcal K_{\rm reg}(H)=\mathcal K_{\rm reg}(K)$；对每个有限 $I$ 有 $\operatorname{Sat}(H_I)=\operatorname{Sat}(K_I)$；$L_{\rm fin}(H)=L_{\rm fin}(K)$；$\mathcal A_{\rm fin}(H)=\mathcal A_{\rm fin}(K)$。此外
+$$
+\mathcal K_{\rm reg}(H)=\mathsf X_{\rm reg}
+\iff L_{\rm fin}(H)=\mathsf V_{\rm reg}
+\iff\mathcal A_{\rm fin}(H)=\{0\}
+\iff\forall I\subseteq\omega\text{ 有限},\quad\operatorname{Sat}(H_I)=\mathbb Z_o^I.
+$$
+若 $H$ 的所有元素具有一个共同有限支撑集 $I_0$，则 $L_{\rm fin}(H)=\operatorname{Sat}(H)$；特别适用于有限生成 $H$。实际有限支撑子群的限制则满足
+$$
+\operatorname{Sat}_{\mathsf V_I}(H\cap\mathsf V_I)
+=\operatorname{Sat}(H)\cap\mathsf V_I.
+$$
+左侧饱和在 $\mathsf V_I$ 的有理张成环境中取。第 309 条此时应用于经限制识别的 $H\cap\mathsf V_I$，其环境环面为 $I$ 外为零的闭子群，一般不能换成投影 $H_I$。例如 $H=\mathbb Z_o(\varepsilon_0+\varepsilon_1)$ 在 $\{0\}$ 上投影为全整数群，而 $H\cap\mathsf V_{\{0\}}=0$；$\varepsilon_0$ 通过该 $H$ 的每个单坐标饱和检验，却不通过 $\{0,1\}$ 检验。
+
+**证明。** 有限有理表达清去公共正分母即进入 $H$；反向 $mu\in H$ 给 $u=(mu)/m$。投影该倍数式给全部有限饱和条件，证明两个包含。商群中 $m(u+H)=H$ 恰等价于 $mu\in H$，所以无非零挠元恰等价于 $H$ 饱和；这里包括被正整数倍消去的零陪集。
+
+若 $u\in L_{\rm fin}(H)$，取包含 $a$ 支撑的有限 $I$。$a|_I$ 消去 $H_I$，也消去其有理张成，故点积在 $u|_I$ 上为零。反向若某个有限饱和条件不成立，第 309 条的整数共同零点描述给 $a_I\in\operatorname{Ann}_I(H_I)$，且 $a_I\cdot u|_I\ne0$；以第 306 条零扩展得分离子。于是整数核公式成立。对任意圆周总点 $x$，将第 309 条的圆周共同零点描述用于每个有限投影，再应用第 310 条。每个有限整数行都能零扩展，每个有限支撑整数行都来自某个有限限制，得到圆周核公式，不需一般对偶定理。
+
+每个整数核都饱和，因为 $m\langle a,u\rangle=0$、$m>0$ 在无挠整数群中迫使 $\langle a,u\rangle=0$。交仍饱和。$H$ 的零化子依核公式消去 $L_{\rm fin}(H)$，反向更大群的零化子必消去 $H$，故零化子相等；再用同一核公式得幂等性。$H$ 的零化子也消去 $\operatorname{Sat}(H)$，由正倍数判据和整数无挠性即可，故这两群的零化子相同。
+
+投影夹含式直接来自 $H\subseteq L_{\rm fin}(H)$ 和有限测试的定义；三者有相同有理张成，取整数交即得饱和等式。将中间群换成 $\operatorname{Sat}(H)$，同样由两包含得同一结论。因此 $L_{\rm fin}(\operatorname{Sat}(H))=L_{\rm fin}(H)$。对所列两种 $G$，第 310 条遂给 $\overline G^{\tau_\Psi}=L_{\rm fin}(H)$，得到闭性等价；分离等价正是整数核公式与 $G\subseteq L_{\rm fin}(H)$。由于 $L_{\rm fin}(H)$ 已饱和，相等于 $H$ 时 $H$ 必饱和；反向饱和加外部分离排除全部多余元素，得到所述充要合取。
+
+有限投影饱和相等，由第 309 条给有限闭包相等，再由第 310 条给环境闭包相等。环境闭包相等，与精确相位像相交并用单射性，给 $L_{\rm fin}$ 相等。$L_{\rm fin}$ 相等又由投影饱和等式给全部有限投影饱和相等，闭合前三条件的循环。$L_{\rm fin}$ 相等给已证的零化子相等，反向零化子相等经整数核公式给 $L_{\rm fin}$ 相等，证明四方向完整等价。全状态群的有限投影都是全整数群，第 309、310 条给其相位稠密于全积；其有限支撑整数零化子为零，因为在每个 $\varepsilon_n$ 上取值都为零就迫使每个系数为零。将 $K=\mathsf V_{\rm reg}$ 代入四条件等价，得到全部满性条件。
+
+若共同支撑为 $I_0$，则 $u\in L_{\rm fin}(H)$ 在 $I_0$ 外每个单坐标测试均为零，故也支撑于 $I_0$。在 $I_0$ 上的倍数测试给某个 $m>0,h\in H$ 满足限制相等，两者在 $I_0$ 外又都为零，故 $mu=h$，即 $u\in\operatorname{Sat}(H)$。反向包含已证；空 $I_0$ 给零群。有限生成群的生成元支撑之有限并即共同支撑。若 $u\in\mathsf V_I$，则 $mu\in H$ 当且仅当 $mu\in H\cap\mathsf V_I$，正倍数判据给限制饱和式。$I$ 外为零的圆周子群是各外部坐标零点逆像的交，因零点闭而闭，并经限制、零扩展与 $\mathbb T^I$ 同胚，故有限引理的环境确如所述。
+
+对显示的反例，$k(\varepsilon_0+\varepsilon_1)$ 在坐标零可任取整数，若其支撑只在零坐标则第一坐标也要求 $k=0$，故交为零。每个单坐标投影或为全整数群或为零，$\varepsilon_0$ 均通过；但在 $\{0,1\}$ 上的有理张成是对角线，不含 $(1,0)$。这同时说明共同支撑、有限支撑交及有限投影是不同条件，单坐标检验不足。以上是经典整数分离与乘积拓扑在本状态载体上的应用，分类的是闭包及有限约束；第 307 条的精确全相位仍单射，闭包相等不蕴含精确子群、增量族或有限执行约束相等。证毕。
+
+## 312. 二进子群与 5040 指数状态
+
+**定义 312。** 取第 306 条的基，定义加法群
+$$
+\mathbb Z_o[1/2]=\{a/2^m:a\in\mathbb Z_o,\ m\in\omega\}\subseteq\mathbb Q,
+$$
+$$
+b_n^{\rm dy}=\varepsilon_n-2\varepsilon_{n+1},\qquad
+H_{\rm dy}=\langle b_n^{\rm dy}:n\in\omega\rangle_{\mathbb Z},\qquad
+\ell_{\rm dy}(u)=\sum_{n\in\omega}2^{-n}u_n.
+$$
+生成和求和均只用每个元素的有限个非零项。对 $j\le m$ 置
+$$
+t_{j,m}^{\rm dy}=\sum_{k=j}^{m-1}2^{k-j}b_k^{\rm dy},\qquad
+q_N^{\rm dy}=\sum_{n=0}^N2^nb_n^{\rm dy},\qquad
+u_{5040}=4\varepsilon_0+2\varepsilon_1+\varepsilon_2+\varepsilon_3.
+$$
+$t_{m,m}^{\rm dy}=0$。$b_n^{\rm dy}$ 是本条增量，不改变第 255 条双射 $b$；$q_N^{\rm dy}$ 是整个状态向量，不是第 295 条有限词的前缀位移记号，也不是档案前缀。
+
+**证明。** 两个二进分母分数通分后仍有二进分母，负元亦然，故所列集合为加法群。每个生成元有有限支撑，每个显示的有限和是状态。$u_{5040}$ 的四个指数值沿用第 32 条，在其余素数坐标为零。证毕。
+
+## 313. 全投影而真饱和的二进反例
+
+**定理 313。** 第 312 条的 $\ell_{\rm dy}:\mathsf V_{\rm reg}\to\mathbb Z_o[1/2]$ 为满射同态，且
+$$
+\ker\ell_{\rm dy}=H_{\rm dy},\qquad
+\mathsf V_{\rm reg}/H_{\rm dy}\cong\mathbb Z_o[1/2],\qquad
+\operatorname{Sat}(H_{\rm dy})=H_{\rm dy}\ne\mathsf V_{\rm reg}.
+$$
+每个有限 $I\subseteq\omega$ 均满足
+$$
+(H_{\rm dy})_I=\mathbb Z_o^I,\qquad
+\mathcal A_{\rm fin}(H_{\rm dy})=\{0\},\qquad
+L_{\rm fin}(H_{\rm dy})=\mathsf V_{\rm reg},\qquad
+\mathcal K_{\rm reg}(H_{\rm dy})=\mathsf X_{\rm reg}.
+$$
+全望远镜恒等式为
+$$
+t_{j,m}^{\rm dy}=\varepsilon_j-2^{m-j}\varepsilon_m\quad(j\le m),
+$$
+$$
+u=\sum_{j<m}u_jt_{j,m}^{\rm dy}+2^m\ell_{\rm dy}(u)\varepsilon_m
+\quad\bigl(\operatorname{supp}(u)\subseteq\{0,\ldots,m\}\bigr).
+$$
+特别地
+$$
+q_N^{\rm dy}=\varepsilon_0-2^{N+1}\varepsilon_{N+1}\in H_{\rm dy}.
+$$
+对每个固定有限坐标集 $I$，当 $N+1>\max I$ 时，此向量与 $\varepsilon_0$ 在 $I$ 上完全一致；空 $I$ 无条件一致。因此 $q_N^{\rm dy}\to\varepsilon_0$ 同时在 $\tau_{\rm coord}$ 和 $\tau_\Psi$ 中成立，虽然 $\varepsilon_0\notin H_{\rm dy}$。这些完整向量的逐级限制并不相等：$q_{N+1}^{\rm dy}$ 在 $\{0,\ldots,N+1\}$ 上的限制，与 $q_N^{\rm dy}$ 在同域的限制不同。
+
+第 32 条的 5040 指数状态满足
+$$
+\ell_{\rm dy}(u_{5040})=\frac{43}{8}\ne0,\qquad
+u_{5040}-43\,2^{M-3}\varepsilon_M\in H_{\rm dy}\quad(M\ge4).
+$$
+故 $u_{5040}\notin H_{\rm dy}=\operatorname{Sat}(H_{\rm dy})$，但通过全部有限投影检验。所列见证在每个固定有限 $I$ 上，当 $M>\max I$ 时与 $u_{5040}$ 一致，并在上述两拓扑中收敛到它；相邻完整见证在前一完整支撑上的限制也不相同。四个素数标签为 $(2,3,5,7)$，指数值为 $(4,2,1,1)$，其低位到高位的非零自然绝对值字为 $(101,01,1,1)$，带符号字则是第 113 条的 $(+,101),(+,01),(+,1),(+,1)$。它们不同于标量整数 5040 自身的规范字，后者占据位置为 $17,13,11,5,2$。因此把第 310 条中 $L_{\rm fin}(H)$ 无条件换成 $\operatorname{Sat}(H)$ 的公式为假。
+
+**证明。** 有限个二进分母分数以最大分母通分，所以 $\ell_{\rm dy}$ 的值属于所列群，有限求和的线性给同态性。任意 $a/2^m$ 是 $a\varepsilon_m$ 的像，故满射。逐生成元计算
+$$
+\ell_{\rm dy}(b_n^{\rm dy})=2^{-n}-2\,2^{-(n+1)}=0,
+$$
+得到 $H_{\rm dy}\subseteq\ker\ell_{\rm dy}$。
+
+$t_{j,m}^{\rm dy}$ 展开后，每个中间坐标的正项与前一项的负项相消，只余所列两端；$j=m$ 时右侧也为零。将 $\varepsilon_j=t_{j,m}^{\rm dy}+2^{m-j}\varepsilon_m$ 代入支撑于 $\{0,\ldots,m\}$ 的状态，收集最后坐标，得到
+$$
+u=\sum_{j<m}u_jt_{j,m}^{\rm dy}
++\left(\sum_{j\le m}2^{m-j}u_j\right)\varepsilon_m
+=\sum_{j<m}u_jt_{j,m}^{\rm dy}+2^m\ell_{\rm dy}(u)\varepsilon_m.
+$$
+若 $\ell_{\rm dy}(u)=0$，此为生成元的有限整数线性组合，故 $u\in H_{\rm dy}$。每个状态都存在这样的 $m$，$m=0$ 及零状态亦包括，所以核的反向包含成立。映射 $u+H_{\rm dy}\mapsto\ell_{\rm dy}(u)$ 不依赖代表，核等式给单射，先前满射给满射，直接证明商同构。$\mathbb Z_o[1/2]$ 是加法有理数群的子群，因而无挠，第 311 条给 $H_{\rm dy}$ 饱和；$\ell_{\rm dy}(\varepsilon_0)=1$ 又证明其为真子群。该目标是经典局部化 $\mathbb Z_o[1/2]$ 的加法群，局部化构造可参见 [Stacks Project，00CM](https://stacks.math.columbia.edu/tag/00CM) 中对乘法集 $\{2^m:m\in\omega\}$ 的定义；这里的商呈现已由显式核与满射独立证明。
+
+对非空有限 $I$ 选 $m>\max I$，则每个 $j\in I$ 的 $t_{j,m}^{\rm dy}$ 在 $I$ 上投影为该坐标单位向量，故投影包含整数基而为全群；空 $I$ 是单点情形。第 311 条满性判据给 $L_{\rm fin}$ 和全相位闭包。也可直接求有限支撑整数零化子：消去全部 $b_n^{\rm dy}$ 恰要求 $a_n=2a_{n+1}$ 对每个 $n$ 成立，从支撑之外向前倒推就得所有 $a_n=0$。$\ell_{\rm dy}$ 的有理系数序列 $(2^{-n})$ 有无限支撑，不属于这里的有限支撑整数关系，故不矛盾。
+
+望远镜式取 $j=0,m=N+1$ 给 $q_N^{\rm dy}$。其唯一偏离 $\varepsilon_0$ 的坐标为 $N+1$，最终离开任意固定有限 $I$，所以在离散整数乘积的每个基本邻域中最终成立，得 $\tau_{\rm coord}$ 收敛。相位在同样坐标上也最终一致，逐柱集得 $\tau_\Psi$ 收敛。另一方面 $q_N^{\rm dy}$ 的第 $N+1$ 坐标为 $-2^{N+1}$，$q_{N+1}^{\rm dy}$ 的该坐标为零，证明所述非前缀性质；不援用第 294 条关于另一种档案前缀的结论。
+
+最后
+$$
+\ell_{\rm dy}(u_{5040})=4+\frac22+\frac14+\frac18=\frac{43}{8}.
+$$
+对 $M\ge4$，修正项的值为 $43\,2^{M-3}2^{-M}=43/8$，故每个见证属于已求出的核。异常坐标 $M$ 最终在任意固定有限集外，证明一致性及两种收敛；第 $M$ 坐标在本见证为 $-43\,2^{M-3}$、在下一个见证为零，证明它们在前一完整支撑上的限制不相等。$4=G_0+G_2$、$2=G_1$、$1=G_0$，第 69–70 条给四个绝对值字，第 113 条给非零正标签。第 32 条另给标量自身的占据位置，不能换成指数元组。由于反例的全局饱和是自身而有限观察闭包是全状态群，且全相位单射，被否定的无条件公式确实不成立。证毕。
+
+## 314. 有限素数乘积的正有理读数
+
+**定义 314。** 在第 306 条状态群上定义
+$$
+\operatorname{scal}_{\rm reg}:\mathsf V_{\rm reg}\to\mathbb Q_{>0},\qquad
+\operatorname{scal}_{\rm reg}(u)=\prod_{n\in\operatorname{supp}(u)}p_n^{u_n}.
+$$
+空乘积为一。目标取乘法群；讨论连续性时，$\mathbb Q_{>0}$ 明确取自通常实直线的子空间拓扑。
+
+**证明。** 每个底数为正素数，任意整数幂为正有理数，有限乘积仍为正有理数，故映射在全部有限支撑状态上有定义。零状态对应空乘积一。这是第 208–209 条非负乘积在第 113–114 条普通有符号值上的有限乘积扩展，不把非负幺半群当作已含负元的群。证毕。
+
+## 315. 代数同构、严格拓扑包含与单寄存器不连续性
+
+**定理 315。** $\operatorname{scal}_{\rm reg}$ 为 $(\mathsf V_{\rm reg},+)$ 到 $(\mathbb Q_{>0},\cdot)$ 的群同构，且 $\operatorname{scal}_{\rm reg}(u_{5040})=5040$。在第 314 条指定的目标拓扑下，它对 $\tau_\Psi$ 及 $\tau_{\rm coord}$ 都在零状态处不连续；任意固定 $j$ 上，它限制到 $\mathbb Z_o\varepsilon_j$，赋予从 $\tau_\Psi$ 继承的子空间拓扑时，已在零处不连续。三种状态拓扑满足
+$$
+\tau_\Psi\subsetneq\tau_{\rm coord}\subsetneq\tau_{\rm disc}.
+$$
+这些断言不提供标量幂相位序列 $[5040^k\phi]$ 的分布、新物理维数或完备化结论。
+
+**证明。** 在两支撑的有限并上使用整数指数律，得
+$$
+\operatorname{scal}_{\rm reg}(u+w)
+=\operatorname{scal}_{\rm reg}(u)\operatorname{scal}_{\rm reg}(w).
+$$
+每个正有理数的正整数分子、分母各有有限素因子分解，指数相减给有限支撑原像。乘积为一时清分母，唯一素因子分解使各指数为零，故单射，证明群同构。此为经典算术基本定理在正有理乘法群上的应用，有限标签特化亦见第 303 条。四坐标乘积为 $2^4 3^2 5\,7=5040$。
+
+任意固定有限坐标集最终不含 $n$，故 $\varepsilon_n\to0$ 在 $\tau_{\rm coord}$ 中成立，相位在每个固定有限坐标集上也最终为零，所以也在 $\tau_\Psi$ 中收敛。然而其标量值 $p_n\ge2$ 从不属于一的邻域 $(1/2,3/2)\cap\mathbb Q_{>0}$。连续映射必须保持收敛，因此两种零处连续性均失败。
+
+为固定寄存器另给无理旋转的通常抽屉论证。对每个正整数 $m$，将 $0,\phi,\ldots,m\phi$ 的小数部分放入 $m$ 个长 $1/m$ 的半开区间，有两点同处一格；取两指标差的绝对值，得 $1\le k_m\le m$ 且
+$$
+0<\|k_m\phi\|_{\mathbb R/\mathbb Z}<\frac1m.
+$$
+这里 $\|t\|_{\mathbb R/\mathbb Z}=\min_{z\in\mathbb Z}|t-z|$，正性由无理性。对每个固定正整数 $B$，有限集 $\{\|k\phi\|:1\le k\le B\}$ 的最小值严格为正；故当 $m$ 足够大时 $k_m>B$，即 $k_m\to\infty$。于是 $k_m\varepsilon_j\to0$ 在单寄存器相位子空间中成立，而 $p_j^{k_m}\to+\infty$，再次违反一的上述邻域条件，证明固定寄存器断言。
+
+每个离散整数坐标上的相位映射连续，有限柱集的逆像因而为坐标开集，得 $\tau_\Psi\subseteq\tau_{\rm coord}$。坐标开集 $\{u:u_j=0\}$ 含零却不含任何 $k_m\varepsilon_j$，若它为相位开集会违反刚证收敛，故包含严格。离散拓扑包含任意拓扑；若坐标拓扑也离散，$\varepsilon_n\to0$ 必最终等于零，与所有单位向量非零矛盾，第二包含亦严格。固定有限 $I$ 上，$\mathsf V_I$ 的坐标拓扑确为离散，因为一个柱集可以固定其全部有限坐标；这不改变同一载体上的相位拓扑。所用论证仅涉及声明的群和拓扑，不涉及标量幂输入的分布或任何物理解释。证毕。
+
+## 316. 独立有限非零记录与补零总数字函数
+
+**定义 316。** 沿用第 69–70 条的 $\zeta:\omega\leftrightarrow\mathsf W_Z:\operatorname{val}$、第 95–96 条的原始素数数字集 $\mathsf{Pr}_Z=\zeta[\operatorname{Pr}]$、第 113–114、255 条的 $S=\mathsf Z_{\mathbb Z}$ 及 $\operatorname{scode}:\mathbb Z_o\leftrightarrow S:\operatorname{ival}$，其中 $0_S=\operatorname{scode}(0)=\varnothing$。下列图边使用普通集合有序对。独立定义三个目标集合
+$$
+\mathsf G_{\rm reg}=\{g:\operatorname{Pr}\to\mathbb Z_o:\{p:g(p)\ne0\}\text{ 有限}\},
+$$
+$$
+\mathsf{Rec}_{\rm reg}=\{r:r\text{ 是从 }\mathsf{Pr}_Z\text{ 到 }S\setminus\{0_S\}\text{ 的有限部分函数}\},
+$$
+$$
+\mathsf{Dig}_{\rm reg}=\{d:\mathsf{Pr}_Z\to S:\{a:d(a)\ne0_S\}\text{ 有限}\}.
+$$
+对有限 $I\subseteq\omega$，置
+$$
+\mathsf{Lab}_I^{\rm reg}=\{\zeta(p_i):i\in I\},\qquad
+\mathsf{Dig}_I=\{d:d\text{ 是定义域恰为 }\mathsf{Lab}_I^{\rm reg}\text{、值在 }S\text{ 中的总函数}\}.
+$$
+有限总图保留零边；空 $I$ 时 $\mathsf{Dig}_I=\{\varnothing\}$。这些标签是原始有限字，既不重定义第 95 条 $P_Z$，也不改成第 304 条的自然叶标签 $P_Z^{\rm lab}$。
+
+对 $u\in\mathsf V_{\rm reg}$ 定义
+$$
+g_u(p_n)=u_n,\qquad
+\operatorname{rec}_{\rm reg}(u)=\{\langle\zeta(p_n),\operatorname{scode}(u_n)\rangle:u_n\ne0\},
+$$
+$$
+\operatorname{dig}_{\rm reg}(u)(\zeta(p_n))=\operatorname{scode}(u_n),\qquad
+\operatorname{dig}_I(w)(\zeta(p_i))=\operatorname{scode}(w_i)\quad(w\in\mathbb Z_o^I).
+$$
+分别在上述独立目标上给候选逆
+$$
+\operatorname{ung}_{\rm reg}(g)_n=g(p_n),\qquad
+\operatorname{unrec}_{\rm reg}(r)_n=
+\begin{cases}
+\operatorname{ival}(r(\zeta(p_n))),&\zeta(p_n)\in\operatorname{dom}(r),\\
+0,&\zeta(p_n)\notin\operatorname{dom}(r),
+\end{cases}
+$$
+$$
+\operatorname{undig}_{\rm reg}(d)_n=\operatorname{ival}(d(\zeta(p_n))),\qquad
+\operatorname{undig}_I(d)_i=\operatorname{ival}(d(\zeta(p_i))).
+$$
+$\operatorname{pad}_{\rm reg}:\mathsf{Rec}_{\rm reg}\to\mathsf{Dig}_{\rm reg}$ 在已有标签上保留记录值，在所有缺失标签上赋 $0_S$；$\operatorname{trim}_{\rm reg}:\mathsf{Dig}_{\rm reg}\to\mathsf{Rec}_{\rm reg}$ 删除恰好全部零边。总数字函数的运算为
+$$
+(d+_{\rm dig}d')(a)=d(a)\oplus_Zd'(a),\qquad
+(-_{\rm dig}d)(a)=\ominus_Zd(a),
+$$
+零为处处取 $0_S$ 的总函数。记录的运算定义为
+$$
+r+_{\rm rec}r'=\operatorname{trim}_{\rm reg}
+(\operatorname{pad}_{\rm reg}(r)+_{\rm dig}\operatorname{pad}_{\rm reg}(r')),
+\qquad
+-_{\rm rec}r=\operatorname{trim}_{\rm reg}(-_{\rm dig}\operatorname{pad}_{\rm reg}(r)),
+$$
+零记录为空函数。原始数字的配对不使用语义配对。
+
+**证明。** 每个普通素数恰有一个指标，每个原始素数数字恰有一个普通素数值，故赋值公式不冲突。$\operatorname{scode}(z)=0_S$ 当且仅当 $z=0$，所以非零标签与非零坐标一一对应；有限记录和有限非零总图的候选逆均有有限支撑。补零只在缺失处增加零边，截尾只保留有限个非零边，均落入所列目标。总图的和在两非零标签集之外为零，负元保持非零标签集，故运算闭合。有限 $I$ 上的全部总函数无额外支撑条件。这些目标先由各自谓词给定，未定义成某映射的像；精确双逆如下条。证毕。
+
+## 317. 记录、总图及有限限制的双逆
+
+**定理 317。** 第 316 条的四个映射分别是到其独立目标的双射，候选逆满足全部复合恒等式
+$$
+\operatorname{ung}_{\rm reg}(g_u)=u,\qquad
+g_{\operatorname{ung}_{\rm reg}(g)}=g\quad(g\in\mathsf G_{\rm reg}),
+$$
+$$
+\begin{aligned}
+\operatorname{unrec}_{\rm reg}\circ\operatorname{rec}_{\rm reg}&=\operatorname{id}_{\mathsf V_{\rm reg}},&
+\operatorname{rec}_{\rm reg}\circ\operatorname{unrec}_{\rm reg}&=\operatorname{id}_{\mathsf{Rec}_{\rm reg}},\\
+\operatorname{undig}_{\rm reg}\circ\operatorname{dig}_{\rm reg}&=\operatorname{id}_{\mathsf V_{\rm reg}},&
+\operatorname{dig}_{\rm reg}\circ\operatorname{undig}_{\rm reg}&=\operatorname{id}_{\mathsf{Dig}_{\rm reg}},\\
+\operatorname{undig}_I\circ\operatorname{dig}_I&=\operatorname{id}_{\mathbb Z_o^I},&
+\operatorname{dig}_I\circ\operatorname{undig}_I&=\operatorname{id}_{\mathsf{Dig}_I}.
+\end{aligned}
+$$
+补零与截尾互逆，且
+$$
+\operatorname{dig}_{\rm reg}=\operatorname{pad}_{\rm reg}\circ\operatorname{rec}_{\rm reg},\qquad
+\operatorname{rec}_{\rm reg}=\operatorname{trim}_{\rm reg}\circ\operatorname{dig}_{\rm reg},
+$$
+$$
+\operatorname{dig}_I(\operatorname{res}^{\mathbb Z}_Iu)
+=\operatorname{dig}_{\rm reg}(u)|_{\mathsf{Lab}_I^{\rm reg}}
+=\operatorname{pad}_{\rm reg}(\operatorname{rec}_{\rm reg}(u))|_{\mathsf{Lab}_I^{\rm reg}}.
+$$
+记录和总数字双射在所列运算下保持加法、负元及零。每个记录为原始素数标签字及非零带符号字的有限图；每个 $\mathsf G_{\rm reg}$、$\mathsf{Dig}_{\rm reg}$ 或 $\mathsf V_{\rm reg}$ 中的总函数图都无限，零状态也如此。$\mathsf{Dig}_I$ 的每个图则有恰好 $|I|$ 条边，包括零边。
+
+**证明。** 第 306 条素数枚举和第 96 条标签双射给指标、普通素数、原始素数数字之间的双向唯一对应。$g$ 的两个复合在 $p_n$ 或 $n$ 处取值都立即还原。对记录逆，有限定义域中的每个标签恢复一个非零整数坐标，因为合法非零带符号字的整数值非零；缺失标签恰恢复零。再作记录，只恢复原有的全部非零边，不增加其它边，故记录侧复合为恒等。反向从状态先作记录，非零处由 $\operatorname{ival}\circ\operatorname{scode}=\operatorname{id}$ 恢复，零处由逆的缺失分支恢复，状态侧也为恒等。对总数字图，每个标签都存在，两个复合分别使用整数侧和 $S$ 侧的双逆，在无限多个零标签处也同样成立。有限 $I$ 上逐坐标应用完全相同的双逆，零边仍保留；空 $I$ 是两个单点之间的唯一映射。第 316 条已检查每个逆落入其声明的域，所以这些等式同时证明单射与到独立目标的满射。
+
+对记录 $r$，补零只添加零值，而已有值全非零，故截尾准确返回 $r$；对总图 $d$，截尾只删除零值，补零正好在这些缺失处把零放回，故逐标签还原 $d$。再用定义取值即得两个组合公式。限制等式的每一侧都是同域 $\mathsf{Lab}_I^{\rm reg}$ 上的总函数，在 $\zeta(p_i)$ 处均取 $\operatorname{scode}(u_i)$，故相等。原非零记录自身的限制可缺少零坐标，不能替代这里显式补零后的限制。
+
+第 114 条给
+$$
+\operatorname{scode}(z+w)=\operatorname{scode}(z)\oplus_Z\operatorname{scode}(w),\qquad
+\operatorname{scode}(-z)=\ominus_Z\operatorname{scode}(z).
+$$
+逐标签应用得到总数字映射的加法、负元、零式；记录的相同断言再复合补零、截尾即可。由双射和这些等式，阿贝尔群律也运输成立。
+
+记录的有限性由独立定义给定；其中每个非零带符号字是一个正或负固定标签与非零有限自然字组成的普通对，不是裸绝对值字。对总图，每个不同指标或素数标签给不同首坐标的图边，故有无限多条边，与非零值的数量无关。普通素数无限可由 Euclid 论证：有限完整素数表的乘积加一有一个不在表中的素因子，矛盾。因此即使处处为零，总图仍无限。有限图则每个 $i\in I$ 恰贡献一条边，标签单射使其数量恰为 $|I|$。此处的有限记录、总图及全集合码始终是各自的对象。证毕。
+
+## 318. 原图、数字图与外部成员载体的类型
+
+**定义 318。** 复用第 71–78 条的 $\operatorname{Enc},\operatorname{Dec},\mathfrak V_Z,\operatorname{El},\operatorname{Pack},\operatorname{NatZ},\in_Z$ 及语义配对。对任意集合 $A$，沿用 $A^*=\operatorname{Enc}[A]=\operatorname{El}(\operatorname{Enc}(A))$，记其限制双射为
+$$
+\operatorname{enc}_A=\operatorname{Enc}|_A:A\to A^*.
+$$
+第 255–256 条的 $J,v,b,\chi,\mathrm e$ 保持原义：$b=\operatorname{scode}\circ v$，$\chi(c)=\operatorname{Enc}(b^{-1}(c))$，$\mathrm e(c)=\operatorname{Enc}(c)$，两提升的域均为原始带符号字集 $S$。
+
+对 $A$ 上明确给定的拓扑 $\tau$，沿用第 289、291 条的外部运输拓扑
+$$
+\tau^*=\{\operatorname{Enc}[U]:U\in\tau\}\quad\text{于 }A^*.
+$$
+这是 $A^*$ 的外部子集族；单个拓扑码 $\operatorname{Enc}(\tau)$ 和开集码族 $\operatorname{Enc}[\tau]$ 分别有另外的用途。在独立记录、总数字目标上定义
+$$
+\tau_{\rm rec}=\{\operatorname{rec}_{\rm reg}[U]:U\in\tau_\Psi\},\qquad
+\tau_{\rm dig}=\{\operatorname{dig}_{\rm reg}[U]:U\in\tau_\Psi\}.
+$$
+
+局部给定集合之间的双射 $\eta_A:A\to A^d$、$\eta_B:B\to B^d$，以及部分函数 $f:D\to B$、$D\subseteq A$，定义
+$$
+f^\eta:\eta_A[D]\to B^d,\qquad
+f^\eta(c)=\eta_B(f(\eta_A^{-1}(c))),
+$$
+$$
+G_f=\{\langle x,f(x)\rangle:x\in D\},\qquad
+G_{f^\eta}=\{\langle c,f^\eta(c)\rangle:c\in\eta_A[D]\}.
+$$
+此为第 259–260 条元数一的特化，整个状态或整个函数图作为一个集合输入。另记既有集合解释的外部共轭及其普通图
+$$
+f^*:D^*\to B^*,\qquad
+f^*(\operatorname{Enc}(x))=\operatorname{Enc}(f(x)),\qquad
+\Gamma_f^*=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle:x\in D\}.
+$$
+$G_f,G_{f^\eta}$ 是原图与数字共轭图；$\operatorname{Enc}(G_f),\operatorname{Enc}(G_{f^\eta})$ 是两个图码；$\Gamma_f^*$ 是外部共轭的普通图；$\operatorname{Enc}[G_f]$ 是原图的外部语义成员像。普通图使用普通有序对，下标 $Z$ 的有序对仅在两个有效码上使用。
+
+对状态 $u$ 定义 $g_u^J:\operatorname{Pr}\to J$，$g_u^J(p_n)=v^{-1}(u_n)$。对 $r\in\mathsf{Rec}_{\rm reg}$ 分别保留
+$$
+\operatorname{Enc}(\operatorname{unrec}_{\rm reg}(r)),\qquad
+\operatorname{Enc}(r),\qquad
+\operatorname{Enc}(g_{\operatorname{unrec}_{\rm reg}(r)})
+$$
+作为状态值、原始记录自身及普通素数总图的三个提升。对 $c\in S$ 分别保留 $\operatorname{Enc}(\operatorname{ival}(c))$、$\chi(c)$、$\mathrm e(c)$ 作为普通数值、原 $J$ 对象和数字对象的提升；此处不宣称这些集合在所有输入下两两不等。
+
+**证明。** 第 72 条的双逆使 $\operatorname{enc}_A$ 的逆为 $\operatorname{Dec}$ 在 $A^*$ 上的限制，故外部共轭在且仅在所列域上有定义。第 317 条给两数字映射到独立目标的双逆，故它们的直接像开集族有明确载体。第 255 条的 $v^{-1}$ 在全部通常整数上有定义，给 $g_u^J$ 的总性；所列提升均对一个集合应用已有总类函数 $\operatorname{Enc}$，每次输出是有效码。没有对原始数字作未声明的语义配对。证毕。
+
+## 319. 两种图码、精确定义域与寄存器交换式
+
+**定理 319。** 对第 318 条的任意 $f:D\to B$ 和两双射，任意 $x\in A$ 有
+$$
+x\in D\iff\eta_A(x)\in\eta_A[D],\qquad
+f^\eta(\eta_A(x))=\eta_B(f(x))\quad(x\in D),\qquad
+\operatorname{ran}(f^\eta)=\eta_B[\operatorname{ran}(f)].
+$$
+约定 $(c,d)\in G$ 是普通边 $\langle c,d\rangle\in G$ 的简写。原图与数字图的两个码分别满足
+$$
+\operatorname{Enc}(G_f)
+=\operatorname{Pack}\{\langle\operatorname{Enc}(\eta_A^{-1}(c)),
+\operatorname{Enc}(\eta_B^{-1}(d))\rangle_Z:(c,d)\in G_{f^\eta}\},
+$$
+$$
+\operatorname{Enc}(G_{f^\eta})
+=\operatorname{Pack}\{\langle\operatorname{Enc}(c),\operatorname{Enc}(d)\rangle_Z:(c,d)\in G_{f^\eta}\}.
+$$
+其语义定义域分别为 $\operatorname{Enc}(D)$、$\operatorname{Enc}(\eta_A[D])$，语义值域分别为 $\operatorname{Enc}(\operatorname{ran}(f))$、$\operatorname{Enc}(\eta_B[\operatorname{ran}(f)])$。原图的语义求值在且仅在 $x\in D$ 时，于 $\operatorname{Enc}(x)$ 给出 $\operatorname{Enc}(f(x))$；数字图在其相应域上给对应唯一值。外部共轭 $f^*$ 的域则为 $D^*=\operatorname{Enc}[D]$，图为 $\Gamma_f^*$，而
+$$
+\operatorname{El}(\operatorname{Enc}(G_f))=\operatorname{Enc}[G_f]
+=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle_Z:x\in D\}.
+$$
+后式是语义对组成的外部集合，$\Gamma_f^*$ 则由普通对组成，不因逐边对应而互相替代。对每个 $E\subseteq D$，有
+$$
+(f|_E)^\eta=f^\eta|_{\eta_A[E]},
+$$
+且域外没有由此增加的值。
+
+对任意状态 $u$，局部写 $d_u=\operatorname{dig}_{\rm reg}(u)$、$r_u=\operatorname{rec}_{\rm reg}(u)$，其五类图码为
+$$
+\operatorname{Enc}(g_u)
+=\operatorname{Pack}\{\langle\operatorname{NatZ}(\operatorname{val}(a)),
+\operatorname{Enc}(\operatorname{ival}(c))\rangle_Z:(a,c)\in d_u\},
+$$
+$$
+\operatorname{Enc}(g_u^J)
+=\operatorname{Pack}\{\langle\operatorname{NatZ}(\operatorname{val}(a)),\chi(c)\rangle_Z:(a,c)\in d_u\},
+$$
+$$
+\operatorname{Enc}(d_u)
+=\operatorname{Pack}\{\langle\operatorname{Enc}(a),\mathrm e(c)\rangle_Z:(a,c)\in d_u\},\qquad
+\operatorname{Enc}(r_u)
+=\operatorname{Pack}\{\langle\operatorname{Enc}(a),\mathrm e(c)\rangle_Z:(a,c)\in r_u\},
+$$
+$$
+\operatorname{Enc}(u)
+=\operatorname{Pack}\{\langle\operatorname{NatZ}(n),\operatorname{Enc}(u_n)\rangle_Z:n\in\omega\}.
+$$
+前两图的普通域为 $\operatorname{Pr}$，总数字图的域为 $\mathsf{Pr}_Z$，记录的域为 $\{\zeta(p_n):u_n\ne0\}$，索引总图的域为 $\omega$；各语义域恰为这些集合的 $\operatorname{Enc}$。对有限 $I$，将前两图限制到 $\{p_i:i\in I\}$、总数字图限制到 $\mathsf{Lab}_I^{\rm reg}$、记录限制到其域与 $\mathsf{Lab}_I^{\rm reg}$ 的交、索引图限制到 $I$，同样逐边公式成立，零边仅在总图中保留。
+
+以下具体特化均取 $A=\mathsf V_{\rm reg}$、$\eta_A=\operatorname{rec}_{\rm reg}$，并包括对任意 $E\subseteq\mathsf V_{\rm reg}$ 的限制。取 $f=\operatorname{res}^{\mathbb Z}_I|_{\mathsf V_{\rm reg}}$、$B=\mathbb Z_o^I$、$\eta_B=\operatorname{dig}_I$，则全部记录上的共轭为
+$$
+r\longmapsto\operatorname{pad}_{\rm reg}(r)|_{\mathsf{Lab}_I^{\rm reg}}\in\mathsf{Dig}_I.
+$$
+取 $f=\Psi_{\rm reg}$、$B=\mathsf X_{\rm reg}$、$\eta_B=\operatorname{enc}_{\mathsf X_{\rm reg}}$，共轭为
+$$
+r\longmapsto\operatorname{Enc}(\Psi_{\rm reg}(\operatorname{unrec}_{\rm reg}(r)))\in\mathsf X_{\rm reg}^*.
+$$
+取 $f=\operatorname{scal}_{\rm reg}$、$B=\mathbb Q_{>0}$、$\eta_B=\operatorname{enc}_{\mathbb Q_{>0}}$，共轭为
+$$
+r\longmapsto\operatorname{Enc}(\operatorname{scal}_{\rm reg}(\operatorname{unrec}_{\rm reg}(r)))\in(\mathbb Q_{>0})^*.
+$$
+每个限制后的精确域为 $\operatorname{rec}_{\rm reg}[E]$，且两图码公式分别适用。后两种输出为完整有效集合码；在编码共轭图自身时，一个已为有效码的输出对象 $d$ 仍按第二图式取 $\operatorname{Enc}(d)$。
+
+**证明。** 若 $\eta_A(x)\in\eta_A[D]$，有 $y\in D$ 使 $\eta_A(x)=\eta_A(y)$，单射性给 $x=y\in D$；反向是直接像定义。域内代入双逆得到求值式。每个共轭输出恰为某个 $x\in D$ 的 $\eta_B(f(x))$，每个这样的值都出现，给值域等式的两向。
+
+共轭图中的边 $(c,d)$ 唯一确定 $x=\eta_A^{-1}(c)\in D$ 和 $y=\eta_B^{-1}(d)=f(x)$；反向每条原边唯一给该共轭边。第 74 条给
+$$
+\operatorname{Enc}(\langle x,y\rangle)
+=\langle\operatorname{Enc}(x),\operatorname{Enc}(y)\rangle_Z.
+$$
+所以第一图式的花括号集合恰为 $\operatorname{Enc}[G_f]$，第 72–73 条的成员展开与 $\operatorname{Pack}$ 双逆给 $\operatorname{Enc}(G_f)$。直接将同一配对式用于数字边自身，得到第二图式。此亦为第 260 条在 $T_1(x)=x$ 上的精确特化，没有改变元组惯例。
+
+图的定义域是至少出现在一条边的首坐标集合，函数性要求每个这样的坐标恰有一个次坐标。配对恒等式及 $\operatorname{Enc},\operatorname{Dec}$ 双逆保持并反映这两个条件，故得两语义域及语义求值，读取次坐标同样得语义值域。外部共轭按定义使用有效码作为普通图的两个坐标，域为成员像 $D^*$；另一方面第 72 条使图码的 $\operatorname{El}$ 为逐原边编码的集合，第 74 条将它写成所列语义对族。由此证明所有对象各自的比较式，不从角色区分推出所有特殊输入下集合两两不等。将原域改为 $E$ 恰选中 $\eta_A[E]$ 上的边，值式不变，故限制公式成立，亦包括空域。
+
+对 $g_u$，输入双射取第 96 条的 $p\mapsto\zeta(p)$，输出双射取 $\operatorname{scode}:\mathbb Z_o\to S$；逐标签求值给共轭恰为 $d_u$。输入逆为 $\operatorname{val}$，普通素数是自然序数，所以 $\operatorname{Enc}(p)=\operatorname{NatZ}(p)$，第一图码式给所列 $\operatorname{Enc}(g_u)$。对 $g_u^J$，输出改用 $b:J\to S$，由于
+$$
+b(v^{-1}(u_n))=\operatorname{scode}(u_n),
+$$
+共轭仍为 $d_u$，但原值提升恰为 $\chi(c)$，给第二个素数图式。直接编码 $d_u,r_u$ 的普通边，输出用 $\mathrm e(c)=\operatorname{Enc}(c)$，得到两个数字图式。最后对 $u$ 的每条索引边应用语义配对，再对全部边应用 $\operatorname{Pack}$，即得索引图式。总图的每个零坐标边均参与这些集合，有限支撑不截掉它们。各实际域由第 316–317 条的总性或部分性确定；将域限制为所列有限集合只筛选对应边，故全部限制式和相应语义域也成立。
+
+第一个寄存器特化的值式是第 317 条限制交换式；记录双射满到独立目标，故它对每个记录成立，有限空 $I$ 也给唯一空图。另两特化将各自的输出双射代入共轭定义即得；其逆只是 $\operatorname{Dec}$ 在指定像上的限制。因此第一图码式对输出 $d$ 使用 $\operatorname{Enc}(\operatorname{Dec}(d))=d$，第二图码式则编码输出对象本身而使用 $\operatorname{Enc}(d)$。再用已证限制结论，所有 $E$ 情形精确成立。
+
+全部语义对的两个参数都由 $\operatorname{Enc},\operatorname{NatZ},\chi$ 或 $\mathrm e$ 产生，绝不直接输入原始零 $0_S=\varnothing$。第 255–256 条给
+$$
+\mathrm e(0_S)=\operatorname{NatZ}(0),\qquad
+\chi(0_S)=\operatorname{Enc}(0_J),\qquad
+0_J=(0,0)\ne0,
+$$
+而普通数值提升为 $\operatorname{Enc}(\operatorname{ival}(0_S))=\operatorname{NatZ}(0)$。这同时处理零输入的相等与不等边界，所有配对仍在第 74 条的有效域内。证毕。
+
+## 320. 拓扑闭包运输与完整集合语义
+
+**定理 320。** 上述状态载体、函数图、子群、有限支撑整数零化子集合、有理张成、群商及拓扑均为 ZFC 中的集合。对其中任意集合 $A$、已指定拓扑 $\tau$ 和 $B\subseteq A$，第 318 条的 $\tau^*$ 是 $A^*$ 上的拓扑，$\operatorname{enc}_A$ 为同胚，其逆为 $\operatorname{Dec}|_{A^*}$，且
+$$
+\operatorname{El}(\operatorname{Enc}(\tau))=\operatorname{Enc}[\tau],\qquad
+\tau^*=\{\operatorname{El}(c):c\in\operatorname{El}(\operatorname{Enc}(\tau))\},
+$$
+$$
+\overline{B^*}^{\tau^*}=\operatorname{Enc}[\overline B^{\tau}].
+$$
+在所列载体上，收敛、连续及不连续均经相应同胚保持并反映。第 317 条的记录、总数字双射分别是从 $\tau_\Psi$ 到 $\tau_{\rm rec},\tau_{\rm dig}$ 的同胚，补零为这两个目标空间之间的同胚。将三种状态拓扑分别沿同一双射运输时，第 315 条的两个严格包含也仍严格。
+
+令 $\tau_{\mathsf X}$ 为 $\mathsf X_{\rm reg}$ 的乘积拓扑，$\mathsf X_{\rm reg}^*$ 取 $(\tau_{\mathsf X})^*$，$\mathsf V_{\rm reg}^*$ 取 $\tau_\Psi^*$，并置
+$$
+\Psi_{\rm reg}^*
+=\operatorname{enc}_{\mathsf X_{\rm reg}}\circ\Psi_{\rm reg}\circ
+\operatorname{enc}_{\mathsf V_{\rm reg}}^{-1}.
+$$
+对每个 $H\le\mathsf V_{\rm reg}$，修正闭包迹准确运输为
+$$
+\overline{\Psi_{\rm reg}^*(H^*)}^{(\tau_{\mathsf X})^*}
+\cap\Psi_{\rm reg}^*(\mathsf V_{\rm reg}^*)
+=\Psi_{\rm reg}^*(L_{\rm fin}(H)^*),
+\qquad L_{\rm fin}(H)^*=\operatorname{Enc}[L_{\rm fin}(H)].
+$$
+在原始记录上，记 $\Psi_{\rm rec}=\Psi_{\rm reg}\circ\operatorname{unrec}_{\rm reg}$，则
+$$
+\overline{\Psi_{\rm rec}(\operatorname{rec}_{\rm reg}[H])}^{\mathsf X_{\rm reg}}
+\cap\Psi_{\rm rec}(\mathsf{Rec}_{\rm reg})
+=\Psi_{\rm rec}(\operatorname{rec}_{\rm reg}[L_{\rm fin}(H)]),
+$$
+$$
+\overline{\operatorname{rec}_{\rm reg}[H]}^{\tau_{\rm rec}}
+=\operatorname{rec}_{\rm reg}[L_{\rm fin}(H)].
+$$
+将记录及其双逆换成总数字及其双逆，得到相同的两式。第 319 条输出有效码的记录相位，正是这些环境相位式再经 $\operatorname{enc}_{\mathsf X_{\rm reg}}$ 的运输。
+
+对每个固定有限的一阶集合论公式，先展开本附录的定义，再按第 75 条翻译，等号、成员及全部量词仍双向保持，包括对任意子群及全部有限坐标集的量化。该结论使用第 78 条的定义性保守解释；给定模型的比较始终以该模型满足 ZFC 为条件。不把任意集合或实数表示为有限字，不给无条件 $\operatorname{Con}(\mathrm{ZFC})$、模型存在、有效成员算法或无限指令族成本最优的结论。
+
+**证明。** 整数总序列和圆周总序列是普通函数集；有限支撑谓词由分离取得子集。全部有限 $I\subseteq\omega$ 构成集合，有限有理系数表及有限向量表也构成集合，替代给有限求和像，故有理张成和局部饱和均为集合。子群族位于状态群的幂集中，零化子由分离取得；商是其等价类组成的集合，等价类位于对应群的幂集中。普通素数是 $\omega$ 的子集，其递增枚举由自然数递归取得；原始数字载体已有集合定义，部分和总函数图都是相应积的子集，其独立合法性谓词再用分离。圆周本身为实数对整数平移的商，映射图和像由这些集合及替代构造；拓扑是相应幂集的子集，乘积拓扑由有限柱集基的任意并给出。因此没有把真类当作状态集。$\operatorname{Enc}$ 仍为旧的可定义类函数，限制到任何所列集合，其像及限制图由替代为集合。
+
+第 72 条的双逆给 $\operatorname{enc}_A$ 的双射和所列逆。双射的直接像保持空集、全集、任意并和有限交；交的反向包含利用单射识别相同像的原像。这证明 $\tau^*$ 的拓扑公理及双向开集对应，故为同胚。第 72 条应用于集合 $\tau$ 给
+$$
+\operatorname{El}(\operatorname{Enc}(\tau))=\{\operatorname{Enc}(U):U\in\tau\}.
+$$
+再对其中每个码单独应用 $\operatorname{El}$，恰得到 $\operatorname{Enc}[U]$，证明第二式。这样拓扑的单个码、它的语义开集码成员及外部开集族各在其正确层次，亦与第 291、305 条的既有拓扑运输一致。
+
+对 $x\in A$，$\operatorname{Enc}(x)$ 的每个开邻域对应于 $x$ 的开邻域 $U$，且 $\operatorname{Enc}[U]$ 与 $B^*$ 相交当且仅当 $U$ 与 $B$ 相交。闭包的邻域判据遂给闭包式的两个方向。同一邻域对应给序列或任一固定指标集上的网的收敛双向对应。对两空间之间的映射，共轭的开集逆像正是原开集逆像的运输，所以连续性等价，其否定也等价。对第 317 条独立目标上的双射作相同论证，得到记录与总数字的同胚及闭包；补零是 $\operatorname{dig}_{\rm reg}\circ\operatorname{unrec}_{\rm reg}$，故为同胚。两拓扑族的包含在双射直接像下保持且可逆，若原来存在一个只属于较细拓扑的开集，其像仍只属于较细运输拓扑，因此严格性也保持。这些是经典双射运输和子空间拓扑事实，证明只使用明确给定的开集。
+
+在 $\mathsf X_{\rm reg}$ 上将闭包运输用于 $\Psi_{\rm reg}(H)$，其直接像依共轭定义恰为 $\Psi_{\rm reg}^*(H^*)$。单射直接像保持交，所以对第 310 条的交集式取 $\operatorname{Enc}$ 直接像，正得到显示的有效成员载体公式。这里是 $\operatorname{Enc}[\mathcal K_{\rm reg}(H)]$ 这样的成员像，不是将单个码 $\operatorname{Enc}(\mathcal K_{\rm reg}(H))$ 当作环境子集。对记录式代入 $\operatorname{unrec}_{\rm reg}\circ\operatorname{rec}_{\rm reg}=\operatorname{id}$，相位图像恰还原为第 310 条相同的两个集合；记录自身的闭包再由记录同胚与 $\overline H^{\tau_\Psi}=L_{\rm fin}(H)$ 得到。总数字情形代入对应双逆作同一推导；有效输出情形在环境再复合其同胚即可。第 319 条有限限制交换式保证全部有限测试亦运输到各自的实际域，空指标无例外。
+
+最后固定一个普通集合论公式及其参数，将参数 $a$ 变成 $\operatorname{Enc}(a)$，将成员变成 $\in_Z$。等号由单射双向保持，成员由第 72 条
+$$
+\operatorname{Enc}(a)\in_Z\operatorname{Enc}(b)\iff a\in b
+$$
+双向保持。对公式结构归纳，布尔联结词保持等价；存在量词的普通见证 $x$ 给有效见证 $\operatorname{Enc}(x)$，反向有效见证 $c$ 给普通见证 $\operatorname{Dec}(c)$，归纳假设给两蕴含。全称量词同样先取有效码再解码，或先取普通集合再编码，得到两向。指定集合上的量词通过其语义成员限制，外部载体恰为前述成员像；无界量词按第 75 条限制到有效码的可定义类谓词，不将该真类当作一个集合。函数符号先替换为已比较的图、精确定义域及唯一值条件，故此归纳适用于这里的支撑、全部有限集及任意子群等公式。
+
+这给每个固定有限公式的普通证明方案，未引入一个同时裁定全部公式的内部真理谓词。所有新对象由定义给出，有限证明中的新定义可逐项消去，新增定理用上述普通证明替代，故仍处于第 78 条的保守扩展。若给定模型满足 ZFC，构造和双逆在该模型内部成立；非标准模型中的“有限”只保证内部有限，内部幂集不冒充外部全部子集。这不推出模型存在或 ZFC 无条件一致。第 317 条只让非零记录有限，全部总图、任意环面点、拓扑和其它集合仍保留各自集合论规模及用途，第 79 条的有限字障碍不变。以上拓扑与代数结论没有附加成员判定程序、无限执行或成本最优语义。证毕。
