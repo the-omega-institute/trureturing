@@ -43,3 +43,5 @@ The canonical Lean wrapper materializes a private cache on demand, using an APFS
 `make lean-cache-ensure` is an explicit, optional prewarm target. The cache is never
 shared through a symlink, and worktree creation restores locked .NET dependencies
 unless `--skip-restore` is explicit.
+
+<!-- disposable J1 admission-plane trigger -->
