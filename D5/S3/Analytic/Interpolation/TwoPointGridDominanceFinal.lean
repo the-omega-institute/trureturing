@@ -154,8 +154,119 @@ theorem fractional_row_bound_strict {c d t u M₀ M₁ θ : ℝ}
   exact ((add_le_add hinner (le_refl (logValue t))).trans hh).trans_lt
     (pair_value_spread_strict (Real.sqrt_nonneg _) hrad hvm)
 
+theorem pair_bound_strict {x y V : ℝ} (hx : 0 < x) (hy : 0 < y)
+    (hV0 : 0 ≤ V) (hV : V < (x - y) ^ 2 / 2) :
+    logValue x + logValue y < psiTwo ((x + y) / 2) V := by
+  let m := (x + y) / 2
+  let R := |(x - y) / 2|
+  have hR : 0 ≤ R := abs_nonneg _
+  have hRm : R < m := by
+    dsimp [R, m]
+    rw [abs_lt]
+    constructor <;> linarith
+  have hRpos : 0 < R := by
+    have hsquare : 0 < R ^ 2 := by
+      dsimp [R]
+      rw [sq_abs]
+      nlinarith
+    nlinarith
+  have hs : Real.sqrt (V / 2) < R := by
+    apply (Real.sqrt_lt' hRpos).mpr
+    dsimp [R]
+    rw [sq_abs]
+    nlinarith
+  have hp := pair_value_spread_strict (Real.sqrt_nonneg (V / 2)) hs hRm
+  change _ < psiTwo m V at hp
+  have he : logValue (m - R) + logValue (m + R) = logValue x + logValue y := by
+    dsimp [m, R]
+    rcases le_total y x with h | h
+    · rw [abs_of_nonneg (by linarith : 0 ≤ (x - y) / 2)]
+      have h₁ : (x + y) / 2 - (x - y) / 2 = y := by ring
+      have h₂ : (x + y) / 2 + (x - y) / 2 = x := by ring
+      rw [h₁, h₂, add_comm]
+    · rw [abs_of_nonpos (by linarith : (x - y) / 2 ≤ 0)]
+      have h₁ : (x + y) / 2 - -((x - y) / 2) = x := by ring
+      have h₂ : (x + y) / 2 + -((x - y) / 2) = y := by ring
+      rw [h₁, h₂]
+  rw [he] at hp
+  exact hp
+
+/-- A point below the upper interval endpoint is strictly closer to the interval. -/
+theorem gridDistance_lt_upper {a m c d x : ℝ}
+    (hx : x = c ∨ x = d) (ham : a < m) (hxm : x < m) :
+    gridDistance a m c d < m - x := by
+  have hz : max a x ∈ Icc a m := ⟨le_max_left _ _, max_le ham.le hxm.le⟩
+  have hd := gridDistance_le hx hz
+  rw [abs_of_nonpos (sub_nonpos.mpr (le_max_right a x)), neg_sub] at hd
+  exact hd.trans_lt (sub_lt_sub_right (max_lt ham hxm) x)
+
+/-- Every actual positive pair other than the upper-budget diagonal has a strict gap. -/
+theorem actual_pair_bound_strict {c d t u x y M₀ M₁ : ℝ}
+    (hx : x = c ∨ x = d) (hy : y = t ∨ y = u)
+    (hxpos : 0 < x) (hypos : 0 < y) (hM : M₀ < M₁)
+    (hlo : M₀ ≤ x + y) (hhi : x + y ≤ M₁)
+    (hne : ¬(x = M₁ / 2 ∧ y = M₁ / 2)) :
+    logValue x + logValue y < psiTwo (M₁ / 2)
+      (gridDistance (M₀ / 2) (M₁ / 2) c d ^ 2 +
+        gridDistance (M₀ / 2) (M₁ / 2) t u ^ 2) := by
+  let m := (x + y) / 2
+  let V := gridDistance (M₀ / 2) (M₁ / 2) c d ^ 2 +
+    gridDistance (M₀ / 2) (M₁ / 2) t u ^ 2
+  have hm : m ∈ Icc (M₀ / 2) (M₁ / 2) :=
+    ⟨by dsimp [m]; linarith, by dsimp [m]; linarith⟩
+  have hxD := gridDistance_le hx hm
+  have hyD := gridDistance_le hy hm
+  have hxD0 := gridDistance_nonneg (M₀ / 2) (M₁ / 2) c d
+  have hyD0 := gridDistance_nonneg (M₀ / 2) (M₁ / 2) t u
+  have hx2 : gridDistance (M₀ / 2) (M₁ / 2) c d ^ 2 ≤ (x - m) ^ 2 := by
+    nlinarith [sq_abs (x - m)]
+  have hy2 : gridDistance (M₀ / 2) (M₁ / 2) t u ^ 2 ≤ (y - m) ^ 2 := by
+    nlinarith [sq_abs (y - m)]
+  have hV0 : 0 ≤ V := add_nonneg (sq_nonneg _) (sq_nonneg _)
+  have hV : V ≤ (x - y) ^ 2 / 2 := by dsimp [V, m] at *; nlinarith
+  change _ < psiTwo (M₁ / 2) V
+  rcases lt_or_eq_of_le hm.2 with hlt | heq
+  · have hL : Real.sqrt (V / 2) < m := by
+      apply (Real.sqrt_lt' (by dsimp [m]; linarith : 0 < m)).mpr
+      dsimp [m]
+      nlinarith [mul_pos hxpos hypos]
+    exact (pair_bound hxpos hypos hV).trans_lt (psiTwo_strictMono_mean hlt hL)
+  · have hxy : x ≠ y := by
+      intro h
+      apply hne
+      dsimp [m] at heq
+      constructor <;> linarith
+    have ham : M₀ / 2 < M₁ / 2 := by linarith
+    have hVlt : V < (x - y) ^ 2 / 2 := by
+      rcases lt_or_gt_of_ne hxy with hlt | hgt
+      · have hxm : x < M₁ / 2 := by dsimp [m] at heq; linarith
+        have hd := gridDistance_lt_upper hx ham hxm
+        have hd' : gridDistance (M₀ / 2) (M₁ / 2) c d < m - x := by
+          simpa only [heq] using hd
+        have hsq : gridDistance (M₀ / 2) (M₁ / 2) c d ^ 2 < (x - m) ^ 2 := by
+          nlinarith [mul_pos (sub_pos.mpr hd')
+            (show 0 < m - x + gridDistance (M₀ / 2) (M₁ / 2) c d by linarith)]
+        dsimp [V, m] at *
+        nlinarith
+      · have hym : y < M₁ / 2 := by dsimp [m] at heq; linarith
+        have hd := gridDistance_lt_upper hy ham hym
+        have hd' : gridDistance (M₀ / 2) (M₁ / 2) t u < m - y := by
+          simpa only [heq] using hd
+        have hsq : gridDistance (M₀ / 2) (M₁ / 2) t u ^ 2 < (y - m) ^ 2 := by
+          nlinarith [mul_pos (sub_pos.mpr hd')
+            (show 0 < m - y + gridDistance (M₀ / 2) (M₁ / 2) t u by linarith)]
+        dsimp [V, m] at *
+        nlinarith
+    have hp := pair_bound_strict hxpos hypos hV0 hVlt
+    change _ < psiTwo m V at hp
+    rwa [heq] at hp
+
 #print axioms psiTwo_strictMono_mean
 #print axioms pair_value_spread_strict
 #print axioms fractional_row_bound_strict
+
+#print axioms pair_bound_strict
+#print axioms gridDistance_lt_upper
+#print axioms actual_pair_bound_strict
 
 end D5.S3.Analytic.Interpolation.TwoPointGridDominanceFinal
