@@ -39,11 +39,13 @@ The conjecture, quoted from arXiv:2305.08349v1:
 > \(R_{\cdot w}=V_H\). A second possibility is that \(R_{\cdot w}\) is a
 > union of three of such sequences.”
 
-Proposed formal target: port the paper's parameterized definitions faithfully,
-then prove that every admissible negative prefix cylinder has an occurrence set
-represented by one trident component `V_F`, `V_G`, or `V_H`, or a union of three
-such components with Lucas parameters. Do not weaken this to mere eventual
-periodicity or occurrence.
+Formal target, in two parts. Port the paper's parameterized definitions
+faithfully, then prove that every admissible negative prefix cylinder has an
+occurrence set represented by one trident component `V_F`, `V_G`, or `V_H`, or a
+union of three such components with Lucas parameters. For the repository's depth
+reading that is done and frozen; see Gap. For the paper's reading, which is a
+different predicate on the same words, it is open, and that is what this entry
+tracks. Neither part may be weakened to mere eventual periodicity or occurrence.
 
 The paper states the obstruction:
 
@@ -140,20 +142,33 @@ although they remain close to that form. It exhibits the first `V_G`, the first
 
 ## Route
 
-1. Port the two-sided base-phi expansion and prove value/uniqueness by clearing
-   negative powers with a suitable phi power and invoking `GoldenInt`/WDigits
-   normalization.
-2. Construct a finite carry transducer from a Zeckendorf word to the first `m`
-   digits of `beta^-`; its state should be a bounded conjugate/deficit residue
-   because the negative tail is contractive.
-3. Identify the output cylinder's return itinerary with `x_F`, `x_G`, `x_H`, or
-   a three-state interleaving. Use frozen return-word and occurrence-gap results
-   after this identification, not before it.
-4. Prove Lucas parameters by induction/desubstitution on `w`; use the frozen
-   Beatty displacement reading to close the affine occurrence formula.
-5. Start with a declaration-ready restricted theorem for prefixes ending in a
-   state whose transducer is a single `V_F` component, then generalize to the
-   trident.
+This route was written before the depth-reading classification was proved. It is
+kept as the record of what was anticipated, with each step marked against what
+actually happened.
+
+1. Done. The two-sided base-phi expansion is ported with value and uniqueness.
+2. Open, and independent of the reading question. Convert a canonical Zeckendorf
+   expansion to the two-sided base-phi expansion without the `CarrySkipRealizes`
+   hypothesis and for negative exponents as well; see Gap. A finite carry
+   transducer whose state is a bounded conjugate/deficit residue remains the
+   proposed shape.
+3. Done for the depth reading, by a different route than anticipated. The
+   occurrence set is identified with a single family member or a disjoint union
+   of three. The transitive import closure of the frozen classification is 42
+   `D5` files and contains no `ReturnWords` module, so the return-word and
+   occurrence-gap results were not the bridge.
+4. Done for the depth reading. The parameters are established as a `LucasPair`,
+   two consecutive Lucas numbers. The frozen Beatty displacement reading is not
+   in that import closure either.
+5. Superseded for the depth reading: the frozen theorem already proves the
+   general classification, so no restricted first step is outstanding.
+
+The paper-reading classification remains open. The frozen depth-reading proof does
+not determine which construction or bridge steps a proof for that reading will
+require; the import readings above record what that proof did not use, not what a
+future one cannot use. One thing is settled about the relation: it is not a
+same-word set equality with the frozen depth-reading result, which already fails at
+`N = 2, 3, 4` for the word `010`; see Gap.
 
 ## Falsifier
 
@@ -230,16 +245,20 @@ settle the conjecture; the window is finite.
 
 ## Triage
 
-`theorem`. The missing two-sided conversion is substantial, but the repository
-already owns precisely the normalization, mechanical-word, Beatty, and
-return-gap ingredients suggested by the conjecture's shape.
+`theorem`. The depth-reading classification is proved and frozen; the remaining
+classification target concerns the paper's reading, whose truth remains open as
+described in Gap. The two-sided conversion named in Gap is a separate outstanding
+obligation that does not depend on the reading question.
 
 ## ASSUMED-UNVERIFIED
 
 - The paper's phrase "union of three" has a unique intended formal
   parameterization and does not require extra overlap/multiplicity conventions.
-- The frozen return-word theorems apply after a finite shift/intercept change;
-  this is the main bridge to prove.
+- The frozen return-word theorems apply after a finite shift/intercept change.
+  This was recorded as the main bridge to prove. The frozen depth-reading
+  classification did not use it: no `ReturnWords` module appears in its 42-file
+  transitive import closure. The statement is therefore unused here, not
+  established.
 - Novelty of the intermediate bridge theorems is unassessed.
 - Post-v1 literature status: arXiv:2305.08349 has one version only (15 May
   2023) and was published as Communications in Mathematics 33 (2025) no. 2; a
@@ -255,7 +274,10 @@ return-gap ingredients suggested by the conjecture's shape.
 - Separately, and not discharging the line above: the `FrontierPhase` machine
   reproduces the measured Lucas step pair `(a, b)` for every admissible `w` of
   length at most 14 over `1 <= N <= 4,000,000`, with zero counterexamples under
-  both readings. Whether it does so for every `w` is unverified and is part of
-  the conjecture.
-- `prefixMultiplicity` (single iff `w` begins with `1`, else a trident) has zero
-  counterexamples in the same window; it is not proved for all `w`.
+  both readings. Whether it does so for every `w` is unverified here, and that
+  correspondence is a repository-internal obligation, separate from the
+  classification already proved for the depth reading.
+- `prefixMultiplicity w` is `if w.head? = some true then 1 else 3`. Under the depth
+  reading that split is proved, not assumed; it is recorded in Gap and is not an
+  item of this section. What belongs here is the paper's reading, for which the
+  corresponding assertion is open.
