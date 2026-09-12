@@ -14,8 +14,6 @@ $$\operatorname {prefixSum}\left(p, k\right) = \sum _ {0 \le j < n , j < k} ( \o
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Codex implementation worker (2026). *A392714 round two — the residual signed sum S(a)*. URL: <https://github.com/the-omega-institute/trureturing>.
-
 *Commentary.*
 
 The argument k is a prefix length. The summation includes exactly the indices j in Fin n with j less than k.
@@ -27,8 +25,6 @@ $$\operatorname {Upper}\left(a, b\right) \iff \forall i , 0 \le i \le n \implies
 *Formalization.* `D5/S1/Words/Compositions/ResidualPermutationSign.Upper` (`✓ std3`).
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* Codex implementation worker (2026). *A392714 round two — the residual signed sum S(a)*. URL: <https://github.com/the-omega-institute/trureturing>.
 
 *Commentary.*
 
@@ -42,8 +38,6 @@ $$\operatorname {LowerFrom}\left(a, b, r\right) \iff \forall i , r < i \le n \im
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Codex implementation worker (2026). *A392714 round two — the residual signed sum S(a)*. URL: <https://github.com/the-omega-institute/trureturing>.
-
 *Commentary.*
 
 Here i is the one-based prefix length. LowerFrom r retains the strict lower cuts at lengths r+1 through n.
@@ -55,8 +49,6 @@ $$\operatorname {signInt}\left(b\right) = \operatorname {sign}\left(b\right)$$
 *Formalization.* `D5/S1/Words/Compositions/ResidualPermutationSign.signInt` (`✓ std3`).
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* Codex implementation worker (2026). *A392714 round two — the residual signed sum S(a)*. URL: <https://github.com/the-omega-institute/trureturing>.
 
 *Commentary.*
 
@@ -70,8 +62,6 @@ $$R _ {r} ( a ) = \sum _ {b \in S _ {n} : \operatorname {Upper}\left(a, b\right)
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Codex implementation worker (2026). *A392714 round two — the residual signed sum S(a)*. URL: <https://github.com/the-omega-institute/trureturing>.
-
 *Commentary.*
 
 R at r sums over all b with every upper bound and the lower bounds remaining from r onward.
@@ -83,8 +73,6 @@ $$\forall r \in \mathbb {N} , R _ {r} ( a ) = R _ {r + 1} ( a )$$
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Compositions/ResidualPermutationSign.lower_cut_removal` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* Codex implementation worker (2026). *A392714 round two — the residual signed sum S(a)*. URL: <https://github.com/the-omega-institute/trureturing>.
 
 *Commentary.*
 
@@ -98,8 +86,6 @@ $$a \neq id \implies \sum _ {b \in S _ {n} : \operatorname {Upper}\left(a, b\rig
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Codex implementation worker (2026). *A392714 round two — the residual signed sum S(a)*. URL: <https://github.com/the-omega-institute/trureturing>.
-
 *Commentary.*
 
 Choose the least moved index k of a, and let j>k be the position of value k. Every upper-admissible b fixes the indices before k. The entries at positions j-1 and j are therefore at least k. Swapping these positions preserves the only affected upper bound, since B at j is at most A at j-1 plus k. This transposition is independent of b and reverses its sign.
@@ -112,8 +98,6 @@ $$\operatorname {InResidual}\left(a, b\right) \iff \forall i , 1 \le i \le n \im
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Codex implementation worker (2026). *A392714 round two — the residual signed sum S(a)*. URL: <https://github.com/the-omega-institute/trureturing>.
-
 *Commentary.*
 
 This is precisely membership in L(a). The left inequality is strict and the right inequality is weak.
@@ -125,8 +109,6 @@ $$\sum _ {b \in S _ {n} : \operatorname {InResidual}\left(a, b\right)} \operator
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Compositions/ResidualPermutationSign.signed_residual_sum` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* Codex implementation worker (2026). *A392714 round two — the residual signed sum S(a)*. URL: <https://github.com/the-omega-institute/trureturing>.
 
 *Commentary.*
 
