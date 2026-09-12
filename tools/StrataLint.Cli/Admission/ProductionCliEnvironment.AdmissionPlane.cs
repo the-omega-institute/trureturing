@@ -18,13 +18,16 @@ internal sealed partial class ProductionCliEnvironment
         null);
 
     internal static AdmissionOutcome? EvaluateAdmissionPlane(
+        RawRepositorySnapshot protectedBase,
         RawRepositorySnapshot candidate,
         RawChangeSet changes)
     {
+        ArgumentNullException.ThrowIfNull(protectedBase);
         ArgumentNullException.ThrowIfNull(candidate);
         ArgumentNullException.ThrowIfNull(changes);
         var changedPaths = AdmissionPlaneChangedPaths(changes);
         var decision = AdmissionPlanePolicy.Evaluate(
+            protectedBase,
             candidate,
             changedPaths.Select(static path => path.Value).ToImmutableArray());
         if (decision.IsAdmissible)
