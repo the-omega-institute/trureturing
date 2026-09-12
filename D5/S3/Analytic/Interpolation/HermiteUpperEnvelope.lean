@@ -119,4 +119,59 @@ private theorem negative_left_of_double_node (x L H : ℝ) (g : ℝ → ℝ)
   linarith
 
 
+private theorem hermite_majorant (L H x : ℝ) (f p : ℝ → ℝ)
+    (hL : 0 < L) (hLH : L < H) (hx : 0 < x) (hxH : x ≤ H)
+    (hf : ContDiffOn ℝ 3 f (Ioi 0)) (hp : ContDiff ℝ 3 p)
+    (hzero : ∀ t, iteratedDeriv 3 p t = 0)
+    (hvalL : p L = f L) (hderL : deriv p L = deriv f L) (hvalH : p H = f H)
+    (hpos : ∀ t ∈ Ioi (0 : ℝ), 0 < iteratedDeriv 3 f t) : f x ≤ p x := by
+  rcases lt_trichotomy x L with hxL | rfl | hLx
+  · obtain ⟨g, hg, heq⟩ := extension_near_interval isOpen_Ioi x H
+      (fun t ht => hx.trans_le ht.1) (f - p) (hf.sub hp.contDiffOn)
+    have hLm : L ∈ Icc x H := ⟨hxL.le, hLH.le⟩
+    have hHm : H ∈ Icc x H := ⟨hxH, le_rfl⟩
+    have hgL : g L = 0 := by
+      rw [(heq L hLm).eq_of_nhds, Pi.sub_apply, hvalL, sub_self]
+    have hgH : g H = 0 := by
+      rw [(heq H hHm).eq_of_nhds, Pi.sub_apply, hvalH, sub_self]
+    have hdL : deriv g L = 0 := by
+      rw [(heq L hLm).deriv_eq,
+        deriv_sub ((hf.contDiffAt (isOpen_Ioi.mem_nhds hL)).differentiableAt (by norm_num))
+          (hp.differentiable (by norm_num)).differentiableAt]
+      exact sub_eq_zero.mpr hderL.symm
+    have hthird (t : ℝ) (ht : t ∈ Ioo x H) : 0 < iteratedDeriv 3 g t := by
+      have ht0 : t ∈ Ioi (0 : ℝ) := hx.trans ht.1
+      rw [(heq t (Ioo_subset_Icc_self ht)).iteratedDeriv_eq 3,
+        iteratedDeriv_sub (hf.contDiffAt (isOpen_Ioi.mem_nhds ht0)) hp.contDiffAt,
+        hzero t, sub_zero]
+      exact hpos t ht0
+    have hneg := negative_left_of_double_node x L H g hxL hLH hg hgL hgH hdL hthird
+    rw [(heq x ⟨le_rfl, hxH⟩).eq_of_nhds, Pi.sub_apply] at hneg
+    linarith
+  · exact hvalL.ge
+  · rcases lt_or_eq_of_le hxH with hxH' | rfl
+    · obtain ⟨ξ, hξ, hrem, hneg⟩ := hermite_two_point_remainder_on isOpen_Ioi L H x
+        (fun t ht => hL.trans_le ht.1) f p ⟨hLx, hxH'⟩ hf hp.contDiffOn
+        (fun t _ => hzero t) hvalL hderL hvalH (fun t ht => hpos t (hL.trans ht.1))
+      linarith
+    · exact hvalH.ge
+
+private theorem quadratic_derivatives (a b c L : ℝ) :
+    deriv (fun t : ℝ => a + b * (t - L) + c * (t - L)^2) L = b ∧
+      ∀ t, iteratedDeriv 3 (fun t : ℝ => a + b * (t - L) + c * (t - L)^2) t = 0 := by
+  have hd : deriv (fun t : ℝ => a + b * (t - L) + c * (t - L)^2) =
+      fun t => b + 2 * c * (t - L) := by
+    funext t
+    convert (((hasDerivAt_const t a).add (((hasDerivAt_id t).sub_const L).const_mul b)).add
+      ((((hasDerivAt_id t).sub_const L).pow 2).const_mul c)).deriv using 1
+    · congr 1
+    · simp only [id_eq]
+      ring
+  have hd2 : deriv (fun t : ℝ => b + 2 * c * (t - L)) = fun _ => 2 * c := by
+    funext t
+    simpa using ((((hasDerivAt_id t).sub_const L).const_mul (2*c)).const_add b).deriv
+  constructor
+  · rw [hd]; ring
+  · simp [iteratedDeriv_succ, iteratedDeriv_zero, hd, hd2]
+
 end D5.S3.Analytic.Interpolation.HermiteUpperEnvelope
