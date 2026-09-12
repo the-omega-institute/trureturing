@@ -15,9 +15,11 @@ public sealed class LeanCacheEnsureScriptTests
         var installed = InstallScript(fixture.Path);
         Directory.CreateDirectory(installed.Bin);
         var dotnet = Path.Combine(installed.Bin, "dotnet");
+        var nodeReuse = Path.Combine(fixture.Path, "node-reuse");
         File.WriteAllText(
             dotnet,
-            "#!/usr/bin/env bash\nprintf '%s\\n' \"$@\" > \"$DOTNET_ARGUMENTS\"\nprintf '%s\\n' \"$PWD\" > \"$DOTNET_CWD\"\nprintf 'delegated\\n'\n");
+            "#!/usr/bin/env bash\nprintf '%s\\n' \"$@\" > \"$DOTNET_ARGUMENTS\"\nprintf '%s\\n' \"$PWD\" > \"$DOTNET_CWD\"\n"
+                + "printf '%s\\n' \"${MSBUILDDISABLENODEREUSE-unset}\" > \"$DOTNET_NODE_REUSE\"\nprintf 'delegated\\n'\n");
         File.SetUnixFileMode(
             dotnet,
             UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
@@ -26,12 +28,14 @@ public sealed class LeanCacheEnsureScriptTests
             "/bin/bash",
             [
                 "-c",
-                "PATH=\"$1:$PATH\" DOTNET_ARGUMENTS=\"$2\" DOTNET_CWD=\"$3\" exec /bin/bash \"$4\"",
+                "PATH=\"$1:$PATH\" DOTNET_ARGUMENTS=\"$2\" DOTNET_CWD=\"$3\" DOTNET_NODE_REUSE=\"$5\" "
+                    + "MSBUILDDISABLENODEREUSE=0 exec /bin/bash \"$4\"",
                 "lean-cache-test",
                 installed.Bin,
                 installed.ArgumentsPath,
                 installed.DotnetCwdPath,
                 installed.Script,
+                nodeReuse,
             ],
             installed.Caller,
             TestBudgets.ScriptProcessHangGuard,
@@ -39,6 +43,7 @@ public sealed class LeanCacheEnsureScriptTests
 
         Assert.Equal(0, result.ExitCode);
         Assert.Equal("delegated\n", Encoding.UTF8.GetString(result.StandardOutput));
+        Assert.Equal("1\n", File.ReadAllText(nodeReuse));
         Assert.Empty(result.StandardError);
         var canonicalRoot = TestProcessRunner.Run(
             "/bin/pwd",
