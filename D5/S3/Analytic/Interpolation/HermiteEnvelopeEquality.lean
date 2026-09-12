@@ -279,4 +279,138 @@ theorem hermite_envelope_equality {k : ℕ} (hk : 2 ≤ k) (x : Fin k → ℝ)
 
 #print axioms hermite_envelope_equality
 
+private theorem zero_variance_coordinates {k : ℕ} (x : Fin k → ℝ) (μ : ℝ)
+    (hV : ∑ i, (x i - μ) ^ 2 = 0) : ∀ i, x i = μ := by
+  intro i
+  have hsq := (Finset.sum_eq_zero_iff_of_nonneg
+    (fun j (_ : j ∈ Finset.univ) => sq_nonneg (x j - μ))).mp hV i (Finset.mem_univ i)
+  exact sub_eq_zero.mp (sq_eq_zero_iff.mp hsq)
+
+/-- Zero total squared deviation means all coordinates and both nodes are the mean,
+and the logarithmic bound is an equality. -/
+theorem hermite_envelope_zero_variance {k : ℕ} (x : Fin k → ℝ) :
+    let μ := (∑ i, x i) / (k : ℝ)
+    let V := ∑ i, (x i - μ)^2
+    let r := Real.sqrt (V / ((k : ℝ) * ((k : ℝ) - 1)))
+    let L := μ - r
+    let H := μ + ((k : ℝ) - 1) * r
+    V = 0 → (∀ i, x i = μ) ∧ L = μ ∧ H = μ ∧
+      ∑ i, Real.log (1 - Real.exp (-x i)) =
+        Real.log (1 - Real.exp (-H)) + ((k : ℝ) - 1) * Real.log (1 - Real.exp (-L)) := by
+  let μ := (∑ i, x i) / (k : ℝ)
+  let V := ∑ i, (x i - μ)^2
+  let r := Real.sqrt (V / ((k : ℝ) * ((k : ℝ) - 1)))
+  let L := μ - r
+  let H := μ + ((k : ℝ) - 1) * r
+  let f := fun t : ℝ => Real.log (1 - Real.exp (-t))
+  change V = 0 → (∀ i, x i = μ) ∧ L = μ ∧ H = μ ∧
+    ∑ i, f (x i) = f H + ((k : ℝ) - 1) * f L
+  intro hV
+  have heq := zero_variance_coordinates x μ hV
+  have hL : L = μ := by simp [L, r, hV]
+  have hH : H = μ := by simp [H, r, hV]
+  refine ⟨heq, hL, hH, ?_⟩
+  rw [hL, hH]
+  calc
+    _ = ∑ _ : Fin k, f μ := Finset.sum_congr rfl (fun i _ => congrArg f (heq i))
+    _ = _ := by
+      simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+      ring
+
+private theorem sum_one_distinguished {k : ℕ} (j : Fin k) (a b : ℝ) (F : ℝ → ℝ) :
+    ∑ i, F (if i = j then a else b) = F a + ((k : ℝ) - 1) * F b := by
+  classical
+  have h (i : Fin k) : F (if i = j then a else b) =
+      F b + (if i = j then F a - F b else 0) := by
+    split_ifs <;> ring
+  simp_rw [h]
+  rw [Finset.sum_add_distrib]
+  simp
+  ring
+
+/-- Every feasible pair of mean and total squared deviation is attained by a positive
+vector with one upper node and all other coordinates at the lower node; its bound is exact. -/
+theorem hermite_envelope_sharpness {k : ℕ} (hk : 2 ≤ k) (μ V : ℝ)
+    (hμ : 0 < μ) (hV : 0 ≤ V) (hbound : V < (k : ℝ) * ((k : ℝ) - 1) * μ^2) :
+    let r := Real.sqrt (V / ((k : ℝ) * ((k : ℝ) - 1)))
+    let L := μ - r
+    let H := μ + ((k : ℝ) - 1) * r
+    ∃ x : Fin k → ℝ,
+      (∀ i, 0 < x i) ∧ (∑ i, x i = (k : ℝ) * μ) ∧
+      (∑ i, (x i - μ)^2 = V) ∧ (∑ i, (x i)^2 = (k : ℝ) * μ^2 + V) ∧
+      (∑ i, Real.log (1 - Real.exp (-x i)) =
+        Real.log (1 - Real.exp (-H)) + ((k : ℝ) - 1) * Real.log (1 - Real.exp (-L))) ∧
+      ∃ j, x j = H ∧ ∀ i, i ≠ j → x i = L := by
+  classical
+  let r := Real.sqrt (V / ((k : ℝ) * ((k : ℝ) - 1)))
+  let L := μ - r
+  let H := μ + ((k : ℝ) - 1) * r
+  change ∃ x : Fin k → ℝ, (∀ i, 0 < x i) ∧ (∑ i, x i = (k : ℝ) * μ) ∧
+    (∑ i, (x i - μ)^2 = V) ∧ (∑ i, (x i)^2 = (k : ℝ) * μ^2 + V) ∧
+    (∑ i, Real.log (1 - Real.exp (-x i)) =
+      Real.log (1 - Real.exp (-H)) + ((k : ℝ) - 1) * Real.log (1 - Real.exp (-L))) ∧ _
+  have hkR : (2 : ℝ) ≤ k := by exact_mod_cast hk
+  have hkpos : (0 : ℝ) < k := by linarith
+  have hden : (0 : ℝ) < (k : ℝ) * ((k : ℝ) - 1) := mul_pos hkpos (by linarith)
+  have hr0 : 0 ≤ r := Real.sqrt_nonneg _
+  have hrμ : r < μ := (Real.sqrt_lt' hμ).mpr ((div_lt_iff₀ hden).mpr (by nlinarith))
+  have hVr : V = (k : ℝ) * ((k : ℝ) - 1) * r^2 := by
+    rw [Real.sq_sqrt (div_nonneg hV hden.le)]
+    field_simp [ne_of_gt hkpos, ne_of_gt (by linarith : (0 : ℝ) < (k : ℝ) - 1)]
+  let j : Fin k := ⟨0, by omega⟩
+  let x : Fin k → ℝ := fun i => if i = j then H else L
+  have hx : ∀ i, 0 < x i := by
+    intro i
+    dsimp [x, H, L]
+    split_ifs
+    · nlinarith
+    · linarith
+  have hsum : ∑ i, x i = (k : ℝ) * μ := by
+    have hs := sum_one_distinguished j H L id
+    change ∑ i, x i = H + ((k : ℝ) - 1) * L at hs
+    rw [hs]
+    dsimp [H, L]
+    ring
+  have hvar : ∑ i, (x i - μ)^2 = V := by
+    have hs := sum_one_distinguished j H L (fun t => (t - μ)^2)
+    change ∑ i, (x i - μ)^2 = (H - μ)^2 + ((k : ℝ) - 1) * (L - μ)^2 at hs
+    rw [hs, hVr]
+    dsimp [H, L]
+    ring
+  have hsecond : ∑ i, (x i)^2 = (k : ℝ) * μ^2 + V := by
+    have hs := sum_one_distinguished j H L (fun t => t^2)
+    change ∑ i, (x i)^2 = H^2 + ((k : ℝ) - 1) * L^2 at hs
+    rw [hs, hVr]
+    dsimp [H, L]
+    ring
+  have hmean : (∑ i, x i) / (k : ℝ) = μ := by rw [hsum]; field_simp
+  have hnodes (i : Fin k) : x i = L ∨ x i = H := by
+    dsimp [x]
+    split_ifs <;> simp
+  have hequality : ∑ i, Real.log (1 - Real.exp (-x i)) =
+      Real.log (1 - Real.exp (-H)) + ((k : ℝ) - 1) * Real.log (1 - Real.exp (-L)) := by
+    by_cases hVz : V = 0
+    · have hz := hermite_envelope_zero_variance x
+      dsimp only at hz
+      rw [hmean, hvar] at hz
+      exact (hz hVz).2.2.2
+    · have hc := hermite_envelope_equality hk x hx
+      dsimp only at hc
+      rw [hmean, hvar] at hc
+      exact ((hc (lt_of_le_of_ne hV (Ne.symm hVz))).1).mpr hnodes
+  refine ⟨x, hx, hsum, hvar, hsecond, hequality, j, ?_, ?_⟩
+  · simp [x, H, r]
+  · intro i hi
+    simp [x, hi, L, r]
+
+-- Positive-variance hypotheses have a concrete inhabitant.
+example : ∃ x : Fin 2 → ℝ, (∀ i, 0 < x i) ∧
+    0 < ∑ i, (x i - (∑ j, x j) / (2 : ℝ))^2 := by
+  refine ⟨![1, 3], ?_, ?_⟩
+  · intro i; fin_cases i <;> norm_num
+  · norm_num [Fin.sum_univ_two]
+
+#print axioms hermite_envelope_zero_variance
+#print axioms hermite_envelope_sharpness
+
 end D5.S3.Analytic.Interpolation.HermiteEnvelopeEquality
