@@ -6,12 +6,15 @@ namespace StrataLint.Tests;
 
 public sealed partial class LeanInspectorScriptTests
 {
-    [Fact]
-    public void DeclaredRuntimeMaterialChangesIdentityWithoutDependencyDiscovery()
+    [Theory]
+    [InlineData("Declared.olean")]
+    [InlineData("libleanshared.so")]
+    [InlineData("libleanshared.dylib")]
+    public void DeclaredRuntimeMaterialChangesIdentityWithoutDependencyDiscovery(string material)
     {
         using var fixture = new RuntimeFixture();
         var before = fixture.Identity();
-        fixture.Write("runtime/lib/lean/Declared.olean", "declared runtime v2");
+        fixture.Write("runtime/lib/lean/" + material, "declared runtime v2");
         Assert.NotEqual(before, fixture.Identity());
         Assert.DoesNotContain("--deps", fixture.Commands, StringComparison.Ordinal);
     }
@@ -26,6 +29,26 @@ public sealed partial class LeanInspectorScriptTests
         fixture.Write("runtime/lib/lean/Undeclared.olean", "not registered");
         fixture.Write("runtime/lib/lean/Undeclared.ilean", "{\"directImports\":[]}");
         Assert.Equal(before, fixture.Identity());
+    }
+
+    [Fact]
+    public void UnregisteredInterpreterMetadataDoesNotChangeRuntimeIdentity()
+    {
+        using var fixture = new RuntimeFixture();
+        Assert.Equal(fixture.Identity("3.11.1"), fixture.Identity("3.12.2"));
+    }
+
+    [Fact]
+    public void RegisteredPythonExecutableIsHashedAndRequired()
+    {
+        using var fixture = new RuntimeFixture();
+        var before = fixture.Identity("3.11.1");
+        fixture.Write("runtime/python", "python executable v2");
+        Assert.NotEqual(before, fixture.Identity("3.11.1"));
+        File.Delete(Path.Combine(fixture.Root, "runtime/python"));
+        var missing = fixture.Runtime("3.11.1");
+        Assert.Equal(2, missing.ExitCode);
+        Assert.Contains("required runtime.python executable is absent", Encoding.UTF8.GetString(missing.StandardError), StringComparison.Ordinal);
     }
 
     [Theory]
@@ -111,6 +134,7 @@ public sealed partial class LeanInspectorScriptTests
                 File.SetUnixFileMode(Lake, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
             foreach (var path in new[] { "Init.olean", "Declared.olean", "libleanshared.so" }) Write("runtime/lib/lean/" + path, "runtime-v1");
             Write("runtime/lib/lean/Init.ilean", "{\"directImports\":[]}");
+            Write("runtime/python", "python executable v1");
             Edit(manifest => manifest["runtime"] = JsonNode.Parse("""
                 {"lean":["bin/lean","lib/lean/Init.olean","lib/lean/Declared.olean","lib/lean/libleanshared.*"],"python":["executable"]}
                 """));
@@ -123,11 +147,23 @@ public sealed partial class LeanInspectorScriptTests
             change(manifest);
             Write(Registration, manifest.ToJsonString());
         }
-        internal ProcessOutput Runtime() => Run("python3", [Path.Combine(Root, "tools/lean-inspector/runtime_identity.py"),
-            "--repository", Root, "--lake", Lake], Root);
-        internal string Identity()
+        internal ProcessOutput Runtime(string? pythonVersion = null)
         {
-            var result = Runtime();
+            var script = Path.Combine(Root, "tools/lean-inspector/runtime_identity.py");
+            // Inject interpreter inputs, then execute the unchanged production script.
+            string[] arguments = pythonVersion is null ? [script] : ["-c", """
+                import platform, runpy, sys
+                version, sys.executable = sys.argv[1:3]
+                sys.version = version + " (fixture, Jan 01 2000, 00:00:00) [Fixture]"
+                assert platform.python_version() == version
+                sys.argv = sys.argv[3:]
+                runpy.run_path(sys.argv[0], run_name="__main__")
+                """, pythonVersion, Path.Combine(Root, "runtime/python"), script];
+            return Run("python3", arguments.Concat(["--repository", Root, "--lake", Lake]).ToArray(), Root);
+        }
+        internal string Identity(string? pythonVersion = null)
+        {
+            var result = Runtime(pythonVersion);
             Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
             return Encoding.UTF8.GetString(result.StandardOutput).Trim();
         }
