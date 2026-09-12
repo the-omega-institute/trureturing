@@ -168,7 +168,7 @@ example : Environment → Name → Expr → CoreM (Bool × Option (Array String)
 run_cmd Elab.Command.liftCoreM do
   let env ← getEnv
   let some targetInfo := env.find? ``target | throwError "target missing"
-  let some proof := targetInfo.value? | throwError "target proof missing"
+  let some proof := targetInfo.value? (allowOpaque := true) | throwError "target proof missing"
   let some (.defnInfo templateInfo) := env.find? ``template | throwError "template missing"
   for original in #[``binderRead, ``ctorRead] do
     let some info := env.find? original | throwError "original fixture missing"
