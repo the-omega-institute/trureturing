@@ -36,7 +36,7 @@ check_provenance "AppliedDecidableFinite" using genericDecision expects "unclass
 def computedKey : Name := Name.str (Name.mkSimple "RegistrationProvenance") "truth"
 example : computedKey = ``truth := rfl
 def computedCert : Certificate computedKey := ⟨true⟩
-def computedRead (_ : Unit) (x : Bool) : Bool := if computedCert.bit then x else true
+def computedRead (_ : Unit) (x : Bool) : Bool := cond computedCert.bit x true
 check_provenance "ComputedName" using computedRead expects "clean" for truth
 run_cmd Elab.Command.liftTermElabM do
   let info ← getConstInfo ``specificTruth
@@ -156,6 +156,6 @@ run_cmd Elab.Command.liftTermElabM do
     name := `RegistrationProvenance.proofBudgetTruth, levelParams := [],
     type := mkConst ``True, value := mkConst (`RegistrationProvenance.proofChain |>.num 4099) }
 def proofBudgetRead (_ : Unit) (x : Bool) : Bool := let _ := proofBudgetTruth; x
-check_provenance "ProofScanExhaustion" using proofBudgetRead expects "forbidden_dependency" for proofBudgetTruth
+check_provenance "ProofScanExhaustion" using proofBudgetRead expects "incomplete_closure" for specificTruth
 
 end RegistrationProvenance

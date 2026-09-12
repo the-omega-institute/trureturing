@@ -27,7 +27,7 @@ check_provenance "DependentProjectionDecision" using projectedDecision expects "
 
 def owner (s : String) : Name := .str (.str .anonymous "RegistrationProvenance") s
 def ownerCertificate : Certificate (owner "specificTruth") := ⟨true⟩
-def ownerRead (_ : Unit) (x : Bool) : Bool := if ownerCertificate.bit then x else true
+def ownerRead (_ : Unit) (x : Bool) : Bool := cond ownerCertificate.bit x true
 -- A user record with Bool data reaches no judge API, generated record, or theorem.
 check_provenance "ComputedOwnerCertificate" using ownerRead expects "clean" for specificTruth
 run_cmd Elab.Command.liftTermElabM do
