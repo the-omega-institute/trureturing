@@ -357,6 +357,90 @@ theorem two_point_grid_dominance (c d : Fin 2 → ℝ) (M₀ M₁ : ℝ)
     rw [grid_dual_swap] at hs
     simpa [varianceFloor, Fin.sum_univ_two, add_comm] using hs
 
+theorem closed_row_bound_strict {c d t u M₀ M₁ θ : ℝ}
+    (hc : 0 < c) (hcd : c < d) (ht : 0 < t) (hM : M₀ < M₁)
+    (htwo : {p : ℝ × ℝ | (p.1 = c ∨ p.1 = d) ∧ (p.2 = t ∨ p.2 = u) ∧
+      M₀ ≤ p.1 + p.2 ∧ p.1 + p.2 ≤ M₁}.Nontrivial)
+    (hθ : θ ∈ Icc 0 1) (hbudget : (1 - θ) * c + θ * d + t = M₁)
+    (hdiag : ¬((M₁ / 2 = c ∨ M₁ / 2 = d) ∧ (M₁ / 2 = t ∨ M₁ / 2 = u))) :
+    (1 - θ) * logValue c + θ * logValue d + logValue t <
+      psiTwo (M₁ / 2) (gridDistance (M₀ / 2) (M₁ / 2) c d ^ 2 +
+        gridDistance (M₀ / 2) (M₁ / 2) t u ^ 2) := by
+  rcases hθ.1.eq_or_lt with hzero | hpos
+  · have hz : θ = 0 := hzero.symm
+    simp only [hz, sub_zero, one_mul, zero_mul, add_zero] at hbudget ⊢
+    apply actual_pair_bound_strict (Or.inl (Eq.refl c)) (Or.inl (Eq.refl t)) hc ht hM
+      (by linarith) hbudget.le
+    rintro ⟨h1, h2⟩
+    exact hdiag ⟨Or.inl h1.symm, Or.inl h2.symm⟩
+  rcases hθ.2.eq_or_lt with hone | hlt
+  · simp only [hone, sub_self, zero_mul, one_mul, zero_add] at hbudget ⊢
+    apply actual_pair_bound_strict (Or.inr (Eq.refl d)) (Or.inl (Eq.refl t)) (hc.trans hcd) ht hM
+      (by linarith) hbudget.le
+    rintro ⟨h1, h2⟩
+    exact hdiag ⟨Or.inr h1.symm, Or.inl h2.symm⟩
+  exact fractional_row_bound_strict hc hcd ht hM htwo ⟨hpos, hlt⟩ hbudget
+
+theorem ordered_fill_bound_strict {c d t u M₀ M₁ : ℝ}
+    (hc : 0 < c) (hcd : c < d) (ht : 0 < t) (htu : t < u) (hM : M₀ < M₁)
+    (hbase : c + t ≤ M₁)
+    (htwo : {p : ℝ × ℝ | (p.1 = c ∨ p.1 = d) ∧ (p.2 = t ∨ p.2 = u) ∧
+      M₀ ≤ p.1 + p.2 ∧ p.1 + p.2 ≤ M₁}.Nontrivial)
+    (hdiag : ¬((M₁ / 2 = c ∨ M₁ / 2 = d) ∧ (M₁ / 2 = t ∨ M₁ / 2 = u))) :
+    logValue c + logValue t + Knapsack.FractionalKnapsackDual.objective
+      ![logValue d - logValue c, logValue u - logValue t]
+      (Knapsack.FractionalKnapsackDual.greedyFill ![d - c, u - t] [0, 1]
+        (M₁ - c - t)) < psiTwo (M₁ / 2)
+          (gridDistance (M₀ / 2) (M₁ / 2) c d ^ 2 +
+            gridDistance (M₀ / 2) (M₁ / 2) t u ^ 2) := by
+  have hswap : {p : ℝ × ℝ | (p.1 = t ∨ p.1 = u) ∧ (p.2 = d ∨ p.2 = c) ∧
+      M₀ ≤ p.1 + p.2 ∧ p.1 + p.2 ≤ M₁}.Nontrivial := by
+    obtain ⟨⟨x, y⟩, hx, ⟨z, w⟩, hz, hne⟩ := htwo
+    refine ⟨(y, x), ?_, (w, z), ?_, ?_⟩
+    · exact ⟨hx.2.1, hx.1.symm, by linarith [hx.2.2.1], by linarith [hx.2.2.2]⟩
+    · exact ⟨hz.2.1, hz.1.symm, by linarith [hz.2.2.1], by linarith [hz.2.2.2]⟩
+    · intro he
+      apply hne
+      have hp := Prod.mk.inj he
+      exact Prod.ext hp.2 hp.1
+  rw [objective_greedyFill_pair _ _ 0 1 (by decide)]
+  simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_fin_one]
+  by_cases hfirst : d - c ≤ M₁ - c - t
+  · by_cases hsecond : u - t ≤ M₁ - c - t - (d - c)
+    · obtain ⟨⟨x, y⟩, hx, _, _, _⟩ := htwo
+      have hxle : x ≤ d := hx.1.elim (fun h => h.le.trans hcd.le) (fun h => h.le)
+      have hyle : y ≤ u := hx.2.1.elim (fun h => h.le.trans htu.le) (fun h => h.le)
+      have hh := actual_pair_bound_strict (c := c) (d := d) (t := t) (u := u)
+        (Or.inr (Eq.refl d)) (Or.inr (Eq.refl u))
+        (hc.trans hcd) (ht.trans htu) (M₀ := M₀) (M₁ := M₁) hM
+        (by linarith [hx.2.2.1]) (by linarith)
+        (by rintro ⟨hd, hu⟩; exact hdiag ⟨Or.inr hd.symm, Or.inr hu.symm⟩)
+      convert hh using 1 <;>
+        simp only [if_pos hfirst, if_pos hsecond] <;> ring
+    · have hθ : (M₁ - c - t - (d - c)) / (u - t) ∈ Icc (0 : ℝ) 1 := by
+        exact ⟨div_nonneg (by linarith) (sub_pos.mpr htu).le,
+          (div_le_one (sub_pos.mpr htu)).mpr (by linarith)⟩
+      have hb : (1 - (M₁ - c - t - (d - c)) / (u - t)) * t +
+          (M₁ - c - t - (d - c)) / (u - t) * u + d = M₁ := by
+        field_simp [sub_ne_zero.mpr htu.ne']
+        <;> ring
+      have hh := closed_row_bound_strict ht htu (hc.trans hcd) hM hswap hθ hb
+        (by rintro ⟨ht, hc⟩; exact hdiag ⟨hc.symm, ht⟩)
+      have hdist : gridDistance (M₀ / 2) (M₁ / 2) d c =
+          gridDistance (M₀ / 2) (M₁ / 2) c d := min_comm _ _
+      rw [hdist, add_comm (_ ^ 2) (_ ^ 2)] at hh
+      convert hh using 1 <;>
+        simp only [if_pos hfirst, if_neg hsecond] <;> ring
+  · have hθ : (M₁ - c - t) / (d - c) ∈ Icc (0 : ℝ) 1 := by
+      exact ⟨div_nonneg (by linarith) (sub_pos.mpr hcd).le,
+        (div_le_one (sub_pos.mpr hcd)).mpr (by linarith)⟩
+    have hb : (1 - (M₁ - c - t) / (d - c)) * c + (M₁ - c - t) / (d - c) * d + t = M₁ := by
+      field_simp [sub_ne_zero.mpr hcd.ne']
+      <;> ring
+    have hh := closed_row_bound_strict hc hcd ht hM htwo hθ hb hdiag
+    convert hh using 1 <;>
+      simp only [if_neg hfirst] <;> ring
+
 #print axioms psiTwo_strictMono_mean
 #print axioms pair_value_spread_strict
 #print axioms fractional_row_bound_strict
@@ -372,5 +456,9 @@ theorem two_point_grid_dominance (c d : Fin 2 → ℝ) (M₀ M₁ : ℝ)
 #print axioms grid_dual_swap
 
 #print axioms two_point_grid_dominance
+
+#print axioms closed_row_bound_strict
+
+#print axioms ordered_fill_bound_strict
 
 end D5.S3.Analytic.Interpolation.TwoPointGridDominanceFinal
