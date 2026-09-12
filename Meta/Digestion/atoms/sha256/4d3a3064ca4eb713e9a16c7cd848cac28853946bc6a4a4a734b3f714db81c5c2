@@ -1,0 +1,36 @@
+**定理 85（两尾累积、延迟乘积与固定因子）。** 取空间卷积环 \(R=\mathbb Z^{(\mathbb Z^3)}\)、联合有限支撑群 \(\mathcal L=R^{(\mathbb Z)}\)。令 \(\mathcal A(R)\) 为全部序列 \(C:\mathbb Z\to R\)，满足充分左侧为零、充分右侧为常值。则
+\[
+\mathsf P:\mathcal L\simeq\mathcal A(R),\quad
+(\mathsf Pc)_n=\sum_{t\le n}c_t,\qquad
+(\mathsf P^{-1}C)_n=C_n-C_{n-1}.
+\tag{Z-CUM}
+\]
+对时间取 \(\max+1\) 的 \(c\odot d\)，若 \(C=\mathsf Pc,D=\mathsf Pd\)，有
+\[
+\mathsf P(c\odot d)_n=C_{n-1}*D_{n-1},\qquad
+(c\odot d)_n=c_{n-1}*D_{n-1}+C_{n-2}*d_{n-1}.
+\tag{Z-DELAY}
+\]
+令 \(\diamond\) 改用时间 \(\max\)，\(\alpha=\tau_1\)，则 \(\diamond\) 结合、交换，且
+\[
+c\odot d=\alpha(c\diamond d),\quad
+(c\odot d)\odot\alpha(e)=\alpha(c)\odot(d\odot e),\quad
+\alpha(c\odot d)=\alpha(c)\odot\alpha(d).
+\]
+固定 \(d\)，算子 \(T_d(c)=c\odot d\) 的核与像准确为
+\[
+\begin{aligned}
+c\in\ker T_d&\iff\forall n\ (D_n\ne0\Rightarrow C_n=0),\\
+h\in\operatorname{im}T_d&\iff
+\forall n\quad
+\begin{cases}H_{n+1}=0,&D_n=0,\\H_{n+1}\in D_nR,&D_n\ne0,\end{cases}\qquad H=\mathsf Ph.
+\end{aligned}
+\tag{Z-FACTOR}
+\]
+所有解在 \(D_n\ne0\) 处取唯一商 \(H_{n+1}/D_n\)，在 \(D_n=0\) 处任取 \(R\) 值，但整条 \(C\) 必须属于 \(\mathcal A(R)\)。在 \(\mathcal L_{\ge a}=\{c:c_n=0\ (n<a)\}\) 上，\(T_d\) 单射恰当且仅当 \(D_n\ne0\) 对全部 \(n\ge a\) 成立；在整个 \(\mathcal L\) 上每个 \(T_d\) 均非单射。上述图、域、核、像及恒等式全与定义 80 的共轭交换。 特别地，
+\[
+\mathsf P^*(\operatorname{Enc}(c))=\operatorname{Enc}(\mathsf Pc),\qquad
+(\mathsf P^{-1})^*(\operatorname{Enc}(C))=\operatorname{Enc}((C_n-C_{n-1})_n),
+\]
+且第二式的定义域准确为 \(\operatorname{Enc}[\mathcal A(R)]\)。
+

@@ -7,6 +7,10 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.ZetaBridge;
 internal sealed class FermiMellinDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Weil/ZetaBridge/FermiMellin.";
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/Weil/gonzalez2026equivalence");
+    private static readonly LibraryNoteRef Transplant =
+        LibraryNoteRef.Create("D5/L/Weil/sanftenberg2026fermi");
     private static Formula R => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula C => Seq(Mathbb, Grp(F.Id("C")));
     private static Formula X => F.Id("x");
@@ -16,47 +20,76 @@ internal sealed class FermiMellinDocument : IScribeDocumentDefinition
         "The Fermi Mellin integral on the positive half-plane and the Salem RH criterion.",
         H("Fermi Mellin Integral"),
         Blocks(
+            Paragraph(Text("Statement provenance is assessed separately below. The modified "
+                + "dbsanfte/RiemannGaussian proof slice, copyright, license, and exact "
+                + "implementation scope are acknowledged in "),
+                Ref("D5/L/Weil/sanftenberg2026fermi"), Text(".")),
             Theorem("fermi_mellin_integrable", "Positive-scale integrability",
                 Domain(Integrable(X, S)),
+                AssessedProvenance.FromLiterature(Source),
                 "The exponentially dominated finite-prefix kernel gives convergence for every "
-                    + "positive scale and every complex exponent with positive real part."),
+                    + "positive scale and every complex exponent with positive real part. "
+                    + "This is the absolute-convergence content of the cited equation (1); "
+                    + "the source note explains the complex integrability correspondence."),
             Theorem("fermi_mellin_eq_of_ne_one", "Value away from one",
                 Domain(Implies(Ne(S, D(1)), Equal(Integral(X, S), Product(X, S)))),
+                AssessedProvenance.FromLiterature(Source),
                 "The paired finite integrals meet the public frozen natural alternating-sum "
-                    + "limit. Positive scaling preserves the entire domain, including real part one."),
+                    + "limit. Positive scaling preserves the entire domain, including real part one. "
+                    + "Equation (1) is printed with eta, not the zeta product. The source note "
+                    + "details the classical factorization and its continuation off one; the "
+                    + "paper's xi denotes zeta, not the repository's xiReading."),
             Theorem("fermi_mellin_product_tendsto_one", "Removable product limit",
                 PositiveScale(Equal(
                     Seq(Lim, Underscore, Grp(S, InMacro, C, Comma, Sp,
                         S, To, D(1), Comma, Sp, S, Neq, D(1)),
                         Sp, Product(X, S)), Endpoint(X))),
+                AssessedProvenance.FromRepo(Source, Transplant),
                 "The dyadic derivative quotient cancels the zeta residue. Gamma and scale "
-                    + "are continuous at one; equality of the products is used only off one."),
+                    + "are continuous at one; equality of the products is used only off one. "
+                    + "The cited sources do not state this punctured complex limit; it is a "
+                    + "repository derivation from the zeta residue and the dyadic derivative."),
             Theorem("fermi_mellin_at_one", "Actual integral at one",
                 PositiveScale(Equal(Integral(X, D(1)), Endpoint(X))),
+                AssessedProvenance.FromRepo(Source, Transplant),
                 "Exponential decay and boundedness at zero make the actual Mellin transform "
-                    + "continuous at one. Its value is identified by the punctured product limit."),
+                    + "continuous at one. Its value is identified by the punctured product limit. "
+                    + "No explicit log-two endpoint evaluation is supplied by the cited passages; "
+                    + "this classification records the repository derivation, not a novelty claim."),
             Theorem("fermi_mellin_identity", "Full-domain identity",
                 Domain(And(Integrable(X, S), Equal(Integral(X, S),
                     Call("ite", Equal(S, D(1)), Endpoint(X), Product(X, S))))),
+                AssessedProvenance.FromRepo(Source, Transplant),
                 "The endpoint branch is a proved integral value. The raw totalized "
-                    + "Gamma-dyadic-zeta product at one is not substituted for that value."),
+                    + "Gamma-dyadic-zeta product at one is not substituted for that value. "
+                    + "This conjunction and explicit endpoint branch are repository packaging "
+                    + "of the classical identity with the separately proved endpoint."),
             Theorem("fermi_mellin_nonzero_iff_zeta_nonzero", "Pointwise strip nonvanishing",
                 All("s", C, Implies(Strip(S), Equivalent(
                     Ne(Integral(D(1), S), D(0)), Ne(Call("riemannZeta", S), D(0))))),
+                AssessedProvenance.FromLiterature(Source),
                 "Gamma has no zero for positive real part. The dyadic factor can vanish "
-                    + "only at real part one, outside this open strip."),
+                    + "only at real part one, outside this open strip. The cited proof states "
+                    + "the zero equivalence on the larger open critical strip. Its positive "
+                    + "scale factor is nonzero, so the scale-one nonvanishing form is equivalent."),
             Theorem("salem_mellin_nonvanishing_iff_rh", "Salem criterion iff RH",
                 Criterion(),
+                AssessedProvenance.FromLiterature(Source),
                 "Both implications use the actual complex integral. All real imaginary "
                     + "coordinates are quantified. The integral criterion implies the standard "
-                    + "Riemann hypothesis by the frozen right-half-strip reduction."))));
+                    + "Riemann hypothesis by the frozen right-half-strip reduction. The source "
+                    + "quantifies every delta strictly between one-half and one and every real "
+                    + "gamma. Positive scaling makes its absence of a power solution for all "
+                    + "positive scales equivalent to this scale-one criterion; it is not the "
+                    + "separate bounded-measurable uniqueness theorem."))));
 
     private static DocumentBlock.Describe Theorem(
-        string name, string title, Formula formula, string narrative) => Describe.Lean(
+        string name, string title, Formula formula, AssessedProvenance provenance,
+        string narrative) => Describe.Lean(
         DescribeId.Create(name.Replace('_', '-')),
         DeclarationHandle.Create(Prefix + name), H(title),
         StatementSource.FromAuthor(Disp(formula)),
-        AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Weil/sanftenberg2026fermi")),
+        provenance,
         Blocks(Paragraph(Text(narrative))), DescribeRole.Theorem);
 
     private static Formula Criterion()

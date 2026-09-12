@@ -1,0 +1,20 @@
+**35.16 Proposition (Monotone exponents, strict integer order and exact logarithmic size).**
+Each floor \(m_i(n)\) is nondecreasing in \(n\), and \(m_0(n)=n\) increases
+strictly. For any \(n'>n\ge n_0\), even without a return assumption,
+\[
+\frac{N_{n'}}{N_n}
+=p_0^{n'-n}\prod_{i=1}^d p_i^{m_i(n')-m_i(n)}
+\ge p_0^{n'-n}>1.
+\]
+Thus \(N_n\) is strictly increasing on the entire valid tail and on its
+\(B_Q\) subsequence. Index counts therefore count distinct integers.
+Distinct coordinates \(c_i,c_j\) cannot be exactly equal on that tail:
+equality would imply \(p_i^{m_i}=p_j^{m_j}\) with positive exponents,
+contrary to unique factorization. Near balance is not exact equal height.
+For every selected valid index, 35.15 gives
+\[
+\boxed{\log N_n=A_n-S_h=knh_0-S_h+R_n,\qquad |R_n|<E_Q.}
+\]
+In particular the error \(O((\sum_{i>0}h_i)/Q)\) has absolute
+implied constant 1, uniformly in these indices at the fixed parameters.
+

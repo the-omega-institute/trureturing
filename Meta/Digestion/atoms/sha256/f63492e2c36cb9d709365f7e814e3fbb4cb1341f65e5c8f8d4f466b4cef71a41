@@ -1,0 +1,39 @@
+**30.79 定理及证明（强制常数替换后的完整局部界）。** Fix a mode
+\(s\in\{0,1,2\}\) and put \(\kappa=\kappa_N^{(s)}\). Since \(F,y\) are real and
+\(F\succeq\kappa I\), the projection optimizer is uniquely \(a^\circ=F^{-1}y\in\mathbb R^N\).
+For complex \(a=b+ic\), \(R_N(a)=R_N(b)+\|Vc\|^2\), so it remains the optimizer of the
+original complex problem. Coercivity and Cauchy–Schwarz give
+\(\kappa\|z\|^2\le\langle z,Fz\rangle\le\|z\|\|Fz\|\), hence
+\(\|F^{-1}\|\le1/\kappa\). For real rational \(q\), expansion therefore gives
+\[
+v=Fq-y=\tfrac12\nabla R_N(q),\qquad
+R_N(q)-D_N=v^TF^{-1}v\le\|v\|^2/\kappa,
+\quad v_k=\frac{R_N(q+e_k)-R_N(q-e_k)}4.
+\]
+The last identity follows again from
+\(R_N(q+te_k)=R_N(q)+2t v_k+t^2F_{kk}\), and so does not depend on the chosen constant.
+Retain precisely \(B,E\) of 30.56, including \(b^2\), both tails and the signed logarithm
+endpoint rule. For coefficient absolute sum at most \(Q\),
+\[
+E(N,x,h+1,h)\le\frac{(1+Q)^2}{h+1}
+ +\frac{3Q(1+Q)}{8\,9^{h-1}}\le\frac{\Gamma(Q)}h.
+\]
+The integer induction \(9^{h-1}\ge h\) and the explicit choice
+\(h=1+\lfloor\Gamma(Q)/\varepsilon\rfloor\) prove \(E<\varepsilon\).
+For the one candidate and its derived offsets, recompute every \(B_i,E_i\) and set
+\[
+l_k=(B_{2k-1}-E_{2k-1}-B_{2k})/4,\quad
+u_k=(B_{2k-1}-B_{2k}+E_{2k})/4,\quad
+S_q=\sum_k\max(|l_k|,|u_k|)^2.
+\]
+Subtracting the appropriate upper and lower residual bounds gives
+\(l_k\le v_k\le u_k\), hence \(\|v\|^2\le S_q\). Thus
+\[
+\ell=\max(\sigma_N,B_0-E_0-S_q/\kappa),\qquad u=\min(1,B_0)
+\]
+satisfies \(0<\ell\le D_N\le u\le1\) and \(u-\ell\le E_0+S_q/\kappa\).
+The lower proof is \(D_N\ge R_N(q)-\|v\|^2/\kappa\ge B_0-E_0-S_q/\kappa\), together
+with the unchanged periodic bound \(\sigma_N\). The upper proof uses \(R_N(q)\le B_0\)
+and \(R_N(0)=1\). Every rational candidate, including negative or zero coefficients, and every
+legal truncation has this soundness; a bad candidate can still fail a required width.
+

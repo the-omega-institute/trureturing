@@ -1,0 +1,29 @@
+**定理 204（终端商的非平凡时间盲核）。** 若 \(P\ne\varnothing\)，取 \(p\in P\) 及整数 \(t_0<t_1\)，定义 \(c\in\mathsf J_P\) 为
+\[
+c(t,p')=
+\begin{cases}
+1,&(t,p')=(t_0,p),\\
+-1,&(t,p')=(t_1,p),\\
+0,&\text{其他}.
+\end{cases}
+\]
+则 \(c\ne0\)、\(\Sigma_P(c)=0\)，但
+\[
+\mathsf I_P(c)(T,p)=1
+\quad(t_0\le T<t_1).
+\]
+存在 \(X,Y\in\mathcal C_P^{\rm pb}\) 使
+\[
+\Theta_P^{\rm pf}([X])=c,
+\qquad
+\Theta_P^{\rm pf}([Y])=0,
+\]
+从而
+\[
+[X]_{\equiv_P}=[Y]_{\equiv_P},
+\qquad
+[X]_{\equiv_P^{\rm pf}}\ne[Y]_{\equiv_P^{\rm pf}}.
+\tag{Z-TEMPORAL-BLIND-KERNEL}
+\]
+因此任何只依赖终端逐槽观察的量都不能恢复该时间循环或其非零前缀。
+

@@ -1,0 +1,36 @@
+### 38.3 一个具体 Lean 消费者
+
+新增：
+
+```text
+D5/S3/Quantum/Tomography/RealXFinitePartnerCertificate.lean
+Blueprint/D5/S3/Quantum/Tomography/RealXFinitePartnerCertificate.scribe.cs
+```
+
+O、B 各由六十个自然数 bit masks 定义。六十行颜色用 base-five 自然数无损存储；颜色解码是 `(code / 5^i) % 5`。没有采样状态、未列出顶点或外部搜索结果进入证明假设。
+
+两个公开关系是 `realXOrthogonalityCandidate` 和 `realXUnbiasednessCandidate`。唯一公共结论是：
+
+```text
+realX_six_frame_has_cross_error_to_any_covered_point
+```
+
+内部 `partner_colors_separate` 使用 `decide +kernel` 对字面数据证明：
+
+```math
+\forall l,i,j,\quad
+B(i,l)\land B(j,l)\land O(i,j)
+\Longrightarrow\operatorname{color}_l(i)\ne\operatorname{color}_l(j).
+```
+
+该结果供应原 owner 所需的 hNoPartner。新的公共 theorem 不再要求用户提交颜色正确性、clique 枚举完整性或有限无伴随命题。
+
+实际残差管覆盖、同管 overlap 下界、两个有限关系对真实 trace overlap 的一侧包含仍然显式保留。对于满足这些前提的实际六元组 C 和实际被覆盖矩阵 Q，结论是：
+
+```math
+\exists i,\quad
+\left|\Re\operatorname{Tr}(C_iQ)-\frac16\right|\ge\frac1{256}.
+```
+
+实际用途是 normalized rank-one outer products。这是具体有限证书的实例化，没有重新定义矩阵、Hadamard、语境、interval 或 frame potential。
+

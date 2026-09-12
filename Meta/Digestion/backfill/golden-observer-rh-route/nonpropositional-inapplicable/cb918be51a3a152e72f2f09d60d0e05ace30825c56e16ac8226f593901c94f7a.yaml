@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cb918be51a3a152e72f2f09d60d0e05ace30825c56e16ac8226f593901c94f7a
+  normalized_sha256: sha256:cb918be51a3a152e72f2f09d60d0e05ace30825c56e16ac8226f593901c94f7a
+cas_ref: sha256:cb918be51a3a152e72f2f09d60d0e05ace30825c56e16ac8226f593901c94f7a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「一　Z-7 预登记:窗内零点数对数下界(`ZeroInfinitude/WindowCount`,同桶第五个模块,绑 Z-6 模块)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: aa549079c946598ff84470c9a7908769e160cd11d167122248785a337b9f15ea
+    next_atom_id: 4957c668776a207df8a4d52504e4bd2e9fc09a7c992f720743eed6843d8c0e61

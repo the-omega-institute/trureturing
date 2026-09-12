@@ -40,6 +40,10 @@ $$\forall n: \mathbb{N}, \operatorname{card}\left(\operatorname{filter}\left((p 
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Compositions/StrictFirstSumsGapfreeOddParts.card_strictFirstSums_eq_gapfreeOdd` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a392707-gapfree-odd-combinatorial-bridge` (proved) by `D5/S1/Words/Compositions/StrictFirstSumsGapfreeOddParts.card_strictFirstSums_eq_gapfreeOdd`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a392707-gapfree-odd-combinatorial-bridge","declaration_gid":"D5/S1/Words/Compositions/StrictFirstSumsGapfreeOddParts.card_strictFirstSums_eq_gapfreeOdd","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* OEIS Foundation Inc. (2026). *OEIS A392707*. URL: <https://oeis.org/A392707>.

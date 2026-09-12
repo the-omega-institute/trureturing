@@ -1,0 +1,11 @@
+**定义 151（全局标量码的轴解码）。** 固定 \((P,A)\)，置
+\[
+\mathsf G(P,A)=\{\operatorname{NatZ}(d):d\mid M(P,A)\}.
+\]
+对 \(c=\operatorname{NatZ}(d)\in\mathsf G(P,A)\) 定义
+\[
+\operatorname{Axis}_{P,A}(c)(p)=\zeta(v_p(d))
+\qquad(p\in P).
+\]
+这里 \(v_p(d)\in\omega\)，故 \(\operatorname{Axis}_{P,A}(c)\in\mathsf D(P,A)\)。
+

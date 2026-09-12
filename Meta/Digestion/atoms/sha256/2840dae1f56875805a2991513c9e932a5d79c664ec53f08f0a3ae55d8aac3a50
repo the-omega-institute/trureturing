@@ -1,0 +1,14 @@
+**定理 35（满窗因数语言及其序）。** 设有限素数集 \(P\) 上给定 \(L_p\in\mathbb N\)，令 \(g=\prod_{p\in P}p^{G_{L_p}-1}\)。则
+\[
+\operatorname{Div}(g)\simeq\prod_{p\in P}\mathcal W_{L_p},\qquad
+|\operatorname{Div}(g)|=\prod_{p\in P}G_{L_p}.
+\]
+赋予右端逐行解码数值的坐标序，该双射为偏序同构。特别地
+\[
+\operatorname{Div}(5040)\simeq\mathcal W_3\times\mathcal W_2\times\mathcal W_1\times\mathcal W_1,
+\quad |\operatorname{Div}(5040)|=60.
+\]
+逐位支撑包含不能代替上述解码序。
+
+**证明。** \(d\mid g\) 当且仅当每个 \(0\le v_p(d)\le G_{L_p}-1\) 且槽外估值为零。逐坐标用定理 10，即得双射与基数。\(d\mid d'\) 又等价于各估值有序，所以它保持且反映所定的序。5040 的窗口长度为 \((3,2,1,1)\)，乘积为 \(5\cdot3\cdot2\cdot2=60\)。然而指数二小于四，而 \(s(2)\) 的支撑 \(\{1\}\) 不包含于 \(s(4)\) 的支撑 \(\{0,2\}\)。本结论复用[《黄金分层算术观察理论》定理 4.5](ZECKENDORF_EULER_5040.md)及[满窗因数语言](../../../D5/S3/Arith/GoldenResource/GoldenDivisorLanguage.lean)的有限素数、有限窗口范围。证毕。
+

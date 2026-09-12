@@ -12,11 +12,11 @@ $$\forall a\in \mathbb{R}, a\ge 1, F_{a}\in H$$
 
 *Formalization.* `D5/S3/Observer/Hilbert/NymanHalflineMellinKernel.realSourceVector` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Luis Báez-Duarte (2002). *A strengthening of the Nyman-Beurling criterion for the Riemann Hypothesis*. URL: <https://arxiv.org/abs/math/0202141v2>.
 
 *Commentary.*
 
-F_a is the Lp class of x |-> ofReal(fract(1/(a*x))). The construction proves square integrability before taking the quotient.
+F_a is the Lp class of x |-> ofReal(fract(1/(a*x))). This realizes the Introduction's real-dilation family in the complex Lp space. The construction proves square integrability before taking the quotient.
 
 **Theorem 1.2 (Actual representative).**
 

@@ -1,0 +1,6 @@
+**定理 368.1。** 保留定义 324.1 的完整目标 $X_+$ 及其乘积拓扑。存在连续
+$$
+\widetilde{\operatorname{Ev}}_+:(X_A^{\rm cap},\tau_{\rm coord,A}^{X})\longrightarrow X_+
+$$
+满足 $\widetilde{\operatorname{Ev}}_+|_{B_A^{\rm cap}}=\operatorname{Ev}_+|_{B_A^{\rm cap}}$，当且仅当 $J_A$ 有限；存在时唯一。
+

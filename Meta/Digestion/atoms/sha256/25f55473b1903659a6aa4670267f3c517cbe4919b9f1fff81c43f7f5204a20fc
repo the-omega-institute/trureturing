@@ -1,0 +1,11 @@
+**证明。** 定理 51 给出 \(b_a=\lfloor\theta_a+\alpha\rfloor\)。等号 \(\theta_a=1-\alpha\) 会使 \((a+1)\alpha\) 为整数，故不成立。对 \(y=(ka+1)\alpha\) 分开整数与小数部分，有
+\[
+\lfloor y+a\alpha\rfloor-\lfloor y\rfloor
+=\lfloor a\alpha\rfloor+\mathbf1_{[1-\theta_a,1)}(\{y\}),
+\]
+代入 \(\kappa\) 得符号公式。\(x_a(k)=\{\alpha+ka\alpha\}\) 是无理旋转，定理 53 给出两个区间的频率。由 \(Q_a(0)=0\) 及其相邻差的符号得单调性与符号。定理 52 给出漂移和望远镜块和。更精确地，块和为
+\[
+hf(a)-\lfloor ha\alpha+x_a(s)\rfloor.
+\]
+后一个取整只有 \(\lfloor ha\alpha\rfloor\) 与 \(\lfloor ha\alpha\rfloor+1\) 两种可能，减去整数 \(hf(a)\) 后即所述相邻二值。最终周期的整数序列具有有理平均，而 \(\delta_a=f(a)-a\alpha\) 无理；其平均又由望远镜公式等于 \(\delta_a\)，矛盾。全部符号结论的自变量为固定加数的轨道 \((ka,a)\)。证毕。
+

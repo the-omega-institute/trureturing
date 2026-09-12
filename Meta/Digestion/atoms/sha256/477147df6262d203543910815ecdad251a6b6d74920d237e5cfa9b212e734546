@@ -1,0 +1,19 @@
+**33.15 Value limits, endpoint degeneracy and scaled optimization.** For every
+fixed real \(r\ge0\), the measure in 33.13 has mass four at strictly positive
+support points below 1. Thus \(D(T,r)<0\) for every finite \(T\ge0\),
+\(D(T,r)\to0\) from below, and
+\[
+\lim_{T\to\infty}\frac{D(T,r)}z
+=-\sum_p[(1-y_p^*)\alpha_p+y_p^*\beta_p].
+\]
+At the formal unscaled endpoint \(z=0\), the objective is identically zero on
+\(K_r\), so every feasible vector is optimal. The feasible set is a singleton
+only for \(r=0\): when \(r>0\), a sufficiently small positive coordinate gives
+a second feasible vector. The endpoint dual is \(\Phi_r(\lambda)=\lambda r\):
+all \(\lambda\ge0\) are optimal at \(r=0\), and only \(\lambda=0\) is optimal
+at \(r>0\). In contrast, the limiting gain divided by \(z\) is
+\(\sum_p A_py_p\), with densities \(w_p(0)>0\). Its optimizer remains the
+unique \(y^*\), and the complete table 33.11 holds with \(s_p\) replaced by
+\(w_p(0)\). The limiting full scaled objective additionally has the constant
+\(-\sum_p\alpha_p\), which does not change its optimizers or prices.
+

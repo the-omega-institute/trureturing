@@ -1,0 +1,14 @@
+**证明。** $K_{n,k}$ 是正整数，下取整给显示的单坐标误差和有理性。每个坐标的值唯一，替代先给总行，再给按 $k$ 索引的序列。对有限状态 $u$，在其支撑上作实有限和，再投到圆周，用第 363.2 条得
+$$
+d_{\mathbb T}\bigl(\chi_\theta(u),\chi_{r^{(k)}}^{\rm cap}(u)\bigr)
+\le\left|\sum_{n\in\operatorname{supp}(u)}u_n(b_n-r_n^{(k)})\right|
+\le\sum_{n\in\operatorname{supp}(u)}\frac{A_n}{K_{n,k}}.
+$$
+各项非负，故有限子和不超过全和；且 $A_n/(A_n+1)\le1$，每项不超过 $2^{-n-k-2}$。几何部分和为 $2^{-k-1}(1-2^{-N-1})$，趋于 $2^{-k-1}$，给一致估计。零容量坐标的加权误差为零，整个论证不使用有限的总容量或统一支撑界。
+
+有理观察已包含在全部圆周行中，故 $\tau_{\mathbb Q}^{B}\subseteq\tau_{\mathbb R}^{B}$。反向固定 $\theta$、$u\in B$ 及 $\epsilon>0$。选 $k$ 使 $2^{-k-1}<\epsilon/4$。有理观察在 $\tau_{\mathbb Q}^{B}$ 中连续，故存在 $u$ 的该拓扑邻域 $U$，在其中有
+$$
+d_{\mathbb T}\bigl(\chi_{r^{(k)}}^{\rm cap}(v),\chi_{r^{(k)}}^{\rm cap}(u)\bigr)<\epsilon/2.
+$$
+对 $v\in U$ 在两端各加一个小于 $\epsilon/4$ 的统一误差，三角不等式给 $d_{\mathbb T}(\chi_\theta(v),\chi_\theta(u))<\epsilon$。每个全圆周观察遂在 $\tau_{\mathbb Q}^{B}$ 中连续，给反向包含，再用定理 365.2。所用和始终只对 $B$ 中的有限状态求值；此结论未给一般 $X$ 点定义 $\chi_\theta$，也未把这些观察称为坐标连续。证毕。
+

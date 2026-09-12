@@ -1,0 +1,6 @@
+**定理 8（全档案守卫下的分阶段读数）。** 设 \(X,Y\in\mathcal B_\lambda^+\) 且 \(M_X<m_Y\)。对每个满足 \(M_X\le T<m_Y\) 的整数 \(T\)，
+\[
+r_{X\triangleright Y}^T=r_X,\qquad N_{X\triangleright Y}(T)=N_X.
+\]
+若 \(E_X\ne\varnothing\)，可以取整数 \(T=M_X\)。对每个整数 \(T\ge\max(M_X,M_Y)\)，总读数为 \(N_XN_Y\)。空左档案时阶段区间为全部整数 \(T<m_Y\)，空右档案时为全部整数 \(T\ge M_X\)；两者皆空时每个整数时刻的读数均为一。
+

@@ -1,0 +1,34 @@
+**30.74 定理及证明（全部跳跃情形、Möbius 反演与目标值）。** For positive integers \(d,k\), let
+\(I(d,k)=\int_0^\infty\{t/k\}\psi_d(t)dt\).
+The only possible jumps of the fractional part are integer multiples of \(k\), and the only
+integer inside \(I_d\) is \(d\). If \(k\nmid d\), there is no jump and the function is
+affine of slope \(1/k\) on this interval; the constant and linear probe moments vanish,
+so \(I(d,k)=0\). In particular when \(k>d\), \(k\ge d+1>d+1/2\) and the function
+is simply \(t/k\) on the support. If \(k\mid d\), put \(t=d+s\). For negative \(s\)
+the fractional part is \(1+s/k\), for positive \(s\) it is \(s/k\). Thus a.e.
+\(\{t/k\}=1+s/k-\mathbf1_{(0,\infty)}(s)\). The first two moments cancel and
+\(I(d,k)=-\int_0^\infty w=-1/2\). This also covers \(d=k=1\).
+It follows that
+\[
+\Lambda_n(f_k)=\sum_{\substack{d\mid n\\k\mid d}}\mu(n/d)=\delta_{nk}.
+\]
+For \(k\nmid n\) the sum is empty. Otherwise write \(n=km,d=ke\), giving
+\(\sum_{e\mid m}\mu(m/e)\), which by 30.72 is one exactly when \(m=1\), and zero otherwise.
+For the target \(\chi(1/t)=\mathbf1_{[1,\infty)}(t)\), each \(d\ge2\) probe lies entirely
+above one and has integral zero. The \(d=1\) probe contributes only its positive half, namely
+\(1/2\). Therefore
+\[
+\Lambda_n(\chi)=-\mu(n),\qquad
+\Lambda_n\left(\sum_ka_kf_k\right)=a_n
+\]
+for every finite complex combination. Square factors make the target value zero but do not
+make the functional zero: \(\Lambda_n(f_n)=1\) and \(C_n>0\) still hold.
+For \(n=1\), \(\Lambda_1(\chi)=-1,\Lambda_1(f_1)=1,\Lambda_1(f_k)=0\) for \(k>1\),
+and \(C_1=62/3\). Applying every coordinate functional to a zero finite combination proves
+finite independence again. Nevertheless the original Gram entries satisfy
+\[
+\langle f_i,f_j\rangle\ge\int_1^\infty\frac{dx}{ijx^2}=\frac1{ij}>0,
+\]
+since the functions are nonnegative and equal \(1/(kx)\) on \(x>1\).
+Biorthogonality with a different family of functionals does not make the original dictionary orthogonal.
+

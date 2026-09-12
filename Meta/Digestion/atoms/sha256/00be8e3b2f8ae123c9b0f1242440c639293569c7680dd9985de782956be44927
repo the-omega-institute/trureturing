@@ -1,0 +1,25 @@
+**30.82 定义及证明（不使用行列式的精确 Gaussian–Schur 求解）。** Solve
+\(\widetilde Fq=\widetilde y\) by rational Gaussian elimination. To prove every division
+legal, consider a positive definite current block
+\[
+M=\begin{pmatrix}a&b^*\\b&C\end{pmatrix}.
+\]
+Its first diagonal entry \(a>0\). For nonzero \(z\), substitute
+\((-\langle b,z\rangle/a,z)\) into its positive quadratic form. The result is
+\[
+\langle z,(C-bb^*/a)z\rangle>0.
+\]
+Thus the Schur complement is again positive definite. Eliminating the first component in
+\(M(x,z)^T=(\gamma,\xi)^T\) gives the exact smaller system
+\[
+(C-bb^*/a)z=\xi-b\gamma/a,\qquad x=(\gamma-b^*z)/a.
+\]
+Starting from the rational real symmetric \(\widetilde F\), these operations preserve
+rationality. Recursing through \(N\) positive pivots reaches a scalar positive system;
+finite back substitution then gives the exact rational solution. The scalar case is the base
+case, so no nonexistent final block is needed at \(N=1\). The displayed elimination identities
+show by induction that the solution satisfies the original system, and positivity gives uniqueness.
+This solver itself uses no determinant. With modes zero or one the coercivity computation is
+also determinant-free; mode two still includes the old determinant for its chosen constant.
+No unknown true-matrix rank or coefficient search is hidden in the recursion.
+

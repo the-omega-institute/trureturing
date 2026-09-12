@@ -1,0 +1,26 @@
+**定理 236（共同核与双整数坐标的卷积环）。** 定义 235 的加法映射
+$$
+(V_G,U_H):R\longrightarrow\mathbb Z^2
+$$
+满射，且其共同核为
+$$
+\ker(V_G,U_H)=\ker V_G\cap\ker U_H=(m).
+$$
+在 $\mathbb Z^2$ 上取逐项加法及乘法
+$$
+(v,u)*(v',u')=
+\bigl(vv'-(v-u)(v'-u'),\ uu'+(v-u)(v'-u')\bigr),
+$$
+则它是单位为 $(1,1)$ 的交换环，$(V_G,U_H)$ 诱导环同构 $R/(m)\cong(\mathbb Z^2,+,*)$。其到 $\mathbb Z[\phi]$ 的环读数是
+$$
+(v,u)\longmapsto(2u-v)+(v-u)\phi.
+$$
+对任意 $F,K\in R$，有
+$$
+F(\phi)=(2U_H(F)-V_G(F))+(V_G(F)-U_H(F))\phi
+=\phi^{-2}\beta(F),
+$$
+$$
+\beta(FK)=\phi^{-2}\beta(F)\beta(K).
+$$
+

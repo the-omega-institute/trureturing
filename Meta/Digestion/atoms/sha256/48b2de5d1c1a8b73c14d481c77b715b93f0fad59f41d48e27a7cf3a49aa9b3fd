@@ -1,0 +1,17 @@
+**33.9 The complete optimum value.** For the fixed data of 33.2 define, for
+\(m=0,\ldots,4\),
+\[
+F_m(z)=\sum_{k\le m}\log(1-\beta_{p_k}z)
++\sum_{k>m}\log(1-\alpha_{p_k}z).
+\]
+On \(H_m\le r\le H_{m+1}\), \(m=0,1,2,3\), set
+\(\theta=(r-H_m)/h_{p_{m+1}}\in[0,1]\). Substitution of 33.8 gives
+\[
+D(T,r)=(1-\theta)F_m(z)+\theta F_{m+1}(z)
+=F_m(z)+(r-H_m)s_{p_{m+1}}(z).
+\]
+Thus \(D(T,H_m)=F_m(z)\) for all five prefixes; shared endpoint values agree.
+For \(r\ge H_4\), \(D(T,r)=F_4(z)\). These include \(r=0\) and the entire
+slack-capacity tail. The proof of maximality is the matching price certificate
+below, not merely the evaluation of one feasible vector.
+

@@ -1,0 +1,26 @@
+**命题 64（repo-derived，§36.7 的 OPEN-COPY）。** 对定义 34 的固定有限总项及全部平衡输入，有
+\[
+\forall B\subseteq K:\qquad E_q^{\rm dup}(B)\ \Longleftrightarrow\ \operatorname{Tail}(B)
+\ \Longleftrightarrow\ E_q(B),
+\]
+其中 $\operatorname{Tail}$ 与 $E_q$ 沿用定义 28。该断言仅分类目标族 $q\circ F_B$。
+
+**证明（充分性）。** 命题 55 的 $(O\text{-}CONSTRUCTION)$ 是原签名的固定有限总单孔项，属于定义 34 的复制语言，故 $\operatorname{Tail}(B)\Rightarrow E_q^{\rm dup}(B)$。
+
+**证明（必要性）。** 先固定 $B$ 及表达它的总项 $C$，其输入叶数 $r\ge1$。记 $L_B(X)=q(F_BX)$。对任意平衡输入 $X$ 及整数 $n\ge0$，$nX$ 仍平衡；区域筛选逐副本使用同一 $B$，所以 $L_B(nX)=nL_B(X)$。引理 5B 给出
+\[
+P_{C,X}(n)=q(C(nX))=nL_B(X)\qquad(n\ge0).
+\]
+对固定 $X$，令 $H(z)=P_{C,X}(z)-zL_B(X)\in\mathbb Z[z]$。非零的次数为 $d$ 的整数多项式至多有 $d$ 个不同整数根：次数 $0$ 时无根；若 $a$ 为根，由每个 $z^k-a^k$ 都被 $z-a$ 整除，得 $H(z)=(z-a)R(z)$，其中 $\deg R=d-1$；其它整数根 $b\ne a$ 满足 $(b-a)R(b)=0$，整数无零因子给出 $R(b)=0$，归纳即得根数界。此处每个非负整数都是 $H$ 的根，所以 $H=0$。因而 $P_{C,X}(z)=zL_B(X)$，包括 $L_B(X)=0$ 的情形；其常数项为 $q(C(0))=0$，一次系数为 $L_B(X)$。
+
+引理 5A、C 给出先于 $X$ 固定的总单孔项 $C_1,\ldots,C_r$，且对每个 $X\in\mathcal B$，
+\[
+L_B(X)=\sum_{i=1}^r q(C_i(X)).
+\]
+对这一有限族应用引理 6，取得先于全部位置与时刻的共同 $c$。任给 $p\in\mathbb Z^3$ 及 $t,t'<c$，取该引理供全族共用的 $X_t,X_{t'}$。它们分别只选位于 $(t,p)$、$(t',p)$ 的一个正点，故
+\[
+\mathbf1_B(t,p)=L_B(X_t)=\sum_iq(C_i(X_t))
+=\sum_iq(C_i(X_{t'}))=L_B(X_{t'})=\mathbf1_B(t',p).
+\]
+这正是定义 28 的 $\operatorname{Tail}(B)$。最后，命题 55 给出 $\operatorname{Tail}(B)\Longleftrightarrow E_q(B)$，完成全部等价。证毕。
+

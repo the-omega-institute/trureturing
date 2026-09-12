@@ -1,0 +1,10 @@
+**命题 QI-P6（双向可达与有限收缩，repo-derived）。** 对同样的组件，
+
+$$
+Q_C^{\rm obs}
+=\{\bar\mu_{A,B}(x,y):
+x\in Q_A^{\rm obs},\ y\in Q_B^{\rm obs},\
+x,y\text{ 的完整边界匹配}\}.
+\tag{QI-REACH}
+$$
+

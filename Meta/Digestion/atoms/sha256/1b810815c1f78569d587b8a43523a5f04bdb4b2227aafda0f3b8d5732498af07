@@ -1,0 +1,6 @@
+**定理 79（真类、有限字障碍与字面成员刚性）。** \(\mathfrak V_Z\) 是真类；环境中的全部集合甚至 \(\mathcal P(\omega)\) 都不能单射编码进有限字母表上的有限字。若 \(J:V\to V\) 是可定义、满到整个 \(V\) 的类双射且保持并反映字面环境成员关系，则 \(J(x)=x\) 对每个集合成立。
+
+**证明。** 若 \(\mathfrak V_Z\) 是集合，替代作用于 \(\operatorname{Dec}\) 就得到包含每个集合的集合 \(U\)。分离出 \(R=\{x\in U:x\notin x\}\)，则 \(R\in U\)，从而 \(R\in R\iff R\notin R\)，矛盾。有限字集合可数；若 \(\mathcal P(\omega)\) 单射入其中，再取字的自然数编号即得单射入 \(\omega\)。在其像上取唯一逆、在像外取 \(\varnothing\)，得到满射 \(f:\omega\to\mathcal P(\omega)\)。集合 \(\{n:n\notin f(n)\}\) 与每个 \(f(n)\) 在第 \(n\) 处不同，矛盾。这是 Cantor 对角论证，参见 [Set Theory](https://plato.stanford.edu/entries/set-theory/)。
+
+最后，由 \(J\) 满到 \(V\)，每个 \(z\in J(x)\) 都为某个 \(J(y)\)，成员反映给 \(y\in x\)；保持给反向包含，所以 \(J(x)=\{J(y):y\in x\}\)。对定义 \(J\) 的公式使用成员归纳即得 \(J(x)=x\)。此刚性要求满到 \(V\) 且使用字面成员；(Z-ENC) 的像为真类子呈现，成员使用 \(\in_Z\)。有限字障碍也与定理 78 的条件模型结论相容：外部可数模型的内部幂集，并非外部 \(\mathcal P(\omega)\)。证毕。
+

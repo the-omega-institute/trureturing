@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dd09c5a37aa683599fcc0e7c462133ed6638a9380234e7870bd626e0d41f425d
+  normalized_sha256: sha256:dd09c5a37aa683599fcc0e7c462133ed6638a9380234e7870bd626e0d41f425d
+cas_ref: sha256:dd09c5a37aa683599fcc0e7c462133ed6638a9380234e7870bd626e0d41f425d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「评注 27.598(反例定理:挠阶通则判负与低层精确名单)〔判负·反例十枚 + 精确普查 + CRT 记录;单条目〕」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 9c9a221faaf32bed5dae96a5c6b058bd233421aee3073960c267b3350ed0127b
+    next_atom_id: d59ded9f7f76f371dfd3e170abb7cd4a7f0e60c96c01549495d7517528dfd262

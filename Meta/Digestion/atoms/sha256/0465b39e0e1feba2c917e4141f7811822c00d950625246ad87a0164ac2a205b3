@@ -1,0 +1,22 @@
+**35.18 Bounded exponent and log-size gaps, divergent additive integer gaps.**
+Let \(n<n'\) be consecutive sufficiently late selected indices. By 35.11,
+\(n'-n\le L(\alpha,Q)\). For \(i>0\), the elementary floor inequality
+\(\lfloor x+t\rfloor-\lfloor x\rfloor\le\lceil t\rceil\), \(t\ge0\),
+gives
+\[
+0\le m_i(n')-m_i(n)\le\lceil L\alpha_i\rceil,
+\qquad 1\le m_0(n')-m_0(n)\le L.
+\]
+The floor inequality holds because \(x+t\le x+\lceil t\rceil\) and
+integer translation commutes with the floor. From the exact size identity,
+\[
+0<\log N_{n'}-\log N_n<kh_0L+2E_Q.
+\]
+All these bounds depend on the fixed rotation and primes. In ordinary integer
+size, 35.16 instead gives
+\[
+N_{n'}-N_n\ge(p_0-1)N_n\longrightarrow\infty.
+\]
+Bounded gaps in the reference exponent, in rounded exponents or in logarithmic
+size do not become bounded additive gaps among ordinary integers.
+

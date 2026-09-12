@@ -18,10 +18,10 @@ set_option maxRecDepth 100000
 
 run_cmd do
   let records := SealRecords.forRoot (← getEnv) frozenInformationRootId
-  let artifact := serializeSealArtifact records
+  let artifact ← Lean.Elab.Command.liftTermElabM <| serializeSealArtifact records
   let digest := Sha256.hex artifact.toUTF8
   -- Persisted InformationRoot records under the role-named seal schema.
-  unless digest == "5e4660aeaab2f81cb6ba78e20ad5d8423dde2994cd682c8e0d93066435819e37" do
+  unless digest == "994ff97c3d0e4f031b6ca34e0a14349788dcded230256b5df14da0bbfc6dc168" do
     throwError "seal artifact digest mismatch: {digest}"
 
 example : agendaPowerArena.__information_catalog.uniqueCaptureCount (0 : Fin 1) = 570 := by

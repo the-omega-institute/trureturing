@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:099b66f1b2f740ae46e241f5f8ccb25a5979036fd42f7577028f1f954268e1d4
+  normalized_sha256: sha256:099b66f1b2f740ae46e241f5f8ccb25a5979036fd42f7577028f1f954268e1d4
+cas_ref: sha256:099b66f1b2f740ae46e241f5f8ccb25a5979036fd42f7577028f1f954268e1d4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「二　W-C 预登记:多尺度阻尼指纹的追加律(`MultiscaleFingerprintAppend`)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: f3ee09921cafd2aa11ced37ed1564fdf9c2bf1a4e719ac1fb63be5f300592636
+    next_atom_id: 2908c6060e2655559923aac22b004364257d1011495a01cad1222fa587ac2036

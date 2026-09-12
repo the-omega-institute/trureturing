@@ -1,0 +1,76 @@
+**命题 66（区域读数的后复合分类，repo-derived）。** 沿用定义 34 的固定总项语言。记
+\[
+\mathcal E=\{h:\mathcal B\to\mathbb Z:\exists\text{ 定义 34 的固定总项 }C\
+ \forall X\in\mathcal B,\ h(X)=q(C(X))\},\qquad
+L_B(X)=q(F_BX).
+\]
+这里 $B\subseteq K=\mathbb Z\times\mathbb Z^3$，$F_B$ 沿用定义 23，$\operatorname{Tail}$ 沿用定义 28。对任意先固定的 $B\subseteq K$ 与 $g:\mathbb Z\to\mathbb Z$，有
+\[
+\begin{aligned}
+&\bigl(\exists\text{ 定义 34 意义下的固定总项 }C\bigr)
+ \bigl(\forall X\in\mathcal B\bigr)\quad q(C(X))=g(L_B(X))\\
+&\quad\Longleftrightarrow\quad
+ B=\varnothing\ \lor\ g\text{ 在 }\mathbb Z\text{ 上恒定}\
+ \lor\ \bigl(\operatorname{Tail}(B)\ \land\
+  \exists p\in\mathbb Z[z]\ \forall k\in\mathbb Z,\ g(k)=p(k)\bigr).
+\end{aligned}
+\tag{POST-CLASSIFICATION}
+\]
+等价地，当 $B\ne\varnothing$ 时，$g\circ L_B\in\mathcal E$ 当且仅当 $g$ 是整系数多项式函数，且其表示多项式恒定或 $\operatorname{Tail}(B)$ 成立。表示同一整数函数的整系数多项式唯一。本条的分类对象仅为标量目标族 $g\circ L_B$，不刻画所有依赖来源或因果结构的数值函数；$F_B$ 仅用于指定目标，不作为定义 34 的项原语。记号 $\mathcal E$ 只指上述固定总项的全部数值函数。
+
+**证明（常量与空区域）。** 定义 8 的固定代表 $\mathbf i(a)$ 对每个整数 $a$ 满足 $u=0$、$q=a$。置
+\[
+K_a(X)=(X\boxtimes0_\varnothing)\boxplus\mathbf i(a).
+\]
+由命题 2、3，各子项在全部平衡输入上有定义且保持平衡，读数为 $q(X)\cdot0+a=a$。该项恰含一个输入叶，符合定义 34 的 $r\ge1$。若 $B=\varnothing$，定义 23 使 $L_B$ 恒为零，取 $a=g(0)$ 即得目标；若 $g$ 恒为 $a$，同一项对任意 $B$ 都给出目标。
+
+**证明（整数根数界）。** 先给出下文使用的多项式恒等判据。设非零 $H\in\mathbb Z[z]$ 的次数为 $d$。$d=0$ 时没有整数根；若 $d\ge1$ 且 $H(a)=0$，对每个正整数 $j$ 有
+\[
+z^j-a^j=(z-a)\sum_{h=0}^{j-1}z^{j-1-h}a^h.
+\]
+将 $H(z)-H(a)$ 逐项按此式分解，得到 $H(z)=(z-a)R(z)$，其中 $R\in\mathbb Z[z]$ 的次数为 $d-1$。任一不同于 $a$ 的整数根 $b$ 满足 $(b-a)R(b)=0$；整数无零因子且 $b-a\ne0$，所以 $R(b)=0$。对次数归纳，$H$ 至多有 $d$ 个不同整数根。于是有无穷多个整数根的整数多项式必为零；两整数多项式若在无穷多个整数处取同值，其差为零。特别地，表示同一整数函数的整系数多项式唯一。
+
+**证明（非空区域的全域刚性）。** 设 $B\ne\varnothing$，固定其中一个单元 $(t_*,x_*)$。对每个整数 $k$ 选定平衡参数 $Z_k$ 如下：$k=0$ 时取 $0_\varnothing$；$k\ne0$ 时，取 $2|k|$ 个不同的 $HF$ 事件标识，令档案等于当前区域，其中 $|k|$ 个正事件和 $|k|$ 个负事件都在 $(t_*,x_*)$，来源均为 $l_0=\operatorname{leaf}(0)$，关系为空。$k>0$ 时选择全部正事件，$k<0$ 时选择全部负事件。该构造的正负事件数相等、关系严格增时条件空真，故 $Z_k\in\mathcal B$，且 $L_B(Z_k)=k$。这些参数只依赖先固定的 $B,k$，不依赖后来代入的输入。
+
+定义 4 的并行并集保留各分量的时间、位置、符号和选择，定义 23 的区域条件逐事件作用，因此对每个 $Y\in\mathcal B$，
+\[
+L_B(Y\boxplus Z_k)=L_B(Y)+k.
+\]
+并且对引理 5 的非负份并行副本，$L_B(nX)=nL_B(X)$，包括 $n=0$。记 $U=Z_1$，便有 $L_B(nU)=n$。
+
+现设固定总项 $C$ 表达 $g\circ L_B$。引理 5B 对 $C,U$ 给出 $p=P_{C,U}\in\mathbb Z[z]$，满足 $p(n)=g(n)$ 对所有 $n\ge0$ 成立。任给整数 $k$，把 $C$ 的每个输入叶换成 $X\boxplus Z_k$，所得项记为 $C^{(k)}$。它仍为固定有限项，输入叶数不变；命题 2 保证 $X\boxplus Z_k\in\mathcal B$，再由 $C$ 的总定义及定义 34 的严格求值，所有子项均有定义。因此引理 5B 也给出 $p_k=P_{C^{(k)},U}\in\mathbb Z[z]$，且
+\[
+p_k(n)=q(C^{(k)}(nU))=g(n+k)\qquad(n\ge0).
+\]
+当 $n\ge\max(0,-k)$ 时，$n+k\ge0$，从而 $p_k(n)=p(n+k)$。多项式 $p(z+k)$ 仍为整系数；上面的根数界使这两个在无穷多个整数处相等的多项式恒等。取 $z=0$，得 $g(k)=p_k(0)=p(k)$。$k$ 任意，故 $g=p|_{\mathbb Z}$。所有实际求值都只用了非负份并行副本；负整数由固定参数 $Z_k$ 的所选负事件给出读数。
+
+**证明（非恒定目标的公共过去尾）。** 继续假设 $B\ne\varnothing$ 且 $g$ 非恒定。已得的 $p$ 非恒定，写作 $p(z)=\sum_{j=0}^d a_jz^j$，其中 $d\ge1$、$a_d\ne0$。形式导数 $p'(z)=\sum_{j=1}^d j a_jz^{j-1}$ 的首系数为 $d a_d\ne0$，故是非零整数多项式。根数界保证存在整数 $k$ 使 $a=p'(k)\ne0$。固定这样的 $k$，令 $T(Y)=C(Y\boxplus Z_k)$，仍按逐叶代换理解；上述总定义论证适用于 $T$。
+
+对每个固定的 $X\in\mathcal B$，引理 5B 及已证的全域等式给出
+\[
+P_{T,X}(n)=q(T(nX))=p\bigl(k+nL_B(X)\bigr)\qquad(n\ge0).
+\]
+两侧作为 $n$ 的整系数多项式在无穷多个整数处相等，故
+\[
+P_{T,X}(z)=p\bigl(k+zL_B(X)\bigr),\qquad
+[z]P_{T,X}=p'(k)L_B(X)=aL_B(X).
+\]
+这里一次系数的公式由逐项展开得到：$(k+zL_B(X))^j$ 的一次项从 $j$ 个因子中恰取一个 $zL_B(X)$，其余取 $k$，贡献 $j k^{j-1}L_B(X)$；常数项不贡献一次系数。
+
+对同一个固定项 $T$ 应用引理 5A、C，先正规化再取切片，得到先于 $X$ 固定的有限总单孔族 $S_1,\ldots,S_r$，满足
+\[
+aL_B(X)=\sum_{i=1}^r\bigl(q(S_i(X))-q(S_i(0_\varnothing))\bigr)
+\qquad(X\in\mathcal B).
+\]
+对该族整体应用引理 6，取共同阈值 $c$。任给位置 $x\in\mathbb Z^3$ 及整数 $t,t'<c$，该引理提供同一对输入 $X_t,X_{t'}$，使全部 $q(S_i(X_t))=q(S_i(X_{t'}))$ 同时成立。每份输入只选择位于 $(t,x)$ 或 $(t',x)$ 的一个正点，其余事件均未选。因此将上述两个切片等式相减，固定常数项消去，得到
+\[
+a\bigl(\mathbf1_B(t,x)-\mathbf1_B(t',x)\bigr)=0.
+\]
+整数无零因子且 $a\ne0$，所以两个指示值相等。$c$ 对全部位置及这两个过去时刻共同有效，正是定义 28 的 $\operatorname{Tail}(B)$。此处只在整数等式中消去非零因子，没有向项语言加入除法。
+
+**证明（整系数多项式的充分性）。** 若 $\operatorname{Tail}(B)$，命题 55 给出固定有限总单孔项 $C_B$，对全部 $X\in\mathcal B$ 满足 $q(C_B(X))=L_B(X)$。常多项式已由 $K_a$ 处理。对次数 $d\ge1$ 的 $p(z)=\sum_{j=0}^d a_jz^j$，以固定参数叶 $H_d=\mathbf i(a_d)$ 起始，依次对 $j=d-1,\ldots,0$ 形成有限 Horner 项
+\[
+H_j(X)=\bigl(H_{j+1}(X)\boxtimes C_B(X)\bigr)\boxplus\mathbf i(a_j).
+\]
+这里每次出现 $C_B(X)$ 都使用同一先固定的语法树，最终的 $H_0$ 有 $d\ge1$ 个输入叶，起始闭参数本身不充当最终见证。定义 8 保证所有系数代表平衡；从 $H_d$ 起归纳，命题 2、3 和 $C_B$ 的总定义保证每个子项在全部输入上有定义且平衡。其读数递推为 $q(H_j(X))=q(H_{j+1}(X))L_B(X)+a_j$，从 $q(H_d)=a_d$ 逐级得到 $q(H_0(X))=p(L_B(X))$。负系数直接使用对应的固定整数代表。常量、非空区域的必要性和此构造合起来，证明所述充要条件及其非空形式。证毕。
+

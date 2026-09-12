@@ -1,0 +1,34 @@
+### 37.1 从实际 signed-Cayley 表达式推导方向导数
+
+写 `x_i(q)=m_i+q v_i`，并沿用既有紧坐标图的实虚部：
+
+```math
+u_i(q)=s_i\frac{1-x_i(q)^2+2i x_i(q)}{1+x_i(q)^2}.
+```
+
+分母在整个实轴严格为正。实际导数为：
+
+```math
+\dot u_i(q)=
+\frac{-4s_i x_i(q)v_i+2i s_i(1-x_i(q)^2)v_i}
+     {(1+x_i(q)^2)^2}.
+```
+
+对实际矩阵 `H` 令 `y=H^dagger u`、`dot y=H^dagger dot u`，则：
+
+```math
+\frac{d}{dq}(|y_a(q)|^2-6)
+=2\left(\Re y_a\Re\dot y_a+\Im y_a\Im\dot y_a\right).
+```
+
+新真源 `CayleyHadamardDifferential.lean` 的公共定理 `signed_cayley_hadamard_residual_hasDerivAt` 从 Mathlib 的商、乘积、有限和求导规则证明这个实际标量路径导数。没有提供 Jacobian 正确性的假设。取 `s_0=1,m_0=v_0=0` 得到验证器的五变量去相位情形。这里证明的是所有指定方向上的路径导数，尚未单独构造一个完整 Frechet-Jacobian 数据接口。
+
+第二个公共定理 `signed_cayley_balanced_sublevel_row_enclosure` 把实际导数接入原有六残差守恒对偶和 scalar mean-value inequality。令 `f_a(q)=|y_a(q)|^2-6`、`g(q)=m_k+qv_k-sum_a c_a f_a(q)`。若在整个闭区间上 `|g'(q)|<=R`，且端点残差在 `lo,hi` 中，则：
+
+```math
+m_k-c\cdot f(0)-R+L\le m_k+v_k
+\le m_k-c\cdot f(0)+R+U,
+```
+
+其中 `L,U` 正是 `hadamard_residual_box_dual` 的平移系数端点界。`HH^dagger=6I` 和 `s_i^2=1` 是实际矩阵与相位条件。数值区间对上述实际导数的包含性仍须证明，不能由有限测试代替。
+

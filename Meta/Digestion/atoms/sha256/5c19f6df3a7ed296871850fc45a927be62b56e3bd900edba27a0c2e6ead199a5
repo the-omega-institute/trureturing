@@ -1,0 +1,11 @@
+**定理 16（任意阿贝尔目标中的完整分类）。** 给定阿贝尔群 \(A\) 和加法观察 \(L\)，以下条件等价：\(L\) 对相邻进位不变；\(L\) 对相邻进位与高位重复进位均不变；存在唯一的族 \((\alpha_p,\gamma_p)_{p\in\operatorname{Pr}}\in(A^2)^{\operatorname{Pr}}\) 使
+\[
+L(r)=\sum_p\bigl(V_p(r)\alpha_p+U_p(r)\gamma_p\bigr)\quad(r\in\mathcal R).
+\]
+参数精确为
+\[
+\alpha_p=w_{p,1}-w_{p,0},\qquad
+\gamma_p=2w_{p,0}-w_{p,1}.
+\]
+目标群可以含任意扭元；参数族无需有限支撑。
+

@@ -1,0 +1,44 @@
+## 13. Source and verification status of this continuation
+
+The five new Lean owners are MemoryRefinement, MemoryLightCone,
+MemoryBlockBounds, RadiusFourData and RadiusFourCertificates. They have 24
+explicitly named public declarations with 24 matching canonical Scribe handles.
+The prior 28 declarations are unchanged. The general induction and geometry
+proofs reuse the preceding owners; no parallel pathCount or memoryStep is created.
+
+The final independent replay reads the actual Lean-owned radius-four payload.
+It checks 2553 geometric transitions, 851 integer rows, all 851 states through
+101 depths (85951 inequalities), 1875 finite-propagation cases, 1080 memory
+inclusions, 120 controller comparisons, 126 light-cone equalities, 558 block
+bounds and 90 actual-domain cases. It also checks the depth-700 integer
+comparison. Four malformed certificates are rejected; removing the necessary
+radius-versus-depth guard is witnessed by a depth-three mismatch. The S,S,R,R
+projection diagnostic is replayed explicitly.
+
+```sh
+python research/hard_core_weitz/verify_radius_four.py
+```
+
+Data SHA-256:
+539f060617047d4334ac6e638b0e92d4f37369c174a89a4f092b6948d5eff36d.
+Verifier SHA-256:
+32ff8ab35c6087ebec88c5eddf3dc2dc17b197ca5ddb78e29f18f623f429eb2b.
+
+The replay uses arbitrary-precision integers and finite coordinate sets, no
+floating-point eigensolver or saved success flag. It was executed again after
+final source assembly and reproduced the result JSON byte for byte. It is a
+separate implementation by the same authoring assistant, not independent-author
+review. Its finite regressions do not certify universal Lean proof terms.
+
+Logical source review and exact replay have been performed. Lean/lake is absent
+from the authoring environment, so elaboration, kernel checking, executed axiom
+closures and Scribe emission have not been performed. The new finite proofs
+request decide +kernel; this records their intended checking method, not an
+executed acceptance result. The original-problem zero-free improvement remains
+open. No first-formalization priority or literature-wide mathematical novelty
+has been established.
+
+Additional precise locator for [4]:
+https://arxiv.org/html/1306.0431v2#S5
+
+

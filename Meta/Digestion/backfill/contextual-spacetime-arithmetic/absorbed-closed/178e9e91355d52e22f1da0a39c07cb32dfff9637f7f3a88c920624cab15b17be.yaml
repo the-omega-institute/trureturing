@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:178e9e91355d52e22f1da0a39c07cb32dfff9637f7f3a88c920624cab15b17be
+  normalized_sha256: sha256:178e9e91355d52e22f1da0a39c07cb32dfff9637f7f3a88c920624cab15b17be
+cas_ref: sha256:178e9e91355d52e22f1da0a39c07cb32dfff9637f7f3a88c920624cab15b17be
+coverage_gids:
+  - gid: D5/S0/History/Spacetime/CompleteBinaryTreeRootTime.rootTime_eq_max_leaf_time_add_depth
+    target_statement_id: sha256:9480a999d097c88a1a849a424718791ebbd31ccbc2eaf418fe6c90d18125d227
+receipts:
+  unresolved_subitems: []

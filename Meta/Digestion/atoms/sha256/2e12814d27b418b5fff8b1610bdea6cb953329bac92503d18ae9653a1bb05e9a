@@ -1,0 +1,37 @@
+## 3. Hadamard-cube cross Gram
+
+对共享底面 `H` 的两个 factorized cube slices：
+
+```math
+C_{ijk}=H_{ij}X_{jk}Y_{ik},
+```
+
+```math
+D_{ij\ell}=H_{ij}X'_{j\ell}Y'_{i\ell},
+```
+
+entrywise unimodularity of `H` 给出：
+
+```math
+\boxed{
+C^\dagger D=(X^\dagger X')\circ(Y^\dagger Y').
+}
+```
+
+这里 `circ` 是 entrywise Hadamard product。该恒等式已经写入 Lean 真源。
+
+若归一化后的两个相对矩阵 `A,B` 都 unitary，且：
+
+```math
+A\circ B=d^{-1}J,
+```
+
+则逐行 Cauchy equality 迫使：
+
+```math
+|A_{ij}|=|B_{ij}|=d^{-1/2},
+\qquad B=\overline A.
+```
+
+这说明 double completion 的两个方向不能独立变化。一个相对 transition 由另一个决定。
+

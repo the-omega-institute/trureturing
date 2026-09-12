@@ -16,6 +16,7 @@ internal static class UtilityAdmissionRule
         ArgumentNullException.ThrowIfNull(context);
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         AddRatchetFindings(context, findings);
+        AddInformationRegistrationFindings(context, findings);
         var modules = new Dictionary<RepoPath, UtilityValidationPhase>();
         foreach (var path in SelectedPaths(context))
         {
@@ -67,6 +68,24 @@ internal static class UtilityAdmissionRule
         }
 
         return findings.ToImmutable();
+    }
+
+    // The same protected-base selection as changed-content utility admission.
+    // First pin alone does not expand registration gates to unchanged modules.
+    private static void AddInformationRegistrationFindings(
+        RuleEvaluationContext context, ImmutableArray<RuleFinding>.Builder findings)
+    {
+        foreach (var path in SelectedPaths(context).Where(path => !FrozenStatePath.IsUnderRoot(path.Value)))
+        {
+            if (!context.Lean.Report.Files.TryGetValue(path, out var report)
+                || report.Error is not null || report.InformationRegistrationErrors is not { } errors)
+            {
+                findings.Add(new RuleFinding(path.Value,
+                    $"INFORMATION-REGISTRATION-EVIDENCE-MISSING module={path.Value}"));
+                continue;
+            }
+            foreach (var message in errors) findings.Add(new RuleFinding(path.Value, message));
+        }
     }
 
     private static IEnumerable<RepoPath> SelectedPaths(RuleEvaluationContext context) =>

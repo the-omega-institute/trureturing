@@ -1,0 +1,15 @@
+**32.5 全实域的正支撑。** 取薄层内任一实际角点 \(x\),记
+\(\bar x=\frac14\sum_i x_i\in I\)、\(m=\min_i x_i\ge\log25>0\)。
+令 \(w_i=x_i-m\ge0\)、\(s=\sum_i w_i=4(\bar x-m)\)。由
+\(\delta_i\le|x_i-\bar x|\) 及非负数的 \(\sum_i w_i^2\le s^2\),有
+\[
+V_0\le\sum_i(x_i-\bar x)^2
+=\sum_i w_i^2-s^2/4\le3s^2/4=12(\bar x-m)^2.
+\]
+于是 \(\rho\le\bar x-m\),而 \(\mu\ge\bar x\),故
+\[
+\boxed{H\ge L\ge m\ge\log25>0.}
+\]
+这是对每一个可容许实薄层的解析证明,包括角点落在端点、零距离和零方差。
+所有后续饱和区间都保留实际角点,故逐点继承正域;有限程序的支撑检查只是固定输入链接。
+

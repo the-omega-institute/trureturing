@@ -1,0 +1,14 @@
+**定理 244（联合预算的精确首项递推）。** 对定义 243 的全部参数，有 $D(i,a,N,b,0)=1$；对 $K\ge1$，
+$$
+D(i,a,N,b,K)=\max\left(
+\{1\}\cup
+\left\{(e+1)D\left(i+1,e,\left\lfloor\frac N{p_i^e}\right\rfloor,
+ b-\ell_Z(e),K-1\right):
+1\le e\le a,\ \ell_Z(e)\le b,\ p_i^e\le N\right\}\right).
+$$
+而顶层满足
+$$
+\mathcal J(N,b,K)=D(1,a_N,N,b,K).
+$$
+常数集合 $\{1\}$ 表示结束尾部，不表示跳过一个素数后再开始。
+

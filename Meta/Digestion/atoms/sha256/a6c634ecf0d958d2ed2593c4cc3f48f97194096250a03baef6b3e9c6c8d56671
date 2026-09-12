@@ -1,0 +1,16 @@
+### 对六维 symmetry budget 的意义
+
+对 `S=E_0+omega E_1+omega^2 E_2` 和两个 MUB contexts，如果几何饱和 adapter 给出：
+
+```math
+S=\mathsf E_C(S)+\mathsf E_D(S),
+```
+
+则本定理推出：
+
+```math
+\boxed{(\alpha_S(C),\alpha_S(D))\in\{(2,0),(0,2)\}.}
+```
+
+特别排除 `(1,1)`。因此实际 branch certificate 若能证明每个 completion 的 context affinity 至少一，就足以排除 quartet。这里不再需要从总 affinity 推出逐行 collision。实际 strict-X 下界本身仍是开放目标。
+

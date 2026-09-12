@@ -121,7 +121,7 @@ public sealed class R15ScopeNarrowingTests
 
     [Fact]
     [BaseFactScopeProbe(17)]
-    public void Sl017LiteratureFindingSurvivesUnrelatedLeanDelta()
+    public void Sl017HistoricalLiteratureFindingSurvivesUnrelatedLeanDelta()
     {
         const string invalidQueries = """
             schema_version: 1
@@ -136,11 +136,9 @@ public sealed class R15ScopeNarrowingTests
         }
 
         var unrelated = Fixture();
-        AssertNoFinding(
-            Execute(unrelated, UnrelatedLeanPath),
-            17,
-            "invalid or duplicate query id",
-            "Library/queries.yaml");
+        Assert.DoesNotContain(
+            Execute(unrelated, UnrelatedLeanPath).Diagnostics,
+            diagnostic => diagnostic.RuleId == RuleId.CreateKnown(17));
 
         var changed = Fixture();
         AssertFinding(

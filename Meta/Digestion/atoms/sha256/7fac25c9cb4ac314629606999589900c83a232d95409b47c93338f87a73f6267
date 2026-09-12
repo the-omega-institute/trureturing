@@ -1,0 +1,58 @@
+## 12. Literature-guided continuation beyond scalar growth
+
+The checked version of Chen, Shao and Shi [1] remains v1 of 3 April 2026.
+Its family-uniform fixed-depth definition counts all depths up to k and takes
+suprema over roots and finite domains. Our complete-process and finite-domain
+count theorems still require a partition-polynomial/deletion-tree identification,
+the four-neighbor root wrapper, and this uniform analytic interface before any
+complex zero-free conclusion can be claimed.
+
+Vera, Vigoda and Yang [4, Section 5, version 2] already use type-dependent
+piecewise-linear message functions and linear programming to prove stronger
+spatial-mixing conditions than scalar branching estimates alone. Their
+criterion motivates the next certificate target on our actual geometric types:
+
+\[
+ x_i=(1+\lambda\prod_jx_j)^{-1},\qquad
+ (1-x_i)\sum_j\Psi_{t_j}(x_j)<\Psi_i(x_i).
+\]
+
+For positive decreasing affine pieces Psi_i(x)=b_i-a_i*x on intervals [X_i,Y_i],
+a sufficient row is
+
+\[
+ (1-X_i)\sum_j(b_{t_j}-a_{t_j}X_{t_j})
+ < b_i-a_iY_i.
+\]
+
+Only interval tuples consistent with the actual parent recursion are relevant.
+Every required child-pruning/boundary configuration must be included, and strict
+positivity of all message pieces must be checked. A fitted derivative at one
+fixed point does not certify strong spatial mixing. The piecewise-affine method
+and this sufficient inequality are prior art from [4], not a new method claimed
+by this repository.
+
+For the zero-free target, real contraction must additionally be extended to a
+common complex neighborhood under valid regularity and denominator conditions.
+Piecewise real messages do not themselves provide a holomorphic coordinate
+change. One must either construct a suitable smooth/analytic approximation with
+a retained strict margin or apply an independently proved complex-extension
+theorem with all of its hypotheses discharged. No such nonlinear message
+certificate or complex extension has been constructed in this increment.
+
+The next substantive target is therefore a geometry-specific rational
+contraction certificate at a parameter strictly above 2.538, or a stronger
+certified geometric growth bound below 2.429. Larger memory is now justified by
+a complete fixed-order hierarchy, while the type-dependent route can use the
+full geometry rather than reducing all types to a single growth constant.
+Neither target is promised by the present radius-four certificate.
+
+Cross-author comparison informed this separation. Loning's #5326 distinguishes
+behavioral compression from preservation of the mathematical quantity consumed
+downstream. The newer #5882 supplies an explicit determinant-loss family even
+under small balanced behavior error. Our shared-weight packing accordingly
+preserves every mask and direction; it is not a behavioral quotient. The recent
+#5602 actual prolate-model comparison likewise emphasizes deriving the relation
+between concrete objects before transporting estimates. These PRs were read as
+research context, not imported as proofs of hard-core facts.
+

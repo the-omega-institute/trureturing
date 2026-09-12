@@ -1,0 +1,5 @@
+**定理 440.11。** 对每个固定有限原集合论公式 $\varphi$ 及任意集合参数，有
+$$
+\varphi(x_1,\ldots,x_r)\iff\varphi^Z(\operatorname{Enc}(x_1),\ldots,\operatorname{Enc}(x_r)),
+$$
+其中成员改为 $\in_Z$，量词遍历全部有效码，已定义函数先展开其图及域。只加入这些定义与已证性质对原集合论语言是定义性保守扩充。

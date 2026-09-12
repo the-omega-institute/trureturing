@@ -1,0 +1,27 @@
+**定义 362.1。** 在定义 341.1 的精确像上记限制双射
+$$
+b_{\rm rec,A}=\operatorname{rec}_{\rm reg}|_{B_A^{\rm cap}}:
+B_A^{\rm cap}\longrightarrow\mathsf{Rec}_A^{\rm cap},\qquad
+b_{\rm dig,A}=\operatorname{dig}_{\rm reg}|_{B_A^{\rm cap}}:
+B_A^{\rm cap}\longrightarrow\mathsf{Dig}_A^{\rm cap},
+$$
+其逆分别为
+$$
+b_{\rm rec,A}^{-1}=\operatorname{unrec}_{\rm reg}|_{\mathsf{Rec}_A^{\rm cap}},\qquad
+b_{\rm dig,A}^{-1}=\operatorname{undig}_{\rm reg}|_{\mathsf{Dig}_A^{\rm cap}}.
+$$
+相应的精确观察拓扑定义为
+$$
+\tau_{\rm rec,+,A}=\{b_{\rm rec,A}[U]:U\in\tau_{+,A}\},\qquad
+\tau_{\rm dig,+,A}=\{b_{\rm dig,A}[U]:U\in\tau_{+,A}\}.
+$$
+对坐标拓扑及每个 $\tau_{\mathcal C,A}$，分别沿同一双射取直接像拓扑，保留所选源拓扑作为参数。这些是指定的运输拓扑，不把它们当作原始有限记录字上未声明的通常拓扑。
+
+对任意所列集合载体 $Y$ 及指定拓扑 $\sigma$，仍使用第 318–320、336、341 条的
+$$
+Y^*=\operatorname{Enc}[Y]=\operatorname{El}(\operatorname{Enc}(Y)),\qquad
+\operatorname{enc}_Y=\operatorname{Enc}|_Y:Y\longrightarrow Y^*,\qquad
+\sigma^*=\{\operatorname{Enc}[U]:U\in\sigma\}.
+$$
+逆为 $\operatorname{Dec}|_{Y^*}$。这里 $Y$ 可取 $B_A^{\rm cap}$、坐标 $X_A^{\rm cap}$、两个记录像、$\mathbb Q^\omega$、$\mathbb R$、$\mathbb T$ 或实际观察乘积；只在已指定拓扑的载体上使用拓扑运输。$\operatorname{Enc}(Y)$ 是载体的单个码，$Y^*$ 是其外部成员像，$\sigma^*$ 是外部开集族。
+

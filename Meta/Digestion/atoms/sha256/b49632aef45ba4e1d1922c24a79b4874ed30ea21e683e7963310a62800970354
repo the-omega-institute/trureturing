@@ -1,0 +1,2 @@
+**定义 327.1。** 对 $r\ge2$ 定义 $H_r=\{u\in\mathsf V_{\rm reg}:r\mid u_0\}$。令 $f_{\rm div}:\mathsf V_{\rm reg}\to\mathsf D_{\rm rat}$ 是基值 $f_{\rm div}(\varepsilon_n)=[1/(n+1)]_{\rm rat}$ 唯一确定的同态，并置 $2\mathsf V_{\rm reg}=\{2v:v\in\mathsf V_{\rm reg}\}$。
+

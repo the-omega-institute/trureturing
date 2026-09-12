@@ -1,0 +1,34 @@
+**定理 260（域、值及原图与数字图的比较）。** 对第 259 条的任意数据及全部 $x\in\prod_i A_i$，有
+$$
+x\in D\iff Bx\in\operatorname{dom}(f^b),\qquad
+f^b(Bx)=b_o(f(x))\quad(x\in D),\qquad
+\operatorname{ran}(f^b)=b_o[\operatorname{ran}(f)].
+$$
+严格总化满足 $\widehat{f^b}(Bx)=b_o^\bot(\widehat f(x))$。令普通图分别为
+$$
+G_f=\{\langle x,f(x)\rangle:x\in D\},\qquad
+G_{f^b}=\{\langle c,f^b(c)\rangle:c\in B[D]\}.
+$$
+对 $c=T_r(c_1,\ldots,c_r)$ 置
+$$
+h_i(c_i)=\operatorname{Enc}(b_i^{-1}(c_i)),\quad
+h_o(d)=\operatorname{Enc}(b_o^{-1}(d)),\quad
+H(c)=T_r^Z(h_1(c_1),\ldots,h_r(c_r)).
+$$
+则两个图码精确满足
+$$
+\begin{aligned}
+\operatorname{Enc}(G_f)
+ &=\operatorname{Pack}\{\langle H(c),h_o(d)\rangle_Z:
+                         \langle c,d\rangle\in G_{f^b}\},\\
+\operatorname{Enc}(G_{f^b})
+ &=\operatorname{Pack}\{\langle\operatorname{Enc}(c),\operatorname{Enc}(d)\rangle_Z:
+                         \langle c,d\rangle\in G_{f^b}\}.
+\end{aligned}
+$$
+前一式所指原函数，后一式所指数字函数；普通 $G_{f^b}$ 又是另一层对象。它们不因所含边有双射而被认作同一个集合。语义定义域分别为 $\operatorname{Enc}(D)$、$\operatorname{Enc}(B[D])$，语义值域分别为 $\operatorname{Enc}(\operatorname{ran}(f))$、$\operatorname{Enc}(b_o[\operatorname{ran}(f)])$。
+
+**证明。** 若 $Bx\in B[D]$，存在 $y\in D$ 使 $Bx=By$，$B$ 单射给 $x=y$；反向直接取像。域内代入定义并用 $B^{-1}B=\operatorname{id}$ 得求值式。每个输出由一个域内输入产生，反向每个 $b_o(f(x))$ 也是新图的值，故值域等式成立。按 $x\in D$ 与否分类，成功用求值式，失败用已证域等价，即得严格总化式。
+
+对任意新边 $\langle c,d\rangle$，$x=B^{-1}c\in D$、$y=b_o^{-1}d=f(x)$，第 258 条给 $H(c)=\operatorname{Enc}(x)$。第 74 条将这条边对应为 $\operatorname{Enc}(\langle x,y\rangle)=\langle H(c),h_o(d)\rangle_Z$。每条原边反向唯一给出新边，故第 73 条的 $\operatorname{Pack}$ 给第一图式。对新边自身应用第 74、73 条得第二式。逐边对应还将“在域内至少有一条边”和“同一输入至多有一条边”分别双向保持；因此语义求值确为所述唯一值，定义域和值域也得到所列式子。空元数、空域照此成立。这里复用第 80–81 条的图与严格失败方法；图本身可以无限，仅元数要求有限。证毕。
+

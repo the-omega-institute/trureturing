@@ -1,0 +1,18 @@
+**33.12 Completeness of prices and uniqueness of vectors.** For the finite-height
+program, a price attaining the optimum must have zero 33.10 gap at \(y^*\).
+A filled coordinate then requires \(\lambda\le s_p\); an empty one requires
+\(\lambda\ge s_p\); a fractional one requires \(\lambda=s_p\).
+Positive resource slack requires \(\lambda=0\). These necessary conditions
+give exactly all the sets in 33.11, including their closed endpoints.
+They also characterize objective equality. In an open prefix interval choose
+its positive pivot price. Since all four densities are distinct, zero box gap
+forces the earlier coordinates to 1 and later coordinates to 0, and zero budget
+gap fixes the remaining fraction. At an internal prefix choose a price strictly
+between the adjacent densities; this forces every coordinate of that prefix
+vector. At \(r=0\), feasibility already forces \(y=0\). At \(r\ge H_4\),
+choose price 0; positive densities force every coordinate to 1. Thus, for every
+real \(r\ge0\), objective equality occurs exactly at \(y=y^*\).
+In the full multiplier formulation, zero complementary products and stationarity
+also force \(\mu_p,\nu_p\) to be the formulas in 33.10 for each listed price;
+there are no additional optimal nonnegative box multipliers.
+

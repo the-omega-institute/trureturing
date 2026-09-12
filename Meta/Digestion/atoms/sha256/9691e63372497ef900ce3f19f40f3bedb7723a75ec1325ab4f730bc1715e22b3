@@ -1,0 +1,22 @@
+### 38.2 数据与几何来源
+
+固定种子、六十个 signed-Cayley 中心和标号与第 35、36 节一致。中心取自已经提交的 `docs/develop/certificates/real_x_two_relation/centers.txt`。普通管半径为 `1/16`，标签 5 使用原强不可扩展程序已处理的 `1/32` 细管。阈值为：
+
+```math
+\tau=1/256,\quad\eta=\tau^2,\quad\mu=3/4.
+```
+
+本次使用另一份同作者实现，重新计算全部 1830 对圆弧整管包含和 60 对标签 5 的不等半径包含。所有圆弧端点、支持函数对偶检验、平方根上界和取整均采用有理数。它不是独立作者审稿，也不替代圆弧包含的分析证明。
+
+重算所得关系为：
+
+```text
+O: 372 undirected edges
+B before refinement: 875 undirected edges
+B after refinement: 859 undirected edges
+removed B-neighbors of label 5:
+14,15,19,23,24,27,31,32,42,45,46,48,49,52,56,59
+```
+
+O 仍保留未细化的大管上界，故允许比实际更多的边。B 的十六条删除必须由已有残差保持的标签 5 局部覆盖以及不等半径的真实包含支持。本次没有重跑该局部覆盖或数百万盒的完整全域遍历，不把旧报告的成功标记变成新执行。
+

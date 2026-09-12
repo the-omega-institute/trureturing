@@ -52,19 +52,25 @@ def prepareAnalysisQualifiedCounts (counts : SealArenaRecord) (available : Array
   for row in counts.theorems do
     let unitName := qualified row.theoremName theoremUnitSuffix
     let realizationName := qualified row.theoremName primitiveRealizationSuffix
-    let certificateName := qualified row.theoremName "__lowers_escape"
+    let certificateName := qualified row.theoremName row.certificate.suffix
     for (source, target) in #[(row.unitName, unitName), (row.realizationName, realizationName)] do
       if source != target then
         let _ ← ProjectionProof.value target (← mkConstWithFreshMVarLevels source)
     certificateAlias row.certificateName certificateName
-    theorems := theorems.push { row with unitName, realizationName, certificateName }
-  let irredundantCertificateName := qualified metadata.arenaName "__catalog_irredundant"
-  certificateAlias counts.irredundantCertificateName irredundantCertificateName
+    let certificate := match row.certificate with
+      | .positive _ => OccurrenceCertificate.positive certificateName
+      | .trivial _ => .trivial certificateName
+    theorems := theorems.push { row with unitName, realizationName, certificate }
+  let verdictName := qualified metadata.arenaName counts.verdict.suffix
+  certificateAlias counts.verdict.name verdictName
+  let verdict := match counts.verdict with
+    | .irredundant _ => CatalogVerdict.irredundant verdictName
+    | .redundant _ => .redundant verdictName
   let units := theorems.map fun row => {
     theoremName := row.theoremName, unitName := row.unitName, realizationName := row.realizationName,
     registrationModuleName := row.registrationModuleName, index := row.index : CatalogUnitRecord }
   return { counts with
-    theorems, irredundantCertificateName,
+    theorems, verdict,
     catalog := { metadata with units, localSealNames := false } }
 
 /-- Build analysis certificates from catalogs already published by seal. -/
@@ -99,10 +105,24 @@ def prepareAnalysisProofs (root : Name) (sealedRecords : Array SealArenaRecord) 
       let suite ← mkAppM ``projectionSuite #[rootExpr, vector]
       let _ ← ProjectionProof.value (root.str "__catalog_suite") suite
       let proposition ← mkAppM ``SystemCatalogIrredundant #[suite]
-      let instanceValue ← mkAppM ``projectionSystemDecidable #[rootExpr, vector]
-      let certificate ← ProjectionProof.proof (root.str "__system_catalog_irredundant")
-        (← mkAppOptM ``of_decide_eq_true
-          #[some proposition, some instanceValue, some (← mkEqRefl (mkConst ``Bool.true))])
+      let negative := sealedRecords.findIdx? fun record => match record.verdict with
+        | .irredundant _ => false | .redundant _ => true
+      let certificate ← if let some i := negative then do
+          let some record := sealedRecords[i]? | throwError "missing redundant catalog"
+          let notIrredundant ← mkAppM ``Iff.mp #[
+            ← mkAppM ``Catalog.catalogRedundant_iff_not_catalogIrredundant
+              #[← mkConstWithFreshMVarLevels record.catalog.catalogName],
+            ← mkConstWithFreshMVarLevels record.verdict.name]
+          let proof ← withLocalDeclD `positive proposition fun h => do
+            mkLambdaFVars #[h] (mkApp notIrredundant
+              (mkApp h (← ProjectionProof.fin i sealedRecords.size)))
+          let proof ← mkAppOptM ``id #[some (← mkAppM ``Not #[proposition]), some proof]
+          ProjectionProof.proof (root.str "__system_catalog_not_irredundant") proof
+        else do
+          let instanceValue ← mkAppM ``projectionSystemDecidable #[rootExpr, vector]
+          ProjectionProof.proof (root.str "__system_catalog_irredundant")
+            (← mkAppOptM ``of_decide_eq_true
+              #[some proposition, some instanceValue, some (← mkEqRefl (mkConst ``Bool.true))])
       pure certificate : ProjectionM _).run declarations
   pure { declarations := finalDeclarations, records, systemCertificate }
 

@@ -15,7 +15,8 @@ internal static class DigestionDecomposition
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
     internal static DigestionClausePlan Plan(DigestionLedgerEntry parent, ImmutableArray<byte> bytes,
-        TheoryAtomizer atomizer, TheoryAtomizerRules rules)
+        TheoryAtomizer atomizer, TheoryAtomizerRules rules, RepositorySnapshot? snapshot = null,
+        ImmutableArray<int> splitAt = default)
     {
         var frozen = DigestionAtom.FromFrozenCas(bytes);
         if (parent.CasRef != frozen.Fingerprints.RawSha256
@@ -38,10 +39,72 @@ internal static class DigestionDecomposition
         var matching = plans.Where(p => p.Parent.Fingerprints == frozen.Fingerprints).ToArray();
         if (matching.Length > 1)
             throw new FormatException("AMBIGUOUS duplicate parent clause plans");
-        var plan = matching.SingleOrDefault() ?? PlanClauses(frozen)
+        var canonical = matching.SingleOrDefault() ?? PlanClauses(frozen);
+        var explicitPlan = splitAt.IsDefaultOrEmpty ? null : PlanAt(frozen, splitAt);
+        if (canonical is not null && explicitPlan is not null
+            && !canonical.Children.Select(static child => child.Fingerprints)
+                .SequenceEqual(explicitPlan.Children.Select(static child => child.Fingerprints)))
+            throw new FormatException("PLAN_CONFLICT split points differ from canonical clause plan");
+        var plan = canonical ?? explicitPlan ?? PersistedPlan(parent, frozen, snapshot)
             ?? throw new FormatException("parent CAS blob has no clause plan (NO_CLAUSE_PLAN)");
         RequireValid(plan);
         return plan;
+    }
+
+    private static DigestionClausePlan PlanAt(DigestionAtom parent, ImmutableArray<int> splitAt)
+    {
+        var segments = ImmutableArray.CreateBuilder<DigestionSegment>(splitAt.Length + 1);
+        var start = 0;
+        foreach (var end in splitAt.Add(parent.RawBytes.Length))
+        {
+            if (end <= start || end > parent.RawBytes.Length
+                || end == parent.RawBytes.Length && segments.Count < splitAt.Length)
+                throw new FormatException("SPLIT_AT_INVALID cuts must be strictly increasing interior byte offsets");
+            var raw = parent.RawBytes[start..end];
+            try { _ = StrictUtf8.GetCharCount(raw.AsSpan()); }
+            catch (DecoderFallbackException)
+            {
+                throw new FormatException("SPLIT_AT_INVALID cut splits a UTF-8 character");
+            }
+            var child = DigestionAtom.FromFrozenCas(raw) with
+            {
+                StartByte = parent.StartByte + start,
+                EndByte = parent.StartByte + end,
+                Context = parent.Context,
+            };
+            segments.Add(new DigestionSegment(DigestionSegmentKind.Claim, child));
+            start = end;
+        }
+        var plan = new DigestionClausePlan(parent, segments.MoveToImmutable()) { IsExplicit = true };
+        RequireValid(plan);
+        return plan;
+    }
+
+    private static DigestionClausePlan? PersistedPlan(DigestionLedgerEntry entry,
+        DigestionAtom parent, RepositorySnapshot? snapshot)
+    {
+        if (entry.Receipts.ChainAtoms.IsEmpty || snapshot is null) return null;
+        var segments = ImmutableArray.CreateBuilder<DigestionSegment>(entry.Receipts.ChainAtoms.Length);
+        var start = parent.StartByte;
+        foreach (var childId in entry.Receipts.ChainAtoms)
+        {
+            if (!snapshot.TryGetFile(DigestionCasStore.RootPath + childId, out var blob))
+                throw new FormatException($"CHILD_CAS_MISSING atom_id={childId}");
+            try { _ = StrictUtf8.GetCharCount(blob.RawBytes.AsSpan()); }
+            catch (DecoderFallbackException)
+            {
+                throw new FormatException($"CHILD_CAS_INVALID_UTF8 atom_id={childId}");
+            }
+            var child = DigestionAtom.FromFrozenCas(blob.RawBytes);
+            if (child.Fingerprints.RawSha256 != "sha256:" + childId)
+                throw new FormatException($"CHILD_CAS_MISMATCH atom_id={childId}");
+            if (child.RawBytes.Length > parent.EndByte - start)
+                throw new FormatException("clause plan children exceed parent bytes");
+            child = child with { StartByte = start, EndByte = start + child.RawBytes.Length, Context = parent.Context };
+            segments.Add(new DigestionSegment(DigestionSegmentKind.Claim, child));
+            start = child.EndByte;
+        }
+        return new DigestionClausePlan(parent, segments.MoveToImmutable()) { IsExplicit = true };
     }
 
     internal static DigestionClausePlan? PlanClauses(DigestionAtom parent)

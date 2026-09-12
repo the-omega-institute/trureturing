@@ -1,0 +1,8 @@
+**证明。** 每个普通素数在递增枚举中恰出现一次，每个原始素数字 $a$ 恰为 $\zeta(\operatorname{val}(a))$ 且其值为素数。因此 $\operatorname{idx}_{\rm reg}(\lambda_{\rm reg}(n))=n$，反向 $\lambda_{\rm reg}(\operatorname{idx}_{\rm reg}(a))=a$，两个域及双逆均成立。
+
+第 317 条的状态逆在标签存在时解码其非零整数值，不存在时补零。其支撑正好是 $\operatorname{idx}_{\rm reg}[\operatorname{dom}(s)]$，有限性及所有复合恒等式直接用该条。这也给显示的状态域等式；零状态的记录为空，但状态自身仍是定义域为 $\omega$ 的无限总图。
+
+对任意 $t\in\mathsf{ProbeRec}$，在每个 $n$ 处解码给 $\mathsf D_{\rm rat}$ 中的值，故 $\operatorname{unprec}_{\rm rat}(t)\in\Theta_{\rm rat}$。第 332 条解码再编码恢复 $t$ 在每个 $\lambda_{\rm reg}(n)$ 的值，而标签满射覆盖其全部域，故总记录侧复合为恒等；反向逐 $n$ 编码再解码也为恒等。对任意有限记录 $c$，其域的 $\operatorname{idx}_{\rm reg}$ 像有限，解码给合法 $\mathsf{FinCoef}$。两个标签逆先恢复有限域，两个相位逆再恢复域内每个值，故有限侧的两个复合均为恒等。即使某值为零，其边也不删除，保证恢复的是整个有限域。限制等式两边的域同为 $\lambda_{\rm reg}[F]$，在 $\lambda_{\rm reg}(n)$ 处同取 $\operatorname{penc}(\theta_n)$，所以相等。
+
+$\mathsf{Pr}_Z$ 无限，故每个总探针记录的图都无限，零探针亦然。对任意固定有限 $F\subseteq\omega$，取 $n\notin F$，将一个总探针仅在 $n$ 处加上非零类 $[1/2]_{\rm rat}$，得到不同总探针而其 $F$ 限制不变。因此限制不是全探针的单射。更一般地，对 $A\subseteq\omega$ 令 $\theta^A_n=[1/2]_{\rm rat}$ 当 $n\in A$、否则为零；不同 $A$ 在某坐标给不同探针，这将 $\mathcal P(\omega)$ 单射入 $\Theta_{\rm rat}$。第 79 条的 Cantor 对角论证排除从后者到有限字的单射，经刚证双射也排除总探针记录的有限字编码。若另用变长有序列表，其序号域为 $r$、数字序号域为 $\zeta[r]$、长度为 $\zeta(r)$，按第 257–258 条处理；列表序号不是本条的素数标签，也不把不同元数的无标签元组合并。证毕。
+

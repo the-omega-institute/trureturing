@@ -1,0 +1,19 @@
+**命题 QI-P11（空性与严格失败像，repo-derived）。** 对固定消费者 $c$，令
+
+$$
+R_W=H[W],\qquad W_c=\{w\in W:H(w)\in D_c\}.
+$$
+
+则
+
+$$
+G_c[W]=
+\{\operatorname{ok}(v):v\in f_c[R_W\cap D_c]\}
+\cup
+\begin{cases}
+\{\bot\},&R_W\setminus D_c\ne\varnothing,\\
+\varnothing,&R_W\setminus D_c=\varnothing.
+\end{cases}
+\tag{QI-FAILURE-IMAGE}
+$$
+

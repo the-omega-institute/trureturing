@@ -62,11 +62,11 @@ $$C_{\mathrm{real}}=\overline{\operatorname{span}_{\mathbb{C}}\{F_{a}:a\in \math
 
 *Formalization.* `D5/S3/Observer/Hilbert/NymanHalflineZeroSeparation.fullRealClosure` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Luis Báez-Duarte (2002). *A strengthening of the Nyman-Beurling criterion for the Riemann Hypothesis*. URL: <https://arxiv.org/abs/math/0202141v2>.
 
 *Commentary.*
 
-C_real is a closed complex submodule of H formed from all real parameters. It is not defined by the natural cumulative family.
+C_real is a closed complex submodule of H formed from all real parameters. It makes the Introduction's span and closure explicit over C in the Lp quotient. It is not defined by the natural cumulative family.
 
 **Theorem 1.6 (Full real closure vanishes).**
 

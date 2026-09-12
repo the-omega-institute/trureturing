@@ -1,0 +1,35 @@
+**命题 68（二叶复制读数超出有限单孔后处理闭包，repo-derived）。** 沿用命题 66 的 $\mathcal E$，令
+\[
+\begin{aligned}
+\mathcal E_1&=\{q\circ C:C\text{ 为定义 16 的签名 }\Sigma_{{\rm cau},t}
+ \text{ 下的固定总单孔上下文}\},\\
+\ell_j&=\operatorname{leaf}(j),\qquad T_{\rm leaf}=\{\ell_j:j\in\mathbb N\},\\
+L_{=}&=\{\operatorname{pair}(\ell_j,\ell_j):j\in\mathbb N\},\qquad
+H_{=}(X)=q\bigl(F_{L_{=}}(X\boxtimes X)\bigr),\\
+z_r(X)&=\sum_{\substack{e\in A_X\\\rho(e)=r}}\sigma(e)\quad(r\in T).
+\end{aligned}
+\]
+其中 $L_{=}$ 是定义 13 已有的固定来源筛选参数：它比较两父的叶来源树相等，不比较父事件的出现标识。$L_{=}$ 与 $H_{=}$ 在任何被挑战的上下文族之前固定。以下三项成立。
+
+1. $H_{=}\in\mathcal E$，由定义 34 的固定总项 $F_{L_{=}}(X\boxtimes X)$ 表达，该项恰含两个输入叶，且对每个 $X\in\mathcal B$，
+   \[
+   H_{=}(X)=\sum_{r\in T_{\rm leaf}}z_r(X)^2
+   =\sum_{j\in\mathbb N}z_{\ell_j}(X)^2.
+   \tag{LEAF-SQUARE-READOUT}
+   \]
+   每个输入只有有限个非零来源电荷。这里平方和只遍历叶来源，与所固定的 $L_{=}$ 一致。
+2. 对任意整数 $m\ge0$ 及任意 $h_1,\ldots,h_m\in\mathcal E_1$，存在 $X,Y\in\mathcal B$，使
+   \[
+   \bigl(\forall i\in\{1,\ldots,m\},\ h_i(X)=h_i(Y)\bigr)
+   \quad\land\quad H_{=}(X)\ne H_{=}(Y).
+   \tag{FINITE-ONE-HOLE-SEPARATION}
+   \]
+   量词次序为：先固定 $m$、全部 $h_i$ 的总单孔上下文 $C_i$ 及其所有参数，再构造供整个有限族共用的 $X,Y$；见证允许依赖该有限族。
+3. 对每个这样的有限族及任意函数 $g:\mathbb Z^m\to\mathbb Z$，都有
+   \[
+   H_{=}\ne g\circ(h_1,\ldots,h_m),\qquad
+   \mathbb Z[\mathcal E_1]\subsetneq\mathcal E.
+   \tag{FINITE-POSTPROCESSING-OBSTRUCTION}
+   \]
+   此处 $g$ 不限于多项式，也不附加可计算性假设；$\mathbb Z[\mathcal E_1]$ 指由整数常函数和 $\mathcal E_1$ 在逐点加、减、乘下生成的函数环。
+

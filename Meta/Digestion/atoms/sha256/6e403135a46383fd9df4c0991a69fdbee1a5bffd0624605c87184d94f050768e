@@ -1,0 +1,15 @@
+**定义 369.1。** 沿用 $\phi=(1+\sqrt5)/2$，定义环境特征及其容量限制
+$$
+g_{\rm add}(u)=\left[\phi\sum_{n\in\operatorname{supp}(u)}u_n\right]\quad(u\in V).
+$$
+对非负有限状态 $u\in B$，沿用第 314 条的正整数标量
+$$
+N(u)=\operatorname{scal}_{\rm reg}(u)
+=\prod_{n\in\operatorname{supp}(u)}p_n^{u_n},\qquad N(0)=1,
+$$
+并令 $F_{\rm scal}(u)=[\phi N(u)]$。其标量三观察仍为第 287、362.7 条及 [GICT 定义 1.4、1.7](GICT.md) 的
+$$
+\Gamma_+(N(u))=(\lfloor\log_\phi N(u)\rfloor,\zeta(N(u)),[\phi N(u)]).
+$$
+$\Gamma_+$ 的输入仍为正整数；其首分量不改变容量函数 $A$ 的含义。
+

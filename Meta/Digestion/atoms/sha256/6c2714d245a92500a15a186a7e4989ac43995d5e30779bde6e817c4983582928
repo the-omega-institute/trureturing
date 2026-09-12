@@ -1,0 +1,60 @@
+### 42.8 完成域增强与根准入测试
+
+**定义 QI-D6（准入完成域）。** 若要求任意等价代表替换都保持准入，定义
+
+$$
+\begin{aligned}
+D_A^K(a)&=\{r\in\mathcal R_A(\rho_A(a)):a\cup r\in K\}
+\subseteq J_{I\setminus A},\\
+\Sigma_A^+(a)&=(\rho_A(a),O_A(a),D_A^K(a)),\\
+a\equiv_A^+a'&\iff a\equiv_Aa'\ \text{且}\ D_A^K(a)=D_A^K(a'),\\
+q_A^+&:J_A\twoheadrightarrow Q_A^+=J_A/{\equiv_A^+}.
+\end{aligned}
+\tag{QI-ADMISSION-SIGNATURE}
+$$
+
+**命题 QI-P8（增强商的拼接与准入，repo-derived）。** 这是保留边界、全部原始算术观察及完整准入完成域的最粗商；它是拼接同余，并能在根精确筛出 $W$ 的像。
+
+**证明。** $\equiv_A^+$ 是完整增强签名的核。命题 QI-P3 的必要性、单值图构造与唯一因子化证明逐字适用于这个签名，所以最粗性指上述三项契约。
+
+取命题 QI-P5 的初始匹配，并同时假设 $a\equiv_A^+a'$、$b\equiv_B^+b'$。边界及原始结果的部分已经由 QI-P5 保证。对任意完整外部记录 $r\in\mathcal R_C(\rho_C(a\cup b))$，先在 $A$ 的补集 $b\cup r$ 中使用完成域相等，再在 $B$ 的补集 $a'\cup r$ 中使用完成域相等，得到
+
+$$
+a\cup b\cup r\in K
+\iff a'\cup b\cup r\in K
+\iff a'\cup b'\cup r\in K.
+\tag{QI-K-SUBSTITUTION}
+$$
+
+两个补集的合法性由相同的完整边界运输保证，不能省略第二个等价假设。故合并后完成域相等，连同全部原始观察相等给出 $\equiv_C^+$。相应拼接也由 QI-P5 所用形式的单值图定义；QI-P6 的限制与合并证明给出相同的双向可达及有限收缩归纳。
+
+根的补集只有空赋值，因此
+
+$$
+D_I^K(w)=
+\begin{cases}
+\{\varnothing\},&w\in K,\\
+\varnothing,&w\notin K.
+\end{cases}
+\tag{QI-ROOT-ADMISSION}
+$$
+
+图 $\{(q_I^+(w),\mathbf1_K(w)):w\in J\}$ 定义根准入函数 $\alpha_I^+:Q_I^+\to\{0,1\}$。其中值为 $1$ 的类恰是 $q_I^+[W]$，因为每类准入恒定。图 $\{(q_I^+(w),G(w)):w\in J\}$ 同样定义 $\bar G^+:Q_I^+\to\mathcal V_{\mathcal F}$，故
+
+$$
+\bar G^+[\{z\in Q_I^+:\alpha_I^+(z)=1\}]=G[W].
+\tag{QI-ADMITTED-ROOT-IMAGE}
+$$
+
+这只是准入可从接口恢复的语义结论，没有断言该函数可计算。$K$ 仍通过其全部兼容效果存在。证毕。
+
+若另一个契约只观察 $K$ 准入的补全，应改用
+
+$$
+\bigl(\rho_A(a),D_A^K(a),
+[\,r\mapsto G(a\cup r)\,]_{r\in D_A^K(a)}\bigr).
+\tag{QI-PARTIAL-CONTRACT}
+$$
+
+相等必须同时要求边界相等、定义域相等和该域上全部输出相等。它可比“原始观察加准入”更粗，因为无需记录被排除补全的原始算术值；两者不是同一个契约。其核仍有 QI-P3 的普遍性质，且仍为拼接同余：对每个完整外部 $r$，完成域相等给 (QI-K-SUBSTITUTION)；在共同准入的 $r$ 上，两次替换分别处于共同准入域内，所以再得 (QI-SUBSTITUTE-A)、(QI-SUBSTITUTE-B)。根仍用 (QI-ROOT-ADMISSION) 筛选，并在准入类上恢复联合结果。被排除的补全始终不同于返回 $\bot$ 的准入补全。
+

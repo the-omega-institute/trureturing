@@ -1,0 +1,15 @@
+### 6. 已有概率判据与本轮位置
+
+Nakamura–Suzuki, *On infinitely divisible distributions related to the Riemann hypothesis*, Statistics & Probability Letters 201 (2023), 109889, arXiv:2306.08317，讨论由实际 g_zeta 构造的 exp(g_zeta)。Suzuki, *Weil's quadratic form via the screw function*, arXiv:2606.09096，讨论实际 screw 核与 Weil 形式。当前 arXiv 摘要记录已核对；本轮没有重新独立证明这两篇论文的全部结果。
+
+本轮构造的曲率测度 mu 与演化测度 mu_t 是不同对象；它们的矩分别是 c_n 与 exp(-t psi_n)。它们也没有被未经证明地等同于归一化 Xi 的概率分布或 Nakamura–Suzuki 的实轴概率律。
+
+进一步的纸面连接可以直接从本轮真实能量出发。对整数 n，将有限几何和扩展成 b_n(z)，使 b_(m+n)=b_m+z^m b_n。则 |b_j-b_k|^2=|b_(j-k)|^2。对和为零的有限实系数 r_j，
+
+\[
+\sum_{j,k}r_jr_k L_{|n_j-n_k|}
+=-2a\int\left|\sum_jr_jb_{n_j}(z)\right|^2d\mu(z)\le0.
+\]
+
+这给出标准条件负定证明的具体被积函数。复系数可按实部和虚部分开处理实对称核。把这一步与 Schoenberg 指数正定性接入本轮实际半群构造，是明确的下一形式化接口；本节未把这个纸面推导计入已写出的 Lean 公共声明。
+

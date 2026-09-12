@@ -1,0 +1,4 @@
+**证明。** 配对、函数求值、集合像、并集均由定理 74 交换。旧标签互异，新标签又与二者互异，故编码单射保持所有出现身份；来源相等仍只比较 \(\rho\) 的值，不等同事件出现。传递闭包由有限非空路径的存在公式刻画，定理 76 保持每条路径及其端点，所以新偏序也精确比较。新增父边严格增加时间，旧边已严格增加时间，故闭包合法。时间复合的全称守卫由于量词遍历 \(E_X,E_Y\) 而保持；空档案的 \(m=+\infty,M=-\infty\) 和空当前域的 \(s=-\infty\) 同样运输，不以当前最高时刻替代全档案端点。
+
+因此对 \(\circ\in\{\boxplus,\triangleright,\boxtimes\}\) 的每个合法输入，\(\operatorname{Enc}(X)\circ^*\operatorname{Enc}(Y)=\operatorname{Enc}(X\circ Y)\)，补集亦为 \(N^*(\operatorname{Enc}(X))=\operatorname{Enc}(C,\Omega\setminus A)\)。编码相等、历史同构和读数相等的保留与反映各自成立，三者不合并。具体取 \(X=Y=\mathbf i(1),Z=\mathbf i(2)\)，每次乘积档案大小为 \(|E_X|+|E_Y|+|\Omega_X||\Omega_Y|\)，遂有两个括号的档案大小 \(28,32\)，读数却同为 \(2\)。编码后语义档案仍有这两个不同基数，故仍非历史同构。引文为[《情境时空算术》定义 4–8、命题 2–4](CONTEXTUAL_SPACETIME_ARITHMETIC.md)。证毕。
+

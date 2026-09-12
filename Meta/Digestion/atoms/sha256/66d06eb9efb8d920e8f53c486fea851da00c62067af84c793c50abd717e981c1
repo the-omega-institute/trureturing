@@ -1,0 +1,18 @@
+**定理 370.7。** 沿用第 341.1、362.1 条的像域
+$$
+\mathsf{Rec}_A^{\rm cap}=\operatorname{rec}_{\rm reg}[B_A^{\rm cap}],\qquad
+\mathsf{Dig}_A^{\rm cap}=\operatorname{dig}_{\rm reg}[B_A^{\rm cap}].
+$$
+对 $s\in\mathsf{Rec}_{\rm reg}$ 及 $d\in\mathsf{Dig}_{\rm reg}$，其像域成员条件分别恰为 $\operatorname{unrec}_{\rm reg}(s)\in B_A^{\rm cap}$ 及 $\operatorname{undig}_{\rm reg}(d)\in B_A^{\rm cap}$。原记录和总数字图的限制在这些域上与所列逆互逆；它们不给 $X_A^{\rm cap}\setminus B_A^{\rm cap}$ 增加记录。
+
+对每个有限 $I\subseteq\omega$，仍使用 $B_{A,I}^{\rm cap}$、$P_I$、$A_I$ 及
+$$
+R_{A,I}:B_{A,I}^{\rm cap}\leftrightarrow S(P_I,A_I):Z_{A,I}.
+$$
+其配置码双射的精确像及逆仍为
+$$
+\gamma_{P_I,A_I}\circ R_{A,I}:B_{A,I}^{\rm cap}\longrightarrow\mathcal C_{P_I,A_I,Z},
+\qquad Z_{A,I}\circ\delta_{P_I,A_I}.
+$$
+以上双射在指定原拓扑及其直接像拓扑下为同胚。
+

@@ -1,0 +1,12 @@
+**定理 307。** $\mathsf V_{\rm reg}$ 是以 $(\varepsilon_n)$ 为基的可数无限自由阿贝尔群。$\Psi_{\rm reg}$ 和 $\Psi_I$ 均为单射同态，且
+$$
+\operatorname{res}^{\mathbb T}_I\circ\Psi_{\rm reg}
+=\Psi_I\circ\operatorname{res}^{\mathbb Z}_I
+\quad\text{于 }\mathsf V_{\rm reg}.
+$$
+$\Psi_{\rm reg}$ 是 $(\mathsf V_{\rm reg},\tau_\Psi)$ 到其相位像子空间的同胚。给定任意增量集 $\mathcal S\subseteq\mathsf V_{\rm reg}$ 和起点 $u_0$，若每个 $s,-s$ 在每个状态都允许、没有守卫，且仅允许有限词，则精确可达集为
+$$
+u_0+\langle\mathcal S\rangle_{\mathbb Z},
+$$
+其中生成子群只含有限整数线性组合。
+

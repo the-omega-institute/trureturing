@@ -1,0 +1,40 @@
+**35.22 Proposition (Exact strict original-domain threshold and 10080).** For either triple,
+define the original-domain intersection
+\[
+\mathscr S_n=\{(M_0,M_1)\in\mathscr W_n:S_h+\log5040<M_0\}.
+\]
+Its source exponent budgets are \(M_j-S_h\); they are distinct from
+\(T_n=\min c_i\). Because \(\log2\) is the unique smallest step, the
+largest corner total is \(A_n+S_h\), and the second largest is
+\(A_n+S_h-\log2\). Every interval containing two corners has
+\(M_0\le A_n+S_h-\log2\). Thus nonemptiness of \(\mathscr S_n\) implies
+\(A_n>\log2+\log5040\). Conversely, under this strict inequality the closed
+slab
+\[
+[A_n+S_h-\log2,\ A_n+S_h]
+\]
+has width \(\log2>0\), two actual corner endpoints, and lower endpoint
+strictly above the cutoff. This proves
+\[
+\boxed{\mathscr S_n\ne\varnothing\quad\Longleftrightarrow\quad
+A_n>\log2+\log5040.}
+\]
+At equality the domain is empty. This is a threshold on the sum \(A_n\),
+not on the minimum \(T_n\). It reproduces the exact 30.18/31.19 endpoint
+argument to make the present application self-contained.
+
+Equivalently \(\prod_i p_i^{m_i}>10080\), where
+\(10080=2\cdot5040=2^5\cdot3^2\cdot5\cdot7\). Equality is arithmetically
+impossible for \((2,3,5)\), whose product has no factor 7, and for
+\((2,3,7)\), whose product has no factor 5. The continuous-domain equality
+case nevertheless stays empty because the cutoff is strict. Since
+\(A_n\ge3T_n\to\infty\), every sufficiently late selected box has
+nonempty original domain. Discarding the finite earlier set changes neither
+index density nor eventual syndeticity nor the integer counting coefficients:
+\[
+C_{235}(X)=\frac{d_{235}}{3\log2}\log X+o(\log X),\qquad
+C_{237}(X)=\frac{d_{237}}{3\log2}\log X+o(\log X).
+\]
+Here the counts concern exactly the constructed valid boxes with nonempty
+original domain, represented injectively by their lower-corner integers.
+

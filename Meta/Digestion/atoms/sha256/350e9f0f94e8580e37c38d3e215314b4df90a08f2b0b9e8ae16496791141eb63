@@ -1,0 +1,8 @@
+**定义 366.1。** 对 $A\in\omega^\omega$、$\theta\in\mathbb T^\omega$，令 $b_n$ 为 $\theta_n$ 在 $[0,1)$ 中的唯一实代表。对全部 $n,k\in\omega$ 定义
+$$
+K_{n,k}=2^{n+k+2}(A_n+1),\qquad
+r_n^{(k)}=\frac{\lfloor K_{n,k}b_n\rfloor}{K_{n,k}},\qquad
+r^{(k)}\in\mathbb Q^\omega.
+$$
+另定义 $\tau_{\mathbb R}^{B}$ 为全部 $\theta\in\mathbb T^\omega$ 的观察 $\chi_\theta|_B$ 到通常圆周所生成的初始拓扑。这里下标 $\mathbb R$ 指任意实代表行的模一观察；每个总实行逐坐标取商给总圆周行，每个总圆周行用上述唯一代表反向取得实行。
+

@@ -1,0 +1,14 @@
+**引理 7（非负整数纤维中的平方和碰撞，repo-derived）。** 沿用 $\mathbb N=\{0,1,2,\ldots\}$。任给整数 $0\le m<s$、矩阵 $A\in\mathbb Z^{m\times s}$ 与 $b\in\mathbb Z^m$，存在 $u,v\in\mathbb N^s$，使
+\[
+Au+b=Av+b,\qquad \sum_{j=1}^s u_j^2\ne\sum_{j=1}^s v_j^2.
+\tag{FIBER-SQUARE-ESCAPE}
+\]
+成熟锚为教科书有限维线性代数的秩–零度定理：列数多于行数的矩阵在 $\mathbb Q$ 上有非零核向量。本条在此标准事实之上给出位于非负整数锥内的显式三点构造。
+
+**证明。** 将 $A$ 视为 $\mathbb Q^s\to\mathbb Q^m$ 的线性映射。其秩至多为 $m<s$，故核维数至少为 $s-m>0$。取非零有理核向量并乘以各坐标分母的公倍数，得到 $d\in\mathbb Z^s\setminus\{0\}$ 且 $Ad=0$。置 $z_j=|d_j|$。每个坐标均满足 $z_j\ge0$ 与 $z_j\pm d_j\ge0$，所以 $z,z+d,z-d\in\mathbb N^s$，并且三者的仿射像均为 $Az+b$。逐坐标展开平方，得
+\[
+\sum_j(z_j+d_j)^2+\sum_j(z_j-d_j)^2-2\sum_jz_j^2
+=2\sum_jd_j^2>0.
+\]
+如果 $z+d$ 和 $z-d$ 的平方和都等于 $z$ 的平方和，左端便为零，矛盾。令 $u=z$，在 $z+d,z-d$ 中取平方和不同于 $z$ 的一个作为 $v$，即得结论。$m=0$ 时仿射像落在单点集 $\mathbb Z^0$，上述秩论证与构造仍成立。若要求所有坐标严格为正，将 $z_j$ 换为 $|d_j|+1$，同一平方恒等式即给出严格正整数见证。证毕。
+

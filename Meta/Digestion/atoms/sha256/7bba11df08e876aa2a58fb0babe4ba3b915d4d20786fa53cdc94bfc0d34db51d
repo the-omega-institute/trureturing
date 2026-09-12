@@ -1,0 +1,33 @@
+**证明。** 对任意给定集合序数作递归，零步为空集，后继步用幂集，极限步先用替代收集此前各层，再取并集，故每层都是集合。超限归纳还给出各层递增且传递：零步成立；若 $V_\alpha$ 传递，则其每个元素是 $V_\alpha$ 的子集，所以 $V_\alpha\subseteq\mathcal P(V_\alpha)$；若 $z\in y\in\mathcal P(V_\alpha)$，则 $z\in V_\alpha\subseteq\mathcal P(V_\alpha)$，故后继层传递。极限层为递增传递集合之并，仍递增且传递。
+
+秩成员判据也作超限归纳。零层两侧均为假。后继步中，$x\in V_{\alpha+1}$ 当且仅当 $x\subseteq V_\alpha$，由归纳假设当且仅当每个 $y\in x$ 满足 $\operatorname{rk}(y)<\alpha$。这恰等价于
+$$
+\operatorname{rk}(x)=\sup_{y\in x}(\operatorname{rk}(y)+1)\le\alpha,
+$$
+也就是 $\operatorname{rk}(x)<\alpha+1$，空集时同样成立。非零极限步中，属于 $V_\lambda$ 当且仅当对某个 $\alpha<\lambda$ 有 $\operatorname{rk}(x)<\alpha$；极限序数对后继封闭，使此条件等价于 $\operatorname{rk}(x)<\lambda$。有限幂集仍有限，故对 $m$ 归纳得每个 $V_m$ 有限。
+
+现在取任意集合 $x$，置 $D=T(x)$。先证对任意传递集合 $D$ 都有
+$$
+\operatorname{rk}[D]=\{\operatorname{rk}(y):y\in D\}
+ =\operatorname{rk}(D).
+$$
+左侧由替代是集合，每个成员严格小于 $\operatorname{rk}(D)$。反向，给 $\beta<\operatorname{rk}(D)$，由秩递推存在 $y\in D$ 的秩至少为 $\beta$。在这些秩中取最小者 $\gamma$，并取秩为 $\gamma$ 的 $y\in D$。若 $\gamma>\beta$，则 $\beta<\sup_{z\in y}(\operatorname{rk}(z)+1)$，故某个 $z\in y$ 满足 $\operatorname{rk}(z)\ge\beta$。传递性给 $z\in D$，但 $\operatorname{rk}(z)<\gamma$，违背最小性。因此 $\gamma=\beta$，反向包含成立；$D=\varnothing$ 时两侧都为零序数。
+
+秩映射于是满射到序数 $\operatorname{rk}(D)$，ZFC 的基数比较给
+$$
+|\operatorname{rk}(D)|\le|D|.
+$$
+若 $h(x)=|D|<\kappa$，则 $|\operatorname{rk}(D)|<\kappa$。$\kappa$ 是初始序数；若 $\operatorname{rk}(D)\ge\kappa$，包含映射将给 $\kappa\le|\operatorname{rk}(D)|$，矛盾。故 $\operatorname{rk}(D)<\kappa$。又 $x\in D$，所以 $\operatorname{rk}(x)<\operatorname{rk}(D)<\kappa$，即 $x\in V_\kappa$。这证明 $H_\kappa\subseteq V_\kappa$；在集合 $V_\kappa$ 中用 $h(x)<\kappa$ 分离，便得 $H_\kappa$ 是集合。
+
+同一秩像论证表明有限 $T(x)$ 使 $\operatorname{rk}(T(x))$ 为有限序数，因而 $x$ 的秩有限，属于某个 $V_m$。反向，若 $x\in V_m$，则有限传递集合 $V_m$ 把 $x$ 作为元素包含；最小性给 $T(x)\subseteq V_m$，故闭包有限。因此有限秩、有限含根传递闭包与遗传有限性等价：有限闭包中的成员均在有限闭包内，而有限层从空集经有限集合构造生成所有这些元素。于是
+$$
+V_\omega=\{x:\operatorname{rk}(x)<\omega\}
+ =\{x:h(x)<\aleph_0\}=HF=H_{\aleph_0}.
+$$
+
+固定任意无限基数 $\kappa$。若 $x\in HF$，第 72 条使 $\operatorname{Enc}(x)\in HF$，两侧含根闭包均有限，故两者的 $h$ 都严格小于 $\kappa$。若 $x\notin HF$，第 280 条给两侧的 $h$ 相等。两种情形穷尽所有集合，得到
+$$
+h(x)<\kappa\iff h(\operatorname{Enc}(x))<\kappa.
+$$
+特别地，$\kappa=\aleph_0$ 的严格阈值由有限性处理，不由可数上界代替。若 $x\in H_\kappa$，其码由此属于 $\mathfrak V_Z\cap H_\kappa$。反向，若有效码 $c\in H_\kappa$，令 $x=\operatorname{Dec}(c)$；第 72 条给 $c=\operatorname{Enc}(x)$，刚证的双向式给 $x\in H_\kappa$，故 $c\in\operatorname{Enc}[H_\kappa]$。左侧由替代是集合，右侧是在 $H_\kappa$ 中按有效码谓词分离的集合。整个证明只比较单个闭包的基数，未使用小于 $\kappa$ 的任意集合族之并仍小于 $\kappa$，故也覆盖奇异 $\kappa$。证毕。
+

@@ -1,0 +1,15 @@
+**定义 QI-D5（局部联合边界—响应关系）。** 对单节点 $i$，$J_{\{i\}}=\Gamma_i$。令
+
+$$
+\begin{aligned}
+\beta_i(a)&=(\rho_{\{i\}}(a),h_i(a)),\\
+Q_i^{\rm rel}&=\beta_i[\Gamma_i]
+=\{(s,y):\exists a\in\Gamma_i,\
+\rho_{\{i\}}(a)=s,\ h_i(a)=y\},\\
+Q_i^{\rm obs}&=Q_{\{i\}}^{\rm obs}.
+\end{aligned}
+\tag{QI-LOCAL-RELATION}
+$$
+
+$Q_i^{\rm rel}$ 完全由一个局部记录同时见证全部边界字段与响应，不能换成各个出边边缘及响应边缘的任意乘积。
+

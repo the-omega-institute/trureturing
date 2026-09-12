@@ -1,0 +1,10 @@
+**定义 40（黄金粗观察）。** 对 \(a\in\mathbb N\)，令 \(L(a)\) 为唯一满足
+\[
+G_{L(a)}\le a+1<G_{L(a)+1}
+\]
+的非负整数，置 \(b(a)=G_{L(a)}-1\)。对正整数定义
+\[
+\operatorname{Gobs}(n)=\prod_p p^{b(v_p(n))}.
+\]
+称 \(g\) 为黄金不动点，若 \(\operatorname{Gobs}(g)=g\)。此定义与[《黄金分层算术观察理论》第四章](ZECKENDORF_EULER_5040.md)及[黄金因数语言的观察映射](../../../D5/S3/Arith/GoldenResource/GoldenDivisorLanguage.lean)相同，后者用 \(F_{L+2}=G_L\) 的索引约定。
+

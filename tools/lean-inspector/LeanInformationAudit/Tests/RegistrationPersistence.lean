@@ -2,6 +2,8 @@ import LeanInformationAudit.Tests.RegistrationErrors
 
 open Lean
 
+set_option linter.style.longLine false
+
 namespace LeanInformationAudit.Tests.RegistrationPersistence
 
 /-- info: 3 -/
@@ -49,8 +51,7 @@ run_cmd do
   | .ok () => pure ()
   | .error message => throwError message
 
-/-- error: IE-C002 DuplicateRegistration:
-LeanInformationAudit.Tests.RegistrationErrors.legacyExample -/
+/-- error: IE-C002 DuplicateRegistration object_arena=LeanInformationAudit.Tests.RegistrationErrors.fixtureLawArena theorem_name=LeanInformationAudit.Tests.RegistrationErrors.legacyExample registration_modules=["LeanInformationAudit.Tests.RegistrationErrors","LeanInformationAudit.Tests.RegistrationPersistence"] count=2 -/
 #guard_msgs (error) in
 register_information_theorem
   LeanInformationAudit.Tests.RegistrationErrors.legacyExample

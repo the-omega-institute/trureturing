@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:63885ff1c7d161b0a26a0ccc9731f183f881d3127a23c0e22685f0bc80011ade
+  normalized_sha256: sha256:63885ff1c7d161b0a26a0ccc9731f183f881d3127a23c0e22685f0bc80011ade
+cas_ref: sha256:63885ff1c7d161b0a26a0ccc9731f183f881d3127a23c0e22685f0bc80011ade
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「评注 27.643(边界饱和判据与形态学三判据)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 4481407a8d4c52da6b186e17db1d0775eaa61b118ec3fe9a7697feddf794b4b3
+    next_atom_id: 5327c267bc9dd7cd7f98fc14a5b4a7fd82a071f37fe4323f85dac75634896a31

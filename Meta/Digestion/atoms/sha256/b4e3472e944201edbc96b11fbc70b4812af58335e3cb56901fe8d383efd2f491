@@ -1,0 +1,28 @@
+**证明。** 任取 $u\in J_C$，其两个限制属于 $J_A,J_B$ 且匹配，合并回到 $u$，故左侧每个商状态在右侧可达。反之，右侧两个实际商状态有代表 $a,b$，匹配的边界使它们在完整重叠相等，故 $a\cup b\in J_C$，其商属于左侧。这只是针对一个有限拼接取两个存在见证，不是全体商类的代表选择函数。
+
+从每个单节点的全部实际 $Q_i^{\rm obs}$ 开始，每次只收缩相邻连通组件。收缩前若各组件状态集恰为其实际观察商，(QI-REACH) 的两向包含保证收缩后仍如此；对有限收缩次数归纳，最后恰得 $Q_I^{\rm obs}$，与收缩次序无关。在根，
+
+$$
+\partial I=\varnothing,\qquad
+\mathcal R_I(\varnothing)=J_\varnothing=\{\varnothing\}.
+\tag{QI-ROOT-CONTEXT}
+$$
+
+因此根观察不是空函数，而是在唯一空赋值处取整个 $G(w)$ 的函数；$q_I$ 恰按完整联合向量识别世界。区别于原始 $G$，下降后的映射定义为
+
+$$
+\bar G:q_I[J]=Q_I^{\rm obs}\longrightarrow\mathcal V_{\mathcal F},
+\qquad
+\operatorname{graph}(\bar G)=\{(q_I(w),G(w)):w\in J\}.
+\tag{QI-ROOT-MAP}
+$$
+
+根的等价定义使图单值，实际像使它总且唯一，并有
+
+$$
+\bar G[Q_I^{\rm obs}]=G[J].
+\tag{QI-ROOT-IMAGE}
+$$
+
+这保留整个联合输出像，不能改写成只保留每个消费者的坐标边缘。若某些局部关系为空或最终 $J=\varnothing$，两向包含和归纳仍成立；此时根状态集与结果像均为空。证毕。
+

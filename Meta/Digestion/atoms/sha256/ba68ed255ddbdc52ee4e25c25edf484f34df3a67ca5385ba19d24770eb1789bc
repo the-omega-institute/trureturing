@@ -1,0 +1,39 @@
+**定理 370.5。** 对集合 $Y$ 上的指定拓扑 $\tau$，定义
+$$
+\tau^*=\{\operatorname{Enc}[U]:U\in\tau\}.
+$$
+则 $\operatorname{enc}_Y:(Y,\tau)\to(Y^*,\tau^*)$ 为同胚。指定源、目标拓扑时，定理 370.3 的 $f$ 连续当且仅当 $f^*$ 连续；不连续性、闭包、稠密性、固定指标的序列或网收敛也保持并反映。特别定理 363.3 的唯一延拓在运输侧存在当且仅当 $\theta\in W_A$，存在时为
+$$
+F_{A,\theta}^*(\operatorname{Enc}(x))=\operatorname{Enc}(F_{A,\theta}(x))
+$$
+从坐标 $(X_A^{\rm cap})^*$ 到通常圆周的运输 $\mathbb T^*$。定理 368.1 的联合延拓在运输侧存在当且仅当 $J_A$ 有限。
+
+**证明。** 双射直接像保持空集、全集和任意并。对有限交，若一个码同时来自两个子集，编码单射迫使其原像相同，故直接像也保持有限交。因此 $\tau^*$ 是拓扑，两个方向的开集完全对应，证明同胚性。对目标开集 $O$，
+$$
+(f^*)^{-1}(\operatorname{Enc}[O])=\operatorname{Enc}[f^{-1}(O)].
+$$
+源取 $D$ 的子空间拓扑时仍有同一开集对应，给连续性两向及其否定。点 $\operatorname{Enc}(y)$ 的邻域恰由 $y$ 的邻域直接像组成，且
+$$
+\operatorname{Enc}[U]\cap\operatorname{Enc}[E]\ne\varnothing
+\iff U\cap E\ne\varnothing.
+$$
+于是邻域判据给
+$$
+\overline{\operatorname{Enc}[E]}^{\tau^*}
+=\operatorname{Enc}[\overline E^{\tau}],
+$$
+从而给稠密性两向。同一邻域对应保持并反映每个固定指标序列或网的最终进入条件，给收敛两向。双射对开集的对应还保持拓扑相等和严格包含，所以第 365–367 条的各个指定域上的等式及严格性也运输。
+
+若原连续延拓存在，其共轭连续，且对 $B$ 的限制等式保持。反向，任意运输侧连续延拓 $G:(X_A^{\rm cap})^*\to\mathbb T^*$ 拉回为
+$$
+x\longmapsto\operatorname{Dec}(G(\operatorname{Enc}(x))).
+$$
+它在坐标 $X_A^{\rm cap}$ 上连续，且限制为 $\chi_\theta|_B$。定理 363.3 强制 $\theta\in W_A$ 及该函数等于 $F_{A,\theta}$，再共轭回去得存在条件和唯一性。联合目标改为 $X_+^*$，同样的拉回将任何候选变成定理 368.1 的延拓，故无限 $J_A$ 时不存在，有限 $J_A$ 时原映射给唯一者。
+
+对拓扑自身的集合码，实际有
+$$
+\operatorname{El}(\operatorname{Enc}(\tau))=\operatorname{Enc}[\tau],\qquad
+\tau^*=\{\operatorname{El}(c):c\in\operatorname{El}(\operatorname{Enc}(\tau))\}.
+$$
+所以单个拓扑码 $\operatorname{Enc}(\tau)$、开集码的成员族 $\operatorname{Enc}[\tau]$、外部开集族 $\tau^*$ 是三个分别定义的构造。证毕。
+

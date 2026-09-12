@@ -1,0 +1,33 @@
+## 19. Exact configuration transport for the square-grid frames
+
+PartitionRelabeling constructs the image and inverse-image correspondence
+between complete independent-configuration families. For a vertex equivalence
+e from G to H that preserves and reflects adjacency, it proves
+
+\[
+ \mathcal I_H(e(V))=\{e(S):S\in\mathcal I_G(V)\},\qquad
+ Z_H(e(V);w)=Z_G(V;w\circ e).
+\]
+
+Weights are pulled back explicitly. The result is over every commutative
+semiring; it therefore preserves entire independence polynomials and all their
+complex evaluations. Injectivity also proves e(V\{v})=e(V)\{e(v)}, so the
+marked numerator is transported together with the denominator.
+
+SquareGridCoordinates defines the nearest-neighbor grid on the already-owned
+integer-pair type. It proves directly that translation to an arbitrary root and
+the existing recenter maps preserve and reflect each grid edge. Explicit inverse
+maps witness bijectivity. No graph-isomorphism premise remains in the concrete
+coordinate theorems.
+
+For the existing recenter map T_d, constant activity z and every finite V,
+
+\[
+ Z_{\rm grid}(T_dV;z)=Z_{\rm grid}(V;z),\qquad
+ \alpha(T_dV,T_dv;z)=\alpha(V,v;z).
+\]
+
+Here alpha is the ratio of two actual independent-set sums. Equality of total
+field expressions at zero denominators does not assert holomorphic regularity;
+all recursive cancellation still requires proper-domain nonvanishing.
+

@@ -1,0 +1,15 @@
+**34.22 Domain of the transfer and limits of its sign consequences.** The
+perturbation estimate applies on the finite positive-support, one-corner
+domain of 34.1, including the boundary cases of 34.12-34.13. A strict
+negative-sign consequence additionally requires a baseline on every
+inverse-image slab specified in 34.15-34.18. The one-corner example in
+34.14 has \(G=0\), so the transfer estimate alone supplies no general
+all-grid negative-sign theorem. The full wider-domain 5040 margin needed
+in 34.20 remains an additional unproved hypothesis.
+
+The theorem does not imply a sharp \(G\) constant, arbitrary nonzero-shape
+prime-lattice density, exact common prime translation, encoding-induced
+orthogonality, a uniform unscaled negative margin, a new GH definition
+or an RH result. Continuous grid translations and actual prime-exponent
+points remain distinct domains; the stated perturbation bound does not
+establish arithmetic attainability of an arbitrary translated shape.

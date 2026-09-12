@@ -1,0 +1,70 @@
+## 6. feature kernels 与 Newton-Gram 压缩
+
+对六阶 Hadamard `H`，对三元素子集 `I subset {1,...,6}` 定义：
+
+```math
+\mu(I)_i=1\quad(i\in I),
+\qquad
+\mu(I)_i=-1\quad(i\notin I).
+```
+
+定义列乘积：
+
+```math
+\delta_k(H)=\prod_iH_{ik}.
+```
+
+对奇数 `q` 定义 square-free feature matrix：
+
+```math
+V_q(H)_{I,k}
+=
+\left(\prod_{i\in I}H_{ik}\right)^{2q}.
+```
+
+由 unimodularity：
+
+```math
+\boxed{
+g_H(q\mu(\cdot))
+=V_q(H)\overline{\delta(H)^q}.
+}
+```
+
+定义：
+
+```math
+K_q(H)=V_q(H)^\dagger V_q(H).
+```
+
+则：
+
+```math
+V_q(H)x=0
+\iff
+K_q(H)x=0.
+```
+
+令：
+
+```math
+G_m(H)=(H^{\circ m})^\dagger H^{\circ m}.
+```
+
+Newton identity `6e_3=p_1^3-3p_1p_2+2p_3` 给出：
+
+```math
+\boxed{
+K_q(H)=\frac16
+\left[
+G_{2q}(H)^{\circ3}
+-3G_{2q}(H)\circ G_{4q}(H)
++2G_{6q}(H)
+\right].
+}
+```
+
+所以 20 个三三分割 feature equations 可压缩为一个 `6 x 6` prescribed-kernel condition。
+
+这条路线保留为 exceptional-locus certificate。当前不把它作为 generic strict-X 分支的唯一入口。
+

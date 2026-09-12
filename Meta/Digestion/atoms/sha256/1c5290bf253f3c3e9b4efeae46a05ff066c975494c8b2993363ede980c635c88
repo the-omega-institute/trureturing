@@ -1,0 +1,8 @@
+# MUB Six Fourth-Basis Research Theory
+
+> **统一理论卷规则。** 六维四互无偏基 research lane 的新理论推理统一追加到本文件。Lean 节点继续拥有独立 GID、Scribe 与 Blueprint 投影，不再为每一个局部 obstruction 建立新的 theory 文档。
+>
+> **状态约定。** 本卷区分机器已证、直接推导、文献输入、条件归约和开放猜想。局部分支证书不得被表述为六维四 MUB 已经解决。历史段落中“已写入 Lean”只表示有源码；完整机器状态以绑定具体提交的 admission 为准。
+>
+> **2026-09-05 主线修正。** 第 30 节的列谱定理保留为条件代数结果。将 context affinity 等于一直接升级为逐行 collision 等于 `2/3`，需要额外逐行下界；该逐行下界已有数值反例线索，不得继续作为 strict-X 主桥。第 31 节用三阶酉算子的直接矩阵刚性替代这一依赖。第 33 节修复 dihedral partner 推导中未证明的逐模等范数假设。
+

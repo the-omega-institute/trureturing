@@ -1,0 +1,21 @@
+**定理 81（商与严格有限表达式的精确比较）。** 若 \(R\) 是集合 \(A\) 上的等价关系，则
+\[
+\kappa_R:A^*/R^*\longrightarrow (A/R)^*,\qquad
+[\operatorname{Enc}(a)]_{R^*}\longmapsto\operatorname{Enc}([a]_R)
+\tag{Z-QUOT}
+\]
+是双射，并与商映射交换。任意由定义 80 的部分原语构成的固定有限有类型表达式 \(C\)，有
+\[
+\operatorname{dom}(C^*)=\operatorname{Enc}[\operatorname{dom}(C)],\qquad
+\widehat{C^*}(\operatorname{Enc}(a))=
+\begin{cases}\operatorname{ok}^*(\operatorname{Enc}(C(a))),&a\in\operatorname{dom}(C),\\
+\bot^*,&a\notin\operatorname{dom}(C).
+\end{cases}
+\tag{Z-STRICT}
+\]
+多输入时逐分量解释。输入叶可重复，但树、参数及各叶的槽位先固定，再对全部输入断言。
+
+**证明。** 关系 \(R^*\) 继承自反、对称、传递。原等价类相同恰当且仅当码等价类相同，所以 (Z-QUOT) 单值且单射；每个原类含一个元素，故满射。直接以集合图 \(\{([\operatorname{Enc}(a)]_{R^*},\operatorname{Enc}([a]_R)):a\in A\}\) 定义它，无须同时选择所有代表。若原语在商上良定义，代入 (Z-CONJ) 后同一域不变性与同余等式成立，因此诱导商运算也与 \(\kappa_R\) 交换。
+
+对实际语法树归纳。输入叶与常量叶满足比较式。内部节点有失败子项时，归纳假设使两边都失败，严格语义使父节点也失败。全部子项成功时，它们的值逐项共轭，本节点域由 (Z-CONJ) 精确对应；守卫不过则两边失败，守卫通过则输出仍共轭。这覆盖每个中间守卫，不因父节点的成功值恒定而删除子求值。关系观察和成功、失败标签也由单射性保持与反映。于是原语言内的观察等价、固定上下文充分性及不可表达性均沿同一量词顺序运输。证毕。
+

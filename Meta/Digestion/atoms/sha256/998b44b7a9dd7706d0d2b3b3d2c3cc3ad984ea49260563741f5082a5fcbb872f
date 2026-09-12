@@ -1,0 +1,21 @@
+**32.19 证据分工、复现与历史限制。** caller 指定的实际 GPT PRO fixed-box primary
+task 为 0838ec9d-f978-4cfc-8d59-965a3331f912,flight
+qgh0910-pro-actual-5040-box。仅消费其已完成 conclusion;
+primary 明报获取所供 immutable GitHub URL 失败为 DisabledError,
+没有读取该源字节或独立核验 caller 给出的源 hash/字节数。
+它从所给定义自行重导有限归约,临时整数/Fraction 级数程序的执行是其自报。
+模型/service 元数据并未由 primary 或本实施独立鉴定,不补造 conversation 身份。
+I16 则在本树实际阅读第 26 节,核对其 \(k\ge2\)、互异素数、\(b_i\in\mathbb Z_{\ge0}\)
+及原始严格 cutoff 等全部适用条件;没有读取 S20 的其它物理工作树。
+
+原 caller node audit 只核验这个箱体的 71 槽资格,没有 \(G\) 值计算。
+原 caller sign audit 记录 python-flint 0.8.0 / Arb256 对四个密度区间和
+48 个 \(D,\Psi,G\) 区间的独立确认,并另述纸面连续域核对;
+这些是原先完成的证据,原程序未在本轮执行。
+单一报告 [actual-5040-fixed-box-0910.md](../../reports/actual-5040-fixed-box-0910.md)
+嵌入一份无 caller 绝对路径依赖的完整可执行证书,静态带入角点、整数 guards、
+四个密度区间和 48 个节点区间。只抽取并执行该改编一次,
+精确程序字节/hash、实际解释器/库版本、命令、结果和 stderr 见报告。
+新增固定分支整数链接与原 52 个包络检查分列;它们不是候选生成或连续域的计算穷举。
+Arb 的有理输入和区间比较承担向外认证,打印小数与区间交叠不承担等式证明。
+

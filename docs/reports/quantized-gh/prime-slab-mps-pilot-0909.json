@@ -1,0 +1,180 @@
+{
+  "schema": "prime-slab-pilot-results-v1",
+  "identity": {
+    "dependencies": {
+      "numpy": "2.0.2",
+      "python-flint": "0.8.0",
+      "torch": "2.8.0"
+    },
+    "fallback": "0",
+    "files": {
+      "gpu5040/state_store.py": "a1eda747e24ea792caac30da136e85ba0beac6dc6f08d53880624b8ac6b1f03a",
+      "prime_slab_search.py": "da39b459defd607355291070c8be1c4ddbbaf72153e1ffdb3bd98ff35588289d",
+      "prime_slabs/certify.py": "d6888215edf92923b2c27dbd2e2a5dc2a18ff1b9e28e45dee80d22a4dfb3285e",
+      "prime_slabs/exact.py": "c125786e2485797c6a9aa3fbcba131e3d5655108d87ed61afd69a367bd70be8c",
+      "prime_slabs/gpu.py": "2d2d14ef1400d8b0228ca3001ac8bb88e09ab0b337a51ad2b2ea5b68ef4245f3",
+      "prime_slabs/search.metal": "1305d0a1c9afd3d986f0d435ec3e8205d916ae951ff84420183e7ba1861b3e9d",
+      "prime_slabs/storage.py": "13a36959cfc07b8d52d3af41bf5231ef4e93f6525a7de28a28d238aadf2dcdf5"
+    },
+    "input_sha256": "9d28055d5255580ed58274822359961483d1deecbb7b4e38ce497948a4808672",
+    "kernel_sha256": "1305d0a1c9afd3d986f0d435ec3e8205d916ae951ff84420183e7ba1861b3e9d",
+    "normalization": "exp(min(c_i))*G; GPU 24 terms; CPU full expression",
+    "precisions": [
+      128,
+      256,
+      512
+    ],
+    "program_sha256": "27a15ae48802d7ad188b5f73e315d6230f0e6b7b208d96d351e6556a18c34ef0",
+    "python": "3.12.13",
+    "schema": "prime-slab-raw-and-arb-v1"
+  },
+  "scientific_context": {
+    "G": "D - Psi; existing comparison of two bounds, not an RH criterion",
+    "D": "maximum of six feasible fractional-knapsack mixtures",
+    "Psi": "f(H)+2*f(L), f(x)=log(1-exp(-x)); existing slab and nearest-endpoint definitions",
+    "cpu_expression": "full unscaled G",
+    "gpu_expression": "exp(min(c_i))*G; 24-term proposal",
+    "existing_truncation_bound": "3/104857600",
+    "bound_exclusions": "float input, transcendental, branch, clipping, summation/maximum, roundoff and underflow errors"
+  },
+  "coverage": {
+    "box_range_closed": [
+      3072,
+      3135
+    ],
+    "raw_range_closed": [
+      76800,
+      78399
+    ],
+    "primes": [
+      2,
+      3,
+      5
+    ],
+    "b0": 12,
+    "b1_closed": [
+      0,
+      3
+    ],
+    "b2_closed": [
+      0,
+      15
+    ],
+    "range_convention": "inclusive"
+  },
+  "outcomes": {
+    "boxes": 64,
+    "by_kind": {
+      "adjacent": 448,
+      "reflected": 1152
+    },
+    "by_kind_and_outcome": {
+      "adjacent": {
+        "active": 447,
+        "inactive": 1,
+        "negative": 447,
+        "raw": 448
+      },
+      "reflected": {
+        "active": 3,
+        "inactive": 1149,
+        "negative": 3,
+        "raw": 1152
+      }
+    },
+    "by_outcome": {
+      "inactive": 1150,
+      "negative": 450
+    },
+    "by_proposal": {
+      "inactive": 1150,
+      "indeterminate": 450
+    },
+    "completed_rows": 1600,
+    "coverage_complete": true,
+    "cpu_evaluated_active": 450,
+    "disagreement_ids": [],
+    "gpu_flags": {
+      "integer_overflow": 0,
+      "nonfinite": 0,
+      "other": 0,
+      "underflow": 450
+    },
+    "invalid_ids": [],
+    "next_box": 3136,
+    "raw_rows": 1600,
+    "unresolved_ids": []
+  },
+  "cpu_certification": {
+    "active_evaluations": 450,
+    "definite_proposal_sign_disagreements": 0,
+    "escalations": 0,
+    "exact_zero": 0,
+    "inactive_exact_guard_audits": 1150,
+    "method": "Python exact integers/rationals for all guards, distances and clipping; independent full Arb log/exp/log1p/sqrt and max of six feasible mixtures; rational outward endpoints",
+    "negative": 450,
+    "parameter_guard_disagreements": 0,
+    "positive": 0,
+    "precision_bits": 128,
+    "unresolved_count": 0,
+    "weak_sign": 0
+  },
+  "gpu_proposals": {
+    "active_definite_signs": 0,
+    "active_indeterminate": 450,
+    "finite_24term_values_by_sign": {
+      "negative": 450
+    },
+    "float32_error_certified": false,
+    "possible_underflow_flags": 450,
+    "tail_scope": "truncation only"
+  },
+  "active_reflected_records": [
+    {
+      "G_bounds": [
+        "-18626508684150676161468231952743507153/170141183460469231731687303715884105728",
+        "-149012069473205409291745855621948057207/1361129467683753853853498429727072845824"
+      ],
+      "box_id": 3081,
+      "exp_T1": "147573952589676412928/2197265625",
+      "nearest_ties": [
+        0
+      ],
+      "row_id": 77041,
+      "slot": 16
+    },
+    {
+      "G_bounds": [
+        "-233890980305305945030866915581950842465/174224571863520493293247799005065324265472",
+        "-233890980305305945030866915581950842239/174224571863520493293247799005065324265472"
+      ],
+      "box_id": 3123,
+      "exp_T1": "476837158203125/3981312",
+      "nearest_ties": [
+        2
+      ],
+      "row_id": 78093,
+      "slot": 18
+    },
+    {
+      "G_bounds": [
+        "-3888025706417437193053030337679600191/1361129467683753853853498429727072845824",
+        "-124416822605357990177696970805747206067/43556142965880123323311949751266331066368"
+      ],
+      "box_id": 3127,
+      "exp_T1": "147573952589676412928/2373046875",
+      "nearest_ties": [
+        0
+      ],
+      "row_id": 78191,
+      "slot": 16
+    }
+  ],
+  "full_campaign_complete": false,
+  "limitations": [
+    "Only the stated finite window is covered; no complete-domain or full-campaign claim.",
+    "No definite GPU sign is certified; active proposals are indeterminate with possible underflow.",
+    "CPU results are finite Arb interval classifications, not an all-prime theorem, RH result or Lean proof.",
+    "Only the reflected records below are embedded; the complete raw search streams are not included."
+  ]
+}

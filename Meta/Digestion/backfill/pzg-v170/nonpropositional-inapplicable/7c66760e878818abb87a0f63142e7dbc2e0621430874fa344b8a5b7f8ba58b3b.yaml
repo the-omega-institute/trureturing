@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7c66760e878818abb87a0f63142e7dbc2e0621430874fa344b8a5b7f8ba58b3b
+  normalized_sha256: sha256:7c66760e878818abb87a0f63142e7dbc2e0621430874fa344b8a5b7f8ba58b3b
+cas_ref: sha256:7c66760e878818abb87a0f63142e7dbc2e0621430874fa344b8a5b7f8ba58b3b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「评注 27.723(记账律三卷:三址)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 0a6addfd806133bbb06c013f5cbc78f1f2c39e2de2a51dbb3c07119a86f38775
+    next_atom_id: 49b32120b5c81a774f96bf4b272507eb10788618b448237f0f713526e7714e2c

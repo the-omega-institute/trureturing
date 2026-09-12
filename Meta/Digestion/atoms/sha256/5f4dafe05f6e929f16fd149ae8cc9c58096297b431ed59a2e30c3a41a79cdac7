@@ -1,0 +1,18 @@
+**34.12 Zero radius, zero perturbation and the height boundary.** The proof
+in 34.5 uses no derivative of a distance minimum or a norm. Closest endpoints
+may switch and tie, and any distance may become zero. If \(\rho_0=0\), then
+\(t=\rho_\xi\ge0\); if \(\rho_\xi=0\), the decreasing-radius path of 34.9
+ends at a permitted boundary point. At either zero radius,
+\(H=L=\mu\) and \(\Psi=kf(\mu)\). Every estimate remains valid.
+
+If merely \(S=0\), nonnegative coordinates force \(\xi=0\); this includes
+\(\epsilon=0\) and also an unused positive upper bound \(\epsilon\).
+Both increments and \(G_\xi-G_0\) then vanish. The theorem does not require
+\(\epsilon=\max_i\xi_i\). The endpoint \(T=T_{\min}\) is included:
+if \(m=0\), it requires \(T_{\min}>0\); if \(T_{\min}=0\), it requires \(m>0\).
+Infinite \(T\) and \(z=0\) are limits, not admitted points. The estimates
+use \(e^T=1/z\) only for \(z>0\). For fixed finite \(\epsilon\), their
+unscaled difference bound tends to zero as \(T\) tends to infinity;
+this is not a uniform unscaled negative margin or a new optimizer theorem
+at the limiting point.
+

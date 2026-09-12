@@ -1,0 +1,11 @@
+**命题 QI-P4（关系到观察商的因子化桥，repo-derived）。** 对上述原始观察契约，
+
+$$
+\ker\beta_i\subseteq{\equiv_{\{i\}}},
+\qquad
+\Phi_i:Q_i^{\rm rel}\to\Sigma_{\{i\}}[\Gamma_i],
+\qquad
+Q_i^{\rm rel}/\ker\Phi_i\cong Q_i^{\rm obs}.
+\tag{QI-REL-OBS-BRIDGE}
+$$
+

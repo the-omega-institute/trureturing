@@ -1,0 +1,6 @@
+**定理 20（黄金值的两个整数坐标）。** 对所有 \(j\ge0\) 和 \(r\in\mathcal R\)，
+\[
+\phi^{j+2}=H_j+G_j\phi,\qquad
+\beta_p(r)=U_p(r)+\phi V_p(r).
+\]
+

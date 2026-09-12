@@ -1,0 +1,6 @@
+**定义 440.1。** 全部集合在同一原集合论宇宙中取值。沿用第69–74条的有限自然数字 $\zeta(n)$、自然叶及原编码：
+$$
+\operatorname{NatZ}(n)=\langle0,\zeta(n)\rangle,\qquad \operatorname{Enc}(x)=\begin{cases}\operatorname{NatZ}(x),&x\in\omega,\\\langle1,\operatorname{Enc}[x]\rangle,&x\notin\omega.\end{cases}
+$$
+有效码类为 $\mathfrak V_Z=\{c:\exists x\ \operatorname{Enc}(x)=c\}$，$\operatorname{Dec}$ 只在该类上为逆。定义 $c\in_Zd\iff\operatorname{Dec}(c)\in\operatorname{Dec}(d)$。对任意集合 $X$，记 $X^*=\operatorname{Enc}[X]$；对有效码 $c$ 和有效码组成的任意集合 $B$，记 $\operatorname{El}(c)=\operatorname{Enc}[\operatorname{Dec}(c)]$、$\operatorname{Pack}(B)=\operatorname{Enc}(\operatorname{Dec}[B])$。
+

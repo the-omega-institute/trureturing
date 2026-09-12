@@ -1,0 +1,50 @@
+**定理 298。** 对第 295–297 条数据，固定 Smith 约定 $UBV=D$，本条所有闭包均在通常有限维环面中取。则 $\vartheta_P$ 单射，且
+$$
+\vartheta_P\circ B=B_{\mathbb T}\circ\vartheta_r,\qquad
+\ker(\vartheta_P\circ B)=K_B^{\mathbb Z}.
+$$
+精确相位子群为
+$$
+\vartheta_P(H)=\{[\phi Bz]:z\in\mathbb Z^r\}
+=U_{\mathbb T}^{-1}\left(
+\prod_{i=1}^k\{[\phi d_i n]:n\in\mathbb Z\}\times0^{d-k}\right),
+$$
+它与 $H$ 抽象同构，而
+$$
+\overline{\vartheta_P(H)}
+=\overline{\vartheta_P(B[\mathbb N^r])}
+=C_B^{\rm tor}
+=U_{\mathbb T}^{-1}(\mathbb T^k\times0^{d-k}).
+$$
+$C_B^{\rm tor}$ 是同构且同胚于 $\mathbb T^k$ 的连通紧环面，实 Lie 维数为 $k$。$k>0$ 时精确子群可数无限、真包含且稠密于该环面；$k=0$ 时二者均为零单点。两个闭包中的各系数独立变化，不指定一条预定的字母执行日程。
+
+整数关系与相位满足
+$$
+\operatorname{Ann}(\vartheta_P(H))
+=\operatorname{Ann}(C_B^{\rm tor})=R_B,\qquad
+C_B^{\rm tor}=\{y\in\mathbb T^P:m\cdot y=0\text{ 对全部 }m\in R_B\},
+$$
+$$
+C_B^{\rm tor}\cap\vartheta_P(\mathbb Z^P)=\vartheta_P(L_{\rm sat}),\qquad
+\vartheta_P(L_{\rm sat})/\vartheta_P(H)\cong L_{\rm sat}/H.
+$$
+第一交集等于 $\vartheta_P(H)$ 当且仅当 $H=L_{\rm sat}$。在同一个带标签目标 $\mathbb Z^P$ 中，两指令族的精确相位子群相等当且仅当整数像格相等；闭包相等当且仅当饱和格相等，也当且仅当有理列空间相等。
+
+环面参数核则为
+$$
+\ker B_{\mathbb T}
+=V_{\mathbb T}\left(
+\prod_{i=1}^k(d_i^{-1}\mathbb Z/\mathbb Z)\times\mathbb T^{r-k}\right).
+$$
+其单位连通分支维数为 $r-k$，分支群为 $\prod_{i=1}^k\mathbb Z/d_i\mathbb Z$。这与自由整数系数核 $K_B^{\mathbb Z}$ 分属不同的域。
+
+对起点 $x\in\mathbb Z^P$，精确有符号端点的相位集及其闭包分别为 $\vartheta_P(x)+\vartheta_P(H)$、$\vartheta_P(x)+C_B^{\rm tor}$；后者恰由仿射关系
+$$
+m\cdot y=m\cdot\vartheta_P(x)\qquad(m\in R_B)
+$$
+刻画，并不总是零陪集。对每个整数 $n$，其数位相位公式为
+$$
+[\phi n]=\left[\sum_{j<\ell_{\rm s}(n)}
+\operatorname{sdrow}(n)(j)(-1)^{j+1}\alpha^{j+2}\right].
+$$
+

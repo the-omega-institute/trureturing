@@ -1,0 +1,25 @@
+fingerprints:
+  raw_sha256: sha256:aea75d31b5b1ebb80a97b4ee9e2de5cdd0e488822c18f8a8f62c717675fb184a
+  normalized_sha256: sha256:aea75d31b5b1ebb80a97b4ee9e2de5cdd0e488822c18f8a8f62c717675fb184a
+cas_ref: sha256:aea75d31b5b1ebb80a97b4ee9e2de5cdd0e488822c18f8a8f62c717675fb184a
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Observation/HistoryPayloadFactorization.BoundaryOutputRetention
+    target_statement_id: sha256:b1bdb38dc79a1b168e98eae065ca4ddd4a2b8dd744329c48d72297b3d7b10512
+  - gid: D5/S3/ConceptDynamics/Observation/HistoryPayloadFactorization.admission_factor_test
+    target_statement_id: sha256:8c4a46b7c43e6ad1263a7bea555d2bdfedd2615afc884bc3e5d142493606fbfa
+  - gid: D5/S3/ConceptDynamics/Observation/HistoryPayloadFactorization.global_admission_factorization
+    target_statement_id: sha256:6860e2f0dd25ae97ad07b776dd894650f75b16ea9a6ea388196a9dad8beecee0
+  - gid: D5/S3/ConceptDynamics/Observation/HistoryPayloadFactorization.global_admission_iff_union_fibers
+    target_statement_id: sha256:14b570287871822018728cb612d5c3313ff4adf1455f7add4c72c28d9a01835d
+  - gid: D5/S3/ConceptDynamics/Observation/HistoryPayloadFactorization.ker_beta_subset_ker_payload_iff_unique_factorization
+    target_statement_id: sha256:7e46314b23877f67193b4d662679605bacd2e1f2c05f73fa29dd5e5d514d5e6e
+  - gid: D5/S3/ConceptDynamics/Observation/HistoryPayloadFactorization.local_completion_factorization
+    target_statement_id: sha256:a977c861de0548d897bb71a65604ed77eed694e3a1e8f1c2954ea6740886bf8b
+  - gid: D5/S3/ConceptDynamics/Observation/HistoryPayloadFactorization.local_completion_global_tests
+    target_statement_id: sha256:81e271c909f419f39785d50a7992a6500a6475e1a68fc927b7ca3108c38b02cb
+  - gid: D5/S3/ConceptDynamics/Observation/HistoryPayloadFactorization.local_completion_tests
+    target_statement_id: sha256:cfe90aff37e34859802427e64fd07c5289143c91f2cf1ef2c802eea6fbb0fad6
+  - gid: D5/S3/ConceptDynamics/Observation/HistoryPayloadFactorization.mem_completion_payload_iff
+    target_statement_id: sha256:0bff82327f30a3fe83bb097e1857db14cbee3a9e3ad527aa8a5bbcedb91f3760
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,21 @@
+**34.17 Exact inverse image of a fixed strict cutoff.** Let \(B_{\rm cut}\)
+be a fixed finite number and retain the notation \(M_j^\xi=M_j^0+S\).
+Then the exact equivalence is
+\[
+M_0^\xi>B_{\rm cut}
+\quad\Longleftrightarrow\quad M_0^0>B_{\rm cut}-S.
+\]
+In particular it is not generally equivalent to \(M_0^0>B_{\rm cut}\).
+The baseline cutoff-restricted domain maps onto exactly the target subset
+\[
+M_0^\xi>B_{\rm cut}+S,
+\]
+with all other baseline family restrictions still imposed. Translation is
+a bijection of the full corresponding wider domains in 34.3, but need not
+be a bijection of the two domains using the same fixed strict cutoff.
+This generalizes the warnings in 30.12 and 31.14, preserving their meaning.
+A baseline theorem on all inverse-image slabs, for example the entire wider
+two-corner domain, permits intersection of the transferred result with
+the original cutoff afterward. A theorem known only above the old cutoff
+does not supply that premise.
+

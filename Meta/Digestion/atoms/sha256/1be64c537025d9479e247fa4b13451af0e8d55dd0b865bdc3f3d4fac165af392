@@ -1,0 +1,21 @@
+### 精确范围
+
+已完成的是全部已认证射线之间的边审计，包括不同轨道之间的所有 nonedges。未完成的是共同无偏方程的全局根覆盖。八个 boxes 证明至少有这些根，不能证明盒外没有其他根。因此不得将以下条件句省略前提：
+
+```text
+IF the 60-ray collection is exhaustive,
+THEN the fixed edge has a unique completion and cannot extend to a quartet.
+```
+
+同样，已认证集合上的唯一 completion affinity 等于二，不是对所有实际 completions 的无条件下界。
+
+checker 复用第 35 节的有理区间内核和种子域运算，不新建第二套 interval arithmetic。拟定真源文件：
+
+```text
+scripts/research/check_real_x_complete_induced_graph.py
+docs/develop/certificates/real_x_orbit_cover_certificate.json
+docs/develop/certificates/real_x_induced_graph_verification.json
+```
+
+上述计算证书不属于 Lean kernel 证明。源码、数据和重放日志的实际提交以及 admission 状态必须单独记录。
+

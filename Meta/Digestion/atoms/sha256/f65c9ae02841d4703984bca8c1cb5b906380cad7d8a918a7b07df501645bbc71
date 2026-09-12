@@ -1,0 +1,33 @@
+### 5. 不能丢掉圆周恒等点：精确 Gaussian 项与跳跃项
+
+Herglotz 完成所得概率测度可以在 z=1 有原子。正尺度 Cayley 映射 (x+ib)/(x-ib) 在任何有限实数 x 上都不等于一；因此从任意圆周表示逆向解释为实谱之前，必须处理这个边界点。
+
+`LiCurvatureLevyDecomposition` 从既有几何多项式直接证明
+
+\[
+\left|\sum_{j=0}^{n-1}z^j\right|^2=
+\frac{2(1-\Re z^n)}{|z-1|^2}\quad(z\ne1),
+\qquad
+\left|\sum_{j=0}^{n-1}1\right|^2=n^2.
+\]
+
+对任意有限 mu 和实数 a，实际 `reconstructedLi` 因而满足
+
+\[
+L_n=a\,\mu(\{1\})n^2+
+\int_{\mathbb T\setminus\{1\}}
+\frac{2a(1-\Re z^n)}{|z-1|^2}\,d\mu(z).
+\]
+
+`reconstructed_li_levy_decomposition` 是此精确等式。`li_jump_integrable` 在未假设总跳跃权重可积的情况下证明补偿后的被积函数可积。证明始终保留 (1-Re z^n) 的抵消；不将它拆成两个可能发散的积分。
+
+a>=0 时两个贡献非负。恒等点质量产生下界
+
+\[
+a\mu(\{1\})n^2\le L_n.
+\]
+
+因此 a>0 且 L_n/n^2->0 蕴含 mu({1})=0。`identity_atom_vanishes_of_subquadratic` 证明的是实际 Borel 测度的原子质量消失。`normalized_curvature_jump_representation` 将共同测度构造、原始递推和这一增长条件合并，从原始 c,L 输入得到同一个无恒等点原子的测度和全部系数的纯补偿跳跃表达；无原子性不是前提。
+
+这解释了一个必须保留的边界：一般正定曲率可以重建 L_n=a n^2，例如 mu=delta_1。该模型不能直接当作实际 Riemann 零点测度。排除恒等点也不会自动证明剩余测度是离散的，或其原子位置、重数恰为实际 zeta 零点。
+

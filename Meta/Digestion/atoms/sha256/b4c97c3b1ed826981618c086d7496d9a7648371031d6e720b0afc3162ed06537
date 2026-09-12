@@ -1,0 +1,43 @@
+### 二次范数证书
+
+写 normalized trace 为 `tau=Tr/d`，定义：
+
+```math
+\beta=\tau(BB^\dagger),\quad\alpha=1-\beta,\quad\mu=\tau(B^2).
+```
+
+MUB overlap 和两个 zero-sum coefficient 条件使 mixed diagonal expectations 消失。在 `P_i` 上对 `SS^dagger=I` 取期望：
+
+```math
+|a_i|^2+\beta=1.
+```
+
+所以所有 `a_i` 有相同平方模 `alpha`，且 `alpha,beta>=0`。
+
+由三阶关系和 unitarity，`S^2=S^dagger`。再次投影到 `P_i`：
+
+```math
+\boxed{a_i^2+\mu=\overline{a_i}.}
+```
+
+对这个式子取模平方并平均，使用 `sum a_i=0`：
+
+```math
+\begin{aligned}
+\alpha^2
+&=\frac1d\sum_i|\overline{a_i}-\mu|^2\\
+&=\alpha+|\mu|^2-\frac2d\Re\left(\mu\sum_i a_i\right)\\
+&=\alpha+|\mu|^2.
+\end{aligned}
+```
+
+结合 `alpha+beta=1`：
+
+```math
+\boxed{\alpha\beta+|\mu|^2=0.}
+```
+
+两项均非负，所以 `alpha beta=0`。`alpha=0` 强制全部 `a_i=0`；`beta=0` 强制全部 `b_j=0`。
+
+该证明不需要谱分类、三次迹的 Cauchy 估计、逐行碰撞下界或枚举 completion roots。
+

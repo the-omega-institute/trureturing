@@ -3,6 +3,7 @@
    mirror-B: D5/B/S0/Computability/Coding/ImmutableExtension
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Exact residual capacity characterizes extensions that preserve a frozen prefix code. -/
 
 import D5.S0.Computability.Coding.KraftConverse

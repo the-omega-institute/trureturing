@@ -1,0 +1,10 @@
+**定理 52（规范幂的精确输送）。** 对 \(a,k\in\mathbb N\)，从 \(k s(a)\) 到 \(s(ka)\) 的有限实际进位路径存在，每条这样的路径的总电荷均为 \(Q_a(k)\)。从 \(s(ka)+s(a)\) 到 \(s((k+1)a)\) 的路径电荷为 \(d_a(k)\)，并有
+\[
+d_a(k)=Q_a(k+1)-Q_a(k),\qquad
+Q_a(k)=\sum_{j=0}^{k-1}d_a(j)=k\delta_a+x_a(k)-\alpha,
+\]
+\[
+-\alpha<Q_a(k)-k\delta_a<1-\alpha.
+\]
+因此从 \(kK(n)\) 到 \(K(n^k)\) 的逐素数电荷为 \(\boldsymbol Q_n(k)\)，且 \(\boldsymbol c_n(k)=(d_{a_p}(k))_p\)。逐次规范相加与最后一次规范化的累计净电荷相同。
+

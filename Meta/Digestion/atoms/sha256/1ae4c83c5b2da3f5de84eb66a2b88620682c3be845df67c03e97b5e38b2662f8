@@ -1,0 +1,24 @@
+**30.60 定理及证明（最优距离的严格有理分离与等号）。** Define
+\(\operatorname{VerifyLess}(N,r,e)\) by decoding a positive precision \(\eta_e\),
+requiring \(\operatorname{VerifyOpt}(N,\eta_e,e)\), and then \(u<r\).
+Define \(\operatorname{VerifyGreater}\) in the same way with \(\ell>r\).
+Malformed data give false. These are total predicates, and for every fixed \(N\ge1,r\in\mathbb Q\),
+\[
+D_N<r\iff\exists e\ \operatorname{VerifyLess}(N,r,e),\qquad
+D_N>r\iff\exists e\ \operatorname{VerifyGreater}(N,r,e).
+\]
+Soundness is \(D_N\le u<r\), respectively \(D_N\ge\ell>r\).
+For completeness generate at precisions \(\eta_j=2^{-j}\), \(j\ge1\).
+If \(D_N<r\), eventually \(\eta_j<r-D_N\), and
+\(u_j-D_N\le u_j-\ell_j<\eta_j\), so \(u_j<r\).
+If \(D_N>r\), eventually \(\eta_j<D_N-r\), and
+\(D_N-\ell_j<\eta_j\), so \(\ell_j>r\).
+The true positive gap is only an existence argument, never an input.
+At equality every reliable interval contains \(r\), so neither strict predicate accepts.
+Waiting for strict separation terminates exactly when \(D_N\ne r\), whereas every
+fixed-precision generation and verification terminates even at equality. Finitely many failures
+to separate do not prove equality. If \(r\le0\), every accepted interval has \(\ell>r\);
+if \(r>1\), every one has \(u<r\); \(r=1\) follows the same strict rule.
+A passing upper certificate supplies its actual grid minimizer with
+\(R_N(q(i_0))\le B(N,q(i_0),v+1,v)=u<r\), hence also a strict residual witness.
+

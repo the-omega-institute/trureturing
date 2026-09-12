@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c67f5a3b57c54aa6a19a2854b794bdc37ebbfd8d6f4765ad4a2b49474d6d6370
+  normalized_sha256: sha256:c67f5a3b57c54aa6a19a2854b794bdc37ebbfd8d6f4765ad4a2b49474d6d6370
+cas_ref: sha256:c67f5a3b57c54aa6a19a2854b794bdc37ebbfd8d6f4765ad4a2b49474d6d6370
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 1, reading 「18. v1.2 增订：反身代理、来源治理与可控—可观测闭包」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: f9f96a3834f4bbab76b0319ed0f471773a68aa46ff0aa06c89449fc34789abfe
+    next_atom_id: 1a869b07b966ee93a01675226e6790724c33840a0ad1e7915c7fab2216a2fc16

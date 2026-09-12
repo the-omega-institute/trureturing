@@ -1,0 +1,27 @@
+**30.64 定理及证明（任意单一候选的局部可靠区间）。** Fix any \(q\in\mathbb Q^N\).
+Derive the ordered vectors \(x_0=q,x_{2k-1}=q+e_k,x_{2k}=q-e_k\).
+For each \(i=0,\ldots,2N\), choose any integers \(J_i\ge2,K_i\ge1\), and set
+\(B_i=B(N,x_i,J_i,K_i)\), \(E_i=E(N,x_i,J_i,K_i)\) from 30.56.
+The exact differences and \(R_N(x_i)\in[B_i-E_i,B_i]\) give
+\[
+l_k=\frac{B_{2k-1}-E_{2k-1}-B_{2k}}4\le v_k(q)
+ \le\frac{B_{2k-1}-B_{2k}+E_{2k}}4=:u_k,
+\quad S=\sum_{k=1}^N\max(|l_k|,|u_k|)^2\ge\|v(q)\|_2^2.
+\]
+Consequently the rational endpoints
+\[
+\ell=\max\left(\sigma_N,B_0-E_0-S/\delta\right),\qquad u=\min(1,B_0)
+\]
+satisfy \(0<\ell\le D_N\le u\le1\). Indeed 30.63 gives
+\(D_N\ge R_N(q)-\|v(q)\|^2/\delta\ge B_0-E_0-S/\delta\),
+and 30.53 supplies the other lower term. For the upper endpoint use
+\(D_N\le R_N(q)\le B_0\) and \(D_N\le R_N(0)=1\).
+Since \(u\le B_0\) and \(\ell\ge B_0-E_0-S/\delta\),
+\[
+u-\ell\le E_0+S/\delta.
+\]
+This proof is valid for a bad, zero, negative or out-of-box candidate. Small residual
+approximation error alone need not make its interval narrow: a nonoptimal fixed \(q\) may retain
+a nonzero half-gradient. Coercivity turns the local gradient bound into a global optimality bound;
+without it that implication has not been proved. Each offset belongs to the same specified \(q\).
+

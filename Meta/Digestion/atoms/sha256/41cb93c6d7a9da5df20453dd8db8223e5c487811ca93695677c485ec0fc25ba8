@@ -1,0 +1,27 @@
+**30.65 定义及证明（版本一 VerifyLocal 与总解码）。** Use exactly the Pair, Sign, Rat and
+List maps of 30.58 (the same natural encodings as 30.47). A local certificate has seven fields
+\[
+(1,N,\operatorname{Rat}(\eta),\operatorname{List}(q_1,\ldots,q_N),
+ \operatorname{List}(p_0,\ldots,p_{2N}),\operatorname{Rat}(\ell),\operatorname{Rat}(u)),
+\quad p_i=\operatorname{Pair}(J_i-2,K_i-1),
+\]
+with rational codes in the coefficient list. Define \(\operatorname{VerifyLocal}(N,\eta,e)\)
+to reject illegal external input, incorrect version or length, internal input mismatch, coefficient
+length other than \(N\), or parameter length other than \(2N+1\). Decode each parameter with
+\(J_i=2+a_i,K_i=1+b_i\). Recompute \(\delta_{\rm old}(N),\sigma_N\) and require their
+positive rational signs. Derive all \(x_i\) from the one decoded \(q\); recompute every
+\(B_i,E_i,l_k,u_k,S\) and both endpoints in 30.64. Require exact equality with the encoded
+endpoints and \(0<\ell\le u\le1\), \(u-\ell<\eta\). These conditions define acceptance.
+
+The certificate contains no trusted true residual, gradient, Gram matrix, optimizer, coercivity
+constant or generation history. Pair decoding terminates by repeated decreasing division of the
+positive integer \(n+1\); sign and positive-denominator decoding are total; each decoded list
+tail is a strictly smaller natural number. Thus malformed shape is decidable after finite decoding.
+The constants use finite rational formulas, and the remaining \(2N+1\) residual computations
+are finite. Cross multiplication with positive denominators decides all rational relations.
+There is no real-rank, logarithm, floating, square-root or infinite-limit operation in this
+predicate. It is total on every encoded input. If it accepts, 30.64 proves its interval contains
+\(D_N\), and the last comparison proves width \(<\eta\). No auxiliary polarization probe
+or matrix from a generator is accepted on trust or required in the certificate. Any source of
+rational \(q\) is governed by exactly this local predicate.
+

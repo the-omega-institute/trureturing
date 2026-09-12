@@ -111,7 +111,7 @@ internal static partial class DigestionLedgerAligner
             {
                 plan = DigestionDecomposition.Plan(parent, parentBlob.RawBytes,
                     AtomizerRegistry.Require(source.Atomizer).Atomize,
-                    TheoryAtomizerDataLoader.Load(snapshot));
+                    TheoryAtomizerDataLoader.Load(snapshot), snapshot);
             }
             catch (FormatException exception)
             {

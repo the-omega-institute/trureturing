@@ -1,0 +1,57 @@
+### 42.2 总响应、部分消费者与严格标签闭包
+
+**定义 QI-D2（严格观察的类型）。** 每个节点给定总函数 $h_i:\Gamma_i\to Y_i$。定义
+
+$$
+H:J\longrightarrow\prod_{i\in I}Y_i,\qquad
+H(w)=(h_i(w|_{S_i}))_{i\in I}.
+\tag{QI-RESPONSE}
+$$
+
+固定一个消费者集合 $\mathcal F$。每个 $c\in\mathcal F$ 给定部分函数
+
+$$
+f_c:D_c\longrightarrow V_c,\qquad D_c\subseteq\prod_{i\in I}Y_i.
+$$
+
+使用不交标签集 $\operatorname{Tag}(V_c)=\{\operatorname{ok}(v):v\in V_c\}\sqcup\{\bot\}$，其中 $\operatorname{ok}$ 为单射且其像不含 $\bot$。另命名总化函数，不把它与 $f_c$ 混用：
+
+$$
+\widehat f_c:\prod_{i\in I}Y_i\longrightarrow\operatorname{Tag}(V_c),
+\qquad
+\widehat f_c(y)=
+\begin{cases}
+\operatorname{ok}(f_c(y)),&y\in D_c,\\
+\bot,&y\notin D_c.
+\end{cases}
+\tag{QI-TOTALIZE}
+$$
+
+令
+
+$$
+G_c=\widehat f_c\circ H:J\to\operatorname{Tag}(V_c),\qquad
+\mathcal V_{\mathcal F}=\prod_{c\in\mathcal F}\operatorname{Tag}(V_c),
+\qquad G:J\to\mathcal V_{\mathcal F},\quad G(w)=(G_c(w))_{c\in\mathcal F}.
+\tag{QI-VECTOR}
+$$
+
+因此 $G$ 在被 $K$ 排除的原始连接记录上也有定义；实际结果另取 $G[W]$。若消费者由有限表达式树给出，叶读取输入或常数，内部节点携带自己的部分操作及原始守卫。内部节点有任一失败子项就返回 $\bot$；只有全部子项成功时，才解标签、检查本节点守卫并计算。即使父操作在成功域上恒取一个常数，也须先执行这些步骤。独立的无子项常数表达式则直接成功。
+
+**命题 QI-P2（有限严格表达式的闭包，repo-derived）。** 将 $D_c$ 定义为该表达式全部原始中间守卫均通过的输入集，将 $f_c$ 定义为此域上的未加标签结果，则递归严格求值恰为 $\widehat f_c$。
+
+**证明。** 对表达式树归纳。叶的成功标签及常数值唯一。内部节点若有失败子项，归纳假设表明该子树的某个原始守卫未通过，整式不在 $D_c$，两种定义都返回 $\bot$。否则各子树的成功值唯一；本节点守卫失败时两者均失败，通过时两者均用同一个部分操作产生同一成功值。这同时证明类型闭合及全部中间守卫的保留，且不依赖父操作是否为常值。证毕。
+
+例如，对有理响应对定义
+
+$$
+F((a,b),(c,d))=
+\begin{cases}
+\operatorname{ok}\!\left(\dfrac{a+c}{b+d}\right),&b+d\ne0,\\
+\bot,&b+d=0.
+\end{cases}
+\tag{QI-RATIO}
+$$
+
+这是 $\mathbb Q$ 中的非零分母守卫；若采用 $\mathbb Z$ 中的精确除法，还须要求 $b+d\mid a+c$。二者的定义域不能混同。严格表达式 $0\cdot(1/0)$ 失败，而独立常数 $0$ 返回 $\operatorname{ok}(0)$；代数化简不能删除原表达式的除法守卫。
+

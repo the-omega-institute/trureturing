@@ -1,0 +1,28 @@
+## 12. mode-local 的 intrinsic characterization
+
+令：
+
+```math
+\Lambda=QSQ^\dagger,
+```
+
+其中 `Lambda` 有三个不同 eigenvalues，每个 multiplicity 为 2。
+
+对 `U=FQ^dagger`，以下条件等价：
+
+1. 每一行 `U_r` 只支持一个 Fourier mode；
+2. 在行置换后，`U=L_0 direct-sum L_1 direct-sum L_2`；
+3. `FSF^dagger=U Lambda U^dagger` 是 diagonal，且三个 eigenvalues 各出现两次。
+
+如果 `F` 与 `FT` 都 flat，则每个 `L_k` 和 `L_kT_k` 都是 flat `2 x 2` unitaries。接入第 9 节的 local two-point fibre 后，mode-local factor 正是 canonical Zauner factor，直到允许的 monomial gauges。
+
+因此真正剩余的 fibre 是：
+
+```math
+\mathcal N(T)
+=
+\mathcal F(T)\setminus\mathcal F_{mode-local}(T).
+```
+
+它由 genuinely mode-mixing solutions 构成。上述 intrinsic characterization 与完整 basis adapter 仍需在指定规范下独立形式化。
+

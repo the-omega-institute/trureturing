@@ -1,0 +1,56 @@
+**定理 406.1。** 令
+$$
+T^*=e_KTe_K^{-1},\qquad R^*=e_{\mathbb T}Re_{\mathbb T}^{-1},
+\qquad H^*=e_{\mathbb T}He_K^{-1}.
+$$
+对全部 $m\in\omega$ 和 $k\in\mathbb Z$，
+$$
+(T^*)^m=e_KT^me_K^{-1},\qquad
+(R^*)^k=e_{\mathbb T}R^ke_{\mathbb T}^{-1},\qquad H^*T^*=R^*H^*.
+$$
+异步关系、同步关系与相位纤维关系的外部运输分别准确满足
+$$
+c\mathrel{E_{T,{\rm ext}}}d
+\iff\exists m,n\in\omega\ ((T^*)^mc=(T^*)^nd),
+$$
+$$
+c\mathrel{S_{T,{\rm ext}}}d
+\iff\exists m\in\omega\ ((T^*)^mc=(T^*)^md)
+\iff H^*c=H^*d,
+$$
+$$
+u\mathrel{E_{R,{\rm ext}}}v
+\iff\exists k\in\mathbb Z\ (v=(R^*)^ku).
+$$
+并有 $c\mathrel{E_{T,{\rm ext}}}d\iff H^*c\mathrel{E_{R,{\rm ext}}}H^*d$。
+
+对任意集合 $X$ 上的等价关系 $Q$，
+$$
+[e_X(x)]_{Q_{\rm ext}}=e_X[[x]_Q].
+$$
+存在不依赖代表选择的双射
+$$
+\kappa_Q:X^*/Q_{\rm ext}\longrightarrow(X/Q)^*,\qquad
+\kappa_Q([e_X(x)]_{Q_{\rm ext}})
+=\operatorname{Enc}([x]_Q).
+$$
+它满足 $\kappa_Q\circ\pi_{Q_{\rm ext}}=e_{X/Q}\circ\pi_Q\circ e_X^{-1}$，其逆将 $\operatorname{Enc}(C)$ 送到 $\operatorname{El}(\operatorname{Enc}(C))=e_X[C]$，其中 $C\in X/Q$。若商集取各自商拓扑，则 $\kappa_Q$ 也是到运输商拓扑的同胚。
+
+**证明。** 零次迭代的共轭是恒等；在归纳步相邻的 $e_X^{-1}e_X$ 消去，得到全部自然次迭代公式。$R^{-1}$ 同样共轭为 $(R^*)^{-1}$，所以全部负次也成立。定理 375.3 的完整半共轭等式 $HT=RH$ 逐项共轭给最后等式。代入这些恒等式，原来每个自然或整数见证在外部仍给同一见证，反向使用 $e_X$ 单射性恢复原见证；定理 391.1 给同步和异步的全部等价式。这里 $T^*$ 仍非单射，不产生其负次迭代。
+
+类公式由逐点等价
+$$
+e_X(y)\in[e_X(x)]_{Q_{\rm ext}}\iff y\in[x]_Q
+$$
+给出。因而类相等、有限大小和可数性均保持并反映：限制双射到一个类，给该类与其像的双射；与有限集合或 $\omega$ 的单射、满射可在两侧复合运输。第 391.2 条中的三个指定自然点、一步边反例以及负相位两点准确合并时刻都由同样的单射和迭代式保留。$H^*$ 在 $e_{\mathbb T}(t)$ 的纤维为 $e_K[H^{-1}(\{t\})]$，所以单点、二点、接缝与所有负整数例外均各自对应。
+
+商集由幂集和替代为集合。若两个外部类相同，类公式及双射性使原类相同，故 $\kappa_Q$ 不依赖写出类时所用的 $x$。每个原类非空，其成员像就是一个外部类；反向每个外部类都这样得到。这证明双射与逆式，且不需对所有类选代表。代入任一点即得投影交换式，正是第 81 条一般商比较的此项实例。
+
+最后，若 $V\subseteq X/Q$，交换式给
+$$
+\pi_{Q_{\rm ext}}^{-1}
+\bigl[\kappa_Q^{-1}[e_{X/Q}[V]]\bigr]
+=e_X[\pi_Q^{-1}[V]].
+$$
+右侧开当且仅当 $\pi_Q^{-1}[V]$ 开，当且仅当 $V$ 在原商拓扑中开；左侧开当且仅当相应子集在外部商拓扑中开。所有目标子集都唯一为 $e_{X/Q}[V]$，所以这证明同胚，不假设商空间为 Hausdorff 或具有额外 Borel 性质。证毕。
+

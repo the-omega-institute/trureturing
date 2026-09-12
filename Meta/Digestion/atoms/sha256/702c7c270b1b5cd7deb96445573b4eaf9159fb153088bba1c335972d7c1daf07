@@ -1,0 +1,7 @@
+**命题 QI-P1（分隔集恰为割的完整重叠，repo-derived）。** 删除边 $e$ 后的节点分割记为 $L\mid R$，则
+
+$$
+U_L\cap U_R=C_e.
+\tag{QI-CUT}
+$$
+

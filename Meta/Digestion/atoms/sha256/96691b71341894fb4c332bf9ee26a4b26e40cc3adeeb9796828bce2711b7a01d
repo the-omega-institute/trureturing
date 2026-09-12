@@ -1,0 +1,28 @@
+**35.17 Full squeeze proof of integer counting.** For real \(t\), put
+\(F(t)=\#\{n\in B_Q^{\rm valid}:n\le t\}\), with zero count below the
+valid range. The density theorem and finite discard give
+\(F(t)=d_Qt+o(t)\) as real \(t\to\infty\); passing from integer to real
+cutoffs changes the argument by less than 1. For \(X\to\infty\), define
+\[
+y_X=\frac{\log X+S_h}{kh_0},\qquad
+\delta_Q=\frac{E_Q}{kh_0},\qquad
+C(X)=\#\{n\in B_Q^{\rm valid}:N_n\le X\}.
+\]
+If \(n\le y_X-\delta_Q\), then 35.16 gives
+\(\log N_n<kh_0n-S_h+E_Q\le\log X\). Conversely,
+\(N_n\le X\) and \(R_n>-E_Q\) give \(n<y_X+\delta_Q\), hence
+\[
+F(y_X-\delta_Q)\le C(X)\le F(y_X+\delta_Q).
+\]
+The two real cutoffs differ from \(y_X\) by fixed constants. Since \(F\)
+counts a subset of the integers, each difference from \(F(y_X)\) is
+\(O(1)\), bounded by the number of integers in an interval of fixed length;
+possible endpoint equalities change no conclusion. Therefore
+\[
+C(X)=d_Qy_X+o(y_X)
+=\boxed{\frac{d_Q}{kh_0}\log X+o(\log X)}.
+\]
+By 35.16 this is the number of distinct constructed integers at most \(X\).
+Removing any further fixed finite prefix preserves the coefficient. The
+primes and \(Q\) remain fixed; no shrinking-target statement follows.
+

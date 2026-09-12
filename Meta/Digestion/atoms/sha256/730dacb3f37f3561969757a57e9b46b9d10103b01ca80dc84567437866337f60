@@ -1,0 +1,34 @@
+### 16.2 Uniform complex invariant neighborhoods
+
+Choose gamma' strictly between gamma and one, for example 1999/2000. There
+are finitely many parent types and child subsets. Holomorphy and compactness
+therefore provide positive radii delta_0 and epsilon_0 such that all transformed
+maps are defined and their complex Jacobian row sums are at most gamma' when
+the messages are delta_0-close to their real intervals and the activity is
+epsilon_0-close to [0,Lambda]. Their activity derivatives have a common finite
+bound M on a smaller closed neighborhood.
+
+Choose 0<delta<delta_0 and then 0<epsilon<epsilon_0 with
+M*epsilon<(1-gamma')*delta, with the harmless M=0 case treated separately.
+Let Omega_i be the open delta-neighborhood of I_i. Each Omega_i is convex.
+For z within epsilon of [0,Lambda] and each m_j in Omega_j, choose nearest
+real points m_j^0 in I_j and lambda in [0,Lambda]. Integrating the derivatives
+along the straight segments gives
+
+\[
+ \left|g_{i,S,z}(m)-g_{i,S,\lambda}(m^0)\right|
+ \le\gamma'\max_j|m_j-m_j^0|+M|z-\lambda|<\delta.
+\]
+
+The real output lies in I_i by the vacancy interval theorem. Hence the complex
+output lies in Omega_i. The empty-child case is included in the same argument.
+This provides one invariant collection of neighborhoods and one activity
+neighborhood, independent of the tree's depth or the graph's size.
+
+At the unconditioned root there can be four children. No root contraction
+estimate is required. Its denominator 1+lambda*prod(x_j) is at least one on
+the compact real set. Shrinking delta and epsilon further, while keeping the
+invariance inequality, makes all these root denominators nonzero as well.
+All root branches may be initialized at the parent-only geometric type; the
+extra actual deletions only prune the represented tree.
+

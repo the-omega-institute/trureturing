@@ -28,6 +28,9 @@ internal static class FileMapProjectionWriter
         {
             var residence = entry.ResidenceViolation ? " | residence_violation=true" : string.Empty;
             var node = $"[{entry.Pattern} | {KindName(entry.Kind)}{residence}]";
+            if (entry.Symlink is { } link)
+                builder.Append(node).Append(" --symlink(").Append(link.Kind).Append(")--> ")
+                    .Append(link.Target).Append('\n');
             builder.Append(entry.ProducedBy)
                 .Append(entry.ProducedBy == "none" ? " --declares--> " : " --produces--> ")
                 .Append(node)

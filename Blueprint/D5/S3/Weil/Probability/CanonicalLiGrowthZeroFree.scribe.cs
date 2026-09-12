@@ -40,7 +40,7 @@ internal sealed class CanonicalLiGrowthZeroFreeDocument : IScribeDocumentDefinit
             Describe.Lean(DescribeId.Create("xi-disk-zero-free-implies-rh"),
                 DeclarationHandle.Create(Prefix + "xi_disk_zero_free_implies_rh"), H("Bare disk converse to standard RH"),
                 StatementSource.FromAuthor(Imp(DiskFree, RH)), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The half-plane transfer feeds ActualZeroGeometry.rh_iff_xi_right_half_plane. Both existing summability consumers below use this bare bridge after disk nonvanishing."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("The half-plane transfer feeds ActualZeroGeometry.rh_iff_xi_right_half_plane. After disk nonvanishing, the half-plane summability consumer below uses xi_disk_zero_free_right_half_plane; the RH summability consumer additionally uses the bare converse xi_disk_zero_free_implies_rh."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("canonical-li-summable-right-half-plane"),
                 DeclarationHandle.Create(Prefix + "canonical_li_summable_right_half_plane"), H("Actual open right-half-plane nonvanishing"),
                 StatementSource.FromAuthor(Imp(AllSummable, HalfFree)), AssessedProvenance.FromRepo(),

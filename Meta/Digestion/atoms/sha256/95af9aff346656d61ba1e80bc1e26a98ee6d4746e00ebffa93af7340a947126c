@@ -1,0 +1,8 @@
+**命题 QI-P10（世界保持与联合结果像保持，repo-derived）。** 删除 $K$ 保留全部世界的充要条件是 $W=J$。只要求指定联合结果像时，充要条件较弱：
+
+$$
+G[W]=G[J]
+\iff \forall u\in J\ \exists w\in W:\ G(u)=G(w).
+\tag{QI-IMAGE-COVERAGE}
+$$
+

@@ -1,0 +1,84 @@
+## 25. support-face flatness defect 的锐化
+
+本节区分两个缩放。令 normalized relative unitary 为 `U`，令未归一化 Hadamard multiplier 为 `K=sqrt(6)U`，令当前 Lean 使用的有理 scaled relative Gram 为：
+
+```math
+P=6U=\sqrt6K.
+```
+
+仓库中的第一 defect 是：
+
+```math
+D_{Lean}(P)
+=\frac1{36}\sum_{a,b}
+\left(|P_{ab}|^2-6\right)^2.
+```
+
+它与未平均的 Hadamard entrywise defect 相同：
+
+```math
+D_{Lean}(P)
+=\sum_{a,b}\left(|K_{ab}|^2-1\right)^2.
+```
+
+概率坐标中的平均 defect 为：
+
+```math
+\widehat\Delta(U)
+=\sum_{a,b}
+\left(|U_{ab}|^2-\frac16\right)^2
+=\frac1{36}D_{Lean}(P).
+```
+
+若一行只允许两个 active coordinates，row-Gram 给出这两个位置的 squared norm 总和为 `36`。设其值为 `a,b`，则：
+
+```math
+(a-6)^2+(b-6)^2+4(0-6)^2
+=432+\frac12(a-b)^2.
+```
+
+所以每行 raw defect 至少为 `432`。六行求和并乘以 `1/36`：
+
+```math
+\boxed{D_{Lean}(P)\ge72.}
+```
+
+等价地：
+
+```math
+\boxed{\widehat\Delta(U)\ge2.}
+```
+
+这比只累计 24 个结构零所得的：
+
+```math
+D_{Lean}(P)\ge24,
+\qquad
+\widehat\Delta(U)\ge\frac23
+```
+
+更强。额外裕量来自剩余 12 个 active positions 必须承载全部 row mass。
+
+锐等号要求每个 active pair 平分质量：
+
+```math
+|P_{a,b_0}|^2=|P_{a,b_1}|^2=18.
+```
+
+当前 PR 已新增：
+
+```text
+D5/S3/Quantum/Tomography/SupportFaceFlatnessDefect.lean
+```
+
+以及：
+
+```text
+row_normSq_sum_of_cardSq_rowGram
+sixRowRawDefect_ge_four_hundred_thirty_two
+twoModeSupport_scaledRelativeGramDefect_ge_seventy_two
+twoModeSupport_completionThreeFramePotential_ge_seventy_two
+```
+
+`ZaunerAggregateFlatnessCertificate.lean` 已接入该通用真源，并加入 row-Gram 显式前提下的 `72` 裕量。该状态在 admission 完成前应记为“Lean source 已提交，等待机器裁决”。
+

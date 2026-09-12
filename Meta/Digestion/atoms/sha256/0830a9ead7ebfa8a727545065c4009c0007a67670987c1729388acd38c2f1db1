@@ -1,0 +1,32 @@
+### 精确有理 Positivstellensatz
+
+写 `mu=u+iv`。令：
+
+```math
+f_1=\alpha+\beta-1,\qquad
+f_2=\alpha^2-\alpha-u^2-v^2,\qquad
+f_3=\alpha-1/2.
+```
+
+系数恒等式为：
+
+```math
+\alpha\beta+u^2+v^2=\alpha f_1-f_2.
+```
+
+balanced split 的直接反证证书为：
+
+```math
+\boxed{
+-1=(2u)^2+(2v)^2+4f_2-4(\alpha-1/2)f_3.
+}
+```
+
+该恒等式已用 Python 标准库 `fractions.Fraction` 对全部单项式系数逐项核对，无浮点输入。证书数据位于：
+
+```text
+docs/develop/certificates/order_three_no_split_certificate.json
+```
+
+这是 scalar polynomial identity 的精确审计。它不能取代上面的矩阵到 scalar 归约，也不能代替 Lean elaboration。
+

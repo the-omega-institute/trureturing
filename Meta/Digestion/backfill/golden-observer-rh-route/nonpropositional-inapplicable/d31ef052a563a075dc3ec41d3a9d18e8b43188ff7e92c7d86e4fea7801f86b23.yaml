@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d31ef052a563a075dc3ec41d3a9d18e8b43188ff7e92c7d86e4fea7801f86b23
+  normalized_sha256: sha256:d31ef052a563a075dc3ec41d3a9d18e8b43188ff7e92c7d86e4fea7801f86b23
+cas_ref: sha256:d31ef052a563a075dc3ec41d3a9d18e8b43188ff7e92c7d86e4fea7801f86b23
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「一　G-h-1 预登记:认证 p = 2 零点的素数缩放轨道对黄金窗口的分类与两素跨线(`D5/S3/Analytic/GermWindow/LocalFactorZeroScalingOrbitWindow`,绑 G-c、`LocalFactorUniversalScaling`、G-g-5)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: b280d82bea32a80677d3ba7bfa33c72f6a12b3f662be0c84192884e42b39a9be
+    next_atom_id: c093b4804d8cf49ab0b6865e3282bad6122f61529c8744f83ada3469b088da4f

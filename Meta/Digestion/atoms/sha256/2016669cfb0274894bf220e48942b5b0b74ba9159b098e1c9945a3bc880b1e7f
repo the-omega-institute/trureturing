@@ -1,0 +1,29 @@
+### 2. 全部有限矩阵产生同一个概率测度
+
+保持原约定：
+
+\[
+\widehat\mu(n)=\int_{\mathbb T}z^{-n}\,d\mu(z),\qquad
+T_N(c)_{jk}=c_{j-k},\quad 0\le j,k\le N.
+\]
+
+`CircleHerglotzCompletion.circle_herglotz_iff` 的结论是
+
+\[
+ c_0=1\quad\Longrightarrow\quad
+ \bigl(\forall N,\ T_N(c)\succeq0\bigr)
+ \iff \exists!\mu\in\mathcal P(\mathbb T),\ \forall n\in\mathbb Z,\ \widehat\mu(n)=c_n.
+\]
+
+共轭对称 `c(-n)=conj(c(n))` 由各阶矩阵的 Hermitian 条件导出。有限表示在零模式的质量因此为一。对每个 N 定义
+
+\[
+K_N=\{\mu\in\mathcal P(\mathbb T):\widehat\mu(n)=c_n\text{ for }|n|\le N\}.
+\]
+
+每个 K_N 非空、闭，且 K_(N+1) 包含于 K_N。圆周概率测度空间在弱拓扑中紧，因此交集非空。唯一性通过标准 Circle/AddCircle 同胚复用已有 Fourier 测度唯一性，过程中保留了负幂与模式反号。
+
+完整矩剖面是从紧空间到 Hausdorff 乘积空间的连续单射，因而为拓扑嵌入。`continuous_iff_circleMoments` 和 `tendsto_iff_circleMoments` 据此刻画实际弱连续性和任意 filter 下的弱收敛。
+
+`finite_moment_witnesses_tendsto` 进一步证明：若任意选择的概率见证 nu_N 匹配前 N 阶矩，则整列 nu_N 弱收敛到上述同一个 mu。固定模式 n 在 N>=|n| 后已恒等于 c_n；无需相邻见证相同或彼此存在耦合。这里既没有从单个有限 N 推出无限结论，也没有给出收敛速率。
+

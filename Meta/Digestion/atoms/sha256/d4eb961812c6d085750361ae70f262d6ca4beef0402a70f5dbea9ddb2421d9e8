@@ -1,0 +1,40 @@
+**证明。** 定理 53 适用于有限间断的分段多项式。变量 \(x\mapsto\{ax+\alpha\}\) 保持圆周长度，故 \(S_a\) 积分为零，且
+\[
+\Gamma_{ab}(h)=\int_0^1
+(\{ax+\alpha\}-1/2)(\{bx+(1+bh)\alpha\}-1/2)\,dx.
+\]
+令 \(S(t)=\{t\}-1/2\)。积分分部给出其非零 Fourier 系数
+\[
+\widehat S(l)=\int_0^1(t-1/2)e^{-2\pi i lt}\,dt
+=-\frac1{2\pi i l}\quad(l\ne0),\qquad\widehat S(0)=0.
+\]
+取 \(S\) 的 Fourier 截断，它们在 \(L^2(\mathbb T)\) 中收敛；整倍数映射与平移保持该范数。若两因子的截断为 \(u_M,v_M\)，则
+\[
+\left|\int u_Mv_M-\int uv\right|
+\le\|u_M-u\|_2\|v_M\|_2+\|u\|_2\|v_M-v\|_2\longrightarrow0.
+\]
+因此可先将有限 Fourier 和相乘并积分，再取极限。只有 \(al+bt=0\) 的项存活，即
+\(l=(b/g)j,t=-(a/g)j\)，\(j\ne0\)。其系数乘积为
+\[
+\left(-\frac1{2\pi i l}\right)\left(-\frac1{2\pi i t}\right)
+=\frac{g^2}{4\pi^2abj^2},
+\]
+相位为 \(e^{2\pi i j(b-a-ab h)\alpha/g}\)。留下的级数绝对收敛，故积分等于
+\[
+\frac{g^2}{4\pi^2ab}\sum_{j\ne0}
+\frac{e^{2\pi i j(b-a-ab h)\alpha/g}}{j^2}.
+\]
+[伯努利多项式 Fourier 公式，DLMF 24.8.3](https://dlmf.nist.gov/24.8#E3)在 \(n=2\)、\(0\le t\le1\) 给出
+\[
+B_2(t)=\frac1{2\pi^2}\sum_{j\ne0}\frac{e^{2\pi i jt}}{j^2}.
+\]
+该式也可由 \(B_2\) 的零平均、两次积分分部所得系数 \(1/(2\pi^2j^2)\) 与绝对一致收敛得到。于是得到 \(\Gamma\) 的公式；\(a=b,h=0\) 时为 \(B_2(0)/2=1/12\)。\(S\) 在整数点的值不影响 \(L^2\) 论证。
+
+由定理 52，方向精确为
+\[
+d_a(k)-\delta_a=R_a(k+1)-R_a(k),\qquad
+F_a(x)-\delta_a=S_a(Tx)-S_a(x).
+\]
+展开两个差的乘积，第一项的共同指标平移不改变极限，四项依次为
+\(\Gamma_{ab}(h),-\Gamma_{ab}(h-1),-\Gamma_{ab}(h+1),\Gamma_{ab}(h)\)。全部序列有界，删除或移动有限个初始项不改变平均，因此负滞后亦成立。证毕。
+

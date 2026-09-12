@@ -6,7 +6,7 @@ using Tomlyn.Model;
 
 namespace StrataLint.Cli;
 
-internal static class SettleAtomCommand
+internal static partial class SettleAtomCommand
 {
     private const string Usage = "USAGE: StrataLint settle-atom --request FILE --base REV | settle-atom --clear ATOM_ID --base REV";
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
@@ -52,7 +52,14 @@ internal static class SettleAtomCommand
             else
             {
                 RequireWritable(target);
-                var context = DigestionAtomContextProjection.Resolve(snapshot, document, atomId);
+                var contexts = DigestionAtomContextProjection.ResolveOccurrences(snapshot, document, atomId);
+                if (contexts.Length > 1 && request.OccurrenceIndex is null)
+                    throw Invalid("OCCURRENCE_INDEX_REQUIRED", $"atom_id={atomId} occurrences={contexts.Length}");
+                if (contexts.Length == 1 && request.OccurrenceIndex is not null)
+                    throw Invalid("REQUEST_KEYS_INVALID", "occurrence_index is only valid for repeated occurrences");
+                if (request.OccurrenceIndex is { } selected && (selected < 1 || selected > contexts.Length))
+                    throw Invalid("OCCURRENCE_INDEX_INVALID", $"atom_id={atomId} occurrence_index={selected} occurrences={contexts.Length}");
+                var context = contexts[request.OccurrenceIndex is { } occurrence ? occurrence - 1 : 0];
                 if (context.Previous?.AtomId != request.PreviousAtomId || context.Next?.AtomId != request.NextAtomId)
                     throw Invalid("CONTEXT_MISMATCH", $"atom_id={atomId}");
                 updated = target with
@@ -140,21 +147,36 @@ internal static class SettleAtomCommand
 
     private static SettleRequest LoadRequest(ImmutableArray<byte> bytes)
     {
+        var text = DecodeRequest(bytes);
+        TomlTable table;
+        try { table = TomlSerializer.Deserialize<TomlTable>(text) ?? throw new FormatException("request is empty"); }
+        catch (Exception error) when (error is not OutOfMemoryException) { throw Invalid("REQUEST_TOML_INVALID", error.Message); }
+        var keys = table.Keys.ToHashSet(StringComparer.Ordinal);
+        var requiredKeys = new HashSet<string>(["atom_id", "justification", "previous_atom_id", "next_atom_id"], StringComparer.Ordinal);
+        if (!keys.IsSupersetOf(requiredKeys) || keys.Any(key => !requiredKeys.Contains(key) && key != "occurrence_index"))
+            throw Invalid("REQUEST_KEYS_INVALID", "request keys are not canonical");
+        var atomId = RequiredString(table, "atom_id");
+        if (!DigestionNonpropositional.IsAtomId(atomId)) throw Invalid("ARGUMENTS_INVALID", "atom_id must be a canonical atom id");
+        int? occurrenceIndex = null;
+        if (table.TryGetValue("occurrence_index", out var occurrenceValue))
+        {
+            if (occurrenceValue is not long raw || raw < 1 || raw > int.MaxValue)
+                throw Invalid("OCCURRENCE_INDEX_INVALID", "occurrence_index must be a positive integer");
+            occurrenceIndex = (int)raw;
+        }
+        return new SettleRequest(atomId, RequiredString(table, "justification"),
+            Neighbor(table, "previous_atom_id"), Neighbor(table, "next_atom_id"), occurrenceIndex);
+    }
+
+    private static string DecodeRequest(ImmutableArray<byte> bytes)
+    {
         if (bytes.IsEmpty || bytes[^1] != (byte)'\n' || bytes.AsSpan().Contains((byte)'\r')
             || bytes.AsSpan().StartsWith(Encoding.UTF8.Preamble))
             throw Invalid("REQUEST_ENCODING_INVALID", "request must be strict UTF-8 without BOM/CR and end in LF");
         string text;
         try { text = StrictUtf8.GetString(bytes.AsSpan()); }
         catch (DecoderFallbackException error) { throw Invalid("REQUEST_ENCODING_INVALID", error.Message); }
-        TomlTable table;
-        try { table = TomlSerializer.Deserialize<TomlTable>(text) ?? throw new FormatException("request is empty"); }
-        catch (Exception error) when (error is not OutOfMemoryException) { throw Invalid("REQUEST_TOML_INVALID", error.Message); }
-        if (!table.Keys.ToHashSet(StringComparer.Ordinal).SetEquals(["atom_id", "justification", "previous_atom_id", "next_atom_id"]))
-            throw Invalid("REQUEST_KEYS_INVALID", "request keys are not canonical");
-        var atomId = RequiredString(table, "atom_id");
-        if (!DigestionNonpropositional.IsAtomId(atomId)) throw Invalid("ARGUMENTS_INVALID", "atom_id must be a canonical atom id");
-        return new SettleRequest(atomId, RequiredString(table, "justification"),
-            Neighbor(table, "previous_atom_id"), Neighbor(table, "next_atom_id"));
+        return text;
     }
 
     private static string? Neighbor(TomlTable table, string key)
@@ -231,5 +253,6 @@ internal static class SettleAtomCommand
     }
 
     private sealed record SettleOptions(string? RequestPath, string? ClearAtomId, string BaseRevision);
-    private sealed record SettleRequest(string AtomId, string Justification, string? PreviousAtomId, string? NextAtomId);
+    private sealed record SettleRequest(string AtomId, string Justification, string? PreviousAtomId, string? NextAtomId,
+        int? OccurrenceIndex);
 }

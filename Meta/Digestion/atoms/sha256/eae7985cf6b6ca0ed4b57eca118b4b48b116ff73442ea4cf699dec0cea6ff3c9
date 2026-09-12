@@ -1,0 +1,25 @@
+**31.22 单一内容层、保留边界及 caller 交付义务。** 本层由隔离 Codex CLI 实施席 I15
+在 caller 固定的 consensus-rnd:sshx 1.0.0-beta.42 和 CODEX_WORKER_SPEC.md 下产生,
+flight qgh0910-i15-balanced-prime-237,attempt 1。遵照 CLAUDE 5.11 和明确 brief,
+无 native subagent、委派、额外 oracle 或本轮评审票;repo-prior-exposed,
+不声称上下文无先验或模型族多样性。实际 GPT PRO 来源取自 caller 既有身份记录,
+本实施未独立鉴定 serving model。准备输入中旧的 predecessor-in-flight 描述属于其准备时刻,
+本层实际 immutable BASE 为 7b443a1764e5756c670b3912300a71f5b2e470f3,
+工作树为 /Users/auricstudio/trureturing-qgh-balanced-prime-237,
+分支 lane/math/quantized-gh-balanced-prime-237-0910。
+
+第 1-30 节完整前缀保留 286326 字节、5391 个 LF,SHA256
+4856aba958844029d1c7150f610104d3652dcfd25139bdfb53e4346cd905db0a;
+全部历史 CAS、entry 和报告保留。只追加本节、单一报告和以下命令的实际 canonical 输出:
+~~~sh
+make ingest BASE=7b443a1764e5756c670b3912300a71f5b2e470f3 SOURCE=arithmetic-boundary-quantization
+~~~
+源语义、固定证书及其 CAS/YAML 绑定属于同一可审查内容层,不拆出脱离源的派生地址。
+全部自动 children、历史末单元 terminal-LF 变体和 producer EOF 均保留原字节,
+指纹与 cas_ref 带 sha256: 前缀,子 atom_id 为裸 hash;完整映射由实施结论提供。
+摄入不等于 Lean 吸收或冻结。CPU 仅用于固定证明核验和必要编排,
+无候选搜索、旧搜索重放、GPU、daemon、工具/Lean/frozen 编辑或广泛 build/preflight。
+没有读取任何 worker 日志、log_ref 内容、caller 转录、同轮 peer 结果或其它 live target。
+本层返回 unstaged;caller 负责其后封存、独立评审、普通仓库门、push/PR/发布,
+最终 S20 交付等待 S19 MERGED。本实施不作 review 或 termination 判词,
+不执行暂存、commit、push、PR、merge 或生命周期命令。

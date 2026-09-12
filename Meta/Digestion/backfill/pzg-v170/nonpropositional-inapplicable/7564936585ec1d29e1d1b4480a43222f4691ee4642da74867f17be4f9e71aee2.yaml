@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7564936585ec1d29e1d1b4480a43222f4691ee4642da74867f17be4f9e71aee2
+  normalized_sha256: sha256:7564936585ec1d29e1d1b4480a43222f4691ee4642da74867f17be4f9e71aee2
+cas_ref: sha256:7564936585ec1d29e1d1b4480a43222f4691ee4642da74867f17be4f9e71aee2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「评注 27.334(测地线仪器与 Ψ 精核,轮 411)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: c2505a67fa6831b3880ef15357a36a39a351f059fcd9f6a5117061665bf31de4
+    next_atom_id: 9a972f50e7540c59f9632b5d5d56aeb57c5ad5a9bd7636eb468e9274af685a3d

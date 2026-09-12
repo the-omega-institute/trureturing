@@ -1,0 +1,13 @@
+**定理 163（来源树重编码的结构保持）。** \(\tau_Z:\mathsf{Tree}\to\mathsf{Tree}_Z\) 是双射，且对任意来源树 \(r,s\)
+\[
+\tau_Z(\operatorname{pair}(r,s))
+ =\operatorname{pair}_Z(\tau_Z(r),\tau_Z(s)).
+\]
+\(\operatorname{Code}^{\rm all}_Z\) 与逐字段逆映射互为逆；它保持并反映事件身份、偏序、选择集、时间序、空间加法、符号电荷、来源树相等及来源树的左右祖先关系。若 \(\mathscr E\) 是有限 CSA 表达式，则
+\[
+\operatorname{Code}^{\rm all}_Z(\mathscr E(X))
+ =\mathscr E^{\rm all}_Z(\operatorname{Code}^{\rm all}_Z(X)),
+\tag{Z-ALL-CONJ}
+\]
+其中 \(\mathscr E^{\rm all}_Z\) 在定义 146 的数值替换之外，对来源叶和来源配对使用定义 162 的两个原语。
+

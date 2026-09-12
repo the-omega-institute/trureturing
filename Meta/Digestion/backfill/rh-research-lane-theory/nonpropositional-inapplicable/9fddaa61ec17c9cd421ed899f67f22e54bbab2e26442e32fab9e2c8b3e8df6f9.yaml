@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9fddaa61ec17c9cd421ed899f67f22e54bbab2e26442e32fab9e2c8b3e8df6f9
+  normalized_sha256: sha256:9fddaa61ec17c9cd421ed899f67f22e54bbab2e26442e32fab9e2c8b3e8df6f9
+cas_ref: sha256:9fddaa61ec17c9cd421ed899f67f22e54bbab2e26442e32fab9e2c8b3e8df6f9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 1, reading 「标量偶 Weil 观察器的可达空间、约化因子分解与多轨道负证书」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: b9af00582abd95b6b216c3f317c864040822cbc6229e29379bc522c847536d3b
+    next_atom_id: 7643d57225afe895ade78f4a27be522cbbf43e1b8a8e65be662b279a6b397d7b

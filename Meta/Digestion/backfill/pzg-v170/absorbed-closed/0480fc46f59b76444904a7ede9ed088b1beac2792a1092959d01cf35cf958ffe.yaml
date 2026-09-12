@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0480fc46f59b76444904a7ede9ed088b1beac2792a1092959d01cf35cf958ffe
+  normalized_sha256: sha256:0480fc46f59b76444904a7ede9ed088b1beac2792a1092959d01cf35cf958ffe
+cas_ref: sha256:0480fc46f59b76444904a7ede9ed088b1beac2792a1092959d01cf35cf958ffe
+coverage_gids:
+  - gid: D5/S1/Words/BarkerEvenLengthModFourObstruction.even_barker_length_mod_four
+    target_statement_id: sha256:8ff8de44dd85ba35f59c4b4a6306a3877baef1eac64fd235957b11873862c378
+receipts:
+  unresolved_subitems: []

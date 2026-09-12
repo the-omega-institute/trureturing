@@ -1,0 +1,20 @@
+**定理 362.4。** 对任意所列集合 $Y,Z$、子集 $D\subseteq Y$ 及实际函数 $f:D\to Z$，其完整集合共轭的精确域和值为
+$$
+f^*:\operatorname{Enc}[D]\longrightarrow Z^*,\qquad
+f^*(\operatorname{Enc}(x))=\operatorname{Enc}(f(x))\quad(x\in D),
+$$
+$$
+x\in D\iff\operatorname{Enc}(x)\in\operatorname{Enc}[D],\qquad
+\operatorname{ran}(f^*)=\operatorname{Enc}[\operatorname{ran}(f)].
+$$
+指定源、目标拓扑，并在 $D$ 上取子空间拓扑后，$f$ 连续当且仅当 $f^*$ 连续。特别定理 356.1 的延拓命题精确运输为：存在连续
+$$
+F^*:((X_A^{\rm cap})^*,(\tau_{\rm coord,A}^{X})^*)\longrightarrow
+(\mathbb R^*,\tau_{\mathbb R}^*)
+$$
+满足 $F^*|_{(B_A^{\rm cap})^*}=\ell_A^*$，当且仅当 $M_A<+\infty$；此时唯一的函数是
+$$
+S_A^*(\operatorname{Enc}(x))=\operatorname{Enc}(S_A(x))\quad(x\in X_A^{\rm cap}).
+$$
+这里 $\tau_{\mathbb R}$ 是通常实拓扑，$(B_A^{\rm cap})^*$ 作为延拓限制域不改变 $X_A^{\rm cap}$ 的坐标源拓扑；单独讨论 $\ell_A^*$ 的精确观察连续性时，源另取 $(\tau_{+,A})^*$。
+

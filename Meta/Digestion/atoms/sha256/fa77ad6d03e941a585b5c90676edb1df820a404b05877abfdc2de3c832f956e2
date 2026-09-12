@@ -1,0 +1,7 @@
+**定义 385.1。** 全部编码使用第 71–74、378.2 条的同一个 $\operatorname{Enc},\operatorname{Dec},\mathfrak V_Z,\in_Z,\operatorname{El},\operatorname{Pack}$，自然叶仍为 $\operatorname{NatZ}(n)=\langle0,\zeta(n)\rangle$。对任意集合 $X$，沿用
+$$
+X^*=\operatorname{Enc}[X],\qquad e_X=\operatorname{enc}_X:X\to X^*,\qquad
+f^*=e_Y\circ f\circ e_D^{-1}:D^*\to Y^*\quad(f:D\to Y).
+$$
+$e_D^{-1}$ 恰为 $\operatorname{Dec}|_{D^*}$；$\operatorname{Dec}$ 的有效域仍仅为 $\mathfrak V_Z$。单个集合码 $\operatorname{Enc}(X)$ 的语义成员集为 $X^*$。
+

@@ -1,0 +1,15 @@
+**定义 430.1（预测十二·外部图与语义图）。** 对有效码定义
+$$
+\{c,d\}_Z=\operatorname{Pack}(\{c,d\}),\qquad
+\langle c,d\rangle_Z=\{\{c,c\}_Z,\{c,d\}_Z\}_Z.
+$$
+对任意集合 $D,Y$ 及函数 $f:D\to Y$，其原图记为 $G_f=\{\langle x,f(x)\rangle:x\in D\}$，定义外部共轭
+$$
+f^*=e_Y\circ f\circ(\operatorname{Dec}|D^*):D^*\to Y^*,\qquad
+\Gamma_{f^*}=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle:x\in D\}.
+$$
+对任意 $R\subseteq X\times Y$，定义外部关系
+$$
+R^*=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(y)\rangle:\langle x,y\rangle\in R\}.
+$$
+

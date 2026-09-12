@@ -1,0 +1,22 @@
+## 21. finite symmetry skeleton 作为备用分支
+
+strict-X edge 携带 cycle type `(3)(3)` 的 monomial symmetry。固定一个 permutation：
+
+```text
+s=(123)(456).
+```
+
+另一个同 cycle type permutation 在 `s` 的 centralizer 下分成六个 orbits：
+
+```text
+1 + 1 + 2 + 9 + 9 + 18 = 40.
+```
+
+相应生成群阶：
+
+```text
+3, 3, 9, 12, 12, 60.
+```
+
+如果 scalar affinity bound 在某 exceptional locus 取 equality，这六个 finite permutation skeleton 提供第二层分解。aligned `Z3` 情形可降到三个 `U(2)` blocks；transitive order-12 和 order-60 情形可利用有限群 representation constraints。
+

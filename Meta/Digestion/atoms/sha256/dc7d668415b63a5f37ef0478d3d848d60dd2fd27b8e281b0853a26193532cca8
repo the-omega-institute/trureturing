@@ -1,0 +1,15 @@
+**定义 243（连续素数尾部的独立语义）。** 对整数 $i\ge1$、$a,b,K\ge0$、$N\ge1$，令 $\mathcal T(i,a,N,b,K)$ 为所有有限序列 $\boldsymbol e=(e_1,\ldots,e_r)$ 的集合，要求
+$$
+0\le r\le K,\qquad a\ge e_1\ge\cdots\ge e_r\ge1,
+$$
+$$
+\prod_{j=1}^r p_{i+j-1}^{e_j}\le N,\qquad
+\sum_{j=1}^r\ell_Z(e_j)\le b.
+$$
+空序列不受指数条件限制，其标量积和状态数均为一、宽度为零。定义
+$$
+D(i,a,N,b,K)=\max_{\boldsymbol e\in\mathcal T(i,a,N,b,K)}
+\prod_{j=1}^r(e_j+1).
+$$
+此处最大化的是状态数，素数幂乘积仅作为标量约束。序列长度至多 $K$、每项至多 $a$，故语义域非空有限。
+

@@ -1,0 +1,18 @@
+**30.3 宽域上的正支持。** 对 30.2 的任一薄层,取其中一个端点角点 \(v\),
+令 \(\bar v=\sum_i v_i/3\in I\)、\(w_i=v_i-T\ge0\)。因为 \(v_i\in C_i\),
+\[
+\sum_i\delta_i^2\le\sum_i(v_i-\bar v)^2
+=\sum_i w_i^2-3(\bar v-T)^2
+\le6(\bar v-T)^2.
+\]
+最后一步是 \(\sum_iw_i^2\le(\sum_iw_i)^2=9(\bar v-T)^2\),
+取等允许若干 \(w_i=0\)。故
+\[
+0\le\rho\le\bar v-T\le\mu-T,\qquad H\ge L\ge T>0.
+\]
+这是 26.4 的同一角点证明,现在显式用于不含 cutoff 的宽域。
+它只需一个实际端点角点,不使用下预算符号、上预算有界区间或严格 5040 条件。
+因而映射前后、\(\rho=0\) 和端点包含等号都有效。
+定义 \(\lambda=L-T\)、\(\eta=H-T\),得到 \(0\le\lambda\le\eta\);
+本节 \(\lambda\) 是包络偏移,不是对偶价格。
+

@@ -1,0 +1,13 @@
+**定理 353.4。** 展开第 342–353 条的新定义后，对每个固定有限集合论公式 $\varphi(x_1,\ldots,x_r)$ 及任意集合参数，第 75 条的翻译保留
+$$
+\varphi(x_1,\ldots,x_r)
+\iff\varphi^Z(\operatorname{Enc}(x_1),\ldots,\operatorname{Enc}(x_r)).
+$$
+量词包括全部容量、全乘积点、实输出、所有子集及全函数空间；特别使用第 74 条已定义的
+$$
+\mathcal P_Z(\operatorname{Enc}(X))=\operatorname{Enc}(\mathcal P(X)),\qquad
+\operatorname{Fun}_Z(\operatorname{Enc}(X),\operatorname{Enc}(Y))
+=\operatorname{Enc}(Y^X).
+$$
+这些定义及已证性质给原集合论语言的定义性保守扩展，并保留第 72、78–79、98、341 条的遗传有限性、有限状态数及给定模型的精确边界。
+

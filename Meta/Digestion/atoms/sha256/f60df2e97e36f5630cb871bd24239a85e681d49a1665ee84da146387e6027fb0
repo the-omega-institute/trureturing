@@ -1,0 +1,13 @@
+**定义 2（原载体上的运算）。** 沿用[《情境时空算术》定义 4–6](CONTEXTUAL_SPACETIME_ARITHMETIC.md)。\(X\boxplus Y\) 对档案、当前区域、选择分别作带互异标签的并集，复制全部属性及各自内部偏序。\(X\triangleright Y\) 使用同一并集并加入从全部左档案事件到全部右档案事件的边，其定义域为
+\[
+\forall e\in E_X\ \forall f\in E_Y,\quad t_X(e)<t_Y(f),
+\qquad\text{等价地 }M_X<m_Y.
+\]
+此运算不改变任何绝对时刻。补集记为 \(\mathsf cX=(C,\Omega\setminus A)\)。原档案乘法 \(X\boxtimes Y\) 保留两份带标签旧档案，并对每个 \((a,b)\in\Omega_X\times\Omega_Y\) 产生一个新事件 \(p_{ab}\)，满足
+\[
+t(p_{ab})=\max(t_X(a),t_Y(b))+1,\quad x(p_{ab})=x_X(a)+x_Y(b),\quad
+\sigma(p_{ab})=\sigma_X(a)\sigma_Y(b),\quad
+\rho(p_{ab})=\operatorname{pair}(\rho_X(a),\rho_Y(b)).
+\]
+偏序为旧边与两父指向新事件的边的传递闭包；当前区域为全部新事件，选择为 \(A_X\times A_Y\) 所对应的新事件。对固定 \(S\subseteq\mathbb Z^3\)、\(I\subseteq\mathbb Z\)，空间筛选 \(F_S\) 和时间筛选 \(F_I^t\) 分别仅将选择替换为 \(A\cap x^{-1}(S)\) 和 \(A\cap t^{-1}(I)\)，其余数据保持。历史同构指保持和反映偏序、保持全部属性及 \(\Omega,A\) 的档案双射。
+

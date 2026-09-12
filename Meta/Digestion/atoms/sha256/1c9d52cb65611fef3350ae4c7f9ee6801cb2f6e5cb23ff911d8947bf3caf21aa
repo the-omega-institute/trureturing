@@ -1,0 +1,1 @@
+**定义 440.4。** 对有效 $c,d$，语义有序对为 $\langle c,d\rangle_Z=\operatorname{Enc}(\langle\operatorname{Dec}(c),\operatorname{Dec}(d)\rangle)$。它等于原第74条的语义库拉托夫斯基对。

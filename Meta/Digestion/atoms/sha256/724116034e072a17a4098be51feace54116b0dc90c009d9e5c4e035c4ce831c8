@@ -1,0 +1,6 @@
+**定理 10（完整窗口与 Zeckendorf 唯一性）。** 对每个 \(L\ge0\)，\(V\) 给出双射
+\[
+\mathcal W_L\simeq\{0,\ldots,G_L-1\}.
+\]
+每个 \(a\in\mathbb N\) 因而恰有一个数值为 \(a\) 的规范行，记为 \(s(a)\)。
+

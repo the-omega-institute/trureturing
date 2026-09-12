@@ -1,0 +1,6 @@
+**命题 67（后复合分类的范围，repo-derived）。** 沿用命题 66 的记号，存在 $H\in\mathcal E$，使任意 $B\subseteq K$ 与任意 $g:\mathbb Z\to\mathbb Z$ 都有 $H\ne g\circ L_B$。因而可表达的后复合子族满足严格包含
+\[
+\mathcal E\cap\{g\circ L_B:B\subseteq K,\ g:\mathbb Z\to\mathbb Z\}
+\subsetneq\mathcal E.
+\]
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5de57d6b0eb45fc0bbd356fe5e1e9dc47760dbeda54706dad4742ea7c1213728
+  normalized_sha256: sha256:5de57d6b0eb45fc0bbd356fe5e1e9dc47760dbeda54706dad4742ea7c1213728
+cas_ref: sha256:5de57d6b0eb45fc0bbd356fe5e1e9dc47760dbeda54706dad4742ea7c1213728
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「467. B-2 预登记:概率形式与真边缘分布相等(同模块第二条公开定理)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 96949f54a942bf9d573139d44d8f0c3a99d3abcca11338ec5d2108b6d26bad8d
+    next_atom_id: 524623baacc05d403aff4277646f4e42e7fff7e9f7d21f4c0fa98b3ff4b20e5b

@@ -1,0 +1,41 @@
+**定义 264（原 CSA 算子的逐字段数字实例）。** 对第 261 条的每一种 $R$，在独立目标 $\mathcal H_R$ 上作如下定义。所有事件标签取 CSA 的固定集合构造 $\iota_0(e)=(0,e)$、$\iota_1(f)=(1,f)$、$p_{ef}=(2,(e,f))$。标签层不作数值加法，不改变事件或来源叶的身份。
+
+对全部 $Y_0,Y_1\in\mathcal H_R$，$Y_0\boxplus^RY_1$ 的事件集、当前整体、选择分别为
+$$
+\iota_0[E_0]\sqcup\iota_1[E_1],\qquad
+\iota_0[\Omega_0]\sqcup\iota_1[\Omega_1],\qquad
+\iota_0[A_0]\sqcup\iota_1[A_1].
+$$
+四字段逐标签复制，偏序只复制两内部关系。$Y_0\triangleright^RY_1$ 的数据相同，但加入全部左档案到右档案的边，联合域为
+$$
+\mathcal T_R=\{(Y_0,Y_1)\in\mathcal H_R^2:
+\forall e\in E_0\ \forall f\in E_1,\ t'_0(e)<_St'_1(f)\}.
+$$
+$Y_0\boxtimes^RY_1$ 的事件集为
+$$
+\iota_0[E_0]\sqcup\iota_1[E_1]\sqcup
+\{p_{ef}:e\in\Omega_0,\ f\in\Omega_1\}.
+$$
+旧事件字段照抄，全部新事件的字段为
+$$
+\begin{aligned}
+t'(p_{ef})&=\max_S(t'_0(e),t'_1(f))\oplus_Z1_S,\\
+x'(p_{ef})_j&=x'_0(e)_j\oplus_Zx'_1(f)_j\quad(1\le j\le3),\\
+\sigma(p_{ef})&=\sigma_0(e)\sigma_1(f),\\
+\rho'(p_{ef})&=\operatorname{pair}_R(\rho'_0(e),\rho'_1(f)).
+\end{aligned}
+$$
+符号乘法在 $\Sigma_\pm$ 上采用正负标签乘法。偏序为两旧偏序与全部父边 $\iota_0(e)\prec p_{ef}$、$\iota_1(f)\prec p_{ef}$ 的传递闭包。当前整体及选择分别为
+$$
+\Omega_{\boxtimes}^R=\{p_{ef}:e\in\Omega_0,f\in\Omega_1\},\qquad
+A_{\boxtimes}^R=\{p_{ef}:e\in A_0,f\in A_1\}.
+$$
+该乘法的联合域为整个 $\mathcal H_R^2$，当前整体不以所选父对替代。
+
+对全部 $Y=(C',A)\in\mathcal H_R$ 令 $N^RY=(C',\Omega\setminus A)$。对全部 $k'\in S$ 令 $T_{k'}^RY$ 只把每个 $t'(e)$ 换为 $t'(e)\oplus_Zk'$；联合域为 $\mathcal H_R\times S$。定义总电荷
+$$
+q^R(Y)=\mathop{\bigoplus}_{e\in A}^{Z}b(\epsilon_J(\sigma(e))),\qquad
+u^R(C')=\mathop{\bigoplus}_{e\in\Omega}^{Z}b(\epsilon_J(\sigma(e))).
+$$
+数字平衡载体为 $\mathcal B_R=\{Y\in\mathcal H_R:u^R(C')=0_S\}$；原平衡载体仍记为 $\mathcal B\subseteq\mathcal H$。一般补集的定义域是 $\mathcal H_R$，在平衡算术签名中使用其到 $\mathcal B_R$ 的限制。
+

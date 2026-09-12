@@ -1,0 +1,33 @@
+**命题 QI-P3（最大准确等价与普遍因子化，repo-derived）。** 定义
+
+$$
+a\equiv_{e,s}a'
+\iff O_{e,s}(a)=O_{e,s}(a'),
+\qquad
+q^*:\mathcal B_e(s)\twoheadrightarrow Q_e^*(s)
+=\mathcal B_e(s)/{\equiv_{e,s}}.
+\tag{QI-EDGE-QUOTIENT}
+$$
+
+表示是满射 $q:\mathcal B_e(s)\twoheadrightarrow Q$；任意到更大集合的函数可先将余域缩到实际像。称 $q$ 准确，是指对每个 $c$ 存在
+
+$$
+E_{c,q}:Q\times\mathcal R_e(s)\to\operatorname{Tag}(V_c),
+\qquad E_{c,q}(q(a),r)=G_c(a\cup r).
+$$
+
+对任意函数 $t$ 记 $\ker t=\{(x,x'):t(x)=t(x')\}$。表示的细化序定义为 $q_1\preceq q_2$ 当且仅当 $\ker q_1\subseteq\ker q_2$，左侧更细；相同核的表示视为同一信息等级后，这是偏序。则
+
+$$
+q\text{ 准确}\iff\ker q\subseteq\ker O_{e,s},
+\qquad Q_e^*(s)\cong O_{e,s}[\mathcal B_e(s)].
+\tag{QI-ACCURATE}
+$$
+
+$\equiv_{e,s}=\ker O_{e,s}$ 是最大的准确等价关系。对每个准确满射 $q$，存在唯一映射
+
+$$
+p:Q\to Q_e^*(s),\qquad q^*=p\circ q.
+\tag{QI-UNIVERSAL}
+$$
+

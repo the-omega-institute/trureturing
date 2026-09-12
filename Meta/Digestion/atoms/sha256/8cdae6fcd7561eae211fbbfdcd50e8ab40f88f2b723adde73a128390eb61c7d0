@@ -1,0 +1,11 @@
+**定理 51（第二递推读数的取整桥）。** 对全部 \(a\in\mathbb N\)，
+\[
+f(a)=\lfloor(a+1)\alpha\rfloor,\qquad
+-\alpha^2<f(a)-a\alpha<\alpha.
+\]
+规范行向上移动一位的解码为
+\[
+\sum_jG_{j+1}s(a)_j=a+f(a)
+=\lfloor(a+1)\phi\rfloor-1.
+\]
+

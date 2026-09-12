@@ -1,0 +1,17 @@
+**30.70 命题（局部方法的全部边界）。** For \(N=1\), \(\delta=1/6,\sigma=3/8\) and the
+two probes \(\pm e_1\) suffice; no off-diagonal probe is needed. Every positive rational \(\eta\)
+and arbitrarily small positive coercivity constant retain the stated definitions and totality.
+Zero, negative, cancelling or poor rational candidates have sound intervals by 30.64, but merely
+refining the residual enclosures at a fixed bad candidate need not achieve any requested width.
+The candidate and its offsets may escape \(\mathcal C_N\); the \(\Gamma(Q)\) bound applies to
+their actual coefficient absolute sums. No positive-coefficient, nonzero-tail, \(J\ge N\), or
+lcm-truncation condition is imposed. The two tails and null endpoints remain those of 30.56.
+The real reduction concerns this actual real-valued dictionary. General complex dependent families
+still require 30.24–30.26's singular Gram/range/pseudoinverse treatment; this local inverse bound
+requires an independently proved positive coercivity constant. At \(N=0\) use the separate
+\(D_0=1\) case, not the undefined constants here. No finite invertibility statement establishes
+closed infinite range, an infinite minimizing coefficient vector, or equality of the three
+attainment notions. The unconditional \(c/N^3\) smallest-eigenvalue bound and all prior infinite
+threshold results remain intact. The complete grid method of 30.57–30.60 remains valid alongside
+this different construction; no old verifier is redefined.
+

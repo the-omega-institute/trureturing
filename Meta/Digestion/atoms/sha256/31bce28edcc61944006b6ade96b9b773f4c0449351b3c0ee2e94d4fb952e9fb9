@@ -1,0 +1,16 @@
+## 34. Source and verification status
+
+The two new owners PartitionLogCocycle and NormalizedPartitionLog have two
+canonical Scribe companions and 26 explicitly named public declarations.
+They reuse the existing actual partitions, marked translations, zero-free
+endpoint and ordered deletion domains. There is no parallel partition model,
+new activity width or finite-state payload.
+
+The supplementary verifier reads actual configuration polynomials from the
+existing direct independent-subset enumerator. Exact rational and Gaussian-
+rational arithmetic checks products, half-planes and logarithmic-derivative
+quotients. Principal-log and exponential values are supplemental 100-digit
+mpmath regressions, not exact transcendental certificates. It covers all 512
+subdomains of a three-by-three square at six activities and checks:
+
+- 3012 deletion squares and 3072 partial/repeated/absent deletion lists;

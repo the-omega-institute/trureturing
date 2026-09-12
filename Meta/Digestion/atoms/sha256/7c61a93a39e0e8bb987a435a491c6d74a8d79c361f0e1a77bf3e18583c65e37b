@@ -1,0 +1,2 @@
+**第一分支：`rho=0`。** 三循环上任意相邻两个 `lambda` 的乘积为零，因此最多一个 `lambda` 非零。由于 `w` normalized，恰好一个非零，`w` 是 mode-local vector。
+

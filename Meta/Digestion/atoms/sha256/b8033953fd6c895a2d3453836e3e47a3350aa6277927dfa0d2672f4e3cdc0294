@@ -1,0 +1,12 @@
+**定义 155（局部与全局 Zeckendorf 字长）。** 对有限配置 \((P,A)\) 定义
+\[
+\Lambda_{\rm loc}(P,A)=\sum_{p\in P}\ell_Z(A(p)),
+\qquad
+\Lambda_{\rm glob}(P,A)=\ell_Z(M(P,A)),
+\]
+并定义字长差
+\[
+\Delta_Z(P,A)=\Lambda_{\rm glob}(P,A)-\Lambda_{\rm loc}(P,A).
+\]
+局部字长把每一寄存器行补齐到容量宽度，全局字长把最大标量的规范行作为单一窗口；二者均不包含标签表和容量表的字长。
+

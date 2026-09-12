@@ -1,0 +1,61 @@
+## 36. A standard Gibbs PMF, its actual mean and its fluctuation response
+
+For lambda>=0, the empty independent configuration contributes one and all
+weights are nonnegative, so the existing theorem gives Z_G(V;lambda)>=1.
+Define the actual mass on all finite subsets of the ambient vertex type by
+
+\[
+ p_{V,\lambda}(S)=
+ \begin{cases}\lambda^{|S|}/Z_G(V;\lambda),&S\in\mathcal I_G(V),\\
+ 0,&\text{otherwise}.\end{cases}
+\]
+
+The new source proves nonnegativity and that the finite support sums to one,
+then constructs Mathlib's `PMF (Finset alpha)` using `PMF.ofFinset`. Its
+real-valued point masses are proved equal to the displayed weights. The
+ambient graph need not be finite; only V is finite. This is a probability law
+on actual configurations, with no newly assumed distribution or normalizer.
+
+Finite PMF summation yields, for every k,
+
+\[
+ \mathbb E_{p_{V,\lambda}}|S|^k=M_k(V;\lambda)/Z_G(V;\lambda).
+\]
+
+The actual one-vertex event and the expected cardinality satisfy
+
+\[
+ \boxed{\Pr(v\in S)=1-\frac{Z_G(V\setminus\{v\};\lambda)}{Z_G(V;\lambda)},
+ \qquad \mu_V(\lambda)=\mathbb E|S|=\sum_{v\in V}\Pr(v\in S).}
+\tag{36.1}
+\]
+
+A vertex outside V has occupancy zero. The source also proves
+0<=mu_V<=|V|. For the centered variance, it first uses the actual weighted
+squared deviations, then derives its raw-moment expression:
+
+\[
+ \operatorname{Var}_{V,\lambda}(|S|)
+ =\sum_Sp_{V,\lambda}(S)(|S|-\mu_V)^2
+ =\frac{M_2}{Z}-\left(\frac{M_1}{Z}\right)^2\ge0.
+\]
+
+Specializing (35.4) to k=1 gives the further completed source theorem
+
+\[
+ \boxed{\lambda\,\mu'_V(\lambda)=\operatorname{Var}_{V,\lambda}(|S|).}
+\tag{36.2}
+\]
+
+For positive lambda this proves mu'_V>=0. At lambda=0 the mean and variance
+are both zero; the PMF is still normalized, with only the empty configuration
+having nonzero mass. The scaled identity includes that endpoint directly.
+No second-moment expression is mislabeled as a centered variance, and no sum
+of individual Bernoulli variances is substituted for the full correlated one.
+
+These facts hold for every finite domain of every simple graph and every
+nonnegative real activity. They do not depend on the square-grid zero-free
+certificate or on the cap 51/20. They are classical hard-core/exponential-family
+identities, not new extremal inequalities. Their formal role is to connect the
+previous analytic objects with the precise Gibbs observable.
+

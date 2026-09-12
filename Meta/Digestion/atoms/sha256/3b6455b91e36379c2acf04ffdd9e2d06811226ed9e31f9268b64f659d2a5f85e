@@ -1,0 +1,22 @@
+### 定量间隙
+
+允许总和集合与目标 `4` 的最小距离为：
+
+```math
+\boxed{\frac14.}
+```
+
+定义 column-spectrum polynomial：
+
+```math
+q(t)=\left(t-\frac23\right)\left(t-\frac78\right)(t-2).
+```
+
+对任意实数 `t`，令 `r` 为其到三个根的最小距离，则 `r^3 <= |q(t)|`。所以若三个 column collisions 满足 `s_0+s_1+s_2=4`，至少一列满足：
+
+```math
+\boxed{|q(s_k)|\ge\frac1{1728}.}
+```
+
+否则每个 `s_k` 都距离某个允许根小于 `1/12`，三个最近根的和距离 `4` 小于 `1/4`，与离散间隙矛盾。这是条件 equality obstruction 的稳定版本，不能用于补足已撤回的 rowwise lower bound。
+

@@ -1,0 +1,7 @@
+**定义 314。** 在第 306 条状态群上定义
+$$
+\operatorname{scal}_{\rm reg}:\mathsf V_{\rm reg}\to\mathbb Q_{>0},\qquad
+\operatorname{scal}_{\rm reg}(u)=\prod_{n\in\operatorname{supp}(u)}p_n^{u_n}.
+$$
+空乘积为一。目标取乘法群；讨论连续性时，$\mathbb Q_{>0}$ 明确取自通常实直线的子空间拓扑。
+

@@ -1,0 +1,20 @@
+**34.10 The envelope increment has the same upper bound.** By 34.4, both
+ends of the scalar segment joining \(L_0,L_\xi\) lie in \([m+T,\infty)\);
+the same holds for the segment joining \(H_0,H_\xi\), even when \(H\) decreases.
+The derivative bound of 34.8 applies to each whole segment. Together with
+34.7 this gives
+\[
+\begin{aligned}
+|\Psi_\xi-\Psi_0|
+&\le K\big((k-1)|L_\xi-L_0|+|H_\xi-H_0|\big)\\
+&\le(k-1)\epsilon K=C.
+\end{aligned}
+\]
+Combine this upper bound with the separately proved sign in 34.9:
+\[
+\boxed{0\le\Psi_\xi-\Psi_0\le C.}
+\]
+The segment estimate alone would give only an absolute bound; its
+nonnegative sign comes from the mean/radius argument, not from an
+unsupported assumption that both endpoints increase.
+

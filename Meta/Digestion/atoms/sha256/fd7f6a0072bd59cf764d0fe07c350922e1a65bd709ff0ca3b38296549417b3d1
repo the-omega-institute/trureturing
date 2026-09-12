@@ -1,0 +1,14 @@
+**定义 93（时间、素数与数位的三个索引）。** 对配置 \((P,A)\)，定义整个轨迹的有界正观察域
+\[
+\mathcal B_{P,A}^+=\{X\in\mathcal B_\lambda^+:
+\forall T\in\mathbb Z, \forall p\in P, a_p^X(T)\le A_p,\quad
+\forall T, \forall p\notin P, a_p^X(T)=0\}.
+\]
+记 \(a^X(T)=(a_p^X(T))_{p\in P}\)，规范数位为
+\[
+d_X(T,p,j)=s(a_p^X(T))_j=
+\nu(r_X^T)(p,j),\qquad
+r_X^T(p,j)=\sum_{t\le T}Z_X(t,\lambda(p,j)).
+\]
+\(T\) 是观察时刻，\(p\) 是内容字段的素数标签，\(j\) 是该内容的数位。空间嵌入仍是 \(\lambda(p,j)=(p,j,0)\in\mathbb Z^3\)，时间不被当作新增空间坐标；增加标签数不改变空间维数。规范位 \(d_X\)、累积原始系数 \(r_X^T\) 与瞬时净选择电荷 \(Z_X\) 是由不同公式定义的量。引文为定义 1、3–4、11。
+

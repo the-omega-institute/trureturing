@@ -1,0 +1,17 @@
+**命题 QI-P7（任意 $K$ 的精确运输，repo-derived）。** 对 $I$ 的任意连通组件分割 $\mathcal P$，保留
+
+$$
+K_{\mathcal P}=
+\{(q_A(w|_{U_A}))_{A\in\mathcal P}:w\in W\}
+\subseteq\prod_{A\in\mathcal P}Q_A^{\rm obs}.
+\tag{QI-JOINT-K}
+$$
+
+将相邻 $A,B$ 收缩为 $C$ 得 $\mathcal P'$，以 $\bar\mu_{A,B}$ 合并这两个坐标、保留其余坐标的映射记为 $m_{\mathcal P}$。其在 $K_{\mathcal P}$ 上处处有定义，且
+
+$$
+m_{\mathcal P}[K_{\mathcal P}]=K_{\mathcal P'},\qquad
+\bar G[q_I[W]]=G[W].
+\tag{QI-K-TRANSPORT}
+$$
+

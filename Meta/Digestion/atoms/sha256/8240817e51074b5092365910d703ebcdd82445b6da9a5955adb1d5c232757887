@@ -1,0 +1,71 @@
+### 输入假设的修正
+
+此前从 context affinity 等于一直接写出逐行 collision 等于 `2/3`，省略了必要的逐行下界。现有 `row_collision_eq_two_thirds_of_affinity_eq_one` 明确要求：
+
+```math
+\forall i,\quad\sum_kp_{ik}^2\ge2/3.
+```
+
+没有这条假设，只有总平方和等于 `4`，不能让每行都等于 `2/3`。strict-X 共同无偏向量的数值探测已发现低于 `2/3` 的行，所以不再把此逐行假设作为一般 strict-X 证明目标。
+
+下面的列谱排除本身仍是合法的条件代数命题。
+
+假设 column sums 为 `2`，每个 row collision 等于 `2/3`，并且：
+
+```math
+(p_{ik}-p_{jk})(p_{ik}+p_{jk}-1)=0.
+```
+
+固定一列，写 `x_i=p_ik`，则：
+
+```math
+\sum_i x_i=2.
+```
+
+相对任一 reference value，饱和二次关系迫使其余五个值分别等于该 reference，或者等于其补数 `1-reference`。消去 reference 后，整列只能具有以下三种谱，直到排列：
+
+```math
+\left(\frac13,\frac13,\frac13,\frac13,\frac13,\frac13\right),
+```
+
+```math
+\left(\frac34,\frac14,\frac14,\frac14,\frac14,\frac14\right),
+```
+
+或：
+
+```math
+(1,1,0,0,0,0).
+```
+
+相应 column collision 只可能是：
+
+```math
+\boxed{\frac23,\quad\frac78,\quad2.}
+```
+
+另一方面，六个 row collisions 的总和为：
+
+```math
+6\cdot\frac23=4.
+```
+
+它也等于三个 column collisions 的总和。三个元素从 `{2/3,7/8,2}` 中任取并带重复时，可能的总和只有：
+
+```math
+2,\ \frac{53}{24},\ \frac{29}{12},\ \frac{21}{8},\
+\frac{10}{3},\ \frac{85}{24},\ \frac{15}{4},\
+\frac{14}{3},\ \frac{39}{8},\ 6.
+```
+
+其中不含 `4`。因此这些假设共同定义的 equality locus 为空。
+
+该结论已经集中写入一个公共 Lean 定理：
+
+```text
+D5/S3/Quantum/Tomography/MUBModeAffinityEqualityObstruction.lean
+no_saturated_mode_probability_table
+```
+
+形式声明有意更强。最终矛盾只需要 column sums、row collision values 与 saturation quadratic，非负性和 row normalization 在这一阶段已经冗余。
+

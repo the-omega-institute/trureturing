@@ -74,16 +74,19 @@ public sealed partial class MakeWorkflowTests
         "settle-clear",
         "worktree",
         "worktree-clean",
+        "worktree-remove",
         "pr-open",
         "pr-watch",
         "preflight",
         "gate",
         "census",
+        "census-derivational",
     ];
 
     private static readonly string[] ToolsTargets =
     [
         "help",
+        "settle-batch",
         "dotnet",
         "check-fast",
         "test",

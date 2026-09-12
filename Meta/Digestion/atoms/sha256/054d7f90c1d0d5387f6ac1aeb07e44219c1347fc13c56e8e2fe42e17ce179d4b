@@ -1,0 +1,2 @@
+**证明（充分性）。** 命题 55 的 $(O\text{-}CONSTRUCTION)$ 是原签名的固定有限总单孔项，属于定义 34 的复制语言，故 $\operatorname{Tail}(B)\Rightarrow E_q^{\rm dup}(B)$。
+

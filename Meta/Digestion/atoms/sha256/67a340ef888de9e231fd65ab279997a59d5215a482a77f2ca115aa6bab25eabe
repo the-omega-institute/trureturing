@@ -1,0 +1,28 @@
+**32.4 两个上界及比较的归一化。** 令 \(u=M_1\)、\(f(x)=\log(1-e^{-x})\),
+\(v_i=f(d_i)-f(c_i)>0\),定义第 26 节的同一个价格上界
+\[
+D(u)=\inf_{\lambda\ge0}\left\{\lambda u+
+\sum_i\max_{x\in C_i}(f(x)-\lambda x)\right\}
+=\sum_i f(c_i)+\inf_{\lambda\ge0}
+\left\{\lambda(u-A)+\sum_i\max(0,v_i-\lambda h_i)\right\}.
+\]
+置
+\[
+I=[M_0/4,u/4],\quad\delta_i=\operatorname{dist}(I,C_i),\quad
+V_0=\sum_i\delta_i^2,\quad\mu=u/4,\quad\rho=\sqrt{V_0/12},
+\]
+\[
+L=\mu-\rho,\quad H=\mu+3\rho,\qquad
+\Psi(M_0,u)=f(H)+3f(L),\quad G(M_0,u)=D(u)-\Psi(M_0,u).
+\]
+\(V_0\) 是四个平方距离的和,没有另除以 4。
+与旧记号相接时 \(E_S=\prod_i(1-p_i^{-1})^{-1}\),
+\(U_{\rm dual}=\log E_S+D\)、\(U_{\rm var}=\log E_S+\Psi\);
+共同常数抵消而得到这里的 \(G\)。实际离散薄层最优值
+\[
+W(M_0,u)=\max_{\substack{x_i\in C_i\\M_0\le\sum_i x_i\le u}}\sum_i f(x_i)
+\]
+满足 \(W\le D\),因为每个可行整数选择都是下述分数可行点。
+\(D\) 是分数松弛的精确值,一般不是 \(W\) 的精确值;
+严格比较两个上界不等于证明 Robin 不等式。
+

@@ -1,0 +1,25 @@
+**34.21 Mathematical dependencies and classical references.** The lower-support
+theorem is reused from 27.4-27.5 and the envelope derivative signs from 26.5.
+The projection/distance and paired-nonnegative-increment method appears in
+30.12-30.15 and 31.14-31.16 within their stated three-dimensional domains.
+The arbitrary-\(k\) two-radius estimate and signed weighted-displacement
+proof are given in 34.5-34.7; their closed-margin and cutoff consequences
+are proved in 34.15-34.18. Reuse of the three-dimensional sign theorems
+requires their particular steps and wider-domain hypotheses, as in 34.19.
+
+Triangle and reverse-triangle inequalities, elementary calculus and
+comparison of maxima over a common set are classical. For norms, convexity
+and Jensen, see 26.28 and Boyd/Vandenberghe's
+[Convex functions](https://web.stanford.edu/class/ee364a/lectures/functions.pdf),
+slides 3.4 and 3.14 (PDF pages 6 and 16). For fractional knapsack, see
+26.28, 33.20 and HKUST's
+[Lecture 14](https://home.cse.ust.hk/~dekai/271/notes/L14/L14.pdf),
+PDF pages 4-7. The latter gives the inherited interpretation of \(D\);
+the transfer proof compares the full feasible polytope directly.
+For the inherited price-formulation context only, see 33.20 and
+Boyd/Vandenberghe's
+[Duality](https://web.stanford.edu/class/ee364a/lectures/duality.pdf),
+PDF pages 14 and 21-23; no price-order premise is required here.
+These references provide the stated classical ingredients, not a
+literature proof of this particular arbitrary-dimensional transfer theorem.
+

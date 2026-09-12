@@ -35,9 +35,9 @@ run_cmd do
   let observed := counts.flatMap (·.theorems.map (·.uniqueCaptureCount))
   unless observed.qsort (· < ·) == (#[570, 12, 20, 56, 240, 968, 6, 12, 48, 60, 2]).qsort
       (· < ·) do throwError "frozen root reseal counts: {observed}"
-  let sealArtifact := serializeSealArtifact counts
+  let sealArtifact ← liftTermElabM <| serializeSealArtifact counts
   unless Sha256.hex sealArtifact.toUTF8 ==
-      "5e4660aeaab2f81cb6ba78e20ad5d8423dde2994cd682c8e0d93066435819e37" do
+      "994ff97c3d0e4f031b6ca34e0a14349788dcded230256b5df14da0bbfc6dc168" do
     throwError "frozen root seal digest"
   elabCommand (← `(command| #stage_information_analysis root $rootId:ident))
   let some analysis := SealRecords.analysisForRoot? (← getEnv) root

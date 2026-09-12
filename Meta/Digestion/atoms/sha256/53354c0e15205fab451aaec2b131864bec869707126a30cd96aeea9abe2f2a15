@@ -1,0 +1,15 @@
+### 7. 执行检查与尚未消除的算术义务
+
+精确诊断采用 seed 20260907 和 Gaussian rational / Fraction 运算：64 个有限概率律，1600 个共轭矩检查，320 个 Gram 恒等式，768 个曲率递推，768 个有限系数重建，1088 个实际卷积矩恒等式，544 个两点族半群矩恒等式，以及各 768 个 Gaussian/jump 分解、原子二次下界和有限原子族极限界。四个负对照分别拒绝逐项非负冒充正定、错误 Fourier 符号、缺失质量归一化和误认不同有限见证相等。这些是作者的第二实现，非独立审稿或无限域验证。
+
+实际 g_zeta 与 xi'/xi 的精确统一、canonical derivative-defined Li 判据、Li 全序列与实际零点测度识别、Schoenberg 的机器接口，以及真正的全局算术正性仍未由本轮消除。固定黄金周期的 Fourier 数据仍有尺度层数盲区；本轮完整圆周矩的唯一性不恢复被周期商映射删去的层数。次二次增长条件也尚未在此增量中从实际算术对象导出。
+
+本轮没有改变旧 Lean、冻结记录、理论吸收状态或工程规范。四个新增 Lean 共 679 行，四个 Scribe 共 144 行，共 23 个公共声明与 23 个 `StatementSource.FromLean()` 绑定。基础理论的末尾原有一个未闭合的显示数学块，本次追加先补齐其闭合符号，再开始本节；既有文字与公式均保留。
+
+参考入口：
+- https://arxiv.org/abs/2306.08317
+- https://arxiv.org/abs/2606.09096
+- Mathlib pin: `Mathlib/MeasureTheory/Measure/Prokhorov.lean`, `ProbabilityMeasure.lean`, `Group/Convolution.lean`, `Integral/Prod.lean`。
+
+---
+

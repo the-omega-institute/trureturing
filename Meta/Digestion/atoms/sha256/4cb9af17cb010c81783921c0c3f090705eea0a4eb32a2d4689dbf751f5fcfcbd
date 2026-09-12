@@ -1,0 +1,6 @@
+**定义 19（黄金值）。** 在 \(\mathbb Z[\phi]\subseteq\mathbb R\) 中取 \(\phi=(1+\sqrt5)/2\)，故 \(\phi^2=\phi+1\)。定义
+\[
+\beta_p(r)=\sum_j r(p,j)\phi^{j+2}.
+\]
+对单行省略下标 \(p\)，同样定义 \(U,V,\beta\)。
+

@@ -1,0 +1,26 @@
+### 全部 1770 对关系的分类
+
+本轮检查全部 `choose(60,2)=1770` 个无序对。共 `114` 条正交边，其中 `104` 条由精确 skew-symmetry identities 得到，另外 `10` 条由不同三循环特征值的正交性得到。其余 `1656` 对均有：
+
+```math
+|\langle v,w\rangle|^2>10^{-8}.
+```
+
+非边不能通过数值阈值伪装成零；边也不由小数值残差决定。三循环固定射线通过“对称像落回同一个唯一性 box”证明，随后用精确 unitary eigenspace orthogonality 认证跨特征值的边。
+
+完整诱导图的 connected-component signature 为：
+
+```text
+3 components: 6 vertices, 9 edges, bipartite (K3,3)
+3 components: 12 vertices, 24 edges, bipartite
+1 component: 6 vertices, 15 edges (K6)
+```
+
+因此这个六十射线集合中唯一的六元 orthogonal clique 是最后的 `K6`。其六个向量均为三循环特征向量，所以相对同一 rank-two mode decomposition：
+
+```math
+\boxed{\alpha_S(C_{known})=2.}
+```
+
+这里的等式是精确的特征向量结论，不由 floating-point affinity 接近二推出。其余五十四个已认证顶点形成二分子图，不能从其中选出三个两两正交向量。
+

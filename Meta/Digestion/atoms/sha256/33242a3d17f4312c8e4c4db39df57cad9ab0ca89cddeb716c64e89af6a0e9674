@@ -1,0 +1,18 @@
+**命题 378.13。** 对已给标签、容量、字段边界及解释函数的有限配置，置
+$$
+Q=\prod_{p\in P}(C_{\rm cap}(p)+1),\qquad
+M=\prod_{p\in P}p^{C_{\rm cap}(p)},\qquad
+\ell_Z(A)=\min\{\ell\ge0:A<G_\ell\}.
+$$
+第 98 条的五种准确宽度在同一有限域上分别为
+$$
+\begin{array}{c|c}
+\text{任意单射状态码}&\lceil\log_2Q\rceil\\
+\text{独立二进字段}&\sum_{p\in P}\lceil\log_2(C_{\rm cap}(p)+1)\rceil\\
+\text{字面指数 Zeckendorf 窗口}&\sum_{p\in P}\ell_Z(C_{\rm cap}(p))\\
+\text{字面乘积二进窗口}&\lceil\log_2(M+1)\rceil\\
+\text{标量自身 Zeckendorf 窗口}&\ell_Z(M)
+\end{array}
+$$
+第 378.12 条的六十状态盒中，这五个数依次为 $6,7,7,13,18$。空配置状态宽零，但标量一的两种字面窗口均宽一；零容量字段宽零。这些是有上述已知参数的有限表示宽度，不是算法空间、程序长度或运算次数的界，也不是无限总函数的字长界。
+

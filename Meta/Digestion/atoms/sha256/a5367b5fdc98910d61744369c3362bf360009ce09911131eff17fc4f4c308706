@@ -1,0 +1,4 @@
+### M06. branch-specific lower bound
+
+先进行 symbolic/numerical discovery，再提交 exact certificate。证书必须验证完整 compact branch domain，不接受 optimizer failure 或 floating-point dual 作为结论。
+

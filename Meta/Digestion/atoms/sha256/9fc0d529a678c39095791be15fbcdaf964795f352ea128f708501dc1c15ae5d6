@@ -1,0 +1,26 @@
+**定理 340.2。** $\rho$ 为满射，且 $E_A^{\rm cap}$ 的初始拓扑恰为 $\tau_{+,A}$。有
+$$
+\tau_{\rm coord,A}^{B}\subseteq\tau_{+,A},\qquad
+\tau_{\rm coord,A}^{B}=\tau_{+,A}\iff J_A\text{ 有限}.
+$$
+若只保留 $r\in\mathbb Q^\omega$ 中有限支撑的系数序列，连同相同黄金首分量所诱导的初始拓扑对每个 $A$ 都等于 $\tau_{\rm coord,A}^{B}$。
+
+**证明。** 每个有理剩余类恰有一个代表落在 $[0,1)\cap\mathbb Q$：对任一代表 $q$ 取 $q-\lfloor q\rfloor$，更换代表为 $q+m$ 只使下取整增加同一整数 $m$，所以所得不变；两个此区间的数若相差整数，其差的绝对值小于一，故只能为零。逐坐标取这个唯一代表，得到函数
+$$
+s_{\rm rat}:\Theta_{\rm rat}\longrightarrow\mathbb Q^\omega,\qquad
+0\le s_{\rm rat}(\theta)_n<1,\qquad
+\rho(s_{\rm rat}(\theta))=\theta.
+$$
+因此 $\rho$ 满射。有限和与整数倍通过商映射交换，所以定义 340.1 的两种 $\chi_r^{\rm cap}$ 写法相等。整数改变系数不改变它们；在两个状态支撑的有限并上求和又给可加性，亦即第 321 条同态性的这个复合。其限制仅作为 $B_A^{\rm cap}$ 上的观察，不把容量盒声明为群。
+
+逐一比较初始拓扑的生成开集。黄金坐标在两个评价中相同。对每个 $r\in\mathbb Q^\omega$，其圆周坐标观察等于既有评价的 $\theta=\rho(r)$ 坐标；对每个 $\theta\in\Theta_{\rm rat}$，其既有圆周观察等于新评价的 $r=s_{\rm rat}(\theta)$ 坐标。故两族观察的开集逆像集合完全相同，重复出现的坐标不添加开集。完整乘积的开集由有限坐标开柱集的任意并组成，其逆像由这些生成开集的有限交和任意并组成。因此两个初始拓扑相等，且恰为所定义的 $\tau_{+,A}$。这个论证不要求两个环境乘积相等，也不要求 $s_{\rm rat}\rho$ 在 $\mathbb Q^\omega$ 上为恒等。
+
+第 324 条 $\Psi_{\rm reg}=\pi_1\circ\operatorname{Ev}_+$ 保留黄金观察，第 329 条的初始拓扑定义以及定理 337.2 遂给 $\tau_{\rm coord,A}^{B}\subseteq\tau_{+,A}$。若 $J_A$ 有限，前者已离散，任何更细拓扑均与它相等。若 $J_A$ 无限，以递增次序列为 $n_0<n_1<\cdots$，则 $A_{n_k}\ge1$，所以 $\varepsilon_{n_k}\in B_A^{\rm cap}$ 且 $\varepsilon_{n_k}\to0$ 在坐标拓扑中成立。取全部坐标上 $r_n=1/2$，则
+$$
+\chi_r^{\rm cap}(\varepsilon_{n_k})=[1/2]\quad\text{对每个 }k,
+\qquad\chi_r^{\rm cap}(0)=0_{\mathbb T}.
+$$
+通常圆周中可取含零而不含 $[1/2]$ 的开集。其逆像按定义为 $\tau_{+,A}$ 的零邻域，却不含任何 $\varepsilon_{n_k}$，因而不是坐标零邻域。故包含严格。
+
+最后，若 $r$ 有限支撑，固定其全部支撑坐标就固定有限和，所以 $\chi_r^{\rm cap}|_{B_A^{\rm cap}}$ 在坐标拓扑中连续。这样的全部观察与黄金首分量共同诱导的拓扑不细于坐标拓扑；黄金首分量又已诱导整个坐标拓扑，因此相等。证毕。
+

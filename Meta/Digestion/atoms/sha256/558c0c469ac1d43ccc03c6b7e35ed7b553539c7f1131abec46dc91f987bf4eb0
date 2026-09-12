@@ -1,0 +1,11 @@
+**定理 323.2。** 对每个 $H\le\mathsf V_{\rm reg}$ 有
+$$
+H=\bigcap_{\theta\in\operatorname{Ann}_{\rm rat}(H)}\ker\chi^{\rm rat}_\theta.
+$$
+其分离量词为
+$$
+\forall H\le\mathsf V_{\rm reg}\ \forall u\in\mathsf V_{\rm reg}\setminus H\
+\exists\theta\in\operatorname{Ann}_{\rm rat}(H),\quad\chi^{\rm rat}_\theta(u)\ne0.
+$$
+对每个固定 $H$，存在至多可数的 $C_H\subseteq\operatorname{Ann}_{\rm rat}(H)$ 使 $H=\bigcap_{\theta\in C_H}\ker\chi^{\rm rat}_\theta$。对预先指定的有限 $F\subseteq\mathsf V_{\rm reg}\setminus H$，存在有限 $C_{H,F}\subseteq\operatorname{Ann}_{\rm rat}(H)$，使每个 $u\in F$ 至少被其中一个特征检测，且可取 $|C_{H,F}|\le|F|$。这不同于用有限族恢复整个 $H$ 的断言。
+

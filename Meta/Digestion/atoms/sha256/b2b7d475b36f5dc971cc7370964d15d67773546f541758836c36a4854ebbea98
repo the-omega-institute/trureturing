@@ -1,0 +1,10 @@
+### 前一版未证明的假设
+
+从 `v_k perp w_k` 只能得到：
+
+```math
+w_k=\lambda_kJ\overline{v_k},\qquad\lambda_k\in\mathbb C.
+```
+
+它不能直接推出 `|lambda_k|=1`。本轮曾尝试使用由 mode mass、输入 channel imbalance、输出 channel imbalance 组成的实三阶行列式来控制幅度，但数值样本中该行列式退化。这条额外 generic guard 不再作为有效入口。
+

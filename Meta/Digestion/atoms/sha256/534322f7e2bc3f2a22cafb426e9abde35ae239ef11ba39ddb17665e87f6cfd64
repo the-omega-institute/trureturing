@@ -1,0 +1,10 @@
+**定理 5（未加权电荷与估值）。** 对 \(X\in\mathcal B_\lambda^+\)，
+\[
+q(X)=\sum_{p,j}r_X(p,j),\qquad
+\sum_p v_p(N_X)=\sum_{p,j}G_jr_X(p,j),\qquad
+\log N_X=\sum_{p,j}G_jr_X(p,j)\log p.
+\]
+特别地，\(q\) 是净选择符号的未加权和。
+
+**证明。** 将 \(\sum_{e\in A}\sigma(e)\) 按联合单元分组，槽外净和为零，即得第一式。素因数分解唯一性给出 \(v_p(D(r))=V_p(r)\)，故得第二式。对有限素数乘积取对数即得第三式。三式的权重分别为 \(1,G_j,G_j\log p\)。证毕。
+

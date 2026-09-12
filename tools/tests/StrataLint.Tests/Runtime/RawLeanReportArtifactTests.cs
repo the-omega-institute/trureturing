@@ -14,7 +14,7 @@ public sealed class RawLeanReportArtifactTests
         + "\"kind\": \"axiom\", \"name\": \"probe\", \"name_key\": \"ns(n0,5:probe)\", "
         + "\"statement_id\": \"sha256:452d97f1469d85ac204ab83dbbb919e19289c28674b14ab9df96586c535b1763\", "
         + "\"type_sha256\": \"sha256:5f53330fdefb1897242ca642a5528fb5eefbf7ae094afd313bb56570e981095a\"}], "
-        + "\"imports\": [], \"module\": \"Trureturing\", "
+        + "\"imports\": [], \"information_registration_errors\": [], \"module\": \"Trureturing\", "
         + "\"source_path\": \"Trureturing.lean\", \"source_sha256\": "
         + "\"sha256:da33f5efbd5a92bd6c18a7a11a36dfbcd0ac00fbe05c267a85dec98370deadd4\"}], "
         + "\"schema\": \"stratalint-raw-lean-report-v2\"}\n";

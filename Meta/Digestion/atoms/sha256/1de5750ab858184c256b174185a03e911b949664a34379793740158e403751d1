@@ -1,0 +1,7 @@
+**命题 64（repo-derived，§36.7 的 OPEN-COPY）。** 对定义 34 的固定有限总项及全部平衡输入，有
+\[
+\forall B\subseteq K:\qquad E_q^{\rm dup}(B)\ \Longleftrightarrow\ \operatorname{Tail}(B)
+\ \Longleftrightarrow\ E_q(B),
+\]
+其中 $\operatorname{Tail}$ 与 $E_q$ 沿用定义 28。该断言仅分类目标族 $q\circ F_B$。
+

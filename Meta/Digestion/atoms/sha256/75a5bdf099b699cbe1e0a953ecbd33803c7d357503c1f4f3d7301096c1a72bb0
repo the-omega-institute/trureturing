@@ -1,0 +1,26 @@
+**33.5 Complete fixed quadratic certificate.** For the pairs and ascending
+coefficients defined in 33.4, the exact rational rows are as follows.
+Here \(E_{ij}=Q_{ij}(1)-\delta_{ij}U_iU_j\).
+
+~~~text
+(i,j)  q0                     q1                      q2
+(2,3)  66157/1296000000        -1963/43200000          -31589/62208000000
+(3,5)  7734773/1687500000      -433859/2531250000      -11475851/3417187500000
+(5,7)  73135501/2143750000     -541169/5359375000      -69645943/13130468750000
+
+(i,j)  Q_ij(1)                    delta_ij    E_ij
+(2,3)  317227/62208000000          1/200000    15697188161267/12150000000000000000
+(3,5)  470804057/106787109375      1/500       477045283208311/546750000000000000
+(5,7)  27909964602/820654296875    1/100       2261528264218737/840350000000000000
+~~~
+
+Substitution into the coefficient formulas proves the first table; summation and
+subtraction prove the second. Each row has \(q_1<0,q_2<0,E_{ij}>0\).
+Hence, on the entire closed interval, \(Q_{ij}(z)\ge Q_{ij}(1)
+>\delta_{ij}U_iU_j\). Also \(0<h_ih_jB_iB_j<U_iU_j\), so 33.4 implies
+\[
+(s_i-s_j)'(z)>\delta_{ij}\qquad(0\le z\le1).
+\]
+The sign proof is a global quadratic bound. Its fixed rational verification is
+recorded in the report; no height sampling supplies this quantifier.
+

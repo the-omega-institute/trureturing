@@ -1,0 +1,31 @@
+fingerprints:
+  raw_sha256: sha256:5a6fa140fc2ad11f6ec740a6d67efed9e1ba295263776bc74c1546ab4750ef98
+  normalized_sha256: sha256:5a6fa140fc2ad11f6ec740a6d67efed9e1ba295263776bc74c1546ab4750ef98
+cas_ref: sha256:5a6fa140fc2ad11f6ec740a6d67efed9e1ba295263776bc74c1546ab4750ef98
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/CoarseObservation.generated_selected_bin_fiber
+    target_statement_id: sha256:3f83cdff966581c4f655543a87befd00d6514f32c2cf75415f6c32e498e1b40f
+  - gid: D5/S3/ConceptDynamics/Spacetime/CoarseObservation.not_global_balance_forces_local_balance
+    target_statement_id: sha256:7bdb76c33cb51ccc28e699ef86d3d3092ddb6657cb0e1ccf450ce50da2f6a80d
+  - gid: D5/S3/ConceptDynamics/Spacetime/CoarseObservation.observe_coarsen
+    target_statement_id: sha256:e5cb5e037fa1f966bd6c8cdc0d367114dc3aa56cf2146323e0dc398978e163a6
+  - gid: D5/S3/ConceptDynamics/Spacetime/CoarseObservation.observe_complement
+    target_statement_id: sha256:c347ce9e468c40956b0e363e2b37572d4bac80dde87e8ff73d4d3a686b599510
+  - gid: D5/S3/ConceptDynamics/Spacetime/CoarseObservation.parallel_common_charges
+    target_statement_id: sha256:01997c1a0d8eb2b56d41dffe8894a098d411a87a0ae4e85341dcf59ec626a96b
+  - gid: D5/S3/ConceptDynamics/Spacetime/CoarseObservation.parallel_tagged_charges
+    target_statement_id: sha256:07e8c61af9e0473f0f429f895f962f7550e40c37ea9251f5b78f3c93c8892fb6
+  - gid: D5/S3/ConceptDynamics/Spacetime/CoarseObservation.product_bin_charges
+    target_statement_id: sha256:d273e3caa93de7e60fa7ff7093dddc88736b771f58806bd7dbabf4b16da62005
+  - gid: D5/S3/ConceptDynamics/Spacetime/CoarseObservation.product_coarsened_charges
+    target_statement_id: sha256:d307486a3c2af602ff9f969f3ea2ee30e75338f3b7f93dc8a2c0c8bbce263415
+  - gid: D5/S3/ConceptDynamics/Spacetime/CoarseObservation.pushforward_comp
+    target_statement_id: sha256:9aaee2a56884637a4871a8d96f09dec80fd990279b3398f6631939d55741cf84
+  - gid: D5/S3/ConceptDynamics/Spacetime/CoarseObservation.sum_backgroundBins
+    target_statement_id: sha256:e898e0f1033abaa298e1496b0b97ae6a8ef1a24ab6dfc7dfc476d3f41a6eab04
+  - gid: D5/S3/ConceptDynamics/Spacetime/CoarseObservation.sum_selectedBins
+    target_statement_id: sha256:874c8504f02dd7ced1e7432d4bfc039159b073bdda321e23ea09aa75fd9efd61
+  - gid: D5/S3/ConceptDynamics/Spacetime/CoarseObservation.two_bin_counterexample
+    target_statement_id: sha256:fd7aeb0c6aa915f84a3fd2fd79b99998728b8b37605d2ba728dc9bc2178856b0
+receipts:
+  unresolved_subitems: []

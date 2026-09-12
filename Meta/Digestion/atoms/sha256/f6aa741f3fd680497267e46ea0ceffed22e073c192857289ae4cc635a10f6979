@@ -1,0 +1,37 @@
+**定理 386.1。** 对任意集合 $X,Y$，使用第 378.4 条的双射
+$$
+\chi_{X,Y}:X^*\times Y^*\to(X\times Y)^*,\qquad
+\chi_{X,Y}(c,d)=\langle c,d\rangle_Z,
+$$
+其逆只在 $(X\times Y)^*$ 上，并为
+$$
+\chi_{X,Y}^{-1}(\operatorname{Enc}(\langle x,y\rangle))
+=\langle\operatorname{Enc}(x),\operatorname{Enc}(y)\rangle.
+$$
+对每个关系 $R\subseteq X\times Y$，定义其普通外部关系
+$$
+R^\square=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(y)\rangle:
+\langle x,y\rangle\in R\}\subseteq X^*\times Y^*.
+$$
+则有
+$$
+\chi_{X,Y}[R^\square]=\operatorname{Enc}[R],\qquad
+\operatorname{Enc}(R)=\operatorname{Pack}(\chi_{X,Y}[R^\square]).
+$$
+对第 379–384 条的每个函数 $f:D\to Y$，其普通共轭图与原图码分别为
+$$
+G_{f^*}=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle:x\in D\},
+$$
+$$
+\operatorname{Enc}(G_f)
+=\operatorname{Pack}\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle_Z:x\in D\},
+\qquad \operatorname{El}(\operatorname{Enc}(G_f))=\operatorname{Enc}[G_f].
+$$
+外部共轭的域为 $D^*$，单个原图码的语义域为 $\operatorname{Enc}(D)$，语义值域为 $\operatorname{Enc}(\operatorname{ran}f)$。任取 $D'\subseteq D$，
+$$
+(f|_{D'})^*=f^*|_{(D')^*},\qquad
+\operatorname{ev}_Z(\operatorname{Enc}(G_f),\operatorname{Enc}(x))
+=\operatorname{Enc}(f(x))\quad(x\in D).
+$$
+域外无图边，空域仍使用同样公式。
+

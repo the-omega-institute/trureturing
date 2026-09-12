@@ -1,0 +1,13 @@
+**定义 3（素数数位槽）。** 记 \(\operatorname{Pr}\) 为素数集，\(\mathbb N=\{0,1,\ldots\}\)，取
+\[
+G_0=1,\quad G_1=2,\quad G_{j+2}=G_{j+1}+G_j,\qquad
+\lambda(p,j)=(p,j,0)\in\mathbb Z^3.
+\]
+\(p\) 是该固定嵌入中的素数标签，\(j\) 是数位索引。定义同一载体的子域
+\[
+\mathcal B_\lambda^+=\{X\in\mathcal B:
+Z_X(t,\lambda(p,j))\ge0\text{ 对所有 }t,p,j,
+\quad Z_X(t,y)=0\text{ 若 }y\notin\lambda[\operatorname{Pr}\times\mathbb N]\}.
+\]
+此条件约束逐单元净选择电荷，允许同一单元内已选正负事件抵消，也允许槽外事件存在而净选择电荷为零。空间维数仍为三。
+

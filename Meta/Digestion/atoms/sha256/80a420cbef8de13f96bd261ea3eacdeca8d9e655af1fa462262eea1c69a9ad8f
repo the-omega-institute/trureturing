@@ -1,0 +1,33 @@
+**定义 86（完整世界、边界与严格响应函数）。** 采用[《情境时空算术》第 42 节 QI-D1–D6](CONTEXTUAL_SPACETIME_ARITHMETIC.md)的集合类型。给定有限非空树 \((I,E_T)\)，每个变量 \(v\) 有任意集合 \(V_v\)，每节点有作用域 \(S_i\) 及完整赋值关系 \(\Gamma_i\subseteq\mathcal A(S_i)\)，其中
+\[
+\mathcal A(D)=\{a:\operatorname{dom}(a)=D, \forall v\in D, a(v)\in V_v\}.
+\]
+假设每个变量出现的节点集连通。对 \(A\subseteq I\) 置
+\[
+U_A=\bigcup_{i\in A}S_i,\quad
+J_A=\{a\in\mathcal A(U_A):\forall i\in A, a|_{S_i}\in\Gamma_i\},\quad
+J_\varnothing=\{\varnothing\},\quad J=J_I,\quad W=J\cap K,
+\]
+其中 \(K\subseteq\mathcal A(U_I)\) 任意。给定总响应 \(h_i:\Gamma_i\to Y_i\) 及消费者集合 \(\mathcal F\)，每个消费者为部分函数 \(f_c:D_c\to V_c\)、\(D_c\subseteq\prod_iY_i\)。用不交的成功、失败标签总化为 \(\widehat f_c\)，定义
+\[
+H(w)=(h_i(w|_{S_i}))_i,\qquad
+G(w)=(\widehat f_c(H(w)))_{c\in\mathcal F}\in
+\mathcal V_{\mathcal F}:=\prod_c\operatorname{Tag}(V_c).
+\]
+有限消费者表达式按定理 81 严格求值。对非空连通组件 \(A\)，置
+\[
+\partial A=U_A\cap U_{I\setminus A},\quad
+\rho_A(a)=a|_{\partial A},\quad
+\mathcal R_A(s)=\{r\in J_{I\setminus A}:r|_{\partial A}=s\},
+\]
+\[
+O_A(a):\mathcal R_A(\rho_Aa)\to\mathcal V_{\mathcal F},\quad
+O_A(a)(r)=G(a\cup r),\qquad
+\Sigma_A(a)=(\rho_Aa,O_A(a)),\quad Q_A^{\rm obs}=J_A/\ker\Sigma_A.
+\]
+所有函数空间取环境中的全部函数，边界不同即签名不同，包括补全域为空的情形。另定义
+\[
+D_A^K(a)=\{r\in\mathcal R_A(\rho_Aa):a\cup r\in K\},\qquad
+\Sigma_A^+(a)=(\rho_Aa,O_A(a),D_A^K(a)).
+\]
+

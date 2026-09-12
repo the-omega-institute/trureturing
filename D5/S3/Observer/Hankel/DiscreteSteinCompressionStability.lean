@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Observer/Hankel/DiscreteSteinCompressionStability
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Positive diagonal discrete Stein dissipation and full observation exclude unit-circle poles after actual principal truncation. -/
 
 import D5.S3.Observer.Hankel.BalancedTruncationTail

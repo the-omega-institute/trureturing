@@ -1,0 +1,11 @@
+### M02. 正确 fixed-edge canonical sparsity
+
+目标：
+
+```text
+zaunerLeftFactor_mul_conjTranspose_offMode_zero
+zaunerCanonicalCompletion_crossGram_not_nonzero_flat
+```
+
+状态：Lean source 已写入当前 PR。最终状态以 admission CI 为准。
+

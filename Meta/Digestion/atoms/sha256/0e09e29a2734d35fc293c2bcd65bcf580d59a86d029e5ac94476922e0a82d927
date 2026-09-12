@@ -1,0 +1,17 @@
+**定理 41（不动点、最大黄金因数与纤维盒）。** \(b\) 单调、幂等且 \(0\le b(a)\le a\)；其不动点恰为 \(G_L-1\)。所以 \(\operatorname{Gobs}(n)\mid n\)，\(\operatorname{Gobs}\) 幂等并保持整除序，其值是 \(n\) 的最大黄金因数。若 \(g\) 是黄金不动点，写
+\[
+v_p(g)=G_{L_p}-1,\qquad
+T(g)=\prod_p p^{G_{L_p+1}-2},
+\]
+则
+\[
+\operatorname{Gobs}(n)=g\iff
+\forall p\quad G_{L_p}-1\le v_p(n)\le G_{L_p+1}-2
+\iff g\mid n\mid T(g).
+\]
+槽外的 \(L_p=0\)，相应区间仅为 \(\{0\}\)，因此 \(T(g)\) 是有限乘积；纤维基数为 \(\prod_{p\mid g}(G_{L_p+1}-G_{L_p})\)。
+
+**证明。** 序列 \(G_L\) 严格递增，所以 \(L(a)\) 随 \(a\) 不减，\(b\) 单调且不超过输入。\(b(a)+1=G_{L(a)}\)，再观察仍取同一个阈值，故幂等；不动点的特征也由此成立。逐素数应用这些结论及素因数分解，得整除、幂等、保序。若黄金数 \(h\mid n\)，则 \(h=\operatorname{Gobs}(h)\mid\operatorname{Gobs}(n)\)，故后者最大。这部分亦见[黄金不动点定理](../../../D5/S3/Arith/GoldenResource/GoldenFixedPoint.lean)。
+
+对任意整数 \(a\ge0\)，\(b(a)=G_L-1\) 当且仅当 \(G_L-1\le a\le G_{L+1}-2\)。逐素数应用即得纤维盒；\(L=0\) 时上下端皆零，不产生新的素数支撑。每个活跃区间的整数数目为 \(G_{L+1}-G_L\)，不同向量对应不同整数，给出基数。纤维公式亦为所引理论的定理 4.4 的指数区间形式。证毕。
+

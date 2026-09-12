@@ -1,0 +1,22 @@
+**定理 98（精确位数、取整间隙与增长）。** 置
+\[
+\ell_Z(A)=\min\{\ell\ge0:A<G_\ell\}.
+\]
+这是容量窗口宽度，定义 40 的 \(L(a)\) 仍指那里由 \(a+1\) 确定的分层指标。已知配置、字段边界和译码函数时，以下宽度准确成立：
+\[
+\begin{array}{c|c}
+\text{任意单射状态码的最小位数}&B_0=\lceil\log_2Q\rceil\\
+\text{独立二进制字段的最小总位数}&B_{\rm ind}=\sum_{p\in P}\lceil\log_2(A_p+1)\rceil\\
+\text{字面指数 Zeckendorf 固定窗口}&B_Z=\sum_{p\in P}\ell_Z(A_p)\\
+\text{字面展开乘积的二进制窗口}&B_{\rm prod,2}=\lceil\log_2(M+1)\rceil\\
+\text{乘积整数自身的 Zeckendorf 窗口}&B_{\rm prod,Z}=\ell_Z(M).
+\end{array}
+\tag{Z-LENGTH}
+\]
+若 \(k=|P|\ge1\)，则 \(0\le B_{\rm ind}-B_0\le k-1\)；\(k=0\) 时差为零。零容量字段宽零，空配置状态宽零，但字面乘积一的两种窗口均宽一。若 \(\phi=(1+\sqrt5)/2\)，则
+\[
+\lim_{A\to\infty}\frac{\ell_Z(A)}{\lceil\log_2(A+1)\rceil}
+=\frac1{\log_2\phi}.
+\]
+对固定非空素数集及固定正实数 \(a_p\)，若 \(A_p(t)/t\to a_p\)，则字面展开乘积的两种宽度均为 \(\Theta(t)\)，两种指数字段宽度均为 \(\Theta(\log t)\)。
+

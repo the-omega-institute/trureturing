@@ -1,0 +1,32 @@
+**证明。** 先假设在任意指定的 $w\in B$ 连续。给定 $0<\delta<1/8$，有一个只固定有限坐标的 $w$ 的柱邻域，使其中所有状态的像到 $\chi_\theta(w)$ 的距离小于 $\delta$。选 $N$ 同时超过这些坐标及 $\operatorname{supp}(w)$ 中全部指标；空集合时任取 $N\in\omega$。每个支撑于 $n>N$ 的 $v\in B$ 与 $w$ 支撑不交，故 $w+v$ 仍满足每个容量界，属于这个柱邻域。只在 $V$ 使用同态性，得到
+$$
+\|\chi_\theta(v)\|_{\mathbb T}<\delta
+\quad\bigl(v\in B,\ \operatorname{supp}(v)\subseteq\{n:n>N\}\bigr).
+$$
+记 $a_n=a(\theta_n)$。当 $n>N$ 且 $A_n>0$ 时，$\varepsilon_n$ 可容许，所以 $|a_n|<\delta$。若 $A_n|a_n|\ge\delta$，取使 $k|a_n|\ge\delta$ 的最小正整数 $k\le A_n$。由最小性及 $|a_n|<\delta$，
+$$
+\delta\le k|a_n|<\delta+|a_n|<2\delta<1/2.
+$$
+可容许状态 $k\varepsilon_n$ 的圆周范数遂为 $k|a_n|\ge\delta$，矛盾。故每个尾坐标的质量 $A_n|a_n|<\delta$；非活跃坐标的质量为零，也满足此式。
+
+分别考虑尾部的正代表和负代表。若正代表的质量和大于 $\delta$，某个有限部分和已经大于 $\delta$。按自然数次序取第一次达到 $\delta$ 的有限正项和，因每项小于 $\delta$，其值在 $[\delta,2\delta)$。在这些坐标取 $v_n=A_n$，其余全取零，得到非负、满足容量的有限状态。其代表实和为该正项和，绝对值小于 $1/2$，因而圆周范数至少 $\delta$，又矛盾。负代表的质量若大于 $\delta$，用同样的首次跨越，并仍在所选负代表坐标取非负值 $A_n$；实和为负，绝对值在 $[\delta,2\delta)$，得同一矛盾。此处没有给状态使用负坐标。于是
+$$
+\sum_{\substack{n>N\\ a_n>0}}A_n|a_n|\le\delta,\qquad
+\sum_{\substack{n>N\\ a_n<0}}A_n|a_n|\le\delta,
+\qquad \sum_{n>N}A_n|a_n|\le2\delta.
+$$
+这些和均按有限非负和的上确界解释；两个符号部分合并仍给全部尾部。有限前缀的质量有限，故 $M(A,\theta)$ 有限。$\delta$ 任意，也给尾部趋零。这个推导从每个可能的 $w$ 出发，未将 $B$ 当成平移不变的群。
+
+反向设 $M(A,\theta)$ 有限。非负部分和单调趋向其有限上确界，所以 $R_N\to0$。对每个 $x\in X$，
+$$
+\sum_n|a_nx_n|\le\sum_n A_n|a_n|=M(A,\theta).
+$$
+实部分和的尾差不超过相应质量尾和，因实数完备而收敛，并满足所述一致余项界。若 $x,y$ 在 $0,\ldots,N$ 上相同，则 $|x_n-y_n|\le A_n$，从而
+$$
+d_{\mathbb T}(F_{A,\theta}(x),F_{A,\theta}(y))
+\le\left|\sum_{n>N}a_n(x_n-y_n)\right|\le R_N(A,\theta).
+$$
+给定正误差，取尾界更小的 $N$，上述柱邻域证明 $F_{A,\theta}$ 在每个点连续。有限状态上的级数化为有限和，$[a_n]=\theta_n$，所以它确实延拓 $\chi_\theta|_B$；限制立即在每个状态连续，特别在零和某个状态连续。
+
+任意连续延拓的限制在零处连续，已证的必要性遂给质量有限。对每个 $x\in X$，令 $x^{\le N}$ 在前 $N+1$ 坐标等于 $x$、其后为零。它属于 $B$，且最终落在 $x$ 的每个有限柱邻域，故 $x^{\le N}\to x$。这同时证明 $B$ 在 $X$ 中稠密。两个连续延拓在所有 $x^{\le N}$ 上相等，通常圆周为 Hausdorff，极限唯一使它们在 $x$ 上相等。若质量无限而有任何连续点，第一段即给矛盾，故处处不连续。证毕。
+

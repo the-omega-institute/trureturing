@@ -1,0 +1,44 @@
+## 8. strict 2-circulant edge 的三模式分解
+
+令 strict-X edge `T` 与 order-three shift：
+
+```math
+S=\operatorname{diag}(P_3,P_3)
+```
+
+交换。令 block Fourier unitary `Q` diagonalize `S`。则：
+
+```math
+D=QTQ^\dagger
+=
+T_0\oplus T_1\oplus T_2,
+```
+
+其中每个：
+
+```math
+T_k\in U(2).
+```
+
+对 factor `F in F(T)` 定义 mode-coordinate matrix：
+
+```math
+U=FQ^\dagger.
+```
+
+则 fixed-edge equations 精确化为：
+
+```math
+U\text{ unitary},
+\qquad UQ\text{ flat},
+\qquad UDQ\text{ flat}.
+```
+
+对第二个 factor `F'`，令 `U'=F'Q^dagger`。两 completions 互无偏等价于：
+
+```math
+UU'^\dagger\text{ flat}.
+```
+
+这里 cross condition 不再含 `Q` 或 `D`。这是 strict-X quartet 的最小 mode-coordinate carrier。
+

@@ -1,0 +1,64 @@
+## 26. robust leakage certificate
+
+精确结构零适合 canonical branch。noncanonical branch 更需要稳定的近似版本。
+
+对 normalized unitary `U`，固定每行的 two-mode active set `S_a`，定义 off-mode leakage：
+
+```math
+\eta_a=\sum_{b\notin S_a}|U_{ab}|^2.
+```
+
+一行总质量为 `1`。在给定 `eta_a` 时，row defect 的最小值在 active 两项均匀、off-mode 四项均匀时取得。直接投影到 probability simplex 得：
+
+```math
+\boxed{
+\sum_b\left(|U_{ab}|^2-\frac16\right)^2
+\ge
+\frac{(2-3\eta_a)^2}{12}.
+}
+```
+
+令总 leakage：
+
+```math
+L=\sum_a\eta_a.
+```
+
+对六行使用 Cauchy 得：
+
+```math
+\boxed{
+\widehat\Delta(U)
+\ge
+\frac{(4-L)^2}{8}.
+}
+```
+
+在 Lean scaled 坐标中：
+
+```math
+\boxed{
+D_{Lean}(P)
+\ge
+\frac92(4-L)^2.
+}
+```
+
+canonical support face 对应 `L=0`，恢复 `D_Lean>=72`。完全 flat transition 对应 `L=4`，下界降到零。
+
+所以 branch exclusion 不必始终证明精确结构零。只要 exact interval、SOS 或代数证书给出：
+
+```math
+L\le4-\delta
+```
+
+其中 `delta>0`，就得到：
+
+```math
+\boxed{
+D_{Lean}(P)\ge\frac92\delta^2>0.
+}
+```
+
+这提供了从 canonical component 向 noncanonical component 延伸的稳健证书。
+

@@ -145,7 +145,7 @@ private def validAddress (address : String) : Bool :=
 #guard_msgs (info) in
 run_cmd do
   let env ← getEnv
-  let contents := serializeSealArtifact (SealRecords.forRoot env env.header.mainModule)
+  let contents ← Lean.Elab.Command.liftTermElabM <| serializeSealArtifact (SealRecords.forRoot env env.header.mainModule)
   let json ← match Json.parse contents with
     | .ok json => pure json
     | .error message => throwError message

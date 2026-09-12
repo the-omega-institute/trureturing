@@ -1,0 +1,27 @@
+## 7. cubic orientation 的逻辑边界
+
+对非负 families `a_pi,b_pi`，必须区分：
+
+```math
+\forall\pi,\ a_\pi b_\pi=0
+```
+
+与：
+
+```math
+\left(\sum_\pi a_\pi\right)
+\left(\sum_\pi b_\pi\right)=0.
+```
+
+第二式推出第一式。第一式一般不推出第二式，因为零的一侧可以随 `pi` 改变。仓库已经写入 `Fin 2` 非负反例。
+
+因此任何依赖 global orientation 的论证都必须额外证明 orientation coherence：
+
+```math
+\operatorname{supp}(a)\cap\operatorname{supp}(b)=\varnothing
+\Longrightarrow
+a=0\text{ or }b=0.
+```
+
+该 coherence 当前仍是开放桥。
+

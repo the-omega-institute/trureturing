@@ -1,0 +1,12 @@
+**30.36 文献定理与推论：RH 的实际闭包条件。** 唯一在此引入的解析数论等价定理是 Luis Báez-Duarte，*A strengthening of the Nyman–Beurling criterion for the Riemann hypothesis, 2*，2002，arXiv [math/0205003v1](https://arxiv.org/pdf/math/0205003v1)，第 1 页的 \(H,\chi,\rho_a\) 定义和第 2 页 Theorem 1.1，即第 3 节的 [B1]。其整数生成族 \(\rho_k(x)=\{1/(kx)\}=f_k(x)\)，空间是 \(L^2((0,\infty),dx)\)。准确输入为
+\[
+\mathrm{RH}\iff\chi\in\overline{\operatorname{span}\{f_k:k\in\mathbb N_+\}}^{H}=M.
+\]
+这不是 \(M=H\) 的稠密张成断言。结合闭包投影及阈值证明，得
+\[
+\boxed{\mathrm{RH}\iff d_\infty=0
+\iff\inf_{N\ge1}D_N=0
+\iff\max\{\delta\ge0:A-\delta E_{00}\succeq0\}=0.}
+\]
+最后也等价于不存在正的 \(\delta\) 使减秩算子非负。这些是引用 [B1] 后的推论；[B1] 的完整解析数论证明不由有限线性代数或以下编码重新证明。本卷没有决定 \(d_\infty\) 是否为零。
+

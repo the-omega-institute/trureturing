@@ -1,0 +1,25 @@
+### 可复核的精确结果
+
+`order_three_no_split_certificate.json` 的两个多项式恒等式，已在本地使用有理系数字典进行展开并逐项比较。输出为：
+
+```text
+PASS: nonnegative identity, balanced refutation, robust rational constants
+Lean elaboration: not executed in this runtime
+```
+
+这不是以数值残差替代恒等式。`fractions.Fraction` 没有浮点舍入。但它仅验证列出的 scalar algebra，Lean admission 仍负责完整矩阵 theorem。
+
+本轮 Lean 主文件真实创建于提交：
+
+```text
+65ea169f452a94f2de77d5c4d66c12747939634f
+```
+
+Scribe 说明创建于：
+
+```text
+244ff1274f0e73f42582b2f3b582d10a77bfd56
+```
+
+本地运行环境没有可用的 Lean/lake 或完整 checkout，所以没有执行本地 elaboration、Scribe reconciliation 或完整 import closure。原 PR 仍有 canonical report 失败历史；本轮不把源码提交描述成 kernel 已接受。
+

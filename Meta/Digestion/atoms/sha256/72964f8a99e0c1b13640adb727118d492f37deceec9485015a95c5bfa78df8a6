@@ -1,0 +1,67 @@
+## 38. Literature interface and executed verification
+
+Davies, Sandhu and Tan [7] study occupancy and variance fractions through the
+operator lambda*d/dlambda, explicitly relating them to expected configuration
+size and its variance. Zhang and Xu [8] continue that study in 2026 with
+extremal bounds. Their work confirms that the observable and response in
+(36.1)-(36.2) are standard active research quantities. This increment does not
+claim their formulas as new discoveries or claim to settle their extremal
+conjectures. Chen, Shao and Shi [1] remains the external guide for connecting
+uniform complex zero-freeness to analytic free energy.
+
+The current dev owner `D5/S3/Analytic/ZetaGibbs.lean` was also read. It already
+uses standard PMF normalization for an infinite logarithmic-integer ensemble.
+That source requires a summability condition on its inverse temperature. The
+present finite hard-core law instead normalizes the existing independent-set
+configuration family; the infinite zeta ensemble and its convergence condition
+are not silently imported or identified with the graph model. Mathlib's
+finite-support PMF constructor is reused directly.
+
+Three new Lean owners have three canonical Scribe companions and 36 public
+declarations: OccupationMoments (12), GibbsOccupation (18), and
+Holomorphic/OccupationResponse (6). Every declaration has a source-bound
+StatementSource.FromLean handle. The existing partition, normalized logarithm,
+geometric and analytic owners are unchanged.
+
+The independent verifier directly enumerates independent subsets of all 76
+labeled simple graphs on at most four vertices and all 512 domains of a 3-by-3
+square. It computes reference polynomial derivatives coefficientwise and uses
+exact rational and Gaussian-rational arithmetic. It checks 20580 Euler moment
+identities, 17800 normalized responses, 4116 partition occupation identities,
+3528 Gibbs normalizations, 21168 raw-moment identities, 15534 vertex marginals,
+and 3528 fluctuation-response identities. There are 556 partition-zero cases
+where only the denominator-free identities are tested. All 588 domain instances
+include a zero-activity probability test.
+
+Seven negative controls detect a missing activity factor, division by zero
+activity, false independence of vertices, dropped indicator covariances,
+uncentered second moments, normalization at a partition zero, and omission of
+the empty configuration. Exact tests were rerun after final source assembly
+and the emitted JSON was byte-identical.
+
+```sh
+python research/hard_core_weitz/verify_occupation_response.py
+```
+
+The verifier reuses only the earlier exact Gaussian-rational arithmetic class;
+its configuration and probability checks are explicitly performed from finite
+subsets. It does not read a stored success verdict or execute Lean proof terms.
+The implementation is by the same assistant, not independent-author review.
+Lean/lake is absent from the authoring runtime; no source elaboration, kernel
+acceptance, executed axiom closure or Scribe emission is claimed. The generic
+moment/Gibbs modules have no dependency on the candidate zero-free theorem;
+the normalized-log consumer and the next Cauchy deduction do inherit it.
+No additional zero-free endpoint, accepted numerical record or mathematical
+priority claim is made in this increment.
+
+[7] Ewan Davies, Juspreet Singh Sandhu and Brian Tan. *On expectations and
+variances in the hard-core model on bounded degree graphs*. arXiv:2505.13396v2,
+especially the definitions of free energy, occupancy fraction and variance
+fraction in Section 1.
+https://arxiv.org/html/2505.13396v2
+
+[8] Weiyuan Zhang and Kexiang Xu. *On expectations and variances in the hard-core
+model*. arXiv:2604.01717v1 (2 April 2026).
+https://arxiv.org/abs/2604.01717
+
+

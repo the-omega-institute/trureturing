@@ -1,0 +1,11 @@
+**定理 71（全部集合的可定义递归编码）。** ZFC 中存在一个由一阶公式定义的总类函数 \(\operatorname{Enc}\)，唯一满足
+\[
+\operatorname{Enc}(x)=
+\begin{cases}
+\operatorname{NatZ}(x),&x\in\omega,\\
+\langle1,\{\operatorname{Enc}(y):y\in x\}\rangle,&x\notin\omega.
+\end{cases}
+\tag{Z-ENC}
+\]
+这里每个输出是集合，类函数指其可定义图。引文为 ZFC 的秩、替代及集合上的良基递归，参见 [Set Theory，第 3 节](https://plato.stanford.edu/entries/set-theory/)；本式的具体递归如下。
+

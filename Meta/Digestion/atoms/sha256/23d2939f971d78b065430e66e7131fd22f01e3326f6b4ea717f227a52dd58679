@@ -1,0 +1,35 @@
+**35.21 Proposition (Two scoped strict scaled margins).** The exponential series, with
+its strictly positive remainder after degree four, gives
+\[
+e^2>1+2+2+4/3+2/3=7.
+\]
+Hence \(\log5<2\) and \(\log7<2\). In the \((2,3,5)\) family set \(Q=1920\)
+and \(d_{235}=\mu_{H_{235}}(U_{1920})\). Equations 35.9 and 35.15 give
+\[
+d_{235}\ge1/1920^2,\qquad
+\max_i\xi_i<2\log5/1920<1/480.
+\]
+Validity gives \(c_i\ge h_i\ge\log2\), thus finite \(T_n\ge\log2\).
+Together with 35.19-35.20 these verify every hypothesis of the inherited
+30.16 estimate. Therefore
+\[
+\boxed{e^{T_n}G<-1/120\quad\text{on every }\mathscr W_n
+\text{ for the valid }(2,3,5),Q=1920\text{ boxes}.}
+\]
+For the separate \((2,3,7)\) family, set \(Q=1280\) and
+\(d_{237}=\mu_{H_{237}}(U_{1280})\). The same construction gives
+\[
+d_{237}\ge1/1280^2,\qquad
+\max_i\xi_i<2\log7/1280<1/320,\qquad T_n\ge\log2.
+\]
+Apply its own inherited theorem 31.17, with the same checked domain and
+support, to obtain
+\[
+\boxed{e^{T_n}G<-1/80\quad\text{on every }\mathscr W_n
+\text{ for the valid }(2,3,7),Q=1280\text{ boxes}.}
+\]
+Both inherited radii are closed; these constructed shapes lie strictly
+inside them. All permitted endpoint and saturation cases remain included.
+The second sign is not an unproved substitution into the first triple's
+theorem. Neither inequality is a bound on unscaled \(G\).
+

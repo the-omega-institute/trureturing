@@ -1,0 +1,17 @@
+## 11. canonical completion 的 Fourier/Diţă 身份
+
+`Z_1(X)` 是 `F_2 tensor F_3` 的 Diţă deformation。对 row/column phases 与 permutations 取商以后，diagonal `X` 只留下两个独立 phase ratios，因此属于 order-six Fourier two-parameter family。
+
+fixed-edge canonical completion 是 `Z_1(X)^dagger`。pair unextendibility 在 adjoint 下保持：若 quartet 含 `I` 与 `Z_1^dagger`，左乘 `Z_1` 并交换前两基，就得到含 `I` 与 `Z_1` 的 quartet。
+
+所以已有 Fourier-family quartet exclusion 可推出：
+
+```math
+\boxed{
+\text{假想 strict-X quartet 的两个 extra completions
+都必须落在 noncanonical mode-mixing locus。}
+}
+```
+
+这是文献输入与直接 gauge 推导的组合。Fourier-family exclusion 在 Lean 中仍应作为待移植外部定理，不应无证明 postulate 进入主真源。
+

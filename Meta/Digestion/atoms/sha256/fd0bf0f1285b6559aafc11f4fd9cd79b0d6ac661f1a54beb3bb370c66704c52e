@@ -1,0 +1,18 @@
+**反例 D17（命题：自乘子类的齐次性与边界，repo-derived）。** 对任意先固定的 $Q\subseteq\mathrm{Attr}_t$，令总项 $D_Q(X)=F_{\downarrow Q}(X\boxtimes X)$。则对所有 $X\in\mathcal B$ 及整数 $n\ge0$，
+\[
+q(D_Q(nX))=n^2q(D_Q(X)).
+\]
+在该子类中区域线性目标的存在性分类为
+\[
+\forall B\subseteq K:\quad
+\bigl(\exists Q\subseteq\mathrm{Attr}_t\ \forall X\in\mathcal B:\ q(D_Q(X))=q(F_BX)\bigr)
+\ \Longleftrightarrow\ B=\varnothing.
+\]
+固定 $Q_{\rm odd}=\{a:\operatorname{time}(a)\text{ 为奇数}\}$；它的时间投影两端无界。取 $X$ 为位置 $0$、时刻 $-4$、来源 $l_0$ 的孤立一正一负两当前点，只选正点。则 $n=1,2,3$ 时 $q(D_{Q_{\rm odd}}(nX))$ 为 $1,4,9$，而 $q(F_{B_{\rm even}}(nX))$ 为 $1,2,3$。
+
+更一般地，记 $m_Q(a,a')=\mathbf1_Q(a\diamond_t a')$，则两个不同所选父事件的无序对贡献为 $\epsilon\epsilon'[m_Q(a,a')+m_Q(a',a)]$；只有相应两核值相等时才能写为 $2\epsilon\epsilon'm_Q(a,a')$。对角父点 $e$ 的属性若为 $a=(p,\epsilon,\rho,t)$、选择位为 $b$，其子点属性为 $(2p,+1,\operatorname{pair}(\rho,\rho),t+1)$、选择位为 $b^2=b$，而其 $U_t$ 为该子点属性的单点集。同属性的非对角父对产生相同子点属性，不能由属性筛选隔离为对角父对。
+
+对任意总项 $H$，总项 $X\boxplus(H(X)\boxplus N(H(X)))$ 的 $q$ 恒等于 $q(X)$，包括 $H(X)=X\boxtimes X$；故终端的线性不要求每个中间自乘子项消失。另取两个同位置、同时刻的正点 $e_0,e_1$，来源分别为 $l_0=\operatorname{leaf}(0),l_1=\operatorname{leaf}(1)$，再加两个孤立未选负点使之平衡，关系为空。若 $Q$ 恰要求子点来源为 $\operatorname{pair}(l_0,l_1)$，则选择依次为 $\varnothing,\{e_0\},\{e_1\},\{e_0,e_1\}$ 时，$q(D_Q(X))$ 依次为 $0,0,0,1$。
+
+定义 28 后的 $B_{d,R}$、$B_{\rm even}$ 与 $B_{\rm drift}$ 均不满足 $\operatorname{Tail}$，因而由命题 64 在全部复制项中不可表达。前两族的时间投影两端无界；$B_{\rm drift}$ 的时间投影无下界且上界为 $0$。
+

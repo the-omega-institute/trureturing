@@ -1,0 +1,8 @@
+**定理 437.4。** 初始化 $V_0(i_0)=0$、另一值 $+\infty$，则
+$$
+V_t(a)=c_t(a)+\min\{V_{t-1}(a),V_{t-1}(b)+\kappa\},\qquad V_t(b)=c_t(b)+\min\{V_{t-1}(b),V_{t-1}(a)+\kappa\}.
+$$
+所有 $t\ge1$ 的两个值有限。令 $\delta_t=1-\lambda_tL$、$D_t=V_t(a)-V_t(b)$，则初态 $a$ 时 $D_1=\delta_1-\kappa$，初态 $b$ 时 $D_1=\delta_1+\kappa$；对 $t\ge2$，
+$$
+D_t=\delta_t+\operatorname{clip}(D_{t-1},-\kappa,\kappa),\qquad\operatorname{clip}(x,-\kappa,\kappa)=\max\{-\kappa,\min\{x,\kappa\}\}.
+$$

@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Observer/Hankel/BalancedTruncationStep
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Actual principal-state truncation inherits both Stein inequalities and has a two-sigma energy bound. -/
 
 import D5.S3.Observer.Hankel.BalancedSteinEnergy

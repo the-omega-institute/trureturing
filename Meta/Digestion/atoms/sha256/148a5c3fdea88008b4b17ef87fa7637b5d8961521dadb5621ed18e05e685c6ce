@@ -1,0 +1,26 @@
+**定义 363.1。** 在 ZFC 中，沿用第 306、337、340、354 条的载体及拓扑，局部简记
+$$
+V=\mathsf V_{\rm reg},\qquad A\in\omega^\omega,\qquad
+D_n=\{k\in\mathbb Z_o:0\le k\le A_n\},\qquad J=J_A=\{n:A_n>0\},
+$$
+
+$$
+X=X_A^{\rm cap}=\prod_{n\in\omega}D_n,\qquad
+B=B_A^{\rm cap}=X\cap V.
+$$
+$X$ 的每个点是定义域恰为 $\omega$ 的总函数，$B$ 另要求有限支撑；两者分别取 $\tau_{\rm coord,A}^{X}$、$\tau_{\rm coord,A}^{B}$。整数加减在 $V$ 中解释，$B$ 不赋群结构。圆周 $\mathbb T=\mathbb R/\mathbb Z_o$ 取通常商拓扑。对 $\vartheta=[t]\in\mathbb T$ 定义中心代表和圆周范数
+$$
+a(\vartheta)=t-\lfloor t+1/2\rfloor\in[-1/2,1/2),\qquad
+\|\vartheta\|_{\mathbb T}=|a(\vartheta)|.
+$$
+沿用第 354.1 条的距离 $d_{\mathbb T}$。对任意总行 $\theta\in\mathbb T^\omega$，置
+$$
+\chi_\theta:V\to\mathbb T,\qquad
+\chi_\theta(u)=\sum_{n\in\operatorname{supp}(u)}u_n\theta_n,
+$$
+
+$$
+M(A,\theta)=\sup_{N\in\omega}\sum_{n=0}^N A_n\|\theta_n\|_{\mathbb T}\in[0,+\infty].
+$$
+无有限上界时取 $+\infty$；有限支撑属于状态 $u$，不属于系数行的定义条件。$M(A,\theta)$ 不改变第 338 条的 $M_A$。
+

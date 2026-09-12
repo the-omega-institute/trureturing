@@ -1,0 +1,15 @@
+**35.25 Proposition (Fibonacci cutoffs are inherited limits, not sparse orbit sampling).**
+Let \(F_j\to\infty\) be increasing Fibonacci numerical cutoffs. Substituting
+this sequence of cutoffs into already established limits immediately gives
+\[
+\frac{\#(B_Q\cap[1,F_j])}{F_j}\longrightarrow d_Q,\qquad
+\frac{\#(\mathcal N_Q\cap[1,F_j])}{\log F_j}
+\longrightarrow\frac{d_Q}{kh_0}.
+\]
+The same holds after the finite discards. No new equidistribution theorem
+is needed for these cutoff limits. Sampling only the indices \(n=F_j\)
+instead asks about \(F_j\alpha\) and
+\(J^{-1}\#\{j\le J:F_j\in B_Q\}\). Its convergence or equality to
+\(d_Q\) is not proved here; uniform consecutive-block frequency does not
+answer this different sparse-sampling question.
+

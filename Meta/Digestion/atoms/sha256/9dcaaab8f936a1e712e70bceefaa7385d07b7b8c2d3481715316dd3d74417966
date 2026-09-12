@@ -1,0 +1,11 @@
+**35.10 A proper disconnected closure is compatible with irrational coordinates.**
+As an illustration outside the prime setting, let \(\beta\) be irrational
+and \(\alpha=(\beta,\beta+1/2)\). The even orbit subsequence is dense in
+\(\{(t,t):t\in\mathbb T\}\), since \(2\beta\) is irrational; the odd
+subsequence is dense in \(\{(t,t+1/2):t\in\mathbb T\}\). The union of these
+two circles is closed and is exactly \(H\). It is a proper disconnected
+subgroup of \(\mathbb T^2\), although both coordinate projections are onto
+and both rotation coordinates are irrational. The proof in 35.3-35.9 covers
+this situation. This example makes no assertion about which closure occurs
+for any particular prime-logarithm vector.
+

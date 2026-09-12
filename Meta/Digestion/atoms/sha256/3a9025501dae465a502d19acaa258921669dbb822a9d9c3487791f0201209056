@@ -1,0 +1,7 @@
+**引理 7（非负整数纤维中的平方和碰撞，repo-derived）。** 沿用 $\mathbb N=\{0,1,2,\ldots\}$。任给整数 $0\le m<s$、矩阵 $A\in\mathbb Z^{m\times s}$ 与 $b\in\mathbb Z^m$，存在 $u,v\in\mathbb N^s$，使
+\[
+Au+b=Av+b,\qquad \sum_{j=1}^s u_j^2\ne\sum_{j=1}^s v_j^2.
+\tag{FIBER-SQUARE-ESCAPE}
+\]
+成熟锚为教科书有限维线性代数的秩–零度定理：列数多于行数的矩阵在 $\mathbb Q$ 上有非零核向量。本条在此标准事实之上给出位于非负整数锥内的显式三点构造。
+

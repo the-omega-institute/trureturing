@@ -136,6 +136,10 @@ $$\forall n: \mathbb{N}, \operatorname{Odd}\left(\operatorname{a}\left(n\right)\
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Parity/FactorialSquareExponentSumParity.hanna_conjecture` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a222014-factorial-square-exponent-sum-parity` (proved) by `D5/S1/Recurrence/Parity/FactorialSquareExponentSumParity.hanna_conjecture`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a222014-factorial-square-exponent-sum-parity","declaration_gid":"D5/S1/Recurrence/Parity/FactorialSquareExponentSumParity.hanna_conjecture","resolution_kind":"proved"} -->
+
 *Citation.* Paul D. Hanna (2024). *OEIS A222014, factorial square-exponent product-sum generating function and parity conjecture*. URL: <https://oeis.org/A222014>.
 
 *Commentary.*

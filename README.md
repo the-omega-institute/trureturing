@@ -1,3 +1,5 @@
+[![Explore & Contribute](https://img.shields.io/badge/Explore_%26_Contribute-0d1117?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48ZyBmaWxsPSJub25lIiBzdHJva2U9IiM0ZmQxYTEiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI%2BPHBhdGggZD0iTTcxIDcxQTMwIDMwIDAgMSAwIDI5IDcxIiBzdHJva2Utd2lkdGg9IjExIi8%2BPHBhdGggZD0iTTcxIDcxIDYxIDU5IDUwIDcxIDM5IDU5IDI5IDcxIiBzdHJva2Utd2lkdGg9IjEwIi8%2BPHBhdGggZD0iTTQ2IDQ0SDU0IiBzdHJva2Utd2lkdGg9IjQiLz48L2c%2BPGcgZmlsbD0iIzRmZDFhMSI%2BPHJlY3QgeD0iMzAiIHk9IjM4IiB3aWR0aD0iMTciIGhlaWdodD0iMTIiIHJ4PSI0Ii8%2BPHJlY3QgeD0iNTMiIHk9IjM4IiB3aWR0aD0iMTciIGhlaWdodD0iMTIiIHJ4PSI0Ii8%2BPC9nPjwvc3ZnPg%3D%3D)](https://bot.chrono-ai.fun/api/v1/triggers/public/pub_d77caf24c76f4ce188e569a83c71b8a1/open/plc_0571014f545848dbb8ed00c49a532fac)
+
 trureturing — the last line of the ledger is always the first line of the next round.
 
 The `Blueprint/` Markdown content of this repository is published as a browsable, searchable

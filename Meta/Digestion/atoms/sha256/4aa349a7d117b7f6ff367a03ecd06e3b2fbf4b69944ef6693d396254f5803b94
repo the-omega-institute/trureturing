@@ -1,0 +1,9 @@
+**定理 23（加法余循环与显式余边界）。** \(\kappa\) 对称，\(\kappa(a,0)=0\)，并且
+\[
+\kappa(a,b)+\kappa(a+b,c)=\kappa(b,c)+\kappa(a,b+c)\quad(a,b,c\in\mathbb N).
+\]
+\(\kappa(a,b)\) 等于每条从 \(s(a)+s(b)\) 到规范终点 \(s(a+b)\) 的有限实际路径的总电荷，并且
+\[
+\beta(s(a))+\beta(s(b))-\beta(s(a+b))=\kappa(a,b).
+\]
+

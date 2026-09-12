@@ -18,6 +18,17 @@
 #   153B  extraction_failure      —— 载体侧随机,可重投
 #   178B  waiting_response        —— **还在跑,根本不是失败**
 #   248B  HTTP 429 quota_exceeded —— **我自己把池打满了**
+#
+# 2026-09-11 又补一个第五状态,它此前落在 UNKNOWN 里,代价是**遍历只跑了一个池就停**:
+#   infrastructure_retry_exhausted —— CLI 自己的基础设施重试打满(Attempts: 4,
+#   infrastructure retries 3/3),任务没能送到 worker 手里。
+# 旧代码里 UNKNOWN 会 `break`(理由是「没有证据表明重投安全」),于是一次 ask 明明有三个
+# 排名池可投,实际只投了 `chrono-chatgpt-pro-pool` 一个就退出;我据此在上游报告里写了
+# 「三池全失败」,那是一个**没有发生过的普查**(第 2.4 条:账上没有的不冒领)。
+# INFRA 是**池作用域**的终局:换池是一次全新提交,不是对同一载体的重放。
+# 边界(第 2.9 条):「没送出去」是 round 16 观察到的 pool span(`selecting_model` /
+# `page_ready`,始终未发送),不是上游的保证;万一确实送出去了,后果只是同一个只读研究
+# 问题被问两遍,无副作用。凡投出去会改变外部状态的 brief,不得依赖本条。
 # 契约就写在 429 的 body 里:`limit 4` 并发。我从没读到它,因为代理把它藏了。
 # 而误读直接导致错误决策:读到「6 投全败」于是投得更多 → 更多 429。
 #
@@ -30,27 +41,13 @@
 #   nyx.sh inflight                  当前 in-flight 数(NYX_POOL 或排名第一的池)
 export PATH="$HOME/.local/bin:$PATH"
 CLI="${NYX_CLI:-nyxid}"  # One executable/function name; no shell evaluation.
-# 2026-08-28 实测:契约写 limit 4,但实际吞吐更低,且 `nyxid oracle status` 的 in-flight
-# **包含别人的任务**(组织级共享池)—— 某刻显示 3 而我只有 2 张在跑。故保守取 2。
-# 缺省 pool(2026-09-06 实测立、2026-09-08 复发后改默认):`extraction_failure` 由 pool 的
-# **worker 脚本版本**决定,不是 brief 大小。同字节对照:`chatgpt-pro-pool`(`cdp-1.3-url-key-image`)
-# 2/2 失败(17.9 KB 与 35.7 KB),同一份 17.9 KB 在 `chrono-chatgpt-pro-pool`(`0.11.7+…`)逐字节重发即成功,
-# 该 pool 另测 24.5 KB 与 34.5 KB 亦成功。2026-09-08 复发:默认仍指向 cdp-1.3 那个 pool,
-# 于是一份 8.1 KB 的 brief 连投两次都 `extraction_failure`,显式 `NYX_POOL=chrono-…` 才通。
-# 缺省与已记录的用法背离,就是器自己产的坏原材料(第 8.4 条);故把缺省改成实测能用的那个。
-#
-# 池遍历(2026-09-08 下午立,用户问「有好几个池子,脚本能都遍历处理掉吗」):写死任何一个缺省池都会
-# 在池容量随时间漂移时失效——同日实测:chrono 池 20 worker 仅 2 在线、队列 7,一行 JSON 排 20 min 排不到;
-# company 池(`cdp-2.8.0-astra-resilient`,6 在线)4 min 即 NYX_OK。故 NYX_POOL **未设**时不再取固定缺省,
-# 而是遍历 `nyxid oracle pool list` 的全部 active 池,按「在线空位多、队列短」排名,剔除已知坏脚本
-# (NYX_BAD_SCRIPTS,前缀匹配,缺省 `cdp-1.3`)与零在线 worker 的池;载体侧失败(EXTRACTION/QUOTA)
-# 换下一池重投同一份 brief。NYX_POOL 显式设定时保持旧行为:只投那一个池,不遍历(调用方要确定性时用)。
+# Automatic calls rank fresh observations and try each candidate once without admission waits.
+# Explicit NYX_POOL keeps bounded lock/capacity waits and bypasses the automatic script filter.
+# A failed observation is invocation-local; no script version is banned by default.
 POOL="${NYX_POOL:-}"
-BAD_SCRIPTS="${NYX_BAD_SCRIPTS:-cdp-1.3}"
-# LIMIT 缺省**由 pool 自报容量派生**,不写死(2026-09-04 立)。
-# 案由:await.sh 曾写死 NYX_LIMIT=4,而 company pool 容量为 10、已被他人占 6 —— 6 >= 4,
-# 于是持锁者永远等不到「空位」,10 分钟后报 NYX_BUSY,五票全部卡在提交之前、零输出。
-# 写死一个与被测对象无关的数,就是器律④ 的坏原材料:它看起来像个限额,实际与真实容量无关。
+AUTO_POOL=1
+[ -z "$POOL" ] || AUTO_POOL=0
+BAD_SCRIPTS="${NYX_BAD_SCRIPTS:-}"
 LIMIT="${NYX_LIMIT:-}"
 # 提交模式(2026-09-04 立)。新版 worker 脚本(cdp-2.6+)执行 `nyxid.oracle.submission-gate.v1`,
 # **fresh task 必须显式带 mode tag**,否则秒退 `oracle_mode_required` 且 retryable=false。
@@ -66,10 +63,10 @@ OUT=""; OWNED_LOCK=""; LOCK_TRANSITION=0; CANCEL_RC=0
 __uint() { [[ "$1" =~ ^[0-9]+$ ]] && [ "$1" -le 2147483647 ] 2>/dev/null; }
 __uuid() { [[ "$1" =~ ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$ ]]; }
 __validate_settings() {
-  { [ -z "$LIMIT" ] || { __uint "$LIMIT" && [ "$LIMIT" -gt 0 ]; }; } &&
-    __uint "$POLL_ROUNDS" && [ "$POLL_ROUNDS" -gt 0 ] && __uint "$POLL_SECONDS" || {
-    echo 'NYX_ERR NYX_LIMIT/NYX_POLL_ROUNDS must be positive integers; NYX_POLL_SECONDS must be nonnegative' >&2; return 2;
-  }
+  if ! { { [ -z "$LIMIT" ] || { __uint "$LIMIT" && [ "$LIMIT" -gt 0 ]; }; } &&
+    __uint "$POLL_ROUNDS" && [ "$POLL_ROUNDS" -gt 0 ] && __uint "$POLL_SECONDS"; }; then
+    echo 'NYX_ERR NYX_LIMIT/NYX_POLL_ROUNDS must be positive integers; NYX_POLL_SECONDS must be nonnegative' >&2; return 2
+  fi
   [ -z "$POOL" ] || [[ "$POOL" =~ ^[a-zA-Z0-9][a-zA-Z0-9._-]*$ ]] || {
     echo "NYX_ERR invalid pool slug: $POOL" >&2; return 2;
   }
@@ -135,9 +132,9 @@ __taskid() {
 }
 __open_taskids() {
   local out="$1" id
-  [ ! "$out" -ef "$out.taskid" ] && { [ ! -e "$out.taskid" ] || [ -f "$out.taskid" ]; } && : >> "$out.taskid" || {
-    echo "NYX_IO taskid must be a separate writable regular file: $out.taskid" >&2; return 2;
-  }
+  if ! { [ ! "$out" -ef "$out.taskid" ] && { [ ! -e "$out.taskid" ] || [ -f "$out.taskid" ]; } && : >> "$out.taskid"; }; then
+    echo "NYX_IO taskid must be a separate writable regular file: $out.taskid" >&2; return 2
+  fi
   while IFS= read -r id || [ -n "$id" ]; do
     __uuid "$id" || { echo "NYX_ERR invalid recovery id: $out.taskid" >&2; return 2; }
   done < "$out.taskid"
@@ -151,32 +148,17 @@ __classify() {  # 读一个 .out,打印:OK|EXTRACTION|QUOTA|NOFILE|RUNNING|UNKNO
   grep -q 'oracle_quota_exceeded\|HTTP 429' "$f" && { echo QUOTA; return; }
   grep -q 'Failed to read prompt' "$f" && { echo NOFILE; return; }
   grep -q 'extraction_failure' "$f" && { echo EXTRACTION; return; }
+  grep -q 'infrastructure_retry_exhausted' "$f" && { echo INFRA; return; }
+  grep -q '^Error: Task failed (' "$f" && { echo CARRIER; return; }
   echo UNKNOWN
 }
 
-__expired() {  # 会话过期是能力缺口,不是池满 —— 必须与 in-flight 区分,否则白等 10 分钟
-  "$CLI" oracle status "$POOL" 2>&1 | grep -q 'session has expired' && return 0 || return 1
-}
 __capacity() {  # pool 自报的总容量(Dispatched: N / M 的 M)
   local m status
   status=$("$CLI" oracle status "$POOL" 2>&1) || return 1
   m=$(printf '%s\n' "$status" | __pool_stats_parse "$POOL" | cut -d'|' -f5)
   __uint "$m" || return 1
   echo "$m"
-}
-__script_ver() {  # pool 自报的 worker 脚本版本 —— `extraction_failure` 的第一诊断位。
-  # 取表格首个数据行的最后一列(Script)。读不到就空,调用方按缺失处理,不猜。
-  # 注:`nyxid oracle status` 把表写到 **stderr**,必须 2>&1(与 __inflight 同坑)。
-  "$CLI" oracle status "$POOL" 2>&1 | __script_ver_parse
-}
-__script_ver_parse() {  # 纯函数:从 stdin 读状态表,打印首个数据行的 Script 列
-  awk -F'┆' '
-    /┆/ {
-      v = $NF
-      gsub(/[│┆]/, "", v)
-      gsub(/^[ \t]+|[ \t]+$/, "", v)
-      if (v != "" && v != "Script") { print v; exit }
-    }'
 }
 __inflight() {
   local n status
@@ -211,8 +193,8 @@ __pool_stats_parse() {  # 纯函数:<slug> + stdin(该池的 status 文本)→ �
     END { printf "%s|%s|%d|%s|%s|%d|%d\n", slug, script, online+0, dispatched, capacity, queued+0, expired+0 }'
 }
 __rank_pools() {  # 纯函数:stdin 读 __pool_stats_parse 的行,打印可用池 slug,按 空位 desc、队列 asc、slug asc
-  # 可用 = 未过期 ∧ 在线 worker>0 ∧ 脚本已知 ∧ 脚本不以 BAD_SCRIPTS 任一前缀开头;空位 = min(在线, 容量) − dispatched(下限 0)
-  awk -F'|' -v bad="$BAD_SCRIPTS" '
+  # 可用 = 未过期 ∧ 在线 worker>0 ∧ 脚本已知 ∧ 脚本不以 BAD_SCRIPTS 任一前缀开头;空位 = min(在线, 容量, NYX_LIMIT 若设) − dispatched(下限 0)
+  awk -F'|' -v bad="$BAD_SCRIPTS" -v limit="$LIMIT" '
     BEGIN { nb = split(bad, B, / +/) }
     {
       if (NF != 7 || $1 !~ /^[a-zA-Z0-9][a-zA-Z0-9._-]*$/) next
@@ -222,6 +204,7 @@ __rank_pools() {  # 纯函数:stdin 读 __pool_stats_parse 的行,打印可用�
       isbad = 0; for (i = 1; i <= nb; i++) if (B[i] != "" && index(script, B[i]) == 1) isbad = 1
       if (isbad) next
       cap = (capacity < online) ? capacity : online
+      if (limit != "" && limit + 0 < cap) cap = limit + 0
       free = cap - dispatched; if (free < 0) free = 0
       printf "%d %d %s\n", free, queued, slug
     }' | sort -k1,1nr -k2,2n -k3,3 | awk '{ print $3 }'
@@ -249,12 +232,7 @@ __verdict_of_payload() {  # 判**取回的文本**,不判文件 —— 活判决
   # 分界:载体是否把答案交回来了,与 worker 判词是 approve 还是 reject **无关**;
   # 故只认 nyxid CLI 自己的错误形态,不因答案里出现 "Error:" 字样而误判(见 --selftest 阴性对照)。
   local r="$1" cli_rc="${2:-0}" first last
-  case "$r" in
-    *oracle_quota_exceeded*|*"HTTP 429"*) echo QUOTA;      return;;
-    *"Failed to read prompt"*)            echo NOFILE;     return;;
-    *extraction_failure*)                 echo EXTRACTION; return;;
-  esac
-  # Delivery tokens need CLI failure evidence; successful answers can quote them.
+  # Diagnostic tokens need CLI failure evidence; successful answers can quote them.
   # NyxID 0d7afdaa docs/ORACLE_RELAY.md:395-410 forbids uncertain post-send replay;
   # "Message delivery timed out" has no upstream safe-retry promise either.
   [ -n "$r" ] || { echo UNKNOWN; return; }
@@ -274,12 +252,44 @@ __verdict_of_payload() {  # 判**取回的文本**,不判文件 —— 活判决
       [ "$last" = "Message delivery timed out. Please try again.Retry" ] || { echo DELIVERY; return; };;
   esac
   if [ "$cli_rc" -ne 0 ]; then   # 只认 CLI 非零退出;exit 0 时末行即便是该诊断原文也是答案(复核 attempt 2 反例)
+    # Terminal recovery instructions take precedence over quotations of earlier failures.
     case "$last" in
       *"Task failed (prompt_delivery_uncertain)"*) echo UNCERTAIN; return;;
       *"Message delivery timed out"*) echo DELIVERY; return;;
     esac
+    # Classify the final CLI diagnostic, never tokens elsewhere in the returned answer.
+    case "$last" in
+      "Error:"*)
+        case "$last" in
+          *oracle_quota_exceeded*|*"HTTP 429"*) echo QUOTA; return;;
+          *"Failed to read prompt"*) echo NOFILE; return;;
+          *extraction_failure*) echo EXTRACTION; return;;
+          *infrastructure_retry_exhausted*) echo INFRA; return;;
+        esac;;
+    esac
   fi
-  first=${r%%$'\n'*}
+  # **规则,不是名单**(第 4.9 条:harness 存规则,不存代表元)。
+  # 上面四个具名判词各有下游差异(QUOTA 要退避、NOFILE 是我自己的 bug),所以保留具名;
+  # 但「还有哪些 reason」是上游的开放集合,逐个补 token 是打地鼠(第 7.11 条:
+  # 同症状第二次即停手修根因)。实测两次:`infrastructure_retry_exhausted` 停在第一个池,
+  # 补上它之后立刻又撞 `composer_draft_conflict`,同样停在第二个池。
+  #
+  # 判据:CLI 非零退出 ∧ 末行是它自己的 `Error: Task failed (<reason>).` 形态
+  # ⟹ 该 reason 命名了一次**已终结**的失败,任务没有留在这个池里跑。
+  # 换池是一次全新提交,不是对同一载体的重放,故 CARRIER 参与遍历。
+  # 唯一的例外已在上面单列:`prompt_delivery_uncertain` 明说交付状态未知,不得重投。
+  if [ "$cli_rc" -ne 0 ]; then
+    case "$last" in
+      "Error: Task failed ("*")"*) echo CARRIER; return;;
+    esac
+    echo UNKNOWN; return
+  fi
+  # The CLI may prefix its result with metadata. A bare Error after that prelude
+  # contradicts rc=0; prose/JSON quoting a diagnostic is still a successful answer.
+  first=$(printf '%s\n' "$r" | awk '
+    /^Attempts: [0-9]+ \(infrastructure retries [0-9]+\/[0-9]+\)$/ {next}
+    /^Conversation: https?:\/\/[^[:space:]]+$/ {next}
+    NF {print; exit}')
   case "$first" in "Error:"*) echo UNKNOWN; return;; esac
   echo OK
 }
@@ -287,7 +297,7 @@ __verdict_of_payload() {  # 判**取回的文本**,不判文件 —— 活判决
 __poll_task() {  # <task-id> <outfile>; ask/fetch share polling, __finish owns the sentinel.
   # **这不是挂钟猜测**(器律⑥′):池无 webhook,`nyxid oracle result` 是唯一取回原语;
   # 间隔对齐真实任务时长(实测数分钟级),有上限,且判据(__verdict_of_payload)在开跑前已写死。
-  local tid="$1" out="$2" n=0 r rc verdict
+  local tid="$1" out="$2" n=0 r rc verdict last
   while [ $n -lt "$POLL_ROUNDS" ]; do
     r=$("$CLI" oracle result "$tid" 2>&1); rc=$?
     if [ "$rc" -eq 0 ]; then
@@ -311,6 +321,14 @@ __poll_task() {  # <task-id> <outfile>; ask/fetch share polling, __finish owns t
     rc=3; verdict=TIMEOUT
   else
     verdict=$(__verdict_of_payload "$r" "$rc")
+    # A failed result read is not a terminal task verdict, even if it mentions quota/infra.
+    # Only the CLI's terminal task-failure shape permits a fresh submission after polling.
+    case "$verdict" in
+      EXTRACTION|QUOTA|INFRA|CARRIER)
+        last=$(printf '%s' "$r" | awk 'NF{l=$0} END{print l}')
+        [ "$rc" -ne 0 ] || verdict=UNKNOWN
+        case "$last" in "Error: Task failed ("*")"*) :;; *) verdict=UNKNOWN;; esac;;
+    esac
     [ "$rc" -eq 0 ] || { [ "$verdict" != OK ] || verdict=UNKNOWN; }
     case "$verdict" in OK) rc=0;; *) rc=1;; esac
   fi
@@ -324,18 +342,24 @@ __poll_task() {  # <task-id> <outfile>; ask/fetch share polling, __finish owns t
   return $rc
 }
 
-__submit_and_poll() {  # <brief> <out> —— 对当前 $POOL 投一票并取回;返回 __poll_task 的 rc,LAST_VERDICT 记判词
-  local brief="$1" out="$2" n rc tid response inflight lock
-  # 会话过期 → 立刻报能力缺口,不要当池满去等 10 分钟(2026-08-28 实测遇到)
-  __expired && { echo "NYX_EXPIRED pool=$POOL 会话已过期 —— 需人跑 \`nyxid login\`(第15条:能力缺口,等灯亮)"; LAST_VERDICT=EXPIRED; return 4; }
-  if [ -z "$LIMIT" ]; then
-    LIMIT=$(__capacity) || { echo "NYX_UNKNOWN capacity pool=$POOL"; LAST_VERDICT=UNKNOWN; return 4; }
-  fi
-  [ "$LIMIT" -gt 0 ] || { echo "NYX_BUSY capacity=0 pool=$POOL"; LAST_VERDICT=BUSY; return 3; }
-  # **锁**:检查 in-flight 与提交之间必须原子,否则两个并发 ask 会都看到有空位、都提交 → 429。
-  # (2026-08-28 实测:并发两个 ask,in-flight=3,两者都判有空位,一者得 QUOTA。
-  #  这是 TOCTOU 竞态 —— 器自己犯了它要防的那个错。)
-  # 锁**按 pool 分片**:跨 pool 本无竞态,共用一把锁会让空闲 pool 的票排在满 pool 的票后面。
+__unstable() {  # Guidance is separate from answer bytes and never a worker review verdict.
+  local outcome="$1" tid="$2" out="$3" action
+  case "$outcome" in
+    OK|IO|ERR|NOFILE|'') return;;
+    TIMEOUT|UNKNOWN|UNCERTAIN|DELIVERY)
+      if [ -n "$tid" ]; then
+        printf -v action 'Resume the same task: nyx.sh fetch %s %q or nyxid oracle result %s; do not resubmit.' "$tid" "$out" "$tid"
+      else
+        printf -v action 'Reconcile uncertain submission using retained output %q before any fresh ask; no current task ID, older sidecar IDs are not evidence for this attempt.' "$out"
+      fi;;
+    *) action='No possibly live submission remains from this attempt; a fresh ask may be tried later.';;
+  esac
+  printf 'NYX_UNSTABLE pool=%s outcome=%s task=%s Oracle 服务不稳定 (Oracle service is unstable); 本次结果不代表永久不可用; a future invocation re-evaluates services. %s\n' "${POOL:-<discovery>}" "$outcome" "${tid:-<none>}" "$action"
+}
+
+__submit_and_poll() {  # <brief> <out>; admission observations precede any submission.
+  local brief="$1" out="$2" n rc tid response inflight lock status row script online capacity queued expired slug limit
+  CURRENT_TASK=""
   lock="${TMPDIR:-/tmp}/nyx-ask-${POOL}.lock"
   n=0
   while [ -z "$OWNED_LOCK" ]; do
@@ -344,29 +368,53 @@ __submit_and_poll() {  # <brief> <out> —— 对当前 $POOL 投一票并取回
     LOCK_TRANSITION=0
     [ "$CANCEL_RC" -eq 0 ] || exit "$CANCEL_RC"
     [ -z "$OWNED_LOCK" ] || break
-    n=$((n+1)); [ $n -gt 120 ] && { echo "NYX_LOCKBUSY 等锁超时: $out"; LAST_VERDICT=LOCKBUSY; return 3; }
+    n=$((n+1))
+    if [ "$AUTO_POOL" -eq 1 ] || [ "$n" -gt 120 ]; then
+      echo "NYX_LOCKBUSY pool=$POOL lock unavailable: $out"; LAST_VERDICT=LOCKBUSY; return 3
+    fi
     sleep 5
   done
-  # 持锁期间等空位,再提交 —— 提交后立刻放锁(任务已计入 in-flight)
+  # Refresh under the owned lock. Automatic admission never waits for availability;
+  # explicit callers retain the bounded capacity wait. The caller releases on every return.
   n=0
   while :; do
-    inflight=$(__inflight) || { echo "NYX_UNKNOWN inflight pool=$POOL"; LAST_VERDICT=UNKNOWN; return 4; }
-    [ "$inflight" -ge "$LIMIT" ] && [ $n -lt 30 ] || break
+    status=$("$CLI" oracle status "$POOL" 2>&1); rc=$?
+    row=$(printf '%s\n' "$status" | __pool_stats_parse "$POOL")
+    IFS='|' read -r slug script online inflight capacity queued expired <<< "$row"
+    if [ "$expired" = 1 ]; then
+      echo "NYX_EXPIRED pool=$POOL session has expired"; LAST_VERDICT=EXPIRED; return 4
+    fi
+    if [ "$rc" -ne 0 ]; then
+      echo "NYX_PRECHECK pool=$POOL status read failed; not submitted"; LAST_VERDICT=PRECHECK; return 4
+    fi
+    if ! __uint "$inflight" || ! __uint "$capacity"; then
+      echo "NYX_PRECHECK pool=$POOL invalid dispatch/capacity observation; not submitted"; LAST_VERDICT=PRECHECK; return 4
+    fi
+    limit="$capacity"
+    if [ "$AUTO_POOL" -eq 1 ]; then
+      if [ -z "$(printf '%s\n' "$row" | __rank_pools)" ]; then
+        echo "NYX_PRECHECK pool=$POOL currently unavailable under online/script/filter/capacity checks; not submitted"
+        LAST_VERDICT=PRECHECK; return 4
+      fi
+      [ "$online" -ge "$limit" ] || limit="$online"
+    fi
+    if [ -n "$LIMIT" ] && [ "$LIMIT" -lt "$limit" ]; then limit="$LIMIT"; fi
+    [ "$inflight" -ge "$limit" ] || break
+    if [ "$AUTO_POOL" -eq 1 ] || [ "$n" -ge 30 ]; then
+      echo "NYX_BUSY pool=$POOL inflight=$inflight limit=$limit; not submitted"; LAST_VERDICT=BUSY; return 3
+    fi
     sleep 20; n=$((n+1))
   done
-  if [ "$inflight" -ge "$LIMIT" ]; then
-    __release_lock || { LAST_VERDICT=IO; return 2; }
-    echo "NYX_BUSY pool=$POOL 等了 10 分钟仍满($LIMIT),放弃: $out"; LAST_VERDICT=BUSY; return 3
-  fi
   # **--no-wait + 记 task id**:阻塞等待会让「我的进程生死」决定「任务是否丢失」。
   # 2026-08-28 实测:前台 ask 被 2min 超时杀、后台 ask 被 SIGTERM(exit 143)杀,
   # 而 `nyxid oracle result <task-id>` 显示**任务在池里仍活着**(`Phase: waiting_response`)。
   # 故改为提交后立刻拿 id 落盘,等待与取回分离 —— 被杀只丢等待,不丢工作。
   # **提交前把产地打出来**:失败判词只说 `extraction_failure`,不说是哪个 pool、哪个 worker 脚本,
   # 于是每次都要另跑一条 `nyxid oracle status` 才能归因。产地进输出即自诊断(第 8.4 条)。
-  echo "NYX_SUBMIT pool=$POOL script=$(__script_ver) tag=$TAG brief_bytes=$(wc -c <"$brief" | tr -d ' ') out=$out"
+  echo "NYX_SUBMIT pool=$POOL script=$script tag=$TAG brief_bytes=$(wc -c <"$brief" | tr -d ' ') out=$out"
   response=$("$CLI" oracle ask "$POOL" --file "$brief" --tag "$TAG" --no-wait 2>&1); rc=$?
   tid=$(printf '%s\n' "$response" | grep -oE '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}' | tail -1)
+  CURRENT_TASK="$tid"
   # Parse only this response; earlier attempts remain audit data, never submission input.
   __append "$out" "$response" || { echo "NYX_IO recovery task=${tid:-<none>} out=$out" >&2; return 2; }
   if [ -n "$tid" ]; then
@@ -377,7 +425,7 @@ __submit_and_poll() {  # <brief> <out> —— 对当前 $POOL 投一票并取回
     LAST_VERDICT=$(__verdict_of_payload "$response" "$rc")
     [ "$LAST_VERDICT" != OK ] || LAST_VERDICT=UNKNOWN
     [ "$rc" -ne 0 ] || rc=1
-    echo "NYX_$LAST_VERDICT $(basename "$out" .out)"; return "$rc"
+    echo "NYX_$LAST_VERDICT task=<none> pool=$POOL $(basename "$out" .out)"; return "$rc"
   fi
   # 轮询取回与判词由 __poll_task 承担(唯一真源;ask 与 fetch 共用)。
   # **退出码必须反映取回的内容,不能写死 0**
@@ -424,7 +472,9 @@ case "${1:-}" in
     __uuid "$tid" || { echo "NYX_ERR fetch 的 <task-id> 不是 uuid 形: $tid"; exit 2; }
     __open_taskids "$out" || exit 2
     if [ "$(__taskid "$out")" != "$tid" ]; then __append "$out.taskid" "$tid" || exit 2; fi
-    __poll_task "$tid" "$out"; exit $?
+    __poll_task "$tid" "$out"; rc=$?
+    __unstable "$LAST_VERDICT" "$tid" "$out"
+    exit "$rc"
     ;;
   ask)
     brief="${2:-}"; out="${3:-}"
@@ -436,24 +486,33 @@ case "${1:-}" in
     [ "$#" -eq 3 ] && [ -f "$brief" ] && [ -r "$brief" ] || { echo "NYX_ERR ask needs a readable brief and outfile: $brief"; exit 2; }
     [ -d "${TMPDIR:-/tmp}" ] && [ -w "${TMPDIR:-/tmp}" ] || { echo 'NYX_ERR TMPDIR must be writable' >&2; exit 2; }
     __open_taskids "$out" || exit 2
-    if [ -n "$POOL" ]; then
+    if [ "$AUTO_POOL" -eq 0 ]; then
       candidates="$POOL"   # 显式指定:只投这一个池,不遍历(调用方要确定性)
     else
       candidates=$(__pool_rows | __rank_pools | tr '\n' ' ')
       echo "NYX_POOLS ranked=[${candidates% }] bad_scripts=[$BAD_SCRIPTS]"
-      [ -n "${candidates% }" ] || { echo "NYX_NOPOOL 没有可用池(全部过期/零在线/坏脚本/容量未知或零);查 nyx.sh pools"; exit 4; }
+      if [ -z "${candidates% }" ]; then
+        echo "NYX_NOPOOL no eligible candidate observed; discovery may be unavailable; no tasks submitted; inspect nyx.sh pools"
+        __unstable NOPOOL "" "$out"
+        exit 4
+      fi
     fi
-    rc=1; LAST_VERDICT=""; previous_pool=""
+    rc=1; LAST_VERDICT=""; previous_pool=""; checked=0; exhausted=1
     for POOL in $candidates; do
       [ -z "$previous_pool" ] || echo "NYX_NEXT_POOL after=$previous_pool verdict=$LAST_VERDICT"
       previous_pool="$POOL"
-      LIMIT="${NYX_LIMIT:-}"   # 每池按自报容量重新派生
+      checked=$((checked+1))
       __submit_and_poll "$brief" "$out"; rc=$?
+      __release_lock || { LAST_VERDICT=IO; rc=2; }
+      __unstable "$LAST_VERDICT" "$CURRENT_TASK" "$out"
       case "$LAST_VERDICT" in
-        EXTRACTION|QUOTA|BUSY|EXPIRED) ;;
-        *) break;;   # Includes UNCERTAIN/DELIVERY: no evidence that replay is safe.
+        EXTRACTION|QUOTA|BUSY|EXPIRED|INFRA|CARRIER|PRECHECK|LOCKBUSY) ;;
+        *) exhausted=0; break;;   # Includes UNCERTAIN/DELIVERY: no evidence that replay is safe.
       esac
     done
+    if [ "$AUTO_POOL" -eq 1 ] && [ "$exhausted" -eq 1 ]; then
+      echo "NYX_UNSTABLE pool=<candidates> outcome=ALL_UNAVAILABLE checked=$checked no candidate yielded an answer in this invocation; untried pools are not declared failed. Oracle service is unstable; this is not a permanent ban; a future invocation re-evaluates services and may try a fresh ask."
+    fi
     exit $rc
     ;;
   *) echo "usage: nyx.sh {ask <brief> <out>|fetch <task-id> <out>|taskid <out>|pools|status [glob]|inflight|--selftest}" >&2; exit 2 ;;

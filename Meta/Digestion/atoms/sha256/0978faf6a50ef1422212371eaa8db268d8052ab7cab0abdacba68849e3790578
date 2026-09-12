@@ -1,0 +1,26 @@
+**定理 418.8（全实数取整、极限、极值与拓扑）。** 全实数上的序、加乘、绝对值、整数及自然嵌入、整数次幂、非负平方根、取整和非零域上的倒数均作为原集合图运输。加乘的域为 $\mathbb R^2$，绝对值的域为 $\mathbb R$；自然指数幂的域为 $\mathbb R\times\omega$，零次幂取一；负整数指数幂要求底数非零。非负平方根的域为 $\mathbb R_{\ge0}$，倒数的域恰为 $\mathbb R\setminus\{0\}$。取整图的准确域为全部 $\mathbb R$，陪域为 $J$，其值是满足
+$$
+\iota_J(j)\le x<\iota_J(j+1)
+$$
+的唯一整数 $j$，其中 $\iota_J:J\to\mathbb R$ 为原嵌入。对非负输入，其非负整数输出再由 $\langle0,n\rangle\mapsto n$ 比较到自然数；$\{-j\alpha\}$ 使用全有符号取整。$\alpha$ 编码为原实数 $(\sqrt5-1)/2$。
+
+对任意序列 $a:\mathbb P\to\mathbb R$ 与任意 $\ell\in\mathbb R$，完整收敛公式
+$$
+\forall\varepsilon\in\mathbb R_{>0}\ \exists K\in\mathbb P\ \forall N\in\mathbb P\quad
+(N\ge K\Longrightarrow |a(N)-\ell|<\varepsilon)
+$$
+在原侧与运输侧等价；若原指标域为 $\omega$，则使用该原域。对任意 $H\subseteq\mathbb R$，上确界公式
+$$
+\operatorname{Sup}(H,s)\ \Longleftrightarrow\
+s\in\mathbb R\ \land\ (\forall h\in H\ h\le s)\ \land\
+\forall B\in\mathbb R\bigl((\forall h\in H\ h\le B)\Longrightarrow s\le B\bigr)
+$$
+及反序的下确界公式、$\forall h\in H\ h\ne s$ 的不取到公式均双向保持。特别定理 416.4、417.3 的全部频率、密度、符号极值、绝对上确界及准确取到域都在完整实数域上运输。
+
+任给集合 $A$ 上的拓扑 $\tau$，令 $\tau^*=\{\operatorname{Enc}[O]:O\in\tau\}$。则 $\operatorname{Enc}|_A:(A,\tau)\to(A^*,\tau^*)$ 为同胚，保留并反映原指定拓扑及原指标序下的收敛；且
+$$
+\tau^*=\{\operatorname{El}(c):c\in\operatorname{El}(\operatorname{Enc}(\tau))\},\qquad
+\operatorname{El}(\operatorname{Enc}(\tau))=\operatorname{Enc}[\tau].
+$$
+单个拓扑码、开集码族和外部开集族三者分别保留。
+

@@ -1,0 +1,2 @@
+**证明。** 替代给出 \(\operatorname{Dec}[B]\)，两个互逆图使 \(\operatorname{Enc}[\operatorname{Dec}[B]]=B\)。应用定理 72 即得第一式，第二式由 \(\operatorname{Dec}[\operatorname{Enc}[x]]=x\) 得到。两个不同有限序数的前驱集合不同，故 \(n\) 唯一。解码集合为 \(n\) 恰好是第一分支条件；否则它非自然，(Z-ENC) 给第二分支。若第一分支时 \(\langle1,B\rangle\) 有效，其解码 \(y\notin\omega\) 却具有与 \(n\) 完全相同的成员，从而 \(y=n\)，矛盾。尤其语义空集只有 \(\operatorname{NatZ}(0)\)，不能同时加入 \(\langle1,\varnothing\rangle\) 作为另一空集。证毕。
+

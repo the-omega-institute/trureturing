@@ -1,0 +1,7 @@
+**定理 53（无理圆周旋转的频率）。** 若 \(\omega\in\mathbb R\) 无理，\(\rho\in\mathbb R\)，则对任意圆周上黎曼可积的函数 \(H\)，
+\[
+\lim_{N\to\infty}\frac1N\sum_{k=0}^{N-1}H(\{\rho+k\omega\})
+=\int_{\mathbb T}H\,d\mu.
+\]
+特别地有限区间并的访问频率等于其长度，每个非空开弧被访问无穷多次。
+

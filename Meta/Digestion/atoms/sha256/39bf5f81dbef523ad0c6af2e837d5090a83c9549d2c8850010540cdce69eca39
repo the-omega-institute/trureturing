@@ -1,0 +1,25 @@
+## 1. 标准 Hadamard 归约与规范边界
+
+固定 `B0 = I`，其余三个基写为无归一化 Hadamard matrices：
+
+```math
+H_r H_r^\dagger = 6I,
+\qquad |(H_r)_{ij}|^2=1.
+```
+
+两基互无偏等价于：
+
+```math
+|(H_r^\dagger H_s)_{ij}|^2=6.
+```
+
+单矩阵标准等价允许独立行列置换与单位相位：
+
+```math
+H\mapsto D_rP_rHP_cD_c.
+```
+
+多矩阵 compatibility 只允许一个共同 ambient left gauge。独立选择三个 Hadamard 等价类的 canonical representatives 会丢失相对左规范。仓库中的二维精确反例记录了 MUB compatibility 不下降到独立 Hadamard classes。
+
+因此 2026 order-six classification 的正确消费者是带显式 lifts 的 atlas compatibility，而不是 class-name triple。
+

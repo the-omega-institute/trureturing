@@ -1,0 +1,32 @@
+**34.15 Transfer of a separately supplied scaled margin.** Keep the fixed
+data and height domain of 34.1. Let \(\mathcal W_T\) be any family of baseline
+slabs in that domain for which a separate theorem proves, with one
+\(\eta>0\) independent of finite \(T\) and of the slab,
+\[
+e^T G_0(M_0,M_1)<-\eta.
+\]
+For each allowed shape \(\xi\), define the target family exactly as
+\[
+\mathcal W_{T,\xi}
+=\{(M_0+S,M_1+S):(M_0,M_1)\in\mathcal W_T\}.
+\]
+Every inverse image must be covered by the assumed baseline theorem; its
+corner-count and width conditions are retained. Put
+\[
+d_{\min}=e^m-e^{-T_{\min}}>0.
+\]
+Multiplication of 34.11 by \(e^T>0\) gives
+\[
+|e^T(G_\xi-G_0)|
+\le\frac{(k-1)\epsilon}{e^m-e^{-T}}
+\le\frac{(k-1)\epsilon}{d_{\min}}.
+\]
+The second denominator inequality follows from \(T\ge T_{\min}\).
+At every corresponding finite point it follows that
+\[
+e^TG_\xi<-\eta+\frac{(k-1)\epsilon}{e^m-e^{-T}}
+\le-\eta+\frac{(k-1)\epsilon}{d_{\min}}.
+\]
+The first inequality is strict because the baseline bound is strict,
+even if every subsequent loss estimate attains equality.
+

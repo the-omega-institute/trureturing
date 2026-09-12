@@ -1,0 +1,10 @@
+**定理 414.1（全部零窗时刻的顺序双射）。** 对每个 $L\ge1$，$U_L:\omega\to Z_L$ 是唯一严格递增满射，且
+$$
+U_L(k)=f_{L+1}k+f_L\lfloor(k+1)\alpha\rfloor\qquad(k\ge0).
+$$
+其逆为
+$$
+n\longmapsto\sum_{j\in\omega}G_jz(n)_{j+L}\qquad(n\in Z_L).
+$$
+有 $U_L(0)=0$、$U_L(1)=G_L$；全部相邻间隔恰为 $f_{L+1},f_{L+2}$，二者都发生无穷多次。唯一性量化于全部函数 $\omega\to Z_L$。
+

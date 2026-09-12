@@ -1,0 +1,13 @@
+**定理 370.6。** 在 $\mathbb T^*$ 上取普通实值距离
+$$
+d_{\mathbb T}^*(c,d)=d_{\mathbb T}(\operatorname{Dec}(c),\operatorname{Dec}(d))
+\quad(c,d\in\mathbb T^*).
+$$
+则 $\operatorname{enc}_{\mathbb T}$ 为等距双射，该度量诱导通常圆周拓扑的运输。第 366.2 条的数值误差精确保留为
+$$
+\sup_{c\in B^*}d_{\mathbb T}^*
+\bigl((\chi_\theta|_B)^*(c),(\chi_{r^{(k)}}^{\rm cap}|_B)^*(c)\bigr)
+=\sup_{u\in B}d_{\mathbb T}\bigl(\chi_\theta(u),\chi_{r^{(k)}}^{\rm cap}(u)\bigr)
+\le2^{-k-1}.
+$$
+

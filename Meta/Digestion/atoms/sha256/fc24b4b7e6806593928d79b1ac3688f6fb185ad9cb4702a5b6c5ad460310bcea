@@ -1,0 +1,8 @@
+**定理 7（时间单调性与整除）。** 对 \(X\in\mathcal B_\lambda^+\) 和整数 \(T\le S\)，
+\[
+r_X^T\le r_X^S,\qquad N_X(T)\mid N_X(S),\qquad
+\frac{N_X(S)}{N_X(T)}=
+\prod_p p^{\sum_jG_j\sum_{T<t\le S}Z_X(t,\lambda(p,j))}.
+\]
+\(N_X(T)\) 在充分早时等于一，在充分晚时等于 \(N_X\)。
+

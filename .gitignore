@@ -6,6 +6,9 @@
 .DS_Store
 .caller-review-prompt.md
 .claude/
+!/.claude/
+/.claude/*
+!/.claude/skills
 .echo-review.md
 .sshx-*
 /.lake/

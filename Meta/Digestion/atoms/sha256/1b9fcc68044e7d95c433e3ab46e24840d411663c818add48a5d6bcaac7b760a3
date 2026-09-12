@@ -1,0 +1,26 @@
+**31.8 九节点的精确距离与贪心权重。** 下表给 31.6 距离公式的完整代入。
+类型 I 表示 \(y=(1,\theta,0)\)、\(\theta=(v-a)/b\);
+类型 II 表示 \(y=(1,1,\theta)\)、\(\theta=(v-a-b)/c\)。
+每行均有 \(0\le\theta\le1\),在 \(v=a+b\) 处两种权重一致。
+\[
+\begin{array}{c|c|c|c}
+\mathrm{slot}&(u,v)&(q_1,q_2,q_3)&\text{类型}\\\hline
+0&(0,a)&(0,0,0)&\mathrm I\\
+1&(a,b)&(a,a,a)&\mathrm I\\
+2&(b,a+b)&(2a-b,b,b)&\mathrm I\\
+3&(a+b,c)&(3a-c,3b-c,a+b)&\mathrm {II}\\
+4&(c,a+c)&(0,3b-a-c,c)&\mathrm {II}\\
+5&(a+c,b+c)&(c-2a,2b-c,a+c)&\mathrm {II}\\
+6&(b+c,Q)&(b+c-3a,0,2c-a-b)&\mathrm {II}\\
+10&(a,2a)&(a,a,a)&\mathrm I\\
+24&(a+c,2c-a)&(c-2a,3b-2c+a,a+c)&\mathrm {II}
+\end{array}
+\]
+全部非零分支的线性对数符号由 31.11 的严格有理区间认证,零向量精确判等;
+反射槽的并列最近端点用同值两式,没有数值容差。
+每行的 \(R\) 如 31.6,并有
+\[
+\lambda=\frac{v-R}{3},\qquad\eta=\frac{v+2R}{3}.
+\]
+权重只依赖本表的相对容量,对每个正高度均最优;本表没有采样高度。
+

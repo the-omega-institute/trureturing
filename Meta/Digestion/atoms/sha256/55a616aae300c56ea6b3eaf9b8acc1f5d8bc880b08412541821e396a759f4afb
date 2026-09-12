@@ -1,0 +1,12 @@
+### M03. finite three-Fourier autocorrelation adapter
+
+先复用：
+
+```text
+FinitePoisson.character
+windowRoot
+windowRoot_isPrimitiveRoot
+```
+
+证明 normalized length-three transform constant-modulus 与 nonzero cyclic autocorrelation vanishing 的等价。该 theorem 服务于第 13 节，不重建通用 DFT 理论。
+

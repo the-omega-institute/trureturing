@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:fe3824b71aec25c856d68757637ffa58a569bc98a44d8ddd0c1b997866815899
+  normalized_sha256: sha256:fe3824b71aec25c856d68757637ffa58a569bc98a44d8ddd0c1b997866815899
+cas_ref: sha256:fe3824b71aec25c856d68757637ffa58a569bc98a44d8ddd0c1b997866815899
+coverage_gids:
+  - gid: D5/S1/Digit/DigitProductSlices.zero_three_slice
+    target_statement_id: sha256:e93f7aa5ce3f60f5ebc0688e791a55035ee979db3fef7bad56f3397dad8f090a
+receipts:
+  unresolved_subitems: []

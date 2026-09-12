@@ -1,0 +1,12 @@
+**证明。** 按[《情境时空算术》定义 8、命题 3 及其后反例](CONTEXTUAL_SPACETIME_ARITHMETIC.md)，取 \(I(a)\) 为时空零点的 \(a\) 对正负事件，全部当前、只选正点、偏序为空，\(a=1,2\)。其档案与当前基数均为 \(2a\)。原乘法满足
+\[
+|E_{P\boxtimes Q}|=|E_P|+|E_Q|+|\Omega_P||\Omega_Q|,\qquad
+|\Omega_{P\boxtimes Q}|=|\Omega_P||\Omega_Q|.
+\]
+令 \(P=Q=I(1),R=I(2)\)。左中间基数为 \((8,4)\)，右中间为 \((14,8)\)，所以
+\[
+|E_{(P\boxtimes Q)\boxtimes R}|=8+4+4\cdot4=28,
+\qquad |E_{P\boxtimes(Q\boxtimes R)}|=2+14+2\cdot8=32.
+\]
+两个原 \(q\) 读数均为二，但事件数不同排除历史同构。此反例的定义域为原 \(\mathcal B\)。证毕。
+

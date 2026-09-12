@@ -1,0 +1,8 @@
+**定理 6（累积乘法）。** \(\mathcal B_\lambda^+\) 对 \(\boxplus\) 封闭；\(X\triangleright Y\) 有定义时也属于该域。对任意整数 \(T\) 和素数 \(p\)，两种运算 \(\circ\in\{\boxplus,\triangleright\}\) 在各自定义域内均满足
+\[
+r_{X\circ Y}^T=r_X^T+r_Y^T,\qquad
+a_p^{X\circ Y}(T)=a_p^X(T)+a_p^Y(T),\qquad
+N_{X\circ Y}(T)=N_X(T)N_Y(T).
+\]
+总表与总读数满足同样的等式。
+

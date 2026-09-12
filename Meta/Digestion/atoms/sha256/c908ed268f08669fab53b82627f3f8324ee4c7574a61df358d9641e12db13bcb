@@ -1,0 +1,55 @@
+**定义 316。** 沿用第 69–70 条的 $\zeta:\omega\leftrightarrow\mathsf W_Z:\operatorname{val}$、第 95–96 条的原始素数数字集 $\mathsf{Pr}_Z=\zeta[\operatorname{Pr}]$、第 113–114、255 条的 $S=\mathsf Z_{\mathbb Z}$ 及 $\operatorname{scode}:\mathbb Z_o\leftrightarrow S:\operatorname{ival}$，其中 $0_S=\operatorname{scode}(0)=\varnothing$。下列图边使用普通集合有序对。独立定义三个目标集合
+$$
+\mathsf G_{\rm reg}=\{g:\operatorname{Pr}\to\mathbb Z_o:\{p:g(p)\ne0\}\text{ 有限}\},
+$$
+$$
+\mathsf{Rec}_{\rm reg}=\{r:r\text{ 是从 }\mathsf{Pr}_Z\text{ 到 }S\setminus\{0_S\}\text{ 的有限部分函数}\},
+$$
+$$
+\mathsf{Dig}_{\rm reg}=\{d:\mathsf{Pr}_Z\to S:\{a:d(a)\ne0_S\}\text{ 有限}\}.
+$$
+对有限 $I\subseteq\omega$，置
+$$
+\mathsf{Lab}_I^{\rm reg}=\{\zeta(p_i):i\in I\},\qquad
+\mathsf{Dig}_I=\{d:d\text{ 是定义域恰为 }\mathsf{Lab}_I^{\rm reg}\text{、值在 }S\text{ 中的总函数}\}.
+$$
+有限总图保留零边；空 $I$ 时 $\mathsf{Dig}_I=\{\varnothing\}$。这些标签是原始有限字，既不重定义第 95 条 $P_Z$，也不改成第 304 条的自然叶标签 $P_Z^{\rm lab}$。
+
+对 $u\in\mathsf V_{\rm reg}$ 定义
+$$
+g_u(p_n)=u_n,\qquad
+\operatorname{rec}_{\rm reg}(u)=\{\langle\zeta(p_n),\operatorname{scode}(u_n)\rangle:u_n\ne0\},
+$$
+$$
+\operatorname{dig}_{\rm reg}(u)(\zeta(p_n))=\operatorname{scode}(u_n),\qquad
+\operatorname{dig}_I(w)(\zeta(p_i))=\operatorname{scode}(w_i)\quad(w\in\mathbb Z_o^I).
+$$
+分别在上述独立目标上给候选逆
+$$
+\operatorname{ung}_{\rm reg}(g)_n=g(p_n),\qquad
+\operatorname{unrec}_{\rm reg}(r)_n=
+\begin{cases}
+\operatorname{ival}(r(\zeta(p_n))),&\zeta(p_n)\in\operatorname{dom}(r),\\
+0,&\zeta(p_n)\notin\operatorname{dom}(r),
+\end{cases}
+$$
+$$
+\operatorname{undig}_{\rm reg}(d)_n=\operatorname{ival}(d(\zeta(p_n))),\qquad
+\operatorname{undig}_I(d)_i=\operatorname{ival}(d(\zeta(p_i))).
+$$
+$\operatorname{pad}_{\rm reg}:\mathsf{Rec}_{\rm reg}\to\mathsf{Dig}_{\rm reg}$ 在已有标签上保留记录值，在所有缺失标签上赋 $0_S$；$\operatorname{trim}_{\rm reg}:\mathsf{Dig}_{\rm reg}\to\mathsf{Rec}_{\rm reg}$ 删除恰好全部零边。总数字函数的运算为
+$$
+(d+_{\rm dig}d')(a)=d(a)\oplus_Zd'(a),\qquad
+(-_{\rm dig}d)(a)=\ominus_Zd(a),
+$$
+零为处处取 $0_S$ 的总函数。记录的运算定义为
+$$
+r+_{\rm rec}r'=\operatorname{trim}_{\rm reg}
+(\operatorname{pad}_{\rm reg}(r)+_{\rm dig}\operatorname{pad}_{\rm reg}(r')),
+\qquad
+-_{\rm rec}r=\operatorname{trim}_{\rm reg}(-_{\rm dig}\operatorname{pad}_{\rm reg}(r)),
+$$
+零记录为空函数。原始数字的配对不使用语义配对。
+
+**证明。** 每个普通素数恰有一个指标，每个原始素数数字恰有一个普通素数值，故赋值公式不冲突。$\operatorname{scode}(z)=0_S$ 当且仅当 $z=0$，所以非零标签与非零坐标一一对应；有限记录和有限非零总图的候选逆均有有限支撑。补零只在缺失处增加零边，截尾只保留有限个非零边，均落入所列目标。总图的和在两非零标签集之外为零，负元保持非零标签集，故运算闭合。有限 $I$ 上的全部总函数无额外支撑条件。这些目标先由各自谓词给定，未定义成某映射的像；精确双逆如下条。证毕。
+

@@ -8,15 +8,22 @@ namespace LeanInformationAudit.Tests.Census.LawNondegeneracy
 
 theorem fakeCertificate : True := True.intro
 
-/-- error: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.Census.LawNondegeneracy.fakeGenerated class=structural_occurrence invalid=law.nondegeneracy -/
-#guard_msgs in
+-- Invalid variation is deferred to the delta consumer, with C048 precedence.
 structural_theorem fakeGenerated in RegisteredClosedTruth.lawArena
   realization RegisteredClosedTruth.readouts nondegeneracy fakeCertificate := rfl
-
-/-- error: IE-C037 DispositionClassMismatch theorem=LeanInformationAudit.Tests.Census.LawNondegeneracy.wrongLawGenerated class=structural_occurrence invalid=law.nondegeneracy -/
-#guard_msgs in
 structural_theorem wrongLawGenerated in RegisteredClosedTruth.lawArena
   realization RegisteredClosedTruth.readouts nondegeneracy Evidence.structuralLawNondegenerate := rfl
+
+/-- info: IE-C048 -/
+#guard_msgs in
+run_cmd liftTermElabM do
+  for name in [``fakeGenerated, ``wrongLawGenerated] do
+    let some entry := (structuralProvenanceEntries (← getEnv)).find? (·.theoremName == name)
+      | throwError "missing registration"
+    let some message ← RegistrationGates.validateStructural entry
+      | throwError "invalid Nondegenerate accepted"
+    unless message.endsWith "reason=invalid_witness" do throwError "{message}"
+  logInfo "IE-C048"
 
 def numericalLaw : StructuralPrimitiveLawArena RegisteredClosedTruth.arena where
   signature := ⟨Unit, inferInstance, fun _ => Nat⟩
@@ -33,13 +40,6 @@ def falseLawArena : StructuralPrimitiveLawArena RegisteredClosedTruth.arena wher
 theorem falseLawDegenerate : ¬falseLawArena.Nondegenerate := by
   rintro ⟨_, _, holds, _⟩
   exact holds
-
--- Failed generation must leave no theorem, realization, or unit behind.
-run_cmd do
-  for name in [`fakeGenerated, `wrongLawGenerated] do
-    let name := (← getCurrNamespace) ++ name
-    for generated in [name, name.str "__structural_realization", name.str "__structural_unit"] do
-      if (← getEnv).contains generated then throwError "failed generation leaked {generated}"
 
 #print axioms fakeCertificate
 #print axioms numericalLawDegenerate

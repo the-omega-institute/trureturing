@@ -1,0 +1,33 @@
+**定理 378.8。** 若另外给定字段双射 $b_D:D\to C_D$、$b_Y:Y\to C_Y$，置
+$$
+f^d=b_Y\circ f\circ b_D^{-1},\qquad
+h_D(c)=\operatorname{Enc}(b_D^{-1}(c)),\qquad e_D(c)=\operatorname{Enc}(c),
+$$
+并在输出槽相应置 $h_Y,e_Y$。则 $h_D$ 的像为 $D^*$，其逆在该像上为 $b_D\circ\operatorname{Dec}$；$e_D$ 的像为 $\operatorname{Enc}[C_D]$，其逆在该像上为 $\operatorname{Dec}$。输出槽有对应的两个精确逆域，且
+$$
+\operatorname{Enc}(G_f)
+=\operatorname{Pack}\{\langle h_D(c),h_Y(d)\rangle_Z:\langle c,d\rangle\in G_{f^d}\},
+$$
+$$
+\operatorname{Enc}(G_{f^d})
+=\operatorname{Pack}\{\langle\operatorname{Enc}(c),\operatorname{Enc}(d)\rangle_Z:
+\langle c,d\rangle\in G_{f^d}\}.
+$$
+这些式子分别编码原对象图与数字对象图，包括 $d$ 自身已经是某个码的情形。
+
+**证明。** 对 $c\in C_D$，先取 $h_D$ 再用 $b_D\circ\operatorname{Dec}$，得到 $b_D(b_D^{-1}(c))=c$；对 $z\in D^*$，反向复合给 $\operatorname{Enc}(\operatorname{Dec}(z))=z$。这同时给像及双逆。$e_D$ 的两复合直接是 $\operatorname{Enc},\operatorname{Dec}$ 在 $C_D$ 及其成员像上的双逆。将 $D,C_D,b_D$ 换为 $Y,C_Y,b_Y$ 给输出侧同样的结论。
+
+数字边 $\langle c,d\rangle\in G_{f^d}$ 唯一对应原输入 $b_D^{-1}(c)$ 及原输出 $b_Y^{-1}(d)=f(b_D^{-1}(c))$。反向每条原边也给唯一数字边。代入第 378.3 条的语义配对图式，得到第一式。直接将数字边本身作为普通集合有序对编码，得到第二式；因此在第二式中，即使 $d$ 已是码，也仍须取作为集合对象的 $\operatorname{Enc}(d)$。
+
+对部分联合域 $D\subseteq X_1\times X_2$，若各槽双射为 $b_1,b_2$，必须取
+$$
+C_D=(b_1\times b_2)[D],\qquad b_D=(b_1\times b_2)|_D.
+$$
+其原输入提升为
+$$
+h_D(\langle c_1,c_2\rangle)
+=\langle\operatorname{Enc}(b_1^{-1}(c_1)),
+\operatorname{Enc}(b_2^{-1}(c_2))\rangle_Z.
+$$
+两槽分别合法不能替代 $\langle c_1,c_2\rangle\in C_D$ 的联合条件，双逆逐边保持整个域。更多固定元数按第 257–260 条的 $T_r,T_r^Z$ 递归配对，给相同结论。若原域要求某个零值图边而输入缺失它，则原输入不在域中，其数字像也不在域中；不能由缺失边得到成功的零值。若另用互不相同的 $\operatorname{ok}$ 与 $\bot$ 作严格总化，域内输出和域外失败各自经编码，单射性仍使成功零不等于失败。证毕。
+

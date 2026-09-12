@@ -1,0 +1,38 @@
+**定理 406.1。** 令
+$$
+T^*=e_KTe_K^{-1},\qquad R^*=e_{\mathbb T}Re_{\mathbb T}^{-1},
+\qquad H^*=e_{\mathbb T}He_K^{-1}.
+$$
+对全部 $m\in\omega$ 和 $k\in\mathbb Z$，
+$$
+(T^*)^m=e_KT^me_K^{-1},\qquad
+(R^*)^k=e_{\mathbb T}R^ke_{\mathbb T}^{-1},\qquad H^*T^*=R^*H^*.
+$$
+异步关系、同步关系与相位纤维关系的外部运输分别准确满足
+$$
+c\mathrel{E_{T,{\rm ext}}}d
+\iff\exists m,n\in\omega\ ((T^*)^mc=(T^*)^nd),
+$$
+$$
+c\mathrel{S_{T,{\rm ext}}}d
+\iff\exists m\in\omega\ ((T^*)^mc=(T^*)^md)
+\iff H^*c=H^*d,
+$$
+$$
+u\mathrel{E_{R,{\rm ext}}}v
+\iff\exists k\in\mathbb Z\ (v=(R^*)^ku).
+$$
+并有 $c\mathrel{E_{T,{\rm ext}}}d\iff H^*c\mathrel{E_{R,{\rm ext}}}H^*d$。
+
+对任意集合 $X$ 上的等价关系 $Q$，
+$$
+[e_X(x)]_{Q_{\rm ext}}=e_X[[x]_Q].
+$$
+存在不依赖代表选择的双射
+$$
+\kappa_Q:X^*/Q_{\rm ext}\longrightarrow(X/Q)^*,\qquad
+\kappa_Q([e_X(x)]_{Q_{\rm ext}})
+=\operatorname{Enc}([x]_Q).
+$$
+它满足 $\kappa_Q\circ\pi_{Q_{\rm ext}}=e_{X/Q}\circ\pi_Q\circ e_X^{-1}$，其逆将 $\operatorname{Enc}(C)$ 送到 $\operatorname{El}(\operatorname{Enc}(C))=e_X[C]$，其中 $C\in X/Q$。若商集取各自商拓扑，则 $\kappa_Q$ 也是到运输商拓扑的同胚。
+

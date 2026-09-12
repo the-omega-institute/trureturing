@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:25925942992a048da71b224bef8fef5c8e7c4f8eeb70c18aa55ff362d1a074c0
+  normalized_sha256: sha256:25925942992a048da71b224bef8fef5c8e7c4f8eeb70c18aa55ff362d1a074c0
+cas_ref: sha256:25925942992a048da71b224bef8fef5c8e7c4f8eeb70c18aa55ff362d1a074c0
+coverage_gids:
+  - gid: D5/S3/Arith/Congruence/LehmerTotientStructure.primeFactors_sub_one_prod_dvd_sub_one
+    target_statement_id: sha256:2f6b7d52062cec870d59630f188f35f732538ffb77f8f085f639198b1542a730
+receipts:
+  unresolved_subitems: []

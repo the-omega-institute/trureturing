@@ -1,0 +1,28 @@
+**定理 72（逆图、语义成员与遗传有限性）。** 令
+\[
+\mathfrak V_Z=\{c:\exists x\ \operatorname{Enc}(x)=c\}.
+\]
+\(\operatorname{Enc}\) 是到此类的双射。其逆记为 \(\operatorname{Dec}\)，只在 \(\mathfrak V_Z\) 上定义。对有效码 \(c,d\) 定义
+\[
+d\in_Zc\iff\operatorname{Dec}(d)\in\operatorname{Dec}(c),\qquad
+\operatorname{El}(c)=\{d\in\mathfrak V_Z:d\in_Zc\}.
+\]
+则 \(\operatorname{El}(c)\) 总为集合，并有
+\[
+\begin{gathered}
+\operatorname{Dec}(\operatorname{Enc}(x))=x,\qquad
+\operatorname{Enc}(\operatorname{Dec}(c))=c,\\
+\operatorname{Enc}(x)=\operatorname{Enc}(y)\iff x=y,
+\qquad \operatorname{Enc}(x)\in_Z\operatorname{Enc}(y)\iff x\in y,\\
+\operatorname{El}(\operatorname{NatZ}(n))=\{\operatorname{NatZ}(m):m<n\},\\
+\operatorname{El}(\langle1,B\rangle)=B\quad(\langle1,B\rangle\in\mathfrak V_Z),
+\qquad \operatorname{El}(\operatorname{Enc}(x))=\operatorname{Enc}[x],\\
+\operatorname{Enc}(x)\in HF\iff x\in HF.
+\end{gathered}
+\]
+特别地，\(\operatorname{El}(c)=\operatorname{El}(d)\) 当且仅当 \(c=d\)。
+
+**证明。** 对 \(\max(\operatorname{rank}(x),\operatorname{rank}(y))\) 作超限归纳以证单射。不同标签不能相等；同为自然标签时，定理 70 给出 \(x=y\)。同为非自然标签时，两个成员码集合相等；每个 \(u\in x\) 都有 \(v\in y\) 使 \(\operatorname{Enc}(u)=\operatorname{Enc}(v)\)。这两个成员的最大秩严格下降，归纳给 \(u=v\)，反向也如此，外延公理给 \(x=y\)。因而逆图唯一，且逆图仍是一阶可定义关系。替代构造 \(\operatorname{Enc}[x]\)，成员保留与反映给出全部 \(\operatorname{El}\) 公式及外延性。自然叶的语义空集和序数后继分别就是 \(\operatorname{NatZ}(0)\)、\(\operatorname{NatZ}(n+1)\)。
+
+若 \(x\in HF\)，对其有限秩归纳；自然分支由定理 70，非自然分支是有限多个遗传有限码的集合及一次配对，仍在 \(HF\)。反向，对有效码的有限环境秩归纳。自然分支解码为有限序数。若 \(c=\langle1,B\rangle\in HF\)，则 \(B\) 有限且每个 \(d\in B\) 的环境秩小于 \(c\) 的秩；归纳使每个 \(\operatorname{Dec}(d)\in HF\)，于是 \(\operatorname{Dec}(c)=\operatorname{Dec}[B]\) 是遗传有限集合。这里使用有限图构造的自然叶，并未从总行的有限支撑推出其图有限。证毕。
+

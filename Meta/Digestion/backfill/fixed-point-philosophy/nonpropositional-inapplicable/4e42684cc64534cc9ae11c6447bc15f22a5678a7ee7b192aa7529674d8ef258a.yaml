@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4e42684cc64534cc9ae11c6447bc15f22a5678a7ee7b192aa7529674d8ef258a
+  normalized_sha256: sha256:4e42684cc64534cc9ae11c6447bc15f22a5678a7ee7b192aa7529674d8ef258a
+cas_ref: sha256:4e42684cc64534cc9ae11c6447bc15f22a5678a7ee7b192aa7529674d8ef258a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「12.4 成熟锚(逐条状态,不冒领)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 24e15a1d1d2a03bf2c28680804596870453fba16120710b77f98d8435aff3473
+    next_atom_id: a751c1bc50538422f92265038604670c7b1d41d26d10678a28d75f5991a0f821

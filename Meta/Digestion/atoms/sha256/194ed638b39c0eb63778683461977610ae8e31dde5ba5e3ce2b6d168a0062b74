@@ -1,0 +1,10 @@
+**定义 34（复制项语言 $\operatorname{Ctx}^{\rm dup}$，repo-derived）。** 沿用定义 3 的平衡载体 $\mathcal B$、定义 22 的 $K=\mathbb Z\times\mathbb Z^3$、定义 23 的 $F_B$ 及定义 26 的签名 $\Sigma_{{\rm cau},t}$。复制项是有限语法树，叶为输入变量 $X$ 或固定参数 $Z\in\mathcal B$，节点只使用该签名的操作。整项的输入叶数 $r\ge1$；所有输入叶代入同一个 $X$。参数、筛选谓词、整数平移、左右槽位和整棵语法树均先于 $X$ 固定。各节点按原操作的定义域求值；任一子项无定义则所有包含它的项无定义，失败不被 $N$、空筛选或零因子挽救。总项指对每个 $X\in\mathcal B$ 都有定义的项；由严格失败传播，这等价于每个子项对全部输入都有定义。
+
+对先固定的 $B\subseteq K$，定义
+\[
+E_q^{\rm dup}(B)\;:\Longleftrightarrow\;
+\exists\text{ 固定总项 }C\in\operatorname{Ctx}^{\rm dup}\quad
+\forall X\in\mathcal B:\quad q(C(X))=q(F_BX).
+\]
+本节只讨论目标族 $q\circ F_B$，不能由本节推出“复制不增加任何 q 表达力”。一般数值函数如 $X\mapsto q(X)^2$ 不属于该分类的目标族。$F_B$、$\widehat M_P$、身份对角筛选均不作为本语言的原语；输入自适应参数及无限项也不属于本定义。
+

@@ -33,9 +33,9 @@ run_cmd do
     unless SealRecords.systemCatalogIrredundant env designatedInformationRootId do
       throwError "ROOT-B-designated-seal: system_catalog_irredundant lacks staged proofs"
     for record in SealRecords.forRoot env designatedInformationRootId do
-      let some (.thmInfo _) := env.find? record.irredundantCertificateName
+      let some (.thmInfo _) := env.find? record.verdict.name
         | throwError "ROOT-B-designated-seal: irredundancy certificate is not a theorem"
-      elabCommand (← `(command| #print axioms $(mkIdent record.irredundantCertificateName)))
+      elabCommand (← `(command| #print axioms $(mkIdent record.verdict.name)))
     logInfo "ROOT-B-designated-seal: actual=expected=13 system_catalog_irredundant=true"
   finally
     modifyEnv (·.setMainModule originalModule)

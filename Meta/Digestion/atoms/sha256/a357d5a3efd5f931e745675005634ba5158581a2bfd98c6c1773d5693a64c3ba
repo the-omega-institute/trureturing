@@ -1,0 +1,18 @@
+### 39.1 证明与既有真源的连接
+
+对非零坐标取 `u=z/|z|`，对零坐标取 `u=1`。由平方差恒等式：
+
+```math
+|z-u|=\big||z|-1\big|\le\big||z|^2-1\big|.
+```
+
+测量幅度改变不超过 `6M rho`，所以已有 private `squared_modulus_residual_transfer` 给出测量界。小坐标误差保证 `|z_ai|<=2`。再使用完整乘积差：
+
+```math
+\overline{u_{a,i}}u_{b,i}-\overline{z_{a,i}}z_{b,i}
+=\overline{u_{a,i}-z_{a,i}}z_{b,i}
+ +\overline{u_{a,i}}(u_{b,i}-z_{b,i}),
+```
+
+得到逐项 `3rho`，从而得到 `p` 的误差。最后 `|p(u_a,u_b)|<=1`、`|p(z_a,z_b)|<=4` 给出 squared-overlap 界 `15rho`。这些常数没有被宣称为最优；经典相位归一化本身也不是新的数学发现。
+

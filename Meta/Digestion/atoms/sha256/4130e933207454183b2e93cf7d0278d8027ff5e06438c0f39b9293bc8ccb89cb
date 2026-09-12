@@ -1,0 +1,18 @@
+**33.18 A fixed capacity witness against the moment order.** At the exact
+capacity \(r=h_2=\log2\), the unique full logarithmic optimizer is
+\(y^*=(1,0,0,0)\). The vector
+\(\widetilde y=(0,h_2/h_3,0,0)\) is feasible because \(0<h_2/h_3<1\),
+and both vectors use resource \(h_2\). By 33.17,
+\[
+J_2(\widetilde y)-J_2(y^*)=h_2(a_{3,2}-a_{2,2})>0.
+\]
+Nevertheless for every \(0<z\le1\),
+\[
+\mathcal L_z(y^*)-\mathcal L_z(\widetilde y)
+=h_2(s_2-s_3)>h_2z/200000.
+\]
+The same difference holds for the full objective after adding \(F_0(z)\).
+Thus improving the second moment strictly worsens the full logarithmic value
+in this fixed witness. At \(z=0\) the two unscaled full values tie at zero,
+while the second-moment inequality itself remains strict.
+

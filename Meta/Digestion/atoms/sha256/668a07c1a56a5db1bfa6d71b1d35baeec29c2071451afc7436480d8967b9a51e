@@ -1,0 +1,14 @@
+**定理 45（素数标签的分量单调性）。** 设 \((p_i)\)、\((q_i)\) 各自成对不同，均为素数，且 \(p_i\le q_i\)，\(a_i\in\mathbb N\)。则
+\[
+n(\boldsymbol p,\boldsymbol a)\le n(\boldsymbol q,\boldsymbol a),\qquad
+R(n(\boldsymbol p,\boldsymbol a))\ge R(n(\boldsymbol q,\boldsymbol a)).
+\]
+任有 \(a_i>0\) 且 \(p_i<q_i\) 时两个不等式均严格。保持指数只更换素数标签，逐指数规范字串及完整因数区间的形状保持。
+
+**证明。** 各项 \(p_i^{a_i}\le q_i^{a_i}\)，因子皆正，故乘积有序且在所述条件下严格。每个正因数对应独立的有界指数选择，因此有限和分配给出
+\[
+R(n(\boldsymbol p,\boldsymbol a))
+=\prod_i\left(1+p_i^{-1}+\cdots+p_i^{-a_i}\right).
+\]
+当 \(a_i>0\) 时括号随正底数 \(p_i\) 严格递减，\(a_i=0\) 时恒为一，故第二不等式及严格性成立。规范行和因数指数区间分别只依赖 \(a_i\)，所以更换标签保留这些对象的形状。该乘积公式沿用[《黄金分层算术观察理论》式 (1.1) 及素数局部因子](ZECKENDORF_EULER_5040.md)。证毕。
+

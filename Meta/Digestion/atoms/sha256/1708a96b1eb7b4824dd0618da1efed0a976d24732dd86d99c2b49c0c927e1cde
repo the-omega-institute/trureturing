@@ -1,0 +1,49 @@
+## 10. fixed-edge 方向修正与 canonical sparsity
+
+若：
+
+```math
+T=Z_1^\dagger Z_2,
+```
+
+则固定边 `(I,T)` 的 completion 是：
+
+```math
+W=Z_1^\dagger.
+```
+
+所以两个 branches 的真实 transition 是：
+
+```math
+W^\dagger W'=Z_1Z_1'^\dagger.
+```
+
+必须检查 `Z_1Z_1'^dagger`，不能误用 `Z_1^dagger Z_1'`。
+
+对 normalized three-Fourier block `F_3` 和 diagonal phases `X,X'`：
+
+```math
+Z_1(X)=
+\frac1{\sqrt2}
+\begin{pmatrix}
+F_3&XF_3\\
+F_3&-XF_3
+\end{pmatrix}.
+```
+
+直接计算：
+
+```math
+Z_1(X)Z_1(X')^\dagger
+=
+\frac12
+\begin{pmatrix}
+I+XX'^\dagger&I-XX'^\dagger\\
+I-XX'^\dagger&I+XX'^\dagger
+\end{pmatrix}.
+```
+
+四个 `3 x 3` blocks 都 diagonal。因此所有 distinct-mode entries 为零。在 order six 中有 24 个结构零，故两个 canonical Zauner completions 不可能 mutually unbiased。
+
+当前 PR 已加入正确 adjoint direction 的 Lean theorem。其 admission 状态必须以最新 CI 为准。
+

@@ -1,0 +1,29 @@
+### 2. 从原测度构造 Gram，推导条件负定性
+
+对任意有限圆周 Borel 测度 sigma、非负 a，以及任意有限整数样本 n_i，定义实际积分矩阵
+
+\[
+G_{ij}=a\int\langle b_{n_i}(z),b_{n_j}(z)\rangle_{\mathbb R}\,d\sigma(z).
+\]
+
+这里复数被视作实内积空间。`geometricLiGram_quadratic` 通过有限和与积分换序证明
+
+\[
+x^T Gx=a\int\left|\sum_i x_i b_{n_i}(z)\right|^2d\sigma(z),
+\]
+
+从而 G 正半定。`geometricLiGram_distance` 再证明同一个矩阵满足
+
+\[
+G_{ii}+G_{jj}-2G_{ij}=L_{|n_i-n_j|},\qquad L_n=\mathrm{reconstructedLi}(\sigma,a,n).
+\]
+
+因此当实系数满足 sum_i x_i=0 时，`reconstructed_li_zero_sum_identity` 给出
+
+\[
+\sum_{i,j}x_i x_jL_{|n_i-n_j|}
+=-2a\int\left|\sum_i x_i b_{n_i}(z)\right|^2d\sigma(z)\le0.
+\]
+
+条件负定性由这个具体积分得出，未作为输入。样本可以有负索引、重复索引或为空；测度可以不归一化甚至为零。零和条件在公共陈述中明确保留。复系数的指数正定性在下一步单独证明。
+

@@ -1,0 +1,19 @@
+**命题 QI-P5（保边界的拼接同余，repo-derived）。** 设 $A,B$ 是不交、非空、连通且相邻的节点组件，令 $C=A\cup B$。取 $a,a'\in J_A$、$b,b'\in J_B$。首先要求原始记录 $a,b$ 在完整重叠 $U_A\cap U_B$ 上一致；再要求
+
+$$
+a\equiv_A a',\qquad b\equiv_B b'.
+\tag{QI-SPLICE-HYP}
+$$
+
+则 $a',b'$ 也一致，且 $a\cup b\equiv_C a'\cup b'$。因此存在部分拼接
+
+$$
+\bar\mu_{A,B}:Q_A^{\rm obs}\times Q_B^{\rm obs}
+\rightharpoonup Q_C^{\rm obs},
+\qquad
+\bar\mu_{A,B}(q_A(a),q_B(b))=q_C(a\cup b).
+\tag{QI-SPLICE}
+$$
+
+其准确域是两状态的边界标签在 $U_A\cap U_B$ 上相等。该重叠包含于 $\partial A\cap\partial B$，由 RI 还恰等于连接两个组件的唯一边之全分隔集。边界相等运输的是已给的初始兼容性，不能从无条件的两个记录产生兼容性。
+

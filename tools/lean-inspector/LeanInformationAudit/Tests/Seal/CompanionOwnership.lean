@@ -23,10 +23,10 @@ private def checkRoot (env : Environment) (root : Name) (frozen : Bool) : IO Uni
       if frozen || localArena then arena.str suffix
       else mkPrivateNameCore root (arena.str suffix)
     unless record.catalog.catalogName == arenaName "__information_catalog" &&
-        record.irredundantCertificateName == arenaName "__catalog_irredundant" do
+        record.verdict.name == arenaName "__catalog_irredundant" do
       throw <| IO.userError s!"companionOwnership: wrong catalog names in {root}"
     checkOwner env root record.catalog.catalogName
-    checkOwner env root record.irredundantCertificateName
+    checkOwner env root record.verdict.name
     for unit in record.theorems do
       let theoremName := fun suffix =>
         if frozen || root.isPrefixOf unit.theoremName then unit.theoremName.str suffix

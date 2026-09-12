@@ -1,0 +1,18 @@
+**定理 56（共同圆周上的联合字律）。** 固定 \(n>1\) 及其有限素数支撑，令
+\[
+T(x)=\{x+\alpha\},\qquad
+F_a(x)=b_a-\mathbf1_{[1-\theta_a,1)}(\{ax+\alpha\}),\qquad
+\boldsymbol F(x)=(F_{a_p}(x))_p.
+\]
+则 \(\boldsymbol c_n(k)=\boldsymbol F(\{k\alpha\})\)。对任意 \(h\ge1\) 和给定向量字 \(w=(w_0,\ldots,w_{h-1})\)，置
+\[
+E_w=\{x\in\mathbb T:\boldsymbol F(T^jx)=w_j\ (0\le j<h)\}.
+\]
+每个 \(E_w\) 是有限个圆周区间的并，其端点及长度属于 \(\mathbb Q(\alpha)\)。相应字的频率恰为 \(\mu(E_w)\)；对任意 \(r\ge0,m\ge1\)，沿起点 \(k=r+mt\) 观察同样的连续 \(h\) 项，频率仍为 \(\mu(E_w)\)。字在轨道上出现当且仅当此频率为正。
+
+令 \(A_n=\{a_p:p\in P(n)\}\) 为不同正指数的集合，\(p_n(h)\) 为出现的长度 \(h\) 向量字数，则
+\[
+p_n(h)\le(h+1)\sum_{a\in A_n}a.
+\]
+因此以 \(\limsup_{h\to\infty}h^{-1}\log p_n(h)\) 定义的字增长熵为零。相等的指数产生逐时刻相等的电荷序列；反之，两个正指数若产生相等序列，则指数相等。
+

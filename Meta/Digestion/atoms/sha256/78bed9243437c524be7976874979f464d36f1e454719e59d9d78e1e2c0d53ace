@@ -1,0 +1,60 @@
+## 39. Uniform finite-volume variance from the common complex neighborhood
+
+This continuation reads dev at `5e5d5e07c56044176abd8b16b1414f1368889ff3`
+and extends research head `9ea79d4b1aca3a56636e8c29c8585d585d2be8ae`.
+The final target proposed in Section 37 is now supplied as candidate Lean
+source. The existing geometric types, real certificate, complex neighborhood,
+partition definition and Gibbs PMF are unchanged.
+
+Let H_V(z)=M_1(V;z)/M_0(V;z), where the existing zeroth-moment theorem identifies
+M_0 with the actual independent-set partition. The prior response identity gives
+H_V(z)=z F'_V(z), and the prior marked-vacancy bound gives |H_V(z)|<=3|V| on the
+same ActivityTube. Since both moments are polynomials and the denominator is
+nonzero there, H_V is holomorphic throughout this common open set.
+
+For each real lambda in [0,51/20], including both endpoints, the entire closed
+disk of radius epsilon/2 centered at lambda lies strictly inside ActivityTube.
+The proof uses the same real center as the tube witness. In particular,
+continuity on the closed disk and holomorphy in its interior are derived, not
+postulated as an external Cauchy-bound premise.
+
+The source applies Mathlib's existing first-derivative Cauchy estimate:
+
+\[
+ |H'_V(\lambda)|\le\frac{3|V|}{\epsilon/2}
+ =\frac{6|V|}{\epsilon},\qquad \epsilon=10^{-30}.
+\]
+
+The real variance is transported exactly to the complex derivative using the
+same finite moment sums in both fields and the earlier normalized-moment
+response theorem. This avoids assuming any unproved interchange of real and
+complex differentiation. The resulting equality is
+
+\[
+ (\operatorname{Var}_{V,\lambda}N:\mathbb C)=\lambda H'_V(\lambda),
+ \qquad N(S)=|S|.
+\]
+
+Consequently the new source proves
+
+\[
+ \boxed{
+ 0\le\operatorname{Var}_{V,\lambda}N
+ \le\frac{6\lambda}{\epsilon}|V|
+ \le C|V|,\qquad C=16\cdot10^{30},\quad 0\le\lambda\le51/20.
+ }
+\tag{39.1}
+\]
+
+The empty domain and zero activity are included. No division by lambda occurs.
+The sharp intermediate coefficient from the interval cap is 153/(10 epsilon);
+C is a convenient larger integer. The adjective sharp here refers only to
+multiplying these chosen coarse constants, not to a sharp variance theorem.
+
+The large constant is a cost of the deliberately tiny sufficient tube, not a
+numerical estimate of physical fluctuations. The bound need not be useful for
+ordinary finite simulation sizes. Its useful mathematical feature is that one
+coefficient works for every finite induced grid domain, with arbitrary holes
+and boundaries. This is a standard analytic consequence of the project's
+candidate zero-free chain, not an independently reviewed new extremal record.
+

@@ -1,0 +1,29 @@
+**定理 74（任意子集、幂集、积与全函数空间）。** 对有效码定义语义无序对和有序对
+\[
+\{c,d\}_Z=\operatorname{Pack}(\{c,d\}),\qquad
+\langle c,d\rangle_Z=\{\{c,c\}_Z,\{c,d\}_Z\}_Z.
+\]
+若 \(c=\operatorname{Enc}(x)\)，则语义并集及幂集为
+\[
+\bigcup_Zc=\operatorname{Pack}\left(\bigcup_{d\in\operatorname{El}(c)}\operatorname{El}(d)\right)=\operatorname{Enc}(\bigcup x),
+\]
+\[
+\mathcal P_Z(c)=\operatorname{Pack}\{\operatorname{Pack}(B):B\subseteq\operatorname{El}(c)\}
+=\operatorname{Enc}(\mathcal P(x)).
+\tag{Z-POWER}
+\]
+这里 \(B\) 遍历环境中的全部子集。置 \(d\subseteq_Zc\iff\operatorname{El}(d)\subseteq\operatorname{El}(c)\)，便有
+\[
+d\in_Z\mathcal P_Z(c)\iff d\subseteq_Zc.
+\]
+对任意集合 \(A,B\)，记 \(A^*=\operatorname{Enc}[A]\)、\(B^*=\operatorname{Enc}[B]\)。语义积及函数空间满足
+\[
+\operatorname{Enc}(A\times B)=\operatorname{Pack}\{\langle a,b\rangle_Z:a\in A^*,b\in B^*\},
+\qquad \operatorname{Fun}_Z(\operatorname{Enc}(A),\operatorname{Enc}(B))=\operatorname{Enc}(B^A).
+\]
+对 \(f\in B^A\)，其语义求值满足
+\[
+\operatorname{ev}_Z(\operatorname{Enc}(f),\operatorname{Enc}(a))=\operatorname{Enc}(f(a))\quad(a\in A).
+\tag{Z-EVAL}
+\]
+

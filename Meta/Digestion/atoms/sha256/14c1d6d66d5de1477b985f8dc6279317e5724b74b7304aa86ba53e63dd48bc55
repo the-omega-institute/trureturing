@@ -1,0 +1,12 @@
+### 八个根盒生成六十条真实射线
+
+继续沿第 35 节的同一精确 `H0`，本轮选择八个有理 uniqueness boxes，分别验证五维 Cayley root equations 的严格压缩与内部包含。每个 box 的半径为 `2^-26`，中心及预条件矩阵为 dyadic rationals。验证阶段只使用 `fractions.Fraction`，必要的 dyadic rounding 始终向外。
+
+八个精确根通过同步 `S3` permutations 与 `Theta0` 生成大小为：
+
+```text
+6, 6, 12, 12, 4, 12, 2, 6
+```
+
+的八个轨道，共六十条射线。逐对 inner-product 区间上界严格小于一，认证了所有射线彼此不同。
+

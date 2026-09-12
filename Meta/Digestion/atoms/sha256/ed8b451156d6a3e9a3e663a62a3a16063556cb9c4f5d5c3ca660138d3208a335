@@ -1,0 +1,34 @@
+**定理 265（基本算子的合法域及逐字段交换）。** 对 $R=R_{\rm num},R_{\rm all}$ 各自成立以下全称式。对所有 $X,Y\in\mathcal H$ 和 $k\in J$，并行、乘法、补集、时间平移均合法，且
+$$
+\begin{aligned}
+R(X\boxplus Y)&=R(X)\boxplus^RR(Y),&
+R(X\boxtimes Y)&=R(X)\boxtimes^RR(Y),\\
+R(NX)&=N^RR(X),&R(T_kX)&=T_{b(k)}^RR(X).
+\end{aligned}
+$$
+时间复合满足
+$$
+(X,Y)\in\mathcal T\iff(RX,RY)\in\mathcal T_R,
+\qquad R(X\triangleright Y)=RX\triangleright^RRY\quad((X,Y)\in\mathcal T).
+$$
+这里 $\mathcal T$ 是 CSA 定义 5 的全档案联合域。所有这些等式反向亦由 $D_R$ 成立。电荷及补集满足
+$$
+\begin{gathered}
+q^R(RX)=b(q(X)),\qquad u^R(RC)=b(u(C)),\qquad
+X\in\mathcal B\iff RX\in\mathcal B_R,\\
+q^R(N^R(C',A))=u^R(C')\oplus_Z\ominus_Zq^R(C',A).
+\end{gathered}
+$$
+对固定 $C'$，最后一式对全部 $A\subseteq\Omega$ 等于 $\ominus_Zq^R(C',A)$，当且仅当 $u^R(C')=0_S$。并行、合法时间复合的 $q,u$ 分别相加，乘法的 $q,u$ 分别相乘，因而它们保持平衡。
+
+端点另用与 $J,S$ 不交的 $\pm\infty$ 哨兵。将 $b$ 扩成固定两个哨兵的全序双射 $\bar b$。定义
+$$
+m_X=\min t[E_X],\quad M_X=\max t[E_X],\quad s_X=\max t[\Omega_X],
+$$
+空集合的最小值为 $+\infty$，最大值为 $-\infty$。目标端点用 $S$ 序同样定义，则
+$$
+(m_{RX},M_{RX},s_{RX})=(\bar b(m_X),\bar b(M_X),\bar b(s_X)),
+\qquad (X,Y)\in\mathcal T\iff M_X<m_Y.
+$$
+时间复合合法性不能用当前整体、选择、读数或有限支撑剖面的零性代替。
+

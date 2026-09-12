@@ -1,0 +1,15 @@
+**定理 71（全部集合的可定义递归编码）。** ZFC 中存在一个由一阶公式定义的总类函数 \(\operatorname{Enc}\)，唯一满足
+\[
+\operatorname{Enc}(x)=
+\begin{cases}
+\operatorname{NatZ}(x),&x\in\omega,\\
+\langle1,\{\operatorname{Enc}(y):y\in x\}\rangle,&x\notin\omega.
+\end{cases}
+\tag{Z-ENC}
+\]
+这里每个输出是集合，类函数指其可定义图。引文为 ZFC 的秩、替代及集合上的良基递归，参见 [Set Theory，第 3 节](https://plato.stanford.edu/entries/set-theory/)；本式的具体递归如下。
+
+**证明。** 固定集合 \(x\)，令 \(T=\operatorname{TC}(\{x\})\) 为含 \(x\) 的传递集合。替代给出其成员秩的集合，可取序数 \(\beta\) 严格大于全部这些秩。由集合序数递归构造 \(g_\alpha\)：\(g_0=\varnothing\)；在 \(\alpha+1\) 将 \(T\) 中秩恰为 \(\alpha\) 的元素加入定义域，自然数按第一分支赋值，其余按 \(\langle1,g_\alpha[y]\rangle\) 赋值；极限步取此前函数图之并。每个 \(z\in y\) 的秩小于 \(\operatorname{rank}(y)\)，所以这里 \(g_\alpha[y]\) 已有定义，是替代所得的集合。分离、替代与并集保证各步为集合函数，定义域互不冲突。至 \(\beta\) 得到 \(T\) 上的解。
+
+对两个传递定义域上的解，按成员关系归纳：自然分支已固定，非自然分支由全部成员的相等值决定，故它们在定义域交集上相等。定义“\(\operatorname{Enc}(x)=c\)”为存在 \(T\) 上满足上述递归方程的集合函数且在 \(x\) 处取 \(c\)。传递闭包和满足递归方程都是一阶条件；刚证的存在与重叠唯一性使它总且单值，与选择的秩界无关，并满足 (Z-ENC)。任何另一解由同一成员归纳相等。整个构造只在每个给定集合的传递闭包和集合序数上递归。证毕。
+

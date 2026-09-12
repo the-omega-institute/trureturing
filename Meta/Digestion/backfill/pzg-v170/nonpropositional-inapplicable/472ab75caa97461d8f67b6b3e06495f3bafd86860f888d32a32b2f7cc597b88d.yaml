@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:472ab75caa97461d8f67b6b3e06495f3bafd86860f888d32a32b2f7cc597b88d
+  normalized_sha256: sha256:472ab75caa97461d8f67b6b3e06495f3bafd86860f888d32a32b2f7cc597b88d
+cas_ref: sha256:472ab75caa97461d8f67b6b3e06495f3bafd86860f888d32a32b2f7cc597b88d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「评注 27.694(重构对账卷:封条测绘完成)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: f638d24f383dbe8168110fba00a144035d832ca723741aba2eb7503cd5383422
+    next_atom_id: 1dc393282e2f2d23268c3d43a6e855d52ccd721599e3216d7f379db52c9da95f

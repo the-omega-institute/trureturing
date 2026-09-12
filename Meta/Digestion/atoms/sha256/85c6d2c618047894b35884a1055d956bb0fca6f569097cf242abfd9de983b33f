@@ -1,0 +1,10 @@
+**证明。** 对旧环境的开集 $O$，
+$$
+\Psi_{\rm reg}^{-1}(O)=\operatorname{Ev}_+^{-1}(O\times Y_{\rm rat}),
+$$
+故 $\tau_\Psi\subseteq\tau_+$。任意映射 $F:V\to X$ 的初始拓扑满足
+$$
+u\in\overline H^{\tau_F}\iff F(u)\in\overline{F[H]}^X.
+$$
+确切地，含 $F(u)$ 的每个环境开集 $O$ 拉回为含 $u$ 的开集，且 $F^{-1}(O)\cap H\ne\varnothing$ 当且仅当 $O\cap F[H]\ne\varnothing$；初始开集全部具有这个逆像形式，所以邻域判据给两个方向。将 $F$ 取为 $\operatorname{Ev}_+$，第 324 条的精确迹给 $\overline H^{\tau_+}=H$。将其取为 $\Psi_{\rm reg}$，第 328 条给 $\overline{H_{\rm dy}}^{\tau_\Psi}=\mathsf V_{\rm reg}\ne H_{\rm dy}$。若两拓扑相等，其闭集应相同，与此矛盾。这比较的是保留首分量的联合拓扑与旧拓扑，不涉及单独有理评价的初始拓扑与旧拓扑之间的排序。证毕。
+

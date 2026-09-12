@@ -28,7 +28,9 @@ Its target COMMENT (quoted verbatim in the same note) is:
 
 > Conjecture: a(n) is divisible by prime(n) for n > 1.
 
-The second A393867 comment, "Conjecture: all terms are odd.", is not resolved.
+The second A393867 comment, "Conjecture: all terms are odd.", is addressed
+separately in `Problems/oeis-a393867-all-terms-odd.md` by the new companion
+module `PrimePowerShiftLogDerivativeOdd`; the original module is unchanged.
 A393866 FORMULA (2), "[x^n] A'(x)/A(x) == 0 (mod prime(n)) for n > 1
 (conjecture - see A393867)", is refuted as printed by the companion theorem;
 it is not a second resolution claim in this dossier.

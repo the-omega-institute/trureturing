@@ -1,0 +1,5 @@
+### 38.7 准确的完成边界
+
+本次实际完成的是先前幅度 Lean/Scribe 的远端交付、六十标签图及颜色的精确重建、二次 refutation 的逐系数核验，以及将有限 hNoPartner 消去的 Lean/Scribe 源码。没有运行 Lean/lake、Scribe emitter 或 transitive axiom report，所以 `decide +kernel` 仍是待实际 elaboration 的证明脚本，不是已执行的 kernel verdict。
+
+完整解析覆盖和区间表达式可靠性仍需内核桥接；新参数区间的覆盖也仍未完成。颜色标签没有被证明与全部真实共同无偏投影一一对应；只能在显式的解析覆盖与 overlap 包含前提下使用。

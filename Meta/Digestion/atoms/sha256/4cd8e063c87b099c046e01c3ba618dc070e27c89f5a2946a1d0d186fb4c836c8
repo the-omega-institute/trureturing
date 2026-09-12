@@ -1,0 +1,31 @@
+### Exact local accounting is the transferable structure
+
+For nonnegative activities, list all vertices and successively delete them.
+The existing ordered telescoping theorem gives
+
+\[
+ \prod_{j=1}^{|V|}\alpha(W_{j-1},v_j;w)=\frac1{Z_G(V;w)},
+ \qquad \log Z_G(V;w)=-\sum_{j=1}^{|V|}\log\alpha(W_{j-1},v_j;w).
+\]
+
+This paper consequence identifies an exact local accounting of the graph's
+target observable. The arithmetic lane obtains its local sum from independent
+prime factors; the graph lane obtains its sum from successive conditional
+deletions, preserving the original correlations. The logarithmic formula is
+not a separate new Lean declaration in this increment.
+
+PR 6131's exponent-tagged padding injection illustrates a second safeguard:
+a many-to-one map must retain a fiber tag or multiplicity bound when comparing
+weighted sums. The grid transport proved here is a bijection, so each
+configuration has multiplicity exactly one and no loss of the existing margin
+is introduced by a coordinate change. PR 6131 explicitly retains its finite-set
+mass-escape hypothesis; it is not read as an RH proof or a source of grid bounds.
+
+Robin's classical criterion has the specific cutoff n>5040. A recent analogue
+[6] uses a different divisor statistic and cutoff 2162160. Together with the
+two distinct repository optimization problems, this reinforces that the number
+5040 is important in specified arithmetic statements. No grid automorphism,
+message dimension, contraction constant or complex-neighborhood width has been
+shown here to equal or be controlled by 5040. There is no numerical 5040 premise
+in the new grid Lean sources.
+

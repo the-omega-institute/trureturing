@@ -1,0 +1,89 @@
+fingerprints:
+  raw_sha256: sha256:355a1326528aeb7af13fb037d9369440552988943dc8cae4069eff7f5678d653
+  normalized_sha256: sha256:355a1326528aeb7af13fb037d9369440552988943dc8cae4069eff7f5678d653
+cas_ref: sha256:355a1326528aeb7af13fb037d9369440552988943dc8cae4069eff7f5678d653
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/IntegerQuotient.IntegerHistory
+    target_statement_id: sha256:3fde89869d0004bae5faf0c01cfe5da5c1b42b1aa66ba92296b3d4ad6fbb5169
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/IntegerQuotient.add_class
+    target_statement_id: sha256:6b0f9116ba93b43e90033868f64091a4da4171a252aed69a49b25aba6c28ec9b
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/IntegerQuotient.classOf
+    target_statement_id: sha256:eaf6c46c31994ee8a074bdeffcb0cf5fcbb71378fc3be49cd2a81370fa085752
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/IntegerQuotient.class_eq_iff
+    target_statement_id: sha256:2723d0b67405adb5b28813caa49a48b0957ccd8a3e164246fef2edd5c2e79eae
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/IntegerQuotient.complement_congr
+    target_statement_id: sha256:6353e7276ab962bb00ef7ba4a928bc3a342f56f02cb39cfcc519d2c910466425
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/IntegerQuotient.integerHistoryCommRing
+    target_statement_id: sha256:a2a1a70a1ad41ba8d6895243c84288e2874d474b1f0b18afbfa1f44ac4bd4d24
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/IntegerQuotient.mul_class
+    target_statement_id: sha256:be82812a7b51fdefe3a07b26e72200dc3e226e65b4444b0faefeacb50fedefc0
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/IntegerQuotient.neg_class
+    target_statement_id: sha256:a1c085017664dc2c0e1e07820ab4bd0e75ad84561d33c7bf6e99fbc986115d26
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/IntegerQuotient.numericalSetoid
+    target_statement_id: sha256:05b3cbd85a5623bbce369970a2975bb0d06eb416a427463ccd43f10b6be76212
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/IntegerQuotient.one_class
+    target_statement_id: sha256:8efbf2cb4e36dba2c537b17488abce00a7bc04374ee7d00a4c2e2fc45e3ac81a
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/IntegerQuotient.parallel_congr
+    target_statement_id: sha256:a2cc0f05eea72aa49ea6213b8d0ec13f08e0aa8b1651a27523b61656c8e9b031
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/IntegerQuotient.product_congr
+    target_statement_id: sha256:467d3f1ff4e215967f6c9cc9398143488e427b4cd7fd5c24630b50efca8c04d3
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/IntegerQuotient.readoutEquiv
+    target_statement_id: sha256:9389f1bee0027a3a02ffd67d84a3de731831ab4191371a051114f4e1475f1e14
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/IntegerQuotient.readoutRingEquiv
+    target_statement_id: sha256:31b2afae03b4dbae0dc9d0dd9f2c99c46a28f554bca0499c060cdecb796959dc
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/IntegerQuotient.readoutRingEquiv_class
+    target_statement_id: sha256:e48908495274d3043fbf86c075519b28568da76c0863a66135cc658b5371eb5a
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/IntegerQuotient.readoutRingEquiv_unique
+    target_statement_id: sha256:09e179ade77c29e24ab8131cd829f1201be97ea7b79b1b7dc4b9bcbf892a4129
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/IntegerQuotient.readout_unique
+    target_statement_id: sha256:de9c0d1249ed5daf78e8dabbec93419687a0b8599280345c02331bf06732352e
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/IntegerQuotient.zero_class
+    target_statement_id: sha256:aa2709960178640540475a265d0e7870b507544af6b4c06256b1a1acbebc9c09
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/NaturalQuotient.NaturalHistory
+    target_statement_id: sha256:a90198e3a5200ce5b3192ebbfe3f603e173f30121a482fdeda4dc5da30a9d338
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/NaturalQuotient.NonnegativeHistory
+    target_statement_id: sha256:87a929ef04a939632516d38f8eaa52525ea5e7a1b8c3ba6e70c0b2a0e16a7fba
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/NaturalQuotient.add_class
+    target_statement_id: sha256:cd941b77c432d79940e8411c2da5d156f30485acffeefea8f2881fd92eeb736f
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/NaturalQuotient.classOf
+    target_statement_id: sha256:f9e30b80926e30f0fe539f02393cbf4fe9fbf81b76b297d754135f56e29a26ea
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/NaturalQuotient.class_eq_iff_signed
+    target_statement_id: sha256:cc1d17dc5005bbb1d2e245d5e4075a1eefd983db4893f4d9468f0a6765d71353
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/NaturalQuotient.complement_nonnegative_iff
+    target_statement_id: sha256:dd408da81577611df779e935ea2b7adbf31bb4b5c2a6db4d9e3bb7c1ba1ed2e3
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/NaturalQuotient.complement_not_closed
+    target_statement_id: sha256:fd172f8c935d059d3a73bb035945bfa6c25c1a7c598bc0ed1218dcbf11a4dba1
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/NaturalQuotient.mul_class
+    target_statement_id: sha256:acdcdef259a8585fe8aa95dcec315d44ac31bb41475e3382a0d4737d5a3081bf
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/NaturalQuotient.naturalHistoryCommSemiring
+    target_statement_id: sha256:2cf8dcd42f824014aa608a3daf2dfa1693b51676dd8cce9299cfb84886bb3dad
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/NaturalQuotient.naturalQ
+    target_statement_id: sha256:3467928b39f84b75745177122b8d32e6dd0caaef48c6903324ded7493818af94
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/NaturalQuotient.naturalQ_cast
+    target_statement_id: sha256:7513db33f1b5ef812872f3cd803730e42c06d47d554cb7359ccb1c7caad4c754
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/NaturalQuotient.naturalSection
+    target_statement_id: sha256:31813c8c67147c450748a664b304361c28fcbf6804bde8d4a6edd2f653e6e45b
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/NaturalQuotient.naturalSection_rightInverse
+    target_statement_id: sha256:8fb130016bab77d48979b684438a5cda5aad9bf015e5a0e71f57f124e30a8e73
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/NaturalQuotient.numericalSetoid
+    target_statement_id: sha256:bde11eca801a194f1fe7e7b91cefbbe475ba6879a9cffae6e3f7d7a3e3e6f4bb
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/NaturalQuotient.numerical_iff_signed
+    target_statement_id: sha256:12f6489bc140e31ef9d59831f3d04f65b36c8137f2d8be2b3736904c4fdbc234
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/NaturalQuotient.one_class
+    target_statement_id: sha256:64f2d5ae3862e8e3a8262f5ab6f0e626492ddb3c9f461f3a08e0bab0e285a2c7
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/NaturalQuotient.parallelNonnegative
+    target_statement_id: sha256:c0a185684856619d934226a4b6419d8f820b8ee4d407e51a26d90d736b17fb42
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/NaturalQuotient.productNonnegative
+    target_statement_id: sha256:5e4c652ad21dded28a975b80d8e5b65bb8ce1db06f862ccf99f5db5148cdd27c
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/NaturalQuotient.readoutEquiv
+    target_statement_id: sha256:3383ccf5b36369d32ff153cc99eb3e4a1e9dd22745a7e7b5de4daf8ffa4cc931
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/NaturalQuotient.readoutSemiringEquiv
+    target_statement_id: sha256:841e6fe016563a56cd7ef5341380f9e2d8838d98a7c5eb5e24cabdf181da2c3a
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/NaturalQuotient.readout_class
+    target_statement_id: sha256:6ff4d2d4121e0d04dfa3722ff58fa3d84cd6c4efd780b98a9f2ccf1ef6868863
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/NaturalQuotient.readout_unique
+    target_statement_id: sha256:027bc45ee6273ce8ca8261765664ef3b9a1b420e3350c9c8d3f9192c296b84d4
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/NaturalQuotient.zero_class
+    target_statement_id: sha256:c578f301484a83d9dde46ec913740f62f531f53abfc011f238dc14684573be83
+receipts:
+  unresolved_subitems: []

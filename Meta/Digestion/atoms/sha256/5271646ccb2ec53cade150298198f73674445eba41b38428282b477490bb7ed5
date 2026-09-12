@@ -1,0 +1,21 @@
+**定理 195（观察商中的补集逆元）。** 对任意 \(X\in\mathcal C_P^{\rm tb}\)，有
+\[
+[X]_{\equiv_P}+[\,\mathsf cX\,]_{\equiv_P}
+=[0]_{\equiv_P},
+\qquad
+[\mathsf c(\mathsf cX)]_{\equiv_P}
+=[X]_{\equiv_P},
+\]
+其中 \([0]_{\equiv_P}\) 是任意终端观察为零的情境等价类。因而补集在终端逐槽观察商上确实给出加法逆；在前缀逐槽平衡子域上，它对每个前缀观察同时给出逆元。
+
+**证明。** 定理 187 给出
+\[
+r_{\mathsf cX}=-r_X.
+\]
+定理 6 给出并行终端表的相加公式，所以
+\[
+V_P^{\mathbb Z}(r_{X\boxplus\mathsf cX})
+ =V_P^{\mathbb Z}(r_X)+V_P^{\mathbb Z}(r_{\mathsf cX})=0.
+\]
+根据定义 193，\(X\boxplus\mathsf cX\) 与任意零观察情境属于同一等价类；补集的集合论定义立即给出 \(\mathsf c(\mathsf cX)=X\)。前缀逐槽平衡时，定理 187 对每个 \(T\) 给 \(r_{\mathsf cX}^T=-r_X^T\)，同样的计算逐前缀成立。证毕。
+

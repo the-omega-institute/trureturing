@@ -1,0 +1,4 @@
+**数学引文。** Boyd/Vandenberghe [Convex functions](https://web.stanford.edu/class/ee364a/lectures/functions.pdf)
+PDF pp.6,16,26,27 (slides 3.4,3.14,3.24,3.25),支持范数凸性、Jensen 和受单调性控制的复合。
+严格性、插值正域、端点最大化及零半径处理由本节证明,不冒充文献已经给出本 \(G\) 的符号。
+

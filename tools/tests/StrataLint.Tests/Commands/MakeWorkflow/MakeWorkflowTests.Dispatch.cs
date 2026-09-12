@@ -195,9 +195,21 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(
             $"\t@/bin/bash {IngestScriptPath} mathlib-reanchor \"$(BASE)\"",
             Recipe(makefile, "mathlib-reanchor"));
-        var showAtomRecipe = Recipe(makefile, "show-atom");
-        Assert.Contains("dotnet run --no-build --project", showAtomRecipe, StringComparison.Ordinal);
-        Assert.Contains(" show-atom --atom-id \"$(ATOM_ID)\"", showAtomRecipe, StringComparison.Ordinal);
+        // The four targets that reach the command line keep the verb in the Makefile and stay one
+        // recipe line: the dispatch table above allows at most one line per target, and
+        // CliVerbLinkageTests reads the verb out of this file to prove it is registered. The same
+        // line first checks that the build output exists and builds it when it does not, because a
+        // fresh worktree carries none; on 2026-09-11 two of five implementation seats hit a raw
+        // process-start exception six times between them while every brief opens by calling show-atom.
+        foreach (var noBuildTarget in new[] { "show-atom", "atom-context", "settle", "settle-clear" })
+        {
+            var recipe = Recipe(makefile, noBuildTarget);
+            Assert.Contains("dotnet run --no-build --project", recipe, StringComparison.Ordinal);
+            Assert.Contains(
+                "@test -x tools/StrataLint.Cli/bin/Release/net10.0/StrataLint || dotnet build",
+                recipe,
+                StringComparison.Ordinal);
+        }
         Assert.Contains(
             EchoResidualSummaryScriptPath,
             Recipe(makefile, "echo-residual-summary"),

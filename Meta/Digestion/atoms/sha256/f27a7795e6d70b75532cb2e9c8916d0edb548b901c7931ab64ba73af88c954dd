@@ -1,0 +1,2 @@
+**证明。** 定理 70 给出 \(\operatorname{val}:\mathsf W_Z\to\omega\) 的双射。正整数与负整数分别由正负标签和非零行唯一表示，零由唯一的 \(0_Z\) 表示，所以 \(\operatorname{ival}\) 双射。三个等式直接由 \(\operatorname{scode}\) 的定义和 \(\operatorname{ival}(\operatorname{scode}(n))=n\) 得到。把整数环的结合律、交换律、分配律、单位元和加法逆经此双射运输，即得结论。证毕。
+

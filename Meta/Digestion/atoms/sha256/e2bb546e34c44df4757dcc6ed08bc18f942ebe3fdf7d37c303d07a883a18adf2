@@ -1,0 +1,36 @@
+**34.4 Positive support from the published lower-support lemma.** The
+coordinatewise monotonicity of \(\ell\) is the existing theorem 27.4,
+not a new theorem of this layer. Its relevant proof is short enough to
+state with the application. For a standard basis vector \(e_i\),
+\[
+\|\Pi e_i\|_2^2=(k-1)/k,\qquad
+\frac{\|\Pi e_i\|_2}{\sqrt{k(k-1)}}=\frac1k.
+\]
+For any \(v\in\mathbb R^k\) and \(b\ge0\), the triangle inequality gives
+\[
+\ell(v+be_i)-\ell(v)
+=\frac bk-\frac{\|\Pi v+b\Pi e_i\|_2-\|\Pi v\|_2}{\sqrt{k(k-1)}}
+\ge0.
+\]
+Successive coordinate increases prove \(v\le w\Rightarrow\ell(v)\le\ell(w)\).
+Weak inequality is essential: 27.4 includes the zero increment and positive
+collinear equality cases.
+
+Choose any admitted actual corner \(x\). Since \(\bar x\in I\) and
+\(\mu\ge\bar x\), every row satisfies
+\(0\le\Delta_i\le|x_i-\bar x|\). Hence
+\[
+\rho\le\frac{\|\Pi x\|_2}{\sqrt{k(k-1)}},\qquad
+L\ge\ell(x)\ge\ell(c)\ge\ell((m+T)\mathbf1)=m+T>0.
+\]
+Here \(x\ge c\ge(m+T)\mathbf1\). Apply the same argument to the translated
+admitted corner \(x+\xi\) and lower vector \(c+\xi\); it gives
+\[
+L_\xi\ge\ell(c+\xi)\ge\ell(c)\ge m+T.
+\]
+In each grid \(\rho\ge0\) implies \(H\ge L\). This is precisely the
+27.5 mechanism and establishes positive support before any derivative of
+\(f\) is used. One corner, including a corner at a budget endpoint, suffices.
+The further comparison \(L_\xi\ge L_0\) follows from the actual radius bounds
+in 34.6, not from comparing these two lower bounds alone.
+

@@ -1,0 +1,4 @@
+## [PR #6114 continuation] INTEGER_LI_NEGATIVE_TYPE_AND_SCHOENBERG_EVOLUTION
+
+日期：2026-09-07。本次从 `61d71eff45e0632bac5210e763a42f0d50bad02a` 继续上一节。新增三个 Lean 真源及三个对应 Scribe：`FiniteGaussianSchoenberg`、`GeometricLiNegativeType`、`LiCurvatureSchoenbergSemigroup`。上一节已经构造共同圆周测度和从指数正定性到实际半群的接口；本节从原 Li 几何能量证明所需指数正定性，消除这一独立前提。数学推导和候选证明源码已完成，本轮未执行 Lean 内核或 Scribe 编译。
+

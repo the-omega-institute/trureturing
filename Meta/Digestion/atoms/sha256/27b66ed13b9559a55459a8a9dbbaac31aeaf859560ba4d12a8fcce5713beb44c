@@ -1,0 +1,51 @@
+## 13. 三循环 DFT 的 exact row equations
+
+把 `U` 的一行写成：
+
+```math
+u_{r,a,k},
+\qquad
+a\in\{0,1\},
+\quad k\in\mathbb Z_3.
+```
+
+`UQ` flat 当且仅当每个 channel 的 length-three Fourier output 具有常模。利用 character orthogonality，这等价于：
+
+```math
+\sum_k|u_{r,a,k}|^2=1/2,
+```
+
+以及唯一独立的 nonzero cyclic autocorrelation：
+
+```math
+\boxed{
+\sum_k u_{r,a,k}\overline{u_{r,a,k+1}}=0.
+}
+```
+
+令 transformed mode row：
+
+```math
+\widetilde u_{r,\cdot,k}=u_{r,\cdot,k}T_k.
+```
+
+`UDQ` flat 等价于对 `tilde u` 重复同一组 energy 与 autocorrelation equations。
+
+再加：
+
+```math
+\sum_{a,k}u_{r,a,k}\overline{u_{s,a,k}}=\delta_{rs},
+```
+
+以及 pair condition：
+
+```math
+\left|
+\sum_{a,k}u_{r,a,k}\overline{u'_{s,a,k}}
+\right|^2=1/6,
+```
+
+就得到 strict-X double-completion 的 compact polynomial system。
+
+这一步应通过 `FinitePoisson` 和 `WindowRegister` 的 primitive character 复用完成。只在现有库没有 constant-modulus/autocorrelation adapter 时增加薄层 theorem。
+

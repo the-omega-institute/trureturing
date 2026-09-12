@@ -1,0 +1,20 @@
+**35.6 Proposition (Full Haar support and every positive forward tail).** Every nonempty
+relatively open \(V\subseteq H\) has positive Haar measure. Its translates
+cover \(H\); a finite subcover exists by compactness. If \(\mu_H(V)=0\),
+translation invariance would then give \(\mu_H(H)=0\), a contradiction.
+In the compact metric space choose a continuous \(f\) with
+\(0\le f\le1\), supported in \(V\), and positive on a nonempty open set.
+Such a function exists by taking a sufficiently small metric ball with closure
+in \(V\) and a continuous distance cutoff. Its integral \(a\) is positive:
+a smaller nonempty open set has \(f\) bounded below by a positive constant.
+By 35.5, for all sufficiently large \(M\), uniformly in \(x\),
+\[
+\frac1M\#\{1\le n\le M:x+n\alpha\in V\}
+\ge\frac1M\sum_{n=1}^M f(x+n\alpha)>a/2>0.
+\]
+Thus the positive orbit of every \(x\in H\) meets every such \(V\), with
+positive lower visit density. Starting instead at \(x+M_0\alpha\), for
+any prescribed nonnegative integer \(M_0\), proves the same assertion for
+every forward tail. All positive forward orbits and their tails are dense;
+in particular \(H\) is also the closure of the positive orbit of 0.
+

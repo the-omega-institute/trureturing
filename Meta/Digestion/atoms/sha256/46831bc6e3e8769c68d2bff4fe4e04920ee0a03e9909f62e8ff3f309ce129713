@@ -1,0 +1,24 @@
+**30.61 命题及证明（有限边界与无限范围）。** For \(N=1\), the formulas give
+\(L_1=1,\sigma_1=3/8,\delta_{\rm old}(1)=1/6,H_1=7\), so the full construction is valid.
+No \(K_N\) or coercivity formula here is defined at \(N=0\): the separate old value
+\(D_0=1\) admits the exact interval \([1,1]\). Complex coefficients were allowed before
+real reduction, and the grid includes negative, zero and boundary coordinates.
+No assumptions \(b\ne0,J\ge N\), or truncation at a common multiple occur.
+
+The actual finite \(f_k\) are independent and \(D_N>0\). If
+\(\alpha\chi+\sum b_kh_k=0\) and \(\alpha\ne0\), it would put \(\chi\) in the finite
+span, contradicting positive distance; if \(\alpha=0\), independence gives every \(b_k=0\).
+Thus the actual Gram \(A_N\) is positive definite. Nevertheless
+\(A_N-D_NE_{00}\) is positive semidefinite and singular by 30.23–30.25.
+This special independence does not add a hypothesis to the general, possibly dependent complex
+Gram theorem. Its range condition, pseudoinverse and singular/zero cases remain as proved there.
+Finite coercivity does not prove uniform coercivity in \(N\), closed infinite synthesis range,
+or an \(\ell^2\) minimizing coefficient vector. The infinite interval
+\([0,\inf_ND_N]\), compression equivalences, closure distance and the three distinct
+attainment questions remain those of 30.32–30.35. With \(c=\|f_1\|^2\),
+\[
+0\le\lambda_{\min}(A_N)\le\langle e_N,A_Ne_N\rangle=c/N^3\longrightarrow0
+\]
+is unconditional even though each finite \(A_N\) is positive definite. This ordinary
+spectral limit does not determine the distance limit.
+

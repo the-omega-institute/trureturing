@@ -1,0 +1,17 @@
+**证明（总表达与读数）。** 命题 3 保证 $X\boxtimes X$ 对全部平衡输入有定义且平衡，定义 13 的 $F_{L_{=}}$ 只改选择，故该两叶项总定义。定义 6 为两个输入叶使用不同的档案标签，即使两叶代入同一个 $X$，仍生成全部有序父对。来源树构造的标签互斥及 $\operatorname{pair}$ 的单射性给出
+\[
+\rho(p_{ef})\in L_{=}
+\quad\Longleftrightarrow\quad
+\exists j\in\mathbb N:\ \rho(e)=\rho(f)=\ell_j.
+\]
+由定义 3、6，筛选后的读数因此为
+\[
+\sum_{j\in\mathbb N}
+\sum_{\substack{e\in A_X\\\rho(e)=\ell_j}}
+\sum_{\substack{f\in A_X\\\rho(f)=\ell_j}}
+\sigma(e)\sigma(f)
+=\sum_{j\in\mathbb N}
+\left(\sum_{\substack{e\in A_X\\\rho(e)=\ell_j}}\sigma(e)\right)^2.
+\]
+$A_X$ 有限，故非空内层求和只涉及有限多个 $j$，各分配等式都是有限和等式。属于同一叶来源而出现标识不同的父事件也进入该求和，没有使用身份对角筛选。
+

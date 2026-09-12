@@ -27,13 +27,16 @@ run_cmd do
     analysis_output $analysis:str ascii_output $ascii:str))
 
 /-- info: complete analysis seal and output noninterference passed -/
-#guard_msgs in
+#guard_msgs (info, error) in
 run_cmd do
   let contents ← liftIO <| IO.FS.readFile (← fixturePath "seal-analysis.json")
   let artifact ← match Json.parse contents with
     | .ok value => pure value
     | .error message => throwError message
   let root := (← getEnv).header.mainModule
+  let forged := Json.mkObj ((artifact.getObj?.toOption.get!.toArray.map fun (k, v) =>
+    (k, if k == "system_catalog_irredundant" then toJson false else v)).toList)
+  unless (validateAnalysisInventory root forged).toOption.isNone do throwError "system verdict branch"
   match validateAnalysisKeySet root `system "root" #["schema", "root_id", "seal_scope",
       "registration_modules", "system_catalog_irredundant",
       "kernel_address_coincidence_classes", "catalogs"] artifact with
@@ -53,7 +56,7 @@ run_cmd do
   let ascii ← liftIO <| IO.FS.readFile (← fixturePath "seal-analysis.txt")
   unless ascii.startsWith "CATALOG " do throwError "ASCII inventory"
   let sealArtifact ← liftIO <| IO.FS.readFile (← fixturePath "seal-catalog.json")
-  unless sealArtifact == serializeSealArtifact (SealRecords.forRoot (← getEnv) root) do
+  unless sealArtifact == (← liftTermElabM <| serializeSealArtifact (SealRecords.forRoot (← getEnv) root)) do
     throwError "seal serializer changed"
   logInfo "complete analysis seal and output noninterference passed"
 

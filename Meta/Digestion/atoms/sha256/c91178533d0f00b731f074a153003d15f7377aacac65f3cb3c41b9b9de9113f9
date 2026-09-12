@@ -1,0 +1,28 @@
+### 完整矩阵陈述
+
+令 `d>0`，`C={P_i}` 和 `D={Q_j}` 是两个 complete orthogonal rank-one contexts，满足：
+
+```math
+\operatorname{Tr}(P_iQ_j)=1/d.
+```
+
+取复系数 `a_i,b_j`，满足 `sum a_i=sum b_j=0`，并令：
+
+```math
+A=\sum_i a_iP_i,\qquad B=\sum_jb_jQ_j,\qquad S=A+B.
+```
+
+如果：
+
+```math
+SS^\dagger=I,\qquad S^3=I,
+```
+
+则：
+
+```math
+\boxed{(\forall i,\ a_i=0)\quad\lor\quad(\forall j,\ b_j=0).}
+```
+
+因此 `S` 整体属于其中一个对角代数。结论适用于实际矩阵与实际 rank-one contexts，不把核心矩阵关系隐藏为一个未证明的 scalar hypothesis。
+

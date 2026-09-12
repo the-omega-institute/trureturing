@@ -1,0 +1,50 @@
+**定理 84（联合剖面、任意区域与三种权重）。** 定义 1 的 \(\Xi\) 及[《情境时空算术》定义 26](CONTEXTUAL_SPACETIME_ARITHMETIC.md)的 \(\Gamma_t\) 满足
+\[
+\Xi^*(\operatorname{Enc}(X))=\operatorname{Enc}(\Xi(X)),\qquad
+\Gamma_t^*(\operatorname{Enc}(X))=\operatorname{Enc}(\Gamma_t(X)).
+\tag{Z-PROFILE}
+\]
+这里实际摘要域是 \(\mathcal D_{ts}=\Xi[\mathcal B]\) 的码像。定义
+\[
+\alpha_t(e)=(x(e),\sigma(e),\rho(e),t(e)),\quad
+U_t^X(e)=\{\alpha_t(d):d\in\Omega_X, e\preceq d\},\quad
+b_X(e)=\mathbf1_{A_X}(e),
+\]
+\[
+\Gamma_t(X)(a,b,U)=\sum_{\substack{e\in\Omega_X\,:\ \alpha_t(e)=a\\b_X(e)=b, U_t^X(e)=U}}\sigma(e).
+\]
+于是 \(q(X)=\sum_{a,U}\Gamma_t(X)(a,1,U)\)。每个 \(U\) 包含自身属性，目标遍历整个当前区域；\(a\) 已含符号，非零格的系数已带此符号。
+
+对原第 25 节的完整 TS 签名以及原定义 26 的完整含时因果签名，严格观察核分别满足
+\[
+(\approx_{\rm ts})^*=\ker\Xi^*,\qquad
+(\approx_{\Sigma_{{\rm cau},t}})^*=
+\ker\bigl((\Gamma_t,m,M)^*\bigr).
+\]
+这里每个核只相对于该原签名的全部有限严格上下文，未把两个签名合并。
+
+对 \(\Xi=(W,Z,m,M,s)\)，并行与合法时间复合将 \(W,Z\) 相加并取档案端点的并集端点、当前最高时刻的最大值；补集取 \((W,W-Z,m,M,s)\)。乘积更新为
+\[
+\Xi(X\boxtimes Y)=(W_X\odot W_Y,Z_X\odot Z_Y,
+\min(m_X,m_Y),\max(M_X,M_Y,g),g),
+\quad
+ g=\begin{cases}\max(s_X,s_Y)+1,&\Omega_X,\Omega_Y\ne\varnothing,\\-\infty,&\text{否则},\end{cases}
+\]
+其中 \(\odot\) 在联合单元对上用时间 \(\max+1\)、位置加法推送。任意空间集、时间集、来源树集、因果目标属性集及属性对集均可作为其原有类型的集合参数运输。
+
+**证明。** 按事件分组的有限和与双射重索引交换，得到 (Z-PROFILE)。\(\Xi\) 的更新来自定理 83 的三个不交档案部分。\(\Gamma_t\) 的精确推送如下：并行为逐格相加；补集为 \((a,b,U)\mapsto(a,1-b,U)\)；空间、时间、来源筛选分别把 \(b\) 乘相应属性的指示函数；因果筛选把 \(b\) 乘 \(\mathbf1_{U\cap Q\ne\varnothing}\)。时间平移 \(k\) 同时将 \(a,U\) 的每个时刻平移。合法时间复合把左格的 \(U\) 换成 \(U\cup\alpha_t[\Omega_Y]\)，右格保持，再相加。置
+\[
+a\diamond_ta'=(p+p',\epsilon\epsilon',\operatorname{pair}(r,r'),\max(n,n')+1)
+\]
+时，乘积把格对推至 \((a\diamond_ta',bb',\{a\diamond_ta'\})\)，系数相乘。同格汇入时相加；已经带符号的系数不再乘一次 \(\epsilon\)。新当前点无后继新点，解释了此处的单元素目标集。全档案端点仍另列于摘要，不能只从当前剖面恢复。各推送逐格由事件定义给出，故在码侧也交换。对于原签名没有列作原语的区域或属性对操作，只运输该已定义操作，不据此扩大原观察语言。
+
+原命题 40、49 分别给两项精确核；定理 81 使其每个上下文观察和所有域测试双向比较，编码单射又使摘要相等双向比较，故得到上述两个码侧核等式。
+
+在正槽域上，原始表、规范表和读数另有准确式
+\[
+(r^T)^*(\operatorname{Enc}(X),\operatorname{Enc}(T))=\operatorname{Enc}(r_X^T),\quad
+\nu^*(\operatorname{Enc}(r))=\operatorname{Enc}(\nu(r)),\quad
+D^*(\operatorname{Enc}(r))=\operatorname{Enc}\left(\prod_p p^{\sum_jG_jr(p,j)}\right).
+\]
+定理 5 的权重依次是 \(1,G_j,G_j\log p\)，编码不改变它们。正槽域亦不因此对补集或丰富乘积封闭：同槽平衡正负对只选正点，补集就读负电荷；将 \(\lambda(2,0)\) 的这种表示与自身相乘，新选正点位于 \((4,0,0)\)，不是素数槽。引文为[《情境时空算术》定义 22–26、命题 39–40、48–49](CONTEXTUAL_SPACETIME_ARITHMETIC.md)及定理 5、25–28。证毕。
+

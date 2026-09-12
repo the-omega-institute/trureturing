@@ -97,10 +97,17 @@ def assess (index : Index) (head : String) (key : StatementKey)
       (← mkAppM ``Arena.Nondegenerate #[arena])
     let enumerations ← matching index ``Arena.StateEnumeration
       (← mkAppM ``Arena.StateEnumeration #[arena])
-    if (finiteSealInScope? env index.modules key.theoremName
-        entry.canonicalObjectArenaName).isSome then
+    if let some (record, occurrence) := finiteSealInScope? env index.modules key.theoremName
+        entry.canonicalObjectArenaName then
       if let (some proof, some enumeration) := (nondegenerate[0]?, enumerations[0]?) then
-        dispositions := dispositions.push <| .finiteOccurrence {
+        if let .trivial certificate := occurrence.certificate then
+          dispositions := dispositions.push <| .trivialInCatalog {
+            root := record.catalog.rootId, canonicalArena := entry.canonicalObjectArenaName,
+            «catalog» := record.catalog.catalogName, index := occurrence.index,
+            registration := entry.unitName, «realization» := entry.realizationName,
+            catalogSeal := record.verdict.name, trivialityCertificate := certificate,
+            context := .finite proof enumeration }
+        else dispositions := dispositions.push <| .finiteOccurrence {
           canonicalArena := entry.canonicalObjectArenaName
           registration := entry.unitName
           «realization» := entry.realizationName
@@ -126,6 +133,21 @@ def assess (index : Index) (head : String) (key : StatementKey)
         canonicalArena := provenance.canonicalArena, registration := name
         «realization» := provenance.realizationConst
         strictnessCertificate := proof, witnessCertificate := witness }
+    let triviality ← matching index ``StructuralCatalog.TrivialInCatalog
+      (← mkAppM ``StructuralCatalog.TrivialInCatalog #[args[3]!, args[4]!])
+    let seals ← matching index ``StructuralCatalogSeal (← mkAppM ``StructuralCatalogSeal #[args[3]!])
+    if let (some proof, some sealName) := (triviality[0]?, seals[0]?) then
+      let indexType ← mkAppM ``StructuralCatalog.Index #[args[3]!]
+      let fintype ← mkAppM ``StructuralCatalog.indexFintype #[args[3]!]
+      let size : Nat ← reduceEval (← mkAppOptM ``Fintype.card #[some indexType, some fintype])
+      let list ← structuralIndexList key indexType fintype
+      for position in [:size] do
+        if ← isDefEq args[4]! (← mkAppM ``List.get #[list, ← ProjectionProof.fin position size]) then
+          dispositions := dispositions.push <| .trivialInCatalog {
+            root := owningModule env sealName, canonicalArena := provenance.canonicalArena,
+            «catalog» := args[3]!.constName!, index := position, registration := name,
+            «realization» := provenance.realizationConst, catalogSeal := sealName,
+            trivialityCertificate := proof, context := .structural }
   for evidenceHead in [``BoundedTruncationFamily, ``UnreachableElaborationEvidence] do
     for name in index.named.getD evidenceHead #[] do
       let value ← mkConstWithFreshMVarLevels name
@@ -179,7 +201,16 @@ def assess (index : Index) (head : String) (key : StatementKey)
         if let .certified row := row then dispositions := dispositions.push row
   -- Validate every discovered disposition, including alternatives to the chosen row.
   for value in dispositions do discard <| certified index head key value
-  if let some value := dispositions[0]? then return .certified value
+  if let some value := dispositions[0]? then
+    if let .trivialInCatalog payload := value then
+      if payload.context == .structural then
+        let args := (← inferType (← mkConstWithFreshMVarLevels payload.registration)).getAppArgs
+        logZeroCapture {
+          root := payload.root, theoremName := key.theoremName, arena := payload.canonicalArena,
+          «catalog» := payload.catalog, index := payload.index, «realization» := payload.realization,
+          trivialityCertificate := payload.trivialityCertificate,
+          context := .structural payload.registration payload.catalogSeal } args[3]! args[4]!
+    return .certified value
   return .observed {
     owningModule := owner
     root := index.root

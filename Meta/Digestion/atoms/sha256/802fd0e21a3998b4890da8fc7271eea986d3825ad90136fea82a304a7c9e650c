@@ -1,0 +1,26 @@
+**定理 378.5。** 对每个指定拓扑空间 $(X,\tau_X)$，定义
+$$
+\tau_X^*=\{\operatorname{Enc}[U]:U\in\tau_X\}.
+$$
+则 $\operatorname{enc}_X:(X,\tau_X)\to(X^*,\tau_X^*)$ 是同胚。对函数 $f:D\to Y$，域 $D$ 取已指定的拓扑或相应子空间拓扑，对每个 $O\subseteq Y$ 及 $S\subseteq X$ 有
+$$
+(f^*)^{-1}(\operatorname{Enc}[O])=\operatorname{Enc}[f^{-1}(O)],\qquad
+\overline{\operatorname{Enc}[S]}^{\tau_X^*}=\operatorname{Enc}[\overline S^{\tau_X}].
+$$
+因此连续性、收敛与闭包均保持并反映。$\chi_{X,Y}$ 是运输拓扑的乘积与乘积拓扑的运输之间的同胚，且
+$$
+\operatorname{El}(\operatorname{Enc}(\tau_X))=\operatorname{Enc}[\tau_X],\qquad
+\tau_X^*=\{\operatorname{El}(c):c\in\operatorname{Enc}[\tau_X]\}.
+$$
+
+**证明。** 双射的直接像保持空集、全集、任意并及有限交；交式的反向包含由单射性使同一个像点的原像相等。因此 $\tau_X^*$ 满足拓扑公理，开集的两向对应给同胚。任意 $c\in D^*$ 唯一写为 $\operatorname{Enc}(x)$；$f^*(c)\in\operatorname{Enc}[O]$ 当且仅当 $f(x)\in O$，于是得原像式。开集判据立即给连续性的两个方向。
+
+点 $\operatorname{Enc}(x)$ 的每个开邻域唯一为某个含 $x$ 的开集 $U$ 的像，此邻域遇到 $\operatorname{Enc}[S]$ 当且仅当 $U$ 遇到 $S$。闭包的邻域判据给显示闭包式。对同一指标集的序列或网，最终处于邻域的条件也在这两方向对应，故收敛保持并反映。
+
+乘积同胚 $\operatorname{enc}_X\times\operatorname{enc}_Y$ 将基本开矩形 $U\times V$ 送到 $\operatorname{Enc}[U]\times\operatorname{Enc}[V]$。结合
+$$
+\chi_{X,Y}=\operatorname{enc}_{X\times Y}\circ
+(\operatorname{enc}_X\times\operatorname{enc}_Y)^{-1}
+$$
+得所述乘积比较同胚。最后将第 72 条的成员像式先用于拓扑这个集合，得到开集码族，再逐个用于开集码，得到外部开集族。因而单个拓扑码、开集的码族、外部拓扑分别按显示的两次成员展开解释。证毕。
+

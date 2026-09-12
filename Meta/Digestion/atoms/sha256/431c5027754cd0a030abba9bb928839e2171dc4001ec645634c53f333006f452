@@ -1,0 +1,43 @@
+**定义 334.1。** 输入对均取第 257 条的 $T_2$。独立给定有限求值的联合域
+$$
+D_{\rm fin}=\{T_2(u,a)\in\mathsf V_{\rm reg}\times\mathsf{FinCoef}:
+\operatorname{supp}(u)\subseteq\operatorname{dom}(a)\},
+$$
+$$
+E_{\rm fin}:D_{\rm fin}\to\mathsf D_{\rm rat},\qquad
+E_{\rm fin}(u,a)=\sum_{n\in\operatorname{supp}(u)}u_na(n).
+$$
+其数字联合域独立写为
+$$
+D_{\rm fin}^{d}=\{T_2(s,c)\in\mathsf{Rec}_{\rm reg}\times\mathsf{FinProbeRec}:
+\operatorname{dom}(s)\subseteq\operatorname{dom}(c)\}.
+$$
+对域内 $(s,c)$ 和 $k\in\operatorname{dom}(s)\subseteq\mathsf{Pr}_Z$，唯一写
+$$
+c(k)=T_2(\zeta(a_k),\zeta(b_k)),\qquad
+z_k=\operatorname{ival}(s(k)),\qquad 0\le a_k<b_k,
+$$
+并置
+$$
+B_{s,c}=\prod_{k\in\operatorname{dom}(s)}b_k,\qquad
+A_{s,c}=\sum_{k\in\operatorname{dom}(s)}z_ka_k(B_{s,c}/b_k),
+$$
+$$
+r_{s,c}=A_{s,c}-B_{s,c}\lfloor A_{s,c}/B_{s,c}\rfloor,\qquad
+d_{s,c}=\gcd(r_{s,c},B_{s,c}),
+$$
+$$
+E_{\rm fin}^{d}(s,c)
+=T_2(\zeta(r_{s,c}/d_{s,c}),\zeta(B_{s,c}/d_{s,c})).
+$$
+空积取一、空和取零。总求值定义为
+$$
+E:\mathsf V_{\rm reg}\times\Theta_{\rm rat}\to\mathsf D_{\rm rat},\quad
+E(u,\theta)=\chi^{\rm rat}_\theta(u),
+$$
+$$
+E_d:\mathsf{Rec}_{\rm reg}\times\mathsf{ProbeRec}\to\mathsf{RatPhaseFld},\quad
+E_d(s,t)=\operatorname{penc}\bigl(E(\operatorname{unrec}_{\rm reg}(s),
+\operatorname{unprec}_{\rm rat}(t))\bigr).
+$$
+

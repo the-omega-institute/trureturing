@@ -1,0 +1,31 @@
+**命题 362.3。** 本层有限自然字段、整数内容、有理读数及有理相位沿第 332–336 条的旧双射精确表示。对任意固定行 $r\in\mathbb Q^\omega$，在恰好 $\mathsf{Rec}_A^{\rm cap}$ 上定义
+$$
+s\longmapsto\operatorname{qenc}(L_r(b_{\rm rec,A}^{-1}(s)))\in\mathsf{RatFld},\qquad
+s\longmapsto\operatorname{penc}\bigl(\chi^{\rm rat}_{\rho(r)}(b_{\rm rec,A}^{-1}(s))\bigr)
+\in\mathsf{RatPhaseFld}.
+$$
+分别用 $\operatorname{qdec}$ 及 $j_{\rm rat}\circ\operatorname{pdec}$ 解码输出，恰还原 $L_r$ 的有理值及 $\chi_r^{\rm cap}$ 的圆周值；用总数字限制逆替代记录逆得到相同结论。有理行本身及其缩放 $r/m$ 保留为完整集合对象，不能用 $\rho(r)$ 代替其逆表示。
+
+**证明。** 第 332.2 条在全部独立合法字段上给
+$$
+\operatorname{qdec}\circ\operatorname{qenc}=\operatorname{id}_{\mathbb Q},\qquad
+\operatorname{qenc}\circ\operatorname{qdec}=\operatorname{id}_{\mathsf{RatFld}},
+$$
+$$
+\operatorname{pdec}\circ\operatorname{penc}=\operatorname{id}_{\mathsf D_{\rm rat}},\qquad
+\operatorname{penc}\circ\operatorname{pdec}=\operatorname{id}_{\mathsf{RatPhaseFld}}.
+$$
+具体地，既约 $a/b$ 使用 $b>0$ 的字段 $T_2(\operatorname{scode}(a),\zeta(b))$；有理相位使用唯一 $0\le a<b$ 的既约代表字段 $T_2(\zeta(a),\zeta(b))$。两种零字段均为 $T_2(0_Z,\zeta(1))$，故空状态的成功零值仍有正确类型。将这些恒等式及记录双逆代入两显示函数，便得各自求值交换式；这不宣称读数本身单射。
+
+每个非零状态字段仍为 $\operatorname{scode}(u_n)$，绝对值和有限自然标签使用 $\zeta$。素数标签为 $\lambda_{\rm reg}(n)=\zeta(p_n)$，逆为 $\operatorname{idx}_{\rm reg}$；$\operatorname{val}(\zeta(p_n))=p_n$ 不是指标 $n$。对相位总行 $\theta=\rho(r)$，第 333.2 条的 $\operatorname{prec}_{\rm rat}$ 与 $\operatorname{unprec}_{\rm rat}$ 在 $\Theta_{\rm rat}$ 与 $\mathsf{ProbeRec}$ 上双向互逆。限制到含状态支撑的有限 $F$ 后，$\operatorname{fprec}_{\rm rat}$ 与 $\operatorname{unfprec}_{\rm rat}$ 在其有限域上也互逆，并保留零系数边。
+
+第 334.2 条的有限求值交换式在当前容量域的精确限制为
+$$
+\{T_2(u,a)\in D_{\rm fin}:u\in B_A^{\rm cap}\}
+\longleftrightarrow
+\{T_2(s,c)\in D_{\rm fin}^{d}:s\in\mathsf{Rec}_A^{\rm cap}\}.
+$$
+正向取 $\operatorname{rec}_{\rm reg}\times\operatorname{fprec}_{\rm rat}$，反向取两者的上述逆。原侧守卫是 $\operatorname{supp}(u)\subseteq\operatorname{dom}(a)$，数字侧守卫是 $\operatorname{dom}(s)\subseteq\operatorname{dom}(c)$，标签双射使二者等价。这保留有限联合域的全部输入条件，域外不增加值；总探针时 $E_d(s,t)=E_{\rm fin}^{d}(s,t|_{\operatorname{dom}(s)})$，且 $t$ 仍是完整总函数而非有限采样本身。
+
+黄金坐标 $[\phi u_n]$ 的有限字段另为 $\operatorname{genc}_\phi([\phi u_n])=T_2(\zeta(1),\operatorname{qenc}(u_n))$，解码逆是第 335.2 条的 $\operatorname{gdec}_\phi$ 在其精确域上的限制；它不与有理相位字段混同。任意行的全部有理系数可作为 $\operatorname{Enc}(r)$ 保留，逆为 $\operatorname{Dec}$ 在这些行码的像上；每个系数的有限有理字段不使整条无限行成为有限表。命题 355.3 的两行有相同 $\rho$ 而有不同除行结果，因而它同时证明在缩放接口处必须保留实际行。证毕。
+

@@ -1,0 +1,92 @@
+## 32. 近饱和的定量刚性：理论推导
+
+本节使用 normalized Hilbert-Schmidt norm：
+
+```math
+\|Z\|_2^2=\tau(Z^\dagger Z),\qquad\tau=\operatorname{Tr}/d.
+```
+
+设 `S` 是 trace-zero order-three unitary，`C,D` 为两个互补 contexts。令：
+
+```math
+A=\mathsf E_C(S),\quad B=\mathsf E_D(S),\quad R=S-A-B,
+```
+
+```math
+a=\|A\|_2^2,\quad b=\|B\|_2^2,\quad r=\|R\|_2^2.
+```
+
+正交投影性质给出 `a+b+r=1`。pinching 在 operator norm 下收缩，所以 `||A||op,||B||op<=1`，进而 `||R||op<=3`。
+
+从投影后的 `SS^dagger=I` 得到：
+
+```math
+H:=AA^\dagger-aI
+=rI-\mathsf E_C(BR^\dagger+RB^\dagger+RR^\dagger).
+```
+
+因为 `R` 与两个 context 正交，mixed trace 为零。centered Hilbert-Schmidt contraction 给出：
+
+```math
+\|H\|_2\le2\sqrt r+\|RR^\dagger-rI\|_2\le5\sqrt r.
+```
+
+从 `S^2=S^dagger` 得到：
+
+```math
+A^2+\mu I+F=A^\dagger,\qquad
+\mu=\tau(B^2),\qquad F=\mathsf E_C(BR+RB+R^2),
+```
+
+且 `||F||2<=5 sqrt(r)`。`A` normal，所以：
+
+```math
+\|A^2\|_2^2=a^2+\|H\|_2^2.
+```
+
+zero trace 还给出：
+
+```math
+\|A^\dagger-\mu I\|_2^2=a+|\mu|^2\le a+b^2\le1.
+```
+
+展开平方并用 Cauchy：
+
+```math
+\begin{aligned}
+a(1-a)+|\mu|^2
+&=\|H\|_2^2-\|F\|_2^2
+ +2\Re\langle A^\dagger-\mu I,F\rangle\\
+&\le25r+10\sqrt r.
+\end{aligned}
+```
+
+因此得到可量化的非平衡约束：
+
+```math
+\boxed{a(1-a)\le25r+10\sqrt r.}
+```
+
+六维中 `alpha_S(C)=2a`、`alpha_S(D)=2b`。若两者均至少 `2499/2500`，令 `epsilon=1/2500`，则：
+
+```math
+r\le\epsilon,\qquad
+a(1-a)\ge\frac{1-\epsilon^2}{4},
+```
+
+但：
+
+```math
+25\epsilon+10\sqrt\epsilon=\frac{21}{100}
+<\frac{6249999}{25000000}
+=\frac{1-\epsilon^2}{4}.
+```
+
+产生矛盾。故对于这类 `S,C,D`：
+
+```math
+\boxed{\min\{\alpha_S(C),\alpha_S(D)\}<\frac{2499}{2500}.}
+```
+
+这条定量结果目前是完整的数学推导；未加入本轮 Lean 公共 API。JSON 证书只审计最后的有理数比较，不声称已经核验全部 operator-norm 估计。若将来证明某一 strict-X completion branch 的 context affinity 至少 `2499/2500`，这一稳健版本就足够排除该 branch 中的 MUB pair。当前没有证明该 branch 下界。
+

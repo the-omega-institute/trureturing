@@ -1,0 +1,44 @@
+**定义 306。** 沿用第 19、236 条固定的黄金比 $\phi=(1+\sqrt5)/2$、第 255 条的通常有符号整数值 $\mathbb Z_o$，以 $(p_n)_{n\in\omega}$ 按递增次序枚举第 3 条的普通正素数集 $\operatorname{Pr}$。定义
+$$
+\mathsf E_{\rm reg}=\mathbb Z_o^\omega,\qquad
+\mathsf V_{\rm reg}=\{u:\omega\to\mathbb Z_o:\operatorname{supp}(u)=\{n:u_n\ne0\}\text{ 有限}\},
+$$
+$$
+\mathsf V_{{\rm reg},\mathbb Q}
+=\{u:\omega\to\mathbb Q:\{n:u_n\ne0\}\text{ 有限}\}.
+$$
+它们的元素都是总函数；加法、负元及零逐点定义。置 $\varepsilon_n(j)=1$ 当 $j=n$，否则为零。写 $u=\sum_nu_n\varepsilon_n$ 时，只对有限个非零项求和。总函数的图与只列非零值的有限记录分属不同载体。
+
+沿用第 297 条的加法圆周 $\mathbb T=\mathbb R/\mathbb Z$ 及其通常商拓扑，令
+$$
+\mathsf X_{\rm reg}=\mathbb T^\omega
+$$
+取完整可数乘积及乘积拓扑，不施加有限支撑条件。对任意有限 $I\subseteq\omega$，包括空集，定义限制和零扩展
+$$
+\operatorname{res}^{\mathbb Z}_I:\mathsf E_{\rm reg}\to\mathbb Z_o^I,\quad u\mapsto u|_I,\qquad
+\operatorname{res}^{\mathbb T}_I:\mathsf X_{\rm reg}\to\mathbb T^I,\quad x\mapsto x|_I,
+$$
+$$
+\mathsf V_I=\{u\in\mathsf V_{\rm reg}:\operatorname{supp}(u)\subseteq I\},\qquad
+\operatorname{zext}^{\mathbb Z}_I:\mathbb Z_o^I\to\mathsf V_I,\quad
+\operatorname{zext}^{\mathbb Z}_I(w)_n=
+\begin{cases}w_n,&n\in I,\\0,&n\notin I,\end{cases}
+$$
+$$
+\operatorname{zext}^{\mathbb T}_I:\mathbb T^I\to\mathsf X_{\rm reg},\quad
+\operatorname{zext}^{\mathbb T}_I(y)_n=
+\begin{cases}y_n,&n\in I,\\0_{\mathbb T},&n\notin I.\end{cases}
+$$
+$\mathbb Z_o^I$ 与 $\mathsf V_I$ 仅经所列限制、零扩展互相识别；$\operatorname{res}^{\mathbb Z}_I$ 用于状态时，其定义域限制到 $\mathsf V_{\rm reg}$。定义相位映射
+$$
+\Psi_{\rm reg}:\mathsf V_{\rm reg}\to\mathsf X_{\rm reg},\quad
+\Psi_{\rm reg}(u)_n=[\phi u_n],\qquad
+\Psi_I:\mathbb Z_o^I\to\mathbb T^I,\quad
+\Psi_I(w)_i=[\phi w_i].
+$$
+在 $\mathsf V_{\rm reg}$ 上分别定义
+$$
+\tau_\Psi=\{\Psi_{\rm reg}^{-1}(O):O\subseteq\mathsf X_{\rm reg}\text{ 开}\},
+$$
+$\tau_{\rm coord}$ 为从离散整数群的乘积 $\prod_{n\in\omega}(\mathbb Z_o,\text{离散})$ 限制所得的子空间拓扑，$\tau_{\rm disc}$ 为状态集的离散拓扑。空指标积为单点群，唯一元素为空函数；未另作说明的群商只取代数意义。
+

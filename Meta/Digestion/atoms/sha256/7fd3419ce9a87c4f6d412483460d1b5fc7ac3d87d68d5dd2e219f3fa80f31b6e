@@ -1,0 +1,8 @@
+**定理 5（未加权电荷与估值）。** 对 \(X\in\mathcal B_\lambda^+\)，
+\[
+q(X)=\sum_{p,j}r_X(p,j),\qquad
+\sum_p v_p(N_X)=\sum_{p,j}G_jr_X(p,j),\qquad
+\log N_X=\sum_{p,j}G_jr_X(p,j)\log p.
+\]
+特别地，\(q\) 是净选择符号的未加权和。
+

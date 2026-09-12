@@ -1,0 +1,6 @@
+**定义 44（带素数标签的规模与因数比）。** 对正整数 \(n\)，记其正因数和为 \(\sigma(n)=\sum_{d\mid n}d\)，置 \(R(n)=\sigma(n)/n\)。对成对不同的素数 \(p_1,\ldots,p_k\) 及非负指数 \(a_1,\ldots,a_k\)，记
+\[
+n(\boldsymbol p,\boldsymbol a)=\prod_{i=1}^k p_i^{a_i}.
+\]
+此处 \(\sigma(n)\) 是整数的因数和，定义 1 的 \(\sigma(e)\) 是事件符号，两者由自变量的类型区分。
+

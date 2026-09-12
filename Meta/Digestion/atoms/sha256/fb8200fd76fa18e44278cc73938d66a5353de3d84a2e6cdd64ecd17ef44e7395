@@ -1,0 +1,24 @@
+**30.55 定理及证明（实最优系数、有限盒与二次网格误差）。** In 30.55–30.71 put
+\(\delta=\delta_{\rm old}(N)\). Splitting at \(x=1/k\) gives
+\(\|f_k\|^2\le1/k+1/k=2/k\). Thus, with \(U_N=2\sum_{k=1}^N1/k\),
+triangle and Cauchy–Schwarz inequalities give
+\[
+\|Va\|^2\le\left(\sum_k|a_k|\|f_k\|\right)^2\le U_N\|a\|_2^2.
+\]
+The range of \(V\) is closed. Explicitly, if \(Va_j\) converges, coercivity makes
+\(a_j\) a finite-dimensional Cauchy sequence, whose limit maps to the original limit.
+Let \(p_N\) be the orthogonal projection of \(\chi\) onto this range. Independence gives
+a unique \(a^\circ\in\mathbb C^N\) with \(Va^\circ=p_N\). Since the functions are real,
+for real \(b,c\) one has \(R_N(b+ic)=R_N(b)+\|Vc\|^2\).
+Minimality and coercivity force \(\operatorname{Im}a^\circ=0\); this does not assert positivity
+or rationality of the optimizer. Orthogonality gives, for every complex \(a\),
+\[
+1=\|p_N\|^2+D_N,\qquad
+\delta\|a^\circ\|_2^2\le\|p_N\|^2\le1,\qquad
+R_N(a)=D_N+\|V(a-a^\circ)\|^2.
+\]
+Set \(H_N=1+\lceil1/\delta\rceil\). The inequality \(\sqrt t<1+t\) for \(t>0\)
+shows \(|a_k^\circ|\le\delta^{-1/2}<H_N\). Hence the explicitly determined closed
+coefficient box \(\mathcal C_N=[-H_N,H_N]^N\) contains the global optimizer, and
+\(R_N(q)-D_N\le U_N\|q-a^\circ\|_2^2\). Its definition requires no knowledge of \(a^\circ\).
+

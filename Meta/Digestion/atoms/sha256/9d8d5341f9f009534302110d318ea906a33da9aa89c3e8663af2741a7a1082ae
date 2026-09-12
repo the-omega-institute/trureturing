@@ -1,0 +1,58 @@
+### Why two conclusions must be maintained together
+
+For every cardinality n, carry the following pair of assertions:
+
+1. Every finite domain V of size n has |Z(V;z)|>=2^(-n).
+2. Every such V whose origin is present and whose vertices avoid an actual
+   geometric mask F_i has a message m in Omega_i with
+   f_i(m)=Z(V\{0};z)/Z(V;z).
+
+The second assertion is needed only for compatible internal nodes. The first
+must quantify over all finite domains, because the proper domains occurring
+in telescoping need not be supplied with any geometric type. The induction is
+strong induction on n, with both assertions for every k<n available together.
+
+At size zero the partition is one, and no internal node with a present origin
+exists. At a nonempty untyped domain, choose any vertex and use the proved grid
+translation to move it to the origin. Translation preserves both cardinality
+and the actual partition. Each present first child in the four-direction root
+formula is strictly smaller and compatible with the existing type-zero mask.
+The induction hypothesis supplies its actual inverse message in Omega_0.
+
+A missing first child contributes exactly one. This conclusion uses
+nonvanishing of its actual proper pre-recentered partition, obtained from the
+first induction hypothesis. No argument from real positivity is used at a
+complex activity. The neutral coordinate c_0(1) lies in Omega_0 and has inverse
+one, so all four factors enter the already proved root denominator bound.
+We obtain a genuine complex D with
+
+\[
+ \operatorname{Re}D\ge\tfrac12,\qquad
+ Z(V;z)=Z(V\{0};z)D.
+\]
+
+The proper-domain modulus bound and |D|>=1/2 prove the first assertion at size n.
+No same-size typed assertion is used in this root argument.
+
+For the second assertion at size n, the geometric theorem gives every present
+child's exact successor type, compatible remaining domain, new origin, and
+strict cardinality decrease. The second induction hypothesis represents these
+child ratios in their corresponding Omega sets. The first induction hypothesis
+again makes every denominator in the ordered elimination legitimate. Missing
+actual children have ratio one and are removed from the product by exact
+finite-set algebra, yielding precisely the valid pruning consumed by the
+analytic map. Invariance gives m_parent in Omega_i, and inverse recovery gives
+
+\[
+ f_i(m_{\rm parent})=(1+z\prod_d\alpha(V_d,0;z))^{-1}.
+\]
+
+The local denominator has real part at least one half. The actual partition
+recursion first proves Z(V;z) nonzero, and only then identifies the displayed
+inverse with the actual parent vacancy. Thus neither target nonvanishing nor
+target representation is smuggled into its own premises.
+
+This completes both induction components at every finite size. It is the
+previously missing source-level connection between the typed analytic theorem
+and an actual finite-grid zero-free endpoint.
+

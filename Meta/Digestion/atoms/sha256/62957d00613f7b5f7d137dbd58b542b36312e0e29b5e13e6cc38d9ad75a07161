@@ -1,0 +1,13 @@
+**定义 QI-D6（准入完成域）。** 若要求任意等价代表替换都保持准入，定义
+
+$$
+\begin{aligned}
+D_A^K(a)&=\{r\in\mathcal R_A(\rho_A(a)):a\cup r\in K\}
+\subseteq J_{I\setminus A},\\
+\Sigma_A^+(a)&=(\rho_A(a),O_A(a),D_A^K(a)),\\
+a\equiv_A^+a'&\iff a\equiv_Aa'\ \text{且}\ D_A^K(a)=D_A^K(a'),\\
+q_A^+&:J_A\twoheadrightarrow Q_A^+=J_A/{\equiv_A^+}.
+\end{aligned}
+\tag{QI-ADMISSION-SIGNATURE}
+$$
+

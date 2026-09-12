@@ -1,0 +1,6 @@
+**证明。** 对集合 $S,T$，全部函数 $S\to T$ 是 $\mathcal P(S\times T)$ 中满足单值、总域及值域条件的子集，故为集合。于是 $\omega^\omega,\mathbb Z_o^\omega,\mathbb T^\omega,\mathbb Q^\omega,\mathbb T^V$ 都是集合；$X_A^{\rm cap}$ 由逐坐标界分离，$B_A^{\rm cap}$ 再以有限支撑条件分离，$\mathcal H$ 由同态等式分离。有限质量有一个自然数上界，反向所列有界部分和的上确界有限，证明 $W_A$ 的等价式及其分离构造。
+
+唯一代表、下取整、整数倍和有限和均给唯一值图，替代因此构造全部总系数行、逼近序列及有限求值图。对于 $\theta\in W_A$，定理 363.3 的绝对 Cauchy 估计及实数完备性给每个 $x$ 唯一的实总和，替代再给 $\operatorname{Ext}_A$。可变域 $D_{\rm ext}$ 是 $\omega^\omega\times\mathbb T^\omega\times\mathbb Z_o^\omega$ 的子集，其唯一值图也由替代给出。各初始拓扑是相应载体幂集的子集，生成族、有限交和任意并均在这些集合内定义。
+
+若 $\theta\notin W_A$，即使某个个别 $x$ 的代表级数收敛，该点也不进入此处 $\operatorname{Ext}_A$ 的声明域；定理 363.3 已否定覆盖整个坐标 $X_A^{\rm cap}$ 的连续延拓。以上构造只定义集合函数，没有提出参数联合连续性。证毕。
+
