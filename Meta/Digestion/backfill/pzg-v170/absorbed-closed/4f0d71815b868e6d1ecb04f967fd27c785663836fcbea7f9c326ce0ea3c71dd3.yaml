@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:4f0d71815b868e6d1ecb04f967fd27c785663836fcbea7f9c326ce0ea3c71dd3
   normalized_sha256: sha256:4f0d71815b868e6d1ecb04f967fd27c785663836fcbea7f9c326ce0ea3c71dd3
 cas_ref: sha256:4f0d71815b868e6d1ecb04f967fd27c785663836fcbea7f9c326ce0ea3c71dd3
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Zeros/ToySpectrum/FourPointPowerDefect.four_point_power_defect_eq
+    target_statement_id: sha256:3d8e2efb47a03aeb43233dceecaf7b3ec461ce349dd1d3fb89ca3e7cf046894f
 receipts:
   unresolved_subitems: []
