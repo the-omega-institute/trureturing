@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:9cbf7601d153608b9e6bf62343738df379cfc01cf1681e88a1f3cd5e2617b9da
   normalized_sha256: sha256:9cbf7601d153608b9e6bf62343738df379cfc01cf1681e88a1f3cd5e2617b9da
 cas_ref: sha256:9cbf7601d153608b9e6bf62343738df379cfc01cf1681e88a1f3cd5e2617b9da
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S0/Computability/SemanticLayerShift.semantic_layer_shift_bijective
+    target_statement_id: sha256:8a4c8c016c25ba842b512d59b5cd3716a00a6083d7a9bfe51aedc1833ba5d4ee
 receipts:
   unresolved_subitems: []
