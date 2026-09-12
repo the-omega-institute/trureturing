@@ -2,8 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Arith/Lattices/FourGridCollinearTriples
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [Mathlib.Data.Fintype.BigOperators, Mathlib.Data.Finset.Powerset,
-     Mathlib.Tactic.LinearCombination, Mathlib.Tactic.Linarith, Mathlib.Tactic.Ring]
+   anchors: [Mathlib.Data.Fintype.BigOperators, Mathlib.Data.Finset.Powerset, Mathlib.Tactic.LinearCombination, Mathlib.Tactic.Linarith, Mathlib.Tactic.Ring]
    utility: none
    digest: Coordinatewise endpoint codes count arithmetic and four-point line candidates. -/
 
@@ -189,49 +188,10 @@ private def orientationMark_reverse {d : Nat} {x z : GridPoint d} (h : x ≠ z) 
   · simp [orientationMark, hlt, not_lt_of_ge hlt.le]
   · simp [orientationMark, hgt, not_lt_of_ge hgt.le]
 
-private noncomputable def apMarkedTriple {d : Nat} (t : OrientedArithmeticProgression d) :
+private noncomputable def markedCollinearTriple {d : Nat} (x y z : GridPoint d)
+    (hxy : x ≠ y) (hxz : x ≠ z) (hyz : y ≠ z) (hbase : Collinear x y z) :
     CollinearTriples d × Bool := by
   classical
-  let x := t.val.1
-  let y := t.val.2.1
-  let z := t.val.2.2
-  have hxz : x ≠ z := t.property.1
-  have hxy : x ≠ y := by
-    intro h
-    apply hxz
-    funext i
-    apply Fin.ext
-    have hi := t.property.2 i
-    change ((x i : Nat) : Int) + ((z i : Nat) : Int) =
-      2 * ((y i : Nat) : Int) at hi
-    rw [h] at hi ⊢
-    omega
-  have hyz : y ≠ z := by
-    intro h
-    apply hxz
-    funext i
-    apply Fin.ext
-    have hi := t.property.2 i
-    change ((x i : Nat) : Int) + ((z i : Nat) : Int) =
-      2 * ((y i : Nat) : Int) at hi
-    rw [h] at hi
-    omega
-  have hbase : Collinear x y z := by
-    intro i j
-    have hi := t.property.2 i
-    have hj := t.property.2 j
-    change ((x i : Nat) : Int) + ((z i : Nat) : Int) =
-      2 * ((y i : Nat) : Int) at hi
-    change ((x j : Nat) : Int) + ((z j : Nat) : Int) =
-      2 * ((y j : Nat) : Int) at hj
-    have hi' : ((z i : Nat) : Int) - ((x i : Nat) : Int) =
-        2 * (((y i : Nat) : Int) - ((x i : Nat) : Int)) := by
-      linarith
-    have hj' : ((z j : Nat) : Int) - ((x j : Nat) : Int) =
-        2 * (((y j : Nat) : Int) - ((x j : Nat) : Int)) := by
-      linarith
-    rw [hi', hj']
-    ring
   refine (⟨{x, y, z}, ?_⟩, orientationMark x z)
   change {x, y, z} ∈
     ((Finset.univ : Finset (GridPoint d)).powersetCard 3).filter IsCollinearTriple
@@ -257,6 +217,44 @@ private noncomputable def apMarkedTriple {d : Nat} (t : OrientedArithmeticProgre
     | linear_combination -hbase j i
     | ring
 
+set_option linter.defProp false in
+private def arithmeticProgressionFacts {d : Nat} (t : OrientedArithmeticProgression d) :
+    t.val.1 ≠ t.val.2.1 ∧ t.val.2.1 ≠ t.val.2.2 ∧
+      Collinear t.val.1 t.val.2.1 t.val.2.2 := by
+  have hxz := t.property.1
+  have hxy : t.val.1 ≠ t.val.2.1 := by
+    intro h
+    apply hxz
+    funext i
+    apply Fin.ext
+    have hi := t.property.2 i
+    rw [h] at hi ⊢
+    omega
+  have hyz : t.val.2.1 ≠ t.val.2.2 := by
+    intro h
+    apply hxz
+    funext i
+    apply Fin.ext
+    have hi := t.property.2 i
+    rw [h] at hi
+    omega
+  refine ⟨hxy, hyz, ?_⟩
+  intro i j
+  have hi := t.property.2 i
+  have hj := t.property.2 j
+  have hi' : ((t.val.2.2 i : Nat) : Int) - ((t.val.1 i : Nat) : Int) =
+      2 * (((t.val.2.1 i : Nat) : Int) - ((t.val.1 i : Nat) : Int)) := by linarith
+  have hj' : ((t.val.2.2 j : Nat) : Int) - ((t.val.1 j : Nat) : Int) =
+      2 * (((t.val.2.1 j : Nat) : Int) - ((t.val.1 j : Nat) : Int)) := by linarith
+  rw [hi', hj']
+  ring
+
+private noncomputable def apMarkedTriple {d : Nat} (t : OrientedArithmeticProgression d) :
+    CollinearTriples d × Bool :=
+  markedCollinearTriple t.val.1 t.val.2.1 t.val.2.2
+    (arithmeticProgressionFacts t).1 t.property.1
+    (arithmeticProgressionFacts t).2.1 (arithmeticProgressionFacts t).2.2
+
 private def extremeInteriorCoordinate (towardSecond : Bool) (x z : Fin 4) : Fin 4 :=
   ⟨(if towardSecond then x.val + 2 * z.val else 2 * x.val + z.val) / 3, by
     split <;> omega⟩
@@ -265,8 +263,14 @@ private def extremeInterior {d : Nat} (towardSecond : Bool) (x z : GridPoint d) 
     GridPoint d :=
   fun i => extremeInteriorCoordinate towardSecond (x i) (z i)
 
-private noncomputable def extremeMarkedTriple {d : Nat}
-    (q : DistinctCoordinatePairs EqualOrExtreme d × Bool) : CollinearTriples d × Bool := by
+private noncomputable def extremeCodeFacts {d : Nat}
+    (q : DistinctCoordinatePairs EqualOrExtreme d × Bool) :
+    let x := q.1.val.val.1
+    let z := q.1.val.val.2
+    let y := extremeInterior q.2 x z
+    {k : Fin d // x k ≠ z k ∧
+      ((x k).val = 0 ∧ (z k).val = 3 ∨ (x k).val = 3 ∧ (z k).val = 0) ∧
+      x k ≠ y k ∧ y k ≠ z k ∧ Collinear x y z} := by
   classical
   let x := q.1.val.val.1
   let z := q.1.val.val.2
@@ -286,16 +290,16 @@ private noncomputable def extremeMarkedTriple {d : Nat}
     · exact False.elim (hk hEq)
     · exact Or.inl hExtreme
     · exact Or.inr hExtreme
-  have hxy : x ≠ y := by
+  have hkxy : x k ≠ y k := by
     intro h
-    have hkval := congrArg (fun p : GridPoint d => (p k).val) h
+    have hkval := congrArg Fin.val h
     change (x k).val = (extremeInteriorCoordinate q.2 (x k) (z k)).val at hkval
     rcases hkextreme with ⟨hx, hz⟩ | ⟨hx, hz⟩ <;>
       cases hq : q.2 <;>
         simp [extremeInteriorCoordinate, hx, hz, hq] at hkval
-  have hyz : y ≠ z := by
+  have hkyz : y k ≠ z k := by
     intro h
-    have hkval := congrArg (fun p : GridPoint d => (p k).val) h
+    have hkval := congrArg Fin.val h
     change (extremeInteriorCoordinate q.2 (x k) (z k)).val = (z k).val at hkval
     rcases hkextreme with ⟨hx, hz⟩ | ⟨hx, hz⟩ <;>
       cases hq : q.2 <;>
@@ -342,30 +346,17 @@ private noncomputable def extremeMarkedTriple {d : Nat}
           3 * (((y j : Nat) : Int) - ((x j : Nat) : Int)) := by
         linarith
       nlinarith only [hi', hj']
-  refine (⟨{x, y, z}, ?_⟩, orientationMark x z)
-  change {x, y, z} ∈
-    ((Finset.univ : Finset (GridPoint d)).powersetCard 3).filter IsCollinearTriple
-  rw [Finset.mem_filter, Finset.mem_powersetCard]
-  refine ⟨⟨by simp, by simp [hxy, hxz, hyz]⟩, ?_⟩
-  refine ⟨by simp [hxy, hxz, hyz], ?_⟩
-  intro a ha b hb c hc
-  simp only [Finset.mem_insert, Finset.mem_singleton] at ha hb hc
-  rcases ha with (rfl | rfl | rfl) <;>
-    rcases hb with (rfl | rfl | rfl) <;>
-      rcases hc with (rfl | rfl | rfl)
-  all_goals
-    unfold Collinear
-    intro i j
-    first
-    | exact hbase i j
-    | exact hbase j i
-    | exact (hbase i j).symm
-    | exact (hbase j i).symm
-    | linear_combination hbase i j
-    | linear_combination -hbase i j
-    | linear_combination hbase j i
-    | linear_combination -hbase j i
-    | ring
+  exact ⟨k, hk, hkextreme, hkxy, hkyz, hbase⟩
+
+private noncomputable def extremeMarkedTriple {d : Nat}
+    (q : DistinctCoordinatePairs EqualOrExtreme d × Bool) : CollinearTriples d × Bool := by
+  let x := q.1.val.val.1
+  let z := q.1.val.val.2
+  let y := extremeInterior q.2 x z
+  let facts := extremeCodeFacts q
+  exact markedCollinearTriple x y z
+    (fun h => facts.property.2.2.1 (congrFun h facts.val)) q.1.property
+    (fun h => facts.property.2.2.2.1 (congrFun h facts.val)) facts.property.2.2.2.2
 
 private abbrev GeometricCode (d : Nat) :=
   OrientedArithmeticProgression d ⊕ (DistinctCoordinatePairs EqualOrExtreme d × Bool)
@@ -657,46 +648,10 @@ private noncomputable def apMarkedTriple_injective {d : Nat} :
   let Z := u.val.2.2
   have hxz : x ≠ z := t.property.1
   have hXZ : X ≠ Z := u.property.1
-  have hxy : x ≠ y := by
-    intro h
-    apply hxz
-    funext i
-    apply Fin.ext
-    have hi := t.property.2 i
-    change ((x i : Nat) : Int) + ((z i : Nat) : Int) =
-      2 * ((y i : Nat) : Int) at hi
-    rw [h] at hi ⊢
-    omega
-  have hyz : y ≠ z := by
-    intro h
-    apply hxz
-    funext i
-    apply Fin.ext
-    have hi := t.property.2 i
-    change ((x i : Nat) : Int) + ((z i : Nat) : Int) =
-      2 * ((y i : Nat) : Int) at hi
-    rw [h] at hi
-    omega
-  have hXY : X ≠ Y := by
-    intro h
-    apply hXZ
-    funext i
-    apply Fin.ext
-    have hi := u.property.2 i
-    change ((X i : Nat) : Int) + ((Z i : Nat) : Int) =
-      2 * ((Y i : Nat) : Int) at hi
-    rw [h] at hi ⊢
-    omega
-  have hYZ : Y ≠ Z := by
-    intro h
-    apply hXZ
-    funext i
-    apply Fin.ext
-    have hi := u.property.2 i
-    change ((X i : Nat) : Int) + ((Z i : Nat) : Int) =
-      2 * ((Y i : Nat) : Int) at hi
-    rw [h] at hi
-    omega
+  have hxy : x ≠ y := (arithmeticProgressionFacts t).1
+  have hyz : y ≠ z := (arithmeticProgressionFacts t).2.1
+  have hXY : X ≠ Y := (arithmeticProgressionFacts u).1
+  have hYZ : Y ≠ Z := (arithmeticProgressionFacts u).2.1
   have hfin := congrArg (fun p => p.1.val) htu
   have hmark := congrArg Prod.snd htu
   change {x, y, z} = {X, Y, Z} at hfin
@@ -741,80 +696,22 @@ private noncomputable def extremeMarkedTriple_injective {d : Nat} :
   let Z := r.1.val.val.2
   let Y := extremeInterior r.2 X Z
   have hxz : x ≠ z := q.1.property
-  have hcoord : ∃ k, x k ≠ z k := by
-    by_contra h
-    simp only [not_exists, not_not] at h
-    exact hxz (funext h)
-  let k := Classical.choose hcoord
-  have hk : x k ≠ z k := Classical.choose_spec hcoord
-  have hkrel := q.1.val.property k
-  change EqualOrExtreme (x k) (z k) at hkrel
+  let facts := extremeCodeFacts q
+  let k := facts.val
+  have hk : x k ≠ z k := facts.property.1
   have hkextreme :
-      (x k).val = 0 ∧ (z k).val = 3 ∨ (x k).val = 3 ∧ (z k).val = 0 := by
-    rcases hkrel with hEq | hExtreme | hExtreme
-    · exact False.elim (hk hEq)
-    · exact Or.inl hExtreme
-    · exact Or.inr hExtreme
-  have hkxy : x k ≠ y k := by
-    intro h
-    have hv := congrArg Fin.val h
-    change (x k).val = (extremeInteriorCoordinate q.2 (x k) (z k)).val at hv
-    rcases hkextreme with ⟨hx, hz⟩ | ⟨hx, hz⟩ <;>
-      cases hq : q.2 <;> simp [extremeInteriorCoordinate, hx, hz, hq] at hv
-  have hkyz : y k ≠ z k := by
-    intro h
-    have hv := congrArg Fin.val h
-    change (extremeInteriorCoordinate q.2 (x k) (z k)).val = (z k).val at hv
-    rcases hkextreme with ⟨hx, hz⟩ | ⟨hx, hz⟩ <;>
-      cases hq : q.2 <;> simp [extremeInteriorCoordinate, hx, hz, hq] at hv
+      (x k).val = 0 ∧ (z k).val = 3 ∨ (x k).val = 3 ∧ (z k).val = 0 :=
+    facts.property.2.1
+  have hkxy : x k ≠ y k := facts.property.2.2.1
+  have hkyz : y k ≠ z k := facts.property.2.2.2.1
   have hxy : x ≠ y := fun h => hkxy (congrFun h k)
   have hyz : y ≠ z := fun h => hkyz (congrFun h k)
-  have hnotXY : ¬EqualOrExtreme (x k) (y k) := by
-    intro hrel
-    rcases hrel with hEq | hExtreme | hExtreme
-    · exact hkxy hEq
-    · rcases hExtreme with ⟨hx0, hy3⟩
-      have hv : (y k).val =
-          (extremeInteriorCoordinate q.2 (x k) (z k)).val := rfl
-      rcases hkextreme with ⟨hx, hz⟩ | ⟨hx, hz⟩ <;>
-        cases hq : q.2 <;>
-          simp [extremeInteriorCoordinate, hx, hz, hq] at hv <;> omega
-    · rcases hExtreme with ⟨hx3, hy0⟩
-      have hv : (y k).val =
-          (extremeInteriorCoordinate q.2 (x k) (z k)).val := rfl
-      rcases hkextreme with ⟨hx, hz⟩ | ⟨hx, hz⟩ <;>
-        cases hq : q.2 <;>
-          simp [extremeInteriorCoordinate, hx, hz, hq] at hv <;> omega
-  have hnotYX : ¬EqualOrExtreme (y k) (x k) := by
-    intro hrel
-    apply hnotXY
-    rcases hrel with hEq | hExtreme | hExtreme
-    · exact Or.inl hEq.symm
-    · exact Or.inr (Or.inr ⟨hExtreme.2, hExtreme.1⟩)
-    · exact Or.inr (Or.inl ⟨hExtreme.2, hExtreme.1⟩)
-  have hnotYZ : ¬EqualOrExtreme (y k) (z k) := by
-    intro hrel
-    rcases hrel with hEq | hExtreme | hExtreme
-    · exact hkyz hEq
-    · rcases hExtreme with ⟨hy0, hz3⟩
-      have hv : (y k).val =
-          (extremeInteriorCoordinate q.2 (x k) (z k)).val := rfl
-      rcases hkextreme with ⟨hx, hz⟩ | ⟨hx, hz⟩ <;>
-        cases hq : q.2 <;>
-          simp [extremeInteriorCoordinate, hx, hz, hq] at hv <;> omega
-    · rcases hExtreme with ⟨hy3, hz0⟩
-      have hv : (y k).val =
-          (extremeInteriorCoordinate q.2 (x k) (z k)).val := rfl
-      rcases hkextreme with ⟨hx, hz⟩ | ⟨hx, hz⟩ <;>
-        cases hq : q.2 <;>
-          simp [extremeInteriorCoordinate, hx, hz, hq] at hv <;> omega
-  have hnotZY : ¬EqualOrExtreme (z k) (y k) := by
-    intro hrel
-    apply hnotYZ
-    rcases hrel with hEq | hExtreme | hExtreme
-    · exact Or.inl hEq.symm
-    · exact Or.inr (Or.inr ⟨hExtreme.2, hExtreme.1⟩)
-    · exact Or.inr (Or.inl ⟨hExtreme.2, hExtreme.1⟩)
+  have hnot : ¬EqualOrExtreme (x k) (y k) ∧ ¬EqualOrExtreme (y k) (x k) ∧
+      ¬EqualOrExtreme (y k) (z k) ∧ ¬EqualOrExtreme (z k) (y k) := by
+    rcases hkextreme with ⟨hx, hz⟩ | ⟨hx, hz⟩ <;> cases hq : q.2 <;>
+      simp [EqualOrExtreme, y, extremeInterior, extremeInteriorCoordinate, hx, hz, hq,
+        Fin.ext_iff]
+  rcases hnot with ⟨hnotXY, hnotYX, hnotYZ, hnotZY⟩
   have hfin := congrArg (fun p => p.1.val) hqr
   have hmark := congrArg Prod.snd hqr
   change {x, y, z} = {X, Y, Z} at hfin
@@ -878,53 +775,16 @@ private noncomputable def apMarkedTriple_ne_extremeMarkedTriple {d : Nat}
   let z := q.1.val.val.2
   let y := extremeInterior q.2 x z
   have hac : a ≠ c := t.property.1
-  have hab : a ≠ b := by
-    intro h
-    apply hac
-    funext i
-    apply Fin.ext
-    have hi := t.property.2 i
-    change ((a i : Nat) : Int) + ((c i : Nat) : Int) =
-      2 * ((b i : Nat) : Int) at hi
-    rw [h] at hi ⊢
-    omega
-  have hbc : b ≠ c := by
-    intro h
-    apply hac
-    funext i
-    apply Fin.ext
-    have hi := t.property.2 i
-    change ((a i : Nat) : Int) + ((c i : Nat) : Int) =
-      2 * ((b i : Nat) : Int) at hi
-    rw [h] at hi
-    omega
+  have hab : a ≠ b := (arithmeticProgressionFacts t).1
+  have hbc : b ≠ c := (arithmeticProgressionFacts t).2.1
   have hxz : x ≠ z := q.1.property
-  have hcoord : ∃ k, x k ≠ z k := by
-    by_contra h
-    simp only [not_exists, not_not] at h
-    exact hxz (funext h)
-  let k := Classical.choose hcoord
-  have hk : x k ≠ z k := Classical.choose_spec hcoord
-  have hkrel := q.1.val.property k
-  change EqualOrExtreme (x k) (z k) at hkrel
+  let facts := extremeCodeFacts q
+  let k := facts.val
   have hkextreme :
-      (x k).val = 0 ∧ (z k).val = 3 ∨ (x k).val = 3 ∧ (z k).val = 0 := by
-    rcases hkrel with hEq | hExtreme | hExtreme
-    · exact False.elim (hk hEq)
-    · exact Or.inl hExtreme
-    · exact Or.inr hExtreme
-  have hkxy : x k ≠ y k := by
-    intro h
-    have hv := congrArg Fin.val h
-    change (x k).val = (extremeInteriorCoordinate q.2 (x k) (z k)).val at hv
-    rcases hkextreme with ⟨hx, hz⟩ | ⟨hx, hz⟩ <;>
-      cases hq : q.2 <;> simp [extremeInteriorCoordinate, hx, hz, hq] at hv
-  have hkyz : y k ≠ z k := by
-    intro h
-    have hv := congrArg Fin.val h
-    change (extremeInteriorCoordinate q.2 (x k) (z k)).val = (z k).val at hv
-    rcases hkextreme with ⟨hx, hz⟩ | ⟨hx, hz⟩ <;>
-      cases hq : q.2 <;> simp [extremeInteriorCoordinate, hx, hz, hq] at hv
+      (x k).val = 0 ∧ (z k).val = 3 ∨ (x k).val = 3 ∧ (z k).val = 0 :=
+    facts.property.2.1
+  have hkxy : x k ≠ y k := facts.property.2.2.1
+  have hkyz : y k ≠ z k := facts.property.2.2.2.1
   have hxy : x ≠ y := fun h => hkxy (congrFun h k)
   have hyz : y ≠ z := fun h => hkyz (congrFun h k)
   have hfin := congrArg (fun p => p.1.val) heq
