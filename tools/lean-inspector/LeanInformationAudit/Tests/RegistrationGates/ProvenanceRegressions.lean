@@ -27,11 +27,11 @@ def decisionProposition : Prop := (137 : Nat) + 0 = 137
 example : decisionProposition = specificStatement := rfl
 noncomputable def defeqDecisionRead (_ : Unit) (x : Bool) : Bool :=
   if @decide decisionProposition (Classical.propDecidable decisionProposition) then x else false
-check_provenance "DefeqDecision" using defeqDecisionRead expects "forbidden_dependency" for specificTruth
+check_provenance "DefeqDecision" using defeqDecisionRead expects "unclassified_form" for specificTruth
 noncomputable def unrelatedDecisionRead (_ : Unit) (x : Bool) : Bool :=
   if @decide (x = true) (Classical.propDecidable (x = true)) then x else false
-check_provenance "UnrelatedBinderDecision" using unrelatedDecisionRead expects "clean" for specificTruth
-check_provenance "AppliedDecidableFinite" using genericDecision expects "forbidden_dependency" for specificTruth
+check_provenance "UnrelatedBinderDecision" using unrelatedDecisionRead expects "unclassified_form" for specificTruth
+check_provenance "AppliedDecidableFinite" using genericDecision expects "unclassified_form" for specificTruth
 
 def computedKey : Name := Name.str (Name.mkSimple "RegistrationProvenance") "truth"
 example : computedKey = ``truth := rfl
