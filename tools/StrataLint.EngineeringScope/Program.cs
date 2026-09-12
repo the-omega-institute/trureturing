@@ -135,6 +135,8 @@ internal static class Program
         var start = new ProcessStartInfo("dotnet") { WorkingDirectory = root, UseShellExecute = false };
         start.Environment["DOTNET_CLI_UI_LANGUAGE"] = "en-US";
         start.Environment["CI"] = "true";
+        // Synthetic test repositories supply their own candidate identity.
+        start.Environment.Remove("CANDIDATE_SHA");
         if (Directory.Exists(Path.Combine(root, CommonBuildOutputs.PackagesPath)))
             start.Environment["NUGET_PACKAGES"] = Path.Combine(root, CommonBuildOutputs.PackagesPath);
         foreach (var argument in BuildTestArguments(project, results)) start.ArgumentList.Add(argument);
