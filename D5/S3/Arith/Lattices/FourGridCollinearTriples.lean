@@ -203,6 +203,14 @@ private abbrev CollinearTriples (d : Nat) := ↥(collinearTripleFinset d)
 private noncomputable def orientationMark {d : Nat} (x z : GridPoint d) : Bool :=
   decide ((Fintype.equivFin (GridPoint d)) x < (Fintype.equivFin (GridPoint d)) z)
 
+private def orientationMark_reverse {d : Nat} {x z : GridPoint d} (h : x ≠ z) :
+    orientationMark z x = !orientationMark x z := by
+  have hne : (Fintype.equivFin (GridPoint d)) x ≠ (Fintype.equivFin (GridPoint d)) z :=
+    (Fintype.equivFin (GridPoint d)).injective.ne h
+  rcases lt_or_gt_of_ne hne with hlt | hgt
+  · simp [orientationMark, hlt, not_lt_of_ge hlt.le]
+  · simp [orientationMark, hgt, not_lt_of_ge hgt.le]
+
 private noncomputable def apMarkedTriple {d : Nat} (t : OrientedArithmeticProgression d) :
     CollinearTriples d × Bool := by
   classical
@@ -410,6 +418,44 @@ private def reverseExtremeCode {d : Nat}
 private def reverseGeometricCode {d : Nat} : GeometricCode d → GeometricCode d
   | Sum.inl t => Sum.inl (reverseArithmeticProgression t)
   | Sum.inr q => Sum.inr (reverseExtremeCode q)
+
+private noncomputable def codeToMarkedTriple_reverse {d : Nat} (c : GeometricCode d) :
+    codeToMarkedTriple (reverseGeometricCode c) =
+      ((codeToMarkedTriple c).1, !(codeToMarkedTriple c).2) := by
+  classical
+  rcases c with t | q
+  · apply Prod.ext
+    · apply Subtype.ext
+      change {t.val.2.2, t.val.2.1, t.val.1} = {t.val.1, t.val.2.1, t.val.2.2}
+      ext p
+      simp only [Finset.mem_insert, Finset.mem_singleton]
+      tauto
+    · exact orientationMark_reverse t.property.1
+  · have hinterior :
+        extremeInterior (!q.2) q.1.val.val.2 q.1.val.val.1 =
+          extremeInterior q.2 q.1.val.val.1 q.1.val.val.2 := by
+      funext i
+      apply Fin.ext
+      have hi := q.1.val.property i
+      rcases hi with hEq | ⟨hx, hz⟩ | ⟨hx, hz⟩
+      · cases q.2 <;>
+          simp [extremeInterior, extremeInteriorCoordinate, hEq] <;> omega
+      · cases hq : q.2 <;>
+          simp [extremeInterior, extremeInteriorCoordinate, hx, hz]
+      · cases hq : q.2 <;>
+          simp [extremeInterior, extremeInteriorCoordinate, hx, hz]
+    apply Prod.ext
+    · apply Subtype.ext
+      change
+        {q.1.val.val.2, extremeInterior (!q.2) q.1.val.val.2 q.1.val.val.1,
+            q.1.val.val.1} =
+          {q.1.val.val.1, extremeInterior q.2 q.1.val.val.1 q.1.val.val.2,
+            q.1.val.val.2}
+      rw [hinterior]
+      ext p
+      simp only [Finset.mem_insert, Finset.mem_singleton]
+      tauto
+    · exact orientationMark_reverse q.1.property
 
 #print axioms endpoint_pair_counts
 #print axioms oriented_arithmetic_progression_count
