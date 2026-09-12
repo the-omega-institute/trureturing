@@ -26,9 +26,9 @@ public sealed partial class MakeWorkflowTests
         File.WriteAllText(explicitReport, "explicit\n");
         File.WriteAllText(ambientReport, "ambient\n");
         File.WriteAllText(scribe, "fixture\n");
-        WriteExecutable(
-            Path.Combine(binDirectory, "dotnet"),
-            "#!/usr/bin/env bash\nprintf '%s|%s\\n' \"$STRATALINT_LEAN_REPORT\" \"$*\" >> \"$SCRIBE_LOG\"");
+        WriteSelectorAwareDotnetShim(
+            binDirectory,
+            "printf '%s|%s\\n' \"$STRATALINT_LEAN_REPORT\" \"$*\" >> \"$SCRIBE_LOG\"");
         var headResult = TestProcessRunner.Run(
             "git",
             ["rev-parse", "HEAD"],
@@ -621,10 +621,9 @@ public sealed partial class MakeWorkflowTests
 
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
     private static void WriteHarnessGateChainDotnetShim(string binDirectory) =>
-        WriteExecutable(
-            Path.Combine(binDirectory, "dotnet"),
+        WriteSelectorAwareDotnetShim(
+            binDirectory,
             """
-            #!/usr/bin/env bash
             case "${1:-}" in
               --version|restore) exit 0 ;;
               build)
@@ -692,6 +691,7 @@ public sealed partial class MakeWorkflowTests
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
     private static void WriteHarnessGateChainReportPair(string candidateRoot)
     {
+        WriteScribeInputRegistration(candidateRoot);
         CopyAdmissionBaseLibraryIfPresent(candidateRoot);
         CopyResourceObservationLibrary(candidateRoot);
         CopyBannedApiCompileFailProof(candidateRoot);

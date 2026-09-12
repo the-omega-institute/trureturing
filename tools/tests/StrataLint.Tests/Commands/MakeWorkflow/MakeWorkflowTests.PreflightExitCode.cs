@@ -135,6 +135,7 @@ public sealed partial class MakeWorkflowTests
         var preflight = Path.Combine(root, PreflightScriptPath);
         var report = Path.Combine(root, ".lake", "build", "stratalint", "raw-lean-report.json");
         CopyPreflightScriptClosure(sourceRoot, root);
+        WriteScribeInputRegistration(root);
         CopyBannedApiCompileFailProof(root);
         Directory.CreateDirectory(Path.GetDirectoryName(report)!);
         Directory.CreateDirectory(binDirectory);
@@ -145,7 +146,7 @@ public sealed partial class MakeWorkflowTests
         RunScenarioGit(root, "init", "--initial-branch=dev");
         RunScenarioGit(root, "config", "user.email", "preflight@example.invalid");
         RunScenarioGit(root, "config", "user.name", "Preflight Fixture");
-        RunScenarioGit(root, "add", "README.md", "tools");
+        RunScenarioGit(root, "add", "README.md", "tools", "Meta");
         RunScenarioGit(root, "commit", "-m", "fixture base");
         var candidatePath = scenario == "stale-values"
             ? Path.Combine(root, "Golden", "values-kernels.toml")
@@ -173,10 +174,9 @@ public sealed partial class MakeWorkflowTests
             fi
             exec /usr/bin/git "$@"
             """);
-        WriteExecutable(
-            Path.Combine(binDirectory, "dotnet"),
+        WriteSelectorAwareDotnetShim(
+            binDirectory,
             """
-            #!/usr/bin/env bash
             if [[ "${1:-}" == --version ]]; then
               [[ "${PREFLIGHT_SCENARIO:-}" != toolchain-missing ]] || exit 127
               exit 0
