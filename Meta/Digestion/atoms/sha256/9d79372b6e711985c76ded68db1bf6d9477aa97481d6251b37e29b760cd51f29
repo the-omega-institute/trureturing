@@ -1,0 +1,25 @@
+**引理 363.2。** 中心代表良定义且唯一，$a([1/2])=-1/2$，并有
+$$
+\|[t]\|_{\mathbb T}=\min_{z\in\mathbb Z_o}|t-z|,\qquad
+\|-\vartheta\|_{\mathbb T}=\|\vartheta\|_{\mathbb T},\qquad
+\|\vartheta+\eta\|_{\mathbb T}\le\|\vartheta\|_{\mathbb T}+\|\eta\|_{\mathbb T}.
+$$
+
+$$
+d_{\mathbb T}(\vartheta,\eta)=\|\vartheta-\eta\|_{\mathbb T}
+$$
+是平移不变的度量，诱导通常圆周拓扑。$\chi_\theta$ 是 $V$ 上的加法同态，且 $\|m\vartheta\|_{\mathbb T}\le |m|\|\vartheta\|_{\mathbb T}$ 对每个整数 $m$ 成立。
+
+**证明。** 更换 $t$ 为 $t+z$ 时，下取整增加同一整数 $z$，所以中心代表不变。半开区间内两个代表的差若为整数，其绝对值严格小于一，故差为零。取 $z_0=\lfloor t+1/2\rfloor$，则 $|t-z_0|\le1/2$；对其余整数，距离不小于此值。这证明最小值公式，包括半整数的两点等距及所选负端点。将整数 $z$ 换为 $-z$ 得范数的对称性。若 $s,t$ 是两类的中心代表，则
+$$
+\|[s+t]\|_{\mathbb T}\le |s+t|\le |s|+|t|.
+$$
+由此得三角不等式；范数为零恰当该类为零，给度量的分离性。相减及对称性给其余度量条件，差在同时平移下不变。
+
+设商映射为 $\pi:\mathbb R\to\mathbb T$。任意半径 $r>0$ 的球满足
+$$
+\pi^{-1}(B_{d_{\mathbb T}}([t],r))
+=\bigcup_{z\in\mathbb Z_o}(t+z-r,t+z+r),
+$$
+所以度量开集的逆像开。反向若 $\pi^{-1}(O)$ 开且 $[t]\in O$，选 $r>0$ 使 $(t-r,t+r)\subseteq\pi^{-1}(O)$。距离小于 $r$ 的类有一个代表落在此区间，故 $B_{d_{\mathbb T}}([t],r)\subseteq O$。两种拓扑相等。在两个有限支撑的并上展开求和，整数倍分配律证明 $\chi_\theta(u+v)=\chi_\theta(u)+\chi_\theta(v)$。反复使用三角不等式，再用负号对称性，得到整数倍估计。证毕。
+

@@ -1,0 +1,12 @@
+**定理 363.3。** 对每个 $A\in\omega^\omega$ 和每个总行 $\theta\in\mathbb T^\omega$，以下五个条件等价：$\chi_\theta|_B$ 在某个 $w\in B$ 坐标连续；它在零处坐标连续；它在每个 $w\in B$ 坐标连续；$M(A,\theta)<+\infty$；存在从坐标 $X$ 到通常圆周的连续函数，其在 $B$ 上等于 $\chi_\theta$。
+
+当这些条件成立时，延拓唯一，恰为
+$$
+F_{A,\theta}(x)=\left[\sum_{n=0}^{\infty}a(\theta_n)x_n\right]\quad(x\in X).
+$$
+此实级数绝对收敛。令
+$$
+R_N(A,\theta)=\sum_{n>N}A_n|a(\theta_n)|,
+$$
+则 $R_N(A,\theta)\to0$，且实总和与第 $N$ 个部分和之差的绝对值对全部 $x\in X$ 一致不超过 $R_N(A,\theta)$。若质量无限，$\chi_\theta|_B$ 在每个状态均不坐标连续。
+

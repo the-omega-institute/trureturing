@@ -1,0 +1,8 @@
+**命题 370.2。** 所列载体、函数、图、拓扑和全部相关子集族均为 ZFC 集合。$W_A$ 的定义可等价写成
+$$
+\theta\in W_A\iff
+\exists m\in\omega\ \forall N\in\omega\quad
+\sum_{n=0}^N A_n\|\theta_n\|_{\mathbb T}\le m.
+$$
+$\operatorname{Ext}_A$ 和 $\operatorname{Ext}$ 在且仅在各自声明的域上取上述连续延拓值。
+

@@ -1,0 +1,24 @@
+**定理 370.10。** 为区分活跃集合 $J=J_A$，将第 255–256 条及 [CSA 第一节、第四节定义 8、第六节定义 9／命题 5](CONTEXTUAL_SPACETIME_ARITHMETIC.md) 的原整数载体在本节记为 $J_{\rm int}$。其原集合为 $J_{\rm int}=(\{0\}\times\omega)\cup(\{1\}\times(\omega\setminus\{0\}))$。原双射和整数数字双射为
+$$
+v:J_{\rm int}\leftrightarrow\mathbb Z_o,\qquad
+b_{\rm int}=\operatorname{scode}\circ v,\qquad
+b_{\rm int}^{-1}=v^{-1}\circ\operatorname{ival}.
+$$
+原固定丰富截面在既约 $a/b$、$b>0$ 处为
+$$
+\sigma_{\rm CSA}(a/b)
+=(\mathbf i(v^{-1}(a)),\mathbf i(v^{-1}(b)))\in\mathcal Q^{\rm rich}.
+$$
+$\sigma_{\rm CSA}\circ\operatorname{qdec}$ 恰将 $\mathsf{RatFld}$ 双射到此截面像，其逆在且仅在该像上为 $\operatorname{qenc}\circ\operatorname{qval}_{\rm CSA}$。
+
+**证明。** 第 255–256 条的 $v$ 双逆及第 114 条的带符号字段双逆给显示的整数逆。原 $\mathbf i:J_{\rm int}\to\mathcal B$ 满足 $q(\mathbf i(z))=z$。第 332.2 条使用的通常有理读数为
+$$
+\operatorname{qval}_{\rm CSA}(X,Y)=\frac{v(q(X))}{v(q(Y))}
+\quad(q(Y)\ne0_{J_{\rm int}}).
+$$
+截面分母解码为 $b>0$，故属于其域，逐分量代入立即给
+$$
+\operatorname{qval}_{\rm CSA}(\sigma_{\rm CSA}(a/b))=a/b.
+$$
+所以 $\sigma_{\rm CSA}$ 单射；它按定义满到自身像。对任意字段先解码到有理数，再取截面，再读值和编码，得到原字段。反向对截面点唯一写作 $\sigma_{\rm CSA}(q)$，先读值再重新取截面，恢复原点。这证明两向双逆且精确限制在截面像，不从任意丰富输入的读数恢复其历史。证毕。
+
