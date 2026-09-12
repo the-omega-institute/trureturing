@@ -93,6 +93,11 @@ fc_paths=$(fetch_tree "$FORMALCONJ_REPO") || die "formal-conjectures tree unavai
 sl_max=$(grep -oE 'A[0-9]{6}' "$sl_paths" | sort -u | tail -1)
 sl_named=$(grep -cE '^Sequencelib/[A-Z][A-Za-z]+\.lean$' "$sl_paths")
 
+# Without this assert the corpus can fail silently in the one direction that
+# matters: an empty $sl_max makes the above-range test true for every input, so
+# a broken fetch would print NO SIGNAL forever and look like a working probe.
+[ -n "$sl_max" ] || die "no A-number found in $SEQUENCELIB_REPO paths; the corpus or its layout changed"
+
 hits=0
 
 for raw in "$@"; do
