@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Observer/Hankel/ProjectedRealizationError
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Constructed reduced dynamics has residual-based finite-time and uniform output bounds. -/
 
 import D5.S3.Observer.Hankel.HankelMinimalStateDimension

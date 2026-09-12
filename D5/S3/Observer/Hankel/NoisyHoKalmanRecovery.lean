@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Observer/Hankel/NoisyHoKalmanRecovery
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: The rational executable output has explicit error bounds against real finite-order systems. -/
 
 import D5.S3.Observer.Hankel.ExecutableHoKalman
