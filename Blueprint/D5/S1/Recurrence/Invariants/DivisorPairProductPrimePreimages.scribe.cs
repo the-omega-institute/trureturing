@@ -9,7 +9,7 @@ internal sealed class DivisorPairProductPrimePreimagesDocument : IScribeDocument
     private const string Prefix =
         "D5/S1/Recurrence/Invariants/DivisorPairProductPrimePreimages.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Divisors/seidov2006a119623");
+        LibraryNoteRef.Create("D5/L/Factorization/seidov2006a119623");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Prime values of the second elementary symmetric divisor function have exactly two preimages when attained at composites.",
