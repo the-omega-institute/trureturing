@@ -96,8 +96,9 @@ internal sealed class CyclicCovariantUniversalDocument : IScribeDocumentDefiniti
                         + "field lift supplies existence for every covariant pair above. "
                         + "There is no additional assumption that v^M is one.")),
                     Paragraph(Text(
-                        "For uniqueness, the original S_M^i D(delta_0) (S_M^j)* are exactly "
-                        + "the constant standard matrix units. The cardinal power S_M^M "
+                        "For uniqueness, the weighted-shift power formula identifies the original "
+                        + "S_M^i D(delta_0) (S_M^j)* with the constant standard matrix units. "
+                        + "The cardinal power S_M^M "
                         + "is the scalar coordinate field. Stone-Weierstrass uniqueness, "
                         + "transported by the parameter homeomorphism, determines a scalar "
                         + "continuous-function homomorphism from that coordinate. Finite "

@@ -58,7 +58,7 @@ $$\exists! L: B_{M} \to B, (\forall f, L\left(D\left(f\right)\right) = \pi\left(
 
 The quantified L is a unital complex star homomorphism. The direct field lift supplies existence for every covariant pair above. There is no additional assumption that v^M is one.
 
-For uniqueness, the original S_M^i D(delta_0) (S_M^j)* are exactly the constant standard matrix units. The cardinal power S_M^M is the scalar coordinate field. Stone-Weierstrass uniqueness, transported by the parameter homeomorphism, determines a scalar continuous-function homomorphism from that coordinate. Finite entry reconstruction then determines the homomorphism on every continuous matrix field.
+For uniqueness, the weighted-shift power formula identifies the original S_M^i D(delta_0) (S_M^j)* with the constant standard matrix units. The cardinal power S_M^M is the scalar coordinate field. Stone-Weierstrass uniqueness, transported by the parameter homeomorphism, determines a scalar continuous-function homomorphism from that coordinate. Finite entry reconstruction then determines the homomorphism on every continuous matrix field.
 
 **Theorem 1.5 (Faithful readouts and closed generation).**
 

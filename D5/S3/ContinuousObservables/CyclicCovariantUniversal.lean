@@ -66,43 +66,9 @@ private def phaseCalculus (u : unitary B) : C(AddCircle (1 : ℝ), ℂ) →⋆�
   (cfcHom (show IsStarNormal (u : B) from inferInstance)).comp
     (ContinuousMap.compStarAlgHom' ℂ ℂ (spectrumPhase u))
 
-private theorem phaseCalculus_coordinate (u : unitary B) :
-    phaseCalculus u windingPhase = (u : B) := by
-  change cfcHom _ (windingPhase.comp (spectrumPhase u)) = _
-  convert cfcHom_id (show IsStarNormal (u : B) from inferInstance) using 1
-  congr 1
-  ext z
-  change (AddCircle.toCircle
-    ((AddCircle.homeomorphCircle (T := (1 : ℝ)) one_ne_zero).symm _) : ℂ) = z.1
-  rw [← AddCircle.homeomorphCircle_apply one_ne_zero]
-  simp only [Homeomorph.apply_symm_apply]
-  rfl
-
-private theorem phaseCalculus_commute (u : unitary B) (b : B)
-    (h : Commute (u : B) b) (hs : Commute (star (u : B)) b)
-    (f : C(AddCircle (1 : ℝ), ℂ)) : Commute (phaseCalculus u f) b :=
-  h.cfcHom (show IsStarNormal (u : B) from inferInstance) hs _
-
 /-- The covariance condition uses the given one-step orientation. -/
 def CyclicCovariant (π : CyclicReadout M →⋆ₐ[ℂ] B) (v : unitary B) : Prop :=
   ∀ f, (v : B) * π f * star (v : B) = π (cyclicAction 1 f)
-
-omit [NeZero M] in
-private theorem delta_star (i : ZMod M) : star (delta i) = delta i := by
-  ext j
-  simp [delta]
-
-omit [NeZero M] in
-private theorem delta_mul (i j : ZMod M) :
-    delta i * delta j = if i = j then delta i else 0 := by
-  by_cases hij : i = j
-  · subst j; ext k; simp [delta]
-  · rw [if_neg hij]; ext k
-    by_cases hi : k = i <;> by_cases hj : k = j <;> simp_all [delta]
-
-private theorem delta_sum : (∑ i : ZMod M, delta i) = 1 := by
-  ext j
-  simp [delta]
 
 omit [NeZero M] in
 private theorem covariant_power (π : CyclicReadout M →⋆ₐ[ℂ] B) (v : unitary B)
@@ -145,55 +111,78 @@ private def targetUnit (π : CyclicReadout M →⋆ₐ[ℂ] B) (v : unitary B)
     (i j : ZMod M) : B :=
   (v : B) ^ i.val * π (delta 0) * star ((v : B) ^ j.val)
 
-omit [NeZero M] in
-private theorem targetUnit_star (π : CyclicReadout M →⋆ₐ[ℂ] B) (v : unitary B)
-    (i j : ZMod M) : star (targetUnit π v i j) = targetUnit π v j i := by
-  simp [targetUnit, star_mul, ← map_star, delta_star, mul_assoc]
-
 private theorem targetUnit_diagonal (π : CyclicReadout M →⋆ₐ[ℂ] B) (v : unitary B)
     (h : CyclicCovariant π v) (i : ZMod M) : targetUnit π v i i = π (delta i) :=
   conjugate_delta π v h i
 
 private theorem targetUnit_sum (π : CyclicReadout M →⋆ₐ[ℂ] B) (v : unitary B)
     (h : CyclicCovariant π v) : (∑ i : ZMod M, targetUnit π v i i) = 1 := by
+  have delta_sum : (∑ i : ZMod M, delta i) = 1 := by
+    ext j
+    simp [delta]
   simp_rw [targetUnit_diagonal π v h, ← map_sum, delta_sum, map_one]
 
 private def column (π : CyclicReadout M →⋆ₐ[ℂ] B) (v : unitary B) (i : ZMod M) : B :=
   (v : B) ^ i.val * π (delta 0)
 
-omit [NeZero M] in
-private theorem column_initial (π : CyclicReadout M →⋆ₐ[ℂ] B) (v : unitary B)
-    (i : ZMod M) : star (column π v i) * column π v i = π (delta 0) := by
-  have hunit := Unitary.star_mul_self_of_mem ((unitary B).pow_mem v.prop i.val)
-  have hp : π (delta 0) * π (delta 0) = π (delta 0) := by
-    rw [← map_mul, delta_mul]; simp
-  simp only [column, star_mul, ← map_star, delta_star]
-  calc
-    π (delta 0) * star ((v : B) ^ i.val) * ((v : B) ^ i.val * π (delta 0)) =
-      π (delta 0) * (star ((v : B) ^ i.val) * (v : B) ^ i.val) * π (delta 0) := by
-        noncomm_ring
-    _ = π (delta 0) := by rw [hunit, mul_one, hp]
-
-omit [NeZero M] in
-private theorem column_outer (π : CyclicReadout M →⋆ₐ[ℂ] B) (v : unitary B)
-    (i j : ZMod M) : column π v i * star (column π v j) = targetUnit π v i j := by
-  have hp : π (delta 0) * π (delta 0) = π (delta 0) := by
-    rw [← map_mul, delta_mul]; simp
-  simp only [column, star_mul, ← map_star, delta_star, targetUnit]
-  calc
-    (v : B) ^ i.val * π (delta 0) * (π (delta 0) * star ((v : B) ^ j.val)) =
-      (v : B) ^ i.val * (π (delta 0) * π (delta 0)) * star ((v : B) ^ j.val) := by
-        noncomm_ring
-    _ = _ := by rw [hp]
-
 private theorem column_support (π : CyclicReadout M →⋆ₐ[ℂ] B) (v : unitary B)
     (h : CyclicCovariant π v) (i : ZMod M) : π (delta i) * column π v i = column π v i := by
+  have delta_mul (i j : ZMod M) :
+      delta i * delta j = if i = j then delta i else 0 := by
+    by_cases hij : i = j
+    · subst j; ext k; simp [delta]
+    · rw [if_neg hij]; ext k
+      by_cases hi : k = i <;> by_cases hj : k = j <;> simp_all [delta]
+  have delta_star (i : ZMod M) : star (delta i) = delta i := by
+    ext j
+    simp [delta]
+  have column_initial (π : CyclicReadout M →⋆ₐ[ℂ] B) (v : unitary B)
+      (i : ZMod M) : star (column π v i) * column π v i = π (delta 0) := by
+    have hunit := Unitary.star_mul_self_of_mem ((unitary B).pow_mem v.prop i.val)
+    have hp : π (delta 0) * π (delta 0) = π (delta 0) := by
+      rw [← map_mul, delta_mul]; simp
+    simp only [column, star_mul, ← map_star, delta_star]
+    calc
+      π (delta 0) * star ((v : B) ^ i.val) * ((v : B) ^ i.val * π (delta 0)) =
+        π (delta 0) * (star ((v : B) ^ i.val) * (v : B) ^ i.val) * π (delta 0) := by
+          noncomm_ring
+      _ = π (delta 0) := by rw [hunit, mul_one, hp]
+  have column_outer (π : CyclicReadout M →⋆ₐ[ℂ] B) (v : unitary B)
+      (i j : ZMod M) : column π v i * star (column π v j) = targetUnit π v i j := by
+    have hp : π (delta 0) * π (delta 0) = π (delta 0) := by
+      rw [← map_mul, delta_mul]; simp
+    simp only [column, star_mul, ← map_star, delta_star, targetUnit]
+    calc
+      (v : B) ^ i.val * π (delta 0) * (π (delta 0) * star ((v : B) ^ j.val)) =
+        (v : B) ^ i.val * (π (delta 0) * π (delta 0)) * star ((v : B) ^ j.val) := by
+          noncomm_ring
+      _ = _ := by rw [hp]
   rw [← targetUnit_diagonal π v h, ← column_outer, mul_assoc, column_initial]
   simp only [column, mul_assoc, ← map_mul, delta_mul, if_true]
 
 private theorem column_inner (π : CyclicReadout M →⋆ₐ[ℂ] B) (v : unitary B)
     (h : CyclicCovariant π v) (i j : ZMod M) :
     star (column π v i) * column π v j = if i = j then π (delta 0) else 0 := by
+  have delta_star (i : ZMod M) : star (delta i) = delta i := by
+    ext j
+    simp [delta]
+  have delta_mul (i j : ZMod M) :
+      delta i * delta j = if i = j then delta i else 0 := by
+    by_cases hij : i = j
+    · subst j; ext k; simp [delta]
+    · rw [if_neg hij]; ext k
+      by_cases hi : k = i <;> by_cases hj : k = j <;> simp_all [delta]
+  have column_initial (π : CyclicReadout M →⋆ₐ[ℂ] B) (v : unitary B)
+      (i : ZMod M) : star (column π v i) * column π v i = π (delta 0) := by
+    have hunit := Unitary.star_mul_self_of_mem ((unitary B).pow_mem v.prop i.val)
+    have hp : π (delta 0) * π (delta 0) = π (delta 0) := by
+      rw [← map_mul, delta_mul]; simp
+    simp only [column, star_mul, ← map_star, delta_star]
+    calc
+      π (delta 0) * star ((v : B) ^ i.val) * ((v : B) ^ i.val * π (delta 0)) =
+        π (delta 0) * (star ((v : B) ^ i.val) * (v : B) ^ i.val) * π (delta 0) := by
+          noncomm_ring
+      _ = π (delta 0) := by rw [hunit, mul_one, hp]
   by_cases hij : i = j
   · subst j; simp [column_initial]
   · have hleft : star (column π v i) * π (delta i) = star (column π v i) := by
@@ -211,6 +200,25 @@ private theorem targetUnit_mul (π : CyclicReadout M →⋆ₐ[ℂ] B) (v : unit
     (h : CyclicCovariant π v) (i j k l : ZMod M) :
     targetUnit π v i j * targetUnit π v k l =
       if j = k then targetUnit π v i l else 0 := by
+  have delta_mul (i j : ZMod M) :
+      delta i * delta j = if i = j then delta i else 0 := by
+    by_cases hij : i = j
+    · subst j; ext k; simp [delta]
+    · rw [if_neg hij]; ext k
+      by_cases hi : k = i <;> by_cases hj : k = j <;> simp_all [delta]
+  have delta_star (i : ZMod M) : star (delta i) = delta i := by
+    ext j
+    simp [delta]
+  have column_outer (π : CyclicReadout M →⋆ₐ[ℂ] B) (v : unitary B)
+      (i j : ZMod M) : column π v i * star (column π v j) = targetUnit π v i j := by
+    have hp : π (delta 0) * π (delta 0) = π (delta 0) := by
+      rw [← map_mul, delta_mul]; simp
+    simp only [column, star_mul, ← map_star, delta_star, targetUnit]
+    calc
+      (v : B) ^ i.val * π (delta 0) * (π (delta 0) * star ((v : B) ^ j.val)) =
+        (v : B) ^ i.val * (π (delta 0) * π (delta 0)) * star ((v : B) ^ j.val) := by
+          noncomm_ring
+      _ = _ := by rw [hp]
   rw [← column_outer, ← column_outer]
   calc
     (column π v i * star (column π v j)) * (column π v k * star (column π v l)) =
@@ -238,6 +246,10 @@ omit [NeZero M] in
 private theorem coefficient_commute (π : CyclicReadout M →⋆ₐ[ℂ] B) (v : unitary B)
     (h : CyclicCovariant π v) (f : C(AddCircle (1 : ℝ), ℂ)) (i j : ZMod M) :
     Commute (phaseCalculus (v ^ M) f) (targetUnit π v i j) := by
+  have phaseCalculus_commute (u : unitary B) (b : B)
+      (h : Commute (u : B) b) (hs : Commute (star (u : B)) b)
+      (f : C(AddCircle (1 : ℝ), ℂ)) : Commute (phaseCalculus u f) b :=
+    h.cfcHom (show IsStarNormal (u : B) from inferInstance) hs _
   have hw := targetUnit_commute π v h i j
   apply phaseCalculus_commute _ _ hw
   exact hw.units_inv_left (u := Unitary.toUnits (v ^ M))
@@ -262,21 +274,26 @@ private def matrixAssemblyLinear (π : CyclicReadout M →⋆ₐ[ℂ] B) (v : un
   Matrix.liftLinear ℂ fun i j =>
     (LinearMap.mulRight ℂ (targetUnit π v i j)).comp (phaseCalculus (v ^ M)).toLinearMap
 
-private theorem matrixAssemblyLinear_apply (π : CyclicReadout M →⋆ₐ[ℂ] B)
-    (v : unitary B) (F : Matrix (ZMod M) (ZMod M) C(AddCircle (1 : ℝ), ℂ)) :
-    matrixAssemblyLinear π v F =
-      ∑ i, ∑ j, phaseCalculus (v ^ M) (F i j) * targetUnit π v i j := by
-  rw [matrixAssemblyLinear, Matrix.liftLinear_apply]
-  rfl
-
 private theorem matrixAssembly_one (π : CyclicReadout M →⋆ₐ[ℂ] B) (v : unitary B)
     (h : CyclicCovariant π v) : matrixAssemblyLinear π v 1 = 1 := by
+  have matrixAssemblyLinear_apply (π : CyclicReadout M →⋆ₐ[ℂ] B)
+      (v : unitary B) (F : Matrix (ZMod M) (ZMod M) C(AddCircle (1 : ℝ), ℂ)) :
+      matrixAssemblyLinear π v F =
+        ∑ i, ∑ j, phaseCalculus (v ^ M) (F i j) * targetUnit π v i j := by
+    rw [matrixAssemblyLinear, Matrix.liftLinear_apply]
+    rfl
   simp [matrixAssemblyLinear_apply, Matrix.one_apply, targetUnit_sum π v h]
 
 private theorem matrixAssembly_mul (π : CyclicReadout M →⋆ₐ[ℂ] B) (v : unitary B)
     (h : CyclicCovariant π v)
     (F G : Matrix (ZMod M) (ZMod M) C(AddCircle (1 : ℝ), ℂ)) :
     matrixAssemblyLinear π v (F * G) = matrixAssemblyLinear π v F * matrixAssemblyLinear π v G := by
+  have matrixAssemblyLinear_apply (π : CyclicReadout M →⋆ₐ[ℂ] B)
+      (v : unitary B) (F : Matrix (ZMod M) (ZMod M) C(AddCircle (1 : ℝ), ℂ)) :
+      matrixAssemblyLinear π v F =
+        ∑ i, ∑ j, phaseCalculus (v ^ M) (F i j) * targetUnit π v i j := by
+    rw [matrixAssemblyLinear, Matrix.liftLinear_apply]
+    rfl
   simp only [matrixAssemblyLinear_apply]
   symm
   calc
@@ -308,6 +325,18 @@ private theorem matrixAssembly_star (π : CyclicReadout M →⋆ₐ[ℂ] B) (v :
     (h : CyclicCovariant π v)
     (F : Matrix (ZMod M) (ZMod M) C(AddCircle (1 : ℝ), ℂ)) :
     matrixAssemblyLinear π v (star F) = star (matrixAssemblyLinear π v F) := by
+  have delta_star (i : ZMod M) : star (delta i) = delta i := by
+    ext j
+    simp [delta]
+  have targetUnit_star (π : CyclicReadout M →⋆ₐ[ℂ] B) (v : unitary B)
+      (i j : ZMod M) : star (targetUnit π v i j) = targetUnit π v j i := by
+    simp [targetUnit, star_mul, ← map_star, delta_star, mul_assoc]
+  have matrixAssemblyLinear_apply (π : CyclicReadout M →⋆ₐ[ℂ] B)
+      (v : unitary B) (F : Matrix (ZMod M) (ZMod M) C(AddCircle (1 : ℝ), ℂ)) :
+      matrixAssemblyLinear π v F =
+        ∑ i, ∑ j, phaseCalculus (v ^ M) (F i j) * targetUnit π v i j := by
+    rw [matrixAssemblyLinear, Matrix.liftLinear_apply]
+    rfl
   simp only [matrixAssemblyLinear_apply, star_sum, star_mul, targetUnit_star,
     Matrix.star_apply, map_star]
   rw [Finset.sum_comm]
@@ -333,19 +362,23 @@ def cyclic_covariant_lift (π : CyclicReadout M →⋆ₐ[ℂ] B) (v : unitary B
     (h : CyclicCovariant π v) : CyclicObservable M →⋆ₐ[ℂ] B :=
   (matrixAssembly π v h).comp fieldEntries
 
-private theorem readout_expansion (f : CyclicReadout M) :
-    (∑ i : ZMod M, f i • delta i) = f := by
-  ext j
-  simp [delta]
-
-private theorem phaseCalculus_const (u : unitary B) (c : ℂ) :
-    phaseCalculus u (ContinuousMap.const _ c) = algebraMap ℂ B c :=
-  (phaseCalculus u).commutes c
-
 /-- The integrated map preserves every continuous readout. -/
 theorem cyclic_covariant_lift_readout (π : CyclicReadout M →⋆ₐ[ℂ] B) (v : unitary B)
     (h : CyclicCovariant π v) (f : CyclicReadout M) :
     cyclic_covariant_lift π v h (cyclicReadout f) = π f := by
+  have matrixAssemblyLinear_apply (π : CyclicReadout M →⋆ₐ[ℂ] B)
+      (v : unitary B) (F : Matrix (ZMod M) (ZMod M) C(AddCircle (1 : ℝ), ℂ)) :
+      matrixAssemblyLinear π v F =
+        ∑ i, ∑ j, phaseCalculus (v ^ M) (F i j) * targetUnit π v i j := by
+    rw [matrixAssemblyLinear, Matrix.liftLinear_apply]
+    rfl
+  have readout_expansion (f : CyclicReadout M) :
+      (∑ i : ZMod M, f i • delta i) = f := by
+    ext j
+    simp [delta]
+  have phaseCalculus_const (u : unitary B) (c : ℂ) :
+      phaseCalculus u (ContinuousMap.const _ c) = algebraMap ℂ B c :=
+    (phaseCalculus u).commutes c
   change matrixAssemblyLinear π v (fieldEntries (cyclicReadout f)) = _
   rw [matrixAssemblyLinear_apply]
   have he (i j : ZMod M) : fieldEntries (cyclicReadout f) i j =
@@ -363,44 +396,34 @@ theorem cyclic_covariant_lift_readout (π : CyclicReadout M →⋆ₐ[ℂ] B) (v
       rw [map_smul, Algebra.smul_def]
     _ = π f := by rw [readout_expansion]
 
-private theorem shift_entry (t : AddCircle (1 : ℝ)) (i j : ZMod M) :
-    windingShiftObservable M t i j =
-      (if i = 0 then windingPhase t else 1) * (if i - 1 = j then 1 else 0) := by
-  change (Matrix.diagonal (fun k : ZMod M => if k = 0 then windingPhase t else 1) *
-    Equiv.Perm.permMatrix ℂ (Equiv.subRight (1 : ZMod M))) i j = _
-  rw [Matrix.diagonal_mul]
-  simp [Equiv.Perm.permMatrix, PEquiv.toMatrix_apply, Equiv.toPEquiv_apply, Option.mem_def]
-
-private theorem successor_val (j : ZMod M) :
-    (j + 1).val = if j + 1 = 0 then 0 else j.val + 1 := by
-  have hjcast : j + 1 = ((j.val + 1 : ℕ) : ZMod M) := by simp
-  by_cases hj : j + 1 = 0
-  · simp [hj]
-  · rw [if_neg hj, hjcast, ZMod.val_natCast]
-    apply Nat.mod_eq_of_lt
-    have hjlt := j.val_lt
-    by_contra hle
-    have heq : j.val + 1 = M := by omega
-    apply hj
-    rw [hjcast, heq]; simp
-
-private theorem wrap_val (j : ZMod M) (hj : j + 1 = 0) : j.val + 1 = M := by
-  have hjcast : j + 1 = ((j.val + 1 : ℕ) : ZMod M) := by simp
-  have hmod : (j.val + 1) % M = 0 := by
-    rw [hjcast] at hj
-    have hv := congrArg ZMod.val hj
-    simpa only [ZMod.val_natCast, ZMod.val_zero] using hv
-  have hjlt := j.val_lt
-  have hn : ¬ j.val + 1 < M := by
-    intro hh
-    rw [Nat.mod_eq_of_lt hh] at hmod
-    omega
-  omega
-
 private theorem targetUnit_step (π : CyclicReadout M →⋆ₐ[ℂ] B) (v : unitary B)
     (h : CyclicCovariant π v) (j : ZMod M) :
     (if j + 1 = 0 then (v : B) ^ M else 1) * targetUnit π v (j + 1) j =
       (v : B) * π (delta j) := by
+  have successor_val (j : ZMod M) :
+      (j + 1).val = if j + 1 = 0 then 0 else j.val + 1 := by
+    have hjcast : j + 1 = ((j.val + 1 : ℕ) : ZMod M) := by simp
+    by_cases hj : j + 1 = 0
+    · simp [hj]
+    · rw [if_neg hj, hjcast, ZMod.val_natCast]
+      apply Nat.mod_eq_of_lt
+      have hjlt := j.val_lt
+      by_contra hle
+      have heq : j.val + 1 = M := by omega
+      apply hj
+      rw [hjcast, heq]; simp
+  have wrap_val (j : ZMod M) (hj : j + 1 = 0) : j.val + 1 = M := by
+    have hjcast : j + 1 = ((j.val + 1 : ℕ) : ZMod M) := by simp
+    have hmod : (j.val + 1) % M = 0 := by
+      rw [hjcast] at hj
+      have hv := congrArg ZMod.val hj
+      simpa only [ZMod.val_natCast, ZMod.val_zero] using hv
+    have hjlt := j.val_lt
+    have hn : ¬ j.val + 1 < M := by
+      intro hh
+      rw [Nat.mod_eq_of_lt hh] at hmod
+      omega
+    omega
   rw [← conjugate_delta π v h j]
   by_cases hj : j + 1 = 0
   · simp only [targetUnit, hj, if_true, ZMod.val_zero, pow_zero, one_mul]
@@ -413,6 +436,33 @@ private theorem targetUnit_step (π : CyclicReadout M →⋆ₐ[ℂ] B) (v : uni
 theorem cyclic_covariant_lift_update (π : CyclicReadout M →⋆ₐ[ℂ] B) (v : unitary B)
     (h : CyclicCovariant π v) :
     cyclic_covariant_lift π v h (windingShiftObservable M) = (v : B) := by
+  have phaseCalculus_coordinate (u : unitary B) :
+      phaseCalculus u windingPhase = (u : B) := by
+    change cfcHom _ (windingPhase.comp (spectrumPhase u)) = _
+    convert cfcHom_id (show IsStarNormal (u : B) from inferInstance) using 1
+    congr 1
+    ext z
+    change (AddCircle.toCircle
+      ((AddCircle.homeomorphCircle (T := (1 : ℝ)) one_ne_zero).symm _) : ℂ) = z.1
+    rw [← AddCircle.homeomorphCircle_apply one_ne_zero]
+    simp only [Homeomorph.apply_symm_apply]
+    rfl
+  have delta_sum : (∑ i : ZMod M, delta i) = 1 := by
+    ext j
+    simp [delta]
+  have matrixAssemblyLinear_apply (π : CyclicReadout M →⋆ₐ[ℂ] B)
+      (v : unitary B) (F : Matrix (ZMod M) (ZMod M) C(AddCircle (1 : ℝ), ℂ)) :
+      matrixAssemblyLinear π v F =
+        ∑ i, ∑ j, phaseCalculus (v ^ M) (F i j) * targetUnit π v i j := by
+    rw [matrixAssemblyLinear, Matrix.liftLinear_apply]
+    rfl
+  have shift_entry (t : AddCircle (1 : ℝ)) (i j : ZMod M) :
+      windingShiftObservable M t i j =
+        (if i = 0 then windingPhase t else 1) * (if i - 1 = j then 1 else 0) := by
+    change (Matrix.diagonal (fun k : ZMod M => if k = 0 then windingPhase t else 1) *
+      Equiv.Perm.permMatrix ℂ (Equiv.subRight (1 : ZMod M))) i j = _
+    rw [Matrix.diagonal_mul]
+    simp [Equiv.Perm.permMatrix, PEquiv.toMatrix_apply, Equiv.toPEquiv_apply, Option.mem_def]
   change matrixAssemblyLinear π v (fieldEntries (windingShiftObservable M)) = _
   rw [matrixAssemblyLinear_apply, Finset.sum_comm]
   have he (i j : ZMod M) : fieldEntries (windingShiftObservable M) i j =
@@ -436,71 +486,9 @@ theorem cyclic_covariant_lift_update (π : CyclicReadout M →⋆ₐ[ℂ] B) (v 
 private def sourceShift : unitary (CyclicObservable M) :=
   ⟨windingShiftObservable M, winding_shift_unitary⟩
 
-private theorem source_covariant : CyclicCovariant (cyclicReadout (M := M)) sourceShift := by
-  intro f
-  have hcomm : windingShiftObservable M * cyclicReadout f =
-      cyclicReadout (cyclicAction 1 f) * windingShiftObservable M := by
-    ext t i j
-    change (windingShiftObservable M t * Matrix.diagonal f) i j =
-      (Matrix.diagonal (cyclicAction 1 f) * windingShiftObservable M t) i j
-    rw [Matrix.mul_diagonal, Matrix.diagonal_mul, shift_entry]
-    by_cases hij : i - 1 = j
-    · subst j; simp [cyclicAction, mul_comm]
-    · simp [hij]
-  change windingShiftObservable M * cyclicReadout f * star (windingShiftObservable M) = _
-  rw [hcomm, mul_assoc, Unitary.mul_star_self_of_mem winding_shift_unitary, mul_one]
-
-private theorem readout_injective : Function.Injective (cyclicReadout (M := M)) := by
-  intro f g h
-  ext i
-  simpa [cyclicReadout] using congrArg (fun F : CyclicObservable M => F 0 i i) h
-
 private def constantUnit (i j : ZMod M) : CyclicObservable M :=
   ContinuousMap.const _ (Matrix.single i j 1)
 
-private theorem shift_constant_column (k : ZMod M) (hk : k + 1 ≠ 0) :
-    windingShiftObservable M * constantUnit k 0 = constantUnit (k + 1) 0 := by
-  ext t i j
-  change (windingShiftObservable M t * Matrix.single k (0 : ZMod M) (1 : ℂ)) i j =
-    Matrix.single (k + 1) (0 : ZMod M) (1 : ℂ) i j
-  by_cases hj : j = 0
-  · subst j
-    rw [Matrix.mul_single_apply_same, mul_one, shift_entry]
-    by_cases hi : i = k + 1
-    · subst i; simp [hk]
-    · have hsub : i - 1 ≠ k := fun hh => hi (sub_eq_iff_eq_add.mp hh)
-      simp [hsub, hi, Matrix.single, eq_comm]
-  · rw [Matrix.mul_single_apply_of_ne _ _ _ _ _ hj]
-    simp [Matrix.single, hj, eq_comm]
-
-private theorem source_column (n : ℕ) (hn : n < M) :
-    windingShiftObservable M ^ n * cyclicReadout (delta 0) = constantUnit (n : ZMod M) 0 := by
-  induction n with
-  | zero =>
-    ext t i j
-    by_cases hi : i = 0 <;> by_cases hj : j = 0 <;>
-      simp [constantUnit, cyclicReadout, delta, Matrix.single,
-        Matrix.diagonal_apply, hi, hj, eq_comm]
-  | succ n ih =>
-    rw [pow_succ', mul_assoc, ih (by omega)]
-    have hnz : (n : ZMod M) + 1 ≠ 0 := by
-      intro hz
-      have hncast : ((n + 1 : ℕ) : ZMod M) = 0 := by simpa using hz
-      have hv := congrArg ZMod.val hncast
-      rw [ZMod.val_natCast_of_lt hn, ZMod.val_zero] at hv
-      omega
-    simpa only [Nat.cast_succ] using shift_constant_column (n : ZMod M) hnz
-
-private theorem sourceUnit_eq_constant (i j : ZMod M) :
-    targetUnit cyclicReadout sourceShift i j = constantUnit i j := by
-  rw [← column_outer]
-  have hc (k : ZMod M) : column cyclicReadout sourceShift k = constantUnit k 0 := by
-    simpa only [column, sourceShift, ZMod.natCast_zmod_val] using source_column k.val k.val_lt
-  rw [hc, hc]
-  ext t a b
-  change (Matrix.single i (0 : ZMod M) (1 : ℂ) *
-    star (Matrix.single j (0 : ZMod M) (1 : ℂ))) a b = _
-  simp [Matrix.star_eq_conjTranspose, Matrix.conjTranspose_single, constantUnit]
 
 private def scalarField : C(AddCircle (1 : ℝ), ℂ) →⋆ₐ[ℂ] CyclicObservable M where
   toFun := PhaseFunctionCenter.phaseScalarObservable
@@ -516,66 +504,134 @@ private def scalarField : C(AddCircle (1 : ℝ), ℂ) →⋆ₐ[ℂ] CyclicObser
     ext t i j; by_cases hij : i = j <;>
       simp [PhaseFunctionCenter.phaseScalarObservable, hij, eq_comm]
 
-private theorem scalarField_coordinate : scalarField windingPhase = windingShiftObservable M ^ M :=
-  winding_shift_pow_card.symm
-
-private theorem field_reconstruction (F : CyclicObservable M) :
-    F = ∑ i : ZMod M, ∑ j : ZMod M, scalarField (coefficient F i j) * constantUnit i j := by
-  apply ContinuousMap.ext
-  intro t
-  rw [ContinuousMap.sum_apply]
-  simp only [ContinuousMap.sum_apply, ContinuousMap.mul_apply]
-  rw [Matrix.matrix_eq_sum_single (F t)]
-  apply Finset.sum_congr rfl; intro i _
-  apply Finset.sum_congr rfl; intro j _
-  change Matrix.single i j (F t i j) = Matrix.scalar _ (F t i j) * Matrix.single i j 1
-  ext a b
-  simp [Matrix.scalar_apply, Matrix.diagonal_mul, Matrix.single]
-
-private theorem phase_hom_ext (φ ψ : C(AddCircle (1 : ℝ), ℂ) →⋆ₐ[ℂ] B)
-    (h : φ windingPhase = ψ windingPhase) : φ = ψ := by
-  let e := (AddCircle.homeomorphCircle (T := (1 : ℝ)) one_ne_zero).compStarAlgEquiv' ℂ ℂ
-  let : CompactSpace (↑(Submonoid.unitSphere ℂ) : Set ℂ) :=
-    inferInstanceAs (CompactSpace Circle)
-  have he : φ.comp e.toStarAlgHom = ψ.comp e.toStarAlgHom := by
-    apply ContinuousMap.starAlgHom_ext_map_X (map_continuous _) (map_continuous _)
-    have hx : e ((Polynomial.toContinuousMapOnAlgHom
-        (↑(Submonoid.unitSphere ℂ) : Set ℂ)) Polynomial.X) = windingPhase := by
-      ext t
-      change Polynomial.eval
-        (↑((AddCircle.homeomorphCircle (T := (1 : ℝ)) one_ne_zero) t) : ℂ)
-        Polynomial.X = (t.toCircle : ℂ)
-      rw [Polynomial.eval_X, AddCircle.homeomorphCircle_apply]
-    change φ (e _) = ψ (e _)
-    rw [hx, h]
-  ext f
-  obtain ⟨g, rfl⟩ := e.surjective f
-  exact DFunLike.congr_fun he g
-
-private theorem lift_unique (φ ψ : CyclicObservable M →⋆ₐ[ℂ] B)
-    (hd : ∀ f, φ (cyclicReadout f) = ψ (cyclicReadout f))
-    (hs : φ (windingShiftObservable M) = ψ (windingShiftObservable M)) : φ = ψ := by
-  have hz : φ.comp scalarField = ψ.comp scalarField := by
-    apply phase_hom_ext
-    change φ (scalarField windingPhase) = ψ (scalarField windingPhase)
-    rw [scalarField_coordinate, map_pow, map_pow, hs]
-  have he (i j : ZMod M) : φ (constantUnit i j) = ψ (constantUnit i j) := by
-    rw [← sourceUnit_eq_constant]
-    simp only [targetUnit, sourceShift, map_mul, map_pow, map_star]
-    rw [hd, hs]
-  ext F
-  rw [field_reconstruction F, map_sum, map_sum]
-  apply Finset.sum_congr rfl; intro i _
-  rw [map_sum, map_sum]
-  apply Finset.sum_congr rfl; intro j _
-  rw [map_mul, map_mul, he]
-  exact congrArg (· * ψ (constantUnit i j)) (DFunLike.congr_fun hz (coefficient F i j))
-
 /-- Every cyclic covariant pair admits exactly one integrated unital complex star homomorphism. -/
 theorem cyclic_covariant_universal_property (π : CyclicReadout M →⋆ₐ[ℂ] B) (v : unitary B)
     (h : CyclicCovariant π v) :
     ∃! L : CyclicObservable M →⋆ₐ[ℂ] B,
       (∀ f, L (cyclicReadout f) = π f) ∧ L (windingShiftObservable M) = (v : B) := by
+  have source_column (n : ℕ) (hn : n < M) :
+      windingShiftObservable M ^ n * cyclicReadout (delta 0) = constantUnit (n : ZMod M) 0 := by
+    ext t i j
+    change ((windingShiftObservable M t) ^ n *
+      Matrix.diagonal (delta (0 : ZMod M) : ZMod M → ℂ)) i j =
+      Matrix.single (n : ZMod M) (0 : ZMod M) (1 : ℂ) i j
+    rw [Matrix.mul_diagonal]
+    by_cases hj : j = 0
+    · subst j
+      have hp : Matrix.mulVec (windingShiftObservable M t ^ n)
+          (fun k => if k = 0 then 1 else 0) i =
+          (∏ k ∈ Finset.range n, if i - (k : ZMod M) = 0 then windingPhase t else 1) *
+            (if i - (n : ZMod M) = 0 then 1 else 0) := by
+        -- Apply the existing private power formula by its exact numeric Lean name.
+        run_tac
+          let name := (Lean.Name.num
+            `_private.D5.S3.ContinuousObservables.CentralWinding 0).append
+            `D5.S3.ContinuousObservables.CentralWinding.winding_shift_pow_mulVec
+          Lean.Elab.Tactic.evalTactic (← `(tactic| exact $(Lean.mkIdent name) _ _ _ _))
+      change (∑ k, (windingShiftObservable M t ^ n) i k * (if k = 0 then 1 else 0)) =
+        (∏ k ∈ Finset.range n, if i - (k : ZMod M) = 0 then windingPhase t else 1) *
+          (if i - (n : ZMod M) = 0 then 1 else 0) at hp
+      simp only [mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true] at hp
+      rw [show delta (0 : ZMod M) 0 = 1 by simp [delta], mul_one, hp]
+      by_cases hi : i = (n : ZMod M)
+      · subst i
+        have hprod : (∏ k ∈ Finset.range n,
+            if (n : ZMod M) - (k : ZMod M) = 0 then windingPhase t else 1) = 1 := by
+          apply Finset.prod_eq_one
+          intro k hk
+          have hklt := Finset.mem_range.mp hk
+          have hne : (n : ZMod M) ≠ (k : ZMod M) := by
+            intro heq
+            have hv := congrArg ZMod.val heq
+            rw [ZMod.val_natCast_of_lt hn, ZMod.val_natCast_of_lt (by omega)] at hv
+            omega
+          simp [sub_ne_zero.mpr hne]
+        simp [hprod]
+      · simp [sub_ne_zero.mpr hi, Matrix.single, Ne.symm hi]
+    · simp [delta, hj, Matrix.single, Ne.symm hj]
+  have sourceUnit_eq_constant (i j : ZMod M) :
+      targetUnit cyclicReadout sourceShift i j = constantUnit i j := by
+    have delta_star (i : ZMod M) : star (delta i) = delta i := by
+      ext j
+      simp [delta]
+    have delta_mul (i j : ZMod M) :
+        delta i * delta j = if i = j then delta i else 0 := by
+      by_cases hij : i = j
+      · subst j; ext k; simp [delta]
+      · rw [if_neg hij]; ext k
+        by_cases hi : k = i <;> by_cases hj : k = j <;> simp_all [delta]
+    have column_outer (π : CyclicReadout M →⋆ₐ[ℂ] CyclicObservable M)
+        (v : unitary (CyclicObservable M))
+        (i j : ZMod M) : column π v i * star (column π v j) = targetUnit π v i j := by
+      have hp : π (delta 0) * π (delta 0) = π (delta 0) := by
+        rw [← map_mul, delta_mul]; simp
+      simp only [column, star_mul, ← map_star, delta_star, targetUnit]
+      calc
+        (v : CyclicObservable M) ^ i.val * π (delta 0) *
+            (π (delta 0) * star ((v : CyclicObservable M) ^ j.val)) =
+          (v : CyclicObservable M) ^ i.val * (π (delta 0) * π (delta 0)) *
+            star ((v : CyclicObservable M) ^ j.val) := by
+            noncomm_ring
+        _ = _ := by rw [hp]
+    rw [← column_outer]
+    have hc (k : ZMod M) : column cyclicReadout sourceShift k = constantUnit k 0 := by
+      simpa only [column, sourceShift, ZMod.natCast_zmod_val] using source_column k.val k.val_lt
+    rw [hc, hc]
+    ext t a b
+    change (Matrix.single i (0 : ZMod M) (1 : ℂ) *
+      star (Matrix.single j (0 : ZMod M) (1 : ℂ))) a b = _
+    simp [Matrix.star_eq_conjTranspose, Matrix.conjTranspose_single, constantUnit]
+  have lift_unique (φ ψ : CyclicObservable M →⋆ₐ[ℂ] B)
+      (hd : ∀ f, φ (cyclicReadout f) = ψ (cyclicReadout f))
+      (hs : φ (windingShiftObservable M) = ψ (windingShiftObservable M)) : φ = ψ := by
+    have scalarField_coordinate : scalarField windingPhase = windingShiftObservable M ^ M :=
+      winding_shift_pow_card.symm
+    have field_reconstruction (F : CyclicObservable M) :
+        F = ∑ i : ZMod M, ∑ j : ZMod M, scalarField (coefficient F i j) * constantUnit i j := by
+      apply ContinuousMap.ext
+      intro t
+      rw [ContinuousMap.sum_apply]
+      simp only [ContinuousMap.sum_apply, ContinuousMap.mul_apply]
+      rw [Matrix.matrix_eq_sum_single (F t)]
+      apply Finset.sum_congr rfl; intro i _
+      apply Finset.sum_congr rfl; intro j _
+      change Matrix.single i j (F t i j) = Matrix.scalar _ (F t i j) * Matrix.single i j 1
+      ext a b
+      simp [Matrix.scalar_apply, Matrix.diagonal_mul, Matrix.single]
+    have phase_hom_ext (φ ψ : C(AddCircle (1 : ℝ), ℂ) →⋆ₐ[ℂ] B)
+        (h : φ windingPhase = ψ windingPhase) : φ = ψ := by
+      let e := (AddCircle.homeomorphCircle (T := (1 : ℝ)) one_ne_zero).compStarAlgEquiv' ℂ ℂ
+      let : CompactSpace (↑(Submonoid.unitSphere ℂ) : Set ℂ) :=
+        inferInstanceAs (CompactSpace Circle)
+      have he : φ.comp e.toStarAlgHom = ψ.comp e.toStarAlgHom := by
+        apply ContinuousMap.starAlgHom_ext_map_X (map_continuous _) (map_continuous _)
+        have hx : e ((Polynomial.toContinuousMapOnAlgHom
+            (↑(Submonoid.unitSphere ℂ) : Set ℂ)) Polynomial.X) = windingPhase := by
+          ext t
+          change Polynomial.eval
+            (↑((AddCircle.homeomorphCircle (T := (1 : ℝ)) one_ne_zero) t) : ℂ)
+            Polynomial.X = (t.toCircle : ℂ)
+          rw [Polynomial.eval_X, AddCircle.homeomorphCircle_apply]
+        change φ (e _) = ψ (e _)
+        rw [hx, h]
+      ext f
+      obtain ⟨g, rfl⟩ := e.surjective f
+      exact DFunLike.congr_fun he g
+    have hz : φ.comp scalarField = ψ.comp scalarField := by
+      apply phase_hom_ext
+      change φ (scalarField windingPhase) = ψ (scalarField windingPhase)
+      rw [scalarField_coordinate, map_pow, map_pow, hs]
+    have he (i j : ZMod M) : φ (constantUnit i j) = ψ (constantUnit i j) := by
+      rw [← sourceUnit_eq_constant]
+      simp only [targetUnit, sourceShift, map_mul, map_pow, map_star]
+      rw [hd, hs]
+    ext F
+    rw [field_reconstruction F, map_sum, map_sum]
+    apply Finset.sum_congr rfl; intro i _
+    rw [map_sum, map_sum]
+    apply Finset.sum_congr rfl; intro j _
+    rw [map_mul, map_mul, he]
+    exact congrArg (· * ψ (constantUnit i j)) (DFunLike.congr_fun hz (coefficient F i j))
   refine ⟨cyclic_covariant_lift π v h,
     ⟨cyclic_covariant_lift_readout π v h, cyclic_covariant_lift_update π v h⟩, ?_⟩
   intro L hL
@@ -586,6 +642,26 @@ private theorem source_generates :
     (StarAlgebra.adjoin ℂ
       (Set.range (cyclicReadout (M := M)) ∪ {windingShiftObservable M})).topologicalClosure =
       ⊤ := by
+  have shift_entry (t : AddCircle (1 : ℝ)) (i j : ZMod M) :
+      windingShiftObservable M t i j =
+        (if i = 0 then windingPhase t else 1) * (if i - 1 = j then 1 else 0) := by
+    change (Matrix.diagonal (fun k : ZMod M => if k = 0 then windingPhase t else 1) *
+      Equiv.Perm.permMatrix ℂ (Equiv.subRight (1 : ZMod M))) i j = _
+    rw [Matrix.diagonal_mul]
+    simp [Equiv.Perm.permMatrix, PEquiv.toMatrix_apply, Equiv.toPEquiv_apply, Option.mem_def]
+  have source_covariant : CyclicCovariant (cyclicReadout (M := M)) sourceShift := by
+    intro f
+    have hcomm : windingShiftObservable M * cyclicReadout f =
+        cyclicReadout (cyclicAction 1 f) * windingShiftObservable M := by
+      ext t i j
+      change (windingShiftObservable M t * Matrix.diagonal f) i j =
+        (Matrix.diagonal (cyclicAction 1 f) * windingShiftObservable M t) i j
+      rw [Matrix.mul_diagonal, Matrix.diagonal_mul, shift_entry]
+      by_cases hij : i - 1 = j
+      · subst j; simp [cyclicAction, mul_comm]
+      · simp [hij]
+    change windingShiftObservable M * cyclicReadout f * star (windingShiftObservable M) = _
+    rw [hcomm, mul_assoc, Unitary.mul_star_self_of_mem winding_shift_unitary, mul_one]
   let S := StarAlgebra.adjoin ℂ
     (Set.range (cyclicReadout (M := M)) ∪ {windingShiftObservable M})
   let A := S.topologicalClosure
@@ -607,7 +683,10 @@ private theorem source_generates :
     exact source_covariant f
   obtain ⟨L, hL, _⟩ := cyclic_covariant_universal_property π v hc
   have he : A.subtype.comp L = StarAlgHom.id ℂ (CyclicObservable M) := by
-    apply lift_unique
+    obtain ⟨K, _, hK⟩ :=
+      cyclic_covariant_universal_property (M := M) (B := CyclicObservable M)
+        cyclicReadout sourceShift source_covariant
+    refine (hK _ ⟨?_, ?_⟩).trans (hK _ ⟨fun _ => rfl, rfl⟩).symm
     · intro f
       change (L (cyclicReadout f) : CyclicObservable M) = cyclicReadout f
       rw [hL.1]; rfl
@@ -627,8 +706,32 @@ theorem cyclic_covariant_model :
         cyclicReadout (cyclicAction 1 f)) ∧
       (StarAlgebra.adjoin ℂ
         (Set.range (cyclicReadout (M := M)) ∪ {windingShiftObservable M})).topologicalClosure =
-        ⊤ :=
-  ⟨readout_injective, winding_shift_unitary, source_covariant, source_generates⟩
+        ⊤ := by
+  have shift_entry (t : AddCircle (1 : ℝ)) (i j : ZMod M) :
+      windingShiftObservable M t i j =
+        (if i = 0 then windingPhase t else 1) * (if i - 1 = j then 1 else 0) := by
+    change (Matrix.diagonal (fun k : ZMod M => if k = 0 then windingPhase t else 1) *
+      Equiv.Perm.permMatrix ℂ (Equiv.subRight (1 : ZMod M))) i j = _
+    rw [Matrix.diagonal_mul]
+    simp [Equiv.Perm.permMatrix, PEquiv.toMatrix_apply, Equiv.toPEquiv_apply, Option.mem_def]
+  have source_covariant : CyclicCovariant (cyclicReadout (M := M)) sourceShift := by
+    intro f
+    have hcomm : windingShiftObservable M * cyclicReadout f =
+        cyclicReadout (cyclicAction 1 f) * windingShiftObservable M := by
+      ext t i j
+      change (windingShiftObservable M t * Matrix.diagonal f) i j =
+        (Matrix.diagonal (cyclicAction 1 f) * windingShiftObservable M t) i j
+      rw [Matrix.mul_diagonal, Matrix.diagonal_mul, shift_entry]
+      by_cases hij : i - 1 = j
+      · subst j; simp [cyclicAction, mul_comm]
+      · simp [hij]
+    change windingShiftObservable M * cyclicReadout f * star (windingShiftObservable M) = _
+    rw [hcomm, mul_assoc, Unitary.mul_star_self_of_mem winding_shift_unitary, mul_one]
+  have readout_injective : Function.Injective (cyclicReadout (M := M)) := by
+    intro f g h
+    ext i
+    simpa [cyclicReadout] using congrArg (fun F : CyclicObservable M => F 0 i i) h
+  exact ⟨readout_injective, winding_shift_unitary, source_covariant, source_generates⟩
 
 /-- A separately universal covariant algebra has a unique generator-preserving star isometry.
 Only its universal contracts at itself and at the concrete model are needed for comparison. -/
@@ -654,7 +757,9 @@ theorem cyclic_covariant_unique_isomorphism
       · change G (F (u : A)) = (u : A); rw [hF.2]; exact hG.2
     · exact ⟨fun _ => rfl, rfl⟩
   have hFG : F.comp G = StarAlgHom.id ℂ (CyclicObservable M) := by
-    apply lift_unique
+    obtain ⟨K, _, hK⟩ := cyclic_covariant_universal_property (M := M) (B := CyclicObservable M)
+      cyclicReadout sourceShift (cyclic_covariant_model.2.2.1)
+    refine (hK _ ⟨?_, ?_⟩).trans (hK _ ⟨fun _ => rfl, rfl⟩).symm
     · intro f; change F (G (cyclicReadout f)) = cyclicReadout f; rw [hG.1, hF.1]
     · change F (G (windingShiftObservable M)) = windingShiftObservable M
       rw [hG.2]; exact hF.2
