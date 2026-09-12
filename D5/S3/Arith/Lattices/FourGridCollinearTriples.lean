@@ -271,6 +271,116 @@ private noncomputable def apMarkedTriple {d : Nat} (t : OrientedArithmeticProgre
     | linear_combination -hbase j i
     | ring
 
+private def extremeInteriorCoordinate (towardSecond : Bool) (x z : Fin 4) : Fin 4 :=
+  ⟨(if towardSecond then x.val + 2 * z.val else 2 * x.val + z.val) / 3, by
+    split <;> omega⟩
+
+private def extremeInterior {d : Nat} (towardSecond : Bool) (x z : GridPoint d) :
+    GridPoint d :=
+  fun i => extremeInteriorCoordinate towardSecond (x i) (z i)
+
+private noncomputable def extremeMarkedTriple {d : Nat}
+    (q : DistinctCoordinatePairs EqualOrExtreme d × Bool) : CollinearTriples d × Bool := by
+  classical
+  let x := q.1.val.val.1
+  let z := q.1.val.val.2
+  let y := extremeInterior q.2 x z
+  have hxz : x ≠ z := q.1.property
+  have hcoord : ∃ k, x k ≠ z k := by
+    by_contra h
+    simp only [not_exists, not_not] at h
+    exact hxz (funext h)
+  let k := Classical.choose hcoord
+  have hk : x k ≠ z k := Classical.choose_spec hcoord
+  have hkrel := q.1.val.property k
+  change EqualOrExtreme (x k) (z k) at hkrel
+  have hkextreme :
+      (x k).val = 0 ∧ (z k).val = 3 ∨ (x k).val = 3 ∧ (z k).val = 0 := by
+    rcases hkrel with hEq | hExtreme | hExtreme
+    · exact False.elim (hk hEq)
+    · exact Or.inl hExtreme
+    · exact Or.inr hExtreme
+  have hxy : x ≠ y := by
+    intro h
+    have hkval := congrArg (fun p : GridPoint d => (p k).val) h
+    change (x k).val = (extremeInteriorCoordinate q.2 (x k) (z k)).val at hkval
+    rcases hkextreme with ⟨hx, hz⟩ | ⟨hx, hz⟩ <;>
+      cases hq : q.2 <;>
+        simp [extremeInteriorCoordinate, hx, hz, hq] at hkval
+  have hyz : y ≠ z := by
+    intro h
+    have hkval := congrArg (fun p : GridPoint d => (p k).val) h
+    change (extremeInteriorCoordinate q.2 (x k) (z k)).val = (z k).val at hkval
+    rcases hkextreme with ⟨hx, hz⟩ | ⟨hx, hz⟩ <;>
+      cases hq : q.2 <;>
+        simp [extremeInteriorCoordinate, hx, hz, hq] at hkval
+  have haffine (i : Fin d) :
+      if q.2 then
+        3 * ((y i : Nat) : Int) =
+          ((x i : Nat) : Int) + 2 * ((z i : Nat) : Int)
+      else
+        3 * ((y i : Nat) : Int) =
+          2 * ((x i : Nat) : Int) + ((z i : Nat) : Int) := by
+    have hi := q.1.val.property i
+    change EqualOrExtreme (x i) (z i) at hi
+    rcases hi with hEq | hExtreme | hExtreme
+    · cases hq : q.2 <;>
+        simp [y, extremeInterior, extremeInteriorCoordinate, hEq, hq] <;> omega
+    · rcases hExtreme with ⟨hx, hz⟩
+      cases hq : q.2 <;>
+        simp [y, extremeInterior, extremeInteriorCoordinate, hx, hz, hq]
+    · rcases hExtreme with ⟨hx, hz⟩
+      cases hq : q.2 <;>
+        simp [y, extremeInterior, extremeInteriorCoordinate, hx, hz, hq]
+  have hbase : Collinear x y z := by
+    intro i j
+    have hi := haffine i
+    have hj := haffine j
+    cases hq : q.2
+    · rw [hq] at hi hj
+      simp only [Bool.false_eq_true, ↓reduceIte] at hi hj
+      have hi' : ((z i : Nat) : Int) - ((x i : Nat) : Int) =
+          3 * (((y i : Nat) : Int) - ((x i : Nat) : Int)) := by
+        linarith
+      have hj' : ((z j : Nat) : Int) - ((x j : Nat) : Int) =
+          3 * (((y j : Nat) : Int) - ((x j : Nat) : Int)) := by
+        linarith
+      rw [hi', hj']
+      ring
+    · rw [hq] at hi hj
+      simp only [↓reduceIte] at hi hj
+      have hi' : 2 * (((z i : Nat) : Int) - ((x i : Nat) : Int)) =
+          3 * (((y i : Nat) : Int) - ((x i : Nat) : Int)) := by
+        linarith
+      have hj' : 2 * (((z j : Nat) : Int) - ((x j : Nat) : Int)) =
+          3 * (((y j : Nat) : Int) - ((x j : Nat) : Int)) := by
+        linarith
+      nlinarith only [hi', hj']
+  refine (⟨{x, y, z}, ?_⟩, orientationMark x z)
+  change {x, y, z} ∈
+    ((Finset.univ : Finset (GridPoint d)).powersetCard 3).filter IsCollinearTriple
+  rw [Finset.mem_filter, Finset.mem_powersetCard]
+  refine ⟨⟨by simp, by simp [hxy, hxz, hyz]⟩, ?_⟩
+  refine ⟨by simp [hxy, hxz, hyz], ?_⟩
+  intro a ha b hb c hc
+  simp only [Finset.mem_insert, Finset.mem_singleton] at ha hb hc
+  rcases ha with (rfl | rfl | rfl) <;>
+    rcases hb with (rfl | rfl | rfl) <;>
+      rcases hc with (rfl | rfl | rfl)
+  all_goals
+    unfold Collinear
+    intro i j
+    first
+    | exact hbase i j
+    | exact hbase j i
+    | exact (hbase i j).symm
+    | exact (hbase j i).symm
+    | linear_combination hbase i j
+    | linear_combination -hbase i j
+    | linear_combination hbase j i
+    | linear_combination -hbase j i
+    | ring
+
 #print axioms endpoint_pair_counts
 #print axioms oriented_arithmetic_progression_count
 #print axioms extreme_line_coordinate_classification
