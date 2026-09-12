@@ -1,0 +1,13 @@
+**命题 356.2。** 取 $A_n=2^n$ 对所有 $n\in\omega$。$\ell_A$ 的每个实水平都在 $\tau_{+,A}$ 中闭，然而 $\ell_A$ 处处不连续。对定义 338.1 的同一集合 $L_{A,1}$，有
+$$
+\overline{L_{A,1}}^{\tau_{+,A}}=L_{A,1},\qquad
+0\notin\overline{L_{A,1}}^{\tau_{+,A}},
+$$
+$$
+\overline{L_{A,1}}^{\tau_{\rm coord,A}^{B}}
+=\{u\in B_A^{\rm cap}:\ell_A(u)\le1\},\qquad
+\overline{L_{A,1}}^{\tau_{\rm coord,A}^{X}}
+=\{x\in X_A^{\rm cap}:S_A(x)\le1\}.
+$$
+后两个闭包都含零。
+

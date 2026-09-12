@@ -1,0 +1,28 @@
+**定义 255（整数实现及两种集合提升）。** 记通常整数环为 $\mathbb Z_o$，记 CSA 第一节的整数实现与第 113 条的带符号数字载体分别为
+$$
+J=(\{0\}\times\omega)\cup(\{1\}\times\omega_{>0}),\qquad
+S=\mathsf Z_{\mathbb Z}.
+$$
+在 $J$ 中置 $0_J=(0,0)$、$1_J=(0,1)$，并定义
+$$
+v:J\longrightarrow\mathbb Z_o,\quad v(0,n)=n,\quad v(1,n)=-n,
+\qquad
+v^{-1}(z)=
+\begin{cases}(0,z),&z\ge0,\\ (1,-z),&z<0.\end{cases}
+$$
+这里非负整数与自然序数按通常数值对应；$v^{-1}$ 的第二坐标取该自然序数。$J$ 的加、乘、负和序沿 $v$ 运输，分别记为 $+_J,\cdot_J,-_J,<_J$。定义
+$$
+b=\operatorname{scode}\circ v:J\longrightarrow S,\qquad
+b^{-1}=v^{-1}\circ\operatorname{ival}:S\longrightarrow J.
+$$
+$S$ 的运算沿用第 113–114 条的 $\oplus_Z,\otimes_Z,\ominus_Z$；置 $c<_Sd$ 当且仅当 $\operatorname{ival}(c)<\operatorname{ival}(d)$，$0_S=\operatorname{scode}(0)$、$1_S=\operatorname{scode}(1)$。以后 CSA 整数常数在 $J$ 字段中指经 $v^{-1}$ 取得的对象，在 $S$ 字段中指相应 $b$ 像；自然序数、事件标签和来源叶参数另按各自类型解释。
+
+复用第 71–78 条的 $\operatorname{Enc},\operatorname{Dec},\mathfrak V_Z,\in_Z$，对 $c\in S$ 分别定义
+$$
+\chi(c)=\operatorname{Enc}(b^{-1}(c)),\qquad
+\mathrm e(c)=\operatorname{Enc}(c),\qquad
+\beta=\operatorname{Enc}\circ b^{-1}\circ\operatorname{Dec}:
+\operatorname{Enc}[S]\longrightarrow\operatorname{Enc}[J].
+$$
+$\chi$ 提升原整数对象，$\mathrm e$ 提升数字对象。另在 $S_{\ge0}=\{c\in S:\operatorname{ival}(c)\ge0\}$ 上定义自然数值提升 $\nu(c)=\operatorname{NatZ}(\operatorname{ival}(c))$。这三个提升所指的集合不同；普通数字、有效码以及有效码的语义成员不作字面认同。
+

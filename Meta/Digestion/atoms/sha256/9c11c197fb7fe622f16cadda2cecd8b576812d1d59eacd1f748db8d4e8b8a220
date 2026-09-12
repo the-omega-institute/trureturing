@@ -1,0 +1,36 @@
+**定理 353.2。** 对上述任一集合 $X$，记
+$$
+X^*=\operatorname{Enc}[X]=\operatorname{El}(\operatorname{Enc}(X)),\qquad
+\operatorname{enc}_X=\operatorname{Enc}|_X.
+$$
+它是 $X\to X^*$ 的双射，逆恰为 $\operatorname{Dec}|_{X^*}$。若 $f:D\to Y$ 为所列任一函数或精确部分域上的函数，$G_f$ 为其普通图，则外部共轭和原图码分别为
+$$
+f^*=\operatorname{enc}_Y\circ f\circ\operatorname{enc}_D^{-1}:D^*\to Y^*,
+$$
+$$
+G_{f^*}=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle:x\in D\},
+$$
+$$
+\operatorname{Enc}(G_f)
+=\operatorname{Pack}\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle_Z:x\in D\}.
+$$
+外部共轭的域为 $\operatorname{Enc}[D]$，原图码的语义域为单个 $\operatorname{Enc}(D)$。
+
+若另有指定双射 $b_D:D\to C_D,b_Y:Y\to C_Y$，令 $f^d=b_Y\circ f\circ b_D^{-1}$，并按定义 336.1 取
+$$
+h_D(c)=\operatorname{Enc}(b_D^{-1}(c)),\qquad
+h_Y(d)=\operatorname{Enc}(b_Y^{-1}(d)).
+$$
+则两个图码恰为
+$$
+\operatorname{Enc}(G_f)
+=\operatorname{Pack}\{\langle h_D(c),h_Y(d)\rangle_Z:
+\langle c,d\rangle\in G_{f^d}\},
+$$
+$$
+\operatorname{Enc}(G_{f^d})
+=\operatorname{Pack}\{\langle\operatorname{Enc}(c),\operatorname{Enc}(d)\rangle_Z:
+\langle c,d\rangle\in G_{f^d}\}.
+$$
+原对象提升 $h_D$ 的像恰为 $D^*$，逆在这个像上为 $b_D\circ\operatorname{Dec}$；数字对象提升 $e_D(c)=\operatorname{Enc}(c)$ 的像恰为 $\operatorname{Enc}[C_D]$，逆在这个像上为 $\operatorname{Dec}$。输出槽有相同的两个精确逆域。
+

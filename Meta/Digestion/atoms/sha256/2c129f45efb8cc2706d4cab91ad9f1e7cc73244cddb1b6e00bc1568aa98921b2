@@ -1,0 +1,18 @@
+**定理 309。** 设 $I\subseteq\omega$ 有限，$d=|I|$，$\Lambda\le\mathbb Z_o^I$。$\Lambda$ 有有限整数基 $\lambda_1,\ldots,\lambda_r$，其中 $0\le r\le d$。按 $I$ 递增排列坐标，令 $\mathbf M_{\Lambda,I}:\mathbb Z_o^r\to\mathbb Z_o^I$ 以这些基为列，$\mathbf M_{\Lambda,I,\mathbb T}:\mathbb T^r\to\mathbb T^I$ 为所诱导的连续同态，$W_{\Lambda,I}=\operatorname{span}_{\mathbb R}\Lambda$，$\operatorname{quot}_I:\mathbb R^I\to\mathbb T^I$ 为逐坐标商映射。按 $W_{\Lambda,I}$ 所用的通常实坐标解释各 $\lambda_j$，另定义实线性扩张
+$$
+\mathbf M_{\Lambda,I,\mathbb R}:\mathbb R^r\to\mathbb R^I,\qquad
+\mathbf M_{\Lambda,I,\mathbb R}(t)=\sum_{j=1}^r t_j\lambda_j.
+$$
+所列环面映射逐坐标为 $(\mathbf M_{\Lambda,I,\mathbb T}(x))_i=\sum_{j=1}^r(\lambda_j)_i x_j$，其中 $x\in\mathbb T^r$、$i\in I$。则
+$$
+C_I(\Lambda)=\mathbf M_{\Lambda,I,\mathbb T}(\mathbb T^r)
+=\operatorname{quot}_I(W_{\Lambda,I})
+=\{x\in\mathbb T^I:a\cdot x=0_{\mathbb T}\text{ 对每个 }a\in\operatorname{Ann}_I(\Lambda)\},
+$$
+$$
+C_I(\Lambda)\cap\Psi_I(\mathbb Z_o^I)
+=\Psi_I(\operatorname{Sat}(\Lambda)),\qquad
+\operatorname{Sat}(\Lambda)=\{w\in\mathbb Z_o^I:a\cdot w=0\text{ 对每个 }a\in\operatorname{Ann}_I(\Lambda)\}.
+$$
+从通常有限环面的商 $\mathbb T^r/\ker\mathbf M_{\Lambda,I,\mathbb T}$ 及欧氏子空间的商 $W_{\Lambda,I}/(W_{\Lambda,I}\cap\mathbb Z_o^I)$ 到此像的自然双射，均为到 $\mathbb T^I$ 中子空间拓扑的同胚。对同一 $I$ 上两个子群，有限相位闭包相等当且仅当饱和相等；闭包为全 $\mathbb T^I$ 当且仅当有理秩为 $d$。所有断言包括 $I=\varnothing$ 和 $r=0$。
+

@@ -1,0 +1,14 @@
+**定理 222（规范寄存器指令的表示独立性）。** 设 \(w\) 为有限槽指令词，令 \(\eta_{t,p,j}(w)\in\mathbb Z\) 为其在 \((t,p,j)\) 上的有符号次数。若两个词 \(w,w'\) 满足
+\[
+\sum_{j\ge0}G_j\,\eta_{t,p,j}(w)
+=\sum_{j\ge0}G_j\,\eta_{t,p,j}(w')
+\quad\text{对所有 }(t,p),
+\]
+则它们具有相同的局部寄存器投影；若进一步满足
+\[
+\sum_{t\in\mathbb Z}\sum_{j\ge0}G_j\,\eta_{t,p,j}(w)
+=\sum_{t\in\mathbb Z}\sum_{j\ge0}G_j\,\eta_{t,p,j}(w')
+\quad\text{对所有 }p,
+\]
+则它们具有相同的终端投影。反之，局部投影相同当且仅当两词的差表属于 \(\ker\mathsf V_P\)；终端投影相同当且仅当差表属于 \(\ker\mathsf C_P\)。
+

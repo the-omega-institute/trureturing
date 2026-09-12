@@ -1,0 +1,8 @@
+**定理 321.2。** $j_{\rm rat}$ 是单射同态，且
+$$
+\Theta_{\rm rat}\longrightarrow
+\operatorname{Hom}(\mathsf V_{\rm reg},\mathsf D_{\rm rat}),\qquad
+\theta\longmapsto\chi^{\rm rat}_\theta
+$$
+是双射，逆为 $f\mapsto(f(\varepsilon_n))_{n\in\omega}$。$\mathsf V_{\rm reg}$ 可数无限，每个子群 $H$ 的商 $\mathsf V_{\rm reg}/H$ 由序列 $(\varepsilon_n+H)_{n\in\omega}$ 生成。
+

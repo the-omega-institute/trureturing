@@ -1,0 +1,22 @@
+**定理 132（时空实现与全 Zeckendorf 配置码的交换）。** 对任意 \(a\in S(P,A)\)，定义 130 的档案编码满足
+\[
+\operatorname{Enc}(X_{P,A}(a))
+=\operatorname{Enc}(C_a,A_a),
+\]
+且其配置字段中的标签、容量和状态表分别由
+\[
+\operatorname{Reg}_Z(P),\qquad
+\operatorname{Tab}_Z(P,A),\qquad
+\operatorname{Tab}_Z(P,a)
+\]
+逐项恢复。若 \(a,b\) 经同一有效单位词 \(w\) 变换，则定理 124 与定理 131 给出
+\[
+\operatorname{Cfg}_Z(P,A,\operatorname{ev}_A(a,w))
+=\operatorname{Cfg}_Z(P,A,\operatorname{ev}_A(b,w))
+\iff
+\operatorname{ev}_A(a,w)=\operatorname{ev}_A(b,w).
+\]
+因此编码、时空档案和配置状态之间不存在额外的数值碰撞。
+
+**证明。** 定理 72–74 对 \(C_a,A_a\) 的每个有限集合、函数图、事件属性和选择集逐项编码，故第一式成立。由定义 130，事件的素数标签和数位索引由 \(\lambda(p,j)\) 及来源树的叶编号给出；定理 83 保持这些属性，定义 115 的三个表遂从编码档案中按成员和有序分量逐项恢复。后一等价的正向由定理 124；反向若两个配置码相等，定理 116 给两终态相等，定理 118 给相应状态相等，再用单位词求值的函数性得到等式。证毕。
+

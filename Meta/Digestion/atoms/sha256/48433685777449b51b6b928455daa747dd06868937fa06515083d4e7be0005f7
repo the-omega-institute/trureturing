@@ -1,0 +1,40 @@
+**命题 352.1。** 在第 332 条的独立字段域中，
+$$
+\operatorname{qenc}(1/G_n)
+=T_2(\operatorname{scode}(1),\zeta(G_n))\in\mathsf{RatFld},
+$$
+$$
+\operatorname{penc}(\theta^F_n)=
+\begin{cases}
+T_2(0_Z,\zeta(1)),&n=0,\\
+T_2(\zeta(1),\zeta(G_n)),&n\ge1.
+\end{cases}
+$$
+分母字 $\zeta(G_n)$ 的唯一占据位置为 $n$，规范字长为 $n+1$；它不是被限制在 $n$ 位置窗口中的状态内容字。值字段与相位字段分别使用定理 332.2 的双逆。
+
+对任意 $u\in\mathsf V_{\rm reg}$，置 $I=\operatorname{supp}(u)$，并定义
+$$
+D=\prod_{n\in I}G_n,\qquad
+ a=\sum_{n\in I}u_n(D/G_n),\qquad
+ h=\gcd(|a|,D),
+$$
+$$
+s=a-D\lfloor a/D\rfloor,\qquad k=\gcd(s,D).
+$$
+空积为一、空和为零。则
+$$
+L_F(u)=a/D,\qquad
+\operatorname{qenc}(L_F(u))
+=T_2(\operatorname{scode}(a/h),\zeta(D/h)),
+$$
+$$
+\operatorname{penc}([L_F(u)]_{\rm rat})
+=T_2(\zeta(s/k),\zeta(D/k)).
+$$
+
+**证明。** 正整数 $G_n$ 与一互素，故第一式满足正分母、既约及有符号分子的值字段谓词。$n=0$ 时值是一而相位为零；相位零的既约正分母只能为一。$n\ge1$ 时 $G_n>1$，故 $0<1<G_n$，满足相位字段的独立谓词。只在位置 $n$ 置一的字没有相邻一且值为 $G_n$，第 70 条唯一性给分母字及其长度。完整状态窗口取的值却是 $0,\ldots,G_n-1$，所以两种长度要求分属不同对象。
+
+有限积 $D$ 为正整数，并被每个支撑分母 $G_n$ 整除；因而 $a\in\mathbb Z_o$，通分给 $L_F(u)=a/D$。$h\ge1$，约分后的正分母分数既约，定理 332.2 给第一字段式及两方向复合恒等。取整保证 $0\le s<D$，$s/D$ 与 $a/D$ 同模一类；以 $k$ 约分给第二式及相位双逆。负 $a$ 也满足该余数不等式。若 $a=0$，则 $h=D$；若 $s=0$，则 $k=D$，分别得到相应的 $0/1$ 字段。特别空支撑使 $D=h=k=1,a=s=0$，两式同取 $T_2(0_Z,\zeta(1))$。故这两个有理字段域并非不交域。
+
+对命题 351.1 的状态，值字段为 $\operatorname{qenc}(83/15)$，有理相位字段为 $\operatorname{penc}([8/15]_{\rm rat})=T_2(\zeta(8),\zeta(15))$，前者的分子是有符号的 $\operatorname{scode}(83)$。证毕。
+

@@ -1,0 +1,19 @@
+**定义 113（带符号的 Zeckendorf 整数码）。** 令 \(\mathsf W_Z\)、\(\operatorname{val}\) 与 \(\zeta\) 如定义 69–70。置
+\[
+\mathsf W_Z^{+}=\mathsf W_Z\setminus\{0_Z\},\qquad
+\mathsf Z_{\mathbb Z}=\{0_Z\}\cup(\{+\}\times\mathsf W_Z^{+})\cup(\{-\}\times\mathsf W_Z^{+}).
+\]
+定义
+\[
+\operatorname{ival}(0_Z)=0,\qquad
+\operatorname{ival}(+,u)=\operatorname{val}(u),\qquad
+\operatorname{ival}(-,u)=-\operatorname{val}(u).
+\]
+对 \(c,d\in\mathsf Z_{\mathbb Z}\) 定义
+\[
+c\oplus_Zd=\operatorname{scode}(\operatorname{ival}(c)+\operatorname{ival}(d)),\quad
+c\otimes_Zd=\operatorname{scode}(\operatorname{ival}(c)\operatorname{ival}(d)),\quad
+\ominus_Zc=\operatorname{scode}(-\operatorname{ival}(c)),
+\]
+其中 \(\operatorname{scode}(n)\) 是 \(0_Z\)、\((+,\zeta(n))\) 或 \((- ,\zeta(-n))\)，分别对应 \(n=0,n>0,n<0\)。零只有一个表示，符号不与零行重复。
+

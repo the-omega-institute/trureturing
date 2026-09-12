@@ -1,0 +1,25 @@
+**定理 256（一维同构与旧三维式的类型障碍）。** $v,v^{-1}$ 及 $b,b^{-1}$ 各自互逆。对所有 $z,w\in J$、有限集合 $I$ 和函数 $f:I\to J$，有
+$$
+\begin{gathered}
+b(z+_Jw)=b(z)\oplus_Zb(w),\qquad
+b(z\cdot_Jw)=b(z)\otimes_Zb(w),\qquad
+b(-_Jz)=\ominus_Zb(z),\\
+z<_Jw\iff b(z)<_Sb(w),\qquad
+b(\max_J(z,w))=\max_S(b(z),b(w)),\\
+b(z+_J1_J)=b(z)\oplus_Z1_S,\qquad
+b\left(\sum_{i\in I}^{J} f(i)\right)=\mathop{\bigoplus}_{i\in I}^{Z} b(f(i)).
+\end{gathered}
+$$
+空和分别为 $0_J,0_S$；有限非空集合的最大值和最小值也交换。CSA 的每个电荷 $q\in J$ 的数字表示为 $b(q)=\operatorname{scode}(v(q))$。
+
+有以下集合层面的不等式与域限制：
+$$
+\begin{gathered}
+\operatorname{scode}(0)=\varnothing\notin\mathfrak V_Z,\qquad
+\operatorname{Enc}(\operatorname{scode}(1))\ne\operatorname{NatZ}(1),\\
+\operatorname{Enc}((0,0))\ne\operatorname{NatZ}(0),\qquad
+\operatorname{Enc}[S]\cap\mathsf N_Z=\{\operatorname{NatZ}(0)\}.
+\end{gathered}
+$$
+因此第 142 条用原始带符号数字直接装配语义三元组的式子在空间原点越出第 74 条的有效域；第 143 条不能从该式得到普通 $S^3$ 余域。第 142–143 条仅保留其一维有效内容，三维混合式及据它得出的三维交换由本条和第 255、257–258 条替代。
+

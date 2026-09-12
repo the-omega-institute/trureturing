@@ -1,0 +1,8 @@
+**定理 330.2。** 有
+$$
+\ker\chi^{\rm rat}_{\eta^{\rm dy}}
+=\ell_{\rm dy}^{-1}(\mathbb Z_o)\supsetneq H_{\rm dy},\qquad
+\bigcap_{m\in\omega}\ker\chi^{\rm rat}_{\eta^{\rm dy,m}}=H_{\rm dy}.
+$$
+无有限有理特征族以 $H_{\rm dy}$ 为共同核；但单个黄金特征满足 $\ker g_{\rm dy}=H_{\rm dy}$。每个 $g_r$ 都是同态，且 $\ker g_r=\ker L_r$ 是饱和子群。
+

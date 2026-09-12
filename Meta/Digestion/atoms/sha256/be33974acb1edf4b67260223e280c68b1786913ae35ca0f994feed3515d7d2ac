@@ -1,0 +1,25 @@
+**定义 297。** 对第 295 条数据，沿用第 50 条的 $\phi=(1+\sqrt5)/2$、$\alpha=\phi^{-1}=\phi-1$，令 $\mathbb T=\mathbb R/\mathbb Z$ 取加法及通常商拓扑。定义
+$$
+\vartheta_P:\mathbb Z^P\longrightarrow\mathbb T^P,\quad
+\vartheta_P(e)=([\phi e_p])_{p\in P},\qquad
+\vartheta_r:\mathbb Z^r\longrightarrow\mathbb T^r,\quad
+\vartheta_r(z)=([\phi z_i])_{i=1}^r,
+$$
+$$
+B_{\mathbb T}:\mathbb T^r\longrightarrow\mathbb T^P,\qquad
+B_{\mathbb T}([t])=[Bt],\qquad
+C_B^{\rm tor}=B_{\mathbb T}(\mathbb T^r).
+$$
+第 296 条的 $U,V$ 诱导环面自同构 $U_{\mathbb T},V_{\mathbb T}$。对任意 $Y\subseteq\mathbb T^P$ 定义其整数特征零化子
+$$
+\operatorname{Ann}(Y)=\{m\in\mathbb Z^P:m\cdot y=0\text{ 于 }\mathbb T\text{，对全部 }y\in Y\},
+\qquad m\cdot y=\sum_{p\in P}m_py_p.
+$$
+
+对 $n\in\mathbb Z$，令 $\ell_{\rm s}(n)=|\zeta(|n|)|$，定义有限有符号行
+$$
+\operatorname{sdrow}(n):\ell_{\rm s}(n)\longrightarrow\{-1,0,1\},\qquad
+\operatorname{sdrow}(n)(j)=\operatorname{sgn}(n)\zeta(|n|)(j),
+$$
+其中 $\operatorname{sgn}(0)=0$，零取空行，有限求和时可把域外数位视为零。该行不是第 69 条的自然总行 $s(m)$；它也不替代第 113 条带标签的 $\operatorname{scode}$ 或第 185 条的槽表映射 $\operatorname{sdig}_P$。
+

@@ -1,0 +1,13 @@
+**定义 259（多类型部分函数与严格失败）。** 给定有限元数 $r$、集合 $A_i,B_i,A_o,B_o$ 及双射 $b_i:A_i\to B_i$、$b_o:A_o\to B_o$，令 $B=\prod_{i=1}^r b_i$ 是第 257 条的外部元组双射。对部分函数 $f:D\to A_o$、$D\subseteq\prod_i A_i$，定义
+$$
+\operatorname{dom}(f^b)=B[D],\qquad
+f^b(c)=b_o(f(B^{-1}c))\quad(c\in B[D]).
+$$
+参数与变量均占声明的输入槽。若某参数的合法性依赖其余输入，例如 $D_0\subseteq E_X$，此条件属于联合域 $D$，不把它省略为参数本身的固定全域。固定参数特化是在联合图中固定相应坐标；$r=0$ 时唯一输入为 $T_0$，域只能为空或 $\{T_0\}$。
+
+对任意输出集合 $A_o$ 取不交和 $A_o^\bot=\{\operatorname{ok}(y):y\in A_o\}\sqcup\{\bot\}$，各构造器单射且像互斥。严格总化为
+$$
+\widehat f(x)=\begin{cases}\operatorname{ok}(f(x)),&x\in D,\\\bot,&x\notin D.\end{cases}
+$$
+运输成功标签用 $b_o^\bot(\operatorname{ok}(y))=\operatorname{ok}(b_o(y))$，失败标签用 $b_o^\bot(\bot)=\bot$。普通严格复合先求全部子项；任一子项失败即失败，全部成功才检查本节点联合域。特别地，$\operatorname{ok}(0_S)\ne\bot$，空选择的成功值也不是失败。
+

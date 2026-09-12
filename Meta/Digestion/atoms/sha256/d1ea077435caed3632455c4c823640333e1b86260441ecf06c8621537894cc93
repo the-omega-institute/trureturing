@@ -1,0 +1,7 @@
+**定义 235（整数位置多项式的两个递推读数）。** 将定义 171 的非负位置多项式与 $\operatorname{ev}_G$、定义 15 的单行 $H$ 读数作整数线性延拓。在普通多项式环 $R=\mathbb Z[X]$ 上，对 $F(X)=\sum_j f_jX^j$ 定义
+$$
+V_G(F)=\sum_j f_jG_j,\qquad U_H(F)=\sum_j f_jH_j,
+\qquad m(X)=X^2-X-1.
+$$
+$X$ 在本条及以下多项式公式中是形式不定元。$U_H$ 使用递推权重 $H_j$，绝不是定义 206 的无权槽计数 $\mathsf U_P$。定义 19 的黄金值也按同一整数线性延拓解释为 $\beta(F)=\sum_j f_j\phi^{j+2}$；非负系数上的 $\operatorname{nf}_G$ 和 $F_u$ 仍使用定义 171，不另改规范化。
+

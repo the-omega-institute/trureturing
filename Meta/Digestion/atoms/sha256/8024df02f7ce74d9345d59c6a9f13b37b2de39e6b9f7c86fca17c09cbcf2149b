@@ -1,0 +1,14 @@
+**定义 139（时空电荷的规范下降）。** 令 \(\mathsf R_P\) 为所有满足有限支撑的函数
+\[
+r:P\times\omega\longrightarrow\omega.
+\]
+对 \(r\in\mathsf R_P\) 定义
+\[
+V_P(r)(p)=\sum_{j\ge0}G_jr(p,j).
+\]
+若 \(V_P(r)(p)\le A(p)\) 对所有 \(p\in P\)，定义
+\[
+\operatorname{Can}_{P,A}(r)(p)=\zeta(V_P(r)(p)).
+\]
+这是从非规范槽电荷到规范指数数位的部分映射；它只对每个素数寄存器内部作规范化，不改变寄存器标签。
+

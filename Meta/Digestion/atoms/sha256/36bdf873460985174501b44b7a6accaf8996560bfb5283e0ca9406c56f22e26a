@@ -1,0 +1,40 @@
+**定理 317。** 第 316 条的四个映射分别是到其独立目标的双射，候选逆满足全部复合恒等式
+$$
+\operatorname{ung}_{\rm reg}(g_u)=u,\qquad
+g_{\operatorname{ung}_{\rm reg}(g)}=g\quad(g\in\mathsf G_{\rm reg}),
+$$
+$$
+\begin{aligned}
+\operatorname{unrec}_{\rm reg}\circ\operatorname{rec}_{\rm reg}&=\operatorname{id}_{\mathsf V_{\rm reg}},&
+\operatorname{rec}_{\rm reg}\circ\operatorname{unrec}_{\rm reg}&=\operatorname{id}_{\mathsf{Rec}_{\rm reg}},\\
+\operatorname{undig}_{\rm reg}\circ\operatorname{dig}_{\rm reg}&=\operatorname{id}_{\mathsf V_{\rm reg}},&
+\operatorname{dig}_{\rm reg}\circ\operatorname{undig}_{\rm reg}&=\operatorname{id}_{\mathsf{Dig}_{\rm reg}},\\
+\operatorname{undig}_I\circ\operatorname{dig}_I&=\operatorname{id}_{\mathbb Z_o^I},&
+\operatorname{dig}_I\circ\operatorname{undig}_I&=\operatorname{id}_{\mathsf{Dig}_I}.
+\end{aligned}
+$$
+补零与截尾互逆，且
+$$
+\operatorname{dig}_{\rm reg}=\operatorname{pad}_{\rm reg}\circ\operatorname{rec}_{\rm reg},\qquad
+\operatorname{rec}_{\rm reg}=\operatorname{trim}_{\rm reg}\circ\operatorname{dig}_{\rm reg},
+$$
+$$
+\operatorname{dig}_I(\operatorname{res}^{\mathbb Z}_Iu)
+=\operatorname{dig}_{\rm reg}(u)|_{\mathsf{Lab}_I^{\rm reg}}
+=\operatorname{pad}_{\rm reg}(\operatorname{rec}_{\rm reg}(u))|_{\mathsf{Lab}_I^{\rm reg}}.
+$$
+记录和总数字双射在所列运算下保持加法、负元及零。每个记录为原始素数标签字及非零带符号字的有限图；每个 $\mathsf G_{\rm reg}$、$\mathsf{Dig}_{\rm reg}$ 或 $\mathsf V_{\rm reg}$ 中的总函数图都无限，零状态也如此。$\mathsf{Dig}_I$ 的每个图则有恰好 $|I|$ 条边，包括零边。
+
+**证明。** 第 306 条素数枚举和第 96 条标签双射给指标、普通素数、原始素数数字之间的双向唯一对应。$g$ 的两个复合在 $p_n$ 或 $n$ 处取值都立即还原。对记录逆，有限定义域中的每个标签恢复一个非零整数坐标，因为合法非零带符号字的整数值非零；缺失标签恰恢复零。再作记录，只恢复原有的全部非零边，不增加其它边，故记录侧复合为恒等。反向从状态先作记录，非零处由 $\operatorname{ival}\circ\operatorname{scode}=\operatorname{id}$ 恢复，零处由逆的缺失分支恢复，状态侧也为恒等。对总数字图，每个标签都存在，两个复合分别使用整数侧和 $S$ 侧的双逆，在无限多个零标签处也同样成立。有限 $I$ 上逐坐标应用完全相同的双逆，零边仍保留；空 $I$ 是两个单点之间的唯一映射。第 316 条已检查每个逆落入其声明的域，所以这些等式同时证明单射与到独立目标的满射。
+
+对记录 $r$，补零只添加零值，而已有值全非零，故截尾准确返回 $r$；对总图 $d$，截尾只删除零值，补零正好在这些缺失处把零放回，故逐标签还原 $d$。再用定义取值即得两个组合公式。限制等式的每一侧都是同域 $\mathsf{Lab}_I^{\rm reg}$ 上的总函数，在 $\zeta(p_i)$ 处均取 $\operatorname{scode}(u_i)$，故相等。原非零记录自身的限制可缺少零坐标，不能替代这里显式补零后的限制。
+
+第 114 条给
+$$
+\operatorname{scode}(z+w)=\operatorname{scode}(z)\oplus_Z\operatorname{scode}(w),\qquad
+\operatorname{scode}(-z)=\ominus_Z\operatorname{scode}(z).
+$$
+逐标签应用得到总数字映射的加法、负元、零式；记录的相同断言再复合补零、截尾即可。由双射和这些等式，阿贝尔群律也运输成立。
+
+记录的有限性由独立定义给定；其中每个非零带符号字是一个正或负固定标签与非零有限自然字组成的普通对，不是裸绝对值字。对总图，每个不同指标或素数标签给不同首坐标的图边，故有无限多条边，与非零值的数量无关。普通素数无限可由 Euclid 论证：有限完整素数表的乘积加一有一个不在表中的素因子，矛盾。因此即使处处为零，总图仍无限。有限图则每个 $i\in I$ 恰贡献一条边，标签单射使其数量恰为 $|I|$。此处的有限记录、总图及全集合码始终是各自的对象。证毕。
+

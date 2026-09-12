@@ -1,0 +1,39 @@
+**证明。** 首先核对集合规模。$\mathsf D_{\rm rat}$ 与 $\mathbb T$ 是集合的等价类商；$\Theta_{\rm rat}$、$Y_{\rm rat}$ 和 $X_+$ 是声明的集合函数空间和积。子群、零化子、有限支撑条件及独立记录域由分离构造，全部图和像由替代与幂集构造，乘积拓扑由有限柱集基的任意并给出。这沿用第 320 条和 [CSA 第十一节命题 14–15](CONTEXTUAL_SPACETIME_ARITHMETIC.md) 的集合构造。全部总探针及全部环境圆周点都包括在相应函数集中；不施加有限字或可计算性条件。$\operatorname{Enc}$ 仍是旧可定义类函数，限制在每个所列集合上的图和像才是集合，没有普遍集合的假设。
+
+由第 72 条，$\operatorname{Dec}(h_X(c))=b_X^{-1}(c)$，再用 $b_X$ 恢复 $c$；对 $z\in X^*$，$\operatorname{Dec}(z)\in X$，且 $h_X(b_X(\operatorname{Dec}(z)))=z$。这既证两个复合也证精确像。数字提升的两个复合直接是 $\operatorname{Enc},\operatorname{Dec}$ 在 $C_X,C_X^*$ 上的限制双逆。两种提升所指对象不同，不从角色区分推断所有特殊输入的像不交。第 255–256 条的 $J$ 提升仍取 $\operatorname{Enc}(b^{-1}(c))$，普通整数值提升取 $\operatorname{Enc}(\operatorname{ival}(c))$，数字提升取 $\operatorname{Enc}(c)$，不能混用。特别原始零字 $\varnothing\notin\mathfrak V_Z$，所有语义配对参数都先由合法提升产生。
+
+第 317、333、332 条分别给三个输入输出双射及其独立目标上的双逆；第 334 条给 $E_d=b_o\circ E\circ B_{\rm in}^{-1}$ 的值式，其中 $b_o=\operatorname{penc}$。对任一数字图边 $\langle c,d\rangle$，其唯一原输入为 $x=T_2(\operatorname{unrec}_{\rm reg}(c_1),\operatorname{unprec}_{\rm rat}(c_2))$，输出为 $y=\operatorname{pdec}(d)=E(x)$。第 258 条给 $H_{\rm in}(c)=\operatorname{Enc}(x)$，第 74 条给
+$$
+\langle H_{\rm in}(c),h_o(d)\rangle_Z=\operatorname{Enc}(\langle x,y\rangle).
+$$
+每条原边也由双逆唯一返回一条数字边，因此第 73 条的 $\operatorname{Pack}$ 恰给第一图码。把第 74 条直接用于数字边自身，再用 $\operatorname{Pack}$，得到第二图码。每个输入的存在边和唯一值由逐边双射保持反映，故第 260、319 条给显示的精确语义域及求值式。有限特化先用第 334 条的联合域双射，余下逐边证明完全相同，域外不增值；严格总化用已证域等价分成功和失败两类。
+
+具体地，对 $t\in\mathsf{ProbeRec}$、$\theta=\operatorname{unprec}_{\rm rat}(t)$，其索引总图和数字总图满足
+$$
+\operatorname{Enc}(\theta)
+=\operatorname{Pack}\{\langle\operatorname{NatZ}(\operatorname{idx}_{\rm reg}(a)),
+\operatorname{Enc}(\operatorname{pdec}(d))\rangle_Z:
+\langle a,d\rangle\in t\},
+$$
+$$
+\operatorname{Enc}(t)
+=\operatorname{Pack}\{\langle\operatorname{Enc}(a),\operatorname{Enc}(d)\rangle_Z:
+\langle a,d\rangle\in t\}.
+$$
+前者的普通定义域是 $\omega$，后者是 $\mathsf{Pr}_Z$，故语义域分别为 $\operatorname{Enc}(\omega)$ 和 $\operatorname{Enc}(\mathsf{Pr}_Z)$。证明逐边使用 $n=\operatorname{idx}_{\rm reg}(a)$ 和相位解码的双逆，正如第 319 条的状态索引图式；限制到有限 $F$ 和 $\lambda_{\rm reg}[F]$ 得相同有限公式，零边仍保留。这也显示原图不能通过将 $\operatorname{val}(a)$ 误作索引来恢复：该值是 $p_n$，索引是 $n$。
+
+对每个固定 $r\in\mathbb Q^\omega$，黄金求值 $g_r:\mathsf V_{\rm reg}\to C_\phi$ 另取输入双射 $\operatorname{rec}_{\rm reg}$、输出双射 $\operatorname{genc}_\phi$。其数字求值是
+$$
+s\longmapsto T_2(\zeta(1),\operatorname{qenc}(L_r(\operatorname{unrec}_{\rm reg}(s))))\in\mathsf{Phase}_\phi.
+$$
+第 335 条的双逆给第 319 条两图式的全部假设，输出原对象提升为 $d\mapsto\operatorname{Enc}(\operatorname{gdec}_\phi(d))$，数字对象提升为 $d\mapsto\operatorname{Enc}(d)$。若将 $r$ 也列作变量，其域必须是整个 $\mathbb Q^\omega$，可用第 318 条的 $\operatorname{enc}_{\mathbb Q^\omega}$ 运输这个集合输入，不把它说成有限系数表。
+
+对拓扑直接应用第 320 条，其适用条件是一个集合及一个已指定拓扑，本条已对两个完整环境满足这些条件。因此
+$$
+\operatorname{enc}_X[\overline S^{\tau_X}]
+=\overline{\operatorname{enc}_X[S]}^{\tau_X^*}
+\quad(S\subseteq X).
+$$
+单射直接像保持交：同一像点的两个原像由单射相等，故反向包含也成立。将此用于第 324 条的两个迹等式，即得显示的两个运输迹。$\tau_X^*$ 是外部开集族；单个拓扑码 $\operatorname{Enc}(\tau_X)$ 的语义成员是开集码，而这些码逐个经 $\operatorname{El}$ 才给 $\tau_X^*$，按第 320 条处理。$G_{E_d}$、单个 $\operatorname{Enc}(G_{E_d})$ 与外部语义成员集 $\operatorname{El}(\operatorname{Enc}(G_{E_d}))$ 也保持各自角色；同样不把 $\operatorname{Enc}(X)$ 与 $\operatorname{Enc}[X]$ 识别。
+
+最后第 72 条给 $\operatorname{Enc}(x)\in_Z\operatorname{Enc}(A)$ 当且仅当 $x\in A$；这包括子群成员及零化子中“对全部 $h\in H$”的条件。将全部新函数展开为已证明总性或精确部分域的图后，第 75–76 条的固定公式结构归纳适用：等号由单射，成员由刚述等价，布尔联结词保持等价，存在见证编码、有效见证解码给量词的两个方向。因而全部子群、总探针及环境点的量化都保留，不只是有限测试的量化。第 77–78 条继而给所有原 ZFC 公理及分离、替代的每个固定翻译实例和定义性保守性。给定 $\mathfrak M\models\mathrm{ZFC}$ 时用其内部定义，非标准有限性及内部函数空间仍按第 78 条的条件理解。这不是统一内部真理谓词、任意集合或实数的有限字表示，也不推出无条件一致性或模型存在。证毕。

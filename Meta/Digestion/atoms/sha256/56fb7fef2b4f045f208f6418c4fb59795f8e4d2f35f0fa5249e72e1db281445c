@@ -1,0 +1,31 @@
+**定理 140（CSA 并行复合在规范观察商上的加法）。** 对 \(a,b\in S(P,A)\) 且 \((a,b)\in\operatorname{Dom}_{P,A}\)，令
+\[
+r_a(p,j)=d_a(p,j),\qquad r_b(p,j)=d_b(p,j).
+\]
+则
+\[
+\operatorname{Can}_{P,A}(r_a+r_b)
+=\operatorname{dig}_{P,A}(a\boxplus_P b),
+\tag{Z-DESCEND}
+\]
+并且
+\[
+r_{\boxplus}(p,j):=
+Z_{X_{P,A}(a)\boxplus X_{P,A}(b)}(0,\lambda(p,j))
+=r_a(p,j)+r_b(p,j).
+\]
+因此
+\[
+\operatorname{Can}_{P,A}\!\left(
+\ r_{\boxplus}
+\right)
+=\operatorname{dig}_{P,A}(a\boxplus_P b),
+\]
+而其全局标量读数满足
+\[
+\widehat\Pi_Z\!\left(\operatorname{Reg}_Z(P),
+\operatorname{Can}_{P,A}(r_a+r_b)\right)
+=\operatorname{NatZ}\!\left(\Pi_P(a)\Pi_P(b)\right).
+\tag{Z-CSA-DESCEND}
+\]
+

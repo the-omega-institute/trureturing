@@ -1,0 +1,18 @@
+**定理 124（规范数字与单位变换的精确共轭）。** 对每个 \(a\in S(P,A)\) 和 \(w\in\mathcal U_P^*\)，
+\[
+\operatorname{ev}_A(a,w)\text{ 有值}
+\iff
+\widehat{\operatorname{ev}}_A(\operatorname{dig}_{P,A}(a),w)\text{ 有值},
+\]
+且在此情形
+\[
+\operatorname{dig}_{P,A}(\operatorname{ev}_A(a,w))
+=\widehat{\operatorname{ev}}_A(\operatorname{dig}_{P,A}(a),w).
+\tag{Z-CONJ-INSTR}
+\]
+进一步，
+\[
+\operatorname{Cfg}_Z(P,A,\operatorname{ev}_A(a,w))
+\]
+是由 \(\operatorname{Cfg}_Z(P,A,a)\) 的状态表按 \(\widehat{\operatorname{ev}}_A\) 逐行更新所得的唯一配置码。
+

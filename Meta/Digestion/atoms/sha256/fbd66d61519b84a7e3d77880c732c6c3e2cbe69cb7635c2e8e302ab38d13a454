@@ -1,0 +1,12 @@
+**命题 342.2。** 每个 $G_n$ 为正整数，且 $G_{n+1}>G_n$。有限状态的 $L_F$ 值为有理数，在 $B_A^{\rm cap}$ 上非负，并有
+$$
+S_F|_{B_A^{\rm cap}}=\ell_F,\qquad
+0\le S_F(x)\le M_F(A)\quad(x\in X_A^{\rm cap}).
+$$
+本节的坐标拓扑和黄金拓扑精确为定理 337.2 的
+$$
+\tau_{\rm coord,A}^{X}=\tau_{\Psi,A}^{X},\qquad
+\tau_{\rm coord,A}^{B}=\tau_{\Psi,A}^{B},
+$$
+其中全乘积上的黄金映射是 $\Psi_A(x)_n=[\phi x_n]$。$B_A^{\rm cap}$ 在 $X_A^{\rm cap}$ 中稠密。
+

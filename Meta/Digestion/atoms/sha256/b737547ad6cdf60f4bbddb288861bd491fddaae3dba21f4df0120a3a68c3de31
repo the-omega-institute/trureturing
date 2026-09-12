@@ -1,0 +1,30 @@
+**定理 260（域、值及原图与数字图的比较）。** 对第 259 条的任意数据及全部 $x\in\prod_i A_i$，有
+$$
+x\in D\iff Bx\in\operatorname{dom}(f^b),\qquad
+f^b(Bx)=b_o(f(x))\quad(x\in D),\qquad
+\operatorname{ran}(f^b)=b_o[\operatorname{ran}(f)].
+$$
+严格总化满足 $\widehat{f^b}(Bx)=b_o^\bot(\widehat f(x))$。令普通图分别为
+$$
+G_f=\{\langle x,f(x)\rangle:x\in D\},\qquad
+G_{f^b}=\{\langle c,f^b(c)\rangle:c\in B[D]\}.
+$$
+对 $c=T_r(c_1,\ldots,c_r)$ 置
+$$
+h_i(c_i)=\operatorname{Enc}(b_i^{-1}(c_i)),\quad
+h_o(d)=\operatorname{Enc}(b_o^{-1}(d)),\quad
+H(c)=T_r^Z(h_1(c_1),\ldots,h_r(c_r)).
+$$
+则两个图码精确满足
+$$
+\begin{aligned}
+\operatorname{Enc}(G_f)
+ &=\operatorname{Pack}\{\langle H(c),h_o(d)\rangle_Z:
+                         \langle c,d\rangle\in G_{f^b}\},\\
+\operatorname{Enc}(G_{f^b})
+ &=\operatorname{Pack}\{\langle\operatorname{Enc}(c),\operatorname{Enc}(d)\rangle_Z:
+                         \langle c,d\rangle\in G_{f^b}\}.
+\end{aligned}
+$$
+前一式所指原函数，后一式所指数字函数；普通 $G_{f^b}$ 又是另一层对象。它们不因所含边有双射而被认作同一个集合。语义定义域分别为 $\operatorname{Enc}(D)$、$\operatorname{Enc}(B[D])$，语义值域分别为 $\operatorname{Enc}(\operatorname{ran}(f))$、$\operatorname{Enc}(b_o[\operatorname{ran}(f)])$。
+

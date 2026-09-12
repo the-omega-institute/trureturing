@@ -1,0 +1,27 @@
+**定理 276（目标构造的合法性及参考点交换）。** 第 275 条的两个规范树载体是集合，其叶与配对构造器单射、像互斥且满足自由有限树条件；第 261 条的递归式在它们之间给出双射及其完整逆。对每个 $o\in J^3$，映射
+$$
+R_o:\mathcal B_o\longrightarrow\mathcal B_{R,b_3(o)},\qquad
+R_o(o,X)=(b_3(o),RX)
+$$
+是双射，且
+$$
+R_o\bigl((o,X)\boxtimes_o(o,Y)\bigr)
+ =\bigl(b_3(o),RX\boxtimes^R_{b_3(o)}RY\bigr).
+$$
+这是完整记录的等式，联合域也保持且反映。目标参考点为 $(0_S,0_S,0_S)$ 时，底层乘法恰为第 264 条的 $\boxtimes^R$。对任意 $L\in\operatorname{Mat}_{3\times3}(J)$、$u\in J^3$，整数仿射函数 $F:J^3\to J^3$、$F(x)=Lx+_Ju$ 的第 266 条目标 $F^R:S^3\to S^3$ 满足下式，其中 $u',v',o'\in S^3$ 独立任取：
+$$
+F^R(u'\oplus_Z^{(3)}v'\ominus_Z^{(3)}o')
+ =F^R(u')\oplus_Z^{(3)}F^R(v')\ominus_Z^{(3)}F^R(o').
+$$
+
+第 268 条的零表、逐点加减与差分满足准确类型的等式
+$$
+\begin{gathered}
+\mathscr T_{b_3}(0_{\mathcal R})=\mathbf0_R,\qquad
+\mathscr T_{b_3}(c+d)=\mathscr T_{b_3}(c)\oplus_R\mathscr T_{b_3}(d),\\
+\mathscr T_{b_3}(-c)=\ominus_R\mathscr T_{b_3}(c),\qquad
+\mathscr T_k(\Delta C)=\Delta^R(\mathscr C C).
+\end{gathered}
+$$
+其中 $c,d\in\mathcal R$、$C\in\mathcal A(\mathcal R)$；$\mathscr C$ 将 $\mathcal A(\mathcal R)$ 双射到第 268 条按第 275 条解释的 $\mathcal A_R$。
+

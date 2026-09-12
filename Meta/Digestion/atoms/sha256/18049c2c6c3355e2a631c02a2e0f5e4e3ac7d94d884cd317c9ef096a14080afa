@@ -1,0 +1,11 @@
+**定理 326.2。** 对每个 $t\in\mathbb Z_o$，
+$$
+\bigl(\forall 1\le i\le k,\ \chi^{\rm rat}_{\theta^i}(tu)=0\bigr)
+\iff L\mid t.
+$$
+若全部探针消去 $H\le\mathsf V_{\rm reg}$，记 $x=u+H$。若 $x$ 阶无限，则 $Lu\notin H$，却被全部这 $k$ 个探针消去。若 $x$ 阶为有限 $r\ge1$，则 $L\mid r$，其共同核在 $\langle x\rangle$ 中恰有 $r/L$ 个元素；在该循环子群上联合映射单射当且仅当 $L=r$。对每个固定 $k$，
+$$
+H\text{ 是 }k\text{ 个有理特征的共同核}
+\iff \mathsf V_{\rm reg}/H\text{ 可嵌入 }(\mathsf D_{\rm rat})^k.
+$$
+

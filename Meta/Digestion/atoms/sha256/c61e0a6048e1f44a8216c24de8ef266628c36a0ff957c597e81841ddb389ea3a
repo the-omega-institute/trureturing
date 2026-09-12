@@ -1,0 +1,105 @@
+**定理 305。** 第 304 条的两类映射分别满足
+$$
+\begin{aligned}
+\delta_P^\infty\circ\gamma_P^\infty&=\operatorname{id}_{\mathbb Z^P},&
+\gamma_P^\infty\circ\delta_P^\infty&=\operatorname{id}_{\mathcal V_{P,Z}^{\mathbb Z}},\\
+\delta_{P,A}\circ\gamma_{P,A}&=\operatorname{id}_{X_A},&
+\gamma_{P,A}\circ\delta_{P,A}&=\operatorname{id}_{\mathcal C_{P,A,Z}}.
+\end{aligned}
+$$
+特别地，无界编码的像恰为独立给定的全部合法有符号表，有界编码的像恰为固定标签和容量的所列配置像。
+
+在两类编码中任选一类，固定其实际状态域 $X$、双射 $\gamma$ 以及有限给定字母表的实际部分映射族。每个词 $w$ 都满足
+$$
+\operatorname{Dom}(w^\gamma)=\gamma[\operatorname{Dom}(w)],\qquad
+w^\gamma(\gamma(x))=\gamma(w(x))\quad(x\in\operatorname{Dom}(w)).
+$$
+每个成功的给定字母前缀、首个失败的给定字母、终值及完整标签序列都逐项对应。若对应字母保持相同严格正实权重，则任意对应端点对的可行词一一对应、成本集合相等，最小词也逐标签相同；空词与不可达情形均包括在内。具体地，两种距离等式各有自己的域：
+$$
+d_{T^\gamma,a}(\gamma_{P,A}(x),\gamma_{P,A}(y))=d_{T,a}(x,y)
+\quad(x,y\in X_A,\ \gamma=\gamma_{P,A}),
+$$
+$$
+d_{B^\gamma,c}(\gamma_P^\infty(x),\gamma_P^\infty(y))
+=d_{B,c}^{\infty}(x,y)
+\quad(x,y\in\mathbb Z^P,\ \gamma=\gamma_P^\infty).
+$$
+第二式的 $B^\gamma$ 指全部总有符号平移的共轭字母族，两符号的权重同为 $c_i>0$；第一式用第 299 条的实际有界族及其权重。
+
+指定复合宏时，共轭运输其完整实际定义域。若还把其内部初等映射逐一共轭，则每个内部前缀及首个失败的初等步骤同样对应。只给最终部分宏的共轭，则保持宏层的成功、失败与终值，不由此指定内部轨迹。
+
+无界有符号表上的平移 $(i,\epsilon)$ 逐项取
+$$
+\gamma_P^\infty(x+\epsilon b_i)(\operatorname{NatZ}(p))
+=\gamma_P^\infty(x)(\operatorname{NatZ}(p))\oplus_Z\operatorname{scode}(\epsilon b_i(p)).
+$$
+有界原子步在全部坐标的盒守卫成功后，新内容的自然行恰为 $\zeta(x(p)+\epsilon b_i(p))$；使用相应 $\operatorname{NatZ}$ 重装状态表，寄存器标签表和容量表保持原值。复合宏的内部守卫仍全部保留。将解码的内容代入第 298 条的有限数位式，所得精确相位与原状态相同。
+
+对任意集合 $x,Y$，原有语义成员仍满足
+$$
+\operatorname{Enc}(x)\in_Z\operatorname{Enc}(Y)\iff x\in Y.
+$$
+对每个固定有限的原集合论公式 $\varphi$，展开全部定义符号并保留全部原参数集合后，第 75–76 条给
+$$
+\varphi(\vec x)\iff\varphi^Z(\operatorname{Enc}(\vec x)).
+$$
+这里右式各参数逐项取码，量词按第 75 条限制到全部有效码。因而前述整数格、关系、函数、权重、环面及已给定拓扑均使用同一完整集合语义。
+
+更明确地，对任意上述实际部分映射 $T:D\to X$，其原图、外部数字图及两个语义图码分别满足
+$$
+G_T=\{\langle x,T(x)\rangle:x\in D\},\qquad
+G_{T^\gamma}=\{\langle\gamma(x),\gamma(T(x))\rangle:x\in D\},
+$$
+$$
+\begin{aligned}
+\operatorname{Enc}(G_T)
+&=\operatorname{Pack}\{\langle h_\gamma(c),h_\gamma(d)\rangle_Z:
+\langle c,d\rangle\in G_{T^\gamma}\},\\
+\operatorname{Enc}(G_{T^\gamma})
+&=\operatorname{Pack}\{\langle\operatorname{Enc}(c),\operatorname{Enc}(d)\rangle_Z:
+\langle c,d\rangle\in G_{T^\gamma}\}.
+\end{aligned}
+$$
+其语义定义域分别为 $\operatorname{Enc}(D)$ 与 $\operatorname{Enc}(\gamma[D])$。外部数字图、原图的语义码及数字图的语义码各按这些比较式取值；原始有符号字段不直接插入语义元组槽。
+
+若在任意集合 $X$ 上明确给定拓扑 $\tau$，则在 $\mathcal E_X[X]$ 上定义
+$$
+\tau^{\mathcal E_X}=\{\mathcal E_X[O]:O\in\tau\}.
+$$
+它是拓扑，且对每个 $S\subseteq X$，
+$$
+\mathcal E_X[\overline S^{\tau}]
+=\overline{\mathcal E_X[S]}^{\tau^{\mathcal E_X}}.
+$$
+此结论运输已给定的拓扑，不额外给整数指令群指定拓扑。无限集合和任意实权重由完整集合语义表达；有限数值字段在各自类型位置使用自然或有符号有限码，正有理权重可使用有限分子和正分母字段。所保持的成本是给定字母的权重和，不指定初等进位路径或物理费用。
+
+**证明。** 对每个 $p\in P$，
+$$
+\delta_P^\infty(\gamma_P^\infty(e))(p)
+=\operatorname{ival}(\operatorname{scode}(e_p))=e_p.
+$$
+反向，任意 $u\in\mathcal V_{P,Z}^{\mathbb Z}$ 的每个值都是合法整数码，所以
+$$
+\operatorname{scode}(\operatorname{ival}(u(\operatorname{NatZ}(p))))
+=u(\operatorname{NatZ}(p)).
+$$
+两表的定义域都恰为 $P_Z^{\rm lab}$，逐项相等即整张函数图相等，得到第二恒等式及独立目标上的满射性。有界情形由第 116 条的语义配对唯一性恢复每个标签的自然内容，所得坐标恰为 $x(p)$，故第一个有界复合为恒等。任意像内配置的前两表固定，第三表的全部且仅有的成员经恢复重装不变，故第二个有界复合也为恒等。空 $P$ 时逐坐标条件为空，两侧各在相应单点域上仍互逆；零内容统一用唯一零码，不增添带正负标签的零。
+
+对一步，$x\in D$ 显然蕴含 $\gamma(x)\in\gamma[D]$；反向若存在 $x'\in D$ 且 $\gamma(x)=\gamma(x')$，由单射得 $x=x'\in D$。域内代入共轭式得
+$$
+T^\gamma(\gamma(x))=\gamma(T(x)).
+$$
+对词长归纳：空词在各自全域是恒等；若前缀成功，两边状态按 $\gamma$ 对应，下一实际域测试由已证一步等价同时成立或同时失败。成功则下一状态仍对应；首个失败则两侧在相同字母位置失败。反向以 $\gamma^{-1}$ 作相同论证，得到域的两个包含、所有前缀及终值式。内部词若也逐步运输，就对该词再作此归纳；只运输最终部分宏时，定义中仅有宏的域和值，未给内部状态。
+
+因此每个有序端点对的可行词以同一标签序列双向对应。对应字母权重不变使有限成本和逐项相等，故成本集合及最小词集合相等。无界总平移的最小值由第 301 条非空可行计数子水平集的有限性取得；有界情形由该条另外的有限图简单路径证明取得。一般集合状态域则用该条有限字母表的有界词长证明。空可行集两侧同为空，距离均为 $+\infty$；同端点两侧均由空词以零成本取到，严格正权排除非空最小词。于是两条带明确定义域的距离等式成立。
+
+第 114 条的整数加法运输给有符号表的逐项显示式。盒守卫成立时新内容非负且不超过容量，第 70 条的自然数值与规范化互逆给唯一自然行；第 115 条以该自然叶重装唯一状态码。每个值与原算术值相同，第 298 条的数位公式就恢复相同模一相位。这个值等式未选择任何规范化的内部步序，也未给这种步序附加成本。
+
+语义成员等价直接是第 72 条。对每个固定有限公式，第 75–76 条的结构归纳以相等和成员为基础，保持布尔运算；量词利用 $\operatorname{Enc}$ 在全部集合与全部有效码之间的双逆，在两个方向对应。把本条全部定义展开为集合图，并把域、权重、环面、拓扑和其余参数一并保留，即得所列公式比较，不把无限对象截为有限字段。对原图一条边，写 $c=\gamma(x)$、$d=\gamma(T(x))$，则
+$$
+h_\gamma(c)=\operatorname{Enc}(x),\qquad h_\gamma(d)=\operatorname{Enc}(T(x)).
+$$
+第 74 条的语义配对把原边编码为 $\langle h_\gamma(c),h_\gamma(d)\rangle_Z$；每条原边与数字边均唯一对应，故第 73 条的 $\operatorname{Pack}$ 给第一图码式。直接编码数字边自身，给第二式。逐边取原定义域和数字定义域，就得到各自语义定义域；此即第 259–260 条在当前单输入状态类型上的比较，包括空域。
+
+最后 $\mathcal E_X$ 是双射，故其直接像保持任意并和有限交，并将 $\varnothing,X$ 分别送到 $\varnothing,\mathcal E_X[X]$，证明显示族确为拓扑。点 $x$ 的开邻域与 $\mathcal E_X(x)$ 的开邻域双向对应，且由单射性，前者与 $S$ 相交当且仅当后者与 $\mathcal E_X[S]$ 相交。逐点使用闭包的邻域判据就得闭包等式的两个方向。此为已经指定拓扑的同胚运输；任意实权重与无限集合使用第 71–78 条原有集合解释，第 79 条的有限字障碍保持。以上没有断言任意实数或集合具有有限字表示，也没有增加集合论的一致性结论。证毕。
+

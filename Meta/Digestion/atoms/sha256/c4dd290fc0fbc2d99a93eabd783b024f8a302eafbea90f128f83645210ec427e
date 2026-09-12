@@ -1,0 +1,16 @@
+**定义 167（配置格的自同构与标量保持自同构）。** 令
+\[
+\operatorname{Aut}_{\wedge,\vee}(P,A)
+\]
+为所有保持 \(\wedge\)、\(\vee\) 及最小、最大元的双射
+\(\varphi:S(P,A)\to S(P,A)\)。定义
+\[
+\operatorname{Aut}_{\Pi}(P,A)
+ =\{\varphi\in\operatorname{Aut}_{\wedge,\vee}(P,A):
+       \Pi_P\circ\varphi=\Pi_P\}.
+\]
+对每个 \(r\ge1\) 置
+\[
+m_r(P,A)=|\{p\in P^+:A(p)=r\}|.
+\]
+

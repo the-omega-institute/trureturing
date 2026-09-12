@@ -1,0 +1,17 @@
+**证明。** \(\operatorname{scode}\) 与 \(\operatorname{ival}\) 互为逆。于是局部码相等当且仅当 \(\mathsf V_P(q)(t,p)=\mathsf V_P(q')(t,p)\) 对所有 \((t,p)\) 成立，这等价于 \(q-q'\in\ker\mathsf V_P\)。终端情形同理，使用 \(\mathsf C_P\)。
+
+对任意局部码 \(d\)，\(j=0\) 层的 Fibonacci 权重为 \(G_0=1\)，故
+\[
+\mathsf V_P(\mathsf L_P^{\rm loc}(d))(t,p)
+=\operatorname{ival}(d(t,p)),
+\]
+再用 \(\operatorname{scode}\) 恢复 \(d\)。终端提升的同一计算给出第二个截面式。
+
+最后，有限支撑允许交换 \(t\) 与 \(j\) 的有限求和：
+\[
+\mathsf C_P(q)(p)
+=\sum_t\sum_jG_jq(t,p,j)
+=\sum_t\mathsf V_P(q)(t,p).
+\]
+将每个 \(\mathsf V_P(q)(t,p)\) 用局部码的 \(\operatorname{ival}\) 恢复，再以 \(\operatorname{scode}\) 编码，即得 (Z-NORMALIZE-AGGREGATE)。证毕。
+

@@ -1,0 +1,38 @@
+**证明。** 对 $f$ 使用第 341.1 条的共轭 $\operatorname{enc}_Z\circ f\circ\operatorname{Dec}|_{\operatorname{Enc}[D]}$。两双逆证明它在且仅在显示域上有唯一值，单射性给域成员的两向，逐输出给值域等式。对 $Z$ 中任一开集 $O$，
+$$
+(f^*)^{-1}(\operatorname{Enc}[O])=\operatorname{Enc}[f^{-1}(O)].
+$$
+定理 362.2 的双向开集对应给连续性等价，也给不连续的等价。
+
+第 319 条的图对象继续分别为
+$$
+G_f=\{\langle x,f(x)\rangle:x\in D\},\qquad
+\Gamma_f^*=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle:x\in D\},
+$$
+$$
+\operatorname{Enc}(G_f)
+=\operatorname{Pack}\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle_Z:x\in D\},
+$$
+$$
+\operatorname{El}(\operatorname{Enc}(G_f))=\operatorname{Enc}[G_f]
+=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle_Z:x\in D\}.
+$$
+$G_f,\Gamma_f^*$ 都使用普通有序对，最后两式使用语义对；语义定义域是单个码 $\operatorname{Enc}(D)$，外部共轭域是 $\operatorname{Enc}[D]$。若另取实际数字双射 $\eta_Y:Y\to Y^d$、$\eta_Z:Z\to Z^d$，则 $f^\eta=\eta_Z\circ f\circ\eta_Y^{-1}$ 的域恰为 $\eta_Y[D]$，两个图码仍分别为
+$$
+\operatorname{Enc}(G_f)
+=\operatorname{Pack}\{\langle\operatorname{Enc}(\eta_Y^{-1}(c)),
+\operatorname{Enc}(\eta_Z^{-1}(d))\rangle_Z:\langle c,d\rangle\in G_{f^\eta}\},
+$$
+$$
+\operatorname{Enc}(G_{f^\eta})
+=\operatorname{Pack}\{\langle\operatorname{Enc}(c),\operatorname{Enc}(d)\rangle_Z:
+\langle c,d\rangle\in G_{f^\eta}\}.
+$$
+其语义域分别为 $\operatorname{Enc}(D)$、$\operatorname{Enc}(\eta_Y[D])$。这些公式由每条原边与数字边的双向唯一对应、第 74 条的配对比较以及 $\operatorname{Pack}$ 双逆得到。任意进一步限制 $H\subseteq D$ 都满足 $(f|_H)^*=f^*|_{\operatorname{Enc}[H]}$ 及 $(f|_H)^\eta=f^\eta|_{\eta_Y[H]}$，包括空域。它们适用于上条的有理及相位字段函数，也适用于 $\Psi_A,E_A^{\rm cap}$、固定行的 $L_r$ 和 $\ell_A$，各自保留原来声明的源与目标。
+
+有限质量时把连续 $S_A$ 共轭得到显示延拓；目标输出是完整实数码，未要求实数为有理数或具有有限字。反向若有显示域上的连续延拓 $\widetilde F$，拉回
+$$
+x\longmapsto\operatorname{Dec}(\widetilde F(\operatorname{Enc}(x)))
+$$
+便得到坐标 $X_A^{\rm cap}$ 上的连续通常实值延拓，定理 356.1 强制 $M_A<+\infty$ 且它等于 $S_A$。再共轭回去强制 $\widetilde F=S_A^*$，证明存在性与唯一性两向。无限质量时可同样编码一般扩展值图 $S_A$，但它在容量角的值为 $+\infty$，因而 $S_A$ 不属于此命题所量化的实值函数集合；不连续的实值集合函数延拓则仍可编码。证毕。
+

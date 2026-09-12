@@ -1,0 +1,27 @@
+**定理 285（自然叶及有限数字图的精确遗传大小）。** 沿用第 277 条的含根传递闭包 $T(x)=\operatorname{TC}(\{x\})$ 与 $h(x)=|T(x)|$。对 $n\in\omega$，置 $\ell=\ell_Z(n)$、$\epsilon_j=\operatorname{pad}(\zeta(n))_j$，其中 $\ell_Z$ 如第 98 条。则
+$$
+h(\operatorname{NatZ}(n))=
+\begin{cases}
+3,&n=0,\\
+7,&n=1,\\
+4\ell-1+\epsilon_0(1-\epsilon_2),&n\ge2,
+\end{cases}
+\qquad
+h(\zeta(n))=h(\operatorname{NatZ}(n))-2.
+$$
+特别地，$5040$ 的低位到高位规范字为 $001001000001010001$，其支撑为 $\{2,5,11,13,17\}$，且
+$$
+\ell_Z(5040)=|\zeta(5040)|=18,\qquad
+h(\zeta(5040))=69,\qquad
+h(\operatorname{NatZ}(5040))=71,\qquad h(5040)=5041.
+$$
+这里 $|\zeta(5040)|$ 取有限函数图的外层基数，$h$ 取所指集合的含根传递闭包大小。令 $\phi=(1+\sqrt5)/2$。对 $n\ge2$，有
+$$
+4\log_\phi n-5<h(\operatorname{Enc}(n))\le4\log_\phi n+4.
+$$
+因此自然序数族在 $n\to\infty$ 时满足
+$$
+h(\operatorname{Enc}(n))=4\log_\phi n+O(1)
+=\Theta(\log h(n)).
+$$
+

@@ -1,0 +1,20 @@
+**证明。** 有限求和可交换，故
+\[
+V_P^{\mathbb Z}(r_X^T)(p)
+ =\sum_jG_j\sum_{s\le T}Z_X(s,\lambda(p,j))
+ =\sum_{s\le T}\sum_jZ_X(s,\lambda(p,j)),
+\]
+这就是第一式；把时间范围换成全体整数得到终端式。相邻前缀之差只留下时刻 \(t\) 的项，得到 (Z-TEMPORAL-DIFFERENCE)。并行复合在每个带标签槽中逐项相加，故给出 (Z-TEMPORAL-PARALLEL)。
+
+若 \(X\) 前缀逐槽平衡，则
+\[
+0=B_X^t(p,j)-B_X^{t-1}(p,j)=W_X(t,\lambda(p,j))
+\]
+对所有 \(t,p,j\) 成立。补集在该槽的选择电荷为
+\[
+Z_{\mathsf cX}(t,\lambda(p,j))
+ =W_X(t,\lambda(p,j))-Z_X(t,\lambda(p,j))
+ =-Z_X(t,\lambda(p,j)).
+\]
+逐槽求和及前缀求和即得 (Z-TEMPORAL-COMPLEMENT)。若两个情境的全部前缀剖面相同，应用差分式便得到其增量表相同；反向由前缀积分式立即成立。证毕。
+

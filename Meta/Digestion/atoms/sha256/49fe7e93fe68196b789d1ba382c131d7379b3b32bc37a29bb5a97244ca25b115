@@ -1,0 +1,8 @@
+**定理 355.2。** 对每个 $A,r$，所有实水平 $\mathcal L_{A,r,c}$ 都在 $(B_A^{\rm cap},\tau_{+,A})$ 中闭。若 $c\in\mathbb Q$，则精确地有
+$$
+\mathcal L_{A,r,c}
+=\bigcap_{m\ge1}
+\{u\in B_A^{\rm cap}:\chi_{r/m}^{\rm cap}(u)=[c/m]\}.
+$$
+若 $c\notin\mathbb Q$，则 $\mathcal L_{A,r,c}=\varnothing$。零行的零水平为整个 $B_A^{\rm cap}$，其余水平为空；任意行在总零状态的值为零。
+

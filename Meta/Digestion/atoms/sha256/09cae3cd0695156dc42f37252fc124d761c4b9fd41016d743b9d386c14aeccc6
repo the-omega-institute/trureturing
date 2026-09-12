@@ -1,0 +1,11 @@
+**定理 118（寄存器轴与数位轴的双射）。** \(\operatorname{dig}_{P,A}\) 是双射，并且
+\[
+|\mathsf D(P,A)|=|S(P,A)|=\prod_{p\in P}(A(p)+1).
+\]
+若 \(a,b\in S(P,A)\)，则
+\[
+a=b\iff\forall p\in P,\quad
+\operatorname{dig}_{P,A}(a)(p)=\operatorname{dig}_{P,A}(b)(p).
+\]
+在此直积中，素数 \(p\) 选择寄存器因子，Zeckendorf 索引 \(j\) 选择该因子内部的数位；任何交换二者的表达都不是同一有序对。
+

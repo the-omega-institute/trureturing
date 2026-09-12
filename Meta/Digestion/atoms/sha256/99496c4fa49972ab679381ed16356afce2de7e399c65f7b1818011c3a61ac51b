@@ -1,0 +1,10 @@
+**定理 280（无限传递闭包的基数保持）。** 对任意 $x\notin HF$，
+$$
+h(\operatorname{Enc}(x))=h(x).
+$$
+对任意集合 $x$，另有统一上界
+$$
+h(\operatorname{Enc}(x))\le\max(\aleph_0,h(x)).
+$$
+故第 278 条的两个外层成员不使无限传递闭包的基数下降。
+

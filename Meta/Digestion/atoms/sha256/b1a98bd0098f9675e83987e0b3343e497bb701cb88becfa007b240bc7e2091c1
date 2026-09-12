@@ -1,0 +1,16 @@
+**证明。** 定义 227 的相等关系核是等价关系。定理 228 给并行与补集对该关系相容；$\Theta_P^{G,\rm pf}$ 按定义单射。为证满射，给定任意 $c\in\mathsf J_P$，对每个 $c(t,p)\ne0$ 放置 $|c(t,p)|$ 对互异正负事件，时间为 $t$，位置为 $\lambda(p,0)$。每对只选择符号为 $\operatorname{sgn}(c(t,p))$ 的事件；来源取 $\operatorname{leaf}(0)$，身份用有限元组的遗传有限编码区分。令 $E=\Omega$ 为全部事件，偏序为空。有限支撑保证事件总数有限。每对背景电荷为零，故构造所得 $X_c$ 在 $\mathcal C_P^{\rm pb}$，并且
+$$
+q_{X_c}=\mathsf s_P(c),\qquad
+\delta_{X_c}^G=c,
+$$
+其中 $\mathsf s_P$ 是定理 207 已有的 $j=0$ 截面，$G_0=1$。$c=0$ 时取空档案。故映射满射，群公理从 $\mathsf J_P$ 运输成立。
+
+若 $\delta_X^G=\delta_Y^G$，定理 228 给 $V_P^{\mathbb Z}(r_X)=V_P^{\mathbb Z}(r_Y)$，所以 $\pi_P^G$ 良定义。此处只推出加权终端相等，不推出原始槽表相同。并行等式给同态性。对任意终端向量 $z$，上述构造取 $c=\iota_Pz$ 即得终端向量为 $z$ 的代表，故 $\pi_P^G$ 满射。复合等式由定理 228 的终端式逐代表成立。
+
+第 200–201 条的抽象求和分裂满足 $\Sigma_P\iota_P=\operatorname{id}$，且每个 $c$ 唯一写成
+$$
+c=\iota_P(\Sigma_Pc)+\bigl(c-\iota_P(\Sigma_Pc)\bigr),
+\qquad c-\iota_P(\Sigma_Pc)\in\mathsf K_P.
+$$
+经两个已证同构运输即得短正合列、截面和核；将该唯一分解拉回 $\mathcal H_P^G$ 即得直和。这仅使用定理 201 的抽象 $\Sigma_P$ 分裂。$P=\varnothing$ 时各观察群均为零群，同一构造与等式仍成立。证毕。
+

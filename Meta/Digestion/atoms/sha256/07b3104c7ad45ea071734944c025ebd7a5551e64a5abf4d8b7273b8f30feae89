@@ -1,0 +1,16 @@
+**定理 147（统一编码算子的双射与定理 145 的补足）。** \(\operatorname{Code}_Z\) 与 \(\operatorname{Dec}_Z\) 在各自定义域上互为逆，并且对任意有限情境表示 \(X=(C,A)\)
+\[
+\operatorname{Dec}_Z(\operatorname{Code}_Z(X))=X,
+\qquad
+q_Z(\operatorname{Code}_Z(X))=\operatorname{scode}(q(X)),
+\qquad
+u_Z(\operatorname{Code}_Z(X))=\operatorname{scode}(u(C)).
+\]
+对任意有限 CSA 表达式 \(\mathscr E\) 及其有效情境表示输入 \(X\)，有
+\[
+\operatorname{Code}_Z(\mathscr E(X))
+ =\mathscr E_Z(\operatorname{Code}_Z(X)),
+\tag{Z-EXPR-CONJ}
+\]
+且两侧同时有定义或同时无定义；成功时由 \(\operatorname{Dec}_Z\) 得到相同的原情境。于是定理 145 中的 \(\operatorname{Code}_Z\) 由定义 146 唯一确定，原交换式在该定义下成立。
+

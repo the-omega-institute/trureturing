@@ -1,0 +1,56 @@
+**定理 273（历史比较与完整集合语义的边界）。** 对两种 $R$ 各自、全部 $X\in\mathcal H$ 及 $c\in\operatorname{Enc}[\mathcal H_R]$，有
+$$
+\begin{gathered}
+J_R(\operatorname{Enc}(RX))=\operatorname{Enc}(X),\qquad
+J_R^{-1}(\operatorname{Enc}(X))=\operatorname{Enc}(RX),\\
+J_R^{-1}(J_R(c))=c,\qquad
+J_R(J_R^{-1}(\operatorname{Enc}(X)))=\operatorname{Enc}(X).
+\end{gathered}
+$$
+对第 272 条的任意 $d:A\to B$、$U\subseteq A$、$a\in A$，精确的集合及成员桥为
+$$
+\begin{gathered}
+\widetilde{\mathcal P(d)}(\operatorname{Enc}(U))
+ =\operatorname{Enc}(d[U])
+ =\operatorname{Pack}\{\widetilde d(\operatorname{Enc}(u)):u\in U\},\\
+\operatorname{Enc}(a)\in_Z\operatorname{Enc}(U)
+\iff\widetilde d(\operatorname{Enc}(a))\in_Z
+                  \widetilde{\mathcal P(d)}(\operatorname{Enc}(U)).
+\end{gathered}
+$$
+因而第 266 条空间、时间、来源、联合区域、属性及其父对的任意集合参数都有这种桥；其中有限档案并不限制参数集合的基数。
+
+更明确地，对每个固定有限 $r$、第 259 条的双射 $b_i:A_i\to B_i$，以及原关系 $Q\subseteq\prod_i A_i$，置 $B=\prod_i b_i$、$Q^b=B[Q]$。则
+$$
+\begin{aligned}
+\operatorname{Enc}(Q)
+ &=\operatorname{Pack}\{
+    T_r^Z(\operatorname{Enc}(b_1^{-1}c_1),\ldots,
+          \operatorname{Enc}(b_r^{-1}c_r)):
+    T_r(c_1,\ldots,c_r)\in Q^b\},\\
+\operatorname{Enc}(Q^b)
+ &=\operatorname{Pack}\{
+    T_r^Z(\operatorname{Enc}(c_1),\ldots,\operatorname{Enc}(c_r)):
+    T_r(c_1,\ldots,c_r)\in Q^b\}.
+\end{aligned}
+$$
+函数图特化为第 260 条，保留完整定义域和值域。历史关系及部分历史操作的图取各历史槽 $b_i=R$、输出槽 $b_o=R$；整数、空间、来源、参数及观察槽取第 255–268 条指定的双射。特别地，对任意部分历史操作 $f:D\subseteq\mathcal H^r\to\mathcal H$ 及其已证对应 $f^R$，令 $R^r$ 为逐槽桥，则
+$$
+\operatorname{Enc}(G_f)=\operatorname{Pack}\{
+\langle T_r^Z(J_R(\operatorname{Enc}(Y_1)),\ldots,J_R(\operatorname{Enc}(Y_r))),
+        J_R(\operatorname{Enc}(Z))\rangle_Z:
+\langle T_r(Y_1,\ldots,Y_r),Z\rangle\in G_{f^R}\}.
+$$
+其域码为 $\operatorname{Enc}(D)$，数字图的域码为 $\operatorname{Enc}(R^r[D])$；这两码由容器与成员一起运输的桥对应，不要求字面相等。完整字段记录先按第 258 条逐字段装配，再按 $J_R$ 比较，所得码恰为原完整记录的 $\operatorname{Enc}$，包括来源字段的逆。
+
+对任意集合 $A,B$ 和每个固定有限原集合论公式 $\varphi(x_1,\ldots,x_r)$，仍有
+$$
+\begin{gathered}
+\mathcal P_Z(\operatorname{Enc}(A))=\operatorname{Enc}(\mathcal P(A)),\qquad
+\operatorname{Fun}_Z(\operatorname{Enc}(A),\operatorname{Enc}(B))=\operatorname{Enc}(B^A),\\
+\varphi(x_1,\ldots,x_r)
+\iff\varphi^Z(\operatorname{Enc}(x_1),\ldots,\operatorname{Enc}(x_r)).
+\end{gathered}
+$$
+这里幂集包含全部子集，函数集包含全部集合函数，参数 $x_i$ 可为任意集合。$R$ 只同构第 261–269 条声明的 CSA 结构；它的定义域不是全部集合，亦不是环境成员关系的自同构。$\mathfrak V_Z$ 是可定义类，不是 ZFC 内含有全部有效码的集合。若 $A\notin HF$，则 $\operatorname{Enc}(A)\notin HF$；特别是无限集合及无限函数图的码不是第 69 条的有限数字，也不是由有限标签和有限字逐有限次装配的遗传有限记录。
+

@@ -1,0 +1,30 @@
+**定理 191（逐槽平衡补集实现群完成中的逆元）。** 令 \(X\) 为终端逐槽平衡的有限情境，且其选择累积表 \(r_X\) 非负。置
+\[
+a_X(p)=V_P^{\mathbb Z}(r_X)(p)=\sum_{j\ge0}G_jr_X(p,j).
+\]
+则 \(a_X\in\mathsf E(P)\)，且
+\[
+[a_X,0]\in\mathsf{Gr}(P),\qquad
+[0,a_X]=-[a_X,0],
+\]
+并且补集的终端观察满足
+\[
+\operatorname{sdig}_P(r_{\mathsf cX})
+ =\operatorname{sdig}^{\rm gp}_P([0,a_X]),
+\qquad
+\operatorname{Rat}_P(r_{\mathsf cX})
+ =\operatorname{Rat}^{\rm gp}_P([0,a_X])
+ =\operatorname{Rat}_P(r_X)^{-1}.
+\]
+若 \(X\) 还前缀逐槽平衡，则对每个 \(T\) 置
+\[
+a_X^T(p)=V_P^{\mathbb Z}(r_X^T)(p),
+\]
+上述等式将 \(a_X,r_X\) 同时替换为 \(a_X^T,r_X^T\) 后仍成立。
+
+**证明。** 终端逐槽平衡由定理 187 给出 \(r_{\mathsf cX}=-r_X\)。应用 \(V_P^{\mathbb Z}\) 得
+\[
+V_P^{\mathbb Z}(r_{\mathsf cX})=-a_X.
+\]
+群完成中 \([0,a_X]=-[a_X,0]\)，其在 \(\mathbb Z^P\) 中的像正是 \(-a_X\)。定理 186 的带符号编码和有理读数遂给出两式。前缀逐槽平衡时定理 187 对每个 \(T\) 给同一负号等式，应用相同论证即得逐前缀结论。证毕。
+

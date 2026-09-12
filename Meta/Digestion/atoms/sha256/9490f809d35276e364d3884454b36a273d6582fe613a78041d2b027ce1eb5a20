@@ -1,0 +1,17 @@
+**定理 337.2。** $\Psi_A$ 是到
+$$
+\prod_{n\in\omega}\{[\phi k]:k\in D_n\}\subseteq\mathbb T^\omega
+$$
+的同胚，右侧取环境的子空间拓扑。因而
+$$
+\tau_{\Psi,A}^{X}=\tau_{\rm coord,A}^{X},\qquad
+\tau_{\Psi,A}^{B}=\tau_{\rm coord,A}^{B}
+=\tau_{\rm coord}|_{B_A^{\rm cap}}
+=\tau_\Psi|_{B_A^{\rm cap}}.
+$$
+$X_A^{\rm cap}$ 紧且 Hausdorff，$B_A^{\rm cap}$ 在其中稠密，并有
+$$
+B_A^{\rm cap}=X_A^{\rm cap}\iff J_A\text{ 有限}.
+$$
+此时载体有限离散，大小为 $\prod_{n\in J_A}(A_n+1)$。若 $A\equiv0$，载体是只含总零函数的单点集。
+

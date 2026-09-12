@@ -1,0 +1,9 @@
+**定理 233（容纳目标状态数的最小总宽度）。** 对整数 $k\ge1$、$Q\ge1$，允许选择 $k$ 个非负整数容量及独立 Zeckendorf 窗口，要求其容量盒至少含有 $Q$ 个状态。最小总宽度为
+$$
+\begin{cases}
+\lceil\log_2Q\rceil,&Q\le2^k,\\
+k-1+\ell_Z\!\left(\left\lceil Q/2^{k-1}\right\rceil-1\right),&Q>2^k.
+\end{cases}
+$$
+这里要求的是至少 $Q$ 个状态，不要求容量盒恰有 $Q$ 个状态。
+
