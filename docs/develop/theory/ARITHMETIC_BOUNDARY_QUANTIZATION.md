@@ -2889,6 +2889,9 @@ S-\tau\ge0&G\ge0
 **26.27 定理的适用范围（保留原有开放限制）：截断界的适用范围。** 26.25 只界定省略 \(n\ge25\) 项的误差。
 在反射点处最近距离精确并列,浮点分支不能自行取消这种等号。
 数学上的总质量 3 不是舍入质量和的自动保证。
+
+**有限模型的实测覆盖（2026-09-12）。** [五窗口科学结果](../../reports/quantized-gh/prime-slab-campaign-coverage-0912.json)按 26.18–26.23 的原定义，覆盖原有 56 个有序素数三元组、各指数 0..15 的全部 229376 个箱体及 5734400 个 guards 前原始槽（box_id 为 0..229375，row_id 为 0..5734399，均为闭区间）；这些 ID 表示有限模型参数位置，不是连续正整数。CPU 已审计全部返回行：1614899 行严格负、4119501 行精确 inactive，unresolved、invalid、disagreement 均为 0；活跃行均由 128-bit Arb 对完整未缩放的 \(G=D-\Psi\) 判定。全部活跃 GPU 提议均为 indeterminate 并带可能下溢标记，没有已认证的 GPU 确定符号；正归一化和 24 项提议不认证浮点误差。该有限并集完成保留各窗口原有的 `full_campaign_complete=false` 及先导版与后续版的区别，也不改写 26.20 的 I9 常量检查。\(G\) 比较既有两界，本身不是 RH 判据；此有限实测不证明 RH、全素数或全指数定理，不提供更宽的 translated5040 前提或非空 \(S\) 的 detector-completeness 证明，其他设备覆盖未知。
+
 **26.28 证明附引（附 26.4–26.17）：经典材料归属。** 本节专门化组合标为 repo-derived,
 以下只归属实际用到的经典材料,不是这个素数差值定理的既有文献证明或穷尽新颖性调查。
 HKUST [Lecture 14: Greedy Algorithms](https://home.cse.ust.hk/~dekai/271/notes/L14/L14.pdf)

@@ -1,0 +1,696 @@
+{
+  "schema": "prime-slab-campaign-coverage-v1",
+  "scientific_context": {
+    "G": "D - Psi; existing comparison of two bounds, not an RH criterion",
+    "D": "maximum of six feasible fractional-knapsack mixtures",
+    "Psi": "f(H)+2*f(L), f(x)=log(1-exp(-x)); existing slab and nearest-endpoint definitions",
+    "cpu_expression": "full unscaled G",
+    "gpu_expression": "exp(min(c_i))*G; 24-term proposal",
+    "existing_truncation_bound": "3/104857600",
+    "bound_exclusions": "float input, transcendental, branch, clipping, summation/maximum, roundoff and underflow errors",
+    "evidence": "Measured finite GPU candidate coverage with completed CPU Arb classifications; no new theorem or RH equivalence."
+  },
+  "model": {
+    "source": "../../develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md",
+    "definitions": "26.18–26.23",
+    "input": {
+      "path": "../prime-slab-corner-order-0909.json",
+      "bytes": 6741,
+      "sha256": "9d28055d5255580ed58274822359961483d1deecbb7b4e38ce497948a4808672"
+    },
+    "prime_alphabet": [
+      2,
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19
+    ],
+    "triple_order": "lexicographic increasing prime-list index triples",
+    "ordered_triples_source": "../prime-slab-corner-order-0909.json#/rows",
+    "triple_count": 56,
+    "triple_index_closed": [
+      0,
+      55
+    ],
+    "exponents": {
+      "b0_closed": [
+        0,
+        15
+      ],
+      "b1_closed": [
+        0,
+        15
+      ],
+      "b2_closed": [
+        0,
+        15
+      ]
+    },
+    "box_encoding": "4096*t+256*b0+16*b1+b2",
+    "row_encoding": "25*box_id+slot",
+    "id_semantics": "Finite model parameter positions, not consecutive positive integers.",
+    "slots_per_box": 25,
+    "adjacent": {
+      "slots_closed": [
+        0,
+        6
+      ],
+      "slots_per_box": 7,
+      "index": "s=slot+1",
+      "eligibility": "26.18/26.21 adjacent cutoff R_(s-1)>5040"
+    },
+    "reflected": {
+      "slots_closed": [
+        7,
+        24
+      ],
+      "slots_per_box": 18,
+      "index": "j=1+(slot-7)//3; i=(slot-7)%3 (j-major)",
+      "eligibility": "All strict integer guards in 26.18/26.21"
+    },
+    "raw_slot_scope": "Counts before eligibility guards; inactive slots remain part of coverage.",
+    "original_constant_input_scope": "26.20 and the original input record retain search_executed=false and exponent_boxes_generated=0. The original I9 check examined 56 constant rows and 448 subset products; it executed no exponent boxes or analytical test rows."
+  },
+  "program_source_directory": "../../../tools/scripts/agent/",
+  "program_identities": [
+    {
+      "dependencies": {
+        "numpy": "2.0.2",
+        "python-flint": "0.8.0",
+        "torch": "2.8.0"
+      },
+      "fallback": "0",
+      "files": {
+        "gpu5040/state_store.py": "a1eda747e24ea792caac30da136e85ba0beac6dc6f08d53880624b8ac6b1f03a",
+        "prime_slab_search.py": "da39b459defd607355291070c8be1c4ddbbaf72153e1ffdb3bd98ff35588289d",
+        "prime_slabs/certify.py": "d6888215edf92923b2c27dbd2e2a5dc2a18ff1b9e28e45dee80d22a4dfb3285e",
+        "prime_slabs/exact.py": "c125786e2485797c6a9aa3fbcba131e3d5655108d87ed61afd69a367bd70be8c",
+        "prime_slabs/gpu.py": "2d2d14ef1400d8b0228ca3001ac8bb88e09ab0b337a51ad2b2ea5b68ef4245f3",
+        "prime_slabs/search.metal": "1305d0a1c9afd3d986f0d435ec3e8205d916ae951ff84420183e7ba1861b3e9d",
+        "prime_slabs/storage.py": "13a36959cfc07b8d52d3af41bf5231ef4e93f6525a7de28a28d238aadf2dcdf5"
+      },
+      "input_sha256": "9d28055d5255580ed58274822359961483d1deecbb7b4e38ce497948a4808672",
+      "kernel_sha256": "1305d0a1c9afd3d986f0d435ec3e8205d916ae951ff84420183e7ba1861b3e9d",
+      "normalization": "exp(min(c_i))*G; GPU 24 terms; CPU full expression",
+      "precisions": [
+        128,
+        256,
+        512
+      ],
+      "program_sha256": "27a15ae48802d7ad188b5f73e315d6230f0e6b7b208d96d351e6556a18c34ef0",
+      "python": "3.12.13",
+      "schema": "prime-slab-raw-and-arb-v1"
+    },
+    {
+      "dependencies": {
+        "numpy": "2.0.2",
+        "python-flint": "0.8.0",
+        "torch": "2.8.0"
+      },
+      "fallback": "0",
+      "files": {
+        "gpu5040/state_store.py": "a1eda747e24ea792caac30da136e85ba0beac6dc6f08d53880624b8ac6b1f03a",
+        "prime_slab_search.py": "c4c8a6d3784d0fa442974eaec91d300f3f35a16affa89cee65d1210eb4501119",
+        "prime_slabs/certify.py": "d6888215edf92923b2c27dbd2e2a5dc2a18ff1b9e28e45dee80d22a4dfb3285e",
+        "prime_slabs/exact.py": "c125786e2485797c6a9aa3fbcba131e3d5655108d87ed61afd69a367bd70be8c",
+        "prime_slabs/gpu.py": "2d2d14ef1400d8b0228ca3001ac8bb88e09ab0b337a51ad2b2ea5b68ef4245f3",
+        "prime_slabs/search.metal": "1305d0a1c9afd3d986f0d435ec3e8205d916ae951ff84420183e7ba1861b3e9d",
+        "prime_slabs/storage.py": "13a36959cfc07b8d52d3af41bf5231ef4e93f6525a7de28a28d238aadf2dcdf5"
+      },
+      "input_sha256": "9d28055d5255580ed58274822359961483d1deecbb7b4e38ce497948a4808672",
+      "kernel_sha256": "1305d0a1c9afd3d986f0d435ec3e8205d916ae951ff84420183e7ba1861b3e9d",
+      "normalization": "exp(min(c_i))*G; GPU 24 terms; CPU full expression",
+      "precisions": [
+        128,
+        256,
+        512
+      ],
+      "program_sha256": "519acdc009869a00d18d918f5137ab035f717b220afbd1463a2ee9143e87dd5c",
+      "python": "3.12.13",
+      "schema": "prime-slab-raw-and-arb-v1"
+    }
+  ],
+  "version_scope": "The original pilot uses the first recorded program identity; the other four windows use the second. program_source_directory currently contains the later files; the pilot file hashes remain historical provenance. Shared input and Metal kernel hashes do not imply a uniform-version rerun.",
+  "coverage": {
+    "range_convention": "inclusive",
+    "window_order": "increasing box coordinate",
+    "window_count": 5,
+    "box_range_closed": [
+      0,
+      229375
+    ],
+    "raw_range_closed": [
+      0,
+      5734399
+    ],
+    "box_count": 229376,
+    "raw_slots": 5734400,
+    "by_kind": {
+      "adjacent": 1605632,
+      "reflected": 4128768
+    },
+    "completed_rows": 5734400,
+    "finite_id_union_complete": true,
+    "gap_count": 0,
+    "overlap_count": 0,
+    "completion_scope": "Exact local union of these five completed finite windows. Each original full_campaign_complete=false describes its individual invocation; the original window records and their finite-window limitations remain unchanged."
+  },
+  "outcomes": {
+    "negative": 1614899,
+    "inactive": 4119501,
+    "positive": 0,
+    "nonpositive": 0,
+    "nonnegative": 0,
+    "unresolved": 0,
+    "invalid": 0,
+    "disagreement": 0
+  },
+  "gpu_proposals": {
+    "by_proposal": {
+      "inactive": 4119501,
+      "indeterminate": 1614899
+    },
+    "definite_active_signs": 0,
+    "flags": {
+      "integer_overflow": 0,
+      "nonfinite": 0,
+      "other": 0,
+      "underflow": 1614899
+    },
+    "underflow_semantics": "conservative possible-subnormal/flush-to-zero flag; no GPU roundoff certificate",
+    "float32_error_certified": false,
+    "cpu_candidate_fallback_enabled": false
+  },
+  "cpu_audit": {
+    "raw_rows_audited": 5734400,
+    "active_rows_evaluated": 1614899,
+    "inactive_exact_guard_audits": 4119501,
+    "precision_ladder_bits": [
+      128,
+      256,
+      512
+    ],
+    "active_precision_counts": {
+      "128": 1614899
+    },
+    "extra_precision_evaluations": 0,
+    "method": "Python exact integers/rationals for all guards, distances and clipping; independent full Arb log/exp/log1p/sqrt and max of six feasible mixtures; rational outward endpoints",
+    "expression": "Full unscaled G=D-Psi for active rows; exact eligibility audit for every returned row, including inactive rows.",
+    "precision_accounting": "128-bit active counts follow the original precision record for each old window and the 128,256,512 ladder with zero extra precision evaluations for each new window."
+  },
+  "windows": [
+    {
+      "label": "lower",
+      "source": {
+        "path": "/Users/auricstudio/.local/state/qgh-prime-slab-lower-0912/run-18265cceaf234c069c08287cb03795b7.json",
+        "bytes": 25544,
+        "sha256": "326352314adc4d94206110fd406565ea4478f9323eab44db562a305a6ed9d8a2",
+        "checkpoint": {
+          "path": "/Users/auricstudio/.local/state/qgh-prime-slab-lower-0912/window-0-3071/checkpoint.json",
+          "sha256": "b555aa3dad7b8486dc9664848b9530fe9f1d6f940f7f5cdaaea3fe515f5dbe12"
+        }
+      },
+      "program_sha256": "519acdc009869a00d18d918f5137ab035f717b220afbd1463a2ee9143e87dd5c",
+      "box_range_closed": [
+        0,
+        3071
+      ],
+      "raw_range_closed": [
+        0,
+        76799
+      ],
+      "box_count": 3072,
+      "raw_rows": 76800,
+      "by_kind": {
+        "adjacent": 21504,
+        "reflected": 55296
+      },
+      "by_outcome": {
+        "inactive": 55717,
+        "negative": 21083
+      },
+      "by_proposal": {
+        "inactive": 55717,
+        "indeterminate": 21083
+      },
+      "gpu_flags": {
+        "integer_overflow": 0,
+        "nonfinite": 0,
+        "other": 0,
+        "underflow": 21083
+      },
+      "gpu_definite_active_signs": 0,
+      "completed_rows": 76800,
+      "cpu_evaluated_active": 21083,
+      "active_precision_counts": {
+        "128": 21083
+      },
+      "extra_precision_evaluations": 0,
+      "unresolved_ids": [],
+      "invalid_ids": [],
+      "disagreement_ids": [],
+      "complete_for_requested_window": true,
+      "next_box": 3072,
+      "original_full_campaign_complete": false,
+      "execution": {
+        "status": "certified_window",
+        "exit_code": 0,
+        "new_gpu_raw_rows": 76800,
+        "new_cpu_audited_rows": 76800,
+        "recovered_gpu_raw_rows": 0,
+        "verification_replay_rows": 0,
+        "returned_metal_dispatches": 12
+      },
+      "environment": {
+        "cpu": "Apple M3 Ultra",
+        "cpu_query_exit": 0,
+        "dependencies": {
+          "numpy": "2.0.2",
+          "python-flint": "0.8.0",
+          "torch": "2.8.0"
+        },
+        "executable": "/Users/auricstudio/.cache/uv/builds-v0/.tmpoeBql4/bin/python",
+        "flags": {
+          "PYTORCH_ENABLE_MPS_FALLBACK": "0",
+          "PYTORCH_MPS_FAST_MATH": null,
+          "PYTORCH_MPS_PREFER_METAL": null
+        },
+        "gpu": [
+          {
+            "_name": "Apple M3 Ultra",
+            "spdisplays_vendor": "sppci_vendor_Apple",
+            "sppci_model": "Apple M3 Ultra"
+          }
+        ],
+        "gpu_query_exit": 0,
+        "machine": "arm64",
+        "metal_compile_options": "Torch 2.8 compile_shader defaults; no GPU rounding certificate",
+        "platform": "macOS-26.6.2-arm64-arm-64bit",
+        "python": "3.12.13 (main, Mar 10 2026, 18:18:07) [Clang 21.1.4 ]"
+      },
+      "started_at": "2026-09-12T13:06:27.047653+00:00",
+      "finished_at": "2026-09-12T13:06:41.409207+00:00",
+      "timing_seconds": {
+        "cpu_verification": 4.794586039613932,
+        "gpu_dispatch_and_synchronize": 0.04557179450057447,
+        "orchestration": 9.525150540983304,
+        "total": 14.365308375097811
+      },
+      "stream_identities": {
+        "external_state_directory": "/Users/auricstudio/.local/state/qgh-prime-slab-lower-0912/window-0-3071",
+        "raw_stream_sha256": "a22f92bb142506ec2fc37fa96432a0f23c32393efcb6b5791944fbe04b3bd51c",
+        "classification_stream_sha256": "c3aa88b92f3b4473a0046e4a06ead3d887194787cedd4127091cce99d8027dcc"
+      }
+    },
+    {
+      "label": "original pilot",
+      "source": {
+        "path": "prime-slab-mps-pilot-0909.json",
+        "bytes": 5552,
+        "sha256": "6895b9e5fdbfc5bdc47ed0bd2cf455ca6d8689f953f26b7b94c43b68c4e56f94"
+      },
+      "program_sha256": "27a15ae48802d7ad188b5f73e315d6230f0e6b7b208d96d351e6556a18c34ef0",
+      "box_range_closed": [
+        3072,
+        3135
+      ],
+      "raw_range_closed": [
+        76800,
+        78399
+      ],
+      "box_count": 64,
+      "raw_rows": 1600,
+      "by_kind": {
+        "adjacent": 448,
+        "reflected": 1152
+      },
+      "by_outcome": {
+        "inactive": 1150,
+        "negative": 450
+      },
+      "by_proposal": {
+        "inactive": 1150,
+        "indeterminate": 450
+      },
+      "gpu_flags": {
+        "integer_overflow": 0,
+        "nonfinite": 0,
+        "other": 0,
+        "underflow": 450
+      },
+      "gpu_definite_active_signs": 0,
+      "completed_rows": 1600,
+      "cpu_evaluated_active": 450,
+      "active_precision_counts": {
+        "128": 450
+      },
+      "extra_precision_evaluations": 0,
+      "unresolved_ids": [],
+      "invalid_ids": [],
+      "disagreement_ids": [],
+      "complete_for_requested_window": true,
+      "next_box": 3136,
+      "original_full_campaign_complete": false,
+      "by_kind_and_outcome": {
+        "adjacent": {
+          "active": 447,
+          "inactive": 1,
+          "negative": 447,
+          "raw": 448
+        },
+        "reflected": {
+          "active": 3,
+          "inactive": 1149,
+          "negative": 3,
+          "raw": 1152
+        }
+      },
+      "finite_24term_values_by_sign": {
+        "negative": 450
+      },
+      "retained_reflected_records": {
+        "path": "prime-slab-mps-pilot-0909.json#/active_reflected_records",
+        "count": 3
+      },
+      "unavailable_fields": [
+        "environment",
+        "started_at",
+        "finished_at",
+        "timing_seconds",
+        "returned_metal_dispatches",
+        "stream_identities"
+      ]
+    },
+    {
+      "label": "middle",
+      "source": {
+        "path": "/Users/auricstudio/.local/state/qgh-prime-slab-middle-0912/run-018c743fe1ef4e2abfb874e9dd77f592.json",
+        "bytes": 965857,
+        "sha256": "c1bc2f363c173ba3fdc80eefd194556afee8a5c1f65d5d84bc918ade2aa69e34",
+        "checkpoint": {
+          "path": "/Users/auricstudio/.local/state/qgh-prime-slab-middle-0912/window-3136-148799/checkpoint.json",
+          "sha256": "38be6afc31dc3774ee6482a70295bc5ca679a5a8d7a31f9272a469057b0be0b1"
+        }
+      },
+      "program_sha256": "519acdc009869a00d18d918f5137ab035f717b220afbd1463a2ee9143e87dd5c",
+      "box_range_closed": [
+        3136,
+        148799
+      ],
+      "raw_range_closed": [
+        78400,
+        3719999
+      ],
+      "box_count": 145664,
+      "raw_rows": 3641600,
+      "by_kind": {
+        "adjacent": 1019648,
+        "reflected": 2621952
+      },
+      "by_outcome": {
+        "inactive": 2618625,
+        "negative": 1022975
+      },
+      "by_proposal": {
+        "inactive": 2618625,
+        "indeterminate": 1022975
+      },
+      "gpu_flags": {
+        "integer_overflow": 0,
+        "nonfinite": 0,
+        "other": 0,
+        "underflow": 1022975
+      },
+      "gpu_definite_active_signs": 0,
+      "completed_rows": 3641600,
+      "cpu_evaluated_active": 1022975,
+      "active_precision_counts": {
+        "128": 1022975
+      },
+      "extra_precision_evaluations": 0,
+      "unresolved_ids": [],
+      "invalid_ids": [],
+      "disagreement_ids": [],
+      "complete_for_requested_window": true,
+      "next_box": 148800,
+      "original_full_campaign_complete": false,
+      "execution": {
+        "status": "certified_window",
+        "exit_code": 0,
+        "new_gpu_raw_rows": 3641600,
+        "new_cpu_audited_rows": 3641600,
+        "recovered_gpu_raw_rows": 0,
+        "verification_replay_rows": 0,
+        "returned_metal_dispatches": 569
+      },
+      "environment": {
+        "cpu": "Apple M3 Ultra",
+        "cpu_query_exit": 0,
+        "dependencies": {
+          "numpy": "2.0.2",
+          "python-flint": "0.8.0",
+          "torch": "2.8.0"
+        },
+        "executable": "/Users/auricstudio/.cache/uv/builds-v0/.tmpSlK1iG/bin/python",
+        "flags": {
+          "PYTORCH_ENABLE_MPS_FALLBACK": "0",
+          "PYTORCH_MPS_FAST_MATH": null,
+          "PYTORCH_MPS_PREFER_METAL": null
+        },
+        "gpu": [
+          {
+            "_name": "Apple M3 Ultra",
+            "spdisplays_vendor": "sppci_vendor_Apple",
+            "sppci_model": "Apple M3 Ultra"
+          }
+        ],
+        "gpu_query_exit": 0,
+        "machine": "arm64",
+        "metal_compile_options": "Torch 2.8 compile_shader defaults; no GPU rounding certificate",
+        "platform": "macOS-26.6.2-arm64-arm-64bit",
+        "python": "3.12.13 (main, Mar 10 2026, 18:18:07) [Clang 21.1.4 ]"
+      },
+      "started_at": "2026-09-12T13:10:44.824318+00:00",
+      "finished_at": "2026-09-12T13:21:19.552582+00:00",
+      "timing_seconds": {
+        "cpu_verification": 202.46385487611406,
+        "gpu_dispatch_and_synchronize": 1.860482795163989,
+        "orchestration": 430.33515837066807,
+        "total": 634.6594960419461
+      },
+      "stream_identities": {
+        "external_state_directory": "/Users/auricstudio/.local/state/qgh-prime-slab-middle-0912/window-3136-148799",
+        "raw_stream_sha256": "932b1797cb070e9f73cf1fb340c775b1c2072ef232f404f2f92a8c618551bf52",
+        "classification_stream_sha256": "19076ffd3a5b66f02aa715faa3acef98dcf333c31c97caed568b90a8c07a4bf2"
+      }
+    },
+    {
+      "label": "original 5,7,11 window",
+      "source": {
+        "path": "prime-slab-5711-window-0910.json",
+        "bytes": 44612,
+        "sha256": "a9e01e233d78970f82b6752b13eef5191415c767334889b7d8ccf18da891a529"
+      },
+      "program_sha256": "519acdc009869a00d18d918f5137ab035f717b220afbd1463a2ee9143e87dd5c",
+      "box_range_closed": [
+        148800,
+        148863
+      ],
+      "raw_range_closed": [
+        3720000,
+        3721599
+      ],
+      "box_count": 64,
+      "raw_rows": 1600,
+      "by_kind": {
+        "adjacent": 448,
+        "reflected": 1152
+      },
+      "by_outcome": {
+        "inactive": 1144,
+        "negative": 456
+      },
+      "by_proposal": {
+        "inactive": 1144,
+        "indeterminate": 456
+      },
+      "gpu_flags": {
+        "integer_overflow": 0,
+        "nonfinite": 0,
+        "other": 0,
+        "underflow": 456
+      },
+      "gpu_definite_active_signs": 0,
+      "completed_rows": 1600,
+      "cpu_evaluated_active": 456,
+      "active_precision_counts": {
+        "128": 456
+      },
+      "extra_precision_evaluations": 0,
+      "unresolved_ids": [],
+      "invalid_ids": [],
+      "disagreement_ids": [],
+      "complete_for_requested_window": true,
+      "next_box": 148864,
+      "original_full_campaign_complete": false,
+      "kind_outcome_table": [
+        {
+          "kind": "adjacent",
+          "raw_rows": 448,
+          "active_count": 448,
+          "negative_count": 448,
+          "inactive_count": 0,
+          "invalid_count": 0,
+          "disagreement_count": 0,
+          "unresolved_count": 0
+        },
+        {
+          "kind": "reflected",
+          "raw_rows": 1152,
+          "active_count": 8,
+          "negative_count": 8,
+          "inactive_count": 1144,
+          "invalid_count": 0,
+          "disagreement_count": 0,
+          "unresolved_count": 0
+        }
+      ],
+      "retained_reflected_records": {
+        "path": "prime-slab-5711-window-0910.json#/active_reflected_records",
+        "count": 8
+      },
+      "unavailable_fields": [
+        "environment",
+        "started_at",
+        "finished_at",
+        "timing_seconds",
+        "returned_metal_dispatches",
+        "stream_identities"
+      ]
+    },
+    {
+      "label": "upper",
+      "source": {
+        "path": "/Users/auricstudio/.local/state/qgh-prime-slab-upper-0912/run-aec96192df8c4a13b4e81c9b924acd7b.json",
+        "bytes": 538916,
+        "sha256": "6ccc7bdf7c2ae51cc2ce6f7d4bcb1d6f4d77bde413015d8393f2d30de9064472",
+        "checkpoint": {
+          "path": "/Users/auricstudio/.local/state/qgh-prime-slab-upper-0912/window-148864-229375/checkpoint.json",
+          "sha256": "48388d4fdd64e4381a5edcc54a95eb14545bb832ae1319754250a1b291ded6e3"
+        }
+      },
+      "program_sha256": "519acdc009869a00d18d918f5137ab035f717b220afbd1463a2ee9143e87dd5c",
+      "box_range_closed": [
+        148864,
+        229375
+      ],
+      "raw_range_closed": [
+        3721600,
+        5734399
+      ],
+      "box_count": 80512,
+      "raw_rows": 2012800,
+      "by_kind": {
+        "adjacent": 563584,
+        "reflected": 1449216
+      },
+      "by_outcome": {
+        "inactive": 1442865,
+        "negative": 569935
+      },
+      "by_proposal": {
+        "inactive": 1442865,
+        "indeterminate": 569935
+      },
+      "gpu_flags": {
+        "integer_overflow": 0,
+        "nonfinite": 0,
+        "other": 0,
+        "underflow": 569935
+      },
+      "gpu_definite_active_signs": 0,
+      "completed_rows": 2012800,
+      "cpu_evaluated_active": 569935,
+      "active_precision_counts": {
+        "128": 569935
+      },
+      "extra_precision_evaluations": 0,
+      "unresolved_ids": [],
+      "invalid_ids": [],
+      "disagreement_ids": [],
+      "complete_for_requested_window": true,
+      "next_box": 229376,
+      "original_full_campaign_complete": false,
+      "execution": {
+        "status": "certified_window",
+        "exit_code": 0,
+        "new_gpu_raw_rows": 2012800,
+        "new_cpu_audited_rows": 2012800,
+        "recovered_gpu_raw_rows": 0,
+        "verification_replay_rows": 0,
+        "returned_metal_dispatches": 315
+      },
+      "environment": {
+        "cpu": "Apple M3 Ultra",
+        "cpu_query_exit": 0,
+        "dependencies": {
+          "numpy": "2.0.2",
+          "python-flint": "0.8.0",
+          "torch": "2.8.0"
+        },
+        "executable": "/Users/auricstudio/.cache/uv/builds-v0/.tmpT0uIwy/bin/python",
+        "flags": {
+          "PYTORCH_ENABLE_MPS_FALLBACK": "0",
+          "PYTORCH_MPS_FAST_MATH": null,
+          "PYTORCH_MPS_PREFER_METAL": null
+        },
+        "gpu": [
+          {
+            "_name": "Apple M3 Ultra",
+            "spdisplays_vendor": "sppci_vendor_Apple",
+            "sppci_model": "Apple M3 Ultra"
+          }
+        ],
+        "gpu_query_exit": 0,
+        "machine": "arm64",
+        "metal_compile_options": "Torch 2.8 compile_shader defaults; no GPU rounding certificate",
+        "platform": "macOS-26.6.2-arm64-arm-64bit",
+        "python": "3.12.13 (main, Mar 10 2026, 18:18:07) [Clang 21.1.4 ]"
+      },
+      "started_at": "2026-09-12T12:47:03.469501+00:00",
+      "finished_at": "2026-09-12T12:52:15.603950+00:00",
+      "timing_seconds": {
+        "cpu_verification": 118.16672586975619,
+        "gpu_dispatch_and_synchronize": 1.4990804202388972,
+        "orchestration": 192.47584595996886,
+        "total": 312.14165224996395
+      },
+      "stream_identities": {
+        "external_state_directory": "/Users/auricstudio/.local/state/qgh-prime-slab-upper-0912/window-148864-229375",
+        "raw_stream_sha256": "1f4907812c0fbbea5785f32738a616517ac09fbe3a643a809cbc3d66006a36c0",
+        "classification_stream_sha256": "60cb750f6051a8de53d56a142b1eef38bf4f32d5d6d6d3824440a96cb3b9e084"
+      }
+    }
+  ],
+  "record_conventions": {
+    "paths": "Relative paths are relative to this JSON. Absolute paths identify original external scientific results and checkpoints; streams remain in their existing external state directories.",
+    "program_sha256": "SHA256 of UTF-8 JSON for the recorded files map, sort_keys=true, indent=2, ensure_ascii=true, allow_nan=false, followed by LF; each file map key is relative to program_source_directory.",
+    "stream_sha256": "Original summary hashes of the ordered concatenation of per-row UTF-8 JSON (sort_keys=true, separators=comma/colon, ensure_ascii=true, allow_nan=false), each followed by LF: raw hashes row.raw, classification hashes the whole classified row. Raw file headers are excluded. These are not concatenated raw-file hashes.",
+    "absent_outcome_categories": "Per-window by_outcome and by_proposal retain their source categories. Omitted categories have zero recorded rows because the listed counts exhaust that window; aggregate outcomes list zero categories explicitly.",
+    "kind_counts": "by_kind counts raw slots. Kind/outcome cross-tabs are retained only where supplied by the two old scientific records; no per-triple outcome counts are inferred from chunks.",
+    "unavailable_fields": "Not retained in that original published scientific window record; no timing, environment or stream fields are reconstructed for old windows.",
+    "timing_seconds": "Copied per invocation with supplied start/finish timestamps; no five-window campaign total is supplied because old-window timings are absent.",
+    "retained_rows": "The two original scientific window records retain their reflected records at the linked JSON pointers. No selected rows or extrema are added for the three larger windows."
+  },
+  "limitations": [
+    "All active GPU proposals were indeterminate with possible-underflow flags. No definite GPU sign was certified; negative proposal floats, positive normalization and the 24-term truncation bound do not certify floating-point errors.",
+    "G=D-Psi compares existing model bounds and is not itself an RH criterion.",
+    "Negative classifications in this finite layout prove neither RH nor an all-prime/all-exponent theorem; they are not Lean proofs.",
+    "This coverage supplies no wider translated5040 premise and no detector-completeness proof for nonempty S.",
+    "Other-device coverage is unknown.",
+    "Classifications are retained from the completed original scientific records; this aggregate supplies finite coverage and result accounting."
+  ]
+}

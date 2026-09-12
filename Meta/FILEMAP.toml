@@ -810,6 +810,17 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
+# Records the complete finite ID union and measured results of five prime-slab windows.
+pattern = "docs/reports/quantized-gh/prime-slab-campaign-coverage-0912.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
 # Preserves the 2,3,5 search window and three reflected interval records.
 pattern = "docs/reports/quantized-gh/prime-slab-mps-pilot-0909.json"
 kind = "data"
