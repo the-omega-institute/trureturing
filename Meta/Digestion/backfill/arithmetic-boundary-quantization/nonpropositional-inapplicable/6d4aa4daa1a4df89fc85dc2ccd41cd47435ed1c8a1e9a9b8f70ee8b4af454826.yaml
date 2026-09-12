@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6d4aa4daa1a4df89fc85dc2ccd41cd47435ed1c8a1e9a9b8f70ee8b4af454826
+  normalized_sha256: sha256:6d4aa4daa1a4df89fc85dc2ccd41cd47435ed1c8a1e9a9b8f70ee8b4af454826
+cas_ref: sha256:6d4aa4daa1a4df89fc85dc2ccd41cd47435ed1c8a1e9a9b8f70ee8b4af454826
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This atom is the status and scope paragraph of section 22. It records that the section is a paper argument, repo derived, to be settled later; that it closes the whole two coordinate family of the adjacent two point problem of sections eighteen through twenty and strengthens it to arbitrary positive real two point grids; that it does not close the arbitrary finite exponent set problem of section seventeen; that the general real prime case with three or more coordinates stays open; and that the manual three coordinate counterexample of section twenty one keeps its scope. These are provenance and scope declarations about the section, not mathematical assertions with a truth value, so no frozen declaration can cover them. The scope limits they state are honoured by the carriers of the sibling theorem atom, which are stated for two coordinates only.
+    previous_atom_id: 89683ac2bda35da807eb9c7931312dd6c954821797e95cd2629ab4519f45ecb2
+    next_atom_id: 57cedf395dbb5d432a824d4fc8b6b60a40501822b31324770dfa7549261bd0fd
