@@ -18,7 +18,7 @@ internal static class DigestionReadinessQuery
         Func<string, DigestionAtomContextProjection.SourceStream> materializeSource,
         out ImmutableArray<(string SourceId, DigestionAtomContextError Code, string Detail)> unreadable)
     {
-        unreadable = [];
+        var sourceErrors = ImmutableArray.CreateBuilder<(string SourceId, DigestionAtomContextError Code, string Detail)>();
         var gaps = ImmutableArray.CreateBuilder<(string AtomId, DigestionGap Gap)>();
         var eligible = entries.Where(static item => item.DerivedStatus is
             { Migration: DigestionMigrationState.Residual, Truth: DigestionTruthState.Open }
@@ -26,7 +26,16 @@ internal static class DigestionReadinessQuery
         foreach (var source in eligible.GroupBy(static item => item.Entry.SourceId, StringComparer.Ordinal)
                      .OrderBy(static group => group.Key, StringComparer.Ordinal))
         {
-            var atomIds = materializeSource(source.Key).AtomIds.ToHashSet(StringComparer.Ordinal);
+            HashSet<string> atomIds;
+            try
+            {
+                atomIds = materializeSource(source.Key).AtomIds.ToHashSet(StringComparer.Ordinal);
+            }
+            catch (DigestionAtomContextException error)
+            {
+                sourceErrors.Add((source.Key, error.Code, error.Message));
+                continue;
+            }
             foreach (var item in source.OrderBy(static item => item.Entry.AtomId, StringComparer.Ordinal))
             {
                 if (!atomIds.Contains(item.Entry.AtomId))
@@ -37,6 +46,7 @@ internal static class DigestionReadinessQuery
             }
         }
 
+        unreadable = sourceErrors.ToImmutable();
         return gaps.ToImmutable();
     }
 

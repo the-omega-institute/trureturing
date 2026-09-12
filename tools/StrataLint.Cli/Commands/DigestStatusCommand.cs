@@ -167,13 +167,16 @@ internal static class DigestStatusCommand
                 var sourceGaps = DigestionReadinessQuery.SourceOccurrenceGaps(
                     evaluation.Entries,
                     sourceId => DigestionAtomContextProjection.MaterializeSource(snapshot, document, sourceId),
-                    out _);
+                    out var unreadableSources);
                 return new CommandResult(
                     true,
                     RenderReadiness(DigestionReadinessQuery.Classify(
                         frontier!)),
                     string.Concat(sourceGaps.Select(static item =>
-                        $"GAP atom={item.AtomId} code={item.Gap.Code} detail={RenderDetail(item.Gap.Detail)}\n")));
+                        $"GAP atom={item.AtomId} code={item.Gap.Code} detail={RenderDetail(item.Gap.Detail)}\n"))
+                    + string.Concat(unreadableSources.Select(static source =>
+                        $"READINESS_SOURCE_UNAVAILABLE source={source.SourceId} code={source.Code} "
+                        + $"detail={RenderDetail(source.Detail)}\n")));
             }
 
             var age = options.ResidualSummary || options.Json
