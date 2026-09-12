@@ -6679,3 +6679,631 @@ $$
 $$
 这给出所述反例，也表明下界证明所用的可达性不能加强成全体源后代的编码包含。证毕。
 
+## 287. 标量观察、符号码与素数字段比较
+
+**定义 287。** 沿用第 50、69、70、113 条的 $\phi=(1+\sqrt5)/2$、$\alpha=\phi^{-1}$、$\mathbb T=\mathbb R/\mathbb Z$、有限自然数字 $\zeta$、唯一零字 $0_Z$、非零数字集 $\mathsf W_Z^+$ 及整数码集 $\mathsf Z_{\mathbb Z}$。$[x]$ 表示实数 $x$ 的模一类，圆周及其有限积取通常拓扑。对正整数 $n$ 定义
+$$
+\mathscr A(n)=\lfloor\log_\phi n\rfloor,\qquad
+\gamma(n)=[n\phi],\qquad
+\Gamma_+(n)=(\mathscr A(n),\zeta(n),\gamma(n))
+\in\mathbb N\times\mathsf W_Z^+\times\mathbb T.
+$$
+另规定 $\gamma(0)=0$，仍有 $\zeta(0)=0_Z$；$\Gamma_+$ 的定义域仍为正整数。取一个不属于 $\mathbb Z$ 的标记 $\bot$，定义
+$$
+\gamma_{\mathbb Z}(m)=[m\phi],\qquad
+\mathscr A_{\mathbb Z}^{\bot}(m)=
+\begin{cases}
+\bot,&m=0,\\
+\mathscr A(|m|),&m\ne0,
+\end{cases}
+$$
+$$
+\Gamma_{\mathbb Z}:\mathbb Z\longrightarrow
+(\mathbb N\cup\{\bot\})\times\mathsf Z_{\mathbb Z}\times\mathbb T,
+\qquad
+m\longmapsto
+(\mathscr A_{\mathbb Z}^{\bot}(m),\operatorname{scode}(m),\gamma_{\mathbb Z}(m)).
+$$
+这里 $\operatorname{scode}$ 严格取第 113–114 条的 $0_Z$、$(+,\zeta(m))$、$(-,\zeta(-m))$ 三种情形，正负标签只与非零字配对。标记 $\bot$ 不给 $\log 0$ 赋实数值。
+
+对辅助实值观察另定义
+$$
+\mathscr A_{\mathbb R}:\mathbb R\setminus\{0\}\longrightarrow\mathbb Z,
+\quad x\longmapsto\lfloor\log_\phi|x|\rfloor,
+\qquad
+\gamma_{\mathbb R}:\mathbb R\longrightarrow\mathbb T,
+\quad x\longmapsto[\phi x].
+$$
+这些定义在各自整数定义域上与前述读数一致；一般实数及一般 $\mathbb Z[\phi]$ 元素不因此取得有限自然数字 $\zeta(x)$。
+
+以 GICT 定义 1.4、1.7 为比较对象，将其首个权值一的位置记为 $k_0$，按权值令
+$$
+W_{k_0+j}=G_j=F_{j+2}\qquad(j\in\omega).
+$$
+$F_n$ 在此等式中为通常 Fibonacci 数；下文三参数函数 $F(P,A,e)$ 为素数位表。对第 115 条的有限配置 $(P,A,e)$，其中 $P\subseteq\operatorname{Pr}$、$A:P\to\omega$、$e\in S(P,A)$，令
+$$
+N_P(e)=\prod_{p\in P}p^{e_p},\qquad
+F(P,A,e)(p,k_0+j)=
+\begin{cases}
+\operatorname{pad}(\zeta(e_p))_j,&p\in P,\\
+0,&p\notin P.
+\end{cases}
+$$
+$F(P,A,e)$ 是全素数标签上的逐行规范有限支撑表；容量、标签与内容的完整编码仍取第 115–116 条的 $\operatorname{Cfg}_Z(P,A,e)$。第 208 条的全局有限支撑指数域在这里由 $e$ 的槽外零扩展给出。观察值 $(\mathscr A(n),\zeta(n),\gamma(n))$、函数索引 $(t,p,j)$、容量 $A$、Fibonacci 权重 $G_j$ 及 CSA 选择集 $A_X$ 各有其类型；$\zeta(n)$ 不表示 CSA 的空间选择电荷 $Z_X(t,y)$。
+
+## 288. 观察图、锐尺度界与配置遗忘
+
+**定理 288。** 第 287 条的正整数观察像恰为图
+$$
+\Gamma_+[\mathbb N_{>0}]
+=\{(\mathscr A(\operatorname{val}u),u,[\phi\operatorname{val}u]):u\in\mathsf W_Z^+\},
+$$
+其到中间坐标 $\mathsf W_Z^+$ 的投影是双射。对 $n>0$，置 $\ell=|\zeta(n)|=\ell_Z(n)$，则
+$$
+\mathscr A(n)\in\{\ell-1,\ell\},\qquad
+\mathscr A(n)=\ell\iff n\ge\phi^\ell.
+$$
+两个尺度值均能达到。若 $u=\zeta(n)$，则第 51 条的相位换算为
+$$
+\gamma(n)=\left[\sum_{j<\ell}(-1)^{j+1}u(j)\alpha^{j+2}\right].
+$$
+空字的同一公式给 $\gamma(0)=0$。有符号整数的尺度读取绝对值，负整数的相位为其绝对值相位的群逆。$\gamma_{\mathbb Z}$ 是单射；对任意固定有限集合 $Q$ 及函数 $H:\mathbb T\to Q$，$H\circ\gamma_{\mathbb Z}$ 都不能单射表示全部整数。
+
+按第 287 条的指标配对，将第 11 条的 $K$ 视为同一权值索引上的表，则
+$$
+F(P,A,e)=K(N_P(e)).
+$$
+零素数表解码为一，有限自然空字解码为零。固定已知的 $P,A$ 时，$N_P:S(P,A)\to\mathbb N_{>0}$ 单射；对全部有限配置，整数 $N\ge1$ 的纤维恰为
+$$
+\{(P,A,e):P\subseteq\operatorname{Pr}\text{ 有限},\
+\{p:v_p(N)>0\}\subseteq P,\
+ e_p=v_p(N),\ A(p)\ge e_p\ (p\in P)\}.
+$$
+每轴的状态数为 $A(p)+1$。
+
+令第 51 条的整数位移为 $L(n)=\lfloor(n+1)\phi\rfloor-1$。当 $n>0$ 时，
+$$
+|\zeta(L(n))|=\ell+1,\qquad
+\mathscr A(L(n))-\mathscr A(n)\in\{0,1,2\},
+$$
+且三个增量都可达到。
+
+**证明。** 第 70 条的互逆式给出图描述，中间投影的逆恰为显示的三元组函数。第 10、69、98 条给
+$$
+G_{\ell-1}\le n<G_\ell.
+$$
+由 $G_0=1,G_1=2$ 及 $1<\phi<2$，初始两项满足 $\phi^j\le G_j<\phi^{j+1}$。若相邻两项成立，将其相加并用 $\phi^{j+2}=\phi^{j+1}+\phi^j$，得到下一项的同一上下界。归纳遂给
+$$
+\phi^{\ell-1}\le n<\phi^{\ell+1}.
+$$
+对以 $\phi>1$ 为底的对数取整，尺度只有所列两值，分界恰为 $\phi^\ell$。$n=1$ 的字长为一而尺度为零；$n=7$ 的字长为四而尺度为四。具体地，五与七同属 $[G_3,G_4)=[5,8)$，尺度分别为三与四，故字长也不唯一决定尺度。
+
+第 51 条已经证明
+$$
+f(n)-n\alpha=\sum_{j<\ell}u(j)(-1)^j\alpha^{j+2},\qquad f(n)\in\mathbb Z.
+$$
+因 $\phi=1+\alpha$，有 $[n\phi]=[n\alpha]$，将上式取模一并变号即得相位公式。GICT 的对应位置为 $j=k-k_0$。括号中的有限和是实代表，不必属于 $[0,1)$；若要该区间中的代表，须再取小数部分。整数负号在圆周中给群逆。若 $[m\phi]=[n\phi]$，则 $(m-n)\phi\in\mathbb Z$；$\phi$ 无理使 $m=n$。无限整数集不能单射入固定有限 $Q$，所以有限值域量化不具这种全域反演性。这个结论的量词固定了有限值域，并未对未指定的变分辨率联合深度作断言。
+
+由唯一素因数分解，$v_p(N_P(e))=e_p$ 在 $P$ 上成立，在 $P$ 外为零。第 10 条及第 69–70 条给 $s(e_p)=\operatorname{pad}(\zeta(e_p))$，故第 11–12 条的规范表正是 $F(P,A,e)$。唯一分解同时证明固定 $P,A$ 上的单射性。若一个配置解码为 $N$，它必须包含 $N$ 的全部正指数素数，并具有显示的逐素数指数；合法容量又必须不小于该指数，故纤维条件必要。反向，满足这些条件的配置逐素数重建 $N$，故充分。有限区间 $\{0,\ldots,A(p)\}$ 恰含 $A(p)+1$ 个元素。
+
+空配置与 $P=\{2\},A(2)=e_2=0$ 都给乘积一；同一 $P=\{2\}$、同一零内容而容量分别为零、一也给同一乘积。第 116 条保证它们的完整配置码各不相同。因此乘积不能替代标签、容量、内容三个字段。另一方面，空自然字的值是空和零，零素数表的乘积是空乘积一，二者没有矛盾。
+
+将 $u$ 在最低位补零并向上移动一位，所得字仍规范且最高位仍为一。第 51 条给其解码为 $L(n)$，第 70 条的唯一性给字长恰增一。分别对 $n,L(n)$ 应用二值尺度界，所得差属于 $\{0,1,2\}$。以下精确计算给锐性。多项式 $x^2-x-1$ 在 $x>1/2$ 上严格递增，在 $8/5$ 处为负、在 $13/8$ 处为正，所以
+$$
+\frac85<\phi<\frac{13}8<\frac53.
+$$
+结合
+$$
+\phi^2=\phi+1,\qquad \phi^3=2\phi+1,\qquad
+\phi^4=3\phi+2,\qquad \phi^5=5\phi+3,
+$$
+得 $\mathscr A(1)=0$、$\mathscr A(2)=1$、$\mathscr A(4)=2$、$\mathscr A(5)=\mathscr A(6)=3$ 及 $\mathscr A(7)=\mathscr A(11)=4$。同一有理界给 $\lfloor2\phi\rfloor=3$、$\lfloor5\phi\rfloor=8$、$\lfloor8\phi\rfloor=12$，因而
+$$
+L(1)=2,\qquad L(4)=7,\qquad L(7)=11.
+$$
+三对分别给增量一、二、零。特别地 $G_3\le6<G_4$ 给 $\ell_Z(6)=4$，而 $\mathscr A(6)=3$。证毕。
+
+## 289. 平衡 CSA 的槽限制与相位比较图
+
+**定义 289。** 固定有限 $P\subseteq\operatorname{Pr}$，复用第 3 条的 $\lambda(p,j)=(p,j,0)$。在《情境时空算术》定义 22 的联合电荷群
+$$
+\mathcal L=\mathbb Z^{(\mathbb Z\times\mathbb Z^3)}
+$$
+上定义限制公式
+$$
+(\rho_Pc)(t,p,j)=c(t,\lambda(p,j)).
+$$
+对该文定义 3 的原平衡载体 $\mathcal B$，记
+$$
+R_P(X)=q_{X,P}=\rho_P(Z_X),\qquad
+w_{X,P}=\rho_P(W_X),
+$$
+$$
+\mathcal B_P^{\rm sel}
+=\{X\in\mathcal B:Z_X(t,y)=0
+\text{ 对全部 }t\in\mathbb Z,\ y\notin\lambda[P\times\omega]\}.
+$$
+这里 $A_X$ 是当前选择集，$Z_X$ 是它的联合时间—空间电荷，$W_X$ 是当前区域的背景电荷。$\mathcal B_P^{\rm sel}$ 只限制净选择电荷的支撑，允许槽外存在相互抵消的事件。限制公式的有限支撑性质在第 290 条证明。
+
+复用第 196、200、206 条的有限支撑群及映射：
+$$
+\mathsf Q_P=\mathbb Z^{(\mathbb Z\times P\times\omega)},\qquad
+\mathsf J_P=\mathbb Z^{(\mathbb Z\times P)},
+$$
+$$
+\mathsf V_P(q)(t,p)=\sum_jG_jq(t,p,j),\qquad
+\mathsf U_P(q)(t,p)=\sum_jq(t,p,j),\qquad
+\Sigma_P(c)(p)=\sum_tc(t,p),\qquad
+\mathsf C_P=\Sigma_P\circ\mathsf V_P.
+$$
+所有和只在非零支撑上求值。对 $X\in\mathcal B$ 定义
+$$
+E_{X,P}^{T}(p)=\sum_{t\le T}\mathsf V_P(q_{X,P})(t,p)\quad(T\in\mathbb Z),
+\qquad
+E_{X,P}^{\infty}=\mathsf C_P(q_{X,P})\in\mathbb Z^P.
+$$
+第 227 条的 $q_X,\delta_X^G,\mathbf a_X^{G,T},\mathbf a_X^{G,\infty}$ 仍只用于它们原有的域 $\mathcal C_P^{\rm tb}$。
+
+符号约定：第 210、221 条的槽级素数乘法字符仍为
+$$
+\chi_P:\mathsf Q_P\longrightarrow\mathbb Q_{>0},\qquad
+\chi_P(q)=\prod_{p\in P}p^{\mathsf C_P(q)(p)}.
+$$
+终端圆周相位与点时圆周相位分别记为 $\varpi_P$ 与 $\widehat\varpi_P$，定义为：
+$$
+\varpi_P:\mathbb Z^P\longrightarrow\mathbb T^P,
+\qquad \varpi_P(e)_p=[\phi e_p],
+$$
+$$
+\widehat\varpi_P:\mathsf J_P\longrightarrow\mathbb T^{(\mathbb Z\times P)},
+\qquad \widehat\varpi_P(c)(t,p)=[\phi c(t,p)].
+$$
+当 $P=\varnothing$ 时，$\mathsf Q_\varnothing$、$\mathbb Z^\varnothing$ 与 $\mathsf J_\varnothing$ 的唯一元素均为同一个空函数 $\varnothing$。按空乘积与空元组约定，
+$$
+\chi_\varnothing(\varnothing)=1,\qquad
+\varpi_\varnothing(\varnothing)=(),\qquad
+\widehat\varpi_\varnothing(\varnothing)=().
+$$
+这里 $()$ 表示相应空指标集上的空元组，即空函数。
+
+圆周值函数上的括号上标也表示有限非零支撑。令
+$$
+\widehat\Psi_P=\widehat\varpi_P\circ\mathsf V_P:
+\mathsf Q_P\longrightarrow\mathbb T^{(\mathbb Z\times P)},
+\qquad
+\Psi_P=\varpi_P\circ\mathsf C_P:
+\mathsf Q_P\longrightarrow\mathbb T^P.
+$$
+前缀相位为 $\varpi_P(E_{X,P}^{T})$。$\mathsf V_P(q)$ 的类型是时间表，不能直接作为 $\varpi_P$ 的自变量；$q(X)\in\mathbb Z$、$q_{X,P}\in\mathsf Q_P$、$\mathsf V_P(q_{X,P})\in\mathsf J_P$ 与 $E_{X,P}^{\infty}\in\mathbb Z^P$ 是四个不同的对象。
+
+有限数值字段沿第 69–70、113–114 条编码。具体地，$q\in\mathsf Q_P$ 的有限记录可取非零支撑上的元组集
+$$
+\{(\operatorname{scode}(t),\operatorname{NatZ}(p),
+\operatorname{NatZ}(j),\operatorname{scode}(q(t,p,j))):q(t,p,j)\ne0\},
+$$
+并规定未列槽的值为零；要保留显式零标签时另附 $P$ 字段。总函数 $q$ 的集合图与这份有限记录不同，总图沿第 71–79 条的 $\operatorname{Enc},\operatorname{Dec},\in_Z$ 解释。下文只复用该解释的记号：对集合 $S$、函数 $f:S\to Y$ 及 $S$ 上拓扑 $\tau$，记
+$$
+S^*=\operatorname{Enc}[S],\qquad
+f^{\rm ext}=\operatorname{Enc}|_Y\circ f\circ\operatorname{Dec}|_{S^*},\qquad
+\tau^*=\{\operatorname{Enc}[U]:U\in\tau\}.
+$$
+$S^*$ 是码的外部集合，$\operatorname{Enc}(S)$ 是以 $S^*$ 为语义成员集的码对象。
+
+## 290. 原平衡观察到加权寄存器的有限支撑桥
+
+**定理 290。** 对全部 $X\in\mathcal B$，$R_P(X)\in\mathsf Q_P$，并且
+$$
+R_P=\rho_P\circ\operatorname{pr}_Z\circ\Xi,
+$$
+其中 $\Xi$ 与其第二字段投影 $\operatorname{pr}_Z$ 取自《情境时空算术》定义 22。在第 227 条的原域 $\mathcal C_P^{\rm tb}$ 上，有
+$$
+q_{X,P}=q_X,\qquad
+\mathsf V_PR_P(X)=\delta_X^G,\qquad
+E_{X,P}^{T}=\mathbf a_X^{G,T},\qquad
+E_{X,P}^{\infty}=\mathbf a_X^{G,\infty}.
+$$
+原 CSA 无权标量满足
+$$
+q(X)=\varepsilon Z_X
+=\sum_{t\in\mathbb Z,\ p\in P,\ j\in\omega}q_{X,P}(t,p,j)
++\sum_{\substack{t\in\mathbb Z\\y\notin\lambda[P\times\omega]}}Z_X(t,y).
+$$
+特别地，对 $X\in\mathcal B_P^{\rm sel}$，
+$$
+q(X)=\sum_{p\in P}(\Sigma_P\mathsf U_PR_P(X))(p).
+$$
+此式不能把 $\mathsf U_P$ 换为 $\mathsf V_P$。任意 $X\in\mathcal B$ 都有第 287 条的标量观察 $\Gamma_{\mathbb Z}(q(X))$。终端寄存器的另一条比较链只有在 $E_{X,P}^{\infty}\ge0$ 时才进入 GICT 定义 1.7 的正整数规范表与乘积域：此时可先取容量 $E_{X,P}^{\infty}$，再取逐行 $s((E_{X,P}^{\infty})_p)$、$N_P(E_{X,P}^{\infty})$ 及其 $\Gamma_+$；指定容量 $A$ 时还须 $E_{X,P}^{\infty}\le A$。有负坐标的终端向量仍有符号码与 $\varpi_P$ 相位，素数乘积则属于 $\mathbb Q_{>0}$，不属于原正整数解码的输入域。
+
+$R_P:\mathcal B\to\mathsf Q_P$ 满射，且每个像值都有背景逐单元为零的有限平衡代表。并行加法及合法的有守卫时间复合满足
+$$
+R_P(X\boxplus Y)=R_P(X)+R_P(Y),\qquad
+R_P(X\triangleright Y)=R_P(X)+R_P(Y).
+$$
+第二式只在《情境时空算术》定义 5 的全档案守卫内成立。对原补集 $N$，精确公式为
+$$
+R_P(NX)=w_{X,P}-R_P(X).
+$$
+在 $\mathcal C_P^{\rm pb}$ 上，$R_P(NX)=-R_P(X)$，因而全部加权时间表和前缀指数也取负；仅在 $\mathcal C_P^{\rm tb}$ 上时，只保证终端指数的负号式。
+
+第 229 条的加权商链满足
+$$
+\Theta_P\circ\pi_P^G=\Sigma_P\circ\Theta_P^{G,\rm pf},\qquad
+\varpi_P\circ\Theta_P\circ\pi_P^G
+=\varpi_P\circ\Sigma_P\circ\Theta_P^{G,\rm pf}.
+$$
+这里定义域是 $\mathcal H_P^G$，中间终端商是 $\mathcal C_P^{\rm tb}/\equiv_P$；$\mathcal H_P^G$ 取第 227 条的加权前缀等价关系。
+
+**证明。** 《情境时空算术》定义 22 给
+$$
+Z_X(t,y)=\sum_{\substack{e\in A_X\\t_X(e)=t,\ x_X(e)=y}}\sigma_X(e).
+$$
+其非零支撑包含于有限像 $(t_X,x_X)[A_X]$。映射
+$$
+(t,p,j)\longmapsto(t,\lambda(p,j))=(t,(p,j,0))
+$$
+单射：输出相等依次迫使 $t,p,j$ 相等。因此上述有限支撑的逆像有限，至多含 $|A_X|$ 个单元，且每项为整数。这证明 $R_P(X)\in\mathsf Q_P$；对任意 $c\in\mathcal L$ 同一单射论证给 $\rho_Pc\in\mathsf Q_P$。将选择集换为有限当前区域 $\Omega_X$，也证明 $w_{X,P}$ 有限支撑。代入 $\Xi$ 的第二字段即得因子化。对 $X\in\mathcal C_P^{\rm tb}$，限制公式与第 227 条的 $q_X$ 逐单元相同；再用第 228 条的有限和换序，即得加权时间表、全部前缀及终端等式。
+
+把选择事件的有限符号和先按 $(t,y)$ 分组，再分为槽内与槽外两部分，就得到 $q(X)=\varepsilon Z_X$ 及显示分解。$\mathcal B_P^{\rm sel}$ 上第二部分为零，第一部分恰为先无权求槽和、再求时间和、最后求素数和。一般 $X$ 的槽外净选择电荷可以被 $R_P$ 遗忘；原 CSA 没有给每一个空间位置指定素数槽标签。
+
+任给 $h\in\mathsf Q_P$。对每个非零单元 $(t,p,j)$，取 $|h(t,p,j)|$ 对互异事件 $e_{t,p,j,r,+},e_{t,p,j,r,-}$，其中 $1\le r\le|h(t,p,j)|$。事件身份使用 CSA 定义 1 的有限整数码和有序元组，因而属于 $HF$；两符号标签及各索引使身份互异。每对同在时刻 $t$、位置 $\lambda(p,j)$，符号分别为正、负，来源都取 $\operatorname{leaf}(0)$。令 $E=\Omega$ 为全部事件，严格偏序为空，每对只选符号为 $\operatorname{sgn}(h(t,p,j))$ 的一个事件。事件数为
+$$
+2\sum_{t,p,j}|h(t,p,j)|<\infty.
+$$
+空偏序满足时间递增条件；每对背景电荷为零，故当前区域在每个联合单元都平衡，尤其全局平衡。选择电荷恰为 $h$，所以所得 $X_h\in\mathcal B$ 且 $R_P(X_h)=h$。其槽外背景与选择电荷均为零，各前缀逐槽平衡，故实际上 $X_h\in\mathcal C_P^{\rm pb}$。$h=0$ 取空档案；$P=\varnothing$ 时 $\mathsf Q_P$ 只有零表，也由空档案实现。取 $j=0$ 的这一构造就是第 229 条的时间表代表构造，不需要新的来源树递归。
+
+CSA 定义 4 的带标签并集不改变各事件的时间、位置、符号及被选身份，在每个单元复制两个有限和，因此给并行加法公式。CSA 命题 2 保证其合法且保持平衡。定义 5 的时间复合在
+$$
+\forall e\in E_X\ \forall f\in E_Y,\quad t_X(e)<t_Y(f)
+$$
+内只增加跨档案偏序边，不改变上述属性，所以给同一相加公式。两档案都非空时，此守卫等价于 $M_X<m_Y$；空输入按全称命题的空真解释，也与定义 22 所用扩展整数端点一致。这里不把选择事件的端点替代全档案端点，也不暗中平移时标。相加的对象是观察值；带身份标签的丰富表示本身并未因此成为交换群。
+
+原补集由 CSA 定义 2–3 及命题 1 在当前区域内取 $\Omega_X\setminus A_X$。这两个选择集分割 $\Omega_X$，逐单元有限和给
+$$
+Z_{NX}(t,y)=W_X(t,y)-Z_X(t,y).
+$$
+限制后便得补集公式。在 $\mathcal C_P^{\rm pb}$ 上，第 198、228 条以相邻背景前缀之差给槽上 $W_X=0$，定义 193 又给槽外 $W_X=0$，所以整段槽历史取负。仅有第 185 条的终端逐槽平衡时，只能在先对时间求和后消去背景，再取 $G_j$ 加权和，故只保证终端负号。具体反例取同一槽 $\lambda(p,0)$ 上的两个事件，正事件在时刻零、未选负事件在时刻一，选择只含正事件；令 $E=\Omega$，来源相同、偏序为空。背景总和及该槽终端背景均为零，但
+$$
+R_P(X)=e_{0,p,0},\qquad R_P(NX)=-e_{1,p,0}\ne-R_P(X).
+$$
+故全局平衡乃至终端逐槽平衡都不足以给逐时负号。
+
+为区分无权标量与加权指数，取非空 $P$ 及 $p\in P$，以刚证构造分别实现
+$$
+h=e_{t,p,1},\qquad h'=2e_{t,p,0}.
+$$
+$G_1=2,G_0=1$ 使二者的加权时间表相同，在 $(t,p)$ 均为二，而无权和分别为一、二。两代表都没有槽外净电荷，故其原 $q(X)$ 分别为一、二；加权终端和相位也不能恢复这个标量。若有符号原始行的终端加权指数非负，第 10 条仍直接给其指数值的规范行；这不提供从负系数原始行出发的非负进位路径。非负实际路径的值保持只使用第 21 条的原有域。
+
+终端向量非负时，第 10–12 条及唯一分解使规范表、正整数乘积及第 287 条的 $\Gamma_+$ 都有定义；容量条件正是第 115 条的逐坐标上界。负指数的有限素数乘积是正有理数；唯一分解还表明存在负素数估值时它不是整数。
+
+最后，显示的商等式直接是第 229 条的自然交换式及其与 $\varpi_P$ 的复合。第 200–201 条只供给抽象求和分裂 $\Sigma_P\iota_P=\operatorname{id}$ 与时间循环分解；第 198–201 条的无权前缀商不能替代这里的加权商。整个比较只涉及相同事件和，不给丰富档案的逆向恢复。证毕。
+
+## 291. 有限寄存器相位的精确像、归一化核与运输
+
+**定理 291。** 令 $D=\{[m\phi]:m\in\mathbb Z\}\subseteq\mathbb T$。第 289 条的 $\varpi_P$ 是单射群同态，精确像及其在积拓扑中的闭包分别为
+$$
+\varpi_P[\mathbb Z^P]=D^P,\qquad
+\overline{\varpi_P[\mathbb Z^P]}=\mathbb T^P.
+$$
+$P\ne\varnothing$ 时这个像可数且为真子集；$P=\varnothing$ 时域、像和闭包都是单点。点时映射 $\widehat\varpi_P$ 也是单射群同态，因而
+$$
+\ker\widehat\Psi_P=\ker\mathsf V_P,\qquad
+\ker\Psi_P=\ker\mathsf C_P.
+$$
+对任意 $q\in\mathsf Q_P$，有精确相位公式
+$$
+\widehat\Psi_P(q)(t,p)
+=\left[\sum_j(-1)^{j+1}\alpha^{j+2}q(t,p,j)\right],
+\qquad
+\Psi_P(q)_p
+=\left[\sum_{t,j}(-1)^{j+1}\alpha^{j+2}q(t,p,j)\right].
+$$
+因此，对任意 $q,q'\in\mathsf Q_P$，
+$$
+\widehat\Psi_P(q)=\widehat\Psi_P(q')
+\iff\mathsf V_P(q)=\mathsf V_P(q'),\qquad
+\Psi_P(q)=\Psi_P(q')\iff\mathsf C_P(q)=\mathsf C_P(q').
+$$
+第 207 条的两个具体核在这里分别给
+$$
+\ker\widehat\Psi_P
+=\left\langle e_{t,p,1}-2e_{t,p,0},\
+e_{t,p,j+2}-e_{t,p,j+1}-e_{t,p,j}
+:t\in\mathbb Z,\ p\in P,\ j\in\omega\right\rangle_{\mathbb Z},
+$$
+$$
+\ker\Psi_P=\ker\mathsf V_P\oplus\mathsf L_P,\qquad
+\mathsf L_P=\langle e_{t,p,0}-e_{0,p,0}:t\ne0,\ p\in P\rangle_{\mathbb Z}.
+$$
+在加权前缀商 $\mathcal H_P^G$ 上，终端相位的零核为
+$$
+\ker(\varpi_P\circ\Sigma_P\circ\Theta_P^{G,\rm pf})
+=(\Theta_P^{G,\rm pf})^{-1}(\mathsf K_P),
+\qquad \mathsf K_P=\ker\Sigma_P.
+$$
+这些相等式以及闭包结论均可沿第 71–79 条的原集合解释运输；闭包使用第 289 条指定的运输拓扑。
+
+**证明。** 模一加法使两种 $\varpi$ 都保持加法及零。若 $[m\phi]=0$ 且 $m\in\mathbb Z$，则 $m\phi$ 为整数，$\phi$ 的无理性迫使 $m=0$。逐坐标应用便得 $\varpi_P$ 与 $\widehat\varpi_P$ 单射；点时像的支撑包含于原时间表支撑，故目标类型确实为有限支撑圆周表。对两种复合分别使用单射性，即得零核及相等关系核的结论。
+
+每个 $p\in P$ 的整数可独立选择，所以 $\varpi_P$ 的精确像恰为 $D^P$。有限个可数集之积可数。第 53 条取无理角 $\alpha$，给 $\{[k\alpha]:k\in\mathbb N\}$ 在圆周中稠密；整数 $k$ 满足 $[k\alpha]=[k\phi]$，所以 $D$ 稠密。每个非空基本开盒在各坐标有非空开集，逐坐标选取 $D$ 的一个点便命中该开盒，证明有限积中的闭包为整个环面。非空 $P$ 时，固定一个坐标为 $[1/2]$、其余坐标为零的点不在像内：$m=0$ 不能给 $[1/2]$，而非零整数 $m$ 若满足 $m\phi\in\mathbb Z+1/2$，会使 $\phi$ 有理。因此像为真子集；环面还包含一份不可数圆周。空 $P$ 的空函数唯一，所有断言退化为单点情形。
+
+第 51 条已给整数 $H_j$ 及恒等式
+$$
+\alpha G_j-H_j=(-1)^{j+1}\alpha^{j+2}.
+$$
+由于 $G_j\in\mathbb Z$，有
+$$
+[\phi G_j]=[\alpha G_j]
+=[(-1)^{j+1}\alpha^{j+2}].
+$$
+乘以任意整数 $q(t,p,j)$ 并作有限和，分别得到点时与终端的两式，负系数同样合法。$H_j$ 是第 51 条的第二递推整数权值；它不是第 206 条的无权槽计数 $\mathsf U_P$。第 207 条已经证明 $\ker\mathsf V_P$ 的生成元及 $\ker\mathsf C_P$ 的直和分解，代入已得的核相等式即可。第 229 条给 $\Theta_P^{G,\rm pf}$ 同构，$\varpi_P$ 单射又使商上零核恰为 $\mathsf K_P$ 的逆像。空 $P$ 时生成集为空，各核都是零群。
+
+这些核关系说明相位只读取相应的加权值。对第 12 条的非负表规范化，逐素数值不变，故相位不变；若给定第 21 条的非负实际进位路径，也由该条的值保持得到同一结论。这里的有符号群关系不是从任意负系数行出发的非负归约算法。
+
+为明确集合解释中的比较，直接应用第 74 条：对集合函数 $f:S\to Y$ 与 $x\in S$，
+$$
+\operatorname{ev}_Z(\operatorname{Enc}(f),\operatorname{Enc}(x))
+=\operatorname{Enc}(f(x)).
+$$
+所以第 289–290 条每个有类型的复合都在语义求值下交换。通常外部共轭图与编码图分别是
+$$
+f^{\rm ext}
+=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle:x\in S\},
+$$
+$$
+\operatorname{Enc}(f)
+=\operatorname{Pack}\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle_Z:x\in S\}.
+$$
+前者用通常外部配对，后者用语义配对再作 $\operatorname{Pack}$，不能把两图直接等同。若 $\tau$ 是 $S$ 上的拓扑，第 72 条逐成员给
+$$
+\tau^*=\{\operatorname{Enc}[U]:U\in\tau\}
+=\{\operatorname{El}(c):c\in\operatorname{El}(\operatorname{Enc}(\tau))\}.
+$$
+因此 $\operatorname{Enc}(\tau)$ 本身及其语义成员集，都不直接等于外部开集族 $\tau^*$。编码的双射性使 $\tau^*$ 含空集和 $S^*$，且保任意并与有限交，故它确是 $S^*$ 上的拓扑。
+
+对 $B\subseteq S$ 和 $x\in S$，$\operatorname{Enc}(x)$ 的每个 $\tau^*$ 开邻域恰为某个 $x$ 的 $\tau$ 开邻域 $U$ 的像。由双射性，$\operatorname{Enc}[U]$ 与 $\operatorname{Enc}[B]$ 相交当且仅当 $U$ 与 $B$ 相交。按闭包的邻域判据，得到
+$$
+\overline{\operatorname{Enc}[B]}^{\tau^*}
+=\operatorname{Enc}[\overline B^{\tau}].
+$$
+这是第 72–76 条在当前拓扑上的应用。函数两端都取运输拓扑时，开集逆像的同一对应给连续性运输；群运算、子群及陪集则用第 74 条的配对与求值运输。因此当前环面的闭包及下条的圆周子群、陪集都保留。$\operatorname{Enc}(\overline B^{\tau})$ 是码对象，其语义成员集才是上式右侧。
+
+完整实圆周、拓扑及其全部子集都按这个既有 $\operatorname{Enc}/\operatorname{Dec}/\in_Z$ 解释处理。第 77–78 条的公式、公理模式和给定模型的边界仍适用，第 79 条的有限字障碍也仍适用；一个相位有有限描述不蕴含其集合码是有限自然数字。非空 $P$ 时，有限支撑总函数 $q$ 在无限索引域的每个零值处也有图边，其总图不能与有限非零记录混同。
+
+所证稠密性是指定拓扑中的闭包结论，不是把离散整数群的完备化认作环面。固定有限容量的状态相位像有限，因环面为 Hausdorff 空间而闭。全素数的规范有限支撑表仍由第 11–12、208 条处理，每个具体表落入某个有限 $P$；本条的相位像量词只涉及有限 $P$。证毕。
+
+## 292. 固定方向圆周的饱和关系与 5040 容量截断
+
+**定理 292。** 固定 $a\in\mathbb Z^P$，定义
+$$
+i_a:\mathbb T\longrightarrow\mathbb T^P,\qquad
+i_a(\theta)=(a_p\theta)_{p\in P},\qquad
+S_a=i_a(\mathbb T),\qquad
+R_a=\{m\in\mathbb Z^P:m\cdot a=0\}.
+$$
+这里整数倍相位取圆周群的整数倍运算，$m\cdot a=\sum_pm_pa_p\in\mathbb Z$，而 $m\cdot y=\sum_pm_py_p\in\mathbb T$。则
+$$
+\overline{\{\varpi_P(ka):k\in\mathbb N\}}
+=S_a
+=\{y\in\mathbb T^P:m\cdot y=0\text{ 对所有 }m\in R_a\}.
+$$
+关系群 $R_a$ 饱和，即非零整数 $r$ 满足 $rm\in R_a$ 时必有 $m\in R_a$。若 $a=0$，$S_a$ 是单点且 $\ker i_a=\mathbb T$。若 $a\ne0$，令
+$$
+d=\gcd\{|a_p|:a_p\ne0\}>0,\qquad b=a/d.
+$$
+则
+$$
+S_a=S_b,\qquad
+\ker i_a=\{[r/d]:r\in\mathbb Z,\ 0\le r<d\},
+$$
+且 $i_b:\mathbb T\to S_a$ 是群同构及同胚。$d>1$ 时，精确群 $\varpi_P(\mathbb Za)$ 仍是 $\varpi_P(\mathbb Zb)$ 中指数为 $d$ 的真子群，虽然闭包相同。
+
+当 $a\ge0$ 时，令 $M=\prod_pp^{a_p}$，区分标量、指数及共同参数三个读数：
+$$
+s_k=\gamma(M^k),\qquad
+\varpi_P(ka),\qquad
+\theta_k=\gamma(k)=[k\alpha].
+$$
+后两者满足 $\varpi_P(ka)=i_a(\theta_k)$。第 50 条的旧相位满足
+$$
+([x_{a_p}(k)])_{p\in P}=\varpi_P(ka)+[\alpha]\mathbf1,
+$$
+故其闭包为陪集 $[\alpha]\mathbf1+S_a$，其中 $\mathbf1=(1)_{p\in P}$。正指数上的电荷与联合字律仍取第 50–56 条的原定义和原域；零指数使用 $x_0(k)=\alpha$ 及零电荷约定。标量读数满足 $s_{k+1}=M s_k$；当 $M>1$ 时它不是固定角度旋转。
+
+对 $a\in\mathbb N^P\setminus\{0\}$、有限容量 $A:P\to\omega$ 及 $k\in\mathbb N$，有
+$$
+ka\in S(P,A)
+\iff
+0\le k\le\min_{a_p>0}\left\lfloor\frac{A(p)}{a_p}\right\rfloor.
+$$
+因此固定容量内允许的相位段是有限闭集；上面的整个圆周闭包使用全部 $k\ge0$ 的无界指数域。$a=0$ 时所有 $k$ 都合法，但状态恒零；空 $P$ 亦如此。
+
+**证明。** 第 53 条给 $\theta_k=[k\alpha]$ 的单侧序列稠密。$i_a$ 是连续群同态，紧圆周的像在 Hausdorff 环面中紧且闭。任取 $y=i_a(\theta)$ 的开邻域，其在 $\mathbb T$ 中的逆像是含 $\theta$ 的非空开集，必被某个 $\theta_k$ 命中。故单侧轨道在 $S_a$ 中稠密，其闭包正是 $S_a$；这一论证不把单侧轨道本身称为群。
+
+先设 $a\ne0$。向量 $b$ 本原，Bézout 定理给整数向量 $h\in\mathbb Z^P$，使
+$$
+h\cdot b=1.
+$$
+若 $i_a(\theta)=0$，以 $h$ 作整数线性组合得 $d\theta=0$；反向若 $d\theta=0$，每个 $a_p\theta=b_p(d\theta)$ 都为零。因此 $\ker i_a$ 恰为圆周的 $d$ 阶零点集，即显示的 $d$ 个相位。圆周上的乘 $d$ 映射满射：对任一实代表 $x$，$[x/d]$ 映到 $[x]$，所以 $S_a=S_b$。$b$ 的参数核为零，故 $i_b$ 是到 $S_a$ 的连续双射及群同构；紧空间到 Hausdorff 空间的连续双射为同胚。又由第 291 条 $\varpi_P$ 的单射性，整数方向群 $\mathbb Za=d\mathbb Zb$ 的指数在相位群中仍为 $d$，证明非本原情形的精确群差别。
+
+对关系描述，若 $y=i_a(\theta)$ 且 $m\in R_a$，则
+$$
+m\cdot y=(m\cdot a)\theta=0,
+$$
+给出正向包含。反向设 $y\in\mathbb T^P$ 满足全部这些关系，取
+$$
+\theta=h\cdot y.
+$$
+对每个 $p\in P$，以 $\varepsilon_p$ 表示 $\mathbb Z^P$ 的单位向量，令
+$$
+m^{(p)}=\varepsilon_p-b_ph.
+$$
+有
+$$
+m^{(p)}\cdot a=d(b_p-b_p(h\cdot b))=0,
+$$
+所以 $m^{(p)}\in R_a$。假设给 $y_p-b_p\theta=0$，逐坐标得 $y=i_b(\theta)\in S_b=S_a$，完成反向包含。若 $a=0$，每个单位向量都属于 $R_a$，全部关系强制 $y=0$；$i_a$ 恒零，参数核为整个圆周。若 $P=\varnothing$，只有一个空向量，关系与像的结论也成立。饱和性来自整数无挠：$rm\in R_a$ 意味着 $r(m\cdot a)=0$，非零 $r$ 迫使 $m\cdot a=0$。
+
+只用未经饱和的成对倍数关系会得到错误集合。例如 $a=(2,2)$ 时，关系 $2y_1-2y_2=0$ 接受 $y=(0,[1/2])$，因为 $2[1/2]=0$；但真正的关系向量 $(1,-1)\in R_a$ 要求 $y_1-y_2=0$，排除这个点。Bézout 反向论证使用全部 $R_a$，因而也适用于有零坐标及负坐标的方向。
+
+现在设 $a\ge0$。唯一分解给 $v_p(M^k)=ka_p$，而整数模一恒等式给
+$$
+[(ka_p+1)\alpha]=[ka_p\phi]+[\alpha].
+$$
+当 $a_p>0$，第 50 条的 $x_{a_p}(k)$ 正是左边的 $[0,1)$ 代表；当 $a_p=0$，该条指定 $x_0(k)=\alpha$，仍满足同式。平移为同胚，故旧相位闭包是显示陪集。第 52 条的 $Q_{a_p}$、第 54 条的正指数阈值及第 56 条在 $M>1$ 的正素数支撑上的共同参数联合字律，都可使用这个相位接缝；零指数只添常值坐标。第 55 条涉及原始代表时的修正及有理权重关系仍带该条的非负表、正指数和有理权重条件。
+
+标量相位则由整数 $M$ 倍运算给
+$$
+s_{k+1}=[M^{k+1}\phi]=M[M^k\phi]=M s_k.
+$$
+若 $M>1$，前两个相邻增量之差为
+$$
+(s_2-s_1)-(s_1-s_0)=[(M-1)^2\phi]\ne0,
+$$
+所以不存在固定 $\eta\in\mathbb T$ 使全部 $s_{k+1}=s_k+\eta$。$k=0$ 时，标量为 $s_0=[\alpha]$，指数向量与共同参数都为零。这些等式只区分三种轨道，不给标量轨道的稠密性或分布结论。
+
+容量条件等价于对所有 $p$ 有 $0\le ka_p\le A(p)$。零坐标不限制 $k$；每个正坐标分别给 $k\le\lfloor A(p)/a_p\rfloor$，取非空有限集合上的最小值即得截止公式。允许的状态及相位只有有限多个，有限集合在 Hausdorff 空间中闭。若 $a=0$，这些不等式对每个 $k$ 自动成立而状态不变；空 $P$ 是同一情形。
+
+取素数标签顺序 $(2,3,5,7)$。由
+$$
+5040=2^4\,3^2\,5\,7,\qquad a=(4,2,1,1),
+$$
+有 $d=1$，因而
+$$
+S_a=\{(4\theta,2\theta,\theta,\theta):\theta\in\mathbb T\}
+=\{y:y_2=4y_5,\ y_3=2y_5,\ y_7=y_5\}.
+$$
+第二个等式的下标是素数标签。旧相位闭包为 $[\alpha]\mathbf1+S_a$，且这个陪集不是子群：若平移向量属于 $S_a$，标签五处强制 $\theta=[\alpha]$，标签二处继而强制 $3\alpha\in\mathbb Z$，与无理性矛盾。一个子群的陪集为子群当且仅当它包含零，等价于平移向量属于原子群，故得到所述非子群结论。
+
+容量取 $A=a$ 时，截止公式只允许 $k=0,1$，对应零状态与容量角 $a$。容量 $A=Ka$ 在 $K\in\mathbb N$ 时允许 $0\le k\le K$；全部幂须置于无界指数域。这个固定容量配置的逐轴状态数为
+$$
+(4+1,2+1,1+1,1+1)=(5,3,2,2),\qquad
+|S(P,a)|=5\cdot3\cdot2\cdot2=60.
+$$
+指数数字分别为低位到高位的
+$$
+\zeta(4)=(1,0,1),\quad \zeta(2)=(0,1),\quad
+\zeta(1)=(1),\quad \zeta(1)=(1).
+$$
+标签使用 $\zeta(2),\zeta(3),\zeta(5),\zeta(7)$ 的自然叶，容量与当前内容仍在第 115–116 条的不同字段。标量 $5040$ 自身的规范数字占据位置恰为
+$$
+\{2,5,11,13,17\},
+$$
+因为 Fibonacci 递推给
+$$
+G_2+G_5+G_{11}+G_{13}+G_{17}
+=3+13+233+610+4181=5040,
+$$
+这些位置无相邻项，第 10 条保证唯一性。因此 $(4,2,1,1)$ 是素数指数向量，也可指定容量角，但不是 $5040$ 的零一数位串；其六十个状态也不同于幂方向在容量内仅有的两个状态。证毕。
+
+## 293. 分别指定的实尺度流与固定指数增量
+
+**假设 293。** 实尺度情形另给序列 $(r_k)_{k\in\mathbb N}$，其中 $r_k\in\mathbb R\setminus\{0\}$，并假设
+$$
+r_{k+1}=\phi r_k\qquad(k\in\mathbb N).
+$$
+若比较其尺度与事件时标，另给整数 $t_0$ 及标定
+$$
+t_k=t_0+k.
+$$
+$r_k$ 是第 287 条的附加实值观察，不是原 CSA 的整数位置，也不因此取得有限自然数字。
+
+寄存器情形另给 $(e_k)_{k\in\mathbb N}$，其中 $e_k\in\mathbb Z^P$，及固定 $a\in\mathbb Z^P$，并假设
+$$
+e_{k+1}=e_k+a\qquad(k\in\mathbb N).
+$$
+若来自有限历史族 $(q^{(k)})_{k\in\mathbb N}$，则指定 $q^{(k)}\in\mathsf Q_P$、$e_k=\mathsf C_P(q^{(k)})$，并对这些终端值施加同一增量等式。若以 $k$ 表示单位间隔的事件时间，也另给 $t_k=t_0+k$ 的标定。
+
+这两组演化条件分别指定，彼此不作前提，也不要求同时成立；时标标定是附加条件。《情境时空算术》定义 1、5 的有限事件属性与时间守卫本身不包含这些演化等式。
+
+## 294. 条件演化交换、有限前缀实现与时间识别反例
+
+**定理 294。** 对 $x\in\mathbb R\setminus\{0\}$，有
+$$
+\mathscr A_{\mathbb R}(\phi x)=\mathscr A_{\mathbb R}(x)+1.
+$$
+在第 293 条实尺度流假设下，
+$$
+\mathscr A_{\mathbb R}(r_k)=\mathscr A_{\mathbb R}(r_0)+k,\qquad
+\gamma_{\mathbb R}(r_{k+1})=[\phi^2r_k].
+$$
+若另有 $t_k=t_0+k$，则
+$$
+\mathscr A_{\mathbb R}(r_k)-t_k
+=\mathscr A_{\mathbb R}(r_0)-t_0.
+$$
+一般不能把实相位更新写成圆周上的 $\phi$ 倍运算。
+
+对 $e_k,e_{k+1},a\in\mathbb Z^P$，有
+$$
+e_{k+1}=e_k+a
+\iff
+\varpi_P(e_{k+1})=\varpi_P(e_k)+\varpi_P(a).
+$$
+因此第 293 条寄存器增量假设蕴含
+$$
+e_k=e_0+ka,\qquad
+\varpi_P(e_k)=\varpi_P(e_0)+i_a([k\alpha]).
+$$
+单个 $q\in\mathsf Q_P$ 的累计指数最终恒定；非零固定增量的无界序列可由相容的有限前缀族实现，但不能作为第 206 条的一个有限支撑历史。具体地，对任意 $a\in\mathbb Z^P$ 存在 $X_K\in\mathcal C_P^{\rm pb}$，其有限槽历史为
+$$
+q^{(K)}=\sum_{t=1}^K\sum_{p\in P}a_p e_{t,p,0},\qquad
+\mathsf C_P(q^{(K)})=Ka,
+$$
+且 $L\ge K$ 时 $X_L$ 在时刻 $t\le K$ 的限制就是 $X_K$，所有旧事件属性与选择保持。对 $a=(4,2,1,1)$、$P=\{2,3,5,7\}$，终端乘积为 $5040^K$，容量条件取第 292 条。
+
+尺度、CSA 事件时标与有限 von Neumann 整数的集合秩不能无条件识别；第 288 条的整数数位移位也不恒增一层。
+
+**证明。** 由 $\phi>0$，
+$$
+\log_\phi|\phi x|=1+\log_\phi|x|.
+$$
+取整恒等式 $\lfloor1+u\rfloor=1+\lfloor u\rfloor$ 给第一式。对实尺度流归纳得到 $r_k=\phi^kr_0$ 及尺度等差式，再减去另行给定的 $t_0+k$ 即得标定恒等式。相位定义直接给
+$$
+\gamma_{\mathbb R}(r_{k+1})=[\phi r_{k+1}]=[\phi^2r_k].
+$$
+这一般不同于 $[\phi r_k]$。例如 $r_0=\alpha$ 时，当前相位为 $[1]=0$，下一相位为 $[\phi]\ne0$。$[u]\mapsto[\phi u]$ 不是圆周上良定义的映射：$[0]=[1]$，而 $[\phi\cdot0]=0\ne[\phi\cdot1]$。所以更新等式读取实数 $r_k$，不能改写为 $\phi\gamma_{\mathbb R}(r_k)$。非零整数乘 $\phi$ 无理，实尺度流也不在自然数字域内闭合；真正的整数位移 $L$ 在第 288 条已有增量零、一、二的具体见证。
+
+寄存器等式的正向来自第 291 条的同态性；反向由
+$$
+\varpi_P(e_{k+1})=\varpi_P(e_k+a)
+$$
+及其单射性得到。归纳给 $e_k=e_0+ka$，再用 $[k\phi]=[k\alpha]$ 得所列相位式。这个证明没有使用实尺度流；实尺度结论也没有使用寄存器增量。当 $P\ne\varnothing$ 时，两组附加条件的独立性还可直接见证：固定非零 $a$，取 $e_k=ka$ 而 $r_k=1$，前者满足寄存器等式、后者不满足实尺度流；反向取 $r_k=\phi^k$、$e_k=0$ 及同一非零 $a$，实尺度流成立而寄存器等式失败。时标可单独取 $t_k=2k$，而不影响任一序列的代数等式，故单位间隔标定也不是它们的推论。
+
+对单个有限槽历史 $q$，记
+$$
+E_q(T)=\sum_{t\le T}\mathsf V_P(q)(t,-).
+$$
+有限和相减给
+$$
+E_q(T+1)-E_q(T)=\mathsf V_P(q)(T+1,-).
+$$
+$q$ 的非零支撑投影到时间轴仍有限。若它非空，越过该投影的最大值后，右侧恒为零；若 $q=0$，所有累计值本来就为零。因此单个有限历史不能在所有充分大时刻保持非零固定增量。一个具体平衡反例是：在时刻一、某个 $j=0$ 槽放置一对正负事件，只选正事件，$E=\Omega$、来源同为 $\operatorname{leaf}(0)$、偏序为空。其在 $T=0,1,2$ 的累计指数依次为 $0,\varepsilon_p,\varepsilon_p$，两次增量不同。第 291 条的单射性使相位增量也不同，故任意 CSA 历史并不自动产生固定非零旋转。
+
+对固定方向，$q^{(K)}$ 只用有限个时间、素数和 $j=0$ 槽，因而属于 $\mathsf Q_P$。$G_0=1$ 给
+$$
+\mathsf V_P(q^{(K)})(t,p)=
+\begin{cases}
+a_p,&1\le t\le K,\\
+0,&\text{其余情形},
+\end{cases}
+\qquad
+\mathsf C_P(q^{(K)})=Ka.
+$$
+为使代表也相容，对每个 $1\le t\le K$、$p\in P$、$1\le r\le|a_p|$，使用共同的身份元组 $(t,p,r,+)$、$(t,p,r,-)$；这些元组用 CSA 定义 1 的有限编码实现，身份不依赖于 $K$。全部事件置于相应时刻 $t$、位置 $\lambda(p,0)$，符号由末字段给定，来源均为 $\operatorname{leaf}(0)$，每对仅选符号为 $\operatorname{sgn}(a_p)$ 的事件。令 $E_K=\Omega_K$ 为这些事件的全集，偏序为空。这个构造正是第 229 条的 $j=0$ 成对代表；每个单元背景为零，故 $X_K\in\mathcal C_P^{\rm pb}$，且其 $q_X$ 恰为 $q^{(K)}$。
+
+若 $L\ge K$，$E_L$ 中时标不超过 $K$ 的事件恰为 $E_K$，各事件的时间、位置、符号、来源与被选状态都使用同一公式，空偏序的限制也相同。因此前缀的相容性是逐字段相等，不只终端指数相等。$K=0$ 时取空档案；$a=0$ 或 $P=\varnothing$ 时所有这些档案皆空。每一步新加入时刻 $K+1$ 的事件，终端增量恰为 $a$。若改用 CSA 定义 5 的带标签时间复合，各非空旧档案的最大时间为 $K$，新批次的最小时间为 $K+1$，故守卫成立，空输入仍按空真解释；该带标签复合给同样的读数。若需第 293 条的标定 $t_0+k$，把这些事件时刻显式改为 $t_0+t$，同一限制、守卫和终端和的证明仍成立。
+
+$a\ne0$ 时，取一个 $a_p\ne0$ 的坐标，则形式无限和在每个 $(t,p,0)$、$t\ge1$ 处都非零，时间支撑无限，所以它不是 $\mathsf Q_P$ 的元素。有限前缀族本身不需要把这个无限和纳入原有限历史域。对 5040 方向，唯一分解及第 292 条给
+$$
+\prod_{p\in\{2,3,5,7\}}p^{Ka_p}
+=(2^4 3^2 5\,7)^K=5040^K;
+$$
+固定容量 $A=a$ 只容纳 $K=0,1$，前 $K$ 次可取容量 $Ka$。
+
+最后，在原平衡域内取两个互异事件，符号正负，同在时刻一与任一合法同位置，来源相同、偏序为空，令 $E=\Omega$，只选正事件。背景电荷为零而 $q(X)=1$，所以
+$$
+\mathscr A(q(X))=\mathscr A(1)=0\ne1.
+$$
+非零平衡选择至少需要两个当前事件：空区域只能给零，一个事件的背景为正一或负一而不平衡。因此这个反例确在原平衡载体内。CSA 定义 5 允许把全部时标显式平移任意整数而不改 $q$；相同 $j=0$ 槽表只改事件时刻时，终端指数及终端相位也相同。事件时标因此不是这些终端读数的函数。
+
+有限 von Neumann 序数一满足 $\operatorname{rank}(1)=1\ne\mathscr A(1)$；事件时标还允许负整数，而集合秩是序数。秩函数的适当集合限制之图及相关公式可沿第 71–79 条运输，这既不等于编码对象的环境秩保持不变，也不提供物理时间或物理维数的识别。证毕。
