@@ -22,7 +22,7 @@ LAYERS = ("dependency", "project", "report")
 # layers remain unchanged; callers request these layers when the native
 # engineering/current seed owners have produced their exports.
 EXECUTION_LAYERS = ("engineering", "current")
-ALL_LAYERS = (*LAYERS, "judge", *EXECUTION_LAYERS)
+ALL_LAYERS = (*LAYERS, "judge", *EXECUTION_LAYERS, "elan")
 
 
 def actions_keys(root: pathlib.Path) -> dict:
@@ -380,10 +380,31 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("command", choices=("keys", "restore", "snapshot"))
     parser.add_argument("--repository", required=True, type=pathlib.Path)
-    parser.add_argument("--layers", choices=ALL_LAYERS, nargs="+", default=LAYERS)
+    selection = parser.add_mutually_exclusive_group()
+    selection.add_argument("--layers", choices=ALL_LAYERS, nargs="+", default=LAYERS)
+    selection.add_argument("--stage", choices=("build", "engineering", "current", "delta"))
     for layer in ALL_LAYERS:
         parser.add_argument("--" + layer + "-key", default="")
     args = parser.parse_args()
+    if args.stage:
+        # Routing is required input validation, outside optional-cache failure handling.
+        sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "workflow"))
+        import ci_plan
+        try:
+            root = args.repository.resolve()
+            commit = ci_plan.git(root, "rev-parse", "HEAD").decode().strip()
+            if os.environ.get("CANDIDATE_SHA", commit) != commit:
+                raise ValueError("cache checkout does not match fixed candidate")
+            plan = ci_plan.validate_plan(root, commit,
+                root / os.environ["CI_PLAN_PATH"], root / os.environ["CI_CHANGES_PATH"])
+            args.layers = ci_plan.stage_requirements(root, plan, args.stage)["cache_layers"]
+        except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as error:
+            print("CI_INPUT_FAILED " + str(error), file=sys.stderr)
+            return 2
+        if not args.layers:
+            return 0
+    elan = "elan" in args.layers or args.stage is None
+    args.layers = [layer for layer in args.layers if layer != "elan"]
     sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "report"))
     from dotnet_producer import ProjectRegistrationError
     try:
@@ -395,9 +416,10 @@ def main():
                            ("mathlib_revision", "os", "arch", "partition", "save_allowed", "judge_save_allowed", "release_prefix")})
             for layer in args.layers:
                 values.update({layer + "_" + key: value for key, value in keys[layer].items()})
-            system, arch = binary_platform()
-            toolchain = hashlib.sha256((args.repository / "lean-toolchain").read_bytes()).hexdigest()
-            values["elan_key"] = f"elan-v1-{system}-{arch}-{toolchain}"
+            if elan:
+                system, arch = binary_platform()
+                toolchain = hashlib.sha256((args.repository / "lean-toolchain").read_bytes()).hexdigest()
+                values["elan_key"] = f"elan-v1-{system}-{arch}-{toolchain}"
             output(values)
         elif args.command == "restore":
             restore(args.repository, keys, {layer: getattr(args, layer + "_key") for layer in args.layers}, args.layers, registry)

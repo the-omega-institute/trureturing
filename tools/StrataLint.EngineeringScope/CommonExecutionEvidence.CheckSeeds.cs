@@ -136,6 +136,18 @@ internal static partial class CommonExecutionEvidence
             .SequenceEqual(materials.OrderBy(material => material.Path, StringComparer.Ordinal)))
             throw new InvalidDataException("common seed material manifest mismatch");
         ValidateMaterials(seed, materials);
+        var expected = materials.Select(material => Path.Combine(seed, material.Path))
+            .Append(Path.Combine(seed, "checks.json"))
+            .Append(Path.Combine(seed, "materials.json"))
+            .Select(path => Path.GetFullPath(path))
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+        var actual = Directory.GetFiles(seed, "*", SearchOption.AllDirectories)
+            .Select(Path.GetFullPath)
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+        if (!actual.SequenceEqual(expected))
+            throw new InvalidDataException("common seed contains extra or missing material");
         return record;
     }
 

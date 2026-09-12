@@ -38,6 +38,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
                 && (resourcePlan.Document.GetProperty("mode").GetString() != "pr"
                     || resourcePlan.Document.GetProperty("base").GetString() != baseSha))
                 throw new InvalidDataException("delta requires the validated plan's explicit immutable base");
+            if (name == "delta") ValidateBase(baseSha);
             if (resourcePlan is not null && !resourcePlan.StageRequired(name))
             {
                 candidate = resourcePlan.Commit;
@@ -121,7 +122,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
                 "-p:CustomAfterMicrosoftCommonTargets=" + Path.Combine(root, "tools/scripts/ci-build-outputs.targets"),
                 "-p:CiRepositoryRoot=" + root, "-p:CiBuildOutputRoot=" + outputs]);
         }
-        return CommonExecutionEvidence.SealBuild(root, candidate!, CommonBuildOutputs.Collect(root), steps.ToArray(), roots, resourcePlan?.Retain(root));
+        return CommonExecutionEvidence.SealBuild(root, candidate!, CommonBuildOutputs.Collect(root, roots), steps.ToArray(), roots, resourcePlan?.Retain(root));
     }
 
     private string[] BuildRoots()
@@ -255,15 +256,19 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         if (ids.Length != 0) _ = CommonExecutionEvidence.ExportCheckSeed(root, "current", output);
     }
 
-    private void Delta(string? baseSha)
+    private void ValidateBase(string? baseSha)
     {
         if (baseSha is null || baseSha.Length != 40 || !baseSha.All(char.IsAsciiHexDigit))
             throw new ArgumentException("delta requires an explicit 40-hex base commit SHA");
         var type = Capture("git", ["cat-file", "-t", baseSha]);
         if (type.Exit != 0 || type.Text.Trim() != "commit") throw new ArgumentException("base must be an available commit object");
+    }
+
+    private void Delta(string? baseSha)
+    {
         var common = CommonExecutionEvidence.ValidateCommon(root);
         RequireBinary(common.Build, CommonExecutionEvidence.CliPath);
-        Step("check-delta", "dotnet", [CommonExecutionEvidence.CliPath, "check-delta", "--protected-base", baseSha,
+        Step("check-delta", "dotnet", [CommonExecutionEvidence.CliPath, "check-delta", "--protected-base", baseSha!,
             "--candidate-lean-report", CommonExecutionEvidence.ReportPath], allowAnnotation: true);
     }
 

@@ -55,7 +55,8 @@ def resolve(root, head):
         raise ValueError("merge candidate is absent or does not contain the triggering PR head")
     candidate, base, _ = map(oid, fields)
     checkout(root, candidate)
-    outputs({"candidate_sha": candidate, "base_sha": base})
+    import ci_plan
+    outputs(ci_plan.plan_pr(root, candidate, base, head))
 
 
 def extract(root, archive, stage):
@@ -114,7 +115,7 @@ def advisory(root, branch):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("command", choices=("resolve", "checkout", "pack", "restore", "verify", "advisory", "summary",
-                                           "plan", "pr-paths", "validate-plan", "no-work", "validate-no-work"))
+                                           "plan", "pr-paths", "pr-plan", "validate-plan", "no-work", "validate-no-work", "stage-input"))
     parser.add_argument("--repository", required=True, type=pathlib.Path)
     parser.add_argument("--commit", default="")
     parser.add_argument("--head", default="")
@@ -123,14 +124,26 @@ def main():
     parser.add_argument("--plan", type=pathlib.Path)
     parser.add_argument("--result", type=pathlib.Path)
     parser.add_argument("--output", type=pathlib.Path)
-    parser.add_argument("--stage", choices=("build", "engineering", "current", "delta"))
+    parser.add_argument("--stage", choices=("build", "engineering", "current", "delta", "engineering-seed", "current-seed"))
+    parser.add_argument("--allow-direct", action="store_true")
+    parser.add_argument("--dispatch", action="store_true")
     parser.add_argument("--archive", type=pathlib.Path)
     parser.add_argument("--run-id", default=os.environ.get("GITHUB_RUN_ID", ""))
     parser.add_argument("--run-attempt", default=os.environ.get("GITHUB_RUN_ATTEMPT", ""))
     args = parser.parse_args()
     args.repository = args.repository.resolve()
     try:
-        if args.command in ("plan", "pr-paths", "validate-plan", "no-work", "validate-no-work"):
+        if args.command == "stage-input":
+            import ci_plan
+            values = ci_plan.stage_input(args)
+            if args.dispatch:
+                print(json.dumps(values, sort_keys=True))
+                return 10 if values["required"] else 0
+            outputs(values)
+        elif args.command == "pr-plan":
+            import ci_plan
+            outputs(ci_plan.plan_pr(args.repository, args.commit, args.base, args.head))
+        elif args.command in ("plan", "pr-paths", "validate-plan", "no-work", "validate-no-work"):
             import ci_plan
             print(json.dumps(ci_plan.command(args), sort_keys=True, ensure_ascii=False))
         elif args.command == "resolve": resolve(args.repository, args.head)
@@ -145,6 +158,10 @@ def main():
             print(text)
         return 0
     except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError, tarfile.TarError) as error:
+        if args.command == "stage-input" and args.stage in ("build", "engineering", "current", "delta"):
+            import ci_plan
+            ci_plan.write(args.repository / "build/ci" / (args.stage + "-result.json"), {
+                "stage": args.stage, "status": "failed", "exit": 2, "error": str(error), "steps": [], "artifacts": []})
         print("CI_INPUT_FAILED " + str(error), file=sys.stderr)
         return 2
 

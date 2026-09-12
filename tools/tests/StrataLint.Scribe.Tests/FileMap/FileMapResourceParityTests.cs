@@ -19,9 +19,11 @@ public sealed class FileMapResourceParityTests
             "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json" })
             Assert.NotEmpty(Assert.Single(map.Match(path)).Require);
         var filemap = Assert.Single(map.Resources, resource => resource.Id == "filemap");
-        Assert.Empty(filemap.CacheLayers);
+        Assert.Equal(["current"], filemap.CacheLayers.ToArray());
         Assert.Equal(["build"], filemap.Prerequisites.ToArray());
-        Assert.Empty(Assert.Single(map.Resources, resource => resource.Id == "build").CacheLayers);
+        Assert.Equal(["judge"], Assert.Single(map.Resources, resource => resource.Id == "build").CacheLayers.ToArray());
+        Assert.Equal(["elan", "engineering"], Assert.Single(map.Resources, resource => resource.Id == "engineering").CacheLayers.ToArray());
+        Assert.DoesNotContain("lake", filemap.Tools);
     }
 
     [Fact]

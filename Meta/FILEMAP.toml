@@ -1,13 +1,13 @@
 schema_version = 3
 resources = [
-  { id = "build", stage = "build", owner = "tools/scripts/ci-stage.sh", prerequisites = [], tools = ["bash", "dotnet", "git", "python3"], cache_layers = [], materials = ["Meta/ci-checks.json", "Meta/ci-resources.json", "Meta/engineering-projects.json", "Meta/package-materials.json"] },
-  { id = "current", stage = "current", owner = "tools/StrataLint.EngineeringScope/CommonStages.cs", prerequisites = ["build", "lean-report"], tools = ["dotnet"], cache_layers = [], materials = ["Meta/ci-resources.json"] },
+  { id = "build", stage = "build", owner = "tools/scripts/ci-stage.sh", prerequisites = [], tools = ["bash", "dotnet", "git", "python3"], cache_layers = ["judge"], materials = ["Meta/ci-checks.json", "Meta/ci-resources.json", "Meta/engineering-projects.json", "Meta/package-materials.json", "lake-manifest.json"] },
+  { id = "current", stage = "current", owner = "tools/StrataLint.EngineeringScope/CommonStages.cs", prerequisites = ["build", "lean-report"], tools = ["dotnet"], cache_layers = ["current"], materials = ["Meta/ci-resources.json"] },
   { id = "delta", stage = "delta", owner = "tools/StrataLint.EngineeringScope/CommonStages.cs", prerequisites = ["current", "engineering", "filemap", "scribe"], tools = ["dotnet", "git"], cache_layers = [], materials = ["Meta/ci-resources.json"] },
-  { id = "engineering", stage = "engineering", owner = "tools/scripts/ci-stage.sh", prerequisites = ["build"], tools = ["bash", "dotnet", "git"], cache_layers = ["judge"], materials = ["Meta/ci-resources.json", "Meta/engineering-projects.json"] },
-  { id = "filemap", stage = "current", owner = "tools/StrataLint.Cli/Commands/FileMap/FileMapConformCommand.cs", prerequisites = ["build"], tools = ["dotnet", "git"], cache_layers = [], materials = ["Meta/FILEMAP.toml", "Meta/ci-resources.json"] },
+  { id = "engineering", stage = "engineering", owner = "tools/scripts/ci-stage.sh", prerequisites = ["build"], tools = ["bash", "dotnet", "git", "lake"], cache_layers = ["elan", "engineering"], materials = ["Meta/ci-resources.json", "Meta/engineering-projects.json", "lean-toolchain"] },
+  { id = "filemap", stage = "current", owner = "tools/StrataLint.Cli/Commands/FileMap/FileMapConformCommand.cs", prerequisites = ["build"], tools = ["dotnet", "git"], cache_layers = ["current"], materials = ["Meta/FILEMAP.toml", "Meta/ci-resources.json"] },
   { id = "lean", stage = "current", owner = "tools/scripts/worktree/lean-cache-run.sh", prerequisites = ["build"], tools = ["bash", "dotnet", "git", "lake", "make", "python3"], cache_layers = ["dependency", "elan", "project"], materials = ["Meta/ci-resources.json", "lake-manifest.json", "lakefile.toml", "lean-toolchain"] },
   { id = "lean-report", stage = "current", owner = "tools/scripts/report/lean-report.sh", prerequisites = ["lean"], tools = ["bash", "dotnet", "lake", "python3"], cache_layers = ["report"], materials = ["Meta/ReportProducers/lean-report.json", "Meta/ci-resources.json"] },
-  { id = "scribe", stage = "current", owner = "tools/scripts/workflow/scribe-content-checks.sh", prerequisites = ["build", "lean-report"], tools = ["bash", "dotnet"], cache_layers = [], materials = ["Meta/ReportProducers/scribe-content.json", "Meta/ci-resources.json"] },
+  { id = "scribe", stage = "current", owner = "tools/scripts/workflow/scribe-content-checks.sh", prerequisites = ["build", "lean-report"], tools = ["bash", "dotnet"], cache_layers = ["current"], materials = ["Meta/ReportProducers/scribe-content.json", "Meta/ci-resources.json"] },
 ]
 [residence_policy]
 case_id = "RESIDENCE-EPOCH"

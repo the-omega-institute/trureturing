@@ -1,6 +1,8 @@
 """FILEMAP declarations and complete path planning for ci.py; never executes work."""
 import hashlib
+import base64
 import json
+import os
 import pathlib
 import re
 import subprocess
@@ -8,7 +10,7 @@ import tomllib
 
 STAGES = ("build", "engineering", "current", "delta")
 TOOLS = {"bash", "dotnet", "git", "lake", "make", "python3"}
-CACHES = {"dependency", "project", "report", "judge", "elan"}
+CACHES = {"dependency", "project", "report", "judge", "elan", "engineering", "current"}
 FILEMAP = "Meta/FILEMAP.toml"
 
 
@@ -268,7 +270,7 @@ def pr_paths(root, commit, base, head):
     oid(base)
     oid(head)
     parents = git(root, "show", "-s", "--format=%P", commit).decode().strip().split()
-    if parents != [base, head]:
+    if parents != list(dict.fromkeys([base, head])):
         raise ValueError("PR candidate parents do not match fixed B and triggering head")
     # No base checkout/code: raw -z object diff includes mode-only changes and both
     # rename endpoints. Git owns rename recognition; the planner only unions paths.
@@ -455,16 +457,119 @@ def write(file, value):
     temporary.replace(file)
 
 
+def validate_plan(root, commit, plan, changes):
+    if plan is None or changes is None:
+        raise ValueError("missing plan or complete changed-path input")
+    value = make_plan(root, commit, changes)
+    if not same_record(strict_json(plan), value):
+        raise ValueError("missing, failed, or mismatched plan")
+    for material in sorted({FILEMAP, *value["materials"]}):
+        if (root / material).read_bytes() != git(root, "show", commit + ":" + material):
+            raise ValueError("resource plan declaration differs from candidate: " + material)
+    return value
+
+
+def stage_requirements(root, plan, stage):
+    if stage not in STAGES or plan["stages"][stage]["status"] == "not-applicable":
+        raise ValueError("stage is not applicable to this plan: " + str(stage))
+    manifest = load_filemap((root / FILEMAP).read_bytes())
+    selected = set(plan["stages"][stage]["resources"])
+    rows = [row for row in manifest["resources"] if row["id"] in selected]
+    union = lambda key: sorted({item for row in rows for item in row[key]})
+    return {"required": bool(rows), "tools": union("tools"), "cache_layers": union("cache_layers"),
+            "materials": union("materials")}
+
+
+def validate_stage(root, stage, base):
+    if stage not in STAGES:
+        raise ValueError("invalid execution stage")
+    if stage == "delta":
+        oid(base)
+        if git(root, "cat-file", "-t", base).strip() != b"commit":
+            raise ValueError("delta base must be an available commit object")
+    elif base:
+        raise ValueError("only delta accepts a base")
+
+
+def plan_pr(root, commit, base, head):
+    changes, plan = root / "build/ci/changes.json", root / "build/ci/plan.json"
+    write(changes, pr_paths(root, commit, base, head))
+    write(plan, make_plan(root, commit, changes))
+    validate_plan(root, commit, plan, changes)
+    return {"candidate_sha": commit, "base_sha": base,
+            "changes_b64": base64.b64encode(changes.read_bytes()).decode("ascii"),
+            "plan_b64": base64.b64encode(plan.read_bytes()).decode("ascii")}
+
+
+def stage_input(args):
+    root, stage = args.repository, args.stage
+    validate_stage(root, stage, args.base)
+    needs = strict_json_bytes(os.environ.get("CI_NEEDS", "{}").encode())
+    if not isinstance(needs, dict):
+        raise ValueError("CI_NEEDS must be a job-result object")
+    for job, result in needs.items():
+        if not isinstance(result, dict) or result.get("result") != "success":
+            raise ValueError("required prerequisite did not succeed: " + job)
+    commit = args.commit or os.environ.get("CANDIDATE_SHA") or git(root, "rev-parse", "HEAD").decode().strip()
+    if git(root, "rev-parse", "HEAD").decode().strip() != oid(commit):
+        raise ValueError("stage checkout does not match fixed candidate")
+    plan = args.plan or (pathlib.Path(os.environ["CI_PLAN_PATH"]) if os.environ.get("CI_PLAN_PATH") else None)
+    changes = args.changes or (pathlib.Path(os.environ["CI_CHANGES_PATH"]) if os.environ.get("CI_CHANGES_PATH") else None)
+    encoded_plan, encoded_changes = os.environ.get("CI_PLAN_B64", ""), os.environ.get("CI_CHANGES_B64", "")
+    if encoded_plan or encoded_changes:
+        if not encoded_plan or not encoded_changes:
+            raise ValueError("both serialized plan and changed-path input are required")
+        plan, changes = root / "build/ci/plan.json", root / "build/ci/changes.json"
+        # Decode both before writing either; strict object/identity checks follow.
+        values = [strict_json_bytes(base64.b64decode(value, validate=True)) for value in (encoded_plan, encoded_changes)]
+        for destination, value in zip((plan, changes), values):
+            write(destination, value)
+    if plan is None and changes is None:
+        if args.allow_direct:
+            return {"required": True}
+        raise ValueError("PUSH_SCOPE_UNRESOLVED: explicit complete changed-path input and validated plan are required")
+    plan = root / plan if plan is not None else None
+    changes = root / changes if changes is not None else None
+    if (os.environ.get("GITHUB_EVENT_NAME") == "push" and not encoded_plan and not encoded_changes
+            and (plan is None or not plan.is_file()) and (changes is None or not changes.is_file())):
+        raise ValueError("PUSH_SCOPE_UNRESOLVED: no authorized complete changed-path input was supplied")
+    value = validate_plan(root, commit, plan, changes)
+    if stage == "delta" and (value["mode"] != "pr" or value["base"] != args.base):
+        raise ValueError("delta requires the validated plan's explicit immutable base")
+    requirements = stage_requirements(root, value, stage)
+    result = {"required": requirements["required"], "cache_layers": " ".join(requirements["cache_layers"]),
+              "dotnet": "dotnet" in requirements["tools"], "lake": "lake" in requirements["tools"],
+              "artifact_required": requirements["required"],
+              "report_required": stage == "current" and "lean-report" in value["execution"]["steps"]}
+    for upstream in ("build", "engineering", "current"):
+        result[upstream + "_required"] = requirements["required"] and value["stages"][upstream]["status"] == "required"
+    if not requirements["required"]:
+        clear_stages = ("build", "engineering", "current") if stage == "build" else (stage,)
+        for name in clear_stages:
+            for suffix in (".json", "-checks.json", "-paths.nul", "-transport.json", "-result.json", "-no-work.json"):
+                (root / "build/ci" / (name + suffix)).unlink(missing_ok=True)
+        if stage in ("build", "engineering"):
+            (root / "build/ci/tests.json").unlink(missing_ok=True)
+        if stage in ("build", "current"):
+            (root / "build/ci/scribe-markdown.paths").unlink(missing_ok=True)
+        receipt = no_work(value, stage)
+        write(root / "build/ci" / (stage + "-no-work.json"), receipt)
+        write(root / "build/ci" / (stage + "-result.json"), {
+            "stage": stage, "candidate": commit, "git_candidate": value["candidate"], "scope": value,
+            "status": "not-required", "exit": 0, "error": None, "steps": [], "artifacts": [],
+            "report": None, "current_evidence": None, "base_sha": args.base or None})
+    return result
+
+
 def command(args):
     if args.command == "pr-paths":
         value = pr_paths(args.repository, args.commit, args.base, args.head)
     else:
         if args.changes is None:
             raise ValueError("--changes complete manifest is required")
-        value = make_plan(args.repository, args.commit, args.changes)
+        value = make_plan(args.repository, args.commit, args.changes) if args.command == "plan" else validate_plan(
+            args.repository, args.commit, args.plan, args.changes)
         if args.command != "plan":
-            if args.plan is None or not same_record(strict_json(args.plan), value):
-                raise ValueError("missing, failed, or mismatched plan")
             if args.command == "validate-plan":
                 return value
             value = no_work(value, args.stage)

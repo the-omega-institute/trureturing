@@ -70,6 +70,12 @@ if [[ "$MODE" == pr ]]; then
     commit-tree "$TREE_SHA" -p "$BASE_SHA" -p "$HEAD_SHA" -m 'Preflight candidate')"
   git -C "$CANDIDATE" checkout --quiet --detach "$CANDIDATE_SHA"
   git -C "$CANDIDATE" remote remove origin
+  stage=plan
+  python3 -B "$CANDIDATE/tools/scripts/workflow/ci.py" pr-plan --repository "$CANDIDATE" \
+    --commit "$CANDIDATE_SHA" --base "$BASE_SHA" --head "$HEAD_SHA"
+  export CANDIDATE_SHA
+  export CI_PLAN_PATH="$CANDIDATE/build/ci/plan.json"
+  export CI_CHANGES_PATH="$CANDIDATE/build/ci/changes.json"
   printf 'PREFLIGHT_CANDIDATE path=%s\n' "$CANDIDATE"
 fi
 if [[ -f "$ROOT/tools/scripts/lib/resource-observation-lib.sh" ]]; then
@@ -81,7 +87,7 @@ for stage in engineering current; do
   /bin/bash tools/scripts/ci-stage.sh "$stage"
 done
 if [[ "$MODE" == pr ]]; then
-  stage=delta
+  stage="delta"
   /bin/bash tools/scripts/ci-stage.sh delta "$BASE_SHA"
 fi
 stage=complete

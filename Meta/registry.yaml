@@ -20,6 +20,8 @@ governance_documents:
   - "Meta/FILEMAP.toml"
   - "Meta/ReportProducers/lean-report.json"
   - "Meta/ReportProducers/scribe-content.json"
+  - "Meta/ci-checks.json"
+  - "Meta/ci-resources.json"
   - "Meta/engineering-projects.json"
   - "Meta/judge-seed.json"
   - "Meta/package-materials.json"

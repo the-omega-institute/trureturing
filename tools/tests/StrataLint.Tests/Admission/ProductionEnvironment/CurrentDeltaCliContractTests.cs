@@ -8,7 +8,7 @@ using StrataLint.EngineeringScope;
 
 namespace StrataLint.Tests;
 
-public sealed class CurrentDeltaCliContractTests
+public sealed class CurrentDeltaCliContractTests(Xunit.Abstractions.ITestOutputHelper log)
 {
     public static int Main(string[] arguments)
     {
@@ -16,6 +16,103 @@ public sealed class CurrentDeltaCliContractTests
         return CliApplication.Run(arguments,
             new ProductionCliEnvironment(root, new GitRepositoryGateway(root), new PrecomputedLeanReportSource(root)),
             new SystemCliConsole());
+    }
+
+    [Theory]
+    [InlineData("valid", 0, "ADMITTED")]
+    [InlineData("invalid-report", 2, "Raw Lean report is not valid JSON")]
+    [InlineData("retired-option", 2, "harness-gate: unknown argument '--test-map-cache-root'")]
+    public void HarnessGateUsesActualCandidateCheckCli(string scenario, int expectedExit, string diagnostic)
+    {
+        if (OperatingSystem.IsWindows()) throw new PlatformNotSupportedException();
+        using var temporary = new TemporaryDirectory();
+        var root = Encoding.UTF8.GetString(RequireSuccess(TestProcessRunner.Run("pwd", ["-P"],
+            temporary.Path, TestBudgets.ScriptProcessHangGuard, 4096)).StandardOutput).Trim();
+        var repository = TestRepositoryLayout.FindRoot();
+        var bin = Path.Combine(root, "bin");
+        Directory.CreateDirectory(bin);
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        foreach (var (path, content) in fixture.Files)
+        {
+            var destination = Path.Combine(root, path);
+            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+            File.WriteAllText(destination, content);
+        }
+        File.WriteAllText(Path.Combine(root, ".gitignore"), "bin/\n.lake/\ntools/StrataLint.Cli/bin/\n");
+        Git("init", "-q");
+        Git("add", ".");
+        Git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "base");
+        var basis = Encoding.UTF8.GetString(Git("rev-parse", "HEAD").StandardOutput).Trim();
+        var report = Path.Combine(root, ".lake/report.json");
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(GitRepositorySnapshotReader.ReadCurrent(root))).Snapshot;
+        RawLeanReportArtifact.WriteFile(report, snapshot, LeanAxiomReport.Create(fixture.Reports));
+        if (scenario == "invalid-report") File.WriteAllText(report, "not JSON\n");
+
+        var runtime = Path.Combine(root, "tools/StrataLint.Cli/bin/Release/net10.0");
+        Directory.CreateDirectory(Path.GetDirectoryName(runtime)!);
+        Directory.CreateSymbolicLink(runtime, Path.GetDirectoryName(typeof(StrataLint.Cli.Program).Assembly.Location)!);
+        // Reuse the candidate build. The native host calls the actual check consumer;
+        // the separate filemap stage retains its process-normalization test boundary.
+        WriteExecutable(Path.Combine(bin, "make"), """
+            [[ $# == 3 && "$1" == -C && "$2" == "$GATE_TEST_ROOT/tools" && "$3" == dotnet ]]
+            test -s "$GATE_TEST_ROOT/tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll"
+            """);
+        WriteExecutable(Path.Combine(bin, "dotnet"), """
+            [[ "$1" == "$GATE_TEST_ROOT/tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll" ]]
+            if [[ $# == 2 && "$2" == filemap-conform ]]; then exit 0; fi
+            shift
+            exec "$GATE_TEST_DOTNET" "$GATE_TEST_HOST" "$@"
+            """);
+        var dotnet = Encoding.UTF8.GetString(RequireSuccess(TestProcessRunner.Run("/bin/bash",
+            ["-c", "command -v dotnet"], root, TestBudgets.ScriptProcessHangGuard, 4096)).StandardOutput).Trim();
+        var arguments = new List<string>
+        {
+            $"PATH={bin}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}",
+            $"GATE_TEST_ROOT={root}", $"GATE_TEST_DOTNET={dotnet}",
+            $"GATE_TEST_HOST={typeof(CurrentDeltaCliContractTests).Assembly.Location}",
+            Path.Combine(repository, ".github/scripts/harness-gate.sh"),
+            "--candidate", root, "--base", basis, "--candidate-lean-report", report,
+        };
+        if (scenario == "retired-option") arguments.AddRange(["--test-map-cache-root", Path.Combine(root, "test-maps")]);
+        var result = TestProcessRunner.Run("/usr/bin/env", arguments, root,
+            TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
+        var output = Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError);
+        log.WriteLine(JsonSerializer.Serialize(new { executable = "/usr/bin/env", arguments, result.ExitCode, output }));
+        Assert.True(result.ExitCode == expectedExit, $"expected {expectedExit}, got {result.ExitCode}: {output}");
+        Assert.True(output.Contains(diagnostic, StringComparison.Ordinal), $"missing {diagnostic}: {output}");
+        Assert.False(Directory.Exists(Path.Combine(root, "test-maps")));
+
+        ProcessOutput Git(params string[] args) => RequireSuccess(TestProcessRunner.Run("git", args,
+            root, TestBudgets.ScriptProcessHangGuard, 1024 * 1024));
+    }
+
+    [Fact]
+    public void ActualCandidateCheckCliRejectsRetiredTestMapOption()
+    {
+        using var temporary = new TemporaryDirectory();
+        var result = TestProcessRunner.Run("dotnet", [typeof(StrataLint.Cli.Program).Assembly.Location, "check",
+            "--protected-base", new string('a', 40), "--candidate-lean-report", "missing.json",
+            "--test-map-cache-root", "test-maps"], temporary.Path,
+            TestBudgets.ScriptProcessHangGuard, 1024 * 1024);
+        log.WriteLine(JsonSerializer.Serialize(new { assembly = typeof(StrataLint.Cli.Program).Assembly.Location, result.ExitCode, error = Encoding.UTF8.GetString(result.StandardError) }));
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains("USAGE: StrataLint check", Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
+    }
+
+    private static ProcessOutput RequireSuccess(ProcessOutput result)
+    {
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+        return result;
+    }
+
+    [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
+    private static void WriteExecutable(string path, string body)
+    {
+        File.WriteAllText(path, "#!/usr/bin/env bash\nset -euo pipefail\n" + body + "\n");
+        File.SetUnixFileMode(path, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
     }
 
     [Theory]

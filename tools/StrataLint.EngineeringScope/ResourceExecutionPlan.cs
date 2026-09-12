@@ -29,15 +29,6 @@ internal sealed class ResourceExecutionPlan
         var validated = Run(root, "python3", ["-B", "tools/scripts/workflow/ci.py", "validate-plan",
             "--repository", root, "--commit", commit, "--changes", changes, "--plan", path]);
         using var document = JsonDocument.Parse(validated);
-        // The planner validates the committed FILEMAP. Native execution must consume
-        // those same declaration bytes even for supported dirty local invocations.
-        foreach (var material in new[] { "Meta/FILEMAP.toml" }.Concat(
-                     Strings(document.RootElement.GetProperty("materials"))))
-        {
-            var committed = RunBytes(root, "git", ["--no-replace-objects", "show", commit + ":" + material]);
-            if (!File.ReadAllBytes(Path.Combine(root, material)).AsSpan().SequenceEqual(committed))
-                throw new InvalidDataException("resource plan declaration differs from candidate: " + material);
-        }
         return new(document.RootElement.Clone(), path, changes);
     }
 

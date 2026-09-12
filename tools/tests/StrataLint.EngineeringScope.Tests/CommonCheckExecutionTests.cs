@@ -6,6 +6,19 @@ namespace StrataLint.EngineeringScope.Tests;
 
 public sealed partial class CommonCheckExecutionTests
 {
+    [Fact]
+    public void NativeSeedBundleRejectsUndeclaredMaterial()
+    {
+        using var fixture = new Fixture();
+        fixture.Run();
+        fixture.Seed();
+        _ = CommonExecutionEvidence.ValidateCheckSeedBundle(fixture.Tree.Root, "engineering");
+        var seed = Path.Combine(fixture.Tree.Root, CommonExecutionEvidence.CheckSeedPath("engineering"));
+        File.WriteAllText(Path.Combine(seed, "extra.txt"), "undeclared");
+        var error = Assert.Throws<InvalidDataException>(() => CommonExecutionEvidence.ValidateCheckSeedBundle(fixture.Tree.Root, "engineering"));
+        Assert.Equal("common seed contains extra or missing material", error.Message);
+    }
+
     [Theory]
     [InlineData("report", 1)]
     [InlineData("report-materials", 1)]
