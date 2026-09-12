@@ -67,7 +67,8 @@ internal static partial class CommonExecutionEvidence
     internal static bool ExportCheckSeed(string root, string stage, TextWriter output, string? destination = null)
     {
         // Acceptance errors are fatal; only optional copying/saving may fail harmlessly.
-        _ = stage == "engineering" ? ValidateEngineering(root) : stage == "current" ? ValidateCurrent(root)
+        CommonCheckRecord? checks = null;
+        _ = stage == "engineering" ? ValidateEngineering(root) : stage == "current" ? ValidateCurrent(root, out checks)
             : throw new InvalidDataException("invalid common seed stage: " + stage);
         var testMaterials = Array.Empty<string>();
         if (stage == "engineering" && destination is null)
@@ -84,12 +85,15 @@ internal static partial class CommonExecutionEvidence
             if (available || ExportTestSeed(root, output))
                 testMaterials = tests.Materials.Select(material => TestSeedPath + "/" + material.Path).Append(TestSeedPath + "/tests.json").ToArray();
         }
-        return CopyCheckSeed(root, stage, output, destination, testMaterials);
+        return CopyCheckSeed(root, stage, output, destination, testMaterials, checks);
     }
 
-    private static bool CopyCheckSeed(string root, string stage, TextWriter output, string? destination, string[] testMaterials)
+    private static bool CopyCheckSeed(string root, string stage, TextWriter output, string? destination, string[] testMaterials,
+        CommonCheckRecord? accepted)
     {
-        var record = ValidateChecks(root, stage, ValidateBuild(root), stage == "current" ? CurrentCheckIds(root) : null);
+        // Current validation just accepted these exact units, build and plan. Copy
+        // that record; independent exports still enter full validation above.
+        var record = accepted ?? ValidateChecks(root, stage, ValidateBuild(root), stage == "current" ? CurrentCheckIds(root) : null);
         destination ??= Path.Combine(root, CheckSeedPath(stage));
         var staging = destination + ".tmp-" + Guid.NewGuid().ToString("N");
         try

@@ -1,6 +1,7 @@
 """FILEMAP declarations and complete path planning for ci.py; never executes work."""
 import hashlib
 import base64
+import functools
 import json
 import os
 import pathlib
@@ -199,11 +200,23 @@ def git(root, *args):
                           env={**os.environ, "GIT_NO_LAZY_FETCH": "1", "GIT_OPTIONAL_LOCKS": "0"}).stdout
 
 
-def candidate(root, commit):
+@functools.cache
+def commit_tree(root, commit):
+    # Share only immutable object reads within this one-shot planner process.
+    # HEAD, status, index and working file bytes must always be read afresh.
     oid(commit)
     if git(root, "cat-file", "-t", commit).strip() != b"commit":
         raise ValueError("candidate must be a commit")
-    return {"commit": commit, "tree": oid(git(root, "rev-parse", commit + "^{tree}").decode().strip())}
+    return oid(git(root, "rev-parse", commit + "^{tree}").decode().strip())
+
+
+def candidate(root, commit):
+    return {"commit": commit, "tree": commit_tree(root, commit)}
+
+
+@functools.cache
+def committed_file(root, commit, file):
+    return git(root, "show", oid(commit) + ":" + path(file))
 
 
 def checked_head(root, expected=""):
@@ -235,9 +248,15 @@ def same_record(left, right):
     return json.dumps(left, sort_keys=True, ensure_ascii=True) == json.dumps(right, sort_keys=True, ensure_ascii=True)
 
 
+@functools.cache
+def tree_bytes(root, tree):
+    return git(root, "ls-tree", "-rz", "--full-tree", oid(tree))
+
+
 def tree_entries(root, tree):
+    # Each caller owns its mutable entries, including any dirty push overlay.
     result = {}
-    for record in nul_fields(git(root, "ls-tree", "-rz", "--full-tree", tree)):
+    for record in nul_fields(tree_bytes(root, tree)):
         meta, raw_path = record.split(b"\t", 1)
         mode, kind, blob = meta.decode("ascii").split(" ")
         result[path(raw_path.decode("utf-8"))] = {"mode": mode, "oid": oid(blob)}
@@ -443,7 +462,7 @@ def make_plan(root, commit, changes_file):
     def read(p):
         if p not in tree:
             raise ValueError(f"{p}: missing registered candidate input")
-        raw = (root / p).read_bytes() if local else git(root, "show", commit + ":" + p)
+        raw = (root / p).read_bytes() if local else committed_file(root, commit, p)
         if local and blob_oid(raw) != tree[p]["oid"]:
             raise ValueError(f"{p}: registered input differs from local candidate")
         return raw
@@ -593,7 +612,7 @@ def validate_plan(root, commit, plan, changes):
         # make_plan checked the complete effective scope. Dirty declarations are
         # bound by its local endpoints; unchanged declarations still bind HEAD.
         matches = (blob_oid(raw) == local[material]["oid"] if material in local else
-                   raw == git(root, "show", commit + ":" + material))
+                   raw == committed_file(root, commit, material))
         if not matches:
             raise ValueError("resource plan declaration differs from candidate: " + material)
     return value

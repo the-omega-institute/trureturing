@@ -298,6 +298,7 @@ public sealed partial class ResourceAdapterTests
 
     private static void RetainLocal(ResourceRouteTests.ResourceFixture fixture, string scenario, (int Exit, string Text) result)
     {
+        ReleaseConsumerContractTests.Capture(fixture.Root, "dirty-" + scenario, result);
         if (Environment.GetEnvironmentVariable("LOCAL_PUSH_EVIDENCE") is not { Length: > 0 } evidence) return;
         JsonNode? Read(string path) => File.Exists(Path.Combine(fixture.Root, path)) ? JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, path))) : null;
         File.AppendAllText(evidence, new JsonObject {

@@ -40,13 +40,19 @@ internal static partial class CommonExecutionEvidence
         WriteBundleList(root, "current", build.Materials.Concat(record.Materials).Select(material => material.Path).Append(CurrentPath));
     }
 
-    internal static CommonStageRecord ValidateCurrent(string root)
+    internal static CommonStageRecord ValidateCurrent(string root) => ValidateCurrent(root, out _);
+
+    private static CommonStageRecord ValidateCurrent(string root, out CommonCheckRecord? checks)
     {
         var candidate = Candidate(root, out var snapshot);
-        return ValidateCurrent(root, ValidateBuild(root, candidate, null), snapshot);
+        return ValidateCurrent(root, ValidateBuild(root, candidate, null), snapshot, out checks);
     }
 
-    private static CommonStageRecord ValidateCurrent(string root, CommonStageRecord build, RepositorySnapshot snapshot)
+    private static CommonStageRecord ValidateCurrent(string root, CommonStageRecord build, RepositorySnapshot snapshot) =>
+        ValidateCurrent(root, build, snapshot, out _);
+
+    private static CommonStageRecord ValidateCurrent(string root, CommonStageRecord build, RepositorySnapshot snapshot,
+        out CommonCheckRecord? checks)
     {
         var record = Read<CommonStageRecord>(root, CurrentPath);
         ValidateRecord(root, record, build.Candidate, build.Round);
@@ -62,7 +68,7 @@ internal static partial class CommonExecutionEvidence
             throw new InvalidDataException("current has missing required materials");
         if (!expected.Contains("lean-report") && record.Materials.Any(material => ReportPaths.Contains(material.Path)))
             throw new InvalidDataException("unrequested report cannot be current evidence");
-        if (ids.Length != 0) _ = ValidateChecks(root, "current", build, ids);
+        checks = ids.Length == 0 ? null : ValidateChecks(root, "current", build, ids);
         if (expected.Contains("lean-report"))
             _ = RawLeanReportArtifact.ReadFile(Path.Combine(root, ReportPath), snapshot, validateMaterials: true);
         return record;

@@ -9,6 +9,50 @@ namespace StrataLint.EngineeringScope.Tests;
 [Collection("Engineering scope process boundary")]
 public sealed class ColdPreflightContractTests
 {
+    [Fact]
+    public void RepeatedValidationReusesObjectsButChecksLiveDeclarations()
+    {
+        using var fixture = new ResourceRouteTests.ResourceFixture(["filemap"]);
+        var result = SharedBuildContractTests.Process(fixture.Root, "python3", ["-B", "-c", """
+            import collections, json, pathlib, sys
+            sys.path.insert(0, str(pathlib.Path.cwd() / 'tools/scripts/workflow'))
+            import ci_plan as planner
+            root = pathlib.Path.cwd()
+            commit = planner.checked_head(root)
+            reads = collections.Counter()
+            native_git = planner.git
+            def observed_git(root, *args):
+                reads[args] += 1
+                return native_git(root, *args)
+            planner.git = observed_git
+            def validate():
+                return planner.validate_plan(root, commit, root / 'build/plan.json', root / 'build/changes.json')
+            first = validate()
+            assert validate() == first
+            tree = first['candidate']['tree']
+            entries = planner.tree_entries(root, tree)
+            entries[planner.FILEMAP]['mode'] = '100755'
+            entries.pop('fixtures/selected.txt')
+            assert planner.tree_entries(root, tree)[planner.FILEMAP]['mode'] == '100644'
+            assert 'fixtures/selected.txt' in planner.tree_entries(root, tree)
+            filemap = root / planner.FILEMAP
+            filemap.write_bytes(filemap.read_bytes() + b'\\n')
+            try:
+                validate()
+                raise AssertionError('changed declaration accepted')
+            except ValueError as error:
+                assert 'declaration differs from candidate' in str(error), str(error)
+            immutable = {args: count for args, count in reads.items()
+                         if args[:2] == ('cat-file', '-t') and args[2] == commit
+                         or args[:1] == ('rev-parse',) and args[1] == commit + '^{tree}'
+                         or args[:1] == ('ls-tree',)
+                         or args[:1] == ('show',) and args[1].startswith(commit + ':')}
+            print(json.dumps([{'arguments': args, 'count': count} for args, count in immutable.items()]))
+            assert immutable and all(count == 1 for count in immutable.values()), 'repeated immutable object reads'
+            """]);
+        Assert.True(result.Exit == 0, result.Text);
+    }
+
     [Theory]
     [InlineData("push", "filemap")]
     [InlineData("pr", "filemap")]
@@ -83,6 +127,8 @@ public sealed class ColdPreflightContractTests
                 return;
             }
             Assert.Single(events, s => s == CommonExecutionEvidence.CliPath + " filemap-conform");
+            Assert.Equal("completed", Read(root, "current-result.json")["status"]!.ToString());
+            Assert.Equal(0, Read(root, "current-result.json")["exit"]!.GetValue<int>());
             var current = Read(root, "current.json");
             Assert.Equal(Read(root, "build.json")["round"]!.ToString(), current["round"]!.ToString());
             Assert.Equal("filemap", Assert.Single(current["steps"]!.AsArray())!["name"]!.ToString());
@@ -90,6 +136,7 @@ public sealed class ColdPreflightContractTests
         }
         Assert.Equal("not-required", Read(root, "engineering-result.json")["status"]!.ToString());
         Assert.Empty(Read(root, "engineering-result.json")["steps"]!.AsArray());
+        Assert.Contains($"PREFLIGHT_RESULT mode={mode} stage=complete exit=0 raw_exit=0", result.Text, StringComparison.Ordinal);
     }
 
     internal static void Configure(ResourceRouteTests.ResourceFixture fixture)
