@@ -135,6 +135,13 @@ internal static class Program
         var start = new ProcessStartInfo("dotnet") { WorkingDirectory = root, UseShellExecute = false };
         start.Environment["DOTNET_CLI_UI_LANGUAGE"] = "en-US";
         start.Environment["CI"] = "true";
+        // The engineering runner executes repository tests, including tests
+        // that create synthetic repositories.  A reusable workflow's fixed
+        // candidate input belongs to the outer stage process; propagating it
+        // into those synthetic fixtures makes their checkout commits fail the
+        // outer identity check.  Tests that exercise this input set it
+        // explicitly in their child environment.
+        start.Environment.Remove("CI_WORKFLOW_CANDIDATE_SHA");
         if (Directory.Exists(Path.Combine(root, CommonBuildOutputs.PackagesPath)))
             start.Environment["NUGET_PACKAGES"] = Path.Combine(root, CommonBuildOutputs.PackagesPath);
         foreach (var argument in BuildTestArguments(project, results)) start.ArgumentList.Add(argument);

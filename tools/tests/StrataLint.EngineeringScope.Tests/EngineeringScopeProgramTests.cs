@@ -37,7 +37,8 @@ public sealed class EngineeringScopeProgramTests
                 </Project>
                 """);
             TemporaryFileSystem.File.WriteAllText(Path.Combine(directory, "Probe.cs"),
-                "using Xunit; public sealed class Probe { [Fact] public void Runs() { Assert.True(" + (passes ? "true" : "false") + "); } }");
+                "using Xunit; public sealed class Probe { [Fact] public void Runs() { Assert.True(" + (passes ? "true" : "false")
+                + "); Assert.Null(Environment.GetEnvironmentVariable(\"CI_WORKFLOW_CANDIDATE_SHA\")); } }");
             var retiredSuite = Path.Combine(root, "tools/tests/StrataLint.ScriptTests");
             TemporaryFileSystem.Directory.CreateDirectory(retiredSuite);
             TemporaryFileSystem.File.WriteAllText(Path.Combine(retiredSuite, "StrataLint.ScriptTests.csproj"),
@@ -69,7 +70,17 @@ public sealed class EngineeringScopeProgramTests
             }
             using var output = new StringWriter();
             using var error = new StringWriter();
-            var exit = Program.Run(["--repository", root], TestResultEvidence.Load, output, error);
+            var ambientCandidate = Environment.GetEnvironmentVariable("CI_WORKFLOW_CANDIDATE_SHA");
+            Environment.SetEnvironmentVariable("CI_WORKFLOW_CANDIDATE_SHA", "ambient-workflow-candidate");
+            int exit;
+            try
+            {
+                exit = Program.Run(["--repository", root], TestResultEvidence.Load, output, error);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("CI_WORKFLOW_CANDIDATE_SHA", ambientCandidate);
+            }
             Assert.True(exit == expected, output + "\n" + error);
             if (!prebuild)
             {
