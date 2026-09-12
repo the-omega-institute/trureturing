@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:8e201f1be1be871be105fd30d80c24ab603dd82b9ab304c26adf2cde04148eed
   normalized_sha256: sha256:8e201f1be1be871be105fd30d80c24ab603dd82b9ab304c26adf2cde04148eed
 cas_ref: sha256:8e201f1be1be871be105fd30d80c24ab603dd82b9ab304c26adf2cde04148eed
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Analytic/Knapsack/FractionalKnapsackDual.full_budget_optimum
+    target_statement_id: sha256:4898f32ffab2fe6dfd4904d8f132fab6f435ddca2806954e7edaf7de17e19813
 receipts:
   unresolved_subitems: []

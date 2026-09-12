@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:49a52b3209167e8829d1b1ad44016d280cada673c03ea2f5415b6905cdee1875
   normalized_sha256: sha256:49a52b3209167e8829d1b1ad44016d280cada673c03ea2f5415b6905cdee1875
 cas_ref: sha256:49a52b3209167e8829d1b1ad44016d280cada673c03ea2f5415b6905cdee1875
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Analytic/Interpolation/TwoPointGridDominance.two_actual_corners_lower_mem
+    target_statement_id: sha256:441b149baddaa17e3177a565e8d9182c2e429e9c3a5da4476223cd27cc78279a
 receipts:
   unresolved_subitems: []

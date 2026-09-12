@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:f7d0148a351614aae0b26f81aebc52b458b2d64bfa3182afd3e1c45401927a14
   normalized_sha256: sha256:f7d0148a351614aae0b26f81aebc52b458b2d64bfa3182afd3e1c45401927a14
 cas_ref: sha256:f7d0148a351614aae0b26f81aebc52b458b2d64bfa3182afd3e1c45401927a14
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Analytic/Interpolation/TwoPointGridDominanceBound.secant_contract
+    target_statement_id: sha256:24c1194165ffe24f5e22b915f654d50afeaa048f1960b8c2a08e9506c149a778
 receipts:
   unresolved_subitems: []
