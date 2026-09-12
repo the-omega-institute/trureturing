@@ -41,7 +41,4 @@ all a_i=2 and b=2. Its sufficiency clause is outside this formalization.
 - Quantifier context: section 4.1, Corollary 4.3 and its proof.
 - https://arxiv.org/abs/2605.12822 lists only v1, submitted 12 May 2026.
 
-Retrieved and read on 10 September 2026. The arXiv HTML and abstract pages
-both returned HTTP 200. Response hashes and bounded later-literature search
-receipts are recorded in docs/reports/qfib-refutation/implementation.md.
 No exhaustive priority claim is made.

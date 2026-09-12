@@ -1,9 +1,0 @@
-{
-"schema":"s24-evidence-entry-v1",
-"resource":"s23-r2-all-intakes-source-approval-and-target-release-0912",
-"original":{"bytes":3531,"lf":76,"lines":76,"terminal_lf":1,"sha256":"91a9d44c65a0c9e8ef717c4bcbe057ea2b9bcfa95d766a6971d864d089e1de0f","git_blob_oid":"60cceaf1b22e356fbda4cb41f314b9deeff7c9c1"},
-"origin":{"supplied_path":"/tmp/qgh-boundaries-0908/s23-r2-all-intakes-source-approval-and-target-release-0912.json","scope":"Original scoped result/intake; no fresh S24 vote and no referents opened by this publication."},
-"contract":"docs/reports/quantized-gh/s24-evidence/README.md",
-"interpretation":"Concatenate raw UTF-8 parts in order without separators before parsing. Exact original bytes, schema, errors, EOF and link owners remain unchanged.",
-"parts":[{"ordinal":1,"path":"docs/reports/quantized-gh/s24-evidence/raw/s23-r2-all-intakes-source-approval-and-target-release-0912/part-001.txt","byte_span":[0,3531],"line_span":[1,76],"bytes":3531,"lf":76,"lines":76,"terminal_lf":1,"sha256":"91a9d44c65a0c9e8ef717c4bcbe057ea2b9bcfa95d766a6971d864d089e1de0f","git_blob_oid":"60cceaf1b22e356fbda4cb41f314b9deeff7c9c1"}]
-}

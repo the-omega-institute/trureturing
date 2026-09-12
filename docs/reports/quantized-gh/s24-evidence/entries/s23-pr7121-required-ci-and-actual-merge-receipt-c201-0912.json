@@ -1,9 +1,0 @@
-{
-"schema":"s24-evidence-entry-v1",
-"resource":"s23-pr7121-required-ci-and-actual-merge-receipt-c201-0912",
-"original":{"bytes":4161,"lf":94,"lines":94,"terminal_lf":1,"sha256":"d17e7b9a7c8df1805ee5110558b100d474fbfef6ee334261e4cd8beb3ad2548f","git_blob_oid":"c5940c63b48e6e0871c3d53f1fb18f226ad0400b"},
-"origin":{"supplied_path":"/tmp/qgh-boundaries-0908/s23-pr7121-required-ci-and-actual-merge-receipt-c201-0912.json","scope":"Original scoped result/intake; no fresh S24 vote and no referents opened by this publication."},
-"contract":"docs/reports/quantized-gh/s24-evidence/README.md",
-"interpretation":"Concatenate raw UTF-8 parts in order without separators before parsing. Exact original bytes, schema, errors, EOF and link owners remain unchanged.",
-"parts":[{"ordinal":1,"path":"docs/reports/quantized-gh/s24-evidence/raw/s23-pr7121-required-ci-and-actual-merge-receipt-c201-0912/part-001.txt","byte_span":[0,4161],"line_span":[1,94],"bytes":4161,"lf":94,"lines":94,"terminal_lf":1,"sha256":"d17e7b9a7c8df1805ee5110558b100d474fbfef6ee334261e4cd8beb3ad2548f","git_blob_oid":"c5940c63b48e6e0871c3d53f1fb18f226ad0400b"}]
-}

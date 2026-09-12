@@ -1,9 +1,0 @@
-{
-"schema":"s24-evidence-entry-v1",
-"resource":"parent-s23-composition-json-before-I54",
-"original":{"bytes":12693,"lf":1,"lines":1,"terminal_lf":1,"sha256":"cd69bdf5bb7d347d91ad5bd60e58a47e328b6c00b5658bb55362e6787fbee7fc","git_blob_oid":"273c57cd5cc8e9ad9c7cab9f6997a81b007d5ba5"},
-"origin":{"base":"ce86420779706418a8f51a5ba6dfc83c527259e8","path":"docs/reports/quantized-gh/s23-evidence/composition.json"},
-"contract":"docs/reports/quantized-gh/s24-evidence/README.md",
-"interpretation":"Concatenate raw UTF-8 parts in order without separators before parsing. Exact original bytes, schema, errors, EOF and link owners remain unchanged.",
-"parts":[{"ordinal":1,"path":"docs/reports/quantized-gh/s24-evidence/raw/parent-s23-composition-json-before-I54/part-001.txt","byte_span":[0,12693],"line_span":[1,1],"bytes":12693,"lf":1,"lines":1,"terminal_lf":1,"sha256":"cd69bdf5bb7d347d91ad5bd60e58a47e328b6c00b5658bb55362e6787fbee7fc","git_blob_oid":"273c57cd5cc8e9ad9c7cab9f6997a81b007d5ba5"}]
-}

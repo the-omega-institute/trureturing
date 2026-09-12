@@ -1,157 +1,5 @@
 {
-  "artifacts": {
-    "checkpoint": {
-      "bytes": 2469,
-      "path": "/Users/auricstudio/.local/state/qgh-prime-slab-pilot-0909/window-3072-3135/checkpoint.json",
-      "sha256": "f4d89261566f7431457adeddd24e65da439f856f16395d03b1e241ffba38043d"
-    },
-    "classified": {
-      "bytes": 2613895,
-      "path": "/Users/auricstudio/.local/state/qgh-prime-slab-pilot-0909/window-3072-3135/classified-3072-3135.jsonl",
-      "sha256": "d6135c038e970072caffda3394c38759c86aff2982c1023733c02c5ef0f0a288"
-    },
-    "device_probes": {
-      "bytes": 22055,
-      "path": "/Users/auricstudio/.local/state/qgh-prime-slab-pilot-0909/run-07fc9cfff7004db8bb7526b0346e0b3b.json",
-      "sha256": "34990063efb0381a7fb2f17a59f5fc57b4a0a61c1ea6db7b8d4d2c61df2b1d97"
-    },
-    "first_mutation_failure": {
-      "bytes": 2597,
-      "path": "/Users/auricstudio/.local/state/qgh-prime-slab-pilot-0909/mutations-6327fa3204ce43ec865047cd2b229fee.json",
-      "sha256": "ad47fd046386943c594d35508c11c921b0afae6898a10eddba82be8e2f301dfb"
-    },
-    "mutations": {
-      "bytes": 2698,
-      "path": "/Users/auricstudio/.local/state/qgh-prime-slab-pilot-0909/mutations-9216fd9206ce46a48373c886cbbb5862.json",
-      "sha256": "7a4db11a1a01b045fb70c6ebb30979e8991af2343104f714347dc5eefd665ce8"
-    },
-    "pilot": {
-      "bytes": 7081,
-      "path": "/Users/auricstudio/.local/state/qgh-prime-slab-pilot-0909/run-3b4080403bf740519c99c60aca54b2c2.json",
-      "sha256": "d413cf3602a66680a069b4050e695693cfb2c98fda8e949d406f79e245a02cc4"
-    },
-    "raw": {
-      "bytes": 361514,
-      "path": "/Users/auricstudio/.local/state/qgh-prime-slab-pilot-0909/window-3072-3135/raw-3072-3135.jsonl",
-      "sha256": "889e4b4a3f3df95271189a6ee58855a10e4b33e781f2fd4d05dc56b8eca17fd1"
-    },
-    "reverification": {
-      "bytes": 5805,
-      "path": "/Users/auricstudio/.local/state/qgh-prime-slab-pilot-0909/run-d187fb7a3b8a4771bcf331549ec9ce67.json",
-      "sha256": "67a4566127ded7c395b85a60f854ca77dd82e0793fb1cff9939c2a2ac9efa091"
-    },
-    "second_mutation_preregistration": {
-      "bytes": 1209,
-      "path": "/Users/auricstudio/.local/state/qgh-prime-slab-pilot-0909/mutations-31b4dce28ec642b1aaa603f955f38f61-preregistration.json",
-      "sha256": "f8b18372dc6dcc84d2821700fef08e3c19d3bcff0c5453abf687f45acc02372e"
-    }
-  },
-  "base": "6428a0eb9032978f091ec6668e2a49a2275e0f09",
-  "branch": "lane/math/quantized-gpu-0908",
-  "commands": [
-    {
-      "command": "make -C tools prime-slab-test",
-      "exit": 0
-    },
-    {
-      "command": "make -C tools prime-slab-device-test",
-      "exit": 0
-    },
-    {
-      "command": "make -C tools prime-slab-search SLAB_FIRST=3072 SLAB_LAST=3135",
-      "exit": 0
-    },
-    {
-      "command": "make -C tools prime-slab-verify SLAB_FIRST=3072 SLAB_LAST=3135",
-      "exit": 0
-    },
-    {
-      "command": "make -C tools prime-slab-mutation-test",
-      "exit": 0
-    }
-  ],
-  "cpu_certification": {
-    "active_evaluations": 450,
-    "definite_proposal_sign_disagreements": 0,
-    "escalations": 0,
-    "exact_zero": 0,
-    "inactive_exact_guard_audits": 1150,
-    "method": "Python exact integers/rationals for all guards, distances and clipping; independent full Arb log/exp/log1p/sqrt and max of six feasible mixtures; rational outward endpoints",
-    "negative": 450,
-    "parameter_guard_disagreements": 0,
-    "positive": 0,
-    "precision_bits": 128,
-    "unresolved_count": 0,
-    "weak_sign": 0
-  },
-  "device_verification": {
-    "custom_metal_dispatches": 4,
-    "probes": [
-      {
-        "name": "limb_probe",
-        "passed": true
-      },
-      {
-        "name": "guard_probe",
-        "passed": true
-      },
-      {
-        "name": "decode_probe",
-        "passed": true
-      },
-      {
-        "name": "numerical_probe",
-        "passed": true
-      }
-    ],
-    "search_rows": 0,
-    "timing_scope": "cpu_verification measures campaign-row verification; synthetic probe validation is included in orchestration",
-    "timing_seconds": {
-      "cpu_verification": 0.0,
-      "gpu_dispatch_and_synchronize": 0.19489250122569501,
-      "orchestration": 3.1215447077993304,
-      "total": 3.3164372090250254
-    }
-  },
-  "environment": {
-    "cpu": "Apple M3 Ultra",
-    "cpu_query_exit": 0,
-    "dependencies": {
-      "numpy": "2.0.2",
-      "python-flint": "0.8.0",
-      "torch": "2.8.0"
-    },
-    "executable": "/Users/auricstudio/.cache/uv/builds-v0/.tmpsloChT/bin/python",
-    "flags": {
-      "PYTORCH_ENABLE_MPS_FALLBACK": "0",
-      "PYTORCH_MPS_FAST_MATH": null,
-      "PYTORCH_MPS_PREFER_METAL": null
-    },
-    "gpu": [
-      {
-        "_name": "Apple M3 Ultra",
-        "spdisplays_vendor": "sppci_vendor_Apple",
-        "sppci_model": "Apple M3 Ultra"
-      }
-    ],
-    "gpu_query_exit": 0,
-    "machine": "arm64",
-    "metal_compile_options": "Torch 2.8 compile_shader defaults; no GPU rounding certificate",
-    "platform": "macOS-26.6.2-arm64-arm-64bit",
-    "python": "3.12.13 (main, Mar 10 2026, 18:18:07) [Clang 21.1.4 ]"
-  },
-  "formal_verification": false,
-  "full_campaign_complete": false,
-  "gpu_proposals": {
-    "active_definite_signs": 0,
-    "active_indeterminate": 450,
-    "finite_24term_values_by_sign": {
-      "negative": 450
-    },
-    "float32_error_certified": false,
-    "possible_underflow_flags": 450,
-    "tail_scope": "truncation only"
-  },
+  "schema": "prime-slab-pilot-results-v1",
   "identity": {
     "dependencies": {
       "numpy": "2.0.2",
@@ -180,7 +28,41 @@
     "python": "3.12.13",
     "schema": "prime-slab-raw-and-arb-v1"
   },
-  "pilot": {
+  "scientific_context": {
+    "G": "D - Psi; existing comparison of two bounds, not an RH criterion",
+    "D": "maximum of six feasible fractional-knapsack mixtures",
+    "Psi": "f(H)+2*f(L), f(x)=log(1-exp(-x)); existing slab and nearest-endpoint definitions",
+    "cpu_expression": "full unscaled G",
+    "gpu_expression": "exp(min(c_i))*G; 24-term proposal",
+    "existing_truncation_bound": "3/104857600",
+    "bound_exclusions": "float input, transcendental, branch, clipping, summation/maximum, roundoff and underflow errors"
+  },
+  "coverage": {
+    "box_range_closed": [
+      3072,
+      3135
+    ],
+    "raw_range_closed": [
+      76800,
+      78399
+    ],
+    "primes": [
+      2,
+      3,
+      5
+    ],
+    "b0": 12,
+    "b1_closed": [
+      0,
+      3
+    ],
+    "b2_closed": [
+      0,
+      15
+    ],
+    "range_convention": "inclusive"
+  },
+  "outcomes": {
     "boxes": 64,
     "by_kind": {
       "adjacent": 448,
@@ -208,16 +90,10 @@
       "inactive": 1150,
       "indeterminate": 450
     },
-    "checkpoint": "/Users/auricstudio/.local/state/qgh-prime-slab-pilot-0909/window-3072-3135/checkpoint.json",
-    "classification_stream_sha256": "d6135c038e970072caffda3394c38759c86aff2982c1023733c02c5ef0f0a288",
     "completed_rows": 1600,
     "coverage_complete": true,
     "cpu_evaluated_active": 450,
     "disagreement_ids": [],
-    "executions": 1,
-    "extra_precision_evaluations": 0,
-    "first_box": 3072,
-    "first_raw_row": 76800,
     "gpu_flags": {
       "integer_overflow": 0,
       "nonfinite": 0,
@@ -225,48 +101,35 @@
       "underflow": 450
     },
     "invalid_ids": [],
-    "last_box": 3135,
-    "last_raw_row": 78399,
     "next_box": 3136,
     "raw_rows": 1600,
-    "raw_stream_sha256": "8645467ae1f9c651e0897eacee90eb94cb9bf1b1dff0c5bf5396532a41311f1c",
-    "reruns": 0,
     "unresolved_ids": []
   },
-  "pilot_timing_seconds": {
-    "cpu_verification": 0.07008012500591576,
-    "gpu_dispatch_and_synchronize": 0.013361624907702208,
-    "orchestration": 2.16686962521635,
-    "total": 2.250311375129968
+  "cpu_certification": {
+    "active_evaluations": 450,
+    "definite_proposal_sign_disagreements": 0,
+    "escalations": 0,
+    "exact_zero": 0,
+    "inactive_exact_guard_audits": 1150,
+    "method": "Python exact integers/rationals for all guards, distances and clipping; independent full Arb log/exp/log1p/sqrt and max of six feasible mixtures; rational outward endpoints",
+    "negative": 450,
+    "parameter_guard_disagreements": 0,
+    "positive": 0,
+    "precision_bits": 128,
+    "unresolved_count": 0,
+    "weak_sign": 0
   },
-  "prospective_domain": {
-    "adjacent_raw_rows": 1605632,
-    "boxes": 229376,
-    "exponent_max": 15,
-    "exponent_min": 0,
-    "primes": [
-      2,
-      3,
-      5,
-      7,
-      11,
-      13,
-      17,
-      19
-    ],
-    "raw_rows": 5734400,
-    "reflected_raw_rows": 4128768,
-    "triples": 56
+  "gpu_proposals": {
+    "active_definite_signs": 0,
+    "active_indeterminate": 450,
+    "finite_24term_values_by_sign": {
+      "negative": 450
+    },
+    "float32_error_certified": false,
+    "possible_underflow_flags": 450,
+    "tail_scope": "truncation only"
   },
-  "provenance": {
-    "implementation": "Codex CLI worker; no subworkers or oracles; no local skill invoked",
-    "paper_status": "supplied primary inputs; separate source implementation/review live and unread",
-    "preceding_primary_task": "ce312694-86a6-4a1b-8318-90c77dc28f75",
-    "primary_conversation": "conv_4c0b62a5e14b0f64",
-    "primary_model": "GPT-6 Astra",
-    "primary_task": "3609e6b0-ab4d-4891-9b0f-55c613d43942"
-  },
-  "reflected_active": [
+  "active_reflected_records": [
     {
       "G_bounds": [
         "-18626508684150676161468231952743507153/170141183460469231731687303715884105728",
@@ -307,90 +170,11 @@
       "slot": 16
     }
   ],
-  "remaining_domain": {
-    "box_ranges": [
-      [
-        0,
-        3071
-      ],
-      [
-        3136,
-        229375
-      ]
-    ],
-    "boxes": 229312,
-    "raw_rows": 5732800
-  },
-  "residuals": [
-    "Independent code/scientific review, canonical CI and MERGED delivery are pending.",
-    "FILEMAP classifies tools/scripts/** as judge and docs/reports/** as content; caller must settle SL-029 publication partition through canonical gates. No admission verdict was executed here.",
-    "The remaining 229312 boxes / 5732800 raw slots have not been searched.",
-    "No definite GPU sign was issued in this pilot; 450 possible-underflow proposals were independently certified on CPU.",
-    "No C25 coordinate-separation pruning, all-prime truth, RH result or Lean/kernel verification is claimed."
-  ],
-  "reverification": {
-    "gpu_dispatches": 0,
-    "matched": true,
-    "new_search_rows": 0,
-    "replayed_rows": 1600,
-    "timing_seconds": {
-      "cpu_verification": 0.07622991688549519,
-      "gpu_dispatch_and_synchronize": 0,
-      "orchestration": 0.5208700422663242,
-      "total": 0.5970999591518193
-    }
-  },
-  "schema": "prime-slab-pilot-report-v2",
-  "standing_goal_complete": false,
-  "status": "implementation-validation-only; independent review and delivery pending",
-  "tests": {
-    "command": "make -C tools prime-slab-test",
-    "final_exit": 0,
-    "final_test_count": 19,
-    "invocation_exits": [
-      2,
-      2,
-      0,
-      0,
-      0,
-      0,
-      0
-    ],
-    "mutations": {
-      "command": "make -C tools prime-slab-mutation-test",
-      "compile_errors": 0,
-      "expected_named_failures": 6,
-      "invocation_exits": [
-        2,
-        2,
-        0
-      ],
-      "mutation_count": 4,
-      "observed_named_failures": 6,
-      "restored": true,
-      "test_errors": 0
-    }
-  },
-  "validation_failures": [
-    {
-      "exit": 2,
-      "reason": "Expected ModuleNotFoundError before the package existed.",
-      "stage": "initial TDD"
-    },
-    {
-      "exit": 2,
-      "reason": "A test incorrectly treated arb(-1,1) as touching zero; Arb outward radius straddles zero. The verifier correctly returned unresolved; the test was corrected.",
-      "stage": "first CPU scientific run"
-    },
-    {
-      "exit": 2,
-      "reason": "Replacing exact.check_coverage module attribute did not change the function already imported by storage; observed one red instead of two. Corrected mutation to alter the shared function code object.",
-      "stage": "first mutation run"
-    },
-    {
-      "exit": 2,
-      "reason": "unittest.mock attempted to delete function __code__ while restoring a descriptor and raised TypeError. Replaced that mutation wrapper with explicit try/finally code restoration; no runtime program change.",
-      "stage": "second mutation run"
-    }
+  "full_campaign_complete": false,
+  "limitations": [
+    "Only the stated finite window is covered; no complete-domain or full-campaign claim.",
+    "No definite GPU sign is certified; active proposals are indeterminate with possible underflow.",
+    "CPU results are finite Arb interval classifications, not an all-prime theorem, RH result or Lean proof.",
+    "Only the reflected records below are embedded; the complete raw search streams are not included."
   ]
 }
