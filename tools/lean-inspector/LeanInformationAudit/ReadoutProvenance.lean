@@ -148,18 +148,19 @@ private def listedProducers : Array Name := #[
   ``decEq, ``Nat.decEq, ``Nat.decLt, ``Nat.decLe, ``Bool.decEq,
   ``instDecidableEqOfLawfulBEq, ``inferInstance]
 
+private def appliedType (env : Environment) (e : Expr) : Option Expr := do
+  let .const n levels := e.getAppFn | none
+  let info ← env.find? n
+  let mut type := info.type.instantiateLevelParams info.levelParams levels
+  for arg in e.getAppArgs do
+    let .forallE _ _ body _ := stripMData type | none
+    type := body.instantiate1 arg
+  return stripMData type
+
 private def propLooking (env : Environment) : Expr → CoreM Bool
   | .forallE _ _ body _ => propLooking env body
   | .mdata _ e => propLooking env e
-  | .const n _ => do
-      let some info := env.find? n | return false
-      return (telescopeResult info.type).isSort
-  | .app f _ => do
-      let some n := f.getAppFn.constName? | return false
-      let some info := env.find? n | return false
-      return (telescopeResult info.type).isSort
-  | .sort .zero => pure true
-  | _ => pure false
+  | e => pure (appliedType env e == some (.sort .zero))
 
 private def isCtorOrInductive (env : Environment) (n : Name) : Bool :=
   match env.find? n with
