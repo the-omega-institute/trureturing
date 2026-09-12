@@ -2,12 +2,11 @@
    generality: G
    mirror-B: D5/B/S1/Recurrence/Invariants/FactorialNestedReciprocalSumRecurrence
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Intervals, mathlib/module/Mathlib.Data.Nat.Factorial.Basic, mathlib/module/Mathlib.Tactic.Positivity, mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Intervals, mathlib/module/Mathlib.Tactic.Positivity, mathlib/module/Mathlib.Tactic.Ring]
    utility: none
    digest: Factorial-prefix updates prove Mathar's third-order recurrence for OEIS A093345. -/
 
 import Mathlib.Algebra.BigOperators.Intervals
-import Mathlib.Data.Nat.Factorial.Basic
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
 
