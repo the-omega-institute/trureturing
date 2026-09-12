@@ -84,7 +84,16 @@ public sealed class FileMapConformCommandTests
         File.WriteAllText(
             Path.Combine(meta, "FILEMAP.toml"),
             """
-            schema_version = 2
+            schema_version = 3
+
+            [evidence.artifact_kinds.json]
+
+            profile = "structured-json"
+
+            selectors = ["result"]
+
+            path_selectors = ["formal"]
+
 
             [residence_policy]
             case_id = "DATA-RESIDENCE-001"
@@ -177,7 +186,16 @@ public sealed class FileMapConformCommandTests
         File.WriteAllText(
             Path.Combine(meta, "FILEMAP.toml"),
             $$"""
-            schema_version = 2
+            schema_version = 3
+
+            [evidence.artifact_kinds.json]
+
+            profile = "structured-json"
+
+            selectors = ["result"]
+
+            path_selectors = ["formal"]
+
 
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"

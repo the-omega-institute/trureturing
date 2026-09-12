@@ -40,7 +40,7 @@ internal static partial class RepositoryRules
 
     private static bool DomainsAffected(RuleEvaluationContext context) =>
         Changed(context, static path =>
-            path is "Meta/domains.yaml" or "Meta/registry.yaml"
+            path is "Meta/domains.yaml" or "Meta/FILEMAP.toml"
             || path.StartsWith("D5/", StringComparison.Ordinal)
             || path.StartsWith("Blueprint/D5/", StringComparison.Ordinal)
             || path.StartsWith("Evidence/D5/", StringComparison.Ordinal));

@@ -13,17 +13,17 @@ public sealed class AdmissionTests
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         var context = fixture.Build(RawChangeSet.Create([RuleFixture.BlueprintPath]));
-        var registry = RegistryLoadAssert.Accepted(
-            RegistryLoader.Load(
-                Encoding.UTF8.GetBytes(TestRegistry.Canonical),
-                Encoding.UTF8.GetBytes(TestRegistry.Domains)));
+        var loadedPolicy = PolicyLoadAssert.Accepted(
+            RepositoryPolicyLoader.Load(
+                Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+                Encoding.UTF8.GetBytes(TestFileMap.Domains)));
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
             RuleCatalog.Default.Execute(context)).Capability;
         var canonical = Assert.IsType<CanonicalizationOutcome.Accepted>(
-            RepositoryCanonicalizer.Validate(context.Current, registry.Policy));
+            RepositoryCanonicalizer.Validate(context.Current, loadedPolicy.Policy));
 
         var admitted = Assert.IsType<AdmissionOutcome.Admitted>(AdmissionEngine.Decide(
-            registry.Policy,
+            loadedPolicy.Policy,
             canonical.Capability,
             context.Lean,
             completed,
@@ -72,17 +72,17 @@ public sealed class AdmissionTests
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         var context = fixture.Build();
-        var registry = RegistryLoadAssert.Accepted(
-            RegistryLoader.Load(
-                Encoding.UTF8.GetBytes(TestRegistry.Canonical),
-                Encoding.UTF8.GetBytes(TestRegistry.Domains)));
+        var loadedPolicy = PolicyLoadAssert.Accepted(
+            RepositoryPolicyLoader.Load(
+                Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+                Encoding.UTF8.GetBytes(TestFileMap.Domains)));
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
             RuleCatalog.Default.Execute(context));
         var canonical = Assert.IsType<CanonicalizationOutcome.Accepted>(
-            RepositoryCanonicalizer.Validate(context.Current, registry.Policy));
+            RepositoryCanonicalizer.Validate(context.Current, loadedPolicy.Policy));
 
         var outcome = AdmissionEngine.Decide(
-            registry.Policy,
+            loadedPolicy.Policy,
             canonical.Capability,
             context.Lean,
             completed.Capability,
@@ -104,17 +104,17 @@ public sealed class AdmissionTests
         var fixture = new RuleFixture();
         fixture.Apply("badge");
         var context = fixture.Build();
-        var registry = RegistryLoadAssert.Accepted(
-            RegistryLoader.Load(
-                Encoding.UTF8.GetBytes(TestRegistry.Canonical),
-                Encoding.UTF8.GetBytes(TestRegistry.Domains)));
+        var loadedPolicy = PolicyLoadAssert.Accepted(
+            RepositoryPolicyLoader.Load(
+                Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+                Encoding.UTF8.GetBytes(TestFileMap.Domains)));
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
             RuleCatalog.Default.Execute(context));
         var canonical = Assert.IsType<CanonicalizationOutcome.Accepted>(
-            RepositoryCanonicalizer.Validate(context.Current, registry.Policy));
+            RepositoryCanonicalizer.Validate(context.Current, loadedPolicy.Policy));
 
         var outcome = AdmissionEngine.Decide(
-            registry.Policy,
+            loadedPolicy.Policy,
             canonical.Capability,
             context.Lean,
             completed.Capability,
@@ -130,12 +130,12 @@ public sealed class AdmissionTests
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         var context = fixture.Build();
-        var registry = RegistryLoadAssert.Accepted(
-            RegistryLoader.Load(
-                Encoding.UTF8.GetBytes(TestRegistry.Canonical),
-                Encoding.UTF8.GetBytes(TestRegistry.Domains)));
+        var loadedPolicy = PolicyLoadAssert.Accepted(
+            RepositoryPolicyLoader.Load(
+                Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+                Encoding.UTF8.GetBytes(TestFileMap.Domains)));
         var canonical = Assert.IsType<CanonicalizationOutcome.Accepted>(
-            RepositoryCanonicalizer.Validate(context.Current, registry.Policy));
+            RepositoryCanonicalizer.Validate(context.Current, loadedPolicy.Policy));
         var descriptor = RuleCatalog.Default.Descriptors.Single(item =>
             item.Id == RuleId.CreateKnown(7));
         var completed = CompletedRuleSet.Create(
@@ -151,7 +151,7 @@ public sealed class AdmissionTests
             ImmutableArray<RuleId>.Empty);
 
         var outcome = AdmissionEngine.Decide(
-            registry.Policy,
+            loadedPolicy.Policy,
             canonical.Capability,
             context.Lean,
             completed,
@@ -167,12 +167,12 @@ public sealed class AdmissionTests
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         var context = fixture.Build();
-        var registry = RegistryLoadAssert.Accepted(
-            RegistryLoader.Load(
-                Encoding.UTF8.GetBytes(TestRegistry.Canonical),
-                Encoding.UTF8.GetBytes(TestRegistry.Domains)));
+        var loadedPolicy = PolicyLoadAssert.Accepted(
+            RepositoryPolicyLoader.Load(
+                Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+                Encoding.UTF8.GetBytes(TestFileMap.Domains)));
         var canonical = Assert.IsType<CanonicalizationOutcome.Accepted>(
-            RepositoryCanonicalizer.Validate(context.Current, registry.Policy));
+            RepositoryCanonicalizer.Validate(context.Current, loadedPolicy.Policy));
         var verification = Assert.IsType<BootstrapOutcome.ProtectedSurfaceVerificationRequired>(
             BootstrapGate.Evaluate(RawChangeSet.Create(new[]
             {
@@ -199,7 +199,7 @@ public sealed class AdmissionTests
             ImmutableArray<RuleId>.Empty);
 
         var outcome = AdmissionEngine.Decide(
-            registry.Policy,
+            loadedPolicy.Policy,
             canonical.Capability,
             context.Lean,
             completed,
@@ -216,12 +216,12 @@ public sealed class AdmissionTests
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         var context = fixture.Build();
-        var registry = RegistryLoadAssert.Accepted(
-            RegistryLoader.Load(
-                Encoding.UTF8.GetBytes(TestRegistry.Canonical),
-                Encoding.UTF8.GetBytes(TestRegistry.Domains)));
+        var loadedPolicy = PolicyLoadAssert.Accepted(
+            RepositoryPolicyLoader.Load(
+                Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+                Encoding.UTF8.GetBytes(TestFileMap.Domains)));
         var canonical = Assert.IsType<CanonicalizationOutcome.Accepted>(
-            RepositoryCanonicalizer.Validate(context.Current, registry.Policy));
+            RepositoryCanonicalizer.Validate(context.Current, loadedPolicy.Policy));
         var verification = Assert.IsType<BootstrapOutcome.ProtectedSurfaceVerificationRequired>(
             BootstrapGate.Evaluate(RawChangeSet.Create(new[]
             {
@@ -234,7 +234,7 @@ public sealed class AdmissionTests
             ImmutableArray<RuleId>.Empty);
 
         var outcome = AdmissionEngine.Decide(
-            registry.Policy,
+            loadedPolicy.Policy,
             canonical.Capability,
             context.Lean,
             completed,
@@ -248,12 +248,12 @@ public sealed class AdmissionTests
     {
         var fixture = new RuleFixture();
         var context = fixture.Build();
-        var registry = RegistryLoadAssert.Accepted(
-            RegistryLoader.Load(
-                Encoding.UTF8.GetBytes(TestRegistry.Canonical),
-                Encoding.UTF8.GetBytes(TestRegistry.Domains)));
+        var loadedPolicy = PolicyLoadAssert.Accepted(
+            RepositoryPolicyLoader.Load(
+                Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+                Encoding.UTF8.GetBytes(TestFileMap.Domains)));
         return Assert.IsType<CanonicalizationOutcome.Accepted>(
-            RepositoryCanonicalizer.Validate(context.Current, registry.Policy)).Capability;
+            RepositoryCanonicalizer.Validate(context.Current, loadedPolicy.Policy)).Capability;
     }
 
     private static CompletedRuleSet CreateCompletedRuleSet(

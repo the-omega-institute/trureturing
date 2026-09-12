@@ -20,7 +20,7 @@ public sealed class CapabilityConstructionTests
         "StrataLint.Engine.FrozenMaterialOutcome+Accepted",
         "StrataLint.Engine.LeanValidationOutcome+Accepted",
         "StrataLint.Engine.MetaClear",
-        "StrataLint.Engine.RegistryLoadOutcome+Accepted",
+        "StrataLint.Engine.PolicyLoadOutcome+Accepted",
         "StrataLint.Engine.RevocationEvidenceValidationOutcome+Accepted",
         "StrataLint.Engine.RevocationPlan",
         "StrataLint.Engine.RevocationPlanOutcome+Accepted",

@@ -1,5 +1,5 @@
 using System.Text;
-using StrataLint.Scribe;
+using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
@@ -26,7 +26,7 @@ internal static class FileMapConformCommand
         {
             if (writeSetQuery)
             {
-                var patterns = FileMapLoader.LoadRepository(repositoryRoot).Entries
+                var patterns = FileMapLoader.Parse(File.ReadAllBytes(Path.Combine(repositoryRoot, FileMapLoader.RelativePath)), FileMapLoader.RelativePath).Entries
                     .Where(entry => string.Equals(
                         entry.ProducedBy,
                         arguments[1],

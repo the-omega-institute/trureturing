@@ -187,8 +187,7 @@ internal static partial class CoverBatchCommand
 
     private static RawRepositorySnapshot ReadEmittedInputs(string root, CoverAtomCommand.Session session)
     {
-        var manifestFile = session.Current.Files[RepoPath.CreateKnown(FileMapLoader.RelativePath)];
-        var manifest = FileMapLoader.Parse(manifestFile.RawBytes.AsSpan(), FileMapLoader.RelativePath);
+        var manifest = session.Policy.Manifest;
         var raw = GitRepositorySnapshotReader.ReadCurrent(root);
         // Generated path membership affects DAG provenance; all authoritative inputs must still match.
         RequireSameInputs(Inputs(session.CurrentRaw), Inputs(raw),

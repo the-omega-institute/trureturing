@@ -6,8 +6,9 @@ namespace StrataLint.Cli;
 
 internal sealed partial class ProductionCliEnvironment
 {
-    // This gate classifies changed paths from the candidate FILEMAP before canonical validation.
-    // It fails closed when FILEMAP is missing or invalid, so a correcting PR carries a valid manifest.
+    // Before canonical validation, classify present paths from candidate FILEMAP and
+    // snapshot-confirmed deletions from protected-base FILEMAP. Missing candidate
+    // registration is not deletion evidence; required metadata fails closed if missing or invalid.
     private static readonly RuleDescriptor AdmissionPlaneRule = new(
         RuleId.CreateKnown(29),
         "Admission plane partition",

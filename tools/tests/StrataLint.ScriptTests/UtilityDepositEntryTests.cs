@@ -26,7 +26,7 @@ public sealed class UtilityDepositEntryTests
         var source = TransactionFixture.ExactSixLineLean(TransactionFixture.Gid, body)
             .Replace("   digest:", "   utility: " + utility + "\n   digest:", StringComparison.Ordinal);
         File.WriteAllText(Path.Combine(root, TransactionFixture.LeanPath), source);
-        foreach (var path in new[] { "Meta/registry.yaml", "Meta/domains.yaml" })
+        foreach (var path in new[] { "Meta/FILEMAP.toml", "Meta/domains.yaml" })
             File.Copy(Path.Combine(repository, path), Path.Combine(root, path));
         File.Copy(Path.Combine(repository, "lean-toolchain"), Path.Combine(root, "lean-toolchain"));
         File.WriteAllText(Path.Combine(root, "lakefile.toml"),

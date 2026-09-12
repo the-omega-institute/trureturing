@@ -8,7 +8,7 @@ public sealed class Sl015AdditionalEdgeScopeTests
     private const string RuleImplementationPath =
         "tools/StrataLint.Engine/Coordinates/RepositoryPathPolicy.cs";
     private const string PathPolicyMessage =
-        "path is outside the registry artifact kind/selector whitelist";
+        "path is outside the FILEMAP Evidence policy or controlled domain vocabulary";
     private const string CompositionMessage =
         "Blueprint composition root allows at most one direct .csproj";
 

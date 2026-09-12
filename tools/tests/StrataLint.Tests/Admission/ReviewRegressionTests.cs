@@ -388,7 +388,7 @@ public sealed partial class ReviewRegressionTests
         Assert.Equal(RuleId.CreateKnown(15), diagnostic.RuleId);
         Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
 
-        var policy = AcceptedPolicy(TestRegistry.Canonical);
+        var policy = AcceptedPolicy(TestFileMap.Canonical);
         var canonical = RepositoryCanonicalizer.Validate(context.Current, policy);
         Assert.IsType<CanonicalizationOutcome.InfrastructureFailure>(canonical);
     }
@@ -567,7 +567,7 @@ public sealed partial class ReviewRegressionTests
         string noncanonicalBytes)
     {
         var fixture = new RuleFixture();
-        var policy = AcceptedPolicy(TestRegistry.Canonical);
+        var policy = AcceptedPolicy(TestFileMap.Canonical);
         fixture.Files[path] = canonicalBytes;
         var canonicalSnapshot = fixture.BuildForRuleCompatibility().Current;
         Assert.IsType<CanonicalizationOutcome.Accepted>(
@@ -587,8 +587,8 @@ public sealed partial class ReviewRegressionTests
         using var repository = new TemporaryDirectory();
         Directory.CreateDirectory(Path.Combine(repository.Path, "Meta"));
         File.WriteAllText(
-            Path.Combine(repository.Path, "Meta", "registry.yaml"),
-            TestRegistry.Canonical,
+            Path.Combine(repository.Path, "Meta", "FILEMAP.toml"),
+            TestFileMap.Canonical,
             new UTF8Encoding(false));
         File.WriteAllText(
             Path.Combine(repository.Path, "Meta", "domains.yaml"),
@@ -658,22 +658,22 @@ public sealed partial class ReviewRegressionTests
 
         var diagnostic = Assert.Single(completed.Capability.Diagnostics, item => item.Path == "rogue.txt");
         Assert.Equal(sl000, diagnostic.RuleId);
-        Assert.Equal("unknown top-level artifact", diagnostic.Message);
+        Assert.Equal("path must match exactly one FILEMAP entry; matches=0", diagnostic.Message);
     }
 
     [Fact]
-    public void Cf9BackfillProtectedPathMembershipComesFromRegistry()
+    public void Cf9BackfillSourceEligibilityComesFromFileMap()
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         var source = Assert.Single(BackfillInventoryLoader
             .Load(fixture.Build().Current)
             .RequireDigestionSources());
-        var registryWithoutSource = TestRegistry.Canonical.Replace(
-            $"  - \"{source.SourcePath}\"\n",
+        var fileMapWithoutSource = TestFileMap.Canonical.Replace(
+            "digestion_source = true\n",
             string.Empty,
             StringComparison.Ordinal);
-        var policy = AcceptedPolicy(registryWithoutSource);
+        var policy = AcceptedPolicy(fileMapWithoutSource);
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build(policy));
 
@@ -685,8 +685,8 @@ public sealed partial class ReviewRegressionTests
                 $"source {source.SourceId} has an invalid governance path",
                 StringComparison.Ordinal));
         Assert.Contains(source.SourcePath, diagnostic.Message, StringComparison.Ordinal);
-        Assert.Contains("Meta/registry.yaml", diagnostic.Message, StringComparison.Ordinal);
-        Assert.Contains("governance_documents", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains("Meta/FILEMAP.toml", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains("digestion_source", diagnostic.Message, StringComparison.Ordinal);
         var enginePath = Directory.EnumerateFiles(
             Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "StrataLint.Engine"),
             "BackfillInventoryRule.cs",

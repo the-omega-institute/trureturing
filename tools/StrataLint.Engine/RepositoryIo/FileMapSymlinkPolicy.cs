@@ -55,9 +55,9 @@ internal static class FileMapSymlinkPolicy
             throw new FileMapParseException(location, "invalid UTF-8 TOML", exception);
         }
 
-        if (!root.TryGetValue("schema_version", out var version) || version is not 2L
+        if (!root.TryGetValue("schema_version", out var version) || version is not (2L or 3L)
             || !root.TryGetValue("files", out var rawFiles) || rawFiles is not TomlTableArray files)
-            throw Invalid(location, "symlink declarations require schema_version 2 and files tables");
+            throw Invalid(location, "symlink declarations require schema_version 2 or 3 and files tables");
 
         var declarations = files.Select((table, index) => ParseEntry(table, $"{location}:files[{index}]"))
             .OfType<FileMapSymlink>().ToImmutableArray();

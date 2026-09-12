@@ -8,25 +8,8 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     private const string FileMapPath = "Meta/FILEMAP.toml";
-    private const string DefaultAdmissionPlaneFileMap = """
-        schema_version = 2
-
-        [residence_policy]
-        case_id = "RESIDENCE-EPOCH"
-        desired = "data-must-live-outside-tools"
-        known_violation_count = 0
-        status = "closed"
-
-        [[files]]
-        pattern = "**"
-        kind = "program"
-        admission_plane = "content"
-        produced_by = "none"
-        consumed_by = ["StrataLint"]
-        verified_by = ["StrataLint"]
-        artifact_id = "none"
-        runtime_disposition = "committed-source"
-        """ + "\n";
+    private static readonly string DefaultAdmissionPlaneFileMap = TestFileMap.Canonical.Replace(
+        "admission_plane = \"judge\"", "admission_plane = \"content\"", StringComparison.Ordinal);
 
     [Fact]
     public void MixedJudgeAndContentDeltaIsRejectedByCandidateCheck()
@@ -71,7 +54,7 @@ public sealed partial class ProductionEnvironmentTests
             .Distinct(StringComparer.Ordinal)
             .Select(path => (path, Plane: (string?)(path == FileMapPath ? "judge"
                 : path == deletedPath ? deletedPlane : "content"))).ToArray());
-        fixture.Files[FileMapPath] = Manifest(fixture.Files.Keys.Append(FileMapPath)
+        fixture.Files[FileMapPath] = CurrentManifest(fixture.Files.Keys.Append(FileMapPath)
             .Distinct(StringComparer.Ordinal)
             .Select(static path => (path, Plane: (string?)(path == FileMapPath ? "judge" : "content")))
             .ToArray());
@@ -477,7 +460,7 @@ public sealed partial class ProductionEnvironmentTests
         }
 
         fixture.Files[newPath] = "internal sealed class Program { }\n";
-        fixture.Files[FileMapPath] = Manifest(baselinePaths
+        fixture.Files[FileMapPath] = CurrentManifest(baselinePaths
             .Concat(includeNewPath ? [newPath] : [])
             .Select(path => (
                 path,
@@ -489,6 +472,19 @@ public sealed partial class ProductionEnvironmentTests
     {
         fixture.Files[FileMapPath] = DefaultAdmissionPlaneFileMap;
         fixture.Baseline[FileMapPath] = DefaultAdmissionPlaneFileMap;
+    }
+
+    private static string CurrentManifest(params (string Pattern, string? Plane)[] entries)
+    {
+        var policy = PolicyLoadAssert.Accepted(RepositoryPolicyLoader.Load(
+            Encoding.UTF8.GetBytes(TestFileMap.Canonical), Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
+        var manifest = new FileMapManifest(policy.Manifest.ResidencePolicy,
+            entries.OrderBy(item => item.Pattern, StringComparer.Ordinal).Select(item => new FileMapEntry(
+                item.Pattern, FileMapKind.Program,
+                item.Plane == "judge" ? FileMapAdmissionPlane.Judge : FileMapAdmissionPlane.Content,
+                "none", ["StrataLint"], ["StrataLint"], false, "none", null, "committed-source", null, null,
+                policy.IsDigestionSource(RepoPath.CreateKnown(item.Pattern)))).ToImmutableArray(), policy.ArtifactKinds);
+        return Encoding.UTF8.GetString(FileMapCanonicalWriter.Write(manifest).AsSpan());
     }
 
     private static string Manifest(params (string Pattern, string? Plane)[] entries)

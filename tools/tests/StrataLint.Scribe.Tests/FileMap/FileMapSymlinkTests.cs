@@ -19,6 +19,18 @@ public sealed class FileMapSymlinkTests
             Assert.Single(FileMapSymlinkPolicy.Parse(tableBytes, "table.toml")));
     }
 
+    [Fact]
+    public void HistoricalSchemaTwoNeedsOnlyItsOwnSymlinkFields()
+    {
+        var current = Manifest("AGENTS.md", "CLAUDE.md", "file");
+        var historical = current.Replace("schema_version = 3", "schema_version = 2", StringComparison.Ordinal);
+        var begin = historical.IndexOf("[evidence.", StringComparison.Ordinal);
+        var end = historical.IndexOf("[residence_policy]", StringComparison.Ordinal);
+        historical = historical.Remove(begin, end - begin);
+        Assert.Equal("CLAUDE.md", Assert.Single(FileMapSymlinkPolicy.Parse(Encoding.UTF8.GetBytes(historical), "historical")).Target);
+        Assert.ThrowsAny<FormatException>(() => FileMapLoader.Parse(Encoding.UTF8.GetBytes(historical), "current"));
+    }
+
     [Theory]
     [InlineData("AGENTS.md", "CLAUDE.md", "file", "CLAUDE.md")]
     [InlineData(".codex/skills", "../skills", "directory", "skills")]
@@ -77,7 +89,12 @@ public sealed class FileMapSymlinkTests
     }
 
     private static string Manifest(string path, string target, string kind) => $$"""
-        schema_version = 2
+        schema_version = 3
+        [evidence.artifact_kinds.json]
+        profile = "structured-json"
+        selectors = ["result"]
+        path_selectors = ["formal"]
+
         [residence_policy]
         case_id = "RESIDENCE-EPOCH"
         desired = "data-must-live-outside-tools"

@@ -6,17 +6,13 @@ namespace StrataLint.Engine;
 internal static partial class RepositoryRules
 {
     internal const string TowerManifestPath = "tools/TOWER.yaml";
-    internal const string RegistryPolicyPath = "Meta/registry.yaml";
     internal const string DomainsPolicyPath = "Meta/domains.yaml";
     internal const string FileMapPolicyPath = "Meta/FILEMAP.toml";
 
-    // Registry and domain bytes compile ValidatedPolicy. FILEMAP is a conservative wake path:
-    // SL-019 does not read FileMapManifest, but replaying on its change is intentionally harmless.
-    // This bounded schema-owned inventory is unlike the structurally defined judge-code closure.
+    // FILEMAP and domains jointly compile the live validated policy.
     private static readonly ImmutableHashSet<string> LedgerPolicyDataPaths =
         ImmutableHashSet.Create(
             StringComparer.Ordinal,
-            RegistryPolicyPath,
             DomainsPolicyPath,
             FileMapPolicyPath);
 

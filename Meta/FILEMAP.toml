@@ -1,4 +1,4 @@
-schema_version = 2
+schema_version = 3
 
 [residence_policy]
 case_id = "RESIDENCE-EPOCH"
@@ -6,46 +6,40 @@ desired = "data-must-live-outside-tools"
 known_violation_count = 0
 status = "closed"
 
-[[files]]
-pattern = "**/*.props"
-kind = "program"
-admission_plane = "judge"
-produced_by = "none"
-consumed_by = ["dotnet"]
-verified_by = ["make-gate"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
+[evidence.artifact_kinds."csv"]
+profile = "opaque-text"
+selectors = ["result"]
+path_selectors = ["formal"]
 
-[[files]]
-pattern = "*.json"
-kind = "program"
-admission_plane = "judge"
-produced_by = "none"
-consumed_by = ["automation"]
-verified_by = ["make-gate"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
+[evidence.artifact_kinds."json"]
+profile = "structured-json"
+selectors = ["check", "legacy", "quote", "result", "run"]
+path_selectors = ["experiments", "formal", "kernels", "special", "values"]
 
-[[files]]
-pattern = "*.lean"
-kind = "truth"
-admission_plane = "content"
-produced_by = "none"
-consumed_by = ["Lean", "Scribe", "StrataLint"]
-verified_by = ["lean-build", "lean-inspector"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
+[evidence.artifact_kinds."md"]
+profile = "opaque-text"
+selectors = ["result"]
+path_selectors = ["formal", "special"]
 
-[[files]]
-pattern = "*.toml"
-kind = "program"
-admission_plane = "judge"
-produced_by = "none"
-consumed_by = ["Lean"]
-verified_by = ["make-gate"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
+[evidence.artifact_kinds."py"]
+profile = "opaque-text"
+selectors = ["source"]
+path_selectors = ["formal", "kernels"]
 
+[evidence.artifact_kinds."txt"]
+profile = "opaque-text"
+selectors = ["result"]
+path_selectors = ["formal"]
+
+[evidence.artifact_kinds."yaml"]
+profile = "structured-yaml"
+selectors = ["result", "run", "spec"]
+path_selectors = ["experiments", "formal"]
+
+[evidence.artifact_kinds."yml"]
+profile = "structured-yaml"
+selectors = ["result", "run", "spec"]
+path_selectors = ["experiments", "formal"]
 [[files]]
 pattern = ".claude/skills"
 kind = "program"
@@ -55,8 +49,8 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+digestion_source = true
 symlink = { target = "../skills", kind = "directory" }
-
 [[files]]
 pattern = ".codex/skills"
 kind = "program"
@@ -66,8 +60,8 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+digestion_source = true
 symlink = { target = "../skills", kind = "directory" }
-
 [[files]]
 pattern = ".editorconfig"
 kind = "program"
@@ -77,7 +71,6 @@ consumed_by = ["dotnet"]
 verified_by = ["make-gate"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = ".github/**"
 kind = "program"
@@ -87,7 +80,6 @@ consumed_by = ["GitHub-Actions"]
 verified_by = ["make-gate"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = ".gitignore"
 kind = "program"
@@ -97,7 +89,6 @@ consumed_by = ["git"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "AGENTS.md"
 kind = "program"
@@ -108,7 +99,6 @@ verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 symlink = { target = "CLAUDE.md", kind = "file" }
-
 [[files]]
 pattern = "Blueprint/**/*.md"
 kind = "generated"
@@ -118,7 +108,6 @@ consumed_by = ["ScribeEmitter", "reader"]
 verified_by = ["ScribeEmitter"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "Blueprint/**/*.scribe.cs"
 kind = "data"
@@ -128,7 +117,6 @@ consumed_by = ["ScribeEmitter"]
 verified_by = ["ScribeCompiler"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "CLAUDE.md"
 kind = "program"
@@ -138,7 +126,6 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "D5/**/*.lean"
 kind = "truth"
@@ -148,9 +135,8 @@ consumed_by = ["Lean", "Scribe", "StrataLint"]
 verified_by = ["lean-build", "lean-inspector"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
-pattern = "D5/**/*.md"
+pattern = "D5/X_Assumptions/REGISTRY.md"
 kind = "ledger"
 admission_plane = "content"
 produced_by = "none"
@@ -158,9 +144,36 @@ consumed_by = ["FrozenContentAddress", "HeartsAuthorizationLedger"]
 verified_by = ["FrozenContentAddress", "SL-008"]
 artifact_id = "none"
 runtime_disposition = "committed-ledger"
-
 [[files]]
-pattern = "Evidence/D5/**/*.result.json"
+pattern = "D5/X_Frontier/HeartsAuthorizations.md"
+kind = "ledger"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["FrozenContentAddress", "HeartsAuthorizationLedger"]
+verified_by = ["FrozenContentAddress", "SL-008"]
+artifact_id = "none"
+runtime_disposition = "committed-ledger"
+digestion_source = true
+[[files]]
+pattern = "Directory.Build.props"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["dotnet"]
+verified_by = ["make-gate"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]]
+pattern = "Directory.Packages.props"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["dotnet"]
+verified_by = ["make-gate"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]]
+pattern = "Evidence/D5/**/*.*.*"
 kind = "data"
 admission_plane = "content"
 produced_by = "none"
@@ -168,7 +181,6 @@ consumed_by = ["reader"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "Evidence/D5/values.json"
 kind = "generated"
@@ -180,31 +192,28 @@ artifact_id = "A-VALUES"
 runtime_disposition = "committed-source"
 mode = "100644"
 history_requirement = "not-required"
-
 [[files]]
 pattern = "Generated/DAG.md"
-artifact_id = "A-DAG"
-mode = "100644"
-history_requirement = "not-required"
 kind = "generated"
 admission_plane = "content"
 produced_by = "DagEmitter"
 consumed_by = ["reader"]
-runtime_disposition = "run-local"
 verified_by = ["DagEmitter"]
-
-[[files]]
-pattern = "Generated/FILEMAP.md"
-artifact_id = "A-FILEMAP"
+artifact_id = "A-DAG"
+runtime_disposition = "run-local"
 mode = "100644"
 history_requirement = "not-required"
+[[files]]
+pattern = "Generated/FILEMAP.md"
 kind = "generated"
 admission_plane = "content"
 produced_by = "FileMapEmitter"
 consumed_by = ["reader"]
-runtime_disposition = "run-local"
 verified_by = ["FileMapEmitter"]
-
+artifact_id = "A-FILEMAP"
+runtime_disposition = "run-local"
+mode = "100644"
+history_requirement = "not-required"
 [[files]]
 pattern = "Generated/echo-residuals/*.md"
 kind = "generated"
@@ -214,7 +223,6 @@ consumed_by = ["reader"]
 verified_by = ["EchoVerifyCommand"]
 artifact_id = "none"
 runtime_disposition = "run-local"
-
 [[files]]
 pattern = "Generated/truth-export.v1.json"
 kind = "generated"
@@ -226,7 +234,6 @@ artifact_id = "A-TRUTHEXPORT"
 runtime_disposition = "run-local"
 mode = "100644"
 history_requirement = "not-required"
-
 [[files]]
 pattern = "Generated/truth-graph.v1.json"
 kind = "generated"
@@ -238,7 +245,6 @@ artifact_id = "A-TRUTH"
 runtime_disposition = "run-local"
 mode = "100644"
 history_requirement = "not-required"
-
 [[files]]
 pattern = "Golden/Frozen/accepted/*.json"
 kind = "ledger"
@@ -248,7 +254,6 @@ consumed_by = ["FrozenLedger"]
 verified_by = ["SL-008"]
 artifact_id = "none"
 runtime_disposition = "committed-ledger"
-
 [[files]]
 pattern = "Golden/Frozen/state/**/*.json"
 kind = "data"
@@ -258,7 +263,6 @@ consumed_by = ["BackfillDeltaImpactResolver", "CoverAtomCommand", "CoverageComma
 verified_by = ["FrozenStateRecordLoader", "SL-008"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "Golden/Projection/*.json"
 kind = "data"
@@ -268,7 +272,6 @@ consumed_by = ["StatementProjectionFixtureLoader"]
 verified_by = ["StatementProjectionFixtureLoader"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "Golden/gate-authority-roots.toml"
 kind = "data"
@@ -278,7 +281,7 @@ consumed_by = ["GateAuthorityRootCatalogLoader"]
 verified_by = ["GateAuthorityRootCatalogLoader"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
+digestion_source = true
 [[files]]
 pattern = "Golden/values-kernels.toml"
 kind = "data"
@@ -288,7 +291,6 @@ consumed_by = ["SL-018", "ValuesKernelDataLoader"]
 verified_by = ["SL-018", "ValuesKernelDataLoader"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "LICENSE"
 kind = "program"
@@ -298,7 +300,6 @@ consumed_by = ["reader"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "Library/**/*.yaml"
 kind = "data"
@@ -308,7 +309,6 @@ consumed_by = ["AnchorReferenceRule"]
 verified_by = ["SL-017", "YamlSubsetParser"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "Library/*/*.md"
 kind = "data"
@@ -318,7 +318,6 @@ consumed_by = ["DescribeRepositoryValidator", "ScribeEmitter"]
 verified_by = ["LibraryNoteCatalog"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "Makefile"
 kind = "program"
@@ -328,7 +327,6 @@ consumed_by = ["developer"]
 verified_by = ["make-gate"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "Meta/Digestion/atomizers.toml"
 kind = "data"
@@ -338,7 +336,7 @@ consumed_by = ["TheoryAtomizerDataLoader"]
 verified_by = ["TheoryAtomizerDataLoader"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
+digestion_source = true
 [[files]]
 pattern = "Meta/Digestion/atoms/sha256/*"
 kind = "ledger"
@@ -348,7 +346,6 @@ consumed_by = ["DigestionCasStore"]
 verified_by = ["DigestionCasStore"]
 artifact_id = "none"
 runtime_disposition = "committed-ledger"
-
 [[files]]
 pattern = "Meta/Digestion/backfill/**"
 kind = "data"
@@ -358,7 +355,6 @@ consumed_by = ["BackfillInventoryLoader"]
 verified_by = ["BackfillInventoryLoader"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "Meta/FILEMAP.toml"
 kind = "data"
@@ -368,27 +364,16 @@ consumed_by = ["FileMapEmitter", "FileMapLoader", "FileMapPolicy"]
 verified_by = ["FileMapLoader"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
+digestion_source = true
 [[files]]
 pattern = "Meta/domains.yaml"
 kind = "data"
 admission_plane = "judge"
 produced_by = "none"
-consumed_by = ["RegistryLoader"]
-verified_by = ["RegistryLoader"]
+consumed_by = ["DomainsLoader"]
+verified_by = ["DomainsLoader"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "Meta/registry.yaml"
-kind = "data"
-admission_plane = "judge"
-produced_by = "none"
-consumed_by = ["RegistryLoader"]
-verified_by = ["RegistryLoader"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "Problems/*.md"
 kind = "data"
@@ -398,7 +383,6 @@ consumed_by = ["DescribeRepositoryValidator", "agent"]
 verified_by = ["ProblemCandidateCatalog"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "README.md"
 kind = "data"
@@ -408,9 +392,17 @@ consumed_by = ["reader"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
-pattern = "agents/**"
+pattern = "Trureturing.lean"
+kind = "truth"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["Lean", "Scribe", "StrataLint"]
+verified_by = ["lean-build", "lean-inspector"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]]
+pattern = "agents/CONTEXT.md"
 kind = "program"
 admission_plane = "judge"
 produced_by = "none"
@@ -418,7 +410,96 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
+[[files]]
+pattern = "agents/adversary.md"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]]
+pattern = "agents/echo-template.md"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]]
+pattern = "agents/gate.md"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]]
+pattern = "agents/librarian.md"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]]
+pattern = "agents/numericist.md"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]]
+pattern = "agents/prover.md"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]]
+pattern = "agents/scout.md"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]]
+pattern = "agents/scribe.md"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]]
+pattern = "agents/theorist.md"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]]
+pattern = "agents/verdict-template.md"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]]
 pattern = "build/census/**"
 kind = "generated"
@@ -428,7 +509,6 @@ consumed_by = ["reader"]
 verified_by = ["lean-inspector"]
 artifact_id = "none"
 runtime_disposition = "run-local"
-
 [[files]]
 pattern = "docs/CONTRIBUTING.md"
 kind = "program"
@@ -438,7 +518,7 @@ consumed_by = ["developer"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
+digestion_source = true
 [[files]]
 pattern = "docs/GOVERNANCE.md"
 kind = "program"
@@ -448,7 +528,7 @@ consumed_by = ["developer"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
+digestion_source = true
 [[files]]
 pattern = "docs/develop/spec/golden-ledger-repo-spec.md"
 kind = "program"
@@ -458,7 +538,6 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md"
 kind = "data"
@@ -468,7 +547,6 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "docs/develop/spec/trureturing_engineering_optimization_v1.md"
 kind = "data"
@@ -478,7 +556,6 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "docs/develop/theory/**"
 kind = "data"
@@ -488,9 +565,8 @@ consumed_by = ["IngestCommand"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
+digestion_source = true
 [[files]]
-# Checks partition parity boundaries and the printed odd-rule counterexample.
 pattern = "docs/reports/a110037-0910/BoundaryProbe.lean"
 kind = "program"
 admission_plane = "content"
@@ -499,9 +575,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
-# Enumerates recurrence coefficients and tests conjectured ternary support.
 pattern = "docs/reports/a396808-implementation-0911/numeric_probe.py"
 kind = "program"
 admission_plane = "content"
@@ -510,9 +584,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
-# Samples singular and full-rank states to probe covariance bounds.
 pattern = "docs/reports/covariancesumbound/random_probe.py"
 kind = "program"
 admission_plane = "content"
@@ -521,9 +593,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
-# Enumerates a Young-diagram game graph with two independent Grundy computations.
 pattern = "docs/reports/crim-grundy-0910/recompute.py"
 kind = "program"
 admission_plane = "content"
@@ -532,9 +602,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
-# Samples unitary families and measures their commutant dimensions.
 pattern = "docs/reports/crossspecies/commutant_probe.py"
 kind = "program"
 admission_plane = "content"
@@ -543,9 +611,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
-# Compares correlated and product states in the energy-information identity.
 pattern = "docs/reports/energyinfo164/numerical_check.py"
 kind = "program"
 admission_plane = "content"
@@ -554,9 +620,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
-# Preserves license terms for the imported partial-trace results.
 pattern = "docs/reports/inoutbalance/physlib-LICENSE.txt"
 kind = "data"
 admission_plane = "content"
@@ -565,9 +629,7 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
-# Supplies prime-corner ordering and constants to the slab search tools.
 pattern = "docs/reports/prime-slab-corner-order-0909.json"
 kind = "data"
 admission_plane = "content"
@@ -576,9 +638,7 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
-# Probes entropy-divergence identities with sign and basis controls.
 pattern = "docs/reports/qdualaccount/numerical_check.py"
 kind = "program"
 admission_plane = "content"
@@ -587,9 +647,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
-# Preserves license terms for the imported quantum information results.
 pattern = "docs/reports/qmutualinfo/csd-lean4-LICENSE.txt"
 kind = "data"
 admission_plane = "content"
@@ -598,9 +656,7 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
-# Preserves the 5,7,11 search window and eight reflected interval records.
 pattern = "docs/reports/quantized-gh/prime-slab-5711-window-0910.json"
 kind = "data"
 admission_plane = "content"
@@ -609,9 +665,7 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
-# Preserves the 2,3,5 search window and three reflected interval records.
 pattern = "docs/reports/quantized-gh/prime-slab-mps-pilot-0909.json"
 kind = "data"
 admission_plane = "content"
@@ -620,9 +674,7 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
-# Checks entropy equality boundaries with a deliberate opposite-claim control.
 pattern = "docs/reports/quantumobs2/numerical_probe.py"
 kind = "program"
 admission_plane = "content"
@@ -631,9 +683,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
-# Preserves license terms for the imported projective-angle results.
 pattern = "docs/reports/recordtimebound/Lean-QIT-LICENSE.txt"
 kind = "data"
 admission_plane = "content"
@@ -642,9 +692,7 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
-# Computes exact divisor-sum witnesses and approximate Robin thresholds.
 pattern = "docs/reports/robin-smooth-general-0909-witnesses.mjs"
 kind = "program"
 admission_plane = "content"
@@ -653,9 +701,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
-# Enumerates seven-smooth integers with rational bounds on the Robin margin.
 pattern = "docs/reports/robin7smooth-0909/measure.py"
 kind = "program"
 admission_plane = "content"
@@ -664,9 +710,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
-# Compares mutual information for orthogonal and overlapping quantum states.
 pattern = "docs/reports/sbsconsensus/numeric_probe.py"
 kind = "program"
 admission_plane = "content"
@@ -675,9 +719,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
-# Enumerates occupation words and computes phase, rank and entropy witnesses.
 pattern = "docs/reports/schmidt-theta-0909-witnesses.mjs"
 kind = "program"
 admission_plane = "content"
@@ -686,7 +728,33 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
+[[files]]
+pattern = "global.json"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["automation"]
+verified_by = ["make-gate"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]]
+pattern = "lake-manifest.json"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["automation"]
+verified_by = ["make-gate"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]]
+pattern = "lakefile.toml"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["Lean"]
+verified_by = ["make-gate"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]]
 pattern = "lean-toolchain"
 kind = "program"
@@ -696,7 +764,6 @@ consumed_by = ["Lean"]
 verified_by = ["make-gate"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "skills/**"
 kind = "program"
@@ -706,7 +773,6 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "tools/ARCHITECTURE.md"
 kind = "program"
@@ -716,7 +782,6 @@ consumed_by = ["developer"]
 verified_by = ["architecture-tests"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "tools/Architecture/*.txt"
 kind = "program"
@@ -726,7 +791,6 @@ consumed_by = ["BannedApiAnalyzers"]
 verified_by = ["architecture-tests"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "tools/Architecture/HARDCODE-LEDGER.md"
 kind = "ledger"
@@ -736,7 +800,6 @@ consumed_by = ["developer"]
 verified_by = ["developer"]
 artifact_id = "none"
 runtime_disposition = "committed-ledger"
-
 [[files]]
 pattern = "tools/Generated/scribe-emissions.v1.json"
 kind = "generated"
@@ -748,7 +811,6 @@ artifact_id = "A-SCRIBE"
 runtime_disposition = "run-local"
 mode = "100644"
 history_requirement = "not-required"
-
 [[files]]
 pattern = "tools/Makefile"
 kind = "program"
@@ -758,7 +820,6 @@ consumed_by = ["developer"]
 verified_by = ["make-gate"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "tools/StrataLint.*/**"
 kind = "program"
@@ -768,7 +829,6 @@ consumed_by = ["dotnet"]
 verified_by = ["dotnet-test"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "tools/StrataLint.sln"
 kind = "program"
@@ -778,7 +838,6 @@ consumed_by = ["dotnet"]
 verified_by = ["dotnet-test"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "tools/TOWER.yaml"
 kind = "program"
@@ -788,7 +847,6 @@ consumed_by = ["CoverageAnalyzer"]
 verified_by = ["make-gate"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "tools/TestSupport/**"
 kind = "program"
@@ -798,7 +856,6 @@ consumed_by = ["dotnet"]
 verified_by = ["dotnet-test"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "tools/Trureturing.Truth/**"
 kind = "program"
@@ -808,7 +865,6 @@ consumed_by = ["dotnet"]
 verified_by = ["dotnet-test"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "tools/lean-inspector/**"
 kind = "program"
@@ -818,7 +874,6 @@ consumed_by = ["Lean"]
 verified_by = ["lean-inspector"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "tools/scripts/**"
 kind = "program"
@@ -828,7 +883,6 @@ consumed_by = ["automation"]
 verified_by = ["make-gate"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "tools/tests/BannedApiCompileFailProof/**"
 kind = "program"
@@ -838,7 +892,6 @@ consumed_by = ["dotnet"]
 verified_by = ["dotnet-build"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "tools/tests/CompileFailProof/**"
 kind = "program"
@@ -848,7 +901,15 @@ consumed_by = ["dotnet"]
 verified_by = ["dotnet-build"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
+[[files]]
+pattern = "tools/tests/Directory.Build.props"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["dotnet"]
+verified_by = ["make-gate"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]]
 pattern = "tools/tests/StrataLint.*/**/*.cs"
 kind = "program"
@@ -858,7 +919,6 @@ consumed_by = ["dotnet"]
 verified_by = ["dotnet-test"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "tools/tests/StrataLint.*/**/*.csproj"
 kind = "program"
@@ -868,7 +928,6 @@ consumed_by = ["dotnet"]
 verified_by = ["dotnet-test"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "tools/tests/StrataLint.*/**/*.json"
 kind = "program"
@@ -878,7 +937,6 @@ consumed_by = ["dotnet"]
 verified_by = ["dotnet-test"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "tools/tests/StrataLint.*/**/*.trx"
 kind = "program"
@@ -888,17 +946,6 @@ consumed_by = ["dotnet"]
 verified_by = ["dotnet-test"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml"
-kind = "data"
-admission_plane = "judge"
-produced_by = "none"
-consumed_by = ["TestRegistry"]
-verified_by = ["TestRegistry"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
 [[files]]
 pattern = "tools/tests/Trureturing.Truth.Tests/**"
 kind = "program"

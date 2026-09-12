@@ -1,3 +1,4 @@
+using StrataLint.Engine;
 using System.Text;
 
 namespace StrataLint.Scribe.Tests;
@@ -63,7 +64,16 @@ public sealed class FileMapManifestTests
     public void SchemaTwoDispositionFieldsFailClosed(string dispositionLine, string expectedMessage)
     {
         var source = $$"""
-            schema_version = 2
+            schema_version = 3
+
+            [evidence.artifact_kinds.json]
+
+            profile = "structured-json"
+
+            selectors = ["result"]
+
+            path_selectors = ["formal"]
+
 
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
@@ -92,7 +102,16 @@ public sealed class FileMapManifestTests
     public void DuplicateArtifactIdIsRejected()
     {
         var source = """
-            schema_version = 2
+            schema_version = 3
+
+            [evidence.artifact_kinds.json]
+
+            profile = "structured-json"
+
+            selectors = ["result"]
+
+            path_selectors = ["formal"]
+
 
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
@@ -134,7 +153,7 @@ public sealed class FileMapManifestTests
     [Fact]
     public void RepositoryManifestClassifiesDigestionCasAsAnAppendOnlyLedger()
     {
-        var manifest = FileMapLoader.LoadRepository(RepositoryAccessor.Discover(RepositoryRootCriterion.FileMapDirectoryNotFound).Root.FullPath);
+        var manifest = FileMapLoader.Parse(File.ReadAllBytes(Path.Combine(RepositoryAccessor.Discover(RepositoryRootCriterion.FileMapDirectoryNotFound).Root.FullPath, FileMapLoader.RelativePath)), FileMapLoader.RelativePath);
         var entry = Assert.Single(manifest.Match(
             "Meta/Digestion/atoms/sha256/" + new string('a', 64)));
 
@@ -156,7 +175,16 @@ public sealed class FileMapManifestTests
     public void CanonicalManifestLoadsAllFiveKindsAndMatchesRepositoryGlobs()
     {
         var manifest = FileMapLoader.Parse(Encoding.UTF8.GetBytes("""
-            schema_version = 2
+            schema_version = 3
+
+            [evidence.artifact_kinds.json]
+
+            profile = "structured-json"
+
+            selectors = ["result"]
+
+            path_selectors = ["formal"]
+
 
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
@@ -239,7 +267,16 @@ public sealed class FileMapManifestTests
     }
 
     private static string DataKeyedRunLocalEntry() => """
-        schema_version = 2
+        schema_version = 3
+
+        [evidence.artifact_kinds.json]
+
+        profile = "structured-json"
+
+        selectors = ["result"]
+
+        path_selectors = ["formal"]
+
 
         [residence_policy]
         case_id = "RESIDENCE-EPOCH"
@@ -267,8 +304,13 @@ public sealed class FileMapManifestTests
     {
         var producedBy = extra.Length == 0 ? "none" : "ScribeEmitter";
         var source = $$"""
-            schema_version = 2
+            schema_version = 3
             {{extra}}
+            [evidence.artifact_kinds.json]
+            profile = "structured-json"
+            selectors = ["result"]
+            path_selectors = ["formal"]
+
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
             desired = "data-must-live-outside-tools"
@@ -296,7 +338,16 @@ public sealed class FileMapManifestTests
     public void GeneratedDeclarationMustNameItsProducer()
     {
         var source = """
-            schema_version = 2
+            schema_version = 3
+
+            [evidence.artifact_kinds.json]
+
+            profile = "structured-json"
+
+            selectors = ["result"]
+
+            path_selectors = ["formal"]
+
 
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
@@ -330,7 +381,16 @@ public sealed class FileMapManifestTests
         string expectedMessage)
     {
         var source = $$"""
-            schema_version = 2
+            schema_version = 3
+
+            [evidence.artifact_kinds.json]
+
+            profile = "structured-json"
+
+            selectors = ["result"]
+
+            path_selectors = ["formal"]
+
 
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
@@ -375,7 +435,16 @@ public sealed class FileMapManifestTests
     private static void AssertUnsafePatternRejected(string pattern)
     {
         var source = $$"""
-            schema_version = 2
+            schema_version = 3
+
+            [evidence.artifact_kinds.json]
+
+            profile = "structured-json"
+
+            selectors = ["result"]
+
+            path_selectors = ["formal"]
+
 
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"

@@ -207,8 +207,8 @@ public sealed class CoverageCommandTests
                   baseline-admission:
                     name: Content-addressed dev baseline admission
                 """,
-            ["Meta/domains.yaml"] = TestRegistry.Domains,
-            ["Meta/registry.yaml"] = TestRegistry.Canonical,
+            ["Meta/domains.yaml"] = TestFileMap.Domains,
+            ["Meta/FILEMAP.toml"] = TestFileMap.Canonical,
             [DescriptorSelector] = "theorem fixture : True := by trivial\n",
             [StateDescriptorSelector] = "theorem stateFixture : True := by trivial\n",
             ["Golden/Frozen/state/D5/S0/Tower/StateFixture.lean.json"] =

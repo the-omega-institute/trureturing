@@ -100,7 +100,7 @@ internal sealed partial class RuleFixture
     {
         Files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
-            ["Meta/domains.yaml"] = TestRegistry.Domains,
+            ["Meta/domains.yaml"] = TestFileMap.Domains,
             [FixtureBackfillSourcePath] = FixtureBackfillSource,
             [FixtureBackfillAtomPath] = FixtureBackfillAtom,
             [TheoryAtomizerDataLoader.DataPath] = File.ReadAllText(
@@ -108,7 +108,7 @@ internal sealed partial class RuleFixture
                     TestRepositoryLayout.FindRoot(),
                     "Meta/Digestion/atomizers.toml"),
                 Encoding.UTF8),
-            ["Meta/registry.yaml"] = TestRegistry.Canonical,
+            ["Meta/FILEMAP.toml"] = TestFileMap.Canonical,
             ["Library/queries.yaml"] = "schema_version: 1\nqueries: []\n",
             [RingPath] = Header + "def goldenRing : Nat := 0\n",
             [ValuesBindingPath] = HeaderFor("D5/S0/Carrier/ValuesBinding", "I")
@@ -321,10 +321,10 @@ internal sealed partial class RuleFixture
         var policy = suppliedPolicy;
         if (policy is null)
         {
-            var policyOutcome = RegistryLoader.Load(
-                Encoding.UTF8.GetBytes(TestRegistry.Canonical),
-                Encoding.UTF8.GetBytes(TestRegistry.Domains));
-            policy = RegistryLoadAssert.Accepted(policyOutcome).Policy;
+            var policyOutcome = RepositoryPolicyLoader.Load(
+                Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+                Encoding.UTF8.GetBytes(TestFileMap.Domains));
+            policy = PolicyLoadAssert.Accepted(policyOutcome).Policy;
         }
         var lean = AcceptLean(current, Reports);
         var bootstrap = BootstrapGate.Evaluate(changes);
@@ -351,10 +351,10 @@ internal sealed partial class RuleFixture
     {
         var current = Decode(Files);
         var baseline = Decode(Baseline);
-        var policyOutcome = RegistryLoader.Load(
-            Encoding.UTF8.GetBytes(TestRegistry.Canonical),
-            Encoding.UTF8.GetBytes(TestRegistry.Domains));
-        var policy = RegistryLoadAssert.Accepted(policyOutcome).Policy;
+        var policyOutcome = RepositoryPolicyLoader.Load(
+            Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+            Encoding.UTF8.GetBytes(TestFileMap.Domains));
+        var policy = PolicyLoadAssert.Accepted(policyOutcome).Policy;
         var bootstrap = BootstrapGate.Evaluate(RawChangeSet.Create(Changes));
         var meta = Assert.IsType<BootstrapOutcome.Clear>(bootstrap).Capability;
         return RuleEvaluationContext.Create(
@@ -371,10 +371,10 @@ internal sealed partial class RuleFixture
     {
         var current = Decode(Files);
         var baseline = Decode(Baseline);
-        var policyOutcome = RegistryLoader.Load(
-            Encoding.UTF8.GetBytes(TestRegistry.Canonical),
-            Encoding.UTF8.GetBytes(TestRegistry.Domains));
-        var policy = RegistryLoadAssert.Accepted(policyOutcome).Policy;
+        var policyOutcome = RepositoryPolicyLoader.Load(
+            Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+            Encoding.UTF8.GetBytes(TestFileMap.Domains));
+        var policy = PolicyLoadAssert.Accepted(policyOutcome).Policy;
         var bootstrap = BootstrapGate.Evaluate(changes);
         var meta = bootstrap switch
         {
@@ -397,10 +397,10 @@ internal sealed partial class RuleFixture
     {
         var current = Decode(Files);
         var baseline = Decode(Baseline);
-        var policyOutcome = RegistryLoader.Load(
-            Encoding.UTF8.GetBytes(TestRegistry.Canonical),
-            Encoding.UTF8.GetBytes(TestRegistry.Domains));
-        var policy = RegistryLoadAssert.Accepted(policyOutcome).Policy;
+        var policyOutcome = RepositoryPolicyLoader.Load(
+            Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+            Encoding.UTF8.GetBytes(TestFileMap.Domains));
+        var policy = PolicyLoadAssert.Accepted(policyOutcome).Policy;
         var bootstrap = BootstrapGate.Evaluate(RawChangeSet.Create(Changes));
         var meta = Assert.IsType<BootstrapOutcome.ProtectedSurfaceVerificationRequired>(bootstrap).ChangeSet;
         return RuleEvaluationContext.Create(

@@ -10,10 +10,10 @@ namespace StrataLint.Engine;
 
 public sealed class CanonicalFixedPoint
 {
-    private CanonicalFixedPoint(ImmutableArray<byte> bytes, string registrySha256)
+    private CanonicalFixedPoint(ImmutableArray<byte> bytes, string fileMapSha256)
     {
         Bytes = bytes;
-        RegistrySha256 = registrySha256;
+        FileMapSha256 = fileMapSha256;
         Sha256 = Convert.ToHexStringLower(SHA256.HashData(bytes.AsSpan()));
     }
 
@@ -21,10 +21,10 @@ public sealed class CanonicalFixedPoint
 
     public string Sha256 { get; }
 
-    public string RegistrySha256 { get; }
+    public string FileMapSha256 { get; }
 
-    internal static CanonicalFixedPoint Create(ImmutableArray<byte> bytes, string registrySha256) =>
-        new(bytes, registrySha256);
+    internal static CanonicalFixedPoint Create(ImmutableArray<byte> bytes, string fileMapSha256) =>
+        new(bytes, fileMapSha256);
 }
 
 [Union(EnableImplicitConversions = false)]
@@ -55,11 +55,11 @@ public static class RepositoryCanonicalizer
         ArgumentNullException.ThrowIfNull(policy);
         try
         {
-            if (RequiresWriteValidation(changes, "Meta/registry.yaml")
-                && (!snapshot.TryGetFile("Meta/registry.yaml", out var registry)
-                    || !registry.RawBytes.AsSpan().SequenceEqual(policy.CanonicalRegistryBytes.AsSpan())))
+            if (RequiresWriteValidation(changes, "Meta/FILEMAP.toml")
+                && (!snapshot.TryGetFile("Meta/FILEMAP.toml", out var fileMap)
+                    || !fileMap.RawBytes.AsSpan().SequenceEqual(policy.CanonicalFileMapBytes.AsSpan())))
             {
-                throw new FormatException("Repository registry bytes do not match the validated canonical policy.");
+                throw new FormatException("Repository FILEMAP bytes do not match the validated canonical policy.");
             }
 
             if (RequiresWriteValidation(changes, "Meta/domains.yaml")
@@ -69,15 +69,21 @@ public static class RepositoryCanonicalizer
                 throw new FormatException("Repository domain bytes do not match the validated canonical policy.");
             }
 
+            if (RequiresWriteValidation(changes, "Meta/FILEMAP.toml"))
+            {
+                var reparsed = FileMapLoader.Parse(policy.CanonicalFileMapBytes.AsSpan(), FileMapLoader.RelativePath);
+                if (!FileMapCanonicalWriter.Write(reparsed).AsSpan().SequenceEqual(policy.CanonicalFileMapBytes.AsSpan()))
+                    throw new FormatException("FILEMAP policy re-encode fixed point failed.");
+            }
             ValidateStructuredArtifacts(snapshot, policy, changes);
 
             var expectedEntries = snapshot.Files
                 .OrderBy(static item => item.Key.Value, StringComparer.Ordinal)
                 .Select(static item => SnapshotEntry.FromFile(item.Key, item.Value))
                 .ToImmutableArray();
-            var bytes = CanonicalSnapshotWriter.Write(policy.RegistrySha256, expectedEntries);
+            var bytes = CanonicalSnapshotWriter.Write(policy.FileMapSha256, expectedEntries);
             return new CanonicalizationOutcome.Accepted(
-                CanonicalFixedPoint.Create(bytes, policy.RegistrySha256));
+                CanonicalFixedPoint.Create(bytes, policy.FileMapSha256));
         }
         catch (Exception exception) when (exception is FormatException or JsonException or DecoderFallbackException)
         {
@@ -114,7 +120,7 @@ public static class RepositoryCanonicalizer
                 || !policy.ArtifactKinds.TryGetValue(evidence.ArtifactKind, out var artifact))
             {
                 throw new FormatException(
-                    $"Evidence artifact {path.Value} is outside the registry kind/selector whitelist.");
+                    $"Evidence artifact {path.Value} is outside the FILEMAP kind/selector whitelist.");
             }
 
             if (artifact.Profile is not (ValidationProfile.StructuredJson or ValidationProfile.StructuredYaml))
@@ -163,10 +169,10 @@ internal static class CanonicalSnapshotWriter
         RegexOptions.CultureInvariant);
 
     internal static ImmutableArray<byte> Write(
-        string registrySha256,
+        string fileMapSha256,
         ImmutableArray<SnapshotEntry> entries)
     {
-        if (!HashPattern.IsMatch(registrySha256)
+        if (!HashPattern.IsMatch(fileMapSha256)
             || !entries.Select(static item => item.Path.Value)
                 .SequenceEqual(entries.Select(static item => item.Path.Value).Order(StringComparer.Ordinal)))
         {
@@ -174,8 +180,8 @@ internal static class CanonicalSnapshotWriter
         }
 
         var builder = new StringBuilder();
-        builder.Append("schema_version: 1\n");
-        builder.Append("registry_sha256: ").Append(registrySha256).Append('\n');
+        builder.Append("schema_version: 2\n");
+        builder.Append("filemap_sha256: ").Append(fileMapSha256).Append('\n');
         builder.Append("files:\n");
         foreach (var entry in entries)
         {

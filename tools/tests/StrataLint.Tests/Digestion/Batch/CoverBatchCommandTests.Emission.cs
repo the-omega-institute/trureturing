@@ -157,7 +157,6 @@ public sealed partial class CoverBatchCommandTests
 
     [Theory]
     [InlineData("Golden/values-kernels.toml", "values emit failed")]
-    [InlineData("Meta/FILEMAP.toml", "filemap emit failed")]
     public void ProducerFailureKeepsCoverageAndEarlierProducerOutputs(string failedInput, string diagnostic)
     {
         using var world = new BatchWorld { UseGitReader = true };
@@ -175,8 +174,19 @@ public sealed partial class CoverBatchCommandTests
         Assert.Single(world.Entry(Second).Coverage);
         Assert.NotEmpty(TemporaryFileSystem.File.ReadAllBytes(Path.Combine(world.Root, "tools/Generated/scribe-emissions.v1.json")));
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(world.Root, "Generated/DAG.md")));
-        if (failedInput == "Meta/FILEMAP.toml")
-            Assert.NotEmpty(TemporaryFileSystem.File.ReadAllBytes(Path.Combine(world.Root, CanonicalValuesWriter.RelativePath)));
+    }
+
+    [Fact]
+    public void MalformedFileMapBlocksSharedContextBeforeAnyCoverageWrite()
+    {
+        using var world = new BatchWorld();
+        File.WriteAllText(Path.Combine(world.Root, "Meta/FILEMAP.toml"), "malformed input\n");
+        var result = world.Run(Row(First, Gid) + Row(Second, OtherGid));
+        Assert.Equal(["blocked", "blocked"], Results(result).Select(item => item.Status).ToArray());
+        Assert.Contains("FILEMAP", result.Error, StringComparison.Ordinal);
+        Assert.Empty(world.Entry(First).Coverage);
+        Assert.Empty(world.Entry(Second).Coverage);
+        Assert.Equal(0, world.EmitCount);
     }
 
     [Fact]

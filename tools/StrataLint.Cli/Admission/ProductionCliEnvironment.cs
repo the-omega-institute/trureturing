@@ -395,9 +395,9 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 return new CommandResult(false, string.Empty, "USAGE: StrataLint selftest\n");
             }
 
-            var registry = LoadRegistry();
+            var fileMap = LoadPolicy();
             var probe = new ManifestSyntax("D5", "F", "Carrier", "Probe", "G", string.Empty, "lean", string.Empty, null);
-            var route = RouteEngine.Route(registry.Policy, probe);
+            var route = RouteEngine.Route(fileMap.Policy, probe);
             if (route is not RouteOutcome.Routed routed
                 || routed.Result.Gid.Value != "D5/S0/Carrier/Probe"
                 || routed.Result.Path.Value != "D5/S0/Carrier/Probe.lean"
@@ -426,8 +426,8 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                     .Select(static item => $"{item.Id.Value}:{item.DeferredCase?.Value}")
                     .Order(StringComparer.Ordinal));
             var output = "SELFTEST PASS\n"
-                + $"CANONICAL_REGISTRY {registry.Policy.RegistrySha256}\n"
-                + $"CANONICAL_DOMAINS {registry.Policy.DomainsSha256}\n"
+                + $"CANONICAL_FILEMAP {fileMap.Policy.FileMapSha256}\n"
+                + $"CANONICAL_DOMAINS {fileMap.Policy.DomainsSha256}\n"
                 + "GOVERNANCE tower=pass banned-api=pass banned-symbols=pass tools-namespace=pass\n"
                 + $"RULES {rules}\n"
                 + $"DEFERRED {deferred}\n";
@@ -484,16 +484,16 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
     public CommandResult Worktree(IReadOnlyList<string> arguments) =>
         WorktreeCommand.Run(repositoryRoot, arguments);
 
-    private RegistryLoadOutcome.Accepted LoadRegistry()
+    private PolicyLoadOutcome.Accepted LoadPolicy()
     {
-        var registryPath = Path.Combine(repositoryRoot, "Meta", "registry.yaml");
+        var fileMapPath = Path.Combine(repositoryRoot, "Meta", "FILEMAP.toml");
         var domainsPath = Path.Combine(repositoryRoot, "Meta", "domains.yaml");
-        var outcome = RegistryLoader.Load(
-            File.ReadAllBytes(registryPath),
+        var outcome = RepositoryPolicyLoader.Load(
+            File.ReadAllBytes(fileMapPath),
             File.ReadAllBytes(domainsPath));
-        return outcome is RegistryLoadOutcome.Accepted accepted
+        return outcome is PolicyLoadOutcome.Accepted accepted
             ? accepted
-            : throw new InvalidOperationException(((RegistryLoadOutcome.InfrastructureFailure)outcome).Message);
+            : throw new InvalidOperationException(((PolicyLoadOutcome.InfrastructureFailure)outcome).Message);
     }
 
     private byte[] ReadRepositoryFile(string relativePath)

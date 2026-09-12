@@ -43,7 +43,7 @@ internal static class BootstrapProtectionPolicy
     internal static ImmutableArray<ProtectionMatcher> Matchers { get; } =
     [
         Atom("tools", ProtectionMatchKind.Prefix, "tools/"),
-        Atom("registry", ProtectionMatchKind.Exact, "Meta/registry.yaml"),
+        Atom("filemap", ProtectionMatchKind.Exact, "Meta/FILEMAP.toml"),
         Atom("domains", ProtectionMatchKind.Exact, "Meta/domains.yaml"),
         Atom("hearts", ProtectionMatchKind.Suffix, "/Hearts.lean"),
         Atom("assumptions", ProtectionMatchKind.Contains, "/X_Assumptions/"),

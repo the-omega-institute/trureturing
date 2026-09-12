@@ -548,17 +548,17 @@ internal static partial class CoverAtomCommand
 
     private static ValidatedPolicy LoadPolicy(RepositorySnapshot snapshot)
     {
-        if (!snapshot.TryGetFile("Meta/registry.yaml", out var registry)
+        if (!snapshot.TryGetFile("Meta/FILEMAP.toml", out var fileMap)
             || !snapshot.TryGetFile("Meta/domains.yaml", out var domains))
         {
             throw new InvalidOperationException(
-                "cover requires Meta/registry.yaml and Meta/domains.yaml");
+                "cover requires Meta/FILEMAP.toml and Meta/domains.yaml");
         }
 
-        return RegistryLoader.Load(registry.RawBytes.AsSpan(), domains.RawBytes.AsSpan()) switch
+        return RepositoryPolicyLoader.Load(fileMap.RawBytes.AsSpan(), domains.RawBytes.AsSpan()) switch
         {
-            RegistryLoadOutcome.Accepted accepted => accepted.Policy,
-            RegistryLoadOutcome.InfrastructureFailure failure =>
+            PolicyLoadOutcome.Accepted accepted => accepted.Policy,
+            PolicyLoadOutcome.InfrastructureFailure failure =>
                 throw new InvalidOperationException(failure.Message),
         };
     }

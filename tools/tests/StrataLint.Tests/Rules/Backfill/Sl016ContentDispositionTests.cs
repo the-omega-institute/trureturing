@@ -63,9 +63,9 @@ public sealed class Sl016ContentDispositionTests
         string kind,
         Action onAtomize)
     {
-        var policy = RegistryLoadAssert.Accepted(RegistryLoader.Load(
-            Encoding.UTF8.GetBytes(TestRegistry.Canonical),
-            Encoding.UTF8.GetBytes(TestRegistry.Domains))).Policy;
+        var policy = PolicyLoadAssert.Accepted(RepositoryPolicyLoader.Load(
+            Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+            Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
         var lean = AcceptedLeanClosure.Create(LeanAxiomReport.Create(
             new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)));
         return BackfillInventoryRule.EvaluateDocument(

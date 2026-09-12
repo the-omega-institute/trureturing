@@ -129,22 +129,30 @@ internal static partial class RepositoryPathPolicy
     internal static RepositoryPathIssue? Validate(RepoPath path, ValidatedPolicy policy)
     {
         var value = path.Value;
-        if (policy.RootFiles.Contains(path) || policy.GovernanceDocuments.Contains(path))
-        {
+        var matches = policy.Manifest.Match(value);
+        if (matches is not [var entry])
+            return Sl000(value, $"path must match exactly one FILEMAP entry; matches={matches.Length}");
+        if (value.StartsWith(ReportsRootPath, StringComparison.Ordinal) && entry.Pattern != value)
+            return Sl000(value, "docs/reports files require an exact FILEMAP entry");
+
+        // Non-coordinate files derive membership solely from FILEMAP. Coordinate
+        // planes still pass their canonical path, GID and domain checks below.
+        if ((!value.Contains('/') || value.StartsWith(AgentFilesRootPath, StringComparison.Ordinal) || entry.Pattern == value)
+            && !value.StartsWith("D5/", StringComparison.Ordinal)
+            && !value.StartsWith("Blueprint/", StringComparison.Ordinal)
+            && !value.StartsWith("Evidence/", StringComparison.Ordinal)
+            && !value.StartsWith("Library/", StringComparison.Ordinal)
+            && !value.StartsWith("Papers/", StringComparison.Ordinal)
+            && !value.StartsWith("Chronicle/", StringComparison.Ordinal)
+            && !value.StartsWith("Meta/Digestion/", StringComparison.Ordinal)
+            && !value.StartsWith("Golden/", StringComparison.Ordinal))
             return null;
-        }
 
-        if (value.StartsWith(AgentFilesRootPath, StringComparison.Ordinal))
-        {
-            return policy.AgentFiles.Contains(value[AgentFilesRootPath.Length..])
-                ? null
-                : Sl000(value, "unknown agent charter artifact");
-        }
-
-        if (value is "Meta/domains.yaml" or "Meta/BACKFILL.yaml" or "Meta/registry.yaml"
+        if (value is "Meta/domains.yaml" or "Meta/BACKFILL.yaml" or "Meta/FILEMAP.toml"
             or "Library/queries.yaml" or AssumptionRegistryPath
-            or "tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml"
-            or "Golden/values-kernels.toml"
+            or "D5/X_Frontier/HeartsAuthorizations.md"
+            or "Golden/values-kernels.toml" or "Golden/gate-authority-roots.toml"
+            or "Meta/Digestion/atomizers.toml"
             or WorkflowPath
             or CachePublicationWorkflowPath
             or TruthReleasePublicationWorkflowPath
@@ -161,7 +169,7 @@ internal static partial class RepositoryPathPolicy
             || value.StartsWith("skills/", StringComparison.Ordinal)
             || value.StartsWith(".codex/skills/", StringComparison.Ordinal)
             || value.StartsWith(ReportsRootPath, StringComparison.Ordinal)
-            // Report filenames are intentionally not copied into registry.yaml. Their
+            // Report filenames have explicit FILEMAP membership. Their
             // exact per-file registration is enforced by FILEMAP's content-plane gate.
             || value.StartsWith(DigestionOpaquePathPolicy.TheoryRootPath, StringComparison.Ordinal)
             || value.StartsWith(SpecRootPath, StringComparison.Ordinal)
@@ -197,7 +205,7 @@ internal static partial class RepositoryPathPolicy
                 : new RepositoryPathIssue(
                     RuleId.CreateKnown(15),
                     value,
-                    "path is outside the registry artifact kind/selector whitelist");
+                    "path is outside the FILEMAP Evidence policy or controlled domain vocabulary");
         }
 
         var top = value.Split('/', 2)[0];
@@ -255,20 +263,14 @@ internal static partial class RepositoryPathPolicy
     {
         var sources = ImmutableArray.CreateBuilder<string>();
         if (Validate(path, policy) is null) sources.Add("path-policy");
-        if (policy.RootFiles.Contains(path)) sources.Add("registry:root-files");
-        if (policy.GovernanceDocuments.Contains(path)) sources.Add("registry:governance-documents");
-        if (path.Value.StartsWith(AgentFilesRootPath, StringComparison.Ordinal)
-            && policy.AgentFiles.Contains(path.Value[AgentFilesRootPath.Length..]))
-        {
-            sources.Add("registry:agent-files");
-        }
+        if (policy.Manifest.Match(path.Value) is [var entry]) sources.Add("filemap:files:" + entry.Pattern);
 
         if (TryResolve(path, policy, out var gid) && gid is not null)
         {
             if (gid.ToTarget() is Target.Evidence evidence
                 && policy.ArtifactKinds.ContainsKey(evidence.ArtifactKind))
             {
-                sources.Add("registry:artifact-kinds");
+                sources.Add("filemap:artifact-kinds");
             }
 
             if (HasControlledDomain(path, policy)) sources.Add("domains");
@@ -299,7 +301,19 @@ internal static partial class RepositoryPathPolicy
 
         if (target is not Target.Evidence evidence)
         {
-            return true;
+            var targetPath = target switch
+            {
+                Target.Formal formal => formal.Path,
+                Target.Blueprint blueprint => blueprint.Path,
+                _ => null,
+            };
+            if (targetPath is null) return true;
+            var path = targetPath.Value;
+            var parts = path.Split('/');
+            var offset = parts[0] == "Blueprint" ? 1 : 0;
+            return parts.Length <= offset + 1 || parts[offset] != "D5"
+                || !Enum.TryParse<Stratum>(parts[offset + 1], false, out _)
+                || HasControlledDomain(targetPath, policy);
         }
 
         if (!policy.ArtifactKinds.TryGetValue(evidence.ArtifactKind, out var artifact)

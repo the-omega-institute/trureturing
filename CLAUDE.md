@@ -8,7 +8,7 @@
 >
 > **诚实分栏:硬不动点 vs 软不动点。** 只有机器强制的才是**变换下真正不变**的硬不动点(违则 lint 红,逃不掉);其余是靠评审与自觉守护的软不动点(不可机器判,会漂移,须对手官与人类门看住)。每条都标了**〔守护〕**——不让"不动点"这个名字比它实际保证的强。这条自省本身,就是下面第 2.4 条("不冒领")与第 5.7 条("再聪明的单点也会错")对本文件自己的应用。
 >
-> **一名一址**:本文件是权威原文,`AGENTS.md` 指向它(同一真源,不复制内容)。文件与目录的相对 symlink 由 `Meta/FILEMAP.toml` 对应的字面路径条目配置:`symlink = { target = "相对目标", kind = "file 或 directory" }`;路径仍须符合 registry/path policy。目标须在同一仓库、同一快照内,文件为常规文件,目录含非空且完整保留的 Git 可发现常规文件集合。harness 保存链接目标的原始字节,不沿目录别名重复收集正文;历史修订使用自身 FILEMAP。未声明、目标不符、绝对/越界路径、链接链与目录循环均拒绝,`.git` 与 `.lake` 不得作为链接或目标。常规指针文件仍可用。agent 入口和 skills 别名的具体目标只在 FILEMAP 声明,各 worktree 的相对链接指向各自的本地真源。
+> **一名一址**:本文件是权威原文,`AGENTS.md` 指向它(同一真源,不复制内容)。文件与目录的相对 symlink 由 `Meta/FILEMAP.toml` 对应的字面路径条目配置:`symlink = { target = "相对目标", kind = "file 或 directory" }`;路径仍须符合 FILEMAP/path policy。目标须在同一仓库、同一快照内,文件为常规文件,目录含非空且完整保留的 Git 可发现常规文件集合。harness 保存链接目标的原始字节,不沿目录别名重复收集正文;历史修订使用自身 FILEMAP。未声明、目标不符、绝对/越界路径、链接链与目录循环均拒绝,`.git` 与 `.lake` 不得作为链接或目标。常规指针文件仍可用。agent 入口和 skills 别名的具体目标只在 FILEMAP 声明,各 worktree 的相对链接指向各自的本地真源。
 ### 1.2 架构三分与唯一真源
 **内核 —— 不可逆真值 DAG(以下诸条皆其投影)**
 整个系统是**一张不可逆的真值 DAG**。下述诸条是这**一个**数学对象的不同侧面。
@@ -190,7 +190,7 @@ worker 的搜索能力是宿主产品默认,仓库无法强制;agent 派发时�
 **地址由算法算出,不开会。**
 GID = 规范地址(F 层即字面路径);地层由 import 偏序算出;桶满则裂、**只裂不迁**;历史只追加。地址是算法的输出,不是协商的结果——所以两个 agent 并行贡献不会撞地址。
 **禁历史兼容:现状唯一,历史归 git。** 工作树永远只呈现**当前最优形态**;格式/规则/词表/语料变更**单 PR 一步迁移到位**(全量迁移 + 机器验证),**不留兼容垫层**——无 grandfather、无 legacy alias、无双读旧格式、无"隔离区待晋升"、无 deprecated 存根。历史查证一律走 git(历史即档案,不在工作树维护)。**辨析**:账本类工件(Chronicle、冻结账本、尸检、spec 修订注)是**现状的审计链构成**,其历史由 git 记录,非兼容层,不在此禁——禁的是"为旧状态保留的运行时机制",不是"记录事件的账"。
-**数据居所律(程序/数据物理边界)**:harness 程序住 `tools/`,工具测试住 `tools/tests/`。程序集目录(`tools/StrataLint.*/`、`tools/tests/*/`)内的源码只许**程序**——类型/逻辑/loader/writer/测试代码;整个 `tools/` 保护面不得住 `kind=data`。**声明性数据实例**(判例案、常数值、目录条目、文档内容)必须住程序目录以外的数据位(`Blueprint/**/*.scribe.cs`、顶层 `Golden/`、`Meta/{BACKFILL.yaml,FILEMAP.toml,domains.yaml,registry.yaml}`、`Library/`、`docs/develop/theory/`、`Evidence/`、`D5/*.lean`),或仅作测试项目内部的合成 fixture(装置非 canonical 数据)。**辨析**:类型/schema 定义=程序,留程序集;实例集合=数据,必须出去;封闭字母表(S0–S4、PLANE)写死于类型=程序合法形,加一处锚定测试即可;数据以数据文件存在时,其 parse 即 harness(fail-closed loader+schema 执法)。内容数据不因“重要”而进入 SL-022 保护面。golden corpus 与判例数据住顶层 `Golden/`,由 strict loader 保护。
+**数据居所律(程序/数据物理边界)**:harness 程序住 `tools/`,工具测试住 `tools/tests/`。程序集目录(`tools/StrataLint.*/`、`tools/tests/*/`)内的源码只许**程序**——类型/逻辑/loader/writer/测试代码;整个 `tools/` 保护面不得住 `kind=data`。**声明性数据实例**(判例案、常数值、目录条目、文档内容)必须住程序目录以外的数据位(`Blueprint/**/*.scribe.cs`、顶层 `Golden/`、`Meta/{BACKFILL.yaml,FILEMAP.toml,domains.yaml}`、`Library/`、`docs/develop/theory/`、`Evidence/`、`D5/*.lean`),或仅作测试项目内部的合成 fixture(装置非 canonical 数据)。**辨析**:类型/schema 定义=程序,留程序集;实例集合=数据,必须出去;封闭字母表(S0–S4、PLANE)写死于类型=程序合法形,加一处锚定测试即可;数据以数据文件存在时,其 parse 即 harness(fail-closed loader+schema 执法)。内容数据不因“重要”而进入 SL-022 保护面。golden corpus 与判例数据住顶层 `Golden/`,由 strict loader 保护。
 **停用边界与居所证据**:旧程序集位置 `Meta/StrataLint/` 不复存在;保守扩展重放/C0 仪式/证书机器已整体退役,均非现役机制。**2026-08-13 记录的样本**中,数据居所违规集为空,冻结账本(Frozen ledger,575+ accepted 分片)位于顶层 `Golden/Frozen/accepted/`;该事件账本样本的 append-only 由 SL-008 冻结面 diff 守卫承担,不走 SL-022。这是有界样本的执法归属记录,不声称是当前全树的新测量,也不构成当前历史只增判官:现役 SL-008 只判成员状态与当前树一致,历史归 git(第 1.3 条、第 4.7 条)。
 *成熟锚*:单一真源(SSOT)、事件溯源(event sourcing)、内容寻址、mathlib 库治理、trunk-based 单版本真源、schema 迁移之 expand–contract(必须收尾 contract,不许永久 expand)、git 即历史数据库、代码/配置分离(config outside the binary)、资产管线(assets≠engine)。
 〔守护:**硬+软**·GID/地层/词表/文件头机器 lint 如前;「禁兼容垫层」靠评审 + 先例(判例集 grandfather/legacy-values 隔离区均已按此裁决拆除),兼容机制一经识别即拆〕

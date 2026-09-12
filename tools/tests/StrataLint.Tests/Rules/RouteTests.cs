@@ -278,8 +278,8 @@ public sealed class RouteTests
     }
 
     private static ValidatedPolicy Policy() =>
-        RegistryLoadAssert.Accepted(
-            RegistryLoader.Load(
-                Encoding.UTF8.GetBytes(TestRegistry.Canonical),
-                Encoding.UTF8.GetBytes(TestRegistry.Domains))).Policy;
+        PolicyLoadAssert.Accepted(
+            RepositoryPolicyLoader.Load(
+                Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+                Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
 }

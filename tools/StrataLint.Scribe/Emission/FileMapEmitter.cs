@@ -1,3 +1,5 @@
+using StrataLint.Engine;
+
 namespace StrataLint.Scribe;
 
 internal static class FileMapEmitter
@@ -16,7 +18,7 @@ internal static class FileMapEmitter
 
         try
         {
-            var manifest = FileMapLoader.LoadRepository(repositoryRoot);
+            var manifest = FileMapLoader.Parse(File.ReadAllBytes(Path.Combine(repositoryRoot, FileMapLoader.RelativePath)), FileMapLoader.RelativePath);
             var first = FileMapProjectionWriter.Write(manifest);
             var second = FileMapProjectionWriter.Write(manifest);
             if (!first.AsSpan().SequenceEqual(second.AsSpan()))

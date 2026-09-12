@@ -11,7 +11,7 @@ internal static partial class DigestionIngestor
     /// nothing checked that one existed. It is derivable from the path, so ingest derives
     /// it: the default atomizer, and a source id slugged from the file name. What remains
     /// hand-written is only what is genuinely a decision — that this path is a canonical
-    /// volume at all, which stays with <c>governance_documents</c> on the base side.
+    /// volume at all, which belongs to FILEMAP membership and source eligibility.
     /// </summary>
     internal static BackfillInventoryDocument RegisterDefaultTheorySources(
         BackfillInventoryDocument document,

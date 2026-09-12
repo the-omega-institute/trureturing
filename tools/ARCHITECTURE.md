@@ -53,10 +53,18 @@ neither candidate files nor a successful candidate test job can synthesize appro
 
 ## FILEMAP custody boundary
 
-`Meta/FILEMAP.toml` owns repository file kind and producer/consumer/verifier relations.
-It remains separate from `Meta/registry.yaml`: the registry has a strict semantic-coordinate
-and artifact-kind schema, while FILEMAP has a strict file-custody schema. The architecture
-suite joins them by requiring registry `root_files` to equal tracked root files, without
-copying either schema into the other. The registry lists the FILEMAP authority and its
-generated projection as governance documents so predecessor closed-world judges can
-admit the new artifact class without candidate-only path exceptions.
+`Meta/FILEMAP.toml` is the single manifest authority: `files` entries own path
+membership, custody, admission plane, symlink declarations and optional
+`digestion_source` eligibility. `evidence.artifact_kinds` owns format profiles,
+selectors and coordinate scopes, including reserved formats. `Meta/domains.yaml`
+remains the strict controlled domain vocabulary. Membership is followed by canonical
+path/GID and domain validation; ambiguous or missing membership fails closed.
+
+Engine owns the pure current-schema model, parser and canonical policy writer. CLI
+acquires bytes and joins the domain vocabulary; Scribe projects the validated model.
+Current writes use schema 3 and a deterministic TOML encoding. Canonical snapshots use
+schema 2 with `filemap_sha256`, binding the validated FILEMAP policy. Changed policy
+bytes and structured Evidence are checked at the write boundary; unrelated deltas do
+not replay historical byte canonicality. Narrow historical admission-plane and symlink
+readers consume their own snapshot's metadata without imposing the current write
+schema on a protected base. Projections retain their declared run-local residency.
