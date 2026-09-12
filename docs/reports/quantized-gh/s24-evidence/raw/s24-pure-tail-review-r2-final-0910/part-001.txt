@@ -1,0 +1,20 @@
+{
+  "head": "dfa2e326f89297712c23ad3b780acf67b4deee4d",
+  "base": "e3c946d63039999549b4bf47f33d255854456560",
+  "work_target": "/Users/auricstudio/trureturing-qgh-recurrence",
+  "verdicts": {
+    "architecture": "reject",
+    "quality": "reject",
+    "tests": "reject"
+  },
+  "full_intake_refs": {
+    "quality": "/tmp/qgh-boundaries-0908/s24-quality-full-intake-r2-20260910T131653137185Z.json",
+    "architecture": "/tmp/qgh-boundaries-0908/s24-pure-tail-architecture-complete-r2-0910.json",
+    "tests": "/tmp/qgh-boundaries-0908/s24-pure-tail-tests-complete-r2-0910.json"
+  },
+  "all_full_conclusions_consumed": true,
+  "decision": "fix",
+  "blocking_basis": "Current full mathematical body still contains inherited process material; exact pure-predecessor composition and fresh full review remain required.",
+  "MERGED": false,
+  "goal_status": "active"
+}
