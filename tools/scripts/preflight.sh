@@ -19,6 +19,13 @@ preflight_base_invalid() {
 [[ -n "$BASE_SHA" ]] || preflight_base_invalid missing
 [[ "$BASE_SHA" =~ ^[0-9a-f]{40}$ ]] || preflight_base_invalid not-40-hex
 BASE_SHA="$BASE"
+ENGINEERING_BEFORE="${BEFORE-}"
+preflight_range_invalid() {
+  printf 'PREFLIGHT_PUSH_RANGE_INVALID before=%s reason=%s\n' "$ENGINEERING_BEFORE" "$1" >&2
+  exit 2
+}
+[[ -n "$ENGINEERING_BEFORE" ]] || preflight_range_invalid missing
+[[ "$ENGINEERING_BEFORE" =~ ^[0-9a-f]{40}$ ]] || preflight_range_invalid not-40-hex
 
 # Remaining seconds of preflight's optional absolute deadline, or empty when unbounded.
 remaining_deadline_seconds() {
@@ -66,6 +73,10 @@ case "$ancestor_rc" in
   *) preflight_base_invalid ancestor-check-failed ;;
 esac
 CANDIDATE_SHA="$(git rev-parse HEAD)"
+if [[ ! "$ENGINEERING_BEFORE" =~ ^0+$ ]]; then
+  before_type="$(git cat-file -t "$ENGINEERING_BEFORE" 2>/dev/null)" || preflight_range_invalid object-missing
+  [[ "$before_type" == commit ]] || preflight_range_invalid not-commit
+fi
 source "$ROOT/tools/scripts/lib/resource-observation-lib.sh"
 
 PREFLIGHT_STARTED="$(date +%s)"
@@ -95,8 +106,7 @@ STRATALINT_SCRIBE_BASE="$BASE_SHA" \
 record_timing scribe-content-checks
 
 ENGINEERING_HEAD="$CANDIDATE_SHA"
-ENGINEERING_BASE="$(git rev-parse HEAD^1)"
-CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make -C tools engineering-tests HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE"
+CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make -C tools engineering-tests EVENT=push HEAD="$ENGINEERING_HEAD" BEFORE="$ENGINEERING_BEFORE"
 record_timing test
 
 make -C tools selftest

@@ -1,0 +1,606 @@
+{
+  "schema_version": 1,
+  "projects": [
+    {
+      "path": "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+      "assembly": "StrataLint",
+      "role": "production",
+      "references": [
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
+        "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj"
+      ],
+      "inputs": [
+        "tools/StrataLint.Cli/**",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "global.json",
+        ".editorconfig",
+        "tools/Architecture/BannedSymbols.txt",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "sha256": "58cfa9eafe895f8fa1a95f68b1d77dc4c8adee4fa3f01a64279b33ca45c08ef8"
+    },
+    {
+      "path": "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+      "assembly": "StrataLint.Engine",
+      "role": "production",
+      "references": [
+        "tools/Trureturing.Truth/Trureturing.Truth.csproj"
+      ],
+      "inputs": [
+        "tools/StrataLint.Engine/**",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "global.json",
+        ".editorconfig",
+        "tools/Architecture/BannedSymbols.txt",
+        "tools/Architecture/BannedSymbols.Determinism.txt",
+        "tools/Architecture/BannedSymbols.Guid.txt"
+      ],
+      "sha256": "885cbc2ec8bcec058e6966acf850bb7fe2f85ee5fd48ddd46e80014b97a7a436"
+    },
+    {
+      "path": "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+      "assembly": "StrataLint.EngineeringScope",
+      "role": "production",
+      "references": [
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj"
+      ],
+      "inputs": [
+        "tools/StrataLint.EngineeringScope/**",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "global.json",
+        ".editorconfig"
+      ],
+      "sha256": "c20b21c4f6e2b7253ec0c3694069f2f79fd6bb4c5ec4a536e10413657f00690f"
+    },
+    {
+      "path": "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj",
+      "assembly": "StrataLint.Scribe.Documents",
+      "role": "production",
+      "references": [
+        "tools/StrataLint.Scribe/StrataLint.Scribe.csproj"
+      ],
+      "inputs": [
+        "Blueprint/**/*.scribe.cs",
+        "tools/StrataLint.Scribe.Documents/**",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "global.json",
+        ".editorconfig",
+        "tools/Architecture/BannedSymbols.txt",
+        "tools/Architecture/BannedSymbols.Determinism.txt",
+        "tools/Architecture/BannedSymbols.Guid.txt"
+      ],
+      "sha256": "1ed32d5311087bb569764fef47db31cbabc254e6fd2846318f1d66812748a2ed"
+    },
+    {
+      "path": "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
+      "assembly": "StrataLint.Scribe",
+      "role": "production",
+      "references": [
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/Trureturing.Truth/Trureturing.Truth.csproj"
+      ],
+      "inputs": [
+        "tools/StrataLint.Scribe/**",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "global.json",
+        ".editorconfig",
+        "tools/Architecture/BannedSymbols.txt",
+        "tools/Architecture/BannedSymbols.Determinism.txt",
+        "tools/Architecture/BannedSymbols.Guid.txt"
+      ],
+      "sha256": "4f597fac3fd951036018531ef59d636f4fdb4677808a72b167b1ea467f0a2bba"
+    },
+    {
+      "path": "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
+      "assembly": "StrataLint.TestSupport",
+      "role": "support",
+      "references": [
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj"
+      ],
+      "inputs": [
+        "tools/TestSupport/StrataLint.TestSupport/**",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "global.json",
+        ".editorconfig",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "sha256": "b8d0cfba0fbbdacf22dc2e9f6204d0b05206d7ceb29f18ce45b7b32599f478ec"
+    },
+    {
+      "path": "tools/Trureturing.Truth/Trureturing.Truth.csproj",
+      "assembly": "Trureturing.Truth",
+      "role": "production",
+      "references": [],
+      "inputs": [
+        "tools/Trureturing.Truth/**",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "global.json",
+        ".editorconfig",
+        "tools/Architecture/BannedSymbols.txt",
+        "tools/Architecture/BannedSymbols.Determinism.txt",
+        "tools/Architecture/BannedSymbols.Guid.txt"
+      ],
+      "sha256": "3e7527aac2e6de8d1e6e3af4c4a433dcb6c729b892b8ec865d93dcfc0c24bbad"
+    },
+    {
+      "path": "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj",
+      "assembly": "StrataLint.BannedApiCompileFailProof",
+      "role": "negative-control",
+      "references": [],
+      "inputs": [
+        "tools/tests/BannedApiCompileFailProof/**",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "global.json",
+        ".editorconfig",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt",
+        "tools/Architecture/BannedSymbols.txt",
+        "tools/Architecture/BannedSymbols.Guid.txt"
+      ],
+      "sha256": "ee8303a8cf05a6ec2d00deeb3310f1de239c81efe661ca1de3f4836bf52e9bc9"
+    },
+    {
+      "path": "tools/tests/CompileFailProof/CompileFailProof.csproj",
+      "assembly": "StrataLint.CompileFailProof",
+      "role": "negative-control",
+      "references": [
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj"
+      ],
+      "inputs": [
+        "tools/tests/CompileFailProof/**",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "global.json",
+        ".editorconfig",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "sha256": "3f8c8f47f033d321dfd3617fa9dd996954d4b9c854debc6602c73a36871f121b"
+    },
+    {
+      "path": "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
+      "assembly": "StrataLint.ArchitectureTests",
+      "role": "harness",
+      "references": [
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+        "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
+        "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+        "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "inputs": [
+        "tools/tests/StrataLint.ArchitectureTests/**",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "global.json",
+        ".editorconfig",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "sha256": "1d989ecdb5bacd9a6930e7f4e6a7fd0dab9461d08293a23727dcc5cc0e3b5159"
+    },
+    {
+      "path": "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj",
+      "assembly": "StrataLint.Engine.Tests",
+      "role": "test",
+      "references": [
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "inputs": [
+        "tools/tests/StrataLint.Engine.Tests/**",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "global.json",
+        ".editorconfig",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "sha256": "ebbb72bbe6d99e4ca449c8fe1834c8ff68cc92d67c98b708607d3a8edb75fbd1"
+    },
+    {
+      "path": "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
+      "assembly": "StrataLint.EngineeringScope.Tests",
+      "role": "test",
+      "references": [
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
+        "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj"
+      ],
+      "inputs": [
+        "tools/tests/StrataLint.EngineeringScope.Tests/**",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "global.json",
+        ".editorconfig",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "sha256": "8837faf3b3bc2b42dbf816b13d4eb389cf4dc73df158cc66e24092af5366b7df"
+    },
+    {
+      "path": "tools/tests/StrataLint.Scribe.Documents.Tests/StrataLint.Scribe.Documents.Tests.csproj",
+      "assembly": "StrataLint.Scribe.Documents.Tests",
+      "role": "test",
+      "references": [
+        "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj"
+      ],
+      "inputs": [
+        "tools/tests/StrataLint.Scribe.Documents.Tests/**",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "global.json",
+        ".editorconfig",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "sha256": "521b4461f707fb8239cee80a2e97f332e9c405d67e0b70027c7b42e71020d583"
+    },
+    {
+      "path": "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
+      "assembly": "StrataLint.Scribe.Tests",
+      "role": "test",
+      "references": [
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
+        "tools/StrataLint.Scribe/StrataLint.Scribe.csproj"
+      ],
+      "inputs": [
+        "tools/tests/StrataLint.Scribe.Tests/**",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "global.json",
+        ".editorconfig",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "sha256": "4a6c0edac122237ce30cf33ec39e53769dca36bef0c358f7bf1b902ac6924161"
+    },
+    {
+      "path": "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj",
+      "assembly": "StrataLint.ScriptTests",
+      "role": "harness",
+      "references": [
+        "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "inputs": [
+        "tools/tests/StrataLint.ScriptTests/**",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "global.json",
+        ".editorconfig",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt",
+        "tools/scripts/workflow/engineering-test-execution-harness.sh"
+      ],
+      "sha256": "a6a892429daec19b1d91138651af14121bacb5267967e7f82d2a9f211999b159"
+    },
+    {
+      "path": "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
+      "assembly": "StrataLint.Tests",
+      "role": "test",
+      "references": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "inputs": [
+        "tools/tests/StrataLint.Tests/**",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "global.json",
+        ".editorconfig",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "sha256": "6eaeb77c2b84de19e3961dc93b1e8240938acd23855b8e97d409e7da74963bbc"
+    },
+    {
+      "path": "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj",
+      "assembly": "Trureturing.Truth.Tests",
+      "role": "test",
+      "references": [
+        "tools/Trureturing.Truth/Trureturing.Truth.csproj"
+      ],
+      "inputs": [
+        "tools/tests/Trureturing.Truth.Tests/**",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "global.json",
+        ".editorconfig",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "sha256": "828ab5b4e72da6f801606d3854f5cc388049d31ef73761f138756cae27327c72"
+    }
+  ],
+  "inputs": [
+    {
+      "patterns": [
+        "tools/StrataLint.Cli/**"
+      ],
+      "projects": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj"
+      ]
+    },
+    {
+      "patterns": [
+        "tools/StrataLint.Engine/**"
+      ],
+      "projects": [
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj"
+      ]
+    },
+    {
+      "patterns": [
+        "tools/StrataLint.EngineeringScope/**"
+      ],
+      "projects": [
+        "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj"
+      ]
+    },
+    {
+      "patterns": [
+        "tools/StrataLint.Scribe.Documents/**"
+      ],
+      "projects": [
+        "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj"
+      ]
+    },
+    {
+      "patterns": [
+        "tools/StrataLint.Scribe/**"
+      ],
+      "projects": [
+        "tools/StrataLint.Scribe/StrataLint.Scribe.csproj"
+      ]
+    },
+    {
+      "patterns": [
+        "tools/TestSupport/StrataLint.TestSupport/**"
+      ],
+      "projects": [
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ]
+    },
+    {
+      "patterns": [
+        "tools/Trureturing.Truth/**"
+      ],
+      "projects": [
+        "tools/Trureturing.Truth/Trureturing.Truth.csproj"
+      ]
+    },
+    {
+      "patterns": [
+        "tools/tests/BannedApiCompileFailProof/**"
+      ],
+      "projects": [
+        "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj"
+      ]
+    },
+    {
+      "patterns": [
+        "tools/tests/CompileFailProof/**"
+      ],
+      "projects": [
+        "tools/tests/CompileFailProof/CompileFailProof.csproj"
+      ]
+    },
+    {
+      "patterns": [
+        "tools/tests/StrataLint.ArchitectureTests/**"
+      ],
+      "projects": [
+        "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj"
+      ]
+    },
+    {
+      "patterns": [
+        "tools/tests/StrataLint.Engine.Tests/**"
+      ],
+      "projects": [
+        "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj"
+      ]
+    },
+    {
+      "patterns": [
+        "tools/tests/StrataLint.EngineeringScope.Tests/**"
+      ],
+      "projects": [
+        "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj"
+      ]
+    },
+    {
+      "patterns": [
+        "tools/tests/StrataLint.Scribe.Documents.Tests/**"
+      ],
+      "projects": [
+        "tools/tests/StrataLint.Scribe.Documents.Tests/StrataLint.Scribe.Documents.Tests.csproj"
+      ]
+    },
+    {
+      "patterns": [
+        "tools/tests/StrataLint.Scribe.Tests/**"
+      ],
+      "projects": [
+        "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj"
+      ]
+    },
+    {
+      "patterns": [
+        "tools/tests/StrataLint.ScriptTests/**"
+      ],
+      "projects": [
+        "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj"
+      ]
+    },
+    {
+      "patterns": [
+        "tools/tests/StrataLint.Tests/**"
+      ],
+      "projects": [
+        "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj"
+      ]
+    },
+    {
+      "patterns": [
+        "tools/tests/Trureturing.Truth.Tests/**"
+      ],
+      "projects": [
+        "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj"
+      ]
+    },
+    {
+      "patterns": [
+        "*.lean",
+        "*.toml",
+        ".github/**",
+        ".gitignore",
+        "AGENTS.md",
+        "CLAUDE.md",
+        "D5/**/*.lean",
+        "Evidence/D5/**/*.result.json",
+        "Evidence/D5/values.json",
+        "Generated/DAG.md",
+        "Generated/FILEMAP.md",
+        "Generated/echo-residuals/*.md",
+        "Generated/truth-export.v1.json",
+        "Generated/truth-graph.v1.json",
+        "Golden/Frozen/accepted/*.json",
+        "Golden/Frozen/state/**/*.json",
+        "Golden/Projection/*.json",
+        "Golden/gate-authority-roots.toml",
+        "Golden/values-kernels.toml",
+        "Library/**/*.yaml",
+        "Makefile",
+        "Meta/Digestion/atomizers.toml",
+        "Meta/FILEMAP.toml",
+        "Meta/LeanInputs.json",
+        "Meta/domains.yaml",
+        "Meta/registry.yaml",
+        "agents/**",
+        "build/census/**",
+        "docs/CONTRIBUTING.md",
+        "docs/GOVERNANCE.md",
+        "docs/develop/spec/golden-ledger-repo-spec.md",
+        "docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md",
+        "docs/develop/spec/trureturing_engineering_optimization_v1.md",
+        "lean-toolchain",
+        "skills/**",
+        "tools/ARCHITECTURE.md",
+        "tools/Architecture/HARDCODE-LEDGER.md",
+        "tools/Generated/scribe-emissions.v1.json",
+        "tools/Makefile",
+        "tools/StrataLint.sln",
+        "tools/TOWER.yaml",
+        "tools/lean-inspector/**",
+        "tools/scripts/**",
+        "Blueprint/**/*.md",
+        "D5/**/*.md",
+        "Library/*/*.md",
+        "Problems/*.md",
+        "README.md",
+        "docs/develop/theory/**",
+        "docs/reports/**"
+      ],
+      "projects": [
+        "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
+        "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj",
+        "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
+        "tools/tests/StrataLint.Scribe.Documents.Tests/StrataLint.Scribe.Documents.Tests.csproj",
+        "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
+        "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj",
+        "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
+        "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj"
+      ]
+    },
+    {
+      "patterns": [
+        "Meta/Digestion/atoms/sha256/*",
+        "Meta/Digestion/backfill/**"
+      ],
+      "projects": []
+    },
+    {
+      "patterns": [
+        "Meta/EngineeringInputs.json"
+      ],
+      "projects": [
+        "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
+        "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj",
+        "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
+        "tools/tests/StrataLint.Scribe.Documents.Tests/StrataLint.Scribe.Documents.Tests.csproj",
+        "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
+        "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj",
+        "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
+        "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj"
+      ]
+    },
+    {
+      "patterns": [
+        "Blueprint/**/*.scribe.cs"
+      ],
+      "projects": [
+        "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj"
+      ]
+    },
+    {
+      "patterns": [
+        "*.props",
+        "*.json",
+        ".editorconfig",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/*.txt"
+      ],
+      "projects": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+        "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj",
+        "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
+        "tools/Trureturing.Truth/Trureturing.Truth.csproj",
+        "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj",
+        "tools/tests/CompileFailProof/CompileFailProof.csproj",
+        "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
+        "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj",
+        "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
+        "tools/tests/StrataLint.Scribe.Documents.Tests/StrataLint.Scribe.Documents.Tests.csproj",
+        "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
+        "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj",
+        "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
+        "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj"
+      ]
+    }
+  ],
+  "comparison_projects": [
+    "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+    "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+    "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+    "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj",
+    "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
+    "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
+    "tools/Trureturing.Truth/Trureturing.Truth.csproj",
+    "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj",
+    "tools/tests/CompileFailProof/CompileFailProof.csproj",
+    "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
+    "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj",
+    "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
+    "tools/tests/StrataLint.Scribe.Documents.Tests/StrataLint.Scribe.Documents.Tests.csproj",
+    "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
+    "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj",
+    "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
+    "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj"
+  ]
+}

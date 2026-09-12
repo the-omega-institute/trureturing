@@ -12,7 +12,15 @@ public sealed class CheckedCiIdentityTests
     [InlineData("pull_request", "wrong-head", false)]
     [InlineData("pull_request", "wrong-parent", false)]
     [InlineData("pull_request", "default-workflow", false)]
-    [InlineData("push", "default-workflow", false)]
+    [InlineData("push", "default-workflow", true)]
+    [InlineData("push", "initial", true)]
+    [InlineData("push", "acquire-success", true)]
+    [InlineData("push", "acquire-failure", false)]
+    [InlineData("push", "missing-before", false)]
+    [InlineData("push", "wrong-after", false)]
+    [InlineData("push", "deleted", false)]
+    [InlineData("push", "missing-object", false)]
+    [InlineData("push", "malformed-before", false)]
     [InlineData("push", "missing-workflow", false)]
     [InlineData("schedule", "valid", false)]
     public void CheckedIdentityBindsRealGitParentsAndWorkflowRevision(string eventName, string change, bool accepted)
@@ -50,26 +58,47 @@ public sealed class CheckedCiIdentityTests
         merge = git('commit-tree', tree, '-p', base, '-p', pr_head, '-m', 'tested merge')
         git('checkout', '--detach', merge)
         payload = root/'event.json'
-        payload.write_text(json.dumps({'pull_request': {'number': 17,
+        payload.write_text(json.dumps({'before': base, 'after': merge, 'created': False, 'deleted': False, 'pull_request': {'number': 17,
             'head': {'sha': pr_head}, 'base': {'sha': base, 'ref': 'integration-ci-fixture-tests'}}}))
         environment = dict(os.environ, GITHUB_EVENT_NAME=event, GITHUB_EVENT_PATH=str(payload),
             GITHUB_SHA=merge, GITHUB_WORKFLOW_SHA=merge,
             GITHUB_WORKFLOW_REF='owner/repo/ci-fixture.yml@refs/pull/17/merge',
             GITHUB_REPOSITORY='owner/repo', GITHUB_RUN_ID='23', GITHUB_RUN_ATTEMPT='1',
             GITHUB_JOB='fixture-job', GITHUB_REF='refs/pull/17/merge')
+        data=json.loads(payload.read_text())
+        if change == 'initial': data.update(before='0'*40, created=True)
+        if change == 'missing-before': data.pop('before')
+        if change == 'wrong-after': data['after']=pr_head
+        if change == 'deleted': data.update(after='0'*40, deleted=True)
+        if change == 'missing-object': data['before']='1'*40
+        if change == 'malformed-before': data['before']='HEAD^1'
+        extra=[]
+        if change.startswith('acquire-'):
+            donor=root/'donor'; donor.mkdir()
+            def donor_git(*args):
+                return subprocess.run(['git', *args], cwd=donor, check=True, text=True, capture_output=True).stdout.strip()
+            donor_git('init', '--quiet')
+            donor_git('config', 'user.name', 'Pinned donor'); donor_git('config', 'user.email', 'pinned@example.invalid')
+            (donor/'old.txt').write_text('nonancestor pinned endpoint')
+            donor_git('add', '.'); donor_git('commit', '--quiet', '-m', 'pinned')
+            data['before']=donor_git('rev-parse', 'HEAD') if change == 'acquire-success' else '1'*40
+            git('remote', 'add', 'origin', str(donor))
+            extra=['--acquire-pinned']
+        payload.write_text(json.dumps(data))
         if change == 'wrong-head': environment['GITHUB_SHA'] = pr_head
         if change == 'wrong-parent':
             data=json.loads(payload.read_text()); data['pull_request']['head']['sha']=base
             payload.write_text(json.dumps(data))
         if change == 'default-workflow': environment['GITHUB_WORKFLOW_SHA'] = base
         if change == 'missing-workflow': environment.pop('GITHUB_WORKFLOW_SHA')
-        result=subprocess.run(['python3', script, '--repository', str(root)],
+        result=subprocess.run(['python3', script, '--repository', str(root), *extra],
             cwd=root, env=environment, text=True, capture_output=True)
         assert (result.returncode == 0) == (accepted == 'yes'), (result.returncode, result.stdout, result.stderr)
         if accepted == 'yes':
             row=json.loads(result.stdout.removeprefix('CI_CHECKED_IDENTITY '))
             assert row['tested_head'] == merge
-            assert row['protected_base'] == base
+            assert row['protected_base'] == (None if event == 'push' else base)
+            if event == 'push': assert row['push_before'] == data['before'] and row['push_after'] == merge
             assert row['pr_head'] == (None if event == 'push' else pr_head)
             assert row['workflow_sha'] == environment['GITHUB_WORKFLOW_SHA']
             assert row['candidate_workflow'] == (change != 'default-workflow')

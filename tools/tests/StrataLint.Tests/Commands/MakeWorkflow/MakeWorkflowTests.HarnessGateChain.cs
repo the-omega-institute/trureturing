@@ -222,7 +222,7 @@ public sealed partial class MakeWorkflowTests
                 "-c",
                 "PREFLIGHT_ADMISSION_RC=\"$1\" PREFLIGHT_CANDIDATE_ROOT=\"$2\" "
                 + "PREFLIGHT_GATE=\"$3\" PREFLIGHT_LOCAL_GATE=\"$4\" "
-                + $"HOME=\"$5\" BASE={GateForkSha} PATH=\"$6:/usr/bin:/bin\" "
+                + $"HOME=\"$5\" BASE={GateForkSha} BEFORE={GateForkSha} PATH=\"$6:/usr/bin:/bin\" "
                 + "exec /bin/bash \"$7\"",
                 "preflight-harness-gate-chain",
                 admissionExitCode.ToString(System.Globalization.CultureInfo.InvariantCulture),
@@ -288,7 +288,7 @@ public sealed partial class MakeWorkflowTests
                 "-c",
                 "PREFLIGHT_ADMISSION_RC=\"$1\" PREFLIGHT_CANDIDATE_ROOT=\"$2\" "
                 + "PREFLIGHT_GATE=\"$3\" PREFLIGHT_LOCAL_GATE=\"$4\" "
-                + $"HOME=\"$5\" BASE={GateForkSha} PATH=\"$6:/usr/bin:/bin\" "
+                + $"HOME=\"$5\" BASE={GateForkSha} BEFORE={GateForkSha} PATH=\"$6:/usr/bin:/bin\" "
                 + "PREFLIGHT_GIT_STATE=\"$7\" PREFLIGHT_EXPECTED_GATE_BASE=\"$8\" exec /bin/bash \"$9\"",
                 "preflight-fork-point",
                 admissionExitCode.ToString(System.Globalization.CultureInfo.InvariantCulture),
@@ -460,7 +460,7 @@ public sealed partial class MakeWorkflowTests
         WriteExecutable(Path.Combine(binDirectory, "make"), "#!/usr/bin/env bash\nexit 0");
 
         var command = scriptPath == PreflightScriptPath
-            ? "HOME=\"$1\" BASE=\"$2\" PATH=\"$3:/usr/bin:/bin\" MERGE_BASE_MODE=\"$4\" exec /bin/bash \"$5\""
+            ? "HOME=\"$1\" BASE=\"$2\" BEFORE=\"$2\" PATH=\"$3:/usr/bin:/bin\" MERGE_BASE_MODE=\"$4\" exec /bin/bash \"$5\""
             : "HOME=\"$1\" PATH=\"$3:/usr/bin:/bin\" MERGE_BASE_MODE=\"$4\" exec /bin/bash \"$5\" --candidate \"$6\" --base \"$2\" --skip-engineering";
         return TestProcessRunner.Run(
             "/bin/bash",

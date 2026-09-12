@@ -23,7 +23,8 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
             "engineering-tests",
             $"REPOSITORY={run.Repository}",
             $"HEAD={run.Head}",
-            $"BASE={run.Base}",
+            $"EVENT=push",
+            $"BEFORE={run.Base}",
         ],
             run.MakeArguments);
     }
@@ -103,14 +104,13 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
     }
 
     [Fact]
-    public void HeadWithoutFirstParentFailsBeforeMake()
+    public void InitialPushWithoutFirstParentPassesExplicitZeroBefore()
     {
         if (OperatingSystem.IsWindows()) return;
         using var run = RunHarness(new HarnessScenario(HeadHasFirstParent: false));
 
-        Assert.Equal(128, run.Process.ExitCode);
-        Assert.Contains("HEAD^1", run.StandardError, StringComparison.Ordinal);
-        Assert.Empty(run.MakeArguments);
+        Assert.Equal(0, run.Process.ExitCode);
+        Assert.Contains("BEFORE=" + new string('0', 40), run.MakeArguments);
     }
 
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
@@ -207,7 +207,7 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
             "GIT_CONFIG_SYSTEM=/dev/null",
             "GIT_CONFIG_NOSYSTEM=1",
         };
-        environment.AddRange(["/bin/bash", scriptPath, candidateRoot]);
+        environment.AddRange(["/bin/bash", scriptPath, candidateRoot, "push", @base ?? new string('0', 40), head]);
         var process = TestProcessRunner.Run(
             "/usr/bin/env",
             environment,

@@ -37,18 +37,13 @@ concurrency:
 # Until dev delivery the default branch can also start its older target run.
 # Evidence must select this run's event, workflow SHA and all three job identities;
 # another run's same-named green is not candidate-workflow verification.
-# Both routes execute only the checked candidate's producer and judge. Protected
-# base data always comes from that checked commit's first parent.
+# Checks execute the candidate producer and judge. Engineering planning binds
+# push before/after endpoints separately from the PR merge and its first parent.
 jobs:
   candidate-engineering:
     name: Candidate harness engineering checks
     runs-on: ubuntu-24.04-arm
-    # 20 分钟对本 job 已结构性不足:凡改动命中 tools/** 者,EngineeringScope 的测试选择器
-    # 选中 0 个、回退 full,跑满全部测试套件,实测 20–21 分钟(#3940)。
-    # 证据:PR #3943(生产 +4/-4、新增测试实测 221ms)连续五次 CANCELLED
-    # (20m04 / 20m15 / ~21m / ~21m / ~21m);同期 dev 上 13–19 分钟通过的 run 全部 0 行
-    # tools/ 改动,选择器能裁剪。dev 自身亦出现过一次 CANCELLED(50a319d9c,20m13s)。
-    # 30 分钟给 full scope 留约 50% 余量;同文件的 Lean report job 预算已是 45 分钟。
+    # Preserve the established engineering job budget.
     timeout-minutes: 30
     steps:
       - name: Check out candidate
@@ -56,6 +51,10 @@ jobs:
         continue-on-error: ${{ github.event_name == 'pull_request_target' }}
         uses: actions/checkout@v4
         with: { ref: "${{ github.event_name == 'pull_request_target' && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}", fetch-depth: 0, persist-credentials: false, path: candidate }
+      - name: Acquire fixed event objects and record identities
+        if: steps.checkout-merge.outcome == 'success'
+        shell: bash
+        run: python3 candidate/tools/scripts/workflow/checked-ci-identity.py --repository candidate --acquire-pinned
       - name: Strip checkout remote state
         if: steps.checkout-merge.outcome == 'success'
         shell: bash
@@ -73,9 +72,7 @@ jobs:
             exit 1
           fi
           head_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD)"
-          base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
           test -n "$head_sha"
-          test -n "$base_sha"
       - name: Record checked tree and actual workflow identity
         shell: bash
         run: python3 candidate/tools/scripts/workflow/checked-ci-identity.py --repository candidate
@@ -183,7 +180,7 @@ jobs:
         run: dotnet restore candidate/tools/StrataLint.sln --locked-mode
       - name: Run candidate engineering tests with resource observation
         shell: bash
-        run: /bin/bash candidate/tools/scripts/workflow/engineering-test-execution-harness.sh "$GITHUB_WORKSPACE/candidate"
+        run: python3 candidate/tools/scripts/workflow/checked-ci-identity.py --repository candidate --run-engineering
 
       - name: Run candidate selftest twice and compare bytes
         shell: bash
@@ -236,12 +233,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          base_sha="$(git -C candidate rev-parse HEAD^1)"
           {
             printf '%s\n' '## Candidate engineering scope'
             printf '\n'
             printf -- '- Event: %s\n' "$GITHUB_EVENT_NAME"
-            printf -- '- Protected base: %s\n' "$base_sha"
             printf -- '%s\n' '- Selected projects: see the ENGINEERING_TEST_PROJECT log lines of the project-scoped engineering test step.'
           } >> "$GITHUB_STEP_SUMMARY"
 
@@ -257,6 +252,10 @@ jobs:
         continue-on-error: ${{ github.event_name == 'pull_request_target' }}
         uses: actions/checkout@v4
         with: { ref: "${{ github.event_name == 'pull_request_target' && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}", fetch-depth: 0, persist-credentials: false, path: candidate }
+      - name: Acquire fixed event objects and record identities
+        if: steps.checkout-merge.outcome == 'success'
+        shell: bash
+        run: python3 candidate/tools/scripts/workflow/checked-ci-identity.py --repository candidate --acquire-pinned
       - name: Strip checkout remote state
         if: steps.checkout-merge.outcome == 'success'
         shell: bash
@@ -274,9 +273,7 @@ jobs:
             exit 1
           fi
           head_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD)"
-          base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
           test -n "$head_sha"
-          test -n "$base_sha"
       - name: Record checked tree and actual workflow identity
         shell: bash
         run: python3 candidate/tools/scripts/workflow/checked-ci-identity.py --repository candidate
@@ -592,6 +589,10 @@ jobs:
         continue-on-error: ${{ github.event_name == 'pull_request_target' }}
         uses: actions/checkout@v4
         with: { ref: "${{ github.event_name == 'pull_request_target' && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}", fetch-depth: 0, persist-credentials: false, path: candidate }
+      - name: Acquire fixed event objects and record identities
+        if: steps.checkout-merge.outcome == 'success'
+        shell: bash
+        run: python3 candidate/tools/scripts/workflow/checked-ci-identity.py --repository candidate --acquire-pinned
       - name: Strip checkout remote state
         if: steps.checkout-merge.outcome == 'success'
         shell: bash
@@ -609,9 +610,7 @@ jobs:
             exit 1
           fi
           head_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD)"
-          base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
           test -n "$head_sha"
-          test -n "$base_sha"
       - name: Record checked tree and actual workflow identity
         shell: bash
         run: python3 candidate/tools/scripts/workflow/checked-ci-identity.py --repository candidate

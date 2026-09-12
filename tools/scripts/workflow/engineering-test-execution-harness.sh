@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [[ "$#" -ne 1 || -z "$1" ]]; then
+if [[ "$#" -ne 4 || -z "$1" ]]; then
   printf '%s\n' \
-    'usage: engineering-test-execution-harness.sh <candidate-root>' >&2
+    'usage: engineering-test-execution-harness.sh <candidate-root> <push|pull-request> <before|base> <head>' >&2
   exit 2
 fi
 
@@ -19,8 +19,19 @@ if ! git -C "$candidate_root" rev-parse --is-inside-work-tree >/dev/null 2>&1; t
   exit 2
 fi
 
-head_sha="$(git -C "$candidate_root" rev-parse HEAD)"
-base_sha="$(git -C "$candidate_root" rev-parse HEAD^1)"
+event_kind="$2"
+before_sha="$3"
+head_sha="$4"
+[[ "$event_kind" == push || "$event_kind" == pull-request ]] || { echo 'ENGINEERING_TEST_EXECUTION_FAILED invalid-event' >&2; exit 2; }
+[[ "$before_sha" =~ ^[0-9a-f]{40}$ && "$head_sha" =~ ^[0-9a-f]{40}$ && ! "$head_sha" =~ ^0+$ ]] || { echo 'ENGINEERING_TEST_EXECUTION_FAILED invalid-endpoints' >&2; exit 2; }
+[[ "$head_sha" == "$(git -C "$candidate_root" rev-parse HEAD)" ]] || { echo 'ENGINEERING_TEST_EXECUTION_FAILED checkout-mismatch' >&2; exit 2; }
+endpoint_name=BEFORE
+if [[ "$event_kind" == pull-request ]]; then
+  endpoint_name=BASE
+  [[ "$before_sha" == "$(git -C "$candidate_root" rev-parse HEAD^1)" ]] || { echo 'ENGINEERING_TEST_EXECUTION_FAILED protected-base-mismatch' >&2; exit 2; }
+elif [[ ! "$before_sha" =~ ^0+$ ]]; then
+  git -C "$candidate_root" cat-file -e "$before_sha^{commit}" || { echo 'ENGINEERING_TEST_EXECUTION_FAILED missing-before-object' >&2; exit 2; }
+fi
 
 run_engineering_tests() {
   make \
@@ -29,7 +40,8 @@ run_engineering_tests() {
     engineering-tests \
     "REPOSITORY=$candidate_root" \
     "HEAD=$head_sha" \
-    "BASE=$base_sha"
+    "EVENT=$event_kind" \
+    "$endpoint_name=$before_sha"
 }
 
 observation_library="$candidate_root/tools/scripts/lib/resource-observation-lib.sh"

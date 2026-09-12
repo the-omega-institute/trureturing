@@ -231,7 +231,7 @@ public sealed partial class MakeWorkflowTests
             "/bin/bash",
             [
                 "-c",
-                $"PREFLIGHT_BASE_MODE=\"$1\" PREFLIGHT_BASE_INVOCATIONS=\"$2\" PATH=\"$3:/usr/bin:/bin\" {baseCommand} /bin/bash \"$4\"",
+                $"BEFORE=0000000000000000000000000000000000000000 PREFLIGHT_BASE_MODE=\"$1\" PREFLIGHT_BASE_INVOCATIONS=\"$2\" PATH=\"$3:/usr/bin:/bin\" {baseCommand} /bin/bash \"$4\"",
                 "preflight-base",
                 mode,
                 invocations,

@@ -1,11 +1,13 @@
 using System.Collections.Immutable;
-using System.Xml.Linq;
 
 namespace StrataLint.Engine;
 
 internal sealed record TestProjectTopologyProject(
     string Path,
-    string Content);
+    string Content,
+    string Assembly,
+    string Role,
+    ImmutableArray<string> References);
 
 internal sealed record TestProjectTopologySnapshot(
     IReadOnlyList<TestProjectTopologyProject> Projects);
@@ -94,52 +96,25 @@ internal static partial class RepositoryRules
     internal const string TestSupportProjectPath =
         "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj";
 
-    private static readonly Uri RepositoryUri = new("https://repository.invalid/");
-
-    // Boundary: runnable identity stays a runtime concern. Static detection would reimplement C#
-    // attributes, MSBuild Compile evaluation, and preprocessor symbols. Full-suite TRX verification
-    // consumes the owner assemblies derived here and requires nonzero executed identity for each.
-    internal static TestProjectTopologySnapshot ReadTrackedProjects(string repositoryRoot)
+    // The debt guard consumes the same declared roles and reference edges as planning.
+    internal static TestProjectTopologySnapshot ReadDeclaredProjects(
+        RepositorySnapshot snapshot, EngineeringInputManifest manifest)
     {
-        ArgumentNullException.ThrowIfNull(repositoryRoot);
-
-        var projects = GitIndexRepositoryFiles.Enumerate(repositoryRoot)
-            .Where(static file => file.RelativePath.EndsWith(
-                ".csproj",
-                StringComparison.Ordinal))
-            .Select(file => new TestProjectTopologyProject(
-                file.RelativePath,
-                File.ReadAllText(file.FullPath)))
-            .ToArray();
-        return new TestProjectTopologySnapshot(projects);
-    }
-
-    internal static TestProjectTopologySnapshot ReadSnapshotProjects(RepositorySnapshot snapshot)
-    {
-        ArgumentNullException.ThrowIfNull(snapshot);
-
-        var projects = snapshot.Files.Values
-            .Where(static file => file.Path.Value.EndsWith(
-                ".csproj",
-                StringComparison.Ordinal))
-            .OrderBy(static file => file.Path.Value, StringComparer.Ordinal)
-            .Select(file => new TestProjectTopologyProject(
-                file.Path.Value,
-                file.Text))
-            .ToArray();
-        return new TestProjectTopologySnapshot(projects);
+        var files = snapshot.Files.Values.ToDictionary(file => file.Path.Value, StringComparer.Ordinal);
+        manifest.ValidateProjectCoverage(files.Keys);
+        foreach (var project in manifest.Projects.Where(project => files.ContainsKey(project.Path)))
+            EngineeringInputManifest.VerifyProjectMaterial(project, files[project.Path].RawBytes.AsSpan());
+        return new(manifest.Projects.Where(project => files.ContainsKey(project.Path))
+            .Select(project => new TestProjectTopologyProject(project.Path, files[project.Path].Text,
+                project.Assembly, project.Role, project.References)).ToArray());
     }
 
     internal static TestProjectTopologyResult EvaluateSnapshots(
-        RepositorySnapshot protectedBase,
-        RepositorySnapshot candidate)
+        RepositorySnapshot protectedBase, RepositorySnapshot candidate)
     {
-        ArgumentNullException.ThrowIfNull(protectedBase);
-        ArgumentNullException.ThrowIfNull(candidate);
-
-        return Evaluate(
-            ReadSnapshotProjects(protectedBase),
-            ReadSnapshotProjects(candidate));
+        var manifest = EngineeringInputManifest.Read(candidate);
+        var baseManifest = manifest.ReadComparison(protectedBase);
+        return Evaluate(ReadDeclaredProjects(protectedBase, baseManifest), ReadDeclaredProjects(candidate, manifest));
     }
 
     internal static TestProjectTopologyResult Evaluate(
@@ -206,7 +181,7 @@ internal static partial class RepositoryRules
     private static DebtGraph BuildDebtGraph(TestProjectTopologySnapshot snapshot)
     {
         var allProjects = snapshot.Projects
-            .Select(ParseProject)
+            .Select(DeclaredVertex)
             .OrderBy(static project => project.Path, StringComparer.Ordinal)
             .ToArray();
         var projectByPath = allProjects.ToDictionary(
@@ -363,69 +338,10 @@ internal static partial class RepositoryRules
             ownedTestProjects);
     }
 
-    private static ProjectVertex ParseProject(TestProjectTopologyProject project)
-    {
-        var path = NormalizePath(project.Path);
-        var document = XDocument.Parse(project.Content, LoadOptions.None);
-        var assemblyName = document.Descendants()
-            .FirstOrDefault(static element => element.Name.LocalName == "AssemblyName")
-            ?.Value.Trim();
-        if (string.IsNullOrEmpty(assemblyName))
-        {
-            assemblyName = System.IO.Path.GetFileNameWithoutExtension(path);
-        }
-
-        var directReferences = document.Descendants()
-            .Where(static element => element.Name.LocalName == "ProjectReference")
-            .Select(static element => (string?)element.Attribute("Include"))
-            .Where(static include => !string.IsNullOrWhiteSpace(include))
-            .Select(include => ResolveProjectReference(path, include!))
-            .Distinct(StringComparer.Ordinal)
-            .Order(StringComparer.Ordinal)
-            .ToImmutableArray();
-        var isXunit = HasLiteralXunitReference(project.Content);
-
-        return new ProjectVertex(
-            path,
-            project.Content,
-            assemblyName,
-            IsProductionProject(path),
-            IsTestProject(path, isXunit),
-            IsOwnedTestProject(path, isXunit),
-            directReferences);
-    }
-
-    // 作用域是 tools/ 下、tests/ 之外的**任意深度** csproj:早先的「恰三段」写法
-    // 让多嵌一层的项目整个逃出双射与引用债务计算。
-    private static bool IsProductionProject(string path) =>
-        path.StartsWith("tools/", StringComparison.Ordinal)
-        && !path.StartsWith("tools/tests/", StringComparison.Ordinal)
-        && path.EndsWith(".csproj", StringComparison.Ordinal)
-        && !string.Equals(path, TestSupportProjectPath, StringComparison.Ordinal);
-
-    // 「是不是受管测试项目」与「是不是拥有某个生产项目」是两个正交的问题,此前由同一个
-    // 谓词回答,于是 CrossCuttingHarnessPaths 对**拥有关系**的豁免被一并施加到
-    // test→test 依赖上,使 ArchitectureTests / ScriptTests 的四条 test→test 边
-    // 结构上不进债账(#5419)。IsOwnedTestProject 由 IsTestProject **收窄**而来,
-    // 而非并列另写一个谓词 —— 这样「旧判 owned 者仍 owned」在结构上成立(保守扩展),
-    // 不依赖测试来保证。
-    private static bool IsTestProject(string path, bool isXunit) =>
-        isXunit
-        && path.StartsWith("tools/tests/", StringComparison.Ordinal)
-        && path.EndsWith(".csproj", StringComparison.Ordinal);
-
-    private static bool IsOwnedTestProject(string path, bool isXunit) =>
-        IsTestProject(path, isXunit)
-        && !CrossCuttingHarnessPaths.Contains(path);
-
-    private static string ResolveProjectReference(string projectPath, string include)
-    {
-        var slash = projectPath.LastIndexOf('/');
-        var directory = slash < 0 ? string.Empty : projectPath[..(slash + 1)];
-        var directoryUri = new Uri(RepositoryUri, directory);
-        var referenceUri = new Uri(directoryUri, include.Replace('\\', '/'));
-        return Uri.UnescapeDataString(referenceUri.AbsolutePath.TrimStart('/'));
-    }
+    private static ProjectVertex DeclaredVertex(TestProjectTopologyProject project) => new(
+        NormalizePath(project.Path), project.Content, project.Assembly,
+        project.Role == "production", project.Role is "test" or "harness",
+        project.Role == "test", project.References);
 
     private static string NormalizePath(string path) => path.Replace('\\', '/');
 
@@ -475,17 +391,6 @@ internal static partial class RepositoryRules
                 && StringComparer.OrdinalIgnoreCase.Equals(
                     existing.AssemblyName,
                     candidate.AssemblyName)));
-    }
-
-    private static bool HasLiteralXunitReference(string content)
-    {
-        var document = XDocument.Parse(content, LoadOptions.None);
-        return document.Descendants().Any(static element =>
-            element.Name.LocalName == "PackageReference"
-            && string.Equals(
-                (string?)element.Attribute("Include"),
-                "xunit",
-                StringComparison.Ordinal));
     }
 
     private static void AddDebt(

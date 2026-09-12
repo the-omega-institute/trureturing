@@ -1,4 +1,4 @@
-using System.Xml.Linq;
+using System.Collections.Immutable;
 using TestProjectTopologyPolicy = StrataLint.Engine.RepositoryRules;
 
 namespace StrataLint.ArchitectureTests;
@@ -352,7 +352,7 @@ public sealed partial class TestProjectTopologyPolicyTests
     }
 
     [Fact]
-    public void XunitPackageIdentityIsOrdinalLiteral()
+    public void PackageSpellingDoesNotOverrideRegisteredTestRole()
     {
         var upperCasePackage = OwnedTest(
             "Literal.Tests",
@@ -369,14 +369,12 @@ public sealed partial class TestProjectTopologyPolicyTests
             Snapshot(),
             Snapshot(Production("Literal", "Literal"), upperCasePackage));
 
-        Assert.False(result.IsAccepted);
-        Assert.Equal(
-            [Debt("missing-owned-project", "Literal", "Literal.Tests")],
-            result.IntroducedDebt.ToArray());
+        Assert.True(result.IsAccepted, result.Message);
+        Assert.Empty(result.IntroducedDebt);
     }
 
     [Fact]
-    public void AssemblyIdentityFallsBackToProjectStemWhenAssemblyNameIsAbsent()
+    public void RegisteredAssemblyIdentityIsIndependentOfProjectStem()
     {
         var production = Production("Fallback", "Ignored") with
         {
@@ -389,7 +387,7 @@ public sealed partial class TestProjectTopologyPolicyTests
             production,
             OwnedTest(
                 "Fallback.Tests",
-                "Fallback.Tests",
+                "Ignored.Tests",
                 "../../Fallback/Fallback.csproj"));
 
         var result = TestProjectTopologyPolicy.Evaluate(current, current);
@@ -474,7 +472,7 @@ public sealed partial class TestProjectTopologyPolicyTests
     }
 
     [Fact]
-    public void OwnerAssembliesAreDerivedFromOwnedXunitProjectTopology()
+    public void OwnerAssembliesConsumeDeclaredTestRoles()
     {
         var assemblies = TestProjectTopologyPolicy.CalculateOwnerAssemblies(Snapshot(
             OwnedTest("Zulu.Tests", "Zulu.Tests"),
@@ -492,8 +490,8 @@ public sealed partial class TestProjectTopologyPolicyTests
         Assert.Equal(["Alpha.Tests", "Zulu.Tests"], assemblies.ToArray());
     }
 
-    [Fact(DisplayName = "assembly identity matching ignores case while xunit marker stays literal")]
-    public void AssemblyIdentityMatchingIsCaseInsensitiveButXunitMarkerIsLiteral()
+    [Fact(DisplayName = "assembly identity matching ignores case and declarations select owners")]
+    public void AssemblyIdentityMatchingIsCaseInsensitiveAndPackageTextDoesNotSelectOwners()
     {
         var assemblies = TestProjectTopologyPolicy.CalculateOwnerAssemblies(Snapshot(
             Production("CaseInsensitive", "CaseInsensitive"),
@@ -526,9 +524,9 @@ public sealed partial class TestProjectTopologyPolicyTests
                         StringComparison.Ordinal),
             };
 
-        Assert.Empty(TestProjectTopologyPolicy.CalculateOwnerAssemblies(Snapshot(
+        Assert.Equal(["caseinsensitive.tests"], TestProjectTopologyPolicy.CalculateOwnerAssemblies(Snapshot(
             Production("CaseInsensitive", "CaseInsensitive"),
-            packageNearMiss)));
+            packageNearMiss)).ToArray());
     }
 
     [Fact]
@@ -562,8 +560,8 @@ public sealed partial class TestProjectTopologyPolicyTests
                     "orphan-owned-project",
                     "owned-test-to-owned-test-reference",
                 }));
-        AssertHasDebtFreePair(protectedBase, result.BaseDebt);
-        AssertHasDebtFreePair(candidate, result.CandidateDebt);
+        AssertHasDebtFreePair(protectedBase, EngineeringInputManifest.Read(candidate), result.BaseDebt);
+        AssertHasDebtFreePair(candidate, EngineeringInputManifest.Read(candidate), result.CandidateDebt);
     }
 
     [Fact]
@@ -660,7 +658,13 @@ public sealed partial class TestProjectTopologyPolicyTests
               </ItemGroup>
             </Project>
             """;
-        return new TestProjectTopologyProject(path, content);
+        var role = path == TestProjectTopologyPolicy.TestSupportProjectPath ? "support"
+            : TestProjectTopologyPolicy.CrossCuttingHarnessPaths.Contains(path) ? "harness"
+            : xunit ? "test" : path.StartsWith("tools/tests/", StringComparison.Ordinal) ? "negative-control" : "production";
+        var origin = new Uri("https://fixture.invalid/" + path);
+        var declaredReferences = references.Select(reference =>
+            Uri.UnescapeDataString(new Uri(origin, reference).AbsolutePath.TrimStart('/'))).ToImmutableArray();
+        return new TestProjectTopologyProject(path, content, assembly, role, declaredReferences);
     }
 
     private static TestProjectTopologyDebt Debt(
@@ -673,51 +677,15 @@ public sealed partial class TestProjectTopologyPolicyTests
 
     private static void AssertHasDebtFreePair(
         RepositorySnapshot snapshot,
+        EngineeringInputManifest manifest,
         IReadOnlyList<TestProjectTopologyDebt> debt)
     {
-        var projects = TestProjectTopologyPolicy.ReadSnapshotProjects(snapshot).Projects
-            .Select(static project =>
-            {
-                var path = project.Path.Replace('\\', '/');
-                var document = XDocument.Parse(project.Content, LoadOptions.None);
-                var assemblyName = document.Descendants()
-                    .FirstOrDefault(static element => element.Name.LocalName == "AssemblyName")
-                    ?.Value.Trim();
-                if (string.IsNullOrEmpty(assemblyName))
-                {
-                    assemblyName = Path.GetFileNameWithoutExtension(path);
-                }
-
-                var isXunit = document.Descendants().Any(static element =>
-                    element.Name.LocalName == "PackageReference"
-                    && string.Equals(
-                        (string?)element.Attribute("Include"),
-                        "xunit",
-                        StringComparison.Ordinal));
-                return (Path: path, AssemblyName: assemblyName, IsXunit: isXunit);
-            })
-            .ToArray();
-        var productionIdentities = projects
-            .Where(static project =>
-            {
-                var parts = project.Path.Split('/');
-                return parts.Length == 3
-                    && parts[0] == "tools"
-                    && parts[1] != "tests"
-                    && parts[2].EndsWith(".csproj", StringComparison.Ordinal);
-            })
-            .GroupBy(static project => project.AssemblyName, StringComparer.OrdinalIgnoreCase)
-            .Where(static group => group.Count() == 1)
-            .Select(static group => group.Key);
-        var ownedTestIdentities = projects
-            .Where(static project => project.IsXunit
-                && project.Path.StartsWith("tools/tests/", StringComparison.Ordinal)
-                && project.Path.EndsWith(".csproj", StringComparison.Ordinal)
-                && project.Path != CanonicalHarnessPath)
-            .GroupBy(static project => project.AssemblyName, StringComparer.OrdinalIgnoreCase)
-            .Where(static group => group.Count() == 1)
-            .Select(static group => group.Key)
-            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var projects = TestProjectTopologyPolicy.ReadDeclaredProjects(snapshot, manifest).Projects;
+        var productionIdentities = projects.Where(project => project.Role == "production")
+            .GroupBy(project => project.Assembly, StringComparer.OrdinalIgnoreCase)
+            .Where(group => group.Count() == 1).Select(group => group.Key);
+        var ownedTestIdentities = projects.Where(project => project.Role == "test")
+            .Select(project => project.Assembly).ToHashSet(StringComparer.OrdinalIgnoreCase);
         var pairIdentities = productionIdentities
             .Where(identity => ownedTestIdentities.Contains(identity + ".Tests"))
             .ToArray();
