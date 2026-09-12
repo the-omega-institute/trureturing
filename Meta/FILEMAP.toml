@@ -556,17 +556,6 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
-# Preserves license terms for the imported partial-trace results.
-pattern = "docs/reports/inoutbalance/physlib-LICENSE.txt"
-kind = "data"
-admission_plane = "content"
-produced_by = "none"
-consumed_by = ["agent"]
-verified_by = ["SnapshotDecoder"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
 # Supplies prime-corner ordering and constants to the slab search tools.
 pattern = "docs/reports/prime-slab-corner-order-0909.json"
 kind = "data"
