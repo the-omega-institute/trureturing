@@ -278,6 +278,10 @@ case "$VERB" in
     ;;
 
   fetch)
+    if [[ "${STRATALINT_ACTIONS_CACHE_SEEDED:-}" == "1" || "${STRATALINT_ACTIONS_CACHE_SEEDED:-}" == "true" ]]; then
+      printf 'LEAN_CACHE_FETCH {"status":"skipped","reason":"Actions supplied an applicable seed"}\n'
+      exit 0
+    fi
     staged="$(mktemp -d)"
     trap 'rm -rf "$staged"' EXIT
     # 精确地址优先；取不到就按 config 前缀回退到最近一份。

@@ -296,13 +296,16 @@ subprocess.run = run
         self.assertEqual(0, self.transport("fetch").returncode)
         self.assertTrue((self.root / ".lake/build/lib/lean/D5/A.olean").is_file())
 
-    def test_actions_seed_skips_release_and_real_build_failure_blocks_save(self):
+    def test_actions_seed_skips_fetch_and_publish_consumes_existing_build(self):
         result = self.transport("fetch", STRATALINT_ACTIONS_CACHE_SEEDED="1")
         self.assertEqual(0, result.returncode, result.stderr)
         self.assertIn("skipped", result.stdout)
+        # Publication consumes the already completed build stage; it does not
+        # invoke `make` and therefore cannot mask a build failure here.
         result = self.transport("publish", FAKE_BUILD_EXIT="19")
-        self.assertEqual(19, result.returncode, result.stdout + result.stderr)
-        self.assertEqual([], list(self.remote.iterdir()))
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status":"published"', result.stdout)
+        self.assertTrue(list(self.remote.iterdir()))
 
     def test_pr_cannot_publish_even_after_a_successful_build(self):
         result = self.transport("publish", GITHUB_EVENT_NAME="pull_request_target")
