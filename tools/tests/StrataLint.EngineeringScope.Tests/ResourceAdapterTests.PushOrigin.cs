@@ -497,6 +497,64 @@ public sealed partial class ResourceAdapterTests
     }
 
     [Fact]
+    public void NativeIdenticalEndpointsProduceCompleteEmptyNoWork()
+    {
+        using var fixture = new ResourceRouteTests.ResourceFixture(["filemap"]);
+        var environment = EnvironmentFor(fixture);
+        SetPushEvent(fixture, environment, fixture.Commit);
+        environment["CI_PLAN_PATH"] = PushPlanPath(fixture);
+        environment["CI_CHANGES_PATH"] = PushScopePath(fixture);
+        foreach (var stage in new[] { "build", "engineering", "current" })
+        {
+            var result = Route(fixture, stage, environment);
+            Assert.True(result.Exit == 0, result.Text);
+            Assert.Equal("not-required", Summary(fixture, stage)["status"]!.ToString());
+            Assert.Empty(Summary(fixture, stage)["artifacts"]!.AsArray());
+            Assert.Empty(Summary(fixture, stage)["steps"]!.AsArray());
+        }
+        var scope = PushScope(fixture);
+        Assert.Equal("event-range", scope["origin"]!["kind"]!.ToString());
+        Assert.Equal(fixture.Commit, scope["origin"]!["before"]!.ToString());
+        Assert.Equal(fixture.Commit, scope["origin"]!["after"]!.ToString());
+        Assert.True(scope["complete"]!.GetValue<bool>());
+        Assert.Equal(0, scope["change_count"]!.GetValue<int>());
+        Assert.Empty(scope["changes"]!.AsArray());
+        Assert.Empty(Strings(PushSelection(fixture)["resources"]!));
+        Assert.Empty(Strings(PushSelection(fixture)["cache_layers"]!));
+        Assert.Equal("not-applicable", PushSelection(fixture)["stages"]!["delta"]!["status"]!.ToString());
+        Assert.False(File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.BuildPath)));
+        Assert.False(File.Exists(Path.Combine(fixture.Root, "build/launched")));
+    }
+
+    [Fact]
+    public void NativePlanRejectsCheckoutAdvanceBeforeCurrent()
+    {
+        using var fixture = LocalFixture();
+        var before = fixture.Commit;
+        fixture.Write("docs/first.md", "first candidate documentation\n");
+        fixture.CommitPlan();
+        var originalHead = fixture.Commit;
+        var environment = EnvironmentFor(fixture);
+        SetPushEvent(fixture, environment, before);
+        Assert.True(PlannerWithEnvironment(fixture, environment, "push-plan").Exit == 0);
+        Assert.Empty(Strings(PushSelection(fixture)["resources"]!));
+        fixture.Write("fixtures/selected.txt", "new required candidate input\n");
+        fixture.CommitPlan();
+        Assert.NotEqual(originalHead, fixture.Commit);
+        environment["CI_PLAN_PATH"] = PushPlanPath(fixture);
+        environment["CI_CHANGES_PATH"] = PushScopePath(fixture);
+        File.Delete(Path.Combine(fixture.Root, "build/adapter-output"));
+        var result = Route(fixture, "current", environment);
+        Assert.Equal(2, result.Exit);
+        Assert.Contains("CI_INPUT_FAILED", result.Text, StringComparison.Ordinal);
+        Assert.Contains("push event after does not match checked-out HEAD", result.Text, StringComparison.Ordinal);
+        Assert.Equal("failed", Summary(fixture, "current")["status"]!.ToString());
+        Assert.False(File.Exists(Path.Combine(fixture.Root, "build/adapter-output")));
+        Assert.False(File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.CurrentPath)));
+        Assert.False(File.Exists(Path.Combine(fixture.Root, "build/launched")));
+    }
+
+    [Fact]
     public void NativeCommonRunnerRejectsAValidPlanForAnotherEvent()
     {
         using var fixture = LocalFixture();
