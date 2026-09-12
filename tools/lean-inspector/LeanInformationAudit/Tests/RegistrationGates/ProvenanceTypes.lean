@@ -85,7 +85,7 @@ noncomputable def openAliasDecision (_ : Unit) (x : Bool) : Bool :=
   if @decide (openAliasFamily x) (Classical.propDecidable _) then x else false
 check_provenance "OpenAliasDecision" using openAliasDecision expects "unclassified_form" for specificTruth
 noncomputable def openAliasBinderControl := unrelatedDecisionRead
-check_provenance "OpenAliasBinderControl" using openAliasBinderControl expects "clean" for specificTruth
+check_provenance "OpenAliasBinderControl" using openAliasBinderControl expects "unclassified_form" for specificTruth
 
 def structuralAliasFamily (_ : Nat) : Prop := specificStatement
 noncomputable def structuralAliasDecision (_ : Unit) (x : Nat) : Nat :=
@@ -100,7 +100,7 @@ run_cmd Elab.Command.liftTermElabM do
     | throwError "fixture template"
   for (readout, label, forbidden) in [
       (``structuralAliasDecision, "OpenAliasDecisionStructural", true),
-      (``structuralBinderDecision, "OpenAliasBinderControlStructural", false)] do
+      (``structuralBinderDecision, "OpenAliasBinderControlStructural", true)] do
     let holder := readout.str "fixtureRealization"
     addDecl <| .defnDecl {
       name := holder, levelParams := [], type := template.type

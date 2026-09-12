@@ -76,10 +76,10 @@ elab "check_provenance " label:str " using " readout:ident " expects " reason:st
       else if let .ok json := Json.parse payload then
         if reason.getString == "unclassified_form" then
           let .obj fields := json | throwError "[FAIL] {label.getString}: non-object payload"
-          let keys := fields.toList.map Prod.fst |>.qsort (· < ·)
+          let keys := fields.toList.map Prod.fst |>.toArray.qsort (· < ·)
           unless keys == #["class", "first", "namespace", "site", "walked"] do
             throwError "[FAIL] {label.getString}: payload keys"
-          let some walked := fields.find? (·.1 == "walked") | throwError "[FAIL] {label.getString}: walked missing"
+          let some walked := fields.get? "walked" | throwError "[FAIL] {label.getString}: walked missing"
           let .arr items := walked | throwError "[FAIL] {label.getString}: walked shape"
           let names := items.filterMap (fun j => j.getStr?) |>.toArray
           unless names == names.qsort (· < ·) && names.toList.eraseDups.length == names.size && names.contains n.toString do
@@ -133,8 +133,8 @@ check_provenance "UnavailableDefinition" using unavailable expects "incomplete_c
 noncomputable def unavailableAlias := unavailable
 check_provenance "UnavailableAlias" using unavailableAlias expects "incomplete_closure" for truth
 
--- A structural readout reaches a proof of its registered statement (0 = 0).
-def structuralRead (_ : Unit) (x : Nat) : Nat := let _ : (0 : Nat) = 0 := rfl; x
+-- A structural readout reaches a reserved judge identity constructor.
+def structuralRead (_ : Unit) (x : Nat) : Nat := let _ := StatementKey.mk; x
 structural_theorem structuralTruth in RegistrationStructural.law
   realization ⟨structuralRead⟩ nondegeneracy RegistrationStructural.lawVariation
   sensitivity RegistrationStructural.slotSensitivity := by let _ := proofSource; rfl
@@ -162,11 +162,11 @@ run_cmd Elab.Command.liftTermElabM do
     value := mkConst ``clean, hints := .abbrev, safety := .safe }
 check_provenance "TypeDependency" using typeTruth expects "forbidden_dependency" for truth
 
--- 65536 distinct leaves in a balanced term exhaust the expression budget
+-- 262144 distinct leaves in a balanced term exhaust the expression budget
 -- while using only a handful of constants; no time-based assertion is involved.
 set_option maxHeartbeats 2000000 in
 run_cmd Elab.Command.liftTermElabM do
-  let mut layer := (List.range 65536).toArray.map mkNatLit
+  let mut layer := (List.range 262144).toArray.map mkNatLit
   while layer.size > 1 do
     layer := (List.range (layer.size / 2)).toArray.map fun i =>
       mkApp2 (mkConst ``Nat.add) layer[2*i]! layer[2*i+1]!

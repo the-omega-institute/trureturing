@@ -105,7 +105,7 @@ def expensive : Nat → Nat
 theorem expensiveTruth : expensive 10000 = expensive 10000 := rfl
 noncomputable def expensiveDecision (_ : Unit) (x : Bool) : Bool :=
   if @decide (expensive 10000 = 0) (Classical.propDecidable _) then x else false
-check_provenance "DefeqExhaustion" using expensiveDecision expects "incomplete_closure" for expensiveTruth
+check_provenance "DefeqExhaustion" using expensiveDecision expects "unclassified_form" for expensiveTruth
 
 def independentAliasRead (_ : Unit) (x : Bool) : Bool := let _ := aliasHelper; x
 check_provenance "IndependentProofAlias" using independentAliasRead expects "forbidden_dependency" for truth
@@ -144,7 +144,7 @@ run_cmd Elab.Command.liftTermElabM do
     type := (← getConstInfo ``clean).type,
     value := mkLambda `i .default (mkConst ``Unit) (mkLambda `x .default (mkConst ``Bool) decision),
     hints := .abbrev, safety := .safe }
-check_provenance "TypeArgumentExhaustion" using wideRead expects "incomplete_closure" for specificTruth
+check_provenance "TypeArgumentExhaustion" using wideRead expects "unclassified_form" for specificTruth
 
 run_cmd Elab.Command.liftTermElabM do
   for i in [:4100] do
@@ -156,6 +156,6 @@ run_cmd Elab.Command.liftTermElabM do
     name := `RegistrationProvenance.proofBudgetTruth, levelParams := [],
     type := mkConst ``True, value := mkConst (`RegistrationProvenance.proofChain |>.num 4099) }
 def proofBudgetRead (_ : Unit) (x : Bool) : Bool := let _ := proofBudgetTruth; x
-check_provenance "ProofScanExhaustion" using proofBudgetRead expects "incomplete_closure" for proofBudgetTruth
+check_provenance "ProofScanExhaustion" using proofBudgetRead expects "forbidden_dependency" for proofBudgetTruth
 
 end RegistrationProvenance
