@@ -230,6 +230,9 @@ jobs:
     name: Canonical Lean report production
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 45
+    env:
+      # 缓存作用域:dev 为空串(key 与既往逐字节相同);integration-* 为「<分支>-」,使前缀回落先取本分支 push 存的层,再回落无作用域前缀。
+      CACHE_SCOPE: ${{ startsWith(github.base_ref || github.ref_name, 'integration-') && format('{0}-', github.base_ref || github.ref_name) || '' }}
     outputs:
       baseline_sha: ${{ steps.base.outputs.sha }}
     steps:
@@ -350,8 +353,10 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: .canonical-lean-report-cache
-          key: stratalint-canonical-lean-report-reportcache0909-restored-v1-${{ steps.lean-report-input.outputs.address }}
-          restore-keys: stratalint-canonical-lean-report-reportcache0909-restored-v1-
+          key: stratalint-canonical-lean-report-v2-${{ env.CACHE_SCOPE }}${{ steps.lean-report-input.outputs.address }}
+          restore-keys: |
+            stratalint-canonical-lean-report-v2-${{ env.CACHE_SCOPE }}
+            stratalint-canonical-lean-report-v2-
       - name: Serve candidate canonical Lean report from the cached address
         id: report-reuse
         if: steps.report-cache.outcome == 'success' && steps.report-cache.outputs.cache-hit == 'true'
@@ -429,15 +434,16 @@ jobs:
       # project 层优先取 Actions cache:它每次 dev push 写一份(约 8 分钟一份),
       # 而 Release 是 `cron: 0 */6 * * *` 且只许 schedule(实测间隔可达 7h05m)。
       # 精确命中结构上不可能(key 含 sources_sha256,每个改 Lean 的候选都不同),
-      # 故这里靠 restore-keys 前缀回退取「最近一次 dev push 的 project 层」。
+      # 故这里靠 restore-keys 前缀回退取「最近一次同作用域 push 的 project 层」,integration-* 先取本分支的,再回落无作用域前缀。
       - name: Restore candidate Lean project build artifacts
         id: lake-build-cache
         if: steps.report-reuse.outcome != 'success'
         uses: actions/cache/restore@v4
         with:
           path: candidate/.lake/build
-          key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-input.outputs.config_sha256 }}-${{ steps.lean-input.outputs.sources_sha256 }}
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-input.outputs.config_sha256 }}-${{ env.CACHE_SCOPE }}${{ steps.lean-input.outputs.sources_sha256 }}
           restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-input.outputs.config_sha256 }}-${{ env.CACHE_SCOPE }}
             ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-input.outputs.config_sha256 }}-
       # make lean owns optional Release fallback and its transaction budget.
       - name: Build candidate Lean project
@@ -459,7 +465,7 @@ jobs:
         uses: actions/cache/save@v4
         with:
           path: candidate/.lake/build
-          key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-input.outputs.config_sha256 }}-${{ steps.lean-input.outputs.sources_sha256 }}
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-input.outputs.config_sha256 }}-${{ env.CACHE_SCOPE }}${{ steps.lean-input.outputs.sources_sha256 }}
       - name: Save Lean dependency artifacts (push only)
         if: always() && steps.lean-build.outcome == 'success' && steps.lake-deps-cache.outputs.cache-hit != 'true' && github.event_name == 'push'
         continue-on-error: true
@@ -522,7 +528,7 @@ jobs:
         uses: actions/cache/save@v4
         with:
           path: .canonical-lean-report-cache
-          key: stratalint-canonical-lean-report-reportcache0909-restored-v1-${{ steps.lean-report-input.outputs.address }}
+          key: stratalint-canonical-lean-report-v2-${{ env.CACHE_SCOPE }}${{ steps.lean-report-input.outputs.address }}
       - name: Run complete mathematical content checks
         shell: bash
         env:
