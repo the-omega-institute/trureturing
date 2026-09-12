@@ -490,7 +490,14 @@ theorem two_point_grid_dominance (c d : Fin 2 → ℝ) (M₀ M₁ : ℝ)
   · have hw : w = ![d 0 - c 0, d 1 - c 1] := by funext i; fin_cases i <;> simp [w]
     have hv : v = ![logValue (d 0) - logValue (c 0), logValue (d 1) - logValue (c 1)] := by
       funext i; fin_cases i <;> simp [v]
-    simpa only [hw, hv, hB₀, varianceFloor, Fin.sum_univ_two] using hh
+    convert hh using 1 <;>
+      simp [hw, hv, hB₀, varianceFloor, Fin.sum_univ_two,
+        Knapsack.FractionalKnapsackDual.objective,
+        Knapsack.FractionalKnapsackDual.greedyFill, sub_le_iff_le_add]
+    have hguard : (d 0 ≤ M₁ - c 0 - c 1 + c 0) ↔
+        (d 0 - c 0 ≤ M₁ - c 0 - c 1) := by
+      constructor <;> intro <;> linarith
+    simp only [hguard]
   · rw [hB₁] at hh'
     by_cases hfirst : d 1 - c 1 ≤ B <;>
       by_cases hsecond : d 0 - c 0 ≤ B - (d 1 - c 1) <;>
