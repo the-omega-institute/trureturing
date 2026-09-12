@@ -19,8 +19,8 @@ internal static class AtomContextCommand
                 throw new DigestionAtomContextException(DigestionAtomContextError.ARGUMENTS_INVALID,
                     "USAGE: StrataLint atom-context --atom-id ATOM_ID");
             var snapshot = Decode(repository.ReadCurrent());
-            var context = DigestionAtomContextProjection.Resolve(snapshot, BackfillInventoryLoader.Load(snapshot), arguments[1]);
-            return new CommandResult(true, Render(context), string.Empty);
+            var contexts = DigestionAtomContextProjection.ResolveOccurrences(snapshot, BackfillInventoryLoader.Load(snapshot), arguments[1]);
+            return new CommandResult(true, Render(contexts), string.Empty);
         }
         catch (DigestionAtomContextException error)
         {
@@ -35,7 +35,29 @@ internal static class AtomContextCommand
     private static CommandResult Invalid(DigestionAtomContextError code, string detail) =>
         new(false, string.Empty, $"ATOM_CONTEXT_INVALID {code} {detail}\n");
 
-    private static string Render(DigestionAtomContext context)
+    private static string Render(ImmutableArray<DigestionAtomContext> contexts)
+    {
+        if (contexts.Length == 1) return RenderSingleton(contexts[0]);
+        var writer = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
+        var first = contexts[0];
+        writer.WriteLine($"ATOM_CONTEXT atom_id={first.Target.AtomId} source_id={first.SourceId} source_path={first.SourcePath} atomizer={first.Atomizer} occurrences={contexts.Length}");
+        foreach (var context in contexts)
+        {
+            writer.WriteLine($"OCCURRENCE index={context.Index}/{context.Count} {NeighborToken("PREVIOUS", context.Previous, context.PreviousBoundaryReason)} {NeighborToken("NEXT", context.Next, context.NextBoundaryReason)}");
+            WriteNeighbor(writer, "CURRENT", context.Current, null);
+            if (context.Previous is { } previous) WriteText(writer, "PREVIOUS", previous.RawBytes);
+            WriteText(writer, "CURRENT", context.Current.RawBytes);
+            if (context.Next is { } next) WriteText(writer, "NEXT", next.RawBytes);
+        }
+        return writer.ToString();
+    }
+
+    private static string NeighborToken(string label,
+        (string AtomId, string? LedgerState, ImmutableArray<byte> RawBytes)? neighbor, string? boundary) => neighbor is { } value
+            ? $"{label} atom_id={value.AtomId} state={value.LedgerState ?? "unregistered"}"
+            : $"{label} none reason={boundary}";
+
+    private static string RenderSingleton(DigestionAtomContext context)
     {
         var writer = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
         writer.WriteLine($"ATOM_CONTEXT atom_id={context.Target.AtomId} source_id={context.SourceId} "

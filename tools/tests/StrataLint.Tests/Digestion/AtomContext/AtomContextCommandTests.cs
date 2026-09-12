@@ -1,3 +1,4 @@
+using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
 using static StrataLint.Tests.AtomContextFixture;
@@ -60,6 +61,20 @@ public sealed class AtomContextCommandTests
         Assert.DoesNotContain("BEGIN_PREVIOUS_TEXT", result.Output, StringComparison.Ordinal);
         Assert.DoesNotContain("BEGIN_NEXT_TEXT", result.Output, StringComparison.Ordinal);
         Assert.Contains("Only.\nEND_CURRENT_TEXT\n", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void AtomContextCommandRendersAllAmbiguousOccurrences()
+    {
+        var fixture = Create();
+        var target = Id(fixture.Atomized.Claims[1]);
+        fixture = fixture with { SourceBytes = Encoding.UTF8.GetBytes(ThreeClaims + ThreeClaims) };
+        var result = fixture.Environment().AtomContext(["--atom-id", target]);
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("occurrences=2\n", result.Output, StringComparison.Ordinal);
+        Assert.Equal(2, result.Output.Split("OCCURRENCE index=", StringSplitOptions.None).Length - 1);
+        Assert.Contains("OCCURRENCE index=2/6 PREVIOUS atom_id=", result.Output, StringComparison.Ordinal);
+        Assert.Contains("OCCURRENCE index=5/6 PREVIOUS atom_id=", result.Output, StringComparison.Ordinal);
     }
 
     [Fact]
