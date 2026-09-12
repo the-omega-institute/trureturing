@@ -396,4 +396,116 @@ theorem eq_two_mul_prime_of_composite_of_s2_prime {n : ℕ} (hncomp : ¬ n.Prime
     simpa [hqne.symm] using hprod.symm
   exact ⟨q, hq, hqodd, hnprod⟩
 
+/-- Seidov's A119623 conjecture: a prime value at a composite has exactly two preimages. -/
+theorem seidov_conjecture : ∀ n : ℕ, ¬ n.Prime → 1 < n → (S2 n).Prime →
+    ∀ m : ℕ, S2 m = S2 n ↔ (m = n ∨ m = S2 n) := by
+  have pair_identity (s : Multiset ℕ) :
+      s.sum ^ 2 = 2 * s.esymm 2 + (s.map fun x => x ^ 2).sum := by
+    induction s using Multiset.induction_on with
+    | empty =>
+        simp only [Multiset.sum_zero, Multiset.map_zero]
+        rw [Multiset.esymm, show (2 : ℕ) = 1 + 1 by rfl,
+          Multiset.powersetCard_zero_right]
+        simp
+    | @cons a s ih =>
+        have hes : (a ::ₘ s).esymm 2 = s.esymm 2 + a * s.sum := by
+          change (Multiset.map Multiset.prod
+              (Multiset.powersetCard (1 + 1) (a ::ₘ s))).sum = _
+          simp only [Multiset.esymm, Multiset.powersetCard_cons,
+            Multiset.map_add, Multiset.sum_add, Multiset.map_map,
+            Function.comp_apply, Multiset.prod_cons, Multiset.powersetCard_one,
+            Multiset.prod_singleton]
+          congr 1
+          simpa using
+            (Multiset.sum_map_mul_left (s := s) (a := a) (f := fun x : ℕ => x))
+        simp only [Multiset.sum_cons, hes, Multiset.map_cons]
+        calc
+          (a + s.sum) ^ 2 = a ^ 2 + 2 * a * s.sum + s.sum ^ 2 := by ring
+          _ = 2 * (s.esymm 2 + a * s.sum) +
+              (a ^ 2 + (Multiset.map (fun x => x ^ 2) s).sum) := by rw [ih]; ring
+  have sigma_identity (x : ℕ) :
+      ArithmeticFunction.sigma 1 x ^ 2 =
+        2 * S2 x + ArithmeticFunction.sigma 2 x := by
+    rw [ArithmeticFunction.sigma_apply, ArithmeticFunction.sigma_apply]
+    simp only [pow_one, S2, Finset.sum_eq_multiset_sum]
+    rw [Multiset.map_id']
+    change x.divisors.val.sum ^ 2 =
+      2 * x.divisors.val.esymm 2 + (x.divisors.val.map fun y => y ^ 2).sum
+    exact pair_identity x.divisors.val
+  have sigma_prime {k p : ℕ} (hp : p.Prime) :
+      ArithmeticFunction.sigma k p = 1 + p ^ k := by
+    calc
+      ArithmeticFunction.sigma k p =
+          ArithmeticFunction.sigma k (p ^ 1) := by rw [pow_one]
+      _ = ∑ j ∈ Finset.range (1 + 1), p ^ (j * k) :=
+        ArithmeticFunction.sigma_apply_prime_pow hp
+      _ = 1 + p ^ k := by norm_num [Finset.sum_range_succ]
+  have s2_prime {p : ℕ} (hp : p.Prime) : S2 p = p := by
+    have hident := sigma_identity p
+    rw [sigma_prime (k := 1) hp, sigma_prime (k := 2) hp] at hident
+    ring_nf at hident
+    omega
+  have s2_two_mul_prime {q : ℕ} (hq : q.Prime) (hqodd : Odd q) :
+      S2 (2 * q) = 2 * q ^ 2 + 9 * q + 2 := by
+    have hsigma_mul (k : ℕ) :
+        ArithmeticFunction.sigma k (2 * q) =
+          ArithmeticFunction.sigma k 2 * ArithmeticFunction.sigma k q :=
+      ArithmeticFunction.isMultiplicative_sigma.map_mul_of_coprime
+        hqodd.coprime_two_left
+    have hident := sigma_identity (2 * q)
+    rw [hsigma_mul 1, hsigma_mul 2,
+      sigma_prime (k := 1) Nat.prime_two, sigma_prime (k := 1) hq,
+      sigma_prime (k := 2) Nat.prime_two, sigma_prime (k := 2) hq] at hident
+    ring_nf at hident
+    have hident' : 9 + q * 18 + q ^ 2 * 9 =
+        5 + q ^ 2 * 5 + S2 (2 * q) * 2 := by simpa [mul_comm] using hident
+    omega
+  intro n hncomp hn hprime m
+  obtain ⟨q, hq, hqodd, hnq⟩ :=
+    eq_two_mul_prime_of_composite_of_s2_prime hncomp hn hprime
+  have hnformula : S2 n = 2 * q ^ 2 + 9 * q + 2 := by
+    rw [hnq]
+    exact s2_two_mul_prime hq hqodd
+  constructor
+  · intro heq
+    by_cases hmgt : 1 < m
+    · by_cases hmprime : m.Prime
+      · right
+        rw [← heq]
+        exact (s2_prime hmprime).symm
+      · have hs2mprime : (S2 m).Prime := by rwa [heq]
+        obtain ⟨r, hr, hrodd, hmr⟩ :=
+          eq_two_mul_prime_of_composite_of_s2_prime hmprime hmgt hs2mprime
+        have hmformula : S2 m = 2 * r ^ 2 + 9 * r + 2 := by
+          rw [hmr]
+          exact s2_two_mul_prime hr hrodd
+        have hrq : r = q := by
+          rcases lt_trichotomy r q with hrlt | hre | hqle
+          · have hrsq : r ^ 2 < q ^ 2 := Nat.pow_lt_pow_left hrlt (by omega)
+            omega
+          · exact hre
+          · have hqrsq : q ^ 2 < r ^ 2 := Nat.pow_lt_pow_left hqle (by omega)
+            omega
+        left
+        rw [hmr, hnq, hrq]
+    · have hmle : m ≤ 1 := by omega
+      have hmzero : m = 0 ∨ m = 1 := by omega
+      exfalso
+      apply hprime.ne_zero
+      rw [← heq]
+      rcases hmzero with rfl | rfl
+      · change (0 : Multiset ℕ).esymm 2 = 0
+        rw [Multiset.esymm, show (2 : ℕ) = 1 + 1 by rfl,
+          Multiset.powersetCard_zero_right]
+        simp
+      · simp [S2, Multiset.esymm, Nat.divisors_one]
+  · intro hm
+    rcases hm with rfl | hm
+    · rfl
+    · rw [hm]
+      simpa using s2_prime hprime
+
+#print axioms eq_two_mul_prime_of_composite_of_s2_prime
+#print axioms seidov_conjecture
+
 end D5.S1.Recurrence.Invariants.DivisorPairProductPrimePreimages
