@@ -2,12 +2,10 @@
    generality: G
    mirror-B: D5/B/S1/Recurrence/Invariants/SchroederPeakAlternatingQuadraticMoment
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [Mathlib.Algebra.BigOperators.Fin, Mathlib.Data.Fintype.List, Mathlib.Logic.Equiv.Sum, Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Fin, mathlib/module/Mathlib.Tactic.Ring]
    utility: none
    digest: First returns of peak-marked Schroeder paths prove Schulte's alternating moment. -/
 import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Data.Fintype.List
-import Mathlib.Logic.Equiv.Sum
 import Mathlib.Tactic.Ring
 open Finset
 open scoped BigOperators
@@ -110,32 +108,20 @@ theorem mem_schroeder_iff (n : Nat) (w : List Step) : w ∈ schroeder n ↔
         q.count D = q.count U + (b - 1) ∧
         (∀ i, i < q.length → (q.take i).count D < (q.take i).count U + b) ∧
         p.count U = p.count D ∧ PrefixNonnegative p := by
-    intro b r hb
-    induction r generalizing b with
+    intro b r hb; induction r generalizing b with
     | nil => intro _ h; simp at h; omega
     | cons a r ih =>
-        intro hstrict hcount
-        cases a with
+        intro hstrict hcount; cases a with
         | H =>
-            have hs : ∀ i, i < r.length → (r.take i).count D ≤ (r.take i).count U + b := by
-              intro i hi
-              have h := hstrict (i + 1) (by simp; omega)
-              rw [List.take_succ_cons] at h
-              simp [List.count_cons] at h
-              simpa using h
+            have hs : ∀ i, i < r.length → (r.take i).count D ≤ (r.take i).count U + b := by intro i hi; have h := hstrict (i + 1) (by simp; omega); rw [List.take_succ_cons] at h; simp [List.count_cons] at h; simpa using h
             have hc : r.count D = r.count U + b := by simpa using hcount
             rcases ih b hb hs hc with ⟨q, p, heq, hq, hqs, hp, hps⟩
             refine ⟨H :: q, p, ?_, ?_, ?_, hp, hps⟩
             · rw [heq, List.cons_append]
-            · simp [List.count_cons] at hq ⊢
-              exact hq
-            · intro i hi
-              cases i with
+            · simp [List.count_cons] at hq ⊢; exact hq
+            · intro i hi; cases i with
               | zero => simpa using hb
-              | succ i =>
-                  rw [List.take_succ_cons]
-                  simp [List.count_cons]
-                  exact hqs i (by simpa using hi)
+              | succ i => rw [List.take_succ_cons]; simp [List.count_cons]; exact hqs i (by simpa using hi)
         | D =>
             by_cases hb1 : b = 1
             · have hpbal : r.count D = r.count U := by
@@ -143,22 +129,12 @@ theorem mem_schroeder_iff (n : Nat) (w : List Step) : w ∈ schroeder n ↔
                 simp [List.count_cons] at hcount
                 omega
               have hpp : PrefixNonnegative r := by
-                intro i
-                by_cases hi : i < r.length
-                · have h := hstrict (i + 1) (by simp; omega)
-                  rw [List.take_succ_cons] at h
-                  simp [List.count_cons] at h
-                  omega
-                · rw [List.take_of_length_le (by omega)]
-                  exact hpbal.le
+                intro i; by_cases hi : i < r.length
+                · have h := hstrict (i + 1) (by simp; omega); rw [List.take_succ_cons] at h; simp [List.count_cons] at h; omega
+                · rw [List.take_of_length_le (by omega)]; exact hpbal.le
               refine ⟨[], r, by simp, by simp [hb1], by simp, hpbal.symm, hpp⟩
             · have hb' : 0 < b - 1 := by omega
-              have hs : ∀ i, i < r.length → (r.take i).count D ≤ (r.take i).count U + (b - 1) := by
-                intro i hi
-                have h := hstrict (i + 1) (by simp; omega)
-                rw [List.take_succ_cons] at h
-                simp [List.count_cons] at h
-                omega
+              have hs : ∀ i, i < r.length → (r.take i).count D ≤ (r.take i).count U + (b - 1) := by intro i hi; have h := hstrict (i + 1) (by simp; omega); rw [List.take_succ_cons] at h; simp [List.count_cons] at h; omega
               have hc : r.count D = r.count U + (b - 1) := by
                 simp [List.count_cons] at hcount
                 omega
@@ -167,21 +143,11 @@ theorem mem_schroeder_iff (n : Nat) (w : List Step) : w ∈ schroeder n ↔
               · rw [heq, List.cons_append]
               · simp [List.count_cons] at hq ⊢
                 omega
-              · intro i hi
-                cases i with
+              · intro i hi; cases i with
                 | zero => simpa using hb
-                | succ i =>
-                    rw [List.take_succ_cons]
-                    simp [List.count_cons]
-                    have hh := hqs i (by simpa using hi)
-                    omega
+                | succ i => rw [List.take_succ_cons]; simp [List.count_cons]; have hh := hqs i (by simpa using hi); omega
         | U =>
-            have hs : ∀ i, i < r.length → (r.take i).count D ≤ (r.take i).count U + (b + 1) := by
-              intro i hi
-              have h := hstrict (i + 1) (by simp; omega)
-              rw [List.take_succ_cons] at h
-              simp [List.count_cons] at h
-              omega
+            have hs : ∀ i, i < r.length → (r.take i).count D ≤ (r.take i).count U + (b + 1) := by intro i hi; have h := hstrict (i + 1) (by simp; omega); rw [List.take_succ_cons] at h; simp [List.count_cons] at h; omega
             have hc : r.count D = r.count U + (b + 1) := by
               simp [List.count_cons] at hcount
               omega
@@ -190,31 +156,22 @@ theorem mem_schroeder_iff (n : Nat) (w : List Step) : w ∈ schroeder n ↔
             · rw [heq, List.cons_append]
             · simp [List.count_cons] at hq ⊢
               omega
-            · intro i hi
-              cases i with
+            · intro i hi; cases i with
               | zero => simpa using hb
-              | succ i =>
-                  rw [List.take_succ_cons]
-                  simp [List.count_cons]
-                  have hh := hqs i (by simpa using hi)
-                  omega
+              | succ i => rw [List.take_succ_cons]; simp [List.count_cons]; have hh := hqs i (by simpa using hi); omega
   constructor
   · exact schroeder_spec n w
   · intro hw
     have hweight : ∀ z : List Step, weight z = z.count U + z.count D + 2 * z.count H := by
-      intro z
-      induction z with
+      intro z; induction z with
       | nil => simp [weight]
       | cons a z ih =>
-          simp only [weight] at ih ⊢
-          cases a <;> simp [List.count_cons, stepWeight, Nat.add_assoc, Nat.add_left_comm, Nat.add_comm] at * <;> omega
+          simp only [weight] at ih ⊢; cases a <;> simp [List.count_cons, stepWeight, Nat.add_assoc, Nat.add_left_comm, Nat.add_comm] at * <;> omega
     have hzero : ∀ z : List Step, weight z = 0 → z = [] := by
-      intro z
-      induction z with
+      intro z; induction z with
       | nil => intro; rfl
       | cons a z ih =>
-          intro hz
-          cases a <;> simp [weight, stepWeight] at hz
+          intro hz; cases a <;> simp [weight, stepWeight] at hz
     induction n using Nat.strong_induction_on generalizing w with
     | h n ih =>
         cases n with
@@ -231,27 +188,12 @@ theorem mem_schroeder_iff (n : Nat) (w : List Step) : w ∈ schroeder n ↔
                     have hbad := hw.2.2 1
                     simp at hbad
                 | H =>
-                    have hrweight : weight r = 2 * n := by
-                      have hwweight := hw.1
-                      change 2 + weight r = 2 * (n + 1) at hwweight
-                      omega
-                    have hrprefix : PrefixNonnegative r := by
-                      intro i
-                      have h := hw.2.2 (i + 1)
-                      rw [List.take_succ_cons] at h
-                      simpa using h
-                    have hrmem := ih n (by omega) r
-                      ⟨hrweight, by simpa using hw.2.1, hrprefix⟩
-                    rw [schroeder]
-                    exact mem_union_left _ (mem_image.mpr ⟨r, hrmem, rfl⟩)
+                    have hrweight : weight r = 2 * n := by have hwweight := hw.1; change 2 + weight r = 2 * (n + 1) at hwweight; omega
+                    have hrprefix : PrefixNonnegative r := by intro i; have h := hw.2.2 (i + 1); rw [List.take_succ_cons] at h; simpa using h
+                    have hrmem := ih n (by omega) r ⟨hrweight, by simpa using hw.2.1, hrprefix⟩
+                    rw [schroeder]; exact mem_union_left _ (mem_image.mpr ⟨r, hrmem, rfl⟩)
                 | U =>
-                    have hstrict : ∀ i, i < r.length →
-                        (r.take i).count D ≤ (r.take i).count U + 1 := by
-                      intro i hi
-                      have h := hw.2.2 (i + 1)
-                      rw [List.take_succ_cons] at h
-                      simp at h
-                      omega
+                    have hstrict : ∀ i, i < r.length → (r.take i).count D ≤ (r.take i).count U + 1 := by intro i hi; have h := hw.2.2 (i + 1); rw [List.take_succ_cons] at h; simp at h; omega
                     have hcount : r.count D = r.count U + 1 := by
                       simpa using hw.2.1.symm
                     rcases hfirst 1 r (by omega) hstrict hcount with
@@ -267,32 +209,20 @@ theorem mem_schroeder_iff (n : Nat) (w : List Step) : w ∈ schroeder n ↔
                         exact hqbal.symm.le
                     let i : Nat := q.count U + q.count H
                     let j : Nat := p.count U + p.count H
-                    have hqweight : weight q = 2 * i := by
-                      dsimp [i]
-                      rw [hweight, hqbal]
-                      omega
-                    have hpweight : weight p = 2 * j := by
-                      dsimp [j]
-                      rw [hweight, hpbal.symm]
-                      omega
-                    have hsplit : weight (U :: (q ++ D :: p)) = 2 + weight q + weight p := by
-                      simp [weight, List.map_append, List.sum_append, stepWeight,
-                        Nat.add_assoc, Nat.add_comm, Nat.add_left_comm]
+                    have hqweight : weight q = 2 * i := by dsimp [i]; rw [hweight, hqbal]; omega
+                    have hpweight : weight p = 2 * j := by dsimp [j]; rw [hweight, hpbal.symm]; omega
+                    have hsplit : weight (U :: (q ++ D :: p)) = 2 + weight q + weight p := by simp [weight, List.map_append, List.sum_append, stepWeight, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm]
                     have htotal : 2 * (n + 1) = 2 + weight q + weight p := by
                       calc
                         2 * (n + 1) = weight (U :: r) := hw.1.symm
                         _ = weight (U :: (q ++ D :: p)) := by rw [heq]
                         _ = 2 + weight q + weight p := hsplit
-                    have hij : i + j = n := by
-                      rw [hqweight, hpweight] at htotal
-                      omega
+                    have hij : i + j = n := by rw [hqweight, hpweight] at htotal; omega
                     have hi : i < n + 1 := by omega
                     have hji : n - i = j := by omega
                     have hqmem := ih i hi q ⟨hqweight, hqbal, hqprefix⟩
                     have hpmem := ih (n - i) (by omega) p ⟨by simpa [hji] using hpweight, hpbal, hpp⟩
-                    rw [schroeder]
-                    apply mem_union_right
-                    apply mem_biUnion.mpr
+                    rw [schroeder]; apply mem_union_right; apply mem_biUnion.mpr
                     refine ⟨⟨i, hi⟩, mem_univ _, ?_⟩
                     apply mem_image.mpr
                     refine ⟨(q, p), mem_product.mpr ⟨hqmem, hpmem⟩, ?_⟩
@@ -300,37 +230,24 @@ theorem mem_schroeder_iff (n : Nat) (w : List Step) : w ∈ schroeder n ↔
 private theorem first_return_unique {i j : Nat} {q1 q2 p1 p2 : List Step}
     (hq1 : q1 ∈ schroeder i) (hq2 : q2 ∈ schroeder j)
     (h : U :: q1 ++ D :: p1 = U :: q2 ++ D :: p2) : q1 = q2 /\ p1 = p2 := by
-  have hs1 := schroeder_spec i q1 hq1
-  have hs2 := schroeder_spec j q2 hq2
+  have hs1 := schroeder_spec i q1 hq1; have hs2 := schroeder_spec j q2 hq2
   have happ : q1 ++ D :: p1 = q2 ++ D :: p2 := (List.cons.inj h).2
   have hlength : q1.length = q2.length := by
     apply Nat.le_antisymm
     · by_contra hn
       have hlt : q2.length < q1.length := by omega
       have ht := congrArg (List.take (q2.length + 1)) happ.symm
-      have hleft : (q2 ++ D :: p2).take (q2.length + 1) = q2 ++ [D] := by
-        rw [List.take_append, List.take_of_length_le (by omega)]
-        simp
-      have hright : (q1 ++ D :: p1).take (q2.length + 1) = q1.take (q2.length + 1) := by
-        rw [List.take_append_of_le_length (by omega)]
-      rw [hleft, hright] at ht
-      have hnonneg := hs1.2.2 (q2.length + 1)
-      rw [← ht] at hnonneg
-      simp only [List.count_append, List.count_singleton, hs2.2.1, show (D == U) = false by rfl, show (D == D) = true by rfl, Bool.false_eq_true, if_false, if_true] at hnonneg
-      omega
+      have hleft : (q2 ++ D :: p2).take (q2.length + 1) = q2 ++ [D] := by rw [List.take_append, List.take_of_length_le (by omega)]; simp
+      have hright : (q1 ++ D :: p1).take (q2.length + 1) = q1.take (q2.length + 1) := by rw [List.take_append_of_le_length (by omega)]
+      rw [hleft, hright] at ht; have hnonneg := hs1.2.2 (q2.length + 1); rw [← ht] at hnonneg
+      simp only [List.count_append, List.count_singleton, hs2.2.1, show (D == U) = false by rfl, show (D == D) = true by rfl, Bool.false_eq_true, if_false, if_true] at hnonneg; omega
     · by_contra hn
       have hlt : q1.length < q2.length := by omega
       have ht := congrArg (List.take (q1.length + 1)) happ
-      have hleft : (q1 ++ D :: p1).take (q1.length + 1) = q1 ++ [D] := by
-        rw [List.take_append, List.take_of_length_le (by omega)]
-        simp
-      have hright : (q2 ++ D :: p2).take (q1.length + 1) = q2.take (q1.length + 1) := by
-        rw [List.take_append_of_le_length (by omega)]
-      rw [hleft, hright] at ht
-      have hnonneg := hs2.2.2 (q1.length + 1)
-      rw [← ht] at hnonneg
-      simp only [List.count_append, List.count_singleton, hs1.2.1, show (D == U) = false by rfl, show (D == D) = true by rfl, Bool.false_eq_true, if_false, if_true] at hnonneg
-      omega
+      have hleft : (q1 ++ D :: p1).take (q1.length + 1) = q1 ++ [D] := by rw [List.take_append, List.take_of_length_le (by omega)]; simp
+      have hright : (q2 ++ D :: p2).take (q1.length + 1) = q2.take (q1.length + 1) := by rw [List.take_append_of_le_length (by omega)]
+      rw [hleft, hright] at ht; have hnonneg := hs2.2.2 (q1.length + 1); rw [← ht] at hnonneg
+      simp only [List.count_append, List.count_singleton, hs1.2.1, show (D == U) = false by rfl, show (D == D) = true by rfl, Bool.false_eq_true, if_false, if_true] at hnonneg; omega
   obtain ⟨hq, hp⟩ := List.append_inj happ hlength
   exact ⟨hq, (List.cons.inj hp).2⟩
 /-- A Schroeder word together with its membership proof at semilength `n`. -/
@@ -338,12 +255,9 @@ abbrev SchroederPath (n : Nat) := {w : List Step // w ∈ schroeder n}
 private def assembleFirstReturn (n : Nat) : SchroederPath n ⊕ (Sigma fun i : Fin (n + 1) =>
       SchroederPath i × SchroederPath (n - i)) -> SchroederPath (n + 1)
   | Sum.inl p => ⟨H :: p.1, by
-      rw [schroeder]
-      exact mem_union_left _ (mem_image.mpr ⟨p.1, p.2, rfl⟩)⟩
+      rw [schroeder]; exact mem_union_left _ (mem_image.mpr ⟨p.1, p.2, rfl⟩)⟩
   | Sum.inr ⟨i, q, p⟩ => ⟨U :: q.1 ++ D :: p.1, by
-      rw [schroeder]
-      apply mem_union_right
-      apply mem_biUnion.mpr
+      rw [schroeder]; apply mem_union_right; apply mem_biUnion.mpr
       refine ⟨i, mem_univ i, mem_image.mpr ⟨(q.1, p.1), ?_, rfl⟩⟩
       exact mem_product.mpr ⟨q.2, p.2⟩⟩
 /-- First-return decomposition: the summands start with `H` and `U,Q,D`, respectively. -/
@@ -357,37 +271,24 @@ noncomputable def firstReturnEquiv (n : Nat) : SchroederPath (n + 1) ≃
     | inl p1 =>
         cases b with
         | inl p2 =>
-            apply congrArg Sum.inl
-            apply Subtype.ext
-            exact (List.cons.inj (congrArg Subtype.val hab)).2
+            apply congrArg Sum.inl; apply Subtype.ext; exact (List.cons.inj (congrArg Subtype.val hab)).2
         | inr s2 =>
-            rcases s2 with ⟨i2, q2, p2⟩
-            have hw := congrArg Subtype.val hab
-            have hbad : H = U := (List.cons.inj hw).1
-            contradiction
+            rcases s2 with ⟨i2, q2, p2⟩; have hw := congrArg Subtype.val hab
+            have hbad : H = U := (List.cons.inj hw).1; contradiction
     | inr s1 =>
         rcases s1 with ⟨i1, q1, p1⟩
         cases b with
         | inl p2 =>
-            have hw := congrArg Subtype.val hab
-            have hbad : U = H := (List.cons.inj hw).1
-            contradiction
+            have hw := congrArg Subtype.val hab; have hbad : U = H := (List.cons.inj hw).1; contradiction
         | inr s2 =>
             rcases s2 with ⟨i2, q2, p2⟩
-            have hw := congrArg Subtype.val hab
-            have hu := first_return_unique q1.2 q2.2 hw
-            have hs1 := schroeder_spec i1 q1.1 q1.2
-            have hs2 := schroeder_spec i2 q2.1 q2.2
+            have hw := congrArg Subtype.val hab; have hu := first_return_unique q1.2 q2.2 hw
+            have hs1 := schroeder_spec i1 q1.1 q1.2; have hs2 := schroeder_spec i2 q2.1 q2.2
             have hiNat : (i1 : Nat) = (i2 : Nat) := by
-              rw [hu.1] at hs1
-              omega
-            have hi : i1 = i2 := Fin.ext hiNat
-            subst i2
-            have hq : q1 = q2 := Subtype.ext hu.1
-            have hp : p1 = p2 := Subtype.ext hu.2
-            subst q2
-            subst p2
-            rfl
+              rw [hu.1] at hs1; omega
+            have hi : i1 = i2 := Fin.ext hiNat; subst i2
+            have hq : q1 = q2 := Subtype.ext hu.1; have hp : p1 = p2 := Subtype.ext hu.2
+            subst q2; subst p2; rfl
   · intro w
     have hw0 : w.1 ∈
         (schroeder n).image (H :: .) ∪
@@ -403,20 +304,16 @@ noncomputable def firstReturnEquiv (n : Nat) : SchroederPath (n + 1) ≃
     rcases mem_union.mp hw0 with hw | hw
     · rcases mem_image.mp hw with ⟨p, hp, hpw⟩
       refine ⟨Sum.inl ⟨p, hp⟩, ?_⟩
-      apply Subtype.ext
-      exact hpw
-    · simp only [mem_biUnion, mem_univ, true_and] at hw
-      rcases hw with ⟨i, hi⟩
+      apply Subtype.ext; exact hpw
+    · simp only [mem_biUnion, mem_univ, true_and] at hw; rcases hw with ⟨i, hi⟩
       rcases mem_image.mp hi with ⟨qp, hqp, hpw⟩
       refine ⟨Sum.inr ⟨i, ⟨qp.1, (mem_product.mp hqp).1⟩, ⟨qp.2, (mem_product.mp hqp).2⟩⟩, ?_⟩
-      apply Subtype.ext
-      exact hpw
+      apply Subtype.ext; exact hpw
 private theorem first_return_peaks {i n : Nat} {q p : List Step}
     (hq : q ∈ schroeder i) (_hp : p ∈ schroeder n) : peaks (U :: q ++ D :: p) = peaks q + peaks p + if i = 0 then 1 else 0 := by
   have hs := schroeder_spec i q hq
   have hD : ∀ r : List Step, peaks (D :: r) = peaks r := by
-    intro r
-    cases r with
+    intro r; cases r with
     | nil => rfl
     | cons a r => cases a <;> simp [peaks]
   have happ : ∀ r : List Step, r ≠ [] -> r.getLast? ≠ some U ->
@@ -425,49 +322,32 @@ private theorem first_return_peaks {i n : Nat} {q p : List Step}
     induction r with
     | nil => simp
     | cons a r ih =>
-        intro _ hlast
-        cases r with
+        intro _ hlast; cases r with
         | nil =>
             cases a with
             | U => simp at hlast
             | D => simpa [peaks] using hD p
             | H => simpa [peaks] using hD p
         | cons b r =>
-            rw [List.cons_append]
-            change (if a = U /\ b = D then 1 else 0) + peaks ((b :: r) ++ D :: p) = (if a = U /\ b = D then 1 else 0) + peaks (b :: r) + peaks p
-            rw [ih (by simp) (by simpa using hlast)]
-            omega
+            rw [List.cons_append]; change (if a = U /\ b = D then 1 else 0) + peaks ((b :: r) ++ D :: p) = (if a = U /\ b = D then 1 else 0) + peaks (b :: r) + peaks p; rw [ih (by simp) (by simpa using hlast)]; omega
   by_cases hi : i = 0
   · subst i
     have hq0 : q = [] := by simpa [schroeder] using hq
     subst q
     simp only [List.singleton_append]
-    rw [show peaks (U :: D :: p) = 1 + peaks (D :: p) by rfl, hD]
-    change 1 + peaks p = 0 + peaks p + 1
-    omega
+    rw [show peaks (U :: D :: p) = 1 + peaks (D :: p) by rfl, hD]; change 1 + peaks p = 0 + peaks p + 1; omega
   · have hqne : q ≠ [] := by
-      intro hzero
-      subst q
-      simp [weight] at hs
-      omega
+      intro hzero; subst q; simp [weight] at hs; omega
     have hlast : q.getLast? ≠ some U := by
-      intro hu
-      have hmem : U ∈ q.getLast? := by simp [hu]
+      intro hu; have hmem : U ∈ q.getLast? := by simp [hu]
       let r0 := q.dropLast
       have hdecomp : r0 ++ [U] = q := List.dropLast_append_getLast? U hmem
-      have hnonneg := hs.2.2 r0.length
-      rw [← hdecomp, List.take_append_of_le_length (by simp)] at hnonneg
-      rw [List.take_length] at hnonneg
-      have hbalance := hs.2.1
-      rw [← hdecomp] at hbalance
-      simp only [List.count_append, List.count_singleton, show (U == U) = true by rfl, show (U == D) = false by rfl, Bool.false_eq_true, if_true, if_false] at hbalance
-      omega
+      have hnonneg := hs.2.2 r0.length; rw [← hdecomp, List.take_append_of_le_length (by simp)] at hnonneg; rw [List.take_length] at hnonneg
+      have hbalance := hs.2.1; rw [← hdecomp] at hbalance
+      simp only [List.count_append, List.count_singleton, show (U == U) = true by rfl, show (U == D) = false by rfl, Bool.false_eq_true, if_true, if_false] at hbalance; omega
     obtain ⟨a, r, rfl⟩ := List.exists_cons_of_ne_nil hqne
     have hhead : a ≠ D := by
-      intro ha
-      subst a
-      have hnonneg := hs.2.2 1
-      simp at hnonneg
+      intro ha; subst a; have hnonneg := hs.2.2 1; simp at hnonneg
     cases a with
     | U =>
         simpa [peaks, hi] using happ (U :: r) (by simp) hlast
@@ -638,68 +518,51 @@ theorem T_first_return_recurrence (n k : Nat) : T (n + 1) k = T n k + (if 0 < k 
 theorem schulte_a060693 (n : Nat) : (∑ k : Fin (n + 1), (-1 : Int) ^ (k : Nat) * (T n k : Int) * (((n : Int) + 1 - (k : Nat)) ^ 2)) = (n : Int) ^ 2 + n + 1 := by
   classical
   have hpeaks : ∀ a (p : List Step), p ∈ schroeder a -> peaks p <= a := by
-    intro a
-    induction a using Nat.strong_induction_on with
+    intro a; induction a using Nat.strong_induction_on with
     | h a ih =>
-        intro p hp
-        cases a with
+        intro p hp; cases a with
         | zero =>
             have hp0 : p = [] := by simpa [schroeder] using hp
-            subst p
-            rfl
+            subst p; rfl
         | succ a =>
             rw [schroeder] at hp
             rcases mem_union.mp hp with hp | hp
             · rcases mem_image.mp hp with ⟨r, hr, rfl⟩
               have hb := ih a (by omega) r hr
-              have heq : peaks (H :: r) = peaks r := by
-                cases r with
-                | nil => rfl
-                | cons s r => cases s <;> simp [peaks]
-              rw [heq]
-              omega
+              have heq : peaks (H :: r) = peaks r := by cases r with | nil => rfl | cons s r => cases s <;> simp [peaks]
+              rw [heq]; omega
             · simp only [mem_biUnion, mem_univ, true_and] at hp
-              rcases hp with ⟨i, hi⟩
-              rcases mem_image.mp hi with ⟨qp, hqp, rfl⟩
-              have hq := (mem_product.mp hqp).1
-              have hr := (mem_product.mp hqp).2
-              have hbq := ih i (by omega) qp.1 hq
-              have hbr := ih (a - i) (by omega) qp.2 hr
+              rcases hp with ⟨i, hi⟩; rcases mem_image.mp hi with ⟨qp, hqp, rfl⟩
+              have hq := (mem_product.mp hqp).1; have hr := (mem_product.mp hqp).2
+              have hbq := ih i (by omega) qp.1 hq; have hbr := ih (a - i) (by omega) qp.2 hr
               rw [first_return_peaks hq hr]
               by_cases hi0 : (i : Nat) = 0 <;> simp [hi0] <;> omega
   have hsum (m : Nat) (f : Nat -> Int) : (∑ w : SchroederPath (m + 1), f (peaks w.1)) = (∑ p : SchroederPath m, f (peaks p.1)) + ∑ i : Fin (m + 1), ∑ qp : SchroederPath i × SchroederPath (m - i), f (peaks qp.1.1 + peaks qp.2.1 + if (i : Nat) = 0 then 1 else 0) := by
-    have hinv (s : SchroederPath m ⊕
-        (Sigma fun i : Fin (m + 1) =>
-          SchroederPath i × SchroederPath (m - i))) : peaks ((firstReturnEquiv m).symm s).1 = match s with
+    have hinv (s : SchroederPath m ⊕ (Sigma fun i : Fin (m + 1) =>
+        SchroederPath i × SchroederPath (m - i))) : peaks ((firstReturnEquiv m).symm s).1 = match s with
           | Sum.inl p => peaks p.1
           | Sum.inr ⟨i, q, p⟩ =>
               peaks q.1 + peaks p.1 + if (i : Nat) = 0 then 1 else 0 := by
       cases s with
       | inl p =>
-          change peaks (H :: p.1) = peaks p.1
-          cases p.1 with
+          change peaks (H :: p.1) = peaks p.1; cases p.1 with
           | nil => rfl
           | cons s r => cases s <;> simp [peaks]
       | inr s =>
-          rcases s with ⟨i, q, p⟩
-          change peaks (U :: q.1 ++ D :: p.1) = peaks q.1 + peaks p.1 + if (i : Nat) = 0 then 1 else 0
+          rcases s with ⟨i, q, p⟩; change peaks (U :: q.1 ++ D :: p.1) = peaks q.1 + peaks p.1 + if (i : Nat) = 0 then 1 else 0
           exact first_return_peaks q.2 p.2
     calc
       _ = ∑ s : SchroederPath m ⊕
           (Sigma fun i : Fin (m + 1) =>
             SchroederPath i × SchroederPath (m - i)), f (peaks ((firstReturnEquiv m).symm s).1) := by
-        symm
-        exact (firstReturnEquiv m).symm.sum_comp
-          (fun w => f (peaks w.1))
+        symm; exact (firstReturnEquiv m).symm.sum_comp (fun w => f (peaks w.1))
       _ = ∑ s : SchroederPath m ⊕
           (Sigma fun i : Fin (m + 1) =>
             SchroederPath i × SchroederPath (m - i)), f (match s with
             | Sum.inl p => peaks p.1
             | Sum.inr ⟨i, q, p⟩ =>
                 peaks q.1 + peaks p.1 + if (i : Nat) = 0 then 1 else 0) := by
-        apply Finset.sum_congr rfl
-        intro s _
-        rw [hinv]
+        apply Finset.sum_congr rfl; intro s _; rw [hinv]
       _ = _ := by
         simp only [Fintype.sum_sum_type, Fintype.sum_sigma, Fintype.sum_prod_type]
   let A : Nat -> Int := fun m =>
@@ -710,88 +573,49 @@ theorem schulte_a060693 (n : Nat) : (∑ k : Fin (n + 1), (-1 : Int) ^ (k : Nat)
     ∑ p : SchroederPath m, (-1 : Int) ^ peaks p.1 * (peaks p.1 : Int) * ((peaks p.1 : Int) - 1)
   have hprod {X Y : Type} [Fintype X] [Fintype Y]
       (f : X -> Int) (g : Y -> Int) : (∑ xy : X × Y, f xy.1 * g xy.2) = (∑ x, f x) * ∑ y, g y := by
-    rw [Fintype.sum_prod_type, Finset.sum_mul]
-    apply Finset.sum_congr rfl
-    intro x _
-    rw [Finset.mul_sum]
+    rw [Fintype.sum_prod_type, Finset.sum_mul]; apply Finset.sum_congr rfl; intro x _; rw [Finset.mul_sum]
   have hpairA (a b : Nat) : (∑ qp : SchroederPath a × SchroederPath b, (-1 : Int) ^ (peaks qp.1.1 + peaks qp.2.1)) = A a * A b := by
-    simpa only [A, pow_add] using
-      hprod (fun q : SchroederPath a => (-1 : Int) ^ peaks q.1)
-        (fun p : SchroederPath b => (-1 : Int) ^ peaks p.1)
+    simpa only [A, pow_add] using hprod (fun q : SchroederPath a => (-1 : Int) ^ peaks q.1) (fun p : SchroederPath b => (-1 : Int) ^ peaks p.1)
   have hpairB (a b : Nat) : (∑ qp : SchroederPath a × SchroederPath b, (-1 : Int) ^ (peaks qp.1.1 + peaks qp.2.1) * ((peaks qp.1.1 + peaks qp.2.1 : Nat) : Int)) = B a * A b + A a * B b := by
     calc
       _ = ∑ qp : SchroederPath a × SchroederPath b, (((-1 : Int) ^ peaks qp.1.1 * (peaks qp.1.1 : Int)) * (-1 : Int) ^ peaks qp.2.1 + (-1 : Int) ^ peaks qp.1.1 * ((-1 : Int) ^ peaks qp.2.1 * (peaks qp.2.1 : Int))) := by
-        apply Finset.sum_congr rfl
-        intro qp _
-        rw [pow_add, Nat.cast_add]
-        ring
+        apply Finset.sum_congr rfl; intro qp _; rw [pow_add, Nat.cast_add]; ring
       _ = (∑ qp : SchroederPath a × SchroederPath b, ((-1 : Int) ^ peaks qp.1.1 * (peaks qp.1.1 : Int)) * (-1 : Int) ^ peaks qp.2.1) + ∑ qp : SchroederPath a × SchroederPath b, (-1 : Int) ^ peaks qp.1.1 * ((-1 : Int) ^ peaks qp.2.1 * (peaks qp.2.1 : Int)) := by
         rw [Finset.sum_add_distrib]
       _ = _ := by
-        rw [hprod
-          (fun q : SchroederPath a =>
-            (-1 : Int) ^ peaks q.1 * (peaks q.1 : Int))
-          (fun p : SchroederPath b => (-1 : Int) ^ peaks p.1)]
-        rw [hprod
-          (fun q : SchroederPath a => (-1 : Int) ^ peaks q.1)
-          (fun p : SchroederPath b =>
-            (-1 : Int) ^ peaks p.1 * (peaks p.1 : Int))]
+        rw [hprod (fun q : SchroederPath a => (-1 : Int) ^ peaks q.1 * (peaks q.1 : Int)) (fun p : SchroederPath b => (-1 : Int) ^ peaks p.1)]
+        rw [hprod (fun q : SchroederPath a => (-1 : Int) ^ peaks q.1) (fun p : SchroederPath b => (-1 : Int) ^ peaks p.1 * (peaks p.1 : Int))]
   have hpairC (a b : Nat) : (∑ qp : SchroederPath a × SchroederPath b, (-1 : Int) ^ (peaks qp.1.1 + peaks qp.2.1) * ((peaks qp.1.1 + peaks qp.2.1 : Nat) : Int) * (((peaks qp.1.1 + peaks qp.2.1 : Nat) : Int) - 1)) = C a * A b + 2 * B a * B b + A a * C b := by
     calc
       _ = ∑ qp : SchroederPath a × SchroederPath b, (((-1 : Int) ^ peaks qp.1.1 * (peaks qp.1.1 : Int) * ((peaks qp.1.1 : Int) - 1)) * (-1 : Int) ^ peaks qp.2.1 + 2 * ((-1 : Int) ^ peaks qp.1.1 * (peaks qp.1.1 : Int)) * ((-1 : Int) ^ peaks qp.2.1 * (peaks qp.2.1 : Int)) + (-1 : Int) ^ peaks qp.1.1 * ((-1 : Int) ^ peaks qp.2.1 * (peaks qp.2.1 : Int) * ((peaks qp.2.1 : Int) - 1))) := by
-        apply Finset.sum_congr rfl
-        intro qp _
-        rw [pow_add, Nat.cast_add]
-        ring
+        apply Finset.sum_congr rfl; intro qp _; rw [pow_add, Nat.cast_add]; ring
       _ = (∑ qp : SchroederPath a × SchroederPath b, ((-1 : Int) ^ peaks qp.1.1 * (peaks qp.1.1 : Int) * ((peaks qp.1.1 : Int) - 1)) * (-1 : Int) ^ peaks qp.2.1) + (∑ qp : SchroederPath a × SchroederPath b, (2 * ((-1 : Int) ^ peaks qp.1.1 * (peaks qp.1.1 : Int))) * ((-1 : Int) ^ peaks qp.2.1 * (peaks qp.2.1 : Int))) + ∑ qp : SchroederPath a × SchroederPath b, (-1 : Int) ^ peaks qp.1.1 * ((-1 : Int) ^ peaks qp.2.1 * (peaks qp.2.1 : Int) * ((peaks qp.2.1 : Int) - 1)) := by
         simp only [Finset.sum_add_distrib]
       _ = _ := by
-        rw [hprod
-          (fun q : SchroederPath a =>
-            (-1 : Int) ^ peaks q.1 * (peaks q.1 : Int) * ((peaks q.1 : Int) - 1))
-          (fun p : SchroederPath b => (-1 : Int) ^ peaks p.1)]
-        rw [hprod
-          (fun q : SchroederPath a =>
-            2 * ((-1 : Int) ^ peaks q.1 * (peaks q.1 : Int)))
-          (fun p : SchroederPath b =>
-            (-1 : Int) ^ peaks p.1 * (peaks p.1 : Int))]
-        rw [hprod
-          (fun q : SchroederPath a => (-1 : Int) ^ peaks q.1)
-          (fun p : SchroederPath b =>
-            (-1 : Int) ^ peaks p.1 * (peaks p.1 : Int) * ((peaks p.1 : Int) - 1))]
-        dsimp [A, B, C]
-        rw [← Finset.mul_sum]
+        rw [hprod (fun q : SchroederPath a => (-1 : Int) ^ peaks q.1 * (peaks q.1 : Int) * ((peaks q.1 : Int) - 1)) (fun p : SchroederPath b => (-1 : Int) ^ peaks p.1)]
+        rw [hprod (fun q : SchroederPath a => 2 * ((-1 : Int) ^ peaks q.1 * (peaks q.1 : Int))) (fun p : SchroederPath b => (-1 : Int) ^ peaks p.1 * (peaks p.1 : Int))]
+        rw [hprod (fun q : SchroederPath a => (-1 : Int) ^ peaks q.1) (fun p : SchroederPath b => (-1 : Int) ^ peaks p.1 * (peaks p.1 : Int) * ((peaks p.1 : Int) - 1))]
+        dsimp [A, B, C]; rw [← Finset.mul_sum]
   let emptyPath : SchroederPath 0 := ⟨[], by simp [schroeder]⟩
   let _ : Unique (SchroederPath 0) :=
     { default := emptyPath
       uniq := fun p => Subtype.ext (by simpa [emptyPath, schroeder] using p.2) }
   have hA0 : A 0 = 1 := by
-    rw [show A 0 = ∑ p : SchroederPath 0, (-1 : Int) ^ peaks p.1 by rfl, Fintype.sum_unique]
-    rfl
+    rw [show A 0 = ∑ p : SchroederPath 0, (-1 : Int) ^ peaks p.1 by rfl, Fintype.sum_unique]; rfl
   have hB0 : B 0 = 0 := by
-    rw [show B 0 = ∑ p : SchroederPath 0, (-1 : Int) ^ peaks p.1 * (peaks p.1 : Int) by rfl, Fintype.sum_unique]
-    rfl
+    rw [show B 0 = ∑ p : SchroederPath 0, (-1 : Int) ^ peaks p.1 * (peaks p.1 : Int) by rfl, Fintype.sum_unique]; rfl
   have hC0 : C 0 = 0 := by
-    rw [show C 0 = ∑ p : SchroederPath 0, (-1 : Int) ^ peaks p.1 * (peaks p.1 : Int) * ((peaks p.1 : Int) - 1) by rfl, Fintype.sum_unique]
-    rfl
+    rw [show C 0 = ∑ p : SchroederPath 0, (-1 : Int) ^ peaks p.1 * (peaks p.1 : Int) * ((peaks p.1 : Int) - 1) by rfl, Fintype.sum_unique]; rfl
   have hshiftA (m : Nat) : (∑ qp : SchroederPath 0 × SchroederPath m, (-1 : Int) ^ (peaks qp.1.1 + peaks qp.2.1 + 1)) = -A m := by
     calc
       _ = -(∑ qp : SchroederPath 0 × SchroederPath m, (-1 : Int) ^ (peaks qp.1.1 + peaks qp.2.1)) := by
-        rw [← Finset.sum_neg_distrib]
-        apply Finset.sum_congr rfl
-        intro qp _
-        rw [pow_succ]
-        ring
+        rw [← Finset.sum_neg_distrib]; apply Finset.sum_congr rfl; intro qp _; rw [pow_succ]; ring
       _ = -(A 0 * A m) := by rw [hpairA]
       _ = _ := by rw [hA0]; ring
   have hshiftB (m : Nat) : (∑ qp : SchroederPath 0 × SchroederPath m, (-1 : Int) ^ (peaks qp.1.1 + peaks qp.2.1 + 1) * ((peaks qp.1.1 + peaks qp.2.1 + 1 : Nat) : Int)) = -(B m + A m) := by
     calc
       _ = ∑ qp : SchroederPath 0 × SchroederPath m, -((-1 : Int) ^ (peaks qp.1.1 + peaks qp.2.1) * ((peaks qp.1.1 + peaks qp.2.1 : Nat) : Int) + (-1 : Int) ^ (peaks qp.1.1 + peaks qp.2.1)) := by
-        apply Finset.sum_congr rfl
-        intro qp _
-        rw [pow_succ, Nat.cast_add]
-        norm_num
-        ring
+        apply Finset.sum_congr rfl; intro qp _; rw [pow_succ, Nat.cast_add]; norm_num; ring
       _ = -((∑ qp : SchroederPath 0 × SchroederPath m, (-1 : Int) ^ (peaks qp.1.1 + peaks qp.2.1) * ((peaks qp.1.1 + peaks qp.2.1 : Nat) : Int)) + ∑ qp : SchroederPath 0 × SchroederPath m, (-1 : Int) ^ (peaks qp.1.1 + peaks qp.2.1)) := by
         rw [Finset.sum_neg_distrib, Finset.sum_add_distrib]
       _ = -((B 0 * A m + A 0 * B m) + A 0 * A m) := by
@@ -800,72 +624,47 @@ theorem schulte_a060693 (n : Nat) : (∑ k : Fin (n + 1), (-1 : Int) ^ (k : Nat)
   have hshiftC (m : Nat) : (∑ qp : SchroederPath 0 × SchroederPath m, (-1 : Int) ^ (peaks qp.1.1 + peaks qp.2.1 + 1) * ((peaks qp.1.1 + peaks qp.2.1 + 1 : Nat) : Int) * (((peaks qp.1.1 + peaks qp.2.1 + 1 : Nat) : Int) - 1)) = -(C m + 2 * B m) := by
     calc
       _ = -((∑ qp : SchroederPath 0 × SchroederPath m, (-1 : Int) ^ (peaks qp.1.1 + peaks qp.2.1) * ((peaks qp.1.1 + peaks qp.2.1 : Nat) : Int) * (((peaks qp.1.1 + peaks qp.2.1 : Nat) : Int) - 1)) + 2 * ∑ qp : SchroederPath 0 × SchroederPath m, (-1 : Int) ^ (peaks qp.1.1 + peaks qp.2.1) * ((peaks qp.1.1 + peaks qp.2.1 : Nat) : Int)) := by
-        rw [Finset.mul_sum, ← Finset.sum_add_distrib, ← Finset.sum_neg_distrib]
-        apply Finset.sum_congr rfl
-        intro qp _
-        rw [pow_succ, Nat.cast_add]
-        norm_num
-        ring
+        rw [Finset.mul_sum, ← Finset.sum_add_distrib, ← Finset.sum_neg_distrib]; apply Finset.sum_congr rfl; intro qp _; rw [pow_succ, Nat.cast_add]; norm_num; ring
       _ = -((C 0 * A m + 2 * B 0 * B m + A 0 * C m) + 2 * (B 0 * A m + A 0 * B m)) := by
         rw [hpairC, hpairB]
       _ = _ := by rw [hA0, hB0, hC0]; ring
   have hArec (m : Nat) : A (m + 1) = ∑ i : Fin m, A (i + 1) * A (m - (i + 1)) := by
-    change (∑ w : SchroederPath (m + 1), (-1 : Int) ^ peaks w.1) = _
-    rw [hsum]
-    rw [Fin.sum_univ_succ]
+    change (∑ w : SchroederPath (m + 1), (-1 : Int) ^ peaks w.1) = _; rw [hsum]; rw [Fin.sum_univ_succ]
     change A m + ((∑ qp : SchroederPath 0 × SchroederPath m, (-1 : Int) ^ (peaks qp.1.1 + peaks qp.2.1 + 1)) + ∑ i : Fin m, ∑ qp : SchroederPath i.succ × SchroederPath (m - i.succ), (-1 : Int) ^ (peaks qp.1.1 + peaks qp.2.1)) = _
     rw [hshiftA]
     have hpos (i : Fin m) : (∑ qp : SchroederPath i.succ × SchroederPath (m - i.succ), (-1 : Int) ^ (peaks qp.1.1 + peaks qp.2.1)) = A (i + 1) * A (m - (i + 1)) := by
       simpa using hpairA (i + 1) (m - (i + 1))
-    simp_rw [hpos]
-    ring
+    simp_rw [hpos]; ring
   have hBrec (m : Nat) : B (m + 1) = -A m + ∑ i : Fin m, (B (i + 1) * A (m - (i + 1)) + A (i + 1) * B (m - (i + 1))) := by
-    change (∑ w : SchroederPath (m + 1), (-1 : Int) ^ peaks w.1 * (peaks w.1 : Int)) = _
-    rw [hsum m (fun r => (-1 : Int) ^ r * (r : Int))]
-    rw [Fin.sum_univ_succ]
+    change (∑ w : SchroederPath (m + 1), (-1 : Int) ^ peaks w.1 * (peaks w.1 : Int)) = _; rw [hsum m (fun r => (-1 : Int) ^ r * (r : Int))]; rw [Fin.sum_univ_succ]
     change B m + ((∑ qp : SchroederPath 0 × SchroederPath m, (-1 : Int) ^ (peaks qp.1.1 + peaks qp.2.1 + 1) * ((peaks qp.1.1 + peaks qp.2.1 + 1 : Nat) : Int)) + ∑ i : Fin m, ∑ qp : SchroederPath i.succ × SchroederPath (m - i.succ), (-1 : Int) ^ (peaks qp.1.1 + peaks qp.2.1) * ((peaks qp.1.1 + peaks qp.2.1 : Nat) : Int)) = _
     rw [hshiftB]
     have hpos (i : Fin m) : (∑ qp : SchroederPath i.succ × SchroederPath (m - i.succ), (-1 : Int) ^ (peaks qp.1.1 + peaks qp.2.1) * ((peaks qp.1.1 + peaks qp.2.1 : Nat) : Int)) = B (i + 1) * A (m - (i + 1)) + A (i + 1) * B (m - (i + 1)) := by
       simpa using hpairB (i + 1) (m - (i + 1))
-    simp_rw [hpos]
-    ring
+    simp_rw [hpos]; ring
   have hCrec (m : Nat) : C (m + 1) = -2 * B m + ∑ i : Fin m, (C (i + 1) * A (m - (i + 1)) + 2 * B (i + 1) * B (m - (i + 1)) + A (i + 1) * C (m - (i + 1))) := by
-    change (∑ w : SchroederPath (m + 1), (-1 : Int) ^ peaks w.1 * (peaks w.1 : Int) * ((peaks w.1 : Int) - 1)) = _
-    rw [hsum m (fun r => (-1 : Int) ^ r * (r : Int) * ((r : Int) - 1))]
-    rw [Fin.sum_univ_succ]
+    change (∑ w : SchroederPath (m + 1), (-1 : Int) ^ peaks w.1 * (peaks w.1 : Int) * ((peaks w.1 : Int) - 1)) = _; rw [hsum m (fun r => (-1 : Int) ^ r * (r : Int) * ((r : Int) - 1))]; rw [Fin.sum_univ_succ]
     change C m + ((∑ qp : SchroederPath 0 × SchroederPath m, (-1 : Int) ^ (peaks qp.1.1 + peaks qp.2.1 + 1) * ((peaks qp.1.1 + peaks qp.2.1 + 1 : Nat) : Int) * (((peaks qp.1.1 + peaks qp.2.1 + 1 : Nat) : Int) - 1)) + ∑ i : Fin m, ∑ qp : SchroederPath i.succ × SchroederPath (m - i.succ), (-1 : Int) ^ (peaks qp.1.1 + peaks qp.2.1) * ((peaks qp.1.1 + peaks qp.2.1 : Nat) : Int) * (((peaks qp.1.1 + peaks qp.2.1 : Nat) : Int) - 1)) = _
     rw [hshiftC]
     have hpos (i : Fin m) : (∑ qp : SchroederPath i.succ × SchroederPath (m - i.succ), (-1 : Int) ^ (peaks qp.1.1 + peaks qp.2.1) * ((peaks qp.1.1 + peaks qp.2.1 : Nat) : Int) * (((peaks qp.1.1 + peaks qp.2.1 : Nat) : Int) - 1)) = C (i + 1) * A (m - (i + 1)) + 2 * B (i + 1) * B (m - (i + 1)) + A (i + 1) * C (m - (i + 1)) := by
       simpa using hpairC (i + 1) (m - (i + 1))
-    simp_rw [hpos]
-    ring
+    simp_rw [hpos]; ring
   have hABC : ∀ m : Nat, (A m = if m = 0 then 1 else 0) /\
         (B m = if m = 0 then 0 else -1) /\
           C m = (m : Int) * ((m : Int) - 1) := by
-    intro m
-    induction m using Nat.strong_induction_on with
+    intro m; induction m using Nat.strong_induction_on with
     | h m ih =>
         cases m with
         | zero =>
             exact ⟨by simpa using hA0, by simpa using hB0, by simpa using hC0⟩
         | succ m =>
-            have hA : A (m + 1) = 0 := by
-              rw [hArec]
-              apply Finset.sum_eq_zero
-              intro i _
-              have hi := (ih (i + 1) (by omega)).1
-              simp at hi
-              rw [hi]
-              simp
+            have hA : A (m + 1) = 0 := by rw [hArec]; apply Finset.sum_eq_zero; intro i _; have hi := (ih (i + 1) (by omega)).1; simp at hi; rw [hi]; simp
             have hB : B (m + 1) = -1 := by
               rw [hBrec]
               cases m with
               | zero => rw [hA0]; simp
               | succ r =>
-                  have hAm := (ih (r + 1) (by omega)).1
-                  have hBm := (ih (r + 1) (by omega)).2.1
-                  simp at hAm hBm
-                  rw [hAm, Fin.sum_univ_castSucc]
+                  have hAm := (ih (r + 1) (by omega)).1; have hBm := (ih (r + 1) (by omega)).2.1; simp at hAm hBm; rw [hAm, Fin.sum_univ_castSucc]
                   have hfront : (∑ i : Fin r, (B (i.castSucc + 1) * A (r + 1 - (i.castSucc + 1)) + A (i.castSucc + 1) * B (r + 1 - (i.castSucc + 1)))) = 0 := by
                     apply Finset.sum_eq_zero
                     intro i _
@@ -874,27 +673,19 @@ theorem schulte_a060693 (n : Nat) : (∑ k : Fin (n + 1), (-1 : Int) ^ (k : Nat)
                     have hir : r - (i : Nat) ≠ 0 := by omega
                     simp at hAi
                     simp [hir] at hAr
-                    have hAi' : A ((i.castSucc : Fin (r + 1)) + 1) = 0 := by
-                      simpa using hAi
-                    have hAr' : A (r + 1 - ((i.castSucc : Fin (r + 1)) + 1)) = 0 := by
-                      simpa using hAr
-                    rw [hAi', hAr']
-                    ring
+                    have hAi' : A ((i.castSucc : Fin (r + 1)) + 1) = 0 := by simpa using hAi
+                    have hAr' : A (r + 1 - ((i.castSucc : Fin (r + 1)) + 1)) = 0 := by simpa using hAr
+                    rw [hAi', hAr']; ring
                   rw [hfront]
                   have hlast : B ((Fin.last r : Fin (r + 1)) + 1) * A (r + 1 - ((Fin.last r : Fin (r + 1)) + 1)) + A ((Fin.last r : Fin (r + 1)) + 1) * B (r + 1 - ((Fin.last r : Fin (r + 1)) + 1)) = -1 := by
                     simp [hA0, hB0, hAm, hBm]
-                  rw [hlast]
-                  ring
+                  rw [hlast]; ring
             have hC : C (m + 1) = ((m + 1 : Nat) : Int) * (((m + 1 : Nat) : Int) - 1) := by
               rw [hCrec]
               cases m with
               | zero => rw [hB0]; simp
               | succ r =>
-                  have hAm := (ih (r + 1) (by omega)).1
-                  have hBm := (ih (r + 1) (by omega)).2.1
-                  have hCm := (ih (r + 1) (by omega)).2.2
-                  simp at hAm hBm
-                  rw [hBm, Fin.sum_univ_castSucc]
+                  have hAm := (ih (r + 1) (by omega)).1; have hBm := (ih (r + 1) (by omega)).2.1; have hCm := (ih (r + 1) (by omega)).2.2; simp at hAm hBm; rw [hBm, Fin.sum_univ_castSucc]
                   have hfront : (∑ i : Fin r, (C (i.castSucc + 1) * A (r + 1 - (i.castSucc + 1)) + 2 * B (i.castSucc + 1) * B (r + 1 - (i.castSucc + 1)) + A (i.castSucc + 1) * C (r + 1 - (i.castSucc + 1)))) = (r : Int) * 2 := by
                     have hterm (i : Fin r) : C (i.castSucc + 1) * A (r + 1 - (i.castSucc + 1)) + 2 * B (i.castSucc + 1) * B (r + 1 - (i.castSucc + 1)) + A (i.castSucc + 1) * C (r + 1 - (i.castSucc + 1)) = 2 := by
                       have hAi := (ih (i + 1) (by omega)).1
@@ -904,24 +695,17 @@ theorem schulte_a060693 (n : Nat) : (∑ k : Fin (n + 1), (-1 : Int) ^ (k : Nat)
                       have hir : r - (i : Nat) ≠ 0 := by omega
                       simp at hAi hBi
                       simp [hir] at hAr hBr
-                      have hAi' : A ((i.castSucc : Fin (r + 1)) + 1) = 0 := by
-                        simpa using hAi
-                      have hBi' : B ((i.castSucc : Fin (r + 1)) + 1) = -1 := by
-                        simpa using hBi
-                      have hAr' : A (r + 1 - ((i.castSucc : Fin (r + 1)) + 1)) = 0 := by
-                        simpa using hAr
-                      have hBr' : B (r + 1 - ((i.castSucc : Fin (r + 1)) + 1)) = -1 := by
-                        simpa using hBr
-                      rw [hAi', hBi', hAr', hBr']
-                      ring
+                      have hAi' : A ((i.castSucc : Fin (r + 1)) + 1) = 0 := by simpa using hAi
+                      have hBi' : B ((i.castSucc : Fin (r + 1)) + 1) = -1 := by simpa using hBi
+                      have hAr' : A (r + 1 - ((i.castSucc : Fin (r + 1)) + 1)) = 0 := by simpa using hAr
+                      have hBr' : B (r + 1 - ((i.castSucc : Fin (r + 1)) + 1)) = -1 := by simpa using hBr
+                      rw [hAi', hBi', hAr', hBr']; ring
                     simp_rw [hterm]
                     simp
                   rw [hfront]
                   have hlast : C ((Fin.last r : Fin (r + 1)) + 1) * A (r + 1 - ((Fin.last r : Fin (r + 1)) + 1)) + 2 * B ((Fin.last r : Fin (r + 1)) + 1) * B (r + 1 - ((Fin.last r : Fin (r + 1)) + 1)) + A ((Fin.last r : Fin (r + 1)) + 1) * C (r + 1 - ((Fin.last r : Fin (r + 1)) + 1)) = C (r + 1) := by
                     simp [hA0, hB0, hC0, hAm]
-                  rw [hlast, hCm]
-                  push_cast
-                  ring
+                  rw [hlast, hCm]; push_cast; ring
             exact ⟨by simpa using hA, by simpa using hB, by simpa using hC⟩
   have hT (a b : Nat) : T a b = Fintype.card {p : SchroederPath a // peaks p.1 = b} := by
     let e : (↥((schroeder a).filter (fun w => peaks w = b))) ≃
