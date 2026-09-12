@@ -124,7 +124,10 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
         var target = fixture.Ledger.RequireDigestionEntries().Single(entry => entry.AtomId == AtomContextFixture.Id(fixture.Atomized.Claims[1]));
         fixture = fixture with { SourceBytes = fixture.SourceBytes.Concat(fixture.SourceBytes).ToArray() };
         var request = $"atom_id = '{target.AtomId}'\njustification = '{Reason}'\nprevious_atom_id = '{new string('f', 64)}'\nnext_atom_id = '{AtomContextFixture.Id(fixture.Atomized.Claims[2])}'\noccurrence_index = 2\n";
-        var result = Run("/synthetic", fixture.RawSnapshot(), request);
+        using var temporary = new TemporaryDirectory();
+        var raw = fixture.RawSnapshot();
+        WriteFiles(temporary.Path, raw);
+        var result = Run(temporary.Path, raw, request);
         Assert.False(result.Success);
         Assert.StartsWith("SETTLE_INVALID CONTEXT_MISMATCH", result.Error, StringComparison.Ordinal);
     }
