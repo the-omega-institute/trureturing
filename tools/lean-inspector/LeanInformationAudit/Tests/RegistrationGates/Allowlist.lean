@@ -39,4 +39,7 @@ def unlistedProducerRead (_ : Unit) (x : Bool) : Bool :=
   if @decide (x = true) (d x true) then x else false
 check_provenance "UnlistedProducer" using unlistedProducerRead expects "unclassified_form" for specificTruth
 
+def payloadRead := closedDecisionRead
+check_provenance "UnclassifiedPayloadParses" using payloadRead expects "unclassified_form" for specificTruth
+
 end RegistrationProvenance

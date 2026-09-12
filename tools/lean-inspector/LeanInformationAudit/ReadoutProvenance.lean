@@ -363,8 +363,7 @@ def provenanceErrorCurrent (root catalog theoremName realization : Name) : CoreM
   let payload := if result.incomplete && result.unclassified.isNone then Json.null
     else if let some u := result.unclassified then unclassifiedJson u result.walked
     else Json.arr (result.walked.map Json.str)
-  return some s!"IE-C050 ClosedTruthReadout key={root}/{catalog}/{theoremName} \
-+    readout={address} reason={reason} provenance={payload.compress}"
+  return some s!"IE-C050 ClosedTruthReadout key={root}/{catalog}/{theoremName} readout={address} reason={reason} provenance={payload.compress}"
 
 def provenanceError (env : Environment) (root catalog theoremName realization : Name) : CoreM (Option String) :=
   withEnv env (provenanceErrorCurrent root catalog theoremName realization)
