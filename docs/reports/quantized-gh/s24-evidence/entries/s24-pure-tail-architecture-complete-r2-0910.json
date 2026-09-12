@@ -1,9 +1,0 @@
-{
-"schema":"s24-evidence-entry-v1",
-"resource":"s24-pure-tail-architecture-complete-r2-0910",
-"original":{"bytes":9115,"lf":153,"lines":153,"terminal_lf":1,"sha256":"d200c7aace1156f794b704c7f407fe5f39eb074987c6194d964fbd02e56b7b72","git_blob_oid":"7fadcca87936ac4651974109917315fce9a81bfa"},
-"origin":{"supplied_path":"/tmp/qgh-boundaries-0908/s24-pure-tail-architecture-complete-r2-0910.json","scope":"Original scoped result/intake; no fresh S24 vote and no referents opened by this publication."},
-"contract":"docs/reports/quantized-gh/s24-evidence/README.md",
-"interpretation":"Concatenate raw UTF-8 parts in order without separators before parsing. Exact original bytes, schema, errors, EOF and link owners remain unchanged.",
-"parts":[{"ordinal":1,"path":"docs/reports/quantized-gh/s24-evidence/raw/s24-pure-tail-architecture-complete-r2-0910/part-001.txt","byte_span":[0,9115],"line_span":[1,153],"bytes":9115,"lf":153,"lines":153,"terminal_lf":1,"sha256":"d200c7aace1156f794b704c7f407fe5f39eb074987c6194d964fbd02e56b7b72","git_blob_oid":"7fadcca87936ac4651974109917315fce9a81bfa"}]
-}

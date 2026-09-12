@@ -1,9 +1,0 @@
-{
-"schema":"s24-evidence-entry-v1",
-"resource":"s24-pure-tail-architecture-result-r2-0910",
-"original":{"bytes":6478,"lf":1,"lines":1,"terminal_lf":1,"sha256":"4b4451d0dd4348378a94b071c62b20a146f465d7cfc108189c48ff39db4378da","git_blob_oid":"2909e8736a85045082d33461b2d82466049a2001"},
-"origin":{"supplied_path":"/tmp/qgh-boundaries-0908/s24-pure-tail-architecture-result-r2-0910.json","scope":"Original scoped result/intake; no fresh S24 vote and no referents opened by this publication."},
-"contract":"docs/reports/quantized-gh/s24-evidence/README.md",
-"interpretation":"Concatenate raw UTF-8 parts in order without separators before parsing. Exact original bytes, schema, errors, EOF and link owners remain unchanged.",
-"parts":[{"ordinal":1,"path":"docs/reports/quantized-gh/s24-evidence/raw/s24-pure-tail-architecture-result-r2-0910/part-001.txt","byte_span":[0,6478],"line_span":[1,1],"bytes":6478,"lf":1,"lines":1,"terminal_lf":1,"sha256":"4b4451d0dd4348378a94b071c62b20a146f465d7cfc108189c48ff39db4378da","git_blob_oid":"2909e8736a85045082d33461b2d82466049a2001"}]
-}

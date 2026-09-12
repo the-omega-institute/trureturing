@@ -43,5 +43,5 @@ all a_i=2 and b=2. Its sufficiency clause is outside this formalization.
 
 Retrieved and read on 10 September 2026. The arXiv HTML and abstract pages
 both returned HTTP 200. Response hashes and bounded later-literature search
-receipts are recorded in docs/reports/qfib-refutation/implementation.md.
+receipts are recorded in [历史记录](https://github.com/the-omega-institute/trureturing/blob/6c97ad12ce/docs/reports/qfib-refutation/implementation.md).
 No exhaustive priority claim is made.

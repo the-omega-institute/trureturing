@@ -1,9 +1,0 @@
-{
-"schema":"s24-evidence-entry-v1",
-"resource":"upstream-residual-before-cover",
-"original":{"bytes":328,"lf":7,"lines":7,"terminal_lf":1,"sha256":"db554c6d14e561b6d034c99cf0b0569aeceb3002d19e8a7a2eddace929ba7265","git_blob_oid":"260195f8577ced5d3ccdbe720d14f35250c04a7f"},
-"origin":{"path":"Meta/Digestion/backfill/arithmetic-boundary-quantization/residual-open/28df2a866cf2599b3db54e34a9b48622ab51e31ddcc65c6494f6335459d7b223.yaml","state":"historical C196 ledger bytes"},
-"contract":"docs/reports/quantized-gh/s24-evidence/README.md",
-"interpretation":"Concatenate raw UTF-8 parts in order without separators before parsing. Exact original bytes, schema, errors, EOF and link owners remain unchanged.",
-"parts":[{"ordinal":1,"path":"docs/reports/quantized-gh/s24-evidence/raw/upstream-residual-before-cover/part-001.txt","byte_span":[0,328],"line_span":[1,7],"bytes":328,"lf":7,"lines":7,"terminal_lf":1,"sha256":"db554c6d14e561b6d034c99cf0b0569aeceb3002d19e8a7a2eddace929ba7265","git_blob_oid":"260195f8577ced5d3ccdbe720d14f35250c04a7f"}]
-}

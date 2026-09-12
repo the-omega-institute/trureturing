@@ -46,7 +46,7 @@ no sequence coefficients or independent product of block counts are asserted.
 
 ## Search boundary
 
-The implementation report `docs/reports/a384350-0910/report.md` records the
+The implementation report [历史记录](https://github.com/the-omega-institute/trureturing/blob/6c97ad12ce/docs/reports/a384350-0910/report.md) records the
 repository, pinned Mathlib, Loogle, GitHub and arXiv searches. The triage seat
 reported searches in five full PDFs, without a page-by-page review. This worker
 additionally searched extracted text of arXiv:2601.10227 (15 pages) and

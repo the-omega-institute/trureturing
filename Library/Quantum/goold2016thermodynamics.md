@@ -44,4 +44,4 @@ formalized here.
 ## Verification record
 
 Retrieved 2026-09-11: abstract and PDF returned HTTP 200. Byte counts and SHA-256
-receipts are recorded in docs/reports/gibbsvar-0911/implementation.md.
+receipts are recorded in [历史记录](https://github.com/the-omega-institute/trureturing/blob/6c97ad12ce/docs/reports/gibbsvar-0911/implementation.md).

@@ -50,7 +50,7 @@ D5/S3/Arith/OmegaGreedyPermutation.lean proves sequence_initial,
 sequence_positive, sequence_injective, sequence_greedy and a363956_surjective.
 The definition uses a finite used-set recursion and a natural infimum. Fairness
 and surjectivity are derived, never assumed. Kernel and repository build
-receipts are in docs/reports/a363956-0910.md.
+receipts are in [历史记录](https://github.com/the-omega-institute/trureturing/blob/6c97ad12ce/docs/reports/a363956-0910.md).
 
 ## Triage
 

@@ -1,9 +1,0 @@
-{
-"schema":"s24-evidence-entry-v1",
-"resource":"s23-quality-original-result-r2-0912",
-"original":{"bytes":21549,"lf":388,"lines":388,"terminal_lf":1,"sha256":"f7d15f707638f0acb9f7b7047e1cf1d705dc74967614b4771bc824a74213cb97","git_blob_oid":"3fa37bd13da9533536763779b8fcf3e4344a5ed9"},
-"origin":{"supplied_path":"/tmp/qgh-boundaries-0908/s23-quality-original-result-r2-0912.json","scope":"Original scoped result/intake; no fresh S24 vote and no referents opened by this publication."},
-"contract":"docs/reports/quantized-gh/s24-evidence/README.md",
-"interpretation":"Concatenate raw UTF-8 parts in order without separators before parsing. Exact original bytes, schema, errors, EOF and link owners remain unchanged.",
-"parts":[{"ordinal":1,"path":"docs/reports/quantized-gh/s24-evidence/raw/s23-quality-original-result-r2-0912/part-001.txt","byte_span":[0,21549],"line_span":[1,388],"bytes":21549,"lf":388,"lines":388,"terminal_lf":1,"sha256":"f7d15f707638f0acb9f7b7047e1cf1d705dc74967614b4771bc824a74213cb97","git_blob_oid":"3fa37bd13da9533536763779b8fcf3e4344a5ed9"}]
-}
