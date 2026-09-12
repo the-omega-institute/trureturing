@@ -23,7 +23,7 @@
 # a stability count; those analyses and delivery to dev belong to the caller.
 set -Eeuo pipefail
 
-VERSION=3
+VERSION=5
 # Watcher re-entry bound: GitHub registration latency and transient API errors.
 WATCH_ATTEMPTS=30 WATCH_INTERVAL=15
 integration='' since='' state='' max=0 dry_run=0
@@ -250,13 +250,14 @@ while read -r merge original_pr; do
   base=$integration_tip
   run find-pr gh pr list --repo "$repo" --base "$integration" --head "$branch" \
     --state all --json number,state,headRefOid,mergedAt,mergeCommit --limit 100 || die 69 "cannot find existing mirror PR"
-  prs=$output
+  # A closed, unmerged mirror is never a cursor: ignore it. Its branch, if it
+  # still exists, is recovered below like any pushed mirror branch.
+  prs=$(jq -c 'map(select(.state != "CLOSED"))' <<<"$output")
   count=$(jq 'length' <<<"$prs")
   (( count <= 1 )) || die 69 "multiple PRs already use $branch"
   if (( count == 1 )); then
     mirror_pr=$(jq -r '.[0].number' <<<"$prs")
     pr_state=$(jq -r '.[0].state' <<<"$prs")
-    [[ "$pr_state" != CLOSED ]] || die 69 "mirror PR #$mirror_pr was closed without merging"
     run fetch-pr git fetch origin "refs/pull/$mirror_pr/head" || die 69 "cannot fetch mirror PR head"
     head=$(git rev-parse FETCH_HEAD)
     [[ "$head" == "$(jq -r '.[0].headRefOid' <<<"$prs")" ]] || die 69 "mirror PR head changed during recovery"
@@ -270,7 +271,8 @@ while read -r merge original_pr; do
       log "recovered merged mirror_pr=$mirror_pr"
       continue
     fi
-  else
+  fi
+  if (( mirror_pr == 0 )); then
     run find-branch git ls-remote --heads origin "refs/heads/$branch" || die 69 "cannot query mirror branch"
     remote_head=${output%%$'\t'*}
     if [[ -n "$remote_head" ]]; then
@@ -329,8 +331,21 @@ Script version: $VERSION"
     record incomplete
     die 69 "required checks incomplete; mirror_pr=$mirror_pr left open"
   fi
-  run merge-pr gh pr merge "$mirror_pr" --repo "$repo" --merge --delete-branch \
-    --match-head-commit "$head" || die 69 "merge request failed; rerun to recover PR state"
+  merge_attempt=0
+  until run merge-pr gh pr merge "$mirror_pr" --repo "$repo" --merge --delete-branch \
+    --match-head-commit "$head"; do
+    merge_attempt=$((merge_attempt + 1))
+    (( merge_attempt < WATCH_ATTEMPTS )) || die 69 "merge request failed after $merge_attempt attempts; rerun to recover PR state"
+    # A fresh check run registered after the last watch (e.g. on PR creation):
+    # wait for the verdict set to settle again before retrying the merge.
+    log "merge-pr retry=$merge_attempt: re-entering the watcher"
+    sleep "$WATCH_INTERVAL"
+    watch_checks || die 69 "verdicts not settled for mirror_pr=$mirror_pr after $WATCH_ATTEMPTS watcher attempts; PR left open"
+    if jq -e 'any(.[]; .bucket == "fail" or .bucket == "cancel")' <<<"$verdicts" >/dev/null; then
+      record red
+      die 66 "red mirror_pr=$mirror_pr left open"
+    fi
+  done
   run confirm gh pr view "$mirror_pr" --repo "$repo" --json state,mergedAt || die 69 "cannot confirm merge"
   [[ $(jq -r '.state' <<<"$output") == MERGED ]] || die 69 "mirror PR is not MERGED"
   record merged "$(jq -er '.mergedAt' <<<"$output")"
