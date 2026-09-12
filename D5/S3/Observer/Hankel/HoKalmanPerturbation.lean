@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Observer/Hankel/HoKalmanPerturbation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Computed inverse margins give nonsingularity and posterior solve error bounds. -/
 
 import Mathlib.Analysis.Matrix.Normed
