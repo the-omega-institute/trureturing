@@ -1,0 +1,122 @@
+/- GID: D5/S3/Analytic/Interpolation/HermiteUpperEnvelope
+   generality: G
+   mirror-B: D5/B/S3/Analytic/Interpolation/HermiteUpperEnvelope
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Hermite interpolation and matching first two moments bound the sum of logarithms of one minus negative exponentials. -/
+
+import D5.S3.Analytic.Interpolation.HermiteTwoPointRemainder
+import D5.S3.Analytic.Interpolation.LogOneSubExpDerivatives
+import D5.S3.Analytic.Interpolation.HermiteMomentBounds
+import Mathlib.Geometry.Manifold.PartitionOfUnity
+
+open Set Filter
+open scoped Topology ContDiff Manifold
+
+noncomputable section
+
+namespace D5.S3.Analytic.Interpolation.HermiteUpperEnvelope
+
+private theorem extension_near_interval {s : Set ℝ} (hs : IsOpen s)
+    (L H : ℝ) (hsub : Icc L H ⊆ s) (f : ℝ → ℝ) (hf : ContDiffOn ℝ 3 f s) :
+    ∃ g : ℝ → ℝ, ContDiff ℝ 3 g ∧ ∀ x ∈ Icc L H, g =ᶠ[𝓝 x] f := by
+  obtain ⟨K, hKnhds, hKclosed, hKs⟩ :=
+    exists_mem_nhdsSet_isClosed_subset (hs.mem_nhdsSet.mpr hsub) isClosed_Icc
+  let t : ℝ → Set ℝ := fun x => {y | x ∈ K → y = f x}
+  have ht (x : ℝ) : Convex ℝ (t x) := (convex_singleton (f x)).setOfPred_const_imp
+  have hlocal : ∀ x : ℝ, ∃ U ∈ 𝓝 x, ∃ g : ℝ → ℝ,
+      ContMDiffOn 𝓘(ℝ, ℝ) 𝓘(ℝ, ℝ) 3 g U ∧ ∀ y ∈ U, g y ∈ t y := by
+    intro x
+    by_cases hx : x ∈ K
+    · refine ⟨s, hs.mem_nhds (hKs hx), f, hf.contMDiffOn, ?_⟩
+      intro y hy hKy
+      exact Eq.refl _
+    · refine ⟨Kᶜ, hKclosed.isOpen_compl.mem_nhds hx, fun _ => 0, contMDiffOn_const, ?_⟩
+      intro y hy hKy
+      exact (hy hKy).elim
+  obtain ⟨g, hg⟩ := exists_contMDiffMap_forall_mem_convex_of_local
+      (I := 𝓘(ℝ, ℝ)) (n := 3) ht hlocal
+  refine ⟨g, g.contMDiff.contDiff, ?_⟩
+  intro x hx
+  filter_upwards [mem_nhdsSet_iff_forall.mp hKnhds x hx] with y hy
+  exact hg y hy
+
+
+/-- The Hermite remainder on an open domain containing both nodes. -/
+theorem hermite_two_point_remainder_on
+    {s : Set ℝ} (hs : IsOpen s) (L H x : ℝ) (hsub : Icc L H ⊆ s)
+    (f p : ℝ → ℝ) (hx : x ∈ Ioo L H)
+    (hf : ContDiffOn ℝ 3 f s) (hp : ContDiffOn ℝ 3 p s)
+    (hzero : ∀ t ∈ s, iteratedDeriv 3 p t = 0)
+    (hvalL : p L = f L) (hderL : deriv p L = deriv f L) (hvalH : p H = f H)
+    (hpos : ∀ t ∈ Ioo L H, 0 < iteratedDeriv 3 f t) :
+    ∃ ξ ∈ Ioo L H,
+      f x - p x = (iteratedDeriv 3 f ξ / 6) * (x - L)^2 * (x - H) ∧
+      f x - p x < 0 := by
+  obtain ⟨g, hg, heq⟩ := extension_near_interval hs L H hsub (f - p) (hf.sub hp)
+  have hLH : L ≤ H := (hx.1.trans hx.2).le
+  have hL : L ∈ Icc L H := ⟨le_rfl, hLH⟩
+  have hH : H ∈ Icc L H := ⟨hLH, le_rfl⟩
+  have hgL : g L = 0 := by
+    rw [(heq L hL).eq_of_nhds, Pi.sub_apply, hvalL, sub_self]
+  have hgH : g H = 0 := by
+    rw [(heq H hH).eq_of_nhds, Pi.sub_apply, hvalH, sub_self]
+  have hdergL : deriv g L = 0 := by
+    rw [(heq L hL).deriv_eq]
+    rw [deriv_sub ((hf.contDiffAt (hs.mem_nhds (hsub hL))).differentiableAt (by norm_num))
+        ((hp.contDiffAt (hs.mem_nhds (hsub hL))).differentiableAt (by norm_num))]
+    exact sub_eq_zero.mpr hderL.symm
+  have hthird (t : ℝ) (ht : t ∈ Ioo L H) : iteratedDeriv 3 g t = iteratedDeriv 3 f t := by
+    have hts := hsub (Ioo_subset_Icc_self ht)
+    rw [(heq t (Ioo_subset_Icc_self ht)).iteratedDeriv_eq 3,
+      iteratedDeriv_sub (hf.contDiffAt (hs.mem_nhds hts))
+        (hp.contDiffAt (hs.mem_nhds hts)), hzero t hts, sub_zero]
+  obtain ⟨ξ, hξ, hrem, hneg⟩ := hermite_two_point_remainder L H x g (fun _ => 0) hx hg
+    contDiff_const (by intro t; simp) (by simpa using hgL.symm)
+    (by simpa using hdergL.symm) (by simpa using hgH.symm)
+    (fun t ht => by rw [hthird t ht]; exact hpos t ht)
+  refine ⟨ξ, hξ, ?_, ?_⟩
+  · simpa only [sub_zero, (heq x (Ioo_subset_Icc_self hx)).eq_of_nhds,
+      Pi.sub_apply, hthird ξ hξ] using hrem
+  · simpa only [sub_zero, (heq x (Ioo_subset_Icc_self hx)).eq_of_nhds,
+      Pi.sub_apply] using hneg
+
+
+private theorem negative_left_of_double_node (x L H : ℝ) (g : ℝ → ℝ)
+    (hxL : x < L) (hLH : L < H) (hg : ContDiff ℝ 3 g)
+    (hgL : g L = 0) (hgH : g H = 0) (hdL : deriv g L = 0)
+    (hpos : ∀ t ∈ Ioo x H, 0 < iteratedDeriv 3 g t) : g x < 0 := by
+  by_contra hn
+  have hnonneg : 0 ≤ g x := le_of_not_gt hn
+  have hc1 : Continuous (deriv g) := by
+    simpa only [iteratedDeriv_one] using hg.continuous_iteratedDeriv 1 (by norm_num)
+  have hd1 : Differentiable ℝ (deriv g) := by
+    simpa only [iteratedDeriv_one] using hg.differentiable_iteratedDeriv 1 (by norm_num)
+  have hc2 : Continuous (deriv (deriv g)) := by
+    simpa only [iteratedDeriv_succ, iteratedDeriv_zero] using
+      hg.continuous_iteratedDeriv 2 (by norm_num)
+  obtain ⟨u, hu, hdu⟩ := exists_deriv_eq_slope g hxL hg.continuous.continuousOn
+    (hg.differentiable (by norm_num)).differentiableOn
+  have hu0 : deriv g u ≤ 0 := by
+    rw [hdu, hgL]
+    exact div_nonpos_of_nonpos_of_nonneg (by linarith) (sub_nonneg.mpr hxL.le)
+  obtain ⟨a, ha, hda⟩ := exists_deriv_eq_slope (deriv g) hu.2 hc1.continuousOn
+    hd1.differentiableOn
+  have ha0 : 0 ≤ deriv (deriv g) a := by
+    rw [hda, hdL]
+    exact div_nonneg (by linarith) (sub_nonneg.mpr hu.2.le)
+  obtain ⟨v, hv, hdv⟩ := exists_deriv_eq_zero hLH hg.continuous.continuousOn
+    (hgL.trans hgH.symm)
+  obtain ⟨b, hb, hdb⟩ := exists_deriv_eq_zero hv.1 hc1.continuousOn (hdL.trans hdv.symm)
+  have hm : StrictMonoOn (deriv (deriv g)) (Ioo x H) := by
+    apply strictMonoOn_of_deriv_pos (convex_Ioo x H) hc2.continuousOn
+    intro t ht
+    have ht' : t ∈ Ioo x H := interior_subset ht
+    simpa only [iteratedDeriv_succ, iteratedDeriv_zero] using hpos t ht'
+  have hab := hm ⟨hu.1.trans ha.1, ha.2.trans hLH⟩
+    ⟨hxL.trans hb.1, hb.2.trans hv.2⟩ (ha.2.trans hb.1)
+  linarith
+
+
+end D5.S3.Analytic.Interpolation.HermiteUpperEnvelope
