@@ -1,6 +1,6 @@
 # S23 composed predecessor evidence
 
-The [mathematical source](../../../develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md) contains the complete actual S22 source as its exact 414248-byte prefix, followed by the complete chapter 34 mathematical layer. Its 440285 bytes and 8740 LF have SHA256 `75e41aeca17b0343d6ecb5cb16e6cee13d7a64f8f798556921351e855c3e6af9`.
+The [mathematical source](../../../develop/theory/ARITHMETIC_BOUNDARY_QUANTIZATION.md) contains the complete actual S22 source as its exact 414248-byte prefix, followed by the complete chapter 34 mathematical layer. The historical S23 version has440285 bytes and8740 LF, with SHA256 `75e41aeca17b0343d6ecb5cb16e6cee13d7a64f8f798556921351e855c3e6af9`.
 
 [composition.json](composition.json) owns current versions and source components. [unit-partitions.json](unit-partitions.json) gives exact original-to-current-plus-archive and forward partitions for 34.1 and 34.16. Only 34.1's opening S23/C55/C47 implementation attribution and 34.16's provenance-report narration leave the active body. The latter's semicolon becomes a period. Both complete original whole units remain exact raw resources. The etadmin = eta*dmin clarification, displayed product, all closed-radius, strictness and endpoint qualifications remain mathematical body text.
 
@@ -10,7 +10,7 @@ The other 20 chapter 34 whole units are byte-identical to I44. [own-addresses.js
 
 | Resource | Exact meaning |
 | --- | --- |
-| source-composed-I51 | Entire current source; ordinary whole file |
+| source-composed-I51 | Complete original S23 source; explicit fixed file span `[0,440285)` |
 | source-S22-merged / source-composed-I50 | Original S22, checked fixed file span `[0,414248)` |
 | tail-S23-current | Current chapter 34, checked file span `[414248,440285)` |
 | source-I44-original / source-I44-current | Entire original I44 source, 392486 bytes; exact prefix, historical LF, current unchanged units and two whole-unit archives |
@@ -208,3 +208,7 @@ def verify():
 
 
 The S20 whole-section navigation repair is recorded in [navigation-repair-I52.json](navigation-repair-I52.json), with the fixed-byte recipe and results in [navigation-repair-verification-I52.md](navigation-repair-verification-I52.md). It preserves the failed pre-I52 map and all three prior R1 review envelopes while correcting the three parent intervals to their complete descendant-inclusive sections.
+
+## S24 source growth
+
+`source-composed-I51` retains the complete original 440285-byte S23 source through explicit `file_span` `[0,440285)`. Ordinary `file()` still returns the entire named physical file. The current source composition and current ledger overlay are in [S24 evidence](../s24-evidence/README.md); the exact pre-extension contracts are named S24 resources. All existing S19–S23 versions, offsets, sections and the I52/I53 public recipe retain their original owners.

@@ -114,6 +114,10 @@ $$\begin{aligned}\forall p: \mathbb{Z}, q: \mathbb{Z}, m: \mathbb{N},\\0 < m \Ri
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/LucasEvenDescent.conjecture_five_two` (`✓ std3`). ∎
 
+*Resolves.* `Problems/fiebig-mbirika-spilker-even-descent-dichotomy` (proved) by `D5/S1/Recurrence/LucasEvenDescent.conjecture_five_two`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"fiebig-mbirika-spilker-even-descent-dichotomy","declaration_gid":"D5/S1/Recurrence/LucasEvenDescent.conjecture_five_two","resolution_kind":"proved"} -->
+
 *Citation.* Morgan Fiebig, aBa Mbirika, Jürgen Spilker (2025). *Period patterns, entry points, and orders in the Lucas sequences: theory and applications*. URL: <https://arxiv.org/abs/2408.14632v2>.
 
 *Commentary.*

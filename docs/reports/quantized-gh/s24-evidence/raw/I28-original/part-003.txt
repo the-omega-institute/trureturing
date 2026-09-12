@@ -1,0 +1,750 @@
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "unit": "35.16",
+      "category": "type_metadata",
+      "edit_id": "E023",
+      "original_identity": {
+        "byte_count": 78,
+        "lf_count": 0,
+        "sha256": "295c547a8cc8b7c58486f9d053335eaceac66c27fe765647b8012a1fbf38a08c"
+      },
+      "replacement_identity": {
+        "byte_count": 92,
+        "lf_count": 0,
+        "sha256": "8e8ce7d12e814ae61682d37792504da78c977f88dd710c87c6fc877d6edb4a71"
+      },
+      "archive_start_byte": 98368,
+      "archive_end_byte": 98446,
+      "delimiter_only_lf_count": 1,
+      "current_source_start_byte": 410476,
+      "current_source_end_byte": 410568
+    },
+    {
+      "original_start_byte": 411023,
+      "original_end_byte": 411042,
+      "replacement": "the error",
+      "reason": "Remove request-context adjective only; the exact error and uniform absolute constant 1 are unchanged.",
+      "unit": "35.16",
+      "category": "operational_split",
+      "edit_id": "E024",
+      "original_identity": {
+        "byte_count": 19,
+        "lf_count": 0,
+        "sha256": "6a3a96e7e8dc97c30b687d7a9502b34197afe776b0fa02f7b526031979464cd4"
+      },
+      "replacement_identity": {
+        "byte_count": 9,
+        "lf_count": 0,
+        "sha256": "fbee06ec6b67bd1a001b6a00d47fa725bfd35e3baec733a1433c3a5bb9a7adc5"
+      },
+      "archive_start_byte": 98618,
+      "archive_end_byte": 98637,
+      "delimiter_only_lf_count": 1,
+      "current_source_start_byte": 411280,
+      "current_source_end_byte": 411289
+    },
+    {
+      "original_start_byte": 411154,
+      "original_end_byte": 411203,
+      "replacement": "**35.17 Proposition (Full squeeze proof of integer counting).**",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "unit": "35.17",
+      "category": "type_metadata",
+      "edit_id": "E025",
+      "original_identity": {
+        "byte_count": 49,
+        "lf_count": 0,
+        "sha256": "6108b3b9c781d47cb7cb94af929158c8f537e601387d322c65b9f110cc866539"
+      },
+      "replacement_identity": {
+        "byte_count": 63,
+        "lf_count": 0,
+        "sha256": "50e9e8fa599013a9eafff629015902a9558ac72c2f92c8867958010e6bb7a6c3"
+      },
+      "archive_start_byte": 98799,
+      "archive_end_byte": 98848,
+      "delimiter_only_lf_count": 1,
+      "current_source_start_byte": 411401,
+      "current_source_end_byte": 411464
+    },
+    {
+      "original_start_byte": 412379,
+      "original_end_byte": 412457,
+      "replacement": "**35.18 Proposition (Bounded exponent and log-size gaps, divergent additive integer gaps).**",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "unit": "35.18",
+      "category": "type_metadata",
+      "edit_id": "E026",
+      "original_identity": {
+        "byte_count": 78,
+        "lf_count": 0,
+        "sha256": "78ff9130e0147cfff43a04d7d26c72e98867233677412a5ede8cf53d1fb8cf2a"
+      },
+      "replacement_identity": {
+        "byte_count": 92,
+        "lf_count": 0,
+        "sha256": "06a2a3f84241da9713410c4011b65d29077b120ab77402f3e529a3532e88926d"
+      },
+      "archive_start_byte": 99010,
+      "archive_end_byte": 99088,
+      "delimiter_only_lf_count": 1,
+      "current_source_start_byte": 412640,
+      "current_source_end_byte": 412732
+    },
+    {
+      "original_start_byte": 413247,
+      "original_end_byte": 413312,
+      "replacement": "**35.19 Definition (The exact three-coordinate comparison and wider domain).**",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "unit": "35.19",
+      "category": "type_metadata",
+      "edit_id": "E027",
+      "original_identity": {
+        "byte_count": 65,
+        "lf_count": 0,
+        "sha256": "0345dd5af820d639171f4c46db621ec745943fc5415e45d7bfca50bd5a8de50d"
+      },
+      "replacement_identity": {
+        "byte_count": 78,
+        "lf_count": 0,
+        "sha256": "69052e35bf2369b664a597f5dbb4194e8cabcbd1428b066637cc21905419a360"
+      },
+      "archive_start_byte": 99250,
+      "archive_end_byte": 99315,
+      "delimiter_only_lf_count": 1,
+      "current_source_start_byte": 413522,
+      "current_source_end_byte": 413600
+    },
+    {
+      "original_start_byte": 414908,
+      "original_end_byte": 414975,
+      "replacement": "**35.20 Proposition (Feasibility, nonempty wider domains and positive support).**",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "unit": "35.20",
+      "category": "type_metadata",
+      "edit_id": "E028",
+      "original_identity": {
+        "byte_count": 67,
+        "lf_count": 0,
+        "sha256": "eb6bcfb1500710409b7a398d6972d4d6f333eff19a76347f66bf3b2244693dce"
+      },
+      "replacement_identity": {
+        "byte_count": 81,
+        "lf_count": 0,
+        "sha256": "fcb506a6bf708468058f435d8a65f325190f195a49de6400da3db18130a63599"
+      },
+      "archive_start_byte": 99477,
+      "archive_end_byte": 99544,
+      "delimiter_only_lf_count": 1,
+      "current_source_start_byte": 415196,
+      "current_source_end_byte": 415277
+    },
+    {
+      "original_start_byte": 416131,
+      "original_end_byte": 416174,
+      "replacement": "**35.21 Proposition (Two scoped strict scaled margins).**",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "unit": "35.21",
+      "category": "type_metadata",
+      "edit_id": "E029",
+      "original_identity": {
+        "byte_count": 43,
+        "lf_count": 0,
+        "sha256": "56effca64fc45a3ebda0a5c2a7a9a3e3a324f07e41ee162d6fe2baf3adee24b3"
+      },
+      "replacement_identity": {
+        "byte_count": 57,
+        "lf_count": 0,
+        "sha256": "4592d970495446643356f91914dc5e8b6bf9cfd826057528a87af8399f0652c2"
+      },
+      "archive_start_byte": 99706,
+      "archive_end_byte": 99749,
+      "delimiter_only_lf_count": 1,
+      "current_source_start_byte": 416433,
+      "current_source_end_byte": 416490
+    },
+    {
+      "original_start_byte": 416321,
+      "original_end_byte": 416388,
+      "replacement": ".",
+      "reason": "Archive method/execution description; exp(2)>7 proof and both log inequalities are unchanged.",
+      "unit": "35.21",
+      "category": "operational_split",
+      "edit_id": "E030",
+      "original_identity": {
+        "byte_count": 67,
+        "lf_count": 1,
+        "sha256": "1209bac2b998c6cf78ed9b9f825c5ff117ebae1a20fb9466db29e1e1fc5f7c04"
+      },
+      "replacement_identity": {
+        "byte_count": 1,
+        "lf_count": 0,
+        "sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8"
+      },
+      "archive_start_byte": 99913,
+      "archive_end_byte": 99980,
+      "delimiter_only_lf_count": 1,
+      "current_source_start_byte": 416637,
+      "current_source_end_byte": 416638
+    },
+    {
+      "original_start_byte": 417528,
+      "original_end_byte": 417587,
+      "replacement": "**35.22 Proposition (Exact strict original-domain threshold and 10080).**",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "unit": "35.22",
+      "category": "type_metadata",
+      "edit_id": "E031",
+      "original_identity": {
+        "byte_count": 59,
+        "lf_count": 0,
+        "sha256": "da2f756cfb06f9814bf1c967620afbdb2b254ff34ba70a69d55744fa98d74db3"
+      },
+      "replacement_identity": {
+        "byte_count": 73,
+        "lf_count": 0,
+        "sha256": "610c106344acf678759ad73ee6573512b6b4c0d1eefa8e5d0aaf5c185bc3fdf1"
+      },
+      "archive_start_byte": 100142,
+      "archive_end_byte": 100201,
+      "delimiter_only_lf_count": 1,
+      "current_source_start_byte": 417778,
+      "current_source_end_byte": 417851
+    },
+    {
+      "original_start_byte": 419374,
+      "original_end_byte": 419450,
+      "replacement": "**35.23 Proposition (Wider estimates precede cutoff intersection; unscaled gaps vanish).**",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "unit": "35.23",
+      "category": "type_metadata",
+      "edit_id": "E032",
+      "original_identity": {
+        "byte_count": 76,
+        "lf_count": 0,
+        "sha256": "7762c1165935f2e9bc9b8abf72196f6247fec893f1f8b82abb0194c42e9b75b9"
+      },
+      "replacement_identity": {
+        "byte_count": 90,
+        "lf_count": 0,
+        "sha256": "c815db18700221f2b29159db0ae428fd969cb8a6243fcb28550a3664d3dd9fd0"
+      },
+      "archive_start_byte": 100363,
+      "archive_end_byte": 100439,
+      "delimiter_only_lf_count": 1,
+      "current_source_start_byte": 419638,
+      "current_source_end_byte": 419728
+    },
+    {
+      "original_start_byte": 421073,
+      "original_end_byte": 421106,
+      "replacement": "**35.24 Proposition (Three density meanings).**",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "unit": "35.24",
+      "category": "type_metadata",
+      "edit_id": "E033",
+      "original_identity": {
+        "byte_count": 33,
+        "lf_count": 0,
+        "sha256": "cd9442c3e3f4da3f41469e05cafe0646b8ea3b13de62a853a3899afd2b74ad4a"
+      },
+      "replacement_identity": {
+        "byte_count": 47,
+        "lf_count": 0,
+        "sha256": "98f89786ac5bb54350ade21b2e7dee293e69685bc8d574e7d3c295e1a4f7fef5"
+      },
+      "archive_start_byte": 100601,
+      "archive_end_byte": 100634,
+      "delimiter_only_lf_count": 1,
+      "current_source_start_byte": 421351,
+      "current_source_end_byte": 421398
+    },
+    {
+      "original_start_byte": 422217,
+      "original_end_byte": 422293,
+      "replacement": "**35.25 Proposition (Fibonacci cutoffs are inherited limits, not sparse orbit sampling).**",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "unit": "35.25",
+      "category": "type_metadata",
+      "edit_id": "E034",
+      "original_identity": {
+        "byte_count": 76,
+        "lf_count": 0,
+        "sha256": "c16fc1cfe4a9f9ad48bfe5a58b6fd7461e027910053301b12893528f5c9cb253"
+      },
+      "replacement_identity": {
+        "byte_count": 90,
+        "lf_count": 0,
+        "sha256": "9c82d3748cff47808a09bcf1d598f705f16fef74415d1ed5cc644f0344116eef"
+      },
+      "archive_start_byte": 100796,
+      "archive_end_byte": 100872,
+      "delimiter_only_lf_count": 1,
+      "current_source_start_byte": 422509,
+      "current_source_end_byte": 422599
+    },
+    {
+      "original_start_byte": 422957,
+      "original_end_byte": 423032,
+      "replacement": "**35.26 Proposition (Numerical-order Zeckendorf recoding preserves every finite count).**",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "unit": "35.26",
+      "category": "type_metadata",
+      "edit_id": "E035",
+      "original_identity": {
+        "byte_count": 75,
+        "lf_count": 0,
+        "sha256": "188fff0c6993ad9fd05312f521c5eca0fc894147f233a893f3e6bfd21ab9cae6"
+      },
+      "replacement_identity": {
+        "byte_count": 89,
+        "lf_count": 0,
+        "sha256": "b0dc6c32865dcf1a943525ca5c710c9b4b82f6b1bff16596cab69131a0b0a822"
+      },
+      "archive_start_byte": 101034,
+      "archive_end_byte": 101109,
+      "delimiter_only_lf_count": 1,
+      "current_source_start_byte": 423263,
+      "current_source_end_byte": 423352
+    },
+    {
+      "original_start_byte": 423967,
+      "original_end_byte": 424040,
+      "replacement": "**35.27 Proposition (Golden-ratio frequency, other metrics and chosen orthogonality).**",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "unit": "35.27",
+      "category": "type_metadata",
+      "edit_id": "E036",
+      "original_identity": {
+        "byte_count": 73,
+        "lf_count": 0,
+        "sha256": "f778a51f85089d85ccbcb4f1f5b9099bddb6a8644cb98f6c0c9d49bc47506d9a"
+      },
+      "replacement_identity": {
+        "byte_count": 87,
+        "lf_count": 0,
+        "sha256": "c468fca1d26642255cbdf281c2236db005f96645cffa951fad066f72ca9b6ce2"
+      },
+      "archive_start_byte": 101271,
+      "archive_end_byte": 101344,
+      "delimiter_only_lf_count": 1,
+      "current_source_start_byte": 424287,
+      "current_source_end_byte": 424374
+    },
+    {
+      "original_start_byte": 425153,
+      "original_end_byte": 427383,
+      "replacement": "",
+      "reason": "Entire original entry is historical attribution/access or implementation evidence; citations reattach to corresponding proofs.",
+      "unit": "35.28",
+      "category": "whole_entry_archive",
+      "edit_id": "E037",
+      "original_identity": {
+        "byte_count": 2230,
+        "lf_count": 32,
+        "sha256": "b217cd18672354a1804147f863f2f6d7b1af958f5a8379f61b72998c1b84d249"
+      },
+      "replacement_identity": {
+        "byte_count": 0,
+        "lf_count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "archive_start_byte": 101541,
+      "archive_end_byte": 103771,
+      "delimiter_only_lf_count": 0,
+      "current_source_start_byte": 425487,
+      "current_source_end_byte": 425487
+    },
+    {
+      "original_start_byte": 427383,
+      "original_end_byte": 427449,
+      "replacement": "**35.29 Theorem (Recurrence and counting: mathematical scope).**",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "unit": "35.29",
+      "category": "type_metadata",
+      "edit_id": "E038",
+      "original_identity": {
+        "byte_count": 66,
+        "lf_count": 0,
+        "sha256": "b789eaea9ac5d492c76efa141640daa4a5641b89be82770fedc9d863421f9ffa"
+      },
+      "replacement_identity": {
+        "byte_count": 64,
+        "lf_count": 0,
+        "sha256": "8508ae4328e44f3b5427382278e69bb1c9b3a0bac20ccaf283dbb1be26e2a44d"
+      },
+      "archive_start_byte": 103932,
+      "archive_end_byte": 103998,
+      "delimiter_only_lf_count": 1,
+      "current_source_start_byte": 425487,
+      "current_source_end_byte": 425551
+    },
+    {
+      "original_start_byte": 427449,
+      "original_end_byte": 428434,
+      "replacement": "\n",
+      "reason": "Archive complete primary identity, model display and carrier history verbatim; retain all following mathematical scope at 35.29.",
+      "unit": "35.29",
+      "category": "operational_split",
+      "edit_id": "E039",
+      "original_identity": {
+        "byte_count": 985,
+        "lf_count": 15,
+        "sha256": "cd54ffb2afb7d29581809c0aca99890b5fa359ccdbedb2f1a6cae8351c1fde34"
+      },
+      "replacement_identity": {
+        "byte_count": 1,
+        "lf_count": 1,
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+      },
+      "archive_start_byte": 104197,
+      "archive_end_byte": 105182,
+      "delimiter_only_lf_count": 0,
+      "current_source_start_byte": 425551,
+      "current_source_end_byte": 425552
+    },
+    {
+      "original_start_byte": 428626,
+      "original_end_byte": 428701,
+      "replacement": "",
+      "reason": "Archive review status only.",
+      "unit": "35.29",
+      "category": "operational_split",
+      "edit_id": "E040",
+      "original_identity": {
+        "byte_count": 75,
+        "lf_count": 1,
+        "sha256": "b3b2307389dc22f0b3195ea3d21d87caf39836bd266d256843310915dda81378"
+      },
+      "replacement_identity": {
+        "byte_count": 0,
+        "lf_count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "archive_start_byte": 105279,
+      "archive_end_byte": 105354,
+      "delimiter_only_lf_count": 1,
+      "current_source_start_byte": 425744,
+      "current_source_end_byte": 425744
+    },
+    {
+      "original_start_byte": 429300,
+      "original_end_byte": 429398,
+      "replacement": " in their assigned scopes.",
+      "reason": "Retain every named open mathematical scope; ticket identities and undefined user label move to explicit report provenance.",
+      "unit": "35.29",
+      "category": "operational_split",
+      "edit_id": "E041",
+      "original_identity": {
+        "byte_count": 98,
+        "lf_count": 1,
+        "sha256": "f1c166dd92f2dc51bcfe89fdaf9d7a51464e6cc0cc6651a35a8cbae4a7884307"
+      },
+      "replacement_identity": {
+        "byte_count": 26,
+        "lf_count": 0,
+        "sha256": "09ba7ac57655f13e5d53ea08ed4ae426648dd0f8bcc718df918542cbfe66b7a4"
+      },
+      "archive_start_byte": 105547,
+      "archive_end_byte": 105645,
+      "delimiter_only_lf_count": 1,
+      "current_source_start_byte": 426343,
+      "current_source_end_byte": 426369
+    },
+    {
+      "original_start_byte": 429422,
+      "original_end_byte": 429705,
+      "replacement": "a negative difference of the supplied upper bounds is an RH theorem\nor an RH-equivalent criterion.\n\n**Proof reference.** 35.3-35.18. The remaining statements specify the scope\nof these arguments and of the applications in 35.19-35.27.\n",
+      "reason": "Retain no-RH-theorem/equivalence scope; archive research/verification/freeze/goal status. Added proof reference points only to existing proofs, with no new reasoning.",
+      "unit": "35.29",
+      "category": "operational_split",
+      "edit_id": "E042",
+      "original_identity": {
+        "byte_count": 283,
+        "lf_count": 4,
+        "sha256": "3f8960b7b776c166fc16fd03b4456653d97d11348f9264c7fdfa661b72908692"
+      },
+      "replacement_identity": {
+        "byte_count": 235,
+        "lf_count": 5,
+        "sha256": "ef9805fcc8fba19dfb8c5558aa8fb10d2d168c04a29eee7d25ed19de2ab077b7"
+      },
+      "archive_start_byte": 105882,
+      "archive_end_byte": 106165,
+      "delimiter_only_lf_count": 0,
+      "current_source_start_byte": 426393,
+      "current_source_end_byte": 426628
+    },
+    {
+      "original_start_byte": 429706,
+      "original_end_byte": 432403,
+      "replacement": "",
+      "reason": "Entire original entry is historical attribution/access or implementation evidence; citations reattach to corresponding proofs.",
+      "unit": "35.30",
+      "category": "whole_entry_archive",
+      "edit_id": "E043",
+      "original_identity": {
+        "byte_count": 2697,
+        "lf_count": 39,
+        "sha256": "ee3f593f0642a2fe6b17cafeeb26a6ba47421f510f683dd126639bc34c4961bb"
+      },
+      "replacement_identity": {
+        "byte_count": 0,
+        "lf_count": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "archive_start_byte": 106361,
+      "archive_end_byte": 109058,
+      "delimiter_only_lf_count": 0,
+      "current_source_start_byte": 426629,
+      "current_source_end_byte": 426629
+    }
+  ],
+  "new_source_additions": [
+    {
+      "edit_id": "E001",
+      "source_start_byte": 394382,
+      "source_end_byte": 394431,
+      "category": "type_metadata",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "byte_count": 49,
+      "lf_count": 0,
+      "sha256": "3d98d930ee61849cb1066d13c4eb9e6fae87949d707313ed6364b420d996e9c8"
+    },
+    {
+      "edit_id": "E002",
+      "source_start_byte": 394431,
+      "source_end_byte": 394432,
+      "category": "operational_split",
+      "reason": "Archive primary/implementation classification; quantified theorem begins with its original For every clause.",
+      "byte_count": 1,
+      "lf_count": 0,
+      "sha256": "36a9e7f1c95b82ffb99743e0c5c4ce95d83c9a430aac59f84ef3cbfab6145068"
+    },
+    {
+      "edit_id": "E005",
+      "source_start_byte": 395326,
+      "source_end_byte": 395393,
+      "category": "type_metadata",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "byte_count": 67,
+      "lf_count": 0,
+      "sha256": "74a54207931a0209bcdd098fe79450015686416b3a0a6d8a244969a08bb5032b"
+    },
+    {
+      "edit_id": "E006",
+      "source_start_byte": 396456,
+      "source_end_byte": 396525,
+      "category": "type_metadata",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "byte_count": 69,
+      "lf_count": 0,
+      "sha256": "e2aef4ae0800d6d32fcebd2b617714966a49f9667f2b553cc0015fd4b2822c4a"
+    },
+    {
+      "edit_id": "E007",
+      "source_start_byte": 397281,
+      "source_end_byte": 397412,
+      "category": "citation_attachment",
+      "reason": "Attach the existing White Theorem 1.1 attribution from original 35.28 to the proof it supports.",
+      "byte_count": 131,
+      "lf_count": 4,
+      "sha256": "e8830879406562cedf5e1a67b0bd41dde50b1bc45bd05e9982d49b0657587082"
+    },
+    {
+      "edit_id": "E008",
+      "source_start_byte": 397412,
+      "source_end_byte": 397484,
+      "category": "type_metadata",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "byte_count": 72,
+      "lf_count": 0,
+      "sha256": "e2c025e1578d794b768d9785486a7e0087b7e9451f8e2ff9e01848d49b229c96"
+    },
+    {
+      "edit_id": "E009",
+      "source_start_byte": 398433,
+      "source_end_byte": 398506,
+      "category": "type_metadata",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "byte_count": 73,
+      "lf_count": 0,
+      "sha256": "e4f8bdee928c881b68f73c92b672452efe88ed42632cf1e2bc1cbfc898a9e8c0"
+    },
+    {
+      "edit_id": "E010",
+      "source_start_byte": 399448,
+      "source_end_byte": 399754,
+      "category": "citation_attachment",
+      "reason": "Attach the existing Meyerovitch Proposition 3.2 and Lemma 5.3 attribution from original 35.28 to the proof it supports.",
+      "byte_count": 306,
+      "lf_count": 6,
+      "sha256": "ed6131b5ddc1425dadb95d0eb4306c1252c43cf7f4f475d9f28ae5ac28ff4063"
+    },
+    {
+      "edit_id": "E011",
+      "source_start_byte": 399754,
+      "source_end_byte": 399827,
+      "category": "type_metadata",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "byte_count": 73,
+      "lf_count": 0,
+      "sha256": "de01f19ec93cff67ead49bba2328742d64b5d44503412286dfb18383316f35be"
+    },
+    {
+      "edit_id": "E012",
+      "source_start_byte": 400939,
+      "source_end_byte": 401004,
+      "category": "type_metadata",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "byte_count": 65,
+      "lf_count": 0,
+      "sha256": "349076a1d924ba8a5f607cb3063984243ede3254bfd70e493362c8d9dc9227e5"
+    },
+    {
+      "edit_id": "E013",
+      "source_start_byte": 402182,
+      "source_end_byte": 402257,
+      "category": "type_metadata",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "byte_count": 75,
+      "lf_count": 0,
+      "sha256": "d34c98abaa8cd5bc29b45e05cc0f68ccab54a9af410aec353873da06018c0cfd"
+    },
+    {
+      "edit_id": "E014",
+      "source_start_byte": 403582,
+      "source_end_byte": 403639,
+      "category": "type_metadata",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "byte_count": 57,
+      "lf_count": 0,
+      "sha256": "6e82788b66d62ac5ccc48175f857a2f36c5acf7dc95fe0712e6afa018d8a6294"
+    },
+    {
+      "edit_id": "E015",
+      "source_start_byte": 404579,
+      "source_end_byte": 404675,
+      "category": "type_metadata",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "byte_count": 96,
+      "lf_count": 0,
+      "sha256": "0ca8c7c26164be2998d90086c71e56c9057f73f67e21e47451072f7c12adadce"
+    },
+    {
+      "edit_id": "E016",
+      "source_start_byte": 405310,
+      "source_end_byte": 405373,
+      "category": "type_metadata",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "byte_count": 63,
+      "lf_count": 0,
+      "sha256": "35ced1ed78d73e2677a7cde0569b324f50eb04fd0f366cfa5bb7ad1da2514f03"
+    },
+    {
+      "edit_id": "E017",
+      "source_start_byte": 406271,
+      "source_end_byte": 406392,
+      "category": "citation_attachment",
+      "reason": "Attach the existing Tao Lecture 3 Lemma 1/Theorem 2 attribution from original 35.28 to the proof it supports.",
+      "byte_count": 121,
+      "lf_count": 3,
+      "sha256": "3cca2d544508d197407f53571e0b222322109c62d7175fcd1170d2ee728ecc5d"
+    },
+    {
+      "edit_id": "E018",
+      "source_start_byte": 406392,
+      "source_end_byte": 406466,
+      "category": "type_metadata",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "byte_count": 74,
+      "lf_count": 0,
+      "sha256": "648b8f6ec694997c98f221136d6a8f1a1a25d798ebe5c9a38f74ff80ac2cea90"
+    },
+    {
+      "edit_id": "E019",
+      "source_start_byte": 407082,
+      "source_end_byte": 407174,
+      "category": "type_metadata",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "byte_count": 92,
+      "lf_count": 0,
+      "sha256": "9a273ba0afa165b53324a26af5c88bcd29f7b70aadb4c245e690194dee6b7297"
+    },
+    {
+      "edit_id": "E020",
+      "source_start_byte": 408379,
+      "source_end_byte": 408463,
+      "category": "type_metadata",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "byte_count": 84,
+      "lf_count": 0,
+      "sha256": "176691ce4572297c25b23004d6fbd6c407e1c0d7931dde4b721f59ff8a4dacf0"
+    },
+    {
+      "edit_id": "E021",
+      "source_start_byte": 409336,
+      "source_end_byte": 409399,
+      "category": "operational_split",
+      "reason": "Remove enumeration process statement, retaining the identical mathematical limitation on a numerical first valid index.",
+      "byte_count": 63,
+      "lf_count": 0,
+      "sha256": "c05f49a886772dae8a6e42fbcda5a9f7ac6b143132f20a4dbfa6fbc3074538b7"
+    },
+    {
+      "edit_id": "E022",
+      "source_start_byte": 409401,
+      "source_end_byte": 409481,
+      "category": "type_metadata",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "byte_count": 80,
+      "lf_count": 0,
+      "sha256": "15cafec9359b396751c562c0e1f4b7404aef6a55eb268f05b76664da22983b75"
+    },
+    {
+      "edit_id": "E023",
+      "source_start_byte": 410476,
+      "source_end_byte": 410568,
+      "category": "type_metadata",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "byte_count": 92,
+      "lf_count": 0,
+      "sha256": "8e8ce7d12e814ae61682d37792504da78c977f88dd710c87c6fc877d6edb4a71"
+    },
+    {
+      "edit_id": "E024",
+      "source_start_byte": 411280,
+      "source_end_byte": 411289,
+      "category": "operational_split",
+      "reason": "Remove request-context adjective only; the exact error and uniform absolute constant 1 are unchanged.",
+      "byte_count": 9,
+      "lf_count": 0,
+      "sha256": "fbee06ec6b67bd1a001b6a00d47fa725bfd35e3baec733a1433c3a5bb9a7adc5"
+    },
+    {
+      "edit_id": "E025",
+      "source_start_byte": 411401,
+      "source_end_byte": 411464,
+      "category": "type_metadata",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "byte_count": 63,
+      "lf_count": 0,
+      "sha256": "50e9e8fa599013a9eafff629015902a9558ac72c2f92c8867958010e6bb7a6c3"
+    },
+    {
+      "edit_id": "E026",
+      "source_start_byte": 412640,
+      "source_end_byte": 412732,
+      "category": "type_metadata",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "byte_count": 92,
+      "lf_count": 0,
+      "sha256": "06a2a3f84241da9713410c4011b65d29077b120ab77402f3e529a3532e88926d"
+    },
+    {
+      "edit_id": "E027",
+      "source_start_byte": 413522,
+      "source_end_byte": 413600,
+      "category": "type_metadata",
+      "reason": "Mathematical type/heading metadata only; original number and retained claims/proofs remain.",
+      "byte_count": 78,
+      "lf_count": 0,

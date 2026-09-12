@@ -1,0 +1,18 @@
+**35.27 Proposition (Golden-ratio frequency, other metrics and chosen orthogonality).**
+For every irrational one-dimensional step \(\beta\) and every circle
+interval \(I\), 35.4-35.8 in dimension one give limiting visit frequency
+equal to the circle length of \(I\); its boundary has at most two points.
+Thus irrationality of the golden ratio yields no improved limiting interval
+frequency. No golden-ratio extremality theorem is invoked. Approximation
+quality such as \(\min_{1\le q\le M}\|q\beta\|_{\mathbb T}\), discrepancy
+of finite empirical interval counts from interval length, and minimum spacing
+between finitely many orbit points are distinct quantities. A comparison of
+any of them requires its own hypotheses, metric and correctly attributed
+extremal theorem; limiting interval frequency determines none of them.
+
+The Euclidean inner product in 35.19 is explicitly chosen. Prime labels,
+ordinary exponent coordinates and Zeckendorf digits supply neither an inner
+product nor new orthogonality or a new KL-loss identity. A lattice slice,
+a positive-width budget slab, a numerical-order cutoff and a digit cylinder
+remain different constructions, as in the existing section 10 discussion.
+

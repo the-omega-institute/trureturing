@@ -1,0 +1,16 @@
+**35.26 Numerical-order Zeckendorf recoding preserves every finite count.**
+Use the stipulated Zeckendorf bijection: Fibonacci weights \(1,2,3,5,\ldots\),
+digits in \(\{0,1\}\) with no adjacent occupied weights, and unique decoding
+to the original integer. Under numerical-order enumeration the first \(M\)
+positive decoded integers are exactly \(1,\ldots,M\). For any membership
+set, including \(B_Q\) as indices or \(\mathcal N_Q\) as integers, its
+count among these codes therefore equals its numerical count for every
+finite \(M\), identically. This is an immediate use of the existing
+bijection, not a new proof of the Zeckendorf theorem.
+
+A complete digit-length cutoff that corresponds to a Fibonacci numerical
+interval inherits 35.25. Conditioning on a digit-prefix cylinder, changing
+weights assigned to codewords, or enumerating codes in an arbitrary different
+order changes the sampling operation and needs separate analysis. Bijectivity
+alone does not preserve density under arbitrary reordering.
+
