@@ -98,14 +98,14 @@ run_cmd Elab.Command.liftTermElabM do
       published == mkStrLit (actual.getD "") do throwError "[FAIL] EscapeRegistrationStructural: {actual}"
   logInfo "[PASS] EscapeRegistrationStructural"
 
--- Definitional equality must fail closed when reduction exceeds its fixed budget.
+-- The allowlist rejects this Classical decision without reducing its expensive argument.
 def expensive : Nat → Nat
   | 0 => 1
   | n + 1 => expensive n + expensive n
 theorem expensiveTruth : expensive 10000 = expensive 10000 := rfl
 noncomputable def expensiveDecision (_ : Unit) (x : Bool) : Bool :=
   if @decide (expensive 10000 = 0) (Classical.propDecidable _) then x else false
-check_provenance "DefeqExhaustion" using expensiveDecision expects "unclassified_form" for expensiveTruth
+check_provenance "ClassicalExpensiveArgument" using expensiveDecision expects "unclassified_form" for expensiveTruth
 
 def independentAliasRead (_ : Unit) (x : Bool) : Bool := let _ := aliasHelper; x
 check_provenance "IndependentProofAlias" using independentAliasRead expects "forbidden_dependency" for truth
