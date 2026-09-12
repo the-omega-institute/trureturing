@@ -26,16 +26,56 @@ def required_path(root, value):
     return pathlib.Path(value)
 
 
-def scope_inputs(root, scope):
+def runtime_registration(data):
+    runtime = data.get("runtime")
+    if not isinstance(runtime, dict) or set(runtime) != {"lean", "python"}:
+        raise ValueError("runtime must declare lean and python material lists")
+    for field in ("lean", "python"):
+        values = runtime[field]
+        if not isinstance(values, list) or not values:
+            raise ValueError(f"runtime.{field} must be a nonempty material list")
+        seen = set()
+        for value in values:
+            if not isinstance(value, str) or not value:
+                raise ValueError(f"invalid runtime.{field} material: {value!r}")
+            if value in seen:
+                raise ValueError(f"duplicate runtime.{field} material: {value}")
+            seen.add(value)
+            if field == "python":
+                if value != "executable":
+                    raise ValueError(f"unknown runtime.python material: {value}")
+                continue
+            path = pathlib.PurePosixPath(value)
+            if (path.is_absolute() or path.as_posix() != value or ".." in path.parts
+                    or any(character in value for character in "\\:")
+                    or any(ord(character) < 32 for character in value)
+                    or "**" in value or any(character in str(path.parent) for character in "*?[]")):
+                raise ValueError(f"runtime.lean material must name a relative file or filename glob: {value}")
+    if "bin/lean" not in runtime["lean"]:
+        raise ValueError("runtime.lean is missing required declaration: bin/lean")
+    return runtime
+
+
+def load_scope(root, scope):
     if scope not in ("lean-report", "scribe-content"):
         raise ValueError(f"unknown producer scope registration: {scope}")
     registration = f"Meta/ReportProducers/{scope}.json"
+    manifest = required_path(root, registration)
+    data = json.loads((root / manifest).read_text(encoding="utf-8"), object_pairs_hook=unique_object)
+    fields = {"schema", "scripts", "projects", "materials"}
+    if (not isinstance(data, dict) or not fields.issubset(data)
+            or set(data) - fields - ({"runtime"} if scope == "lean-report" else set())
+            or data["schema"] != "report-producer-scope-v1"):
+        raise ValueError(f"registration {registration}: expected report-producer-scope-v1 with schema, scripts, projects and materials")
+    if "runtime" in data:
+        runtime_registration(data)
+    return manifest, data
+
+
+def scope_inputs(root, scope):
+    registration = f"Meta/ReportProducers/{scope}.json"
     try:
-        manifest = required_path(root, registration)
-        data = json.loads((root / manifest).read_text(encoding="utf-8"), object_pairs_hook=unique_object)
-        if (not isinstance(data, dict) or set(data) != {"schema", "scripts", "projects", "materials"}
-                or data["schema"] != "report-producer-scope-v1"):
-            raise ValueError("expected report-producer-scope-v1 with schema, scripts, projects and materials")
+        manifest, data = load_scope(root, scope)
         paths = {manifest}
         registered = set()
         for field in ("scripts", "projects", "materials"):

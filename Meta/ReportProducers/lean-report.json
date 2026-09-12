@@ -34,5 +34,16 @@
     "tools/StrataLint.Engine/packages.lock.json",
     "tools/Trureturing.Truth/packages.lock.json",
     ".editorconfig"
-  ]
+  ],
+  "runtime": {
+    "lean": [
+      "bin/lean",
+      "lib/lean/Init.olean",
+      "lib/lean/Lean.olean",
+      "lib/lean/libleanshared.*"
+    ],
+    "python": [
+      "executable"
+    ]
+  }
 }

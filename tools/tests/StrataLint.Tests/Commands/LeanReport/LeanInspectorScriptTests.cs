@@ -4,7 +4,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-public sealed class LeanInspectorScriptTests
+public sealed partial class LeanInspectorScriptTests
 {
     private const string InspectorScript = "tools/lean-inspector/inspect.sh";
     private const string InspectorSource = "tools/lean-inspector/Inspector.lean";
@@ -29,8 +29,8 @@ public sealed class LeanInspectorScriptTests
         LeanSeedProcessContract.Run("InspectorTests.test_report_staging_does_not_preempt_cold_cache_provisioning");
 
     [Fact]
-    public void LoadedRuntimeDependenciesInvalidateModuleResults() =>
-        LeanSeedProcessContract.Run("InspectorTests.test_actual_runtime_dependency_change_reinspects_inside_same_partition");
+    public void DeclaredRuntimeDependenciesInvalidateModuleResults() =>
+        LeanSeedProcessContract.Run("InspectorTests.test_declared_runtime_material_change_reinspects_inside_same_partition");
 
     [Theory]
     [InlineData("standalone", 0)]
@@ -41,8 +41,9 @@ public sealed class LeanInspectorScriptTests
         if (OperatingSystem.IsWindows()) return;
         using var temporary = new TemporaryDirectory();
         var repository = CreateRepository(temporary.Path);
-        var lake = Path.Combine(temporary.Path, "lake");
-        File.WriteAllText(lake, "#!/usr/bin/env bash\nprintf '%s\\n' \"$*\" >> \"$STUB_LOG\"\nif [[ \"$*\" == *' --output '* ]]; then while [[ $# -gt 0 ]]; do [[ $1 == --output ]] && { printf '{\"modules\": [], \"schema\": \"stratalint-lean-inspector-spool-v1\"}\\n' > \"$2\"; break; }; shift; done; fi\n", new UTF8Encoding(false));
+        var lake = Path.Combine(temporary.Path, "runtime/bin/lean");
+        Directory.CreateDirectory(Path.GetDirectoryName(lake)!);
+        File.WriteAllText(lake, "#!/usr/bin/env bash\nprintf '%s\\n' \"$*\" >> \"$STUB_LOG\"\nif [[ \"$*\" == \"env lean --print-prefix\" ]]; then dirname \"$(dirname \"$0\")\"; exit 0; fi\nif [[ \"$*\" == *' --output '* ]]; then while [[ $# -gt 0 ]]; do [[ $1 == --output ]] && { printf '{\"modules\": [], \"schema\": \"stratalint-lean-inspector-spool-v1\"}\\n' > \"$2\"; break; }; shift; done; fi\n", new UTF8Encoding(false));
         File.SetUnixFileMode(lake, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
         var log = Path.Combine(temporary.Path, "lake.log");
         var output = Path.Combine(temporary.Path, "report.json");
@@ -130,7 +131,7 @@ public sealed class LeanInspectorScriptTests
         }));
         Write(repository, "Meta/ReportProducers/lean-report.json", JsonSerializer.Serialize(new
         {
-            schema = "report-producer-scope-v1", projects = new[] { "tools/StrataLint.Lean/StrataLint.Lean.csproj" },
+            schema = "report-producer-scope-v1", runtime = new { lean = new[] { "bin/lean" }, python = new[] { "executable" } }, projects = new[] { "tools/StrataLint.Lean/StrataLint.Lean.csproj" },
             materials = new[] { "global.json" }, scripts = new[]
             {
                 InspectorScript, InspectorSource, MaterialCompactor, InputScript, ResourceObservationLibrary, CacheRunScript,

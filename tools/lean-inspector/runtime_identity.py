@@ -1,4 +1,4 @@
-"""Identity of the actual programs used by an inspector invocation."""
+"""Hash only runtime material explicitly registered by the report producer."""
 from __future__ import annotations
 
 import argparse
@@ -8,11 +8,10 @@ import pathlib
 import platform
 import subprocess
 import sys
-import sysconfig
-import zipfile
 
-import delta
-import materials
+sys.dont_write_bytecode = True
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "scripts/report"))
+from producer_paths import load_scope, runtime_registration
 
 
 def file_sha(path: pathlib.Path) -> str:
@@ -23,32 +22,23 @@ def file_sha(path: pathlib.Path) -> str:
     return value.hexdigest()
 
 
-def lean_programs(lake: str, repository: pathlib.Path, toolchain: pathlib.Path) -> dict:
-    inspector = pathlib.Path(__file__).with_name("Inspector.lean")
-    dependencies = subprocess.run([lake, "env", "lean", "--deps", str(inspector)],
-        cwd=repository, check=True, capture_output=True, text=True).stdout.splitlines()
-    pending = [pathlib.Path(path) for path in dependencies if path]
+def declared_lean_material(toolchain: pathlib.Path, patterns: list[str]) -> dict:
     programs = {}
-    visited = set()
-    while pending:
-        olean = pending.pop().resolve()
-        if olean in visited:
-            continue
-        visited.add(olean)
-        relative = olean.relative_to(toolchain / "lib/lean").as_posix()
-        # The compiler's structured import index supplies the transitive closure;
-        # executable olean/IR parts supply the identity, not a declared version.
-        imports = json.loads(olean.with_suffix(".ilean").read_text(encoding="utf-8"))["directImports"]
-        for item in imports:
-            name = item[0] if isinstance(item, list) else item
-            pending.append(toolchain / "lib/lean" / (name.replace(".", "/") + ".olean"))
-        for suffix in ("", ".private", ".server"):
-            path = pathlib.Path(str(olean) + suffix)
-            if path.is_file():
-                programs["lean-module:" + relative + suffix] = file_sha(path)
-        ir = olean.with_suffix(".ir")
-        if ir.is_file():
-            programs["lean-ir:" + relative] = file_sha(ir)
+    owners = {}
+    for pattern in patterns:
+        # Only the registered filename glob expands; imports and neighboring files
+        # cannot introduce additional material into the identity.
+        matches = sorted(toolchain.glob(pattern))
+        if not matches:
+            raise ValueError(f"required runtime.lean material is absent: {pattern} under {toolchain}")
+        for path in matches:
+            resolved = path.resolve()
+            if not resolved.is_relative_to(toolchain) or not resolved.is_file():
+                raise ValueError(f"invalid runtime.lean material: {pattern} resolved to {path}")
+            if resolved in owners:
+                raise ValueError(f"conflicting runtime.lean material: {path.relative_to(toolchain)} declared by {owners[resolved]} and {pattern}")
+            owners[resolved] = pattern
+            programs["lean:" + path.relative_to(toolchain).as_posix()] = file_sha(resolved)
     return programs
 
 
@@ -58,37 +48,26 @@ def main() -> int:
     parser.add_argument("--lake", required=True)
     args = parser.parse_args()
     try:
+        _, manifest = load_scope(args.repository.resolve(), "lean-report")
+        runtime = runtime_registration(manifest)
+        # Resolve the installation actually selected by Lake; this does not select
+        # dependencies. The manifest alone selects material within this root.
         prefix = subprocess.run([args.lake, "env", "lean", "--print-prefix"],
             cwd=args.repository, check=True, capture_output=True, text=True).stdout.strip()
-        toolchain = pathlib.Path(prefix).resolve()
-        lean = toolchain / "bin/lean"
-        if not lean.is_file():
-            raise ValueError("executing Lean installation is unavailable")
-        programs = {"lean": file_sha(lean), **lean_programs(args.lake, args.repository, toolchain)}
-        # Lean's evaluator and primitives live in the loaded shared libraries.
-        for path in sorted((toolchain / "lib/lean").glob("*")):
-            if path.is_file() and path.suffix in (".so", ".dylib", ".dll"):
-                programs[path.name] = file_sha(path)
-        programs["python"] = file_sha(pathlib.Path(sys.executable).resolve())
-        library = pathlib.Path(sysconfig.get_config_var("LIBDIR") or "") / (sysconfig.get_config_var("LDLIBRARY") or "")
-        framework = sysconfig.get_config_var("PYTHONFRAMEWORK")
-        if framework:
-            library = (pathlib.Path(sysconfig.get_config_var("PYTHONFRAMEWORKPREFIX"))
-                / (framework + ".framework") / "Versions" / sysconfig.get_config_var("VERSION") / framework)
-        if library.is_file():
-            programs["python-runtime"] = file_sha(library)
-        # Import the actual Python programs first; enumerate their loaded module
-        # closure, including extension modules, rather than declared packages.
-        for name, module in sorted(sys.modules.copy().items()):
-            path = getattr(module, "__file__", None)
-            if path and pathlib.Path(path).is_file():
-                programs["python-module:" + name] = file_sha(pathlib.Path(path))
-        identity = {"schema": "lean-report-runtime-v1", "programs": programs,
+        if not prefix or not pathlib.Path(prefix).is_absolute():
+            raise ValueError(f"invalid declared Lean installation prefix: {prefix!r}")
+        programs = declared_lean_material(pathlib.Path(prefix).resolve(), runtime["lean"])
+        for material in runtime["python"]:
+            executable = pathlib.Path(sys.executable).resolve()
+            if not executable.is_file():
+                raise ValueError(f"required runtime.python {material} is absent: {executable}")
+            programs["python:" + material] = file_sha(executable)
+        identity = {"schema": "lean-report-runtime-v2", "programs": programs,
                     "python": platform.python_version()}
         print(hashlib.sha256(json.dumps(identity, sort_keys=True, separators=(",", ":")).encode()).hexdigest())
         return 0
     except (OSError, ValueError, KeyError, TypeError, subprocess.CalledProcessError) as error:
-        print(f"lean-report-runtime: {error}", file=sys.stderr)
+        print(f"lean-report-runtime: Meta/ReportProducers/lean-report.json: {error}", file=sys.stderr)
         return 2
 
 
