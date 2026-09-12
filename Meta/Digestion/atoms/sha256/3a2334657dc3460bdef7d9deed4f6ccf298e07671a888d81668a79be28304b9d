@@ -1,0 +1,60 @@
+**定理 353.2。** 对上述任一集合 $X$，记
+$$
+X^*=\operatorname{Enc}[X]=\operatorname{El}(\operatorname{Enc}(X)),\qquad
+\operatorname{enc}_X=\operatorname{Enc}|_X.
+$$
+它是 $X\to X^*$ 的双射，逆恰为 $\operatorname{Dec}|_{X^*}$。若 $f:D\to Y$ 为所列任一函数或精确部分域上的函数，$G_f$ 为其普通图，则外部共轭和原图码分别为
+$$
+f^*=\operatorname{enc}_Y\circ f\circ\operatorname{enc}_D^{-1}:D^*\to Y^*,
+$$
+$$
+G_{f^*}=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle:x\in D\},
+$$
+$$
+\operatorname{Enc}(G_f)
+=\operatorname{Pack}\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle_Z:x\in D\}.
+$$
+外部共轭的域为 $\operatorname{Enc}[D]$，原图码的语义域为单个 $\operatorname{Enc}(D)$。
+
+若另有指定双射 $b_D:D\to C_D,b_Y:Y\to C_Y$，令 $f^d=b_Y\circ f\circ b_D^{-1}$，并按定义 336.1 取
+$$
+h_D(c)=\operatorname{Enc}(b_D^{-1}(c)),\qquad
+h_Y(d)=\operatorname{Enc}(b_Y^{-1}(d)).
+$$
+则两个图码恰为
+$$
+\operatorname{Enc}(G_f)
+=\operatorname{Pack}\{\langle h_D(c),h_Y(d)\rangle_Z:
+\langle c,d\rangle\in G_{f^d}\},
+$$
+$$
+\operatorname{Enc}(G_{f^d})
+=\operatorname{Pack}\{\langle\operatorname{Enc}(c),\operatorname{Enc}(d)\rangle_Z:
+\langle c,d\rangle\in G_{f^d}\}.
+$$
+原对象提升 $h_D$ 的像恰为 $D^*$，逆在这个像上为 $b_D\circ\operatorname{Dec}$；数字对象提升 $e_D(c)=\operatorname{Enc}(c)$ 的像恰为 $\operatorname{Enc}[C_D]$，逆在这个像上为 $\operatorname{Dec}$。输出槽有相同的两个精确逆域。
+
+**证明。** 定理 72 直接给 $\operatorname{enc}_X$ 的双逆及成员像式。对 $c\in C_D$，解码 $h_D(c)$ 得 $b_D^{-1}(c)$，再用 $b_D$ 得 $c$；反向对 $z\in D^*$，$b_D(\operatorname{Dec}(z))\in C_D$，其 $h_D$ 像是 $z$。数字提升则直接使用 $\operatorname{Enc},\operatorname{Dec}$ 在 $C_D$ 及其像上的双逆。输出域的证明相同。这些是不同对象的提升，角色不同不蕴含所有特殊输入的像不交。
+
+对 $x\in D$，外部共轭在 $\operatorname{Enc}(x)$ 处取唯一值 $\operatorname{Enc}(f(x))$，给普通有序对的外部图。定理 74 使每个语义对为 $\operatorname{Enc}(\langle x,f(x)\rangle)$，定理 73 的 $\operatorname{Pack}$ 因而恢复整个原图码。逐边存在与唯一性给所列语义域及
+$$
+\operatorname{ev}_Z(\operatorname{Enc}(G_f),\operatorname{Enc}(x))
+=\operatorname{Enc}(f(x))\quad(x\in D).
+$$
+对任意数字边 $\langle c,d\rangle\in G_{f^d}$，唯一原输入是 $b_D^{-1}(c)$，唯一原输出是 $b_Y^{-1}(d)=f(b_D^{-1}(c))$；反向每条原边由双射产生唯一数字边。用这一双向逐边对应和语义配对恒等式得到第一数字图式。直接编码数字边本身则给第二式，其语义域是 $\operatorname{Enc}(C_D)$。因此单个图码、它的外部语义成员像与普通外部图具有分别指定的配对和域。
+
+对多输入函数，使用第 257–260、336 条固定元数的 $T_k$ 和对应 $T_k^Z$。若原联合域 $D\subseteq T_k[X_1,\ldots,X_k]$，输入双射逐槽作用后得到精确数字联合域 $C_D$；原对象输入提升满足
+$$
+H_{\rm in}(T_k(c_1,\ldots,c_k))
+=T_k^Z(h_1(c_1),\ldots,h_k(c_k))
+=\operatorname{Enc}(T_k(b_1^{-1}(c_1),\ldots,b_k^{-1}(c_k))).
+$$
+把这个等式代入两图式即保留整个联合域，不能以各槽分别合法代替联合谓词。特别命题 352.3 的有限求值使用恰好 $D_{\rm fin}$ 与 $D_{\rm fin}^{d}$，语义域分别为它们的单个码；缺少所需零边的输入在两侧均无值。严格总化按域内与域外两类运输，前者给相应的 $\operatorname{ok}$ 值，后者给相应 $\bot$，成功零和失败仍不相等。所有语义元组的参数先经合法提升；原始零字 $\varnothing\notin\mathfrak V_Z$，语义空集是 $\operatorname{NatZ}(0)$。
+
+取 $b_D=\operatorname{rec}_{\rm reg}$、$b_Y=\operatorname{qenc}$ 或 $\operatorname{genc}_\phi$，便得到命题 352.4 的值和黄金求值图。限制输入到 $B_A^{\rm cap}$ 时，数字域恰为 $\mathsf{Rec}_A^{\rm cap}$。若输出取通常实数全编码，则记录上的式子为
+$$
+s\longmapsto\operatorname{Enc}(\ell_F(\operatorname{unrec}_{\rm reg}(s)))
+\quad(s\in\mathsf{Rec}_A^{\rm cap}).
+$$
+$S_F$ 在整个 $X_A^{\rm cap}$ 上使用 $x\mapsto\operatorname{Enc}(S_F(x))$ 的图式，不能以此有限非零记录域替代其全乘积输入。证毕。
+

@@ -1,0 +1,7 @@
+**定义 323.1。** 对 $H\le\mathsf V_{\rm reg}$ 定义
+$$
+\operatorname{Ann}_{\rm rat}(H)
+=\{\theta\in\Theta_{\rm rat}:\forall h\in H,\ \chi^{\rm rat}_\theta(h)=0\}.
+$$
+空族的核交约定为 $\mathsf V_{\rm reg}$。
+

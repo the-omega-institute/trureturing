@@ -1,0 +1,18 @@
+**定义 345.1。** 对容量 $A$ 定义两个谓词
+$$
+\mathsf U_F(A)\iff
+\exists\epsilon\in\mathbb R_{>0}\
+\forall d\in\omega\setminus\{0\}\
+\forall N\in\omega\
+\exists n>N,\quad
+d\mid G_n\ \land\ \frac{A_n}{G_n}\ge\epsilon,
+$$
+$$
+\mathsf{Fill}_F(A)\iff
+\forall q\in\mathbb Q_{\ge0}\ \forall N\in\omega\
+\exists u\in B_A^{\rm cap},\quad
+\operatorname{supp}(u)\subseteq\{n:n>N\}\ \land\
+\ell_F(u)=\iota_{\mathbb Q}(q).
+$$
+$\mathsf U_F(A)$ 中只选一次 $\epsilon$，且两个条件必须在同一个 $n$ 上成立。每条尾的容量质量记为非负扩展和 $\sum_{n>N}A_n/G_n$。
+

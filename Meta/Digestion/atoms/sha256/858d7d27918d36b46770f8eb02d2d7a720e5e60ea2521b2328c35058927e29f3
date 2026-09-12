@@ -1,0 +1,22 @@
+**定义 133（指数表的逐行加法与规范提升）。** 对有限 \(P\) 置
+\[
+\mathsf E(P)=\omega^P,\qquad
+(a\boxplus_P b)(p)=a(p)+b(p),
+\]
+并置 \(\mathsf D_\infty(P)=\mathsf W_Z^P\)。对 \(d,e\in\mathsf D_\infty(P)\) 定义
+\[
+(d\boxplus_Z e)(p)
+=\operatorname{Norm}\bigl(\operatorname{pad}(d(p))+\operatorname{pad}(e(p))\bigr).
+\]
+定义
+\[
+\operatorname{dig}^{\infty}_P:\mathsf E(P)\to\mathsf D_\infty(P),
+\qquad
+\operatorname{dig}^{\infty}_P(a)(p)=\zeta(a(p)).
+\]
+这里右侧的行加法先产生有限非负系数，再由 \(\operatorname{Norm}\) 唯一化；它不是把两个 Zeckendorf 数位的索引相加。有限容量域 \(S(P,A)\) 在 \(\boxplus_P\) 下的定义域为
+\[
+\operatorname{Dom}_{P,A}
+=\{(a,b)\in S(P,A)^2:\forall p\in P,\ a(p)+b(p)\le A(p)\}.
+\]
+

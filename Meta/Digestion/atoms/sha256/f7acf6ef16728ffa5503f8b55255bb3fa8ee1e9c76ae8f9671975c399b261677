@@ -1,0 +1,27 @@
+**定理 197（时间剖面的差分恢复与并行、补集运输）。** 对每个槽支撑情境 \(X\)，有
+\[
+\mathbf a_X^T=\mathsf I_P(\delta_X)(T,-),
+\qquad
+\mathbf a_X^\infty=\Sigma_P(\delta_X),
+\]
+且在所有整数 \(t\) 上
+\[
+\delta_X(t,p)=\mathbf a_X^t(p)-\mathbf a_X^{t-1}(p).
+\tag{Z-TEMPORAL-DIFFERENCE}
+\]
+若 \(X,Y\) 均属于定义 193 的支撑域，则
+\[
+\delta_{X\boxplus Y}=\delta_X+\delta_Y.
+\tag{Z-TEMPORAL-PARALLEL}
+\]
+若 \(X\) 还前缀逐槽平衡，则 \(\mathsf cX\) 也前缀逐槽平衡，并且
+\[
+\delta_{\mathsf cX}=-\delta_X,
+\qquad
+\mathbf a_{\mathsf cX}^T=-\mathbf a_X^T,
+\qquad
+\mathbf a_{\mathsf cX}^\infty=-\mathbf a_X^\infty.
+\tag{Z-TEMPORAL-COMPLEMENT}
+\]
+因此，对前缀逐槽平衡情境，全部前缀剖面恰好决定全部时间增量表。
+

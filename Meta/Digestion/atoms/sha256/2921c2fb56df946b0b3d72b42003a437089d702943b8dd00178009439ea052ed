@@ -1,0 +1,25 @@
+**定理 215（无权槽数与 Fibonacci 指数的不可混同）。** 取任意 \(p\in P\)，令
+\[
+q_1=2e_{0,p,0},
+\qquad
+q_2=e_{0,p,0}+e_{0,p,1}.
+\]
+则
+\[
+\mathsf U_P(q_1)(0,p)=\mathsf U_P(q_2)(0,p)=2,
+\]
+但
+\[
+\mathsf V_P(q_1)(0,p)=2,
+\qquad
+\mathsf V_P(q_2)(0,p)=3.
+\tag{Z-UNWEIGHTED-WEIGHTED-SEPARATION}
+\]
+所以不存在只由无权槽数 \(\mathsf U_P(q)\) 决定 Fibonacci 寄存器指数 \(\mathsf V_P(q)\) 的函数。对定理 212 的 \(q_{5040}\)，有
+\[
+\sum_{t,p}\mathsf U_{P_{5040}}(q_{5040})(t,p)=5,
+\qquad
+\sum_{p}\mathsf C_{P_{5040}}(q_{5040})(p)=8,
+\]
+而其素数加权读数仍为 \(5040\)。
+

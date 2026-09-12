@@ -1,0 +1,35 @@
+**定义 185（带符号槽表与逐槽平衡）。** 对有限素数集 \(P\) 定义有限支撑带符号槽表
+\[
+\mathcal R_{P,\mathbb Z}=\mathbb Z^{(P\times\omega)}.
+\]
+对 \(r\in\mathcal R_{P,\mathbb Z}\) 定义
+\[
+V_P^{\mathbb Z}(r)(p)=\sum_{j\ge0}G_jr(p,j),
+\qquad
+\operatorname{sdig}_P(r)(p)
+ =\operatorname{scode}\bigl(V_P^{\mathbb Z}(r)(p)\bigr),
+\]
+并令 \(\ominus_Z^P\) 在 \(P\) 上逐坐标作用，即
+\[
+(\ominus_Z^P d)(p)=\ominus_Z(d(p)).
+\]
+以及有理素数幂读数
+\[
+\operatorname{Rat}_P(r)=\prod_{p\in P}p^{V_P^{\mathbb Z}(r)(p)}
+\in\mathbb Q_{>0}.
+\]
+对有限情境 \(X\) 定义背景的终端槽电荷和前缀槽电荷
+\[
+B_X(p,j)=\sum_{t\in\mathbb Z}W_X(t,\lambda(p,j)),
+\qquad
+B_X^T(p,j)=\sum_{t\le T}W_X(t,\lambda(p,j)).
+\]
+对任意槽支撑于 \(\lambda[P\times\omega]\) 的 \(X\)，同时置
+\[
+r_X(p,j)=\sum_{t\in\mathbb Z}Z_X(t,\lambda(p,j)),
+\qquad
+r_X^T(p,j)=\sum_{t\le T}Z_X(t,\lambda(p,j)).
+\]
+当 \(X\in\mathcal B_\lambda^+\) 时，这些表取值于 \(\mathbb N\)；一般情形下取值于 \(\mathbb Z\)。
+称 \(X\) 终端逐槽平衡，若 \(B_X(p,j)=0\) 对所有 \(p,j\) 成立；称 \(X\) 前缀逐槽平衡，若 \(B_X^T(p,j)=0\) 对所有 \(T,p,j\) 成立。前缀逐槽平衡蕴含终端逐槽平衡及定义 1 的全局平衡。
+

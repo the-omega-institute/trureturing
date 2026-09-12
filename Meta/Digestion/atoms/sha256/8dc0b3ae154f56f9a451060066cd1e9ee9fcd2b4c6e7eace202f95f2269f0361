@@ -1,0 +1,11 @@
+**定理 332.2。** 上述选择存在唯一，且在整个独立目标上有双逆
+$$
+\operatorname{qdec}\circ\operatorname{qenc}=\operatorname{id}_{\mathbb Q},\qquad
+\operatorname{qenc}\circ\operatorname{qdec}=\operatorname{id}_{\mathsf{RatFld}},
+$$
+$$
+\operatorname{pdec}\circ\operatorname{penc}=\operatorname{id}_{\mathsf D_{\rm rat}},\qquad
+\operatorname{penc}\circ\operatorname{pdec}=\operatorname{id}_{\mathsf{RatPhaseFld}}.
+$$
+两个零字段均恰为 $T_2(0_Z,\zeta(1))$。有理域运算及有理相位的加法群运算沿相应双射精确运输，保留其全部原定义域。
+

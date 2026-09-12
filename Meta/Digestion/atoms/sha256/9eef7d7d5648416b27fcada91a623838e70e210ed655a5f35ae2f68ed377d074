@@ -1,0 +1,7 @@
+**定义 231（固定寄存器数的窗口容量极值）。** 对整数 $k\ge1$、$B\ge0$，复用定义 9 的窗口及定理 98 的 $\ell_Z$，定义
+$$
+\mathcal C_k(B)=
+\max\left\{\prod_{i=1}^kG_{L_i}:L_i\in\mathbb N,\ \sum_{i=1}^kL_i=B\right\}.
+$$
+这里 $k$ 个寄存器及其字段边界固定，允许 $L_i=0$。对容量 $A_i\in\mathbb N$，要求 $A_i<G_{L_i}$，相应盒的状态数仍是 $Q=\prod_i(A_i+1)$；$G_{L_i}=|\mathcal W_{L_i}|$ 是完整窗口的状态数，不是容量角标量 $M$。
+

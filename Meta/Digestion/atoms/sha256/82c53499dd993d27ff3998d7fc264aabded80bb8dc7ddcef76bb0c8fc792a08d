@@ -1,0 +1,44 @@
+**定理 265（基本算子的合法域及逐字段交换）。** 对 $R=R_{\rm num},R_{\rm all}$ 各自成立以下全称式。对所有 $X,Y\in\mathcal H$ 和 $k\in J$，并行、乘法、补集、时间平移均合法，且
+$$
+\begin{aligned}
+R(X\boxplus Y)&=R(X)\boxplus^RR(Y),&
+R(X\boxtimes Y)&=R(X)\boxtimes^RR(Y),\\
+R(NX)&=N^RR(X),&R(T_kX)&=T_{b(k)}^RR(X).
+\end{aligned}
+$$
+时间复合满足
+$$
+(X,Y)\in\mathcal T\iff(RX,RY)\in\mathcal T_R,
+\qquad R(X\triangleright Y)=RX\triangleright^RRY\quad((X,Y)\in\mathcal T).
+$$
+这里 $\mathcal T$ 是 CSA 定义 5 的全档案联合域。所有这些等式反向亦由 $D_R$ 成立。电荷及补集满足
+$$
+\begin{gathered}
+q^R(RX)=b(q(X)),\qquad u^R(RC)=b(u(C)),\qquad
+X\in\mathcal B\iff RX\in\mathcal B_R,\\
+q^R(N^R(C',A))=u^R(C')\oplus_Z\ominus_Zq^R(C',A).
+\end{gathered}
+$$
+对固定 $C'$，最后一式对全部 $A\subseteq\Omega$ 等于 $\ominus_Zq^R(C',A)$，当且仅当 $u^R(C')=0_S$。并行、合法时间复合的 $q,u$ 分别相加，乘法的 $q,u$ 分别相乘，因而它们保持平衡。
+
+端点另用与 $J,S$ 不交的 $\pm\infty$ 哨兵。将 $b$ 扩成固定两个哨兵的全序双射 $\bar b$。定义
+$$
+m_X=\min t[E_X],\quad M_X=\max t[E_X],\quad s_X=\max t[\Omega_X],
+$$
+空集合的最小值为 $+\infty$，最大值为 $-\infty$。目标端点用 $S$ 序同样定义，则
+$$
+(m_{RX},M_{RX},s_{RX})=(\bar b(m_X),\bar b(M_X),\bar b(s_X)),
+\qquad (X,Y)\in\mathcal T\iff M_X<m_Y.
+$$
+时间复合合法性不能用当前整体、选择、读数或有限支撑剖面的零性代替。
+
+**证明。** 并行的两标签像互斥，复制字段在两条路径上相同；两内部偏序无跨边，故传递严格且沿边增时。时间复合的守卫对每个 $e\in E_X,f\in E_Y$ 用第 256 条序等价，得域双向等价。加入的全部跨边只从左到右；内部边接跨边仍属全部跨边，故关系传递。守卫使每条跨边增时，域内所得记录合法且逐字段相同。
+
+乘法的三标签像互斥；原、目标都复制两个完整旧档案，并生成恰好相同的全部 $\Omega_X\times\Omega_Y$。任意新事件的时间由第 256 条的最大值和后继式交换；每个空间坐标由第 258 条交换；符号照原乘法，来源用 $\theta(\operatorname{pair}(r,s))=\operatorname{pair}_R(\theta r,\theta s)$。两侧生成边逐对相同。对任意两个结果事件，属于传递闭包当且仅当存在连接它们的有限非空生成边路径；相同生成边给出完全相同的路径，故闭包相等。每条生成边严格增时，路径传递严格增时，排除自环，证明合法性。选择恰由 $A_X\times A_Y$ 决定，两侧亦相同；未选父对依然产生当前事件。
+
+补集只改变 $A$，时移保持事件及偏序，且 $c<_Sd$ 当且仅当 $c\oplus_Zb(k)<_Sd\oplus_Zb(k)$，故时移合法。各时间值的交换由第 256 条加法式给出。有限符号和用同条有限和式得两个电荷式；将 $\Omega$ 分成 $A$ 与其补集，得一般背景减所选公式。若对所有选择等于负号，取空选择即得 $u^R=0_S$；反向直接代入。并行的两不交和可相加；乘积电荷的有限双和分配为两因子的和之积，背景用 $\Omega_X,\Omega_Y$ 作相同运算。因此平衡限制的域和值也精确对应。目标任意对象都由第 262 条唯一解码，故这些结论覆盖独立目标全域，反向式随之成立。
+
+有限非空集合的最值用第 256 条，空集合用固定哨兵，得端点式。两档案均非空时，全档案守卫等价于最大左时刻严格小于最小右时刻；任一档案空时，哨兵序同样使该不等式为真。$s$ 只在 $\Omega$ 上取最大值，不从 $A$ 或非零电荷支撑取值。
+
+具体取两份各含一个孤立事件的档案，时间分别为 $v^{-1}(2)$ 与 $v^{-1}(1)$，位置任取零、符号取正、来源取 $\operatorname{leaf}(0)$，两侧均令 $\Omega=A=\varnothing$。它们合法、平衡，全部当前电荷剖面及 $q,u$ 都为零；但时间守卫要求 $2<1$，为假。数字侧要求 $\operatorname{scode}(2)<_S\operatorname{scode}(1)$，仍为假。此反例由原定义直接成立。第 144–147 条中受影响的基本字段和电荷式以第 255、261–265 条为准，不使用旧三维式作前提。证毕。
+

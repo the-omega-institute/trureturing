@@ -1,0 +1,42 @@
+**定理 290。** 对全部 $X\in\mathcal B$，$R_P(X)\in\mathsf Q_P$，并且
+$$
+R_P=\rho_P\circ\operatorname{pr}_Z\circ\Xi,
+$$
+其中 $\Xi$ 与其第二字段投影 $\operatorname{pr}_Z$ 取自《情境时空算术》定义 22。在第 227 条的原域 $\mathcal C_P^{\rm tb}$ 上，有
+$$
+q_{X,P}=q_X,\qquad
+\mathsf V_PR_P(X)=\delta_X^G,\qquad
+E_{X,P}^{T}=\mathbf a_X^{G,T},\qquad
+E_{X,P}^{\infty}=\mathbf a_X^{G,\infty}.
+$$
+原 CSA 无权标量满足
+$$
+q(X)=\varepsilon Z_X
+=\sum_{t\in\mathbb Z,\ p\in P,\ j\in\omega}q_{X,P}(t,p,j)
++\sum_{\substack{t\in\mathbb Z\\y\notin\lambda[P\times\omega]}}Z_X(t,y).
+$$
+特别地，对 $X\in\mathcal B_P^{\rm sel}$，
+$$
+q(X)=\sum_{p\in P}(\Sigma_P\mathsf U_PR_P(X))(p).
+$$
+此式不能把 $\mathsf U_P$ 换为 $\mathsf V_P$。任意 $X\in\mathcal B$ 都有第 287 条的标量观察 $\Gamma_{\mathbb Z}(q(X))$。终端寄存器的另一条比较链只有在 $E_{X,P}^{\infty}\ge0$ 时才进入 GICT 定义 1.7 的正整数规范表与乘积域：此时可先取容量 $E_{X,P}^{\infty}$，再取逐行 $s((E_{X,P}^{\infty})_p)$、$N_P(E_{X,P}^{\infty})$ 及其 $\Gamma_+$；指定容量 $A$ 时还须 $E_{X,P}^{\infty}\le A$。有负坐标的终端向量仍有符号码与 $\varpi_P$ 相位，素数乘积则属于 $\mathbb Q_{>0}$，不属于原正整数解码的输入域。
+
+$R_P:\mathcal B\to\mathsf Q_P$ 满射，且每个像值都有背景逐单元为零的有限平衡代表。并行加法及合法的有守卫时间复合满足
+$$
+R_P(X\boxplus Y)=R_P(X)+R_P(Y),\qquad
+R_P(X\triangleright Y)=R_P(X)+R_P(Y).
+$$
+第二式只在《情境时空算术》定义 5 的全档案守卫内成立。对原补集 $N$，精确公式为
+$$
+R_P(NX)=w_{X,P}-R_P(X).
+$$
+在 $\mathcal C_P^{\rm pb}$ 上，$R_P(NX)=-R_P(X)$，因而全部加权时间表和前缀指数也取负；仅在 $\mathcal C_P^{\rm tb}$ 上时，只保证终端指数的负号式。
+
+第 229 条的加权商链满足
+$$
+\Theta_P\circ\pi_P^G=\Sigma_P\circ\Theta_P^{G,\rm pf},\qquad
+\varpi_P\circ\Theta_P\circ\pi_P^G
+=\varpi_P\circ\Sigma_P\circ\Theta_P^{G,\rm pf}.
+$$
+这里定义域是 $\mathcal H_P^G$，中间终端商是 $\mathcal C_P^{\rm tb}/\equiv_P$；$\mathcal H_P^G$ 取第 227 条的加权前缀等价关系。
+

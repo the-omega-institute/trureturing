@@ -1,0 +1,20 @@
+**定义 218（三轴表的终端规范截面）。** 对 \(q\in\mathsf Q_P\) 定义
+\[
+\operatorname{Can}_P(q)=\mathsf L_P^{\rm term}
+\bigl(\mathsf N_P^{\rm term}(q)\bigr).
+\]
+显式地，
+\[
+\operatorname{Can}_P(q)(t,p,j)=
+\begin{cases}
+\mathsf C_P(q)(p),&t=0,\ j=0,\\
+0,&\text{其他}.
+\end{cases}
+\]
+其像记为
+\[
+\mathsf Q_P^{0,0}
+=\{q\in\mathsf Q_P:
+\operatorname{supp}(q)\subseteq\{0\}\times P\times\{0\}\}.
+\]
+

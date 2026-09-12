@@ -1,0 +1,26 @@
+**定理 338.2。** 对所有容量函数 $A$，以下四项等价：
+$$
+M_A<+\infty
+\iff\ell_A\text{ 在零处连续}
+\iff\ell_A\text{ 在 }B_A^{\rm cap}\text{ 上连续}
+\iff\ell_A\text{ 有到 }X_A^{\rm cap}\text{ 的连续实值延拓}.
+$$
+在这些条件下，唯一延拓是 $S_A$；令
+$$
+R_N=\sum_{n>N}A_n2^{-n}=M_A-P_N(A),
+$$
+则 $R_N\to0$，且
+$$
+0\le S_A(x)-P_N(x)\le R_N\quad(x\in X_A^{\rm cap}),\qquad
+\sup_{x\in X_A^{\rm cap}}|S_A(x)-P_N(x)|=R_N.
+$$
+所以 $P_N\to S_A$ 一致收敛。若 $x,y$ 在 $\{0,\ldots,N\}$ 上相等，则
+$$
+|S_A(x)-S_A(y)|\le R_N.
+$$
+此时每个 $L_{A,c}$ 在 $B_A^{\rm cap}$ 中闭，每个 $F_{A,c}$ 在 $X_A^{\rm cap}$ 中闭，且
+$$
+\overline{L_{A,c}}^{X_A^{\rm cap}}\subseteq F_{A,c}.
+$$
+不论 $M_A$ 有限与否，每个有限实数 $c$ 的子水平集 $\{x:S_A(x)\le c\}$ 都在 $X_A^{\rm cap}$ 中闭。
+

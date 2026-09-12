@@ -1,0 +1,10 @@
+**定义 137（局部指数码与全局乘积码）。** 对固定 \(P,A\) 定义局部码
+\[
+\mathsf L_{P,A}(a)=\operatorname{Tab}_Z(P,a)
+\]
+以及全局码
+\[
+\mathsf G_{P,A}(a)=\operatorname{NatZ}(\Pi_P(a)).
+\]
+局部码的每一行先对一个指数 \(a(p)\) 作 Zeckendorf 规范化，再保留素数标签；全局码先完成素数指数化，再对所得单个自然数作 Zeckendorf 规范化。二者的值域分别是表对象和自然数字对象。
+

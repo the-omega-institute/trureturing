@@ -1,0 +1,13 @@
+**定义 210（槽级素数乘法字符）。** 对有限素数集 \(P\)，定义
+\[
+\chi_P:\mathsf Q_P\longrightarrow\mathbb Q_{>0},
+\qquad
+\chi_P(q)=\prod_{t\in\mathbb Z}\prod_{p\in P}
+p^{\sum_{j\ge0}G_jq(t,p,j)}.
+\tag{Z-SLOT-CHARACTER}
+\]
+指数表有限支撑，故该乘积是有限个有理素数幂之积。等价地，
+\[
+\chi_P(q)=\prod_{p\in P}p^{\mathsf C_P(q)(p)}.
+\]
+

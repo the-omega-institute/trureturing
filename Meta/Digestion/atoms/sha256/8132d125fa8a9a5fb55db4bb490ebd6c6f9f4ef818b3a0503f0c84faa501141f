@@ -1,0 +1,14 @@
+**定义 153（固定最大标量的配置纤维与正容量约化）。** 对 \(M\in\mathbb N_+\) 定义配置纤维
+\[
+\mathfrak C(M)=\{(P,A):M(P,A)=M\},
+\]
+以及正容量约化
+\[
+\operatorname{red}(P,A)=(P^+,A|_{P^+}).
+\]
+若 \((P,A),(P',A')\in\mathfrak C(M)\)，定义扩展映射
+\[
+\operatorname{ext}_{P,P'}:S(P,A)\to S(P',A')
+\]
+为在共同正容量轴上保持坐标、在 \(P'\setminus P^+\) 上取零的函数；反向映射同样定义。
+

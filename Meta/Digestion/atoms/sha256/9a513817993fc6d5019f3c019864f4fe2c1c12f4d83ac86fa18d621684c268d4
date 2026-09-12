@@ -1,0 +1,17 @@
+**定义 121（有界单位变换与指令词）。** 固定 \(P,A\)。对每个 \(p\in P\) 定义部分变换
+\[
+\begin{aligned}
+\iota_p(a)(p)&=a(p)+1&&\text{若 }a(p)<A(p),\\
+\delta_p(a)(p)&=a(p)-1&&\text{若 }a(p)>0,
+\end{aligned}
+\]
+并令它们在其他坐标上保持 \(a\)；在守卫失败时部分变换无值。令
+\[
+\mathcal U_P=\{\iota_p,\delta_p:p\in P\},\qquad
+\mathcal U_P^*
+\]
+为该字母表生成的自由幺半群。空词 \(\varepsilon\) 的值为恒等变换。若 \(w=u_1\cdots u_m\)，则 \(\operatorname{ev}_A(a,w)\) 递归地先求 \(u_1\)，再求后续词；其中任一守卫失败即表示整个词在 \(a\) 上无值。记
+\[
+\eta_p(w)=\#\{i:u_i=\iota_p\}-\#\{i:u_i=\delta_p\}.
+\]
+

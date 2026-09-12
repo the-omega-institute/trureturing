@@ -1,0 +1,2 @@
+**证明。** \(\operatorname{scode}\) 与 \(\operatorname{ival}\) 互为双射，且 \(\mathbb Z_{\mathrm{code}}\) 与通常整数由定义给出的符号双射，所以 \(\iota_Z\) 双射。定理 114 的环同构等式给第一式，序关系由 \(\operatorname{ival}\) 的定义给出。有限直积保持双射和逐坐标运算，得三维结论。后继式是 \(\operatorname{succ}_{\mathbb Z,Z}\) 的定义。CSA 的时间复合守卫只使用整数严格序，空间位置只使用逐坐标加法，乘积的新时刻只使用二者最大值再加一，故上述各式逐项替换后保持。证毕。
+

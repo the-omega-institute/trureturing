@@ -1,0 +1,10 @@
+**定理 325.2。** 对任意已声明的读数 $R:A_R\to B_R$、$A_R\subseteq\mathsf V_{\rm reg}$，联合评价像上有精确恢复
+$$
+R_+:\operatorname{Ev}_+[A_R]\to B_R,\qquad
+R_+=R\circ\Psi_{\rm reg}^{-1}\circ\pi_1,
+\qquad R_+(\operatorname{Ev}_+(u))=R(u).
+$$
+这里 $\Psi_{\rm reg}^{-1}$ 只在第 307 条的像 $\Psi_{\rm reg}[\mathsf V_{\rm reg}]$ 上定义。特别地，对每个 $n\in\omega$，取 $R(u)=\Gamma_{\mathbb Z}(u_n)$ 保留该坐标的完整三轴读数；取 $A_R=\{u:u_n>0\}$ 及 $R(u)=\Gamma_+(u_n)$ 保留正整数特化。
+
+**证明。** 对 $u\in A_R$，第 324 条给 $\pi_1(\operatorname{Ev}_+(u))=\Psi_{\rm reg}(u)$，再用第 307 条的精确逆就得到 $u$，故复合落在 $R$ 的原定义域并返回原值。反向任一 $\operatorname{Ev}_+[A_R]$ 中的点唯一来自这样的 $u$，所以没有域的遗漏或额外值。上述坐标特化保持零标记、符号、数字及相位原义。它只断言精确恢复，不给尺度图或数字图增加连续性。普通指标 $n$、素数标签 $p_n$、位位置 $j$ 以及三个观察字段仍是不同类型；一般实数和 $\phi\mathbb Q$ 元素没有由此取得自然字 $\zeta(x)$。这也是第 259–260 条保留部分读数域的具体情形。证毕。
+

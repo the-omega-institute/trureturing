@@ -1,0 +1,11 @@
+**定义 223（终端指令类与商中的轴基）。** 令
+\[
+\overline e_p=[e_{0,p,0}]\in\mathsf Q_P/\ker\mathsf C_P
+\quad(p\in P)
+\]
+为时间零点、\(j=0\) 槽的终端指令类。对任意 \(t\in\mathbb Z\)、\(j\in\omega\)，令
+\[
+\overline e_{t,p,j}=[e_{t,p,j}]
+\]
+为一般槽指令类。
+

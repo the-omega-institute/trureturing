@@ -1,0 +1,29 @@
+**定理 194（CSA 终端观察商的精确代数）。** \(\equiv_P\) 是等价关系，且并行复合在商上良定义：
+\[
+[X]_{\equiv_P}+[Y]_{\equiv_P}
+=[X\boxplus Y]_{\equiv_P}.
+\]
+映射
+\[
+\Theta_P:\mathcal C_P^{\rm tb}/\equiv_P
+\longrightarrow\mathbb Z^P,
+\qquad
+\Theta_P([X]_{\equiv_P})=V_P^{\mathbb Z}(r_X)
+\]
+是交换群同构；其复合
+\[
+\operatorname{Rat}_P\circ\Theta_P:
+\mathcal C_P^{\rm tb}/\equiv_P
+\xrightarrow{\ \cong\ }
+\left\{\prod_{p\in P}p^{z(p)}:z\in\mathbb Z^P\right\}
+\subseteq\mathbb Q_{>0}
+\]
+也是群同构。若限制到 \(\mathcal B_\lambda^+\)，则
+\[
+\mathcal C_P^{+}/\equiv_P^+
+\cong\mathbb N^P
+\cong\left\{\prod_{p\in P}p^{a(p)}:a\in\mathbb N^P\right\}.
+\tag{Z-OBS-QUOTIENT}
+\]
+终端逐槽平衡情形下，补集在商上诱导 \(z\mapsto-z\)；前缀逐槽平衡情形下，该负号关系对每个时间前缀同时成立。历史档案中的事件身份、时间和槽内原始系数全部被 \(\equiv_P\) 忘却。
+

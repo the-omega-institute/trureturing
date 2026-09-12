@@ -1,0 +1,24 @@
+**定义 171（Fibonacci 基位置多项式）。** 令 \(\mathsf{Pol}_{\rm fin}(\mathbb N)\) 为所有有限形式和
+\[
+F(X)=\sum_{j<\ell}r_jX^j,
+\qquad r_j\in\mathbb N,
+\]
+组成的集合。定义 Fibonacci 基评价、规范化及加权乘积原语为
+\[
+\operatorname{ev}_G(F)=\sum_{j<\ell}r_jG_j,
+\qquad
+\operatorname{nf}_G(F)=\zeta(\operatorname{ev}_G(F)),
+\]
+\[
+F\star_G H
+ =\bigl(\operatorname{ev}_G(F)\operatorname{ev}_G(H)\bigr)X^0.
+\]
+对有限 Zeckendorf 行 \(u\in\mathsf W_Z\) 置
+\[
+F_u(X)=\sum_j u(j)X^j.
+\]
+此处 \(j\) 是 Fibonacci 基的位置指标；\(\operatorname{ev}_G(F_u)\) 才是该行代表的自然数。对固定素数寄存器 \(p\)，若其指数行为 \(u_p\)，定义寄存器指数为
+\[
+a(p)=\operatorname{ev}_G(F_{u_p}).
+\]
+

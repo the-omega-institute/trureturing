@@ -1,0 +1,27 @@
+**定理 317。** 第 316 条的四个映射分别是到其独立目标的双射，候选逆满足全部复合恒等式
+$$
+\operatorname{ung}_{\rm reg}(g_u)=u,\qquad
+g_{\operatorname{ung}_{\rm reg}(g)}=g\quad(g\in\mathsf G_{\rm reg}),
+$$
+$$
+\begin{aligned}
+\operatorname{unrec}_{\rm reg}\circ\operatorname{rec}_{\rm reg}&=\operatorname{id}_{\mathsf V_{\rm reg}},&
+\operatorname{rec}_{\rm reg}\circ\operatorname{unrec}_{\rm reg}&=\operatorname{id}_{\mathsf{Rec}_{\rm reg}},\\
+\operatorname{undig}_{\rm reg}\circ\operatorname{dig}_{\rm reg}&=\operatorname{id}_{\mathsf V_{\rm reg}},&
+\operatorname{dig}_{\rm reg}\circ\operatorname{undig}_{\rm reg}&=\operatorname{id}_{\mathsf{Dig}_{\rm reg}},\\
+\operatorname{undig}_I\circ\operatorname{dig}_I&=\operatorname{id}_{\mathbb Z_o^I},&
+\operatorname{dig}_I\circ\operatorname{undig}_I&=\operatorname{id}_{\mathsf{Dig}_I}.
+\end{aligned}
+$$
+补零与截尾互逆，且
+$$
+\operatorname{dig}_{\rm reg}=\operatorname{pad}_{\rm reg}\circ\operatorname{rec}_{\rm reg},\qquad
+\operatorname{rec}_{\rm reg}=\operatorname{trim}_{\rm reg}\circ\operatorname{dig}_{\rm reg},
+$$
+$$
+\operatorname{dig}_I(\operatorname{res}^{\mathbb Z}_Iu)
+=\operatorname{dig}_{\rm reg}(u)|_{\mathsf{Lab}_I^{\rm reg}}
+=\operatorname{pad}_{\rm reg}(\operatorname{rec}_{\rm reg}(u))|_{\mathsf{Lab}_I^{\rm reg}}.
+$$
+记录和总数字双射在所列运算下保持加法、负元及零。每个记录为原始素数标签字及非零带符号字的有限图；每个 $\mathsf G_{\rm reg}$、$\mathsf{Dig}_{\rm reg}$ 或 $\mathsf V_{\rm reg}$ 中的总函数图都无限，零状态也如此。$\mathsf{Dig}_I$ 的每个图则有恰好 $|I|$ 条边，包括零边。
+

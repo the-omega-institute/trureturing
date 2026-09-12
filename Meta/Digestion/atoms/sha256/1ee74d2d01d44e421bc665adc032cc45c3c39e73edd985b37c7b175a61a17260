@@ -1,0 +1,27 @@
+**定义 162（来源树自然叶的 Zeckendorf 重编码）。** 令 \(\mathsf{Tree}\) 为由 \(\operatorname{leaf}(n)\)（\(n\in\omega\)）及 \(\operatorname{pair}(r,s)\) 经过有限次构造得到的来源树类。定义其 Zeckendorf 树类 \(\mathsf{Tree}_Z\) 及递归双射 \(\tau_Z\) 为
+\[
+\tau_Z(\operatorname{leaf}(n))=\operatorname{leaf}_Z(\operatorname{NatZ}(n)),
+\qquad
+\tau_Z(\operatorname{pair}(r,s))
+ =\operatorname{pair}_Z(\tau_Z(r),\tau_Z(s)).
+\tag{Z-TREE}
+\]
+其中 \(\operatorname{leaf}_Z(c)\) 的参数 \(c\) 属于 \(\mathsf N_Z\)，而 \(\operatorname{pair}_Z\) 保留两个子树的有序位置。定义逆递归
+\[
+\tau_Z^{-1}(\operatorname{leaf}_Z(\operatorname{NatZ}(n)))=\operatorname{leaf}(n),
+\qquad
+\tau_Z^{-1}(\operatorname{pair}_Z(r,s))
+ =\operatorname{pair}(\tau_Z^{-1}(r),\tau_Z^{-1}(s)).
+\]
+对有限情境 \(C=(E,\prec,t,x,\sigma,\rho,\Omega)\) 定义全数值编码
+\[
+\operatorname{Code}^{\rm all}_Z(C)
+ =\bigl(E,\prec,\iota_Z\!\circ t,\iota_Z^{(3)}\!\circ x,
+ \sigma,\tau_Z\!\circ\rho,\Omega\bigr).
+\]
+情境表示 \(X=(C,A)\) 的全数值编码为
+\[
+\operatorname{Code}^{\rm all}_Z(X)
+ =\bigl(\operatorname{Code}^{\rm all}_Z(C),A\bigr).
+\]
+

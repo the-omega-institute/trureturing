@@ -1,0 +1,22 @@
+**定理 333.2。** $\lambda_{\rm reg}$ 与 $\operatorname{idx}_{\rm reg}$ 互逆，且上述总探针及有限探针映射分别是独立域之间的双射，满足
+$$
+\operatorname{unprec}_{\rm rat}\operatorname{prec}_{\rm rat}
+=\operatorname{id}_{\Theta_{\rm rat}},\qquad
+\operatorname{prec}_{\rm rat}\operatorname{unprec}_{\rm rat}
+=\operatorname{id}_{\mathsf{ProbeRec}},
+$$
+$$
+\operatorname{unfprec}_{\rm rat}\operatorname{fprec}_{\rm rat}
+=\operatorname{id}_{\mathsf{FinCoef}},\qquad
+\operatorname{fprec}_{\rm rat}\operatorname{unfprec}_{\rm rat}
+=\operatorname{id}_{\mathsf{FinProbeRec}}.
+$$
+状态的双逆仍为第 317 条；对 $u\in\mathsf V_{\rm reg}$、$\theta\in\Theta_{\rm rat}$ 及每个有限 $F\subseteq\omega$，有
+$$
+\operatorname{dom}(\operatorname{rec}_{\rm reg}(u))
+=\lambda_{\rm reg}[\operatorname{supp}(u)],\qquad
+\operatorname{fprec}_{\rm rat}(\theta|_F)
+=\operatorname{prec}_{\rm rat}(\theta)|_{\mathsf{Lab}_F^{\rm reg}}.
+$$
+有限采样记录不能作为任意总探针的逆表示；全部总探针也不能单射表示为有限字母表上的有限字。
+
