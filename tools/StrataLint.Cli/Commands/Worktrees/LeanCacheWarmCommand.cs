@@ -24,32 +24,34 @@ internal static class LeanCacheWarmCommand
                 ?? throw new InvalidOperationException("shared cache warmer is busy");
             using var guard = LeanCacheWriterGuard.TryAcquire(Path.Combine(root, ".lake"), policy.LockDirectory)
                 ?? throw new InvalidOperationException("private main .lake writer guard is busy");
-            RequireMainDev(root, runner);
+            policy.Writers = [warmer, guard];
+            RequireMainDev(root, policy);
             LeanCacheProvisioner.RequirePrivateLake(root);
-            var pull = runner.Run("git", ["pull", "--ff-only", "origin", "dev"], root,
+            var pull = policy.Run("git", ["pull", "--ff-only", "origin", "dev"], root,
                 LeanCacheProvisioner.DependencyFetchBudget);
             output.Append(Encoding.UTF8.GetString(pull.StandardOutput));
             LeanCacheProvisioner.RequireSuccess(pull, "git pull --ff-only origin dev");
-            RequireMainDev(root, runner);
-            var head = LeanProcessPolicy.Git(root, runner, "rev-parse", "HEAD");
+            RequireMainDev(root, policy);
+            var head = LeanProcessPolicy.Git(root, policy, "rev-parse", "HEAD");
             pins = ReadPins(root);
             policy = LeanProcessPolicy.Create(root, pins, runner);
+            policy.Writers = [warmer, guard];
             output.Append(LeanCacheProvisioner.Ensure(policy, pins, guard));
             stage = Path.Combine(root, ".lake", "cache-stage-" + Path.GetRandomFileName());
             if (Directory.Exists(policy.SharedCache))
-                LeanArtifactPublisher.CopyDetached(policy.SharedCache, stage, root, runner, cloner);
+                LeanArtifactPublisher.CopyDetached(policy.SharedCache, stage, root, policy, cloner);
             else
                 Directory.CreateDirectory(stage);
             var writer = policy.StageWriter(stage);
             var built = writer.Run(policy.LakeExecutable, ["build"], root, LeanCacheProvisioner.LeanCommandBudget);
             output.Append(Encoding.UTF8.GetString(built.StandardOutput));
             LeanCacheProvisioner.RequireSuccess(built, "Lake warming build");
-            RequireMainDev(root, runner);
-            if (head != LeanProcessPolicy.Git(root, runner, "rev-parse", "HEAD") || !pins.HasSameBytes(ReadPins(root)))
+            RequireMainDev(root, policy);
+            if (head != LeanProcessPolicy.Git(root, policy, "rev-parse", "HEAD") || !pins.HasSameBytes(ReadPins(root)))
                 throw new InvalidOperationException("main checkout changed during warming");
             warmer.RequireOwnershipOf(policy.SharedRoot);
             var counts = LeanArtifactPublisher.Publish(stage, policy.SharedCache,
-                Path.GetDirectoryName(policy.SharedRoot)!, root, runner, cloner);
+                Path.GetDirectoryName(policy.SharedRoot)!, root, policy, cloner);
             output.Append("LEAN_DONOR_WARM " + JsonSerializer.Serialize(new
             {
                 status = "warmed", cache = policy.SharedCache, artifacts = counts.Artifacts, mappings = counts.Mappings,

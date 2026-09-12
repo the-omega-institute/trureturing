@@ -22,6 +22,7 @@ internal static class LeanCacheEnsureCommand
             var policy = LeanProcessPolicy.Create(root, pins, runner);
             using var guard = LeanCacheWriterGuard.TryAcquire(Path.Combine(policy.Root, ".lake"), policy.LockDirectory)
                 ?? throw new InvalidOperationException("private .lake writer guard is busy");
+            policy.Writers = [guard];
             var receipt = LeanCacheProvisioner.Ensure(policy, pins, guard);
             if (!runCommand) return new(true, receipt, string.Empty);
             var result = policy.Run(command[0], command.Skip(1).ToArray(), policy.Root,

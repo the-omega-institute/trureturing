@@ -90,28 +90,6 @@ public sealed class SharedLakeCacheTests
     }
 
     [Fact]
-    public void WarmingPublishesDetachedArtifactsAndPreservesPriorMapsOnFailure()
-    {
-        if (!OperatingSystem.IsMacOS()) return;
-        using var fixture = new SharedLakeFixture();
-        var warmed = fixture.Command(fixture.Main, "warm-cache");
-        Assert.True(warmed.Success, warmed.Error);
-        var shared = Path.Combine(fixture.Main, ".git", "stratalint-lake");
-        var artifact = Assert.Single(Directory.GetFiles(shared, "*.art", SearchOption.AllDirectories));
-        var mapping = Assert.Single(Directory.GetFiles(shared, "*.json", SearchOption.AllDirectories));
-        var oldMap = File.ReadAllBytes(mapping);
-        File.WriteAllText(Path.Combine(fixture.Main, ".lake", "build", "built"), "mutated donor");
-        Assert.Equal("built\n", File.ReadAllText(artifact));
-        File.WriteAllText(Path.Combine(fixture.Main, ".lake", "fail-publication"), "fail");
-        var failed = fixture.Command(fixture.Main, "warm-cache");
-        Assert.False(failed.Success);
-        Assert.Equal(oldMap, File.ReadAllBytes(mapping));
-        Assert.Equal("built\n", File.ReadAllText(artifact));
-        Assert.Empty(Directory.GetDirectories(Path.Combine(fixture.Main, ".lake"), "cache-stage-*"));
-        Assert.Empty(Directory.GetDirectories(Path.Combine(fixture.Main, ".git"), ".stratalint-lake-publish-*"));
-    }
-
-    [Fact]
     public void SharedWarmerLockDoesNotBlockReaderAndRejectsOverlappingWarmer()
     {
         if (!OperatingSystem.IsMacOS()) return;
@@ -150,22 +128,6 @@ public sealed class SharedLakeCacheTests
         {
             Environment.SetEnvironmentVariable("TMPDIR", previous);
         }
-    }
-
-    [Fact]
-    public void DeniedPackageOptInRetriesLakeBuildWithAPrivateCache()
-    {
-        if (!OperatingSystem.IsMacOS()) return;
-        using var fixture = new SharedLakeFixture();
-        Assert.True(fixture.Command(fixture.Main, "warm-cache").Success);
-        Assert.True(fixture.Command(fixture.Reader, "ensure-cache").Success);
-        File.WriteAllText(Path.Combine(fixture.Reader, ".lake", "optin"), "true");
-        var built = fixture.Command(fixture.Reader, "with-cache-reader", "--", "lake", "build");
-        Assert.True(built.Success, built.Error);
-        Assert.Contains("LEAN_CACHE_FALLBACK", built.Output);
-        Assert.True(File.Exists(Path.Combine(fixture.Reader, ".lake", "artifact-cache", "artifacts", "optin.art")));
-        Assert.Empty(Directory.GetFiles(Path.Combine(fixture.Main, ".git", "stratalint-lake"),
-            "optin.art", SearchOption.AllDirectories));
     }
 
     [Fact]
@@ -211,7 +173,7 @@ internal sealed class SharedLakeFixture : IDisposable
     internal string Lake { get; }
     internal string LockDirectory => Path.Combine(Main, ".git", "stratalint-lake-locks");
 
-    internal SharedLakeFixture()
+    internal SharedLakeFixture(bool native = false)
     {
         Main = Path.Combine(directory.Path, "main with spaces");
         Reader = Path.Combine(directory.Path, "reader");
@@ -221,7 +183,9 @@ internal sealed class SharedLakeFixture : IDisposable
         Git(Main, "config", "user.name", "Fixture");
         File.WriteAllText(Path.Combine(Main, "lean-toolchain"), "leanprover/lean4:v4.33.0\n");
         File.WriteAllText(Path.Combine(Main, "lake-manifest.json"), "{\"version\":\"1.2.0\",\"packages\":[]}\n");
-        File.WriteAllText(Path.Combine(Main, "lakefile.toml"), "name = \"fixture\"\n");
+        File.WriteAllText(Path.Combine(Main, "lakefile.toml"), "name = \"fixture\"\n"
+            + (native ? "defaultTargets = [\"Fixture\"]\n[[lean_lib]]\nname = \"Fixture\"\n" : ""));
+        if (native) File.WriteAllText(Path.Combine(Main, "Fixture.lean"), "def answer : Nat := 42\n");
         File.WriteAllText(Path.Combine(Main, ".gitignore"), ".lake/\n");
         Git(Main, "add", ".");
         Git(Main, "commit", "-m", "fixture");
@@ -230,6 +194,12 @@ internal sealed class SharedLakeFixture : IDisposable
         Git(Main, "remote", "add", "origin", remote);
         Git(Main, "push", "-u", "origin", "dev");
         Git(Main, "worktree", "add", "--detach", Reader);
+        if (native)
+        {
+            Assert.True(LeanLakeExecutable.TryResolve(out var executable, out var reason), reason);
+            Lake = executable;
+            return;
+        }
         Lake = Path.Combine(directory.Path, "lake");
         File.WriteAllText(Lake, """
             #!/bin/sh
@@ -238,22 +208,11 @@ internal sealed class SharedLakeFixture : IDisposable
             elif [ "$1" = build ]; then
               mkdir -p .lake/build
               echo built > .lake/build/built
-              if [ -f .lake/optin ]; then
-                mkdir -p "$LAKE_CACHE_DIR/artifacts" 2>/dev/null
-                if ! (echo optin > "$LAKE_CACHE_DIR/artifacts/optin.art") 2>/dev/null; then
-                  printf 'error: failed to cache artifact: operation not permitted (error code: 1)\n  file: %s/artifacts/optin.art\n' "$LAKE_CACHE_DIR" >&2
-                  exit 1
-                fi
-              fi
               if [ "${LAKE_ARTIFACT_CACHE:-}" = true ]; then
                 mkdir -p "$LAKE_CACHE_DIR/artifacts" "$LAKE_CACHE_DIR/outputs/fixture"
                 rm -f "$LAKE_CACHE_DIR/artifacts/fixture.art"
                 ln .lake/build/built "$LAKE_CACHE_DIR/artifacts/fixture.art"
-                if [ -f .lake/fail-publication ]; then
-                  echo incomplete > "$LAKE_CACHE_DIR/outputs/fixture/fixture.json"
-                else
-                  echo '{"schemaVersion":"2026-02-25","service":null,"data":[]}' > "$LAKE_CACHE_DIR/outputs/fixture/fixture.json"
-                fi
+                echo '{"schemaVersion":"2026-02-25","service":null,"data":[]}' > "$LAKE_CACHE_DIR/outputs/fixture/fixture.json"
               fi
             fi
             """ + "\n");

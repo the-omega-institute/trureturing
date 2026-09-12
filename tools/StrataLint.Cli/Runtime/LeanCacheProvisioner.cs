@@ -41,9 +41,16 @@ internal static class LeanCacheProvisioner
             RequireSuccess(dependencies, "Lake dependency materialization");
             if (!policy.SharedReader && HasMathlib(pins))
             {
-                var fetched = policy.Run(policy.LakeExecutable, ["exe", "cache", "get"], root, DependencyFetchBudget);
-                if (fetched.ExitCode != 0) warning = "private Mathlib cache fetch failed; Lake may rebuild locally: "
-                    + Encoding.UTF8.GetString(fetched.StandardError).Trim();
+                try
+                {
+                    var fetched = policy.Run(policy.LakeExecutable, ["exe", "cache", "get"], root, DependencyFetchBudget);
+                    if (fetched.ExitCode != 0) warning = "private Mathlib cache fetch failed; Lake may rebuild locally: "
+                        + Encoding.UTF8.GetString(fetched.StandardError).Trim();
+                }
+                catch (TimeoutException exception)
+                {
+                    warning = "private Mathlib cache fetch timed out; Lake may rebuild locally: " + exception.Message;
+                }
             }
             if (warning is null) LeanCacheStamp.Write(lake, pins);
         }

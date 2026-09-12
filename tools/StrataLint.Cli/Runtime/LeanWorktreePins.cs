@@ -222,13 +222,52 @@ internal sealed class LeanCacheGuard : IDisposable
 {
     private const int LockExclusive = 2;
     private const int LockNonBlocking = 4;
-    private const int LockUnlock = 8;
     private const uint LockFileFailImmediately = 1;
     private const uint LockFileExclusiveLock = 2;
     private readonly FileStream stream;
     private bool locked = true;
 
     private LeanCacheGuard(FileStream stream) => this.stream = stream;
+
+    internal int Descriptor => stream.SafeFileHandle.DangerousGetHandle().ToInt32();
+
+    internal bool HasWriterSession()
+    {
+        if (OperatingSystem.IsWindows()) return false;
+        stream.Position = 0;
+        using var reader = new StreamReader(stream, leaveOpen: true);
+        var line = reader.ReadLine();
+        if (line is null) return false;
+        if (!int.TryParse(line, System.Globalization.NumberStyles.None,
+            System.Globalization.CultureInfo.InvariantCulture, out var group) || group <= 1)
+            throw new InvalidOperationException("invalid cache writer session in " + stream.Name);
+        if (Kill(-group, 0) == 0) return true;
+        if (Marshal.GetLastPInvokeError() != 3) // ESRCH: the original process group is gone.
+            throw new InvalidOperationException("cannot inspect cache writer session " + group);
+        // Foreground tools such as timeout can start another group in the same session.
+        // A departed leader does not release the reservation while that writer remains.
+        var processes = System.Diagnostics.Process.GetProcesses();
+        try
+        {
+            foreach (var process in processes)
+            {
+                var session = GetSession(process.Id);
+                if (session == group) return true;
+                if (session < 0 && Marshal.GetLastPInvokeError() != 3)
+                    throw new InvalidOperationException("cannot inspect cache writer session membership");
+            }
+            return false;
+        }
+        finally { foreach (var process in processes) process.Dispose(); }
+    }
+
+    internal void SetInheritable(bool inherit)
+    {
+        if (Fcntl(Descriptor, 2, inherit ? 0 : 1) < 0) // F_SETFD, FD_CLOEXEC
+            throw new IOException("cannot transfer cache writer guard to child");
+    }
+
+    internal void ClearExitedSession() => stream.SetLength(0);
 
     internal static LeanCacheGuard? TryAcquireExclusive(string lake, string directory) => TryAcquire(lake, directory);
 
@@ -251,10 +290,8 @@ internal sealed class LeanCacheGuard : IDisposable
             {
                 _ = UnlockFile(stream.SafeFileHandle, 0, 0, 1, 0);
             }
-            else
-            {
-                _ = Flock(stream.SafeFileHandle, LockUnlock);
-            }
+            // POSIX flock follows the open file description. Closing our descriptor keeps
+            // the startup guard held by an inherited launcher; LOCK_UN would release both.
             locked = false;
         }
         stream.Dispose();
@@ -272,7 +309,8 @@ internal sealed class LeanCacheGuard : IDisposable
                 Path.Combine(directory, address + ".lock"),
                 FileMode.OpenOrCreate,
                 FileAccess.ReadWrite,
-                FileShare.ReadWrite | FileShare.Delete);
+                FileShare.ReadWrite | FileShare.Delete,
+                bufferSize: 1);
         }
         catch (IOException)
         {
@@ -283,7 +321,15 @@ internal sealed class LeanCacheGuard : IDisposable
             : Flock(
                 stream.SafeFileHandle,
                 LockExclusive | LockNonBlocking) == 0;
-        if (acquired) return new LeanCacheGuard(stream);
+        if (acquired)
+        {
+            var guard = new LeanCacheGuard(stream);
+            try
+            {
+                if (!guard.HasWriterSession()) return guard;
+            }
+            catch { guard.Dispose(); throw; }
+        }
         stream.Dispose();
         return null;
     }
@@ -319,6 +365,15 @@ internal sealed class LeanCacheGuard : IDisposable
 
     [DllImport("libc", EntryPoint = "flock", SetLastError = true)]
     private static extern int Flock(SafeFileHandle handle, int operation);
+
+    [DllImport("libc", EntryPoint = "fcntl", SetLastError = true)]
+    private static extern int Fcntl(int descriptor, int command, int flags);
+
+    [DllImport("libc", EntryPoint = "kill", SetLastError = true)]
+    private static extern int Kill(int process, int signal);
+
+    [DllImport("libc", EntryPoint = "getsid", SetLastError = true)]
+    private static extern int GetSession(int process);
 
     [DllImport("libc", EntryPoint = "realpath", SetLastError = true)]
     private static extern IntPtr RealPath([MarshalAs(UnmanagedType.LPUTF8Str)] string path, IntPtr buffer);
@@ -366,6 +421,8 @@ internal sealed class LeanCacheWriterGuard : IDisposable
         this.lake = LeanCacheGuard.PhysicalPath(lake);
         this.guard = guard;
     }
+
+    internal LeanCacheGuard ProcessGuard => guard ?? throw new ObjectDisposedException(nameof(LeanCacheWriterGuard));
 
     internal static LeanCacheWriterGuard? TryAcquire(string lake, string directory)
     {
