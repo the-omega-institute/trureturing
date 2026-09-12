@@ -131,6 +131,142 @@ public sealed class EngineeringScopeProgramTests
     }
 
     [Theory]
+    [InlineData("judge")]
+    [InlineData("content")]
+    public void DeletedFileAndRegistrationUseProtectedBasePlane(string deletedPlane)
+    {
+        const string deletedPath = "retired/component.txt";
+        var result = RunBoundary(
+            root =>
+            {
+                WriteProductProjects(root);
+                WriteFile(root, deletedPath, "retired component\n");
+                WriteAdmissionPlaneFileMap(
+                    root, (FileMapPath, "judge"), (deletedPath, deletedPlane));
+            },
+            root =>
+            {
+                TemporaryFileSystem.File.Delete(Path.Combine(root, deletedPath));
+                WriteAdmissionPlaneFileMap(root, (FileMapPath, "judge"));
+            });
+
+        if (deletedPlane == "judge")
+        {
+            Assert.True(result.ExitCode == 0, result.Diagnostic);
+            Assert.Equal([ProductTestsProject], result.SelectedProjects);
+            Assert.Contains("ENGINEERING_TEST_PLAN state=full", result.Output, StringComparison.Ordinal);
+        }
+        else
+        {
+            Assert.True(result.ExitCode == 2, result.Diagnostic);
+            Assert.Empty(result.SelectedProjects);
+            Assert.DoesNotContain("ENGINEERING_TEST_PLAN state=", result.Output, StringComparison.Ordinal);
+            Assert.Contains("ADMISSION-PLANE-MIXED", result.Error, StringComparison.Ordinal);
+        }
+    }
+
+    [Theory]
+    [InlineData(true, null, "ADMISSION-PLANE-FILEMAP-UNAVAILABLE")]
+    [InlineData(true, "", "ADMISSION-PLANE-PATH-MATCH-COUNT")]
+    [InlineData(true, "[[files]]\npattern = '**'\nadmission_plane = 'judge'\n[[files]]\npattern = 'retired/*'\nadmission_plane = 'content'", "ADMISSION-PLANE-PATH-MATCH-COUNT")]
+    [InlineData(true, "files = [", "ADMISSION-PLANE-FILEMAP-INVALID")]
+    [InlineData(true, "[[files]]\npattern = '**'\nadmission_plane = 'observer'", "ADMISSION-PLANE-FILEMAP-INVALID")]
+    [InlineData(false, null, "ADMISSION-PLANE-FILEMAP-UNAVAILABLE")]
+    [InlineData(false, "files = [", "ADMISSION-PLANE-FILEMAP-INVALID")]
+    [InlineData(false, "[[files]]\npattern = 'unrelated'\nadmission_plane = 'observer'", "ADMISSION-PLANE-FILEMAP-INVALID")]
+    public void DeletedPathWithInvalidManifestFailsBeforePlanning(
+        bool invalidBaseline, string? invalidManifest, string expectedCode)
+    {
+        const string deletedPath = "retired/component.txt";
+        void WriteInvalidManifest(string root)
+        {
+            if (invalidManifest is null)
+                TemporaryFileSystem.File.Delete(Path.Combine(root, FileMapPath));
+            else
+                WriteFile(root, FileMapPath, invalidManifest);
+        }
+
+        var result = RunBoundary(
+            root =>
+            {
+                WriteProductProjects(root);
+                WriteFile(root, deletedPath, "retired component\n");
+                WriteAdmissionPlaneFileMap(root, (FileMapPath, "judge"), (deletedPath, "judge"));
+                if (invalidBaseline) WriteInvalidManifest(root);
+            },
+            root =>
+            {
+                TemporaryFileSystem.File.Delete(Path.Combine(root, deletedPath));
+                WriteAdmissionPlaneFileMap(root, (FileMapPath, "judge"));
+                if (!invalidBaseline) WriteInvalidManifest(root);
+            });
+
+        Assert.True(result.ExitCode == 2, result.Diagnostic);
+        Assert.Empty(result.SelectedProjects);
+        Assert.DoesNotContain("ENGINEERING_TEST_PLAN state=", result.Output, StringComparison.Ordinal);
+        Assert.Contains(expectedCode, result.Error, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("judge")]
+    [InlineData("content")]
+    public void RenameClassifiesSourceFromBaselineAndDestinationFromCandidate(string destinationPlane)
+    {
+        const string source = "retired/source.txt";
+        const string destination = "replacement/destination.txt";
+        var result = RunBoundary(
+            root =>
+            {
+                WriteProductProjects(root);
+                WriteFile(root, source, "renamed component\n");
+                WriteAdmissionPlaneFileMap(root, (FileMapPath, "judge"), (source, "judge"));
+            },
+            root =>
+            {
+                WriteFile(root, destination, "renamed component\n");
+                TemporaryFileSystem.File.Delete(Path.Combine(root, source));
+                WriteAdmissionPlaneFileMap(root, (FileMapPath, "judge"), (destination, destinationPlane));
+            });
+
+        if (destinationPlane == "judge")
+        {
+            Assert.True(result.ExitCode == 0, result.Diagnostic);
+            Assert.Equal([ProductTestsProject], result.SelectedProjects);
+            Assert.Contains("ENGINEERING_TEST_PLAN state=full", result.Output, StringComparison.Ordinal);
+        }
+        else
+        {
+            Assert.True(result.ExitCode == 2, result.Diagnostic);
+            Assert.Empty(result.SelectedProjects);
+            Assert.Contains("ADMISSION-PLANE-MIXED", result.Error, StringComparison.Ordinal);
+        }
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void PresentPathCannotUseRemovedCandidateRegistration(bool baselineHasPath)
+    {
+        const string path = "component.txt";
+        var result = RunBoundary(
+            root =>
+            {
+                WriteProductProjects(root);
+                if (baselineHasPath) WriteFile(root, path, "before\n");
+                WriteAdmissionPlaneFileMap(root, (FileMapPath, "judge"), (path, "judge"));
+            },
+            root =>
+            {
+                WriteFile(root, path, "after\n");
+                WriteAdmissionPlaneFileMap(root, (FileMapPath, "judge"));
+            });
+
+        Assert.True(result.ExitCode == 2, result.Diagnostic);
+        Assert.Empty(result.SelectedProjects);
+        Assert.Contains("ADMISSION-PLANE-PATH-MATCH-COUNT", result.Error, StringComparison.Ordinal);
+    }
+
+    [Theory]
     [InlineData(false)]
     [InlineData(true)]
     public void DigestionOnlyContentChangeSelectsNoEngineeringTestsUnlessFull(bool full)
