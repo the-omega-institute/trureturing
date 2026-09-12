@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f2355791e89119cf9daf71b3f168051840d68fe4e1c859d160730ed0fc32a764
+  normalized_sha256: sha256:f2355791e89119cf9daf71b3f168051840d68fe4e1c859d160730ed0fc32a764
+cas_ref: sha256:f2355791e89119cf9daf71b3f168051840d68fe4e1c859d160730ed0fc32a764
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This atom is the recurring section heading that the volume places before each revision of its watch list. Its entire content is that heading line. A heading names the material that follows; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. The same heading occurs fifty two times in the source, so one ledger entry is shared by all of them; this settlement is written against occurrence index one, whose neighbours are the preceding entry and the first list revision that follows it. The substantive content of each revision lives in the sibling atoms that the heading introduces, and those are covered or settled on their own terms.
+    previous_atom_id: d43e60788a0bf66e6262ceef7b09df108cb249464d9fac0839a022c06065dc60
+    next_atom_id: a32441aebb9795c67f56845dd108dd138f23398ae34e321b8d5f053d3a10926a
