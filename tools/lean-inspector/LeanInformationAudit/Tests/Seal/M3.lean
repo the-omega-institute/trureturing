@@ -1,7 +1,7 @@
 import D5.S3.ConceptDynamics.Interventions.CounterfactualIdentifiabilityCriterion
 import D5.S3.ConceptDynamics.Sufficiency.SufficiencyIsTargetRelative
 import D5.S3.ConceptDynamics.InterventionLaws.ObservationInterventionKernelStrictness
-import LeanInformationAudit.Census.Query
+import LeanInformationAudit.SealCommand
 set_option backward.isDefEq.respectTransparency.types false
 set_option maxHeartbeats 2000000
 set_option maxRecDepth 100000
