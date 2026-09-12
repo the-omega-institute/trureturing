@@ -2,11 +2,10 @@
    generality: G
    mirror-B: D5/B/S3/Arith/Density/ErdosExactlyOneDivisorUnimodalityRefutation
    mirror-E: none(waiver:kernel-checked-refutation)
-   anchors: [mathlib/module/Mathlib.Algebra.GCDMonoid.Finset, mathlib/module/Mathlib.Analysis.SpecificLimits.Basic, mathlib/module/Mathlib.Data.Nat.Periodic]
+   anchors: [mathlib/module/Mathlib.Analysis.SpecificLimits.Basic, mathlib/module/Mathlib.Data.Nat.Periodic]
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Arith/Density/ErdosExactlyOneDivisorUnimodalityRefutation.claim; result=D5/S3/Arith/Density/ErdosExactlyOneDivisorUnimodalityRefutation.result; claim=D5/S3/Arith/Density/ErdosExactlyOneDivisorUnimodalityRefutation.claim
    digest: Exact periodic densities refute unimodality of the density of integers with one divisor in an interval. -/
 
-import Mathlib.Algebra.GCDMonoid.Finset
 import Mathlib.Analysis.SpecificLimits.Basic
 import Mathlib.Data.Nat.Periodic
 
