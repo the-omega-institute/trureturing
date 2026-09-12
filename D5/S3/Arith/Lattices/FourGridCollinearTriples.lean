@@ -381,6 +381,36 @@ private noncomputable def extremeMarkedTriple {d : Nat}
     | linear_combination -hbase j i
     | ring
 
+private abbrev GeometricCode (d : Nat) :=
+  OrientedArithmeticProgression d ⊕ (DistinctCoordinatePairs EqualOrExtreme d × Bool)
+
+private noncomputable def codeToMarkedTriple {d : Nat} :
+    GeometricCode d → CollinearTriples d × Bool
+  | Sum.inl t => apMarkedTriple t
+  | Sum.inr q => extremeMarkedTriple q
+
+private def reverseArithmeticProgression {d : Nat} (t : OrientedArithmeticProgression d) :
+    OrientedArithmeticProgression d := by
+  refine ⟨(t.val.2.2, t.val.2.1, t.val.1), ?_, ?_⟩
+  · exact Ne.symm t.property.1
+  · intro i
+    have hi := t.property.2 i
+    linarith
+
+private def reverseExtremeCode {d : Nat}
+    (q : DistinctCoordinatePairs EqualOrExtreme d × Bool) :
+    DistinctCoordinatePairs EqualOrExtreme d × Bool := by
+  refine (⟨⟨(q.1.val.val.2, q.1.val.val.1), ?_⟩, Ne.symm q.1.property⟩, !q.2)
+  intro i
+  rcases q.1.val.property i with hEq | hExtreme | hExtreme
+  · exact Or.inl hEq.symm
+  · exact Or.inr (Or.inr ⟨hExtreme.2, hExtreme.1⟩)
+  · exact Or.inr (Or.inl ⟨hExtreme.2, hExtreme.1⟩)
+
+private def reverseGeometricCode {d : Nat} : GeometricCode d → GeometricCode d
+  | Sum.inl t => Sum.inl (reverseArithmeticProgression t)
+  | Sum.inr q => Sum.inr (reverseExtremeCode q)
+
 #print axioms endpoint_pair_counts
 #print axioms oriented_arithmetic_progression_count
 #print axioms extreme_line_coordinate_classification
