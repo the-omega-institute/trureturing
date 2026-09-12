@@ -194,8 +194,10 @@ theorem hits_two_steps (L : ℕ) (e : ℤ) : Hits (L + 2) e → Hits L e := by
   have ha2 : 0 < alpha ^ 2 := sq_pos_of_pos alpha_pos
   have ha2lt : alpha ^ 2 < 1 := by nlinarith [alpha_sq_add, alpha_pos]
   constructor
-  · positivity
-  · nlinarith
+  · exact mul_pos ha2 hlo
+  · have hm : alpha ^ 2 * phaseCoordinate (L + 2) e h < alpha ^ 2 := by
+      simpa using mul_lt_mul_of_pos_left hhi ha2
+    exact hm.trans ha2lt
 
 /-- Every (L+1)-event has an L-event exactly F_(L+2) integer steps earlier. -/
 theorem hits_preceding_boundary (L : ℕ) (e : ℤ) :
@@ -213,9 +215,12 @@ theorem hits_preceding_boundary (L : ℕ) (e : ℤ) :
     rw [hnum, signedWidth_succ]
     field_simp [signedWidth_ne_zero L, ne_of_gt alpha_pos] <;> ring
   rw [hc]
-  constructor
-  · nlinarith [alpha_pos, alpha_lt_one]
-  · nlinarith [alpha_pos]
+  have hv0 : 0 < alpha * phaseCoordinate (L + 1) e h := mul_pos alpha_pos hlo
+  have hv1 : alpha * phaseCoordinate (L + 1) e h < 1 := by
+    have hh : alpha * phaseCoordinate (L + 1) e h < alpha := by
+      simpa using mul_lt_mul_of_pos_left hhi alpha_pos
+    exact hh.trans alpha_lt_one
+  constructor <;> linarith
 
 /-- No fixed finite clock, including 60 or 64 positions, is an exact period of this rotation. -/
 theorem no_nonzero_clock_period (p : ℤ) (hp : p ≠ 0) :
@@ -244,7 +249,9 @@ theorem relativeSeparation_ne_zero (L r : ℕ) (hr : 0 < r) :
     unfold width
     rw [show L + r + 2 = (L + 2) + r by omega, pow_add]
   rw [hpow] at habs
-  nlinarith [width_pos L]
+  have hlt : width L * alpha ^ r < width L := by
+    simpa using mul_lt_mul_of_pos_left hp (width_pos L)
+  linarith
 
 end
 end D5.S3.Observer.GoldenPrimeCircle.GoldenClockLattice
