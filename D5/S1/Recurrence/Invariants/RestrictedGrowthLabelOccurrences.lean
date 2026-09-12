@@ -75,4 +75,51 @@ theorem sum_words_succ (n : ℕ) (f : List ℕ → ℕ) :
   intro a _ b _ h
   exact (List.cons.inj h).1
 
+/-- The unique word which introduces a new label at every step. -/
+def topWord : ℕ → List ℕ
+  | 0 => []
+  | n + 1 => (n + 1) :: topWord n
+
+theorem maxLabel_topWord (n : ℕ) : maxLabel (topWord n) = n := by
+  induction n with
+  | zero => rfl
+  | succ n ih => simp [topWord, maxLabel_cons, ih]
+
+theorem topWord_mem (n : ℕ) : topWord n ∈ words n := by
+  induction n with
+  | zero => simp [topWord, words]
+  | succ n ih =>
+    exact (mem_words_succ n (topWord n) (n + 1)).mpr
+      ⟨ih, by omega, by simp [maxLabel_topWord]⟩
+
+/-- The maximum can attain the word length only along the all-new-label path. -/
+theorem eq_topWord_of_maxLabel_eq (n : ℕ) (w : List ℕ)
+    (hw : w ∈ words n) (hm : maxLabel w = n) : w = topWord n := by
+  induction n generalizing w with
+  | zero =>
+    simpa [topWord] using (mem_words_zero w).mp hw
+  | succ n ih =>
+    cases w with
+    | nil => simp [words] at hw
+    | cons x v =>
+      obtain ⟨hv, _, hx⟩ := (mem_words_succ n v x).mp hw
+      have hb := maxLabel_le_length n v hv
+      have hx' : x = n + 1 := by
+        rw [maxLabel_cons] at hm
+        omega
+      have hv' : maxLabel v = n := by omega
+      simpa [topWord, hx'] using congrArg (List.cons (n + 1)) (ih v hv hv')
+
+theorem card_top_words (n : ℕ) :
+    ((words n).filter fun w => maxLabel w = n).card = 1 := by
+  have heq : (words n).filter (fun w => maxLabel w = n) = {topWord n} := by
+    ext w
+    simp only [Finset.mem_filter, Finset.mem_singleton]
+    constructor
+    · rintro ⟨hw, hm⟩
+      exact eq_topWord_of_maxLabel_eq n w hw hm
+    · rintro rfl
+      exact ⟨topWord_mem n, maxLabel_topWord n⟩
+  simp [heq]
+
 end D5.S1.Recurrence.Invariants.RestrictedGrowthLabelOccurrences
