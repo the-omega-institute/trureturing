@@ -5,7 +5,6 @@ import argparse
 import hashlib
 import json
 import pathlib
-import platform
 import subprocess
 import sys
 
@@ -62,8 +61,7 @@ def main() -> int:
             if not executable.is_file():
                 raise ValueError(f"required runtime.python {material} is absent: {executable}")
             programs["python:" + material] = file_sha(executable)
-        identity = {"schema": "lean-report-runtime-v2", "programs": programs,
-                    "python": platform.python_version()}
+        identity = {"schema": "lean-report-runtime-v2", "programs": programs}
         print(hashlib.sha256(json.dumps(identity, sort_keys=True, separators=(",", ":")).encode()).hexdigest())
         return 0
     except (OSError, ValueError, KeyError, TypeError, subprocess.CalledProcessError) as error:
