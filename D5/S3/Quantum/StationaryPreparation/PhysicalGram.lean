@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Exact fixed-isometry stationary preparation yields residuals,
-     Gram formulas, and rank bounds. -/
+   digest: Exact fixed-isometry stationary preparation yields residuals, Gram formulas, and rank bounds. -/
 
 import D5.S3.Quantum.StationaryPreparation.PhysicalResiduals
 import D5.S3.Quantum.Algebra.StationaryGramRank
