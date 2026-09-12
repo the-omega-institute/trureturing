@@ -208,4 +208,34 @@ theorem card_near_words (n : ℕ) :
     rw [card_near_step (n + 1) (by omega), hfilter, ih]
     rw [Nat.choose_succ_succ' (n + 1) 1, Nat.choose_one_right]
 
+private theorem count_eq_zero_of_maxLabel_lt (w : List ℕ) (p : ℕ)
+    (hp : maxLabel w < p) : w.count p = 0 := by
+  induction w with
+  | nil => simp
+  | cons x w ih =>
+    have hx : x ≠ p := by
+      have hle : x ≤ maxLabel (x :: w) := by simp [maxLabel_cons]
+      omega
+    have hw : maxLabel w < p := by
+      have hle : maxLabel w ≤ maxLabel (x :: w) := by simp [maxLabel_cons]
+      omega
+    simp [hx, ih hw]
+
+private theorem count_topWord_self (n : ℕ) :
+    (topWord (n + 1)).count (n + 1) = 1 := by
+  have hzero := count_eq_zero_of_maxLabel_lt (topWord n) (n + 1)
+    (by simp [maxLabel_topWord])
+  simp [topWord, hzero]
+
+private theorem count_top_of_mem (n : ℕ) (hn : 0 < n) (w : List ℕ)
+    (hw : w ∈ words n) : w.count n = if maxLabel w = n then 1 else 0 := by
+  by_cases hm : maxLabel w = n
+  · have heq := eq_topWord_of_maxLabel_eq n w hw hm
+    obtain ⟨k, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : n ≠ 0)
+    simp [heq, maxLabel_topWord, count_topWord_self]
+  · have hlt : maxLabel w < n := by
+      have hb := maxLabel_le_length n w hw
+      omega
+    simp [hm, count_eq_zero_of_maxLabel_lt w n hlt]
+
 end D5.S1.Recurrence.Invariants.RestrictedGrowthLabelOccurrences
