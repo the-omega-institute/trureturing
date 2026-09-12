@@ -7966,7 +7966,12 @@ $C_I$ 只表示本条有限指标闭包，不改变旧单孔项 $C_B$ 的意义�
 
 ## 309. 有限投影子群的基、相位与饱和
 
-**定理 309。** 设 $I\subseteq\omega$ 有限，$d=|I|$，$\Lambda\le\mathbb Z_o^I$。$\Lambda$ 有有限整数基 $\lambda_1,\ldots,\lambda_r$，其中 $0\le r\le d$。按 $I$ 递增排列坐标，令 $\mathbf M_{\Lambda,I}:\mathbb Z_o^r\to\mathbb Z_o^I$ 以这些基为列，$\mathbf M_{\Lambda,I,\mathbb T}:\mathbb T^r\to\mathbb T^I$ 为所诱导的连续同态，$W_{\Lambda,I}=\operatorname{span}_{\mathbb R}\Lambda$，$\operatorname{quot}_I:\mathbb R^I\to\mathbb T^I$ 为逐坐标商映射。则
+**定理 309。** 设 $I\subseteq\omega$ 有限，$d=|I|$，$\Lambda\le\mathbb Z_o^I$。$\Lambda$ 有有限整数基 $\lambda_1,\ldots,\lambda_r$，其中 $0\le r\le d$。按 $I$ 递增排列坐标，令 $\mathbf M_{\Lambda,I}:\mathbb Z_o^r\to\mathbb Z_o^I$ 以这些基为列，$\mathbf M_{\Lambda,I,\mathbb T}:\mathbb T^r\to\mathbb T^I$ 为所诱导的连续同态，$W_{\Lambda,I}=\operatorname{span}_{\mathbb R}\Lambda$，$\operatorname{quot}_I:\mathbb R^I\to\mathbb T^I$ 为逐坐标商映射。按 $W_{\Lambda,I}$ 所用的通常实坐标解释各 $\lambda_j$，另定义实线性扩张
+$$
+\mathbf M_{\Lambda,I,\mathbb R}:\mathbb R^r\to\mathbb R^I,\qquad
+\mathbf M_{\Lambda,I,\mathbb R}(t)=\sum_{j=1}^r t_j\lambda_j.
+$$
+所列环面映射逐坐标为 $(\mathbf M_{\Lambda,I,\mathbb T}(x))_i=\sum_{j=1}^r(\lambda_j)_i x_j$，其中 $x\in\mathbb T^r$、$i\in I$。则
 $$
 C_I(\Lambda)=\mathbf M_{\Lambda,I,\mathbb T}(\mathbb T^r)
 =\operatorname{quot}_I(W_{\Lambda,I})
@@ -7985,10 +7990,19 @@ $$
 $$
 B_{p_i,j}=(\lambda_j)_i\qquad(i\in I,\ 1\le j\le r).
 $$
-重标 $i\leftrightarrow p_i$ 将本条 $\mathbb Z_o^I,\mathbb T^I,\Lambda,\operatorname{Sat}(\Lambda),\operatorname{Ann}_I(\Lambda)$ 分别对应到那两条的 $\mathbb Z^P,\mathbb T^P,H,L_{\rm sat},R_B$；有理秩 $k=r$。同一重标将 $\Psi_I$ 对应到 $\vartheta_P$，$\mathbf M_{\Lambda,I,\mathbb T}$ 对应到 $B_{\mathbb T}$。它们的整数、实数和圆周坐标运算及通常有限积拓扑都逐项对应。因此第 298 条给相位闭包、圆周共同零点集和精确相位交集，第 296 条给整数共同零点集。每个圆周参数可取实代表，故
+重标 $i\leftrightarrow p_i$ 将本条 $\mathbb Z_o^I,\mathbb T^I,\Lambda,\operatorname{Sat}(\Lambda),\operatorname{Ann}_I(\Lambda)$ 分别对应到那两条的 $\mathbb Z^P,\mathbb T^P,H,L_{\rm sat},R_B$；有理秩 $k=r$。同一重标将 $\Psi_I$ 对应到 $\vartheta_P$，$\mathbf M_{\Lambda,I,\mathbb T}$ 对应到 $B_{\mathbb T}$。它们的整数、实数和圆周坐标运算及通常有限积拓扑都逐项对应。因此第 298 条给相位闭包、圆周共同零点集和精确相位交集，第 296 条给整数共同零点集。
+
+对 $z\in\mathbb Z_o^r$，两种列和逐坐标相同，故 $\mathbf M_{\Lambda,I,\mathbb R}(z)=\mathbf M_{\Lambda,I}(z)$，此等式中输入与输出的整数坐标均按通常嵌入解释为实数。对 $t\in\mathbb R^r$ 及 $i\in I$，有
+$$
+\bigl(\operatorname{quot}_I(\mathbf M_{\Lambda,I,\mathbb R}(t))\bigr)_i
+=\left[\sum_{j=1}^r t_j(\lambda_j)_i\right]
+=\sum_{j=1}^r(\lambda_j)_i[t_j]
+=\bigl(\mathbf M_{\Lambda,I,\mathbb T}(([t_j])_{j=1}^r)\bigr)_i.
+$$
+若把 $t$ 换成 $t+z$、$z\in\mathbb Z_o^r$，实像之差为 $\mathbf M_{\Lambda,I}(z)\in\mathbb Z_o^I$，所以所得圆周像与代表选择无关。每个环面参数都有逐坐标实提升，每个实参数又给一个环面参数，故上式给出环面像与实像取商的两个包含。实像的每个元素是基向量的有限实线性组合，因而属于 $W_{\Lambda,I}$；反向，每个 $\Lambda$ 元素都是这些基的整数线性组合，将任一有限实线性组合展开并合并各基的系数，就得到 $\mathbf M_{\Lambda,I,\mathbb R}$ 的一个实输入。因此
 $$
 \mathbf M_{\Lambda,I,\mathbb T}(\mathbb T^r)
-=\operatorname{quot}_I(\mathbf M_{\Lambda,I}[\mathbb R^r])
+=\operatorname{quot}_I(\mathbf M_{\Lambda,I,\mathbb R}[\mathbb R^r])
 =\operatorname{quot}_I(W_{\Lambda,I}),
 $$
 补上显示式中的实子空间描述。这里没有对无限矩阵应用 Smith 归约。
