@@ -367,15 +367,6 @@ theorem no_peer_lowers_escape :
     fun i => (Catalog.trivialInCatalog_iff_not_lowersEscape _ _ observation_nondegenerate).mp
       (all_peers_trivial.2 i)⟩
 
-/-- Counterfactual before-peer measurement only: no singleton is registered or sealed. -/
-theorem intervention_before_peers (i : Fin 5) :
-    (Catalog.ofVector (fun _ : Fin 1 => interventionCatalog.theoremAt i)).uniqueCaptureCount 0 = 240 := by
-  fin_cases i <;> decide
-
-theorem observation_before_peers (i : Fin 2) :
-    (Catalog.ofVector (fun _ : Fin 1 => observationCatalog.theoremAt i)).uniqueCaptureCount 0 = 968 := by
-  fin_cases i <;> decide
-
 -- Compare the measured catalogs with the engine's complete, canonically grouped vectors.
 open Lean Meta LeanInformationAudit in
 run_cmd do
@@ -443,8 +434,6 @@ run_meta do
 #print axioms D5.S3.ConceptDynamics.InterventionLaws.ObservationInterventionKernelStrictness.intervention_kernel_strictly_finer_than_observation.__information_unit
 #print axioms intervention_gold_kernel_equal
 #print axioms observation_gold_kernel_equal
-#print axioms intervention_before_peers
-#print axioms observation_before_peers
 #print axioms no_peer_lowers_escape
 
 #print axioms finer_bridge
