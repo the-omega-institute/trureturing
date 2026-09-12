@@ -110,6 +110,13 @@ done
 # 缺失或形状不对时**拒绝发布**：发不出资产，好过发一个事后无法归属的资产。
 # 这一段刻意早于 address 计算 —— 身份不成立就不必再算别的。
 if [[ "$VERB" == "publish" ]]; then
+  # Release snapshots are writable only from the scheduled dev producer. PR
+  # and local invocations remain read-only so an untrusted candidate cannot
+  # populate the shared release namespace.
+  if [[ "${GITHUB_EVENT_NAME:-}" != "schedule" || "${GITHUB_REF:-}" != "refs/heads/dev" ]]; then
+    printf 'LEAN_CACHE_PUBLISH {"status":"skipped","reason":"Release publication requires the scheduled dev producer"}\n'
+    exit 0
+  fi
   producer_commit_sha="${GITHUB_SHA:-}"
   workflow_run_id="${GITHUB_RUN_ID:-}"
   [[ "$producer_commit_sha" =~ ^[0-9a-f]{40}$ ]] \
@@ -213,11 +220,14 @@ case "$VERB" in
     #   隔着一次 lake pack）。于是 manifest 里记的 producer_commit_sha 会与 tag 实际指向的
     #   commit 不是同一个，consumer 拿哪一个都对不上。--target 消除的是这个错配，
     #   不是一个并不存在的事后漂移。
-    gh release create "$tag" --repo "$REPO" \
+    if ! gh release create "$tag" --repo "$REPO" \
       --target "$producer_commit_sha" \
       --title "Lean build cache ${config_sha256:0:8}/${sources_sha256:0:8} (${os}-${arch})" \
       --notes "Lean build cache produced from ${toolchain} on ${os}-${arch} at ${producer_commit_sha} by run ${workflow_run_id}. An accelerator, not independent admission evidence." \
-      "${archives[@]}" "$staged/manifest.txt" >/dev/null
+      "${archives[@]}" "$staged/manifest.txt" >/dev/null; then
+      printf 'LEAN_CACHE_PUBLISH {"status":"failed","tag":"%s","reason":"release creation or asset upload failed"}\n' "$tag"
+      exit 0
+    fi
     # 剪枝：稳态只留一份。fetch 的前缀回落是 `grep "^${prefix}" | head -1`，只取最新的
     # 一份，故同 config 的旧份边际收益为零；而 GitHub Releases **没有** Actions Cache 那样
     # 的 LRU 兜底，不剪就是无上界累积（案号 #2896：实测 9 份 13.1 GiB、5.8 GiB/日）。

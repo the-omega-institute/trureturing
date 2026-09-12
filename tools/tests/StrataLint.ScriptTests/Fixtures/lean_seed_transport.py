@@ -189,7 +189,7 @@ subprocess.run = run
                     self.assertEqual(build_exit, result.returncode, result.stdout + result.stderr)
                     self.assertIn('"status":"miss"', result.stdout)
                     self.assertFalse((self.root / ".lake/build").exists())
-        self.assertEqual(["lean"] + ["-C " + str(self.root) + " lean"] * 4,
+        self.assertEqual(["-C " + str(self.root) + " lean"] * 4,
                          (self.root / "build-runs").read_text().splitlines())
 
     def test_optional_fetch_valid_seed_still_reaches_build(self):
@@ -375,6 +375,11 @@ else:
             candidate = pathlib.Path(value)
             if candidate.is_file():
                 shutil.copyfile(candidate, directory / candidate.name)
+        if os.environ.get("FAKE_FAIL") == "upload":
+            # The production command uploads assets atomically with create;
+            # model an upload failure as an unusable publication.
+            shutil.rmtree(directory)
+            sys.exit(23)
     elif verb == "upload":
         for value in args[3:]:
             if pathlib.Path(value).is_file(): shutil.copyfile(value, directory / pathlib.Path(value).name)
