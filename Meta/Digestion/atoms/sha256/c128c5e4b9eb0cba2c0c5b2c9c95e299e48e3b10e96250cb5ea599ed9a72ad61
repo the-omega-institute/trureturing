@@ -1,0 +1,1 @@
+**定理 2.10(素无穷)**〔骨架〕。在假设 2.9 下,任一由容许变换生成的账本链 $L_0\le L_1\le\cdots$ 若穷尽 $\mathrm{Thm}(\mathfrak A)$,则 $\bigcup_t\mathrm{Prime}(L_t)$ 无限。
