@@ -51,6 +51,38 @@ public sealed class RouteTests
     }
 
     [Theory]
+    [InlineData("C", "2026-09-13", "note", "markdown", "", "D5/C/2026-09-13/note", "Chronicle/2026/09/13-note.md")]
+    [InlineData("P", "Papers", "D5-P001", "recipe", "", "D5/P/D5-P001", "Papers/recipes/D5-P001.yaml")]
+    [InlineData("P", "Papers", "D5-P001", "frozen", "frozen", "D5/P/D5-P001--frozen", "Papers/frozen/D5-P001/manifest.sha256")]
+    public void CurrentRepositoryPolicyRoutesUnpopulatedChronicleAndPapersWithoutAdmittingFiles(
+        string plane, string domain, string module, string artifact, string tag, string expectedGid, string expectedPath)
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var policy = PolicyLoadAssert.Accepted(RepositoryPolicyLoader.Load(
+            File.ReadAllBytes(Path.Combine(root, "Meta/FILEMAP.toml")),
+            File.ReadAllBytes(Path.Combine(root, "Meta/domains.yaml")))).Policy;
+        var manifest = new ManifestSyntax("D5", plane, domain, module, "G", "", artifact, tag);
+        var routed = Assert.IsType<RouteOutcome.Routed>(RouteEngine.Route(policy, manifest)).Result;
+
+        Assert.Equal(expectedGid, routed.Gid.Value);
+        Assert.Equal(expectedPath, routed.Path.Value);
+        string[] skeleton = artifact switch
+        {
+            "markdown" => ["<!-- GID: D5/C/2026-09-13/note -->", "# note", "", "EDIT-ME"],
+            "recipe" => ["id: D5-P001", "decls: []", "blueprint: []", "evidence: []", "venue: EDIT-ME"],
+            _ => ["EDIT-ME  manifest.sha256"],
+        };
+        Assert.Equal(skeleton, routed.Skeleton);
+        Assert.True(RepositoryPathPolicy.TryResolve(routed.Path, out var reverse));
+        Assert.Equal(routed.Gid, reverse);
+        Assert.Empty(policy.Manifest.Match(expectedPath));
+        Assert.Equal(RuleId.CreateKnown(0), RepositoryPathPolicy.Validate(routed.Path, policy)!.RuleId);
+        Assert.False(RepositoryPathPolicy.TryResolve(routed.Path, policy, out _));
+        Assert.IsType<RouteOutcome.Rejected>(RouteEngine.Route(policy, manifest with { Module = "../note" }));
+        Assert.IsType<RouteOutcome.Rejected>(RouteEngine.Route(policy, manifest with { Selector = "unexpected" }));
+    }
+
+    [Theory]
     [InlineData("F", "lean", "", "D5/S0/Carrier/Algebra/Probe", "D5/S0/Carrier/Algebra/Probe.lean")]
     [InlineData("B", "markdown", "", "D5/B/S0/Carrier/Algebra/Probe", "Blueprint/D5/S0/Carrier/Algebra/Probe.md")]
     [InlineData("E", "json", "result", "D5/E/S0/Carrier/Algebra/Probe.result--json", "Evidence/D5/S0/Carrier/Algebra/Probe.result.json")]

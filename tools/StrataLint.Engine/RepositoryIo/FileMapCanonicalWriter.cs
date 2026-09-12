@@ -1,7 +1,6 @@
 using System.Collections.Immutable;
 using System.Text;
-using System.Text.Encodings.Web;
-using System.Text.Json;
+using Tomlyn.Syntax;
 
 namespace StrataLint.Engine;
 
@@ -9,11 +8,6 @@ namespace StrataLint.Engine;
 // digestion eligibility and every reserved Evidence format; comments are not authority.
 internal static class FileMapCanonicalWriter
 {
-    private static readonly JsonSerializerOptions StringOptions = new()
-    {
-        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-    };
-
     internal static ImmutableArray<byte> Write(FileMapManifest manifest)
     {
         var text = new StringBuilder("schema_version = 3\n\n[residence_policy]\n");
@@ -60,5 +54,5 @@ internal static class FileMapCanonicalWriter
             .AppendJoin(", ", values.Order(StringComparer.Ordinal).Select(Quote)).Append("]\n");
     }
 
-    private static string Quote(string value) => JsonSerializer.Serialize(value, StringOptions);
+    private static string Quote(string value) => new StringValueSyntax(value).ToString();
 }

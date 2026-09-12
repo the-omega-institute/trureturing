@@ -41,6 +41,70 @@ public sealed class RepositoryPolicyTests
     }
 
     [Theory]
+    [InlineData("😀", "😀")]
+    [InlineData("\\U0001F600", "😀")]
+    [InlineData("\\U00010000\\U0010FFFF", "\U00010000\U0010FFFF")]
+    [InlineData("中é\\u0000\\u0001\\b\\t\\n\\f\\r\\u007F\\\"\\\\end", "中é\0\u0001\b\t\n\f\r\u007F\"\\end")]
+    public void AcceptedUnicodeScalarsHaveCanonicalTomlRoundTrips(string tomlValue, string expected)
+    {
+        var source = TestFileMap.Canonical.Replace("data-must-live-outside-tools", tomlValue, StringComparison.Ordinal);
+        var first = PolicyLoadAssert.Accepted(Load(source)).Policy;
+        Assert.Equal(expected, first.Manifest.ResidencePolicy.Desired);
+        var second = PolicyLoadAssert.Accepted(RepositoryPolicyLoader.Load(
+            first.CanonicalFileMapBytes.AsSpan(), first.CanonicalDomainsBytes.AsSpan())).Policy;
+
+        Assert.Equal(expected, second.Manifest.ResidencePolicy.Desired);
+        Assert.Equal(first.CanonicalFileMapBytes.ToArray(), second.CanonicalFileMapBytes.ToArray());
+        Assert.Equal(first.FileMapSha256, second.FileMapSha256);
+        if (!expected.Any(char.IsControl))
+        {
+            var literal = PolicyLoadAssert.Accepted(Load(source.Replace(tomlValue, expected, StringComparison.Ordinal))).Policy;
+            Assert.Equal(first.FileMapSha256, literal.FileMapSha256);
+        }
+    }
+
+    [Fact]
+    public void UnicodeDirectoryLinksRoundTripInTheirOwnSnapshot()
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var source = File.ReadAllText(Path.Combine(root, "Meta/FILEMAP.toml"));
+        const string original = "target = \"../skills\"";
+        Assert.Equal(2, source.Split(original, StringSplitOptions.None).Length - 1);
+        var modified = source.Replace(original, "target = \"../skills/😀\"", StringComparison.Ordinal);
+        Assert.NotEqual(source, modified);
+        var policy = PolicyLoadAssert.Accepted(Load(modified,
+            File.ReadAllText(Path.Combine(root, "Meta/domains.yaml")))).Policy;
+        var originalEntries = Entries(Encoding.UTF8.GetBytes(modified));
+        HashSet<string> links = [".claude/skills", ".codex/skills"];
+        var paths = originalEntries.Select(entry => entry.Path).ToArray();
+        FileMapSymlinkPolicy.ValidateSnapshot(originalEntries, links, paths);
+
+        var reloaded = PolicyLoadAssert.Accepted(RepositoryPolicyLoader.Load(
+            policy.CanonicalFileMapBytes.AsSpan(), policy.CanonicalDomainsBytes.AsSpan())).Policy;
+        Assert.Equal(policy.FileMapSha256, reloaded.FileMapSha256);
+        Assert.Equal(policy.CanonicalFileMapBytes.ToArray(), reloaded.CanonicalFileMapBytes.ToArray());
+        var canonicalEntries = Entries(policy.CanonicalFileMapBytes);
+        FileMapSymlinkPolicy.ValidateSnapshot(canonicalEntries, links, paths);
+        var decoded = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(RawRepositorySnapshot.Create(canonicalEntries))).Snapshot;
+        Assert.IsType<CanonicalizationOutcome.Accepted>(RepositoryCanonicalizer.Validate(decoded, reloaded));
+        Assert.Throws<InvalidOperationException>(() => FileMapSymlinkPolicy.ValidateSnapshot(
+            canonicalEntries.Where(entry => entry.Path != "skills/😀/probe.md").ToArray(), links, paths));
+        Assert.Throws<InvalidOperationException>(() => FileMapSymlinkPolicy.ValidateSnapshot(
+            canonicalEntries.Select(entry => entry.Path == ".codex/skills"
+                ? RawRepositoryEntry.FromText(entry.Path, "../skills") : entry).ToArray(), links, paths));
+
+        RawRepositoryEntry[] Entries(IEnumerable<byte> fileMap) =>
+        [
+            new("Meta/FILEMAP.toml", fileMap.ToImmutableArray()),
+            new("Meta/domains.yaml", policy.CanonicalDomainsBytes),
+            RawRepositoryEntry.FromText(".claude/skills", "../skills/😀"),
+            RawRepositoryEntry.FromText(".codex/skills", "../skills/😀"),
+            RawRepositoryEntry.FromText("skills/😀/probe.md", "# Probe\n"),
+        ];
+    }
+
+    [Theory]
     [InlineData("csv", "result", "opaque-text")]
     [InlineData("json", "run", "structured-json")]
     [InlineData("md", "result", "opaque-text")]

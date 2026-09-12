@@ -234,15 +234,24 @@ public sealed class R15ScopeNarrowingTests
         fixture.Files[artifactPath] = anomaly;
         fixture.Baseline[artifactPath] = anomaly;
         fixture.Files["Meta/FILEMAP.toml"] = TestFileMap.Canonical.Replace(
-            "      - \"legacy\"\n",
-            "      - \"legacy\"\n      - \"spec\"\n",
+            "selectors = [\"check\", \"legacy\", \"quote\", \"result\", \"run\"]",
+            "selectors = [\"check\", \"legacy\", \"quote\", \"result\", \"run\", \"spec\"]",
             StringComparison.Ordinal);
+        Assert.NotEqual(fixture.Baseline["Meta/FILEMAP.toml"], fixture.Files["Meta/FILEMAP.toml"]);
 
         var changes = RawChangeSet.Create([RuleFixture.RingPath, "Meta/FILEMAP.toml"]);
         var policy = PolicyLoadAssert.Accepted(
             RepositoryPolicyLoader.Load(
                 Encoding.UTF8.GetBytes(fixture.Files["Meta/FILEMAP.toml"]),
                 Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
+        var baselinePolicy = PolicyLoadAssert.Accepted(
+            RepositoryPolicyLoader.Load(
+                Encoding.UTF8.GetBytes(fixture.Baseline["Meta/FILEMAP.toml"]),
+                Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
+        Assert.True(ArtifactKindId.TryCreate("json", out var json));
+        Assert.DoesNotContain("spec", baselinePolicy.ArtifactKinds[json].Selectors);
+        Assert.Contains("spec", policy.ArtifactKinds[json].Selectors);
+        Assert.NotEqual(baselinePolicy.FileMapSha256, policy.FileMapSha256);
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
             RuleCatalog.Default.Execute(fixture.BuildScopeProbe(changes, policy))).Capability;
 

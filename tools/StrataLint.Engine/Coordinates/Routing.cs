@@ -103,11 +103,13 @@ public static class RouteEngine
                 throw new FormatException("routed GID is not canonical");
             }
 
-            if (!RepositoryPathPolicy.TryResolve(gid.Path, policy, out var reverse)
+            // Routing generates a canonical address and skeleton before a file exists.
+            // FILEMAP membership remains a separate requirement of file admission.
+            if (!RepositoryPathPolicy.TryResolve(gid.Path, out var reverse)
                 || reverse is null
                 || !reverse.Equals(gid))
             {
-                throw new FormatException("routed path does not have a policy-admitted GID inverse");
+                throw new FormatException("routed path does not have a canonical GID inverse");
             }
 
             var validated = ValidatedManifest.Create(syntax);
