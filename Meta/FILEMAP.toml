@@ -480,6 +480,16 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
+pattern = "lean-toolchain"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["Lean"]
+verified_by = ["make-gate"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
 pattern = "global.json"
 kind = "program"
 admission_plane = "judge"
@@ -506,16 +516,6 @@ admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["lean-inspector"]
 verified_by = ["LeanReportSelection"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "lean-toolchain"
-kind = "program"
-admission_plane = "judge"
-produced_by = "none"
-consumed_by = ["Lean"]
-verified_by = ["make-gate"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
