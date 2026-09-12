@@ -709,11 +709,18 @@ public sealed partial class MakeWorkflowTests
             Path.Combine(producerDirectory, "inspect.sh"),
             "#!/usr/bin/env bash\nexit 0");
         File.WriteAllText(Path.Combine(producerDirectory, "Inspector.lean"), "fixture\n");
-        var workflowDirectory = Path.Combine(candidateRoot, "tools", "scripts", "workflow");
-        Directory.CreateDirectory(workflowDirectory);
-        File.Copy(
-            Path.Combine(TestRepositoryLayout.FindRoot(), ScribeContentChecksScriptPath),
-            Path.Combine(workflowDirectory, "scribe-content-checks.sh"));
+        foreach (var relativePath in new[]
+        {
+            ScribeContentChecksScriptPath,
+            "tools/scripts/report/lean-report-input.sh",
+            "tools/scripts/worktree/lean-cache-input.sh",
+            "Meta/lean-report.toml",
+        })
+        {
+            var destination = Path.Combine(candidateRoot, relativePath);
+            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+            File.Copy(Path.Combine(TestRepositoryLayout.FindRoot(), relativePath), destination);
+        }
         var script = Path.Combine(candidateRoot, "tools", "scripts", "lean-report-pair.sh");
         WriteExecutable(
             script,
