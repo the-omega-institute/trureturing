@@ -17,6 +17,7 @@ noncomputable section
 namespace D5.S3.Analytic.Knapsack.GridDualStructure
 
 open Interpolation.TwoPointGridDominance (logValue)
+open private weak_duality box_bound from D5.S3.Analytic.Knapsack.FractionalKnapsackDual
 open private logValue_strictMono from D5.S3.Analytic.Interpolation.TwoPointGridDominance
 
 variable {ι : Type*} [Fintype ι]
@@ -112,12 +113,9 @@ private theorem fill_values_bddAbove (c d : ι → ℝ) (M : ℝ) :
   rintro _ ⟨a, ha, rfl⟩
   apply Finset.sum_le_sum
   intro i _
-  have hbox := ha.1 i
-  have h := le_max_left 0 (logValue (d i) - logValue (c i))
-  have h' := le_max_right 0 (logValue (d i) - logValue (c i))
-  by_cases hv : 0 ≤ logValue (d i) - logValue (c i)
-  · nlinarith [hbox.2]
-  · nlinarith [hbox.1]
+  exact add_le_add le_rfl
+    (by simpa only [mul_comm] using
+      box_bound (logValue (d i) - logValue (c i)) (a i) (ha.1 i))
 
 /-- A positive-return unfilled row permits strict improvement whenever the budget has slack. -/
 theorem slack_fill_improvable (c d : ι → ℝ) (M : ℝ) (a : ι → ℝ) (j : ι)
@@ -166,8 +164,6 @@ theorem fractional_optimum_saturates (c d : ι → ℝ) (M : ℝ) (a : ι → �
     fillValue c d b ∈ fillValue c d '' {b | FillFeasible c d M b} from ⟨b, hb, rfl⟩)
   rw [← ha.2] at hbound
   exact (not_lt_of_ge hbound) hgain
-
-open private weak_duality box_bound from D5.S3.Analytic.Knapsack.FractionalKnapsackDual
 
 /-- A fractional optimal fill matches the density of its fractional row at every coordinate. -/
 theorem fractional_optimum_matching_price (c d : ι → ℝ) (M : ℝ) (a : ι → ℝ) (j : ι)
