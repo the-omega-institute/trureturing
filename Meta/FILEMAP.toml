@@ -557,6 +557,17 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
+# Documents report-cache CLI usage, cache ownership, incrementality and measured memory boundaries.
+pattern = "docs/reports/lean-report-cache/README.md"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
 # Supplies prime-corner ordering and constants to the slab search tools.
 pattern = "docs/reports/prime-slab-corner-order-0909.json"
 kind = "data"
