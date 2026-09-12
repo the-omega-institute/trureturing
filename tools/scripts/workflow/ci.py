@@ -30,14 +30,16 @@ def oid(value):
     return value
 
 
-def checkout(root, commit):
+def checkout(root, commit, allow_missing_candidate=False):
     workflow_candidate = os.environ.get("CI_WORKFLOW_CANDIDATE_SHA", "")
     # The reusable push workflow supplies this immutable candidate input to
-    # its stage jobs. The PR resolver runs in the caller workflow and has no
-    # reusable input; an absent value therefore means that there is nothing
-    # additional to compare, while a supplied value is always checked.
+    # its stage jobs. The PR resolver explicitly opts out because it runs in
+    # the caller workflow, before reusable inputs exist. Every stage job keeps
+    # the fail-closed requirement when the input is absent.
     if workflow_candidate and oid(workflow_candidate) != oid(commit):
         raise ValueError("checkout does not match the reusable workflow candidate input")
+    if not workflow_candidate and not allow_missing_candidate and os.environ.get("GITHUB_EVENT_NAME") != "push":
+        raise ValueError("reusable workflow candidate input is required")
     if run(root, "git", "rev-parse", "HEAD") != oid(commit):
         raise ValueError("checkout does not match the fixed candidate")
     for remote in run(root, "git", "remote").splitlines():
@@ -56,7 +58,8 @@ def resolve(root, head):
     if len(fields) != 3 or fields[2] != oid(head):
         raise ValueError("merge candidate is absent or does not contain the triggering PR head")
     candidate, base, _ = map(oid, fields)
-    checkout(root, candidate)
+    # The resolver is the caller workflow, before reusable inputs exist.
+    checkout(root, candidate, allow_missing_candidate=True)
     import ci_plan
     outputs(ci_plan.plan_pr(root, candidate, base, head))
 
