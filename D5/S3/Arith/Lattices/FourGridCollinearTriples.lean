@@ -653,6 +653,90 @@ private noncomputable def codeToTriple_surjective {d : Nat} (s : CollinearTriple
   · exact makeExtreme z x y hzmem hxmem hymem hyz.symm (by rw [hsxyz]; ext; simp; tauto) hp
   · exact makeExtreme z y x hzmem hymem hxmem hxz.symm (by rw [hsxyz]; ext; simp; tauto) hp
 
+private noncomputable def apMarkedTriple_injective {d : Nat} :
+    Function.Injective (apMarkedTriple : OrientedArithmeticProgression d →
+      CollinearTriples d × Bool) := by
+  classical
+  intro t u htu
+  let x := t.val.1
+  let y := t.val.2.1
+  let z := t.val.2.2
+  let X := u.val.1
+  let Y := u.val.2.1
+  let Z := u.val.2.2
+  have hxz : x ≠ z := t.property.1
+  have hXZ : X ≠ Z := u.property.1
+  have hxy : x ≠ y := by
+    intro h
+    apply hxz
+    funext i
+    apply Fin.ext
+    have hi := t.property.2 i
+    change ((x i : Nat) : Int) + ((z i : Nat) : Int) =
+      2 * ((y i : Nat) : Int) at hi
+    rw [h] at hi ⊢
+    omega
+  have hyz : y ≠ z := by
+    intro h
+    apply hxz
+    funext i
+    apply Fin.ext
+    have hi := t.property.2 i
+    change ((x i : Nat) : Int) + ((z i : Nat) : Int) =
+      2 * ((y i : Nat) : Int) at hi
+    rw [h] at hi
+    omega
+  have hXY : X ≠ Y := by
+    intro h
+    apply hXZ
+    funext i
+    apply Fin.ext
+    have hi := u.property.2 i
+    change ((X i : Nat) : Int) + ((Z i : Nat) : Int) =
+      2 * ((Y i : Nat) : Int) at hi
+    rw [h] at hi ⊢
+    omega
+  have hYZ : Y ≠ Z := by
+    intro h
+    apply hXZ
+    funext i
+    apply Fin.ext
+    have hi := u.property.2 i
+    change ((X i : Nat) : Int) + ((Z i : Nat) : Int) =
+      2 * ((Y i : Nat) : Int) at hi
+    rw [h] at hi
+    omega
+  have hfin := congrArg (fun p => p.1.val) htu
+  have hmark := congrArg Prod.snd htu
+  change {x, y, z} = {X, Y, Z} at hfin
+  change orientationMark x z = orientationMark X Z at hmark
+  have hcenter : y = Y := by
+    funext i
+    apply Fin.ext
+    have hsum := congrArg
+      (fun s : Finset (GridPoint d) => ∑ p ∈ s, ((p i : Nat) : Int)) hfin
+    simp [hxy, hxz, hyz, hXY, hXZ, hYZ] at hsum
+    have ht := t.property.2 i
+    have hu := u.property.2 i
+    change ((x i : Nat) : Int) + ((z i : Nat) : Int) =
+      2 * ((y i : Nat) : Int) at ht
+    change ((X i : Nat) : Int) + ((Z i : Nat) : Int) =
+      2 * ((Y i : Nat) : Int) at hu
+    have hval : ((y i : Nat) : Int) = ((Y i : Nat) : Int) := by linarith
+    exact_mod_cast hval
+  have hendpoints : (x = X ∧ z = Z) ∨ (x = Z ∧ z = X) := by
+    have hxmem : x ∈ ({X, Y, Z} : Finset (GridPoint d)) := by rw [← hfin]; simp
+    have hzmem : z ∈ ({X, Y, Z} : Finset (GridPoint d)) := by rw [← hfin]; simp
+    simp only [Finset.mem_insert, Finset.mem_singleton] at hxmem hzmem
+    grind
+  rcases hendpoints with ⟨hx, hz⟩ | ⟨hx, hz⟩
+  · apply Subtype.ext
+    exact Prod.ext hx (Prod.ext hcenter hz)
+  · rw [← hz, ← hx] at hmark
+    have hreverse := orientationMark_reverse hxz
+    rw [hreverse] at hmark
+    cases hq : orientationMark x z <;> simp [hq] at hmark
+
 #print axioms endpoint_pair_counts
 #print axioms oriented_arithmetic_progression_count
 #print axioms extreme_line_coordinate_classification
