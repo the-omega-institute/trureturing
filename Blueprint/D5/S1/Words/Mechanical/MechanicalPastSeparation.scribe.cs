@@ -67,7 +67,7 @@ internal sealed class MechanicalPastSeparationDocument : IScribeDocumentDefiniti
                 StatementSource.FromAuthor(Disp(Seq(
                     Forall, Sp, F.Id("J"), Comma, Sp,
                     F.Id("PastResidual"), Open, F.Id("J"), Close,
-                    Sp, Eq, Sp, F.Id("nonempty")))),
+                    Sp, Neq, Sp, OpenBrace, CloseBrace))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "There are two actual traces with equal complete J-pasts but different "
