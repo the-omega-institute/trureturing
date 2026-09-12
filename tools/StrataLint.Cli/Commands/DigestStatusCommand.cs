@@ -164,11 +164,15 @@ internal static class DigestStatusCommand
 
             if (options.Readiness)
             {
+                var sourceGaps = DigestionReadinessQuery.SourceOccurrenceGaps(
+                    evaluation.Entries,
+                    sourceId => DigestionAtomContextProjection.MaterializeSource(snapshot, document, sourceId));
                 return new CommandResult(
                     true,
                     RenderReadiness(DigestionReadinessQuery.Classify(
                         frontier!)),
-                    string.Empty);
+                    string.Concat(sourceGaps.Select(static item =>
+                        $"GAP atom={item.AtomId} code={item.Gap.Code} detail={RenderDetail(item.Gap.Detail)}\n")));
             }
 
             var age = options.ResidualSummary || options.Json
