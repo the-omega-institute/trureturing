@@ -486,3 +486,4 @@ unsafe def main (args : List String) : IO Unit := do
   let materialCounter ← IO.mkRef 0
   let reports ← inputs.mapM (inspectModule env cache materialSpool materialCounter utilities)
   IO.FS.writeFile output (renderReport reports)
+-- Disposable manual-version integration trigger: Inspector comment only.
