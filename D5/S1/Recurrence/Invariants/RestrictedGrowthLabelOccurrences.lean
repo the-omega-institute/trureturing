@@ -2,13 +2,14 @@
    generality: G
    mirror-B: D5/B/S1/Recurrence/Invariants/RestrictedGrowthLabelOccurrences
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [Mathlib.Order.Interval.Finset.Nat, Mathlib.Data.List.Count]
+   anchors: [Mathlib.Order.Interval.Finset.Nat, Mathlib.Algebra.BigOperators.Group.Finset.Piecewise, Mathlib.Data.List.Count]
    utility: none
    digest: Label occurrences in restricted-growth words, counted by final block deficit. -/
 
 import Mathlib.Order.Interval.Finset.Nat
 import Mathlib.Data.List.Count
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
 
 namespace D5.S1.Recurrence.Invariants.RestrictedGrowthLabelOccurrences
 
@@ -155,5 +156,36 @@ private theorem nearFiber (n m : ℕ) (hn : 0 < n) (hm : m ≤ n) :
           simp at h
       rw [heq]
       simp [hmn, hnext]
+
+private theorem card_near_step (n : ℕ) (hn : 0 < n) :
+    ((words (n + 1)).filter fun w => maxLabel w = n).card =
+      n + ((words n).filter fun w => maxLabel w + 1 = n).card := by
+  calc
+    _ = (words (n + 1)).sum (fun w => if maxLabel w = n then 1 else 0) := by
+      exact Finset.card_filter _ _
+    _ = (words n).sum (fun w =>
+        (Finset.Icc 1 (maxLabel w + 1)).sum fun x =>
+          if maxLabel (x :: w) = n then 1 else 0) := sum_words_succ n _
+    _ = (words n).sum (fun w =>
+        if maxLabel w = n then n else if maxLabel w + 1 = n then 1 else 0) := by
+      apply Finset.sum_congr rfl
+      intro w hw
+      have hf := nearFiber n (maxLabel w) hn (maxLabel_le_length n w hw)
+      change (Finset.Icc 1 (maxLabel w + 1)).sum
+        (fun x => if max x (maxLabel w) = n then 1 else 0) = _
+      rw [← Finset.card_filter]
+      exact hf
+    _ = n + ((words n).filter fun w => maxLabel w + 1 = n).card := by
+      have heq : ((words n).filter (fun w => maxLabel w ≠ n)).filter
+          (fun w => maxLabel w + 1 = n) =
+          (words n).filter (fun w => maxLabel w + 1 = n) := by
+        ext w
+        simp only [Finset.mem_filter]
+        constructor
+        · rintro ⟨⟨hw, _⟩, hx⟩
+          exact ⟨hw, hx⟩
+        · rintro ⟨hw, hx⟩
+          exact ⟨⟨hw, by omega⟩, hx⟩
+      simp [Finset.sum_ite, card_top_words, heq]
 
 end D5.S1.Recurrence.Invariants.RestrictedGrowthLabelOccurrences
