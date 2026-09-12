@@ -98,4 +98,4 @@ theorem resolution_cover_nat (L n : ℕ) :
   resolution_cover_nonnegative L n (by positivity)
 
 end
-end D5.S3.Observer/GoldenPrimeCircle.GoldenClockResolutionCover
+end D5.S3.Observer.GoldenPrimeCircle.GoldenClockResolutionCover
