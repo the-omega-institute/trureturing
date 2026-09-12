@@ -7,6 +7,38 @@ namespace StrataLint.Tests;
 public sealed partial class FormalizeCandidatesTests
 {
     [Fact]
+    public void ReadinessReportsMissingSourceOccurrenceWithoutChangingActionOrSuccess()
+    {
+        var entry = Entry("source", "removed-claim", "theorem", "16.30",
+            atomizer: AtomizerRegistry.GenericId);
+        var present = Run([entry], atomizer: AtomizerRegistry.GenericId, arguments: ["--readiness"]);
+        var missing = Run([entry], atomizer: AtomizerRegistry.GenericId,
+            arguments: ["--readiness"], currentSource: "# Synthetic\n\n**theorem 99.1**。Other。\n");
+
+        Assert.True(missing.Success, missing.Error);
+        using var json = JsonDocument.Parse(missing.Output);
+        var readiness = Assert.Single(json.RootElement.GetProperty("entries").EnumerateArray());
+        Assert.Equal("not-formalizable", readiness.GetProperty("action").GetString());
+        Assert.Empty(readiness.GetProperty("ordered_blockers").EnumerateArray());
+        Assert.Equal("GAP atom=removed-claim code=source-occurrence-missing detail=\"source\"\n", missing.Error);
+        Assert.Empty(present.Error);
+    }
+
+    [Theory]
+    [InlineData("--formalize-candidates")]
+    [InlineData(null)]
+    public void MissingSourceOccurrenceIsOnlyReportedByReadiness(string? option)
+    {
+        var entry = Entry("source", "removed-claim", "theorem", "16.31",
+            atomizer: AtomizerRegistry.GenericId);
+        var result = Run([entry], atomizer: AtomizerRegistry.GenericId,
+            arguments: option is null ? [] : [option], currentSource: "# Synthetic\n\n**theorem 99.1**。Other。\n");
+
+        Assert.True(result.Success, result.Error);
+        Assert.DoesNotContain("source-occurrence-missing", result.Output + result.Error);
+    }
+
+    [Fact]
     public void ReadinessOptionDispatchesToReadinessJsonRenderer()
     {
         var entry = Entry(
