@@ -1,0 +1,30 @@
+**定义 189（指数幺半群的群完成）。** 对有限素数集 \(P\)，在 \(\mathsf E(P)\times\mathsf E(P)\) 上定义
+\[
+(a,b)\sim_{\rm gp}(c,d)
+\iff a\boxplus_Pd=b\boxplus_Pc.
+\]
+令
+\[
+\mathsf{Gr}(P)
+ =(\mathsf E(P)\times\mathsf E(P))/\sim_{\rm gp},
+\qquad
+[a,b]+[c,d]=[a\boxplus_Pc,b\boxplus_Pd],
+\]
+并令 \(-[a,b]=[b,a]\)。定义
+\[
+\Gamma_P:\mathsf{Gr}(P)\longrightarrow\mathbb Z^P,
+\qquad
+\Gamma_P([a,b])=a-b.
+\]
+置
+\[
+\operatorname{Rat}^{\rm gp}_P([a,b])
+ =\frac{\Pi_P^{\infty}(a)}{\Pi_P^{\infty}(b)}
+ \in\mathbb Q_{>0},
+\]
+以及带符号局部码
+\[
+\operatorname{sdig}^{\rm gp}_P([a,b])(p)
+ =\operatorname{scode}\bigl(a(p)-b(p)\bigr).
+\]
+

@@ -1,0 +1,30 @@
+**定理 144（全数值字段的 CSA Zeckendorf 运输）。** 对任意有限情境
+\[
+C=(E,\prec,t,x,\sigma,\rho,\Omega)
+\]
+定义其 Zeckendorf 数值字段为
+\[
+t_Z(e)=\iota_Z(t(e)),\qquad
+x_Z(e)=\iota_Z^{(3)}(x(e)),\qquad
+q_Z(A)=\operatorname{scode}(q_C(A)),\qquad
+u_Z(C)=\operatorname{scode}(u(C)).
+\]
+事件身份、偏序、选择集和来源树保持原样，只有数值字段按上述映射替换。则：
+\[
+e\prec f\Longrightarrow t_Z(e)<_Z^{\mathbb Z}t_Z(f),
+\qquad
+u_Z(C)=0_Z\iff u(C)=0.
+\]
+并行加法、合法时间复合、补集和档案乘法在这些字段上的结果，分别等于原 CSA 结果经同一字段映射后的结果。特别地，对乘积父事件 \(p_{ab}\)，
+\[
+\begin{aligned}
+t_Z(p_{ab})
+ &=\operatorname{succ}_{\mathbb Z,Z}\!\left(
+   \max\nolimits_{<_Z^{\mathbb Z}}\{t_Z(a),t_Z(b)\}\right),\\
+x_Z(p_{ab})
+ &=x_Z(a)\boxplus_Z^{(3)}x_Z(b),\\
+\sigma(p_{ab})&=\sigma(a)\sigma(b),
+\end{aligned}
+\]
+其中 \(\boxplus_Z^{(3)}\) 逐坐标使用 \(\oplus_Z\)。因此原 CSA 的合法性、平衡性和全部有限复合运算在全 Zeckendorf 数值字段中保持且可反向恢复。
+

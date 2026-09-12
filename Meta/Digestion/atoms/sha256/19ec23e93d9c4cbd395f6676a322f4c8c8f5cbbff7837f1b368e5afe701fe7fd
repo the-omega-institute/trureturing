@@ -1,0 +1,19 @@
+**35.7 Proposition (Surjective coordinates and Haar marginals).** For each \(1\le i\le d\),
+\(\pi_i(H)\) is a compact, hence closed, circle subgroup containing all
+integer multiples of the irrational \(\alpha_i\). It is infinite, since
+two equal multiples would give a nonzero integer multiple in \(\mathbb Z\).
+An infinite closed subgroup of the circle is the circle itself. To see this,
+compactness supplies distinct subgroup elements arbitrarily close together;
+their differences, with sign chosen, have representatives \(t>0\) tending
+to 0. The subgroup contains \(0,t,\ldots,\lfloor1/t\rfloor t\), whose
+circle mesh has gaps at most \(t\). Every circle point is a limit of such
+subgroup elements and belongs to the closed subgroup. Thus \(\pi_i\) is onto.
+
+For a circle translation \(t\), choose \(y\in H\) with \(\pi_i(y)=t\).
+For every Borel circle set \(E\), translation by \(y\) identifies
+\(\pi_i^{-1}(E)\) with \(\pi_i^{-1}(E+t)\). The pushforward
+\(\nu_i=(\pi_i)_*\mu_H\) is therefore translation-invariant circle
+probability, hence normalized circle length by Haar uniqueness. In particular
+\(\mu_H(\pi_i^{-1}(\{t\}))=0\) for every \(t\). These are marginal
+statements, not independence or ambient-dimensional volume statements.
+

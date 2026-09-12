@@ -1,0 +1,26 @@
+**定理 286（全部遗传有限集合的统一大小界及渐近达阶）。** 对每个正整数 $N$，集合
+$$
+\mathcal A_N=\{x\in HF:h(x)=N\}
+$$
+有限且非空，且对其中每个 $x$，$h(\operatorname{Enc}(x))$ 为正整数。因此最大值
+$$
+M(N)=\max\{h(\operatorname{Enc}(x)):x\in\mathcal A_N\}
+$$
+存在。对任意 $x\in HF$，置 $N=h(x)$、$H=h(\operatorname{Enc}(x))$。$N=1$ 时 $x=0$、$H=3$；当 $N\ge2$ 时，令 $\phi=(1+\sqrt5)/2$，则
+$$
+\log_2N\le H\le
+\min\{5N,\ 3N+12\log_2N,\ 3N+6\log_\phi N+6\}.
+$$
+令 $b_0=\{1\}$、$b_{r+1}=\{b_r\}$。对全部 $r\ge0$，$b_r\notin\omega$，且
+$$
+h(b_r)=r+3,\qquad h(\operatorname{Enc}(b_r))=3r+11=3h(b_r)+2.
+$$
+因而统一上界的线性主系数 $3$ 不能替换为任何 $a<3$ 再加一个仅依赖 $N$ 的 $o(N)$ 余项；结合第 285 条的自然序数族，对数下阶与线性上阶均能达到。对 $N\ge3$，
+$$
+3N+2\le M(N)\le
+\min\{5N,\ 3N+12\log_2N,\ 3N+6\log_\phi N+6\},
+\qquad
+\lim_{N\to\infty}\frac{M(N)}N=3.
+$$
+此外，包含式 $\operatorname{Enc}[T(x)]\subseteq T(\operatorname{Enc}(x))$ 对全部 $HF$ 集合并不成立，$x=2$ 已是反例。
+

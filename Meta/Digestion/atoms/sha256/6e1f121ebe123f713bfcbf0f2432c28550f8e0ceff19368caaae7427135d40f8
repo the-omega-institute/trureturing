@@ -1,0 +1,12 @@
+**定义 324.1。** 定义完整乘积空间及映射
+$$
+Y_{\rm rat}=\mathbb T^{\Theta_{\rm rat}},\qquad
+\operatorname{Ev}_{\rm rat}:\mathsf V_{\rm reg}\to Y_{\rm rat},\quad
+\operatorname{Ev}_{\rm rat}(u)(\theta)=j_{\rm rat}(\chi^{\rm rat}_\theta(u)),
+$$
+$$
+X_+=\mathsf X_{\rm reg}\times Y_{\rm rat},\qquad
+\operatorname{Ev}_+(u)=(\Psi_{\rm reg}(u),\operatorname{Ev}_{\rm rat}(u)).
+$$
+两环境都取所列完整乘积的乘积拓扑，包含全部相应圆周值函数。$\pi_1,\pi_2$ 是 $X_+$ 的两投影。
+

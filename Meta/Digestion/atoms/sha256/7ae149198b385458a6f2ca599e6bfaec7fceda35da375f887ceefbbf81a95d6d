@@ -1,0 +1,15 @@
+**定理 154（最大标量纤维的完整分类）。** 若 \(M>1\)，则 \(\operatorname{red}\) 在 \(\mathfrak C(M)\) 上取唯一值，且该唯一约化由
+\[
+P_M=\{p:v_p(M)>0\},qquad A_M(p)=v_p(M)
+\]
+给出。每个 \((P,A)\in\mathfrak C(M)\) 都由 \((P_M,A_M)\) 加上有限个零容量素数轴得到。
+
+对纤维中的任意两个配置，\(\operatorname{ext}_{P,P'}\) 是配置格的序同构，满足
+\[
+\Pi_{P'}(\operatorname{ext}_{P,P'}(a))=\Pi_P(a),
+\qquad
+\mathsf G_{P',A'}(\operatorname{ext}_{P,P'}(a))
+ =\mathsf G_{P,A}(a).
+\]
+然而若两个配置的零容量标签不同，其 \(\operatorname{Cfg}_Z\) 不同；故最大标量及其全局 Zeckendorf 码不能恢复全部标签数据。
+

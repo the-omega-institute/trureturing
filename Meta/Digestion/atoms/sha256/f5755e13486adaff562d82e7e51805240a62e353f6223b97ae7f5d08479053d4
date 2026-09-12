@@ -1,0 +1,25 @@
+**定义 340.1。** 沿用第 321 条的 $\mathsf D_{\rm rat}=\mathbb Q/\mathbb Z_o$、$j_{\rm rat}:\mathsf D_{\rm rat}\to\mathbb T$、$\Theta_{\rm rat}=(\mathsf D_{\rm rat})^\omega$ 和 $\chi^{\rm rat}_\theta$。定义逐坐标商映射
+$$
+\rho:\mathbb Q^\omega\longrightarrow\Theta_{\rm rat},\qquad
+\rho(r)_n=[r_n]_{\rm rat}.
+$$
+对每个 $r\in\mathbb Q^\omega$，保留整个有理系数序列而不要求其有限支撑，置
+$$
+\chi_r^{\rm cap}=j_{\rm rat}\circ\chi^{\rm rat}_{\rho(r)}:
+\mathsf V_{\rm reg}\longrightarrow\mathbb T,
+\qquad
+\chi_r^{\rm cap}(u)=\left[\sum_{n\in\operatorname{supp}(u)}r_nu_n\right].
+$$
+在容量状态上定义
+$$
+E_A^{\rm cap}:B_A^{\rm cap}\longrightarrow
+\mathbb T^\omega\times\mathbb T^{\mathbb Q^\omega},\qquad
+E_A^{\rm cap}(u)=\bigl(\Psi_{\rm reg}(u),(\chi_r^{\rm cap}(u))_{r\in\mathbb Q^\omega}\bigr),
+$$
+目标取完整乘积拓扑。另以第 324 条的 $\operatorname{Ev}_+:\mathsf V_{\rm reg}\to X_+$ 和第 329 条的 $\tau_+$ 定义
+$$
+\tau_{+,A}=\tau_+|_{B_A^{\rm cap}}
+=\{(\operatorname{Ev}_+|_{B_A^{\rm cap}})^{-1}(O):O\subseteq X_+\text{ 开}\}.
+$$
+此处两个联合评价的环境分别按 $\mathbb Q^\omega$ 和 $\Theta_{\rm rat}$ 索引，不作字面认同。上述求和只在有限支撑状态上求值，不由此给任意 $x\in X_A^{\rm cap}$ 赋无穷和。
+

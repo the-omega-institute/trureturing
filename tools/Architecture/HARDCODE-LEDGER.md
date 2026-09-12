@@ -738,7 +738,7 @@ independent verification and were merged as deletions or registered as named ope
 | `.github/` | every referenced script exists; `STRATALINT_TIMING` is consumed by `harness-gate.sh` | 0 |
 | `Library/` | 34 anchors, 33 cited; `bell1964epr` is an under-citation in a live Bell module, not an orphan | 0 |
 | `skills/` | install contract in each `SKILL.md` plus use receipts in three reports | 0 |
-| `docs/reports/**` | 25 named diagnoses, sole copy of their conclusions; dossier, not projection | 0 |
+| `docs/reports/` | Exact FILEMAP registrations for useful experimental programs, result data and referenced licenses; process records and archive links are excluded | 0 |
 
 Merged this round: 13 pull requests, net 1474 lines removed. The two largest were
 whole machines guarding something that was not there: `BlueprintPins` validated a

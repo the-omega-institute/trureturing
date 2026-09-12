@@ -1,0 +1,12 @@
+**引理 363.2。** 中心代表良定义且唯一，$a([1/2])=-1/2$，并有
+$$
+\|[t]\|_{\mathbb T}=\min_{z\in\mathbb Z_o}|t-z|,\qquad
+\|-\vartheta\|_{\mathbb T}=\|\vartheta\|_{\mathbb T},\qquad
+\|\vartheta+\eta\|_{\mathbb T}\le\|\vartheta\|_{\mathbb T}+\|\eta\|_{\mathbb T}.
+$$
+
+$$
+d_{\mathbb T}(\vartheta,\eta)=\|\vartheta-\eta\|_{\mathbb T}
+$$
+是平移不变的度量，诱导通常圆周拓扑。$\chi_\theta$ 是 $V$ 上的加法同态，且 $\|m\vartheta\|_{\mathbb T}\le |m|\|\vartheta\|_{\mathbb T}$ 对每个整数 $m$ 成立。
+

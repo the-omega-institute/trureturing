@@ -1,0 +1,18 @@
+**定理 254（联合预算函数图的全 Zeckendorf 运输与集合论解释）。** 定义 241、243、246 及定理 245、247–253 中的配置域、尾部域、联合函数、阈值部分函数、轴数最小值、支配关系、前沿和实现图，都可在 ZFC 中定义为集合及集合函数图。其定义域、有限最大值或最小值的存在唯一性，以及所述普通证明的等式与极值，均在既有 $\zeta$、$\operatorname{NatZ}$、$\operatorname{Enc}$ 与 $\in_Z$ 下保持并反映。
+
+具体地，对输入为自然数元组的任一上述数值函数 $F$，其逐字段数字共轭记为 $\widetilde F$：
+$$
+\widetilde F(\zeta(n_1),\ldots,\zeta(n_s))
+=\zeta(F(n_1,\ldots,n_s)),
+$$
+定义域也逐字段运输。此式适用于 $\mathcal J,D,m,\kappa$ 及 $a_N$，并适用于素数序列、幂、$\ell_Z$ 和整商。尾序列的长度、索引和每个指数同样取 $\zeta$ 数字；作为语义自然数时则使用 $\operatorname{NatZ}$。尤其 $N,b,K,q,i,a,e$、全部素数标签、指数、序及递推中的预算比较都在同一自然数表示中表达。定义 115 的配置码继续保留标签、容量和状态的不同有序字段。
+
+设 $G_F$ 是普通函数 $F$ 的集合图，$\boldsymbol n$ 是自然数元组，$m$ 为自然数，则
+$$
+\langle\operatorname{Enc}(\boldsymbol n),\operatorname{NatZ}(m)\rangle_Z
+\in_Z\operatorname{Enc}(G_F)
+\iff
+\boldsymbol n\in\operatorname{Dom}(F)\ \land\ m=F(\boldsymbol n).
+$$
+外部逐字段共轭的函数图与 $\operatorname{Enc}(G_F)$ 这个语义集合码是不同层的对象，不把它们直接当作同一个字面集合。加入这些有效定义及其已证性质仍是第 75–78 条和定理 239 意义下对原集合论语言的定义性保守扩充。有效前提排除定理 239 已列出的失效断言，也排除旧定理 132 的无参数恢复句及仅依赖该句而未另证的推断；第 132 条的保留部分只按定理 240 使用。
+

@@ -1,0 +1,45 @@
+**定理 269（全部有限严格项及相应观察关系）。** 固定第 264–268 条中任意一个明确的有类型签名，每个符号连同全部参数槽及联合域一起取相应数字实例。对每棵预先固定的有限有类型语法树 $C$，输入类型为 $\prod_{i=1}^r A_i$，输出类型为 $A_o$，令输入桥为 $B_{\rm in}=\prod_i b_i$、输出桥为 $b_o$；历史类型使用 $R$，整数使用 $b$，空间使用 $b_3$，来源使用 $\theta$，集合参数及观察类型使用第 266、268 条指定的桥。则对全部输入有
+$$
+\operatorname{dom}(C^R)=B_{\rm in}[\operatorname{dom}(C)],\qquad
+C^R(B_{\rm in}x)=b_o(C(x))\quad(x\in\operatorname{dom}(C)),
+$$
+以及严格标签等式
+$$
+\widehat{C^R}(B_{\rm in}x)=b_o^\bot(\widehat C(x)).
+$$
+结论量化于所有有限树，不设共同的深度上界。参数、槽位和树先于输入固定；若一个输入叶出现多次，每处代入同一个输入及其同一个像。
+
+具体对平衡历史，以下每一个签名分别适用，数字签名逐个替换其中原有符号及其参数域：
+$$
+\begin{aligned}
+\Sigma_{\rm arith}&=\{\boxplus,\boxtimes,N\},\\
+\Sigma_{\rm sp}&=\Sigma_{\rm arith}\cup\{F_{S_0}:S_0\subseteq J^3\},\\
+\Sigma_{\rm src}&=\Sigma_{\rm sp}\cup\{F_L:L\subseteq\mathsf{Tree}\},\\
+\Sigma_{\rm st}&=\Sigma_{\rm sp}\cup\{\triangleright\}\cup\{T_h:h\in J\},\\
+\Sigma_{\rm ts}&=\Sigma_{\rm arith}\cup\{\triangleright\}
+ \cup\{F_{B_0}:B_0\subseteq K\}\cup\{T_h:h\in J\},\\
+\Sigma_{\rm ts}^{\rm pair}&=\Sigma_{\rm ts}\cup\{M_{P_0}:P_0\subseteq K^2\},\\
+\Sigma_{\rm cau}&=\Sigma_{\rm src}\cup\Sigma_{\rm st}
+ \cup\{F_{\downarrow Q}:Q\subseteq\mathrm{Attr}\},\\
+\Sigma_{{\rm cau},t}&=\Sigma_{\rm src}\cup\Sigma_{\rm st}
+ \cup\{F_{\downarrow Q_t}:Q_t\subseteq\mathrm{Attr}_t\},\\
+\Sigma_{\rm mix}&=\Sigma_{{\rm cau},t}\cup\{F_{B_0}:B_0\subseteq K\}
+ \cup\{M_{P_0}:P_0\subseteq K^2\},\\
+\Sigma_{\rm mix}^{\rm attr}&=\Sigma_{\rm mix}
+ \cup\{\widehat M_{P_t}:P_t\subseteq\mathrm{Attr}_t^2\}.
+\end{aligned}
+$$
+同一记号的筛选由所示参数类型区分。CSA 定义 16 的一孔上下文取这些签名各自的全部丰富参数、全部槽位及有限复合；定义 34 的复制语言取其原定的 $\Sigma_{{\rm cau},t}$，不自动增添一般联合筛选、属性父对、身份查询或 $D_\prec$。第 267 条对这些额外操作的单独交换不使它们成为未包含它们的签名成员。
+
+以 $q$ 为终端读数、$b$ 为终端双射时，对每个上述签名分别有
+$$
+X\approx_\Sigma Y\iff RX\approx_{\Sigma^R}RY.
+$$
+对于定义 34 的每个固定复制项，其全输入总定义性也被保持反映。更一般的观察关系运输要求所量化上下文与全部参数双向对应，且终端读数使用双射；参数也运输的结论不等于事件重命名后固定同一身份参数的观察不变性。
+
+**证明。** 对给定语法树结构归纳。输入叶由输入桥成立，重复叶仍用同一输入；固定参数叶由其参数桥成立。零元符号的域为唯一空元组的一个子集，第 260 条给域和值的对应。内部节点若有一个失败子项，归纳假设使对应子项同时失败，严格语义使两侧父节点同时失败，与父节点在成功值上是否恒零无关。全部子项成功时，各值由归纳假设对应；本节点若是基本历史操作，用第 265 条的联合域等价和逐字段等式；若是筛选、关系或参考点操作，用第 267 条，特别保留 $D_0\subseteq E_X$、$R_0\subseteq\Omega_X\times\Omega_Y$ 与共同参考点域；若是观察、推送或剖面图，使用第 268 条及第 260 条的相应图桥。守卫失败则两侧同为失败，通过则输出经 $b_o$ 对应，完成归纳。
+
+该归纳是第 81 条方法在这些已逐项证明的原语上的应用，未将抽象共轭定义代替原语域证明。由输入桥满射，正反两向的逐输入结论给域像等式。CSA 定义 16 的基本一孔映射是在某个槽放输入、其它槽放全部允许固定参数；第 266 条的全幂集双射与第 262 条的历史双射使所有参数选择均有逆。反复有限复合仍是上述树，故上下文族正反对应。定义 34 允许重复叶，已由同一归纳覆盖，且未改变其签名。输入桥满射又使“对全部输入有定义”两向等价。
+
+严格观察的成功值满足 $\operatorname{ok}(q(CX))\mapsto\operatorname{ok}(b(q(CX)))$，失败单独映到失败；这个标签映射单射。因此每个对应上下文的观察相等双向等价，再对双向对应的全部上下文量化即得观察关系式。第 265 条的零读数而时间守卫失败的输入，即使外层再取空筛选、$N$ 或乘零因子，也仍由失败子项分支失败。固定身份查询则显示另一边界：将所选事件 $e$ 重命名成 $e'$，查询仍固定为 $H_e$ 时可失去该事件；查询参数同时改为 $H_{e'}$ 才是所证运输。第 144–147、163、177 条受旧数值链影响的有限表达式句由本条的域、签名和量词范围替代。证毕。
+

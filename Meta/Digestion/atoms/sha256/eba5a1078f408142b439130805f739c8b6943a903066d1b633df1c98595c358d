@@ -1,0 +1,23 @@
+**定义 337.1。** 在 ZFC 中，沿用第 236、255、306–307 条的 $\phi=(1+\sqrt5)/2$、通常整数 $\mathbb Z_o$、递增素数枚举 $(p_n)_{n\in\omega}$、有限支撑总状态群 $\mathsf V_{\rm reg}$、单位状态 $\varepsilon_n$ 及 $\Psi_{\rm reg}$。这里 $\omega$ 包括零，自然数在整数值中按通常非负值识别。固定任意容量函数 $A:\omega\to\omega$，每个 $A_n$ 是有限自然数，定义
+$$
+D_n=\{k\in\mathbb Z_o:0\le k\le A_n\},\qquad
+J_A=\{n\in\omega:A_n>0\},
+$$
+$$
+X_A^{\rm cap}=\prod_{n\in\omega}D_n,\qquad
+B_A^{\rm cap}=\{u\in X_A^{\rm cap}:\operatorname{supp}(u)\text{ 有限}\}
+=X_A^{\rm cap}\cap\mathsf V_{\rm reg}.
+$$
+两载体中的点都是定义域恰为 $\omega$ 的总函数；$X_A^{\rm cap}$ 无支撑限制。容量函数按上述自然数到整数的逐点包含给容量角，仍记为 $A\in X_A^{\rm cap}$。第 299 条有限素数域上的 $X_A=S(P,A)$ 保持原义。
+
+各 $D_n$ 取离散拓扑，$X_A^{\rm cap}$ 取乘积拓扑 $\tau_{\rm coord,A}^{X}$，$B_A^{\rm cap}$ 取其子空间拓扑 $\tau_{\rm coord,A}^{B}$。对有限 $I\subseteq\omega$ 和 $x\in X_A^{\rm cap}$ 记精确柱集
+$$
+C_I(x)=\{y\in X_A^{\rm cap}:y_i=x_i\ (i\in I)\};
+$$
+$C_\varnothing(x)=X_A^{\rm cap}$。令 $\mathbb T=\mathbb R/\mathbb Z$ 取通常商拓扑，独立定义全乘积上的黄金映射
+$$
+\Psi_A:X_A^{\rm cap}\longrightarrow\mathbb T^\omega,\qquad
+\Psi_A(x)_n=[\phi x_n].
+$$
+目标取完整乘积拓扑。记其初始拓扑为 $\tau_{\Psi,A}^{X}$，在 $B_A^{\rm cap}$ 上由 $\Psi_A|_{B_A^{\rm cap}}=\Psi_{\rm reg}|_{B_A^{\rm cap}}$ 诱导的初始拓扑为 $\tau_{\Psi,A}^{B}$。
+

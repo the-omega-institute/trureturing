@@ -1,0 +1,31 @@
+**定理 353.4。** 展开第 342–353 条的新定义后，对每个固定有限集合论公式 $\varphi(x_1,\ldots,x_r)$ 及任意集合参数，第 75 条的翻译保留
+$$
+\varphi(x_1,\ldots,x_r)
+\iff\varphi^Z(\operatorname{Enc}(x_1),\ldots,\operatorname{Enc}(x_r)).
+$$
+量词包括全部容量、全乘积点、实输出、所有子集及全函数空间；特别使用第 74 条已定义的
+$$
+\mathcal P_Z(\operatorname{Enc}(X))=\operatorname{Enc}(\mathcal P(X)),\qquad
+\operatorname{Fun}_Z(\operatorname{Enc}(X),\operatorname{Enc}(Y))
+=\operatorname{Enc}(Y^X).
+$$
+这些定义及已证性质给原集合论语言的定义性保守扩展，并保留第 72、78–79、98、341 条的遗传有限性、有限状态数及给定模型的精确边界。
+
+**证明。** 命题 353.1 及各函数的定义和证明给总图的存在唯一性或部分图的精确域。将函数符号换为这些图，全部命题成为普通集合论公式。等号原子由 $\operatorname{Enc}$ 单射保持反映，成员原子由
+$$
+\operatorname{Enc}(x)\in_Z\operatorname{Enc}(y)\iff x\in y
+$$
+保持反映。对固定公式作结构归纳：否定及各布尔联结词保持两方向等价；存在量词的原见证编码成有效见证，反向把有效见证解码；全称量词正向对任意有效码解码，反向对任意原集合编码。归纳中保留全部参数，量词限制使用类谓词 $c\in\mathfrak V_Z$，不假设该类为集合。这正是定理 75–76 的全部适用条件。
+
+对全部子集的量词，可逐项核对：$U\subseteq X$ 产生 $\operatorname{Enc}[U]\subseteq X^*$；反向每个 $B\subseteq X^*$ 都解码为 $\operatorname{Dec}[B]\subseteq X$，两个操作互逆。定理 73 的 $\operatorname{Pack}$ 将这样的外部成员集变为子集码，故得到整个语义幂集，没有限制为可定义或有限子集。对每个外部函数 $g:X^*\to Y^*$，拉回
+$$
+x\longmapsto\operatorname{Dec}(g(\operatorname{Enc}(x)))
+$$
+得到 $Y^X$ 中的函数，再共轭回去还原 $g$。定理 74 的配对比较保留逐输入存在唯一输出的图谓词，所以全部函数空间的显示等式也成立，包括全部容量函数和全实值函数。
+
+对任何只使用这些定义和已证性质的有限证明，逐一展开新符号，并把新定理行替换为上述普通证明；每个分离或替代实例展开后仍是原 ZFC 的对应实例。定理 78 的定义消去于是给所称保守性，而不是增加一个新的编码理论。
+
+定理 72 仍精确给 $\operatorname{Enc}(x)\in HF\iff x\in HF$。有限支撑状态的非零记录有限，但其定义域为 $\omega$ 的总图无限，即使状态为零也有无限多条不同输入边；其全对象码不能由“支撑有限”推出遗传有限。有限坐标集 $I$ 上的容量盒仍有 $Q_I=\prod_{i\in I}(A_i+1)$ 个状态，定理 341.2 与第 98 条在已给标签、容量及解释函数的条件下给所需二进位数 $\lceil\log_2Q_I\rceil$，连同原有独立字段及 Zeckendorf 窗口结论保持在同一有限域上。若活跃指标无限，定理 341.4 的二进序列嵌入和 Cantor 对角论证使 $X_A^{\rm cap}$ 不可数，而有限字集可数，故不能把其全部点单射表示为有限字；定理 79 对任意集合的相同障碍也保持。
+
+若外部给定 $\mathfrak M\models\mathrm{ZFC}$，在其中解释同一图定义，定理 78 给 $\operatorname{Enc}^{\mathfrak M}$ 与内部有效码类之间的外部双射，以及每个外部标准有限公式的同构比较。内部有限性、幂集和函数集按 $\mathfrak M$ 的原义解释，不与外部有限性或全部外部子集、函数集识别。这个断言以已有模型为条件，不构造模型，不推出无条件 $\operatorname{Con}(\mathrm{ZFC})$；逐公式归纳也不定义同时判定全部公式的统一内部真理谓词。证毕。
+

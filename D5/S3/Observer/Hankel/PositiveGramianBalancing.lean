@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Observer/Hankel/PositiveGramianBalancing
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Construct mutually inverse balancing coordinates from two positive definite Gramians. -/
 
 import Mathlib.Analysis.Matrix.Order

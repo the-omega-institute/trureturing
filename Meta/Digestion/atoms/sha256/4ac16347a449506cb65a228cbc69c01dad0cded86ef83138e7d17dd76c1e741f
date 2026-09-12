@@ -1,0 +1,12 @@
+**定义 119（全 Zeckendorf 配置的标量读数）。** 对自然数字码 \(c=\operatorname{NatZ}(n)\) 定义 \(\operatorname{nval}(c)=n\)。对 \(a\in S(P,A)\) 定义
+\[
+\Pi_P(a)=\prod_{p\in P}p^{a(p)}.
+\]
+若 \(R=\operatorname{Reg}_Z(P)\) 且 \(d\in\mathsf D(P,A)\)，定义
+\[
+\widehat\Pi_Z(R,d)
+=\operatorname{NatZ}\left(\prod_{c\in\operatorname{El}(R)}
+\operatorname{nval}(c)^{\,\operatorname{val}(d(\operatorname{nval}(c)))}\right).
+\]
+在这里 \(R\) 的每个成员 \(c\) 是素数标签的 Zeckendorf 自然码，\(d\) 的对应行是该标签的内容码；所以标签和指数都由 Zeckendorf 数字给出，而两者由有序索引保持区分。空积取一。
+

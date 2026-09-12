@@ -1,0 +1,30 @@
+**定理 172（Zeckendorf 加法与普通多项式乘法的区别）。** 对任意 \(F,H\in\mathsf{Pol}_{\rm fin}(\mathbb N)\)，有
+\[
+\operatorname{ev}_G(F+H)=\operatorname{ev}_G(F)+\operatorname{ev}_G(H),
+\qquad
+\operatorname{ev}_G(F\star_GH)
+ =\operatorname{ev}_G(F)\operatorname{ev}_G(H).
+\tag{Z-POLY-EVAL}
+\]
+因此
+\[
+\operatorname{nf}_G(F_u+F_v)=u+_Zv,
+\qquad
+\operatorname{nf}_G(F_u\star_GF_v)=u\cdot_Zv.
+\]
+若 \(FH\) 表示通常的形式多项式乘法，则
+\[
+\operatorname{ev}_G(FH)=\sum_{i,j}r_is_jG_{i+j},
+\]
+该值一般不等于 \(\operatorname{ev}_G(F)\operatorname{ev}_G(H)\)。特别地，
+\[
+\operatorname{ev}_G(X\cdot X)=G_2=3,
+\qquad
+\operatorname{ev}_G(X)^2=G_1^2=4.
+\]
+所以 \(X^j\) 不是数值基 \(G_j\) 的幂，普通多项式乘法不能直接表示 Zeckendorf 数值乘法。
+
+**证明。** 第一式由有限和的分配律直接得到。由定义，\(F\star_GH\) 的唯一系数为 \(\operatorname{ev}_G(F)\operatorname{ev}_G(H)\) 且位于 \(X^0\)，故其评价就是该乘积。将 \(F_u+F_v\) 和 \(F_u\star_GF_v\) 代入定理 70 的规范化定义，得到两个行运算式。
+
+普通乘积的系数为 \(\sum_{i+j=k}r_is_j\)，评价后得到所列双重和；而两个评价的乘积为 \(\sum_{i,j}r_is_jG_iG_j\)。两者相等需要额外的数值关系 \(G_{i+j}=G_iG_j\)，该关系并非 Fibonacci 递推的性质。取 \(F=H=X\)，即得 \(G_2=3\ne4=G_1G_1\)，故一般不等。证毕。
+

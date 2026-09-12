@@ -1,0 +1,6 @@
+**定理 343.2。** 对每个整数 $d\ge1$ 和每个 $N\in\omega$，存在 $n>N$ 使 $d\mid G_n$。此外
+$$
+G_{n+3}=2G_{n+1}+G_n,\qquad G_{n+3}\equiv G_n\pmod2,
+$$
+所以奇偶性按奇、偶、奇循环。本条使用经典模 Fibonacci 周期性，参见 [D. D. Wall, Fibonacci Series Modulo m](https://doi.org/10.2307/2309169) 与 [Pisano Period](https://mathworld.wolfram.com/PisanoPeriod.html)。
+

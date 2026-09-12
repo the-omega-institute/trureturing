@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Observer/Hankel/BalancedSteinEnergy
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: A diagonal reachability Stein inequality yields an inverse-storage input-energy inequality. -/
 
 import D5.S3.Observer.Hankel.ProjectedRealizationError

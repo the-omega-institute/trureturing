@@ -1,0 +1,7 @@
+**证明。** 对词长作归纳。定理 70 给出
+\[
+\operatorname{val}(\operatorname{succ}_Z(u))=\operatorname{val}(u)+1,\qquad
+\operatorname{val}(\operatorname{pred}_Z(u))=\operatorname{val}(u)-1
+\]
+在相应定义域内成立，因此原变换的容量或正性守卫与码变换的守卫等价。单步更新后两边的数字行由 \(\zeta\) 唯一确定；归纳假设再给出整词的定义域和结果。定理 116 说明配置码的标签、容量和状态三坐标中只有状态表改变，且改变由这些唯一数字行组成，所以最后的码也是唯一的。证毕。
+

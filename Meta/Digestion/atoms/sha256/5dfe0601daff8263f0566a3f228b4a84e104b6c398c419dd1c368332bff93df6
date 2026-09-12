@@ -1,0 +1,8 @@
+**命题 362.3。** 本层有限自然字段、整数内容、有理读数及有理相位沿第 332–336 条的旧双射精确表示。对任意固定行 $r\in\mathbb Q^\omega$，在恰好 $\mathsf{Rec}_A^{\rm cap}$ 上定义
+$$
+s\longmapsto\operatorname{qenc}(L_r(b_{\rm rec,A}^{-1}(s)))\in\mathsf{RatFld},\qquad
+s\longmapsto\operatorname{penc}\bigl(\chi^{\rm rat}_{\rho(r)}(b_{\rm rec,A}^{-1}(s))\bigr)
+\in\mathsf{RatPhaseFld}.
+$$
+分别用 $\operatorname{qdec}$ 及 $j_{\rm rat}\circ\operatorname{pdec}$ 解码输出，恰还原 $L_r$ 的有理值及 $\chi_r^{\rm cap}$ 的圆周值；用总数字限制逆替代记录逆得到相同结论。有理行本身及其缩放 $r/m$ 保留为完整集合对象，不能用 $\rho(r)$ 代替其逆表示。
+

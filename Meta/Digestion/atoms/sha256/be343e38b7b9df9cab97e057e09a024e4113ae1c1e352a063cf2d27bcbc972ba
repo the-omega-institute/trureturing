@@ -1,0 +1,6 @@
+**定义 329.1。** 保留第 306 条的 $\tau_\Psi$，另令
+$$
+\tau_+=\{\operatorname{Ev}_+^{-1}(O):O\subseteq X_+\text{ 开}\}
+$$
+为 $\mathsf V_{\rm reg}$ 上联合评价的初始拓扑。
+

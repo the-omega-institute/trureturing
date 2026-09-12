@@ -1,0 +1,35 @@
+**命题 352.3。** 对 $u\in\mathsf V_{\rm reg}$ 取第 316–317 条的 $s_u=\operatorname{rec}_{\rm reg}(u)\in\mathsf{Rec}_{\rm reg}$，对总探针 $\theta^F$ 取第 333 条的
+$$
+t_F=\operatorname{prec}_{\rm rat}(\theta^F)\in\mathsf{ProbeRec},\qquad
+t_F(\lambda_{\rm reg}(n))=\operatorname{penc}(\theta^F_n),\qquad
+\lambda_{\rm reg}(n)=\zeta(p_n).
+$$
+对每个有限 $F\subseteq\omega$，置 $a_F=\theta^F|_F\in\mathsf{FinCoef}$、$c_F=\operatorname{fprec}_{\rm rat}(a_F)$。则
+$$
+\operatorname{dom}(s_u)=\lambda_{\rm reg}[\operatorname{supp}(u)],\qquad
+\operatorname{dom}(c_F)=\lambda_{\rm reg}[F],\qquad
+c_F=t_F|_{\lambda_{\rm reg}[F]}.
+$$
+定理 334.2 的精确联合域特化为
+$$
+T_2(u,a_F)\in D_{\rm fin}
+\iff \operatorname{supp}(u)\subseteq F
+\iff \operatorname{dom}(s_u)\subseteq\operatorname{dom}(c_F)
+\iff T_2(s_u,c_F)\in D_{\rm fin}^{d}.
+$$
+在且仅在这些条件成立时，有限求值有定义且
+$$
+E_{\rm fin}^{d}(s_u,c_F)
+=\operatorname{penc}(E_{\rm fin}(u,a_F))
+=\operatorname{penc}([L_F(u)]_{\rm rat});
+$$
+总求值则对每个 $u$ 满足 $E_d(s_u,t_F)=\operatorname{penc}([L_F(u)]_{\rm rat})$。
+
+**证明。** 第 317 条在独立目标 $\mathsf{Rec}_{\rm reg}$ 上给 $\operatorname{unrec}_{\rm reg}$ 的双逆，解码非零边并在其余指标补零，恢复整个总函数。第 333 条的 $\lambda_{\rm reg},\operatorname{idx}_{\rm reg}$ 双逆给显示的域等式和有限限制式；逐边使用 $\operatorname{penc},\operatorname{pdec}$ 双逆，得到总探针和有限探针两侧的全部复合恒等。这里 $\operatorname{val}(\lambda_{\rm reg}(n))=p_n$，逆索引是 $\operatorname{idx}_{\rm reg}(\lambda_{\rm reg}(n))=n$，不是将标签的值当作索引。
+
+标签单射保持并反映两个域的包含，因此联合域恰为所列四个等价条件。域内各相位项是 $[u_n/G_n]_{\rm rat}$，有限求和给 $[L_F(u)]_{\rm rat}$；定理 334.2 再给数字式。它的通分、取余数及约分公式允许负状态值，空积为一。总探针包含全部标签，故其限制到 $\operatorname{dom}(s_u)$ 自动满足域条件，给总求值。
+
+特别取 $u=\varepsilon_0,F=\{0\}$。状态边为 $s_u(\zeta(2))=\operatorname{scode}(1)$，系数边为 $c_F(\zeta(2))=T_2(0_Z,\zeta(1))$；后者相位虽为零，标签仍在其域中。因此联合域成立，输出是成功的零字段。删去该唯一系数边后，其域为空而状态域非空，联合域失败。第 259–260、334 条的严格总化于是取 $\bot$，而不是 $\operatorname{ok}(T_2(0_Z,\zeta(1)))$。相反，空状态记录与空系数记录满足包含关系，空和产生成功的 $0/1$；非空系数记录中未被状态域使用的额外边仍被保留，但不进入求和。由此零边、缺边和额外边具有精确不同的域效果。
+
+$\theta^F$ 与 $r^F$ 都是定义域为 $\omega$ 的总函数，$t_F$ 的域是全部无限的 $\mathsf{Pr}_Z$；它们的整张图均无限。有限状态记录 $s_u$ 只保存非零边，状态总图仍有每个指标的一条边。有限采样的逆恢复的是 $a_F$，不是任意总探针。证毕。
+

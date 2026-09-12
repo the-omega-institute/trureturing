@@ -9,12 +9,13 @@ internal sealed record RepositoryPathIssue(RuleId RuleId, string Path, string Me
 internal static partial class RepositoryPathPolicy
 {
     internal const string AgentFilesRootPath = "agents/";
-    // 规范草案与理论卷、docs/reports/ 同性质:作者选定的文件名无法预先枚举。
-    // 逐条枚举进 registry.yaml 曾使「加一份规范」必须同时改 harness,而那个改动
-    // 落不了地——准入面分区门拒绝同时触碰 judge 面(registry.yaml)与 content 面
-    // (文档)的 PR,两半各自单独提交又分别被 FILEMAP-REGISTRY-DANGLING 与本规则
-    // 的 SL-000 拒绝(三条判词见 #5251)。故改由路径规则治理。
+    // Spec drafts and agent reports have author-chosen names, so this path layer admits
+    // their prefixes without copying a filename registry into the harness. Reports have
+    // a stricter, separate FILEMAP gate: FileMapPolicy requires one exact entry per
+    // tracked docs/reports file before the file is usable. Path admission alone is not
+    // registration and must not be treated as a substitute for filemap-conform.
     internal const string SpecRootPath = "docs/develop/spec/";
+    internal const string ReportsRootPath = "docs/reports/";
     internal const string AssumptionRegistryPath = "D5/X_Assumptions/REGISTRY.md";
     internal const string WorkflowPath = ".github/workflows/ci.yml";
     // 缓存发布 workflow（#2542）。`.github` 下是白名单而非通配，新增控制工件必须在此具名登记。
@@ -159,10 +160,9 @@ internal static partial class RepositoryPathPolicy
             || FrozenStatePath.TryToModulePath(value, out _)
             || value.StartsWith("skills/", StringComparison.Ordinal)
             || value.StartsWith(".codex/skills/", StringComparison.Ordinal)
-            || value.StartsWith("docs/reports/", StringComparison.Ordinal)
-            // 理论卷与 docs/reports/ 同性质:第三方 PR 带进来的卷名无法预先枚举,
-            // 逐个写进 registry.yaml 会让「加一个 markdown」被迫改 harness
-            // (CLAUDE.md 商余结构:harness 存规则,不存代表元)。
+            || value.StartsWith(ReportsRootPath, StringComparison.Ordinal)
+            // Report filenames are intentionally not copied into registry.yaml. Their
+            // exact per-file registration is enforced by FILEMAP's content-plane gate.
             || value.StartsWith(DigestionOpaquePathPolicy.TheoryRootPath, StringComparison.Ordinal)
             || value.StartsWith(SpecRootPath, StringComparison.Ordinal)
             || IsGoldenProjectionData(value)

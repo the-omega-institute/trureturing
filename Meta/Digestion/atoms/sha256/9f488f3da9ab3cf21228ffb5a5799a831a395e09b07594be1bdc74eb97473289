@@ -1,0 +1,11 @@
+**证明。** 有限求和给
+$$
+\chi^{\rm rat}_{\eta^{\rm dy}}(u)=[\ell_{\rm dy}(u)]_{\rm rat},\qquad
+\chi^{\rm rat}_{\eta^{\rm dy,m}}(u)=[\ell_{\rm dy}(u)/2^m]_{\rm rat}.
+$$
+第一式为零恰为 $\ell_{\rm dy}(u)$ 是整数，$\varepsilon_0$ 的值一证明严格包含。若 $q=\ell_{\rm dy}(u)\ne0$，取 $m$ 使 $2^m>|q|$，则 $0<|q/2^m|<1$，这个数不是整数，故相应特征非零。反向 $q=0$ 时全部为零，再用第 313 条核等式，得到可数族结论。第 313 条的商 $\mathbb Z_o[1/2]$ 含无限阶元素一，第 326 条因而排除有限族恢复此核。
+
+第 236 条已证明 $\phi$ 无理。对 $q\in\mathbb Q$，若 $[\phi q]=0$ 且 $q\ne0$，则 $\phi q=z\in\mathbb Z_o$，于是 $\phi=z/q\in\mathbb Q$，矛盾；所以 $[\phi q]=0$ 当且仅当 $q=0$。应用于 $\ell_{\rm dy}(u)$ 给黄金核，应用于 $L_r(u)$ 给一般核。$L_r$ 的有限和线性及模一加法给同态性。若 $ku\in\ker L_r$、$k\in\mathbb Z_o\setminus\{0\}$，则 $kL_r(u)=0$，有理数无挠性迫使 $L_r(u)=0$，故核饱和。第 327 条的 $H_r$ 不饱和，因为 $r\varepsilon_0\in H_r$ 而 $\varepsilon_0\notin H_r$；$2\mathsf V_{\rm reg}$ 同理由 $2\varepsilon_0$ 见证。因此这种纯 $\phi\mathbb Q$ 系数形式不能表示任意子群。
+
+最后，$[0]_{\rm rat}=[1]_{\rm rat}$，而 $[0]\ne[\phi]$。故按任意代表“乘以 $\phi$”不是 $\mathsf D_{\rm rat}\to\mathbb T$ 的良定义映射。特别 $\chi^{\rm rat}_{\eta^{\rm dy}}(\varepsilon_0)=0$ 而 $g_{\rm dy}(\varepsilon_0)=[\phi]\ne0$，黄金读数不能从已经约化的该有理相位按这种乘法取得。证毕。
+

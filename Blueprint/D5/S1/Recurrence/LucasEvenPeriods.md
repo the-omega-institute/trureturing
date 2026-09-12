@@ -14,6 +14,10 @@ $$\begin{aligned}\forall p: \mathbb{Z},\\\forall q: \operatorname{Units}\left(\m
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/LucasEvenPeriods.even_lucas_periods` (`✓ std3`). ∎
 
+*Resolves.* `Problems/fiebig-mbirika-spilker-even-period-exception` (proved) by `D5/S1/Recurrence/LucasEvenPeriods.even_lucas_periods`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"fiebig-mbirika-spilker-even-period-exception","declaration_gid":"D5/S1/Recurrence/LucasEvenPeriods.even_lucas_periods","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Morgan Fiebig, aBa Mbirika, Jürgen Spilker (2025). *Period patterns, entry points, and orders in the Lucas sequences: theory and applications*. URL: <https://arxiv.org/abs/2408.14632v2>.

@@ -1,0 +1,21 @@
+**定义 220（槽指令与寄存器指令）。** 对 \(q\in\mathsf Q_P\)、\(t\in\mathbb Z\)、\(p\in P\)、\(j\in\omega\)，定义正、负槽指令
+\[
+\mathsf I_{t,p,j}^{+}(q)=q+e_{t,p,j},
+\qquad
+\mathsf I_{t,p,j}^{-}(q)=q-e_{t,p,j}.
+\]
+其局部寄存器投影的对应单位变化定义为
+\[
+\mathsf R_{t,p,j}^{\pm}(c)(s,r)
+=c(s,r)\pm
+\begin{cases}
+G_j,&(s,r)=(t,p),\\
+0,&\text{其他}.
+\end{cases}
+\]
+其终端素数读数的对应乘法变化定义为
+\[
+\mathsf P_{p,j}^{\pm}(u)=u\,p^{\pm G_j}
+\quad(u\in\mathbb Q_{>0}).
+\]
+

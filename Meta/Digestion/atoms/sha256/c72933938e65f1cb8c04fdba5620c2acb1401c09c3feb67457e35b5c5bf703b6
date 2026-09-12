@@ -1,0 +1,8 @@
+**定义 364.1。** 对固定容量 $A$，定义
+$$
+W_A=\{\theta\in\mathbb T^\omega:M(A,\theta)<+\infty\},\qquad
+\operatorname{Res}_{A}^{\rm ph}:\mathbb T^\omega\to\mathbb T^B,\quad
+\operatorname{Res}_{A}^{\rm ph}(\theta)=\chi_\theta|_B.
+$$
+$\mathbb T^B$ 只取逐点加法群。沿用第 321、340 条的 $\mathsf D_{\rm rat}=\mathbb Q/\mathbb Z_o$、$\Theta_{\rm rat}=\mathsf D_{\rm rat}^\omega$、$j_{\rm rat}:\mathsf D_{\rm rat}\hookrightarrow\mathbb T$ 及 $\rho:\mathbb Q^\omega\to\Theta_{\rm rat}$，记逐坐标嵌入为 $i=j_{\rm rat}^{\omega}$。
+

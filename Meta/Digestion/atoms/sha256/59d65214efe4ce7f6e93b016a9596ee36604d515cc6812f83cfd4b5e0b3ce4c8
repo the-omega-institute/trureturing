@@ -1,0 +1,26 @@
+**定理 219（终端规范截面的幂等性与完备性）。** 对任意 \(q,q'\in\mathsf Q_P\)，
+\[
+\mathsf C_P(\operatorname{Can}_P(q))=\mathsf C_P(q),
+\qquad
+\chi_P(\operatorname{Can}_P(q))=\chi_P(q),
+\tag{Z-CANONICAL-SECTION}
+\]
+\[
+\operatorname{Can}_P(\operatorname{Can}_P(q))=\operatorname{Can}_P(q),
+\]
+以及
+\[
+\operatorname{Can}_P(q)=\operatorname{Can}_P(q')
+\iff
+\mathsf C_P(q)=\mathsf C_P(q')
+\iff
+\chi_P(q)=\chi_P(q').
+\tag{Z-CANONICAL-COMPLETE}
+\]
+\(\operatorname{Can}_P\) 的像恰为 \(\mathsf Q_P^{0,0}\)，并且
+\[
+\mathsf Q_P/\ker\mathsf C_P
+\xrightarrow{\ \cong\ }\mathsf Q_P^{0,0}
+\]
+由 \([q]\mapsto\operatorname{Can}_P(q)\) 给出。
+

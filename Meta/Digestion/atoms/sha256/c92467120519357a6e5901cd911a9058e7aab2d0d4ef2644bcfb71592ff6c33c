@@ -1,0 +1,42 @@
+**定理 194（CSA 终端观察商的精确代数）。** \(\equiv_P\) 是等价关系，且并行复合在商上良定义：
+\[
+[X]_{\equiv_P}+[Y]_{\equiv_P}
+=[X\boxplus Y]_{\equiv_P}.
+\]
+映射
+\[
+\Theta_P:\mathcal C_P^{\rm tb}/\equiv_P
+\longrightarrow\mathbb Z^P,
+\qquad
+\Theta_P([X]_{\equiv_P})=V_P^{\mathbb Z}(r_X)
+\]
+是交换群同构；其复合
+\[
+\operatorname{Rat}_P\circ\Theta_P:
+\mathcal C_P^{\rm tb}/\equiv_P
+\xrightarrow{\ \cong\ }
+\left\{\prod_{p\in P}p^{z(p)}:z\in\mathbb Z^P\right\}
+\subseteq\mathbb Q_{>0}
+\]
+也是群同构。若限制到 \(\mathcal B_\lambda^+\)，则
+\[
+\mathcal C_P^{+}/\equiv_P^+
+\cong\mathbb N^P
+\cong\left\{\prod_{p\in P}p^{a(p)}:a\in\mathbb N^P\right\}.
+\tag{Z-OBS-QUOTIENT}
+\]
+终端逐槽平衡情形下，补集在商上诱导 \(z\mapsto-z\)；前缀逐槽平衡情形下，该负号关系对每个时间前缀同时成立。历史档案中的事件身份、时间和槽内原始系数全部被 \(\equiv_P\) 忘却。
+
+**证明。** 定义 193 的关系是函数 \(X\mapsto V_P^{\mathbb Z}(r_X)\) 的核，故自反、对称、传递。定理 6 给出
+\[
+r_{X\boxplus Y}=r_X+r_Y,
+\]
+定理 186 遂给出
+\[
+V_P^{\mathbb Z}(r_{X\boxplus Y})
+ =V_P^{\mathbb Z}(r_X)+V_P^{\mathbb Z}(r_Y),
+\]
+所以并行复合不依赖等价类代表。由定理 192，任意 \(z\in\mathbb Z^P\) 都有某个 \(X_r\in\mathcal C_P^{\rm tb}\) 使其终端表满足 \(V_P^{\mathbb Z}(r_{X_r})=z\)，故 \(\Theta_P\) 满射；其单射性正是 (Z-OBS-EQ) 的定义。定理 190 给出 \(\operatorname{Rat}_P\) 的群同构，得到第一组结论。
+
+若 \(X\in\mathcal B_\lambda^+\)，则其终端表非负，故 \(V_P^{\mathbb Z}(r_X)\in\mathbb N^P\)；定理 192 对任意 \(\mathbb N^P\) 向量给出正槽实现，于是限制商恰为 \(\mathbb N^P\) 的加法幺半群。定理 187 给出补集终端表为 \(-r_X\)，故在商上是取负；前缀逐槽平衡时逐前缀同样成立。由于等价关系只读取 \(V_P^{\mathbb Z}(r_X)\)，其它历史字段均不进入商。证毕。
+

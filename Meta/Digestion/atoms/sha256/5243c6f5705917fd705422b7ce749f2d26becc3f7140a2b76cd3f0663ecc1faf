@@ -1,0 +1,31 @@
+**定义 370.1。** 沿用第 71–78、255–260、318–320、332–336、341、362 条的完整集合解释及其 $\operatorname{Enc},\operatorname{Dec},\operatorname{Pack},\operatorname{El},\in_Z$。对任意集合 $Y$，仍记
+$$
+Y^*=\operatorname{Enc}[Y]=\operatorname{El}(\operatorname{Enc}(Y)),\qquad
+\operatorname{enc}_Y=\operatorname{Enc}|_Y:Y\to Y^*.
+$$
+本节的函数域包括
+$$
+\operatorname{Eval}:V\times\mathbb T^\omega\to\mathbb T,\qquad
+\operatorname{Eval}(u,\theta)=\chi_\theta(u),
+$$
+
+$$
+\operatorname{Approx}:\omega^\omega\times\mathbb T^\omega\times\omega\to\mathbb Q^\omega,
+\qquad \operatorname{Approx}(A,\theta,k)=r^{(k)}
+$$
+及固定 $A$ 的函数
+$$
+\operatorname{Ext}_A:W_A\times X_A^{\rm cap}\to\mathbb T,\qquad
+\operatorname{Ext}_A(\theta,x)=F_{A,\theta}(x).
+$$
+可变容量的联合域及函数为
+$$
+D_{\rm ext}=\{T_3(A,\theta,x):A\in\omega^\omega,\ \theta\in W_A,\ x\in X_A^{\rm cap}\},
+$$
+
+$$
+\operatorname{Ext}:D_{\rm ext}\to\mathbb T,\qquad
+\operatorname{Ext}(A,\theta,x)=F_{A,\theta}(x).
+$$
+多输入的积按第 257–260 条固定元数 $T_r$ 表示。$\operatorname{Eval}$ 的有界限制域为 $B_A^{\rm cap}\times\mathbb T^\omega$。连续性断言只为固定 $A,\theta\in W_A$ 时关于 $x$ 的断言；这里没有给参数族赋拓扑。
+

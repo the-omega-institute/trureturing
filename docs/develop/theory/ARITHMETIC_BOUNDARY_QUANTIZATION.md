@@ -8148,3 +8148,1243 @@ or full vectors maximize every moment. At \(z=0\) both sides are zero for all
 \(r\ge0\). No classification at other capacities or of other second-moment
 pairs is asserted.
 
+## 34. Arbitrary-dimension shape transfer with paired increments and closed margins
+
+**34.1 Domain and theorem.**
+Fix any integer \(k\ge2\), finite real \(h_i>0\), \(a_i\ge0\), and
+\(m=\min_{1\le i\le k}a_i\). Fix finite \(T_{\min}\ge0\) such that
+\(m+T_{\min}>0\). At every finite \(T\ge T_{\min}\), put
+\[
+c_i=a_i+T,\qquad d_i=c_i+h_i,\qquad C_i=\{c_i,d_i\}.
+\]
+Admit every finite real \(M_0\le M_1\) for which the closed slab contains
+an actual endpoint corner \(x(e)=(c_i+e_i h_i)_{i=1}^k\),
+\(e\in\{0,1\}^k\): \(M_0\le\sum_i x_i(e)\le M_1\).
+Here actual means a vertex of this specified grid, not a fractional mixture
+and not necessarily an arithmetic prime-exponent point. For every finite
+\(\epsilon\ge0\) and every vector \(0\le\xi_i\le\epsilon\) with
+\(\min_i\xi_i=0\), translate both endpoints in row \(i\) by \(\xi_i\)
+and both budgets by \(S=\sum_i\xi_i\). Subscripts \(0,\xi\) compare these
+two shapes at the same height and corresponding budgets.
+
+With the definitions in 34.2, write
+\[
+z=e^{-T}>0,\qquad K=\frac{z}{e^m-z}=\frac1{e^{m+T}-1},\qquad
+C=(k-1)\epsilon K.
+\]
+The denominator is positive. The theorem is
+\[
+H_0\ge L_0\ge\ell(c)\ge m+T>0,\qquad
+H_\xi\ge L_\xi\ge\ell(c+\xi)\ge\ell(c),\qquad L_\xi\ge L_0,
+\]
+\[
+0\le D_\xi-D_0\le C,\qquad 0\le\Psi_\xi-\Psi_0\le C,\qquad
+|G_\xi-G_0|\le C.
+\]
+There is no upper bound on \(k\), no restriction on step ratios and no
+positive-width requirement. The one-corner analytical domain is inherited
+from 27.2-27.5. A two-corner negative-sign theorem retains its own narrower
+hypotheses; 34.14 gives an obstruction to extending such a sign by this estimate.
+
+**34.2 Definitions and Euclidean normalization.** For the domain in 34.1 set
+\[
+A=\sum_i c_i,\qquad Q=\sum_i h_i,\qquad r=M_1-A,\qquad
+I=[M_0/k,M_1/k],\qquad \mu=M_1/k.
+\]
+For nonempty subsets of the real line, \(\operatorname{dist}(E,F)\)
+means \(\inf\{|v-w|:v\in E,\ w\in F\}\). Define
+\[
+\Delta_i=\operatorname{dist}(I,C_i),\quad
+V_0=\sum_i\Delta_i^2,\quad
+\rho=\frac{\|\Delta\|_2}{\sqrt{k(k-1)}}=\sqrt{\frac{V_0}{k(k-1)}},
+\quad L=\mu-\rho,\quad H=\mu+(k-1)\rho.
+\]
+The subscript in \(V_0\) is the historical distance-variance notation; it
+does not select the unperturbed shape. There is no additional division by
+\(k\) in \(V_0\). On \(x>0\), let \(f(x)=\log(1-e^{-x})\), with natural logarithms.
+Using the entire fractional polytope, set
+\[
+\mathcal P=\{y\in[0,1]^k:\sum_i h_i y_i\le r\},\qquad
+J_0(y)=\sum_i\big((1-y_i)f(c_i)+y_i f(d_i)\big),
+\]
+\[
+D_0=\max_{y\in\mathcal P}J_0(y),\qquad
+\Psi_0=(k-1)f(L_0)+f(H_0),\qquad G_0=D_0-\Psi_0.
+\]
+Perturbed definitions replace \(c_i,d_i,M_j\) by
+\(c_i+\xi_i,d_i+\xi_i,M_j+S\); thus \(J_\xi\) uses the translated endpoints.
+The lower budget enters \(I\), not an extra lower constraint on \(y\).
+This is exactly the positive-grid comparison of 27.3, including its
+classically matched price formulation; a greedy representation is not needed here.
+
+Throughout, \(\langle v,w\rangle=\sum_i v_iw_i\) and
+\(\|v\|_2=\sqrt{\langle v,v\rangle}\) are ordinary Euclidean quantities.
+For \(\mathbf1=(1,\ldots,1)^{\mathsf T}\) define
+\[
+\bar v=\frac1k\sum_i v_i,\qquad
+\Pi=\operatorname{Id}-\frac1k\mathbf1\mathbf1^{\mathsf T},\qquad
+\ell(v)=\bar v-\frac{\|\Pi v\|_2}{\sqrt{k(k-1)}}.
+\]
+Then \(\Pi v=v-\bar v\mathbf1\), \(\langle\Pi v,\mathbf1\rangle=0\) and
+\(\|v\|_2^2=k\bar v^2+\|\Pi v\|_2^2\). This projection is a choice of
+inner product, not orthogonality supplied by prime labels or an encoding.
+
+**34.3 Exact corner, slab and capacity correspondence.** For every binary
+index \(e\) in 34.1, the total \(A+\sum_i e_i h_i\) becomes
+\(A+S+\sum_i e_i h_i\). Therefore
+\[
+M_0\le A+\sum_i e_i h_i\le M_1
+\quad\Longleftrightarrow\quad
+M_0+S\le A+S+\sum_i e_i h_i\le M_1+S.
+\]
+The inverse subtracts \(S\) from both budgets. It preserves each individual
+corner's membership, endpoint equalities, slab width, and the number of
+distinct actual corner vectors. Different vectors with equal totals remain
+different; no strict ordering of corner totals is assumed. Thus the whole
+one-corner domain is in bijection with its translated domain, and the
+positive-width and at-least-two-corner subclasses are preserved separately.
+
+The perturbed lower total is \(A_\xi=A+S\), so
+\[
+r_\xi=(M_1+S)-(A+S)=M_1-A=r,\qquad \mathcal P_\xi=\mathcal P_0.
+\]
+This preserves every feasible fractional vector, not only one presumed
+optimal face. An admitted corner is coordinatewise at least \(c\), hence
+\(M_1\ge A\ge k(m+T)>0\), \(r\ge0\), and \(0\in\mathcal P\).
+The polytope is nonempty and compact. Its finite continuous objectives attain
+their maxima. Endpoint density ties, nonunique maximizers and changes in
+the maximizing face do not affect this argument.
+
+**34.4 Positive support from the published lower-support lemma.** The
+coordinatewise monotonicity of \(\ell\) is the existing theorem 27.4,
+not a new theorem of this layer. Its relevant proof is short enough to
+state with the application. For a standard basis vector \(e_i\),
+\[
+\|\Pi e_i\|_2^2=(k-1)/k,\qquad
+\frac{\|\Pi e_i\|_2}{\sqrt{k(k-1)}}=\frac1k.
+\]
+For any \(v\in\mathbb R^k\) and \(b\ge0\), the triangle inequality gives
+\[
+\ell(v+be_i)-\ell(v)
+=\frac bk-\frac{\|\Pi v+b\Pi e_i\|_2-\|\Pi v\|_2}{\sqrt{k(k-1)}}
+\ge0.
+\]
+Successive coordinate increases prove \(v\le w\Rightarrow\ell(v)\le\ell(w)\).
+Weak inequality is essential: 27.4 includes the zero increment and positive
+collinear equality cases.
+
+Choose any admitted actual corner \(x\). Since \(\bar x\in I\) and
+\(\mu\ge\bar x\), every row satisfies
+\(0\le\Delta_i\le|x_i-\bar x|\). Hence
+\[
+\rho\le\frac{\|\Pi x\|_2}{\sqrt{k(k-1)}},\qquad
+L\ge\ell(x)\ge\ell(c)\ge\ell((m+T)\mathbf1)=m+T>0.
+\]
+Here \(x\ge c\ge(m+T)\mathbf1\). Apply the same argument to the translated
+admitted corner \(x+\xi\) and lower vector \(c+\xi\); it gives
+\[
+L_\xi\ge\ell(c+\xi)\ge\ell(c)\ge m+T.
+\]
+In each grid \(\rho\ge0\) implies \(H\ge L\). This is precisely the
+27.5 mechanism and establishes positive support before any derivative of
+\(f\) is used. One corner, including a corner at a budget endpoint, suffices.
+The further comparison \(L_\xi\ge L_0\) follows from the actual radius bounds
+in 34.6, not from comparing these two lower bounds alone.
+
+**34.5 Centered endpoint displacement and distance Lipschitz bound.** For
+corresponding slabs define
+\[
+u=S/k,\qquad q=\xi-u\mathbf1=\Pi\xi,\qquad t=\rho_\xi-\rho_0.
+\]
+The perturbed interval is \(I+u\). Translating both arguments in a distance
+back by \(u\) shows
+\[
+\Delta_i^\xi=\operatorname{dist}(I,\{c_i+q_i,d_i+q_i\}).
+\]
+For every \(v\in I\), \(w\in C_i\), the triangle inequality gives
+\(|v-(w+q_i)|\le|v-w|+|q_i|\). Taking infima gives
+\(\Delta_i^\xi\le\Delta_i^0+|q_i|\); reversing the translation gives the
+opposite inequality. Consequently
+\[
+|\Delta_i^\xi-\Delta_i^0|\le|q_i|,\qquad
+|t|\le\frac{\|\Delta^\xi-\Delta^0\|_2}{\sqrt{k(k-1)}}
+\le\frac{\|q\|_2}{\sqrt{k(k-1)}}.
+\]
+The first norm comparison is the reverse triangle inequality. No nearest
+endpoint is selected for differentiation. These statements include distance
+ties, switches of the nearest endpoint, vanishing distances and either zero
+norm. They impose no stable critical-node topology.
+
+**34.6 Both bounds on the actual radius change and the signed argument shifts.**
+The nonnegative shifts and a zero coordinate imply
+\[
+0\le S\le(k-1)\epsilon,\qquad
+\|q\|_2^2=\sum_i\xi_i^2-\frac{S^2}{k}.
+\]
+First, \(\sum_i\xi_i^2\le S^2\), since all cross products are nonnegative.
+Combining this with 34.5 yields
+\[
+|t|\le\frac{\sqrt{(k-1)S^2/k}}{\sqrt{k(k-1)}}=\frac Sk=u.
+\]
+Second, \(\xi_i^2\le\epsilon\xi_i\) gives
+\(\sum_i\xi_i^2\le\epsilon S\), and therefore
+\[
+|t|\le\frac{\sqrt{S(k\epsilon-S)}}{k\sqrt{k-1}}.
+\]
+Both are simultaneous bounds on the same radius difference produced by the
+distances. Their radicands are nonnegative because
+\(0\le S\le(k-1)\epsilon\le k\epsilon\). No positive lower bound on
+\(S\) or \(\epsilon\) was used.
+
+Since \(\mu_\xi-\mu_0=u\), the actual envelope argument shifts are
+\[
+L_\xi-L_0=u-t\ge0,\qquad H_\xi-H_0=u+(k-1)t.
+\]
+The second shift can be negative; it is not assigned a sign in general.
+Neither radius bound is presumed attained, and \(t\) is not a free
+parameter chosen independently of the slab geometry.
+
+**34.7 Dimension-general weighted displacement with signs checked before squaring.**
+For the \(u,t\) in 34.5-34.6 define
+\[
+B=(k-1)|u-t|+|u+(k-1)t|.
+\]
+We prove \(B\le(k-1)\epsilon\). Since \(u\ge|t|\), the first absolute value is
+\(u-t\). If \(u+(k-1)t\ge0\), cancellation gives
+\[
+B=(k-1)(u-t)+u+(k-1)t=ku=S\le(k-1)\epsilon.
+\]
+Otherwise \(t<0\), and the second actual-radius bound gives
+\[
+B=(k-2)u-2(k-1)t
+\le\frac{(k-2)S+2\sqrt{(k-1)S(k\epsilon-S)}}k.
+\]
+Set
+\[
+A_0=k(k-1)\epsilon-(k-2)S,\qquad
+R=2\sqrt{(k-1)S(k\epsilon-S)}.
+\]
+Before comparing squares, \(k-2\ge0\) and \(S\le(k-1)\epsilon\) imply
+\[
+A_0\ge2(k-1)\epsilon\ge0,\qquad R\ge0.
+\]
+Direct polynomial expansion proves
+\[
+\begin{aligned}
+A_0^2-R^2
+&=k^2(k-1)^2\epsilon^2
+ -2k^2(k-1)\epsilon S+k^2S^2\\
+&=k^2\big(S-(k-1)\epsilon\big)^2\ge0.
+\end{aligned}
+\]
+Thus \(A_0\ge R\). Substitution into the displayed bound for \(B\) proves
+\[
+\boxed{(k-1)|L_\xi-L_0|+|H_\xi-H_0|\le(k-1)\epsilon.}
+\]
+For \(k=2\), the negative-high-shift case is impossible because \(u+t\ge0\).
+If \(S=0\) or \(\epsilon=0\), nonnegativity forces \(\xi=0\), \(u=t=B=0\).
+Nothing was divided by either of these quantities. The polynomial identity
+yields the weighted bound only with the actual-radius estimates and the
+nonnegative square-root and square-comparison premises established above.
+
+**34.8 The mixed-objective increment is nonnegative and bounded.** For
+\(x\ge m+T>0\),
+\[
+0<f'(x)=\frac1{e^x-1}\le K=\frac z{e^m-z}.
+\]
+For either row endpoint \(w=c_i\) or \(d_i\), the segment from \(w\) to
+\(w+\xi_i\) lies in this domain, so the mean-value inequality gives
+\[
+0\le f(w+\xi_i)-f(w)\le \xi_i K.
+\]
+Every \(y\) in the common \(\mathcal P\) has nonnegative row weights
+\(1-y_i,y_i\) summing to one. Summing the endpoint inequalities gives
+\[
+0\le J_\xi(y)-J_0(y)\le SK.
+\]
+Comparison of maxima over exactly this common set now yields
+\[
+D_0\le D_\xi\le D_0+SK\le D_0+(k-1)\epsilon K.
+\]
+For example, the upper inequality follows by applying
+\(J_\xi(y)\le J_0(y)+SK\le D_0+SK\) to every \(y\); the lower one follows
+at a maximizer of \(J_0\). No density order or differentiability of a
+maximum is assumed. This covers different optimal faces and every capacity
+allowed by 34.3.
+
+**34.9 The envelope increment is nonnegative even if its high argument decreases.**
+On positive support \(f''(x)=-e^x/(e^x-1)^2<0\). Reuse 26.5's function
+\[
+F(\mu,r)=(k-1)f(\mu-r)+f(\mu+(k-1)r),\qquad r\ge0,\quad\mu-r>0.
+\]
+With \(L=\mu-r\), \(H=\mu+(k-1)r\),
+\[
+F_\mu=(k-1)f'(L)+f'(H)>0,\qquad
+F_r=(k-1)(f'(H)-f'(L))\le0.
+\]
+If the actual change \(t\ge0\), then \(u\ge t\), so both argument shifts
+\(u-t\) and \(u+(k-1)t\) are nonnegative. Increasing \(f\) proves
+\(\Psi_\xi\ge\Psi_0\).
+
+If \(t<0\), first increase the mean from \(\mu_0\) to \(\mu_0+u\) at
+radius \(\rho_0\); then decrease the radius to the actual
+\(\rho_\xi=\rho_0+t\ge0\) at the new mean. Each operation weakly increases
+\(F\). Along the first segment the lower support is \(L_0+v\ge m+T\)
+for \(0\le v\le u\). Along the second it is at least \(L_0+u\ge m+T\),
+and the radius remains nonnegative, so \(H\ge L>0\).
+All calculus therefore stays in the valid domain, including a final
+radius zero. In particular, a negative value of \(H_\xi-H_0\) does not
+invalidate the nonnegative total envelope increment.
+
+**34.10 The envelope increment has the same upper bound.** By 34.4, both
+ends of the scalar segment joining \(L_0,L_\xi\) lie in \([m+T,\infty)\);
+the same holds for the segment joining \(H_0,H_\xi\), even when \(H\) decreases.
+The derivative bound of 34.8 applies to each whole segment. Together with
+34.7 this gives
+\[
+\begin{aligned}
+|\Psi_\xi-\Psi_0|
+&\le K\big((k-1)|L_\xi-L_0|+|H_\xi-H_0|\big)\\
+&\le(k-1)\epsilon K=C.
+\end{aligned}
+\]
+Combine this upper bound with the separately proved sign in 34.9:
+\[
+\boxed{0\le\Psi_\xi-\Psi_0\le C.}
+\]
+The segment estimate alone would give only an absolute bound; its
+nonnegative sign comes from the mean/radius argument, not from an
+unsupported assumption that both endpoints increase.
+
+**34.11 The common interval before subtraction and the bound for \(G\).**
+At every point of the full domain of 34.1, 34.8 and 34.10 have already shown
+\[
+d:=D_\xi-D_0\in[0,C],\qquad p:=\Psi_\xi-\Psi_0\in[0,C],
+\qquad C=\frac{(k-1)\epsilon z}{e^m-z}.
+\]
+Only now subtract. Since two numbers in \([0,C]\) differ by at most its
+length, \(-C\le d-p\le C\). Therefore
+\[
+\boxed{|G_\xi-G_0|\le\frac{(k-1)\epsilon z}{e^m-z}.}
+\]
+The loss is this one interval length, not its double. Adding two unsigned
+Lipschitz estimates would lose the separately established paired signs.
+This is a valid uniform common-increment bound; no sharpness or optimal
+Lipschitz constant for \(G\) is claimed, and it does not establish the
+sign of an unperturbed grid.
+
+**34.12 Zero radius, zero perturbation and the height boundary.** The proof
+in 34.5 uses no derivative of a distance minimum or a norm. Closest endpoints
+may switch and tie, and any distance may become zero. If \(\rho_0=0\), then
+\(t=\rho_\xi\ge0\); if \(\rho_\xi=0\), the decreasing-radius path of 34.9
+ends at a permitted boundary point. At either zero radius,
+\(H=L=\mu\) and \(\Psi=kf(\mu)\). Every estimate remains valid.
+
+If merely \(S=0\), nonnegative coordinates force \(\xi=0\); this includes
+\(\epsilon=0\) and also an unused positive upper bound \(\epsilon\).
+Both increments and \(G_\xi-G_0\) then vanish. The theorem does not require
+\(\epsilon=\max_i\xi_i\). The endpoint \(T=T_{\min}\) is included:
+if \(m=0\), it requires \(T_{\min}>0\); if \(T_{\min}=0\), it requires \(m>0\).
+Infinite \(T\) and \(z=0\) are limits, not admitted points. The estimates
+use \(e^T=1/z\) only for \(z>0\). For fixed finite \(\epsilon\), their
+unscaled difference bound tends to zero as \(T\) tends to infinity;
+this is not a uniform unscaled negative margin or a new optimizer theorem
+at the limiting point.
+
+**34.13 Corners, equal totals, zero width and full saturation/slack.** One
+actual corner suffices for the analytical theorem, including a corner
+at either endpoint and \(M_0=M_1\). Two distinct corner vectors may have
+the same total for arbitrary steps. For example, if \(h_1=h_2=h>0\),
+the corners with just coordinate 1 or just coordinate 2 raised have total
+\(A+h\); the zero-width slab \([A+h,A+h]\) contains both. Translation
+preserves these two vectors and their equal totals separately. This example
+does not extend the positive-width sign domains of sections 30 or 31.
+
+Write \(r=M_1-A\ge0\) and \(Q=\sum_i h_i>0\). At \(r=0\), positivity of
+every \(h_i\) forces \(\mathcal P=\{0\}\), so \(D=\sum_i f(c_i)\).
+At \(r=Q\), and also at every slack capacity \(r>Q\), \(\mathcal P=[0,1]^k\).
+Since \(f(d_i)>f(c_i)\), its maximum is \(D=\sum_i f(d_i)\) at the full
+upper vector. Tight full saturation and slack above it are both covered.
+For \(0<r<Q\), the pointwise proof in 34.8 covers all feasible weights,
+including fractional or integer optimizers, density ties and nonunique faces.
+Changing \(M_0\), even below zero, introduces no lower mixture constraint.
+The upper budget is finite at each point but has no uniform finite upper bound.
+
+**34.14 A one-corner zero-sign witness.** To see why the analytical domain
+does not imply a negative baseline on that whole domain, choose any positive
+steps, let all \(a_i=0\), and fix \(T>0\) with \(T_{\min}=T\).
+Set \(M_1=kT=A\) and choose any finite \(M_0\le M_1\).
+Only the lower corner is admitted: raising any coordinate increases its
+total strictly above \(M_1\). The capacity is zero and every row distance
+is zero because \(T=M_1/k\in I\). Thus
+\[
+D_0=\sum_i f(T)=kf(T),\qquad \rho_0=0,\qquad
+\Psi_0=kf(T),\qquad G_0=0.
+\]
+This includes both \(M_0=M_1\) and \(M_0<M_1\).
+In particular, even the zero perturbation cannot turn a two-corner
+negative-margin theorem into a one-corner negative theorem.
+A transferred sign requires a separately proved margin on the actual
+inverse-image family, as stated next.
+
+**34.15 Transfer of a separately supplied scaled margin.** Keep the fixed
+data and height domain of 34.1. Let \(\mathcal W_T\) be any family of baseline
+slabs in that domain for which a separate theorem proves, with one
+\(\eta>0\) independent of finite \(T\) and of the slab,
+\[
+e^T G_0(M_0,M_1)<-\eta.
+\]
+For each allowed shape \(\xi\), define the target family exactly as
+\[
+\mathcal W_{T,\xi}
+=\{(M_0+S,M_1+S):(M_0,M_1)\in\mathcal W_T\}.
+\]
+Every inverse image must be covered by the assumed baseline theorem; its
+corner-count and width conditions are retained. Put
+\[
+d_{\min}=e^m-e^{-T_{\min}}>0.
+\]
+Multiplication of 34.11 by \(e^T>0\) gives
+\[
+|e^T(G_\xi-G_0)|
+\le\frac{(k-1)\epsilon}{e^m-e^{-T}}
+\le\frac{(k-1)\epsilon}{d_{\min}}.
+\]
+The second denominator inequality follows from \(T\ge T_{\min}\).
+At every corresponding finite point it follows that
+\[
+e^TG_\xi<-\eta+\frac{(k-1)\epsilon}{e^m-e^{-T}}
+\le-\eta+\frac{(k-1)\epsilon}{d_{\min}}.
+\]
+The first inequality is strict because the baseline bound is strict,
+even if every subsequent loss estimate attains equality.
+
+**34.16 Complete closed-radius statement and retained margins.** Under the
+separate baseline hypothesis of 34.15, for every \(0\le\gamma\le\eta\),
+\[
+0\le\epsilon\le\frac{(\eta-\gamma)d_{\min}}{k-1}
+\quad\Longrightarrow\quad
+\boxed{e^TG_\xi<-\gamma\quad
+\text{on every }\mathcal W_{T,\xi},\ T_{\min}\le T<\infty.}
+\]
+Indeed \((k-1)\epsilon/d_{\min}\le\eta-\gamma\), and substitution into
+the strict inequality in 34.15 proves the assertion. In particular,
+\[
+\epsilon\le\frac{\eta\,d_{\min}}{2(k-1)}
+\quad\Longrightarrow\quad e^TG_\xi<-\eta/2,
+\qquad
+\epsilon\le\frac{\eta\,d_{\min}}{k-1}
+\quad\Longrightarrow\quad e^TG_\xi<0.
+\]
+The raw primary token etadmin denotes the product eta*dmin, explicitly
+\(\eta\,d_{\min}\), as fixed by the preceding general \(\gamma\) formula. It is not a new symbol.
+The endpoints \(\epsilon=(\eta-\gamma)d_{\min}/(k-1)\) and
+\(T=T_{\min}\) may hold simultaneously without losing strictness.
+The case \(\gamma=\eta\) requires \(\epsilon=0\) and recovers the baseline;
+\(\gamma=0\) retains strict negativity. These are pointwise strict bounds
+throughout the admitted finite domain. They do not assert that a limiting
+supremum over that domain is strictly below the same right-hand side.
+
+**34.17 Exact inverse image of a fixed strict cutoff.** Let \(B_{\rm cut}\)
+be a fixed finite number and retain the notation \(M_j^\xi=M_j^0+S\).
+Then the exact equivalence is
+\[
+M_0^\xi>B_{\rm cut}
+\quad\Longleftrightarrow\quad M_0^0>B_{\rm cut}-S.
+\]
+In particular it is not generally equivalent to \(M_0^0>B_{\rm cut}\).
+The baseline cutoff-restricted domain maps onto exactly the target subset
+\[
+M_0^\xi>B_{\rm cut}+S,
+\]
+with all other baseline family restrictions still imposed. Translation is
+a bijection of the full corresponding wider domains in 34.3, but need not
+be a bijection of the two domains using the same fixed strict cutoff.
+This generalizes the warnings in 30.12 and 31.14, preserving their meaning.
+A baseline theorem on all inverse-image slabs, for example the entire wider
+two-corner domain, permits intersection of the transferred result with
+the original cutoff afterward. A theorem known only above the old cutoff
+does not supply that premise.
+
+**34.18 Strict uniform buffers and a two-corner endpoint counter-witness.**
+For the bound \(S\le(k-1)\epsilon\), a sufficient shape-uniform target
+buffer for a baseline theorem above \(B_{\rm cut}\) is
+\[
+M_0^\xi>B_{\rm cut}+(k-1)\epsilon.
+\]
+It implies \(M_0^\xi>B_{\rm cut}+S\), hence \(M_0^0>B_{\rm cut}\).
+Alternatively, to cover all target slabs with \(M_0^\xi>B_{\rm cut}\),
+it suffices to prove the baseline theorem on the larger strict domain
+\[
+M_0^0>B_{\rm cut}-(k-1)\epsilon,
+\]
+with its other hypotheses retained. Indeed
+\(M_0^0=M_0^\xi-S>B_{\rm cut}-S\ge B_{\rm cut}-(k-1)\epsilon\).
+These sufficient conditions are strict. Replacing the target buffer by
+a weak inequality can leave \(M_0^0=B_{\rm cut}\) when
+\(S=(k-1)\epsilon\), so the old strict theorem cannot be applied there.
+
+There is a positive-width, two-actual-corner witness to the domain failure.
+Whenever \(A=B_{\rm cut}\), let \(h_*=\min_i h_i>0\).
+The baseline slab \([A,A+h_*]\) contains the lower corner and a corner
+obtained by raising a minimum-step coordinate, at its two endpoints.
+It fails the strict cutoff. For every permitted shape with \(S>0\),
+the translated slab \([A+S,A+S+h_*]\) clears the same fixed cutoff.
+For \(S=(k-1)\epsilon>0\), it also attains equality in the weak uniform
+target-buffer condition just discussed. At \(T=0\) the continuous fixed5040
+family has \(A=B_{\rm cut}=\log1058400\) by 32.3, so this exact witness
+applies. It uses neither an unproved mass/tail sign nor a claim of
+prime-lattice attainability for the translated box.
+
+**34.19 Recovery of the three-dimensional constants.** For
+\(k=3\), all \(a_i=0\), and \(T_{\min}=\log2\), one has
+\[
+m=0,\qquad d_{\min}=1-\tfrac12=\tfrac12,\qquad
+|e^T(G_\xi-G_0)|\le4\epsilon.
+\]
+The zero coordinate and \(0\le\xi_i\le\epsilon\) are as in 34.1.
+Use the positive-width two-corner wider domains of the cited theorems:
+30.2 and 30.11 for \((\log2,\log3,\log5)\), and 31.2 and 31.13 for
+\((\log2,\log3,\log7)\). The baseline margins, closed radii and retained
+strict margins are exactly
+\[
+(\eta,\epsilon_{\max},\gamma)
+=(1/60,1/480,1/120)\quad\text{for }(2,3,5),
+\]
+\[
+(\eta,\epsilon_{\max},\gamma)
+=(1/40,1/320,1/80)\quad\text{for }(2,3,7).
+\]
+Indeed \((\eta-\eta/2)d_{\min}/2=\eta/8\) in dimension three.
+Thus 34.16 recovers 30.16 and 31.17, including closed radius and
+\(T=\log2\) simultaneously. The cited finite-node sign results retain
+their strict-width and two-corner hypotheses.
+Intersection with the original strict 5040 domain is legitimate because
+these particular baselines already hold on their respective wider domains.
+
+**34.20 The four-dimensional 5040 consequence remains conditional.** Take
+\[
+k=4,\qquad h=(\log2,\log3,\log5,\log7),\qquad
+a=(5\log2,3\log3,2\log5,2\log7)
+=(\log32,\log27,\log25,\log49),\qquad T_{\min}=0.
+\]
+These are the lower coordinates associated with ordinary exponents
+\((4,2,1,1)\) in 32.2-32.3; subsequent common translation is a continuous
+family. Here
+\[
+m=\log25,\qquad d_{\min}=24,\qquad
+|e^T(G_\xi-G_0)|\le3\epsilon/24=\epsilon/8.
+\]
+Only if a separate theorem establishes the full wider-domain bound
+\[
+e^TG_0<-1/2000
+\]
+for every finite \(T\ge0\) and every corresponding finite positive-width
+real slab containing two actual translated corners, without the fixed
+lower cutoff, does 34.16 imply
+\[
+0\le\epsilon\le1/500\quad\Longrightarrow\quad e^TG_\xi<-1/4000
+\]
+on that whole translated class. The calculation is
+\((1/2000-1/4000)\,24/3=1/500\); it includes \(T=0\) and the closed
+radius boundary. A subsequent intersection with
+\(\log1058400<M_0^\xi<M_1^\xi\) is then valid.
+A baseline result limited to the old cutoff instead supports only
+inverse-image-covered slabs, such as the buffers of 34.17-34.18.
+
+The full wider-domain margin is an additional unproved hypothesis here.
+Section 32's fixed \(T=0\), cutoff-restricted certificate covers neither
+all translated heights nor every slab without the cutoff. Section 33's
+density order determines the fractional optimizer, but does not by itself
+bound the difference \(G=D-\Psi\). Neither establishes the required margin.
+
+**34.21 Mathematical dependencies and classical references.** The lower-support
+theorem is reused from 27.4-27.5 and the envelope derivative signs from 26.5.
+The projection/distance and paired-nonnegative-increment method appears in
+30.12-30.15 and 31.14-31.16 within their stated three-dimensional domains.
+The arbitrary-\(k\) two-radius estimate and signed weighted-displacement
+proof are given in 34.5-34.7; their closed-margin and cutoff consequences
+are proved in 34.15-34.18. Reuse of the three-dimensional sign theorems
+requires their particular steps and wider-domain hypotheses, as in 34.19.
+
+Triangle and reverse-triangle inequalities, elementary calculus and
+comparison of maxima over a common set are classical. For norms, convexity
+and Jensen, see 26.28 and Boyd/Vandenberghe's
+[Convex functions](https://web.stanford.edu/class/ee364a/lectures/functions.pdf),
+slides 3.4 and 3.14 (PDF pages 6 and 16). For fractional knapsack, see
+26.28, 33.20 and HKUST's
+[Lecture 14](https://home.cse.ust.hk/~dekai/271/notes/L14/L14.pdf),
+PDF pages 4-7. The latter gives the inherited interpretation of \(D\);
+the transfer proof compares the full feasible polytope directly.
+For the inherited price-formulation context only, see 33.20 and
+Boyd/Vandenberghe's
+[Duality](https://web.stanford.edu/class/ee364a/lectures/duality.pdf),
+PDF pages 14 and 21-23; no price-order premise is required here.
+These references provide the stated classical ingredients, not a
+literature proof of this particular arbitrary-dimensional transfer theorem.
+
+**34.22 Domain of the transfer and limits of its sign consequences.** The
+perturbation estimate applies on the finite positive-support, one-corner
+domain of 34.1, including the boundary cases of 34.12-34.13. A strict
+negative-sign consequence additionally requires a baseline on every
+inverse-image slab specified in 34.15-34.18. The one-corner example in
+34.14 has \(G=0\), so the transfer estimate alone supplies no general
+all-grid negative-sign theorem. The full wider-domain 5040 margin needed
+in 34.20 remains an additional unproved hypothesis.
+
+The theorem does not imply a sharp \(G\) constant, arbitrary nonzero-shape
+prime-lattice density, exact common prime translation, encoding-induced
+orthogonality, a uniform unscaled negative margin, a new GH definition
+or an RH result. Continuous grid translations and actual prime-exponent
+points remain distinct domains; the stated perturbation bound does not
+establish arithmetic attainability of an arbitrary translated shape.
+## 35. Fixed-prime recurrence, actual near-balanced boxes and logarithmic counting
+
+**35.1 Theorem (Statement and inherited scope).** For every fixed ordered list of distinct primes \(p_0,\ldots,p_{k-1}\), every
+integer \(k\ge2\), and every fixed integer \(Q\ge3\), the strict simultaneous
+return set defined in 35.2 has positive natural density on its actual compact
+orbit closure, uniformly over consecutive blocks. Its density is at least
+\(Q^{-(k-1)}\), its forward returns are syndetic with a rotation-dependent
+bound, and nearest rounding produces actual nonnegative integer exponent boxes.
+Their distinct lower-corner integers have counting function
+\((d_Q/(k\log p_0))\log X+o(\log X)\). The proof is given in 35.3-35.18.
+No joint independence of reciprocal prime logarithms is assumed.
+
+Sections 30.17 and 31.18 already give qualitative homogeneous approximation
+near zero relative shape. Sections 30.16 and 31.17 are the only inherited sign inputs
+to the applications in 35.19-35.23, after their domains are checked.
+
+**35.2 Definition (Fixed parameters and distinct height symbols).** All logarithms are
+natural. Fix the primes, \(k\) and \(Q\) as in 35.1 throughout all limits, and set
+\[
+d=k-1,\qquad h_i=\log p_i>0,\qquad
+\alpha_i=h_0/h_i\ (1\le i\le d),\qquad
+\alpha=(\alpha_1,\ldots,\alpha_d).
+\]
+Write \(\mathbb T=\mathbb R/\mathbb Z\),
+\(\|t\|_{\mathbb T}=\min_{a\in\mathbb Z}|t-a|\), and
+\[
+H=\overline{\{n\alpha:n\in\mathbb Z\}}\subseteq\mathbb T^d,
+\qquad r=1/Q,\qquad
+U_Q=\{x\in H:\max_{1\le i\le d}\|x_i\|_{\mathbb T}<r\},
+\]
+\[
+B_Q=\{n\in\mathbb Z_{\ge1}:n\alpha\in U_Q\},\qquad
+d_Q=\mu_H(U_Q),\qquad
+S_h=\sum_{i=0}^{k-1}h_i,\quad h_{\max}=\max_i h_i,\quad
+E_Q=\frac1Q\sum_{i=1}^{d}h_i.
+\]
+Here \(\mu_H\) is normalized Haar probability, justified in 35.3. The group
+\(H\) need not be the full torus or connected. The source's earlier slab
+symbol \(Q=\sum h_i\) is denoted \(S_h\) in this section, so it cannot be
+confused with the integer recurrence parameter. For each rounded box below,
+\(T_n=\min_i c_i\) is its lower height and \(A_n=\sum_i c_i\) is its total;
+these two quantities have different roles and are never identified.
+
+**35.3 Proposition (Individual irrationality and Haar probability).** If
+\(\alpha_i=u/v\in\mathbb Q\), positivity permits positive integers \(u,v\)
+with \(v\log p_0=u\log p_i\). Exponentiating gives
+\(p_0^v=p_i^u\), contradicting unique prime factorization. Thus each
+\(\alpha_i\) is irrational. This proves no rational independence of
+\(1,\alpha_1,\ldots,\alpha_d\).
+
+The integer orbit is a subgroup of \(\mathbb T^d\). If two sequences from
+that subgroup converge, continuity of subtraction puts the difference of
+their limits in its closure. Hence \(H\) is a closed subgroup. It is compact
+and metrizable, as a closed subset of a compact metrizable torus. The classical
+Haar theorem supplies a unique translation-invariant regular Borel probability
+\(\mu_H\). No connectedness or ambient positive-volume premise is used.
+
+Mathematical citation: Christopher White,
+*Ergodic Theory and Topological Groups*, Theorem 1.1 (Haar probability
+and invariance).
+
+**35.4 Proposition (Restricted characters and uniform geometric sums).** For
+\(\ell\in\mathbb Z^d\), restrict the character
+\(\chi_\ell(x)=\exp(2\pi\mathrm i\,\ell\cdot x)\) to \(H\), and let
+\(w=\chi_\ell(\alpha)\). If \(w=1\), this character is 1 on the entire
+integer orbit and, by continuity, on \(H\). Its integral and every orbit
+average are therefore 1. If \(w\ne1\), Haar invariance gives
+\[
+\int_H\chi_\ell\,d\mu_H=w\int_H\chi_\ell\,d\mu_H,
+\qquad\text{so}\qquad\int_H\chi_\ell\,d\mu_H=0.
+\]
+For every \(x\in H\) and integer \(M\ge1\), the geometric-sum identity is
+\[
+\frac1M\sum_{n=1}^M\chi_\ell(x+n\alpha)
+=\chi_\ell(x)\frac{w(1-w^M)}{M(1-w)},\qquad
+\left|\frac1M\sum_{n=1}^M\chi_\ell(x+n\alpha)\right|
+\le\frac2{M|1-w|}.
+\]
+The bound is uniform in \(x\). Nontrivial roots of unity \(w\ne1\), which
+can occur for characters of disconnected closures, are covered by this same
+calculation. A nonzero ambient \(\ell\) may restrict to the trivial character;
+the \(w=1\) case handles that possibility explicitly.
+
+**35.5 Proposition (Stone-Weierstrass passage to continuous functions).** Finite complex
+linear combinations of the restricted characters form a unital algebra:
+products add their integer indices and complex conjugation negates them.
+The coordinate characters separate distinct torus points, hence separate
+points of \(H\). The complex Stone-Weierstrass theorem makes this algebra
+uniformly dense in \(C(H)\). Given \(f\in C(H)\) and \(\varepsilon>0\),
+choose a finite character combination \(P\) with
+\(\|f-P\|_\infty<\varepsilon\). Its orbit averages converge uniformly by
+35.4, while both its integral error and average error relative to \(f\)
+are at most \(\varepsilon\). Consequently
+\[
+\limsup_{M\to\infty}\sup_{x\in H}
+\left|\frac1M\sum_{n=1}^M f(x+n\alpha)-\int_H f\,d\mu_H\right|
+\le2\varepsilon.
+\]
+Letting \(\varepsilon\downarrow0\) proves uniform continuous
+equidistribution on the actual group \(H\). This is the classical character
+form of the Weyl criterion, here proved in the precise form needed.
+
+Mathematical citation: Tom Meyerovitch,
+*Well-distribution of polynomial maps on locally compact groups*,
+arXiv:2210.01429v2, Proposition 3.2 (PDF page 8), for Haar distribution
+on the closure of a homomorphism's image, and Lemma 5.3 (PDF page 11),
+for the compact metrizable abelian character criterion.
+
+**35.6 Proposition (Full Haar support and every positive forward tail).** Every nonempty
+relatively open \(V\subseteq H\) has positive Haar measure. Its translates
+cover \(H\); a finite subcover exists by compactness. If \(\mu_H(V)=0\),
+translation invariance would then give \(\mu_H(H)=0\), a contradiction.
+In the compact metric space choose a continuous \(f\) with
+\(0\le f\le1\), supported in \(V\), and positive on a nonempty open set.
+Such a function exists by taking a sufficiently small metric ball with closure
+in \(V\) and a continuous distance cutoff. Its integral \(a\) is positive:
+a smaller nonempty open set has \(f\) bounded below by a positive constant.
+By 35.5, for all sufficiently large \(M\), uniformly in \(x\),
+\[
+\frac1M\#\{1\le n\le M:x+n\alpha\in V\}
+\ge\frac1M\sum_{n=1}^M f(x+n\alpha)>a/2>0.
+\]
+Thus the positive orbit of every \(x\in H\) meets every such \(V\), with
+positive lower visit density. Starting instead at \(x+M_0\alpha\), for
+any prescribed nonnegative integer \(M_0\), proves the same assertion for
+every forward tail. All positive forward orbits and their tails are dense;
+in particular \(H\) is also the closure of the positive orbit of 0.
+
+**35.7 Proposition (Surjective coordinates and Haar marginals).** For each \(1\le i\le d\),
+\(\pi_i(H)\) is a compact, hence closed, circle subgroup containing all
+integer multiples of the irrational \(\alpha_i\). It is infinite, since
+two equal multiples would give a nonzero integer multiple in \(\mathbb Z\).
+An infinite closed subgroup of the circle is the circle itself. To see this,
+compactness supplies distinct subgroup elements arbitrarily close together;
+their differences, with sign chosen, have representatives \(t>0\) tending
+to 0. The subgroup contains \(0,t,\ldots,\lfloor1/t\rfloor t\), whose
+circle mesh has gaps at most \(t\). Every circle point is a limit of such
+subgroup elements and belongs to the closed subgroup. Thus \(\pi_i\) is onto.
+
+For a circle translation \(t\), choose \(y\in H\) with \(\pi_i(y)=t\).
+For every Borel circle set \(E\), translation by \(y\) identifies
+\(\pi_i^{-1}(E)\) with \(\pi_i^{-1}(E+t)\). The pushforward
+\(\nu_i=(\pi_i)_*\mu_H\) is therefore translation-invariant circle
+probability, hence normalized circle length by Haar uniqueness. In particular
+\(\mu_H(\pi_i^{-1}(\{t\}))=0\) for every \(t\). These are marginal
+statements, not independence or ambient-dimensional volume statements.
+
+**35.8 Proposition (Null boundary and uniform consecutive-block density).** The continuous
+function \(g(x)=\max_i\|x_i\|_{\mathbb T}\) has
+\[
+\partial_H U_Q\subseteq\{g=r\}
+\subseteq\bigcup_{i=1}^d\pi_i^{-1}(\{r,-r\}).
+\]
+All these fibers are Haar-null by 35.7. Thus both \(\{g=r\}\) and the
+relative boundary of the strict neighborhood are null. For small
+\(0<\delta<\min(r,1/2-r)\), define continuous cutoffs by composing \(g\)
+with the piecewise linear functions
+\[
+f^-_\delta=\min(1,\max(0,(r-g)/\delta)),\qquad
+f^+_\delta=\min(1,\max(0,(r+\delta-g)/\delta)).
+\]
+They satisfy \(f^-_\delta\le\mathbf1_{U_Q}\le f^+_\delta\), and differ
+from that indicator only in \(\{|g-r|\le\delta\}\). As \(\delta\downarrow0\),
+continuity from above of finite measure makes the strip measure tend to 0.
+The two integrals therefore tend to \(d_Q\). Applying 35.5 to the two
+cutoffs, then squeezing and taking \(\delta\downarrow0\), proves
+\[
+\sup_{x\in H}\left|\frac1M\sum_{n=1}^M\mathbf1_{U_Q}(x+n\alpha)-d_Q\right|
+\longrightarrow0.
+\]
+In particular, with integer \(m\ge0\),
+\[
+\sup_{m\ge0}\left|
+\frac{\#(B_Q\cap\{m+1,\ldots,m+M\})}{M}-d_Q\right|\longrightarrow0.
+\]
+Taking \(m=0\) gives natural density. Taking any fixed forward tail gives
+the same density. Merely observing that an orbit avoids the boundary would
+not have justified the indicator passage; the Haar-null boundary is essential
+to this proof.
+
+**35.9 Proposition (Strict half-open-cell lower bound).** Represent torus points uniquely
+in \([0,1)^d\) and partition it into the \(Q^d\) Borel half-open cubes
+\[
+C_j=\prod_{i=1}^d[j_i/Q,(j_i+1)/Q),\qquad 0\le j_i<Q.
+\]
+The sets \(H\cap C_j\) form a disjoint exhaustive Borel partition of \(H\).
+Some member \(A\) has \(\mu_H(A)\ge Q^{-d}>0\). Choose \(a\in A\).
+For every \(x\in A\), the chosen representatives of \(x_i,a_i\) are in
+the same half-open interval of length \(1/Q\), so
+\(|x_i-a_i|<1/Q\), strictly. Circle distance is at most this real distance.
+It follows that \(A-a\subseteq U_Q\). Since \(a\in H\), Haar invariance gives
+\[
+\boxed{d_Q\ge\mu_H(A-a)=\mu_H(A)\ge Q^{-(k-1)}>0.}
+\]
+No positive ambient Lebesgue measure of \(A\) is needed. Any coordinate
+marginal also gives \(d_Q\le2/Q\). For \(k=2\), 35.7 gives \(H=\mathbb T\)
+and \(d_Q=2/Q\). For larger \(k\), the value \((2/Q)^{k-1}\) is justified
+under a separately established full-torus hypothesis; it is not inferred here.
+
+**35.10 Proposition (A proper disconnected closure is compatible with irrational coordinates).**
+As an illustration outside the prime setting, let \(\beta\) be irrational
+and \(\alpha=(\beta,\beta+1/2)\). The even orbit subsequence is dense in
+\(\{(t,t):t\in\mathbb T\}\), since \(2\beta\) is irrational; the odd
+subsequence is dense in \(\{(t,t+1/2):t\in\mathbb T\}\). The union of these
+two circles is closed and is exactly \(H\). It is a proper disconnected
+subgroup of \(\mathbb T^2\), although both coordinate projections are onto
+and both rotation coordinates are irrational. The proof in 35.3-35.9 covers
+this situation. This example makes no assertion about which closure occurs
+for any particular prime-logarithm vector.
+
+**35.11 Proposition (Rotation-dependent forward syndeticity).** The relatively open
+neighborhood \(U_Q\) is nonempty, since it contains 0. By 35.6 every positive
+forward orbit meets it. Thus \(\{U_Q-j\alpha:j\ge1\}\) covers \(H\).
+Compactness gives a finite nonempty set \(J\subseteq\mathbb Z_{\ge1}\)
+whose corresponding sets still cover \(H\). Define
+\(L=L(\alpha,Q)=\max J\). For every integer \(m\ge0\), some \(j\in J\)
+satisfies \(m\alpha\in U_Q-j\alpha\). Hence
+\[
+B_Q\cap\{m+1,\ldots,m+L\}\ne\varnothing.
+\]
+The positive choice of \(j\) proves a forward-return statement. Consecutive
+members of \(B_Q\) differ by at most \(L\). Removing finitely many indices
+preserves this bound for sufficiently late blocks and preserves both natural
+density and the uniform block limit: the block count changes by at most the
+total number removed, independently of its starting index. This proof gives
+existence of \(L\); it evaluates no numerical maximum-gap bound.
+
+Mathematical citation: Terence Tao, *254A Lecture 3*, Lemma 1 and
+Theorem 2 (minimal recurrence and torus return sets).
+
+**35.12 Proposition (Dirichlet's first return is a different assertion).** Place the
+\(Q^d+1\) points \(j\alpha\), \(0\le j\le Q^d\), in the half-open cubes
+of 35.9. Two share a cube. Subtract the smaller index from the larger to get
+an integer \(q\) with
+\[
+1\le q\le Q^d,\qquad
+\max_i\|q\alpha_i\|_{\mathbb T}<1/Q.
+\]
+Thus the first positive return from 0 is at most \(Q^{k-1}\). This is the
+classical simultaneous Dirichlet pigeonhole argument. Applying it to a
+translated block again gives a difference of two indices, which need not
+belong to that block. It proves neither \(L\le Q^{k-1}\) nor the location
+of the first rounded box surviving positivity or the strict original cutoff.
+
+**35.13 Proposition (Generic irrational rotations refute a uniform maximum-gap inference).**
+Fix \(Q\ge3\), any integer \(R\ge1\), and \(r=1/Q\). Choose an irrational
+\[
+0<\beta<\min\bigl(r,(1-2r)/(R+1)\bigr).
+\]
+For integers \(\ell\ge0\), let
+\(t_\ell=\lfloor(\ell+r)/\beta\rfloor+1\). For \(0\le j<R\),
+\[
+\ell+r<(t_\ell+j)\beta<\ell+r+R\beta<\ell+1-r.
+\]
+The first strict upper estimate follows from
+\(t_\ell\beta<\ell+r+\beta\); equality there would make \(\beta\) rational.
+Every one of the \(R\) consecutive positive indices
+\(t_\ell,\ldots,t_\ell+R-1\) consequently avoids
+\(\{n\ge1:\|n\beta\|_{\mathbb T}<r\}\). These blocks occur arbitrarily
+late because \(t_\ell\to\infty\). Nevertheless 1 is a return, since
+\(\beta<r\), and the one-dimensional result gives density \(2/Q\).
+There are returns on either side of sufficiently late empty blocks, so
+their enclosing consecutive returns differ by at least \(R+1\).
+Taking \(R=Q\) disproves a generic maximum-gap bound \(Q\) in dimension one;
+arbitrary \(R\) rules out any bound depending only on \(Q\) across all
+irrational steps. The rotation changes with \(R\), so this is consistent
+with 35.11 for each fixed rotation. It is not a counterexample for any fixed
+prime tuple and does not refute a separately proved prime-specific estimate.
+
+**35.14 Proposition (Unique rounding, finite positivity discard and actual boxes).** For
+every integer \(n\ge1\), each \(n\alpha_i\) is irrational, hence never a
+half-integer. Its nearest integer is unique. Set
+\[
+m_0(n)=n,\qquad
+m_i(n)=\lfloor n\alpha_i+1/2\rfloor\ (i>0),\qquad
+c_i=m_i(n)h_i.
+\]
+As \(n\to\infty\), all \(m_i(n)\to\infty\), because all \(\alpha_i>0\).
+Choose a finite \(n_0\) after which every \(m_i(n)\ge1\). For \(n\ge n_0\),
+\[
+b_i(n)=m_i(n)-1\in\mathbb Z_{\ge0},\qquad
+C_i=\{c_i,c_i+h_i\}=\{m_i(n)h_i,(m_i(n)+1)h_i\}.
+\]
+These are actual logarithms of adjacent integer prime powers. In the source's
+original exponent convention the box is \(b_i\in\{m_i-1,m_i\}\), and its
+lower-corner integer is
+\[
+N_n=\prod_{i=0}^{k-1}p_i^{m_i(n)-1}.
+\]
+Only the finite initial indices with a nonpositive \(m_i\) are removed;
+write \(B_Q^{\rm valid}=B_Q\cap[n_0,\infty)\). This retains all density
+and eventual syndeticity conclusions of 35.8-35.11. No numerical first valid index is supplied by the construction.
+
+**35.15 Proposition (Errors, minimum height, total height and relative shape).** For
+\(n\in B_Q^{\rm valid}\), nearest rounding and the strict return condition give
+\[
+\Delta_0=0,\qquad\Delta_i=c_i-nh_0,
+\qquad |\Delta_i|<h_i/Q\quad(i>0).
+\]
+Define separately
+\[
+T_n=\min_i c_i,\qquad\xi_i=c_i-T_n,\qquad A_n=\sum_i c_i,
+\qquad R_n=\sum_{i=1}^{d}\Delta_i.
+\]
+The coordinate \(\Delta_0=0\) and the strict error bounds imply
+\[
+nh_0-h_{\max}/Q<T_n\le nh_0,\qquad
+\min_i\xi_i=0,\quad\xi_i\ge0,\quad
+\max_i\xi_i=\max_i\Delta_i-\min_i\Delta_i<2h_{\max}/Q.
+\]
+Summing the coordinates instead gives the exact identity and separate error
+\[
+A_n=knh_0+R_n,\qquad |R_n|<E_Q.
+\]
+Thus \(T_n\to\infty\) and \(A_n\ge kT_n\to\infty\) along the selected
+indices. For fixed \(Q\) these statements give a uniform neighborhood of
+zero shape; they do not claim that the shapes of every successive selected
+box converge to zero. That stronger convergence belongs to a separate
+approximation subsequence or to a different target, not to a varying-\(Q\)
+limit silently inserted into this theorem.
+
+**35.16 Proposition (Monotone exponents, strict integer order and exact logarithmic size).**
+Each floor \(m_i(n)\) is nondecreasing in \(n\), and \(m_0(n)=n\) increases
+strictly. For any \(n'>n\ge n_0\), even without a return assumption,
+\[
+\frac{N_{n'}}{N_n}
+=p_0^{n'-n}\prod_{i=1}^d p_i^{m_i(n')-m_i(n)}
+\ge p_0^{n'-n}>1.
+\]
+Thus \(N_n\) is strictly increasing on the entire valid tail and on its
+\(B_Q\) subsequence. Index counts therefore count distinct integers.
+Distinct coordinates \(c_i,c_j\) cannot be exactly equal on that tail:
+equality would imply \(p_i^{m_i}=p_j^{m_j}\) with positive exponents,
+contrary to unique factorization. Near balance is not exact equal height.
+For every selected valid index, 35.15 gives
+\[
+\boxed{\log N_n=A_n-S_h=knh_0-S_h+R_n,\qquad |R_n|<E_Q.}
+\]
+In particular the error \(O((\sum_{i>0}h_i)/Q)\) has absolute
+implied constant 1, uniformly in these indices at the fixed parameters.
+
+**35.17 Proposition (Full squeeze proof of integer counting).** For real \(t\), put
+\(F(t)=\#\{n\in B_Q^{\rm valid}:n\le t\}\), with zero count below the
+valid range. The density theorem and finite discard give
+\(F(t)=d_Qt+o(t)\) as real \(t\to\infty\); passing from integer to real
+cutoffs changes the argument by less than 1. For \(X\to\infty\), define
+\[
+y_X=\frac{\log X+S_h}{kh_0},\qquad
+\delta_Q=\frac{E_Q}{kh_0},\qquad
+C(X)=\#\{n\in B_Q^{\rm valid}:N_n\le X\}.
+\]
+If \(n\le y_X-\delta_Q\), then 35.16 gives
+\(\log N_n<kh_0n-S_h+E_Q\le\log X\). Conversely,
+\(N_n\le X\) and \(R_n>-E_Q\) give \(n<y_X+\delta_Q\), hence
+\[
+F(y_X-\delta_Q)\le C(X)\le F(y_X+\delta_Q).
+\]
+The two real cutoffs differ from \(y_X\) by fixed constants. Since \(F\)
+counts a subset of the integers, each difference from \(F(y_X)\) is
+\(O(1)\), bounded by the number of integers in an interval of fixed length;
+possible endpoint equalities change no conclusion. Therefore
+\[
+C(X)=d_Qy_X+o(y_X)
+=\boxed{\frac{d_Q}{kh_0}\log X+o(\log X)}.
+\]
+By 35.16 this is the number of distinct constructed integers at most \(X\).
+Removing any further fixed finite prefix preserves the coefficient. The
+primes and \(Q\) remain fixed; no shrinking-target statement follows.
+
+**35.18 Proposition (Bounded exponent and log-size gaps, divergent additive integer gaps).**
+Let \(n<n'\) be consecutive sufficiently late selected indices. By 35.11,
+\(n'-n\le L(\alpha,Q)\). For \(i>0\), the elementary floor inequality
+\(\lfloor x+t\rfloor-\lfloor x\rfloor\le\lceil t\rceil\), \(t\ge0\),
+gives
+\[
+0\le m_i(n')-m_i(n)\le\lceil L\alpha_i\rceil,
+\qquad 1\le m_0(n')-m_0(n)\le L.
+\]
+The floor inequality holds because \(x+t\le x+\lceil t\rceil\) and
+integer translation commutes with the floor. From the exact size identity,
+\[
+0<\log N_{n'}-\log N_n<kh_0L+2E_Q.
+\]
+All these bounds depend on the fixed rotation and primes. In ordinary integer
+size, 35.16 instead gives
+\[
+N_{n'}-N_n\ge(p_0-1)N_n\longrightarrow\infty.
+\]
+Bounded gaps in the reference exponent, in rounded exponents or in logarithmic
+size do not become bounded additive gaps among ordinary integers.
+
+**35.19 Definition (The exact three-coordinate comparison and wider domain).** For either
+ordered triple \((2,3,5)\) or \((2,3,7)\), take a selected valid box from
+35.14-35.15. For \(e\in\{0,1\}^3\), its endpoint corner is
+\(v(e)=(c_i+e_i h_i)_{i=0}^2\), with total \(A_n+\sum_i e_i h_i\).
+Distinct \(e\) have distinct totals: equality, after canceling \(A_n\)
+and exponentiating, would identify two different products of distinct primes.
+Define \(\mathscr W_n\) to be all finite real pairs \(M_0<M_1\) whose
+closed interval \([M_0,M_1]\) contains at least two such corner totals.
+Corners are actual endpoints of this box, not fractional mixtures. This
+domain permits negative \(M_0\), equality of budgets with corner totals,
+zero envelope radius, upper saturation \(M_1\ge A_n+S_h\), and arbitrary
+finite upper-budget slack. It imposes no 5040 cutoff.
+
+For \((M_0,M_1)\in\mathscr W_n\), set
+\[
+f(x)=\log(1-e^{-x})\ (x>0),\qquad C_i=\{c_i,c_i+h_i\},
+\]
+\[
+D(M_1)=\max_{\substack{0\le y_i\le1\\\sum_i h_i y_i\le M_1-A_n}}
+\sum_{i=0}^2\bigl((1-y_i)f(c_i)+y_i f(c_i+h_i)\bigr),
+\]
+\[
+I=[M_0/3,M_1/3],\quad\mu=M_1/3,\quad
+V_0=\sum_{i=0}^2\operatorname{dist}(I,C_i)^2,\quad\rho=\sqrt{V_0/6},
+\]
+\[
+L_{\rm env}=\mu-\rho,\quad H_{\rm env}=\mu+2\rho,\qquad
+\Psi=f(H_{\rm env})+2f(L_{\rm env}),\qquad G=D-\Psi.
+\]
+Here distance is the infimum of \(|u-v|\) over the two indicated sets.
+There is no extra division by 3 in \(V_0\). The projection explicitly uses
+\(\langle u,v\rangle=\sum_i u_iv_i\), the chosen Euclidean inner product
+on real logarithmic coordinates. These are precisely the definitions of
+30.2 and 31.2; the lower budget is not an additional LP constraint on \(y\).
+
+**35.20 Proposition (Feasibility, nonempty wider domains and positive support).** The least
+corner total is \(A_n\). Two distinct admitted totals imply \(M_1>A_n\),
+so \(y=0\) is feasible in 35.19. The feasible polytope is closed and bounded;
+its objective is continuous on positive endpoints, so \(D\) exists as an
+attained finite maximum. The wider domain itself is nonempty: the closed
+interval between the largest two corner totals has positive width and
+contains both of them. This does not yet check the original strict cutoff.
+
+For an admitted corner \(v\), let \(\bar v=\sum_i v_i/3\in I\) and
+\(w_i=v_i-T_n\ge0\). Then
+\[
+\sum_i\operatorname{dist}(I,C_i)^2\le\sum_i(v_i-\bar v)^2
+=\sum_i w_i^2-3(\bar v-T_n)^2
+\le6(\bar v-T_n)^2.
+\]
+The last step uses \(\sum_iw_i^2\le(\sum_iw_i)^2=9(\bar v-T_n)^2\),
+valid also when some \(w_i=0\). It follows that
+\[
+0\le\rho\le\bar v-T_n\le\mu-T_n,\qquad
+H_{\rm env}\ge L_{\rm env}\ge T_n>0.
+\]
+Thus both envelope arguments and all prime-power endpoints have positive
+support. The proof includes budget endpoints at corners, negative lower
+budgets, zero radius, saturated LPs, ties of optimal mixtures and any finite
+upper slack; no stable greedy order or critical-node topology is assumed.
+
+**35.21 Proposition (Two scoped strict scaled margins).** The exponential series, with
+its strictly positive remainder after degree four, gives
+\[
+e^2>1+2+2+4/3+2/3=7.
+\]
+Hence \(\log5<2\) and \(\log7<2\). In the \((2,3,5)\) family set \(Q=1920\)
+and \(d_{235}=\mu_{H_{235}}(U_{1920})\). Equations 35.9 and 35.15 give
+\[
+d_{235}\ge1/1920^2,\qquad
+\max_i\xi_i<2\log5/1920<1/480.
+\]
+Validity gives \(c_i\ge h_i\ge\log2\), thus finite \(T_n\ge\log2\).
+Together with 35.19-35.20 these verify every hypothesis of the inherited
+30.16 estimate. Therefore
+\[
+\boxed{e^{T_n}G<-1/120\quad\text{on every }\mathscr W_n
+\text{ for the valid }(2,3,5),Q=1920\text{ boxes}.}
+\]
+For the separate \((2,3,7)\) family, set \(Q=1280\) and
+\(d_{237}=\mu_{H_{237}}(U_{1280})\). The same construction gives
+\[
+d_{237}\ge1/1280^2,\qquad
+\max_i\xi_i<2\log7/1280<1/320,\qquad T_n\ge\log2.
+\]
+Apply its own inherited theorem 31.17, with the same checked domain and
+support, to obtain
+\[
+\boxed{e^{T_n}G<-1/80\quad\text{on every }\mathscr W_n
+\text{ for the valid }(2,3,7),Q=1280\text{ boxes}.}
+\]
+Both inherited radii are closed; these constructed shapes lie strictly
+inside them. All permitted endpoint and saturation cases remain included.
+The second sign is not an unproved substitution into the first triple's
+theorem. Neither inequality is a bound on unscaled \(G\).
+
+**35.22 Proposition (Exact strict original-domain threshold and 10080).** For either triple,
+define the original-domain intersection
+\[
+\mathscr S_n=\{(M_0,M_1)\in\mathscr W_n:S_h+\log5040<M_0\}.
+\]
+Its source exponent budgets are \(M_j-S_h\); they are distinct from
+\(T_n=\min c_i\). Because \(\log2\) is the unique smallest step, the
+largest corner total is \(A_n+S_h\), and the second largest is
+\(A_n+S_h-\log2\). Every interval containing two corners has
+\(M_0\le A_n+S_h-\log2\). Thus nonemptiness of \(\mathscr S_n\) implies
+\(A_n>\log2+\log5040\). Conversely, under this strict inequality the closed
+slab
+\[
+[A_n+S_h-\log2,\ A_n+S_h]
+\]
+has width \(\log2>0\), two actual corner endpoints, and lower endpoint
+strictly above the cutoff. This proves
+\[
+\boxed{\mathscr S_n\ne\varnothing\quad\Longleftrightarrow\quad
+A_n>\log2+\log5040.}
+\]
+At equality the domain is empty. This is a threshold on the sum \(A_n\),
+not on the minimum \(T_n\). It reproduces the exact 30.18/31.19 endpoint
+argument to make the present application self-contained.
+
+Equivalently \(\prod_i p_i^{m_i}>10080\), where
+\(10080=2\cdot5040=2^5\cdot3^2\cdot5\cdot7\). Equality is arithmetically
+impossible for \((2,3,5)\), whose product has no factor 7, and for
+\((2,3,7)\), whose product has no factor 5. The continuous-domain equality
+case nevertheless stays empty because the cutoff is strict. Since
+\(A_n\ge3T_n\to\infty\), every sufficiently late selected box has
+nonempty original domain. Discarding the finite earlier set changes neither
+index density nor eventual syndeticity nor the integer counting coefficients:
+\[
+C_{235}(X)=\frac{d_{235}}{3\log2}\log X+o(\log X),\qquad
+C_{237}(X)=\frac{d_{237}}{3\log2}\log X+o(\log X).
+\]
+Here the counts concern exactly the constructed valid boxes with nonempty
+original domain, represented injectively by their lower-corner integers.
+
+**35.23 Proposition (Wider estimates precede cutoff intersection; unscaled gaps vanish).**
+In section 34 take \(k=3\), baseline offsets \(a_i=0\) and
+\(T_{\min}=\log2\). Its paired-increment theorem gives
+\(|e^T(G_\xi-G_0)|\le4\epsilon\) when \(\epsilon=\max_i\xi_i\).
+The budget correspondence adds \(S_\xi=\sum_i\xi_i\) to both endpoints
+and preserves endpoint corners. But
+\[
+M_0^\xi>S_h+\log5040
+\quad\Longleftrightarrow\quad
+M_0^0>S_h+\log5040-S_\xi,
+\]
+which need not imply the old fixed cutoff. As 34.17-34.19 require, one
+first applies the separate triple-specific wider-domain sign theorem, then
+intersects with \(\mathscr S_n\). Transfer alone provides no baseline sign,
+and a theorem restricted to the old cutoff would not suffice for all these
+inverse-image slabs. The signs in 35.21 consume only 30.16 and 31.17.
+
+There is a uniform direct estimate independent of the relative slab. Since
+\(f\) is increasing and negative on \((0,\infty)\), all endpoint arguments
+and both envelope arguments being at least \(T_n\) imply
+\[
+D,\Psi\in[3f(T_n),0],\qquad
+\boxed{|G|\le-3f(T_n)=-3\log(1-e^{-T_n})\longrightarrow0.}
+\]
+The interval bound for \(D\) holds for every feasible mixture and therefore
+for its maximum. The bound for \(\Psi\) uses its total weight 3. Their
+difference is bounded by the length of that same interval, not twice its
+length. This is uniform over all admitted wider-domain slabs, and hence
+over the original intersections. By 35.22 there are actual original slabs
+at unbounded heights, so no unscaled negative margin bounded away from zero
+can hold on this family. The constants constrain \(e^{T_n}G\). Infinite
+height, or \(e^{-T_n}=0\), is a limit and never an admitted parameter.
+
+**35.24 Proposition (Three density meanings).** The positive density \(d_Q\) concerns the
+one-dimensional reference exponent \(n\). Let
+\(\mathcal N_Q=\{N_n:n\in B_Q^{\rm valid}\}\). Its counting function is
+of order \(\log X\) by 35.17 and \(d_Q>0\), so its ordinary natural
+integer density is zero:
+\(\#(\mathcal N_Q\cap[1,X])/X\to0\). Its logarithmic integer density is
+also zero, with the usual definition
+\[
+\lim_{X\to\infty}\frac1{\log X}
+\sum_{\substack{N\in\mathcal N_Q\\N\le X}}\frac1N=0.
+\]
+Indeed validity gives \(N_n\ge p_0^{n-1}\), so the sum over the entire
+selected tail is bounded by the convergent geometric series
+\(\sum_{n\ge n_0}p_0^{-(n-1)}\). Logarithmic growth of a counting function
+does not mean positive logarithmic density among integers.
+
+In full exponent space, among \(b\in\{0,\ldots,R\}^k\) the constructed
+family has at most \(R+1\) points, since \(b_0=n-1\) determines \(n\).
+Its proportion is at most \((R+1)^{1-k}\to0\) for \(k\ge2\).
+These statements describe the constructed subfamily, not all boxes that
+might satisfy a \(G\) inequality. Finite validity/cutoff removal does not
+change any of these density conclusions.
+
+**35.25 Proposition (Fibonacci cutoffs are inherited limits, not sparse orbit sampling).**
+Let \(F_j\to\infty\) be increasing Fibonacci numerical cutoffs. Substituting
+this sequence of cutoffs into already established limits immediately gives
+\[
+\frac{\#(B_Q\cap[1,F_j])}{F_j}\longrightarrow d_Q,\qquad
+\frac{\#(\mathcal N_Q\cap[1,F_j])}{\log F_j}
+\longrightarrow\frac{d_Q}{kh_0}.
+\]
+The same holds after the finite discards. No new equidistribution theorem
+is needed for these cutoff limits. Sampling only the indices \(n=F_j\)
+instead asks about \(F_j\alpha\) and
+\(J^{-1}\#\{j\le J:F_j\in B_Q\}\). Its convergence or equality to
+\(d_Q\) is not proved here; uniform consecutive-block frequency does not
+answer this different sparse-sampling question.
+
+**35.26 Proposition (Numerical-order Zeckendorf recoding preserves every finite count).**
+Use the stipulated Zeckendorf bijection: Fibonacci weights \(1,2,3,5,\ldots\),
+digits in \(\{0,1\}\) with no adjacent occupied weights, and unique decoding
+to the original integer. Under numerical-order enumeration the first \(M\)
+positive decoded integers are exactly \(1,\ldots,M\). For any membership
+set, including \(B_Q\) as indices or \(\mathcal N_Q\) as integers, its
+count among these codes therefore equals its numerical count for every
+finite \(M\), identically. This is an immediate use of the existing
+bijection, not a new proof of the Zeckendorf theorem.
+
+A complete digit-length cutoff that corresponds to a Fibonacci numerical
+interval inherits 35.25. Conditioning on a digit-prefix cylinder, changing
+weights assigned to codewords, or enumerating codes in an arbitrary different
+order changes the sampling operation and needs separate analysis. Bijectivity
+alone does not preserve density under arbitrary reordering.
+
+**35.27 Proposition (Golden-ratio frequency, other metrics and chosen orthogonality).**
+For every irrational one-dimensional step \(\beta\) and every circle
+interval \(I\), 35.4-35.8 in dimension one give limiting visit frequency
+equal to the circle length of \(I\); its boundary has at most two points.
+Thus irrationality of the golden ratio yields no improved limiting interval
+frequency. No golden-ratio extremality theorem is invoked. Approximation
+quality such as \(\min_{1\le q\le M}\|q\beta\|_{\mathbb T}\), discrepancy
+of finite empirical interval counts from interval length, and minimum spacing
+between finitely many orbit points are distinct quantities. A comparison of
+any of them requires its own hypotheses, metric and correctly attributed
+extremal theorem; limiting interval frequency determines none of them.
+
+The Euclidean inner product in 35.19 is explicitly chosen. Prime labels,
+ordinary exponent coordinates and Zeckendorf digits supply neither an inner
+product nor new orthogonality or a new KL-loss identity. A lattice slice,
+a positive-width budget slab, a numerical-order cutoff and a digit cylinder
+remain different constructions, as in the existing section 10 discussion.
+
+**35.29 Theorem (Recurrence and counting: mathematical scope).**
+The fixed-prime/fixed-\(Q\) recurrence and counting arguments have no residual
+mathematical premise beyond the classical tools proved or attributed above;
+they do not depend on any \(G\) sign. No numerical \(d_Q\) beyond its bounds
+is asserted without identifying \(H\); no evaluated gap bound, first valid
+box, discrepancy rate, shrinking target, arbitrary nonzero-shape density or
+continuously realizable prime-lattice translation family is supplied. General
+prime-data gap estimates remain distinct from the generic rotation example.
+Sparse Fibonacci sampling and changed code order/weighting retain their
+separate questions. Full translated/wider-domain 5040, uniform-third-prime,
+density/optimizer-stability, arbitrary-fixed-prime-triple and arbitrary-shape
+sign obligations remain open in their assigned scopes. Neither recurrence nor
+a negative difference of the supplied upper bounds is an RH theorem
+or an RH-equivalent criterion.
+
+**Proof reference.** 35.3-35.18. The remaining statements specify the scope
+of these arguments and of the applications in 35.19-35.27.
+

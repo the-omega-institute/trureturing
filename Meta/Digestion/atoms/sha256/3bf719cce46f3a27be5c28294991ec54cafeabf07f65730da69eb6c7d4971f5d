@@ -1,0 +1,19 @@
+**证明。** 对有理数的任一整数分子、非零整数分母，分母为负时同时变号，再除以两者的正最大公因数，即得正分母的既约式。说明其唯一性所需的整除事实如下。对整数 $a$ 和 $b>0$，整数线性组合 $sa+tb$ 的正值集合非空，因为含 $b$。取最小正值 $g$；将 $a,b$ 分别除以 $g$ 的余数仍是这种线性组合，最小性迫使余数为零，故 $g$ 同时整除 $a,b$。反向每个公因数整除每个线性组合，故 $g=\gcd(|a|,b)$，并得到 Bézout 恒等式。若两既约正分母式 $a/b=a'/b'$，则 $ab'=a'b$。用 $sa+tb=1$ 乘 $b'$，可见 $b\mid b'$；反向同理 $b'\mid b$。正性给 $b=b'$，再给 $a=a'$。这也覆盖零分子，因为 $\gcd(0,b)=b$ 强制 $b=1$。
+
+第 70、114 条的字段双逆现在使 $\operatorname{qenc}$ 良定义并落在 $\mathsf{RatFld}$，给 $\operatorname{qdec}(\operatorname{qenc}(q))=q$。反向任意合法 $T_2(c,d)$ 已给既约正分母式，唯一性强制重新编码时恢复原分子分母，故恢复原字段。
+
+有理数 $q$ 的 $q-\lfloor q\rfloor$ 属于 $[0,1)$ 且同类。此区间内两数若差为整数，因差在 $(-1,1)$ 中只能为零，所以每个类的这种代表唯一。再用既约式唯一性以及 $\zeta,\operatorname{val}$ 双逆，分别得到相位侧两个复合恒等式，包括每个独立合法记录。零代表的既约式只能为 $0/1$，证明两个零字段的断言。相位分母的正性已由 $0\le a<b$ 强制，既约相位记录排除 $a=b$，并保留负有理数先取模一后取得的非负分子。
+
+例如有理字段加法是 $\operatorname{qenc}(\operatorname{qdec}(c)+\operatorname{qdec}(d))$，乘法及负号同样定义；求逆只在 $\operatorname{qdec}(c)\ne0$ 上定义，除法只在第二字段解码非零上定义。解码后恰得原运算，单射性把全部域恒等式带回字段。相位加法与负号用 $\operatorname{penc}$ 运输 $\mathsf D_{\rm rat}$ 的相应群运算，不引入有理商类的乘法。
+
+与 [CSA 第一节、第四节定义 8、第六节定义 9／命题 5](CONTEXTUAL_SPACETIME_ARITHMETIC.md) 的实际整数实现对接时，使用第 255–256 条的 $v:J\leftrightarrow\mathbb Z_o$ 及 $b=\operatorname{scode}\circ v$。带符号字段到原 $J$ 对象的逆是 $v^{-1}\circ\operatorname{ival}$。把 CSA 原有理读数在通常有理数中的对应值记为
+$$
+\operatorname{qval}_{\rm CSA}(X,Y)=\frac{v(q(X))}{v(q(Y))}\quad(q(Y)\ne0_J).
+$$
+对既约 $a/b$，该文固定丰富截面在这些类型下恰为
+$$
+\sigma_{\rm CSA}(a/b)
+=(\mathbf i(v^{-1}(a)),\mathbf i(v^{-1}(b)))\in\mathcal Q^{\rm rich}.
+$$
+它使用 $\mathbf i:J\to\mathcal B$，不是只取 $J$ 对 $(v^{-1}(a),v^{-1}(b))$。原恒等式 $q(\mathbf i(z))=z$ 给 $\operatorname{qval}_{\rm CSA}(\sigma_{\rm CSA}(q))=q$。因此 $\sigma_{\rm CSA}\circ\operatorname{qdec}$ 将 $\mathsf{RatFld}$ 双射到这个既约丰富截面像，其逆在且仅在该像上为 $\operatorname{qenc}\circ\operatorname{qval}_{\rm CSA}$：一个复合用刚得读数恒等式及字段双逆，另一个复合先把截面点唯一写为 $\sigma_{\rm CSA}(q)$ 再用同一等式。这个截面逆不恢复任意丰富输入的历史。证毕。
+

@@ -1,0 +1,8 @@
+**命题 355.3。** 保留有理相位不等于保留可除的有理系数行。具体地，设 $A_0\ge1$，令 $r_0=1$、$r_n=0$ 对 $n>0$，并令 $r'$ 为零行。则两者的未缩放特征在全部 $\mathsf V_{\rm reg}$ 上相同，但
+$$
+L_r(\varepsilon_0)=1,\qquad L_{r'}(\varepsilon_0)=0,\qquad
+\chi_{r/2}^{\rm cap}(\varepsilon_0)=[1/2]\ne0_{\mathbb T}
+=\chi_{r'/2}^{\rm cap}(\varepsilon_0).
+$$
+规则 $[q]_{\rm rat}\mapsto[q/2]_{\rm rat}$ 不是 $\mathbb Q/\mathbb Z_o$ 上的良定义函数。
+

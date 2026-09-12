@@ -1,0 +1,2 @@
+**定理 345.2。** $\mathsf U_F(A)$ 蕴含 $\mathsf{Fill}_F(A)$，并使每条尾的容量质量为 $+\infty$。单独的 $\mathsf{Fill}_F(A)$ 也使每条尾的容量质量为 $+\infty$。
+

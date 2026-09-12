@@ -1,0 +1,26 @@
+**34.3 Exact corner, slab and capacity correspondence.** For every binary
+index \(e\) in 34.1, the total \(A+\sum_i e_i h_i\) becomes
+\(A+S+\sum_i e_i h_i\). Therefore
+\[
+M_0\le A+\sum_i e_i h_i\le M_1
+\quad\Longleftrightarrow\quad
+M_0+S\le A+S+\sum_i e_i h_i\le M_1+S.
+\]
+The inverse subtracts \(S\) from both budgets. It preserves each individual
+corner's membership, endpoint equalities, slab width, and the number of
+distinct actual corner vectors. Different vectors with equal totals remain
+different; no strict ordering of corner totals is assumed. Thus the whole
+one-corner domain is in bijection with its translated domain, and the
+positive-width and at-least-two-corner subclasses are preserved separately.
+
+The perturbed lower total is \(A_\xi=A+S\), so
+\[
+r_\xi=(M_1+S)-(A+S)=M_1-A=r,\qquad \mathcal P_\xi=\mathcal P_0.
+\]
+This preserves every feasible fractional vector, not only one presumed
+optimal face. An admitted corner is coordinatewise at least \(c\), hence
+\(M_1\ge A\ge k(m+T)>0\), \(r\ge0\), and \(0\in\mathcal P\).
+The polytope is nonempty and compact. Its finite continuous objectives attain
+their maxima. Endpoint density ties, nonunique maximizers and changes in
+the maximizing face do not affect this argument.
+

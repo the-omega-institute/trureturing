@@ -1,0 +1,34 @@
+**命题 352.1。** 在第 332 条的独立字段域中，
+$$
+\operatorname{qenc}(1/G_n)
+=T_2(\operatorname{scode}(1),\zeta(G_n))\in\mathsf{RatFld},
+$$
+$$
+\operatorname{penc}(\theta^F_n)=
+\begin{cases}
+T_2(0_Z,\zeta(1)),&n=0,\\
+T_2(\zeta(1),\zeta(G_n)),&n\ge1.
+\end{cases}
+$$
+分母字 $\zeta(G_n)$ 的唯一占据位置为 $n$，规范字长为 $n+1$；它不是被限制在 $n$ 位置窗口中的状态内容字。值字段与相位字段分别使用定理 332.2 的双逆。
+
+对任意 $u\in\mathsf V_{\rm reg}$，置 $I=\operatorname{supp}(u)$，并定义
+$$
+D=\prod_{n\in I}G_n,\qquad
+ a=\sum_{n\in I}u_n(D/G_n),\qquad
+ h=\gcd(|a|,D),
+$$
+$$
+s=a-D\lfloor a/D\rfloor,\qquad k=\gcd(s,D).
+$$
+空积为一、空和为零。则
+$$
+L_F(u)=a/D,\qquad
+\operatorname{qenc}(L_F(u))
+=T_2(\operatorname{scode}(a/h),\zeta(D/h)),
+$$
+$$
+\operatorname{penc}([L_F(u)]_{\rm rat})
+=T_2(\zeta(s/k),\zeta(D/k)).
+$$
+

@@ -1,0 +1,44 @@
+**定理 292。** 固定 $a\in\mathbb Z^P$，定义
+$$
+i_a:\mathbb T\longrightarrow\mathbb T^P,\qquad
+i_a(\theta)=(a_p\theta)_{p\in P},\qquad
+S_a=i_a(\mathbb T),\qquad
+R_a=\{m\in\mathbb Z^P:m\cdot a=0\}.
+$$
+这里整数倍相位取圆周群的整数倍运算，$m\cdot a=\sum_pm_pa_p\in\mathbb Z$，而 $m\cdot y=\sum_pm_py_p\in\mathbb T$。则
+$$
+\overline{\{\varpi_P(ka):k\in\mathbb N\}}
+=S_a
+=\{y\in\mathbb T^P:m\cdot y=0\text{ 对所有 }m\in R_a\}.
+$$
+关系群 $R_a$ 饱和，即非零整数 $r$ 满足 $rm\in R_a$ 时必有 $m\in R_a$。若 $a=0$，$S_a$ 是单点且 $\ker i_a=\mathbb T$。若 $a\ne0$，令
+$$
+d=\gcd\{|a_p|:a_p\ne0\}>0,\qquad b=a/d.
+$$
+则
+$$
+S_a=S_b,\qquad
+\ker i_a=\{[r/d]:r\in\mathbb Z,\ 0\le r<d\},
+$$
+且 $i_b:\mathbb T\to S_a$ 是群同构及同胚。$d>1$ 时，精确群 $\varpi_P(\mathbb Za)$ 仍是 $\varpi_P(\mathbb Zb)$ 中指数为 $d$ 的真子群，虽然闭包相同。
+
+当 $a\ge0$ 时，令 $M=\prod_pp^{a_p}$，区分标量、指数及共同参数三个读数：
+$$
+s_k=\gamma(M^k),\qquad
+\varpi_P(ka),\qquad
+\theta_k=\gamma(k)=[k\alpha].
+$$
+后两者满足 $\varpi_P(ka)=i_a(\theta_k)$。第 50 条的旧相位满足
+$$
+([x_{a_p}(k)])_{p\in P}=\varpi_P(ka)+[\alpha]\mathbf1,
+$$
+故其闭包为陪集 $[\alpha]\mathbf1+S_a$，其中 $\mathbf1=(1)_{p\in P}$。正指数上的电荷与联合字律仍取第 50–56 条的原定义和原域；零指数使用 $x_0(k)=\alpha$ 及零电荷约定。标量读数满足 $s_{k+1}=M s_k$；当 $M>1$ 时它不是固定角度旋转。
+
+对 $a\in\mathbb N^P\setminus\{0\}$、有限容量 $A:P\to\omega$ 及 $k\in\mathbb N$，有
+$$
+ka\in S(P,A)
+\iff
+0\le k\le\min_{a_p>0}\left\lfloor\frac{A(p)}{a_p}\right\rfloor.
+$$
+因此固定容量内允许的相位段是有限闭集；上面的整个圆周闭包使用全部 $k\ge0$ 的无界指数域。$a=0$ 时所有 $k$ 都合法，但状态恒零；空 $P$ 亦如此。
+

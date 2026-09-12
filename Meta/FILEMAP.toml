@@ -470,7 +470,74 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
-pattern = "docs/reports/**"
+# Checks partition parity boundaries and the printed odd-rule counterexample.
+pattern = "docs/reports/a110037-0910/BoundaryProbe.lean"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Enumerates recurrence coefficients and tests conjectured ternary support.
+pattern = "docs/reports/a396808-implementation-0911/numeric_probe.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Samples singular and full-rank states to probe covariance bounds.
+pattern = "docs/reports/covariancesumbound/random_probe.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Enumerates a Young-diagram game graph with two independent Grundy computations.
+pattern = "docs/reports/crim-grundy-0910/recompute.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Samples unitary families and measures their commutant dimensions.
+pattern = "docs/reports/crossspecies/commutant_probe.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Compares correlated and product states in the energy-information identity.
+pattern = "docs/reports/energyinfo164/numerical_check.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Preserves license terms for the imported partial-trace results.
+pattern = "docs/reports/inoutbalance/physlib-LICENSE.txt"
 kind = "data"
 admission_plane = "content"
 produced_by = "none"
@@ -480,12 +547,123 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
-pattern = "lean-toolchain"
-kind = "program"
-admission_plane = "judge"
+# Supplies prime-corner ordering and constants to the slab search tools.
+pattern = "docs/reports/prime-slab-corner-order-0909.json"
+kind = "data"
+admission_plane = "content"
 produced_by = "none"
-consumed_by = ["Lean"]
-verified_by = ["make-gate"]
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Probes entropy-divergence identities with sign and basis controls.
+pattern = "docs/reports/qdualaccount/numerical_check.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Preserves license terms for the imported quantum information results.
+pattern = "docs/reports/qmutualinfo/csd-lean4-LICENSE.txt"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Preserves the 5,7,11 search window and eight reflected interval records.
+pattern = "docs/reports/quantized-gh/prime-slab-5711-window-0910.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Preserves the 2,3,5 search window and three reflected interval records.
+pattern = "docs/reports/quantized-gh/prime-slab-mps-pilot-0909.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Checks entropy equality boundaries with a deliberate opposite-claim control.
+pattern = "docs/reports/quantumobs2/numerical_probe.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Preserves license terms for the imported projective-angle results.
+pattern = "docs/reports/recordtimebound/Lean-QIT-LICENSE.txt"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Computes exact divisor-sum witnesses and approximate Robin thresholds.
+pattern = "docs/reports/robin-smooth-general-0909-witnesses.mjs"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Enumerates seven-smooth integers with rational bounds on the Robin margin.
+pattern = "docs/reports/robin7smooth-0909/measure.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Compares mutual information for orthogonal and overlapping quantum states.
+pattern = "docs/reports/sbsconsensus/numeric_probe.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Enumerates occupation words and computes phase, rank and entropy witnesses.
+pattern = "docs/reports/schmidt-theta-0909-witnesses.mjs"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -516,6 +694,16 @@ admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["lean-inspector"]
 verified_by = ["LeanReportSelection"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "lean-toolchain"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["Lean"]
+verified_by = ["make-gate"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 

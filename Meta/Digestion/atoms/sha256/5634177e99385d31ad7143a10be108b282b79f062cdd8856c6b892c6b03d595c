@@ -1,0 +1,41 @@
+**定义 266（实际集合参数、关系参数及参考点运输）。** 对每种第 261 条的 $R$，令
+$$
+\begin{aligned}
+K&=J\times J^3,&K_R&=S\times S^3,&k(t,x)&=(b(t),b_3(x)),\\
+\mathrm{Attr}&=J^3\times\Sigma_\pm\times\mathsf{Tree},&
+\mathrm{Attr}_R&=S^3\times\Sigma_\pm\times T_R,&
+a(x,\sigma,r)&=(b_3(x),\sigma,\theta(r)),\\
+\mathrm{Attr}_t&=\mathrm{Attr}\times J,&
+\mathrm{Attr}_{t,R}&=\mathrm{Attr}_R\times S,&
+a_t(x,\sigma,r,t)&=(b_3(x),\sigma,\theta(r),b(t)).
+\end{aligned}
+$$
+各积均为普通外部积，按各自原括号与第 257 条对接。对任意所列集合参数定义
+$$
+\begin{aligned}
+S_0\subseteq J^3 &: &S_0^R&=b_3[S_0],&
+I\subseteq J &: &I^R&=b[I],\\
+L\subseteq\mathsf{Tree} &: &L^R&=\theta[L],&
+B_0\subseteq K &: &B_0^R&=k[B_0],\\
+P_0\subseteq K^2 &: &P_0^R&=(k\times k)[P_0],&
+P_{\rm sp}\subseteq(J^3)^2 &: &P_{\rm sp}^R&=(b_3\times b_3)[P_{\rm sp}],\\
+Q\subseteq\mathrm{Attr} &: &Q^R&=a[Q],&
+Q_t\subseteq\mathrm{Attr}_t &: &Q_t^R&=a_t[Q_t],\\
+P_t\subseteq\mathrm{Attr}_t^2 &: &P_t^R&=(a_t\times a_t)[P_t].
+\end{aligned}
+$$
+这些像映射各自是对应全幂集之间的双射，逆为相应逆像。参数可无限，有限的只是每份档案。
+
+身份过去参数的联合域是 $\{(X,D_0):X\in\mathcal H,D_0\subseteq E_X\}$，关系限制乘法参数的联合域是
+$$
+\{(X,Y,R_0):X,Y\in\mathcal H, R_0\subseteq\Omega_X\times\Omega_Y\}.
+$$
+字段运输时 $D_0,R_0$ 保持原集合；出现身份单点参数 $e_0\in HF$ 也保持原值。事件重命名 $h:E_X\to E_Y$ 时才分别取 $h[D_0]$、$(h\times h')[R_0]$ 和 $h(e_0)$，最后一式限于 $e_0\in E_X$。各依赖域条件仍包含于联合输入域。
+
+对全部 $o\in J^3$，参考点取 $o^R=b_3(o)$，带参考点记录取 $(o,X)^R=(b_3(o),RX)$。CSA 定义 21 的二元乘法联合域要求两输入参考点相等。对 $L\in\operatorname{Mat}_{3\times3}(J)$、$u\in J^3$，矩阵 $L^R$ 逐元素用 $b$，向量 $u^R=b_3(u)$；目标仿射函数为
+$$
+F^R(c)_i=\left(\mathop{\bigoplus}_{j=1}^{3}L^R_{ij}\otimes_Zc_j\right)\oplus_Zu^R_i,
+\qquad F(x)=Lx+_Ju.
+$$
+矩阵、向量和参考点是不同参数槽。第 257–260 条给每个参数集合、有限矩阵记录及其函数图到 $\operatorname{Enc}$ 语义的桥，不将这里的普通直接像误作整体集合码。
+

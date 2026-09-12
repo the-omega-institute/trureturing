@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Observer/Hankel/OrderedBalancedCoordinates
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Sort genuine balancing weights and permute the actual realization by the same permutation. -/
 
 import D5.S3.Observer.Hankel.BalancedRealizationTransport

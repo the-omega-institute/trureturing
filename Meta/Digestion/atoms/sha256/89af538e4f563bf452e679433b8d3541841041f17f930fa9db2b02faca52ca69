@@ -1,0 +1,23 @@
+**定理 370.4。** 给定实际数字双射 $b_Y:Y\to C_Y$，原对象提升与数字对象提升分别为
+$$
+h_Y(c)=\operatorname{Enc}(b_Y^{-1}(c)),\qquad
+e_Y(c)=\operatorname{Enc}(c)\quad(c\in C_Y).
+$$
+它们的精确像分别为 $Y^*$、$\operatorname{Enc}[C_Y]$，逆分别为 $b_Y\circ\operatorname{Dec}|_{Y^*}$、$\operatorname{Dec}|_{\operatorname{Enc}[C_Y]}$。若同时给定 $b_Z:Z\to C_Z$ 和 $f:D\to Z$，则
+$$
+f^d:b_Y[D]\to C_Z,\qquad f^d=b_Z\circ f\circ b_Y^{-1},
+$$
+且两个普通图对象的语义码具有不同的提升式
+$$
+\operatorname{Enc}(G_f)
+=\operatorname{Pack}\{\langle h_Y(c),h_Z(d)\rangle_Z:
+\langle c,d\rangle\in G_{f^d}\},
+$$
+
+$$
+\operatorname{Enc}(G_{f^d})
+=\operatorname{Pack}\{\langle e_Y(c),e_Z(d)\rangle_Z:
+\langle c,d\rangle\in G_{f^d}\}.
+$$
+它们的语义域分别为 $\operatorname{Enc}(D)$、$\operatorname{Enc}(b_Y[D])$。
+
