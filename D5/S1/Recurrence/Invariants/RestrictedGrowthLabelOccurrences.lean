@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S1/Recurrence/Invariants/RestrictedGrowthLabelOccurrences
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [Mathlib.Order.Interval.Finset.Nat, Mathlib.Algebra.BigOperators.Group.Finset.Piecewise, Mathlib.Algebra.BigOperators.Ring.Finset, Mathlib.Data.List.Count, Mathlib.Data.Nat.Choose.Basic]
+   anchors: [Mathlib.Order.Interval.Finset.Nat, Mathlib.Data.List.Count, Mathlib.Algebra.BigOperators.Group.Finset.Basic, Mathlib.Algebra.BigOperators.Group.Finset.Piecewise, Mathlib.Algebra.BigOperators.Ring.Finset, Mathlib.Data.Nat.Choose.Basic, Mathlib.Tactic.Ring, Mathlib.Tactic.NormNum, Mathlib.Tactic.IntervalCases]
    utility: none
    digest: Label occurrences in restricted-growth words, counted by final block deficit. -/
 
@@ -12,6 +12,9 @@ import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Data.Nat.Choose.Basic
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.IntervalCases
 
 namespace D5.S1.Recurrence.Invariants.RestrictedGrowthLabelOccurrences
 
@@ -28,39 +31,28 @@ def words : ℕ → Finset (List ℕ)
 /-- Sum of the occurrences of label `p` across all restricted-growth words. -/
 def T (n p : ℕ) : ℕ := (words n).sum fun w => w.count p
 
-theorem mem_words_zero (w : List ℕ) : w ∈ words 0 ↔ w = [] := by
-  simp [words]
-
-theorem mem_words_succ (n : ℕ) (w : List ℕ) (x : ℕ) :
-    x :: w ∈ words (n + 1) ↔ w ∈ words n ∧ 1 ≤ x ∧ x ≤ maxLabel w + 1 := by
-  simp only [words, Finset.mem_biUnion, Finset.mem_image, Finset.mem_Icc]
-  constructor
-  · rintro ⟨v, hv, y, ⟨hlo, hhi⟩, heq⟩
-    obtain ⟨rfl, rfl⟩ := List.cons.inj heq
-    exact ⟨hv, hlo, hhi⟩
-  · rintro ⟨hw, hlo, hhi⟩
-    exact ⟨w, hw, x, ⟨hlo, hhi⟩, rfl⟩
-
-theorem maxLabel_cons (w : List ℕ) (x : ℕ) :
-    maxLabel (x :: w) = max x (maxLabel w) := rfl
-
-theorem maxLabel_le_length (n : ℕ) (w : List ℕ) (hw : w ∈ words n) :
+private theorem maxLabel_le_length (n : ℕ) (w : List ℕ) (hw : w ∈ words n) :
     maxLabel w ≤ n := by
   induction n generalizing w with
   | zero =>
-    have heq := (mem_words_zero w).mp hw
-    simp [heq, maxLabel]
+    simp [words] at hw
+    simp [hw, maxLabel]
   | succ n ih =>
     cases w with
     | nil => simp [words] at hw
     | cons x v =>
-      obtain ⟨hv, _, hx⟩ := (mem_words_succ n v x).mp hw
-      have hb := ih v hv
-      rw [maxLabel_cons]
+      change x :: v ∈ (words n).biUnion (fun u =>
+        (Finset.Icc 1 (maxLabel u + 1)).image fun y => y :: u) at hw
+      obtain ⟨u, hv, hi⟩ := Finset.mem_biUnion.mp hw
+      obtain ⟨y, hy, heq⟩ := Finset.mem_image.mp hi
+      obtain ⟨rfl, rfl⟩ := List.cons.inj heq
+      have hx := (Finset.mem_Icc.mp hy).2
+      have hb := ih u hv
+      change max y (maxLabel u) ≤ n + 1
       exact max_le (by omega) (by omega)
 
 /-- A finite-fiber sum for the next RGF label, valid for arbitrary weights. -/
-theorem sum_words_succ (n : ℕ) (f : List ℕ → ℕ) :
+private theorem sum_words_succ (n : ℕ) (f : List ℕ → ℕ) :
     (words (n + 1)).sum f =
       (words n).sum (fun w => (Finset.Icc 1 (maxLabel w + 1)).sum fun x => f (x :: w)) := by
   have hdisj : (↑(words n) : Set (List ℕ)).PairwiseDisjoint
@@ -79,41 +71,53 @@ theorem sum_words_succ (n : ℕ) (f : List ℕ → ℕ) :
   exact (List.cons.inj h).1
 
 /-- The unique word which introduces a new label at every step. -/
-def topWord : ℕ → List ℕ
+private def topWord : ℕ → List ℕ
   | 0 => []
   | n + 1 => (n + 1) :: topWord n
 
-theorem maxLabel_topWord (n : ℕ) : maxLabel (topWord n) = n := by
+private theorem maxLabel_topWord (n : ℕ) : maxLabel (topWord n) = n := by
   induction n with
   | zero => rfl
-  | succ n ih => simp [topWord, maxLabel_cons, ih]
+  | succ n ih =>
+    change max (n + 1) (maxLabel (topWord n)) = n + 1
+    simp [ih]
 
-theorem topWord_mem (n : ℕ) : topWord n ∈ words n := by
+private theorem topWord_mem (n : ℕ) : topWord n ∈ words n := by
   induction n with
   | zero => simp [topWord, words]
   | succ n ih =>
-    exact (mem_words_succ n (topWord n) (n + 1)).mpr
-      ⟨ih, by omega, by simp [maxLabel_topWord]⟩
+    change (n + 1) :: topWord n ∈ (words n).biUnion (fun w =>
+      (Finset.Icc 1 (maxLabel w + 1)).image fun x => x :: w)
+    apply Finset.mem_biUnion.mpr
+    refine ⟨topWord n, ih, ?_⟩
+    apply Finset.mem_image.mpr
+    exact ⟨n + 1, Finset.mem_Icc.mpr
+      ⟨by omega, by simp [maxLabel_topWord]⟩, rfl⟩
 
 /-- The maximum can attain the word length only along the all-new-label path. -/
-theorem eq_topWord_of_maxLabel_eq (n : ℕ) (w : List ℕ)
+private theorem eq_topWord_of_maxLabel_eq (n : ℕ) (w : List ℕ)
     (hw : w ∈ words n) (hm : maxLabel w = n) : w = topWord n := by
   induction n generalizing w with
   | zero =>
-    simpa [topWord] using (mem_words_zero w).mp hw
+    simpa [topWord, words] using hw
   | succ n ih =>
     cases w with
     | nil => simp [words] at hw
     | cons x v =>
-      obtain ⟨hv, _, hx⟩ := (mem_words_succ n v x).mp hw
-      have hb := maxLabel_le_length n v hv
-      have hx' : x = n + 1 := by
-        rw [maxLabel_cons] at hm
+      change x :: v ∈ (words n).biUnion (fun u =>
+        (Finset.Icc 1 (maxLabel u + 1)).image fun y => y :: u) at hw
+      obtain ⟨u, hv, hi⟩ := Finset.mem_biUnion.mp hw
+      obtain ⟨y, hy, heq⟩ := Finset.mem_image.mp hi
+      obtain ⟨rfl, rfl⟩ := List.cons.inj heq
+      have hx := (Finset.mem_Icc.mp hy).2
+      have hb := maxLabel_le_length n u hv
+      have hx' : y = n + 1 := by
+        change max y (maxLabel u) = n + 1 at hm
         omega
-      have hv' : maxLabel v = n := by omega
-      simpa [topWord, hx'] using congrArg (List.cons (n + 1)) (ih v hv hv')
+      have hv' : maxLabel u = n := by omega
+      simpa [topWord, hx'] using congrArg (List.cons (n + 1)) (ih u hv hv')
 
-theorem card_top_words (n : ℕ) :
+private theorem card_top_words (n : ℕ) :
     ((words n).filter fun w => maxLabel w = n).card = 1 := by
   have heq : (words n).filter (fun w => maxLabel w = n) = {topWord n} := by
     ext w
@@ -242,7 +246,7 @@ private theorem card_near_step (n : ℕ) (hn : 0 < n) :
 
 /-- RGFs of length `n+1` with exactly one repetition are counted by a pair
 of indices: the repetition time and its previously introduced label. -/
-theorem card_near_words (n : ℕ) :
+private theorem card_near_words (n : ℕ) :
     ((words (n + 1)).filter fun w => maxLabel w = n).card = (n + 1).choose 2 := by
   induction n with
   | zero => simp [words, maxLabel]
@@ -261,7 +265,7 @@ theorem card_near_words (n : ℕ) :
 
 /-- A deficit of two consists of one triple block or two disjoint pairs.
 The proof counts the corresponding RGFs through their maximum-label recurrence. -/
-theorem card_two_repeat_words (n : ℕ) :
+private theorem card_two_repeat_words (n : ℕ) :
     ((words (n + 2)).filter fun w => maxLabel w = n).card =
       (n + 2).choose 3 + 3 * (n + 2).choose 4 := by
   induction n with
@@ -303,10 +307,10 @@ private theorem count_eq_zero_of_maxLabel_lt (w : List ℕ) (p : ℕ)
   | nil => simp
   | cons x w ih =>
     have hx : x ≠ p := by
-      have hle : x ≤ maxLabel (x :: w) := by simp [maxLabel_cons]
+      have hle : x ≤ maxLabel (x :: w) := by simp [maxLabel]
       omega
     have hw : maxLabel w < p := by
-      have hle : maxLabel w ≤ maxLabel (x :: w) := by simp [maxLabel_cons]
+      have hle : maxLabel w ≤ maxLabel (x :: w) := by simp [maxLabel]
       omega
     simp [hx, ih hw]
 
@@ -468,6 +472,87 @@ theorem mathar_f1 (n : ℕ) (hn : 1 < n) :
       rw [Nat.choose_two_right]
       congr 1
 
+/-- Mathar's second OEIS A270236 conjecture, including the OEIS natural-number
+quotient by `24`. -/
+theorem mathar_f2 (n : ℕ) (hn : 1 < n) :
+    T (n + 1) (n - 1) =
+      2 + n * (n + 1) * (3 * n ^ 2 - 5 * n + 26) / 24 := by
+  have hcomb : T (n + 1) (n - 1) =
+      2 + n * T n (n - 1) + n.choose 2 + n.choose 3 + 3 * n.choose 4 := by
+    obtain ⟨k, hk⟩ := Nat.exists_eq_add_of_le (by omega : 2 ≤ n)
+    subst n
+    simpa only [show 2 + k = k + 2 by omega,
+      show k + 2 - 1 = k + 1 by omega,
+      show k + 2 + 1 = k + 3 by omega] using T_second_step k
+  have hc2 : 2 * n.choose 2 = n * (n - 1) := by
+    simpa only [show 1 + 1 = 2 by omega, Nat.choose_one_right, mul_comm] using
+      Nat.choose_succ_right_eq n 1
+  have hc3 : 3 * n.choose 3 = n.choose 2 * (n - 2) := by
+    simpa only [show 2 + 1 = 3 by omega, mul_comm] using
+      Nat.choose_succ_right_eq n 2
+  have hc4 : 4 * n.choose 4 = n.choose 3 * (n - 3) := by
+    simpa only [show 3 + 1 = 4 by omega, mul_comm] using
+      Nat.choose_succ_right_eq n 3
+  have hs2 : 24 * n.choose 2 = 12 * n * (n - 1) := by
+    calc
+      24 * n.choose 2 = 12 * (2 * n.choose 2) := by ring
+      _ = 12 * n * (n - 1) := by rw [hc2]; ring
+  have hs3 : 24 * n.choose 3 = 4 * n * (n - 1) * (n - 2) := by
+    calc
+      24 * n.choose 3 = 8 * (3 * n.choose 3) := by ring
+      _ = 8 * (n.choose 2 * (n - 2)) := by rw [hc3]
+      _ = 4 * (2 * n.choose 2) * (n - 2) := by ring
+      _ = 4 * n * (n - 1) * (n - 2) := by rw [hc2]; ring
+  have hs4 : 24 * n.choose 4 = n * (n - 1) * (n - 2) * (n - 3) := by
+    calc
+      24 * n.choose 4 = 6 * (4 * n.choose 4) := by ring
+      _ = 6 * (n.choose 3 * (n - 3)) := by rw [hc4]
+      _ = 2 * (3 * n.choose 3) * (n - 3) := by ring
+      _ = 2 * (n.choose 2 * (n - 2)) * (n - 3) := by rw [hc3]
+      _ = (2 * n.choose 2) * (n - 2) * (n - 3) := by ring
+      _ = n * (n - 1) * (n - 2) * (n - 3) := by rw [hc2]
+  have hpoly :
+      48 * n + 12 * (n + 1) * n * (n - 1) +
+        4 * n * (n - 1) * (n - 2) +
+        3 * n * (n - 1) * (n - 2) * (n - 3) =
+      n * (n + 1) * (3 * n ^ 2 - 5 * n + 26) := by
+    by_cases hsmall : n < 4
+    · interval_cases n <;> norm_num at *
+    · have hlarge : 4 ≤ n := by omega
+      obtain ⟨j, rfl⟩ := Nat.exists_eq_add_of_le hlarge
+      have hsub : 3 * (4 + j) ^ 2 - 5 * (4 + j) =
+          3 * j ^ 2 + 19 * j + 28 := by
+        have hright : 3 * (4 + j) ^ 2 =
+            3 * j ^ 2 + 19 * j + 28 + 5 * (4 + j) := by ring
+        omega
+      rw [show 4 + j - 1 = j + 3 by omega,
+        show 4 + j - 2 = j + 2 by omega,
+        show 4 + j - 3 = j + 1 by omega, hsub]
+      ring
+  have hnum :
+      24 * (n * (2 + n.choose 2) + n.choose 2 + n.choose 3 + 3 * n.choose 4) =
+      n * (n + 1) * (3 * n ^ 2 - 5 * n + 26) := by
+    calc
+      _ = 48 * n + (n + 1) * (24 * n.choose 2) +
+            24 * n.choose 3 + 3 * (24 * n.choose 4) := by ring
+      _ = 48 * n + 12 * (n + 1) * n * (n - 1) +
+            4 * n * (n - 1) * (n - 2) +
+            3 * n * (n - 1) * (n - 2) * (n - 3) := by
+        rw [hs2, hs3, hs4]
+        ring
+      _ = _ := hpoly
+  have hf1 : T n (n - 1) = 2 + n.choose 2 := by
+    simpa only [Nat.choose_two_right] using mathar_f1 n hn
+  calc
+    T (n + 1) (n - 1) =
+        2 + (n * (2 + n.choose 2) + n.choose 2 + n.choose 3 + 3 * n.choose 4) := by
+      rw [hcomb, hf1]
+      omega
+    _ = 2 + n * (n + 1) * (3 * n ^ 2 - 5 * n + 26) / 24 := by
+      rw [← hnum]
+      simp
+
 #print axioms mathar_f1
+#print axioms mathar_f2
 
 end D5.S1.Recurrence.Invariants.RestrictedGrowthLabelOccurrences
