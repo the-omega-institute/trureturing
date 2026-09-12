@@ -258,6 +258,44 @@ theorem card_near_words (n : ℕ) :
     rw [card_near_step (n + 1) (by omega), hfilter, ih]
     rw [Nat.choose_succ_succ' (n + 1) 1, Nat.choose_one_right]
 
+/-- A deficit of two consists of one triple block or two disjoint pairs.
+The proof counts the corresponding RGFs through their maximum-label recurrence. -/
+theorem card_two_repeat_words (n : ℕ) :
+    ((words (n + 2)).filter fun w => maxLabel w = n).card =
+      (n + 2).choose 3 + 3 * (n + 2).choose 4 := by
+  induction n with
+  | zero => decide
+  | succ n ih =>
+    have hfilter : ((words (n + 2)).filter fun w => maxLabel w + 1 = n + 1) =
+        ((words (n + 2)).filter fun w => maxLabel w = n) := by
+      ext w
+      simp only [Finset.mem_filter]
+      constructor
+      · rintro ⟨hw, h⟩
+        exact ⟨hw, by omega⟩
+      · rintro ⟨hw, h⟩
+        exact ⟨hw, by omega⟩
+    have hp3 : (n + 3).choose 3 = (n + 2).choose 2 + (n + 2).choose 3 := by
+      simpa only using Nat.choose_succ_succ' (n + 2) 2
+    have hp4 : (n + 3).choose 4 = (n + 2).choose 3 + (n + 2).choose 4 := by
+      simpa only using Nat.choose_succ_succ' (n + 2) 3
+    have hfactor : 3 * (n + 2).choose 3 = n * (n + 2).choose 2 := by
+      simpa only [show 2 + 1 = 3 by omega, show n + 2 - 2 = n by omega,
+        mul_comm] using Nat.choose_succ_right_eq (n + 2) 2
+    have hstep := card_max_step (n + 2) (n + 1) (by omega)
+    rw [hfilter, card_near_words (n + 1), ih] at hstep
+    calc
+      ((words (n + 1 + 2)).filter fun w => maxLabel w = n + 1).card =
+          (n + 1) * (n + 2).choose 2 +
+            ((n + 2).choose 3 + 3 * (n + 2).choose 4) := by
+        simpa only [show n + 1 + 2 = n + 3 by omega,
+          show n + 2 + 1 = n + 3 by omega,
+          show n + 1 + 1 = n + 2 by omega] using hstep
+      _ = (n + 3).choose 3 + 3 * (n + 3).choose 4 := by
+        rw [hp3, hp4]
+        simp only [Nat.add_mul]
+        omega
+
 private theorem count_eq_zero_of_maxLabel_lt (w : List ℕ) (p : ℕ)
     (hp : maxLabel w < p) : w.count p = 0 := by
   induction w with
