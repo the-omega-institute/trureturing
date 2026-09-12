@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:6a41930c394293968add4c6741662027b93e639d074d4c53d229f1c59bb94f00
+  normalized_sha256: sha256:6a41930c394293968add4c6741662027b93e639d074d4c53d229f1c59bb94f00
+cas_ref: sha256:6a41930c394293968add4c6741662027b93e639d074d4c53d229f1c59bb94f00
+coverage_gids:
+  - gid: D5/S3/Analytic/Interpolation/TwoPointGridDominanceBound.inner_secant_quadratic_moments
+    target_statement_id: sha256:b360d39d94a8dde395bdc3da35c6f3b6efa3a448e7fe29101151bc4ddb23d246
+receipts:
+  unresolved_subitems: []

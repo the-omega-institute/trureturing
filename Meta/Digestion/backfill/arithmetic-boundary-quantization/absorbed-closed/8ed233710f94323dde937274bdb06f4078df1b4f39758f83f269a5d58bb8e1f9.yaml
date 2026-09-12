@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:8ed233710f94323dde937274bdb06f4078df1b4f39758f83f269a5d58bb8e1f9
+  normalized_sha256: sha256:8ed233710f94323dde937274bdb06f4078df1b4f39758f83f269a5d58bb8e1f9
+cas_ref: sha256:8ed233710f94323dde937274bdb06f4078df1b4f39758f83f269a5d58bb8e1f9
+coverage_gids:
+  - gid: D5/S3/Analytic/Interpolation/FractionalBranchGeometry.fractional_residual_support
+    target_statement_id: sha256:7c585714ac4d3c10f5bdb20bc555464a42d876630940739351eb2df6fb06cfc5
+receipts:
+  unresolved_subitems: []
