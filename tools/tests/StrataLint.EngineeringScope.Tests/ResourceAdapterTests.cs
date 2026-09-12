@@ -6,7 +6,7 @@ using Xunit;
 namespace StrataLint.EngineeringScope.Tests;
 
 [Collection("Engineering scope process boundary")]
-public sealed class ResourceAdapterTests
+public sealed partial class ResourceAdapterTests
 {
     [Theory]
     [InlineData("build")]
@@ -199,16 +199,18 @@ public sealed class ResourceAdapterTests
     }
 
     [Fact]
-    public void WorkflowPushWithoutDeclaredScopeReportsUnresolvedBoundary()
+    public void NativePushResolvesOrdinaryDocumentationChangeBeforeSetup()
     {
         using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        fixture.Write("fixtures/selected.txt", "documentation change\n");
+        fixture.CommitPlan();
         var environment = EnvironmentFor(fixture);
         environment["CI_PLAN_PATH"] = "build/ci/absent-plan.json";
         environment["CI_CHANGES_PATH"] = "build/ci/absent-changes.json";
         environment["GITHUB_EVENT_NAME"] = "push";
         var result = Route(fixture, "build", environment);
-        Assert.Equal(2, result.Exit);
-        Assert.Contains("PUSH_SCOPE_UNRESOLVED", result.Text, StringComparison.Ordinal);
+        Assert.True(result.Exit == 0, result.Text);
+        Assert.Equal("not-required", Summary(fixture, "build")["status"]!.ToString());
     }
 
     private static JsonNode Summary(ResourceRouteTests.ResourceFixture fixture, string stage) =>

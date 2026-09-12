@@ -115,7 +115,7 @@ def advisory(root, branch):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("command", choices=("resolve", "checkout", "pack", "restore", "verify", "advisory", "summary",
-                                           "plan", "pr-paths", "pr-plan", "validate-plan", "no-work", "validate-no-work", "stage-input"))
+                                           "plan", "pr-paths", "pr-plan", "push-plan", "validate-plan", "no-work", "validate-no-work", "stage-input"))
     parser.add_argument("--repository", required=True, type=pathlib.Path)
     parser.add_argument("--commit", default="")
     parser.add_argument("--head", default="")
@@ -143,6 +143,11 @@ def main():
         elif args.command == "pr-plan":
             import ci_plan
             outputs(ci_plan.plan_pr(args.repository, args.commit, args.base, args.head))
+        elif args.command == "push-plan":
+            import ci_plan
+            if args.base or args.head or args.plan or args.changes:
+                raise ValueError("push-plan resolves only checked-out HEAD and its first parent")
+            outputs(ci_plan.plan_push(args.repository, args.commit))
         elif args.command in ("plan", "pr-paths", "validate-plan", "no-work", "validate-no-work"):
             import ci_plan
             print(json.dumps(ci_plan.command(args), sort_keys=True, ensure_ascii=False))

@@ -77,6 +77,11 @@ if [[ "$MODE" == pr ]]; then
   export CI_PLAN_PATH="$CANDIDATE/build/ci/plan.json"
   export CI_CHANGES_PATH="$CANDIDATE/build/ci/changes.json"
   printf 'PREFLIGHT_CANDIDATE path=%s\n' "$CANDIDATE"
+else
+  stage=plan
+  python3 -B tools/scripts/workflow/ci.py push-plan --repository "$ROOT" ${CANDIDATE_SHA:+--commit "$CANDIDATE_SHA"}
+  export CI_PLAN_PATH="$ROOT/build/ci/plan.json"
+  export CI_CHANGES_PATH="$ROOT/build/ci/changes.json"
 fi
 if [[ -f "$ROOT/tools/scripts/lib/resource-observation-lib.sh" ]]; then
   source "$ROOT/tools/scripts/lib/resource-observation-lib.sh"

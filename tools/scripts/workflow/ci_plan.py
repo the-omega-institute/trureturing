@@ -5,6 +5,7 @@ import json
 import os
 import pathlib
 import re
+import stat
 import subprocess
 import tomllib
 
@@ -192,7 +193,10 @@ def oid(value):
 
 
 def git(root, *args):
-    return subprocess.run(["git", "--no-replace-objects", *args], cwd=root, check=True, capture_output=True).stdout
+    # Missing objects are input failures, including in partial clones. Planning
+    # must never turn an object read into an implicit fetch from a remote.
+    return subprocess.run(["git", "--no-replace-objects", *args], cwd=root, check=True, capture_output=True,
+                          env={**os.environ, "GIT_NO_LAZY_FETCH": "1", "GIT_OPTIONAL_LOCKS": "0"}).stdout
 
 
 def candidate(root, commit):
@@ -200,6 +204,13 @@ def candidate(root, commit):
     if git(root, "cat-file", "-t", commit).strip() != b"commit":
         raise ValueError("candidate must be a commit")
     return {"commit": commit, "tree": oid(git(root, "rev-parse", commit + "^{tree}").decode().strip())}
+
+
+def checked_head(root, expected=""):
+    commit = oid(git(root, "rev-parse", "--verify", "HEAD").decode().strip())
+    if expected and oid(expected) != commit:
+        raise ValueError("stage checkout does not match fixed candidate")
+    return commit
 
 
 def strict_json(file):
@@ -226,10 +237,10 @@ def same_record(left, right):
 
 def tree_entries(root, tree):
     result = {}
-    for record in git(root, "ls-tree", "-rz", "--full-tree", tree).split(b"\0")[:-1]:
+    for record in nul_fields(git(root, "ls-tree", "-rz", "--full-tree", tree)):
         meta, raw_path = record.split(b"\t", 1)
         mode, kind, blob = meta.decode("ascii").split(" ")
-        result[raw_path.decode("utf-8")] = {"mode": mode, "oid": blob}
+        result[path(raw_path.decode("utf-8"))] = {"mode": mode, "oid": oid(blob)}
     return result
 
 
@@ -265,24 +276,24 @@ def change_paths(data):
     return selected
 
 
-def pr_paths(root, commit, base, head):
-    identity = candidate(root, commit)
-    oid(base)
-    oid(head)
-    parents = git(root, "show", "-s", "--format=%P", commit).decode().strip().split()
-    if parents != list(dict.fromkeys([base, head])):
-        raise ValueError("PR candidate parents do not match fixed B and triggering head")
+def nul_fields(raw):
+    if not raw:
+        return []
+    if not raw.endswith(b"\0"):
+        raise ValueError("unterminated NUL Git input")
+    return raw.split(b"\0")[:-1]
+
+
+def diff_paths(root, base, commit):
     # No base checkout/code: raw -z object diff includes mode-only changes and both
     # rename endpoints. Git owns rename recognition; the planner only unions paths.
     raw = git(root, "diff", "--raw", "-z", "--no-abbrev", "--no-ext-diff", "--no-textconv", "--find-renames", base, commit, "--")
-    fields = raw.split(b"\0")
-    if fields.pop() != b"":
-        raise ValueError("unterminated NUL Git diff")
+    fields = nul_fields(raw)
     changes, i = [], 0
     while i < len(fields):
         meta = fields[i].decode("ascii").split()
         i += 1
-        if len(meta) != 5 or not meta[0].startswith(":"):
+        if len(meta) != 5 or not meta[0].startswith(":") or i >= len(fields):
             raise ValueError("invalid raw Git diff metadata")
         old_mode, new_mode, old_oid, new_oid, status = meta
         old_mode = old_mode[1:]
@@ -290,12 +301,102 @@ def pr_paths(root, commit, base, head):
         i += 1
         new_path = old_path
         if status.startswith("R"):
+            if not re.fullmatch(r"R[0-9]{1,3}", status) or int(status[1:]) > 100 or i >= len(fields):
+                raise ValueError("invalid raw Git rename endpoints")
             new_path = fields[i].decode("utf-8")
             i += 1
             status = "R"
         changes.append({"status": status,
                         "old": None if status == "A" else {"path": old_path, "mode": old_mode, "oid": old_oid},
                         "new": None if status == "D" else {"path": new_path, "mode": new_mode, "oid": new_oid}})
+    return changes
+
+
+def blob_oid(raw):
+    return hashlib.sha1(b"blob " + str(len(raw)).encode("ascii") + b"\0" + raw).hexdigest()
+
+
+def worktree_entries(root):
+    # Same effective input domain as the native ReadCurrent: indexed paths plus
+    # nonignored untracked files, reading working bytes (never staged blob bytes).
+    paths = set()
+    for record in nul_fields(git(root, "ls-files", "--stage", "-z")):
+        meta, raw_path = record.split(b"\t", 1)
+        mode, _, stage = meta.decode("ascii").split()
+        p = path(raw_path.decode("utf-8"))
+        if stage != "0" or mode not in {"100644", "100755"}:
+            raise ValueError(f"{p}: unresolved or non-regular index entry")
+        paths.add(p)
+    paths.update(path(p.decode("utf-8")) for p in nul_fields(git(root, "ls-files", "--others", "--exclude-standard", "-z")))
+    entries = {}
+    for p in sorted(paths):
+        file = root / p
+        try:
+            mode = file.lstat().st_mode
+        except FileNotFoundError:
+            continue
+        if not stat.S_ISREG(mode):
+            raise ValueError(f"{p}: non-regular working-tree input")
+        raw = file.read_bytes()
+        entries[p] = {"mode": "100755" if mode & 0o111 else "100644",
+                      "oid": blob_oid(raw)}
+    return entries
+
+
+def entry_changes(before, after):
+    # Local renames are represented by their deletion/addition endpoints; no
+    # second rename analyzer or selector. FILEMAP consumes both paths as usual.
+    return [{"status": "A" if p not in before else "D" if p not in after else "M",
+             "old": {"path": p, **before[p]} if p in before else None,
+             "new": {"path": p, **after[p]} if p in after else None}
+            for p in sorted(before.keys() | after.keys()) if before.get(p) != after.get(p)]
+
+
+def push_paths(root, commit):
+    identity = candidate(root, commit)
+    # Raw commit headers retain the real parents even at a shallow boundary.
+    # All reads after resolving HEAD use that fixed OID, including explicit ^1.
+    headers = git(root, "cat-file", "commit", commit).split(b"\n\n", 1)[0].split(b"\n")
+    parents = [oid(line[7:].decode("ascii")) for line in headers if line.startswith(b"parent ")]
+    parent = parents[0] if parents else None
+    if parent is not None:
+        try:
+            if git(root, "cat-file", "-t", parent).strip() != b"commit":
+                raise ValueError("first parent is not a commit")
+            if oid(git(root, "rev-parse", "--verify", commit + "^1").decode().strip()) != parent:
+                raise ValueError("first parent identity mismatch")
+        except (ValueError, subprocess.SubprocessError) as error:
+            raise ValueError(f"PUSH_PARENT_UNAVAILABLE: candidate {commit} requires first parent {parent}; missing object or shallow ancestry") from error
+        changes = diff_paths(root, parent, commit)
+    else:
+        changes = [{"status": "A", "old": None, "new": {"path": p, **entry}}
+                   for p, entry in tree_entries(root, identity["tree"]).items()]
+    origin = {"kind": "first-parent" if parent else "initial-tree", "parent": parent}
+    if git(root, "status", "--porcelain=v1", "-z", "--untracked-files=all"):
+        effective = worktree_entries(root)
+        local = entry_changes(tree_entries(root, identity["tree"]), effective)
+        if local:
+            # The existing scope fingerprint binds this HEAD-relative material.
+            # There is no committed tree identity for the local candidate.
+            identity = {"commit": commit, "tree": None}
+            origin["worktree"] = local
+            before = tree_entries(root, candidate(root, parent)["tree"]) if parent else {}
+            changes = entry_changes(before, effective)
+    data = {"schema_version": 1, "mode": "push", "candidate": identity, "base": None, "head": None,
+            "origin": origin,
+            "complete": True, "change_count": len(changes), "changes": changes}
+    change_paths(data)
+    return data
+
+
+def pr_paths(root, commit, base, head):
+    identity = candidate(root, commit)
+    oid(base)
+    oid(head)
+    parents = git(root, "show", "-s", "--format=%P", commit).decode().strip().split()
+    if parents != list(dict.fromkeys([base, head])):
+        raise ValueError("PR candidate parents do not match fixed B and triggering head")
+    changes = diff_paths(root, base, commit)
     data = {"schema_version": 1, "mode": "pr", "candidate": identity, "base": base, "head": head,
             "complete": True, "change_count": len(changes), "changes": changes}
     change_paths(data)
@@ -304,29 +405,49 @@ def pr_paths(root, commit, base, head):
 
 def make_plan(root, commit, changes_file):
     data = strict_json(changes_file)
-    exact(data, {"schema_version", "mode", "candidate", "base", "head", "complete", "change_count", "changes"}, "changed scope")
-    if type(data["schema_version"]) is not int or data["schema_version"] != 1 or data["mode"] not in {"current", "pr"}:
+    push = isinstance(data, dict) and data.get("mode") == "push"
+    exact(data, {"schema_version", "mode", "candidate", "base", "head", "complete", "change_count", "changes"}
+          | ({"origin"} if push else set()), "changed scope")
+    if type(data["schema_version"]) is not int or data["schema_version"] != 1 or data["mode"] not in {"current", "push", "pr"}:
         raise ValueError("invalid changed scope version/mode")
     exact(data["candidate"], {"commit", "tree"}, "candidate")
     paths = change_paths(data)
-    if data["candidate"] != candidate(root, commit):
+    actual = push_paths(root, checked_head(root, commit)) if push else None
+    if data["candidate"] != (actual["candidate"] if push else candidate(root, commit)):
         raise ValueError("changed scope candidate identity mismatch")
-    if data["mode"] == "current":
+    if data["mode"] != "pr":
         if data["base"] is not None or data["head"] is not None:
             raise ValueError("current scope must not contain base/head")
-    else:
-        actual = pr_paths(root, commit, data["base"], data["head"])
+    if push or data["mode"] == "pr":
+        actual = actual if push else pr_paths(root, commit, data["base"], data["head"])
+        if push and not same_record(data["origin"], actual["origin"]):
+            raise ValueError("push origin does not match candidate's actual first parent/initial tree")
         key = lambda row: json.dumps(row, sort_keys=True, ensure_ascii=True)
         if sorted(map(key, actual["changes"])) != sorted(map(key, data["changes"])):
-            raise ValueError("incomplete or mismatched PR changed-path list")
-    tree = tree_entries(root, data["candidate"]["tree"])
+            raise ValueError(f"incomplete or mismatched {'push' if push else 'PR'} changed-path list")
+    local = push and "worktree" in actual["origin"]
+    tree = tree_entries(root, candidate(root, commit)["tree"])
+    if local:
+        for record in actual["origin"]["worktree"]:
+            if record["new"] is None:
+                tree.pop(record["old"]["path"])
+            else:
+                new = record["new"]
+                tree[new["path"]] = {k: new[k] for k in ("mode", "oid")}
     for record in data["changes"]:
         new, old = record["new"], record["old"]
         if new is not None and tree.get(new["path"]) != {k: new[k] for k in ("mode", "oid")}:
             raise ValueError(f"{new['path']}: endpoint does not match candidate")
         if record["status"] in {"D", "R"} and old["path"] in tree:
             raise ValueError(f"{old['path']}: removed endpoint still exists")
-    raw = git(root, "show", commit + ":" + FILEMAP)
+    def read(p):
+        if p not in tree:
+            raise ValueError(f"{p}: missing registered candidate input")
+        raw = (root / p).read_bytes() if local else git(root, "show", commit + ":" + p)
+        if local and blob_oid(raw) != tree[p]["oid"]:
+            raise ValueError(f"{p}: registered input differs from local candidate")
+        return raw
+    raw = read(FILEMAP)
     manifest = load_filemap(raw)
     resources = {r["id"]: r for r in manifest["resources"]}
     entries = [(glob(e["pattern"]), e) for e in manifest["files"]]
@@ -354,10 +475,11 @@ def make_plan(root, commit, changes_file):
     active = [resources[r] for r in selected if data["mode"] == "pr" or resources[r]["stage"] != "delta"]
     union = lambda key: sorted({v for r in active for v in r[key]}, key=ordinal)
     stages = {stage: {"resources": [r["id"] for r in active if r["stage"] == stage],
-                      "status": "not-applicable" if stage == "delta" and data["mode"] == "current" else
+                      "status": "not-applicable" if stage == "delta" and data["mode"] != "pr" else
                       "required" if any(r["stage"] == stage for r in active) else "not-required"} for stage in STAGES}
-    execution = execution_selection(root, commit, active, resources)
+    execution = execution_selection(read, active, resources)
     return {"schema_version": 1, "status": "planned", "mode": data["mode"], "candidate": data["candidate"],
+            **({"origin": data["origin"]} if push else {}),
             "base": data["base"], "head": data["head"], "filemap_sha256": hashlib.sha256(raw).hexdigest(),
             "scope_sha256": hashlib.sha256(json.dumps(data, sort_keys=True, ensure_ascii=True, separators=(",", ":")).encode()).hexdigest(),
             "paths": scope, "declared_require": sorted(required), "resources": selected,
@@ -365,7 +487,7 @@ def make_plan(root, commit, changes_file):
             "tools": union("tools"), "cache_layers": union("cache_layers"), "materials": union("materials"), "execution": execution}
 
 
-def execution_selection(root, commit, active, resources):
+def execution_selection(read, active, resources):
     registration = "Meta/ci-resources.json"
     if not active:
         return {"projects": [], "checks": [], "steps": []}
@@ -374,7 +496,7 @@ def execution_selection(root, commit, active, resources):
     declarations = {registration, "Meta/engineering-projects.json", "Meta/ci-checks.json"}
     if not declarations <= {p for row in active for p in row["materials"]}:
         raise ValueError("resource plan lacks declared execution inputs")
-    manifest = strict_json_bytes(git(root, "show", commit + ":" + registration))
+    manifest = strict_json_bytes(read(registration))
     exact(manifest, {"schema", "resources"}, registration)
     if manifest["schema"] != "ci-resource-execution-v1":
         raise ValueError("invalid resource execution schema")
@@ -389,9 +511,9 @@ def execution_selection(root, commit, active, resources):
         rows[row["id"]] = row
     if set(rows) != set(resources):
         raise ValueError("missing resource execution registration")
-    registry = strict_json_bytes(git(root, "show", commit + ":Meta/engineering-projects.json"))
+    registry = strict_json_bytes(read("Meta/engineering-projects.json"))
     projects = {row["path"]: row for row in registry["projects"]}
-    checks = {row["id"]: row for row in strict_json_bytes(git(root, "show", commit + ":Meta/ci-checks.json"))["checks"]}
+    checks = {row["id"]: row for row in strict_json_bytes(read("Meta/ci-checks.json"))["checks"]}
     selected_projects, selected_checks, steps = set(), set(), set()
     for resource in active:
         row = rows[resource["id"]]
@@ -442,6 +564,7 @@ def no_work(plan, stage=None):
     if stage is None and plan["resources"]:
         raise ValueError("nonempty resource plan cannot be not-required")
     return {"schema_version": 1, "status": "not-required", "exit": 0, "stage": stage,
+            **({"origin": plan["origin"]} if plan["mode"] == "push" else {}),
             "candidate": plan["candidate"], "mode": plan["mode"], "base": plan["base"], "head": plan["head"],
             "filemap_sha256": plan["filemap_sha256"], "scope_sha256": plan["scope_sha256"],
             "paths": plan["paths"], "resources": plan["resources"], "stages": plan["stages"],
@@ -463,8 +586,15 @@ def validate_plan(root, commit, plan, changes):
     value = make_plan(root, commit, changes)
     if not same_record(strict_json(plan), value):
         raise ValueError("missing, failed, or mismatched plan")
+    local = {endpoint["path"]: endpoint for row in value.get("origin", {}).get("worktree", [])
+             if (endpoint := row["new"]) is not None}
     for material in sorted({FILEMAP, *value["materials"]}):
-        if (root / material).read_bytes() != git(root, "show", commit + ":" + material):
+        raw = (root / material).read_bytes()
+        # make_plan checked the complete effective scope. Dirty declarations are
+        # bound by its local endpoints; unchanged declarations still bind HEAD.
+        matches = (blob_oid(raw) == local[material]["oid"] if material in local else
+                   raw == git(root, "show", commit + ":" + material))
+        if not matches:
             raise ValueError("resource plan declaration differs from candidate: " + material)
     return value
 
@@ -501,6 +631,17 @@ def plan_pr(root, commit, base, head):
             "plan_b64": base64.b64encode(plan.read_bytes()).decode("ascii")}
 
 
+def plan_push(root, commit="", plan=None, changes=None):
+    commit = checked_head(root, commit)
+    changes = changes or root / "build/ci/changes.json"
+    plan = plan or root / "build/ci/plan.json"
+    write(changes, push_paths(root, commit))
+    value = make_plan(root, commit, changes)
+    write(plan, value)
+    validate_plan(root, commit, plan, changes)
+    return {"candidate_sha": commit, "origin": value["origin"], "complete": True}
+
+
 def stage_input(args):
     root, stage = args.repository, args.stage
     validate_stage(root, stage, args.base)
@@ -510,9 +651,7 @@ def stage_input(args):
     for job, result in needs.items():
         if not isinstance(result, dict) or result.get("result") != "success":
             raise ValueError("required prerequisite did not succeed: " + job)
-    commit = args.commit or os.environ.get("CANDIDATE_SHA") or git(root, "rev-parse", "HEAD").decode().strip()
-    if git(root, "rev-parse", "HEAD").decode().strip() != oid(commit):
-        raise ValueError("stage checkout does not match fixed candidate")
+    commit = checked_head(root, args.commit or os.environ.get("CANDIDATE_SHA", ""))
     plan = args.plan or (pathlib.Path(os.environ["CI_PLAN_PATH"]) if os.environ.get("CI_PLAN_PATH") else None)
     changes = args.changes or (pathlib.Path(os.environ["CI_CHANGES_PATH"]) if os.environ.get("CI_CHANGES_PATH") else None)
     encoded_plan, encoded_changes = os.environ.get("CI_PLAN_B64", ""), os.environ.get("CI_CHANGES_B64", "")
@@ -524,16 +663,25 @@ def stage_input(args):
         values = [strict_json_bytes(base64.b64decode(value, validate=True)) for value in (encoded_plan, encoded_changes)]
         for destination, value in zip((plan, changes), values):
             write(destination, value)
+    inputs = strict_json_bytes(os.environ.get("CI_WORKFLOW_INPUTS", "null").encode())
+    if inputs not in (None, "") and not isinstance(inputs, dict):
+        raise ValueError("workflow inputs must be an object")
+    native_push = os.environ.get("GITHUB_EVENT_NAME") == "push" and not (inputs or {}).get("candidate_sha")
     if plan is None and changes is None:
         if args.allow_direct:
             return {"required": True}
-        raise ValueError("PUSH_SCOPE_UNRESOLVED: explicit complete changed-path input and validated plan are required")
+        if not native_push:
+            raise ValueError("explicit complete changed-path input and validated plan are required")
     plan = root / plan if plan is not None else None
     changes = root / changes if changes is not None else None
-    if (os.environ.get("GITHUB_EVENT_NAME") == "push" and not encoded_plan and not encoded_changes
+    if (native_push and not encoded_plan and not encoded_changes
             and (plan is None or not plan.is_file()) and (changes is None or not changes.is_file())):
-        raise ValueError("PUSH_SCOPE_UNRESOLVED: no authorized complete changed-path input was supplied")
+        plan = plan or root / "build/ci/plan.json"
+        changes = changes or root / "build/ci/changes.json"
+        plan_push(root, commit, plan, changes)
     value = validate_plan(root, commit, plan, changes)
+    if native_push and value["mode"] != "push":
+        raise ValueError("native push requires its validated first-parent/initial-tree origin")
     if stage == "delta" and (value["mode"] != "pr" or value["base"] != args.base):
         raise ValueError("delta requires the validated plan's explicit immutable base")
     requirements = stage_requirements(root, value, stage)
