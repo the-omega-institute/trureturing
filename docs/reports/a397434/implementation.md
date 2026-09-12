@@ -101,6 +101,10 @@ The already-merged `docs/develop/theory/PZG_BEDC.md` atom text retains its
 separate typo for the follow-up annotation requested by the ruling; it is not
 part of this lane's edit.
 
+Formula-location answer: yes, this lane contained the mistaken formula in the
+OEIS library card and the implementation report; it did not occur in the Lean
+header or Scribe source. The merged dev atom occurrence is outside this lane.
+
 ### (iv) Literature cards
 
 Before (`meaux2019threshold.md` body):
