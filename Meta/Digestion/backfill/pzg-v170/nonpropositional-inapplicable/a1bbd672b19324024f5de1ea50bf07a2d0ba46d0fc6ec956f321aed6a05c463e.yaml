@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a1bbd672b19324024f5de1ea50bf07a2d0ba46d0fc6ec956f321aed6a05c463e
+  normalized_sha256: sha256:a1bbd672b19324024f5de1ea50bf07a2d0ba46d0fc6ec956f321aed6a05c463e
+cas_ref: sha256:a1bbd672b19324024f5de1ea50bf07a2d0ba46d0fc6ec956f321aed6a05c463e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This disposition note records the scope, provenance, and dispatch effect of the tier-classification correction. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with the candidate lanes classified above.
+    previous_atom_id: aa388e63e20b456c7b5825e8886740dd381e23e4af5a127d8080116df0d8de7f
+    next_atom_id: 0c63d036f6e1e66803de7b52211e1a6614cb0d435c597c2f7bfb8b39ff512bab

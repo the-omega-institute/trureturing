@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:94873a815adcc6392473a525872de86e5841b62d745b8386de90dd6cdf80eb4a
+  normalized_sha256: sha256:94873a815adcc6392473a525872de86e5841b62d745b8386de90dd6cdf80eb4a
+cas_ref: sha256:94873a815adcc6392473a525872de86e5841b62d745b8386de90dd6cdf80eb4a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This table row records only the planned Lean pipeline and open workflow status for X-A-X-J. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with X-A-X-J.
+    previous_atom_id: 74e85d7377d0782e29e8757c36706aa34eb7cde15943a62f44ec1fe0e85cf914
+    next_atom_id: 9eeb494b697390f50513ec6f8d0b83e44e5df78de0219a9d1fb58a20b8657f14
