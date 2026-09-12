@@ -352,10 +352,11 @@ private def visitSummary (env : Environment) (origin : Name) (summary : Summary)
         if (head == ``Decidable.isTrue || head == ``Decidable.isFalse) && args.size > 0 then
           if compareCanonical args[0]! (← get).statement then modify fun s => { s with forbidden := true }
     | .lam _ t _ _ | .forallE _ t _ _ | .letE _ t _ _ _ =>
-      if compareCanonical t (← get).statement || compareCanonical t (← get).decision then
+      let exactType := compareCanonical t (← get).statement || compareCanonical t (← get).decision
+      if exactType then
         modify fun s => { s with forbidden := true }
-      else if let some typeIndex := node.children[0]? then
-        if containsStatement[typeIndex]! then
+      if let some typeIndex := node.children[0]? then
+        if !exactType && containsStatement[typeIndex]! then
           noteUnclassified (Unclassified.mk "statement_mentioning_type"
             (t.getAppFn.constName?.getD `statement_mentioning_type) "protected:current" origin)
       if let some typeIndex := node.children[0]? then checkU summary.nodes[typeIndex]!
