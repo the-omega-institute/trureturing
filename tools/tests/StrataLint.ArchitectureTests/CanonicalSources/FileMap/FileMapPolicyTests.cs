@@ -250,13 +250,15 @@ public sealed partial class FileMapPolicyTests
     public void ReportCanBeRegisteredBeforeItsContentIsAdded()
     {
         const string path = "docs/reports/experiment/results.json";
-        var manifest = Parse(Entry(path, "data", "none", "agent", "SnapshotDecoder"));
+        var entry = Entry(path, "data", "none", "agent", "SnapshotDecoder")
+            .Replace("admission_plane = \"judge\"", "admission_plane = \"content\"", StringComparison.Ordinal);
+        var manifest = Parse(entry);
 
         // SL-029 requires the registration PR to precede the content PR.
         Assert.Empty(FileMapPolicy.InspectPatternPopulation(manifest, []));
         Assert.Empty(FileMapPolicy.InspectCoverage(manifest, [path]));
         var decision = AdmissionPlanePolicy.Evaluate(
-            Encoding.UTF8.GetBytes("schema_version = 2\n" + Entry(path, "data", "none", "agent", "SnapshotDecoder")),
+            Encoding.UTF8.GetBytes("schema_version = 2\n" + entry),
             [path]);
         Assert.True(decision.IsAdmissible);
         Assert.Equal(AdmissionPlaneClassification.ContentOnly, decision.Classification);

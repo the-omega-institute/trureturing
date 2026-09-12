@@ -490,102 +490,12 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
-pattern = "docs/reports/a396808-implementation-0911/numeric_probe.json"
-kind = "data"
-admission_plane = "content"
-produced_by = "none"
-consumed_by = ["agent"]
-verified_by = ["SnapshotDecoder"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "docs/reports/a396808-implementation-0911/numeric_probe.py"
-kind = "program"
-admission_plane = "content"
-produced_by = "none"
-consumed_by = ["agent"]
-verified_by = ["repository-policy"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "docs/reports/covariancesumbound/random_probe.json"
-kind = "data"
-admission_plane = "content"
-produced_by = "none"
-consumed_by = ["agent"]
-verified_by = ["SnapshotDecoder"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "docs/reports/covariancesumbound/random_probe.py"
-kind = "program"
-admission_plane = "content"
-produced_by = "none"
-consumed_by = ["agent"]
-verified_by = ["repository-policy"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
 pattern = "docs/reports/crim-grundy-0910/recompute.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"
 consumed_by = ["agent"]
 verified_by = ["repository-policy"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "docs/reports/crossspecies/commutant_probe.json"
-kind = "data"
-admission_plane = "content"
-produced_by = "none"
-consumed_by = ["agent"]
-verified_by = ["SnapshotDecoder"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "docs/reports/crossspecies/commutant_probe.py"
-kind = "program"
-admission_plane = "content"
-produced_by = "none"
-consumed_by = ["agent"]
-verified_by = ["repository-policy"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "docs/reports/energyinfo164/numerical-results.json"
-kind = "data"
-admission_plane = "content"
-produced_by = "none"
-consumed_by = ["agent"]
-verified_by = ["SnapshotDecoder"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "docs/reports/energyinfo164/numerical_check.py"
-kind = "program"
-admission_plane = "content"
-produced_by = "none"
-consumed_by = ["agent"]
-verified_by = ["repository-policy"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "docs/reports/inoutbalance/numerics.json"
-kind = "data"
-admission_plane = "content"
-produced_by = "none"
-consumed_by = ["agent"]
-verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -610,26 +520,6 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
-pattern = "docs/reports/qdualaccount/numerical_check.py"
-kind = "program"
-admission_plane = "content"
-produced_by = "none"
-consumed_by = ["agent"]
-verified_by = ["repository-policy"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "docs/reports/qdualaccount/numerical_result.json"
-kind = "data"
-admission_plane = "content"
-produced_by = "none"
-consumed_by = ["agent"]
-verified_by = ["SnapshotDecoder"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
 pattern = "docs/reports/qmutualinfo/csd-lean4-LICENSE.txt"
 kind = "data"
 admission_plane = "content"
@@ -640,72 +530,12 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
-pattern = "docs/reports/quantumobs2/numerical_probe.py"
-kind = "program"
-admission_plane = "content"
-produced_by = "none"
-consumed_by = ["agent"]
-verified_by = ["repository-policy"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
 pattern = "docs/reports/recordtimebound/Lean-QIT-LICENSE.txt"
 kind = "data"
 admission_plane = "content"
 produced_by = "none"
 consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "docs/reports/robin-smooth-general-0909-witnesses.mjs"
-kind = "program"
-admission_plane = "content"
-produced_by = "none"
-consumed_by = ["agent"]
-verified_by = ["repository-policy"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "docs/reports/robin7smooth-0909/measure.py"
-kind = "program"
-admission_plane = "content"
-produced_by = "none"
-consumed_by = ["agent"]
-verified_by = ["repository-policy"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "docs/reports/sbsconsensus/numeric-results.json"
-kind = "data"
-admission_plane = "content"
-produced_by = "none"
-consumed_by = ["agent"]
-verified_by = ["SnapshotDecoder"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "docs/reports/sbsconsensus/numeric_probe.py"
-kind = "program"
-admission_plane = "content"
-produced_by = "none"
-consumed_by = ["agent"]
-verified_by = ["repository-policy"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "docs/reports/schmidt-theta-0909-witnesses.mjs"
-kind = "program"
-admission_plane = "content"
-produced_by = "none"
-consumed_by = ["agent"]
-verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
