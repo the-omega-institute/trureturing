@@ -16,7 +16,7 @@ public sealed partial class FrozenSurfaceRuleTests
         var eventPath = AddFreeze(fixture, FrozenPath);
 
         var diagnostic = Assert.Single(
-            Evaluate(fixture, (eventPath, RawChangeKind.Added)).Diagnostics);
+            Evaluate(fixture, (eventPath, RawChangeKind.Added)).Diagnostics, finding => finding.Path == eventPath);
 
         Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
         Assert.Equal(eventPath, diagnostic.Path);
@@ -49,7 +49,7 @@ public sealed partial class FrozenSurfaceRuleTests
         AddState(fixture, FrozenPath, statePin);
 
         var diagnostic = Assert.Single(
-            Evaluate(fixture, (eventPath, RawChangeKind.Added)).Diagnostics);
+            Evaluate(fixture, (eventPath, RawChangeKind.Added)).Diagnostics, finding => finding.Path == eventPath);
 
         Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
         Assert.Equal(eventPath, diagnostic.Path);

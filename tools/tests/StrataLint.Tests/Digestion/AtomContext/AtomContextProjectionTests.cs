@@ -56,19 +56,12 @@ public sealed class AtomContextProjectionTests
     }
 
     [Fact]
-    public void AtomContextReturnsEveryAmbiguousOccurrence()
+    public void AtomContextFailsClosedOnAmbiguousOccurrence()
     {
         var fixture = Create();
         var target = Id(fixture.Atomized.Claims[1]);
         fixture = fixture with { SourceBytes = Encoding.UTF8.GetBytes(ThreeClaims + ThreeClaims) };
-        var results = DigestionAtomContextProjection.ResolveOccurrences(fixture.Snapshot(), fixture.Ledger, target);
-        Assert.Equal(2, results.Length);
-        Assert.Equal((2, 6), (results[0].Index, results[0].Count));
-        Assert.Equal((5, 6), (results[1].Index, results[1].Count));
-        Assert.Equal(Id(fixture.Atomized.Claims[0]), results[0].Previous!.Value.AtomId);
-        Assert.Equal(Id(fixture.Atomized.Claims[2]), results[0].Next!.Value.AtomId);
-        Assert.Equal(Id(fixture.Atomized.Claims[0]), results[1].Previous!.Value.AtomId);
-        Assert.Equal(Id(fixture.Atomized.Claims[2]), results[1].Next!.Value.AtomId);
+        AssertCode("OCCURRENCE_AMBIGUOUS", () => Resolve(fixture, target));
     }
 
     [Fact]

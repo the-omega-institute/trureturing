@@ -56,11 +56,11 @@ internal static partial class RepositoryRules
 
     internal static ImmutableArray<RuleRegistration> CreateRegistrations() =>
     [
-        Register(1, "Stratum import closure", new RepositoryRule(ManagedLean, Imports, LeanReportAffected)),
-        Register(2, "Sorry closure", new RepositoryRule(ManagedLean, Sorry, SorryAffected)),
-        Register(3, "Capacity pressure", new RepositoryRule(CapacityScoped, Capacity, CapacityAffected)),
-        Register(4, "Mirror completeness", new RepositoryRule(Formal, Mirrors, MirrorsAffected)),
-        Register(6, "Generated status", new RepositoryRule(StatusScoped, Badges, StatusAffected)),
+        Register(1, "Stratum import closure", new RepositoryRule(ManagedLean, Imports)),
+        Register(2, "Sorry closure", new RepositoryRule(ManagedLean, Sorry)),
+        Register(3, "Capacity pressure", new RepositoryRule(CapacityScoped, CurrentCapacity, CapacityAffected, Capacity)),
+        Register(4, "Mirror completeness", new RepositoryRule(Formal, Mirrors)),
+        Register(6, "Generated status", new RepositoryRule(StatusScoped, Badges)),
         Register(
             7,
             "Conflict-of-interest gate",
@@ -68,7 +68,7 @@ internal static partial class RepositoryRules
             AdmissionEffect.HumanGate,
             CaseId.CreateKnown("D5-T0011"),
             "trust"),
-        Register(8, "Frozen Hearts semantics", new RepositoryRule(HeartsScoped, Hearts, HeartsAffected)),
+        Register(8, "Frozen Hearts semantics", new RepositoryRule(HeartsScoped, CurrentHearts, HeartsAffected, Hearts)),
         Register(
             9,
             "Provenance gate",
@@ -76,9 +76,9 @@ internal static partial class RepositoryRules
             AdmissionEffect.HumanGate,
             CaseId.CreateKnown("D5-T0012"),
             "trust"),
-        Register(10, "Generality closure", new RepositoryRule(GeneralSource, Generality, LeanReportAffected)),
-        Register(11, "Controlled domains", new RepositoryRule(DomainScoped, Domains, DomainsAffected)),
-        Register(12, "Canonical Lean header", new RepositoryRule(Formal, Headers, FormalSourceAffected)),
+        Register(10, "Generality closure", new RepositoryRule(GeneralSource, Generality)),
+        Register(11, "Controlled domains", new RepositoryRule(DomainScoped, Domains)),
+        Register(12, "Canonical Lean header", new RepositoryRule(Formal, Headers)),
         // SL-013 remains deferred and has no rejection predicate. Keep this descriptor in place:
         // positional consumers would silently bind later registrations to the wrong rule otherwise.
         Register(
@@ -96,37 +96,36 @@ internal static partial class RepositoryRules
             "Machine field and GID grammar",
             RepositoryRule.FromDiscoveredEdges(
                 typeof(RepositoryRules),
-                AllArtifacts,
-                RepositoryShapeAffected)),
+                AllArtifacts)),
         Register(
             16,
             "Digestion ledger",
             new RepositoryRule(
                 BackfillScoped,
-                BackfillInventoryRule.Evaluate,
+                null,
                 BackfillInventoryRule.IsAffectedBy,
                 BackfillInventoryRule.EvaluateCandidateDelta)),
         Register(
             17,
             "Typed anchor membership",
-            new RepositoryRule(AnchorReferenceScoped, ResolvableAnchors, AnchorsAffected)),
+            new RepositoryRule(AnchorReferenceScoped, ResolvableAnchors)),
         Register(
             18,
             "Machine-produced values",
-            new RepositoryRule(ValuesScoped, Values, ValuesAffected, ValuesCandidateDelta)),
+            new RepositoryRule(ValuesScoped, Values)),
         Register(
             19,
             "Balanced anomaly ledger",
-            new RepositoryRule(StructuredOrChronicle, Ledger, LedgerAffected)),
-        Register(20, "Lean axiom closure", new RepositoryRule(ManagedLean, Axioms, LeanReportAffected)),
+            new RepositoryRule(StructuredOrChronicle, Ledger)),
+        Register(20, "Lean axiom closure", new RepositoryRule(ManagedLean, Axioms)),
         Register(
             21,
             "Instantiated coordinate gate",
-            new RepositoryRule(InstantiationScoped, Instantiation, InstantiationAffected)),
+            new RepositoryRule(InstantiationScoped, Instantiation)),
         Register(
             22,
             "Meta bootstrap gate",
-            new RepositoryRule(BootstrapScoped, Bootstrap, BootstrapAffected),
+            new RepositoryRule(BootstrapScoped, null, BootstrapAffected, Bootstrap),
             AdmissionEffect.HumanGate,
             category: "trust"),
         Register(
@@ -134,52 +133,52 @@ internal static partial class RepositoryRules
             "Describe LaTeX statement",
             new RepositoryRule(
                 ScribeDefinitionScoped,
-                DescribeLatex,
-                DescribeLatexAffected,
-                DescribeLatexCandidateDelta),
+                DescribeLatex),
             AdmissionEffect.Observe),
         Register(
             25,
             "Blueprint source-projection skeleton",
-            new RepositoryRule(RepositoryScoped, BlueprintProjectionSkeleton, BlueprintSkeletonAffected)),
+            new RepositoryRule(RepositoryScoped, BlueprintProjectionSkeleton, BlueprintSkeletonAffected, ProtectedBlueprintSkeleton)),
         Register(
             26,
             "Scribe legacy constructor budget",
-            new RepositoryRule(RepositoryScoped, ScribeLegacyConstructorBudget, ScribeSourceAffected)),
+            new RepositoryRule(RepositoryScoped, ScribeLegacyConstructorBudget)),
         Register(
             28,
             "Duplicate statement advisory",
             new RepositoryRule(
                 ManagedLean,
-                DuplicateStatementAdvisory.Evaluate,
-                DuplicateStatementAdvisory.IsAffectedBy),
+                null,
+                DuplicateStatementAdvisory.IsAffectedBy,
+                DuplicateStatementAdvisory.Evaluate),
             AdmissionEffect.Observe),
         Register(
             30,
             "Judge surface reads no other revision",
             new RepositoryRule(
                 JudgeSurfaceScoped,
-                JudgeSurfaceRevisionMaterialization,
-                JudgeSurfaceAffected),
+                null,
+                JudgeSurfaceAffected,
+                JudgeSurfaceRevisionMaterialization),
             category: "trust"),
         Register(
             31,
             "Computational utility admission",
             new RepositoryRule(
                 Formal,
-                UtilityAdmissionRule.Evaluate,
+                null,
                 UtilityAdmissionRule.IsAffectedBy,
                 UtilityAdmissionRule.Evaluate)),
         Register(
             32,
             "Scribe narrative provenance",
-            new RepositoryRule(ScribeDefinitionScoped, ScribeNarrativeProvenance, ScribeSourceAffected)),
+            new RepositoryRule(ScribeDefinitionScoped, null, ScribeSourceAffected, ScribeNarrativeProvenance)),
         Register(
             33,
             "Frozen state and accepted Freeze pairing",
             new RepositoryRule(
                 (artifact, _) => FrozenPairRule.IsPairPath(artifact.Path.Value),
-                FrozenPairRule.Evaluate,
+                null,
                 FrozenPairRule.IsAffectedBy,
                 FrozenPairRule.Evaluate)),
         Register(
@@ -187,7 +186,7 @@ internal static partial class RepositoryRules
             "Closed Lean modules missing frozen state",
             new RepositoryRule(
                 ModuleStateGateRule.IsApplicable,
-                ModuleStateGateRule.Evaluate,
+                null,
                 ModuleStateGateRule.IsAffectedBy,
                 ModuleStateGateRule.Evaluate),
             AdmissionEffect.Observe,
@@ -214,7 +213,7 @@ internal static partial class RepositoryRules
             rule,
             recheckOnImplementationChange);
 
-    private static ImmutableArray<RuleFinding> DescribeLatex(RuleEvaluationContext context) =>
+    private static ImmutableArray<RuleFinding> DescribeLatex(CurrentRuleContext context) =>
         context.VerifiedScribeEmissions is null
             ? []
             : context.VerifiedScribeEmissions.DescribeLatexRecords
@@ -227,20 +226,6 @@ internal static partial class RepositoryRules
                     AdmissionEffect.Block))
                 .ToImmutableArray();
 
-    private static ImmutableArray<RuleFinding> DescribeLatexCandidateDelta(
-        RuleEvaluationContext context) =>
-        DescribeLatex(context)
-            .Where(finding => DescribeLatexFactAffected(context, finding.Path))
-            .ToImmutableArray();
-
-    private static bool DescribeLatexFactAffected(
-        RuleEvaluationContext context,
-        string definitionPath) =>
-        context.IsBaseFactAffected(definitionPath)
-        || context.Changes.Paths.Any(path =>
-            path.Value.StartsWith("tools/StrataLint.Scribe/", StringComparison.Ordinal)
-            || RepositoryPathPolicy.IsBlueprintContentCompositionBuildFile(path.Value));
-
-    private static ImmutableArray<RuleFinding> NoFindings(RuleEvaluationContext context) =>
+    private static ImmutableArray<RuleFinding> NoFindings(CurrentRuleContext context) =>
         ImmutableArray<RuleFinding>.Empty;
 }

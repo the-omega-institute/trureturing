@@ -11,7 +11,7 @@ public sealed class TowerManifestTests
     {
         var syntax = Syntax(
             Component("rules", "rule-catalog", ["SL-002"], "bootstrap-pr-1"),
-            Component("baseline", "ci-jobs", ["baseline-admission"], "bootstrap-pr-1"));
+            Component("baseline", "ci-jobs", ["delta"], "bootstrap-pr-1"));
         var snapshot = Snapshot(
             (RuleFixture.WorkflowPath, "jobs:\n  other-job:\n    name: Other\n"),
             LedgerAnchorFile());
@@ -33,9 +33,9 @@ public sealed class TowerManifestTests
     {
         var syntax = Syntax(
             Component("rules", "rule-catalog", ["SL-002"], "bootstrap-pr-1"),
-            Component("baseline", "ci-jobs", ["baseline-admission"], "bootstrap-pr-1"));
+            Component("baseline", "ci-jobs", ["delta"], "bootstrap-pr-1"));
         var snapshot = Snapshot(
-            (RuleFixture.WorkflowPath, "jobs:\n  baseline-admission:\n    name: Baseline\n"),
+            (RuleFixture.WorkflowPath, "jobs:\n  delta:\n    name: Baseline\n"),
             LedgerAnchorFile());
         var catalog = Catalog(RuleId.CreateKnown(1));
 
@@ -55,12 +55,11 @@ public sealed class TowerManifestTests
     {
         var syntax = Syntax(
             Component("rules", "rule-catalog", ["SL-001"], "bootstrap-pr-1"),
-            Component("baseline", "ci-jobs", ["baseline-admission"], "bootstrap-pr-1"));
+            Component("baseline", "ci-jobs", ["delta"], "bootstrap-pr-1"));
         var snapshot = Snapshot(
             (RuleFixture.WorkflowPath, """
-                jobs:
-                  baseline-admission:
-                    name: Content-addressed dev baseline admission
+                on: {pull_request_target: {branches: [dev]}}
+                jobs: {delta: {runs-on: fixture}}
                 """),
             LedgerAnchorFile());
 
@@ -73,6 +72,57 @@ public sealed class TowerManifestTests
         Assert.Contains(
             accepted.Manifest.Checks,
             item => item is { Subject: "bootstrap-pr-1", Status: "ASSUMED-UNVERIFIED" });
+    }
+
+    [Fact]
+    public void NestedChecksComeFromTheReferencedReusableWorkflow()
+    {
+        var syntax = Syntax(Component("checks", "ci-jobs",
+            ["push / engineering", "push / current", "delta"], "bootstrap-pr-1"));
+        var snapshot = Snapshot(
+            (".github/workflows/ci-pr.yml", """
+                on: {pull_request_target: {branches: [dev]}}
+                jobs:
+                  common: {name: push, uses: './.github/workflows/ci-push.yml'}
+                  delta: {runs-on: fixture}
+                """),
+            (".github/workflows/ci-push.yml", """
+                on: {push: {branches: [dev]}, workflow_call: {}}
+                jobs: {engineering: {runs-on: fixture}, current: {runs-on: fixture}}
+                """),
+            LedgerAnchorFile());
+
+        var accepted = Assert.IsType<TowerValidationOutcome.Accepted>(
+            TowerManifestValidator.Validate(syntax, snapshot, Catalog()));
+
+        Assert.Equal(3, accepted.Manifest.Checks.Count(check => check.Subject == "checks"));
+    }
+
+    [Theory]
+    [InlineData("pull_request", "push", "ci-push.yml", "push", "current")]
+    [InlineData("pull_request_target", "workflow_dispatch", "ci-push.yml", "push", "current")]
+    [InlineData("pull_request_target", "push", "other.yml", "push", "current")]
+    [InlineData("pull_request_target", "push", "ci-push.yml", "renamed", "current")]
+    [InlineData("pull_request_target", "push", "ci-push.yml", "push", "renamed")]
+    public void NestedChecksRejectWrongEventsReferencesAndDisplayNames(
+        string prEvent, string pushEvent, string calledFile, string callerName, string currentName)
+    {
+        var syntax = Syntax(Component("checks", "ci-jobs", ["push / current"], "bootstrap-pr-1"));
+        var snapshot = Snapshot(
+            (".github/workflows/ci-pr.yml", $$"""
+                on: { {{prEvent}}: {branches: [dev]} }
+                jobs: {common: {name: '{{callerName}}', uses: './.github/workflows/{{calledFile}}'} }
+                """),
+            (".github/workflows/ci-push.yml", $$"""
+                on: { {{pushEvent}}: {branches: [dev]}, workflow_call: {} }
+                jobs: {current: {name: '{{currentName}}', runs-on: fixture} }
+                """),
+            LedgerAnchorFile());
+
+        var rejected = Assert.IsType<TowerValidationOutcome.Rejected>(
+            TowerManifestValidator.Validate(syntax, snapshot, Catalog()));
+
+        Assert.Contains(rejected.Findings, finding => finding.Code == "TOWER-CI-JOB");
     }
 
     [Fact]
@@ -239,6 +289,6 @@ public sealed class TowerManifestTests
     {
         public bool AppliesTo(RepositoryFile artifact, RuleApplicabilityContext context) => true;
 
-        public ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context) => [];
+        public ImmutableArray<RuleFinding> EvaluateCurrent(CurrentRuleContext context) => [];
     }
 }

@@ -20,6 +20,8 @@ import sys
 import tempfile
 import zipfile
 
+from materials import canonical_json, require_keys, require_sorted_strings, statement_address
+
 
 HEX64 = re.compile(r"^[0-9a-f]{64}$")
 SHA_FIELD = re.compile(r"^sha256:[0-9a-f]{64}$")
@@ -44,6 +46,17 @@ def current_modules(module_table: pathlib.Path, repository: pathlib.Path) -> dic
 
 def sidecar_path(report: pathlib.Path) -> pathlib.Path:
     return pathlib.Path(str(report) + ".sha256")
+
+
+def validate_report_sha(report: pathlib.Path, expected: str) -> None:
+    """Validate a report's bytes and one-line sidecar against a transport hash."""
+    digest = hashlib.sha256(report.read_bytes()).hexdigest()
+    value = expected[7:] if expected.startswith("sha256:") else expected
+    if not HEX64.fullmatch(value) or digest != value:
+        raise ValueError("report checksum does not match transported material")
+    sidecar = sidecar_path(report).read_text(encoding="ascii").splitlines()
+    if sidecar != [f"{digest}  raw-lean-report.json"]:
+        raise ValueError("report SHA sidecar does not match report")
 
 
 def materials_path(report: pathlib.Path) -> pathlib.Path:
@@ -100,6 +113,81 @@ def parse_json_modules(report: pathlib.Path) -> tuple[dict[str, dict], str]:
                 raise ValueError("refutation source binding is malformed")
             modules[name]["refutation_claim_path"] = refutation["claim_source_path"]
     return modules, digest
+
+
+def validate_materials(report: pathlib.Path) -> None:
+    root = json.loads(report.read_text(encoding="utf-8"))
+    with zipfile.ZipFile(materials_path(report)) as archive:
+        names = archive.namelist()
+        if len(names) != len(set(names)):
+            raise ValueError("duplicate statement material")
+        expected = set()
+        for module in root["modules"]:
+            for declaration in module["declarations"]:
+                address = declaration["type_sha256"]
+                name = "sha256/" + address[7:]
+                material = archive.read(name)
+                if statement_address(material) != address:
+                    raise ValueError("statement material checksum mismatch")
+                identity = statement_address(canonical_json({
+                    "declaration_name_key": declaration["name_key"],
+                    "kind": declaration["kind"], "module_path": module["source_path"],
+                    "schema": "declaration-statement-v1",
+                    "statement_material": material.decode("utf-8"),
+                }))
+                if identity != declaration["statement_id"]:
+                    raise ValueError("declaration statement identity mismatch")
+                expected.add(name)
+        if set(names) != expected:
+            raise ValueError("statement material archive does not match report")
+
+
+def valid_bundle(report: pathlib.Path, partition: str = "", allow_logs: bool = False) -> tuple[dict[str, dict], str] | None:
+    logs = pathlib.Path(str(report) + ".logs")
+    if not allow_logs and (logs.exists() or logs.is_symlink()):
+        return None
+    attestation = pathlib.Path(str(report) + ".input.attestation")
+    provenance = pathlib.Path(str(report) + ".provenance.json")
+    if not (report.is_file() and sidecar_path(report).is_file()
+            and materials_path(report).is_file()
+            and attestation.is_file() and provenance.is_file()):
+        return None
+    try:
+        modules, report_sha = parse_json_modules(report)
+        attestation_lines = attestation.read_text(encoding="ascii").splitlines()
+        if (len(attestation_lines) != 4
+                or attestation_lines[0] != "schema=stratalint-lean-report-input-attestation-v1"
+                or not re.fullmatch(r"repository_input_sha256=[0-9a-f]{64}", attestation_lines[1])
+                or not re.fullmatch(r"producer_sha256=[0-9a-f]{64}", attestation_lines[2])
+                or attestation_lines[3] != "report_sha256=" + report_sha):
+            return None
+        value = json.loads(provenance.read_text(encoding="utf-8"))
+        if (set(value) != {
+                    "schema", "side", "mode", "source_side", "input_address",
+                    "producer_sha256", "repository_inspector_sha256",
+                    "lean_sources_sha256", "lean_config_sha256", "report_sha256"}
+                or value.get("schema") != "stratalint-lean-report-provenance-v1"
+                or value.get("side") != "candidate"
+                or value.get("source_side") != "candidate"
+                or value.get("mode") not in ("produced", "cached")
+                or not SHA_FIELD.fullmatch(value.get("input_address", ""))
+                or attestation_lines[2] != "producer_sha256=" + value.get("producer_sha256", "")
+                or value.get("report_sha256") != report_sha):
+            return None
+        if any(not HEX64.fullmatch(value.get(field, "")) for field in (
+                "producer_sha256", "repository_inspector_sha256", "lean_sources_sha256", "lean_config_sha256")):
+            return None
+        if partition:
+            seed = json.loads(pathlib.Path(str(report) + ".seed.json").read_text(encoding="utf-8"))
+            if (seed.get("schema") != "lean-report-seed-v1" or seed.get("partition") != partition
+                    or seed.get("report_sha256") != report_sha
+                    or seed.get("materials_sha256") != hashlib.sha256(materials_path(report).read_bytes()).hexdigest()
+                    or not HEX64.fullmatch(seed.get("runtime_sha256", ""))):
+                return None
+        validate_materials(report)
+        return modules, report_sha
+    except (OSError, UnicodeError, ValueError, TypeError, AttributeError, KeyError, zipfile.BadZipFile):
+        return None
 
 
 def valid_baseline(

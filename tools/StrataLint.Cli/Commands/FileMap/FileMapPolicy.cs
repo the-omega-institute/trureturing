@@ -53,11 +53,16 @@ internal static class FileMapPolicy
     private static readonly IReadOnlyDictionary<string, string> DataVerifierImplementations =
         new Dictionary<string, string>(StringComparer.Ordinal)
         {
+            ["CommonExecutionEvidence"] = "tools/StrataLint.EngineeringScope/CommonExecutionEvidence.cs",
+            ["EngineeringProjectRegistry"] = "tools/StrataLint.Engine/RepositoryIo/EngineeringProjectRegistry.cs",
+            ["report-producer-scope"] = "tools/scripts/report/producer_paths.py",
+            ["JudgeSeedRegistration"] = "tools/scripts/report/dotnet_producer.py",
             ["BackfillInventoryLoader"] = BackfillLoaderPath,
             ["FileMapLoader"] = FileMapLoaderPath,
             ["FrozenStateRecordLoader"] = FrozenStateRecordLoaderPath,
             ["GateAuthorityRootCatalogLoader"] = GateAuthorityRootCatalogLoaderPath,
             ["LibraryNoteCatalog"] = LibraryNoteCatalogPath,
+            ["PackageMaterialRegistry"] = "tools/StrataLint.EngineeringScope/PackageMaterialRegistry.cs",
             ["ProblemCandidateCatalog"] = ProblemCandidateCatalogPath,
             ["RegistryLoader"] = RegistryLoaderPath,
             ["ScribeEmitter"] = ScribeEmitterPath,
@@ -518,11 +523,9 @@ internal static class FileMapPolicy
             if (matches.Length == 0)
             {
                 findings.Add(new FileMapFinding(
-                    IsReportPath(path) ? "FILEMAP-REPORT-UNREGISTERED" : "FILEMAP-UNCLASSIFIED",
+                    "FILEMAP-UNCLASSIFIED",
                     path,
-                    IsReportPath(path)
-                        ? "docs/reports files require an exact FILEMAP entry before use"
-                        : "tracked repository file matches no FILEMAP pattern"));
+                    "tracked repository file matches no FILEMAP pattern"));
             }
             else if (matches.Length > 1)
             {
@@ -532,26 +535,10 @@ internal static class FileMapPolicy
                     "tracked repository file matches multiple FILEMAP patterns: "
                     + string.Join(", ", matches.Select(static entry => entry.Pattern))));
             }
-
-            // Reports are an intentionally explicit inventory. A broad glob would make a
-            // newly added report usable without a FILEMAP edit, defeating the registration
-            // gate even though generic coverage sees a match.
-            if (IsReportPath(path)
-                && matches.Length == 1
-                && !string.Equals(matches[0].Pattern, path, StringComparison.Ordinal))
-            {
-                findings.Add(new FileMapFinding(
-                    "FILEMAP-REPORT-NONEXACT",
-                    path,
-                    $"docs/reports files require an exact FILEMAP entry; matched {matches[0].Pattern}"));
-            }
         }
 
         return findings;
     }
-
-    private static bool IsReportPath(string path) =>
-        path.StartsWith(RepositoryPathPolicy.ReportsRootPath, StringComparison.Ordinal);
 
     internal static IReadOnlyList<FileMapFinding> InspectPatternPopulation(
         FileMapManifest manifest,
@@ -562,10 +549,6 @@ internal static class FileMapPolicy
         var trackedPaths = paths.ToArray();
         return manifest.Entries
             .Where(static entry => entry.RuntimeDisposition != "run-local")
-            // SL-029 separates a FILEMAP registration from its content addition.
-            // An exact report path is therefore a reservation, including between
-            // content deletion and the subsequent registration cleanup.
-            .Where(static entry => !IsReportPath(entry.Pattern) || entry.Pattern.Contains('*'))
             .Where(entry => !trackedPaths.Any(entry.Matches))
             .Select(static entry => new FileMapFinding(
                 "FILEMAP-PATTERN-EMPTY",
@@ -763,11 +746,9 @@ internal static class FileMapPolicy
         || path.EndsWith(".json", StringComparison.Ordinal)
         || path.EndsWith(".scribe.cs", StringComparison.Ordinal);
 
-    internal static string[] TrackedPaths(string repositoryRoot) =>
-        GitIndexRepositoryFiles.EnumerateTracked(repositoryRoot)
+    private static string[] TrackedPaths(string repositoryRoot) =>
+        GitIndexRepositoryFiles.Enumerate(repositoryRoot)
             .Select(static file => file.RelativePath)
-            .Where(path => File.Exists(Absolute(repositoryRoot, path))
-                || new FileInfo(Absolute(repositoryRoot, path)).LinkTarget is not null)
             .ToArray();
 
     private static IReadOnlyDictionary<string, string> TrackedModes(string repositoryRoot) =>

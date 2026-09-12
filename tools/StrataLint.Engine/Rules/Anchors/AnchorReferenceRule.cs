@@ -4,7 +4,7 @@ namespace StrataLint.Engine;
 
 internal static class AnchorReferenceRule
 {
-    internal static ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context)
+    internal static ImmutableArray<RuleFinding> Evaluate(CurrentRuleContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         foreach (var (path, file) in RepositoryRules.FormalFiles(context.Current)
@@ -14,8 +14,6 @@ internal static class AnchorReferenceRule
             {
                 continue;
             }
-
-            var findingAffected = RepositoryRules.IsLeanClosureFactAffected(context, path);
 
             foreach (var anchor in header.Anchors)
             {
@@ -34,7 +32,7 @@ internal static class AnchorReferenceRule
                     MathlibAnchor { TargetKind: MathlibTargetKind.Module } mathlib => mathlib.Name,
                     _ => null,
                 };
-                if (moduleName is null && findingAffected)
+                if (moduleName is null)
                 {
                     findings.Add(new RuleFinding(
                         path.Value,
@@ -47,8 +45,7 @@ internal static class AnchorReferenceRule
                     && !LeanImportClosure.ImportsExternalModule(
                     context.Lean.Report,
                     LeanImportClosure.ModuleName(path),
-                    moduleName.Value)
-                    && findingAffected)
+                    moduleName.Value))
                 {
                     findings.Add(new RuleFinding(
                         path.Value,

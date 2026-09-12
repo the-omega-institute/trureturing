@@ -206,6 +206,14 @@ internal static class AdmissionEngine
 
 public static class AdmissionPipeline
 {
+    public static RuleExecutionOutcome CheckCurrent(CurrentRuleContext context) =>
+        RuleCatalog.Default.ExecuteCurrent(context);
+
+    public static RuleExecutionOutcome CheckDelta(DeltaRuleContext context) =>
+        context.CommonResults is null
+            ? new RuleExecutionOutcome.InfrastructureFailure("delta requires validated current/engineering evidence")
+            : RuleCatalog.Default.ExecuteDelta(context);
+
     public static AdmissionOutcome Evaluate(
         RepositorySnapshot current,
         RepositorySnapshot baseline,
@@ -232,9 +240,7 @@ public static class AdmissionPipeline
         VerifiedScribeEmissions? verifiedScribeEmissions,
         RuleEvaluationMeasure? measureRule = null,
         RuleApplicabilityMeasure? measureApplicability = null,
-        CanonicalizationMeasure? measureCanonicalization = null,
-        ScribeTestMapStore? testMapStore = null,
-        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null)
+        CanonicalizationMeasure? measureCanonicalization = null)
         => Evaluate(
             current,
             baseline,
@@ -245,9 +251,7 @@ public static class AdmissionPipeline
             verifiedScribeEmissions,
             measureRule,
             measureApplicability,
-            measureCanonicalization,
-            testMapStore,
-            deriveTestMap);
+            measureCanonicalization);
 
     internal static AdmissionOutcome EvaluateProtectedSurface(
         RepositorySnapshot current,
@@ -259,9 +263,7 @@ public static class AdmissionPipeline
         VerifiedScribeEmissions? verifiedScribeEmissions = null,
         RuleEvaluationMeasure? measureRule = null,
         RuleApplicabilityMeasure? measureApplicability = null,
-        CanonicalizationMeasure? measureCanonicalization = null,
-        ScribeTestMapStore? testMapStore = null,
-        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null)
+        CanonicalizationMeasure? measureCanonicalization = null)
         => Evaluate(
             current,
             baseline,
@@ -272,9 +274,7 @@ public static class AdmissionPipeline
             verifiedScribeEmissions,
             measureRule,
             measureApplicability,
-            measureCanonicalization,
-            testMapStore,
-            deriveTestMap);
+            measureCanonicalization);
 
     private static AdmissionOutcome Evaluate(
         RepositorySnapshot current,
@@ -286,20 +286,16 @@ public static class AdmissionPipeline
         VerifiedScribeEmissions? verifiedScribeEmissions,
         RuleEvaluationMeasure? measureRule = null,
         RuleApplicabilityMeasure? measureApplicability = null,
-        CanonicalizationMeasure? measureCanonicalization = null,
-        ScribeTestMapStore? testMapStore = null,
-        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null)
+        CanonicalizationMeasure? measureCanonicalization = null)
     {
-        var context = RuleEvaluationContext.Create(
+        var context = DeltaRuleContext.Create(
             current,
             baseline,
             policy,
             lean,
             changes,
             metaEvaluation,
-            verifiedScribeEmissions,
-            testMapStore,
-            deriveTestMap);
+            verifiedScribeEmissions);
         return RuleCatalog.Default.Execute(context, measureRule, measureApplicability) switch
         {
             RuleExecutionOutcome.Completed completed => Complete(

@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Text.Json;
+using Trureturing.Truth;
 
 namespace StrataLint.Engine;
 
@@ -9,19 +10,6 @@ internal sealed record TowerActualValidation(
 
 internal static class TowerActualValidator
 {
-    private static readonly ImmutableDictionary<string, string> KnownCiNames =
-        new Dictionary<string, string>(StringComparer.Ordinal)
-        {
-            ["candidate-engineering"] = "Candidate harness engineering checks",
-            ["baseline-admission"] = "Content-addressed dev baseline admission",
-            // Branch protection requires three contexts and matches them to jobs by
-            // display name, so a renamed job silently stops reporting: the PR then sits
-            // BLOCKED with nothing to point at, and the obvious repair is to drop the
-            // context, which quietly removes a required check. Two of the three names
-            // were pinned here; this is the third.
-            ["lean-inspect"] = "Canonical Lean report production",
-        }.ToImmutableDictionary(StringComparer.Ordinal);
-
     internal static TowerActualValidation Validate(
         TowerManifestSyntax syntax,
         RepositorySnapshot snapshot,
@@ -116,13 +104,7 @@ internal static class TowerActualValidator
         ImmutableArray<TowerFinding>.Builder findings,
         ImmutableArray<TowerCheck>.Builder checks)
     {
-        if (!snapshot.TryGetFile(RepositoryPathPolicy.WorkflowPath, out var workflow))
-        {
-            findings.Add(new TowerFinding("TOWER-CI-JOB", component.Id, "ci.yml is missing"));
-            return;
-        }
-
-        var jobs = ParseJobs(workflow.Text);
+        var jobs = CiChecks(snapshot);
         foreach (var member in component.Members.Order(StringComparer.Ordinal))
         {
             if (!jobs.TryGetValue(member, out var name))
@@ -131,49 +113,45 @@ internal static class TowerActualValidator
                 continue;
             }
 
-            if (KnownCiNames.TryGetValue(member, out var expected) && name != expected)
-            {
-                findings.Add(new TowerFinding(
-                    "TOWER-CI-JOB",
-                    component.Id,
-                    $"ci job {member} name is {name}, expected {expected}"));
-                continue;
-            }
-
-            checks.Add(new TowerCheck(component.Id, "verified", $"ci job {member} name={name}"));
+            checks.Add(new TowerCheck(component.Id, "verified", $"ci check {member} workflow={name}"));
         }
     }
 
-    private static ImmutableDictionary<string, string> ParseJobs(string yaml)
+    private static ImmutableDictionary<string, string> CiChecks(RepositorySnapshot snapshot)
     {
-        var lines = yaml.Replace("\r\n", "\n", StringComparison.Ordinal).Split('\n');
         var jobs = ImmutableDictionary.CreateBuilder<string, string>(StringComparer.Ordinal);
-        var inJobs = false;
-        string? current = null;
-        foreach (var line in lines)
+        var pr = Read(RepositoryPathPolicy.PrWorkflowPath);
+        var push = Read(RepositoryPathPolicy.PushWorkflowPath);
+        if (pr?.HasDeltaGate("dev") == true)
         {
-            if (line == "jobs:")
+            jobs[CiWorkflowDocument.DeltaJobName] = RepositoryPathPolicy.PrWorkflowPath;
+        }
+
+        if (push?.RunsOnBranch("push", "dev") == true)
+        {
+            var nested = push.HasEvent("workflow_call")
+                && pr?.RunsOnBranch("pull_request_target", "dev") == true
+                && pr.Jobs.Values.Count(job => job.Name == CiWorkflowDocument.PushCallName
+                    && job.Uses == "./" + RepositoryPathPolicy.PushWorkflowPath) == 1;
+            foreach (var name in TruthReleaseManifestReader.RequiredCheckNames)
             {
-                inJobs = true;
-                continue;
-            }
-            if (!inJobs) continue;
-            if (line.Length > 0 && !char.IsWhiteSpace(line[0])) break;
-            if (line.StartsWith("  ", StringComparison.Ordinal)
-                && !line.StartsWith("    ", StringComparison.Ordinal)
-                && line.EndsWith(':'))
-            {
-                current = line[2..^1];
-                jobs[current] = string.Empty;
-                continue;
-            }
-            if (current is not null && line.StartsWith("    name: ", StringComparison.Ordinal))
-            {
-                jobs[current] = line[10..].Trim().Trim('"', '\'');
+                if (!push.Jobs.TryGetValue(name, out var job) || job.Name != name || job.Uses is not null)
+                {
+                    continue;
+                }
+
+                jobs[name] = RepositoryPathPolicy.PushWorkflowPath;
+                if (nested)
+                {
+                    jobs[CiWorkflowDocument.PushCallName + " / " + name] = RepositoryPathPolicy.PushWorkflowPath;
+                }
             }
         }
 
         return jobs.ToImmutable();
+
+        CiWorkflowDocument? Read(string path) =>
+            snapshot.TryGetFile(path, out var file) ? CiWorkflowDocument.Parse(file.Text) : null;
     }
 
     private static void ValidateFiles(

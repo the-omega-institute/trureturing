@@ -37,7 +37,7 @@ internal static class DuplicateStatementAdvisory
     private const string CasesOn = "casesOn";
     private const string RecOn = "recOn";
 
-    internal static bool IsAffectedBy(RuleEvaluationContext context) =>
+    internal static bool IsAffectedBy(DeltaRuleContext context) =>
         ChangedLeanModules(context).Count > 0;
 
     // Admission carries exactly one elaborated report, the candidate's, so there is
@@ -46,7 +46,7 @@ internal static class DuplicateStatementAdvisory
     // collision class is reported only when this candidate touched the source of at
     // least one of its members. A pair that predates the candidate on both sides
     // stays silent, which keeps existing collisions off unrelated pull requests.
-    internal static ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context)
+    internal static ImmutableArray<RuleFinding> Evaluate(DeltaRuleContext context)
     {
         ArgumentNullException.ThrowIfNull(context);
         var changed = ChangedLeanModules(context);
@@ -102,7 +102,7 @@ internal static class DuplicateStatementAdvisory
         return findings.ToImmutable();
     }
 
-    private static HashSet<RepoPath> ChangedLeanModules(RuleEvaluationContext context) =>
+    private static HashSet<RepoPath> ChangedLeanModules(DeltaRuleContext context) =>
         context.RuleImplementationChanged
             ? context.Lean.Report.Files.Keys.ToHashSet()
             : context.Changes.Paths

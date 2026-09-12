@@ -17,18 +17,14 @@ namespace StrataLint.Tests;
 // 本测试刻意是纯 in-process 断言(不 spawn 进程),直接落在该全量 tools-test 中。
 public sealed class CliVerbLinkageTests
 {
-    // 正则允许 `@` 与 `dotnet run` 之间有前缀:这四个目标在同一物理行上先做一次
-    // 「二进制缺失即建」检查(新 worktree 无构建产物,否则首个此类目标以裸进程启动异常失败;
-    // 2026-09-11 五个实施席中两席共撞六次)。放宽前缀不削弱本测试的判据——它验的是
-    // 交给 CLI 的动词字面仍在 Makefile 里且已注册,而动词仍逐字匹配。
     [Fact]
     public void SettleMakeTargetsLinkToRegisteredVerb()
     {
         Assert.Contains("settle-atom", CliApplication.ImplementedCommands);
         var makefile = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile"));
         Assert.Equal(2, Regex.Matches(makefile, @"--\s+settle-atom(?:\s|$)", RegexOptions.CultureInvariant).Count);
-        Assert.Matches(@"(?m)^settle:\r?\n\t@[^\r\n]*dotnet run [^\r\n]*--project tools/StrataLint\.Cli/StrataLint\.Cli\.csproj [^\r\n]*-- settle-atom --request ", makefile);
-        Assert.Matches(@"(?m)^settle-clear:\r?\n\t@[^\r\n]*dotnet run [^\r\n]*--project tools/StrataLint\.Cli/StrataLint\.Cli\.csproj [^\r\n]*-- settle-atom --clear ", makefile);
+        Assert.Matches(@"(?m)^settle:\r?\n\t@dotnet run [^\r\n]*--project tools/StrataLint\.Cli/StrataLint\.Cli\.csproj [^\r\n]*-- settle-atom --request ", makefile);
+        Assert.Matches(@"(?m)^settle-clear:\r?\n\t@dotnet run [^\r\n]*--project tools/StrataLint\.Cli/StrataLint\.Cli\.csproj [^\r\n]*-- settle-atom --clear ", makefile);
     }
 
     [Fact]
@@ -36,7 +32,7 @@ public sealed class CliVerbLinkageTests
     {
         Assert.Contains("atom-context", CliApplication.ImplementedCommands);
         var makefile = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile"));
-        Assert.Matches(@"(?m)^atom-context:\r?\n\t@[^\r\n]*dotnet run [^\r\n]*--project tools/StrataLint\.Cli/StrataLint\.Cli\.csproj [^\r\n]*-- atom-context --atom-id ", makefile);
+        Assert.Matches(@"(?m)^atom-context:\r?\n\t@dotnet run [^\r\n]*--project tools/StrataLint\.Cli/StrataLint\.Cli\.csproj [^\r\n]*-- atom-context --atom-id ", makefile);
     }
 
     // 提取器至少应认出这么多次调用。低于此,说明提取器自己坏了(路径变了、调用形态变了),

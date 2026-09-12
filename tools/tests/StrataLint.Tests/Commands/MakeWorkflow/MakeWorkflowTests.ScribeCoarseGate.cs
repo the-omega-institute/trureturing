@@ -6,304 +6,61 @@ namespace StrataLint.Tests;
 
 public sealed partial class MakeWorkflowTests
 {
-    [Fact]
-    [UnsupportedOSPlatform("windows")]
-    public void ScribeCoarseGateSkipsEmissionProcessesForAnUnrelatedDelta()
-    {
-        if (OperatingSystem.IsWindows()) return;
-
-        using var fixture = new ScribeCoarseGateFixture();
-        fixture.Change("docs/develop/notes.md");
-
-        var result = fixture.Run();
-
-        Assert.Equal(0, result.ExitCode);
-        Assert.Empty(fixture.Invocations());
-    }
-
-    [Fact]
-    [UnsupportedOSPlatform("windows")]
-    public void ScribeCoarseGateSkipsEmissionProcessesForTheHardcodeLedger()
-    {
-        if (OperatingSystem.IsWindows()) return;
-
-        using var fixture = new ScribeCoarseGateFixture();
-        fixture.Change("tools/Architecture/HARDCODE-LEDGER.md");
-
-        var result = fixture.Run();
-
-        Assert.Equal(0, result.ExitCode);
-        Assert.Empty(fixture.Invocations());
-    }
-
-    [Fact]
-    [UnsupportedOSPlatform("windows")]
-    public void ScribeCoarseGateSkipsEmissionProcessesForAnEmptyDelta()
-    {
-        if (OperatingSystem.IsWindows()) return;
-
-        using var fixture = new ScribeCoarseGateFixture();
-
-        var result = fixture.Run();
-
-        Assert.Equal(0, result.ExitCode);
-        Assert.Empty(fixture.Invocations());
-    }
-
     [Theory]
-    [InlineData("D5/Probe.lean")]
-    [InlineData("Trureturing.lean")]
-    [InlineData("lean-toolchain")]
-    [InlineData("lake-manifest.json")]
-    [InlineData("lakefile.toml")]
-    [InlineData("Library/notes/probe.md")]
-    [InlineData("Meta/Digestion/backfill/probe.yaml")]
-    [InlineData("Problems/probe.md")]
-    [UnsupportedOSPlatform("windows")]
-    public void R15DescribeReportRunsForAuthoritativeInputDelta(string changedPath)
-    {
-        if (OperatingSystem.IsWindows()) return;
-
-        using var fixture = new ScribeCoarseGateFixture();
-        fixture.Change(changedPath);
-
-        var result = fixture.Run();
-
-        Assert.Equal(0, result.ExitCode);
-        Assert.Equal(
-            [
-                $"{fixture.ScribeDll} describe-report --check",
-            ],
-            fixture.Invocations());
-    }
-
-    [Fact]
-    [UnsupportedOSPlatform("windows")]
-    public void R15StatementProjectionReplayRunsForGoldenFixtureDelta()
-    {
-        if (OperatingSystem.IsWindows()) return;
-
-        using var fixture = new ScribeCoarseGateFixture();
-        fixture.Change("Golden/Projection/statement-projection-pilot-v1.json");
-
-        var result = fixture.Run();
-
-        Assert.Equal(0, result.ExitCode);
-        Assert.Equal(
-            [$"{fixture.ScribeDll} projections --check --report {fixture.Report}"],
-            fixture.Invocations());
-    }
-
-    [Theory]
+    [InlineData("")]
+    [InlineData("Blueprint/D5/Probe.md")]
+    [InlineData("docs/develop/notes.md")]
     [InlineData("Golden/values-kernels.toml")]
-    [InlineData("Evidence/D5/values.json")]
-    [InlineData("notes/r15-unrelated.txt")]
     [UnsupportedOSPlatform("windows")]
-    public void R15ProjectionFreshnessDoesNotEnterTheContentGate(string changedPath)
+    public void CurrentScribeRunsEveryConsistencyCheckWithoutGitOrBase(string changedPath)
     {
         if (OperatingSystem.IsWindows()) return;
-
-        using var fixture = new ScribeCoarseGateFixture();
-        fixture.Change(changedPath);
-
-        var result = fixture.Run();
-
-        Assert.Equal(0, result.ExitCode);
-        Assert.Empty(fixture.Invocations());
-    }
-
-    [Fact]
-    [UnsupportedOSPlatform("windows")]
-    public void MarkdownFormulaGateRunsForABlueprintProjectionDelta()
-    {
-        if (OperatingSystem.IsWindows()) return;
-
-        using var fixture = new ScribeCoarseGateFixture();
-        fixture.Change("Blueprint/D5/Probe.md");
-
-        var result = fixture.Run();
-
-        // Freshness still does not enter the gate; the formulas the projection carries do,
-        // and nothing else about a markdown-only delta does.
-        Assert.Equal(0, result.ExitCode);
-        Assert.Equal(
-            [$"{fixture.ScribeDll} markdown-check --report {fixture.Report} --paths-from -"],
-            fixture.Invocations());
-    }
-
-    [Fact]
-    [UnsupportedOSPlatform("windows")]
-    public void BlueprintSourceDeltaRunsDescribeAndTheMarkdownFormulaGate()
-    {
-        if (OperatingSystem.IsWindows()) return;
-
-        using var fixture = new ScribeCoarseGateFixture();
-        fixture.Change("Blueprint/D5/Probe.scribe.cs");
-
-        var result = fixture.Run();
-
-        Assert.Equal(0, result.ExitCode);
-        Assert.Equal(
-            [
-                $"{fixture.ScribeDll} describe-report --check",
-                $"{fixture.ScribeDll} markdown-check --report {fixture.Report} --paths-from -",
-            ],
-            fixture.Invocations());
-    }
-
-    [Fact]
-    [UnsupportedOSPlatform("windows")]
-    public void ScribeCoarseGateUsesTheDerivedProducerClosure()
-    {
-        if (OperatingSystem.IsWindows()) return;
-
-        using var fixture = new ScribeCoarseGateFixture();
-        fixture.Change(ScribeCoarseGateFixture.DerivedProducerPath);
-
-        var result = fixture.Run();
-
-        Assert.Equal(0, result.ExitCode);
-        Assert.DoesNotContain(
-            fixture.Invocations(),
-            invocation => invocation == $"{fixture.ScribeDll} emit --check");
-        Assert.Equal(
-            [
-                $"{fixture.ScribeDll} projections --check --report {fixture.Report}",
-                $"{fixture.ScribeDll} describe-report --check",
-            ],
-            fixture.Invocations());
-    }
-
-    [Theory]
-    [InlineData("HEAD")]
-    [InlineData("0000000000000000000000000000000000000000")]
-    [UnsupportedOSPlatform("windows")]
-    public void ScribeCoarseGateRejectsANonExactOrUnavailableBase(string baseRevision)
-    {
-        if (OperatingSystem.IsWindows()) return;
-
-        using var fixture = new ScribeCoarseGateFixture();
-
-        var result = fixture.Run(baseRevision);
-
-        Assert.Equal(2, result.ExitCode);
-        Assert.Empty(fixture.Invocations());
-    }
-
-    [UnsupportedOSPlatform("windows")]
-    private sealed class ScribeCoarseGateFixture : IDisposable
-    {
-        internal const string DerivedProducerPath = "tools/custom/DerivedProducer.cs";
-
-        private readonly TemporaryDirectory temporary = new();
-        private readonly string binDirectory;
-        private readonly string log;
-        private readonly string script;
-        private readonly string baseRevision;
-
-        internal ScribeCoarseGateFixture()
+        using var temporary = new TemporaryDirectory();
+        var root = temporary.Path;
+        var script = Path.Combine(root, ScribeContentChecksScriptPath);
+        Directory.CreateDirectory(Path.GetDirectoryName(script)!);
+        File.Copy(Path.Combine(TestRepositoryLayout.FindRoot(), ScribeContentChecksScriptPath), script);
+        if (changedPath.Length > 0)
         {
-            Repository = Path.Combine(temporary.Path, "repository");
-            binDirectory = Path.Combine(temporary.Path, "bin");
-            log = Path.Combine(temporary.Path, "scribe.log");
-            Report = Path.Combine(temporary.Path, "report.json");
-            ScribeDll = Path.Combine(temporary.Path, "StrataLint.Scribe.dll");
-            script = Path.Combine(
-                Repository,
-                "tools",
-                "scripts",
-                "workflow",
-                "scribe-content-checks.sh");
-            Directory.CreateDirectory(Path.GetDirectoryName(script)!);
-            Directory.CreateDirectory(binDirectory);
-            Directory.CreateDirectory(Path.Combine(Repository, "Blueprint"));
-            File.WriteAllText(Report, "report\n", new UTF8Encoding(false));
-            File.WriteAllText(ScribeDll, "fixture\n", new UTF8Encoding(false));
-
-            var root = TestRepositoryLayout.FindRoot();
-            File.Copy(
-                Path.Combine(root, ScribeContentChecksScriptPath),
-                script);
-            File.SetUnixFileMode(
-                script,
-                UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
-
-            var inputHelper = Path.Combine(
-                Repository,
-                "tools",
-                "scripts",
-                "report",
-                "lean-report-input.sh");
-            Directory.CreateDirectory(Path.GetDirectoryName(inputHelper)!);
-            WriteExecutable(
-                inputHelper,
-                $"#!/usr/bin/env bash\n[[ \"${{1:-}}\" == scribe-producer-paths ]] || exit 2\nprintf '%s\\n' '{DerivedProducerPath}'\n");
-            WriteExecutable(
-                Path.Combine(binDirectory, "dotnet"),
-                "#!/usr/bin/env bash\nprintf '%s\\n' \"$*\" >> \"$SCRIBE_LOG\"\n");
-            File.WriteAllText(
-                Path.Combine(Repository, "global.json"),
-                "{}\n",
-                new UTF8Encoding(false));
-
-            RunGit(["init", "--quiet"]);
-            RunGit(["add", "."]);
-            RunGit(
-                [
-                    "-c", "user.name=Scribe Test",
-                    "-c", "user.email=scribe@example.invalid",
-                    "commit", "--quiet", "-m", "base",
-                ]);
-            baseRevision = RunGit(["rev-parse", "HEAD"]);
+            var changed = Path.Combine(root, changedPath);
+            Directory.CreateDirectory(Path.GetDirectoryName(changed)!);
+            File.WriteAllText(changed, "candidate input\n");
         }
-
-        internal string Repository { get; }
-
-        internal string Report { get; }
-
-        internal string ScribeDll { get; }
-
-        internal void Change(string relativePath)
+        var bin = Path.Combine(root, "bin");
+        var log = Path.Combine(root, "calls");
+        var report = Path.Combine(root, "report.json");
+        var dll = Path.Combine(root, "scribe.dll");
+        File.WriteAllText(report, "candidate report");
+        File.WriteAllText(dll, "candidate binary");
+        WriteExecutable(Path.Combine(bin, "git"), "#!/bin/bash\nexit 93\n");
+        WriteExecutable(Path.Combine(bin, "dotnet"), "#!/bin/bash\nprintf '%s\\n' \"$*\" >> \"$SCRIBE_LOG\"\n");
+        ProcessOutput Run(params string[] selection) => TestProcessRunner.Run("/usr/bin/env",
+            [$"PATH={bin}:/usr/bin:/bin", $"SCRIBE_LOG={log}", "BASE=unavailable",
+             "/bin/bash", script, report, dll, .. selection], root, BoundedProcessRunner.HangDetectionBudget, 64 * 1024);
+        var result = Run();
+        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+        Assert.Equal(new[]
         {
-            var path = Path.Combine(
-                Repository,
-                relativePath.Replace('/', Path.DirectorySeparatorChar));
-            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-            File.AppendAllText(path, "changed\n", new UTF8Encoding(false));
-        }
-
-        internal ProcessOutput Run(string? baseRevisionOverride = null) => TestProcessRunner.Run(
-            "/bin/bash",
-            [
-                "-c",
-                "PATH=\"$1:/usr/bin:/bin\" SCRIBE_LOG=\"$2\" "
-                    + "exec /bin/bash \"$3\" \"$4\" \"$5\" \"$6\"",
-                "scribe-coarse-gate",
-                binDirectory,
-                log,
-                script,
-                Report,
-                ScribeDll,
-                baseRevisionOverride ?? baseRevision,
-            ],
-            Repository,
-            BoundedProcessRunner.HangDetectionBudget,
-            64 * 1024);
-
-        internal string[] Invocations() => File.Exists(log) ? File.ReadAllLines(log) : [];
-
-        public void Dispose() => temporary.Dispose();
-
-        private string RunGit(IReadOnlyList<string> arguments)
+            $"{dll} projections --check --report {report}",
+            $"{dll} describe-report --check",
+            $"{dll} markdown-check --report {report}",
+        }, File.ReadAllLines(log));
+        foreach (var invalid in new[] { new string('a', 40), root, "" })
         {
-            var result = TestProcessRunner.Run(
-                "git",
-                arguments,
-                Repository,
-                BoundedProcessRunner.HangDetectionBudget,
-                64 * 1024);
-            Assert.Equal(0, result.ExitCode);
-            return Encoding.UTF8.GetString(result.StandardOutput).Trim();
+            var rejected = Run(invalid);
+            Assert.True(rejected.ExitCode == 2, Encoding.UTF8.GetString(rejected.StandardError));
+            Assert.Contains("PATHS_FILE must be a readable regular file", Encoding.UTF8.GetString(rejected.StandardError), StringComparison.Ordinal);
+            Assert.Equal(3, File.ReadAllLines(log).Length);
         }
+        var paths = Path.Combine(root, "selected paths.txt");
+        File.WriteAllText(paths, "Blueprint/D5/Probe.md\n");
+        var selected = Run(paths);
+        Assert.True(selected.ExitCode == 0, Encoding.UTF8.GetString(selected.StandardError));
+        Assert.Equal(new[]
+        {
+            $"{dll} projections --check --report {report}",
+            $"{dll} describe-report --check",
+            $"{dll} markdown-check --report {report} --paths-from {paths}",
+        }, File.ReadAllLines(log).Skip(3));
     }
 }

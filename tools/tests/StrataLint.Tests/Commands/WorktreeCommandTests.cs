@@ -492,7 +492,7 @@ public sealed partial class WorktreeCommandTests
         ReviewRegressionTests.RunGit(root, "config", "user.name", "StrataLint Tests");
         File.WriteAllText(Path.Combine(root, "README.md"), "# worktree fixture\n");
         File.WriteAllText(Path.Combine(root, "lean-toolchain"), "leanprover/lean4:v4.31.0\n");
-        File.WriteAllText(Path.Combine(root, "lake-manifest.json"), "{\"version\": \"1.1.0\"}\n");
+        File.WriteAllText(Path.Combine(root, "lake-manifest.json"), LeanCacheFixtureFile.Manifest());
         ReviewRegressionTests.RunGit(root, "add", "README.md", "lean-toolchain", "lake-manifest.json");
         ReviewRegressionTests.RunGit(root, "commit", "-m", "fixture baseline");
     }
@@ -547,14 +547,6 @@ public sealed partial class WorktreeCommandTests
     }
 }
 
-// 本类的其余测试已迁往 Commands/Worktrees/LeanCacheEnsureCommandTests.WorktreeIntegration.cs。
-// 这一个留在原处**不是疏漏**:SL-003 的 unknown 棘轮按 (PartitionKey, SourcePath, Id)
-// 认身份,而该方法被派生器判为 conservative unknown;换文件即造新身份,判词原文:
-//   SL-003 …WorktreeIntegration.cs: conservative unknown test method introduced after
-//   fork point: tools/tests/StrataLint.Tests::LeanCacheEnsureCommandTests.
-//   MissingLakeCanBeSeededFromAnotherRegisteredWorktree
-// 要搬它,须先消掉它的 unknown 分类(补 ScribePathProvenance 或改测试的取路径方式),
-// 那是另一层,不夹带在本层。
 public sealed partial class LeanCacheEnsureCommandTests
 {
     [Fact]

@@ -91,11 +91,13 @@ USAGE
 
 repository="$ROOT"
 allow_seed=0
+writer_owned=0
 shift || true
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --repository) repository="${2:?--repository needs a value}"; shift 2 ;;
     --allow-seed) [[ "$VERB" == fetch ]] || usage; allow_seed=1; shift ;;
+    --writer-owned) [[ "$VERB" == fetch ]] || usage; writer_owned=1; shift ;;
     *) usage ;;
   esac
 done
@@ -479,6 +481,10 @@ fail_provenance() {
       done <<< "$releases"
     done
     # Keep the last candidate's receipt as the terminal, specific failure reason.
+    # If no release existed at all, there is no candidate receipt to preserve;
+    # still emit the structured miss contract so callers can distinguish an
+    # ordinary cache miss from a malformed fetcher invocation.
+    printf 'LEAN_CACHE_FETCH {"status":"miss","tag":"%s","reason":"no release for this address nor its config prefix or an allowed same-toolchain seed passed validation"}\n' "$tag"
     printf 'lean-cache-publish: no release for this address nor its config prefix or an allowed same-toolchain seed passed validation\n' >&2
     exit 1
     ;;

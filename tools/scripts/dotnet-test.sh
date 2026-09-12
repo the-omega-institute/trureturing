@@ -3,7 +3,8 @@ set -euo pipefail
 
 SCRIPT_DIRECTORY="$(dirname "${BASH_SOURCE[0]}")"
 ROOT="$(cd "$SCRIPT_DIRECTORY/../.." && pwd -P)"
-RESULTS_DIRECTORY="$(mktemp -d "${TMPDIR:-/tmp}/stratalint-test-results.XXXXXXXX")"
+RESULTS_DIRECTORY="${TEST_RESULTS_DIRECTORY:-$(mktemp -d "${TMPDIR:-/tmp}/stratalint-test-results.XXXXXXXX")}"
+mkdir -p "$RESULTS_DIRECTORY"
 completed=0
 
 finish() {
@@ -14,12 +15,12 @@ finish() {
     rc=1
   fi
   trap - EXIT
-  rm -rf -- "$RESULTS_DIRECTORY"
+  if [[ -z "${TEST_RESULTS_DIRECTORY:-}" ]]; then rm -rf -- "$RESULTS_DIRECTORY"; fi
   exit "$rc"
 }
 trap 'finish "$?"' EXIT
 
-dotnet test "$@" --configuration Release --verbosity normal \
+dotnet test "$@" --configuration Release --verbosity normal -p:RestoreLockedMode=true -nr:false \
   --logger 'trx;LogFilePrefix=canonical' --results-directory "$RESULTS_DIRECTORY"
 
 OWNER_ASSEMBLY_ARGS=()

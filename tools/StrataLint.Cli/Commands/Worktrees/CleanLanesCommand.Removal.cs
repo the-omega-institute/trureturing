@@ -1,4 +1,3 @@
-using static StrataLint.Cli.RegisteredWorktreeInventory;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;

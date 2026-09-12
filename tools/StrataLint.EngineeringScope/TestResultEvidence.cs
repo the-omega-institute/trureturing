@@ -1,5 +1,5 @@
-using System.Xml.Linq;
 using StrataLint.Engine;
+using System.Xml.Linq;
 
 namespace StrataLint.EngineeringScope;
 
@@ -18,8 +18,12 @@ internal sealed record TestResultEvidence(
         foreach (var file in files)
         {
             var document = XDocument.Load(file, LoadOptions.None);
+            if (document.Root?.Name.LocalName != "TestRun") throw new InvalidDataException("invalid TRX root");
+            var summary = document.Descendants().Single(element => element.Name.LocalName == "ResultSummary");
+            if ((string?)summary.Attribute("outcome") is not ("Completed" or "Passed"))
+                throw new InvalidDataException($"TRX run summary did not succeed: {file}");
             var counters = document.Descendants().Single(element => element.Name.LocalName == "Counters");
-            if (!int.TryParse((string?)counters.Attribute("executed"), out var fileExecuted))
+            if (!int.TryParse((string?)counters.Attribute("executed"), System.Globalization.CultureInfo.InvariantCulture, out var fileExecuted))
                 throw new InvalidDataException($"TRX has no executed count: {file}");
             executed += fileExecuted;
 
@@ -29,6 +33,21 @@ internal sealed record TestResultEvidence(
                     element => (string?)element.Attribute("testId")
                         ?? throw new InvalidDataException("TRX result has no test identity"),
                     StringComparer.Ordinal);
+            var passed = results.Values.Count(static result => (string?)result.Attribute("outcome") == "Passed");
+            if (results.Values.Any(static result => (string?)result.Attribute("outcome") is not ("Passed" or "NotExecuted")))
+                throw new InvalidDataException($"TRX contains a failed or unknown test outcome: {file}");
+            if (fileExecuted < 0 || fileExecuted != passed)
+                throw new InvalidDataException($"TRX executed count disagrees with successful results: {file}");
+            foreach (var name in new[] { "passed", "failed", "error", "timeout", "aborted" })
+            {
+                if (counters.Attribute(name) is not { } counter) continue;
+                if (!int.TryParse(counter.Value, System.Globalization.CultureInfo.InvariantCulture, out var value)
+                    || value != (name == "passed" ? passed : 0))
+                    throw new InvalidDataException($"TRX {name} counter disagrees with successful results: {file}");
+            }
+            var definitions = document.Descendants().Where(element => element.Name.LocalName == "UnitTest")
+                .Select(element => (string?)element.Attribute("id")).ToHashSet(StringComparer.Ordinal);
+            if (results.Keys.Any(id => !definitions.Contains(id))) throw new InvalidDataException("TRX result has no matching definition");
             foreach (var result in results.Values)
             {
                 var message = result.Descendants()

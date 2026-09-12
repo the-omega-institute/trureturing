@@ -11,8 +11,6 @@ public sealed partial class MakeWorkflowTests
     private const string LocalHarnessGateScriptPath =
         "tools/scripts/local-harness-gate.sh";
     private const string PreflightScriptPath = "tools/scripts/preflight.sh";
-    private const string AdmissionBaseScriptPath =
-        "tools/scripts/lib/admission-base-lib.sh";
     private const string ScribeContentChecksScriptPath =
         "tools/scripts/workflow/scribe-content-checks.sh";
     private const string WorktreeInitScriptPath = "tools/scripts/worktree-init.sh";
@@ -64,7 +62,6 @@ public sealed partial class MakeWorkflowTests
         "truth-export",
         "deliver-check",
         "deposit",
-        "deposit-uncovered",
         "cover",
         "cover-batch",
         "decompose",
@@ -74,22 +71,22 @@ public sealed partial class MakeWorkflowTests
         "settle-clear",
         "worktree",
         "worktree-clean",
-        "worktree-remove",
         "pr-open",
         "pr-watch",
         "preflight",
         "gate",
-        "census",
-        "census-derivational",
+        "current",
+        "delta",
     ];
 
     private static readonly string[] ToolsTargets =
     [
         "help",
-        "settle-batch",
         "dotnet",
         "check-fast",
         "test",
+        "ci-build",
+        "engineering",
         "engineering-tests",
         "selftest",
         "capacity-audit",
@@ -97,12 +94,6 @@ public sealed partial class MakeWorkflowTests
         "clean-lanes",
         "xi-quantization",
         "xi-quantization-test",
-        "prime-slab-search",
-        "prime-slab-test",
-        "prime-slab-device-test",
-        "prime-slab-verify",
-        "prime-slab-mutation-test",
-        "census-test",
     ];
 
     [Fact]
@@ -154,80 +145,6 @@ public sealed partial class MakeWorkflowTests
             """ + "\n",
             System.Text.Encoding.UTF8.GetString(result.StandardOutput));
         Assert.Equal("lean provenance\n", System.Text.Encoding.UTF8.GetString(result.StandardError));
-    }
-
-    [Fact]
-    public void PreflightRefreshesLeanReportAfterDotnetAndBeforeTests()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var preflight = File.ReadAllText(Path.Combine(root, PreflightScriptPath));
-
-        var dotnetIndex = preflight.IndexOf("CI=true make -C tools dotnet", StringComparison.Ordinal);
-        var leanReportIndex = preflight.IndexOf("make lean-report", StringComparison.Ordinal);
-        var testIndex = preflight.IndexOf(
-            "CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make -C tools engineering-tests",
-            StringComparison.Ordinal);
-
-        Assert.True(dotnetIndex >= 0, "preflight must build the .NET report consumer");
-        Assert.True(leanReportIndex >= 0, "preflight must refresh the raw Lean report");
-        Assert.True(testIndex >= 0, "preflight must run the harness tests");
-        Assert.True(dotnetIndex < leanReportIndex, "the .NET build must precede report production");
-        Assert.True(leanReportIndex < testIndex, "report production must precede every test consumer");
-    }
-
-    [Fact]
-    public void PreflightOwnsExplicitBaseValidationWhileLocalGateDelegatesForkResolution()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var preflight = File.ReadAllText(Path.Combine(root, PreflightScriptPath));
-        var localGate = File.ReadAllText(Path.Combine(root, LocalHarnessGateScriptPath));
-        var admissionBase = File.ReadAllText(Path.Combine(root, AdmissionBaseScriptPath));
-
-        const string source = "source \"$ROOT/tools/scripts/lib/admission-base-lib.sh\"";
-        const string localResolve =
-            "admission_resolve_base \"$CANDIDATE_ROOT\" \"$BASE_REF\"";
-        string[] ordered =
-        [
-            "ROOT=\"$(git rev-parse --show-toplevel)\"",
-            "git cat-file -t \"$BASE\"",
-            "git merge-base --is-ancestor \"$BASE\" HEAD",
-            "CI=true make -C tools dotnet",
-        ];
-        var cursor = -1;
-        foreach (var fragment in ordered)
-        {
-            cursor = preflight.IndexOf(fragment, cursor + 1, StringComparison.Ordinal);
-            Assert.True(cursor >= 0, $"preflight contract is absent or out of order: {fragment}");
-        }
-        Assert.Contains(source, localGate, StringComparison.Ordinal);
-        Assert.Contains(localResolve, localGate, StringComparison.Ordinal);
-        Assert.DoesNotContain(source, preflight, StringComparison.Ordinal);
-        Assert.DoesNotContain("admission_resolve_base", preflight, StringComparison.Ordinal);
-        Assert.DoesNotContain("fetch --prune", preflight, StringComparison.Ordinal);
-        Assert.DoesNotContain("BASE_RESOLUTION_FAILED", preflight, StringComparison.Ordinal);
-        Assert.DoesNotContain("BASE_RESOLUTION_FAILED", localGate, StringComparison.Ordinal);
-        Assert.Single(Regex.Matches(admissionBase, "BASE_RESOLUTION_FAILED").Cast<Match>());
-        Assert.Single(Regex.Matches(
-            admissionBase,
-            "\\bgit\\s+-C\\s+\"\\$repository_root\"\\s+merge-base\\b").Cast<Match>());
-        Assert.DoesNotContain("git -C \"$CANDIDATE_ROOT\" merge-base", localGate, StringComparison.Ordinal);
-        Assert.Contains("merge-base --is-ancestor", preflight, StringComparison.Ordinal);
-        Assert.Contains("make gate BASE=\"$BASE_SHA\"", preflight, StringComparison.Ordinal);
-        Assert.DoesNotContain("BASE_ADVANCED", preflight, StringComparison.Ordinal);
-        Assert.DoesNotContain("merge-base --is-ancestor", localGate, StringComparison.Ordinal);
-        Assert.DoesNotContain("pinned base is not a strict ancestor", localGate, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void LocalGateHonorsExplicitTemporaryDirectory()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var localGate = File.ReadAllText(Path.Combine(root, LocalHarnessGateScriptPath));
-
-        Assert.Contains(
-            "mktemp -d \"${TMPDIR:-/tmp}/stratalint-local-gate.XXXXXXXX\"",
-            localGate,
-            StringComparison.Ordinal);
     }
 
     [Fact]
@@ -397,8 +314,8 @@ public sealed partial class MakeWorkflowTests
         File.WriteAllText(Path.Combine(fixture.Path, "lakefile.toml"), "name = \"Fixture\"\n");
         File.WriteAllText(Path.Combine(fixture.Path, "README.md"), "baseline\n");
         File.WriteAllText(
-            Path.Combine(fixture.Path, ".github", "workflows", "ci.yml"),
-            "jobs:\n  lean-inspect:\n    steps: []\n  baseline-admission:\n    steps: []\n");
+            Path.Combine(fixture.Path, ".github", "workflows", "ci-pr.yml"),
+            "on: {pull_request_target: {branches: [dev]}}\njobs: {delta: {steps: []}}\n");
         File.WriteAllText(
             Path.Combine(fixture.Path, LeanReportPairScriptPath),
             "#!/usr/bin/env bash\n");
@@ -505,9 +422,6 @@ public sealed partial class MakeWorkflowTests
     [Fact]
     public void CleanLanesAdapterForwardsTheScopeFlagToTheCli()
     {
-        // 路径写成字面量并内联 FindRoot():ScribeTestMapDeriver 只静态解析
-        // Path.Combine(XxxRepositoryLayout.FindRoot(), "字面量") 这一形式;
-        // 先赋值给 root 或改用常量都会判 VariablePath → unknown → 撞 SL-003 棘轮。
         var script = File.ReadAllText(
             Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/clean-lanes.sh"));
 

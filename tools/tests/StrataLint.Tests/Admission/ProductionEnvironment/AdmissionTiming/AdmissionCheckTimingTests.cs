@@ -112,11 +112,24 @@ public sealed partial class ProductionEnvironmentTests
         var changes = RawChangeSet.Create([RuleFixture.BlueprintPath]);
         ImmutableArray<RuleId> expectedExecutedRules =
         [
+            RuleId.CreateKnown(1),
+            RuleId.CreateKnown(2),
+            RuleId.CreateKnown(3),
             RuleId.CreateKnown(4),
             RuleId.CreateKnown(6),
+            RuleId.CreateKnown(8),
+            RuleId.CreateKnown(10),
             RuleId.CreateKnown(11),
+            RuleId.CreateKnown(12),
             RuleId.CreateKnown(15),
+            RuleId.CreateKnown(17),
+            RuleId.CreateKnown(18),
+            RuleId.CreateKnown(19),
+            RuleId.CreateKnown(20),
+            RuleId.CreateKnown(21),
+            RuleId.CreateKnown(23),
             RuleId.CreateKnown(25),
+            RuleId.CreateKnown(26),
         ];
         var gateway = new FakeRepositoryGateway(
             changes,

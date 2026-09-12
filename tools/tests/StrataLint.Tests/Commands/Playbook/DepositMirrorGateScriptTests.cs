@@ -4,17 +4,14 @@ namespace StrataLint.Tests;
 
 public sealed partial class DepositCoverWorkflowScriptTests
 {
-    [Theory]
-    [InlineData("deposit")]
-    [InlineData("deposit-uncovered")]
-    public void DepositRejectsNewModuleWhenBlueprintMirrorIsMissing(string command)
+    [Fact]
+    public void DepositRejectsNewModuleWhenBlueprintMirrorIsMissing()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
         fixture.AddNewFormalization(withMirror: false);
 
-        var result = fixture.Run(command, TransactionFixture.NewGid,
-            atomId: command == "deposit" ? TransactionFixture.AtomId : null, baseRevision: "HEAD");
+        var result = fixture.Run("deposit", TransactionFixture.NewGid, baseRevision: "HEAD");
 
         Assert.NotEqual(0, result.ExitCode);
         Assert.Contains(
@@ -27,18 +24,15 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(0, fixture.FreezeCount(TransactionFixture.NewLeanPath));
     }
 
-    [Theory]
-    [InlineData("deposit")]
-    [InlineData("deposit-uncovered")]
-    public void DepositAcceptsNewModuleWhenBlueprintMirrorIsPresent(string command)
+    [Fact]
+    public void DepositAcceptsNewModuleWhenBlueprintMirrorIsPresent()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
         fixture.AddNewFormalization(withMirror: true);
         var before = fixture.CommitCount();
 
-        var result = fixture.Run(command, TransactionFixture.NewGid,
-            atomId: command == "deposit" ? TransactionFixture.AtomId : null, baseRevision: "HEAD");
+        var result = fixture.Run("deposit", TransactionFixture.NewGid, baseRevision: "HEAD");
 
         Assert.True(result.ExitCode == 0, Diagnostics(result));
         Assert.Equal(before, fixture.CommitCount());

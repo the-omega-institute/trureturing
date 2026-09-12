@@ -9,7 +9,7 @@ internal static partial class RepositoryRules
     // This compares path stems only. It protects the source/projection skeleton,
     // never Markdown bytes, provenance, freshness, or history.
     private static ImmutableArray<RuleFinding> BlueprintProjectionSkeleton(
-        RuleEvaluationContext context)
+        CurrentRuleContext context)
     {
         var markdown = context.Current.Files.Keys
             .Where(static path => IsBlueprintPath(path.Value, ".md"))
@@ -22,17 +22,13 @@ internal static partial class RepositoryRules
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         findings.AddRange(markdown
             .Except(scribeSources, StringComparer.Ordinal)
-            .Where(stem => BlueprintStemAffected(context, stem))
             .Order(StringComparer.Ordinal)
             .Select(static stem => new RuleFinding(
                 stem + ".md",
                 "Blueprint markdown has no matching .scribe.cs source")));
         findings.AddRange(scribeSources
             .Except(markdown, StringComparer.Ordinal)
-            .Where(stem => BlueprintStemAffected(context, stem))
-            .Where(stem => !IsProtectedCandidateOnlyScribeGrowth(
-                context,
-                stem + ".scribe.cs"))
+            .Where(stem => !BootstrapGate.IsProtected(RepoPath.CreateKnown(stem + ".scribe.cs")))
             .Order(StringComparer.Ordinal)
             .Select(static stem => new RuleFinding(
                 stem + ".scribe.cs",
@@ -40,12 +36,21 @@ internal static partial class RepositoryRules
         return findings.ToImmutable();
     }
 
-    private static bool BlueprintStemAffected(RuleEvaluationContext context, string stem) =>
+    private static ImmutableArray<RuleFinding> ProtectedBlueprintSkeleton(DeltaRuleContext context) =>
+        context.Current.Files.Keys
+            .Where(path => IsBlueprintPath(path.Value, ".scribe.cs") && BootstrapGate.IsProtected(path))
+            .Where(path => BlueprintStemAffected(context, path.Value[..^".scribe.cs".Length]))
+            .Where(path => !context.Current.TryGetFile(path.Value[..^".scribe.cs".Length] + ".md", out _))
+            .Where(path => !IsProtectedCandidateOnlyScribeGrowth(context, path.Value))
+            .Select(static path => new RuleFinding(path.Value, "Blueprint Scribe source has no matching .md projection"))
+            .ToImmutableArray();
+
+    private static bool BlueprintStemAffected(DeltaRuleContext context, string stem) =>
         context.IsBaseFactAffected(stem + ".md")
         || context.IsBaseFactAffected(stem + ".scribe.cs");
 
     private static bool IsProtectedCandidateOnlyScribeGrowth(
-        RuleEvaluationContext context,
+        DeltaRuleContext context,
         string path) =>
         !context.Baseline.TryGetFile(path, out _)
         && context.Changes.Paths.Any(changed => changed.Value == path)

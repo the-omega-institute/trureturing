@@ -18,17 +18,17 @@ internal static partial class RepositoryRules
     // 故判据不是「执行了什么」(文本上不可判),而是「有没有把另一修订的文件物化进 shell」:
     // 能物化修订文件的 git 动词(show <rev>:<path>、cat-file、archive、worktree add、checkout <rev>、
     // restore --source、read-tree、checkout-index)在判官面上只许指向 HEAD;修订为变量时 fail-closed。
-    // 作用面 = `.github/**`(workflow 与 CI 脚本)+ `tools/scripts/workflow/**`(CI 调用的 harness 脚本);
+    // Scope includes .github/**, tools/scripts/workflow/** and the shared ci-stage.sh entrypoint.
     // 这是四次案例全部发生的面。`tools/scripts/ingest.sh` 一类本地 producer 与 `tools/scripts/agent/**`
     // 不在面内:它们在 lane 里把 base 当数据读,不判决候选。
     private static bool JudgeSurfaceScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
         JudgeSurfaceRevisionScanner.IsJudgeSurfacePath(artifact.Path.Value);
 
-    private static bool JudgeSurfaceAffected(RuleEvaluationContext context) =>
+    private static bool JudgeSurfaceAffected(DeltaRuleContext context) =>
         Changed(context, JudgeSurfaceRevisionScanner.IsJudgeSurfacePath);
 
     private static ImmutableArray<RuleFinding> JudgeSurfaceRevisionMaterialization(
-        RuleEvaluationContext context)
+        DeltaRuleContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         foreach (var (path, file) in context.Current.Files

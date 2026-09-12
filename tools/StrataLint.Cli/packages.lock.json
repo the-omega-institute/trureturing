@@ -50,6 +50,19 @@
           "YamlDotNet": "[16.3.0, )"
         }
       },
+      "stratalint.engineeringscope": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )",
+          "StrataLint.Lean": "[1.0.0, )"
+        }
+      },
+      "stratalint.lean": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )"
+        }
+      },
       "stratalint.scribe": {
         "type": "Project",
         "dependencies": {

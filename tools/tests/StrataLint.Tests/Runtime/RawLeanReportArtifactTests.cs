@@ -1,6 +1,8 @@
 using System.Text;
 using System.Security.Cryptography;
 using System.IO.Compression;
+using System.Collections.Concurrent;
+using System.Runtime.CompilerServices;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -14,7 +16,7 @@ public sealed class RawLeanReportArtifactTests
         + "\"kind\": \"axiom\", \"name\": \"probe\", \"name_key\": \"ns(n0,5:probe)\", "
         + "\"statement_id\": \"sha256:452d97f1469d85ac204ab83dbbb919e19289c28674b14ab9df96586c535b1763\", "
         + "\"type_sha256\": \"sha256:5f53330fdefb1897242ca642a5528fb5eefbf7ae094afd313bb56570e981095a\"}], "
-        + "\"imports\": [], \"information_registration_errors\": [], \"module\": \"Trureturing\", "
+        + "\"imports\": [], \"module\": \"Trureturing\", "
         + "\"source_path\": \"Trureturing.lean\", \"source_sha256\": "
         + "\"sha256:da33f5efbd5a92bd6c18a7a11a36dfbcd0ac00fbe05c267a85dec98370deadd4\"}], "
         + "\"schema\": \"stratalint-raw-lean-report-v2\"}\n";
@@ -133,6 +135,86 @@ public sealed class RawLeanReportArtifactTests
         var exception = Assert.Throws<InvalidDataException>(() => declaration.LoadTypeRepresentation());
         Assert.Contains("material archive", exception.Message, StringComparison.OrdinalIgnoreCase);
         Assert.Contains("missing", exception.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void FullMaterialValidationDoesNotPopulateTheDemandReadCache()
+    {
+        using var temporary = new TemporaryDirectory();
+        var path = Path.Combine(temporary.Path, "raw-lean-report.json");
+        var address = WriteMaterialFixture(path, "statement-v1(test)");
+        var read = RawLeanReportArtifact.OpenStatementMaterialSource(path, [address, address]);
+
+        // Inspect reachable material directly: GC timing and machine speed must
+        // not decide whether full validation retains every expanded string.
+        var archive = read.Target!;
+        ValidateAllMaterials(archive);
+        var cache = MaterialCache(archive);
+        Assert.Empty(cache);
+
+        var value = read(address);
+        Assert.Equal("statement-v1(test)", value);
+        Assert.Same(value, read(address));
+        Assert.Single(cache);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void MaterialValidationPreservesUnicodeAndLazyReads(bool validateMaterials)
+    {
+        const string material = "statement-v1(∀ α, Ω𝒪😀)";
+        using var temporary = new TemporaryDirectory();
+        var path = Path.Combine(temporary.Path, "raw-lean-report.json");
+        WriteMaterialFixture(path, material);
+
+        var report = RawLeanReportArtifact.ReadFile(path, Snapshot(), validateMaterials);
+        var declaration = Assert.Single(Assert.Single(report.Files).Value.Declarations);
+        Assert.Equal(material, declaration.LoadTypeRepresentation());
+        Assert.Same(declaration.LoadTypeRepresentation(), declaration.LoadTypeRepresentation());
+    }
+
+    [Theory]
+    [InlineData("hash", "hash mismatch")]
+    [InlineData("utf8", "strict UTF-8")]
+    [InlineData("missing", "missing")]
+    [InlineData("extra", "unreferenced")]
+    [InlineData("duplicate", "duplicate")]
+    [InlineData("address", "malformed")]
+    [InlineData("truncated", "invalid")]
+    public void FullMaterialValidationRejectsCorruptionBeforeAnyDemandRead(string corruption, string diagnostic)
+    {
+        using var temporary = new TemporaryDirectory();
+        var path = Path.Combine(temporary.Path, "raw-lean-report.json");
+        WriteMaterialFixture(path, "statement-v1(test)");
+        var materials = RawLeanReportArtifact.MaterialsPath(path);
+        if (corruption == "truncated")
+        {
+            var bytes = TemporaryFileSystem.File.ReadAllBytes(materials);
+            File.WriteAllBytes(materials, bytes[..^8]);
+        }
+        else
+        {
+            using var archive = ZipFile.Open(materials, ZipArchiveMode.Update);
+            var entry = Assert.Single(archive.Entries);
+            var name = entry.FullName;
+            if (corruption is "hash" or "utf8" or "missing" or "address") entry.Delete();
+            if (corruption != "missing")
+            {
+                var replacement = archive.CreateEntry(corruption switch
+                {
+                    "extra" => "sha256/" + new string('0', 64),
+                    "address" => "sha256/not-an-address",
+                    _ => name,
+                });
+                using var stream = replacement.Open();
+                stream.Write(corruption == "utf8" ? [0xff] : Encoding.UTF8.GetBytes("statement-v1(changed)"));
+            }
+        }
+
+        var exception = Assert.Throws<InvalidDataException>(() =>
+            RawLeanReportArtifact.ReadFile(path, Snapshot(), validateMaterials: true));
+        Assert.Contains(diagnostic, exception.ToString(), StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
@@ -265,6 +347,29 @@ public sealed class RawLeanReportArtifactTests
         Assert.Contains(
             report.Files.Single().Value.Declarations,
             declaration => declaration.Name == "term𝒪φ");
+    }
+
+    // Fixed CLR member access keeps the observed object and operations explicit;
+    // it neither discovers members nor dispatches through a reflection wrapper.
+    private const string MaterialArchiveType =
+        "StrataLint.Engine.RawLeanReportArtifact+StatementMaterialArchive, StrataLint.Engine";
+
+    [UnsafeAccessor(UnsafeAccessorKind.Method, Name = "ValidateAll")]
+    private static extern void ValidateAllMaterials([UnsafeAccessorType(MaterialArchiveType)] object archive);
+
+    [UnsafeAccessor(UnsafeAccessorKind.Field, Name = "material")]
+    private static extern ref ConcurrentDictionary<string, Lazy<string>> MaterialCache(
+        [UnsafeAccessorType(MaterialArchiveType)] object archive);
+
+    private static string WriteMaterialFixture(string path, string material)
+    {
+        var declaration = new LeanDeclaration("probe", "axiom", material, [])
+        {
+            NameKey = "ns(n0,5:probe)",
+        };
+        RawLeanReportArtifact.WriteFile(path, Snapshot(), LeanAxiomReport.Create(
+            new Dictionary<string, LeanFileReport> { ["Trureturing.lean"] = new([], [declaration]) }));
+        return declaration.StatementTypeAddress;
     }
 
     private static RepositorySnapshot Snapshot()

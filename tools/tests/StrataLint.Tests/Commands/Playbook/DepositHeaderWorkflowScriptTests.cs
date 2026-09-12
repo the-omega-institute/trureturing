@@ -44,10 +44,8 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Empty(console.Error);
     }
 
-    [Theory]
-    [InlineData("deposit")]
-    [InlineData("deposit-uncovered")]
-    public void DepositRejectsSevenLineWrappedDigestBeforeFreezeAndWritesNothing(string command)
+    [Fact]
+    public void DepositRejectsSevenLineWrappedDigestBeforeFreezeAndWritesNothing()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -55,7 +53,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var commitsBefore = fixture.CommitCount();
         var blueprintBefore = fixture.BlueprintState();
 
-        var result = fixture.Run(command, atomId: command == "deposit" ? TransactionFixture.AtomId : null, rejectDepositHeader: true);
+        var result = fixture.Run("deposit", rejectDepositHeader: true);
 
         Assert.NotEqual(0, result.ExitCode);
         Assert.Contains(
@@ -69,10 +67,8 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.DoesNotContain("dotnet:ledger-align", fixture.CallKinds());
     }
 
-    [Theory]
-    [InlineData("deposit")]
-    [InlineData("deposit-uncovered")]
-    public void DepositRejectsSevenLineWrappedDigestWithExistingFreezeBeforeEmission(string command)
+    [Fact]
+    public void DepositRejectsSevenLineWrappedDigestWithExistingFreezeBeforeEmission()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -82,7 +78,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var blueprintBefore = fixture.BlueprintState();
         var ledgerBefore = fixture.LedgerState();
 
-        var result = fixture.Run(command, atomId: command == "deposit" ? TransactionFixture.AtomId : null, rejectDepositHeader: true);
+        var result = fixture.Run("deposit", rejectDepositHeader: true);
 
         Assert.NotEqual(0, result.ExitCode);
         Assert.Contains(

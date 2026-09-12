@@ -45,6 +45,7 @@ internal static partial class JudgeSurfaceRevisionScanner
 
     internal static bool IsJudgeSurfacePath(string path) =>
         path.StartsWith(".github/", StringComparison.Ordinal)
+        || path == "tools/scripts/ci-stage.sh"
         || path.StartsWith("tools/scripts/workflow/", StringComparison.Ordinal);
 
     internal static ImmutableArray<string> Scan(string path, string text)

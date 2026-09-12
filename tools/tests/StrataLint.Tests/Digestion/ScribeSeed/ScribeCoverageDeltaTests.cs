@@ -115,7 +115,7 @@ public sealed class ScribeCoverageDeltaTests
         Assert.DoesNotContain("scribe-", result.Output, StringComparison.Ordinal);
     }
 
-    private static RuleEvaluationContext AdmissionContext(CoverageWithoutScribeFixture fixture, RawChangeSet changes)
+    private static DeltaRuleContext AdmissionContext(CoverageWithoutScribeFixture fixture, RawChangeSet changes)
     {
         var repository = fixture.Gateway(changes);
         var current = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
@@ -127,7 +127,7 @@ public sealed class ScribeCoverageDeltaTests
         var lean = Assert.IsType<LeanValidationOutcome.Accepted>(
             LeanClosureValidator.Validate(current, fixture.Inputs.Report)).Capability;
         var bootstrap = Assert.IsType<BootstrapOutcome.Clear>(BootstrapGate.Evaluate(changes));
-        return RuleEvaluationContext.Create(current, baseline, policy, lean, changes,
+        return DeltaRuleContext.Create(current, baseline, policy, lean, changes,
             MetaEvaluationProfile.ForClear(bootstrap.Capability), fixture.Verified);
     }
 }

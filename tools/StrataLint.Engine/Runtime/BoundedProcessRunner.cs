@@ -8,15 +8,6 @@ internal sealed record StreamedProcessOutput<T>(int ExitCode, T StandardOutput, 
 
 internal static class BoundedProcessRunner
 {
-    internal delegate ProcessOutput ProcessRunner(
-        string fileName,
-        IEnumerable<string> arguments,
-        string workingDirectory,
-        TimeSpan timeout,
-        int maximumOutputBytes,
-        ReadOnlyMemory<byte> standardInput = default,
-        IReadOnlyDictionary<string, string>? environment = null);
-
     internal static readonly TimeSpan HangDetectionBudget = TimeSpan.FromMinutes(5);
 
     // Flow the startup seam into Task.Run without sharing overrides between checks.

@@ -31,7 +31,7 @@ public sealed class ValuesBindingRuleTests
     }
 
     [Fact]
-    public void Sl018DoesNotReplayCommittedStatementIdsForAnUnrelatedCandidateDelta()
+    public void Sl018CurrentChecksItsBindingWithoutDeltaSelection()
     {
         var fixture = Fixture();
         var text = fixture.Files[ValuesKernelBindingValidator.RelativePath];
@@ -44,7 +44,7 @@ public sealed class ValuesBindingRuleTests
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
             RuleCatalog.Default.Execute(fixture.Build(RawChangeSet.Create(["notes/unrelated.txt"]))));
 
-        Assert.DoesNotContain(
+        Assert.Contains(
             completed.Capability.Diagnostics,
             static diagnostic => diagnostic.RuleId == RuleId.CreateKnown(18));
     }

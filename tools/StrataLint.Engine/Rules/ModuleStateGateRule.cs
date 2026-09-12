@@ -9,10 +9,10 @@ internal static class ModuleStateGateRule
     internal static bool IsApplicable(RepositoryFile artifact, RuleApplicabilityContext context) =>
         IsD5Lean(artifact.Path.Value);
 
-    internal static bool IsAffectedBy(RuleEvaluationContext context) =>
+    internal static bool IsAffectedBy(DeltaRuleContext context) =>
         context.Changes.Entries.Any(change => IsCandidateAddition(context, change));
 
-    internal static ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context)
+    internal static ImmutableArray<RuleFinding> Evaluate(DeltaRuleContext context)
     {
         var states = LeanTruthStates.Resolve(context.Current, context.Lean);
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
@@ -49,7 +49,7 @@ internal static class ModuleStateGateRule
         return findings.ToImmutable();
     }
 
-    private static bool IsCandidateAddition(RuleEvaluationContext context, RawChange change) =>
+    private static bool IsCandidateAddition(DeltaRuleContext context, RawChange change) =>
         change.Kind is RawChangeKind.Added
         && IsD5Lean(change.Path.Value)
         && context.Current.Files.ContainsKey(change.Path)

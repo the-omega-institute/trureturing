@@ -9,14 +9,13 @@ namespace StrataLint.Engine;
 internal static partial class RepositoryRules
 {
     [FindingEdge(FindingEdgeKind.Local)]
-    internal static ImmutableArray<RuleFinding> FormulaValidation(RuleEvaluationContext context)
+    internal static ImmutableArray<RuleFinding> FormulaValidation(CurrentRuleContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         foreach (var (path, file) in context.Current.Files.OrderBy(item => item.Key.Value, StringComparer.Ordinal))
         {
             if (RepositoryPathPolicy.Validate(path, context.Policy) is not null
-                || !path.Value.EndsWith(".json", StringComparison.Ordinal)
-                || !context.IsBaseFactAffected(path.Value))
+                || !path.Value.EndsWith(".json", StringComparison.Ordinal))
             {
                 continue;
             }
@@ -28,13 +27,12 @@ internal static partial class RepositoryRules
     }
 
     [FindingEdge(FindingEdgeKind.Local)]
-    internal static ImmutableArray<RuleFinding> GidCharacterSet(RuleEvaluationContext context)
+    internal static ImmutableArray<RuleFinding> GidCharacterSet(CurrentRuleContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         foreach (var (path, file) in context.Current.Files.OrderBy(item => item.Key.Value, StringComparer.Ordinal))
         {
             if (RepositoryPathPolicy.Validate(path, context.Policy) is not null
-                || !context.IsBaseFactAffected(path.Value)
                 || !TryHeader(file.Text, out var header))
             {
                 continue;
@@ -50,13 +48,12 @@ internal static partial class RepositoryRules
     }
 
     [FindingEdge(FindingEdgeKind.Local)]
-    internal static ImmutableArray<RuleFinding> HeaderAnchorCanonicality(RuleEvaluationContext context)
+    internal static ImmutableArray<RuleFinding> HeaderAnchorCanonicality(CurrentRuleContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         foreach (var (path, file) in context.Current.Files.OrderBy(item => item.Key.Value, StringComparer.Ordinal))
         {
             if (RepositoryPathPolicy.Validate(path, context.Policy) is not null
-                || !context.IsBaseFactAffected(path.Value)
                 || !TryHeader(file.Text, out var header))
             {
                 continue;
@@ -78,7 +75,7 @@ internal static partial class RepositoryRules
     }
 
     [FindingEdge(FindingEdgeKind.Interaction)]
-    internal static ImmutableArray<RuleFinding> DuplicateGidCollisions(RuleEvaluationContext context)
+    internal static ImmutableArray<RuleFinding> DuplicateGidCollisions(CurrentRuleContext context)
     {
         var seenGids = new Dictionary<string, List<string>>(StringComparer.Ordinal);
         foreach (var (path, file) in context.Current.Files.OrderBy(item => item.Key.Value, StringComparer.Ordinal))
@@ -101,8 +98,7 @@ internal static partial class RepositoryRules
 
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         foreach (var duplicate in seenGids.Where(item =>
-                     item.Value.Count > 1
-                     && item.Value.Any(context.IsBaseFactAffected)))
+                     item.Value.Count > 1))
         {
             var locations = string.Join(", ", duplicate.Value.Order(StringComparer.Ordinal));
             foreach (var path in duplicate.Value)
@@ -115,7 +111,7 @@ internal static partial class RepositoryRules
     }
 
     [FindingEdge(FindingEdgeKind.Interaction)]
-    internal static ImmutableArray<RuleFinding> EvidenceSelectorCollisions(RuleEvaluationContext context)
+    internal static ImmutableArray<RuleFinding> EvidenceSelectorCollisions(CurrentRuleContext context)
     {
         var evidence = new Dictionary<(string Coordinates, string Selector), List<string>>();
         foreach (var (path, _) in context.Current.Files.OrderBy(item => item.Key.Value, StringComparer.Ordinal))
@@ -147,9 +143,7 @@ internal static partial class RepositoryRules
         }
 
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        foreach (var collision in evidence.Where(item =>
-                     item.Value.Count > 1
-                     && item.Value.Any(context.IsBaseFactAffected)))
+        foreach (var collision in evidence.Where(item => item.Value.Count > 1))
         {
             foreach (var path in collision.Value)
             {
@@ -163,7 +157,7 @@ internal static partial class RepositoryRules
         return findings.ToImmutable();
     }
 
-    private static ImmutableArray<RuleFinding> Literature(RuleEvaluationContext context)
+    private static ImmutableArray<RuleFinding> Literature(CurrentRuleContext context)
     {
         const string path = "Library/queries.yaml";
         if (!context.Current.TryGetFile(path, out var file))
@@ -251,7 +245,7 @@ internal static partial class RepositoryRules
         return findings.ToImmutable();
     }
 
-    private static ImmutableArray<RuleFinding> ResolvableAnchors(RuleEvaluationContext context) =>
+    private static ImmutableArray<RuleFinding> ResolvableAnchors(CurrentRuleContext context) =>
         Literature(context).AddRange(AnchorReferenceRule.Evaluate(context));
 
     private static void ValidateQuerySource(
@@ -284,47 +278,19 @@ internal static partial class RepositoryRules
         }
     }
 
-    private static bool ValuesAffected(RuleEvaluationContext context)
-    {
-        if (context.Changes.Paths.Any(static path =>
-                path.Value == ValuesKernelBindingValidator.RelativePath
-                || path.Value.StartsWith("Evidence/D5/values.", StringComparison.Ordinal)
-                || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path.Value)
-                || FrozenLedgerDeltaPredicate.IsDeltaDefinitionInput(path.Value)))
-        {
-            return true;
-        }
-
-        return context.Current.TryGetFile(ValuesKernelBindingValidator.RelativePath, out var values)
-            && ValuesKernelBindingValidator.ReferencesChangedLeanInput(
-                values.Text,
-                context.Lean.Report,
-                context.Changes);
-    }
-
-    private static ImmutableArray<RuleFinding> Values(RuleEvaluationContext context) =>
-        Values(context, changes: null);
-
-    private static ImmutableArray<RuleFinding> ValuesCandidateDelta(RuleEvaluationContext context) =>
-        Values(context, context.Changes);
-
-    private static ImmutableArray<RuleFinding> Values(
-        RuleEvaluationContext context,
-        RawChangeSet? changes)
+    private static ImmutableArray<RuleFinding> Values(CurrentRuleContext context)
     {
         var findings = context.Current.Files.Keys
             .Where(static path =>
                 path.Value.StartsWith("Evidence/D5/values.", StringComparison.Ordinal)
                 && path.Value != RepositoryPathPolicy.ValuesProjectionPath)
-            .Where(path => ValuesPathFactAffected(context, path.Value))
             .OrderBy(static path => path.Value, StringComparer.Ordinal)
             .Select(static path => new RuleFinding(
                 path.Value,
                 "canonical values projection must be Evidence/D5/values.json"))
             .ToImmutableArray()
             .ToBuilder();
-        if (!context.Current.TryGetFile(ValuesKernelBindingValidator.RelativePath, out var values)
-            && context.IsBaseFactAffected(ValuesKernelBindingValidator.RelativePath))
+        if (!context.Current.TryGetFile(ValuesKernelBindingValidator.RelativePath, out var values))
         {
             findings.Add(new RuleFinding(
                 ValuesKernelBindingValidator.RelativePath,
@@ -335,18 +301,11 @@ internal static partial class RepositoryRules
             findings.AddRange(ValuesKernelBindingValidator.Validate(
                 values.Text,
                 context.Lean.Report,
-                changes));
+                changes: null));
         }
 
         return findings.ToImmutable();
     }
 
-    private static bool ValuesPathFactAffected(RuleEvaluationContext context, string path) =>
-        context.Changes.Paths.Any(change => string.Equals(
-            change.Value,
-            path,
-            StringComparison.Ordinal))
-        || context.IsBaseFactAffected(path)
-            && context.Changes.Paths.Any(change =>
-                StrataLintEngineBuildInputs.ContainsRuleSource(change.Value));
+
 }

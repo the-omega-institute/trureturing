@@ -31,12 +31,10 @@ internal static class WorktreeCommand
         "USAGE: StrataLint worktree ensure-cache [--path DIR] | "
         + "StrataLint worktree with-cache-writer [--path DIR] -- COMMAND [ARG ...] | "
         + "StrataLint worktree validate-branch --branch NAME | "
-        + "StrataLint worktree remove --names \"NAME [NAME ...]\" | "
         + "StrataLint worktree --kind KIND --name TASK_CODE --path DIR "
         + "[--base REV] [--source REPO_ROOT] [--skip-restore]. "
         + $"Allowed worktree kinds: {CreationKindList}. "
-        + "The .lake cache is materialized by the first Lean command; symlink sharing is forbidden.\n"
-        + RemoveWorktreesCommand.Usage;
+        + "The .lake cache is materialized by the first Lean command; symlink sharing is forbidden.";
 
     private static readonly string[] ReviewScaffoldIgnorePatterns =
     [
@@ -63,11 +61,6 @@ internal static class WorktreeCommand
         ArgumentNullException.ThrowIfNull(arguments);
         ArgumentNullException.ThrowIfNull(runner);
         ArgumentNullException.ThrowIfNull(cloner);
-        if (arguments.Count > 0
-            && string.Equals(arguments[0], "remove", StringComparison.Ordinal))
-        {
-            return RemoveWorktreesCommand.Run(repositoryRoot, arguments.Skip(1).ToArray(), runner);
-        }
         if (arguments.Count > 0
             && string.Equals(arguments[0], "ensure-cache", StringComparison.Ordinal))
         {

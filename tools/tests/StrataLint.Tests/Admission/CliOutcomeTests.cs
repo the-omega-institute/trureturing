@@ -54,6 +54,51 @@ public sealed class CliOutcomeTests
         Assert.Equal(error, console.Error);
     }
 
+    [Theory]
+    [InlineData(0)]
+    [InlineData(1)]
+    [InlineData(2)]
+    [InlineData(3)]
+    public void CheckDeltaPreservesStageExitCodesAndBothStreams(int expectedExit)
+    {
+        const string output = "candidate delta diagnostics\n";
+        const string error = "candidate delta stderr\n";
+        var console = new BufferedConsole();
+        AdmissionOutcome unused = new AdmissionOutcome.InfrastructureFailure("unused check outcome");
+        var environment = new StubCliEnvironment(
+            unused,
+            checkDelta: new ExplicitCommandResult(expectedExit, output, error));
+
+        var exitCode = CliApplication.Run(["check-delta"], environment, console);
+
+        Assert.Equal(expectedExit, exitCode);
+        Assert.Equal(output, console.Output);
+        Assert.Equal(error, console.Error);
+    }
+
+    [Theory]
+    [InlineData("check-delta", -1)]
+    [InlineData("check-delta", 4)]
+    [InlineData("check-delta", 255)]
+    [InlineData("check-delta", 256)]
+    [InlineData("check-current", 3)]
+    [InlineData("echo-verify", 3)]
+    public void ExplicitCommandsRejectInvalidExitCodesBeforeWritingResult(string command, int invalidExit)
+    {
+        var console = new BufferedConsole();
+        var result = new ExplicitCommandResult(invalidExit, "invalid output\n", "invalid stderr\n");
+        AdmissionOutcome unused = new AdmissionOutcome.InfrastructureFailure("unused check outcome");
+        var environment = new StubCliEnvironment(
+            unused,
+            echoVerify: result, checkCurrent: result, checkDelta: result);
+
+        var exitCode = CliApplication.Run([command], environment, console);
+
+        Assert.Equal(2, exitCode);
+        Assert.Empty(console.Output);
+        Assert.Equal("INFRASTRUCTURE_FAILURE output: explicit command returned an invalid exit code\n", console.Error);
+    }
+
     // 判词产出却不可见即浮账(CLAUDE.md 第 20 条红线:允许 open,不允许浮账)。
     // admitted 路径此前把 Observe 判词全部丢掉——Observe 罕见时不显眼,而理论卷
     // 「尚未消化」改判 Observe 后,它就成了承重缺口:一个没人看得见的 open,与没有

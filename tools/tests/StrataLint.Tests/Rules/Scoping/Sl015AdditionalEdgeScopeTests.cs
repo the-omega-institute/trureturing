@@ -1,4 +1,5 @@
 using StrataLint.Engine;
+using StrataLint.TestSupport;
 
 namespace StrataLint.Tests;
 
@@ -17,7 +18,7 @@ public sealed class Sl015AdditionalEdgeScopeTests
         const string path = "Evidence/D5/S0/Carrier/Probe.unknown.json";
         var unrelated = HistoricalPath(path);
         SetDelta(unrelated, UnrelatedPath);
-        AssertNoFinding(Execute(unrelated, UnrelatedPath), path, PathPolicyMessage);
+        AssertFinding(Execute(unrelated, UnrelatedPath), path, PathPolicyMessage);
 
         var changed = HistoricalPath(path);
         AssertFinding(Execute(changed, path), path, PathPolicyMessage);
@@ -32,7 +33,7 @@ public sealed class Sl015AdditionalEdgeScopeTests
         const string second = "Blueprint/Two.csproj";
         var unrelated = CompositionHistory(first, second);
         SetDelta(unrelated, UnrelatedPath);
-        AssertNoFinding(Execute(unrelated, UnrelatedPath), second, CompositionMessage);
+        AssertFinding(Execute(unrelated, UnrelatedPath), second, CompositionMessage);
 
         var oneChanged = CompositionHistory(first, second);
         SetDelta(oneChanged, first, "<Project />\n", "<Project><PropertyGroup /></Project>\n");
@@ -59,6 +60,11 @@ public sealed class Sl015AdditionalEdgeScopeTests
         var fixture = new RuleFixture();
         SetHistorical(fixture, first, "<Project />\n");
         SetHistorical(fixture, second, "<Project />\n");
+        foreach (var files in new[] { fixture.Files, fixture.Baseline })
+            files[EngineeringRegistrationFixture.Path] = EngineeringRegistrationFixture.Append(
+                files[EngineeringRegistrationFixture.Path],
+                new EngineeringProjectFixture(first, "One", "test-support", false, []),
+                new EngineeringProjectFixture(second, "Two", "test-support", false, []));
         return fixture;
     }
 
@@ -87,9 +93,4 @@ public sealed class Sl015AdditionalEdgeScopeTests
             && diagnostic.Path == path
             && diagnostic.Message.Contains(message, StringComparison.Ordinal));
 
-    private static void AssertNoFinding(CompletedRuleSet result, string path, string message) =>
-        Assert.DoesNotContain(result.Diagnostics, diagnostic =>
-            diagnostic.RuleId == RuleId.CreateKnown(15)
-            && diagnostic.Path == path
-            && diagnostic.Message.Contains(message, StringComparison.Ordinal));
 }

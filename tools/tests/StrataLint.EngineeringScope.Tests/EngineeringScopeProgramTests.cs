@@ -1,6 +1,4 @@
 using System.Diagnostics;
-using System.Text.Json;
-using StrataLint.EngineeringScope;
 using StrataLint.TestSupport;
 using Xunit;
 
@@ -9,570 +7,197 @@ namespace StrataLint.EngineeringScope.Tests;
 [Collection("Engineering scope process boundary")]
 public sealed class EngineeringScopeProgramTests
 {
-    private const string ProductProject = "tools/Product/Product.csproj";
-    private const string ProductTestsProject =
-        "tools/tests/Product.Tests/Product.Tests.csproj";
-    private const string NewProductProject = "tools/NewProduct/NewProduct.csproj";
-    private const string NewProductTestsProject =
-        "tools/tests/NewProduct.Tests/NewProduct.Tests.csproj";
-    // 这个项目由 WriteGateInfrastructure 写进夹具树,且是 IsTestProject=true 的真项目;
-    // 它**不出现在**任何 SelectedProjects 断言里,正是「CI 永不选中脚本测试项目」
-    // (owner 2026-09-07)在端到端边界上的证据 —— 不是夹具漏写。
-    private const string ScriptTestsProject =
-        "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj";
-    private const string ProductFeature = "tools/Product/Feature.cs";
-    private const string FileMapPath = "Meta/FILEMAP.toml";
-
-    [Fact]
-    public void CandidateNewTestProjectIsSelectedOnItsIntroducingChange()
-    {
-        var result = RunBoundary(
-            root =>
-            {
-                WriteProject(root, ProductProject, isTest: false);
-                WriteProject(root, ProductTestsProject, isTest: true, ProductProject);
-            },
-            root =>
-            {
-                WriteProject(root, NewProductProject, isTest: false);
-                WriteProject(root, NewProductTestsProject, isTest: true, NewProductProject);
-            });
-
-        Assert.True(result.ExitCode == 0, result.Diagnostic);
-        Assert.Equal(
-            [NewProductTestsProject, ProductTestsProject],
-            result.SelectedProjects);
-        Assert.Equal(2, result.RetryCount);
-    }
-
-    [Fact]
-    public void CandidateDeletedBaseTestProjectIsExcludedAndReported()
-    {
-        var result = RunBoundary(
-            WriteProductProjects,
-            root =>
-            {
-                TemporaryFileSystem.File.Delete(Path.Combine(root, ProductTestsProject));
-                TemporaryFileSystem.File.Delete(Path.Combine(
-                    root,
-                    Path.GetDirectoryName(ProductTestsProject)!,
-                    "SmokeTests.cs"));
-            });
-
-        Assert.True(result.ExitCode == 0, result.Diagnostic);
-        Assert.Empty(result.SelectedProjects);
-        Assert.Contains(
-            $"ENGINEERING_TEST_PROJECT_REMOVED project={JsonSerializer.Serialize(ProductTestsProject)}",
-            result.Output,
-            StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void CandidateNewXunitProjectWithoutLiteralIsTestProjectIsSelected()
-    {
-        var result = RunBoundary(
-            root =>
-            {
-                WriteProject(root, ProductProject, isTest: false);
-                WriteProject(root, ProductTestsProject, isTest: true, ProductProject);
-            },
-            root => WriteRunnableTestProjectWithoutMarker(
-                root,
-                NewProductTestsProject,
-                ProductProject));
-
-        Assert.True(result.ExitCode == 0, result.Diagnostic);
-        Assert.Equal(
-            [NewProductTestsProject, ProductTestsProject],
-            result.SelectedProjects);
-    }
-
-    [Fact]
-    public void CandidateNewProjectWithNonLiteralTestClassificationFailsClosed()
-    {
-        var result = RunBoundary(
-            root =>
-            {
-                WriteProject(root, ProductProject, isTest: false);
-                WriteProject(root, ProductTestsProject, isTest: true, ProductProject);
-            },
-            root => WriteFile(
-                root,
-                "tools/tests/Ambiguous.Tests/Ambiguous.Tests.csproj",
-                """
-                <Project Sdk="Microsoft.NET.Sdk">
-                  <PropertyGroup><IsTestProject>$(CandidateIsTest)</IsTestProject></PropertyGroup>
-                </Project>
-                """));
-
-        Assert.True(result.ExitCode == 2, result.Diagnostic);
-        Assert.Contains(
-            "candidate-added project has no literal IsTestProject classification",
-            result.Error,
-            StringComparison.Ordinal);
-    }
-
-
-    [Fact]
-    public void JudgePlaneChangeForcesFullEngineeringScope()
-    {
-        var result = RunBoundary(
-            root =>
-            {
-                WriteProductProjects(root);
-                WriteFile(root, ProductFeature, "internal sealed class Feature { }\n");
-                WriteAdmissionPlaneFileMap(root, (ProductFeature, "judge"));
-            },
-            root => WriteFile(root, ProductFeature, "internal sealed class Feature { public int Value => 1; }\n"));
-
-        Assert.True(result.ExitCode == 0, result.Diagnostic);
-        Assert.Equal([ProductTestsProject], result.SelectedProjects);
-        Assert.Contains("ENGINEERING_TEST_PLAN state=full", result.Output, StringComparison.Ordinal);
-    }
-
     [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void DigestionOnlyContentChangeSelectsNoEngineeringTestsUnlessFull(bool full)
+    [InlineData(true, true, 0)]
+    [InlineData(true, false, 1)]
+    [InlineData(false, true, 2)]
+    public void CurrentRunnerExecutesPrebuiltTestsAndNeverRetries(bool prebuild, bool passes, int expected)
     {
-        const string path = "Meta/Digestion/backfill/source/residual-open/atom.yaml";
-        var result = RunBoundary(
-            root =>
-            {
-                WriteProductProjects(root);
-                WriteFile(root, path, "# before\n");
-                WriteAdmissionPlaneFileMap(root, (path, "content"));
-            },
-            root => WriteFile(root, path, "# after\n"),
-            full: full);
-
-        Assert.True(result.ExitCode == 0, result.Diagnostic);
-        Assert.Equal(full ? [ProductTestsProject] : [], result.SelectedProjects);
-        Assert.Contains(
-            $"ENGINEERING_TEST_PLAN state={(full ? "full" : "none")}",
-            result.Output,
-            StringComparison.Ordinal);
-    }
-
-    [Theory]
-    [InlineData(false, false)]
-    [InlineData(false, true)]
-    [InlineData(true, false)]
-    [InlineData(true, true)]
-    public void InvalidAdmissionIsRejectedBeforeFullRouting(bool full, bool mixed)
-    {
-        const string path = "Meta/Digestion/backfill/source/residual-open/atom.yaml";
-        var result = RunBoundary(
-            root =>
-            {
-                WriteProductProjects(root);
-                WriteFile(root, path, "# before\n");
-                WriteFile(root, ProductFeature, "internal sealed class Feature { }\n");
-                WriteAdmissionPlaneFileMap(
-                    root,
-                    (mixed ? path : "unmatched", "content"),
-                    (ProductFeature, "judge"));
-            },
-            root =>
-            {
-                WriteFile(root, path, "# after\n");
-                if (mixed)
-                    WriteFile(root, ProductFeature, "internal sealed class Feature { public int Value => 1; }\n");
-            },
-            full: full);
-
-        Assert.True(result.ExitCode == 2, result.Diagnostic);
-        Assert.Empty(result.SelectedProjects);
-        Assert.DoesNotContain("ENGINEERING_TEST_PLAN state=", result.Output, StringComparison.Ordinal);
-        Assert.Contains(
-            mixed ? "ADMISSION-PLANE-MIXED" : "ADMISSION-PLANE-PATH-MATCH-COUNT",
-            result.Error,
-            StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void ChangingOnlyTheScriptTestsProjectSelectsNoTestProjectAtAll()
-    {
-        // owner 2026-09-07:脚本 / make target 测试保留在树上,CI 永不执行它们。
-        // 本例走 Program 的真实边界(真 git 树 + 真 plan),而非 policy 的合成 topology:
-        // 只改该项目自己的源文件时,计划必须为空 —— 既不选它,也不因它而选别的。
-        var result = RunBoundary(
-            root =>
-            {
-                WriteProductProjects(root);
-                WriteFile(
-                    root,
-                    "tools/tests/StrataLint.ScriptTests/WarmDonorScriptTests.cs",
-                    "internal sealed class WarmDonorScriptTests { }\n");
-            },
-            root => WriteFile(
-                root,
-                "tools/tests/StrataLint.ScriptTests/WarmDonorScriptTests.cs",
-                "internal sealed class WarmDonorScriptTests { public int Value => 1; }\n"));
-
-        Assert.True(result.ExitCode == 0, result.Diagnostic);
-        Assert.Empty(result.SelectedProjects);
-        Assert.Contains("ENGINEERING_TEST_PLAN state=none", result.Output, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void ClassificationUsesCandidateFileMapForFullRouting()
-    {
-        var result = RunBoundary(
-            root =>
-            {
-                WriteProductProjects(root);
-                WriteAdmissionPlaneFileMap(root, (FileMapPath, "content"));
-            },
-            root => WriteAdmissionPlaneFileMap(root, (FileMapPath, "judge")));
-
-        Assert.True(result.ExitCode == 0, result.Diagnostic);
-        Assert.Equal([ProductTestsProject], result.SelectedProjects);
-        Assert.Contains("ENGINEERING_TEST_PLAN state=full", result.Output, StringComparison.Ordinal);
-        Assert.Contains(
-            "candidate admission plane judgeonly requires full engineering",
-            result.Output,
-            StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void CandidateFileMapEntryAndNewJudgeFamilyInSameDeltaForceFullEngineeringScope()
-    {
-        const string newJudgePath = "tools/new-lib/Program.cs";
-        var result = RunBoundary(
-            root =>
-            {
-                WriteProductProjects(root);
-                WriteAdmissionPlaneFileMap(root, (FileMapPath, "judge"));
-            },
-            root =>
-            {
-                WriteFile(root, newJudgePath, "internal sealed class Program { }\n");
-                WriteAdmissionPlaneFileMap(
-                    root,
-                    (FileMapPath, "judge"),
-                    ("tools/new-lib/**", "judge"));
-            });
-
-        Assert.True(result.ExitCode == 0, result.Diagnostic);
-        Assert.Equal([ProductTestsProject], result.SelectedProjects);
-        Assert.Contains("ENGINEERING_TEST_PLAN state=full", result.Output, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void AdmissionPlaneFirstCandidateFileMapForcesFullEngineeringScope()
-    {
-        var result = RunBoundary(
-            root =>
-            {
-                WriteProductProjects(root);
-                TemporaryFileSystem.File.Delete(Path.Combine(root, FileMapPath));
-            },
-            root => WriteAdmissionPlaneFileMap(root, (FileMapPath, "judge")));
-
-        Assert.True(result.ExitCode == 0, result.Diagnostic);
-        Assert.Equal([ProductTestsProject], result.SelectedProjects);
-        Assert.Contains("ENGINEERING_TEST_PLAN state=full", result.Output, StringComparison.Ordinal);
-        Assert.Contains(
-            "candidate admission plane judgeonly requires full engineering",
-            result.Output,
-            StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void ContentPlaneChangeKeepsIncrementalEngineeringScope()
-    {
-        var result = RunBoundary(
-            root =>
-            {
-                WriteProductProjects(root);
-                WriteFile(root, ProductFeature, "internal sealed class Feature { }\n");
-            },
-            root => WriteFile(root, ProductFeature, "internal sealed class Feature { public int Value => 1; }\n"));
-
-        Assert.True(result.ExitCode == 0, result.Diagnostic);
-        Assert.Equal([ProductTestsProject], result.SelectedProjects);
-        Assert.Contains("ENGINEERING_TEST_PLAN state=selected", result.Output, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void MissingBuildOutputRetriesOnce() =>
-        AssertRunTestsScenario(
-            "RunsAfterFallback", "Assert.True(true);", prebuild: false, expectedExitCode: 0, expectedRetryCount: 1);
-
-    [Fact]
-    public void PrebuiltTestProjectDoesNotRetry() =>
-        AssertRunTestsScenario(
-            "RunsPrebuilt", "Assert.True(true);", prebuild: true, expectedExitCode: 0, expectedRetryCount: 0);
-
-    [Fact]
-    public void RealTestFailureDoesNotRetry() =>
-        AssertRunTestsScenario(
-            "Fails", "Assert.True(false, \"intentional\");", prebuild: true, expectedExitCode: 1, expectedRetryCount: 0);
-
-    [Fact]
-    public void CandidateTestInvocationUsesMinimalVerbosity()
-    {
-        var arguments = Program.BuildTestArguments(
-            ProductTestsProject,
-            noBuild: true,
-            resultsDirectory: "/tmp/engineering-results");
-
-        var verbosityIndex = Array.IndexOf(arguments.ToArray(), "--verbosity");
-        Assert.True(verbosityIndex >= 0, $"arguments=[{string.Join(", ", arguments)}]");
-        Assert.Equal("minimal", arguments[verbosityIndex + 1]);
-    }
-
-
-    private static void AssertRunTestsScenario(
-        string testName,
-        string testBody,
-        bool prebuild,
-        int expectedExitCode,
-        int expectedRetryCount)
-    {
-        var result = RunBoundary(
-            WriteProductProjects,
-            root => WriteSmokeTest(root, testName, testBody),
-            prebuild
-                ? root => RunDotNet(
-                    root, "build", ProductTestsProject, "--configuration", "Release", "--nologo")
-                : null);
-
-        Assert.True(result.ExitCode == expectedExitCode, result.Diagnostic);
-        Assert.Equal([ProductTestsProject], result.SelectedProjects);
-        Assert.Equal(expectedRetryCount, result.RetryCount);
-    }
-
-    private static BoundaryResult RunBoundary(
-        Action<string> writeBase,
-        Action<string> writeCandidate,
-        Action<string>? prepareExecution = null,
-        bool full = false)
-    {
-        var root = TemporaryFileSystem.Directory.CreateTempSubdirectory(
-            "stratalint-engineering-scope-").FullName;
-        var originalOutput = Console.Out;
-        var originalError = Console.Error;
+        var root = TemporaryFileSystem.Directory.CreateTempSubdirectory("engineering-process-").FullName;
         try
         {
-            RunGit(root, "init", "--quiet");
-            RunGit(root, "config", "user.email", "engineering-scope@example.invalid");
-            RunGit(root, "config", "user.name", "Engineering Scope Tests");
-            WriteGateInfrastructure(root);
-            writeBase(root);
-            RunGit(root, "add", ".");
-            RunGit(root, "commit", "--quiet", "-m", "base");
-            writeCandidate(root);
-            RunGit(root, "add", ".");
-            RunGit(root, "commit", "--quiet", "-m", "candidate");
-            prepareExecution?.Invoke(root);
-
-            var head = GitText(root, "rev-parse", "HEAD");
-            var @base = GitText(root, "rev-parse", "HEAD^1");
-            using var output = new StringWriter { NewLine = "\n" };
-            using var error = new StringWriter { NewLine = "\n" };
-            Console.SetOut(output);
-            Console.SetError(error);
-            var exitCode = Program.Run(
-                [
-                    "--repository", root,
-                    "--head", head,
-                    "--base", @base,
-                    .. full ? new[] { "--full", "1" } : [],
-                ],
-                TestResultEvidence.Load,
-                output,
-                error);
-            var selectedProjects = output.ToString()
-                .Split('\n', StringSplitOptions.RemoveEmptyEntries)
-                .Where(static line => line.StartsWith(
-                    "ENGINEERING_TEST_PROJECT project=",
-                    StringComparison.Ordinal))
-                .Select(static line => JsonSerializer.Deserialize<string>(
-                    line["ENGINEERING_TEST_PROJECT project=".Length..])!)
-                .ToArray();
-            return new BoundaryResult(
-                exitCode,
-                selectedProjects,
-                output.ToString(),
-                error.ToString());
+            const string project = "tools/tests/Probe/Probe.csproj";
+            var directory = Path.Combine(root, "tools/tests/Probe");
+            TemporaryFileSystem.Directory.CreateDirectory(directory);
+            TemporaryFileSystem.File.WriteAllText(Path.Combine(root, ".gitignore"), ".lake/\nbuild/\nbin/\nobj/\n");
+            TemporaryFileSystem.File.WriteAllText(Path.Combine(root, project), """
+                <Project Sdk="Microsoft.NET.Sdk">
+                  <PropertyGroup><TargetFramework>net10.0</TargetFramework><IsTestProject>true</IsTestProject></PropertyGroup>
+                  <Import Project="Dependencies.props" />
+                </Project>
+                """);
+            // Package declarations are an explicit build input of this native fixture.
+            TemporaryFileSystem.File.WriteAllText(Path.Combine(directory, "Dependencies.props"), """
+                <Project>
+                  <ItemGroup>
+                    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+                    <PackageReference Include="xunit" Version="2.9.3" />
+                    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
+                  </ItemGroup>
+                </Project>
+                """);
+            TemporaryFileSystem.File.WriteAllText(Path.Combine(directory, "Probe.cs"),
+                "using Xunit; public sealed class Probe { [Fact] public void Runs() { Assert.True(" + (passes ? "true" : "false") + "); } }");
+            var retiredSuite = Path.Combine(root, "tools/tests/StrataLint.ScriptTests");
+            TemporaryFileSystem.Directory.CreateDirectory(retiredSuite);
+            TemporaryFileSystem.File.WriteAllText(Path.Combine(retiredSuite, "StrataLint.ScriptTests.csproj"),
+                "<Project><PropertyGroup><IsTestProject>true</IsTestProject></PropertyGroup></Project>");
+            TemporaryFileSystem.Directory.CreateDirectory(Path.Combine(root, "Meta"));
+            TemporaryFileSystem.File.WriteAllText(Path.Combine(root, EngineeringRegistrationFixture.Path),
+                EngineeringRegistrationFixture.Manifest(
+                    new EngineeringProjectFixture("tools/tests/Probe/Probe.csproj", "Probe", "cross-cutting-test", true, ["tools/tests/Probe/**/*.cs"], BuildInputs: ["tools/tests/Probe/Dependencies.props"]),
+                    new EngineeringProjectFixture("tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj", "StrataLint.ScriptTests", "cross-cutting-test", false, [])));
+            TemporaryFileSystem.File.WriteAllText(Path.Combine(root, "global.json"), "{\"sdk\":{\"version\":\"10.0.103\"}}");
+            TemporaryFileSystem.File.WriteAllText(Path.Combine(root, "Meta/ci-checks.json"), CommonCheckRegistrationFixture.Manifest(project));
+            var registrationPath = Path.Combine(root, EngineeringRegistrationFixture.Path);
+            foreach (var proof in new[] { "CompileFailProof", "BannedApiCompileFailProof" })
+            {
+                var proofProject = $"tools/tests/{proof}/{proof}.csproj";
+                Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine(root, proofProject))!);
+                File.WriteAllText(Path.Combine(root, proofProject), "<Project />");
+                File.WriteAllText(registrationPath, EngineeringRegistrationFixture.Append(File.ReadAllText(registrationPath),
+                    new EngineeringProjectFixture(proofProject, proof, "compile-fail-proof", false, [$"tools/tests/{proof}/**/*.cs"])));
+            }
+            File.WriteAllText(Path.Combine(root, "tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"), "// banned-api-proof\n");
+            Run(root, "git", ["init", "-q"]);
+            Run(root, "git", ["add", "."]);
+            Run(root, "git", ["-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "parentless"]);
+            if (prebuild)
+            {
+                Run(root, "dotnet", ["build", project, "--configuration", "Release", "--nologo"]);
+                SealProbeBuild(root, project);
+            }
+            using var output = new StringWriter();
+            using var error = new StringWriter();
+            var exit = Program.Run(["--repository", root], TestResultEvidence.Load, output, error);
+            Assert.True(exit == expected, output + "\n" + error);
+            if (!prebuild)
+            {
+                Assert.Empty(output.ToString());
+                Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, CommonExecutionEvidence.TestsPath)));
+                return;
+            }
+            Assert.Single(output.ToString().Split('\n'), line => line.StartsWith("ENGINEERING_TEST_PROJECT ", StringComparison.Ordinal));
+            Assert.DoesNotContain("ENGINEERING_TEST_RETRY", output.ToString(), StringComparison.Ordinal);
+            Assert.True(TemporaryFileSystem.File.Exists(Path.Combine(root, CommonExecutionEvidence.TestsPath)));
+            if (expected == 0)
+            {
+                var original = CommonExecutionEvidence.ValidateTests(root);
+                var steps = CommonExecutionEvidence.EngineeringSteps.Select(name => new StageStep(name,
+                    name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", "build/ci/probe-build.log")).ToArray();
+                var build = CommonExecutionEvidence.ValidateBuild(root);
+                CheckEvidenceFixture.Seal(root, "engineering", build);
+                CommonExecutionEvidence.SealEngineering(root, build, steps);
+                Assert.True(CommonExecutionEvidence.ExportTestSeed(root, output));
+                TemporaryFileSystem.File.AppendAllText(Path.Combine(root, ".gitignore"), "# unrelated doc-only candidate change\n");
+                SealProbeBuild(root, project);
+                output.GetStringBuilder().Clear();
+                Assert.Equal(0, Program.Run(["--repository", root], TestResultEvidence.Load, output, error));
+                Assert.DoesNotContain("ENGINEERING_TEST_PROJECT ", output.ToString(), StringComparison.Ordinal);
+                var reused = CommonExecutionEvidence.ValidateTests(root);
+                var row = Assert.Single(reused.Projects);
+                Assert.Equal("reused", row.Status);
+                Assert.Equal(original.Projects[0] with { Status = "reused" }, row);
+                Assert.Equal(original.Materials, reused.Materials);
+            }
         }
         finally
         {
-            Console.SetOut(originalOutput);
-            Console.SetError(originalError);
+            if (Environment.GetEnvironmentVariable("CI_TEST_REUSE_EVIDENCE") is { Length: > 0 } retention && prebuild)
+            {
+                var ci = Path.Combine(root, CommonExecutionEvidence.RootPath);
+                foreach (var file in TemporaryFileSystem.Directory.EnumerateFiles(ci, "*", SearchOption.AllDirectories))
+                {
+                    var target = Path.Combine(retention, passes ? "passed" : "failed", Path.GetRelativePath(ci, file));
+                    TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+                    TemporaryFileSystem.File.WriteAllBytes(target, TemporaryFileSystem.File.ReadAllBytes(file));
+                }
+            }
             TemporaryFileSystem.Directory.Delete(root, recursive: true);
         }
     }
 
-    private static void WriteProject(
-        string root,
-        string path,
-        bool isTest,
-        params string[] references)
+    [Fact]
+    public void DeclaredExecutionEnvironmentChangesOnlyRegisteredProjectsAndMissingValueFails()
     {
-        var directory = Path.GetDirectoryName(path)!;
-        var projectReferences = string.Join(
-            "",
-            references.Select(reference =>
-                $"<ProjectReference Include=\"{Path.GetRelativePath(directory, reference).Replace('\\', '/')}\" />"));
-        var testPackages = isTest
-            ? """
-              <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
-              <PackageReference Include="xunit" Version="2.9.3" />
-              <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
-              """
-            : "";
-        WriteFile(root, path, $"""
-            <Project Sdk="Microsoft.NET.Sdk">
-              <PropertyGroup>
-                <TargetFramework>net10.0</TargetFramework>
-                <IsTestProject>{isTest.ToString().ToLowerInvariant()}</IsTestProject>
-              </PropertyGroup>
-              <ItemGroup>{projectReferences}{testPackages}</ItemGroup>
-            </Project>
-            """);
-        if (isTest)
+        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        const string name = "CONTRACT_REGISTERED_TEST_ENVIRONMENT";
+        var original = Environment.GetEnvironmentVariable(name);
+        try
         {
-            WriteFile(
-                root,
-                Path.Combine(directory, "SmokeTests.cs"),
-                "using Xunit; public sealed class SmokeTests { [Fact] public void Runs() { } }\n");
-        }
-    }
-
-    private static void WriteRunnableTestProjectWithoutMarker(
-        string root,
-        string path,
-        params string[] references)
-    {
-        var directory = Path.GetDirectoryName(path)!;
-        var projectReferences = string.Join(
-            "",
-            references.Select(reference =>
-                $"<ProjectReference Include=\"{Path.GetRelativePath(directory, reference).Replace('\\', '/')}\" />"));
-        WriteFile(root, path, $"""
-            <Project Sdk="Microsoft.NET.Sdk">
-              <PropertyGroup><TargetFramework>net10.0</TargetFramework></PropertyGroup>
-              <ItemGroup>
-                {projectReferences}
-                <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
-                <PackageReference Include="xunit" Version="2.9.3" />
-                <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
-              </ItemGroup>
-            </Project>
-            """);
-        WriteFile(
-            root,
-            Path.Combine(directory, "SmokeTests.cs"),
-            "using Xunit; public sealed class SmokeTests { [Fact] public void Runs() { } }\n");
-    }
-
-    private static void WriteSmokeTest(string root, string name, string body) =>
-        WriteFile(
-            root,
-            Path.Combine(Path.GetDirectoryName(ProductTestsProject)!, "SmokeTests.cs"),
-            $"using Xunit; public sealed class SmokeTests {{ [Fact] public void {name}() {{ {body} }} }}\n");
-
-    private static void WriteProductProjects(string root)
-    {
-        WriteProject(root, ProductProject, isTest: false);
-        WriteProject(root, ProductTestsProject, isTest: true, ProductProject);
-    }
-
-    private static void WriteGateInfrastructure(string root)
-    {
-        WriteAdmissionPlaneFileMap(root, ("**", "content"));
-        WriteProject(root, ScriptTestsProject, isTest: true);
-        WriteFile(
-            root,
-            "tools/tests/StrataLint.ScriptTests/packages.lock.json",
-            """
+            var manifestPath = Path.Combine(fixture.Root, EngineeringRegistrationFixture.Path);
+            var manifest = System.Text.Json.Nodes.JsonNode.Parse(TemporaryFileSystem.File.ReadAllText(manifestPath))!;
+            manifest["projects"]![0]!["execution_environment"] = new System.Text.Json.Nodes.JsonArray(name);
+            TemporaryFileSystem.File.WriteAllText(manifestPath, manifest.ToJsonString());
+            Environment.SetEnvironmentVariable(name, "macos-arm64-sdk103-runtime10");
+            fixture.Build();
+            Assert.Equal(0, Program.RunCurrentTests(fixture.Root, (_, directory) => { fixture.WriteTrx(directory, "Passed"); return 0; }, TextWriter.Null));
+            var build = CommonExecutionEvidence.ValidateBuild(fixture.Root);
+            CheckEvidenceFixture.Seal(fixture.Root, "engineering", build);
+            CommonExecutionEvidence.SealEngineering(fixture.Root, build, CommonExecutionEvidence.EngineeringSteps.Select(step =>
+                new StageStep(step, step.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", "build/ci/fixture-build.log")).ToArray());
+            Assert.True(CommonExecutionEvidence.ExportTestSeed(fixture.Root, TextWriter.Null));
+            Environment.SetEnvironmentVariable(name, "linux-arm64-sdk103-runtime10");
+            var selected = new List<string>();
+            Assert.Equal(0, Program.RunCurrentTests(fixture.Root, (project, directory) =>
             {
-              "version": 2,
-              "dependencies": {
-                "net10.0": {
-                  "xunit.assert": { "type": "Transitive", "resolved": "2.9.3" },
-                  "xunit.extensibility.core": { "type": "Transitive", "resolved": "2.9.3" }
-                }
-              }
-            }
-
-            """);
-        WriteProject(
-            root,
-            "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
-            isTest: false);
-        WriteFile(root, "Directory.Build.props", "<Project />\n");
-        WriteFile(root, "Directory.Packages.props", "<Project />\n");
-        WriteFile(root, "tools/scripts/report/report-supervisor.sh", "exit 0\n");
-    }
-
-    private static void WriteAdmissionPlaneFileMap(
-        string root,
-        params (string Pattern, string Plane)[] entries) =>
-        WriteFile(
-            root,
-            FileMapPath,
-            string.Join(
-                "\n",
-                entries.Select(entry =>
-                    $"[[files]]\npattern = \"{entry.Pattern}\"\nadmission_plane = \"{entry.Plane}\"\n")));
-
-    private static void WriteFile(string root, string path, string content)
-    {
-        var fullPath = Path.Combine(root, path);
-        TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
-        TemporaryFileSystem.File.WriteAllText(fullPath, content);
-    }
-
-    private static string GitText(string root, params string[] arguments) =>
-        RunGit(root, arguments).Trim();
-
-    private static string RunGit(string root, params string[] arguments)
-        => RunProcess("git", root, arguments);
-
-    private static string RunDotNet(string root, params string[] arguments)
-        => RunProcess("dotnet", root, arguments);
-
-    private static string RunProcess(string fileName, string root, params string[] arguments)
-    {
-        var startInfo = new ProcessStartInfo
-        {
-            FileName = fileName,
-            WorkingDirectory = root,
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            UseShellExecute = false,
-        };
-        foreach (var argument in arguments) startInfo.ArgumentList.Add(argument);
-        using var process = Process.Start(startInfo)
-            ?? throw new InvalidOperationException("could not start git");
-        var output = process.StandardOutput.ReadToEnd();
-        var error = process.StandardError.ReadToEnd();
-        process.WaitForExit();
-        if (process.ExitCode != 0)
-        {
-            throw new InvalidOperationException(
-                $"{fileName} {string.Join(' ', arguments)} failed ({process.ExitCode}): {error}");
+                selected.Add(project);
+                fixture.WriteTrx(directory, "Passed");
+                return 0;
+            }, TextWriter.Null));
+            Assert.Equal([CurrentExecutionContractTests.CandidateFixture.First], selected);
+            Environment.SetEnvironmentVariable(name, null);
+            var calls = 0;
+            Assert.Throws<InvalidDataException>(() => Program.RunCurrentTests(fixture.Root, (_, _) => { ++calls; return 0; }, TextWriter.Null));
+            Assert.Equal(0, calls);
         }
-
-        return output;
+        finally { Environment.SetEnvironmentVariable(name, original); }
     }
 
-    private sealed record BoundaryResult(
-        int ExitCode,
-        string[] SelectedProjects,
-        string Output,
-        string Error)
+    [Fact]
+    public void CandidateTestInvocationIsPrebuiltWithMinimalVerbosity()
     {
-        internal int RetryCount => Output.Split('\n').Count(static line =>
-            line.StartsWith("ENGINEERING_TEST_RETRY ", StringComparison.Ordinal));
+        var arguments = Program.BuildTestArguments("tools/tests/Probe/Probe.csproj", "/tmp/results");
+        Assert.Contains("--no-build", arguments);
+        Assert.Contains("--no-restore", arguments);
+        Assert.Equal("minimal", arguments[Array.IndexOf(arguments.ToArray(), "--verbosity") + 1]);
+    }
 
-        internal string Diagnostic =>
-            $"exit={ExitCode}; selected=[{string.Join(", ", SelectedProjects)}]; "
-            + $"stdout={Output}; stderr={Error}";
+    [Theory]
+    [InlineData("--all")]
+    [InlineData("--base")]
+    [InlineData("--head")]
+    [InlineData("--full")]
+    public void RunnerRejectsFullAndHistoricalSelectionOptions(string option)
+    {
+        using var output = new StringWriter();
+        using var error = new StringWriter();
+        var exit = Program.Run(["--repository", "/missing-repository", option, "value"],
+            TestResultEvidence.Load, output, error);
+        Assert.Equal(2, exit);
+        Assert.Contains("options must be", error.ToString(), StringComparison.Ordinal);
+        Assert.Empty(output.ToString());
+    }
+
+    private static void SealProbeBuild(string root, string project)
+    {
+        const string assembly = "tools/tests/Probe/bin/Release/net10.0/Probe.dll";
+        const string log = "build/ci/probe-build.log";
+        CommonExecutionEvidence.Write(root, CommonBuildOutputs.TestsPath, new[] { new BuiltTestProject(project, assembly) });
+        TemporaryFileSystem.File.WriteAllText(Path.Combine(root, log), "native probe build\n");
+        CommonExecutionEvidence.SealBuild(root, CommonExecutionEvidence.Candidate(root), [assembly, log, CommonBuildOutputs.TestsPath],
+            CommonExecutionEvidence.BuildSteps.Select(name => new StageStep(name, 0, 0, "executed", log)).ToArray());
+    }
+
+    private static void Run(string root, string command, string[] arguments)
+    {
+        var start = new ProcessStartInfo(command) { WorkingDirectory = root, RedirectStandardOutput = true, RedirectStandardError = true };
+        foreach (var argument in arguments) start.ArgumentList.Add(argument);
+        using var process = Process.Start(start)!;
+        var stdout = process.StandardOutput.ReadToEndAsync();
+        var stderr = process.StandardError.ReadToEndAsync();
+        process.WaitForExit();
+        Assert.True(process.ExitCode == 0, stdout.GetAwaiter().GetResult() + stderr.GetAwaiter().GetResult());
     }
 }
 

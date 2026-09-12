@@ -15,7 +15,7 @@ public sealed class ActiveRuleScopeProbeTests
         const string message = "exactly four columns";
 
         var unrelated = MalformedAuthorizationLedger();
-        AssertNoFinding(
+        AssertFinding(
             Execute(unrelated, "Golden/Frozen/accepted/fixture-event.json"),
             8,
             message,
@@ -67,7 +67,7 @@ public sealed class ActiveRuleScopeProbeTests
 
         var unrelated = InstantiationHistory(historicalPath);
         SetHistorical(unrelated, unrelatedPath, "future delta\n");
-        AssertNoFinding(Execute(unrelated, unrelatedPath), 21, message, historicalPath);
+        AssertFinding(Execute(unrelated, unrelatedPath), 21, message, historicalPath);
 
         AssertFinding(
             Execute(InstantiationHistory(historicalPath), historicalPath),
@@ -94,7 +94,7 @@ public sealed class ActiveRuleScopeProbeTests
         SetHistorical(unrelated, path, "// historical\n");
         SetHistorical(unrelated, unrelatedPath, "// baseline\n");
         unrelated.Files[unrelatedPath] = "// candidate\n";
-        AssertNoFinding(Execute(unrelated, unrelatedPath, emissions), 23, message, path);
+        AssertFinding(Execute(unrelated, unrelatedPath, emissions), 23, message, path);
 
         var changed = new RuleFixture();
         SetHistorical(changed, path, "// historical\n");
@@ -123,7 +123,7 @@ public sealed class ActiveRuleScopeProbeTests
         var unrelated = LegacyScribeHistory(path);
         SetHistorical(unrelated, unrelatedPath, "// baseline\n");
         unrelated.Files[unrelatedPath] = "// candidate\n";
-        AssertNoFinding(Execute(unrelated, unrelatedPath), 26, message, path);
+        AssertFinding(Execute(unrelated, unrelatedPath), 26, message, path);
 
         AssertFinding(Execute(LegacyScribeHistory(path), path), 26, message, path);
         AssertFinding(

@@ -111,7 +111,7 @@ public sealed class GitRepositoryGatewayRevisionTests
     }
 
     [Fact]
-    public void PrepareOnDirtyTreeWithoutProtectedBaseUsesHeadAsRevision()
+    public void PrepareOnDirtyTreeStillRequiresExplicitBase()
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
@@ -131,17 +131,7 @@ public sealed class GitRepositoryGatewayRevisionTests
             "new\n",
             new UTF8Encoding(false));
 
-        var prepared = new GitRepositoryGateway(repository.Path).Prepare(null);
-
-        Assert.Equal(head, prepared.Revision);
-        Assert.Equal(
-            new[]
-            {
-                ("tracked.txt", RawChangeKind.Modified),
-                ("untracked.txt", RawChangeKind.Added),
-            },
-            prepared.Changes.Entries.Select(static change =>
-                (change.Path.Value, change.Kind)));
+        Assert.Throws<InvalidOperationException>(() => new GitRepositoryGateway(repository.Path).Prepare(null));
     }
 
     [Fact]
@@ -159,7 +149,7 @@ public sealed class GitRepositoryGatewayRevisionTests
         var exception = Assert.Throws<InvalidOperationException>(
             () => new GitRepositoryGateway(repository.Path).Prepare(null));
 
-        Assert.Contains("--protected-base", exception.Message, StringComparison.Ordinal);
+        Assert.Contains("40-hex", exception.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -199,7 +189,7 @@ public sealed class GitRepositoryGatewayRevisionTests
     }
 
     [Fact]
-    public void PrepareRejectsProtectedBaseThatIsNotAncestorOfHead()
+    public void PrepareComparesDivergentBaseAsData()
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
@@ -227,17 +217,10 @@ public sealed class GitRepositoryGatewayRevisionTests
         var sibling = ReviewRegressionTests.RunGit(repository.Path, "rev-parse", "HEAD").Trim();
         ReviewRegressionTests.RunGit(repository.Path, "checkout", "candidate");
 
-        var exception = Assert.Throws<InvalidOperationException>(
-            () => new GitRepositoryGateway(repository.Path).Prepare(sibling));
-
-        Assert.Contains(
-            "protected base must be an ancestor of HEAD",
-            exception.Message,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "merge origin/dev into the lane first",
-            exception.Message,
-            StringComparison.Ordinal);
+        var prepared = new GitRepositoryGateway(repository.Path).Prepare(sibling);
+        Assert.Equal(sibling, prepared.Revision);
+        Assert.Equal(new[] { ("candidate.txt", RawChangeKind.Added), ("sibling.txt", RawChangeKind.Deleted) },
+            prepared.Changes.Entries.Select(change => (change.Path.Value, change.Kind)));
     }
 
     [Fact]
@@ -251,7 +234,7 @@ public sealed class GitRepositoryGatewayRevisionTests
             runner,
             "git");
 
-        var prepared = gateway.Prepare("synthetic-base");
+        var prepared = gateway.Prepare(FirstOid);
 
         Assert.Equal(2, prepared.Changes.Entries.Length);
         var source = Assert.Single(
@@ -273,7 +256,7 @@ public sealed class GitRepositoryGatewayRevisionTests
             runner,
             "git");
 
-        var prepared = gateway.Prepare("synthetic-base");
+        var prepared = gateway.Prepare(FirstOid);
 
         Assert.Equal(2, prepared.Changes.Entries.Length);
         var source = Assert.Single(

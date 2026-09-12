@@ -476,6 +476,8 @@ public sealed partial class CoverBatchCommandTests
                 Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
                 File.WriteAllText(fullPath, contents);
             }
+            foreach (var path in ProducerInputFixture.CopyBatchProducerInputs(Root))
+                inputs.Baseline[path] = File.ReadAllText(Path.Combine(Root, path));
             Repository = new FakeRepositoryGateway(RawChangeSet.Create([]), null,
                 CoverWorld.Raw(inputs.Baseline), currentReader: () => UseGitReader
                     ? GitRepositorySnapshotReader.ReadCurrent(Root) : ReadFiles());
@@ -521,7 +523,7 @@ public sealed partial class CoverBatchCommandTests
                 reports.TryAdd(path.Value, new LeanFileReport([], []));
             var reportPath = RawLeanReportArtifact.DefaultPath(Root);
             RawLeanReportArtifact.WriteFile(reportPath, snapshot, LeanAxiomReport.Create(reports));
-            LeanReportInputScriptTests.AttestBatchReport(Root, reportPath);
+            ProducerInputFixture.AttestBatchReport(Root, reportPath);
             return reportPath;
         }
 

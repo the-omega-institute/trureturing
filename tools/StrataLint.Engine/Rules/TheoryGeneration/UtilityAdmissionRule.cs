@@ -5,18 +5,17 @@ namespace StrataLint.Engine;
 // SL-031. Changed unfrozen content and first-freeze utility admission.
 internal static class UtilityAdmissionRule
 {
-    internal static bool IsAffectedBy(RuleEvaluationContext context) =>
+    internal static bool IsAffectedBy(DeltaRuleContext context) =>
         context.RuleImplementationChanged
         || SelectedPaths(context).Any()
         || context.Changes.Paths.Any(path => IsBaselineFrozen(context, path)
             && IsChangedUtilityHeader(context, path));
 
-    internal static ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context)
+    internal static ImmutableArray<RuleFinding> Evaluate(DeltaRuleContext context)
     {
         ArgumentNullException.ThrowIfNull(context);
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         AddRatchetFindings(context, findings);
-        AddInformationRegistrationFindings(context, findings);
         var modules = new Dictionary<RepoPath, UtilityValidationPhase>();
         foreach (var path in SelectedPaths(context))
         {
@@ -70,25 +69,7 @@ internal static class UtilityAdmissionRule
         return findings.ToImmutable();
     }
 
-    // The same protected-base selection as changed-content utility admission.
-    // First pin alone does not expand registration gates to unchanged modules.
-    private static void AddInformationRegistrationFindings(
-        RuleEvaluationContext context, ImmutableArray<RuleFinding>.Builder findings)
-    {
-        foreach (var path in SelectedPaths(context).Where(path => !FrozenStatePath.IsUnderRoot(path.Value)))
-        {
-            if (!context.Lean.Report.Files.TryGetValue(path, out var report)
-                || report.Error is not null || report.InformationRegistrationErrors is not { } errors)
-            {
-                findings.Add(new RuleFinding(path.Value,
-                    $"INFORMATION-REGISTRATION-EVIDENCE-MISSING module={path.Value}"));
-                continue;
-            }
-            foreach (var message in errors) findings.Add(new RuleFinding(path.Value, message));
-        }
-    }
-
-    private static IEnumerable<RepoPath> SelectedPaths(RuleEvaluationContext context) =>
+    private static IEnumerable<RepoPath> SelectedPaths(DeltaRuleContext context) =>
         context.Changes.Paths.Where(path =>
             context.Current.Files.TryGetValue(path, out var current)
             && (FrozenStatePath.IsUnderRoot(path.Value)
@@ -98,13 +79,13 @@ internal static class UtilityAdmissionRule
                     && (!context.Baseline.Files.TryGetValue(path, out var baseline)
                         || !current.RawBytes.AsSpan().SequenceEqual(baseline.RawBytes.AsSpan()))));
 
-    private static bool IsBaselineFrozen(RuleEvaluationContext context, RepoPath path) =>
+    private static bool IsBaselineFrozen(DeltaRuleContext context, RepoPath path) =>
         IsD5Lean(path.Value)
         && FrozenStatePath.TryFromModulePath(path, out var statePath)
         && context.Baseline.Files.ContainsKey(statePath);
 
     private static void AddClassificationFindings(
-        RuleEvaluationContext context,
+        DeltaRuleContext context,
         RepoPath path,
         ImmutableArray<RuleFinding>.Builder findings)
     {
@@ -155,7 +136,7 @@ internal static class UtilityAdmissionRule
     }
 
     private static void AddRatchetFindings(
-        RuleEvaluationContext context,
+        DeltaRuleContext context,
         ImmutableArray<RuleFinding>.Builder findings)
     {
         foreach (var path in context.Changes.Paths
@@ -175,7 +156,7 @@ internal static class UtilityAdmissionRule
         }
     }
 
-    private static bool IsChangedUtilityHeader(RuleEvaluationContext context, RepoPath path)
+    private static bool IsChangedUtilityHeader(DeltaRuleContext context, RepoPath path)
     {
         if (!IsD5Lean(path.Value))
         {

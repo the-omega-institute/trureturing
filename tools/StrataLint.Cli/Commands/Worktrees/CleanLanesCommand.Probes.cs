@@ -6,7 +6,7 @@ namespace StrataLint.Cli;
 
 internal static partial class CleanLanesCommand
 {
-    internal static string? TryResolveRegisteredGitDirectory(
+    private static string? TryResolveRegisteredGitDirectory(
         string path,
         IWorktreeProcessRunner runner)
     {
@@ -39,7 +39,7 @@ internal static partial class CleanLanesCommand
             error.Length == 0 ? "could not compare lane ancestry" : error);
     }
 
-    internal static ProcessOutput RunGit(
+    private static ProcessOutput RunGit(
         string workingDirectory,
         IReadOnlyList<string> arguments,
         IWorktreeProcessRunner runner,
@@ -51,7 +51,7 @@ internal static partial class CleanLanesCommand
         throw new InvalidOperationException(error.Length == 0 ? fallback : error);
     }
 
-    internal static string Decode(byte[] bytes) => StrictUtf8.GetString(bytes);
+    private static string Decode(byte[] bytes) => StrictUtf8.GetString(bytes);
 
     private static CreationRecord ReadCreationRecord(string gitDirectory)
     {

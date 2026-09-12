@@ -62,7 +62,7 @@ internal sealed partial class ProductionCliEnvironment
         DepositHeaderCheckCommand.Run(repository, leanReportSource, arguments);
 
     public ExplicitCommandResult LeanUtilityInput(IReadOnlyList<string> arguments) =>
-        LeanUtilityInputCommand.Run(repository, arguments);
+        LeanUtilityInputCommand.Run(repository.ReadCurrent, arguments);
 
     public ExplicitCommandResult LedgerFrozen(IReadOnlyList<string> arguments) =>
         LedgerFrozenCommand.Run(repositoryRoot, repository, arguments);
@@ -107,9 +107,6 @@ internal sealed partial class ProductionCliEnvironment
     public CommandResult CoverBatch(IReadOnlyList<string> arguments) =>
         CoverBatchCommand.Run(repositoryRoot, repository, leanReportSource,
             scribeEmissionVerifier, timeProvider.GetUtcNow(), arguments);
-
-    public CommandResult SettleBatch(IReadOnlyList<string> arguments) =>
-        SettleAtomCommand.RunBatch(repositoryRoot, repository, arguments);
 
     public CommandResult SettleAtom(IReadOnlyList<string> arguments) =>
         SettleAtomCommand.Run(repositoryRoot, repository, arguments);

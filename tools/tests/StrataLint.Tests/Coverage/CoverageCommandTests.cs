@@ -203,9 +203,10 @@ public sealed class CoverageCommandTests
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             [RuleFixture.WorkflowPath] = """
+                on: {pull_request_target: {branches: [dev]}}
                 jobs:
-                  baseline-admission:
-                    name: Content-addressed dev baseline admission
+                  delta:
+                    name: delta
                 """,
             ["Meta/domains.yaml"] = TestRegistry.Domains,
             ["Meta/registry.yaml"] = TestRegistry.Canonical,
@@ -247,7 +248,7 @@ public sealed class CoverageCommandTests
           - id: dev-baseline
             kind: ci-jobs
             members:
-              - baseline-admission
+              - delta
             judged_by:
               - bootstrap-pr-1
             verification: verified

@@ -11,7 +11,7 @@ internal static partial class RepositoryRules
 {
     internal const string HeartsPath = "D5/X_Frontier/Hearts.lean";
 
-    private static ImmutableArray<RuleFinding> Imports(RuleEvaluationContext context)
+    private static ImmutableArray<RuleFinding> Imports(CurrentRuleContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         foreach (var (path, report) in context.Lean.Report.Files.OrderBy(item => item.Key.Value, StringComparer.Ordinal))
@@ -19,13 +19,11 @@ internal static partial class RepositoryRules
             foreach (var module in report.Imports.Where(static item => item.StartsWith("D5.", StringComparison.Ordinal)))
             {
                 var target = module.Replace('.', '/') + ".lean";
-                var findingAffected = IsLeanClosureFactAffected(context, path)
-                    || context.IsBaseFactAffected(target);
-                if (!context.Current.TryGetFile(target, out _) && findingAffected)
+                if (!context.Current.TryGetFile(target, out _))
                 {
                     findings.Add(new RuleFinding(path.Value, $"managed import {target} does not exist"));
                 }
-                else if (!ImportAllowed(path.Value, target) && findingAffected)
+                else if (!ImportAllowed(path.Value, target))
                 {
                     findings.Add(new RuleFinding(path.Value, $"stratum closure may not import {target}"));
                 }
@@ -35,7 +33,7 @@ internal static partial class RepositoryRules
         return findings.ToImmutable();
     }
 
-    private static ImmutableArray<RuleFinding> Sorry(RuleEvaluationContext context)
+    private static ImmutableArray<RuleFinding> Sorry(CurrentRuleContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         foreach (var (path, report) in context.Lean.Report.Files)
@@ -46,8 +44,7 @@ internal static partial class RepositoryRules
                 .Order(StringComparer.Ordinal)
                 .ToArray();
             if (declarations.Length > 0
-                && !path.Value.Contains("/X_Frontier/", StringComparison.Ordinal)
-                && IsLeanClosureFactAffected(context, path))
+                && !path.Value.Contains("/X_Frontier/", StringComparison.Ordinal))
             {
                 findings.Add(new RuleFinding(
                     path.Value,
@@ -61,9 +58,9 @@ internal static partial class RepositoryRules
     // SL-003 capacity limits. These are the single enforcement source shared by
     // the admission rule (Capacity, below) and RepositoryCapacityAudit, so both
     // agree on the exact thresholds with no drift.
-    internal const int ArtifactHardLineLimit = 1000;
+    internal const int ArtifactHardLineLimit = 800;
 
-    internal const int ArtifactSoftLineLimit = 800;
+    internal const int ArtifactSoftLineLimit = 600;
 
     internal const int DirectoryFileLimit = 48;
 
@@ -146,120 +143,9 @@ internal static partial class RepositoryRules
         return directories;
     }
 
-    private static ImmutableArray<RuleFinding> Capacity(RuleEvaluationContext context)
-        => EvaluateCapacity(context, context.DeriveTestMap);
-
-    internal static ImmutableArray<RuleFinding> EvaluateCapacity(
-        RuleEvaluationContext context,
-        Func<RepositorySnapshot, ScribeTestMap> deriveSnapshot)
-    {
-        // Wrap both snapshot derivations here so cache outcomes remain observational to capacity findings.
-        ScribeTestMap GetMap(RepositorySnapshot snapshot) => context.TestMapStore is null
-            ? deriveSnapshot(snapshot)
-            : context.TestMapStore.GetOrDerive(snapshot);
-        if (context.Changes.Paths.Any(static path =>
-                ScribeTestMapDeriver.IsDerivationInput(path.Value)))
-        {
-            var currentDerivation = Task.Run(() => GetMap(context.Current));
-            var baselineDerivation = ReferenceEquals(context.Current, context.Baseline)
-                ? currentDerivation
-                : Task.Run(() => GetMap(context.Baseline));
-            return EvaluateCapacityAsync(context, currentDerivation, baselineDerivation)
-                .GetAwaiter()
-                .GetResult();
-        }
-
-        return EvaluateCapacityCore(context, derivedMaps: null);
-    }
-
-    internal static async Task<ImmutableArray<RuleFinding>> EvaluateCapacityAsync(
-        RuleEvaluationContext context,
-        Task<ScribeTestMap> currentDerivation,
-        Task<ScribeTestMap> baselineDerivation)
-    {
-        var bothDerivations = Task.WhenAll(currentDerivation, baselineDerivation);
-        try
-        {
-            await bothDerivations.ConfigureAwait(false);
-        }
-        catch
-        {
-            _ = bothDerivations.Exception;
-            if (!currentDerivation.IsCompletedSuccessfully)
-            {
-                await currentDerivation.ConfigureAwait(false);
-            }
-
-            await baselineDerivation.ConfigureAwait(false);
-            throw;
-        }
-
-        return EvaluateCapacityCore(
-            context,
-            (currentDerivation.Result, baselineDerivation.Result));
-    }
-
-    private static ImmutableArray<RuleFinding> EvaluateCapacityCore(
-        RuleEvaluationContext context,
-        (ScribeTestMap Current, ScribeTestMap Baseline)? derivedMaps)
+    private static ImmutableArray<RuleFinding> Capacity(DeltaRuleContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        if (derivedMaps is { } maps)
-        {
-            findings.AddRange(ScribeUnknownDebtPolicy.Evaluate(maps.Current, maps.Baseline)
-                .Select(static finding => new RuleFinding(
-                    finding.Path,
-                    finding.Message,
-                    finding.Effect)));
-        }
-
-        foreach (var (path, file) in context.Current.Files)
-        {
-            if (IsCapacityExcluded(path.Value))
-            {
-                continue;
-            }
-
-            var lineCount = CountArtifactLines(file.Text);
-            if (lineCount > ArtifactHardLineLimit)
-            {
-                // 阻断落在把它推过线的那个候选身上,不落在无辜候选身上。判据取自受保护基线:
-                // 本次改动有没有让它变长。与目录轴同构(带内候选只有引入了基线上不存在的
-                // 路径才阻断,见下方 DirectoryToleranceLimit 注释与 2026-08-13 判例)。
-                //
-                // 案由(2026-08-15):dev 上 DigestionLedgerAligner.cs 因两个 PR 的**并集**
-                // 达到 823 行——各自树内是 799 与 639,都没越线,各自 admit 都是对的。此后每个
-                // PR 的准入一律判红,包括 #1890/#1891/#1896/#1897 这些从未碰过该文件的,全仓
-                // 锁死约一小时。并集本身在 PR 期不可拦(那正是 strict 的活,而 strict 已被 19 禁),
-                // 所以能治的是别让它连坐,并把分裂压力压在真正加长它的那次改动上。
-                //
-                // 检测不降级:超线仍然出 finding,无辜者那条是 Observe;全仓检测由 push
-                // 侧的 capacity-audit 承担。第20条要的正是这个形状:窄化阻断须以加强检测为对价。
-                var baselineLineCount = context.Baseline.Files.TryGetValue(path, out var baselineFile)
-                    ? CountArtifactLines(baselineFile.Text)
-                    : 0;
-                findings.Add(lineCount > baselineLineCount
-                    ? new RuleFinding(
-                        path.Value,
-                        $"artifact exceeds {ArtifactHardLineLimit} lines")
-                    : new RuleFinding(
-                        path.Value,
-                        $"artifact is overfull at {lineCount} lines (hard limit "
-                        + $"{ArtifactHardLineLimit}; split per CLAUDE.md 8), but this change "
-                        + "did not grow it",
-                        AdmissionEffect.Observe));
-            }
-            else if (lineCount > ArtifactSoftLineLimit)
-            {
-                findings.Add(new RuleFinding(
-                    path.Value,
-                    $"artifact spans {lineCount} lines (soft limit {ArtifactSoftLineLimit}, "
-                    + $"hard limit {ArtifactHardLineLimit})",
-                    AdmissionEffect.Observe));
-            }
-
-        }
-
         var directories = CapacityPathsByDirectory(context.Current.Files.Keys);
         var baselineDirectories = CapacityPathsByDirectory(context.Baseline.Files.Keys);
 
@@ -329,17 +215,12 @@ internal static partial class RepositoryRules
         return slash < 0 ? "." : path[..slash];
     }
 
-    private static ImmutableArray<RuleFinding> Mirrors(RuleEvaluationContext context)
+    private static ImmutableArray<RuleFinding> Mirrors(CurrentRuleContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         foreach (var (path, file) in FormalFiles(context.Current))
         {
             if (!TryHeader(file.Text, out var header))
-            {
-                continue;
-            }
-
-            if (!MirrorPairAffected(context, path.Value, header))
             {
                 continue;
             }
@@ -351,20 +232,18 @@ internal static partial class RepositoryRules
         return findings.ToImmutable();
     }
 
-    private static ImmutableArray<RuleFinding> Badges(RuleEvaluationContext context) =>
+    private static ImmutableArray<RuleFinding> Badges(CurrentRuleContext context) =>
         context.Current.Files
             .Where(item => IsStatusScope(item.Key.Value)
-                && context.IsBaseFactAffected(item.Key.Value)
                 && BadgePattern.IsMatch(item.Value.Text))
             .Select(static item => new RuleFinding(item.Key.Value, "hand-written status badge is forbidden"))
             .ToImmutableArray();
 
-    private static ImmutableArray<RuleFinding> Hearts(RuleEvaluationContext context)
+    private static ImmutableArray<RuleFinding> CurrentHearts(CurrentRuleContext context)
     {
         try
         {
-            if (context.IsBaseFactAffected(HeartsAuthorizationLedger.Path)
-                && context.Current.TryGetFile(
+            if (context.Current.TryGetFile(
                     HeartsAuthorizationLedger.Path,
                     out var authorizationFile))
             {
@@ -377,6 +256,11 @@ internal static partial class RepositoryRules
                 new RuleFinding(HeartsAuthorizationLedger.Path, exception.Message));
         }
 
+        return FrozenStates(context);
+    }
+
+    private static ImmutableArray<RuleFinding> Hearts(DeltaRuleContext context)
+    {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         foreach (var change in context.Changes.Entries)
         {
@@ -391,12 +275,21 @@ internal static partial class RepositoryRules
 
         }
 
-        findings.AddRange(FrozenStates(context));
+        ValidateChangedAcceptedFreezePins(context, findings);
+        foreach (var path in context.Changes.Paths.Where(path => FrozenStatePath.IsUnderRoot(path.Value)).OrderBy(path => path.Value, StringComparer.Ordinal))
+        {
+            if (context.Current.Files.TryGetValue(path, out var file)
+                && FrozenStatePath.TryToModulePath(path.Value, out var module))
+            {
+                try { ObservePinChange(context, file, module, FrozenStateRecordLoader.Load(file), findings); }
+                catch (FormatException) { /* Current reports invalid pins. */ }
+            }
+        }
 
         return findings.ToImmutable();
     }
 
-    private static ImmutableArray<RuleFinding> Generality(RuleEvaluationContext context)
+    private static ImmutableArray<RuleFinding> Generality(CurrentRuleContext context)
     {
         var headers = FormalFiles(context.Current)
             .Select(item => (item.Path, Header: TryHeader(item.File.Text, out var header) ? header : null))
@@ -420,8 +313,7 @@ internal static partial class RepositoryRules
             foreach (var target in ImportClosure(source, imports))
             {
                 if (headers.TryGetValue(target, out var imported)
-                    && imported?.Generality is "I" or "E"
-                    && IsLeanClosureFactAffected(context, RepoPath.CreateKnown(source)))
+                    && imported?.Generality is "I" or "E")
                 {
                     findings.Add(new RuleFinding(
                         source,
@@ -433,7 +325,7 @@ internal static partial class RepositoryRules
         return findings.ToImmutable();
     }
 
-    private static ImmutableArray<RuleFinding> Domains(RuleEvaluationContext context)
+    private static ImmutableArray<RuleFinding> Domains(CurrentRuleContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         foreach (var path in context.Current.Files.Keys)
@@ -465,13 +357,6 @@ internal static partial class RepositoryRules
 
             var stratum = parts[stratumIndex];
             var domain = parts[stratumIndex + 1];
-            if (!context.IsBaseFactAffected(path.Value)
-                && !context.IsBaseFactAffected("Meta/domains.yaml")
-                && !context.IsBaseFactAffected("Meta/registry.yaml"))
-            {
-                continue;
-            }
-
             var policyDomain = context.Policy.Domains.FirstOrDefault(
                 item => string.Equals(item.Key.Value, domain, StringComparison.Ordinal));
             if (policyDomain.Key is null)
@@ -489,7 +374,7 @@ internal static partial class RepositoryRules
         return findings.ToImmutable();
     }
 
-    private static ImmutableArray<RuleFinding> Headers(RuleEvaluationContext context)
+    private static ImmutableArray<RuleFinding> Headers(CurrentRuleContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         var headers = new List<(RepoPath Path, HeaderData Header)>();
@@ -498,13 +383,10 @@ internal static partial class RepositoryRules
         {
             if (!TryHeader(file.Text, out var header))
             {
-                if (context.IsBaseFactAffected(path.Value))
-                {
-                    findings.Add(new RuleFinding(
-                        path.Value,
-                        "expected the canonical Lean header at byte zero "
-                        + "(six-line legacy header or seven-line header with utility)"));
-                }
+                findings.Add(new RuleFinding(
+                    path.Value,
+                    "expected the canonical Lean header at byte zero "
+                    + "(six-line legacy header or seven-line header with utility)"));
 
                 continue;
             }
@@ -516,8 +398,7 @@ internal static partial class RepositoryRules
         foreach (var (path, header) in headers)
         {
             var expected = path.Value[..^5];
-            if (context.IsBaseFactAffected(path.Value)
-                && counts[header.Gid] == 1
+            if (counts[header.Gid] == 1
                 && Gid.TryParse(header.Gid, out _)
                 && !string.Equals(header.Gid, expected, StringComparison.Ordinal))
             {

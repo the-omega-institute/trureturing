@@ -28,7 +28,6 @@ public sealed class MarkdownCheckCommandTests
 
     [Theory]
     [InlineData("markdown-check")]
-    [InlineData("markdown-check", "--report", "report.json")]
     [InlineData("markdown-check", "--report", "report.json", "--paths-from")]
     [InlineData("markdown-check", "--paths-from", "-", "--report", "report.json")]
     [InlineData("markdown-check", "--report", "", "--paths-from", "-")]

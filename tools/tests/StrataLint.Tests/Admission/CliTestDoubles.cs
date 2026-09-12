@@ -16,9 +16,17 @@ internal sealed class StubCliEnvironment(
     ExplicitCommandResult? fileMapConform = null,
     CommandResult? cleanLanes = null,
     ExplicitCommandResult? capacityAudit = null,
-    Func<IReadOnlyList<string>, CommandResult>? alignLedger = null) : ICliEnvironment
+    Func<IReadOnlyList<string>, CommandResult>? alignLedger = null,
+    ExplicitCommandResult? checkCurrent = null,
+    ExplicitCommandResult? checkDelta = null) : ICliEnvironment
 {
     internal IReadOnlyList<string> CleanLanesArguments { get; private set; } = [];
+
+    public ExplicitCommandResult CheckCurrent(IReadOnlyList<string> arguments) =>
+        checkCurrent ?? throw new NotSupportedException();
+
+    public ExplicitCommandResult CheckDelta(IReadOnlyList<string> arguments) =>
+        checkDelta ?? throw new NotSupportedException();
 
     public AdmissionOutcome Check(IReadOnlyList<string> arguments) => outcome;
 
@@ -72,9 +80,6 @@ internal sealed class StubCliEnvironment(
 
     public CommandResult QuarantineAtom(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "quarantine-atom is not configured in this fixture");
-
-    public CommandResult SettleBatch(IReadOnlyList<string> arguments) =>
-        new(false, string.Empty, "settle-batch is not configured in this fixture");
 
     public CommandResult SettleAtom(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "settle-atom is not configured in this fixture");
