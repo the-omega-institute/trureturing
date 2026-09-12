@@ -8515,3 +8515,626 @@ $$
 双向保持。对公式结构归纳，布尔联结词保持等价；存在量词的普通见证 $x$ 给有效见证 $\operatorname{Enc}(x)$，反向有效见证 $c$ 给普通见证 $\operatorname{Dec}(c)$，归纳假设给两蕴含。全称量词同样先取有效码再解码，或先取普通集合再编码，得到两向。指定集合上的量词通过其语义成员限制，外部载体恰为前述成员像；无界量词按第 75 条限制到有效码的可定义类谓词，不将该真类当作一个集合。函数符号先替换为已比较的图、精确定义域及唯一值条件，故此归纳适用于这里的支撑、全部有限集及任意子群等公式。
 
 这给每个固定有限公式的普通证明方案，未引入一个同时裁定全部公式的内部真理谓词。所有新对象由定义给出，有限证明中的新定义可逐项消去，新增定理用上述普通证明替代，故仍处于第 78 条的保守扩展。若给定模型满足 ZFC，构造和双逆在该模型内部成立；非标准模型中的“有限”只保证内部有限，内部幂集不冒充外部全部子集。这不推出模型存在或 ZFC 无条件一致。第 317 条只让非零记录有限，全部总图、任意环面点、拓扑和其它集合仍保留各自集合论规模及用途，第 79 条的有限字障碍不变。以上拓扑与代数结论没有附加成员判定程序、无限执行或成本最优语义。证毕。
+
+## 321. 寄存器上的全部有理相位特征
+
+**定义 321.1。** 在 ZFC 中沿用第 255、306–307 条的通常整数 $\mathbb Z_o$、有限支撑总状态群 $\mathsf V_{\rm reg}$、基 $(\varepsilon_n)_{n\in\omega}$、完整圆周乘积 $\mathsf X_{\rm reg}=\mathbb T^\omega$ 及 $\Psi_{\rm reg}$，不改变其定义域。另定义加法商群和全部系数序列
+$$
+\mathsf D_{\rm rat}=\mathbb Q/\mathbb Z_o,\qquad
+j_{\rm rat}:\mathsf D_{\rm rat}\to\mathbb T,\quad [q]_{\rm rat}\mapsto[q],\qquad
+\Theta_{\rm rat}=(\mathsf D_{\rm rat})^\omega.
+$$
+$[q]_{\rm rat}$ 表示有理数的整数平移类，$[x]$ 表示实数的整数平移类。每个 $\theta\in\Theta_{\rm rat}$ 都是定义域恰为 $\omega$ 的总函数，不要求有限支撑。对 $u\in\mathsf V_{\rm reg}$ 定义
+$$
+\chi^{\rm rat}_\theta(u)=\sum_{n\in\operatorname{supp}(u)}u_n\theta_n\in\mathsf D_{\rm rat}.
+$$
+整数倍按加法群解释，空和为零；本条特征的上标区分第 255 条的原整数提升 $\chi$。
+
+**定理 321.2。** $j_{\rm rat}$ 是单射同态，且
+$$
+\Theta_{\rm rat}\longrightarrow
+\operatorname{Hom}(\mathsf V_{\rm reg},\mathsf D_{\rm rat}),\qquad
+\theta\longmapsto\chi^{\rm rat}_\theta
+$$
+是双射，逆为 $f\mapsto(f(\varepsilon_n))_{n\in\omega}$。$\mathsf V_{\rm reg}$ 可数无限，每个子群 $H$ 的商 $\mathsf V_{\rm reg}/H$ 由序列 $(\varepsilon_n+H)_{n\in\omega}$ 生成。
+
+**证明。** 两有理数之差在实数中是整数，当且仅当它在有理数中是同一整数；这同时证明 $j_{\rm rat}$ 良定义及单射，模一加法给同态性。把两个状态的求和域扩到支撑的有限并，补上的项为零，逐项分配给 $\chi^{\rm rat}_\theta(u+v)=\chi^{\rm rat}_\theta(u)+\chi^{\rm rat}_\theta(v)$。第 307 条已证明唯一有限基展开及自由性；因而任意同态 $f$ 满足 $f(u)=\sum_nu_nf(\varepsilon_n)$，而 $\chi^{\rm rat}_\theta(\varepsilon_n)=\theta_n$。这给两个复合恒等式。可数无限性直接用第 307 条；将该条的有限基展开取商，即得所列生成序列，包括零商。证毕。
+
+## 322. 可数扩张与经典有理相位分离
+
+**定义 322.1。** 设 $A$ 是由序列 $(g_n)_{n\in\omega}$ 生成的阿贝尔群，$B\le A$，$f:B\to\mathsf D_{\rm rat}$ 为同态。这里只要求正整数可除性：对 $d\ge1$ 和 $[r]_{\rm rat}$，取一个有理代表 $r$，则 $d[r/d]_{\rm rat}=[r]_{\rm rat}$。经典来源为 [Stacks Project §15.55，Lemma 15.55.1](https://stacks.math.columbia.edu/tag/01D6) 的可除阿贝尔群单射性，以及 [§15.56，Lemma 15.56.7](https://stacks.math.columbia.edu/tag/01D8) 的评价单射性；以下给出它们在可数生成域上的完整构造。
+
+**定理 322.2。** 每个上述 $f$ 都可延拓到 $A$。对每个 $x\in A\setminus\{0\}$，存在同态 $F:A\to\mathsf D_{\rm rat}$ 使 $F(x)\ne0$。
+
+**证明。** 先加入一个元素 $g\in A$。令 $L=\{k\in\mathbb Z_o:kg\in B\}$，由子群封闭性，$L\le\mathbb Z_o$。若它没有正元素，负元素取负也会给正元素，故 $L=\{0\}$。若有正元素，取最小者 $d$；对任意 $k\in L$ 作 $k=jd+r$、$0\le r<d$ 的整数除法，$rg\in B$，最小性迫使 $r=0$，故 $L=d\mathbb Z_o$。
+
+在 $L=\{0\}$ 时置 $f'(b+kg)=f(b)$。若 $b+kg=b'+k'g$，则 $(k-k')g\in B$，所以 $k=k'$，继而 $b=b'$，定义良好。在 $L=d\mathbb Z_o$ 时取 $t\in\mathsf D_{\rm rat}$ 使 $dt=f(dg)$，置 $f'(b+kg)=f(b)+kt$。同一表示等式给 $k-k'=jd$ 以及 $b'-b=jdg$，从而
+$$
+f(b')-f(b)=jf(dg)=jdt=(k-k')t.
+$$
+因此两种表示给同一值。两种情形都由相加表示得到加法保持，由 $k=0$ 得到延拓。$g\in B$ 时 $d=1$，以及 $f(dg)=0$ 的情形均在论证内。
+
+从 $B_0=B,f_0=f$ 起，依次在 $B_{n+1}=B_n+\mathbb Z_og_n$ 上作上述延拓。在 ZFC 中对每步的非空选择集选择 $t$ 并作自然数递归，得到兼容序列 $(f_n)$。其图的并仍单值；任意两个输入属于某个共同有限阶段，因此并图保持加法。并域是含全部 $g_n$ 的子群，等于 $A$，故给出延拓。
+
+最后在 $\langle x\rangle$ 上先定义非零特征。若 $x$ 的阶为有限 $r\ge2$，令 $kx\mapsto[k/r]_{\rm rat}$：相同群元素的系数差被 $r$ 整除，故良定义，且 $[1/r]_{\rm rat}\ne0$。若 $x$ 阶无限，$kx$ 的系数唯一，令 $kx\mapsto[k/2]_{\rm rat}$，仍为同态且在 $x$ 上非零。无限循环群上的这个映射不要求单射。延拓这两个循环子群上的映射即得结论。构造使用子群成员关系的集合论语义，不由它推出成员判定算法。证毕。
+
+## 323. 每个子群的零化子与分离量词
+
+**定义 323.1。** 对 $H\le\mathsf V_{\rm reg}$ 定义
+$$
+\operatorname{Ann}_{\rm rat}(H)
+=\{\theta\in\Theta_{\rm rat}:\forall h\in H,\ \chi^{\rm rat}_\theta(h)=0\}.
+$$
+空族的核交约定为 $\mathsf V_{\rm reg}$。
+
+**定理 323.2。** 对每个 $H\le\mathsf V_{\rm reg}$ 有
+$$
+H=\bigcap_{\theta\in\operatorname{Ann}_{\rm rat}(H)}\ker\chi^{\rm rat}_\theta.
+$$
+其分离量词为
+$$
+\forall H\le\mathsf V_{\rm reg}\ \forall u\in\mathsf V_{\rm reg}\setminus H\
+\exists\theta\in\operatorname{Ann}_{\rm rat}(H),\quad\chi^{\rm rat}_\theta(u)\ne0.
+$$
+对每个固定 $H$，存在至多可数的 $C_H\subseteq\operatorname{Ann}_{\rm rat}(H)$ 使 $H=\bigcap_{\theta\in C_H}\ker\chi^{\rm rat}_\theta$。对预先指定的有限 $F\subseteq\mathsf V_{\rm reg}\setminus H$，存在有限 $C_{H,F}\subseteq\operatorname{Ann}_{\rm rat}(H)$，使每个 $u\in F$ 至少被其中一个特征检测，且可取 $|C_{H,F}|\le|F|$。这不同于用有限族恢复整个 $H$ 的断言。
+
+**证明。** $H$ 包含于所有显示的核。若 $u\notin H$，则 $x=u+H\ne0$；第 321 条给商的可数生成性，第 322 条给检测 $x$ 的同态。与商映射复合，再用第 321 条的双射，得到所需 $\theta$，它在 $H$ 上为零而在 $u$ 上非零。这证明核交的反向包含；$H=\mathsf V_{\rm reg}$ 时无排除状态，$H=\{0\}$ 时同一论证适用。
+
+在 ZFC 中对每个排除状态选一个见证。第 307 条的可数性使这些见证的像至多可数；其核交包含 $H$ 且排除全部外部状态，给 $C_H$。只对有限 $F$ 作此选择则得到 $C_{H,F}$，空 $F$ 取空族。这不交换“先定有限排除表”和“排除全部状态”的量词。对任意 $a,u\in\mathsf V_{\rm reg}$，将排除测试用于 $u-a$，又得
+$$
+u\in a+H\iff
+\forall\theta\in\operatorname{Ann}_{\rm rat}(H),\quad
+\chi^{\rm rat}_\theta(u)=\chi^{\rm rat}_\theta(a).
+$$
+第 326–327 条给有限族不能普遍替代上述量词的具体障碍。证毕。
+
+## 324. 保留坐标观察的联合评价与精确闭包迹
+
+**定义 324.1。** 定义完整乘积空间及映射
+$$
+Y_{\rm rat}=\mathbb T^{\Theta_{\rm rat}},\qquad
+\operatorname{Ev}_{\rm rat}:\mathsf V_{\rm reg}\to Y_{\rm rat},\quad
+\operatorname{Ev}_{\rm rat}(u)(\theta)=j_{\rm rat}(\chi^{\rm rat}_\theta(u)),
+$$
+$$
+X_+=\mathsf X_{\rm reg}\times Y_{\rm rat},\qquad
+\operatorname{Ev}_+(u)=(\Psi_{\rm reg}(u),\operatorname{Ev}_{\rm rat}(u)).
+$$
+两环境都取所列完整乘积的乘积拓扑，包含全部相应圆周值函数。$\pi_1,\pi_2$ 是 $X_+$ 的两投影。
+
+**定理 324.2。** $\Psi_{\rm reg}$、$\operatorname{Ev}_{\rm rat}$、$\operatorname{Ev}_+$ 均为单射同态，且
+$$
+\Psi_{\rm reg}=\pi_1\circ\operatorname{Ev}_+,\qquad
+\operatorname{Ev}_{\rm rat}=\pi_2\circ\operatorname{Ev}_+.
+$$
+对每个 $H\le\mathsf V_{\rm reg}$，在定义 324.1 的实际环境拓扑中有
+$$
+\overline{\operatorname{Ev}_{\rm rat}[H]}^{Y_{\rm rat}}
+\cap\operatorname{Ev}_{\rm rat}[\mathsf V_{\rm reg}]
+=\operatorname{Ev}_{\rm rat}[H],
+$$
+$$
+\overline{\operatorname{Ev}_+[H]}^{X_+}
+\cap\operatorname{Ev}_+[\mathsf V_{\rm reg}]
+=\operatorname{Ev}_+[H].
+$$
+这些是精确状态像上的迹等式，不声称整个像在环境乘积中闭。
+
+**证明。** $\Psi_{\rm reg}$ 的单射同态性直接用第 307 条。其余同态性由第 321 条逐评价坐标成立。若 $u\ne v$，第 323 条取 $H=\{0\}$ 给一个检测 $u-v$ 的特征，再用 $j_{\rm rat}$ 单射，得到两有理评价像不同。联合评价的首分量已单射，故它也单射；两个投影式由定义成立。
+
+固定 $\theta\in\operatorname{Ann}_{\rm rat}(H)$。在 $Y_{\rm rat}$ 中，集合 $\{y:y(\theta)=0_{\mathbb T}\}$ 是闭集，因为评价投影连续而通常圆周中的零单点闭。它含 $\operatorname{Ev}_{\rm rat}[H]$，故也含其环境闭包。若 $\operatorname{Ev}_{\rm rat}(u)$ 在此闭包中，则所有零化子值经 $j_{\rm rat}$ 都为零。单射性及第 323 条给 $u\in H$，证明第一个迹式的非平凡方向；另一方向由集合包含于自身闭包。在 $X_+$ 中改用闭集 $\{(z,y):y(\theta)=0_{\mathbb T}\}$，同样证明第二式。
+
+若 $u\notin H$，取分离见证 $\theta$；圆周开集 $\mathbb T\setminus\{0\}$ 含其非零评价值。这个开集在相应评价坐标的逆像，是含该状态像而不交 $H$ 像的单个开柱集。此论证在完整目标中进行，没有把目标换成有理相位子空间。证毕。
+
+## 325. 原 GICT 三轴读数的精确保留
+
+**定义 325.1。** 保留第 287–288 条的原定义域与读数：$\Gamma_+$ 只作用于正整数，$\Gamma_{\mathbb Z}$ 作用于全部通常有符号整数，且
+$$
+\Gamma_+(m)=(\lfloor\log_\phi m\rfloor,\zeta(m),[\phi m])\quad(m>0),
+$$
+$$
+\Gamma_{\mathbb Z}(m)
+=(\mathscr A_{\mathbb Z}^{\bot}(m),\operatorname{scode}(m),[\phi m]),\qquad
+\mathscr A_{\mathbb Z}^{\bot}(0)=\bot,
+$$
+非零时 $\mathscr A_{\mathbb Z}^{\bot}(m)=\lfloor\log_\phi|m|\rfloor$，其中 $\bot\notin\mathbb Z_o$。这些与 [GICT 定义 1.1、1.4、1.7](GICT.md) 比较时使用第 287 条已声明的权值对应，不把素数轴索引当作 Fibonacci 位索引。
+
+**定理 325.2。** 对任意已声明的读数 $R:A_R\to B_R$、$A_R\subseteq\mathsf V_{\rm reg}$，联合评价像上有精确恢复
+$$
+R_+:\operatorname{Ev}_+[A_R]\to B_R,\qquad
+R_+=R\circ\Psi_{\rm reg}^{-1}\circ\pi_1,
+\qquad R_+(\operatorname{Ev}_+(u))=R(u).
+$$
+这里 $\Psi_{\rm reg}^{-1}$ 只在第 307 条的像 $\Psi_{\rm reg}[\mathsf V_{\rm reg}]$ 上定义。特别地，对每个 $n\in\omega$，取 $R(u)=\Gamma_{\mathbb Z}(u_n)$ 保留该坐标的完整三轴读数；取 $A_R=\{u:u_n>0\}$ 及 $R(u)=\Gamma_+(u_n)$ 保留正整数特化。
+
+**证明。** 对 $u\in A_R$，第 324 条给 $\pi_1(\operatorname{Ev}_+(u))=\Psi_{\rm reg}(u)$，再用第 307 条的精确逆就得到 $u$，故复合落在 $R$ 的原定义域并返回原值。反向任一 $\operatorname{Ev}_+[A_R]$ 中的点唯一来自这样的 $u$，所以没有域的遗漏或额外值。上述坐标特化保持零标记、符号、数字及相位原义。它只断言精确恢复，不给尺度图或数字图增加连续性。普通指标 $n$、素数标签 $p_n$、位位置 $j$ 以及三个观察字段仍是不同类型；一般实数和 $\phi\mathbb Q$ 元素没有由此取得自然字 $\zeta(x)$。这也是第 259–260 条保留部分读数域的具体情形。证毕。
+
+## 326. 有限有理探针族的阶与最小公倍数
+
+**定义 326.1。** 固定 $k\in\omega$ 及 $\theta^1,\ldots,\theta^k\in\Theta_{\rm rat}$。对 $u\in\mathsf V_{\rm reg}$，令 $d_i$ 为 $\chi^{\rm rat}_{\theta^i}(u)$ 在 $\mathsf D_{\rm rat}$ 中的阶，零的阶取一，并置 $L=\operatorname{lcm}(d_1,\ldots,d_k)$，$k=0$ 时取 $L=1$。每个 $d_i$ 有限，因为有理类的任一正分母消去该类。
+
+**定理 326.2。** 对每个 $t\in\mathbb Z_o$，
+$$
+\bigl(\forall 1\le i\le k,\ \chi^{\rm rat}_{\theta^i}(tu)=0\bigr)
+\iff L\mid t.
+$$
+若全部探针消去 $H\le\mathsf V_{\rm reg}$，记 $x=u+H$。若 $x$ 阶无限，则 $Lu\notin H$，却被全部这 $k$ 个探针消去。若 $x$ 阶为有限 $r\ge1$，则 $L\mid r$，其共同核在 $\langle x\rangle$ 中恰有 $r/L$ 个元素；在该循环子群上联合映射单射当且仅当 $L=r$。对每个固定 $k$，
+$$
+H\text{ 是 }k\text{ 个有理特征的共同核}
+\iff \mathsf V_{\rm reg}/H\text{ 可嵌入 }(\mathsf D_{\rm rat})^k.
+$$
+
+**证明。** 若群元素阶为 $d$，将任意整数 $t$ 写成 $jd+s$、$0\le s<d$；$t$ 消去它当且仅当 $s$ 消去它，由正阶最小性恰为 $s=0$。同时满足 $d_i\mid t$ 恰为 $L\mid t$；也可按每个素因子的指数取最大值看出这一等价，空族给 $1\mid t$。同态性给显示的结论。
+
+探针消去 $H$ 时，它们在商上良定义。若 $x$ 阶无限，$L\ge1$ 使 $Lx\ne0$，而已证整除判据使所有探针消去 $Lu$。若 $x$ 阶为 $r$，$r$ 消去所有像，所以每个 $d_i\mid r$，进而 $L\mid r$。模 $r$ 的共同核由 $0,L,2L,\ldots,(r/L-1)L$ 恰好给出：它们两两不同，所有被 $L$ 整除的系数模 $r$ 都在其中，故得数量与单射判据。
+
+把 $k$ 个特征组成联合同态 $F:\mathsf V_{\rm reg}\to(\mathsf D_{\rm rat})^k$。当 $H\subseteq\ker F$，因 $F(u+h)=F(u)$，映射 $\bar F(u+H)=F(u)$ 良定义；它单射当且仅当 $\ker F=H$。反向把任一商嵌入与商映射复合并取 $k$ 个投影，第 321 条将各同态写为相应有理特征。$k=0$ 时目标为单点群，充要条件两侧均为 $H=\mathsf V_{\rm reg}$。
+
+特别取 $H=0$ 及 $u\ne0$，第 307 条的自由群无挠性给 $Lu\ne0$，所以任何有限族不能分离全部状态。这里 $L$ 同时依赖探针族及被选状态：单个总序列 $\theta_n=[1/2^{n+1}]_{\rm rat}$ 在 $\varepsilon_n$ 上的值恰有阶 $2^{n+1}$，因为 $[t/2^{n+1}]_{\rm rat}=0$ 恰为 $2^{n+1}\mid t$，故不存在由这个单探针给出的全坐标统一阶界。被漏掉的倍数 $Lu$ 也不要求仍在另行固定的容量盒中。证毕。
+
+## 327. 一个探针的无限商与二倍子群障碍
+
+**定义 327.1。** 对 $r\ge2$ 定义 $H_r=\{u\in\mathsf V_{\rm reg}:r\mid u_0\}$。令 $f_{\rm div}:\mathsf V_{\rm reg}\to\mathsf D_{\rm rat}$ 是基值 $f_{\rm div}(\varepsilon_n)=[1/(n+1)]_{\rm rat}$ 唯一确定的同态，并置 $2\mathsf V_{\rm reg}=\{2v:v\in\mathsf V_{\rm reg}\}$。
+
+**定理 327.2。** $H_r$ 与 $\ker f_{\rm div}$ 各是一个有理特征的核，且
+$$
+\mathsf V_{\rm reg}/H_r\cong\mathbb Z_o/r\mathbb Z_o,\qquad
+\mathsf V_{\rm reg}/\ker f_{\rm div}\cong\mathsf D_{\rm rat}.
+$$
+不存在有限个到 $\mathbb T$ 的群同态以 $2\mathsf V_{\rm reg}$ 为共同核；因此有限有理特征族也不可能做到。
+
+**证明。** 特征 $u\mapsto[u_0/r]_{\rm rat}$ 的核恰为 $H_r$，坐标 $a\varepsilon_0$ 取得每个模 $r$ 的类；对应商映射良定义，核为零且满射，给第一个同构。任取 $[a/b]_{\rm rat}$、$b\ge1$，有 $f_{\rm div}(a\varepsilon_{b-1})=[a/b]_{\rm rat}$，所以 $f_{\rm div}$ 满射。映射 $u+\ker f_{\rm div}\mapsto f_{\rm div}(u)$ 由核的定义良定义及单射，由该满射得满射。这是一个无限商只需一个探针的例子。任意阶 $r$ 的有限循环商也由选定生成元映到 $[1/r]_{\rm rat}$ 嵌入该群。
+
+若 $k$ 个圆周特征 $\rho_1,\ldots,\rho_k$ 消去 $2\mathsf V_{\rm reg}$，则 $2\rho_i(u)=0$ 对每个 $u$ 成立。圆周的二挠子群恰为 $\{0,[1/2]\}$：对代表 $0\le t<1$，$2t\in\mathbb Z_o$ 只可能是零或一。因此联合像至多有 $2^k$ 个元素。但
+$$
+\left\{\sum_{n=0}^{k}a_n\varepsilon_n:a_n\in\{0,1\}\right\}
+$$
+有 $2^{k+1}$ 个向量，且在模 $2\mathsf V_{\rm reg}$ 后仍两两不同，因为不同向量至少一个坐标差为 $1$ 或 $-1$。抽屉原理给两个具有同一联合像的向量，其差不在 $2\mathsf V_{\rm reg}$ 中而被每个特征消去，矛盾。$k=0$ 时单点联合像与两个向量同样给反例。本证明不要求这些圆周特征有理值或连续。证毕。
+
+## 328. 二进子群的旧坐标闭包迹
+
+**定义 328.1。** 使用第 312 条的 $b_n^{\rm dy},H_{\rm dy},\ell_{\rm dy},u_{5040}$ 原义；$\ell_{\rm dy}$ 的目标仍是 $\mathbb Z_o[1/2]\subseteq\mathbb Q$。在取有理数运算时显式使用这个包含映射。
+
+**定理 328.2。** 第 313 条的核等式、商同构、真饱和性及每个有限坐标投影满性给出
+$$
+\overline{\Psi_{\rm reg}[H_{\rm dy}]}^{\mathsf X_{\rm reg}}
+\cap\Psi_{\rm reg}[\mathsf V_{\rm reg}]
+=\Psi_{\rm reg}[\mathsf V_{\rm reg}]
+\supsetneq\Psi_{\rm reg}[H_{\rm dy}].
+$$
+更明确地，对每个固定 $u\in\mathsf V_{\rm reg}$ 和所有充分大的 $N$，
+$$
+h_N(u)=u-2^N\ell_{\rm dy}(u)\varepsilon_N\in H_{\rm dy},\qquad
+\Psi_{\rm reg}(h_N(u))\longrightarrow\Psi_{\rm reg}(u).
+$$
+
+**证明。** 第 313 条已证明 $H_{\rm dy}=\ker\ell_{\rm dy}$、$\mathsf V_{\rm reg}/H_{\rm dy}\cong\mathbb Z_o[1/2]$、真饱和性及所有有限投影满性，直接复用这些事实。对 $N$ 不小于 $u$ 支撑的全部指标，$2^N\ell_{\rm dy}(u)$ 为整数；该条的望远镜恒等式直接给 $h_N(u)\in H_{\rm dy}$。零状态也取任意 $N$。此向量只在坐标 $N$ 处可能偏离 $u$；对每个固定有限 $I$，取 $N$ 同时大于 $I$ 及原支撑的全部指标，则相位在 $I$ 上完全相等。每个乘积开邻域含一个这样的有限柱集，故得显示的收敛，并使每个精确相位状态落在环境闭包中。于是迹为整个精确像。$\varepsilon_0\notin H_{\rm dy}$ 由第 313 条给出，再用第 307 条单射性得严格包含。这里既未另证望远镜恒等式，也不需要重新描述全部环境闭包。证毕。
+
+## 329. 保留旧观察后的严格拓扑加强
+
+**定义 329.1。** 保留第 306 条的 $\tau_\Psi$，另令
+$$
+\tau_+=\{\operatorname{Ev}_+^{-1}(O):O\subseteq X_+\text{ 开}\}
+$$
+为 $\mathsf V_{\rm reg}$ 上联合评价的初始拓扑。
+
+**定理 329.2。** 有 $\tau_\Psi\subsetneq\tau_+$。每个子群都在 $\tau_+$ 中闭，而 $H_{\rm dy}$ 在 $\tau_\Psi$ 中的闭包是全状态群。
+
+**证明。** 对旧环境的开集 $O$，
+$$
+\Psi_{\rm reg}^{-1}(O)=\operatorname{Ev}_+^{-1}(O\times Y_{\rm rat}),
+$$
+故 $\tau_\Psi\subseteq\tau_+$。任意映射 $F:V\to X$ 的初始拓扑满足
+$$
+u\in\overline H^{\tau_F}\iff F(u)\in\overline{F[H]}^X.
+$$
+确切地，含 $F(u)$ 的每个环境开集 $O$ 拉回为含 $u$ 的开集，且 $F^{-1}(O)\cap H\ne\varnothing$ 当且仅当 $O\cap F[H]\ne\varnothing$；初始开集全部具有这个逆像形式，所以邻域判据给两个方向。将 $F$ 取为 $\operatorname{Ev}_+$，第 324 条的精确迹给 $\overline H^{\tau_+}=H$。将其取为 $\Psi_{\rm reg}$，第 328 条给 $\overline{H_{\rm dy}}^{\tau_\Psi}=\mathsf V_{\rm reg}\ne H_{\rm dy}$。若两拓扑相等，其闭集应相同，与此矛盾。这比较的是保留首分量的联合拓扑与旧拓扑，不涉及单独有理评价的初始拓扑与旧拓扑之间的排序。证毕。
+
+## 330. 二进有理探针与黄金实提升的不同核
+
+**定义 330.1。** 在定义域仍为 $\omega$ 的 $\Theta_{\rm rat}$ 中置
+$$
+\eta^{\rm dy}_n=[2^{-n}]_{\rm rat},\qquad
+\eta^{\rm dy,m}_n=[2^{-n-m}]_{\rm rat}\quad(m\in\omega).
+$$
+定义
+$$
+g_{\rm dy}:\mathsf V_{\rm reg}\to\mathbb T,\qquad
+g_{\rm dy}(u)=[\phi\ell_{\rm dy}(u)].
+$$
+此处先将 $\ell_{\rm dy}(u)$ 作为有理数嵌入实数、乘以 $\phi$，再取模一。一般地，对任意总有理系数序列 $r\in\mathbb Q^\omega$ 定义
+$$
+L_r(u)=\sum_{n\in\operatorname{supp}(u)}r_nu_n\in\mathbb Q,\qquad
+g_r(u)=[\phi L_r(u)]\in\mathbb T.
+$$
+
+**定理 330.2。** 有
+$$
+\ker\chi^{\rm rat}_{\eta^{\rm dy}}
+=\ell_{\rm dy}^{-1}(\mathbb Z_o)\supsetneq H_{\rm dy},\qquad
+\bigcap_{m\in\omega}\ker\chi^{\rm rat}_{\eta^{\rm dy,m}}=H_{\rm dy}.
+$$
+无有限有理特征族以 $H_{\rm dy}$ 为共同核；但单个黄金特征满足 $\ker g_{\rm dy}=H_{\rm dy}$。每个 $g_r$ 都是同态，且 $\ker g_r=\ker L_r$ 是饱和子群。
+
+**证明。** 有限求和给
+$$
+\chi^{\rm rat}_{\eta^{\rm dy}}(u)=[\ell_{\rm dy}(u)]_{\rm rat},\qquad
+\chi^{\rm rat}_{\eta^{\rm dy,m}}(u)=[\ell_{\rm dy}(u)/2^m]_{\rm rat}.
+$$
+第一式为零恰为 $\ell_{\rm dy}(u)$ 是整数，$\varepsilon_0$ 的值一证明严格包含。若 $q=\ell_{\rm dy}(u)\ne0$，取 $m$ 使 $2^m>|q|$，则 $0<|q/2^m|<1$，这个数不是整数，故相应特征非零。反向 $q=0$ 时全部为零，再用第 313 条核等式，得到可数族结论。第 313 条的商 $\mathbb Z_o[1/2]$ 含无限阶元素一，第 326 条因而排除有限族恢复此核。
+
+第 236 条已证明 $\phi$ 无理。对 $q\in\mathbb Q$，若 $[\phi q]=0$ 且 $q\ne0$，则 $\phi q=z\in\mathbb Z_o$，于是 $\phi=z/q\in\mathbb Q$，矛盾；所以 $[\phi q]=0$ 当且仅当 $q=0$。应用于 $\ell_{\rm dy}(u)$ 给黄金核，应用于 $L_r(u)$ 给一般核。$L_r$ 的有限和线性及模一加法给同态性。若 $ku\in\ker L_r$、$k\in\mathbb Z_o\setminus\{0\}$，则 $kL_r(u)=0$，有理数无挠性迫使 $L_r(u)=0$，故核饱和。第 327 条的 $H_r$ 不饱和，因为 $r\varepsilon_0\in H_r$ 而 $\varepsilon_0\notin H_r$；$2\mathsf V_{\rm reg}$ 同理由 $2\varepsilon_0$ 见证。因此这种纯 $\phi\mathbb Q$ 系数形式不能表示任意子群。
+
+最后，$[0]_{\rm rat}=[1]_{\rm rat}$，而 $[0]\ne[\phi]$。故按任意代表“乘以 $\phi$”不是 $\mathsf D_{\rm rat}\to\mathbb T$ 的良定义映射。特别 $\chi^{\rm rat}_{\eta^{\rm dy}}(\varepsilon_0)=0$ 而 $g_{\rm dy}(\varepsilon_0)=[\phi]\ne0$，黄金读数不能从已经约化的该有理相位按这种乘法取得。证毕。
+
+## 331. 5040 指数状态的全局相位与匹配前缀
+
+**定义 331.1。** 取第 312 条的 $u_{5040}=4\varepsilon_0+2\varepsilon_1+\varepsilon_2+\varepsilon_3$。第 306 条的有序素数枚举给 $(p_0,p_1,p_2,p_3)=(2,3,5,7)$；数字标签相应为 $(\zeta(2),\zeta(3),\zeta(5),\zeta(7))$。这是指数状态，容量另为参数；只有在另取这四个标签上的容量 $(4,2,1,1)$ 时，它才是第 115 条的容量上角。
+
+**定理 331.2。** 有
+$$
+\ell_{\rm dy}(u_{5040})=\frac{43}{8},\qquad
+\chi^{\rm rat}_{\eta^{\rm dy}}(u_{5040})=[3/8]_{\rm rat},\qquad
+g_{\rm dy}(u_{5040})=[43\phi/8].
+$$
+最后一相位在 $[0,1)$ 中的代表恰为 $(43\sqrt5-85)/16\in(0,1)$。$8u_{5040}\notin H_{\rm dy}$，但 $\chi^{\rm rat}_{\eta^{\rm dy}}(8u_{5040})=0$，而其黄金相位非零。对 $N\ge4$，
+$$
+h_N=u_{5040}-43\,2^{N-3}\varepsilon_N\in H_{\rm dy},\qquad
+\Psi_{\rm reg}(h_N)\longrightarrow\Psi_{\rm reg}(u_{5040}),
+$$
+其中 $h_4=(4,2,1,1,-86,0,\ldots)$。每个固定有限坐标集上的状态值及旧相位值最终与 $u_{5040}$ 完全相等。
+
+**证明。** 第 313 条已经证明 $43/8$ 的值、$h_N$ 的核归属及匹配前缀收敛，直接用其结论。第 330 条给有理相位为 $[43/8]_{\rm rat}=[3/8]_{\rm rat}$ 及黄金值。精确整数不等式
+$$
+85^2=7225<5\cdot43^2=9245<101^2=10201
+$$
+给 $85<43\sqrt5<101$，等价于 $8<43\phi/8<9$，所以减八得到所列唯一代表。线性给 $\ell_{\rm dy}(8u_{5040})=43$，非零且为整数；第 313、330 条分别给不属于二进核、有理相位为零及黄金相位非零。$N=4$ 时修正系数为 $43\cdot2=86$。
+
+第 32 条给 $5040=2^4 3^2 5\,7$、指数的绝对值字 $(101,01,1,1)$，以及标量自身的非相邻位置集 $\{2,5,11,13,17\}$，其权值和为 $3+13+233+610+4181$。第 3、69–70 条的低位到高位约定另给
+$$
+\zeta(2)=01,\quad\zeta(3)=001,\quad\zeta(5)=0001,\quad\zeta(7)=0101,
+$$
+$$
+43=G_7+G_4+G_0=34+8+1,\qquad 8=G_4,\qquad3=G_2,
+$$
+$$
+\zeta(43)=10001001,\qquad\zeta(8)=00001,\qquad\zeta(3)=001.
+$$
+各显示位置均非相邻，唯一性给这些规范字。按第 332 条的独立有限字段，$43/8$ 的记录为 $T_2(\operatorname{scode}(43),\zeta(8))$，其中正分子字段为 $(+,10001001)$；其有理相位的记录为 $T_2(001,00001)$。$\gcd(43,8)=\gcd(3,8)=1$，所以已经约分。$\eta^{\rm dy}_0=[1]_{\rm rat}=0$ 的规范相位记录则是 $T_2(0_Z,\zeta(1))$，不是分子一分母一的相位记录。
+
+标量 GICT 相位 $[5040\phi]$、坐标向量 $\Psi_{\rm reg}(u_{5040})$ 和全局相位 $[43\phi/8]$ 分别属于所声明的标量、乘积与全局读数；前后两个圆周值也不相等，否则非零有理数 $(5040-43/8)\phi$ 为整数，与第 236 条无理性矛盾。第 115–116、287–288 条区分完整配置与标量投影；例如同一状态 $u_{5040}$ 同时适合容量 $(4,2,1,1)$ 和 $(5,2,1,1)$，三种相位完全不变而配置不同。第 33 条又给同一指数状态的两份 CSA 档案，事件数分别为十和十六，故并非历史同构。这些相位值因此不恢复未声明的容量或被投影遗忘的 CSA 档案。证毕。
+
+## 332. 独立的既约有理字段与有理相位字段
+
+**定义 332.1。** 沿用第 69–70、113–114、255 条的 $\mathsf W_Z,S,\zeta,\operatorname{val},\operatorname{scode},\operatorname{ival}$，其中 $0_Z=0_S=\varnothing$。所有字段对使用第 257 条的普通外部 $T_2$。独立定义
+$$
+\mathsf{RatFld}
+=\{T_2(c,d):c\in S,\ d\in\mathsf W_Z,\ \operatorname{val}(d)>0,\
+\gcd(|\operatorname{ival}(c)|,\operatorname{val}(d))=1\},
+$$
+$$
+\mathsf{RatPhaseFld}
+=\{T_2(c,d):c,d\in\mathsf W_Z,\
+0\le\operatorname{val}(c)<\operatorname{val}(d),\
+\gcd(\operatorname{val}(c),\operatorname{val}(d))=1\}.
+$$
+两者都由合法性谓词定义，不用某映射的像定义。置
+$$
+\operatorname{qdec}(T_2(c,d))=\frac{\operatorname{ival}(c)}{\operatorname{val}(d)},\qquad
+\operatorname{pdec}(T_2(c,d))=
+\left[\frac{\operatorname{val}(c)}{\operatorname{val}(d)}\right]_{\rm rat}.
+$$
+对 $q\in\mathbb Q$ 的既约表示 $a/b$、$a\in\mathbb Z_o,b\ge1$，定义 $\operatorname{qenc}(q)=T_2(\operatorname{scode}(a),\zeta(b))$。对 $\delta\in\mathsf D_{\rm rat}$ 的 $[0,1)$ 代表的既约表示 $a/b$，定义 $\operatorname{penc}(\delta)=T_2(\zeta(a),\zeta(b))$。
+
+**定理 332.2。** 上述选择存在唯一，且在整个独立目标上有双逆
+$$
+\operatorname{qdec}\circ\operatorname{qenc}=\operatorname{id}_{\mathbb Q},\qquad
+\operatorname{qenc}\circ\operatorname{qdec}=\operatorname{id}_{\mathsf{RatFld}},
+$$
+$$
+\operatorname{pdec}\circ\operatorname{penc}=\operatorname{id}_{\mathsf D_{\rm rat}},\qquad
+\operatorname{penc}\circ\operatorname{pdec}=\operatorname{id}_{\mathsf{RatPhaseFld}}.
+$$
+两个零字段均恰为 $T_2(0_Z,\zeta(1))$。有理域运算及有理相位的加法群运算沿相应双射精确运输，保留其全部原定义域。
+
+**证明。** 对有理数的任一整数分子、非零整数分母，分母为负时同时变号，再除以两者的正最大公因数，即得正分母的既约式。说明其唯一性所需的整除事实如下。对整数 $a$ 和 $b>0$，整数线性组合 $sa+tb$ 的正值集合非空，因为含 $b$。取最小正值 $g$；将 $a,b$ 分别除以 $g$ 的余数仍是这种线性组合，最小性迫使余数为零，故 $g$ 同时整除 $a,b$。反向每个公因数整除每个线性组合，故 $g=\gcd(|a|,b)$，并得到 Bézout 恒等式。若两既约正分母式 $a/b=a'/b'$，则 $ab'=a'b$。用 $sa+tb=1$ 乘 $b'$，可见 $b\mid b'$；反向同理 $b'\mid b$。正性给 $b=b'$，再给 $a=a'$。这也覆盖零分子，因为 $\gcd(0,b)=b$ 强制 $b=1$。
+
+第 70、114 条的字段双逆现在使 $\operatorname{qenc}$ 良定义并落在 $\mathsf{RatFld}$，给 $\operatorname{qdec}(\operatorname{qenc}(q))=q$。反向任意合法 $T_2(c,d)$ 已给既约正分母式，唯一性强制重新编码时恢复原分子分母，故恢复原字段。
+
+有理数 $q$ 的 $q-\lfloor q\rfloor$ 属于 $[0,1)$ 且同类。此区间内两数若差为整数，因差在 $(-1,1)$ 中只能为零，所以每个类的这种代表唯一。再用既约式唯一性以及 $\zeta,\operatorname{val}$ 双逆，分别得到相位侧两个复合恒等式，包括每个独立合法记录。零代表的既约式只能为 $0/1$，证明两个零字段的断言。相位分母的正性已由 $0\le a<b$ 强制，既约相位记录排除 $a=b$，并保留负有理数先取模一后取得的非负分子。
+
+例如有理字段加法是 $\operatorname{qenc}(\operatorname{qdec}(c)+\operatorname{qdec}(d))$，乘法及负号同样定义；求逆只在 $\operatorname{qdec}(c)\ne0$ 上定义，除法只在第二字段解码非零上定义。解码后恰得原运算，单射性把全部域恒等式带回字段。相位加法与负号用 $\operatorname{penc}$ 运输 $\mathsf D_{\rm rat}$ 的相应群运算，不引入有理商类的乘法。
+
+与 [CSA 第一节、第四节定义 8、第六节定义 9／命题 5](CONTEXTUAL_SPACETIME_ARITHMETIC.md) 的实际整数实现对接时，使用第 255–256 条的 $v:J\leftrightarrow\mathbb Z_o$ 及 $b=\operatorname{scode}\circ v$。带符号字段到原 $J$ 对象的逆是 $v^{-1}\circ\operatorname{ival}$。把 CSA 原有理读数在通常有理数中的对应值记为
+$$
+\operatorname{qval}_{\rm CSA}(X,Y)=\frac{v(q(X))}{v(q(Y))}\quad(q(Y)\ne0_J).
+$$
+对既约 $a/b$，该文固定丰富截面在这些类型下恰为
+$$
+\sigma_{\rm CSA}(a/b)
+=(\mathbf i(v^{-1}(a)),\mathbf i(v^{-1}(b)))\in\mathcal Q^{\rm rich}.
+$$
+它使用 $\mathbf i:J\to\mathcal B$，不是只取 $J$ 对 $(v^{-1}(a),v^{-1}(b))$。原恒等式 $q(\mathbf i(z))=z$ 给 $\operatorname{qval}_{\rm CSA}(\sigma_{\rm CSA}(q))=q$。因此 $\sigma_{\rm CSA}\circ\operatorname{qdec}$ 将 $\mathsf{RatFld}$ 双射到这个既约丰富截面像，其逆在且仅在该像上为 $\operatorname{qenc}\circ\operatorname{qval}_{\rm CSA}$：一个复合用刚得读数恒等式及字段双逆，另一个复合先把截面点唯一写为 $\sigma_{\rm CSA}(q)$ 再用同一等式。这个截面逆不恢复任意丰富输入的历史。证毕。
+
+## 333. 素数标签上的总探针与有限采样记录
+
+**定义 333.1。** 复用第 316–317 条的独立状态域 $\mathsf{Rec}_{\rm reg}$ 及双射 $\operatorname{rec}_{\rm reg},\operatorname{unrec}_{\rm reg}$，不另建状态记录类型。由第 306 条的递增素数枚举和第 95–96 条的素数数字双射，定义标签运输
+$$
+\lambda_{\rm reg}:\omega\to\mathsf{Pr}_Z,\qquad
+\lambda_{\rm reg}(n)=\zeta(p_n),\qquad
+\operatorname{idx}_{\rm reg}(a)=\text{满足 }p_n=\operatorname{val}(a)\text{ 的唯一 }n.
+$$
+因此对每个有限 $I\subseteq\omega$，有 $\lambda_{\rm reg}[I]=\mathsf{Lab}_I^{\rm reg}$。独立定义
+$$
+\mathsf{ProbeRec}=\{t:t\text{ 是从 }\mathsf{Pr}_Z\text{ 到 }\mathsf{RatPhaseFld}\text{ 的总函数}\},
+$$
+$$
+\mathsf{FinCoef}=\{a:a\text{ 是从某个有限 }F\subseteq\omega
+\text{ 到 }\mathsf D_{\rm rat}\text{ 的函数，且 }\operatorname{dom}(a)=F\},
+$$
+$$
+\mathsf{FinProbeRec}=\{c:c\text{ 是从 }\mathsf{Pr}_Z
+\text{ 到 }\mathsf{RatPhaseFld}\text{ 的有限部分函数}\}.
+$$
+后两类保留其有限域上的零值，空图合法。定义
+$$
+\operatorname{prec}_{\rm rat}(\theta)(\lambda_{\rm reg}(n))
+=\operatorname{penc}(\theta_n),\qquad
+\operatorname{unprec}_{\rm rat}(t)_n
+=\operatorname{pdec}(t(\lambda_{\rm reg}(n))),
+$$
+$$
+\operatorname{dom}(\operatorname{fprec}_{\rm rat}(a))
+=\lambda_{\rm reg}[\operatorname{dom}(a)],\qquad
+\operatorname{fprec}_{\rm rat}(a)(\lambda_{\rm reg}(n))=\operatorname{penc}(a(n)),
+$$
+$$
+\operatorname{dom}(\operatorname{unfprec}_{\rm rat}(c))
+=\operatorname{idx}_{\rm reg}[\operatorname{dom}(c)],\qquad
+\operatorname{unfprec}_{\rm rat}(c)(n)=\operatorname{pdec}(c(\lambda_{\rm reg}(n))).
+$$
+有限映射的值式仅在各自显示的域上使用。总系数 $\theta$ 的域仍为 $\omega$；记录的域是原始素数字集 $\mathsf{Pr}_Z$，二者通过 $\lambda_{\rm reg}$ 运输，不作字面认同。
+
+**定理 333.2。** $\lambda_{\rm reg}$ 与 $\operatorname{idx}_{\rm reg}$ 互逆，且上述总探针及有限探针映射分别是独立域之间的双射，满足
+$$
+\operatorname{unprec}_{\rm rat}\operatorname{prec}_{\rm rat}
+=\operatorname{id}_{\Theta_{\rm rat}},\qquad
+\operatorname{prec}_{\rm rat}\operatorname{unprec}_{\rm rat}
+=\operatorname{id}_{\mathsf{ProbeRec}},
+$$
+$$
+\operatorname{unfprec}_{\rm rat}\operatorname{fprec}_{\rm rat}
+=\operatorname{id}_{\mathsf{FinCoef}},\qquad
+\operatorname{fprec}_{\rm rat}\operatorname{unfprec}_{\rm rat}
+=\operatorname{id}_{\mathsf{FinProbeRec}}.
+$$
+状态的双逆仍为第 317 条；对 $u\in\mathsf V_{\rm reg}$、$\theta\in\Theta_{\rm rat}$ 及每个有限 $F\subseteq\omega$，有
+$$
+\operatorname{dom}(\operatorname{rec}_{\rm reg}(u))
+=\lambda_{\rm reg}[\operatorname{supp}(u)],\qquad
+\operatorname{fprec}_{\rm rat}(\theta|_F)
+=\operatorname{prec}_{\rm rat}(\theta)|_{\mathsf{Lab}_F^{\rm reg}}.
+$$
+有限采样记录不能作为任意总探针的逆表示；全部总探针也不能单射表示为有限字母表上的有限字。
+
+**证明。** 每个普通素数在递增枚举中恰出现一次，每个原始素数字 $a$ 恰为 $\zeta(\operatorname{val}(a))$ 且其值为素数。因此 $\operatorname{idx}_{\rm reg}(\lambda_{\rm reg}(n))=n$，反向 $\lambda_{\rm reg}(\operatorname{idx}_{\rm reg}(a))=a$，两个域及双逆均成立。
+
+第 317 条的状态逆在标签存在时解码其非零整数值，不存在时补零。其支撑正好是 $\operatorname{idx}_{\rm reg}[\operatorname{dom}(s)]$，有限性及所有复合恒等式直接用该条。这也给显示的状态域等式；零状态的记录为空，但状态自身仍是定义域为 $\omega$ 的无限总图。
+
+对任意 $t\in\mathsf{ProbeRec}$，在每个 $n$ 处解码给 $\mathsf D_{\rm rat}$ 中的值，故 $\operatorname{unprec}_{\rm rat}(t)\in\Theta_{\rm rat}$。第 332 条解码再编码恢复 $t$ 在每个 $\lambda_{\rm reg}(n)$ 的值，而标签满射覆盖其全部域，故总记录侧复合为恒等；反向逐 $n$ 编码再解码也为恒等。对任意有限记录 $c$，其域的 $\operatorname{idx}_{\rm reg}$ 像有限，解码给合法 $\mathsf{FinCoef}$。两个标签逆先恢复有限域，两个相位逆再恢复域内每个值，故有限侧的两个复合均为恒等。即使某值为零，其边也不删除，保证恢复的是整个有限域。限制等式两边的域同为 $\lambda_{\rm reg}[F]$，在 $\lambda_{\rm reg}(n)$ 处同取 $\operatorname{penc}(\theta_n)$，所以相等。
+
+$\mathsf{Pr}_Z$ 无限，故每个总探针记录的图都无限，零探针亦然。对任意固定有限 $F\subseteq\omega$，取 $n\notin F$，将一个总探针仅在 $n$ 处加上非零类 $[1/2]_{\rm rat}$，得到不同总探针而其 $F$ 限制不变。因此限制不是全探针的单射。更一般地，对 $A\subseteq\omega$ 令 $\theta^A_n=[1/2]_{\rm rat}$ 当 $n\in A$、否则为零；不同 $A$ 在某坐标给不同探针，这将 $\mathcal P(\omega)$ 单射入 $\Theta_{\rm rat}$。第 79 条的 Cantor 对角论证排除从后者到有限字的单射，经刚证双射也排除总探针记录的有限字编码。若另用变长有序列表，其序号域为 $r$、数字序号域为 $\zeta[r]$、长度为 $\zeta(r)$，按第 257–258 条处理；列表序号不是本条的素数标签，也不把不同元数的无标签元组合并。证毕。
+
+## 334. 有限求值的联合域与规范相位输出
+
+**定义 334.1。** 输入对均取第 257 条的 $T_2$。独立给定有限求值的联合域
+$$
+D_{\rm fin}=\{T_2(u,a)\in\mathsf V_{\rm reg}\times\mathsf{FinCoef}:
+\operatorname{supp}(u)\subseteq\operatorname{dom}(a)\},
+$$
+$$
+E_{\rm fin}:D_{\rm fin}\to\mathsf D_{\rm rat},\qquad
+E_{\rm fin}(u,a)=\sum_{n\in\operatorname{supp}(u)}u_na(n).
+$$
+其数字联合域独立写为
+$$
+D_{\rm fin}^{d}=\{T_2(s,c)\in\mathsf{Rec}_{\rm reg}\times\mathsf{FinProbeRec}:
+\operatorname{dom}(s)\subseteq\operatorname{dom}(c)\}.
+$$
+对域内 $(s,c)$ 和 $k\in\operatorname{dom}(s)\subseteq\mathsf{Pr}_Z$，唯一写
+$$
+c(k)=T_2(\zeta(a_k),\zeta(b_k)),\qquad
+z_k=\operatorname{ival}(s(k)),\qquad 0\le a_k<b_k,
+$$
+并置
+$$
+B_{s,c}=\prod_{k\in\operatorname{dom}(s)}b_k,\qquad
+A_{s,c}=\sum_{k\in\operatorname{dom}(s)}z_ka_k(B_{s,c}/b_k),
+$$
+$$
+r_{s,c}=A_{s,c}-B_{s,c}\lfloor A_{s,c}/B_{s,c}\rfloor,\qquad
+d_{s,c}=\gcd(r_{s,c},B_{s,c}),
+$$
+$$
+E_{\rm fin}^{d}(s,c)
+=T_2(\zeta(r_{s,c}/d_{s,c}),\zeta(B_{s,c}/d_{s,c})).
+$$
+空积取一、空和取零。总求值定义为
+$$
+E:\mathsf V_{\rm reg}\times\Theta_{\rm rat}\to\mathsf D_{\rm rat},\quad
+E(u,\theta)=\chi^{\rm rat}_\theta(u),
+$$
+$$
+E_d:\mathsf{Rec}_{\rm reg}\times\mathsf{ProbeRec}\to\mathsf{RatPhaseFld},\quad
+E_d(s,t)=\operatorname{penc}\bigl(E(\operatorname{unrec}_{\rm reg}(s),
+\operatorname{unprec}_{\rm rat}(t))\bigr).
+$$
+
+**定理 334.2。** 在两种输入积之间，$\operatorname{rec}_{\rm reg}\times\operatorname{fprec}_{\rm rat}$ 将 $D_{\rm fin}$ 双射到恰好 $D_{\rm fin}^{d}$，且
+$$
+E_{\rm fin}^{d}(\operatorname{rec}_{\rm reg}(u),\operatorname{fprec}_{\rm rat}(a))
+=\operatorname{penc}(E_{\rm fin}(u,a)).
+$$
+显示的有限分数公式总落在 $\mathsf{RatPhaseFld}$。对任意总探针记录有
+$$
+E_d(s,t)=E_{\rm fin}^{d}(s,t|_{\operatorname{dom}(s)}).
+$$
+
+**证明。** 第 333 条使
+$$
+\operatorname{dom}(s)=\lambda_{\rm reg}[\operatorname{supp}(u)],\qquad
+\operatorname{dom}(c)=\lambda_{\rm reg}[\operatorname{dom}(a)].
+$$
+标签单射保持并反映包含，故两个联合域条件等价；状态与有限系数的双逆同时给出联合域上的两个复合恒等式。特别地，这个守卫依赖两个输入，不能只以“$c$ 是有限合法记录”替代。
+
+每个 $b_k>0$，因此 $B_{s,c}>0$，且 $B_{s,c}/b_k$ 是整数。$z_k$ 可为负，仍有 $A_{s,c}\in\mathbb Z_o$。由取整定义，$0\le r_{s,c}<B_{s,c}$；$d_{s,c}\ge1$ 同时整除余数及分母。约分后最大公因数为一，因为其任一公因数乘 $d_{s,c}$ 都整除原两数，而原最大公因数为 $d_{s,c}$。因此 $r_{s,c}/d_{s,c}$ 为非负整数，严格小于正整数 $B_{s,c}/d_{s,c}$，输出确为独立合法相位字段。当 $r_{s,c}=0$ 时 $d_{s,c}=B_{s,c}$，输出精确为 $0/1$；当 $s$ 为空时 $B_{s,c}=1,A_{s,c}=r_{s,c}=0,d_{s,c}=1$，也得同一成功零值。
+
+在 $\mathsf D_{\rm rat}$ 中，标签重索引与通分给
+$$
+E_{\rm fin}(u,a)
+=\left[\sum_{k\in\operatorname{dom}(s)}\frac{z_ka_k}{b_k}\right]_{\rm rat}
+=[A_{s,c}/B_{s,c}]_{\rm rat}
+=[r_{s,c}/B_{s,c}]_{\rm rat}.
+$$
+第 332 条的代表及既约式唯一性证明输出等于该类的 $\operatorname{penc}$。$c$ 中多于 $\operatorname{dom}(s)$ 的边不参与此和，但仍属于它的原有限域；其中的零边同样保留。对总 $t$，限制到 $\operatorname{dom}(s)$ 总有定义，且是合法有限记录。其逆系数域恰为 $\operatorname{supp}(\operatorname{unrec}_{\rm reg}(s))$，各值与总探针相同，所以同一有限和证明总求值公式。
+
+按第 259–260 条，$E_{\rm fin}$ 在 $D_{\rm fin}$ 之外没有值，$E_{\rm fin}^{d}$ 在 $D_{\rm fin}^{d}$ 之外没有值。若分别严格总化，原侧的成功零为 $\operatorname{ok}(0_{\mathsf D_{\rm rat}})$，数字侧的成功零为 $\operatorname{ok}(T_2(0_Z,\zeta(1)))$；各自域外取相应不交和中的 $\bot$，均与成功零不同。值式只需有限采样，不能据它构造任意子群分离所需的总探针，也不给任意子群的成员算法。证毕。
+
+## 335. 黄金系数与黄金圆周相位的分别类型
+
+**定义 335.1。** 定义实际值域
+$$
+L_\phi=\{\phi q:q\in\mathbb Q\}\subseteq\mathbb R,\qquad
+C_\phi=\{[\phi q]:q\in\mathbb Q\}\subseteq\mathbb T.
+$$
+使用第 69–70 条不同的有限标签 $\zeta(0),\zeta(1)$，独立定义两个普通字段域
+$$
+\mathsf{Coeff}_\phi=\{T_2(\zeta(0),r):r\in\mathsf{RatFld}\},\qquad
+\mathsf{Phase}_\phi=\{T_2(\zeta(1),r):r\in\mathsf{RatFld}\}.
+$$
+解码器分别为
+$$
+\operatorname{cdec}_\phi(T_2(\zeta(0),r))=\phi\operatorname{qdec}(r),\qquad
+\operatorname{gdec}_\phi(T_2(\zeta(1),r))=[\phi\operatorname{qdec}(r)].
+$$
+
+**定理 335.2。** 两解码器分别双射到 $L_\phi$ 和 $C_\phi$，其逆精确为
+$$
+\operatorname{cenc}_\phi(\phi q)=T_2(\zeta(0),\operatorname{qenc}(q)),\qquad
+\operatorname{genc}_\phi([\phi q])=T_2(\zeta(1),\operatorname{qenc}(q)).
+$$
+它们满足各自值域侧及字段侧的全部复合恒等式，且两字段域不交。每个 $\phi/2^n$ 以及第 330–331 条的全部黄金输出都有相应有限字段。对 $n>0$，$\phi/2^n$ 不属于 [GICT 定义 1.2](GICT.md) 的整系数环 $\mathbb Z_o[\phi]$。
+
+**证明。** $\phi\ne0$，故 $\phi q=\phi q'$ 蕴含 $q=q'$。若 $[\phi q]=[\phi q']$，则 $\phi(q-q')\in\mathbb Z_o$；第 236 条无理性使 $q-q'=0$。因此两种值都各自唯一确定有理乘数 $q$，显示的逆良定义；每个 $L_\phi$ 或 $C_\phi$ 元素按定义具有这种乘数，给满性。第 332 条的两个有理字段逆使解码再编码、编码再解码分别恢复原字段及原值。普通有序对的唯一性和 $\zeta(0)\ne\zeta(1)$ 使两个字段域不交，包括其零字段。
+
+系数 $\phi/2^n$ 使用 $\operatorname{cenc}_\phi(\phi/2^n)$；每个 $g_r(u)$ 使用 $\operatorname{genc}_\phi(g_r(u))$，其中有理乘数是有限和 $L_r(u)$。特别第 331 条黄金相位的字段为 $T_2(\zeta(1),\operatorname{qenc}(43/8))$，不是有理相位字段 $\operatorname{penc}([3/8]_{\rm rat})$。所有这些字段的数字分量及固定标签均有限；它们的解码值不因此成为自然数。
+
+若 $n>0$ 且 $\phi/2^n=a+b\phi$、$a,b\in\mathbb Z_o$，则 $(2^{-n}-b)\phi=a$。因 $0<2^{-n}<1$，$2^{-n}-b$ 是非零有理数，故该式迫使 $\phi$ 有理，矛盾。这里的系数域确为 $\phi\mathbb Q$，相位域确为其模一像；两个标签分别记录实提升和圆周值，没有定义 $\zeta$ 在无理数上的值，也没有对 $\mathsf D_{\rm rat}$ 定义乘以 $\phi$。证毕。
+
+## 336. 有限字段、无限求值图与完整集合语义
+
+**定义 336.1。** 只使用第 71–78、255–260、318–320 条的全集合解释。对任意集合 $X$ 保留
+$$
+X^*=\operatorname{Enc}[X]=\operatorname{El}(\operatorname{Enc}(X)),\qquad
+\operatorname{enc}_X=\operatorname{Enc}|_X:X\to X^*.
+$$
+对本附录任一已给双射 $b_X:X\to C_X$，分别定义原对象提升和数字对象提升
+$$
+h_X(c)=\operatorname{Enc}(b_X^{-1}(c)),\qquad
+e_X(c)=\operatorname{Enc}(c)\quad(c\in C_X).
+$$
+总求值 $E$ 的第 260 条特化取元数二，实际数据为
+$$
+(A_1,A_2,A_o)=(\mathsf V_{\rm reg},\Theta_{\rm rat},\mathsf D_{\rm rat}),\qquad
+(B_1,B_2,B_o)=(\mathsf{Rec}_{\rm reg},\mathsf{ProbeRec},\mathsf{RatPhaseFld}),
+$$
+$$
+(b_1,b_2,b_o)=(\operatorname{rec}_{\rm reg},\operatorname{prec}_{\rm rat},\operatorname{penc}),\qquad
+B_{\rm in}(T_2(u,\theta))=T_2(b_1(u),b_2(\theta)).
+$$
+原函数域为完整 $T_2[A_1,A_2]$，数字函数域为完整 $T_2[B_1,B_2]$。令 $G_E,G_{E_d}$ 是它们的普通函数图，且对 $c=T_2(c_1,c_2)$ 定义
+$$
+h_1(c_1)=\operatorname{Enc}(\operatorname{unrec}_{\rm reg}(c_1)),\qquad
+h_2(c_2)=\operatorname{Enc}(\operatorname{unprec}_{\rm rat}(c_2)),
+$$
+$$
+h_o(d)=\operatorname{Enc}(\operatorname{pdec}(d)),\qquad
+H_{\rm in}(c)=T_2^Z(h_1(c_1),h_2(c_2)).
+$$
+$E_{\rm fin}$ 的特化则取 $A_2=\mathsf{FinCoef},B_2=\mathsf{FinProbeRec},b_2=\operatorname{fprec}_{\rm rat}$，联合域恰为第 334 条的 $D_{\rm fin}$，数字域恰为 $D_{\rm fin}^{d}$；其余两槽不变。
+
+**定理 336.2。** $h_X$ 的像恰为 $X^*$，逆在且仅在 $X^*$ 上为 $b_X\circ\operatorname{Dec}$；$e_X$ 的像恰为 $C_X^*$，逆在且仅在 $C_X^*$ 上为 $\operatorname{Dec}$。总求值的两个图码精确为
+$$
+\operatorname{Enc}(G_E)
+=\operatorname{Pack}\{\langle H_{\rm in}(c),h_o(d)\rangle_Z:
+\langle c,d\rangle\in G_{E_d}\},
+$$
+$$
+\operatorname{Enc}(G_{E_d})
+=\operatorname{Pack}\{\langle\operatorname{Enc}(c),\operatorname{Enc}(d)\rangle_Z:
+\langle c,d\rangle\in G_{E_d}\}.
+$$
+其语义定义域分别是
+$$
+\operatorname{Enc}(T_2[\mathsf V_{\rm reg},\Theta_{\rm rat}]),\qquad
+\operatorname{Enc}(T_2[\mathsf{Rec}_{\rm reg},\mathsf{ProbeRec}]),
+$$
+且
+$$
+\operatorname{ev}_Z(\operatorname{Enc}(G_E),
+T_2^Z(\operatorname{Enc}(u),\operatorname{Enc}(\theta)))
+=\operatorname{Enc}(E(u,\theta)).
+$$
+有限求值的相同两图式使用定义 336.1 的有限特化，语义域分别恰为 $\operatorname{Enc}(D_{\rm fin})$、$\operatorname{Enc}(D_{\rm fin}^{d})$，其严格失败按第 259–260 条保持。
+
+对 $X=Y_{\rm rat}$ 或 $X=X_+$ 取第 324 条实际的完整乘积拓扑 $\tau_X$，令
+$$
+\tau_X^*=\{\operatorname{Enc}[O]:O\in\tau_X\}.
+$$
+分别取 $F=\operatorname{Ev}_{\rm rat}$ 或 $F=\operatorname{Ev}_+$，定义 $F^*=\operatorname{enc}_X\circ F\circ\operatorname{enc}_{\mathsf V_{\rm reg}}^{-1}$，则对每个子群有
+$$
+\overline{F^*[H^*]}^{\tau_X^*}
+\cap F^*[\mathsf V_{\rm reg}^*]
+=F^*[H^*].
+$$
+本附录的全部定义、等式、成员谓词及量词，在新符号展开后按第 75–78 条保留每个固定有限集合论公式的双向比较。
+
+**证明。** 首先核对集合规模。$\mathsf D_{\rm rat}$ 与 $\mathbb T$ 是集合的等价类商；$\Theta_{\rm rat}$、$Y_{\rm rat}$ 和 $X_+$ 是声明的集合函数空间和积。子群、零化子、有限支撑条件及独立记录域由分离构造，全部图和像由替代与幂集构造，乘积拓扑由有限柱集基的任意并给出。这沿用第 320 条和 [CSA 第十一节命题 14–15](CONTEXTUAL_SPACETIME_ARITHMETIC.md) 的集合构造。全部总探针及全部环境圆周点都包括在相应函数集中；不施加有限字或可计算性条件。$\operatorname{Enc}$ 仍是旧可定义类函数，限制在每个所列集合上的图和像才是集合，没有普遍集合的假设。
+
+由第 72 条，$\operatorname{Dec}(h_X(c))=b_X^{-1}(c)$，再用 $b_X$ 恢复 $c$；对 $z\in X^*$，$\operatorname{Dec}(z)\in X$，且 $h_X(b_X(\operatorname{Dec}(z)))=z$。这既证两个复合也证精确像。数字提升的两个复合直接是 $\operatorname{Enc},\operatorname{Dec}$ 在 $C_X,C_X^*$ 上的限制双逆。两种提升所指对象不同，不从角色区分推断所有特殊输入的像不交。第 255–256 条的 $J$ 提升仍取 $\operatorname{Enc}(b^{-1}(c))$，普通整数值提升取 $\operatorname{Enc}(\operatorname{ival}(c))$，数字提升取 $\operatorname{Enc}(c)$，不能混用。特别原始零字 $\varnothing\notin\mathfrak V_Z$，所有语义配对参数都先由合法提升产生。
+
+第 317、333、332 条分别给三个输入输出双射及其独立目标上的双逆；第 334 条给 $E_d=b_o\circ E\circ B_{\rm in}^{-1}$ 的值式，其中 $b_o=\operatorname{penc}$。对任一数字图边 $\langle c,d\rangle$，其唯一原输入为 $x=T_2(\operatorname{unrec}_{\rm reg}(c_1),\operatorname{unprec}_{\rm rat}(c_2))$，输出为 $y=\operatorname{pdec}(d)=E(x)$。第 258 条给 $H_{\rm in}(c)=\operatorname{Enc}(x)$，第 74 条给
+$$
+\langle H_{\rm in}(c),h_o(d)\rangle_Z=\operatorname{Enc}(\langle x,y\rangle).
+$$
+每条原边也由双逆唯一返回一条数字边，因此第 73 条的 $\operatorname{Pack}$ 恰给第一图码。把第 74 条直接用于数字边自身，再用 $\operatorname{Pack}$，得到第二图码。每个输入的存在边和唯一值由逐边双射保持反映，故第 260、319 条给显示的精确语义域及求值式。有限特化先用第 334 条的联合域双射，余下逐边证明完全相同，域外不增值；严格总化用已证域等价分成功和失败两类。
+
+具体地，对 $t\in\mathsf{ProbeRec}$、$\theta=\operatorname{unprec}_{\rm rat}(t)$，其索引总图和数字总图满足
+$$
+\operatorname{Enc}(\theta)
+=\operatorname{Pack}\{\langle\operatorname{NatZ}(\operatorname{idx}_{\rm reg}(a)),
+\operatorname{Enc}(\operatorname{pdec}(d))\rangle_Z:
+\langle a,d\rangle\in t\},
+$$
+$$
+\operatorname{Enc}(t)
+=\operatorname{Pack}\{\langle\operatorname{Enc}(a),\operatorname{Enc}(d)\rangle_Z:
+\langle a,d\rangle\in t\}.
+$$
+前者的普通定义域是 $\omega$，后者是 $\mathsf{Pr}_Z$，故语义域分别为 $\operatorname{Enc}(\omega)$ 和 $\operatorname{Enc}(\mathsf{Pr}_Z)$。证明逐边使用 $n=\operatorname{idx}_{\rm reg}(a)$ 和相位解码的双逆，正如第 319 条的状态索引图式；限制到有限 $F$ 和 $\lambda_{\rm reg}[F]$ 得相同有限公式，零边仍保留。这也显示原图不能通过将 $\operatorname{val}(a)$ 误作索引来恢复：该值是 $p_n$，索引是 $n$。
+
+对每个固定 $r\in\mathbb Q^\omega$，黄金求值 $g_r:\mathsf V_{\rm reg}\to C_\phi$ 另取输入双射 $\operatorname{rec}_{\rm reg}$、输出双射 $\operatorname{genc}_\phi$。其数字求值是
+$$
+s\longmapsto T_2(\zeta(1),\operatorname{qenc}(L_r(\operatorname{unrec}_{\rm reg}(s))))\in\mathsf{Phase}_\phi.
+$$
+第 335 条的双逆给第 319 条两图式的全部假设，输出原对象提升为 $d\mapsto\operatorname{Enc}(\operatorname{gdec}_\phi(d))$，数字对象提升为 $d\mapsto\operatorname{Enc}(d)$。若将 $r$ 也列作变量，其域必须是整个 $\mathbb Q^\omega$，可用第 318 条的 $\operatorname{enc}_{\mathbb Q^\omega}$ 运输这个集合输入，不把它说成有限系数表。
+
+对拓扑直接应用第 320 条，其适用条件是一个集合及一个已指定拓扑，本条已对两个完整环境满足这些条件。因此
+$$
+\operatorname{enc}_X[\overline S^{\tau_X}]
+=\overline{\operatorname{enc}_X[S]}^{\tau_X^*}
+\quad(S\subseteq X).
+$$
+单射直接像保持交：同一像点的两个原像由单射相等，故反向包含也成立。将此用于第 324 条的两个迹等式，即得显示的两个运输迹。$\tau_X^*$ 是外部开集族；单个拓扑码 $\operatorname{Enc}(\tau_X)$ 的语义成员是开集码，而这些码逐个经 $\operatorname{El}$ 才给 $\tau_X^*$，按第 320 条处理。$G_{E_d}$、单个 $\operatorname{Enc}(G_{E_d})$ 与外部语义成员集 $\operatorname{El}(\operatorname{Enc}(G_{E_d}))$ 也保持各自角色；同样不把 $\operatorname{Enc}(X)$ 与 $\operatorname{Enc}[X]$ 识别。
+
+最后第 72 条给 $\operatorname{Enc}(x)\in_Z\operatorname{Enc}(A)$ 当且仅当 $x\in A$；这包括子群成员及零化子中“对全部 $h\in H$”的条件。将全部新函数展开为已证明总性或精确部分域的图后，第 75–76 条的固定公式结构归纳适用：等号由单射，成员由刚述等价，布尔联结词保持等价，存在见证编码、有效见证解码给量词的两个方向。因而全部子群、总探针及环境点的量化都保留，不只是有限测试的量化。第 77–78 条继而给所有原 ZFC 公理及分离、替代的每个固定翻译实例和定义性保守性。给定 $\mathfrak M\models\mathrm{ZFC}$ 时用其内部定义，非标准有限性及内部函数空间仍按第 78 条的条件理解。这不是统一内部真理谓词、任意集合或实数的有限字表示，也不推出无条件一致性或模型存在。证毕。
