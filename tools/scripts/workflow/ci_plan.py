@@ -568,8 +568,9 @@ def make_plan(root, commit, changes_file):
             raise ValueError(f"{p}: run-local path cannot be a committed change")
         required.update(entry["require"])
         scope.append({"path": p, "pattern": entry["pattern"], "require": entry["require"]})
-    selected = closure(resources, required)
-    active = [resources[r] for r in selected if data["mode"] == "pr" or resources[r]["stage"] != "delta"]
+    roots = [r for r in required if data["mode"] == "pr" or resources[r]["stage"] != "delta"]
+    selected = closure(resources, roots)
+    active = [resources[r] for r in selected]
     union = lambda key: sorted({v for r in active for v in r[key]}, key=ordinal)
     stages = {stage: {"resources": [r["id"] for r in active if r["stage"] == stage],
                       "status": "not-applicable" if stage == "delta" and data["mode"] != "pr" else
