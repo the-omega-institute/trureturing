@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Uniform pointwise registration descriptor and generic sensitivity and variation providers. -/
+   digest: Pointwise registration descriptor with sensitivity and variation providers. -/
 
 import D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates
 
@@ -13,7 +13,7 @@ set_option relaxedAutoImplicit false
 
 -- Utility is none: this registration-template provider has no computational content.
 namespace D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates
-open D5.S3.ConceptDynamics.InformationEscape PointwiseRegistrationTemplates
+open D5.S3.ConceptDynamics.InformationEscape PointwiseRegistrationTemplates LeanInformationAudit
 
 /-- Uniform source descriptor. Direct carrier parameters retain the source telescope.
 The bridge to the existing pointwise template is a proved equivalence. -/
