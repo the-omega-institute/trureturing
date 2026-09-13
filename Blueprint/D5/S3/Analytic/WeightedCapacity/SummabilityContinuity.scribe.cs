@@ -9,13 +9,14 @@ internal sealed class SummabilityContinuityDocument : IScribeDocumentDefinition
         H("Summability and continuity of weighted dyadic readout"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("summabilitycontinuity-divergent-capacity-tail-mass"),
-                DeclarationHandle.Create("D5/S3/Analytic/WeightedCapacity/SummabilityContinuity.divergent_capacity_tail_mass"),
-                H("Divergent capacity leaves mass in every finite tail"),
+                DescribeId.Create("summabilitycontinuity-summable-iff-continuous"),
+                DeclarationHandle.Create("D5/S3/Analytic/WeightedCapacity/SummabilityContinuity.summable_iff_continuous"),
+                H("Finite capacity and continuous real extension"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "When the total dyadic capacity is infinite, every finite set of coordinates has a "
-                    + "disjoint finite complement carrying at least one unit of weighted mass."))),
+                    "For every capacity function, finite total dyadic mass is equivalent to continuity "
+                    + "of the finite-support readout at zero, to its continuity everywhere, and to "
+                    + "the existence of a continuous real extension to the full coordinate product."))),
                 DescribeRole.Theorem))));
 }
