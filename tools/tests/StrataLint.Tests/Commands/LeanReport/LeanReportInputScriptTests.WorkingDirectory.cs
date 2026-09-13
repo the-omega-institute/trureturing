@@ -129,6 +129,7 @@ public sealed partial class LeanReportInputScriptTests
                 PairScriptPath, SupervisorScriptPath, CiBaselineScriptPath,
                 CacheEnsureScriptPath, CachePublishScriptPath,
                 "tools/scripts/worktree/lean-cache-input.sh",
+                "tools/scripts/workflow/checked-ci-identity.py",
                 ResourceObservationLibraryPath, ToolchainInstallerPath,
                 JudgeContentAddressPath, ScribeContentChecksPath, WorkflowPath,
                 EngineLockPath, CliLockPath, TruthLockPath,

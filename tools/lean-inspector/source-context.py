@@ -9,14 +9,62 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import tempfile
 import time
 import urllib.error
 import urllib.request
+import zipfile
 
 SCHEMA = "lean-source-context/1"
+ARCHIVE_ENTRY = "source-context.json"
+
+
+def read_context(report):
+    sibling = Path(str(report) + ".source-context.json")
+    if sibling.exists():
+        return sibling.read_bytes()
+    archive = Path(str(report) + ".materials.zip")
+    if archive.exists():
+        with zipfile.ZipFile(archive) as bundle:
+            entries = [entry for entry in bundle.infolist() if entry.filename == ARCHIVE_ENTRY]
+            if len(entries) > 1:
+                raise ValueError("duplicate source context in " + str(archive))
+            if entries:
+                return bundle.read(entries[0])
+    return json.dumps(dict(schema=SCHEMA, files=[], registrations=[])).encode()
+
+
+def bundle_context(report, data):
+    """Carry demand evidence through the public report/material transfer boundary."""
+    archive = Path(str(report) + ".materials.zip")
+    # Standalone demand preparation can precede declaration report production.
+    if not archive.exists():
+        return
+    with zipfile.ZipFile(archive) as source:
+        entries = [entry for entry in source.infolist() if entry.filename == ARCHIVE_ENTRY]
+        if len(entries) > 1:
+            raise ValueError("duplicate source context in " + str(archive))
+        if len(entries) == 1 and source.read(entries[0]) == data:
+            return
+        with tempfile.TemporaryDirectory(prefix=".source-context-bundle-", dir=archive.parent) as temporary:
+            staged = Path(temporary) / archive.name
+            if not entries:
+                # Append the named companion without recompressing statement materials.
+                shutil.copyfile(archive, staged)
+            else:
+                with zipfile.ZipFile(staged, "w") as target:
+                    for entry in source.infolist():
+                        if entry.filename != ARCHIVE_ENTRY:
+                            with source.open(entry) as reader, target.open(entry, "w") as writer:
+                                shutil.copyfileobj(reader, writer)
+            with zipfile.ZipFile(staged, "a") as target:
+                entry = zipfile.ZipInfo(ARCHIVE_ENTRY, (1980, 1, 1, 0, 0, 0))
+                entry.compress_type = zipfile.ZIP_DEFLATED
+                target.writestr(entry, data)
+            os.replace(staged, archive)
 
 
 class SourceAnalysisUnknown(RuntimeError):
@@ -296,8 +344,7 @@ def main():
         scratch = Path(temporary)
         preparation = Preparation(repository, report, args.base, scratch, args.lake, args.push_before, args.push_head)
         context = scratch / "context.json"
-        empty = dict(schema=SCHEMA, files=[], registrations=[])
-        context.write_bytes(output.read_bytes() if output.exists() else json.dumps(empty).encode())
+        context.write_bytes(read_context(report))
         try:
             bundle = json.loads(context.read_bytes())
         except ValueError:
@@ -340,6 +387,7 @@ def main():
             context.write_text(json.dumps(bundle, ensure_ascii=False, separators=(",", ":")) + "\n")
             staged = Path(str(output) + ".tmp")
             staged.write_bytes(context.read_bytes())
+            bundle_context(report, context.read_bytes())
             os.replace(staged, output)
         print("LEAN_SOURCE_CONTEXT " + json.dumps(dict(seconds=round(time.monotonic()-preparation.started, 3),
             queries=preparation.queries, option_queries=preparation.option_queries, interfaces=preparation.interfaces, external_queries=preparation.external_queries,
@@ -352,6 +400,6 @@ def main():
 if __name__ == "__main__":
     try:
         main()
-    except (RuntimeError, ValueError, OSError, subprocess.SubprocessError) as error:
+    except (RuntimeError, ValueError, OSError, zipfile.BadZipFile, subprocess.SubprocessError) as error:
         print("LEAN_SOURCE_CONTEXT_FAILED " + str(error), file=sys.stderr)
         raise SystemExit(2)

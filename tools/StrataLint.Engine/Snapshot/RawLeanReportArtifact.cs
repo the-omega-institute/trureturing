@@ -403,8 +403,15 @@ internal static class RawLeanReportArtifact
                     new MemoryStream(File.ReadAllBytes(path), writable: false),
                     ZipArchiveMode.Read);
                 var builder = ImmutableDictionary.CreateBuilder<string, ZipArchiveEntry>(StringComparer.Ordinal);
+                var hasSourceContext = false;
                 foreach (var entry in archive.Entries)
                 {
+                    if (entry.FullName == LeanSourceContextInput.ArchiveEntryName && !hasSourceContext)
+                    {
+                        // Source consumers validate this separately bound companion on demand.
+                        hasSourceContext = true;
+                        continue;
+                    }
                     if (!entry.FullName.StartsWith(EntryPrefix, StringComparison.Ordinal)
                         || !FrozenHashSyntax.IsSha256("sha256:" + entry.FullName[EntryPrefix.Length..])
                         || !builder.TryAdd(entry.FullName, entry))

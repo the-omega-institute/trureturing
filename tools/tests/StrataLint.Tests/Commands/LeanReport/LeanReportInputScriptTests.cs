@@ -416,6 +416,7 @@ public sealed partial class LeanReportInputScriptTests
         private readonly TemporaryDirectory temporary = new();
         private readonly string repository;
         private readonly string report;
+        private string? sourceBase;
         private readonly string script;
         private readonly string inspectorScriptPath = string.Join(
             '/', "tools", "lean-inspector", "inspect.sh");
@@ -440,6 +441,8 @@ public sealed partial class LeanReportInputScriptTests
             Write(inspectorScriptPath, "#!/usr/bin/env bash\n");
             Write(inspectorSourcePath, "def fixture : True := by trivial\n");
             Write("tools/lean-inspector/source-context.sh", LeanSourceContextScriptFixture.Script);
+            Write("tools/scripts/workflow/checked-ci-identity.py", File.ReadAllText(
+                Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/workflow/checked-ci-identity.py")));
             Write(InputHelperPath, "#!/usr/bin/env bash\n");
             Write("tools/scripts/worktree/lean-cache-input.sh", File.ReadAllText(
                 Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/lean-cache-input.sh"),
@@ -535,6 +538,8 @@ public sealed partial class LeanReportInputScriptTests
                 report + ".provenance.json",
                 "{}\n",
                 new UTF8Encoding(false));
+            File.WriteAllText(report + ".source-context.json",
+                "{\"schema\":\"lean-source-context/1\",\"files\":[],\"registrations\":[]}\n");
         }
 
         internal string MemoRoot => Path.Combine(temporary.Path, "memo");
@@ -736,12 +741,23 @@ public sealed partial class LeanReportInputScriptTests
         {
             var arguments = new List<string>
             {
+                "-u", "GITHUB_ACTIONS", "-u", "STRATALINT_SOURCE_BASE",
+                "-u", "STRATALINT_PUSH_BEFORE", "-u", "STRATALINT_PUSH_HEAD",
                 $"STRATALINT_LEAN_INPUT_MEMO_ROOT={MemoRoot}",
             };
             arguments.AddRange(
             [
                 "bash", script, command, "--repository", repository, "--report", report,
             ]);
+            if (command == "verify")
+            {
+                if (sourceBase is null)
+                {
+                    if (!Directory.Exists(Path.Combine(repository, ".git"))) InitializeGitRepository();
+                    sourceBase = ReviewRegressionTests.RunGit(repository, "rev-parse", "HEAD").Trim();
+                }
+                arguments.AddRange(["--base", sourceBase]);
+            }
             // Explicit working directories exercise SDK resolution in the real launcher.
             if (workingDirectory is not null)
                 return TestProcessRunner.Run("env", arguments, workingDirectory,

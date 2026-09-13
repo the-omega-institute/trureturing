@@ -27,6 +27,7 @@ internal sealed record LeanSourceContextRequest(string Side, string Path, string
 internal sealed class LeanSourceContextInput
 {
     internal const string Schema = "lean-source-context/1";
+    internal const string ArchiveEntryName = "source-context.json";
     private readonly JsonElement? document;
     private readonly string? documentError;
     private readonly RepositorySnapshot? current;

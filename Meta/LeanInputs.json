@@ -225,6 +225,14 @@
         },
         {
           "patterns": [
+            "tools/scripts/workflow/checked-ci-identity.py"
+          ],
+          "exclude": [],
+          "optional_root": null,
+          "min_matches": 1
+        },
+        {
+          "patterns": [
             "tools/scripts/report/lean-report-input.sh"
           ],
           "exclude": [],

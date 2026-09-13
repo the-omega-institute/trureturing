@@ -26,10 +26,11 @@ internal static class LeanSourceInputCommand
             var current = Decode(repository.ReadCurrent());
             var baseline = options.TryGetValue("--base", out var baseRevision)
                 ? Decode(repository.ReadRevision(baseRevision)) : null;
-            var contextFile = options.GetValueOrDefault("--context", reportPath + ".source-context.json");
-            var input = File.Exists(contextFile)
-                ? LeanSourceContextInput.Load(File.ReadAllBytes(contextFile), current, baseline)
-                : LeanSourceContextInput.Empty;
+            var input = options.TryGetValue("--context", out var contextFile)
+                ? File.Exists(contextFile)
+                    ? LeanSourceContextInput.Load(File.ReadAllBytes(contextFile), current, baseline)
+                    : LeanSourceContextInput.Empty
+                : LeanSourceContextArtifact.ReadBundle(reportPath, current, baseline);
             var paths = prepared?.SourcePaths ?? NativeDecideSourceRule.SelectedPaths(current, baseline,
                 repository.ReadChanges(baseRevision!)).ToImmutableArray();
             foreach (var path in paths)

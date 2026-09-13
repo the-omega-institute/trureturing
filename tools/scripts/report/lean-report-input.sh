@@ -7,17 +7,13 @@ COMMAND="${1:-}"
 if [[ -n "$COMMAND" ]]; then shift; fi
 REPOSITORY=""
 REPORT=""
-SOURCE_BASE="${STRATALINT_SOURCE_BASE:-}"
-PUSH_BEFORE="${STRATALINT_PUSH_BEFORE:-}"
-PUSH_HEAD="${STRATALINT_PUSH_HEAD:-}"
+SOURCE_INPUTS=()
 PRODUCER_OVERRIDE=""
 INSPECTOR_OVERRIDE=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --repository) REPOSITORY="$2"; shift 2 ;;
-    --base) SOURCE_BASE="$2"; shift 2 ;;
-    --push-before) PUSH_BEFORE="$2"; shift 2 ;;
-    --push-head) PUSH_HEAD="$2"; shift 2 ;;
+    --base|--push-before|--push-head) SOURCE_INPUTS+=("$1" "$2"); shift 2 ;;
     --report) REPORT="$2"; shift 2 ;;
     --producer) PRODUCER_OVERRIDE="$2"; shift 2 ;;
     --inspector) INSPECTOR_OVERRIDE="$2"; shift 2 ;;
@@ -25,9 +21,9 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-[[ "$COMMAND" == "address" || "$COMMAND" == "verify" || "$COMMAND" == "modules" \
+[[ "$COMMAND" == "address" || "$COMMAND" == "verify" || "$COMMAND" == "verify-input" || "$COMMAND" == "modules" \
   || "$COMMAND" == "producer-paths" || "$COMMAND" == "scribe-producer-paths" ]] \
-  || { echo "usage: lean-report-input.sh address|verify|modules|producer-paths|scribe-producer-paths --repository DIR [--report FILE] [--producer FILE] [--inspector FILE]" >&2; exit 2; }
+  || { echo "usage: lean-report-input.sh address|verify|verify-input|modules|producer-paths|scribe-producer-paths --repository DIR [--report FILE] [--producer FILE] [--inspector FILE]" >&2; exit 2; }
 [[ -n "$REPOSITORY" && "$REPOSITORY" == /* && -d "$REPOSITORY" ]] \
   || { echo "lean-report-input: --repository requires an absolute directory" >&2; exit 2; }
 [[ -z "$PRODUCER_OVERRIDE" || ( "$PRODUCER_OVERRIDE" == /* && -f "$PRODUCER_OVERRIDE" ) ]] \
@@ -35,7 +31,7 @@ done
 [[ -z "$INSPECTOR_OVERRIDE" || ( "$INSPECTOR_OVERRIDE" == /* && -f "$INSPECTOR_OVERRIDE" ) ]] \
   || { echo "lean-report-input: --inspector requires an absolute file" >&2; exit 2; }
 REPOSITORY="$(cd "$REPOSITORY" && pwd -P)"
-if [[ "$COMMAND" == "verify" ]]; then
+if [[ "$COMMAND" == "verify" || "$COMMAND" == "verify-input" ]]; then
   [[ -n "$REPORT" && "$REPORT" == /* && -s "$REPORT" ]] \
     || { echo "lean-report-input: raw Lean report is missing; run make lean-report first" >&2; exit 2; }
 fi
@@ -47,7 +43,7 @@ trap cleanup EXIT
 SCRIPT_DIRECTORY="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 source "$SCRIPT_DIRECTORY/../worktree/lean-cache-input.sh"
 case "$COMMAND" in
-  address|verify) REGISTERED_INPUT_SCOPES=producer,lean-sources,lean-config ;;
+  address|verify|verify-input) REGISTERED_INPUT_SCOPES=producer,lean-sources,lean-config ;;
   modules) REGISTERED_INPUT_SCOPES=managed-modules ;;
   producer-paths) REGISTERED_INPUT_SCOPES=producer ;;
   scribe-producer-paths) REGISTERED_INPUT_SCOPES=scribe-producer ;;
@@ -161,7 +157,7 @@ case "$COMMAND" in
     complete_scribe_producer_paths \
       || { echo "lean-report-input: Scribe producer closure is unavailable" >&2; exit 2; }
     ;;
-  verify)
+  verify|verify-input)
     verify_report_sha
     [[ -f "${REPORT}.input.attestation" ]] \
       || { echo "lean-report-input: production input attestation is missing; run make lean-report first" >&2; exit 2; }
@@ -201,14 +197,13 @@ esac
 
 if [[ "$COMMAND" == verify ]]; then
   SOURCE_ARGS=()
-  if [[ -n "$PUSH_BEFORE" || -n "$PUSH_HEAD" ]]; then
-    [[ -z "$SOURCE_BASE" ]] || { echo "lean-report-input: choose protected base or push range" >&2; exit 2; }
-    SOURCE_ARGS=(--push-before "$PUSH_BEFORE" --push-head "$PUSH_HEAD")
-  elif [[ -n "$SOURCE_BASE" ]]; then
-    SOURCE_ARGS=(--base "$SOURCE_BASE")
-  fi
-  if [[ ${#SOURCE_ARGS[@]} -gt 0 ]]; then
-    "$BASH" "$REPOSITORY/tools/lean-inspector/source-context.sh" verify \
-      --repository "$REPOSITORY" --report "$REPORT" "${SOURCE_ARGS[@]}"
-  fi
+  source_arguments="$(python3 "$REPOSITORY/tools/scripts/workflow/checked-ci-identity.py" \
+    --repository "$REPOSITORY" --report-source-arguments --acquire-pinned \
+    "${SOURCE_INPUTS[@]}")" || exit 2
+  while IFS= read -r argument; do SOURCE_ARGS+=("$argument"); done <<< "$source_arguments"
+  "$BASH" "$REPOSITORY/tools/lean-inspector/source-context.sh" verify \
+    --repository "$REPOSITORY" --report "$REPORT" "${SOURCE_ARGS[@]}"
 fi
+# verify-input is only the cache's pre-preparation input attestation check.
+# Public verification above always checks demand for the selected source mode;
+# the pair also calls it after preparing the complete staged bundle.
