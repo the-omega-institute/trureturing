@@ -75,7 +75,10 @@ public sealed partial class LeanReportInputScriptTests
                 TemporaryFileSystem.File.WriteAllBytes(destination, TemporaryFileSystem.File.ReadAllBytes(path));
             }
             TemporaryFileSystem.File.WriteAllText(Path.Combine(root, InputHelperPath),
-                "#!/bin/bash\nexec /bin/bash '"
+                "#!/bin/bash\n"
+                // The copied repository supplies its own explicit source arguments.
+                + "unset GITHUB_ACTIONS STRATALINT_SOURCE_BASE STRATALINT_PUSH_BEFORE STRATALINT_PUSH_HEAD\n"
+                + "exec /bin/bash '"
                 + Path.Combine(TestRepositoryLayout.FindRoot(), InputHelperPath) + "' \"$@\"\n");
         }
     }
