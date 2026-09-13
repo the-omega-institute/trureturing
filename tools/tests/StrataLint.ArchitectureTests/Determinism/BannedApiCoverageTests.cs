@@ -1,4 +1,5 @@
 using StrataLint.Tests;
+using StrataLint.EngineeringScope;
 
 namespace StrataLint.ArchitectureTests;
 
@@ -43,15 +44,15 @@ public sealed class BannedApiCoverageTests
     [Fact]
     public void PreflightComparesEveryMarkedLineWithAnRs0030Diagnostic()
     {
-        var preflight = TestRepositoryLayout.ReadAllText(
-            RepositoryRelativePath.Create("tools/scripts/preflight.sh"));
-
-        Assert.Contains("expected_lines+=(\"$line\")", preflight, StringComparison.Ordinal);
-        Assert.Contains("actual_lines+=(\"$line\")", preflight, StringComparison.Ordinal);
-        Assert.Contains("error RS0030", preflight, StringComparison.Ordinal);
-        Assert.Contains(
-            "test \"${#actual_lines[@]}\" -eq \"${#expected_lines[@]}\"",
-            preflight,
-            StringComparison.Ordinal);
+        var source = TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
+            "tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"));
+        var diagnostics = source.Split('\n').Select((line, index) => (line, index))
+            .Where(item => item.line.Contains("// banned-api-proof", StringComparison.Ordinal))
+            .Select(item => $"BannedApiViolations.cs({item.index + 1},1): error RS0030: forbidden symbol").ToArray();
+        var output = string.Join('\n', diagnostics);
+        Assert.True(CompilationProof.ValidateBannedApi(1, output, source));
+        Assert.False(CompilationProof.ValidateBannedApi(0, output, source));
+        Assert.False(CompilationProof.ValidateBannedApi(1, string.Join('\n', diagnostics.Skip(1)), source));
+        Assert.False(CompilationProof.ValidateBannedApi(1, output + "\nproject: error MSB1009: missing project", source));
     }
 }

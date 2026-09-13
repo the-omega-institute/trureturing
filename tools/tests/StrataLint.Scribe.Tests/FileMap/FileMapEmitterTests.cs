@@ -8,7 +8,8 @@ public sealed class FileMapEmitterTests
     public void DependencyProjectionIsByteStableAndDerivedFromEveryEntry()
     {
         var manifest = FileMapLoader.Parse(Encoding.UTF8.GetBytes("""
-            schema_version = 2
+            schema_version = 3
+            resources = []
 
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
@@ -17,6 +18,8 @@ public sealed class FileMapEmitterTests
             status = "known-violations-frozen-under-monitoring"
 
             [[files]]
+
+            require = []
             pattern = "Blueprint/**/*.md"
             kind = "generated"
             admission_plane = "content"
@@ -27,6 +30,8 @@ public sealed class FileMapEmitterTests
             artifact_id = "none"
 
             [[files]]
+
+            require = []
             pattern = "D5/**/*.lean"
             kind = "truth"
             admission_plane = "content"
@@ -37,6 +42,8 @@ public sealed class FileMapEmitterTests
             artifact_id = "none"
 
             [[files]]
+
+            require = []
             pattern = "tools/FixtureData/*.toml"
             kind = "data"
             admission_plane = "judge"
@@ -81,6 +88,13 @@ public sealed class FileMapEmitterTests
             var manifestPath = Path.Combine(root, FileMapLoader.RelativePath);
             TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(manifestPath)!);
             repository.CopyTo(RepositoryRelativePath.Create(FileMapLoader.RelativePath), manifestPath);
+            var manifest = FileMapLoader.Parse(TemporaryFileSystem.File.ReadAllBytes(manifestPath), manifestPath);
+            foreach (var relative in manifest.Resources.SelectMany(resource => resource.Materials.Prepend(resource.Owner)).Distinct())
+            {
+                var destination = Path.Combine(root, relative);
+                TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+                repository.CopyTo(RepositoryRelativePath.Create(relative), destination, overwrite: true);
+            }
             using var output = new StringWriter();
             using var error = new StringWriter();
 

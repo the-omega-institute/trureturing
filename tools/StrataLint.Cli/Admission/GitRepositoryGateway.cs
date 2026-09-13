@@ -102,37 +102,11 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
 
     public PreparedRepository Prepare(string? protectedBase)
     {
-        var head = GitText("rev-parse", "HEAD").Trim();
-        var dirty = GitText("status", "--porcelain", "--untracked-files=all").Length > 0;
-        string revision;
-        if (protectedBase is not null)
-        {
-            revision = GitText("rev-parse", "--verify", $"{protectedBase}^{{commit}}").Trim();
-        }
-        else if (dirty)
-        {
-            revision = head;
-        }
-        else
-        {
-            throw new InvalidOperationException(
-                "clean checkout requires --protected-base; candidate HEAD cannot protect itself");
-        }
-
-        // The protected base is the state the candidate extends. CI supplies HEAD^1 of its
-        // pull-request merge object; local callers must likewise supply an ancestor of HEAD.
-        var ancestor = GitRaw(new[] { "merge-base", "--is-ancestor", revision, head }, allowNonzero: true);
-        if (ancestor.ExitCode != 0)
-        {
-            throw new InvalidOperationException(
-                "protected base must be an ancestor of HEAD; merge origin/dev into the lane first");
-        }
-
-        if (!dirty && revision == head)
-        {
-            throw new InvalidOperationException(
-                "protected base equals clean candidate HEAD; history comparison would be vacuous");
-        }
+        if (protectedBase is null || protectedBase.Length != 40 || !protectedBase.All(char.IsAsciiHexDigit))
+            throw new InvalidOperationException("delta requires an explicit 40-hex base commit SHA");
+        var revision = GitText("rev-parse", "--verify", $"{protectedBase}^{{commit}}").Trim();
+        if (!string.Equals(revision, protectedBase, StringComparison.OrdinalIgnoreCase))
+            throw new InvalidOperationException("base must name the commit itself");
 
         return new PreparedRepository(
             revision,
