@@ -140,5 +140,31 @@ theorem mem_H_iff_eval_eq_zero (u : V) : u ∈ H ↔ ell u = 0 := by
     rw [hd, hw, zero_smul, add_zero]
     exact hs
 
+/-- Restriction of the adjacent-row span to any finite coordinate set is surjective. -/
+theorem finite_projection_surjective (I : Finset ℕ) :
+    Function.Surjective (fun v : H => fun i : I => (v : V) i) := by
+  classical
+  intro a
+  let m := I.sup id + 1
+  have hm (i : I) : (i : ℕ) < m :=
+    Nat.lt_succ_of_le (Finset.le_sup (f := id) i.property)
+  let v : V := ∑ j : I, a j • t j m
+  have hv : v ∈ H := by
+    apply H.sum_mem
+    intro j hj
+    apply H.smul_mem
+    simpa only [Nat.add_sub_of_le (Nat.le_of_lt (hm j))] using
+      telescoping_mem j (m - j)
+  refine ⟨⟨v, hv⟩, ?_⟩
+  funext i
+  change v i = a i
+  rw [show v i = ∑ j : I, (a j • t j m) i by exact Finsupp.finsetSum_apply _ _ _]
+  rw [Finset.sum_eq_single i]
+  · simp [t, eps, Finsupp.single_apply, (hm i).ne, (hm i).ne']
+  · intro j hj hji
+    have hji' : (j : ℕ) ≠ (i : ℕ) := fun h => hji (Subtype.ext h)
+    simp [t, eps, Finsupp.single_apply, hji', (hm i).ne']
+  · simp
+
 end
 end D5.S1.Ledger.DyadicRelationKernel

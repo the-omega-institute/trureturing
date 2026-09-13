@@ -45,5 +45,18 @@ internal sealed class DyadicRelationKernelDocument : IScribeDocumentDefinition
                     + "powers of two is zero. Each adjacent relation has zero evaluation. "
                     + "Conversely, the finite decomposition reduces a vector to its endpoint "
                     + "coefficient, and zero evaluation forces that coefficient to vanish."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("finite-coordinate-surjectivity"),
+                DeclarationHandle.Create("D5/S1/Ledger/DyadicRelationKernel.finite_projection_surjective"),
+                H("Every finite coordinate assignment is realized"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For any finite set of indices, restriction from the adjacent-row span "
+                    + "onto the integer assignments on that set is surjective. Choose an "
+                    + "endpoint beyond every specified index and sum the corresponding "
+                    + "telescoping rows with the desired coefficients. All endpoint corrections "
+                    + "lie outside the specified set. The empty set is included."))),
                 DescribeRole.Theorem))));
 }
