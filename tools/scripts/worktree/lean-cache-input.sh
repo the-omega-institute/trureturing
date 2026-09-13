@@ -2,8 +2,6 @@
 set -euo pipefail
 export LC_ALL=C
 
-LEAN_CACHE_GIT_RUNNER="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)/lean-cache-run.sh"
-
 # The report consumer also sources the shared manifest and memo primitives.
 if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
   COMMAND="${1:-}"
@@ -73,9 +71,9 @@ prepare_memo() {
 
   local status="$TMP_ROOT/git-status"
   local index="$TMP_ROOT/git-index"
-  "$LEAN_CACHE_GIT_RUNNER" --git -C "$REPOSITORY" status --porcelain=v1 -z --untracked-files=all > "$status" \
+  git -C "$REPOSITORY" status --porcelain=v1 -z --untracked-files=all > "$status" \
     2>/dev/null || return 0
-  "$LEAN_CACHE_GIT_RUNNER" --git -C "$REPOSITORY" ls-files -s -z > "$index" 2>/dev/null || return 0
+  git -C "$REPOSITORY" ls-files -s -z > "$index" 2>/dev/null || return 0
 
   if [[ ! -e "$MEMO_ROOT" ]]; then
     local old_umask
