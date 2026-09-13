@@ -4,7 +4,7 @@
    mirror-E: none(waiver:actual-smooth-periodic-shear-and-coordinate-derivatives)
    anchors: []
    utility: none
-   digest: The original toral isogeny transports an exact shear solution only with the pulled metric; the unchanged Euclidean NS equation has an explicit nonzero defect. -/
+   digest: The original toral isogeny transports an exact shear solution with the pulled metric; the unchanged Euclidean NS equation has an explicit nonzero defect. -/
 
 import D5.S3.Observer.Dynamics.ToralReturnModuleSpectrum
 import D5.S3.FluidDynamics.Fourier.ReversalWaveSynthesis
@@ -24,6 +24,7 @@ pulls back the base velocity. The pulled inverse metric is P_k^{-1}P_k^{-T}.
 The theorem computes the full convection-diffusion residual of the shear.
 It proves failure at the unchanged metric and exact repair after transporting
 the metric, as well as a different exact Euclidean solution at its own rate.
+This is not uniqueness of a metric compatible with one Fourier mode.
 
 This is an exact planar invariant family. It gives no general 3D regularity,
 blowup, nonlinear perturbation stability or physical realization of a cat map
