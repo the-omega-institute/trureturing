@@ -187,3 +187,7 @@ def cleanInstanceResult (_ : Unit) (bit : Bool) : CleanInstanceResult :=
   @CleanInstanceResult.mk ⟨⟨⟨rfl⟩, bit⟩⟩ bit
 
 end ReviewTestsA7External
+
+namespace NumericMetadataFixtures
+def boundedRead (_ : Unit) (_ : Bool) : Fin 256 := ⟨0, Nat.zero_lt_succ 255⟩
+end NumericMetadataFixtures

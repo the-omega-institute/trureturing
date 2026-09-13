@@ -1142,6 +1142,25 @@ run_cmd Elab.Command.liftTermElabM do
     else logInfo m!"[PASS] {label}"
 end CorrectnessRound5
 
+namespace NumericMetadataFixtures
+theorem orderTarget : (0 : Nat) ≤ 137 := Nat.zero_le 137
+theorem strictOrderTarget : (0 : Nat) < 137 := by decide
+def signature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => Fin 256
+def bounded : StructuralPrimitiveRealization ⟨Bool⟩ signature := ⟨boundedRead⟩
+
+run_cmd Elab.Command.liftCoreM do
+  for (label, statement, clean) in [
+      ("NumericMetadataClean", ``AllowlistRules.target, true),
+      ("NatLeStatementFence", ``orderTarget, false),
+      ("NatLtStatementFence", ``strictOrderTarget, false)] do
+    let result ← provenanceErrorCurrent (← getEnv).header.mainModule `catalog statement ``bounded
+    if clean == result.isNone then logInfo m!"[PASS] {label}"
+    else logError m!"[FAIL] {label}: {result}"
+end NumericMetadataFixtures
+
 
 open Lean LeanInformationAudit LeanInformationAudit.RegistrationGates
 namespace ReviewTestsA7
