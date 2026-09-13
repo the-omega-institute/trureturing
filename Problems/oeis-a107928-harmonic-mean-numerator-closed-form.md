@@ -33,8 +33,13 @@ The first terms (`%S`) are 2, 3, 12, 24, 16, 96, 192, 128, 768, 1536,
 `∀ m ≥ 1, a(3m) = 12·8^(m−1) ∧ a(3m+1) = 3·8^m ∧
 a(3m+2) = 2·8^m`. The Lean definition uses `a 0 = 0` as an offset-one
 sentinel and implements the reduced numerator as `Rat.num ... .toNat`.
-The generating-function sentence is an algebraic rewriting of this closed
-form and is not formalized or claimed.
+Only the three-residue closed form is formalized by elementary block
+induction; no priority claim is made. The printed generating function with
++8x^4 expands to 2, 3, 12, 24, 32, ... and disagrees with the sequence at
+n = 5 (a(5) = 16), whereas changing the sign to -8x^4 yields the rational
+generating function x(2+3x+12x^2+8x^3-8x^4)/(1-8x^3) of the proved closed
+form; the generating-function sentence is neither formalized nor claimed,
+and the discrepancy is recorded here, not corrected upstream.
 
 ## Motivation
 
@@ -94,3 +99,5 @@ induction.
 The OpenAlex works endpoint was not verified because it ended with a budget
 error. All literature searches are bounded, and no first-publication or
 priority claim is made.
+The printed generating function has a sign discrepancy at the x^4 term
+(disclosed above); no corrected formula is claimed or submitted upstream.
