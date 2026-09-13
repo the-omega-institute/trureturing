@@ -952,7 +952,7 @@ run_cmd Elab.Command.liftCoreM do
   unsafe enableInitializersExecution
   let parserEnv ← importModules #[{ module := `Lean }] {} (loadExts := true)
   for (moduleName, expectedDigest, expectedExits) in [
-      ("ReadoutProvenance", "7cbfbb85d1bb69def51c210061e52e9efe1bae99ced1bbc65647895e3b64e7fe", 238),
+      ("ReadoutProvenance", "4e894c9bd36009d3e5465c81e879c7ebea4d3356868825f7d4327198dfbb42f4", 242),
       ("ReadoutFamily", "2cc8a787350d521c79e444692b947ccd00e5a6898c3da9d30080d06333b2184d", 47)] do
     let path := s!"tools/lean-inspector/LeanInformationAudit/{moduleName}.lean"
     let parsed ← Parser.testParseFile parserEnv path
