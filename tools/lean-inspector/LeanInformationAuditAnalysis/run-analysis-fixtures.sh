@@ -22,7 +22,7 @@ fail() {
 }
 
 [[ $# -eq 1 && -n $1 ]] || fail 64 "usage: $0 OUTPUT_DIRECTORY"
-command -v lake >/dev/null 2>&1 || fail 69 'missing command: lake'
+# The canonical runner resolves LAKE_BIN and validates the pinned Lake version.
 command -v shasum >/dev/null 2>&1 || fail 69 'missing command: shasum'
 
 script_directory=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)

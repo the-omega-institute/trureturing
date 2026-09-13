@@ -20,13 +20,14 @@ internal static class LeanCacheBudgetPolicy
     /// 含干净的 dev 树本身)一律红,不只是触碰 D5 的(https://github.com/the-omega-institute/trureturing/issues/4120)。
     /// 本次是对该到期的**重新收口**,不是「改大让它绿」:型别不变、论证重走、读数更新、复审线重算。
     ///
-    /// **域**:`LeanCacheProvisioner` 的三个具名消费点 —— `LeanCommandBudget`(承重,
-    /// `worktree with-cache` 包裹的任意 Lake 命令)
-    /// (`cp -R` 回退,实测 0 次发生)、`DependencyFetchBudget`(`lake exe cache get`,
-    /// 走到 3 次且差两个数量级)。后两者的继承依据与到期条件写在各自的访问器上。
+    /// **域**:`LeanCacheProvisioner` 的两个具名消费点 —— `LeanCommandBudget`
+    /// (`worktree with-cache` 包裹的命令及 warm 构建)、`DependencyFetchBudget`
+    /// (ensure 的原生 `lake env` 依赖物化)。后者直接继承前者；ensure 不再复制 donor
+    /// 构建目录、运行 `lake exe cache get` 或取回归档。
     ///
-    /// **正读数**:正常路径 —— ensure 播种 clonefile **13 秒**;prefix 归档补编
-    /// **1m18s**(重编 19/1513 模块);CI 热态报告生产 **12m46s**。
+    /// **历史正读数(旧 provisioning 路径,不代表当前官方 artifact cache 性能)**:
+    /// ensure 播种 clonefile **13 秒**;prefix 归档补编 **1m18s**(重编 19/1513 模块);
+    /// CI 热态报告生产 **12m46s**。
     ///
     /// **负读数**:① 旧值 1800 对当时最贵工作 1656,超配 **1.087**,注释自陈被并发
     /// 「整个吃掉」⟹ 超时失败;② 全量内容层冷建实测 **3388s**(本机 28 核,含并发,
@@ -46,17 +47,15 @@ internal static class LeanCacheBudgetPolicy
     /// **不产生任何耗时下界或倍数**(#4122 曾据它写过下界与倍数,已全部撤回,不再复述);它只说明 ARM 上该
     /// 集成树的冷建在检查点制度下未能完成,原因未查(记 open,归 #3769 集成流)。**本值的取值依据只用 ④。**
     /// 且 `lean-inspect` job 自身 `timeout-minutes: 45`,故本预算在 CI 上从不承重。
-    /// ⑥(2026-08-30,#4122 四轮评审;**披露,非解决**)**嵌套 deadline 取最小**:本机 `make lean-report`
-    /// 的 worker `tools/lean-inspector/inspect.sh` 最坏顺序跑 3 条 Lake 阶段,每条之前的 ensure 前导可进入
-    /// provisioning(`cp -R` / `lake exe cache get` / 归档取回,各有自己的预算),阶段之间还有非 Lake 工作;
+    /// ⑥**嵌套 deadline 取最小**:本机 `make lean-report` 的 worker
+    /// `tools/lean-inspector/inspect.sh` 经 canonical runner 执行 Lake 命令,阶段之间还有非 Lake 工作;
     /// 外层是 `report-supervisor.sh` 的 `BUILD_TIMEOUT_SECONDS`(#403 挂死上限,默认 7200,**本次不动**)。
     /// 有效上限 = min(本值, 外层 − 已耗):**外层小于本值时,真正杀进程的是外层**,本值在该路径上不承重。
-    /// #4122 第 2–4 轮曾试图把外层写成内层之和(21600 → 64800 → 76140),每轮都被指出少算一段,
+    /// 历史 #4122 第 2–4 轮曾试图把外层写成旧 provisioning 内层之和(21600 → 64800 → 76140),每轮都被指出少算一段,
     /// 而全部内层挂死上限相加 = 3 × (3 × 21600 + 2580) + 3600 = 205,740s > 脚本自身 86400 上限——
     /// **挂死上限之和不是排程**,该关系在当前词汇表里无解(第 5″ 条预算包络),建模另立
-    /// https://github.com/the-omega-institute/trureturing/issues/4127 承接。**域不变**(仍是上面列出的
-    /// 三个具名消费点,`ConfiguredBudgetAppliesToEveryProvisioningProcess` 钉住三者同值);本条只补一句
-    /// 事实:三者中任一条命令被外层 supervisor 包裹时,都以外层允许的范围为限。
+    /// https://github.com/the-omega-institute/trureturing/issues/4127 承接。上述历史算式不描述当前
+    /// ensure 路径；当前两个消费点中任一条命令被外层 supervisor 包裹时,都以外层允许的范围为限。
     ///
     /// **永久案号**:https://github.com/the-omega-institute/trureturing/issues/2535(首次收口)
     ///   → https://github.com/the-omega-institute/trureturing/issues/4120(2026-08-30 修订)
@@ -65,8 +64,8 @@ internal static class LeanCacheBudgetPolicy
     ///
     /// **退出条件 / 复审触发**(两条,任一为真即须重新收口):
     ///   ① 拦住**全量冷建**的 fail-closed 门落地(设计、代价与五条开建条件记于 #3029)。
-    ///      届时本值不再需要覆盖冷建。在那之前它**必须**覆盖冷建 —— 现有守卫 `AllCold`
-    ///      是合取,结构上放过「mathlib 热 / 内容层冷」这一真实未命中态,故冷建当前无人拦。
+    ///      届时本值不再需要覆盖冷建。在那之前它**必须**覆盖冷建 —— 当前官方 Lake
+    ///      对实际 cache miss 编译,ensure 的 ready 不保证编译产物齐全或命中。
     ///      **① 是一个动作,不可机器判**,故它不能单独承担「非永久」。〔2026-08-30 勘注:生产者侧
     ///      的种子 workflow `lean-cache-seed-manual.yml` 曾实际存在并跑过(负读数⑤),
     ///      #3029 「新 config 的首个 PR 结构上必无种子」这一前提因此改变;
@@ -95,8 +94,8 @@ internal static class LeanCacheBudgetPolicy
     /// (负读数①证明 8% 的余量会被并发吃掉;首次取 7200/3388 = 2.13 倍为足)。当前规模的冷建读数
     /// 取负读数④(本机投影 5763s,上界侧;⑤ 不是耗时读数,见其说明);21600/5763 = **3.75 倍**,
     /// 取整小时使它一望可知是选定值。**不取更小**:2 倍(11526)只在今日规模上成立,
-    /// 而本值的域是本机 Lake 命令的挂死上限,误杀一次合法冷建的代价(半建的 `.lake` 无 stamp,
-    /// 连带作废 donor 资格,#2762)高于多等一会儿;**不取更大**:预算必须封顶,否则挂死检测失效。
+    /// 而本值的域是本机 Lake 命令的挂死上限,误杀一次合法冷建会留下未完成的本地构建;
+    /// 当前 pin stamp 不证明构建完成,也不承担 donor 准入。**不取更大**:预算必须封顶,否则挂死检测失效。
     /// 它是**选定值,不是算出来的** —— 这正是本值属③而非①的原因。
     /// </summary>
     internal const int DefaultProvisionBudgetSeconds = 21600;

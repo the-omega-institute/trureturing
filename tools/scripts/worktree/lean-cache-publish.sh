@@ -38,9 +38,10 @@
 #   manifest 记 producer_commit_sha 与 workflow_run_id；缺这两个值时 publish 直接拒绝；
 #   workflow 侧显式写出 checkout 取的事件 SHA。
 #
-#   仍未落地（B 步）：**consumer 侧没有任何 provenance 核验** —— 上面这些字段现在
-#   写得出来，但没有人去核它们。**在 consumer 核验落地之前，ensure 不得自动 fetch
-#   本归档** —— 当前也确实没有，手工 target 只作诊断。
+#   consumer (`fetch`) 已核验 producer commit、workflow run id 的存在、release target
+#   与 producer 的一致性，以及资产清单和 GitHub 记录的归档/分片摘要；不核验作者或
+#   workflow run 的执行身份。验证通过后，经 canonical runner 保持 writer reservation
+#   调用所选 Lake unpack。ensure 只让原生 Lake 物化依赖，不自动 fetch 本归档。
 set -euo pipefail
 export LC_ALL=C
 

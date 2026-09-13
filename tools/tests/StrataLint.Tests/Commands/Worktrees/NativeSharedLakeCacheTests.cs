@@ -323,9 +323,18 @@ for module,names in exports.items():
         '    IO.FS.writeFile ((folder.get! : System.FilePath) / name) (toString answer)\n')
 seed=reader/'analysis-seed';seed.mkdir()
 command(reader,'env','IE_PROJECTION_OUTPUT_DIR='+str(seed),lake,'build','LeanInformationAuditAnalysis')
+# Exercise the supported absolute selection through the actual script and runner,
+# with real auxiliary tools but no Lake discoverable on PATH.
+analysis_bin=P/'analysis-bin';analysis_bin.mkdir()
+(analysis_bin/'dotnet').symlink_to(CLI[0])
+analysis_env=dict(native_env,PATH=str(analysis_bin)+':/usr/bin:/bin:/usr/sbin:/sbin')
+assert pathlib.Path(lake).is_absolute()
+assert shutil.which('lake',path=analysis_env['PATH']) is None
+cached_analysis=command(reader,lake,'build','-v','LeanInformationAuditAnalysis')
+assert 'Built LeanInformationAuditAnalysis.' not in cached_analysis.stdout
 for name in ['analysis-first','analysis-second']:
     destination=reader/name
-    result=run(['bash',analysis_script,destination],reader,env=native_env)
+    result=run(['bash',analysis_script,destination],reader,env=analysis_env)
     assert 'ANALYSIS_FIXTURES_EXIT=0' in result.stdout
     assert len(list(destination.iterdir()))==7
     assert all(p.read_text()=='42' for p in destination.iterdir())
@@ -371,7 +380,8 @@ assert compiled_digests(reuse,'Fixture')==original_digests
 print(json.dumps(dict(commands=records,shared_olean_parts=len(parts),
     root_local_olean_on_hit=True,hardlink_identity=True,report_equivalence=True,
     actual_miss_and_cross_tree_reuse=True,utility_import=True,
-    static_runners=True,analysis_repeated_exports=7,mutation_restored_bytes=True,
+    static_runners=True,analysis_repeated_exports=7,analysis_absolute_lake_without_path=True,
+    analysis_cached_without_build=True,mutation_restored_bytes=True,
     storage=snapshots,writer_inode=inode(local),reader_inode=inode(reader/'.lake/build/lib/lean/Fixture.olean'),
     cache_inode=inode(cached),setup_only_for_compilation=True,independent_trace_inodes=True)))
 """;
