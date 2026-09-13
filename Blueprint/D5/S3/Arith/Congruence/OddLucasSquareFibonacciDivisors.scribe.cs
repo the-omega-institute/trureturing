@@ -48,9 +48,9 @@ internal sealed class OddLucasSquareFibonacciDivisorsDocument : IScribeDocumentD
                         + "one do not contribute two divisors.")),
                     Paragraph(Text("External anchor: Michel Lagneau, OEIS A339669, "
                         + "Conjecture 1, December 12, 2020, https://oeis.org/A339669 . "
-                        + "The fetched entry retained the conjecture label. This binding "
-                        + "does not assert that a complete historical literature audit "
-                        + "or Lean compilation has been performed."))),
+                        + "The official oeis/oeisdata snapshot dated September 13, 2026 "
+                        + "retains both conjecture labels and lists no proof. This does "
+                        + "not establish worldwide priority or Lean compilation."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("a339669-conjecture-two"),
@@ -85,7 +85,8 @@ internal sealed class OddLucasSquareFibonacciDivisorsDocument : IScribeDocumentD
     }
 
     private static Formula DivisorBound() => Disp(Call("Implies",
-        Call("Divides", Call("F", F.Id("k")), Call("target", F.Id("n"))),
+        Call("And", Call("Odd", F.Id("n")),
+            Call("Divides", Call("F", F.Id("k")), Call("target", F.Id("n")))),
         Call("Divides", Call("F", F.Id("k")), F.Id("2"))));
 
     private static Formula FirstClaim() => Disp(Seq(
