@@ -105,4 +105,52 @@ private theorem next_block (m : ℕ)
     ring
   exact ⟨h3, h4, h5⟩
 
+/-- Stephan's three-residue closed form for OEIS A107928. -/
+theorem stephan_a107928 : ∀ m : ℕ, 1 ≤ m →
+    a (3 * m) = 12 * 8 ^ (m - 1) ∧
+      a (3 * m + 1) = 3 * 8 ^ m ∧
+      a (3 * m + 2) = 2 * 8 ^ m := by
+  intro m hm
+  obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le hm
+  clear hm
+  induction k with
+  | zero =>
+      have h3 : a 3 = 12 := by
+        simp [a]
+        rw [show (2 * 3 * 2 / (2 + 3) : ℚ) = 12 / 5 by norm_num]
+        change ((((12 : ℤ) : ℚ) / ((5 : ℤ) : ℚ)).num.toNat) = 12
+        rw [Rat.num_div_eq_of_coprime (by norm_num) (by decide)]
+        rfl
+      have h4 : a 4 = 24 := by
+        rw [show 4 = 1 + 3 by omega, a]
+        rw [show 1 + 2 = 3 by omega, show 1 + 1 = 2 by omega, h3, a]
+        rw [show
+          (2 * ((12 : ℕ) : ℚ) * ((3 : ℕ) : ℚ)) /
+              (((3 : ℕ) : ℚ) + ((12 : ℕ) : ℚ)) =
+            (((24 : ℤ) : ℚ) / ((5 : ℤ) : ℚ)) by norm_num]
+        rw [Rat.num_div_eq_of_coprime (by norm_num) (by decide)]
+        rfl
+      have h5 : a 5 = 16 := by
+        rw [show 5 = 2 + 3 by omega, a]
+        rw [show 2 + 2 = 4 by omega, show 2 + 1 = 3 by omega, h4, h3]
+        rw [show
+          (2 * ((24 : ℕ) : ℚ) * ((12 : ℕ) : ℚ)) /
+              (((12 : ℕ) : ℚ) + ((24 : ℕ) : ℚ)) =
+            ((16 : ℕ) : ℚ) by norm_num]
+        simp
+      simpa using And.intro h3 (And.intro h4 h5)
+  | succ k ih =>
+      rcases next_block (1 + k) ih.2.1 ih.2.2 with ⟨h0, h1, h2⟩
+      constructor
+      · rw [show 3 * (1 + Nat.succ k) = 3 * (1 + k) + 3 by omega,
+          show 1 + Nat.succ k - 1 = 1 + k by omega]
+        exact h0
+      · constructor
+        · rw [show 3 * (1 + Nat.succ k) + 1 = 3 * (1 + k) + 4 by omega,
+            show 1 + Nat.succ k = 1 + k + 1 by omega]
+          exact h1
+        · rw [show 3 * (1 + Nat.succ k) + 2 = 3 * (1 + k) + 5 by omega,
+            show 1 + Nat.succ k = 1 + k + 1 by omega]
+          exact h2
+
 end D5.S1.Recurrence.Invariants.StephanHarmonicMeanNumeratorClosedForm
