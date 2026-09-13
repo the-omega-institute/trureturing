@@ -5,6 +5,50 @@ namespace StrataLint.Tests;
 public sealed class JudgeSeedTests
 {
     [Fact]
+    public void RestoredJudgeSeedKeepsNativePushPlanValidWithoutAllowingDirtySources()
+    {
+        using var fixture = new JudgeSeedFixture();
+        fixture.NativePushCandidate();
+        fixture.Prepare();
+        fixture.Build("native-push-cold", 2);
+        fixture.Snapshot();
+        var beforeRestore = fixture.PushStageInput();
+        Assert.True(beforeRestore.ExitCode == 0, beforeRestore.Text);
+        Assert.True(JsonNode.Parse(beforeRestore.Text)!["required"]!.GetValue<bool>());
+        var plan = File.ReadAllBytes(fixture.PathOf("build/ci/plan.json"));
+        var changes = File.ReadAllBytes(fixture.PathOf("build/ci/changes.json"));
+        var seed = fixture.CacheKeys()["judge"]!;
+
+        var restored = fixture.RestoreLayer("judge", seed["key"]!.GetValue<string>());
+
+        Assert.Contains("\"status\": \"restored\"", restored.Text, StringComparison.Ordinal);
+        Assert.True(Directory.Exists(fixture.PathOf(seed["target"]!.GetValue<string>())));
+        var afterRestore = fixture.PushStageInput();
+        Assert.True(afterRestore.ExitCode == 0, afterRestore.Text);
+        Assert.Equal(beforeRestore.Text, afterRestore.Text);
+        Assert.Equal(plan, File.ReadAllBytes(fixture.PathOf("build/ci/plan.json")));
+        Assert.Equal(changes, File.ReadAllBytes(fixture.PathOf("build/ci/changes.json")));
+
+        fixture.Write("unregistered-input.txt", "untracked source\n");
+        AssertDirty();
+        File.Delete(fixture.PathOf("unregistered-input.txt"));
+        const string source = "tools/Library/Code.cs";
+        var original = File.ReadAllText(fixture.PathOf(source));
+        fixture.Write(source, original + "// uncommitted tracked source\n");
+        AssertDirty();
+        fixture.Write(source, original);
+        var cleanAgain = fixture.PushStageInput();
+        Assert.True(cleanAgain.ExitCode == 0, cleanAgain.Text);
+
+        void AssertDirty()
+        {
+            var result = fixture.PushStageInput();
+            Assert.Equal(2, result.ExitCode);
+            Assert.Contains("push checkout is dirty", result.Text, StringComparison.Ordinal);
+        }
+    }
+
+    [Fact]
     public void GeneratedDriverRecoversValidatedTimeAfterCleanStateRestore()
     {
         using var fixture = new JudgeSeedFixture();
