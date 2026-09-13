@@ -2,10 +2,11 @@
    generality: G
    mirror-B: D5/B/S3/ArithSums/AdamchukGeneralizedHarmonicThirtySevenCubeProgression
    mirror-E: none(waiver:universal-divisibility-no-numeric-artifact)
-   anchors: [mathlib/module/Mathlib.Data.Rat.Lemmas, mathlib/module/Mathlib.Data.ZMod.Basic, mathlib/module/Mathlib.FieldTheory.Finite.Basic, mathlib/module/Mathlib.Tactic]
+   anchors: [mathlib/module/Mathlib.Data.Nat.Prime.Factorial, mathlib/module/Mathlib.Data.Rat.Lemmas, mathlib/module/Mathlib.Data.ZMod.Basic, mathlib/module/Mathlib.FieldTheory.Finite.Basic, mathlib/module/Mathlib.Tactic]
    utility: none
    digest: Cubic divisibility of generalized harmonic numerators along Adamchuk's progression. -/
 
+import Mathlib.Data.Nat.Prime.Factorial
 import Mathlib.Data.Rat.Lemmas
 import Mathlib.Data.ZMod.Basic
 import Mathlib.FieldTheory.Finite.Basic
@@ -73,5 +74,72 @@ private lemma C_zero : ∀ k : ℕ, C k = 0 := by
         _ = 0 := by
           rw [ih (m + 2) (by omega), ih (m + 1) (by omega), ih m (by omega)]
           ring
+
+/-- Adamchuk's conjectured arithmetic progression in OEIS A116184. -/
+theorem adamchuk_a116184 :
+    ∀ k : ℕ, (37 ^ 3 : ℤ) ∣ (H (3 + 36 * k)).num := by
+  intro k
+  let n := 3 + 36 * k
+  have hNzero : ((N n : ℤ) : R) = 0 := by
+    calc
+      ((N n : ℤ) : R) = C k := by
+        simp only [N, C, Int.cast_sum, Int.cast_pow, Int.cast_natCast]
+        apply Finset.sum_congr rfl
+        intro j hj
+        dsimp [n]
+        rw [pow_add, pow_mul]
+      _ = 0 := C_zero k
+  have hH (m : ℕ) : H m = (N m : ℚ) / (L : ℚ) ^ m := by
+    unfold H
+    rw [show (N m : ℚ) = ∑ j ∈ Finset.Icc 1 36, (b j : ℚ) ^ m by
+      simp only [N, Int.cast_sum, Int.cast_pow, Int.cast_natCast]]
+    rw [Finset.sum_div]
+    apply Finset.sum_congr rfl
+    intro j hj
+    have hj_bounds := Finset.mem_Icc.mp hj
+    have hjL : j * b j = L := by
+      apply Nat.mul_div_cancel'
+      exact Nat.dvd_factorial (by omega) (by omega)
+    have hj_ne : (j : ℚ) ≠ 0 := by exact_mod_cast (by omega : j ≠ 0)
+    have hb_ne : (b j : ℚ) ≠ 0 := by
+      exact_mod_cast (show b j ≠ 0 by
+        intro hb
+        rw [hb, Nat.mul_zero] at hjL
+        norm_num [L] at hjL)
+    calc
+      (1 : ℚ) / (j : ℚ) ^ m = (b j : ℚ) ^ m / ((j : ℚ) ^ m * (b j : ℚ) ^ m) := by
+        field_simp [hj_ne, hb_ne]
+      _ = (b j : ℚ) ^ m / (L : ℚ) ^ m := by
+        rw [← mul_pow]
+        congr 1
+        exact congrArg (fun x : ℚ => x ^ m) (by exact_mod_cast hjL)
+  have hscale : H n * (L : ℚ) ^ n = (N n : ℚ) := by
+    rw [hH]
+    field_simp [L]
+  have hrat :
+      ((H n).num : ℚ) * (L : ℚ) ^ n =
+        (N n : ℚ) * ((H n).den : ℚ) := by
+    rw [← Rat.mul_den_eq_num (H n)]
+    calc
+      (H n * (H n).den) * (L : ℚ) ^ n =
+          (H n * (L : ℚ) ^ n) * (H n).den := by ring
+      _ = (N n : ℚ) * (H n).den := by rw [hscale]
+  have hint :
+      (H n).num * (L : ℤ) ^ n = N n * ((H n).den : ℤ) := by
+    exact_mod_cast hrat
+  have hintMod := congrArg (fun z : ℤ => (z : R)) hint
+  push_cast at hintMod
+  rw [hNzero] at hintMod
+  have hunit : IsUnit ((L : ℕ) : R) := by
+    have hp : Nat.Prime 37 := by norm_num
+    rw [ZMod.isUnit_natCast_iff_not_dvd_pow hp (by norm_num : 0 < 3)]
+    rw [L, Nat.Prime.dvd_factorial hp]
+    omega
+  have hnumzero : (((H n).num : ℤ) : R) = 0 := by
+    refine (hunit.pow n).mul_right_cancel ?_
+    simpa using hintMod
+  exact (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).mp hnumzero
+
+#print axioms adamchuk_a116184
 
 end D5.S3.ArithSums.AdamchukGeneralizedHarmonicThirtySevenCubeProgression
