@@ -29,7 +29,11 @@ internal sealed class GerasimovLeastEvenDivisorCountPowerOfTwoDocument : IScribe
                 "For composite n = d times e, the multiplicative count "
                     + "E(2^d times 3^(e-1)) = d times e gives a smaller witness than 2^n. "
                     + "Thus equality with 2^n at a positive index forces n to be prime or one.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a187941-least-even-divisor-count-power-of-two"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance,
