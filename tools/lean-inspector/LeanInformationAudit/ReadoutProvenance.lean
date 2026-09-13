@@ -325,6 +325,7 @@ private structure WalkState where
   assumedFamilyDepth : Option Nat := none
   inferredTypes : Std.HashMap Expr Expr := {}
   cleanKinds : Std.HashSet Expr := {}
+  certifiedNullaryCarriers : Std.HashSet Expr := {}
   dataFunctionTypes : Std.HashSet Expr := {}
   binderContexts : Std.HashMap (Array Expr) (LocalContext × LocalInstances × Array Expr) := {}
   exprFuel : Nat := provenanceExpressionFuel
@@ -581,7 +582,7 @@ private def caseFields (type : Expr) :
     WalkM (Option (Array (LocalContext × LocalInstances × Meta.FVarSubst × Array Expr))) := do
   unless ← chargeTraversal do return none
   unless ← chargeExpression type do return none
-  let some (.inductInfo family) := (← getEnv).find? type.getAppFn.constName! | return none
+  let some (.inductInfo family) := (type.getAppFn.constName?.bind (← getEnv).find?) | return none
   -- Native cases batches every constructor of a proposition even when asked
   -- for one. Reserve one existing Meta allowance per constructor; this is an
   -- explicitly charged batch, while inferType/whnf/defeq remain single queries.
@@ -627,7 +628,7 @@ private partial def buildBinderContext (context : Array Expr) (k : Array Expr �
 -- Reuse reconstructed binders only when the original parent context is empty.
 -- Restoring both locals and local instances preserves their actual types and
 -- stable fvar identities; nested callers retain their existing parent context.
-private def inBinderContext (context : Array Expr) (k : Array Expr → WalkM α) :
+private partial def inBinderContext (context : Array Expr) (k : Array Expr → WalkM α) :
     WalkM (Option α) := do
   if context.isEmpty then return some (← k #[])
   if !(← getLCtx).isEmpty then return ← buildBinderContext context k
@@ -635,11 +636,16 @@ private def inBinderContext (context : Array Expr) (k : Array Expr → WalkM α)
   if let some (lctx, instances, locals) := (← get).binderContexts[context]? then
     return some (← Meta.withLCtx lctx instances (k locals))
   unless ← chargeTraversal context.size do return none
-  buildBinderContext context fun locals => do
-    let lctx ← getLCtx
-    let instances ← Meta.getLocalInstances
-    modify fun s => { s with binderContexts := s.binderContexts.insert context (lctx, instances, locals) }
-    k locals
+  -- Canonicalize the parent first: extending a lexical prefix must retain
+  -- its immutable local identities so shared occurrences reuse inference.
+  let parent := context.pop
+  let result ← inBinderContext parent fun locals =>
+    buildBinderContext context (fun locals => do
+      let lctx ← getLCtx
+      let instances ← Meta.getLocalInstances
+      modify fun s => { s with binderContexts := s.binderContexts.insert context (lctx, instances, locals) }
+      k locals) parent.size locals
+  return result.join
 
 -- The syntax scan checks TERM occurrences inside types. They are not themselves
 -- assumed to be types (e.g. Classical constants on either side of an equality).
@@ -833,14 +839,22 @@ private partial def inputType (env : Environment) (type : Expr)
         if !carrierAllowed && level.isNeverZero then
           let some carrier ← boundedMeta (Meta.whnf carrier) `carrier_whnf
             | return (mentions, true)
-          if let some (.inductInfo family) := env.find? carrier.getAppFn.constName! then
+          if let some (.inductInfo family) := (carrier.getAppFn.constName?.bind env.find?) then
             let nullary := family.numParams == 0 && family.numIndices == 0 &&
               family.ctors.all (fun ctor => match env.find? ctor with
                 | some (.ctorInfo info) => info.numFields == 0
                 | _ => false)
-            if nullary then
-              let some branches ← caseFields carrier | return (mentions, true)
-              carrierAllowed := branches.all (fun (_, _, _, fields) => fields.isEmpty)
+            if nullary && closed carrier && !carrier.hasLevelMVar then
+              unless ← chargeTraversal do return (mentions, true)
+              if (← get).certifiedNullaryCarriers.contains carrier then
+                carrierAllowed := true
+              else
+                let some branches ← caseFields carrier | return (mentions, true)
+                carrierAllowed := branches.all (fun (_, _, _, fields) => fields.isEmpty)
+                if carrierAllowed then
+                  unless ← chargeTraversal do return (mentions, true)
+                  modify fun s => { s with certifiedNullaryCarriers :=
+                    s.certifiedNullaryCarriers.insert carrier }
         if carrierAllowed && (name == ``List.Mem || (← compareCanonical args[1]! relation)) then
           let some statement ← boundedMeta (Meta.whnf (← get).statement) `statement_head
             | return (mentions, true)
@@ -849,7 +863,7 @@ private partial def inputType (env : Environment) (type : Expr)
               let some domain ← boundedMeta (Meta.whnf domain) `statement_domain
                 | return (mentions, true)
               pure (domain.getAppFn.isConstOf ``Exists && body.isConstOf ``False)
-            | _ => pure (#[``And, ``Or, ``Exists, ``True].contains statement.getAppFn.constName!)
+            | _ => pure (statement.getAppFn.constName?.any (#[``And, ``Or, ``Exists, ``True].contains ·))
           if disjoint then return (mentions, unclassified)
       if Lean.isClass env name && !listedTypeClasses.contains name then
         return (mentions, true)
