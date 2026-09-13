@@ -120,8 +120,9 @@ internal sealed class KrehMinimalSetLayerGrowthRefutationDocument
             Implies(
                 Member(b, set),
                 Implies(Call("digitSubseq", b, a), Equal(b, a))));
-        Formula members = new Formula.SetBuilder(
-            And(Member(a, set), minimality), a, Naturals());
+        Formula members = Seq(
+            OpenBrace, a, Sp, InMacro, Sp, Naturals(), Sp, Mid, Sp,
+            And(Member(a, set), minimality), CloseBrace);
         return Disp(AllSet(Equal(Call("minimal", set), members)));
     }
 

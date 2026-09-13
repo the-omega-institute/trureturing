@@ -18,7 +18,7 @@ The decimal digit lists are reversed into printed order. Thus digitSubseq(a,b) i
 
 **Definition 1.2 (Minimal elements of a set).**
 
-$$\forall M \subseteq \mathbb{N}, \operatorname{minimal}\left(M\right) = \left\{(a \in M) \land (\forall b \in \mathbb{N},\; (b \in M) \Rightarrow ((\operatorname{digitSubseq}\left(b, a\right)) \Rightarrow (b = a))) \mid a \in \mathbb{N}\right\}$$
+$$\forall M \subseteq \mathbb{N}, \operatorname{minimal}\left(M\right) = \{a \in \mathbb{N} \mid (a \in M) \land (\forall b \in \mathbb{N},\; (b \in M) \Rightarrow ((\operatorname{digitSubseq}\left(b, a\right)) \Rightarrow (b = a)))\}$$
 
 *Formalization.* `D5/S1/Digit/KrehMinimalSetLayerGrowthRefutation.minimal` (`✓ std3`).
 
