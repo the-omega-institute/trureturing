@@ -27,7 +27,7 @@ public sealed partial class CoverBatchCommandTests
                 *) shift ;;
               esac
             done
-            test "$base" = baseline
+            test "$base" = "$(git rev-parse --verify 'baseline^{commit}')"
             if [[ ! -f "${report}.source-context.json" ]] || [[ "$(cat "${report}.source-context.json")" != 'captured source input' ]]; then
               echo 'demanded source context is missing or stale' >&2
               exit 2

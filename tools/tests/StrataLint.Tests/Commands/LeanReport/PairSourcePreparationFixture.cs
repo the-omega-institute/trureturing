@@ -1,3 +1,4 @@
+using System.IO.Compression;
 using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
@@ -66,6 +67,7 @@ internal sealed class PairSourcePreparationFixture
         }
 
         ProcessOutput Invoke(string? sourceBase) => TestProcessRunner.Run("env", [
+            "-u", "GITHUB_ACTIONS", "-u", "STRATALINT_PUSH_BEFORE", "-u", "STRATALINT_PUSH_HEAD",
             $"STRATALINT_SOURCE_BASE={(sourceBase is null ? protectedParent : string.Empty)}",
             $"STRATALINT_REPORT_CACHE_ROOT={Path.Combine(scratch, "cache")}",
             $"STRATALINT_SUPERVISOR_ROOT={Path.Combine(scratch, "supervisor")}",
@@ -76,6 +78,20 @@ internal sealed class PairSourcePreparationFixture
             "--lake-bin", "/usr/bin/true", "--candidate-root", root, "--candidate-output", report,
             .. sourceBase is null ? Array.Empty<string>() : ["--base", sourceBase]],
             scratch, BoundedProcessRunner.HangDetectionBudget, 4 * 1024 * 1024);
+    }
+
+    internal static void RewriteSourceContext(string report, string? context)
+    {
+        // Both delivery forms must carry the fault; admission can recover the
+        // context from the material archive when its sibling is absent.
+        var sibling = report + ".source-context.json";
+        TemporaryFile.Delete(sibling);
+        using var archive = ZipFile.Open(RawLeanReportArtifact.MaterialsPath(report), ZipArchiveMode.Update);
+        archive.GetEntry(LeanSourceContextInput.ArchiveEntryName)?.Delete();
+        if (context is null) return;
+        TemporaryFile.WriteAllText(sibling, context);
+        using var writer = new StreamWriter(archive.CreateEntry(LeanSourceContextInput.ArchiveEntryName).Open());
+        writer.Write(context);
     }
 
     private void Write(string relative, string contents)

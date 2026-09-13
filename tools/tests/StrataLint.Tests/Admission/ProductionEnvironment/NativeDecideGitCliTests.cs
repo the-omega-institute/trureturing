@@ -288,11 +288,11 @@ public sealed partial class ProductionEnvironmentTests
         if (pair is not null && demandContext)
         {
             // Admission must still refuse missing and stale demanded data offline.
-            File.Delete(Path.Combine(temporary.Path, reportName + ".source-context.json"));
+            PairSourcePreparationFixture.RewriteSourceContext(report, null);
             AssertContextRejected("missing demanded commands input");
             var stale = System.Text.Json.Nodes.JsonNode.Parse(preparedContext!)!;
             stale["files"]![0]!["sourceSha256"] = new string('0', 64);
-            File.WriteAllText(Path.Combine(temporary.Path, reportName + ".source-context.json"), stale.ToJsonString());
+            PairSourcePreparationFixture.RewriteSourceContext(report, stale.ToJsonString());
             AssertContextRejected("NATIVE_DECIDE_CONTEXT_ERROR");
         }
 

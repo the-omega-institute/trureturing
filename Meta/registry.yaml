@@ -17,6 +17,7 @@ governance_documents:
   - "D5/X_Frontier/HeartsAuthorizations.md"
   - "Golden/gate-authority-roots.toml"
   - "Meta/Digestion/atomizers.toml"
+  - "Meta/EngineeringInputs.json"
   - "Meta/FILEMAP.toml"
   - "Meta/LeanInputs.json"
   - "docs/CONTRIBUTING.md"

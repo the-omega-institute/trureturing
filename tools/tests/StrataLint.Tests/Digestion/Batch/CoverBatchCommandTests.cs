@@ -515,6 +515,7 @@ public sealed partial class CoverBatchCommandTests
             ReviewRegressionTests.RunGit(Root, "add", ".");
             ReviewRegressionTests.RunGit(Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.test",
                 "commit", "--quiet", "-m", "synthetic producer inputs");
+            ReviewRegressionTests.RunGit(Root, "tag", "baseline");
             var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(Repository.ReadCurrent())).Snapshot;
             var reports = inputs.Report.Files.ToDictionary(pair => pair.Key.Value, pair => pair.Value, StringComparer.Ordinal);
             foreach (var path in snapshot.Files.Keys.Where(path => LeanClosureValidator.IsManagedLean(path.Value)))
