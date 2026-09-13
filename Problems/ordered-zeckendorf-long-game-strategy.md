@@ -74,12 +74,24 @@ upper and lower asymptotics and a structural lemma about repetitions under LGS.
 ## Gap
 
 - `RawDigits` is a multiplicity map and loses order; no ordered list state or
-  inversion count exists.
+  inversion count was found here, subject to the search limits recorded below.
 - Frozen carry orientation is not identical to the paper's bidirectional
   merge/split game.
 - Newman confluence and normal-form uniqueness say nothing about longest paths.
-- LGS contains a tie phrase "switch moves (in any order)" that must be resolved
-  before a Lean proposition is exact.
+- LGS contains a tie phrase "switch moves (in any order)".
+  `ASSUMED-UNVERIFIED`: an uncommitted exhaustive search over `n <= 16` found
+  equal minimum and maximum LGS lengths across all priority-one switch choices.
+  If correct, that supports omitting a switch tie-breaker within that range; the
+  all-`n` Lean statement still requires a proof of switch-order independence.
+- No inversion count was found to build on. A search by the names `inversions`,
+  `inversionCount`, `countInversions` and `Perm.inversions` returned nothing
+  usable: this repository's `inversion` hits are Moebius, Fourier and matrix
+  inversion; mathlib4 returned only `GroupTheory/Coxeter/Inversion.lean`, which is
+  Coxeter group inversion and a different notion; Batteries, CSLib and TauCeti
+  returned nothing; Formalpedia was not searched. A search by name is not a proof
+  of absence under every possible name, and the external inventories were not
+  re-verified here. On that basis `inv : List Nat -> Nat` and its basic lemmas
+  are expected to need building here.
 
 ## Route
 
@@ -99,6 +111,46 @@ upper and lower asymptotics and a structural lemma about repetitions under LGS.
 6. Prove switch-order independence as a separate lemma; if false, tighten the
    conjecture to the paper's intended deterministic interpretation and record
    the counterexample.
+
+Beyond those six steps, the following is a proposed paper-level proof **sketch**, and its claims remain
+`ASSUMED-UNVERIFIED`. **Nothing here is Lean-verified**, the four move-specific
+count calculations are not displayed, and it does not settle the conjecture. Write `inv s` for the inversion
+count of a state and `L u` for the longest game length from a sorted state `u`.
+
+- **Decomposition.** `longest s = inv s + L (sort s)`. The easy direction is that
+  `inv s` switches bubble `s` into `sort s`. The other direction is induction over
+  the move relation: the switch case is an equality because sorting is unchanged
+  and `inv` drops by one, and the merge/split case follows from the key lemma
+  below together with the Bellman recursion at `sort s`.
+- **Key lemma.** Let a merge or split act on an adjacent pair of `s` with values
+  `(a,b)`, giving `t`; let `t'` be the result of the same-valued move applied at
+  the leftmost such pair of `sort s`. Then `inv t <= inv s + inv t'`. Each of the
+  four move kinds reduces to two monotonicity steps on the counts
+  `#{p in prefix : p > j}` and `#{q in suffix : q < j}` plus one absorption using
+  that prefix and suffix are disjoint parts of the same multiset. The lemma
+  mentions no Fibonacci number and no reachability: it holds for arbitrary lists,
+  exhaustively over every list of length at most six on values one to six.
+- **Consequence.** Every switch is an optimal move, with
+  `longest s = longest t + 1`. So LGS priority one is exactly optimal, and the
+  conjecture reduces to the sorted case.
+
+Conditional on the proposed reduction, the following stronger sorted-state
+optimality statements would suffice; their equivalence to the paper's exact LGS
+rule is not established, and the Route remains unfinished in Lean:
+
+- any merge-ones move at the leftmost such pair is optimal;
+- any split with index above two is optimal;
+- if no such split exists, any split of twos is optimal;
+- if only merges are available, the leftmost is optimal.
+
+On a sorted state, splitting the rightmost splittable pair selects the largest
+splittable index; in particular it has index above two whenever such a pair
+exists. `ASSUMED-UNVERIFIED`: an uncommitted search reported five sampled states
+where splitting twos is suboptimal while a higher-index split is available; the
+sample domain, state identities and program are not supplied, so this does not
+establish a general characterization. Replacing the rightmost selection by any
+split above two requires an equivalence argument on the relevant reachable
+states, including the hypotheses of the repetition lemma.
 
 ## Falsifier
 

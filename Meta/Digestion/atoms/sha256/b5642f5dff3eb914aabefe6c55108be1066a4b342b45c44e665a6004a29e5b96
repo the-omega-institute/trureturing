@@ -1,0 +1,70 @@
+**定理 417.3（准确密度与不取到的尖锐上确界）。** 对所有 $L\ge1,N\ge0$，
+$$
+-1+\delta_L<D_L(N)<b_L\delta_L,\qquad
+|D_L(N)|<1-\delta_L<1.
+$$
+以全部 $N\in\omega$ 为定义域，有
+$$
+\inf_ND_L(N)=-1+\delta_L=-s_L,\qquad
+\sup_ND_L(N)=b_L\delta_L=t_L,\qquad
+\sup_N|D_L(N)|=1-\delta_L=s_L;
+$$
+这三个端值均不取到。自然时间密度为
+$$
+\lim_{\substack{N\to\infty\\N\ge1}}\frac{C_L(N)}N=\delta_L=\alpha^{L+2}.
+$$
+对每个实数 $B$，有全部如下等价：
+$$
+\begin{aligned}
+(\forall N\in\omega\ D_L(N)\le B)
+&\Longleftrightarrow(\forall N\in\omega\ D_L(N)<B)
+\Longleftrightarrow t_L\le B,\\
+(\forall N\in\omega\ B\le D_L(N))
+&\Longleftrightarrow(\forall N\in\omega\ B<D_L(N))
+\Longleftrightarrow B\le-s_L,\\
+(\forall N\in\omega\ |D_L(N)|\le B)
+&\Longleftrightarrow(\forall N\in\omega\ |D_L(N)|<B)
+\Longleftrightarrow s_L\le B.
+\end{aligned}
+$$
+此外 $\inf_{N\ge0}|D_L(N)|=0$，仅在 $N=0$ 取到；$\inf_{N\ge1}|D_L(N)|=0$ 而不取到。
+
+**证明。** 固定 $L$，简记 $b,\Lambda,\delta,s,t,e_m,r_m$，令 $M=C_L(N)$。定理 417.2 的两端分别给
+$$
+D_L(N)\ge M-\frac{e_{M+1}-1}{\Lambda}
+=-1+\frac{1+br_{M+1}}\Lambda>-1+\delta,
+$$
+$$
+D_L(N)\le M-\frac{e_M}{\Lambda}
+=\frac{br_M}{\Lambda}<b\delta.
+$$
+首式用 $M+1\ge1$，次式在 $M=0$ 时也严格成立。由于 $A_L\ge b_L+1$、$b_L>0$，有 $\Lambda_L-1>b_L$，从而
+$$
+0<t<s<1.
+$$
+故对全部 $N$ 有 $|D_L(N)|<s$。
+
+任给实数 $\varepsilon>0$，取整数 $K>\max(1,s/\varepsilon)$。对全部 $N\ge K$，
+$$
+\left|\frac{C_L(N)}N-\delta\right|=\frac{|D_L(N)|}{N}<\frac{s}{N}<\varepsilon.
+$$
+这证明所列密度，并保留了正分母条件。
+
+定理 53 使每个正长度开区间含有任意大的正指标 $m$ 的相位 $r_m$。逐步选 $m_i$ 严格递增且 $0<r_{m_i}<1/(i+2)$；则
+$$
+D_L(e_{m_i}-1)=-s+tr_{m_i}\longrightarrow-s.
+$$
+同样逐步选严格递增的 $\widetilde m_i$ 使 $1-1/(i+2)<r_{\widetilde m_i}<1$，得到
+$$
+D_L(e_{\widetilde m_i})=tr_{\widetilde m_i}\longrightarrow t.
+$$
+每步可取满足要求且大于前项的最小自然数。结合严格界，便得符号误差的下确界、上确界及不取到性。
+
+因为 $t<s$，每个出时刻端点的误差为负。给定任意实数 $B<s$，定理 53 给正指标 $m$ 使 $tr_m<s-B$，于是
+$$
+|D_L(e_m-1)|=s-tr_m>B.
+$$
+所以不存在比 $s$ 小的实上界，而 $s$ 本身是严格上界，证明绝对值上确界及不取到性。上述两个趋近序列排除一切小于 $t$ 的符号上界及一切大于 $-s$ 的符号下界，刚得的绝对值趋近排除一切小于 $s$ 的绝对上界；结合严格界，即得对每个实数 $B$ 的六个等价条件。
+
+$D_L(0)=0$。若 $N>0$ 且 $D_L(N)=0$，则 $C_L(N)=N/\Lambda>0$，于是 $\Lambda=N/C_L(N)$ 为有理数；但 $\Lambda=A_L+b_L\alpha$ 无理，矛盾。故零仅在 $N=0$ 取到。前述 $r_{m_i}\to0$ 还给 $|D_L(e_{m_i})|=tr_{m_i}\to0$，其中 $e_{m_i}>0$，证明正指标域的绝对下确界亦为零但不取到。证毕。
+

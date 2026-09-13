@@ -1,0 +1,13 @@
+**定理 378.4。** 对任意集合 $X,Y$，乘积比较
+$$
+\chi_{X,Y}:X^*\times Y^*\longrightarrow(X\times Y)^*,\qquad
+\chi_{X,Y}(c,d)=\operatorname{Enc}(\langle\operatorname{Dec}(c),\operatorname{Dec}(d)\rangle)
+=\langle c,d\rangle_Z
+$$
+是双射，其逆为
+$$
+\chi_{X,Y}^{-1}(\operatorname{Enc}(\langle x,y\rangle))
+=\langle\operatorname{Enc}(x),\operatorname{Enc}(y)\rangle.
+$$
+右侧是普通有序对。二元函数 $f:X\times Y\to Z$ 在外部乘积上的对应为 $f^*\circ\chi_{X,Y}$。
+

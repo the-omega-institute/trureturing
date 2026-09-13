@@ -1,0 +1,14 @@
+**命题 378.11。** 对第 91、115–116 条的有限配置，取有限素数集 $P$、单独给定的容量函数 $C_{\rm cap}:P\to\omega$，以及当前内容
+$$
+S(P,C_{\rm cap})=\{e:P\to\omega:\forall p\in P,\ e(p)\le C_{\rm cap}(p)\},\qquad
+N_P(e)=\prod_{p\in P}p^{e(p)}.
+$$
+固定 $P,C_{\rm cap}$ 时标量函数单射。跨全部有限配置时，对每个 $N\ge1$，其准确纤维为
+$$
+\left\{(P,C_{\rm cap},e):\begin{array}{l}
+P\subseteq\operatorname{Pr}\text{ 有限},\quad\{p:\nu_p(N)>0\}\subseteq P,\\
+e(p)=\nu_p(N)\text{ 对每个 }p\in P,\quad C_{\rm cap}(p)\ge\nu_p(N)
+\end{array}\right\}.
+$$
+因此标量、其无限补零字、相位及 $\Gamma_+$ 均不恢复未指定的标签与容量；完整配置码仍单射。零素数内容表的标量为一，而自然数零的规范字值为零。
+

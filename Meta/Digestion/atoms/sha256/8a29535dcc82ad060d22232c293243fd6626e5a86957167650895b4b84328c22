@@ -1,0 +1,16 @@
+**定义 448.1（同一全集合解释及两种集合对象）。** 沿用原 69–90、418 及 429–431 的同一 $\operatorname{Enc},\operatorname{Dec}$，不另造宇宙编码：
+$$
+\operatorname{NatZ}(n)=\langle0,\zeta(n)\rangle,\qquad
+\operatorname{Enc}(x)=
+\begin{cases}
+\operatorname{NatZ}(x),&x\in\omega,\\
+\langle1,\{\operatorname{Enc}(y):y\in x\}\rangle,&x\notin\omega.
+\end{cases}
+$$
+有效码类为 $\mathfrak V_Z=\{c:\exists x,\operatorname{Enc}(x)=c\}$，$\operatorname{Dec}$ 仅在该类上有定义。原双逆给 $\operatorname{Dec}\operatorname{Enc}(x)=x$ 和 $\operatorname{Enc}\operatorname{Dec}(c)=c$。记
+$$
+D^*=\operatorname{Enc}[D],\quad d\in_Zc\Longleftrightarrow\operatorname{Dec}(d)\in\operatorname{Dec}(c),\quad
+\operatorname{Pack}(B)=\operatorname{Enc}(\operatorname{Dec}[B])
+$$
+其中 $B$ 必须是有效码组成的集合。单一有效码 $\operatorname{Enc}(D)$ 与外部成员像 $D^*$ 不同。语义配对 $\langle c,d\rangle_Z$ 沿用原由 $\operatorname{Pack}$ 构造的 Kuratowski 配对，区别于外部普通配对 $\langle c,d\rangle$。自然叶仍取有限规范字；无限补零的全数位图是另一个集合对象。
+

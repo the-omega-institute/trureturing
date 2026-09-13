@@ -1,0 +1,11 @@
+**定义 375.1。** 若 $x\in K_{\rm infdig}$ 有相邻零，令 $j$ 为满足 $x_j=x_{j+1}=0$ 的最小指标，定义
+$$
+(T_{\rm infdig}x)_i=
+\begin{cases}
+0,&i<j,\\
+1,&i=j,\\
+x_i,&i>j.
+\end{cases}
+$$
+若不存在这样的 $j$，定义 $T_{\rm infdig}x=z_{\rm infdig}(0)$。
+

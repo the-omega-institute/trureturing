@@ -55,13 +55,14 @@ probe="$probe_dir/BindOnlyProbe_$FLIGHT.lean"
   echo "  exact?"
 } > "$probe"
 
-# 第 8.3 条: never a bare lake on a cold tree — the first bare command on a tree
-# with no stamp forfeits its clonefile donor and buys a full rebuild.
-( cd "$LANE" && make lean-cache-ensure ) > "$probe.ensure.log" 2>&1 \
+# Lake env does not restore compiled imports. Build the consumed import through
+# the canonical reader before theorem checking, including native hits on a fresh lane.
+( cd "$LANE" && make lean LEAN_TARGETS=Mathlib ) > "$probe.ensure.log" 2>&1 \
   || { echo "BINDONLY_PROBE status=error lane=$LANE seconds=0 probe=$probe reason=ensure-failed"; exit 2; }
 
 started=$(date +%s)
-( cd "$LANE" && timeout "$BUDGET" lake env lean "$probe" ) > "$probe.out" 2>&1
+( cd "$LANE" && /bin/bash tools/scripts/worktree/lean-cache-run.sh \
+    lake env timeout "$BUDGET" lean "$probe" ) > "$probe.out" 2>&1
 rc=$?
 seconds=$(( $(date +%s) - started ))
 

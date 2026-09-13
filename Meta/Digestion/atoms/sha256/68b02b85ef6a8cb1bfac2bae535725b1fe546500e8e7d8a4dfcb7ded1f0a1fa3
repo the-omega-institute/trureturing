@@ -1,0 +1,5 @@
+**定理 440.10。** 观测商的两种码呈现存在准确双射。令 $R=\ker q$，$q^*(\operatorname{Enc}(s))=\operatorname{Enc}(q(s))$。则
+$$
+[\operatorname{Enc}(s)]_{\ker q^*}=\operatorname{Enc}[[s]_R],\qquad [\operatorname{Enc}(s)]_{\ker q^*}\longmapsto\operatorname{Enc}([s]_R)
+$$
+给 $S^*/\ker q^*\to(S/R)^*$ 的双射，正向为 $\operatorname{Pack}$，逆为 $\operatorname{El}$。

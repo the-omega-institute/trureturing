@@ -1,0 +1,2 @@
+**命题。** 按 \(\rho_p\) 非增排序,相等时按素数大小递增固定顺序 \(p_1,\ldots,p_k\)。若 \(B\ge\sum_p\ell_p\),则
+\(U_{\rm dual}=F_b+\sum_p\Delta_p\),可取 \(\lambda_*=0\)。

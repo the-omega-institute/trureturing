@@ -66,7 +66,7 @@ fi
 [[ -n "$LAKE" && "$LAKE" == /* && -x "$LAKE" ]] \
   || { echo "inspect.sh: an absolute executable lake path is required (set LAKE_BIN)" >&2; exit 2; }
 CACHE_RUN="$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh"
-[[ -x "$CACHE_RUN" ]] || { echo "inspect.sh: cache writer is absent: $CACHE_RUN" >&2; exit 2; }
+[[ -x "$CACHE_RUN" ]] || { echo "inspect.sh: cache reader is absent: $CACHE_RUN" >&2; exit 2; }
 
 finish_inspector() {
   local rc=$?
@@ -312,7 +312,7 @@ PY
 fi
 
 run_default_build() {
-  # The declaration and plan must be valid before the existing cache writer builds.
+  # The declaration and plan must be valid before the canonical cache reader builds.
   run_phase build "$CACHE_RUN" "$LAKE" build
 }
 
@@ -329,7 +329,7 @@ project_delta_build() {
   # Lake owns TOML parsing. A Lean configuration or an unavailable projection
   # retains the unqualified default build, which owns configuration errors.
   [[ ! -e "$REPOSITORY/lakefile.lean" ]] || return 3
-  # The cache writer's stdout includes its receipt; consume only the reader's
+  # The cache reader's stdout includes its receipt; consume only the config reader's
   # dedicated output, with no previous phase output available for reuse.
   local config="$LOG_DIR/delta-config.json"
   rm -f -- "$config" || return 3

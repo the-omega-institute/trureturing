@@ -7,7 +7,7 @@ internal sealed partial class LeanReportTransportFixture
     internal const string AuxiliarySource = "tools/lean-inspector/LeanInformationAudit/Tests/SealEmptyBundle.lean";
 
     // A two-module repository with real report scripts. Only external tools
-    // (utility input, the cache writer, and Lean) return synthetic data.
+    // (utility input, the cache reader, and Lean) return synthetic data.
     internal void UseRealInspector()
     {
         File.Delete(Path.Combine(Repository, "tools/lean-inspector/inspect.sh"));
@@ -33,7 +33,7 @@ internal sealed partial class LeanReportTransportFixture
                   cat "$REPORT_FIXTURE/utility-input.json"
                   ;;
                 worktree)
-                  [[ "$2" == with-cache-writer && "$3" == -- ]]
+                  [[ "$2" == with-cache-reader && "$3" == -- ]]
                   if [[ -n "${FIXTURE_NATIVE_CLI:-}" ]]; then exec "$FIXTURE_NATIVE_CLI" "$@"; fi
                   shift 3
                   exec "$@"
@@ -87,6 +87,7 @@ internal sealed partial class LeanReportTransportFixture
     internal void UseNativeLean()
     {
         UseRealInspector();
+        Success(Run(["git", "init", "--quiet"]));
         foreach (var path in new[] { "lean-toolchain", "tools/lean-inspector/Inspector.lean" })
         {
             File.Delete(Path.Combine(Repository, path));
@@ -106,7 +107,7 @@ internal sealed partial class LeanReportTransportFixture
             resultGid = "Trureturing.result", resultModule = "Trureturing", resultSelector = "result",
         } }));
         // This dependency-free fixture needs no transport bootstrap. Use the
-        // canonical stamp owner so the real writer can admit its bounded builds.
+        // canonical stamp owner; the real reader still materializes dependencies.
         var pins = StrataLint.Cli.LeanPinSet.Create(
             File.ReadAllBytes(Path.Combine(Repository, "lean-toolchain")),
             File.ReadAllBytes(Path.Combine(Repository, "lake-manifest.json")));
@@ -179,8 +180,8 @@ internal sealed partial class LeanReportTransportFixture
           if [[ $# == 1 ]]; then exit "${FIXTURE_DEFAULT_BUILD_EXIT:-${FIXTURE_BUILD_EXIT:-0}}"; fi
           exit "${FIXTURE_BUILD_EXIT:-0}"
         fi
-        [[ "$1" == env && "$2" == lean && "$3" == --run ]]
         if [[ -n "${FIXTURE_NATIVE_LAKE:-}" ]]; then exec "$FIXTURE_NATIVE_LAKE" "$@"; fi
+        [[ "$1" == env && "$2" == lean && "$3" == --run ]]
         if [[ "$4" == */Census/config.lean ]]; then
           [[ "${FIXTURE_CONFIG_EXIT:-0}" == 0 ]] || exit "$FIXTURE_CONFIG_EXIT"
           [[ "${FIXTURE_CONFIG_MISSING_OUTPUT:-0}" == 0 ]] || exit 0

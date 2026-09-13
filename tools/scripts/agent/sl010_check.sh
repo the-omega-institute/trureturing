@@ -30,6 +30,11 @@ while [ -s "$queue" ]; do
   done < "$queue"
   cp "$next" "$queue"
 done > /tmp/sl010.out 2>&1 || true
-bad=$(grep -c "^VIOLATION" /tmp/sl010.out 2>/dev/null || echo 0)
+# `grep -c` prints "0" AND exits 1 when nothing matches, so `|| echo 0` used to append a second
+# "0" and the numeric test below died with "integer expression expected" while still printing
+# SL010_VIOLATION count=0 — a false red on every clean G module (three seats hit it on
+# 2026-09-13: GuardedBoxPaths, JointRotationFactorComplexity). Keep the count, default only when empty.
+bad=$(grep -c "^VIOLATION" /tmp/sl010.out 2>/dev/null || true)
+bad=${bad:-0}
 cat /tmp/sl010.out | head -5
 [ "$bad" -eq 0 ] && echo "SL010_OK" || echo "SL010_VIOLATION count=$bad"

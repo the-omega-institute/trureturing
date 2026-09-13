@@ -1,0 +1,15 @@
+**定理 441.2（估值、素数词与 Möbius 的精确读数）。** 对 $m,n>0$，
+$$
+K(mn)=\nu(K(m)+K(n)).
+$$
+令 $r(n)=\sum_pv_p(n)$，$\lambda(n)=(-1)^{r(n)}$。取 $\mu(0)=0$，$\mu(1)=\lambda(1)=1$；如需在零处扩充 $\lambda$，单独取 $\lambda(0)=0$。对 $n>0$，
+$$
+\mu(n)=
+\begin{cases}
+(-1)^{\sum_pK(n)(p,0)},&\forall p\ \forall j\ge1, K(n)(p,j)=0,\\
+0,&\text{否则},
+\end{cases}
+\qquad
+\lambda(n)=(-1)^{\sum_{p,j}G_jK(n)(p,j)}.
+$$
+

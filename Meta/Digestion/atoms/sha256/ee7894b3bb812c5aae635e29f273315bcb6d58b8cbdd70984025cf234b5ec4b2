@@ -1,0 +1,8 @@
+**证明。** 第 72 条的两向逆使 $\operatorname{Dec}[\operatorname{Enc}[U]]=U$，也使 $\operatorname{Enc}[\operatorname{Dec}[B]]=B$；后式的每个解码对象在 $X$ 中，因为 $B\subseteq X^*$。替代保证两个像都是集合，故双射作用于完整的幂集。第 73 条使所列子集码恰解码为 $\operatorname{Dec}[B]$，其两向式在此实际域上直接成立。第 74 条的语义幂集定义遍历这些全部 $B$，所以给显示的整个幂集码。
+
+对任意 $g:X^*\to Y^*$，每个 $g(\operatorname{Enc}(x))$ 都有唯一解码且在 $Y$ 中，替代给显示的函数 $X\to Y$。先解码再共轭，对 $c=\operatorname{Enc}(x)$ 的值为
+$$
+\operatorname{Enc}(\operatorname{Dec}(g(c)))=g(c).
+$$
+先共轭再解码，在每个 $x$ 处得到 $f(x)$。所以全部函数逐一对应。第 74 条的语义配对保留函数图的每个输入存在唯一输出条件，故语义函数空间正是 $\operatorname{Enc}(Y^X)$。$X=\varnothing$ 时两侧函数集各有唯一空函数；$X\ne\varnothing,Y=\varnothing$ 时两侧函数集均为空；两者同时空仍属第一种情形。子集和 $\operatorname{Pack}$ 的空例直接来自第 73 条，故没有排除空载体。证毕。
+

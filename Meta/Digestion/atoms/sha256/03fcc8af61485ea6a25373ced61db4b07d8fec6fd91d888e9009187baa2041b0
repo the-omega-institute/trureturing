@@ -1,0 +1,7 @@
+**定理 339.1。** 设 $M_A=+\infty$。对每个 $c\in\mathbb D_+$，有
+$$
+\overline{L_{A,c}}^{X_A^{\rm cap}}
+=\{x\in X_A^{\rm cap}:S_A(x)\le c\},\qquad
+\overline{L_{A,c}}^{B_A^{\rm cap}}
+=\{u\in B_A^{\rm cap}:\ell_A(u)\le c\}.
+$$

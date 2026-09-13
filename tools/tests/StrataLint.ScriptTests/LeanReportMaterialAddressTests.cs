@@ -114,9 +114,11 @@ public sealed class LeanReportMaterialAddressTests(ITestOutputHelper output)
         var buildsBeforeFailure = fixture.BuildCalls.Length;
         fixture.WriteSource("Trureturing.lean", "import D5.Probe\ntheorem result : False := True.intro\n");
         var failed = fixture.MakeNativeReport(lake);
+        output.WriteLine("Native delta failure: make_exit={0}; delta_build_exit={1}",
+            failed.ExitCode, fixture.Phase("delta-build", "exit"));
         Assert.Equal(2, failed.ExitCode);
-        // The canonical CLI maps a failed writer command to exit 2.
-        Assert.Contains("LEAN_INSPECTOR_FAILED phase=delta-build exit=2", failed.Text, StringComparison.Ordinal);
+        // The canonical reader preserves Lake's failure status; make exits 2.
+        Assert.Contains("LEAN_INSPECTOR_FAILED phase=delta-build exit=1", failed.Text, StringComparison.Ordinal);
         Assert.Equal(buildsBeforeFailure + 1, fixture.BuildCalls.Length);
         Assert.DoesNotContain("RAW_LEAN_REPORT", failed.Text, StringComparison.Ordinal);
     }

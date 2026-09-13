@@ -1,0 +1,6 @@
+**定义 432.1。** 配置沿用第91、148、153、155、241条，先删去零容量轴，记为 $C=(P,A)$，其中 $P$ 是有限互异素数集，$A:P\to\mathbb N_{>0}$。令
+$$
+S_C=\prod_{p\in P}\{0,\ldots,A(p)\},\quad N_C(x)=\prod_{p\in P}p^{x_p},\quad Q(C)=\prod_p(A(p)+1),\quad M(C)=\prod_pp^{A(p)},\quad B(C)=\sum_p\ell_Z(A(p)),\quad k(C)=|P|,
+$$
+其中 $G_0=1,G_1=2,G_{j+2}=G_{j+1}+G_j$，$\ell_Z(e)=\min\{L\in\mathbb N:e<G_L\}$。空积为一，空和为零，空配置的状态集只含空向量。$M$ 是容量角读数，$B$ 是独立局部窗口宽度，不含标签、容量元数据；二者均不同于当前内容及另行给定的执行费用。
+

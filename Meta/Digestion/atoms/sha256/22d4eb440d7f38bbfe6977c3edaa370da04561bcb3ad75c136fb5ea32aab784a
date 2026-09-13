@@ -1,0 +1,8 @@
+**定理 431.3（预测十三·严格标记、字域与首个失败的运输）。** 对任意集合 $X$，存在双射
+$$
+\eta_X:\operatorname{Opt}(X^*)\longrightarrow(\operatorname{Opt}(X))^*,\qquad
+\eta_X(\bot)=\operatorname{Enc}(\bot),\quad
+\eta_X(\operatorname{ok}(c))=\operatorname{Enc}(\operatorname{ok}(\operatorname{Dec}(c))).
+$$
+它的逆先解码原不交和元素，再按其标签取 $\bot$ 或 $\operatorname{ok}(\operatorname{Enc}(x))$。对全部设置字或严格有界后继字，此桥和字、状态的乘积桥保持并反映每步定义域、成功输出、失败状态、首个失败编号及末端标记观察。对 $\operatorname{Exec}$ 限制乘积桥所得的像恰为 $\operatorname{Enc}[\operatorname{Exec}]$。有限前缀因子与条件代价同样在各自精确域上共轭。
+

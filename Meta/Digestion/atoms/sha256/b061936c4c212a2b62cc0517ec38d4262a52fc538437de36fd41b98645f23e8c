@@ -1,0 +1,10 @@
+**定义 395.1。** 已指定拓扑空间 $X$ 上的 Borel 概率是以整个 $\mathscr B_X$ 为定义域的可数可加函数 $\mu:\mathscr B_X\to[0,1]\subseteq\mathbb R$，满足 $\mu(X)=1$。对 Borel 映射 $S:X\to X$，不变性指
+$$
+\forall A\in\mathscr B_X\quad\mu(S^{-1}A)=\mu(A).
+$$
+不变概率的遍历性指，对全部 $A\in\mathscr B_X$，若 $\mu(A\mathbin\triangle S^{-1}A)=0$，则 $\mu(A)\in\{0,1\}$。几乎处处相等指相异集合为 Borel 零测集。$X$ 上等价关系 $E$ 的横截集是一个子集 $C\subseteq X$，与每个 $E$ 类恰交于一点；Borel 实值完全不变量是 Borel 函数 $f:X\to\mathbb R$，满足
+$$
+\forall x,y\in X\quad f(x)=f(y)\iff x\mathrel Ey.
+$$
+这里 $\mathbb R$ 为通常有限实数集合，取通常拓扑。所有测度论断言使用上述 Borel 域。
+

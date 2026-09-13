@@ -1,0 +1,16 @@
+**定理 447.3（每个 epsilon 与根 limsup 的精确等价）。** 以下条件等价：
+$$
+\forall\varepsilon>0\ \exists C_\varepsilon>0\ \forall N\ge1,
+\quad |M(N)|\le C_\varepsilon N^{1/2+\varepsilon};
+$$
+$$
+\limsup_{L\to\infty}A_L^{1/L}\le\sqrt\varphi.
+$$
+二者也等价于对每个 $\varepsilon>0$ 的真实 $hM(1/2+\varepsilon)$。这些条件不改写为单个 $O(\sqrt N)$ 界，也不能只用窗口末端值代替 $A_L$。
+
+**证明。** 由 447.2，第一个条件给 $A_L\le E_\varepsilon\varphi^{(1/2+\varepsilon)L}$；取 $L$ 次根及 limsup，再使 $\varepsilon\downarrow0$，得第二式。反向，给定 $\varepsilon>0$，$\varphi^{1/2+\varepsilon}>\sqrt\varphi$，limsup 定义给充分大 $L$ 的 $A_L^{1/L}\le\varphi^{1/2+\varepsilon}$。对余下有限 $L$ 吸收最大比值，得到全部窗口界，再用 447.2。实数版本也由同一桥得到。
+
+边界上的根界本身不能给临界常数：正序列 $L\varphi^{L/2}$ 的 $L$ 次根趋于 $\sqrt\varphi$，但与 $\varphi^{L/2}$ 的比值无界。这个反例陈述的是根界推理的强度，不宣称实际 Mertens 函数满足或违反临界界。窗口端点也可能漏掉真实最大值：$G_7=34$，不超过三十三的正 Möbius 项在 $\{1,6,10,14,15,21,22,26,33\}$，负项在 $\{2,3,5,7,11,13,17,19,23,29,30,31\}$，其余有平方因子。依次求和给 $M(31)=-4,M(33)=-3$，此前绝对值不超过四，所以 $A_7=4>|M(G_7-1)|$。
+
+即使另知相邻增量绝对值至多一，端点信息也不一般控制全部窗口：在每个整数区间 $[G_L-1,G_{L+1}-1]$ 上定义到两个端点的距离之较小者，两端为零，相邻差至多一，内部峰值为 $\lfloor(G_{L+1}-G_L)/2\rfloor$。这些片段在公共端点吻合，给一条端点全零而窗口内线性增长的序列。它不是 Möbius 序列，只反驳以这两项一般信息替代全前缀假设的推理。证毕。
+

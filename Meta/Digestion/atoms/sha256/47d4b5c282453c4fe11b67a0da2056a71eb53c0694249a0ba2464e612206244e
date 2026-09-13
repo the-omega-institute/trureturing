@@ -1,0 +1,20 @@
+**定理 372.2。** 有
+$$
+F_{\rm infdig}[K_{\rm infdig}]=I,\qquad
+F_{\rm infdig}^{-1}(\{a\})=\{u\},\qquad
+F_{\rm infdig}^{-1}(\{b\})=\{v\}.
+$$
+每个 $t\in\mathbb R\setminus I$ 的纤维为空，特别
+$$
+F_{\rm infdig}^{-1}(\{1\})=\varnothing.
+$$
+区间内部的二点纤维恰为
+$$
+F_{\rm infdig}^{-1}(\{f_w(q)\})=\{w0v,w10v\}
+$$
+所列各项，其中 $w$ 遍历全部有限块字；每个二点值对应唯一的 $w$。每个
+$$
+t\in I\setminus\{f_w(q):w\text{ 为有限块字}\}
+$$
+的纤维恰有一点。
+
