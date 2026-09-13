@@ -420,4 +420,97 @@ private theorem Y_succ (n : ℕ) : Y (n + 1) = 2 * Y n + Z n := by
       rw [Y, Z]
       rw [Finset.mul_sum, ← Finset.sum_add_distrib]
 
+private theorem Z_succ (n : ℕ) : Z (n + 1) + 2 * X n = 2 * Y n + 4 * Z n := by
+  have hcard (G : GoodGraph n) (S : {S : Finset (Fin n) // S ⊆ Allowed G}) :
+      (Allowed ((goodGraphSuccEquiv n).symm ⟨G, S⟩)).card =
+        if S.1 = ∅ then (Allowed G).card + 1 else if S.1.card = 1 then 2 else 1 := by
+    change (allowedEdges (extendEdges G.1 S.1)).card = _
+    exact card_allowedEdges_extend G.1 S.1 S.2
+  have hfiber (G : GoodGraph n) :
+      (∑ S : {S : Finset (Fin n) // S ⊆ Allowed G},
+        2 ^ (if S.1 = ∅ then (Allowed G).card + 1 else
+          if S.1.card = 1 then 2 else 1)) + 2 =
+        2 * (Allowed G).card + 4 * 2 ^ (Allowed G).card := by
+    let A := Allowed G
+    let r := A.card
+    let p : Finset (Fin n) → Prop := fun S => S ⊆ A
+    let f : Finset (Fin n) → ℕ := fun S =>
+      if S = ∅ then r + 1 else if S.card = 1 then 2 else 1
+    change (∑ S : Subtype p, 2 ^ f S.1) + 2 = 2 * r + 4 * 2 ^ r
+    have hsubsum : (∑ S : Subtype p, 2 ^ f S.1) =
+        ∑ S ∈ A.powerset, 2 ^ f S := by
+      calc
+        (∑ S : Subtype p, 2 ^ f S.1) =
+            ∑ S ∈ Finset.univ.filter p, 2 ^ f S :=
+          (Finset.sum_subtype (F := inferInstance) (Finset.univ.filter p)
+            (fun S => by simp [p]) (fun S => 2 ^ f S)).symm
+        _ = ∑ S ∈ A.powerset, 2 ^ f S := by rw [Finset.filter_subset_univ]
+    have hemptyTwo : (∑ S ∈ A.powerset, if S = ∅ then 2 else 0) = 2 := by
+      simp
+    have hrewrite (S : Finset (Fin n)) :
+        2 ^ f S + (if S = ∅ then 2 else 0) =
+          2 + (if S = ∅ then 2 * 2 ^ r else 0) +
+            (if S.card = 1 then 2 else 0) := by
+      dsimp only [f]
+      by_cases hS0 : S = ∅
+      · subst S
+        simp [pow_succ]
+        omega
+      by_cases hS1 : S.card = 1 <;> simp [hS0, hS1]
+    have hsingleTwo :
+        (∑ S ∈ A.powerset, if S.card = 1 then 2 else 0) = 2 * r := by
+      have hpoint (S : Finset (Fin n)) :
+          (if S.card = 1 then 2 else 0) = 2 * (if S.card = 1 then 1 else 0) := by
+        by_cases hS : S.card = 1 <;> simp [hS]
+      simp_rw [hpoint, ← Finset.mul_sum, Finset.sum_boole]
+      change 2 * (A.powerset.filter (fun S => S.card = 1)).card = 2 * r
+      rw [← Finset.powersetCard_eq_filter, Finset.card_powersetCard]
+      simp [r]
+    calc
+      (∑ S : Subtype p, 2 ^ f S.1) + 2 =
+          (∑ S ∈ A.powerset, 2 ^ f S) + 2 := by rw [hsubsum]
+      _ = (∑ S ∈ A.powerset, 2 ^ f S) +
+          ∑ S ∈ A.powerset, (if S = ∅ then 2 else 0) := by rw [hemptyTwo]
+      _ = ∑ S ∈ A.powerset, (2 ^ f S + (if S = ∅ then 2 else 0)) := by
+        rw [Finset.sum_add_distrib]
+      _ = ∑ S ∈ A.powerset,
+          (2 + (if S = ∅ then 2 * 2 ^ r else 0) +
+            (if S.card = 1 then 2 else 0)) := by
+        exact Finset.sum_congr rfl fun S _ => hrewrite S
+      _ = 2 * r + 4 * 2 ^ r := by
+        rw [Finset.sum_add_distrib, Finset.sum_add_distrib]
+        simp [hsingleTwo, Finset.card_powerset, r]
+        omega
+  calc
+    Z (n + 1) + 2 * X n =
+        (∑ G : GoodGraph n,
+          ∑ S : {S : Finset (Fin n) // S ⊆ Allowed G},
+            2 ^ (if S.1 = ∅ then (Allowed G).card + 1 else
+              if S.1.card = 1 then 2 else 1)) + 2 * Fintype.card (GoodGraph n) := by
+      congr 1
+      rw [Z]
+      calc
+        (∑ H : GoodGraph (n + 1), 2 ^ (Allowed H).card) =
+            ∑ p : (Σ G : GoodGraph n, {S : Finset (Fin n) // S ⊆ Allowed G}),
+              2 ^ (Allowed ((goodGraphSuccEquiv n).symm p)).card := by
+          exact ((goodGraphSuccEquiv n).symm.sum_comp
+            (fun H : GoodGraph (n + 1) => 2 ^ (Allowed H).card)).symm
+        _ = ∑ G : GoodGraph n,
+            ∑ S : {S : Finset (Fin n) // S ⊆ Allowed G},
+              2 ^ (if S.1 = ∅ then (Allowed G).card + 1 else
+                if S.1.card = 1 then 2 else 1) := by
+          rw [Fintype.sum_sigma]
+          apply Finset.sum_congr rfl
+          intro G _
+          simp_rw [hcard]
+    _ = ∑ G : GoodGraph n, (2 * (Allowed G).card + 4 * 2 ^ (Allowed G).card) := by
+      have hconst : 2 * Fintype.card (GoodGraph n) = ∑ _ : GoodGraph n, 2 := by
+        simp [Nat.mul_comm]
+      rw [hconst, ← Finset.sum_add_distrib]
+      apply Finset.sum_congr rfl
+      intro G _
+      exact hfiber G
+    _ = 2 * Y n + 4 * Z n := by
+      rw [Y, Z, Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
+
 end D5.S1.Words.Patterns.NoncrossingNonnestingGraphRecurrence
