@@ -2,13 +2,11 @@
    generality: G
    mirror-B: D5/B/S3/Arith/CloitreSquareRootPrimeGapRefutation
    mirror-E: none(waiver:kernel-checked-refutation)
-   anchors: [mathlib/module/Mathlib.NumberTheory.Chebyshev, mathlib/module/Mathlib.Analysis.Real.Sqrt, mathlib/module/Mathlib.Tactic.Linarith]
+   anchors: [mathlib/module/Mathlib.NumberTheory.Chebyshev]
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Arith/CloitreSquareRootPrimeGapRefutation.claim; result=D5/S3/Arith/CloitreSquareRootPrimeGapRefutation.result; claim=D5/S3/Arith/CloitreSquareRootPrimeGapRefutation.claim
    digest: The OEIS A079063 eventual square-root lower bound contradicts prime counting. -/
 
 import Mathlib.NumberTheory.Chebyshev
-import Mathlib.Analysis.Real.Sqrt
-import Mathlib.Tactic.Linarith
 
 namespace D5.S3.Arith.CloitreSquareRootPrimeGapRefutation
 
