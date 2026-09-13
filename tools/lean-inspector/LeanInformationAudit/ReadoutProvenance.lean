@@ -289,7 +289,7 @@ structure ProvenanceCounters where
   dispatchWork : Nat := 0
   inferredOccurrences : Nat := 0
   caseExpansions : Nat := 0
-  substitutionMemoHits : Nat := 0
+  familyMemoHits : Nat := 0
   deriving Inhabited, Repr
 
 -- Ordinary environment extensions are compilation-local and not serialized.
@@ -319,7 +319,6 @@ private structure WalkState where
   incomplete : Bool := false
   weights : Std.HashMap Expr Nat := {}
   substitutionWeights : Std.HashMap (Expr × Nat) Nat := {}
-  substitutions : Std.HashMap (Expr × Array Expr) Expr := {}
   levelWeights : Std.HashMap Level Nat := {}
   applications : Std.HashMap Expr (Expr × Array Expr) := {}
   mentionsCache : Std.HashMap Expr Bool := {}
@@ -329,6 +328,7 @@ private structure WalkState where
   cleanKinds : Std.HashSet Expr := {}
   certifiedNullaryCarriers : Std.HashSet Expr := {}
   dataFunctionTypes : Std.HashSet Expr := {}
+  cleanFamilies : Std.HashSet (Expr × Expr) := {}
   binderContexts : Std.HashMap (Array Expr) (LocalContext × LocalInstances × Array Expr) := {}
   exprFuel : Nat := provenanceExpressionFuel
   constFuel : Nat := provenanceConstantFuel
@@ -412,10 +412,6 @@ private partial def substitutionWeight (e : Expr) (offset : Nat := 0) : WalkM (O
 
 private def substitute (e : Expr) (locals : Array Expr) : WalkM (Option Expr) := do
   if !e.hasLooseBVars then return some e
-  unless ← chargeTraversal (2 * locals.size + 1) do return none
-  if let some result := (← get).substitutions[(e, locals)]? then
-    modify fun s => { s with counters.substitutionMemoHits := s.counters.substitutionMemoHits + 1 }
-    return some result
   let some size ← substitutionWeight e | return none
   unless ← chargeTraversal locals.size do return none
   let mut factor := 1
@@ -425,9 +421,7 @@ private def substitute (e : Expr) (locals : Array Expr) : WalkM (Option Expr) :=
       factor := factor + valueSize
   -- An open replacement can be lifted at every substituted variable.
   unless ← chargeTraversal (size * factor) do return none
-  let result := e.instantiateRev locals
-  modify fun s => { s with substitutions := s.substitutions.insert (e, locals) result }
-  return some result
+  return some (e.instantiateRev locals)
 
 private def applicationParts (e : Expr) : WalkM (Option (Expr × Array Expr)) := do
   unless ← chargeTraversal do return none
@@ -964,6 +958,13 @@ private partial def typeFamilyArgument (env : Environment) (value type : Expr)
     (active : Array Expr) : WalkM (Option (Bool × Bool)) := do
   unless ← chargeTraversal do return some (false, true)
   if (← get).dataFunctionTypes.contains type then return none
+  let canCache := #[value, type].all fun e =>
+    !e.hasLooseBVars && !e.hasMVar && !e.hasLevelMVar
+  if canCache && (← get).cleanFamilies.contains (value, type) then
+    modify fun s => { s with counters.familyMemoHits := s.counters.familyMemoHits + 1 }
+    return some (false, false)
+  let enclosing := (← get).assumedFamilyDepth
+  modify fun s => { s with assumedFamilyDepth := none }
   let inspect : WalkM (Option (Bool × Bool)) := do
     let some reduced ← boundedMeta (Meta.whnf type) `family_whnf | return some (false, true)
     match reduced with
@@ -978,6 +979,13 @@ private partial def typeFamilyArgument (env : Environment) (value type : Expr)
     | .sort _ => return some (← inputType env value active)
     | _ => return none
   let result ← inspect
+  let state ← get
+  modify fun s => { s with assumedFamilyDepth := mergeAssumptions enclosing state.assumedFamilyDepth }
+  -- This fold opens no family frame: every surviving assumption is external.
+  if canCache && result == some (false, false) && state.assumedFamilyDepth.isNone &&
+      !state.incomplete && !state.forbidden && state.unclassified.isNone then
+    unless ← chargeTraversal do return some (false, true)
+    modify fun s => { s with cleanFamilies := s.cleanFamilies.insert (value, type) }
   -- A non-family telescope performs no domain/value classification, so this
   -- completed negative result is independent of recursive-family assumptions.
   if result.isNone && closed type then
@@ -1172,7 +1180,7 @@ private def collectReadout (env : Environment) (theoremName address : Name) (rea
   modifyEnv (summaryCache.setState · state.summaries)
   modifyEnv (countersCache.setState · counters)
   trace[InformationProvenance.check]
-    "theorem={theoremName} P_constants_summarised={counters.summarisedConstants} visits={counters.visits} memo_hits={counters.memoHits} charged_visits={counters.chargedVisits} rechecked_nodes={counters.recheckedNodes} spine_arguments={counters.spineArguments} canonicalizations={counters.canonicalizations} construction_work={counters.constructionWork} traversal_work={counters.traversalWork} dispatch_work={counters.dispatchWork} inferred_occurrences={counters.inferredOccurrences} case_expansions={counters.caseExpansions} substitution_memo_hits={counters.substitutionMemoHits}"
+    "theorem={theoremName} P_constants_summarised={counters.summarisedConstants} visits={counters.visits} memo_hits={counters.memoHits} charged_visits={counters.chargedVisits} rechecked_nodes={counters.recheckedNodes} spine_arguments={counters.spineArguments} canonicalizations={counters.canonicalizations} construction_work={counters.constructionWork} traversal_work={counters.traversalWork} dispatch_work={counters.dispatchWork} inferred_occurrences={counters.inferredOccurrences} case_expansions={counters.caseExpansions} family_memo_hits={counters.familyMemoHits}"
   let names := state.walked.toArray.map Name.toString |>.qsort (· < ·)
   return (WalkResult.mk state.forbidden state.unclassified state.incomplete names)
 
