@@ -1117,3 +1117,177 @@ PA.2 对全部素数词的下界，不是对 {Zeckendorf(4^i)} 这个稀疏域�
 2. A. Barnoff, C. Bright, J. Shallit, *Using finite automata to compute the base-b representation of the golden ratio and other quadratic irrationals*, arXiv:2405.02727v1, 4 May 2024, https://arxiv.org/abs/2405.02727 . Its digit-extraction and sparse minimality scope is not silently transferred to prime-command words.
 3. A. Ronca, N. Knorozova, G. De Giacomo, *Automata Cascades: Expressivity and Sample Complexity*, arXiv:2211.14028, https://arxiv.org/abs/2211.14028 . Used only to distinguish algebraic prime decomposition from arithmetic prime labels; no cascade sample-complexity result is claimed for the present state machine.
 4. Repository sources reused directly: `D5/S0/Automata/DFAOStateLowerBound.lean` and `D5/S0/Automata/TypedPartialDFAOOverBase.lean`; arithmetic inputs use pinned mathlib `Nat.primeFactorsList`, `Nat.divisors`, positive-factor cancellation and prime-power divisibility. No unmerged research module is imported.
+
+---
+
+# 补编 PB：固定素数容量盒的双向观察与合法历史
+
+## PB.1 对象、动作与读数不变，更换的只是允许的续词
+
+继续 PA 的实际素数寄存器，而不引入与整数无关的隐藏坐标。对素数 $p$ 和容量 $a\in\mathbb N$，完整活状态是 $p^e$，$0\le e\le a$。上行动作乘以 $p$，下行动作要求 $p\mid p^e$ 后执行精确除法；每一步的结果必须仍整除 $p^a$。非法步骤进入吸收拒绝状态。目标读数只回答整个指定词是否执行成功，不输出完整指数。
+
+`BoundedPrimeWalk.run_transport` 用实际整数乘除证明指数坐标和全部命令词的运行相对应。它复用 `ReversiblePrimeThreshold.numberStep` 与 `TypedPartialDFAOOverBase.runTransition`，新增上容量守卫，而不是将一个抽象计数器未经证明地改称素数机器。每一步的单态传输先由素数幂整除与实际除法建立，再对词归纳。拒绝结果也被传输。
+
+对于有限互异素数集合及容量向量 $(a_i)$，整数 $\prod_i p_i^{e_i}$ 与指数元组双射。这是完整整数读数，已经确定每个指数。多态同读数来自这里明确选择的合法性布尔读数，或来自另一个明确的更丰富载体；不能归因于唯一分解本身不唯一。
+
+多轴源码定义实际 interleaved `boxStep`：每个命令只更新指定坐标，失败终止。`chronological_legality` 对完整词证明：同一初始元组的联合运行成功，当且仅当每个轴按原先的相对顺序执行其全部局部命令都成功。这解决共同历史见证，禁止用各边不同的见证拼接轨迹。单轴数值传输在 Lean 中完成；多轴指数元组与一个整数乘积的通常唯一分解对应在这里说明，不声称另有一条新编译的乘积共轭声明。
+
+## PB.2 完整历史的守卫，不是终点的净变化
+
+把上行记作 $+1$，下行记作 $-1$。对词 $w$ 的全部前缀（包括空前缀），记净位移为 $s_j$，并令
+
+$$
+m(w)=\min_j s_j,\qquad M(w)=\max_j s_j,\qquad \Delta(w)=s_{|w|}.
+$$
+
+在指数 $e$ 上，整段历史合法当且仅当
+
+$$
+0\le e+s_j\le a\quad\text{对全部 }j,
+$$
+
+也就是
+
+$$
+-m(w)\le e\le a-M(w).
+$$
+
+合法时终点为 $e+\Delta(w)$。这是逐个前缀守卫的直接等价，不是只比较最终整数。比如先除再乘和先乘再除的净位移都为零，但前者要求 $e\ge1$，后者要求 $e\le a-1$。二者与空操作具有不同的定义域。
+
+新源码的运行语义逐步检查这些守卫；PB.7 进一步给出该区间三元组的普通数学分类，作为下一项独立形式化目标，不把它冒充当前已经新增的 Lean 定理。
+
+## PB.3 双向有限视野的精确核
+
+**定理。** 对任意 $a,H\in\mathbb N$ 以及 $e,f\in\{0,\ldots,a\}$，
+
+$$
+\begin{aligned}
+&\text{每个长度至多 }H\text{ 的乘除词，在 }e,f\text{ 上的合法性相同}\\
+&\quad\Longleftrightarrow\quad
+\bigl(\min(e,H),\min(a-e,H)\bigr)
+=
+\bigl(\min(f,H),\min(a-f,H)\bigr).
+\end{aligned}
+$$
+
+**必要性。** 连续 $k$ 次除法成功当且仅当 $k\le e$；连续 $k$ 次乘法成功当且仅当 $e+k\le a$。分别取 $k=\min(e,H)$、$\min(a-e,H)$ 并交换 $e,f$，得到两个截断距离相等。两种重复词的实际运行语义由 `accepts_down` 和 `accepts_up` 对词长归纳证明。
+
+**充分性。** 对 $H$ 归纳。$H=0$ 只包含空词。对 $H+1$，截断下边界距离相同保证除法的第一步守卫一致，截断上边界距离相同保证乘法的第一步守卫一致。共同失败时结论立即成立；共同成功时，更新后状态在预算 $H$ 上仍有相同的两边界截断距离，于是用归纳假设处理剩余的混合词。该证明不是把混合词换成它的净计数。对应 `BoundedPrimeHorizon.finite_horizon_kernel`。
+
+**精确像。** 若 $a\le2H$，所有活状态都不同。若 $a>2H$，$0,\ldots,H-1$ 各自一类，$H,\ldots,a-H$ 合为一个中心类，$a-H+1,\ldots,a$ 各自一类。源码构造了下列有限编号并证明满射与核相同：
+
+$$
+\operatorname{code}_{a,H}(e)=
+\begin{cases}
+e,&a\le2H,\\
+e,&a>2H,\ e\le H,\\
+\max(H,e-(a-2H)),&a>2H,\ e>H.
+\end{cases}
+$$
+
+因此活类数是 $\min(a,2H)+1$，计入拒绝类后为 $\min(a,2H)+2$。拒绝类在空词处已经与全部活状态区分。对应 `profile_classification`，不仅给出基数上界，还实现每个声称的类。
+
+## PB.4 最短分离长度与任意素数盒
+
+**定理。** 若 $e<f$，最短的合法性分离实验长度是
+
+$$
+\boxed{d_a(e,f)=\min(e+1,a-f+1).}
+$$
+
+这里分离实验允许一边结果为拒绝。连续 $e+1$ 次除法，较小状态失败而较大状态成功；连续 $a-f+1$ 次乘法，较大状态失败而较小状态成功。任意比这两者都短的词，都看不到相应的边界差异：PB.3 的截断距离仍相同。故没有更短的混合词。Lean 的 `shortest_separation` 以“存在长度至多 H 的分离词 iff 上述最小值至多 H”给出全部预算的充要条件。
+
+**最坏情况阈值。** 所有活状态能由长度至多 $H$ 的词族两两区分，当且仅当
+
+$$
+a\le2H.
+$$
+
+充分性由两边界距离相等推出 $e=f$。反向，当 $a>2H$，实际不同状态 $H$ 与 $H+1$ 都处在未分开的中心类中。对应 `full_separation_threshold`。最小统一预算是 $\lceil a/2\rceil$。
+
+**任意有限素数盒。** 对混合词在第 $i$ 轴上的局部子词，长度不超过总长度；反之任意单轴词都能作为混合词使用，并且其他轴不动。由这两个具体词构造和 PB.1 的联合运行等价，得到整盒精确核：
+
+$$
+e\sim_Hf\iff
+\forall i,\quad
+\min(e_i,H)=\min(f_i,H),\quad
+\min(a_i-e_i,H)=\min(a_i-f_i,H).
+$$
+
+全部实现类型数（包括拒绝）为
+
+$$
+\boxed{B_H^{\pm}=1+\prod_i\bigl(\min(a_i,2H)+1\bigr).}
+$$
+
+对应 `PrimeBoxBidirectionalHorizon.mixed_word_profile_classification`，包含满射、全部混合词的核和类型基数。空字母表时额外拒绝点仍是声明的状态，但不宣称它从初态可达。
+
+对 $(4,2,1,1)$，数目在 $H=0,1,2$ 分别为 $2,37,61$，以后保持 $61$。上一轮只乘法的相应数目为 $2,17,37,49,61$。两种动作域下完整状态仍是 60 个活整数加拒绝；除法降低的是分离这些状态所需的最大后续长度，不是完整状态数或输入的所有成本。
+
+对于一般盒，完全分离阈值是 $\max_i\lceil a_i/2\rceil$（空指标集为零）。两个不同元组的最短分离长度是各个不同坐标的
+
+$$
+\min\bigl(\min(e_i,f_i)+1,\ a_i-\max(e_i,f_i)+1\bigr)
+$$
+
+之最小值。此两项是已证精确核及单轴见证的普通推论，不另造仅作投影与代入的 Lean 包装。
+
+## PB.5 有限视野商不是同预算的永久记忆
+
+PB.3 的归纳同时展示预算下降规则：相同 $(H+1)$-视野的状态，在同一成功操作后，具有相同 $H$-视野。不能去掉这一次预算损耗。例如容量 $a=4$、预算 $H=1$，状态 $1,2$ 当前同类；共同除以 $p$ 后成为 $0,1$，再进行一次除法就能区分。
+
+因此有限问题所需的摘要，与能够永久自治更新的摘要不同。加入除法没有突破这一边界。保留全部有限续词的极限时，盒中的全部活状态都会被分开；这与此前的最小完整 DFAO 结论相容。
+
+## PB.6 区分见证与安全识别实验
+
+所有上述视野结论都针对共同初态候选上的反事实词族：比较某个词在不同起态的结果。它不保证在一个未知的不可复制寄存器上，任意执行一条 H 步路径就能知道初态。
+
+事实上，若初态可能是整个盒，任何非空的单轴乘除词都不可能对所有初态保持合法：第一步若乘法，则上端点失败；第一步若除法，则下端点失败。多轴同样如此，因为任意第一个命令选中的轴都可能处在不利端点。
+
+所以同时要求“无额外读数、无重置、对全部初态安全、仍作非空有效询问”是不可能的。要设计安全识别，必须明列额外条件，例如已知严格内区间、可重置实验、多个一致副本，或一个不会改变状态的整除观察。增加这样的能力会改变数学规格，不能事后隐去其成本。
+
+## PB.7 下一项实际数学对象：完整历史作为区间偏变换
+
+以下是从逐步守卫直接得到的普通数学推论，尚未声称已写入本轮 Lean。
+
+固定单轴容量 $a$，一段任意长命令历史所诱导的非空偏变换，准确形如
+
+$$
+x\in[l,u]\longmapsto x+\delta,
+\qquad 0\le l\le u\le a,
+\qquad -l\le\delta\le a-u.
+$$
+
+这不是把完整路径还原为终点：定义域 $[l,u]$ 记录整段历史对所有起态施加的守卫。PB.2 给出 $l=-m(w),u=a-M(w),\delta=\Delta(w)$。任意满足这些条件的三元组都可实现：先下行 $l$ 次，再上行 $l+a-u$ 次，最后下行 $a-u-\delta$ 次。其前缀最小值、最大值和最终位移恰为 $-l,a-u,\delta$，而所有次数非负。
+
+所以，尽管命令历史无限多，其在这个固定盒上的偏变换只有
+
+$$
+1+\sum_{k=1}^{a+1}k^2
+$$
+
+种：空变换一类；每个长度为 $s$ 的非空定义区间及同长像区间，分别有 $a+2-s$ 种选择。不同定义域或不同位移给出不同偏变换。
+
+有限非空的多轴盒中，非空变换是这些区间平移的乘积；任意坐标失败给出同一个空变换，各局部选择可按轴串接实现。因此数量为
+
+$$
+1+\prod_i\left(\sum_{k=1}^{a_i+1}k^2\right).
+$$
+
+对 $(4,2,1,1)$，这是 $1+55\cdot14\cdot5\cdot5=19251$。它数的是命令词诱导的不同偏变换，不是机器状态，也不是不同原始历史的数量。
+
+这一商恰好保留插入任意前后命令时的可执行性和最终状态，因为偏函数相等在复合下保持。它不保留步数、全部中间读数或其他路径费用。因此“19251 种操作行为”不能冒称“完整历史只有19251种”。下一项形式化应证明实际词的区间正规形、复合律和实现性，然后才运输此基数。该对象与有限链上的保序偏变换理论有关，但其精确子幺半群是区间平移，不能直接套用更大的保序变换幺半群的计数。
+
+## PB.8 来源、验证边界与公开问题
+
+本批新增三个 Lean 模块与三个配套 Scribe：`BoundedPrimeWalk`、`BoundedPrimeHorizon`、`PrimeBoxBidirectionalHorizon`。证明承担的是实际整数操作传输、对完整词的归纳、精确核和像实现、最短见证及联合运行合法性。有限数值例子只解释一般定理，不建立另一组独立正向实例模块。
+
+本批没有运行 Lean elaboration、kernel checking 或 Scribe 编译；没有伪造 axiom 输出、冻结记录、独立评审或 CI 结果。普通数学证明与源码经过审查，仍须实际 Lean 检查。PB.7 的正规形及偏变换计数仅为普通证明和下一项形式化对象。经典 Myhill–Nerode、有限链偏变换和区分序列的思想不声称为本项目首创。
+
+参考的第一手来源：
+
+1. 钉版 Mathlib 与仓库已有 `DFAOStateLowerBound`、`TypedPartialDFAOOverBase`；Mathlib Myhill–Nerode 文档：<https://leanprover-community.github.io/mathlib4_docs/Mathlib/Computability/MyhillNerode.html>。本批以既有词运行接口为底层，没有改写自动机真源。
+2. Aaron Barnoff, Curtis Bright, Jeffrey Shallit. *Using finite automata to compute the base-b representation of the golden ratio and other quadratic irrationals*. arXiv:2405.02727v1, 2024. <https://arxiv.org/abs/2405.02727>。其 2026 年期刊扩展为 *Computing the base-b representation of quadratic irrationals using automata*, Theoretical Computer Science 1071, 115843, DOI <https://doi.org/10.1016/j.tcs.2026.115843>。期刊摘要仍区分已证最小性与只拟合高精度数位的候选。这些数值表示输入并非本批的乘除命令词；本批不宣称解决稀疏 base-4 的22状态问题，也不凭旧问题页断言其全部后续文献状态。
+3. Hayrullah Ayık, Vítor H. Fernandes, Emrah Korkmaz. *On the monoid of partial order-preserving transformations of a finite chain whose domains and ranges are intervals*. arXiv:2503.19459, 2025. <https://arxiv.org/abs/2503.19459>。用于定位 PB.7 的现有研究背景；其对象更大，未把摘要中的结果当成本批的现成证明或计数公式。
+
+公开问题仍保留原规格：稀疏输入域不扩大，表示词不换成命令词，候选拟合不升级为全称正确性。本轮的具体进展是同一素数状态机上的可检验一般数学结果，而非再造通用搜索框架。
