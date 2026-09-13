@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1c5c618a039f8a3bbf1008fb7f5a035ab9ef2c30a2ac2b8de7afd4b2366fc169
+  normalized_sha256: sha256:1c5c618a039f8a3bbf1008fb7f5a035ab9ef2c30a2ac2b8de7afd4b2366fc169
+cas_ref: sha256:1c5c618a039f8a3bbf1008fb7f5a035ab9ef2c30a2ac2b8de7afd4b2366fc169
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: The completion note records ledger settlement and subsumption status for the twelve section 54.3 obligations. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with obligations 1-12 and their referenced frozen declarations.
+    previous_atom_id: fe8101908cfb02f33b9336087c6aefabd528d98715e496aff205658d069f199e
+    next_atom_id: 2541d82933389425fbbc97c2f4cabbc1f01a597473a6a33e1b257deddc0b1ca4

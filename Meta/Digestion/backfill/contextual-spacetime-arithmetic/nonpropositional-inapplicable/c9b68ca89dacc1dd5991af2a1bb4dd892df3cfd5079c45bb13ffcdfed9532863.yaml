@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c9b68ca89dacc1dd5991af2a1bb4dd892df3cfd5079c45bb13ffcdfed9532863
+  normalized_sha256: sha256:c9b68ca89dacc1dd5991af2a1bb4dd892df3cfd5079c45bb13ffcdfed9532863
+cas_ref: sha256:c9b68ca89dacc1dd5991af2a1bb4dd892df3cfd5079c45bb13ffcdfed9532863
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section 41 defines only the scope of a numbering, source-provenance, and ingestion-ownership erratum without restating its mathematics. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with P2 propositions 58-63.
+    previous_atom_id: a94c352fb0993ece15a9f04d85e4277c7e636fa60172db5cb91764013e9aafc7
+    next_atom_id: 71a3ee57db8edc8f165c329f33d7fbb965c65426e799c910fb90a544bcda2757

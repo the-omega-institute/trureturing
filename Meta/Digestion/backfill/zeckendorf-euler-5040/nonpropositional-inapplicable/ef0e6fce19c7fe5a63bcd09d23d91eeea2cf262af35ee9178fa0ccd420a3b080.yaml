@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ef0e6fce19c7fe5a63bcd09d23d91eeea2cf262af35ee9178fa0ccd420a3b080
+  normalized_sha256: sha256:ef0e6fce19c7fe5a63bcd09d23d91eeea2cf262af35ee9178fa0ccd420a3b080
+cas_ref: sha256:ef0e6fce19c7fe5a63bcd09d23d91eeea2cf262af35ee9178fa0ccd420a3b080
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: The unchanged-scope note records which preregistration and dependency classifications remain unaffected by the W-1 correction. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with W-2-W-6.
+    previous_atom_id: 649a147454c4d6059a758034c0f59b19ba9b80cacd86c7532418e67f33b17032
+    next_atom_id: 36248bbb93c8e043b956b05cb772143574397e3a6668052780d73057a22a0141
