@@ -2,7 +2,9 @@
 import hashlib
 import io
 import json
+import os
 from pathlib import Path
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -78,11 +80,41 @@ class StreamingTests(unittest.TestCase):
 
 
 class PublicationTests(unittest.TestCase):
+    def test_source_membership_and_claim_bindings_use_current_registered_sources(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / 'X.lean'
+            source.write_text('def x : Nat := 1\n')
+            claim = root / 'Claim.lean'
+            claim.write_text('def claim : Prop := False\n')
+            paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
+            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1,
+                report_modules=paths('X.lean'), inspector_sources=paths(), config_inputs=paths(),
+                producer_scopes={'lean-report': paths('lean-report-inputs.json',
+                    'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))
+            row = dict(module='X', source_path='X.lean', source_sha256='sha256:' + publication.digest(source),
+                utility_refutation=dict(claim_source_path='Claim.lean', claim_source_sha256='sha256:' + publication.digest(claim)))
+            publication.validate_sources([row], root)
+            with self.assertRaisesRegex(ValueError, 'membership'):
+                publication.validate_sources([], root)
+            row['source_path'] = 'Claim.lean'
+            with self.assertRaisesRegex(ValueError, 'source binding'):
+                publication.validate_sources([row], root)
+            row['source_path'] = 'X.lean'
+            claim.write_text('def claim : Prop := True\n')
+            with self.assertRaisesRegex(ValueError, 'claim source'):
+                publication.validate_sources([row], root)
+            row.pop('utility_refutation')
+            source.write_text('def x : Nat := 2\n')
+            with self.assertRaisesRegex(ValueError, 'source binding'):
+                publication.validate_sources([row], root)
+
     def test_rejected_complete_bundle_never_replaces_published_bytes(self):
         import subprocess
         import zipfile
         for damage in ['material', 'missing', 'duplicate', 'unreferenced', 'nonobject-provenance',
-                       'provenance', 'attestation', 'declaration-identity', 'noncanonical']:
+                       'provenance', 'attestation', 'declaration-identity', 'noncanonical',
+                       'report-symlink', 'materials-symlink', 'missing-sidecar']:
             with self.subTest(damage=damage), tempfile.TemporaryDirectory() as directory:
                 directory = Path(directory)
                 spool = directory / 'spool'
@@ -126,12 +158,68 @@ class PublicationTests(unittest.TestCase):
                     value['modules'][0]['declarations'][0]['statement_id'] = 'sha256:' + 'f'*64
                     report.write_bytes(materials.canonical_json(value))
                     publication.write_sidecars(report, coordinates)
-                else:
+                elif damage == 'noncanonical':
                     report.write_text(json.dumps(json.loads(report.read_text())))
                     publication.write_sidecars(report, coordinates)
+                elif damage == 'missing-sidecar':
+                    publication.member(report, '.provenance.json').unlink()
+                else:
+                    path = report if damage == 'report-symlink' else publication.member(report, '.materials.zip')
+                    regular = path.with_name(path.name + '.regular')
+                    path.rename(regular)
+                    path.symlink_to(regular.name)
                 with self.assertRaises((ValueError, TypeError)):
                     publication.publish(report, live, coordinates)
                 self.assertEqual(before, {suffix: publication.member(live, suffix).read_bytes() for suffix in publication.SUFFIXES})
+
+
+class EntryPointTests(unittest.TestCase):
+    def test_failed_phase_preserves_public_bundle_and_propagates_exit(self):
+        for phase, status, calls in [('inputs', 2, []), ('utility-input-build', 37, ['build']),
+                                     ('ensure', 38, ['build', 'ensure']),
+                                     ('report', 39, ['build', 'ensure', 'report']),
+                                     ('publish', 40, ['build', 'ensure', 'report', 'publish'])]:
+            with self.subTest(phase=phase), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                def write(name, text):
+                    path = root / name
+                    path.parent.mkdir(parents=True, exist_ok=True)
+                    path.write_text(text)
+                    path.chmod(0o755)
+                repository = Path(publication.__file__).resolve().parents[2]
+                for name in ['tools/lean-inspector/inspect.sh', 'tools/scripts/report/lean-report-selection.py']:
+                    write(name, (repository / name).read_text())
+                write('Trureturing.lean', 'def x : Nat := 1\n')
+                paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
+                write('lean-report-inputs.json', json.dumps(dict(schema_version=1,
+                    report_modules=paths('Trureturing.lean'), inspector_sources=paths(), config_inputs=paths(),
+                    producer_scopes={'lean-report': paths('lean-report-inputs.json',
+                        'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))
+                def shell_phase(name, label, exit_code):
+                    write(name, '#!/bin/sh\nprintf "%s\\n" ' + label + ' >> "$CALLS"\nexit ' + str(exit_code) + '\n')
+                shell_phase('bin/dotnet', 'build', 37 if phase == 'utility-input-build' else 0)
+                shell_phase('tools/scripts/worktree/lean-cache-ensure.sh', 'ensure', 38 if phase == 'ensure' else 0)
+                shell_phase('bin/lake', 'report', 39 if phase == 'report' else 0)
+                write('tools/scripts/worktree/lean-cache-run.sh', '#!/bin/sh\nexec "$@"\n')
+                write('tools/scripts/lib/resource-observation-lib.sh', 'resource_observe() { :; }\n')
+                write('tools/lean-inspector/native.py',
+                    'import os\nfrom pathlib import Path\nwith Path(os.environ["CALLS"]).open("a") as out: out.write("publish\\n")\nraise SystemExit(40)\n')
+                if phase == 'inputs':
+                    (root / 'lean-report-inputs.json').unlink()
+                report = root / 'public/report.json'
+                report.parent.mkdir()
+                before = {suffix: ('previous' + suffix).encode() for suffix in publication.SUFFIXES}
+                for suffix, data in before.items():
+                    publication.member(report, suffix).write_bytes(data)
+                record = root / 'calls'
+                env = dict(os.environ, PATH=str(root / 'bin') + os.pathsep + os.environ['PATH'],
+                    CALLS=str(record), LAKE_BIN=str(root / 'bin/lake'), STRATALINT_INSPECTOR_SUPERVISED='1')
+                result = subprocess.run(['bash', str(root / 'tools/lean-inspector/inspect.sh'),
+                    '--repository', str(root), '--output', str(report)], env=env, capture_output=True, text=True, timeout=30)
+                self.assertEqual(result.returncode, status, result.stdout + result.stderr)
+                self.assertIn(f'LEAN_INSPECTOR_FAILED phase={phase} exit={status}', result.stderr)
+                self.assertEqual(record.read_text().splitlines() if record.exists() else [], calls)
+                self.assertEqual(before, {suffix: publication.member(report, suffix).read_bytes() for suffix in publication.SUFFIXES})
 
 
 if __name__ == '__main__':

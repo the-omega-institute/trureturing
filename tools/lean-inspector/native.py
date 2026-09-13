@@ -2,7 +2,6 @@
 """Production actions for Lake's Inspector facets; Lake owns all reuse decisions."""
 from __future__ import annotations
 
-import importlib.util
 import json
 import os
 from pathlib import Path
@@ -16,10 +15,7 @@ import zipfile
 import materials
 import publication as public
 
-HERE = Path(__file__).resolve().parent
-spec = importlib.util.spec_from_file_location('report_selection', HERE.parent / 'scripts/report/lean-report-selection.py')
-selection = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(selection)
+selection = public.selection
 ROW_SUFFIXES = ('', '.materials.zip')
 UTILITY_FIELDS = {'modulePath', 'claimGid', 'claimModule', 'claimSelector', 'claimSourcePath',
                   'claimSourceSha256', 'resultGid', 'resultModule', 'resultSelector'}
@@ -279,7 +275,7 @@ def publish(root, destination):
             mode = 'produced' if records else 'cached'
             public.write_sidecars(report, inputs, mode)
             print(f'LEAN_INSPECTOR_WORK extracted_modules={sum(row["count"] for row in records if row["kind"] == "extract")} aggregates={sum(row["count"] for row in records if row["kind"] == "aggregate")}')
-        public.publish(report, Path(destination), inputs)
+        public.publish(report, Path(destination), inputs, root)
     print(f'RAW_LEAN_REPORT path={destination} sha256={public.digest(destination)}')
 
 

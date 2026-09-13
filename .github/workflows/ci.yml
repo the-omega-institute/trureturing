@@ -329,24 +329,6 @@ jobs:
           dependency_sha256="$("$helper" dependency-address --repository "$GITHUB_WORKSPACE/candidate")"
           [[ "$dependency_sha256" =~ ^[0-9a-f]{64}$ ]]
           echo "dependency_sha256=$dependency_sha256" >> "$GITHUB_OUTPUT"
-      - name: Probe candidate canonical Lean report address
-        id: lean-report-input
-        shell: bash
-        run: |
-          set -euo pipefail
-          helper="$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-input.sh"
-          address_pattern='^([0-9a-f]{64} ){3}[0-9a-f]{64}$'
-          test -x "$helper"
-          address_output="$("$helper" address --repository "$GITHUB_WORKSPACE/candidate")"
-          [[ "$address_output" =~ $address_pattern ]]
-          read -r address producer sources config <<< "$address_output"
-          coordinates="$("$helper" coordinates "$producer" "$producer" "$sources" "$config")"
-          echo "address=$address" >> "$GITHUB_OUTPUT"
-          echo "producer=$producer" >> "$GITHUB_OUTPUT"
-          echo "sources=$sources" >> "$GITHUB_OUTPUT"
-          echo "config=$config" >> "$GITHUB_OUTPUT"
-          echo "pair=${coordinates%% *}" >> "$GITHUB_OUTPUT"
-
       - name: Restore elan and pinned Lean toolchains
         uses: actions/cache/restore@v4
         with:

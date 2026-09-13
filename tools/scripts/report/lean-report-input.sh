@@ -31,27 +31,21 @@ if [[ "$COMMAND" == "coordinates" ]]; then
 fi
 REPOSITORY=""
 REPORT=""
-PRODUCER_OVERRIDE=""
-INSPECTOR_OVERRIDE=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --repository) REPOSITORY="$2"; shift 2 ;;
-    --report) REPORT="$2"; shift 2 ;;
-    --producer) PRODUCER_OVERRIDE="$2"; shift 2 ;;
-    --inspector) INSPECTOR_OVERRIDE="$2"; shift 2 ;;
+    --repository|--report)
+      [[ $# -ge 2 && -n "$2" ]] || { echo "lean-report-input: $1 requires a value" >&2; exit 2; }
+      case "$1" in --repository) REPOSITORY="$2" ;; --report) REPORT="$2" ;; esac
+      shift 2 ;;
     *) echo "lean-report-input: unknown argument '$1'" >&2; exit 2 ;;
   esac
 done
 
 [[ "$COMMAND" == "address" || "$COMMAND" == "verify" || "$COMMAND" == "modules" \
   || "$COMMAND" == "producer-paths" || "$COMMAND" == "scribe-producer-paths" ]] \
-  || { echo "usage: lean-report-input.sh address|verify|modules|producer-paths|scribe-producer-paths --repository DIR [--report FILE] [--producer FILE] [--inspector FILE]" >&2; exit 2; }
+  || { echo "usage: lean-report-input.sh address|verify|modules|producer-paths|scribe-producer-paths --repository DIR [--report FILE]" >&2; exit 2; }
 [[ -n "$REPOSITORY" && "$REPOSITORY" == /* && -d "$REPOSITORY" ]] \
   || { echo "lean-report-input: --repository requires an absolute directory" >&2; exit 2; }
-[[ -z "$PRODUCER_OVERRIDE" || ( "$PRODUCER_OVERRIDE" == /* && -f "$PRODUCER_OVERRIDE" ) ]] \
-  || { echo "lean-report-input: --producer requires an absolute file" >&2; exit 2; }
-[[ -z "$INSPECTOR_OVERRIDE" || ( "$INSPECTOR_OVERRIDE" == /* && -f "$INSPECTOR_OVERRIDE" ) ]] \
-  || { echo "lean-report-input: --inspector requires an absolute file" >&2; exit 2; }
 REPOSITORY="$(cd "$REPOSITORY" && pwd -P)"
 if [[ "$COMMAND" == "verify" ]]; then
   [[ -n "$REPORT" && "$REPORT" == /* && -s "$REPORT" ]] \
@@ -71,10 +65,6 @@ append_producer_manifest_entry() {
   local path="$REPOSITORY/$relative"
   if [[ "$relative" == "lean-report-inputs.json" ]]; then
     path="$TMP_ROOT/selection-policy.json"
-  elif [[ "$relative" == "tools/lean-inspector/inspect.sh" && -n "$PRODUCER_OVERRIDE" ]]; then
-    path="$PRODUCER_OVERRIDE"
-  elif [[ "$relative" == "tools/lean-inspector/Inspector.lean" && -n "$INSPECTOR_OVERRIDE" ]]; then
-    path="$INSPECTOR_OVERRIDE"
   fi
   [[ -f "$path" ]] \
     || { echo "lean-report-input: repository input is absent: $path" >&2; return 2; }

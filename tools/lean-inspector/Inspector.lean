@@ -76,13 +76,17 @@ def StatementOutput.flush (out : StatementOutput) : IO Unit := do
 
 def StatementOutput.put (out : StatementOutput) (text : String) : IO Unit := do
   let bytes := text.toUTF8
-  let mut offset := 0
-  while offset < bytes.size do
-    let available := 65536 - (← out.buffer.get).size
-    let count := min available (bytes.size - offset)
-    out.buffer.modify (· ++ bytes.extract offset (offset + count))
-    offset := offset + count
-    if (← out.buffer.get).size == 65536 then out.flush
+  let used := (← out.buffer.get).size
+  if used + bytes.size < 65536 then
+    out.buffer.modify fun buffer => bytes.copySlice 0 buffer used bytes.size false
+  else
+    let mut offset := 0
+    while offset < bytes.size do
+      let used := (← out.buffer.get).size
+      let count := min (65536 - used) (bytes.size - offset)
+      out.buffer.modify fun buffer => bytes.copySlice offset buffer used count false
+      offset := offset + count
+      if used + count == 65536 then out.flush
 
 partial def writeLevel (out : StatementOutput) : Level → IO Unit
   | .zero => out.put "l0"

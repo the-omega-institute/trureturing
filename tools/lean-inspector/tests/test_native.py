@@ -45,14 +45,16 @@ defaultFacets = ["static"]
         self.write('D5/A.lean', 'import D5.B\ndef value : Nat := D5.hidden\n')
         self.write('D5/B.lean', 'module\npublic section\nnamespace D5\nprivate def secret : Nat := 1\ndef hidden : Nat := secret\n')
         self.write('D5/Alone.lean', 'def alone : String := "λ😀𐀀"\nopaque concealed : Nat := 7\n')
-        self.write('External.lean', 'def claim : Prop := False\n')
+        self.write('External.lean', 'import ClaimSupport\ndef claim : Prop := claimSupport\n')
+        self.write('ClaimSupport.lean', 'def claimSupport : Prop := False\n')
         self.write('Audit.lean', 'def audit : Nat := 1\n')
         with (self.root / 'lakefile.toml').open('a') as target:
-            target.write('[[lean_lib]]\nname = "External"\n')
+            target.write('[[lean_lib]]\nname = "External"\n[[lean_lib]]\nname = "ClaimSupport"\n')
         for name in ['Inspector.lean', 'lakefile.lean', 'lake-manifest.json', 'native.py', 'publication.py', 'materials.py', 'inspect.sh']:
             self.copy('tools/lean-inspector/' + name)
         for name in ['tools/scripts/report/lean-report-selection.py', 'tools/scripts/report/lean-report-input.sh',
-                     'tools/scripts/worktree/lean-cache-input.sh', 'lean-toolchain']:
+                     'tools/scripts/worktree/lean-cache-input.sh', 'lean-toolchain',
+                     'tools/StrataLint.Cli/Commands/LeanUtilityInputCommand.cs']:
             self.copy(name)
         self.write('bin/dotnet', '#!/usr/bin/env python3\nfrom pathlib import Path\nprint(Path("utility.json").read_text())\n')
         (self.root / 'bin/dotnet').chmod(0o755)
@@ -63,7 +65,8 @@ defaultFacets = ["static"]
             config_inputs=paths('lean-toolchain', 'lakefile.toml', 'lake-manifest.json'),
             producer_scopes={'lean-report': paths('lean-report-inputs.json', 'tools/scripts/report/lean-report-selection.py',
                 'tools/lean-inspector/Inspector.lean', 'tools/lean-inspector/lakefile.lean',
-                'tools/lean-inspector/native.py', 'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py'),
+                'tools/lean-inspector/native.py', 'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py',
+                'tools/scripts/report/lean-report-input.sh', 'tools/StrataLint.Cli/Commands/LeanUtilityInputCommand.cs'),
                 'scribe-content': dict(include=[], exclude=[])})
         self.write('lean-report-inputs.json', json.dumps(policy))
         self.env = dict(os.environ, PATH=str(self.root / 'bin') + os.pathsep + os.environ['PATH'],
@@ -138,16 +141,15 @@ defaultFacets = ["static"]
         changed(['D5.B', 'D5.A', 'Fixture'])
         self.write('D5/Alone.lean', (self.root / 'D5/Alone.lean').read_text() + '-- raw source bytes\n')
         changed(['D5.Alone'])
+        self.write('ClaimSupport.lean', 'def claimSupport : Prop := True\n')
+        changed(['Fixture'])
+        self.assertFalse(self.report()[0][-1]['utility_refutation']['is_closed_negation'])
         self.write('External.lean', 'def claim : Prop := True\n')
         self.utility()
         changed(['Fixture'])
         self.assertFalse(self.report()[0][-1]['utility_refutation']['is_closed_negation'])
         self.utility('absent')
         changed(['Fixture'])
-        self.write('tools/lean-inspector/materials.py', (self.root / 'tools/lean-inspector/materials.py').read_text() + '\n# producer bytes\n')
-        changed(before)
-        self.write('lakefile.toml', (self.root / 'lakefile.toml').read_text() + '\n# config bytes\n')
-        changed(before)
         self.write('D5/Added.lean', 'def added : Nat := 3\n')
         changed(['D5.Added'])
         (self.root / 'D5/Added.lean').unlink()
@@ -155,6 +157,34 @@ defaultFacets = ["static"]
         self.assertNotIn('D5.Added', [row['module'] for row in self.report()[0]])
         self.write('Audit.lean', 'def audit : Nat := 2\n')
         changed([])
+
+    def test_native_producer_inputs(self):
+        self.build()
+        before = self.stamps()
+
+        def changed(expected):
+            nonlocal before
+            self.build()
+            after = self.stamps()
+            self.assertEqual({name for name in after if after[name] != before.get(name)}, set(expected))
+            before = after
+            records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
+            self.assertEqual(sum(r['count'] for r in records if r['kind'] == 'extract'), len(expected))
+
+        # These are copies of the actual producers, not synthetic version tokens.
+        for producer, comment in [('tools/lean-inspector/Inspector.lean', '--'),
+                                  ('tools/lean-inspector/materials.py', '#'),
+                                  ('tools/scripts/report/lean-report-input.sh', '#'),
+                                  ('tools/StrataLint.Cli/Commands/LeanUtilityInputCommand.cs', '//')]:
+            with self.subTest(producer=producer):
+                self.write(producer, (self.root / producer).read_text() + '\n' + comment + ' producer bytes\n')
+                changed(before)
+                changed([])
+        self.write('lean-report-inputs.json', (self.root / 'lean-report-inputs.json').read_text() + '\n')
+        changed(before)
+        changed([])
+        self.write('lakefile.toml', (self.root / 'lakefile.toml').read_text() + '\n# config bytes\n')
+        changed(before)
 
     def test_native_recovery_and_required_failures(self):
         self.build()
@@ -178,6 +208,19 @@ defaultFacets = ["static"]
         self.write('D5/A.lean', 'import D5.B\ndef value : Nat := D5.hidden\n')
         self.write('utility.json', '{invalid')
         self.build(success=False)
+        self.utility()
+        original_policy = (self.root / 'lean-report-inputs.json').read_text()
+        for invalid in ['{invalid', original_policy.replace('"schema_version": 1', '"schema_version": 9'),
+                        original_policy.replace('"pattern": "tools/scripts/report/lean-report-selection.py"',
+                                                '"pattern": "absent-required-producer.py"')]:
+            self.write('lean-report-inputs.json', invalid)
+            self.build(success=False)
+        (self.root / 'lean-report-inputs.json').unlink()
+        self.build(success=False)
+        self.write('lean-report-inputs.json', original_policy)
+        (self.root / 'External.lean').unlink()
+        self.build(success=False)
+        self.write('External.lean', 'import ClaimSupport\ndef claim : Prop := claimSupport\n')
         self.utility()
         (self.root / 'tools/lean-inspector/materials.py').unlink()
         self.build(success=False)

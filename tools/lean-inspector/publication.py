@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.util
 import json
 import os
 from pathlib import Path
@@ -19,6 +20,11 @@ import tempfile
 import zipfile
 
 import materials
+
+_selection_spec = importlib.util.spec_from_file_location('report_selection',
+    Path(__file__).resolve().parent.parent / 'scripts/report/lean-report-selection.py')
+selection = importlib.util.module_from_spec(_selection_spec)
+_selection_spec.loader.exec_module(selection)
 
 RAW = 'raw-lean-report.json'
 SUFFIXES = ('', '.sha256', '.input.attestation', '.provenance.json', '.materials.zip')
@@ -141,11 +147,25 @@ def validate_rows(report, archive_path):
     return root['modules']
 
 
-def validate_bundle(report, expected=None):
+def validate_sources(rows, repository):
+    inputs = selection.Selection(repository)
+    modules = inputs.modules()
+    if [row['module'] for row in rows] != sorted(modules):
+        raise ValueError('report source membership mismatch')
+    for row in rows:
+        path = modules[row['module']]
+        if row['source_path'] != path or row['source_sha256'] != 'sha256:' + digest(inputs.safe_file(path)):
+            raise ValueError('report source binding mismatch')
+        evidence = row.get('utility_refutation')
+        if evidence and evidence['claim_source_sha256'] != 'sha256:' + digest(inputs.safe_file(evidence['claim_source_path'])):
+            raise ValueError('report claim source binding mismatch')
+
+
+def validate_bundle(report, expected=None, repository=None):
     report = Path(report)
     for suffix in SUFFIXES:
         path = member(report, suffix)
-        if not path.is_file() or not path.stat().st_size:
+        if path.is_symlink() or not path.is_file() or not path.stat().st_size:
             raise ValueError(f'missing bundle member: {path.name}')
     sha = digest(report)
     if member(report, '.sha256').read_text(encoding='ascii') != f'{sha}  {report.name}\n':
@@ -176,7 +196,10 @@ def validate_bundle(report, expected=None):
             'lean_config_sha256': expected['config']}
         if any(provenance[k] != v for k, v in wanted.items()) or lines[1] != 'repository_input_sha256=' + expected['repository']:
             raise ValueError('stale input/provenance')
-    return validate_rows(report, member(report, '.materials.zip'))
+    rows = validate_rows(report, member(report, '.materials.zip'))
+    if repository is not None:
+        validate_sources(rows, repository)
+    return rows
 
 
 def zip_files(destination, paths):
@@ -195,15 +218,18 @@ def unpack(artifact, directory, suffixes=SUFFIXES):
         if len(archive.namelist()) != len(expected) or set(archive.namelist()) != expected:
             raise ValueError('invalid native artifact members')
         for name in sorted(expected):
+            info = archive.getinfo(name)
+            if info.is_dir() or stat.S_IFMT(info.external_attr >> 16) not in (0, stat.S_IFREG):
+                raise ValueError('nonregular native artifact member')
             with archive.open(name) as reader, (Path(directory) / name).open('wb') as writer:
                 shutil.copyfileobj(reader, writer, materials.BUFFER_BYTES)
     return Path(directory) / RAW
 
 
-def publish(report, destination, expected):
+def publish(report, destination, expected, repository=None):
     destination = Path(destination)
     destination.parent.mkdir(parents=True, exist_ok=True)
-    validate_bundle(report, expected)
+    validate_bundle(report, expected, repository)
     with tempfile.TemporaryDirectory(prefix='.lean-report.', dir=destination.parent) as directory:
         staged = Path(directory) / destination.name
         for suffix in SUFFIXES:
@@ -229,10 +255,10 @@ def main():
     args = parser.parse_args()
     expected = coordinates(args.repository) if args.repository else None
     if args.command == 'validate':
-        validate_bundle(args.report, expected)
+        validate_bundle(args.report, expected, args.repository)
     else:
         output = args.staging_directory / RAW
-        publish(args.bundle, output, expected)
+        publish(args.bundle, output, expected, args.repository)
         print(output)
 
 

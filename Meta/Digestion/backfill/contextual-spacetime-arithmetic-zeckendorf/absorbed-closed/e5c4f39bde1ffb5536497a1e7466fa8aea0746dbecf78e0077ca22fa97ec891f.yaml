@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:e5c4f39bde1ffb5536497a1e7466fa8aea0746dbecf78e0077ca22fa97ec891f
+  normalized_sha256: sha256:e5c4f39bde1ffb5536497a1e7466fa8aea0746dbecf78e0077ca22fa97ec891f
+cas_ref: sha256:e5c4f39bde1ffb5536497a1e7466fa8aea0746dbecf78e0077ca22fa97ec891f
+coverage_gids:
+  - gid: D5/S1/Deficit/ZeckendorfDisplacementReading.displacement_decode_eq_beatty_floor
+    target_statement_id: sha256:a2a75eaa142e774e908b7d7fd9624f1c694238fadfa2febdb0a0178ad2919b5b
+receipts:
+  unresolved_subitems: []
