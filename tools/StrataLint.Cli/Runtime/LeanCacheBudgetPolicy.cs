@@ -25,7 +25,7 @@ internal static class LeanCacheBudgetPolicy
     /// (ensure 的原生 `lake env` 依赖物化)。后者直接继承前者；ensure 不再复制 donor
     /// 构建目录、运行 `lake exe cache get` 或取回归档。
     ///
-    /// **历史正读数(旧 provisioning 路径,不代表当前官方 artifact cache 性能)**:
+    /// **正读数**:以下为旧 provisioning 路径的历史读数,不代表当前官方 artifact cache 性能:
     /// ensure 播种 clonefile **13 秒**;prefix 归档补编 **1m18s**(重编 19/1513 模块);
     /// CI 热态报告生产 **12m46s**。
     ///
