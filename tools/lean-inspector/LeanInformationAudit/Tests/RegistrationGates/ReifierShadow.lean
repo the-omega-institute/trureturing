@@ -129,7 +129,8 @@ elab "check_pointwise_shadow" : command => do
   unless manualEntries.size == 2 do throwError "manual count"
   let manualObs ← liftTermElabM <| (manualEntries.mapM registrationObservations : MetaM _)
   let manifest := reprStr <| ExpectedOccurrenceManifest.declaredEntries (← getEnv) (← getEnv).header.mainModule
-  prepareSealPublication
+  elabCommand (← `(command| #seal_information_theory))
+  if (← get).messages.hasErrors then throwError "manual seal command rejected"
   let manualSeal ← liftTermElabM <| sealObservations
   set initial
   forms.forM (fun form => manual form true)
@@ -152,7 +153,8 @@ elab "check_pointwise_shadow" : command => do
   for entry in derivedEntries do
     liftTermElabM <| RegistrationReifier.validateDerivedCertificate entry
     unless entry.derivedCertificate.isSome do throwError "missing derived certificate"
-  prepareSealPublication
+  elabCommand (← `(command| #seal_information_theory))
+  if (← get).messages.hasErrors then throwError "derived seal command rejected"
   let derivedSeal ← liftTermElabM <| sealObservations
   unless ← liftTermElabM <| sameObservations manualSeal derivedSeal do throwError "seal/catalog ordering or enumeration differs"
   logInfo "P1_SHADOW_EQUIVALENT registrations=2 manifest=equal raw=equal witnesses=equal seals=equal"

@@ -454,6 +454,9 @@ def validatePersistedEntry (env : Environment) (entry : InformationRegistryEntry
   match ← validateEntryCore env entry with
   | .error message => return .error message
   | .ok () => pure ()
+  try
+    if entry.derivedCertificate.isSome then RegistrationReifier.closedTruthExcluded entry
+  catch e => return .error (← e.toMessageData.toString)
   let entries := InformationRegistry.entries env
   let occurrenceMatches := entries.filter fun candidate =>
     candidate.canonicalObjectArenaName == entry.canonicalObjectArenaName &&

@@ -20,7 +20,7 @@ def closed (e : Expr) : MetaM Unit := do
   if e.hasMVar || e.hasFVar || e.hasLooseBVars then
     throwError "P1.UnresolvedMetavariables: {e}"
 
-private partial def canonical (e : Expr) : StateT Nat (Except String) Expr := do
+private def canonical (e : Expr) : StateT Nat (Except String) Expr := do
   let fuel ← get
   if fuel == 0 then throw "P1.IncompleteCheck: expression fuel exhausted"
   set (fuel - 1)
@@ -32,30 +32,33 @@ private partial def canonical (e : Expr) : StateT Nat (Except String) Expr := do
   | .mdata m b => return .mdata m (← canonical b)
   | .proj n i b => return .proj n i (← canonical b)
   | _ => return e
+termination_by structural e
 
 private def normalizeNames (e : Expr) : MetaM Expr := do
   match (canonical e).run (min 65536 (informationReifier.fuel.get (← getOptions))) with
   | .ok (e, _) => return e
   | .error reason => throwError reason
 
-private partial def difference (a b : Expr) (path := "type") : String := Id.run do
+private def difference (a b : Expr) (path := "type") : String := Id.run do
   if a.equal b then return ""
-  let children := match a, b with
-    | .app f x, .app g y => #[(".fn", f, g), (".arg", x, y)]
+  match a, b with
+    | .app f x, .app g y =>
+      return if !f.equal g then difference f g (path ++ ".fn") else difference x y (path ++ ".arg")
     | .forallE _ t x bi, .forallE _ u y bj
     | .lam _ t x bi, .lam _ u y bj =>
-      if bi == bj then #[(".domain", t, u), (".body", x, y)] else #[]
+      if bi != bj then return path
+      return if !t.equal u then difference t u (path ++ ".domain") else difference x y (path ++ ".body")
     | .letE _ t v x nd, .letE _ u w y ne =>
-      if nd == ne then #[(".type", t, u), (".value", v, w), (".body", x, y)] else #[]
+      if nd != ne then return path
+      if !t.equal u then return difference t u (path ++ ".type")
+      return if !v.equal w then difference v w (path ++ ".value") else difference x y (path ++ ".body")
     | .proj n i x, .proj m j y =>
-      if n == m && i == j then #[(".value", x, y)] else #[]
+      return if n == m && i == j then difference x y (path ++ ".value") else path
     | .mdata m x, .mdata n y =>
-      if (Expr.mdata m (mkBVar 0)).equal (.mdata n (mkBVar 0)) then
-        #[(".body", x, y)] else #[]
-    | _, _ => #[]
-  for (suffix, x, y) in children do
-    if !x.equal y then return difference x y (path ++ suffix)
-  return path
+      return if (Expr.mdata m (mkBVar 0)).equal (.mdata n (mkBVar 0)) then
+        difference x y (path ++ ".body") else path
+    | _, _ => return path
+termination_by structural a
 
 /-- Alpha-renaming only; deliberately NOT Expr's BEq or definitional equality. -/
 def exact (a b : Expr) : MetaM Bool := bounded do
@@ -192,12 +195,17 @@ def lawSensitive (entry : InformationRegistryEntry) (arena : Expr) : MetaM Unit 
     unless ← RegistrationGates.checked name (← mkAppM predicate #[arena]) do
       throwError "P1.WitnessBindingMismatch: {name}"
 
-/-- Restricted closed-truth exclusion: uniform source plus real variation/provenance.
-This does not attempt to decide general semantic truth or arbitrary source fidelity. -/
-def closedTruthExcluded (entry : InformationRegistryEntry) : MetaM Unit := do
+/-- Consume the completed registration-time scan, bound to the same immutable
+module as the checked unit. Publication never executes the runtime scanner. -/
+def closedTruthExcluded (entry : InformationRegistryEntry) : MetaM Unit := bounded do
   let some cert := entry.derivedCertificate | throwError "P1.MissingEvidence: uniform source"
   discard <| exactUse entry.theoremName cert.arena cert.descriptor
-  if let some diagnostic ← RegistrationGates.validateFinite entry then throwError "P1.SemanticRejected: {diagnostic}"
+  let name := RegistrationGates.diagnosticName entry.unitName entry.registrationModuleName
+  let info ← getConstInfo name
+  let env ← getEnv
+  unless env.getModuleIdxFor? name == env.getModuleIdxFor? entry.unitName &&
+      info.type.equal (mkConst ``String) && info.value?.any (·.equal (mkStrLit "")) do
+    throwError "P1.SemanticRejected: incomplete or unbound registration diagnostic"
 
 /-- Consumer validation of persisted inputs, including copied/stale occurrence data. -/
 def validateDerivedCertificate (entry : InformationRegistryEntry) : MetaM Unit := bounded do
@@ -239,7 +247,6 @@ def validateDerivedCertificate (entry : InformationRegistryEntry) : MetaM Unit :
     | throwError "P1.WitnessBindingMismatch: missing variation"
   requireExact "WitnessBindingMismatch" value
     (← mkAppM ``ReifierTemplates.variation #[cert.arena, mkConst ``Bool.false, ← rigid entry.sensitivityWitness])
-  closedTruthExcluded entry
   lawSensitive entry cert.arena
 
 end LeanInformationAudit.RegistrationReifier
