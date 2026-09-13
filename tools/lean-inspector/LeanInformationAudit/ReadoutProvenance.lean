@@ -289,6 +289,7 @@ structure ProvenanceCounters where
   dispatchWork : Nat := 0
   inferredOccurrences : Nat := 0
   caseExpansions : Nat := 0
+  substitutionMemoHits : Nat := 0
   deriving Inhabited, Repr
 
 -- Ordinary environment extensions are compilation-local and not serialized.
@@ -318,6 +319,7 @@ private structure WalkState where
   incomplete : Bool := false
   weights : Std.HashMap Expr Nat := {}
   substitutionWeights : Std.HashMap (Expr × Nat) Nat := {}
+  substitutions : Std.HashMap (Expr × Array Expr) Expr := {}
   levelWeights : Std.HashMap Level Nat := {}
   applications : Std.HashMap Expr (Expr × Array Expr) := {}
   mentionsCache : Std.HashMap Expr Bool := {}
@@ -410,6 +412,10 @@ private partial def substitutionWeight (e : Expr) (offset : Nat := 0) : WalkM (O
 
 private def substitute (e : Expr) (locals : Array Expr) : WalkM (Option Expr) := do
   if !e.hasLooseBVars then return some e
+  unless ← chargeTraversal (2 * locals.size + 1) do return none
+  if let some result := (← get).substitutions[(e, locals)]? then
+    modify fun s => { s with counters.substitutionMemoHits := s.counters.substitutionMemoHits + 1 }
+    return some result
   let some size ← substitutionWeight e | return none
   unless ← chargeTraversal locals.size do return none
   let mut factor := 1
@@ -419,7 +425,9 @@ private def substitute (e : Expr) (locals : Array Expr) : WalkM (Option Expr) :=
       factor := factor + valueSize
   -- An open replacement can be lifted at every substituted variable.
   unless ← chargeTraversal (size * factor) do return none
-  return some (e.instantiateRev locals)
+  let result := e.instantiateRev locals
+  modify fun s => { s with substitutions := s.substitutions.insert (e, locals) result }
+  return some result
 
 private def applicationParts (e : Expr) : WalkM (Option (Expr × Array Expr)) := do
   unless ← chargeTraversal do return none
@@ -1164,7 +1172,7 @@ private def collectReadout (env : Environment) (theoremName address : Name) (rea
   modifyEnv (summaryCache.setState · state.summaries)
   modifyEnv (countersCache.setState · counters)
   trace[InformationProvenance.check]
-    "theorem={theoremName} P_constants_summarised={counters.summarisedConstants} visits={counters.visits} memo_hits={counters.memoHits} charged_visits={counters.chargedVisits} rechecked_nodes={counters.recheckedNodes} spine_arguments={counters.spineArguments} canonicalizations={counters.canonicalizations} construction_work={counters.constructionWork} traversal_work={counters.traversalWork} dispatch_work={counters.dispatchWork} inferred_occurrences={counters.inferredOccurrences} case_expansions={counters.caseExpansions}"
+    "theorem={theoremName} P_constants_summarised={counters.summarisedConstants} visits={counters.visits} memo_hits={counters.memoHits} charged_visits={counters.chargedVisits} rechecked_nodes={counters.recheckedNodes} spine_arguments={counters.spineArguments} canonicalizations={counters.canonicalizations} construction_work={counters.constructionWork} traversal_work={counters.traversalWork} dispatch_work={counters.dispatchWork} inferred_occurrences={counters.inferredOccurrences} case_expansions={counters.caseExpansions} substitution_memo_hits={counters.substitutionMemoHits}"
   let names := state.walked.toArray.map Name.toString |>.qsort (· < ·)
   return (WalkResult.mk state.forbidden state.unclassified state.incomplete names)
 
