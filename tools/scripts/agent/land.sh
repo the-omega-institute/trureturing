@@ -54,7 +54,7 @@ BASE=$(git rev-parse origin/dev)
 #   INFRASTRUCTURE_FAILURE Raw Lean report is missing modules: <新模块>
 # 实测(2026-08-30)该缺口让一条 lane 白烧一轮 CI(engineering 17m2s + admission 3m32s)。
 # 缓存命中时这步是秒级;未命中才重编,那正是它该做的事。
-make lean-report > "$L/flights/$TAG-leanreport.log" 2>&1; R=$?
+make lean-report BASE="$BASE" > "$L/flights/$TAG-leanreport.log" 2>&1; R=$?
 echo "LEANREPORT_EXIT=$R"
 [ "$R" -eq 0 ] || { echo HALT_LEAN_REPORT; exit 97; }
 for pair in "${COVERS[@]}"; do

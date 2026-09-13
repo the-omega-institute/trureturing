@@ -84,4 +84,4 @@ fi
 # 因而不必落一个还要清理的临时文件。
 if [[ "$requires_markdown_check" == "1" ]]; then
   run_scribe markdown-check --report "$REPORT" --paths-from -
-fi < <(printf '%s\0' "${CHANGED_PATHS[@]}")
+fi < <(if [[ ${#CHANGED_PATHS[@]} -gt 0 ]]; then printf '%s\0' "${CHANGED_PATHS[@]}"; fi)

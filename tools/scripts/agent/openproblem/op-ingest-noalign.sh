@@ -20,7 +20,7 @@ git fetch -q origin || { echo "NOALIGN_FAIL fetch"; exit 3; }
 git merge -q --no-edit origin/dev || { echo "NOALIGN_FAIL merge-conflict"; git merge --abort; exit 3; }
 DEVSHA=$(git rev-parse origin/dev); echo "PINNED_BASE $DEVSHA"
 THEORY_BEFORE=$(git rev-parse HEAD)
-make lean-report; rc=$?; [ "$rc" -eq 0 ] || { echo "NOALIGN_FAIL lean-report rc=$rc"; exit 4; }
+make lean-report BASE="$DEVSHA"; rc=$?; [ "$rc" -eq 0 ] || { echo "NOALIGN_FAIL lean-report rc=$rc"; exit 4; }
 make ingest BASE="$DEVSHA"; rc=$?
 if [ "$rc" -ne 0 ]; then echo "INGEST_RC $rc"; echo "NOALIGN_FAIL ingest rc=$rc"; exit 4; fi
 git add -A Meta/Digestion docs/develop/theory && git commit -q -m "digestion: ingest addendum atoms (no-align path)" || echo "NOTE nothing to commit after ingest"

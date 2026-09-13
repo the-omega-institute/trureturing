@@ -4,6 +4,7 @@ import argparse
 import ast
 import json
 import pathlib
+import subprocess
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -99,7 +100,8 @@ class StructureReviewTests(unittest.TestCase):
         tree = ast.parse(pathlib.Path(pipeline.__file__).read_text())
         execute = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == "execute")
         body = next(n for n in execute.body if isinstance(n, ast.Try)).body
-        provenance = next(n for n in body if isinstance(n, ast.If) and n.orelse)
+        provenance = next(n for n in body if isinstance(n, ast.If) and any(
+            isinstance(child, ast.FunctionDef) and child.name == "verify_report" for child in ast.walk(n)))
         handoff = next(n for n in body if isinstance(n, ast.If) and
                        isinstance(n.test, ast.UnaryOp) and
                        isinstance(n.test.operand, ast.Attribute) and n.test.operand.attr == "no_structure")
@@ -110,6 +112,11 @@ class StructureReviewTests(unittest.TestCase):
             (directory / "logs").mkdir(parents=True)
             source = repository / "A.lean"
             source.write_text("theorem a : True := True.intro\n")
+            subprocess.run(["git", "init", "--quiet"], cwd=repository, check=True)
+            subprocess.run(["git", "add", "A.lean"], cwd=repository, check=True)
+            subprocess.run(["git", "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
+                            "commit", "--quiet", "--no-gpg-sign", "-m", "report base"], cwd=repository, check=True)
+            source_base = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repository, text=True).strip()
             key = ("A", name_key("a"), "id-a")
             true_axioms = ["Classical.choice", "Quot.sound", "propext"]
             module = {"module": "A", "source_path": "A.lean", "source_sha256": file_digest(source),
@@ -127,7 +134,7 @@ class StructureReviewTests(unittest.TestCase):
                         raise RuntimeError("stale transitive axiom closure")
                     self.assertEqual(axiom_readings(repository, report, [key]), {key[1:]: true_axioms})
                     verified.append(report)
-                elif command == ["make", "lean-report"]:
+                elif command == ["make", "lean-report", "BASE=" + source_base]:
                     regenerated.parent.mkdir(parents=True)
                     module["declarations"][0]["axioms"] = true_axioms
                     write(regenerated, {"modules": [module]})
@@ -141,7 +148,7 @@ class StructureReviewTests(unittest.TestCase):
             def sidecar(repo, _directory, report):
                 return {"report": str(report), "axioms": axiom_readings(repo, report, [key])}
 
-            scope = dict(pipeline.__dict__, repository=repository, directory=directory, state=state,
+            scope = dict(pipeline.__dict__, repository=repository, directory=directory, state=state, source_base=source_base,
                          env={}, step=step, options=argparse.Namespace(fixture_truth_export=None,
                          lean_report=str(stale), no_structure=False))
             with patch("Structure.sidecar.run_sidecar", side_effect=sidecar):

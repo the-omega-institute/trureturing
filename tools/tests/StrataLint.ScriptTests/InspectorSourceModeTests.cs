@@ -69,11 +69,11 @@ public sealed partial class InspectorSourceModeTests
     // Adapters below that boundary reuse the canonically built candidate CLI and
     // supply only the declaration spool/utility metadata. Lake really builds this
     // small synthetic project and runs the current SourceContext/SourceOptions.
-    private const string Fixture = """"
+    internal const string Fixture = """"
         import hashlib, json, os, shutil, subprocess, sys, zipfile
         from pathlib import Path
 
-        candidate, scratch, cli, mode, local_consumers, selection = sys.argv[1:]
+        candidate, scratch, cli, mode, local_consumers, selection = sys.argv[1:7]
         actions = mode.startswith("actions-")
         transfer = actions or mode == "transfer"
         source_mode = mode.removeprefix("actions-")
@@ -112,6 +112,7 @@ public sealed partial class InspectorSourceModeTests
             "tools/StrataLint.Cli/Commands/LeanSourceInputCommand.cs",
             "tools/StrataLint.Engine/Ledger/Admission/LeanSourceHeader.cs",
         ]
+        if len(sys.argv) > 7: paths += json.loads(sys.argv[7])
         for relative in paths:
             target = root / relative
             target.parent.mkdir(parents=True, exist_ok=True)
@@ -248,6 +249,9 @@ public sealed partial class InspectorSourceModeTests
             STRATALINT_REPORT_CACHE_ROOT=str(scratch / "cache"), STRATALINT_SUPERVISOR_ROOT=str(scratch / "supervisor"))
         for name in tuple(env):
             if name.startswith("GITHUB_"): env.pop(name)
+        if len(sys.argv) > 8:
+            exec(sys.argv[8])
+            raise SystemExit(0)
         source_args = ["--push-before", before, "--push-head", head] if source_mode in ("push", "initial", "nonancestor") else ["--base", before]
         pair_args = source_args
         if mode == "base-environment":
