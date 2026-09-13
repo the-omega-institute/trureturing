@@ -50,7 +50,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/IffRegistrationTemplate
 
 *Commentary.*
 
-The universally quantified iff statement is definitionally the generated pointwise law.
+The universally quantified iff statement is proved equivalent to the generated pointwise law: the bridge rewrites each iff into an equality of decided Booleans, so the two sides are logically equivalent, not definitionally equal.
 
 **Theorem 1.5 (iff_sensitivity).**
 
