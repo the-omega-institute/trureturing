@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Marked prime words read out strict divisor chains with uniform internal-vertex deletion. -/
+   digest: Marked prime word readouts obey uniform internal-vertex deletion. -/
 
 import D5.S3.Factorization.Combinatorics.MarkedPrimeWordSnapshotFiber
 import D5.S3.Factorization.Combinatorics.StrictDivisorChainCount
@@ -45,7 +45,8 @@ def Marks (n k : ℕ) := {I : Finset (Positions n) // I.card = k-1}
 /-- A prime word together with its selected internal positions. -/
 def U (n k : ℕ) := PrimeWord n × Marks n k
 /-- Mark selections and marked prime words have finite carriers. -/
-instance (n k : ℕ) : Fintype (Marks n k) := inferInstanceAs (Fintype {_I : Finset (Positions n) // _})
+instance (n k : ℕ) : Fintype (Marks n k) :=
+  inferInstanceAs (Fintype {_I : Finset (Positions n) // _})
 /-- Mark selections and marked prime words have finite carriers. -/
 instance (n k : ℕ) : Fintype (U n k) := inferInstanceAs (Fintype (PrimeWord n × Marks n k))
 /-- The endpoints and the actual prefix products at the increasingly sorted selected positions. -/
@@ -76,7 +77,6 @@ noncomputable def deletionKernel (n k : ℕ) (d' : Chain n (k+1)) (d : Chain n k
   classical
   exact if Deletes d' d then 1/(k : ℝ) else 0
 
-
 /-- A prime word with strictly increasing prefix lengths including both endpoints. -/
 def RawMarked (n k : ℕ) :=
   {z : PrimeWord n × (Fin (k+1) → ℕ) //
@@ -97,7 +97,6 @@ def fibreEquiv (n k : ℕ) (d : Fin (k+1) → ℕ) :
   left_inv _ := rfl
   right_inv _ := rfl
 
-
 /-- Increasing marked prefix products define a bounded strict divisor chain. -/
 def qChain {n k : ℕ} (z : RawMarked n k) : Chain n k := by
   let w := z.val.1.val
@@ -114,7 +113,9 @@ def qChain {n k : ℕ} (z : RawMarked n k) : Chain n k := by
     rw [← z.property.2.1]
     exact z.property.2.2.monotone (Fin.le_last i)
   have hbound (i : Fin (k+1)) : QNat z i ≤ n := by
-    have h := hmono.monotone (show (⟨z.val.2 i, Nat.lt_succ_of_le (hmarkbound i)⟩ : Fin (w.length+1)) ≤ Fin.last w.length by exact hmarkbound i)
+    have h := hmono.monotone (show
+      (⟨z.val.2 i, Nat.lt_succ_of_le (hmarkbound i)⟩ : Fin (w.length+1)) ≤
+        Fin.last w.length from hmarkbound i)
     simpa only [Fin.val_last, List.take_length, w, z.val.1.property.2, QNat] using h
   refine ⟨(fun i => ⟨QNat z i, Nat.lt_succ_of_le (hbound i)⟩), ?_, ?_, ?_⟩
   · simp [QNat, z.property.1]
@@ -126,8 +127,10 @@ def qChain {n k : ℕ} (z : RawMarked n k) : Chain n k := by
     · have he := List.prod_take_mul_prod_drop (w.take (z.val.2 i.succ)) (z.val.2 i.castSucc)
       rw [List.take_take, Nat.min_eq_left hle] at he
       exact ⟨_, he.symm⟩
-    · exact hmono (show (⟨z.val.2 i.castSucc, Nat.lt_succ_of_le (hmarkbound _)⟩ : Fin (w.length+1)) <
-        ⟨z.val.2 i.succ, Nat.lt_succ_of_le (hmarkbound _)⟩ from z.property.2.2 (Fin.castSucc_lt_succ (i := i)))
+    · exact hmono (show
+        (⟨z.val.2 i.castSucc, Nat.lt_succ_of_le (hmarkbound _)⟩ : Fin (w.length+1)) <
+          ⟨z.val.2 i.succ, Nat.lt_succ_of_le (hmarkbound _)⟩ from
+            z.property.2.2 (Fin.castSucc_lt_succ (i := i)))
 
 /-- The actual strict-chain readout fibre is the corresponding snapshot fibre. -/
 def actualChainFibreEquiv (n k : ℕ) (d : Chain n k) :
@@ -143,8 +146,6 @@ def actualChainFibreEquiv (n k : ℕ) (d : Chain n k) :
       apply Fin.ext
       exact congrFun h i
   exact (Equiv.subtypeEquivRight heq).trans (fibreEquiv n k (fun i => (d.val i).val))
-
-
 
 /-- Erasing a selected position leaves one fewer internal mark. -/
 def eraseMark {n k : ℕ} (I : Marks n (k+1)) (j : I.val) : Marks n k :=
@@ -192,7 +193,8 @@ def deleteChain {n k : ℕ} (d : Chain n (k+1)) (j : Fin k) : Chain n k := by
     intro a b hab
     rcases hab.eq_or_lt with he | hlt
     · rw [he]
-    · exact (Fin.liftFun_iff_succ (· ∣ ·) (f := fun i => (d.val i).val)).mpr (fun i => (d.property.2.2 i).1) hlt
+    · exact (Fin.liftFun_iff_succ (· ∣ ·) (f := fun i => (d.val i).val)).mpr
+        (fun i => (d.property.2.2 i).1) hlt
   refine ⟨fun i => d.val (e i), ?_, ?_, ?_⟩
   · simpa only [hzero] using d.property.1
   · simpa only [hlast] using d.property.2.1
@@ -200,7 +202,7 @@ def deleteChain {n k : ℕ} (d : Chain n (k+1)) (j : Fin k) : Chain n k := by
     have hlt := Fin.strictMono_succAbove j.succ.castSucc (Fin.castSucc_lt_succ (i := i))
     exact ⟨hdiv _ _ hlt.le,
       (Fin.strictMono_iff_lt_succ.mpr fun t => (d.property.2.2 t).2) hlt⟩
-/-- Sorting the selected internal positions and adjoining endpoints gives increasing prefix lengths. -/
+/-- Sorting the internal positions and adjoining endpoints gives increasing prefix lengths. -/
 def markedRaw (n k : ℕ) (hn : 1 < n) (hk : 1 ≤ k) (z : U n k) : RawMarked n k := by
   have hlen : z.1.val.length = omegaCount n := by
     rw [omegaCount, ← ArithmeticFunction.cardFactors_eq_sum_factorization,
@@ -212,13 +214,14 @@ def markedRaw (n k : ℕ) (hn : 1 < n) (hk : 1 ≤ k) (z : U n k) : RawMarked n 
   cases k with
   | zero => omega
   | succ k =>
-    let a : Fin k → ℕ := fun i => (z.2.val.orderEmbOfFin (by simpa using z.2.property) i).val + 1
+    let a : Fin k → ℕ := fun i =>
+      (z.2.val.orderEmbOfFin (by simpa only [Nat.add_sub_cancel] using z.2.property) i).val + 1
     have ha : StrictMono a := by
       intro i j hij
       exact Nat.add_lt_add_right ((z.2.val.orderEmbOfFin _).strictMono hij) 1
     have hab : ∀ i, a i < omegaCount n := by
       intro i
-      have := (z.2.val.orderEmbOfFin (by simpa using z.2.property) i).isLt
+      have := (z.2.val.orderEmbOfFin (by simpa only [Nat.add_sub_cancel] using z.2.property) i).isLt
       dsimp [a]
       omega
     have hs : StrictMono (Fin.snoc a (omegaCount n)) := by
@@ -242,7 +245,6 @@ def markedRaw (n k : ℕ) (hn : 1 < n) (hk : 1 ≤ k) (z : U n k) : RawMarked n 
 /-- The sorted finite-set readout as a strict divisor chain. -/
 def readoutChain (n k : ℕ) (hn : 1 < n) (hk : 1 ≤ k) (z : U n k) : Chain n k :=
   qChain (markedRaw n k hn hk z)
-
 
 /-- Uniform internal-vertex deletion preserves every signed prime-word readout mass. -/
 theorem actual_readout_deletion (n k : ℕ) (hn : 1 < n) (hk : 1 ≤ k)
@@ -301,7 +303,8 @@ theorem actual_readout_deletion (n k : ℕ) (hn : 1 < n) (hk : 1 ≤ k)
         rw [← hlen, List.take_length, z.1.property.2]
       rw [ht]
       congr 2
-      rw [← Finset.listMap_orderEmbOfFin_finRange z.2.val (show z.2.val.card = j by simpa only [Nat.add_sub_cancel] using z.2.property)]
+      rw [← Finset.listMap_orderEmbOfFin_finRange z.2.val
+        (show z.2.val.card = j by simpa only [Nat.add_sub_cancel] using z.2.property)]
       simp only [List.map_map, List.ofFn_eq_map, List.concat_eq_append, Function.comp_def]
   have hmono {j : ℕ} (c : Chain n j) : StrictMono (fun i => (c.val i).val) :=
     Fin.strictMono_iff_lt_succ.mpr fun t => (c.property.2.2 t).2
@@ -336,10 +339,11 @@ theorem actual_readout_deletion (n k : ℕ) (hn : 1 < n) (hk : 1 ≤ k)
     exact h.symm
   have hreaddelete (γ : PrimeWord n) (I : Marks n (k+1)) (m : I.val) :
       deleteChain (readoutChain n (k+1) hn (by omega) (γ,I))
-          ((I.val.orderIsoOfFin (by simpa using I.property)).symm m) =
+          ((I.val.orderIsoOfFin (by simpa only [Nat.add_sub_cancel] using I.property)).symm m) =
         readoutChain n k hn hk (γ, eraseMark I m) := by
     let c := readoutChain n (k+1) hn (by omega) (γ,I)
-    let e := I.val.orderIsoOfFin (show I.val.card = k by simpa using I.property)
+    let e := I.val.orderIsoOfFin
+      (show I.val.card = k by simpa only [Nat.add_sub_cancel] using I.property)
     let j : Fin k := e.symm m
     let f : Positions n → ℕ := fun a => (γ.val.take (a.val+1)).prod
     have hf : Function.Injective f := by
@@ -357,15 +361,19 @@ theorem actual_readout_deletion (n k : ℕ) (hn : 1 < n) (hk : 1 ≤ k)
           ArithmeticFunction.cardFactors_apply]
         exact (Nat.primeFactorsList_unique γ.property.2 γ.property.1).length_eq
       have h := hprefix γ (a := ⟨m.val.val+1, by have := m.val.isLt; omega⟩)
-        (b := Fin.last (omegaCount n)) (by have := m.val.isLt; exact_mod_cast (by omega : m.val.val+1 < omegaCount n))
+        (b := Fin.last (omegaCount n)) (by
+          have := m.val.isLt
+          exact_mod_cast (by omega : m.val.val+1 < omegaCount n))
       have ht : (γ.val.take (omegaCount n)).prod = n := by
         rw [← hlen, List.take_length, γ.property.2]
       simpa only [Fin.val_last, ht, f] using h.ne
     have hpivot : (c.val j.succ.castSucc).val = f m.val := by
-      have he : I.val.orderEmbOfFin (by simpa using I.property) j = m.val :=
+      have he : I.val.orderEmbOfFin
+          (by simpa only [Nat.add_sub_cancel] using I.property) j = m.val :=
         congrArg Subtype.val (e.apply_symm_apply m)
       change (γ.val.take ((Fin.cons 0
-        (Fin.snoc (fun i : Fin k => (I.val.orderEmbOfFin (by simpa using I.property) i).val+1)
+        (Fin.snoc (fun i : Fin k =>
+          (I.val.orderEmbOfFin (by simpa only [Nat.add_sub_cancel] using I.property) i).val+1)
           (omegaCount n)) : Fin (k+2) → ℕ) j.succ.castSucc)).prod = f m.val
       rw [← Fin.succ_castSucc, Fin.cons_succ, Fin.snoc_castSucc, he]
     have hdeleted (x : ℕ) :
@@ -473,7 +481,8 @@ theorem actual_readout_deletion (n k : ℕ) (hn : 1 < n) (hk : 1 ≤ k)
       intro I _
       rw [hkernel, Finset.mul_sum]
       simp only [μ, Nat.add_sub_cancel, mul_ite, mul_zero]
-      let e := (I.val.orderIsoOfFin (show I.val.card = k by simpa using I.property)).toEquiv
+      let e := (I.val.orderIsoOfFin
+        (show I.val.card = k by simpa only [Nat.add_sub_cancel] using I.property)).toEquiv
       apply Fintype.sum_equiv e
       intro j
       have h := hreaddelete γ I (e j)
