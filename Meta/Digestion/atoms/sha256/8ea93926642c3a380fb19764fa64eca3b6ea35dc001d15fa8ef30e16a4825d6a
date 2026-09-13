@@ -1,0 +1,48 @@
+## PT.4 Koopman 观察闭合与两步记忆
+
+**定义。** 令 $K$ 为有限维实观察函数空间上的一步转移算子，$P^2=P$，$Q=I-P$，并定义
+
+$$
+\overline K=PKP,\qquad
+\Delta_2=PK^2P-\overline K^2,\qquad
+B=QKP.
+$$
+
+**定理 PT3。** 有
+
+$$
+\boxed{\Delta_2=PKQKP.}
+$$
+
+**证明。** $\overline K^2=PKP^2KP=PKPKP$。在 $K^2$ 的两个 $K$ 之间插入 $P+Q=I$ 后相减。证毕。
+
+**定理 PT4。** 若 $P^*=P$、$K^*=K$，则
+
+$$
+\boxed{\Delta_2=B^*B},\qquad
+\boxed{\Delta_2=0\iff QKP=0\iff KP=PKP}.
+$$
+
+**证明。** $B^*=PKQ$ 且 $Q^2=Q$，故 $B^*B=PKQKP$。实矩阵的 Gram 矩阵为零当且仅当原矩阵为零，再展开 $QKP=KP-PKP$。证毕。
+
+**定理 PT5。** 在 PT4 的条件下，
+
+$$
+\Delta_2=0
+\iff
+\forall m\ge1,\quad PK^mP=(PKP)^m.
+$$
+
+**证明。** 由 $KP=PKP$ 对 $m$ 归纳，将最右侧的 $KP$ 替换成 $PKP$。反向取 $m=2$。证毕。
+
+**命题。** PT4 的自伴条件不可删除。
+
+**证明。** 取
+
+$$
+P=\operatorname{diag}(1,0),\qquad
+K=\begin{pmatrix}0&0\\1&0\end{pmatrix}.
+$$
+
+则 $K^2=0$、$PKP=0$，所以 $\Delta_2=0$，但 $QKP=K\ne0$。证毕。
+

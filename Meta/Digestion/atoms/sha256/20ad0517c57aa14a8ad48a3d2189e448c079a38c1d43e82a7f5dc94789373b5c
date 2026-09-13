@@ -1,0 +1,15 @@
+**假设。** 设有限群具有已知的有限维复酉表示，并固定酉等型分解
+
+$$
+\mathcal H=\bigoplus_\lambda(\mathbb C^{m_\lambda}\otimes W_\lambda),\qquad
+\rho(g)=\bigoplus_\lambda(I_{m_\lambda}\otimes\rho_\lambda(g)).
+$$
+
+设收缩算子 $K$ 与正交投影 $P$ 均与所有 $\rho(g)$ 交换。在重数空间中取酉坐标，使
+
+$$
+K=\bigoplus_\lambda(K_\lambda\otimes I),\qquad
+P=\bigoplus_\lambda(P_\lambda\otimes I),\qquad
+P_\lambda=\operatorname{diag}(I_{r_\lambda},0).
+$$
+

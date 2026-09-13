@@ -1,0 +1,2 @@
+**证明。** Kronecker 乘法给出交换性。归纳得 $K_0^k=\operatorname{diag}(a^k,b^k)\otimes I$；$K_1^k$ 的对角项为 $(a^k+b^k)/2$，非对角项为 $(a^k-b^k)/2$。取迹并使用张量积的迹相乘公式得到迹等式。$K_0$ 的 $PK_0Q$ 为零；$K_1$ 的分块为 $A=cI,B=dI,C=dI,D=cI$，故 $BD^jC=d^2c^jI$。证毕。
+

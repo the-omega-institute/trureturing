@@ -1,0 +1,14 @@
+**定义。** 取非零有限维实表示 $\rho:G\to GL(W)$，并在 $W\oplus W$ 上令
+
+$$
+P=\begin{pmatrix}1&0\\0&0\end{pmatrix}\otimes I_W,
+\qquad
+K=\begin{pmatrix}u&v\\v&w\end{pmatrix}\otimes I_W.
+$$
+
+对第一副本的固定单位向量 $e$，置
+
+$$
+s_t=\langle e,K^te\rangle,qquad t=1,2,3.
+$$
+
