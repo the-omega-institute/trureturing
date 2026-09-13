@@ -1,0 +1,9 @@
+**证明。** 由 T1、范数的乘法性及
+$\operatorname N(\varphi^n)=-1$，有
+
+$$
+\operatorname N(E_n)
+=\operatorname N(L_n-1)\operatorname N(\varphi^n)
+=(L_n-1)^2(-1).
+$$
+
