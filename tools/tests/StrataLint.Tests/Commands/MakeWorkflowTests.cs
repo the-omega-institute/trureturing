@@ -122,14 +122,19 @@ public sealed partial class MakeWorkflowTests
         File.Copy(
             Path.Combine(root, EchoResidualSummaryScriptPath),
             Path.Combine(fixture.Path, EchoResidualSummaryScriptPath));
+        var baseSha = CreateWrapperBase(fixture.Path, "synthetic-base");
         File.WriteAllText(
             Path.Combine(fixture.Path, LeanReportScriptPath),
-            "#!/usr/bin/env bash\nprintf 'lean provenance\\n' >&2\n");
+            """
+            #!/usr/bin/env bash
+            [[ $# -eq 1 && "$1" == "$FIXTURE_BASE_SHA" ]] || exit 18
+            printf 'lean provenance\n' >&2
+            """);
         File.WriteAllText(
             Path.Combine(binDirectory, "dotnet"),
             """
             #!/usr/bin/env bash
-            [[ "$*" == *"echo-verify --emit --base synthetic-base"* ]] || exit 19
+            [[ "$*" == *"echo-verify --emit --base $FIXTURE_BASE_SHA" ]] || exit 19
             printf '%s\n' '<!-- echo-residual-summary:v3 residual=sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->' '# Echo Residual Summary'
             """);
         File.SetUnixFileMode(
@@ -141,7 +146,7 @@ public sealed partial class MakeWorkflowTests
 
         var result = TestProcessRunner.Run(
             "/bin/bash",
-            ["-c", "PATH=\"$1:$PATH\" exec make --no-print-directory echo-residual-summary BASE=synthetic-base", "echo-make", binDirectory],
+            ["-c", "PATH=\"$1:$PATH\" FIXTURE_BASE_SHA=\"$2\" exec make --no-print-directory echo-residual-summary BASE=synthetic-base", "echo-make", binDirectory, baseSha],
             fixture.Path,
             BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
@@ -276,7 +281,6 @@ public sealed partial class MakeWorkflowTests
             StringComparison.Ordinal);
         Assert.Contains("mathlib-reanchor)", script, StringComparison.Ordinal);
         Assert.Contains("make -C \"$ROOT\" lean-report", script, StringComparison.Ordinal);
-        Assert.Contains("git -C \"$ROOT\" merge-base HEAD \"$BASE\"", script, StringComparison.Ordinal);
         Assert.Contains(
             "ledger-reanchor-mathlib --base \"$base_sha\"",
             script,
@@ -324,6 +328,8 @@ public sealed partial class MakeWorkflowTests
         Directory.CreateDirectory(projectDirectory);
         Directory.CreateDirectory(binDirectory);
         File.Copy(Path.Combine(root, IngestScriptPath), scriptPath);
+        File.Copy(Path.Combine(root, "Makefile"), Path.Combine(fixture.Path, "Makefile"));
+        var baseSha = CreateWrapperBase(fixture.Path, "baseline");
         File.SetUnixFileMode(
             scriptPath,
             UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
@@ -335,32 +341,42 @@ public sealed partial class MakeWorkflowTests
             dotnetPath,
             UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
 
-        ProcessOutput Run(int fakeDotnetExit, params string[] arguments) => TestProcessRunner.Run(
+        ProcessOutput RunCommand(int fakeDotnetExit, params string[] arguments) => TestProcessRunner.Run(
             "env",
             [
                 $"PATH={binDirectory}:/usr/bin:/bin",
                 $"FAKE_DOTNET_EXIT={fakeDotnetExit}",
-                "/bin/bash",
-                scriptPath,
                 .. arguments,
             ],
             fixture.Path,
             TestBudgets.ScriptProcessHangGuard,
             64 * 1024);
 
+        ProcessOutput Run(int fakeDotnetExit, params string[] arguments) =>
+            RunCommand(fakeDotnetExit, ["/bin/bash", scriptPath, .. arguments]);
+
         var set = Run(0, "quarantine", "baseline", "request.toml");
         Assert.Equal(0, set.ExitCode);
         Assert.Contains(
-            "quarantine-atom --request request.toml --base baseline",
+            $"quarantine-atom --request request.toml --base {baseSha}",
             Encoding.UTF8.GetString(set.StandardOutput),
             StringComparison.Ordinal);
 
         var clear = Run(0, "quarantine-clear", "baseline", "atom-id");
         Assert.Equal(0, clear.ExitCode);
         Assert.Contains(
-            "quarantine-atom --clear atom-id --base baseline",
+            $"quarantine-atom --clear atom-id --base {baseSha}",
             Encoding.UTF8.GetString(clear.StandardOutput),
             StringComparison.Ordinal);
+
+        var makeSet = RunCommand(0, "make", "--no-print-directory", "quarantine",
+            "BASE=baseline", "REQUEST=request.toml");
+        Assert.Equal(0, makeSet.ExitCode);
+        Assert.Equal(set.StandardOutput, makeSet.StandardOutput);
+        var makeClear = RunCommand(0, "make", "--no-print-directory", "quarantine-clear",
+            "BASE=baseline", "ATOM_ID=atom-id");
+        Assert.Equal(0, makeClear.ExitCode);
+        Assert.Equal(clear.StandardOutput, makeClear.StandardOutput);
 
         Assert.Equal(23, Run(23, "quarantine", "baseline", "request.toml").ExitCode);
         Assert.Equal(23, Run(23, "quarantine-clear", "baseline", "atom-id").ExitCode);
@@ -371,9 +387,9 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Theory]
-    [InlineData("", "ingest --base HEAD")]
-    [InlineData("alpha beta", "ingest --base HEAD --source alpha --source beta")]
-    public void IngestWrapperForwardsBaseAndSourcesWithoutLeanClosureProbe(string sourcePayload, string expected)
+    [InlineData("", "")]
+    [InlineData("alpha beta", " --source alpha --source beta")]
+    public void IngestWrapperForwardsBaseAndSourcesWithoutLeanClosureProbe(string sourcePayload, string expectedSources)
     {
         if (OperatingSystem.IsWindows()) return;
 
@@ -444,6 +460,8 @@ public sealed partial class MakeWorkflowTests
         ReviewRegressionTests.RunGit(fixture.Path, "config", "user.name", "StrataLint Tests");
         ReviewRegressionTests.RunGit(fixture.Path, "add", ".");
         ReviewRegressionTests.RunGit(fixture.Path, "commit", "--quiet", "-m", "ingest wrapper fixture");
+        var baseSha = ReviewRegressionTests.RunGit(fixture.Path, "rev-parse", "HEAD").Trim();
+        var expected = $"ingest --base {baseSha}{expectedSources}";
 
         ProcessOutput RunWrapper() => TestProcessRunner.Run(
             "/bin/bash",
@@ -521,6 +539,15 @@ public sealed partial class MakeWorkflowTests
         var execIndex = script.IndexOf("exec dotnet run", StringComparison.Ordinal);
         Assert.True(parseIndex >= 0, "clean-lanes adapter must accept the scope flag");
         Assert.True(execIndex > parseIndex, "flag parsing must precede the CLI invocation");
+    }
+
+    private static string CreateWrapperBase(string repository, string baseRef)
+    {
+        ReviewRegressionTests.RunGit(repository, "init", "--quiet");
+        ReviewRegressionTests.RunGit(repository, "-c", "user.email=stratalint@example.invalid",
+            "-c", "user.name=StrataLint Tests", "commit", "--quiet", "--allow-empty", "-m", "wrapper fixture");
+        ReviewRegressionTests.RunGit(repository, "tag", baseRef);
+        return ReviewRegressionTests.RunGit(repository, "rev-parse", baseRef).Trim();
     }
 
     private static int RecipeCount(string makefile, string target) =>
