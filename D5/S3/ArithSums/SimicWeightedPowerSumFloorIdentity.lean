@@ -1,14 +1,14 @@
 /- GID: D5/S3/ArithSums/SimicWeightedPowerSumFloorIdentity
    generality: G
    mirror-B: D5/B/S3/ArithSums/SimicWeightedPowerSumFloorIdentity
-   mirror-E: none(waiver:unbounded-symbolic-floor-identity)
-   anchors: [mathlib/module/Mathlib.Algebra.Order.Floor.Ring, mathlib/module/Mathlib.Data.Finset.Max, mathlib/module/Mathlib.Tactic]
+   mirror-E: none(waiver:unbounded-symbolic-proof)
+   anchors: [mathlib/module/Mathlib.Algebra.Field.GeomSum, mathlib/module/Mathlib.Data.Rat.Floor, mathlib/module/Mathlib.Tactic.Positivity]
    utility: none
    digest: Simic H-655(ii) weighted power-sum floor identity for at least two indices. -/
 
-import Mathlib.Algebra.Order.Floor.Ring
-import Mathlib.Data.Finset.Max
-import Mathlib.Tactic
+import Mathlib.Algebra.Field.GeomSum
+import Mathlib.Data.Rat.Floor
+import Mathlib.Tactic.Positivity
 
 open scoped BigOperators
 
