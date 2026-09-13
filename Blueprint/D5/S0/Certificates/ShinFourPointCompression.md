@@ -24,6 +24,10 @@ Lean statement: `D5/S0/Certificates/ShinFourPointCompression.result`
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/ShinFourPointCompression.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/shin-four-point-sumset-compression` (refuted) by `D5/S0/Certificates/ShinFourPointCompression.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"shin-four-point-sumset-compression","declaration_gid":"D5/S0/Certificates/ShinFourPointCompression.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Henry Shin (2026). *Iterated-sumset spectra: The complete exponent law and its rank geometry*. DOI: [10.48550/arXiv.2609.01690](https://doi.org/10.48550/arXiv.2609.01690).

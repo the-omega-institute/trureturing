@@ -64,5 +64,8 @@ internal sealed class ShinFourPointCompressionDocument : IScribeDocumentDefiniti
                         + "The argument does not determine the least diameter realizing "
                         + "every eleven-fold cardinality; in particular it does not assert "
                         + "that this diameter equals 80."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("shin-four-point-sumset-compression"),
+                    ResolutionKind.Refuted)))));
 }
