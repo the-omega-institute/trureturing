@@ -165,4 +165,62 @@ private theorem no_large_product_sum (i j r s : ℕ)
     · have hjle : Nat.fib j ≤ Nat.fib (t - 2) := Nat.fib_mono (by omega)
       omega
 
+private theorem mem_iff_family (x : ℕ) :
+    mem x ↔ ∃ k, x = Nat.fib k ∨ x = 2 * Nat.fib k ∨ x = 3 * Nat.fib k := by
+  constructor
+  · rintro ⟨⟨i, j, hsum⟩, ⟨r, s, hproduct⟩⟩
+    have hsmall : r ≤ 4 ∨ s ≤ 4 := by
+      by_contra hn
+      push Not at hn
+      have heq : Nat.fib i + Nat.fib j = Nat.fib r * Nat.fib s :=
+        hsum.symm.trans hproduct
+      rcases le_total j i with hji | hij
+      · exact no_large_product_sum i j r s hji (by omega) (by omega) heq
+      · exact no_large_product_sum j i r s hij (by omega) (by omega)
+          (by simpa only [add_comm] using heq)
+    have small_factor (u v : ℕ) (hu : u ≤ 4)
+        (h : x = Nat.fib u * Nat.fib v) :
+        ∃ k, x = Nat.fib k ∨ x = 2 * Nat.fib k ∨ x = 3 * Nat.fib k := by
+      interval_cases u
+      · exact ⟨0, Or.inl (by simpa using h)⟩
+      · exact ⟨v, Or.inl (by simpa using h)⟩
+      · exact ⟨v, Or.inl (by simpa using h)⟩
+      · exact ⟨v, Or.inr (Or.inl (by simpa [show Nat.fib 3 = 2 by decide] using h))⟩
+      · exact ⟨v, Or.inr (Or.inr (by simpa [show Nat.fib 4 = 3 by decide] using h))⟩
+    rcases hsmall with hr | hs
+    · exact small_factor r s hr hproduct
+    · exact small_factor s r hs (by simpa only [mul_comm] using hproduct)
+  · rintro ⟨k, hk | hk | hk⟩
+    · refine ⟨⟨k, 0, ?_⟩, ⟨k, 1, ?_⟩⟩
+      · simpa only [Nat.fib_zero, add_zero] using hk
+      · simpa only [Nat.fib_one, mul_one] using hk
+    · refine ⟨⟨k, k, ?_⟩, ⟨3, k, ?_⟩⟩
+      · simpa only [two_mul] using hk
+      · simpa only [show Nat.fib 3 = 2 by decide] using hk
+    · by_cases hzero : k = 0
+      · subst k
+        have hx : x = 0 := by simpa using hk
+        subst x
+        exact ⟨⟨0, 0, by decide⟩, ⟨0, 0, by decide⟩⟩
+      by_cases hone : k = 1
+      · subst k
+        have hx : x = 3 := by simpa using hk
+        subst x
+        exact ⟨⟨1, 3, by decide⟩, ⟨4, 1, by decide⟩⟩
+      have hk2 : 2 ≤ k := by omega
+      have h1 : Nat.fib (k + 2) = Nat.fib k + Nat.fib (k + 1) :=
+        Nat.fib_add_two
+      have h2 : Nat.fib (k + 1) = Nat.fib (k - 1) + Nat.fib k := by
+        simpa only [show k - 1 + 2 = k + 1 by omega,
+          show k - 1 + 1 = k by omega] using
+            (Nat.fib_add_two (n := k - 1))
+      have h3 : Nat.fib k = Nat.fib (k - 2) + Nat.fib (k - 1) := by
+        simpa only [show k - 2 + 2 = k by omega,
+          show k - 2 + 1 = k - 1 by omega] using
+            (Nat.fib_add_two (n := k - 2))
+      have hsum : Nat.fib (k + 2) + Nat.fib (k - 2) = 3 * Nat.fib k := by omega
+      refine ⟨⟨k + 2, k - 2, ?_⟩, ⟨4, k, ?_⟩⟩
+      · exact hk.trans hsum.symm
+      · simpa only [show Nat.fib 4 = 3 by decide] using hk
+
 end D5.S1.Recurrence.BarkerFibonacciSumProductRecurrence
