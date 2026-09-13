@@ -148,3 +148,48 @@ k=0 也纳入分类：按 ZMod 0=Z 的约定，左边对应 Z，右边对应 Z/2
 主要声明：`companion_image_eq_kernel`、`balanced_image_eq_kernel`、`one_step_return_module_classification`、`balanced_return_annihilated`、`companion_return_not_annihilated`、`one_step_return_modules_not_isomorphic`、`scalar_spectrum_and_structural_separation`。
 
 本组继续停留在普通证明与候选 Lean 源码层，未宣称已执行内核。该结构恢复是指定校准族的完整分类，不推广为任意环面自同构的单步分类。矩阵 P_k 的行列式提示下一项可证明的问题：在所有模数中，2 是否是唯一检测这一共轭差异的素数？应在实际 ZMod 作用上构造可逆交织子，并证明偶数模数的精确障碍。
+
+### TR.8 完整交织子范数与精确模数判据
+
+TR.7 提出的素数定位现在有全称证明脚本 `ToralReturnPrimeTwoCriterion.lean` 及对应 Scribe。系数从原整数矩阵经标准环同态输运，未引入一个只在名称上对应原系统的新模型。
+
+对任意交换环 R、自然数 k，所有满足 C_k U=U D_k 的矩阵都恰好具有形式
+
+$$U(a,b)=\begin{pmatrix}a&b\\2k((k+1)b-a)&2(a-kb)\end{pmatrix},\qquad a,b\in R.$$
+
+证明的正向来自两个第一行方程；反向将该表达式代入四个矩阵元即可。推导不除以 2，因此在特征 2 中也成立。随即有精确恒等式
+
+$$\det U(a,b)=2\bigl(a^2-k(k+1)b^2\bigr).$$
+
+该公式把偶性障碍提升为二次范数说明。整数情形，非零交织子的格指数受这个范数控制；a=1、b=0 实现行列式 2。这里的“非零”应精确理解为行列式非零，单纯非零矩阵仍可能奇异。对应二次域随 k 变化，k=1 给出 Q(sqrt(2))。
+
+在 ZMod(m) 上，用存在 P,Q 满足 PQ=QP=I 且 C_k P=P D_k 定义实际可逆矩阵共轭。对所有 k,m≥0：
+
+$$C_k\text{ 与 }D_k\text{ 在 }\mathbb Z/m\text{ 上共轭}\quad\Longleftrightarrow\quad m\text{ 为奇数}.$$
+
+充分性：写 m=2r+1，令 u=-r mod m，则 2u=1。取
+
+$$P=\begin{pmatrix}1&0\\-2k&2\end{pmatrix},\qquad
+Q=\begin{pmatrix}1&0\\k&u\end{pmatrix}.$$
+
+直接乘法证明 PQ=QP=I 及 C_kP=PD_k。
+
+必要性：若 2 整除 m，标准环同态 ZMod(m)→ZMod(2) 存在。任何假设的可逆交织子都必须满足 det(P)det(Q)=1。将范数公式代入再通过该同态，左侧为 0，右侧为 1，矛盾。m=0 对应整数环，亦在排除范围；m=1 为零环，满足奇数侧结论。
+
+主要声明：`intertwiner_normal_form`、`intertwiner_quadratic_norm`、`modular_conjugacy_iff_odd`。
+
+本族的结论非常具体：所有正时间返回商基数相同；一步返回群结构已可区分；所有奇数模数的可逆线性观察仍等价；模 2 足以检测差异。无须增加时间长度，也无须提高奇素数精度。该结论只针对已定义的族，并不推广为一般局部到整体共轭判定。
+
+### TR.9 此后真正需要闭合的对象接口
+
+源稿继续维持“普通数学证明及候选 Lean 脚本，未执行内核或 Scribe 编译”的层级。三个阶段实际进行了符号恒等式、整数 Smith 数据、有限模矩阵与显式逆矩阵的诊断；有限诊断不替代文件中全部参数的证明。
+
+下一个优先任务是建立实际环面固定点与原返回模的对应。设 M=A^n-I 在实向量空间可逆，固定点群是 M^{-1}Z²/Z²。其候选同构为
+
+$$[x]\longmapsto[Mx]\quad\text{从}\quad M^{-1}\mathbb Z^2/\mathbb Z^2\quad\text{到}\quad\mathbb Z^2/M\mathbb Z^2.$$
+
+要完成该桥，须在真实商拓扑或 AddCircle² 状态空间上构造 A 的作用，证明固定点对象正好是左侧群，证明同构良定义、满射、单射，最后消费本节已有基数和结构定理。该对应属于经典数学，不能作为新的开放问题解决；但它是把本轮算术结果称作环面周期点结果前不可跳过的一步。
+
+随后可以保留返回自同构及覆盖层间的作用，研究具有真正 R-module 标记的广义 BF 系统。TR2 已有的完备性定理应作为复用目标，其作用域和相似性前提必须保留。对实际三维映射环面，还需先构造基本群与同调接口，不能从某个整数矩阵的非共轭直接跳到一般三维几何结论。
+
+外部未闭合方向维持 TR5 的高亏格映射类群 CSP 与曲线轨道合同控制。今后若尝试具体受限情形，必须增加非阿贝尔基本群的有限特征商、真实曲线轨道及已知 CSP 组合定理。这里已经证明的二维线性例子用于测量观察数据的不足及修复，尚未构成该高亏格猜想的一个证明步骤。研究推进应以能实际消费的定理依赖为依据，不以共同名称或主题相似性计数。
