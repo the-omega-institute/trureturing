@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The dyadic adjacent-row relation admits a telescoping kernel decomposition and exact readout kernel. -/
+   digest: Dyadic adjacent rows have an exact evaluation kernel and full finite projections. -/
 import Mathlib
 
 set_option autoImplicit false
@@ -94,7 +94,8 @@ theorem support_bounded_decomposition (u : V) (m : ℕ)
         omega
       simp [Finset.sum_apply, t, eps, Finsupp.single_apply, hzero, Nat.ne_of_gt hgt]
 
-/-- A vector lies in the span of the adjacent relations exactly when its dyadic evaluation is zero. -/
+/-- A vector lies in the span of the adjacent relations exactly when
+its dyadic evaluation is zero. -/
 theorem mem_H_iff_eval_eq_zero (u : V) : u ∈ H ↔ ell u = 0 := by
   classical
   let f : V →+ ℚ :=
