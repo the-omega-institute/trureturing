@@ -1,0 +1,12 @@
+**证明。** 写 $u s_\rho(n)=A+P\varphi$，其中 $P=P_u^\rho(n)$。
+取内部嵌入并用 $(s_\rho(n))_*=-r_\rho(n)$，得到
+$A-P\alpha=-u_*r_\rho(n)$，即 $P\alpha=A+u_*r_\rho(n)$。
+因此
+
+$$
+c_u^\rho(n)=\lfloor P\alpha+\rho\rfloor-A
+=\lfloor u_*r_\rho(n)+\rho\rfloor.
+$$
+
+第二式比较整数坐标与 $\varphi$ 坐标即可。
+
