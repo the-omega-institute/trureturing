@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:aba7245b532f8afbaf4c5dfc0d5279b3d4e6e26c571c63e8381347bf0f285e43
+  normalized_sha256: sha256:aba7245b532f8afbaf4c5dfc0d5279b3d4e6e26c571c63e8381347bf0f285e43
+cas_ref: sha256:aba7245b532f8afbaf4c5dfc0d5279b3d4e6e26c571c63e8381347bf0f285e43
+coverage_gids:
+  - gid: D5/S3/Weil/Analytic/BaezDuarteMertensTransfer.baez_duarte_decay_of_eventual_mertens_bound
+    target_statement_id: sha256:ab966c6cd45b160309d5b355c59f859c80823b4c7dd455da10addce381fab665
+  - gid: D5/S3/Weil/Analytic/BaezDuarteMertensTransfer.baez_duarte_decay_of_mertens_bound
+    target_statement_id: sha256:1a36c7e97d8fca079a209755c9f4d885f4054414c010e365b6b00b74f8cdd3dd
+receipts:
+  unresolved_subitems: []

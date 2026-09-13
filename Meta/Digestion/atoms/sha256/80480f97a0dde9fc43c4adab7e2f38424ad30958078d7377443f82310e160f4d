@@ -1,0 +1,5 @@
+**定理 209（全素数寄存器的唯一性与有限容量盒的并）。** \(\Pi_{\rm Pr}\) 是交换幺半群同构
+\[
+\Pi_{\rm Pr}:\mathsf E_{\rm Pr}\xrightarrow{\ \cong\ }\mathbb N_{>0},
+\tag{Z-UNIVERSAL-REGISTERS}
+\]
