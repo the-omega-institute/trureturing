@@ -444,7 +444,7 @@ internal sealed partial class TransactionFixture
                     : new[]
                         {
                             "/bin/bash", Path.Combine(Root, ScriptPath), command,
-                            baseRevision ?? (command is "deposit" or "deposit-uncovered" ? "HEAD" : "synthetic-base"),
+                            baseRevision ?? "HEAD",
                         }
                         .Concat(atomId is null ? [] : new[] { atomId })
                         .Append(gid)),
@@ -585,7 +585,7 @@ internal sealed partial class TransactionFixture
                 "/bin/bash",
                 Path.Combine(Root, ScriptPath),
                 "cover-batch",
-                "synthetic-base",
+                HeadRevision(),
                 atomsFile,
             ],
             Root,

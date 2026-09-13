@@ -66,8 +66,6 @@ public sealed partial class LeanReportInputScriptTests
         var before = Fields(fixture.RunCommand("address"));
         Assert.Equal(0, fixture.CaptureProductionInput().ExitCode);
         Assert.Equal(0, fixture.Verify().ExitCode);
-        fixture.CreateDeltaBaseline();
-        Assert.Equal("reuse", fixture.DeltaPlanStatus());
 
         fixture.Append(launcher, "# changed launcher\n");
         var after = Fields(fixture.RunCommand("address"));
@@ -75,7 +73,6 @@ public sealed partial class LeanReportInputScriptTests
         Assert.NotEqual(before[1], after[1]);
         Assert.Equal(before[2..], after[2..]);
         Assert.Equal(2, fixture.Verify().ExitCode);
-        Assert.Equal("fallback", fixture.DeltaPlanStatus());
 
         fixture.RemoveSource(launcher);
         var absent = fixture.RunCommand("address");
@@ -117,10 +114,10 @@ public sealed partial class LeanReportInputScriptTests
     public void RegistrationChangeRejectsProducerBaselineReuse()
     {
         using var fixture = new LeanReportInputFixture();
-        fixture.CreateDeltaBaseline();
-        Assert.Equal("reuse", fixture.DeltaPlanStatus());
+        Assert.Equal(0, fixture.CaptureProductionInput().ExitCode);
+        Assert.Equal(0, fixture.Verify().ExitCode);
         fixture.RegisterProducerInput("tools/StrataLint.Scribe/Emission/FixtureEmitter.cs");
-        Assert.Equal("fallback", fixture.DeltaPlanStatus());
+        Assert.Equal(2, fixture.Verify().ExitCode);
     }
 
     private sealed partial class LeanReportInputFixture

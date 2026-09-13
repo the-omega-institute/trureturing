@@ -5,8 +5,14 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-public sealed class InspectorSourceModeTests
+public sealed partial class InspectorSourceModeTests
 {
+    [Fact]
+    public void LocalConsumersCarryExplicitBaseThroughPublicRoutes() => RunFixture("local-consumers");
+
+    [Fact]
+    public void CompatiblePriorReportCannotNarrowDeclaredInspection() => RunFixture("compatible-prior");
+
     [Theory]
     [InlineData("actions-pr")]
     [InlineData("actions-push")]
@@ -30,7 +36,7 @@ public sealed class InspectorSourceModeTests
         using var temporary = new TemporaryDirectory();
         var result = TestProcessRunner.Run("python3", ["-c", Fixture,
             TestRepositoryLayout.FindRoot(), temporary.Path,
-            Path.Combine(AppContext.BaseDirectory, "StrataLint.dll"), mode], temporary.Path,
+            Path.Combine(AppContext.BaseDirectory, "StrataLint.dll"), mode, LocalConsumers, Selection], temporary.Path,
             BoundedProcessRunner.HangDetectionBudget, 4 * 1024 * 1024);
         Console.WriteLine(Encoding.UTF8.GetString(result.StandardOutput));
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardOutput)
@@ -67,7 +73,7 @@ public sealed class InspectorSourceModeTests
         import hashlib, json, os, shutil, subprocess, sys, zipfile
         from pathlib import Path
 
-        candidate, scratch, cli, mode = sys.argv[1:]
+        candidate, scratch, cli, mode, local_consumers, selection = sys.argv[1:]
         actions = mode.startswith("actions-")
         transfer = actions or mode == "transfer"
         source_mode = mode.removeprefix("actions-")
@@ -81,6 +87,15 @@ public sealed class InspectorSourceModeTests
             if executable: path.chmod(0o755)
             return path
         paths = [
+            "Makefile",
+            "tools/scripts/scribe.sh",
+            "tools/scripts/ingest.sh",
+            "tools/scripts/workflow/playbook-workflows.sh",
+            "tools/scripts/workflow/math-gate.sh",
+            "tools/scripts/workflow/scribe-content-checks.sh",
+            "tools/scripts/report/report-consumer.sh",
+            "tools/scripts/report/lean-report.sh",
+            "tools/scripts/report/echo-residual-summary.sh",
             "tools/scripts/lean-report-pair.sh",
             "tools/scripts/report/report-supervisor.sh",
             "tools/scripts/report/lean-report-input.sh",
@@ -109,6 +124,10 @@ public sealed class InspectorSourceModeTests
         write("Trureturing.lean", "import D5.Probe\n")
         source = "import Init\nexample : ')' =')' := by decide\n"
         write("D5/Probe.lean", source if source_mode == "initial" else "import Init\nexample : True := by trivial\n")
+        if mode == "compatible-prior":
+            write("D5/Dependent.lean", "import Init\n")
+            write("D5/Unrelated.lean", "import Init\n")
+            write("Trureturing.lean", "import D5.Dependent\n")
         write("tools/StrataLint.Cli/StrataLint.Cli.csproj", '<Project Sdk="Microsoft.NET.Sdk" />\n')
         write("tools/scripts/worktree/lean-cache-ensure.sh", "#!/bin/bash\nset -euo pipefail\n", True)
         write("tools/scripts/worktree/lean-cache-run.sh", '#!/bin/bash\nset -euo pipefail\nexec "$@"\n', True)
@@ -135,6 +154,9 @@ public sealed class InspectorSourceModeTests
             scope("managed-modules", [], ["Trureturing.lean", "D5/**/*.lean"]),
             scope("lean-sources", ["managed-modules"], ["tools/lean-inspector/*.lean"]),
             scope("lean-config", [], ["lean-toolchain", "lakefile.toml", "lake-manifest.json"]),
+            scope("scribe-projections", [], ["D5/**/*.lean"]),
+            scope("scribe-describe", [], ["D5/**/*.lean"]),
+            scope("scribe-markdown", [], ["D5/**/*.lean"]),
             scope("producer", [], paths + ["Meta/FILEMAP.toml", "Meta/LeanInputs.json",
                 "tools/scripts/worktree/lean-cache-ensure.sh", "tools/scripts/worktree/lean-cache-run.sh"]),
         ])))
@@ -186,6 +208,14 @@ public sealed class InspectorSourceModeTests
         if command == ["lean-utility-input"]:
             print("{}")
             raise SystemExit(0)
+        if os.environ.get("FIXTURE_PUBLIC_CONSUMERS") == "1" and command[0] in (
+                "emit", "emit-values", "filemap", "dag-render", "ingest", "align-digestion-status",
+                "ledger-reanchor-mathlib", "deposit-header-check", "ledger-frozen", "cover-atom", "check",
+                "projections", "describe-report", "markdown-check", "echo-verify", "digest-status", "ledger-align"):
+            with open(os.environ["FIXTURE_PUBLIC_RESULTS"], "a") as f:
+                f.write(json.dumps(dict(command=command, source_base=os.environ.get("STRATALINT_SOURCE_BASE"),
+                    push_before=os.environ.get("STRATALINT_PUSH_BEFORE"), push_head=os.environ.get("STRATALINT_PUSH_HEAD"))) + "\\n")
+            raise SystemExit(0)
         assert command[0] in ("filemap-conform", "lean-source-input"), command
         os.execv(os.environ["FIXTURE_DOTNET"], [os.environ["FIXTURE_DOTNET"], os.environ["FIXTURE_CLI"], *command])
         ''')
@@ -201,12 +231,19 @@ public sealed class InspectorSourceModeTests
                 module, path, sha = args[i:i+3]
                 modules.append(dict(module=module, source_path=path, source_sha256=sha,
                     imports=["Init"] if path == "D5/Probe.lean" else ["D5.Probe"], declarations=[]))
+                if os.environ.get("FIXTURE_SELECTION") == "1":
+                    modules[-1]["imports"] = ["D5.Dependent"] if module == "Trureturing" else ["Init"]
+                    if module == "D5.Dependent":
+                        modules[-1]["utility_refutation"] = dict(claim_source_path="D5/Probe.lean",
+                            claim_source_sha256="sha256:" + __import__("hashlib").sha256(Path("D5/Probe.lean").read_bytes()).hexdigest(),
+                            claim_gid="D5/Probe.claim", result_gid="D5/Dependent.result", is_closed_negation=True)
             output.write_text(json.dumps(dict(schema="stratalint-lean-inspector-spool-v1", modules=sorted(modules, key=lambda m: m["module"]))))
             raise SystemExit(0)
         os.execv(os.environ["FIXTURE_LAKE"], [os.environ["FIXTURE_LAKE"], *args])
         ''')
         env = dict(os.environ, PATH=str(bin_dir) + os.pathsep + os.environ["PATH"],
             FIXTURE_DOTNET=real_dotnet, FIXTURE_LAKE=real_lake, FIXTURE_CLI=cli, FIXTURE_CALLS=str(calls),
+            FIXTURE_SELECTION="1" if mode == "compatible-prior" else "0",
             STRATALINT_SOURCE_BASE="", STRATALINT_PUSH_BEFORE="", STRATALINT_PUSH_HEAD="",
             STRATALINT_REPORT_CACHE_ROOT=str(scratch / "cache"), STRATALINT_SUPERVISOR_ROOT=str(scratch / "supervisor"))
         for name in tuple(env):
@@ -268,6 +305,8 @@ public sealed class InspectorSourceModeTests
         assert "LEAN_REPORT_PROVENANCE side=candidate mode=cached" in cached.stdout, cached.stdout
         assert context_path.read_bytes() == context_bytes
         assert not phase.exists(), "cache hit retained producer logs"
+        if mode == "local-consumers": exec(local_consumers)
+        if mode == "compatible-prior": exec(selection)
         if transfer:
             # Literal public report/cache calls with synthetic fixed Git inputs.
             # No workflow source is read or asserted by this test.
@@ -312,16 +351,20 @@ public sealed class InspectorSourceModeTests
             assert sum(json.loads(line)[0] == "lake" for line in calls.read_text().splitlines()) == lake_calls_before_transfer
             assert not (root / ".lake").exists(), "report transfer required Lean build artifacts"
         invocations = [json.loads(line) for line in calls.read_text().splitlines()]
-        assert sum(row == ["lake", "build"] for row in invocations) == 1, invocations
-        assert sum(any(a.endswith("/Inspector.lean") for a in row) for row in invocations) == 1, invocations
+        expected_builds = 2 if mode in ("local-consumers", "compatible-prior") else 1
+        assert sum(row == ["lake", "build"] for row in invocations) == expected_builds, invocations
+        expected_inspections = 2 if mode == "compatible-prior" else 1
+        assert sum(any(a.endswith("/Inspector.lean") for a in row) for row in invocations) == expected_inspections, invocations
         demands = [row[row.index("--") + 1:] for row in invocations if "lean-source-input" in row]
         assert len(demands) >= 4, demands
-        assert all(row[1:1+len(source_args)] == source_args for row in demands), demands
+        expected_sources = [source_args]
+        if mode == "local-consumers": expected_sources.append(["--push-before", before, "--push-head", head])
+        assert all(any(row[1:1+len(args)] == args for args in expected_sources) for row in demands), demands
         print(json.dumps(dict(mode=mode, before=before, head=head, cold_exit=cold.returncode,
             repository=str(root), delivered_report=str(scratch / "delivered-report.json"),
             cache_exit=cached.returncode, missing_context_exit=missing.returncode, inspector_context=metrics,
             context_sha256=hashlib.sha256(context_bytes).hexdigest(), native_demand_calls=len(demands),
             transfer_context_rejections=negative_exits if transfer else {},
-            fixture_lean_builds=1, fixture_declaration_spools=1)))
+            fixture_lean_builds=expected_builds, fixture_declaration_spools=expected_inspections)))
         """";
 }

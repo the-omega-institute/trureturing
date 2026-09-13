@@ -16,6 +16,8 @@ usage() {
 }
 
 [[ -n "$BASE" ]] || usage
+BASE="$(git rev-parse --verify "${BASE}^{commit}")"
+export BASE
 case "$VERB" in
   ingest)
     [[ $# -le 3 ]] || usage
@@ -33,16 +35,16 @@ case "$VERB" in
       "${ingest_args[@]}"
     ;;
   align-digestion-status)
-    exec "$CONSUMER" --role digestion-alignment-consumer --report "$REPORT" -- \
+    exec "$CONSUMER" --role digestion-alignment-consumer --report "$REPORT" --base "$BASE" -- \
       dotnet run --project "$PROJECT" --configuration Release -- \
         align-digestion-status --base "$BASE"
     ;;
   mathlib-reanchor)
-    base_sha="$(git -C "$ROOT" merge-base HEAD "$BASE")"
+    base_sha="$BASE"
     make -C "$ROOT" lean-report BASE="$base_sha"
     dotnet run --project "$PROJECT" --configuration Release -- \
       ledger-reanchor-mathlib --base "$base_sha"
-    exec "$CONSUMER" --role digestion-alignment-consumer --report "$REPORT" -- \
+    exec "$CONSUMER" --role digestion-alignment-consumer --report "$REPORT" --base "$base_sha" -- \
       dotnet run --project "$PROJECT" --configuration Release -- \
         align-digestion-status --base "$base_sha"
     ;;
