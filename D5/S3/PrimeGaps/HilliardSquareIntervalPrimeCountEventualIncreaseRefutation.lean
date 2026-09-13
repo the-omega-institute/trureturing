@@ -2,14 +2,12 @@
    generality: G
    mirror-B: D5/B/S3/PrimeGaps/HilliardSquareIntervalPrimeCountEventualIncreaseRefutation
    mirror-E: none(waiver:symbolic-refutation-no-numeric-artifact)
-   anchors: [mathlib/module/Mathlib.Data.Finset.Card, mathlib/module/Mathlib.Data.Nat.Prime.Basic, mathlib/module/Mathlib.Order.Interval.Finset.Nat, mathlib/module/Mathlib.Order.Monotone.Basic]
+   anchors: [mathlib/module/Mathlib.Data.Nat.Prime.Basic, mathlib/module/Mathlib.Order.Interval.Finset.Nat]
    utility: none
    digest: Odd-prime counting refutes eventual increase in Hilliard square intervals. -/
 
-import Mathlib.Data.Finset.Card
 import Mathlib.Data.Nat.Prime.Basic
 import Mathlib.Order.Interval.Finset.Nat
-import Mathlib.Order.Monotone.Basic
 
 namespace D5.S3.PrimeGaps.HilliardSquareIntervalPrimeCountEventualIncreaseRefutation
 
