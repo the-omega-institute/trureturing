@@ -253,9 +253,12 @@ internal sealed partial class TransactionFixture
     private void CopyScript()
     {
         var root = TestRepositoryLayout.FindRoot();
-        var target = Path.Combine(Root, ScriptPath);
-        Directory.CreateDirectory(Path.GetDirectoryName(target)!);
-        File.Copy(Path.Combine(root, ScriptPath), target);
+        foreach (var relativePath in new[] { ScriptPath, "tools/scripts/preflight.sh" })
+        {
+            var target = Path.Combine(Root, relativePath);
+            Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+            File.Copy(Path.Combine(root, relativePath), target);
+        }
     }
 
     private void WriteGitGuardStub() => WriteExecutable("git", """
@@ -420,7 +423,8 @@ internal sealed partial class TransactionFixture
         string? baseRevision = null,
         bool rejectDepositHeader = false,
         bool useCanonicalFrozenQuery = false,
-        bool throughMake = false) =>
+        bool throughMake = false,
+        string? pushBefore = null) =>
         TestProcessRunner.Run(
             "/usr/bin/env",
             [
@@ -433,6 +437,7 @@ internal sealed partial class TransactionFixture
                 $"PLAYBOOK_REJECT_DEPOSIT_HEADER={(rejectDepositHeader ? "1" : "0")}",
                 $"PLAYBOOK_USE_CANONICAL_FROZEN_QUERY={(useCanonicalFrozenQuery ? "1" : "0")}",
                 $"PLAYBOOK_REAL_CLI={RealCliPath()}",
+                $"BEFORE={pushBefore ?? string.Empty}",
                 .. (throughMake
                     ? new[] { "/usr/bin/make", command, $"BASE={baseRevision ?? "HEAD"}", $"GID={gid}" }
                         .Concat(atomId is null ? [] : new[] { $"ATOM_ID={atomId}" })
