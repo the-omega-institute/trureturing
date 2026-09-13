@@ -411,6 +411,27 @@ public sealed partial class LeanCachePublishTests
         Assert.Contains("\"workflow_run_id\":\"7777\"", result.Text, StringComparison.Ordinal);
     }
 
+    // Routing control only: the fixture runner and Lake are stubs. Native archive
+    // extraction, hardlinks and the real guard are covered by NativeSharedLakeCacheTests.
+    [Fact]
+    public void FetchPropagatesSelectedRunnerFailureAndSuccess()
+    {
+        using var fixture = new FetchFixture(deviation: null);
+        using var occupied = fixture.OccupyWriter();
+
+        var blocked = fixture.RunFetch(ScriptPath());
+
+        Assert.NotEqual(0, blocked.ExitCode);
+        Assert.Contains("writer guard is busy", blocked.Text, StringComparison.Ordinal);
+        Assert.False(fixture.Unpacked, "a busy worktree must not be mutated");
+
+        occupied.Dispose();
+        var released = fixture.RunFetch(ScriptPath());
+
+        Assert.Equal(0, released.ExitCode);
+        Assert.True(fixture.Unpacked);
+    }
+
     /// <summary>
     /// 一棵最小的可发布树，外加 PATH 上的假 `gh`/`lake`。夹具存在的理由是上面那条断言：
     /// 要判「发布确实按 producer commit 锚定」，就得看 gh **实际收到**的参数，而不是脚本
@@ -443,6 +464,8 @@ public sealed partial class LeanCachePublishTests
                     + $"\"{new string('1', 64)}\" \"{new string('2', 64)}\"\n");
 
             Directory.CreateDirectory(Bin);
+            WriteExecutable(Path.Combine(Repository, "tools/scripts/worktree/lean-cache-run.sh"),
+                "#!/bin/bash\nexport LAKE_RESTORE_ARTIFACTS=true\nexport LAKE_BIN=" + Path.Combine(Bin, "lake") + "\nexec \"$@\"\n");
             // release view 报「不存在」，脚本才会走到创建；create 把参数与 manifest 留证。
             WriteExecutable(
                 Path.Combine(Bin, "gh"),
@@ -459,7 +482,9 @@ public sealed partial class LeanCachePublishTests
             WriteExecutable(
                 Path.Combine(Bin, "lake"),
                 "#!/usr/bin/env bash\n"
-                    + "if [[ \"$1\" == 'pack' ]]; then printf 'archive\\n' > \"$2\"; fi\n"
+                    + "[[ \"${LAKE_RESTORE_ARTIFACTS:-}\" == true ]] || exit 8\n"
+                    + "if [[ \"$1\" == build ]]; then touch .lake/export-ready; fi\n"
+                    + "if [[ \"$1\" == 'pack' ]]; then test -f .lake/export-ready || exit 9; printf 'archive\\n' > \"$2\"; fi\n"
                     + "exit 0\n");
             if (requirePortableLocaleForShasum)
             {
@@ -571,6 +596,24 @@ public sealed partial class LeanCachePublishTests
                 helper,
                 "#!/usr/bin/env bash\nprintf '%s %s\\n' "
                     + $"\"{new string('3', 64)}\" \"{new string('4', 64)}\"\n");
+            WriteExecutable(
+                Path.Combine(Repository, "tools/scripts/worktree/lean-cache-run.sh"),
+                "#!/usr/bin/env bash\n"
+                    + "set -euo pipefail\n"
+                    + "mkdir -p \"$PWD/.lake\"\n"
+                    + "writer=\"$PWD/.lake/.lean-cache-writer\"\n"
+                    + "if ! mkdir \"$writer\" 2>/dev/null; then\n"
+                    + "  echo 'private .lake writer guard is busy' >&2\n"
+                    + "  exit 2\n"
+                    + "fi\n"
+                    + "finish() { rmdir \"$writer\"; }\n"
+                    + "trap finish EXIT\n"
+                    + "export ELAN_TOOLCHAIN=\"$(cat \"$PWD/lean-toolchain\")\"\n"
+                    + "export LAKE_ARTIFACT_CACHE=true\n"
+                    + "export LAKE_RESTORE_ARTIFACTS=true\n"
+                    + "export LAKE_NO_CACHE=true\n"
+                    + "export LAKE_BIN=\"$(command -v lake)\"\n"
+                    + "\"$@\"\n");
 
             var producer = deviation == "no-producer" ? "" : $"producer_commit_sha={ProducerSha}\n";
             var runId = deviation == "no-run-id" ? "" : "workflow_run_id=7777\n";
@@ -652,6 +695,7 @@ public sealed partial class LeanCachePublishTests
                 Path.Combine(Bin, "lake"),
                 "#!/usr/bin/env bash\n"
                     + $"if [[ \"$1\" == 'unpack' ]]; then printf 'yes\\n' > '{UnpackMarker}'; fi\n"
+                    + "if [[ \"$1\" == 'build' ]]; then test \"${LAKE_ARTIFACT_CACHE:-}\" = true; fi\n"
                     + "exit 0\n");
         }
 
@@ -662,6 +706,14 @@ public sealed partial class LeanCachePublishTests
         private string UnpackMarker { get; }
 
         internal bool Unpacked => File.Exists(UnpackMarker);
+
+        internal IDisposable OccupyWriter()
+        {
+            var writer = Path.Combine(Repository, ".lake", ".lean-cache-writer");
+            Directory.CreateDirectory(Path.GetDirectoryName(writer)!);
+            Directory.CreateDirectory(writer);
+            return new WriterReservation(writer);
+        }
 
         internal PublishAttempt RunFetch(string script)
         {
@@ -686,6 +738,14 @@ public sealed partial class LeanCachePublishTests
         }
 
         public void Dispose() => root.Dispose();
+
+        private sealed class WriterReservation(string path) : IDisposable
+        {
+            public void Dispose()
+            {
+                if (Directory.Exists(path)) Directory.Delete(path);
+            }
+        }
 
         private static void WriteExecutable(string path, string contents)
         {

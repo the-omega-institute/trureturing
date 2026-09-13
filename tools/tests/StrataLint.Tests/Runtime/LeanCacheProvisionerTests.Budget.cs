@@ -8,22 +8,20 @@ public sealed partial class LeanCacheProvisionerTests
     private const string BudgetVariable = "STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS";
 
     [Fact]
-    public void ThreeNamedBudgetsExistAndCurrentlyShareTheLoadBearingValue()
+    public void TwoNamedBudgetsExistAndCurrentlyShareTheLoadBearingValue()
     {
         var lean = LeanCacheProvisioner.LeanCommandBudget;
-        var copy = LeanCacheProvisioner.DirectoryCopyBudget;
         var fetch = LeanCacheProvisioner.DependencyFetchBudget;
 
         Assert.Equal(
             PinnedProductionBudgets.LeanCacheProvisionBudget,
             lean);
 
-        Assert.Equal(lean, copy);
         Assert.Equal(lean, fetch);
     }
 
     [Fact]
-    public void AllThreeNamedBudgetsFollowTheClampedEnvironmentOverride()
+    public void AllTwoNamedBudgetsFollowTheClampedEnvironmentOverride()
     {
         var previous = Environment.GetEnvironmentVariable(BudgetVariable);
         try
@@ -31,7 +29,6 @@ public sealed partial class LeanCacheProvisionerTests
             Environment.SetEnvironmentVariable(BudgetVariable, "99999");
             var clamped = PinnedProductionBudgets.LeanCacheProvisionCeiling;
             Assert.Equal(clamped, LeanCacheProvisioner.LeanCommandBudget);
-            Assert.Equal(clamped, LeanCacheProvisioner.DirectoryCopyBudget);
             Assert.Equal(clamped, LeanCacheProvisioner.DependencyFetchBudget);
         }
         finally
@@ -106,7 +103,7 @@ public sealed partial class LeanCacheProvisionerTests
         {
             using var fixture = new SharedLakeFixture();
             var runner = new BudgetRunner();
-            var result = WorktreeCommand.Run(fixture.Reader, ["with-cache-reader", "--", "lake", "build"], runner);
+            var result = WorktreeCommand.Run(fixture.Reader, ["with-cache", "--", "lake", "build"], runner);
             Assert.True(result.Success, result.Error);
             Assert.NotEmpty(runner.Budgets);
             Assert.All(runner.Budgets, budget => Assert.Equal(5400, budget.TotalSeconds));

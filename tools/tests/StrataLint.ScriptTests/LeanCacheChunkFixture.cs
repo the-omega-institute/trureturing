@@ -29,16 +29,28 @@ internal sealed class LeanCacheChunkFixture : IDisposable
         Write(Path.Combine(repository, "lean-toolchain"), "leanprover/lean4:v4.31.0\n");
         Write(Path.Combine(temporary.Path, "archive"), archive);
         Write(Path.Combine(temporary.Path, "tags"), "");
-        ScriptHarnessScratch.WriteExecutableStub(Path.Combine(repository, "tools/scripts/worktree/lean-cache-input.sh"),
+        WriteStub(Path.Combine(repository, "tools/scripts/worktree/lean-cache-input.sh"),
             $"printf '%s %s\\n' '{new string('3', 64)}' '{new string('4', 64)}'");
-        ScriptHarnessScratch.WriteExecutableStub(Path.Combine(bin, "lake"), """
+        // Transport/routing fixture only. NativeSharedLakeCacheTests exercises the
+        // actual runner, writer reservation and Lake archive materialization.
+        WriteStub(Path.Combine(repository, "tools/scripts/worktree/lean-cache-run.sh"), """
+            export ELAN_TOOLCHAIN="$(cat "$PWD/lean-toolchain")"
+            export LAKE_ARTIFACT_CACHE=true
+            export LAKE_RESTORE_ARTIFACTS=true
+            export LAKE_NO_CACHE=true
+            export LAKE_BIN="$(command -v lake)"
+            exec "$@"
+            """);
+        WriteStub(Path.Combine(bin, "lake"), """
+            [[ "${LAKE_ARTIFACT_CACHE:-}" == true && "${LAKE_RESTORE_ARTIFACTS:-}" == true ]]
             case "$1" in
-              pack) cp "$CHUNK_FIXTURE/archive" "$2" ;;
+              build) cp "$CHUNK_FIXTURE/archive" "$CHUNK_FIXTURE/build-archive" ;;
+              pack) cp "$CHUNK_FIXTURE/build-archive" "$2" ;;
               unpack) cp "$2" "$CHUNK_FIXTURE/unpacked" ;;
               *) exit 80 ;;
             esac
             """);
-        ScriptHarnessScratch.WriteExecutableStub(Path.Combine(bin, "gh"), """
+        WriteStub(Path.Combine(bin, "gh"), """
             set -euo pipefail
             case "$1 $2" in
               'release view') exit 1 ;;
@@ -181,6 +193,13 @@ internal sealed class LeanCacheChunkFixture : IDisposable
     }
 
     private static void Write(string path, string text) => ScriptHarnessScratch.WriteScratchText(path, text);
+    private static void WriteStub(string path, string body)
+    {
+        // Executable shebangs must start at byte zero, without a UTF-8 BOM.
+        Write(path, "#!/usr/bin/env bash\nset -euo pipefail\n" + body + "\n");
+        File.SetUnixFileMode(path,
+            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+    }
     private static string Digest(string value) => Convert.ToHexStringLower(SHA256.HashData(Encoding.ASCII.GetBytes(value)));
     public void Dispose() => temporary.Dispose();
     internal sealed record Attempt(int ExitCode, string Text);

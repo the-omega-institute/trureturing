@@ -38,9 +38,10 @@
 #   manifest 记 producer_commit_sha 与 workflow_run_id；缺这两个值时 publish 直接拒绝；
 #   workflow 侧显式写出 checkout 取的事件 SHA。
 #
-#   仍未落地（B 步）：**consumer 侧没有任何 provenance 核验** —— 上面这些字段现在
-#   写得出来，但没有人去核它们。**在 consumer 核验落地之前，ensure 不得自动 fetch
-#   本归档** —— 当前也确实没有，手工 target 只作诊断。
+#   consumer (`fetch`) 已核验 producer commit、workflow run id 的存在、release target
+#   与 producer 的一致性，以及资产清单和 GitHub 记录的归档/分片摘要；不核验作者或
+#   workflow run 的执行身份。验证通过后，经 canonical runner 保持 writer reservation
+#   调用所选 Lake unpack。ensure 只让原生 Lake 物化依赖，不自动 fetch 本归档。
 set -euo pipefail
 export LC_ALL=C
 
@@ -171,7 +172,11 @@ case "$VERB" in
     fi
     staged="$(mktemp -d)"
     trap 'rm -rf "$staged"' EXIT
-    ( cd "$repository" && lake pack "$staged/$asset" >/dev/null )
+    # Build under the same reservation as pack so the archive contains current,
+    # complete outputs. Both calls use the executable selected by the runner.
+    ( cd "$repository" && "$repository/tools/scripts/worktree/lean-cache-run.sh" \
+        /bin/bash -c \
+        '"$LAKE_BIN" build >&2 && "$LAKE_BIN" pack "$1"' lake-export "$staged/$asset" >/dev/null )
     bytes="$(wc -c < "$staged/$asset" | tr -d ' ')"
     digest="$(sha256_of "$staged/$asset")"
     archives=("$staged/$asset")
@@ -446,8 +451,14 @@ fail_provenance() {
     # 解包只有这一个入口，且它在**产地核验之后**。做成具名函数不是修辞：
     # `VerifiedConsumptionHasASingleEntryPoint` 钉住脚本里 `lake unpack` 恰好出现一次
     # 且落在此函数体内，故将来任何新分支想解包都必须走这里，不能各写各的。
+    cache_runner="$repository/tools/scripts/worktree/lean-cache-run.sh"
+    [[ -x "$cache_runner" ]] \
+      || { printf 'LEAN_CACHE_FETCH {"status":"miss","tag":"%s","reason":"canonical cache runner is absent"}\n' "$resolved"; exit 1; }
     consume_verified_archive() {
-      ( cd "$repository" && lake unpack "$staged/$asset" >/dev/null )
+      # The runner owns the selected worktree's .lake reservation and pins the
+      # toolchain/Lake environment. Direct Lake execution honors LAKE_BIN even
+      # when PATH has no Lake, while retaining the writer guard during unpack.
+      ( cd "$repository" && "$cache_runner" lake unpack "$staged/$asset" >/dev/null )
     }
     consume_verified_archive \
       || { printf 'LEAN_CACHE_FETCH {"status":"miss","tag":"%s","reason":"archive could not be unpacked"}\n' "$resolved"; exit 1; }

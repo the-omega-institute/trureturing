@@ -8,6 +8,15 @@ import pathlib
 from resources import run
 
 
+def compiled_digests(repository, module):
+    """Check restored output bytes without ever rewriting shared inodes."""
+    from streaming import enumerate_oleans
+    repository = pathlib.Path(repository)
+    manifest, _ = enumerate_oleans(repository, {module: ""})
+    paths = [*manifest[0][1], repository / ".lake/build/ir" / (module.replace(".", "/") + ".c")]
+    return [hashlib.sha256(pathlib.Path(path).read_bytes()).hexdigest() for path in paths]
+
+
 def certificate_mutations(options):
     directory = options.output.resolve()
     repository = pathlib.Path(__file__).resolve().parents[3]
@@ -73,8 +82,8 @@ def certificate_mutations(options):
         original = source.read_bytes()
         mutated = transform(original.decode()).encode()
         assert original != mutated, "mutation did not change production"
-        target = repository / ".lake/build/lib/lean" / source.relative_to(source_root).with_suffix(".olean")
-        compiled_original = {path: path.read_bytes() for path in target.parent.glob(target.stem + ".*")}
+        module = ".".join(source.relative_to(source_root).with_suffix("").parts)
+        compiled_original = compiled_digests(repository, module)
         logs = directory / label
         logs.mkdir(parents=True, exist_ok=False)
         record = {"mutation": label, "location": str(source.relative_to(repository)),
@@ -85,7 +94,7 @@ def certificate_mutations(options):
         (logs / "preregistration.json").write_text(json.dumps(record, indent=2) + "\n")
         run(["lake", "env", "lean", str(fixture)], logs, "baseline", cwd=repository)
         record["baseline_exit_code"] = 0
-        compile_command = ["lake", "env", "lean", "-R", str(source_root), "-o", str(target), str(source)]
+        compile_command = ["lake", "build", "+" + module + ":c"]
         try:
             source.write_bytes(mutated)
             run(compile_command, logs, "compile", cwd=repository)
@@ -103,10 +112,10 @@ def certificate_mutations(options):
                 raise AssertionError(label + " survived")
         finally:
             source.write_bytes(original)
-            for path, content in compiled_original.items():
-                path.write_bytes(content)
-            record["restored_byte_identical"] = source.read_bytes() == original and all(
-                path.read_bytes() == content for path, content in compiled_original.items())
+            run(compile_command, logs, "restore-build", cwd=repository)
+            record["restored_byte_identical"] = source.read_bytes() == original and \
+                compiled_digests(repository, module) == compiled_original
+            assert record["restored_byte_identical"], "mutation output restoration changed bytes"
             (logs / "result.json").write_text(json.dumps(record, indent=2) + "\n")
         run(["lake", "env", "lean", str(fixture)], logs, "restored", cwd=repository)
         record["restored_exit_code"] = 0
@@ -217,10 +226,8 @@ def main():
         original = source.read_bytes()
         assert original.decode().count(old) == 1, "mutation location is not unique"
         mutated = original.decode().replace(old, new).encode()
-        target = (repository / ".lake/build/lib/lean" / source.relative_to(source_root).with_suffix(".olean")) if source.suffix == ".lean" else None
-        compiled = target.read_bytes() if target else None
-        native = repository / ".lake/build/ir" / source.relative_to(source_root).with_suffix(".c") if target else None
-        native_bytes = native.read_bytes() if native else None
+        module = ".".join(source.relative_to(source_root).with_suffix("").parts) if source.suffix == ".lean" else None
+        compiled_original = compiled_digests(repository, module) if module else None
         logs = directory / label
         logs.mkdir(parents=True, exist_ok=False)
         if label in review_labels:
@@ -237,8 +244,8 @@ def main():
         (logs / "preregistration.json").write_text(json.dumps(record, indent=2) + "\n")
         try:
             source.write_bytes(mutated)
-            compile_command = (["lake", "env", "lean", "-R", str(source_root), "-o", str(target), "-c", str(native), str(source)]
-                if target else [sys.executable, "-m", "py_compile", str(source)])
+            compile_command = (["lake", "build", "+" + module + ":c"]
+                if module else [sys.executable, "-m", "py_compile", str(source)])
             run(compile_command, logs, "compile", cwd=repository)
             record["compile_errors"] = 0
             try:
@@ -252,11 +259,11 @@ def main():
                 raise AssertionError(label + " survived")
         finally:
             source.write_bytes(original)
-            if target:
-                target.write_bytes(compiled)
-                native.write_bytes(native_bytes)
-            record["restored_byte_identical"] = source.read_bytes() == original and (not target or
-                target.read_bytes() == compiled and native.read_bytes() == native_bytes)
+            if module:
+                run(compile_command, logs, "restore-build", cwd=repository)
+            record["restored_byte_identical"] = source.read_bytes() == original and (module is None or
+                compiled_digests(repository, module) == compiled_original)
+            assert record["restored_byte_identical"], "mutation output restoration changed bytes"
             (logs / "result.json").write_text(json.dumps(record, indent=2) + "\n")
         outcomes.append(record)
     run([sys.executable, "-m", "unittest", "tests.test_streaming", "tests.test_incremental"], directory, "restored-python", cwd=python_root)

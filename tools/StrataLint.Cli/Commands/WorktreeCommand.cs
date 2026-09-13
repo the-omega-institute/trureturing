@@ -29,7 +29,7 @@ internal static class WorktreeCommand
 
     internal static string Usage { get; } =
         "USAGE: StrataLint worktree ensure-cache [--path DIR] | "
-        + "StrataLint worktree with-cache-reader [--path DIR] -- COMMAND [ARG ...] | StrataLint worktree warm-cache [--path DIR] | "
+        + "StrataLint worktree with-cache [--path DIR] -- COMMAND [ARG ...] | StrataLint worktree warm-cache [--path DIR] | "
         + "StrataLint worktree cache-git [--path DIR] -- ARG [ARG ...] | "
         + "StrataLint worktree validate-branch --branch NAME | "
         + "StrataLint worktree remove --names \"NAME [NAME ...]\" | "
@@ -80,7 +80,7 @@ internal static class WorktreeCommand
                 runner);
         }
         if (arguments.Count > 0
-            && string.Equals(arguments[0], "with-cache-reader", StringComparison.Ordinal))
+            && string.Equals(arguments[0], "with-cache", StringComparison.Ordinal))
         {
             return LeanCacheEnsureCommand.Run(
                 repositoryRoot,
@@ -89,7 +89,7 @@ internal static class WorktreeCommand
                 runCommand: true);
         }
         if (arguments.Count > 0 && arguments[0] == "warm-cache")
-            return LeanCacheWarmCommand.Run(repositoryRoot, arguments.Skip(1).ToArray(), runner, cloner);
+            return LeanCacheWarmCommand.Run(repositoryRoot, arguments.Skip(1).ToArray(), runner);
         if (arguments.Count > 0
             && string.Equals(arguments[0], "validate-branch", StringComparison.Ordinal))
         {
