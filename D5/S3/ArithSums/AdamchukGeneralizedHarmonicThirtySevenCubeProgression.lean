@@ -2,15 +2,19 @@
    generality: G
    mirror-B: D5/B/S3/ArithSums/AdamchukGeneralizedHarmonicThirtySevenCubeProgression
    mirror-E: none(waiver:universal-divisibility-no-numeric-artifact)
-   anchors: [mathlib/module/Mathlib.Data.Nat.Prime.Factorial, mathlib/module/Mathlib.Data.Rat.Lemmas, mathlib/module/Mathlib.Data.ZMod.Basic, mathlib/module/Mathlib.FieldTheory.Finite.Basic, mathlib/module/Mathlib.Tactic]
+   anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Field, mathlib/module/Mathlib.Data.Nat.Prime.Factorial, mathlib/module/Mathlib.Data.ZMod.Basic, mathlib/module/Mathlib.Tactic.FieldSimp, mathlib/module/Mathlib.Tactic.IntervalCases, mathlib/module/Mathlib.Tactic.LinearCombination, mathlib/module/Mathlib.Tactic.NormNum.NatFactorial, mathlib/module/Mathlib.Tactic.NormNum.Prime, mathlib/module/Mathlib.Tactic.Ring]
    utility: none
    digest: Cubic divisibility of generalized harmonic numerators along Adamchuk's progression. -/
 
+import Mathlib.Algebra.BigOperators.Field
 import Mathlib.Data.Nat.Prime.Factorial
-import Mathlib.Data.Rat.Lemmas
 import Mathlib.Data.ZMod.Basic
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.Tactic
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.IntervalCases
+import Mathlib.Tactic.LinearCombination
+import Mathlib.Tactic.NormNum.NatFactorial
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.Ring
 
 open Finset
 
