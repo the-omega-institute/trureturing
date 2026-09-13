@@ -17,6 +17,12 @@ internal sealed class SummabilityContinuityDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text(
                     "For every capacity function, finite total dyadic mass is equivalent to continuity "
                     + "of the finite-support readout at zero, to its continuity everywhere, and to "
-                    + "the existence of a continuous real extension to the full coordinate product."))),
+                    + "the existence of a continuous real extension to the full coordinate product. The extended "
+                    + "sum is then finite and continuous and agrees with the readout on finite states. "
+                    + "The capacity tail tends to zero and equals total capacity minus its prefix. "
+                    + "It bounds the nonnegative prefix error uniformly, with equality at the capacity "
+                    + "corner, so the supremum of the absolute error is precisely that tail. Prefixes "
+                    + "converge uniformly, and the same tail bounds the difference of sums for two "
+                    + "states agreeing through the given prefix."))),
                 DescribeRole.Theorem))));
 }
