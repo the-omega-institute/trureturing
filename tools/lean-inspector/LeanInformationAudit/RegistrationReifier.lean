@@ -47,6 +47,11 @@ private partial def difference (a b : Expr) (path := "type") : String := Id.run 
       if bi == bj then #[(".domain", t, u), (".body", x, y)] else #[]
     | .letE _ t v x nd, .letE _ u w y ne =>
       if nd == ne then #[(".type", t, u), (".value", v, w), (".body", x, y)] else #[]
+    | .proj n i x, .proj m j y =>
+      if n == m && i == j then #[(".value", x, y)] else #[]
+    | .mdata m x, .mdata n y =>
+      if (Expr.mdata m (mkBVar 0)).equal (.mdata n (mkBVar 0)) then
+        #[(".body", x, y)] else #[]
     | _, _ => #[]
   for (suffix, x, y) in children do
     if !x.equal y then return difference x y (path ++ suffix)

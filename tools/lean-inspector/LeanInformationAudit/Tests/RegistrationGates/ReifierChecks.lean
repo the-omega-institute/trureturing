@@ -16,6 +16,13 @@ elab "reject_via " label:str " expects " reason:str " in " command:command : com
   modify fun s => { s with messages }
   unless (InformationRegistry.entries (← getEnv)).size == (InformationRegistry.entries before).size do
     throwError "{label.getString}: rejected command inserted an entry"
+  let owner ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo command.raw[1]
+  let unit := localCompanionName before owner theoremUnitSuffix
+  for name in #[unit, localCompanionName before owner primitiveRealizationSuffix,
+      unit.str "__variation", unit.str "__sensitivity", unit.str "__nondegenerate",
+      RegistrationGates.diagnosticName unit before.header.mainModule] do
+    unless before.contains name == (← getEnv).contains name do
+      throwError "{label.getString}: rejected command leaked a generated declaration"
   unless errors.length == 1 do throwError "{label.getString}: expected exactly one error, got {errors.length}"
   let actual ← errors[0]!.data.toString
   unless (actual.splitOn reason.getString).length > 1 do throwError "{label.getString}: {actual}"
@@ -155,6 +162,18 @@ run_meta do
   unless diagnostic.endsWith "reason=missing_witness" do throwError diagnostic
   logInfo "P1_WITNESS_CONTROLS checked"
 
+-- Projection arguments and annotations remain observable even when unused by reduction.
+run_meta do
+  let pair := mkAppN (mkConst ``Prod.mk [.zero, .zero])
+    #[mkConst ``Bool, mkConst ``Bool, mkConst ``Bool.false, mkConst ``Bool.true]
+  let a := Expr.proj ``Prod 0 pair
+  let b := Expr.proj ``Prod 0 (mkAppN pair.getAppFn (pair.getAppArgs.set! 3 (mkConst ``Bool.false)))
+  unless ← exact a a do throwError "projection positive"
+  expectFailure "projection_path" "path=type.value.arg" do
+    requireExact "StatementIdentityMismatch" a b
+  expectFailure "annotation_path" "path=type.body.value.arg" do
+    requireExact "StatementIdentityMismatch" (mkAnnotation `tag a) (mkAnnotation `tag b)
+
 -- Empty slot sensitivity is vacuous; variation is independently required.
 def emptyArena : PrimitiveLawArena.{0,0,0} where
   toArena := Arena.ofFintype Bool
@@ -169,6 +188,8 @@ def emptyRealization : PrimitiveRealization emptyArena.signature := ⟨(fun i =>
 theorem emptySensitivity : FiniteSlotSensitivity emptyArena := ⟨(fun i => Fin.elim0 i), (fun i => Fin.elim0 i)⟩
 theorem emptySource : True := True.intro
 theorem emptyBridge : LegacyPrimitiveRealization emptyArena True emptyRealization := ⟨Iff.rfl⟩
+reject_via "empty_slots_derived" expects "UnsupportedDescriptor" in
+register_information_theorem emptySource via emptyBridge in emptyArena
 register_information_theorem emptySource in emptyArena
   primitives (@PrimitiveRealization.toPrimitiveBundle _ _ emptyArena.stateDecidableEq emptyRealization) realization emptyBridge sensitivity emptySensitivity
 

@@ -39,7 +39,7 @@ def registrationObservations (e : InformationRegistryEntry) : MetaM (Array Strin
     scalars := scalars.push (reprStr info.levelParams)
     scalars := scalars.push (reprStr (← collectAxioms name))
     expressions := expressions.push info.type
-    if name == e.unitName || name == e.realizationName then
+    if name == e.unitName then
       expressions := expressions.push (info.value? (allowOpaque := true)).get!
   scalars := scalars.push (reprStr (← RegistrationGates.provenanceErrorCurrent
     e.registrationModuleName e.effectiveCatalogId e.theoremName e.realizationName))
@@ -74,7 +74,7 @@ private def ownEntries : CoreM (Array InformationRegistryEntry) := do
 
 /-- Independent manual expansion uses the old command, never the reifier producer.
 Companion names match the derived convention to compare the same occurrences. -/
-private def manual (form : Syntax) : CommandElabM Unit := do
+private def manual (form : Syntax) (wrapped : Bool) : CommandElabM Unit := do
   let theoremName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo form[1]
   let arenaName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo form[5]
   let unit := localCompanionName (← getEnv) theoremName theoremUnitSuffix
@@ -92,7 +92,8 @@ private def manual (form : Syntax) : CommandElabM Unit := do
     let arena := mkConst arenaName
     let source := (← getConstInfo theoremName).type
     let proof := fun name type value => addDecl (.thmDecl { name, levelParams := [], type, value })
-    proof bridge (← mkAppM ``LegacyPrimitiveRealization #[arena, source, native]) descriptor
+    let bridgeProof ← if wrapped then mkAppM ``id #[descriptor] else pure descriptor
+    proof bridge (← mkAppM ``LegacyPrimitiveRealization #[arena, source, native]) bridgeProof
     let ndType ← mkAppM ``Arena.Nondegenerate #[← mkAppM ``PrimitiveLawArena.toArena #[arena]]
     proof nd ndType (← mkDecideProof ndType)
     let expected ← mkAppM ``Nontrivial #[p[1]!]
@@ -123,13 +124,21 @@ private def manual (form : Syntax) : CommandElabM Unit := do
 elab "check_pointwise_shadow" : command => do
   let initial ← get
   let forms ← viaForms
-  forms.forM manual
+  forms.forM (fun form => manual form false)
   let manualEntries ← liftCoreM ownEntries
   unless manualEntries.size == 2 do throwError "manual count"
   let manualObs ← liftTermElabM <| (manualEntries.mapM registrationObservations : MetaM _)
   let manifest := reprStr <| ExpectedOccurrenceManifest.declaredEntries (← getEnv) (← getEnv).header.mainModule
   prepareSealPublication
   let manualSeal ← liftTermElabM <| sealObservations
+  set initial
+  forms.forM (fun form => manual form true)
+  let wrappedEntries ← liftCoreM ownEntries
+  let wrappedObs ← liftTermElabM <| (wrappedEntries.mapM registrationObservations : MetaM _)
+  unless wrappedObs.size == manualObs.size do throwError "wrapped manual count"
+  for (m, w) in manualObs.zip wrappedObs do
+    unless ← liftTermElabM <| sameObservations m w do
+      throwError "harmless bridge proof changed consumer observations"
   set initial
   forms.forM elabCommand
   let derivedEntries ← liftCoreM ownEntries
