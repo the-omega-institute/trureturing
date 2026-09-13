@@ -112,7 +112,7 @@ theorem mem_H_iff_eval_eq_zero (u : V) : u ∈ H ↔ ell u = 0 := by
       simp only [row, map_sub, map_zsmul, heps, zsmul_eq_mul, Int.cast_ofNat]
       rw [pow_succ]
       field_simp
-      <;> ring
+      ring
     | zero => exact f.map_zero
     | add v w hv hw ihv ihw => simp [map_add, ihv, ihw]
     | smul a v hv ih => simp only [map_zsmul, ih, smul_zero]
@@ -160,10 +160,10 @@ theorem finite_projection_surjective (I : Finset ℕ) :
   change v i = a i
   rw [show v i = ∑ j : I, (a j • t j m) i by exact Finsupp.finsetSum_apply _ _ _]
   rw [Finset.sum_eq_single i]
-  · simp [t, eps, Finsupp.single_apply, (hm i).ne, (hm i).ne']
+  · simp [t, eps, (hm i).ne]
   · intro j hj hji
     have hji' : (j : ℕ) ≠ (i : ℕ) := fun h => hji (Subtype.ext h)
-    simp [t, eps, Finsupp.single_apply, hji', (hm i).ne']
+    simp [t, eps, hji', (hm i).ne']
   · simp
 
 end
