@@ -73,7 +73,7 @@ internal sealed class CiWorkflowDocument(
         && branches.Children.OfType<YamlScalarNode>().Any(item => item.Value == branch);
 
     internal bool HasDeltaGate(string branch) =>
-        RunsOnBranch("pull_request_target", branch)
+        RunsOnBranch("pull_request", branch)
         && Jobs.TryGetValue(DeltaJobName, out var job)
         && job is { Name: DeltaJobName, Uses: null };
 

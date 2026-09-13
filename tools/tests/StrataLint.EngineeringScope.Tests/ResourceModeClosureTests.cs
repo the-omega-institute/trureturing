@@ -155,7 +155,7 @@ public sealed class ResourceModeClosureTests(Xunit.Abstractions.ITestOutputHelpe
             .. mode == "push" ? new[] { "--before", basis, "--after", candidate } : ["--base", basis, "--head", head]],
             new Dictionary<string, string>
             {
-                ["GITHUB_EVENT_NAME"] = mode == "push" ? "push" : "pull_request_target", ["GITHUB_EVENT_PATH"] = eventPath,
+                ["GITHUB_EVENT_NAME"] = mode == "push" ? "push" : "pull_request", ["GITHUB_EVENT_PATH"] = eventPath,
                 ["GITHUB_OUTPUT"] = Path.Combine(fixture.Root, "build/mode-output"),
                 ["GITHUB_STEP_SUMMARY"] = Path.Combine(fixture.Root, "build/mode-summary"),
             }, TestBudgets.ScriptProcessHangGuard);

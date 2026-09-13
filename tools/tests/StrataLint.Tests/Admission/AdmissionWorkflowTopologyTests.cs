@@ -7,10 +7,10 @@ namespace StrataLint.Tests;
 public sealed class AdmissionWorkflowTopologyTests
 {
     [Fact]
-    public void TargetDeltaJobActivatesAdmissionUsingStructuredYaml()
+    public void PullRequestDeltaJobActivatesAdmissionUsingStructuredYaml()
     {
         var bytes = Encoding.UTF8.GetBytes("""
-            'on': {pull_request_target: {branches: [dev, integration-**]}}
+            'on': {pull_request: {branches: [dev, integration-**]}}
             jobs: {delta: {runs-on: fixture}}
             """);
 
@@ -18,11 +18,11 @@ public sealed class AdmissionWorkflowTopologyTests
     }
 
     [Theory]
-    [InlineData("pull_request", "dev", "delta", "delta")]
+    [InlineData("pull_request_target", "dev", "delta", "delta")]
     [InlineData("push", "dev", "delta", "delta")]
-    [InlineData("pull_request_target", "main", "delta", "delta")]
-    [InlineData("pull_request_target", "dev", "baseline-admission", "delta")]
-    [InlineData("pull_request_target", "dev", "delta", "renamed")]
+    [InlineData("pull_request", "main", "delta", "delta")]
+    [InlineData("pull_request", "dev", "baseline-admission", "delta")]
+    [InlineData("pull_request", "dev", "delta", "renamed")]
     public void OtherEventsBranchesAndJobsDoNotActivateAdmission(
         string trigger, string branch, string job, string name)
     {

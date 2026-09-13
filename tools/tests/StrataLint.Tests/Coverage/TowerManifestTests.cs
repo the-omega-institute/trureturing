@@ -58,7 +58,7 @@ public sealed class TowerManifestTests
             Component("baseline", "ci-jobs", ["delta"], "bootstrap-pr-1"));
         var snapshot = Snapshot(
             (RuleFixture.WorkflowPath, """
-                on: {pull_request_target: {branches: [dev]}}
+                on: {pull_request: {branches: [dev]}}
                 jobs: {delta: {runs-on: fixture}}
                 """),
             LedgerAnchorFile());
@@ -81,7 +81,7 @@ public sealed class TowerManifestTests
             ["push / engineering", "push / current", "delta"], "bootstrap-pr-1"));
         var snapshot = Snapshot(
             (".github/workflows/ci-pr.yml", """
-                on: {pull_request_target: {branches: [dev]}}
+                on: {pull_request: {branches: [dev]}}
                 jobs:
                   common: {name: push, uses: './.github/workflows/ci-push.yml'}
                   delta: {runs-on: fixture}
@@ -99,11 +99,11 @@ public sealed class TowerManifestTests
     }
 
     [Theory]
-    [InlineData("pull_request", "push", "ci-push.yml", "push", "current")]
-    [InlineData("pull_request_target", "workflow_dispatch", "ci-push.yml", "push", "current")]
-    [InlineData("pull_request_target", "push", "other.yml", "push", "current")]
-    [InlineData("pull_request_target", "push", "ci-push.yml", "renamed", "current")]
-    [InlineData("pull_request_target", "push", "ci-push.yml", "push", "renamed")]
+    [InlineData("pull_request_target", "push", "ci-push.yml", "push", "current")]
+    [InlineData("pull_request", "workflow_dispatch", "ci-push.yml", "push", "current")]
+    [InlineData("pull_request", "push", "other.yml", "push", "current")]
+    [InlineData("pull_request", "push", "ci-push.yml", "renamed", "current")]
+    [InlineData("pull_request", "push", "ci-push.yml", "push", "renamed")]
     public void NestedChecksRejectWrongEventsReferencesAndDisplayNames(
         string prEvent, string pushEvent, string calledFile, string callerName, string currentName)
     {

@@ -315,7 +315,7 @@ public sealed partial class MakeWorkflowTests
         File.WriteAllText(Path.Combine(fixture.Path, "README.md"), "baseline\n");
         File.WriteAllText(
             Path.Combine(fixture.Path, ".github", "workflows", "ci-pr.yml"),
-            "on: {pull_request_target: {branches: [dev]}}\njobs: {delta: {steps: []}}\n");
+            "on: {pull_request: {branches: [dev]}}\njobs: {delta: {steps: []}}\n");
         File.WriteAllText(
             Path.Combine(fixture.Path, LeanReportPairScriptPath),
             "#!/usr/bin/env bash\n");

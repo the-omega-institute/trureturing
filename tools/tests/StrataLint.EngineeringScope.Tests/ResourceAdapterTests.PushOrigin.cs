@@ -205,7 +205,7 @@ public sealed partial class ResourceAdapterTests
             SetPushEvent(fixture, environment, SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^1"));
             if (invocation == "reusable-event")
             {
-                environment["GITHUB_EVENT_NAME"] = "pull_request_target";
+                environment["GITHUB_EVENT_NAME"] = "pull_request";
                 environment["CI_WORKFLOW_INPUTS"] = new JsonObject { ["candidate_sha"] = fixture.Commit }.ToJsonString();
             }
         }
