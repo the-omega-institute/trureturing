@@ -391,6 +391,11 @@ jobs:
           name: ci-current-diagnostics-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
             build/ci/current-result.json
+            build/ci/current.json
+            build/ci/current-checks.json
+            build/ci/current-paths.nul
+            build/ci/plan.json
+            build/ci/changes.json
             build/ci/logs/current
           if-no-files-found: warn
           retention-days: 7
