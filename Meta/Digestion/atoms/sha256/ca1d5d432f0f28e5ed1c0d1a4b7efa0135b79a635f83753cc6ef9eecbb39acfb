@@ -1,0 +1,9 @@
+**证明。** 取 $\operatorname{Hits}_L(e)$ 的见证 $h$ 及其参数 $u\in(0,1)$。
+若 $u<\alpha^2$，GC7 第一式给出 $\operatorname{Hits}_{L+2}(e)$；
+若 $u>\alpha^2$，GC7 第二式给出
+$\operatorname{Hits}_{L+1}(e+B_L)$。等号情形由 GC8 恰为被排除的
+$e=-F_{L+4}$。反向地，第一种窗口经 $u=\alpha^2v$ 回到
+$u\in(0,\alpha^2)$；第二种窗口经 $u=1-\alpha v$ 回到
+$u\in(\alpha^2,1)$。因此两者都推出 $\operatorname{Hits}_L(e)$。
+最后 $F_{L+4}>0$，所以 $e\ge0$ 自动避开接缝。
+

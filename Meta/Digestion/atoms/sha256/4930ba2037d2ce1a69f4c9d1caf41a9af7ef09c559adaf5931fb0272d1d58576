@@ -1,0 +1,16 @@
+**定理。** 对 $m\in\mathbb Z\setminus\{0\}$，嵌套返回满足
+
+$$
+\boxed{
+T_K(T_L(m))=T_{K+L+2}(m)-B_Kc_L.
+}\tag{GC11}
+$$
+
+因而
+
+$$
+\boxed{
+T_K(T_L(m))-T_L(T_K(m))=B_Lc_K-B_Kc_L.
+}\tag{GC12}
+$$
+
