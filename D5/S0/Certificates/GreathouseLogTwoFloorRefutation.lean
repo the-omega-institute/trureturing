@@ -2,14 +2,12 @@
    generality: I
    mirror-B: D5/B/S0/Certificates/GreathouseLogTwoFloorRefutation
    mirror-E: none(waiver:kernel-checked-refutation)
-   anchors: [mathlib/module/Mathlib.Algebra.Order.Floor.Semiring, mathlib/module/Mathlib.Analysis.SpecialFunctions.Log.Deriv, mathlib/module/Mathlib.Analysis.SpecialFunctions.Pow.Real, mathlib/module/Mathlib.Tactic.NormNum]
+   anchors: [mathlib/module/Mathlib.Analysis.SpecialFunctions.Log.Deriv, mathlib/module/Mathlib.Analysis.SpecialFunctions.Pow.Real]
    utility: kind=certified-instance; basis=refutes=gid:D5/S0/Certificates/GreathouseLogTwoFloorRefutation.claim; result=D5/S0/Certificates/GreathouseLogTwoFloorRefutation.result; claim=D5/S0/Certificates/GreathouseLogTwoFloorRefutation.claim
    digest: The index 1121626023352383 refutes Greathouse's floor formula for OEIS A175406. -/
 
-import Mathlib.Algebra.Order.Floor.Semiring
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Tactic.NormNum
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
