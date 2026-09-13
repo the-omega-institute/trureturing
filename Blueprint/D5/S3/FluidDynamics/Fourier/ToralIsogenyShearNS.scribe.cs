@@ -9,7 +9,7 @@ internal sealed class ToralIsogenyShearNSDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/FluidDynamics/Fourier/ToralIsogenyShearNS.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The original integer torus bridge transports an explicit NS shear only with its metric; keeping the Euclidean metric produces an exact nonzero residual.",
+        "The original integer torus bridge transports an explicit NS shear with its pulled metric; keeping the Euclidean metric produces an exact nonzero residual.",
         H("The metric-sensitive Navier-Stokes bridge"),
         Blocks(
             Paragraph(Text("Let k be a natural number. Write s_lambda(t,x,y)=(1,k) exp(-nu lambda t) "
@@ -59,7 +59,7 @@ internal sealed class ToralIsogenyShearNSDocument : IScribeDocumentDefinition
                     + "G=P^T P, H=Q Q^T=[[1,k],[k,k^2+1/4]], both inverse identities, and positivity "
                     + "through (r+ks)^2+s^2/4. The field v=Q u(t,P(x,y)), with "
                     + "u=(exp(-nu*t)cos(y),0), is proved equal to s_1 before the residual theorem is applied. "
-                    + "Q is not a global inverse of the degree-two torus covering."))),
+                    + "Q is not a global inverse of the degree-two torus covering. A single mode does not determine a unique compatible metric."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("euclidean-metric-defect"),
                 DeclarationHandle.Create(Prefix + "pulled_euclidean_defect"),
