@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Run after make lean-cache-ensure. Lake builds the non-default analysis library
-# and its dependencies; the library's own traces are cleared to repeat exports.
+# Lake resolves the non-default analysis files' dependencies. Each export file
+# is explicitly elaborated so cached artifacts cannot suppress its side effects.
 # The recursive LeanInformationAuditAnalysis.+ glob covers this directory dedicated
 # to opt-in full analyses; adding an exporting fixture requires updating this
 # runner's artifact inventory.
@@ -47,13 +47,14 @@ mkdir -p -- "$output_directory" || fail 73 "cannot create output: $output_direct
 export IE_PROJECTION_OUTPUT_DIR=$output_directory
 export LC_ALL=C
 
-# The output directory is not a Lake input. Re-elaborate only these modules so a
-# cached successful build cannot leave the caller's directory without artifacts.
-for fixture in "${fixtures[@]}"; do
-  rm -f -- ".lake/build/lib/lean/LeanInformationAuditAnalysis/$fixture.trace"
-done
+# The output directory is not a Lake input. Trace deletion does not invalidate
+# the official artifact store, so use Lake's source elaboration command.
+lake_runner="$repository/tools/scripts/worktree/lean-cache-run.sh"
+[[ -x "$lake_runner" ]] || fail 66 "missing cache runner: $lake_runner"
 TIMEFORMAT='ANALYSIS_FIXTURES_BUILD wall_seconds=%R'
-time lake build LeanInformationAuditAnalysis
+time for fixture in "${fixtures[@]}"; do
+  "$lake_runner" lake lean "$script_directory/$fixture.lean"
+done
 
 for fixture in "${fixtures[@]}"; do
   case $fixture in

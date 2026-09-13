@@ -6,8 +6,8 @@ namespace StrataLint.Cli;
 internal static class LeanCacheEnsureCommand
 {
     internal const string Usage = "USAGE: StrataLint worktree ensure-cache [--path DIR]";
-    internal const string ReaderUsage =
-        "USAGE: StrataLint worktree with-cache-reader [--path DIR] -- COMMAND [ARG ...]";
+    internal const string CommandUsage =
+        "USAGE: StrataLint worktree with-cache [--path DIR] -- COMMAND [ARG ...]";
 
     internal static CommandResult RunGit(string repositoryRoot, IReadOnlyList<string> arguments,
         IWorktreeProcessRunner runner)
@@ -30,7 +30,7 @@ internal static class LeanCacheEnsureCommand
         IWorktreeProcessRunner runner, bool runCommand = false)
     {
         if (!TryParse(repositoryRoot, arguments, runCommand, out var root, out var command))
-            return new(false, string.Empty, (runCommand ? ReaderUsage : Usage) + "\n");
+            return new(false, string.Empty, (runCommand ? CommandUsage : Usage) + "\n");
         try
         {
             var pins = LeanPinSet.TryReadWorktree(root, out var reason)
@@ -44,8 +44,8 @@ internal static class LeanCacheEnsureCommand
             if (!runCommand) return new(true, receipt, string.Empty);
             var result = policy.Run(command[0], command.Skip(1).ToArray(), policy.Root,
                 LeanCacheProvisioner.LeanCommandBudget);
-            return new(result.ExitCode == 0, receipt + Encoding.UTF8.GetString(result.StandardOutput),
-                Encoding.UTF8.GetString(result.StandardError), result.ExitCode);
+            return new(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardOutput),
+                receipt + Encoding.UTF8.GetString(result.StandardError), result.ExitCode);
         }
         catch (Exception exception)
         {

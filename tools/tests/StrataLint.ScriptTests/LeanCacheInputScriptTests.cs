@@ -45,7 +45,7 @@ public sealed class LeanCacheInputScriptTests
 
         fixture.AssertIndependentSuccess(result);
         Assert.Contains("\"status\":\"published\"", result.Text, StringComparison.Ordinal);
-        Assert.Equal(new[] { "pack" }, fixture.LakeCalls);
+        Assert.Equal(new[] { "build", "pack" }, fixture.LakeCalls);
         Assert.Contains($"sources_sha256={fixture.ExpectedSources}\n", fixture.PublishedManifest, StringComparison.Ordinal);
         Assert.Contains($"config_sha256={fixture.ExpectedConfig}\n", fixture.PublishedManifest, StringComparison.Ordinal);
         Assert.Contains($"producer_commit_sha={LeanInputFixture.ProducerSha}\n", fixture.PublishedManifest, StringComparison.Ordinal);
@@ -218,6 +218,24 @@ public sealed class LeanCacheInputScriptTests
             Write("tools/StrataLint.Engine/CanonicalWriter.cs", "// report only\n");
             ScriptHarnessScratch.CopyScriptInto(
                 Path.Combine(TestRepositoryLayout.FindRoot(), PublisherPath), Path.Combine(repository, PublisherPath));
+            WriteStub(
+                Path.Combine(repository, "tools/scripts/worktree/lean-cache-run.sh"),
+                """
+                mkdir -p "$PWD/.lake"
+                writer="$PWD/.lake/.lean-cache-writer"
+                if ! mkdir "$writer" 2>/dev/null; then
+                  echo 'private .lake writer guard is busy' >&2
+                  exit 2
+                fi
+                finish() { rmdir "$writer"; }
+                trap finish EXIT
+                export ELAN_TOOLCHAIN="$(cat "$PWD/lean-toolchain")"
+                export LAKE_ARTIFACT_CACHE=true
+                export LAKE_RESTORE_ARTIFACTS=true
+                export LAKE_NO_CACHE=true
+                export LAKE_BIN="$(command -v lake)"
+                "$@"
+                """);
             ScriptHarnessScratch.CopyScriptInto(
                 Path.Combine(TestRepositoryLayout.FindRoot(), LeafPath), candidateLeaf);
             WriteStub(Path.Combine(repository, LeafPath), "exec /bin/bash \"$LEAN_INPUT_CANDIDATE\" \"$@\"");
@@ -227,6 +245,7 @@ public sealed class LeanCacheInputScriptTests
             WriteStub(Path.Combine(bin, "lake"), """
                 printf '%s\n' "$1" >> "$LEAN_INPUT_LAKE_CALLS"
                 case "$1" in
+                  build) [[ "${LAKE_RESTORE_ARTIFACTS:-}" == true ]] || exit 76; touch "$LEAN_INPUT_PAYLOAD/build-ready" ;;
                   pack) cp "$LEAN_INPUT_PAYLOAD/lean-build.tgz" "$2" ;;
                   unpack) cmp "$2" "$LEAN_INPUT_PAYLOAD/lean-build.tgz" ;;
                   *) exit 75 ;;
@@ -368,7 +387,13 @@ public sealed class LeanCacheInputScriptTests
         private static void WriteStub(string path, string body)
         {
             ScriptHarnessScratch.EnsureDirectory(Path.GetDirectoryName(path)!);
-            ScriptHarnessScratch.WriteExecutableStub(path, body);
+            File.WriteAllText(
+                path,
+                "#!/usr/bin/env bash\nset -euo pipefail\n" + body + "\n",
+                new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
+            File.SetUnixFileMode(
+                path,
+                UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
         }
 
         public void Dispose() => temporary.Dispose();

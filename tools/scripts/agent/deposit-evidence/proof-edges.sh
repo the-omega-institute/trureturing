@@ -13,7 +13,7 @@ eval "$(sed -n '/^export PATH=/p' "$ROOT"/tools/scripts/local-harness-gate.sh)"
 [ -d .lake/build ] || { echo "EDGES_FAIL cold tree (no .lake/build)"; exit 3; }
 WORK="${WORK:-${TMPDIR:-/tmp}/deposit-evidence}"; mkdir -p "$WORK"
 F="$WORK/proof-edges-$(echo "$MOD" | tr '.' '_').lean"; sed -e "s#__IMPORT__#$MOD#" -e "s#__MODULE__#$MOD#" "$SP/proof-edges-template.lean" > "$F"
-LOG="${F%.lean}.log"; lake env lean "$F" > "$LOG" 2>&1; rc=$?
+LOG="${F%.lean}.log"; "$W/tools/scripts/worktree/lean-cache-run.sh" lake env lean "$F" > "$LOG" 2>&1; rc=$?
 grep -q 'EDGE ' "$LOG" || { echo "EDGES_FAIL lean rc=$rc (no EDGE lines); log=$LOG"; grep -n 'error' "$LOG" | head -3; exit 4; }
 python3 - "$LOG" "$OUT" "$MOD" <<'PY'
 import sys,json,re

@@ -39,33 +39,30 @@ state remain Git object snapshots used by repository rules.
 
 `worktree` fetches a remote base and creates a worktree without `.lake`, restoring
 locked .NET dependencies unless `--skip-restore` is explicit.
-`make lean-cache-ensure` is an optional explicit step to validate and materialize
-private dependency sources and select the cache. `make lean` and `make lean-report`
-use the same preparation when invoking Lean, read native Lake artifacts, and restore
-ordinary private `.lake/build` outputs. Missing artifacts build locally. Mathlib
-downloads use each tree's `.lake/mathlib-cache`; private mode retains the separate
-GitHub release fallback for project outputs.
+`make lean-cache-ensure` prepares pinned dependency sources. `make lean` and
+`make lean-report` use Lean 4.33.0's official writable artifact cache, selected by
+Lake for the pinned toolchain. Every worktree can reuse and publish artifacts.
+Canonical commands clear inherited cache routing and coordinate each worktree's
+mutable `.lake` state with its own writer lock. Child stdout and exits are preserved.
 
-The shared store is `<git-common-dir>/stratalint-lake/lean-<version>/<os>-<arch>`,
-selected by the pinned toolchain and platform. Lake owns the hashes and input
-mappings; commits and complete manifest bytes do not partition the store.
-Normal commands, including main-checkout builds, are readers and clear inherited
-cache writer/path overrides. Shared mode and warming are supported on macOS with
-`sandbox-exec`, which denies shared-subtree writes by commands and their descendants;
-native hardlink restores fall back to copying. Other platforms use private caches
-when no shared store exists and reject shared mode.
+Local and CI commands both set `LAKE_ARTIFACT_CACHE=true` and
+`LAKE_RESTORE_ARTIFACTS=true`. Official restoration provides module-shaped outputs
+for reports and existing CI archives. Mathlib's explicit `restoreAllArtifacts := true`
+is preserved. Lake attempts hardlinks for missing outputs, then copies if linking
+fails, including across filesystems. Each worktree has its own mutable build
+directory, traces and compiler setup; restored artifacts can share an inode.
+Sources, reports, new outputs and cache generations still consume space. Small
+fixture timings and inode readings do not establish whole-repository performance
+or physical disk savings. On APFS, measure inode-deduplicated allocation and
+filesystem free space; `du` alone is insufficient. This arrangement provides no
+transactional cache publication, automatic size limit or zero-growth guarantee.
 
-Only `make warm-donor` in the physical, clean main `dev` checkout writes the local
-shared store. It holds an exclusive warmer lock and the main `.lake` lock across
-pull, ensure, build and publication. Private native Lake staging preserves older
-input mappings; artifacts are detached from mutable build outputs before
-publication. Complete artifacts precede atomic replacement of each complete mapping
-file, so existing readers remain usable during warming and interrupted publication
-without taking the warmer lock.
-
-Existing independent private build outputs remain usable; whole-build donor copying
-and reverse publication are removed. `.lake` and its build, packages and cache
-directories must not be symlinks. Readers reject shared symlinks and hardlink aliases.
-Cache owners must migrate old aliases with related readers and warmers stopped,
-restoring independent files and rebuilding affected shared artifacts from trusted
-outputs if those aliases may have allowed writes. Readers never repair shared storage.
+`make warm-donor` is an ordinary ensure/build in the selected checkout. Git
+synchronization belongs to the caller. The old Git-common `stratalint-lake` store,
+main outputs, and published archives are preserved and not selected by new
+canonical commands. There is no automatic migration or eviction. Explicit release
+archive production runs `lake build` then `lake pack` under one worktree reservation,
+using the selected executable throughout. Verified fetch invokes that executable
+directly under the same guard; fetch remains explicit. `.lake` and its build
+and packages directories remain private directories, never symlinks.
+Archives are build seeds; Lake decides which outputs to reuse or rebuild.

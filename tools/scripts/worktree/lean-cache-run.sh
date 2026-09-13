@@ -3,7 +3,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
 
-command=with-cache-reader
+command=with-cache
 if [[ "${1:-}" == "--git" ]]; then
   command=cache-git
   shift

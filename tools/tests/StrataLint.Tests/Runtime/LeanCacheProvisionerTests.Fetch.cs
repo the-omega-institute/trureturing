@@ -12,9 +12,9 @@ public sealed partial class LeanCacheProvisionerTests
     [InlineData("materialization", false, 0)]
     [InlineData("pins", false, 0)]
     [InlineData("build", false, 1)]
-    public void OptionalFetchFailureStillReachesLocalBuild(string fault, bool success, int builds)
+    public void EnsureSkipsOptionalArchivesAndPropagatesDependencyAndBuildFailures(string fault, bool success, int builds)
     {
-        using var fixture = new SharedLakeFixture(native: true);
+        using var fixture = new SharedLakeFixture();
         var root = fixture.Main;
         var dependency = Path.Combine(root, "mathlib");
         Directory.CreateDirectory(dependency);
@@ -28,19 +28,14 @@ public sealed partial class LeanCacheProvisionerTests
         Directory.CreateDirectory(Path.GetDirectoryName(prior)!);
         File.WriteAllText(prior, "private output retained");
         if (fault == "pins") File.Delete(Path.Combine(root, "lean-toolchain"));
-        if (fault == "build") File.WriteAllText(Path.Combine(root, "Fixture.lean"), "unknown_command\n");
+
         var runner = new FetchFaultRunner(fault);
-        var result = WorktreeCommand.Run(root, ["with-cache-reader", "--", "lake", "build"], runner);
+        var result = WorktreeCommand.Run(root, ["with-cache", "--", "lake", "build"], runner);
         Assert.True(result.Success == success, result.Output + result.Error);
         Assert.Equal(builds, runner.Builds);
         Assert.Equal("private output retained", File.ReadAllText(prior));
-        if (fault is "timeout" or "nonzero")
-        {
-            Assert.Contains("\"status\":\"degraded\"", result.Output);
-            Assert.Contains("injected " + fault, result.Output);
-            Assert.True(File.Exists(Path.Combine(root, ".lake", "build", "lib", "lean", "Fixture.olean")));
-            Assert.False(File.Exists(LeanCacheStamp.PathFor(Path.Combine(root, ".lake"))));
-        }
+        Assert.Equal(0, runner.Fetches);
+        if (success) Assert.Contains("official-writable", result.Error);
         if (fault == "build") Assert.Equal(1, result.ExitCode);
     }
 
@@ -48,6 +43,7 @@ public sealed partial class LeanCacheProvisionerTests
     {
         private readonly ProductionWorktreeProcessRunner native = new();
         internal int Builds { get; private set; }
+        internal int Fetches { get; private set; }
         public ProcessOutput Run(string file, IReadOnlyList<string> args, string root, TimeSpan budget) =>
             native.Run(file, args, root, budget);
 
@@ -62,15 +58,19 @@ public sealed partial class LeanCacheProvisionerTests
                 target = targetArgs[index];
                 targetArgs = targetArgs.Skip(index + 1).ToArray();
             }
-            if (target == "/usr/bin/sandbox-exec") targetArgs = targetArgs.Skip(3).ToArray();
             if (targetArgs.SequenceEqual(new[] { "exe", "cache", "get" }))
             {
+                Fetches++;
                 if (fault == "timeout") throw new TimeoutException("injected timeout");
                 return new(1, [], Encoding.UTF8.GetBytes("injected nonzero"));
             }
             if (fault == "materialization" && targetArgs.FirstOrDefault() == "env")
                 return new(1, [], Encoding.UTF8.GetBytes("injected materialization failure"));
-            if (targetArgs.FirstOrDefault() == "build") Builds++;
+            if (targetArgs.FirstOrDefault() == "build")
+            {
+                Builds++;
+                if (fault == "build") return new(1, [], Encoding.UTF8.GetBytes("injected build failure"));
+            }
             return native.RunWithEnvironment(file, args, root, budget, environment);
         }
     }

@@ -19,7 +19,6 @@ internal static class LeanCacheProvisioner
     }
 
     internal static TimeSpan LeanCommandBudget => ProvisionBudgetFor();
-    internal static TimeSpan DirectoryCopyBudget => LeanCommandBudget;
     internal static TimeSpan DependencyFetchBudget => LeanCommandBudget;
 
     internal static string Ensure(LeanProcessPolicy policy, LeanPinSet pins, LeanCacheWriterGuard guard)
@@ -30,56 +29,23 @@ internal static class LeanCacheProvisioner
         RequirePrivateLake(root);
         Directory.CreateDirectory(lake);
         var stamp = LeanCacheStamp.Inspect(lake, pins);
-        var archive = LeanArchiveAttempt.Skipped("native shared cache available");
-        string? warning = null;
         // The durable stamp records pins, not current source availability. Native Lake
         // validates/materializes the pinned Git dependencies on every standalone ensure.
         var dependencies = policy.Run(policy.LakeExecutable,
-            ["env", OperatingSystem.IsWindows() ? "cmd" : "/usr/bin/true", .. OperatingSystem.IsWindows() ? new[] { "/c", "exit", "0" } : Array.Empty<string>()],
+            ["env"],
             root, DependencyFetchBudget);
         RequireSuccess(dependencies, "Lake dependency materialization");
-        if (stamp.State != LeanCacheStampState.Match)
-        {
-            if (!policy.SharedReader && HasMathlib(pins))
-            {
-                try
-                {
-                    var fetched = policy.Run(policy.LakeExecutable, ["exe", "cache", "get"], root, DependencyFetchBudget);
-                    if (fetched.ExitCode != 0) warning = "private Mathlib cache fetch failed; Lake may rebuild locally: "
-                        + Encoding.UTF8.GetString(fetched.StandardError).Trim();
-                }
-                catch (TimeoutException exception)
-                {
-                    warning = "private Mathlib cache fetch timed out; Lake may rebuild locally: " + exception.Message;
-                }
-            }
-            if (warning is null) LeanCacheStamp.Write(lake, pins);
-        }
-        if (!policy.SharedReader)
-        {
-            var build = Path.Combine(lake, "build");
-            var content = LeanCacheStateProbe.InspectContentRoot(build);
-            archive = content.Clear && File.Exists(LeanArchiveFetch.ScriptPath(root))
-                ? LeanArchiveFetch.Run(root, policy, TimeSpan.FromMinutes(
-                    LeanCacheBudgetPolicy.LeanInspectJobBudgetMinutes - LeanCacheBudgetPolicy.PostArchiveReserveMinutes))
-                : LeanArchiveAttempt.Skipped(content.Error ?? "private build outputs already present or no release fetcher");
-        }
+        var cacheLine = Encoding.UTF8.GetString(dependencies.StandardOutput).Split('\n')
+            .SingleOrDefault(line => line.StartsWith("LAKE_CACHE_DIR=", StringComparison.Ordinal));
+        var cache = cacheLine?["LAKE_CACHE_DIR=".Length..].TrimEnd('\r');
+        if (string.IsNullOrEmpty(cache))
+            throw new InvalidOperationException("Lake did not resolve an artifact cache directory.");
+        if (stamp.State != LeanCacheStampState.Match) LeanCacheStamp.Write(lake, pins);
         return "LEAN_CACHE " + JsonSerializer.Serialize(new
         {
-            status = warning is null ? "ready" : "degraded", worktree = root,
-            mode = policy.SharedReader ? "shared-reader" : "private",
-            cache = policy.Cache, reason = warning,
-            archive_status = archive.Outcome.ToString().ToLowerInvariant(),
-            archive_reason = archive.Reason ?? archive.SkipReason,
+            status = "ready", worktree = root, mode = "official-writable",
+            cache,
         }) + "\n";
-    }
-
-    private static bool HasMathlib(LeanPinSet pins)
-    {
-        using var manifest = JsonDocument.Parse(pins.LakeManifest);
-        return manifest.RootElement.TryGetProperty("packages", out var packages)
-            && packages.EnumerateArray().Any(package => package.TryGetProperty("name", out var name)
-                && name.GetString() == "mathlib");
     }
 
     internal static void RequirePrivateLake(string root)
