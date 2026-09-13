@@ -3,7 +3,7 @@ import Lean
 namespace LeanInformationAudit.RegistrationGates.ReadoutFamily
 open Lean
 
--- §10.1 budget record: policy-override safety limit; owner=governance lane;
+-- §10.1 budget record: safety limit outside the capacity domain; owner=governance lane;
 -- date=2026-09-13; basis=the realization decoder's 256-step structural-depth
 -- ceiling; exit condition=the supported realization encoding or pinned Lean
 -- version changes, then rerun decoder depth and malformed-encoding fixtures.

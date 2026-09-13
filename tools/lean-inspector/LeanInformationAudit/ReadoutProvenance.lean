@@ -14,25 +14,25 @@ a changed exit, callback or preceding guard requires a renewed return audit.
 namespace LeanInformationAudit.RegistrationGates
 open Lean
 
--- §10.1 budget record: relation-derived safety limit; owner=governance lane;
+-- §10.1 budget record: safety limit outside the capacity domain; owner=governance lane;
 -- date=2026-09-13; basis=the existing 4100-link closure-exhaustion fixture;
 -- exit condition=the supported closure corpus or pinned Lean version changes,
--- then rerun that fixture and register a new relation before changing this cap.
+-- then rerun that fixture and review the safety ceiling before changing it.
 def provenanceConstantFuel : Nat := 4096
 -- Completed InformationRoot and TemplateShadow profiles, Lean 4.33.0,
 -- 2026-09-13: the context-selection query consumed 8,034,836 work units;
 -- InformationRoot's largest query consumed 3,247,448.
 private def provenanceReferenceQueryWork : Nat := 8034836
--- §10.1 budget record: capacity-derived limit; owner=governance lane;
+-- §10.1 budget record: safety limit outside the capacity domain; owner=governance lane;
 -- date=2026-09-13; basis=the measured 8,034,836 work-unit maximum plus 25%
--- policy headroom, rounded upward; exit condition=the pinned Lean version,
+-- safety headroom, rounded upward; exit condition=the pinned Lean version,
 -- supported readout corpus, or measurement profile changes, then remeasure.
 def provenanceExpressionFuel : Nat := (5 * provenanceReferenceQueryWork + 3) / 4
 register_option provenanceExpressionLimit : Nat := {
   defValue := provenanceExpressionFuel
   descr := "Readout work limit, capped by the production expression policy" }
 
--- §10.1 budget record: policy-override safety limit; owner=governance lane;
+-- §10.1 budget record: safety limit outside the capacity domain; owner=governance lane;
 -- date=2026-09-13; basis=bounded raw Lean allocation per definitional comparison;
 -- exit condition=the supported readout corpus or pinned Lean version changes,
 -- then rerun real heartbeat-exhaustion and boundary fixtures. This is exempt
