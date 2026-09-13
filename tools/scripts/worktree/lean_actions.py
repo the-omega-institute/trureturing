@@ -12,6 +12,7 @@ import subprocess
 import sys
 import tempfile
 import tarfile
+import time
 
 from lean_cache import binary_platform, partition_path, resolved_mathlib
 from lean_cache_release import cache_guard
@@ -290,6 +291,7 @@ def snapshot(root, keys, layers=LAYERS, registry=None):
             if not keys["judge_save_allowed" if layer == "judge" else "save_allowed"]:
                 receipt(layer, "save-disabled")
                 continue
+            started = time.monotonic()
             spec = keys[layer]
             target = root / spec["path"]
             target.parent.mkdir(parents=True, exist_ok=True)
@@ -308,6 +310,7 @@ def snapshot(root, keys, layers=LAYERS, registry=None):
                         shutil.copytree(root / spec["target"], staged / "data", symlinks=True)
                 if layer != "report":
                     inventory = files(staged / "data", materialize_links=layer == "dependency")
+                sizes = [(item, (staged / "data" / item["path"]).stat().st_size) for item in inventory]
                 manifest = {"schema": "lean-actions-seed-v1", "partition": keys["partition"], "layer": layer,
                             "key": spec["key"], "files": inventory}
                 (staged / "manifest.json").write_text(json.dumps(manifest, sort_keys=True) + "\n")
@@ -315,7 +318,10 @@ def snapshot(root, keys, layers=LAYERS, registry=None):
                     shutil.rmtree(target)
                 staged.rename(target)
                 ready = True
-                receipt(layer, "snapshot", key=spec["key"])
+                receipt(layer, "snapshot", key=spec["key"], file_count=len(inventory),
+                        uncompressed_bytes=sum(size for _, size in sizes), elapsed_seconds=round(time.monotonic() - started, 3),
+                        largest_files=[{"path": item["path"], "sha256": item["sha256"], "size_bytes": size}
+                                       for item, size in sorted(sizes, key=lambda pair: (-pair[1], pair[0]["path"]))[:5]])
         except (OSError, ValueError, TypeError, KeyError) as error:
             receipt(layer, "save-failed", reason=str(error))
         finally:
