@@ -4,12 +4,17 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Strict divisor chains and their prime-exponent counting function. -/
+   digest: Strict divisor-chain counts equal the signed binomial transform of prime-exponent composition counts. -/
 
 import D5.S3.Factorization.Combinatorics.PrimeGenealogyCount
 import Mathlib.Data.Fintype.Pi
 import Mathlib.Data.Finsupp.Multiset
 import Mathlib.Data.Sym.Card
+import Mathlib.Combinatorics.Enumerative.InclusionExclusion
+import Mathlib.Algebra.BigOperators.Group.Finset.Powerset
+import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Tactic.Ring
+import Mathlib.Data.Fintype.Lattice
 import Mathlib.Order.Fin.Basic
 import Mathlib.SetTheory.Cardinal.Finite
 
@@ -185,32 +190,6 @@ noncomputable def weakChainEquivFactors (n k : ℕ) (hn : n ≠ 0) :
     change partialProducts u.val i.succ / partialProducts u.val i.castSucc = u.val i
     rw [prefix_step, Nat.mul_div_cancel_left _ (prefix_pos u i.castSucc)]
 
-/-- For endpoints greater than one, the weak-chain count is the product of composition counts. -/
-theorem weak_chain_count (n k : ℕ) (hn : 1 < n) :
-    Nat.card (WeakChain n k) = weakCount n k := by
-  classical
-  have hn0 : n ≠ 0 := by omega
-  by_cases hk : k = 0
-  · subst k
-    have : IsEmpty (WeakChain n 0) := ⟨by
-      intro d
-      have hstart := d.prop.1
-      have hend := d.prop.2.1
-      change (d.val 0).val = n at hend
-      omega⟩
-    simp [weakCount]
-  · let e := (weakChainEquivFactors n k hn0).trans (factorTupleEquivAllocation n hn0 (Fin k))
-    let e' : PrimeAllocation n (Fin k) ≃
-        ((p : n.primeFactors) → Sym (Fin k) (n.factorization p)) :=
-      Equiv.piCongrRight fun p => (Sym.equivNatSumOfFintype (Fin k) (n.factorization p)).symm
-    rw [Nat.card_congr (e.trans e'), Nat.card_eq_fintype_card, Fintype.card_pi]
-    simp only [Sym.card_sym_eq_choose, Fintype.card_fin, weakCount, if_neg hk]
-    simpa only [Nat.add_comm] using
-      (Finset.prod_coe_sort n.primeFactors (fun p =>
-        (n.factorization p + k - 1).choose (n.factorization p)))
-
-#print axioms weak_chain_count
-
 /-- Strict steps correspond to the absence of unit factors in the quotient tuple. -/
 noncomputable def strictChainEquivFactors (n k : ℕ) (hn : n ≠ 0) :
     Chain n k ≃ {u : FactorTuple n (Fin k) // ∀ i, u.val i ≠ 1} := by
@@ -292,5 +271,71 @@ noncomputable def factorTupleRestrictEquiv (n : ℕ) (ι : Type*) [Fintype ι]
     funext i
     change extend u i.val = u.val i
     simp [extend, i.prop]
+
+/-- The strict-chain count is the signed binomial transform of the weak-chain counting function. -/
+theorem strict_divisor_chain_count (n k : ℕ) (hn : 1 < n) (_hk : 1 ≤ k) :
+    (Nat.card (Chain n k) : ℤ) =
+      ∑ j ∈ Finset.range (k + 1),
+        (-1 : ℤ) ^ (k - j) * (k.choose j : ℤ) * weakCount n j := by
+  classical
+  have hn0 : n ≠ 0 := by omega
+  have count_factors : ∀ (ι : Type) [Fintype ι],
+      Nat.card (FactorTuple n ι) = weakCount n (Fintype.card ι) := by
+    intro ι inst
+    by_cases hi : Fintype.card ι = 0
+    · have : IsEmpty ι := Fintype.card_eq_zero_iff.mp hi
+      have : IsEmpty (FactorTuple n ι) := ⟨by
+        intro u
+        have hu := u.prop.2
+        simp only [Finset.univ_eq_empty, Finset.prod_empty] at hu
+        omega⟩
+      simp [weakCount]
+    · let e := (factorTupleEquivAllocation n hn0 ι).trans
+        (Equiv.piCongrRight fun p =>
+          (Sym.equivNatSumOfFintype ι (n.factorization p)).symm)
+      rw [Nat.card_congr e, Nat.card_eq_fintype_card, Fintype.card_pi]
+      simp only [Sym.card_sym_eq_choose, weakCount, if_neg hi]
+      simpa only [Nat.add_comm] using
+        (Finset.prod_coe_sort n.primeFactors (fun p =>
+          (n.factorization p + Fintype.card ι - 1).choose (n.factorization p)))
+  let U := FactorTuple n (Fin k)
+  let e := (factorTupleEquivAllocation n hn0 (Fin k)).trans
+    (Equiv.piCongrRight fun p => (Sym.equivNatSumOfFintype (Fin k) (n.factorization p)).symm)
+  let : Fintype U := Fintype.ofEquiv _ e.symm
+  let B : Fin k → Finset U := fun i => Finset.univ.filter (fun u => u.val i = 1)
+  have strict_card : Nat.card (Chain n k) =
+      ((Finset.univ : Finset (Fin k)).inf (fun i => (B i)ᶜ)).card := by
+    rw [Nat.card_congr (strictChainEquivFactors n k hn0), Nat.card_eq_fintype_card]
+    apply Fintype.card_of_subtype
+    intro u
+    simp [Finset.mem_inf, B]
+  have intersection_card : ∀ s : Finset (Fin k),
+      (s.inf B).card = weakCount n (k - s.card) := by
+    intro s
+    have hcard : (s.inf B).card =
+        Nat.card {u : U // ∀ i, i ∉ sᶜ → u.val i = 1} := by
+      rw [Nat.card_eq_fintype_card]
+      symm
+      apply Fintype.card_of_subtype
+      intro u
+      simp [Finset.mem_inf, B]
+    rw [hcard, Nat.card_congr (factorTupleRestrictEquiv n (Fin k) sᶜ), count_factors]
+    simp
+  have hIE := Finset.inclusion_exclusion_card_inf_compl (Finset.univ : Finset (Fin k)) B
+  rw [← strict_card] at hIE
+  simp_rw [intersection_card] at hIE
+  rw [Finset.sum_powerset] at hIE
+  simp_rw [Finset.sum_powersetCard (f := fun m =>
+    (-1 : ℤ) ^ m * (weakCount n (k - m) : ℤ))] at hIE
+  simp only [Finset.card_univ, Fintype.card_fin, nsmul_eq_mul] at hIE
+  rw [hIE]
+  rw [← Finset.sum_range_reflect]
+  apply Finset.sum_congr rfl
+  intro j hj
+  have hjk : j ≤ k := by simpa using Finset.mem_range.mp hj
+  simp only [Nat.add_sub_cancel, Nat.sub_sub_self hjk, Nat.choose_symm hjk]
+  ring
+
+#print axioms strict_divisor_chain_count
 
 end D5.S3.Factorization.Combinatorics.StrictDivisorChainCount
