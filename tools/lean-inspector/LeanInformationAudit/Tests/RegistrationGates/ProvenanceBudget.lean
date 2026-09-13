@@ -1,4 +1,5 @@
 import D5.S3.ConceptDynamics.InformationEscape.InformationRoot
+import D5.S3.ConceptDynamics.InformationEscape.TemplateShadow
 
 open Lean LeanInformationAudit LeanInformationAudit.RegistrationGates
 
@@ -107,3 +108,18 @@ run_cmd Elab.Command.liftCoreM do
     logInfo "[PASS] ProvenanceWorkFuelBoundary"
   else
     logError m!"[FAIL] ProvenanceWorkFuelBoundary: exact={enough}, below={exhausted}, fuel={total}"
+
+-- This dependent output family is larger than every InformationRoot query.
+-- Check the actual registration so a cap derived from only the smaller root
+-- cannot silently publish an IE-C050 diagnostic for this accepted readout.
+run_cmd Elab.Command.liftCoreM do
+  let root := `D5.S3.ConceptDynamics.InformationEscape.TemplateShadow
+  let theoremName :=
+    `D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points
+  let some entry := (InformationRegistry.entries (← getEnv)).find?
+      (fun entry => entry.registrationModuleName == root && entry.theoremName == theoremName)
+    | throwError "[FAIL] TemplateShadowReadoutBudget: missing registration"
+  let actual ← provenanceErrorCurrent root entry.effectiveCatalogId theoremName entry.realizationName
+  if actual.isSome then
+    throwError "[FAIL] TemplateShadowReadoutBudget: {actual}"
+  logInfo "[PASS] TemplateShadowReadoutBudget"

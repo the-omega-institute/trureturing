@@ -27,11 +27,11 @@ def decisionProposition : Prop := (137 : Nat) + 0 = 137
 example : decisionProposition = specificStatement := rfl
 noncomputable def defeqDecisionRead (_ : Unit) (x : Bool) : Bool :=
   if @decide decisionProposition (Classical.propDecidable decisionProposition) then x else false
-check_provenance "DefeqDecision" using defeqDecisionRead expects "unclassified_form" for specificTruth
+check_provenance "DefeqDecision" using defeqDecisionRead expects "forbidden_dependency" for specificTruth
 noncomputable def unrelatedDecisionRead (_ : Unit) (x : Bool) : Bool :=
   if @decide (x = true) (Classical.propDecidable (x = true)) then x else false
 check_provenance "UnrelatedBinderDecision" using unrelatedDecisionRead expects "unclassified_form" for specificTruth
-check_provenance "AppliedDecidableFinite" using genericDecision expects "unclassified_form" for specificTruth
+check_provenance "AppliedDecidableFinite" using genericDecision expects "forbidden_dependency" for specificTruth
 
 def computedKey : Name := Name.str (Name.mkSimple "RegistrationProvenance") "truth"
 example : computedKey = ``truth := rfl
@@ -144,7 +144,7 @@ run_cmd Elab.Command.liftTermElabM do
     type := (← getConstInfo ``clean).type,
     value := mkLambda `i .default (mkConst ``Unit) (mkLambda `x .default (mkConst ``Bool) decision),
     hints := .abbrev, safety := .safe }
-check_provenance "TypeArgumentExhaustion" using wideRead expects "unclassified_form" for specificTruth
+check_provenance "TypeArgumentExhaustion" using wideRead expects "forbidden_dependency" for specificTruth
 
 run_cmd Elab.Command.liftTermElabM do
   for i in [:4100] do

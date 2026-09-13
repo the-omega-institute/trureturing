@@ -6,9 +6,10 @@ open Lean
 -- policy-override, G1b-2: the constant-closure cap preserves the existing
 -- 4100-link exhaustion fixture. Revisit when the readout corpus changes.
 def provenanceConstantFuel : Nat := 4096
--- Completed eleven-query InformationRoot profile, Lean 4.33.0, 2026-09-13:
--- the largest query (CommutingCompletionExchange) consumed 3247448 work units.
-private def provenanceReferenceQueryWork : Nat := 3247448
+-- Completed InformationRoot and TemplateShadow profiles, Lean 4.33.0,
+-- 2026-09-13: the context-selection query consumed 6308220 work units;
+-- InformationRoot's largest query consumed 3247448.
+private def provenanceReferenceQueryWork : Nat := 6308220
 -- policy-override, governance lane: allow 25% growth above that measured maximum,
 -- rounded upward. Construction, cached scans and recursive type work share this
 -- cap; the independent expression-exhaustion and exact-boundary fixtures apply.
