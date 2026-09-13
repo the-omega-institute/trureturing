@@ -28,6 +28,19 @@ private theorem a_zero_eq_one : a 0 = 1 := by
   have hpos : 0 < a 0 := hs.1
   omega
 
+private theorem card_even_divisors_two_pow (k : ℕ) :
+    ((2 ^ k).divisors.filter Even).card = k := by
+  rw [Nat.divisors_prime_pow (by norm_num : Nat.Prime 2) k]
+  rw [Finset.filter_map, Finset.card_map]
+  have hfilter :
+      (Finset.range (k + 1)).filter (fun j => Even (2 ^ j)) = Finset.Ico 1 (k + 1) := by
+    ext j
+    simp [Nat.even_pow]
+    omega
+  change ((Finset.range (k + 1)).filter (fun j => Even (2 ^ j))).card = k
+  rw [hfilter]
+  simp
+
 theorem result : ¬ claim := by
   intro h
   have hbad : Nat.Prime 0 ∨ (0 : ℕ) = 1 := h 0 (by simp [a_zero_eq_one])
