@@ -30,8 +30,8 @@ formal result attached to this note refutes only the latter suggestion.
   `1 + (k^2 − 1) = k^2` after renaming the base variable.
 - Reading: the coprimality condition `gcd(k, x) = 1` is inherited from
   Mahler's setting and excludes the digit-shift scalings `x ↦ k·x`.
-- Background: Kurt Mahler, "On the digits of the multiples of an irrational
-  p-adic number," *Acta Arithmetica* 53 (1989), 99–106,
+- Background: Kurt Mahler, "The representation of squares to the base 3,"
+  *Acta Arithmetica* 53 (1989), 99–106,
   DOI 10.4064/aa-53-1-99-106.
 - Corroborating source: the 1988 Mahler letter reproduced in the introduction
   to the 2019 *Kurt Mahler: Selecta* says that base 5 had yielded no example
