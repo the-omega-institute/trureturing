@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fdd08047b64c870c15d9064cc698a7dd15768f3f846729d33018e4351b875c8a
+  normalized_sha256: sha256:fdd08047b64c870c15d9064cc698a7dd15768f3f846729d33018e4351b875c8a
+cas_ref: sha256:fdd08047b64c870c15d9064cc698a7dd15768f3f846729d33018e4351b875c8a
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Attribution/StabilizerSelectorObstruction.no_equivariant_selector_of_stabilizer_without_fixed_action
+    target_statement_id: sha256:a097fe57b668b604c4ed22ed29726ce6ff6b0e438c6dda349f9f9bc47efe27ae
+  - gid: D5/S3/Observer/ProbabilisticClosure/TransitiveInvariantDistribution.transitive_invariant_distribution_unique_uniform
+    target_statement_id: sha256:86b2e73c1679b7a87ea68ef153c655e5588da74bea663139c23f1ef714e1fa19
+receipts:
+  unresolved_subitems: []
