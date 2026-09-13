@@ -1,0 +1,7 @@
+**定理 479.3（准确删除核与带核有效费用）。** 对 $1\le k<r$ 定义
+$$
+D_k(c',c)=\begin{cases}
+1/k,&c\text{ 由 }c'\in\mathcal C_{n,k+1}\text{ 删除一个内部顶点得到},\\
+0,&\text{否则},
+\end{cases}\qquad c\in\mathcal C_{n,k}.
+$$
