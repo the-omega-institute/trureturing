@@ -7,6 +7,58 @@ namespace StrataLint.Tests;
 
 public sealed class RawLeanReportArtifactTests
 {
+    [Theory]
+    [InlineData("valid")]
+    [InlineData("duplicate-context")]
+    [InlineData("unreferenced-material")]
+    [InlineData("tampered-material")]
+    [InlineData("missing-material")]
+    public void SourceContextTransportPreservesStatementMaterialValidation(string mutation)
+    {
+        using var temporary = new TemporaryDirectory();
+        var path = Path.Combine(temporary.Path, "report.json");
+        var snapshot = Snapshot();
+        var report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>
+        {
+            ["Trureturing.lean"] = new([], [new LeanDeclaration("probe", "axiom", "statement-v1(test)", [])
+                { NameKey = "ns(n0,5:probe)" }]),
+        });
+        RawLeanReportArtifact.WriteFile(path, snapshot, report);
+        const string context = "{\"schema\":\"lean-source-context/1\",\"files\":[],\"registrations\":[]}\n";
+        var bundled = TestProcessRunner.Run("python3", ["-c", """
+            import importlib.util, pathlib, sys
+            spec = importlib.util.spec_from_file_location("source_context", sys.argv[1])
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            report, data = pathlib.Path(sys.argv[2]), sys.argv[3].encode()
+            module.bundle_context(report, data + b"\n")
+            module.bundle_context(report, data)
+            """, Path.Combine(TestRepositoryLayout.FindRoot(), "tools/lean-inspector/source-context.py"), path, context],
+            temporary.Path, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
+        Assert.True(bundled.ExitCode == 0, Encoding.UTF8.GetString(bundled.StandardError));
+        using (var archive = ZipFile.Open(RawLeanReportArtifact.MaterialsPath(path), ZipArchiveMode.Update))
+        {
+            var material = Assert.Single(archive.Entries, entry => entry.FullName.StartsWith("sha256/", StringComparison.Ordinal));
+            void Add(string name, string contents)
+            {
+                using var writer = new StreamWriter(archive.CreateEntry(name).Open());
+                writer.Write(contents);
+            }
+            if (mutation == "duplicate-context") Add("source-context.json", context);
+            if (mutation == "unreferenced-material") Add("sha256/" + new string('1', 64), "unused");
+            if (mutation == "missing-material") material.Delete();
+            if (mutation == "tampered-material")
+            {
+                var name = material.FullName;
+                material.Delete();
+                Add(name, "statement-v1(tampered)");
+            }
+        }
+        var declaration = RawLeanReportArtifact.ReadFile(path, snapshot).Files.Single().Value.Declarations.Single();
+        if (mutation == "valid") Assert.Equal("statement-v1(test)", declaration.LoadTypeRepresentation());
+        else Assert.Throws<InvalidDataException>(() => declaration.LoadTypeRepresentation());
+    }
+
     private const string Source = "axiom probe : False\n";
 
     private const string CanonicalReport =

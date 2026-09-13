@@ -108,18 +108,74 @@ def planning_paths(repository, before, head):
     return sorted(set(path for path in paths if path))
 
 
+def report_source_arguments(repository, environment, bases, befores, heads, acquire_pinned=False):
+    """Resolve the public report boundary; shell callers only transport these arguments."""
+    def single(values, name):
+        values = list(values or [])
+        if environment.get(name):
+            values.append(environment[name])
+        if any(not value for value in values) or len(set(values)) > 1:
+            raise ValueError("conflicting or empty " + name)
+        return values[0] if values else None
+
+    base = single(bases, "STRATALINT_SOURCE_BASE")
+    before = single(befores, "STRATALINT_PUSH_BEFORE")
+    head = single(heads, "STRATALINT_PUSH_HEAD")
+    if (before is None) != (head is None) or (base is not None and before is not None):
+        raise ValueError("choose protected base or complete push range")
+    if base is not None:
+        base = subprocess.run(["git", "rev-parse", "--verify", base + "^{commit}"],
+            cwd=repository, check=True, capture_output=True, text=True).stdout.strip()
+
+    identity = None
+    if environment.get("GITHUB_ACTIONS") == "true":
+        identity = checked_identity(repository, environment, acquire_pinned)
+        expected = (identity["protected_base"], identity["push_before"], identity["push_after"])
+        if (base is not None or before is not None) and (base, before, head) != expected:
+            raise ValueError("explicit report source mode differs from checked Actions identity")
+        base, before, head = expected
+    if base is not None:
+        return ["--base", base], identity
+    if before is None:
+        raise ValueError("explicit protected base or push range is required outside Actions")
+    planning_paths(repository, before, head)
+    return ["--push-before", before, "--push-head", head], identity
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--repository", required=True, type=Path)
     parser.add_argument("--acquire-pinned", action="store_true")
     parser.add_argument("--engineering-arguments", action="store_true",
         help="emit validated make arguments, with the identity observation on stderr")
+    parser.add_argument("--report-source-arguments", action="store_true",
+        help="emit one validated source argument per line for report callers")
+    parser.add_argument("--base", action="append")
+    parser.add_argument("--push-before", action="append")
+    parser.add_argument("--push-head", action="append")
     parser.add_argument("--planning-before")
     parser.add_argument("--planning-head")
     parser.add_argument("--paths", action="store_true")
     parser.add_argument("--github-output", action="store_true")
     parser.add_argument("--github-env", action="store_true")
     arguments = parser.parse_args()
+    if arguments.report_source_arguments:
+        try:
+            if (arguments.paths or arguments.planning_before or arguments.planning_head
+                    or arguments.engineering_arguments or arguments.github_output or arguments.github_env):
+                raise ValueError("report source arguments require a single output mode")
+            source, identity = report_source_arguments(arguments.repository, os.environ, arguments.base,
+                arguments.push_before, arguments.push_head, arguments.acquire_pinned)
+        except (ValueError, KeyError, TypeError, OSError, subprocess.CalledProcessError) as error:
+            print("CI_REPORT_SOURCE_INVALID " + str(error), file=sys.stderr)
+            return 2
+        if identity is not None:
+            print("CI_CHECKED_IDENTITY " + json.dumps(identity, sort_keys=True), file=sys.stderr)
+        print("\n".join(source))
+        return 0
+    if arguments.base or arguments.push_before or arguments.push_head:
+        print("CI_CHECKED_IDENTITY_INVALID source flags require --report-source-arguments", file=sys.stderr)
+        return 2
     if arguments.paths:
         try:
             paths = planning_paths(arguments.repository, arguments.planning_before, arguments.planning_head)

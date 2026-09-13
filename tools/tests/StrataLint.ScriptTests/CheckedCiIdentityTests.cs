@@ -6,6 +6,32 @@ namespace StrataLint.Tests;
 public sealed class CheckedCiIdentityTests
 {
     [Theory]
+    [InlineData("pull_request_target", "default-workflow", true)]
+    [InlineData("pull_request_target", "event-base-drift", true)]
+    [InlineData("pull_request_target", "explicit-base", true)]
+    [InlineData("pull_request_target", "conflicting-base", false)]
+    [InlineData("pull_request_target", "wrong-parent", false)]
+    [InlineData("push", "valid", true)]
+    [InlineData("push", "initial", true)]
+    [InlineData("push", "acquire-success", true)]
+    [InlineData("push", "acquire-failure", false)]
+    [InlineData("push", "explicit-push", true)]
+    [InlineData("push", "conflicting-push", false)]
+    [InlineData("push", "partial-push", false)]
+    [InlineData("push", "planning-options", false)]
+    [InlineData("push", "both-modes", false)]
+    [InlineData("push", "deleted", false)]
+    [InlineData("push", "wrong-after", false)]
+    [InlineData("push", "missing-workflow", false)]
+    [InlineData("local", "valid", false)]
+    [InlineData("local", "explicit-base", true)]
+    [InlineData("local", "explicit-push", true)]
+    [InlineData("local", "environment-conflict", false)]
+    [InlineData("local", "duplicate-conflict", false)]
+    public void ReportArgumentsRequireConsistentExplicitOrActionsIdentity(string eventName, string change, bool accepted)
+        => RunFixture(eventName, change, accepted, "report");
+
+    [Theory]
     [InlineData("pull_request", "valid", true)]
     [InlineData("push", "valid", true)]
     [InlineData("pull_request_target", "default-workflow", true)]
@@ -23,13 +49,17 @@ public sealed class CheckedCiIdentityTests
     [InlineData("push", "malformed-before", false)]
     [InlineData("push", "missing-workflow", false)]
     [InlineData("schedule", "valid", false)]
+    [InlineData("push", "foreign-source-options", false)]
     public void CheckedIdentityBindsRealGitParentsAndWorkflowRevision(string eventName, string change, bool accepted)
+        => RunFixture(eventName, change, accepted, "identity");
+
+    private static void RunFixture(string eventName, string change, bool accepted, string mode)
     {
         using var temporary = new TemporaryDirectory();
         var root = TestRepositoryLayout.FindRoot();
         var result = TestProcessRunner.Run("python3", ["-c", Fixture,
             Path.Combine(root, "tools/scripts/workflow/checked-ci-identity.py"), temporary.Path,
-            eventName, change, accepted ? "yes" : "no"], root,
+            eventName, change, accepted ? "yes" : "no", mode], root,
             BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardOutput)
             + Encoding.UTF8.GetString(result.StandardError));
@@ -38,7 +68,7 @@ public sealed class CheckedCiIdentityTests
     private const string Fixture = """
         import json, os, subprocess, sys
         from pathlib import Path
-        script, directory, event, change, accepted = sys.argv[1:]
+        script, directory, event, change, accepted, mode = sys.argv[1:]
         root = Path(directory)
         def git(*args):
             return subprocess.run(['git', *args], cwd=root, check=True, text=True,
@@ -66,6 +96,7 @@ public sealed class CheckedCiIdentityTests
             GITHUB_REPOSITORY='owner/repo', GITHUB_RUN_ID='23', GITHUB_RUN_ATTEMPT='1',
             GITHUB_JOB='fixture-job', GITHUB_REF='refs/pull/17/merge')
         data=json.loads(payload.read_text())
+        if change == 'event-base-drift': data['pull_request']['base']['sha'] = pr_head
         if change == 'initial': data.update(before='0'*40, created=True)
         if change == 'missing-before': data.pop('before')
         if change == 'wrong-after': data['after']=pr_head
@@ -92,9 +123,34 @@ public sealed class CheckedCiIdentityTests
         if change == 'default-workflow': environment['GITHUB_WORKFLOW_SHA'] = base
         if change == 'missing-workflow': environment.pop('GITHUB_WORKFLOW_SHA')
         environment.update(GITHUB_OUTPUT=str(root/'outputs'), GITHUB_ENV=str(root/'environment'))
-        result=subprocess.run(['python3', script, '--repository', str(root), '--github-output', '--github-env', *extra],
+        arguments = ['--github-output', '--github-env']
+        if change == 'foreign-source-options': arguments += ['--base', base]
+        if mode == 'report':
+            environment.update(STRATALINT_SOURCE_BASE='', STRATALINT_PUSH_BEFORE='', STRATALINT_PUSH_HEAD='')
+            environment['GITHUB_ACTIONS'] = 'true' if event != 'local' else ''
+            arguments = ['--report-source-arguments']
+            if change == 'explicit-base': arguments += ['--base', base]
+            if change == 'explicit-push': arguments += ['--push-before', data['before'], '--push-head', merge]
+            if change == 'conflicting-base': arguments += ['--base', pr_head]
+            if change == 'conflicting-push': arguments += ['--push-before', pr_head, '--push-head', merge]
+            if change == 'partial-push': arguments += ['--push-before', base]
+            if change == 'planning-options': arguments += ['--planning-before', base, '--planning-head', merge]
+            if change == 'both-modes': arguments += ['--base', base, '--push-before', base, '--push-head', merge]
+            if change == 'environment-conflict':
+                environment['STRATALINT_SOURCE_BASE'] = pr_head
+                arguments += ['--base', base]
+            if change == 'duplicate-conflict': arguments += ['--base', base, '--base', pr_head]
+        result=subprocess.run(['python3', script, '--repository', str(root), *arguments, *extra],
             cwd=root, env=environment, text=True, capture_output=True)
         assert (result.returncode == 0) == (accepted == 'yes'), (result.returncode, result.stdout, result.stderr)
+        if mode == 'report':
+            if accepted == 'yes':
+                expected = ['--push-before', data['before'], '--push-head', merge] if event == 'push' or change == 'explicit-push' else ['--base', base]
+                assert result.stdout.splitlines() == expected, result.stdout
+                if event != 'local': assert 'CI_CHECKED_IDENTITY ' in result.stderr, result.stderr
+            else:
+                assert result.returncode == 2 and 'CI_REPORT_SOURCE_INVALID' in result.stderr, result.stderr
+            raise SystemExit(0)
         if accepted == 'yes':
             row=json.loads(result.stdout.removeprefix('CI_CHECKED_IDENTITY '))
             exported=dict(line.split('=', 1) for line in (root/'environment').read_text().splitlines())

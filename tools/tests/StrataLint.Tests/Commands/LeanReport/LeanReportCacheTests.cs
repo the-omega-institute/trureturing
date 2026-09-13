@@ -521,6 +521,7 @@ public sealed class LeanReportCacheTests
         {
             var arguments = new List<string>
             {
+                "-u", "GITHUB_ACTIONS", "-u", "STRATALINT_SOURCE_BASE",
                 "-u", "STRATALINT_PUSH_BEFORE", "-u", "STRATALINT_PUSH_HEAD",
             };
             if (!cacheEnabled)

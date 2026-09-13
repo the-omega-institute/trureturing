@@ -11,6 +11,7 @@ public sealed partial class LeanReportInputScriptTests
         TestProcessRunner.Run("/bin/bash",
             ["-c", """
                 set -euo pipefail
+                unset GITHUB_ACTIONS STRATALINT_SOURCE_BASE STRATALINT_PUSH_BEFORE STRATALINT_PUSH_HEAD
                 # The test project's CLI reference is built by the canonical test build.
                 # Reuse only that immutable program; every selector still reads this invocation's inputs.
                 export BATCH_NATIVE_CLI="$1"

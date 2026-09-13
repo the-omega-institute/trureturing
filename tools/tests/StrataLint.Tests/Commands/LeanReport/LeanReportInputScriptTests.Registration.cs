@@ -8,6 +8,10 @@ public sealed partial class LeanReportInputScriptTests
 {
     internal static void WritePairInputRegistration(string repository, params string[] producerPaths)
     {
+        const string identity = "tools/scripts/workflow/checked-ci-identity.py";
+        Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine(repository, identity))!);
+        File.Copy(Path.Combine(TestRepositoryLayout.FindRoot(), identity), Path.Combine(repository, identity));
+        producerPaths = [.. producerPaths, identity];
         var meta = Path.Combine(repository, "Meta");
         Directory.CreateDirectory(meta);
         File.WriteAllText(Path.Combine(meta, "FILEMAP.toml"), """
@@ -49,6 +53,7 @@ public sealed partial class LeanReportInputScriptTests
             root, StrataLint.Engine.BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
         Assert.Contains("tools/scripts/worktree/lean-cache-run.sh", Lines(result));
+        Assert.Contains("tools/scripts/workflow/checked-ci-identity.py", Lines(result));
     }
 
     [Fact]
@@ -156,6 +161,7 @@ public sealed partial class LeanReportInputScriptTests
                 "Meta/FILEMAP.toml", "Meta/LeanInputs.json", InputHelperPath, PairScriptPath, SupervisorScriptPath, CiBaselineScriptPath,
                 CacheEnsureScriptPath, CachePublishScriptPath, "tools/scripts/worktree/lean-cache-input.sh",
                 ResourceObservationLibraryPath, ToolchainInstallerPath, JudgeContentAddressPath,
+                "tools/scripts/workflow/checked-ci-identity.py",
                 ScribeContentChecksPath, WorkflowPath, EngineLockPath, CliLockPath, TruthLockPath,
             ];
             Write("Meta/LeanInputs.json", JsonSerializer.Serialize(new

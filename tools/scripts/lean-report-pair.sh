@@ -7,9 +7,7 @@ PRODUCER=""
 LAKE_BIN=""
 CANDIDATE_ROOT=""
 CANDIDATE_OUTPUT=""
-SOURCE_BASE="${STRATALINT_SOURCE_BASE:-}"
-PUSH_BEFORE="${STRATALINT_PUSH_BEFORE:-}"
-PUSH_HEAD="${STRATALINT_PUSH_HEAD:-}"
+SOURCE_INPUTS=()
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 SUPERVISOR="$SCRIPT_DIR/report/report-supervisor.sh"
 INPUT_HELPER="$SCRIPT_DIR/report/lean-report-input.sh"
@@ -22,9 +20,7 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
     --producer) PRODUCER="$2"; shift 2 ;;
     --lake-bin) LAKE_BIN="$2"; shift 2 ;;
-    --base) SOURCE_BASE="$2"; shift 2 ;;
-    --push-before) PUSH_BEFORE="$2"; shift 2 ;;
-    --push-head) PUSH_HEAD="$2"; shift 2 ;;
+    --base|--push-before|--push-head) SOURCE_INPUTS+=("$1" "$2"); shift 2 ;;
     --candidate-root) CANDIDATE_ROOT="$2"; shift 2 ;;
     --candidate-output) CANDIDATE_OUTPUT="$2"; shift 2 ;;
     *) echo "lean-report-pair: unknown argument '$1'" >&2; exit 2 ;;
@@ -47,15 +43,15 @@ done
 PRODUCER="$(cd "$(dirname "$PRODUCER")" && pwd -P)/$(basename "$PRODUCER")"
 CANDIDATE_ROOT="$(cd "$CANDIDATE_ROOT" && pwd -P)"
 SOURCE_ARGS=()
-if [[ -n "$PUSH_BEFORE" || -n "$PUSH_HEAD" ]]; then
-  [[ -z "$SOURCE_BASE" ]] || { echo "lean-report-pair: choose protected base or push range" >&2; exit 2; }
-  python3 "$CANDIDATE_ROOT/tools/scripts/workflow/checked-ci-identity.py" --repository "$CANDIDATE_ROOT" \
-    --paths --planning-before "$PUSH_BEFORE" --planning-head "$PUSH_HEAD" >/dev/null || exit 2
-  SOURCE_ARGS=(--push-before "$PUSH_BEFORE" --push-head "$PUSH_HEAD")
+source_arguments="$(python3 "$CANDIDATE_ROOT/tools/scripts/workflow/checked-ci-identity.py" \
+  --repository "$CANDIDATE_ROOT" --report-source-arguments --acquire-pinned \
+  "${SOURCE_INPUTS[@]}")" || exit 2
+while IFS= read -r argument; do SOURCE_ARGS+=("$argument"); done <<< "$source_arguments"
+SOURCE_BASE="" PUSH_BEFORE="" PUSH_HEAD=""
+if [[ "${SOURCE_ARGS[0]}" == --base ]]; then
+  SOURCE_BASE="${SOURCE_ARGS[1]}"
 else
-  [[ -n "$SOURCE_BASE" ]] || { echo "lean-report-pair: explicit protected base or push range is required" >&2; exit 2; }
-  SOURCE_BASE="$(git -C "$CANDIDATE_ROOT" rev-parse --verify "${SOURCE_BASE}^{commit}")" || exit 2
-  SOURCE_ARGS=(--base "$SOURCE_BASE")
+  PUSH_BEFORE="${SOURCE_ARGS[1]}" PUSH_HEAD="${SOURCE_ARGS[3]}"
 fi
 INSPECTOR="$(dirname "$PRODUCER")/Inspector.lean"
 [[ -f "$INSPECTOR" ]] \
@@ -289,8 +285,7 @@ cache_try_restore() {
   # the stored attestation; rejects any key skew or collision. Fail-closed.
   # Source context belongs to this B or P/H and is prepared and verified below.
   # Restore candidate report material before demanding that context sibling.
-  if ! STRATALINT_SOURCE_BASE="" STRATALINT_PUSH_BEFORE="" STRATALINT_PUSH_HEAD="" \
-    "$INPUT_HELPER" verify --repository "$root" --report "$output" \
+  if ! "$INPUT_HELPER" verify-input --repository "$root" --report "$output" \
     --producer "$PRODUCER" --inspector "$INSPECTOR" >/dev/null 2>&1; then
     cache_evict "$address"
     rm -rf -- "$output" "${output}.sha256" "${output}.provenance.json" \
