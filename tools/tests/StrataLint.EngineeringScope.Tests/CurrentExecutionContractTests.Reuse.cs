@@ -7,6 +7,49 @@ namespace StrataLint.EngineeringScope.Tests;
 public sealed partial class CurrentExecutionContractTests
 {
     [Theory]
+    [InlineData("StrataLint.ArchitectureTests")]
+    [InlineData("StrataLint.EngineeringScope.Tests")]
+    [InlineData("StrataLint.ScriptTests")]
+    [InlineData("StrataLint.Tests")]
+    public void RegisteredAgentDocumentationPreservesTestInputsWhileScriptsAndTemplatesInvalidate(string project)
+    {
+        using var fixture = new CandidateFixture();
+        var registration = JsonNode.Parse(File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), EngineeringRegistrationFixture.Path)))!;
+        var declaration = registration["projects"]!.AsArray().Single(row => row!["path"]!.ToString() == $"tools/tests/{project}/{project}.csproj")!;
+        EditRegistration(fixture, rows =>
+        {
+            foreach (var field in new[] { "execution_inputs", "execution_excludes" })
+                rows[0]![field] = declaration[field]!.DeepClone();
+        });
+        // Exercise the production fingerprint with the real execution registration;
+        // only the fixture's compile inputs and test assembly remain synthetic.
+        foreach (var input in declaration["execution_inputs"]!.AsArray().Select(value => value!.ToString()).Where(path => !path.Contains('*')))
+            if (!File.Exists(Path.Combine(fixture.Root, input))) fixture.Write(input, "registered fixture material\n");
+        var changes = new[]
+        {
+            (Path: "tools/scripts/agent/openproblem/README.md", Invalidates: false),
+            (Path: "tools/scripts/agent/openproblem/SCREENED-OUT.md", Invalidates: false),
+            (Path: "tools/scripts/preflight.sh", Invalidates: true),
+            (Path: "tools/scripts/agent/openproblem/templates/judgement-form-check-template.md", Invalidates: true),
+        };
+        foreach (var change in changes) fixture.Write(change.Path, "original fixture material\n");
+        fixture.Track();
+        Execute(fixture);
+        var previous = ReadTests(fixture)["projects"]![0]!["input_fingerprint"]!.ToString();
+        foreach (var change in changes)
+        {
+            Seed(fixture);
+            fixture.Write(change.Path, "changed fixture material\n");
+            fixture.Track();
+            var calls = Execute(fixture);
+            var current = ReadTests(fixture)["projects"]![0]!["input_fingerprint"]!.ToString();
+            Assert.True(change.Invalidates ? previous != current : previous == current, $"{project}: {change.Path}: invalidates={change.Invalidates}");
+            Assert.Equal(change.Invalidates ? new[] { CandidateFixture.First } : [], calls);
+            previous = current;
+        }
+    }
+
+    [Theory]
     [InlineData("source", 1)]
     [InlineData("reference", 2)]
     [InlineData("material", 1)]

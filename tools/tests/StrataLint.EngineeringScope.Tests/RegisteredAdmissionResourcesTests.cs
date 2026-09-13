@@ -40,6 +40,9 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     [InlineData("tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml", true)]
     [InlineData("tools/tests/Trureturing.Truth.Tests/AdmissionResourceProbe.cs", false)]
     [InlineData("tools/tests/Trureturing.Truth.Tests/AdmissionResourceProbe.cs", true)]
+    [InlineData("tools/scripts/preflight.sh", false)]
+    [InlineData("tools/scripts/agent/openproblem/TARGET-GATES.md", false)]
+    [InlineData("tools/scripts/agent/openproblem/templates/judgement-form-check-template.md", false)]
     public void RegisteredJudgeChangesKeepDeltaReachableWithOrWithoutNoResourceContent(string judge, bool mixed)
     {
         var plan = Plan(judge, mixed ? RegisteredNoResourceContent : "");
@@ -59,7 +62,9 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     [InlineData("docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md")]
     [InlineData("docs/develop/spec/trureturing_engineering_optimization_v1.md")]
     [InlineData(RegisteredNoResourceContent)]
-    public void RegisteredContentAloneStillNeedsNoResources(string content)
+    [InlineData("tools/scripts/agent/openproblem/README.md")]
+    [InlineData("tools/scripts/agent/openproblem/SCREENED-OUT.md")]
+    public void RegisteredFilesAloneStillNeedNoResources(string content)
     {
         var plan = Plan("", content);
         foreach (var field in new[] { "resources", "selected_stages", "tools", "cache_layers" })
