@@ -44,7 +44,11 @@ internal sealed class MurthyLeastPrimePrefixSuffixRefutationDocument : IScribeDo
                         + "a suffix of length one and value one gives 11 = 1 times 10 plus 1, "
                         + "while one is not strictly smaller than one. No general existence "
                         + "statement for a(n) is asserted."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a018800-least-prime-prefix-suffix-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula SequenceFormula()
     {

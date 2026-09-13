@@ -34,6 +34,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/MurthyLeastPrimePrefixSuffixRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a018800-least-prime-prefix-suffix-refutation` (refuted) by `D5/S0/Certificates/MurthyLeastPrimePrefixSuffixRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a018800-least-prime-prefix-suffix-refutation","declaration_gid":"D5/S0/Certificates/MurthyLeastPrimePrefixSuffixRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Amarnath Murthy; David W. Wilson (2002). *OEIS A018800, Smallest prime that begins with n*. URL: <https://oeis.org/A018800>.
