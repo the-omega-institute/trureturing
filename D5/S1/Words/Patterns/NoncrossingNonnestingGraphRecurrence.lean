@@ -311,4 +311,38 @@ private theorem card_allowedEdges_extend (E : Finset (Edge n)) (S : Finset (Fin 
       rw [hset, if_neg hempty, if_neg hone]
       simp
 
+private def goodGraphEquivAvoiding (n : ℕ) :
+    GoodGraph n ≃ {E : Finset (Fin n × Fin n) // IsAvoiding E} :=
+  (((Equiv.finsetSubtypeComm (fun e : Fin n × Fin n => e.1 < e.2)).subtypeEquiv
+    (p := GoodEdges) (q := fun E => IsAvoiding E.1)
+    (fun E => by
+      let valEmb : Edge n ↪ Fin n × Fin n := ⟨Subtype.val, Subtype.val_injective⟩
+      change GoodEdges E ↔ IsAvoiding (E.map valEmb)
+      constructor
+      · intro hgood
+        constructor
+        · intro e he
+          obtain ⟨e', _, rfl⟩ := Finset.mem_map.mp he
+          exact e'.2
+        intro e he f hf
+        obtain ⟨e', he', rfl⟩ := Finset.mem_map.mp he
+        obtain ⟨f', hf', rfl⟩ := Finset.mem_map.mp hf
+        exact hgood e' he' f' hf'
+      · rintro ⟨_, hgood⟩ e he f hf
+        exact hgood e.1 (Finset.mem_map.mpr ⟨e, he, rfl⟩)
+          f.1 (Finset.mem_map.mpr ⟨f, hf, rfl⟩)))).trans
+    (Equiv.subtypeSubtypeEquivSubtype (fun h => h.1))
+
+private def goodGraphSuccEquiv (n : ℕ) :
+    GoodGraph (n + 1) ≃
+      Σ G : GoodGraph n, {S : Finset (Fin n) // S ⊆ Allowed G} :=
+  ((splitEdges n).subtypeEquiv (p := GoodEdges)
+    (q := fun p => GoodEdges p.1 ∧ p.2 ⊆ allowedEdges p.1) (fun E => by
+    simpa [extendEdges] using
+      (goodEdges_extend_iff (E := (splitEdges n E).1) (S := (splitEdges n E).2)))).trans
+    { toFun := fun p => ⟨⟨p.1.1, p.2.1⟩, ⟨p.1.2, p.2.2⟩⟩
+      invFun := fun p => ⟨(p.1.1, p.2.1), ⟨p.1.2, p.2.2⟩⟩
+      left_inv := by rintro ⟨⟨E, S⟩, hE, hS⟩; rfl
+      right_inv := by rintro ⟨⟨E, hE⟩, ⟨S, hS⟩⟩; rfl }
+
 end D5.S1.Words.Patterns.NoncrossingNonnestingGraphRecurrence
