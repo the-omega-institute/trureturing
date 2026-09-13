@@ -2,14 +2,15 @@
    generality: G
    mirror-B: D5/B/S3/Factorization/GerasimovLeastEvenDivisorCountPowerOfTwo
    mirror-E: none(waiver:kernel-checked-refutation)
-   anchors: [mathlib/module/Mathlib.NumberTheory.Divisors, mathlib/module/Mathlib.Data.Finset.NatDivisors, mathlib/module/Mathlib.Data.Nat.Prime.Basic, mathlib/module/Mathlib.Tactic]
+   anchors: [mathlib/module/Mathlib.Data.Finset.NatDivisors, mathlib/module/Mathlib.Order.Lattice.Nat, mathlib/module/Mathlib.Tactic.NormNum, mathlib/module/Mathlib.Tactic.NormNum.Parity, mathlib/module/Mathlib.Tactic.NormNum.Prime]
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Factorization/GerasimovLeastEvenDivisorCountPowerOfTwo.claim; result=D5/S3/Factorization/GerasimovLeastEvenDivisorCountPowerOfTwo.result; claim=D5/S3/Factorization/GerasimovLeastEvenDivisorCountPowerOfTwo.claim
-   digest: The literal offset-zero power-of-two comment is refuted at zero, while its positive-index form is studied. -/
+   digest: The offset-zero claim is refuted at zero, while its positive-index form is proved. -/
 
-import Mathlib.NumberTheory.Divisors
 import Mathlib.Data.Finset.NatDivisors
-import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.Tactic
+import Mathlib.Order.Lattice.Nat
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.NormNum.Parity
+import Mathlib.Tactic.NormNum.Prime
 
 namespace D5.S3.Factorization.GerasimovLeastEvenDivisorCountPowerOfTwo
 
