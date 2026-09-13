@@ -1,0 +1,12 @@
+**定理 143（时空坐标算术的 Zeckendorf 共轭）。** \(\iota_Z:\mathbb Z_{\mathrm{code}}\to\mathsf Z_{\mathbb Z}\) 是双射，并且对所有整数 \(z,z'\)
+\[
+\iota_Z(z+z')=\iota_Z(z)\boxplus_Z^{\mathbb Z}\iota_Z(z'),
+\qquad
+z<z'\iff\iota_Z(z)<_Z^{\mathbb Z}\iota_Z(z').
+\]
+\(\iota_Z^{(3)}\) 是 \(\mathbb Z^3\) 与 \((\mathsf Z_{\mathbb Z})^3\) 的双射，并保持逐坐标加法。若 \(t<t'\)，则
+\[
+\iota_Z(t'+1)=\operatorname{succ}_{\mathbb Z,Z}(\iota_Z(t'))
+\]
+其中 \(\operatorname{succ}_{\mathbb Z,Z}(c)=\operatorname{scode}(\operatorname{ival}(c)+1)\)。因此 CSA 中的时间守卫、空间平移和乘积位置更新都能只用带符号 Zeckendorf 码表达。
+

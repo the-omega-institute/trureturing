@@ -1,0 +1,8 @@
+**证明。** 定理 113–114 给出 \(\operatorname{scode}\) 与 \(\operatorname{ival}\) 的互逆性。时间码 \(\operatorname{scode}(t)\) 与寄存器码 \(\operatorname{NatZ}(p)\) 均为单射，故 \(\operatorname{TCode}_P\) 的每个位置唯一，且有限支撑相互保持；逐点应用
+\[
+\operatorname{scode}(m+n)=\operatorname{scode}(m)\oplus_Z\operatorname{scode}(n)
+\]
+得到两式及双射性。
+
+平移只重排有限支撑的时间坐标，故保持有限支撑、加法及逆元。对终端和作变量替换 \(s=t-h\) 得第一式；对前缀和作同一替换得第二式。把 \(c(t-h,p)\) 代入 (Z-TEMPORAL-CODE) 即得编码侧平移公式。终端化只对有限非零时间项求和，定理 114 把该有限整数和运输为带符号 Zeckendorf 加法；因此 \(\Sigma_P\)、\(\iota_P\) 及其核、像和分裂关系全部保持。证毕。
+

@@ -1,0 +1,15 @@
+**命题 352.2。** 第 335 条的黄金字段给
+$$
+\operatorname{cenc}_\phi(\phi/G_n)
+=T_2(\zeta(0),\operatorname{qenc}(1/G_n))\in\mathsf{Coeff}_\phi,
+$$
+$$
+\operatorname{genc}_\phi([\phi/G_n])
+=T_2(\zeta(1),\operatorname{qenc}(1/G_n))\in\mathsf{Phase}_\phi,
+$$
+$$
+\operatorname{genc}_\phi(g_F(u_{5040}))
+=T_2(\zeta(1),\operatorname{qenc}(83/15)).
+$$
+系数侧与相位侧各在其整个独立字段域及整个值域 $L_\phi,C_\phi$ 上互为双逆，两个带标签字段域不交。对每个 $n\ge1$，$\phi/G_n\notin\mathbb Z_o[\phi]$；$n=0$ 时 $\phi/G_0=\phi\in\mathbb Z_o[\phi]$。
+

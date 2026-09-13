@@ -1,0 +1,7 @@
+**定理 327.2。** $H_r$ 与 $\ker f_{\rm div}$ 各是一个有理特征的核，且
+$$
+\mathsf V_{\rm reg}/H_r\cong\mathbb Z_o/r\mathbb Z_o,\qquad
+\mathsf V_{\rm reg}/\ker f_{\rm div}\cong\mathsf D_{\rm rat}.
+$$
+不存在有限个到 $\mathbb T$ 的群同态以 $2\mathsf V_{\rm reg}$ 为共同核；因此有限有理特征族也不可能做到。
+

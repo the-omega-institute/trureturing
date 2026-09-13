@@ -1,0 +1,15 @@
+**命题 356.2。** 取 $A_n=2^n$ 对所有 $n\in\omega$。$\ell_A$ 的每个实水平都在 $\tau_{+,A}$ 中闭，然而 $\ell_A$ 处处不连续。对定义 338.1 的同一集合 $L_{A,1}$，有
+$$
+\overline{L_{A,1}}^{\tau_{+,A}}=L_{A,1},\qquad
+0\notin\overline{L_{A,1}}^{\tau_{+,A}},
+$$
+$$
+\overline{L_{A,1}}^{\tau_{\rm coord,A}^{B}}
+=\{u\in B_A^{\rm cap}:\ell_A(u)\le1\},\qquad
+\overline{L_{A,1}}^{\tau_{\rm coord,A}^{X}}
+=\{x\in X_A^{\rm cap}:S_A(x)\le1\}.
+$$
+后两个闭包都含零。
+
+**证明。** 对实际行 $r_n=2^{-n}$ 有 $L_r|_{B_A^{\rm cap}}=\ell_A$，故定理 355.2 给每个实水平的闭性。另一方面 $M_A=\sum_n1=+\infty$，定理 356.1 给处处不连续。零的读数为零而非一，得到前两个式子。定理 339.1 对正二进有理数一给后两个坐标闭包公式，非负零总和将零包含在其中。也可直接取 $2^n\varepsilon_n\in L_{A,1}$，该序列在坐标拓扑中趋于零。这里三个闭包分别明确使用 $\tau_{+,A}$、$\tau_{\rm coord,A}^{B}$、$\tau_{\rm coord,A}^{X}$；闭纤维不蕴含到通常实直线的连续性。证毕。
+

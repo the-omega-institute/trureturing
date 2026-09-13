@@ -1,0 +1,23 @@
+**定义 200（终端化、循环核与时间零点分裂）。** 在 \(\mathsf J_P\) 上定义终端化同态
+\[
+\Sigma_P:\mathsf J_P\longrightarrow\mathbb Z^P,
+\qquad
+(\Sigma_Pc)(p)=\sum_{t\in\mathbb Z}c(t,p),
+\]
+其核记为
+\[
+\mathsf K_P=\ker\Sigma_P.
+\]
+定义时间零点嵌入
+\[
+\iota_P:\mathbb Z^P\longrightarrow\mathsf J_P,
+\qquad
+(\iota_Pz)(t,p)=
+\begin{cases}z(p),&t=0,\\0,&t\ne0.
+\end{cases}
+\]
+对 \(c\in\mathsf J_P\) 定义其零点规范循环部分
+\[
+c^{\circ}=c-\iota_P(\Sigma_Pc).
+\]
+

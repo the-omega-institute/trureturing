@@ -1,0 +1,23 @@
+**定义 142（时空整数的 Zeckendorf 码）。** 对情境时空算术中的整数编码
+\[
+\mathbb Z_{\mathrm{code}}
+=(\{0\}\times\omega)\cup(\{1\}\times\omega_{>0})
+\]
+定义
+\[
+\iota_Z(0,n)=\operatorname{scode}(n),\qquad
+\iota_Z(1,n)=\operatorname{scode}(-n).
+\]
+在 \(\mathsf Z_{\mathbb Z}\) 上置
+\[
+c<_Z^{\mathbb Z}d\iff\operatorname{ival}(c)<\operatorname{ival}(d),
+\qquad
+c\boxplus_Z^{\mathbb Z}d=c\oplus_Zd.
+\]
+对 \(z=(z_1,z_2,z_3)\in\mathbb Z^3\) 定义
+\[
+\iota_Z^{(3)}(z)=
+\langle\iota_Z(z_1),\iota_Z(z_2),\iota_Z(z_3)\rangle_Z,
+\]
+并把时间坐标 \(t\) 由同一 \(\iota_Z\) 编码。符号 \(+1,-1\) 作为选择标签保留；其电荷和使用 \(\mathsf Z_{\mathbb Z}\) 的运算。
+

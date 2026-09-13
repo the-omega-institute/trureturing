@@ -1,0 +1,21 @@
+**定理 166（Zeckendorf 寄存器系统是自由指数幺半群的规范呈现）。** 有
+\[
+\Pi_P^{\infty}(\mathbf 0_P)=1,
+\qquad
+\Pi_P^{\infty}(a\boxplus_P b)
+ =\Pi_P^{\infty}(a)\Pi_P^{\infty}(b),
+\]
+且 \(\Pi_P^{\infty}:\mathsf E(P)\to\mathsf M(P)\) 是交换幺半群同构。逐行编码
+\[
+\operatorname{dig}^{\infty}_P(a)(p)=\zeta(a(p))
+\]
+也是 \((\mathsf E(P),\boxplus_P,\mathbf 0_P)\) 与 \((\mathsf D_{\infty}(P),\boxplus_Z,0)\) 的幺半群同构。
+
+对有限容量 \((P,A)\)，有界加法的定义域恰为
+\[
+(a,b)\in\operatorname{Dom}_{P,A}
+\iff
+\jmath_A(a)\boxplus_P\jmath_A(b)\in\jmath_A[S(P,A)].
+\]
+在该定义域上，\(\Pi_P\) 将有界指数加法送到标量乘法，\(\operatorname{dig}_{P,A}\) 将其送到逐行 Zeckendorf 规范加法。
+

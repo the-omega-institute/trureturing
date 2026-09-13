@@ -1,0 +1,25 @@
+**定理 124（规范数字与单位变换的精确共轭）。** 对每个 \(a\in S(P,A)\) 和 \(w\in\mathcal U_P^*\)，
+\[
+\operatorname{ev}_A(a,w)\text{ 有值}
+\iff
+\widehat{\operatorname{ev}}_A(\operatorname{dig}_{P,A}(a),w)\text{ 有值},
+\]
+且在此情形
+\[
+\operatorname{dig}_{P,A}(\operatorname{ev}_A(a,w))
+=\widehat{\operatorname{ev}}_A(\operatorname{dig}_{P,A}(a),w).
+\tag{Z-CONJ-INSTR}
+\]
+进一步，
+\[
+\operatorname{Cfg}_Z(P,A,\operatorname{ev}_A(a,w))
+\]
+是由 \(\operatorname{Cfg}_Z(P,A,a)\) 的状态表按 \(\widehat{\operatorname{ev}}_A\) 逐行更新所得的唯一配置码。
+
+**证明。** 对词长作归纳。定理 70 给出
+\[
+\operatorname{val}(\operatorname{succ}_Z(u))=\operatorname{val}(u)+1,\qquad
+\operatorname{val}(\operatorname{pred}_Z(u))=\operatorname{val}(u)-1
+\]
+在相应定义域内成立，因此原变换的容量或正性守卫与码变换的守卫等价。单步更新后两边的数字行由 \(\zeta\) 唯一确定；归纳假设再给出整词的定义域和结果。定理 116 说明配置码的标签、容量和状态三坐标中只有状态表改变，且改变由这些唯一数字行组成，所以最后的码也是唯一的。证毕。
+

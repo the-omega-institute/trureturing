@@ -1,0 +1,10 @@
+**定义 350.1。** 在第 306、330 条的带符号有限支撑总函数群 $\mathsf V_{\rm reg}$ 上，置
+$$
+H_F=\ker L_F,\qquad g_F(u)=[\phi L_F(u)]\in C_\phi,\qquad
+\theta^F_n=[1/G_n]_{\rm rat}\in\mathsf D_{\rm rat}.
+$$
+$\theta^F\in\Theta_{\rm rat}$ 是定义域为全部 $\omega$ 的有理相位探针，其特征为第 321–323 条的
+$$
+\chi^{\rm rat}_{\theta^F}(u)=\sum_nu_n\theta^F_n=[L_F(u)]_{\rm rat}.
+$$
+

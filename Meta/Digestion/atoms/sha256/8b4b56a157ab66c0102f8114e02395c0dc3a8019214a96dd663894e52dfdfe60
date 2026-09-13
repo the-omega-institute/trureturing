@@ -1,0 +1,26 @@
+**定理 172（Zeckendorf 加法与普通多项式乘法的区别）。** 对任意 \(F,H\in\mathsf{Pol}_{\rm fin}(\mathbb N)\)，有
+\[
+\operatorname{ev}_G(F+H)=\operatorname{ev}_G(F)+\operatorname{ev}_G(H),
+\qquad
+\operatorname{ev}_G(F\star_GH)
+ =\operatorname{ev}_G(F)\operatorname{ev}_G(H).
+\tag{Z-POLY-EVAL}
+\]
+因此
+\[
+\operatorname{nf}_G(F_u+F_v)=u+_Zv,
+\qquad
+\operatorname{nf}_G(F_u\star_GF_v)=u\cdot_Zv.
+\]
+若 \(FH\) 表示通常的形式多项式乘法，则
+\[
+\operatorname{ev}_G(FH)=\sum_{i,j}r_is_jG_{i+j},
+\]
+该值一般不等于 \(\operatorname{ev}_G(F)\operatorname{ev}_G(H)\)。特别地，
+\[
+\operatorname{ev}_G(X\cdot X)=G_2=3,
+\qquad
+\operatorname{ev}_G(X)^2=G_1^2=4.
+\]
+所以 \(X^j\) 不是数值基 \(G_j\) 的幂，普通多项式乘法不能直接表示 Zeckendorf 数值乘法。
+

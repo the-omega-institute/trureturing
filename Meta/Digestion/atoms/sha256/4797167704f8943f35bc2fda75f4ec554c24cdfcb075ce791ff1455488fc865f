@@ -1,0 +1,10 @@
+**命题 355.3。** 保留有理相位不等于保留可除的有理系数行。具体地，设 $A_0\ge1$，令 $r_0=1$、$r_n=0$ 对 $n>0$，并令 $r'$ 为零行。则两者的未缩放特征在全部 $\mathsf V_{\rm reg}$ 上相同，但
+$$
+L_r(\varepsilon_0)=1,\qquad L_{r'}(\varepsilon_0)=0,\qquad
+\chi_{r/2}^{\rm cap}(\varepsilon_0)=[1/2]\ne0_{\mathbb T}
+=\chi_{r'/2}^{\rm cap}(\varepsilon_0).
+$$
+规则 $[q]_{\rm rat}\mapsto[q/2]_{\rm rat}$ 不是 $\mathbb Q/\mathbb Z_o$ 上的良定义函数。
+
+**证明。** 任一整数状态的第零坐标为整数，故 $[L_r(u)]=[u_0]=0_{\mathbb T}=[L_{r'}(u)]$，且 $\rho(r)=\rho(r')$。容量条件保证 $\varepsilon_0$ 属于当前有限状态载体，在此点缩放后的两行分别给 $1/2$ 和零。商中 $[0]_{\rm rat}=[1]_{\rm rat}$，但 $[0/2]_{\rm rat}\ne[1/2]_{\rm rat}$；同一输入若按两个代表给值便冲突。因此定理 355.2 使用的是先在 $\mathbb Q^\omega$ 中除行、再求特征的操作，不能由未缩放相位的除法替代。证毕。
+

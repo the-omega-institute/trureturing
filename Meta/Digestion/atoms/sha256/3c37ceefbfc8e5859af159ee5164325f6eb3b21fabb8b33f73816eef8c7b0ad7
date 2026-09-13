@@ -1,0 +1,11 @@
+**定义 325.1。** 保留第 287–288 条的原定义域与读数：$\Gamma_+$ 只作用于正整数，$\Gamma_{\mathbb Z}$ 作用于全部通常有符号整数，且
+$$
+\Gamma_+(m)=(\lfloor\log_\phi m\rfloor,\zeta(m),[\phi m])\quad(m>0),
+$$
+$$
+\Gamma_{\mathbb Z}(m)
+=(\mathscr A_{\mathbb Z}^{\bot}(m),\operatorname{scode}(m),[\phi m]),\qquad
+\mathscr A_{\mathbb Z}^{\bot}(0)=\bot,
+$$
+非零时 $\mathscr A_{\mathbb Z}^{\bot}(m)=\lfloor\log_\phi|m|\rfloor$，其中 $\bot\notin\mathbb Z_o$。这些与 [GICT 定义 1.1、1.4、1.7](GICT.md) 比较时使用第 287 条已声明的权值对应，不把素数轴索引当作 Fibonacci 位索引。
+

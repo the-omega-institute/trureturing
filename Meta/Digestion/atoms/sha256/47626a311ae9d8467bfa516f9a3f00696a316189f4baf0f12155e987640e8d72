@@ -1,0 +1,41 @@
+**定理 284（无限极限秩层的像与限制结构同构）。** 对每个无限极限集合序数 $\lambda$，有
+$$
+\operatorname{Enc}[V_\lambda]=\mathfrak V_Z\cap V_\lambda.
+$$
+对 $A=H_\kappa$ 或 $A=V_\lambda$，其中 $\kappa$ 为任意无限基数、$\lambda$ 为任意无限极限集合序数，限制映射给出集合结构的同构
+$$
+\operatorname{Enc}|_A:
+(A,\in\cap A^2)\cong
+\bigl(\mathfrak V_Z\cap A,
+\in_Z\cap(\mathfrak V_Z\cap A)^2\bigr),
+$$
+逆为 $\operatorname{Dec}|_{\mathfrak V_Z\cap A}$。记这两个限制结构分别为 $\mathfrak A,\mathfrak A_Z$，则对每个一阶集合论公式 $\varphi(x_1,\ldots,x_r)$ 和任意 $a_1,\ldots,a_r\in A$，
+$$
+\mathfrak A\models\varphi(a_1,\ldots,a_r)
+\iff
+\mathfrak A_Z\models\varphi(\operatorname{Enc}(a_1),\ldots,\operatorname{Enc}(a_r)).
+$$
+右侧的成员符号解释为限制后的 $\in_Z$，两侧量词分别只在自己的载体内取值。
+
+上述秩层像等式不能推广到全部后继层：$\omega\in V_{\omega+1}$，但 $\operatorname{Enc}(\omega)\notin V_{\omega+1}$。这些参数条件也不保证各限制结构满足 ZFC；具体地，$H_{\aleph_0}=V_\omega=HF$ 的源、目标限制结构均不满足无穷公理。若另给源限制结构满足 ZFC 的假设，则其目标限制结构满足相同公理及分离、替代的各个模式实例。
+
+**证明。** 固定无限极限 $\lambda$。若 $x\in HF$，第 72、282 条使 $x$ 及其码都具有有限秩，均小于 $\lambda$。若 $x\notin HF$，置 $\operatorname{rk}(x)=\mu+n$，第 283 条给 $r(x)=\mu+(3n+2)\ge\operatorname{rk}(x)$。当 $\operatorname{rk}(x)<\lambda$ 时，$\mu\le\operatorname{rk}(x)<\lambda$；极限 $\lambda$ 对有限次后继封闭，故 $r(x)<\lambda$。反向，当 $r(x)<\lambda$ 时，前述不等式给 $\operatorname{rk}(x)<\lambda$。结合 $HF$ 分支，得到对全部集合的双向切口
+$$
+\operatorname{rk}(x)<\lambda\iff
+\operatorname{rk}(\operatorname{Enc}(x))<\lambda.
+$$
+由秩成员判据，$x\in V_\lambda$ 的码属于 $\mathfrak V_Z\cap V_\lambda$。反向，若有效码 $c\in V_\lambda$，令 $x=\operatorname{Dec}(c)$，则 $\operatorname{Enc}(x)=c$，刚证的反向切口使 $x\in V_\lambda$。因此两集合相等，不能只从正向包含替代这一步。
+
+对两种 $A$，第 282 条或本条的像等式都给 $\operatorname{Enc}[A]=\mathfrak V_Z\cap A$。第 282 条保证 $A$ 是集合；替代给限制函数的图
+$$
+\{\langle x,\operatorname{Enc}(x)\rangle:x\in A\},
+$$
+分离给目标载体是集合。源关系是 $\{(x,y)\in A^2:x\in y\}$，目标关系是在目标载体平方中按第 72 条可定义谓词 $c\in_Zd$ 分离所得的集合。第 72 条给编码单射和成员保持反映，像等式给满射；其两个逆式及替代给所列限制解码函数确为集合函数和逆。因此显示的两个集合结构同构。这里使用的是逐元素像载体，不是单个对象 $\operatorname{Enc}(A)$。
+
+对公式结构归纳以证比较式。等号原子由单射性，成员原子由第 72 条的双向成员式；否定由归纳等价取否定，合取由两个归纳等价合取，其余布尔联结词可由这两种表达。对存在量词，源见证 $x\in A$ 的码在目标载体内，由归纳假设给目标见证；反向，目标见证 $c\in\mathfrak V_Z\cap A$ 的唯一原像 $\operatorname{Dec}(c)$ 在 $A$ 内，同一归纳假设给源见证。对全称量词，正向任取目标元素并解码应用源全称断言，反向任取源元素并编码应用目标全称断言，两向再用归纳假设。每一步其它参数均随限制双射运输，故得到全部载体内参数的公式比较。此处量词范围是两个限制结构，不将比较式解释为它们与整个集合宇宙的初等比较。
+
+边界子句由秩直接判定：$\operatorname{rk}(\omega)=\omega<\omega+1$，故 $\omega\in V_{\omega+1}$；第 283 条给 $r(\omega)=\omega+2$，故它的码不在 $V_{\omega+1}$。于是 $\operatorname{Enc}[V_{\omega+1}]$ 包含一个不在 $\mathfrak V_Z\cap V_{\omega+1}$ 的元素，后继层的普遍像等式为假。
+
+最后，$HF$ 传递，且其中每个集合有限。若 $(HF,\in\cap HF^2)$ 满足无穷公理，则其中存在一个内部归纳集 $I\in HF$。传递性使内部空集只能是环境空集，内部的序数后继也正是 $z\cup\{z\}$；这些有限集合都在 $HF$ 中。因此在环境中按 $n<\omega$ 归纳，零属于 $I$，$n\in I$ 推出 $n+1\in I$，得到 $\omega\subseteq I$，与 $I$ 有限矛盾。源结构不满足无穷公理，由已证公式比较，目标结构也不满足。若额外假设某个源限制结构满足 ZFC，则对每个公理及每个分离、替代实例应用同一公式比较，得到目标满足相应实例；这个条件性运输没有给出源模型的存在性。证毕。
+
+

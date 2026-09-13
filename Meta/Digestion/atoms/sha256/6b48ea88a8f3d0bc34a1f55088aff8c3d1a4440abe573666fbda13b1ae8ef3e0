@@ -1,0 +1,15 @@
+**定理 353.3。** 对 $X=X_A^{\rm cap}$ 或 $X=B_A^{\rm cap}$，取第 342 条在该域上相等的坐标、黄金拓扑 $\tau$，定义外部拓扑
+$$
+\tau^*=\{\operatorname{Enc}[U]:U\in\tau\}.
+$$
+则 $\operatorname{enc}_X:(X,\tau)\to(X^*,\tau^*)$ 是同胚，对每个 $L\subseteq X$ 有
+$$
+\overline{\operatorname{Enc}[L]}^{(X^*,\tau^*)}
+=\operatorname{Enc}[\overline L^{(X,\tau)}].
+$$
+这将定理 346.1 的两个锐闭包分别运输到其各自载体上，也将定理 344.1 的全部连续性等价、唯一实延拓及处处不连续运输到对应实值共轭。单个拓扑码、开集码族和外部拓扑的关系为
+$$
+\operatorname{El}(\operatorname{Enc}(\tau))=\operatorname{Enc}[\tau],\qquad
+\tau^*=\{\operatorname{El}(c):c\in\operatorname{Enc}[\tau]\}.
+$$
+

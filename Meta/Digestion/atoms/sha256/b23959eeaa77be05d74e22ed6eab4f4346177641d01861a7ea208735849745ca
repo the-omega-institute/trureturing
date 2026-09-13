@@ -1,0 +1,15 @@
+**定义 277（环境大小、语义大小与语义秩）。** 对任意集合 $x$，令
+$$
+T(x)=\operatorname{TC}(\{x\}),\qquad h(x)=|T(x)|,
+$$
+其中传递闭包采用含根约定：$x\in T(x)$，$T(x)$ 是把 $x$ 作为元素包含的最小传递集合，即从 $x$ 出发沿有限成员链可达的全部集合，长度零的链给根 $x$。$|\cdot|$ 取 ZFC 中的基数，$\operatorname{rk}$ 取环境成员关系下的通常秩。对有效码 $c\in\mathfrak V_Z$，定义
+$$
+\begin{aligned}
+\operatorname{size}_{\rm out}(c)&=|c|,&
+\operatorname{size}_{\rm sem}(c)&=|\operatorname{El}(c)|,\\
+\operatorname{Card}_Z(c)&=\operatorname{Enc}(|\operatorname{Dec}(c)|),&
+\operatorname{Rank}_Z(c)&=\operatorname{Enc}(\operatorname{rk}(\operatorname{Dec}(c))).
+\end{aligned}
+$$
+前两个值是环境中的基数，后两个值分别是基数与序数的有效集合码；$\operatorname{Rank}_Z(c)$ 不指环境秩 $\operatorname{rk}(c)$。$\operatorname{El}(c)$ 是第 72 条的语义成员集合，与外层集合 $c$ 分开。$\operatorname{Enc},\operatorname{Dec},T,h$ 均按可定义类函数使用，$\operatorname{Dec}$ 的调用限于有效码，不把整个类图当成集合。
+

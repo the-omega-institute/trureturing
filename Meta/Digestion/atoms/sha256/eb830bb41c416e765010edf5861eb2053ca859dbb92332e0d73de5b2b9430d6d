@@ -1,0 +1,24 @@
+**定理 152（全局 Zeckendorf 码与局部寄存器码的互逆）。** 对每个 \(a\in S(P,A)\) 和 \(c\in\mathsf G(P,A)\)，有
+\[
+\operatorname{Axis}_{P,A}(\mathsf G_{P,A}(a))
+ =\operatorname{dig}_{P,A}(a),
+\tag{Z-AXIS-DEC}
+\]
+\[
+\widehat\Pi_Z(\operatorname{Reg}_Z(P),
+ \operatorname{Axis}_{P,A}(c))=c.
+\tag{Z-AXIS-ENC}
+\]
+因此，在固定寄存器标签和容量的条件下，全局 Zeckendorf 数字与局部指数表是双射；全局数位本身不携带寄存器轴，但由唯一素因子分解可以恢复该轴。
+
+**证明。** 令 \(c=\mathsf G_{P,A}(a)=\operatorname{NatZ}(\Pi_P(a))\)。唯一素因子分解给 \(v_p(\Pi_P(a))=a(p)\)，于是
+\[
+\operatorname{Axis}_{P,A}(c)(p)=\zeta(a(p))
+ =\operatorname{dig}_{P,A}(a)(p),
+\]
+得到 (Z-AXIS-DEC)。反过来，任取 \(c=\operatorname{NatZ}(d)\in\mathsf G(P,A)\)，有 \(d\mid M(P,A)\)，故其每个正素数估值满足 \(v_p(d)\le A(p)\)。定义 119 的乘积取值为
+\[
+\prod_{p\in P}p^{v_p(d)}=d,
+\]
+定义 119 的 \(\operatorname{nval}\) 与定理 70 的 \(\operatorname{val}\) 分别恢复标签和指数，遂得到 (Z-AXIS-ENC)。双射性由两式立即成立。全局 Zeckendorf 行只编码整数 \(d\)；寄存器轴来自随后施加的估值函数，故其字面数位集合一般不与局部数位集合相同。证毕。
+

@@ -1,0 +1,31 @@
+**定理 258（元组装配、投影与序列图桥）。** 对每个固定有限 $r$ 和任意集合分量 $a_i$，有
+$$
+T_r^Z(\operatorname{Enc}(a_1),\ldots,\operatorname{Enc}(a_r))
+=\operatorname{Enc}(T_r(a_1,\ldots,a_r)).
+$$
+此装配是外部有效分量积到元组码像的双射，逆为解码、原投影、逐分量 $\operatorname{Enc}$。特别地，$T_1^Z(c)=c$，$T_0^Z=\operatorname{NatZ}(0)\ne T_0$，且对 $r\ge2$
+$$
+T_r^Z(c_1,\ldots,c_r)=\langle c_1,T_{r-1}^Z(c_2,\ldots,c_r)\rangle_Z.
+$$
+$b_3^{\rm can}$ 与 $b_3$ 都是双射，逆先逐分量用 $b^{-1}$，后者再以 $\kappa_3^{-1}$ 恢复原 CSA 括号；二者均与各自的逐坐标加法、负号交换。原值及数字值在 $T_3$ 括号下的两个集合提升分别是
+$$
+\begin{aligned}
+T_3^Z(\chi(c_1),\chi(c_2),\chi(c_3))
+ &=\operatorname{Enc}(\kappa_3(b_3^{-1}(T_3(c_1,c_2,c_3)))),\\
+T_3^Z(\mathrm e(c_1),\mathrm e(c_2),\mathrm e(c_3))
+ &=\operatorname{Enc}(T_3(c_1,c_2,c_3)).
+\end{aligned}
+$$
+对任意有限序列 $s$ 如第 257 条，有
+$$
+\operatorname{Enc}(s)=
+\operatorname{Pack}\{\langle\operatorname{NatZ}(i),\operatorname{Enc}(a_i)\rangle_Z:i<r\},
+\qquad
+\operatorname{dom}_Z(\operatorname{Enc}(s))=\operatorname{NatZ}(r).
+$$
+这里 $\operatorname{dom}_Z$ 是普通图定义域的第 74 条语义运输。序列的域、长度和各处求值被保持且反映；数字图 $s^b$ 经其域的 $\operatorname{val}$ 像恢复 $r$，经 $b^{-1}$ 恢复各值。固定元数的单射性不蕴含去掉元数后的单射性。
+
+**证明。** 首式由 $\operatorname{Dec}\operatorname{Enc}=\operatorname{id}$ 得出。第 74 条的语义配对比较使递归式成立。固定元数的投影恢复每个分量，反向投影后重新装配恢复原元组；对 $r\ge2$ 按元数归纳，对 $r=1$ 用恒等，对 $r=0$ 用单点集之间的唯一映射。相同论证给 $\kappa_r$ 两侧恒等式，故不同括号之间确有双射而非字面等式。$b_3^{\rm can}$ 的两个复合逐坐标由第 256 条为恒等，算术式亦逐坐标由该条成立；再复合 $\kappa_3$ 的双逆即得 $b_3$ 的结论。两种集合提升由首式得出；要取得原 CSA 括号的元组码，再对第一式两侧使用 $\operatorname{Enc}\circ\kappa_3^{-1}\circ\operatorname{Dec}$。
+
+序列图的每条边经第 74 条变成 $\langle\operatorname{NatZ}(i),\operatorname{Enc}(a_i)\rangle_Z$。第 73 条将全部这些边恰装为 $\operatorname{Enc}(s)$，没有增加或遗漏成员。原图定义域恰为自然序数 $r$，故语义定义域为其码 $\operatorname{NatZ}(r)$，求值由第 74 条保持反映。外部数字图的域为 $\zeta[r]$，施加 $\operatorname{val}$ 得回 $r$，包括空域时的零长度；每条边的值用 $b^{-1}$ 唯一恢复。最后 $T_0=T_1(\varnothing)$，已是跨元数去标签的碰撞。以上有限性仅限制元数和序列长度，未用于限制 $a_i$ 的成员数。证毕。
+

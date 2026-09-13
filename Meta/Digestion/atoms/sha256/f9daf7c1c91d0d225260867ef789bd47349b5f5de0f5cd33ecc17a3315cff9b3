@@ -1,0 +1,16 @@
+**定义 330.1。** 在定义域仍为 $\omega$ 的 $\Theta_{\rm rat}$ 中置
+$$
+\eta^{\rm dy}_n=[2^{-n}]_{\rm rat},\qquad
+\eta^{\rm dy,m}_n=[2^{-n-m}]_{\rm rat}\quad(m\in\omega).
+$$
+定义
+$$
+g_{\rm dy}:\mathsf V_{\rm reg}\to\mathbb T,\qquad
+g_{\rm dy}(u)=[\phi\ell_{\rm dy}(u)].
+$$
+此处先将 $\ell_{\rm dy}(u)$ 作为有理数嵌入实数、乘以 $\phi$，再取模一。一般地，对任意总有理系数序列 $r\in\mathbb Q^\omega$ 定义
+$$
+L_r(u)=\sum_{n\in\operatorname{supp}(u)}r_nu_n\in\mathbb Q,\qquad
+g_r(u)=[\phi L_r(u)]\in\mathbb T.
+$$
+

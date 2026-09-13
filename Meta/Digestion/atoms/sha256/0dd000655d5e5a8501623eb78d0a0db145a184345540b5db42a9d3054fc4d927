@@ -1,0 +1,34 @@
+**定理 207（三轴群的精确核与 5040 型进位关系）。** \(\mathsf V_P\) 与 \(\mathsf C_P\) 都是满射群同态。定义
+\[
+\mathsf s_P(c)(t,p,j)=
+\begin{cases}c(t,p),&j=0,\\0,&j\ne0,\end{cases}
+\qquad(c\in\mathsf J_P),
+\]
+则 \(\mathsf V_P\circ\mathsf s_P=\operatorname{id}_{\mathsf J_P}\)，并且
+\[
+0\longrightarrow\ker\mathsf V_P\longrightarrow\mathsf Q_P
+\xrightarrow{\ \mathsf V_P\ }\mathsf J_P\longrightarrow0
+\tag{Z-SLOT-EXACT}
+\]
+为短正合列。进一步，
+\[
+\ker\mathsf V_P
+=\left\langle
+e_{t,p,1}-2e_{t,p,0},
+e_{t,p,j+2}-e_{t,p,j+1}-e_{t,p,j}
+:t\in\mathbb Z,\ p\in P,\ j\in\omega
+\right\rangle_{\mathbb Z}.
+\tag{Z-SLOT-KERNEL}
+\]
+令
+\[
+\mathsf L_P=\left\langle e_{t,p,0}-e_{0,p,0}:t\ne0,\ p\in P\right\rangle_{\mathbb Z}.
+\]
+则
+\[
+\ker\mathsf C_P=\ker\mathsf V_P\oplus\mathsf L_P,
+\qquad
+\mathsf Q_P/\ker\mathsf C_P\cong\mathbb Z^P.
+\tag{Z-THREE-AXIS-QUOTIENT}
+\]
+

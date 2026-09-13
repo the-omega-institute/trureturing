@@ -1,0 +1,13 @@
+**定义 281（遗传基数层与累积秩层）。** 对每个无限基数 $\kappa$，先以可定义类谓词置
+$$
+H_\kappa=\{x:h(x)<\kappa\},
+$$
+其中 $h$ 使用第 277 条的含根传递闭包。对集合序数定义通常累积层
+$$
+V_0=\varnothing,\qquad
+V_{\alpha+1}=\mathcal P(V_\alpha),\qquad
+V_\lambda=\bigcup_{\alpha<\lambda}V_\alpha
+\quad(\lambda\text{ 为非零极限序数}).
+$$
+层级指标均为集合序数，通常秩与层的对应记为 $x\in V_\alpha\iff\operatorname{rk}(x)<\alpha$。这里不在定义中假设 $H_\kappa$ 是集合或模型，也不要求 $\kappa$ 正则或不可达。对集合 $A$，$\operatorname{Enc}[A]=\{\operatorname{Enc}(x):x\in A\}$ 始终表示逐元素像，$\operatorname{Enc}(A)$ 表示单个集合 $A$ 的有效码，二者分属不同构造。
+

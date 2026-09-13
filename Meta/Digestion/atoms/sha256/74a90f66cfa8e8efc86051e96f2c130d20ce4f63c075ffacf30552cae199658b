@@ -1,0 +1,15 @@
+**定理 141（历史层不下降为规范配置层）。** 若 \(P\ne\varnothing\)、至少有一个 \(A(p)>0\)，则存在 \(a,b\in S(P,A)\) 使
+\[
+X_{P,A}(a)\boxplus X_{P,A}(b)
+\not\cong_h
+X_{P,A}(a\boxplus_P b),
+\]
+虽然两者的规范观察相同，且在 \(\operatorname{Can}_{P,A}\) 下给出同一指数状态。更具体地，对 \(a=b=0\)，有
+\[
+|E_{X_{P,A}(0)\boxplus X_{P,A}(0)}|
+=2|E_{X_{P,A}(0)}|
+\ne |E_{X_{P,A}(0)}|
+=|E_{X_{P,A}(0\boxplus_P0)}|.
+\]
+因此 \(\operatorname{Can}_{P,A}\) 是算术观察商，而不是历史同构。
+

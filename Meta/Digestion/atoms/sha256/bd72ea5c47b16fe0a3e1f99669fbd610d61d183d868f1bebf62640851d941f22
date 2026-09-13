@@ -1,0 +1,17 @@
+**定义 312。** 取第 306 条的基，定义加法群
+$$
+\mathbb Z_o[1/2]=\{a/2^m:a\in\mathbb Z_o,\ m\in\omega\}\subseteq\mathbb Q,
+$$
+$$
+b_n^{\rm dy}=\varepsilon_n-2\varepsilon_{n+1},\qquad
+H_{\rm dy}=\langle b_n^{\rm dy}:n\in\omega\rangle_{\mathbb Z},\qquad
+\ell_{\rm dy}(u)=\sum_{n\in\omega}2^{-n}u_n.
+$$
+生成和求和均只用每个元素的有限个非零项。对 $j\le m$ 置
+$$
+t_{j,m}^{\rm dy}=\sum_{k=j}^{m-1}2^{k-j}b_k^{\rm dy},\qquad
+q_N^{\rm dy}=\sum_{n=0}^N2^nb_n^{\rm dy},\qquad
+u_{5040}=4\varepsilon_0+2\varepsilon_1+\varepsilon_2+\varepsilon_3.
+$$
+$t_{m,m}^{\rm dy}=0$。$b_n^{\rm dy}$ 是本条增量，不改变第 255 条双射 $b$；$q_N^{\rm dy}$ 是整个状态向量，不是第 295 条有限词的前缀位移记号，也不是档案前缀。
+

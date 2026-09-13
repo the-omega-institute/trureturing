@@ -1,0 +1,2 @@
+**定义 326.1。** 固定 $k\in\omega$ 及 $\theta^1,\ldots,\theta^k\in\Theta_{\rm rat}$。对 $u\in\mathsf V_{\rm reg}$，令 $d_i$ 为 $\chi^{\rm rat}_{\theta^i}(u)$ 在 $\mathsf D_{\rm rat}$ 中的阶，零的阶取一，并置 $L=\operatorname{lcm}(d_1,\ldots,d_k)$，$k=0$ 时取 $L=1$。每个 $d_i$ 有限，因为有理类的任一正分母消去该类。
+

@@ -1,0 +1,48 @@
+**定理 226（定理 191 的前缀群元与定理 194 的字符类型更正）。** 固定有限素数集 $P$。在定理 191 的终端逐槽平衡及 $r_X\ge0$ 假设下，$a_X=V_P^{\mathbb Z}(r_X)\in\mathbb N^P$ 及该条的终端群元、带符号码和有理读数结论均成立。若再有前缀逐槽平衡，对任意整数 $T$，令 $a_X^T=V_P^{\mathbb Z}(r_X^T)\in\mathbb Z^P$，则补集前缀对应的无条件群元为
+$$
+\Gamma_P^{-1}(-a_X^T)=[(a_X^T)^-,(a_X^T)^+].
+$$
+具体地，
+$$
+\operatorname{sdig}_P(r_{\mathsf cX}^T)
+=\operatorname{sdig}^{\rm gp}_P\bigl([(a_X^T)^-,(a_X^T)^+]\bigr),
+$$
+$$
+\operatorname{Rat}_P(r_{\mathsf cX}^T)
+=\operatorname{Rat}^{\rm gp}_P\bigl([(a_X^T)^-,(a_X^T)^+]\bigr)
+=\operatorname{Rat}_P(r_X^T)^{-1}.
+$$
+仅当 $a_X^T\ge0$ 时，才可把此群元写成 $[0,a_X^T]$。终端非负条件本身不保证该前缀条件。
+
+定理 194 的 $\Theta_P$ 仍是群同构，但其中写作 $\operatorname{Rat}_P\circ\Theta_P$ 的字符应替换为有类型的复合
+$$
+\operatorname{Rat}^{\rm gp}_P\circ\Gamma_P^{-1}\circ\Theta_P:
+\mathcal C_P^{\rm tb}/\equiv_P\longrightarrow\mathbb Q_{>0},
+\qquad
+[X]\longmapsto\operatorname{Rat}_P(r_X).
+$$
+其像为 $P$ 支撑的正有理素数幂群。正子商的自然映射
+$$
+\mathcal C_P^+/\equiv_P^+\longrightarrow\mathcal C_P^{\rm tb}/\equiv_P,
+\qquad [X]_+\longmapsto[X]
+$$
+是单射幺半群映射，经 $\Theta_P$ 的像恰为 $\mathbb N^P$；$P\ne\varnothing$ 时该像不是子群。
+
+**证明。** 定理 187 的终端互负及 $G_j>0$ 分别给 $V_P^{\mathbb Z}(r_{\mathsf cX})=-a_X$ 和 $a_X\ge0$，因此定义 189 的 $[0,a_X]$ 有类型且给终端逆元。前缀逐槽平衡给 $V_P^{\mathbb Z}(r_{\mathsf cX}^T)=-a_X^T$。定理 190 的逆映射是 $\Gamma_P^{-1}(z)=[z^+,z^-]$；代入 $z=-a_X^T$ 得所列群元，定义 185、189 逐坐标给编码与有理读数等式。当 $a_X^T\ge0$ 时正负部分分别为 $a_X^T,0$；否则 $a_X^T$ 不是 $\mathsf E(P)$ 的元素，$[0,a_X^T]$ 越出定义 189 的域。
+
+若 $P\ne\varnothing$，取 $p\in P$，在时刻 $0,1$ 的 $\lambda(p,0)$ 各放一对互异正负事件，令 $E=\Omega$，偏序为空，来源均为 $\operatorname{leaf}(0)$。时刻 $0$ 只选负事件，时刻 $1$ 只选正事件。背景逐单元为零，$r_X=0$，但 $a_X^0(p)=-1$。这证明定理 191 的无条件前缀替换断言失效；$P=\varnothing$ 时所有向量为空，前缀条件自动成立。
+
+为补足定理 194、195 在带符号域中对定理 6 的引用，直接使用定义 2：带互异标签的并集在每个 $(t,y)$ 上给
+$$
+W_{X\boxplus Y}=W_X+W_Y,\qquad Z_{X\boxplus Y}=Z_X+Z_Y.
+$$
+这不使用非负性。故 $\mathcal C_P^{\rm tb}$ 对并行封闭，终端加权值相加；补集保留背景及支撑并使终端槽表取负。$\Theta_P$ 的良定义和单射性由定义 193 成立。任意 $z\in\mathbb Z^P$ 可用定理 192 实现槽表 $r(p,0)=z(p)$、其余为零，故 $\Theta_P$ 满射，群运算由 $\mathbb Z^P$ 运输。这样同时补足定理 195 的带符号并行证明，而不将只在正域陈述的定理 6 越域使用。
+
+定义 185 的 $\operatorname{Rat}_P$ 以槽表为自变量，定义 189 的 $\Gamma_P$ 则以群完成元素为自变量。对 $z=\Theta_P([X])$，定理 190 给
+$$
+\operatorname{Rat}^{\rm gp}_P(\Gamma_P^{-1}(z))
+=\prod_{p\in P}p^{z(p)}
+=\operatorname{Rat}_P(r_X),
+$$
+并由唯一素因子分解得到到所述像的同构。正子商的关系是同一关系的限制，故自然映射单射且保并行；非负性与定理 192 的非负实现给像恰为 $\mathbb N^P$。若 $p\in P$，标准单位向量 $e_p$ 在像中，而 $-e_p$ 不在像中，故不是子群。证毕。
+

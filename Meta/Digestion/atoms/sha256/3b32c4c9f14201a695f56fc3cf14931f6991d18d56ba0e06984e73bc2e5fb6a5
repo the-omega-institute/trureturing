@@ -1,0 +1,8 @@
+**证明。** 固定 \(p\)。定理 70 的 \(\operatorname{Norm}\) 满足
+\[
+\operatorname{val}\bigl(\operatorname{Norm}(\operatorname{pad}(\zeta(a(p)))
++\operatorname{pad}(\zeta(b(p))))\bigr)
+=a(p)+b(p),
+\]
+故逐行比较给第一式。对素数指数使用 \(p^{r+s}=p^rp^s\)，对有限 \(P\) 相乘即得 (Z-EXP-ADD)。容量条件正好是每个规范行的值不超过 \(A(p)\)，所以给出定义域的充要性。最后，若以 \(G_{i+j}\) 代表两个占据数位的乘法贡献，在 \(i=j=1\) 时会把真实值 \(G_1G_1=4\) 错写成 \(G_2=3\)；因此该替换与定理 70 的数值乘法不相容。证毕。
+

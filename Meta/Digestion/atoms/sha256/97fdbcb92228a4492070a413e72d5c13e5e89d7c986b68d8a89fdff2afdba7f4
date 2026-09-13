@@ -1,0 +1,73 @@
+**定理 283（全部无限原秩的精确环境秩）。** 每个无限序数 $\alpha$ 唯一写为 $\lambda+n$，其中 $\lambda$ 是非零极限序数，$n<\omega$。对任意 $x\notin HF$，若 $\operatorname{rk}(x)=\lambda+n$，则
+$$
+\operatorname{rk}(\operatorname{Enc}(x))=\lambda+(3n+2).
+$$
+这里 $3n+2$ 在有限自然数中计算，再作为序数从右侧加到 $\lambda$。特别地，记 $r(x)=\operatorname{rk}(\operatorname{Enc}(x))$，有
+$$
+r(\omega)=\omega+2,\qquad r(\{\omega\})=\omega+5.
+$$
+该一般公式的适用域是无限原秩，有限秩仍按第 71、279 条的分支处理。
+
+**证明。** 先给出序数除法在此处的有限尾形式。对无限 $\alpha$，考虑
+$$
+\Xi=\{\xi\le\alpha:\omega\cdot\xi\le\alpha\}.
+$$
+序数归纳给 $\xi\le\omega\cdot\xi$：零步成立，后继步由 $\omega\cdot(\xi+1)=\omega\cdot\xi+\omega\ge\xi+1$，极限步取上确界。因此所需商均在显示的集合范围内。$1\in\Xi$；序数乘法在右侧极限连续，故 $\Xi$ 的上确界仍满足 $\omega\cdot\xi\le\alpha$，从而是它的最大元，记为 $\xi_0>0$。若 $\omega\cdot(\xi_0+1)\le\alpha$，则 $\xi_0+1\in\Xi$，矛盾。所以
+$$
+\omega\cdot\xi_0\le\alpha<\omega\cdot\xi_0+\omega
+ =\sup_{m<\omega}(\omega\cdot\xi_0+m).
+$$
+在此递增的有限后继序列中取第一个严格超过 $\alpha$ 的项；它必为某个 $\omega\cdot\xi_0+(n+1)$，前一项不超过 $\alpha$。两相邻序数之间没有其它序数，故 $\alpha=\omega\cdot\xi_0+n$。$\lambda=\omega\cdot\xi_0$ 是非零极限序数：商为后继时末段为 $\omega$，商为非零极限时用乘法的连续性。
+
+若 $\lambda<\mu$ 均为非零极限序数，则对每个有限 $m$，由后继归纳有 $\lambda+m<\mu$，所以 $\lambda+\omega\le\mu$。因此两个不同极限部分的有限尾不可能相等；极限部分相同时，逐次后继的严格递增性又使有限尾唯一。这证明所述分解的唯一性。
+
+在无限序数上记
+$$
+F(\lambda+n)=\lambda+(3n+2).
+$$
+它严格递增且 $F(\beta)\ge\beta$。后一个不等式由 $3n+2\ge n$；严格递增在相同极限部分内由有限尾比较得到，在不同极限部分 $\lambda<\mu$ 时由
+$$
+\lambda+(3n+2)<\lambda+\omega\le\mu\le\mu+(3m+2)
+$$
+得到。另对每个无限极限序数 $\eta$ 和 $\omega\le\beta<\eta$，若 $\beta=\mu+m$，则 $\mu\le\beta<\eta$。极限序数对有限次后继封闭，故
+$$
+F(\beta)+1=\mu+(3m+3)<\eta.
+$$
+这些比较均为序数右加法的比较。
+
+由第 282 条，$x\notin HF$ 当且仅当 $\operatorname{rk}(x)\ge\omega$；这时 $x\notin\omega$。对原秩作超限归纳，使用第 279 条的非自然分支递推
+$$
+r(x)=\left(\sup_{y\in x}(r(y)+1)\right)+2.
+$$
+
+先设 $\operatorname{rk}(x)=\omega$。每个 $y\in x$ 的秩有限，故 $y\in HF$。$x$ 必无限，否则有限多个有限秩的后继有有限最大值，秩递推将给 $\operatorname{rk}(x)<\omega$。第 72 条使 $\operatorname{Enc}[x]$ 为无限集合且其每个元素在 $HF$。所有 $r(y)$ 因而有限。若这些秩有有限上界 $m$，则 $\operatorname{Enc}[x]\subseteq V_{m+1}$，但第 282 条的 $V_{m+1}$ 有限，矛盾。因此
+$$
+\sup_{y\in x}(r(y)+1)=\omega,
+\qquad r(x)=\omega+2=F(\omega).
+$$
+这处理任意秩为 $\omega$ 的集合，不只处理序数 $\omega$。
+
+再设原秩为极限 $\eta>\omega$。源秩递推为 $\sup_{y\in x}(\operatorname{rk}(y)+1)=\eta$。对任意 $\gamma<\eta$，令 $\delta=\max(\omega,\gamma)<\eta$；上确界式给某个 $y\in x$ 满足 $\operatorname{rk}(y)\ge\delta$，否则全部后继秩至多 $\delta$。故成员中的无限原秩共尾于 $\eta$。对无限原秩的成员，归纳假设及刚证的 $F$ 性质给
+$$
+r(y)=F(\operatorname{rk}(y))\ge\operatorname{rk}(y),\qquad
+r(y)+1<\eta.
+$$
+其余成员在 $HF$，由第 72 条其码的秩有限，后继也小于 $\eta$。所以所有 $r(y)+1$ 的上确界至多 $\eta$，而无限原秩的共尾性及前一不等式使其至少为 $\eta$。于是
+$$
+\sup_{y\in x}(r(y)+1)=\eta,
+\qquad r(x)=\eta+2=F(\eta).
+$$
+这里只使用共尾子集和上确界，不要求 $\eta$ 有可数共尾性或正则性。
+
+最后设原秩为后继 $\beta+1$，其中 $\beta\ge\omega$。必有某个 $y_0\in x$ 的秩恰为 $\beta$：所有成员秩都至多为 $\beta$；若都严格小于 $\beta$，则它们的后继秩都至多为 $\beta$，其上确界不能等于 $\beta+1$。归纳给 $r(y_0)=F(\beta)$。任意其它无限原秩成员的码秩由 $F$ 的单调性至多为 $F(\beta)$；有限原秩成员的码秩有限，也小于 $F(\beta)$。因此这个成员取得最大码秩，且
+$$
+\sup_{y\in x}(r(y)+1)=F(\beta)+1,\qquad
+r(x)=(F(\beta)+1)+2=F(\beta)+3.
+$$
+若 $\beta=\lambda+n$，则 $\beta+1=\lambda+(n+1)$，序数加法结合律和有限自然数算术给
+$$
+F(\beta)+3=\lambda+((3n+2)+3)
+ =\lambda+(3(n+1)+2)=F(\beta+1).
+$$
+三种情形完成超限归纳。最后 $\operatorname{rk}(\omega)=\omega$，而单点集秩递推给 $\operatorname{rk}(\{\omega\})=\omega+1$，分别代入有限尾 $0,1$ 得两个附带等式。证毕。
+

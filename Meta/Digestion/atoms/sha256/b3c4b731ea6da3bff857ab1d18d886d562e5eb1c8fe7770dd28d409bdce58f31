@@ -1,0 +1,34 @@
+**定理 313。** 第 312 条的 $\ell_{\rm dy}:\mathsf V_{\rm reg}\to\mathbb Z_o[1/2]$ 为满射同态，且
+$$
+\ker\ell_{\rm dy}=H_{\rm dy},\qquad
+\mathsf V_{\rm reg}/H_{\rm dy}\cong\mathbb Z_o[1/2],\qquad
+\operatorname{Sat}(H_{\rm dy})=H_{\rm dy}\ne\mathsf V_{\rm reg}.
+$$
+每个有限 $I\subseteq\omega$ 均满足
+$$
+(H_{\rm dy})_I=\mathbb Z_o^I,\qquad
+\mathcal A_{\rm fin}(H_{\rm dy})=\{0\},\qquad
+L_{\rm fin}(H_{\rm dy})=\mathsf V_{\rm reg},\qquad
+\mathcal K_{\rm reg}(H_{\rm dy})=\mathsf X_{\rm reg}.
+$$
+全望远镜恒等式为
+$$
+t_{j,m}^{\rm dy}=\varepsilon_j-2^{m-j}\varepsilon_m\quad(j\le m),
+$$
+$$
+u=\sum_{j<m}u_jt_{j,m}^{\rm dy}+2^m\ell_{\rm dy}(u)\varepsilon_m
+\quad\bigl(\operatorname{supp}(u)\subseteq\{0,\ldots,m\}\bigr).
+$$
+特别地
+$$
+q_N^{\rm dy}=\varepsilon_0-2^{N+1}\varepsilon_{N+1}\in H_{\rm dy}.
+$$
+对每个固定有限坐标集 $I$，当 $N+1>\max I$ 时，此向量与 $\varepsilon_0$ 在 $I$ 上完全一致；空 $I$ 无条件一致。因此 $q_N^{\rm dy}\to\varepsilon_0$ 同时在 $\tau_{\rm coord}$ 和 $\tau_\Psi$ 中成立，虽然 $\varepsilon_0\notin H_{\rm dy}$。这些完整向量的逐级限制并不相等：$q_{N+1}^{\rm dy}$ 在 $\{0,\ldots,N+1\}$ 上的限制，与 $q_N^{\rm dy}$ 在同域的限制不同。
+
+第 32 条的 5040 指数状态满足
+$$
+\ell_{\rm dy}(u_{5040})=\frac{43}{8}\ne0,\qquad
+u_{5040}-43\,2^{M-3}\varepsilon_M\in H_{\rm dy}\quad(M\ge4).
+$$
+故 $u_{5040}\notin H_{\rm dy}=\operatorname{Sat}(H_{\rm dy})$，但通过全部有限投影检验。所列见证在每个固定有限 $I$ 上，当 $M>\max I$ 时与 $u_{5040}$ 一致，并在上述两拓扑中收敛到它；相邻完整见证在前一完整支撑上的限制也不相同。四个素数标签为 $(2,3,5,7)$，指数值为 $(4,2,1,1)$，其低位到高位的非零自然绝对值字为 $(101,01,1,1)$，带符号字则是第 113 条的 $(+,101),(+,01),(+,1),(+,1)$。它们不同于标量整数 5040 自身的规范字，后者占据位置为 $17,13,11,5,2$。因此把第 310 条中 $L_{\rm fin}(H)$ 无条件换成 $\operatorname{Sat}(H)$ 的公式为假。
+

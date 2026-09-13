@@ -1,0 +1,9 @@
+**定理 262（来源双逆及独立目标的精确恢复）。** 第 261 条的树映射两侧互逆，且保持反映每一条有限的有序子树路径。对任意 $X\in\mathcal H$、$Y\in\mathcal H_{\rm all}$，$R_{\rm all}(X)$ 与 $D_{\rm all}(Y)$ 分别合法，并有
+$$
+D_{\rm all}(R_{\rm all}(X))=X,\qquad
+R_{\rm all}(D_{\rm all}(Y))=Y.
+$$
+所以独立定义的 $\mathcal H_{\rm all}$ 恰为 $R_{\rm all}[\mathcal H]$。数值版同样满足 $D_{\rm num}R_{\rm num}=\operatorname{id}_{\mathcal H}$、$R_{\rm num}D_{\rm num}=\operatorname{id}_{\mathcal H_{\rm num}}$。第 146–147 条受旧空间式影响的档案域和逆，以及第 162–163 条受该数值链影响的档案部分，由本条及第 261 条替代；独立树递归保留。
+
+存在符合上述自由树约定的集合实现，使“只逆时间空间、保持数字来源不动”不但不能恢复原对象，而且输出来源已经越出 $\mathsf{Tree}$。
+
