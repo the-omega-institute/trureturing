@@ -1,0 +1,20 @@
+**定义 425.1（预测七·全未来与动态闭包）。** 对 $L\ge1$，令
+$$
+Q_{L,\infty}(x)=(P_LT^tx)_{t\in\omega}.
+$$
+对任意集合 $X,A,U$、读数 $q:X\to A$ 及全运算族 $I:U\to X^X$，以 $U^{<\omega}=\bigcup_{k\in\omega}U^k$ 表示全部有限字，递归定义从左至右作用
+$$
+\operatorname{runWord}(I,\varnothing,x)=x,\qquad
+\operatorname{runWord}(I,u::w,x)=\operatorname{runWord}(I,w,I_u(x)),
+$$
+以及
+$$
+\operatorname{DynClosure}(q,I)(x)(w)=q(\operatorname{runWord}(I,w,x)).
+$$
+对 $q_C:X\to C,q_D:X\to D$，定义粗读数在前的因子序
+$$
+\operatorname{Refines}(q_C,q_D)\iff
+\exists f:D\to C\quad q_C=f\circ q_D.
+$$
+称 $a:X\to C$ 的纤维对 $I$ 封闭，若对所有 $u\in U,x,y\in X$，$a(x)=a(y)$ 蕴含 $a(I_ux)=a(I_uy)$。
+

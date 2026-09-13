@@ -1,0 +1,30 @@
+fingerprints:
+  raw_sha256: sha256:0e09e29a2734d35fc293c2bcd65bcf580d59a86d029e5ac94476922e0a82d927
+  normalized_sha256: sha256:0e09e29a2734d35fc293c2bcd65bcf580d59a86d029e5ac94476922e0a82d927
+cas_ref: sha256:0e09e29a2734d35fc293c2bcd65bcf580d59a86d029e5ac94476922e0a82d927
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenResource/GoldenDivisorLanguage.Gobs_dvd
+    target_statement_id: sha256:e1c2ca3781d2e3bdab369430a07852db43a918d13aaed9f003bbe1e94f361cac
+  - gid: D5/S3/Arith/GoldenResource/GoldenDivisorLanguage.Gobs_factorization
+    target_statement_id: sha256:1dc1b37558d0febfd76df234d31a84f9d1103a7424230e618761f963bf489284
+  - gid: D5/S3/Arith/GoldenResource/GoldenDivisorLanguage.Gobs_idempotent
+    target_statement_id: sha256:12ca51a74b19a56dac77d2b8641e973d1fdd9bc527ae0a16b6b9036fd8e6e094
+  - gid: D5/S3/Arith/GoldenResource/GoldenDivisorLanguage.b_idempotent
+    target_statement_id: sha256:216f497be265b356eb2d6bdc03c9af4f94598cb773dee86c4002f08203e36bc2
+  - gid: D5/S3/Arith/GoldenResource/GoldenDivisorLanguage.b_le
+    target_statement_id: sha256:46a80c818b547a7d78e619355fcfcde7d7ba258b4503d7e47db890d076ff1d9b
+  - gid: D5/S3/Arith/GoldenResource/GoldenDivisorLanguage.b_monotone
+    target_statement_id: sha256:494df8430a9a2dbef7424d305c95dd09af51fd94bc5ff5ae52ed0f35ab898075
+  - gid: D5/S3/Arith/GoldenResource/GoldenFixedPoint.Gobs_dvd_of_dvd
+    target_statement_id: sha256:a168a6bcd35682a2f70744d71bee29956857761ee00809d5269d96413a6ae2df
+  - gid: D5/S3/Arith/GoldenResource/GoldenFixedPoint.Gobs_greatest_golden_divisor
+    target_statement_id: sha256:b7eafb1f5822243ebaebdd829e65f06dc0868d5bd0cf2a0c9491b801221ceb2e
+  - gid: D5/S3/Arith/GoldenResource/GoldenFixedPoint.b_fixed_iff
+    target_statement_id: sha256:125cddcbe29d641a0ea54effd39d23533b49a2731473762b7e704b7c735d2777
+  - gid: D5/S3/Factorization/ExponentCoordinates/PrimeExponentBijection.primeExponentLanguageEquiv
+    target_statement_id: sha256:8b1a3665e6d2461fefe0b27cf895270c9d088a68b6dfd5ff4bdd65517e9d6c84
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 0f01bc90a6311a757eebe6094751fcad30591e8b485c22c7a1b3dbaaf956794d
+    - eb066b29eaf4f2ca4b0cadcab59d53aca58df05c94bab9f1241c0e8fc7a402d9

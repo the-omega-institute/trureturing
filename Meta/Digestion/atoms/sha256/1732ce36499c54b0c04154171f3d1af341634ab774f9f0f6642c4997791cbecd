@@ -1,0 +1,6 @@
+分母正,且 \(1-\theta'=(v-s)/(A+v)>0\)。两步都给目标的合法上界:
+
+\[
+D(M_1)\le(1-\theta')f(c')+\theta'f(d')+n f(t)=:\mathcal M_*(f).
+\]
+

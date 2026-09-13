@@ -1,0 +1,7 @@
+跨全部有限配置时，对每个 $N\ge1$，其准确纤维为
+$$
+\left\{(P,C_{\rm cap},e):\begin{array}{l}
+P\subseteq\operatorname{Pr}\text{ 有限},\quad\{p:\nu_p(N)>0\}\subseteq P,\\
+e(p)=\nu_p(N)\text{ 对每个 }p\in P,\quad C_{\rm cap}(p)\ge\nu_p(N)
+\end{array}\right\}.
+$$

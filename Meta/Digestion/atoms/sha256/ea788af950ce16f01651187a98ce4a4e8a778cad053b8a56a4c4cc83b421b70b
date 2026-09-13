@@ -1,0 +1,6 @@
+**定义 462.1。**$p_1<\cdots<p_M$ 为前 $M$ 个素数，$M\ge1,s\ge0$，计数有序对且排除 $i=j$：
+$$
+R_M(s;\theta)=\frac1M\#\{(i,j):1\le i,j\le M,\ i\ne j,\ \|\theta(p_i-p_j)\|\le s/M\}.
+$$
+Poisson 参照为对每个固定 $s>0$ 趋于 $2s$。$\theta$ 无理时 $R_M(0;\theta)=0$。
+

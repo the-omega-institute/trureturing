@@ -1,0 +1,20 @@
+**定理 479.3（准确删除核与带核有效费用）。** 对 $1\le k<r$ 定义
+$$
+D_k(c',c)=\begin{cases}
+1/k,&c\text{ 由 }c'\in\mathcal C_{n,k+1}\text{ 删除一个内部顶点得到},\\
+0,&\text{否则},
+\end{cases}\qquad c\in\mathcal C_{n,k}.
+$$
+它的每行和为一，且对定义479.1的全部 $w,J$，有
+$$
+p_k(c)=\sum_{c'\in\mathcal C_{n,k+1}}p_{k+1}(c')D_k(c',c),\qquad
+Z_k(c)=\sum_{c'\in\mathcal C_{n,k+1}}Z_{k+1}(c')D_k(c',c),
+\tag{479.3a}
+$$
+$$
+F_k(c)=-\beta^{-1}\log\sum_{c'\in\mathcal C_{n,k+1}}
+D_k(c',c)e^{-\beta F_{k+1}(c')}.
+\tag{479.3b}
+$$
+这些连接是概率核，费用式中的核因子保留。
+

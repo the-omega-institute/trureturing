@@ -1,0 +1,7 @@
+此域 \(V_0>0\),令 \(L_0=\mu-\sqrt{V_0/[k(k-1)]}>0\)、\(H_0=\mu+\sqrt{(k-1)V_0/k}\)。对原均值向量的零和偏差作 Cauchy-Schwarz,逐项得到
+
+\[
+|y_i-\mu|^2\le\frac{k-1}{k}\overline V
+<\frac{k-1}{k}V_0.
+\]
+

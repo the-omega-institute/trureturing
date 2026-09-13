@@ -1,0 +1,9 @@
+**定理 428.5（预测十·最大强同余与代价域）。** $\simeq_L$ 恰是包含于 $\ker P_L$ 的最大强同余：对每个字母保留完整定义域，并在共同成功时保留输出的等价。对全部情境的量化等价于对全部有限字的量化，包括不同字解释为同一函数的情形。严格一步、字解释及标记观察分别是上述部分签名的严格复合、从首字母开始的 $\operatorname{runWord}$ 以及对成功值应用 $P_L$。
+
+对任意给定 $\lambda$，
+$$
+\operatorname{cost}_\lambda(\varnothing)=0,\qquad
+\operatorname{cost}_\lambda(wv)=\operatorname{cost}_\lambda(w)+\operatorname{cost}_\lambda(v).
+$$
+函数 $(w,x)\mapsto\operatorname{cost}_\lambda(w)$ 可限制在整个 $\operatorname{Exec}$ 上，且不改变其域。
+

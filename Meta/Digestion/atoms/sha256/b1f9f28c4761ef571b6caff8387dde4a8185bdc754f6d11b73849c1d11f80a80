@@ -1,0 +1,16 @@
+**定义 415.1（重置入时刻、出时刻与机械字）。** 对 $L\ge1$ 记
+$$
+A_L=G_{L+1},\qquad b_L=G_L,\qquad
+\Lambda_L=A_L+\alpha b_L,\qquad \delta_L=\Lambda_L^{-1}=\alpha^{L+2},
+$$
+$$
+e_{L,m}=A_Lm+b_L\lfloor m\alpha\rfloor\quad(m\ge0),\qquad
+n_{L,m}=e_{L,m}-1\quad(m\ge1).
+$$
+$e_{L,0}=0$ 仅为计数用的辅助起点；出时刻的定义域严格为 $\mathbb P$。定义二元总字
+$$
+w:\mathbb P\to\{0,1\},\qquad
+w_m=\lfloor(m+1)\alpha\rfloor-\lfloor m\alpha\rfloor.
+$$
+对 $r\ge0$，记 $P_r$ 为值 $G_r-1$ 的宽度 $r$ 合法字；$P_0$ 为空，$r>0$ 时它从位置 $r-1$ 起向低位交替取一、零。此交替表示及其和式由定理 103、375.2 给出。
+

@@ -1,0 +1,11 @@
+**定理 443.3（两段边界、错误交集及初步计数）。** 对不同素数 $p<q$，
+$$
+M(N)=\sum_{\substack{N/p<d\le N\\(d,pq)=1}}\mu(d)
+-\sum_{\substack{N/(pq)<d\le N/q\\(d,pq)=1}}\mu(d).
+$$
+一般多素数配对不能改为单素数边界的交集。仅用 $|\mu|\le1$，单素数式给
+$$
+|M(N)|\le N-2\lfloor N/p\rfloor+\lfloor N/p^2\rfloor.
+$$
+特别地 $|M(N)|\le\lfloor N/4\rfloor+(N\bmod2)\le N/4+1$。
+

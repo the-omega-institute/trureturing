@@ -1,0 +1,4 @@
+更一般，若一个实际合法历史集合 $\mathcal H$ 有投影 $\pi:\mathcal H\to D$，每条纤维 $\mathcal H_n$ 非空有限，则对任意 $f:D\to\mathbb Q$ 和有限 $D_0\subseteq D$，
+$$
+\sum_{n\in D_0}f(n)=\sum_{n\in D_0}\ \sum_{h\in\mathcal H_n}\frac{f(n)}{|\mathcal H_n|}.
+$$

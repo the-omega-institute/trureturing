@@ -1,0 +1,7 @@
+**定理 300。** 对第 299 条的词 $w=\lambda_1\cdots\lambda_m$，令 $q_j$ 为第 295 条的前缀位移。原子词的精确定义域为
+$$
+\operatorname{Dom}(w)=
+\prod_{p\in P}\left(
+\left[-\min_{0\le j\le m}q_j(p),\ A(p)-\max_{0\le j\le m}q_j(p)\right]\cap\mathbb Z\right).
+$$
+该域

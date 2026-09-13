@@ -1,0 +1,32 @@
+**定理 378.6。** 对任意普通实值度量空间 $(X,d)$，在 $X^*$ 上定义外部实值距离
+$$
+d_{\rm ext}(c,c')=d(\operatorname{Dec}(c),\operatorname{Dec}(c')).
+$$
+它是度量，$\operatorname{enc}_X$ 为等距双射。对每个 $\varepsilon>0$，
+$$
+\{(c,c'):d_{\rm ext}(c,c')<\varepsilon\}
+=(\operatorname{enc}_X\times\operatorname{enc}_X)
+[\{(x,x'):d(x,x')<\varepsilon\}].
+$$
+一致结构、一致连续性、Cauchy 序列与度量完备化在这项比较下均保持并反映。分别用于 $d_K,\rho,d_{\rm digit},d_{\rm phase}$ 时，保留第 373.2 条的两个不同一致结构及其各自完备化。
+
+完整编码的距离为
+$$
+d^*:(X\times X)^*\to\mathbb R^*,\qquad
+d^*(\chi_{X,X}(c,c'))=\operatorname{Enc}(d_{\rm ext}(c,c')).
+$$
+其零、加法及序均取实数结构的运输；解码后才是上述普通实值度量。
+
+**证明。** 非负性及对称性由原距离给出，距离为零当且仅当解码相同，当且仅当两个码相同。三角不等式在三个解码点处直接为原三角不等式，所以 $d_{\rm ext}$ 为实值度量，且代入两点编码即得等距式。逐对代入定义给所列邻近关系式，故所有包含这些关系的一致结构元素也准确对应。
+
+对任意序列和 $\varepsilon>0$，所有充分靠后项的两两距离小于 $\varepsilon$ 在两侧完全相同，故 Cauchy 条件双向相同；极限同样由到一个点的距离趋零保持反映。若 $i:X\to\widehat X$ 为稠密等距嵌入且 $\widehat X$ 完备，将其共轭成 $i^*:X^*\to\widehat X^*$。等距性由距离定义给出，稠密性由第 378.5 条给出，而 $\widehat X^*$ 中每个 Cauchy 序列解码后在 $\widehat X$ 收敛，再编码得极限，故是相应完备化。反向解码证明相同结论，也给一致连续性的全部 $\varepsilon$、$\delta$ 条件双向对应。
+
+在 $\omega^*$ 上分别取
+$$
+(d_{\rm digit})_{\rm ext}(\operatorname{NatZ}(n),\operatorname{NatZ}(k))=d_{\rm digit}(n,k),\qquad
+(d_{\rm phase})_{\rm ext}(\operatorname{NatZ}(n),\operatorname{NatZ}(k))=d_{\rm phase}(n,k).
+$$
+其完备化便分别是带 $(d_K)_{\rm ext}$ 的 $K_{\rm infdig}^*$ 和带 $\rho_{\rm ext}$ 的 $\mathbb T^*$；第 373.2 条的反向不一致连续序列也逐项编码，仍给反例。
+
+最后，$d^*$ 是作为二元图的原距离函数的共轭，所以其值为实数对象的码。令 $0_{\mathbb R}^*=\operatorname{Enc}(0)$，并沿 $\operatorname{enc}_{\mathbb R}$ 运输实加法及实序，其三角不等式就是原三角不等式的编码。目标为 $\mathbb R^*$ 的这个函数不是以通常实数算术解释的普通实值度量；与 $\operatorname{Dec}|_{\mathbb R^*}$ 复合并通过 $\chi_{X,X}$ 才恢复 $d_{\rm ext}$。证毕。
+

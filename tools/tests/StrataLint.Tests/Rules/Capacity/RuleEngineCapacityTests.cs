@@ -126,8 +126,10 @@ public sealed class RuleEngineCapacityTests
     [Fact]
     public void Sl003DoesNotTreatCanonicalProblemPoolDossiersAsASplittableModule()
     {
+        // One past the admission limit, derived from the constant: below it the exclusion is
+        // never exercised and this pin would hold vacuously.
         var fixture = new RuleFixture();
-        for (var index = 1; index <= 60; index++)
+        for (var index = 1; index <= L + 1; index++)
         {
             var path = $"Problems/oeis-a000001-sample-slug-{index:0000}.md";
             fixture.Files[path] = "fixture\n";
@@ -161,8 +163,9 @@ public sealed class RuleEngineCapacityTests
     [Fact]
     public void Sl003StillCountsNonCanonicalProblemPoolPaths()
     {
+        // One past the admission limit, derived from the constant so a threshold change moves it along.
         var fixture = new RuleFixture();
-        for (var index = 1; index <= 60; index++)
+        for (var index = 1; index <= L + 1; index++)
         {
             foreach (var path in new[] { $"Problems/Foo{index:0000}.md", $"Problems/sub/x{index:0000}.md" })
             {
@@ -179,7 +182,7 @@ public sealed class RuleEngineCapacityTests
         {
             var diagnostic = Assert.Single(diagnostics, item => item.Path == directory);
             Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
-            Assert.Contains("directory contains 60 files", diagnostic.Message, StringComparison.Ordinal);
+            Assert.Contains($"directory contains {L + 1} files", diagnostic.Message, StringComparison.Ordinal);
         }
     }
 

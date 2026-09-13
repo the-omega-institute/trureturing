@@ -1,0 +1,33 @@
+**定理 431.4（预测十三·拓扑、度量与自然算术）。** 对任意指定拓扑空间 $(X,\tau)$，令
+$$
+\tau^*=\{\operatorname{Enc}[U]:U\in\tau\}.
+$$
+$e_X:(X,\tau)\to(X^*,\tau^*)$ 为同胚；全部集合指标的乘积桥在相应乘积拓扑下为同胚。因此本篇的紧性、稠密性、连续性及首位序列同胚均双向运输。若 $d$ 为普通实值度量，则
+$$
+d_{\rm ext}(c,c')=d(\operatorname{Dec}(c),\operatorname{Dec}(c'))
+$$
+为使 $e_X$ 等距的普通实值度量；值也编码时须使用运输后的实数零、加法及序。拓扑三层满足
+$$
+\operatorname{El}(\operatorname{Enc}(\tau))=\operatorname{Enc}[\tau],\qquad
+\tau^*=\{\operatorname{El}(c):c\in\operatorname{Enc}[\tau]\}.
+$$
+
+令 $\mathsf N_Z=\omega^*$，在它上面共轭通常后继、加法、乘法及序为 $S_{\mathsf N},+_{\mathsf N},\times_{\mathsf N},<_{\mathsf N}$。对全部 $m,n\in\omega$，
+$$
+\operatorname{El}(\operatorname{NatZ}(n))=\{\operatorname{NatZ}(k):k<n\},\qquad
+S_{\mathsf N}(\operatorname{NatZ}(n))=\operatorname{NatZ}(n+1),
+$$
+$$
+\operatorname{NatZ}(m)+_{\mathsf N}\operatorname{NatZ}(n)=\operatorname{NatZ}(m+n),\qquad
+\operatorname{NatZ}(m)\times_{\mathsf N}\operatorname{NatZ}(n)=\operatorname{NatZ}(mn),
+$$
+$$
+\operatorname{NatZ}(m)<_{\mathsf N}\operatorname{NatZ}(n)\iff m<n.
+$$
+全部递归与归纳实例保留。$G$ 的完整图码为
+$$
+\operatorname{Enc}(G)=\operatorname{Pack}
+\{\langle\operatorname{NatZ}(j),\operatorname{NatZ}(G_j)\rangle_Z:j\in\omega\},
+$$
+其初值、递推、空和及零参数取相同的共轭含义。$T$ 仍作用在 $K$，$S_{\mathsf N}$ 仍是自然数后继的共轭。
+

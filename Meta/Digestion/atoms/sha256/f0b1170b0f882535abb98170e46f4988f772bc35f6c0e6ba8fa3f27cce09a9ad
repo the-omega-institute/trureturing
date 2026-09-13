@@ -1,0 +1,28 @@
+**定理 472.7（四个公式在全部支撑族上的固定幂次障碍）。** 对平方自由 $Q>1$、$k=\omega(Q)$，
+$$
+c_Q\ge\frac1{2(k+1)},\qquad
+\alpha_Q\ge\frac1{z(k+2)},\qquad
+\min\{2\tau(Q),\Phi(Q)\}s_Q\ge2^{k-1},\qquad
+D_Q\ge E_Q\ge2^k.
+\tag{472.7a}
+$$
+对每个整数 $N\ge1$ 和每个平方自由 $Q\ge1$，令 $L=\log_2N$，则
+$$
+E_U(Q,N)\ge\frac{N}{2(L+2)},\qquad
+E_W(Q,N),\widehat E_W(Q,N)\ge\frac{N}{z(L/2+2)},
+\tag{472.7b}
+$$
+$$
+E_U^{\rm jump}(Q,N)\ge\frac{N}{L+2}.
+\tag{472.7c}
+$$
+因此对任意序列 $(\mathcal Q_N)_{N\ge1}$，只要每个 $\mathcal Q_N$ 是非空的平方自由正整数族，无论该族有限或无限、有界或无界，对每个预先固定的实数 $\delta>0$ 都有
+$$
+\lim_{N\to\infty}
+\frac{\displaystyle\inf_{Q\in\mathcal Q_N}
+\min\{E_U(Q,N),E_W(Q,N),\widehat E_W(Q,N),E_U^{\rm jump}(Q,N)\}}
+{N^{1-\delta}}=+\infty.
+\tag{472.7d}
+$$
+此结论不声称实际 $U_Q,W_Q$ 或 $|M|$ 的相应下界。
+

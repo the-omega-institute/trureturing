@@ -1,0 +1,8 @@
+### 剩余情形的内侧割线与 Hermite 上包络
+
+只余 \(2s^2<V_0\)。置 \(v=\operatorname{dist}(I,\{c,d\})\)、\(e=\operatorname{dist}(I,\{t,t'\})\)。因 \(\mu\in I\) 且 \(t\) 是实际端点,\(e\le|t-\mu|=|s|\),所以
+
+\[
+2s^2<V_0=v^2+e^2\le v^2+s^2,\qquad v>|s|.
+\]
+

@@ -1,0 +1,2 @@
+**定义 457.1。**$\varphi=(1+\sqrt5)/2$，$\alpha=\varphi^{-1}$，$\mathbb T=\mathbb R/\mathbb Z$，$e(t)=\exp(2\pi it)$。在 $\mathbb Z$ 上定义 $z(n)=e(\alpha n)$，其在 $\mathbb N$、$\mathbb N_+$ 上取限制。圆周距离为 $\|x-y\|=\min_{m\in\mathbb Z}|x-y-m|$。
+

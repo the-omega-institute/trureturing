@@ -38,6 +38,7 @@ public sealed partial class FrozenSurfaceRuleTests
         "Directory.Build.targets",
         "Directory.Packages.props",
         "global.json",
+        "Meta/lean-report.toml",
         "lean-toolchain",
         "lakefile.toml",
         "lakefile.lean",
@@ -57,6 +58,7 @@ public sealed partial class FrozenSurfaceRuleTests
         "tools/scripts/lib/resource-observation-lib.sh",
         "tools/scripts/lean-report-pair.sh",
         ".github/workflows/ci.yml",
+        "Meta/lean-report.toml",
         "lean-toolchain",
         "lakefile.toml",
         "lakefile.lean",
@@ -65,6 +67,7 @@ public sealed partial class FrozenSurfaceRuleTests
 
     public static TheoryData<string> CatalogProducerWakeupInputs => new()
     {
+        "Meta/lean-report.toml",
         "lean-toolchain",
         ".github/workflows/ci.yml",
         "tools/StrataLint.Cli/Program.cs",

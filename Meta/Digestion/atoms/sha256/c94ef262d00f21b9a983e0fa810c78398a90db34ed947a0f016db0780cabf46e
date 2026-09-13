@@ -1,0 +1,6 @@
+**定理 103（区间总数、容量最坏值与完整窗口）。** 对 \(0\le u\le v\)，
+\[
+\sum_{n=u}^{v-1}h_Z(n)=2(v-u)+w_Z(u)-w_Z(v),\qquad
+\sum_{n=u}^{v-1}r_Z(n)=(v-u)+w_Z(u)-w_Z(v).
+\tag{Z-INTERVAL}
+\]

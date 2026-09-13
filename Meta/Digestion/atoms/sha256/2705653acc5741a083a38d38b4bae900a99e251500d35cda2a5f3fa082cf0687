@@ -1,0 +1,11 @@
+**定理 476.4（同一失败质量下无限期望与有限有效费用）。** 在 476.1 的最大图中固定 $11\le X<13,t>0$。为每条可提升原输入选一条有限合法执行，使用所给完整非负标量费用；失败输入费用为 $+\infty$，仍取整个 $\mathcal E_X$ 的同一输入概率。对 $\beta>0$，规定 $e^{-\beta(+\infty)}=0$，令
+$$
+Z_\beta=\sum_{\gamma\in\mathcal E_X}\Pr(\gamma)e^{-\beta J(\gamma)},\qquad
+F_\beta=-\beta^{-1}\log Z_\beta.
+$$
+期望费用为 $+\infty$，而 $F_\beta$ 是有限实数，且
+$$
+F_\beta\ge-\beta^{-1}\log(1-\delta_{\max}(X,t))>0.
+$$
+$t=1$ 时 $F_\beta\ge\beta^{-1}\log(36/13)$。所以有效费用有限并不蕴含完整任务可行，也不能替代失败概率。
+

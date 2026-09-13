@@ -1,0 +1,16 @@
+**证明。**$P$ 在 $(0,1)$ 严格增加，趋一时任意有限多个素数项均趋一，所以无界，根存在唯一且 $0<P'(\rho_t)<\infty$。先固定 $0<r<\rho_t$。不同素因子数至多 $\log_2n$；若更小状态已有 $w_t(m)\le B_r r^{-m}$，P9 递推给
+$$
+w_t(n)\le B_r r^{-n}t\left(P(r)+(\log_2n)r^{n/2}\right).
+$$
+$tP(r)<1$，余项趋零，先选足够大的阈值，再把有限小状态吸入 $B_r$，强归纳给全局上界。故 $F_t(z)=\sum_{n\ge1}w_t(n)z^n$ 在 $|z|<\rho_t$ 解析。绝对收敛及末字母递推给
+$$
+(1-tP(z))F_t(z)=B_t(z):=z+t\sum_{q\in\operatorname{Pr}}F_t(z^q).
+$$
+$B_t$ 在 $|z|<\sqrt{\rho_t}$ 解析：在任意 $|z|\le a<\sqrt{\rho_t}$ 上，全部 $z^q$ 位于 $F_t$ 的解析域，且 $F_t(v)=v+O(v^2)$ 使大 $q$ 项被常数乘 $a^q$ 一致支配；有限余项亦解析。$B_t(\rho_t)$ 有限且正。
+
+在 $|z|<\rho_t$，$|tP(z)|<1$。在 $|z|=\rho_t$ 若 $tP(z)=1$，三角不等式取等迫使每个 $(z/\rho_t)^q=1$；二、三两项使 $z=\rho_t$。该零点的导数为 $-tP'(\rho_t)\ne0$。解析零点孤立性及紧性给 $\rho_t<R<\sqrt{\rho_t}$，在 $|z|<R$ 中没有其它分母零点。因此
+$$
+F_t(z)-\frac{C_t}{1-z/\rho_t},\qquad C_t=\frac{B_t(\rho_t)}{t\rho_t P'(\rho_t)}>0
+$$
+在该圆盘解析。取 $\rho_t<R_t<R$，Cauchy 系数公式把余项界为 $O_t(R_t^{-n})$。可达性给全部 $w_t(n)>0$，将有限小 $n$ 与渐近合并即得双边常数。证毕。
+

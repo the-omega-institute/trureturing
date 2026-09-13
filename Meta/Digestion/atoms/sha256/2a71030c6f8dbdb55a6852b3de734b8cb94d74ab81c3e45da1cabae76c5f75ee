@@ -1,0 +1,2 @@
+**定义 3.9（最小缘与最小支持）**〔semantic〕。命题 $P$ 的支持是满足 $P\in S\in\mathcal A(K,\mathfrak A)$ 的 $S$；其中不存在仍支持 $P$ 的真子集者称为最小支持，记其族为 $\operatorname{MinSupp}(P)$。为把有限性前件说清，对有限候选域 $D\subseteq\mathcal P$，另记 $\operatorname{MinSupp}_D(P)=\{S\in\operatorname{MinSupp}(P):S\subseteq D\}$；最小性始终是包含意义的极小，不预设唯一最小元。
+

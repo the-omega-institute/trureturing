@@ -1,0 +1,13 @@
+**定理 380.2。** $\mathcal U:K\to\mathscr Q$ 是同胚。对任意 $x,y\in K$，
+$$
+y=Tx\quad\Longleftrightarrow\quad
+\forall L\ge1,\ \langle P_Lx,P_Ly\rangle\in\mathscr R_L.
+$$
+因此普通图 $G_T\subseteq K\times K$ 经全部窗口对映射同胚到 $\mathscr Q_R$。
+
+**证明。** 对相容族 $p$ 定义 $x_j=p_{j+1}(j)$。反复使用相邻层相容性得到 $\pi_{J,L}(p_J)=p_L$ 对所有 $J\ge L$ 成立，故 $x|_L=p_L$。相邻坐标的合法性在 $p_{j+2}$ 中成立，所以 $x\in K$。这给 $\mathcal U$ 的逆，两个复合逐坐标均为恒等。每个 $P_L$ 连续，故 $\mathcal U$ 连续；逆的第 $j$ 坐标只读取 $p_{j+1}(j)$，有限个输出坐标只读取有限个输入坐标，所以逆也连续。
+
+图等价的正向就是 $\mathscr R_L$ 的定义。反向，若 $x$ 首次 $00$ 在 $j$，则对每个 $L\ge j+2$，定理 379.2 的首次 $00$ 情形使 $P_Lx$ 只有唯一的后继前缀 $P_LTx$。假设的关系成员条件于是给 $P_Ly=P_LTx$；这些深度无界，故 $y=Tx$。若 $x=u$，所有奇数长度前缀均交替且末位一；若 $x=v$，所有偶数长度前缀均交替且末位一。相应无界深度上唯一输出都是零前缀，因而两种情形均强制 $y=z(0)=Tx$。
+
+连接映射确实将 $\mathscr R_J$ 送入 $\mathscr R_L$：用同一个见证 $x$ 限制两个坐标即可；每条低层边也可用其见证提升到任意高层。任意 $\mathscr Q_R$ 的元素分别恢复唯一的 $x,y\in K$，图等价又使 $y=Tx$。逐层配对与拆对是乘积拓扑的同胚，故 $\mathcal U\times\mathcal U$ 在 $G_T$ 上的限制及其逆均连续，给最后结论。证毕。
+

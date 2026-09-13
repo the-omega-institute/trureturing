@@ -5,6 +5,12 @@ cas_ref: sha256:92312c5c0791ca42042265d47e65559acb1efa5a59e9e7db7f6e9fa6786b1a38
 coverage_gids:
   - gid: D5/S3/ContinuousObservables/CentralWinding.central_winding_certificate
     target_statement_id: sha256:efe1d31611476f5361ce2f2b0e29dd800d888be2cb20ffe5b4513461d98da533
+  - gid: D5/S3/ContinuousObservables/CentralWinding.winding_shift_pow_card
+    target_statement_id: sha256:40e7246f63644b528b9a6698b719dbf46f026168a5f8ad7dd8dbc94c8f13e786
+  - gid: D5/S3/ContinuousObservables/CentralWinding.winding_shift_pow_mulVec
+    target_statement_id: sha256:a386430b77fbcab427408a431bced67a06c3d8f6cea4cccd2aa2254cb1fed6f3
+  - gid: D5/S3/ContinuousObservables/CentralWinding.winding_shift_unitary
+    target_statement_id: sha256:a00e2c3a79a9a960840c04c6cf1b36b47cee28b3ed5a089d2ac54f9061b57274
   - gid: D5/S3/Observer/MatrixUnitCertificate.matrix_unit_mul
     target_statement_id: sha256:825d35ab442c2353b86f3417fb4e8e1f3e558dd41ad1db977c3b0c7e1189d358
   - gid: D5/S3/Observer/WindowRegister.clockMatrix_pow_card

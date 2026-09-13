@@ -1,0 +1,10 @@
+**定义 417.1（半开计数与实误差）。** 对全部 $L\ge1,N\ge0$ 定义
+$$
+C_L(N)=|E_L\cap N|=|E_L\cap[0,N)|,\qquad
+D_L(N)=C_L(N)-\frac{N}{\Lambda_L},
+$$
+$$
+s_L=1-\delta_L,\qquad t_L=b_L\delta_L.
+$$
+自然数在实式中经原自然数到整数再到实数的嵌入解释。$C_L(N)/N$ 的定义域为 $N\ge1$。
+

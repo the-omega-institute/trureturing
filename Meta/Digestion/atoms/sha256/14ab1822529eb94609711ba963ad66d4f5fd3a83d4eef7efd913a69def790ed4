@@ -1,0 +1,8 @@
+每个 \(a\in\mathsf E_{\rm Pr}\) 都存在有限容量对 \((P,A)\) 使 \(a\) 是 \(S(P,A)\) 的零扩展像中的元素，并且
+\[
+\mathsf E_{\rm Pr}
+=\bigcup_{(P,A)\in\mathfrak B}
+\jmath_{(P,A)}^{\rm Pr}[S(P,A)]
+\tag{Z-BOX-COVER}
+\]
+在所有零扩展嵌入下相容。

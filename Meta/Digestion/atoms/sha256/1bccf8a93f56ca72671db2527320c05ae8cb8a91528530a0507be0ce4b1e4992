@@ -1,0 +1,7 @@
+**定义 469.1。**窗口深度 $L$ 一律取自然数，令
+$$
+\mathcal W_L=\{u:\{0,\ldots,L-1\}\to\{0,1\}:u(j)u(j+1)=0\text{ 对所有 }j\in\mathbb N,\ j+1<L\},\qquad
+\pi_L:\mathbb N\to\mathcal W_L,\quad \pi_L(n)=(d_0(n),\ldots,d_{L-1}(n)).
+$$
+$L=0$ 时窗口域为空，$\mathcal W_0$ 只有空函数，$\pi_0$ 恒取它；窗口允许高位零。关系 $R\subseteq\mathbb N^r$ 的低位局部深度为使 $R=(\pi_L^r)^{-1}(R_L)$ 的最小 $L$；不存在时为 $+\infty$。函数输出前 $L$ 位的输入深度，也按相同前缀是否强制相同输出前缀定义。
+

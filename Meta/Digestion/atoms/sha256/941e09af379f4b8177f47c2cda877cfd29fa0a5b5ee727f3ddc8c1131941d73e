@@ -1,0 +1,6 @@
+**定义 441.1（数位、正整数表及记号域）。** 令 $\mathbb N=\{0,1,2,\ldots\}$、$\mathbb P$ 为全部素数集合，$\varphi=(1+\sqrt5)/2$，$G_0=1,G_1=2,G_{j+2}=G_{j+1}+G_j$。沿用原规范数位 $z(a)_j$、有限规范字 $\zeta(a)$ 和逐行规范化 $\nu$：$z(a):\mathbb N\to\{0,1\}$ 有限支撑、无相邻的一，$a=\sum_jG_jz(a)_j$；零的有限字为空，但其总数位图包含全部零边。$\ell_Z(a)=\min\{L\ge0:a<G_L\}$。对正整数 $n$，沿用
+$$
+K(n)(p,j)=z(v_p(n))_j\qquad(p\in\mathbb P,\ j\in\mathbb N).
+$$
+这里的表是 $\mathbb P\times\mathbb N$ 上的总函数，只有支撑有限；不定义 $K(0)$。总而有限支撑的非负整数表 $D$ 的第 $p$ 行值为 $\sum_jG_jD(p,j)$，$\nu(D)$ 对每行取此值的原规范数位。它与有限单行字的原 $\operatorname{Norm}$ 保持各自的域。下文自然数公式是自然数语义陈述，其规范表示及全部集合图统一按 448 解释。记 $\Phi$ 为 Euler 函数，避免与 $\varphi$ 混淆；对 $n>0$ 记 $\omega(n)=|\{p\in\mathbb P:p\mid n\}|$、$\operatorname{rad}(n)=\prod_{p\mid n}p$、$\tau(n)=|\{d\in\mathbb N_{>0}:d\mid n\}|$。
+

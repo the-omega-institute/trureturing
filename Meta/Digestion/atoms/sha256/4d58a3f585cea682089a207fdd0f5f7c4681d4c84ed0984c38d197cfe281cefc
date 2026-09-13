@@ -1,0 +1,16 @@
+**定理 294。** 对 $x\in\mathbb R\setminus\{0\}$，有
+$$
+\mathscr A_{\mathbb R}(\phi x)=\mathscr A_{\mathbb R}(x)+1.
+$$
+在第 293 条实尺度流假设下，
+$$
+\mathscr A_{\mathbb R}(r_k)=\mathscr A_{\mathbb R}(r_0)+k,\qquad
+\gamma_{\mathbb R}(r_{k+1})=[\phi^2r_k].
+$$
+若另有 $t_k=t_0+k$，则
+$$
+\mathscr A_{\mathbb R}(r_k)-t_k
+=\mathscr A_{\mathbb R}(r_0)-t_0.
+$$
+一般不能把实相位更新写成圆周上的 $\phi$ 倍运算。
+

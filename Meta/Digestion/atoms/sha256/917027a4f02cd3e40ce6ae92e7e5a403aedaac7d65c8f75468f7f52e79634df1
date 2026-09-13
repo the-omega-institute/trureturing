@@ -1,0 +1,20 @@
+**定义 390.1。** 在通常 ZFC 中，沿用定义 371.1、372.1、375.1 的全部对象，在第 390–412 条局部简记
+$$
+K=K_{\rm infdig},\quad z=z_{\rm infdig},\quad
+F=F_{\rm infdig},\quad H=H_{\rm infdig},\quad T=T_{\rm infdig}.
+$$
+$\omega$ 仍为通常自然数集合，$K$ 中的点仍为低位到高位的合法总函数，$z(n)=\operatorname{pad}(\zeta(n))$。$K$ 取定义 371.1 的拓扑与度量 $d_K$，$\mathbb T=\mathbb R/\mathbb Z$ 取通常圆周拓扑及定义 373.1 的距离 $\rho$。令
+$$
+R:\mathbb T\to\mathbb T,\qquad R(t)=t+[\phi],\qquad
+R^k(t)=t+[k\phi]\quad(k\in\mathbb Z).
+$$
+对 $t,s\in\mathbb T$、$x,y\in K$ 定义
+$$
+t\mathrel{E_R}s\iff\exists k\in\mathbb Z\ (s=R^kt),
+$$
+$$
+x\mathrel{E_T}y\iff\exists m,n\in\omega\ (T^mx=T^ny),\qquad
+x\mathrel{S_T}y\iff\exists k\in\omega\ (T^kx=T^ky).
+$$
+$E_T$ 称为异步最终汇合关系，$S_T$ 称为同步最终汇合关系。另记相位纤维关系 $x\mathrel{Q_H}y\iff Hx=Hy$。$T^0$ 是恒等映射；此处未对 $T$ 定义负次迭代。
+

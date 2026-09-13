@@ -1,0 +1,24 @@
+**定理 384.1。** 对每个 $L\ge1,h\ge0,J\ge L$，以下三条件等价：
+$$
+\exists f\in\mathsf X_L^{\mathsf X_J}\ \forall x\in K,\quad P_LT^hx=f(P_Jx),
+$$
+$$
+\exists f\in\mathsf X_L^{\mathsf X_J}\ \forall n\in\omega,\quad
+P_Lz(n+h)=f(P_Jz(n)),
+$$
+$$
+G_J\ge G_L+h.
+$$
+若 $M=G_L+h>G_J$，令 $t\ge1$ 为唯一满足 $G_t<M\le G_{t+1}$ 的自然数，置 $s=G_{t+1}-M$、$N=L+h$。则下列两个有限自然数给出第二条件失败的见证：
+$$
+n_0=s+\sum_{\substack{k\in\omega\\t+2+2k<N}}G_{t+2+2k},\qquad
+n_1=s+G_t+\sum_{\substack{k\in\omega\\t+3+2k<N}}G_{t+3+2k}.
+$$
+它们满足
+$$
+n_0\ne n_1,\qquad P_Jz(n_0)=P_Jz(n_1),
+$$
+$$
+\{V_L(P_Lz(n_0+h)),V_L(P_Lz(n_1+h))\}=\{0,G_{L-1}\}.
+$$
+

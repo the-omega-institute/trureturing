@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:18945b266f27f568b1054bb2f5db347c83a7faaaf0b12ca6e978d8f356ad3b92
+  normalized_sha256: sha256:18945b266f27f568b1054bb2f5db347c83a7faaaf0b12ca6e978d8f356ad3b92
+cas_ref: sha256:18945b266f27f568b1054bb2f5db347c83a7faaaf0b12ca6e978d8f356ad3b92
+coverage_gids:
+  - gid: D5/S3/Analytic/Interpolation/EnvelopeKMonotone.psiK_strictAnti_variance
+    target_statement_id: sha256:f42ef6fdde1bd94b4d67e794448928953c454e8a768fa9b95a88c89afbed99d9
+receipts:
+  unresolved_subitems: []

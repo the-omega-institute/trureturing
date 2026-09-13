@@ -18,6 +18,11 @@ internal static partial class IngestCommand
         ArgumentNullException.ThrowIfNull(leanReportSource);
         ArgumentNullException.ThrowIfNull(scribeEmissionVerifier);
         ArgumentNullException.ThrowIfNull(arguments);
+        if (arguments.Contains("--refresh-source", StringComparer.Ordinal))
+        {
+            return RefreshSourceRegistry(repositoryRoot, repository, leanReportSource,
+                scribeEmissionVerifier, arguments);
+        }
         try
         {
             var baselineRevision = ParseArguments(arguments);

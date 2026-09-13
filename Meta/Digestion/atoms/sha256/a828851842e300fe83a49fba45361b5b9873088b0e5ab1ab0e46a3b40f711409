@@ -1,0 +1,15 @@
+**定理 453.2（零边路径的费用集与全部达到者）。** 令 $J\subseteq I\cap F_0$ 为满足原任务全部零步接受条件的状态集；只有初末集合条件的任务取 $J=I\cap F_0$。对 $s\in J$ 定义
+$$
+s^{(0)}=\{\langle0,s\rangle\},\qquad p_s=\langle s^{(0)},\varnothing\rangle.
+$$
+则 $s\mapsto p_s$ 是 $J\to\mathcal P_0$ 的双射，并且
+$$
+G_0(p_s)=\alpha(s)+h(s),\qquad
+\mathcal A_0=\{\alpha(s)+h(s):s\in J\},
+$$
+$$
+\mathcal R_0(v)=\{p_s:s\in J,\ \alpha(s)+h(s)=v\},\qquad
+\operatorname{Min}\mathcal A_0=\operatorname{Min}\bigcup_{s\in J}\{\alpha(s)+h(s)\}.
+$$
+当 $J$ 有限且非空时，极小费用集非空，其中每个费用的全部达到路径恰由上式恢复。$J=\varnothing$ 时路径集、费用集和极小集都空。$d=0$ 时所有合法路径费用均为唯一空向量，若有合法路径则全部达到该极小费用。对任意 $s\in J$，总费退化为仅有终端费 $h(s)$ 当且仅当 $\alpha(s)=0_V$。
+

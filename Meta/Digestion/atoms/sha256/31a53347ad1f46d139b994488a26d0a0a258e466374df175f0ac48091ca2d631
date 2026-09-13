@@ -1,0 +1,20 @@
+**定理 378.4。** 对任意集合 $X,Y$，乘积比较
+$$
+\chi_{X,Y}:X^*\times Y^*\longrightarrow(X\times Y)^*,\qquad
+\chi_{X,Y}(c,d)=\operatorname{Enc}(\langle\operatorname{Dec}(c),\operatorname{Dec}(d)\rangle)
+=\langle c,d\rangle_Z
+$$
+是双射，其逆为
+$$
+\chi_{X,Y}^{-1}(\operatorname{Enc}(\langle x,y\rangle))
+=\langle\operatorname{Enc}(x),\operatorname{Enc}(y)\rangle.
+$$
+右侧是普通有序对。二元函数 $f:X\times Y\to Z$ 在外部乘积上的对应为 $f^*\circ\chi_{X,Y}$。
+
+**证明。** 任给 $c\in X^*,d\in Y^*$，解码取得唯一的 $x\in X,y\in Y$，故显示的码在目标中，配对等式由第 74 条给出。将此码代入所列逆，得到 $\langle\operatorname{Enc}(\operatorname{Dec}(c)),\operatorname{Enc}(\operatorname{Dec}(d))\rangle=\langle c,d\rangle$。反向，任给目标的 $\operatorname{Enc}(\langle x,y\rangle)$，先取逆再取正向，得到原码。唯一解码及普通对的唯一分解保证逆良定义，证明双逆。最后
+$$
+(f^*\circ\chi_{X,Y})(\operatorname{Enc}(x),\operatorname{Enc}(y))
+=\operatorname{Enc}(f(x,y)),
+$$
+所以二元输入的普通码对和原普通对的单个码通过这个比较相接。证毕。
+

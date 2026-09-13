@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:e3dfcf09b2f3a66d2fe78eae0deec95ac9409fcff1bf43667a6e618114a4db89
+  normalized_sha256: sha256:e3dfcf09b2f3a66d2fe78eae0deec95ac9409fcff1bf43667a6e618114a4db89
+cas_ref: sha256:e3dfcf09b2f3a66d2fe78eae0deec95ac9409fcff1bf43667a6e618114a4db89
+coverage_gids:
+  - gid: D5/S1/Solenoid/Connectivity/ContinuousDiscreteRigidity.continuous_map_to_discrete_is_constant
+    target_statement_id: sha256:8ac06a855fb801483a2a3b7ef6b977cec6be7fcb9c9942f64505b88b9435f651
+receipts:
+  unresolved_subitems: []

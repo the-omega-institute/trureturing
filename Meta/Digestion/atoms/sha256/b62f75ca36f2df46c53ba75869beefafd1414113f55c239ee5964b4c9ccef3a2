@@ -1,0 +1,7 @@
+**定理 466.5（定义与命题）。**若每个合法状态边 $(n,A_q)$、$(n,M_q)$ 的权为 $a(n,q),b(n,q)\ge0$，域外权记零，应以
+$$
+\mathcal T\!\left(\sum_nc_nz^n\right)
+=\Pi_J\sum_{\substack{1\le n\le J\\q\in\mathcal P_X}}c_n\bigl(a(n,q)z^{n+q}+b(n,q)z^{qn}\bigr)
+$$
+代替上式；其系数为相应逐边乘积的历史权和。纯加法的常标签权可用 $\sum_qa_qe(q\theta)$。
+

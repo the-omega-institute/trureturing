@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:75e28b1dece75da97c09a58b28586ea8246eac3dcc5ffab8fa49f1aa0ab17800
+  normalized_sha256: sha256:75e28b1dece75da97c09a58b28586ea8246eac3dcc5ffab8fa49f1aa0ab17800
+cas_ref: sha256:75e28b1dece75da97c09a58b28586ea8246eac3dcc5ffab8fa49f1aa0ab17800
+coverage_gids:
+  - gid: D5/S3/Weil/Probability/CanonicalLiDiskEquivalence.rh_iff_canonical_li_global_expansion
+    target_statement_id: sha256:fc0636c793c8f4640572418398ead26538742cbb85b45a1692f23156fe902f61
+  - gid: D5/S3/Weil/Probability/CanonicalLiDiskEquivalence.rh_li_generator_analytic
+    target_statement_id: sha256:1d47d21d81970ae49e1c92732f43bbff9f19210b7ae5ce3599d7f1c6c2f70a4c
+  - gid: D5/S3/Zeros/Endpoints/CanonicalLiLocalExpansion.generator_taylor_coefficient
+    target_statement_id: sha256:74d25f80541d7c5073a1528751a5136dc0b71b7e423be0aa687a7356220589a2
+receipts:
+  unresolved_subitems: []

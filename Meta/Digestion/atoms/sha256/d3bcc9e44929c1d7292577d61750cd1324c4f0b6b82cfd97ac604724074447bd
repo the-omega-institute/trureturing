@@ -1,0 +1,30 @@
+**定理 417.2（准确计数及其逆区间）。** 对全部 $L\ge1,N\ge0$，
+$$
+C_L(N)=\#\{m\ge1:e_{L,m}\le N\}
+=\max\{m\ge0:e_{L,m}\le N\}.
+$$
+对任意 $M\ge0$，
+$$
+C_L(N)=M\quad\Longleftrightarrow\quad e_{L,M}\le N\le e_{L,M+1}-1.
+$$
+有 $C_L(0)=0$，且对全部 $m\ge1$，
+$$
+C_L(e_{L,m}-1)=m-1,\qquad C_L(e_{L,m})=m.
+$$
+另令 $h=\lfloor N/\Lambda_L\rfloor\in\omega$，则
+$$
+C_L(N)=h+\mathbf1_{\{e_{L,h+1}\le N\}}.
+$$
+
+**证明。** 固定 $L$，简记 $A,b,\Lambda,e_m$，并令 $r_m=\{m\alpha\}$。有
+$$
+e_m=\Lambda m-br_m\quad(m\ge0),\qquad r_0=0,\qquad 0<r_m<1\quad(m\ge1).
+$$
+$e_m$ 严格递增、取整数值，且 $e_m\ge Am$，所以无界。实际出时刻 $e_m-1<N$ 与 $e_m\le N$ 对整数 $N$ 等价。定理 415.2 给全部出时刻而无重复，故计数恰为不超过 $N$ 的正指标入时刻个数。这些指标构成有限初段，加入辅助指标零后，其个数恰是所写最大值。最大指标为 $M$ 等价于 $e_M\le N<e_{M+1}$，整数性给逆区间；特别得到零值和两端计数。
+
+由 $\Lambda h\le N<\Lambda(h+1)$，有 $e_h\le\Lambda h\le N$。另一方面 $\Lambda>b$ 且 $h+2\ge1$，故
+$$
+e_{h+2}>\Lambda(h+2)-b>\Lambda(h+1)>N.
+$$
+最大指标只可能为 $h$ 或 $h+1$，后者当且仅当 $e_{h+1}\le N$，即得显示式。$N=0$ 时 $h=0$ 且指标函数为零。证毕。
+

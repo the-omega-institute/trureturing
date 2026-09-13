@@ -1,0 +1,15 @@
+对 $X,Y\in\mathcal C_P^{\rm tb}$，并行满足
+$$
+q_{X\boxplus Y}=q_X+q_Y,\qquad
+\delta_{X\boxplus Y}^G=\delta_X^G+\delta_Y^G,\qquad
+\mathbf a_{X\boxplus Y}^{G,T}=\mathbf a_X^{G,T}+\mathbf a_Y^{G,T},
+$$
+终端式同样成立。在 $M_X<m_Y$ 的定义域内，$\triangleright$ 满足同样的带符号等式。若 $X\in\mathcal C_P^{\rm pb}$，则 $\mathsf cX\in\mathcal C_P^{\rm pb}$ 且
+$$
+q_{\mathsf cX}=-q_X,\qquad
+\delta_{\mathsf cX}^G=-\delta_X^G,\qquad
+\mathbf a_{\mathsf cX}^{G,T}=-\mathbf a_X^{G,T},\qquad
+\mathbf a_{\mathsf cX}^{G,\infty}=-\mathbf a_X^{G,\infty}.
+$$
+若仅终端逐槽平衡，则终端负号式仍成立。
+
