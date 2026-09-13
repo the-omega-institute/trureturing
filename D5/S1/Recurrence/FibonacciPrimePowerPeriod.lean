@@ -57,7 +57,8 @@ theorem actual_initial_seed (p : ℕ) (hp : p.Prime) :
     apply hn
     apply (scalar_return_iff _ _).mp
     refine ⟨D, ?_⟩
-    rw [hB, hD, Nat.cast_pow, Nat.cast_pow, pow_succ]
+    rw [hB, hD]
+    simp only [Nat.cast_pow, pow_succ]
     ring
   · push_cast at hB
     linear_combination hB
@@ -82,9 +83,10 @@ theorem odd_prime_power_period (p : ℕ) (hp : p.Prime) (hp2 : p ≠ 2)
 theorem standard_quotient_zero_iff_depth (p : ℕ) (hp : p.Prime)
     (hp2 : p ≠ 2) (hp5 : p ≠ 5) :
     quotientMod p (frobeniusIndex p) = 0 ↔ 2 ≤ initialDepth p := by
+  change quotientMod p (frobeniusIndex p) = 0 ↔
+    2 ≤ padicValNat p (returnContent (period p))
   rw [← wall_iff_standard_quotient hp hp2 hp5, square_period_eq_iff,
     pow_dvd_iff_le_padicValNat hp.ne_one (returnContent_period_ne_zero p hp.pos)]
-  rfl
 
 /-- A nonzero standard Fibonacci quotient controls every higher prime power at once. -/
 theorem full_tower_of_standard_quotient_nonzero (p : ℕ) (hp : p.Prime)
@@ -103,9 +105,10 @@ private theorem period_two : period 2 = 3 := by
   have hd : period 2 ∣ 3 := (period_dvd_iff_pair 2 3).mpr (by norm_num [Nat.fib])
   have hn : period 2 ≠ 1 := by
     intro h
-    have hz := ((period_dvd_iff_pair 2 1).mp (by rw [h])).1
+    have hz := ((period_dvd_iff_pair 2 1).mp
+      (by simpa only [h] using (dvd_refl (1 : ℕ)))).1
     norm_num [Nat.fib] at hz
-  exact (Nat.dvd_prime Nat.prime_three).mp hd |>.resolve_left hn
+  exact ((Nat.dvd_prime Nat.prime_three).mp hd).resolve_left hn
 
 private theorem period_four : period 4 = 6 := by
   have h3 : 3 ∣ period 4 := by
@@ -118,7 +121,8 @@ private theorem period_four : period 4 = 6 := by
     obtain ⟨k, hk⟩ := h3
     omega
   rcases hcases with h | h
-  · have hz := ((period_dvd_iff_pair 4 3).mp (by rw [h])).1
+  · have hz := ((period_dvd_iff_pair 4 3).mp
+      (by simpa only [h] using (dvd_refl (3 : ℕ)))).1
     norm_num [Nat.fib] at hz
   · exact h
 
