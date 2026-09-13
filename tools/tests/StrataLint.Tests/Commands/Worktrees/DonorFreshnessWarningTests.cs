@@ -3,24 +3,17 @@ using StrataLint.Cli;
 namespace StrataLint.Tests;
 
 /// <summary>
-/// 建树时报告货源树的状态,**只读、不修、不挡**。
-///
-/// 这是 `LeanDonorRefresh` 的对偶:那个设计发现货源陈旧就自己去 pull + build 别人的树,
-/// 失败还被吞成一个不进收据的字符串;这里只把读数摆出来,连同一条人可以直接粘贴执行的
-/// 命令,由人决定要不要去暖它。同样的信息需求,一个越界一个不越界。
-///
-/// 判据刻意选最便宜的两个:落后多少提交(`git rev-list --count`),以及货源的 `.lake`
-/// 是否为本次 base 的 pin 而建(stamp)。**不验 mathlib 完整性**——那要遍历 8000+ 文件,
-/// 会把三秒的建树拖慢,而 stamp 匹配本来也不证明完整。故字段名是 `donor_cache_pin`
-/// 而非 `warm`,不冒领它没证明的东西。
+/// 建树时只报告货源缓存的 mathlib 分区状态,不推进货源历史。
+/// stamp 匹配不证明缓存材料完整;材料校验与补编由实际 Lean 入口负责。
 /// </summary>
 public sealed partial class WorktreeCommandTests
 {
     [Fact]
-    public void ReceiptReportsHowFarTheDonorTrailsTheBase()
+    public void AMatchingDonorBehindTheBaseEmitsNoWarning()
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
+        StampCache(repository.Path);
         AdvanceDev(repository.Path, 2);
         DetachDonorTo(repository.Path, "dev~2");
         var target = Path.Combine(repository.Path, "trailing-lane");
@@ -33,7 +26,8 @@ public sealed partial class WorktreeCommandTests
 
         Assert.True(result.Success, result.Error);
         using var receipt = ParseInitReceipt(result.Output);
-        Assert.Equal(2, receipt.RootElement.GetProperty("donor_behind_base").GetInt32());
+        Assert.Equal("match", receipt.RootElement.GetProperty("donor_cache_pin").GetString());
+        Assert.Equal(string.Empty, result.Error);
     }
 
     [Fact]
@@ -43,7 +37,7 @@ public sealed partial class WorktreeCommandTests
         InitializeRepository(repository.Path);
         var lake = Path.Combine(repository.Path, ".lake");
         Directory.CreateDirectory(lake);
-        // 为**别的** pin 建的缓存:身份不匹配本次 base。
+        // 为另一个 mathlib 分区建的缓存。
         LeanCacheStamp.Write(
             lake,
             LeanPinSet.Create(
@@ -62,8 +56,10 @@ public sealed partial class WorktreeCommandTests
         using var receipt = ParseInitReceipt(result.Output);
         Assert.Equal("mismatch", receipt.RootElement.GetProperty("donor_cache_pin").GetString());
         Assert.Contains("WARNING", result.Error, StringComparison.Ordinal);
-        // 给的是可执行的命令,不是一句结论。
+        Assert.Contains("mathlib partition", result.Error, StringComparison.Ordinal);
         Assert.Contains("make lean", result.Error, StringComparison.Ordinal);
+        Assert.Contains(target, result.Error, StringComparison.Ordinal);
+        Assert.DoesNotContain("git pull", result.Error, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -83,6 +79,9 @@ public sealed partial class WorktreeCommandTests
         using var receipt = ParseInitReceipt(result.Output);
         Assert.Equal("absent", receipt.RootElement.GetProperty("donor_cache_pin").GetString());
         Assert.Contains("WARNING", result.Error, StringComparison.Ordinal);
+        Assert.Contains("mathlib partition", result.Error, StringComparison.Ordinal);
+        Assert.Contains(target, result.Error, StringComparison.Ordinal);
+        Assert.DoesNotContain("git pull", result.Error, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -101,7 +100,6 @@ public sealed partial class WorktreeCommandTests
 
         Assert.True(result.Success, result.Error);
         using var receipt = ParseInitReceipt(result.Output);
-        Assert.Equal(0, receipt.RootElement.GetProperty("donor_behind_base").GetInt32());
         Assert.Equal("match", receipt.RootElement.GetProperty("donor_cache_pin").GetString());
         // 没有可报的就一个字都不说 —— 否则 warning 会退化成背景噪音。
         Assert.Equal(string.Empty, result.Error);

@@ -100,7 +100,7 @@ internal static class WorktreeCommand
             GitWorktreeInventory.FetchRemoteBase(options.Source, options.Base, runner);
             branchOid = VerifyBase(options, runner);
             var pins = LeanPinSet.ReadBase(options.Source, branchOid, runner);
-            var donor = ProbeDonor(options, pins, runner);
+            var donor = ProbeDonor(options, pins);
             branchTracking = WorktreeBranchTracking.Prepare(options, runner);
 
             creationLock = $"worktree-init:{Guid.NewGuid():N}";
@@ -154,7 +154,6 @@ internal static class WorktreeCommand
                 path = options.Path,
                 base_revision = options.Base,
                 pin_sha256 = pins.Sha256,
-                donor_behind_base = donor.BehindBase,
                 donor_cache_pin = donor.CachePin,
                 halfbuilt_recovered = halfBuiltRecovered,
                 dotnet_restore = options.SkipRestore ? "skipped" : "restored",
@@ -201,87 +200,38 @@ internal static class WorktreeCommand
     }
 
     /// <summary>
-    /// 货源树的状态读数——**只读取,不修改**。
-    ///
-    /// 这是已删除的 `LeanDonorRefresh` 的对偶:那个设计发现货源陈旧就自己去 pull 并
-    /// rebuild 别人的树,失败还被吞成一个不进收据的字符串;这里只把读数摆出来,连同一条
-    /// 可以直接粘贴执行的命令,由人决定要不要去暖它。同一个信息需求,一个越界一个不越界。
-    ///
-    /// 两个判据都取最便宜的形态。落后多少提交只用 `HEAD` 与 base 两个引用,不引入任何
-    /// 远端名字。缓存则只看 stamp 是否为本次 base 的 pin 而建,**刻意不验 mathlib 完整性**:
-    /// 那要遍历八千多个文件,会把三秒的建树拖慢,而 stamp 匹配本来也不证明完整。故字段叫
-    /// `cache_pin` 而不是 `warm` —— 不冒领它没证明的东西。
-    ///
-    /// 全程尽力而为:探不到就报 null / absent,绝不让建树失败。
+    /// 只报告货源缓存的 mathlib 分区状态,不按提交距离判断可复用性。
+    /// stamp 匹配不证明材料完整;实际 Lean 入口负责校验与增量构建。
     /// </summary>
-    private sealed record DonorStatus(int? BehindBase, string CachePin);
+    private sealed record DonorStatus(string CachePin);
 
     private static DonorStatus ProbeDonor(
         WorktreeOptions options,
-        LeanPinSet basePins,
-        IWorktreeProcessRunner runner)
+        LeanPinSet basePins)
     {
-        int? behind = null;
-        try
-        {
-            var counted = RunProcess(
-                runner,
-                "git",
-                ["rev-list", "--count", "--end-of-options", $"HEAD..{options.Base}"],
-                options.Source,
-                BoundedProcessRunner.HangDetectionBudget);
-            if (counted.ExitCode == 0
-                && int.TryParse(
-                    Encoding.UTF8.GetString(counted.StandardOutput).Trim(),
-                    System.Globalization.NumberStyles.Integer,
-                    System.Globalization.CultureInfo.InvariantCulture,
-                    out var parsed))
-            {
-                behind = parsed;
-            }
-        }
-        catch (Exception exception) when (exception is IOException
-            or UnauthorizedAccessException
-            or InvalidOperationException
-            or TimeoutException)
-        {
-            behind = null;
-        }
-
         var lake = System.IO.Path.Combine(options.Source, ".lake");
         var cachePin = !Directory.Exists(lake)
             ? "absent"
             : LeanCacheStamp.Matches(lake, basePins, out _) ? "match" : "mismatch";
-        return new DonorStatus(behind, cachePin);
+        return new DonorStatus(cachePin);
     }
 
     /// <summary>
     /// 没有可报的就一个字都不说——否则 warning 会退化成人人略过的背景噪音。
-    /// 有可报的则给命令,不给结论:读者不需要同意我的判断,只需要能照着做。
+    /// 缓存缺失或分区不匹配时,只建议在新工作树运行 Lean 入口。
     /// </summary>
     private static string RenderDonorWarning(WorktreeOptions options, DonorStatus donor)
     {
-        var problems = new List<string>();
-        if (donor.BehindBase is int behind and > 0)
+        var problem = donor.CachePin switch
         {
-            problems.Add($"is {behind} commit{(behind == 1 ? string.Empty : "s")} behind {options.Base}");
-        }
+            "absent" => "has no Lean build cache",
+            "mismatch" => "has no cache stamp matching this worktree's mathlib partition",
+            _ => null,
+        };
+        if (problem is null) return string.Empty;
 
-        if (donor.CachePin == "absent")
-        {
-            problems.Add("has no Lean build cache");
-        }
-        else if (donor.CachePin == "mismatch")
-        {
-            problems.Add("has a Lean build cache built for different pins");
-        }
-
-        if (problems.Count == 0) return string.Empty;
-
-        return $"WARNING donor {options.Source} {string.Join(" and ", problems)}.\n"
-            + $"        Only the cache is affected; this worktree still branches from {options.Base}.\n"
-            + "        It will provision its own cache, which works and just costs more.\n"
-            + $"        To warm the donor:  cd {options.Source} && git pull --ff-only && make lean\n";
+        return $"WARNING donor {options.Source} {problem}.\n"
+            + $"        Run make lean in {options.Path} to provision a cache for this worktree's mathlib partition.\n";
     }
 
     private static void EnsureReviewScaffoldIgnores(string worktreeRoot)
