@@ -2,18 +2,12 @@
    generality: G
    mirror-B: D5/B/S1/Words/Patterns/NoncrossingNonnestingGraphRecurrence
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Ring.Finset, mathlib/module/Mathlib.Data.Fin.Tuple.Basic, mathlib/module/Mathlib.Data.Finset.Sum, mathlib/module/Mathlib.Data.Fintype.BigOperators, mathlib/module/Mathlib.Data.Fintype.Card, mathlib/module/Mathlib.Data.Fintype.Powerset, mathlib/module/Mathlib.Data.Fintype.Prod, mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Ring.Finset, mathlib/module/Mathlib.Data.Fintype.BigOperators]
    utility: none
    digest: Literal labeled-graph avoidance and its allowed-vertex state yield Barker's recurrence. -/
 
 import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.Data.Fin.Tuple.Basic
-import Mathlib.Data.Finset.Sum
 import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Fintype.Powerset
-import Mathlib.Data.Fintype.Prod
-import Mathlib.Tactic.Ring
 
 /-!
 # Crossing- and nesting-free labeled graphs
