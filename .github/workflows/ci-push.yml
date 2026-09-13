@@ -223,8 +223,9 @@ jobs:
           key: ${{ steps.keys.outputs.engineering_key }}
       - if: always()
         run: python3 tools/scripts/workflow/ci.py summary --repository "$GITHUB_WORKSPACE" --stage engineering
-      - name: Retain failed engineering diagnostics
-        if: failure()
+      - name: Retain engineering diagnostics
+        if: failure() || (success() && steps.route.outputs.required == 'true')
+        continue-on-error: true
         uses: actions/upload-artifact@v4
         with:
           name: ci-engineering-diagnostics-${{ github.run_id }}-${{ github.run_attempt }}
@@ -390,8 +391,9 @@ jobs:
           key: ${{ steps.keys.outputs.current_key }}
       - if: always()
         run: python3 tools/scripts/workflow/ci.py summary --repository "$GITHUB_WORKSPACE" --stage current
-      - name: Retain current failure or cancellation diagnostics
-        if: (failure() || cancelled()) && needs.build.result == 'success'
+      - name: Retain current diagnostics
+        if: (failure() || cancelled() || (success() && steps.route.outputs.required == 'true')) && needs.build.result == 'success'
+        continue-on-error: true
         uses: actions/upload-artifact@v4
         with:
           name: ci-current-diagnostics-${{ github.run_id }}-${{ github.run_attempt }}
