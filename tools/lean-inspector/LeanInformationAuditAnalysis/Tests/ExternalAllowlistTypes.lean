@@ -238,3 +238,15 @@ structure LetPropositionUnique where
 def letPropositionRead (_ : Unit) (bit : Bool) : LetPropositionUnique :=
   ⟨(propositionRead () bit).proof, bit⟩
 end ListMetadataFixtures
+
+namespace ListMetadataFixtures
+inductive Choice where | left | right deriving DecidableEq
+def enumMemRead (b : Choice)
+    (_ : Choice.right ∈ (if b == .left then [b, .right] else [.right]))
+    (_ : Unit) (bit : Bool) : Bool := bit
+structure PropositionMember where
+  proof : False ∈ propositionList
+  bit : Bool
+def propositionMemRead (_ : Unit) (bit : Bool) : PropositionMember :=
+  ⟨.tail _ (.head _), bit⟩
+end ListMetadataFixtures

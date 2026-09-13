@@ -1329,3 +1329,22 @@ run_cmd Elab.Command.liftCoreM do
     if clean == result.isNone then logInfo m!"[PASS] {label}"
     else logError m!"[FAIL] {label}: {result}"
 end ListMetadataFixtures
+
+namespace ListMetadataFixtures
+def enumMemRealization : StructuralPrimitiveRealization ⟨Bool⟩ polymorphicSignature :=
+  ⟨fun i bit => enumMemRead .left (.tail _ (.head _)) i bit⟩
+def propositionMemSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => PropositionMember
+def propositionMemRealization : StructuralPrimitiveRealization ⟨Bool⟩ propositionMemSignature :=
+  ⟨propositionMemRead⟩
+run_cmd Elab.Command.liftCoreM do
+  for (label, statement, holder, clean) in [
+      ("EnumMemExistsClean", ``existsTarget, ``enumMemRealization, true),
+      ("EnumMemNegExistsClean", ``notExistsTarget, ``enumMemRealization, true),
+      ("PropositionMemPayload", ``existsTarget, ``propositionMemRealization, false)] do
+    let result ← provenanceErrorCurrent (← getEnv).header.mainModule `catalog statement holder
+    if clean == result.isNone then logInfo m!"[PASS] {label}"
+    else logError m!"[FAIL] {label}: {result}"
+end ListMetadataFixtures
