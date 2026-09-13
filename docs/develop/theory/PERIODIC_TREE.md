@@ -30,3 +30,99 @@
 
 ## 7. 施工日志(v1.0 首期)
 注册域 $m\le3000$;**141 类节点**(真偶 136、奇核 5);素性位:141/141 本原(城册按类去重后天然本原);$\Psi{=}0$ 节点 12;城色谱 $\{0{:}30,\ 3{:}45,\ 12{:}45,\ 27{:}21\}$——恰为定理 B 可实现残类 $\{0,3,12,27\}$ 之谱(其余残类 $8,23,32,35$ 于此域未现,与实现性条件一致)。注册表:PERIODIC_TREE_registry.jsonl(逐行 JSON,四标签全字段)。
+
+---
+
+## TR. 环面返回模、有限观察与粘合信息
+
+### TR.1 对象与研究目标
+
+本节延续周期树的整数矩阵、同余与观察者研究。固定列向量约定，对整数二阶矩阵 A 定义真实返回模
+
+$$R(A,n)=\mathbb Z^2/(A^n-I)\mathbb Z^2.$$
+
+这里使用像子模的商，基数随后由格指数定理推得。不能把行列式的绝对值定义成“周期点数”，再声称已经识别实际周期点。环面自同构固定点与返回模之间的拓扑对应、映射环面的基本群及一阶同调，属于需要另行构造和证明的接口。
+
+既有 `MinimalBinaryUnimodularBreak` 给出 Fibonacci 矩阵及其平方的实际谱资料。本节在同一整数二阶矩阵类别中研究一个可完全计算的校准族。该族的判别式为 16k(k+1)，k=1 时对应 Q(sqrt(2))，不能与原黄金域 Q(sqrt(5)) 混同。
+
+源稿状态：本节 TR.2–TR.4 给出完整普通数学证明及对应 Lean 证明脚本；本轮没有执行 Lean 内核或 Scribe 编译。有限整数诊断只检查实现，不替代全称证明。这里不主张发现了新的三维流形分类定理，不计入开放问题解决数。
+
+### TR.2 无界等谱族
+
+对任意自然数 k，定义
+
+$$C_k=\begin{pmatrix}4k+1&1\\4k&1\end{pmatrix},\qquad
+D_k=\begin{pmatrix}2k+1&2\\2k(k+1)&2k+1\end{pmatrix},\qquad
+P_k=\begin{pmatrix}1&0\\-2k&2\end{pmatrix}.$$
+
+二者行列式均为 1，迹均为 4k+2。直接乘法给出 C_k P_k=P_k D_k，且 det(P_k)=2。由归纳，对每个 n≥0 有
+
+$$(C_k^n-I)P_k=P_k(D_k^n-I).$$
+
+取行列式并在整数中约去非零的 2，得到全部时间的带符号恒等式
+
+$$\det(C_k^n-I)=\det(D_k^n-I).$$
+
+P_k 是度数为 2 的整数同源映射，不能当成整数基变换。该区别是以下障碍的来源。
+
+Lean：`D5/S3/Observer/Dynamics/ToralReturnModuleSpectrum.same_return_determinant`。
+
+### TR.3 从实际商对象得到基数
+
+令 k>0、n>0。C_k 的各项非负；归纳证明 C_k^m 的两个对角元至少为 1。对 n=m+1，右乘 C_k 后的迹为
+
+$$(4k+1)(C_k^m)_{00}+4k(C_k^m)_{01}+(C_k^m)_{10}+(C_k^m)_{11}>2.$$
+
+又因 det(C_k^n)=1，二阶恒等式给出
+
+$$\det(C_k^n-I)=2-\operatorname{tr}(C_k^n)<0.$$
+
+因此两个返回矩阵都非奇异。对任意非奇异整数二阶矩阵 M，M 在 Z² 上的作用是单射，因而给出 Z² 到其像子模的加法同构。将这一实际同构代入 mathlib 的 `Submodule.natAbs_det_equiv`，得到
+
+$$\#(\mathbb Z^2/M\mathbb Z^2)=|\det M|.$$
+
+所以，对全部正 k、正 n，R(C_k,n) 与 R(D_k,n) 都有相同的正有限基数。n=0 的商是无限的 Z²，不纳入这个有限基数结论。
+
+Lean：`equal_cardinality_return_modules`。这一步消费实际商的构造，未将有限性、基数公式或目标等式作为独立输入假设。
+
+### TR.4 全部整数交织子的偶性障碍
+
+令 U=[[a,b],[c,d]] 为任意整数矩阵。如果 C_k U=U D_k，则第一行的两个方程强制
+
+$$c=2k((k+1)b-a),\qquad d=2(a-kb).$$
+
+因此
+
+$$\det U=2\bigl[a(a-kb)-kb((k+1)b-a)\bigr]$$
+
+一定为偶数。特别地，不存在行列式为 ±1 的整数交织子。这个结论覆盖任意整数 U、任意 k，包括 k=0；与 TR.3 联立时取 k>0。
+
+结论：完整的正时间返回商基数序列，无法确定这个类别中的整数共轭类。增加观测时间不会消除此处的信息损失；需要增加观测的结构类型。
+
+Lean：`intertwiner_determinant_even`、`spectrum_does_not_determine_integral_conjugacy`。此处尚未将整数非共轭自动提升为未构造的三维流形不同胚。
+
+### TR.5 从等谱障碍继续推导的精确目标
+
+下一项应直接计算同一个 R(A,1) 的群结构，而非引入与矩阵没有证明关系的抽象群。候选坐标为
+
+$$\pi_C(x,y)=y\pmod{4k},$$
+
+$$\pi_D(x,y)=\bigl(x\pmod2,\; y-kx\pmod{2k}\bigr).$$
+
+需证明每个映射满射且其核分别恰为 (C_k-I)Z²、(D_k-I)Z²。这样才能从第一同构定理得到循环群与乘积群的分类，并通过实际商上的湮灭子区别二者。更强的后续目标是在任意有限模数上给出共轭的准确判据，并保留矩阵诱导的返回作用。
+
+这些目标属于经典 Bowen–Franks 理论内的完整可核验实例。研究价值在于刻画具体观察丢失了什么，并提供最少结构性修复；并不把“有无限数据”当成“足够识别”的替代条件。
+
+### TR.6 文献边界与外部问题
+
+[TR1] P. Martins Rodrigues; J. Sousa Ramos. *Bowen-Franks groups as conjugacy invariants for T^n automorphisms*. arXiv:math/0303185 (2003). https://arxiv.org/abs/math/0303185 。广义 BF 群及拓扑共轭背景；本节采用列向量，与原文行向量约定区分。
+
+[TR2] L. F. Bakker; P. Martins Rodrigues. *Generalized Bowen-Franks Groups and Profinite Conjugacy for Hyperbolic Toral Automorphisms*. arXiv:2207.00922v1 (2022). https://arxiv.org/abs/2207.00922 。论文已给出 principal BF R-modules 对相似双曲环面自同构 profinite 共轭的完整性结论。不能将它重列为未解问题，也不能把 R-module 改为基数或无标记阿贝尔群后沿用结论。
+
+[TR3] X. Xu. *Profinite almost rigidity in 3-manifolds*. Advances in Mathematics 480 (2025), 110505; arXiv:2410.16002v4. https://arxiv.org/abs/2410.16002 。研究 profinite completion 对紧致可定向、空或环面边界三维流形的有限歧义识别。该结果与本节的标量返回序列不是相同数据。
+
+[TR4] X. Xu. *Profinite rigidity in lattices of PSL(2,C)*. arXiv:2608.07350v1，2026-08-07. https://arxiv.org/abs/2608.07350 。本轮新检索到的预印本摘要声称证明全部 PSL(2,C) 格在该类别内的 profinite 刚性。尚未取得全文审阅或独立认可证据，故不把它当作已核定的 Lean 依赖；但足以阻止沿用旧文献中“该一般猜想尚无人提出证明”的口径。
+
+[TR5] A. Klukowski. *Congruence Subgroup Property for nilpotent groups and subsurface subgroups of Mapping Class Groups*. arXiv:2411.06867v2 (2024)，Conjectures 1、13，Definition 3、Lemma 14. https://arxiv.org/html/2411.06867v2 。外部目标是高亏格映射类群 CSP，以及其简单闭曲线轨道的合同子群控制：给定有限指数 Gamma 与曲线 alpha，构造合同子群 Delta 使 Delta.alpha 包含于 Gamma.alpha。检索未发现该全称轨道结论已解决的来源；此为有界检索结论，不是穷尽优先权证明。本节的环面线性实例不属于亏格至少 3 的证明，也没有闭合这个猜想。
+
+面向该外部目标，后续必须保留真实群作用、有限特征商与曲线轨道。仅靠二维阿贝尔化、相同迹、相同返回计数都没有足够信息。可先形式化 TR5 的已知组合引理作为真实消费者的基础，再推进明确受限的曲线轨道分离情形。若仅完成线性校准，应据实报告其范围，不把它计作 CSP 或庞加莱定理的解决。
