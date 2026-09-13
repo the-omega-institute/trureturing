@@ -30,7 +30,8 @@ theorem phi_power_a_add_b (n : ℕ) :
 
 /-- No division in ZMod(p^2): cancellation takes place in the integer divisibility witness. -/
 theorem cancel_scalar_mod_square (p : ℕ) (hp : 0 < p) (a b : ℤ)
-    (h : ((p : ℤ) * a : ZMod (p ^ 2)) = ((p : ℤ) * b : ZMod (p ^ 2))) :
+    (h : (((p : ℤ) * a : ℤ) : ZMod (p ^ 2)) =
+      (((p : ℤ) * b : ℤ) : ZMod (p ^ 2))) :
     (a : ZMod p) = (b : ZMod p) := by
   have hd : ((p : ℤ) ^ 2) ∣ (p : ℤ) * (b - a) := by
     have hh := (ZMod.intCast_eq_intCast_iff_dvd_sub ((p : ℤ) * a)
@@ -54,17 +55,24 @@ theorem golden_power_first_order {q : ℕ} (z : GoldenMod q)
   induction k with
   | zero => simp
   | succ k ih =>
-      cases k with
-      | zero => simp
-      | succ k =>
-          rw [pow_succ]
-          simp only [GoldenMod.a_mul, GoldenMod.b_mul, ih.1, ih.2,
-            Nat.add_sub_cancel, Nat.cast_add, Nat.cast_one]
-          constructor
-          · rw [pow_succ]
-            linear_combination ((k : ZMod q) + 1) * z.a ^ k * hb
-          · rw [pow_succ]
-            linear_combination ((k : ZMod q) + 1) * z.a ^ k * hb
+      constructor
+      · calc
+          (z ^ (k + 1)).a = (z ^ k).a * z.a + (z ^ k).b * z.b := by
+            rw [pow_succ, GoldenMod.a_mul]
+          _ = z.a ^ (k + 1) := by
+            rw [ih.1, ih.2, pow_succ]
+            linear_combination (k : ZMod q) * z.a ^ (k - 1) * hb
+      · cases k with
+        | zero => simp
+        | succ k =>
+            calc
+              (z ^ (k + 1 + 1)).b = (z ^ (k + 1)).a * z.b +
+                  (z ^ (k + 1)).b * z.a + (z ^ (k + 1)).b * z.b := by
+                rw [pow_succ, GoldenMod.b_mul]
+              _ = ((k + 1 + 1 : ℕ) : ZMod q) * z.a ^ ((k + 1 + 1) - 1) * z.b := by
+                rw [ih.1, ih.2]
+                simp only [Nat.add_sub_cancel, Nat.cast_add, Nat.cast_one, pow_succ]
+                linear_combination ((k : ZMod q) + 1) * z.a ^ k * hb
 
 /-- A coefficient divisible by p is square-zero after reduction modulo p^2. -/
 lemma reduced_b_square_zero (p : ℕ) (z : GoldenInt) (hz : (p : ℤ) ∣ z.b) :
@@ -80,8 +88,8 @@ lemma reduced_b_square_zero (p : ℕ) (z : GoldenInt) (hz : (p : ℤ) ∣ z.b) :
     _ = 0 := by rw [hp2, zero_mul]
 
 /-- Compare two ways of obtaining exactly the same golden-integer power.
-All divisions are witnessed in Z. Neither the equality of indices nor its quotient consequence
-is assumed: callers establish x^k=y^l using the actual exponent arithmetic. -/
+All divisions are witnessed in Z. The Frobenius caller proves the equal-power premise
+from exponent commutation, without assuming equality of its two indices. -/
 theorem coefficient_transport (p : ℕ) (hp : 0 < p)
     (x y : GoldenInt) (k l : ℕ) (a b : ℤ)
     (hx : x.b = (p : ℤ) * a) (hy : y.b = (p : ℤ) * b)
