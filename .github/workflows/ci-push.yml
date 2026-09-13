@@ -48,7 +48,7 @@ jobs:
   build:
     name: build
     runs-on: ubuntu-24.04-arm
-    timeout-minutes: 120
+    timeout-minutes: 30
     outputs:
       round: ${{ steps.pack.outputs.round }}
       artifact_id: ${{ steps.upload.outputs.artifact-id }}
@@ -125,7 +125,7 @@ jobs:
       CI_NEEDS: '{"build":{"result":${{ toJSON(needs.build.result) }}}}'
       CI_BUILD_ROUND: ${{ needs.build.outputs.round }}
     runs-on: ubuntu-24.04-arm
-    timeout-minutes: 120
+    timeout-minutes: 30
     outputs:
       artifact_id: ${{ steps.upload.outputs.artifact-id }}
       run_id: ${{ steps.pack.outputs.run_id }}
@@ -239,7 +239,7 @@ jobs:
     env:
       CI_NEEDS: '{"build":{"result":${{ toJSON(needs.build.result) }}}}'
     runs-on: ubuntu-24.04-arm
-    timeout-minutes: 360
+    timeout-minutes: 45
     outputs:
       artifact_id: ${{ steps.upload.outputs.artifact-id }}
       artifact_name: ${{ steps.pack.outputs.artifact_name }}
@@ -358,12 +358,14 @@ jobs:
           key: ${{ steps.keys.outputs.elan_key }}
       - if: env.STRATALINT_CACHE_WRITES == 'true' && steps.snapshot.outputs.dependency_ready == 'true'
         continue-on-error: true
+        timeout-minutes: 12
         uses: actions/cache/save@v4
         with:
           path: ${{ steps.keys.outputs.dependency_path }}
           key: ${{ steps.keys.outputs.dependency_key }}
       - if: env.STRATALINT_CACHE_WRITES == 'true' && steps.snapshot.outputs.project_ready == 'true'
         continue-on-error: true
+        timeout-minutes: 12
         uses: actions/cache/save@v4
         with:
           path: ${{ steps.keys.outputs.project_path }}

@@ -50,7 +50,7 @@ jobs:
     needs: [resolve, push]
     if: always() && (needs.resolve.result != 'success' || needs.push.result != 'success' || !cancelled())
     runs-on: ubuntu-24.04-arm
-    timeout-minutes: 60
+    timeout-minutes: 20
     env:
       CANDIDATE_SHA: ${{ needs.resolve.outputs.candidate_sha }}
       BASE_SHA: ${{ needs.resolve.outputs.base_sha }}
