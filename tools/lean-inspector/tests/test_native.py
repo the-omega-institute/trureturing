@@ -1,15 +1,18 @@
 """Execute native Lake facets in private pinned-toolchain fixture packages."""
 import hashlib
+import io
 import json
 import os
 from pathlib import Path
 import shutil
+import struct
 import subprocess
 import sys
 import tempfile
 import time
 import unittest
 import zipfile
+import zlib
 
 HERE = Path(__file__).resolve().parents[1]
 ROOT = HERE.parents[1]
@@ -270,6 +273,67 @@ defaultFacets = ["static"]
             self.assertIn('report_semantic_version', result.stdout + result.stderr)
             self.assertEqual(before, self.stamps())
             self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+
+    def check_row_decoder_recovery(self, damage, exception):
+        self.build()
+        before = self.stamps()
+        expected_report = self.report()
+        origins = self.origins()
+        path = self.root / '.lake/build/lean-inspector/modules/D5.Alone.zip'
+        expected = path.read_bytes()
+        damaged = damage(expected)
+        # Establish the real decoder failure before testing Lake's optional-row
+        # recovery. Replace the private path, never a native-cache hard link.
+        path.unlink()
+        path.write_bytes(damaged)
+        with tempfile.TemporaryDirectory(dir=self.root) as directory:
+            with self.assertRaises(exception):
+                report = publication.unpack(path, directory, ('', '.materials.zip', '.provenance.json'))
+                publication.validate_rows(report, publication.member(report, '.materials.zip'))
+        recovered = self.build()
+        self.assertIn('inspector artifact rejected; rebuilding privately', recovered.stdout + recovered.stderr)
+        self.assertEqual({name for name, stamp in self.stamps().items() if stamp != before[name]}, {'D5.Alone'})
+        records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
+        self.assertEqual(sum(row['count'] for row in records if row['kind'] == 'extract'), 1)
+        self.assertEqual(path.read_bytes(), expected)
+        self.assertEqual(path.stat().st_nlink, 1, 'reconstruction must be private')
+        self.assertEqual(self.report(), expected_report)
+        self.assertEqual(self.origins(), origins)
+
+    def test_native_recovers_only_row_with_damaged_deflate(self):
+        def damage(data):
+            with zipfile.ZipFile(io.BytesIO(data)) as outer:
+                entries = [(info, outer.read(info)) for info in outer.infolist()]
+            for index, (info, payload) in enumerate(entries):
+                if info.filename.endswith('.materials.zip'):
+                    damaged = bytearray(payload)
+                    with zipfile.ZipFile(io.BytesIO(payload)) as nested:
+                        entry = nested.infolist()[0]
+                        self.assertEqual(entry.compress_type, zipfile.ZIP_DEFLATED)
+                        offset = entry.header_offset
+                    name_size, extra_size = struct.unpack_from('<HH', damaged, offset + 26)
+                    offset += 30 + name_size + extra_size
+                    # Reserved deflate block type, in an otherwise readable ZIP.
+                    damaged[offset] = (damaged[offset] & ~6) | 6
+                    entries[index] = (info, bytes(damaged))
+            result = io.BytesIO()
+            with zipfile.ZipFile(result, 'w') as outer:
+                for info, payload in entries:
+                    outer.writestr(info, payload)
+            return result.getvalue()
+        self.check_row_decoder_recovery(damage, zlib.error)
+
+    def test_native_recovers_only_row_with_unsupported_compression(self):
+        for method in [1, 2]:
+            with self.subTest(method=method):
+                def damage(data):
+                    with zipfile.ZipFile(io.BytesIO(data)) as outer:
+                        offset = outer.start_dir + 10
+                    damaged = bytearray(data)
+                    self.assertEqual(struct.unpack_from('<H', damaged, offset)[0], zipfile.ZIP_STORED)
+                    damaged[offset] ^= method
+                    return bytes(damaged)
+                self.check_row_decoder_recovery(damage, NotImplementedError)
 
     def test_native_recovery_and_required_failures(self):
         self.build()

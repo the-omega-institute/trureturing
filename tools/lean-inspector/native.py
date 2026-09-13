@@ -11,6 +11,7 @@ import subprocess
 import sys
 import tempfile
 import zipfile
+import zlib
 
 import materials
 import publication as public
@@ -194,7 +195,8 @@ def batch(request_file, result_file):
             try:
                 validate(*args[1:])
                 statuses.append(0)
-            except (OSError, UnicodeError, ValueError, KeyError, TypeError, zipfile.BadZipFile) as error:
+            except (OSError, UnicodeError, ValueError, KeyError, TypeError,
+                    zipfile.BadZipFile, zlib.error, NotImplementedError) as error:
                 print(f'LEAN_INSPECTOR_REJECT {error}', file=sys.stderr)
                 statuses.append(1)
         else:

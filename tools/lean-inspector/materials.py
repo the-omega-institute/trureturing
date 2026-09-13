@@ -100,8 +100,15 @@ def material_identities(source: BinaryIO, source_path: str, kind: str, name_key:
         block = source.read(chunk_size)
         raw.update(block)
         text = decoder.decode(block, final=not block)
-        encoded = json.dumps(text, ensure_ascii=False, allow_nan=False)[1:-1]
-        declaration.update(SUPPLEMENTARY_SCALAR.sub(escape_supplementary_scalar, encoded).encode("utf-8"))
+        if text:
+            # Use the same string encoder as JSONEncoder without constructing
+            # an encoder for each chunk. Only supplementary scalars need the
+            # canonical surrogate rewrite. UTF-16 counts them in native code,
+            # avoiding a regex scan of every ordinary ASCII/BMP material.
+            encoded = json.encoder.encode_basestring(text)[1:-1]
+            if not text.isascii() and len(text.encode("utf-16-le")) != 2 * len(text):
+                encoded = SUPPLEMENTARY_SCALAR.sub(escape_supplementary_scalar, encoded)
+            declaration.update(encoded.encode("utf-8"))
         if not block:
             break
     declaration.update(b'"}\n')

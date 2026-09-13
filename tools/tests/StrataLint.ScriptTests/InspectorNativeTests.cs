@@ -11,6 +11,8 @@ public sealed class InspectorNativeTests
     [InlineData("test_native.NativeTests.test_native_semantic_version_and_config")]
     [InlineData("test_native.NativeTests.test_native_invalid_semantic_versions")]
     [InlineData("test_native.NativeTests.test_native_recovery_and_required_failures")]
+    [InlineData("test_native.NativeTests.test_native_recovers_only_row_with_damaged_deflate")]
+    [InlineData("test_native.NativeTests.test_native_recovers_only_row_with_unsupported_compression")]
     [InlineData("test_native.NativeTests.test_native_pack_unpack_reuses_complete_rows")]
     [InlineData("test_native.NativeTests.test_snapshot_generation_preserves_lean_address")]
     public void InspectorArtifactBehavior(string suite)

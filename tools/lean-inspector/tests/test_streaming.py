@@ -29,6 +29,15 @@ class StreamingTests(unittest.TestCase):
         self.assertEqual(materials.canonical_json({'s': 'λ😀𐀀\U0010ffff'}),
                          '{"s": "λ\\uD83D\\uDE00\\uD800\\uDC00\\uDBFF\\uDFFF"}\n'.encode())
 
+    def test_bmp_controls_and_unicode_metadata_match_canonical_identity(self):
+        value = ''.join(chr(n) for n in range(128)) + 'λ\u07ff\u0800\u2028\u2029\ud7ff\ue000\ufffe\uffff'
+        path, key = 'Δ😀.lean', 'ns(λ,\"\\\t𐀀)'
+        expected = materials.declaration_statement_id(path, 'def', key, value)
+        for size in [1, 2, 3, 7, 64, materials.BUFFER_BYTES]:
+            with self.subTest(chunk=size):
+                self.assertEqual(materials.material_identities(io.BytesIO(value.encode()), path, 'def', key, size),
+                                 (materials.statement_address(value.encode()), expected))
+
     def test_strict_utf8_rejects_overlong_surrogate_invalid_and_truncated_sequences(self):
         for invalid in [b'\xc0\xaf', b'\xed\xa0\x80', b'\xf4\x90\x80\x80', b'\x80', b'\xf0\x9f\x98', b'\xe2\x82', b'\xc2']:
             for size in [1, 2, 3, 4, 7]:

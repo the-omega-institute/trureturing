@@ -32,6 +32,7 @@ public sealed partial class NativeSharedLakeCacheTests(ITestOutputHelper output)
         // Other platforms execute the private/fail-closed controls in the same program.
         Assert.True(LeanLakeExecutable.TryResolve(out var lake, out var reason), reason);
         var script = Path.Combine(temporary.Path, "native.py");
+        File.WriteAllText(Path.Combine(temporary.Path, "lean-report-inputs.json"), LeanReportRegistrationFixture.Manifest + "\n");
         File.WriteAllText(script, NativeProgram + "\n" + RepairScenarios + "\n" + TraceScenarios + "\n" + CallbackScenarios + "\n" + NativeScenarios);
         var result = TestProcessRunner.Run("python3", [script, scenario,
             typeof(Program).Assembly.Location, lake, TestRepositoryLayout.FindRoot()],
@@ -95,9 +96,13 @@ def prepare_helpers():
         target = reader / path.relative_to(source)
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(path, target)
+    shutil.copy2(source / 'tools/scripts/report/lean-report-selection.py',
+        reader / 'tools/scripts/report/lean-report-selection.py')
+    shutil.copy2(P / 'lean-report-inputs.json', reader / 'lean-report-inputs.json')
     shutil.copytree(source / 'tools/lean-inspector', reader / 'tools/lean-inspector',
         ignore=shutil.ignore_patterns('__pycache__', '.lake'))
     shutil.copy2(source / 'Makefile', reader / 'Makefile')
+    shutil.copy2(source / '.gitignore', reader / '.gitignore')
     for name in ['StrataLint.Cli', 'StrataLint.Engine', 'StrataLint.Scribe',
             'StrataLint.Scribe.Documents', 'Trureturing.Truth', 'Architecture']:
         shutil.copytree(source / 'tools' / name, reader / 'tools' / name,
@@ -109,6 +114,7 @@ def prepare_helpers():
     (reader / 'Trureturing.lean').write_text('import Fixture\n')
     with (reader / 'lakefile.toml').open('a') as f:
         f.write('\n[[lean_lib]]\nname = "D5"\nroots = ["D5.Probe"]\n')
+        f.write('\n[[lean_lib]]\nname = "Trureturing"\n')
         f.write('\n[[require]]\nname = "leanInspector"\npath = "tools/lean-inspector"\n')
     manifest = json.loads((reader / 'lake-manifest.json').read_text())
     manifest['packages'].append(dict(type='path', scope='', name='leanInspector', manifestFile='lake-manifest.json',
@@ -123,6 +129,13 @@ def prepare_helpers():
     project = reader / 'tools/StrataLint.Cli/StrataLint.Cli.csproj'
     run(['dotnet', 'restore', project, '--locked-mode', '--disable-parallel'], reader)
     run(['dotnet', 'build', project, '--no-restore', '-c', 'Release', '--warnaserror', '-m:1', '-nodeReuse:false'], reader)
+def check_report():
+    report = reader / '.lake/build/stratalint/raw-lean-report.json'
+    logs = pathlib.Path(str(report) + '.logs')
+    for phase in ['inputs', 'utility-input-build', 'ensure', 'report', 'publish']:
+        assert (logs / (phase + '.exit.log')).read_text().strip() == '0', phase
+    run([sys.executable, reader / 'tools/lean-inspector/publication.py', 'validate', report,
+        '--repository', reader], reader)
 main = P / 'main with spaces'
 main.mkdir()
 git(main, 'init', '-b', 'dev')

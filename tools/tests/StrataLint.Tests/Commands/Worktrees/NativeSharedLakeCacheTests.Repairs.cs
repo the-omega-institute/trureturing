@@ -58,8 +58,8 @@ if scenario.startswith('callbacks:'):
         ('shell-index', [shell, '--git', '-C', target, *index], 0),
         ('input-address', [reader / 'tools/scripts/worktree/lean-cache-input.sh',
             'dependency-address', '--repository', target], 0),
-        ('make-report', ['make', '-f', reader / 'Makefile', 'lean-report'], 2),
-        ('warm-admission', CLI + ['warm-cache', '--path', query_main], 2)]
+        ('warm-admission', CLI + ['warm-cache', '--path', query_main], 2),
+        ('make-report', ['make', '-f', reader / 'Makefile', 'lean-report'], 0)]
     # The make row uses its actual repository-relative recipe in the script root.
     if origin == 'worktree':
         git(reader, 'config', '--worktree', 'core.fsmonitor', str(hook))
@@ -68,9 +68,13 @@ if scenario.startswith('callbacks:'):
     def reset_log(preexisting):
         if diagnostic.exists(): diagnostic.unlink()
         if preexisting: diagnostic.write_text('existing diagnostic\n')
-    for preexisting in [False, True]:
-        for name, args, expected in queries:
+    for name, args, expected in queries:
+        for preexisting in [False, True]:
             cwd = reader if name == 'make-report' else query_main if name == 'warm-admission' else target
+            # Native report production requires the actual pinned Lake. The
+            # preceding Git-only cases still run without any usable toolchain.
+            call_extra = {k: v for k, v in extra.items()
+                if name != 'make-report' or k not in ['LAKE_BIN', 'ELAN_HOME']}
             shared_root = runner_shared if name == 'make-report' else target_shared
             diagnostic = shared_root / 'diagnostic'
             # A sensitive raw control for the exact index/status refresh.
@@ -86,12 +90,12 @@ if scenario.startswith('callbacks:'):
                 extra | {'FSMONITOR_LOG': str(diagnostic)}).stdout
             unchanged(shared_root, before)
             if private.exists(): private.unlink()
-            control = run(args, cwd, extra, expected=expected)
+            control = run(args, cwd, call_extra, expected=expected)
             assert private.exists(), (name, 'private callback absent', control)
             assert 'hook query\nchild query\n' in private.read_text(), (name, 'private callback suppressed')
             if (P / 'memo').exists(): shutil.rmtree(P / 'memo')
             before = snapshot(shared_root)
-            result = run(args, cwd, extra | {'FSMONITOR_LOG': str(diagnostic)}, expected=None)
+            result = run(args, cwd, call_extra | {'FSMONITOR_LOG': str(diagnostic)}, expected=None)
             row = dict(callback=name, origin=origin, preexisting=preexisting,
                 exit=result.returncode, stdout=result.stdout, stderr=result.stderr,
                 raw_positive=True, private_callback=True, explicit_false_changed=0)
@@ -103,12 +107,15 @@ if scenario.startswith('callbacks:'):
                 assert result.stdout == expected_bytes, row
             if name == 'warm-admission': assert 'clean checkout' in result.stderr, row
             if name == 'make-report':
-                assert 'producer closure is unavailable' in result.stderr, row
-            if name in ['input-address', 'make-report']:
+                check_report()
+                assert not (reader / '.lake').is_symlink()
+            if name == 'input-address':
                 assert (P / 'memo').is_dir(), 'fingerprint Git did not complete'
-            assert not (target / '.lake').exists() and not (reader / '.lake').exists()
+            assert not (target / '.lake').exists()
             assert not (P / 'no-toolchains').exists() and not (P / 'lake-called').exists()
-            assert not (main / '.git/stratalint-lake-locks').exists()
+            if name != 'make-report':
+                assert not (reader / '.lake').exists()
+                assert not (main / '.git/stratalint-lake-locks').exists()
     # Native selection and bytes: options locate a different common directory.
     shared_root = target_shared
     before = snapshot(shared_root)
