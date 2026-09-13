@@ -44,6 +44,8 @@ public sealed class LeanCacheInputScriptTests
     }
 
     [Theory]
+    [InlineData("ci_contract", "test_dependency_module_and_submodule_seed_round_trip")]
+    [InlineData("ci_contract", "test_project_module_and_submodule_seed_round_trip")]
     [InlineData("ci_contract", "test_internal_dependency_file_links_round_trip_as_private_material")]
     [InlineData("report_snapshot_contract", "test_invalid_dependency_links_disable_only_that_save_with_an_offending_path")]
     [InlineData("ci_contract", "test_corrupt_dependency_seed_falls_back_without_replacing_current_material")]

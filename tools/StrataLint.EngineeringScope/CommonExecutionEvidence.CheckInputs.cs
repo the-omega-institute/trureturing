@@ -45,9 +45,11 @@ internal static partial class CommonExecutionEvidence
         IReadOnlyCollection<string>? selectedIds = null, string? executionEnvironment = null, ValidationScope? validation = null)
     {
         validation ??= new ValidationScope(snapshot);
+        if (!ReferenceEquals(snapshot, validation.Snapshot))
+            throw new InvalidDataException("common check validation snapshot mismatch");
         var files = snapshot.Files.Values.Select(item => new EngineeringSource(item.Path.Value, item.Text)).ToArray();
         var registry = EngineeringProjectRegistry.Read(files);
-        var checks = ReadCheckManifest(snapshot, registry).Where(check => selectedIds is null || selectedIds.Contains(check.Id)).ToArray();
+        var checks = validation.CheckManifest(registry).Where(check => selectedIds is null || selectedIds.Contains(check.Id)).ToArray();
         var sources = registry.Sources(files);
         var paths = snapshot.Files.Keys.Select(path => path.Value).ToArray();
         var projects = registry.Projects.ToDictionary(project => project.Path, StringComparer.Ordinal);

@@ -24,23 +24,23 @@ dotnet test "$@" --configuration Release --verbosity normal -p:RestoreLockedMode
   --logger 'trx;LogFilePrefix=canonical' --results-directory "$RESULTS_DIRECTORY"
 
 OWNER_ASSEMBLY_ARGS=()
-full_suite=1
+test_target="${1:-$ROOT/tools/StrataLint.sln}"
+if [[ "$test_target" == -* ]]; then test_target="$ROOT/tools/StrataLint.sln"; fi
+filtered=false
 for argument in "$@"; do
   if [[ "$argument" == "--filter" || "$argument" == --filter=* ]]; then
-    full_suite=0
+    filtered=true
   fi
 done
 
-if [[ "$full_suite" -eq 1 ]]; then
-  owner_assemblies="$(dotnet run \
-    --project "$ROOT/tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" \
-    --configuration Release --no-build --no-launch-profile -- \
-    list-test-owner-assemblies --repository "$ROOT")"
-  while IFS= read -r owner_assembly; do
-    [[ -n "$owner_assembly" ]] || continue
-    OWNER_ASSEMBLY_ARGS+=(--required-assembly "$owner_assembly")
-  done <<< "$owner_assemblies"
-fi
+owner_assemblies="$(dotnet run \
+  --project "$ROOT/tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" \
+  --configuration Release --no-build --no-launch-profile -- \
+  list-test-owner-assemblies --repository "$ROOT" --target "$test_target" --filtered "$filtered")"
+while IFS= read -r owner_assembly; do
+  [[ -n "$owner_assembly" ]] || continue
+  OWNER_ASSEMBLY_ARGS+=(--required-assembly "$owner_assembly")
+done <<< "$owner_assemblies"
 
 dotnet run \
   --project "$ROOT/tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" \

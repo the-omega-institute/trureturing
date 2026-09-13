@@ -78,6 +78,24 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
     [InlineData("current", "missing-current-units", 2)]
     [InlineData("engineering", "replace-build", 2)]
     public void BranchProcessesUseOneBuildInEitherOrderAndPropagateRealExits(string first, string failure, int expected)
+        => RunBranches(first, failure, expected, exportSeeds: true);
+
+    [Theory]
+    [InlineData("engineering")]
+    [InlineData("current")]
+    public void ReadOnlyBranchesPreserveRequiredTransportAndExplicitSeedExport(string first)
+        => RunBranches(first, "", 0, exportSeeds: false);
+
+    [Theory]
+    [InlineData("current", "missing-current-units", 2)]
+    [InlineData("current", "replace-build", 2)]
+    [InlineData("engineering", "replace-build", 2)]
+    [InlineData("engineering", "test", 1)]
+    [InlineData("engineering", "capability-proof", 1)]
+    public void ReadOnlyBranchesStillRejectInvalidRequiredEvidence(string first, string failure, int expected)
+        => RunBranches(first, failure, expected, exportSeeds: false);
+
+    private void RunBranches(string first, string failure, int expected, bool exportSeeds)
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new CurrentExecutionContractTests.CandidateFixture();
@@ -145,6 +163,11 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
         fixture.WriteTrx(Path.Combine(root, "build/passed"), "Passed");
         fixture.WriteTrx(Path.Combine(root, "build/failed"), "Failed");
         CiTransportTests.Report(root);
+        if (!exportSeeds)
+        {
+            fixture.Track();
+            Git(root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "required branch fixture");
+        }
         var build = CommonExecutionEvidence.SealBuild(root, CommonExecutionEvidence.Candidate(root), binaries.Append(CommonBuildOutputs.TestsPath),
             CommonExecutionEvidence.BuildSteps.Select(name => new StageStep(name, 0, 0, "executed", "build/ci/build.log")).ToArray());
         // The CLI fixture supplies a unit manifest produced by the native common
@@ -157,8 +180,10 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
         var environment = new Dictionary<string, string> {
             ["PATH"] = Path.Combine(root, "build/bin") + Path.PathSeparator + Environment.GetEnvironmentVariable("PATH"),
             ["CONTRACT_SCOPE"] = scope, ["CONTRACT_FAILURE"] = failure };
+        if (!exportSeeds) environment["STRATALINT_CACHE_WRITES"] = "false";
         var result = Branch(first);
         Assert.True(result.Exit == expected, result.Text);
+        if (!exportSeeds) AssertNoOptionalSeeds();
         var other = first == "current" ? "engineering" : "current";
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, "build/ci/" + other + ".json")));
         if (expected == 0)
@@ -182,13 +207,49 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
                 Assert.Equal(0, proof.GetProperty("exit").GetInt32());
             }
             var initial = CommonExecutionEvidence.ValidateTests(root);
+            if (!exportSeeds)
+            {
+                Assert.False(fresh.GetProperty("test_seed_saved").GetBoolean());
+                AssertNoOptionalSeeds();
+                var commit = Git(root, "rev-parse", "HEAD");
+                foreach (var stage in new[] { "engineering", "current" })
+                {
+                    Transport(stage);
+                    AssertNoOptionalSeeds();
+                }
+                CommonExecutionEvidence.ValidateCommon(root, [CurrentExecutionContractTests.CandidateFixture.First]);
+                // Explicit writer commands remain available without implicit stage export.
+                foreach (var stage in new[] { "engineering", "current" })
+                {
+                    Transport(stage + "-seed");
+                    CommonExecutionEvidence.ValidateCheckSeedBundle(root, stage);
+                }
+
+                void Transport(string stage)
+                {
+                    var arguments = new[] { "--repository", root, "--stage", stage,
+                        "--commit", commit, "--run-id", "17", "--run-attempt", "2" };
+                    var packed = Process(root, scope, new[] { "transport-pack" }.Concat(arguments)
+                        .Concat(["--archive", Path.Combine(root, "build", stage + ".tgz")]).ToArray(), environment);
+                    Assert.True(packed.Exit == 0, packed.Text);
+                    var verified = Process(root, scope, new[] { "transport-verify" }.Concat(arguments).ToArray(), environment);
+                    Assert.True(verified.Exit == 0, verified.Text);
+                }
+            }
             Assert.True(TemporaryFileSystem.File.Exists(Path.Combine(root, CommonExecutionEvidence.TestSeedPath, "tests.json")));
+            var seedFiles = !exportSeeds ? SeedFiles() : [];
             var again = Branch("engineering");
             Assert.True(again.Exit == 0, again.Text);
             var summary = EngineeringSummary("warm");
             Assert.Equal(0, summary.GetProperty("test_projects_executed").GetInt32());
             Assert.Equal(2, summary.GetProperty("test_projects_reused").GetInt32());
-            Assert.True(summary.GetProperty("test_seed_saved").GetBoolean());
+            Assert.Equal(exportSeeds, summary.GetProperty("test_seed_saved").GetBoolean());
+            if (!exportSeeds)
+            {
+                Assert.DoesNotContain("ENGINEERING_TEST_SEED_SAVED", again.Text, StringComparison.Ordinal);
+                Assert.DoesNotContain("COMMON_CHECK_SEED_SAVED", again.Text, StringComparison.Ordinal);
+                Assert.Equal(seedFiles, SeedFiles());
+            }
             Assert.Empty(summary.GetProperty("not_executed").EnumerateArray());
             Assert.Empty(summary.GetProperty("not_required").EnumerateArray());
             AssertUnits(summary, ["reused", "reused", "reused"]);
@@ -199,6 +260,28 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
             Assert.Equal(initial.Projects.Select(row => row with { Status = "reused" }), CommonExecutionEvidence.ValidateTests(root).Projects);
             Assert.Equal(2, TemporaryFileSystem.File.ReadAllText(Path.Combine(root, "build/events")).Split('\n').Count(value => value == "test"));
             Assert.Equal(events, TemporaryFileSystem.File.ReadAllText(Path.Combine(root, "build/events")).Split('\n'));
+            if (!exportSeeds)
+            {
+                // The CLI fixture uses the native unit owner to prepare reused
+                // evidence; invoking any unit's work here is a test failure.
+                var checks = CommonExecutionEvidence.BeginChecks(root, "current", build, TextWriter.Null);
+                foreach (var id in checks.Ids)
+                    checks.Run(id, () => throw new InvalidOperationException("restored current unit must reuse: " + id));
+                Assert.All(checks.Seal().Units, unit => Assert.Equal("reused", unit.Status));
+                File.Copy(Path.Combine(root, CommonExecutionEvidence.ChecksPath("current")),
+                    Path.Combine(root, "build/prepared-current-checks.json"), overwrite: true);
+                var current = Branch("current");
+                Assert.True(current.Exit == 0, current.Text);
+                Assert.DoesNotContain("COMMON_CHECK_SEED_SAVED", current.Text, StringComparison.Ordinal);
+                Assert.DoesNotContain("CURRENT_FINALIZE phase=seed-export", current.Text, StringComparison.Ordinal);
+                Assert.Equal(seedFiles, SeedFiles());
+                var currentEvidence = CommonExecutionEvidence.ValidateCommon(root,
+                    [CurrentExecutionContractTests.CandidateFixture.First]).Current;
+                Assert.All(currentEvidence.Steps.Where(step => step.Name is "scribe" or "filemap" or "check-current"),
+                    step => Assert.Equal("reused", step.Status));
+                Assert.Equal(events.Where(value => value.Length != 0).Concat(["report", "check-current"]),
+                    File.ReadAllLines(Path.Combine(root, "build/events")));
+            }
         }
         else
         {
@@ -231,6 +314,24 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
             }
         }
         Assert.Equal(failure == "replace-build", before != CommonExecutionEvidence.Hash(Path.Combine(root, CommonExecutionEvidence.BuildPath)));
+
+        void AssertNoOptionalSeeds()
+        {
+            Assert.False(Directory.Exists(Path.Combine(root, CommonExecutionEvidence.TestSeedPath)));
+            foreach (var stage in new[] { "engineering", "current" })
+            {
+                Assert.False(Directory.Exists(Path.Combine(root, CommonExecutionEvidence.CheckSeedPath(stage))));
+                Assert.False(File.Exists(Path.Combine(root, CommonExecutionEvidence.BundleListPath(stage + "-seed"))));
+            }
+        }
+
+        (string Path, string Hash)[] SeedFiles() => new[] { CommonExecutionEvidence.TestSeedPath,
+                CommonExecutionEvidence.CheckSeedPath("engineering"), CommonExecutionEvidence.CheckSeedPath("current") }
+            .SelectMany(path => Directory.EnumerateFiles(Path.Combine(root, path), "*", SearchOption.AllDirectories))
+            .Concat(new[] { "engineering", "current" }.Select(stage =>
+                Path.Combine(root, CommonExecutionEvidence.BundleListPath(stage + "-seed"))))
+            .Order(StringComparer.Ordinal)
+            .Select(path => (Path.GetRelativePath(root, path), CommonExecutionEvidence.Hash(path))).ToArray();
 
         JsonElement EngineeringSummary(string phase)
         {
@@ -349,6 +450,7 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
         start.Environment["GITHUB_EVENT_NAME"] = "";
         start.Environment["CANDIDATE_SHA"] = "";
         start.Environment["CI_WORKFLOW_INPUTS"] = "null";
+        start.Environment.Remove("STRATALINT_CACHE_WRITES");
         foreach (var pair in environment ?? new Dictionary<string, string>()) start.Environment[pair.Key] = pair.Value;
         using var process = System.Diagnostics.Process.Start(start)!;
         using var deadline = new CancellationTokenSource(hangGuard ?? TestBudgets.ScriptProcessHangGuard);

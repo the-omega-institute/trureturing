@@ -17,6 +17,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
     private ResourceExecutionPlan? resourcePlan;
     private CommonExecutionEvidence.CheckExecution? engineeringChecks;
     private string? attemptedEngineeringCheck;
+    private readonly bool exportSeeds = Environment.GetEnvironmentVariable("STRATALINT_CACHE_WRITES") != "false";
 
     internal static int Normalize(int raw, bool allowProtectedAnnotation = false) => raw switch
     {
@@ -192,8 +193,8 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         }
         _ = checks.Seal();
         CommonExecutionEvidence.SealEngineering(root, build, steps.Where(step => step.Name == "tests").ToArray());
-        testSeedSaved = CommonExecutionEvidence.ExportTestSeed(root, output);
-        _ = CommonExecutionEvidence.ExportCheckSeed(root, "engineering", output);
+        testSeedSaved = exportSeeds && CommonExecutionEvidence.ExportTestSeed(root, output);
+        if (exportSeeds) _ = CommonExecutionEvidence.ExportCheckSeed(root, "engineering", output);
     }
 
     private CheckOperation Operation(string name, string[] arguments)
@@ -263,7 +264,9 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
                 // corresponding stage obligations without launching them a second time.
                 steps.RemoveAt(steps.Count - 1);
             }
+            output.WriteLine("CURRENT_FINALIZE phase=validate-checks status=started");
             var accepted = CommonExecutionEvidence.ValidateChecks(root, "current", build, ids);
+            output.WriteLine("CURRENT_FINALIZE phase=validate-checks status=completed");
             foreach (var name in obligations.Where(name => name is "scribe" or "filemap" or "check-current"))
             {
                 var units = accepted.Units.Where(unit => name == "scribe" ? unit.Id.StartsWith("scribe-", StringComparison.Ordinal)
@@ -272,8 +275,15 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
                 steps.Add(new(name, 0, 0, units.All(unit => unit.Status == "reused") ? "reused" : "executed", units[0].Operations[0].Log));
             }
         }
+        output.WriteLine("CURRENT_FINALIZE phase=seal status=started");
         CommonExecutionEvidence.SealCurrent(root, build, steps.ToArray(), resourcePlan);
-        if (ids.Length != 0) _ = CommonExecutionEvidence.ExportCheckSeed(root, "current", output);
+        output.WriteLine("CURRENT_FINALIZE phase=seal status=completed");
+        if (ids.Length != 0 && exportSeeds)
+        {
+            output.WriteLine("CURRENT_FINALIZE phase=seed-export status=started");
+            _ = CommonExecutionEvidence.ExportCheckSeed(root, "current", output);
+            output.WriteLine("CURRENT_FINALIZE phase=seed-export status=completed");
+        }
     }
 
     private void ValidateBase(string? baseSha)

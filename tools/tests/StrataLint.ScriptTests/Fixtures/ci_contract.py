@@ -314,6 +314,38 @@ runtime_disposition = "committed-source"
 
 
 class SnapshotContracts(CacheFixture, unittest.TestCase):
+    def test_dependency_module_and_submodule_seed_round_trip(self):
+        self.assert_module_and_submodule_seed_round_trip("dependency")
+
+    def test_project_module_and_submodule_seed_round_trip(self):
+        self.assert_module_and_submodule_seed_round_trip("project")
+
+    def assert_module_and_submodule_seed_round_trip(self, layer):
+        source = self.root / (".lake/packages" if layer == "dependency" else ".lake/build")
+        prefix = "mathlib/.lake/build/lib/lean" if layer == "dependency" else "lib/lean"
+        material = {
+            prefix + "/Foo.olean": (b"module bytes", 0o640),
+            prefix + "/Foo/Bar.olean": (b"submodule bytes", 0o644),
+        }
+        for relative, (data, mode) in material.items():
+            path = source / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(data)
+            path.chmod(mode)
+        snapshot = self.run_tool(CACHE, "snapshot", "--layers", layer)
+        self.assertEqual(0, snapshot.returncode, snapshot.stdout + snapshot.stderr)
+        self.assertIn('"status": "snapshot"', snapshot.stdout, snapshot.stdout + snapshot.stderr)
+        cached = self.root / "build/lean-cache" / layer
+        key = json.loads((cached / "manifest.json").read_text())["key"]
+        shutil.rmtree(source)
+        restore = self.run_tool(CACHE, "restore", "--layers", layer, "--" + layer + "-key", key)
+        self.assertEqual(0, restore.returncode, restore.stdout + restore.stderr)
+        self.assertIn('"status": "restored"', restore.stdout, restore.stdout + restore.stderr)
+        for relative, (data, mode) in material.items():
+            path = source / relative
+            self.assertEqual(data, path.read_bytes())
+            self.assertEqual(mode, path.stat().st_mode & 0o777)
+
     def test_internal_dependency_file_links_round_trip_as_private_material(self):
         source, material = self.dependency_files()
         links = {
@@ -394,9 +426,16 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                         env=dict(self.env, PYTHON=sys.executable, CACHE=str(CACHE), ROOT=str(self.root),
                                  KEY=key, PRODUCER_EXIT=production_exit), capture_output=True, text=True)
                     self.assertEqual(production_exit == "0", result.returncode == 0, result.stdout + result.stderr)
-                    self.assertIn('"layer": "dependency", "reason":', result.stdout)
-                    self.assertIn('"status": "miss"', result.stdout)
-                    self.assertEqual(b"current material", (source / "batteries/README.md").read_bytes())
+                    if corruption == "extra":
+                        # A cache neighbour is not registered material and must not be copied.
+                        self.assertIn('"status": "restored"', result.stdout)
+                        self.assertEqual(original, (source / "batteries/README.md").read_bytes())
+                        self.assertFalse((source / "batteries/extra").exists())
+                        self.assertEqual(b"unlisted", (saved.parent / "extra").read_bytes())
+                    else:
+                        self.assertIn('"layer": "dependency", "reason":', result.stdout)
+                        self.assertIn('"status": "miss"', result.stdout)
+                        self.assertEqual(b"current material", (source / "batteries/README.md").read_bytes())
                     self.assertNotIn("STRATALINT_ACTIONS_CACHE_SEEDED=1", (self.root / "environment").read_text())
                 saved.unlink(missing_ok=True)
                 saved.write_bytes(original)

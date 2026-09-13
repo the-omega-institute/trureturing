@@ -7,6 +7,56 @@ namespace StrataLint.EngineeringScope.Tests;
 public sealed partial class CommonCheckExecutionTests
 {
     [Fact]
+    public void ReadOnlyValidationReusesItsCompleteCheckRegistration()
+    {
+        using var fixture = new Fixture();
+        var validation = CommonExecutionEvidence.ValidationScope.Create(fixture.Tree.Root);
+        var checks = validation.CheckManifest();
+        Assert.Equal(25, checks.Count);
+        Assert.Same(checks, validation.CheckManifest());
+    }
+
+    [Fact]
+    public void FreshValidationReadsChangedRegistrationWithoutSharingAnotherRepository()
+    {
+        using var first = new Fixture();
+        using var second = new Fixture();
+        var original = CommonExecutionEvidence.ValidationScope.Create(first.Tree.Root).CheckManifest();
+        CommonExecutionEvidence.Write(first.Tree.Root, CommonExecutionEvidence.CheckManifestPath,
+            new CommonCheckManifest("ci-check-input-registration-v1", original.Select(check => check.Id == "filemap"
+                ? check with { Materials = ["fixtures/selftest.txt"] } : check).ToArray()));
+
+        var changed = CommonExecutionEvidence.ValidationScope.Create(first.Tree.Root).CheckManifest();
+        var other = CommonExecutionEvidence.ValidationScope.Create(second.Tree.Root).CheckManifest();
+        Assert.Equal(new[] { "fixtures/selftest.txt" }, changed.Single(check => check.Id == "filemap").Materials);
+        Assert.Empty(other.Single(check => check.Id == "filemap").Materials);
+        Assert.NotSame(original, changed);
+        Assert.NotSame(changed, other);
+    }
+
+    [Theory]
+    [InlineData("project", "tools/Absent.csproj")]
+    [InlineData("material", "fixtures/absent.txt")]
+    public void FreshValidationRejectsDamagedUnselectedRegistration(string defect, string expected)
+    {
+        using var fixture = new Fixture();
+        fixture.Run();
+        var original = CommonExecutionEvidence.ValidationScope.Create(fixture.Tree.Root).CheckManifest();
+        CommonExecutionEvidence.Write(fixture.Tree.Root, CommonExecutionEvidence.CheckManifestPath,
+            new CommonCheckManifest("ci-check-input-registration-v1", original.Select(check => check.Id != "SL-001" ? check
+                : defect == "project" ? check with { ProgramProjects = [expected] }
+                : check with { Materials = [expected] }).ToArray()));
+
+        var fresh = CommonExecutionEvidence.ValidationScope.Create(fixture.Tree.Root);
+        var error = Assert.Throws<InvalidDataException>(() => fresh.CheckManifest());
+        Assert.Contains("SL-001", error.Message, StringComparison.Ordinal);
+        Assert.Contains(expected, error.Message, StringComparison.Ordinal);
+        Assert.Throws<InvalidDataException>(() => fresh.CheckManifest());
+        Assert.Throws<InvalidDataException>(() => fixture.Run());
+        Assert.Empty(fixture.Calls);
+    }
+
+    [Fact]
     public void ActualRepositoryRegistrationReachesEngineeringSeedHandling()
     {
         using var output = new StringWriter();
