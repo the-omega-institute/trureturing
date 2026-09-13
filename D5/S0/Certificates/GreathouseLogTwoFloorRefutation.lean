@@ -115,6 +115,10 @@ theorem result : ¬ claim := by
       (∑ k ∈ Finset.range 36, fTwo k) + 1 / 3 ^ 72 <
         (M : ℝ) * (∑ k ∈ Finset.range 2, fWitness k) := by
     norm_num [n₀, M, fTwo, fWitness, Finset.sum_range_succ]
+  have hPreviousExact :
+      ((M - 1 : ℕ) : ℝ) * (1 / (n₀ : ℝ)) <
+        ∑ k ∈ Finset.range 36, fTwo k := by
+    norm_num [n₀, M, fTwo, Finset.sum_range_succ]
 
   have hFloor :
       ⌊((n₀ : ℝ) + 1 / 2) * Real.log 2⌋₊ = M := by
@@ -141,36 +145,60 @@ theorem result : ¬ claim := by
         mul_le_mul_of_nonneg_left hWitnessLower (by positivity)
 
   have hBasePos : (0 : ℝ) < 1 + 1 / (n₀ : ℝ) := by positivity
+  have hLogWitnessUpper :
+      Real.log (1 + 1 / (n₀ : ℝ)) ≤ 1 / (n₀ : ℝ) := by
+    calc
+      Real.log (1 + 1 / (n₀ : ℝ)) ≤ (1 + 1 / (n₀ : ℝ)) - 1 :=
+        Real.log_le_sub_one_of_pos hBasePos
+      _ = 1 / (n₀ : ℝ) := by ring
+  have hPreviousLog :
+      ((M - 1 : ℕ) : ℝ) * Real.log (1 + 1 / (n₀ : ℝ)) < Real.log 2 := by
+    calc
+      ((M - 1 : ℕ) : ℝ) * Real.log (1 + 1 / (n₀ : ℝ)) ≤
+          ((M - 1 : ℕ) : ℝ) * (1 / (n₀ : ℝ)) :=
+        mul_le_mul_of_nonneg_left hLogWitnessUpper (by positivity)
+      _ < ∑ k ∈ Finset.range 36, fTwo k := hPreviousExact
+      _ ≤ Real.log 2 := hTwoLower
+  have hPreviousPower :
+      (1 + 1 / (n₀ : ℝ)) ^ (M - 1) ≤ 2 :=
+    (Real.pow_le_iff_le_log hBasePos (by norm_num)).2 hPreviousLog.le
   have hPower : (2 : ℝ) < (1 + 1 / (n₀ : ℝ)) ^ M := by
     by_contra hnot
     have hle : (1 + 1 / (n₀ : ℝ)) ^ M ≤ (2 : ℝ) := le_of_not_gt hnot
     have hlogs := (Real.pow_le_iff_le_log hBasePos (by norm_num : (0 : ℝ) < 2)).1 hle
     exact (not_le_of_gt hLogStrict) hlogs
 
-  have hNonempty :
+  have hSetNonempty :
       {k : ℕ | (1 + 1 / (n₀ : ℝ)) ^ k ≤ 2}.Nonempty := by
     refine ⟨0, ?_⟩
     norm_num
-  have hSup : a n₀ ≤ M - 1 := by
-    unfold a
-    apply csSup_le hNonempty
-    intro k hk
+  have hEverySetMember (k : ℕ)
+      (hk : k ∈ {j : ℕ | (1 + 1 / (n₀ : ℝ)) ^ j ≤ 2}) : k ≤ M - 1 := by
     have hklt : k < M := by
       by_contra hnot
       have hMk : M ≤ k := le_of_not_gt hnot
-      have hbaseOne : (1 : ℝ) ≤ 1 + 1 / (n₀ : ℝ) := by
-        exact le_add_of_nonneg_right (by positivity)
-      have hmono :
+      have hBaseOne : (1 : ℝ) ≤ 1 + 1 / (n₀ : ℝ) :=
+        le_add_of_nonneg_right (by positivity)
+      have hMono :
           (1 + 1 / (n₀ : ℝ)) ^ M ≤ (1 + 1 / (n₀ : ℝ)) ^ k :=
-        pow_le_pow_right₀ hbaseOne hMk
-      exact (not_le_of_gt hPower) (hmono.trans hk)
+        pow_le_pow_right₀ hBaseOne hMk
+      exact (not_le_of_gt hPower) (hMono.trans hk)
     omega
+  have hAUpper : a n₀ ≤ M - 1 := by
+    unfold a
+    exact csSup_le hSetNonempty hEverySetMember
+  have hSetBounded : BddAbove {k : ℕ | (1 + 1 / (n₀ : ℝ)) ^ k ≤ 2} :=
+    ⟨M - 1, hEverySetMember⟩
+  have hALower : M - 1 ≤ a n₀ := by
+    unfold a
+    exact le_csSup hSetBounded hPreviousPower
+  have hAExact : a n₀ = M - 1 := Nat.le_antisymm hAUpper hALower
 
   intro hClaim
   have hAtWitness := hClaim n₀ (by norm_num [n₀])
   rw [hFloor] at hAtWitness
-  have hlt : a n₀ < M := by
-    omega
+  rw [hAExact] at hAtWitness
+  have hlt : M - 1 < M := by norm_num [M]
   exact (Nat.ne_of_lt hlt) hAtWitness
 
 #print axioms a
