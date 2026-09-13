@@ -412,5 +412,20 @@ private theorem stateCount_recurrence (n : ℕ) (i : HorizontalMask) :
           rw [Finset.sum_sub_distrib, Finset.sum_sub_distrib, Finset.sum_sub_distrib]
           rw [pull, pull, pull, pull]
 
+/-- Barker's conjectured order-four recurrence for the literal grid-subgraph count. -/
+theorem barker_a301976 : ∀ n : ℕ, 4 < n →
+    (a n : ℤ) =
+      12 * a (n - 1) - 6 * a (n - 2) - 20 * a (n - 3) - 5 * a (n - 4) := by
+  intro n hn
+  rw [a_eq_stateCount n, a_eq_stateCount (n - 1), a_eq_stateCount (n - 2),
+    a_eq_stateCount (n - 3), a_eq_stateCount (n - 4)]
+  have h5 : n - 5 + 5 = n := by omega
+  have h4 : n - 5 + 4 = n - 1 := by omega
+  have h3 : n - 5 + 3 = n - 2 := by omega
+  have h2 : n - 5 + 2 = n - 3 := by omega
+  have h1 : n - 5 + 1 = n - 4 := by omega
+  simpa only [h5, h4, h3, h2, h1] using
+    stateCount_recurrence (n - 5) zeroHorizontal
+
 end
 end D5.S1.Words.Patterns.GridNoLeafSubgraphRecurrence
