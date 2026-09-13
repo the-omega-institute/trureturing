@@ -199,6 +199,35 @@ syntax (name := registerInformationTheoremCmd)
     "primitives " term " realization " ident
     (" variation " ident)? (" sensitivity " ident)? : command
 
+syntax (name := registerInformationTheoremViaCmd)
+  "register_information_theorem " ident " via " term " in " ident : command
+
+@[command_elab registerInformationTheoremViaCmd]
+private def elabRegisterInformationTheoremVia : CommandElab := fun stx => do
+  let saved ← getEnv
+  try
+    let theoremId : TSyntax `ident := ⟨stx[1]⟩
+    let arenaName ← resolveArena ⟨stx[5]⟩
+    let arena ← liftTermElabM <| RegistrationReifier.freezeArena arenaName
+    let descriptor ← liftTermElabM do
+      let value ← elabTerm stx[3] none
+      synthesizeSyntheticMVarsNoPostponing
+      let value ← instantiateMVars value
+      RegistrationReifier.closed value
+      return value
+    let theoremName ← resolveTheorem theoremId
+    let unitName := localCompanionName (← getEnv) theoremName theoremUnitSuffix
+    let realizationName := localCompanionName (← getEnv) theoremName primitiveRealizationSuffix
+    let entry ← liftTermElabM <| prepareRegistrationEntry (← getEnv) {
+      theoremName, unitName, arenaName, realizationName,
+      statementIdentity := theoremStatementIdentity (← getEnv) theoremName }
+    ensureRegisterableName (← getEnv) entry
+    let entry ← liftTermElabM <| RegistrationReifier.derive entry arena descriptor
+    registerEntry entry
+  catch e =>
+    setEnv saved
+    throw e
+
 @[command_elab registerInformationTheoremCmd]
 private def elabRegisterInformationTheorem : CommandElab := fun stx => do
     let theoremId : TSyntax `ident := ⟨stx[1]⟩

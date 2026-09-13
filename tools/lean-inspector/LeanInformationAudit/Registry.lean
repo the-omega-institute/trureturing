@@ -1,4 +1,4 @@
-import LeanInformationAudit.RegistrationGates
+import LeanInformationAudit.RegistrationReifier
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import LeanInformationAudit.Sha256
 import LeanInformationAudit.FixedSnapshot
@@ -324,6 +324,9 @@ private def validateEntryCore (env : Environment) (entry : InformationRegistryEn
   | .error message => return .error message
   | .ok () => pure ()
   try
+    RegistrationReifier.validateDerivedCertificate entry
+  catch e => return .error (← e.toMessageData.toString)
+  try
     let theoremExpr <- mkConstWithFreshMVarLevels entry.theoremName
     let theoremType <- instantiateMVars (← whnfR (← inferType theoremExpr))
     let unitExpr <- mkConstWithFreshMVarLevels entry.unitName
@@ -489,6 +492,8 @@ def registerValidatedEntry (entry : InformationRegistryEntry) :
   | .ok () =>
     Lean.Elab.Command.liftTermElabM do
       let diagnostic ← RegistrationGates.validateFinite entry
+      if entry.derivedCertificate.isSome && diagnostic.isSome then
+        throwError "P1.SemanticRejected: {diagnostic.get!}"
       RegistrationGates.publishDiagnostic entry.unitName diagnostic
     modifyEnv fun env => informationRegistryExt.addEntry env entry
   | .error message => throwError message
