@@ -6,7 +6,8 @@
    utility: none
    digest: Strict divisor-chain counts equal the signed binomial transform of prime-exponent composition counts. -/
 
-import D5.S3.Factorization.Combinatorics.PrimeGenealogyCount
+import Mathlib.Data.Nat.Factorization.Basic
+import Mathlib.NumberTheory.ArithmeticFunction.Misc
 import Mathlib.Data.Fintype.Pi
 import Mathlib.Data.Finsupp.Multiset
 import Mathlib.Data.Sym.Card
@@ -273,7 +274,8 @@ noncomputable def factorTupleRestrictEquiv (n : ℕ) (ι : Type*) [Fintype ι]
     simp [extend, i.prop]
 
 /-- The strict-chain count is the signed binomial transform of the weak-chain counting function. -/
-theorem strict_divisor_chain_count (n k : ℕ) (hn : 1 < n) (_hk : 1 ≤ k) :
+theorem strict_divisor_chain_count (n k : ℕ) (hn : 1 < n) (_hk : 1 ≤ k)
+    (_hkr : k ≤ ArithmeticFunction.cardFactors n) :
     (Nat.card (Chain n k) : ℤ) =
       ∑ j ∈ Finset.range (k + 1),
         (-1 : ℤ) ^ (k - j) * (k.choose j : ℤ) * weakCount n j := by
