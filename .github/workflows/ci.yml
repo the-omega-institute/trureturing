@@ -322,6 +322,9 @@ jobs:
           [[ "$input_address" =~ ^[0-9a-f]{64}\ [0-9a-f]{64}$ ]]
           read -r sources_sha256 config_sha256 <<< "$input_address"
           echo "sources_sha256=$sources_sha256" >> "$GITHUB_OUTPUT"
+          build_snapshot_sha256="$("$helper" build-snapshot-address --repository "$GITHUB_WORKSPACE/candidate")"
+          [[ "$build_snapshot_sha256" =~ ^[0-9a-f]{64}$ ]]
+          echo "build_snapshot_sha256=$build_snapshot_sha256" >> "$GITHUB_OUTPUT"
           echo "config_sha256=$config_sha256" >> "$GITHUB_OUTPUT"
           dependency_sha256="$("$helper" dependency-address --repository "$GITHUB_WORKSPACE/candidate")"
           [[ "$dependency_sha256" =~ ^[0-9a-f]{64}$ ]]
@@ -344,58 +347,7 @@ jobs:
           echo "config=$config" >> "$GITHUB_OUTPUT"
           echo "pair=${coordinates%% *}" >> "$GITHUB_OUTPUT"
 
-      # 精确 key 命中仍直接复用;prefix restore 只提供陈旧 delta 基线,不算 cache hit。adapter 与现行 delta 机器重验报告、provenance、materials 与 producer logs;
-      # 任一项不可信就不给 cache root,沿原路径全量生产。下游仍逐模块核对 source_sha256,故陈旧报告不能被静默接受。
-      - name: Restore canonical Lean report by input address
-        id: report-cache
-        if: steps.lean-report-input.outputs.address != ''
-        continue-on-error: true
-        uses: actions/cache/restore@v4
-        with:
-          path: .canonical-lean-report-cache
-          key: stratalint-canonical-lean-report-v2-${{ env.CACHE_SCOPE }}${{ steps.lean-report-input.outputs.address }}
-          restore-keys: |
-            stratalint-canonical-lean-report-v2-${{ env.CACHE_SCOPE }}
-            stratalint-canonical-lean-report-v2-
-      - name: Serve candidate canonical Lean report from the cached address
-        id: report-reuse
-        if: steps.report-cache.outcome == 'success' && steps.report-cache.outputs.cache-hit == 'true'
-        # 这一步失败必须**回落**到完整生产路径,而不是让整个 job 红:缓存是加速,不是权威。
-        # 下面四个重活步骤的守卫是 `outcome != 'success'`,故失败与跳过都会走原路。
-        continue-on-error: true
-        timeout-minutes: 2
-        shell: bash
-        run: |
-          set -euo pipefail
-          source="$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json"
-          reports="$RUNNER_TEMP/raw-lean-reports"
-          mkdir -p "$reports"
-          # Validate the complete transport bundle before a hit can skip production.
-          source="$(python3 "$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-cache.py" stage \
-            --bundle "$source" --staging-directory "$RUNNER_TEMP/validated-lean-report-cache" --transport)"
-          helper="$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-input.sh"
-          # 缓存条目对候选树重新验一次地址与报告哈希;不符即整体回落,不静默使用。
-          "$helper" verify --repository "$GITHUB_WORKSPACE/candidate" --report "$source"
-          producer="${{ steps.lean-report-input.outputs.producer }}"
-          sources="${{ steps.lean-report-input.outputs.sources }}"
-          config="${{ steps.lean-report-input.outputs.config }}"
-          input="${{ steps.lean-report-input.outputs.pair }}"
-          jq -e -s --arg producer "$producer" --arg sources "$sources" --arg config "$config" \
-            --arg input "sha256:$input" --arg report "$(sha256sum "$source" | cut -d ' ' -f 1)" '
-            length == 1 and (.[0] == {schema: "stratalint-lean-report-provenance-v1", side: "candidate",
-              mode: .[0].mode, source_side: "candidate", input_address: $input,
-              producer_sha256: $producer, repository_inspector_sha256: $producer,
-              lean_sources_sha256: $sources, lean_config_sha256: $config, report_sha256: $report}
-            and (.[0].mode == "produced" or .[0].mode == "cached"))' "${source}.provenance.json" > /dev/null
-          for suffix in '' .input.attestation .provenance.json .materials.zip; do
-            cp "${source}${suffix}" "$reports/candidate-lean-report.json${suffix}"
-          done
-          printf '%s  %s\n' \
-            "$(sha256sum "$reports/candidate-lean-report.json" | cut -d ' ' -f 1)" \
-            "candidate-lean-report.json" > "$reports/candidate-lean-report.json.sha256"
-          printf '%s\n' "canonical Lean reports served from cached input address" >> "$GITHUB_STEP_SUMMARY"
       - name: Restore elan and pinned Lean toolchains
-        if: steps.report-reuse.outcome != 'success'
         uses: actions/cache/restore@v4
         with:
           path: ~/.elan
@@ -404,7 +356,6 @@ jobs:
             ${{ runner.os }}-${{ runner.arch }}-elan-
       - name: Install pinned Lean toolchains
         id: install-elan
-        if: steps.report-reuse.outcome != 'success'
         shell: bash
         run: |
           if [[ ! -x "$GITHUB_WORKSPACE/candidate/tools/scripts/workflow/install-lean-toolchain.sh" ]]; then
@@ -420,7 +371,6 @@ jobs:
       # failures remain terminal.
       - name: Restore candidate Lean dependency artifacts
         id: lake-deps-cache
-        if: steps.report-reuse.outcome != 'success'
         uses: actions/cache/restore@v4
         with:
           path: |
@@ -437,18 +387,16 @@ jobs:
       # 故这里靠 restore-keys 前缀回退取「最近一次同作用域 push 的 project 层」,integration-* 先取本分支的,再回落无作用域前缀。
       - name: Restore candidate Lean project build artifacts
         id: lake-build-cache
-        if: steps.report-reuse.outcome != 'success'
         uses: actions/cache/restore@v4
         with:
           path: candidate/.lake/build
-          key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-input.outputs.config_sha256 }}-${{ env.CACHE_SCOPE }}${{ steps.lean-input.outputs.sources_sha256 }}
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-input.outputs.config_sha256 }}-${{ env.CACHE_SCOPE }}${{ steps.lean-input.outputs.sources_sha256 }}-${{ steps.lean-input.outputs.build_snapshot_sha256 }}
           restore-keys: |
             ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-input.outputs.config_sha256 }}-${{ env.CACHE_SCOPE }}
             ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-input.outputs.config_sha256 }}-
       # make lean owns optional Release fallback and its transaction budget.
       - name: Build candidate Lean project
         id: lean-build
-        if: steps.report-reuse.outcome != 'success'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           STRATALINT_ACCEPT_COLD_BUILD: '1'
@@ -456,16 +404,6 @@ jobs:
         run: |
           set -euo pipefail
           PATH="$HOME/.elan/bin:$PATH" make -C candidate lean
-      # Only a successful build materializes Lean artifacts. A report hit skips
-      # that build; later report failures cannot revoke its completed cache supply.
-      - name: Save Lean project build artifacts (push only)
-        if: always() && steps.lean-build.outcome == 'success' && steps.lake-build-cache.outputs.cache-hit != 'true' && github.event_name == 'push'
-        continue-on-error: true
-        timeout-minutes: 12
-        uses: actions/cache/save@v4
-        with:
-          path: candidate/.lake/build
-          key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-input.outputs.config_sha256 }}-${{ env.CACHE_SCOPE }}${{ steps.lean-input.outputs.sources_sha256 }}
       - name: Save Lean dependency artifacts (push only)
         if: always() && steps.lean-build.outcome == 'success' && steps.lake-deps-cache.outputs.cache-hit != 'true' && github.event_name == 'push'
         continue-on-error: true
@@ -479,16 +417,10 @@ jobs:
             ~/.cache/mathlib
           key: ${{ runner.os }}-${{ runner.arch }}-lake-deps-v2-${{ steps.lean-input.outputs.dependency_sha256 }}
       - name: Produce source-bound canonical Lean reports
-        if: steps.report-reuse.outcome != 'success'
         env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
         shell: bash
         run: |
           set -euo pipefail
-          export STRATALINT_REPORT_CACHE_ROOT="$RUNNER_TEMP/canonical-lean-report-delta-cache"
-          export STRATALINT_REPORT_CACHE_REMOTE=1
-          "$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-ci-baseline.sh" \
-            --bundle "$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json" \
-            --cache-root "$STRATALINT_REPORT_CACHE_ROOT" --transport >/dev/null || true
           producer="$GITHUB_WORKSPACE/candidate/tools/lean-inspector/inspect.sh"
           pair_producer="$GITHUB_WORKSPACE/candidate/tools/scripts/lean-report-pair.sh"
           test -x "$producer"
@@ -503,32 +435,16 @@ jobs:
             --lake-bin "$HOME/.elan/bin/lake" \
             --candidate-root "$GITHUB_WORKSPACE/candidate" \
             --candidate-output "$reports/candidate-lean-report.json"
-      - name: Stage candidate canonical Lean report cache
-        id: report-cache-stage
+      # Save the existing native build snapshot after the report attempt. A
+      # report failure does not revoke successful Lean-build cache supply.
+      - name: Save Lean project build artifacts (push only)
+        if: always() && steps.lean-build.outcome == 'success' && steps.lake-build-cache.outputs.cache-hit != 'true' && github.event_name == 'push'
         continue-on-error: true
-        shell: bash
-        run: |
-          set -euo pipefail
-          source="$RUNNER_TEMP/raw-lean-reports/candidate-lean-report.json"
-          target="$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json"
-          mkdir -p "$(dirname "$target")"
-          rm -rf -- "${target}.logs"
-          python3 "$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-cache.py" stage \
-            --bundle "$source" --staging-directory "$(dirname "$target")" --transport >/dev/null
-          "$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-input.sh" verify \
-            --repository "$GITHUB_WORKSPACE/candidate" \
-            --report "$target"
-
-      # Actions cache writes require a push; both PR events only restore shared entries.
-      # Actions scopes these writes to the branch that received the push.
-      # 命中报告缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;分层 lake cache exact hit 时对应 key 也已存在。三个 save 只在真正跑过生产路径时执行。
-      - name: Save candidate canonical Lean report (push only)
-        if: success() && steps.report-cache-stage.outcome == 'success' && steps.lean-report-input.outputs.address != '' && steps.report-reuse.outcome != 'success' && github.event_name == 'push'
-        continue-on-error: true
+        timeout-minutes: 12
         uses: actions/cache/save@v4
         with:
-          path: .canonical-lean-report-cache
-          key: stratalint-canonical-lean-report-v2-${{ env.CACHE_SCOPE }}${{ steps.lean-report-input.outputs.address }}
+          path: candidate/.lake/build
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-input.outputs.config_sha256 }}-${{ env.CACHE_SCOPE }}${{ steps.lean-input.outputs.sources_sha256 }}-${{ steps.lean-input.outputs.build_snapshot_sha256 }}
       - name: Run complete mathematical content checks
         shell: bash
         env:
@@ -550,11 +466,10 @@ jobs:
           if-no-files-found: warn
           retention-days: 7
 
-      # 命中报告缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;分层 lake cache exact hit 时对应 key 也已存在。三个 save 只在真正跑过生产路径时执行。
       - name: Save elan toolchains (push only)
         # 不挂在 success() 上:elan 装成功就该存。否则一次下载失败会让 job 红、缓存不写、
         # 下次继续 miss,故障自我延续。
-        if: always() && steps.install-elan.outcome == 'success' && steps.report-reuse.outcome != 'success' && github.event_name == 'push'
+        if: always() && steps.install-elan.outcome == 'success' && github.event_name == 'push'
         uses: actions/cache/save@v4
         with:
           path: ~/.elan
@@ -741,34 +656,3 @@ jobs:
           path: ${{ runner.temp }}/gate-timing.jsonl
           if-no-files-found: warn
           retention-days: 7
-
-  publish-lean-report-cache:
-    name: Publish reusable Lean report cache
-    needs: [candidate-engineering, lean-inspect, baseline-admission]
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/integration-ci-lean-report-cache-restored-tests')
-    runs-on: ubuntu-24.04-arm
-    timeout-minutes: 10
-    continue-on-error: true
-    permissions: { contents: write }
-    steps:
-      - name: Check out the successful report producer
-        id: checkout-producer
-        uses: actions/checkout@v4
-        with: { ref: "${{ github.sha }}", fetch-depth: 2, persist-credentials: false }
-      - name: Strip checkout remote state
-        if: steps.checkout-producer.outcome == 'success'
-        shell: bash
-        run: |
-          set -euo pipefail
-          git remote remove origin
-          git for-each-ref --format='delete %(refname)' refs/remotes/ | git update-ref --stdin
-          test -z "$(git remote)"
-          test -z "$(git for-each-ref refs/remotes/)"
-          git rev-parse HEAD HEAD^1 >/dev/null
-      - uses: actions/setup-dotnet@v4
-        with: { global-json-file: global.json }
-      - uses: actions/download-artifact@v4
-        with: { name: raw-lean-reports, path: "${{ runner.temp }}/raw-lean-reports" }
-      - name: Publish the verified report bundle without a Lean build
-        env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
-        run: make lean-report-cache-to-github LEAN_REPORT="$RUNNER_TEMP/raw-lean-reports/candidate-lean-report.json"

@@ -152,7 +152,6 @@ PAIR_PRODUCER="$CANDIDATE_ROOT/tools/scripts/lean-report-pair.sh"
   || { echo "local-harness-gate: candidate Lean report pair helper is absent" >&2; exit 2; }
 
 # User-private content-addressed report cache for local producer runs.
-export STRATALINT_REPORT_CACHE_ROOT="${STRATALINT_REPORT_CACHE_ROOT:-${XDG_CACHE_HOME:-$HOME/.cache}/stratalint-lean-report-cache}"
 CANDIDATE_REPORT="$CANDIDATE_ROOT/.lake/build/stratalint/raw-lean-report.json"
 run_stage lean-reports \
   "$PAIR_PRODUCER" \

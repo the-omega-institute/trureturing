@@ -180,66 +180,10 @@ jobs:
           set -euo pipefail
           tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
 
-      # The publish producer only needs the canonical Lean report for the selected
-      # gate-verified commit. That commit already passed the "Canonical Lean report
-      # production" gate on its dev push, which content-addresses and caches the report
-      # under stratalint-canonical-lean-report-v2-<address>. Reuse it here instead of
-      # re-running the whole-tree `make lean-report` (which does not finish in the
-      # runner window). If the cache misses or fails to verify, fall through to the
-      # full production path below, so this is a pure speed-up, never a trust weakening.
-      - name: Resolve canonical Lean report address
-        id: lean-report-input
-        if: steps.source.outputs.publish_ready == 'true'
-        shell: bash
-        run: |
-          set -euo pipefail
-          helper="$GITHUB_WORKSPACE/tools/scripts/report/lean-report-input.sh"
-          test -x "$helper"
-          # A missing or invalid registered scope is a production failure.
-          "$helper" scribe-producer-paths --repository "$GITHUB_WORKSPACE" >/dev/null
-          address_output="$("$helper" address --repository "$GITHUB_WORKSPACE")"
-          address_pattern='^([0-9a-f]{64} ){3}[0-9a-f]{64}$'
-          [[ "$address_output" =~ $address_pattern ]]
-          read -r address producer_sha256 sources_sha256 config_sha256 <<< "$address_output"
-          echo "address=$address" >> "$GITHUB_OUTPUT"
-
-      - name: Restore canonical Lean report by input address
-        id: report-cache
-        if: steps.source.outputs.publish_ready == 'true'
-        uses: actions/cache/restore@v4
-        with:
-          path: .canonical-lean-report-cache
-          key: stratalint-canonical-lean-report-v2-${{ steps.lean-report-input.outputs.address }}
-          restore-keys: stratalint-canonical-lean-report-v2-
-
-      - name: Serve the canonical Lean report from the cached address
-        id: report-reuse
-        if: steps.source.outputs.publish_ready == 'true' && steps.report-cache.outputs.cache-hit == 'true'
-        # A cache serve failure must fall back to full production, not fail the job.
-        continue-on-error: true
-        shell: bash
-        run: |
-          set -euo pipefail
-          source="$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json"
-          served="$(python3 "$GITHUB_WORKSPACE/tools/scripts/report/lean-report-cache.py" stage \
-            --transport --bundle "$source" --staging-directory "$RUNNER_TEMP/canonical-lean-report")"
-          # Re-verify the cached report against the checked-out tree; mismatch falls back.
-          "$GITHUB_WORKSPACE/tools/scripts/report/lean-report-input.sh" verify \
-            --repository "$GITHUB_WORKSPACE" --report "$served"
-          printf 'path=%s\n' "$served" >> "$GITHUB_OUTPUT"
-          printf '%s\n' 'canonical Lean report served from cached input address' >> "$GITHUB_STEP_SUMMARY"
-
-      # When the content-addressed cache misses (it is evicted under dev churn: the
-      # 10GB Actions cache holds only a few of the 34MB reports at a time), reuse the
-      # same report from the gate's durable raw-lean-reports artifact instead of falling
-      # into full production, which does not finish in the runner window. The selected
-      # commit is gate-verified, so its dev-push CI run published that artifact. The
-      # report is re-verified against the checked-out tree exactly as the cache-serve
-      # path does, so this stays a pure speed-up that falls through to full production
-      # if the run, the artifact, or the verification is unavailable.
+      # Reuse ordinary exact-source CI artifacts after Inspector validation.
       - name: Restore the canonical Lean report from the gate artifact
         id: report-artifact
-        if: steps.source.outputs.publish_ready == 'true' && steps.report-reuse.outcome != 'success'
+        if: steps.source.outputs.publish_ready == 'true'
         continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
@@ -257,51 +201,17 @@ jobs:
           gh run download "$run_id" --repo "$GITHUB_REPOSITORY" \
             --name raw-lean-reports --dir "$staging"
           source="$staging/candidate-lean-report.json"
-          served="$(python3 "$GITHUB_WORKSPACE/tools/scripts/report/lean-report-cache.py" stage \
-            --transport --bundle "$source" --staging-directory "$RUNNER_TEMP/canonical-lean-report")"
+          served="$(python3 "$GITHUB_WORKSPACE/tools/lean-inspector/publication.py" stage \
+            --repository "$GITHUB_WORKSPACE" --bundle "$source" --staging-directory "$RUNNER_TEMP/canonical-lean-report")"
           cp -R "${source}.logs" "${served}.logs" 2>/dev/null || true
           "$GITHUB_WORKSPACE/tools/scripts/report/lean-report-input.sh" verify \
             --repository "$GITHUB_WORKSPACE" --report "$served"
           printf 'path=%s\n' "$served" >> "$GITHUB_OUTPUT"
           printf '%s\n' 'canonical Lean report served from the gate artifact' >> "$GITHUB_STEP_SUMMARY"
 
-      # A Release runner may have neither the Actions entry nor the gate
-      # artifact. Try the existing shared report-only release consumer before
-      # spending time on optional Lean warming. The shared fetch may return a
-      # compatible stale seed; only the exact current input address, complete
-      # transport staging, and the existing source-input verifier can serve the
-      # assembly. Any miss, stale seed, corrupt bundle, or unavailable transfer
-      # falls through to the unchanged warm/ensure/producer path below.
-      - name: Fetch and validate an exact shared Lean report
-        id: report-shared
-        if: steps.source.outputs.publish_ready == 'true' && steps.report-reuse.outcome != 'success' && steps.report-artifact.outcome != 'success'
-        continue-on-error: true
-        env:
-          GH_TOKEN: ${{ github.token }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          source "$GITHUB_WORKSPACE/tools/scripts/report/lean-report-cache.sh"
-          cache_root="$(report_cache_root)"
-          helper="$GITHUB_WORKSPACE/tools/scripts/report/lean-report-input.sh"
-          address_output="$("$helper" address --repository "$GITHUB_WORKSPACE")"
-          read -r _ producer sources config <<< "$address_output"
-          # The shared cache uses pair A; the Actions cache key remains repository R.
-          coordinates="$("$helper" coordinates "$producer" "$producer" "$sources" "$config")"
-          address_dir="${coordinates%% *}"
-          make lean-report-cache-from-github
-          source="$cache_root/$address_dir/raw-lean-report.json"
-          test -s "$source"
-          served="$(python3 "$GITHUB_WORKSPACE/tools/scripts/report/lean-report-cache.py" stage \
-            --transport --bundle "$source" --staging-directory "$RUNNER_TEMP/release-shared-lean-report")"
-          "$GITHUB_WORKSPACE/tools/scripts/report/lean-report-input.sh" verify \
-            --repository "$GITHUB_WORKSPACE" --report "$served"
-          printf 'path=%s\n' "$served" >> "$GITHUB_OUTPUT"
-          printf '%s\n' 'exact shared canonical Lean report served before warming' >> "$GITHUB_STEP_SUMMARY"
-
       - name: Produce the canonical Lean report
         id: report
-        if: steps.source.outputs.publish_ready == 'true' && steps.report-reuse.outcome != 'success' && steps.report-artifact.outcome != 'success' && steps.report-shared.outcome != 'success'
+        if: steps.source.outputs.publish_ready == 'true' && steps.report-artifact.outcome != 'success'
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
@@ -321,7 +231,7 @@ jobs:
           COMMIT_ON_PROTECTED_DEV: ${{ steps.identity.outputs.commit_on_protected_dev }}
           SOURCE_COMMIT: ${{ steps.source.outputs.source_commit }}
           SOURCE_TREE: ${{ steps.identity.outputs.source_tree }}
-          REPORT_PATH: ${{ steps.report-reuse.outputs.path || steps.report-artifact.outputs.path || steps.report-shared.outputs.path || steps.report.outputs.path }}
+          REPORT_PATH: ${{ steps.report-artifact.outputs.path || steps.report.outputs.path }}
         shell: bash
         run: |
           set -euo pipefail

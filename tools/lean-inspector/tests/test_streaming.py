@@ -1,0 +1,138 @@
+"""Byte and failure regressions for the statement-v1 stream contract."""
+import hashlib
+import io
+import json
+from pathlib import Path
+import sys
+import tempfile
+import unittest
+from unittest.mock import patch
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import materials
+import publication
+
+
+class StreamingTests(unittest.TestCase):
+    def test_chunk_boundaries_match_canonical_declaration_bytes(self):
+        values = ['', 'plain', '\\"\n\x00λ😀𐀀\U0010ffff', '\b\t\r\f' + 'a' * 65530 + '😀tail']
+        for value in values:
+            for size in [1, 2, 3, 4, 5, 7, 64, 65536]:
+                with self.subTest(length=len(value), chunk=size):
+                    expected = materials.declaration_statement_id('X.lean', 'def', 'ns(n0,1:x)', value)
+                    actual = materials.material_identities(io.BytesIO(value.encode()), 'X.lean', 'def', 'ns(n0,1:x)', size)
+                    self.assertEqual(actual, (materials.statement_address(value.encode()), expected))
+
+    def test_supplementary_scalars_have_uppercase_surrogate_bytes(self):
+        self.assertEqual(materials.canonical_json({'s': 'λ😀𐀀\U0010ffff'}),
+                         '{"s": "λ\\uD83D\\uDE00\\uD800\\uDC00\\uDBFF\\uDFFF"}\n'.encode())
+
+    def test_strict_utf8_rejects_overlong_surrogate_invalid_and_truncated_sequences(self):
+        for invalid in [b'\xc0\xaf', b'\xed\xa0\x80', b'\xf4\x90\x80\x80', b'\x80', b'\xf0\x9f\x98', b'\xe2\x82', b'\xc2']:
+            for size in [1, 2, 3, 4, 7]:
+                with self.subTest(invalid=invalid, chunk=size):
+                    with self.assertRaises(UnicodeDecodeError):
+                        materials.material_identities(io.BytesIO(b'x' * 7 + invalid), 'X.lean', 'def', 'key', size)
+
+    def test_reads_are_bounded_even_for_a_large_single_material(self):
+        class Bounded(io.BytesIO):
+            def read(self, count=-1):
+                self.assertion(count)
+                return super().read(count)
+            def assertion(self, count):
+                if not 0 < count <= materials.BUFFER_BYTES:
+                    raise AssertionError(count)
+        source = Bounded(('λ😀x' * 300000).encode())
+        actual = materials.material_identities(source, 'X.lean', 'opaque', 'key')
+        self.assertEqual(actual[0], materials.statement_address(source.getvalue()))
+
+    def test_duplicate_json_fields_are_rejected(self):
+        with self.assertRaisesRegex(ValueError, 'duplicate'):
+            publication.read_json('{"modules": [], "modules": []}')
+
+    def test_stream_comparison_detects_collision_after_chunk_boundary(self):
+        prefix = b'x' * (materials.BUFFER_BYTES + 7)
+        self.assertTrue(materials.streams_equal(io.BytesIO(prefix), io.BytesIO(prefix)))
+        self.assertFalse(materials.streams_equal(io.BytesIO(prefix + b'a'), io.BytesIO(prefix + b'b')))
+        self.assertFalse(materials.streams_equal(io.BytesIO(prefix), io.BytesIO(prefix + b'b')))
+
+    def test_compactor_rejects_duplicate_spool_and_hash_collision(self):
+        for duplicate in [True, False]:
+            with self.subTest(duplicate=duplicate), tempfile.TemporaryDirectory() as directory:
+                directory = Path(directory)
+                spool = directory / 'spool'
+                spool.mkdir()
+                (spool / '0.statement').write_text('first')
+                (spool / '1.statement').write_text('second')
+                declarations = [dict(axioms=[], include_in_statement=False, kind='theorem',
+                    material_file=('0.statement' if duplicate else str(n) + '.statement'), name=str(n), name_key=str(n)) for n in range(2)]
+                report = directory / 'spool.json'
+                report.write_text(json.dumps(dict(schema=materials.SPOOL_SCHEMA, modules=[dict(module='X',
+                    source_path='X.lean', source_sha256='sha256:' + 'a' * 64, imports=[], declarations=declarations)])))
+                output = directory / 'report.json'
+                with patch.object(materials, 'material_identities', return_value=('sha256:' + 'b' * 64, 'sha256:' + 'c' * 64)):
+                    with self.assertRaisesRegex(ValueError, 'reused|collision'):
+                        materials.compact(report, spool, output)
+                self.assertFalse(output.exists())
+
+
+
+class PublicationTests(unittest.TestCase):
+    def test_rejected_complete_bundle_never_replaces_published_bytes(self):
+        import subprocess
+        import zipfile
+        for damage in ['material', 'missing', 'duplicate', 'unreferenced', 'nonobject-provenance',
+                       'provenance', 'attestation', 'declaration-identity', 'noncanonical']:
+            with self.subTest(damage=damage), tempfile.TemporaryDirectory() as directory:
+                directory = Path(directory)
+                spool = directory / 'spool'
+                spool.mkdir()
+                (spool / '0.statement').write_text('statement-v1(λ😀)')
+                declaration = dict(axioms=[], include_in_statement=False, kind='opaque',
+                    material_file='0.statement', name='x', name_key='ns(n0,1:x)')
+                raw = dict(schema=materials.SPOOL_SCHEMA, modules=[dict(module='X', source_path='X.lean',
+                    source_sha256='sha256:' + 'a' * 64, imports=[], declarations=[declaration])])
+                source = directory / 'spool.json'
+                source.write_text(json.dumps(raw))
+                report = directory / 'report.json'
+                materials.compact(source, spool, report)
+                helper = Path(publication.__file__).resolve().parent.parent / 'scripts/report/lean-report-input.sh'
+                pair, repository = subprocess.check_output([str(helper), 'coordinates', 'b'*64, 'b'*64, 'c'*64, 'd'*64], text=True).split()
+                coordinates = dict(repository=repository, producer='b'*64, sources='c'*64, config='d'*64, input=pair)
+                publication.write_sidecars(report, coordinates)
+                live = directory / 'live.json'
+                publication.publish(report, live, coordinates)
+                before = {suffix: publication.member(live, suffix).read_bytes() for suffix in publication.SUFFIXES}
+                if damage in ['material', 'missing', 'duplicate', 'unreferenced']:
+                    path = publication.member(report, '.materials.zip')
+                    with zipfile.ZipFile(path) as archive:
+                        entries = [(name, archive.read(name)) for name in archive.namelist()]
+                    if damage == 'material': entries[0] = (entries[0][0], b'different valid UTF-8')
+                    if damage == 'missing': entries = []
+                    if damage == 'duplicate': entries += entries
+                    if damage == 'unreferenced': entries.append(('sha256/' + 'f'*64, b'extra'))
+                    with zipfile.ZipFile(path, 'w') as archive:
+                        for name, data in entries: archive.writestr(name, data)
+                elif damage == 'nonobject-provenance':
+                    publication.member(report, '.provenance.json').write_text('[]')
+                elif damage == 'provenance':
+                    value = json.loads(publication.member(report, '.provenance.json').read_text())
+                    value['producer_sha256'] = 'f'*64
+                    publication.member(report, '.provenance.json').write_text(json.dumps(value))
+                elif damage == 'attestation':
+                    publication.member(report, '.input.attestation').write_text('malformed\n')
+                elif damage == 'declaration-identity':
+                    value = json.loads(report.read_text())
+                    value['modules'][0]['declarations'][0]['statement_id'] = 'sha256:' + 'f'*64
+                    report.write_bytes(materials.canonical_json(value))
+                    publication.write_sidecars(report, coordinates)
+                else:
+                    report.write_text(json.dumps(json.loads(report.read_text())))
+                    publication.write_sidecars(report, coordinates)
+                with self.assertRaises((ValueError, TypeError)):
+                    publication.publish(report, live, coordinates)
+                self.assertEqual(before, {suffix: publication.member(live, suffix).read_bytes() for suffix in publication.SUFFIXES})
+
+
+if __name__ == '__main__':
+    unittest.main()

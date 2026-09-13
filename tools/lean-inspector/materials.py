@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import hashlib
+import codecs
 import json
 import os
 import pathlib
@@ -12,6 +13,7 @@ import shutil
 import stat
 import sys
 import tempfile
+import time
 import zipfile
 from typing import BinaryIO, Iterable
 
@@ -22,6 +24,7 @@ STATEMENT_DOMAIN = b"trureturing:statement:v1\0"
 MATERIAL_FILE = re.compile(r"^[0-9]+\.statement$")
 SUPPLEMENTARY_SCALAR = re.compile(r"[\U00010000-\U0010FFFF]")
 ARCHIVE_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
+BUFFER_BYTES = 64 * 1024
 
 
 def escape_supplementary_scalar(match: re.Match[str]) -> str:
@@ -78,6 +81,42 @@ def declaration_statement_id(source_path: str, kind: str, name_key: str, materia
     }))
 
 
+def material_identities(source: BinaryIO, source_path: str, kind: str, name_key: str,
+                        chunk_size: int = BUFFER_BYTES) -> tuple[str, str]:
+    """Hash both identities in one bounded, strictly decoded UTF-8 pass.
+
+    The canonical declaration JSON has its material as its last field. JSON
+    escaping is scalar-local; the incremental decoder retains only an incomplete
+    UTF-8 scalar between reads, including at EOF.
+    """
+    prefix = canonical_json({
+        "declaration_name_key": name_key, "kind": kind, "module_path": source_path,
+        "schema": "declaration-statement-v1", "statement_material": "",
+    })[:-3]
+    raw = hashlib.sha256(STATEMENT_DOMAIN)
+    declaration = hashlib.sha256(STATEMENT_DOMAIN + prefix)
+    decoder = codecs.getincrementaldecoder("utf-8")("strict")
+    while True:
+        block = source.read(chunk_size)
+        raw.update(block)
+        text = decoder.decode(block, final=not block)
+        encoded = json.dumps(text, ensure_ascii=False, allow_nan=False)[1:-1]
+        declaration.update(SUPPLEMENTARY_SCALAR.sub(escape_supplementary_scalar, encoded).encode("utf-8"))
+        if not block:
+            break
+    declaration.update(b'"}\n')
+    return "sha256:" + raw.hexdigest(), "sha256:" + declaration.hexdigest()
+
+
+def streams_equal(left: BinaryIO, right: BinaryIO) -> bool:
+    while True:
+        block = left.read(BUFFER_BYTES)
+        if block != right.read(BUFFER_BYTES):
+            return False
+        if not block:
+            return True
+
+
 def require_keys(value: object, expected: set[str], context: str) -> dict:
     if not isinstance(value, dict) or set(value) != expected:
         raise ValueError(f"{context} has unexpected fields")
@@ -106,6 +145,7 @@ def regular_spool_file(spool: pathlib.Path, relative: str) -> pathlib.Path:
 
 
 def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Path) -> None:
+    started = time.perf_counter_ns()
     root = json.loads(spool_report.read_text(encoding="utf-8"))
     require_keys(root, {"modules", "schema"}, "Inspector spool")
     if root["schema"] != SPOOL_SCHEMA or not isinstance(root["modules"], list):
@@ -190,23 +230,21 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
                     raise ValueError(f"statement material spool is reused: {material_file}")
                 referenced_spools.add(material_file)
                 material_path = regular_spool_file(spool, material_file)
-                material = material_path.read_bytes()
                 try:
-                    material.decode("utf-8", errors="strict")
+                    with material_path.open("rb") as source:
+                        type_sha256, declaration_id = material_identities(source, source_path, kind, name_key)
                 except UnicodeDecodeError as error:
                     raise ValueError(
                         f"statement material spool is not strict UTF-8: {material_file}") from error
-                type_sha256 = statement_address(material)
-                declaration_id = declaration_statement_id(source_path, kind, name_key, material.decode("utf-8"))
                 destination = staged_materials / type_sha256[7:]
                 if destination.exists():
-                    if destination.read_bytes() != material:
-                        raise ValueError(
-                            f"statement material address collision: {type_sha256}")
+                    with destination.open("rb") as left, material_path.open("rb") as right:
+                        if not streams_equal(left, right):
+                            raise ValueError(f"statement material address collision: {type_sha256}")
                     material_path.unlink()
                 else:
+                    material_bytes += material_path.stat().st_size
                     os.replace(material_path, destination)
-                    material_bytes += len(material)
                 declarations.append({
                     "axioms": require_sorted_strings(
                         declaration["axioms"], "Inspector spool declaration axioms"),
@@ -267,6 +305,12 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
             f"declarations={declaration_count} unique_bytes={material_bytes} "
             f"report_bytes={len(report_bytes)}"
         )
+        if os.environ.get("STRATALINT_INSPECTOR_PROFILE") == "1":
+            import resource
+            rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+            if sys.platform != "darwin":
+                rss *= 1024
+            print(f"LEAN_INSPECTOR_PROFILE compact_ns={time.perf_counter_ns() - started} max_process_rss_bytes={rss}")
     finally:
         shutil.rmtree(staged_root, ignore_errors=True)
 

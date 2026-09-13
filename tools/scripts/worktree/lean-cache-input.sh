@@ -15,8 +15,8 @@ if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
       *) echo "lean-cache-input: unknown argument '$1'" >&2; exit 2 ;;
     esac
   done
-  [[ "$COMMAND" == "address" || "$COMMAND" == "dependency-address" ]] \
-    || { echo "usage: lean-cache-input.sh address|dependency-address --repository DIR" >&2; exit 2; }
+  [[ "$COMMAND" == "address" || "$COMMAND" == "dependency-address" || "$COMMAND" == "build-snapshot-address" ]] \
+    || { echo "usage: lean-cache-input.sh address|dependency-address|build-snapshot-address --repository DIR" >&2; exit 2; }
   [[ -n "$REPOSITORY" && "$REPOSITORY" == /* && -d "$REPOSITORY" ]] \
     || { echo "lean-cache-input: --repository requires an absolute directory" >&2; exit 2; }
   REPOSITORY="$(cd "$REPOSITORY" && pwd -P)"
@@ -69,6 +69,10 @@ prepare_memo() {
   : > "$MEMO_ELIGIBLE"
   : > "$MEMO_SNAPSHOT"
   : > "$MEMO_UPDATES"
+  # A native facet already runs within the guarded writer session. Its input
+  # fingerprint must not spawn a nested .NET build just to consult this optional
+  # memo; the existing raw-file hashing path produces the identical address.
+  [[ "${STRATALINT_LEAN_INPUT_MEMO_DISABLED:-0}" != 1 ]] || return 0
   [[ -n "$MEMO_ROOT" ]] || return 0
 
   local status="$TMP_ROOT/git-status"
@@ -388,6 +392,14 @@ if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
   prepare_memo
   if [[ "$COMMAND" == "dependency-address" ]]; then
     lean_dependency_sha256
+  elif [[ "$COMMAND" == "build-snapshot-address" ]]; then
+    # One immutable CI snapshot carries both ordinary Lean and native Inspector
+    # facets. Preserve the existing Lean identities and restore-prefix scope;
+    # distinguish producer-only changes in this snapshot's final generation.
+    snapshot_manifest="$TMP_ROOT/build-snapshot.manifest"
+    lean_cache_address > "$snapshot_manifest"
+    "$REPOSITORY/tools/scripts/report/lean-report-input.sh" address --repository "$REPOSITORY" >> "$snapshot_manifest"
+    hash_file "$snapshot_manifest"
   else
     lean_cache_address
   fi

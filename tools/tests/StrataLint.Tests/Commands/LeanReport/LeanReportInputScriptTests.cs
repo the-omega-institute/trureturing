@@ -19,8 +19,7 @@ public sealed partial class LeanReportInputScriptTests
     private static readonly string PairScriptPath = string.Join(
         '/', "tools", "scripts", "lean-report-pair.sh");
     private const string SupervisorScriptPath = "tools/scripts/report/report-supervisor.sh";
-    private const string CiBaselineScriptPath =
-        "tools/scripts/report/lean-report-ci-baseline.sh";
+    private const string NativeProducerPath = "tools/lean-inspector/native.py";
     private const string CacheEnsureScriptPath =
         "tools/scripts/worktree/lean-cache-ensure.sh";
     private const string CachePublishScriptPath =
@@ -200,7 +199,7 @@ public sealed partial class LeanReportInputScriptTests
         Assert.Contains(RawReportPath, paths);
         Assert.Contains(LeanModelsPath, paths);
         Assert.Contains(SupervisorScriptPath, paths);
-        Assert.Contains(CiBaselineScriptPath, paths);
+        Assert.Contains(NativeProducerPath, paths);
         Assert.Contains(CacheEnsureScriptPath, paths);
         Assert.Contains(CachePublishScriptPath, paths);
         Assert.Contains(ResourceObservationLibraryPath, paths);
@@ -431,14 +430,14 @@ public sealed partial class LeanReportInputScriptTests
                         "tools", "scripts", "report", "report-supervisor.sh"),
                     Encoding.UTF8));
             Write(
-                CiBaselineScriptPath,
+                NativeProducerPath,
                 File.ReadAllText(
                     Path.Combine(
                         TestRepositoryLayout.FindRoot(),
-                        "tools", "scripts", "report", "lean-report-ci-baseline.sh"),
+                        "tools", "lean-inspector", "native.py"),
                     Encoding.UTF8));
             Write(CacheEnsureScriptPath, "#!/usr/bin/env bash\n");
-            Write("tools/scripts/report/lean-report-cache.sh", "#!/usr/bin/env bash\n");
+            Write("tools/lean-inspector/publication.py", "#!/usr/bin/env bash\n");
             Write(
                 CachePublishScriptPath,
                 File.ReadAllText(

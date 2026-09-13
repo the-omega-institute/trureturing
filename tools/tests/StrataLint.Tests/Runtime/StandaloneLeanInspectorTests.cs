@@ -264,11 +264,18 @@ public sealed class StandaloneLeanInspectorTests
                 IO.FS.withFile (name ++ ".statement") .write fun handle => do
                   handle.putStr (encodeStatement info)
                   handle.flush
+                IO.FS.withFile (name ++ ".streamed") .write fun handle => do
+                  writeStatement ⟨IO.FS.Stream.ofHandle handle, ← IO.mkRef ByteArray.empty⟩ info
+                  handle.flush
             """);
         foreach (var item in cases)
+        {
+            Assert.Equal(File.ReadAllBytes(Path.Combine(temporary.Path, item.Name + ".statement")),
+                File.ReadAllBytes(Path.Combine(temporary.Path, item.Name + ".streamed")));
             Assert.Equal(
                 Encoding.UTF8.GetBytes("statement-v1(uparams=[],type=" + item.Bytes + ")"),
                 File.ReadAllBytes(Path.Combine(temporary.Path, item.Name + ".statement")));
+        }
     }
 
     [Fact]
@@ -297,6 +304,9 @@ public sealed class StandaloneLeanInspectorTests
                 IO.FS.withFile (name ++ ".statement") .write fun handle => do
                   handle.putStr (encodeStatement info)
                   handle.flush
+                IO.FS.withFile (name ++ ".streamed") .write fun handle => do
+                  writeStatement ⟨IO.FS.Stream.ofHandle handle, ← IO.mkRef ByteArray.empty⟩ info
+                  handle.flush
             """);
         var expected = new Dictionary<string, string>
         {
@@ -310,7 +320,10 @@ public sealed class StandaloneLeanInspectorTests
         foreach (var kind in new[] { "axiom", "quotient", "constructor", "recursor", "inductive" })
             expected[kind] = "statement-v1(uparams=[],type=eb(1))";
         foreach (var (name, bytes) in expected)
+        {
             Assert.Equal(Encoding.UTF8.GetBytes(bytes), File.ReadAllBytes(Path.Combine(temporary.Path, name + ".statement")));
+            Assert.Equal(Encoding.UTF8.GetBytes(bytes), File.ReadAllBytes(Path.Combine(temporary.Path, name + ".streamed")));
+        }
     }
 
     [Fact]
@@ -326,8 +339,12 @@ public sealed class StandaloneLeanInspectorTests
               IO.FS.withFile "shared.statement" .write fun handle => do
                 handle.putStr (encodeStatement info)
                 handle.flush
+              IO.FS.withFile "streamed.statement" .write fun handle => do
+                writeStatement ⟨IO.FS.Stream.ofHandle handle, ← IO.mkRef ByteArray.empty⟩ info
+                handle.flush
             """);
         var observed = File.ReadAllBytes(Path.Combine(temporary.Path, "shared.statement"));
+        Assert.Equal(observed, File.ReadAllBytes(Path.Combine(temporary.Path, "streamed.statement")));
         // Each app adds five framing bytes around two shared children.
         var expandedBytes = (14 + 5) * (1 << 16) - 5;
         Assert.Equal(expandedBytes + Encoding.UTF8.GetByteCount("statement-v1(uparams=[],type=)"), observed.Length);
@@ -348,7 +365,12 @@ public sealed class StandaloneLeanInspectorTests
               IO.FS.withFile "literal.statement" .write fun handle => do
                 handle.putStr (encodeStatement info)
                 handle.flush
+              IO.FS.withFile "streamed.statement" .write fun handle => do
+                writeStatement ⟨IO.FS.Stream.ofHandle handle, ← IO.mkRef ByteArray.empty⟩ info
+                handle.flush
             """);
+        Assert.Equal(File.ReadAllBytes(Path.Combine(temporary.Path, "literal.statement")),
+            File.ReadAllBytes(Path.Combine(temporary.Path, "streamed.statement")));
         Assert.Equal(
             Encoding.UTF8.GetBytes("statement-v1(uparams=[],type=ei(lt(131072:" + new string('é', 65536) + ")))"),
             File.ReadAllBytes(Path.Combine(temporary.Path, "literal.statement")));

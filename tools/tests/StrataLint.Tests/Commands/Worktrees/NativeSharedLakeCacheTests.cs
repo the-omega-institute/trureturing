@@ -96,7 +96,7 @@ def prepare_helpers():
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(path, target)
     shutil.copytree(source / 'tools/lean-inspector', reader / 'tools/lean-inspector',
-        ignore=shutil.ignore_patterns('__pycache__'))
+        ignore=shutil.ignore_patterns('__pycache__', '.lake'))
     shutil.copy2(source / 'Makefile', reader / 'Makefile')
     for name in ['StrataLint.Cli', 'StrataLint.Engine', 'StrataLint.Scribe',
             'StrataLint.Scribe.Documents', 'Trureturing.Truth', 'Architecture']:
@@ -109,12 +109,16 @@ def prepare_helpers():
     (reader / 'Trureturing.lean').write_text('import Fixture\n')
     with (reader / 'lakefile.toml').open('a') as f:
         f.write('\n[[lean_lib]]\nname = "D5"\nroots = ["D5.Probe"]\n')
+        f.write('\n[[require]]\nname = "leanInspector"\npath = "tools/lean-inspector"\n')
+    manifest = json.loads((reader / 'lake-manifest.json').read_text())
+    manifest['packages'].append(dict(type='path', scope='', name='leanInspector', manifestFile='lake-manifest.json',
+        inherited=False, dir='tools/lean-inspector', configFile='lakefile.lean'))
+    (reader / 'lake-manifest.json').write_text(json.dumps(manifest))
     git(reader, 'add', '.')
     git(reader, 'commit', '-m', 'actual helper fixture')
     ENV['MSBUILDDISABLENODEREUSE'] = '1'
     ENV['DOTNET_CLI_USE_MSBUILD_SERVER'] = '0'
     ENV['STRATALINT_LEAN_INPUT_MEMO_ROOT'] = str(P / 'memo')
-    ENV['STRATALINT_REPORT_CACHE_ROOT'] = str(P / 'report-cache')
     ENV['XDG_CACHE_HOME'] = str(P / 'xdg-cache')
     project = reader / 'tools/StrataLint.Cli/StrataLint.Cli.csproj'
     run(['dotnet', 'restore', project, '--locked-mode', '--disable-parallel'], reader)

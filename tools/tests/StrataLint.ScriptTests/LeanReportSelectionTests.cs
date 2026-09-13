@@ -7,15 +7,7 @@ public sealed class LeanReportSelectionTests
     [Theory]
     [InlineData("registration_failures")]
     [InlineData("glob_semantics")]
-    [InlineData("cohort_changes")]
     [InlineData("source_and_policy_identity")]
-    [InlineData("failure_before_build")]
-    [InlineData("delta_records")]
-    [InlineData("planner_changes")]
-    [InlineData("entrypoint_failures")]
-    [InlineData("malformed_provenance")]
-    [InlineData("malformed_reports")]
-    [InlineData("seed_metadata_io")]
     [InlineData("source_traversal_io")]
     public void RegisteredSelectionContract(string scenario)
     {

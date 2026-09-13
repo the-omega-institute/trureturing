@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
-"""Consume the FILEMAP-registered report input and impact declaration.
+"""Consume the FILEMAP-registered report input declaration.
 
-Lake owns compilation. This reader only expands authored path sets and cohort
-relations; report imports and typed claims are never selection authorities.
+Lake owns compilation. This reader only expands authored path sets; Lake owns dependency and invalidation semantics.
 """
 import argparse
 import json
@@ -85,7 +84,7 @@ class Selection:
         except (OSError, UnicodeError, ValueError) as error:
             fail('declaration', str(error))
         fields(self.data, ('schema_version', 'report_modules', 'inspector_sources',
-                          'config_inputs', 'producer_scopes', 'impact_cohorts'), 'declaration')
+                          'config_inputs', 'producer_scopes'), 'declaration')
         if type(self.data['schema_version']) is not int or self.data['schema_version'] != 1:
             fail('schema_version', 'unsupported version')
         for name in ('report_modules', 'inspector_sources', 'config_inputs'):
@@ -98,32 +97,7 @@ class Selection:
         for anchor in (MANIFEST, LOADER):
             if dict(pattern=anchor, optional=False) not in required:
                 fail('producer_scopes.lean-report', f'missing required registration {anchor}')
-        cohorts = self.data['impact_cohorts']
-        if not isinstance(cohorts, list) or not cohorts:
-            fail('impact_cohorts', 'expected nonempty cohort list')
-        self.cohorts = {}
-        for cohort in cohorts:
-            fields(cohort, ('id', 'members', 'exclude', 'depends_on'), 'impact_cohorts')
-            name = cohort['id']
-            if not isinstance(name, str) or not re.fullmatch('[A-Za-z0-9][A-Za-z0-9_-]*', name):
-                fail('impact_cohorts', f'invalid id {name!r}')
-            if name in self.cohorts:
-                fail(name, 'duplicate cohort registration')
-            if not cohort['members']:
-                fail(name, 'members must be nonempty')
-            members = patterns(cohort['members'], name + '.members')
-            excluded = patterns(cohort['exclude'], name + '.exclude')
-            dependencies = cohort['depends_on']
-            if (not isinstance(dependencies, list)
-                    or any(not isinstance(d, str) for d in dependencies)
-                    or len(set(dependencies)) != len(dependencies)):
-                fail(name, 'depends_on must be unique group IDs')
-            self.cohorts[name] = (members, excluded, dependencies)
-        for name, (_, _, dependencies) in self.cohorts.items():
-            for dependency in dependencies:
-                if dependency not in self.cohorts:
-                    fail(name, f'unknown depends_on group {dependency}')
-        self.modules()  # Includes exactly-one ownership for the current universe.
+        self.modules()
 
     def safe_file(self, relative):
         compile_glob(relative, 'path')
@@ -180,23 +154,11 @@ class Selection:
         self._expanded[name] = list(result)
         return self._expanded[name]
 
-    def owner(self, path):
-        universe = self.data['report_modules']
-        if (not any(compile_glob(p['pattern'], 'report_modules').fullmatch(path) for p in universe['include'])
-                or any(p.fullmatch(path) for p in patterns(universe['exclude'], 'report_modules.exclude'))):
-            fail(path, 'current/removed path is outside report_modules registration')
-        owners = [name for name, (members, excluded, _) in self.cohorts.items()
-                  if any(m.fullmatch(path) for m in members) and not any(e.fullmatch(path) for e in excluded)]
-        if len(owners) != 1:
-            fail(path, f'expected exactly one impact_cohorts owner, got {owners}')
-        return owners[0]
-
     def modules(self):
         result = {}
         for path in self.expand('report_modules'):
             if not path.endswith('.lean'):
                 fail(path, 'report_modules must select Lean source files')
-            self.owner(path)
             name = path[:-5].replace('/', '.')
             if name in result:
                 fail(path, f'conflicting module name {name}')
@@ -222,20 +184,6 @@ class Selection:
         value['producer_scopes'] = {name: self.data['producer_scopes'][name]
             for name in (SCOPES if scope == 'scribe-content' else ('lean-report',))}
         return json.dumps(value, sort_keys=True, separators=(',', ':'), ensure_ascii=True) + '\n'
-
-    def affected(self, changed_paths, current):
-        dirty = {self.owner(path) for path in changed_paths}
-        reverse = {name: set() for name in self.cohorts}
-        for name, (_, _, dependencies) in self.cohorts.items():
-            for dependency in dependencies:
-                reverse[dependency].add(name)
-        pending = list(dirty)
-        while pending:
-            for dependent in reverse[pending.pop()]:
-                if dependent not in dirty:
-                    dirty.add(dependent)
-                    pending.append(dependent)
-        return sorted(name for name, path in current.items() if self.owner(path) in dirty)
 
     def scribe_affected(self, changed_paths):
         # Match declarations, including deleted optional/growth-glob members.

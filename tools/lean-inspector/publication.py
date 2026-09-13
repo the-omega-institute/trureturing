@@ -1,0 +1,244 @@
+#!/usr/bin/env python3
+"""Inspector-owned canonical bundle validation and private publication.
+
+Optional artifacts are validated before use. This module has no reuse index,
+source planner, remote transport, or persistent store.
+"""
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import shutil
+import stat
+import subprocess
+import tempfile
+import zipfile
+
+import materials
+
+RAW = 'raw-lean-report.json'
+SUFFIXES = ('', '.sha256', '.input.attestation', '.provenance.json', '.materials.zip')
+SHA = re.compile(r'sha256:[0-9a-f]{64}')
+HEX = re.compile(r'[0-9a-f]{64}')
+KINDS = {'axiom', 'def', 'theorem', 'opaque', 'quotient', 'constructor', 'recursor', 'inductive'}
+
+
+def unique_object(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError(f'duplicate JSON field: {key}')
+        result[key] = value
+    return result
+
+
+def read_json(data):
+    return json.loads(data, object_pairs_hook=unique_object)
+
+
+def member(report, suffix):
+    return Path(str(report) + suffix)
+
+
+def digest(path):
+    result = hashlib.sha256()
+    with Path(path).open('rb') as source:
+        for block in iter(lambda: source.read(materials.BUFFER_BYTES), b''):
+            result.update(block)
+    return result.hexdigest()
+
+
+def coordinates(repository):
+    helper = Path(repository) / 'tools/scripts/report/lean-report-input.sh'
+    env = dict(os.environ, STRATALINT_LEAN_INPUT_MEMO_ROOT=str(Path(repository) / '.lake/lean-input-memo'),
+               STRATALINT_LEAN_INPUT_MEMO_DISABLED='1')
+    values = subprocess.check_output([str(helper), 'address', '--repository', str(repository)], text=True, env=env).strip().split(' ')
+    if len(values) != 4 or any(not HEX.fullmatch(value) for value in values):
+        raise ValueError('malformed repository input address')
+    repository_id, producer, sources, config = values
+    pair = subprocess.check_output([str(helper), 'coordinates', producer, producer, sources, config], text=True).strip().split(' ')
+    if len(pair) != 2 or pair[1] != repository_id or not HEX.fullmatch(pair[0]):
+        raise ValueError('malformed report input coordinates')
+    return dict(repository=repository_id, producer=producer, sources=sources, config=config, input=pair[0])
+
+
+def write_sidecars(report, inputs, mode='produced'):
+    sha = digest(report)
+    member(report, '.sha256').write_text(f'{sha}  {report.name}\n', encoding='ascii')
+    member(report, '.input.attestation').write_text(
+        'schema=stratalint-lean-report-input-attestation-v1\n'
+        f'repository_input_sha256={inputs["repository"]}\nproducer_sha256={inputs["producer"]}\nreport_sha256={sha}\n', encoding='ascii')
+    provenance = dict(schema='stratalint-lean-report-provenance-v1', side='candidate', mode=mode,
+        source_side='candidate', input_address='sha256:' + inputs['input'], producer_sha256=inputs['producer'],
+        repository_inspector_sha256=inputs['producer'], lean_sources_sha256=inputs['sources'],
+        lean_config_sha256=inputs['config'], report_sha256=sha)
+    member(report, '.provenance.json').write_text(json.dumps(provenance, separators=(',', ':')) + '\n', encoding='utf-8')
+
+
+def validate_rows(report, archive_path):
+    data = Path(report).read_bytes()
+    root = read_json(data)
+    materials.require_keys(root, {'modules', 'schema'}, 'report')
+    if root['schema'] != materials.REPORT_SCHEMA or not isinstance(root['modules'], list):
+        raise ValueError('invalid raw report schema')
+    if data != materials.canonical_json(root):
+        raise ValueError('noncanonical raw report bytes')
+    previous = None
+    paths = set()
+    references = {}
+    for row in root['modules']:
+        keys = {'module', 'source_path', 'source_sha256', 'imports', 'declarations'}
+        keys.update(key for key in ('information_registration_errors', 'utility_refutation') if key in row)
+        materials.require_keys(row, keys, 'module')
+        name, path, sha = row['module'], row['source_path'], row['source_sha256']
+        if (not isinstance(name, str) or not name or previous is not None and name <= previous
+                or not isinstance(path, str) or not path or path in paths
+                or not isinstance(sha, str) or not SHA.fullmatch(sha)):
+            raise ValueError('invalid or duplicate module/source binding')
+        previous = name
+        paths.add(path)
+        materials.require_sorted_strings(row['imports'], 'imports')
+        if 'information_registration_errors' in row:
+            materials.require_sorted_strings(row['information_registration_errors'], 'registration errors')
+        if 'utility_refutation' in row:
+            evidence = materials.require_keys(row['utility_refutation'], {'claim_gid', 'claim_source_path',
+                'claim_source_sha256', 'result_gid', 'is_closed_negation'}, 'utility refutation')
+            if (any(not isinstance(evidence[k], str) or not evidence[k] for k in ('claim_gid', 'claim_source_path', 'result_gid'))
+                    or not isinstance(evidence['claim_source_sha256'], str)
+                    or not SHA.fullmatch(evidence['claim_source_sha256']) or type(evidence['is_closed_negation']) is not bool):
+                raise ValueError('invalid typed refutation')
+        if not isinstance(row['declarations'], list):
+            raise ValueError('invalid declarations')
+        previous_key = None
+        for decl in row['declarations']:
+            materials.require_keys(decl, {'axioms', 'include_in_statement', 'kind', 'name', 'name_key', 'statement_id', 'type_sha256'}, 'declaration')
+            key = decl['name_key']
+            if (not isinstance(key, str) or not key or previous_key is not None and key <= previous_key
+                    or not isinstance(decl['name'], str) or not decl['name'] or decl['kind'] not in KINDS
+                    or type(decl['include_in_statement']) is not bool
+                    or any(not isinstance(decl[k], str) or not SHA.fullmatch(decl[k]) for k in ('statement_id', 'type_sha256'))):
+                raise ValueError('invalid or duplicate declaration')
+            previous_key = key
+            materials.require_sorted_strings(decl['axioms'], 'axioms')
+            references.setdefault('sha256/' + decl['type_sha256'][7:], []).append((row, decl))
+    with zipfile.ZipFile(archive_path) as archive:
+        names = archive.namelist()
+        if len(names) != len(references) or set(names) != set(references):
+            raise ValueError('duplicate, missing, or unreferenced material')
+        for name in names:
+            info = archive.getinfo(name)
+            if info.is_dir() or stat.S_ISLNK(info.external_attr >> 16):
+                raise ValueError('nonregular material')
+            for row, decl in references[name]:
+                with archive.open(info) as source:
+                    actual = materials.material_identities(source, row['source_path'], decl['kind'], decl['name_key'])
+                if actual != (decl['type_sha256'], decl['statement_id']):
+                    raise ValueError('material or declaration identity mismatch')
+    return root['modules']
+
+
+def validate_bundle(report, expected=None):
+    report = Path(report)
+    for suffix in SUFFIXES:
+        path = member(report, suffix)
+        if not path.is_file() or not path.stat().st_size:
+            raise ValueError(f'missing bundle member: {path.name}')
+    sha = digest(report)
+    if member(report, '.sha256').read_text(encoding='ascii') != f'{sha}  {report.name}\n':
+        raise ValueError('report SHA mismatch')
+    provenance = read_json(member(report, '.provenance.json').read_bytes())
+    materials.require_keys(provenance, {'schema', 'side', 'mode', 'source_side', 'input_address', 'producer_sha256',
+        'repository_inspector_sha256', 'lean_sources_sha256', 'lean_config_sha256', 'report_sha256'}, 'provenance')
+    if (provenance['schema'] != 'stratalint-lean-report-provenance-v1' or provenance['side'] != 'candidate'
+            or provenance['source_side'] != 'candidate' or provenance['mode'] not in ('produced', 'cached')
+            or provenance['report_sha256'] != sha or not SHA.fullmatch(provenance['input_address'])
+            or any(not HEX.fullmatch(provenance[k]) for k in ('producer_sha256', 'repository_inspector_sha256',
+                'lean_sources_sha256', 'lean_config_sha256', 'report_sha256'))):
+        raise ValueError('invalid provenance')
+    lines = member(report, '.input.attestation').read_text(encoding='ascii').splitlines()
+    if (len(lines) != 4 or lines[0] != 'schema=stratalint-lean-report-input-attestation-v1'
+            or not re.fullmatch('repository_input_sha256=[0-9a-f]{64}', lines[1])
+            or lines[2] != 'producer_sha256=' + provenance['producer_sha256'] or lines[3] != 'report_sha256=' + sha):
+        raise ValueError('invalid input attestation')
+    helper = Path(__file__).resolve().parent.parent / 'scripts/report/lean-report-input.sh'
+    coordinates = subprocess.check_output([str(helper), 'coordinates',
+        *(provenance[k] for k in ('producer_sha256', 'repository_inspector_sha256',
+                                  'lean_sources_sha256', 'lean_config_sha256'))], text=True).strip().split(' ')
+    if coordinates != [provenance['input_address'][7:], lines[1].split('=', 1)[1]]:
+        raise ValueError('bundle input coordinate mismatch')
+    if expected is not None:
+        wanted = {'input_address': 'sha256:' + expected['input'], 'producer_sha256': expected['producer'],
+            'repository_inspector_sha256': expected['producer'], 'lean_sources_sha256': expected['sources'],
+            'lean_config_sha256': expected['config']}
+        if any(provenance[k] != v for k, v in wanted.items()) or lines[1] != 'repository_input_sha256=' + expected['repository']:
+            raise ValueError('stale input/provenance')
+    return validate_rows(report, member(report, '.materials.zip'))
+
+
+def zip_files(destination, paths):
+    with zipfile.ZipFile(destination, 'w', compression=zipfile.ZIP_STORED, allowZip64=True) as archive:
+        for name, source in paths:
+            info = zipfile.ZipInfo(name, materials.ARCHIVE_TIMESTAMP)
+            info.create_system = 3
+            info.external_attr = (stat.S_IFREG | 0o644) << 16
+            with Path(source).open('rb') as reader, archive.open(info, 'w', force_zip64=Path(source).stat().st_size >= zipfile.ZIP64_LIMIT) as writer:
+                shutil.copyfileobj(reader, writer, materials.BUFFER_BYTES)
+
+
+def unpack(artifact, directory, suffixes=SUFFIXES):
+    expected = {RAW + suffix for suffix in suffixes}
+    with zipfile.ZipFile(artifact) as archive:
+        if len(archive.namelist()) != len(expected) or set(archive.namelist()) != expected:
+            raise ValueError('invalid native artifact members')
+        for name in sorted(expected):
+            with archive.open(name) as reader, (Path(directory) / name).open('wb') as writer:
+                shutil.copyfileobj(reader, writer, materials.BUFFER_BYTES)
+    return Path(directory) / RAW
+
+
+def publish(report, destination, expected):
+    destination = Path(destination)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    validate_bundle(report, expected)
+    with tempfile.TemporaryDirectory(prefix='.lean-report.', dir=destination.parent) as directory:
+        staged = Path(directory) / destination.name
+        for suffix in SUFFIXES:
+            shutil.copyfile(member(report, suffix), member(staged, suffix))
+        member(staged, '.sha256').write_text(f'{digest(staged)}  {staged.name}\n', encoding='ascii')
+        validate_bundle(staged, expected)
+        # Publish the validated report last. Concurrent readers fail closed on a
+        # transitional sidecar mismatch; they can never accept a mixed bundle.
+        for suffix in (*SUFFIXES[1:], ''):
+            os.replace(member(staged, suffix), member(destination, suffix))
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    sub = parser.add_subparsers(dest='command', required=True)
+    validate = sub.add_parser('validate')
+    validate.add_argument('report', type=Path)
+    validate.add_argument('--repository', type=Path)
+    stage = sub.add_parser('stage')
+    stage.add_argument('--bundle', required=True, type=Path)
+    stage.add_argument('--staging-directory', required=True, type=Path)
+    stage.add_argument('--repository', required=True, type=Path)
+    args = parser.parse_args()
+    expected = coordinates(args.repository) if args.repository else None
+    if args.command == 'validate':
+        validate_bundle(args.report, expected)
+    else:
+        output = args.staging_directory / RAW
+        publish(args.bundle, output, expected)
+        print(output)
+
+
+if __name__ == '__main__':
+    try:
+        main()
+    except (OSError, UnicodeError, ValueError, KeyError, TypeError, zipfile.BadZipFile, subprocess.CalledProcessError) as error:
+        print(f'lean-inspector-publication: {error}', file=__import__('sys').stderr)
+        raise SystemExit(1)
