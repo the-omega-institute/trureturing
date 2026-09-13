@@ -65,7 +65,11 @@ internal sealed class WilsonBalancedPrimeDivisorPairModSixRefutationDocument
                         + "S(140140) = 38, R(140140) = 141638, S(141601) = 141601, and "
                         + "R(141601) = 1 establish the balance and filters. Minimality and "
                         + "the prime/composite alternation sentence are not claimed."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a260310-balanced-prime-divisor-pair-mod-six-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula SFormula()
     {

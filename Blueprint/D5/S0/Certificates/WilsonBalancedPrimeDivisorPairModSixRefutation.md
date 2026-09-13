@@ -58,6 +58,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/WilsonBalancedPrimeDivisorPairModSixRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a260310-balanced-prime-divisor-pair-mod-six-refutation` (refuted) by `D5/S0/Certificates/WilsonBalancedPrimeDivisorPairModSixRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a260310-balanced-prime-divisor-pair-mod-six-refutation","declaration_gid":"D5/S0/Certificates/WilsonBalancedPrimeDivisorPairModSixRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Robert G. Wilson v; Juri-Stepan Gerasimov (2015). *OEIS A260310, Pairs with balanced sums of prime divisors (A008472) and inverse prime divisors (A069359), ordered by larger members*. URL: <https://oeis.org/A260310>.
