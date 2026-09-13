@@ -2,12 +2,13 @@
    generality: G
    mirror-B: D5/B/S1/Words/Patterns/NoncrossingNonnestingGraphRecurrence
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Data.Fin.Tuple.Basic, mathlib/module/Mathlib.Data.Finset.Sum, mathlib/module/Mathlib.Data.Fintype.Card, mathlib/module/Mathlib.Data.Fintype.Powerset, mathlib/module/Mathlib.Data.Fintype.Prod, mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.Data.Fin.Tuple.Basic, mathlib/module/Mathlib.Data.Finset.Sum, mathlib/module/Mathlib.Data.Fintype.BigOperators, mathlib/module/Mathlib.Data.Fintype.Card, mathlib/module/Mathlib.Data.Fintype.Powerset, mathlib/module/Mathlib.Data.Fintype.Prod, mathlib/module/Mathlib.Tactic.Ring]
    utility: none
    digest: Literal labeled-graph avoidance and its allowed-vertex state yield Barker's recurrence. -/
 
 import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.Data.Finset.Sum
+import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Data.Fintype.Card
 import Mathlib.Data.Fintype.Powerset
 import Mathlib.Data.Fintype.Prod
@@ -344,5 +345,21 @@ private def goodGraphSuccEquiv (n : ℕ) :
       invFun := fun p => ⟨(p.1.1, p.2.1), ⟨p.1.2, p.2.2⟩⟩
       left_inv := by rintro ⟨⟨E, S⟩, hE, hS⟩; rfl
       right_inv := by rintro ⟨⟨E, hE⟩, ⟨S, hS⟩⟩; rfl }
+
+private noncomputable def X (n : ℕ) : ℕ := Fintype.card (GoodGraph n)
+
+private noncomputable def Y (n : ℕ) : ℕ :=
+  ∑ G : GoodGraph n, (Allowed G).card
+
+private noncomputable def Z (n : ℕ) : ℕ :=
+  ∑ G : GoodGraph n, 2 ^ (Allowed G).card
+
+private theorem X_succ (n : ℕ) : X (n + 1) = Z n := by
+  rw [X, Fintype.card_congr (goodGraphSuccEquiv n), Fintype.card_sigma, Z]
+  apply Finset.sum_congr rfl
+  intro G _
+  rw [Fintype.card_subtype]
+  change (Finset.univ.filter (fun S : Finset (Fin n) => S ⊆ Allowed G)).card = _
+  rw [Finset.filter_subset_univ, Finset.card_powerset]
 
 end D5.S1.Words.Patterns.NoncrossingNonnestingGraphRecurrence
