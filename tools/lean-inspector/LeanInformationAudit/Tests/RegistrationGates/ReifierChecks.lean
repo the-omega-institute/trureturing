@@ -200,4 +200,89 @@ run_meta do
   unless entry.derivedCertificate.isNone do throwError "manual entry marked derived"
   logInfo "P1_EMPTY_SLOTS C048 missing_witness; manual insertion preserved"
 
+
+-- Review R1/Q2: construct raw Expr inputs so elaborator reduction cannot mask extraction.
+def reviewSource (annotated : Bool) : MetaM (Expr × Expr) := do
+  let some e := InformationRegistry.find? (← getEnv) ``clean | throwError "missing clean"
+  let some cert := e.derivedCertificate | throwError "missing certificate"
+  let bool := mkConst ``Bool
+  let inner := Expr.lam `y bool (mkApp (mkConst ``Bool.not)
+    (mkApp (mkConst ``Bool.not) (mkBVar 0))) .default
+  let lhs := if annotated then mkAnnotation `readout (inner.bindingBody!) else mkApp inner (mkBVar 0)
+  let readout := Expr.lam `x bool (if annotated then inner.bindingBody! else lhs) .default
+  let descriptor := mkAppN cert.descriptor.getAppFn (cert.descriptor.getAppArgs.set! 5
+    (if annotated then mkAnnotation `readout readout else readout))
+  let .forallE n t b bi := cert.statement | throwError "expected forall"
+  return (descriptor, .forallE n t (mkAppN b.getAppFn (b.getAppArgs.set! 1 lhs)) bi)
+
+elab "review_readout " annotated:ident : term => do
+  return (← reviewSource (annotated.getId == `annotated)).1
+
+run_meta do
+  let (descriptor, expected) ← reviewSource false
+  let (_, actual, _) ← semanticSource descriptor
+  unless ← exact actual expected do throwError "raw_nested_source: authored inner beta redex erased"
+  logInfo "P1_REVIEW raw_nested_source accepted"
+
+run_meta do
+  let (descriptor, expected) ← reviewSource true
+  let (_, actual, _) ← semanticSource descriptor
+  unless ← exact actual expected do throwError "annotated_source: readout-head metadata erased"
+  logInfo "P1_REVIEW annotated_source accepted"
+
+run_meta do
+  for (name, annotated) in #[( `LeanInformationAudit.Tests.ReifierChecks.nestedPositive, false),
+      (`LeanInformationAudit.Tests.ReifierChecks.annotatedPositive, true)] do
+    let (_, type) ← reviewSource annotated
+    addDecl (.thmDecl { name, levelParams := [], type, value := mkConst ``clean })
+    unless (← getConstInfo name).type.equal type do throwError "raw theorem type not retained"
+
+register_information_theorem nestedPositive via (review_readout nested) in eqArena
+register_information_theorem annotatedPositive via (review_readout annotated) in eqArena
+
+theorem nestedNegative (x : Bool) : x.not.not = x := Bool.not_not _
+reject_via "nested_beta_in_readout" expects "StatementIdentityMismatch" in
+register_information_theorem nestedNegative
+  via (ReifierTemplates.pointwise (fun x : Bool => (fun y : Bool => y.not.not) x) (fun x => x)) in eqArena
+
+run_meta do
+  let (descriptor, _) ← reviewSource true
+  expectFailure "annotated_negative" "StatementIdentityMismatch" do
+    discard <| exactUse ``clean (← freezeArena ``eqArena) descriptor
+
+-- Review R2: persisted occurrence identity is raw, including optional certificate content.
+def expectPersistedRejection (label : String) (edit : InformationRegistryEntry → InformationRegistryEntry) : MetaM Unit := do
+  let env ← getEnv
+  let some entry := InformationRegistry.find? env ``clean | throwError "missing clean"
+  match ← validatePersistedEntry env (edit entry) with
+  | .error reason =>
+    unless reason.startsWith "P1.CertificateBindingMismatch" do throwError "{label}: {reason}"
+    logInfo m!"P1_REVIEW {label} {reason}"
+  | .ok () => throwError "{label}: expected rejection"
+
+run_meta expectPersistedRejection "certificate_omission" fun e => { e with derivedCertificate := none }
+
+run_meta do
+  let env ← getEnv
+  let some entry := InformationRegistry.find? env ``clean | throwError "missing clean"
+  match ← withOptions (fun o => o.set `informationReifier.fuel (0 : Nat)) (validatePersistedEntry env entry) with
+  | .error reason => unless reason.startsWith "P1.IncompleteCheck" do throwError reason
+  | .ok () => throwError "original zero fuel accepted"
+  withOptions (fun o => o.set `informationReifier.fuel (0 : Nat)) <|
+    expectPersistedRejection "certificate_omission_zero_fuel" fun e => { e with derivedCertificate := none }
+
+run_meta expectPersistedRejection "raw_occurrence_identity" fun e =>
+  let changed := { e with catalogId := e.effectiveCatalogId }
+  { changed with derivedCertificate := e.derivedCertificate.map fun c =>
+    { c with occurrence := occurrenceBinding changed } }
+
+-- Review R3: logged errors returning valid terms must roll back all six companions.
+theorem loggedError (x : Bool) : x.not.not = x := Bool.not_not _
+reject_via "logged_error_rollback" expects "review_logged_error" in
+register_information_theorem loggedError
+  via (ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
+  output_evidence (by
+    run_tac Lean.logError "review_logged_error"
+    exact inferInstance)
+
 end LeanInformationAudit.Tests.ReifierChecks
