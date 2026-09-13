@@ -1,0 +1,4 @@
+**定理 460.2（Vinogradov 素数等分布的上述输入推论）。**对每个固定无理 $\theta$，
+$$
+\frac1{\pi(X)}\sum_{p\le X}e(\theta p)\longrightarrow0.
+$$

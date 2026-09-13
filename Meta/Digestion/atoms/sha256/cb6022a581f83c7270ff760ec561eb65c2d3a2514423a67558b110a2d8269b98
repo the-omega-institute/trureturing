@@ -1,0 +1,6 @@
+**定义 469.4。**保留 P9 全部完整历史，定义
+$$
+\mathcal E_{X,L,u}=\{\gamma\in\mathcal E_X:\pi_L(\operatorname{end}\gamma)=u\},\qquad u\in\mathcal W_L.
+$$
+其概率始终从同一原历史概率求和。$q_L(n)=\sum_{j<L}G_jd_j(n)$ 是观察；不把它重新当作 P2 的素数终点。
+

@@ -1,0 +1,11 @@
+**定义 467.6。**保留原 CSA 的嵌套对象 $X=(C,A)$、
+$$
+C=(E,\prec,t_C,x_C,\sigma_C,\rho_C,\Omega),\qquad A\subseteq\Omega\subseteq E.
+$$
+$E\subset HF$ 有限，$\prec$ 为严格偏序；时间、位置、符号和来源均为整个 $E$ 上的全函数。原整数类型为
+$$
+J=(\{0\}\times\omega)\cup(\{1\}\times\omega_{>0}),
+\quad v(0,n)=n,\quad v(1,n)=-n,
+$$
+其序、加、乘沿 $v:J\to\mathbb Z_o$ 运输。时间取 $J$，位置取 $J^3$，符号取原正负一，来源取原有限带标签树；$e\prec f$ 强制 $t_C(e)<_Jt_C(f)$。原读数 $q_{\rm CSA}(X)=\sum_{e\in A}^J\sigma_C(e)$，普通值 $q_{\rm ord}=v\circ q_{\rm CSA}$。平衡在 $\Omega$ 上求同一原整数和为零。事件出现与来源身份不同，所有旧参数保持原对象。相位观察是 $[\,\alpha q_{\rm ord}(X)\,]$，并保留 $v$ 的全图。
+
