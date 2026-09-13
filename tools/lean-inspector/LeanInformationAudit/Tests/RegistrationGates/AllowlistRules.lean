@@ -908,9 +908,10 @@ run_cmd Elab.Command.liftTermElabM do
   let env ← getEnv
   for userName in [
       `LeanInformationAudit.RegistrationGates.inputType,
-      `LeanInformationAudit.RegistrationGates.constructorFields,
+      `LeanInformationAudit.RegistrationGates.occurrenceType,
+      `LeanInformationAudit.RegistrationGates.caseFields,
       `LeanInformationAudit.RegistrationGates.typeFamilyArgument,
-      `LeanInformationAudit.RegistrationGates.classifyType] do
+      `LeanInformationAudit.RegistrationGates.classifyOccurrence] do
     let some (_, info) := env.constants.toList.find? (fun (name, _) =>
       privateToUserName? name == some userName)
       | throwError "[FAIL] NoTypeClassificationModes: missing {userName}"
@@ -951,7 +952,7 @@ run_cmd Elab.Command.liftCoreM do
   unsafe enableInitializersExecution
   let parserEnv ← importModules #[{ module := `Lean }] {} (loadExts := true)
   for (moduleName, expectedDigest, expectedExits) in [
-      ("ReadoutProvenance", "b539c5a4c9e7138dddc71df95154613de2b4ae102ac13041916a22bbd69ca6ea", 258),
+      ("ReadoutProvenance", "b915842f2f4c98ba957ada32db687bd9c4398800c2b0faac14169d57277985c6", 230),
       ("ReadoutFamily", "2cc8a787350d521c79e444692b947ccd00e5a6898c3da9d30080d06333b2184d", 47)] do
     let path := s!"tools/lean-inspector/LeanInformationAudit/{moduleName}.lean"
     let parsed ← Parser.testParseFile parserEnv path
@@ -1048,7 +1049,7 @@ run_cmd Elab.Command.liftCoreM do
   match result with
   | some message =>
     if message.startsWith "IE-C050 ClosedTruthReadout " &&
-        message.contains "unclassified_argument_type" then
+        message.contains "statement_mentioning_type" then
       logInfo m!"[PASS] NominalLetIndexProofField: {message}"
     else logError m!"[FAIL] NominalLetIndexProofField: unexpected {message}"
   | none => logError "[FAIL] NominalLetIndexProofField: false admission; missing IE-C050"
