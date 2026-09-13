@@ -283,6 +283,9 @@ public sealed partial class MakeWorkflowTests
             File.Copy(
                 Path.Combine(root, ScribeContentChecksScriptPath),
                 script);
+            File.Copy(
+                Path.Combine(root, "tools/scripts/workflow/checked-ci-identity.py"),
+                Path.Combine(Path.GetDirectoryName(script)!, "checked-ci-identity.py"));
             File.SetUnixFileMode(
                 script,
                 UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);

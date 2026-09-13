@@ -34,7 +34,21 @@ public sealed partial class MakeWorkflowTests
             "cache root validation must precede dotnet");
         Assert.Contains(
             """
-            check_args=(--protected-base "$BASE_REF" --candidate-lean-report "$CANDIDATE_LEAN_REPORT")
+            INPUT_ARGS=()
+            if [[ -n "$PUSH_BEFORE" || -n "$PUSH_HEAD" ]]; then
+              [[ -z "$BASE_REF" && -n "$PUSH_BEFORE" && -n "$PUSH_HEAD" ]] \
+                || { echo "harness-gate: choose complete push range or protected base" >&2; exit 2; }
+              INPUT_ARGS=(--push-before "$PUSH_BEFORE" --push-head "$PUSH_HEAD")
+            else
+              [[ -n "$BASE_REF" ]] || { echo "harness-gate: explicit base or push range is required" >&2; exit 2; }
+              INPUT_ARGS=(--protected-base "$BASE_REF")
+            fi
+            """,
+            script,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            """
+            check_args=("${INPUT_ARGS[@]}" --candidate-lean-report "$CANDIDATE_LEAN_REPORT")
             if [[ -n "$TEST_MAP_CACHE_ROOT" ]]; then
               check_args+=(--test-map-cache-root "$TEST_MAP_CACHE_ROOT")
             fi
@@ -216,7 +230,7 @@ public sealed partial class MakeWorkflowTests
             StringComparison.Ordinal);
         Assert.Contains(LocalHarnessGateScriptPath, Recipe(makefile, "gate"), StringComparison.Ordinal);
         Assert.Equal(
-            $"\t@BASE=\"$(BASE)\" /bin/bash {PreflightScriptPath}",
+            $"\t@BASE=\"$(BASE)\" BEFORE=\"$(BEFORE)\" /bin/bash {PreflightScriptPath}",
             Recipe(makefile, "preflight"));
         var worktreeRecipe = Recipe(makefile, "worktree");
         Assert.Contains(WorktreeInitScriptPath, worktreeRecipe, StringComparison.Ordinal);
