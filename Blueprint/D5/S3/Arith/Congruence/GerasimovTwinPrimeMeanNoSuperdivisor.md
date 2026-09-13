@@ -22,6 +22,10 @@ $$\forall p \in {\mathbb N},\; Prime\left(p\right) \Rightarrow \left(Prime\left(
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/GerasimovTwinPrimeMeanNoSuperdivisor.gerasimov_a254748` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a254748-twin-prime-mean-no-superdivisor` (proved) by `D5/S3/Arith/Congruence/GerasimovTwinPrimeMeanNoSuperdivisor.gerasimov_a254748`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a254748-twin-prime-mean-no-superdivisor","declaration_gid":"D5/S3/Arith/Congruence/GerasimovTwinPrimeMeanNoSuperdivisor.gerasimov_a254748","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*

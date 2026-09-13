@@ -23,9 +23,12 @@ internal sealed class GerasimovTwinPrimeMeanNoSuperdivisorDocument : IScribeDocu
             Node("gerasimov_a254748", "The twin-prime mean theorem", TheoremFormula(),
                 "For twin primes p and p+2, every positive divisor k of p+1 fails the "
                     + "superdivisor predicate. The proof uses the multiplicative order in "
-                    + "ZMod (k+1), through the stronger statement for an even n at least 4 "
+                + "ZMod (k+1), through the stronger statement for an even n at least 4 "
                     + "whose predecessor is prime.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo()))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a254748-twin-prime-mean-no-superdivisor"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance,
