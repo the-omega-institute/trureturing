@@ -570,7 +570,16 @@ private def occurrenceType (e : Expr) : WalkM (Option Expr) := do
     noteUnclassified ⟨"unclassified_occurrence", `occurrence, "unclassified", `occurrence⟩
     return none
   if let some type := (← get).inferredTypes[e]? then return some type
-  unless ← chargeExpression e do return none
+  let some nativeCached ← boundedMeta (Meta.withInferTypeConfig do
+    if !(← read).cacheInferType then return false
+    let cacheable := match e with
+      | .const _ (_ :: _) | .proj .. | .app .. | .forallE .. | .lam .. | .letE .. => true
+      | _ => false
+    return cacheable && (← get).cache.inferType.contains (← Meta.mkExprConfigCacheKey e)) `infer_cache
+      | return none
+  -- A native cache hit does no expression descent; misses keep full charges.
+  unless nativeCached do
+    unless ← chargeExpression e do return none
   let some type ← boundedMeta (Meta.inferType e) `infer_type | return none
   modify fun s => { s with
     inferredTypes := s.inferredTypes.insert e type
