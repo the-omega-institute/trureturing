@@ -1,0 +1,16 @@
+**定义。** 令
+
+$$
+\varphi=\frac{1+\sqrt5}{2},
+\qquad \psi=1-\varphi=\frac{1-\sqrt5}{2},
+\qquad \mathcal O=\mathbb Z[\varphi].
+$$
+
+对 $z=a+b\varphi\in\mathcal O$，定义
+
+$$
+\overline z=a+b\psi,
+\qquad \operatorname{Tr}(z)=z+\overline z,
+\qquad \operatorname N(z)=z\overline z.
+$$
+

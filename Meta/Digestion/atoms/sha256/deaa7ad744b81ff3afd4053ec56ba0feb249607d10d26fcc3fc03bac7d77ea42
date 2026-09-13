@@ -1,0 +1,12 @@
+**定理。** 对 $d_L=\psi^{L+2}$，全部分辨率共同保持 $W_\rho$ 的充要条件是
+
+$$
+\boxed{
+\forall L\in\mathbb N,\ d_LW_\rho\subseteq W_\rho
+\quad\Longleftrightarrow\quad
+\frac{1-\alpha}{2}\le\rho\le\frac{1+\alpha}{2}.
+}\tag{GS9}
+$$
+
+若 $\rho$ 超出该闭区间，则 $L=1$ 的负收缩已经不保持 $W_\rho$。
+

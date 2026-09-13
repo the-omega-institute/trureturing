@@ -1,0 +1,12 @@
+**定理。** 规范黄金整数恰好是偏移为 $\alpha$ 的截面：
+
+$$
+\boxed{
+\beta_{\mathrm G}(n)=s_\alpha(n)
+=\lfloor(n+1)\alpha\rfloor+n\varphi.
+}\tag{GS10}
+$$
+
+其正实嵌入为 $\beta_{\mathbb R}(n)$，内部实嵌入为
+$(\beta_{\mathrm G}(n))_*$。
+
