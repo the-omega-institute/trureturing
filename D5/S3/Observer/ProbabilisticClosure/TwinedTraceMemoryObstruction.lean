@@ -137,8 +137,10 @@ theorem twined_traces_and_exact_memory (a b : Real) :
       rw [pow_succ', mul_assoc, ih, mul_smul_comm, hDC, smul_smul, pow_succ]
   refine ⟨?_, ?_, ?_⟩
   · intro R
-    simp only [liftCopies, copyAction, ← Matrix.mul_kronecker_mul, one_mul, mul_one]
-    exact ⟨rfl, rfl, rfl⟩
+    constructor
+    · simp only [liftCopies, copyAction, ← Matrix.mul_kronecker_mul, one_mul, mul_one]
+    · constructor <;>
+        simp only [liftCopies, copyAction, ← Matrix.mul_kronecker_mul, one_mul, mul_one]
   · intro R k
     rw [hpow, hpow, hdiag, hmixed]
     simp only [copyAction, liftCopies, ← Matrix.mul_kronecker_mul, one_mul,
