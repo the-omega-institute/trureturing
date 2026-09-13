@@ -8,6 +8,10 @@ using StrataLint.EngineeringScope;
 
 namespace StrataLint.Tests;
 
+[CollectionDefinition("CI fixture environment", DisableParallelization = true)]
+public sealed class CiFixtureEnvironmentCollection;
+
+[Collection("CI fixture environment")]
 public sealed class CurrentDeltaCliContractTests(Xunit.Abstractions.ITestOutputHelper log)
 {
     public static int Main(string[] arguments)
@@ -120,6 +124,7 @@ public sealed class CurrentDeltaCliContractTests(Xunit.Abstractions.ITestOutputH
     [InlineData(true)]
     public void CurrentRunsInParentlessRemotelessRepositoryAndFindsExistingInvalidHeader(bool selected)
     {
+        using var ciEnvironment = new CiFixtureEnvironment();
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();

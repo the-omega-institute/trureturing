@@ -118,6 +118,12 @@ internal sealed class JudgeSeedFixture : IDisposable
         Record(name, result, count);
         Assert.True(result.ExitCode == 0, Tail(result.Text));
         Assert.True(expected == count, $"{name}: expected {expected} Csc executions, actual {count}\n{Tail(result.Text)}");
+        // Retain the explicitly requested, successful fixture build roots for
+        // the same seed adapter used by the native shared build.
+        Write("build/ci/build.json", JsonSerializer.Serialize(new
+        {
+            version = 2, projects = project == "tools/StrataLint.sln" ? projectFiles : [project],
+        }));
     }
 
     internal Invocation BuildFailure(string name)
