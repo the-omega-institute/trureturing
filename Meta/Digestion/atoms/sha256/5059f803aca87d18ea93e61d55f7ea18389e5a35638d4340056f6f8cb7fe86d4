@@ -1,0 +1,23 @@
+## 21.1 实际历史与前缀碰撞
+
+**定义。** 固定实截距 $\rho$，令
+
+$$
+a_{\alpha,\rho}(i)=\lfloor\rho+(i+1)\alpha\rfloor-\lfloor\rho+i\alpha\rfloor,
+\qquad i\in\mathbb N.
+$$
+
+定义起点 $i$ 的长度 $n$ 字 $W_n(i)=(a_{\alpha,\rho}(i+k))_{0\le k<n}$，以及全部实际长度 $n$ 字的集合
+
+$$
+W_n=\{W_n(i):i\in\mathbb N\}.
+$$
+
+**定理。** $a_{\alpha,\rho}(i)\in\{0,1\}$，$|W_n|=n+1$，且对任意 $n,h\in\mathbb N$，前缀映射 $\pi_{n,h}:W_{n+h}\to W_n$ 满射。若 $h>0$，则
+
+$$
+\exists i,j,\quad W_n(i)=W_n(j),\qquad W_{n+h}(i)\ne W_{n+h}(j).
+$$
+
+**证明。** 由于 $0<\alpha<1$，每个 floor 增量为 $0$ 或 $1$。令 $x=\{\rho+i\alpha\}$。字的前 $k$ 位之和为 $\lfloor x+k\alpha\rfloor$；当 $x$ 走过 $[0,1)$ 时，对 $1\le k\le n$，第 $k$ 个和恰在 $x=1-\{k\alpha\}$ 改变一次。这 $n$ 个点因 $\alpha$ 无理而互异，故所得前缀和向量恰有 $n+1$ 种，且相邻区间的向量不同、各坐标随 $x$ 不减，因此全部向量互异。轨道 $\{\rho+i\alpha\}$ 在圆周上稠密，每个区间均有实际起点；落在端点时的 floor 值与其右侧区间相同。故 $|W_n|=n+1$，空字情形亦然。每个实际短字在同一起点有长度 $n+h$ 的延伸，所以 $\pi_{n,h}$ 满射。若 $h>0$，则 $|W_{n+h}|=n+h+1>n+1=|W_n|$；满射不可能同时单射。取同一前缀的两个不同长字及其实际起点即得结论。
+
