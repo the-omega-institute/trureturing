@@ -329,9 +329,13 @@ project_delta_build() {
   # Lake owns TOML parsing. A Lean configuration or an unavailable projection
   # retains the unqualified default build, which owns configuration errors.
   [[ ! -e "$REPOSITORY/lakefile.lean" ]] || return 3
+  # The cache writer's stdout includes its receipt; consume only the reader's
+  # dedicated output, with no previous phase output available for reuse.
+  local config="$LOG_DIR/delta-config.json"
+  rm -f -- "$config" || return 3
   run_phase delta-config "${CACHE_RUN}" "$LAKE" env lean --run \
-    "$INSPECTOR_DIR/Census/config.lean" lakefile.toml || return 3
-  python3 - "$plan" "$utility" "$LOG_DIR/delta-config.stdout.log" "$output" <<'PY'
+    "$INSPECTOR_DIR/Census/config.lean" lakefile.toml --output "$config" || return 3
+  python3 - "$plan" "$utility" "$config" "$output" <<'PY'
 import json
 import pathlib
 import re
