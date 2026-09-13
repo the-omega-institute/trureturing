@@ -1,0 +1,11 @@
+**定理。** 对正整数 $q$ 与 $t\ge0$，
+
+$$
+\boxed{
+\pi(q)\mid t
+\iff(F_t,F_{t+1})\equiv(0,1)\pmod q
+\iff\forall n\ge0,\ F_{n+t}\equiv F_n\pmod q.
+}
+\tag{R2}
+$$
+

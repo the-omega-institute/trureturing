@@ -1,0 +1,10 @@
+**证明。** 令 $\delta=2\varphi-1$，则 $\delta^2=5$。在特征 $p$ 的
+二次代数中，由 Frobenius 同态与 Euler 判据，
+$\delta^p=\epsilon_p\delta$。若 $\epsilon_p=1$，便有
+$\varphi^{p-1}=1$；若 $\epsilon_p=-1$，则
+$\varphi^p=1-\varphi=-\varphi^{-1}$，故 $\varphi^{p+1}=-1$。
+两种情形统一为 $\varphi^{n_p}=\epsilon_p$。比较 $\varphi$ 系数得
+$p\mid F_{n_p}$，平方后得 $\varphi^{2n_p}=1$，故 $r_p\mid2n_p$。
+又 $n_p\equiv-\epsilon_p\not\equiv0\pmod p$ 且 $p$ 为奇数，所以
+$p\nmid r_p$。
+

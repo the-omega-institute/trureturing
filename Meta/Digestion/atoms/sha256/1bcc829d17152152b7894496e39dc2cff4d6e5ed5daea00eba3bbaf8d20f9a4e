@@ -1,0 +1,6 @@
+**命题。** 对素数 $p\ne2,5$，若 $q_p\ne0$，则
+
+$$
+\forall e\ge1,\quad \pi(p^e)=\pi(p)p^{e-1}.
+$$
+

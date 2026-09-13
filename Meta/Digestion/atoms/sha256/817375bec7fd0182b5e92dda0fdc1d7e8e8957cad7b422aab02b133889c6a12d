@@ -1,0 +1,7 @@
+**定理。** 对每个奇数 $n$ 与每个自然数 $q$，
+
+$$
+\boxed{E_n\equiv0\pmod q\text{ 于 }\mathcal O
+\iff L_n\equiv1\pmod q\text{ 于 }\mathbb Z.}\tag{T3}
+$$
+

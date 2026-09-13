@@ -1,0 +1,10 @@
+**证明。** 若 $e\le s_p$，则 $r_p$ 已在模 $p^e$ 下回归，而降模到 $p$ 又给
+$r_p\mid\pi(p^e)$，故 $\pi(p^e)=r_p$。若 $e=s_p+j$，R.13 表明
+$\varphi^{r_p}$ 在模 $p^e$ 下的阶为 $p^j$。令
+$T=\pi(p^e)$；因 $r_p\mid T$，元素幂的阶公式给出
+
+$$
+\operatorname{ord}(\varphi^{r_p})
+=\frac{T}{\gcd(T,r_p)}=\frac{T}{r_p}=p^j.
+$$
+

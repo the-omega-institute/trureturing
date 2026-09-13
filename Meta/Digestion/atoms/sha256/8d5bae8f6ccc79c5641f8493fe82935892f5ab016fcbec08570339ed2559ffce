@@ -1,0 +1,7 @@
+**定理。** 对正整数 $q$ 与 $t\ge0$，
+
+$$
+\boxed{\pi(q)\mid t\iff q\mid C_t.}
+\tag{R5}
+$$
+
