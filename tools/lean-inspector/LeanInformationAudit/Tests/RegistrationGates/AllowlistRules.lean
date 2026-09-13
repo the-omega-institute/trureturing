@@ -384,6 +384,43 @@ def proofIndexedSignature : LeanInformationAudit.StructuralPrimitiveSignature wh
 def proofIndexedRealization : LeanInformationAudit.StructuralPrimitiveRealization
     ⟨Bool⟩ proofIndexedSignature := ⟨ExternalAllowlistTypes.ProofIndexed.mk⟩
 
+def quotientAliasSignature : LeanInformationAudit.StructuralPrimitiveSignature where
+  Index := Quot ExternalAllowlistTypes.hiddenRelation
+  indexFintype := Fintype.ofSubsingleton (Quot.mk _ ())
+  Output := fun _ => ExternalAllowlistTypes.QuotientBox
+def quotientAliasRealization : LeanInformationAudit.StructuralPrimitiveRealization
+    ⟨Bool⟩ quotientAliasSignature := ⟨ExternalAllowlistTypes.QuotientBox.mk⟩
+def cleanQuotientSignature : LeanInformationAudit.StructuralPrimitiveSignature where
+  Index := Quot ExternalAllowlistTypes.cleanRelation
+  indexFintype := Fintype.ofSubsingleton (Quot.mk _ ())
+  Output := fun _ => ExternalAllowlistTypes.CleanQuotientBox
+def cleanQuotientRealization : LeanInformationAudit.StructuralPrimitiveRealization
+    ⟨Bool⟩ cleanQuotientSignature := ⟨ExternalAllowlistTypes.CleanQuotientBox.mk⟩
+
+def nestedProductSignature : LeanInformationAudit.StructuralPrimitiveSignature where
+  Index := Bool × Bool × Bool
+  indexFintype := inferInstance
+  Output := fun _ => GenericBox (Bool × Bool × Bool)
+def nestedProductRealization : LeanInformationAudit.StructuralPrimitiveRealization
+    ⟨Bool⟩ nestedProductSignature := ⟨GenericBox.mk⟩
+
+instance : Subsingleton ExternalAllowlistTypes.IndexRecord :=
+  ⟨fun ⟨a⟩ ⟨b⟩ => by cases a; cases b; rfl⟩
+def hiddenIndexSignature : LeanInformationAudit.StructuralPrimitiveSignature where
+  Index := ExternalAllowlistTypes.IndexRecord
+  indexFintype := Fintype.ofSubsingleton ⟨.mk⟩
+  Output := fun _ => ExternalAllowlistTypes.IndexBox
+def hiddenIndexRealization : LeanInformationAudit.StructuralPrimitiveRealization
+    ⟨Bool⟩ hiddenIndexSignature := ⟨ExternalAllowlistTypes.IndexBox.mk⟩
+
+def specializedProjectionSignature : LeanInformationAudit.StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => ExternalAllowlistTypes.SpecializedProjectionBox
+def specializedProjectionRealization : LeanInformationAudit.StructuralPrimitiveRealization
+    ⟨Bool⟩ specializedProjectionSignature :=
+  ⟨ExternalAllowlistTypes.SpecializedProjectionBox.mk (f := ExternalAllowlistTypes.unitCarrier)⟩
+
 elab "raw_payload_name" value:term : term => do
   let value ← Elab.Term.elabTerm value (some (mkConst ``LeanInformationAudit.SealedOccurrenceState))
   let some projection := (← getEnv).getProjectionFnInfo? ``LeanInformationAudit.SealedOccurrenceState.theoremName
@@ -445,7 +482,10 @@ run_cmd Elab.Command.liftTermElabM do
       ("ExternalValuedDeclaredType", ``externalValuedRealization),
       ("ExternalPredicateConstructorDomain", ``externalPredicateRealization),
       ("SyntheticProjectionType", ``syntheticProjectionRealization),
-      ("ExternalProofIndexType", ``proofIndexedRealization)] do
+      ("ExternalProofIndexType", ``proofIndexedRealization),
+      ("SyntheticDeclaredKind", ``hiddenIndexRealization),
+      ("SpecializedProjectionReceiver", ``specializedProjectionRealization),
+      ("QuotientPredicateAlias", ``quotientAliasRealization)] do
     let actual ← provenanceErrorCurrent (← getEnv).header.mainModule `catalog ``target holder
     match actual with
     | some message =>
@@ -480,6 +520,14 @@ run_cmd Elab.Command.liftCoreM do
     ``target ``plainRealization
   if actual.isNone then logInfo "[PASS] ValuelessCleanCounterpart"
   else logError m!"[FAIL] ValuelessCleanCounterpart: {actual}"
+  let quotient ← provenanceErrorCurrent (← getEnv).header.mainModule `catalog
+    ``target ``cleanQuotientRealization
+  if quotient.isNone then logInfo "[PASS] ValuelessQuotientCounterpart"
+  else logError m!"[FAIL] ValuelessQuotientCounterpart: {quotient}"
+  let product ← provenanceErrorCurrent (← getEnv).header.mainModule `catalog
+    ``target ``nestedProductRealization
+  if product.isNone then logInfo "[PASS] ValuelessNestedProductCounterpart"
+  else logError m!"[FAIL] ValuelessNestedProductCounterpart: {product}"
   for (label, readout) in [
       ("ClassicalTypeOnlyCounterpart", ``classicalTypeOnlyRead),
       ("PlainProjectionCounterpart", ``plainProjectionRead)] do

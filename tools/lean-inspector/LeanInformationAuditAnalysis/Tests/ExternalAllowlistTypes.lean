@@ -13,4 +13,27 @@ inductive PredicateBox where
 inductive ProofIndexed : ((137 : Nat) = 137) → Type where
   | mk (_ : Unit) (_ : Bool) : ProofIndexed rfl
 
+def hiddenRelation (_ _ : Unit) : Prop := (137 : Nat) = 137
+inductive QuotientBox where
+  | mk (_ : Quot hiddenRelation) (_ : Bool) : QuotientBox
+def cleanRelation (x y : Unit) : Prop := x = y
+inductive CleanQuotientBox where
+  | mk (_ : Quot cleanRelation) (_ : Bool) : CleanQuotientBox
+
+def callback (_ : (137 : Nat) = 137) : Bool := true
+inductive HiddenIndex : (((137 : Nat) = 137) → Bool) → Type where
+  | mk : HiddenIndex callback
+structure IndexRecord where
+  token : HiddenIndex callback
+inductive IndexBox where
+  | mk (_ : IndexRecord) (_ : Bool) : IndexBox
+
+structure IndexedCarrier (n : Nat) where
+  Carrier : Type
+  evidence : n = n
+def unitCarrier (n : Nat) : IndexedCarrier n := ⟨Unit, rfl⟩
+inductive SpecializedProjectionBox where
+  | mk {f : (n : Nat) → IndexedCarrier n} (_ : (f 137).Carrier) (_ : Bool) :
+      SpecializedProjectionBox
+
 end ExternalAllowlistTypes
