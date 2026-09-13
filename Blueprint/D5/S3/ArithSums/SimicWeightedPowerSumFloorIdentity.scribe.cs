@@ -27,7 +27,10 @@ internal sealed class SimicWeightedPowerSumFloorIdentityDocument : IScribeDocume
                     + "endpoint has floor c(q - 1), so it is outside this statement. Part 1 "
                     + "of the printed problem is not formalized.",
                 DescribeRole.Theorem,
-                AssessedProvenance.FromLiterature(Source)))));
+                AssessedProvenance.FromLiterature(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("fq-h655-ii-weighted-power-sum-floor"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance,

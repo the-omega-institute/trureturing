@@ -10,6 +10,10 @@ $$\forall s \in \operatorname{Finset}\left(\mathbb{N}\right),\; ((2 \le Finset.c
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/SimicWeightedPowerSumFloorIdentity.simic_h655_ii` (`✓ std3`). ∎
 
+*Resolves.* `Problems/fq-h655-ii-weighted-power-sum-floor` (proved) by `D5/S3/ArithSums/SimicWeightedPowerSumFloorIdentity.simic_h655_ii`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"fq-h655-ii-weighted-power-sum-floor","declaration_gid":"D5/S3/ArithSums/SimicWeightedPowerSumFloorIdentity.simic_h655_ii","resolution_kind":"proved"} -->
+
 *Citation.* Slavko Simic (2007). *Problem H-655, The Fibonacci Quarterly 45(2)*. URL: <https://www.fq.math.ca/Problems/Aug2009advanced.pdf>.
 
 *Commentary.*
