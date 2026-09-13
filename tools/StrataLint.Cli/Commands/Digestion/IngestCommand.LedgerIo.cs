@@ -18,12 +18,14 @@ internal static partial class IngestCommand
         string repositoryRoot,
         RawRepositorySnapshot current,
         ImmutableArray<LedgerUpdate> updates,
-        Action<string, string>? commit = null)
+        Action<string, string>? commit = null,
+        Action? requireInputsUnchanged = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(current);
         if (updates.Length == 0)
         {
+            requireInputsUnchanged?.Invoke();
             return;
         }
 
@@ -36,6 +38,9 @@ internal static partial class IngestCommand
                 ? (ImmutableArray<byte>?)bytes
                 : null,
             StringComparer.Ordinal);
+        // The caller's complete input precondition belongs after the ledger reread,
+        // before any directory creation, replacement or rollback-visible touch.
+        requireInputsUnchanged?.Invoke();
         var touched = new List<string>(updates.Length);
         try
         {

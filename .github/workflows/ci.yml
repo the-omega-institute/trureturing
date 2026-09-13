@@ -6,24 +6,21 @@ on:
   pull_request:
     branches: [dev, 'integration-**']
     types: [opened, synchronize, reopened]
-  pull_request_target:
-    branches: [dev, 'integration-**']
-    types: [opened, synchronize, reopened]
 
 permissions:
   contents: read
 # PR updates cancel earlier runs for the same PR. Pushes use the ref and commit
 # so different branches and later merges retain their checks and cache writes.
 concurrency:
-  # Keep pull_request, pull_request_target, and push runs in separate event groups.
   group: ci-${{ github.event_name }}-${{ github.event.pull_request.number || format('{0}-{1}', github.ref, github.sha) }}
   cancel-in-progress: true
 
-# Both PR events explicitly check the PR merge tree; push checks the pushed commit.
-# The three required checks cover candidate engineering, canonical Lean report
-# production, and admission with the candidate's own judge. Admission consumes
-# immutable raw reports from the predecessor job; the protected base is the
-# checked commit's first-parent SHA, passed to the gate as data for its diff.
+# Native pull_request runs the candidate workflow on GitHub's post-merge tree.
+# The candidate-owned Lean producer and .NET judge inspect that tree (candidate
+# plus the protected first parent). Candidate engineering is only a signal.
+# Admission consumes immutable raw reports from the predecessor job; the protected
+# base is the checked merge commit's first-parent SHA passed to the gate. The
+# workflow itself retains an unfiltered floor for engineering and root inputs.
 jobs:
   candidate-engineering:
     name: Candidate harness engineering checks
@@ -38,9 +35,8 @@ jobs:
     steps:
       - name: Check out candidate
         id: checkout-merge
-        continue-on-error: ${{ (github.event_name == 'pull_request' || github.event_name == 'pull_request_target') }}
         uses: actions/checkout@v4
-        with: { ref: "${{ (github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}", fetch-depth: 0, persist-credentials: false, path: candidate }
+        with: { ref: "${{ github.sha }}", fetch-depth: 0, persist-credentials: false, path: candidate }
       - name: Strip checkout remote state
         if: steps.checkout-merge.outcome == 'success'
         shell: bash
@@ -61,16 +57,12 @@ jobs:
           base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
           test -n "$head_sha"
           test -n "$base_sha"
-      - name: Fail closed when merge result is unavailable
+      - name: Fail closed when candidate checkout is unavailable
         if: always() && steps.checkout-merge.outcome != 'success'
         shell: bash
         run: |
           set -euo pipefail
-          if [[ "$GITHUB_EVENT_NAME" == "pull_request" || "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
-            printf '%s\n' "cannot check out GitHub merge ref refs/pull/${{ github.event.pull_request.number }}/merge; conflicted pull requests have no merge result, so admission fails closed" >&2
-          else
-            printf '%s\n' "cannot check out push commit $GITHUB_SHA; admission fails closed" >&2
-          fi
+          printf '%s\n' "cannot check out immutable candidate commit $GITHUB_SHA; admission fails closed" >&2
           exit 1
       - name: Install candidate-pinned SDK for candidate build and tests
         uses: actions/setup-dotnet@v4
@@ -154,7 +146,7 @@ jobs:
             candidate/tools/**/obj
           key: stratalint-judge-binaries-v2-${{ runner.os }}-${{ steps.judge-address.outputs.runtime }}-${{ steps.judge-address.outputs.address }}
       - name: Signal PR head branch grammar
-        if: (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
+        if: github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'dev'
         shell: bash
         env:
           HEAD_REF: ${{ github.event.pull_request.head.ref }}
@@ -238,9 +230,8 @@ jobs:
     steps:
       - name: Check out candidate with history
         id: checkout-merge
-        continue-on-error: ${{ (github.event_name == 'pull_request' || github.event_name == 'pull_request_target') }}
         uses: actions/checkout@v4
-        with: { ref: "${{ (github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}", fetch-depth: 0, persist-credentials: false, path: candidate }
+        with: { ref: "${{ github.sha }}", fetch-depth: 0, persist-credentials: false, path: candidate }
       - name: Strip checkout remote state
         if: steps.checkout-merge.outcome == 'success'
         shell: bash
@@ -261,16 +252,12 @@ jobs:
           base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
           test -n "$head_sha"
           test -n "$base_sha"
-      - name: Fail closed when merge result is unavailable
+      - name: Fail closed when candidate checkout is unavailable
         if: always() && steps.checkout-merge.outcome != 'success'
         shell: bash
         run: |
           set -euo pipefail
-          if [[ "$GITHUB_EVENT_NAME" == "pull_request" || "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
-            printf '%s\n' "cannot check out GitHub merge ref refs/pull/${{ github.event.pull_request.number }}/merge; conflicted pull requests have no merge result, so admission fails closed" >&2
-          else
-            printf '%s\n' "cannot check out push commit $GITHUB_SHA; admission fails closed" >&2
-          fi
+          printf '%s\n' "cannot check out immutable candidate commit $GITHUB_SHA; admission fails closed" >&2
           exit 1
       - name: Install pinned SDK for statement projection reconciliation
         uses: actions/setup-dotnet@v4
@@ -303,7 +290,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          # PR merge refs and push commits both carry their protected base as
+          # Native PR merge commits and dev push commits both carry their protected base as
           # the checked object's first parent, so the verdict has no event-payload input.
           sha="$(git -C candidate rev-parse HEAD^1)"
           if [[ -z "$sha" || "$sha" =~ ^0+$ ]]; then
@@ -467,9 +454,8 @@ jobs:
     steps:
       - name: Check out candidate with history
         id: checkout-merge
-        continue-on-error: ${{ (github.event_name == 'pull_request' || github.event_name == 'pull_request_target') }}
         uses: actions/checkout@v4
-        with: { ref: "${{ (github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}", fetch-depth: 0, persist-credentials: false, path: candidate }
+        with: { ref: "${{ github.sha }}", fetch-depth: 0, persist-credentials: false, path: candidate }
       - name: Strip checkout remote state
         if: steps.checkout-merge.outcome == 'success'
         shell: bash
@@ -490,16 +476,12 @@ jobs:
           base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
           test -n "$head_sha"
           test -n "$base_sha"
-      - name: Fail closed when merge result is unavailable
+      - name: Fail closed when candidate checkout is unavailable
         if: always() && steps.checkout-merge.outcome != 'success'
         shell: bash
         run: |
           set -euo pipefail
-          if [[ "$GITHUB_EVENT_NAME" == "pull_request" || "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
-            printf '%s\n' "cannot check out GitHub merge ref refs/pull/${{ github.event.pull_request.number }}/merge; conflicted pull requests have no merge result, so admission fails closed" >&2
-          else
-            printf '%s\n' "cannot check out push commit $GITHUB_SHA; admission fails closed" >&2
-          fi
+          printf '%s\n' "cannot check out immutable candidate commit $GITHUB_SHA; admission fails closed" >&2
           exit 1
       - name: Install pinned SDK
         uses: actions/setup-dotnet@v4
@@ -523,15 +505,17 @@ jobs:
             candidate/tools/**/bin
             candidate/tools/**/obj
           key: stratalint-judge-binaries-v2-${{ runner.os }}-${{ steps.judge-address.outputs.runtime }}-${{ steps.judge-address.outputs.address }}
-      # PR event SHAs can differ from the checked base; exact test-map lookup may miss.
-      # Prefix fallback can restore the target branch or default-dev caches;
-      # the Engine still validates entries against the checked first-parent base.
+      # Native pull_request supplies github.sha=M, the checked merge commit. PR
+      # restores use its already computed protected parent B=M^1; push restores
+      # and saves continue to use github.sha for the pushed commit H. Prefix
+      # fallback remains best-effort, while the Engine validates entries against
+      # the checked first-parent base.
       - name: Restore base-side unknown-debt test maps
         id: test-map-cache
         uses: actions/cache/restore@v4
         with:
           path: .stratalint-test-map-cache
-          key: stratalint-test-map-v1-${{ runner.os }}-${{ github.sha }}
+          key: stratalint-test-map-v1-${{ runner.os }}-${{ github.event_name == 'pull_request' && env.DEV_BASELINE_SHA || github.sha }}
           restore-keys: stratalint-test-map-v1-${{ runner.os }}-
       - name: Snapshot test map cache before the gate
         id: test-map-before
@@ -572,7 +556,8 @@ jobs:
           fi
           # expand 阶段;contract 义务:当 `git branch -r --list 'origin/integration-*'` 中
           # 不再有 base 早于 d4f14b1a4d 的分支时,改回 fail-closed(与 `--candidate-lean-report` 同形);
-          # 2025-12-08 起 pull_request_target 取默认分支 workflow,故不存在无窗口。
+          # Native pull_request executes the candidate gate directly, so there is
+          # no default-branch compatibility window for this option.
           # This is a bounded migration obligation with the stated exit condition;
           # it must not become a second judge path or a permanent compatibility branch.
           cache_args=()

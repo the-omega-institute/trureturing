@@ -32,8 +32,8 @@ internal static class AdmissionWorkflowTopology
             if (yaml.Documents.Count != 1
                 || yaml.Documents[0].RootNode is not YamlMappingNode root
                 || Child(root, "on") is not YamlMappingNode triggers
-                || Child(triggers, "pull_request_target") is not YamlMappingNode pullRequestTarget
-                || Child(pullRequestTarget, "branches") is not YamlSequenceNode branches
+                || Child(triggers, "pull_request") is not YamlMappingNode pullRequest
+                || Child(pullRequest, "branches") is not YamlSequenceNode branches
                 || !branches.Children
                     .OfType<YamlScalarNode>()
                     .Any(branch => string.Equals(branch.Value, defaultBranch, StringComparison.Ordinal))
