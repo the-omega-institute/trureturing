@@ -170,6 +170,7 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
               exit 1
             fi
             if [[ "$1" == test ]]; then
+              [[ "${LEAN_NUM_THREADS:-unset}" == 7 ]] || exit 95
               echo test >> build/events
               assembly="$2"
               source=build/passed/execution.trx
@@ -225,7 +226,7 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
         var scope = Path.Combine(Path.GetDirectoryName(typeof(Program).Assembly.Location)!, "StrataLint.EngineeringScope");
         var environment = new Dictionary<string, string> {
             ["PATH"] = Path.Combine(root, "build/bin") + Path.PathSeparator + Environment.GetEnvironmentVariable("PATH"),
-            ["CONTRACT_SCOPE"] = scope, ["CONTRACT_FAILURE"] = failure };
+            ["CONTRACT_SCOPE"] = scope, ["CONTRACT_FAILURE"] = failure, ["LEAN_NUM_THREADS"] = "7" };
         if (!exportSeeds) environment["STRATALINT_CACHE_WRITES"] = "false";
         var result = Branch(first);
         Assert.True(result.Exit == expected, result.Text);
