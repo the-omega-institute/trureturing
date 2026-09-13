@@ -39,9 +39,8 @@ open scoped Classical
 noncomputable section
 
 /-- Canonical labels for the unordered nearest-neighbour edges of a `3 x n` grid. -/
-def Edge (n : ℕ) :=
+abbrev Edge (n : ℕ) :=
   {p : Fin n × Fin 5 // p.2.val < 2 ∨ p.1.val + 1 < n}
-  deriving DecidableEq
 
 instance (n : ℕ) : Fintype (Edge n) :=
   Fintype.ofFinset (p := {p : Fin n × Fin 5 | p.2.val < 2 ∨ p.1.val + 1 < n})
@@ -154,6 +153,177 @@ private theorem card_paths (n : ℕ) (i : HorizontalMask) :
       rw [ih]
       rw [Fintype.card_subtype]
       rfl
+
+private def decode {n : ℕ} (f : Fin n → Column) : Finset (Edge n) :=
+  Finset.univ.filter fun e ↦
+    if hk : e.1.2.val < 2 then
+      (f e.1.1).1 ⟨e.1.2.val, hk⟩ = true
+    else
+      (f e.1.1).2 ⟨e.1.2.val - 2, by omega⟩ = true
+
+private theorem decode_encode {n : ℕ} (H : Finset (Edge n)) :
+    decode (encode H) = H := by
+  ext e
+  rcases e with ⟨⟨c, k⟩, hk⟩
+  by_cases hvertical : k.val < 2
+  · simp only [decode, Edge, Finset.mem_filter, Finset.mem_univ, true_and]
+    rw [dif_pos hvertical]
+    change edgeBit H c ⟨k.val, by omega⟩ = true ↔ _
+    rw [edgeBit, dif_pos (Or.inl hvertical)]
+    simp only [decide_eq_true_eq]
+  · have hcvalid : c.val + 1 < n := hk.resolve_left hvertical
+    simp only [decode, Edge, Finset.mem_filter, Finset.mem_univ, true_and]
+    rw [dif_neg hvertical]
+    let r : Fin 3 := ⟨k.val - 2, by omega⟩
+    change edgeBit H c ⟨r.val + 2, by omega⟩ = true ↔ _
+    rw [edgeBit, dif_pos (Or.inr hcvalid)]
+    simp only [decide_eq_true_eq]
+    have hr : r.val + 2 = k.val := by dsimp [r]; omega
+    have hkeq : (⟨r.val + 2, by omega⟩ : Fin 5) = k := Fin.ext hr
+    rw [hkeq]
+
+private def preceding {n : ℕ}
+    (i : HorizontalMask) (f : Fin n → Column) (c : Fin n) : HorizontalMask :=
+  if hc : 0 < c.val then (f ⟨c.val - 1, by omega⟩).2 else i
+
+private def GloballyGood {n : ℕ} (i : HorizontalMask) (f : Fin n → Column) : Prop :=
+  (∀ c : Fin n, Good (preceding i f c) (f c).1 (f c).2) ∧
+    match n with
+    | 0 => i = zeroHorizontal
+    | m + 1 => (f (Fin.last m)).2 = zeroHorizontal
+
+private theorem preceding_tail {n : ℕ} (i : HorizontalMask)
+    (f : Fin (n + 1) → Column) (j : Fin n) :
+    preceding (f 0).2 (Fin.tail f) j = preceding i f j.succ := by
+  cases n with
+  | zero => exact Fin.elim0 j
+  | succ n =>
+      refine Fin.cases ?_ (fun k ↦ ?_) j
+      · simp [preceding, Fin.tail]
+      · simp [preceding, Fin.tail]
+
+private theorem pathGood_iff_globallyGood {n : ℕ}
+    (i : HorizontalMask) (f : Fin n → Column) :
+    PathGood i f ↔ GloballyGood i f := by
+  induction n generalizing i with
+  | zero => simp [PathGood, GloballyGood]
+  | succ n ih =>
+      rw [show PathGood i f =
+        (Good i (f 0).1 (f 0).2 ∧ PathGood (f 0).2 (Fin.tail f)) by rfl]
+      rw [ih]
+      constructor
+      · rintro ⟨hfirst, htail, hend⟩
+        refine ⟨?_, ?_⟩
+        · intro c
+          refine Fin.cases ?_ (fun j ↦ ?_) c
+          · simpa [preceding] using hfirst
+          · rw [← preceding_tail i f j]
+            exact htail j
+        · cases n with
+          | zero => simpa using hend
+          | succ n => simpa [Fin.tail] using hend
+      · rintro ⟨hall, hend⟩
+        refine ⟨?_, ?_⟩
+        · simpa [preceding] using hall 0
+        · refine ⟨?_, ?_⟩
+          · intro j
+            rw [preceding_tail i f j]
+            exact hall j.succ
+          · cases n with
+            | zero => simpa using hend
+            | succ n => simpa [Fin.tail] using hend
+
+private theorem preceding_encode {n : ℕ} (H : Finset (Edge n)) (c : Fin n) :
+    preceding zeroHorizontal (encode H) c = incomingMask H c := by
+  by_cases hc : 0 < c.val
+  · simp [preceding, incomingMask, encode, hc]
+  · simp [preceding, incomingMask, hc]
+
+private theorem noLeaf_iff_local_columns {n : ℕ} (H : Finset (Edge n)) :
+    NoLeaf H ↔
+      ∀ c : Fin n,
+        Good (preceding zeroHorizontal (encode H) c) (encode H c).1 (encode H c).2 := by
+  constructor
+  · intro h c r
+    have hr := h (r, c)
+    rw [preceding_encode H c]
+    exact hr
+  · intro h ⟨r, c⟩
+    have hr := h c r
+    rw [preceding_encode H c] at hr
+    exact hr
+
+private theorem encode_final_zero {n : ℕ} (H : Finset (Edge n)) :
+    match n with
+    | 0 => zeroHorizontal = zeroHorizontal
+    | m + 1 => (encode H (Fin.last m)).2 = zeroHorizontal := by
+  cases n with
+  | zero => rfl
+  | succ m =>
+      funext r
+      simp [encode, outgoingMask, edgeBit, zeroHorizontal]
+
+private theorem noLeaf_iff_pathGood {n : ℕ} (H : Finset (Edge n)) :
+    NoLeaf H ↔ PathGood zeroHorizontal (encode H) := by
+  rw [pathGood_iff_globallyGood]
+  constructor
+  · intro h
+    refine ⟨(noLeaf_iff_local_columns H).mp h, ?_⟩
+    cases n with
+    | zero => rfl
+    | succ m => simpa using encode_final_zero H
+  · intro h
+    exact (noLeaf_iff_local_columns H).mpr h.1
+
+private theorem encode_decode_of_pathGood {n : ℕ} (f : Fin n → Column)
+    (hf : PathGood zeroHorizontal f) : encode (decode f) = f := by
+  have hg := (pathGood_iff_globallyGood zeroHorizontal f).mp hf
+  funext c
+  apply Prod.ext
+  · funext r
+    simp [encode, verticalMask, edgeBit, decode]
+  · funext r
+    by_cases hc : c.val + 1 < n
+    · simp [encode, outgoingMask, edgeBit, decode, hc]
+    · have hbit : (f c).2 r = false := by
+        cases n with
+        | zero => exact Fin.elim0 c
+        | succ m =>
+            have hlast : c = Fin.last m := by
+              apply Fin.ext
+              simp
+              omega
+            rw [hlast]
+            exact congrFun hg.2 r
+      simp [encode, outgoingMask, edgeBit, decode, hc, hbit]
+
+private def edgePathEquiv (n : ℕ) :
+    {H : Finset (Edge n) // NoLeaf H} ≃
+      {f : Fin n → Column // PathGood zeroHorizontal f} where
+  toFun H := ⟨encode H.1, (noLeaf_iff_pathGood H.1).mp H.2⟩
+  invFun f := ⟨decode f.1, (noLeaf_iff_pathGood (decode f.1)).mpr (by
+    rw [encode_decode_of_pathGood f.1 f.2]
+    exact f.2)⟩
+  left_inv H := by
+    apply Subtype.ext
+    exact decode_encode H.1
+  right_inv f := by
+    apply Subtype.ext
+    exact encode_decode_of_pathGood f.1 f.2
+
+private theorem a_eq_stateCount (n : ℕ) : a n = stateCount n zeroHorizontal := by
+  let s := (gridEdges n).powerset.filter (NoLeaf (n := n))
+  let hmem : ∀ H : Finset (Edge n), H ∈ s ↔ H ∈ {H | NoLeaf H} := by
+    intro H
+    simp [s, gridEdges]
+  letI : Fintype {H : Finset (Edge n) // NoLeaf H} := Fintype.ofFinset s hmem
+  calc
+    a n = s.card := rfl
+    _ = Fintype.card {H : Finset (Edge n) // NoLeaf H} :=
+      (Fintype.card_ofFinset s hmem).symm
+    _ = Fintype.card {f : Fin n → Column // PathGood zeroHorizontal f} :=
+      Fintype.card_congr (edgePathEquiv n)
+    _ = stateCount n zeroHorizontal := card_paths n zeroHorizontal
 
 end
 end D5.S1.Words.Patterns.GridNoLeafSubgraphRecurrence
