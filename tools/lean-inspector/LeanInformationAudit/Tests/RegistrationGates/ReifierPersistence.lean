@@ -6,7 +6,7 @@ open Lean Meta LeanInformationAudit in
 run_meta do
   let env ← getEnv
   let entries := (InformationRegistry.entries env).filter (·.derivedCertificate.isSome)
-  unless entries.size == 4 do throwError "expected four imported derived certificates"
+  unless entries.size == 6 do throwError "expected six imported derived certificates"
   for entry in entries do
     unless env.isImportedConst entry.unitName do throwError "unit was not imported"
     match ← validatePersistedEntry env entry with
@@ -14,4 +14,4 @@ run_meta do
     | .ok () => pure ()
     let info ← getConstInfo (RegistrationGates.diagnosticName entry.unitName entry.registrationModuleName)
     unless info.value?.any (·.equal (mkStrLit "")) do throwError "nonempty imported diagnostic"
-  logInfo "P1_IMPORTED_CERTIFICATES_CHECKED count=4"
+  logInfo "P1_IMPORTED_CERTIFICATES_CHECKED count=6"
