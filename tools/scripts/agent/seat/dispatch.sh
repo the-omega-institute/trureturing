@@ -27,17 +27,12 @@
 
 set -uo pipefail
 
-RUNNER_GLOB="${SSHX_PLUGIN_ROOT:-$HOME/.claude/plugins/cache/consensus-rnd/consensus-rnd}"
-
 # 解析已安装的最新 sshx runner。找不到即 fail-closed —— 不回退到任何猜测路径。
-resolve_runner() {
-  local root="$1" newest
-  newest=$(ls -d "$root"/*/ 2>/dev/null | sed 's|.*/\([^/]*\)/$|\1|' | sort -V | tail -1)
-  [ -n "$newest" ] || return 1
-  local candidate="$root/$newest/skills/sshx/scripts/run-codex-worker.sh"
-  [ -f "$candidate" ] || return 1
-  printf '%s\n' "$candidate"
-}
+# 实现住共用库,因为 openproblem/op-resume-seat.sh 也要同一个解析;抄第二份即第二真源(第 4.2 条)。
+SEAT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)
+# shellcheck source=./sshx-runner-lib.sh
+. "$SEAT_DIR/sshx-runner-lib.sh"
+RUNNER_GLOB="$SSHX_PLUGIN_ROOT_DEFAULT"
 
 # selftest 的每个子调用都必须 hermetic:存根 runner + 单轮 gate + 零 sleep。否则删掉任一输入断言,
 # 该用例就会掉进**真实**的 240×30s 负载门,selftest 变成挂起而不是变红 —— 挂起不是红(第 9.3 条),
