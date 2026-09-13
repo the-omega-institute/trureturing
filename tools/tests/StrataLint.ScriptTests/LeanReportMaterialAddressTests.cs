@@ -7,6 +7,47 @@ namespace StrataLint.Tests;
 public sealed class LeanReportMaterialAddressTests(ITestOutputHelper output)
 {
     [Fact]
+    public void RealLakeConfigPreservesStdoutAndWritesIdenticalJsonToFile()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new LeanReportTransportFixture();
+        fixture.UseNativeLean();
+        var config = Path.Combine(fixture.Repository, "config output.json");
+        var stdout = fixture.ReadNativeConfig("lakefile.toml");
+        var file = fixture.ReadNativeConfig("lakefile.toml", "--output", config);
+
+        fixture.Success(stdout);
+        fixture.Success(file);
+        Assert.Empty(file.Stdout);
+        Assert.Equal(stdout.Stdout, File.ReadAllText(config));
+        using var parsed = JsonDocument.Parse(stdout.Stdout);
+        Assert.Equal(new[] { "Trureturing", "LeanInformationAudit" }, parsed.RootElement
+            .GetProperty("defaultTargets").EnumerateArray().Select(target => target.GetString()));
+    }
+
+    [Theory]
+    [InlineData("parse")]
+    [InlineData("read")]
+    [InlineData("write")]
+    [InlineData("arguments")]
+    public void RealLakeConfigInputAndOutputFailuresRemainNonzero(string failure)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new LeanReportTransportFixture();
+        fixture.UseNativeLean();
+        fixture.WriteSource("invalid.toml", "name = [\n");
+        var destination = Path.Combine(fixture.Repository, "config output.json");
+        var source = failure == "parse" ? "invalid.toml" : failure == "read" ? "absent.toml" : "lakefile.toml";
+        var arguments = failure == "arguments" ? new[] { source, "--output" }
+            : new[] { source, "--output", failure == "write" ? fixture.Repository : destination };
+
+        var result = fixture.ReadNativeConfig(arguments);
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.False(File.Exists(destination));
+    }
+
+    [Fact]
     public void RealLeanDeltaBuildCompilesDependenciesExternalClaimAndAllAuditRootsWithIdenticalFullBytes()
     {
         if (OperatingSystem.IsWindows()) return;
@@ -26,6 +67,7 @@ public sealed class LeanReportMaterialAddressTests(ITestOutputHelper output)
 
         fixture.Success(delta);
         Assert.Equal(2, fixture.UtilityCalls.Length);
+        Assert.StartsWith("LEAN_CACHE ", fixture.Phase("delta-config", "stdout"), StringComparison.Ordinal);
         Assert.Contains("LEAN_REPORT_DELTA mode=delta", delta.Text, StringComparison.Ordinal);
         Assert.Equal("build +D5.External +Trureturing LeanInformationAudit", fixture.BuildCalls[^1]);
         foreach (var module in new[] { "Trureturing", "D5/Probe", "D5/External", "LeanInformationAudit/One", "LeanInformationAudit/Two" })
@@ -72,8 +114,9 @@ public sealed class LeanReportMaterialAddressTests(ITestOutputHelper output)
         var buildsBeforeFailure = fixture.BuildCalls.Length;
         fixture.WriteSource("Trureturing.lean", "import D5.Probe\ntheorem result : False := True.intro\n");
         var failed = fixture.MakeNativeReport(lake);
-        Assert.NotEqual(0, failed.ExitCode);
-        Assert.Contains("LEAN_INSPECTOR_FAILED phase=delta-build exit=1", failed.Text, StringComparison.Ordinal);
+        Assert.Equal(2, failed.ExitCode);
+        // The canonical CLI maps a failed writer command to exit 2.
+        Assert.Contains("LEAN_INSPECTOR_FAILED phase=delta-build exit=2", failed.Text, StringComparison.Ordinal);
         Assert.Equal(buildsBeforeFailure + 1, fixture.BuildCalls.Length);
         Assert.DoesNotContain("RAW_LEAN_REPORT", failed.Text, StringComparison.Ordinal);
     }
@@ -171,6 +214,37 @@ public sealed class LeanReportMaterialAddressTests(ITestOutputHelper output)
 
         Assert.Equal(new[] { "build", "build" }, fixture.BuildCalls);
         Assert.Equal(new[] { "D5.Probe", "Trureturing" }, fixture.ExtractedModules[^1].Order(StringComparer.Ordinal));
+    }
+
+    [Theory]
+    [InlineData("invalid-json", false)]
+    [InlineData("invalid-json", true)]
+    [InlineData("missing-output", false)]
+    [InlineData("missing-output", true)]
+    [InlineData("command-failure", false)]
+    [InlineData("command-failure", true)]
+    public void UnavailableConfigProjectionRequiresDefaultBuildBeforeFullInspection(string failure, bool buildFails)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new LeanReportTransportFixture();
+        fixture.UseRealInspector();
+        fixture.Success(fixture.MakeInspectedReport());
+        fixture.WriteSource("Trureturing.lean", "import D5.Probe\n-- config output failure\n");
+        if (failure == "invalid-json") fixture.SetConfigOutput("{");
+        // A failed producer must not reuse an output left by an earlier phase.
+        File.WriteAllText(fixture.Output + ".logs/delta-config.json", "{\"defaultTargets\":[\"Trureturing\"],"
+            + "\"lean_lib\":[{\"name\":\"Trureturing\",\"roots\":[\"Trureturing\",\"D5\"],\"globs\":[\"Trureturing\",\"D5.+\"]}]}");
+
+        var result = fixture.Inspect("FIXTURE_CONFIG_EXIT=" + (failure == "command-failure" ? "75" : "0"),
+            "FIXTURE_CONFIG_MISSING_OUTPUT=" + (failure == "missing-output" ? "1" : "0"),
+            "FIXTURE_DEFAULT_BUILD_EXIT=" + (buildFails ? "73" : "0"));
+
+        if (buildFails) Assert.NotEqual(0, result.ExitCode); else fixture.Success(result);
+        Assert.Equal(new[] { "build", "build" }, fixture.BuildCalls);
+        Assert.Equal(buildFails ? new[] { "build", "inspect", "build" }
+            : new[] { "build", "inspect", "build", "inspect" }, fixture.Events);
+        if (!buildFails)
+            Assert.Equal(new[] { "D5.Probe", "Trureturing" }, fixture.ExtractedModules[^1].Order(StringComparer.Ordinal));
     }
 
     [Theory]
