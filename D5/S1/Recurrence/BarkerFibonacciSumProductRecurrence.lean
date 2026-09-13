@@ -2,13 +2,13 @@
    generality: G
    mirror-B: D5/B/S1/Recurrence/BarkerFibonacciSumProductRecurrence
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Data.Nat.Fib.Basic, mathlib/module/Mathlib.Data.Nat.Nth, mathlib/module/Mathlib.Tactic]
+   anchors: [mathlib/module/Mathlib.Data.Nat.Fib.Basic, mathlib/module/Mathlib.Data.Nat.Nth, mathlib/module/Mathlib.Tactic.IntervalCases]
    utility: none
    digest: Barker's Fibonacci sum-product sequence obeys a three-and-six-step recurrence. -/
 
 import Mathlib.Data.Nat.Fib.Basic
 import Mathlib.Data.Nat.Nth
-import Mathlib.Tactic
+import Mathlib.Tactic.IntervalCases
 
 namespace D5.S1.Recurrence.BarkerFibonacciSumProductRecurrence
 
