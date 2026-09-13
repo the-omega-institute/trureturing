@@ -156,6 +156,8 @@ public sealed class SharedBuildRuntimeTests
             ["GITHUB_RUN_ID"] = "17", ["GITHUB_RUN_ATTEMPT"] = "2", ["GITHUB_EVENT_NAME"] = "",
             ["GITHUB_EVENT_PATH"] = "", ["CI_PUSH_BEFORE"] = "", ["CI_PUSH_AFTER"] = "",
             ["GITHUB_REF"] = "refs/heads/integration-ci-current-stability-0909-tests", ["STRATALINT_CACHE_WRITES"] = "true",
+            // This fixture exercises stage exports, independently of the outer workflow's deferred upload.
+            ["CI_SEED_EXPORT"] = "automatic",
             ["STRATALINT_CHECK_SUCCEEDED"] = "false", ["STRATALINT_BUILD_SUCCEEDED"] = "true" };
         var cold = Stage("cold", "build");
         Assert.Equal(projects.Length + 2, Compilers(cold)); // Four utilities, Runtime, and the registered JudgeSeedTask.
@@ -194,7 +196,9 @@ public sealed class SharedBuildRuntimeTests
         Assert.False(File.Exists(Path.Combine(root, CommonExecutionEvidence.CurrentPath)));
         var originalChecks = CommonExecutionEvidence.ValidateChecks(root, "engineering", build);
         var reusedEngineering = Stage("engineering-warm", "engineering");
-        Assert.Equal(0, Compilers(reusedEngineering));
+        var reusedEngineeringCompilers = Compilers(reusedEngineering);
+        Assert.True(reusedEngineeringCompilers == 0,
+            $"Warm engineering expected 0 Csc calls, actual {reusedEngineeringCompilers}.\n{reusedEngineering}");
         Assert.DoesNotContain(Calls(), call => call.Contains(" selftest", StringComparison.Ordinal)
             || call.StartsWith("restore tools/tests/CompileFailProof", StringComparison.Ordinal)
             || call.StartsWith("restore tools/tests/BannedApiCompileFailProof", StringComparison.Ordinal));
