@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [mathlib/module/Mathlib.Data.Nat.Fib.Basic, mathlib/module/Mathlib.Data.Nat.Nth, mathlib/module/Mathlib.Tactic]
    utility: none
-   digest: Two-step induction bounds products of large Fibonacci numbers. -/
+   digest: Barker's Fibonacci sum-product sequence obeys a three-and-six-step recurrence. -/
 
 import Mathlib.Data.Nat.Fib.Basic
 import Mathlib.Data.Nat.Nth
@@ -223,36 +223,6 @@ private theorem mem_iff_family (x : ℕ) :
       · exact hk.trans hsum.symm
       · simpa only [show Nat.fib 4 = 3 by decide] using hk
 
-private theorem family_interleave (k : ℕ) (hk : 4 ≤ k) :
-    2 * Nat.fib k < Nat.fib (k + 2) ∧
-      Nat.fib (k + 2) < 3 * Nat.fib k ∧
-        3 * Nat.fib k < 2 * Nat.fib (k + 1) ∧
-          2 * Nat.fib (k + 1) < Nat.fib (k + 3) := by
-  have hprev : Nat.fib (k - 2) < Nat.fib (k - 1) := by
-    simpa only [show k - 2 + 1 = k - 1 by omega] using
-      (Nat.fib_lt_fib_succ (n := k - 2) (by omega))
-  have hcur : Nat.fib (k - 1) < Nat.fib k := by
-    simpa only [show k - 1 + 1 = k by omega] using
-      (Nat.fib_lt_fib_succ (n := k - 1) (by omega))
-  have hnext : Nat.fib k < Nat.fib (k + 1) :=
-    Nat.fib_lt_fib_succ (by omega)
-  have hnext2 : Nat.fib (k + 1) < Nat.fib (k + 2) :=
-    Nat.fib_lt_fib_succ (by omega)
-  have hf0 : Nat.fib k = Nat.fib (k - 2) + Nat.fib (k - 1) := by
-    simpa only [show k - 2 + 2 = k by omega,
-      show k - 2 + 1 = k - 1 by omega] using
-        (Nat.fib_add_two (n := k - 2))
-  have hf1 : Nat.fib (k + 1) = Nat.fib (k - 1) + Nat.fib k := by
-    simpa only [show k - 1 + 2 = k + 1 by omega,
-      show k - 1 + 1 = k by omega] using
-        (Nat.fib_add_two (n := k - 1))
-  have hf2 : Nat.fib (k + 2) = Nat.fib k + Nat.fib (k + 1) :=
-    Nat.fib_add_two
-  have hf3 : Nat.fib (k + 3) = Nat.fib (k + 1) + Nat.fib (k + 2) := by
-    simpa only [show k + 1 + 2 = k + 3 by omega] using
-      (Nat.fib_add_two (n := k + 1))
-  omega
-
 private def candidate (n : ℕ) : ℕ :=
   if n < 6 then n
   else if n % 3 = 0 then 2 * Nat.fib (n / 3 + 2)
@@ -260,6 +230,35 @@ private def candidate (n : ℕ) : ℕ :=
   else 3 * Nat.fib (n / 3 + 2)
 
 private theorem candidate_eq_nth (n : ℕ) : candidate n = Nat.nth mem n := by
+  have family_interleave (k : ℕ) (hk : 4 ≤ k) :
+      2 * Nat.fib k < Nat.fib (k + 2) ∧
+        Nat.fib (k + 2) < 3 * Nat.fib k ∧
+          3 * Nat.fib k < 2 * Nat.fib (k + 1) ∧
+            2 * Nat.fib (k + 1) < Nat.fib (k + 3) := by
+    have hprev : Nat.fib (k - 2) < Nat.fib (k - 1) := by
+      simpa only [show k - 2 + 1 = k - 1 by omega] using
+        (Nat.fib_lt_fib_succ (n := k - 2) (by omega))
+    have hcur : Nat.fib (k - 1) < Nat.fib k := by
+      simpa only [show k - 1 + 1 = k by omega] using
+        (Nat.fib_lt_fib_succ (n := k - 1) (by omega))
+    have hnext : Nat.fib k < Nat.fib (k + 1) :=
+      Nat.fib_lt_fib_succ (by omega)
+    have hnext2 : Nat.fib (k + 1) < Nat.fib (k + 2) :=
+      Nat.fib_lt_fib_succ (by omega)
+    have hf0 : Nat.fib k = Nat.fib (k - 2) + Nat.fib (k - 1) := by
+      simpa only [show k - 2 + 2 = k by omega,
+        show k - 2 + 1 = k - 1 by omega] using
+          (Nat.fib_add_two (n := k - 2))
+    have hf1 : Nat.fib (k + 1) = Nat.fib (k - 1) + Nat.fib k := by
+      simpa only [show k - 1 + 2 = k + 1 by omega,
+        show k - 1 + 1 = k by omega] using
+          (Nat.fib_add_two (n := k - 1))
+    have hf2 : Nat.fib (k + 2) = Nat.fib k + Nat.fib (k + 1) :=
+      Nat.fib_add_two
+    have hf3 : Nat.fib (k + 3) = Nat.fib (k + 1) + Nat.fib (k + 2) := by
+      simpa only [show k + 1 + 2 = k + 3 by omega] using
+        (Nat.fib_add_two (n := k + 1))
+    omega
   have candidate_zero (m : ℕ) :
       candidate (3 * m + 6) = 2 * Nat.fib (m + 4) := by
     simp only [candidate, if_neg (show ¬ 3 * m + 6 < 6 by omega),
