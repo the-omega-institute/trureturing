@@ -48,7 +48,11 @@ internal sealed class VosPostLogBoundedSemiprimePartitionRefutationDocument
                         + "above three; parity then forces p=2; divisibility by three finally "
                         + "forces q=3 or r=3, a contradiction. The completeness conjecture "
                         + "for A100952 is untouched."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a100952-log-bounded-semiprime-partition-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula RepFormula()
     {

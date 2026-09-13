@@ -34,6 +34,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/VosPostLogBoundedSemiprimePartitionRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a100952-log-bounded-semiprime-partition-refutation` (refuted) by `D5/S3/Arith/Congruence/VosPostLogBoundedSemiprimePartitionRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a100952-log-bounded-semiprime-partition-refutation","declaration_gid":"D5/S3/Arith/Congruence/VosPostLogBoundedSemiprimePartitionRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jonathan Vos Post; Reinhard Zumkeller (2004). *OEIS A100952, Numbers that cannot be written as p*q+r with three distinct primes p, q and r*. URL: <https://oeis.org/A100952>.
