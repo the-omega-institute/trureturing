@@ -808,6 +808,14 @@ private partial def inputType (env : Environment) (type : Expr)
       -- operands already checked above. Eliminating an arbitrary equality
       -- would instead ask Lean to solve a theorem (e.g. f x = x).
       if name == ``Eq || name == ``HEq then return (mentions, unclassified)
+      -- Nat.le has only natural indices and recursive Nat.le premises. Check
+      -- the actual operands above; if S is itself an order statement, reject
+      -- conservatively so no recursive order subproof can conceal it. This
+      -- avoids enumerating numeric representation bounds (UInt32, Char, ...).
+      if name == ``Nat.le then
+        let some statement ← boundedMeta (Meta.whnf (← get).statement) `statement_head
+          | return (mentions, true)
+        return (mentions, unclassified || statement.getAppFn.isConstOf ``Nat.le)
       if Lean.isClass env name && !listedTypeClasses.contains name then
         return (mentions, true)
       -- Quotient carriers and lifted type families expose their relation or
