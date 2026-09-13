@@ -2,16 +2,11 @@
    generality: G
    mirror-B: D5/B/S3/Factorization/IanakievPrimeExponentSumIterationReachesFive
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Data.Nat.Factorization.Induction, mathlib/module/Mathlib.Data.Nat.Factorization.Basic, mathlib/module/Mathlib.NumberTheory.ArithmeticFunction.Misc, mathlib/module/Mathlib.Tactic.Linarith, mathlib/module/Mathlib.Tactic.NormNum, mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.NumberTheory.ArithmeticFunction.Misc]
    utility: none
    digest: Ianakiev's prime-exponent sum iteration reaches five from every integer above four. -/
 
-import Mathlib.Data.Nat.Factorization.Induction
-import Mathlib.Data.Nat.Factorization.Basic
 import Mathlib.NumberTheory.ArithmeticFunction.Misc
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -84,41 +79,40 @@ private theorem F_upper : ∀ n : ℕ, 2 ≤ n → F n ≤ n + 1 := by
         nlinarith [Nat.zero_le ((a - 3) * (b - 2))]
     exact (Nat.add_le_add (hA (by omega)) (hB (by omega))).trans hsum
 
-private theorem F_at_least_three : ∀ n : ℕ, 2 ≤ n → 3 ≤ F n := by
-  have hmul : ∀ a b : ℕ, a.Coprime b → 1 < a → 1 < b →
-      F (a * b) = F a + F b := by
-    intro a b hab ha hb
-    rw [F, F, F, hab.primeFactors_mul,
-      Nat.factorization_mul (by omega) (by omega)]
-    rw [Finset.sum_union hab.disjoint_primeFactors]
-    apply congrArg₂ (fun x y => x + y)
-    · apply Finset.sum_congr rfl
-      intro p hp
-      simp only [Finsupp.add_apply]
-      have hnot : ¬p ∣ b := fun hpb =>
-        (Nat.prime_of_mem_primeFactors hp).ne_one
-          (Nat.eq_one_of_dvd_coprimes hab (Nat.dvd_of_mem_primeFactors hp) hpb)
-      rw [Nat.factorization_eq_zero_of_not_dvd hnot, add_zero]
-    · apply Finset.sum_congr rfl
-      intro p hp
-      simp only [Finsupp.add_apply]
-      have hnot : ¬p ∣ a := fun hpa =>
-        (Nat.prime_of_mem_primeFactors hp).ne_one
-          (Nat.eq_one_of_dvd_coprimes hab hpa (Nat.dvd_of_mem_primeFactors hp))
-      rw [Nat.factorization_eq_zero_of_not_dvd hnot, zero_add]
-  apply Nat.recOnPosPrimePosCoprime
-  · intro p e hp he _
-    have hp2 := hp.two_le
-    rw [F, Nat.primeFactors_pow p he.ne', hp.primeFactors, hp.factorization_pow]
-    simp
-    omega
-  · omega
-  · omega
-  · intro a b ha hb hab hA hB _
-    rw [hmul a b hab ha hb]
-    omega
-
 private theorem F_lower : ∀ n : ℕ, 5 ≤ n → 5 ≤ F n := by
+  have F_at_least_three : ∀ n : ℕ, 2 ≤ n → 3 ≤ F n := by
+    have hmul : ∀ a b : ℕ, a.Coprime b → 1 < a → 1 < b →
+        F (a * b) = F a + F b := by
+      intro a b hab ha hb
+      rw [F, F, F, hab.primeFactors_mul,
+        Nat.factorization_mul (by omega) (by omega)]
+      rw [Finset.sum_union hab.disjoint_primeFactors]
+      apply congrArg₂ (fun x y => x + y)
+      · apply Finset.sum_congr rfl
+        intro p hp
+        simp only [Finsupp.add_apply]
+        have hnot : ¬p ∣ b := fun hpb =>
+          (Nat.prime_of_mem_primeFactors hp).ne_one
+            (Nat.eq_one_of_dvd_coprimes hab (Nat.dvd_of_mem_primeFactors hp) hpb)
+        rw [Nat.factorization_eq_zero_of_not_dvd hnot, add_zero]
+      · apply Finset.sum_congr rfl
+        intro p hp
+        simp only [Finsupp.add_apply]
+        have hnot : ¬p ∣ a := fun hpa =>
+          (Nat.prime_of_mem_primeFactors hp).ne_one
+            (Nat.eq_one_of_dvd_coprimes hab hpa (Nat.dvd_of_mem_primeFactors hp))
+        rw [Nat.factorization_eq_zero_of_not_dvd hnot, zero_add]
+    apply Nat.recOnPosPrimePosCoprime
+    · intro p e hp he _
+      have hp2 := hp.two_le
+      rw [F, Nat.primeFactors_pow p he.ne', hp.primeFactors, hp.factorization_pow]
+      simp
+      omega
+    · omega
+    · omega
+    · intro a b ha hb hab hA hB _
+      rw [hmul a b hab ha hb]
+      omega
   have hmul : ∀ a b : ℕ, a.Coprime b → 1 < a → 1 < b →
       F (a * b) = F a + F b := by
     intro a b hab ha hb
@@ -283,24 +277,22 @@ private theorem F_composite_lt : ∀ n : ℕ,
           nlinarith [Nat.zero_le ((a - 3) * (b - 3))]
     exact (Nat.add_le_add hFa hFb).trans_lt harith
 
-private theorem F_two_mul_le (n : ℕ) (hn : 0 < n) :
-    F (2 * n) ≤ F n + 3 := by
-  have hsplit (m : ℕ) :
-      F m = (∑ p ∈ m.primeFactors, p) + ArithmeticFunction.cardFactors m := by
-    rw [F, Finset.sum_add_distrib,
-      ArithmeticFunction.cardFactors_eq_sum_factorization, Finsupp.sum,
-      Nat.support_factorization]
-  rw [hsplit, hsplit, ArithmeticFunction.cardFactors_mul (by norm_num) hn.ne',
-    ArithmeticFunction.cardFactors_apply_prime Nat.prime_two,
-    Nat.primeFactors_mul (by norm_num) hn.ne', Nat.prime_two.primeFactors]
-  by_cases h2 : 2 ∈ n.primeFactors
-  · rw [Finset.singleton_union, Finset.insert_eq_of_mem h2]
-    omega
-  · rw [Finset.singleton_union, Finset.sum_insert h2]
-    omega
-
 private theorem F_prime_two_step_lt (p : ℕ) (hp : p.Prime) (hp11 : 11 ≤ p) :
     F (F p) < p := by
+  have F_two_mul_le (n : ℕ) (hn : 0 < n) : F (2 * n) ≤ F n + 3 := by
+    have hsplit (m : ℕ) :
+        F m = (∑ p ∈ m.primeFactors, p) + ArithmeticFunction.cardFactors m := by
+      rw [F, Finset.sum_add_distrib,
+        ArithmeticFunction.cardFactors_eq_sum_factorization, Finsupp.sum,
+        Nat.support_factorization]
+    rw [hsplit, hsplit, ArithmeticFunction.cardFactors_mul (by norm_num) hn.ne',
+      ArithmeticFunction.cardFactors_apply_prime Nat.prime_two,
+      Nat.primeFactors_mul (by norm_num) hn.ne', Nat.prime_two.primeFactors]
+    by_cases h2 : 2 ∈ n.primeFactors
+    · rw [Finset.singleton_union, Finset.insert_eq_of_mem h2]
+      omega
+    · rw [Finset.singleton_union, Finset.sum_insert h2]
+      omega
   have hpvalue : F p = p + 1 := by
     simpa only [pow_one] using
       (show F (p ^ 1) = p + 1 by
