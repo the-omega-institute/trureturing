@@ -72,7 +72,7 @@ elab "check_provenance " label:str " using " readout:ident " expects " reason:st
           (message.splitOn s!"readout={n}").length == 2 do
         throwError "[FAIL] {label.getString}: diagnostic keys"
       if reason.getString == "incomplete_closure" then
-        unless payload == "null" do throwError "[FAIL] {label.getString}: partial closure"
+        unless payload == "null" do throwError "[FAIL] {label.getString}: partial closure: {payload}"
       else if let .ok json := Json.parse payload then
         if reason.getString == "unclassified_form" then
           let .obj fields := json | throwError "[FAIL] {label.getString}: non-object payload"

@@ -151,12 +151,13 @@ private structure Unclassified where
 
 private inductive TypeClassification where
   /-- The only verdicts accepted by the walker: a positive allowlist result,
-  statement mention, direct forbidden dependency, or an explicit failure to
-  classify.  Callers must handle every constructor. -/
+  statement mention, direct forbidden dependency, an unclassified form, or
+  incomplete work. Callers must handle every constructor. -/
   | allowlisted
   | statementMention
   | forbidden
   | unclassified
+  | incomplete
   deriving Inhabited
 
 private inductive Position where | dataPos | proofPos | typePos
@@ -999,23 +1000,25 @@ end
 -- Recursive constructor results close only the active family obligation.
 private def classifyType (env : Environment) (type : Expr) (context : Array Expr) : WalkM TypeClassification := do
   let context := if type.hasLooseBVars then context else #[]
-  unless ← chargeTraversal (2 * context.size + 1) do return .unclassified
+  unless ← chargeTraversal (2 * context.size + 1) do return .incomplete
   let key := (type, context)
   if let some cached := (← get).typeChecks[key]? then return cached
   let verdict ← inBinderContext context fun locals => do
-    let some type ← substitute type locals | return .unclassified
+    let some type ← substitute type locals | return .incomplete
     let exact ← compareCanonical type (← get).statement
     let decision ← compareCanonical type (← get).decision
     let (mentions, unclassified) ← inputType env type
     if exact || decision then return .forbidden
     if mentions then return .statementMention
-    if unclassified then return .unclassified
     let state ← get
     if state.forbidden then return .forbidden
-    if state.incomplete || state.unclassified.isSome then return .unclassified
+    if state.unclassified.isSome then return .unclassified
+    -- Incomplete work is a rejection, not evidence of an unknown type form.
+    if state.incomplete then return .incomplete
+    if unclassified then return .unclassified
     return .allowlisted
-  let verdict := verdict.getD .unclassified
-  unless ← chargeTraversal context.size do return .unclassified
+  let verdict := verdict.getD (if (← get).incomplete then .incomplete else .unclassified)
+  unless ← chargeTraversal context.size do return .incomplete
   modify fun s => { s with typeChecks := s.typeChecks.insert key verdict }
   return verdict
 
@@ -1124,6 +1127,7 @@ private def process (env : Environment) : WalkM Unit := do
           noteUnclassified ⟨"statement_mentioning_type", first, namespaceLabel env first, origin⟩
         | .unclassified =>
           noteUnclassified ⟨"unclassified_argument_type", first, namespaceLabel env first, origin⟩
+        | .incomplete => modify fun s => { s with incomplete := true }
         | .allowlisted => pure ()
         continue
       if let some (e, context, isProjection, origin) := (← get).appObligations.head? then
@@ -1138,6 +1142,7 @@ private def process (env : Environment) : WalkM Unit := do
               | .statementMention | .unclassified =>
                 noteUnclassified ⟨"unclassified_projection_type", projectionName,
                   namespaceLabel env projectionName, origin⟩
+              | .incomplete => modify fun s => { s with incomplete := true }
               | .allowlisted => pure ()
             | none =>
               noteUnclassified ⟨"unclassified_projection_type", origin,
@@ -1147,6 +1152,7 @@ private def process (env : Environment) : WalkM Unit := do
           | .forbidden => modify fun s => { s with forbidden := true }
           | .statementMention | .unclassified =>
             noteUnclassified ⟨"unclassified_argument_type", origin, namespaceLabel env origin, origin⟩
+          | .incomplete => modify fun s => { s with incomplete := true }
           | .allowlisted => pure ()
         continue
       break
