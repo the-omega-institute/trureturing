@@ -26,7 +26,9 @@ theorem scalar_dvd_iff_coordinates (q : ℕ) (z : GoldenInt) :
     · exact ⟨w.b, by simp⟩
   · rintro ⟨⟨a, ha⟩, ⟨b, hb⟩⟩
     refine ⟨⟨a, b⟩, ?_⟩
-    apply GoldenInt.ext <;> simpa using_assumption
+    apply GoldenInt.ext
+    · simpa using ha
+    · simpa using hb
 
 theorem reduce_eq_zero_iff (q : ℕ) (z : GoldenInt) :
     GoldenMod.reduce q z = 0 ↔ (q : GoldenInt) ∣ z := by
@@ -81,7 +83,7 @@ theorem prime_power_expansion (p : ℕ) (hp : p.Prime) (s : ℕ)
   have hv : (p : GoldenInt) ∣ (p : GoldenInt) ^ s := dvd_pow_self _ (by omega)
   have ht : (p : GoldenInt) * (p : GoldenInt) ^ s * p ∣ ((p : GoldenInt) ^ s) ^ p := by
     rw [← pow_succ', ← pow_succ, ← pow_mul]
-    exact pow_dvd_pow _ (by omega)
+    exact pow_dvd_pow _ (by simpa only [Nat.mul_comm] using hstable)
   obtain ⟨C, hC⟩ := ZMod.exists_one_add_mul_pow_prime_pow_eq
     (R := GoldenInt) (u := (p : GoldenInt) ^ s) (v := (p : GoldenInt)) hp hv ht B j
   refine ⟨C, ?_⟩
