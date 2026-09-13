@@ -7,11 +7,13 @@ COMMAND="${1:-}"
 if [[ -n "$COMMAND" ]]; then shift; fi
 REPOSITORY=""
 REPORT=""
+SOURCE_INPUTS=()
 PRODUCER_OVERRIDE=""
 INSPECTOR_OVERRIDE=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --repository) REPOSITORY="$2"; shift 2 ;;
+    --base|--push-before|--push-head) SOURCE_INPUTS+=("$1" "$2"); shift 2 ;;
     --report) REPORT="$2"; shift 2 ;;
     --producer) PRODUCER_OVERRIDE="$2"; shift 2 ;;
     --inspector) INSPECTOR_OVERRIDE="$2"; shift 2 ;;
@@ -19,9 +21,9 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-[[ "$COMMAND" == "address" || "$COMMAND" == "verify" || "$COMMAND" == "modules" \
+[[ "$COMMAND" == "address" || "$COMMAND" == "verify" || "$COMMAND" == "verify-input" || "$COMMAND" == "modules" \
   || "$COMMAND" == "producer-paths" || "$COMMAND" == "scribe-producer-paths" ]] \
-  || { echo "usage: lean-report-input.sh address|verify|modules|producer-paths|scribe-producer-paths --repository DIR [--report FILE] [--producer FILE] [--inspector FILE]" >&2; exit 2; }
+  || { echo "usage: lean-report-input.sh address|verify|verify-input|modules|producer-paths|scribe-producer-paths --repository DIR [--report FILE] [--producer FILE] [--inspector FILE]" >&2; exit 2; }
 [[ -n "$REPOSITORY" && "$REPOSITORY" == /* && -d "$REPOSITORY" ]] \
   || { echo "lean-report-input: --repository requires an absolute directory" >&2; exit 2; }
 [[ -z "$PRODUCER_OVERRIDE" || ( "$PRODUCER_OVERRIDE" == /* && -f "$PRODUCER_OVERRIDE" ) ]] \
@@ -29,7 +31,7 @@ done
 [[ -z "$INSPECTOR_OVERRIDE" || ( "$INSPECTOR_OVERRIDE" == /* && -f "$INSPECTOR_OVERRIDE" ) ]] \
   || { echo "lean-report-input: --inspector requires an absolute file" >&2; exit 2; }
 REPOSITORY="$(cd "$REPOSITORY" && pwd -P)"
-if [[ "$COMMAND" == "verify" ]]; then
+if [[ "$COMMAND" == "verify" || "$COMMAND" == "verify-input" ]]; then
   [[ -n "$REPORT" && "$REPORT" == /* && -s "$REPORT" ]] \
     || { echo "lean-report-input: raw Lean report is missing; run make lean-report first" >&2; exit 2; }
 fi
@@ -40,6 +42,12 @@ trap cleanup EXIT
 
 SCRIPT_DIRECTORY="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 source "$SCRIPT_DIRECTORY/../worktree/lean-cache-input.sh"
+case "$COMMAND" in
+  address|verify|verify-input) REGISTERED_INPUT_SCOPES=producer,lean-sources,lean-config ;;
+  modules) REGISTERED_INPUT_SCOPES=managed-modules ;;
+  producer-paths) REGISTERED_INPUT_SCOPES=producer ;;
+  scribe-producer-paths) REGISTERED_INPUT_SCOPES=scribe-producer ;;
+esac
 
 append_producer_manifest_entry() {
   local manifest="$1"
@@ -55,222 +63,14 @@ append_producer_manifest_entry() {
   printf '%s\0%s\0' "$relative" "$path" >> "${manifest}.requests"
 }
 
-producer_declared_paths() {
-  local relative
-  for relative in \
-    tools/StrataLint.Cli/StrataLint.Cli.csproj \
-    tools/StrataLint.Engine/StrataLint.Engine.csproj \
-    tools/Trureturing.Truth/Trureturing.Truth.csproj \
-    Directory.Build.props \
-    Directory.Build.targets \
-    Directory.Packages.props \
-    tools/lean-inspector/inspect.sh \
-    tools/lean-inspector/Inspector.lean \
-    tools/lean-inspector/delta.py \
-    tools/lean-inspector/materials.py \
-    tools/scripts/report/lean-report-input.sh \
-    tools/scripts/lean-report-pair.sh \
-    tools/StrataLint.Engine/packages.lock.json \
-    tools/StrataLint.Cli/packages.lock.json \
-    tools/Trureturing.Truth/packages.lock.json \
-    global.json; do
-    if [[ -f "$REPOSITORY/$relative" \
-      || ( "$relative" == "tools/lean-inspector/inspect.sh" && -n "$PRODUCER_OVERRIDE" ) \
-      || ( "$relative" == "tools/lean-inspector/Inspector.lean" && -n "$INSPECTOR_OVERRIDE" ) ]]; then
-      printf '%s\n' "$relative"
-    fi
-  done
-}
-
-producer_reachable_script_paths() {
-  local scope="${1:-lean-report}"
-  python3 - "$REPOSITORY" "$scope" <<'PY'
-import pathlib
-import re
-import sys
-
-root = pathlib.Path(sys.argv[1]).resolve()
-scope = sys.argv[2]
-inspector_entrypoint = pathlib.PurePosixPath("tools/lean-inspector/inspect.sh")
-inspector_root = root / "tools" / "lean-inspector"
-if scope == "lean-report":
-    entrypoints = (
-        pathlib.PurePosixPath(".github/workflows/ci.yml"),
-        inspector_entrypoint,
-        pathlib.PurePosixPath("tools/scripts/lean-report-pair.sh"),
-        pathlib.PurePosixPath("tools/scripts/report/lean-report-input.sh"),
-        # LeanArchiveFetch.Run enters this script from C#, outside shell references.
-        pathlib.PurePosixPath("tools/scripts/worktree/lean-cache-publish.sh"),
-    )
-elif scope == "scribe-content":
-    entrypoints = (
-        pathlib.PurePosixPath(".github/workflows/ci.yml"),
-        pathlib.PurePosixPath("tools/scripts/workflow/scribe-content-checks.sh"),
-    )
-else:
-    raise SystemExit(f"lean-report-input: unknown producer scope: {scope}")
-reference_pattern = re.compile(
-    r"(?P<path>(?:\$[A-Za-z_][A-Za-z0-9_]*|\$\{[A-Za-z_][A-Za-z0-9_]*\}|[A-Za-z0-9_.-]+)"
-    r"(?:/[A-Za-z0-9_.$@{}+-]+)+\.sh)(?![A-Za-z0-9_.])"
-)
-
-
-def source_text(relative):
-    path = root.joinpath(*relative.parts).resolve()
-    try:
-        path.relative_to(root)
-    except ValueError as error:
-        raise SystemExit(f"lean-report-input: producer script escaped repository: {relative}") from error
-    if relative == inspector_entrypoint and not path.is_file() and not inspector_root.exists():
-        return None
-    if not path.is_file():
-        raise SystemExit(f"lean-report-input: reachable producer input is absent: {relative}")
-    text = path.read_text(encoding="utf-8")
-    if relative == pathlib.PurePosixPath(".github/workflows/ci.yml"):
-        start_marker = "  lean-inspect:\n"
-        end_marker = "  baseline-admission:\n"
-        if start_marker not in text or end_marker not in text:
-            raise SystemExit("lean-report-input: Lean-report workflow job boundaries are absent")
-        text = text[text.index(start_marker):text.index(end_marker)]
-    return text
-
-
-def normalize(reference, source):
-    if "/candidate/" in reference:
-        reference = reference.split("/candidate/", 1)[1]
-    elif reference.startswith("candidate/"):
-        reference = reference[len("candidate/"):]
-    elif reference.startswith("$"):
-        reference = reference.split("/", 1)[1]
-        if reference.startswith("candidate/"):
-            reference = reference[len("candidate/"):]
-    if reference.startswith(("tools/", ".github/")):
-        candidate = pathlib.PurePosixPath(reference)
-    else:
-        candidate = source.parent.joinpath(pathlib.PurePosixPath(reference))
-    normalized = pathlib.PurePosixPath(pathlib.PurePosixPath(candidate).as_posix())
-    parts = []
-    for part in normalized.parts:
-        if part in ("", "."):
-            continue
-        if part == "..":
-            if not parts:
-                raise SystemExit(f"lean-report-input: producer script escaped repository: {reference}")
-            parts.pop()
-        else:
-            parts.append(part)
-    return pathlib.PurePosixPath(*parts)
-
-
-pending = list(entrypoints)
-reachable = set()
-while pending:
-    source = pending.pop()
-    if source in reachable:
-        continue
-    text = source_text(source)
-    if text is None:
-        continue
-    reachable.add(source)
-    for match in reference_pattern.finditer(text):
-        if text[max(0, match.start() - 3):match.start()] == "://":
-            continue
-        referenced = normalize(match.group("path"), source)
-        if referenced not in reachable:
-            pending.append(referenced)
-
-for relative in sorted(reachable, key=lambda path: path.as_posix().encode("utf-8")):
-    print(relative.as_posix())
-PY
-}
-
-producer_compile_paths() {
-  local scope="${1:-lean-report}"
-  local project json
-  local projects=()
-  if [[ "$scope" == "lean-report" ]]; then
-    projects=(
-      tools/StrataLint.Cli/StrataLint.Cli.csproj
-      tools/StrataLint.Engine/StrataLint.Engine.csproj
-      tools/Trureturing.Truth/Trureturing.Truth.csproj)
-  elif [[ "$scope" == "scribe-content" ]]; then
-    projects=(
-      tools/StrataLint.Scribe/StrataLint.Scribe.csproj
-      tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj
-      tools/StrataLint.Engine/StrataLint.Engine.csproj
-      tools/Trureturing.Truth/Trureturing.Truth.csproj)
-  else
-    return 1
-  fi
-  for project in "${projects[@]}"; do
-    [[ -f "$REPOSITORY/$project" ]] || return 1
-    json="$TMP_ROOT/$(basename "$project").compile.json"
-    if ! (
-      cd "$REPOSITORY" || exit 1
-      dotnet msbuild "$REPOSITORY/$project" -getItem:Compile \
-        -verbosity:quiet -nologo
-    ) > "$json" 2> "$json.stderr"; then
-      printf 'lean-report-input: producer Compile evaluation failed: %s\n' "$REPOSITORY/$project" >&2
-      # MSBuild can write errors to stdout even when -getItem requests JSON.
-      cat "$json.stderr" "$json" >&2
-      return 1
-    fi
-    python3 - "$REPOSITORY" "$json" <<'PY' || return 1
-import json
-import pathlib
-import sys
-
-root = pathlib.Path(sys.argv[1]).resolve()
-items = json.loads(pathlib.Path(sys.argv[2]).read_text(encoding="utf-8"))["Items"]["Compile"]
-if not items:
-    raise SystemExit(1)
-for item in items:
-    path = pathlib.Path(item["FullPath"]).resolve()
-    try:
-        relative = path.relative_to(root)
-    except ValueError:
-        raise SystemExit(1)
-    if not path.is_file():
-        raise SystemExit(1)
-    print(relative.as_posix())
-PY
-  done
-}
-
 complete_producer_paths() {
-  local compile_paths="$TMP_ROOT/producer-compile-paths"
-  local script_paths="$TMP_ROOT/producer-script-paths"
-  local lean_paths="$TMP_ROOT/producer-lean-paths"
-  producer_compile_paths lean-report > "$compile_paths" || return 1
-  producer_reachable_script_paths lean-report > "$script_paths" || return 1
-  lean_inspector_source_paths > "$lean_paths" || return 1
-  { cat "$compile_paths"; cat "$script_paths"; cat "$lean_paths"; producer_declared_paths; } | sort -u
-}
-
-scribe_declared_paths() {
-  local relative
-  for relative in \
-    tools/StrataLint.Scribe/StrataLint.Scribe.csproj \
-    tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj \
-    tools/StrataLint.Scribe.Documents/packages.lock.json \
-    tools/StrataLint.Scribe/packages.lock.json; do
-    [[ -f "$REPOSITORY/$relative" ]] && printf '%s\n' "$relative"
-  done
+  registered_input_paths producer > "$TMP_ROOT/producer-selected" || return 2
+  sort "$TMP_ROOT/producer-selected"
 }
 
 complete_scribe_producer_paths() {
-  local compile_paths="$TMP_ROOT/scribe-compile-paths"
-  local script_paths="$TMP_ROOT/scribe-script-paths"
-  local lean_paths="$TMP_ROOT/lean-producer-paths"
-  producer_compile_paths scribe-content > "$compile_paths" || return 1
-  producer_reachable_script_paths scribe-content > "$script_paths" || return 1
-  complete_producer_paths > "$lean_paths" || return 1
-  {
-    cat "$compile_paths"
-    cat "$script_paths"
-    cat "$lean_paths"
-    scribe_declared_paths
-  } | sort -u
+  registered_input_paths scribe-producer > "$TMP_ROOT/scribe-selected" || return 2
+  sort "$TMP_ROOT/scribe-selected"
 }
 
 producer_sha256() {
@@ -292,16 +92,12 @@ producer_sha256() {
 }
 
 managed_modules() {
-  [[ -f "$REPOSITORY/Trureturing.lean" && -d "$REPOSITORY/D5" ]] \
-    || { echo "lean-report-input: managed Lean roots are absent" >&2; return 2; }
-  printf 'Trureturing\tTrureturing.lean\n'
-  find "$REPOSITORY/D5" -type f -name '*.lean' -print \
-    | sed "s#^$REPOSITORY/##" \
-    | sort \
-    | while IFS= read -r path; do
-        module="${path%.lean}"
-        printf '%s\t%s\n' "${module//\//.}" "$path"
-      done
+  local paths="$TMP_ROOT/managed-modules"
+  registered_input_paths managed-modules > "$paths" || return 2
+  while IFS= read -r path; do
+    module="${path%.lean}"
+    printf '%s\t%s\n' "${module//\//.}" "$path"
+  done < "$paths"
 }
 
 # Repository address preimage v1 hashes the resident inspector producer,
@@ -361,7 +157,7 @@ case "$COMMAND" in
     complete_scribe_producer_paths \
       || { echo "lean-report-input: Scribe producer closure is unavailable" >&2; exit 2; }
     ;;
-  verify)
+  verify|verify-input)
     verify_report_sha
     [[ -f "${REPORT}.input.attestation" ]] \
       || { echo "lean-report-input: production input attestation is missing; run make lean-report first" >&2; exit 2; }
@@ -398,3 +194,16 @@ case "$COMMAND" in
       || { echo "lean-report-input: raw Lean report is stale for current repository inputs; run make lean-report first" >&2; exit 2; }
     ;;
 esac
+
+if [[ "$COMMAND" == verify ]]; then
+  SOURCE_ARGS=()
+  source_arguments="$(python3 "$REPOSITORY/tools/scripts/workflow/checked-ci-identity.py" \
+    --repository "$REPOSITORY" --report-source-arguments --acquire-pinned \
+    "${SOURCE_INPUTS[@]}")" || exit 2
+  while IFS= read -r argument; do SOURCE_ARGS+=("$argument"); done <<< "$source_arguments"
+  "$BASH" "$REPOSITORY/tools/lean-inspector/source-context.sh" verify \
+    --repository "$REPOSITORY" --report "$REPORT" "${SOURCE_ARGS[@]}"
+fi
+# verify-input is only the cache's pre-preparation input attestation check.
+# Public verification above always checks demand for the selected source mode;
+# the pair also calls it after preparing the complete staged bundle.

@@ -81,6 +81,8 @@ public sealed partial class MakeWorkflowTests
 
     [Theory]
     [InlineData("pass", 0)]
+    [InlineData("missing-before", 2)]
+    [InlineData("invalid-before", 2)]
     [InlineData("semantic-test", 41)]
     [InlineData("semantic-gate", 42)]
     [InlineData("configuration", 78)]
@@ -101,6 +103,14 @@ public sealed partial class MakeWorkflowTests
         var result = RunPreflightScenario(scenario, TestRepositoryLayout.FindRoot());
 
         Assert.Equal(expectedExitCode, result.ExitCode);
+    }
+
+    [Fact]
+    public void PreflightKeepsPushBeforeDistinctFromAdmissionBase()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var result = RunPreflightScenario("semantic-test", TestRepositoryLayout.FindRoot());
+        Assert.Equal(41, result.ExitCode);
     }
 
     [Fact]
@@ -135,6 +145,7 @@ public sealed partial class MakeWorkflowTests
         var preflight = Path.Combine(root, PreflightScriptPath);
         var report = Path.Combine(root, ".lake", "build", "stratalint", "raw-lean-report.json");
         CopyPreflightScriptClosure(sourceRoot, root);
+        WriteScribeInputRegistration(root);
         CopyBannedApiCompileFailProof(root);
         Directory.CreateDirectory(Path.GetDirectoryName(report)!);
         Directory.CreateDirectory(binDirectory);
@@ -145,8 +156,9 @@ public sealed partial class MakeWorkflowTests
         RunScenarioGit(root, "init", "--initial-branch=dev");
         RunScenarioGit(root, "config", "user.email", "preflight@example.invalid");
         RunScenarioGit(root, "config", "user.name", "Preflight Fixture");
-        RunScenarioGit(root, "add", "README.md", "tools");
+        RunScenarioGit(root, "add", "README.md", "tools", "Meta");
         RunScenarioGit(root, "commit", "-m", "fixture base");
+        var engineeringBefore = RunScenarioGitForOutput(root, "rev-parse", "HEAD").Trim();
         var candidatePath = scenario == "stale-values"
             ? Path.Combine(root, "Golden", "values-kernels.toml")
             : Path.Combine(root, "README.md");
@@ -154,6 +166,12 @@ public sealed partial class MakeWorkflowTests
         File.AppendAllText(candidatePath, "candidate\n");
         RunScenarioGit(root, "add", Path.GetRelativePath(root, candidatePath));
         RunScenarioGit(root, "commit", "-m", "fixture candidate");
+        if (scenario == "semantic-test")
+        {
+            File.AppendAllText(Path.Combine(root, "README.md"), "second pushed commit\n");
+            RunScenarioGit(root, "add", "README.md");
+            RunScenarioGit(root, "commit", "-m", "second candidate commit");
+        }
         WriteExecutable(
             Path.Combine(binDirectory, "git"),
             """
@@ -173,10 +191,9 @@ public sealed partial class MakeWorkflowTests
             fi
             exec /usr/bin/git "$@"
             """);
-        WriteExecutable(
-            Path.Combine(binDirectory, "dotnet"),
+        WriteSelectorAwareDotnetShim(
+            binDirectory,
             """
-            #!/usr/bin/env bash
             if [[ "${1:-}" == --version ]]; then
               [[ "${PREFLIGHT_SCENARIO:-}" != toolchain-missing ]] || exit 127
               exit 0
@@ -229,6 +246,9 @@ public sealed partial class MakeWorkflowTests
                   ;;
               esac
             done
+            if [[ "$target" == engineering-tests ]]; then
+              [[ "$original" == *"EVENT=push"* && "$original" == *"BEFORE=$PREFLIGHT_ENGINEERING_BEFORE"* ]] || exit 45
+            fi
             case "${PREFLIGHT_SCENARIO:-}:$directory:$target" in
               semantic-test:tools:engineering-tests)
                 exit 41
@@ -250,12 +270,13 @@ public sealed partial class MakeWorkflowTests
             "/bin/bash",
             [
                 "-c",
-                "PREFLIGHT_SCENARIO=\"$1\" BASE=\"$4\" PATH=\"$2:/usr/bin:/bin\" exec /bin/bash \"$3\"",
+                "PREFLIGHT_SCENARIO=\"$1\" BASE=\"$4\" BEFORE=\"$5\" PREFLIGHT_ENGINEERING_BEFORE=\"$5\" PATH=\"$2:/usr/bin:/bin\" exec /bin/bash \"$3\"",
                 "preflight-contract",
                 scenario,
                 binDirectory,
                 preflight,
                 explicitBase,
+                scenario == "missing-before" ? "" : scenario == "invalid-before" ? "HEAD^1" : engineeringBefore,
             ],
             root,
             BoundedProcessRunner.HangDetectionBudget,

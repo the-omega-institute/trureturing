@@ -15,12 +15,20 @@ if [[ ! -s "$REPORT" ]]; then
   echo "scribe-content-checks: raw Lean report is missing or empty at $REPORT" >&2
   exit 2
 fi
-if [[ ! "$BASE" =~ ^[0-9a-fA-F]{40}$|^[0-9a-fA-F]{64}$ ]]; then
-  echo "scribe-content-checks: an exact merge-base is required" >&2
-  exit 2
+PUSH_BEFORE="${STRATALINT_PUSH_BEFORE:-}"
+PUSH_HEAD="${STRATALINT_PUSH_HEAD:-}"
+if [[ -n "$PUSH_BEFORE" || -n "$PUSH_HEAD" ]]; then
+  [[ -z "$BASE" ]] || { echo "scribe-content-checks: push range and protected base are distinct modes" >&2; exit 2; }
+else
+  # The retained PR/local comparison interface supplies a pinned B; it is not guessed.
+  if ! comparison_base="$(git -C "$REPO_ROOT" rev-parse --verify --end-of-options "${BASE}^{commit}" 2>/dev/null)" \
+    || [[ "$comparison_base" != "$BASE" ]]; then
+    echo "PUSH_RANGE_INVALID scribe-content-checks: comparison base must be an exact available commit" >&2
+    exit 2
+  fi
+  PUSH_BEFORE="$BASE"
+  PUSH_HEAD="$(git -C "$REPO_ROOT" rev-parse --verify HEAD)" || exit 2
 fi
-git -C "$REPO_ROOT" cat-file -e "${BASE}^{commit}" \
-  || { echo "scribe-content-checks: BASE commit is unavailable" >&2; exit 2; }
 SCRIBE=(dotnet run --project "$PROJECT" --configuration Release --)
 if [[ -n "$SCRIBE_DLL" ]]; then
   SCRIBE=(dotnet "$SCRIBE_DLL")
@@ -32,66 +40,39 @@ run_scribe() {
 }
 
 CHANGED_PATHS=()
+paths_file="$(mktemp)"
+trap 'rm -f -- "$paths_file"' EXIT
+python3 "$REPO_ROOT/tools/scripts/workflow/checked-ci-identity.py" --repository "$REPO_ROOT" \
+  --paths --planning-before "$PUSH_BEFORE" --planning-head "$PUSH_HEAD" > "$paths_file" || exit 2
 while IFS= read -r -d '' path; do
   CHANGED_PATHS+=("$path")
-done < <(
-  git diff --name-only --no-renames -z "$BASE" --
-  git ls-files --others --exclude-standard -z
-)
+done < "$paths_file"
+
+# FILEMAP's registered manifest is the sole impact authority. Validate its
+# inputs even on an unrelated delta; match removed paths from the same git diff.
+selection="$(dotnet run --project "$REPO_ROOT/tools/StrataLint.Cli/StrataLint.Cli.csproj" \
+  --configuration Release --no-launch-profile --disable-build-servers --verbosity quiet -- \
+  filemap-conform --input-scopes scribe-projections,scribe-describe,scribe-markdown \
+  --repository "$REPO_ROOT" --match-paths ${CHANGED_PATHS[@]+"${CHANGED_PATHS[@]}"})" \
+  || { echo "scribe-content-checks: registered impact selection is unavailable" >&2; exit 2; }
+checks="$(printf '%s' "$selection" | python3 -c '
+import json, sys
+selected = json.load(sys.stdin)
+for scope in ("scribe-projections", "scribe-describe", "scribe-markdown"):
+    if selected[scope]:
+        print(scope)
+')" || { echo "scribe-content-checks: registered impact selection is malformed" >&2; exit 2; }
 
 requires_projection_check=0
 requires_describe_check=0
 requires_markdown_check=0
-derive_producer_closure=0
-if [[ "${#CHANGED_PATHS[@]}" -gt 0 ]]; then
-  for path in "${CHANGED_PATHS[@]}"; do
-    case "$path" in
-      Golden/Projection/*.json)
-        requires_projection_check=1
-        ;;
-      Blueprint/*.scribe.cs)
-        requires_describe_check=1
-        requires_markdown_check=1
-        ;;
-      # 投影本身:新鲜度仍然不入门(它是 reader snapshot),但它承载的公式要过
-      # 真 KaTeX——那是站点实际用的解析器,而发射器的规则只是它的人工读数。
-      Blueprint/*.md)
-        requires_markdown_check=1
-        ;;
-      D5/*.lean|Trureturing.lean|lean-toolchain|lake-manifest.json|lakefile.toml|lakefile.lean|\
-      Library/*|Problems/*|Meta/BACKFILL.yaml|Meta/Digestion/backfill/*|\
-      tools/lean-inspector/*|tools/scripts/report/lean-report-input.sh)
-        requires_describe_check=1
-        ;;
-      .github/workflows/ci.yml|Directory.Build.props|Directory.Build.targets|Directory.Packages.props|\
-      global.json|tools/StrataLint.Scribe/*|tools/StrataLint.Scribe.Documents/*|\
-      tools/StrataLint.Engine/*|tools/StrataLint.Cli/*|\
-      tools/Architecture/BannedSymbols*.txt|tools/scripts/workflow/scribe-content-checks.sh)
-        requires_projection_check=1
-        requires_describe_check=1
-        ;;
-      *.cs|*.sh|*.csproj|*.props|*.targets|*/packages.lock.json)
-        derive_producer_closure=1
-        ;;
-    esac
-  done
-fi
-
-if [[ "$derive_producer_closure" == "1" ]]; then
-  producer_output="$(
-    "$REPO_ROOT/tools/scripts/report/lean-report-input.sh" scribe-producer-paths \
-      --repository "$REPO_ROOT"
-  )" || { echo "scribe-content-checks: Scribe producer closure is unavailable" >&2; exit 2; }
-  while IFS= read -r producer_path; do
-    for path in "${CHANGED_PATHS[@]}"; do
-      if [[ "$path" == "$producer_path" ]]; then
-        requires_projection_check=1
-        requires_describe_check=1
-        break 2
-      fi
-    done
-  done <<< "$producer_output"
-fi
+while IFS= read -r check; do
+  case "$check" in
+    scribe-projections) requires_projection_check=1 ;;
+    scribe-describe) requires_describe_check=1 ;;
+    scribe-markdown) requires_markdown_check=1 ;;
+  esac
+done <<< "$checks"
 
 if [[ "$requires_projection_check" == "1" ]]; then
   run_scribe projections --check --report "$REPORT"
@@ -103,4 +84,4 @@ fi
 # 因而不必落一个还要清理的临时文件。
 if [[ "$requires_markdown_check" == "1" ]]; then
   run_scribe markdown-check --report "$REPORT" --paths-from -
-fi < <(printf '%s\0' "${CHANGED_PATHS[@]}")
+fi < <(if [[ ${#CHANGED_PATHS[@]} -gt 0 ]]; then printf '%s\0' "${CHANGED_PATHS[@]}"; fi)

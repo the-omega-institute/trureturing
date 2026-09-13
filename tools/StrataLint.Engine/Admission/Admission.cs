@@ -208,7 +208,7 @@ public static class AdmissionPipeline
 {
     public static AdmissionOutcome Evaluate(
         RepositorySnapshot current,
-        RepositorySnapshot baseline,
+        RepositorySnapshot? baseline,
         ValidatedPolicy policy,
         AcceptedLeanClosure lean,
         RawChangeSet changes,
@@ -224,7 +224,7 @@ public static class AdmissionPipeline
 
     internal static AdmissionOutcome EvaluateWithScribe(
         RepositorySnapshot current,
-        RepositorySnapshot baseline,
+        RepositorySnapshot? baseline,
         ValidatedPolicy policy,
         AcceptedLeanClosure lean,
         RawChangeSet changes,
@@ -234,7 +234,9 @@ public static class AdmissionPipeline
         RuleApplicabilityMeasure? measureApplicability = null,
         CanonicalizationMeasure? measureCanonicalization = null,
         ScribeTestMapStore? testMapStore = null,
-        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null)
+        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null,
+        LeanSourceContextInput? sourceContext = null,
+        ImmutableArray<RepoPath>? sourcePaths = null)
         => Evaluate(
             current,
             baseline,
@@ -247,11 +249,12 @@ public static class AdmissionPipeline
             measureApplicability,
             measureCanonicalization,
             testMapStore,
-            deriveTestMap);
+            deriveTestMap,
+            sourceContext, sourcePaths);
 
     internal static AdmissionOutcome EvaluateProtectedSurface(
         RepositorySnapshot current,
-        RepositorySnapshot baseline,
+        RepositorySnapshot? baseline,
         ValidatedPolicy policy,
         AcceptedLeanClosure lean,
         RawChangeSet changes,
@@ -261,7 +264,9 @@ public static class AdmissionPipeline
         RuleApplicabilityMeasure? measureApplicability = null,
         CanonicalizationMeasure? measureCanonicalization = null,
         ScribeTestMapStore? testMapStore = null,
-        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null)
+        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null,
+        LeanSourceContextInput? sourceContext = null,
+        ImmutableArray<RepoPath>? sourcePaths = null)
         => Evaluate(
             current,
             baseline,
@@ -274,11 +279,12 @@ public static class AdmissionPipeline
             measureApplicability,
             measureCanonicalization,
             testMapStore,
-            deriveTestMap);
+            deriveTestMap,
+            sourceContext, sourcePaths);
 
     private static AdmissionOutcome Evaluate(
         RepositorySnapshot current,
-        RepositorySnapshot baseline,
+        RepositorySnapshot? baseline,
         ValidatedPolicy policy,
         AcceptedLeanClosure lean,
         RawChangeSet changes,
@@ -288,7 +294,9 @@ public static class AdmissionPipeline
         RuleApplicabilityMeasure? measureApplicability = null,
         CanonicalizationMeasure? measureCanonicalization = null,
         ScribeTestMapStore? testMapStore = null,
-        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null)
+        Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null,
+        LeanSourceContextInput? sourceContext = null,
+        ImmutableArray<RepoPath>? sourcePaths = null)
     {
         var context = RuleEvaluationContext.Create(
             current,
@@ -299,7 +307,8 @@ public static class AdmissionPipeline
             metaEvaluation,
             verifiedScribeEmissions,
             testMapStore,
-            deriveTestMap);
+            deriveTestMap,
+            sourceContext, sourcePaths);
         return RuleCatalog.Default.Execute(context, measureRule, measureApplicability) switch
         {
             RuleExecutionOutcome.Completed completed => Complete(

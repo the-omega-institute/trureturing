@@ -128,6 +128,8 @@ public partial record BootstrapOutcome
 
 public static class BootstrapGate
 {
+    // Current checks have no protected transition to authorize. Candidate policy still loads and runs.
+    internal static BootstrapOutcome CurrentTree() => new BootstrapOutcome.Clear(MetaClear.Create());
     internal const string ProtectedSurfaceMessage =
         "protected-surface change detected (SL-022)";
     public static BootstrapOutcome Evaluate(RawChangeSet changes)

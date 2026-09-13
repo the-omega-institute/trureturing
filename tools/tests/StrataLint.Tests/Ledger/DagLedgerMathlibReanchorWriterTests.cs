@@ -7,7 +7,7 @@ using static StrataLint.Tests.FrozenLedgerTestData;
 
 namespace StrataLint.Tests;
 
-public sealed class DagLedgerMathlibReanchorWriterTests
+public sealed partial class DagLedgerMathlibReanchorWriterTests(Xunit.Abstractions.ITestOutputHelper output)
 {
     private const string BaseRevision = "base";
     private const string BaseToolchain = "leanprover/lean4:v4.32.0\n";
@@ -379,7 +379,12 @@ public sealed class DagLedgerMathlibReanchorWriterTests
             current,
             baseline,
             changesForBase: _ => changes);
-        var reportSource = new FakeLeanReportSource(Report(candidateModules));
+        var reportSource = new FakeLeanReportSource(Report(candidateModules))
+        {
+            SourceContext = SyntheticSourceContext.ForSnapshots(
+                Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(current)).Snapshot,
+                Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(baseline)).Snapshot),
+        };
         var temporary = new TemporaryDirectory();
         var ledgerPath = Path.Combine(
             temporary.Path,

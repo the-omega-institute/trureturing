@@ -192,6 +192,15 @@ internal static partial class RepositoryRules
                 ModuleStateGateRule.Evaluate),
             AdmissionEffect.Observe,
             recheckOnImplementationChange: false),
+        Register(
+            35,
+            "Native decide source prohibition",
+            new RepositoryRule(
+                NativeDecideSourceRule.IsApplicable,
+                NativeDecideSourceRule.Evaluate,
+                NativeDecideSourceRule.IsAffectedBy,
+                NativeDecideSourceRule.Evaluate),
+            recheckOnImplementationChange: false),
     ];
 
     private static RuleRegistration Register(

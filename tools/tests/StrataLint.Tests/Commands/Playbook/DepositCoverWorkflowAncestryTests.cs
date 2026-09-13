@@ -15,7 +15,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var eventPath = fixture.WriteLegacyFreeze();
         fixture.CommitAll("record freeze");
 
-        var result = fixture.Run("deliver-check", baseRevision: deliveryBase);
+        var result = fixture.Run("deliver-check", baseRevision: deliveryBase, pushBefore: deliveryBase);
 
         Assert.Equal(1, result.ExitCode);
         var error = Encoding.UTF8.GetString(result.StandardError);
@@ -23,7 +23,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Contains(eventPath, error, StringComparison.Ordinal);
         Assert.Contains("is not a v5 Freeze", error, StringComparison.Ordinal);
         Assert.DoesNotContain("dotnet:ledger-align", fixture.Calls());
-        Assert.DoesNotContain("make:preflight", fixture.Calls());
+        Assert.DoesNotContain(fixture.Calls(), static call => call.StartsWith("make:preflight", StringComparison.Ordinal));
     }
 
     [Fact]
@@ -36,10 +36,10 @@ public sealed partial class DepositCoverWorkflowScriptTests
         fixture.WriteAcceptedFreezeV5();
         fixture.CommitAll("record freeze");
 
-        var result = fixture.Run("deliver-check", baseRevision: deliveryBase);
+        var result = fixture.Run("deliver-check", baseRevision: deliveryBase, pushBefore: deliveryBase);
 
         Assert.True(result.ExitCode == 0, Diagnostics(result));
-        Assert.Contains("make:preflight BASE=" + deliveryBase, fixture.Calls());
+        Assert.Contains("make:preflight BASE=" + deliveryBase + " BEFORE=" + deliveryBase, fixture.Calls());
     }
 
 }

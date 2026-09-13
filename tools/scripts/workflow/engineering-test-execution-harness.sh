@@ -19,8 +19,15 @@ if ! git -C "$candidate_root" rev-parse --is-inside-work-tree >/dev/null 2>&1; t
   exit 2
 fi
 
-head_sha="$(git -C "$candidate_root" rev-parse HEAD)"
-base_sha="$(git -C "$candidate_root" rev-parse HEAD^1)"
+# The native Actions caller supplies one root; fixed event data comes from its
+# environment and payload. The candidate identity program validates every input
+# before observation or make, and emits one literal make argument per line.
+engineering_inputs="$(python3 "$candidate_root/tools/scripts/workflow/checked-ci-identity.py" \
+  --repository "$candidate_root" --engineering-arguments)"
+engineering_arguments=()
+while IFS= read -r argument; do
+  engineering_arguments+=("$argument")
+done <<< "$engineering_inputs"
 
 run_engineering_tests() {
   make \
@@ -28,8 +35,7 @@ run_engineering_tests() {
     -C "$candidate_root/tools" \
     engineering-tests \
     "REPOSITORY=$candidate_root" \
-    "HEAD=$head_sha" \
-    "BASE=$base_sha"
+    "${engineering_arguments[@]}"
 }
 
 observation_library="$candidate_root/tools/scripts/lib/resource-observation-lib.sh"

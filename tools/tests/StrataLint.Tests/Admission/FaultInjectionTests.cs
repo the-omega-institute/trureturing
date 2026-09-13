@@ -11,7 +11,7 @@ public sealed class FaultInjectionTests
     public void ProductionRegistrationTableContainsEveryExpectedRuleExactlyOnce()
     {
         var expected = Enumerable.Range(1, 23).Except([5])
-            .Append(25).Append(26).Append(28).Append(30).Append(31).Append(32).Append(33).Append(34)
+            .Append(25).Append(26).Append(28).Append(30).Append(31).Append(32).Append(33).Append(34).Append(35)
             .Select(RuleId.CreateKnown)
             .ToImmutableArray();
         var actual = RepositoryRules.CreateRegistrations()

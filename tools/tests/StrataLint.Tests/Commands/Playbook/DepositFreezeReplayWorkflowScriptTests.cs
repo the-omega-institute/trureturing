@@ -27,9 +27,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.NotEqual(historyBefore, fixture.LedgerState());
         Assert.Equal(
             [
-                "make:lean-report", "dotnet:deposit-header-check", "make:emit",
+                $"make:lean-report BASE={fixture.HeadRevision()}", "dotnet:deposit-header-check", $"make:emit BASE={fixture.HeadRevision()}",
                 "dotnet:ledger-frozen", "dotnet:ledger-align", "dotnet:ledger-frozen",
-                "dotnet:cover-atom", "make:emit",
+                "dotnet:cover-atom", $"make:emit BASE={fixture.HeadRevision()}",
             ],
             fixture.CallKinds());
         Assert.Contains("coverage: true", fixture.BackfillContents(), StringComparison.Ordinal);

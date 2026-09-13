@@ -8,6 +8,7 @@ public sealed class PlaybookWorkflowScriptTests
 {
     private const string ScriptPath = "tools/scripts/workflow/playbook-workflows.sh";
     private const string SyntheticBaseSha = "0000000000000000000000000000000000000001";
+    private const string SyntheticHeadSha = "0000000000000000000000000000000000000002";
 
     [Fact]
     public void DeliverCheckAlignsBeforeReadOnlyChecks()
@@ -20,17 +21,19 @@ public sealed class PlaybookWorkflowScriptTests
         Assert.Equal(0, result.ExitCode);
         Assert.Equal(
             [
-                "make:lean-report",
-                "make:emit",
-                "make:align-digestion-status BASE=synthetic-base",
-                "dotnet:digest-status --base synthetic-base",
-                "git:diff --diff-filter=A --name-only -z synthetic-base...HEAD -- Golden/Frozen/accepted/*.json",
+                $"git:cat-file -t {SyntheticBaseSha}",
+                "git:rev-parse --verify HEAD",
+                "git:rev-parse --verify synthetic-base^{commit}",
+                $"make:lean-report BASE={SyntheticBaseSha}",
+                $"make:emit BASE={SyntheticBaseSha}",
+                $"make:align-digestion-status BASE={SyntheticBaseSha}",
+                $"dotnet:digest-status --base {SyntheticBaseSha}",
+                $"git:diff --diff-filter=A --name-only -z {SyntheticBaseSha}...HEAD -- Golden/Frozen/accepted/*.json",
                 "git:ls-files --others --exclude-standard -z -- Golden/Frozen/accepted/*.json",
                 "dotnet:ledger-align --candidate-lean-report .lake/build/stratalint/raw-lean-report.json",
-                "dotnet:digest-status --base synthetic-base",
-                $"git:rev-parse HEAD^1",
-                $"make:preflight BASE={SyntheticBaseSha}",
-                "git:diff --diff-filter=A --name-only -z synthetic-base...HEAD -- Golden/Frozen/accepted/*.json",
+                $"dotnet:digest-status --base {SyntheticBaseSha}",
+                $"make:preflight BASE={SyntheticBaseSha} BEFORE={SyntheticBaseSha}",
+                $"git:diff --diff-filter=A --name-only -z {SyntheticBaseSha}...HEAD -- Golden/Frozen/accepted/*.json",
                 "git:ls-files --others --exclude-standard -z -- Golden/Frozen/accepted/*.json",
             ],
             fixture.Calls());
@@ -164,6 +167,8 @@ public sealed class PlaybookWorkflowScriptTests
             ScriptHarnessScratch.EnsureDirectory(binPath);
             var scriptTarget = Path.Combine(temporary.Path, ScriptPath);
             ScriptHarnessScratch.CopyScriptInto(Path.Combine(root, ScriptPath), scriptTarget);
+            ScriptHarnessScratch.CopyScriptInto(Path.Combine(root, "tools/scripts/preflight.sh"),
+                Path.Combine(temporary.Path, "tools/scripts/preflight.sh"));
             Directory.CreateDirectory(Path.Combine(temporary.Path, "Golden", "Frozen", "accepted"));
             WriteEmptyTruthGraph(this);
             WriteExecutable("make", "printf 'make:%s\\n' \"$*\" >> \"$PLAYBOOK_TEST_CALLS\"");
@@ -198,9 +203,12 @@ public sealed class PlaybookWorkflowScriptTests
                   exit 97
                 fi
                 printf 'git:%s\n' "${arguments[*]}" >> "$PLAYBOOK_TEST_CALLS"
-                if [[ $subcommand == rev-parse && "${arguments[index+1]:-}" == HEAD^1 ]]; then
-                  printf '%s\n' '{{SyntheticBaseSha}}'
-                fi
+                case "${arguments[*]}" in
+                  'rev-parse --verify synthetic-base^{commit}') printf '%s\n' '{{SyntheticBaseSha}}' ;;
+                  'rev-parse --verify HEAD') printf '%s\n' '{{SyntheticHeadSha}}' ;;
+                  'cat-file -t {{SyntheticBaseSha}}') printf 'commit\n' ;;
+                  'rev-parse '*|'cat-file '*) exit 96 ;;
+                esac
                 """);
             WriteExecutable(
                 "dotnet",
@@ -231,6 +239,7 @@ public sealed class PlaybookWorkflowScriptTests
                     $"PLAYBOOK_TEST_CALLS={callsPath}",
                     $"PLAYBOOK_DOTNET_FAILURE={dotnetFailure}",
                     $"PLAYBOOK_DOTNET_DIAGNOSTIC={dotnetDiagnostic}",
+                    $"BEFORE={SyntheticBaseSha}",
                     "/bin/bash",
                     Path.Combine(temporary.Path, ScriptPath),
                     command,

@@ -201,6 +201,8 @@ public sealed class TypeModelTests
         Assert.True(RuleId.TryCreate("SL-032", out _));
         Assert.True(RuleId.TryCreate("SL-033", out _));
         Assert.True(RuleId.TryCreate("SL-034", out _));
+        Assert.True(RuleId.TryCreate("SL-035", out _));
+        Assert.False(RuleId.TryCreate("SL-036", out _));
         Assert.True(CaseId.TryCreate("D5-T0016", out _));
     }
 

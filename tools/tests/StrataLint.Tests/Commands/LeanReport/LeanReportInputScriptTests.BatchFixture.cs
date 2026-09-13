@@ -6,6 +6,30 @@ namespace StrataLint.Tests;
 
 public sealed partial class LeanReportInputScriptTests
 {
+    internal static ProcessOutput RunWithBuiltInputCli(
+        IReadOnlyList<string> arguments, string workingDirectory, TimeSpan hangGuard) =>
+        TestProcessRunner.Run("/bin/bash",
+            ["-c", """
+                set -euo pipefail
+                unset GITHUB_ACTIONS STRATALINT_SOURCE_BASE STRATALINT_PUSH_BEFORE STRATALINT_PUSH_HEAD
+                # The test project's CLI reference is built by the canonical test build.
+                # Reuse only that immutable program; every selector still reads this invocation's inputs.
+                export BATCH_NATIVE_CLI="$1"
+                shift
+                dotnet() {
+                  if [[ "${1:-}" == run && " $* " == *' -- filemap-conform --input-scopes '* ]]; then
+                    while [[ "$1" != -- ]]; do shift; done
+                    shift
+                    command dotnet "$BATCH_NATIVE_CLI" "$@"
+                  else
+                    command dotnet "$@"
+                  fi
+                }
+                export -f dotnet
+                exec "$@"
+                """, "lean-input-fixture", Path.Combine(AppContext.BaseDirectory, "StrataLint.dll"),
+                .. arguments], workingDirectory, hangGuard, 1024 * 1024);
+
     internal static void CopyBatchProducerInputs(string root)
     {
         using var fixture = new LeanReportInputFixture();
@@ -14,14 +38,16 @@ public sealed partial class LeanReportInputScriptTests
 
     internal static void AttestBatchReport(string root, string report)
     {
-        var result = TestProcessRunner.Run("/bin/bash",
-            [Path.Combine(root, InputHelperPath), "address", "--repository", root], root,
-            TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
+        var result = RunWithBuiltInputCli(
+            ["/bin/bash", Path.Combine(root, InputHelperPath), "address", "--repository", root],
+            root, TestBudgets.WorkflowProcessHangGuard);
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
         var fields = Fields(result);
         var hash = Convert.ToHexStringLower(SHA256.HashData(TemporaryFileSystem.File.ReadAllBytes(report)));
         TemporaryFileSystem.File.WriteAllText(report + ".sha256", $"{hash}  {Path.GetFileName(report)}\n");
         TemporaryFileSystem.File.WriteAllText(report + ".provenance.json", "{}\n");
+        TemporaryFileSystem.File.WriteAllText(report + ".source-context.json",
+            "{\"schema\":\"lean-source-context/1\",\"files\":[],\"registrations\":[]}\n");
         TemporaryFileSystem.File.WriteAllText(report + ".input.attestation",
             "schema=stratalint-lean-report-input-attestation-v1\n"
             + $"repository_input_sha256={fields[0]}\nproducer_sha256={fields[1]}\nreport_sha256={hash}\n");
@@ -38,12 +64,22 @@ public sealed partial class LeanReportInputScriptTests
                     || relative.StartsWith("Blueprint/", StringComparison.Ordinal)
                     || relative == "Trureturing.lean") continue;
                 var destination = Path.Combine(root, relative);
-                if (TemporaryFileSystem.File.Exists(destination)) continue;
+                if (TemporaryFileSystem.File.Exists(destination))
+                {
+                    // Preserve the admission fixture's entries while registering the copied producer inputs.
+                    if (relative == "Meta/FILEMAP.toml")
+                        TemporaryFileSystem.File.AppendAllText(destination, "\n" + Registration + "\n");
+                    continue;
+                }
                 TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
                 TemporaryFileSystem.File.WriteAllBytes(destination, TemporaryFileSystem.File.ReadAllBytes(path));
             }
             TemporaryFileSystem.File.WriteAllText(Path.Combine(root, InputHelperPath),
-                File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), InputHelperPath)));
+                "#!/bin/bash\n"
+                // The copied repository supplies its own explicit source arguments.
+                + "unset GITHUB_ACTIONS STRATALINT_SOURCE_BASE STRATALINT_PUSH_BEFORE STRATALINT_PUSH_HEAD\n"
+                + "exec /bin/bash '"
+                + Path.Combine(TestRepositoryLayout.FindRoot(), InputHelperPath) + "' \"$@\"\n");
         }
     }
 }

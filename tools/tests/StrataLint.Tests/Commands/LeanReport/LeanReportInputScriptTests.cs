@@ -97,12 +97,12 @@ public sealed partial class LeanReportInputScriptTests
     }
 
     [Fact]
-    public void CompileClosureFailureCannotProduceCollidingValidAddresses()
+    public void MissingRegistrationCannotProduceCollidingValidAddresses()
     {
         using var left = new LeanReportInputFixture();
         using var right = new LeanReportInputFixture();
-        left.BreakProducerClosureEvaluation();
-        right.BreakProducerClosureEvaluation();
+        left.RemoveProducerRegistration();
+        right.RemoveProducerRegistration();
         right.Append(LeanModelsPath, "// the only repository-content difference\n");
 
         Assert.Equal(2, left.RunCommand("producer-paths").ExitCode);
@@ -145,12 +145,12 @@ public sealed partial class LeanReportInputScriptTests
     }
 
     [Fact]
-    public void VerifyRejectsEmptyProducerPreimageWhenCompileClosureFails()
+    public void VerifyRejectsEmptyProducerPreimageWhenRegistrationIsMissing()
     {
         using var fixture = new LeanReportInputFixture();
         fixture.AttestEmptyProducerPreimage();
         Assert.Equal(2, fixture.Verify().ExitCode);
-        fixture.BreakProducerClosureEvaluation();
+        fixture.RemoveProducerRegistration();
 
         var result = fixture.Verify();
 
@@ -160,11 +160,11 @@ public sealed partial class LeanReportInputScriptTests
     }
 
     [Fact]
-    public void VerifyRejectsTheSameReportAcrossCSharpDriftWhenCompileClosureFails()
+    public void VerifyRejectsTheSameReportAcrossCSharpDriftWhenRegistrationIsMissing()
     {
         using var fixture = new LeanReportInputFixture();
         fixture.AttestEmptyProducerPreimage();
-        fixture.BreakProducerClosureEvaluation();
+        fixture.RemoveProducerRegistration();
         var before = fixture.Verify();
 
         fixture.Append(LeanModelsPath, "// C#-only drift\n");
@@ -191,7 +191,7 @@ public sealed partial class LeanReportInputScriptTests
     }
 
     [Fact]
-    public void ProducerPathsDeriveEveryReachableShellDependency()
+    public void ProducerPathsConsumeRegisteredShellDependencies()
     {
         using var fixture = new LeanReportInputFixture();
         const string derivedProbe = "tools/scripts/report/derived-producer.sh";
@@ -216,13 +216,19 @@ public sealed partial class LeanReportInputScriptTests
         Assert.Contains(ToolchainInstallerPath, paths);
         Assert.Contains(JudgeContentAddressPath, paths);
         Assert.Contains(WorkflowPath, paths);
-        Assert.Contains(derivedProbe, paths);
+        Assert.DoesNotContain(derivedProbe, paths);
         Assert.DoesNotContain(TestSourcePath, paths);
         Assert.DoesNotContain(BlueprintSourcePath, paths);
+        fixture.RegisterProducerInput(derivedProbe);
+        Assert.Contains(derivedProbe, Lines(fixture.RunCommand("producer-paths")));
+        fixture.RemoveSource(derivedProbe);
+        var missing = fixture.RunCommand("producer-paths");
+        Assert.Equal(2, missing.ExitCode);
+        Assert.Contains(derivedProbe, Encoding.UTF8.GetString(missing.StandardError));
     }
 
     [Fact]
-    public void ProducerPathsCommandExposesTheCanonicalDeclaredAndCompileClosure()
+    public void ProducerPathsCommandExposesTheCanonicalDeclaredInputs()
     {
         using var fixture = new LeanReportInputFixture();
 
@@ -242,7 +248,7 @@ public sealed partial class LeanReportInputScriptTests
     }
 
     [Fact]
-    public void ScribeProducerPathsDeriveCompileItemsAndReachableShellDependencies()
+    public void ScribeProducerPathsConsumeRegisteredCompilerAndShellInputs()
     {
         using var fixture = new LeanReportInputFixture();
         const string derivedProbe = "tools/scripts/workflow/derived-scribe-input.sh";
@@ -264,8 +270,14 @@ public sealed partial class LeanReportInputScriptTests
         Assert.Contains(ScribeContentChecksPath, paths);
         Assert.Contains(JudgeContentAddressPath, paths);
         Assert.Contains(CachePublishScriptPath, paths);
-        Assert.Contains(derivedProbe, paths);
+        Assert.DoesNotContain(derivedProbe, paths);
         Assert.DoesNotContain(TestSourcePath, paths);
+        fixture.RegisterProducerInput(derivedProbe);
+        Assert.Contains(derivedProbe, Lines(fixture.RunCommand("scribe-producer-paths")));
+        fixture.RemoveSource(derivedProbe);
+        var missing = fixture.RunCommand("scribe-producer-paths");
+        Assert.Equal(2, missing.ExitCode);
+        Assert.Contains(derivedProbe, Encoding.UTF8.GetString(missing.StandardError));
     }
 
     [Fact]
@@ -332,6 +344,11 @@ public sealed partial class LeanReportInputScriptTests
     public void AbsentJudgeLibraryContributesNoSourcesAndAddressSucceeds()
     {
         using var fixture = new LeanReportInputFixture();
+        const string contextLauncher = "tools/lean-inspector/source-context.sh";
+        fixture.RemoveSource(contextLauncher);
+        var missingMember = fixture.RunCommand("address");
+        Assert.Equal(2, missingMember.ExitCode);
+        Assert.Contains(contextLauncher, Encoding.UTF8.GetString(missingMember.StandardError), StringComparison.Ordinal);
         fixture.RemoveInspectorDirectory();
 
         var result = fixture.RunCommand("address");
@@ -399,6 +416,7 @@ public sealed partial class LeanReportInputScriptTests
         private readonly TemporaryDirectory temporary = new();
         private readonly string repository;
         private readonly string report;
+        private string? sourceBase;
         private readonly string script;
         private readonly string inspectorScriptPath = string.Join(
             '/', "tools", "lean-inspector", "inspect.sh");
@@ -422,12 +440,14 @@ public sealed partial class LeanReportInputScriptTests
             Write("lake-manifest.json", "{\"version\":\"1.1.0\"}\n");
             Write(inspectorScriptPath, "#!/usr/bin/env bash\n");
             Write(inspectorSourcePath, "def fixture : True := by trivial\n");
+            Write("tools/lean-inspector/source-context.sh", LeanSourceContextScriptFixture.Script);
+            Write("tools/scripts/workflow/checked-ci-identity.py", File.ReadAllText(
+                Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/workflow/checked-ci-identity.py")));
             Write(InputHelperPath, "#!/usr/bin/env bash\n");
             Write("tools/scripts/worktree/lean-cache-input.sh", File.ReadAllText(
                 Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/lean-cache-input.sh"),
                 Encoding.UTF8));
-            // Cli 工程必须至少有一个编译项:零编译项会让 helper 的 msbuild 求值退化,
-            // producer 分量对 Engine 源失敏(阶段 7 删 MergeCommand 桩后实测)。
+            // Synthetic declarations select these compiler inputs explicitly.
             Write("tools/StrataLint.Cli/Commands/FixtureProbe.cs", "// fixture\n");
             Write(RawReportPath, "// fixture\n");
             Write(CanonicalWriterPath, "// fixture\n");
@@ -507,6 +527,7 @@ public sealed partial class LeanReportInputScriptTests
             Write(DocumentsLockPath, "{}\n");
             Write(TruthLockPath, "{}\n");
             Write("global.json", "{}\n");
+            WriteRegistration();
             File.WriteAllText(report, "{}\n", new UTF8Encoding(false));
             var digest = Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(report)));
             File.WriteAllText(
@@ -517,6 +538,8 @@ public sealed partial class LeanReportInputScriptTests
                 report + ".provenance.json",
                 "{}\n",
                 new UTF8Encoding(false));
+            File.WriteAllText(report + ".source-context.json",
+                "{\"schema\":\"lean-source-context/1\",\"files\":[],\"registrations\":[]}\n");
         }
 
         internal string MemoRoot => Path.Combine(temporary.Path, "memo");
@@ -560,8 +583,7 @@ public sealed partial class LeanReportInputScriptTests
                 new UTF8Encoding(false));
         }
 
-        internal void BreakProducerClosureEvaluation() =>
-            Append(CliProjectPath, "<");
+        internal void RemoveProducerRegistration() => RemoveSource("Meta/LeanInputs.json");
 
         internal void RewriteAttestedProducer(string producer)
         {
@@ -676,7 +698,7 @@ public sealed partial class LeanReportInputScriptTests
         internal string Address()
         {
             var result = Run("address");
-            Assert.Equal(0, result.ExitCode);
+            Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
             return Encoding.UTF8.GetString(result.StandardOutput)
                 .Split(' ', StringSplitOptions.RemoveEmptyEntries)[0];
         }
@@ -719,18 +741,29 @@ public sealed partial class LeanReportInputScriptTests
         {
             var arguments = new List<string>
             {
+                "-u", "GITHUB_ACTIONS", "-u", "STRATALINT_SOURCE_BASE",
+                "-u", "STRATALINT_PUSH_BEFORE", "-u", "STRATALINT_PUSH_HEAD",
                 $"STRATALINT_LEAN_INPUT_MEMO_ROOT={MemoRoot}",
             };
             arguments.AddRange(
             [
                 "bash", script, command, "--repository", repository, "--report", report,
             ]);
-            return TestProcessRunner.Run(
-                "env",
-                arguments,
-                workingDirectory ?? temporary.Path,
-                BoundedProcessRunner.HangDetectionBudget,
-                1024 * 1024);
+            if (command == "verify")
+            {
+                if (sourceBase is null)
+                {
+                    if (!Directory.Exists(Path.Combine(repository, ".git"))) InitializeGitRepository();
+                    sourceBase = ReviewRegressionTests.RunGit(repository, "rev-parse", "HEAD").Trim();
+                }
+                arguments.AddRange(["--base", sourceBase]);
+            }
+            // Explicit working directories exercise SDK resolution in the real launcher.
+            if (workingDirectory is not null)
+                return TestProcessRunner.Run("env", arguments, workingDirectory,
+                    BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
+            return RunWithBuiltInputCli(["env", .. arguments], temporary.Path,
+                BoundedProcessRunner.HangDetectionBudget);
         }
 
         private void Write(string relativePath, string contents)

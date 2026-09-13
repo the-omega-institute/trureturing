@@ -99,7 +99,7 @@ public sealed class RuleCatalogAssociationTests
     {
         var uniqueFinding = new RuleFinding("unique/path.txt", "finding from rule seventeen");
         var registrations = Enumerable.Range(1, 23).Except([5])
-            .Append(25).Append(26).Append(28).Append(30).Append(31).Append(32).Append(33).Append(34)
+            .Append(25).Append(26).Append(28).Append(30).Append(31).Append(32).Append(33).Append(34).Append(35)
             .Select(number => new RuleRegistration(
                 Descriptor(
                     number,
@@ -221,7 +221,7 @@ public sealed class RuleCatalogAssociationTests
         var setterId = RuleId.CreateKnown(1);
         var finderId = RuleId.CreateKnown(2);
         var remainingIds = Enumerable.Range(1, 23).Except([5, 7, 9, 13, 14])
-            .Append(25).Append(26).Append(28).Append(30).Append(31).Append(32).Append(33).Append(34)
+            .Append(25).Append(26).Append(28).Append(30).Append(31).Append(32).Append(33).Append(34).Append(35)
             .Select(RuleId.CreateKnown)
             .Where(id => id != setterId && id != finderId)
             .ToImmutableArray();
@@ -265,7 +265,7 @@ public sealed class RuleCatalogAssociationTests
     {
         var rule = new CountingUnaffectedRule();
         var registrations = Enumerable.Range(1, 23).Except([5])
-            .Append(25).Append(26).Append(28).Append(30).Append(31).Append(32).Append(33).Append(34)
+            .Append(25).Append(26).Append(28).Append(30).Append(31).Append(32).Append(33).Append(34).Append(35)
             .Select(number => Registration(
                 Descriptor(
                     number,
@@ -308,9 +308,9 @@ public sealed class RuleCatalogAssociationTests
         var active = RuleCatalog.Default.Descriptors
             .Where(static descriptor => descriptor.Lifecycle == RuleLifecycle.Active)
             .Select(static descriptor => descriptor.Id)
-            .Where(static id => id != RuleId.CreateKnown(34));
+            .Where(static id => id != RuleId.CreateKnown(34) && id != RuleId.CreateKnown(35));
         Assert.Equal(active, completed.ExecutedRules);
-        Assert.Equal(RuleId.CreateKnown(34), Assert.Single(completed.SkippedRules));
+        Assert.Equal(new[] { RuleId.CreateKnown(34), RuleId.CreateKnown(35) }, completed.SkippedRules);
     }
 
     [Fact]
@@ -421,10 +421,9 @@ public sealed class RuleCatalogAssociationTests
     [Fact]
     public void DefaultCatalogRootMatchesCharacterizedRegressionValue()
     {
-        // Recharacterized 2026-09-08 with SL-034 Observe; independently computed with Ruby SHA-256.
-        // Previous root: sha256:b276eef4632135feff663e5a4fe2d4d4b073767522cf2defff3f145895602af1.
+        // Characterized 2026-09-08 with SL-035 Block in the candidate catalog.
         Assert.Equal(
-            "sha256:4374fde9e5d66d5d918bd942d29ccc2d1c1988f554a6f0d869f637e484d6ebb7",
+            "sha256:6abc53aadcea82455832337c327f35293c4f44e018334916f6b84dab8fc58583",
             RuleCatalog.Default.RootSha256);
     }
 
@@ -462,7 +461,7 @@ public sealed class RuleCatalogAssociationTests
     {
         var state = new OrderDependentState();
         var registrations = Enumerable.Range(1, 23).Except([5])
-            .Append(25).Append(26).Append(28).Append(30).Append(31).Append(32).Append(33).Append(34)
+            .Append(25).Append(26).Append(28).Append(30).Append(31).Append(32).Append(33).Append(34).Append(35)
             .Select(number => new RuleRegistration(
                 Descriptor(number, $"descriptor {number}", DisplaySeverity.Error, AdmissionEffect.Block),
                 number switch

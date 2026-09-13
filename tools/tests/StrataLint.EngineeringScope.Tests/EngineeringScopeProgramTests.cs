@@ -7,7 +7,7 @@ using Xunit;
 namespace StrataLint.EngineeringScope.Tests;
 
 [Collection("Engineering scope process boundary")]
-public sealed class EngineeringScopeProgramTests
+public sealed partial class EngineeringScopeProgramTests
 {
     private const string ProductProject = "tools/Product/Product.csproj";
     private const string ProductTestsProject =
@@ -46,7 +46,7 @@ public sealed class EngineeringScopeProgramTests
     }
 
     [Fact]
-    public void CandidateDeletedBaseTestProjectIsExcludedAndReported()
+    public void CandidateDeletedTestProjectRequiresExplicitNoResourceRegistration()
     {
         var result = RunBoundary(
             WriteProductProjects,
@@ -62,13 +62,13 @@ public sealed class EngineeringScopeProgramTests
         Assert.True(result.ExitCode == 0, result.Diagnostic);
         Assert.Empty(result.SelectedProjects);
         Assert.Contains(
-            $"ENGINEERING_TEST_PROJECT_REMOVED project={JsonSerializer.Serialize(ProductTestsProject)}",
+            ProductTestsProject,
             result.Output,
             StringComparison.Ordinal);
     }
 
     [Fact]
-    public void CandidateNewXunitProjectWithoutLiteralIsTestProjectIsSelected()
+    public void CandidateRegisteredTestWithoutLiteralIsTestProjectIsSelected()
     {
         var result = RunBoundary(
             root =>
@@ -88,7 +88,7 @@ public sealed class EngineeringScopeProgramTests
     }
 
     [Fact]
-    public void CandidateNewProjectWithNonLiteralTestClassificationFailsClosed()
+    public void CandidateNewProjectWithoutRegistrationFailsClosed()
     {
         var result = RunBoundary(
             root =>
@@ -107,7 +107,7 @@ public sealed class EngineeringScopeProgramTests
 
         Assert.True(result.ExitCode == 2, result.Diagnostic);
         Assert.Contains(
-            "candidate-added project has no literal IsTestProject classification",
+            "missing project registration",
             result.Error,
             StringComparison.Ordinal);
     }
@@ -159,7 +159,7 @@ public sealed class EngineeringScopeProgramTests
     [InlineData(false, true)]
     [InlineData(true, false)]
     [InlineData(true, true)]
-    public void InvalidAdmissionIsRejectedBeforeFullRouting(bool full, bool mixed)
+    public void PushMixedPlanesArePlannedAndInvalidClassificationFailsBeforeFullRouting(bool full, bool mixed)
     {
         const string path = "Meta/Digestion/backfill/source/residual-open/atom.yaml";
         var result = RunBoundary(
@@ -181,13 +181,18 @@ public sealed class EngineeringScopeProgramTests
             },
             full: full);
 
-        Assert.True(result.ExitCode == 2, result.Diagnostic);
-        Assert.Empty(result.SelectedProjects);
-        Assert.DoesNotContain("ENGINEERING_TEST_PLAN state=", result.Output, StringComparison.Ordinal);
-        Assert.Contains(
-            mixed ? "ADMISSION-PLANE-MIXED" : "ADMISSION-PLANE-PATH-MATCH-COUNT",
-            result.Error,
-            StringComparison.Ordinal);
+        Assert.True(result.ExitCode == (mixed ? 0 : 2), result.Diagnostic);
+        if (mixed)
+        {
+            Assert.Equal([ProductTestsProject], result.SelectedProjects);
+            Assert.Contains("state=full", result.Output, StringComparison.Ordinal);
+        }
+        else
+        {
+            Assert.Empty(result.SelectedProjects);
+            Assert.DoesNotContain("ENGINEERING_TEST_PLAN state=", result.Output, StringComparison.Ordinal);
+            Assert.Contains("ADMISSION-PLANE-PATH-MATCH-COUNT", result.Error, StringComparison.Ordinal);
+        }
     }
 
     [Fact]
@@ -230,7 +235,7 @@ public sealed class EngineeringScopeProgramTests
         Assert.Equal([ProductTestsProject], result.SelectedProjects);
         Assert.Contains("ENGINEERING_TEST_PLAN state=full", result.Output, StringComparison.Ordinal);
         Assert.Contains(
-            "candidate admission plane judgeonly requires full engineering",
+            "explicit registered input and impact declarations",
             result.Output,
             StringComparison.Ordinal);
     }
@@ -248,6 +253,7 @@ public sealed class EngineeringScopeProgramTests
             root =>
             {
                 WriteFile(root, newJudgePath, "internal sealed class Program { }\n");
+                RegisterExtraInput(root, "tools/new-lib/**", ProductTestsProject);
                 WriteAdmissionPlaneFileMap(
                     root,
                     (FileMapPath, "judge"),
@@ -274,7 +280,7 @@ public sealed class EngineeringScopeProgramTests
         Assert.Equal([ProductTestsProject], result.SelectedProjects);
         Assert.Contains("ENGINEERING_TEST_PLAN state=full", result.Output, StringComparison.Ordinal);
         Assert.Contains(
-            "candidate admission plane judgeonly requires full engineering",
+            "explicit registered input and impact declarations",
             result.Output,
             StringComparison.Ordinal);
     }
@@ -361,9 +367,11 @@ public sealed class EngineeringScopeProgramTests
             RunGit(root, "config", "user.name", "Engineering Scope Tests");
             WriteGateInfrastructure(root);
             writeBase(root);
+            CompleteRegistration(root);
             RunGit(root, "add", ".");
             RunGit(root, "commit", "--quiet", "-m", "base");
             writeCandidate(root);
+            CompleteRegistration(root);
             RunGit(root, "add", ".");
             RunGit(root, "commit", "--quiet", "-m", "candidate");
             prepareExecution?.Invoke(root);
@@ -377,8 +385,9 @@ public sealed class EngineeringScopeProgramTests
             var exitCode = Program.Run(
                 [
                     "--repository", root,
+                    "--event", "push",
                     "--head", head,
-                    "--base", @base,
+                    "--before", @base,
                     .. full ? new[] { "--full", "1" } : [],
                 ],
                 TestResultEvidence.Load,
@@ -412,6 +421,7 @@ public sealed class EngineeringScopeProgramTests
         bool isTest,
         params string[] references)
     {
+        RegisterProject(root, path, isTest, references);
         var directory = Path.GetDirectoryName(path)!;
         var projectReferences = string.Join(
             "",
@@ -447,6 +457,7 @@ public sealed class EngineeringScopeProgramTests
         string path,
         params string[] references)
     {
+        RegisterProject(root, path, true, references);
         var directory = Path.GetDirectoryName(path)!;
         var projectReferences = string.Join(
             "",
@@ -483,7 +494,7 @@ public sealed class EngineeringScopeProgramTests
 
     private static void WriteGateInfrastructure(string root)
     {
-        WriteAdmissionPlaneFileMap(root, ("**", "content"));
+        WriteAdmissionPlaneFileMap(root, ("tools/**", "content"), ("Meta/FILEMAP.toml", "content"), ("Directory.*", "content"), ("notes/**", "content"));
         WriteProject(root, ScriptTestsProject, isTest: true);
         WriteFile(
             root,

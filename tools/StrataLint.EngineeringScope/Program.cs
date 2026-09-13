@@ -41,17 +41,7 @@ internal static class Program
             }
 
             var options = Options.Parse(arguments);
-            var head = GitText(options.RepositoryRoot, "rev-parse", "HEAD");
-            var @base = GitText(options.RepositoryRoot, "rev-parse", "HEAD^1");
-            if (options.Head != head
-                || options.Base != @base
-                || !IsObjectId(options.Base, head.Length))
-            {
-                throw new InvalidOperationException(
-                    "--head must equal the checked HEAD and --base must equal the checked HEAD^1");
-            }
-
-            return Execute(options, head, @base);
+            return Execute(options, standardOutput);
         }
         catch (Exception exception)
         {
@@ -60,69 +50,57 @@ internal static class Program
         }
     }
 
-    private static int Execute(Options options, string head, string @base)
+    private static int Execute(Options options, TextWriter output)
     {
-        var changedPaths = GitPaths(options.RepositoryRoot, @base, head);
-        var protectedBaseRaw = GitRepositorySnapshotReader.ReadRevision(options.RepositoryRoot, @base);
-        var candidateRaw = GitRepositorySnapshotReader.ReadRevision(options.RepositoryRoot, head);
-        var admissionPlane = AdmissionPlanePolicy.Evaluate(candidateRaw, changedPaths);
-        if (!admissionPlane.IsAdmissible)
+        var head = GitText(options.RepositoryRoot, "rev-parse", "HEAD");
+        if (!IsObjectId(options.Head, head.Length) || options.Head.All(character => character == '0'))
+            throw new InvalidOperationException("deletion or invalid --head has no checked candidate tree");
+        if (options.Head != head) throw new InvalidOperationException("--head must equal checkout HEAD");
+        if (!IsObjectId(options.Before, head.Length))
+            throw new InvalidOperationException("planning endpoint must be a complete fixed object ID");
+        var initial = options.Before.All(character => character == '0');
+        if (options.Event == "pull-request")
         {
-            throw new InvalidDataException(
-                $"{admissionPlane.Code} {admissionPlane.Path}: {admissionPlane.Message}");
+            if (initial || options.Before != GitText(options.RepositoryRoot, "rev-parse", "HEAD^1"))
+                throw new InvalidOperationException("PR --base must equal checked merge first parent");
+            _ = GitText(options.RepositoryRoot, "rev-parse", "--verify", "HEAD^2");
+            if (GitText(options.RepositoryRoot, "status", "--porcelain").Length != 0)
+                throw new InvalidOperationException("PR planning requires a clean checked merge tree");
+        }
+        else if (!initial)
+        {
+            if (GitText(options.RepositoryRoot, "rev-parse", "--verify", options.Before + "^{commit}") != options.Before)
+                throw new InvalidOperationException("push --before must name a complete commit object");
         }
 
-        var protectedBase = DecodeSnapshot(protectedBaseRaw, "protected base");
-        var candidate = DecodeSnapshot(candidateRaw, "candidate");
-        if (admissionPlane.RequiresFullEngineering())
-        {
-            var fullPlan = EngineeringTestPlanPolicy.EvaluateOrdinary(
-                changedPaths,
-                RepositoryRules.ReadSnapshotProjects(protectedBase),
-                RepositoryRules.ReadSnapshotProjects(candidate),
-                full: true) with
-            {
-                Reason = $"candidate admission plane "
-                    + $"{admissionPlane.Classification!.Value.ToString().ToLowerInvariant()} "
-                    + "requires full engineering",
-            };
-            return ExecutePlan(options.RepositoryRoot, fullPlan);
-        }
-
-        var plan = EngineeringTestPlanPolicy.EvaluateOrdinary(
-            changedPaths,
-            RepositoryRules.ReadSnapshotProjects(protectedBase),
-            RepositoryRules.ReadSnapshotProjects(candidate),
-            full: options.Full,
-            admissionPlane: admissionPlane);
-        return ExecutePlan(options.RepositoryRoot, plan);
+        var manifest = EngineeringInputManifest.ReadCurrent(options.RepositoryRoot);
+        var currentPaths = GitRawText(options.RepositoryRoot, "ls-files", "-z")
+            .Split('\0', StringSplitOptions.RemoveEmptyEntries)
+            .Where(path => File.Exists(Path.Combine(options.RepositoryRoot, path))).ToArray();
+        var changedPaths = initial ? currentPaths : GitPaths(options.RepositoryRoot, options.Before, head);
+        if (options.Event == "push")
+            changedPaths = changedPaths.Concat(GitPaths(options.RepositoryRoot, head, null))
+                .Concat(GitRawText(options.RepositoryRoot, "ls-files", "--others", "--exclude-standard", "-z")
+                    .Split('\0', StringSplitOptions.RemoveEmptyEntries))
+                .Distinct(StringComparer.Ordinal).ToArray();
+        manifest.ValidateProjectCoverage(changedPaths.Where(path => File.Exists(Path.Combine(options.RepositoryRoot, path))));
+        // Validate all selected material before classification or full routing.
+        foreach (var path in changedPaths) _ = manifest.Owners(path);
+        var admissionPlane = AdmissionPlanePolicy.Evaluate(
+            File.ReadAllBytes(Path.Combine(options.RepositoryRoot, AdmissionPlanePolicy.FileMapPath)), changedPaths);
+        if (!admissionPlane.IsAdmissible
+            && !(options.Event == "push" && admissionPlane.Code == AdmissionPlanePolicy.MixedCode))
+            throw new InvalidDataException($"{admissionPlane.Code} {admissionPlane.Path}: {admissionPlane.Message}");
+        var full = options.Full || admissionPlane.Classification is AdmissionPlaneClassification.JudgeOnly or AdmissionPlaneClassification.Mixed;
+        var plan = EngineeringTestPlanPolicy.EvaluateOrdinary(changedPaths, manifest, full);
+        output.WriteLine($"ENGINEERING_INPUT_RANGE event={options.Event} mode={(initial ? "initial" : "endpoints")} before={options.Before} head={head}");
+        WritePlan(plan, output);
+        if (options.PlanOnly) return 0;
+        return EngineeringTestExecutor.Execute(plan, invocation => RunTests(options.RepositoryRoot, invocation));
     }
 
-    private static int ExecutePlan(string repositoryRoot, EngineeringTestPlan plan)
-    {
-        WritePlan(plan);
-        return EngineeringTestExecutor.Execute(
-            plan,
-            invocation => RunTests(repositoryRoot, invocation));
-    }
-
-    // Projects in a plan run concurrently (EngineeringTestExecutor.Execute), and two
-    // of them commonly reference the same project. The first attempt is --no-build
-    // and cannot race, but the fallback builds, and two concurrent builds of one
-    // shared reference write the same obj/ and bin/. A half-written output leaves
-    // the dependent test project with no runnable assembly, and dotnet test then
-    // reports the missing dll as an invalid argument.
-    //
-    // That is #5060: six occurrences over a month, every one of them naming
-    // CandidateNewXunitProjectWithoutLiteralIsTestProjectIsSelected, which is the
-    // only test in its class whose two selected projects share a ProjectReference.
-    // Its siblings run the same parallel path with disjoint references and have
-    // never been recorded failing.
-    //
-    // The build fallback is therefore serialized. It costs nothing where the
-    // fallback does not fire — in CI the projects are already built, and the
-    // recorded RETRY lines name only synthetic fixture projects — and where it
-    // does fire, the second build finds the shared reference up to date.
+    // Concurrent no-build tests keep their native behavior. Only a missing-output
+    // build retry is serialized, because selected projects may share compiler outputs.
     private static readonly object BuildFallbackGate = new();
 
     private static int RunTests(
@@ -236,12 +214,13 @@ internal static class Program
                 "list-test-owner-assemblies requires exactly --repository value");
         }
 
-        var snapshot = RepositoryRules.ReadTrackedProjects(Path.GetFullPath(arguments[1]));
-        var assemblies = RepositoryRules.CalculateOwnerAssemblies(snapshot);
+        var manifest = EngineeringInputManifest.ReadCurrent(Path.GetFullPath(arguments[1]));
+        var assemblies = manifest.Projects.Where(EngineeringInputManifest.IsTest)
+            .Select(project => project.Assembly).Order(StringComparer.Ordinal).ToArray();
         if (assemblies.Length == 0)
         {
             throw new InvalidDataException(
-                "list-test-owner-assemblies derived zero owner assemblies");
+                "list-test-owner-assemblies registered zero test assemblies");
         }
 
         foreach (var assembly in assemblies)
@@ -282,40 +261,43 @@ internal static class Program
         return 0;
     }
 
-    private static void WritePlan(EngineeringTestPlan plan)
+    private static void WritePlan(EngineeringTestPlan plan, TextWriter output)
     {
-        Console.WriteLine(
+        output.WriteLine(
             $"ENGINEERING_TEST_PLAN state={plan.Kind.ToString().ToLowerInvariant()} "
             + $"changed={plan.ChangedPaths.Length} selected={plan.Projects.Length} "
             + $"reason={JsonSerializer.Serialize(plan.Reason)}");
-        foreach (var project in plan.RemovedBaseTestProjects)
-        {
-            Console.WriteLine(
-                $"ENGINEERING_TEST_PROJECT_REMOVED project={JsonSerializer.Serialize(project)}");
-        }
+        foreach (var path in plan.ChangedPaths)
+            output.WriteLine($"ENGINEERING_TEST_INPUT path={JsonSerializer.Serialize(path)}");
         foreach (var project in plan.Projects)
         {
-            Console.WriteLine(
+            output.WriteLine(
                 $"ENGINEERING_TEST_PROJECT project={JsonSerializer.Serialize(project)}");
         }
     }
 
-    private static string GitText(string repositoryRoot, params string[] arguments)
+    private static string GitText(string repositoryRoot, params string[] arguments) =>
+        GitOutput(repositoryRoot, 1024 * 1024, arguments).Trim();
+
+    private static string GitRawText(string repositoryRoot, params string[] arguments) =>
+        GitOutput(repositoryRoot, 32 * 1024 * 1024, arguments);
+
+    private static string GitOutput(string repositoryRoot, int maximumOutputBytes, params string[] arguments)
     {
-        var output = BoundedProcessRunner.Run("git", ["-C", repositoryRoot, .. arguments], repositoryRoot, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
+        var output = BoundedProcessRunner.Run("git", ["-C", repositoryRoot, .. arguments], repositoryRoot, BoundedProcessRunner.HangDetectionBudget, maximumOutputBytes);
         if (output.ExitCode != 0) throw new InvalidOperationException(StrictUtf8.GetString(output.StandardError).Trim());
-        return StrictUtf8.GetString(output.StandardOutput).Trim();
+        return StrictUtf8.GetString(output.StandardOutput);
     }
 
     private static bool IsObjectId(string value, int expectedLength) =>
         value.Length == expectedLength
         && value.All(static character => character is >= '0' and <= '9' or >= 'a' and <= 'f');
 
-    private static IReadOnlyList<string> GitPaths(string repositoryRoot, string @base, string head)
+    private static IReadOnlyList<string> GitPaths(string repositoryRoot, string @base, string? head)
     {
         var output = BoundedProcessRunner.Run(
             "git",
-            ["-C", repositoryRoot, "diff", "--name-only", "-z", "--no-renames", "--diff-filter=ACDMRTUXB", @base, head, "--"],
+            ["-C", repositoryRoot, "diff", "--name-only", "-z", "--no-renames", "--diff-filter=ACDMRTUXB", @base, .. head is null ? Array.Empty<string>() : [head], "--"],
             repositoryRoot,
             BoundedProcessRunner.HangDetectionBudget,
             32 * 1024 * 1024);
@@ -324,18 +306,7 @@ internal static class Program
             .Split('\0', StringSplitOptions.RemoveEmptyEntries);
     }
 
-    private static RepositorySnapshot DecodeSnapshot(
-        RawRepositorySnapshot raw,
-        string description) =>
-        SnapshotDecoder.Decode(raw) switch
-        {
-            SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
-            SnapshotDecodeOutcome.InfrastructureFailure failure =>
-                throw new InvalidDataException($"{description} snapshot is invalid: {failure.Message}"),
-            _ => throw new InvalidDataException($"{description} snapshot decode returned an unknown outcome"),
-        };
-
-    private sealed record Options(string RepositoryRoot, string Head, string Base, bool Full)
+    private sealed record Options(string RepositoryRoot, string Event, string Head, string Before, bool Full, bool PlanOnly)
     {
         internal static Options Parse(IReadOnlyList<string> arguments)
         {
@@ -347,27 +318,26 @@ internal static class Program
                 if (!values.TryAdd(arguments[index], arguments[index + 1]))
                     throw new ArgumentException($"duplicate option: {arguments[index]}");
             }
-            if (values.Keys.Any(static name => name is not "--repository" and not "--head" and not "--base" and not "--full"))
-            {
-                throw new ArgumentException("options must be --repository, --head, --base, and optional --full 0|1");
-            }
-
-            return new Options(
-                Path.GetFullPath(Require(values, "--repository")),
-                Require(values, "--head"),
-                Require(values, "--base"),
-                values.GetValueOrDefault("--full", "0") switch
-                {
-                    "0" => false,
-                    "1" => true,
-                    _ => throw new ArgumentException("--full must be 0 or 1"),
-                });
+            if (values.Keys.Any(static name => name is not ("--repository" or "--event" or "--head" or "--base" or "--before" or "--full" or "--plan-only")))
+                throw new ArgumentException("unknown engineering planning option");
+            var eventKind = Require(values, "--event");
+            if (eventKind is not ("push" or "pull-request")) throw new ArgumentException("--event must be push or pull-request");
+            var endpoint = eventKind == "push" ? "--before" : "--base";
+            if (values.ContainsKey(eventKind == "push" ? "--base" : "--before"))
+                throw new ArgumentException("push before and PR protected base are distinct input roles");
+            return new(Path.GetFullPath(Require(values, "--repository")), eventKind,
+                Require(values, "--head"), Require(values, endpoint), Flag(values, "--full"), Flag(values, "--plan-only"));
         }
+
+        private static bool Flag(IReadOnlyDictionary<string, string> values, string name) =>
+            values.GetValueOrDefault(name, "0") switch
+            {
+                "0" => false, "1" => true, _ => throw new ArgumentException(name + " must be 0 or 1"),
+            };
 
         private static string Require(IReadOnlyDictionary<string, string> values, string name) =>
             values.TryGetValue(name, out var value) && !string.IsNullOrWhiteSpace(value)
-                ? value
-                : throw new ArgumentException($"{name} is required");
+                ? value : throw new ArgumentException($"{name} is required");
     }
 
     private sealed record VerifyTrxOptions(

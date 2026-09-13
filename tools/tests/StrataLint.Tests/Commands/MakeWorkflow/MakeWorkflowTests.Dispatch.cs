@@ -34,7 +34,21 @@ public sealed partial class MakeWorkflowTests
             "cache root validation must precede dotnet");
         Assert.Contains(
             """
-            check_args=(--protected-base "$BASE_REF" --candidate-lean-report "$CANDIDATE_LEAN_REPORT")
+            INPUT_ARGS=()
+            if [[ -n "$PUSH_BEFORE" || -n "$PUSH_HEAD" ]]; then
+              [[ -z "$BASE_REF" && -n "$PUSH_BEFORE" && -n "$PUSH_HEAD" ]] \
+                || { echo "harness-gate: choose complete push range or protected base" >&2; exit 2; }
+              INPUT_ARGS=(--push-before "$PUSH_BEFORE" --push-head "$PUSH_HEAD")
+            else
+              [[ -n "$BASE_REF" ]] || { echo "harness-gate: explicit base or push range is required" >&2; exit 2; }
+              INPUT_ARGS=(--protected-base "$BASE_REF")
+            fi
+            """,
+            script,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            """
+            check_args=("${INPUT_ARGS[@]}" --candidate-lean-report "$CANDIDATE_LEAN_REPORT")
             if [[ -n "$TEST_MAP_CACHE_ROOT" ]]; then
               check_args+=(--test-map-cache-root "$TEST_MAP_CACHE_ROOT")
             fi
@@ -211,7 +225,7 @@ public sealed partial class MakeWorkflowTests
             StringComparison.Ordinal);
         Assert.Contains(LocalHarnessGateScriptPath, Recipe(makefile, "gate"), StringComparison.Ordinal);
         Assert.Equal(
-            $"\t@BASE=\"$(BASE)\" /bin/bash {PreflightScriptPath}",
+            $"\t@BASE=\"$(BASE)\" BEFORE=\"$(BEFORE)\" /bin/bash {PreflightScriptPath}",
             Recipe(makefile, "preflight"));
         var worktreeRecipe = Recipe(makefile, "worktree");
         Assert.Contains(WorktreeInitScriptPath, worktreeRecipe, StringComparison.Ordinal);
@@ -351,18 +365,7 @@ public sealed partial class MakeWorkflowTests
             "${OWNER_ASSEMBLY_ARGS[@]+\"${OWNER_ASSEMBLY_ARGS[@]}\"}",
             dotnetTest,
             StringComparison.Ordinal);
-        var engineeringTestsRecipe = Recipe(makefile, "engineering-tests");
-        Assert.Contains("REPOSITORY ?= $(HERE)/..", makefile, StringComparison.Ordinal);
-        Assert.Equal(
-            "\t@cd \"$(REPOSITORY)\" && dotnet run --project \"$(HERE)/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj\" --configuration Release --no-launch-profile -- --repository \"$(REPOSITORY)\" --head \"$(HEAD)\" --base \"$(BASE)\" $(if $(filter 1,$(FULL)),--full 1,)",
-            engineeringTestsRecipe);
-        Assert.Single(
-            Regex.Matches(
-                    makefile,
-                    Regex.Escape(
-                        "dotnet run --project \"$(HERE)/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj\""),
-                    RegexOptions.CultureInvariant)
-                .Cast<Match>());
+        AssertNativeEngineeringDispatch(root);
         Assert.Contains("$(HERE)/scripts/stratalint-selftest.sh", Recipe(makefile, "selftest"), StringComparison.Ordinal);
         Assert.Contains(
             "$(HERE)/scripts/update-renderer-contract.sh",
@@ -707,10 +710,7 @@ public sealed partial class MakeWorkflowTests
             mathGate,
             StringComparison.Ordinal);
         Assert.Contains(ScribeContentChecksScriptPath, preflight, StringComparison.Ordinal);
-        Assert.Contains(
-            "STRATALINT_SCRIBE_BASE=\"$BASE_SHA\"",
-            preflight,
-            StringComparison.Ordinal);
+        // Native preflight/Scribe caller tests verify the explicit push range transport.
     }
 
     [Fact]

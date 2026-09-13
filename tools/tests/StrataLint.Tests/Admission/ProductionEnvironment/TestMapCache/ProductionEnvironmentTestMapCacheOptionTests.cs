@@ -8,7 +8,7 @@ namespace StrataLint.Tests;
 public sealed class ProductionEnvironmentTestMapCacheOptionTests
 {
     private const string Usage =
-        "USAGE: StrataLint check [--protected-base REV] "
+        "USAGE: StrataLint check [--protected-base REV | --push-before OID --push-head OID] "
         + "[--test-map-cache-root DIR] --candidate-lean-report FILE";
 
     [Fact]

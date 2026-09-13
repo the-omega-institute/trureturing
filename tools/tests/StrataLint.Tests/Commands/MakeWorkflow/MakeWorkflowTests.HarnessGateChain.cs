@@ -26,9 +26,9 @@ public sealed partial class MakeWorkflowTests
         File.WriteAllText(explicitReport, "explicit\n");
         File.WriteAllText(ambientReport, "ambient\n");
         File.WriteAllText(scribe, "fixture\n");
-        WriteExecutable(
-            Path.Combine(binDirectory, "dotnet"),
-            "#!/usr/bin/env bash\nprintf '%s|%s\\n' \"$STRATALINT_LEAN_REPORT\" \"$*\" >> \"$SCRIBE_LOG\"");
+        WriteSelectorAwareDotnetShim(
+            binDirectory,
+            "printf '%s|%s\\n' \"$STRATALINT_LEAN_REPORT\" \"$*\" >> \"$SCRIBE_LOG\"");
         var headResult = TestProcessRunner.Run(
             "git",
             ["rev-parse", "HEAD"],
@@ -43,7 +43,9 @@ public sealed partial class MakeWorkflowTests
             #!/usr/bin/env bash
             if [[ "${1:-}" == -C ]]; then shift 2; fi
             case "$*" in
-              "cat-file -e {{baseRevision}}^{commit}"|"ls-files --others --exclude-standard -z") exit 0 ;;
+              "cat-file -e {{baseRevision}}^{commit}"|"ls-files --others --exclude-standard -z"|"diff --name-only --no-renames -z {{baseRevision}} {{baseRevision}} --") exit 0 ;;
+              "cat-file -t {{baseRevision}}") printf 'commit\n' ;;
+              "rev-parse --verify HEAD"|"rev-parse --verify HEAD^{commit}"|"rev-parse --verify --end-of-options {{baseRevision}}^{commit}") printf '%s\n' '{{baseRevision}}' ;;
               "diff --name-only --no-renames -z {{baseRevision}} --") printf 'Blueprint/D5/Probe.scribe.cs\0' ;;
               *) echo "unexpected git invocation: $*" >&2; exit 90 ;;
             esac
@@ -222,8 +224,8 @@ public sealed partial class MakeWorkflowTests
                 "-c",
                 "PREFLIGHT_ADMISSION_RC=\"$1\" PREFLIGHT_CANDIDATE_ROOT=\"$2\" "
                 + "PREFLIGHT_GATE=\"$3\" PREFLIGHT_LOCAL_GATE=\"$4\" "
-                + $"HOME=\"$5\" BASE={GateForkSha} PATH=\"$6:/usr/bin:/bin\" "
-                + "exec /bin/bash \"$7\"",
+                + $"HOME=\"$5\" BASE={GateForkSha} BEFORE={GateForkSha} PATH=\"$6:/usr/bin:/bin\" "
+                + $"PREFLIGHT_EXPECTED_GATE_BASE={GateForkSha} exec /bin/bash \"$7\"",
                 "preflight-harness-gate-chain",
                 admissionExitCode.ToString(System.Globalization.CultureInfo.InvariantCulture),
                 candidateRoot,
@@ -288,7 +290,7 @@ public sealed partial class MakeWorkflowTests
                 "-c",
                 "PREFLIGHT_ADMISSION_RC=\"$1\" PREFLIGHT_CANDIDATE_ROOT=\"$2\" "
                 + "PREFLIGHT_GATE=\"$3\" PREFLIGHT_LOCAL_GATE=\"$4\" "
-                + $"HOME=\"$5\" BASE={GateForkSha} PATH=\"$6:/usr/bin:/bin\" "
+                + $"HOME=\"$5\" BASE={GateForkSha} BEFORE={GateForkSha} PATH=\"$6:/usr/bin:/bin\" "
                 + "PREFLIGHT_GIT_STATE=\"$7\" PREFLIGHT_EXPECTED_GATE_BASE=\"$8\" exec /bin/bash \"$9\"",
                 "preflight-fork-point",
                 admissionExitCode.ToString(System.Globalization.CultureInfo.InvariantCulture),
@@ -460,7 +462,7 @@ public sealed partial class MakeWorkflowTests
         WriteExecutable(Path.Combine(binDirectory, "make"), "#!/usr/bin/env bash\nexit 0");
 
         var command = scriptPath == PreflightScriptPath
-            ? "HOME=\"$1\" BASE=\"$2\" PATH=\"$3:/usr/bin:/bin\" MERGE_BASE_MODE=\"$4\" exec /bin/bash \"$5\""
+            ? "HOME=\"$1\" BASE=\"$2\" BEFORE=\"$2\" PATH=\"$3:/usr/bin:/bin\" MERGE_BASE_MODE=\"$4\" exec /bin/bash \"$5\""
             : "HOME=\"$1\" PATH=\"$3:/usr/bin:/bin\" MERGE_BASE_MODE=\"$4\" exec /bin/bash \"$5\" --candidate \"$6\" --base \"$2\" --skip-engineering";
         return TestProcessRunner.Run(
             "/bin/bash",
@@ -552,7 +554,7 @@ public sealed partial class MakeWorkflowTests
               "rev-parse HEAD^1") printf '%040d\n' 1 ;;
               "merge-base 0000000000000000000000000000000000000001 0000000000000000000000000000000000000002") printf '%040d\n' 1 ;;
               "merge-base --is-ancestor "*) exit 0 ;;
-              "cat-file -e {{GateForkSha}}^{commit}"|"diff --name-only --no-renames -z {{GateForkSha}} --"|"ls-files --others --exclude-standard -z") exit 0 ;;
+              "cat-file -e {{GateForkSha}}^{commit}"|"diff --name-only --no-renames -z {{GateForkSha}} {{GateCandidateSha}} --"|"diff --name-only --no-renames -z {{GateCandidateSha}} --"|"ls-files --others --exclude-standard -z") exit 0 ;;
               *) echo "unexpected git invocation: $*" >&2; exit 90 ;;
             esac
             """);
@@ -613,7 +615,7 @@ public sealed partial class MakeWorkflowTests
               "merge-base --is-ancestor {{baseTipSha}} {{candidateSha}}") exit {{(diverged ? 1 : 0)}} ;;
               "merge-base --is-ancestor {{forkSha}} {{candidateSha}}") exit 0 ;;
               "merge-base --is-ancestor {{forkSha}} HEAD") exit 0 ;;
-              "cat-file -e {{forkSha}}^{commit}"|"diff --name-only --no-renames -z {{forkSha}} --"|"ls-files --others --exclude-standard -z") exit 0 ;;
+              "cat-file -e {{forkSha}}^{commit}"|"diff --name-only --no-renames -z {{forkSha}} {{candidateSha}} --"|"diff --name-only --no-renames -z {{candidateSha}} --"|"ls-files --others --exclude-standard -z") exit 0 ;;
               merge\ *) printf 'mutated\n' > "$PREFLIGHT_GIT_STATE" ;;
               *) echo "unexpected git invocation: $*" >&2; exit 90 ;;
             esac
@@ -621,10 +623,9 @@ public sealed partial class MakeWorkflowTests
 
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
     private static void WriteHarnessGateChainDotnetShim(string binDirectory) =>
-        WriteExecutable(
-            Path.Combine(binDirectory, "dotnet"),
+        WriteSelectorAwareDotnetShim(
+            binDirectory,
             """
-            #!/usr/bin/env bash
             case "${1:-}" in
               --version|restore) exit 0 ;;
               build)
@@ -647,7 +648,8 @@ public sealed partial class MakeWorkflowTests
             esac
             if [[ "${2:-}" == selftest ]]; then printf 'selftest\n'; exit 0; fi
             if [[ "${2:-}" == check ]]; then
-              if [[ -n "${PREFLIGHT_EXPECTED_GATE_BASE:-}" && "$*" != *" --protected-base $PREFLIGHT_EXPECTED_GATE_BASE "* ]]; then exit 94; fi
+              [[ "$*" == *" --protected-base ${PREFLIGHT_EXPECTED_GATE_BASE:?} "* ]] || exit 94
+              [[ "$*" != *" --push-before "* && "$*" != *" --push-head "* ]] || exit 94
               exit "$PREFLIGHT_ADMISSION_RC"
             fi
             if [[ "${2:-}" == filemap-conform ]]; then exit 0; fi
@@ -672,6 +674,13 @@ public sealed partial class MakeWorkflowTests
                 BASE=*) gate_base="${arg#BASE=}" ;;
               esac
             done
+            if [[ "$target" == engineering-tests ]]; then
+              [[ -z "${STRATALINT_PUSH_BEFORE:-}${STRATALINT_PUSH_HEAD:-}${STRATALINT_SOURCE_BASE:-}${STRATALINT_SCRIBE_BASE:-}" ]] || exit 96
+            fi
+            if [[ "$target" == lean-report && -n "${BEFORE:-}" ]]; then
+              [[ "${STRATALINT_PUSH_BEFORE:-}" == "$BEFORE" && -n "${STRATALINT_PUSH_HEAD:-}" ]] || exit 96
+              [[ -z "${STRATALINT_SOURCE_BASE:-}${STRATALINT_SCRIBE_BASE:-}" ]] || exit 96
+            fi
             if [[ "$target" == lean-report ]]; then
               report="$PREFLIGHT_CANDIDATE_ROOT/.lake/build/stratalint/raw-lean-report.json"
               mkdir -p "$(dirname "$report")"
@@ -679,19 +688,21 @@ public sealed partial class MakeWorkflowTests
               exit 0
             fi
             [[ "$target" == gate ]] || exit 0
+            [[ -z "${STRATALINT_PUSH_BEFORE:-}${STRATALINT_PUSH_HEAD:-}${STRATALINT_SOURCE_BASE:-}${STRATALINT_SCRIBE_BASE:-}" ]] || exit 96
             [[ "$gate_args" == --skip-engineering ]] || exit 92
             if [[ -n "${PREFLIGHT_EXPECTED_GATE_BASE:-}" ]]; then
               [[ "$gate_base" == "$PREFLIGHT_EXPECTED_GATE_BASE" ]] || exit 93
             fi
             "$PREFLIGHT_LOCAL_GATE" \
               --candidate "$PREFLIGHT_CANDIDATE_ROOT" \
-              --base 0000000000000000000000000000000000000001 \
+              --base "$gate_base" \
               --skip-engineering
             """);
 
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
     private static void WriteHarnessGateChainReportPair(string candidateRoot)
     {
+        WriteScribeInputRegistration(candidateRoot);
         CopyAdmissionBaseLibraryIfPresent(candidateRoot);
         CopyResourceObservationLibrary(candidateRoot);
         CopyBannedApiCompileFailProof(candidateRoot);
@@ -711,6 +722,8 @@ public sealed partial class MakeWorkflowTests
         File.WriteAllText(Path.Combine(producerDirectory, "Inspector.lean"), "fixture\n");
         var workflowDirectory = Path.Combine(candidateRoot, "tools", "scripts", "workflow");
         Directory.CreateDirectory(workflowDirectory);
+        File.Copy(Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/workflow/checked-ci-identity.py"),
+            Path.Combine(workflowDirectory, "checked-ci-identity.py"));
         File.Copy(
             Path.Combine(TestRepositoryLayout.FindRoot(), ScribeContentChecksScriptPath),
             Path.Combine(workflowDirectory, "scribe-content-checks.sh"));

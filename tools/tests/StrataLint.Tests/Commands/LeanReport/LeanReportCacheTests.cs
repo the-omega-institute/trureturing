@@ -14,6 +14,25 @@ public sealed class LeanReportCacheTests(ITestOutputHelper output)
     private const string RawReportPath = "tools/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs";
     private const string CanonicalWriterPath = "tools/Trureturing.Truth/StructuredCanonicalWriter.cs";
     [Fact]
+    public void CachedDeclarationsMissingSourceContextAreCompletedWithoutReinspection()
+    {
+        using var world = new CacheWorld();
+        var first = world.RunPair();
+        Assert.True(first.ExitCode == 0, Encoding.UTF8.GetString(first.StandardError));
+        var address = world.AddressFrom(first);
+        var cached = Path.Combine(world.CacheRoot, address, "raw-lean-report.json.source-context.json");
+        Assert.True(File.Exists(cached));
+        File.Delete(cached);
+        File.Delete(world.Output + ".source-context.json");
+        var bytes = File.ReadAllBytes(world.Output);
+        var second = world.RunPair();
+        Assert.True(second.ExitCode == 0, Encoding.UTF8.GetString(second.StandardError));
+        Assert.Equal(1, world.ProducerRunCount);
+        Assert.Equal(bytes, File.ReadAllBytes(world.Output));
+        Assert.True(File.Exists(cached));
+        Assert.True(File.Exists(world.Output + ".source-context.json"));
+    }
+    [Fact]
     public void SecondProductionOfTheSameAddressIsServedFromCacheWithoutSlotOrProducer()
     {
         if (OperatingSystem.IsWindows()) return;
@@ -367,6 +386,7 @@ public sealed class LeanReportCacheTests(ITestOutputHelper output)
     private sealed class CacheWorld : IDisposable
     {
         private readonly TemporaryDirectory _tmp = new();
+        private readonly string _baseline;
 
         internal CacheWorld()
         {
@@ -413,6 +433,7 @@ public sealed class LeanReportCacheTests(ITestOutputHelper output)
 
             Producer = Path.Combine(inspectorDir, "inspect.sh");
             WriteExecutable(Producer, StubProducer);
+            WriteRepositoryFile("tools/lean-inspector/source-context.sh", LeanSourceContextScriptFixture.Script);
             WriteExecutable(
                 Path.Combine(reportDir, "report-supervisor.sh"),
                 StubSupervisor);
@@ -445,6 +466,36 @@ public sealed class LeanReportCacheTests(ITestOutputHelper output)
             }
             MakeExecutable(PairScript);
             MakeExecutable(Path.Combine(reportDir, "lean-report-input.sh"));
+            LeanReportInputScriptTests.WritePairInputRegistration(Repo,
+                "tools/lean-inspector/inspect.sh", "tools/lean-inspector/source-context.sh",
+                "tools/scripts/lean-report-pair.sh", "tools/scripts/report/lean-report-input.sh",
+                "tools/scripts/report/report-supervisor.sh", "tools/scripts/worktree/lean-cache-input.sh",
+                "tools/scripts/worktree/lean-cache-ensure.sh", "tools/scripts/worktree/lean-cache-publish.sh",
+                "tools/scripts/workflow/scribe-content-checks.sh", RawReportPath, CanonicalWriterPath,
+                "tools/StrataLint.Cli/StrataLint.Cli.csproj", "tools/StrataLint.Cli/FixtureProbe.cs",
+                "tools/StrataLint.Engine/StrataLint.Engine.csproj", "tools/Trureturing.Truth/Trureturing.Truth.csproj",
+                ".github/workflows/ci.yml");
+            WriteExecutable(Path.Combine(bin, "dotnet"), """
+                #!/usr/bin/env bash
+                set -euo pipefail
+                while [[ $# -gt 0 && "$1" != -- ]]; do shift; done
+                [[ $# -gt 0 ]] || exit 2
+                shift
+                PATH="$ORIGINAL_PATH" exec dotnet "$NATIVE_CLI" "$@"
+                """);
+            Git("init", "--quiet");
+            Git("add", ".");
+            Git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
+                "commit", "--quiet", "--no-gpg-sign", "-m", "cache fixture baseline");
+            _baseline = Git("rev-parse", "HEAD").Trim();
+        }
+
+        private string Git(params string[] arguments)
+        {
+            var run = TestProcessRunner.Run("git", arguments, Repo,
+                TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
+            Assert.True(run.ExitCode == 0, Encoding.UTF8.GetString(run.StandardError));
+            return Encoding.UTF8.GetString(run.StandardOutput);
         }
 
         internal string Repo { get; }
@@ -484,7 +535,11 @@ public sealed class LeanReportCacheTests(ITestOutputHelper output)
             string? failureStage = null,
             int reportVersion = 1)
         {
-            var arguments = new List<string>();
+            var arguments = new List<string>
+            {
+                "-u", "GITHUB_ACTIONS", "-u", "STRATALINT_SOURCE_BASE",
+                "-u", "STRATALINT_PUSH_BEFORE", "-u", "STRATALINT_PUSH_HEAD",
+            };
             if (!cacheEnabled)
             {
                 // Seal against an ambient STRATALINT_REPORT_CACHE_ROOT leaking in from
@@ -506,11 +561,14 @@ public sealed class LeanReportCacheTests(ITestOutputHelper output)
             if (failureStage == "cache-restore") arguments.Add("STUB_CACHE_COPY_FAIL=1");
             if (cacheEnabled) arguments.Add($"STRATALINT_REPORT_CACHE_ROOT={CacheRoot}");
             arguments.Add($"STUB_CACHE_ROOT={CacheRoot}");
+            arguments.Add($"ORIGINAL_PATH={Environment.GetEnvironmentVariable("PATH")}");
+            arguments.Add($"NATIVE_CLI={Path.Combine(AppContext.BaseDirectory, "StrataLint.dll")}");
             arguments.Add(
                 $"PATH={Path.GetDirectoryName(CopyWrapper)}:{Environment.GetEnvironmentVariable("PATH")}");
             arguments.AddRange(
             [
                 PairScript,
+                "--base", _baseline,
                 "--producer", Producer,
                 "--lake-bin", "/bin/echo",
                 "--candidate-root", Repo,

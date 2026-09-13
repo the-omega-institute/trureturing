@@ -23,7 +23,7 @@ for try in $(seq 1 "$MAXTRY"); do
   git merge -q --no-edit origin/dev || { echo "ADDENDUM_FAIL merge-conflict"; exit 3; }
   DEVSHA=$(git rev-parse origin/dev); echo "PINNED_BASE $DEVSHA"
   set +e
-  make lean-report; rc=$?; [ "$rc" -eq 0 ] || { echo "ADDENDUM_FAIL lean-report rc=$rc"; exit 4; }
+  make lean-report BASE="$DEVSHA"; rc=$?; [ "$rc" -eq 0 ] || { echo "ADDENDUM_FAIL lean-report rc=$rc"; exit 4; }
   make align-digestion-status BASE="$DEVSHA"; rc=$?
   set -e
   if [ "$rc" -eq 0 ]; then git add -A Meta/Digestion; git commit -q -m "digestion: align truth status before addendum ingest (try $try)" || true; else echo "ALIGN_RC $rc (continuing to ingest)"; fi

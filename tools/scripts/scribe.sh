@@ -7,16 +7,18 @@ CLI_PROJECT="$ROOT/tools/StrataLint.Cli/StrataLint.Cli.csproj"
 LEAN_REPORT="$ROOT/.lake/build/stratalint/raw-lean-report.json"
 CONSUMER="$ROOT/tools/scripts/report/report-consumer.sh"
 MODE="${1:-}"
+SOURCE_ARGS=()
+if [[ $# -ge 2 ]]; then SOURCE_ARGS=(--base "$2"); fi
 
 case "$MODE" in
   emit) ;;
-  *) echo "usage: scribe.sh emit" >&2; exit 2 ;;
+  *) echo "usage: scribe.sh emit [BASE]" >&2; exit 2 ;;
 esac
 
 run_scribe() {
   local command=(dotnet run --project "$PROJECT" --configuration Release -- "$1")
   if [[ "$1" == "emit" ]]; then
-    "$CONSUMER" --role scribe-consumer --report "$LEAN_REPORT" -- "${command[@]}"
+    "$CONSUMER" --role scribe-consumer --report "$LEAN_REPORT" ${SOURCE_ARGS[@]+"${SOURCE_ARGS[@]}"} -- "${command[@]}"
   else
     "${command[@]}"
   fi

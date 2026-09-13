@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json;
 using StrataLint.Scribe;
 
 namespace StrataLint.Cli;
@@ -6,7 +7,7 @@ namespace StrataLint.Cli;
 internal static class FileMapConformCommand
 {
     internal const string Usage =
-        "USAGE: StrataLint filemap-conform [--producer-write-set PRODUCER]";
+        "USAGE: StrataLint filemap-conform [--producer-write-set PRODUCER | --input-scopes SCOPES --repository DIR [--match-paths PATH...]]";
 
     internal static ExplicitCommandResult Run(
         IReadOnlyList<string> arguments,
@@ -14,6 +15,21 @@ internal static class FileMapConformCommand
     {
         ArgumentNullException.ThrowIfNull(arguments);
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
+        if (arguments.Count >= 4 && arguments[0] == "--input-scopes" && arguments[2] == "--repository"
+            && (arguments.Count == 4 || arguments[4] == "--match-paths"))
+        {
+            try
+            {
+                var paths = LeanInputManifest.Select(arguments[3], arguments[1].Split(','),
+                    arguments.Count == 4 ? null : arguments.Skip(5).ToArray());
+                return new ExplicitCommandResult(0, JsonSerializer.Serialize(paths) + "\n", string.Empty);
+            }
+            catch (Exception exception)
+            {
+                return new ExplicitCommandResult(2, string.Empty,
+                    $"INPUT_REGISTRATION_FAILED LeanInputManifest: {exception.Message}\n");
+            }
+        }
         var writeSetQuery = arguments.Count == 2
             && arguments[0] == "--producer-write-set"
             && !string.IsNullOrWhiteSpace(arguments[1]);

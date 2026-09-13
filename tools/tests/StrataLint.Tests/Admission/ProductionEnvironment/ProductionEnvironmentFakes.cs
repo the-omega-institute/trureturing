@@ -87,6 +87,8 @@ internal sealed class FakeRepositoryGateway(
 internal sealed class FakeLeanReportSource(LeanAxiomReport? report) : ILeanReportSource
 {
     internal int CallCount { get; private set; }
+    internal LeanSourceContextInput SourceContext { get; init; } = LeanSourceContextInput.Empty;
+    public LeanSourceContextInput LoadSourceContext(RepositorySnapshot current, RepositorySnapshot protectedBase) => SourceContext;
 
     public LeanAxiomReport Load(RepositorySnapshot snapshot)
     {

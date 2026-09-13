@@ -61,6 +61,9 @@ internal sealed partial class ProductionCliEnvironment
     public ExplicitCommandResult DepositHeaderCheck(IReadOnlyList<string> arguments) =>
         DepositHeaderCheckCommand.Run(repository, leanReportSource, arguments);
 
+    public ExplicitCommandResult LeanSourceInput(IReadOnlyList<string> arguments) =>
+        LeanSourceInputCommand.Run(repository, arguments);
+
     public ExplicitCommandResult LeanUtilityInput(IReadOnlyList<string> arguments) =>
         LeanUtilityInputCommand.Run(repository, arguments);
 

@@ -179,10 +179,11 @@ freeze_module_if_needed() {
 deposit_module() {
   local deposit_base_sha freeze_precheck status
   require_new_module_blueprint_mirror
-  step lean-report make lean-report
   deposit_base_sha="$(git rev-parse --verify "${BASE}^{commit}")"
+  BASE="$deposit_base_sha"
+  step lean-report make lean-report BASE="$BASE"
   step deposit-header-check run_cli deposit-header-check --target "$MODULE_PATH" --protected-base "$deposit_base_sha"
-  step emit make emit
+  step emit make emit BASE="$BASE"
   if freeze_exists; then
     freeze_precheck=1
     printf 'PLAYBOOK_SKIP command=deposit detail=module-already-frozen path=%s\n' \
@@ -305,22 +306,30 @@ cover_row() {
 cd "$ROOT"
 case "$COMMAND" in
   deliver-check)
-    make lean-report
-    make emit
+    case "${PREFLIGHT:-1}" in
+      1) /bin/bash "$ROOT/tools/scripts/preflight.sh" --validate-range-only ;;
+      0) printf 'LOCAL_PREFLIGHT_NOT_RUN explicit_skip=1\n' ;;
+      *) echo 'PLAYBOOK_INVALID PREFLIGHT must be 0 or 1' >&2; exit 2 ;;
+    esac
+    BASE="$(git rev-parse --verify "${BASE}^{commit}")"
+    make lean-report BASE="$BASE"
+    make emit BASE="$BASE"
     make align-digestion-status BASE="$BASE"
     run_digest_status
     # Freeze last among all mutating derivations so the proposition snapshot is current.
     verify_added_frozen_events_v5
     align_delivery_ledger
     run_digest_status
-    make preflight BASE="$(git rev-parse HEAD^1)"
+    if [[ "${PREFLIGHT:-1}" == 1 ]]; then
+      make preflight BASE="$BASE" BEFORE="$BEFORE"
+    fi
     verify_added_frozen_events_v5
     ;;
   deposit)
     require_transaction_arguments
     deposit_module
     if cover_row; then
-      step emit make emit
+      step emit make emit BASE="$BASE"
     else
       status=$?
       printf 'PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED atom_id=%s gid=%s reason=%s\n' \
@@ -340,13 +349,15 @@ case "$COMMAND" in
     ;;
   cover)
     require_transaction_arguments
-    step lean-report make lean-report
+    BASE="$(git rev-parse --verify "${BASE}^{commit}")"
+    step lean-report make lean-report BASE="$BASE"
     cover_row
-    step emit make emit
+    step emit make emit BASE="$BASE"
     ;;
   cover-batch)
     require_cover_batch_arguments
-    step lean-report make lean-report
+    BASE="$(git rev-parse --verify "${BASE}^{commit}")"
+    step lean-report make lean-report BASE="$BASE"
     step cover-batch run_cli cover-batch --atoms "$ATOM_ID" --base "$BASE"
     ;;
   *)

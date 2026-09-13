@@ -47,7 +47,7 @@ internal static partial class RepositoryRules
     private static bool IsProtectedCandidateOnlyScribeGrowth(
         RuleEvaluationContext context,
         string path) =>
-        !context.Baseline.TryGetFile(path, out _)
+        context.ProtectedBase is { } baseline && !baseline.TryGetFile(path, out _)
         && context.Changes.Paths.Any(changed => changed.Value == path)
         && RepoPath.TryCreate(path, out var repoPath)
         && BootstrapGate.IsProtected(repoPath);

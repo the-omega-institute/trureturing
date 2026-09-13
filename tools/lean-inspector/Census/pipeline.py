@@ -147,6 +147,11 @@ def execute(options):
     try:
         if options.fixture_truth_export:
             validate_fixture_export(read(options.fixture_truth_export))
+        else:
+            if not options.base:
+                raise ValueError("census requires an explicit --base for report verification")
+            source_base = subprocess.check_output(["git", "rev-parse", "--verify", "--end-of-options",
+                options.base + "^{commit}"], cwd=repository, env=env).decode().strip()
         step(["make", "lean-cache-ensure"], "cache_ensure", build=True)
         freshness(lambda command, label: step(command, label, build=True))
         # Resolve Lake's search paths once; time the Lean census process itself.
@@ -165,14 +170,14 @@ def execute(options):
             verifier = str(repository / "tools/scripts/report/lean-report-input.sh")
             def verify_report(label):
                 step(["bash", verifier, "verify", "--repository", str(repository),
-                      "--report", str(raw_report)], label, build=True)
+                      "--report", str(raw_report), "--base", source_base], label, build=True)
             regenerated = False
             try:
                 verify_report("report_provenance")
             except RuntimeError:
                 # Only the canonical producer may repair missing/stale input
                 # attestations. Verify its result before truth-export consumes it.
-                step(["make", "lean-report"], "report_regeneration", build=True)
+                step(["make", "lean-report", "BASE=" + source_base], "report_regeneration", build=True)
                 raw_report = repository / ".lake/build/stratalint/raw-lean-report.json"
                 verify_report("report_provenance_regenerated")
                 regenerated = True
@@ -302,6 +307,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", required=True, help="new run-local directory")
     parser.add_argument("--lean-report", default=".lake/build/stratalint/raw-lean-report.json")
+    parser.add_argument("--base", help="explicit protected base for the Lean report")
     parser.add_argument("--fixture-truth-export", help="synthetic fixture input; production revisions reject")
     parser.add_argument("--prefix", default="D5", help="explicit partial measurement scope")
     parser.add_argument("--replay-of", help="rerun every phase and compare canonical outputs to this prior run")
