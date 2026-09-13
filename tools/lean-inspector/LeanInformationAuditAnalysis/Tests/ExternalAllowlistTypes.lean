@@ -154,3 +154,36 @@ def successorRead (_ : Unit) (bit : Bool) : SuccessorIndexed 138 := .mk 137 rfl 
 def cleanSuccessorRead (_ : Unit) (bit : Bool) : SuccessorIndexed 140 := .mk 139 rfl bit
 
 end CorrectnessExternalRound5
+
+
+namespace ReviewTestsA7External
+
+structure NestedResult where
+  inner : CorrectnessExternalRound4.StatementResult
+  bit : Bool
+
+def nestedResult (_ : Unit) (bit : Bool) : NestedResult :=
+  ⟨⟨⟨rfl⟩, bit⟩, bit⟩
+
+structure CleanNestedResult where
+  inner : CorrectnessExternalRound4.CleanResult
+  bit : Bool
+
+def cleanNestedResult (_ : Unit) (bit : Bool) : CleanNestedResult :=
+  ⟨⟨⟨rfl⟩, bit⟩, bit⟩
+
+structure InstanceResult where
+  [witness : Inhabited CorrectnessExternalRound4.StatementResult]
+  bit : Bool
+
+def instanceResult (_ : Unit) (bit : Bool) : InstanceResult :=
+  @InstanceResult.mk ⟨⟨⟨rfl⟩, bit⟩⟩ bit
+
+structure CleanInstanceResult where
+  [witness : Inhabited CorrectnessExternalRound4.CleanResult]
+  bit : Bool
+
+def cleanInstanceResult (_ : Unit) (bit : Bool) : CleanInstanceResult :=
+  @CleanInstanceResult.mk ⟨⟨⟨rfl⟩, bit⟩⟩ bit
+
+end ReviewTestsA7External

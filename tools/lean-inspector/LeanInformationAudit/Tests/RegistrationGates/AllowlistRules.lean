@@ -1141,3 +1141,98 @@ run_cmd Elab.Command.liftTermElabM do
       logError m!"[FAIL] {label}: unexpected rejection {result}"
     else logInfo m!"[PASS] {label}"
 end CorrectnessRound5
+
+
+open Lean LeanInformationAudit LeanInformationAudit.RegistrationGates
+namespace ReviewTestsA7
+
+theorem target : (137 : Nat) = 137 := rfl
+
+def signature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => CorrectnessExternalRound4.StatementResult
+
+def bare : StructuralPrimitiveRealization ⟨Bool⟩ signature :=
+  ⟨CorrectnessExternalRound4.valuedResult⟩
+def eta : StructuralPrimitiveRealization ⟨Bool⟩ signature :=
+  ⟨fun index bit => CorrectnessExternalRound4.valuedResult index bit⟩
+def literal : StructuralPrimitiveRealization ⟨Bool⟩ signature :=
+  ⟨fun (_ : Unit) bit => ⟨⟨rfl⟩, bit⟩⟩
+
+def cleanSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => CorrectnessExternalRound4.CleanResult
+def clean : StructuralPrimitiveRealization ⟨Bool⟩ cleanSignature :=
+  ⟨CorrectnessExternalRound4.cleanResult⟩
+def cleanEta : StructuralPrimitiveRealization ⟨Bool⟩ cleanSignature :=
+  ⟨fun index bit => CorrectnessExternalRound4.cleanResult index bit⟩
+
+def nestedSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => ReviewTestsA7External.NestedResult
+def nested : StructuralPrimitiveRealization ⟨Bool⟩ nestedSignature :=
+  ⟨ReviewTestsA7External.nestedResult⟩
+def cleanNestedSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => ReviewTestsA7External.CleanNestedResult
+def cleanNested : StructuralPrimitiveRealization ⟨Bool⟩ cleanNestedSignature :=
+  ⟨ReviewTestsA7External.cleanNestedResult⟩
+
+def instanceSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => ReviewTestsA7External.InstanceResult
+def instanceReadout : StructuralPrimitiveRealization ⟨Bool⟩ instanceSignature :=
+  ⟨ReviewTestsA7External.instanceResult⟩
+def cleanInstanceSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => ReviewTestsA7External.CleanInstanceResult
+def cleanInstance : StructuralPrimitiveRealization ⟨Bool⟩ cleanInstanceSignature :=
+  ⟨ReviewTestsA7External.cleanInstanceResult⟩
+
+run_cmd Elab.Command.liftTermElabM do
+  for alternative in [``eta, ``literal] do
+    unless ← Meta.isDefEq (mkConst ``bare) (mkConst alternative) do
+      throwError "[FAIL] A7NominalShape: {alternative}"
+  let env ← getEnv
+  for name in [``CorrectnessExternalRound4.valuedResult,
+      ``ReviewTestsA7External.nestedResult, ``ReviewTestsA7External.instanceResult] do
+    let some index := env.getModuleIdxFor? name
+      | throwError "[FAIL] A7ExternalShape: {name}"
+    logInfo m!"[PASS] A7ExternalShape {name}: {env.header.modules[index.toNat]!.module}"
+  let info ← getConstInfo ``ReviewTestsA7External.InstanceResult.mk
+  Meta.forallTelescope info.type fun params _ => do
+    let mut found := false
+    for param in params do
+      let decl ← param.fvarId!.getDecl
+      if decl.binderInfo == .instImplicit && decl.type.isAppOf ``Inhabited then
+        found := true
+    unless found do throwError "[FAIL] A7InstanceBinderShape: missing Inhabited instance binder"
+  logInfo "[PASS] A7NominalShape"
+  logInfo "[PASS] A7InstanceBinderShape: Inhabited instance argument contains nominal proof record"
+
+run_cmd Elab.Command.liftCoreM do
+  let env ← getEnv
+  for (label, holder) in [("A7NominalBare", ``bare), ("A7NominalEta", ``eta),
+      ("A7NominalLiteral", ``literal), ("A7NestedProofField", ``nested),
+      ("A7KnownInstanceProofField", ``instanceReadout)] do
+    let result ← provenanceErrorCurrent env.header.mainModule `catalog ``target holder
+    logInfo m!"[OBSERVED] {label}: {result}"
+    match result with
+    | none => logError m!"[FAIL] {label}: false admission; missing IE-C050"
+    | some message =>
+      if message.startsWith "IE-C050 ClosedTruthReadout " then
+        logInfo m!"[PASS] {label}: {message}"
+      else logError m!"[FAIL] {label}: unexpected {message}"
+  for (label, holder) in [("A7CleanBare", ``clean), ("A7CleanEta", ``cleanEta),
+      ("A7CleanNested", ``cleanNested), ("A7CleanInstance", ``cleanInstance)] do
+    let result ← provenanceErrorCurrent env.header.mainModule `catalog ``target holder
+    if result.isNone then logInfo m!"[PASS] {label}"
+    else logError m!"[FAIL] {label}: unexpected {result}"
+
+end ReviewTestsA7
