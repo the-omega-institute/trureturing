@@ -129,3 +129,28 @@ inductive IndexSelfResult : Nat → Type where
   | mk (n : Nat) (evidence : n = n) (bit : Bool) : IndexSelfResult n
 def indexSelfBy (n : Nat) (_ : Unit) (bit : Bool) : IndexSelfResult n := .mk n rfl bit
 end NominalFieldFixtures
+
+
+namespace CorrectnessExternalRound5
+
+inductive DirectIndexed : Nat → Type where
+  | zero : DirectIndexed 0
+  | mk (n : Nat) (proof : n = n) (bit : Bool) : DirectIndexed n
+
+def directRead (_ : Unit) (bit : Bool) : DirectIndexed 137 := .mk 137 rfl bit
+
+inductive IdentityIndexed : Nat → Type where
+  | zero : IdentityIndexed 0
+  | mk (n : Nat) (proof : n = n) (bit : Bool) : IdentityIndexed (id n)
+
+def identityRead (_ : Unit) (bit : Bool) : IdentityIndexed 137 := .mk 137 rfl bit
+def cleanIdentityRead (_ : Unit) (bit : Bool) : IdentityIndexed 139 := .mk 139 rfl bit
+
+inductive SuccessorIndexed : Nat → Type where
+  | zero : SuccessorIndexed 0
+  | mk (n : Nat) (proof : n = n) (bit : Bool) : SuccessorIndexed (Nat.succ n)
+
+def successorRead (_ : Unit) (bit : Bool) : SuccessorIndexed 138 := .mk 137 rfl bit
+def cleanSuccessorRead (_ : Unit) (bit : Bool) : SuccessorIndexed 140 := .mk 139 rfl bit
+
+end CorrectnessExternalRound5

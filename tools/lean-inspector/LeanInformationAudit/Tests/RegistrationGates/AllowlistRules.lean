@@ -1057,3 +1057,86 @@ run_cmd Elab.Command.liftCoreM do
   if clean.isNone then logInfo "[PASS] NominalCleanLetIndexProofField"
   else logError m!"[FAIL] NominalCleanLetIndexProofField: {clean}"
 end NominalFieldFixtures
+
+
+open Lean LeanInformationAudit LeanInformationAudit.RegistrationGates
+
+namespace CorrectnessRound5
+open CorrectnessExternalRound5
+
+def directSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => DirectIndexed 137
+def directBare : StructuralPrimitiveRealization ⟨Bool⟩ directSignature := ⟨directRead⟩
+
+-- These eliminators return the stored field. No independent proof of S is supplied.
+def recoverIdentityProof : IdentityIndexed 137 → ((137 : Nat) = 137)
+  | .mk _ proof _ => proof
+def recoverSuccessorProof : SuccessorIndexed 138 → ((137 : Nat) = 137)
+  | .mk _ proof _ => proof
+
+def identitySignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => IdentityIndexed 137
+def identityBare : StructuralPrimitiveRealization ⟨Bool⟩ identitySignature := ⟨identityRead⟩
+def identityEta : StructuralPrimitiveRealization ⟨Bool⟩ identitySignature :=
+  ⟨fun i bit => identityRead i bit⟩
+def identityLiteral : StructuralPrimitiveRealization ⟨Bool⟩ identitySignature :=
+  ⟨fun _ bit => .mk 137 rfl bit⟩
+
+def successorSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => SuccessorIndexed 138
+def successorBare : StructuralPrimitiveRealization ⟨Bool⟩ successorSignature := ⟨successorRead⟩
+def successorEta : StructuralPrimitiveRealization ⟨Bool⟩ successorSignature :=
+  ⟨fun i bit => successorRead i bit⟩
+def successorLiteral : StructuralPrimitiveRealization ⟨Bool⟩ successorSignature :=
+  ⟨fun _ bit => .mk 137 rfl bit⟩
+
+def cleanIdentitySignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => IdentityIndexed 139
+def cleanIdentity : StructuralPrimitiveRealization ⟨Bool⟩ cleanIdentitySignature := ⟨cleanIdentityRead⟩
+def cleanSuccessorSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => SuccessorIndexed 140
+def cleanSuccessor : StructuralPrimitiveRealization ⟨Bool⟩ cleanSuccessorSignature := ⟨cleanSuccessorRead⟩
+
+run_cmd Elab.Command.liftTermElabM do
+  for (bare, alternative) in [(``identityBare, ``identityEta), (``identityBare, ``identityLiteral),
+      (``successorBare, ``successorEta), (``successorBare, ``successorLiteral)] do
+    unless ← Meta.isDefEq (mkConst bare) (mkConst alternative) do
+      throwError "[FAIL] ReopeningShape {bare} {alternative}"
+    logInfo m!"[PASS] ReopeningShape {bare} = {alternative}"
+  let env ← getEnv
+  let some externalIndex := env.getModuleIdxFor? ``identityRead
+    | throwError "[FAIL] ExternalShape: no imported owner"
+  logInfo m!"[PASS] ExternalShape: {env.header.modules[externalIndex.toNat]!.module}"
+  for name in [``IdentityIndexed, ``SuccessorIndexed] do
+    let some (.inductInfo info) := env.find? name | throwError "missing inductive"
+    logInfo m!"[SHAPE] {name}: parameters={info.numParams} indices={info.numIndices}"
+  for name in [``IdentityIndexed.mk, ``SuccessorIndexed.mk] do
+    logInfo m!"[SHAPE] {name}: {(env.find? name).map (·.type)}"
+  for (label, holder, clean) in [
+      ("DirectIndexBare", ``directBare, false),
+      ("CompositeIdentityBare", ``identityBare, false),
+      ("CompositeIdentityEta", ``identityEta, false),
+      ("CompositeIdentityLiteral", ``identityLiteral, false),
+      ("CompositeSuccessorBare", ``successorBare, false),
+      ("CompositeSuccessorEta", ``successorEta, false),
+      ("CompositeSuccessorLiteral", ``successorLiteral, false),
+      ("CompositeIdentityClean", ``cleanIdentity, true),
+      ("CompositeSuccessorClean", ``cleanSuccessor, true)] do
+    let result ← provenanceErrorCurrent env.header.mainModule `catalog ``AllowlistRules.target holder
+    logInfo m!"[OBSERVED] {label}: {result}"
+    if !clean && result.isNone then
+      logError m!"[FAIL] {label}: false admission; nominal proof field specializes to registered statement"
+    else if clean && result.isSome then
+      logError m!"[FAIL] {label}: unexpected rejection {result}"
+    else logInfo m!"[PASS] {label}"
+end CorrectnessRound5
