@@ -410,19 +410,22 @@ private def validateEntryCore (env : Environment) (entry : InformationRegistryEn
   catch _ =>
     return .error (statementMismatchError entry.theoremName)
 
+private def sameCertificate : Option AutoDerivedSemanticCertificate →
+    Option AutoDerivedSemanticCertificate → Bool
+  | none, none => true
+  | some a, some b =>
+    a.occurrence == b.occurrence && a.catalogKind == b.catalogKind &&
+      a.localRegistrationNames == b.localRegistrationNames && a.statementIdentity == b.statementIdentity &&
+      a.levelParams == b.levelParams && a.nondegenerate == b.nondegenerate &&
+      a.statement.equal b.statement && a.descriptor.equal b.descriptor &&
+      a.arena.equal b.arena && a.outputEvidence.equal b.outputEvidence
+  | _, _ => false
+
 private def sameEntry (left right : InformationRegistryEntry) : Bool :=
-  left.theoremName == right.theoremName &&
-    left.unitName == right.unitName &&
-    left.arenaName == right.arenaName &&
-    left.realizationName == right.realizationName &&
-    left.variationWitness == right.variationWitness &&
-    left.sensitivityWitness == right.sensitivityWitness &&
-    left.effectiveCatalogId == right.effectiveCatalogId &&
-    left.catalogKind == right.catalogKind &&
-    left.registrationModuleName == right.registrationModuleName &&
-    left.canonicalObjectArenaName == right.canonicalObjectArenaName &&
-    left.statementIdentity == right.statementIdentity &&
-    left.localRegistrationNames == right.localRegistrationNames
+  RegistrationReifier.occurrenceBinding left == RegistrationReifier.occurrenceBinding right &&
+    left.catalogKind == right.catalogKind && left.statementIdentity == right.statementIdentity &&
+    left.localRegistrationNames == right.localRegistrationNames &&
+    sameCertificate left.derivedCertificate right.derivedCertificate
 
 /-- Validate a prospective entry before insertion; neither registry key may exist yet. -/
 def validateNewEntry (env : Environment) (entry : InformationRegistryEntry) :
@@ -451,21 +454,22 @@ def validateNewEntry (env : Environment) (entry : InformationRegistryEntry) :
 /-- Validate an entry already stored in the persistent registry exactly once. -/
 def validatePersistedEntry (env : Environment) (entry : InformationRegistryEntry) :
     MetaM (Except String Unit) := do
+  let entries := InformationRegistry.entries env
+  let occurrenceMatches := entries.filter fun candidate =>
+    candidate.canonicalObjectArenaName == entry.canonicalObjectArenaName &&
+      candidate.theoremName == entry.theoremName
+  let [stored] := occurrenceMatches.toList
+    | return .error (duplicateRegistrationError entry occurrenceMatches)
+  unless sameEntry stored entry do
+    return .error "P1.CertificateBindingMismatch: supplied entry differs from authoritative raw row"
+  -- Only the authoritative row determines whether derived checks are required.
+  let entry := stored
   match ← validateEntryCore env entry with
   | .error message => return .error message
   | .ok () => pure ()
   try
     if entry.derivedCertificate.isSome then RegistrationReifier.closedTruthExcluded entry
   catch e => return .error (← e.toMessageData.toString)
-  let entries := InformationRegistry.entries env
-  let occurrenceMatches := entries.filter fun candidate =>
-    candidate.canonicalObjectArenaName == entry.canonicalObjectArenaName &&
-      candidate.theoremName == entry.theoremName
-  match occurrenceMatches.toList with
-  | [candidate] =>
-    unless sameEntry candidate entry do
-      return .error (duplicateRegistrationError entry occurrenceMatches)
-  | _ => return .error (duplicateRegistrationError entry occurrenceMatches)
   let unitMatches := entries.filter fun candidate => candidate.unitName == entry.unitName
   match unitMatches.toList with
   | [candidate] =>
