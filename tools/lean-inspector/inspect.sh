@@ -11,6 +11,10 @@ DELTA_PLAN=""
 DELTA_SUBSET_OUTPUT=""
 MATERIAL_SPOOL=""
 SPOOL_REPORT=""
+DELTA_BUILD_ARGS=""
+DELTA_SELECTION_FILE=""
+UTILITY_INPUT=""
+UTILITY_READY=0
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -71,6 +75,8 @@ finish_inspector() {
   [[ -z "$MODULE_TABLE" ]] || rm -f -- "$MODULE_TABLE"
   [[ -z "$DELTA_PLAN" ]] || rm -f -- "$DELTA_PLAN"
   [[ -z "$DELTA_SUBSET_OUTPUT" ]] || rm -f -- "$DELTA_SUBSET_OUTPUT"
+  [[ -z "$DELTA_BUILD_ARGS" ]] || rm -f -- "$DELTA_BUILD_ARGS"
+  [[ -z "$DELTA_SELECTION_FILE" ]] || rm -f -- "$DELTA_SELECTION_FILE"
   [[ -z "$MATERIAL_SPOOL" ]] || rm -rf -- "$MATERIAL_SPOOL"
   [[ -z "$SPOOL_REPORT" ]] || rm -f -- "$SPOOL_REPORT"
   resource_observe lean-inspector-finish "$REPOSITORY" || true
@@ -148,6 +154,7 @@ invoke_inspector() {
   local selection_file="${2:-}"
   local compactor="$INSPECTOR_DIR/materials.py"
   [[ -r "$compactor" ]] || { echo "inspect.sh: material compactor is absent: $compactor" >&2; return 2; }
+  prepare_utility_input
   SPOOL_REPORT="${output}.spool.json"
   MATERIAL_SPOOL="${output}.material-spool"
   rm -rf -- "$SPOOL_REPORT" "$MATERIAL_SPOOL" "${output}.materials" "${output}.materials.zip"
@@ -161,21 +168,31 @@ invoke_inspector() {
     append_module "$module" "$path"
   done < "$MODULE_TABLE"
   [[ "${#inspector_arguments[@]}" -gt 0 ]] || return 2
+  local status=0
+  run_phase inspect \
+    "$CACHE_RUN" "$LAKE" env lean --run "$INSPECTOR" \
+    --output "$SPOOL_REPORT" --material-spool "$MATERIAL_SPOOL" \
+    --utility-input "$UTILITY_INPUT" \
+    "${inspector_arguments[@]}" || status=$?
+  if [[ "$status" -eq 0 ]]; then
+    run_phase compact python3 "$compactor" compact \
+      "$SPOOL_REPORT" "$MATERIAL_SPOOL" "$output" || status=$?
+  fi
+  rm -rf -- "$SPOOL_REPORT" "$MATERIAL_SPOOL"
+  SPOOL_REPORT=""
+  MATERIAL_SPOOL=""
+  return "$status"
+}
+
+prepare_utility_input() {
+  [[ "$UTILITY_READY" == "1" ]] && return 0
+  UTILITY_INPUT="$LOG_DIR/utility-input.stdout.log"
   run_phase utility-input-build dotnet build \
     "$INSPECTOR_DIR/../StrataLint.Cli/StrataLint.Cli.csproj" --configuration Release --nologo --verbosity quiet
   run_phase utility-input dotnet run \
     --project "$INSPECTOR_DIR/../StrataLint.Cli/StrataLint.Cli.csproj" \
     --configuration Release --no-build --no-restore --no-launch-profile -- lean-utility-input
-  run_phase inspect \
-    "$CACHE_RUN" "$LAKE" env lean --run "$INSPECTOR" \
-    --output "$SPOOL_REPORT" --material-spool "$MATERIAL_SPOOL" \
-    --utility-input "$LOG_DIR/utility-input.stdout.log" \
-    "${inspector_arguments[@]}"
-  run_phase compact python3 "$compactor" compact \
-    "$SPOOL_REPORT" "$MATERIAL_SPOOL" "$output"
-  rm -rf -- "$SPOOL_REPORT" "$MATERIAL_SPOOL"
-  SPOOL_REPORT=""
-  MATERIAL_SPOOL=""
+  UTILITY_READY=1
 }
 
 DELTA_SCRIPT="$INSPECTOR_DIR/delta.py"
@@ -219,6 +236,7 @@ fi
 
 DELTA_PLAN="$(mktemp "${TMPDIR:-/tmp}/stratalint-report-delta-plan.XXXXXXXX")"
 DELTA_SUBSET_OUTPUT="$(mktemp "${TMPDIR:-/tmp}/stratalint-report-delta-output.XXXXXXXX")"
+DELTA_BUILD_ARGS="$(mktemp "${TMPDIR:-/tmp}/stratalint-report-delta-build-args.XXXXXXXX")"
 delta_status="fallback"
 delta_baseline=""
 delta_recheck_count=0
@@ -293,24 +311,157 @@ PY
   fi
 fi
 
-# The declaration and plan must be valid before the existing cache writer builds.
-run_phase build "$CACHE_RUN" "$LAKE" build
+run_default_build() {
+  # The declaration and plan must be valid before the existing cache writer builds.
+  run_phase build "$CACHE_RUN" "$LAKE" build
+}
+
+run_projected_build() {
+  local phase="$1"
+  shift
+  run_phase "$phase" "${CACHE_RUN}" "$LAKE" build "$@"
+}
+
+project_delta_build() {
+  local plan="$1"
+  local utility="$2"
+  local output="$3"
+  # Lake owns TOML parsing. A Lean configuration or an unavailable projection
+  # retains the unqualified default build, which owns configuration errors.
+  [[ ! -e "$REPOSITORY/lakefile.lean" ]] || return 3
+  # The cache writer's stdout includes its receipt; consume only the reader's
+  # dedicated output, with no previous phase output available for reuse.
+  local config="$LOG_DIR/delta-config.json"
+  rm -f -- "$config" || return 3
+  run_phase delta-config "${CACHE_RUN}" "$LAKE" env lean --run \
+    "$INSPECTOR_DIR/Census/config.lean" lakefile.toml --output "$config" || return 3
+  python3 - "$plan" "$utility" "$config" "$output" <<'PY'
+import json
+import pathlib
+import re
+import sys
+
+
+class UnsupportedProjection(Exception):
+    pass
+
+
+class InvalidUtilityInput(Exception):
+    pass
+
+plan_path, utility_path, config_path, output_path = map(pathlib.Path, sys.argv[1:])
+try:
+    plan = json.loads(plan_path.read_text(encoding="utf-8"))
+    selected = plan.get("recheck")
+    current = plan.get("current")
+    if not isinstance(selected, list) or not selected or any(not isinstance(name, str) for name in selected):
+        raise UnsupportedProjection("delta recheck set is not a nonempty name list")
+    if not isinstance(current, dict):
+        raise UnsupportedProjection("delta current module map is unavailable")
+    selected_paths = set()
+    for name in selected:
+        record = current.get(name)
+        if not isinstance(record, dict) or not isinstance(record.get("path"), str):
+            raise UnsupportedProjection(f"selected module has no source path: {name}")
+        selected_paths.add(record["path"])
+
+    try:
+        utilities = json.loads(utility_path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, ValueError) as error:
+        raise InvalidUtilityInput(f"utility input cannot be decoded: {error}")
+    if not isinstance(utilities, list):
+        raise InvalidUtilityInput("utility input is not an array")
+    claims = set()
+    for item in utilities:
+        if not isinstance(item, dict):
+            raise InvalidUtilityInput("utility input contains a non-object")
+        required = ("modulePath", "claimGid", "claimModule", "claimSelector",
+                    "claimSourcePath", "claimSourceSha256", "resultGid",
+                    "resultModule", "resultSelector")
+        if any(not isinstance(item.get(field), str) for field in required):
+            raise InvalidUtilityInput("utility input contains an incomplete obligation")
+        module_path = item.get("modulePath")
+        claim_module = item.get("claimModule")
+        if module_path in selected_paths:
+            if not isinstance(claim_module, str) or not claim_module:
+                raise InvalidUtilityInput("selected utility input has no claim module")
+            claims.add(claim_module)
+
+    config = json.loads(config_path.read_text(encoding="utf-8"))
+    if not isinstance(config, dict):
+        raise UnsupportedProjection("Lake configuration is not an object")
+    defaults = config.get("defaultTargets")
+    libraries = config.get("lean_lib")
+    if (not isinstance(defaults, list) or not defaults
+            or any(not isinstance(target, str) or not target or target.startswith("-") for target in defaults)
+            or not isinstance(libraries, list)
+            or any(not isinstance(library, dict) for library in libraries)):
+        raise UnsupportedProjection("Lake default targets or libraries are unsupported")
+    # Only the ordinary report library's leanArts demand is projected. Other
+    # facets, roots, globs or library settings may carry independent work.
+    report_libraries = [library for library in libraries if library.get("name") == "Trureturing"]
+    if ("Trureturing" not in defaults or "Trureturing" not in current
+            or report_libraries != [{"name": "Trureturing", "roots": ["Trureturing", "D5"],
+                                    "globs": ["Trureturing", "D5.+"]}]):
+        raise UnsupportedProjection("report library is not the supported ordinary module demand")
+    modules = set(selected) | claims
+    modules.add("Trureturing")
+    if any(re.fullmatch(r"[A-Za-z_][A-Za-z0-9_']*(?:\.[A-Za-z_][A-Za-z0-9_']*)*", module) is None
+           for module in modules):
+        raise UnsupportedProjection("module name is not a supported Lake target")
+    targets = {"+" + module for module in modules}
+    # Retain all other defaults verbatim, including the full audit library and
+    # targets whose names also happen to be registered report modules.
+    targets.update(target for target in defaults if target != "Trureturing")
+    output_path.write_text("".join(target + "\n" for target in sorted(targets)), encoding="utf-8")
+except InvalidUtilityInput as error:
+    print(f"inspect.sh: authoritative utility input is invalid: {error}", file=sys.stderr)
+    raise SystemExit(2)
+except (OSError, UnicodeError, ValueError, json.JSONDecodeError) as error:
+    print(f"inspect.sh: selected build projection unavailable: {error}", file=sys.stderr)
+    raise SystemExit(3)
+except UnsupportedProjection as error:
+    print(f"inspect.sh: selected build projection unavailable: {error}", file=sys.stderr)
+    raise SystemExit(3)
+PY
+}
+
+selected_build_done=0
+if [[ "$delta_status" == "delta" && "$delta_recheck_count" -gt 0 ]]; then
+  DELTA_SELECTION_FILE="$(mktemp "${TMPDIR:-/tmp}/stratalint-report-delta-selection.XXXXXXXX")"
+  python3 - "$DELTA_PLAN" "$DELTA_SELECTION_FILE" <<'PY'
+import json, pathlib, sys
+plan = json.loads(pathlib.Path(sys.argv[1]).read_text(encoding="utf-8"))
+pathlib.Path(sys.argv[2]).write_text("".join(name + "\n" for name in plan["recheck"]), encoding="utf-8")
+PY
+  # A selected delta owns one utility-input snapshot and one projected Lake
+  # invocation.  Projection failures retain authoritative full production.
+  prepare_utility_input
+  if project_delta_build "$DELTA_PLAN" "$UTILITY_INPUT" "$DELTA_BUILD_ARGS"; then
+    projected_build_arguments=()
+    while IFS= read -r target; do projected_build_arguments+=("$target"); done < "$DELTA_BUILD_ARGS"
+    run_projected_build delta-build "${projected_build_arguments[@]}"
+    selected_build_done=1
+  else
+    projection_status=$?
+    [[ "$projection_status" -eq 3 ]] || exit "$projection_status"
+    delta_status="full-fallback"
+    run_default_build
+  fi
+else
+  run_default_build
+fi
 
 printf 'LEAN_REPORT_DELTA_PLAN mode=%s changed=%s added=%s removed=%s recheck=%s\n' \
   "$delta_status" "$delta_changed_count" "$delta_added_count" \
   "$delta_removed_count" "$delta_recheck_count"
 
 if [[ "$delta_status" == "delta" && "$delta_recheck_count" -gt 0 ]]; then
-  selection_file="$(mktemp "${TMPDIR:-/tmp}/stratalint-report-delta-selection.XXXXXXXX")"
-  python3 - "$DELTA_PLAN" "$selection_file" <<'PY'
-import json, pathlib, sys
-plan = json.loads(pathlib.Path(sys.argv[1]).read_text(encoding="utf-8"))
-pathlib.Path(sys.argv[2]).write_text("".join(name + "\n" for name in plan["recheck"]), encoding="utf-8")
-PY
-  if ! invoke_inspector "$DELTA_SUBSET_OUTPUT" "$selection_file"; then
+  if ! invoke_inspector "$DELTA_SUBSET_OUTPUT" "$DELTA_SELECTION_FILE"; then
     delta_status="full-fallback"
   fi
-  rm -f -- "$selection_file"
+  rm -f -- "$DELTA_SELECTION_FILE"
+  DELTA_SELECTION_FILE=""
 elif [[ "$delta_status" != "reuse" && "$delta_status" != "delta" ]]; then
   delta_status="full-fallback"
 fi
@@ -337,6 +488,12 @@ fi
 
 if [[ "$delta_status" == "full-fallback" ]]; then
   rm -rf -- "$DELTA_SUBSET_OUTPUT" "${DELTA_SUBSET_OUTPUT}.materials.zip"
+  # A selected attempt may have produced a valid subset but an optional
+  # baseline/material/merge consumer can still reject it.  Re-establish the
+  # complete authoritative build before inspecting the full report.
+  if [[ "$selected_build_done" == "1" ]]; then
+    run_projected_build fallback-build
+  fi
   invoke_inspector "$OUTPUT"
 fi
 
