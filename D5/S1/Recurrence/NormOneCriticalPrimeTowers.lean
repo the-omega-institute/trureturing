@@ -160,26 +160,20 @@ private lemma seed_five_identity : integralCompanion 47 ^ 5 = 1 + 5 • seedFive
 /-- First complete fixed-point tower for the single parameter 47. -/
 theorem golden_trace_three_tower (e : ℕ) (he : 0 < e) : period 47 (3 ^ e) = 3 ^ e := by
   rw [period_eq_reduced_order]
-  apply order_tower_of_seed 3 Nat.prime_three (by decide)
-    (integralCompanion 47) seedThree seed_three_identity
+  refine order_tower_of_seed 3 Nat.prime_three (by decide)
+    (integralCompanion 47) seedThree seed_three_identity ?_ 0 0 ?_ e he
   · rw [← period_eq_reduced_order]
     exact (prime_fixed_iff_parameter_two 47 3 Nat.prime_three).mpr (by norm_num)
-  · exact (0 : Fin 2)
-  · exact (0 : Fin 2)
   · norm_num [seedThree]
-  · exact he
 
 /-- Second complete fixed-point tower for that same parameter. -/
 theorem golden_trace_five_tower (e : ℕ) (he : 0 < e) : period 47 (5 ^ e) = 5 ^ e := by
   rw [period_eq_reduced_order]
-  apply order_tower_of_seed 5 Nat.prime_five (by decide)
-    (integralCompanion 47) seedFive seed_five_identity
+  refine order_tower_of_seed 5 Nat.prime_five (by decide)
+    (integralCompanion 47) seedFive seed_five_identity ?_ 0 0 ?_ e he
   · rw [← period_eq_reduced_order]
     exact (prime_fixed_iff_parameter_two 47 5 Nat.prime_five).mpr (by norm_num)
-  · exact (0 : Fin 2)
-  · exact (0 : Fin 2)
   · norm_num [seedFive]
-  · exact he
 
 /-- A prime with a complete fixed-point power tower, the strongest natural reading
 of the unnumbered critical-prime claim following Conjecture 6.5. -/
