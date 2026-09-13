@@ -1,5 +1,4 @@
 import LeanInformationAudit.RegistrationGates
-import LeanInformationAudit.ReifierTemplates
 
 namespace LeanInformationAudit.RegistrationReifier
 open Lean Meta D5.S3.ConceptDynamics.InformationEscape
