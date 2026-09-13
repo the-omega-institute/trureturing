@@ -330,7 +330,7 @@ private def validateEntryCore (env : Environment) (entry : InformationRegistryEn
         return .error "P1.CertificateBindingMismatch: current statement identity or arena ownership"
     RegistrationReifier.validateDerivedCertificate entry
   catch e => return .error (← e.toMessageData.toString)
-  try
+  tryCatchRuntimeEx (do
     let theoremExpr <- mkConstWithFreshMVarLevels entry.theoremName
     let theoremType <- instantiateMVars (← whnfR (← inferType theoremExpr))
     let unitExpr <- mkConstWithFreshMVarLevels entry.unitName
@@ -406,8 +406,7 @@ private def validateEntryCore (env : Environment) (entry : InformationRegistryEn
       | _ => return .error (statementMismatchError entry.theoremName)
     else
       return .error (statementMismatchError entry.theoremName)
-    return .ok ()
-  catch e =>
+    return .ok ()) fun e => do
     if entry.derivedCertificate.isSome && e.isRuntime then
       return .error s!"P1.IncompleteCheck: {← e.toMessageData.toString}"
     return .error (statementMismatchError entry.theoremName)

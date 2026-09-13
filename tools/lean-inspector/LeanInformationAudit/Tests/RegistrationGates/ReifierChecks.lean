@@ -26,12 +26,14 @@ elab "reject_via " label:str " expects " reason:str " in " command:command : com
   unless errors.length == 1 do throwError "{label.getString}: expected exactly one error, got {errors.length}"
   let actual ← errors[0]!.data.toString
   unless (actual.splitOn reason.getString).length > 1 do throwError "{label.getString}: {actual}"
+  logInfo m!"P1_REJECTION {label.getString} {actual}"
   logInfo m!"P1_NEGATIVE {label.getString} {reason.getString} no_entry"
 
 def expectFailure (label reason : String) (action : MetaM Unit) : MetaM Unit := do
   let outcome ← try action; pure none catch e => pure (some (← e.toMessageData.toString))
   let some actual := outcome | throwError "{label}: expected rejection"
   unless (actual.splitOn reason).length > 1 do throwError "{label}: {actual}"
+  logInfo m!"P1_REJECTION {label} {actual}"
   logInfo m!"P1_NEGATIVE {label} {reason}"
 
 def eqArena := pointwiseEqArena (Arena.ofFintype Bool) Bool
@@ -371,5 +373,10 @@ run_meta do
   let some diagnostic ← RegistrationGates.provenanceErrorCurrent `root `catalog ``clean `absentReadout
     | throwError "expected incomplete provenance"
   expectFailure "insertion_incomplete" "P1.IncompleteCheck" <| checkDiagnostic diagnostic
+
+run_meta do
+  expectFailure "bounded_runtime" "P1.IncompleteCheck" <| bounded <|
+    withOptions (fun o => o.set `maxRecDepth (1 : Nat)) <|
+      MonadRecDepth.withRecDepth 1 <| withIncRecDepth <| pure ()
 
 end LeanInformationAudit.Tests.ReifierChecks

@@ -10,9 +10,8 @@ register_option informationReifier.fuel : Nat := {
   descr := "Lower-only expression traversal budget for the P1 reifier" }
 
 /-- Every exception, including heartbeat/recursion exhaustion, fails certification. -/
-def bounded (action : MetaM α) : MetaM α := do
-  try RegistrationGates.budget action
-  catch e =>
+def bounded (action : MetaM α) : MetaM α :=
+  tryCatchRuntimeEx (RegistrationGates.budget action) fun e => do
     if (← e.toMessageData.toString).startsWith "P1." then throw e
     throwError "P1.IncompleteCheck: {e.toMessageData}"
 
