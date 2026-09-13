@@ -12,6 +12,7 @@ import D5.S3.Entropy.Forgetting.PushforwardComposition
 import Mathlib.Data.List.Permutation
 import Mathlib.Data.Finset.Sort
 import Mathlib.Data.Fintype.Perm
+import Mathlib.Order.Fin.Tuple
 
 set_option autoImplicit false
 open scoped BigOperators
@@ -140,5 +141,103 @@ def actualChainFibreEquiv (n k : ℕ) (d : Chain n k) :
       exact congrFun h i
   exact (Equiv.subtypeEquivRight heq).trans (fibreEquiv n k (fun i => (d.val i).val))
 
+
+
+/-- Erasing a selected position leaves one fewer internal mark. -/
+def eraseMark {n k : ℕ} (I : Marks n (k+1)) (j : I.val) : Marks n k :=
+  ⟨I.val.erase j.val, by rw [Finset.card_erase_of_mem j.property, I.property]; omega⟩
+
+/-- Inserting an unselected position adds one internal mark. -/
+def insertMark {n k : ℕ} (hk : 1 ≤ k) (I : Marks n k)
+    (j : {j : Positions n // j ∉ I.val}) : Marks n (k+1) :=
+  ⟨insert j.val I.val, by rw [Finset.card_insert_of_notMem j.property, I.property]; omega⟩
+
+/-- A selected mark and its erasure correspond to a smaller selection and an unselected position. -/
+def markIncidenceEquiv (n k : ℕ) (hk : 1 ≤ k) :
+    (Σ I : Marks n (k+1), I.val) ≃ (Σ I : Marks n k, {j : Positions n // j ∉ I.val}) where
+  toFun z := ⟨eraseMark z.1 z.2, ⟨z.2.val, Finset.notMem_erase _ _⟩⟩
+  invFun z := ⟨insertMark hk z.1 z.2, ⟨z.2.val, Finset.mem_insert_self _ _⟩⟩
+  left_inv z := by
+    apply Sigma.ext
+    · apply Subtype.ext
+      exact Finset.insert_erase z.2.property
+    · apply (Subtype.heq_iff_coe_eq (by
+        intro t
+        simp [insertMark, eraseMark, Finset.insert_erase z.2.property])).mpr
+      rfl
+  right_inv z := by
+    apply Sigma.ext
+    · apply Subtype.ext
+      exact Finset.erase_insert z.2.property
+    · apply (Subtype.heq_iff_coe_eq (by
+        intro t
+        simp [insertMark, eraseMark, z.2.property])).mpr
+      rfl
+
+/-- Omitting the chosen internal vertex of a strict divisor chain. -/
+def deleteChain {n k : ℕ} (d : Chain n (k+1)) (j : Fin k) : Chain n k := by
+  let e := (j.succ.castSucc).succAbove
+  have hzero : e 0 = 0 := by
+    apply Fin.ext
+    simp [e]
+  have hlast : e (Fin.last k) = Fin.last (k+1) := by
+    dsimp [e]
+    rw [Fin.succAbove_of_le_castSucc]
+    · rfl
+    · exact j.isLt
+  have hdiv : ∀ a b : Fin (k+2), a ≤ b → (d.val a).val ∣ (d.val b).val := by
+    intro a b hab
+    rcases hab.eq_or_lt with he | hlt
+    · rw [he]
+    · exact (Fin.liftFun_iff_succ (· ∣ ·) (f := fun i => (d.val i).val)).mpr (fun i => (d.property.2.2 i).1) hlt
+  refine ⟨fun i => d.val (e i), ?_, ?_, ?_⟩
+  · simpa only [hzero] using d.property.1
+  · simpa only [hlast] using d.property.2.1
+  · intro i
+    have hlt := Fin.strictMono_succAbove j.succ.castSucc (Fin.castSucc_lt_succ (i := i))
+    exact ⟨hdiv _ _ hlt.le,
+      (Fin.strictMono_iff_lt_succ.mpr fun t => (d.property.2.2 t).2) hlt⟩
+/-- Sorting the selected internal positions and adjoining endpoints gives increasing prefix lengths. -/
+def markedRaw (n k : ℕ) (hn : 1 < n) (hk : 1 ≤ k) (z : U n k) : RawMarked n k := by
+  have hlen : z.1.val.length = omegaCount n := by
+    rw [omegaCount, ← ArithmeticFunction.cardFactors_eq_sum_factorization,
+      ArithmeticFunction.cardFactors_apply]
+    exact (Nat.primeFactorsList_unique z.1.property.2 z.1.property.1).length_eq
+  have hr : 0 < omegaCount n := by
+    rw [← hlen]
+    exact List.length_pos_of_prod_ne_one z.1.val (by rw [z.1.property.2]; omega)
+  cases k with
+  | zero => omega
+  | succ k =>
+    let a : Fin k → ℕ := fun i => (z.2.val.orderEmbOfFin (by simpa using z.2.property) i).val + 1
+    have ha : StrictMono a := by
+      intro i j hij
+      exact Nat.add_lt_add_right ((z.2.val.orderEmbOfFin _).strictMono hij) 1
+    have hab : ∀ i, a i < omegaCount n := by
+      intro i
+      have := (z.2.val.orderEmbOfFin (by simpa using z.2.property) i).isLt
+      dsimp [a]
+      omega
+    have hs : StrictMono (Fin.snoc a (omegaCount n)) := by
+      intro i j hij
+      cases i using Fin.lastCases with
+      | last => exact (not_lt_of_ge (Fin.le_last j) hij).elim
+      | cast i =>
+        cases j using Fin.lastCases with
+        | last => simpa using hab i
+        | cast j => simpa using ha (Fin.castSucc_lt_castSucc_iff.mp hij)
+    refine ⟨(z.1, Fin.cons 0 (Fin.snoc a (omegaCount n))), ?_, ?_, ?_⟩
+    · simp
+    · simpa only [← Fin.succ_last, Fin.cons_succ, Fin.snoc_last] using hlen.symm
+    · apply Fin.strictMono_cons.mpr
+      refine ⟨?_, hs⟩
+      intro j
+      cases j using Fin.lastCases with
+      | last => simpa using hr
+      | cast j => simp [a]
+
+/-- The sorted finite-set readout as a strict divisor chain. -/
+def readoutChain (n k : ℕ) (hn : 1 < n) (hk : 1 ≤ k) (z : U n k) : Chain n k :=
+  qChain (markedRaw n k hn hk z)
 
 end D5.S3.Factorization.Combinatorics.MarkedPrimeWordReadoutDeletion
