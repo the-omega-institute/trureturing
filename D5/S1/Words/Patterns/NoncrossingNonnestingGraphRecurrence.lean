@@ -87,4 +87,12 @@ private def edgeSuccEquiv (n : ℕ) : Edge (n + 1) ≃ Edge n ⊕ Fin n where
     · simp
     · simp
 
+private def splitEdges (n : ℕ) :
+    Finset (Edge (n + 1)) ≃ Finset (Edge n) × Finset (Fin n) :=
+  (Equiv.finsetCongr (edgeSuccEquiv n)).trans Finset.sumEquiv.toEquiv
+
+private def extendEdges (E : Finset (Edge n)) (S : Finset (Fin n)) :
+    Finset (Edge (n + 1)) :=
+  (splitEdges n).symm (E, S)
+
 end D5.S1.Words.Patterns.NoncrossingNonnestingGraphRecurrence
