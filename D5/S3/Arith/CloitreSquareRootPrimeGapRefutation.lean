@@ -47,6 +47,24 @@ private theorem sqrt_nth_prime_add_le_of_lt_a (t k : ℕ)
         show t + 1 - 1 = t by omega] using hdiff
   exact (not_lt_of_ge (Nat.sInf_le hmem)) hka
 
+private theorem sqrt_nth_prime_step_of_claim
+    (c : ℝ) (N r m t : ℕ) (hc : 0 < c)
+    (hclaim : ∀ n : ℕ, N ≤ n → c * sqrt n < (a n : ℝ))
+    (hr : 1 < c * r) (hm : 0 < m) (hN : N ≤ t)
+    (ht : (r * m) ^ 2 ≤ t) :
+    sqrt (Nat.nth Nat.Prime (t + m)) ≤ sqrt (Nat.nth Nat.Prime t) + 1 := by
+  have hroot : (↑(r * m) : ℝ) ≤ sqrt (↑(t + 1) : ℝ) := by
+    apply Real.le_sqrt_of_sq_le
+    exact_mod_cast (ht.trans (Nat.le_succ t))
+  have hmreal : (0 : ℝ) < m := by exact_mod_cast hm
+  have hmc : (m : ℝ) < c * (↑(r * m) : ℝ) := by
+    have hmul := mul_lt_mul_of_pos_right hr hmreal
+    simpa only [one_mul, Nat.cast_mul, mul_assoc] using hmul
+  have hca : (m : ℝ) < (a (t + 1) : ℝ) :=
+    (hmc.trans_le (mul_le_mul_of_nonneg_left hroot hc.le)).trans
+      (hclaim (t + 1) (by omega))
+  exact sqrt_nth_prime_add_le_of_lt_a t m hm (by exact_mod_cast hca)
+
 end
 
 end D5.S3.Arith.CloitreSquareRootPrimeGapRefutation
