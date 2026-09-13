@@ -6,6 +6,80 @@ namespace StrataLint.Tests;
 public sealed class CheckedCiIdentityTests
 {
     [Theory]
+    [InlineData("schedule")]
+    [InlineData("repository_dispatch")]
+    public void PublisherReportSourceRequiresMatchingCheckout(string eventName)
+    {
+        using var temporary = new TemporaryDirectory();
+        var result = TestProcessRunner.Run("python3", ["-c", PublisherFixture,
+            Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/workflow/checked-ci-identity.py"),
+            temporary.Path, eventName], temporary.Path,
+            BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
+        Console.WriteLine(Encoding.UTF8.GetString(result.StandardOutput));
+        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardOutput)
+            + Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    private const string PublisherFixture = """
+        import json, os, subprocess, sys
+        from pathlib import Path
+        script, directory, event = sys.argv[1:]
+        root = Path(directory)
+        def git(*args):
+            return subprocess.run(['git', '-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid',
+                *args], cwd=root, check=True, capture_output=True, text=True).stdout.strip()
+        git('init', '--quiet')
+        (root/'input').write_text('selected source')
+        git('add', '.'); git('commit', '--quiet', '-m', 'selected')
+        head = git('rev-parse', 'HEAD')
+        event_sha = git('commit-tree', git('rev-parse', 'HEAD^{tree}'), '-p', head, '-m', 'later event')
+        git('checkout', '--detach', head)
+        payload = root/'event.json'; payload.write_text('{}')
+        env = {k:v for k,v in os.environ.items() if not k.startswith(('GITHUB_', 'STRATALINT_')) and k != 'BASE'}
+        env.update(GITHUB_ACTIONS='true', GITHUB_EVENT_NAME=event, GITHUB_EVENT_PATH=str(payload),
+            GITHUB_SHA=event_sha, GITHUB_WORKFLOW_SHA=event_sha,
+            GITHUB_WORKFLOW_REF='owner/repo/.github/workflows/truth-release-publish.yml@refs/heads/dev',
+            GITHUB_REPOSITORY='owner/repo', GITHUB_RUN_ID='35', GITHUB_RUN_ATTEMPT='1', GITHUB_JOB='produce')
+        rows = []
+        def case(label, args=(), updates=None, accepted=False):
+            environment = dict(env, **(updates or {}))
+            result = subprocess.run([sys.executable, script, '--repository', str(root),
+                '--report-source-arguments', *args], cwd=root, env=environment, capture_output=True, text=True)
+            rows.append(dict(label=label, arguments=list(args), environment=updates or {}, exit=result.returncode,
+                stdout=result.stdout, stderr=result.stderr))
+            assert result.returncode == (0 if accepted else 2), rows[-1]
+            if accepted:
+                assert result.stdout.splitlines() == ['--base', head], rows[-1]
+                identity = json.loads(result.stderr.split('CI_CHECKED_IDENTITY ')[1])
+                assert identity['event_sha'] == event_sha != head and identity['tested_head'] == head, identity
+                assert identity['selected_source'] == head and identity['protected_base'] is None, identity
+                assert identity['push_before'] is None and identity['push_after'] is None, identity
+            else: assert 'CI_REPORT_SOURCE_INVALID' in result.stderr, rows[-1]
+        case('explicit-selected', ['--base', head], accepted=True)
+        case('environment-selected', updates={'STRATALINT_SOURCE_BASE':head}, accepted=True)
+        case('duplicate-identical', ['--base', head, '--base', head], {'STRATALINT_SOURCE_BASE':head}, True)
+        case('mismatched-checkout', ['--base', event_sha])
+        for label, args, updates in (
+            ('missing', [], {}), ('empty', ['--base', ''], {}),
+            ('empty-environment', [], {'STRATALINT_SOURCE_BASE':''}),
+            ('symbolic', ['--base', 'HEAD'], {}), ('zero', ['--base', '0'*40], {}),
+            ('short', ['--base', head[:12]], {}), ('missing-object', ['--base', '1'*40], {}),
+            ('duplicate-conflict', ['--base', head, '--base', event_sha], {}),
+            ('environment-conflict', ['--base', head], {'STRATALINT_SOURCE_BASE':event_sha}),
+            ('mixed-push', ['--base', head, '--push-before', '0'*40, '--push-head', head], {}),
+            ('push-only', ['--push-before', '0'*40, '--push-head', head], {}),
+            ('incomplete-push', ['--base', head, '--push-before', head], {}),
+            ('missing-workflow', ['--base', head], {'GITHUB_WORKFLOW_SHA':''}),
+            ('wrong-caller', ['--base', head], {'GITHUB_WORKFLOW_REF':'owner/repo/other.yml@refs/heads/dev'}),
+            ('wrong-repository', ['--base', head], {'GITHUB_REPOSITORY':'another/repo'}),
+            ('wrong-job', ['--base', head], {'GITHUB_JOB':'publish'}),
+        ): case(label, args, updates)
+        git('checkout', '-b', 'attached', head)
+        case('attached-checkout', ['--base', head])
+        print(json.dumps(dict(event=event, selected_source=head, event_sha=event_sha, cases=rows)))
+        """;
+
+    [Theory]
     [InlineData("pull_request_target", "default-workflow", true)]
     [InlineData("pull_request_target", "event-base-drift", true)]
     [InlineData("pull_request_target", "explicit-base", true)]

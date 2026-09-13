@@ -166,6 +166,9 @@ jobs:
           fi
           printf 'source_tree=%s\n' "$source_tree" >> "$GITHUB_OUTPUT"
           printf 'commit_on_protected_dev=true\n' >> "$GITHUB_OUTPUT"
+          # One selected-source reference for report production, cache/artifact
+          # verification and downstream consumers. GITHUB_SHA remains the event.
+          printf 'STRATALINT_SOURCE_BASE=%s\n' "$source_commit" >> "$GITHUB_ENV"
 
       - name: Set up pinned .NET SDK
         if: steps.source.outputs.publish_ready == 'true'

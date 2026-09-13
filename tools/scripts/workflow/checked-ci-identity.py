@@ -13,7 +13,7 @@ import subprocess
 import sys
 
 
-def checked_identity(repository, environment, acquire_pinned=False):
+def checked_identity(repository, environment, acquire_pinned=False, report_source=None):
     def required(name):
         value = environment.get(name, "")
         if not value:
@@ -31,13 +31,20 @@ def checked_identity(repository, environment, acquire_pinned=False):
             check=True, capture_output=True, text=True).stdout.strip()
 
     event = required("GITHUB_EVENT_NAME")
-    if event not in {"pull_request", "pull_request_target", "push"}:
+    publisher = event in {"schedule", "repository_dispatch"} and report_source is not None
+    if event not in {"pull_request", "pull_request_target", "push"} and not publisher:
         raise ValueError("unsupported event " + event)
     head = revision("HEAD")
     base = None
     workflow = sha("GITHUB_WORKFLOW_SHA")
     event_sha = sha("GITHUB_SHA")
-    if event != "pull_request_target" and event_sha != head:
+    if publisher:
+        if report_source != head:
+            raise ValueError("selected report source differs from checkout HEAD")
+        if subprocess.run(["git", "symbolic-ref", "-q", "HEAD"], cwd=repository,
+                          capture_output=True).returncode != 1:
+            raise ValueError("selected report source requires detached checkout")
+    elif event != "pull_request_target" and event_sha != head:
         raise ValueError("event must name the checked commit")
     if event == "pull_request" and workflow != head:
         raise ValueError("PR workflow must name the checked commit")
@@ -66,7 +73,7 @@ def checked_identity(repository, environment, acquire_pinned=False):
                 pinned = revision(before + "^{commit}")
             if pinned != before:
                 raise ValueError("push before does not name a commit")
-    else:
+    elif not publisher:
         base = revision("HEAD^1")
         pr_head = payload["pull_request"]["head"]["sha"]
         pr_base = payload["pull_request"]["base"]["sha"]
@@ -77,7 +84,11 @@ def checked_identity(repository, environment, acquire_pinned=False):
     parts = entry.split("/", 2)
     if not separator or len(parts) != 3:
         raise ValueError("invalid entry workflow repository/path identity")
+    if publisher and ("/".join(parts[:2]) != required("GITHUB_REPOSITORY")
+            or parts[2] != ".github/workflows/truth-release-publish.yml" or required("GITHUB_JOB") != "produce"):
+        raise ValueError("selected report source requires the truth-release publisher producer")
     return dict(workflow_repository="/".join(parts[:2]), workflow_path=parts[2], event=event, event_sha=event_sha, tested_head=head,
+        selected_source=report_source if publisher else None,
         protected_base=base, push_before=before, push_after=after,
         planning_mode="initial" if before == "0" * 40 else "endpoints",
         pr_head=pr_head, event_pr_base=pr_base,
@@ -123,14 +134,21 @@ def report_source_arguments(repository, environment, bases, befores, heads, acqu
     head = single(heads, "STRATALINT_PUSH_HEAD")
     if (before is None) != (head is None) or (base is not None and before is not None):
         raise ValueError("choose protected base or complete push range")
+    publisher = (environment.get("GITHUB_ACTIONS") == "true"
+                 and environment.get("GITHUB_EVENT_NAME") in {"schedule", "repository_dispatch"})
+    # This caller reports an already gate-verified immutable source, independently
+    # of the commit that triggered publication. H is its data reference; it does
+    # not invent a push range or rerun historical delta admission.
+    if publisher and (base is None or not re.fullmatch(r"[0-9a-f]{40}", base)):
+        raise ValueError("publisher requires an explicit immutable selected report source")
     if base is not None:
         base = subprocess.run(["git", "rev-parse", "--verify", base + "^{commit}"],
             cwd=repository, check=True, capture_output=True, text=True).stdout.strip()
 
     identity = None
     if environment.get("GITHUB_ACTIONS") == "true":
-        identity = checked_identity(repository, environment, acquire_pinned)
-        expected = (identity["protected_base"], identity["push_before"], identity["push_after"])
+        identity = checked_identity(repository, environment, acquire_pinned, base if publisher else None)
+        expected = (identity["selected_source"] or identity["protected_base"], identity["push_before"], identity["push_after"])
         if (base is not None or before is not None) and (base, before, head) != expected:
             raise ValueError("explicit report source mode differs from checked Actions identity")
         base, before, head = expected
