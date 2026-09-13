@@ -317,7 +317,7 @@ private structure WalkState where
   forbidden : Bool := false
   unclassified : Option Unclassified := none
   incomplete : Bool := false
-  weights : Std.HashMap Expr Nat := {}
+  weights : Std.HashMap (Expr × Bool) Nat := {}
   substitutionWeights : Std.HashMap (Expr × Nat) Nat := {}
   levelWeights : Std.HashMap Level Nat := {}
   applications : Std.HashMap Expr (Expr × Array Expr) := {}
@@ -366,10 +366,10 @@ private partial def levelWeight (level : Level) : WalkM (Option Nat) := do
 
 -- Computing a weight consumes fuel too. Cached Expr hashes and occurrence flags
 -- are constant-time; weights cap at the query budget before arithmetic grows.
-private partial def expressionWeight (e : Expr) : WalkM (Option Nat) := do
+private partial def expressionWeight (e : Expr) (freeOnly : Bool := false) : WalkM (Option Nat) := do
   unless ← chargeTraversal do return none
-  if let some n := (← get).weights[e]? then return some n
-  let children := match e with
+  if let some n := (← get).weights[(e, freeOnly)]? then return some n
+  let children := if freeOnly && !e.hasFVar then #[] else match e with
     | .app f a => #[f, a]
     | .lam _ t b _ | .forallE _ t b _ => #[t, b]
     | .letE _ t v b _ => #[t, v, b]
@@ -377,13 +377,13 @@ private partial def expressionWeight (e : Expr) : WalkM (Option Nat) := do
     | _ => #[]
   let mut weight := 1
   for child in children do
-    let some n ← expressionWeight child | return none
+    let some n ← expressionWeight child freeOnly | return none
     weight := min (provenanceExpressionFuel + 1) (weight + n)
-  let levels := match e with | .const _ ls => ls | .sort l => [l] | _ => []
+  let levels := if freeOnly then [] else match e with | .const _ ls => ls | .sort l => [l] | _ => []
   for level in levels do
     let some n ← levelWeight level | return none
     weight := min (provenanceExpressionFuel + 1) (weight + n)
-  modify fun s => { s with weights := s.weights.insert e weight }
+  modify fun s => { s with weights := s.weights.insert (e, freeOnly) weight }
   return some weight
 
 private def chargeExpression (e : Expr) : WalkM Bool := do
@@ -917,6 +917,10 @@ private partial def inputType (env : Environment) (type : Expr)
       unless ← chargeTraversal (active.size + 1) do return (mentions, true)
       let nextActive := active.push reduced
       for (lctx, instances, subst, fields) in branches do
+        let mut lookupBound := 1
+        for _ in subst.map do
+          unless ← chargeTraversal do return (mentions, true)
+          lookupBound := lookupBound + 1
         let mut branchActive := #[]
         for family in nextActive do
           unless ← chargeTraversal (branchActive.size + 1) do return (mentions, true)
@@ -924,8 +928,14 @@ private partial def inputType (env : Environment) (type : Expr)
           if subst.isEmpty || !family.hasFVar then
             branchActive := branchActive.push family
           else
-            unless ← chargeExpression family do return (mentions, true)
-            let some family ← boundedMeta (pure (subst.apply family)) | return (mentions, true)
+            let some size ← expressionWeight family true | return (mentions, true)
+            unless ← chargeTraversal (size * lookupBound) do return (mentions, true)
+            -- Closed subtrees contain no substitution target. Stop there;
+            -- like FVarSubst.apply, never recurse into a replacement value.
+            let some family ← boundedMeta (pure (family.replace fun part =>
+              if !part.hasFVar then some part else match part with
+              | .fvar id => some (subst.get id)
+              | _ => none)) | return (mentions, true)
             branchActive := branchActive.push family
         for field in fields do
           unless ← chargeTraversal do return (mentions, true)
