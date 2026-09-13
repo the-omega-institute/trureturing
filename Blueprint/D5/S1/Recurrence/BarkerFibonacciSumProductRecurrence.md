@@ -36,6 +36,10 @@ $$\forall n \in \mathbb{N},\; 12 < n \Rightarrow \operatorname{a}\left(n\right) 
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/BarkerFibonacciSumProductRecurrence.barker_a226857` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a226857-fibonacci-sum-product-recurrence` (proved) by `D5/S1/Recurrence/BarkerFibonacciSumProductRecurrence.barker_a226857`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a226857-fibonacci-sum-product-recurrence","declaration_gid":"D5/S1/Recurrence/BarkerFibonacciSumProductRecurrence.barker_a226857","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*

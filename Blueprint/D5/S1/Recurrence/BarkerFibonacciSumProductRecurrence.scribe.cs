@@ -47,14 +47,18 @@ internal sealed class BarkerFibonacciSumProductRecurrenceDocument : IScribeDocum
                     + "families, identifies the explicit enumeration with Nat.nth and yields "
                     + "the recurrence for every n greater than 12. The generating-function "
                     + "line and the accompanying %C corollaries are not claimed.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a226857-fibonacci-sum-product-recurrence"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(
         string name,
         string title,
         Formula formula,
         string prose,
-        DescribeRole role) => Describe.Lean(
+        DescribeRole role,
+        OpenProblemResolutionClaim? claim = null) => Describe.Lean(
         DescribeId.Create("a226857-" + name.Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name),
         H(title),
@@ -63,7 +67,8 @@ internal sealed class BarkerFibonacciSumProductRecurrenceDocument : IScribeDocum
             ? AssessedProvenance.FromLiterature(Source)
             : AssessedProvenance.FromRepo(),
         Blocks(Paragraph(Text(prose))),
-        role);
+        role,
+        claim);
 
     private static Formula MemFormula() => Disp(ForAll(
         new[] { Bound("x") },
