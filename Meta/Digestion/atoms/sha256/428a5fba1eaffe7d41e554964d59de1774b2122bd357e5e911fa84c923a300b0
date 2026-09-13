@@ -1,0 +1,107 @@
+### 9.6 规范黄金截面与返回锚定
+
+**定义。** 对 $n\in\mathbb N$，令
+
+$$
+S(n)=\lfloor(n+1)\varphi\rfloor-1,
+\qquad
+\beta_{\mathbb R}(n)=S(n)-n\psi,
+$$
+
+并定义规范黄金整数
+
+$$
+\beta_{\mathrm G}(n)=(S(n)-n)+n\varphi\in\mathcal O.
+$$
+
+**定理。** 规范黄金整数恰好是偏移为 $\alpha$ 的截面：
+
+$$
+\boxed{
+\beta_{\mathrm G}(n)=s_\alpha(n)
+=\lfloor(n+1)\alpha\rfloor+n\varphi.
+}\tag{GS10}
+$$
+
+其正实嵌入为 $\beta_{\mathbb R}(n)$，内部实嵌入为
+$(\beta_{\mathrm G}(n))_*$。
+
+**证明。** 因为 $\varphi=1+\alpha$，
+
+$$
+S(n)=n+\lfloor(n+1)\alpha\rfloor.
+$$
+
+代回定义便得到 GS10。正实嵌入满足
+
+$$
+(S(n)-n)+n\varphi=S(n)+n\alpha=S(n)-n\psi
+=\beta_{\mathbb R}(n),
+$$
+
+内部嵌入则由定义直接得到。
+
+**定义。** 对 $L\in\mathbb N$，令
+
+$$
+u_L=\varphi^{L+2},
+\qquad U_L(n)=P_{u_L}^{\alpha}(n)\quad(n\in\mathbb Z).
+$$
+
+**定理。** 对每个 $L$ 与 $n\in\mathbb Z$，规范截面的进位为零，且
+
+$$
+s_\alpha(U_L(n))=u_Ls_\alpha(n).
+$$
+
+因此
+
+$$
+\boxed{U_K(U_L(n))=U_{K+L+2}(n).}\tag{GS11}
+$$
+
+若 $n\in\mathbb N$，则 $U_L(n)\ge0$，并且把该输出视为自然数时，
+
+$$
+\boxed{
+\beta_{\mathrm G}(U_L(n))
+=\varphi^{L+2}\beta_{\mathrm G}(n).
+}\tag{GS12}
+$$
+
+**证明。** 由取整界，
+$r_\alpha(n)\in[-\alpha,1-\alpha)$。将该半开区间乘以
+$d_L=(u_L)_*$；利用 $|d_L|<1$、符号交替及无理性排除可能的整数端点，得到
+
+$$
+0\le d_Lr_\alpha(n)+\alpha<1.
+$$
+
+GS4 因而给出零进位与截面不变性。又因
+$u_Ku_L=u_{K+L+2}$，连续应用截面不变性并取 $\pi$，得到 GS11。
+对自然数 $n$，$s_\alpha(n)$ 的两个整数坐标非负，而
+$u_L=F_{L+1}+F_{L+2}\varphi$ 的两个坐标也非负，故乘积的
+$\varphi$ 坐标 $U_L(n)$ 非负。最后结合 GS10 与截面不变性得到 GS12。
+
+**定理。** 第 8 节的返回映射与规范尺度映射满足锚定关系
+
+$$
+\boxed{T_L(m)=A_L+U_L(m-1),\qquad m\in\mathbb Z.}\tag{GS13}
+$$
+
+**证明。** 由
+$u_L=F_{L+1}+F_{L+2}\varphi=C_L+B_L\varphi$，且
+
+$$
+q_\alpha(m-1)=\lfloor m\alpha\rfloor,
+$$
+
+展开 $u_Ls_\alpha(m-1)$ 的 $\varphi$ 坐标，得到
+
+$$
+U_L(m-1)=A_L(m-1)+B_L\lfloor m\alpha\rfloor
+=T_L(m)-A_L.
+$$
+
+移项即得 GS13。
+

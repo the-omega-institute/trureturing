@@ -1,0 +1,16 @@
+**定理。** 上述数满足
+
+$$
+\alpha^2+\alpha=1,\qquad 0<\alpha<1,\qquad
+M_L=Q^{L+2},\qquad \delta_L=\alpha^{L+2},
+$$
+
+以及 Cassini 行列式恒等式
+
+$$
+\boxed{\det M_L=A_LC_L-B_L^2=(-1)^L.}
+$$
+
+因此 $M_L\in GL_2(\mathbb Z)$；$L$ 为偶数时 $M_L\in SL_2(\mathbb Z)$，
+$L$ 为奇数时 $M_L$ 反转定向。
+
