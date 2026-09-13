@@ -23,7 +23,7 @@ structure Dispatcher where
 noncomputable def dispatcher : Dispatcher := ⟨Decidable, Classical.propDecidable⟩
 noncomputable def projectedDecision (_ : Unit) (x : Bool) : Bool :=
   if @decide specificStatement (dispatcher.choose specificStatement) then x else true
-check_provenance "DependentProjectionDecision" using projectedDecision expects "unclassified_form" for specificTruth
+check_provenance "DependentProjectionDecision" using projectedDecision expects "forbidden_dependency" for specificTruth
 
 def owner (s : String) : Name := .str (.str .anonymous "RegistrationProvenance") s
 def ownerCertificate : Certificate (owner "specificTruth") := ⟨true⟩
@@ -83,7 +83,7 @@ check_provenance "ClosedStatementInhabitant" using closedStatementRead expects "
 def openAliasFamily (_ : Bool) : Prop := specificStatement
 noncomputable def openAliasDecision (_ : Unit) (x : Bool) : Bool :=
   if @decide (openAliasFamily x) (Classical.propDecidable _) then x else false
-check_provenance "OpenAliasDecision" using openAliasDecision expects "unclassified_form" for specificTruth
+check_provenance "OpenAliasDecision" using openAliasDecision expects "forbidden_dependency" for specificTruth
 noncomputable def openAliasBinderControl := unrelatedDecisionRead
 check_provenance "OpenAliasBinderControl" using openAliasBinderControl expects "unclassified_form" for specificTruth
 
@@ -98,9 +98,9 @@ run_cmd Elab.Command.liftTermElabM do
     (·.theoremName == ``RegistrationStructural.positive)).get!
   let .defnInfo template := (env.find? ``RegistrationStructural.good).get!
     | throwError "fixture template"
-  for (readout, label, forbidden) in [
-      (``structuralAliasDecision, "OpenAliasDecisionStructural", true),
-      (``structuralBinderDecision, "OpenAliasBinderControlStructural", true)] do
+  for (readout, label, reason) in [
+      (``structuralAliasDecision, "OpenAliasDecisionStructural", "forbidden_dependency"),
+      (``structuralBinderDecision, "OpenAliasBinderControlStructural", "unclassified_form")] do
     let holder := readout.str "fixtureRealization"
     addDecl <| .defnDecl {
       name := holder, levelParams := [], type := template.type
@@ -108,10 +108,8 @@ run_cmd Elab.Command.liftTermElabM do
       hints := .abbrev, safety := .safe }
     let actual ← RegistrationGates.validateStructural
       { entry with theoremName := ``specificTruth, realizationConst := holder }
-    let ok := if forbidden then
-        (actual.getD "").startsWith "IE-C050 ClosedTruthReadout " &&
-        ((actual.getD "").splitOn " reason=unclassified_form provenance=").length == 2
-      else actual.isNone
+    let ok := (actual.getD "").startsWith "IE-C050 ClosedTruthReadout " &&
+      ((actual.getD "").splitOn s!" reason={reason} provenance=").length == 2
     if ok then logInfo m!"[PASS] {label}"
     else logError m!"[FAIL] {label}: {actual}"
 
