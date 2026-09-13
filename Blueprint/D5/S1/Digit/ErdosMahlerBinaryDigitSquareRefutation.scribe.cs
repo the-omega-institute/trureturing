@@ -36,13 +36,18 @@ internal sealed class ErdosMahlerBinaryDigitSquareRefutationDocument
                     + "coprime pair outside both alternatives. A second example is "
                     + "8^9 + 8^7 + 8^5 + 8^4 + 8^3 + 8^2 + 8 + 1 = 11677^2. "
                     + "Neither example addresses Mahler's fixed-base finiteness conjecture.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "erdos-1989-mahler-binary-digit-square-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create(id), DeclarationHandle.Create(Prefix + DeclarationName(id)),
         H(title), StatementSource.FromAuthor(formula), provenance,
-        Blocks(Paragraph(Text(prose))), role);
+        Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static string DeclarationName(string id) => id switch
     {

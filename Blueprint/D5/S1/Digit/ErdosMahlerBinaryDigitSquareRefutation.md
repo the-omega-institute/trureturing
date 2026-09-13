@@ -34,6 +34,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Digit/ErdosMahlerBinaryDigitSquareRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/erdos-1989-mahler-binary-digit-square-refutation` (refuted) by `D5/S1/Digit/ErdosMahlerBinaryDigitSquareRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"erdos-1989-mahler-binary-digit-square-refutation","declaration_gid":"D5/S1/Digit/ErdosMahlerBinaryDigitSquareRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul Erdős (1989). *Some personal and mathematical reminiscences of Kurt Mahler, Australian Mathematical Society Gazette 16(1) (1989), 1–2*. URL: <https://users.renyi.hu/~p_erdos/1989-34.pdf>.
