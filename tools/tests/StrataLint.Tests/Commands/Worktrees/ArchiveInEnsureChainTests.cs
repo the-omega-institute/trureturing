@@ -5,6 +5,34 @@ namespace StrataLint.Tests;
 [Collection("Lean cache environment")]
 public sealed class ArchiveInEnsureChainTests
 {
+    [Fact]
+    public void PrivateReleaseFallbackAllowsSeedThroughBoundedEnsureOwner()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new SharedLakeFixture();
+        var script = LeanArchiveFetch.ScriptPath(fixture.Reader);
+        Directory.CreateDirectory(Path.GetDirectoryName(script)!);
+        File.WriteAllText(script, """
+            #!/bin/sh
+            printf '%s\n' "$@" > fetch-arguments
+            for argument in "$@"; do
+              if [ "$argument" = --allow-seed ]; then
+                echo 'LEAN_CACHE_FETCH {"status":"unpacked","mode":"seed"}'
+                exit 0
+              fi
+            done
+            echo 'LEAN_CACHE_FETCH {"status":"miss","reason":"seed not allowed"}'
+            exit 1
+            """ + "\n");
+
+        var result = fixture.Command(fixture.Reader, "ensure-cache");
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("\"archive_status\":\"unpacked\"", result.Output, StringComparison.Ordinal);
+        Assert.Equal(["fetch", "--repository", fixture.Reader, "--allow-seed"],
+            File.ReadAllLines(Path.Combine(fixture.Reader, "fetch-arguments")));
+    }
+
     [Theory]
     [InlineData("miss", 1, "miss")]
     [InlineData("rejected", 1, "rejected")]

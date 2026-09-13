@@ -66,7 +66,7 @@ internal static class LeanArchiveFetch
         {
             output = runner.Run(
                 "/bin/bash",
-                [script, "fetch", "--repository", worktreeRoot],
+                [script, "fetch", "--repository", worktreeRoot, "--allow-seed"],
                 worktreeRoot,
                 budget);
         }

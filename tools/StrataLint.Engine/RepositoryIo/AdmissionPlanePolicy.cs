@@ -59,41 +59,56 @@ internal static class AdmissionPlanePolicy
 
     internal static AdmissionPlaneDecision Evaluate(
         RawRepositorySnapshot candidate,
-        IReadOnlyList<string> changedPaths)
+        RawRepositorySnapshot protectedBase,
+        RawChangeSet changes)
     {
         ArgumentNullException.ThrowIfNull(candidate);
-        ArgumentNullException.ThrowIfNull(changedPaths);
-        if (changedPaths.Count == 0)
+        ArgumentNullException.ThrowIfNull(protectedBase);
+        ArgumentNullException.ThrowIfNull(changes);
+        var endpoints = changes.Entries.Where(static change => change.Kind switch
+        {
+            RawChangeKind.Added or RawChangeKind.Modified or RawChangeKind.Deleted => true,
+            RawChangeKind.Copied => false,
+            _ => throw new InvalidOperationException($"unsupported raw change kind: {change.Kind}"),
+        }).ToArray();
+        if (endpoints.Length == 0)
         {
             return Admissible(AdmissionPlaneClassification.Empty);
         }
 
         var fileMap = candidate.Entries.FirstOrDefault(
             static entry => entry.Path == FileMapPath);
-        return fileMap is null
-            ? Failed(
+        if (fileMap is null)
+        {
+            return Failed(
                 "ADMISSION-PLANE-FILEMAP-UNAVAILABLE",
                 FileMapPath,
-                "FILEMAP is unavailable")
-            : Evaluate(fileMap.Bytes.AsSpan(), changedPaths);
-    }
-
-    internal static AdmissionPlaneDecision Evaluate(
-        ReadOnlySpan<byte> candidateFileMap,
-        IReadOnlyList<string> changedPaths)
-    {
-        ArgumentNullException.ThrowIfNull(changedPaths);
-        if (changedPaths.Count == 0)
-        {
-            return Admissible(AdmissionPlaneClassification.Empty);
+                "candidate FILEMAP is unavailable");
         }
 
-        AdmissionPlaneFileMap manifest;
+        AdmissionPlaneFileMap candidateManifest;
+        AdmissionPlaneFileMap? baseManifest = null;
         try
         {
-            manifest = AdmissionPlaneFileMapLoader.Parse(
-                candidateFileMap,
+            candidateManifest = AdmissionPlaneFileMapLoader.Parse(
+                fileMap.Bytes.AsSpan(),
                 FileMapPath);
+            if (endpoints.Any(static change => change.Kind is RawChangeKind.Deleted))
+            {
+                var baseFileMap = protectedBase.Entries.FirstOrDefault(
+                    static entry => entry.Path == FileMapPath);
+                if (baseFileMap is null)
+                {
+                    return Failed(
+                        "ADMISSION-PLANE-FILEMAP-UNAVAILABLE",
+                        FileMapPath,
+                        "protected-base FILEMAP is unavailable");
+                }
+
+                baseManifest = AdmissionPlaneFileMapLoader.Parse(
+                    baseFileMap.Bytes.AsSpan(),
+                    $"protected-base {FileMapPath}");
+            }
         }
         catch (FileMapParseException exception)
         {
@@ -119,8 +134,12 @@ internal static class AdmissionPlanePolicy
 
         var judgePaths = new List<string>();
         var contentPaths = new List<string>();
-        foreach (var path in changedPaths)
+        foreach (var change in endpoints)
         {
+            // A retired path's registration can be retired in the same delta. Renames
+            // arrive as Deleted + Added, so each endpoint uses its own snapshot.
+            var manifest = change.Kind is RawChangeKind.Deleted ? baseManifest! : candidateManifest;
+            var path = change.Path.Value;
             var matches = manifest.Match(path);
             if (matches is not [var match])
             {
@@ -128,7 +147,8 @@ internal static class AdmissionPlanePolicy
                     "ADMISSION-PLANE-PATH-MATCH-COUNT",
                     path,
                     "changed path must match exactly one FILEMAP entry; "
-                    + $"path={path} matches={matches.Length}");
+                    + $"path={path} matches={matches.Length} "
+                    + $"manifest={(change.Kind is RawChangeKind.Deleted ? "protected-base" : "candidate")}");
             }
 
             if (match.AdmissionPlane is FileMapAdmissionPlane.Judge)
@@ -155,6 +175,16 @@ internal static class AdmissionPlanePolicy
             judgePaths.Count > 0
                 ? AdmissionPlaneClassification.JudgeOnly
                 : AdmissionPlaneClassification.ContentOnly);
+    }
+
+    internal static AdmissionPlaneDecision Evaluate(
+        ReadOnlySpan<byte> candidateFileMap,
+        IReadOnlyList<string> changedPaths)
+    {
+        ArgumentNullException.ThrowIfNull(changedPaths);
+        var candidate = RawRepositorySnapshot.Create(
+            [new RawRepositoryEntry(FileMapPath, ImmutableArray.Create(candidateFileMap.ToArray()))]);
+        return Evaluate(candidate, candidate, RawChangeSet.Create(changedPaths));
     }
 
     private static AdmissionPlaneDecision Admissible(
