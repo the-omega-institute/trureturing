@@ -20,11 +20,25 @@ namespace D5.S3.ConceptDynamics.InformationEscape.MembershipRegistrations
 open MembershipRegistrationTemplates LeanInformationAudit
 open D5.S3.Fourier.FinitePoisson
 
-noncomputable section
+-- Keep the decision folded while elaborating the existing membership witnesses.
+@[irreducible] local instance membershipDecidable :
+    DecidablePred (fun x : ZMod 4 => x ∈ (annihilator evenSubgroupFour : Set (ZMod 4))) := fun k =>
+  letI : DecidablePred (· ∈ evenSubgroupFour) :=
+    AddMonoidHom.decidableMemKer
+      (ZMod.castHom (by norm_num : 2 ∣ 4) (ZMod 2)).toAddMonoidHom
+  decidable_of_iff (∀ h ∈ evenSubgroupFour, (k * h : ZMod 4) = 0) (by
+    change (∀ h ∈ evenSubgroupFour, (k * h : ZMod 4) = 0) ↔
+      ∀ h ∈ evenSubgroupFour, character k h = 1
+    apply forall_congr'
+    intro h
+    apply forall_congr'
+    intro _
+    exact (AddChar.IsPrimitive.zmod_char_eq_one_iff 4
+      (ZMod.isPrimitive_stdAddChar 4) (k * h)).symm)
 
-local instance membershipDecidable :
-    DecidablePred (fun x : ZMod 4 => x ∈ (annihilator evenSubgroupFour : Set (ZMod 4))) :=
-  Classical.decPred _
+#print axioms membershipDecidable
+
+noncomputable section
 
 def objectArena : Arena := Arena.ofFintype (ZMod 4)
 def memberArena := membershipArena objectArena true
@@ -80,8 +94,10 @@ expect_information_occurrence one_not_mem_annihilator_evenSubgroupFour in object
 
 #print axioms member_slotSensitive
 #print axioms nonmember_slotSensitive
-/- The original annihilator readout uses classical decidability. Finite seal
-evaluation requires a computable readout; no finite seal is asserted here. -/
+#print axioms twoRealization
+#print axioms oneRealization
+/- The original annihilator readout is decided by finite modular multiplication.
+No finite seal is asserted here. -/
 
 open Lean in
 run_meta do
