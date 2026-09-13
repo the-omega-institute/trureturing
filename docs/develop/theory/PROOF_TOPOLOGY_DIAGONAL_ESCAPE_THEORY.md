@@ -940,3 +940,194 @@ D5/S3/ConceptDynamics/ObservationTopology/PrimitiveEscapeStrictRefinement.lean
 \text{拓扑记录这种增长在何种观察下可见。}
 }
 \]
+
+---
+
+# 补编 RD：整数显示、实际黄金纤维与原始状态
+
+本补编将本卷的读数核与目标充分性具体应用到 #6881 的现役数位对象。普通整数本身没有由显示之外自动指定的隐藏坐标。这里的原对象是已有的非负有限数位表，显示是对该表的整数求值；黄金求值保留的内容必须由实际定义及其运算对应来确定。不存在从一个标量名字自动恢复其任意来源的断言。
+
+## RD.1 三个实际对象及其可交换求值
+
+令 $F_0=0,F_1=1,F_{i+2}=F_{i+1}+F_i$，并取现役载体
+
+$$
+\mathcal R=\mathbb N^{(\mathbb N)},\qquad
+v(r)=\sum_i r_iF_{i+2},\qquad
+\beta(r)=\sum_i r_i\varphi^{i+2}\in\mathbb Z[\varphi],
+\quad \varphi^2=\varphi+1.
+$$
+
+它们分别是 `RawDigits`、`rawValue` 与 `betaDigits`，不是本补编另造的模型。`DoubleFaceLength.betaDigits_b` 已证明
+
+$$
+\pi(\beta(r))=v(r),\qquad \pi(a+b\varphi)=b.
+$$
+
+因此原始数位表、黄金环元素及显示整数是三个不同的数学对象。原始表的规范性为系数至多一且没有相邻两个一，即现役 `CanonicalRaw`。已知表是规范的时，现役 Zeckendorf 唯一性由显示恢复该表；没有规范性前提时，不能默认选定规范代表就是原输入。
+
+若目标只是普通整数命题 $P(v(r))$，它在每个 $v$ 纤维上自动恒定。若所问性质在同值纤维内改变，它就不是仅关于该整数的性质，而是关于构造或更细语义对象的性质。这一区别先于任何编码选择。
+
+## RD.2 定理：非负原始数位的完整黄金像
+
+**定理 RD1。** 对 $z=a+b\varphi\in\mathbb Z[\varphi]$，
+
+$$
+\exists r\in\mathcal R:\beta(r)=z
+\quad\Longleftrightarrow\quad
+0\le a\le b\le2a.
+$$
+
+**证明。** $\varphi^2=1+\varphi$ 的系数位于该锥。乘以 $\varphi$ 将 $(a,b)$ 变成 $(b,a+b)$；若 $0\le a\le b\le2a$，则 $0\le b\le a+b\le2b$。故所有 $\varphi^{i+2}$ 均在锥内，非负整数线性组合仍在锥内。
+
+反过来，置 $u=2a-b\ge0$、$w=b-a\ge0$，则
+
+$$
+u\varphi^2+w\varphi^3=(u+w)+(u+2w)\varphi=a+b\varphi.
+$$
+
+取 $r=u\delta_0+w\delta_1$ 即为实际原始数位见证。两个系数由 $u=2a-b,w=b-a$ 唯一决定；唯一的是这个两槽代表，并非所有原始表示。证毕。
+
+**推论 RD2。** 对每个 $n\in\mathbb N$，实际可实现的黄金纤维为
+
+$$
+\{\beta(r):v(r)=n\}
+=\{a+n\varphi:a\in\mathbb Z,\ a\le n\le2a\}.
+$$
+
+等价地，$a$ 从 $\lceil n/2\rceil$ 到 $n$ 取每个整数。相应黄金像的数量为 $\lfloor n/2\rfloor+1$，但该数不计原始表达式、规范化路径或历史。正文中的区间分类由 `RealizableFiber.raw_image_iff` 与 `display_fiber_iff` 承载；计数是这个整数区间的算术推论，不另立有限正例模块。
+
+## RD.3 定理：显示对的可实现条件与全部移位观察
+
+使用现役 `shiftDigits`，将每个槽号提高 $k$，并定义
+
+$$
+v_k(r)=v(\operatorname{shiftDigits}(k,r)).
+$$
+
+这里先作用于实际输入，再求值；不是先规范化，再从显示重新构造输入。有限求和换元与幂法则给出
+
+$$
+\beta(\operatorname{shiftDigits}(k,r))=\varphi^k\beta(r),
+\qquad v_k(r)=\pi(\varphi^k\beta(r)).
+$$
+
+**定理 RD3。** 对任意 $n,m\in\mathbb N$，
+
+$$
+\exists r:\ v(r)=n\ \land\ v_1(r)=m
+\quad\Longleftrightarrow\quad
+3n\le2m\ \land\ m\le2n.
+$$
+
+而每个这样的输入满足
+
+$$
+\beta(r)=(m-n)+n\varphi.
+$$
+
+**证明。** 写 $\beta(r)=a+n\varphi$，乘以 $\varphi$ 后读数为 $m=a+n$。RD1 的 $a\le n\le2a$ 恰转成所列两项不等式。反向取 $a=m-n$，由两项不等式及 RD1 构造原始输入。证毕。
+
+特别地，显示 $n\ge2$ 时，$m=2n$ 与 $m=2n-1$ 都可实现；两者来自不同黄金像。因此单个显示在此域上足以确定黄金像，当且仅当 $n\le1$。若额外假设原输入规范，则规范唯一性另外给出所有 $n$ 的单值性；两项结论的前提不同。
+
+**定理 RD4。** 对原始输入 $r,s$，
+
+$$
+\beta(r)=\beta(s)
+\iff (v(r),v_1(r))=(v(s),v_1(s))
+\iff \forall k\in\mathbb N,\ v_k(r)=v_k(s).
+$$
+
+并有实际读数递推
+
+$$
+v_{k+2}(r)=v_{k+1}(r)+v_k(r).
+$$
+
+**证明。** 相同黄金元素乘以每个 $\varphi^k$ 后相同；反向只取第零与第一读数，使用 RD3 的恢复式。递推由 $\varphi^{k+2}=\varphi^{k+1}+\varphi^k$ 乘以 $\beta(r)$ 后取第二坐标得到。证毕。
+
+对应源码为 `ShiftReadout.display_pair_iff`、`reconstruct_beta`、`beta_eq_iff_all_shifts`、`shiftedValue_recurrence` 与 `display_determines_beta_iff`。这组结果确定的是此实际观察族的核，而不是断言所有数学观察都由两个整数决定。
+
+## RD.4 定理：规范化实际丢弃的坐标及其精确谱
+
+令 $\nu(r)=\operatorname{normalize}(r)$，并令 $c(r)=\operatorname{carrySignedCount}(r)$。后者是现役进位过程的整数电荷；它不是任意添加的标签。现役 `ChargedCarryPath.charged_normalize_exists` 与 `betaDigits_sub_chargedReduces` 给出
+
+$$
+\beta(r)-\beta(\nu(r))=c(r)\in\mathbb Z\subset\mathbb Z[\varphi].
+$$
+
+规范唯一性又给出 $\beta(\nu(r))=\operatorname{betaGolden}(v(r))$。写
+
+$$
+a_0(n)=(\operatorname{betaGolden}(n)).a,
+$$
+
+即得到 $\beta(r).a=a_0(v(r))+c(r)$。
+
+**定理 RD5。** 对每个显示 $n$，实际可能的规范化电荷恰为
+
+$$
+\{c(r):v(r)=n\}
+=\{c\in\mathbb Z:a_0(n)+c\le n\le2(a_0(n)+c)\}.
+$$
+
+并且
+
+$$
+\beta(r)=\beta(s)
+\iff v(r)=v(s)\ \land\ c(r)=c(s).
+$$
+
+**证明。** 将电荷坐标式代入 RD2 得到必要性。反向，对每个满足区间条件的 $a=a_0(n)+c$，RD2 给出一个实际输入；其进位电荷由已有路径恒等式强制等于 $c$。最后的等价由两个黄金坐标的相等及电荷坐标式直接推出。证毕。
+
+**定理 RD6。** 规范化前后的全部实际移位读数之差为
+
+$$
+\boxed{v_k(r)-v_k(\nu(r))=F_k\,c(r).}
+$$
+
+这里两边在 $\mathbb Z$ 中比较。因而规范化保留所有移位读数，当且仅当 $c(r)=0$。
+
+**证明。** 将规范化电荷恒等式乘以 $\varphi^k$ 后取第二坐标，使用现役 `(phi^k).b=F_k`。必要性取 $k=1$；充分性代入零电荷。证毕。
+
+源码为 `NormalizationResidual.charge_spectrum_iff`、`beta_eq_iff_value_charge`、`normalization_shift_defect` 与 `normalization_preserves_all_shifts_iff`。这里推导的是现有电荷的完整取值谱及其观察意义，没有重新宣称发现已证明的路径电荷不变量。
+
+## RD.5 后续推论：完整黄金恢复仍不能判断一个原始定理性质
+
+**定理 RD7。** 对每个 $i\in\mathbb N$，存在两个实际原始数位表 $r,s$，其所有移位整数读数相同，但一个规范、另一个非规范并可执行一次实际进位。
+
+**证明。** 取
+
+$$
+r=\delta_{i+2},\qquad s=\delta_i+\delta_{i+1}.
+$$
+
+现役 `ChargedCarryStep.adjacent` 给出 $s\to r$ 的零电荷进位。其已有黄金差恒等式推出 $\beta(r)=\beta(s)$，由 RD4 得到全部移位读数相同。单个系数一的表满足 `CanonicalRaw`；$s$ 在相邻位置同时为一，违反该谓词。证毕。
+
+因此不存在任何谓词 $H:(\mathbb N\to\mathbb N)\to\mathrm{Prop}$ 满足
+
+$$
+\forall r,\quad\operatorname{CanonicalRaw}(r)
+\iff H((v_k(r))_{k\ge0}).
+$$
+
+若存在，RD7 中相同的整段观察会被 $H$ 赋予相同真假，和原始规范性不同矛盾。对应 `all_shifts_hide_carry_applicability` 与 `no_shift_only_canonicality_test`。这不是算法运行时间下界，而是不存在这种仅由所给数据决定的函数。
+
+这证明了严格的目标区别。黄金求值足以回答所有移位求值问题；它不足以回答一个已有、明确的原始对象性质 `CanonicalRaw`，也不能以自身作为已经完整保留全部进位适用条件的证明。零电荷不等于原始表没有发生变化；相同的全部读数更不等于表达式或历史相同。
+
+## RD.6 具体研究用途与尚待闭合的问题
+
+本补编回答的是一个已经具体化的识别问题：给定 `rawValue` 的整数显示，哪些实际黄金语义状态可能产生它；哪些额外读数恰好补齐黄金语义；哪些原始性质仍然不能从该语义恢复。第一项的完整像、第二项的充要条件及第三项的全称反例族均有以上普通证明与对应 Lean 源。
+
+外部研究目标采用现有 `Problems/random-zeckendorf-game-gaussianity.md` 登记的随机 Zeckendorf 游戏长度与混合问题。Cheigh 等的 *Towards the Gaussianity of Random Zeckendorf Games* 研究两种路径分布，并得到若干分块上的高斯极限，而不是在摘要中宣称已经解决全部游戏空间的问题。其预印本为 arXiv:2210.11038，正式章节 DOI 为 10.1007/978-3-031-65064-2_4（2025）。本补编不证明该高斯猜想，也不把当前 `CarryStep` 不经比较便认定为论文的完整游戏规则。
+
+RD7 对这个方向给出一个必要的方法边界：仅由数值及黄金电荷得到的摘要甚至不能判断是否已经规范，因而不能直接充当已经保留终止事件、合法动作或局部均匀动作概率的完整随机状态。下一项承重问题是，在固定的真实游戏关系及其路径测度中，证明某个包含局部进位适用条件的观察商保持终止和目标条件分布；然后才研究混合或再生。构造该商不能仅提出字段，必须给出保持条件的定理，或具体证明某些候选仍然丢失目标相关区别。
+
+对当前原始数位关系，更近的数学目标是精确分类：哪些附加的有限局部读数，能在指定子域上把 RD7 的规范性及一步动作歧义消去，同时保留对下一步的闭合性。补充一个点值规范性位只能解决当前规范性，不能据此声称整个下一步结构也恢复；后者仍需单独证明。
+
+参考与复用边界：
+
+- 当前整数求值、黄金环、数位移位、规范唯一性及带电进位路径均使用既有真实对象，不引入平行状态机。
+- 当前 dev 的 `LowCutoffObservationFibres` 提供相邻领域的同类证明范式：在实际观察公式中刻画完整纤维，再检查目标是否恒定。本补编没有把其流体模型或连续稳定性断言运输到数位模型。
+- Schaeffer、Shallit、Zorcic，*Beatty Sequences for a Quadratic Irrational: Decidability and Applications*，arXiv:2402.08331v3（2026），提供指定二次无理数的 Beatty/Ostrowski 表示背景。本文的全原始输入像分类不以该文的自动机可判定性为前提，也不宣称普通整数算术因为改写坐标而获得新的逻辑真值。
+- 基础取整、Fibonacci 恒等式和有限支撑求值属于既有数学。这里的形式化贡献限定为现役载体的完整像、实际显示对及规范化电荷的精确对应，以及完整移位观察仍遗忘规范性的明确障碍；没有主张文献首次性或把随机游戏开放目标记为已解决。
