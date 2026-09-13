@@ -49,7 +49,11 @@ internal sealed class GreathouseLogTwoFloorRefutationDocument : IScribeDocumentD
                         + "and the (M - 1)-st power is at most 2. The proof uses 36 positive "
                         + "terms and a geometric tail for log 2, two positive terms for the "
                         + "witness logarithm, and log(1+x) <= x. No minimality claim is made."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a175406-log-two-floor-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula AFormula()
     {

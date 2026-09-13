@@ -34,6 +34,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/GreathouseLogTwoFloorRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a175406-log-two-floor-refutation` (refuted) by `D5/S0/Certificates/GreathouseLogTwoFloorRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a175406-log-two-floor-refutation","declaration_gid":"D5/S0/Certificates/GreathouseLogTwoFloorRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Charles R Greathouse IV; Zak Seidov (2012). *OEIS A175406, The greatest integer k such that (1+1/n)^k <= 2*. URL: <https://oeis.org/A175406>.
