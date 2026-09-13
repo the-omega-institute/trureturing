@@ -20,22 +20,49 @@ Harness programs live under `tools/`, harness tests under `tools/tests/`, and
 canonical helper scripts under `tools/scripts/`. `Meta/` contains only FILEMAP,
 registry/domain data, and the digestion ledger. The Makefile contains routing only.
 
-StrataLint commands:
+Run the shared checks through Make:
 
 ```text
-tools/lean-inspector/inspect.sh --repository ROOT --output REPORT
-dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- check [--protected-base REV] --candidate-lean-report FILE
+make preflight MODE=push
+make preflight MODE=pr BASE=<40-hex-commit-sha>
+```
+
+Push preflight checks the current working tree. PR preflight requires a clean
+working tree and an explicit base commit, constructs the candidate merge tree,
+and checks it with the candidate's own programs. Merge conflicts fail immediately.
+Without an explicit complete range, local push preflight selects all current
+registered inputs; it does not infer a previous commit.
+The three stage entries are `make -C tools engineering`, `make current`, and
+`make delta BASE=<40-hex-commit-sha>`; delta consumes the current round's build,
+test and report evidence. Only PR mode runs delta, and base revisions supply data.
+
+FILEMAP registers which resources each path needs. A validated complete change
+plan containing only paths with `require = []` produces a successful
+`not-required` result without setting
+up unnecessary SDKs or caches. Missing registration or incomplete change inputs
+fail explicitly. A cache hit supplies reusable work; it does not establish that
+a check passed.
+
+Other StrataLint commands:
+
+```text
 dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- coverage [--json]
 dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- route MANIFEST|-
 dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- selftest
 dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- topology
-dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- worktree --branch NAME --path DIR [--base REV] [--skip-restore]
+dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- worktree --kind KIND --name NAME --path DIR [--base REV] [--skip-restore]
 ```
 
 Lean inspection and .NET admission are separate programs. The inspector runs in
 the pinned Lean environment and emits source-bound canonical JSON plus a SHA-256
-sidecar; `check` consumes the candidate report without invoking Lean. Baseline and fork-point
-state remain Git object snapshots used by repository rules.
+sidecar; the .NET `check-current` and `check-delta` commands consume the candidate
+report without invoking Lean. `make lean-report` always enters incremental production and validates the
+selected seed, module sources, dependencies and statement materials. Report
+compatibility uses `compatibility_version` in `Meta/lean-report.toml`; increment
+it when producer changes require old reports to be rejected. Producer source
+bytes do not automatically change this version. The separate
+`Meta/ReportProducers/lean-report.json` registers engineering and evidence inputs.
+Neither identity changes the remote mathlib cache partition.
 
 `worktree` fetches a remote base and creates the worktree with no `.lake` directory.
 The canonical Lean wrapper materializes a private cache on demand, using an APFS
@@ -43,3 +70,8 @@ The canonical Lean wrapper materializes a private cache on demand, using an APFS
 `make lean-cache-ensure` is an explicit, optional prewarm target. The cache is never
 shared through a symlink, and worktree creation restores locked .NET dependencies
 unless `--skip-restore` is explicit.
+
+The dependency, project and report caches are partitioned by mathlib's resolved
+revision in `lake-manifest.json` and binary platform; elan separately caches
+toolchain installation. Lake owns the build hashes and input mappings. Commits,
+project sources and complete manifest bytes do not partition these caches.
