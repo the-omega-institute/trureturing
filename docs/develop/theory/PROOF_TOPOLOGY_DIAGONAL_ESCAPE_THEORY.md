@@ -1131,3 +1131,205 @@ RD7 对这个方向给出一个必要的方法边界：仅由数值及黄金电�
 - 当前 dev 的 `LowCutoffObservationFibres` 提供相邻领域的同类证明范式：在实际观察公式中刻画完整纤维，再检查目标是否恒定。本补编没有把其流体模型或连续稳定性断言运输到数位模型。
 - Schaeffer、Shallit、Zorcic，*Beatty Sequences for a Quadratic Irrational: Decidability and Applications*，arXiv:2402.08331v3（2026），提供指定二次无理数的 Beatty/Ostrowski 表示背景。本文的全原始输入像分类不以该文的自动机可判定性为前提，也不宣称普通整数算术因为改写坐标而获得新的逻辑真值。
 - 基础取整、Fibonacci 恒等式和有限支撑求值属于既有数学。这里的形式化贡献限定为现役载体的完整像、实际显示对及规范化电荷的精确对应，以及完整移位观察仍遗忘规范性的明确障碍；没有主张文献首次性或把随机游戏开放目标记为已解决。
+
+---
+
+# 补编 PT：整路径概率、观察闭合与可逆投影记忆
+
+## PT.1 物理路径与数学历史的共同问题
+
+本补编沿用 #6881 的共同见证原则：逐条可实现的观察边，不自动组成同一隐藏对象的完整历史。引入随机演化后，还必须区分三个层次：路径是否有共同合法实现、路径集合上采用什么概率、参数是否为实际演化时间。只给出合法路径的集合，不决定路径的相对频率；只匹配单帧边缘分布，也不决定时间相关或首次到达分布。
+
+设完整状态为 $x\in X$，观察为 $q:X\to Y$，真实一步律为 $K:X\to\operatorname{PMF}(X)$。给定初始律 $\mu$，有限路径律是
+
+$$
+\mathbb P_K(x_0,\ldots,x_n)=\mu(x_0)\prod_{j=0}^{n-1}K(x_j)(x_{j+1}).
+$$
+
+每个中间 $x_j$ 同时出现在前后两个因子中。不能分别在每条观察边上重选互不相容的隐藏见证。若事件 $E$ 只依赖观察路径且概率非零，端点约束下的路径律由 $\mathbb P_K(E\cap\cdot)/\mathbb P_K(E)$ 定义；这不是所有满足端点条件的路径上的均匀分布。
+
+物理来源的启发必须按其实际范围使用。Seong 等的 TPS-DPS [P1] 明确将 Langevin 转移路径作为路径测度处理，并使用包含位置与速度的状态；其离散训练表示不等于已经对所有连续插值给出物理保证。PLaTITO [P2] 学习给定物理间隔的粗粒度转移密度，其生成流时间与物理时间不同，作者明确没有声明无偏动力学、详细平衡或 Chapman–Kolmogorov 一致性的形式保证。DeepPath [P3] 的主动学习使用分子力学能量极小化预言机改善中间结构；低能路径与带正确时钟的路径律仍是不同目标。
+
+具体名称 TPD 和 TDEG 的公司公告 [P6] 宣称整路径生成与快慢运动分离，但本补编没有据此认定其速度数字、完整方法或动力学保证。以下定理只依赖明示的数学对象，不依赖这些宣传性结论。把整个有限路径作为输出，既可用于生成模型，也可用于确定性或概率证明见证；输出方式本身不会证明正确性。
+
+## PT.2 已有全部移位读数仍不能闭合实际进位
+
+沿用补编 RD 的原始对象 $r\in\mathrm{RawDigits}$、求值 $\beta(r)$、移位读数 $v_j(r)$、真实规范化电荷 $c(r)$，这次将操作固定为已有确定性 $T=\mathrm{carryPass}$。
+
+**定理 PT1（增强观察的真实后继障碍）。** 对每个 $k\ge0$，存在两个非规范原始对象 $r_k,s_k$，满足
+
+$$
+v_0(r_k)=v_0(s_k)=6+8k,\qquad
+\beta(r_k)=\beta(s_k),\qquad
+\forall j\ge0,\ v_j(r_k)=v_j(s_k),\qquad c(r_k)=c(s_k),
+$$
+
+且两边都执行合法的原始进位，但
+
+$$
+\beta(Tr_k)+1=\beta(Ts_k).
+$$
+
+**证明。** 用 $\delta_i$ 表示第 $i$ 个原始槽的单个数位，取
+
+$$
+r_k=2\delta_0+2\delta_1+k\delta_4,\qquad
+s_k=2\delta_2+k\delta_4.
+$$
+
+两者的黄金值均为 $(4+5k)+(6+8k)\varphi$，由 RD 的已证核等价得到全部移位读数和总电荷相同。两者均有重数二的槽，所以都不是规范对象。已有确定性规则先处理最低重复槽；因此
+
+$$
+Tr_k=3\delta_1+k\delta_4,\qquad
+Ts_k=\delta_0+\delta_3+k\delta_4.
+$$
+
+因为 $\varphi^2+\varphi^5-3\varphi^3=1$，结论成立。两次更新均是已有 `CarryStep` 的实际构造子。证毕。
+
+对应源码 `CarryStepClosure.actual_carry_closure_failure` 及 `no_shift_and_canonicality_next_map`。后者严格排除一个从“整个移位读数序列与当前规范性布尔值”恢复下一黄金值的函数。这里的全部移位探针不是全部实际进位历史；不能混换两种演化。定理也不排除保留更多局部数据后实现闭合。
+
+这比仅证明当前规范性不可恢复更强：即使把该谓词的真值额外告诉观察者，两边也同为 false，实际下一步仍不同。因而一个充分描述某族数值运算的商，不自动充分描述另一个真实操作。这是数学状态与具体动力学必须一起确定的例子。
+
+## PT.3 强可合并性将一步律提升为整条路径律
+
+已有 `StrongLumpabilityDescent.strong_lumpability_descent_tfae` 说明：在实际观察像上存在一步核 $L$，满足
+
+$$
+q_\#K(x)=L(q(x)),
+$$
+
+当且仅当 $q_\#K(x)$ 在每个 $q$-纤维上恒定。这是对全部隐藏初态的要求；固定一个初始分布时的弱性质不能替代它。
+
+**定理 PT2（整路径下降）。** 若上述逐点一步恒等式成立，则对任意 $n$ 和任意初始分布，
+
+$$
+(q^{n+1})_\#\mathbb P_K=\mathbb P_L.
+$$
+
+因此每个观察路径统计量 $F:Y^{n+1}\to Z$ 的分布也相同，包括有限时间内是否经过指定中间区域、端点对以及有限路径费用。
+
+**证明。** 长度零的路径只含初态，结论为点质量的推前恒等式。假设长度 $n$ 已成立。长度 $n+1$ 的路径先按 $K(x)$ 选一个共同后继 $y$，再生成从 $y$ 出发的长度 $n$ 后段，最后在前面接上 $x$。归纳假设将后段的整体推前换成 $L$ 的后段；一步恒等式将 $q(y)$ 的分布换成 $L(q(x))$。这正是商路径的递归定义。最后对初态混合，并对 $F$ 再推前。证毕。
+
+对应 `WholePathDescent.whole_path_descent`、`initial_distribution_path_descent`、`path_statistic_descent`。源码是离散 PMF 的完整联合分布定理，不是连续蛋白 SDE 的认证，也没有对任何神经生成器宣称它已满足前提。端点条件化的推前结论需要另外履行正概率条件，连续精确端点则需正则条件分布等工具。
+
+当强可合并性失败，设实际观察历史为 $h=(y_0,\ldots,y_t)$，则下一观察分布为
+
+$$
+\sum_{x\in q^{-1}(y_t)}\nu_h(x)\,q_\#K(x),
+\qquad
+\nu_h=\operatorname{Law}(X_t\mid Y_{0:t}=h).
+$$
+
+这是在该历史概率非零时对隐藏当前状态作全概率分解。历史可通过 $\nu_h$ 改变未来，即使当前 $y_t$ 相同。它把 #6881 的相容隐藏状态集合升级为带权相容对象；集合只决定支持，不决定权重。学习一个 $L(y,\cdot)$ 总能定义自己的马尔可夫模拟器，但不能据此证明它是原系统的精确观察律。
+
+## PT.4 Koopman 观察闭合与两步记忆的精确关系
+
+令 $K$ 为有限维实观察函数空间上的一步转移算子，$P$ 为投影，记 $Q=I-P$。这里 $K$ 作用于函数：$(Kf)(x)$ 是从 $x$ 出发的下一步 $f$ 的条件期望。若 $P$ 来自状态观察 $q$，它应是对所有 $q$-可测函数的条件期望，而不是任意选出的几个慢特征函数。
+
+定义
+
+$$
+\overline K=PKP,\qquad
+\Delta_2=PK^2P-\overline K^2,\qquad
+B=QKP.
+$$
+
+**定理 PT3（隐藏往返恒等式）。** 仅要求 $P^2=P$，就有
+
+$$
+\boxed{\Delta_2=PKQKP.}
+$$
+
+**证明。** $\overline K^2=PKP^2KP=PKPKP$，在 $K^2$ 的两个 $K$ 之间插入 $P+Q=I$ 后相减。证毕。
+
+**定理 PT4（可逆情形的 Gram 判据）。** 若进一步 $P^*=P$、$K^*=K$，则
+
+$$
+\boxed{\Delta_2=B^*B.}
+$$
+
+所以
+
+$$
+\boxed{\Delta_2=0\iff QKP=0\iff KP=PKP.}
+$$
+
+**证明。** $B^*=PKQ$，且 $Q^2=Q$，因此 $B^*B=PKQ^2KP=PKQKP$。实矩阵 Gram 为零当且仅当原矩阵为零，再展开 $QKP=KP-PKP$。证毕。
+
+**定理 PT5（两步精确性与全部正整数时间）。** 在 PT4 的条件下，
+
+$$
+\Delta_2=0
+\iff
+\forall m\ge1,\quad PK^mP=(PKP)^m.
+$$
+
+**证明。** 由 $KP=PKP$ 对 $m$ 归纳：将最后一个 $KP$ 替换成 $PKP$，再用归纳假设。反向取 $m=2$。只声明正次幂，因为投影空间的恒等算子是 $P$，不是环境空间的 $I$。证毕。
+
+这些结论由 `ReversibleProjectionMemory` 承载，复用 mathlib 的 `Matrix.conjTranspose_mul_self_eq_zero`，不复述 Gram 零判据的证明。一般非均匀可逆链需先运输到 $L^2(\pi)$ 的正交坐标；本源码并未完成这个额外字典。
+
+自伴条件不能删除。例如 $P=\operatorname{diag}(1,0)$、$K=\begin{pmatrix}0&0\\1&0\end{pmatrix}$ 时，$K^2=0$、$PKP=0$，因此 $\Delta_2=0$，但 $QKP=K\ne0$。该普通代数反例只说明一般算子情形的限制，不是随机转移矩阵的例子。
+
+比较的必须是真实 $PK^2P$ 与真实一步压缩的平方。任取一个学到的矩阵 $\widehat K$ 再计算其自身幂，本来就满足自己的半群规则；这不认证它等于物理系统的观察转移。投影产生记忆是 Mori–Zwanzig 的经典机制 [P4,P5]；本节的贡献定位是精确有限矩阵承载及其与 #6881 观察商边界的连接，不主张该机制首次发现。
+
+## PT.5 同一个平衡图景不决定路径速率
+
+**定理 PT6（可逆三态族）。** 对 $a,b\ge0$、$a+b\le1$，取
+
+$$
+K_{a,b}=\begin{pmatrix}
+1-a&a&0\\
+a&1-a-b&b\\
+0&b&1-b
+\end{pmatrix},\qquad
+P=\begin{pmatrix}
+1/2&1/2&0\\
+1/2&1/2&0\\
+0&0&1
+\end{pmatrix}.
+$$
+
+则 $K_{a,b}$ 非负、行和为一、对称，并对全部参数共享平衡分布 $(1/3,1/3,1/3)$。$P$ 是合并前两个状态的实际平衡条件期望。直接乘法得到
+
+$$
+\Delta_2=\frac{b^2}{8}
+\begin{pmatrix}1&1&-2\\1&1&-2\\-2&-2&4\end{pmatrix}.
+$$
+
+因此在零起始索引下 $\Delta_2(2,2)=b^2/2$，且观察空间闭合当且仅当 $b=0$。对应 `stochastic_and_stationary`、`exact_memory_entry` 和 `closed_iff_cross_edge_zero`；源码公开承载所需矩阵项与零缺陷等价，完整显示矩阵是同一次展开的普通数学表达。
+
+固定 $a=1/4$，分别取 $b=1/4$、$1/2$，两个有效可逆链的整个平衡向量完全相同，但 $K(1,2)$ 不同。故不存在仅从平衡向量恢复该转移项的函数；源码为 `no_equilibrium_only_transition_decoder`。证毕。
+
+这里揭示的是平衡信息与动力信息的不同：统一的能量或平衡分布不决定转移频率。不是说指定力场、质量、摩擦、温度、噪声及时间步长也无从定义动力学；后者已经给了更多信息。
+
+当 $b$ 很小而 $a$ 保持非零，模型有快速内部交换与缓慢跨组交换，但缺陷仍不为零，只是该矩阵项准确按 $b^2/2$ 缩小。快慢分解因而是近似闭合的候选，不是精确闭合的自动证明。单个两步误差小，也不能不经长时间估计就保证罕见转移的平均首次到达时间正确。
+
+## PT.6 对物理预言机与主动观察的数学含义
+
+低能、无原子重叠、端点匹配、时间连续以及正确路径律是不同约束。连续低能曲线经过重新参数化仍是同一几何曲线，却可有不同速度。力场预言机返回的是某项明确的能量、力或动力学计算，不能被当作无条件真值预言机。
+
+对项目中的实际原始进位，PT1 说明只加一个当前规范性标志仍不足。对可逆概率模型，PT4 说明遗漏的动力信息由 $QKP$ 精确刻画。两者共同提出一个目标相关的补充观察原则：新增观察应消除对真实下一步或路径统计量仍有影响的纤维差异，而不只是改善当前构型重建。
+
+这不是一个已经实现或已证最优的主动学习算法。可检验的数学目标是：给定新增观察 $r$，证明联合观察 $(q,r)$ 的逐点推前律在纤维上恒定，或在明确范数及时间范围内给出其不恒定的上界。若不能闭合，则须保留相应记忆或增加状态，而不能将隐藏纤维在每步重新初始化。
+
+## PT.7 后续承重问题与适用范围
+
+本补编没有构造连续蛋白路径生成器、没有证明神经模型的物理正确性，也没有解决随机 Zeckendorf 游戏的高斯极限。当前闭合的普通数学链条是：真实进位反例、一步核条件到整路径分布、可逆投影的 Gram 缺陷、同平衡不同动力的显式族；相应 Lean/Scribe 是这些陈述的源码承载，形式认证仍以实际内核报告为准。
+
+下一项具体问题有两个互相联系的方向。第一，在已登记的随机 Zeckendorf 游戏问题 [P7] 中，先固定与文献一致的合法动作及路径测度，找出保留动作适用条件和整路径目标统计的观察商。PT1 排除了“全部移位读数加当前规范性”这个候选；它并不把现行确定性 `carryPass` 自动等同于论文的随机规则。第二，将 PT4 的精确零缺陷判据推进到定量误差：在明确谱隙、记忆衰减及目标事件概率条件下，从有限滞后缺陷约束长时间路径统计。仅用平衡分布或只对模型自身检查半群关系不足以完成任何一个方向。
+
+## PT.8 文献与来源
+
+[P1] K. Seong et al. *Transition Path Sampling with Improved Off-Policy Training of Diffusion Path Samplers*. ICLR 2025; arXiv:2405.19961v5, 25 January 2025. https://arxiv.org/html/2405.19961v5 。用于区分完整相空间状态、连续路径测度与离散训练路径，不与另名 TPD 混同。
+
+[P2] P. Antoniadis, B. Pavesi, S. Olsson, O. Winther. *Protein Language Model Embeddings Improve Generalization of Implicit Transfer Operators*. arXiv:2602.11216v2, 29 May 2026. https://arxiv.org/html/2602.11216v2 。第4.1节区分物理间隔与生成流时间；第6节明确列出粗粒度和半群一致性等限制。
+
+[P3] Y. T. Pang, L. Yang, K. M. Kuo, J. C. Gumbart. *DeepPath: overcoming data scarcity for protein transition pathway prediction using physics-based deep learning*. Chemical Science 17 (2026), 12055–12073; first published 5 May 2026, received 25 October 2025. DOI:10.1039/D5SC08253F. https://doi.org/10.1039/D5SC08253F 。主动学习的分子力学极小化预言机和低能路径是本文采用的来源范围，不据此认定真实路径频率。
+
+[P4] Y. T. Lin, Y. Tian, M. Anghel, D. Livescu. *Data-driven learning for the Mori-Zwanzig formalism: a generalization of the Koopman learning framework*. arXiv:2101.05873 (2021). https://arxiv.org/abs/2101.05873 。投影记忆与 Koopman 学习的既有研究背景。
+
+[P5] F. Wang, P. Benner, J. Heiland. *Partial Observation of Linear Systems with the Mori-Zwanzig Formalism*. arXiv:2606.23341v1, 22 June 2026. https://arxiv.org/html/2606.23341v1 。对部分观察线性系统的 Markov、噪声、记忆项进行显式分解；本补编不把线性有限维结论冒充一般蛋白非线性闭合。
+
+[P6] FLock.io company announcement, retrieved 13 September 2026. https://cn.linkedin.com/company/flock-io 。公告列出 *Transition Path Diffusion for Protein Reactive Trajectories* 和 *Timescale-Disentangled Generative Models of Protein Dynamics*；本补编没有获得对应完整方法文本，不采用其百万倍加速等数字作为数学前提或已核验实验结论。
+
+[P7] C. Cheigh et al. *Towards the Gaussianity of Random Zeckendorf Games*. arXiv:2210.11038; DOI:10.1007/978-3-031-65064-2_4. https://arxiv.org/abs/2210.11038 。仓内已登记目标为 `Problems/random-zeckendorf-game-gaussianity.md`；精确随机规则、测度和统一混合界均不能被确定性规范化的已证内容替代。
