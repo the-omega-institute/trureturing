@@ -678,7 +678,9 @@
         "*.json",
         "*.toml",
         "lean-toolchain",
-        "tools/tests/StrataLint.ScriptTests/Fixtures/**"
+        "tools/tests/StrataLint.ScriptTests/Fixtures/**",
+        ".gitignore",
+        "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json"
       ],
       "execution_excludes": [],
       "execution_environment": [

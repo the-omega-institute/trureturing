@@ -74,6 +74,44 @@ internal sealed class JudgeSeedFixture : IDisposable
         execution_excludes = (string[]?)null, execution_environment = (string[]?)null,
     };
 
+    internal void NativePushCandidate()
+    {
+        // Push must see the production ignore policy, including any omissions.
+        File.Copy(Path.Combine(producerRoot, ".gitignore"), PathOf(".gitignore"), overwrite: true);
+        var canonical = JsonNode.Parse(File.ReadAllText(Path.Combine(producerRoot,
+            "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json")))!;
+        Write("Meta/FILEMAP.toml", canonical["filemap"]!.GetValue<string>().Replace("materials = []",
+            "materials = [\"Meta/ci-checks.json\", \"Meta/ci-resources.json\", \"Meta/engineering-projects.json\"]",
+            StringComparison.Ordinal).Replace("pattern = \"Meta/FILEMAP.toml\"", "pattern = \"Meta/*\"", StringComparison.Ordinal));
+        const string project = "tools/Consumer/Consumer.csproj";
+        Write("Meta/ci-checks.json", CommonCheckRegistrationFixture.Manifest(project));
+        Write("Meta/ci-resources.json", JsonSerializer.Serialize(new { schema = "ci-resource-execution-v1",
+            resources = new[] {
+                new { id = "build", projects = new[] { project }, checks = Array.Empty<string>(), steps = Array.Empty<string>() },
+                new { id = "engineering", projects = new[] { project }, checks = Array.Empty<string>(), steps = Array.Empty<string>() },
+                new { id = "filemap", projects = new[] { project }, checks = new[] { "filemap" }, steps = new[] { "filemap" } },
+                new { id = "lean-report", projects = new[] { project }, checks = Array.Empty<string>(), steps = new[] { "lean-report" } },
+            } }));
+        Write("tools/owner.py", "# synthetic registered operation owner\n");
+        Git("add", ".");
+        Git("commit", "--quiet", "-m", "native push baseline");
+        var before = Git("rev-parse", "HEAD").Text.Trim();
+        Write("tools/Library/Code.cs", "public static class Library { public static int Value() => 2; }\n");
+        Git("add", "tools/Library/Code.cs");
+        Git("commit", "--quiet", "-m", "native push candidate");
+        var after = Git("rev-parse", "HEAD").Text.Trim();
+        environment["GITHUB_EVENT_PATH"] = Write("build/native-push-event.json", JsonSerializer.Serialize(new { before, after }));
+        environment["CANDIDATE_SHA"] = after;
+        environment["CI_WORKFLOW_INPUTS"] = "null";
+        environment["CI_NEEDS"] = "{}";
+        foreach (var name in new[] { "CI_PLAN_PATH", "CI_CHANGES_PATH", "CI_PLAN_B64", "CI_CHANGES_B64",
+                     "CI_PUSH_BEFORE", "CI_PUSH_AFTER", "GITHUB_OUTPUT" }) environment[name] = "";
+    }
+
+    internal Invocation PushStageInput() => Run("python3",
+        ["-B", Path.Combine(producerRoot, "tools/scripts/workflow/ci.py"), "stage-input", "--repository", root,
+            "--stage", "build", "--plan", "build/ci/plan.json", "--changes", "build/ci/changes.json"], false);
+
     internal void EditProjects(Action<JsonObject> change)
     {
         var registry = JsonNode.Parse(File.ReadAllText(PathOf("Meta/engineering-projects.json")))!.AsObject();
