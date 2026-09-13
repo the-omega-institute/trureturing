@@ -259,58 +259,54 @@ private def candidate (n : ℕ) : ℕ :=
   else if n % 3 = 1 then Nat.fib (n / 3 + 4)
   else 3 * Nat.fib (n / 3 + 2)
 
-private theorem candidate_zero (m : ℕ) :
-    candidate (3 * m + 6) = 2 * Nat.fib (m + 4) := by
-  simp only [candidate, if_neg (show ¬ 3 * m + 6 < 6 by omega),
-    if_pos (show (3 * m + 6) % 3 = 0 by omega),
-    show (3 * m + 6) / 3 + 2 = m + 4 by omega]
-
-private theorem candidate_one (m : ℕ) :
-    candidate (3 * m + 7) = Nat.fib (m + 6) := by
-  simp only [candidate, if_neg (show ¬ 3 * m + 7 < 6 by omega),
-    if_neg (show (3 * m + 7) % 3 ≠ 0 by omega),
-    if_pos (show (3 * m + 7) % 3 = 1 by omega),
-    show (3 * m + 7) / 3 + 4 = m + 6 by omega]
-
-private theorem candidate_two (m : ℕ) :
-    candidate (3 * m + 8) = 3 * Nat.fib (m + 4) := by
-  simp only [candidate, if_neg (show ¬ 3 * m + 8 < 6 by omega),
-    if_neg (show (3 * m + 8) % 3 ≠ 0 by omega),
-    if_neg (show (3 * m + 8) % 3 ≠ 1 by omega),
-    show (3 * m + 8) / 3 + 2 = m + 4 by omega]
-
-private theorem candidate_strictMono : StrictMono candidate := by
-  refine strictMono_nat_of_lt_succ fun n => ?_
-  by_cases hn : n < 5
-  · have hn' : n + 1 < 6 := by omega
-    simp only [candidate, if_pos (by omega : n < 6), if_pos hn']
-    omega
-  by_cases hn5 : n = 5
-  · subst n
-    decide
-  have hn6 : 6 ≤ n := by omega
-  let m := (n - 6) / 3
-  let rem := (n - 6) % 3
-  have hrem : rem < 3 := Nat.mod_lt _ (by decide)
-  have hdecomp : n = 3 * m + 6 + rem := by dsimp [m, rem]; omega
-  rcases (by omega : rem = 0 ∨ rem = 1 ∨ rem = 2) with hr | hr | hr
-  · rw [hdecomp, hr]
-    simpa only [add_zero, show 3 * m + 6 + 1 = 3 * m + 7 by omega,
-      candidate_zero, candidate_one] using
-      (family_interleave (m + 4) (by omega)).1
-  · rw [hdecomp, hr]
-    simpa only [show 3 * m + 6 + 1 = 3 * m + 7 by omega,
-      show 3 * m + 6 + 1 + 1 = 3 * m + 8 by omega,
-      candidate_one, candidate_two] using
-      (family_interleave (m + 4) (by omega)).2.1
-  · rw [hdecomp, hr]
-    have h := (family_interleave (m + 4) (by omega)).2.2.1
-    simpa only [show 3 * m + 6 + 2 = 3 * m + 8 by omega,
-      candidate_two, candidate_zero,
-      show 3 * m + 8 + 1 = 3 * (m + 1) + 6 by omega,
-      show m + 4 + 1 = m + 1 + 4 by omega] using h
-
 private theorem candidate_eq_nth (n : ℕ) : candidate n = Nat.nth mem n := by
+  have candidate_zero (m : ℕ) :
+      candidate (3 * m + 6) = 2 * Nat.fib (m + 4) := by
+    simp only [candidate, if_neg (show ¬ 3 * m + 6 < 6 by omega),
+      if_pos (show (3 * m + 6) % 3 = 0 by omega),
+      show (3 * m + 6) / 3 + 2 = m + 4 by omega]
+  have candidate_one (m : ℕ) :
+      candidate (3 * m + 7) = Nat.fib (m + 6) := by
+    simp only [candidate, if_neg (show ¬ 3 * m + 7 < 6 by omega),
+      if_neg (show (3 * m + 7) % 3 ≠ 0 by omega),
+      if_pos (show (3 * m + 7) % 3 = 1 by omega),
+      show (3 * m + 7) / 3 + 4 = m + 6 by omega]
+  have candidate_two (m : ℕ) :
+      candidate (3 * m + 8) = 3 * Nat.fib (m + 4) := by
+    simp only [candidate, if_neg (show ¬ 3 * m + 8 < 6 by omega),
+      if_neg (show (3 * m + 8) % 3 ≠ 0 by omega),
+      if_neg (show (3 * m + 8) % 3 ≠ 1 by omega),
+      show (3 * m + 8) / 3 + 2 = m + 4 by omega]
+  have candidate_strictMono : StrictMono candidate := by
+    refine strictMono_nat_of_lt_succ fun i => ?_
+    by_cases hi : i < 5
+    · have hi' : i + 1 < 6 := by omega
+      simp only [candidate, if_pos (by omega : i < 6), if_pos hi']
+      omega
+    by_cases hi5 : i = 5
+    · subst i
+      decide
+    have hi6 : 6 ≤ i := by omega
+    let m := (i - 6) / 3
+    let rem := (i - 6) % 3
+    have hrem : rem < 3 := Nat.mod_lt _ (by decide)
+    have hdecomp : i = 3 * m + 6 + rem := by dsimp [m, rem]; omega
+    rcases (by omega : rem = 0 ∨ rem = 1 ∨ rem = 2) with hr | hr | hr
+    · rw [hdecomp, hr]
+      simpa only [add_zero, show 3 * m + 6 + 1 = 3 * m + 7 by omega,
+        candidate_zero, candidate_one] using
+        (family_interleave (m + 4) (by omega)).1
+    · rw [hdecomp, hr]
+      simpa only [show 3 * m + 6 + 1 = 3 * m + 7 by omega,
+        show 3 * m + 6 + 1 + 1 = 3 * m + 8 by omega,
+        candidate_one, candidate_two] using
+        (family_interleave (m + 4) (by omega)).2.1
+    · rw [hdecomp, hr]
+      have h := (family_interleave (m + 4) (by omega)).2.2.1
+      simpa only [show 3 * m + 6 + 2 = 3 * m + 8 by omega,
+        candidate_two, candidate_zero,
+        show 3 * m + 8 + 1 = 3 * (m + 1) + 6 by omega,
+        show m + 4 + 1 = m + 1 + 4 by omega] using h
   have hmaps (i : ℕ) : mem (candidate i) := by
     apply (mem_iff_family _).2
     by_cases hi : i < 6
@@ -376,5 +372,77 @@ private theorem candidate_eq_nth (n : ℕ) : candidate n = Nat.nth mem n := by
       exact ⟨i, by intro hf; exact (hinfinite hf).elim, rfl⟩)
     (by intro i hi; exact hmaps i)
     (candidate_strictMono.strictMonoOn _) hfull
+
+theorem barker_a226857 : ∀ n : ℕ, 12 < n → a n = a (n - 3) + a (n - 6) := by
+  intro n hn
+  have candidate_zero (m : ℕ) :
+      candidate (3 * m + 6) = 2 * Nat.fib (m + 4) := by
+    simp only [candidate, if_neg (show ¬ 3 * m + 6 < 6 by omega),
+      if_pos (show (3 * m + 6) % 3 = 0 by omega),
+      show (3 * m + 6) / 3 + 2 = m + 4 by omega]
+  have candidate_one (m : ℕ) :
+      candidate (3 * m + 7) = Nat.fib (m + 6) := by
+    simp only [candidate, if_neg (show ¬ 3 * m + 7 < 6 by omega),
+      if_neg (show (3 * m + 7) % 3 ≠ 0 by omega),
+      if_pos (show (3 * m + 7) % 3 = 1 by omega),
+      show (3 * m + 7) / 3 + 4 = m + 6 by omega]
+  have candidate_two (m : ℕ) :
+      candidate (3 * m + 8) = 3 * Nat.fib (m + 4) := by
+    simp only [candidate, if_neg (show ¬ 3 * m + 8 < 6 by omega),
+      if_neg (show (3 * m + 8) % 3 ≠ 0 by omega),
+      if_neg (show (3 * m + 8) % 3 ≠ 1 by omega),
+      show (3 * m + 8) / 3 + 2 = m + 4 by omega]
+  simp only [a, ← candidate_eq_nth]
+  let p := n - 1
+  let m := (p - 6) / 3
+  let rem := (p - 6) % 3
+  have hm : 2 ≤ m := by dsimp [m, p]; omega
+  have hrem : rem < 3 := Nat.mod_lt _ (by decide)
+  have hp : p = 3 * m + 6 + rem := by dsimp [p, m, rem]; omega
+  have hsub3 : n - 3 - 1 = p - 3 := by dsimp [p]; omega
+  have hsub6 : n - 6 - 1 = p - 6 := by dsimp [p]; omega
+  change candidate p = candidate (n - 3 - 1) + candidate (n - 6 - 1)
+  rw [hsub3, hsub6]
+  rcases (by omega : rem = 0 ∨ rem = 1 ∨ rem = 2) with hr | hr | hr
+  · rw [hp, hr, add_zero,
+      show 3 * m + 6 - 3 = 3 * (m - 1) + 6 by omega,
+      show 3 * m + 6 - 6 = 3 * (m - 2) + 6 by omega,
+      candidate_zero, candidate_zero, candidate_zero]
+    have h : Nat.fib (m + 4) = Nat.fib (m + 2) + Nat.fib (m + 3) := by
+      simpa only [show m + 2 + 2 = m + 4 by omega,
+        show m + 2 + 1 = m + 3 by omega] using
+          (Nat.fib_add_two (n := m + 2))
+    have hm1 : m - 1 + 4 = m + 3 := by omega
+    have hm2 : m - 2 + 4 = m + 2 := by omega
+    rw [hm1, hm2]
+    omega
+  · rw [hp, hr,
+      show 3 * m + 6 + 1 = 3 * m + 7 by omega,
+      show 3 * m + 7 - 3 = 3 * (m - 1) + 7 by omega,
+      show 3 * m + 7 - 6 = 3 * (m - 2) + 7 by omega,
+      candidate_one, candidate_one, candidate_one]
+    have h : Nat.fib (m + 6) = Nat.fib (m + 4) + Nat.fib (m + 5) := by
+      simpa only [show m + 4 + 2 = m + 6 by omega,
+        show m + 4 + 1 = m + 5 by omega] using
+          (Nat.fib_add_two (n := m + 4))
+    have hm1 : m - 1 + 6 = m + 5 := by omega
+    have hm2 : m - 2 + 6 = m + 4 := by omega
+    rw [hm1, hm2]
+    omega
+  · rw [hp, hr,
+      show 3 * m + 6 + 2 = 3 * m + 8 by omega,
+      show 3 * m + 8 - 3 = 3 * (m - 1) + 8 by omega,
+      show 3 * m + 8 - 6 = 3 * (m - 2) + 8 by omega,
+      candidate_two, candidate_two, candidate_two]
+    have h : Nat.fib (m + 4) = Nat.fib (m + 2) + Nat.fib (m + 3) := by
+      simpa only [show m + 2 + 2 = m + 4 by omega,
+        show m + 2 + 1 = m + 3 by omega] using
+          (Nat.fib_add_two (n := m + 2))
+    have hm1 : m - 1 + 4 = m + 3 := by omega
+    have hm2 : m - 2 + 4 = m + 2 := by omega
+    rw [hm1, hm2]
+    omega
+
+#print axioms barker_a226857
 
 end D5.S1.Recurrence.BarkerFibonacciSumProductRecurrence
