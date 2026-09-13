@@ -16,11 +16,6 @@ public sealed partial class LeanCacheProvisionerTests
     {
         using var fixture = new SharedLakeFixture(native: true);
         var root = fixture.Main;
-        var dependency = Path.Combine(root, "mathlib");
-        Directory.CreateDirectory(dependency);
-        File.WriteAllText(Path.Combine(dependency, "lakefile.toml"), "name = \"mathlib\"\n");
-        File.AppendAllText(Path.Combine(root, "lakefile.toml"),
-            "\n[[require]]\nname = \"mathlib\"\npath = \"mathlib\"\n");
         var updated = TestProcessRunner.Run(fixture.Lake, ["update"], root,
             TestBudgets.LeanProcessHangGuard, 1024 * 1024);
         Assert.Equal(0, updated.ExitCode);
@@ -41,6 +36,8 @@ public sealed partial class LeanCacheProvisionerTests
             Assert.True(File.Exists(Path.Combine(root, ".lake", "build", "lib", "lean", "Fixture.olean")));
             Assert.False(File.Exists(LeanCacheStamp.PathFor(Path.Combine(root, ".lake"))));
         }
+        if (fault == "materialization") Assert.Contains("injected materialization failure", result.Error);
+        if (fault == "pins") Assert.Contains("pin files are absent", result.Error);
         if (fault == "build") Assert.Equal(1, result.ExitCode);
     }
 

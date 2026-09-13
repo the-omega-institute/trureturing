@@ -1,7 +1,5 @@
 using System.Text;
 using StrataLint.Engine;
-using YamlDotNet.Core;
-using YamlDotNet.RepresentationModel;
 
 namespace StrataLint.Cli;
 
@@ -18,7 +16,7 @@ internal abstract record AdmissionTopologyOutcome
 
 internal static class AdmissionWorkflowTopology
 {
-    internal const string WorkflowPath = RepositoryPathPolicy.WorkflowPath;
+    internal const string WorkflowPath = RepositoryPathPolicy.PrWorkflowPath;
 
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
@@ -26,46 +24,11 @@ internal static class AdmissionWorkflowTopology
     {
         try
         {
-            var yaml = new YamlStream();
-            using var reader = new StringReader(StrictUtf8.GetString(bytes));
-            yaml.Load(reader);
-            if (yaml.Documents.Count != 1
-                || yaml.Documents[0].RootNode is not YamlMappingNode root
-                || Child(root, "on") is not YamlMappingNode triggers
-                || Child(triggers, "pull_request_target") is not YamlMappingNode pullRequestTarget
-                || Child(pullRequestTarget, "branches") is not YamlSequenceNode branches
-                || !branches.Children
-                    .OfType<YamlScalarNode>()
-                    .Any(branch => string.Equals(branch.Value, defaultBranch, StringComparison.Ordinal))
-                || Child(root, "jobs") is not YamlMappingNode jobs
-                || Child(jobs, "baseline-admission") is not YamlMappingNode)
-            {
-                return false;
-            }
-
-            return true;
+            return CiWorkflowDocument.Parse(StrictUtf8.GetString(bytes))?.HasDeltaGate(defaultBranch) == true;
         }
         catch (DecoderFallbackException)
         {
             return false;
         }
-        catch (YamlException)
-        {
-            return false;
-        }
-    }
-
-    private static YamlNode? Child(YamlMappingNode mapping, string key)
-    {
-        foreach (var pair in mapping.Children)
-        {
-            if (pair.Key is YamlScalarNode scalar
-                && string.Equals(scalar.Value, key, StringComparison.Ordinal))
-            {
-                return pair.Value;
-            }
-        }
-
-        return null;
     }
 }

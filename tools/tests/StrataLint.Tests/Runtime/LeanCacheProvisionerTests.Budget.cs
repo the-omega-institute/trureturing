@@ -66,7 +66,7 @@ public sealed partial class LeanCacheProvisionerTests
     {
         var file = File.ReadAllText(Path.Combine(
             TestRepositoryLayout.FindRoot(),
-            "tools", "StrataLint.Cli", "Runtime", "LeanCacheBudgetPolicy.cs"));
+            "tools", "StrataLint.Lean", "Lean", "LeanCacheBudgetPolicy.cs"));
 
         var constantIndex = file.IndexOf("internal const int DefaultProvisionBudgetSeconds", StringComparison.Ordinal);
         Assert.True(constantIndex > 0, "DefaultProvisionBudgetSeconds declaration not found");

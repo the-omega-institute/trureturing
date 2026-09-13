@@ -279,8 +279,19 @@ public sealed class StatementProjectionPilotTests
     {
         Assert.Equal(
             expected,
-            StatementProjectionReconciliation.IsAffectedBy(RawChangeSet.Create([changedPath])));
+            StatementProjectionReconciliation.IsAffectedBy(RegisteredProjectionSnapshot(), RawChangeSet.Create([changedPath])));
     }
+
+    private static RepositorySnapshot RegisteredProjectionSnapshot() =>
+        Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(RawRepositorySnapshot.Create(
+        [
+            RawRepositoryEntry.FromText("Meta/ReportProducers/scribe-content.json",
+                "{\"schema\":\"report-producer-scope-v1\",\"scripts\":[],\"projects\":[\"producer/Owner.csproj\"],\"materials\":[]}"),
+            RawRepositoryEntry.FromText("producer/Owner.csproj", "<Project />"),
+            RawRepositoryEntry.FromText(StrataLint.TestSupport.EngineeringRegistrationFixture.Path,
+                StrataLint.TestSupport.EngineeringRegistrationFixture.Manifest(new StrataLint.TestSupport.EngineeringProjectFixture(
+                    "producer/Owner.csproj", "Owner", "test-support", false, ["tools/StrataLint.Scribe/**/*.cs"]))),
+        ]))).Snapshot;
 
     [Fact]
     public void ProjectionsCheckReturnsZeroForMatchingPinnedFixtures()

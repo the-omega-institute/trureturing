@@ -9,15 +9,15 @@ namespace StrataLint.Tests;
 public sealed class JudgeSurfaceRevisionRuleTests
 {
     private const string ScriptPath = "tools/scripts/workflow/gate-helper.sh";
-    private const string HarnessGatePath = RuleFixture.HarnessGatePath;
+    private const string StageScriptPath = RuleFixture.StageScriptPath;
     private const string WorkflowPath = RuleFixture.WorkflowPath;
 
     [Fact]
     public void WorktreeAddOnTheJudgeSurfaceIsRejected()
     {
-        var findings = Evaluate(HarnessGatePath, "git -C candidate worktree add --detach \"$root\" \"$ENGINEERING_BASE\"\n");
+        var findings = Evaluate(StageScriptPath, "git -C candidate worktree add --detach \"$root\" \"$ENGINEERING_BASE\"\n");
         var finding = Assert.Single(findings);
-        Assert.Equal(HarnessGatePath, finding.Path);
+        Assert.Equal(StageScriptPath, finding.Path);
         Assert.Contains("worktree add", finding.Message, StringComparison.Ordinal);
     }
 
@@ -777,7 +777,7 @@ public sealed class JudgeSurfaceRevisionRuleTests
         return Diagnostics(fixture.BuildScopeProbe(RawChangeSet.Create(fixture.Changes)));
     }
 
-    private static ImmutableArray<RuleFinding> Diagnostics(RuleEvaluationContext context) =>
+    private static ImmutableArray<RuleFinding> Diagnostics(DeltaRuleContext context) =>
         RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(30), context).Diagnostics
             .Select(static diagnostic => new RuleFinding(diagnostic.Path, diagnostic.Message))
             .ToImmutableArray();

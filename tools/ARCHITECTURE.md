@@ -4,44 +4,48 @@ Production harness projects, scripts, manifests, and architecture material live 
 `tools/`; all harness test and compile-fail projects live under `tools/tests/`.
 `Meta/` is the data side of this boundary and contains no harness program directory.
 
-The admission judge is selected before candidate policy, assemblies, or helpers are read.
-The steady-state workflow is orchestrated by base-controlled `pull_request_target`, not
-the candidate's workflow definition; candidate checkout credentials are not persisted.
-The baseline is resolved from the checked object itself, never from the event payload:
-both PR merge refs and `dev` push commits carry their protected base as the first parent,
-so the baseline is `git -C candidate rev-parse HEAD^1` and the candidate is
-`git -C candidate rev-parse HEAD`. Only `head` and `base` are admissible git references. A Lean-native predecessor job builds the candidate tree and
-emits its source-bound canonical report. It uploads the report, SHA-256 sidecar, and
-complete phase logs. The .NET admission job downloads and verifies that artifact, builds
-the candidate judge with locked dependencies, and runs its DLL from the candidate repository
-with `check --protected-base <dev-baseline-sha> --candidate-lean-report <file>`. The admission
-job installs no Lean tooling and starts no Lean process. Candidate build, tests, and
-selftest are engineering signals only and cannot issue admission.
+CI and preflight execute the candidate's programs. A PR uses the read-only
+`pull_request` entry in `ci-pr.yml`; the first checkout uses the event's immutable
+`github.sha` merge commit M. Before publishing a plan, `ci.py resolve` verifies
+that checked-out HEAD equals `GITHUB_SHA`, has two parents, and has the triggering
+PR head H as its second parent. It takes B from M's first parent. Every downstream
+job checks out that same M; a later update to `refs/pull/N/merge` cannot select a
+different candidate. Base commits supply data to the candidate judge, never code
+that is restored, compiled, or executed.
 
-## D5-T0017: one-time bootstrap
+Push checks the final commit H. Its lightweight planner uses the push event's
+complete before-to-after path range; initial pushes cover the registered current
+tree. FILEMAP and explicit manifests select resources, build roots, tests, checks,
+and cache layers. The semantic `current` checks have no baseline or changes input;
+only PR `delta` checks compare B to M. Local PR preflight constructs an isolated
+merge-tree candidate from a clean checkout and an explicit base SHA.
 
-The first C# harness has no earlier C# judge, and a candidate-only
-`pull_request_target` workflow cannot run before that workflow exists on the actual
-default branch. Therefore the initial placement is not machine admission. It is a
-one-time, human-authorized trusted bootstrap: an admin places the harness and this
-workflow on `dev` without claiming predecessor harness verification. Any bootstrap push
-run that selects the candidate is only a post-injection observation and says so in its
-annotation and job summary.
+The common build stage restores locked packages, builds the selected candidate
+projects, and seals their identity and outputs. Engineering accepts verified test
+evidence and runs required selftests and negative compilations. Current enters the
+incremental Lean/report producers when required, then checks Scribe, FILEMAP, and
+current invariants. Delta consumes this round's validated common results and test
+coverage. Reports, DLLs, TRX, and check materials are bound to the candidate and
+production round before downstream use. Cache seeds are optional inputs to those
+validators and producers; cache hits do not issue a passing verdict. PR runs do
+not publish cache snapshots.
 
-`StrataLint topology` queries `origin HEAD`, reads the workflow from that exact remote
-default-branch commit, and validates the `pull_request_target` trigger for that branch
-plus the `baseline-admission` job. Until those are reachable on `dev`, it exits through
-the human-gate path and reports
-`BOOTSTRAP-NOT-ACTIVE:baseline gate 尚未注入 dev,当前非机器门控态,须人类可信注入(D5-T0017)`.
-Only the reachable base workflow is reported as `STEADY-STATE-ACTIVE`.
+PR required checks are `push / engineering`, `push / current`, and `delta`;
+push required checks are `engineering` and `current`. The shared build job is a
+prerequisite of its selected consumers. Truth release selects the two successful
+push checks and report artifact for one explicit dev commit. Workflow version,
+permissions, artifact handoff, and actual required-check names are verified in
+integration runs under CLAUDE.md §8.12; branch protection keeps `strict=false`.
 
-After injection, the admin must configure `required_status_checks` for the baseline
-admission job and set `enforce_admins=true`. Those hosting changes are caller-owned human
-authorization under D5-T0017, not actions repository code can perform or verify by
-itself. D5-T0017 remains open until the injection and settings are externally verified.
-Afterward, the content-addressed dev-baseline harness adjudicates every later PR. If any
-earlier dev commit contained the harness, a missing baseline harness is an infrastructure
-failure and the trusted bootstrap path cannot recur.
+## D5-T0017: deployment boundary
+
+`StrataLint topology` reads the workflow at the resolved remote default-branch
+commit and checks its declared `pull_request` trigger and `delta` job. Its
+`STEADY-STATE-ACTIVE` result describes reachable workflow topology; it does not
+prove that a run executed that version or that branch protection is configured.
+Deployment and protection state need their own observed evidence. The original
+trusted-bootstrap boundary does not authorize executing a baseline judge or
+bypassing the current integration and PR requirements.
 
 SL-022 evaluates raw changed paths before candidate-controlled inputs. Git rename and
 copy records contribute both endpoints, so removing or moving a protected old path is
@@ -58,5 +62,6 @@ It remains separate from `Meta/registry.yaml`: the registry has a strict semanti
 and artifact-kind schema, while FILEMAP has a strict file-custody schema. The architecture
 suite joins them by requiring registry `root_files` to equal tracked root files, without
 copying either schema into the other. The registry lists the FILEMAP authority and its
-generated projection as governance documents so predecessor closed-world judges can
-admit the new artifact class without candidate-only path exceptions.
+generated projection as governance documents. FILEMAP also declares each path's
+required resources and their explicit owners, tools, cache layers, and materials;
+these registrations govern planning without discovering dependencies from code.

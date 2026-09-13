@@ -45,7 +45,7 @@ if [[ "$OUTPUT" != /* ]]; then OUTPUT="$REPOSITORY/$OUTPUT"; fi
 if [[ -z "$LOG_DIR" ]]; then LOG_DIR="${OUTPUT}.logs"; fi
 if [[ "$LOG_DIR" != /* ]]; then LOG_DIR="$REPOSITORY/$LOG_DIR"; fi
 mkdir -p "$(dirname "$OUTPUT")" "$LOG_DIR"
-rm -rf -- "$OUTPUT" "${OUTPUT}.sha256" "${OUTPUT}.materials" "${OUTPUT}.materials.zip"
+rm -rf -- "$OUTPUT" "${OUTPUT}.sha256" "${OUTPUT}.materials" "${OUTPUT}.materials.zip" "${OUTPUT}.seed.json"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 source "$SCRIPT_DIR/../scripts/lib/resource-observation-lib.sh"
@@ -164,11 +164,17 @@ invoke_inspector() {
     append_module "$module" "$path"
   done < "$MODULE_TABLE"
   [[ "${#inspector_arguments[@]}" -gt 0 ]] || return 2
-  run_phase utility-input-build dotnet build \
-    "$INSPECTOR_DIR/../StrataLint.Cli/StrataLint.Cli.csproj" --configuration Release --nologo --verbosity quiet
-  run_phase utility-input dotnet run \
-    --project "$INSPECTOR_DIR/../StrataLint.Cli/StrataLint.Cli.csproj" \
-    --configuration Release --no-build --no-restore --no-launch-profile -- lean-utility-input
+  if [[ -n "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]]; then
+    [[ "$STRATALINT_LEAN_PRODUCER_DLL" == /* && -f "$STRATALINT_LEAN_PRODUCER_DLL" ]] \
+      || { echo "inspect.sh: candidate producer is absent: $STRATALINT_LEAN_PRODUCER_DLL" >&2; return 2; }
+    run_phase utility-input dotnet "$STRATALINT_LEAN_PRODUCER_DLL" lean-utility-input
+  else
+    run_phase utility-input-build dotnet build \
+      "$INSPECTOR_DIR/../StrataLint.Lean/StrataLint.Lean.csproj" --configuration Release --nologo --verbosity quiet
+    run_phase utility-input dotnet run \
+      --project "$INSPECTOR_DIR/../StrataLint.Lean/StrataLint.Lean.csproj" \
+      --configuration Release --no-build --no-restore --no-launch-profile -- lean-utility-input
+  fi
   run_phase inspect \
     "$CACHE_RUN" "$LAKE" env lean --run "$INSPECTOR" \
     --output "$SPOOL_REPORT" --material-spool "$MATERIAL_SPOOL" \
@@ -182,6 +188,9 @@ invoke_inspector() {
 }
 
 DELTA_SCRIPT="$INSPECTOR_DIR/delta.py"
+runtime_sha256="$(python3 "$INSPECTOR_DIR/runtime_identity.py" \
+  --repository "$REPOSITORY" --lake "$LAKE")" || exit 2
+cache_partition="$("$REPOSITORY/tools/scripts/worktree/lean-cache-input.sh" partition-path --repository "$REPOSITORY")" || exit 2
 delta_available=1
 [[ -r "$DELTA_SCRIPT" ]] || delta_available=0
 current_input_address="${STRATALINT_REPORT_INPUT_ADDRESS:-}"
@@ -249,15 +258,16 @@ cache_root_trusted() {
 
 if [[ "$delta_available" == "1" ]] \
   && cache_root_trusted \
-  && [[ "$current_input_address" =~ ^[0-9a-f]{64}$ \
+  && [[ "$runtime_sha256" =~ ^[0-9a-f]{64}$ \
+     && "$current_input_address" =~ ^[0-9a-f]{64}$ \
      && "$current_repository_sha256" =~ ^[0-9a-f]{64}$ \
      && "$current_producer_sha256" =~ ^[0-9a-f]{64}$ \
      && "$current_resident_sha256" =~ ^[0-9a-f]{64}$ \
      && "$current_config_sha256" =~ ^[0-9a-f]{64}$ ]]; then
   python3 "$DELTA_SCRIPT" plan \
-    "$REPOSITORY" "$STRATALINT_REPORT_CACHE_ROOT" "$current_input_address" \
+    "$REPOSITORY" "$STRATALINT_REPORT_CACHE_ROOT/$cache_partition" "$current_input_address" \
     "$current_producer_sha256" "$current_resident_sha256" "$current_config_sha256" \
-    "$MODULE_TABLE" "$DELTA_PLAN" || true
+    "$MODULE_TABLE" "$DELTA_PLAN" --runtime-sha "$runtime_sha256" --partition "$cache_partition" || true
   if [[ -s "$DELTA_PLAN" ]]; then
     delta_status="$(python3 - "$DELTA_PLAN" <<'PY'
 import json, pathlib, sys
@@ -307,19 +317,16 @@ import json, pathlib, sys
 plan = json.loads(pathlib.Path(sys.argv[1]).read_text(encoding="utf-8"))
 pathlib.Path(sys.argv[2]).write_text("".join(name + "\n" for name in plan["recheck"]), encoding="utf-8")
 PY
-  if ! invoke_inspector "$DELTA_SUBSET_OUTPUT" "$selection_file"; then
-    delta_status="full-fallback"
-  fi
+  # A genuine Lean/producer failure is blocking. Only unusable seed data falls
+  # back to full production; failure cannot be replaced with an old report.
+  invoke_inspector "$DELTA_SUBSET_OUTPUT" "$selection_file"
   rm -f -- "$selection_file"
 elif [[ "$delta_status" != "reuse" && "$delta_status" != "delta" ]]; then
   delta_status="full-fallback"
 fi
 
 if [[ "$delta_status" == "delta" || "$delta_status" == "reuse" ]]; then
-  if [[ "$delta_status" == "reuse" ]]; then
-    cp "$delta_baseline" "$OUTPUT"
-    cp "${delta_baseline}.materials.zip" "${OUTPUT}.materials.zip"
-  elif ! python3 "$DELTA_SCRIPT" merge \
+  if ! python3 "$DELTA_SCRIPT" merge \
       "$DELTA_PLAN" "$DELTA_SUBSET_OUTPUT" "$OUTPUT"; then
     delta_status="full-fallback"
   fi
@@ -328,6 +335,7 @@ fi
 if [[ "$delta_status" == "full-fallback" ]]; then
   rm -rf -- "$DELTA_SUBSET_OUTPUT" "${DELTA_SUBSET_OUTPUT}.materials.zip"
   invoke_inspector "$OUTPUT"
+  delta_recheck_count="$(wc -l < "$MODULE_TABLE" | tr -d ' ')"
 fi
 
 printf 'LEAN_REPORT_DELTA mode=%s changed=%s added=%s removed=%s recheck=%s\n' \
@@ -348,4 +356,8 @@ if [[ "$serialize_rc" -eq 0 ]]; then
 fi
 set -e
 [[ "$serialize_rc" -eq 0 ]] || exit "$serialize_rc"
+python3 - "${OUTPUT}.seed.json" "$runtime_sha256" <<'PY'
+import json, pathlib, sys
+pathlib.Path(sys.argv[1]).write_text(json.dumps({"runtime_sha256": sys.argv[2]}) + "\n")
+PY
 printf 'RAW_LEAN_REPORT file=%s content_address=sha256:%s\n' "$OUTPUT" "$report_sha256"

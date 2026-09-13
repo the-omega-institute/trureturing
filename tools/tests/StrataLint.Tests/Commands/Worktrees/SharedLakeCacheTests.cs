@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
@@ -20,8 +21,9 @@ public sealed class SharedLakeCacheTests
               "LAKE_CACHE_ARTIFACT_ENDPOINT=${LAKE_CACHE_ARTIFACT_ENDPOINT-}" "LAKE_CONFIG=$LAKE_CONFIG"
             """);
         Assert.True(result.Success, result.Error);
-        Assert.Contains("MATHLIB_CACHE_DIR=" + fixture.Reader + "/.lake/mathlib-cache\n", result.Output);
-        Assert.Contains("LAKE_CACHE_DIR=" + fixture.Reader + "/.lake/artifact-cache\n", result.Output);
+        var physicalReader = LeanCacheGuard.PhysicalPath(fixture.Reader);
+        Assert.Contains("MATHLIB_CACHE_DIR=" + physicalReader + "/.lake/mathlib-cache\n", result.Output);
+        Assert.Contains("LAKE_CACHE_DIR=" + physicalReader + "/.lake/artifact-cache\n", result.Output);
         Assert.DoesNotContain("inherited-writer", result.Output);
         Assert.DoesNotContain("LAKE_ARTIFACT_CACHE=true", result.Output);
         Assert.Contains("LAKE_RESTORE_ARTIFACTS=true", result.Output);
@@ -156,7 +158,8 @@ public sealed class SharedLakeCacheTests
         Assert.True(fixture.Command(fixture.Reader, "with-cache-reader", "--", "lake", "build").Success);
         var before = fixture.Command(fixture.Reader, "ensure-cache");
         File.AppendAllText(Path.Combine(fixture.Reader, "lake-manifest.json"), " \n");
-        File.AppendAllText(Path.Combine(fixture.Reader, "lakefile.toml"), "keywords = [\"metadata\"]\n");
+        var lakefile = Path.Combine(fixture.Reader, "lakefile.toml");
+        File.WriteAllText(lakefile, "keywords = [\"metadata\"]\n" + File.ReadAllText(lakefile));
         var after = fixture.Command(fixture.Reader, "ensure-cache");
         Assert.True(after.Success, after.Error);
         Assert.Equal(before.Output, after.Output);
@@ -182,9 +185,26 @@ internal sealed class SharedLakeFixture : IDisposable
         Git(Main, "config", "user.email", "fixture@example.invalid");
         Git(Main, "config", "user.name", "Fixture");
         File.WriteAllText(Path.Combine(Main, "lean-toolchain"), "leanprover/lean4:v4.33.0\n");
-        File.WriteAllText(Path.Combine(Main, "lake-manifest.json"), "{\"version\":\"1.2.0\",\"packages\":[]}\n");
+        var mathlib = Path.Combine(directory.Path, "mathlib");
+        Directory.CreateDirectory(mathlib);
+        Git(mathlib, "init", "-b", "dev");
+        Git(mathlib, "config", "user.email", "fixture@example.invalid");
+        Git(mathlib, "config", "user.name", "Fixture");
+        File.WriteAllText(Path.Combine(mathlib, "lakefile.toml"), "name = \"mathlib\"\n");
+        Git(mathlib, "add", ".");
+        Git(mathlib, "commit", "-m", "empty local mathlib package");
+        var revision = Git(mathlib, "rev-parse", "HEAD");
+        File.WriteAllText(Path.Combine(Main, "lake-manifest.json"), JsonSerializer.Serialize(new
+        {
+            version = "1.2.0", packagesDir = ".lake/packages", name = "fixture", lakeDir = ".lake",
+            packages = new[] { new { name = "mathlib", type = "git", url = mathlib, rev = revision,
+                inputRev = revision, subDir = (string?)null, scope = "", inherited = false,
+                configFile = "lakefile.toml", manifestFile = "lake-manifest.json" } },
+        }) + "\n");
         File.WriteAllText(Path.Combine(Main, "lakefile.toml"), "name = \"fixture\"\n"
-            + (native ? "defaultTargets = [\"Fixture\"]\n[[lean_lib]]\nname = \"Fixture\"\n" : ""));
+            + (native ? "defaultTargets = [\"Fixture\"]\n[[lean_lib]]\nname = \"Fixture\"\n" : "")
+            + "[[require]]\nname = \"mathlib\"\ngit = " + JsonSerializer.Serialize(mathlib)
+            + "\nrev = " + JsonSerializer.Serialize(revision) + "\n");
         if (native) File.WriteAllText(Path.Combine(Main, "Fixture.lean"), "def answer : Nat := 42\n");
         File.WriteAllText(Path.Combine(Main, ".gitignore"), ".lake/\n");
         Git(Main, "add", ".");
@@ -224,11 +244,12 @@ internal sealed class SharedLakeFixture : IDisposable
     internal CommandResult Command(string root, params string[] arguments) =>
         WorktreeCommand.Run(root, [arguments[0], "--path", root, .. arguments.Skip(1)]);
 
-    internal void Git(string root, params string[] arguments)
+    internal string Git(string root, params string[] arguments)
     {
         var result = TestProcessRunner.Run("git", arguments, root,
             BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+        return Encoding.UTF8.GetString(result.StandardOutput).Trim();
     }
 
     internal IDisposable InheritWriterEnvironment() => new InheritedEnvironment(new Dictionary<string, string>

@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
+using StrataLint.TestSupport;
 
 namespace StrataLint.Tests;
 
@@ -404,6 +405,14 @@ public sealed partial class ProductionEnvironmentTests
         bool includeNewPath,
         bool includeBaselineFileMap = true)
     {
+        const string project = "tools/new-lib/Fixture.csproj";
+        foreach (var files in new[] { fixture.Files, fixture.Baseline })
+        {
+            files[project] = "<Project />";
+            files[EngineeringRegistrationFixture.Path] = EngineeringRegistrationFixture.Append(
+                files[EngineeringRegistrationFixture.Path],
+                new EngineeringProjectFixture(project, "Fixture", "test-support", false, ["tools/new-lib/**/*.cs"]));
+        }
         var baselinePaths = fixture.Baseline.Keys
             .Append(FileMapPath)
             .Distinct(StringComparer.Ordinal)

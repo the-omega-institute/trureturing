@@ -66,6 +66,7 @@ if verb_group in ['traces', 'report-traces', 'serial-traces']:
                 unchanged(shared_root, before)
                 if verb == 'report-traces':
                     assert result.returncode == 2 and 'producer closure is unavailable' in result.stderr, result
+                    assert 'native-fixture-required.py' in result.stderr, result
                     # prepare_memo creates this only after BOTH Git calls succeed.
                     # The absent producer input fails later; keep that failure truthful.
                     assert (P / 'memo').is_dir(), 'fingerprint Git did not complete'

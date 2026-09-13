@@ -58,19 +58,17 @@ elif scenario == 'symlinks':
         unchanged(shared_root, before)
         records.append(dict(scan_extra_files=extra_files, reader_command_seconds=elapsed))
 elif scenario == 'helper':
-    dependency = P / 'mathlib'
-    dependency.mkdir()
-    git(dependency, 'init', '-b', 'dev')
-    git(dependency, 'config', 'user.email', 'fixture@example.invalid')
-    git(dependency, 'config', 'user.name', 'Fixture')
+    dependency = mathlib
     (dependency / 'lean-toolchain').write_text((main / 'lean-toolchain').read_text())
     (dependency / 'lakefile.toml').write_text('name = "mathlib"\n[[lean_lib]]\nname = "Mathlib"\n')
     (dependency / 'Mathlib.lean').write_text('import Lean.Elab.Tactic.LibrarySearch\n')
     git(dependency, 'add', '.')
     git(dependency, 'commit', '-m', 'tiny genuine Git Mathlib import')
     rev = git(dependency, 'rev-parse', 'HEAD')
-    with (main / 'lakefile.toml').open('a') as f:
-        f.write('\n[[require]]\nname = "mathlib"\ngit = ' + json.dumps(str(dependency)) + '\nrev = "' + rev + '"\n')
+    config = main / 'lakefile.toml'
+    config.write_text(config.read_text().replace(mathlib_rev, rev))
+    mathlib_rev = rev
+    shared = shared_root / (mathlib_rev + '/macos-' + ('arm64' if platform.machine() == 'arm64' else 'x64'))
     (main / 'Fixture.lean').write_text('import Mathlib\ndef answer : Nat := 42\n')
     run([lake, 'update'], main)
     commit()

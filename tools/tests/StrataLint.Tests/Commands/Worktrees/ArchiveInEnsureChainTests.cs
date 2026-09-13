@@ -22,7 +22,7 @@ public sealed class ArchiveInEnsureChainTests
         var result = fixture.Command(fixture.Reader, "ensure-cache");
         Assert.True(result.Success, result.Error);
         Assert.Contains("\"archive_status\":\"" + expected + "\"", result.Output);
-        Assert.Equal(fixture.Reader + "/.lake/mathlib-cache\n",
+        Assert.Equal(LeanCacheGuard.PhysicalPath(fixture.Reader) + "/.lake/mathlib-cache\n",
             File.ReadAllText(Path.Combine(fixture.Reader, "downloads-path")));
     }
 

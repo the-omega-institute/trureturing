@@ -2,7 +2,7 @@
 # layers are read-only; outputs belong only to this workflow run's artifacts.
 # Dispatch is available because this job cannot publish a shared build layer.
 # This separate file gives opt-in analysis its own budget outside the required
-# lean-report job; ci.yml is text-slice-guarded and near its SL-003 line limit.
+# lean-report job.
 name: Lean analysis fixtures
 
 on:
@@ -38,29 +38,33 @@ jobs:
         with:
           path: candidate
           ref: ${{ github.sha }}
-          fetch-depth: 2
+          fetch-depth: 1
           persist-credentials: false
 
       - name: Strip checkout remote state
         if: steps.checkout-publish.outcome == 'success'
         shell: bash
-        env:
-          CHECKOUT_PATH: candidate
-        run: |
-          set -euo pipefail
-          git -C "$CHECKOUT_PATH" remote remove origin
-          git -C "$CHECKOUT_PATH" for-each-ref --format='delete %(refname)' refs/remotes/ |
-            git -C "$CHECKOUT_PATH" update-ref --stdin
-          remote_count="$(git -C "$CHECKOUT_PATH" remote | wc -l)"
-          remote_ref_count="$(git -C "$CHECKOUT_PATH" for-each-ref --format='%(refname)' refs/remotes/ | wc -l)"
-          if [[ "$remote_count" -ne 0 || "$remote_ref_count" -ne 0 ]]; then
-            printf '%s\n' "checkout still exposes remotes or remote-tracking refs" >&2
-            exit 1
-          fi
-          head_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD)"
-          base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
-          test -n "$head_sha"
-          test -n "$base_sha"
+        run: python3 candidate/tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE/candidate" --commit "$GITHUB_SHA"
+
+      - name: Set up the pinned .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: candidate/global.json
+
+      - name: Build the candidate cache owner with locked dependencies
+        run: make -C candidate/tools dotnet
+
+      - name: Resolve optional cache partitions
+        id: keys
+        run: python3 candidate/tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE/candidate"
+
+      - name: Restore the pinned Lean toolchain
+        if: steps.keys.outputs.elan_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
 
       - name: Install the pinned Lean toolchain
         shell: bash
@@ -71,43 +75,31 @@ jobs:
           "$GITHUB_WORKSPACE/candidate/tools/scripts/workflow/install-lean-toolchain.sh" \
             "${TOOLCHAIN_FILE}" --github-path "$GITHUB_PATH"
 
-      - name: Resolve this commit's Lean input addresses
-        id: addr
-        shell: bash
-        run: |
-          set -euo pipefail
-          helper="$GITHUB_WORKSPACE/candidate/tools/scripts/worktree/lean-cache-input.sh"
-          test -x "${helper}"
-          input_address="$("${helper}" address --repository "$GITHUB_WORKSPACE/candidate")"
-          [[ "$input_address" =~ ^[0-9a-f]{64}\ [0-9a-f]{64}$ ]]
-          read -r sources_sha256 config_sha256 <<< "$input_address"
-          echo "config_sha256=${config_sha256}" >> "$GITHUB_OUTPUT"
-          echo "sources_sha256=${sources_sha256}" >> "$GITHUB_OUTPUT"
-          dependency_sha256="$("${helper}" dependency-address --repository "$GITHUB_WORKSPACE/candidate")"
-          [[ "$dependency_sha256" =~ ^[0-9a-f]{64}$ ]]
-          echo "dependency_sha256=${dependency_sha256}" >> "$GITHUB_OUTPUT"
-
       - name: Restore the Lean dependency layer
+        id: dependency
+        if: steps.keys.outputs.dependency_key != ''
         uses: actions/cache/restore@v4
+        continue-on-error: true
         with:
-          path: |
-            candidate/.lake/packages
-            candidate/.lake/config
-            candidate/.lake/.stratalint-lean-cache-stamp.json
-            ~/.cache/mathlib
-          key: ${{ runner.os }}-${{ runner.arch }}-lake-deps-v2-${{ steps.addr.outputs.dependency_sha256 }}
-          restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-lake-deps-v2-
+          path: candidate/${{ steps.keys.outputs.dependency_path }}
+          key: ${{ steps.keys.outputs.dependency_key }}
+          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
 
-      - name: Seed from the prior Lean release build layer
+      - name: Restore the Lean project layer
+        id: project
+        if: steps.keys.outputs.project_key != ''
+        uses: actions/cache/restore@v4
+        continue-on-error: true
+        with:
+          path: candidate/${{ steps.keys.outputs.project_path }}
+          key: ${{ steps.keys.outputs.project_key }}
+          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
+
+      - name: Restore optional validated seeds
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          publisher="$GITHUB_WORKSPACE/candidate/tools/scripts/worktree/lean-cache-publish.sh"
-          test -x "${publisher}"
-          "${publisher}" fetch --allow-seed --repository "$GITHUB_WORKSPACE/candidate"
+          DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
+          PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
+        run: python3 candidate/tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE/candidate" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY"
 
       - name: Install the artifact hashing tool
         shell: bash
@@ -123,6 +115,10 @@ jobs:
         shell: bash
         env:
           OUTPUT_ROOT: ${{ runner.temp }}/lean-analysis-fixtures
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Bound optional dependency transfer at the ensure owner's supported
+          # five-minute floor; analysis production retains this job's budget.
+          STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS: 300
         run: |
           set -euo pipefail
           fixture_runner="$GITHUB_WORKSPACE/candidate/tools/lean-inspector/LeanInformationAuditAnalysis/run-analysis-fixtures.sh"

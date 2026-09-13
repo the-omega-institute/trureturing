@@ -62,7 +62,7 @@ internal sealed partial class ProductionCliEnvironment
         DepositHeaderCheckCommand.Run(repository, leanReportSource, arguments);
 
     public ExplicitCommandResult LeanUtilityInput(IReadOnlyList<string> arguments) =>
-        LeanUtilityInputCommand.Run(repository, arguments);
+        LeanUtilityInputCommand.Run(repository.ReadCurrent, arguments);
 
     public ExplicitCommandResult LedgerFrozen(IReadOnlyList<string> arguments) =>
         LedgerFrozenCommand.Run(repositoryRoot, repository, arguments);

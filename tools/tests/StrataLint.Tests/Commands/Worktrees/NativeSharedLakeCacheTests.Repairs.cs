@@ -86,15 +86,23 @@ if scenario.startswith('callbacks:'):
                 extra | {'FSMONITOR_LOG': str(diagnostic)}).stdout
             unchanged(shared_root, before)
             if private.exists(): private.unlink()
+            if (P / 'memo').exists(): shutil.rmtree(P / 'memo')
             control = run(args, cwd, extra, expected=expected)
-            assert private.exists(), (name, 'private callback absent', control)
-            assert 'hook query\nchild query\n' in private.read_text(), (name, 'private callback suppressed')
+            if name == 'input-address':
+                expected_address = hashlib.sha256((mathlib_rev + '/darwin-'
+                    + ('arm64' if platform.machine() == 'arm64' else 'x64')).encode()).hexdigest() + '\n'
+                assert control.stdout == expected_address, control
+                assert not private.exists(), 'partition parsing unexpectedly invoked Git callback'
+                assert not (P / 'memo').exists(), 'partition parsing created a source memo'
+            else:
+                assert private.exists(), (name, 'private callback absent', control)
+                assert 'hook query\nchild query\n' in private.read_text(), (name, 'private callback suppressed')
             if (P / 'memo').exists(): shutil.rmtree(P / 'memo')
             before = snapshot(shared_root)
             result = run(args, cwd, extra | {'FSMONITOR_LOG': str(diagnostic)}, expected=None)
             row = dict(callback=name, origin=origin, preexisting=preexisting,
                 exit=result.returncode, stdout=result.stdout, stderr=result.stderr,
-                raw_positive=True, private_callback=True, explicit_false_changed=0)
+                raw_positive=True, private_callback=name != 'input-address', explicit_false_changed=0)
             records.append(row)
             print(json.dumps(row), flush=True)
             unchanged(shared_root, before)
@@ -104,8 +112,13 @@ if scenario.startswith('callbacks:'):
             if name == 'warm-admission': assert 'clean checkout' in result.stderr, row
             if name == 'make-report':
                 assert 'producer closure is unavailable' in result.stderr, row
-            if name in ['input-address', 'make-report']:
+                assert 'native-fixture-required.py' in result.stderr, row
+            if name == 'make-report':
                 assert (P / 'memo').is_dir(), 'fingerprint Git did not complete'
+            if name == 'input-address':
+                assert result.stdout == expected_address, row
+                assert not private.exists(), 'partition parsing unexpectedly invoked Git callback'
+                assert not (P / 'memo').exists(), 'partition parsing created a source memo'
             assert not (target / '.lake').exists() and not (reader / '.lake').exists()
             assert not (P / 'no-toolchains').exists() and not (P / 'lake-called').exists()
             assert not (main / '.git/stratalint-lake-locks').exists()
