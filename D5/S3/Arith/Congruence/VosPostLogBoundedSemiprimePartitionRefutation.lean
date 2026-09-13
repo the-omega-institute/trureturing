@@ -2,13 +2,11 @@
    generality: G
    mirror-B: D5/B/S3/Arith/Congruence/VosPostLogBoundedSemiprimePartitionRefutation
    mirror-E: none(waiver:symbolic-refutation-no-numeric-artifact)
-   anchors: [mathlib/module/Mathlib.Analysis.SpecialFunctions.Log.Basic, mathlib/module/Mathlib.Data.Nat.Prime.Basic, mathlib/module/Mathlib.Tactic]
+   anchors: [mathlib/module/Mathlib.Analysis.SpecialFunctions.Log.Basic]
    utility: none
    digest: Residue five modulo six forbids every Vos Post log-bounded partition. -/
 
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.Tactic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
