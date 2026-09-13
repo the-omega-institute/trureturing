@@ -901,3 +901,293 @@ $\pi$-纤维上的单值映射；中心截面 $s_{1/2}(\mathbb Z)$ 在该乘法�
 
 **证明。** 第一项由 GS2 与 $d\ne0$ 得到，第二项由 GS7 与
 $|u_*|\le1$ 得到，第三项由 GS14 得到。
+## 附录 T：WSS 的素数下标迹障碍与幂复合多项式
+
+### T.1 黄金整数环、迹与范数
+
+**定义。** 令
+
+$$
+\varphi=\frac{1+\sqrt5}{2},
+\qquad \psi=1-\varphi=\frac{1-\sqrt5}{2},
+\qquad \mathcal O=\mathbb Z[\varphi].
+$$
+
+对 $z=a+b\varphi\in\mathcal O$，定义
+
+$$
+\overline z=a+b\psi,
+\qquad \operatorname{Tr}(z)=z+\overline z,
+\qquad \operatorname N(z)=z\overline z.
+$$
+
+**定义。** Lucas 数与 Fibonacci 数分别由
+
+$$
+L_n=\varphi^n+\psi^n,
+\qquad
+F_n=\frac{\varphi^n-\psi^n}{\sqrt5}
+$$
+
+定义。
+
+**定理。** 对每个 $n\in\mathbb N$，
+
+$$
+\varphi^2=\varphi+1,
+\qquad \varphi\psi=-1,
+\qquad \operatorname N(\varphi^n)=(-1)^n.
+$$
+
+**证明。** 前两式由 $\varphi=(1+\sqrt5)/2$ 与
+$\psi=(1-\sqrt5)/2$ 直接计算得到。由范数的乘法性，
+
+$$
+\operatorname N(\varphi^n)
+=(\varphi\psi)^n=(-1)^n.
+$$
+
+### T.2 幂复合多项式与整数环指数
+
+**定义。** 对 $n\in\mathbb N$，定义
+
+$$
+\mathcal P_n(X)=X^{2n}-X^n-1,
+\qquad E_n=\mathcal P_n(\varphi)\in\mathcal O.
+$$
+
+**定义。** 设 $p$ 为奇素数，$\theta_p$ 是 $\mathcal P_p$ 的一个根，
+$K_p=\mathbb Q(\theta_p)$，而 $\mathcal O_{K_p}$ 是 $K_p$ 的整数环。
+当 $\mathcal P_p$ 是 $\theta_p$ 的最小多项式时，定义指定幂基的指数为
+
+$$
+I_p=[\mathcal O_{K_p}:\mathbb Z[\theta_p]].
+$$
+
+指定幂基是整数环的整基，依定义即为 $I_p=1$。
+
+**定理。** 对每个奇素数 $p$，
+
+$$
+\operatorname{disc}(\mathcal P_p)=p^{2p}5^p.
+$$
+
+若 $\mathcal P_p$ 是 $\theta_p$ 的最小多项式，则
+
+$$
+\operatorname{disc}(\mathcal P_p)
+=I_p^2\operatorname{disc}(K_p).
+$$
+
+**证明。** 导数为
+
+$$
+\mathcal P_p'(X)=pX^{p-1}(2X^p-1).
+$$
+
+以 $Y=X^p$ 计算两个结果式，得到
+
+$$
+\operatorname{Res}(\mathcal P_p,X^{p-1})=1,
+\qquad
+\operatorname{Res}(\mathcal P_p,2X^p-1)=-5^p.
+$$
+
+由于 $\deg\mathcal P_p=2p$ 且 $p$ 为奇数，判别式与结果式的符号相消，
+从而得到第一式。第二式是基变换的判别式公式：
+$\mathbb Z[\theta_p]$ 到 $\mathcal O_{K_p}$ 的基变换行列式绝对值为 $I_p$，
+而判别式在基变换下乘以该行列式的平方。
+
+### T.3 奇数下标的迹恒等式
+
+**定理。** 对每个奇数 $n$，
+
+$$
+\boxed{E_n=(L_n-1)\varphi^n.}\tag{T1}
+$$
+
+**证明。** 每个二次元素 $x\in\mathcal O$ 满足
+
+$$
+x^2-\operatorname{Tr}(x)x+\operatorname N(x)=0,
+$$
+
+因为左端展开为
+$x^2-(x+\overline x)x+x\overline x=0$。取 $x=\varphi^n$。
+此时 $\operatorname{Tr}(x)=L_n$；又因 $n$ 为奇数，
+$\operatorname N(x)=-1$。因此
+
+$$
+E_n=x^2-x-1=(\operatorname{Tr}(x)-1)x
+=(L_n-1)\varphi^n.
+$$
+
+### T.4 标量整除、模同余与范数
+
+**定理。** 对每个奇数 $n$ 与每个整数 $q$，
+
+$$
+\boxed{q\mid E_n\text{ 于 }\mathcal O
+\iff q\mid L_n-1\text{ 于 }\mathbb Z.}\tag{T2}
+$$
+
+这包括复合整数 $q$ 及 $q=0$。
+
+**证明。** 令 $x=\varphi^n$。由
+$x\overline x=-1$ 可知 $x^{-1}=-\overline x\in\mathcal O$。
+若 $E_n=qy$，则 T1 给出
+
+$$
+L_n-1=qyx^{-1}.
+$$
+
+写 $yx^{-1}=a+b\varphi$。比较 $\{1,\varphi\}$ 中的整数坐标可得
+$b=0$ 及 $L_n-1=qa$。反之，若 $L_n-1=qa$，则
+$E_n=q(a\varphi^n)$。上述论证也适用于 $q=0$。
+
+**定理。** 对每个奇数 $n$ 与每个自然数 $q$，
+
+$$
+\boxed{E_n\equiv0\pmod q\text{ 于 }\mathcal O
+\iff L_n\equiv1\pmod q\text{ 于 }\mathbb Z.}\tag{T3}
+$$
+
+**证明。** 两个同余分别等价于 $q\mid E_n$ 于 $\mathcal O$ 与
+$q\mid L_n-1$ 于 $\mathbb Z$，故结论由 T2 得到。
+
+**定理。** 对每个奇数 $n$，
+
+$$
+\boxed{\operatorname N(E_n)=-(L_n-1)^2.}\tag{T4}
+$$
+
+**证明。** 由 T1、范数的乘法性及
+$\operatorname N(\varphi^n)=-1$，有
+
+$$
+\operatorname N(E_n)
+=\operatorname N(L_n-1)\operatorname N(\varphi^n)
+=(L_n-1)^2(-1).
+$$
+
+### T.5 素数平方特化与规范化周期商
+
+**定义。** 对奇素数 $p\ne5$，令
+
+$$
+\epsilon=\left(\frac5p\right),
+\qquad m=p-\epsilon.
+$$
+
+在下述整除性成立时，定义规范化商
+
+$$
+\ell_p=\frac{L_p-1}{p}\pmod p,
+\qquad q_p=\frac{F_m}{p}\pmod p.
+$$
+
+**定理。** 对每个奇素数 $p\ne5$，有
+
+$$
+p\mid L_p-1,
+\qquad p\mid F_{p-\epsilon},
+\qquad 2\ell_p=5q_p\pmod p.
+$$
+
+**证明。** 在 $\mathbb F_p[\sqrt5]$ 中，Euler 判据与 Frobenius 映射给出
+
+$$
+(\sqrt5)^p=\epsilon\sqrt5,
+\qquad L_p\equiv1\pmod p,
+\qquad F_p\equiv\epsilon\pmod p.
+$$
+
+由
+$L_p=F_p+2F_{p-1}=2F_{p+1}-F_p$，得到
+$p\mid F_{p-\epsilon}$。写
+
+$$
+F_p=\epsilon+pA,
+\qquad F_{p-\epsilon}=pB.
+$$
+
+若 $\epsilon=1$，Cassini 恒等式化为
+
+$$
+F_p^2-F_pF_{p-1}-F_{p-1}^2=1.
+$$
+
+模 $p^2$ 化简得 $2A\equiv B\pmod p$，而
+$\ell_p\equiv A+2B$、$q_p\equiv B$，所以
+$2\ell_p\equiv5q_p\pmod p$。若 $\epsilon=-1$，Cassini 恒等式化为
+
+$$
+F_{p+1}(F_{p+1}-F_p)-F_p^2=-1.
+$$
+
+模 $p^2$ 化简得 $2A\equiv-B\pmod p$，而
+$\ell_p\equiv2B-A$、$q_p\equiv B$，仍有
+$2\ell_p\equiv5q_p\pmod p$。
+
+**定义。** 奇素数 $p$ 称为 WSS 素数，当且仅当
+
+$$
+p^2\mid L_p-1.
+$$
+
+**定理。** 对每个奇素数 $p$，
+
+$$
+\boxed{
+p^2\mid\mathcal P_p(\varphi)\text{ 于 }\mathcal O
+\iff p^2\mid L_p-1\text{ 于 }\mathbb Z.
+}
+$$
+
+并且
+
+$$
+\operatorname N(\mathcal P_p(\varphi))=-(L_p-1)^2.
+$$
+
+若 $p\ne5$，上述条件还等价于
+$\ell_p=0$，也等价于 $q_p=0$。
+
+**证明。** 取 $n=p$、$q=p^2$ 代入 T2，得到第一组等价；取
+$n=p$ 代入 T4，得到范数公式。最后，
+$p^2\mid L_p-1$ 当且仅当 $\ell_p=0$；由于 $2$ 与 $5$ 在
+$\mathbb F_p$ 中均可逆，等式 $2\ell_p=5q_p$ 又给出
+$\ell_p=0\iff q_p=0$。
+
+### T.6 两个实嵌入下的取值
+
+**定义。** 定义 $\mathcal O$ 的两个实嵌入
+
+$$
+\sigma_+(a+b\varphi)=a+b\varphi,
+\qquad
+\sigma_*(a+b\varphi)=a+b\psi.
+$$
+
+**定理。** 对每个奇数 $n$，
+
+$$
+\sigma_+(E_n)=(L_n-1)\varphi^n,
+\qquad
+\sigma_*(E_n)=(L_n-1)\psi^n,
+$$
+
+并且两个实嵌入值的乘积为
+
+$$
+\sigma_+(E_n)\sigma_*(E_n)=-(L_n-1)^2.
+$$
+
+**证明。** 对 T1 分别应用 $\sigma_+$ 与 $\sigma_*$，得到前两式。
+再使用 $\varphi\psi=-1$ 及 $n$ 为奇数，得到
+
+$$
+\sigma_+(E_n)\sigma_*(E_n)
+=(L_n-1)^2(\varphi\psi)^n
+=-(L_n-1)^2.
+$$
