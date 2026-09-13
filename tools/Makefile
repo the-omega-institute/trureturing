@@ -14,6 +14,7 @@ XI_STATE ?= /tmp/qgh-xi-quantization-state
 XI_REPORT ?= /tmp/qgh-xi-quantization-state/report.md
 TEST_PROJECT ?= $(HERE)/StrataLint.sln
 TEST_FILTER ?=
+SEED_EXPORT ?= automatic
 CHECK_FAST_FILTER := FullyQualifiedName~StrataLint.Tests.CapacityAuditCommandTests|FullyQualifiedName~StrataLint.ArchitectureTests.RepositoryIoAccessPolicyTests|FullyQualifiedName~StrataLint.ArchitectureTests.BannedApiCoverageTests|FullyQualifiedName=StrataLint.Tests.MakeWorkflowTests.CheckFastFilterIsNonEmptyAndPinsRequiredRepositoryChecks
 .PHONY: help dotnet check-fast test ci-build engineering engineering-tests selftest capacity-audit update-renderer-contract clean-lanes xi-quantization xi-quantization-test
 
@@ -39,7 +40,7 @@ ci-build:
 	@CI_PLAN_PATH="$(CI_PLAN_PATH)" CI_CHANGES_PATH="$(CI_CHANGES_PATH)" /bin/bash "$(HERE)/scripts/ci-stage.sh" build
 
 engineering:
-	@CI_PLAN_PATH="$(CI_PLAN_PATH)" CI_CHANGES_PATH="$(CI_CHANGES_PATH)" /bin/bash "$(HERE)/scripts/ci-stage.sh" engineering
+	@CI_PLAN_PATH="$(CI_PLAN_PATH)" CI_CHANGES_PATH="$(CI_CHANGES_PATH)" CI_SEED_EXPORT="$(SEED_EXPORT)" /bin/bash "$(HERE)/scripts/ci-stage.sh" engineering
 
 engineering-tests:
 	@cd "$(REPOSITORY)" && dotnet "$(HERE)/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll" --repository "$(REPOSITORY)"

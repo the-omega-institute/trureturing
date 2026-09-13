@@ -95,9 +95,55 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
     public void ReadOnlyBranchesStillRejectInvalidRequiredEvidence(string first, string failure, int expected)
         => RunBranches(first, failure, expected, exportSeeds: false);
 
-    private void RunBranches(string first, string failure, int expected, bool exportSeeds)
+    [Theory]
+    [InlineData("engineering", "automatic", true)]
+    [InlineData("current", "automatic", true)]
+    [InlineData("engineering", "automatic", false)]
+    [InlineData("current", "automatic", false)]
+    [InlineData("engineering", "deferred", true)]
+    [InlineData("current", "deferred", true)]
+    [InlineData("engineering", "deferred", false)]
+    [InlineData("current", "deferred", false)]
+    public void ExplicitSeedExportModePreservesRequiredEvidenceAndCanonicalExport(string first, string mode, bool cacheWrites)
+        => RunBranches(first, "", 0, cacheWrites, mode);
+
+    [Theory]
+    [InlineData("current", "missing-current-units", 2)]
+    [InlineData("current", "replace-build", 2)]
+    [InlineData("engineering", "replace-build", 2)]
+    [InlineData("engineering", "test", 1)]
+    [InlineData("engineering", "capability-proof", 1)]
+    public void DeferredSeedExportStillRejectsInvalidRequiredEvidence(string first, string failure, int expected)
+        => RunBranches(first, failure, expected, exportSeeds: true, seedExport: "deferred");
+
+    [Theory]
+    [InlineData("value")]
+    [InlineData("missing")]
+    [InlineData("duplicate")]
+    [InlineData("build")]
+    [InlineData("delta")]
+    public void InvalidSeedExportOptionFailsBeforeStageExecution(string defect)
+    {
+        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        var stage = defect is "build" or "delta" ? defect : "current";
+        string[] options = defect switch
+        {
+            "value" => ["--seed-export", "unsupported"],
+            "missing" => ["--seed-export"],
+            "duplicate" => ["--seed-export", "automatic", "--seed-export", "deferred"],
+            _ => ["--seed-export", "deferred"],
+        };
+        using var text = new StringWriter();
+        Assert.Equal(2, Program.Run([stage, "--repository", fixture.Root, .. options], TestResultEvidence.Load, text, text));
+        Assert.Contains("ENGINEERING_TEST_PLAN_FAILED", text.ToString(), StringComparison.Ordinal);
+        Assert.DoesNotContain("STAGE_PROCESS ", text.ToString(), StringComparison.Ordinal);
+        Assert.False(File.Exists(Path.Combine(fixture.Root, "build/ci/" + stage + "-result.json")));
+    }
+
+    private void RunBranches(string first, string failure, int expected, bool exportSeeds, string? seedExport = null)
     {
         if (OperatingSystem.IsWindows()) return;
+        var automaticExport = exportSeeds && seedExport != "deferred";
         using var fixture = new CurrentExecutionContractTests.CandidateFixture();
         var root = fixture.Root;
         Write(".gitignore", "build/\n.lake/\n**/bin/\n");
@@ -163,7 +209,7 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
         fixture.WriteTrx(Path.Combine(root, "build/passed"), "Passed");
         fixture.WriteTrx(Path.Combine(root, "build/failed"), "Failed");
         CiTransportTests.Report(root);
-        if (!exportSeeds)
+        if (!automaticExport)
         {
             fixture.Track();
             Git(root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "required branch fixture");
@@ -183,14 +229,20 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
         if (!exportSeeds) environment["STRATALINT_CACHE_WRITES"] = "false";
         var result = Branch(first);
         Assert.True(result.Exit == expected, result.Text);
-        if (!exportSeeds) AssertNoOptionalSeeds();
+        if (!automaticExport) AssertNoOptionalSeeds();
         var other = first == "current" ? "engineering" : "current";
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, "build/ci/" + other + ".json")));
         if (expected == 0)
         {
+            AssertAutomaticSeed(first, result.Text);
             result = Branch(other);
             Assert.True(result.Exit == 0, result.Text);
-            CommonExecutionEvidence.ValidateCommon(root, [CurrentExecutionContractTests.CandidateFixture.First]);
+            AssertAutomaticSeed(other, result.Text);
+            var accepted = CommonExecutionEvidence.ValidateCommon(root, [CurrentExecutionContractTests.CandidateFixture.First]);
+            Assert.Equal(build.Candidate, accepted.Current.Candidate);
+            Assert.Equal(build.Round, accepted.Current.Round);
+            Assert.Equal(CommonExecutionEvidence.CurrentSteps, accepted.Current.Steps.Select(step => step.Name));
+            Assert.All(accepted.Current.Steps, step => Assert.Equal((0, 0, "executed"), (step.RawExit, step.Exit, step.Status)));
             var events = TemporaryFileSystem.File.ReadAllText(Path.Combine(root, "build/events")).Split('\n');
             Assert.Equal(2, events.Count(value => value == "test"));
             Assert.Equal(2, events.Count(value => value == "proof"));
@@ -207,7 +259,7 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
                 Assert.Equal(0, proof.GetProperty("exit").GetInt32());
             }
             var initial = CommonExecutionEvidence.ValidateTests(root);
-            if (!exportSeeds)
+            if (!automaticExport)
             {
                 Assert.False(fresh.GetProperty("test_seed_saved").GetBoolean());
                 AssertNoOptionalSeeds();
@@ -232,19 +284,23 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
                     var packed = Process(root, scope, new[] { "transport-pack" }.Concat(arguments)
                         .Concat(["--archive", Path.Combine(root, "build", stage + ".tgz")]).ToArray(), environment);
                     Assert.True(packed.Exit == 0, packed.Text);
+                    Assert.Equal(stage.EndsWith("-seed", StringComparison.Ordinal) ? 1 : 0,
+                        packed.Text.Split('\n').Count(line => line.StartsWith("COMMON_CHECK_SEED_SAVED ", StringComparison.Ordinal)));
+                    Assert.Equal(stage == "engineering-seed" ? 1 : 0,
+                        packed.Text.Split('\n').Count(line => line == "ENGINEERING_TEST_SEED_SAVED"));
                     var verified = Process(root, scope, new[] { "transport-verify" }.Concat(arguments).ToArray(), environment);
                     Assert.True(verified.Exit == 0, verified.Text);
                 }
             }
             Assert.True(TemporaryFileSystem.File.Exists(Path.Combine(root, CommonExecutionEvidence.TestSeedPath, "tests.json")));
-            var seedFiles = !exportSeeds ? SeedFiles() : [];
+            var seedFiles = !automaticExport ? SeedFiles() : [];
             var again = Branch("engineering");
             Assert.True(again.Exit == 0, again.Text);
             var summary = EngineeringSummary("warm");
             Assert.Equal(0, summary.GetProperty("test_projects_executed").GetInt32());
             Assert.Equal(2, summary.GetProperty("test_projects_reused").GetInt32());
-            Assert.Equal(exportSeeds, summary.GetProperty("test_seed_saved").GetBoolean());
-            if (!exportSeeds)
+            Assert.Equal(automaticExport, summary.GetProperty("test_seed_saved").GetBoolean());
+            if (!automaticExport)
             {
                 Assert.DoesNotContain("ENGINEERING_TEST_SEED_SAVED", again.Text, StringComparison.Ordinal);
                 Assert.DoesNotContain("COMMON_CHECK_SEED_SAVED", again.Text, StringComparison.Ordinal);
@@ -260,7 +316,7 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
             Assert.Equal(initial.Projects.Select(row => row with { Status = "reused" }), CommonExecutionEvidence.ValidateTests(root).Projects);
             Assert.Equal(2, TemporaryFileSystem.File.ReadAllText(Path.Combine(root, "build/events")).Split('\n').Count(value => value == "test"));
             Assert.Equal(events, TemporaryFileSystem.File.ReadAllText(Path.Combine(root, "build/events")).Split('\n'));
-            if (!exportSeeds)
+            if (!automaticExport)
             {
                 // The CLI fixture uses the native unit owner to prepare reused
                 // evidence; invoking any unit's work here is a test failure.
@@ -281,10 +337,24 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
                     step => Assert.Equal("reused", step.Status));
                 Assert.Equal(events.Where(value => value.Length != 0).Concat(["report", "check-current"]),
                     File.ReadAllLines(Path.Combine(root, "build/events")));
+                // An old successful seed never substitutes for the current
+                // required evidence at an explicit snapshot/export boundary.
+                File.AppendAllText(Path.Combine(root, CommonExecutionEvidence.ReportPath), "corrupt required report");
+                var failedArchive = Path.Combine(root, "build/failed-current-seed.tgz");
+                var failedExport = Process(root, scope, ["transport-pack", "--repository", root, "--stage", "current-seed",
+                    "--commit", Git(root, "rev-parse", "HEAD"), "--run-id", "17", "--run-attempt", "2", "--archive", failedArchive], environment);
+                Assert.Equal(2, failedExport.Exit);
+                Assert.DoesNotContain("status=packed", failedExport.Text, StringComparison.Ordinal);
+                Assert.DoesNotContain("COMMON_CHECK_SEED_SAVED", failedExport.Text, StringComparison.Ordinal);
+                Assert.False(File.Exists(failedArchive));
+                Assert.Equal(seedFiles, SeedFiles());
             }
         }
         else
         {
+            using var failedSummary = JsonDocument.Parse(File.ReadAllText(Path.Combine(root, "build/ci/" + first + "-result.json")));
+            Assert.Equal("failed", failedSummary.RootElement.GetProperty("status").GetString());
+            Assert.Equal(expected, failedSummary.RootElement.GetProperty("exit").GetInt32());
             Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, "build/ci/" + first + ".json")));
             Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, CommonExecutionEvidence.TestSeedPath, "tests.json")));
             if (first == "engineering" && failure != "replace-build")
@@ -314,6 +384,13 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
             }
         }
         Assert.Equal(failure == "replace-build", before != CommonExecutionEvidence.Hash(Path.Combine(root, CommonExecutionEvidence.BuildPath)));
+
+        void AssertAutomaticSeed(string stage, string text)
+        {
+            Assert.Equal(automaticExport ? 1 : 0,
+                text.Split('\n').Count(line => line == "COMMON_CHECK_SEED_SAVED stage=" + stage));
+            if (automaticExport) CommonExecutionEvidence.ValidateCheckSeedBundle(root, stage);
+        }
 
         void AssertNoOptionalSeeds()
         {
@@ -347,7 +424,8 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
             Assert.Equal(statuses, units.Select(unit => unit.GetProperty("status").GetString()));
         }
         (int Exit, string Text) Branch(string stage) => Process(root, scope,
-            new[] { stage, "--repository", root }.Concat(stage == "engineering" ? ["--build-round", build.Round] : Array.Empty<string>()).ToArray(), environment);
+            new[] { stage, "--repository", root }.Concat(stage == "engineering" ? ["--build-round", build.Round] : Array.Empty<string>())
+                .Concat(seedExport is null ? [] : new[] { "--seed-export", seedExport }).ToArray(), environment);
         void Write(string path, string text)
         {
             var full = Path.Combine(root, path);

@@ -21,8 +21,8 @@ internal static class Program
             if (arguments.FirstOrDefault() is "build" or "engineering" or "current" or "delta")
             {
                 if (arguments.Count < 3 || arguments[1] != "--repository")
-                    throw new ArgumentException("stage --repository ROOT [--base SHA | --build-round ROUND] [--plan FILE --changes FILE]");
-                string? baseSha = null, stageBuildRound = null, plan = null, changes = null;
+                    throw new ArgumentException("stage --repository ROOT [--base SHA | --build-round ROUND] [--plan FILE --changes FILE] [--seed-export automatic|deferred]");
+                string? baseSha = null, stageBuildRound = null, plan = null, changes = null, seedExport = null;
                 for (var i = 3; i < arguments.Count; i += 2)
                 {
                     if (i + 1 >= arguments.Count) throw new ArgumentException("stage options must be name/value pairs");
@@ -32,10 +32,14 @@ internal static class Program
                         case "--build-round" when arguments[0] == "engineering" && stageBuildRound is null: stageBuildRound = arguments[i + 1]; break;
                         case "--plan" when plan is null: plan = arguments[i + 1]; break;
                         case "--changes" when changes is null: changes = arguments[i + 1]; break;
+                        case "--seed-export" when arguments[0] is "engineering" or "current" && seedExport is null
+                            && arguments[i + 1] is "automatic" or "deferred": seedExport = arguments[i + 1]; break;
                         default: throw new ArgumentException("invalid stage option: " + arguments[i]);
                     }
                 }
-                return new CommonStages(Path.GetFullPath(arguments[2]), output).Run(arguments[0], baseSha, stageBuildRound, plan, changes);
+                return new CommonStages(Path.GetFullPath(arguments[2]), output,
+                    seedExport: seedExport == "deferred" ? SeedExportMode.Deferred : SeedExportMode.Automatic)
+                    .Run(arguments[0], baseSha, stageBuildRound, plan, changes);
             }
             if (arguments.FirstOrDefault() == "verify-trx")
             {

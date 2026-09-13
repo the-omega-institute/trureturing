@@ -5,8 +5,10 @@ using StrataLint.Engine;
 
 namespace StrataLint.EngineeringScope;
 
+internal enum SeedExportMode { Automatic, Deferred }
+
 internal sealed class CommonStages(string root, TextWriter output, CancellationToken deadlineCancellation = default,
-    Action<Process>? processExited = null, TimeProvider? timeProvider = null)
+    Action<Process>? processExited = null, TimeProvider? timeProvider = null, SeedExportMode seedExport = SeedExportMode.Automatic)
 {
     private readonly List<StageStep> steps = [];
     private string stage = "input";
@@ -17,7 +19,8 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
     private ResourceExecutionPlan? resourcePlan;
     private CommonExecutionEvidence.CheckExecution? engineeringChecks;
     private string? attemptedEngineeringCheck;
-    private readonly bool exportSeeds = Environment.GetEnvironmentVariable("STRATALINT_CACHE_WRITES") != "false";
+    private readonly bool exportSeeds = seedExport == SeedExportMode.Automatic
+        && Environment.GetEnvironmentVariable("STRATALINT_CACHE_WRITES") != "false";
 
     internal static int Normalize(int raw, bool allowProtectedAnnotation = false) => raw switch
     {
