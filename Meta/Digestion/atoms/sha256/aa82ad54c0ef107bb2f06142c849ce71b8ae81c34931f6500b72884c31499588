@@ -1,0 +1,64 @@
+### 8.6 区间 Fourier 积分的反射与平移
+
+**定义。** 固定实数 $\omega\ne0$。对 $a,b\in\mathbb R$，采用负指数和定向积分约定，定义
+
+$$
+\mathcal F_\omega(a,b)=\int_a^b e^{-i\omega x}\,dx.
+$$
+
+**定理。** 对所有 $a,b,t\in\mathbb R$，
+
+$$
+\boxed{
+\mathcal F_\omega(-b,-a)=\overline{\mathcal F_\omega(a,b)},\qquad
+|\mathcal F_\omega(-b,-a)|^2=|\mathcal F_\omega(a,b)|^2,
+}\tag{GC13}
+$$
+
+并且
+
+$$
+\boxed{
+\mathcal F_\omega(a+t,b+t)
+=e^{-i\omega t}\mathcal F_\omega(a,b).
+}
+$$
+
+**证明。** 当 $\omega\ne0$ 时，端点公式为
+
+$$
+\mathcal F_\omega(a,b)=\frac{e^{-i\omega b}-e^{-i\omega a}}{-i\omega}.
+$$
+
+把 $(a,b)$ 换成 $(-b,-a)$，并用
+$\overline{e^{-i\theta}}=e^{i\theta}$，得到反射取共轭；取模平方得到功率相等。
+把端点同时平移 $t$，公因子 $e^{-i\omega t}$ 提出后得到平移公式。
+
+**定义。** 对 $z,w\in\mathbb C$ 定义交叉系数
+$\mathcal C(z,w)=z\overline w$。令
+
+$$
+z_t=e^{-i\omega t}z,\qquad w_t=e^{-i\omega t}w,\qquad
+z^{\mathrm{mir}}=\overline z,\qquad w^{\mathrm{mir}}=\overline w.
+$$
+
+**定理。** 共同平移不改变交叉系数，共同反射则使它取共轭；特别地，
+
+$$
+\boxed{
+\mathcal C(z_t,w_t)=\mathcal C(z,w),\qquad
+\operatorname{Im}\mathcal C(z^{\mathrm{mir}},w^{\mathrm{mir}})
+=-\operatorname{Im}\mathcal C(z,w).
+}\tag{GC14}
+$$
+
+**证明。** 直接计算得
+$z_t\overline{w_t}=e^{-i\omega t}z\,e^{i\omega t}\overline w=z\overline w$，
+而
+$\mathcal C(\overline z,\overline w)=\overline z\,w
+=\overline{z\overline w}$。取虚部即得第二式。
+
+**命题。** 若 $\mathcal C(z,w)$ 为零或实数，则共同反射前后的交叉系数虚部都为零。
+
+**证明。** 实数等于自身的共轭，且实数的虚部为零；零是其实例。
+

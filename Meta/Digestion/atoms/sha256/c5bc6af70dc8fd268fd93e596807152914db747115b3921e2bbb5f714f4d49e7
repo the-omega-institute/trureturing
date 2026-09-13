@@ -1,0 +1,31 @@
+### 8.3 任意分辨率的收缩与非周期性
+
+**定理。** 对每个 $L\in\mathbb N$，
+
+$$
+\boxed{d_{L+1}=-\alpha d_L,\qquad d_{L+2}=\alpha^2d_L.}\tag{GC4}
+$$
+
+若 $r\in\mathbb N$ 且 $r>0$，定义
+$D_{L,r}=d_L-d_{L+r}$，则
+
+$$
+\boxed{D_{L,r}\ne0,\qquad D_{L+1,r}=-\alpha D_{L,r}.}\tag{GC5}
+$$
+
+**证明。** 由 $d_L=(-\alpha)^{L+2}$ 直接得到 GC4 及第二个等式。
+又有
+$|d_{L+r}|=|d_L|\alpha^r<|d_L|$，所以 $d_L\ne d_{L+r}$，
+即 $D_{L,r}\ne0$。
+
+**定理。** 对每个 $p\in\mathbb Z$，
+
+$$
+\boxed{p\ne0\Longrightarrow p\alpha\notin\mathbb Z.}\tag{GC6}
+$$
+
+因此旋转 $x\mapsto x+\alpha\pmod1$ 不存在非零整数回归周期。
+
+**证明。** 若 $p\ne0$ 且 $p\alpha=q\in\mathbb Z$，则
+$\alpha=q/p\in\mathbb Q$，这与 $\sqrt5$ 的无理性矛盾。
+
