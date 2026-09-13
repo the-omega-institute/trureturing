@@ -343,3 +343,14 @@ https://arxiv.org/html/2603.25343v1 。第1、3、4节用于问题定位；
 mathlib `Data/ZMod/Basic.lean`、`GroupTheory/OrderOfElement.lean`、
 `Algebra/Polynomial/Derivative.lean`，依 `lake-manifest.json` 固定到
 `db584cd6d46c92f209a44c0f1c829460d327499d`。
+
+
+### R.10 Conditional Frobenius-quotient bridge
+
+The next formal interface is now recorded as D5/S1/Recurrence/FibonacciFrobeniusQuotientBridge. For a prime p != 2,5, define Q_p(n)=F_n/p mod p using the repository's natural-number quotient. The existing GoldenApparition.fibonacci_apparition_entry_point proves that p divides F_(p-(5/p)), with the signed Legendre index converted to its natural form, while FibonacciRank proves that the least positive zero divides this index.
+
+The new theorem is deliberately conditional:
+
+$$Q_p(pi(p)) = 1 * Q_p(p-| (5/p) |)$$
+
+under the hypothesis pi(p)=p-| (5/p) |. The proportionality factor is explicitly 1, and quotient_period_eq_frobenius_factor_isUnit proves it is a unit in every ZMod p, including the exceptional characteristics. The hypotheses p != 2,5 belong to the index-identification interface, not to the unit lemma. This separates what is already forced by the current Frobenius/splitting library from the genuinely open step: proving a nontrivial Lucas multiplier for a return period that is only known to divide the Frobenius index. No unconditional equality of the two quotients, and no nonzero-quotient claim, is asserted without that missing period equality.
