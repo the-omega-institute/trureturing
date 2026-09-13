@@ -126,3 +126,25 @@ $$\pi_D(x,y)=\bigl(x\pmod2,\; y-kx\pmod{2k}\bigr).$$
 [TR5] A. Klukowski. *Congruence Subgroup Property for nilpotent groups and subsurface subgroups of Mapping Class Groups*. arXiv:2411.06867v2 (2024)，Conjectures 1、13，Definition 3、Lemma 14. https://arxiv.org/html/2411.06867v2 。外部目标是高亏格映射类群 CSP，以及其简单闭曲线轨道的合同子群控制：给定有限指数 Gamma 与曲线 alpha，构造合同子群 Delta 使 Delta.alpha 包含于 Gamma.alpha。检索未发现该全称轨道结论已解决的来源；此为有界检索结论，不是穷尽优先权证明。本节的环面线性实例不属于亏格至少 3 的证明，也没有闭合这个猜想。
 
 面向该外部目标，后续必须保留真实群作用、有限特征商与曲线轨道。仅靠二维阿贝尔化、相同迹、相同返回计数都没有足够信息。可先形式化 TR5 的已知组合引理作为真实消费者的基础，再推进明确受限的曲线轨道分离情形。若仅完成线性校准，应据实报告其范围，不把它计作 CSP 或庞加莱定理的解决。
+
+
+### TR.7 实际返回群的结构恢复
+
+TR.5 的核与满射目标现有对应 Lean 证明脚本，位于 `ToralReturnModuleStructure.lean`，并配套同名 Scribe。原返回模定义直接复用，不更换载体。
+
+对任意 k≥0，pi_C 满射，其核等于 (C_k-I)Z²。若 y=4ka，则 (a,x-4ka) 是 (x,y) 的原像。pi_D 同样满射；给定两个剩余类的整数代表 a,b，可取 (a,b+ka)。若 (x,y) 位于 pi_D 的核，写 x=2a、y-kx=2kb，则 (b,a-kb) 是其在 D_k-I 下的原像。这同时证明两项像与核的双向包含。
+
+第一同构定理因此在同一个实际商上给出
+
+$$R(C_k,1)\cong\mathbb Z/(4k),\qquad
+R(D_k,1)\cong\mathbb Z/2\times\mathbb Z/(2k).$$
+
+k=0 也纳入分类：按 ZMod 0=Z 的约定，左边对应 Z，右边对应 Z/2×Z。有限性及以下分离结论取 k>0。
+
+第二个商的每个元素都被 2k 湮灭。第一个商中，将剩余类 1 经构造出的同构逆像拉回，得到不被 2k 湮灭的实际商元素；否则 4k 整除 2k，与正 k 矛盾。于是不存在两个返回商之间的加法同构。
+
+联合 TR.3，得到无界参数、全部正时间的结论：两个系统的所有返回模基数相同，单个时间的群结构却已足够区分这两个备选。这里的附加信息是同一个原对象上的湮灭性质，未定义人为标签或外加分类分数。
+
+主要声明：`companion_image_eq_kernel`、`balanced_image_eq_kernel`、`one_step_return_module_classification`、`balanced_return_annihilated`、`companion_return_not_annihilated`、`one_step_return_modules_not_isomorphic`、`scalar_spectrum_and_structural_separation`。
+
+本组继续停留在普通证明与候选 Lean 源码层，未宣称已执行内核。该结构恢复是指定校准族的完整分类，不推广为任意环面自同构的单步分类。矩阵 P_k 的行列式提示下一项可证明的问题：在所有模数中，2 是否是唯一检测这一共轭差异的素数？应在实际 ZMod 作用上构造可逆交织子，并证明偶数模数的精确障碍。
