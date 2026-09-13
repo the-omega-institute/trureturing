@@ -103,4 +103,66 @@ private theorem product_gap (r s : ℕ) (hr : 5 ≤ r) (hs : 5 ≤ s) :
     show i + 5 + (j + 5) - 6 = i + j + 4 by omega,
     show i + 5 + (j + 5) - 5 = i + j + 5 by omega] using h
 
+private theorem no_large_product_sum (i j r s : ℕ)
+    (hij : j ≤ i) (hr : 5 ≤ r) (hs : 5 ≤ s)
+    (heq : Nat.fib i + Nat.fib j = Nat.fib r * Nat.fib s) : False := by
+  let t := r + s - 2
+  have ht : 8 ≤ t := by dsimp [t]; omega
+  have hgap := product_gap r s hr hs
+  have hlow : Nat.fib t + Nat.fib (t - 4) < Nat.fib i + Nat.fib j := by
+    rw [heq]
+    simpa only [show r + s - 2 = t by rfl,
+      show r + s - 6 = t - 4 by dsimp [t]; omega] using hgap.1
+  have hupp : Nat.fib i + Nat.fib j < Nat.fib t + Nat.fib (t - 3) := by
+    rw [heq]
+    simpa only [show r + s - 2 = t by rfl,
+      show r + s - 5 = t - 3 by dsimp [t]; omega] using hgap.2
+  have hf1 : Nat.fib (t - 1) = Nat.fib (t - 3) + Nat.fib (t - 2) := by
+    simpa only [show t - 3 + 2 = t - 1 by omega,
+      show t - 3 + 1 = t - 2 by omega] using
+        (Nat.fib_add_two (n := t - 3))
+  have hf2 : Nat.fib t = Nat.fib (t - 2) + Nat.fib (t - 1) := by
+    simpa only [show t - 2 + 2 = t by omega,
+      show t - 2 + 1 = t - 1 by omega] using
+        (Nat.fib_add_two (n := t - 2))
+  have hf3 : Nat.fib (t + 1) = Nat.fib (t - 1) + Nat.fib t := by
+    simpa only [show t - 1 + 2 = t + 1 by omega,
+      show t - 1 + 1 = t by omega] using
+        (Nat.fib_add_two (n := t - 1))
+  have hfsmall : Nat.fib (t - 2) < Nat.fib (t - 1) := by
+    simpa only [show t - 2 + 1 = t - 1 by omega] using
+      (Nat.fib_lt_fib_succ (n := t - 2) (by omega))
+  have hflarge : Nat.fib (t - 3) < Nat.fib (t - 1) := by
+    have h : Nat.fib (t - 3) < Nat.fib (t - 2) := by
+      simpa only [show t - 3 + 1 = t - 2 by omega] using
+        (Nat.fib_lt_fib_succ (n := t - 3) (by omega))
+    exact lt_trans h hfsmall
+  have hbound : Nat.fib t + Nat.fib (t - 3) =
+      2 * Nat.fib (t - 1) := by omega
+  have hi_lt : i < t + 1 := by
+    by_contra h
+    have hmono : Nat.fib (t + 1) ≤ Nat.fib i := Nat.fib_mono (by omega)
+    omega
+  have hi_ge : t - 2 < i := by
+    by_contra h
+    have hmonoI : Nat.fib i ≤ Nat.fib (t - 2) := Nat.fib_mono (by omega)
+    have hmonoJ : Nat.fib j ≤ Nat.fib (t - 2) := Nat.fib_mono (by omega)
+    omega
+  by_cases hit : i = t
+  · subst i
+    have hjlow : Nat.fib (t - 4) < Nat.fib j := by omega
+    have hjupp : Nat.fib j < Nat.fib (t - 3) := by omega
+    have hjindexLow : t - 4 < j :=
+      (Nat.fib_lt_fib (by omega : 2 ≤ t - 4)).mp hjlow
+    have hjindexUpp : j < t - 3 :=
+      (Nat.fib_lt_fib (by omega : 2 ≤ j)).mp hjupp
+    omega
+  · have hi1 : i = t - 1 := by omega
+    subst i
+    by_cases hj1 : j = t - 1
+    · subst j
+      omega
+    · have hjle : Nat.fib j ≤ Nat.fib (t - 2) := Nat.fib_mono (by omega)
+      omega
+
 end D5.S1.Recurrence.BarkerFibonacciSumProductRecurrence
