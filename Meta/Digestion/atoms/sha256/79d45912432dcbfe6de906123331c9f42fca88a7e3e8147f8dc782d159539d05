@@ -1,0 +1,4 @@
+**证明。** 将 GC10 给出的
+$\lfloor T_L(m)\alpha\rfloor$ 代入 $T_K(T_L(m))$，再使用
+$M_KM_L=M_{K+L+2}$，得到 GC11。交换 $K,L$ 后两式相减，得到 GC12。
+

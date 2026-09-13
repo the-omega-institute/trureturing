@@ -1,0 +1,20 @@
+**定义。** 令
+
+$$
+\alpha=\frac{\sqrt5-1}{2},\qquad \varphi=1+\alpha,
+\qquad \psi=-\alpha,
+$$
+
+并令 $(F_n)_{n\ge0}$ 为满足 $F_0=0$、$F_1=1$、
+$F_{n+2}=F_{n+1}+F_n$ 的 Fibonacci 数列。对 $L\in\mathbb N$，定义
+
+$$
+A_L=F_{L+3},\quad B_L=F_{L+2},\quad C_L=F_{L+1},\quad
+M_L=\begin{pmatrix}A_L&B_L\\B_L&C_L\end{pmatrix},
+$$
+
+$$
+Q=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+d_L=\psi^{L+2},\qquad \delta_L=|d_L|.
+$$
+

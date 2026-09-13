@@ -1,0 +1,21 @@
+**定理。** 对每个 $L$ 与 $n\in\mathbb Z$，规范截面的进位为零，且
+
+$$
+s_\alpha(U_L(n))=u_Ls_\alpha(n).
+$$
+
+因此
+
+$$
+\boxed{U_K(U_L(n))=U_{K+L+2}(n).}\tag{GS11}
+$$
+
+若 $n\in\mathbb N$，则 $U_L(n)\ge0$，并且把该输出视为自然数时，
+
+$$
+\boxed{
+\beta_{\mathrm G}(U_L(n))
+=\varphi^{L+2}\beta_{\mathrm G}(n).
+}\tag{GS12}
+$$
+

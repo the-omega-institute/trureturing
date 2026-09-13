@@ -1,0 +1,8 @@
+**定义。** 对 $e\in\mathbb Z$，定义定向相位窗口事件
+
+$$
+\operatorname{Hits}_L(e)
+\iff \exists h\in\mathbb Z:\quad
+0<\frac{e\alpha-h}{d_L}<1.
+$$
+
