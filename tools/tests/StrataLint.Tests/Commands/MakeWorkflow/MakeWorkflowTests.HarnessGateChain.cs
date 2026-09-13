@@ -45,7 +45,7 @@ public sealed partial class MakeWorkflowTests
             case "$*" in
               "cat-file -e {{baseRevision}}^{commit}"|"ls-files --others --exclude-standard -z"|"diff --name-only --no-renames -z {{baseRevision}} {{baseRevision}} --") exit 0 ;;
               "cat-file -t {{baseRevision}}") printf 'commit\n' ;;
-              "rev-parse --verify HEAD"|"rev-parse --verify HEAD^{commit}") printf '%s\n' '{{baseRevision}}' ;;
+              "rev-parse --verify HEAD"|"rev-parse --verify HEAD^{commit}"|"rev-parse --verify --end-of-options {{baseRevision}}^{commit}") printf '%s\n' '{{baseRevision}}' ;;
               "diff --name-only --no-renames -z {{baseRevision}} --") printf 'Blueprint/D5/Probe.scribe.cs\0' ;;
               *) echo "unexpected git invocation: $*" >&2; exit 90 ;;
             esac
