@@ -4,7 +4,7 @@
 
 Exact annihilator membership registrations over four frequencies.
 
-These registrations retain classical annihilator membership. Finite sealing requires a computable readout and is not supplied; the registration diagnostics remain visible.
+These registrations retain the annihilator membership predicate and decide it by finite modular multiplication, using the standard character's primitivity. No finite seal is supplied; the registration diagnostics remain visible.
 
 **Definition 1.1 (objectArena).**
 
@@ -76,7 +76,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/MembershipRegistrations
 
 *Commentary.*
 
-The original annihilator membership predicate is retained with anchor two, using classical decidability without theorem-based reduction.
+The original annihilator membership predicate is retained with anchor two, using computable kernel membership and a finite universal test for zero modular products.
 
 **Theorem 1.7 (two_bridge).**
 
