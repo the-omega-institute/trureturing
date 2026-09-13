@@ -55,10 +55,11 @@ theorem norm_tube_of_energy
       ((ρ + γ * δ) / γ) * (1 - Real.exp (-γ * t))
   have hreg : ∀ δ ∈ Ioi (0 : ℝ), ‖u t‖ ≤ B δ := by
     intro δ hδ
+    have hδpos : 0 < δ := hδ
     let z : ℝ → ℝ := fun s => Real.sqrt (‖u s‖ ^ 2 + δ ^ 2)
     have hzpos (s : ℝ) : 0 < z s := by
       dsimp [z]
-      exact Real.sqrt_pos.mpr (by nlinarith [sq_nonneg ‖u s‖, sq_pos_of_ne_zero (ne_of_gt hδ)])
+      exact Real.sqrt_pos.mpr (by nlinarith [sq_nonneg ‖u s‖, sq_pos_of_ne_zero hδpos.ne'])
     have hzsq (s : ℝ) : (z s) ^ 2 = ‖u s‖ ^ 2 + δ ^ 2 :=
       Real.sq_sqrt (by positivity)
     have huz (s : ℝ) : ‖u s‖ ≤ z s := by
@@ -76,8 +77,9 @@ theorem norm_tube_of_energy
         ⟪u s, du s⟫_ℝ / z s ≤ -γ * z s + (ρ + γ * δ) := by
       apply (div_le_iff₀ (hzpos s)).mpr
       have hρdiff := mul_nonneg hρ (sub_nonneg.mpr (huz s))
-      have hδdiff := mul_nonneg (mul_nonneg hγ.le hδ.le) (sub_nonneg.mpr (hδz s))
-      nlinarith [henergy s hs, hzsq s]
+      have hδdiff := mul_nonneg (mul_nonneg hγ.le hδpos.le) (sub_nonneg.mpr (hδz s))
+      have hγsq := congrArg (fun r : ℝ => γ * r) (hzsq s)
+      nlinarith [henergy s hs, hγsq]
     have hb := le_gronwallBound_of_liminf_deriv_right_le
       (f := z) (f' := fun s => ⟪u s, du s⟫_ℝ / z s)
       (δ := z 0) (K := -γ) (ε := ρ + γ * δ)

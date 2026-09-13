@@ -379,3 +379,136 @@ OpenAI 的终端爆破结果说明，不能期望对所有允许外力和初值�
 [8] OpenAI. `NavierStokes/ViscousPropagator.lean`，同一提交，Apache-2.0。https://github.com/openai/NavierStokesAndEuler/blob/f9e8bc5b38b6e212696e8a30e3e91517af887bbd/NavierStokes/ViscousPropagator.lean 。本轮移植的三项 Hilbert 范数证明来源；没有添加虚构的单个作者署名。
 
 [9] OpenAI. `NavierStokes/R3/H3Energy.lean` 与 `NavierStokes/R3/ComparisonGronwall.lean`，同一提交。https://github.com/openai/NavierStokesAndEuler/blob/f9e8bc5b38b6e212696e8a30e3e91517af887bbd/NavierStokes/R3/H3Energy.lean ；https://github.com/openai/NavierStokesAndEuler/blob/f9e8bc5b38b6e212696e8a30e3e91517af887bbd/NavierStokes/R3/ComparisonGronwall.lean 。实际弱导数、能量比较和截断耗尽的后续依赖；本轮尚未移植其完整分析闭包。
+
+## 12. Mathlib 独立重证：耗散、稳态残差与记忆恢复
+
+### 12.1 当前证明来源及历史更正
+
+第 11 节记录 `e9ccb7a1` 阶段的源调查与移植方案。该阶段已由本节替代：PR 中的 `OpenAIViscousAttraction.lean` 及同名 Scribe 已删除；三段外部移植证明全部移出当前候选树。新 `DissipativeAttraction.lean` 采用独立的正则化能量证明，直接 import mathlib。`ForcedShearFixedPoint` 的实际场与方程不变，已改用新证明。第 11 节的旧文件名及“已移植”语句只描述历史状态。
+
+当前外部形式化依赖只有仓库固定的 mathlib。本节复用本库自有数学对象，外部论文用于比较研究问题和限定新颖性，不作为证明前提。本次没有修改 toolchain、CI 或其他贡献者的既有 Cone 文件；该 Cone 文件不在本节新证明的依赖链中。这里没有声称重写了整个仓库或完整三维 NS 证明。
+
+本节给出完整普通数学论证及候选 Lean 脚本。环境中未发现 Lean、Lake、dotnet，未执行内核、C# 编译或独立作者审稿。因此“源码中有证明”与“本轮已通过内核”仍分开记载。已推送的原始移植历史保留在 Git 历史中，来源记录没有被重新署名为独立成果。
+
+### 12.2 独立的正则化能量比较
+
+设实内积空间中的实际轨迹 u 在 [0,T] 连续，在 [0,T) 有强右导数 du，且 gamma>0、rho>=0 满足
+
+$$\langle u(t),du(t)\rangle\leq-\gamma\|u(t)\|^2+\rho\|u(t)\|.$$
+
+对任意 delta>0 定义 z_delta(t)=sqrt(||u(t)||²+delta²)。平方根的被开方数严格为正，所以普通链式求导合法，包括 u(t)=0 的时刻。记 n=||u(t)||、z=z_delta(t)，则 z>=n、z>=delta，且
+
+$$z_\delta'(t)=\frac{\langle u(t),du(t)\rangle}{z_\delta(t)}
+\leq-\gamma z_\delta(t)+\rho+\gamma\delta.$$
+
+关键代数差可精确展开为
+
+$$(-\gamma z+\rho+\gamma\delta)z-(-\gamma n^2+\rho n)
+=\rho(z-n)+\gamma\delta(z-\delta)-\gamma(z^2-n^2-\delta^2).$$
+
+最后一项为零，前两项非负。在负增长系数 -gamma 下调用 mathlib 的标量 Gronwall 定理，随后利用 delta 处的连续性令 delta 从正侧趋于零，得到式 (11.1) 的相同精确上界。完整证明不使用第 11 节的三个外部辅助引理，也不需要在零范数处定义范数导数。
+
+新主声明 `norm_tube_of_energy` 直接接受真实轨迹的能量不等式；它不要求存在定义在整个 H 上的有界生成算子。因此，在线性有界方程之外，满足同样强导数条件的非线性轨迹或无界生成元定义域内的强解也可使用。弱解是否满足这些强导数条件仍须独立证明。`norm_le_exponential_tube`、`unforced_norm_contraction` 和 `scalar_equilibrium_tube` 是该新证明的直接消费者，原剪切稳态界保留。
+
+### 12.3 同一正裕量控制动态吸引和静态残差
+
+新增 `QuadraticEquilibriumCertificate.lean`。定义真实二次向量场 F(x)=Lx-B(x,x)+f，其中 L 线性、B 双线性，且
+
+$$\langle b,B(a,b)\rangle=0\qquad\text{对全部 }a,b.$$
+
+完整展开而不要求 B 对称，得到
+
+$$\langle w,F(v+w)-F(v)\rangle
+=\langle w,Lw\rangle-\langle w,B(w,v)\rangle.$$
+
+参考流输运项 B(v,w) 与扰动自作用 B(w,w) 的能量配对分别消失。若实际估计为
+
+$$\langle w,Lw\rangle\leq-\mu\|w\|^2,\qquad
+-\langle w,B(w,v)\rangle\leq G\|w\|^2,$$
+
+则 gamma=mu-G>0 给出严格负能量裕量。对于已验证 F(v)=0 的同一稳态，有两项结论：
+
+$$\|u(t)-v\|\leq e^{-\gamma t}\|u(0)-v\|
+ +\frac{\rho}{\gamma}(1-e^{-\gamma t})\quad(u'=F(u)+r,\ \|r\|\leq\rho),$$
+
+$$\boxed{\|x-v\|\leq\frac{\|F(x)\|}{\gamma}.}$$
+
+第二项来自 -<x-v,F(x)> 的耗散下界与 Cauchy-Schwarz 上界，再约去非零误差范数；x=v 的情形单独处理。它还推出该模型内稳态的唯一性。小残差只在已经存在并通过所列条件验证的 v 周围给出距离认证，本轮没有从小残差推断未知稳态存在。
+
+主要声明：`difference_energy_identity`、`shifted_energy_bound`、`residual_controls_state`、`equilibrium_unique`、`nonlinear_equilibrium_tube`。这里是由实际双线性条件得到的通用代数/轨迹定理。应用到连续 NS 时，零均值、压力正交、Poincare 谱隙、函数空间和导数定义域仍需在真实对象上证明；不能把这些条件贴到任意低维模型后声称已认证 PDE。对有限 Fourier 候选，需要控制完整残差及未解析尾项，单独的投影残差可能漏掉隐藏方向。
+
+### 12.4 稳定耗散与可恢复性是两组不同的条件
+
+新增 `ObserverMemory/Dynamics/DampedExchangeMemory.lean`。本节使用一个实际可解的二状态系统作共同对象：
+
+$$x'=-a x+b y,\qquad y'=-b x-d y.$$
+
+其中 x 为可见状态，y 为隐藏状态，b 为实耦合常数。实际欧氏平方能量 E=x²+y² 满足
+
+$$E'=-2ax^2-2dy^2.$$
+
+只要 a,d>=gamma>0，就有 E(t)<=E(0)exp(-2gamma*t)，对任意 b 成立。`state_energy_decay` 直接对实际坐标求导并调用 mathlib 标量比较，没有把谱稳定当成输入。
+
+同一系统的真实状态和变化率给出
+
+$$y=\frac{x'+a x}{b}\quad(b\ne0).$$
+
+若读数误差分别为 epsilon_x 和 epsilon_v，实际重建满足
+
+$$|\widehat y-y|\leq\frac{\epsilon_v+|a|\epsilon_x}{|b|}.$$
+
+因此，固定正 a,d 并令 b 趋近零，可以保持同一个状态能量衰减率，而上述瞬时重建的条件数恶化。b=0 时 y 无法通过 x 及其变化率识别，但在 d>0 下隐藏状态自身仍会衰减。这是稳定性、可观测性与可检测性之间的具体区分，不把一个损失信息的观察趋零等同于全状态恢复。
+
+主要声明：`exchange_energy_identity`、`state_energy_decay`、`exact_jet_recovery`、`noisy_jet_recovery`。此线性对象没有被宣称为原非线性 NS 的某个已识别截断。原环面矩阵参数 k、模 2 检测障碍与这里的实耦合 b 也没有被人为等同。
+
+### 12.5 同一个系统产生精确记忆方程与有限历史误差界
+
+对同一隐藏 ODE 乘以 exp(dt) 并实际求导，得到
+
+$$\frac{d}{dt}(e^{dt}y(t))=-b e^{dt}x(t).$$
+
+微积分基本定理给出
+
+$$y(t)=e^{-dt}\left(y(0)-b\int_0^t e^{ds}x(s)\,ds\right).$$
+
+代回实际 x 导数，得到精确 Volterra 方程
+
+$$x'(t)=-a x(t)+b e^{-dt}y(0)+\int_0^t K(t-s)x(s)\,ds,$$
+
+$$\boxed{K(\tau)=-b^2e^{-d\tau}.}$$
+
+`memoryTerm_factored` 先在实际积分内验证指数因式分解；`hidden_history_formula` 从原 y 方程证明历史表达式；`resolved_memory_equation` 才将其接回原 x 方程。隐藏初值项没有删除。该负号来自当前反对称交换结构，不能推广为任意非线性 Mori-Zwanzig 核的符号规律。
+
+对于相同的给定可见输入 x，两个不同初始化的隐藏解 y,z 有
+
+$$|b(y(t)-z(t))|\leq |b|e^{-dt}|y(0)-z(0)|.$$
+
+这是 `hidden_restart_error`。将时间原点移到历史窗口左端，即得到同输入下重启隐藏记忆的定量误差。一个具体初始化上界 Y 与可容忍反馈误差 eta，在 |b|Y>eta 时给出普通数学的充分窗口长度 tau>=log(|b|Y/eta)/d。该对数重排尚未另写 Lean。完整闭环截断后，可见轨迹也会改变，所以还需要把输入变化反馈纳入误差方程，不能直接把同输入重启界宣称为全部降阶轨迹误差。
+
+在静态层面，原 y 方程等于零意味着 y=-bx/d，原 x 右端随即变成 -(a+b²/d)x。`stationary_hidden_elimination` 因而把稳态 Schur 修正、记忆与瞬时恢复接到同一实际系统。这里没有将无限区间的核积分当作已形式化对象。
+
+### 12.6 下一项研究：保持耗散的更小记忆实现
+
+当前具体模型提示下一项应先证明有限维块系统
+
+$$\dot x=-Ax+B^*y,\qquad \dot y=-Bx-Dy,$$
+
+在 A,D 的对称部分有正下界时，真实总能量的交叉项完全消去；消去 y 后的实际核为 -B^*exp(-Dt)B。这一有限维矩阵指数与积分的证明应从 mathlib 自行构建，并保留隐藏初值项。核的负号、对称性和度量一起决定稳定结构，不能通过只拟合少量轨迹来替代。
+
+在进一步要求 D 自伴时，可研究由 D^j Bx 生成的实际 Krylov 子空间。要证明缩减隐藏空间后核完全不变、耗散下界保留，并明确给定观察能否恢复这个缩减对象。该路线与本库 Gramian、Hankel 和最小预测商的研究相接。最小状态维数、稳定裕量和观测条件数需要分别给出；不能只按衰减快慢删除状态，或只按当前观察是否可见来删除状态。
+
+再往实际 NS 推进，应固定真实正交 Fourier 投影，证明其双线性能量消去和完整残差界；随后处理非共线扰动、压力项与高频尾项。连续极限还要求统一估计及原对象识别。本节未完成这些 PDE 接口，也未给出新的学界开放问题解答。后续新价值应落在具体 NS 子空间中保持同一目标核和负耗散裕量的有效最小化，以及有限时间、有限精度下的恢复误差，而非重列已知线性消元结论。
+
+### 12.7 文献、独立实现与本轮核验
+
+本轮以 pinned mathlib 的 `Analysis/ODE/Gronwall.lean`、`Analysis/InnerProductSpace/Calculus.lean`、`MeasureTheory/Integral/IntervalIntegral/FundThmCalculus` 为外部形式化基础。源码检索未发现上述新端点的重复 owner；该检索范围不构成数学优先权证明。新增 Lean 均有同名 Scribe，配套说明原假设和真实消费者。
+
+外部数学背景与新颖性边界：Zhu-Dominy-Venturi 已研究短记忆与有限记忆近似的误差和收敛条件 [10]；Gouasmi-Parish-Duraisamy 明确区分可精确求出的线性核与非线性正交动力学近似 [11]；Zhu-Venturi 对特定随机系统的有效 Mori-Zwanzig 核给出指数收敛分析 [12]。这些文献说明记忆误差与稳定性已有成熟研究，本节具体线性结果不计为新开放问题解决。这里只核读了原始摘要和版本信息，没有声称逐页审阅这些论文或复现其全部结论。
+
+[10] Yuanran Zhu, Jason M. Dominy, Daniele Venturi. *On the estimation of the Mori-Zwanzig memory integral*. arXiv:1708.02235v3, 2018-05-15. https://arxiv.org/abs/1708.02235 。用于限定已有短记忆误差与收敛结果的范围；无外部 Lean 依赖。
+
+[11] Ayoub Gouasmi, Eric Parish, Karthik Duraisamy. *A Priori Estimation Of Memory Effects In Coarse-Grained Nonlinear Systems Using The Mori-Zwanzig Formalism*. arXiv:1611.06277v2, 2017-05-09. https://arxiv.org/abs/1611.06277 。本文实际线性消元不含其非线性近似假设。
+
+[12] Yuanran Zhu, Daniele Venturi. *Hypoellipticity and the Mori-Zwanzig formulation of stochastic differential equations*. arXiv:2001.04565v3, 2021-08-29. https://arxiv.org/abs/2001.04565 。其随机/次椭圆假设没有被删去或替换成本节的确定性二维条件。
+
+实际执行的本轮诊断为 11 项符号恒等式与 180 组精确有理参数/状态检查。它们检查正则化差、非线性差能量、交换消去、一个解析输入的隐藏 ODE、记忆回代、噪声恢复及稳态消元。检查脚本仅保存在工作容器，未提交工程文件。没有执行 Lean 编译，因而本节所有新增源码仍需本地内核核验；不能把有限诊断计作形式化全称定理的机器证明。
