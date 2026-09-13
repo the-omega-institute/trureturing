@@ -82,6 +82,94 @@ private theorem F_upper : ∀ n : ℕ, 2 ≤ n → F n ≤ n + 1 := by
         nlinarith [Nat.zero_le ((a - 3) * (b - 2))]
     exact (Nat.add_le_add (hA (by omega)) (hB (by omega))).trans hsum
 
+private theorem F_at_least_three : ∀ n : ℕ, 2 ≤ n → 3 ≤ F n := by
+  have hmul : ∀ a b : ℕ, a.Coprime b → 1 < a → 1 < b →
+      F (a * b) = F a + F b := by
+    intro a b hab ha hb
+    rw [F, F, F, hab.primeFactors_mul,
+      Nat.factorization_mul (by omega) (by omega)]
+    rw [Finset.sum_union hab.disjoint_primeFactors]
+    apply congrArg₂ (fun x y => x + y)
+    · apply Finset.sum_congr rfl
+      intro p hp
+      simp only [Finsupp.add_apply]
+      have hnot : ¬p ∣ b := fun hpb =>
+        (Nat.prime_of_mem_primeFactors hp).ne_one
+          (Nat.eq_one_of_dvd_coprimes hab (Nat.dvd_of_mem_primeFactors hp) hpb)
+      rw [Nat.factorization_eq_zero_of_not_dvd hnot, add_zero]
+    · apply Finset.sum_congr rfl
+      intro p hp
+      simp only [Finsupp.add_apply]
+      have hnot : ¬p ∣ a := fun hpa =>
+        (Nat.prime_of_mem_primeFactors hp).ne_one
+          (Nat.eq_one_of_dvd_coprimes hab hpa (Nat.dvd_of_mem_primeFactors hp))
+      rw [Nat.factorization_eq_zero_of_not_dvd hnot, zero_add]
+  apply Nat.recOnPosPrimePosCoprime
+  · intro p e hp he _
+    have hp2 := hp.two_le
+    rw [F, Nat.primeFactors_pow p he.ne', hp.primeFactors, hp.factorization_pow]
+    simp
+    omega
+  · omega
+  · omega
+  · intro a b ha hb hab hA hB _
+    rw [hmul a b hab ha hb]
+    omega
+
+private theorem F_lower : ∀ n : ℕ, 5 ≤ n → 5 ≤ F n := by
+  have hmul : ∀ a b : ℕ, a.Coprime b → 1 < a → 1 < b →
+      F (a * b) = F a + F b := by
+    intro a b hab ha hb
+    rw [F, F, F, hab.primeFactors_mul,
+      Nat.factorization_mul (by omega) (by omega)]
+    rw [Finset.sum_union hab.disjoint_primeFactors]
+    apply congrArg₂ (fun x y => x + y)
+    · apply Finset.sum_congr rfl
+      intro p hp
+      simp only [Finsupp.add_apply]
+      have hnot : ¬p ∣ b := fun hpb =>
+        (Nat.prime_of_mem_primeFactors hp).ne_one
+          (Nat.eq_one_of_dvd_coprimes hab (Nat.dvd_of_mem_primeFactors hp) hpb)
+      rw [Nat.factorization_eq_zero_of_not_dvd hnot, add_zero]
+    · apply Finset.sum_congr rfl
+      intro p hp
+      simp only [Finsupp.add_apply]
+      have hnot : ¬p ∣ a := fun hpa =>
+        (Nat.prime_of_mem_primeFactors hp).ne_one
+          (Nat.eq_one_of_dvd_coprimes hab hpa (Nat.dvd_of_mem_primeFactors hp))
+      rw [Nat.factorization_eq_zero_of_not_dvd hnot, zero_add]
+  apply Nat.recOnPosPrimePosCoprime
+  · intro p e hp he hpe
+    have hp2 := hp.two_le
+    rw [F, Nat.primeFactors_pow p he.ne', hp.primeFactors, hp.factorization_pow]
+    simp
+    by_cases hp5 : 5 ≤ p
+    · omega
+    · have hp4 : p ≤ 4 := by omega
+      have hpne4 : p ≠ 4 := by
+        intro h
+        subst p
+        exact (by decide : ¬Nat.Prime 4) hp
+      rcases (by omega : p = 2 ∨ p = 3) with rfl | rfl
+      · have he3 : 3 ≤ e := by
+          by_contra h
+          have heCases : e = 1 ∨ e = 2 := by omega
+          rcases heCases with rfl | rfl <;> norm_num at hpe
+        omega
+      · have he2 : 2 ≤ e := by
+          by_contra h
+          have : e = 1 := by omega
+          subst e
+          norm_num at hpe
+        omega
+  · omega
+  · omega
+  · intro a b ha hb hab _ _ _
+    rw [hmul a b hab ha hb]
+    have haF := F_at_least_three a (by omega)
+    have hbF := F_at_least_three b (by omega)
+    omega
+
 /-- Ianakiev's A008474 iteration conjecture. -/
 theorem ianakiev_a008474 : ∀ m : ℕ, 4 < m → ∃ t : ℕ, F^[t] m = 5 := by
   sorry
