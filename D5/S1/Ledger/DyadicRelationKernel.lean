@@ -25,9 +25,32 @@ def H : Submodule ℤ V := Submodule.span ℤ (Set.range row)
 def ell (u : V) : ℚ := u.sum (fun n z => (z : ℚ) / (2 : ℚ) ^ n)
 /-- The endpoint difference between indices `j` and `m`. -/
 def t (j m : ℕ) : V := eps j - (2 : ℤ) ^ (m - j) • eps m
-/-- The integer numerator obtained by using the common denominator `2^m`. -/
-def weighted (u : V) (m : ℕ) : ℤ :=
-  Finset.sum (Finset.range (m + 1)) (fun j => (2 : ℤ) ^ (m - j) * u j)
+/-- The additive subgroup of rational numbers with a power of two as denominator. -/
+def Dyadic : AddSubgroup ℚ where
+  carrier := {q | ∃ k : ℕ, ∃ z : ℤ, q = (z : ℚ) / (2 : ℚ) ^ k}
+  zero_mem' := ⟨0, 0, by simp⟩
+  add_mem' := by
+    rintro a b ⟨k, z, rfl⟩ ⟨l, w, rfl⟩
+    refine ⟨k + l, z * 2 ^ l + w * 2 ^ k, ?_⟩
+    push_cast
+    rw [pow_add]
+    field_simp
+  neg_mem' := by
+    rintro a ⟨k, z, rfl⟩
+    exact ⟨k, -z, by simp [neg_div]⟩
+
+/-- Evaluation as an additive homomorphism into the dyadic rational numbers. -/
+def ellDy : V →+ Dyadic where
+  toFun u := ⟨ell u, by
+    unfold ell Finsupp.sum
+    apply Dyadic.sum_mem
+    intro n hn
+    exact ⟨n, u n, rfl⟩⟩
+  map_zero' := Subtype.ext (by simp [ell])
+  map_add' v w := by
+    apply Subtype.ext
+    change ell (v + w) = ell v + ell w
+    exact Finsupp.sum_add_index' (by simp) (by intros; simp [Int.cast_add, add_div])
 
 /-- The telescoping row from index `j` to index `m` belongs to the adjacent-row span. -/
 theorem telescoping_mem (j d : ℕ) : t j (j + d) ∈ H := by
@@ -38,17 +61,29 @@ theorem telescoping_mem (j d : ℕ) : t j (j + d) ∈ H := by
     change t j (j + d) ∈ H at ih
     change t j (j + (d + 1)) ∈ H
     rw [show t j (j + (d + 1)) = t j (j + d) + (2 : ℤ) ^ d • row (j + d) by
-      simp [t, row, eps, sub_eq_add_neg, smul_add, add_assoc, add_left_comm, add_comm,
+      simp [t, row, eps, sub_eq_add_neg, smul_add, add_assoc, add_left_comm,
         pow_succ]]
     exact H.add_mem ih (H.smul_mem _ (Submodule.subset_span ⟨j + d, rfl⟩))
   exact Nat.rec hp (fun d ih => hs d ih) d
 
-/-- A finitely supported vector is reconstructed from its lower dyadic rows and
-the remaining endpoint coefficient. -/
+/-- A vector supported at or below `m` is the sum of its lower telescoping rows and
+an integer endpoint coefficient equal to `2^m` times its dyadic evaluation. -/
 theorem support_bounded_decomposition (u : V) (m : ℕ)
     (h : u.support ⊆ Finset.range (m + 1)) :
-    u = (Finset.sum (Finset.range m) (fun j => u j • t j m)) + weighted u m • eps m := by
+    ∃ z : ℤ, (z : ℚ) = (2 : ℚ) ^ m * (ellDy u : ℚ) ∧
+      u = (∑ j ∈ Finset.range m, u j • t j m) + z • eps m := by
   classical
+  let z : ℤ := ∑ j ∈ Finset.range (m + 1), (2 : ℤ) ^ (m - j) * u j
+  refine ⟨z, ?_, ?_⟩
+  · change (z : ℚ) = (2 : ℚ) ^ m * ell u
+    rw [ell, Finsupp.sum_of_support_subset _ h _ (by simp)]
+    simp only [z, Int.cast_sum, Int.cast_mul, Int.cast_pow, Int.cast_ofNat,
+      Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro j hj
+    have hjm : j ≤ m := Nat.le_of_lt_succ (Finset.mem_range.mp hj)
+    rw [pow_sub₀ (2 : ℚ) (by norm_num) hjm]
+    ring
   ext n
   by_cases hn : n < m
   · have hnm : n ∈ Finset.range m := Finset.mem_range.mpr hn
@@ -69,7 +104,7 @@ theorem support_bounded_decomposition (u : V) (m : ℕ)
     simp [t, eps, Finsupp.single_apply, hn, Nat.ne_of_lt hn]
   · by_cases hnm : n = m
     · subst n
-      simp [Finset.sum_apply, t, eps, Finsupp.single_apply, weighted,
+      simp [Finset.sum_apply, t, eps, Finsupp.single_apply, z,
         Finset.sum_range_succ, Finset.mem_range]
       have hif : (Finset.sum (Finset.range m) (fun x => u x * if x = m then 1 else 0)) = 0 := by
         apply Finset.sum_eq_zero
@@ -96,13 +131,9 @@ theorem support_bounded_decomposition (u : V) (m : ℕ)
 
 /-- A vector lies in the span of the adjacent relations exactly when
 its dyadic evaluation is zero. -/
-theorem mem_H_iff_eval_eq_zero (u : V) : u ∈ H ↔ ell u = 0 := by
+theorem mem_H_iff_ellDy_eq_zero (u : V) : u ∈ H ↔ ellDy u = 0 := by
   classical
-  let f : V →+ ℚ :=
-    { toFun := ell
-      map_zero' := by simp [ell]
-      map_add' := fun v w => Finsupp.sum_add_index' (by simp)
-        (by intros; simp [Int.cast_add, add_div]) }
+  let f : V →+ ℚ := Dyadic.subtype.comp ellDy
   have heps (n : ℕ) : f (eps n) = 1 / (2 : ℚ) ^ n := by
     change ell (eps n) = _
     simp [ell, eps]
@@ -118,7 +149,8 @@ theorem mem_H_iff_eval_eq_zero (u : V) : u ∈ H ↔ ell u = 0 := by
     | add v w hv hw ihv ihw => simp [map_add, ihv, ihw]
     | smul a v hv ih => simp only [map_zsmul, ih, smul_zero]
   constructor
-  · exact hH u
+  · intro hu
+    exact Subtype.ext (hH u hu)
   · intro hu
     let m := u.support.sup id
     have hm : u.support ⊆ Finset.range (m + 1) := by
@@ -130,13 +162,9 @@ theorem mem_H_iff_eval_eq_zero (u : V) : u ∈ H ↔ ell u = 0 := by
       apply H.smul_mem
       have hjm := Nat.le_of_lt (Finset.mem_range.mp hj)
       simpa only [Nat.add_sub_of_le hjm] using telescoping_mem j (m - j)
-    have hd := support_bounded_decomposition u m hm
-    have hz : f u = 0 := hu
-    have he := congrArg f hd
-    rw [map_add, hH _ hs, map_zsmul, heps, hz, zero_add, zsmul_eq_mul] at he
-    have hw : weighted u m = 0 := by
-      have hc : (weighted u m : ℚ) = 0 :=
-        (mul_eq_zero.mp he.symm).resolve_right (by positivity)
+    obtain ⟨z, hz, hd⟩ := support_bounded_decomposition u m hm
+    have hw : z = 0 := by
+      have hc : (z : ℚ) = 0 := by simpa only [hu, AddSubgroup.coe_zero, mul_zero] using hz
       exact_mod_cast hc
     rw [hd, hw, zero_smul, add_zero]
     exact hs

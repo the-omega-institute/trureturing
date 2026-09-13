@@ -31,18 +31,23 @@ internal sealed class DyadicRelationKernelDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text(
                     "A finitely supported vector whose support lies at or below m is the sum of "
                     + "its lower coordinate coefficients times the telescoping rows to m, "
-                    + "together with the weighted endpoint coefficient at m."))),
+                    + "together with z times eps m, where z is an integer and equals 2^m times "
+                    + "the dyadic evaluation of the vector. This equality also proves the "
+                    + "endpoint coefficient is integral under the support bound, including m = 0."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("dyadic-evaluation-kernel"),
-                DeclarationHandle.Create("D5/S1/Ledger/DyadicRelationKernel.mem_H_iff_eval_eq_zero"),
+                DeclarationHandle.Create("D5/S1/Ledger/DyadicRelationKernel.mem_H_iff_ellDy_eq_zero"),
                 H("The adjacent-row span is the evaluation kernel"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "An integer vector with finite support belongs to the adjacent-row span "
-                    + "if and only if the sum of its coordinates divided by the corresponding "
-                    + "powers of two is zero. Each adjacent relation has zero evaluation. "
+                    + "if and only if its image under the additive homomorphism ellDy to the "
+                    + "dyadic rational subgroup is zero. The subgroup consists exactly of "
+                    + "the fractions z/2^k with integer z and natural k. Evaluation sums "
+                    + "the coordinates divided by the corresponding "
+                    + "powers of two, and finite sums remain in that subgroup. Each adjacent relation has zero evaluation. "
                     + "Conversely, the finite decomposition reduces a vector to its endpoint "
                     + "coefficient, and zero evaluation forces that coefficient to vanish."))),
                 DescribeRole.Theorem),
