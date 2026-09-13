@@ -33,6 +33,11 @@ theorem clean (renamed : Bool) : renamed.not.not = renamed := Bool.not_not _
 register_information_theorem clean
   via (ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
 
+theorem reflexive (x : Bool) : x = x := rfl
+reject_via "reflexive_closed_truth" expects "forbidden_dependency" in
+register_information_theorem reflexive
+  via (ReifierTemplates.pointwise (fun x : Bool => x) (fun x => x)) in eqArena
+
 theorem wrongArena (x : Bool) : x.not.not = x := Bool.not_not _
 reject_via "same_carrier_different_law" expects "ArenaMismatch" in
 register_information_theorem wrongArena
@@ -73,6 +78,23 @@ reject_via "provenance_hidden_proof" expects "forbidden_dependency" in
 register_information_theorem hidden
   via (ReifierTemplates.pointwise (fun x : Bool => have _p := clean; x.not.not) (fun x => x)) in eqArena
 
+def singletonArena := pointwiseEqArena (Arena.ofFintype (Fin 1)) Bool
+theorem singleton (_x : Fin 1) : false = false := rfl
+reject_via "nondegenerate_required" expects "IE-C004" in
+register_information_theorem singleton
+  via (ReifierTemplates.pointwise (fun _ : Fin 1 => false) (fun _ => false)) in singletonArena
+
+def trivialOutput := pointwiseEqArena (Arena.ofFintype Bool) Unit
+theorem noOutputs (_x : Bool) : Unit.unit = Unit.unit := rfl
+reject_via "distinct_outputs_required" expects "MissingEvidence" in
+register_information_theorem noOutputs
+  via (ReifierTemplates.pointwise (fun _ : Bool => Unit.unit) (fun _ => Unit.unit)) in trivialOutput
+
+theorem unresolved (x : Bool) : x.not.not = x := Bool.not_not _
+reject_via "unresolved_descriptor" expects "UnresolvedMetavariables" in
+register_information_theorem unresolved
+  via (ReifierTemplates.pointwise (fun _ : Bool => ?pending) (fun x => x)) in eqArena
+
 theorem exhausted (x : Bool) : x.not.not = x := Bool.not_not _
 set_option informationReifier.fuel 0 in
 reject_via "forced_exhaustion" expects "IncompleteCheck" in
@@ -84,10 +106,12 @@ run_meta do
   let a := mkSort (.param `u)
   unless ← exact a a do throwError "rigid universe positive"
   unless !(← exact a (mkSort (.param `v))) do throwError "rigid universe mismatch accepted"
-  let expr := mkApp (mkConst ``Fin) (mkNatLit 2)
-  unless ← exact expr expr do throwError "index positive"
-  unless !(← exact expr (mkApp (mkConst ``Fin) (mkNatLit 3))) do
-    throwError "changed index accepted"
+  let left := mkApp (mkConst ``Fin) (mkNatLit 2)
+  let right := mkApp (mkConst ``Fin) (mkNatLit 3)
+  let expr := mkApp2 (mkConst ``Sum [Level.zero, Level.zero]) left right
+  unless ← exact expr expr do throwError "composite index positive"
+  unless !(← exact expr (mkApp2 (mkConst ``Sum [Level.zero, Level.zero]) right left)) do
+    throwError "changed composite indices accepted"
   let flags := Expr.forallE `x (mkConst ``Bool) (mkConst ``True) .default
   unless !(← exact flags (.forallE `x (mkConst ``Bool) (mkConst ``True) .implicit)) do
     throwError "binder information erased"
@@ -96,17 +120,30 @@ run_meta do
   expectFailure "level_metavariable" "UnresolvedMetavariables" do
     discard <| exact (mkSort (← mkFreshLevelMVar)) a
 
+theorem otherRealization : LegacyPrimitiveRealization eqArena (∀ x : Bool, x.not.not = x)
+    (pointwiseEqRealization (fun _ => false) (fun _ => false)) :=
+  ⟨⟨fun _ _ => rfl, fun _ => Bool.not_not⟩⟩
+
 -- Mutation controls use the SAME valid occurrence and change one input only.
 run_meta do
   let some entry := InformationRegistry.find? (← getEnv) ``clean | throwError "missing clean"
   validateDerivedCertificate entry
   let some cert := entry.derivedCertificate | throwError "missing certificate"
   expectFailure "copied_certificate" "CertificateBindingMismatch" do
-    validateDerivedCertificate { entry with theoremName := ``wrongArena }
-  let mutated := mkAppN cert.descriptor.getAppFn
-    (cert.descriptor.getAppArgs.set! 6 (.lam `x (mkConst ``Bool) (mkConst ``Bool.false) .default))
-  expectFailure "wrong_bridge_realization" "StatementIdentityMismatch" do
-    validateDerivedCertificate { entry with derivedCertificate := some { cert with descriptor := mutated } }
+    validateDerivedCertificate { entry with registrationModuleName := `CopiedModule }
+  let rebound := { entry with registrationModuleName := `CopiedModule }
+  expectFailure "rebound_certificate" "CertificateBindingMismatch" do
+    validateDerivedCertificate { rebound with derivedCertificate := some {
+      cert with occurrence := occurrenceBinding rebound } }
+  let corrupt := { entry with statementIdentity := "stale", derivedCertificate := some {
+    cert with statementIdentity := "stale" } }
+  match ← validatePersistedEntry (← getEnv) corrupt with
+  | .error reason => unless reason.startsWith "P1.CertificateBindingMismatch" do throwError reason
+  | .ok () => throwError "stale statement identity certified"
+  let changed := { entry with realizationName := ``otherRealization }
+  expectFailure "wrong_bridge_realization" "BridgeBindingMismatch" do
+    validateDerivedCertificate { changed with derivedCertificate := some {
+      cert with occurrence := occurrenceBinding changed } }
   let arena ← freezeArena ``neArena
   let witness ← mkAppM ``FiniteSlotSensitivity #[arena]
   unless !(← RegistrationGates.checked entry.sensitivityWitness witness) do

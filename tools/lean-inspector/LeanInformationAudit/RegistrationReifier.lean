@@ -141,7 +141,8 @@ def unitValue (e : InformationRegistryEntry) : MetaM Expr := do
   mkAppM ``LegacyPrimitiveRealization.toTheoremUnit #[← rigid e.realizationName, ← rigid e.theoremName]
 
 /-- No per-registration witness declarations: create the name-based gate inputs. -/
-def derive (e : InformationRegistryEntry) (arena descriptor : Expr) : MetaM InformationRegistryEntry := bounded do
+def derive (e : InformationRegistryEntry) (arena descriptor : Expr)
+    (outputEvidence : Option Expr := none) : MetaM InformationRegistryEntry := bounded do
   let (statement, realization) ← exactUse e.theoremName arena descriptor
   let bridgeType ← mkAppM ``LegacyPrimitiveRealization #[arena, statement, realization]
   declaration e.realizationName bridgeType descriptor
@@ -154,8 +155,15 @@ def derive (e : InformationRegistryEntry) (arena descriptor : Expr) : MetaM Info
   declaration nd ndType ndProof
   let params := descriptor.getAppArgs.extract 0 5
   let output := params[1]!
-  let .some nontrivial ← trySynthInstance (← mkAppM ``Nontrivial #[output])
-    | throwError "P1.MissingEvidence: Nontrivial {output}"
+  let expected ← mkAppM ``Nontrivial #[output]
+  let nontrivial ← match outputEvidence with
+    | some value => pure value
+    | none =>
+      let .some value ← trySynthInstance expected
+        | throwError "P1.MissingEvidence: Nontrivial {output}"
+      pure value
+  closed nontrivial
+  unless ← isDefEq (← inferType nontrivial) expected do throwError "P1.MissingEvidence: output type"
   let sensitivity := e.unitName.str "__sensitivity"
   let sensitivityValue := mkAppN (mkConst ``ReifierTemplates.sensitivity)
     (params ++ #[nontrivial, ← rigid nd])
@@ -170,7 +178,7 @@ def derive (e : InformationRegistryEntry) (arena descriptor : Expr) : MetaM Info
     occurrence := occurrenceBinding e, catalogKind := e.catalogKind,
     localRegistrationNames := e.localRegistrationNames, statementIdentity := e.statementIdentity,
     levelParams := (← getConstInfo e.theoremName).levelParams, statement,
-    descriptor, arena, nondegenerate := nd } }
+    descriptor, arena, nondegenerate := nd, outputEvidence := nontrivial } }
 
 /-- Full arena-indexed witness types and permitted axiom closures, not labels. -/
 def lawSensitive (entry : InformationRegistryEntry) (arena : Expr) : MetaM Unit := do
@@ -182,19 +190,26 @@ def lawSensitive (entry : InformationRegistryEntry) (arena : Expr) : MetaM Unit 
 /-- Restricted closed-truth exclusion: uniform source plus real variation/provenance.
 This does not attempt to decide general semantic truth or arbitrary source fidelity. -/
 def closedTruthExcluded (entry : InformationRegistryEntry) : MetaM Unit := do
+  let some cert := entry.derivedCertificate | throwError "P1.MissingEvidence: uniform source"
+  discard <| exactUse entry.theoremName cert.arena cert.descriptor
   if let some diagnostic ← RegistrationGates.validateFinite entry then throwError "P1.SemanticRejected: {diagnostic}"
 
 /-- Consumer validation of persisted inputs, including copied/stale occurrence data. -/
 def validateDerivedCertificate (entry : InformationRegistryEntry) : MetaM Unit := bounded do
   let some cert := entry.derivedCertificate | return
-  unless cert.occurrence == occurrenceBinding entry && cert.catalogKind == entry.catalogKind &&
+  let env ← getEnv
+  let owner := env.getModuleIdxFor? entry.unitName |>.map
+    (env.allImportedModuleNames[·]!) |>.getD env.header.mainModule
+  unless cert.occurrence == occurrenceBinding entry && owner == entry.registrationModuleName &&
+      cert.catalogKind == entry.catalogKind &&
       cert.localRegistrationNames == entry.localRegistrationNames &&
       cert.statementIdentity == entry.statementIdentity &&
       cert.levelParams == (← getConstInfo entry.theoremName).levelParams do
     throwError "P1.CertificateBindingMismatch: {entry.theoremName}"
   requireExact "CertificateBindingMismatch" cert.arena (← freezeArena entry.arenaName)
   let (statement, realization) ← exactUse entry.theoremName cert.arena cert.descriptor
-  requireExact "CertificateBindingMismatch" cert.statement statement
+  unless cert.statement.equal statement do
+    throwError "P1.CertificateBindingMismatch: retained original statement"
   let bridge ← getConstInfo entry.realizationName
   requireExact "BridgeBindingMismatch" bridge.type
     (← mkAppM ``LegacyPrimitiveRealization #[cert.arena, statement, realization])
@@ -208,6 +223,17 @@ def validateDerivedCertificate (entry : InformationRegistryEntry) : MetaM Unit :
     unless (← getConstInfo name).levelParams.isEmpty do throwError "P1.RigidUniverseMismatch: {name}"
   let ndType ← mkAppM ``Arena.Nondegenerate #[← mkAppM ``PrimitiveLawArena.toArena #[cert.arena]]
   unless ← RegistrationGates.checked cert.nondegenerate ndType do throwError "P1.MissingEvidence: nondegenerate"
+  let sensitivity ← getConstInfo entry.sensitivityWitness
+  let some value := sensitivity.value? (allowOpaque := true)
+    | throwError "P1.WitnessBindingMismatch: missing sensitivity"
+  requireExact "WitnessBindingMismatch" value
+    (mkAppN (mkConst ``ReifierTemplates.sensitivity)
+      (cert.descriptor.getAppArgs.extract 0 5 ++ #[cert.outputEvidence, ← rigid cert.nondegenerate]))
+  let variation ← getConstInfo entry.variationWitness
+  let some value := variation.value? (allowOpaque := true)
+    | throwError "P1.WitnessBindingMismatch: missing variation"
+  requireExact "WitnessBindingMismatch" value
+    (← mkAppM ``ReifierTemplates.variation #[cert.arena, mkConst ``Bool.false, ← rigid entry.sensitivityWitness])
   closedTruthExcluded entry
   lawSensitive entry cert.arena
 

@@ -29,6 +29,7 @@ structure AutoDerivedSemanticCertificate where
   descriptor : Expr
   arena : Expr
   nondegenerate : Name
+  outputEvidence : Expr
 
 structure InformationRegistryEntry where
   theoremName : Name

@@ -324,6 +324,10 @@ private def validateEntryCore (env : Environment) (entry : InformationRegistryEn
   | .error message => return .error message
   | .ok () => pure ()
   try
+    if entry.derivedCertificate.isSome then
+      unless entry.statementIdentity == theoremStatementIdentity env entry.theoremName &&
+          entry.resolvedArenaName == (← prepareRegistrationEntry env entry).resolvedArenaName do
+        return .error "P1.CertificateBindingMismatch: current statement identity or arena ownership"
     RegistrationReifier.validateDerivedCertificate entry
   catch e => return .error (← e.toMessageData.toString)
   try
