@@ -5,7 +5,7 @@ export LC_ALL=C
 
 REPOSITORY=""
 OUTPUT=""
-SOURCE_BASE="${STRATALINT_SOURCE_BASE:-HEAD}"
+SOURCE_BASE="${STRATALINT_SOURCE_BASE:-}"
 LOG_DIR=""
 MODULE_TABLE=""
 DELTA_PLAN=""
@@ -352,5 +352,9 @@ set -e
 [[ "$serialize_rc" -eq 0 ]] || exit "$serialize_rc"
 printf 'RAW_LEAN_REPORT file=%s content_address=sha256:%s\n' "$OUTPUT" "$report_sha256"
 
+SOURCE_ARGS=()
+if [[ -n "$SOURCE_BASE" || ( -z "${STRATALINT_PUSH_BEFORE:-}" && -z "${STRATALINT_PUSH_HEAD:-}" ) ]]; then
+  SOURCE_ARGS=(--base "${SOURCE_BASE:-HEAD}")
+fi
 run_phase source-context "$BASH" "$REPOSITORY/tools/lean-inspector/source-context.sh" prepare \
-  --repository "$REPOSITORY" --report "$OUTPUT" --base "$SOURCE_BASE" --lake "$LAKE"
+  --repository "$REPOSITORY" --report "$OUTPUT" ${SOURCE_ARGS[@]+"${SOURCE_ARGS[@]}"} --lake "$LAKE"

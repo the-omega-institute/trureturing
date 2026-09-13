@@ -70,6 +70,97 @@ public sealed partial class ProductionEnvironmentTests
             contextErrorLine: demanded ? 9 : null, diagnosticLine: 10);
     }
 
+    [Theory]
+    [InlineData("earlier", "native_decide", 1)]
+    [InlineData("earlier", "decide", 0)]
+    [InlineData("historical", "native_decide", 0)]
+    [InlineData("initial", "native_decide", 1)]
+    [InlineData("initial", "decide", 0)]
+    [InlineData("nonancestor", "native_decide", 1)]
+    [InlineData("nonancestor", "decide", 0)]
+    [InlineData("pr", "native_decide", 1)]
+    [InlineData("pr", "decide", 0)]
+    public void GitCliPushRangeDispatchesSourceRule(string shape, string tactic, int expected)
+    {
+        using var temporary = new TemporaryDirectory();
+        var root = Path.Combine(temporary.Path, "repository");
+        var fixture = TrustedFrozenFixture();
+        fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical;
+        fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
+        const string path = "D5/S0/Carrier/Anonymous.lean";
+        const string header = "/- GID: D5/S0/Carrier/Anonymous\n"
+            + "   generality: G\n   mirror-B: none(waiver:test-fixture)\n   mirror-E: none(waiver:test-fixture)\n"
+            + "   anchors: []\n   utility: none\n   digest: Anonymous source admission fixture. -/\n";
+        var source = header + $"example : True := by {tactic}\n";
+        if (shape is "initial" or "historical") fixture.Files[path] = source;
+        foreach (var file in Snapshot(fixture.Files).Entries)
+        {
+            var target = Path.Combine(root, file.Path);
+            Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+            File.WriteAllBytes(target, file.Bytes.ToArray());
+        }
+        Git("init", "--quiet");
+        Commit("P");
+        var before = Git("rev-parse", "HEAD").Trim();
+        if (shape == "nonancestor")
+        {
+            // P supplies path/byte planning only, even when its old policy cannot load.
+            File.WriteAllText(Path.Combine(root, "Meta/registry.yaml"), "invalid old policy\n");
+            Git("add", "Meta/registry.yaml");
+            before = Git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
+                "commit-tree", Git("write-tree").Trim(), "-m", "unrelated P").Trim();
+            File.WriteAllText(Path.Combine(root, "Meta/registry.yaml"), TestRegistry.Canonical);
+        }
+        if (shape != "initial")
+        {
+            File.WriteAllText(Path.Combine(root, path), source);
+            Commit("earlier source");
+            File.WriteAllText(Path.Combine(root, "README.md"), "final unrelated commit\n");
+            Commit("H");
+        }
+        else before = new string('0', 40);
+        var head = Git("rev-parse", "HEAD").Trim();
+        if (shape == "pr")
+        {
+            head = Git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
+                "commit-tree", Git("rev-parse", "HEAD^{tree}").Trim(), "-p", before, "-p", head, "-m", "M").Trim();
+            Git("update-ref", "HEAD", head);
+        }
+        var gateway = new GitRepositoryGateway(root);
+        var snapshot = Decode(gateway.ReadCurrent());
+        fixture.Reports[path] = new LeanFileReport([], []);
+        var report = Path.Combine(temporary.Path, "report.json");
+        RawLeanReportArtifact.WriteFile(report, snapshot, LeanAxiomReport.Create(fixture.Reports));
+        string[] input = shape == "pr" ? ["--protected-base", before]
+            : ["--push-before", before, "--push-head", head];
+        var console = new BufferedConsole();
+        var exit = CliApplication.Run(["check", .. input, "--candidate-lean-report", report],
+            new ProductionCliEnvironment(root, gateway, new FakeLeanReportSource(null)), console);
+        Assert.True(exit == expected, $"shape={shape} exit={exit} " + console.Output + console.Error);
+        if (expected == 1) Assert.Contains($"{path}: NATIVE_DECIDE_SOURCE line=8", console.Output);
+        if (shape == "pr") return;
+        var missing = new BufferedConsole();
+        Assert.Equal(2, CliApplication.Run(["check", "--push-before", before, "--candidate-lean-report", report],
+            new ProductionCliEnvironment(root, gateway, new FakeLeanReportSource(null)), missing));
+        var wrongHead = new BufferedConsole();
+        Assert.Equal(2, CliApplication.Run(["check", "--push-before", before, "--push-head", new string('a', 40),
+            "--candidate-lean-report", report], new ProductionCliEnvironment(root, gateway, new FakeLeanReportSource(null)), wrongHead));
+        Assert.Contains("PUSH_RANGE_INVALID", wrongHead.Error);
+
+        void Commit(string message)
+        {
+            Git("add", ".");
+            Git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "--quiet",
+                "--allow-empty", "--no-gpg-sign", "-m", message);
+        }
+        string Git(params string[] arguments)
+        {
+            var result = TestProcessRunner.Run("git", arguments, root, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
+            Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+            return Encoding.UTF8.GetString(result.StandardOutput);
+        }
+    }
+
     private static void CheckAnonymousSource(string tactic, int expected, string prefix = "",
         bool modified = false, bool prepareContext = false, bool demandContext = true,
         int? contextErrorLine = null, int diagnosticLine = 8, bool? pairBase = null, bool unchanged = false)

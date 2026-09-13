@@ -139,6 +139,34 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
             RawChangeSet.CreateWithKinds(ReadRawChanges(revision)));
     }
 
+    // P is an endpoint for planning only. It is never the protected semantic base.
+    public PreparedRepository PreparePush(string before, string head)
+    {
+        static bool IsOid(string value) => value.Length is 40 or 64
+            && value.All(character => character is >= '0' and <= '9' or >= 'a' and <= 'f');
+        if (!IsOid(before) || !IsOid(head) || before.Length != head.Length)
+            throw new InvalidOperationException("PUSH_RANGE_INVALID: immutable before/head OIDs are required");
+        if (GitText("rev-parse", "--verify", "HEAD^{commit}").Trim() != head)
+            throw new InvalidOperationException("PUSH_RANGE_INVALID: head differs from checked HEAD");
+        var initial = before.All(character => character == '0');
+        if (!initial && GitText("cat-file", "-t", before).Trim() != "commit")
+            throw new InvalidOperationException("PUSH_RANGE_INVALID: before is not a commit");
+        var current = ReadCurrent();
+        var changes = initial
+            ? RawChangeSet.CreateWithKinds(current.Entries.Select(file => (file.Path, RawChangeKind.Added)))
+            : RawChangeSet.CreateWithKinds(ParseChanges(GitBytes("diff", "--name-status", "-z", "--no-renames", before, head, "--"))
+                .Concat(ReadRawChanges(head)).GroupBy(change => change.Path, StringComparer.Ordinal)
+                .Select(group => group.First()));
+        var oldFiles = initial ? null : ReadRevision(before).Entries.ToDictionary(file => file.Path, StringComparer.Ordinal);
+        var files = current.Entries.ToDictionary(file => file.Path, StringComparer.Ordinal);
+        var sourcePaths = changes.Paths.Where(path => path.Value.StartsWith("D5/", StringComparison.Ordinal)
+            && path.Value.EndsWith(".lean", StringComparison.Ordinal)
+            && files.TryGetValue(path.Value, out var file)
+            && (oldFiles is null || !oldFiles.TryGetValue(path.Value, out var old)
+                || !file.Bytes.AsSpan().SequenceEqual(old.Bytes.AsSpan()))).ToImmutableArray();
+        return new PreparedRepository(null, changes, sourcePaths);
+    }
+
     public RawChangeSet ReadCurrentChanges()
     {
         var head = GitText("rev-parse", "HEAD").Trim();

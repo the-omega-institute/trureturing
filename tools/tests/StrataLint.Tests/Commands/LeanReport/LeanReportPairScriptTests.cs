@@ -222,6 +222,7 @@ public sealed class LeanReportPairScriptTests
         private readonly string cacheEnsureLog;
         private string script = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "scripts", "lean-report-pair.sh");
         private string addressOutput = "";
+        private readonly string baseline;
 
         internal LeanReportPairFixture()
         {
@@ -253,6 +254,10 @@ public sealed class LeanReportPairScriptTests
                 InputHelperPath, PairScriptPath, RawReportPath, CanonicalWriterPath, ScribeProgramPath,
                 CliProjectPath, EngineProjectPath, TruthProjectPath, "tools/StrataLint.Cli/FixtureProbe.cs",
                 "Directory.Build.props", ".github/workflows/ci.yml");
+            Git("init", "--quiet");
+            Git("add", ".");
+            Git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "--quiet", "--no-gpg-sign", "-m", "fixture base");
+            baseline = Git("rev-parse", "HEAD").Trim();
             var chmod = TestProcessRunner.Run(
                 "chmod",
                 ["+x", producer],
@@ -298,6 +303,7 @@ public sealed class LeanReportPairScriptTests
                     $"STUB_ADDRESS={addressOutput}",
                     "bash",
                     script,
+                    "--base", baseline,
                     "--producer", producer,
                     "--lake-bin", "/usr/bin/true",
                     "--candidate-root", candidateRoot,
@@ -305,6 +311,14 @@ public sealed class LeanReportPairScriptTests
                 ],
                 temporary.Path,
                 BoundedProcessRunner.HangDetectionBudget);
+        }
+
+        private string Git(params string[] arguments)
+        {
+            var run = TestProcessRunner.Run("git", arguments, candidateRoot,
+                BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
+            Assert.True(run.ExitCode == 0, Encoding.UTF8.GetString(run.StandardError));
+            return Encoding.UTF8.GetString(run.StandardOutput);
         }
 
         internal void DeleteCacheEnsure() => File.Delete(CacheEnsurePath);

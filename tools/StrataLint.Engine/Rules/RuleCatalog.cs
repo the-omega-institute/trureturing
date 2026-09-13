@@ -253,7 +253,9 @@ public sealed class RuleCatalog
                             context.IsBaseFactAffected);
                     }
 
-                    return registration.Rule.EvaluateCandidateDelta(context);
+                    return context.ProtectedBase is null
+                        ? registration.Rule.Evaluate(context)
+                        : registration.Rule.EvaluateCandidateDelta(context);
                 }
 
                 var findings = measureRule is null

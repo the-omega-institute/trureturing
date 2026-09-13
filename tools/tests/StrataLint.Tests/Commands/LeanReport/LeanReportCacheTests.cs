@@ -370,6 +370,7 @@ public sealed class LeanReportCacheTests
     private sealed class CacheWorld : IDisposable
     {
         private readonly TemporaryDirectory _tmp = new();
+        private readonly string _baseline;
 
         internal CacheWorld()
         {
@@ -466,6 +467,19 @@ public sealed class LeanReportCacheTests
                 shift
                 PATH="$ORIGINAL_PATH" exec dotnet "$NATIVE_CLI" "$@"
                 """);
+            Git("init", "--quiet");
+            Git("add", ".");
+            Git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
+                "commit", "--quiet", "--no-gpg-sign", "-m", "cache fixture baseline");
+            _baseline = Git("rev-parse", "HEAD").Trim();
+        }
+
+        private string Git(params string[] arguments)
+        {
+            var run = TestProcessRunner.Run("git", arguments, Repo,
+                TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
+            Assert.True(run.ExitCode == 0, Encoding.UTF8.GetString(run.StandardError));
+            return Encoding.UTF8.GetString(run.StandardOutput);
         }
 
         internal string Repo { get; }
@@ -505,7 +519,10 @@ public sealed class LeanReportCacheTests
             string? failureStage = null,
             int reportVersion = 1)
         {
-            var arguments = new List<string>();
+            var arguments = new List<string>
+            {
+                "-u", "STRATALINT_PUSH_BEFORE", "-u", "STRATALINT_PUSH_HEAD",
+            };
             if (!cacheEnabled)
             {
                 // Seal against an ambient STRATALINT_REPORT_CACHE_ROOT leaking in from
@@ -534,6 +551,7 @@ public sealed class LeanReportCacheTests
             arguments.AddRange(
             [
                 PairScript,
+                "--base", _baseline,
                 "--producer", Producer,
                 "--lake-bin", "/bin/echo",
                 "--candidate-root", Repo,

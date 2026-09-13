@@ -137,8 +137,9 @@ internal static partial class RepositoryRules
 
     private static bool ChangedLeanTaskSet(RuleEvaluationContext context)
     {
+        if (context.ProtectedBase is null) return true;
         var currentTasks = CollectTaskCodes(context.Current);
-        var baselineTasks = CollectTaskCodes(context.Baseline);
+        var baselineTasks = CollectTaskCodes(context.ProtectedBase);
         return !currentTasks.SetEquals(baselineTasks);
     }
 

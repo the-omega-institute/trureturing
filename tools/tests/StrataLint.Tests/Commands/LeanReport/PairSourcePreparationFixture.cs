@@ -30,10 +30,11 @@ internal sealed class PairSourcePreparationFixture
 
     internal void Prepare(string report, string? baseline, bool demanded)
     {
+        var protectedParent = new StrataLint.Cli.GitRepositoryGateway(root).Prepare("HEAD^1").Revision;
         Produce("produced");
         if (baseline is not null) return;
         var bytes = TemporaryFile.ReadAllBytes(report + ".source-context.json");
-        // An existing report cache can predate the sibling. The next no-base
+        // An existing report cache can predate the sibling. The next environment-base
         // invocation must rebuild demanded context without rebuilding the report.
         foreach (var path in TemporaryDirectoryIo.EnumerateFiles(Path.Combine(scratch, "cache"),
             "*.source-context.json", SearchOption.AllDirectories)) TemporaryFile.Delete(path);
@@ -65,7 +66,7 @@ internal sealed class PairSourcePreparationFixture
         }
 
         ProcessOutput Invoke(string? sourceBase) => TestProcessRunner.Run("env", [
-            "-u", "STRATALINT_SOURCE_BASE",
+            $"STRATALINT_SOURCE_BASE={(sourceBase is null ? protectedParent : string.Empty)}",
             $"STRATALINT_REPORT_CACHE_ROOT={Path.Combine(scratch, "cache")}",
             $"STRATALINT_SUPERVISOR_ROOT={Path.Combine(scratch, "supervisor")}",
             $"PAIR_COMPILER={compiler}", $"PAIR_PREPARATION={Path.Combine(scratch, "prepare.py")}",

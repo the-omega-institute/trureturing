@@ -16,9 +16,32 @@ preflight_base_invalid() {
   exit 2
 }
 
+ENGINEERING_BEFORE="${BEFORE-}"
+preflight_range_invalid() {
+  printf 'PREFLIGHT_PUSH_RANGE_INVALID before=%s reason=%s\n' "$ENGINEERING_BEFORE" "$1" >&2
+  exit 2
+}
+validate_push_range() {
+  [[ -n "$ENGINEERING_BEFORE" ]] || preflight_range_invalid missing
+  [[ "$ENGINEERING_BEFORE" =~ ^[0-9a-f]{40}$ ]] || preflight_range_invalid not-40-hex
+  if [[ ! "$ENGINEERING_BEFORE" =~ ^0+$ ]]; then
+    local before_type
+    before_type="$(git cat-file -t "$ENGINEERING_BEFORE" 2>/dev/null)" || preflight_range_invalid object-missing
+    [[ "$before_type" == commit ]] || preflight_range_invalid not-commit
+  fi
+  CANDIDATE_SHA="$(git rev-parse --verify HEAD)" || preflight_range_invalid head-unavailable
+}
+if [[ "${1:-}" == --validate-range-only && $# -eq 1 ]]; then
+  validate_push_range
+  printf 'PREFLIGHT_PUSH_RANGE_VALID before=%s head=%s\n' "$ENGINEERING_BEFORE" "$CANDIDATE_SHA"
+  exit 0
+fi
+[[ $# -eq 0 ]] || { echo 'PREFLIGHT_ARGUMENT_INVALID' >&2; exit 2; }
 [[ -n "$BASE_SHA" ]] || preflight_base_invalid missing
 [[ "$BASE_SHA" =~ ^[0-9a-f]{40}$ ]] || preflight_base_invalid not-40-hex
 BASE_SHA="$BASE"
+[[ -n "$ENGINEERING_BEFORE" ]] || preflight_range_invalid missing
+[[ "$ENGINEERING_BEFORE" =~ ^[0-9a-f]{40}$ ]] || preflight_range_invalid not-40-hex
 
 # Remaining seconds of preflight's optional absolute deadline, or empty when unbounded.
 remaining_deadline_seconds() {
@@ -66,6 +89,8 @@ case "$ancestor_rc" in
   *) preflight_base_invalid ancestor-check-failed ;;
 esac
 CANDIDATE_SHA="$(git rev-parse HEAD)"
+validate_push_range
+unset STRATALINT_PUSH_BEFORE STRATALINT_PUSH_HEAD STRATALINT_SOURCE_BASE STRATALINT_SCRIBE_BASE
 source "$ROOT/tools/scripts/lib/resource-observation-lib.sh"
 
 PREFLIGHT_STARTED="$(date +%s)"
@@ -86,17 +111,18 @@ record_timing restore-proofs
 CI=true make -C tools dotnet
 record_timing dotnet
 
-make lean-report
+STRATALINT_PUSH_BEFORE="$ENGINEERING_BEFORE" STRATALINT_PUSH_HEAD="$CANDIDATE_SHA" \
+  STRATALINT_SOURCE_BASE="" STRATALINT_SCRIBE_BASE="" make lean-report
 record_timing lean-report
 
-STRATALINT_SCRIBE_BASE="$BASE_SHA" \
+STRATALINT_PUSH_BEFORE="$ENGINEERING_BEFORE" STRATALINT_PUSH_HEAD="$CANDIDATE_SHA" \
+  STRATALINT_SOURCE_BASE="" STRATALINT_SCRIBE_BASE="" \
   /bin/bash "$ROOT/tools/scripts/workflow/scribe-content-checks.sh" \
   "$ROOT/.lake/build/stratalint/raw-lean-report.json"
 record_timing scribe-content-checks
 
 ENGINEERING_HEAD="$CANDIDATE_SHA"
-ENGINEERING_BASE="$(git rev-parse HEAD^1)"
-CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make -C tools engineering-tests HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE"
+CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make -C tools engineering-tests EVENT=push HEAD="$ENGINEERING_HEAD" BEFORE="$ENGINEERING_BEFORE"
 record_timing test
 
 make -C tools selftest
@@ -173,7 +199,9 @@ if gate_remaining="$(remaining_deadline_seconds)"; then
 fi
 
 set +e
-make gate BASE="$BASE_SHA" GATE_ARGS="--skip-engineering"
+STRATALINT_PUSH_BEFORE="$ENGINEERING_BEFORE" STRATALINT_PUSH_HEAD="$CANDIDATE_SHA" \
+  STRATALINT_SOURCE_BASE="" STRATALINT_SCRIBE_BASE="" \
+  make gate BASE="$BASE_SHA" GATE_ARGS="--skip-engineering"
 gate_rc=$?
 set -e
 record_timing gate

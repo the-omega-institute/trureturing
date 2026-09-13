@@ -327,6 +327,16 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
+pattern = "Meta/EngineeringInputs.json"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["EngineeringInputManifest"]
+verified_by = ["EngineeringInputManifest"]
+artifact_id = "EngineeringInputManifest"
+runtime_disposition = "committed-source"
+
+[[files]]
 pattern = "Meta/FILEMAP.toml"
 kind = "data"
 admission_plane = "judge"

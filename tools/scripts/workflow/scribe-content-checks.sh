@@ -15,12 +15,15 @@ if [[ ! -s "$REPORT" ]]; then
   echo "scribe-content-checks: raw Lean report is missing or empty at $REPORT" >&2
   exit 2
 fi
-if [[ ! "$BASE" =~ ^[0-9a-fA-F]{40}$|^[0-9a-fA-F]{64}$ ]]; then
-  echo "scribe-content-checks: an exact merge-base is required" >&2
-  exit 2
+PUSH_BEFORE="${STRATALINT_PUSH_BEFORE:-}"
+PUSH_HEAD="${STRATALINT_PUSH_HEAD:-}"
+if [[ -n "$PUSH_BEFORE" || -n "$PUSH_HEAD" ]]; then
+  [[ -z "$BASE" ]] || { echo "scribe-content-checks: push range and protected base are distinct modes" >&2; exit 2; }
+else
+  # The retained PR/local comparison interface supplies a pinned B; it is not guessed.
+  PUSH_BEFORE="$BASE"
+  PUSH_HEAD="$(git -C "$REPO_ROOT" rev-parse --verify HEAD)" || exit 2
 fi
-git -C "$REPO_ROOT" cat-file -e "${BASE}^{commit}" \
-  || { echo "scribe-content-checks: BASE commit is unavailable" >&2; exit 2; }
 SCRIBE=(dotnet run --project "$PROJECT" --configuration Release --)
 if [[ -n "$SCRIBE_DLL" ]]; then
   SCRIBE=(dotnet "$SCRIBE_DLL")
@@ -32,12 +35,13 @@ run_scribe() {
 }
 
 CHANGED_PATHS=()
+paths_file="$(mktemp)"
+trap 'rm -f -- "$paths_file"' EXIT
+python3 "$REPO_ROOT/tools/scripts/workflow/checked-ci-identity.py" --repository "$REPO_ROOT" \
+  --paths --planning-before "$PUSH_BEFORE" --planning-head "$PUSH_HEAD" > "$paths_file" || exit 2
 while IFS= read -r -d '' path; do
   CHANGED_PATHS+=("$path")
-done < <(
-  git diff --name-only --no-renames -z "$BASE" --
-  git ls-files --others --exclude-standard -z
-)
+done < "$paths_file"
 
 # FILEMAP's registered manifest is the sole impact authority. Validate its
 # inputs even on an unrelated delta; match removed paths from the same git diff.

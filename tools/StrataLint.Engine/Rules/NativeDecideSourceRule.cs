@@ -8,10 +8,10 @@ internal static class NativeDecideSourceRule
         IsD5Lean(artifact.Path);
 
     internal static bool IsAffectedBy(RuleEvaluationContext context) =>
-        SelectedPaths(context.Current, context.Baseline, context.Changes).Any();
+        (context.SourcePaths ?? SelectedPaths(context.Current, context.ProtectedBase, context.Changes).ToImmutableArray()).Any();
 
     internal static ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context) =>
-        SelectedPaths(context.Current, context.Baseline, context.Changes)
+        (context.SourcePaths ?? SelectedPaths(context.Current, context.ProtectedBase, context.Changes).ToImmutableArray())
             .OrderBy(path => path.Value, StringComparer.Ordinal)
             .SelectMany(path => Inspect(context.Current, path, context.SourceContext)).ToImmutableArray();
 
@@ -59,9 +59,9 @@ internal static class NativeDecideSourceRule
     }
 
     internal static IEnumerable<RepoPath> SelectedPaths(RepositorySnapshot current,
-        RepositorySnapshot baseline, RawChangeSet changes) => changes.Paths.Distinct().Where(path =>
+        RepositorySnapshot? baseline, RawChangeSet changes) => changes.Paths.Distinct().Where(path =>
             IsD5Lean(path) && current.Files.TryGetValue(path, out var file)
-            && (!baseline.Files.TryGetValue(path, out var old)
+            && (baseline is null || !baseline.Files.TryGetValue(path, out var old)
                 || !file.RawBytes.AsSpan().SequenceEqual(old.RawBytes.AsSpan())));
 
     private static bool IsD5Lean(RepoPath path) => path.Value.StartsWith("D5/", StringComparison.Ordinal)

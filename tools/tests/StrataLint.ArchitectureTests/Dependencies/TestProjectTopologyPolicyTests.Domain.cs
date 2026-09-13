@@ -1,4 +1,3 @@
-using System.Xml.Linq;
 using TestProjectTopologyPolicy = StrataLint.Engine.RepositoryRules;
 
 namespace StrataLint.ArchitectureTests;
@@ -136,7 +135,8 @@ public sealed partial class TestProjectTopologyPolicyTests
         var harness = CrossCuttingHarness("../NewProduct.Tests/NewProduct.Tests.csproj");
         var edited = new TestProjectTopologyProject(
             harness.Path,
-            harness.Content.Replace("<ItemGroup>", "<ItemGroup><!-- unrelated --></ItemGroup><ItemGroup>"));
+            harness.Content.Replace("<ItemGroup>", "<ItemGroup><!-- unrelated --></ItemGroup><ItemGroup>"),
+            harness.Assembly, harness.Role, harness.References);
 
         var result = TestProjectTopologyPolicy.Evaluate(
             HarnessWorld(harness),

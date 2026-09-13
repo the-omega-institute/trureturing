@@ -199,7 +199,7 @@ internal sealed class RuleEvaluationContext
 {
     private RuleEvaluationContext(
         RepositorySnapshot current,
-        RepositorySnapshot baseline,
+        RepositorySnapshot? baseline,
         ValidatedPolicy policy,
         AcceptedLeanClosure lean,
         RawChangeSet changes,
@@ -207,15 +207,17 @@ internal sealed class RuleEvaluationContext
         VerifiedScribeEmissions? verifiedScribeEmissions,
         ScribeTestMapStore? testMapStore,
         Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap,
-        LeanSourceContextInput? sourceContext)
+        LeanSourceContextInput? sourceContext,
+        ImmutableArray<RepoPath>? sourcePaths)
     {
         SourceContext = sourceContext ?? LeanSourceContextInput.Empty;
+        SourcePaths = sourcePaths;
         Current = current;
-        Baseline = baseline;
+        ProtectedBase = baseline;
         Policy = policy;
         Lean = lean;
         Changes = changes;
-        BackfillCandidateDeltaSession = new BackfillCandidateDeltaSession(
+        backfillCandidateDeltaSession = baseline is null ? null : new BackfillCandidateDeltaSession(
             current,
             baseline,
             changes);
@@ -228,11 +230,16 @@ internal sealed class RuleEvaluationContext
 
     internal LeanSourceContextInput SourceContext { get; }
 
+    internal ImmutableArray<RepoPath>? SourcePaths { get; }
+
     internal RepositorySnapshot Current { get; }
 
-    // Baseline is the protected state extended by the candidate. In CI it is HEAD^1 of the
-    // pull-request merge object, so it is an ancestor of the candidate HEAD.
-    internal RepositorySnapshot Baseline { get; }
+    // Current push evaluation has no protected snapshot. Legacy comparison consumers
+    // must explicitly require it; P never enters this semantic context.
+    internal RepositorySnapshot? ProtectedBase { get; }
+
+    internal RepositorySnapshot Baseline => ProtectedBase
+        ?? throw new InvalidOperationException("protected comparison requires a base snapshot");
 
     internal ValidatedPolicy Policy { get; }
 
@@ -240,9 +247,12 @@ internal sealed class RuleEvaluationContext
 
     internal RawChangeSet Changes { get; }
 
-    internal BackfillCandidateDeltaSession BackfillCandidateDeltaSession { get; }
+    private readonly BackfillCandidateDeltaSession? backfillCandidateDeltaSession;
 
-    internal int BackfillCandidateDeltaLoadCount => BackfillCandidateDeltaSession.LoadCount;
+    internal BackfillCandidateDeltaSession BackfillCandidateDeltaSession => backfillCandidateDeltaSession
+        ?? throw new InvalidOperationException("candidate delta session requires a protected base");
+
+    internal int BackfillCandidateDeltaLoadCount => backfillCandidateDeltaSession?.LoadCount ?? 0;
 
     internal bool RuleImplementationChanged { get; }
 
@@ -261,7 +271,7 @@ internal sealed class RuleEvaluationContext
 
     internal static RuleEvaluationContext Create(
         RepositorySnapshot current,
-        RepositorySnapshot baseline,
+        RepositorySnapshot? baseline,
         ValidatedPolicy policy,
         AcceptedLeanClosure lean,
         RawChangeSet changes,
@@ -269,7 +279,8 @@ internal sealed class RuleEvaluationContext
         VerifiedScribeEmissions? verifiedScribeEmissions = null,
         ScribeTestMapStore? testMapStore = null,
         Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null,
-        LeanSourceContextInput? sourceContext = null) =>
+        LeanSourceContextInput? sourceContext = null,
+        ImmutableArray<RepoPath>? sourcePaths = null) =>
         Create(
             current,
             baseline,
@@ -280,11 +291,11 @@ internal sealed class RuleEvaluationContext
             verifiedScribeEmissions,
             testMapStore,
             deriveTestMap,
-            sourceContext);
+            sourceContext, sourcePaths);
 
     internal static RuleEvaluationContext Create(
         RepositorySnapshot current,
-        RepositorySnapshot baseline,
+        RepositorySnapshot? baseline,
         ValidatedPolicy policy,
         AcceptedLeanClosure lean,
         RawChangeSet changes,
@@ -292,7 +303,8 @@ internal sealed class RuleEvaluationContext
         VerifiedScribeEmissions? verifiedScribeEmissions = null,
         ScribeTestMapStore? testMapStore = null,
         Func<RepositorySnapshot, ScribeTestMap>? deriveTestMap = null,
-        LeanSourceContextInput? sourceContext = null) =>
+        LeanSourceContextInput? sourceContext = null,
+        ImmutableArray<RepoPath>? sourcePaths = null) =>
         new(
             current,
             baseline,
@@ -303,7 +315,7 @@ internal sealed class RuleEvaluationContext
             verifiedScribeEmissions,
             testMapStore,
             deriveTestMap,
-            sourceContext);
+            sourceContext, sourcePaths);
 }
 
 internal sealed class RepositoryRule(
