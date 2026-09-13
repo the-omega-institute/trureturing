@@ -282,7 +282,7 @@ private structure WalkState where
   visited : Std.HashSet (Expr × Position × Array Expr) := {}
   walked : NameHashSet := {}
   queued : NameHashSet := {}
-  pending : List (Name × Position × Name) := []
+  pending : List Name := []
   typeObligations : List (Expr × Array Expr × Bool × Bool × Name × Name) := []
   appObligations : List (Expr × Array Expr × Bool × Name) := []
   comparisons : Std.HashMap (Expr × Expr) Bool := {}
@@ -403,11 +403,11 @@ private def resultHead (raw : Expr) : WalkM (Option Name) := do
 private def noteUnclassified (u : Unclassified) : WalkM Unit := do
   if (← get).unclassified |>.isNone then modify fun s => { s with unclassified := some u }
 
-private def queue (n : Name) (pos : Position) (site : Name) : WalkM Unit := do
+private def queue (n : Name) : WalkM Unit := do
   let s ← get
   if s.queued.contains n then return
   if s.constFuel == 0 then modify fun s => { s with incomplete := true } else
-    modify fun s => { s with queued := s.queued.insert n, pending := List.cons (n, pos, site) s.pending, constFuel := s.constFuel - 1 }
+    modify fun s => { s with queued := s.queued.insert n, pending := List.cons n s.pending, constFuel := s.constFuel - 1 }
 
 -- No failed or exhausted Meta query can supply a positive allowlist verdict.
 -- Open subterms are checked structurally below, without inventing a context
@@ -458,7 +458,7 @@ private def typeConstant (env : Environment) (n : Name) : WalkM Unit := do
     if (← compareCanonical info.type (← get).statement) ||
         (← compareCanonical info.type (← get).decision) then
       modify fun s => { s with forbidden := true, walked := s.walked.insert n }
-    if inProtected env n then queue n .typePos n
+    if inProtected env n then queue n
   else modify fun s => { s with incomplete := true }
 
 -- Positive policies for instance types whose parameters are still checked by
@@ -845,7 +845,7 @@ private def visitSummary (env : Environment) (origin : Name) (summary : Summary)
           modify fun s => { s with forbidden := true }
         modify fun s => { s with typeObligations :=
           (type, #[], false, info.any (fun i => !i.hasValue (allowOpaque := true)), n, origin) :: s.typeObligations }
-        if inProtected env n && !(← get).queued.contains n then queue n node.position origin
+        if inProtected env n && !(← get).queued.contains n then queue n
       else modify fun s => { s with incomplete := true }
     | .app _ _ =>
       -- Check instantiated domains after scanning constant dependencies, so a
@@ -875,7 +875,7 @@ private def visit (env : Environment) (pos : Position) (origin : Name) (e : Expr
 private def process (env : Environment) : WalkM Unit := do
   while !(← get).forbidden do
     unless ← chargeSummaryWork (fun c => { c with dispatchWork := c.dispatchWork + 1 }) do break
-    let some (n, _, _) := (← get).pending.head? | do
+    let some n := (← get).pending.head? | do
       if let some (type, context, full, rejectUnknown, first, origin) := (← get).typeObligations.head? then
         modify fun s => { s with typeObligations := s.typeObligations.tail! }
         let (exact, mentions, unknown) ← classifyType env type context full

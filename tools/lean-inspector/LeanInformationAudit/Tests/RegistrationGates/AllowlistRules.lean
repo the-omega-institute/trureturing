@@ -540,4 +540,15 @@ run_cmd Elab.Command.liftCoreM do
       check "DefeqBudgetExhaustion" ``cleanRead ``target "unclassified_form" "defeq_budget"
   catch ex => logError m!"[FAIL] DefeqBudgetExhaustion: {ex.toMessageData}"
 
+-- Pending constants have declaration identity only. Occurrence metadata belongs
+-- to the separate type obligations, where it is consumed by diagnostics.
+run_cmd Elab.Command.liftTermElabM do
+  let some (_, info) := (← getEnv).constants.toList.find? (fun (name, _) =>
+    privateToUserName? name == some `LeanInformationAudit.RegistrationGates.WalkState.pending)
+    | throwError "[FAIL] PendingConstantNames: accessor missing"
+  Meta.forallTelescope info.type fun _ result => do
+    unless ← Meta.isDefEq result (mkApp (mkConst ``List [.zero]) (mkConst ``Name)) do
+      throwError "[FAIL] PendingConstantNames: queue retains unused occurrence metadata"
+  logInfo "[PASS] PendingConstantNames"
+
 end AllowlistRules
