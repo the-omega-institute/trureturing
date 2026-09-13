@@ -492,13 +492,15 @@ private def compareCanonical (a b : Expr) : WalkM Bool := do
         unless ← Meta.isDefEq (← Meta.inferType a) (← Meta.inferType b) do return false
         Meta.isDefEq a b
       Core.checkMaxHeartbeats "readout definitional comparison"
-      pure (some result)) (fun _ => pure none) : MetaM (Option Bool))
+      pure (Except.ok result)) (fun ex => pure (Except.error ex)) : MetaM (Except Exception Bool))
   match result with
-  | some result =>
+  | .ok result =>
     modify fun s => { s with comparisons := s.comparisons.insert (a, b) result }
     return result
-  | none =>
-    noteUnclassified ⟨"defeq_budget", `defeq, "unclassified", `defeq⟩
+  | .error ex =>
+    -- Keep the exception until Lean's native predicate identifies its cause.
+    noteUnclassified ⟨(if ex.isMaxHeartbeat then "defeq_budget" else "meta_runtime_exception"),
+      `defeq, "unclassified", if ex.isMaxHeartbeat then `heartbeat_exhaustion else `meta_runtime_exception⟩
     return false
 
 -- Preserve constant provenance before reduction, including constants discovered
@@ -552,10 +554,13 @@ private def boundedMeta (action : MetaM α) : WalkM (Option α) := do
       { ctx with initHeartbeats := start, maxHeartbeats := budget }) do
       let result ← runInBase action
       Core.checkMaxHeartbeats "readout type classification"
-      pure (some result)) (fun _ => pure none) : MetaM (Option α))
-  if result.isNone then
-    noteUnclassified ⟨"defeq_budget", `defeq, "unclassified", `defeq⟩
-  return result
+      pure (Except.ok result)) (fun ex => pure (Except.error ex)) : MetaM (Except Exception α))
+  match result with
+  | .ok value => return some value
+  | .error ex =>
+    noteUnclassified ⟨(if ex.isMaxHeartbeat then "defeq_budget" else "meta_runtime_exception"),
+      `defeq, "unclassified", if ex.isMaxHeartbeat then `heartbeat_exhaustion else `meta_runtime_exception⟩
+    return none
 
 -- These locals are rebuilt from the original typed readout syntax in this
 -- query. Their immutable let values are valid even when Lean marks the local

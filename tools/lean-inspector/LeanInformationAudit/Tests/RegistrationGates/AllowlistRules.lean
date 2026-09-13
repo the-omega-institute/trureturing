@@ -489,10 +489,10 @@ def cleanAliasDecidableSignature : LeanInformationAudit.StructuralPrimitiveSigna
 def cleanAliasDecidableRealization : LeanInformationAudit.StructuralPrimitiveRealization
     ⟨Bool⟩ cleanAliasDecidableSignature := ⟨@CleanAliasDecidableBox.mk⟩
 
--- A genuinely deep type comparison for the positive-budget exhaustion check.
+-- A deep type comparison for the positive-budget exhaustion check.
 -- The recursive family forces definitional equality to unfold 256 layers;
 -- setting a finite heartbeat budget below that work must produce the same
--- fail-closed diagnostic as any other bounded comparison.
+-- fail-closed diagnostic, with Lean's heartbeat exception tag preserved.
 def DeepType : Nat → Type
   | 0 => Bool
   | n + 1 => Prod (DeepType n) Bool
@@ -642,7 +642,7 @@ run_cmd Elab.Command.liftCoreM do
   try
     withOptions (·.set `provenanceDefEqLimit (1000 : Nat)) <|
       check "DefeqBudgetRealExhaustion" ``defeqExhaustionRead ``target
-        "unclassified_form" "defeq_budget"
+        "unclassified_form" "defeq_budget" "defeq" "unclassified" "heartbeat_exhaustion"
   catch ex => logError m!"[FAIL] DefeqBudgetRealExhaustion: {ex.toMessageData}"
 
 -- Pending constants have declaration identity only. Occurrence metadata belongs
@@ -951,7 +951,7 @@ run_cmd Elab.Command.liftCoreM do
   unsafe enableInitializersExecution
   let parserEnv ← importModules #[{ module := `Lean }] {} (loadExts := true)
   for (moduleName, expectedDigest, expectedExits) in [
-      ("ReadoutProvenance", "11700aa6074203886a6fff7ddf3285c0b4ee3b94d426570e3628eed6c6ccd837", 256),
+      ("ReadoutProvenance", "4956037f61c1af7018e7401675259d69bf29fb75ad82f8bcfe5daf8005694029", 257),
       ("ReadoutFamily", "2cc8a787350d521c79e444692b947ccd00e5a6898c3da9d30080d06333b2184d", 47)] do
     let path := s!"tools/lean-inspector/LeanInformationAudit/{moduleName}.lean"
     let parsed ← Parser.testParseFile parserEnv path
