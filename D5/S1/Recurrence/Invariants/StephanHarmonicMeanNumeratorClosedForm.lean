@@ -2,13 +2,11 @@
    generality: G
    mirror-B: D5/B/S1/Recurrence/Invariants/StephanHarmonicMeanNumeratorClosedForm
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Data.Rat.Lemmas, mathlib/module/Mathlib.Tactic.FieldSimp, mathlib/module/Mathlib.Tactic.Linarith, mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.Tactic.FieldSimp, mathlib/module/Mathlib.Tactic.Ring]
    utility: none
    digest: Closed form for Stephan's harmonic-mean-numerator recurrence, OEIS A107928. -/
 
-import Mathlib.Data.Rat.Lemmas
 import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring
 
 /-!
