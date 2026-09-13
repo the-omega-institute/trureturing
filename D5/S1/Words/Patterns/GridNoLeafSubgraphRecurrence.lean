@@ -2,13 +2,15 @@
    generality: G
    mirror-B: D5/B/S1/Words/Patterns/GridNoLeafSubgraphRecurrence
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [lean/module/Lean.Elab.Tactic.Omega, mathlib/module/Mathlib.Data.Fin.Tuple.Finset, mathlib/module/Mathlib.Data.Finset.Powerset, mathlib/module/Mathlib.Data.Fintype.Prod, mathlib/module/Mathlib.Data.Int.ModEq, mathlib/module/Mathlib.Tactic.FinCases, mathlib/module/Mathlib.Tactic.NormNum, mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [lean/module/Lean.Elab.Tactic.Omega, mathlib/module/Mathlib.Data.Fin.Tuple.Finset, mathlib/module/Mathlib.Data.Finset.Powerset, mathlib/module/Mathlib.Data.Fintype.BigOperators, mathlib/module/Mathlib.Data.Fintype.Prod, mathlib/module/Mathlib.Data.Fintype.Sigma, mathlib/module/Mathlib.Data.Int.ModEq, mathlib/module/Mathlib.Tactic.FinCases, mathlib/module/Mathlib.Tactic.NormNum, mathlib/module/Mathlib.Tactic.Ring]
    utility: none
    digest: No-leaf edge subgraphs of the three-by-n grid satisfy Barker's recurrence and Kagey's congruence. -/
 
 import Mathlib.Data.Fin.Tuple.Finset
 import Mathlib.Data.Finset.Powerset
+import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Data.Fintype.Prod
+import Mathlib.Data.Fintype.Sigma
 import Mathlib.Data.Int.ModEq
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
@@ -98,6 +100,60 @@ private def encode {n : ℕ} (H : Finset (Edge n)) : Fin n → Column :=
 private def PathGood : {n : ℕ} → HorizontalMask → (Fin n → Column) → Prop
   | 0, i, _ => i = zeroHorizontal
   | _ + 1, i, f => Good i (f 0).1 (f 0).2 ∧ PathGood (f 0).2 (Fin.tail f)
+
+private def transition (i o : HorizontalMask) : ℕ :=
+  (Finset.univ.filter fun v : VerticalMask ↦ Good i v o).card
+
+private def stateCount : ℕ → HorizontalMask → ℕ
+  | 0, i => if i = zeroHorizontal then 1 else 0
+  | n + 1, i => ∑ o : HorizontalMask, transition i o * stateCount n o
+
+private def pathConsEquiv (n : ℕ) (i : HorizontalMask) :
+    {f : Fin (n + 1) → Column // PathGood i f} ≃
+      {p : Column × (Fin n → Column) //
+        Good i p.1.1 p.1.2 ∧ PathGood p.1.2 p.2} where
+  toFun f := ⟨(f.1 0, Fin.tail f.1), f.2⟩
+  invFun p := ⟨Fin.cons p.1.1 p.1.2, by simpa [PathGood] using p.2⟩
+  left_inv f := by
+    apply Subtype.ext
+    funext j
+    exact Fin.cases (by simp) (fun k ↦ by change f.1 k.succ = f.1 k.succ; rfl) j
+  right_inv p := by
+    apply Subtype.ext
+    apply Prod.ext
+    · simp
+    · funext j
+      simp
+
+private def pathSigmaEquiv (n : ℕ) (i : HorizontalMask) :
+    {p : Column × (Fin n → Column) //
+      Good i p.1.1 p.1.2 ∧ PathGood p.1.2 p.2} ≃
+      Σ o : HorizontalMask,
+        ({v : VerticalMask // Good i v o} ×
+          {tail : Fin n → Column // PathGood o tail}) where
+  toFun p := ⟨p.1.1.2, ⟨⟨p.1.1.1, p.2.1⟩, ⟨p.1.2, p.2.2⟩⟩⟩
+  invFun p := ⟨((p.2.1.1, p.1), p.2.2.1), p.2.1.2, p.2.2.2⟩
+  left_inv p := by cases p; rfl
+  right_inv p := by cases p; rfl
+
+private theorem card_paths (n : ℕ) (i : HorizontalMask) :
+    Fintype.card {f : Fin n → Column // PathGood i f} = stateCount n i := by
+  induction n generalizing i with
+  | zero =>
+      by_cases hi : i = zeroHorizontal
+      · simpa [PathGood, stateCount, hi] using Fintype.card_unique
+      · have hempty : IsEmpty {f : Fin 0 → Column // PathGood i f} :=
+          ⟨fun f ↦ hi f.2⟩
+        simp [stateCount, hi]
+  | succ n ih =>
+      rw [Fintype.card_congr (pathConsEquiv n i)]
+      rw [Fintype.card_congr (pathSigmaEquiv n i)]
+      simp only [Fintype.card_sigma, Fintype.card_prod]
+      apply Finset.sum_congr rfl
+      intro o _
+      rw [ih]
+      rw [Fintype.card_subtype]
+      rfl
 
 end
 end D5.S1.Words.Patterns.GridNoLeafSubgraphRecurrence
