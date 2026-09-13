@@ -1,0 +1,4 @@
+**定理 475.7（首次平方分布、转换窗口与费用分量）。** 对全部 $d\mid b$，
+$$
+S(\gamma)=T(\gamma),\qquad
+h(d)=|\mathcal H_+(d)|=\frac{r!}{\prod_i a_i!},\qquad
