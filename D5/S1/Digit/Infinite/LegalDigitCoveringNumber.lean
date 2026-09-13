@@ -20,7 +20,9 @@ open D5.S1.Digit.Infinite.SuccessorContinuity
 open D5.S1.Words.AdmissibleWords.AdmissibleCount
 
 noncomputable def digitDist (theta : ℝ) (x y : LegalDigits) : ℝ :=
-  if x = y then 0 else theta ^ PiNat.firstDiff x.val y.val
+  by
+    classical
+    exact if x = y then 0 else theta ^ PiNat.firstDiff x.val y.val
 
 def covers (theta : ℝ) (L m : ℕ) : Prop :=
   ∃ centers : Fin m → LegalDigits, ∀ x : LegalDigits,
@@ -30,7 +32,8 @@ def covers (theta : ℝ) (L m : ℕ) : Prop :=
 theorem least_covering_number (theta : ℝ) (hθ0 : 0 < theta) (hθ1 : theta < 1) (L : ℕ) :
     IsLeast {m : ℕ | covers theta L m} (Nat.fib (L + 2)) := by
   have adm_no_adj : ∀ (m : ℕ) (w : Fin m → Bool), Adm m w →
-      ∀ i : ℕ, i + 1 < m → ¬ (w ⟨i, by omega⟩ = true ∧ w ⟨i + 1, by omega⟩ = true) := by
+      ∀ i : ℕ, ∀ hi : i + 1 < m,
+        ¬ (w ⟨i, Nat.lt_of_succ_lt hi⟩ = true ∧ w ⟨i + 1, hi⟩ = true) := by
     intro m
     induction m using Nat.strong_induction_on with
     | _ m ih =>
@@ -50,9 +53,10 @@ theorem least_covering_number (theta : ℝ) (hθ0 : 0 < theta) (hθ1 : theta < 1
                   simpa [Fin.tail, Nat.sub_add_cancel (Nat.one_le_iff_ne_zero.mpr hi0)] using ht
   have prefix_adm : ∀ (m : ℕ) (x : LegalDigits),
       Adm m (fun i : Fin m => x.val i.1) := by
-    intro m x
+    intro m
     induction m using Nat.strong_induction_on with
     | _ m ih =>
+        intro x
         cases m with
         | zero => simp [Adm]
         | succ m =>
@@ -63,16 +67,35 @@ theorem least_covering_number (theta : ℝ) (hθ0 : 0 < theta) (hθ1 : theta < 1
                 constructor
                 · intro h
                   exact x.property 0 ⟨h.1, by simpa using h.2⟩
-                · apply ih (k + 1) (by omega)
-                  intro i
-                  exact x.val (i.succ)
+                · let y : LegalDigits :=
+                    ⟨fun i => x.val i.succ, by
+                      intro j hj
+                      simpa [Nat.add_assoc] using x.property (j + 1) hj⟩
+                  have hy := ih (k + 1) (by omega) y
+                  rw [show Fin.tail (fun i : Fin (k + 2) => x.val i) =
+                    (fun i : Fin (k + 1) => x.val i.succ) by funext i; rfl]
+                  exact hy
   let extend : ∀ (w : Fin L → Bool), Adm L w → LegalDigits := fun w hw =>
     ⟨fun n => if h : n < L then w ⟨n, h⟩ else false, by
       intro n hn
       by_cases hL : n + 1 < L
       · have hna := adm_no_adj L w hw n (by omega)
-        exact hna (by simpa [hL] using hn)
-      · simp [hL]
+        have hnL : n < L := by omega
+        have h1 : w ⟨n, hnL⟩ = true := by
+          simpa only [dif_pos hnL] using hn.1
+        have h2 : w ⟨n + 1, hL⟩ = true := by
+          simpa only [dif_pos hL] using hn.2
+        apply hna
+        constructor
+        · simpa using h1
+        · simpa using h2
+      · by_cases hnL : n < L
+        · have hfalse : (false : Bool) = true := by
+            simpa only [dif_neg hL] using hn.2
+          exact Bool.noConfusion hfalse
+        · have hfalse : (false : Bool) = true := by
+            simpa only [dif_neg hnL] using hn.1
+          exact Bool.noConfusion hfalse
     ⟩
   have extend_prefix : ∀ (w : Fin L → Bool) (hw : Adm L w),
       (fun i : Fin L => (extend w hw).val i.1) = w := by
@@ -86,18 +109,19 @@ theorem least_covering_number (theta : ℝ) (hθ0 : 0 < theta) (hθ1 : theta < 1
     by_cases hEq : x = y
     · simp [hEq]
     · unfold digitDist at hxy
-      rw [dif_neg hEq] at hxy
+      rw [if_neg hEq] at hxy
       by_contra hne
       have hfd : PiNat.firstDiff x.val y.val < L := by
         by_contra hnot
-        exact hne (funext fun i => PiNat.apply_eq_of_lt_firstDiff (by omega))
+        exact hne (funext fun i =>
+          PiNat.apply_eq_of_lt_firstDiff (lt_of_lt_of_le i.isLt (Nat.le_of_not_gt hnot)))
       have hpow : theta ^ L < theta ^ PiNat.firstDiff x.val y.val :=
         pow_lt_pow_right_of_lt_one₀ hθ0 hθ1 hfd
       linarith
   constructor
   · let words := {w : Fin L → Bool // Adm L w}
     let e : words ≃ Fin (Nat.fib (L + 2)) :=
-      (Fintype.equivFin words)
+      Fintype.equivFinOfCardEq (admissibleWord_card_eq_fib L)
     refine ⟨fun i => extend (e.symm i).val (e.symm i).property, ?_⟩
     intro x
     let w : words := ⟨fun i => x.val i.1, prefix_adm L x⟩
@@ -113,18 +137,21 @@ theorem least_covering_number (theta : ℝ) (hθ0 : 0 < theta) (hθ1 : theta < 1
       have := congrFun hp ⟨j, hj⟩
       simpa using this
     by_cases hEq : x = extend (e.symm i).val (e.symm i).property
-    · simp [digitDist, hEq]
+    · simp [digitDist, hEq, pow_nonneg hθ0.le]
     · unfold digitDist
-      rw [dif_neg hEq]
+      rw [if_neg hEq]
       have hfd : L ≤ PiNat.firstDiff x.val
           (extend (e.symm i).val (e.symm i).property).val := by
         by_contra hlt
-        have := PiNat.apply_firstDiff_ne hEq hlt
-        exact this (hfirst _ hlt)
-      exact pow_le_pow_right_of_le_one₀ hθ0.le hfd
-  · intro hcover
-    rcases hcover with ⟨centers, hcenters⟩
-    intro m hm
+        have hfun : x.val ≠
+            (extend (e.symm i).val (e.symm i).property).val := by
+          intro heq
+          exact hEq (Subtype.ext heq)
+        have hne := PiNat.apply_firstDiff_ne hfun
+        exact hne (hfirst _ (by omega))
+      exact pow_le_pow_of_le_one hθ0.le hθ1.le hfd
+  · intro m hm
+    rcases hm with ⟨centers, hcenters⟩
     by_contra hlt
     have hcard : Fintype.card {w : Fin L → Bool // Adm L w} ≤ m := by
       let f : {w : Fin L → Bool // Adm L w} → Fin m := fun w =>
@@ -143,7 +170,7 @@ theorem least_covering_number (theta : ℝ) (hθ0 : 0 < theta) (hθ1 : theta < 1
             _ = (fun i : Fin L => (extend v.val v.property).val i.1) := by rw [hfv]; exact hpv.symm
             _ = v.val := extend_prefix v.val v.property
         exact this
-      exact Fintype.card_le_of_injective f hf
+      simpa using Fintype.card_le_of_injective f hf
     rw [admissibleWord_card_eq_fib] at hcard
     omega
 
