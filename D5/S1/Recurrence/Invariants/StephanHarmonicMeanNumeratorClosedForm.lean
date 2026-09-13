@@ -40,4 +40,23 @@ example : a 3 = 12 := by
   rw [Rat.num_div_eq_of_coprime (by norm_num) (by decide)]
   rfl
 
+private theorem reduced_numerators (m : ℕ) :
+    (((((12 * 8 ^ m : ℕ) : ℤ) : ℚ) / ((5 : ℤ) : ℚ)).num.toNat = 12 * 8 ^ m) ∧
+      (((((24 * 8 ^ m : ℕ) : ℤ) : ℚ) / ((7 : ℤ) : ℚ)).num.toNat = 24 * 8 ^ m) := by
+  have hpow5 : Nat.Coprime (8 ^ m) 5 :=
+    Nat.Coprime.pow_left m (by decide)
+  have hpow7 : Nat.Coprime (8 ^ m) 7 :=
+    Nat.Coprime.pow_left m (by decide)
+  have h5 : Nat.Coprime (12 * 8 ^ m) 5 :=
+    Nat.Coprime.mul_left (by decide) hpow5
+  have h7 : Nat.Coprime (24 * 8 ^ m) 7 :=
+    Nat.Coprime.mul_left (by decide) hpow7
+  constructor
+  · rw [Rat.num_div_eq_of_coprime (by norm_num)
+      (by simpa [Int.natAbs_mul, Int.natAbs_pow] using h5)]
+    exact Int.toNat_natCast _
+  · rw [Rat.num_div_eq_of_coprime (by norm_num)
+      (by simpa [Int.natAbs_mul, Int.natAbs_pow] using h7)]
+    exact Int.toNat_natCast _
+
 end D5.S1.Recurrence.Invariants.StephanHarmonicMeanNumeratorClosedForm
