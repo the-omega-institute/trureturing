@@ -75,17 +75,31 @@ def rigid (name : Name) : MetaM Expr := do
   return mkConst name (info.levelParams.map Level.param)
 
 /-- Only descriptor-created application sites beta-substitute a supplied lambda. -/
+private def readoutBody (f arg : Expr) : Option Expr :=
+  match f with
+  | .lam _ _ body _ => some (body.instantiate1 arg)
+  | .mdata data body => (readoutBody body arg).map (.mdata data)
+  | _ => none
+termination_by structural f
+
 private def sourceSite (e : Expr) : Expr :=
   match e with
-  | .app (.lam _ _ body _) arg => body.instantiate1 arg
+  | .app f arg => (readoutBody f arg).getD e
   | _ => e
 
-/-- Extract the actual applied bridge triple, never an unspecialized telescope. -/
+/-- Instantiate the provider telescope without inferAppType's implicit beta step.
+Only the two provider-created equality-side applications below may substitute. -/
 def semanticSource (descriptor : Expr) : MetaM (Expr × Expr × Expr) := do
   closed descriptor
   unless descriptor.isAppOfArity ``ReifierTemplates.pointwise 7 do
     throwError "P1.UnsupportedDescriptor: expected fully applied ReifierTemplates.pointwise"
-  let type ← inferType descriptor
+  let .const provider levels := descriptor.getAppFn
+    | throwError "P1.UnsupportedDescriptor: provider constant"
+  let info ← getConstInfo provider
+  let mut type := info.type.instantiateLevelParams info.levelParams levels
+  for arg in descriptor.getAppArgs do
+    let .forallE _ _ body _ := type | throwError "P1.UnsupportedDescriptor: provider telescope"
+    type := body.instantiate1 arg
   closed type
   unless type.isAppOfArity ``LegacyPrimitiveRealization 3 do
     throwError "P1.UnsupportedDescriptor: legacy triple missing"

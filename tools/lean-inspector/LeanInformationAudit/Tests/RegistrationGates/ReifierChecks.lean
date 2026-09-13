@@ -239,6 +239,10 @@ run_meta do
 
 register_information_theorem nestedPositive via (review_readout nested) in eqArena
 register_information_theorem annotatedPositive via (review_readout annotated) in eqArena
+run_meta do
+  for name in #[``nestedPositive, ``annotatedPositive] do
+    unless InformationRegistry.hasTheorem (← getEnv) name do throwError "{name}: positive not registered"
+    logInfo m!"P1_REVIEW positive_registered {name}"
 
 theorem nestedNegative (x : Bool) : x.not.not = x := Bool.not_not _
 reject_via "nested_beta_in_readout" expects "StatementIdentityMismatch" in
