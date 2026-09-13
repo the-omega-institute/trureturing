@@ -37,3 +37,16 @@ inductive SpecializedProjectionBox where
       SpecializedProjectionBox
 
 end ExternalAllowlistTypes
+
+namespace ExternalAllowlistTypes
+
+class UnknownEvidence : Type where
+  proof : (138 : Nat) = 138
+instance : Subsingleton UnknownEvidence := ⟨by intro a b; cases a; cases b; rfl⟩
+
+def valuedUnknown [UnknownEvidence] (bit : Bool) : Bool := bit
+
+inductive ValuelessUnknownOutput where
+  | mk [UnknownEvidence] (bit : Bool) : ValuelessUnknownOutput
+
+end ExternalAllowlistTypes

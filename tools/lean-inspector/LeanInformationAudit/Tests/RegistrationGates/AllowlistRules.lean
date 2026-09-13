@@ -421,6 +421,39 @@ def specializedProjectionRealization : LeanInformationAudit.StructuralPrimitiveR
     ⟨Bool⟩ specializedProjectionSignature :=
   ⟨ExternalAllowlistTypes.SpecializedProjectionBox.mk (f := ExternalAllowlistTypes.unitCarrier)⟩
 
+-- Matched clean controls for the guards above.  These use the same valueless
+-- constructor shape while carrying only listed classes or harmless propositions.
+inductive CleanInstanceBox where
+  | mk [Inhabited Unit] (bit : Bool) : CleanInstanceBox
+instance : Subsingleton (Inhabited Unit) :=
+  ⟨fun a b => by cases a; cases b; rfl⟩
+def cleanInstanceSignature : LeanInformationAudit.StructuralPrimitiveSignature where
+  Index := Inhabited Unit
+  indexFintype := Fintype.ofSubsingleton inferInstance
+  Output := fun _ => CleanInstanceBox
+def cleanInstanceRealization : LeanInformationAudit.StructuralPrimitiveRealization
+    ⟨Bool⟩ cleanInstanceSignature := ⟨@CleanInstanceBox.mk⟩
+
+protected def harmlessStatement : Prop := True
+structure HarmlessPLiftBox where
+  evidence : PLift AllowlistRules.harmlessStatement
+  bit : Bool
+def harmlessPLiftSignature : LeanInformationAudit.StructuralPrimitiveSignature where
+  Index := PLift AllowlistRules.harmlessStatement
+  indexFintype := Fintype.ofSubsingleton ⟨True.intro⟩
+  Output := fun _ => HarmlessPLiftBox
+def harmlessPLiftRealization : LeanInformationAudit.StructuralPrimitiveRealization
+    ⟨Bool⟩ harmlessPLiftSignature := ⟨HarmlessPLiftBox.mk⟩
+
+inductive CleanDecidableBox where
+  | mk [Decidable True] (bit : Bool) : CleanDecidableBox
+def cleanDecidableSignature : LeanInformationAudit.StructuralPrimitiveSignature where
+  Index := Decidable True
+  indexFintype := Fintype.ofSubsingleton (.isTrue trivial)
+  Output := fun _ => CleanDecidableBox
+def cleanDecidableRealization : LeanInformationAudit.StructuralPrimitiveRealization
+    ⟨Bool⟩ cleanDecidableSignature := ⟨@CleanDecidableBox.mk⟩
+
 elab "raw_payload_name" value:term : term => do
   let value ← Elab.Term.elabTerm value (some (mkConst ``LeanInformationAudit.SealedOccurrenceState))
   let some projection := (← getEnv).getProjectionFnInfo? ``LeanInformationAudit.SealedOccurrenceState.theoremName
@@ -535,10 +568,29 @@ run_cmd Elab.Command.liftCoreM do
     catch ex => logError m!"[FAIL] {label}: {ex.toMessageData}"
 
 run_cmd Elab.Command.liftCoreM do
+  for (label, realizationName) in [
+      ("InstanceTypeCleanCounterpart", ``cleanInstanceRealization),
+      ("ProtectedPLiftCleanCounterpart", ``harmlessPLiftRealization),
+      ("DecidableTypeCleanCounterpart", ``cleanDecidableRealization)] do
+    try
+      let actual ← provenanceErrorCurrent (← getEnv).header.mainModule `catalog
+        ``target realizationName
+      unless actual.isNone do
+        throwError "expected clean, got {actual}"
+      logInfo m!"[PASS] {label}"
+    catch ex => logError m!"[FAIL] {label}: {ex.toMessageData}"
+
+run_cmd Elab.Command.liftCoreM do
   try
     withOptions (·.set `provenanceDefEqLimit (0 : Nat)) <|
       check "DefeqBudgetExhaustion" ``cleanRead ``target "unclassified_form" "defeq_budget"
   catch ex => logError m!"[FAIL] DefeqBudgetExhaustion: {ex.toMessageData}"
+
+run_cmd Elab.Command.liftCoreM do
+  try
+    withOptions (·.set `provenanceDefEqLimit (1 : Nat)) <|
+      check "DefeqBudgetRealExhaustion" ``cleanRead ``target "unclassified_form" "defeq_budget"
+  catch ex => logError m!"[FAIL] DefeqBudgetRealExhaustion: {ex.toMessageData}"
 
 -- Pending constants have declaration identity only. Occurrence metadata belongs
 -- to the separate type obligations, where it is consumed by diagnostics.
@@ -547,8 +599,57 @@ run_cmd Elab.Command.liftTermElabM do
     privateToUserName? name == some `LeanInformationAudit.RegistrationGates.WalkState.pending)
     | throwError "[FAIL] PendingConstantNames: accessor missing"
   Meta.forallTelescope info.type fun _ result => do
-    unless ← Meta.isDefEq result (mkApp (mkConst ``List [.zero]) (mkConst ``Name)) do
+    let hasName := result.find? (fun e => e == mkConst ``Name) |>.isSome
+    let hasOccurrenceMetadata := result.find? (fun e =>
+      e == mkConst ``Expr || e == mkConst ``Bool) |>.isSome
+    unless hasName && !hasOccurrenceMetadata do
       throwError "[FAIL] PendingConstantNames: queue retains unused occurrence metadata"
   logInfo "[PASS] PendingConstantNames"
 
 end AllowlistRules
+namespace AllowlistAttempt8Fixtures
+open Lean LeanInformationAudit.RegistrationGates
+
+universe u
+inductive UniverseBox where
+  | mk (_ : PLift (∀ α : Sort u, α = α)) (_ : Bool) : UniverseBox
+
+theorem universeTarget : ∀ α : Type, α = α := by intro α; rfl
+
+def universeBoxSignature : LeanInformationAudit.StructuralPrimitiveSignature where
+  Index := PLift (∀ α : Type, α = α)
+  indexFintype := Fintype.ofSubsingleton ⟨by intro α; rfl⟩
+  Output := fun _ => UniverseBox.{1}
+
+def universeBoxRealization : LeanInformationAudit.StructuralPrimitiveRealization
+    ⟨Bool⟩ universeBoxSignature := ⟨UniverseBox.mk⟩
+
+def unknownValuedSignature : LeanInformationAudit.StructuralPrimitiveSignature where
+  Index := ExternalAllowlistTypes.UnknownEvidence
+  indexFintype := Fintype.ofSubsingleton ⟨rfl⟩
+  Output := fun _ => Bool
+
+def unknownValuedRealization : LeanInformationAudit.StructuralPrimitiveRealization
+    ⟨Bool⟩ unknownValuedSignature := ⟨@ExternalAllowlistTypes.valuedUnknown⟩
+
+def hiddenIndexAttempt8Signature : LeanInformationAudit.StructuralPrimitiveSignature where
+  Index := ExternalAllowlistTypes.IndexRecord
+  indexFintype := Fintype.ofSubsingleton ⟨.mk⟩
+  Output := fun _ => ExternalAllowlistTypes.IndexBox
+
+def hiddenIndexAttempt8Realization : LeanInformationAudit.StructuralPrimitiveRealization
+    ⟨Bool⟩ hiddenIndexAttempt8Signature := ⟨ExternalAllowlistTypes.IndexBox.mk⟩
+
+private def expectDiagnostic (label : String) (theoremName realizationName : Name) : CoreM Unit := do
+  let result ← provenanceErrorCurrent (← getEnv).header.mainModule `catalog theoremName realizationName
+  let some message := result | throwError m!"{label}: missing IE-C050 diagnostic"
+  unless message.startsWith "IE-C050 ClosedTruthReadout " do
+    throwError m!"{label}: unexpected diagnostic {message}"
+  logInfo m!"[PASS] {label}: {message}"
+
+run_cmd Elab.Command.liftCoreM do
+  expectDiagnostic "UniverseBox.mk.{1}/PLift" ``universeTarget ``universeBoxRealization
+  expectDiagnostic "External valued unknown instance class" ``AllowlistRules.target ``unknownValuedRealization
+  expectDiagnostic "ExternalAllowlistTypes.HiddenIndex" ``AllowlistRules.target ``hiddenIndexAttempt8Realization
+
+end AllowlistAttempt8Fixtures
