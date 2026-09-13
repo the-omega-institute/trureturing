@@ -65,6 +65,50 @@ private theorem sqrt_nth_prime_step_of_claim
       (hclaim (t + 1) (by omega))
   exact sqrt_nth_prime_add_le_of_lt_a t m hm (by exact_mod_cast hca)
 
+private theorem sqrt_prime_quadratic_step
+    (c : ℝ) (N r m : ℕ) (hc : 0 < c)
+    (hclaim : ∀ n : ℕ, N ≤ n → c * sqrt n < (a n : ℝ))
+    (hr : 1 < c * r) (hm : 1 ≤ m) (hN : N ≤ (r * m) ^ 2) :
+    sqrt (Nat.nth Nat.Prime ((r * (m + 1)) ^ 2)) ≤
+      sqrt (Nat.nth Nat.Prime ((r * m) ^ 2)) + (3 * r * r : ℕ) := by
+  let t0 := (r * m) ^ 2
+  let L := 3 * r * r
+  have hchain (i : ℕ) :
+      sqrt (Nat.nth Nat.Prime (t0 + i * m)) ≤
+        sqrt (Nat.nth Nat.Prime t0) + i := by
+    induction i with
+    | zero => simp
+    | succ i ih =>
+      have hstep := sqrt_nth_prime_step_of_claim c N r m (t0 + i * m) hc
+        hclaim hr (by omega : 0 < m)
+        (by
+          calc
+            N ≤ t0 := by simpa only [t0] using hN
+            _ ≤ t0 + i * m := Nat.le_add_right _ _)
+        (by dsimp [t0]; omega)
+      calc
+        sqrt (Nat.nth Nat.Prime (t0 + (i + 1) * m)) =
+            sqrt (Nat.nth Nat.Prime ((t0 + i * m) + m)) := by
+              exact congrArg (fun j : ℕ => sqrt (Nat.nth Nat.Prime j))
+                (by simp only [Nat.add_mul, one_mul]; omega :
+                  t0 + (i + 1) * m = (t0 + i * m) + m)
+        _ ≤ sqrt (Nat.nth Nat.Prime (t0 + i * m)) + 1 := hstep
+        _ ≤ sqrt (Nat.nth Nat.Prime t0) + (↑(i + 1) : ℝ) := by
+          push_cast
+          linarith [ih]
+  have hR : r * r ≤ (r * r) * m := by
+    calc
+      r * r = (r * r) * 1 := by omega
+      _ ≤ (r * r) * m := Nat.mul_le_mul_left _ hm
+  have hindex : (r * (m + 1)) ^ 2 ≤ t0 + L * m := by
+    dsimp [t0, L]
+    nlinarith [hR]
+  have hp := (Nat.nth_monotone Nat.infinite_setOfPred_prime) hindex
+  have hs : sqrt (Nat.nth Nat.Prime ((r * (m + 1)) ^ 2)) ≤
+      sqrt (Nat.nth Nat.Prime (t0 + L * m)) :=
+    Real.sqrt_le_sqrt (by exact_mod_cast hp)
+  exact hs.trans (by simpa only [t0, L] using hchain L)
+
 end
 
 end D5.S3.Arith.CloitreSquareRootPrimeGapRefutation
