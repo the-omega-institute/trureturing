@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:fab01625794de8b44f11848d68211cba30a7b6ca03540061b460a4598a9910e2
+  normalized_sha256: sha256:fab01625794de8b44f11848d68211cba30a7b6ca03540061b460a4598a9910e2
+cas_ref: sha256:fab01625794de8b44f11848d68211cba30a7b6ca03540061b460a4598a9910e2
+coverage_gids:
+  - gid: D5/S3/Analytic/Convexity/FiniteStrongDuality.strong_duality_of_both_feasible
+    target_statement_id: sha256:35ddc5b69e34bac998770646bdbf4c97024bd83b3a09ed39358a975d957844d1
+receipts:
+  unresolved_subitems: []

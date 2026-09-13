@@ -1,0 +1,9 @@
+## 60. A robust ambiguity modulus for approximate moment agreement
+
+Fix a nonempty finite allowed carrier S, rational feature map phi with d coordinates, a rational query q, and nonnegative coordinate tolerances eta. Define the pairwise ambiguity
+
+```text
+Delta_eta(phi,q) = max { abs(E_u[q]-E_v[q]) :
+  u,v in simplex(S), abs(E_u[phi_j]-E_v[phi_j]) <= eta_j for every j }.
+```
+

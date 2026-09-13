@@ -1,0 +1,2 @@
+The errors compare two models directly. If each model is within epsilon_j of one observed center, triangle inequality only gives eta_j=2*epsilon_j; the common-center restrictions can make the actual range smaller than this global pairwise modulus.
+
