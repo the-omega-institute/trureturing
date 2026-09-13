@@ -35,103 +35,6 @@ noncomputable def a (n : ℕ) : ℕ :=
 def claim : Prop :=
   ∀ n : ℕ, 1 ≤ n → a n = ⌊((n : ℝ) + 1 / 2) * Real.log 2⌋₊
 
-example :
-    (∑ k ∈ Finset.range 36,
-        (2 : ℝ) * (1 / (2 * k + 1)) * (1 / 3) ^ (2 * k + 1)) ≤ Real.log 2 := by
-  let f : ℕ → ℝ := fun k =>
-    2 * (1 / (2 * k + 1)) * (1 / 3) ^ (2 * k + 1)
-  have hlog : HasSum f (Real.log 2) := by
-    convert! Real.hasSum_log_one_add_inv (a := (1 : ℝ)) (by norm_num) using 1 <;>
-      norm_num [f]
-  have hpartial := hlog.summable.sum_le_tsum (Finset.range 36) (fun k _ => by
-    dsimp [f]
-    positivity)
-  rw [hlog.tsum_eq] at hpartial
-  exact hpartial
-
-example :
-    Real.log 2 ≤
-      (∑ k ∈ Finset.range 36,
-          (2 : ℝ) * (1 / (2 * k + 1)) * (1 / 3) ^ (2 * k + 1)) +
-        1 / 3 ^ 72 := by
-  let f : ℕ → ℝ := fun k =>
-    2 * (1 / (2 * k + 1)) * (1 / 3) ^ (2 * k + 1)
-  let g : ℕ → ℝ := fun k =>
-    (2 * (1 / 3 : ℝ) ^ 73) * (1 / 3) ^ k
-  have hlog : HasSum f (Real.log 2) := by
-    convert! Real.hasSum_log_one_add_inv (a := (1 : ℝ)) (by norm_num) using 1 <;>
-      norm_num [f]
-  have hgeom : HasSum g (1 / 3 ^ 72 : ℝ) := by
-    convert! ((hasSum_geometric_of_lt_one
-      (show (0 : ℝ) ≤ 1 / 3 by norm_num)
-      (show (1 : ℝ) / 3 < 1 by norm_num)).mul_left
-        (2 * (1 / 3 : ℝ) ^ 73)) using 1 <;>
-      norm_num [g]
-  have hpoint (k : ℕ) : f (k + 36) ≤ g k := by
-    have hfrac : (1 : ℝ) / (2 * ((k + 36 : ℕ) : ℝ) + 1) ≤ 1 := by
-      rw [div_le_one (by positivity)]
-      norm_num
-      positivity
-    have hpow :
-        ((1 : ℝ) / 3) ^ (2 * (k + 36) + 1) ≤
-          ((1 : ℝ) / 3) ^ (k + 73) := by
-      exact pow_le_pow_of_le_one (by norm_num) (by norm_num) (by omega)
-    dsimp [f, g]
-    calc
-      2 * (1 / (2 * ((k + 36 : ℕ) : ℝ) + 1)) * (1 / 3) ^ (2 * (k + 36) + 1) ≤
-          2 * 1 * (1 / 3) ^ (2 * (k + 36) + 1) := by
-            exact mul_le_mul_of_nonneg_right
-              (mul_le_mul_of_nonneg_left hfrac (by norm_num)) (by positivity)
-      _ ≤ 2 * 1 * (1 / 3) ^ (k + 73) := by
-        exact mul_le_mul_of_nonneg_left hpow (by norm_num)
-      _ = (2 * (1 / 3) ^ 73) * (1 / 3) ^ k := by
-        rw [pow_add]
-        ring
-  have htail : (∑' k : ℕ, f (k + 36)) ≤ 1 / 3 ^ 72 := by
-    have hfshift : Summable (fun k : ℕ => f (k + 36)) :=
-      (summable_nat_add_iff 36).2 hlog.summable
-    exact (hfshift.tsum_le_tsum hpoint hgeom.summable).trans_eq hgeom.tsum_eq
-  calc
-    Real.log 2 = ∑' k : ℕ, f k := hlog.tsum_eq.symm
-    _ = (∑ k ∈ Finset.range 36, f k) + ∑' k : ℕ, f (k + 36) :=
-      (hlog.summable.sum_add_tsum_nat_add 36).symm
-    _ ≤ (∑ k ∈ Finset.range 36, f k) + 1 / 3 ^ 72 :=
-      add_le_add_right htail _
-    _ =
-        (∑ k ∈ Finset.range 36,
-          (2 : ℝ) * (1 / (2 * k + 1)) * (1 / 3) ^ (2 * k + 1)) +
-          1 / 3 ^ 72 := by rfl
-
-example :
-    let s : ℝ := ∑ k ∈ Finset.range 36,
-      2 * (1 / (2 * k + 1)) * (1 / 3) ^ (2 * k + 1)
-    let t : ℝ := ∑ k ∈ Finset.range 2,
-      2 * (1 / (2 * k + 1)) *
-        (1 / (2 * 1121626023352383 + 1)) ^ (2 * k + 1)
-    (777451915729368 : ℝ) ≤ (1121626023352383 + 1 / 2) * s ∧
-      (1121626023352383 + 1 / 2) * (s + 1 / 3 ^ 72) < 777451915729368 + 1 ∧
-      s + 1 / 3 ^ 72 < 777451915729368 * t := by
-  dsimp
-  norm_num [Finset.sum_range_succ]
-
-example :
-    (∑ k ∈ Finset.range 2,
-        (2 : ℝ) * (1 / (2 * k + 1)) *
-          (1 / (2 * 1121626023352383 + 1)) ^ (2 * k + 1)) ≤
-      Real.log (1 + 1 / (1121626023352383 : ℝ)) := by
-  let f : ℕ → ℝ := fun k =>
-    2 * (1 / (2 * k + 1)) *
-      (1 / (2 * 1121626023352383 + 1)) ^ (2 * k + 1)
-  have hlog : HasSum f (Real.log (1 + 1 / (1121626023352383 : ℝ))) := by
-    convert! Real.hasSum_log_one_add_inv
-      (a := (1121626023352383 : ℝ)) (by norm_num) using 1 <;>
-        norm_num [f]
-  have hpartial := hlog.summable.sum_le_tsum (Finset.range 2) (fun k _ => by
-    dsimp [f]
-    positivity)
-  rw [hlog.tsum_eq] at hpartial
-  exact hpartial
-
 /-- The conjectured formula fails at `n = 1121626023352383`. -/
 theorem result : ¬ claim := by
   let n₀ : ℕ := 1121626023352383
@@ -144,12 +47,12 @@ theorem result : ¬ claim := by
     (2 * (1 / 3 : ℝ) ^ 73) * (1 / 3) ^ k
 
   have hLogTwo : HasSum fTwo (Real.log 2) := by
-    convert! Real.hasSum_log_one_add_inv (a := (1 : ℝ)) (by norm_num) using 1 <;>
-      norm_num [fTwo]
+    convert! Real.hasSum_log_one_add_inv (a := (1 : ℝ)) (by norm_num) using 1
+    all_goals norm_num [fTwo]
   have hLogWitness :
       HasSum fWitness (Real.log (1 + 1 / (n₀ : ℝ))) := by
-    convert! Real.hasSum_log_one_add_inv (a := (n₀ : ℝ)) (by norm_num [n₀]) using 1 <;>
-      norm_num [fWitness]
+    convert! Real.hasSum_log_one_add_inv (a := (n₀ : ℝ)) (by norm_num [n₀]) using 1
+    all_goals norm_num [fWitness]
 
   have hTwoLower :
       (∑ k ∈ Finset.range 36, fTwo k) ≤ Real.log 2 := by
@@ -162,8 +65,8 @@ theorem result : ¬ claim := by
     convert! ((hasSum_geometric_of_lt_one
       (show (0 : ℝ) ≤ 1 / 3 by norm_num)
       (show (1 : ℝ) / 3 < 1 by norm_num)).mul_left
-        (2 * (1 / 3 : ℝ) ^ 73)) using 1 <;>
-      norm_num [geometricTail]
+        (2 * (1 / 3 : ℝ) ^ 73)) using 1
+    all_goals norm_num [geometricTail]
   have hTailPoint (k : ℕ) : fTwo (k + 36) ≤ geometricTail k := by
     have hfrac : (1 : ℝ) / (2 * ((k + 36 : ℕ) : ℝ) + 1) ≤ 1 := by
       rw [div_le_one (by positivity)]
