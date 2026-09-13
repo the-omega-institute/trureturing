@@ -354,3 +354,189 @@ The new theorem is deliberately conditional:
 $$Q_p(pi(p)) = 1 * Q_p(p-| (5/p) |)$$
 
 under the hypothesis pi(p)=p-| (5/p) |. The proportionality factor is explicitly 1, and quotient_period_eq_frobenius_factor_isUnit proves it is a unit in every ZMod p, including the exceptional characteristics. The hypotheses p != 2,5 belong to the index-identification interface, not to the unit lemma. This separates what is already forced by the current Frobenius/splitting library from the genuinely open step: proving a nontrivial Lucas multiplier for a return period that is only known to divide the Frobenius index. No unconditional equality of the two quotients, and no nonzero-quotient claim, is asserted without that missing period equality.
+
+### R.11 对 R.10 的勘误及两个问题的精确定义
+
+R.10 的绝对值索引及其附带源声明不能承担标准 Frobenius 桥。对惰性素数，标准索引为 $p+1$；$p-| (5/p) |$ 却恒为 $p-1$。例如 $p=3$ 时，错误索引给 $F_2=1$，而标准索引给 $F_4=3$。此外，实际周期通常不等于标准索引；$\pi(3)=8$ 而标准索引为4。R.10 中“return period ... divide the Frobenius index”也不能作为一般事实，正确统一界是 $\pi(p)\mid2(p-(5/p))$。此前源中的 $p\ne2,5\Rightarrow p\ge7$ 同样漏掉3。
+
+本节保留 R.10 作为历史文本，其数学接口由 R.12–R.16 取代。对应 Lean 和 Scribe 已用真实桥接替换条件重写；不再假设两个索引相等，也不再将系数人为置为1。
+
+以下对 $p\ne2,5$ 的素数定义
+
+$$
+\epsilon_p=\left(\frac5p\right),\quad n_p=p-\epsilon_p,\quad r_p=\pi(p),\quad
+\eta_p=\frac{F_{r_p}}p\bmod p,\quad q_p=\frac{F_{n_p}}p\bmod p.
+$$
+
+mathlib 的 `legendreSym 5 p` 采用分母在前的记号，它是 $(p/5)$；对这里的奇素数，二次互反使其等于 $(5/p)$。Lean 定义 `frobeniusIndex p = ((p : Int) - epsilon p).toNat`，并证明该整数为正及回转整数等式。不会先取绝对值。
+
+第二个问题使用真实的首次回归深度
+
+$$
+s_p=\nu_p(C_{r_p}),\qquad C_t=\gcd(F_t,F_{t+1}-1).
+$$
+
+$C_{r_p}>0$ 且 $p\mid C_{r_p}$，因此 $s_p$ 是有限正整数。它不是自由输入的“平台长度”。
+
+### R.12 第一项：准确比例为负的最小周期
+
+**定理 R14。** 对每个素数 $p\ne2,5$，
+
+$$
+\boxed{\eta_p=-r_p q_p\quad\text{于 }\mathbb F_p,\qquad -r_p\in\mathbb F_p^\times.}
+\tag{R14}
+$$
+
+证明先在现役黄金环内完成。设 $x=a+b\varphi$ 且 $p\mid b$。在模 $p^2$ 下，$b^2=0$，逐次乘法归纳得到
+
+$$
+(x^k).a=a^k,\qquad (x^k).b=k a^{k-1}b\pmod{p^2}.
+$$
+
+这对全部自然数 $k$ 成立，$k=0$ 时右侧因子 $k$ 为零。若两个黄金整数 $x,y$ 的系数分别为 $pA,pB$，且 $x^k=y^l$，就有
+
+$$
+k x.a^{k-1} A=l y.a^{l-1}B\pmod p.
+\tag{R15}
+$$
+
+约去 $p$ 的步骤在整数整除见证中进行，未把 $p$ 当作模 $p^2$ 的单位。`GoldenFirstOrderTransport` 实现这组一般系数公式。
+
+现役 Frobenius 定理给 $F_{n_p}=0$、$F_p=\epsilon_p\pmod p$，结合递推与原黄金幂坐标式得到
+
+$$
+\varphi^{n_p}=\epsilon_p\pmod p,\qquad \varphi^{r_p}=1\pmod p.
+$$
+
+比较始终相等的两项
+
+$$
+(\varphi^{r_p})^{n_p}=(\varphi^{n_p})^{r_p}
+$$
+
+并应用 R15，得到
+
+$$
+n_p\eta_p=r_p\epsilon_p^{r_p-1}q_p\pmod p.
+$$
+
+由奇素数下的行列式约束，$r_p$ 为偶数，所以 $\epsilon_p^{r_p-1}=\epsilon_p$；又 $n_p=-\epsilon_p\pmod p$。约去 $\epsilon_p=\pm1$，得到 R14 的等式。
+
+单位性也由真实周期证明：$\varphi^{2n_p}=1\pmod p$ 意味着 $r_p\mid2n_p$。由于 $p$ 为奇数且 $n_p\equiv-\epsilon_p\ne0\pmod p$，故 $p\nmid r_p$。不需要假设 $r_p=n_p$，也不需要先分类 $r_p/n_p$。
+
+例如 $p=7$ 时，$n_p=8,r_p=16$，标准商为3，周期商为1，而 $-r_p\equiv5\pmod7$，确有 $5\cdot3=1\pmod7$。这说明系数通常不是1。
+
+结合 R11，得到真正的标准 WSS 判据：
+
+$$
+\boxed{\pi(p^2)=\pi(p)\iff q_p=0.}\tag{R16}
+$$
+
+对应声明：`quotient_period_eq_frobenius`、`quotient_period_eq_frobenius_factor_isUnit`、`wall_iff_standard_quotient`。它们均排除2和5，不对非单位进行约分。5的高次周期由 R.15 另外处理。
+
+### R.13 第二项的局部引擎：精确缺陷深度
+
+使用既有黄金整数环 $\mathcal O=\mathbb Z[\varphi]$。标量 $p$ 整除一个黄金整数，当且仅当同时整除其两个整数坐标。
+
+**定理 R17。** 设 $p$ 为素数，$s>0$，$s+2\le ps$，$B\in\mathcal O$ 且 $p\nmid B$。则对每个 $j\ge0$，存在 $D_j\in\mathcal O$ 使
+
+$$
+\boxed{
+(1+p^sB)^{p^j}=1+p^{s+j}(B+pD_j).
+}\tag{R17}
+$$
+
+因此该差恰被 $p^{s+j}$ 整除，而不被 $p^{s+j+1}$ 整除。
+
+证明复用钉版 mathlib 的 `ZMod.exists_one_add_mul_pow_prime_pow_eq`。尽管名称位于 `ZMod`，该定理的系数类型是任意交换半环，此处实例化为 $\mathcal O$，取 $u=p^s,v=p$。其两个整除前件分别为 $p\mid p^s$ 和 $p^{s+2}\mid p^{sp}$，正是当前假设。该库定理使用素数二项系数的整除性质，包括最高次端点。余项 $B+pD_j$ 模 $p$ 与 $B$ 相同，故仍为原始系数。标量约分通过整数坐标单射性完成。
+
+对奇素数，$s\ge1$ 就满足 $s+2\le ps$；对2，需要 $s\ge2$。这个差异说明不能将深度一的奇素数证明直接应用到二进情形。
+
+由准确深度可得：$1+p^sB$ 模 $p^{s+j}$ 的阶恰为 $p^j$。上界由 R17 给出；$j>0$ 时，低一次的 $p^{j-1}$ 幂仍有非零差，排除全部更小的素数幂阶。对应 `exact_depth_after_prime_power` 和 `reduced_order_at_depth`。
+
+### R.14 完整奇素数周期塔
+
+**定理 R18。** 对任意奇素数 $p$ 与任意 $e\ge1$，
+
+$$
+\boxed{\pi(p^e)=r_p\,p^{\max(e-s_p,0)},\qquad s_p=\nu_p(C_{r_p}).}\tag{R18}
+$$
+
+证明不假设 $s_p=1$。从 $C_{r_p}$ 的真实估值构造
+
+$$
+\varphi^{r_p}=1+p^{s_p}B,\qquad p\nmid B.
+$$
+
+该构造由 `actual_initial_seed` 完成：利用 $p^{s_p}\mid C_{r_p}$、$p^{s_p+1}\nmid C_{r_p}$ 与原黄金单位的降模桥，得到两个整数坐标的共同最大 $p$ 幂。
+
+若 $e\le s_p$，原周期已经在模 $p^e$ 下回归，所以新周期整除 $r_p$；降模又给反向整除，故两周期相等。
+
+若 $e=s_p+j$，R17 证明 $\varphi^{r_p}$ 模 $p^e$ 的阶为 $p^j$。设 $T=\pi(p^e)$，降模给 $r_p\mid T$，于是群元素幂的阶公式给
+
+$$
+\operatorname{ord}(\varphi^{r_p})
+=\frac{T}{\gcd(T,r_p)}=\frac{T}{r_p}=p^j.
+$$
+
+这就得到 R18。没有用上界替代最小周期，也没有将初始缺陷不为零当作未证明前件。
+
+将 R16 与估值定义合并：
+
+$$
+\boxed{q_p=0\iff s_p\ge2,\qquad p\ne2,5.}\tag{R19}
+$$
+
+所以标准商非零会同时确定所有高次周期：
+
+$$
+q_p\ne0\Longrightarrow\forall e\ge1,\quad
+\pi(p^e)=\pi(p)p^{e-1}.
+$$
+
+若未来得到一个 $s_p>1$ 的素数，R18 同样适用：前 $s_p$ 层保持 $r_p$，之后每增加一层都乘 $p$。这不是例外素数存在性证明，而是对任意实际初始深度的统一结论。
+
+### R.15 二进与分歧素数的全部层级
+
+**定理 R20。** 对每个 $e\ge1$，
+
+$$
+\boxed{\pi(2^e)=3\cdot2^{e-1},\qquad
+\pi(5^e)=20\cdot5^{e-1}.}\tag{R20}
+$$
+
+二进证明使用真实种子
+
+$$
+\pi(2)=3,\quad\pi(4)=6,\quad
+\varphi^6=1+4(1+2\varphi).
+$$
+
+$1+2\varphi$ 不被2整除，故从深度2应用 R17。得到 $e\ge2$ 时周期为 $6\cdot2^{e-2}$，与单独验证的 $e=1$ 合并即为第一式。
+
+对5，使用
+
+$$
+\pi(5)=20,\qquad
+\varphi^{20}=1+5(836+1353\varphi).
+$$
+
+括号内两个坐标不同时被5整除，因此是深度1的真实种子；R17 给出全部层级。这里不使用分裂/惰性分类，也不约去模5下为零的 $-\pi(5)$。
+
+有限种子证明直接消费于两个无界指数定理，没有作为独立有限正例模块发布。模数 $p^0=1$ 的周期为1，明确不属于 R18、R20 的 $e\ge1$ 公式。
+
+### R.16 两项成果的依赖、文献边界与剩余算术问题
+
+新增 `GoldenFirstOrderTransport`、`GoldenPrimePowerDepth`、`FibonacciPrimePowerPeriod`，并替换错误的 `FibonacciFrobeniusQuotientBridge`，均位于 `D5/S1/Recurrence/`；每个源都有同名 Blueprint Scribe。
+
+第一条主链是已有 Frobenius、实际黄金幂坐标、模 $p^2$ 一阶输运，再到可逆系数 $-\pi(p)$。第二条主链是实际回归内容量、原始缺陷构造、既有素数幂二项式定理、真实元素阶，最后到全部 $p^e$ 周期。两者由 R19 连接。
+
+本节给出完整普通数学证明及 Lean 证明脚本。当前工作环境未执行 Lean/lake 或 Scribe 编译，故这些新增源不能列为已获 kernel 认证或已冻结结论。独立有限检查与源码复核不能代替该环节。
+
+经典 $p$-进估值与提升规律已见 Wall、Lengyel 及后续研究。本节不将其宣称为新发现。Medina–Rowland [R-ref5] 的定理1.4列出 Lengyel 的 Fibonacci 估值公式，并单独处理2和5；本节以实际回归内容量为初始数据，复用已形式化的通用二项式引理完成另一条与本库载体一致的证明路线。
+
+现在两个约定的桥接问题均已有全称陈述和证明脚本。WSS 存在性剩余的是跨素数的 $q_p$ 零集合，或者等价的实际 $s_p\ge2$ 条件的算术分析。R18 已经说明，高次层级自身不会额外提供一个独立自由参数。下一条有意义的推进应约束初始深度在素数族中的行为，或将标准商与已有数域/局部单位命题建立经过证明的连接，不能把再次写出同一提升公式计作存在性进展。
+
+[R-ref5] Luis A. Medina and Eric Rowland, *p-regularity of the p-adic valuation of the Fibonacci sequence*, The Fibonacci Quarterly 53 (2015), 265–271. arXiv:0910.2907v4, Theorem 1.4 (Lengyel). https://arxiv.org/abs/0910.2907v4
+
+[R-ref6] Mathlib, `Mathlib/RingTheory/ZMod/UnitsCyclic.lean`, `exists_one_add_mul_pow_prime_eq` and `exists_one_add_mul_pow_prime_pow_eq`; `Mathlib/GroupTheory/OrderOfElement.lean`, `orderOf_eq_prime_pow` and `orderOf_pow'`; `Mathlib/NumberTheory/Padics/PadicVal/Defs.lean`, `pow_dvd_iff_le_padicValNat`. Pinned revision: `db584cd6d46c92f209a44c0f1c829460d327499d`. These are imported proof dependencies rather than assumed conclusion fields.
