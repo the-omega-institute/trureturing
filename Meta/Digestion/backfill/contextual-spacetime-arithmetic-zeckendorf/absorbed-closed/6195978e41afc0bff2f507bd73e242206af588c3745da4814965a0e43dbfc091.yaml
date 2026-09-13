@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:6195978e41afc0bff2f507bd73e242206af588c3745da4814965a0e43dbfc091
+  normalized_sha256: sha256:6195978e41afc0bff2f507bd73e242206af588c3745da4814965a0e43dbfc091
+cas_ref: sha256:6195978e41afc0bff2f507bd73e242206af588c3745da4814965a0e43dbfc091
+coverage_gids:
+  - gid: D5/S0/Rewriting/TranslationPrefixDomain.eval_eq_some_iff
+    target_statement_id: sha256:f993c8ee293397a2c034dcea9fe4d019a2c5c4075eb9d2653b1ee85d4584f64f
+receipts:
+  unresolved_subitems: []

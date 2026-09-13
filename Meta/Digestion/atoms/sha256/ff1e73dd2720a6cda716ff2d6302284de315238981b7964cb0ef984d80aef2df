@@ -1,0 +1,8 @@
+更准确地，对每个 $m\ge1,k\ge0$，
+$$
+\sum_{j=0}^{k-1}w_{m+j}=\lfloor(m+k)\alpha\rfloor-\lfloor m\alpha\rfloor
+=\lfloor k\alpha+\{m\alpha\}\rfloor,
+$$
+$$
+\left|\sum_{j=0}^{k-1}w_{m+j}-k\alpha\right|<1.
+$$

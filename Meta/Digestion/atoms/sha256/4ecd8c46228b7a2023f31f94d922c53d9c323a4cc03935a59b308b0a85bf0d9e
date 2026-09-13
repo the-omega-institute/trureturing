@@ -1,0 +1,5 @@
+则 \(\equiv_a\) 是 \(\operatorname{Path}_{P,A}(a,-)\) 上的等价关系，并且端点映射
+\[
+[w]_{\equiv_a}\longmapsto\operatorname{ev}_A(a,w)
+\]
+从成功词的等价类集合双射到 \(S(P,A)\)。

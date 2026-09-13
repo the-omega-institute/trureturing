@@ -1,0 +1,12 @@
+**定理 408.1。** 对任意拓扑集合 $X$，下列为全部 Borel 函数类之间的双射：
+$$
+f:X\to\mathbb R\quad\longleftrightarrow\quad
+f\circ e_X^{-1}:X^*\to\mathbb R,
+$$
+$$
+f:X\to\mathbb R\quad\longleftrightarrow\quad
+e_{\mathbb R}\circ f\circ e_X^{-1}:X^*\to\mathbb R^*,
+\qquad \mathbb R^*=\operatorname{Enc}[\mathbb R].
+$$
+第二式的目标取通常实拓扑的运输；第一式的目标保持普通实数。两个双射均保持并反映不变函数与完全不变量的定义。因此 $E_{R,{\rm ext}}$、$E_{T,{\rm ext}}$ 对这两种目标都没有 Borel 完全不变量。
+

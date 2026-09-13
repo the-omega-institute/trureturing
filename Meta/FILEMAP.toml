@@ -290,6 +290,16 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
+pattern = "LICENSE"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["reader"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
 pattern = "Library/**/*.yaml"
 kind = "data"
 admission_plane = "judge"
@@ -366,6 +376,16 @@ admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["RegistryLoader"]
 verified_by = ["RegistryLoader"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "Meta/lean-report.toml"
+kind = "data"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["automation"]
+verified_by = ["LeanReportInput"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 

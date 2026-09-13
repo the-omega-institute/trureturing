@@ -1,0 +1,41 @@
+**定理 394.1。** $\mathcal F_n$ 是 Borel 等价关系，每个类至多有 $L_n$ 个点，并有
+$$
+\mathcal F_n\subseteq\mathcal F_{n+1},\qquad
+\bigcup_{n\in\omega}\mathcal F_n=E_R.
+$$
+$\mathcal G_n$ 是 Borel 等价关系，每个类至多有 $2L_n$ 个点，并有
+$$
+\mathcal G_n\subseteq\mathcal G_{n+1},\qquad
+\bigcup_{n\in\omega}\mathcal G_n=E_T.
+$$
+所以这两个无限载体上的轨道等价关系均超有限。
+
+**证明。** 每个连通分量只含一个原旋转轨道中的点。将该轨道单射标为整数线 $k\mapsto R^kt$，源点指标 $k$ 对应边 $k\to k+1$。定理 393.1 的删边指标在两侧无界，故每个整数顶点处于某两个相邻删边指标 $c<d$ 之间的唯一段
+$$
+\{c+1,c+2,\ldots,d\}.
+$$
+段内边的源点为 $c+1,\ldots,d-1$，均未删；两条边界边的源点为 $c,d$，都已删。因此这些段准确是无向连通分量，每段大小 $d-c\le L_n$。零路径、反向路径与连接路径证明连通关系的自反、对称和传递。
+
+为确定整个关系图的 Borel 性，置
+$$
+P_{n,0}=\mathbb T,\qquad
+P_{n,k}=\bigcap_{i=0}^{k-1}R^{-i}(\mathbb T\setminus U_n)\quad(k>0),
+$$
+$$
+P_{n,k}=\bigcap_{i=k}^{-1}R^{-i}(\mathbb T\setminus U_n)\quad(k<0).
+$$
+这里 $R^{-i}(A)$ 表示 $\{t:R^it\in A\}$，故负向路径的源点准确为 $k,\ldots,-1$。整数线上从零到 $k$ 的每条路径都必须穿过这些相应的中间边；若这些边都在，直路径即可连接。于是
+$$
+\mathcal F_n
+=\bigcup_{k\in\mathbb Z}\{(t,R^kt):t\in P_{n,k}\}.
+$$
+$U_n$ 开、$R^i$ 连续，故每个 $P_{n,k}$ 闭。相应限制图是 $R^k$ 的闭图与 $P_{n,k}\times\mathbb T$ 的交，因而闭。可数并证明整个关系图 Borel。
+
+标记缩小只会恢复边，给递增包含。$\mathcal F_n\subseteq E_R$ 已由轨道内的路径给出。反向，若 $s=R^kt$，连接它们的直路径只有有限条边；每条边的源点由标记的空交及递减性在某个指标后永远离开 $U_n$。取这些有限多个退出指标的最大值，整条路径便在其后所有图中存活。$k=0$ 的空路径在每个图中都在。因此并恰为 $E_R$，且 $0\to R0$ 从来未删。
+
+拉回一个等价关系保持其三个公理；$H\times H$ 连续，故 $\mathcal G_n$ Borel。其类准确为
+$$
+[x]_{\mathcal G_n}=H^{-1}[[Hx]_{\mathcal F_n}].
+$$
+右侧至多为 $L_n$ 个相位纤维的并，定理 372.4 给每个纤维至多二点，所以类大小至多 $2L_n$。递增性由拉回保持，拉回与并交换，再用定理 391.1 得并恰为 $E_T$。有限性使用的是这里的实际二点纤维界。证毕。
+

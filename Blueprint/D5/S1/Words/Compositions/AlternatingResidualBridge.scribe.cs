@@ -7,8 +7,6 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Words.Compositions;
 internal sealed class AlternatingResidualBridgeDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Words/Compositions/AlternatingResidualBridge.";
-    private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Words/codex2026a392714bridge");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Blocked alternating words correspond to interlaced residual pairs.",
@@ -72,7 +70,7 @@ internal sealed class AlternatingResidualBridgeDocument : IScribeDocumentDefinit
         string prose, DescribeRole role) => Describe.Lean(
         DescribeId.Create("alternating-residual-" + name.Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-        AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
+        AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
     private static Formula V(string name) => F.Id(name);
     private static Formula Par(Formula value) => Q(Open, value, Close);
     private static Formula Sub(string name, Formula index) => Q(V(name), Underscore, Grp(index));

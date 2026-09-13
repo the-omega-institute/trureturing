@@ -1,0 +1,14 @@
+**定理。** 对每个奇数 $n$，
+
+$$
+\sigma_+(E_n)=(L_n-1)\varphi^n,
+\qquad
+\sigma_*(E_n)=(L_n-1)\psi^n,
+$$
+
+并且两个实嵌入值的乘积为
+
+$$
+\sigma_+(E_n)\sigma_*(E_n)=-(L_n-1)^2.
+$$
+

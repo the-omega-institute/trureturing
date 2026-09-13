@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:06026bbbbcbd38439ad22b6ebc7af31f73d722b7c0d67e17316d757da74c1a1d
+  normalized_sha256: sha256:06026bbbbcbd38439ad22b6ebc7af31f73d722b7c0d67e17316d757da74c1a1d
+cas_ref: sha256:06026bbbbcbd38439ad22b6ebc7af31f73d722b7c0d67e17316d757da74c1a1d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section 35.1 records the implementation worker, skill context, worktree, and separation from reasoning and review seats. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with the surrounding PR5 theory atoms.
+    previous_atom_id: ce49faf753439afc645d01cfbb0b39eb958b12e0a1d3106c6038523183c57083
+    next_atom_id: bd5648b3ae7faecf8af7156c4e7ee786c733756f99ca3e039d25e8281476f912

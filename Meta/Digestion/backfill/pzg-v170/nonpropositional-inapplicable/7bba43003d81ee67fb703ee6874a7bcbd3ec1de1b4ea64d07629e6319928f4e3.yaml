@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7bba43003d81ee67fb703ee6874a7bcbd3ec1de1b4ea64d07629e6319928f4e3
+  normalized_sha256: sha256:7bba43003d81ee67fb703ee6874a7bcbd3ec1de1b4ea64d07629e6319928f4e3
+cas_ref: sha256:7bba43003d81ee67fb703ee6874a7bcbd3ec1de1b4ea64d07629e6319928f4e3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「评注 27.607(形式化全卷七:对偶论)〔结构定理 + 定理总装;全文入册〕」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 299ce6c92e4513f580ec0f707871e417b7948b05160da0f18e2a61b6583ff72f
+    next_atom_id: 23827257231603253f971f5e18badb36d578b7fa9615910a918ad0a3dd380b84

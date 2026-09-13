@@ -1,0 +1,10 @@
+**定理。** 对全部 $L\in\mathbb N$ 与 $e\in\mathbb Z$，相位窗口恰好等价于
+非零 Beatty 返回：
+
+$$
+\boxed{
+\operatorname{Hits}_L(e)
+\iff \exists m\in\mathbb Z\setminus\{0\}:\ e=T_L(m).
+}\tag{GC3}
+$$
+

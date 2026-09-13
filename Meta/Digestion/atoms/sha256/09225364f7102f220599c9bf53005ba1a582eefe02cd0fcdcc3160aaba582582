@@ -1,0 +1,16 @@
+**定理 443.5（未过滤的精确式、显式误差和系数）。** 对固定平方自由 $R>1$、所有 $N\ge0$，
+$$
+C_R(x)=\sum_{a\mid R}\mu(a)\lfloor x/a\rfloor,
+\quad
+U_R(N)=\sum_{i<t}|b_i|\bigl(C_R(N/a_i)-C_R(N/a_{i+1})\bigr),
+$$
+$$
+|M(N)|\le U_R(N),\quad c_R>0,\quad
+|U_R(N)-c_RN|\le2\tau(R)\sum_{i<t}|b_i|.
+$$
+另一独立有效的误差界为 $\Phi(R)\sum_{i<t}|b_i|$。特别地，
+$$
+c_2=\frac14,\quad c_6=\frac29,\quad c_{30}=\frac{16}{75},\quad
+|M(N)|\le\frac{2N}{9}+4.
+$$
+

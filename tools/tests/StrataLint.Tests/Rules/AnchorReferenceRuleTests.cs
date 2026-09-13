@@ -10,6 +10,46 @@ public sealed class AnchorReferenceRuleTests
     private const string Target = "Mathlib.Data.Nat.Fib.Zeckendorf";
 
     [Fact]
+    public void Sl017AddedModuleWithUnreachableAnchorIsReported()
+    {
+        var completed = ExecuteDelta(RuleFixture.RingPath, added: true);
+
+        AssertAnchorFinding(completed);
+    }
+
+    [Fact]
+    public void Sl017AddedModuleWithDirectAnchorImportPasses()
+    {
+        var completed = ExecuteDelta(RuleFixture.RingPath, added: true, directImport: true);
+
+        Assert.Empty(AnchorDiagnostics(completed));
+    }
+
+    [Fact]
+    public void Sl017UnrelatedLeanDeltaPreservesUntouchedFrozenAnchor()
+    {
+        var completed = ExecuteDelta("D5/S0/Carrier/Unrelated.lean");
+
+        Assert.Empty(AnchorDiagnostics(completed));
+    }
+
+    [Fact]
+    public void Sl017DependencyDeltaReportsUntouchedFrozenAnchor()
+    {
+        var completed = ExecuteDelta("D5/S0/Carrier/Helper.lean");
+
+        AssertAnchorFinding(completed);
+    }
+
+    [Fact]
+    public void Sl017LeanReportProducerDeltaReportsUntouchedFrozenAnchor()
+    {
+        var completed = ExecuteDelta("lean-toolchain");
+
+        AssertAnchorFinding(completed);
+    }
+
+    [Fact]
     public void ImportClosureAcceptsDirectImport() =>
         Assert.True(IsReachable(("D5/A.lean", [Target])));
 
@@ -145,6 +185,92 @@ public sealed class AnchorReferenceRuleTests
 
     private static bool IsReachable(params (string Path, string[] Imports)[] files) =>
         LeanImportClosure.ImportsExternalModule(Report(files), "D5.A", Target);
+
+    private static IEnumerable<Diagnostic> AnchorDiagnostics(CompletedRuleSet completed) =>
+        completed.Diagnostics.Where(static diagnostic => diagnostic.RuleId == RuleId.CreateKnown(17));
+
+    private static void AssertAnchorFinding(CompletedRuleSet completed)
+    {
+        var diagnostic = Assert.Single(AnchorDiagnostics(completed));
+        Assert.Equal(RuleFixture.RingPath, diagnostic.Path);
+        Assert.Equal(
+            $"anchor 'mathlib/module/{Target}' is not reachable through this file's repository import closure",
+            diagnostic.Message);
+    }
+
+    // Synthetic snapshots and policy: these applicability tests do not read repository data.
+    private static CompletedRuleSet ExecuteDelta(
+        string changedPath,
+        bool added = false,
+        bool directImport = false)
+    {
+        const string helper = "D5/S0/Carrier/Helper.lean";
+        const string unrelated = "D5/S0/Carrier/Unrelated.lean";
+        var ringImports = directImport ? new[] { Target } : new[] { "D5.S0.Carrier.Helper" };
+        var report = Report(
+            (RuleFixture.RingPath, ringImports),
+            (helper, []),
+            (unrelated, []));
+        var current = new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            [RuleFixture.RingPath] = $"""
+                /- GID: D5/S0/Carrier/Ring
+                   generality: G
+                   mirror-B: none(waiver:fixture)
+                   mirror-E: none(waiver:fixture)
+                   anchors: [mathlib/module/{Target}]
+                   digest: Anchor scope fixture. -/
+                import {ringImports[0]}
+                """ + "\n",
+            [helper] = "-- helper\n",
+            [unrelated] = "-- unrelated\n",
+            ["Library/queries.yaml"] = "schema_version: 1\nqueries: []\n",
+            [RuleFixture.FixtureBackfillSourcePath] = RuleFixture.FixtureBackfillSource,
+            [RuleFixture.FixtureDigestionSourcePath] = RuleFixture.FixtureDigestionSource,
+            ["lean-toolchain"] = "leanprover/lean4:v4.23.0\n",
+        };
+        if (!added)
+        {
+            var path = RepoPath.CreateKnown(RuleFixture.RingPath);
+            var statement = FrozenContentAddress.ComputeModuleStatementId(path, report.Files[path]);
+            current[FrozenStatePath.FromModulePath(path).Value] =
+                $"{{\"statement_id\":\"{statement.Value}\"}}\n";
+        }
+
+        var baseline = new Dictionary<string, string>(current, StringComparer.Ordinal);
+        if (added)
+        {
+            baseline.Remove(RuleFixture.RingPath);
+        }
+        else
+        {
+            current[changedPath] += "-- changed\n";
+        }
+
+        var policy = RegistryLoadAssert.Accepted(RegistryPolicyCompiler.Compile(
+            new RegistrySyntax(1, [], [], [],
+                [new ArtifactKindSyntax("lean", "lean-module", ["module"], ["formal"])]),
+            [new DomainSyntax("Carrier", "S0", "Synthetic carrier")])).Policy;
+        var changes = RawChangeSet.CreateWithKinds(
+            [(changedPath, added ? RawChangeKind.Added : RawChangeKind.Modified)]);
+        var context = RuleEvaluationContext.Create(
+            SyntheticSnapshot(current),
+            SyntheticSnapshot(baseline),
+            policy,
+            AcceptedLeanClosure.Create(report),
+            changes,
+            MetaClear.Create());
+        Assert.False(context.RuleImplementationChanged);
+        var outcome = RuleCatalog.Default.Execute(context);
+        Assert.True(outcome is RuleExecutionOutcome.Completed,
+            outcome is RuleExecutionOutcome.InfrastructureFailure failure ? failure.Message : "execution failed");
+        return Assert.IsType<RuleExecutionOutcome.Completed>(outcome).Capability;
+    }
+
+    private static RepositorySnapshot SyntheticSnapshot(IReadOnlyDictionary<string, string> files) =>
+        Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            RawRepositorySnapshot.Create(files.Select(static file =>
+                RawRepositoryEntry.FromText(file.Key, file.Value))))).Snapshot;
 
     private static LeanAxiomReport Report(params (string Path, string[] Imports)[] files) =>
         LeanAxiomReport.Create(files.ToDictionary(

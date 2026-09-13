@@ -1,0 +1,13 @@
+**定理 378.14。** 展开第 371–378 条的新定义后，对每个固定有限集合论公式 $\varphi(x_1,\ldots,x_r)$ 及任意集合参数，都有第 75–78 条的双向比较
+$$
+\varphi(x_1,\ldots,x_r)
+\iff\varphi^Z(\operatorname{Enc}(x_1),\ldots,\operatorname{Enc}(x_r)).
+$$
+量词包含全部子集与全部函数，特别
+$$
+\mathcal P_Z(\operatorname{Enc}(X))=\operatorname{Enc}(\mathcal P(X)),\qquad
+\operatorname{Fun}_Z(\operatorname{Enc}(X),\operatorname{Enc}(Y))
+=\operatorname{Enc}(Y^X).
+$$
+这些定义及已证性质为 ZFC 的定义性保守扩展，保留每个固定的分离及替代实例。若外部给定 $\mathfrak M\models\mathrm{ZFC}$，同样比较按其内部幂集、函数集及有限对象解释，对每个外部标准有限公式成立；该条件命题不构造模型，不给无条件一致性，也不给统一内部真理谓词。
+

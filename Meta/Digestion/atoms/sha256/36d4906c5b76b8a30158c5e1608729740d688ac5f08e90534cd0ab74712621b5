@@ -1,0 +1,10 @@
+**定义 373.1。** 在 $\omega$ 上分别取 $z_{\rm infdig}$ 向 $K_{\rm infdig}$ 及 $\gamma$ 向通常圆周的拉回拓扑，记为 $\tau_{\rm digit},\tau_{\rm phase}$。定义
+$$
+\rho([s],[t])=\min_{k\in\mathbb Z}|s-t-k|,\qquad
+d_{\rm digit}(n,k)=d_K(z_{\rm infdig}(n),z_{\rm infdig}(k)),
+$$
+$$
+d_{\rm phase}(n,k)=\rho(\gamma(n),\gamma(k)).
+$$
+一个度量 $d$ 的一致结构指包含某个 $\{(x,y):d(x,y)<\varepsilon\}$、$\varepsilon>0$ 的全部二元关系。
+

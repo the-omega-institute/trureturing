@@ -1,0 +1,7 @@
+**定理 379.2。** 对每个 $L\ge1$，在 $V_L$ 的坐标下，$\mathscr R_L$ 恰为
+$$
+\{\langle s,s+1\rangle:0\le s<G_L-1\}
+\ \cup\ \{\langle G_L-1,0\rangle,\langle\beta_L,0\rangle\}.
+$$
+唯一出度二的状态为 $\beta_L$，唯一入度二的状态为零；其余各出度、入度均为一。所有边都有原自然数核心中的见证。存在唯一函数 $g_L:\mathsf X_{L+1}\to\mathsf X_L$ 使 $P_LT=g_LP_{L+1}$，不存在函数 $\mathsf X_L\to\mathsf X_L$ 使 $P_LT$ 经 $P_L$ 分解，即使只要求该等式对全部 $z(n)$ 成立。
+

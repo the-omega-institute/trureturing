@@ -1,0 +1,17 @@
+**定理 460.4。**任意 P2 操作词给仿射函数 $x\mapsto a_\gamma x+b_\gamma$，其中
+$$
+a_\gamma=\prod_{\text{乘法位置 }i}q_i,\qquad
+b_\gamma=\sum_{\text{加法位置 }i}q_i
+\prod_{\substack{\text{乘法位置 }j\\j>i}}q_j.
+$$
+空词给 $(1,0)$。
+
+**证明。**从 $(a,b)=(1,0)$ 出发，接 $A_q$ 变成 $(a,b+q)$，接 $M_q$ 变成 $(qa,qb)$；归纳即得显示式。所有出现的 $b$ 为零或至少二。反向，任意 $a\ge1$ 可由其素因数乘法词产生，任意 $b\ge2$ 是若干个 $2$ 与 $3$ 的和，接在后面即可；所以操作词的仿射像恰为 $a\ge1,b\in\{0,2,3,\ldots\}$，而不同词仍不合并。固定词的素数初值像因此满足前一定理。证毕。
+
+反例。不能把“固定 $a$”无证明地换成任意 $a_X$。取 $k(X)\to\infty$ 使 $X\alpha^{k(X)}\to0$，令 $a_X=F_{k(X)},b_X=0$。P5 给 $\|\alpha a_Xp\|\le X\alpha^{k(X)}$ 对全部 $p\le X$ 成立，故这些像经验概率弱趋 $\delta_0$。这排除任意增长乘数的一致 Haar 结论。
+
+分析假设。Michael Drmota、Clemens Müllner、Lukas Spiegelhofer，〈Primes as Sums of Fibonacci Numbers〉，arXiv:2109.04068v2（2022-08-16，[原文](https://arxiv.org/pdf/2109.04068v2)）Lemma 3.21 的证明（原 PDF 第 44 页，印刷第 32 页；同版作者原文的对应证明）显示下列估计，并转引 Henryk Iwaniec、Emmanuel Kowalski，〈Analytic Number Theory〉（2004）Theorem 13.6。对实数 $X\ge2,\theta\in\mathbb R$、互素整数 $a,q$、$q\ge1$ 及 $|\theta-a/q|\le q^{-2}$，使用素数指数和估计
+$$
+\left|\sum_{p\le X}e(\theta p)\right|\ll(\log X)^3\left(\frac X{\sqrt q}+\sqrt{Xq}+X^{4/5}\right).
+$$
+

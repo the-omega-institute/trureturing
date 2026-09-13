@@ -1,0 +1,7 @@
+**定义 431.5（预测十三·逐个固定公式的翻译）。** 对原集合论语言 $\{=,\in\}$ 的每个固定有限公式 $\theta$，先避免变元捕获并将已定义符号展开为其唯一图及精确域，再取第 75 条的翻译：等号改为码的等号，成员改为 $\in_Z$，布尔联结词保持，并规定
+$$
+(\exists x\,\psi)^Z=\exists c\,(c\in\mathfrak V_Z\land\psi^Z),\qquad
+(\forall x\,\psi)^Z=\forall c\,(c\in\mathfrak V_Z\Rightarrow\psi^Z).
+$$
+这里 $c\in\mathfrak V_Z$ 表示可定义类谓词。
+

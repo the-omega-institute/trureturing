@@ -11,7 +11,7 @@ PROJECT="$ROOT/tools/StrataLint.Cli/StrataLint.Cli.csproj"
 
 cd "$ROOT"
 usage() {
-  echo "USAGE: ingest.sh ingest|align-digestion-status|mathlib-reanchor|quarantine|quarantine-clear BASE [SOURCE|REQUEST|ATOM_ID]" >&2
+  echo "USAGE: ingest.sh ingest|align-digestion-status|refresh-source-registry|mathlib-reanchor|quarantine|quarantine-clear BASE [SOURCE|REQUEST|ATOM_ID|1] [PLAN_SHA256]" >&2
   exit 2
 }
 
@@ -32,10 +32,25 @@ case "$VERB" in
     exec dotnet run --project "$PROJECT" --configuration Release -- \
       "${ingest_args[@]}"
     ;;
-  align-digestion-status)
+  refresh-source-registry|align-digestion-status)
+    alignment_args=(--base "$BASE")
+    if [[ "$VERB" == refresh-source-registry ]]; then
+      [[ $# -le 4 && -n "$PAYLOAD" ]] || usage
+      alignment_args+=(--refresh-source "$PAYLOAD")
+      if [[ -n "${4:-}" ]]; then
+        alignment_args+=(--apply "$4")
+      else
+        alignment_args+=(--plan)
+      fi
+    else
+      [[ $# -le 3 && ( -z "$PAYLOAD" || "$PAYLOAD" == 1 ) ]] || usage
+      if [[ "$PAYLOAD" == 1 ]]; then
+        alignment_args+=(--plan)
+      fi
+    fi
     exec "$CONSUMER" --role digestion-alignment-consumer --report "$REPORT" -- \
       dotnet run --project "$PROJECT" --configuration Release -- \
-        align-digestion-status --base "$BASE"
+        align-digestion-status "${alignment_args[@]}"
     ;;
   mathlib-reanchor)
     make -C "$ROOT" lean-report

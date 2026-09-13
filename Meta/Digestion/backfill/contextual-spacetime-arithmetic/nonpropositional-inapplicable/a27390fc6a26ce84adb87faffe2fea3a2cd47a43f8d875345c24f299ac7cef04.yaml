@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a27390fc6a26ce84adb87faffe2fea3a2cd47a43f8d875345c24f299ac7cef04
+  normalized_sha256: sha256:a27390fc6a26ce84adb87faffe2fea3a2cd47a43f8d875345c24f299ac7cef04
+cas_ref: sha256:a27390fc6a26ce84adb87faffe2fea3a2cd47a43f8d875345c24f299ac7cef04
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section 31.2 records worker provenance, renumbering, ingest shape, and explicitly unmeasured review boundaries. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with candidate definitions 25 and propositions 42-47.
+    previous_atom_id: 20bd999783ae1f2628ec86ffc7bc3de4d79603ccb23454fbd76e283c50518d06
+    next_atom_id: 1422ef240b7066eb0914d524ef135f1fd93ce2746f256d853b13fd9481ab049b

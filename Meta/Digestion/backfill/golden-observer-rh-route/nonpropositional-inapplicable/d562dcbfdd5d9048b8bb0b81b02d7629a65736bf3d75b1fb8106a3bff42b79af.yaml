@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d562dcbfdd5d9048b8bb0b81b02d7629a65736bf3d75b1fb8106a3bff42b79af
+  normalized_sha256: sha256:d562dcbfdd5d9048b8bb0b81b02d7629a65736bf3d75b1fb8106a3bff42b79af
+cas_ref: sha256:d562dcbfdd5d9048b8bb0b81b02d7629a65736bf3d75b1fb8106a3bff42b79af
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「一　M3-d-1′ 预登记:交错级数的延拓恒等式(s ≠ 1)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 06fa957df0cd052e733697e98e1de0b4c8d7793b080f742008673be1cf79f262
+    next_atom_id: f4a7d27cc41095a8a18a39dfff30dd0feccd2bb5c061b49c7c9665022443df3e

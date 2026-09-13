@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3bff1e0ce36a93129ffb2d0684d9afc73d5c910836d6d3abaca949f64adad9d3
+  normalized_sha256: sha256:3bff1e0ce36a93129ffb2d0684d9afc73d5c910836d6d3abaca949f64adad9d3
+cas_ref: sha256:3bff1e0ce36a93129ffb2d0684d9afc73d5c910836d6d3abaca949f64adad9d3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「评注 27.735(文本件合卷:L1·C10·名录·拆机)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 4eeac5f3be518901a221074397e5780350eacb072a801016da2a3cbfaaa58d2a
+    next_atom_id: 37dd3a3ead06904c8a1de533d24ad62e6fda2f5d27a74ae42f7cdbcb4fc9eca3

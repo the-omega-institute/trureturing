@@ -1,6 +1,7 @@
 using StrataLint.Cli;
 using StrataLint.Engine;
 using static StrataLint.Tests.FrozenLedgerTestData;
+using Directory = StrataLint.TestSupport.TemporaryFileSystem.Directory;
 
 namespace StrataLint.Tests;
 
@@ -25,6 +26,24 @@ public sealed class LedgerFrozenCommandTests
     }
 
     [Fact]
+    public void HistoricalFreezeWithoutStatePinReturnsOneAfterSourceChanges()
+    {
+        var result = Run(createLedgerDirectory: true, activeFreeze: true, statePin: false);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Empty(result.Error);
+    }
+
+    [Fact]
+    public void StatePinWithoutHistoricalFreezeReturnsZero()
+    {
+        var result = Run(createLedgerDirectory: true, activeFreeze: false, statePin: true);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Empty(result.Error);
+    }
+
+    [Fact]
     public void MissingLedgerDirectoryReturnsTwoAsInfrastructureFailure()
     {
         var result = Run(createLedgerDirectory: false, activeFreeze: false);
@@ -36,7 +55,8 @@ public sealed class LedgerFrozenCommandTests
             StringComparison.Ordinal);
     }
 
-    private static ExplicitCommandResult Run(bool createLedgerDirectory, bool activeFreeze)
+    private static ExplicitCommandResult Run(
+        bool createLedgerDirectory, bool activeFreeze, bool? statePin = null)
     {
         using var temporary = new TemporaryDirectory();
         if (createLedgerDirectory)
@@ -50,6 +70,14 @@ public sealed class LedgerFrozenCommandTests
             ? EventFiles(BuildCatalog(Module("A"))).Select(static file =>
                 new RawRepositoryEntry(file.Path.Value, file.RawBytes))
             : [];
+        entries = entries.Append(RawRepositoryEntry.FromText(
+            PathFor("A"), "theorem a : True := by\n  trivial\n"));
+        if (statePin ?? activeFreeze)
+        {
+            entries = entries.Append(RawRepositoryEntry.FromText(
+                "Golden/Frozen/state/D5/S0/Carrier/A.lean.json",
+                "{\"statement_id\":\"sha256:3333333333333333333333333333333333333333333333333333333333333333\"}\n"));
+        }
         return LedgerFrozenCommand.Run(
             temporary.Path,
             new FakeRepositoryGateway(RawChangeSet.Create([]), RawRepositorySnapshot.Create(entries), null),

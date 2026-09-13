@@ -1,0 +1,2 @@
+**证明及匹配证书。** 任意 LP 可行 \(t\) 与 \(\lambda\ge0\) 满足
+\(F_b+\sum_p\Delta_pt_p\le Q(\lambda)\):先用预算控制 \(\lambda\sum_p\ell_pt_p\),再逐项用 \(t_p(\Delta_p-\lambda\ell_p)\le\max(0,\Delta_p-\lambda\ell_p)\)。

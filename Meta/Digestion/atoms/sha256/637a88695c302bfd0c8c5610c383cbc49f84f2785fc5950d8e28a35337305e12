@@ -1,0 +1,12 @@
+**定理 424.2（预测六·整段计数与普遍因子）。** 置 $m=G_L-1\ge1$。$\mathcal Q_{L,h}$ 与 $\mathcal L_{m+h}$ 有互逆恢复映射，且
+$$
+|\mathcal Q_{L,h}|=G_L+h,\qquad Q_{L,h}[z[\omega]]=\mathcal Q_{L,h}.
+$$
+$E_{L,h}$ 是使时刻 $0,\ldots,h$ 的各个窗口均下降到商的最大等价关系。对任意集合 $C$ 和函数 $a:K\to C$，有
+$$
+\ker a\subseteq E_{L,h}
+\iff
+\exists! f:a[K]\to\mathcal Q_{L,h}\ \forall x\in K\ f(a(x))=Q_{L,h}(x).
+$$
+$K/E_{L,h}\to\mathcal Q_{L,h}$，$[x]\mapsto Q_{L,h}(x)$，是双射；每个在 $E_{L,h}$ 类上恒定的集合值函数唯一经 $\mathcal Q_{L,h}$ 分解。同样结论成立于自然数载体上的 $n\mapsto Q_{L,h}(z(n))$。
+

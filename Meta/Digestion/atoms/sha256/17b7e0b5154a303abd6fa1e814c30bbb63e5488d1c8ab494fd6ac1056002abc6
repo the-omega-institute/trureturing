@@ -1,0 +1,12 @@
+**定理 443.12（两类系数的联系及精确数值）。** 对平方自由 $Q\ge1$，
+$$
+\alpha_Q=\frac{c_Q}{\zeta_R(2)\prod_{p\mid Q}(1-p^{-2})},\qquad
+\frac{c_Q}{\zeta_R(2)}\le\alpha_Q\le c_Q.
+$$
+并有
+$$
+\alpha_2=\alpha_6=\alpha_{30}=\alpha_{210}=\frac1{3\zeta_R(2)},
+\qquad \alpha_{330}=\frac{137}{432\zeta_R(2)}.
+$$
+固定 $Q$ 的这两类证书均有严格正的线性主项；它们各自的估计不直接给 $M(N)=o(N)$。
+

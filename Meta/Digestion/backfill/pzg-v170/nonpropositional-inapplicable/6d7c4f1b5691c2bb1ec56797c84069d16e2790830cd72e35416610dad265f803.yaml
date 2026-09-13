@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6d7c4f1b5691c2bb1ec56797c84069d16e2790830cd72e35416610dad265f803
+  normalized_sha256: sha256:6d7c4f1b5691c2bb1ec56797c84069d16e2790830cd72e35416610dad265f803
+cas_ref: sha256:6d7c4f1b5691c2bb1ec56797c84069d16e2790830cd72e35416610dad265f803
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「评注 27.581(实名三枚与合流四注)〔定理·典/证 + 六证书〕」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 7d21687c2970cfc36d419ed96004e6590bef74c1ce6a05fa716fa4b15fb9470d
+    next_atom_id: 244c7fbd07bba9c60f9b7222b7d351c08a88e04a3676b0b252bd639d130ef6d0

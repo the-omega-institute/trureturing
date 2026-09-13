@@ -1,0 +1,38 @@
+**24.8 定理（命题及证明）：剩余域中的实际下角点约束与内点正性。** 只余 \(\overline V<V_0\),令 \(v=\eta_j\)。其它行都是实际端点且 \(\mu\in I\),故
+
+\[
+s^2+W<V_0=v^2+\sum_{i\ne j}\eta_i^2\le v^2+W,
+\qquad v>|s|\ge0.
+\]
+
+于是 \(c,d\) 都不在 \(I\)。若 \(d<\mu_0\),则 \(\mu-z>\mu-d\ge\mu_0-d=v\);若 \(c>\mu\),则 \(z-\mu>c-\mu=v\),都矛盾。因此
+
+\[
+c<\mu_0<\mu<d,\qquad v=\min(\mu_0-c,d-\mu)>0.
+\]
+
+实际下角点的下预算给出 \(k\mu_0\le c+\sum_{i\ne j}t_i=k\mu+c-z\),从而
+
+\[
+kv\le k(\mu_0-c)\le(k-1)(\mu-c)-s.
+\]
+
+令 \(n=k-1\ge1\),以及
+
+\[
+A=\frac{kv+s}{n},\qquad c'=\mu-A,\qquad d'=\mu+v.
+\]
+
+上述不等式给出 \(c'\ge c>0\),而 \(d'\le d\)。又
+
+\[
+z-c'=\frac{k(v+s)}{n}>0,\quad d'-z=v-s>0,
+\quad (\mu-v)-c'=\frac{v+s}{n}>0.
+\]
+
+因此完整支撑关系为
+
+\[
+0<c\le c'<\mu-v<z<\mu+v=d'\le d.
+\]
+

@@ -1,0 +1,15 @@
+**证明。** 这些一般双射及图比较分别应用定理 74、258、370.3、370.11。具体地，定理 74 给
+$$
+\langle\operatorname{Enc}(a),\operatorname{Enc}(b)\rangle_Z
+=\operatorname{Enc}(\langle a,b\rangle),
+$$
+所以 $J_{A,B}$ 的逆是解码有序对、取两个原投影再编码。定理 370.3 的完整图式给两种图之间的 $J$ 与 $\operatorname{Pack}$ 等式及域、值域、限制式。它没有将外部普通图与语义配对图认同。
+
+全子集对应的两个方向是 $S\mapsto\operatorname{Enc}[S]$ 与 $H\mapsto\operatorname{Dec}[H]$；全函数对应的逆为
+$$
+h\longmapsto\bigl(a\mapsto\operatorname{Dec}(h(\operatorname{Enc}(a)))\bigr).
+$$
+定理 370.11 的双逆证明保证这些确实包括每个候选，而非仅包括显示公式所定义的候选。若域为空，两侧都有唯一空函数；若域非空而陪域为空，两侧均无函数。
+
+固定元数桥、投影、重括号及有限序列图直接用定理 258。限制双射到联合条件的逆像给准确联合域，复合 $g^*$ 后给普通分量输入上的同一函数。$r=0$ 的桥是从 $\{\varnothing\}$ 到 $\{\operatorname{NatZ}(0)\}$ 的唯一映射，$r=1$ 为恒等；去掉元数后 $T_0=T_1(\varnothing)$，所以没有跨元数单射的断言。有限函数则由其域恢复长度，再逐边恢复字母，空字的码恰为 $\operatorname{NatZ}(0)$。证毕。
+

@@ -1,0 +1,18 @@
+**定理。** 对所有 $a,b,t\in\mathbb R$，
+
+$$
+\boxed{
+\mathcal F_\omega(-b,-a)=\overline{\mathcal F_\omega(a,b)},\qquad
+|\mathcal F_\omega(-b,-a)|^2=|\mathcal F_\omega(a,b)|^2,
+}\tag{GC13}
+$$
+
+并且
+
+$$
+\boxed{
+\mathcal F_\omega(a+t,b+t)
+=e^{-i\omega t}\mathcal F_\omega(a,b).
+}
+$$
+

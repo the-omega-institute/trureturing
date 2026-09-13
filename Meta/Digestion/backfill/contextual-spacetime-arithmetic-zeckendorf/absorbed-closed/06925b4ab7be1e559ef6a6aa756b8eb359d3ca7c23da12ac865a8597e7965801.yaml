@@ -1,0 +1,20 @@
+fingerprints:
+  raw_sha256: sha256:06925b4ab7be1e559ef6a6aa756b8eb359d3ca7c23da12ac865a8597e7965801
+  normalized_sha256: sha256:06925b4ab7be1e559ef6a6aa756b8eb359d3ca7c23da12ac865a8597e7965801
+cas_ref: sha256:06925b4ab7be1e559ef6a6aa756b8eb359d3ca7c23da12ac865a8597e7965801
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/CoarseObservation.observe_complement
+    target_statement_id: sha256:c347ce9e468c40956b0e363e2b37572d4bac80dde87e8ff73d4d3a686b599510
+  - gid: D5/S3/ConceptDynamics/Spacetime/CoarseObservation.parallel_common_charges
+    target_statement_id: sha256:01997c1a0d8eb2b56d41dffe8894a098d411a87a0ae4e85341dcf59ec626a96b
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/CumulativeInverse.cumulative_add
+    target_statement_id: sha256:353767ffdbaf618702f6685cefd52859cba9a3db6a7ecc6e656d7c0cd3570173
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/CumulativeInverse.cumulative_inverse_bijective
+    target_statement_id: sha256:039f3e252252042b488b25fd745cec59f5439e3175aadc654158c65c00396d91
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/CumulativeInverse.cumulative_succ
+    target_statement_id: sha256:78a1ae272c26f75390c71d2120cce1aa02120cbc6eaf63e73f745a34f0da13ad
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - f7acf6ef16728ffa5503f8b55255bb3fa8ee1e9c76ae8f9671975c399b261677
+    - 12d6b8aa220c52c1f77122bddcf0fc5b2de321c4d76d33904875e5fb3c1d9bf6

@@ -1,0 +1,8 @@
+Polynomial rigidity: if dim L>=2, then L is contained in C[ell] for one
+nonzero homogeneous linear form ell. To prove this, choose a nonzero p in L
+of minimum degree m. Its value at0 is nonzero, since otherwise all partials
+would have smaller degree in L and vanish. Choose nonzero q of minimum degree
+n in the kernel of evaluation at0. Then n>m, and every element of L below
+degree n is a multiple of p. Thus partial_i q=c_i p, not all c_i zero.
+Commuting mixed derivatives shows p,q depend only on ell=sum_i c_i x_i.
+

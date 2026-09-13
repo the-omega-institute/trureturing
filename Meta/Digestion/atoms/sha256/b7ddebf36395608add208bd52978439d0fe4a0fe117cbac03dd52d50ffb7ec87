@@ -1,0 +1,16 @@
+**证明。** 对任意 $1/4<\alpha<1/3$，取两条实际下机械轨迹 $v=\ell_0$、$w=\ell_{-2}$。由
+
+$$
+\lfloor\alpha\rfloor=\lfloor2\alpha\rfloor=\lfloor3\alpha\rfloor=0,
+\qquad \lfloor4\alpha\rfloor=\lfloor5\alpha\rfloor=1,
+$$
+
+得到
+
+$$
+(v(0),v(1),v(2))=(0,0,0),\qquad
+(w(0),w(1),w(2))=(0,1,0).
+$$
+
+令 $A=\{0,2\}$、$B=\{1\}$，则 $D(B)=\{1,2\}\subseteq\{0,1,2,3\}=D(A)$，但 $v|_A=w|_A$ 且 $v|_B\ne w|_B$。
+

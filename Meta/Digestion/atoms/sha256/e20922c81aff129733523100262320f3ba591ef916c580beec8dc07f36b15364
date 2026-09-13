@@ -1,0 +1,7 @@
+**证明。** 任给 $c\in X^*,d\in Y^*$，解码取得唯一的 $x\in X,y\in Y$，故显示的码在目标中，配对等式由第 74 条给出。将此码代入所列逆，得到 $\langle\operatorname{Enc}(\operatorname{Dec}(c)),\operatorname{Enc}(\operatorname{Dec}(d))\rangle=\langle c,d\rangle$。反向，任给目标的 $\operatorname{Enc}(\langle x,y\rangle)$，先取逆再取正向，得到原码。唯一解码及普通对的唯一分解保证逆良定义，证明双逆。最后
+$$
+(f^*\circ\chi_{X,Y})(\operatorname{Enc}(x),\operatorname{Enc}(y))
+=\operatorname{Enc}(f(x,y)),
+$$
+所以二元输入的普通码对和原普通对的单个码通过这个比较相接。证毕。
+

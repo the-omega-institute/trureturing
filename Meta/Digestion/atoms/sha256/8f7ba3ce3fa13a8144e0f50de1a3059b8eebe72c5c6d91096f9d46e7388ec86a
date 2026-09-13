@@ -1,0 +1,6 @@
+**定理 459.2。**若 $n,m\in\mathbb N$ 的低 $L$ 位相同，$L\in\mathbb N$，则
+$$
+\|\alpha(n-m)\|\le\alpha^L.
+$$
+更一般，对全部无相邻一的无限零一行，实函数 $F(d)=\sum_{j\ge0}d_j\varepsilon_j$ 绝对收敛，同前缀的两行满足 $|F(d)-F(d')|\le\alpha^L$。
+

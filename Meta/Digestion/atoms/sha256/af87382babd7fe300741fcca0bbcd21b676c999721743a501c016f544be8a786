@@ -1,0 +1,43 @@
+**定理 386.1。** 对任意集合 $X,Y$，使用第 378.4 条的双射
+$$
+\chi_{X,Y}:X^*\times Y^*\to(X\times Y)^*,\qquad
+\chi_{X,Y}(c,d)=\langle c,d\rangle_Z,
+$$
+其逆只在 $(X\times Y)^*$ 上，并为
+$$
+\chi_{X,Y}^{-1}(\operatorname{Enc}(\langle x,y\rangle))
+=\langle\operatorname{Enc}(x),\operatorname{Enc}(y)\rangle.
+$$
+对每个关系 $R\subseteq X\times Y$，定义其普通外部关系
+$$
+R^\square=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(y)\rangle:
+\langle x,y\rangle\in R\}\subseteq X^*\times Y^*.
+$$
+则有
+$$
+\chi_{X,Y}[R^\square]=\operatorname{Enc}[R],\qquad
+\operatorname{Enc}(R)=\operatorname{Pack}(\chi_{X,Y}[R^\square]).
+$$
+对第 379–384 条的每个函数 $f:D\to Y$，其普通共轭图与原图码分别为
+$$
+G_{f^*}=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle:x\in D\},
+$$
+$$
+\operatorname{Enc}(G_f)
+=\operatorname{Pack}\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle_Z:x\in D\},
+\qquad \operatorname{El}(\operatorname{Enc}(G_f))=\operatorname{Enc}[G_f].
+$$
+外部共轭的域为 $D^*$，单个原图码的语义域为 $\operatorname{Enc}(D)$，语义值域为 $\operatorname{Enc}(\operatorname{ran}f)$。任取 $D'\subseteq D$，
+$$
+(f|_{D'})^*=f^*|_{(D')^*},\qquad
+\operatorname{ev}_Z(\operatorname{Enc}(G_f),\operatorname{Enc}(x))
+=\operatorname{Enc}(f(x))\quad(x\in D).
+$$
+域外无图边，空域仍使用同样公式。
+
+**证明。** 第 74、378.4 条在任意集合上给 $\langle\operatorname{Enc}(x),\operatorname{Enc}(y)\rangle_Z=\operatorname{Enc}(\langle x,y\rangle)$ 及两个实际积域间的双逆。将等式逐边用于 $R$ 得第一个关系式，再以第 73 条的 $\operatorname{Pack}$ 双逆得到单个关系码。$\chi$ 的逆逐对解码并分解原普通对，其所列定义域不扩张到任意有效码。
+
+把 $R$ 取为 $G_f\subseteq D\times Y$，共轭的值式给其普通图；逐边语义配对再用 $\operatorname{Pack}$ 给原图码。第 378.3 条的精确图域、值域与语义求值在同一个 $D,Y$ 上适用。限制到 $D'$ 正好只留输入在 $D'$ 的边，故共轭限制等式成立。$D'=\varnothing$ 时两边为空外部图，原图码为 $\operatorname{Pack}(\varnothing)=\operatorname{NatZ}(0)$，没有在域外添值。
+
+特别取 $R=\mathscr R_L$，这将有限观测关系的普通码坐标图送到 $\operatorname{Enc}[\mathscr R_L]$；取 $R=G_T$，得到真实后继图的相同桥。若原联合域是某个 $D\subseteq X\times Y$，桥的限制域准确为 $D^\square$，像准确为 $D^*$，不能仅以两个坐标分别合法代替 $D$ 的成员条件。若编码普通外部图 $G_{f^*}$ 自身，输入输出对象已是码，仍各再施一次 $\operatorname{Enc}$；这是按第 378.8 条编码另一个普通集合图的操作，不替代显示的 $\operatorname{Enc}(G_f)$。证毕。
+

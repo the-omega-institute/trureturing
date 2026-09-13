@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a2fc7e74a0559124a9f0c5534efd2372385297ad9b8d04b320a873f4680bbd6b
+  normalized_sha256: sha256:a2fc7e74a0559124a9f0c5534efd2372385297ad9b8d04b320a873f4680bbd6b
+cas_ref: sha256:a2fc7e74a0559124a9f0c5534efd2372385297ad9b8d04b320a873f4680bbd6b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「四　M2-c 预登记:每个 `ZeroData` 对每个 Weil 测试函数对称收敛(`SymmetricConvergentOfZetaSummable`)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 216591b69b37e1bf51adc318a63a9df2665eac134138c747313b5986e6524018
+    next_atom_id: a379b0f1bb204d5f17f090b44774c9574b61c969a4e7bdd7390f0180c6b30c5c

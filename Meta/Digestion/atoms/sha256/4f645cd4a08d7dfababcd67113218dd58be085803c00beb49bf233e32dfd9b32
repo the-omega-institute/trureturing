@@ -1,0 +1,55 @@
+**定理 409.1。** 对任意拓扑集合 $X$ 及任意 Borel 概率 $\mu$，令
+$$
+\mu_{\rm ext}(B)=\mu(e_X^{-1}[B])\qquad(B\in\mathscr B_{X^*}).
+$$
+这是以普通实数为值的 Borel 概率；该构造给两载体上全部 Borel 概率的双射，逆为 $\eta\mapsto(A\mapsto\eta(e_X[A]))$。所有 Borel 零测集、不变概率、模零不变集、唯一性及遍历性均保持并反映。对任意非负 Borel 函数 $f$，以及任何正负部积分使有符号积分有定义的实 Borel 函数，有
+$$
+\int_{X^*}f\circ e_X^{-1}\,d\mu_{\rm ext}
+=\int_X f\,d\mu.
+$$
+非负积分允许 $+\infty$；有符号式不定义 $\infty-\infty$。
+
+测度作为整个函数图的码另满足
+$$
+\operatorname{Enc}(\mu)=
+\operatorname{Pack}\{
+\langle\operatorname{Enc}(A),\operatorname{Enc}(\mu(A))\rangle_Z:
+A\in\mathscr B_X\}.
+$$
+实际外部 Borel 子集与这个图的自变量码之间的双射为
+$$
+B\longmapsto\operatorname{Pack}(B)=\operatorname{Enc}(e_X^{-1}[B]),
+\qquad B\in\mathscr B_{X^*},
+$$
+逆为 $\operatorname{El}$；完整实数码值为 $\operatorname{Enc}(\mu_{\rm ext}(B))$。
+
+**证明。** 第 405.1 条使每个自变量的原像 Borel，双射原像保持空集、全集及不交可数并。因此可数可加性与总质量一直接从 $\mu$ 得到。给定任意外部概率 $\eta$，直接像同样保持这些集合运算，故逆式给原概率；两次应用逐子集为原函数。这覆盖全体概率而不预设某个外部概率来自已知原概率。$\mu_{\rm ext}(e_X[A])=\mu(A)$ 立刻给所有 Borel 零测集的双向对应，包含以对称差表示的几乎处处相等。
+
+对任意 Borel $S:X\to X$，令 $S^*=e_XSe_X^{-1}$。原像比较准确为
+$$
+(S^*)^{-1}[e_X[A]]=e_X[S^{-1}[A]],
+$$
+故对全部 $A\in\mathscr B_X$，
+$$
+\mu_{\rm ext}((S^*)^{-1}[e_X[A]])=\mu(S^{-1}[A]),\qquad
+\mu_{\rm ext}(e_X[A])=\mu(A).
+$$
+全体 Borel 子集已由 $e_X[A]$ 穷尽，故两侧概率不变性等价。又
+$$
+e_X[A]\mathbin\triangle(S^*)^{-1}[e_X[A]]
+=e_X[A\mathbin\triangle S^{-1}[A]],
+$$
+使模零不变条件等价，而该集质量为零或一的判断也相同。于是遍历性双向相应。不变概率类整体双射，所以存在性、唯一性及不唯一性各自双向保持。
+
+对指示函数，积分式是子集质量的定义式；对非负有限简单函数，把有限个实系数乘以各 Borel 分片质量相加，逐项得到积分相等。任意非负 Borel 函数的积分定义为所有受其支配的非负简单函数积分的上确界；简单函数在两载体上由复合双向对应，逐点支配条件也对应，所以两侧上确界相同，包括无界的 $+\infty$ 情形。对实函数，正部和负部各自遵从这一结论；只要不是两者同时无限，作定义允许的减法得有符号式。特别所有有界连续检验函数的积分均有限并对应。
+
+测度的原输入对象是 $A\in\mathscr B_X$，原输出对象是普通实数 $\mu(A)$，因此第 404.1 条直接给所列完整图码；语义求值在 $\operatorname{Enc}(A)$ 处给 $\operatorname{Enc}(\mu(A))$。一个实际外部子集 $B=e_X[A]$ 自身由点码组成，$\operatorname{Pack}(B)=\operatorname{Enc}(A)$，而 $\operatorname{El}(\operatorname{Enc}(A))=B$，故这两个域表示双向比较。$\operatorname{Enc}(B)$ 是对外部子集这个对象再编码，不能用它省略 $\operatorname{Pack}$ 的域比较。
+
+完整实数码值使用第 408.1 条的运输算术。概率可数可加性的每个有限部分和都对应，而它们有界于一的实极限也对应，故完整值的可数可加性正是原式的编码。积分的有限实值用相同方式编码；若使用扩充非负实数的无穷值，可将 $[0,\infty]$ 本身作为一个集合载体另行编码并运输其序及上确界，不把该无穷值加入本条有限实值测度的值域。
+
+因此第 396–399 条中的 $\lambda$、任意假设存在的 $\nu$、以及 $0<\lambda(A)<1$ 时的整个规范化限制
+$$
+B\longmapsto\lambda(B\cap A)/\lambda(A)
+$$
+都逐域、逐值对应；交集和非零分母域已分别由集合比较及第 404.2、408.1 条保留。第 397–398 条于是给 $(\mathbb T^*,R^*,\lambda_{\rm ext})$ 的唯一不变概率与遍历性；每个不变 Borel 函数以普通实数或实数码为值时，分别几乎处处等于 $c$ 或 $\operatorname{Enc}(c)$。这里对 $K$ 的应用只有“若给定概率则运输”的全称条件，未附加 $K$ 上另一个不变概率的存在断言。证毕。
+

@@ -1,0 +1,24 @@
+**命题 429.2（预测十一·完整逆式与自然分支）。** 对每个集合 $x$ 和每个有效码 $c$，
+$$
+\operatorname{Dec}(\operatorname{Enc}(x))=x,\qquad
+\operatorname{Enc}(\operatorname{Dec}(c))=c.
+$$
+$e_X$ 为双射，逆为 $\operatorname{Dec}|X^*$，并且对每个集合 $X$、每个有效码 $c$ 和每个集合 $B\subseteq\mathfrak V_Z$，
+$$
+\operatorname{El}(\operatorname{Enc}(X))=\operatorname{Enc}[X]=X^*,\qquad
+\operatorname{El}(\operatorname{Pack}(B))=B,\qquad
+\operatorname{Pack}(\operatorname{El}(c))=c.
+$$
+具体地，
+$$
+\operatorname{Pack}(B)=
+\begin{cases}
+\operatorname{NatZ}(n),&B=\{\operatorname{NatZ}(m):m<n\}\text{ 对某 }n\in\omega,\\
+\langle1,B\rangle,&\text{不存在这样的 }n.
+\end{cases}
+$$
+第一分支的 $n$ 唯一，且此时竞争节点 $\langle1,B\rangle$ 无效。$\operatorname{Pack}(\varnothing)=\operatorname{NatZ}(0)$ 为唯一语义空集；原始空字 $\varnothing$ 不是有效码。对每个集合 $x$，
+$$
+\operatorname{Enc}(x)\in HF\iff x\in HF.
+$$
+

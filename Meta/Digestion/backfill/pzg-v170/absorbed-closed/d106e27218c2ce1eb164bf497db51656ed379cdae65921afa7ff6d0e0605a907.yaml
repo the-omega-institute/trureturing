@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:d106e27218c2ce1eb164bf497db51656ed379cdae65921afa7ff6d0e0605a907
+  normalized_sha256: sha256:d106e27218c2ce1eb164bf497db51656ed379cdae65921afa7ff6d0e0605a907
+cas_ref: sha256:d106e27218c2ce1eb164bf497db51656ed379cdae65921afa7ff6d0e0605a907
+coverage_gids:
+  - gid: D5/S3/Arith/DeeplyCompositeLcmRank.deeply_composite_lcm_sqrt_rank
+    target_statement_id: sha256:5b90b138cd4356e124f805a48caeb3153e8a1dd8be61bdb8b7546453fc4d7ab6
+  - gid: D5/S3/Factorization/DeeplyCompositeNotPrimeExponentRecord.deeply_composite_25200_not_in_Binfty
+    target_statement_id: sha256:e687af902dd0e860a2ece02bfa6ed68df78ab63fcfc12a6d1cb00856be3a62f2
+  - gid: D5/S3/Factorization/PrimeExponentRecordLimitOne.a384669_endpoint_limit_one
+    target_statement_id: sha256:30cafcb4ac5490ee357b46a71a87b7a0ff038faa2f1e1d67ec859e2e5fef8f40
+receipts:
+  unresolved_subitems: []

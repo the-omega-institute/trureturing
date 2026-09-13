@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:c0ba55aa6dba2d878fc6842c2604b515992f419a391e724a54b68623a42d2d26
+  normalized_sha256: sha256:c0ba55aa6dba2d878fc6842c2604b515992f419a391e724a54b68623a42d2d26
+cas_ref: sha256:c0ba55aa6dba2d878fc6842c2604b515992f419a391e724a54b68623a42d2d26
+coverage_gids:
+  - gid: D5/S0/Conventions/WDigits.wEncoding
+    target_statement_id: sha256:a21cdbccd79847d85c30d61e2928a0de9f1170e1dbb4ed768dfa3068a8e70ea9
+  - gid: D5/S3/Arith/GoldenResource/GoldenDivisorLanguage.divisor_5040_card
+    target_statement_id: sha256:a0540ffd4cda1d54b0e338889c018a12b1767d0c94df1c6f75690f3c786ec835
+  - gid: D5/S3/Arith/GoldenResource/GoldenDivisorLanguage.divisor_5040_golden_equiv
+    target_statement_id: sha256:f3dd5ff71359c08945559efb764170be30bacdab68c758eaf946dd9adb63d462
+  - gid: D5/S3/Arith/GoldenResource/GoldenDivisorLanguage.full_window_divisor_card
+    target_statement_id: sha256:844de1467168c2f411c5c825814f9d3113a6752a8e2c4bfceafa4c462e0450b5
+  - gid: D5/S3/Arith/GoldenResource/GoldenDivisorLanguage.full_window_divisor_exponent_equiv
+    target_statement_id: sha256:282d3ee5054235f7b6e578e2ff6a5714cfc3b0cb4de4df72cd262da908c36df8
+  - gid: D5/S3/Arith/GoldenResource/GoldenDivisorLanguage.full_window_divisor_golden_equiv
+    target_statement_id: sha256:e9ddbe9df5de62fe3cf72caa16bbc51f8c2949f0c1648ce36c8be3d56ee6e066
+receipts:
+  unresolved_subitems: []

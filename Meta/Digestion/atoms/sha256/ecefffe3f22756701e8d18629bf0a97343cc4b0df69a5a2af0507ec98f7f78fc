@@ -1,0 +1,53 @@
+**定理 472.7（四个公式在全部支撑族上的固定幂次障碍）。** 对平方自由 $Q>1$、$k=\omega(Q)$，
+$$
+c_Q\ge\frac1{2(k+1)},\qquad
+\alpha_Q\ge\frac1{z(k+2)},\qquad
+\min\{2\tau(Q),\Phi(Q)\}s_Q\ge2^{k-1},\qquad
+D_Q\ge E_Q\ge2^k.
+\tag{472.7a}
+$$
+对每个整数 $N\ge1$ 和每个平方自由 $Q\ge1$，令 $L=\log_2N$，则
+$$
+E_U(Q,N)\ge\frac{N}{2(L+2)},\qquad
+E_W(Q,N),\widehat E_W(Q,N)\ge\frac{N}{z(L/2+2)},
+\tag{472.7b}
+$$
+$$
+E_U^{\rm jump}(Q,N)\ge\frac{N}{L+2}.
+\tag{472.7c}
+$$
+因此对任意序列 $(\mathcal Q_N)_{N\ge1}$，只要每个 $\mathcal Q_N$ 是非空的平方自由正整数族，无论该族有限或无限、有界或无界，对每个预先固定的实数 $\delta>0$ 都有
+$$
+\lim_{N\to\infty}
+\frac{\displaystyle\inf_{Q\in\mathcal Q_N}
+\min\{E_U(Q,N),E_W(Q,N),\widehat E_W(Q,N),E_U^{\rm jump}(Q,N)\}}
+{N^{1-\delta}}=+\infty.
+\tag{472.7d}
+$$
+此结论不声称实际 $U_Q,W_Q$ 或 $|M|$ 的相应下界。
+
+**证明。** 将素因子排列为 $q_1<\cdots<q_k$。$q_i\ge i+1$，而 $1-1/x$、$x/(x+1)$ 递增，所以
+$$
+e_Q\ge\prod_{i=1}^k\frac i{i+1}=\frac1{k+1},\qquad
+\rho_Q\ge z^{-1}\prod_{i=1}^k\frac{i+1}{i+2}=\frac2{z(k+2)}.
+$$
+原主项的共同非负差和，首项为 $|b_1|(1-a_2^{-1})=1-q_1^{-1}\ge1/2$。乘以上述因子便得两个系数下界。又 $s_Q\ge1$、$\tau(Q)=2^k$，且首素因子 $q_1-1\ge1$、其余 $q_i-1\ge2$，故 $\Phi(Q)\ge2^{k-1}$。最后 $E_Q\ge2^k$ 由定义，$D_Q\ge E_Q$ 由 472.2，证明 (472.7a)。
+
+固定 $N\ge1$。若 $k\le L+1$，旧未过滤公式的主项至少为 $N/[2(L+2)]$；若 $k>L+1$，其余项至少 $2^{k-1}>N$。这给 (472.7b) 的第一界。若 $k\le L/2$，两个平方自由公式的主项至少为 $N/[z(L/2+2)]$；若 $k>L/2$，它们各自的平方根项至少 $2^k\sqrt N>N$。其分母 $z(L/2+2)>1$，所以仍得到同一界。
+
+对实际跳变公式须直接分情况。若 $k\le L/2$，
+$$
+E_U^{\rm jump}(Q,N)\ge c_QN\ge\frac{N}{2(k+1)}\ge\frac{N}{L+2}.
+$$
+若 $k>L/2$，则 $E_U^{\rm jump}(Q,N)\ge4^k>N\ge N/(L+2)$。这独立证明 (472.7c)，没有使用旧较大公式的下界。$Q=1$ 时 $E_U=N$、$E_U^{\rm jump}=N+1$，两个平方自由公式均至少为 $N/z$，故 (472.7b)–(472.7c) 同样成立，包括 $N=1$。
+
+四个公式因而同时至少为
+$$
+\frac{N}{2z(L+2)}.
+$$
+这个下界与 $Q$ 无关；先取有限最小值，再在任意非空 $\mathcal Q_N$ 上取下确界仍成立。下确界有限，因为族中任一固定成员在该 $N$ 处的四个值均有限。除以 $N^{1-\delta}$ 后，下界为 $N^\delta/[2z(\log_2N+2)]$。令 $s=\log N$，由 $e^{\delta s}\ge(\delta s)^2/2$ 可知此式趋正无穷，得到 (472.7d)。任意固定 $\delta>0$ 都按此顺序量化；不允许它随 $N$ 变动后仍引用这个极限。
+
+例如 $N=Q=2$ 时两个实际外层都只剩 $d=1$，且 $B_2(2)=0$，所以 $U_2(2)=W_2(2)=|M(2)|=0$，而四个显示公式都正。这明确区分了公式障碍与实际函数下界。定理 472.2 的余项一致趋零与本定理相容：余项趋零并不删去其正主项。证毕。
+
+**必要数学引用。** 素数计数和初始素数积上界使用 mathlib 版本 $db584cd6d46c92f209a44c0f1c829460d327499d$ 的 `Mathlib/NumberTheory/Chebyshev.lean` 中 `eventually_primeCounting_le`、`Mathlib/NumberTheory/Primorial.lean` 中 `primorial_le_four_pow`。有限分部求和亦见同版本 `Mathlib/Algebra/BigOperators/Module.lean`。素数定理使用 D. Zagier，〈Newman's Short Proof of the Prime Number Theorem〉，*American Mathematical Monthly* **104** (1997)，705–708。Z 卷第 443.2 的有符号支持等式、第 443.5 与 443.11 的计数估计始终在其原条件下使用。
+

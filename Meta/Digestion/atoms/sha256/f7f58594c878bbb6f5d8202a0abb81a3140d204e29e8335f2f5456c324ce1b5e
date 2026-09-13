@@ -1,0 +1,12 @@
+**假设 447.7（经典解析等价及可选定量输入）。** 分别保留以下解析接口：
+$$
+H_{\rm RM}:\quad \mathrm{RH}\Longleftrightarrow
+\forall\varepsilon>0\ \exists C_\varepsilon>0\ \forall N\ge1,
+\quad |M(N)|\le C_\varepsilon N^{1/2+\varepsilon};
+$$
+可选的 $H_S$ 为：RH 蕴含存在 $C>0,X>e$，使所有实数 $x\ge X$ 满足
+$$
+|\mathcal M(x)|\le C\sqrt x\exp\bigl(\sqrt{\log x}(\log\log x)^{14}\bigr).
+$$
+这些接口作为条件命题的局部假设使用，不作为由编码或有限恒等式得到的结论。
+

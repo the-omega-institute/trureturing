@@ -14,8 +14,6 @@ $$\operatorname {Good}\left(h, w\right) \iff \forall k , 0 \le k \le \operatorna
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Codex implementation worker (2026). *Alternating words and the A392714 residual intervals*. URL: <https://github.com/the-omega-institute/trureturing>.
-
 *Commentary.*
 
 Good requires every height, including the initial and final heights, to be nonnegative.
@@ -27,8 +25,6 @@ $$\operatorname {Unswappable}\left(h, \operatorname {cons}\left(x, \operatorname
 *Formalization.* `D5/S1/Words/Compositions/AlternatingResidualBridge.Unswappable` (`✓ std3`).
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* Codex implementation worker (2026). *Alternating words and the A392714 residual intervals*. URL: <https://github.com/the-omega-institute/trureturing>.
 
 *Commentary.*
 
@@ -42,8 +38,6 @@ $$\operatorname {alternating}\left(\operatorname {cons}\left(( a , b ), l\right)
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Codex implementation worker (2026). *Alternating words and the A392714 residual intervals*. URL: <https://github.com/the-omega-institute/trureturing>.
-
 *Commentary.*
 
 The entries of each pair are natural numbers. Expand a pair to its first entry and the negation of its second entry, both as integers. The empty list expands to the singleton zero.
@@ -55,8 +49,6 @@ $$\operatorname {encode}\left(a, b\right) = ( a _ {1} , - b _ {1} , ... , a _ {m
 *Formalization.* `D5/S1/Words/Compositions/AlternatingResidualBridge.encode` (`✓ std3`).
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* Codex implementation worker (2026). *Alternating words and the A392714 residual intervals*. URL: <https://github.com/the-omega-institute/trureturing>.
 
 *Commentary.*
 
@@ -70,8 +62,6 @@ $$\operatorname {Good}\left(0, \operatorname {encode}\left(a, b\right)\right) \l
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Codex implementation worker (2026). *Alternating words and the A392714 residual intervals*. URL: <https://github.com/the-omega-institute/trureturing>.
-
 *Commentary.*
 
 Before block i the height is A at i-1 minus B at i-1. The reversed order is illegal exactly when A at i-1 is less than B at i; the block endpoint is nonnegative exactly when B at i is at most A at i. Induction over the blocks proves both implications, including the initial and final heights.
@@ -84,8 +74,6 @@ $$\operatorname {encode}\left(a, b\right) = \operatorname {encode}\left(c, d\rig
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Codex implementation worker (2026). *Alternating words and the A392714 residual intervals*. URL: <https://github.com/the-omega-institute/trureturing>.
-
 *Commentary.*
 
 Equality at alternating positions recovers the entries of a and b separately. Equality of the finite lists therefore gives equality of both permutations.
@@ -97,8 +85,6 @@ $$\sum _ {a} \sum _ {b : \operatorname {Good}\left(0, \operatorname {encode}\lef
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Compositions/AlternatingResidualBridge.encoded_product_sign_sum` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
-
-*Acknowledgement.* Codex implementation worker (2026). *Alternating words and the A392714 residual intervals*. URL: <https://github.com/the-omega-institute/trureturing>.
 
 *Commentary.*
 

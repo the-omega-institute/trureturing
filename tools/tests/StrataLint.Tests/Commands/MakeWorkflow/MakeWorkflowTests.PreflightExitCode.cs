@@ -17,6 +17,10 @@ public sealed partial class MakeWorkflowTests
             "arbitrary.sh");
         Directory.CreateDirectory(Path.GetDirectoryName(futureScript)!);
         File.WriteAllText(futureScript, "#!/usr/bin/env bash\n");
+        Directory.CreateDirectory(Path.Combine(source.Path, "Meta"));
+        File.Copy(
+            Path.Combine(TestRepositoryLayout.FindRoot(), "Meta", "lean-report.toml"),
+            Path.Combine(source.Path, "Meta", "lean-report.toml"));
 
         CopyPreflightScriptClosure(source.Path, destination.Path);
 
@@ -145,7 +149,7 @@ public sealed partial class MakeWorkflowTests
         RunScenarioGit(root, "init", "--initial-branch=dev");
         RunScenarioGit(root, "config", "user.email", "preflight@example.invalid");
         RunScenarioGit(root, "config", "user.name", "Preflight Fixture");
-        RunScenarioGit(root, "add", "README.md", "tools");
+        RunScenarioGit(root, "add", "README.md", "tools", "Meta");
         RunScenarioGit(root, "commit", "-m", "fixture base");
         var candidatePath = scenario == "stale-values"
             ? Path.Combine(root, "Golden", "values-kernels.toml")
@@ -270,7 +274,7 @@ public sealed partial class MakeWorkflowTests
         foreach (var source in Directory.GetFiles(
             sourceScripts,
             "*",
-            SearchOption.AllDirectories))
+            SearchOption.AllDirectories).Append(Path.Combine(sourceRoot, "Meta", "lean-report.toml")))
         {
             var relativePath = Path.GetRelativePath(sourceRoot, source);
             var destination = Path.Combine(destinationRoot, relativePath);

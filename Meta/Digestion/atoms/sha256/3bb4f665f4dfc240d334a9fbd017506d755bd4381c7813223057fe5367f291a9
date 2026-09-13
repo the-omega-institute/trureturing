@@ -1,0 +1,8 @@
+**定理 469.15（定义与命题）（待证）。**相位与整数数字和的联合候选为
+$$
+J_X(h,u)=\frac1{\pi(X)}\sum_{p\le X}e(h\alpha p)
+\exp\!\left(iu\,\frac{D(p)-cL_X}{\sqrt{vL_X}}\right)
+\ \longrightarrow\ \mathbf1_{h=0}e^{-u^2/2}
+$$
+对每个固定 $h\in\mathbb Z,u\in\mathbb R$。P6 给 $u=0$，P7 给 $h=0$；$h\ne0,u\ne0$ 的消去估计仍缺。若该估计成立且 $\epsilon_X\to0$，它同样传递到 P9 历史加权终点，因为检验函数模至多一，其积分差至多 $2\epsilon_X$。单独边缘分布不蕴含联合独立：两点 $(0,0),(1,1)$ 各半的概率与四点均匀概率具有相同边缘、不同联合分布。
+

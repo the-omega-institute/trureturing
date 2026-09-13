@@ -87,6 +87,51 @@ public sealed class BoundedProcessRunnerTests
         Assert.Equal("err", System.Text.Encoding.UTF8.GetString(result.StandardError));
     }
 
+    [Xunit.SkippableTheory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void OutputLimitFailureIsNotMaskedByBlockedProducer(bool stderr)
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        // Exceed pipe capacity as well as the reader limit: a child that can
+        // finish writing before the reader fails does not exercise this fault.
+        var redirect = stderr ? " >&2" : string.Empty;
+        InvalidOperationException? exceeded = null;
+        try
+        {
+            TestProcessRunner.Run("/bin/sh",
+                ["-c", "head -c 1048576 /dev/zero" + redirect], Path.GetTempPath(),
+                BoundedProcessRunner.HangDetectionBudget, 16);
+        }
+        catch (InvalidOperationException exception) { exceeded = exception; }
+
+        Assert.Equal("process output exceeded 16 bytes",
+            Assert.IsType<InvalidOperationException>(exceeded).Message);
+    }
+
+    [Xunit.SkippableFact]
+    public void StreamingParserFailureIsNotMaskedByBlockedProducer()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        FormatException? invalid = null;
+        try
+        {
+            TestProcessRunner.Classify(() => BoundedProcessRunner.RunStreaming<int>("/usr/bin/head",
+                ["-c", "1048576", "/dev/zero"], Path.GetTempPath(),
+                BoundedProcessRunner.HangDetectionBudget, 16,
+                async (stream, cancellation) =>
+                {
+                    await stream.ReadExactlyAsync(new byte[1], cancellation);
+                    throw new FormatException("invalid history record");
+                }), "/usr/bin/head");
+        }
+        catch (FormatException exception) { invalid = exception; }
+
+        Assert.Equal("invalid history record", Assert.IsType<FormatException>(invalid).Message);
+    }
+
     [Fact]
     public void ChildExitIsNotMaskedByClosedStandardInputPipe()
     {

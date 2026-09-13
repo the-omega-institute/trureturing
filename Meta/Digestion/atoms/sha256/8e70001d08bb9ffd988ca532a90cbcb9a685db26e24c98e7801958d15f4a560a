@@ -1,0 +1,13 @@
+**定理 460.2（Vinogradov 素数等分布的上述输入推论）。**对每个固定无理 $\theta$，
+$$
+\frac1{\pi(X)}\sum_{p\le X}e(\theta p)\longrightarrow0.
+$$
+**证明。**若带 $\Lambda$ 的和不是 $o(X)$，某固定 $\delta>0$ 及无穷多个 $X$ 满足第二输入。取最近整数 $a$，并将 $a/q$ 约分为 $a'/q'$；令 $\xi'=q'\theta-a'$。则 $q'\le C(\log X)^B$，$|\xi'|\le C(\log X)^B/X$。固定无理 $\theta$ 强制 $q'\to\infty$：否则有有界分母子列，而逼近误差趋零，有限个可能分数之一就等于 $\theta$。第三输入取 $A>B+2$，得到和的绝对值至多 $X/\phi_E(q')+o(X)=o(X)$，矛盾。这里 $\phi_E(q')\to\infty$ 可直接由 $\phi_E(q)^2\ge q/2$ 看出：按素数幂因子分解 $\phi_E(q)^2/q$，除 $2^1$ 因子贡献 $1/2$ 外，每项均至少一。
+
+高次素数幂的总 $\Lambda$ 权至多 $O(\sqrt X(\log X)^2)=o(X)$，所以 $A(X)=\sum_{p\le X}\log p\,e(\theta p)=o(X)$。分部求和给
+$$
+\sum_{p\le X}e(\theta p)=\frac{A(X)}{\log X}
++\int_2^X\frac{A(t)}{t(\log t)^2}\,dt.
+$$
+固定误差 $\varepsilon$ 后，在足够大的尾部用 $|A(t)|\le\varepsilon t$；前面有限积分为常数，尾部积分为 $O(\varepsilon X/(\log X)^2)$，由分割 $[2,\sqrt X]$、$[\sqrt X,X]$ 即可验证此界。故总和为 $o(X/\log X)$。除以素数定理给出的 $\pi(X)\sim X/\log X$ 即得。证毕。
+

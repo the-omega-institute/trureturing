@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f7db38c64ddd1dde2bf542f904b56408050e798b1b99186020d970762be4c9ad
+  normalized_sha256: sha256:f7db38c64ddd1dde2bf542f904b56408050e798b1b99186020d970762be4c9ad
+cas_ref: sha256:f7db38c64ddd1dde2bf542f904b56408050e798b1b99186020d970762be4c9ad
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「增订(2026-09-07)—— Karp 位移乘积差的系数非负性:两条最低阶截断」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: c0b204de5fb1912eb7aaf062b759f26ab5b4bf8899b16518ad4319d304c90f39
+    next_atom_id: 5867a5aa977063b8208cd7c4e574947d462737ee0d6d8f364a494363bc188830

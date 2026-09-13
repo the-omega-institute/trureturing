@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:525b1305e2e013372a08e1011dd696c56933902af608f2d41ca0167961ca6a91
+  normalized_sha256: sha256:525b1305e2e013372a08e1011dd696c56933902af608f2d41ca0167961ca6a91
+cas_ref: sha256:525b1305e2e013372a08e1011dd696c56933902af608f2d41ca0167961ca6a91
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「一　G-d 预登记:局部因子的通用缩放(`LocalFactorUniversalScaling`)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 656dd70e3ef8338f80d20481a8a370712ac69d1ad11e8ee2b1eb948257f8bbde
+    next_atom_id: d8be484f91362453e309f4481d827a8d8ff02fc4df20f16bcea69226966e1186

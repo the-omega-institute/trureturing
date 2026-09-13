@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dc5cb97f6730ab70e3afb0cb68c7034fdb9bcf2a13dca96c67a985b67be1bf13
+  normalized_sha256: sha256:dc5cb97f6730ab70e3afb0cb68c7034fdb9bcf2a13dca96c67a985b67be1bf13
+cas_ref: sha256:dc5cb97f6730ab70e3afb0cb68c7034fdb9bcf2a13dca96c67a985b67be1bf13
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「8. 数学引文（附第 2–6 节及其后续引用）」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 0800c6b35b37b2316befb574b8ae00f5541c3fbcc68c0b79805ad1431edd64ee
+    next_atom_id: 8f0c951a19753f9f16c17f04acf088b727319e1a2d7e800de506bac38cde07dd

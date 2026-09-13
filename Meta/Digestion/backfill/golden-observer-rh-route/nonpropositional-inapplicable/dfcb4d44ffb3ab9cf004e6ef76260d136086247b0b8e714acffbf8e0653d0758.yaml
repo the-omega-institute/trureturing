@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dfcb4d44ffb3ab9cf004e6ef76260d136086247b0b8e714acffbf8e0653d0758
+  normalized_sha256: sha256:dfcb4d44ffb3ab9cf004e6ef76260d136086247b0b8e714acffbf8e0653d0758
+cas_ref: sha256:dfcb4d44ffb3ab9cf004e6ef76260d136086247b0b8e714acffbf8e0653d0758
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「一　M3-f-5 预登记:完整 separator(`OffLineNonrealZeroNegativeWeilSquare`)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 3cb5a3fb47fddc8973d5c0cd2461c574147941e37e5761a5f8458b9b495ffd98
+    next_atom_id: 744b2ea9f9af39f2efa0f3603010e3b5b4100d2e2f699a39688ff9cde0317b40

@@ -1,0 +1,7 @@
+若 \(\mathcal M\) 是正支撑不超过 \(H\) 的有限非负加权和,满足 \(\mathcal M(1)=k\)、\(\mathcal M(x)=k\mu\)、\(\mathcal M((x-\mu)^2)=V_{\mathcal M}\),则与原型 \((H,L,\ldots,L)\) 比较得到
+
+\[
+\mathcal M(f)\le\mathcal M(P)
+=\Psi_k(\mu,V)+a(V_{\mathcal M}-V).
+\]
+

@@ -1,0 +1,2 @@
+**定理 398.1。** $(\mathbb T,R,\lambda)$ 遍历。对每个 Borel 函数 $f:\mathbb T\to\mathbb R$，若 $f\circ R=f$，则存在唯一有限实数 $c$，使 $f=c$ 几乎处处。
+
