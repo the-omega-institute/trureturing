@@ -205,9 +205,8 @@ syntax (name := registerInformationTheoremViaCmd)
 @[command_elab registerInformationTheoremViaCmd]
 private def elabRegisterInformationTheoremVia : CommandElab := fun stx => do
   let saved ← getEnv
-  let errorCount := fun (log : MessageLog) =>
-    (log.reportedPlusUnreported.toList.filter (·.severity == .error)).length
-  let previousErrors := errorCount (← get).messages
+  let previousMessages := (← get).messages
+  modify fun s => { s with messages := {} }
   try
     let theoremId : TSyntax `ident := ⟨stx[1]⟩
     let arenaName ← resolveArena ⟨stx[5]⟩
@@ -218,6 +217,7 @@ private def elabRegisterInformationTheoremVia : CommandElab := fun stx => do
       let value ← instantiateMVars value
       RegistrationReifier.closed value
       return value
+    if (← get).messages.hasErrors then return
     let outputEvidence ← liftTermElabM do
       if stx[6].getNumArgs == 0 then return none
       discard <| RegistrationReifier.semanticSource descriptor
@@ -227,6 +227,7 @@ private def elabRegisterInformationTheoremVia : CommandElab := fun stx => do
       let value ← instantiateMVars value
       RegistrationReifier.closed value
       return some value
+    if (← get).messages.hasErrors then return
     let theoremName ← resolveTheorem theoremId
     let unitName := localCompanionName (← getEnv) theoremName theoremUnitSuffix
     let realizationName := localCompanionName (← getEnv) theoremName primitiveRealizationSuffix
@@ -235,12 +236,21 @@ private def elabRegisterInformationTheoremVia : CommandElab := fun stx => do
       statementIdentity := theoremStatementIdentity (← getEnv) theoremName }
     ensureRegisterableName (← getEnv) entry
     let entry ← liftTermElabM <| RegistrationReifier.derive entry arena descriptor outputEvidence
+    if (← get).messages.hasErrors then return
     registerEntry entry
-    -- Term elaboration can log an error and still return a valid expression.
-    if errorCount (← get).messages > previousErrors then setEnv saved
   catch e =>
     setEnv saved
+    if e.isRuntime then throwError "P1.IncompleteCheck: {e.toMessageData}"
     throw e
+  finally
+    let messages := (← get).messages
+    if messages.hasErrors then setEnv saved
+    let classify := fun (m : Message) =>
+      if m.severity == .error && (Exception.error .missing m.data).isRuntime then
+        { m with data := m!"P1.IncompleteCheck: {m.data}" }
+      else m
+    modify fun s => { s with messages := previousMessages ++ { messages with
+      reported := messages.reported.map classify, unreported := messages.unreported.map classify } }
 
 @[command_elab registerInformationTheoremCmd]
 private def elabRegisterInformationTheorem : CommandElab := fun stx => do

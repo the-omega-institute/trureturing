@@ -289,4 +289,87 @@ register_information_theorem loggedError
     run_tac Lean.logError "review_logged_error"
     exact inferInstance)
 
+
+-- Q3/Q9: a buggy producer retains required values but wraps one raw type argument.
+def reviewRawTypes (changed : Nat) : MetaM Unit := do
+  let some original := InformationRegistry.find? (← getEnv) ``clean | throwError "missing clean"
+  let some cert := original.derivedCertificate | throwError "missing certificate"
+  let unit := original.unitName.str s!"raw{changed}"
+  let nd := unit.str "__nondegenerate"
+  let e := { original with
+    unitName := unit
+    sensitivityWitness := unit.str "__sensitivity"
+    variationWitness := unit.str "__variation" }
+  let ndType ← mkAppM ``Arena.Nondegenerate #[← mkAppM ``PrimitiveLawArena.toArena #[cert.arena]]
+  let sens := mkAppN (mkConst ``ReifierTemplates.sensitivity)
+    (cert.descriptor.getAppArgs.extract 0 5 ++ #[cert.outputEvidence, mkConst nd])
+  for i in [:4] do
+    let name := #[nd, e.sensitivityWitness, e.variationWitness, unit][i]!
+    let value ← match i with
+      | 0 => pure ((← getConstInfo cert.nondegenerate).value? (allowOpaque := true)).get!
+      | 1 => pure sens
+      | 2 => mkAppM ``ReifierTemplates.variation #[cert.arena, mkConst ``Bool.false, mkConst e.sensitivityWitness]
+      | _ => unitValue e
+    let type ← match i with
+      | 0 => pure ndType
+      | 1 => mkAppM ``FiniteSlotSensitivity #[cert.arena]
+      | 2 => mkAppM ``FiniteLawVariation #[cert.arena]
+      | _ => inferType value
+    let type ← if i == changed then do
+        pure <| mkAppN type.getAppFn (type.getAppArgs.set! (type.getAppArgs.size - 1)
+          (← mkAppM ``id #[type.getAppArgs.back!]))
+      else pure type
+    if i == 3 then
+      addDecl (.defnDecl { name, levelParams := [], type, value, hints := .abbrev, safety := .safe })
+    else addDecl (.thmDecl { name, levelParams := [], type, value })
+  let e := { e with derivedCertificate := some { cert with nondegenerate := nd, occurrence := occurrenceBinding e } }
+  expectFailure s!"raw_type_{changed}" (if changed == 3 then "UnitBindingMismatch" else "WitnessBindingMismatch") <|
+    validateDerivedCertificate e
+
+run_meta reviewRawTypes 0
+run_meta reviewRawTypes 1
+run_meta reviewRawTypes 2
+run_meta reviewRawTypes 3
+
+-- Actual recursion-limit exceptions, separately in descriptor and evidence elaboration.
+elab "review_exhaustion" : term =>
+  withOptions (fun o => o.set `maxRecDepth (1 : Nat)) <|
+    MonadRecDepth.withRecDepth 1 <| withIncRecDepth <| pure (mkConst ``Bool.true)
+theorem resourceDescriptor (x : Bool) : x.not.not = x := Bool.not_not _
+reject_via "descriptor_exhaustion" expects "P1.IncompleteCheck" in
+register_information_theorem resourceDescriptor via review_exhaustion in eqArena
+theorem resourceEvidence (x : Bool) : x.not.not = x := Bool.not_not _
+reject_via "evidence_exhaustion" expects "P1.IncompleteCheck" in
+register_information_theorem resourceEvidence
+  via (ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
+  output_evidence review_exhaustion
+
+-- Q4: the consumer trusts correct report production; an empty literal is no scan proof.
+run_meta do
+  let saved ← getEnv
+  try
+    let some original := InformationRegistry.find? saved ``clean | throwError "missing clean"
+    let some cert := original.derivedCertificate | throwError "missing certificate"
+    let descriptor := mkAppN cert.descriptor.getAppFn
+      (cert.descriptor.getAppArgs.set! 5 cert.descriptor.getAppArgs[6]!)
+    let e ← prepareRegistrationEntry (← getEnv) { original with
+      theoremName := ``reflexive
+      unitName := original.unitName.str "producerBug"
+      realizationName := original.realizationName.str "producerBug"
+      statementIdentity := theoremStatementIdentity (← getEnv) ``reflexive
+      derivedCertificate := none }
+    let e ← derive e (← freezeArena ``eqArena) descriptor
+    let some diagnostic ← RegistrationGates.validateFinite e | throwError "boundary: scanner accepted"
+    unless (diagnostic.splitOn "forbidden_dependency").length > 1 do throwError diagnostic
+    RegistrationGates.publishDiagnostic e.unitName none
+    validateDerivedCertificate e
+    closedTruthExcluded e
+    logInfo "P1_REVIEW producer_report_boundary conditional_on_correct_producer"
+  finally setEnv saved
+
+run_meta do
+  let some diagnostic ← RegistrationGates.provenanceErrorCurrent `root `catalog ``clean `absentReadout
+    | throwError "expected incomplete provenance"
+  expectFailure "insertion_incomplete" "P1.IncompleteCheck" <| checkDiagnostic diagnostic
+
 end LeanInformationAudit.Tests.ReifierChecks

@@ -407,7 +407,9 @@ private def validateEntryCore (env : Environment) (entry : InformationRegistryEn
     else
       return .error (statementMismatchError entry.theoremName)
     return .ok ()
-  catch _ =>
+  catch e =>
+    if entry.derivedCertificate.isSome && e.isRuntime then
+      return .error s!"P1.IncompleteCheck: {← e.toMessageData.toString}"
     return .error (statementMismatchError entry.theoremName)
 
 private def sameCertificate : Option AutoDerivedSemanticCertificate →
@@ -504,7 +506,7 @@ def registerValidatedEntry (entry : InformationRegistryEntry) :
     Lean.Elab.Command.liftTermElabM do
       let diagnostic ← RegistrationGates.validateFinite entry
       if entry.derivedCertificate.isSome && diagnostic.isSome then
-        throwError "P1.SemanticRejected: {diagnostic.get!}"
+        RegistrationReifier.checkDiagnostic diagnostic.get!
       RegistrationGates.publishDiagnostic entry.unitName diagnostic
     modifyEnv fun env => informationRegistryExt.addEntry env entry
   | .error message => throwError message

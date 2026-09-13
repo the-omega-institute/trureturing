@@ -209,6 +209,12 @@ def lawSensitive (entry : InformationRegistryEntry) (arena : Expr) : MetaM Unit 
     unless ← RegistrationGates.checked name (← mkAppM predicate #[arena]) do
       throwError "P1.WitnessBindingMismatch: {name}"
 
+/-- Shared insertion classification for a nonempty finite diagnostic. -/
+def checkDiagnostic (diagnostic : String) : MetaM Unit := do
+  if (diagnostic.splitOn " reason=incomplete_closure ").length > 1 then
+    throwError "P1.IncompleteCheck: {diagnostic}"
+  throwError "P1.SemanticRejected: {diagnostic}"
+
 /-- Consume the completed registration-time scan, bound to the same immutable
 module as the checked unit. Publication never executes the runtime scanner. -/
 def closedTruthExcluded (entry : InformationRegistryEntry) : MetaM Unit := bounded do
@@ -244,19 +250,24 @@ def validateDerivedCertificate (entry : InformationRegistryEntry) : MetaM Unit :
   requireExact "BridgeBindingMismatch" value cert.descriptor
   let unit ← getConstInfo entry.unitName
   let some value := unit.value? | throwError "P1.UnitBindingMismatch: no value"
-  requireExact "UnitBindingMismatch" value (← unitValue entry)
+  let expectedUnit ← unitValue entry
+  requireExact "UnitBindingMismatch" value expectedUnit
+  requireExact "UnitBindingMismatch" unit.type (← inferType expectedUnit)
   for name in #[entry.realizationName, entry.unitName, entry.variationWitness,
       entry.sensitivityWitness, cert.nondegenerate] do
     unless (← getConstInfo name).levelParams.isEmpty do throwError "P1.RigidUniverseMismatch: {name}"
   let ndType ← mkAppM ``Arena.Nondegenerate #[← mkAppM ``PrimitiveLawArena.toArena #[cert.arena]]
+  requireExact "WitnessBindingMismatch" (← getConstInfo cert.nondegenerate).type ndType
   unless ← RegistrationGates.checked cert.nondegenerate ndType do throwError "P1.MissingEvidence: nondegenerate"
   let sensitivity ← getConstInfo entry.sensitivityWitness
+  requireExact "WitnessBindingMismatch" sensitivity.type (← mkAppM ``FiniteSlotSensitivity #[cert.arena])
   let some value := sensitivity.value? (allowOpaque := true)
     | throwError "P1.WitnessBindingMismatch: missing sensitivity"
   requireExact "WitnessBindingMismatch" value
     (mkAppN (mkConst ``ReifierTemplates.sensitivity)
       (cert.descriptor.getAppArgs.extract 0 5 ++ #[cert.outputEvidence, ← rigid cert.nondegenerate]))
   let variation ← getConstInfo entry.variationWitness
+  requireExact "WitnessBindingMismatch" variation.type (← mkAppM ``FiniteLawVariation #[cert.arena])
   let some value := variation.value? (allowOpaque := true)
     | throwError "P1.WitnessBindingMismatch: missing variation"
   requireExact "WitnessBindingMismatch" value
