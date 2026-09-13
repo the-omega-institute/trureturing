@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Observer/Hankel/BalancedTruncationTail
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Iterated actual principal truncation has the twice-discarded-diagonal finite and infinite input-output energy bound. -/
 
 import D5.S3.Observer.Hankel.BalancedTruncationStep
