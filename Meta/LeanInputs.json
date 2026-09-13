@@ -345,14 +345,6 @@
         },
         {
           "patterns": [
-            "tools/lean-inspector/delta.py"
-          ],
-          "exclude": [],
-          "optional_root": "tools/lean-inspector",
-          "min_matches": 1
-        },
-        {
-          "patterns": [
             "tools/lean-inspector/materials.py"
           ],
           "exclude": [],

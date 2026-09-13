@@ -59,7 +59,7 @@ public sealed class LeanCacheInputScriptTests
         var before = fixture.ReadAddresses();
 
         fixture.Write("tools/lean-inspector/inspect.sh", "#!/bin/bash\nexit 99\n");
-        fixture.Write("tools/lean-inspector/delta.py", "raise RuntimeError('report only')\n");
+        fixture.Write("tools/lean-inspector/materials.py", "raise RuntimeError('report only')\n");
         fixture.Write("tools/StrataLint.Engine/CanonicalWriter.cs", "// changed report writer\n");
 
         Assert.Equal(before, fixture.ReadAddresses());
@@ -240,7 +240,7 @@ public sealed class LeanCacheInputScriptTests
             Write("lakefile.toml", "name = \"fixture\"\n");
             Write("lakefile.lean", "import Lake\n");
             Write("tools/lean-inspector/inspect.sh", "#!/bin/bash\n");
-            Write("tools/lean-inspector/delta.py", "# report only\n");
+            Write("tools/lean-inspector/materials.py", "# report only\n");
             Write("tools/StrataLint.Engine/CanonicalWriter.cs", "// report only\n");
             ScriptHarnessScratch.CopyScriptInto(
                 Path.Combine(TestRepositoryLayout.FindRoot(), PublisherPath), Path.Combine(repository, PublisherPath));

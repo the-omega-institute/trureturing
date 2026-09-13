@@ -21,7 +21,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
             "missing Blueprint mirror: Blueprint/D5/S2/NewModule.md; run make emit",
             Encoding.UTF8.GetString(result.StandardError),
             StringComparison.Ordinal);
-        Assert.DoesNotContain("make:lean-report", fixture.CallKinds());
+        Assert.DoesNotContain(fixture.CallKinds(), static call => call.StartsWith("make:lean-report", StringComparison.Ordinal));
         Assert.DoesNotContain("dotnet:ledger-align", fixture.CallKinds());
         Assert.Equal(1, fixture.CommitCount());
         Assert.Equal(0, fixture.FreezeCount(TransactionFixture.NewLeanPath));

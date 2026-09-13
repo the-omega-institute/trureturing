@@ -199,18 +199,6 @@ public sealed class LeanReportPairScriptTests
         Assert.False(fixture.CandidateLakeExists);
     }
 
-    [Fact]
-    public void PairScriptPinsPerModuleReuseOff()
-    {
-        var script = File.ReadAllText(Path.Combine(
-            TestRepositoryLayout.FindRoot(), "tools", "scripts", "lean-report-pair.sh"));
-
-        Assert.Contains("Per-module reuse is disabled", script, StringComparison.Ordinal);
-        Assert.DoesNotContain("--module-cache-report", script, StringComparison.Ordinal);
-        Assert.DoesNotContain("--module-cache-manifest", script, StringComparison.Ordinal);
-        Assert.DoesNotContain("--modules-file", script, StringComparison.Ordinal);
-    }
-
     private sealed class LeanReportPairFixture : IDisposable
     {
         private readonly TemporaryDirectory temporary = new();

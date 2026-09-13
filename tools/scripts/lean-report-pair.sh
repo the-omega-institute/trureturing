@@ -12,8 +12,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 SUPERVISOR="$SCRIPT_DIR/report/report-supervisor.sh"
 INPUT_HELPER="$SCRIPT_DIR/report/lean-report-input.sh"
 # Opt-in host/UID-scoped content-addressed report cache. Local entry points use
-# the persistent host cache; CI may supply a runner-temporary root containing an
-# attested stale dev report for the producer's existing delta path.
+# the persistent host cache; CI may supply a runner-temporary root containing
+# attested complete reports. Only an exact input address can be reused.
 CACHE_ROOT="${STRATALINT_REPORT_CACHE_ROOT:-}"
 
 while [[ $# -gt 0 ]]; do
@@ -358,20 +358,8 @@ materialize_report() {
     local cache_rc=$?
     [[ "$cache_rc" == "1" ]] || return "$cache_rc"
   fi
-  # Per-module reuse is disabled. Before enabling it, producer identity must cover
-  # the actually selected MSBuild SDK and dotnet runtime plus the bytes of every
-  # actually loaded NuGet package, analyzer, and source generator (or hash the DLL
-  # that is actually executed). global.json latestMinor can make 10.0.103 select
-  # SDK 10.0.201, so one producer SHA can otherwise execute code built by different
-  # toolchains. Keep production on the complete-report path until that is solved.
   "$SUPERVISOR" --role lean-producer --lean-slot -- \
     env LAKE_BIN="$LAKE_BIN" STRATALINT_SOURCE_BASE="$SOURCE_BASE" STRATALINT_PUSH_BEFORE="$PUSH_BEFORE" STRATALINT_PUSH_HEAD="$PUSH_HEAD" \
-      STRATALINT_REPORT_INPUT_ADDRESS="$input_address" \
-      STRATALINT_REPORT_REPOSITORY_SHA256="$repository_sha256" \
-      STRATALINT_REPORT_PRODUCER_SHA256="$producer_sha256" \
-      STRATALINT_REPORT_RESIDENT_SHA256="$resident_sha256" \
-      STRATALINT_REPORT_SOURCES_SHA256="$sources_sha256" \
-      STRATALINT_REPORT_CONFIG_SHA256="$config_sha256" \
       "$PRODUCER" --repository "$root" --output "$output"
   verify_report "$output"
   LAST_REPORT_MODE="produced"

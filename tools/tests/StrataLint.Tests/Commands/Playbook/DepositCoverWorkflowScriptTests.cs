@@ -48,9 +48,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(backfillBefore, fixture.BackfillContents());
         Assert.Equal(
             [
-                "make:lean-report",
+                $"make:lean-report BASE={fixture.HeadRevision()}",
                 "dotnet:deposit-header-check",
-                "make:emit",
+                $"make:emit BASE={fixture.HeadRevision()}",
                 "dotnet:ledger-frozen",
                 "dotnet:ledger-align",
                 "dotnet:ledger-frozen",
@@ -116,14 +116,14 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.NotEmpty(fixture.Status());
         Assert.Equal(
             [
-                "make:lean-report",
+                $"make:lean-report BASE={fixture.HeadRevision()}",
                 "dotnet:deposit-header-check",
-                "make:emit",
+                $"make:emit BASE={fixture.HeadRevision()}",
                 "dotnet:ledger-frozen",
                 "dotnet:ledger-align",
                 "dotnet:ledger-frozen",
                 "dotnet:cover-atom",
-                "make:emit",
+                $"make:emit BASE={fixture.HeadRevision()}",
             ],
             fixture.CallKinds());
         Assert.Contains("coverage: true", fixture.BackfillContents(), StringComparison.Ordinal);
@@ -150,12 +150,12 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(backfillBefore, fixture.BackfillContents());
         Assert.Equal(
             [
-                "make:lean-report",
+                $"make:lean-report BASE={fixture.HeadRevision()}",
                 "dotnet:deposit-header-check",
-                "make:emit",
+                $"make:emit BASE={fixture.HeadRevision()}",
                 "dotnet:ledger-frozen",
                 "dotnet:cover-atom",
-                "make:emit",
+                $"make:emit BASE={fixture.HeadRevision()}",
             ],
             fixture.CallKinds());
         var error = Encoding.UTF8.GetString(result.StandardError);
@@ -176,9 +176,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(1, fixture.FreezeCount());
         Assert.Equal(
             [
-                "make:lean-report",
+                $"make:lean-report BASE={fixture.HeadRevision()}",
                 "dotnet:deposit-header-check",
-                "make:emit",
+                $"make:emit BASE={fixture.HeadRevision()}",
                 "dotnet:ledger-frozen",
                 "dotnet:ledger-align",
                 "dotnet:ledger-frozen",
@@ -270,7 +270,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.NotEqual(0, result.ExitCode);
         Assert.Contains("STALE_LEAN_REPORT", Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
         Assert.Equal(
-            ["make:lean-report", "dotnet:deposit-header-check", "make:emit"],
+            [$"make:lean-report BASE={fixture.HeadRevision()}", "dotnet:deposit-header-check", $"make:emit BASE={fixture.HeadRevision()}"],
             fixture.CallKinds());
         Assert.Equal(0, fixture.FreezeCount());
     }
@@ -292,9 +292,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(before, fixture.CommitCount());
         Assert.Equal(
             [
-                "make:lean-report",
+                $"make:lean-report BASE={fixture.HeadRevision()}",
                 "dotnet:cover-atom",
-                "make:emit",
+                $"make:emit BASE={fixture.HeadRevision()}",
             ],
             fixture.CallKinds());
         Assert.Contains("coverage: true", fixture.BackfillContents(), StringComparison.Ordinal);
@@ -318,7 +318,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
             StringComparison.Ordinal);
         Assert.Equal(before, fixture.CommitCount());
         Assert.Contains("cover_disposition:", fixture.BackfillContents(), StringComparison.Ordinal);
-        Assert.Equal(["make:lean-report", "dotnet:cover-atom"], fixture.CallKinds());
+        Assert.Equal([$"make:lean-report BASE={fixture.HeadRevision()}", "dotnet:cover-atom"], fixture.CallKinds());
         Assert.NotEmpty(fixture.Status());
     }
 
