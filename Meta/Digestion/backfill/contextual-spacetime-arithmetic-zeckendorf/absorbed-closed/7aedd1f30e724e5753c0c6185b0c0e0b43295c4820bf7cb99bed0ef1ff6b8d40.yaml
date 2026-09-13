@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7aedd1f30e724e5753c0c6185b0c0e0b43295c4820bf7cb99bed0ef1ff6b8d40
+  normalized_sha256: sha256:7aedd1f30e724e5753c0c6185b0c0e0b43295c4820bf7cb99bed0ef1ff6b8d40
+cas_ref: sha256:7aedd1f30e724e5753c0c6185b0c0e0b43295c4820bf7cb99bed0ef1ff6b8d40
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DagCompletion/WellFoundedFrontier.complement_frontier_nonempty_of_wellFounded
+    target_statement_id: sha256:49b9e59ba2fe32b0d7a98ae65377da0bc2992eaaaa88b971a6c6be0422f0425b
+receipts:
+  unresolved_subitems: []
