@@ -191,3 +191,20 @@ end ReviewTestsA7External
 namespace NumericMetadataFixtures
 def boundedRead (_ : Unit) (_ : Bool) : Fin 256 := ⟨0, Nat.zero_lt_succ 255⟩
 end NumericMetadataFixtures
+
+namespace ListMetadataFixtures
+structure UniqueRange where
+  count : Nat
+  proof : (List.range count).Nodup
+  bit : Bool
+def uniqueRead (_ : Unit) (bit : Bool) : UniqueRange := ⟨0, by simp, bit⟩
+structure PredicatePairwise where
+  proof : List.Pairwise (fun a _ : Nat => ∃ k : Nat, k = a) [137, 0]
+  bit : Bool
+def predicateRead (_ : Unit) (bit : Bool) : PredicatePairwise :=
+  ⟨.cons (by intro b hb; exact ⟨137, rfl⟩) (.cons (by simp) .nil), bit⟩
+structure UniqueLiteral where
+  proof : ([137, 0] : List Nat).Nodup
+  bit : Bool
+def literalRead (_ : Unit) (bit : Bool) : UniqueLiteral := ⟨by decide, bit⟩
+end ListMetadataFixtures

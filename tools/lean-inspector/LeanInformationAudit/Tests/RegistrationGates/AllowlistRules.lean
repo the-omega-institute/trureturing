@@ -1255,3 +1255,33 @@ run_cmd Elab.Command.liftCoreM do
     else logError m!"[FAIL] {label}: unexpected {result}"
 
 end ReviewTestsA7
+
+namespace ListMetadataFixtures
+theorem existsTarget : ∃ k : Nat, k = 137 := ⟨137, rfl⟩
+theorem notExistsTarget : ¬ (∃ k : Nat, k + 1 = 0) := by simp
+theorem functionTarget : ∀ b ∈ ([0] : List Nat), 137 ≠ b := by simp
+def rangeSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => UniqueRange
+def rangeRealization : StructuralPrimitiveRealization ⟨Bool⟩ rangeSignature := ⟨uniqueRead⟩
+def predicateSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => PredicatePairwise
+def predicateRealization : StructuralPrimitiveRealization ⟨Bool⟩ predicateSignature := ⟨predicateRead⟩
+def literalSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => UniqueLiteral
+def literalRealization : StructuralPrimitiveRealization ⟨Bool⟩ literalSignature := ⟨literalRead⟩
+run_cmd Elab.Command.liftCoreM do
+  for (label, statement, holder, clean) in [
+      ("SymbolicNodupExistsClean", ``existsTarget, ``rangeRealization, true),
+      ("SymbolicNodupNegExistsClean", ``notExistsTarget, ``rangeRealization, true),
+      ("PairwisePredicatePayload", ``existsTarget, ``predicateRealization, false),
+      ("NodupFunctionPayload", ``functionTarget, ``literalRealization, false)] do
+    let result ← provenanceErrorCurrent (← getEnv).header.mainModule `catalog statement holder
+    if clean == result.isNone then logInfo m!"[PASS] {label}"
+    else logError m!"[FAIL] {label}: {result}"
+end ListMetadataFixtures
