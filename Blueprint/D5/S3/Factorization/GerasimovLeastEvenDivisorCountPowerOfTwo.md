@@ -46,6 +46,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Factorization/GerasimovLeastEvenDivisorCountPowerOfTwo.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a187941-least-even-divisor-count-literal-refutation` (refuted) by `D5/S3/Factorization/GerasimovLeastEvenDivisorCountPowerOfTwo.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a187941-least-even-divisor-count-literal-refutation","declaration_gid":"D5/S3/Factorization/GerasimovLeastEvenDivisorCountPowerOfTwo.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Juri-Stepan Gerasimov (2011). *OEIS A187941, Least number with exactly n even divisors*. URL: <https://oeis.org/A187941>.
@@ -59,6 +63,10 @@ At n = 0, the least number with no even divisors is a(0) = 1 = 2^0, while zero i
 $$\forall n \in \mathrm{Nat},\; 1 \le n \Rightarrow \left(\operatorname{a}\left(n\right) = 2^{n} \Rightarrow \left((\operatorname{Prime}\left(n\right)) \lor (n = 1)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Factorization/GerasimovLeastEvenDivisorCountPowerOfTwo.gerasimov_a187941` (`✓ std3`). ∎
+
+*Resolves.* `Problems/oeis-a187941-least-even-divisor-count-power-of-two` (proved) by `D5/S3/Factorization/GerasimovLeastEvenDivisorCountPowerOfTwo.gerasimov_a187941`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a187941-least-even-divisor-count-power-of-two","declaration_gid":"D5/S3/Factorization/GerasimovLeastEvenDivisorCountPowerOfTwo.gerasimov_a187941","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 

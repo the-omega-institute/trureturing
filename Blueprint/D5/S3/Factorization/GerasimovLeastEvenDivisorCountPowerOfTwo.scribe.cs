@@ -29,18 +29,27 @@ internal sealed class GerasimovLeastEvenDivisorCountPowerOfTwoDocument : IScribe
             Node("result", "The offset-zero conjecture is false", ResultFormula(),
                 "At n = 0, the least number with no even divisors is a(0) = 1 = 2^0, "
                     + "while zero is neither prime nor equal to one.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a187941-least-even-divisor-count-literal-refutation"),
+                    ResolutionKind.Refuted)),
             Node("gerasimov_a187941", "The positive-index implication", PositiveIndexFormula(),
                 "For composite n = d times e, the multiplicative count "
                     + "E(2^d times 3^(e-1)) = d times e gives a smaller witness than 2^n. "
                     + "Thus equality with 2^n at a positive index forces n to be prime or one.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a187941-least-even-divisor-count-power-of-two"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? claim = null) => Describe.Lean(
         DescribeId.Create("a187941-" + name.Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-        provenance, Blocks(Paragraph(Text(prose))), role);
+        provenance, Blocks(Paragraph(Text(prose))), role, claim);
 
     private static Formula EvenDivisorCountFormula()
     {
