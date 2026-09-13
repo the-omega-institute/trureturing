@@ -61,4 +61,30 @@ private def Allowed {n : ℕ} (G : GoodGraph n) : Finset (Fin n) :=
   Finset.univ.filter fun c =>
     ∀ e ∈ G.1, c < e.1.2 → e.1.1 = c ∨ e.1.2 = c
 
+private def edgeSuccEquiv (n : ℕ) : Edge (n + 1) ≃ Edge n ⊕ Fin n where
+  toFun e :=
+    if hright : e.1.2 = Fin.last n then
+      Sum.inr (Fin.castPred e.1.1 (by
+        exact (Fin.lt_last_iff_ne_last.mp (hright ▸ e.2))))
+    else
+      Sum.inl ⟨(Fin.castPred e.1.1 (by
+        exact (Fin.lt_last_iff_ne_last.mp
+          (e.2.trans (Fin.lt_last_iff_ne_last.mpr hright)))),
+        Fin.castPred e.1.2 hright), e.2⟩
+  invFun
+    | Sum.inl e => ⟨(e.1.1.castSucc, e.1.2.castSucc), e.2⟩
+    | Sum.inr c => ⟨(c.castSucc, Fin.last n), Fin.castSucc_lt_last c⟩
+  left_inv e := by
+    by_cases hright : e.1.2 = Fin.last n
+    · simp [hright]
+      apply Subtype.ext
+      apply Prod.ext
+      · simp
+      · exact hright.symm
+    · simp [hright]
+  right_inv e := by
+    rcases e with e | c
+    · simp
+    · simp
+
 end D5.S1.Words.Patterns.NoncrossingNonnestingGraphRecurrence
