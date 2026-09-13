@@ -30,7 +30,7 @@ lean:
 	@/bin/bash tools/scripts/worktree/lean-cache-run.sh lake build
 
 lean-report:
-	@/bin/bash tools/scripts/report/lean-report.sh "$(BASE)"
+	@/bin/bash tools/scripts/report/lean-report.sh $(if $(filter-out file undefined,$(origin BASE)),"$(BASE)")
 
 build: lean
 

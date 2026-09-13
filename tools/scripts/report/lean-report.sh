@@ -21,9 +21,20 @@ if [[ "${CI:-}" != "true" && "${CI:-}" != "1" ]]; then
 fi
 
 SOURCE_ARGS=()
-if [[ -z "${STRATALINT_PUSH_BEFORE:-}" && -z "${STRATALINT_PUSH_HEAD:-}" ]]; then
-  SOURCE_ARGS=(--base "${1:-HEAD}")
+# Preserve presence, including empty values, for the pair's shared validator.
+# A positional BASE remains supported alongside explicit source-mode options.
+if [[ -n "${BASE+x}" ]]; then SOURCE_ARGS+=(--base "$BASE"); fi
+if [[ $# -gt 0 && "$1" != --* ]]; then
+  SOURCE_ARGS+=(--base "$1"); shift
 fi
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --base|--push-before|--push-head)
+      [[ $# -ge 2 ]] || { echo "CI_REPORT_SOURCE_INVALID $1 requires a value" >&2; exit 2; }
+      SOURCE_ARGS+=("$1" "$2"); shift 2 ;;
+    *) echo "CI_REPORT_SOURCE_INVALID unsupported argument '$1'" >&2; exit 2 ;;
+  esac
+done
 exec "$PAIR" \
   ${SOURCE_ARGS[@]+"${SOURCE_ARGS[@]}"} \
   --producer "$INSPECTOR" \
