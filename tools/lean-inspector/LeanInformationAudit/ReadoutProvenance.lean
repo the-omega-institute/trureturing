@@ -1,6 +1,16 @@
 import LeanInformationAudit.ReadoutFamily
 import Lean.Structure
 
+/-!
+Positive type-classification decisions live in `inputType`, `constructorFields`,
+`typeFamilyArgument`, and `classifyType`. The recursive helpers classify kinds,
+arguments, constructor fields and type-family telescopes; `classifyType`
+combines completed classifications and contextual failure state. The provenance
+walker consumes that verdict. ReadoutFamily decodes the representation and
+supplies no type admission. CleanReturnInventory pins both parsed programs:
+a changed exit, callback or preceding guard requires a renewed return audit.
+-/
+
 namespace LeanInformationAudit.RegistrationGates
 open Lean
 
@@ -301,18 +311,21 @@ private structure WalkState where
   walked : NameHashSet := {}
   queued : NameHashSet := {}
   pending : List Name := []
-  typeObligations : List (Expr × Array Expr × Bool × Name × Name) := []
+  typeObligations : List (Expr × Array Expr × Name × Name) := []
   appObligations : List (Expr × Array Expr × Bool × Name) := []
   comparisons : Std.HashMap (Expr × Expr) Bool := {}
-  typeChecks : Std.HashMap (Expr × Array Expr × Bool) TypeClassification := {}
+  typeChecks : Std.HashMap (Expr × Array Expr) TypeClassification := {}
   forbidden : Bool := false
   unclassified : Option Unclassified := none
   incomplete : Bool := false
   weights : Std.HashMap Expr Nat := {}
+  substitutionWeights : Std.HashMap (Expr × Nat) Nat := {}
   levelWeights : Std.HashMap Level Nat := {}
   applications : Std.HashMap Expr (Expr × Array Expr) := {}
   mentionsCache : Std.HashMap Expr Bool := {}
-  cleanTypes : Std.HashSet (Expr × Bool) := {}
+  cleanTypes : Std.HashSet Expr := {}
+  assumedFamilyDepth : Option Nat := none
+  instantiatedTypes : Std.HashMap (Name × List Level) Expr := {}
   cleanKinds : Std.HashSet Expr := {}
   dataFunctionTypes : Std.HashSet Expr := {}
   binderContexts : Std.HashMap (Array Expr) (LocalContext × LocalInstances × Array Expr) := {}
@@ -376,21 +389,50 @@ private def chargeExpression (e : Expr) : WalkM Bool := do
   let some size ← expressionWeight e | return false
   chargeTraversal size
 
+-- Lean 4.33's instantiate_rev_core stops when the binder offset reaches a
+-- subterm's loose-variable range (kernel/instantiate.cpp). Count that visited
+-- frontier, including stopped roots, before performing the native operation.
+private partial def substitutionWeight (e : Expr) (offset : Nat := 0) : WalkM (Option Nat) := do
+  unless ← chargeTraversal do return none
+  let key := (e, offset)
+  if let some size := (← get).substitutionWeights[key]? then return some size
+  let children := if offset >= e.looseBVarRange then #[] else match e with
+    | .app f a => #[(f, offset), (a, offset)]
+    | .lam _ t b _ | .forallE _ t b _ => #[(t, offset), (b, offset + 1)]
+    | .letE _ t v b _ => #[(t, offset), (v, offset), (b, offset + 1)]
+    | .mdata _ b | .proj _ _ b => #[(b, offset)]
+    | _ => #[]
+  let mut size := 1
+  for (child, childOffset) in children do
+    let some childSize ← substitutionWeight child childOffset | return none
+    size := min (provenanceExpressionFuel + 1) (size + childSize)
+  modify fun s => { s with substitutionWeights := s.substitutionWeights.insert key size }
+  return some size
+
 private def substitute (e : Expr) (locals : Array Expr) : WalkM (Option Expr) := do
   if !e.hasLooseBVars then return some e
-  unless ← chargeExpression e do return none
+  let some size ← substitutionWeight e | return none
   unless ← chargeTraversal locals.size do return none
+  let mut factor := 1
+  for value in locals do
+    if value.hasLooseBVars then
+      let some valueSize ← expressionWeight value | return none
+      factor := factor + valueSize
+  -- An open replacement can be lifted at every substituted variable.
+  unless ← chargeTraversal (size * factor) do return none
   return some (e.instantiateRev locals)
 
 private def substituteLevels (info : ConstantInfo) (levels : List Level) : WalkM (Option Expr) := do
+  unless ← chargeTraversal (levels.length + 1) do return none
+  let key := (info.name, levels)
+  if let some type := (← get).instantiatedTypes[key]? then return some type
+  -- Debit the source traversal before instantiation: inspecting the result's
+  -- hasLevelParam flag would miss work when all universe parameters disappear.
+  if info.type.hasLevelParam && !levels.isEmpty then
+    let some size ← expressionWeight info.type | return none
+    unless ← chargeTraversal (size * (info.levelParams.length + 1)) do return none
   let type := info.instantiateTypeLevelParams levels
-  if !type.hasLevelParam then return some type
-  let some size ← expressionWeight type | return none
-  let mut factor := 1
-  for _ in info.levelParams do
-    unless ← chargeTraversal do return none
-    factor := factor + 1
-  unless ← chargeTraversal (size * factor) do return none
+  modify fun s => { s with instantiatedTypes := s.instantiatedTypes.insert key type }
   return some type
 
 private def applicationParts (e : Expr) : WalkM (Option (Expr × Array Expr)) := do
@@ -480,27 +522,22 @@ private def typeConstant (env : Environment) (n : Name) (levels : List Level := 
     -- single classifyType funnel.
     let origin := (← get).theoremName
     modify fun s => { s with typeObligations :=
-      (type, #[], !info.hasValue (allowOpaque := true), n, origin) :: s.typeObligations }
+      (type, #[], n, origin) :: s.typeObligations }
     if inProtected env n then queue n
   else modify fun s => { s with incomplete := true }
 
--- Positive policies for instance types whose parameters are still checked by
--- the same structural fold. An unfamiliar class never inherits external-leaf
+-- Eligible instance heads still require the same structural fold over their
+-- parameters and every constructor field. An unfamiliar class never inherits external-leaf
 -- status from its module. In particular proof-carrying user classes are unclassified.
 private def listedTypeClasses : Array Name := #[
   ``Decidable, ``OfNat, ``Inhabited, ``Subsingleton, ``Nonempty, ``BEq, ``LawfulBEq,
   `Fintype, `Finite, `NeZero,
   -- Collection and relation interfaces used by the frozen readout corpus.
-  ``Membership, ``GetElem?, ``Setoid, `SetLike, ``Singleton, ``Insert,
+  ``Membership, ``GetElem, ``GetElem?, ``Setoid, `SetLike, ``Singleton, ``Insert,
   ``Std.Associative, ``Std.Commutative,
   -- Scalar operator interfaces: their actual type parameters are checked too.
   ``Zero, ``One, ``Add, ``HAdd, ``Mul, ``HMul, ``Sub, ``HSub, ``Div, ``HDiv,
   ``Neg, ``Inv, ``Pow, ``HPow, ``Mod, ``HMod, ``LT, ``LE, ``NatPow]
-
--- These families expose their proof fields in type-valued arguments. Exists
--- is intentionally classified through its constructor and predicate application.
-private def listedPropositions : Array Name := #[
-  ``Eq, ``HEq, ``True, ``False, ``And, ``Or, ``Iff, ``Nat.le]
 
 private def boundedMeta (action : MetaM α) : WalkM (Option α) := do
   unless ← chargeSummaryWork (fun c => { c with canonicalizations := c.canonicalizations + 1 }) do
@@ -519,6 +556,60 @@ private def boundedMeta (action : MetaM α) : WalkM (Option α) := do
   if result.isNone then
     noteUnclassified ⟨"defeq_budget", `defeq, "unclassified", `defeq⟩
   return result
+
+-- These locals are rebuilt from the original typed readout syntax in this
+-- query. Their immutable let values are valid even when Lean marks the local
+-- nondependent; generic zetaReduce deliberately hides such preexisting values.
+private def normalizeIndex (e : Expr) : WalkM (Option Expr) :=
+  boundedMeta <| Meta.transform e (usedLetOnly := true) (pre := fun part => do
+    let .fvar id := part.getAppFn | return .continue
+    let decl ← id.getDecl
+    let some value := decl.value? (allowNondep := true) | return .continue
+    return .visit (value.beta part.getAppArgs))
+
+-- A constructor field used directly as a result index has the actual index
+-- as its value at this occurrence. Retain that binding as a let in the field
+-- telescope; the same classifier then sees all dependent field types after
+-- substitution. Composite index expressions keep their quantified fields.
+-- This is expression construction only, never a positive type verdict.
+private def constructorInstanceType (ctorType resultType : Expr) : WalkM (Option Expr) := do
+  let mut fields : Array (Name × Expr × BinderInfo) := #[]
+  let mut tail := ctorType
+  repeat
+    unless ← chargeTraversal do return none
+    match tail with
+    | .forallE n type body bi =>
+      fields := fields.push (n, type, bi)
+      tail := body
+    | _ => break
+  let some (_, formalIndices) ← applicationParts tail | return none
+  let some (_, actualIndices) ← applicationParts resultType | return none
+  if formalIndices.size != actualIndices.size then
+    noteUnclassified ⟨"unclassified_constructor_indices", `constructor, "unclassified", `constructor⟩
+    return none
+  let mut bindings : Std.HashMap Nat Expr := {}
+  for index in [:formalIndices.size] do
+    unless ← chargeTraversal do return none
+    if let .bvar field := formalIndices[index]! then
+      if field < fields.size then
+        -- Repeated result indices must denote the same actual value. Keeping
+        -- one of unequal bindings would fabricate a constructor instance.
+        let actual := actualIndices[index]!
+        let some actual ← if actual.hasFVar then
+            normalizeIndex actual
+          else pure (some actual) | return none
+        if let some previous := bindings[field]? then
+          unless ← compareCanonical previous actual do return some ctorType
+        bindings := bindings.insert field actual
+  if bindings.isEmpty then return some ctorType
+  let mut specialized := tail
+  for offset in [:fields.size] do
+    unless ← chargeTraversal do return none
+    let (name, type, bi) := fields[fields.size - 1 - offset]!
+    specialized := match bindings[offset]? with
+      | some value => .letE name type value specialized false
+      | none => .forallE name type specialized bi
+  return some specialized
 
 private def appliedValueType (e : Expr) : WalkM (Option Expr) := do
   let some type ← boundedMeta (Meta.inferType e) | return none
@@ -554,7 +645,9 @@ private partial def buildBinderContext (context : Array Expr) (k : Array Expr �
       let some t ← substitute t locals | return none
       let some v ← substitute v locals | return none
       Meta.withLetDecl n t v (fun x => next (locals.push x)) (nondep := nd)
-    | _ => return none
+    | _ =>
+      noteUnclassified ⟨"unclassified_binder_context", `binder, "unclassified", `binder⟩
+      return none
   else return some (← k locals)
 
 -- Reuse reconstructed binders only when the original parent context is empty.
@@ -606,51 +699,44 @@ private partial def typeMentions (env : Environment) (e : Expr) : WalkM Bool := 
   modify fun s => { s with mentionsCache := s.mentionsCache.insert e result }
   return result
 
--- Local projections are neutral families just like local function variables.
--- An opaque or closed receiver cannot use this rule: its projected type still
--- needs reduction or another positive classification.
-private partial def localNeutral (e : Expr) : WalkM Bool := do
-  unless ← chargeTraversal do return false
-  match e with
-  | .fvar id =>
-    if let some value := ((← getLCtx).get! id).value? (allowNondep := true) then localNeutral value
-    else return true
-  | .app f _ | .proj _ _ f | .mdata _ f => localNeutral f
-  | _ => return false
+-- The least unfinished ancestor used by a recursive cutoff. None means that
+-- no enclosing-family assumption was used; this is proof-dependency metadata,
+-- never a classification mode.
+private def mergeAssumptions (a b : Option Nat) : Option Nat :=
+  match a, b with
+  | none, x | x, none => x
+  | some a, some b => some (min a b)
 
--- Every binder origin has a domain obligation: inputType and family telescopes
--- combine it with their body verdict, while summary binders enqueue it. A plain
--- binder receiver has that same immutable domain; applications/projections can
--- specialize it and must keep their separate receiver-type check.
-private partial def binderReceiver (e : Expr) : WalkM Bool := do
-  unless ← chargeTraversal do return false
-  match e with
-  | .fvar id =>
-    if let some value := ((← getLCtx).get! id).value? (allowNondep := true) then binderReceiver value
-    else return true
-  | .mdata _ body => binderReceiver body
-  | _ => return false
+private def noteFamilyAssumption (depth : Nat) : WalkM Unit := do
+  unless ← chargeTraversal do return
+  modify fun s => { s with assumedFamilyDepth := mergeAssumptions s.assumedFamilyDepth (some depth) }
 
 mutual
--- Constructor scans quantify every index. Recursion may reuse that family
--- obligation only after checking current arguments and identical parameters.
+-- Constructor scans retain every field, including directly bound result indices.
+-- Recursive-family reuse requires checked arguments and identical parameters.
 private partial def inputType (env : Environment) (type : Expr)
-    (active : Array Expr := #[]) (checkResult : Bool := true) : WalkM (Bool × Bool) := do
+    (active : Array Expr := #[]) : WalkM (Bool × Bool) := do
   unless ← chargeSummaryWork (fun c => { c with recheckedNodes := c.recheckedNodes + 1 }) do
     return (false, true)
   if type.hasLooseBVars || type.hasMVar || type.hasLevelMVar then return (false, true)
-  let key := (type, checkResult)
+  let key := type
   if (← get).cleanTypes.contains key then return (false, false)
+  unless ← chargeTraversal do return (false, true)
+  let enclosingAssumptions := (← get).assumedFamilyDepth
+  modify fun s => { s with assumedFamilyDepth := none }
   let classify : WalkM (Bool × Bool) := do
     -- A family enters active only after its kind and every actual argument have
     -- been checked. An identical application therefore needs no second argument
     -- check. Different indices/aliases still take the full classifier below.
-    for previous in active do
+    for depth in [:active.size] do
+      let previous := active[depth]!
       unless ← chargeTraversal do return (false, true)
       if hash previous == hash type then
         unless ← chargeExpression previous do return (false, true)
         unless ← chargeExpression type do return (false, true)
-        if previous == type then return (false, false)
+        if previous == type then
+          noteFamilyAssumption depth
+          return (false, false)
     -- A telescope is already traversed domain by domain by this classifier.
     -- Rescanning each complete suffix with typeMentions would duplicate its
     -- binder reconstruction and comparisons at every level.
@@ -660,8 +746,16 @@ private partial def inputType (env : Environment) (type : Expr)
       let (dm, du) ← inputType env domain active
       let (bm, bu) ← Meta.withLocalDecl n bi domain fun x => do
         let some body ← substitute body #[x] | return (false, true)
-        inputType env body active checkResult
+        inputType env body active
       return (exact || decision || dm || bm, du || bu)
+    if let .letE _ domain value body _ := type then
+      let exact ← compareCanonical type (← get).statement
+      let decision ← compareCanonical type (← get).decision
+      let (dm, du) ← inputType env domain active
+      let vm ← typeMentions env value
+      let some body ← substitute body #[value] | return (false, true)
+      let (bm, bu) ← inputType env body active
+      return (exact || decision || dm || vm || bm, du || bu)
     let mut mentions ← typeMentions env type
     if ← compareCanonical type (← get).decision then mentions := true
     let some reduced ← boundedMeta (Meta.whnf type) | return (mentions, true)
@@ -672,7 +766,7 @@ private partial def inputType (env : Environment) (type : Expr)
       let (bm, bu) ← Meta.withLocalDecl n bi domain fun x =>
         do
           let some body ← substitute body #[x] | return (false, true)
-          inputType env body active checkResult
+          inputType env body active
       return (mentions || dm || bm, du || bu)
     | .lam n domain body bi =>
       -- Type-valued lambda expressions are generated by dependent recursors
@@ -682,17 +776,17 @@ private partial def inputType (env : Environment) (type : Expr)
       let (dm, du) ← inputType env domain active
       let (bm, bu) ← Meta.withLocalDecl n bi domain fun x => do
         let some body ← substitute body #[x] | return (false, true)
-        inputType env body active checkResult
+        inputType env body active
       return (mentions || dm || bm, du || bu)
     | .letE n domain value body nd =>
       let (dm, du) ← inputType env domain active
       let (vm, vu) ← inputType env value active
       let (bm, bu) ← Meta.withLetDecl n domain value (fun x => do
         let some body ← substitute body #[x] | return (false, true)
-        inputType env body active checkResult) (nondep := nd)
+        inputType env body active) (nondep := nd)
       return (mentions || dm || vm || bm, du || vu || bu)
     | .mdata _ body =>
-      let (bm, bu) ← inputType env body active checkResult
+      let (bm, bu) ← inputType env body active
       return (mentions || bm, bu)
     | _ =>
       if reduced.isSort then return (mentions, false)
@@ -715,8 +809,7 @@ private partial def inputType (env : Environment) (type : Expr)
         -- the actual receiver type and the projection's instantiated declared
         -- type before accepting the result.  This covers ordinary projections
         -- such as `LT.lt`, whose receiver is an instance constant rather than
-        -- a local neutral, and keeps the nominal `checkResult=false` path
-        -- inside the same funnel.
+        -- a local neutral. Both obligations use the same full classifier.
         let some receiverType ← appliedValueType receiver | return (mentions, true)
         let (rm, ru) ← inputType env receiverType active
         let some (_, projectionType) ← projectionDeclaredType env head |
@@ -737,16 +830,15 @@ private partial def inputType (env : Environment) (type : Expr)
         -- constants in value summaries. Their closed kind is independent of
         -- the caller's recursive-family assumptions.
         let some kind ← substituteLevels declaration levels | return (mentions, true)
-        let (km, ku) ← inputType env kind #[] false
+        let (km, ku) ← inputType env kind #[]
         mentions := mentions || km
         unclassified := unclassified || ku
         let state ← get
         if !km && !ku && !state.incomplete && !state.forbidden && state.unclassified.isNone then
           unless ← chargeTraversal do return (mentions, true)
           modify fun s => { s with cleanKinds := s.cleanKinds.insert head }
-      if Lean.isClass env name then
-        return (mentions, unclassified || !listedTypeClasses.contains name)
-      if listedPropositions.contains name then return (mentions, unclassified)
+      if Lean.isClass env name && !listedTypeClasses.contains name then
+        return (mentions, true)
       -- Quotient carriers and lifted type families expose their relation or
       -- predicate to the same argument classifier; no predicate is a leaf.
       if let some (.quotInfo info) := env.find? name then
@@ -762,12 +854,11 @@ private partial def inputType (env : Environment) (type : Expr)
         let (um, uu) ← inputType env unfolded active
         return (mentions || um, unclassified || uu)
       let some (.inductInfo info) := env.find? name | return (mentions, true)
-      -- A nominal result may be checked in a reduced context (`checkResult=false`),
-      -- but its actual family arguments and head kind are still mandatory.  The
-      -- flag only controls whether constructor fields are expanded below.
-      if !checkResult then return (mentions, unclassified)
-      for previous in active do
+      for depth in [:active.size] do
+        let previous := active[depth]!
         let some (previousHead, previousArgs) ← applicationParts previous | return (mentions, true)
+        unless ← chargeTraversal do return (mentions, true)
+        if hash previousHead != hash head then continue
         unless ← chargeExpression previousHead do return (mentions, true)
         unless ← chargeExpression head do return (mentions, true)
         if previousHead == head then
@@ -777,34 +868,98 @@ private partial def inputType (env : Environment) (type : Expr)
             let some a := previousArgs[index]? | return (mentions, true)
             let some b := args[index]? | return (mentions, true)
             sameParameters := (← compareCanonical a b) && sameParameters
-          if sameParameters then return (mentions, unclassified)
+          let mut coveredIndices := true
+          for index in [info.numParams:args.size] do
+            unless ← chargeTraversal do return (mentions, true)
+            let current := args[index]!
+            -- Fresh quantified indices retain the generic constructor scan.
+            -- A concrete change of index is a new field obligation: it may
+            -- specialize a dependent proof field to the registered statement.
+            if current.hasFVar then
+              let some normalized ← normalizeIndex current | return (mentions, true)
+              if normalized.hasFVar then continue
+            let some previous := previousArgs[index]? | return (mentions, true)
+            coveredIndices := (← compareCanonical previous current) && coveredIndices
+          if sameParameters && coveredIndices then
+            noteFamilyAssumption depth
+            return (mentions, unclassified)
           -- Different parameters are a fresh obligation, as in nested products.
       for ctorName in info.ctors do
-        let some ctor := env.find? ctorName | return (mentions, true)
-        let some initialType ← substituteLevels ctor levels | return (mentions, true)
-        let mut ctorType := initialType
-        for arg in args[:info.numParams] do
-          let .forallE _ _ body _ := ctorType | return (mentions, true)
-          let some next ← substitute body #[arg] | return (mentions, true)
-          ctorType := next
+        let some (.ctorInfo ctor) := env.find? ctorName | return (mentions, true)
+        if ctor.induct != name then return (mentions, true)
+        let some initialType ← substituteLevels (.ctorInfo ctor) levels | return (mentions, true)
+        -- Strip the parameter telescope, then substitute all actual parameters
+        -- together. Repeated single-parameter substitution rescans suffixes and
+        -- can repeatedly copy the previously inserted argument expressions.
+        let parameterCount := min info.numParams args.size
+        unless ← chargeTraversal (2 * parameterCount) do return (mentions, true)
+        let parameters := args[:parameterCount].toArray
+        let mut ctorBody := initialType
+        for _ in parameters do
+          let .forallE _ _ body _ := ctorBody | return (mentions, true)
+          ctorBody := body
+        let some ctorType ← substitute ctorBody parameters | return (mentions, true)
+        let some ctorType ← if info.numIndices > 0 && ctorType.isForall then
+            constructorInstanceType ctorType reduced
+          else pure (some ctorType) | return (mentions, true)
         unless ← chargeTraversal (active.size + 1) do return (mentions, true)
-        let (cm, cu) ← inputType env ctorType (active.push reduced) false
+        let (cm, cu) ← constructorFields env name ctorType (active.push reduced)
         mentions := mentions || cm
         unclassified := unclassified || cu
       return (mentions, unclassified)
 
   let result ← classify
-  -- Only an independent, completed check can seed the cache. Recursive cutoffs
-  -- never publish a provisional verdict. A stored result is independent of any
-  -- caller's active stack and remains valid throughout this statement query.
-  -- Fvar identities are unique and their local declarations are immutable.
+  -- Constructor scans introduced in this call have now completed; discharge
+  -- their recursive assumptions. A dependency on an enclosing unfinished family
+  -- still forbids caching. Independent nested checks can be reused immediately.
+  unless ← chargeTraversal do return (false, true)
+  let unresolved := (← get).assumedFamilyDepth.filter (· < active.size)
+  modify fun s => { s with
+    assumedFamilyDepth := mergeAssumptions enclosingAssumptions unresolved }
   let state ← get
-  if active.isEmpty && !type.hasLooseBVars && !type.hasMVar && !type.hasLevelMVar &&
+  if unresolved.isNone && !type.hasLooseBVars && !type.hasMVar && !type.hasLevelMVar &&
       !result.1 && !result.2 &&
       !state.incomplete && !state.forbidden && state.unclassified.isNone then
     unless ← chargeTraversal do return (false, true)
     modify fun s => { s with cleanTypes := s.cleanTypes.insert key }
   return result
+
+-- Only inputType's verified ctorInfo loop enters this grammar. A constructor
+-- result closes that constructor's field telescope; it is not a new value
+-- result or a second admission route. Every field domain uses inputType, and
+-- the terminal must name the owning inductive and classify every type argument.
+private partial def constructorFields (env : Environment) (owner : Name) (type : Expr)
+    (active : Array Expr) : WalkM (Bool × Bool) := do
+  unless ← chargeSummaryWork (fun c => { c with recheckedNodes := c.recheckedNodes + 1 }) do
+    return (false, true)
+  if type.hasLooseBVars || type.hasMVar || type.hasLevelMVar then return (false, true)
+  let exact ← compareCanonical type (← get).statement
+  let decision ← compareCanonical type (← get).decision
+  match type with
+  | .forallE n domain body bi =>
+    let (dm, du) ← inputType env domain active
+    let (bm, bu) ← Meta.withLocalDecl n bi domain fun x => do
+      let some body ← substitute body #[x] | return (false, true)
+      constructorFields env owner body active
+    return (exact || decision || dm || bm, du || bu)
+  | .letE _ domain value body _ =>
+    let (dm, du) ← inputType env domain active
+    let vm ← typeMentions env value
+    let some body ← substitute body #[value] | return (false, true)
+    let (bm, bu) ← constructorFields env owner body active
+    return (exact || decision || dm || vm || bm, du || bu)
+  | .mdata _ body => constructorFields env owner body active
+  | _ =>
+    let some (head, args) ← applicationParts type | return (false, true)
+    if head.constName? != some owner then return (false, true)
+    let mut mentions := exact || decision || (← typeMentions env type)
+    let mut unclassified := false
+    for arg in args do
+      let some argType ← boundedMeta (Meta.inferType arg) | return (mentions, true)
+      if let some (am, au) ← typeFamilyArgument env arg argType active then
+        mentions := mentions || am
+        unclassified := unclassified || au
+    return (mentions, unclassified)
 
 -- Probe the inferred telescope first. Only functions ending in Sort supply
 -- type families; ordinary data functions keep their term-provenance treatment.
@@ -835,21 +990,24 @@ private partial def typeFamilyArgument (env : Environment) (value type : Expr)
 end
 
 -- Declared types and value binders share this contextual classifier. Constructor
--- results are scanned nominally; their input types require a positive verdict.
-private def classifyType (env : Environment) (type : Expr) (context : Array Expr)
-    (checkResult : Bool) : WalkM TypeClassification := do
+-- fields, including proof and instance fields, require a positive verdict.
+-- Recursive constructor results close only the active family obligation.
+private def classifyType (env : Environment) (type : Expr) (context : Array Expr) : WalkM TypeClassification := do
   let context := if type.hasLooseBVars then context else #[]
   unless ← chargeTraversal (2 * context.size + 1) do return .unclassified
-  let key := (type, context, checkResult)
+  let key := (type, context)
   if let some cached := (← get).typeChecks[key]? then return cached
   let verdict ← inBinderContext context fun locals => do
     let some type ← substitute type locals | return .unclassified
     let exact ← compareCanonical type (← get).statement
     let decision ← compareCanonical type (← get).decision
-    let (mentions, unclassified) ← inputType env type #[] checkResult
+    let (mentions, unclassified) ← inputType env type
     if exact || decision then return .forbidden
     if mentions then return .statementMention
     if unclassified then return .unclassified
+    let state ← get
+    if state.forbidden then return .forbidden
+    if state.incomplete || state.unclassified.isSome then return .unclassified
     return .allowlisted
   let verdict := verdict.getD .unclassified
   unless ← chargeTraversal context.size do return .unclassified
@@ -920,7 +1078,7 @@ private def visitSummary (env : Environment) (origin : Name) (summary : Summary)
                 noteUnclassified (Unclassified.mk "unlisted_decision_producer" n (namespaceLabel env n) origin)
       if let some type := node.declaredType then
         modify fun s => { s with typeObligations :=
-          (type, #[], info.any (fun i => !i.hasValue (allowOpaque := true)), n, origin) :: s.typeObligations }
+          (type, #[], n, origin) :: s.typeObligations }
         if inProtected env n && !(← get).queued.contains n then queue n
       else modify fun s => { s with incomplete := true }
     | .app _ _ =>
@@ -934,7 +1092,7 @@ private def visitSummary (env : Environment) (origin : Name) (summary : Summary)
               modify fun s => { s with forbidden := true }
     | .lam _ t _ _ | .forallE _ t _ _ | .letE _ t _ _ _ =>
       modify fun s => { s with typeObligations :=
-        (t, node.context, true, (summary.nodes[node.children[0]!]!).appHead.constName?.getD origin, origin) :: s.typeObligations }
+        (t, node.context, (summary.nodes[node.children[0]!]!).appHead.constName?.getD origin, origin) :: s.typeObligations }
       if let some typeIndex := node.children[0]? then checkU summary.nodes[typeIndex]!
     | .proj n _ _ =>
       directProjection env n
@@ -953,9 +1111,9 @@ private def process (env : Environment) : WalkM Unit := do
   while !(← get).forbidden do
     unless ← chargeSummaryWork (fun c => { c with dispatchWork := c.dispatchWork + 1 }) do break
     let some n := (← get).pending.head? | do
-      if let some (type, context, checkResult, first, origin) := (← get).typeObligations.head? then
+      if let some (type, context, first, origin) := (← get).typeObligations.head? then
         modify fun s => { s with typeObligations := s.typeObligations.tail! }
-        match ← classifyType env type context checkResult with
+        match ← classifyType env type context with
         | .forbidden => modify fun s => { s with forbidden := true }
         | .statementMention =>
           noteUnclassified ⟨"statement_mentioning_type", first, namespaceLabel env first, origin⟩
@@ -970,7 +1128,7 @@ private def process (env : Environment) : WalkM Unit := do
           if isProjection then
             match ← projectionDeclaredType env applied with
             | some (projectionName, declaredType) =>
-              match ← classifyType env declaredType #[] true with
+              match ← classifyType env declaredType #[] with
               | .forbidden => modify fun s => { s with forbidden := true }
               | .statementMention | .unclassified =>
                 noteUnclassified ⟨"unclassified_projection_type", projectionName,
@@ -980,7 +1138,7 @@ private def process (env : Environment) : WalkM Unit := do
               noteUnclassified ⟨"unclassified_projection_type", origin,
                 namespaceLabel env origin, origin⟩
           let some type ← appliedValueType applied | return
-          match ← classifyType env type #[] true with
+          match ← classifyType env type #[] with
           | .forbidden => modify fun s => { s with forbidden := true }
           | .statementMention | .unclassified =>
             noteUnclassified ⟨"unclassified_argument_type", origin, namespaceLabel env origin, origin⟩

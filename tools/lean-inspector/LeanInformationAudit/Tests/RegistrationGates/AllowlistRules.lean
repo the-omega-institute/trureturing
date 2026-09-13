@@ -695,9 +695,9 @@ def hiddenIndexAttempt8Realization : LeanInformationAudit.StructuralPrimitiveRea
 
 private def expectDiagnostic (label : String) (theoremName realizationName : Name) : CoreM Unit := do
   let result ← provenanceErrorCurrent (← getEnv).header.mainModule `catalog theoremName realizationName
-  let some message := result | throwError m!"{label}: missing IE-C050 diagnostic"
+  let some message := result | throwError m!"[FAIL] {label}: missing IE-C050 diagnostic"
   unless message.startsWith "IE-C050 ClosedTruthReadout " do
-    throwError m!"{label}: unexpected diagnostic {message}"
+    throwError m!"[FAIL] {label}: unexpected diagnostic {message}"
   logInfo m!"[PASS] {label}: {message}"
 
 run_cmd Elab.Command.liftCoreM do
@@ -706,3 +706,354 @@ run_cmd Elab.Command.liftCoreM do
   expectDiagnostic "ExternalAllowlistTypes.HiddenIndex" ``AllowlistRules.target ``hiddenIndexAttempt8Realization
 
 end AllowlistAttempt8Fixtures
+
+
+open Lean LeanInformationAudit.RegistrationGates
+
+namespace CorrectnessNominalResult
+
+def signature : LeanInformationAudit.StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => CorrectnessExternalRound4.StatementResult
+
+def bare : LeanInformationAudit.StructuralPrimitiveRealization ⟨Bool⟩ signature :=
+  ⟨CorrectnessExternalRound4.valuedResult⟩
+def eta : LeanInformationAudit.StructuralPrimitiveRealization ⟨Bool⟩ signature :=
+  ⟨fun index bit => CorrectnessExternalRound4.valuedResult index bit⟩
+def literal : LeanInformationAudit.StructuralPrimitiveRealization ⟨Bool⟩ signature :=
+  ⟨fun (_ : Unit) bit => ⟨⟨rfl⟩, bit⟩⟩
+
+def cleanSignature : LeanInformationAudit.StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => CorrectnessExternalRound4.CleanResult
+def clean : LeanInformationAudit.StructuralPrimitiveRealization ⟨Bool⟩ cleanSignature :=
+  ⟨CorrectnessExternalRound4.cleanResult⟩
+def cleanEta : LeanInformationAudit.StructuralPrimitiveRealization ⟨Bool⟩ cleanSignature :=
+  ⟨fun index bit => CorrectnessExternalRound4.cleanResult index bit⟩
+
+run_cmd Elab.Command.liftTermElabM do
+  for alternative in [``eta, ``literal] do
+    unless ← Meta.isDefEq (mkConst ``bare) (mkConst alternative) do
+      throwError "[FAIL] NominalResultShape {alternative}"
+  let env ← getEnv
+  let some index := env.getModuleIdxFor? ``CorrectnessExternalRound4.valuedResult
+    | throwError "[FAIL] NominalResultShape external module missing"
+  logInfo m!"[PASS] NominalResultShape external={env.header.modules[index.toNat]!.module}"
+  for (label, holder) in [("NominalBare", ``bare), ("NominalEta", ``eta),
+      ("NominalLiteral", ``literal), ("NominalCleanBare", ``clean), ("NominalCleanEta", ``cleanEta)] do
+    let result ← provenanceErrorCurrent env.header.mainModule `catalog ``AllowlistRules.target holder
+    if holder == ``clean || holder == ``cleanEta then
+      if result.isNone then logInfo m!"[PASS] {label}"
+      else logError m!"[FAIL] {label}: {result}"
+    else
+      match result with
+      | some message =>
+        let expected := if holder == ``literal then "reason=forbidden_dependency"
+          else "statement_mentioning_type"
+        if message.startsWith "IE-C050 ClosedTruthReadout " && message.contains expected then
+          logInfo m!"[PASS] {label}: {message}"
+        else logError m!"[FAIL] {label}: unexpected {message}"
+      | none => logError m!"[FAIL] {label}: false admission; missing IE-C050"
+
+end CorrectnessNominalResult
+
+open Lean LeanInformationAudit LeanInformationAudit.RegistrationGates
+open D5.S3.ConceptDynamics.InformationEscape
+
+namespace FunnelAttackA6
+
+
+def statement : Prop := (137 : Nat) = 137
+theorem target : statement := rfl
+
+def targetFamily (f : statement → Type) : Type := Unit
+
+def sortDomainRead (i : Unit) (s : Bool) : targetFamily (fun _ : statement => Bool) := ()
+
+def sortDomainSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => targetFamily (fun _ : statement => Bool)
+def sortDomainRealization : StructuralPrimitiveRealization
+    ⟨Bool⟩ sortDomainSignature := ⟨sortDomainRead⟩
+
+structure CachePayload where
+  hidden : Unit → statement
+  bit : Bool
+
+def cacheRead (i : Unit) (s : Bool) : CachePayload :=
+  { hidden := fun _ => rfl, bit := s }
+def cacheSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => CachePayload
+def cacheRealization : StructuralPrimitiveRealization
+    ⟨Bool⟩ cacheSignature := ⟨cacheRead⟩
+
+inductive ActiveNominal where
+  | base : ActiveNominal
+  | mk (next : ActiveNominal) (hidden : statement) (bit : Bool) : ActiveNominal
+
+def activeRead (i : Unit) (s : Bool) : ActiveNominal :=
+  ActiveNominal.mk ActiveNominal.base rfl s
+def activeSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => ActiveNominal
+def activeRealization : StructuralPrimitiveRealization
+    ⟨Bool⟩ activeSignature := ⟨activeRead⟩
+
+private def check (label : String) (realizationName : Name) : CoreM Unit := do
+  let result ← provenanceErrorCurrent (← getEnv).header.mainModule `catalog ``FunnelAttackA6.target realizationName
+  logInfo m!"[A6_RESULT] {label}: {result.getD "<none>"}"
+  let some message := result | throwError "[FAIL] {label}: false admission"
+  unless message.startsWith "IE-C050 ClosedTruthReadout " do
+    throwError "[FAIL] {label}: unexpected {message}"
+  logInfo m!"[PASS] {label}"
+
+run_cmd Elab.Command.liftCoreM do
+  check "cache-domain-hidden-body" ``cacheRealization
+  check "active-nominal-hidden-field" ``activeRealization
+  check "sort-family-hidden-domain" ``sortDomainRealization
+
+end FunnelAttackA6
+
+namespace NominalFieldFixtures
+open Lean LeanInformationAudit LeanInformationAudit.RegistrationGates
+def ProofSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => ProofResult
+def ProofRealization : StructuralPrimitiveRealization ⟨Bool⟩ ProofSignature := ⟨proofResult⟩
+def CleanProofSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => CleanProofResult
+def CleanProofRealization : StructuralPrimitiveRealization ⟨Bool⟩ CleanProofSignature := ⟨cleanProofResult⟩
+def InstanceSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => InstanceResult
+def InstanceRealization : StructuralPrimitiveRealization ⟨Bool⟩ InstanceSignature := ⟨instanceResult⟩
+def CleanInstanceSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => CleanInstanceResult
+def CleanInstanceRealization : StructuralPrimitiveRealization ⟨Bool⟩ CleanInstanceSignature := ⟨cleanInstanceResult⟩
+def UniverseSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => UniverseResult.{1}
+def UniverseRealization : StructuralPrimitiveRealization ⟨Bool⟩ UniverseSignature := ⟨universeResult⟩
+run_cmd Elab.Command.liftCoreM do
+  for (label, holder, target, clean) in [
+      ("NominalProofField", ``ProofRealization, ``AllowlistRules.target, false),
+      ("NominalInstanceField", ``InstanceRealization, ``AllowlistRules.target, false),
+      ("NominalUniverseField", ``UniverseRealization, ``AllowlistAttempt8Fixtures.universeTarget, false),
+      ("NominalCleanProofField", ``CleanProofRealization, ``AllowlistRules.target, true),
+      ("NominalCleanInstanceField", ``CleanInstanceRealization, ``AllowlistRules.target, true)] do
+    let result ← provenanceErrorCurrent (← getEnv).header.mainModule `catalog target holder
+    if clean then
+      if result.isNone then logInfo m!"[PASS] {label}"
+      else logError m!"[FAIL] {label}: unexpected {result}"
+    else
+      match result with
+      | some message =>
+        if message.startsWith "IE-C050 ClosedTruthReadout " &&
+            message.contains "statement_mentioning_type" then logInfo m!"[PASS] {label}: {message}"
+        else logError m!"[FAIL] {label}: unexpected {message}"
+      | none => logError m!"[FAIL] {label}: false admission; missing IE-C050"
+end NominalFieldFixtures
+
+namespace NominalFieldFixtures
+open Lean LeanInformationAudit LeanInformationAudit.RegistrationGates
+theorem listedClassTarget : ∀ a b : Unit, a = b := by
+  intro a b
+  cases a
+  cases b
+  rfl
+def listedClassSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => PLift (Subsingleton Unit)
+def listedClassRealization : StructuralPrimitiveRealization ⟨Bool⟩ listedClassSignature :=
+  ⟨listedClassResult⟩
+def cleanListedClassSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => PLift (Subsingleton (Fin 1))
+def cleanListedClassRealization : StructuralPrimitiveRealization ⟨Bool⟩ cleanListedClassSignature :=
+  ⟨cleanListedClassResult⟩
+run_cmd Elab.Command.liftCoreM do
+  let result ← provenanceErrorCurrent (← getEnv).header.mainModule `catalog
+    ``listedClassTarget ``listedClassRealization
+  match result with
+  | some message =>
+    if message.startsWith "IE-C050 ClosedTruthReadout " &&
+        message.contains "statement_mentioning_type" then
+      logInfo m!"[PASS] NominalListedClassProof: {message}"
+    else logError m!"[FAIL] NominalListedClassProof: unexpected {message}"
+  | none => logError "[FAIL] NominalListedClassProof: false admission; missing IE-C050"
+  let clean ← provenanceErrorCurrent (← getEnv).header.mainModule `catalog
+    ``listedClassTarget ``cleanListedClassRealization
+  if clean.isNone then logInfo "[PASS] NominalCleanListedClassProof"
+  else logError m!"[FAIL] NominalCleanListedClassProof: {clean}"
+end NominalFieldFixtures
+
+namespace ReadoutModeInvariant
+open Lean
+run_cmd Elab.Command.liftTermElabM do
+  let env ← getEnv
+  for userName in [
+      `LeanInformationAudit.RegistrationGates.inputType,
+      `LeanInformationAudit.RegistrationGates.constructorFields,
+      `LeanInformationAudit.RegistrationGates.typeFamilyArgument,
+      `LeanInformationAudit.RegistrationGates.classifyType] do
+    let some (_, info) := env.constants.toList.find? (fun (name, _) =>
+      privateToUserName? name == some userName)
+      | throwError "[FAIL] NoTypeClassificationModes: missing {userName}"
+    Meta.forallTelescope info.type fun params _ => do
+      for param in params do
+        if (← Meta.inferType param) == mkConst ``Bool then
+          throwError "[FAIL] NoTypeClassificationModes: {userName} has a Boolean mode"
+  for userName in [
+      `LeanInformationAudit.RegistrationGates.WalkState.typeObligations,
+      `LeanInformationAudit.RegistrationGates.WalkState.typeChecks,
+      `LeanInformationAudit.RegistrationGates.WalkState.cleanTypes] do
+    let some (_, info) := env.constants.toList.find? (fun (name, _) =>
+      privateToUserName? name == some userName)
+      | throwError "[FAIL] NoTypeClassificationModes: missing {userName}"
+    Meta.forallTelescope info.type fun _ result => do
+      if (result.find? (· == mkConst ``Bool)).isSome then
+        throwError "[FAIL] NoTypeClassificationModes: {userName} retains a mode in its data"
+  logInfo "[PASS] NoTypeClassificationModes"
+end ReadoutModeInvariant
+
+namespace ReadoutAdmissionInventory
+open Lean
+
+-- The parser omits comments and source positions. Include every program token,
+-- including forwarded callback expressions and all guards, in the audit key.
+-- A new exit or a changed predecessor invalidates the completed return audit.
+private partial def tokens : Syntax → Array String
+  | .missing => #["<missing>"]
+  | .atom _ value => #[value]
+  | .ident _ raw _ _ => #[raw.toString]
+  | .node _ kind children =>
+    if kind == `Lean.Parser.Command.docComment || kind == `Lean.Parser.Command.moduleDoc then #[]
+    else #[s!"({kind}"] ++ children.foldl (fun acc child => acc ++ tokens child) #[] ++ #[")"]
+
+run_cmd Elab.Command.liftCoreM do
+  -- Parse at the production layer: downstream catalog syntax reserves names
+  -- that are ordinary identifiers in these Lean-only modules.
+  unsafe enableInitializersExecution
+  let parserEnv ← importModules #[{ module := `Lean }] {} (loadExts := true)
+  for (moduleName, expectedDigest, expectedExits) in [
+      ("ReadoutProvenance", "11700aa6074203886a6fff7ddf3285c0b4ee3b94d426570e3628eed6c6ccd837", 256),
+      ("ReadoutFamily", "2cc8a787350d521c79e444692b947ccd00e5a6898c3da9d30080d06333b2184d", 47)] do
+    let path := s!"tools/lean-inspector/LeanInformationAudit/{moduleName}.lean"
+    let parsed ← Parser.testParseFile parserEnv path
+    let allTokens := tokens parsed
+    let digest := LeanInformationAudit.Sha256.hex
+      (String.intercalate "\n" allTokens.toList).toUTF8
+    let exits := allTokens.filter (#["return", "break", "continue", "failure", "pure"].contains ·)
+    if digest != expectedDigest || exits.size != expectedExits then
+      logError m!"[FAIL] CleanReturnInventory/{moduleName}: unaudited code; digest={digest}, exits={exits.size}"
+    else logInfo m!"[PASS] CleanReturnInventory/{moduleName}: {exits.size} explicit exits; all forwarding code pinned"
+
+end ReadoutAdmissionInventory
+
+namespace NominalFieldFixtures
+open Lean LeanInformationAudit LeanInformationAudit.RegistrationGates
+def IndexedSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => IndexedResult 137
+def IndexedRealization : StructuralPrimitiveRealization ⟨Bool⟩ IndexedSignature := ⟨indexedResult⟩
+def CleanIndexedSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => CleanIndexedResult 138
+def CleanIndexedRealization : StructuralPrimitiveRealization ⟨Bool⟩ CleanIndexedSignature := ⟨cleanIndexedResult⟩
+run_cmd Elab.Command.liftCoreM do
+  let result ← provenanceErrorCurrent (← getEnv).header.mainModule `catalog
+    ``AllowlistRules.target ``IndexedRealization
+  match result with
+  | some message =>
+    if message.startsWith "IE-C050 ClosedTruthReadout " &&
+        message.contains "statement_mentioning_type" then
+      logInfo m!"[PASS] NominalIndexedProofField: {message}"
+    else logError m!"[FAIL] NominalIndexedProofField: unexpected {message}"
+  | none => logError "[FAIL] NominalIndexedProofField: false admission; missing IE-C050"
+  let clean ← provenanceErrorCurrent (← getEnv).header.mainModule `catalog
+    ``AllowlistRules.target ``CleanIndexedRealization
+  if clean.isNone then logInfo "[PASS] NominalCleanIndexedProofField"
+  else logError m!"[FAIL] NominalCleanIndexedProofField: {clean}"
+end NominalFieldFixtures
+
+namespace NominalFieldFixtures
+open Lean LeanInformationAudit LeanInformationAudit.RegistrationGates
+theorem recursiveTarget : (138 : Nat) = 138 := rfl
+def RecursiveIndexedSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => RecursiveIndexedResult 137
+def RecursiveIndexedRealization : StructuralPrimitiveRealization ⟨Bool⟩ RecursiveIndexedSignature :=
+  ⟨recursiveIndexedResult⟩
+def CleanRecursiveIndexedSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => CleanRecursiveIndexedResult 137
+def CleanRecursiveIndexedRealization : StructuralPrimitiveRealization ⟨Bool⟩ CleanRecursiveIndexedSignature :=
+  ⟨cleanRecursiveIndexedResult⟩
+run_cmd Elab.Command.liftCoreM do
+  let env ← getEnv
+  for name in [``UniformIndexedResult, ``IndexedResult] do
+    let some (.inductInfo info) := env.find? name | throwError "[FAIL] IndexFixtureShape"
+    logInfo m!"IndexFixtureShape {name}: parameters={info.numParams}, indices={info.numIndices}"
+  let result ← provenanceErrorCurrent env.header.mainModule `catalog
+    ``recursiveTarget ``RecursiveIndexedRealization
+  match result with
+  | some message =>
+    if message.startsWith "IE-C050 ClosedTruthReadout " &&
+        message.contains "statement_mentioning_type" then
+      logInfo m!"[PASS] NominalRecursiveIndexedProofField: {message}"
+    else logError m!"[FAIL] NominalRecursiveIndexedProofField: unexpected {message}"
+  | none => logError "[FAIL] NominalRecursiveIndexedProofField: false admission; missing IE-C050"
+  let clean ← provenanceErrorCurrent env.header.mainModule `catalog
+    ``recursiveTarget ``CleanRecursiveIndexedRealization
+  if clean.isNone then logInfo "[PASS] NominalCleanRecursiveIndexedProofField"
+  else logError m!"[FAIL] NominalCleanRecursiveIndexedProofField: {clean}"
+end NominalFieldFixtures
+
+namespace NominalFieldFixtures
+open Lean LeanInformationAudit LeanInformationAudit.RegistrationGates
+def LetIndexSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => IndexSelfResult 138
+def LetIndexRealization : StructuralPrimitiveRealization ⟨Bool⟩ LetIndexSignature :=
+  ⟨fun i bit => let n := 138; indexSelfBy n i bit⟩
+def CleanLetIndexSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => IndexSelfResult 139
+def CleanLetIndexRealization : StructuralPrimitiveRealization ⟨Bool⟩ CleanLetIndexSignature :=
+  ⟨fun i bit => let n := 139; indexSelfBy n i bit⟩
+run_cmd Elab.Command.liftCoreM do
+  let result ← provenanceErrorCurrent (← getEnv).header.mainModule `catalog
+    ``recursiveTarget ``LetIndexRealization
+  match result with
+  | some message =>
+    if message.startsWith "IE-C050 ClosedTruthReadout " &&
+        message.contains "unclassified_argument_type" then
+      logInfo m!"[PASS] NominalLetIndexProofField: {message}"
+    else logError m!"[FAIL] NominalLetIndexProofField: unexpected {message}"
+  | none => logError "[FAIL] NominalLetIndexProofField: false admission; missing IE-C050"
+  let clean ← provenanceErrorCurrent (← getEnv).header.mainModule `catalog
+    ``recursiveTarget ``CleanLetIndexRealization
+  if clean.isNone then logInfo "[PASS] NominalCleanLetIndexProofField"
+  else logError m!"[FAIL] NominalCleanLetIndexProofField: {clean}"
+end NominalFieldFixtures
