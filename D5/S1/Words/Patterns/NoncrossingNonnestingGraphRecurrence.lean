@@ -2,10 +2,11 @@
    generality: G
    mirror-B: D5/B/S1/Words/Patterns/NoncrossingNonnestingGraphRecurrence
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Data.Fin.Tuple.Basic, mathlib/module/Mathlib.Data.Finset.Sum, mathlib/module/Mathlib.Data.Fintype.BigOperators, mathlib/module/Mathlib.Data.Fintype.Card, mathlib/module/Mathlib.Data.Fintype.Powerset, mathlib/module/Mathlib.Data.Fintype.Prod, mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Ring.Finset, mathlib/module/Mathlib.Data.Fin.Tuple.Basic, mathlib/module/Mathlib.Data.Finset.Sum, mathlib/module/Mathlib.Data.Fintype.BigOperators, mathlib/module/Mathlib.Data.Fintype.Card, mathlib/module/Mathlib.Data.Fintype.Powerset, mathlib/module/Mathlib.Data.Fintype.Prod, mathlib/module/Mathlib.Tactic.Ring]
    utility: none
    digest: Literal labeled-graph avoidance and its allowed-vertex state yield Barker's recurrence. -/
 
+import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.Data.Finset.Sum
 import Mathlib.Data.Fintype.BigOperators
@@ -361,5 +362,62 @@ private theorem X_succ (n : ℕ) : X (n + 1) = Z n := by
   rw [Fintype.card_subtype]
   change (Finset.univ.filter (fun S : Finset (Fin n) => S ⊆ Allowed G)).card = _
   rw [Finset.filter_subset_univ, Finset.card_powerset]
+
+private theorem Y_succ (n : ℕ) : Y (n + 1) = 2 * Y n + Z n := by
+  have hcard (G : GoodGraph n) (S : {S : Finset (Fin n) // S ⊆ Allowed G}) :
+      (Allowed ((goodGraphSuccEquiv n).symm ⟨G, S⟩)).card =
+        if S.1 = ∅ then (Allowed G).card + 1 else if S.1.card = 1 then 2 else 1 := by
+    change (allowedEdges (extendEdges G.1 S.1)).card = _
+    exact card_allowedEdges_extend G.1 S.1 S.2
+  have hsum (G : GoodGraph n) :
+      (∑ S : {S : Finset (Fin n) // S ⊆ Allowed G},
+        if S.1 = ∅ then (Allowed G).card + 1 else if S.1.card = 1 then 2 else 1) =
+        2 * (Allowed G).card + 2 ^ (Allowed G).card := by
+    let A := Allowed G
+    let r := A.card
+    let p : Finset (Fin n) → Prop := fun S => S ⊆ A
+    let f : Finset (Fin n) → ℕ := fun S =>
+      if S = ∅ then r + 1 else if S.card = 1 then 2 else 1
+    change (∑ S : Subtype p, f S.1) = 2 * r + 2 ^ r
+    calc
+      (∑ S : Subtype p, f S.1) =
+          ∑ S ∈ Finset.univ.filter p, f S :=
+        (Finset.sum_subtype (F := inferInstance) (Finset.univ.filter p)
+          (fun S => by simp [p]) f).symm
+      _ = ∑ S ∈ A.powerset, f S := by rw [Finset.filter_subset_univ]
+      _ = 2 * r + 2 ^ r := by
+        dsimp only [f]
+        have hrewrite (S : Finset (Fin n)) :
+            (if S = ∅ then r + 1 else if S.card = 1 then 2 else 1) =
+              1 + (if S = ∅ then r else 0) + (if S.card = 1 then 1 else 0) := by
+          by_cases hS0 : S = ∅
+          · subst S
+            simp [Nat.add_comm]
+          by_cases hS1 : S.card = 1 <;> simp [hS0, hS1]
+        simp_rw [hrewrite, Finset.sum_add_distrib]
+        have hsingle :
+            (∑ S ∈ A.powerset, if S.card = 1 then 1 else 0) = r := by
+          rw [Finset.sum_boole]
+          change (A.powerset.filter (fun S => S.card = 1)).card = r
+          rw [← Finset.powersetCard_eq_filter, Finset.card_powersetCard]
+          simp [r]
+        simp [hsingle, Finset.card_powerset, r]
+        omega
+  rw [Y]
+  calc
+    (∑ H : GoodGraph (n + 1), (Allowed H).card) =
+        ∑ p : (Σ G : GoodGraph n, {S : Finset (Fin n) // S ⊆ Allowed G}),
+          (Allowed ((goodGraphSuccEquiv n).symm p)).card := by
+      exact ((goodGraphSuccEquiv n).symm.sum_comp
+        (fun H : GoodGraph (n + 1) => (Allowed H).card)).symm
+    _ = ∑ G : GoodGraph n, (2 * (Allowed G).card + 2 ^ (Allowed G).card) := by
+      rw [Fintype.sum_sigma]
+      apply Finset.sum_congr rfl
+      intro G _
+      simp_rw [hcard]
+      exact hsum G
+    _ = 2 * Y n + Z n := by
+      rw [Y, Z]
+      rw [Finset.mul_sum, ← Finset.sum_add_distrib]
 
 end D5.S1.Words.Patterns.NoncrossingNonnestingGraphRecurrence
