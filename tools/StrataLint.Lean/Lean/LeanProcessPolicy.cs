@@ -90,10 +90,14 @@ internal sealed class LeanProcessPolicy : IWorktreeProcessRunner
     }
 
     public ProcessOutput Run(string fileName, IReadOnlyList<string> arguments,
-        string workingDirectory, TimeSpan timeout)
+        string workingDirectory, TimeSpan timeout) =>
+        Run(fileName, arguments, workingDirectory, timeout, null, null);
+
+    internal ProcessOutput Run(string fileName, IReadOnlyList<string> arguments,
+        string workingDirectory, TimeSpan timeout, Stream? standardOutput, Stream? standardError)
     {
         if (Path.GetFileName(fileName) == "lake") fileName = LakeExecutable;
-        var result = RunOnce(fileName, arguments, workingDirectory, timeout);
+        var result = RunOnce(fileName, arguments, workingDirectory, timeout, standardOutput, standardError);
         if (SharedReader && fileName == LakeExecutable && arguments.FirstOrDefault() == "build"
             && result.ExitCode != 0)
         {
@@ -103,10 +107,16 @@ internal sealed class LeanProcessPolicy : IWorktreeProcessRunner
             {
                 var privateCache = Path.Combine(Root, ".lake", "artifact-cache");
                 var child = new Dictionary<string, string>(environment) { ["LAKE_CACHE_DIR"] = privateCache };
+                const string fallback = "LEAN_CACHE_FALLBACK denied shared cache write; retrying Lake build with private cache\n";
+                if (standardOutput is not null)
+                {
+                    standardOutput.Write(Encoding.UTF8.GetBytes(fallback));
+                    standardOutput.Flush();
+                }
                 var local = new LeanProcessPolicy(Root, SharedRoot, SharedCache, privateCache,
-                    LakeExecutable, runner, child) { Writers = Writers }.RunOnce(fileName, arguments, workingDirectory, timeout);
-                var output = "LEAN_CACHE_FALLBACK denied shared cache write; retrying Lake build with private cache\n"
-                    + diagnostic + Encoding.UTF8.GetString(local.StandardOutput);
+                    LakeExecutable, runner, child) { Writers = Writers }.RunOnce(
+                        fileName, arguments, workingDirectory, timeout, standardOutput, standardError);
+                var output = fallback + diagnostic + Encoding.UTF8.GetString(local.StandardOutput);
                 return new(local.ExitCode, Encoding.UTF8.GetBytes(output), local.StandardError);
             }
         }
@@ -114,12 +124,14 @@ internal sealed class LeanProcessPolicy : IWorktreeProcessRunner
     }
 
     private ProcessOutput RunOnce(string fileName, IReadOnlyList<string> arguments,
-        string workingDirectory, TimeSpan timeout) =>
-        RunGuarded(SharedRoot, runner, fileName, arguments, workingDirectory, timeout, environment, Writers);
+        string workingDirectory, TimeSpan timeout, Stream? standardOutput, Stream? standardError) =>
+        RunGuarded(SharedRoot, runner, fileName, arguments, workingDirectory, timeout, environment, Writers,
+            standardOutput, standardError);
 
     private static ProcessOutput RunGuarded(string sharedRoot, IWorktreeProcessRunner runner,
         string fileName, IReadOnlyList<string> arguments, string workingDirectory, TimeSpan timeout,
-        IReadOnlyDictionary<string, string> environment, IReadOnlyList<LeanCacheWriterGuard> writers)
+        IReadOnlyDictionary<string, string> environment, IReadOnlyList<LeanCacheWriterGuard> writers,
+        Stream? standardOutput = null, Stream? standardError = null)
     {
         RequireGuard(sharedRoot);
         RequireNoSharedLinks(sharedRoot);
@@ -129,9 +141,11 @@ internal sealed class LeanProcessPolicy : IWorktreeProcessRunner
                 .Replace("\"", "\\\"", StringComparison.Ordinal);
             var profile = "(version 1) (allow default) (deny file-write* (subpath \"" + literal + "\"))";
             return LeanCacheProcessLifetime.Run(runner, "/usr/bin/sandbox-exec",
-                ["-p", profile, fileName, .. arguments], workingDirectory, timeout, environment, writers);
+                ["-p", profile, fileName, .. arguments], workingDirectory, timeout, environment, writers,
+                standardOutput, standardError);
         }
-        return LeanCacheProcessLifetime.Run(runner, fileName, arguments, workingDirectory, timeout, environment, writers);
+        return LeanCacheProcessLifetime.Run(runner, fileName, arguments, workingDirectory, timeout, environment, writers,
+            standardOutput, standardError);
     }
 
     internal static string Git(string root, IWorktreeProcessRunner runner, params string[] arguments)

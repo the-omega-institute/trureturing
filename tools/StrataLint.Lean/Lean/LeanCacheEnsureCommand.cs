@@ -27,7 +27,8 @@ internal static class LeanCacheEnsureCommand
     }
 
     internal static CommandResult Run(string repositoryRoot, IReadOnlyList<string> arguments,
-        IWorktreeProcessRunner runner, bool runCommand = false)
+        IWorktreeProcessRunner runner, bool runCommand = false,
+        Stream? standardOutput = null, Stream? standardError = null)
     {
         if (!TryParse(repositoryRoot, arguments, runCommand, out var root, out var command))
             return new(false, string.Empty, (runCommand ? ReaderUsage : Usage) + "\n");
@@ -42,11 +43,20 @@ internal static class LeanCacheEnsureCommand
             policy.Writers = [guard];
             var receipt = LeanCacheProvisioner.Ensure(policy, pins, guard);
             if (!runCommand) return new(true, receipt, string.Empty);
+            if (standardOutput is not null)
+            {
+                standardOutput.Write(Encoding.UTF8.GetBytes(receipt));
+                standardOutput.Flush();
+            }
             var result = policy.Run(command[0], command.Skip(1).ToArray(), policy.Root,
-                LeanCacheProvisioner.LeanCommandBudget);
-            return new(result.ExitCode == 0, receipt + Encoding.UTF8.GetString(result.StandardOutput),
-                Encoding.UTF8.GetString(result.StandardError), result.ExitCode);
+                LeanCacheProvisioner.LeanCommandBudget, standardOutput, standardError);
+            // Forwarded bytes have already reached their original stream; the bounded
+            // captured result remains available to policy but must not be replayed.
+            return new(result.ExitCode == 0,
+                standardOutput is null ? receipt + Encoding.UTF8.GetString(result.StandardOutput) : string.Empty,
+                standardError is null ? Encoding.UTF8.GetString(result.StandardError) : string.Empty, result.ExitCode);
         }
+        catch (OperationCanceledException) { throw; }
         catch (Exception exception)
         {
             return new(false, string.Empty, "LEAN_CACHE " + JsonSerializer.Serialize(new

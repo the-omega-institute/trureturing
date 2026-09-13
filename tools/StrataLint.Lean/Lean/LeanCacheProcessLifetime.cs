@@ -31,10 +31,11 @@ internal static class LeanCacheProcessLifetime
 
     internal static ProcessOutput Run(IWorktreeProcessRunner runner, string file, IReadOnlyList<string> arguments,
         string root, TimeSpan timeout, IReadOnlyDictionary<string, string> environment,
-        IReadOnlyList<LeanCacheWriterGuard> writers)
+        IReadOnlyList<LeanCacheWriterGuard> writers,
+        Stream? standardOutput = null, Stream? standardError = null)
     {
         if (writers.Count == 0 || OperatingSystem.IsWindows())
-            return runner.RunWithEnvironment(file, arguments, root, timeout, environment);
+            return runner.RunWithEnvironment(file, arguments, root, timeout, environment, standardOutput, standardError);
         if (!File.Exists("/usr/bin/perl"))
             throw new PlatformNotSupportedException("Cache writer process ownership requires /usr/bin/perl on POSIX.");
         var guards = writers.Select(writer => writer.ProcessGuard).ToArray();
@@ -63,7 +64,7 @@ internal static class LeanCacheProcessLifetime
             var result = runner.RunWithEnvironment("/usr/bin/perl",
                 ["-e", Launcher, guards.Length.ToString(System.Globalization.CultureInfo.InvariantCulture),
                     .. guards.Select(guard => guard.Descriptor.ToString(System.Globalization.CultureInfo.InvariantCulture)),
-                    file, .. arguments], root, timeout, child);
+                    file, .. arguments], root, timeout, child, standardOutput, standardError);
             foreach (var guard in guards)
                 if (guard.HasWriterSession())
                     throw new InvalidOperationException("cache command exited with live writer descendants; writer guard remains busy");

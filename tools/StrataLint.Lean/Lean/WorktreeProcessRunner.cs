@@ -18,6 +18,13 @@ internal interface IWorktreeProcessRunner
         IReadOnlyDictionary<string, string> environment) =>
         throw new NotSupportedException("This process runner does not support an isolated child environment.");
 
+    ProcessOutput RunWithEnvironment(
+        string fileName, IReadOnlyList<string> arguments, string workingDirectory, TimeSpan timeout,
+        IReadOnlyDictionary<string, string> environment, Stream? standardOutput, Stream? standardError) =>
+        standardOutput is null && standardError is null
+            ? RunWithEnvironment(fileName, arguments, workingDirectory, timeout, environment)
+            : throw new NotSupportedException("This process runner does not support forwarding child output.");
+
     StreamedProcessOutput<T> RunStreaming<T>(
         string fileName,
         IReadOnlyList<string> arguments,
@@ -32,7 +39,7 @@ internal interface IWorktreeProcessRunner
     }
 }
 
-internal sealed class ProductionWorktreeProcessRunner : IWorktreeProcessRunner
+internal sealed class ProductionWorktreeProcessRunner(CancellationToken cancellationToken = default) : IWorktreeProcessRunner
 {
     public ProcessOutput RunWithEnvironment(
         string fileName,
@@ -41,7 +48,14 @@ internal sealed class ProductionWorktreeProcessRunner : IWorktreeProcessRunner
         TimeSpan timeout,
         IReadOnlyDictionary<string, string> environment) =>
         BoundedProcessRunner.Run(fileName, arguments, workingDirectory, timeout,
-            64 * 1024 * 1024, environment: environment);
+            64 * 1024 * 1024, environment: environment, cancellationToken: cancellationToken);
+
+    public ProcessOutput RunWithEnvironment(
+        string fileName, IReadOnlyList<string> arguments, string workingDirectory, TimeSpan timeout,
+        IReadOnlyDictionary<string, string> environment, Stream? standardOutput, Stream? standardError) =>
+        BoundedProcessRunner.Run(fileName, arguments, workingDirectory, timeout,
+            64 * 1024 * 1024, environment: environment, standardOutput: standardOutput,
+            standardError: standardError, cancellationToken: cancellationToken);
 
     public StreamedProcessOutput<T> RunStreaming<T>(
         string fileName,
@@ -50,7 +64,7 @@ internal sealed class ProductionWorktreeProcessRunner : IWorktreeProcessRunner
         TimeSpan timeout,
         Func<Stream, CancellationToken, Task<T>> readStandardOutput) =>
         BoundedProcessRunner.RunStreaming(fileName, arguments, workingDirectory, timeout,
-            64 * 1024 * 1024, readStandardOutput);
+            64 * 1024 * 1024, readStandardOutput, cancellationToken: cancellationToken);
 
     public ProcessOutput Run(
         string fileName,
@@ -62,5 +76,5 @@ internal sealed class ProductionWorktreeProcessRunner : IWorktreeProcessRunner
             arguments,
             workingDirectory,
             timeout,
-            64 * 1024 * 1024);
+            64 * 1024 * 1024, cancellationToken: cancellationToken);
 }
