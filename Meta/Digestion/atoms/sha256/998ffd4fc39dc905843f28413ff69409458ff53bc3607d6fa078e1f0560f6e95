@@ -1,0 +1,5 @@
+其余四十四个约数的 Möbius 为零，且
+$$
+\operatorname{rad}(5040)=210,\quad
+\sum_{d\mid5040}\frac{\mu(d)}d=\frac8{35},\quad \Phi(5040)=1152.
+$$
