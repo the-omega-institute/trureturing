@@ -109,6 +109,58 @@ private theorem sqrt_prime_quadratic_step
     Real.sqrt_le_sqrt (by exact_mod_cast hp)
   exact hs.trans (by simpa only [t0, L] using hchain L)
 
+private theorem sqrt_prime_quadratic_linear
+    (c : ℝ) (N r : ℕ) (hc : 0 < c)
+    (hclaim : ∀ n : ℕ, N ≤ n → c * sqrt n < (a n : ℝ))
+    (hr : 1 < c * r) :
+    ∃ B : ℝ, 0 < B ∧ ∀ m : ℕ, N + 1 ≤ m →
+      sqrt (Nat.nth Nat.Prime ((r * m) ^ 2)) ≤ B * m := by
+  have hr1 : 1 ≤ r := by
+    by_contra h
+    have hzero : r = 0 := by omega
+    simp [hzero] at hr
+    linarith
+  let m0 := N + 1
+  let L := 3 * r * r
+  let B : ℝ := sqrt (Nat.nth Nat.Prime ((r * m0) ^ 2)) + L
+  have hL : (0 : ℝ) < L := by
+    dsimp [L]
+    have hrpos : 0 < r := by omega
+    positivity
+  have hB : 0 < B := by
+    dsimp [B]
+    exact add_pos_of_nonneg_of_pos (sqrt_nonneg _) hL
+  refine ⟨B, hB, ?_⟩
+  intro m hm
+  induction m, hm using Nat.le_induction with
+  | base =>
+    have hm0 : (1 : ℝ) ≤ m0 := by
+      change (1 : ℝ) ≤ (N + 1 : ℕ)
+      exact_mod_cast (by omega : 1 ≤ N + 1)
+    have hB0 : 0 ≤ B := hB.le
+    dsimp [B]
+    nlinarith [mul_nonneg hB0 (sub_nonneg.mpr hm0)]
+  | succ m hm ih =>
+    have hN : N ≤ (r * m) ^ 2 := by
+      have hNm : N ≤ m := by omega
+      have hrm : m ≤ r * m := by
+        calc
+          m = 1 * m := by omega
+          _ ≤ r * m := Nat.mul_le_mul_right m hr1
+      have hx : 1 ≤ r * m := by omega
+      have hpow : r * m ≤ (r * m) ^ 2 := by
+        nlinarith [Nat.mul_le_mul_left (r * m) hx]
+      exact hNm.trans (hrm.trans hpow)
+    have hstep := sqrt_prime_quadratic_step c N r m hc hclaim hr (by omega) hN
+    have hLB : (L : ℝ) ≤ B := by
+      dsimp [B]
+      exact le_add_of_nonneg_left (sqrt_nonneg _)
+    calc
+      sqrt (Nat.nth Nat.Prime ((r * (m + 1)) ^ 2)) ≤
+          sqrt (Nat.nth Nat.Prime ((r * m) ^ 2)) + (L : ℝ) := by
+            simpa only [L] using hstep
+      _ ≤ B * (↑(m + 1) : ℝ) := by push_cast; nlinarith [ih, hLB]
+
 end
 
 end D5.S3.Arith.CloitreSquareRootPrimeGapRefutation
