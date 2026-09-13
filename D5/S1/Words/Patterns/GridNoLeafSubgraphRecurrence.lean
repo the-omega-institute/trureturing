@@ -427,5 +427,61 @@ theorem barker_a301976 : ∀ n : ℕ, 4 < n →
   simpa only [h5, h4, h3, h2, h1] using
     stateCount_recurrence (n - 5) zeroHorizontal
 
+private theorem initial_mod_ten :
+    a 3 % 10 = 3 ∧ a 4 % 10 = 3 ∧ a 5 % 10 = 3 ∧ a 6 % 10 = 3 := by
+  rw [a_eq_stateCount 3, a_eq_stateCount 4, a_eq_stateCount 5, a_eq_stateCount 6]
+  decide
+
+/-- Kagey's conjectured final-digit pattern for no-leaf grid subgraphs. -/
+theorem kagey_a301976_mod10 : ∀ n : ℕ, 2 < n → a n % 10 = 3 := by
+  intro n
+  induction n using Nat.strong_induction_on with
+  | h n ih =>
+      intro hn
+      by_cases hsmall : n ≤ 6
+      · rcases initial_mod_ten with ⟨h3, h4, h5, h6⟩
+        have hn_cases : n = 3 ∨ n = 4 ∨ n = 5 ∨ n = 6 := by omega
+        rcases hn_cases with rfl | rfl | rfl | rfl <;> assumption
+      · have hn7 : 7 ≤ n := by omega
+        have hm1nat : Nat.ModEq 10 (a (n - 1)) 3 := by
+          simpa [Nat.ModEq] using ih (n - 1) (by omega) (by omega)
+        have hm2nat : Nat.ModEq 10 (a (n - 2)) 3 := by
+          simpa [Nat.ModEq] using ih (n - 2) (by omega) (by omega)
+        have hm4nat : Nat.ModEq 10 (a (n - 4)) 3 := by
+          simpa [Nat.ModEq] using ih (n - 4) (by omega) (by omega)
+        have hm1 : (a (n - 1) : ℤ) ≡ 3 [ZMOD 10] :=
+          Int.natCast_modEq_iff.mpr hm1nat
+        have hm2 : (a (n - 2) : ℤ) ≡ 3 [ZMOD 10] :=
+          Int.natCast_modEq_iff.mpr hm2nat
+        have hm4 : (a (n - 4) : ℤ) ≡ 3 [ZMOD 10] :=
+          Int.natCast_modEq_iff.mpr hm4nat
+        have hm3 : 20 * (a (n - 3) : ℤ) ≡ 20 * 3 [ZMOD 10] := by
+          have hd : (10 : ℤ) ∣ 20 * (a (n - 3) : ℤ) :=
+            dvd_mul_of_dvd_left (by norm_num) _
+          rw [Int.ModEq, Int.emod_eq_zero_of_dvd hd]
+          norm_num
+        have hrec :
+            (a n : ℤ) =
+              12 * a (n - 1) - 6 * a (n - 2) -
+                20 * a (n - 3) - 5 * a (n - 4) := barker_a301976 n (by omega)
+        have hrecmod :
+            (a n : ℤ) ≡
+              12 * a (n - 1) - 6 * a (n - 2) -
+                20 * a (n - 3) - 5 * a (n - 4) [ZMOD 10] := by
+          rw [hrec]
+        have hterms :
+            12 * (a (n - 1) : ℤ) - 6 * a (n - 2) -
+                20 * a (n - 3) - 5 * a (n - 4) ≡
+              12 * 3 - 6 * 3 - 20 * 3 - 5 * 3 [ZMOD 10] :=
+          (((hm1.mul_left 12).sub (hm2.mul_left 6)).sub hm3).sub (hm4.mul_left 5)
+        have hnum : (12 * 3 - 6 * 3 - 20 * 3 - 5 * 3 : ℤ) ≡ 3 [ZMOD 10] := by
+          norm_num [Int.ModEq]
+        have hz : (a n : ℤ) ≡ 3 [ZMOD 10] := hrecmod.trans (hterms.trans hnum)
+        have hnat : Nat.ModEq 10 (a n) 3 := Int.natCast_modEq_iff.mp hz
+        simpa [Nat.ModEq] using hnat
+
+#print axioms barker_a301976
+#print axioms kagey_a301976_mod10
+
 end
 end D5.S1.Words.Patterns.GridNoLeafSubgraphRecurrence
