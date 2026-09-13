@@ -1,0 +1,8 @@
+**定理 475.1（上半窗素数的饱和律及5040设置分量）。** 固定整数 $N\ge2$、平方自由 $Q\ge1$，取有限素数集
+$$
+T\subseteq\mathcal P_Q(N),\qquad s=|T|,\qquad R=\prod_{p\in T}p,\qquad b=B_Q(N).
+$$
+空集给 $R=1$。则
+$$
+B_{QR}(N)=b-s,\qquad B_{QR}(N/d)=B_Q(N/d)\quad(2\le d\le N),
+$$
