@@ -1,0 +1,24 @@
+### T.3 奇数下标的迹恒等式
+
+**定理。** 对每个奇数 $n$，
+
+$$
+\boxed{E_n=(L_n-1)\varphi^n.}\tag{T1}
+$$
+
+**证明。** 每个二次元素 $x\in\mathcal O$ 满足
+
+$$
+x^2-\operatorname{Tr}(x)x+\operatorname N(x)=0,
+$$
+
+因为左端展开为
+$x^2-(x+\overline x)x+x\overline x=0$。取 $x=\varphi^n$。
+此时 $\operatorname{Tr}(x)=L_n$；又因 $n$ 为奇数，
+$\operatorname N(x)=-1$。因此
+
+$$
+E_n=x^2-x-1=(\operatorname{Tr}(x)-1)x
+=(L_n-1)\varphi^n.
+$$
+

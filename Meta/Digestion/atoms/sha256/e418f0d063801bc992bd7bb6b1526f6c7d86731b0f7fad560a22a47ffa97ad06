@@ -1,0 +1,44 @@
+### T.1 黄金整数环、迹与范数
+
+**定义。** 令
+
+$$
+\varphi=\frac{1+\sqrt5}{2},
+\qquad \psi=1-\varphi=\frac{1-\sqrt5}{2},
+\qquad \mathcal O=\mathbb Z[\varphi].
+$$
+
+对 $z=a+b\varphi\in\mathcal O$，定义
+
+$$
+\overline z=a+b\psi,
+\qquad \operatorname{Tr}(z)=z+\overline z,
+\qquad \operatorname N(z)=z\overline z.
+$$
+
+**定义。** Lucas 数与 Fibonacci 数分别由
+
+$$
+L_n=\varphi^n+\psi^n,
+\qquad
+F_n=\frac{\varphi^n-\psi^n}{\sqrt5}
+$$
+
+定义。
+
+**定理。** 对每个 $n\in\mathbb N$，
+
+$$
+\varphi^2=\varphi+1,
+\qquad \varphi\psi=-1,
+\qquad \operatorname N(\varphi^n)=(-1)^n.
+$$
+
+**证明。** 前两式由 $\varphi=(1+\sqrt5)/2$ 与
+$\psi=(1-\sqrt5)/2$ 直接计算得到。由范数的乘法性，
+
+$$
+\operatorname N(\varphi^n)
+=(\varphi\psi)^n=(-1)^n.
+$$
+

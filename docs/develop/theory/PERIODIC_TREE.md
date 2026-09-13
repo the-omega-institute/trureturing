@@ -903,134 +903,291 @@ $\pi$-纤维上的单值映射；中心截面 $s_{1/2}(\mathbb Z)$ 在该乘法�
 $|u_*|\le1$ 得到，第三项由 GS14 得到。
 ## 附录 T：WSS 的素数下标迹障碍与幂复合多项式
 
-### T.1 与周期树主线的准确联系
+### T.1 黄金整数环、迹与范数
 
-固定原黄金单位 $\varphi$、其共轭 $\psi=1-\varphi$，以及原载体
-$\mathcal O=\mathbb Z[\varphi]$。$\varphi^2=\varphi+1$，范数为 $-1$。
-现役 `goldenLucas(n)=trace(phi^n)` 满足 $L_n=\varphi^n+\psi^n$。
-Fibonacci 矩阵 $Q$ 与此单位的乘法是同一整数线性递推；$Q^2$ 是周期树的一对左右生成矩阵之积。
+**定义。** 令
 
-对这个固定对象改变模观察 $p,p^2,\ldots$，即得到 WSS 问题卡的研究对象。
-模 $p$ 下回归，不保证模 $p^2$ 下回归。WSS 问的是某个素数上是否恰好没有
-第一次额外周期增长。它与黄金单位、共轭、范数、回归和层级观察直接相关。
-实圆周上的无理黄金旋转则没有非零整数周期；有限模回归与该实动力系统
-不能由“黄金”这个共同名称推成共轭关系。5040的约数资源选择也不蕴含 WSS 的存在。
+$$
+\varphi=\frac{1+\sqrt5}{2},
+\qquad \psi=1-\varphi=\frac{1-\sqrt5}{2},
+\qquad \mathcal O=\mathbb Z[\varphi].
+$$
 
-### T.2 从外部数域结果选定实际多项式
+对 $z=a+b\varphi\in\mathcal O$，定义
 
-Jones [T-ref1] 对 $k$-WSS 证明：在其参数条件下，$p$ 为 $k$-WSS 素数当且仅当
-$X^{2p}-kX^p-1$ 关于指定根的幂基不是整个数域整数环的整基。
-黄金特化 $k=1$、判别式5满足参数条件。其定理1.1及引理3.4–3.5
-同时连接模 $p^2$ 的多项式取值与整数环指标。
+$$
+\overline z=a+b\psi,
+\qquad \operatorname{Tr}(z)=z+\overline z,
+\qquad \operatorname N(z)=z\overline z.
+$$
 
-这里必须保留“指定根的幂基”的含义。若 $K_p=\mathbb Q(\theta_p)$ 且
-$\theta_p^{2p}-\theta_p^p-1=0$，比较的是
-$\mathbb Z[\theta_p]\subseteq\mathcal O_{K_p}$。
-这个给定幂基失败，不等于该数域不存在任何其他幂整基。
+**定义。** Lucas 数与 Fibonacci 数分别由
 
-该文献等价已经被证明，不能再计为新解决的开放问题。本附录只将其具体
-多项式输入接回现役黄金载体，并给出精确的迹障碍；没有假设或形式化
-Dedekind指标判据、不可约性、整数环构造或 Jones 的完整定理。
+$$
+L_n=\varphi^n+\psi^n,
+\qquad
+F_n=\frac{\varphi^n-\psi^n}{\sqrt5}
+$$
 
-### T.3 准确恒等式及保留整除性的证明
+定义。
 
-定义实际整数多项式及其取值
+**定理。** 对每个 $n\in\mathbb N$，
+
+$$
+\varphi^2=\varphi+1,
+\qquad \varphi\psi=-1,
+\qquad \operatorname N(\varphi^n)=(-1)^n.
+$$
+
+**证明。** 前两式由 $\varphi=(1+\sqrt5)/2$ 与
+$\psi=(1-\sqrt5)/2$ 直接计算得到。由范数的乘法性，
+
+$$
+\operatorname N(\varphi^n)
+=(\varphi\psi)^n=(-1)^n.
+$$
+
+### T.2 幂复合多项式与整数环指数
+
+**定义。** 对 $n\in\mathbb N$，定义
 
 $$
 \mathcal P_n(X)=X^{2n}-X^n-1,
 \qquad E_n=\mathcal P_n(\varphi)\in\mathcal O.
 $$
 
-**定理 T1。** 对每个奇数 $n$，
+**定义。** 设 $p$ 为奇素数，$\theta_p$ 是 $\mathcal P_p$ 的一个根，
+$K_p=\mathbb Q(\theta_p)$，而 $\mathcal O_{K_p}$ 是 $K_p$ 的整数环。
+当 $\mathcal P_p$ 是 $\theta_p$ 的最小多项式时，定义指定幂基的指数为
+
+$$
+I_p=[\mathcal O_{K_p}:\mathbb Z[\theta_p]].
+$$
+
+指定幂基是整数环的整基，依定义即为 $I_p=1$。
+
+**定理。** 对每个奇素数 $p$，
+
+$$
+\operatorname{disc}(\mathcal P_p)=p^{2p}5^p.
+$$
+
+若 $\mathcal P_p$ 是 $\theta_p$ 的最小多项式，则
+
+$$
+\operatorname{disc}(\mathcal P_p)
+=I_p^2\operatorname{disc}(K_p).
+$$
+
+**证明。** 导数为
+
+$$
+\mathcal P_p'(X)=pX^{p-1}(2X^p-1).
+$$
+
+以 $Y=X^p$ 计算两个结果式，得到
+
+$$
+\operatorname{Res}(\mathcal P_p,X^{p-1})=1,
+\qquad
+\operatorname{Res}(\mathcal P_p,2X^p-1)=-5^p.
+$$
+
+由于 $\deg\mathcal P_p=2p$ 且 $p$ 为奇数，判别式与结果式的符号相消，
+从而得到第一式。第二式是基变换的判别式公式：
+$\mathbb Z[\theta_p]$ 到 $\mathcal O_{K_p}$ 的基变换行列式绝对值为 $I_p$，
+而判别式在基变换下乘以该行列式的平方。
+
+### T.3 奇数下标的迹恒等式
+
+**定理。** 对每个奇数 $n$，
 
 $$
 \boxed{E_n=(L_n-1)\varphi^n.}\tag{T1}
 $$
 
-证明：任意 $x\in\mathcal O$ 满足
-$x^2-\operatorname{Tr}(x)x+\operatorname{N}(x)=0$，逐个整数坐标展开即可验证。
-取 $x=\varphi^n$。奇数 $n$ 保证 $\operatorname{N}(x)=-1$，故
-$x^2-x-1=(\operatorname{Tr}(x)-1)x$。
+**证明。** 每个二次元素 $x\in\mathcal O$ 满足
 
-更进一步，$x(-\overline x)=1$，给出原黄金环中的显式逆。因此对任意整数 $q$：
+$$
+x^2-\operatorname{Tr}(x)x+\operatorname N(x)=0,
+$$
+
+因为左端展开为
+$x^2-(x+\overline x)x+x\overline x=0$。取 $x=\varphi^n$。
+此时 $\operatorname{Tr}(x)=L_n$；又因 $n$ 为奇数，
+$\operatorname N(x)=-1$。因此
+
+$$
+E_n=x^2-x-1=(\operatorname{Tr}(x)-1)x
+=(L_n-1)\varphi^n.
+$$
+
+### T.4 标量整除、模同余与范数
+
+**定理。** 对每个奇数 $n$ 与每个整数 $q$，
 
 $$
 \boxed{q\mid E_n\text{ 于 }\mathcal O
 \iff q\mid L_n-1\text{ 于 }\mathbb Z.}\tag{T2}
 $$
 
-正向先在原环乘以 $-\overline x$，再取整数坐标；反向直接乘以 $x$。
-该证明不在模 $q$ 的环中非法约去零因子。它包括复合标量及零标量。
+这包括复合整数 $q$ 及 $q=0$。
 
-对全部自然模数 $q$，现役 `GoldenMod.reduce` 还给出
+**证明。** 令 $x=\varphi^n$。由
+$x\overline x=-1$ 可知 $x^{-1}=-\overline x\in\mathcal O$。
+若 $E_n=qy$，则 T1 给出
 
 $$
-\boxed{E_n=0\pmod q\iff L_n=1\pmod q.}\tag{T3}
+L_n-1=qyx^{-1}.
 $$
 
-范数则为
+写 $yx^{-1}=a+b\varphi$。比较 $\{1,\varphi\}$ 中的整数坐标可得
+$b=0$ 及 $L_n-1=qa$。反之，若 $L_n-1=qa$，则
+$E_n=q(a\varphi^n)$。上述论证也适用于 $q=0$。
+
+**定理。** 对每个奇数 $n$ 与每个自然数 $q$，
+
+$$
+\boxed{E_n\equiv0\pmod q\text{ 于 }\mathcal O
+\iff L_n\equiv1\pmod q\text{ 于 }\mathbb Z.}\tag{T3}
+$$
+
+**证明。** 两个同余分别等价于 $q\mid E_n$ 于 $\mathcal O$ 与
+$q\mid L_n-1$ 于 $\mathbb Z$，故结论由 T2 得到。
+
+**定理。** 对每个奇数 $n$，
 
 $$
 \boxed{\operatorname N(E_n)=-(L_n-1)^2.}\tag{T4}
 $$
 
-因而在每个奇素数 $p$ 上，$\mathcal P_p(\varphi)$ 的局部模 $p^2$ 障碍
-完全等于 $p^2\mid L_p-1$。T1–T4 的证明脚本量化于全部奇数下标，
-不依赖未合并的 WSS 周期塔模块，也没有给未知的 WSS 素数提供存在性见证。
-
-### T.4 与现有周期商及两实嵌入的关系
-
-经典 WSS 等价表述包括 $L_p\equiv1\pmod{p^2}$；Jones 的局部取值判据加上
-T3也恢复这个表述。PR #7446 给出的标准商桥与高次周期脚本在本轮读取时
-仍为未编译 Draft，不作为本模块已获核验的依赖。
-
-若 $\epsilon=(5/p)$、$n=p-\epsilon$，则两个经典规范化商满足
+**证明。** 由 T1、范数的乘法性及
+$\operatorname N(\varphi^n)=-1$，有
 
 $$
-\ell_p=(L_p-1)/p\bmod p,
-\quad q_p=F_n/p\bmod p,
-\qquad 2\ell_p=5q_p\pmod p\quad(p\ne2,5).
+\operatorname N(E_n)
+=\operatorname N(L_n-1)\operatorname N(\varphi^n)
+=(L_n-1)^2(-1).
 $$
 
-该标量比例作为本节数学背景和有限诊断，未在本模块中新增其 Lean 声明。
-核心已交付内容是实际多项式取值、原 Lucas 迹与所有标量模整除之间的 T1–T4。
+### T.5 素数平方特化与规范化周期商
 
-在实嵌入下，T1 的两个面分别为 $(L_n-1)\varphi^n$ 和
-$(L_n-1)\psi^n$。它们的乘积就是T4。WSS关注的是同一个整数因子
-$L_p-1$的精确 $p$-整除性；实嵌入的指数增长或收缩不决定这个因子模 $p^2$ 是否为零。
+**定义。** 对奇素数 $p\ne5$，令
 
-### T.5 向存在性推进时仍缺少的算术信息
+$$
+\epsilon=\left(\frac5p\right),
+\qquad m=p-\epsilon.
+$$
 
-本轮没有新增已解决的开放问题。新写入的是已有数论路线在本库的一个
-精确接口。若仍以WSS存在性为目标，下一条应当引入关于实际整数环指标
-$I_p=[\mathcal O_{K_p}:\mathbb Z[\theta_p]]$或素数迹商的跨素数约束，
-而不能把再次改写 $q_p=0$ 的判据算成存在性进展。
+在下述整除性成立时，定义规范化商
 
-文献给出的 $\operatorname{disc}(\mathcal P_p)=p^{2p}5^p$（奇素数 $p$）
-和 $\operatorname{disc}(\mathcal P_p)=I_p^2\operatorname{disc}(K_p)$，
-本身都不能强制 $I_p>1$。必须增加实际整数环、局部整性或跨素数分布的信息。
-同样，改变二次域来构造某个固定 $p$ 的例外，不会证明固定黄金域
-$\mathbb Q(\sqrt5)$ 中存在所需素数。McConnell [T-ref2] 的量词是固定一组素数、
-改变域判别式；与当前目标保持区分。
+$$
+\ell_p=\frac{L_p-1}{p}\pmod p,
+\qquad q_p=\frac{F_m}{p}\pmod p.
+$$
 
-高次周期规律、黄金单位范数及一阶迹约束均允许初始商为零或非零。
-它们描述两个分支的后果，没有挑出哪一个素数必须处于零分支。
-当前有意义的验收结果应是：实际给出且验证一个WSS素数；证明某个此前
-未解决的无穷素数族的排除/存在结果；或找到并证明能约束初始商的新条件。
-局部恒等式和有限回归测试只作为这些目标的工具。
+**定理。** 对每个奇素数 $p\ne5$，有
 
-### T.6 交付与来源
+$$
+p\mid L_p-1,
+\qquad p\mid F_{p-\epsilon},
+\qquad 2\ell_p=5q_p\pmod p.
+$$
 
-源：`D5/S1/Recurrence/GoldenTrinomialTraceObstruction.lean`。
-配套：同名 `Blueprint/D5/S1/Recurrence/GoldenTrinomialTraceObstruction.scribe.cs`。
-普通数学推导及源码逻辑复核完成；未执行 Lean/lake、Scribe 编译或kernel冻结。
-独立整数诊断覆盖501个奇数下标、50100组模数关系，并用301个小素数检查
-文献中的迹商/标准商关系。后者不计作新搜索界或WSS存在性证据。
+**证明。** 在 $\mathbb F_p[\sqrt5]$ 中，Euler 判据与 Frobenius 映射给出
 
-[T-ref1] Lenny Jones, *A new condition for k-Wall-Sun-Sun primes*, Taiwanese Journal of Mathematics 28 (2024), 17–28; arXiv:2302.10357v4. Theorem 1.1, Proposition 2.5, Lemmas 3.4–3.5. https://arxiv.org/abs/2302.10357
+$$
+(\sqrt5)^p=\epsilon\sqrt5,
+\qquad L_p\equiv1\pmod p,
+\qquad F_p\equiv\epsilon\pmod p.
+$$
 
-[T-ref2] Gary McConnell, *Some new infinite families of non-p-rational real quadratic fields*, arXiv:2406.14632. https://arxiv.org/abs/2406.14632
+由
+$L_p=F_p+2F_{p-1}=2F_{p+1}-F_p$，得到
+$p\mid F_{p-\epsilon}$。写
 
-[T-ref3] Richard J. McIntosh and Eric L. Roettger, *A search for Fibonacci-Wieferich and Wolstenholme primes*, Mathematics of Computation 76 (2007), 2087–2094. DOI 10.1090/S0025-5718-07-01955-2. Classical quotient characterizations are background, not a novelty claim in this appendix.
+$$
+F_p=\epsilon+pA,
+\qquad F_{p-\epsilon}=pB.
+$$
 
-[T-ref4] 本仓 `D5/S1/Scale/Lucas.lean`、`D5/S0/Carrier/Norm.lean`、`Conj.lean`、`D5/S3/Arith/GoldenApparition.lean`；钉版 mathlib `Mathlib/Algebra/Polynomial/Eval/Defs.lean`，revision `db584cd6d46c92f209a44c0f1c829460d327499d`。
+若 $\epsilon=1$，Cassini 恒等式化为
+
+$$
+F_p^2-F_pF_{p-1}-F_{p-1}^2=1.
+$$
+
+模 $p^2$ 化简得 $2A\equiv B\pmod p$，而
+$\ell_p\equiv A+2B$、$q_p\equiv B$，所以
+$2\ell_p\equiv5q_p\pmod p$。若 $\epsilon=-1$，Cassini 恒等式化为
+
+$$
+F_{p+1}(F_{p+1}-F_p)-F_p^2=-1.
+$$
+
+模 $p^2$ 化简得 $2A\equiv-B\pmod p$，而
+$\ell_p\equiv2B-A$、$q_p\equiv B$，仍有
+$2\ell_p\equiv5q_p\pmod p$。
+
+**定义。** 奇素数 $p$ 称为 WSS 素数，当且仅当
+
+$$
+p^2\mid L_p-1.
+$$
+
+**定理。** 对每个奇素数 $p$，
+
+$$
+\boxed{
+p^2\mid\mathcal P_p(\varphi)\text{ 于 }\mathcal O
+\iff p^2\mid L_p-1\text{ 于 }\mathbb Z.
+}
+$$
+
+并且
+
+$$
+\operatorname N(\mathcal P_p(\varphi))=-(L_p-1)^2.
+$$
+
+若 $p\ne5$，上述条件还等价于
+$\ell_p=0$，也等价于 $q_p=0$。
+
+**证明。** 取 $n=p$、$q=p^2$ 代入 T2，得到第一组等价；取
+$n=p$ 代入 T4，得到范数公式。最后，
+$p^2\mid L_p-1$ 当且仅当 $\ell_p=0$；由于 $2$ 与 $5$ 在
+$\mathbb F_p$ 中均可逆，等式 $2\ell_p=5q_p$ 又给出
+$\ell_p=0\iff q_p=0$。
+
+### T.6 两个实嵌入下的取值
+
+**定义。** 定义 $\mathcal O$ 的两个实嵌入
+
+$$
+\sigma_+(a+b\varphi)=a+b\varphi,
+\qquad
+\sigma_*(a+b\varphi)=a+b\psi.
+$$
+
+**定理。** 对每个奇数 $n$，
+
+$$
+\sigma_+(E_n)=(L_n-1)\varphi^n,
+\qquad
+\sigma_*(E_n)=(L_n-1)\psi^n,
+$$
+
+并且两个实嵌入值的乘积为
+
+$$
+\sigma_+(E_n)\sigma_*(E_n)=-(L_n-1)^2.
+$$
+
+**证明。** 对 T1 分别应用 $\sigma_+$ 与 $\sigma_*$，得到前两式。
+再使用 $\varphi\psi=-1$ 及 $n$ 为奇数，得到
+
+$$
+\sigma_+(E_n)\sigma_*(E_n)
+=(L_n-1)^2(\varphi\psi)^n
+=-(L_n-1)^2.
+$$
