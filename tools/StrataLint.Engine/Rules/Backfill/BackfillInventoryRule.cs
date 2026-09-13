@@ -101,13 +101,10 @@ internal static partial class BackfillInventoryRule
         "^[A-Za-z0-9]+(?:[.-][A-Za-z0-9]+)*$",
         RegexOptions.CultureInvariant);
 
-    internal static ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context)
-        => Evaluate(context, changes: null);
-
-    internal static ImmutableArray<RuleFinding> EvaluateCandidateDelta(RuleEvaluationContext context)
+    internal static ImmutableArray<RuleFinding> EvaluateCandidateDelta(DeltaRuleContext context)
         => Evaluate(context, context.Changes);
 
-    internal static bool IsAffectedBy(RuleEvaluationContext context)
+    internal static bool IsAffectedBy(DeltaRuleContext context)
     {
         if (context.Changes.Paths.IsDefaultOrEmpty)
         {
@@ -120,7 +117,7 @@ internal static partial class BackfillInventoryRule
                 || DigestionCasStore.IsCanonicalPath(path.Value)
                 || path.Value == BackfillInventoryLoader.RelativePath
                 || path.Value == TheoryAtomizerDataLoader.DataPath
-                || DigestionLedgerAligner.IsAtomizerImplementationPath(path.Value)
+                || DigestionLedgerAligner.IsAtomizerImplementationPath(path.Value, context.RegisteredRuleBuildInputs)
                 || path.Value is "Meta/registry.yaml" or "Meta/domains.yaml"
                 || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path.Value)
                 // 理论卷按路径规则治理后,`GovernanceDocuments` 里已无理论路径;
@@ -146,8 +143,8 @@ internal static partial class BackfillInventoryRule
     }
 
     private static ImmutableArray<RuleFinding> Evaluate(
-        RuleEvaluationContext context,
-        RawChangeSet? changes)
+        DeltaRuleContext context,
+        RawChangeSet changes)
     {
         BackfillInventoryDocument document;
         RawChangeSet? evaluationChanges = changes;
@@ -155,10 +152,7 @@ internal static partial class BackfillInventoryRule
         Func<string, bool>? isBaseFactAffected = null;
         try
         {
-            document = changes is null
-                ? BackfillInventoryLoader.Load(context.Current)
-                : context.BackfillCandidateDeltaSession.GetDocument(changes);
-            if (changes is not null)
+            document = context.BackfillCandidateDeltaSession.GetDocument(changes);
             {
                 var impact = BackfillDeltaImpactResolver.Resolve(
                     context.Current,

@@ -8,21 +8,59 @@ namespace StrataLint.ArchitectureTests;
 public sealed partial class FileMapPolicyTests
 {
     [Fact]
-    public void LeanReportConfigurationIsAdmittedByRepositoryPathPolicy()
+    public void LeanReportConfigurationIsAdmittedWithItsRuntimeVerifier()
     {
+        const string path = "Meta/lean-report.toml";
         var root = RepositoryLayout.FindRoot();
         var registry = Assert.IsType<RegistryLoadOutcome.Accepted>(RegistryLoader.Load(
             File.ReadAllBytes(Path.Combine(root, "Meta/registry.yaml")),
             File.ReadAllBytes(Path.Combine(root, "Meta/domains.yaml"))));
-
-        Assert.Null(RepositoryPathPolicy.Validate(
-            RepoPath.CreateKnown("Meta/lean-report.toml"), registry.Policy));
+        Assert.Null(RepositoryPathPolicy.Validate(RepoPath.CreateKnown(path), registry.Policy));
         var manifest = FileMapLoader.Parse(
             File.ReadAllBytes(Path.Combine(root, FileMapLoader.RelativePath)),
             FileMapLoader.RelativePath);
-        var entry = Assert.Single(manifest.Match("Meta/lean-report.toml"));
+        var entry = Assert.Single(manifest.Match(path));
         Assert.Equal(FileMapKind.Data, entry.Kind);
         Assert.Equal(FileMapAdmissionPlane.Judge, entry.AdmissionPlane);
+        Assert.Equal("LeanReportInput", Assert.Single(entry.VerifiedBy));
+        Assert.Contains("lean-report", entry.Require);
+        Assert.DoesNotContain(FileMapPolicy.InspectRepository(root), finding =>
+            finding.Path == path && finding.Code is "FILEMAP-DATA-VERIFIER" or "FILEMAP-DATA-VERIFIER-DANGLING");
+    }
+
+    [Fact]
+    public void CommonExecutionManifestsHaveRegisteredDataVerifiers()
+    {
+        var root = RepositoryLayout.FindRoot();
+        var manifest = FileMapLoader.LoadRepository(root);
+        string[] paths = ["Meta/ci-checks.json", "Meta/engineering-projects.json"];
+        Assert.All(paths, path =>
+        {
+            var entry = Assert.Single(manifest.Match(path));
+            Assert.Equal(FileMapKind.Data, entry.Kind);
+            Assert.Contains("CommonExecutionEvidence", entry.VerifiedBy);
+        });
+
+        var findings = FileMapPolicy.InspectRepository(root);
+
+        Assert.DoesNotContain(findings, finding =>
+            paths.Contains(finding.Path, StringComparer.Ordinal)
+            && finding.Code is "FILEMAP-DATA-VERIFIER" or "FILEMAP-DATA-VERIFIER-DANGLING");
+    }
+
+    [Theory]
+    [InlineData("lean-report")]
+    [InlineData("scribe-content")]
+    public void ReportProducerScopesHaveRegisteredDataVerifier(string scope)
+    {
+        var root = RepositoryLayout.FindRoot();
+        var manifest = FileMapLoader.LoadRepository(root);
+        var entry = Assert.Single(manifest.Match($"Meta/ReportProducers/{scope}.json"));
+
+        Assert.Equal(FileMapKind.Data, entry.Kind);
+        Assert.Equal(FileMapAdmissionPlane.Judge, entry.AdmissionPlane);
+        Assert.Equal("report-producer-scope", Assert.Single(entry.VerifiedBy));
+        Assert.Equal("committed-source", entry.RuntimeDisposition);
     }
 
     [Fact]

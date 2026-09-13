@@ -21,11 +21,14 @@ SLAB_STATE ?= $(HOME)/.local/state/qgh-prime-slab-pilot-0909
 SLAB_INPUT ?= $(HERE)/../docs/reports/prime-slab-corner-order-0909.json
 SLAB_INPUT_SHA ?= 9d28055d5255580ed58274822359961483d1deecbb7b4e38ce497948a4808672
 SLAB_ENV = PYTHONDONTWRITEBYTECODE=1 PYTORCH_ENABLE_MPS_FALLBACK=0 uv run --python 3.12 --with torch==2.8.0 --with numpy==2.0.2 --with python-flint==0.8.0 python
+TEST_PROJECT ?= $(HERE)/StrataLint.sln
+TEST_FILTER ?=
+SEED_EXPORT ?= automatic
 CHECK_FAST_FILTER := FullyQualifiedName~StrataLint.Tests.CapacityAuditCommandTests|FullyQualifiedName~StrataLint.ArchitectureTests.RepositoryIoAccessPolicyTests|FullyQualifiedName~StrataLint.ArchitectureTests.BannedApiCoverageTests|FullyQualifiedName=StrataLint.Tests.MakeWorkflowTests.CheckFastFilterIsNonEmptyAndPinsRequiredRepositoryChecks
-.PHONY: help settle-batch dotnet check-fast test engineering-tests selftest capacity-audit update-renderer-contract clean-lanes xi-quantization xi-quantization-test prime-slab-search prime-slab-test prime-slab-device-test prime-slab-verify prime-slab-mutation-test census-test
+.PHONY: help settle-batch dotnet check-fast test engineering-tests selftest capacity-audit update-renderer-contract clean-lanes xi-quantization xi-quantization-test prime-slab-search prime-slab-test prime-slab-device-test prime-slab-verify prime-slab-mutation-test census-test ci-build engineering
 
 help:
-	@printf '%s\n' 'make -C tools help                         Show this target list' 'make -C tools settle-batch REQUESTS=file [BASE=origin/dev]  Settle strict TOML [[requests]] in order; stop at the first failed record' 'make -C tools dotnet                       Restore and build .NET with warnings as errors' 'make -C tools check-fast                   Run the required fast repository structure checks' 'make -C tools test                         Run the full .NET harness test suite' 'make -C tools engineering-tests HEAD=sha BASE=sha  Run affected test projects' 'make -C tools selftest                     Run deterministic StrataLint selftest' 'make -C tools capacity-audit [REPOSITORY=path]  Audit the current git index against repository capacity limits' 'make -C tools update-renderer-contract     Update the fixed synthetic renderer contract' 'make -C tools clean-lanes [BASE=origin/dev] [FORCE=1]  List reclaimable lanes (dry-run); FORCE=1 removes them' 'make -C tools xi-quantization [XI_MODE=mps|cpu] [XI_REPORT=path]  Certify the fixed xi resolution prefix; default 1..1399999 on MPS' 'make -C tools xi-quantization-test         Run exact scientific behavior tests (no GPU)' 'make -C tools prime-slab-search SLAB_FIRST=id SLAB_LAST=id [SLAB_STATE=external-path] [SLAB_CHUNK=64] [SLAB_MAX_CHUNKS=0]  Bounded MPS prime slabs; 0 max-chunks means finish the explicit window' 'make -C tools prime-slab-test              Scientific and durable-state tests (CPU synthetic fixtures)' 'make -C tools prime-slab-device-test       Locked, bounded synthetic Metal correctness probes (no box search)' 'make -C tools prime-slab-verify SLAB_FIRST=id SLAB_LAST=id  Independently revalidate the saved GPU stream (no generation)' 'make -C tools prime-slab-mutation-test      Predict and verify named scientific test failures; receipts under SLAB_STATE' 'make -C tools census-test [CENSUS_TEST_OUT=dir]  Run census program tests and bounded Lean fixtures'
+	@printf '%s\n' 'make -C tools help                         Show this target list' 'make -C tools settle-batch REQUESTS=file [BASE=origin/dev]  Settle strict TOML [[requests]] in order; stop at the first failed record' 'make -C tools dotnet                       Restore and build .NET with warnings as errors' 'make -C tools check-fast                   Run the required fast repository structure checks' 'make -C tools test                         Run the full .NET harness test suite' 'make -C tools ci-build                     Prepare and seal this round shared build' 'make -C tools engineering                  Accept registered tests and run selftest and negative compiles' 'make -C tools engineering-tests           Accept registered test projects using built outputs and optional evidence seeds' 'make -C tools selftest                     Run deterministic StrataLint selftest' 'make -C tools capacity-audit [REPOSITORY=path]  Audit the current git index against repository capacity limits' 'make -C tools update-renderer-contract     Update the fixed synthetic renderer contract' 'make -C tools clean-lanes [BASE=origin/dev] [FORCE=1]  List reclaimable lanes (dry-run); FORCE=1 removes them' 'make -C tools xi-quantization [XI_MODE=mps|cpu] [XI_REPORT=path]  Certify the fixed xi resolution prefix; default 1..1399999 on MPS' 'make -C tools xi-quantization-test         Run exact scientific behavior tests (no GPU)' 'make -C tools prime-slab-search SLAB_FIRST=id SLAB_LAST=id [SLAB_STATE=external-path] [SLAB_CHUNK=64] [SLAB_MAX_CHUNKS=0]  Bounded MPS prime slabs; 0 max-chunks means finish the explicit window' 'make -C tools prime-slab-test              Scientific and durable-state tests (CPU synthetic fixtures)' 'make -C tools prime-slab-device-test       Locked, bounded synthetic Metal correctness probes (no box search)' 'make -C tools prime-slab-verify SLAB_FIRST=id SLAB_LAST=id  Independently revalidate the saved GPU stream (no generation)' 'make -C tools prime-slab-mutation-test      Predict and verify named scientific test failures; receipts under SLAB_STATE' 'make -C tools census-test [CENSUS_TEST_OUT=dir]  Run census program tests and bounded Lean fixtures'
 
 dotnet:
 	@/bin/bash $(HERE)/scripts/dotnet-build.sh
@@ -55,13 +58,19 @@ check-fast:
 	@/bin/bash $(HERE)/scripts/dotnet-test.sh $(HERE)/StrataLint.sln --filter "$(CHECK_FAST_FILTER)"
 
 test:
-	@/bin/bash $(HERE)/scripts/dotnet-test.sh $(HERE)/StrataLint.sln
+	@/bin/bash $(HERE)/scripts/dotnet-test.sh "$(TEST_PROJECT)" $(if $(TEST_FILTER),--filter "$(TEST_FILTER)",)
+
+ci-build:
+	@CI_PLAN_PATH="$(CI_PLAN_PATH)" CI_CHANGES_PATH="$(CI_CHANGES_PATH)" /bin/bash "$(HERE)/scripts/ci-stage.sh" build
+
+engineering:
+	@CI_PLAN_PATH="$(CI_PLAN_PATH)" CI_CHANGES_PATH="$(CI_CHANGES_PATH)" CI_SEED_EXPORT="$(SEED_EXPORT)" /bin/bash "$(HERE)/scripts/ci-stage.sh" engineering
 
 census-test:
 	@python3 $(HERE)/lean-inspector/Census/tests/fixtures.py $(if $(CENSUS_TEST_OUT),--output "$(CENSUS_TEST_OUT)",)
 
 engineering-tests:
-	@cd "$(REPOSITORY)" && dotnet run --project "$(HERE)/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" --configuration Release --no-launch-profile -- --repository "$(REPOSITORY)" --head "$(HEAD)" --base "$(BASE)" $(if $(filter 1,$(FULL)),--full 1,)
+	@cd "$(REPOSITORY)" && dotnet "$(HERE)/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll" --repository "$(REPOSITORY)"
 
 selftest:
 	@/bin/bash $(HERE)/scripts/stratalint-selftest.sh

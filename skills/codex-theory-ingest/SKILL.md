@@ -319,7 +319,7 @@ the successful Step 3 writer. Prepare a pull-request body that records:
 Commit the theory volume and writer-produced digestion data, then run:
 
 ```sh
-make preflight BASE="$(git rev-parse HEAD^1)"
+make preflight
 git push -u origin <branch>
 make pr-open HEAD=<branch> MESSAGE=<message-file> AUTO_MERGE=1
 # The message file's first line is the PR title; the rest is the PR body.

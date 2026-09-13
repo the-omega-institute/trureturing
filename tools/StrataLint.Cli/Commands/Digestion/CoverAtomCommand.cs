@@ -199,7 +199,7 @@ internal static partial class CoverAtomCommand
             var receiptVerificationChanges = receiptImpact.ReceiptVerificationChanges;
             var evaluationScope = DigestionEvaluationScopes.ForChanges(
                 authorityChanges,
-                ImplementationPath);
+                ImplementationPath, EngineeringProjectRegistry.ReadRuleBuildInputs(current));
 
             bool ValueChanged(string path)
             {

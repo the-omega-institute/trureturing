@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
-set -u
-
+set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
-
+[[ $# -gt 0 ]] || { echo 'lean-cache-run: COMMAND is required' >&2; exit 2; }
 cd "$ROOT"
-exec dotnet run \
-  --project "$ROOT/tools/StrataLint.Cli/StrataLint.Cli.csproj" \
-  --configuration Release \
-  -- \
-  worktree with-cache-writer -- "$@"
+if [[ -n "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]]; then
+  [[ "$STRATALINT_LEAN_PRODUCER_DLL" == /* && -f "$STRATALINT_LEAN_PRODUCER_DLL" ]] || { echo 'lean-cache-run: candidate producer DLL is absent' >&2; exit 2; }
+  cli=(dotnet "$STRATALINT_LEAN_PRODUCER_DLL")
+else
+  cli=(dotnet run --project "$ROOT/tools/StrataLint.Lean/StrataLint.Lean.csproj" --configuration Release --)
+fi
+exec "${cli[@]}" with-cache-reader -- "$@"

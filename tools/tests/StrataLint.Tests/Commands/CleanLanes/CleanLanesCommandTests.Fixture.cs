@@ -261,13 +261,13 @@ public sealed partial class CleanLanesCommandTests
             var path = Path.Combine(temp.Path, name);
             Directory.CreateDirectory(Path.Combine(path, "D5"));
             Directory.CreateDirectory(Path.Combine(path, "tools"));
-            Directory.CreateDirectory(Path.Combine(path, ".github", "scripts"));
+            Directory.CreateDirectory(Path.Combine(path, "tools", "scripts"));
             File.WriteAllText(Path.Combine(path, "CLAUDE.md"), "fixture\n", new UTF8Encoding(false));
             File.WriteAllText(Path.Combine(path, "AGENTS.md"), "fixture\n", new UTF8Encoding(false));
             File.WriteAllText(Path.Combine(path, "Trureturing.lean"), "fixture\n", new UTF8Encoding(false));
             File.WriteAllText(Path.Combine(path, "lean-toolchain"), "fixture\n", new UTF8Encoding(false));
             File.WriteAllText(
-                Path.Combine(path, ".github", "scripts", "harness-gate.sh"),
+                Path.Combine(path, "tools", "scripts", "ci-stage.sh"),
                 "fixture\n",
                 new UTF8Encoding(false));
             return path;
