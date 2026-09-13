@@ -57,9 +57,12 @@ private def GoodEdges {n : ℕ} (E : Finset (Edge n)) : Prop :=
 
 private abbrev GoodGraph (n : ℕ) := {E : Finset (Edge n) // GoodEdges E}
 
-private def Allowed {n : ℕ} (G : GoodGraph n) : Finset (Fin n) :=
+private def allowedEdges {n : ℕ} (E : Finset (Edge n)) : Finset (Fin n) :=
   Finset.univ.filter fun c =>
-    ∀ e ∈ G.1, c < e.1.2 → e.1.1 = c ∨ e.1.2 = c
+    ∀ e ∈ E, c < e.1.2 → e.1.1 = c ∨ e.1.2 = c
+
+private def Allowed {n : ℕ} (G : GoodGraph n) : Finset (Fin n) :=
+  allowedEdges G.1
 
 private def edgeSuccEquiv (n : ℕ) : Edge (n + 1) ≃ Edge n ⊕ Fin n where
   toFun e :=
@@ -94,5 +97,115 @@ private def splitEdges (n : ℕ) :
 private def extendEdges (E : Finset (Edge n)) (S : Finset (Fin n)) :
     Finset (Edge (n + 1)) :=
   (splitEdges n).symm (E, S)
+
+private theorem goodEdges_extend_iff (E : Finset (Edge n)) (S : Finset (Fin n)) :
+    GoodEdges (extendEdges E S) ↔ GoodEdges E ∧ S ⊆ allowedEdges E := by
+  constructor
+  · intro hgood
+    constructor
+    · intro e he f hf
+      have hpair := hgood
+        ((edgeSuccEquiv n).symm (Sum.inl e)) (by
+          simpa [extendEdges, splitEdges] using he)
+        ((edgeSuccEquiv n).symm (Sum.inl f)) (by
+          simpa [extendEdges, splitEdges] using hf)
+      simpa [Crossing, Nesting, edgeSuccEquiv] using hpair
+    · intro c hc
+      simp only [allowedEdges, Finset.mem_filter, Finset.mem_univ, true_and]
+      intro e he hce
+      by_cases hac : e.1.1 = c
+      · exact Or.inl hac
+      by_cases hbc : e.1.2 = c
+      · exact Or.inr hbc
+      exfalso
+      have hpair := hgood
+        ((edgeSuccEquiv n).symm (Sum.inl e)) (by
+          simpa [extendEdges, splitEdges] using he)
+        ((edgeSuccEquiv n).symm (Sum.inr c)) (by
+          simpa [extendEdges, splitEdges] using hc)
+      simp [Crossing, Nesting, edgeSuccEquiv] at hpair
+      omega
+  · rintro ⟨hgood, hallowed⟩ x hx y hy
+    cases hxcase : edgeSuccEquiv n x with
+    | inl e =>
+        have hxform : x = (edgeSuccEquiv n).symm (Sum.inl e) := by
+          apply (edgeSuccEquiv n).injective
+          simpa using hxcase
+        subst x
+        have he : e ∈ E := by
+          simpa [extendEdges, splitEdges] using hx
+        cases hycase : edgeSuccEquiv n y with
+        | inl f =>
+            have hyform : y = (edgeSuccEquiv n).symm (Sum.inl f) := by
+              apply (edgeSuccEquiv n).injective
+              simpa using hycase
+            subst y
+            have hf : f ∈ E := by
+              simpa [extendEdges, splitEdges] using hy
+            simpa [Crossing, Nesting, edgeSuccEquiv] using hgood e he f hf
+        | inr c =>
+            have hyform : y = (edgeSuccEquiv n).symm (Sum.inr c) := by
+              apply (edgeSuccEquiv n).injective
+              simpa using hycase
+            subst y
+            have hc : c ∈ S := by
+              simpa [extendEdges, splitEdges] using hy
+            have hcAllowed := hallowed hc
+            simp only [allowedEdges, Finset.mem_filter, Finset.mem_univ, true_and] at hcAllowed
+            have hincident := hcAllowed e he
+            simp [Crossing, Nesting, edgeSuccEquiv]
+            constructor
+            · constructor
+              · intro hac
+                by_contra hbc
+                have := hincident (by omega)
+                omega
+              · intro _
+                exact Fin.le_last _
+            · constructor
+              · intro _
+                exact Fin.le_last _
+              · by_contra hac
+                have := hincident (by omega)
+                omega
+    | inr c =>
+        have hxform : x = (edgeSuccEquiv n).symm (Sum.inr c) := by
+          apply (edgeSuccEquiv n).injective
+          simpa using hxcase
+        subst x
+        have hc : c ∈ S := by
+          simpa [extendEdges, splitEdges] using hx
+        cases hycase : edgeSuccEquiv n y with
+        | inl f =>
+            have hyform : y = (edgeSuccEquiv n).symm (Sum.inl f) := by
+              apply (edgeSuccEquiv n).injective
+              simpa using hycase
+            subst y
+            have hf : f ∈ E := by
+              simpa [extendEdges, splitEdges] using hy
+            have hcAllowed := hallowed hc
+            simp only [allowedEdges, Finset.mem_filter, Finset.mem_univ, true_and] at hcAllowed
+            have hincident := hcAllowed f hf
+            simp [Crossing, Nesting, edgeSuccEquiv]
+            constructor
+            · constructor
+              · intro _
+                exact Fin.le_last _
+              · intro hac
+                by_contra hbc
+                have := hincident (by omega)
+                omega
+            · constructor
+              · by_contra hac
+                have := hincident (by omega)
+                omega
+              · intro _
+                exact Fin.le_last _
+        | inr d =>
+            have hyform : y = (edgeSuccEquiv n).symm (Sum.inr d) := by
+              apply (edgeSuccEquiv n).injective
+              simpa using hycase
+            subst y
+            simp [Crossing, Nesting, edgeSuccEquiv]
 
 end D5.S1.Words.Patterns.NoncrossingNonnestingGraphRecurrence
