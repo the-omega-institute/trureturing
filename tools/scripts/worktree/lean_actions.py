@@ -337,9 +337,9 @@ def restore(root, keys, matched, layers=LAYERS, registry=None):
             cached = root / spec["path"]
             manifest = json.loads((cached / "manifest.json").read_text())
             if (not isinstance(manifest, dict) or manifest.get("schema") != "lean-actions-seed-v1" or manifest.get("partition") != keys["partition"]
-                    or manifest.get("layer") != layer or manifest.get("key") != key
-                    or manifest.get("files") != files(cached / "data", expected=manifest["files"])):
+                    or manifest.get("layer") != layer or manifest.get("key") != key):
                 raise ValueError("Actions seed identity or material integrity mismatch")
+            inventory = files(cached / "data", expected=manifest.get("files"))
             target = root / spec.get("target", ".")
             with cache_guard(root):
                 target.parent.mkdir(parents=True, exist_ok=True)
@@ -348,14 +348,14 @@ def restore(root, keys, matched, layers=LAYERS, registry=None):
                     # Copy exactly the validated manifest; unlisted neighbours
                     # cannot introduce projects or executable seed material.
                     staged.mkdir()
-                    for item in manifest["files"]:
+                    for item in inventory:
                         destination = staged / item["path"]
                         destination.parent.mkdir(parents=True, exist_ok=True)
                         shutil.copy2(cached / "data" / item["path"], destination)
                     if layer == "report":
                         sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2] / "lean-inspector"))
                         from report_cache import seed_valid
-                        reports = [staged / item["path"] for item in manifest["files"]
+                        reports = [staged / item["path"] for item in inventory
                                    if pathlib.PurePosixPath(item["path"]).name == "raw-lean-report.json"
                                    and pathlib.PurePosixPath(item["path"]).parent.parent.as_posix() == keys["partition"]]
                         if not reports or not any(seed_valid(report, keys["partition"]) for report in reports):

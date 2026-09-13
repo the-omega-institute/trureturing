@@ -22,7 +22,7 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
         self.root = fixture.root
         fixture.manifest["packages"][0]["rev"] = REV
         fixture.save_manifest()
-        fixture.output = self.root / "out/declared-current-report.json"
+        fixture.output = self.root / ".lake/build/stratalint/raw-lean-report.json"
         # Exercise real compaction/validation with nonempty declaration material.
         fixture.lake.write_text(FAKE_LAKE.replace("output.write_text(", '''
 spool = pathlib.Path(args[args.index("--material-spool") + 1])
@@ -330,7 +330,7 @@ shutil.copyfile = damaged
         source, _ = self.dependency_files()
         for target in (".lake/build",):
             directory = self.root / target
-            directory.mkdir(parents=True)
+            directory.mkdir(parents=True, exist_ok=True)
             (directory / "fixture").write_bytes(b"other layer bytes")
         readiness, _ = self.snapshot_result()
         self.assertEqual({layer + "_ready": "true" for layer in ("dependency", "project", "report")}, readiness)
@@ -399,9 +399,8 @@ shutil.copyfile = damaged
             ("dev_check_failed", "push", "refs/heads/dev", "true", "false", False),
             ("dev_check_missing", "push", "refs/heads/dev", "true", None, False),
             ("other_branch", "push", "refs/heads/topic", "true", "true", False),
-            ("other_integration", "push", "refs/heads/integration-ci-other-tests", "true", "true", False),
+            ("other_integration", "push", "refs/heads/integration-ci-other-tests", "true", "true", True),
         ]
-        # Integration-only rollout data: exclude this block from dev delivery.
         integration = "integration-ci-current-stability-0909-tests"
         cases += [
             ("integration_push", "push", f"refs/heads/{integration}", "true", "true", True),
@@ -411,10 +410,9 @@ shutil.copyfile = damaged
             ("integration_writes_false", "push", f"refs/heads/{integration}", "false", "true", False),
             ("integration_check_failed", "push", f"refs/heads/{integration}", "true", "false", False),
             ("integration_check_missing", "push", f"refs/heads/{integration}", "true", None, False),
-            ("integration_suffix", "push", f"refs/heads/{integration}-other", "true", "true", False),
+            ("integration_suffix", "push", f"refs/heads/{integration}-other", "true", "true", True),
             ("integration_tag", "push", f"refs/tags/{integration}", "true", "true", False),
         ]
-        # End integration-only rollout data.
         for name, event, ref, writes, success, allowed in cases:
             with self.subTest(case=name):
                 cache = self.root / "build/lean-cache"
@@ -444,10 +442,17 @@ shutil.copyfile = damaged
                     staged = cache / layer
                     self.assertEqual(data, (staged / "data" / relative).read_bytes())
                     self.assertEqual(data, (self.root / target / relative).read_bytes())
+                    expected = {relative: (data, 0o640)}
+                    if layer == "project":
+                        # The canonical report lives in the project build directory.
+                        expected.update({fixture.output.relative_to(self.root / target).as_posix() + suffix:
+                            (contents, pathlib.Path(str(fixture.output) + suffix).stat().st_mode & 0o777)
+                            for suffix, contents in fixture.bundle_bytes(fixture.output).items()})
                     self.assertEqual({
                         "schema": "lean-actions-seed-v1", "partition": partition, "layer": layer,
                         "key": f"lean-{layer}-v3-{REV}-{system}-{architecture}-34362630774-1",
-                        "files": [{"path": relative, "sha256": hashlib.sha256(data).hexdigest(), "mode": 0o640}],
+                        "files": [{"path": path, "sha256": hashlib.sha256(contents).hexdigest(), "mode": mode}
+                                  for path, (contents, mode) in sorted(expected.items())],
                     }, json.loads((staged / "manifest.json").read_text()))
 
 

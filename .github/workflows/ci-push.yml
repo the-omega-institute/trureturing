@@ -384,8 +384,8 @@ jobs:
           key: ${{ steps.keys.outputs.current_key }}
       - if: always()
         run: python3 tools/scripts/workflow/ci.py summary --repository "$GITHUB_WORKSPACE" --stage current
-      - name: Retain current failure diagnostics
-        if: failure() && needs.build.result == 'success'
+      - name: Retain current failure or cancellation diagnostics
+        if: (failure() || cancelled()) && needs.build.result == 'success'
         uses: actions/upload-artifact@v4
         with:
           name: ci-current-diagnostics-${{ github.run_id }}-${{ github.run_attempt }}
