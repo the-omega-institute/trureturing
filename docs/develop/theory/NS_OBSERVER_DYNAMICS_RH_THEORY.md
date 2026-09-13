@@ -264,3 +264,118 @@ LowModeReversalWitness -> ReversalWaveSynthesis
 [4] The Omega Institute. `D5/S3/Weil/HolonomyBridge/OffLineOrbitParityDecomposition.lean`, `off_line_orbit_parity_decomposition`。读取 blob `299a01acdde3e62892738ff790779729715e8938`。新桥保留该定理全部离线、非自共轭和重数条件。
 
 [5] The Omega Institute. PR #6172, `CanonicalLiLocalExpansion`。本轮读取为已合并状态，列作后续 Li 路线的已有源对象，不是本组直接依赖。
+
+## 11. OpenAI 完整 NS 形式化的源核对与稳定性接入
+
+### 11.1 原始结果和当前接入范围
+
+2026-09-08，OpenAI 发布 Navier–Stokes 论文与完整 Lean 项目 `openai/NavierStokesAndEuler`。[6] 本轮读取的 main 为 `f9e8bc5b38b6e212696e8a30e3e91517af887bbd`，更新日期为 2026-09-10。其 `NavierStokes/ComparatorSolution.lean` 给出两项实际终端声明：对每个正黏性 nu，存在满足相应条件的光滑初值和外力，使 R³ 或周期 R³/Z³ 上所规定的全局光滑解不存在；全空间分支的解要求还含统一能量界。[7] 这是官方表述的 C、D 分支。外力变量及其条件属于原定理，不得删除；单独的无外力 Euler 项目也不能替代 NS 的量词。
+
+本轮核对了公开声明及相关证明模块，没有在当前环境重新构建完整上游工程，也没有宣称完成独立专家审查或奖项认证。完整上游项目存在，与本库是否已有全部依赖闭包，是不同事实。本库现役 `Cone/ConePositivity.lean` 已注明从上游 `8937a8f4cbc7abaab5e9e97d1cc7f5d2319d9538` 移植 `ConeAlgebra.lean`；它给出应力锥与二阶矩阵正定性的等价，没有给出任意 NS 流的全局吸引性。
+
+本库固定 Lean 4.33.0，上游固定 Lean 4.34.0-rc2。本轮保持既有 toolchain 和 mathlib revision 不变，选择有真实消费者的证明切片作署名移植。没有添加无法解析的外部 import，也没有把上游终端结论重述成 axiom。
+
+### 11.2 实际源模块的不同用途
+
+| 上游真源 | 核读的结论 | 本轮用途 |
+|---|---|---|
+| `NavierStokes/ComparatorSolution.lean` | 带规定外力的 C、D 终端结果 | 核对范围，不移植为稳定性假设 |
+| `NavierStokes/R3/H3Energy.lean` | 实际 L² 曲线求导、弱导数分部积分、两解之差的能量增长界和唯一性 | 保留真正 PDE 接入目标，尚未移植其全部 H³ 依赖 |
+| `NavierStokes/R3/ComparisonGronwall.lean` | 闭区间连续、内点可导下的误差界和空间截断耗尽 | 核对端点条件与正增长估计的边界 |
+| `NavierStokes/ViscousPropagator.lean` | 实 Hilbert 空间上，从实际右侧微分方程推导带强迫的范数界 | 三个私有证明切片已移植，并被新公开结论直接调用 |
+
+H³ 比较证明给出 E'≤2GE 一类上界，其中 G 非负。它用于初始差为零时的唯一性；不能通过更换解释，把正增长上界写成指数吸引。本轮使用 `ViscousPropagator` 的真正加权范数论证，并额外要求实际算子具有严格负的二次型界。
+
+三段移植的上游原名为 `hasDerivWithinAt_norm_of_ne_zero`、`norm_le_initial_add_integral`、`weighted_norm_le_initial_add_integral`。[8] 本地仅调整 namespace、私有可见性、辅助名称与所需 Mathlib imports；保留闭区间连续性、右导数与正权重条件。源代码保留 OpenAI 仓库、确切提交、文件路径及 Apache-2.0 归属。它们位于同一个具有后续实质结论的模块中，没有另建无人调用的包装库。
+
+### 11.3 来自真实方程的指数误差管
+
+新增 `D5/S3/FluidDynamics/Stability/OpenAIViscousAttraction.lean`，配套同名 Scribe。设 H 为实内积空间，实际轨迹满足
+
+\[
+w'(t)=A(t)w(t)+r(t),\qquad
+\langle z,A(t)z\rangle\leq-\gamma\|z\|^2,\quad\gamma>0,
+\qquad\|r(t)\|\leq\rho.
+\]
+
+在所声明的闭时间区间内，证明
+
+\[
+\boxed{\|w(t)\|\leq e^{-\gamma t}\|w(0)\|
+ +\frac{\rho}{\gamma}(1-e^{-\gamma t}).}
+\tag{11.1}
+\]
+
+具体证明调用上游移植的加权范数定理，取 W(t)=exp(-gamma*t)。积分项由 rho*exp(gamma*t) 控制，再用显式原函数 (rho/gamma)*exp(gamma*t) 与微积分基本定理求出。初始误差、实际时间、负增长率及持续扰动均未被隐藏。轨迹过零的情形由上游右导数比较处理，没有除以零范数。
+
+公开声明是 `norm_le_exponential_tube`、`unforced_norm_contraction`、`scalar_equilibrium_tube`。最后一项将实际标量轨迹 a(t) 平移到误差 a(t)-c，适用于 a'=-gamma*(a-c)+r。持续误差允许的极限范围是 rho/gamma；rho=0 时得到指数衰减。全时间收敛仍要求轨迹全局存在，且同一个 gamma 在全部时间有效；有限区间估计自身不证明全局存在。
+
+该一般模块的 A(t) 是有界连续线性算子。全空间 L² 上的 Stokes 算子通常无界，不能直接塞进这一类型。有限 Galerkin 系统、标量不变族可以直接消费本定理；一般 PDE 需要保留算子定义域及能量形式，或证明一致逼近后才能过渡。低维观察的趋零也不能替代这里实际状态范数的趋零。
+
+### 11.4 实际受迫 NS 不动点的消费者
+
+新增 `D5/S3/FluidDynamics/Stability/ForcedShearFixedPoint.lean` 及同名 Scribe，直接复用同一 PR 的 `ToralIsogenyShearNS` 中真实波形、普通导数与完整 NS 残差。固定空间周期 2pi，令
+
+\[
+\Phi_k(x,y)=(1,k)\cos(-2kx+2y),\qquad
+\Gamma_k=4\nu(k^2+1),\qquad u_a(t,x,y)=a(t)\Phi_k(x,y).
+\]
+
+普通求导证明 div(u_a)=0，且零压力 NS 残差为
+
+\[
+\partial_tu_a+(u_a\cdot\nabla)u_a-\nu\Delta u_a
+ =(a'+\Gamma_k a)\Phi_k.
+\tag{11.2}
+\]
+
+非线性对流的两个分量完整保留，随后由速度方向 (1,k) 与波矢 (-2k,2) 的配对为零而消去。没有从一张预设乘子表假定 PDE 成立。
+
+固定 c 后，真实场 u_*=c Phi_k 满足时间不变外力 f_*=Gamma_k*c*Phi_k 的 NS 方程。该不动点通过实际导数证明构造出来。若外力再加 r(t)Phi_k，实际幅度方程就是 a'=-Gamma_k*(a-c)+r。nu>0 推出 Gamma_k>0，因而可以直接调用式 (11.1)。结合每个实际分量的 |Phi_k,i|≤1+k，得到对所有 x,y 和两个分量同时成立的界
+
+\[
+|u_{a,i}(t,x,y)-u_{*,i}(x,y)|\leq
+(1+k)\left[e^{-\Gamma_k t}|a(0)-c|
+ +\frac{\rho}{\Gamma_k}(1-e^{-\Gamma_k t})\right].
+\tag{11.3}
+\]
+
+`amplitude_readout` 还证明 a(t)=u_a(t,0,0)_0，因此幅度确为原速度场上的读数。关键声明是 `field_equation`、`stationary_forced_solution`、`forced_shear_attraction`。空间界采用分量绝对值，没有擅自改写成连续 L² 范数。
+
+无扰动时，显式幅度 a(t)=c+(a(0)-c)exp(-Gamma_k*t) 给出全局趋近该不动点的普通解公式。本轮源码的主要认证结论是上述实际方程和有限区间误差界，没有额外声称已完成任意受迫 PDE 的解构造。稳定性范围为同一剪切不变族，任意非共线或三维扰动均未纳入。这里的时间不变外力也不等同于 C、D 分支中有指定时间衰减条件的外力；两类问题不能交换假设。
+
+### 11.5 一般稳定不动点需要补齐的分析链
+
+对同一固定外力下的候选稳态 u_*，设 w=u-u_*。在光滑周期、散度为零且压力正交等条件下，目标是从实际方程获得
+
+\[
+\frac12\frac{d}{dt}\|w\|_{L^2}^2+\nu\|\nabla w\|_{L^2}^2
+ =-\int w\cdot((w\cdot\nabla)u_*)+\int w\cdot r.
+\tag{11.4}
+\]
+
+这与已核读的上游 H³ 比较证明使用同一类分部积分和压力处理，但必须保留黏性耗散项。若实际零均值子空间满足 Poincare 下界 D≥lambda_1 E，且已验证的稳态伸长界为 G，则
+
+\[
+\gamma=\nu\lambda_1-G>0
+\]
+
+才是吸引证书的负增长裕量。可用完整梯度算子范数作 G 的充分上界，也可进一步证明对称梯度的更精确控制。零均值或固定均值条件不可省略，R³ 上也不能自动使用周期域的正谱隙。式 (11.4)、Poincare 接入与这些充分条件是下一轮待证明目标，本轮未将它们包装成已经完成的 PDE 结论。
+
+实际路线因此是：复用上游弱导数和能量空间；为我们的同一速度场建立空间对象对应；保留耗散、压力和非线性项；验证稳态方程与正裕量；最后将估计传到真实观察或记忆核。若目标通过有限 Fourier 数据给出，还需认证未解析高频尾项与残差，而非假设截断解就是 PDE 稳态。
+
+OpenAI 的终端爆破结果说明，不能期望对所有允许外力和初值存在无条件的全局吸引固定点。可研究的目标应明确固定方程、外力、状态空间、对称性及吸引域。数学表示中的不动点、速度场演化的稳态、以及空间环面作用的固定点，是需要以实际映射连接的不同对象。
+
+### 11.6 当前证据和文献归属
+
+本次交付为普通数学证明、署名源码移植、直接消费者及配套 Scribe。当前环境没有 Lean、Lake 或 .NET；没有新增内核认证、C# 编译、独立评审或完整上游重建。`#print axioms` 指令仅供后续执行。实际诊断包括 9 项符号恒等式和 1617 项精确整数幅度/强迫关系；另有源码占位扫描、Scribe 词法括号检查和本地/远端 Git blob 对照。有限诊断不替代全称证明的内核检查，临时诊断文件未提交。
+
+本轮没有宣称新的外部开放问题解答。指数输入误差界和剪切解属于经典机制；新增价值是让上游实际证明成为本库实际状态和 NS 场的可复用依赖，并明确通往一般不动点稳定证书所缺的分析定理。
+
+[6] OpenAI. *On the Navier–Stokes Millennium Prize Problem*. 2026-09-08，页面更新至 2026-09-10。https://openai.com/index/navier-stokes-solution/ 。用于核对发布、范围与源码入口，不代表本轮完成独立证明审查。
+
+[7] OpenAI. `NavierStokes/ComparatorSolution.lean`，提交 `f9e8bc5b38b6e212696e8a30e3e91517af887bbd`。https://github.com/openai/NavierStokesAndEuler/blob/f9e8bc5b38b6e212696e8a30e3e91517af887bbd/NavierStokes/ComparatorSolution.lean 。两项终端陈述及实际外力量词。
+
+[8] OpenAI. `NavierStokes/ViscousPropagator.lean`，同一提交，Apache-2.0。https://github.com/openai/NavierStokesAndEuler/blob/f9e8bc5b38b6e212696e8a30e3e91517af887bbd/NavierStokes/ViscousPropagator.lean 。本轮移植的三项 Hilbert 范数证明来源；没有添加虚构的单个作者署名。
+
+[9] OpenAI. `NavierStokes/R3/H3Energy.lean` 与 `NavierStokes/R3/ComparisonGronwall.lean`，同一提交。https://github.com/openai/NavierStokesAndEuler/blob/f9e8bc5b38b6e212696e8a30e3e91517af887bbd/NavierStokes/R3/H3Energy.lean ；https://github.com/openai/NavierStokesAndEuler/blob/f9e8bc5b38b6e212696e8a30e3e91517af887bbd/NavierStokes/R3/ComparisonGronwall.lean 。实际弱导数、能量比较和截断耗尽的后续依赖；本轮尚未移植其完整分析闭包。
