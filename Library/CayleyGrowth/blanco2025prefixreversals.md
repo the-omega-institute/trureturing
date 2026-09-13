@@ -7,6 +7,7 @@ doi: 10.48550/arXiv.2511.16959
 claim: Conjecture 4 describes a triangular region of index triples whose three prefix reversals do not generate the symmetric group.
 strata_touched:
   - D5/S0/CayleyGrowth/PrefixReversalTripleOddNonGeneration
+  - D5/S0/CayleyGrowth/PrefixReversalTripleEvenNonGeneration
 license: citation-only
 triage: anchor
 ---
@@ -37,12 +38,21 @@ odd `n` the hypothesis forces at most `n - 2` edges, while a connected graph on
 `n` vertices needs at least `n - 1`, so the graph is disconnected and the subgroup
 is proper.
 
-The even clause is not proved here. At that boundary the graph can be connected,
-and it is then a tree with exactly `n - 1` edges; the argument continues by giving
-the edges of the longest reversal weight one and the others weight zero and
-labelling each position by the weight parity of its path from a fixed root, which
-splits the positions into two halves that the two shorter reversals preserve and
-the longest exchanges. That construction is a separate module.
+The even clause is proved in the companion module
+`D5/S0/CayleyGrowth/PrefixReversalTripleEvenNonGeneration`. At that boundary the
+graph can be connected, and the connected branch is real rather than
+hypothetical: among even triples with `n < 200` satisfying the hypothesis, 7105
+have exactly `n - 1` edges and 5301 of those are connected, the smallest being
+`n = 6, m = 3, k = 2`. So counting alone does not settle the even case. When the
+graph is connected it is a tree, and giving the edges of the longest reversal
+weight one and the others weight zero, then labelling each position by the weight
+parity of its unique path from a fixed root, splits the positions into two halves
+that the two shorter reversals preserve and the longest exchanges. A transposition
+across the halves then lies outside the subgroup.
+
+With both modules the conjecture is settled in full: the second clause covers even
+`n`, and the first clause at even `n` follows from it because `m + k < n - 1`
+implies `m + k < n`.
 
 The two strategies used here are the ones the paper names for its own
 non-generation results: an invariant set of positions, and a nontrivial block
