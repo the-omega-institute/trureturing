@@ -29,6 +29,9 @@ internal sealed partial class LeanReportTransportFixture : IDisposable
     internal string[] DeadlineCalls => Calls("deadline.log");
     internal string[] EnsureCalls => Calls("ensure.log");
     internal string[] ProducerCalls => Calls("producer.log");
+    internal string[] BuildCalls => Calls("build.log");
+    internal string[] Events => Calls("events.log");
+    internal string[] UtilityCalls => Calls("utility.log");
     internal string[] SlotCalls => Calls("slot.log");
     internal int UploadCount => ReleaseCalls.Count(value => value.StartsWith("release upload ", StringComparison.Ordinal));
     internal int DeleteCount => ReleaseCalls.Count(value => value.StartsWith("api --method DELETE ", StringComparison.Ordinal));
@@ -183,6 +186,7 @@ internal sealed partial class LeanReportTransportFixture : IDisposable
         exec /usr/bin/python3 "$@"
         """);
     internal void ClearCache() { if (Directory.Exists(CacheRoot)) Directory.Delete(CacheRoot, true); }
+    internal void SetUtilityInput(string json) => File.WriteAllText(Path.Combine(temporary.Path, "utility-input.json"), json);
     internal string[] LiveSnapshot() => Suffixes.Select(suffix => Digest(File.ReadAllBytes(Output + suffix)))
         .Append(Digest(File.ReadAllBytes(Output + ".logs/producer.log"))).ToArray();
     internal string[] CacheSnapshot() => Suffixes.Select(suffix => Digest(File.ReadAllBytes(CachedReport + suffix))).ToArray();
