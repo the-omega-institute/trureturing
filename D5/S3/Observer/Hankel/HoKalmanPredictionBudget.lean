@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Observer/Hankel/HoKalmanPredictionBudget
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Noisy finite-sample reconstruction gives a computable bound at every prediction horizon. -/
 
 import D5.S3.Observer.Hankel.NoisyHoKalmanRecovery

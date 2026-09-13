@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Observer/Hankel/ExecutableHoKalman
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Total rational pivot search computes a finite realization or rejects insufficient margin. -/
 
 import D5.S3.Observer.Hankel.FiniteHoKalmanBlocks

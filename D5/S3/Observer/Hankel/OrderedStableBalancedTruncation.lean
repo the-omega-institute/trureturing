@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Observer/Hankel/OrderedStableBalancedTruncation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: One constructed largest-singular-weight reduced model has both strict complex-spectrum stability and the certified tail-sum error bound. -/
 
 import D5.S3.Observer.Hankel.OrderedBalancedCoordinates

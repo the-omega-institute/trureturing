@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Observer/Hankel/InfiniteHankelGramian
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Construct the actual half-line observation, reachability and Hankel operators and identify their Gramians. -/
 
 import D5.S3.Observer.Hankel.ExactGramianSeries
