@@ -19,6 +19,26 @@ internal sealed class SchroederPeakAlternatingQuadraticMomentDocument : IScribeD
             Node("Step", "The three-step alphabet", StepFormula(),
                 "Step consists of the up, down, and horizontal letters U, D, and H.",
                 DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("a060693-inst-fintype-step"),
+                DeclarationHandle.Create(Prefix + "instFintypeStep"),
+                H("Finite three-step alphabet"),
+                StatementSource.FromAuthor(FintypeStepFormula()),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "The anonymous instance command generates this auto-named declaration. "
+                    + "The three-letter Step alphabet is finite."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("a060693-inst-decidable-eq-step"),
+                DeclarationHandle.Create(Prefix + "instDecidableEqStep"),
+                H("Decidable equality on steps"),
+                StatementSource.FromAuthor(DecidableEqStepFormula()),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "The deriving DecidableEq command generates this auto-named declaration. "
+                    + "Equality on the three-letter Step alphabet is decidable."))),
+                DescribeRole.Definition),
             Node("stepWeight", "Horizontal step weights", StepWeightFormula(),
                 "The up and down letters have horizontal weight one, while the horizontal letter has weight two.",
                 DescribeRole.Definition),
@@ -66,7 +86,7 @@ internal sealed class SchroederPeakAlternatingQuadraticMomentDocument : IScribeD
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(Named(name), [.. args]);
-    private static Formula Par(Formula value) => Seq(Open, value, Close);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Eq(Formula left, Formula right) => Seq(left, Sp, FormulaDsl.Eq, Sp, right);
     private static Formula Add(Formula left, Formula right) =>
         new Formula.Binary(left, FormulaBinaryOperator.Add, right);
@@ -75,7 +95,7 @@ internal sealed class SchroederPeakAlternatingQuadraticMomentDocument : IScribeD
     private static Formula Sub(Formula left, Formula right) =>
         new Formula.Binary(left, FormulaBinaryOperator.Subtract, right);
     private static Formula Pow(Formula value, Formula exponent) =>
-        new Formula.Power(Par(value), exponent);
+        new Formula.Power(Parenthesized(value), exponent);
     private static Formula Bound(string name, Formula type, Formula body) =>
         Seq(Forall, Sp, F.Id(name), Sp, InMacro, Sp, type, Comma, Sp, body);
     private static Formula Nat() => Seq(Mathbb, Grp(F.Id("N")));
@@ -96,6 +116,12 @@ internal sealed class SchroederPeakAlternatingQuadraticMomentDocument : IScribeD
 
     private static Formula StepFormula() => Disp(Eq(Named("Step"),
         Seq(OpenBrace, U(), Comma, Sp, Dn(), Comma, Sp, Hh(), CloseBrace)));
+
+    private static Formula FintypeStepFormula() =>
+        Disp(Parenthesized(Call("Fintype", F.Id("Step"))));
+
+    private static Formula DecidableEqStepFormula() =>
+        Disp(Parenthesized(Call("DecidableEq", F.Id("Step"))));
 
     private static Formula StepWeightFormula() => Disp(new Formula.Aligned([
         Eq(Call("stepWeight", U()), D(1)),
@@ -149,7 +175,7 @@ internal sealed class SchroederPeakAlternatingQuadraticMomentDocument : IScribeD
                             Call("SchroederPath", Sub(N(), I())))))))));
 
     private static Formula MembershipFormula() => Disp(Bound("n", Nat(), Bound("w", Words(),
-        Seq(Call("mem", W(), Call("schroeder", N())), Sp, Iff, Sp, Par(Seq(
+        Seq(Call("mem", W(), Call("schroeder", N())), Sp, Iff, Sp, Parenthesized(Seq(
             Eq(Call("weight", W()), Mul(D(2), N())), Sp, Land, Sp,
             Eq(Call("count", U(), W()), Call("count", Dn(), W())), Sp, Land, Sp,
             Call("PrefixNonnegative", W())))))));

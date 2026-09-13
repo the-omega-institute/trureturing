@@ -20,7 +20,35 @@ $$\operatorname{Step} = \{U, D, H\}$$
 
 Step consists of the up, down, and horizontal letters U, D, and H.
 
-**Definition 1.2 (Horizontal step weights).**
+**Definition 1.2 (Finite three-step alphabet).**
+
+$$(\operatorname{Fintype}\left(Step\right))$$
+
+*Formalization.* `D5/S1/Recurrence/Invariants/SchroederPeakAlternatingQuadraticMoment.instFintypeStep` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Werner Schulte (2017). *OEIS A060693, Triangle read by rows: T(n, k) is the number of Schröder paths from (0,0) to (2n,0) having k peaks*. URL: <https://oeis.org/A060693>.
+
+*Commentary.*
+
+The anonymous instance command generates this auto-named declaration. The three-letter Step alphabet is finite.
+
+**Definition 1.3 (Decidable equality on steps).**
+
+$$(\operatorname{DecidableEq}\left(Step\right))$$
+
+*Formalization.* `D5/S1/Recurrence/Invariants/SchroederPeakAlternatingQuadraticMoment.instDecidableEqStep` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Werner Schulte (2017). *OEIS A060693, Triangle read by rows: T(n, k) is the number of Schröder paths from (0,0) to (2n,0) having k peaks*. URL: <https://oeis.org/A060693>.
+
+*Commentary.*
+
+The deriving DecidableEq command generates this auto-named declaration. Equality on the three-letter Step alphabet is decidable.
+
+**Definition 1.4 (Horizontal step weights).**
 
 $$\begin{aligned}\operatorname{stepWeight}\left(U\right) = 1\\\operatorname{stepWeight}\left(D\right) = 1\\\operatorname{stepWeight}\left(H\right) = 2\end{aligned}$$
 
@@ -32,7 +60,7 @@ $$\begin{aligned}\operatorname{stepWeight}\left(U\right) = 1\\\operatorname{step
 
 The up and down letters have horizontal weight one, while the horizontal letter has weight two.
 
-**Definition 1.3 (Word weight).**
+**Definition 1.5 (Word weight).**
 
 $$\forall w \in \operatorname{List}\left(\operatorname{Step}\left(\right)\right), \operatorname{weight}\left(w\right) = \operatorname{sum}\left(\operatorname{map}\left(\operatorname{stepWeight}, w\right)\right)$$
 
@@ -44,7 +72,7 @@ $$\forall w \in \operatorname{List}\left(\operatorname{Step}\left(\right)\right)
 
 The weight of a word is the sum of the horizontal weights of its letters.
 
-**Definition 1.4 (Prefix nonnegativity).**
+**Definition 1.6 (Prefix nonnegativity).**
 
 $$\forall w \in \operatorname{List}\left(\operatorname{Step}\left(\right)\right), \operatorname{PrefixNonnegative}\left(w\right) \iff \forall i \in \mathbb{N}, \operatorname{count}\left(D, \operatorname{take}\left(i, w\right)\right) \le \operatorname{count}\left(U, \operatorname{take}\left(i, w\right)\right)$$
 
@@ -56,7 +84,7 @@ $$\forall w \in \operatorname{List}\left(\operatorname{Step}\left(\right)\right)
 
 Every prefix has no more down letters than up letters.
 
-**Definition 1.5 (The first-return Schroeder generator).**
+**Definition 1.7 (The first-return Schroeder generator).**
 
 $$\begin{aligned}\operatorname{schroeder}\left(0\right) = \{()\}\\\operatorname{schroeder}\left(n + 1\right) = \operatorname{union}\left(\operatorname{image}\left(H + ., \operatorname{schroeder}\left(n\right)\right), \operatorname{biUnion}\left(\operatorname{univ}\left(\operatorname{Fin}\left(n + 1\right), \operatorname{image}\left(U + D + p, \operatorname{product}\left(\operatorname{schroeder}\left(i\right), \operatorname{schroeder}\left(n - i\right)\right)\right)\right)\right)\right)\end{aligned}$$
 
@@ -68,7 +96,7 @@ $$\begin{aligned}\operatorname{schroeder}\left(0\right) = \{()\}\\\operatorname{
 
 The empty word is the zero object. A positive generator word either begins with H and a word of the preceding size, or begins with U, follows a generated inside word, returns with D, and continues with a generated outside word.
 
-**Definition 1.6 (Adjacent up-down peaks).**
+**Definition 1.8 (Adjacent up-down peaks).**
 
 $$\begin{aligned}\operatorname{peaks}\left(()\right) = 0\\\operatorname{peaks}\left(a + w\right) = \operatorname{isPeak}\left(a, \operatorname{head}\left(w\right)\right) + \operatorname{peaks}\left(w\right)\end{aligned}$$
 
@@ -80,7 +108,7 @@ $$\begin{aligned}\operatorname{peaks}\left(()\right) = 0\\\operatorname{peaks}\l
 
 peaks counts adjacent occurrences of U followed immediately by D.
 
-**Definition 1.7 (The peak-counted triangle).**
+**Definition 1.9 (The peak-counted triangle).**
 
 $$\forall n \in \mathbb{N}, \forall k \in \mathbb{N}, \operatorname{T}\left(n, k\right) = \operatorname{card}\left(\operatorname{filter}\left(w \mapsto \operatorname{peaks}\left(w\right) = k, \operatorname{schroeder}\left(n\right)\right)\right)$$
 
@@ -92,7 +120,7 @@ $$\forall n \in \mathbb{N}, \forall k \in \mathbb{N}, \operatorname{T}\left(n, k
 
 T(n,k) is the cardinality of the generated words of semilength n having k peaks.
 
-**Definition 1.8 (A generated Schroeder path).**
+**Definition 1.10 (A generated Schroeder path).**
 
 $$\forall n \in \mathbb{N}, \operatorname{SchroederPath}\left(n\right) = \operatorname{Subtype}\left(\operatorname{List}\left(\operatorname{Step}\left(\right)\right), w \in \operatorname{schroeder}\left(n\right)\right)$$
 
@@ -104,7 +132,7 @@ $$\forall n \in \mathbb{N}, \operatorname{SchroederPath}\left(n\right) = \operat
 
 A SchroederPath is a word together with a proof that it belongs to the generator at its semilength.
 
-**Definition 1.9 (First-return decomposition).**
+**Definition 1.11 (First-return decomposition).**
 
 $$\forall n \in \mathbb{N}, \operatorname{firstReturnEquiv}\left(n\right) = \operatorname{Equiv}\left(\operatorname{SchroederPath}\left(n + 1\right), \operatorname{Sum}\left(\operatorname{SchroederPath}\left(n\right), \operatorname{Sigma}\left(\operatorname{Fin}\left(n + 1\right), \operatorname{Product}\left(\operatorname{SchroederPath}\left(i\right), \operatorname{SchroederPath}\left(n - i\right)\right)\right)\right)\right)$$
 
@@ -116,7 +144,7 @@ $$\forall n \in \mathbb{N}, \operatorname{firstReturnEquiv}\left(n\right) = \ope
 
 The equivalence separates a positive path into its initial H case or its U, inside, D, outside first-return case.
 
-**Theorem 1.10 (The generator characterization).**
+**Theorem 1.12 (The generator characterization).**
 
 $$\forall n \in \mathbb{N}, \forall w \in \operatorname{List}\left(\operatorname{Step}\left(\right)\right), \operatorname{mem}\left(w, \operatorname{schroeder}\left(n\right)\right) \iff (\operatorname{weight}\left(w\right) = 2 \cdot n \land \operatorname{count}\left(U, w\right) = \operatorname{count}\left(D, w\right) \land \operatorname{PrefixNonnegative}\left(w\right))$$
 
@@ -128,7 +156,7 @@ $$\forall n \in \mathbb{N}, \forall w \in \operatorname{List}\left(\operatorname
 
 This identity connects the recursive generator with the path description: a word is generated exactly when its weight is 2n, its U and D counts agree, and every prefix is nonnegative.
 
-**Theorem 1.11 (The peak recurrence).**
+**Theorem 1.13 (The peak recurrence).**
 
 $$\forall n \in \mathbb{N}, \forall k \in \mathbb{N}, \operatorname{T}\left(n + 1, k\right) = \operatorname{T}\left(n, k\right) + \operatorname{if}\left(0 < k, \operatorname{T}\left(n, k - 1\right), 0\right) + \sum_{i \in \operatorname{Fin}\left(n\right)} \sum_{j \in k + 1} \operatorname{T}\left(i + 1, j\right) \cdot \operatorname{T}\left(n - \left(i + 1\right), k - j\right)$$
 
@@ -140,7 +168,7 @@ $$\forall n \in \mathbb{N}, \forall k \in \mathbb{N}, \operatorname{T}\left(n + 
 
 The first-return equivalence and finite-fiber counting split T(n+1,k) into the initial H contribution, the empty-inside peak contribution, and the double convolution over nonempty inside indices.
 
-**Theorem 1.12 (Schulte's alternating quadratic moment).**
+**Theorem 1.14 (Schulte's alternating quadratic moment).**
 
 $$\forall n \in \mathbb{N}, \sum_{k \in \operatorname{Fin}\left(n + 1\right)} (-1)^{k} \cdot \operatorname{T}\left(n, k\right) \cdot (n + 1 - k)^{2} = (n)^{2} + n + 1$$
 
@@ -164,6 +192,8 @@ The zeroth, first, and second falling signed peak moments satisfy the recurrence
 - Truth anchor: `D5/S1/Recurrence/Invariants/SchroederPeakAlternatingQuadraticMoment.T`
 - Truth anchor: `D5/S1/Recurrence/Invariants/SchroederPeakAlternatingQuadraticMoment.T_first_return_recurrence`
 - Truth anchor: `D5/S1/Recurrence/Invariants/SchroederPeakAlternatingQuadraticMoment.firstReturnEquiv`
+- Truth anchor: `D5/S1/Recurrence/Invariants/SchroederPeakAlternatingQuadraticMoment.instDecidableEqStep`
+- Truth anchor: `D5/S1/Recurrence/Invariants/SchroederPeakAlternatingQuadraticMoment.instFintypeStep`
 - Truth anchor: `D5/S1/Recurrence/Invariants/SchroederPeakAlternatingQuadraticMoment.mem_schroeder_iff`
 - Truth anchor: `D5/S1/Recurrence/Invariants/SchroederPeakAlternatingQuadraticMoment.peaks`
 - Truth anchor: `D5/S1/Recurrence/Invariants/SchroederPeakAlternatingQuadraticMoment.schroeder`
