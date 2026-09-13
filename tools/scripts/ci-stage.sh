@@ -5,10 +5,6 @@ cd "$ROOT"
 stage="${1:-}"
 PLAN_PATH="${CI_PLAN_PATH:-}"
 CHANGES_PATH="${CI_CHANGES_PATH:-}"
-if [[ -n "${CI_PLAN_B64:-}" || -n "${CI_CHANGES_B64:-}" ]]; then
-  PLAN_PATH="$ROOT/build/ci/plan.json"
-  CHANGES_PATH="$ROOT/build/ci/changes.json"
-fi
 completed=0
 runner=tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll
 finish() {

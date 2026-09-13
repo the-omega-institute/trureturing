@@ -104,7 +104,7 @@ internal sealed class JudgeSeedFixture : IDisposable
         environment["CANDIDATE_SHA"] = after;
         environment["CI_WORKFLOW_INPUTS"] = "null";
         environment["CI_NEEDS"] = "{}";
-        foreach (var name in new[] { "CI_PLAN_PATH", "CI_CHANGES_PATH", "CI_PLAN_B64", "CI_CHANGES_B64",
+        foreach (var name in new[] { "CI_PLAN_PATH", "CI_CHANGES_PATH",
                      "CI_PUSH_BEFORE", "CI_PUSH_AFTER", "GITHUB_OUTPUT" }) environment[name] = "";
     }
 

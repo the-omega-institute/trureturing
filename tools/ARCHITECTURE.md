@@ -13,6 +13,13 @@ job checks out that same M; a later update to `refs/pull/N/merge` cannot select 
 different candidate. Base commits supply data to the candidate judge, never code
 that is restored, compiled, or executed.
 
+The resolver publishes the complete plan and changed-path manifests together as
+one Actions artifact. Job outputs carry only immutable candidate/base identities
+and the artifact ID. Each consuming job downloads the files and validates their
+complete scope and declared resource selection against the fixed candidate before
+routing work. Missing, corrupt, or mismatched manifests fail even for no-resource
+changes; path lists never travel through process arguments or environment values.
+
 Push checks the final commit H. Its lightweight planner uses the push event's
 complete before-to-after path range; initial pushes cover the registered current
 tree. FILEMAP and explicit manifests select resources, build roots, tests, checks,

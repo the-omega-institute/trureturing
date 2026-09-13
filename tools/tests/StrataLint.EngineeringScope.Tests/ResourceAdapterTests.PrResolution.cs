@@ -6,6 +6,57 @@ namespace StrataLint.EngineeringScope.Tests;
 
 public sealed partial class ResourceAdapterTests
 {
+    [Fact]
+    public void LargePullRequestTransportsCompleteScopeWithoutProcessSizedOutputs()
+    {
+        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        const int count = 600;
+        for (var index = 0; index < count; index++)
+            fixture.Write($"docs/{index:D4}-{new string('x', 160)}.md", "registered documentation\n");
+        fixture.PrPlan();
+        var head = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^2");
+        var resolved = ResolvePullRequest(fixture, head, fixture.Commit);
+        Assert.True(resolved.Exit == 0, resolved.Text);
+        var outputs = File.ReadAllBytes(Path.Combine(fixture.Root, "build/adapter-output"));
+        Assert.True(outputs.Length < 4096, $"Resolver emitted {outputs.Length} bytes as process/job outputs.");
+        Assert.True(System.Text.Encoding.UTF8.GetByteCount(resolved.Text) < 4096,
+            "Resolver logged the full scope instead of compact identities.");
+
+        var material = Path.Combine(fixture.Root, "build/ci");
+        foreach (var name in new[] { "plan", "changes" })
+            Assert.True(new FileInfo(Path.Combine(material, name + ".json")).Length > 128 * 1024,
+                "Fixture must exceed Linux's single environment-string boundary.");
+        Assert.Equal(count + 1, JsonNode.Parse(File.ReadAllText(Path.Combine(material, "changes.json")))!["change_count"]!.GetValue<int>());
+
+        // Recreate a downstream checkout and move only the artifact's two files.
+        var downstream = Path.Combine(fixture.Root, "build/downstream checkout");
+        SharedBuildContractTests.Git(fixture.Root, "clone", "--quiet", "--no-hardlinks", fixture.Root, downstream);
+        SharedBuildContractTests.Git(downstream, "checkout", "--detach", fixture.Commit);
+        var destination = Path.Combine(downstream, "build/ci");
+        Directory.CreateDirectory(destination);
+        foreach (var name in new[] { "plan", "changes" })
+            File.Copy(Path.Combine(material, name + ".json"), Path.Combine(destination, name + ".json"));
+        var environment = EnvironmentFor(fixture);
+        environment["CI_PLAN_PATH"] = "build/ci/plan.json";
+        environment["CI_CHANGES_PATH"] = "build/ci/changes.json";
+        environment["CI_WORKFLOW_INPUTS"] = new JsonObject { ["candidate_sha"] = fixture.Commit }.ToJsonString();
+        environment["GITHUB_EVENT_NAME"] = "pull_request";
+        environment["GITHUB_SHA"] = fixture.Commit;
+        var basis = SharedBuildContractTests.Git(downstream, "rev-parse", "HEAD^1");
+        foreach (var stage in new[] { "build", "engineering", "current", "delta" })
+        {
+            var routed = SharedBuildContractTests.Process(downstream, "python3",
+                ["-B", "tools/scripts/workflow/ci.py", "stage-input", "--repository", downstream,
+                    "--commit", fixture.Commit, "--stage", stage, .. stage == "delta" ? new[] { "--base", basis } : []],
+                environment, TestBudgets.WorkflowProcessHangGuard);
+            Assert.True(routed.Exit == 0, routed.Text);
+            var summary = JsonNode.Parse(File.ReadAllText(Path.Combine(destination, stage + "-result.json")))!;
+            Assert.Equal("not-required", summary["status"]!.ToString());
+            Assert.Equal(count + 1, summary["scope"]!["paths"]!.AsArray().Count);
+            Assert.Equal(fixture.Commit, summary["git_candidate"]!["commit"]!.ToString());
+        }
+    }
+
     [Theory]
     [InlineData("missing")]
     [InlineData("empty")]

@@ -1,6 +1,5 @@
 """FILEMAP declarations and complete path planning for ci.py; never executes work."""
 import hashlib
-import base64
 import functools
 import json
 import os
@@ -8,6 +7,7 @@ import pathlib
 import re
 import stat
 import subprocess
+import time
 import tomllib
 
 STAGES = ("build", "engineering", "current", "delta")
@@ -779,13 +779,19 @@ def validate_stage(root, stage, base):
 
 
 def plan_pr(root, commit, base, head):
+    started = time.monotonic()
     changes, plan = root / "build/ci/changes.json", root / "build/ci/plan.json"
-    write(changes, pr_paths(root, commit, base, head))
-    write(plan, make_plan(root, commit, changes))
+    scope = pr_paths(root, commit, base, head)
+    write(changes, scope)
+    value = make_plan(root, commit, changes)
+    write(plan, value)
     validate_plan(root, commit, plan, changes)
-    return {"candidate_sha": commit, "base_sha": base,
-            "changes_b64": base64.b64encode(changes.read_bytes()).decode("ascii"),
-            "plan_b64": base64.b64encode(plan.read_bytes()).decode("ascii")}
+    print("CI_PLAN_RESULT " + json.dumps({"mode": "pr", "change_count": scope["change_count"],
+          "path_count": len(value["paths"]), "plan_bytes": plan.stat().st_size,
+          "changes_bytes": changes.stat().st_size, "elapsed_seconds": round(time.monotonic() - started, 6)}, sort_keys=True))
+    # Complete manifests travel as files. Job outputs remain bounded regardless
+    # of the number or length of changed paths.
+    return {"candidate_sha": commit, "base_sha": base}
 
 
 def plan_push(root, commit="", plan=None, changes=None, before=None, after=None):

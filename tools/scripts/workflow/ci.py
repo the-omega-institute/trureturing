@@ -1,6 +1,5 @@
 """Fixed candidate resolution, stage transport bootstrap, and CI diagnostics."""
 import argparse
-import base64
 import json
 import os
 import pathlib
@@ -155,15 +154,6 @@ def stage_input(args):
     commit = ci_plan.checked_head(root, args.commit or os.environ.get("CANDIDATE_SHA", ""))
     plan = args.plan or (pathlib.Path(os.environ["CI_PLAN_PATH"]) if os.environ.get("CI_PLAN_PATH") else None)
     changes = args.changes or (pathlib.Path(os.environ["CI_CHANGES_PATH"]) if os.environ.get("CI_CHANGES_PATH") else None)
-    encoded_plan, encoded_changes = os.environ.get("CI_PLAN_B64", ""), os.environ.get("CI_CHANGES_B64", "")
-    if encoded_plan or encoded_changes:
-        if not encoded_plan or not encoded_changes:
-            raise ValueError("both serialized plan and changed-path input are required")
-        plan, changes = root / "build/ci/plan.json", root / "build/ci/changes.json"
-        # Decode both before writing either; strict object/identity checks follow.
-        values = [ci_plan.strict_json_bytes(base64.b64decode(value, validate=True)) for value in (encoded_plan, encoded_changes)]
-        for destination, value in zip((plan, changes), values):
-            ci_plan.write(destination, value)
     native_push = ci_plan.native_push()
     if plan is None and changes is None:
         if args.allow_direct:
@@ -176,8 +166,7 @@ def stage_input(args):
         raise ValueError("both plan and changed-path input are required")
     plan = root / plan if plan is not None else None
     changes = root / changes if changes is not None else None
-    if (native_push and not encoded_plan and not encoded_changes
-            and (plan is None or not plan.is_file()) and (changes is None or not changes.is_file())):
+    if (native_push and (plan is None or not plan.is_file()) and (changes is None or not changes.is_file())):
         plan = plan or root / "build/ci/plan.json"
         changes = changes or root / "build/ci/changes.json"
         ci_plan.plan_push(root, commit, plan, changes)

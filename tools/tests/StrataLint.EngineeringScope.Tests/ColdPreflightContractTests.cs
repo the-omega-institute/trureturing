@@ -194,7 +194,7 @@ public sealed class ColdPreflightContractTests
         return new() { ["PATH"] = bin + Path.PathSeparator + Environment.GetEnvironmentVariable("PATH"),
             ["CONTRACT_NATIVE"] = Path.Combine(Path.GetDirectoryName(typeof(Program).Assembly.Location)!, "StrataLint.EngineeringScope"),
             ["CONTRACT_DOTNET"] = realDotnet, ["CONTRACT_EVENTS"] = Path.Combine(fixture.Root, "build/cold-events"),
-            ["CI_PLAN_PATH"] = "", ["CI_CHANGES_PATH"] = "", ["CI_PLAN_B64"] = "", ["CI_CHANGES_B64"] = "",
+            ["CI_PLAN_PATH"] = "", ["CI_CHANGES_PATH"] = "",
             ["CI_BUILD_ROUND"] = "", ["CANDIDATE_SHA"] = "", ["GITHUB_EVENT_NAME"] = "", ["CI_NEEDS"] = "{}", ["CI_WORKFLOW_INPUTS"] = "null" };
     }
 

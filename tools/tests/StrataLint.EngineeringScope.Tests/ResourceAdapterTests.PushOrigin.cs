@@ -279,10 +279,12 @@ public sealed partial class ResourceAdapterTests
     {
         using var fixture = new ResourceRouteTests.ResourceFixture([]);
         var environment = EnvironmentFor(fixture);
-        environment["GITHUB_EVENT_NAME"] = "push";
-        if (partial) environment["CI_PLAN_B64"] = Encode(File.ReadAllText(fixture.Plan));
+        SetPushEvent(fixture, environment, new string('0', 40));
+        MaterializePlan(fixture, environment);
+        if (partial) File.Delete(environment["CI_CHANGES_PATH"]);
         var result = Route(fixture, "current", environment);
         Assert.Equal(2, result.Exit);
+        Assert.Contains("CI_INPUT_FAILED", result.Text, StringComparison.Ordinal);
         Assert.Equal("failed", Summary(fixture, "current")["status"]!.ToString());
     }
 
@@ -387,7 +389,7 @@ public sealed partial class ResourceAdapterTests
     [InlineData("current", "local-current-input", false)]
     [InlineData("current", "local-current-input", true)]
     [InlineData("build", "current", true)]
-    public void NativeStageRejectsCoherentReplacementScope(string stage, string replacement, bool serialized)
+    public void NativeStageRejectsCoherentReplacementScope(string stage, string replacement, bool downloaded)
     {
         using var fixture = LocalFixture();
         var before = fixture.Commit;
@@ -407,10 +409,16 @@ public sealed partial class ResourceAdapterTests
         var changes = replacement == "current" ? fixture.Changes : PushScopePath(fixture);
         environment["CI_PLAN_PATH"] = plan;
         environment["CI_CHANGES_PATH"] = changes;
-        if (serialized)
+        if (downloaded)
         {
-            environment["CI_PLAN_B64"] = Encode(File.ReadAllText(plan));
-            environment["CI_CHANGES_B64"] = Encode(File.ReadAllText(changes));
+            if (replacement != "current")
+            {
+                File.Copy(plan, fixture.Plan, true);
+                File.Copy(changes, fixture.Changes, true);
+                File.Delete(plan);
+                File.Delete(changes);
+            }
+            MaterializePlan(fixture, environment);
         }
         SetPushEvent(fixture, environment, before);
         var routed = Route(fixture, stage, environment);

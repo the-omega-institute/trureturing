@@ -151,7 +151,7 @@ public sealed class SharedBuildRuntimeTests
             ["PATH"] = Path.Combine(physicalRoot, "build/bin") + Path.PathSeparator + Environment.GetEnvironmentVariable("PATH"),
             ["CONTRACT_SCOPE"] = scope, ["CONTRACT_DOTNET"] = dotnet,
             ["DOTNET_CLI_UI_LANGUAGE"] = "en-US",
-            ["CI_PLAN_PATH"] = "", ["CI_CHANGES_PATH"] = "", ["CI_PLAN_B64"] = "", ["CI_CHANGES_B64"] = "",
+            ["CI_PLAN_PATH"] = "", ["CI_CHANGES_PATH"] = "",
             ["CI_WORKFLOW_INPUTS"] = "null", ["CI_NEEDS"] = "{}", ["CI_BUILD_ROUND"] = "", ["CANDIDATE_SHA"] = "",
             ["GITHUB_RUN_ID"] = "17", ["GITHUB_RUN_ATTEMPT"] = "2", ["GITHUB_EVENT_NAME"] = "",
             ["GITHUB_EVENT_PATH"] = "", ["CI_PUSH_BEFORE"] = "", ["CI_PUSH_AFTER"] = "",

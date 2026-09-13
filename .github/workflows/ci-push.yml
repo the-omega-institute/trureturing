@@ -8,10 +8,7 @@ on:
       candidate_sha:
         required: true
         type: string
-      changes_b64:
-        required: true
-        type: string
-      plan_b64:
+      plan_artifact_id:
         required: true
         type: string
     outputs:
@@ -62,11 +59,14 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
       - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
+      - uses: actions/download-artifact@v4
+        if: inputs.plan_artifact_id != ''
+        with:
+          artifact-ids: ${{ inputs.plan_artifact_id }}
+          path: build/ci
+          merge-multiple: true
       - id: route
         name: Validate plan and route build
-        env:
-          CI_CHANGES_B64: ${{ inputs.changes_b64 }}
-          CI_PLAN_B64: ${{ inputs.plan_b64 }}
         run: python3 -B tools/scripts/workflow/ci.py stage-input --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA" --stage build
       - uses: actions/setup-dotnet@v4
         if: steps.route.outputs.dotnet == 'true'
@@ -138,11 +138,14 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
       - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
+      - uses: actions/download-artifact@v4
+        if: inputs.plan_artifact_id != ''
+        with:
+          artifact-ids: ${{ inputs.plan_artifact_id }}
+          path: build/ci
+          merge-multiple: true
       - id: route
         name: Validate plan and route engineering
-        env:
-          CI_CHANGES_B64: ${{ inputs.changes_b64 }}
-          CI_PLAN_B64: ${{ inputs.plan_b64 }}
         run: python3 -B tools/scripts/workflow/ci.py stage-input --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA" --stage engineering
       - uses: actions/setup-dotnet@v4
         if: steps.route.outputs.dotnet == 'true'
@@ -253,11 +256,14 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
       - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
+      - uses: actions/download-artifact@v4
+        if: inputs.plan_artifact_id != ''
+        with:
+          artifact-ids: ${{ inputs.plan_artifact_id }}
+          path: build/ci
+          merge-multiple: true
       - id: route
         name: Validate plan and route current
-        env:
-          CI_CHANGES_B64: ${{ inputs.changes_b64 }}
-          CI_PLAN_B64: ${{ inputs.plan_b64 }}
         run: python3 -B tools/scripts/workflow/ci.py stage-input --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA" --stage current
       - uses: actions/setup-dotnet@v4
         if: steps.route.outputs.dotnet == 'true'

@@ -1,4 +1,3 @@
-using System.Text;
 using System.Text.Json.Nodes;
 using StrataLint.TestSupport;
 using Xunit;
@@ -59,24 +58,40 @@ public sealed partial class ResourceAdapterTests
 
     [Theory]
     [InlineData("missing")]
+    [InlineData("missing-changes")]
     [InlineData("malformed")]
     [InlineData("candidate")]
+    [InlineData("scope-candidate")]
+    [InlineData("scope-truncated")]
+    [InlineData("scope-duplicate")]
     [InlineData("prerequisite")]
     public void WorkflowRouteFailsClosedBeforeSetup(string defect)
     {
         using var fixture = new ResourceRouteTests.ResourceFixture([]);
         var environment = EnvironmentFor(fixture);
-        environment.Remove("CI_PLAN_PATH");
-        environment.Remove("CI_CHANGES_PATH");
-        environment["CI_PLAN_B64"] = Encode(File.ReadAllText(fixture.Plan));
-        environment["CI_CHANGES_B64"] = Encode(File.ReadAllText(fixture.Changes));
-        if (defect == "missing") environment["CI_PLAN_B64"] = "";
-        if (defect == "malformed") environment["CI_PLAN_B64"] = "not base64!";
+        fixture.PrPlan();
+        MaterializePlan(fixture, environment);
+        if (defect == "missing") File.Delete(environment["CI_PLAN_PATH"]);
+        if (defect == "missing-changes") File.Delete(environment["CI_CHANGES_PATH"]);
+        if (defect == "malformed") File.WriteAllText(environment["CI_PLAN_PATH"], "not json!");
         if (defect == "candidate")
         {
             var plan = JsonNode.Parse(File.ReadAllText(fixture.Plan))!;
             plan["candidate"]!["commit"] = new string('a', 40);
-            environment["CI_PLAN_B64"] = Encode(plan.ToJsonString());
+            File.WriteAllText(environment["CI_PLAN_PATH"], plan.ToJsonString());
+        }
+        if (defect.StartsWith("scope-", StringComparison.Ordinal))
+        {
+            var scope = JsonNode.Parse(File.ReadAllText(fixture.Changes))!;
+            if (defect == "scope-candidate") scope["candidate"]!["commit"] = new string('a', 40);
+            else
+            {
+                var rows = scope["changes"]!.AsArray();
+                if (defect == "scope-truncated") rows.Clear();
+                else rows.Add(rows[0]!.DeepClone());
+                scope["change_count"] = rows.Count;
+            }
+            File.WriteAllText(environment["CI_CHANGES_PATH"], scope.ToJsonString());
         }
         if (defect == "prerequisite") environment["CI_NEEDS"] = "{\"build\":{\"result\":\"failure\",\"outputs\":{}}}";
         var result = Route(fixture, "engineering", environment);
@@ -96,10 +111,7 @@ public sealed partial class ResourceAdapterTests
         fixture.Write("Meta/FILEMAP.toml", filemap);
         fixture.CommitPlan();
         var environment = EnvironmentFor(fixture);
-        environment.Remove("CI_PLAN_PATH");
-        environment.Remove("CI_CHANGES_PATH");
-        environment["CI_PLAN_B64"] = Encode(File.ReadAllText(fixture.Plan));
-        environment["CI_CHANGES_B64"] = Encode(File.ReadAllText(fixture.Changes));
+        MaterializePlan(fixture, environment);
         var result = Route(fixture, "current", environment);
         Assert.True(result.Exit == 0, result.Text);
         var outputs = File.ReadAllLines(Path.Combine(fixture.Root, "build/adapter-output"));
@@ -166,14 +178,11 @@ public sealed partial class ResourceAdapterTests
     }
 
     [Fact]
-    public void SerializedShellSelectionReachesNativeRunnerAndPreservesSelectedFailure()
+    public void DownloadedShellSelectionReachesNativeRunnerAndPreservesSelectedFailure()
     {
         using var fixture = new ResourceRouteTests.ResourceFixture(["filemap"]);
         var environment = EnvironmentFor(fixture);
-        environment.Remove("CI_PLAN_PATH");
-        environment.Remove("CI_CHANGES_PATH");
-        environment["CI_PLAN_B64"] = Encode(File.ReadAllText(fixture.Plan));
-        environment["CI_CHANGES_B64"] = Encode(File.ReadAllText(fixture.Changes));
+        MaterializePlan(fixture, environment);
         fixture.Write("tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll", "fixture");
         var dotnet = Path.Combine(environment["PATH"], "dotnet");
         File.WriteAllText(dotnet, "#!/bin/bash\nprintf '%s\\n' \"$@\" > build/native-arguments\nexit 1\n");
@@ -215,7 +224,17 @@ public sealed partial class ResourceAdapterTests
 
     private static JsonNode Summary(ResourceRouteTests.ResourceFixture fixture, string stage) =>
         JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, "build/ci/" + stage + "-result.json")))!;
-    private static string Encode(string text) => Convert.ToBase64String(Encoding.UTF8.GetBytes(text));
+    private static void MaterializePlan(ResourceRouteTests.ResourceFixture fixture, Dictionary<string, string> environment)
+    {
+        var directory = Path.Combine(fixture.Root, "build/ci");
+        Directory.CreateDirectory(directory);
+        foreach (var name in new[] { "plan", "changes" })
+        {
+            var path = Path.Combine(directory, name + ".json");
+            File.Copy(name == "plan" ? fixture.Plan : fixture.Changes, path, true);
+            environment[name == "plan" ? "CI_PLAN_PATH" : "CI_CHANGES_PATH"] = path;
+        }
+    }
 
     private static Dictionary<string, string> EnvironmentFor(ResourceRouteTests.ResourceFixture fixture)
     {
@@ -229,7 +248,7 @@ public sealed partial class ResourceAdapterTests
         }
         return new() { ["PATH"] = bin, ["CI_PLAN_PATH"] = fixture.Plan, ["CI_CHANGES_PATH"] = fixture.Changes,
             ["GITHUB_EVENT_NAME"] = "", ["GITHUB_EVENT_PATH"] = "",
-            ["CI_PLAN_B64"] = "", ["CI_CHANGES_B64"] = "", ["CI_NEEDS"] = "{}", ["CI_WORKFLOW_INPUTS"] = "null",
+            ["CI_NEEDS"] = "{}", ["CI_WORKFLOW_INPUTS"] = "null",
             ["CANDIDATE_SHA"] = "",
             ["GITHUB_OUTPUT"] = Path.Combine(fixture.Root, "build/adapter-output") };
     }

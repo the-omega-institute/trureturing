@@ -19,8 +19,7 @@ jobs:
     outputs:
       candidate_sha: ${{ steps.resolve.outputs.candidate_sha }}
       base_sha: ${{ steps.resolve.outputs.base_sha }}
-      changes_b64: ${{ steps.resolve.outputs.changes_b64 }}
-      plan_b64: ${{ steps.resolve.outputs.plan_b64 }}
+      plan_artifact_id: ${{ steps.upload.outputs.artifact-id }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -31,6 +30,15 @@ jobs:
         env:
           PR_HEAD: ${{ github.event.pull_request.head.sha }}
         run: python3 -B tools/scripts/workflow/ci.py resolve --repository "$GITHUB_WORKSPACE" --head "$PR_HEAD"
+      - id: upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-plan-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            build/ci/plan.json
+            build/ci/changes.json
+          if-no-files-found: error
+          retention-days: 7
 
   push:
     name: push
@@ -39,8 +47,7 @@ jobs:
     uses: ./.github/workflows/ci-push.yml
     with:
       candidate_sha: ${{ needs.resolve.outputs.candidate_sha }}
-      changes_b64: ${{ needs.resolve.outputs.changes_b64 }}
-      plan_b64: ${{ needs.resolve.outputs.plan_b64 }}
+      plan_artifact_id: ${{ needs.resolve.outputs.plan_artifact_id }}
 
   delta:
     name: delta
@@ -62,11 +69,14 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
       - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
+      - uses: actions/download-artifact@v4
+        if: needs.resolve.outputs.plan_artifact_id != ''
+        with:
+          artifact-ids: ${{ needs.resolve.outputs.plan_artifact_id }}
+          path: build/ci
+          merge-multiple: true
       - id: route
         name: Validate delta prerequisites and resource plan
-        env:
-          CI_CHANGES_B64: ${{ needs.resolve.outputs.changes_b64 }}
-          CI_PLAN_B64: ${{ needs.resolve.outputs.plan_b64 }}
         run: python3 -B tools/scripts/workflow/ci.py stage-input --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA" --stage delta --base "$BASE_SHA"
       - uses: actions/setup-dotnet@v4
         if: steps.route.outputs.dotnet == 'true'
