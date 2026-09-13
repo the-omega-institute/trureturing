@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:16584e48cce7316eee56a4b8756a3c3f9c78a8af04bab22d608ce50cd66e6da7
+  normalized_sha256: sha256:16584e48cce7316eee56a4b8756a3c3f9c78a8af04bab22d608ce50cd66e6da7
+cas_ref: sha256:16584e48cce7316eee56a4b8756a3c3f9c78a8af04bab22d608ce50cd66e6da7
+coverage_gids:
+  - gid: D5/S1/Deficit/ChargedCarryPath.betaDigits_sub_chargedReduces
+    target_statement_id: sha256:704a1a057a9a52f8af86b0f01f0e03610b3339aa1a228a670dfc02ae8bec67d0
+  - gid: D5/S1/Deficit/ZeckendorfDisplacementReading.displacement_decode_eq_beatty_floor
+    target_statement_id: sha256:a2a75eaa142e774e908b7d7fd9624f1c694238fadfa2febdb0a0178ad2919b5b
+  - gid: D5/S1/Words/Mechanical/FloorFractShift.floor_fract_add_indicator
+    target_statement_id: sha256:30f8defc43067c3cc515938a3de159e450085aa7f1d41aec9e8ed4eca6611352
+  - gid: D5/S1/Words/Mechanical/MechanicalBalance.lowerMechanicalLetter_eq_zero_or_one
+    target_statement_id: sha256:5386c38192676a913b44b62dd445e421e0db0c92e65ac92018fa6596026b4f4f
+receipts:
+  unresolved_subitems: []

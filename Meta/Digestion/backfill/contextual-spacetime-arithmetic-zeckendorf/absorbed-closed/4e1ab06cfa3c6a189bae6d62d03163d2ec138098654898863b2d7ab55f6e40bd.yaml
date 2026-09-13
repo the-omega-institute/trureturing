@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4e1ab06cfa3c6a189bae6d62d03163d2ec138098654898863b2d7ab55f6e40bd
+  normalized_sha256: sha256:4e1ab06cfa3c6a189bae6d62d03163d2ec138098654898863b2d7ab55f6e40bd
+cas_ref: sha256:4e1ab06cfa3c6a189bae6d62d03163d2ec138098654898863b2d7ab55f6e40bd
+coverage_gids:
+  - gid: D5/S1/Digit/PrimeAxisEncoding.primeAxisEncoding
+    target_statement_id: sha256:6269035f14e166bcf156403561751185bdd5b7f7d73767f6bf8d194aa0587409
+  - gid: D5/S3/Arith/GoldenResource/GoldenDivisorLanguage.full_window_divisor_exponent_equiv
+    target_statement_id: sha256:282d3ee5054235f7b6e578e2ff6a5714cfc3b0cb4de4df72cd262da908c36df8
+receipts:
+  unresolved_subitems: []
