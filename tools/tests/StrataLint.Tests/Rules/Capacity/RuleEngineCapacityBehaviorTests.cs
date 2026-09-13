@@ -38,15 +38,16 @@ public sealed class RuleEngineCapacityBehaviorTests
     public void Sl003StillRejectsLineCapacityGrowthInIoTest()
     {
         var fixture = IoFixture();
-        fixture.Files[Source] += string.Concat(Enumerable.Repeat("// padding\n",
-            RepositoryRules.ArtifactHardLineLimit));
+        var prefix = fixture.Files[Source] + "\n";
+        fixture.Files[Source] = prefix + string.Concat(Enumerable.Repeat("// padding\n",
+            1001 - prefix.Count(character => character == '\n')));
 
         var result = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3),
             fixture.Build(RawChangeSet.Create([Source])));
 
         var finding = Assert.Single(result.Diagnostics);
         Assert.Equal(Source, finding.Path);
-        Assert.Equal("artifact exceeds 800 lines", finding.Message);
+        Assert.Equal("artifact exceeds 1000 lines", finding.Message);
         Assert.Equal(AdmissionEffect.Block, finding.AdmissionEffect);
     }
 

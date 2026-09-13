@@ -18,6 +18,14 @@ public sealed class CommonCurrentProducerTests
         using var temporary = new TemporaryDirectory();
         var root = temporary.Path;
         var fixture = new RuleFixture();
+        string[] currentRuleIds =
+        [
+            "SL-001", "SL-002", "SL-003", "SL-004", "SL-006", "SL-008", "SL-010", "SL-011", "SL-012",
+            "SL-015", "SL-018", "SL-019", "SL-020", "SL-021", "SL-023", "SL-025", "SL-026",
+        ];
+        Assert.Equal(currentRuleIds, RuleCatalog.Default.CurrentPredicateIds.Select(rule => rule.Value).Order(StringComparer.Ordinal));
+        Assert.Equal(currentRuleIds, CommonCheckRegistrationFixture.Ids.Where(id => id.StartsWith("SL-", StringComparison.Ordinal)));
+        var selectedRuleIds = selected ? new[] { "SL-006" } : currentRuleIds;
         fixture.AddBackfillTargets();
         fixture.Files["Golden/Projection/statement-projection-pilot-v1.json"] = "{\"schema\":\"statement-projection-pilot-fixture-v1\",\"declarations\":[{\"source_path\":\"D5/S0/Carrier/Ring.lean\",\"name\":\"goldenRing\",\"kind\":\"def\",\"type\":\"Nat\"}]}";
         fixture.Files["Golden/Projection/statement-projection-expansion-v1.json"] = "{\"schema\":\"statement-projection-expansion-fixture-v1\",\"declarations\":[]}";
@@ -85,8 +93,11 @@ public sealed class CommonCurrentProducerTests
             foreach (var id in selected ? Array.Empty<string>() : new[] { "filemap", "scribe-markdown" }) checks.Run(id, () => new([new(id, 0, "fixture boundary")]));
             var result = Assert.IsType<RuleExecutionOutcome.Completed>(checks.ExecuteCurrentPredicates(policy, data.Lean)).Capability;
             Assert.DoesNotContain(result.Diagnostics, d => d.AdmissionEffect != AdmissionEffect.Observe);
-            Assert.Equal(cycle == 0 ? selected ? 1 : 18 : 0, result.ExecutedRules.Length);
+            Assert.Equal(cycle == 0 ? selectedRuleIds : [], result.ExecutedRules.Select(rule => rule.Value).Order(StringComparer.Ordinal));
             var record = checks.Seal();
+            var predicates = record.Units.Where(unit => unit.Id.StartsWith("SL-", StringComparison.Ordinal)).ToArray();
+            Assert.Equal(selectedRuleIds, predicates.Select(unit => unit.Id).Order(StringComparer.Ordinal));
+            Assert.All(predicates, unit => Assert.Equal(cycle == 0 ? "executed" : "reused", unit.Status));
             foreach (var id in selected ? new[] { "SL-006" } : new[] { "SL-006", "SL-023", "SL-025" })
             {
                 var predicate = record.Units.Single(unit => unit.Id == id);

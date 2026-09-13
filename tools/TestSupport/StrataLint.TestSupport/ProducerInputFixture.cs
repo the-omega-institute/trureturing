@@ -352,7 +352,7 @@ internal sealed class ProducerInputFixture : IDisposable
 
     private string HashFile(string path) =>
         Convert.ToHexStringLower(SHA256.HashData(
-            ScriptHarnessScratch.ReadScratchBytes(temporary, Path.Combine("repository", path))));
+            ScriptHarnessScratch.ReadScratchBytes(Path.Combine(repository, path))));
 
     private static string Hash(string value) => Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(value)));
 

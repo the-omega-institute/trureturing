@@ -122,7 +122,6 @@ public sealed partial class ProductionEnvironmentTests
             RuleId.CreateKnown(11),
             RuleId.CreateKnown(12),
             RuleId.CreateKnown(15),
-            RuleId.CreateKnown(17),
             RuleId.CreateKnown(18),
             RuleId.CreateKnown(19),
             RuleId.CreateKnown(20),

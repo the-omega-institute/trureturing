@@ -22,13 +22,16 @@ public sealed class RuleEngineFixtureRegistrationCapacityTests
     public void Sl003StillRejectsLineCapacityWithFixtureRegistrationDelta()
     {
         var fixture = Fixture();
-        fixture.Files[SourcePath] += string.Concat(Enumerable.Repeat("// padding\n",
-            RepositoryRules.ArtifactHardLineLimit));
+        var prefix = fixture.Files[SourcePath];
+        Assert.EndsWith("\n", prefix, StringComparison.Ordinal);
+        fixture.Files[SourcePath] = prefix + string.Concat(Enumerable.Repeat("// padding\n",
+            1001 - prefix.Count(character => character == '\n')));
 
         var result = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build());
 
-        var finding = Assert.Single(result.Diagnostics, diagnostic =>
-            diagnostic.Path == SourcePath && diagnostic.Message == "artifact exceeds 800 lines");
+        var finding = Assert.Single(result.Diagnostics);
+        Assert.Equal(SourcePath, finding.Path);
+        Assert.Equal("artifact exceeds 1000 lines", finding.Message);
         Assert.Equal(AdmissionEffect.Block, finding.AdmissionEffect);
     }
 

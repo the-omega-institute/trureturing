@@ -510,15 +510,50 @@ public sealed class RuleEngineCapacityTests
     public void Sl003CurrentBlocksAnAlreadyOversizeArtifact()
     {
         var fixture = new RuleFixture();
-        var oversize = fixture.Files[RuleFixture.RingPath]
-            + string.Concat(Enumerable.Repeat("-- pad\n", RepositoryRules.ArtifactHardLineLimit + 1));
+        var prefix = fixture.Files[RuleFixture.RingPath];
+        Assert.EndsWith("\n", prefix, StringComparison.Ordinal);
+        var oversize = prefix + string.Concat(Enumerable.Repeat("-- pad\n",
+            1001 - prefix.Count(character => character == '\n')));
         fixture.Files[RuleFixture.RingPath] = oversize;
         fixture.Baseline[RuleFixture.RingPath] = oversize;
 
         var diagnostic = Assert.Single(
             RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics);
+        Assert.Equal(RuleFixture.RingPath, diagnostic.Path);
         Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
-        Assert.Contains("exceeds 800 lines", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Equal("artifact exceeds 1000 lines", diagnostic.Message);
+    }
+
+    [Theory]
+    [InlineData(800, null)]
+    [InlineData(801, AdmissionEffect.Observe)]
+    [InlineData(1000, AdmissionEffect.Observe)]
+    [InlineData(1001, AdmissionEffect.Block)]
+    public void Sl003LineCapacityUsesThePublishedSoftAndHardBoundaries(
+        int lines, AdmissionEffect? expectedEffect)
+    {
+        // Pin both sides of the 800/1000 policy independently of the rule constants.
+        var fixture = new RuleFixture();
+        var prefix = fixture.Files[RuleFixture.RingPath];
+        Assert.EndsWith("\n", prefix, StringComparison.Ordinal);
+        fixture.Files[RuleFixture.RingPath] = prefix + string.Concat(Enumerable.Repeat("-- pad\n",
+            lines - prefix.Count(character => character == '\n')));
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(3), fixture.Build()).Diagnostics;
+
+        if (expectedEffect is null)
+        {
+            Assert.Empty(diagnostics);
+            return;
+        }
+
+        var diagnostic = Assert.Single(diagnostics);
+        Assert.Equal(RuleFixture.RingPath, diagnostic.Path);
+        Assert.Equal(expectedEffect.Value, diagnostic.AdmissionEffect);
+        Assert.Equal(expectedEffect == AdmissionEffect.Block
+            ? "artifact exceeds 1000 lines"
+            : $"artifact spans {lines} lines (soft limit 800, hard limit 1000)", diagnostic.Message);
     }
 
     [Fact]

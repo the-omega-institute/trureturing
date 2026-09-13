@@ -9,6 +9,8 @@ namespace StrataLint.EngineeringScope.Tests;
 public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, RegisteredAdmissionResourcesTests.RegisteredBase basis)
     : IClassFixture<RegisteredAdmissionResourcesTests.RegisteredBase>
 {
+    private const string RegisteredNoResourceContent = "docs/reports/prime-slab-corner-order-0909.json";
+
     [Theory]
     [InlineData("Meta/ci-checks.json", false)]
     [InlineData("Meta/ci-checks.json", true)]
@@ -40,7 +42,7 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     [InlineData("tools/tests/Trureturing.Truth.Tests/AdmissionResourceProbe.cs", true)]
     public void RegisteredJudgeChangesKeepDeltaReachableWithOrWithoutNoResourceContent(string judge, bool mixed)
     {
-        var plan = Plan(judge, mixed ? "docs/reports/ci-fixture-plane-probe.md" : "");
+        var plan = Plan(judge, mixed ? RegisteredNoResourceContent : "");
         Assert.Equal("required", plan["stages"]!["delta"]!["status"]!.GetValue<string>());
         Assert.Equal(new[] { "build", "current", "delta", "engineering", "filemap", "lean", "lean-report", "scribe" },
             Strings(plan["resources"]!));
@@ -49,14 +51,14 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
         Assert.Contains(judge, plan["paths"]!.AsArray().Select(row => row!["path"]!.GetValue<string>()));
         Assert.Equal(mixed ? 2 : 1, plan["paths"]!.AsArray().Count);
         if (mixed)
-            Assert.Empty(plan["paths"]!.AsArray().Single(row => row!["path"]!.GetValue<string>().StartsWith("docs/reports/", StringComparison.Ordinal))!["require"]!.AsArray());
+            Assert.Empty(plan["paths"]!.AsArray().Single(row => row!["path"]!.GetValue<string>() == RegisteredNoResourceContent)!["require"]!.AsArray());
     }
 
     [Theory]
     [InlineData("README.md")]
     [InlineData("docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md")]
     [InlineData("docs/develop/spec/trureturing_engineering_optimization_v1.md")]
-    [InlineData("docs/reports/ci-fixture-plane-probe.md")]
+    [InlineData(RegisteredNoResourceContent)]
     public void RegisteredContentAloneStillNeedsNoResources(string content)
     {
         var plan = Plan("", content);
@@ -69,6 +71,29 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     }
 
     private JsonNode Plan(string judge, string content)
+    {
+        var result = PlanResult(judge, content);
+        Assert.True(result.Exit == 0, result.Text);
+        var plan = JsonNode.Parse(result.Text)!;
+        output.WriteLine("REGISTERED_ADMISSION_RESOURCES " + new JsonObject
+        {
+            ["judge"] = judge, ["content"] = content,
+            ["resources"] = plan["resources"]!.DeepClone(),
+            ["stages"] = plan["stages"]!.DeepClone(),
+            ["cache_layers"] = plan["cache_layers"]!.DeepClone(),
+        }.ToJsonString());
+        return plan;
+    }
+
+    [Fact]
+    public void UnregisteredReportContentCannotClaimNoResources()
+    {
+        var result = PlanResult("", "docs/reports/ci-fixture-plane-probe.md");
+        Assert.NotEqual(0, result.Exit);
+        Assert.Contains("FILEMAP match count 0", result.Text, StringComparison.Ordinal);
+    }
+
+    private (int Exit, string Text) PlanResult(string judge, string content)
     {
         using var temporary = new PlanningFixture();
         var prepared = Python(temporary.Path, """
@@ -95,23 +120,13 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
             print(merge)
             """, basis.Path, basis.Commit, judge, content);
         Assert.True(prepared.Exit == 0, prepared.Text);
-        var result = Python(temporary.Path, """
+        return Python(temporary.Path, """
             import json, pathlib, sys
             source, root = map(pathlib.Path, sys.argv[1:3])
             sys.path.insert(0, str(source / 'tools/scripts/workflow'))
             import ci_plan
             print(json.dumps(ci_plan.make_plan(root, sys.argv[3], root / 'build/ci/changes.json')))
             """, prepared.Text.Trim());
-        Assert.True(result.Exit == 0, result.Text);
-        var plan = JsonNode.Parse(result.Text)!;
-        output.WriteLine("REGISTERED_ADMISSION_RESOURCES " + new JsonObject
-        {
-            ["judge"] = judge, ["content"] = content,
-            ["resources"] = plan["resources"]!.DeepClone(),
-            ["stages"] = plan["stages"]!.DeepClone(),
-            ["cache_layers"] = plan["cache_layers"]!.DeepClone(),
-        }.ToJsonString());
-        return plan;
     }
 
     private static string[] Strings(JsonNode value) => value.AsArray().Select(item => item!.GetValue<string>()).ToArray();

@@ -233,7 +233,8 @@ public sealed partial class MakeWorkflowTests
         var phony = Assert.Single(
             makefile.Split('\n'),
             static line => line.StartsWith(".PHONY:", StringComparison.Ordinal));
-        Assert.Equal(ToolsTargets, phony[".PHONY:".Length..].Split(' ', StringSplitOptions.RemoveEmptyEntries));
+        Assert.Equal(ToolsTargets.Order(StringComparer.Ordinal),
+            phony[".PHONY:".Length..].Split(' ', StringSplitOptions.RemoveEmptyEntries).Order(StringComparer.Ordinal));
         foreach (var target in ToolsTargets)
         {
             Assert.Matches(new Regex($"(?m)^{Regex.Escape(target)}:", RegexOptions.CultureInvariant), makefile);
