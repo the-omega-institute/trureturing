@@ -940,3 +940,180 @@ D5/S3/ConceptDynamics/ObservationTopology/PrimitiveEscapeStrictRefinement.lean
 \text{拓扑记录这种增长在何种观察下可见。}
 }
 \]
+
+---
+
+# 补编 PA：素数输入、DFAO 与操作相对的最小状态
+
+本补编把 #6881 的素数状态机直接接到仓库现有 DFAO 真源。固定的研究对象是素数乘积、容量守卫及后续指令，不把矩阵记忆模型或其他载体替换成这个对象。三个新源码位于 `D5/S3/Factorization/Automata/`，配有同名 Scribe。以下普通证明、候选 Lean 源码与已通过内核的上游定理分开记载；新源码尚未在本环境编译。
+
+## PA.1 状态、输出与输入分别是什么
+
+DFAO 是 deterministic finite automaton with output，即带输出的确定性有限状态自动机。有限的是状态集合，不是可读取的输入长度。设状态集合为 S、输入字母表为 A、更新为 delta:S×A→S、输出为 o:S→O，则对任意有限输入词 w，都可以执行 delta_w。两个当前输出相同的状态可以具有不同的后续输出。
+
+固定目标和输入域后，正确的状态等价是
+
+$$
+s\sim t\iff\forall w,\quad o(\delta_w(s))=o(\delta_w(t)).
+$$
+
+部分操作还必须保留哪些输入合法，或者把失败显式总化为一个吸收状态。仓库 `DFAOStateLowerBound` 复用 mathlib 的 DFA 和 Myhill–Nerode 左商，给出带输出的实际执行以及合法共同后缀的下界；`TypedPartialDFAOOverBase` 已有 Option-valued 部分执行与拼接律。本文复用这些对象，不重复建立通用自动机框架。
+
+对于素数状态机，至少要区别两种字母表：
+
+- 输入素数 p，执行整数乘法 x↦xp；输入的是操作。
+- 输入二进制或 Zeckendorf 数位，更新一个数位识别器；输入的是某个整数的表示。
+
+两者都可以使用 DFAO，但同一个字串、一步或状态数没有默认对应。自动机得到外部数位输入，也不等于无输入的有限自主系统能持续生成某个非周期序列。
+
+## PA.2 实际整数上的精确最小性
+
+固定 N>1，令 P_N 为 N 的素因子集合。字母表是 P_N，词值是其各字母的整数乘积，空词值为 1。目标是
+
+$$
+L_N=\{w:\operatorname{value}(w)\mid N\}.
+$$
+
+构造状态集合
+
+$$
+S_N=\{d\in\mathbb N:d\mid N\}\sqcup\{\bot\},
+$$
+
+其中 N>0，所以所有实际因数均为正数。初态是 1，全部因数状态输出 true，失败状态输出 false。更新为
+
+$$
+\delta(d,p)=
+\begin{cases}dp,&dp\mid N,\\\bot,&dp\nmid N,\end{cases}
+\qquad \delta(\bot,p)=\bot.
+$$
+
+**定理。** 这个自动机对每个素数输入词正确，而且任何对同一完整词域正确的 DFAO 至少有 tau(N)+1 个状态。
+
+**证明。** 若某个前缀的乘积不整除 N，其任意后续乘积也不整除 N，因为前缀乘积整除完整乘积。若前缀合法，则更新保存当前的实际整数乘积。对词长归纳，得到全词正确性。
+
+每个 d|N 都有一个来自其真实素因子分解的输入词。给定两个因数 d,e，取 d 的补因数 N/d，其全部素因子仍属于 P_N。由于 N/d>0，乘法消去给出
+
+$$
+e(N/d)\mid N\iff e(N/d)\mid d(N/d)\iff e\mid d.
+$$
+
+如果 d≠e，不能同时有 d|e 和 e|d。因此补因数 N/d 或 N/e 的真实素数词能区分这两个前缀。再取 N 的素数词后接任一 p∈P_N，得到真实失败前缀；空后缀就区分它和全部合法前缀。将这 tau(N)+1 个前缀及各对共同后缀交给已有 `state_lower_bound_of_distinguishing_family`，得到下界。构造本身达到该下界。证毕。
+
+候选 Lean 声明：`GuardedPrimeProduct.arithmetic_dfao_minimality`。它把正确性、显式有限载体大小与所有正确有限机的下界共同写出，没有把预期下界放在假设中。N=1 的空素数字母表没有可达失败状态，因此通过显式素数输入前提排除；不能错误地给它套用两状态的最小性。
+
+N=5040=2^4·3^2·5·7 时，tau(N)=5·3·2·2=60。故本任务有 60 个合法状态、61 个总状态；六个二进制位的 64 个码字能容纳总化机器，留下 3 个未用码字。原来只存合法寄存器状态时留下的是 4 个，两个口径不能混用。
+
+如果规定只要求在已经保证合法的输入上输出 true，完全不要求识别溢出，那么一个永远输出 true 的状态就够。60 或 61 的下界依赖实际守卫语义；不能以承诺输入偷偷消除守卫后仍沿用下界，也不能把它解释为最优通用计算机。
+
+## PA.3 有限观察深度的完整状态谱
+
+写 N=product_i p_i^{a_i}，其中 p_i 是互异素数，当前合法状态为 d=product_i p_i^{e_i}。剩余容量是 r_i=a_i-e_i。一个后续词 w 含第 i 个素数 count_i(w) 次，因此唯一分解给出
+
+$$
+d\operatorname{value}(w)\mid N
+\iff \forall i,\ \operatorname{count}_i(w)\le r_i.
+$$
+
+这正是 `PrimeCapacityHorizon.fits` 使用的实际 List 计数语义；不是独立边的存在性拼接。整数素因数到容量坐标的上述运输在这里给出普通证明，未另行声称一个已编译的坐标运输声明。
+
+**定理。** 对任意有限容量向量 a、任意 H≥0，两合法状态在全部总长度不超过 H 的后续词上具有相同合法性，当且仅当
+
+$$
+\boxed{\forall i,\quad\min(r_i,H)=\min(s_i,H).}
+$$
+
+**证明。** 充分性：每个字母的计数至多为词长，因此至多 H；把剩余容量在 H 处截断，不改变该词是否合法。必要性：对每个 i，连续输入 min(r_i,H) 次第 i 个字母。这是一个合法且长度不超过 H 的词，故在 s 处也合法，推出 min(r_i,H)≤s_i；交换两状态得到反向不等式，结合两者至多 H，便得截断坐标相同。证毕。
+
+截断后的每个坐标可以任取 0,…,min(a_i,H)，并可用同样的剩余容量 r_i 实现。失败状态由空后缀与全部合法状态区分。因此全部观察类数精确为
+
+$$
+\boxed{B_H=1+\prod_i\bigl(\min(a_i,H)+1\bigr).}
+$$
+
+`finite_horizon_state_classification` 同时证明核等价、到完整 profile 载体的满射与该载体基数，避免只构造一个未证明最小或未证明全部可实现的编码。退化空字母表时该载体仍显式包含一个失败状态，但本定理不声称该失败状态从初态可达；应用于 N>1 的实际素因子表时可达性由 PA.2 给出。
+
+对于 a=(4,2,1,1)，得到：
+
+| 可询问后续的最大长度 H | 合法状态观察类 | 含失败的全部观察类 |
+|---:|---:|---:|
+| 0 | 1 | 2 |
+| 1 | 16 | 17 |
+| 2 | 36 | 37 |
+| 3 | 48 | 49 |
+| 4 及以上 | 60 | 61 |
+
+H=0 只看当前是否合法；H=1 还知道哪些素数已经没有剩余容量；逐步增加 H 才暴露更深余量。这里 60 与 64 的联系是实际算术残差数到二进制编码容量的关系，不是 Fibonacci 递推，也不是生物密码子论断。
+
+更精细地，对 r≠s，两状态的最短区分词长为
+
+$$
+1+\min_{i:r_i\ne s_i}\min(r_i,s_i).
+$$
+
+取达到最小值的坐标并重复该字母可达此长度；更短的词在每个不同坐标都尚未耗尽较小余量，因此无法区分。这是上述核分类的普通推论，不另造一个绑定包装声明。
+
+## PA.4 固定视野摘要与可更新状态必须分开
+
+C_H(r)=(min(r_i,H)) 只保证当前能回答长度≤H 的问题，不自动保证对同样的 H 持续自治。若某轴容量至少 H+1 且 H>0，则余量 H 与 H+1 具有相同 C_H；各消耗一个单位后，余量成为 H-1 与 H，已被 C_H 区分。故一次更新可能让旧摘要中隐藏的区别变得可见。
+
+但一个预算逐步减少的正面版本成立。对合法的单次消耗，已知 C_H(r) 足以更新 C_{H-1}(r-e_i)：被消耗的坐标使用
+
+$$
+\min(r_i-1,H-1)=\min(r_i,H)-1\quad(r_i>0,H>0),
+$$
+
+其他坐标再截断至 H-1。这给出精确有限时间预测，与“用同一固定粗状态永远更新”不同。此段是普通算术推论，源码中的主定理没有把它冒充已经具备的自治状态转换。
+
+在恒定容量盒中，达到 H=max_i a_i 后，全部合法余量已被区分，完整状态因而可以自治更新。原来的有限盒本来只有有限状态；加入合法除法不会让这个固定盒凭空变成无限。
+
+## PA.5 同一素数阈值在加入逆操作后需要更多状态
+
+现在明确改变的是允许无界增长的寄存器域：完整整数从 1 开始，输入 + 表示乘以固定素数 p，输入 - 表示在 p|x 时精确除以 p。目标只询问
+
+$$
+p^a\mid x,\qquad a>0.
+$$
+
+在只允许乘法的同一无界域中，指数 e 的摘要 min(e,a) 足够：它按截断递增更新，输出是否已经达到 a。这个 a+1 状态构造不会保存超过 a 的具体指数，因为以后只乘不除时，超过量再也不影响该目标。
+
+**定理。** 加入有守卫的精确除法后，不存在对全部合法输入词正确的有限 DFAO，即使完全不要求判断非法词。
+
+**证明。** 任取 H。选择 H+1 个前缀：分别执行 a+i 次乘法，0≤i≤H，真实到达 p^{a+i}，当前输出全部相同。若 i<j，给两者接上同一个 i+1 次除法后缀。因为 a≥1，这个后缀对二者都合法。首个达到 p^{a-1}，目标为假；第二个仍有指数 a+j-i-1≥a，目标为真。故任何正确 DFAO 必须对这 H+1 个前缀到达互不相同的状态。取 H 为其假定有限状态数，矛盾。证毕。
+
+`ReversiblePrimeThreshold.no_finite_dfao_for_exact_prime_division` 从实际整数乘除开始，先证明 p^e 坐标的逐步与整词模拟，再构造合法共同后缀族，最后复用现有 DFAO 下界。没有把非法后缀作为区分手段，也没有用输出全部指数来人为制造无限值域。
+
+因此，必须保留多少状态是相对于对象域、操作集合和目标共同决定的。被乘法摘要丢掉的指数超额，在除法下重新变得重要。这是一种确切的操作相对记忆，不需要诉诸未实现现实或任意附加坐标。
+
+## PA.6 整数显示、黄金数位与隐藏信息的范围
+
+在固定互异素数的容量盒里，完整整数乘积 d 本身通过唯一分解就能恢复所有指数 e_i。此处不存在“同一个 d 对应不同指数向量”的隐含自由度。隐藏性来自改成较粗的观察，例如只显示是否合法、只显示某个余数，或只保留有限后续的答案。
+
+之前 RawDigits→GoldenInt→整数读数的多对一映射是另一个已经明确的载体：不同原始数位构造可能具有相同整数求值。不能把那里存在的纤维直接移入这里已唯一分解的 60 状态盒。若要把两者组合，必须显式指定每个素数轴上保留原始数位、黄金坐标还是规范指数，并给出操作如何作用于该载体。
+
+Zeckendorf 可以给这些指数或状态编号提供规范表示，但单纯无损换码不改变继续词等价类数。若读取的是数位字，合法数位语法的状态也必须计入；若读取的是素数指令，语法和运算契约则不同。位翻转成本、读取长度、解码开销与语义状态最小性是不同目标。
+
+## PA.7 与现役 DFAO 开放问题的接口
+
+Barnoff、Bright、Shallit 的论文表明：黄金比例第 n 个 base-b 数位是 b^n 的 Zeckendorf 表示的有限状态函数。仓库的 `golden-ratio-base4-dfao-minimality` 将 base-4 稀疏输入问题单独登记，现有 `DFAOStateLowerBound`、`TypedPartialDFAOOverBase` 及相关 oracle/identification 模块提供基础。
+
+PA.2 对全部素数词的下界，不是对 {Zeckendorf(4^i)} 这个稀疏域的下界；一个补因数词能保持整除问题的输入合法，不意味着它能把两个稀疏前缀都补成 4 的幂。不能扩大正确性域后冒称解决了原来的 22 状态问题。现有唯一合法后缀的 distinguishing-family 容量限制也必须保留。
+
+若一个有限前缀约束的 SAT 编码确实覆盖所有至多 21 状态机器，那么经 soundness 核验的 UNSAT 可以排除全局 21 状态模型，因为全局模型必定满足这个前缀。它仍不能单独证明某个 22 状态表对全部稀疏输入正确，也不能证明唯一性。有限拟合成功则更不能证明全局正确。本批不声称解决该外部猜想。
+
+另一个不同的“prime automata”用语来自 Krohn–Rhodes 分解：其中的素构件指群/复位等转换半群结构，不是给寄存器贴上算术素数标签。这里的只乘法守卫系统中，任意非空词足够多次重复都会进入失败，因而其转换半群没有因此获得 Monster 作用。需要群论桥时，必须证明实际动作保持状态域、守卫和读数；数目相同或术语相同都不是这项证明。
+
+## PA.8 研究价值、验证边界与来源
+
+本批的实质结果是实际素数词的最小状态定理、任意容量和未来深度的完整核分类，以及精确除法破坏有限摘要的全称障碍。一般 Myhill–Nerode 理论、有限状态基本概念与一计数器障碍不作新发现或开放问题解决的宣称。没有 HTML、搜索平台、CI、harness 或冻结修改。
+
+候选源码与普通证明经过逻辑审查；本环境没有 Lean/Lake，未运行 elaboration、kernel、axiom-print 或 Scribe 编译。实际整数检查验证了 5040 全部 60×60 个补因数测试、61 状态机的分区细化；另对多组实际素数和阈值检查 16,275 对合法除法后缀；对 420 组容量与视野实例，独立枚举真实后续词并核对完整 profile。有限检查仅作错误诊断，不替代全称证明。
+
+原理论正文全部保留，本补编不取代其他分支对投影记忆、矩阵恢复或原始进位的结果。下一项承重问题是把实际 RawDigits 进位的目标相关历史和局部守卫，与这里的继续词等价逐项对齐；先确定能否得到有限的精确预测状态，而不是假定 60 个地址能容纳任意隐藏结构。若改用概率路径，应重新履行随机下降和整路径概率保持条件，不能由确定性 DFAO 自动获得。
+
+**来源与复用：**
+
+1. mathlib, `Mathlib.Computability.DFA` and `Mathlib.Computability.MyhillNerode`, pinned revision `db584cd6d46c92f209a44c0f1c829460d327499d`; public documentation: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Computability/MyhillNerode.html . Actual repository adapters were read at dev `5cc2bac9e9591eeaf703d875b077891d335a0025` and compared with the subsequent base `f59ab9427f4336f6718603695e4df5d47560d739`.
+2. A. Barnoff, C. Bright, J. Shallit, *Using finite automata to compute the base-b representation of the golden ratio and other quadratic irrationals*, arXiv:2405.02727v1, 4 May 2024, https://arxiv.org/abs/2405.02727 . Its digit-extraction and sparse minimality scope is not silently transferred to prime-command words.
+3. A. Ronca, N. Knorozova, G. De Giacomo, *Automata Cascades: Expressivity and Sample Complexity*, arXiv:2211.14028, https://arxiv.org/abs/2211.14028 . Used only to distinguish algebraic prime decomposition from arithmetic prime labels; no cascade sample-complexity result is claimed for the present state machine.
+4. Repository sources reused directly: `D5/S0/Automata/DFAOStateLowerBound.lean` and `D5/S0/Automata/TypedPartialDFAOOverBase.lean`; arithmetic inputs use pinned mathlib `Nat.primeFactorsList`, `Nat.divisors`, positive-factor cancellation and prime-power divisibility. No unmerged research module is imported.
