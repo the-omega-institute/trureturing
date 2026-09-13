@@ -102,9 +102,41 @@ although they remain close to that form. It exhibits the first `V_G`, the first
   Under that conjunct the paper's own Proposition 7.8 d) identity
   `R_{.01} = R_{.010}` fails, with symmetric difference exactly `{2, 3, 4}`;
   under the zero-padded reading it holds and is a corollary of canonicality.
-- What remains open is the classification itself. Existing return-word theorems
-  concern factors of the frozen golden word; it remains to prove that
-  negative-prefix cylinders land in those exact subshifts.
+- The classification under the repository reading is proved and frozen.
+  `D5/S1/Words/NegativeExpansions/BasePhiNegativePrefixTridentClassification`
+  carries `negative_prefix_trident_classification`: for every
+  `BasePhiNegativeExpansion` and every admissible `w`, `occurrenceSet expansion w`
+  equals `sequenceRange (vF a b r)`, `vG`, or `vH` with `LucasPair a b`, or a union
+  of three pairwise disjoint arms `vForFamily family a b (r + i)`, `i : Fin 3`.
+  `AdmissibleNegativePrefix expansion w` unfolds to nonemptiness of
+  `occurrenceSet expansion w` (`admissible_negative_prefix_iff_occurrence_set_nonempty`,
+  proved by `rfl`), so the statement carries no hypothesis beyond the word occurring.
+  A source scan of the classification module and its 41 transitively imported `D5`
+  files, 42 files in total, finds
+  no `sorry`, no `admit`, no `native_decide` and no `axiom`, and its five
+  load-bearing `_proved` lemmas are theorems, not axiom debt. That scan is over `D5`
+  source only; it is not a fresh kernel run or a transitive axiom-closure check.
+- What remains open is therefore the classification under the paper's reading, not
+  the classification as such. Three readings of "the first `m` digits of `beta^-(N)`
+  are `w`" must be separated, and the paper prints two facts that any faithful
+  reading has to satisfy at once: Proposition 7.8 d) `R_{.01} = R_{.010}`, and the
+  trident classification.
+  Proved in the tree. The depth reading satisfies the classification and fails the
+  identity: `BasePhiNegativePrefixPaddedReading` gives
+  `occurrenceSet 01 \ occurrenceSet 010 = {2, 3, 4}`. The zero-padded reading
+  satisfies the identity in that same module, and a set equality survives
+  restriction, so it holds under `N >= 2` as well.
+  How the three domains relate. The two zero-padded readings differ only at `N = 1`,
+  which is what restricting to `N >= 2` removes. The depth
+  reading differs from both of them at points other than `N = 1`: `N = 2, 3, 4` for
+  the word `010`, all of which survive the `N >= 2` restriction. So the divergence
+  is a single point only between the two padded domains, not among the three
+  readings.
+  Not proved here. Whether either zero-padded reading satisfies the classification
+  is open. The finite measurement recorded under Evidence exhibits failures at the
+  all-zero words when `N = 1` is included, and no failure under `N >= 2`; the window
+  is finite, so neither the failure at every all-zero word nor the success under
+  `N >= 2` is established. Closing that is the remaining obligation.
 
 ## Route
 
@@ -149,6 +181,18 @@ For all admissible `w` of length at most 14:
 
 The first Evidence goal is to validate the finite transducer and discover its
 states, not to certify the infinite conjecture from samples.
+
+`ASSUMED-UNVERIFIED` -- reading trichotomy, measured outside the repository with
+programs that are not committed here. Window `1 <= N <= 1,000,000`, exact
+integer-pair arithmetic in `Z[phi]`, the 374 admissible words of length at most ten
+whose depth-reading occurrence set has at least 60 elements in the window. Counts of
+words whose occurrence set is neither a single family member nor a union of three:
+depth 0, zero-padded 10, zero-padded with `N >= 2` 0. The 10 are exactly the all-zero
+words `0^1` to `0^10`, and for each of them the zero-padded set exceeds the depth set
+by exactly `{1}`. Under the depth reading each `0^m` is a union of three `V_F` arms
+with `(a, b) = (L_{m+2}, L_{m+1})`, measured as `(4,3)`, `(7,4)`, `(11,7)`, `(18,11)`,
+`(29,18)`, `(47,29)`, `(76,47)`, `(123,76)`, `(199,123)`, `(322,199)`. The window is
+finite and this settles no infinite statement.
 
 Steps 1 and 2 of the protocol above have been run, and step 3 only in the
 degenerate form of classifying every word directly rather than inferring from a
