@@ -153,4 +153,6 @@ theorem stephan_a107928 : ∀ m : ℕ, 1 ≤ m →
             show 1 + Nat.succ k = 1 + k + 1 by omega]
           exact h2
 
+#print axioms stephan_a107928
+
 end D5.S1.Recurrence.Invariants.StephanHarmonicMeanNumeratorClosedForm
