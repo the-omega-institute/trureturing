@@ -2,10 +2,11 @@
    generality: G
    mirror-B: D5/B/S1/Words/Patterns/GridNoLeafSubgraphRecurrence
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [lean/module/Lean.Elab.Tactic.Omega, mathlib/module/Mathlib.Data.Fin.Tuple.Finset, mathlib/module/Mathlib.Data.Finset.Powerset, mathlib/module/Mathlib.Data.Fintype.BigOperators, mathlib/module/Mathlib.Data.Fintype.Prod, mathlib/module/Mathlib.Data.Fintype.Sigma, mathlib/module/Mathlib.Data.Int.ModEq, mathlib/module/Mathlib.Tactic.FinCases, mathlib/module/Mathlib.Tactic.NormNum, mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [lean/module/Lean.Elab.Tactic.Omega, mathlib/module/Mathlib.Algebra.BigOperators.Ring.Finset, mathlib/module/Mathlib.Data.Fin.Tuple.Finset, mathlib/module/Mathlib.Data.Finset.Powerset, mathlib/module/Mathlib.Data.Fintype.BigOperators, mathlib/module/Mathlib.Data.Fintype.Prod, mathlib/module/Mathlib.Data.Fintype.Sigma, mathlib/module/Mathlib.Data.Int.ModEq, mathlib/module/Mathlib.Tactic.FinCases, mathlib/module/Mathlib.Tactic.NormNum, mathlib/module/Mathlib.Tactic.Ring]
    utility: none
    digest: No-leaf edge subgraphs of the three-by-n grid satisfy Barker's recurrence and Kagey's congruence. -/
 
+import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Data.Fin.Tuple.Finset
 import Mathlib.Data.Finset.Powerset
 import Mathlib.Data.Fintype.BigOperators
@@ -90,8 +91,38 @@ def NoLeaf {n : ℕ} (H : Finset (Edge n)) : Prop :=
 def a (n : ℕ) : ℕ :=
   ((gridEdges n).powerset.filter (NoLeaf (n := n))).card
 
+private def good (i : HorizontalMask) (v : VerticalMask) (o : HorizontalMask) : Bool :=
+  decide (localDegree i v o ⟨0, by omega⟩ ≠ 1) &&
+    decide (localDegree i v o ⟨1, by omega⟩ ≠ 1) &&
+      decide (localDegree i v o ⟨2, by omega⟩ ≠ 1)
+
 private def Good (i : HorizontalMask) (v : VerticalMask) (o : HorizontalMask) : Prop :=
-  ∀ r : Fin 3, localDegree i v o r ≠ 1
+  good i v o = true
+
+private instance goodDecidable (i : HorizontalMask) (v : VerticalMask) (o : HorizontalMask) :
+    Decidable (Good i v o) := Bool.decEq (good i v o) true
+
+private theorem good_eq_true_iff (i : HorizontalMask) (v : VerticalMask) (o : HorizontalMask) :
+    Good i v o ↔ ∀ r : Fin 3, localDegree i v o r ≠ 1 := by
+  constructor
+  · intro h
+    have hs :
+        (localDegree i v o ⟨0, by omega⟩ ≠ 1 ∧
+          localDegree i v o ⟨1, by omega⟩ ≠ 1) ∧
+            localDegree i v o ⟨2, by omega⟩ ≠ 1 := by
+      simpa only [Good, good, Bool.and_eq_true, decide_eq_true_eq] using h
+    intro r
+    fin_cases r
+    · exact hs.1.1
+    · exact hs.1.2
+    · exact hs.2
+  · intro h
+    have h0 := h ⟨0, by omega⟩
+    have h1 := h ⟨1, by omega⟩
+    have h2 := h ⟨2, by omega⟩
+    change good i v o = true
+    simp only [good, Bool.and_eq_true, decide_eq_true_eq]
+    exact ⟨⟨h0, h1⟩, h2⟩
 
 private def encode {n : ℕ} (H : Finset (Edge n)) : Fin n → Column :=
   fun c ↦ (verticalMask H c, outgoingMask H c)
@@ -244,12 +275,14 @@ private theorem noLeaf_iff_local_columns {n : ℕ} (H : Finset (Edge n)) :
       ∀ c : Fin n,
         Good (preceding zeroHorizontal (encode H) c) (encode H c).1 (encode H c).2 := by
   constructor
-  · intro h c r
+  · intro h c
+    apply (good_eq_true_iff _ _ _).mpr
+    intro r
     have hr := h (r, c)
     rw [preceding_encode H c]
     exact hr
   · intro h ⟨r, c⟩
-    have hr := h c r
+    have hr := (good_eq_true_iff _ _ _).mp (h c) r
     rw [preceding_encode H c] at hr
     exact hr
 
@@ -324,6 +357,60 @@ private theorem a_eq_stateCount (n : ℕ) : a n = stateCount n zeroHorizontal :=
     _ = Fintype.card {f : Fin n → Column // PathGood zeroHorizontal f} :=
       Fintype.card_congr (edgePathEquiv n)
     _ = stateCount n zeroHorizontal := card_paths n zeroHorizontal
+
+private theorem transfer_certificate :
+    ∀ i : HorizontalMask,
+      (stateCount 5 i : ℤ) =
+        12 * stateCount 4 i - 6 * stateCount 3 i -
+          20 * stateCount 2 i - 5 * stateCount 1 i := by
+  decide
+
+private theorem stateCount_succ_int (n : ℕ) (i : HorizontalMask) :
+    (stateCount (n + 1) i : ℤ) =
+      ∑ o : HorizontalMask, (transition i o : ℤ) * stateCount n o := by
+  rw [stateCount]
+  simpa only [Nat.cast_sum, Nat.cast_mul]
+
+private theorem stateCount_recurrence (n : ℕ) (i : HorizontalMask) :
+    (stateCount (n + 5) i : ℤ) =
+      12 * stateCount (n + 4) i - 6 * stateCount (n + 3) i -
+        20 * stateCount (n + 2) i - 5 * stateCount (n + 1) i := by
+  induction n generalizing i with
+  | zero => simpa using transfer_certificate i
+  | succ n ih =>
+      have h5 : n.succ + 5 = (n + 5) + 1 := by omega
+      have h4 : n.succ + 4 = (n + 4) + 1 := by omega
+      have h3 : n.succ + 3 = (n + 3) + 1 := by omega
+      have h2 : n.succ + 2 = (n + 2) + 1 := by omega
+      have h1 : n.succ + 1 = (n + 1) + 1 := by omega
+      rw [h5, h4, h3, h2, h1]
+      rw [stateCount_succ_int (n + 5) i]
+      rw [stateCount_succ_int (n + 4) i]
+      rw [stateCount_succ_int (n + 3) i]
+      rw [stateCount_succ_int (n + 2) i]
+      rw [stateCount_succ_int (n + 1) i]
+      have pull (c : ℤ) (g : HorizontalMask → ℤ) :
+          (∑ o : HorizontalMask, (transition i o : ℤ) * (c * g o)) =
+            c * ∑ o : HorizontalMask, (transition i o : ℤ) * g o := by
+        rw [Finset.mul_sum]
+        apply Finset.sum_congr rfl
+        intro o _
+        ring
+      calc
+        (∑ o : HorizontalMask, (transition i o : ℤ) * stateCount (n + 5) o) =
+            ∑ o : HorizontalMask, (transition i o : ℤ) *
+              (12 * stateCount (n + 4) o - 6 * stateCount (n + 3) o -
+                20 * stateCount (n + 2) o - 5 * stateCount (n + 1) o) := by
+          apply Finset.sum_congr rfl
+          intro o _
+          rw [ih o]
+        _ = 12 * (∑ o : HorizontalMask, (transition i o : ℤ) * stateCount (n + 4) o) -
+              6 * (∑ o : HorizontalMask, (transition i o : ℤ) * stateCount (n + 3) o) -
+              20 * (∑ o : HorizontalMask, (transition i o : ℤ) * stateCount (n + 2) o) -
+              5 * (∑ o : HorizontalMask, (transition i o : ℤ) * stateCount (n + 1) o) := by
+          simp_rw [mul_sub]
+          rw [Finset.sum_sub_distrib, Finset.sum_sub_distrib, Finset.sum_sub_distrib]
+          rw [pull, pull, pull, pull]
 
 end
 end D5.S1.Words.Patterns.GridNoLeafSubgraphRecurrence
