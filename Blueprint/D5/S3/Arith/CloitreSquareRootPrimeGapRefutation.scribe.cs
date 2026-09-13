@@ -10,7 +10,7 @@ internal sealed class CloitreSquareRootPrimeGapRefutationDocument
     private const string Prefix =
         "D5/S3/Arith/CloitreSquareRootPrimeGapRefutation.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Factorization/cloitre2003a079063");
+        LibraryNoteRef.Create("D5/L/cloitre2003a079063");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Prime counting refutes the eventual square-root lower bound proposed for A079063.",
