@@ -22,6 +22,10 @@ $$\forall m \in {\mathbb N},\; 4 < m \Rightarrow \left(\exists t \in {\mathbb N}
 
 *Proof.* Machine-checked in Lean as `D5/S3/Factorization/IanakievPrimeExponentSumIterationReachesFive.ianakiev_a008474` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a008474-prime-exponent-sum-iteration-reaches-five` (proved) by `D5/S3/Factorization/IanakievPrimeExponentSumIterationReachesFive.ianakiev_a008474`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a008474-prime-exponent-sum-iteration-reaches-five","declaration_gid":"D5/S3/Factorization/IanakievPrimeExponentSumIterationReachesFive.ianakiev_a008474","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*

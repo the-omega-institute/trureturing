@@ -28,13 +28,18 @@ internal sealed class IanakievPrimeExponentSumIterationReachesFiveDocument
                     + "descend in two steps. The remaining values enter the cycle "
                     + "5 -> 6 -> 7 -> 8 -> 5. Since four is fixed, the lower bound is sharp. "
                     + "No generating-function identity is asserted.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo()))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a008474-prime-exponent-sum-iteration-reaches-five"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? claim = null) => Describe.Lean(
         DescribeId.Create("a008474-" + name.Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-        provenance, Blocks(Paragraph(Text(prose))), role);
+        provenance, Blocks(Paragraph(Text(prose))), role, claim);
 
     private static Formula DefinitionFormula()
     {
