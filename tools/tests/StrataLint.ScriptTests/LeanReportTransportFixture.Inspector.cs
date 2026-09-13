@@ -34,6 +34,7 @@ internal sealed partial class LeanReportTransportFixture
                   ;;
                 worktree)
                   [[ "$2" == with-cache-writer && "$3" == -- ]]
+                  if [[ -n "${FIXTURE_NATIVE_CLI:-}" ]]; then exec "$FIXTURE_NATIVE_CLI" "$@"; fi
                   shift 3
                   exec "$@"
                   ;;
@@ -74,6 +75,14 @@ internal sealed partial class LeanReportTransportFixture
     }
 
     internal string Phase(string name, string suffix) => File.ReadAllText(Output + ".logs/" + name + "." + suffix + ".log").Trim();
+    internal void SetConfigOutput(string json) => File.WriteAllText(Path.Combine(temporary.Path, "lake-config.json"), json);
+    internal Attempt ReadNativeConfig(params string[] arguments)
+    {
+        var discovery = Run(["elan", "which", "lake"]);
+        Success(discovery);
+        return Run([discovery.Stdout.Trim(), "env", "lean", "--run",
+            Path.Combine(Repository, "tools/lean-inspector/Census/config.lean"), .. arguments]);
+    }
 
     internal void UseNativeLean()
     {
@@ -96,6 +105,12 @@ internal sealed partial class LeanReportTransportFixture
             claimSourceSha256 = "sha256:" + Digest(File.ReadAllBytes(Path.Combine(Repository, "D5/External.lean"))),
             resultGid = "Trureturing.result", resultModule = "Trureturing", resultSelector = "result",
         } }));
+        // This dependency-free fixture needs no transport bootstrap. Use the
+        // canonical stamp owner so the real writer can admit its bounded builds.
+        var pins = StrataLint.Cli.LeanPinSet.Create(
+            File.ReadAllBytes(Path.Combine(Repository, "lean-toolchain")),
+            File.ReadAllBytes(Path.Combine(Repository, "lake-manifest.json")));
+        StrataLint.Cli.LeanCacheStamp.Write(Path.Combine(Repository, ".lake"), pins);
     }
 
     internal Attempt MakeNativeReport(string lake)
@@ -104,6 +119,8 @@ internal sealed partial class LeanReportTransportFixture
             $"PATH={Bin}:{Environment.GetEnvironmentVariable("PATH")}", $"REPORT_FIXTURE={temporary.Path}",
             $"REPORT_REPOSITORY={Repository}", $"STRATALINT_REPORT_CACHE_ROOT={CacheRoot}",
             "STRATALINT_REPORT_CACHE_REMOTE=0", $"LAKE_BIN={Path.Combine(Bin, "lake")}",
+            $"FIXTURE_NATIVE_CLI={Path.Combine(AppContext.BaseDirectory, "StrataLint")}",
+            "STRATALINT_ACCEPT_COLD_BUILD=1",
             $"FIXTURE_NATIVE_LAKE={lake}", "make", "lean-report"],
             Repository, StrataLint.Engine.BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
         return new Attempt(result.ExitCode, System.Text.Encoding.UTF8.GetString(result.StandardOutput),
@@ -165,7 +182,14 @@ internal sealed partial class LeanReportTransportFixture
         [[ "$1" == env && "$2" == lean && "$3" == --run ]]
         if [[ -n "${FIXTURE_NATIVE_LAKE:-}" ]]; then exec "$FIXTURE_NATIVE_LAKE" "$@"; fi
         if [[ "$4" == */Census/config.lean ]]; then
-          cat "$REPORT_FIXTURE/lake-config.json"
+          [[ "${FIXTURE_CONFIG_EXIT:-0}" == 0 ]] || exit "$FIXTURE_CONFIG_EXIT"
+          [[ "${FIXTURE_CONFIG_MISSING_OUTPUT:-0}" == 0 ]] || exit 0
+          if [[ $# == 5 ]]; then
+            cat "$REPORT_FIXTURE/lake-config.json"
+          else
+            [[ $# == 7 && "$6" == --output ]]
+            cat "$REPORT_FIXTURE/lake-config.json" > "$7"
+          fi
           exit 0
         fi
         printf 'inspect\n' >> "$REPORT_FIXTURE/events.log"
