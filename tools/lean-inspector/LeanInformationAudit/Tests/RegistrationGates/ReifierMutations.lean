@@ -1,3 +1,4 @@
+import D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates
 import LeanInformationAudit.Syntax
 
 namespace LeanInformationAudit.Tests.ReifierMutations
@@ -12,7 +13,7 @@ private def observe (label : String) (check : MetaM Bool) : MetaM Unit := do
 def arena := pointwiseEqArena (Arena.ofFintype Bool) Bool
 theorem clean (x : Bool) : x.not.not = x := Bool.not_not _
 register_information_theorem clean
-  via (ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in arena
+  via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in arena
 
 run_meta do
   let a := Expr.letE `unused (mkConst ``True) (mkConst ``True.intro) (mkConst ``Bool.true) true
@@ -43,9 +44,9 @@ theorem hidden (x : Bool) : (have _p := clean; x.not.not) = x := Bool.not_not _
 elab "observe_semantic_insertion" : command => do
   let forms ← pure #[
     ("reflexive_closed_truth", ``reflexive, ← `(command| register_information_theorem reflexive
-      via (ReifierTemplates.pointwise (fun x : Bool => x) (fun x => x)) in arena)),
+      via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => x) (fun x => x)) in arena)),
     ("provenance_hidden_proof", ``hidden, ← `(command| register_information_theorem hidden
-      via (ReifierTemplates.pointwise (fun x : Bool => have _p := clean; x.not.not) (fun x => x)) in arena))]
+      via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => have _p := clean; x.not.not) (fun x => x)) in arena))]
   for (label, name, form) in forms do
     let initial ← get
     modify fun s => { s with messages := {} }

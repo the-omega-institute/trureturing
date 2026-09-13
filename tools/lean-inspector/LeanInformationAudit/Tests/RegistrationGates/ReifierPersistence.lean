@@ -1,3 +1,4 @@
+import D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates
 import LeanInformationAudit.Tests.RegistrationGates.ReifierShadow
 import LeanInformationAudit.Tests.RegistrationGates.ReifierChecks
 import LeanInformationAudit.Tests.RegistrationPersistence

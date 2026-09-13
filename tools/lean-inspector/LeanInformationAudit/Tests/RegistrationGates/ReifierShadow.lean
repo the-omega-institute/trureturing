@@ -1,3 +1,4 @@
+import D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates
 import LeanInformationAudit.SealCommand
 import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import D5.S0.Tower.DBonacci.Substitution
@@ -16,9 +17,9 @@ def substitutionArena := pointwiseEqArena (Arena.ofFintype (Fin 3)) (List Tribon
 def recenterArena := pointwiseEqArena (Arena.ofFintype (Fin 3)) Point
 
 private def viaForms : CommandElabM (Array Syntax) := do
-  let substitution ← `(command| register_information_theorem gapLabelSubstitution_three_compatible via (ReifierTemplates.pointwise
+  let substitution ← `(command| register_information_theorem gapLabelSubstitution_three_compatible via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise
     (fun label : Fin 3 => (gapLabelSubstitution 3 label.1).map tribonacciGapLetterOfLabel) (fun label => gapLetterSubstitution (tribonacciGapLetterOfLabel label.1))) in substitutionArena output_evidence (nontrivial_of_ne [] [.small] (by decide)))
-  let recenter ← `(command| register_information_theorem recenter_direction via (ReifierTemplates.pointwise
+  let recenter ← `(command| register_information_theorem recenter_direction via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise
     (fun d : Fin 3 => recenter d (direction d)) (fun _ => (0, 0))) in recenterArena)
   return #[substitution, recenter]
 
@@ -102,9 +103,9 @@ private def manual (form : Syntax) (wrapped : Bool) : CommandElabM Unit := do
       Term.synthesizeSyntheticMVarsNoPostponing
       instantiateMVars value
     proof sens (← mkAppM ``FiniteSlotSensitivity #[arena])
-      (mkAppN (mkConst ``ReifierTemplates.sensitivity) (p.extract 0 5 ++ #[outputInstance, mkConst nd]))
+      (mkAppN (mkConst ``D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.sensitivity) (p.extract 0 5 ++ #[outputInstance, mkConst nd]))
     proof vari (← mkAppM ``FiniteLawVariation #[arena])
-      (← mkAppM ``ReifierTemplates.variation #[arena, mkConst ``Bool.false, mkConst sens])
+      (← mkAppM ``D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.variation #[arena, mkConst ``Bool.false, mkConst sens])
     let compiled ← compilePrimitiveBundle arena native
     let value ← mkAppOptM ``PrimitiveRealization.toPrimitiveBundle (compiled.getAppArgs.map some)
     let type ← inferType value
