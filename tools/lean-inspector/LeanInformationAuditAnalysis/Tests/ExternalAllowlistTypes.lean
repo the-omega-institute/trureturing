@@ -208,3 +208,17 @@ structure UniqueLiteral where
   bit : Bool
 def literalRead (_ : Unit) (bit : Bool) : UniqueLiteral := ⟨by decide, bit⟩
 end ListMetadataFixtures
+
+namespace ListMetadataFixtures
+def propositionList : List Prop := [∃ k : Nat, k = 137, False]
+structure PropositionUnique where
+  proof : propositionList.Nodup
+  bit : Bool
+def propositionRead (_ : Unit) (bit : Bool) : PropositionUnique :=
+  ⟨.cons (by
+    intro b hb
+    simp only [List.mem_singleton] at hb
+    subst b
+    intro h
+    exact Eq.mp h ⟨137, rfl⟩) (.cons (by simp) .nil), bit⟩
+end ListMetadataFixtures

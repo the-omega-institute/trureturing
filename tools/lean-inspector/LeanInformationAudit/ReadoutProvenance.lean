@@ -326,7 +326,6 @@ private structure WalkState where
   inferredTypes : Std.HashMap Expr Expr := {}
   cleanKinds : Std.HashSet Expr := {}
   dataFunctionTypes : Std.HashSet Expr := {}
-  fieldContexts : Std.HashMap Expr (Array (LocalContext × LocalInstances × Meta.FVarSubst × Array Expr)) := {}
   binderContexts : Std.HashMap (Array Expr) (LocalContext × LocalInstances × Array Expr) := {}
   exprFuel : Nat := provenanceExpressionFuel
   constFuel : Nat := provenanceConstantFuel
@@ -581,7 +580,6 @@ private def occurrenceType (e : Expr) : WalkM (Option Expr) := do
 private def caseFields (type : Expr) :
     WalkM (Option (Array (LocalContext × LocalInstances × Meta.FVarSubst × Array Expr))) := do
   unless ← chargeTraversal do return none
-  if let some fields := (← get).fieldContexts[type]? then return some fields
   unless ← chargeExpression type do return none
   let some (.inductInfo family) := (← getEnv).find? type.getAppFn.constName! | return none
   -- Native cases batches every constructor of a proposition even when asked
@@ -602,7 +600,6 @@ private def caseFields (type : Expr) :
     return none
   unless ← chargeTraversal fields.size do return none
   modify fun s => { s with
-    fieldContexts := s.fieldContexts.insert type fields
     counters.caseExpansions := s.counters.caseExpansions + 1 }
   return some fields
 
@@ -816,6 +813,26 @@ private partial def inputType (env : Environment) (type : Expr)
         let some statement ← boundedMeta (Meta.whnf (← get).statement) `statement_head
           | return (mentions, true)
         return (mentions, unclassified || statement.getAppFn.isConstOf ``Nat.le)
+      -- Natural-list uniqueness is primitive only for a checked Ne relation. Its proof
+      -- fields are recursive Pairwise and forall b, Mem b tail -> (a = b -> False).
+      -- These forms cannot specialize to the positive heads below or to
+      -- Exists p -> False. Unknown statement heads do not prove disjointness.
+      if name == ``List.Pairwise && args.size == 3 then
+        let some kind ← occurrenceType args[0]! | return (mentions, true)
+        let some (.sort level) ← boundedMeta (Meta.whnf kind) `carrier_kind
+          | return (mentions, true)
+        let relation := mkApp (mkConst ``Ne [level]) args[0]!
+        if (← compareCanonical args[0]! (mkConst ``Nat)) &&
+            (← compareCanonical args[1]! relation) then
+          let some statement ← boundedMeta (Meta.whnf (← get).statement) `statement_head
+            | return (mentions, true)
+          let disjoint ← match statement with
+            | .forallE _ domain body _ => do
+              let some domain ← boundedMeta (Meta.whnf domain) `statement_domain
+                | return (mentions, true)
+              pure (domain.getAppFn.isConstOf ``Exists && body.isConstOf ``False)
+            | _ => pure (#[``And, ``Or, ``Exists, ``True].contains statement.getAppFn.constName!)
+          return (mentions, unclassified || !disjoint)
       if Lean.isClass env name && !listedTypeClasses.contains name then
         return (mentions, true)
       -- Quotient carriers and lifted type families expose their relation or

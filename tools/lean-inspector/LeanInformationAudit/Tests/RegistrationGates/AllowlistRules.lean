@@ -952,7 +952,7 @@ run_cmd Elab.Command.liftCoreM do
   unsafe enableInitializersExecution
   let parserEnv ← importModules #[{ module := `Lean }] {} (loadExts := true)
   for (moduleName, expectedDigest, expectedExits) in [
-      ("ReadoutProvenance", "8c72a666595a6d5faa5969b720d1464a54e465d00ba73f735822dc02a52aaf73", 232),
+      ("ReadoutProvenance", "7cbfbb85d1bb69def51c210061e52e9efe1bae99ced1bbc65647895e3b64e7fe", 238),
       ("ReadoutFamily", "2cc8a787350d521c79e444692b947ccd00e5a6898c3da9d30080d06333b2184d", 47)] do
     let path := s!"tools/lean-inspector/LeanInformationAudit/{moduleName}.lean"
     let parsed ← Parser.testParseFile parserEnv path
@@ -1284,4 +1284,18 @@ run_cmd Elab.Command.liftCoreM do
     let result ← provenanceErrorCurrent (← getEnv).header.mainModule `catalog statement holder
     if clean == result.isNone then logInfo m!"[PASS] {label}"
     else logError m!"[FAIL] {label}: {result}"
+end ListMetadataFixtures
+
+namespace ListMetadataFixtures
+def propositionSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => PropositionUnique
+def propositionRealization : StructuralPrimitiveRealization ⟨Bool⟩ propositionSignature :=
+  ⟨propositionRead⟩
+run_cmd Elab.Command.liftCoreM do
+  let result ← provenanceErrorCurrent (← getEnv).header.mainModule
+    `catalog ``existsTarget ``propositionRealization
+  if result.isSome then logInfo "[PASS] PropositionNodupPayload"
+  else logError "[FAIL] PropositionNodupPayload: list element hides the registered proposition"
 end ListMetadataFixtures
