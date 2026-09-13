@@ -917,9 +917,14 @@ private partial def inputType (env : Environment) (type : Expr)
       for (lctx, instances, subst, fields) in branches do
         let mut branchActive := #[]
         for family in nextActive do
-          unless ← chargeExpression family do return (mentions, true)
-          let some family ← boundedMeta (pure (subst.apply family)) | return (mentions, true)
-          branchActive := branchActive.push family
+          unless ← chargeTraversal (branchActive.size + 1) do return (mentions, true)
+          -- FVarSubst.apply is identity for either condition (pinned Lean).
+          if subst.isEmpty || !family.hasFVar then
+            branchActive := branchActive.push family
+          else
+            unless ← chargeExpression family do return (mentions, true)
+            let some family ← boundedMeta (pure (subst.apply family)) | return (mentions, true)
+            branchActive := branchActive.push family
         for field in fields do
           unless ← chargeTraversal do return (mentions, true)
           let (fm, fu) ← Meta.withLCtx lctx instances do
