@@ -1,0 +1,6 @@
+若 $m_d=|\{p\in P:a_p=d\}|$，则
+$$
+|\Pi[W(a)]|=\frac{r!}{\displaystyle\prod_{p\in P}a_p!\prod_{d:m_d>0}m_d!},
+\qquad |\Pi^{-1}(\Pi(w))|=\prod_{d:m_d>0}m_d!.
+\tag{486.2}
+$$

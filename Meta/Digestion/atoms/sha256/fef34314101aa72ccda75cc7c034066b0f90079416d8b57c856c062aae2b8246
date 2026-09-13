@@ -1,0 +1,13 @@
+**定理。** 对每个 $L\in\mathbb N$，
+
+$$
+\boxed{d_{L+1}=-\alpha d_L,\qquad d_{L+2}=\alpha^2d_L.}\tag{GC4}
+$$
+
+若 $r\in\mathbb N$ 且 $r>0$，定义
+$D_{L,r}=d_L-d_{L+r}$，则
+
+$$
+\boxed{D_{L,r}\ne0,\qquad D_{L+1,r}=-\alpha D_{L,r}.}\tag{GC5}
+$$
+

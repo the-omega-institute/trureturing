@@ -1,0 +1,14 @@
+**定义。** 对 $n\in\mathbb N$，令
+
+$$
+S(n)=\lfloor(n+1)\varphi\rfloor-1,
+\qquad
+\beta_{\mathbb R}(n)=S(n)-n\psi,
+$$
+
+并定义规范黄金整数
+
+$$
+\beta_{\mathrm G}(n)=(S(n)-n)+n\varphi\in\mathcal O.
+$$
+
