@@ -1,0 +1,16 @@
+**定理。** 令 $u=c+d\varphi\in\mathcal O$。对任意 $k,n\in\mathbb Z$，
+
+$$
+\pi\bigl(u(k+n\varphi)\bigr)=(c+d)n+dk.
+$$
+
+并且乘法在整数纤维上下降为单值映射的充要条件是 $u$ 为普通整数：
+
+$$
+\boxed{
+\exists f:\mathbb Z\to\mathbb Z\ \forall z\in\mathcal O,
+\quad \pi(uz)=f(\pi z)
+\quad\Longleftrightarrow\quad d=0.
+}\tag{GS2}
+$$
+

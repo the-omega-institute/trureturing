@@ -1,0 +1,4 @@
+**证明。** 第一式由 $s_\rho(n)$ 的 $\varphi$ 坐标得到。
+取整的基本界给出第二式，而
+$q_\rho(n)+n\psi=q_\rho(n)-n\alpha=-r_\rho(n)$ 给出第三式。
+
