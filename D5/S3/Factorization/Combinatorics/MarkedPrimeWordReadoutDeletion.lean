@@ -13,8 +13,11 @@ import Mathlib.Data.List.Permutation
 import Mathlib.Data.Finset.Sort
 import Mathlib.Data.Fintype.Perm
 import Mathlib.Order.Fin.Tuple
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Linarith
 
 set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
 open scoped BigOperators
 noncomputable section
 namespace D5.S3.Factorization.Combinatorics.MarkedPrimeWordReadoutDeletion
@@ -240,4 +243,262 @@ def markedRaw (n k : ℕ) (hn : 1 < n) (hk : 1 ≤ k) (z : U n k) : RawMarked n 
 def readoutChain (n k : ℕ) (hn : 1 < n) (hk : 1 ≤ k) (z : U n k) : Chain n k :=
   qChain (markedRaw n k hn hk z)
 
+
+/-- Uniform internal-vertex deletion preserves every signed prime-word readout mass. -/
+theorem actual_readout_deletion (n k : ℕ) (hn : 1 < n) (hk : 1 ≤ k)
+    (hkr : k < omegaCount n) (ρ : PrimeWord n → ℝ) :
+    (∀ d' : Chain n (k+1), ∑ d : Chain n k, deletionKernel n k d' d = 1) ∧
+    (∀ d : Chain n k, p n k ρ (chainList d) =
+      ∑ d' : Chain n (k+1), p n (k+1) ρ (chainList d') * deletionKernel n k d' d) := by
+  classical
+  have hk0 : (k : ℝ) ≠ 0 := by exact_mod_cast (by omega : k ≠ 0)
+  have hdelinj (d' : Chain n (k+1)) : Function.Injective (deleteChain d') := by
+    intro i j hij
+    have hmono := (Fin.strictMono_iff_lt_succ.mpr fun t => (d'.property.2.2 t).2)
+    have he : i.succ.castSucc.succAbove = j.succ.castSucc.succAbove := by
+      funext t
+      apply hmono.injective
+      exact congrArg (fun d : Chain n k => d.val t) hij
+    have := Fin.succAbove_left_injective he
+    exact Fin.ext (Nat.add_right_cancel (congrArg Fin.val this))
+  have hdel (d' : Chain n (k+1)) (d : Chain n k) :
+      Deletes d' d ↔ ∃ j : Fin k, deleteChain d' j = d := by
+    constructor
+    · rintro ⟨j, hj⟩
+      refine ⟨j, Subtype.ext (funext fun i => Fin.ext (hj i).symm)⟩
+    · rintro ⟨j, rfl⟩
+      exact ⟨j, fun _ => rfl⟩
+  have hkernel (d' : Chain n (k+1)) (d : Chain n k) :
+      deletionKernel n k d' d =
+        ∑ j : Fin k, if deleteChain d' j = d then 1 / (k : ℝ) else 0 := by
+    by_cases h : Deletes d' d
+    · obtain ⟨j, rfl⟩ := (hdel d' d).mp h
+      simp [deletionKernel, h, (hdelinj d').eq_iff]
+    · have he : ∀ j : Fin k, deleteChain d' j ≠ d := by
+        intro j hj
+        exact h ((hdel d' d).mpr ⟨j, hj⟩)
+      simp [deletionKernel, h, he]
+  have hrow : ∀ d' : Chain n (k+1), ∑ d : Chain n k, deletionKernel n k d' d = 1 := by
+    intro d'
+    simp_rw [hkernel]
+    rw [Finset.sum_comm]
+    simp [hk0]
+  have hlist (j : ℕ) (hj : 1 ≤ j) (z : U n j) :
+      chainList (readoutChain n j hn hj z) = Q n j z := by
+    cases j with
+    | zero => omega
+    | succ j =>
+      dsimp [chainList, readoutChain, qChain, QNat, markedRaw, Q, qList]
+      rw [List.ofFn_succ]
+      simp only [Fin.cons_zero, List.take_zero, List.prod_nil, Fin.cons_succ]
+      rw [List.ofFn_succ']
+      simp only [Fin.snoc_castSucc, Fin.snoc_last]
+      have hlen : z.1.val.length = omegaCount n := by
+        rw [omegaCount, ← ArithmeticFunction.cardFactors_eq_sum_factorization,
+          ArithmeticFunction.cardFactors_apply]
+        exact (Nat.primeFactorsList_unique z.1.property.2 z.1.property.1).length_eq
+      have ht : (z.1.val.take (omegaCount n)).prod = n := by
+        rw [← hlen, List.take_length, z.1.property.2]
+      rw [ht]
+      congr 2
+      rw [← Finset.listMap_orderEmbOfFin_finRange z.2.val (show z.2.val.card = j by simpa only [Nat.add_sub_cancel] using z.2.property)]
+      simp only [List.map_map, List.ofFn_eq_map, List.concat_eq_append, Function.comp_def]
+  have hmono {j : ℕ} (c : Chain n j) : StrictMono (fun i => (c.val i).val) :=
+    Fin.strictMono_iff_lt_succ.mpr fun t => (c.property.2.2 t).2
+  have hrange (l : ℕ) (hl : 1 ≤ l) (z : U n l) (x : ℕ) :
+      (∃ i, ((readoutChain n l hn hl z).val i).val = x) ↔
+        x = 1 ∨ x = n ∨ ∃ a ∈ z.2.val, (z.1.val.take (a.val+1)).prod = x := by
+    rw [← List.mem_ofFn]
+    change x ∈ chainList (readoutChain n l hn hl z) ↔ _
+    rw [hlist]
+    simp [Q, qList, or_left_comm, or_comm, eq_comm]
+  have hprefix (γ : PrimeWord n) :
+      StrictMono (fun i : Fin (omegaCount n+1) => (γ.val.take i.val).prod) := by
+    have hlen : γ.val.length = omegaCount n := by
+      rw [omegaCount, ← ArithmeticFunction.cardFactors_eq_sum_factorization,
+        ArithmeticFunction.cardFactors_apply]
+      exact (Nat.primeFactorsList_unique γ.property.2 γ.property.1).length_eq
+    let z : RawMarked n (omegaCount n) :=
+      ⟨(γ, fun i => i.val), rfl, hlen.symm, fun _ _ h => h⟩
+    exact hmono (qChain z)
+  have hfactor (γ : PrimeWord n) (i : Fin (omegaCount n+1)) :
+      omegaCount ((γ.val.take i.val).prod) = i.val := by
+    have hlen : γ.val.length = omegaCount n := by
+      rw [omegaCount, ← ArithmeticFunction.cardFactors_eq_sum_factorization,
+        ArithmeticFunction.cardFactors_apply]
+      exact (Nat.primeFactorsList_unique γ.property.2 γ.property.1).length_eq
+    let z : RawMarked n (omegaCount n) :=
+      ⟨(γ, fun i => i.val), rfl, hlen.symm, fun _ _ h => h⟩
+    let c := qChain z
+    have h := (snapshot_fiber_equiv_and_forced_marks n (omegaCount n)
+      (fun t => (c.val t).val) hn (by omega) c.property.1 c.property.2.1 c.property.2.2).2
+      ((actualChainFibreEquiv n (omegaCount n) c) ⟨z,rfl⟩) i
+    exact h.symm
+  have hreaddelete (γ : PrimeWord n) (I : Marks n (k+1)) (m : I.val) :
+      deleteChain (readoutChain n (k+1) hn (by omega) (γ,I))
+          ((I.val.orderIsoOfFin (by simpa using I.property)).symm m) =
+        readoutChain n k hn hk (γ, eraseMark I m) := by
+    let c := readoutChain n (k+1) hn (by omega) (γ,I)
+    let e := I.val.orderIsoOfFin (show I.val.card = k by simpa using I.property)
+    let j : Fin k := e.symm m
+    let f : Positions n → ℕ := fun a => (γ.val.take (a.val+1)).prod
+    have hf : Function.Injective f := by
+      intro a b hab
+      have ha := hfactor γ ⟨a.val+1, by have := a.isLt; omega⟩
+      have hb := hfactor γ ⟨b.val+1, by have := b.isLt; omega⟩
+      exact Fin.ext (Nat.add_right_cancel (ha.symm.trans ((congrArg omegaCount hab).trans hb)))
+    have hm1 : f m.val ≠ 1 := by
+      have h := hprefix γ (a := 0) (b := ⟨m.val.val+1, by have := m.val.isLt; omega⟩)
+        (by exact Nat.zero_lt_succ _)
+      simpa only [Fin.val_zero, List.take_zero, List.prod_nil, f] using h.ne'
+    have hmn : f m.val ≠ n := by
+      have hlen : γ.val.length = omegaCount n := by
+        rw [omegaCount, ← ArithmeticFunction.cardFactors_eq_sum_factorization,
+          ArithmeticFunction.cardFactors_apply]
+        exact (Nat.primeFactorsList_unique γ.property.2 γ.property.1).length_eq
+      have h := hprefix γ (a := ⟨m.val.val+1, by have := m.val.isLt; omega⟩)
+        (b := Fin.last (omegaCount n)) (by have := m.val.isLt; exact_mod_cast (by omega : m.val.val+1 < omegaCount n))
+      have ht : (γ.val.take (omegaCount n)).prod = n := by
+        rw [← hlen, List.take_length, γ.property.2]
+      simpa only [Fin.val_last, ht, f] using h.ne
+    have hpivot : (c.val j.succ.castSucc).val = f m.val := by
+      have he : I.val.orderEmbOfFin (by simpa using I.property) j = m.val :=
+        congrArg Subtype.val (e.apply_symm_apply m)
+      change (γ.val.take ((Fin.cons 0
+        (Fin.snoc (fun i : Fin k => (I.val.orderEmbOfFin (by simpa using I.property) i).val+1)
+          (omegaCount n)) : Fin (k+2) → ℕ) j.succ.castSucc)).prod = f m.val
+      rw [← Fin.succ_castSucc, Fin.cons_succ, Fin.snoc_castSucc, he]
+    have hdeleted (x : ℕ) :
+        (∃ i, ((deleteChain c j).val i).val = x) ↔
+          (∃ i, (c.val i).val = x) ∧ x ≠ f m.val := by
+      constructor
+      · rintro ⟨i, hi⟩
+        refine ⟨⟨j.succ.castSucc.succAbove i, hi⟩, ?_⟩
+        intro hx
+        exact Fin.succAbove_ne _ _ ((hmono c).injective (hi.trans (hx.trans hpivot.symm)))
+      · rintro ⟨⟨i, hi⟩, hx⟩
+        have hne : i ≠ j.succ.castSucc := by
+          intro he
+          subst i
+          exact hx (hi.symm.trans hpivot)
+        obtain ⟨a, ha⟩ := Fin.exists_succAbove_eq hne
+        exact ⟨a, by change (c.val (j.succ.castSucc.succAbove a)).val = x; rw [ha]; exact hi⟩
+    apply Subtype.ext
+    have he := (hmono (deleteChain c j)).range_inj
+      (hmono (readoutChain n k hn hk (γ, eraseMark I m)))
+    apply funext
+    intro i
+    apply Fin.ext
+    apply congrFun (he.mp ?_) i
+    ext x
+    change (∃ i, ((deleteChain c j).val i).val = x) ↔ _
+    rw [hdeleted]
+    change (∃ i, ((readoutChain n (k+1) hn (by omega) (γ,I)).val i).val = x) ∧
+      x ≠ f m.val ↔ ∃ i, ((readoutChain n k hn hk (γ,eraseMark I m)).val i).val = x
+    rw [hrange (k+1) (by omega) (γ,I) x, hrange k hk (γ,eraseMark I m) x]
+    change (x = 1 ∨ x = n ∨ ∃ a ∈ I.val, f a = x) ∧ x ≠ f m.val ↔
+      x = 1 ∨ x = n ∨ ∃ a ∈ I.val.erase m.val, f a = x
+    by_cases hx1 : x = 1
+    · subst x
+      simp [hm1.symm]
+    by_cases hxn : x = n
+    · subst x
+      simp [hmn.symm]
+    simp only [hx1, hxn, false_or, Finset.mem_erase]
+    constructor
+    · rintro ⟨⟨a, ha, hax⟩, hx⟩
+      exact ⟨a, ⟨fun ham => hx (hax.symm.trans (congrArg f ham)), ha⟩, hax⟩
+    · rintro ⟨a, ⟨ham, ha⟩, hax⟩
+      exact ⟨⟨a, ha, hax⟩, fun hx => ham (hf (hax.trans hx))⟩
+  have hcode {l : ℕ} : Function.Injective (@chainList n l) := by
+    intro a b hab
+    apply Subtype.ext
+    funext i
+    apply Fin.ext
+    exact congrFun (List.ofFn_injective hab) i
+  have hpush (l : ℕ) (hl : 1 ≤ l) (c : Chain n l) :
+      p n l ρ (chainList c) = ∑ z : U n l,
+        if readoutChain n l hn hl z = c then μ n l ρ z else 0 := by
+    unfold p pushforward
+    apply Finset.sum_congr rfl
+    intro z _
+    rw [← hlist l hl z, hcode.eq_iff]
+  have hchoose : ((omegaCount n-1).choose k : ℝ) * (k : ℝ) =
+      ((omegaCount n-1).choose (k-1) : ℝ) * (omegaCount n-k : ℕ) := by
+    have h := Nat.choose_succ_right_eq (omegaCount n-1) (k-1)
+    have he : k-1+1 = k := by omega
+    have he' : omegaCount n-1-(k-1) = omegaCount n-k := by omega
+    rw [he, he'] at h
+    exact_mod_cast h
+  have hc0 : ((omegaCount n-1).choose k : ℝ) ≠ 0 := by
+    exact_mod_cast (Nat.choose_pos (by omega : k ≤ omegaCount n-1)).ne'
+  have hc1 : ((omegaCount n-1).choose (k-1) : ℝ) ≠ 0 := by
+    exact_mod_cast (Nat.choose_pos (by omega : k-1 ≤ omegaCount n-1)).ne'
+  have hratio (γ : PrimeWord n) :
+      (omegaCount n-k : ℕ) * (ρ γ / ((omegaCount n-1).choose k : ℝ) * (1/(k : ℝ))) =
+        ρ γ / ((omegaCount n-1).choose (k-1) : ℝ) := by
+    field_simp
+    nlinarith only [congrArg (fun t : ℝ => ρ γ * t) hchoose]
+  refine ⟨hrow, ?_⟩
+  intro d
+  have htransport :
+      (∑ c : Chain n (k+1), p n (k+1) ρ (chainList c) * deletionKernel n k c d) =
+        ∑ z : U n (k+1), μ n (k+1) ρ z *
+          deletionKernel n k (readoutChain n (k+1) hn (by omega) z) d := by
+    have h := sum_indicator_comp
+      (fun z : U n (k+1) => μ n (k+1) ρ z *
+        deletionKernel n k (readoutChain n (k+1) hn (by omega) z) d)
+      (readoutChain n (k+1) hn (by omega)) (fun _ : Chain n (k+1) => ()) ()
+    simp only [ite_true] at h
+    rw [← h]
+    apply Finset.sum_congr rfl
+    intro c _
+    rw [hpush (k+1) (by omega), Finset.sum_mul]
+    apply Finset.sum_congr rfl
+    intro z _
+    split_ifs with he
+    · rw [he]
+    · simp
+  rw [htransport, hpush k hk]
+  change (∑ z : PrimeWord n × Marks n k, _) = (∑ z : PrimeWord n × Marks n (k+1), _)
+  rw [Fintype.sum_prod_type, Fintype.sum_prod_type]
+  apply Finset.sum_congr rfl
+  intro γ _
+  symm
+  calc
+    _ = ∑ I : Marks n (k+1), ∑ m : I.val,
+          if readoutChain n k hn hk (γ, eraseMark I m) = d then
+            ρ γ / ((omegaCount n-1).choose k : ℝ) * (1/(k : ℝ)) else 0 := by
+      apply Finset.sum_congr rfl
+      intro I _
+      rw [hkernel, Finset.mul_sum]
+      simp only [μ, Nat.add_sub_cancel, mul_ite, mul_zero]
+      let e := (I.val.orderIsoOfFin (show I.val.card = k by simpa using I.property)).toEquiv
+      apply Fintype.sum_equiv e
+      intro j
+      have h := hreaddelete γ I (e j)
+      simpa [e] using
+        congrArg (fun c : Chain n k => if c = d then
+          ρ γ / ((omegaCount n-1).choose k : ℝ) * (1/(k : ℝ)) else 0) h
+    _ = ∑ z : (Σ I : Marks n (k+1), I.val),
+          if readoutChain n k hn hk (γ, eraseMark z.1 z.2) = d then
+            ρ γ / ((omegaCount n-1).choose k : ℝ) * (1/(k : ℝ)) else 0 := by
+      rw [Fintype.sum_sigma]
+    _ = ∑ z : (Σ I : Marks n k, {a : Positions n // a ∉ I.val}),
+          if readoutChain n k hn hk (γ, z.1) = d then
+            ρ γ / ((omegaCount n-1).choose k : ℝ) * (1/(k : ℝ)) else 0 := by
+      exact Fintype.sum_equiv (markIncidenceEquiv n k hk) _ _ (fun _ => rfl)
+    _ = ∑ I : Marks n k, if readoutChain n k hn hk (γ,I) = d then μ n k ρ (γ,I) else 0 := by
+      rw [Fintype.sum_sigma]
+      apply Finset.sum_congr rfl
+      intro I _
+      have hcard : Fintype.card {a : Positions n // a ∉ I.val} = omegaCount n-k := by
+        rw [Fintype.card_subtype_compl]
+        simp only [Fintype.card_fin, Fintype.card_coe, I.property, Positions]
+        omega
+      split_ifs
+      · simpa only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul, hcard, μ] using hratio γ
+      · simp
+
+#print axioms actual_readout_deletion
 end D5.S3.Factorization.Combinatorics.MarkedPrimeWordReadoutDeletion
