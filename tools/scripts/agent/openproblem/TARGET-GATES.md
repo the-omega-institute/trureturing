@@ -106,3 +106,23 @@ Judgement form (§3.2) is checked by a read-only review seat **before** the free
 `templates/judgement-form-check-template.md`. Editing a `.lean` after `ledger-align` has written
 the state pin collides with SL-008, so the only remedy is to discard the deposit and run the
 whole chain again. One lane was lost that way before the stage existed.
+
+### Read the entry's own settlement record before anything else
+
+OEIS entries record their own settlement, in a later comment on the same entry. Run
+
+    tools/scripts/agent/openproblem/oeis-conjecture-scan.py --ids A211417,A397356
+
+and read what comes back. It reports two states and only two: a settlement marker with the line
+that carries it, or no marker found. **No marker is not openness** — it is the absence of one
+signal, and the scan says so rather than reporting the entry as open.
+
+The case that established this: A211417 carries four integrality conjectures by Peter Bala dated
+2025-08-28 and one settlement comment dated 2026-06-30. The settlement covers a different
+statement — `(30n − 1) | a(n)`, proved by an autonomous agent whose Lean file the entry links —
+and leaves Bala's four untouched. An entry with a proof link is not a settled entry; the marker
+has to be read against the conjecture you intend to attack, one at a time.
+
+The same entry shows why the scan cannot be trusted in the other direction either. Its links
+include arXiv:2608.11941, which formalized 492 open OEIS conjectures and resolved 147 of them.
+Anything in that resolved set is settled without any marker appearing in the entry text.

@@ -31,15 +31,24 @@ def prepare(repository, directory, membership, request, *, bound=BATCH_MODULE_BO
     cache = cache or repository / ".lake/build/census/validation"
     keys_by_id = {key[2]: key for key in membership["candidate_keys"]}
 
+    def evidence_for(owner):
+        scope = set(scopes[membership["assignment"][owner]])
+        return sorted(scope.intersection(membership["evidence_modules"]) |
+                      {e["module"] for e in membership["named"] if e["module"] in scope})
+
+    for owner in sorted({key[0] for key in membership["candidate_keys"]}):
+        imports[owner] = sorted({owner, COMMAND, *evidence_for(owner)})
+    # Plan before cache lookup: a prior assessment must not bypass today's
+    # safety limit. Logical batches and skips are independent of cache warmth.
+    planned, skipped = candidate_batches(membership["candidate_keys"], imports, graph, bound)
+    skipped_owners = {entry["owner"] for entry in skipped}
+
     def inputs_for(key):
         # Only one key's dependency digest lists are transient. Keeping those
         # lists for every candidate would duplicate graph-sized data per key.
         owner = key[0]
         root = membership["assignment"][owner]
-        scope = set(scopes[root])
-        evidence = sorted(scope.intersection(membership["evidence_modules"]) |
-                          {e["module"] for e in membership["named"] if e["module"] in scope})
-        imports[owner] = sorted({owner, COMMAND, *evidence})
+        evidence = evidence_for(owner)
         # Dependencies can change while an importing module's serialized bytes
         # stay equal. Bind the actual project closure, plus pinned upstreams.
         owner_inputs = [[m, hashes[m]] for m in closure(graph, [owner]) if m in hashes]
@@ -55,6 +64,8 @@ def prepare(repository, directory, membership, request, *, bound=BATCH_MODULE_BO
 
     hits, missing, entries, source_inputs = [], [], [], []
     for key in membership["candidate_keys"]:
+        if key[0] in skipped_owners:
+            continue
         inputs = inputs_for(key)
         addresses[key[2]] = validation_key(key, digest(inputs["owner_inputs"]), inputs["evidence_inputs"],
                                          toolchain, query_digest, inputs["scope"])
@@ -68,9 +79,8 @@ def prepare(repository, directory, membership, request, *, bound=BATCH_MODULE_BO
             source_inputs.extend(value["source_inputs"])
         else:
             missing.append(key)
-    # The receipt's logical batches cover every key, independent of cache warmth.
-    planned = candidate_batches(membership["candidate_keys"], imports, graph, bound)
-    return {"planned": planned, "execute": candidate_batches(missing, imports, graph, bound), "bound": bound,
+    execute, _ = candidate_batches(missing, imports, graph, bound)
+    return {"planned": planned, "skipped": skipped, "execute": execute, "bound": bound,
             "key_bound": BATCH_KEY_BOUND,
             "hits": hits, "misses": missing, "entries": entries, "source_inputs": source_inputs,
             "addresses": addresses, "inputs_for": inputs_for, "keys_by_id": keys_by_id,
@@ -78,6 +88,8 @@ def prepare(repository, directory, membership, request, *, bound=BATCH_MODULE_BO
 
 
 def run_batches(repository, directory, membership, request, plan, step, lean_binary):
+    from emission import parse_name_key
+    from phases import name_json
     from report_stream import fields
     executions = []
     for number, batch in enumerate(plan["execute"]):
@@ -111,7 +123,7 @@ def run_batches(repository, directory, membership, request, plan, step, lean_bin
         driver.write_text("".join("import " + module + "\n" for module in batch["imports"]) +
             "#census_validate " + json.dumps(str(folder / "request.json")) + " using " +
             json.dumps(str(folder / "index.json")) + " output " + json.dumps(str(output)) + "\n")
-        step([lean_binary, "-DmaxRecDepth=100000", "-DmaxHeartbeats=0", str(driver)],
+        measurement = step([lean_binary, "-DmaxRecDepth=100000", "-DmaxHeartbeats=0", str(driver)],
              f"candidate_environment_{number:04d}", design_limit_gb=4)
         value = json.loads(output.read_bytes())
         receipt = json.loads(pathlib.Path(str(output) + ".receipt.json").read_bytes())
@@ -133,7 +145,17 @@ def run_batches(repository, directory, membership, request, plan, step, lean_bin
                 "row": row, "source_inputs": keyed_sources[identity]})
         plan["entries"].extend(value["entries"])
         plan["source_inputs"].extend(value["source_inputs"])
-        executions.append({"keys": batch["keys"], "receipt": receipt})
+        executions.append({"keys": batch["keys"], "receipt": receipt,
+                           "peak_rss_bytes": measurement["peak_rss_bytes"]})
+    # Planning failure is an incomplete query, never evidence of absence or a
+    # certified result. These rows enter Lean's ordinary accounting parser and
+    # are deliberately not stored in the assessment cache.
+    for skipped in plan["skipped"]:
+        for owner, name, identity in skipped["keys"]:
+            plan["entries"].append({"theorem_name": parse_name_key(name), "statement_id": identity,
+                "class": "observed", "payload": {"owning_module": name_json(owner),
+                    "root": name_json(membership["assignment"][owner]), "import_scope": None,
+                    "query_completed": False, "candidates": [], "note": skipped["diagnostic"]}})
     rows = sorted(plan["entries"], key=lambda row: row["statement_id"])
     sources = {canonical(source): source for source in plan["source_inputs"]}
     result = {"entries": rows, "source_inputs": [sources[k] for k in sorted(sources)]}
@@ -141,6 +163,7 @@ def run_batches(repository, directory, membership, request, plan, step, lean_bin
     record = {"hits": len(plan["hits"]), "misses": len(plan["misses"]),
               "revalidated_keys": plan["misses"], "executions": executions,
               "receipt": {"bound": plan["bound"], "key_bound": plan["key_bound"], "batches": plan["planned"],
+                "skipped": plan["skipped"],
                 "cache_keys": sorted(plan["addresses"].items()),
                 "result_sha256": digest(result)}}
     atomic_json(directory / "validation.json", record)

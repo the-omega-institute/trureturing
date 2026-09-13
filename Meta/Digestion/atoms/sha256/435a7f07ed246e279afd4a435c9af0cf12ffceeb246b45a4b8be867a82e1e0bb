@@ -1,0 +1,54 @@
+**定理 6.2（最小记录环境可达与测量平均）。** 沿用定理6.1的$S,f,M,F$。定理3.5（确定性纤维量子提升的最小环境）的$M$维正交记录上界构造已经足以达到定理6.1的最优值，不必增大被测记录空间。这里$M$计量测量前的量子记录环境，测量结果另作为经典输出；并未将测量及读出也要求为此空间内的封闭酉演化。此为可选构造的存在性，不保证任意预先固定的最小记录构造均可只靠环境测量达到。
+
+证明。 将各纤维枚举为$s_{y,1},\ldots,s_{y,n_y}$，直接使用定理3.5的正交记录上界，取等距映射
+$$
+W|s_{y,j}\rangle=|y\rangle\otimes b_j,
+$$
+其中$b_1,\ldots,b_M$为同一环境$\mathcal E$的正交基。取
+$$
+h=\frac1{\sqrt M}\sum_{j=1}^M b_j,\qquad P=|h\rangle\langle h|,
+$$
+测量投影$P$及$I-P$，并只接受$P$。因为$\langle h,b_j\rangle=M^{-1/2}$，
+$$
+(I\otimes P)W\psi=\frac{F\psi}{\sqrt M}\otimes h.
+$$
+故成功支路恰为$K=F/\sqrt M$，成功后的环境向量$h$与输入无关。$M=1$时$P=I$，失败结果概率为零。
+
+对已固定的等距记录$W|s\rangle=|f(s)\rangle\otimes e_s$，环境单独产生共同振幅$\lambda$的无记录支路，当且仅当存在$\|h\|\le1$使
+$$
+\langle h,e_s\rangle=\lambda\qquad(s\in S).
+$$
+确实，若成功环境算子$B$为收缩且满足$Be_s=\lambda\eta$、$\|\eta\|=1$，取$h=B^\dagger\eta$即可，因为
+$$
+\langle B^\dagger\eta,e_s\rangle=\langle\eta,Be_s\rangle=\lambda.
+$$
+反之取$B=|\eta\rangle\langle h|$，其为收缩且$Be_s=\lambda\eta$。两个二元纤维分别使用记录$(b_1,b_2)$与$(b_1,-b_2)$，仍是定理3.5允许的最小构造，却要求
+$$
+\langle h,b_2\rangle=\langle h,-b_2\rangle=\lambda,
+$$
+迫使$\lambda=0$。
+
+若固定环境恰为$M$维且$\lambda=1/\sqrt M$，则任一最大纤维的记录构成环境的正交基，上述内积条件唯一确定
+$$
+h=\frac1{\sqrt M}\sum_{s\in S_y}e_s;
+$$
+此向量还必须满足其余纤维的全部条件。因此，环境维数达到最小值，不等于跨纤维记录已经相位对齐。
+
+回到本条开头的枚举记录构造，将失败投影细分，取$\mathcal E$的正交基$h_1=h,h_2,\ldots,h_M$，记
+$$
+K_j=(I\otimes\langle h_j|)W.
+$$
+忘记测量结果并丢弃环境后，由定理3.2、3.4所用的部分迹公式，
+$$
+\Phi(\varrho)=\sum_{j=1}^M K_j\varrho K_j^\dagger
+=\operatorname{tr}_{\mathcal E}(W\varrho W^\dagger),\qquad
+\sum_{j=1}^M K_j^\dagger K_j=I.
+$$
+对这里的有限矩形Kraus家族，直接应用 [FiniteKrausChannel 的 finite_kraus_quantum_channel](../../../D5/S3/Quantum/Foundation/FiniteKrausChannel.lean)的完备性构造，$\Phi$是保迹通道，且
+$$
+\Phi(|s\rangle\langle s|)=|f(s)\rangle\langle f(s)|.
+$$
+当$M>1$时，$\Phi$不同于仅有成功项$F\varrho F^\dagger/M$：定理6.1的$d$在成功支路概率为零，平均通道却将其以总概率一送到该纤维的标签纯态。故基态确定输出并不等于共同振幅的相干汇聚；零成功率输入的条件态没有定义，不能以除法归一化将失败当成成功。证毕。
+
+测量结果的条件化及其通道之和沿用 Watrous，前引 §2.3.2，式 (2.257)–(2.262)：式 (2.258)–(2.260)给出一般完全正仪器求和为通道，式 (2.261)–(2.262)给出单算符特例及经典结果寄存器。在联合空间对完整正交投影测量作条件化时，亦可使用 [Conditioning 的 conditionalState_isState](../../../D5/S3/Observer/Conditioning.lean)的非零记录权重条件；它不定义零概率条件态。记录维数与一般部分迹直接复用定理3.5及上述既有公式，所引有限Kraus通道构造不承担任意单支收缩的补全或后选择最优界。
+
