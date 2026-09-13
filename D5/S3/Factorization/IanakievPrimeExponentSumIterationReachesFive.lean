@@ -2,12 +2,13 @@
    generality: G
    mirror-B: D5/B/S3/Factorization/IanakievPrimeExponentSumIterationReachesFive
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Data.Nat.Factorization.Induction, mathlib/module/Mathlib.Data.Nat.Factorization.Basic, mathlib/module/Mathlib.Tactic.Linarith, mathlib/module/Mathlib.Tactic.NormNum, mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.Data.Nat.Factorization.Induction, mathlib/module/Mathlib.Data.Nat.Factorization.Basic, mathlib/module/Mathlib.NumberTheory.ArithmeticFunction.Misc, mathlib/module/Mathlib.Tactic.Linarith, mathlib/module/Mathlib.Tactic.NormNum, mathlib/module/Mathlib.Tactic.Ring]
    utility: none
    digest: Ianakiev's prime-exponent sum iteration reaches five from every integer above four. -/
 
 import Mathlib.Data.Nat.Factorization.Induction
 import Mathlib.Data.Nat.Factorization.Basic
+import Mathlib.NumberTheory.ArithmeticFunction.Misc
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
@@ -281,6 +282,44 @@ private theorem F_composite_lt : ∀ n : ℕ,
           rw [haeq, hbeq]
           nlinarith [Nat.zero_le ((a - 3) * (b - 3))]
     exact (Nat.add_le_add hFa hFb).trans_lt harith
+
+private theorem F_two_mul_le (n : ℕ) (hn : 0 < n) :
+    F (2 * n) ≤ F n + 3 := by
+  have hsplit (m : ℕ) :
+      F m = (∑ p ∈ m.primeFactors, p) + ArithmeticFunction.cardFactors m := by
+    rw [F, Finset.sum_add_distrib,
+      ArithmeticFunction.cardFactors_eq_sum_factorization, Finsupp.sum,
+      Nat.support_factorization]
+  rw [hsplit, hsplit, ArithmeticFunction.cardFactors_mul (by norm_num) hn.ne',
+    ArithmeticFunction.cardFactors_apply_prime Nat.prime_two,
+    Nat.primeFactors_mul (by norm_num) hn.ne', Nat.prime_two.primeFactors]
+  by_cases h2 : 2 ∈ n.primeFactors
+  · rw [Finset.singleton_union, Finset.insert_eq_of_mem h2]
+    omega
+  · rw [Finset.singleton_union, Finset.sum_insert h2]
+    omega
+
+private theorem F_prime_two_step_lt (p : ℕ) (hp : p.Prime) (hp11 : 11 ≤ p) :
+    F (F p) < p := by
+  have hpvalue : F p = p + 1 := by
+    simpa only [pow_one] using
+      (show F (p ^ 1) = p + 1 by
+        rw [F, Nat.primeFactors_pow p (by norm_num), hp.primeFactors, hp.factorization_pow]
+        simp)
+  have hpodd : p % 2 = 1 := (hp.eq_two_or_odd).resolve_left (by omega)
+  have hdiv : 2 ∣ p + 1 := Nat.dvd_iff_mod_eq_zero.mpr (by omega)
+  let t := (p + 1) / 2
+  have hdecomp : 2 * t = p + 1 := by
+    dsimp [t]
+    rw [mul_comm]
+    exact Nat.div_mul_cancel hdiv
+  have ht2 : 2 ≤ t := by omega
+  calc
+    F (F p) = F (p + 1) := by rw [hpvalue]
+    _ = F (2 * t) := by rw [hdecomp]
+    _ ≤ F t + 3 := F_two_mul_le t (by omega)
+    _ ≤ (t + 1) + 3 := Nat.add_le_add_right (F_upper t ht2) 3
+    _ < p := by omega
 
 /-- Ianakiev's A008474 iteration conjecture. -/
 theorem ianakiev_a008474 : ∀ m : ℕ, 4 < m → ∃ t : ℕ, F^[t] m = 5 := by
