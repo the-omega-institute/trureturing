@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:668bfb4423d9ef1e93025843c36ecf4c19e41eee01e0972eb768aced9ba3687d
+  normalized_sha256: sha256:668bfb4423d9ef1e93025843c36ecf4c19e41eee01e0972eb768aced9ba3687d
+cas_ref: sha256:668bfb4423d9ef1e93025843c36ecf4c19e41eee01e0972eb768aced9ba3687d
+coverage_gids:
+  - gid: D5/S3/Weil/Separator/WeilSquarePositivityCriterion.rh_iff_weilSquarePositivity
+    target_statement_id: sha256:9f8bdc94875389e5db038a20f9a3857cb51f60810a213609374506ca87106924
+  - gid: D5/S3/Weil/ZeroData/UnconditionalCanonicalZeroData.zetaZeroData
+    target_statement_id: sha256:986e7bc0fad340e7c0ed69b916c9e698a0509e307cf8065ec34c13ad6412332a
+  - gid: D5/S3/Weil/ZeroData/UnconditionalCanonicalZeroData.zetaZeroData_exhaustiveUnique
+    target_statement_id: sha256:69619fdf83bdcc55acf5103bb4f739db63051a27f6dcdebe54b91dc66a5300c9
+  - gid: D5/S3/Weil/ZetaBridge/SymmetricConvergentOfZetaSummable.symmetricConvergent_of_zeroData
+    target_statement_id: sha256:4d920c70fb52788a7bf8a37055da70a83649ab255570352ad6169e5fa069895b
+receipts:
+  unresolved_subitems: []
