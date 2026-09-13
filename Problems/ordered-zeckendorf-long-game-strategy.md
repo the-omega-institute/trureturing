@@ -9,6 +9,7 @@ motivation_gids:
   - D5/S1/Digit/Carry
   - D5/S1/Digit/Normalize
   - D5/S1/Digit/Carry/ListInversions
+  - D5/S1/Digit/Carry/RunChainLowerBound
   - D5/S0/Rewriting/NewmanConfluence
   - D5/S0/Rewriting/NormalFormFunction
 ---
@@ -96,8 +97,21 @@ upper and lower asymptotics and a structural lemma about repetitions under LGS.
   `carryStep_measure_decreases` for every one of them and builds a terminating
   normalizer. A search by the problem's name reaches neither module; a search
   by the name of each operation reaches both.
-- What is still missing here is the length side. No chain-length, rank or
-  longest-path function on `CarryStep` exists, and no optimality statement.
+- The length side now has its first node, and it is a lower bound.
+  `D5/S1/Digit/Carry/RunChainLowerBound` is frozen and states that for every
+  start `a` and every length `L` there exists a `CarrySteps` chain of exactly
+  `L * L / 4` steps out of the raw digit vector carrying one token at each of
+  the `L` consecutive indices from `a`. Its proof is a construction rather than
+  a pure existence argument: for `L` at least two, one merge at the bottom of
+  the run followed by one split for each remaining duplicate carries that run to
+  the run of length `L - 2` together with one isolated token in `L - 1` steps,
+  and a strong induction in steps of two composes those blocks, with lengths
+  zero and one as its bases.
+- That module supplies neither a matching upper bound nor a definition of
+  `height`, so maximality of the constructed chain is unproved and there is
+  still no optimality statement. A proposed lemma for the consecutive-run upper
+  bound is that immediately clearing the duplicate created by the run-block
+  merge is optimal; it is unproved.
 
 ## Route
 
@@ -248,7 +262,40 @@ Unguarded split-twos against merge fails in 56 of 1749 instances, which is how
 the `{2,2,3,3,7,8}` family was found independently of the analysis predicting
 it.
 
-None of the above is a proof. All of it is enumeration.
+Write `U(M)` for the length of the longest chain of carry steps out of the raw
+digit multiset `M`, and `run a L` for the multiset carrying one token at each of
+the `L` consecutive indices from `a`. The readings below are enumeration on the
+domains stated with them.
+
+Over `a` in 1 to 6 and `L` in 1 to 13, `U(run a L)` equals `floor(L^2 / 4)` in
+78 of 78 instances, with no observed dependence on `a`. For the proposed
+equality over all consecutive runs, the lower bound is the frozen module cited
+in the gap above and the upper bound remains open.
+
+All union readings below place the first run at start `a = 1` in zero-based raw
+indices, and a gap counts the empty indices between consecutive runs.
+
+Over 684 unions of runs whose gaps are all at least two, being 108 two-run
+states with lengths in 1 to 6 and gaps in 2 to 4 together with 576 three-run
+states with lengths in 1 to 4 and both gaps in 2 to 4, `U` of the union equals
+the sum of `floor(L_i^2 / 4)` in 684 of 684 instances. Over the 100 states of
+the same shape with every gap equal to one, that sum is exact in 10; among the
+36 two-run members of that sample the measured `U` is above the sum in 30
+instances, equal in 6 and below in none.
+
+Within the 81-pair gap-one sample with `L_1` and `L_2` in 1 to 9, the measured
+excess over the additive sum is zero when `L_1` is one and `ceil(L_2 / 2)` when
+`L_1` is at least two, in 81 of 81 instances. Applying
+that correction once per gap is not sufficient: over the 64 three-run states
+with lengths in 1 to 4 and both gaps one it is exact in 52, and each of the 12
+failures has middle length exactly one and first length at least two, with the
+measured `U` above the prediction. Those samples suggest that a run block emits
+a token into the empty index above the run, adjacent to a length-one middle run,
+so that the two can merge and reach the next gap; that is a reading of the
+sample, not a classification of `U`.
+
+None of the enumeration above is a proof. The only kernel-verified
+statement cited in this section is the chain-length lower bound.
 
 ## Triage
 
@@ -268,6 +315,11 @@ exchange lemmas rather than a new analytic theory.
   the exchange-lemma route is unassessed.
 - The four guarded Bellman equalities have no proof recorded here. Nothing
   about them is kernel-verified.
+- `U(run a L) = floor(L^2 / 4)` is an enumeration reading on `a` in 1 to 6 and
+  `L` in 1 to 13, and the union-of-runs readings hold only on the domains stated
+  with them. Independence from `a`, the gap-one closed form and the cascade
+  explanation are all unproved outside those samples. Of the run-length claims
+  only the lower bound is kernel-verified.
 - The smallest-merge case carries an external dependency this entry does not
   discharge. The unordered Zeckendorf game's longest length is treated in
   arXiv:2009.09510, whose Theorem 1.2 reads "The longest game on any `n` is
