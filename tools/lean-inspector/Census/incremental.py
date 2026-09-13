@@ -7,7 +7,8 @@ from streaming import canonical, closure, digest
 
 
 # Owner ruling #5214, 2026-09-09: policy-override, not capacity-derived.
-# Fixed module-count safety bound; remeasure at a toolchain/evidence-domain change.
+# Fixed module-count safety limit, exempt from capacity derivation;
+# remeasure at a toolchain/evidence-domain change.
 # The run receipt records both this bound and each actual Environment peak.
 BATCH_MODULE_BOUND = 5600
 BATCH_KEY_BOUND = 128
@@ -51,10 +52,17 @@ def validation_key(key, owner_digest, evidence_digests, toolchain, query_source,
 
 
 def candidate_batches(keys, owner_imports, graph, bound=BATCH_MODULE_BOUND):
+    """Return bounded batches and per-owner planning diagnostics.
+
+    Every key of an owner needs that owner's complete evidence Environment.
+    Split keys at BATCH_KEY_BOUND and owner unions at the module bound; an
+    individual owner closure above the bound cannot be split without changing
+    the query. Account for its keys as incomplete observations instead (#7583).
+    """
     grouped = {}
     for key in keys:
         grouped.setdefault(key[0], []).append(key)
-    batches = []
+    batches, skipped = [], []
     current_keys, imports, modules = [], set(), set()
     current_names = {}
     for owner in sorted(grouped):
@@ -62,7 +70,10 @@ def candidate_batches(keys, owner_imports, graph, bound=BATCH_MODULE_BOUND):
         required = set(owner_imports[owner])
         scope = set(closure(graph, required))
         if len(scope) > bound:
-            raise ValueError(f"IE-C044 candidate batch owner={owner} modules={len(scope)} bound={bound}")
+            skipped.append({"owner": owner, "modules": len(scope), "bound": bound,
+                "keys": grouped[owner],
+                "diagnostic": f"IE-C044 candidate batch owner={owner} modules={len(scope)} bound={bound}"})
+            continue
         for start in range(0, len(grouped[owner]), BATCH_KEY_BOUND):
             chunk = grouped[owner][start:start + BATCH_KEY_BOUND]
             # Distinct owners of the same Lean Name must never be reimported
@@ -78,4 +89,4 @@ def candidate_batches(keys, owner_imports, graph, bound=BATCH_MODULE_BOUND):
             modules.update(scope)
     if current_keys:
         batches.append({"keys": current_keys, "imports": sorted(imports), "modules": sorted(modules)})
-    return batches
+    return batches, skipped
