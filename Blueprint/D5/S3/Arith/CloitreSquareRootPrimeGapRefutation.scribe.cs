@@ -50,7 +50,11 @@ internal sealed class CloitreSquareRootPrimeGapRefutationDocument
                         + "of length 3r^2 to obtain a linear upper bound for square roots "
                         + "of quadratic-index primes. The resulting quadratic lower bound "
                         + "on prime counting contradicts the Chebyshev upper bound."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a079063-sqrt-prime-gap-lower-bound-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula AFormula()
     {

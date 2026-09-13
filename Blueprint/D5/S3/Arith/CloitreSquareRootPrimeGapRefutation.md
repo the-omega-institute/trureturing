@@ -34,6 +34,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/CloitreSquareRootPrimeGapRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a079063-sqrt-prime-gap-lower-bound-refutation` (refuted) by `D5/S3/Arith/CloitreSquareRootPrimeGapRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a079063-sqrt-prime-gap-lower-bound-refutation","declaration_gid":"D5/S3/Arith/CloitreSquareRootPrimeGapRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Benoit Cloitre (2003). *OEIS A079063, Least k such that sqrt(prime(n+k))-sqrt(prime(n))>1*. URL: <https://oeis.org/A079063>.
