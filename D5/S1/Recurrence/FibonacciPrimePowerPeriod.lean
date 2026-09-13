@@ -3,7 +3,7 @@
    mirror-B: none(waiver:actual-all-prime-power-period)
    mirror-E: none(waiver:unbounded-depth-and-exponent)
    anchors: []
-   digest: Every odd-prime period tower is determined by the valuation of the actual first return content; explicit dyadic and ramified towers complete the boundary cases. -/
+   digest: Every odd-prime period tower and every multiplied-return depth are determined by the actual first return content; separate seeds cover two and five. -/
 
 import D5.S1.Recurrence.GoldenPrimePowerDepth
 import D5.S1.Recurrence.FibonacciFrobeniusQuotientBridge
@@ -99,6 +99,53 @@ theorem full_tower_of_standard_quotient_nonzero (p : ℕ) (hp : p.Prime)
     exact hq ((standard_quotient_zero_iff_depth p hp hp2 hp5).mpr h)
   have hs1 : initialDepth p = 1 := by omega
   simpa only [hs1] using odd_prime_power_period p hp hp2 e he
+
+/-- A return repeated k times reaches precision p^e exactly when k supplies the missing depth.
+Here k may be zero; time zero is correctly a return at every precision. -/
+theorem returnContent_multiple_power_dvd (p : ℕ) (hp : p.Prime) (hp2 : p ≠ 2)
+    (k e : ℕ) (he : 0 < e) :
+    p ^ e ∣ returnContent (period p * k) ↔ p ^ (e - initialDepth p) ∣ k := by
+  rw [← period_dvd_iff_dvd_returnContent, odd_prime_power_period p hp hp2 e he]
+  constructor
+  · rintro ⟨d, hd⟩
+    refine ⟨d, ?_⟩
+    apply Nat.eq_of_mul_eq_mul_left (period_pos p hp.pos)
+    simpa only [Nat.mul_assoc] using hd
+  · rintro ⟨d, rfl⟩
+    exact ⟨d, by simp only [Nat.mul_assoc]⟩
+
+/-- The original return-content integer obeys an exact all-multiplier valuation law.
+The zero time is excluded because padicValNat uses a finite default at zero. -/
+theorem returnContent_multiple_valuation (p : ℕ) (hp : p.Prime) (hp2 : p ≠ 2)
+    (k : ℕ) (hk : 0 < k) :
+    padicValNat p (returnContent (period p * k)) = initialDepth p + padicValNat p k := by
+  have hF : Nat.fib (period p * k) ≠ 0 :=
+    ne_of_gt (Nat.fib_pos.mpr (Nat.mul_pos (period_pos p hp.pos) hk))
+  have hC : returnContent (period p * k) ≠ 0 := by
+    intro hz
+    have hd : returnContent (period p * k) ∣ Nat.fib (period p * k) :=
+      Nat.gcd_dvd_left _ _
+    rw [hz, zero_dvd_iff] at hd
+    exact hF hd
+  let d := initialDepth p + padicValNat p k
+  have hs := initialDepth_pos p hp
+  have hdpos : 0 < d := by dsimp [d]; omega
+  have hsub : d - initialDepth p = padicValNat p k := by dsimp [d]; omega
+  have hsub' : d + 1 - initialDepth p = padicValNat p k + 1 := by dsimp [d]; omega
+  have hdiv : p ^ d ∣ returnContent (period p * k) := by
+    apply (returnContent_multiple_power_dvd p hp hp2 k d hdpos).mpr
+    rw [hsub]
+    exact (pow_dvd_iff_le_padicValNat hp.ne_one (ne_of_gt hk)).mpr (le_refl _)
+  have hnot : ¬ p ^ (d + 1) ∣ returnContent (period p * k) := by
+    rw [returnContent_multiple_power_dvd p hp hp2 k (d + 1) (by omega), hsub',
+      pow_dvd_iff_le_padicValNat hp.ne_one (ne_of_gt hk)]
+    omega
+  have hlo := (pow_dvd_iff_le_padicValNat hp.ne_one hC).mp hdiv
+  have hhi : ¬ d + 1 ≤ padicValNat p (returnContent (period p * k)) := by
+    intro h
+    exact hnot ((pow_dvd_iff_le_padicValNat hp.ne_one hC).mpr h)
+  change padicValNat p (returnContent (period p * k)) = d
+  omega
 
 /-- These small seeds are consumed by the unbounded exceptional-characteristic formulas below. -/
 private theorem period_two : period 2 = 3 := by
