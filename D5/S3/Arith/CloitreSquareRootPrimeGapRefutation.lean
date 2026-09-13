@@ -29,28 +29,6 @@ liminf; it does not assert the existence of either proposed limit. -/
 def claim : Prop :=
   ∃ c : ℝ, 0 < c ∧ ∃ N : ℕ, ∀ n : ℕ, N ≤ n → c * sqrt n < a n
 
-private theorem a_witness_nonempty (n : ℕ) (hn : 0 < n) :
-    {k : ℕ | 0 < k ∧
-      1 < sqrt (Nat.nth Nat.Prime (n + k - 1)) -
-        sqrt (Nat.nth Nat.Prime (n - 1))}.Nonempty := by
-  obtain ⟨k, hk⟩ := exists_nat_gt
-    ((sqrt (Nat.nth Nat.Prime (n - 1) : ℝ) + 1) ^ 2)
-  have hq : (k : ℝ) ≤ Nat.nth Nat.Prime (n + k) := by
-    exact_mod_cast (show k ≤ Nat.nth Nat.Prime (n + k) by
-      have := Nat.add_two_le_nth_prime (n + k)
-      omega)
-  have hs : (sqrt (Nat.nth Nat.Prime (n - 1) : ℝ) + 1) ^ 2 <
-      (Nat.nth Nat.Prime (n + k) : ℝ) := hk.trans_le hq
-  have hroot : sqrt (Nat.nth Nat.Prime (n - 1) : ℝ) + 1 <
-      sqrt (Nat.nth Nat.Prime (n + k) : ℝ) := Real.lt_sqrt_of_sq_lt hs
-  refine ⟨k + 1, ?_⟩
-  simp only [Set.mem_ofPred_eq]
-  constructor
-  · omega
-  · have hidx : n + (k + 1) - 1 = n + k := by omega
-    rw [hidx]
-    linarith
-
 private theorem sqrt_prime_quadratic_step
     (c : ℝ) (N r m : ℕ) (hc : 0 < c)
     (hclaim : ∀ n : ℕ, N ≤ n → c * sqrt n < (a n : ℝ))
@@ -172,6 +150,27 @@ private theorem sqrt_prime_quadratic_linear
 OEIS A079063. The contradiction holds on arbitrarily large quadratic blocks,
 not at a finite exceptional index. -/
 theorem result : ¬ claim := by
+  have a_witness_nonempty (n : ℕ) (hn : 0 < n) :
+      {k : ℕ | 0 < k ∧
+        1 < sqrt (Nat.nth Nat.Prime (n + k - 1)) -
+          sqrt (Nat.nth Nat.Prime (n - 1))}.Nonempty := by
+    obtain ⟨k, hk⟩ := exists_nat_gt
+      ((sqrt (Nat.nth Nat.Prime (n - 1) : ℝ) + 1) ^ 2)
+    have hq : (k : ℝ) ≤ Nat.nth Nat.Prime (n + k) := by
+      exact_mod_cast (show k ≤ Nat.nth Nat.Prime (n + k) by
+        have := Nat.add_two_le_nth_prime (n + k)
+        omega)
+    have hs : (sqrt (Nat.nth Nat.Prime (n - 1) : ℝ) + 1) ^ 2 <
+        (Nat.nth Nat.Prime (n + k) : ℝ) := hk.trans_le hq
+    have hroot : sqrt (Nat.nth Nat.Prime (n - 1) : ℝ) + 1 <
+        sqrt (Nat.nth Nat.Prime (n + k) : ℝ) := Real.lt_sqrt_of_sq_lt hs
+    refine ⟨k + 1, ?_⟩
+    simp only [Set.mem_ofPred_eq]
+    constructor
+    · omega
+    · have hidx : n + (k + 1) - 1 = n + k := by omega
+      rw [hidx]
+      linarith
   rintro ⟨c, hc, N, hclaim⟩
   obtain ⟨r, hr0⟩ := exists_nat_gt (1 / c)
   have hr : 1 < c * (r : ℝ) := by
