@@ -23,6 +23,10 @@ internal sealed class SummabilityContinuityDocument : IScribeDocumentDefinition
                     + "It bounds the nonnegative prefix error uniformly, with equality at the capacity "
                     + "corner, so the supremum of the absolute error is precisely that tail. Prefixes "
                     + "converge uniformly, and the same tail bounds the difference of sums for two "
-                    + "states agreeing through the given prefix."))),
+                    + "states agreeing through the given prefix. The continuous extension is unique. Both "
+                    + "finite-state and full-product real levels are closed, and the ambient closure "
+                    + "of a finite-state level lies in the corresponding full level. For every "
+                    + "capacity, including infinite total capacity, each finite real sublevel is "
+                    + "closed. Negative real sublevels are empty."))),
                 DescribeRole.Theorem))));
 }

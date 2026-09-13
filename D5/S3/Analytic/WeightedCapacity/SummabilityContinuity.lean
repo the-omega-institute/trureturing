@@ -4,19 +4,10 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Finite dyadic capacity characterizes continuous real extension with sharp uniform tails. -/
+   digest: Finite dyadic capacity characterizes continuous extension and sharp uniform tails. -/
 import D5.S3.Analytic.WeightedCapacity.DyadicTailFilling
 import Mathlib.Analysis.Normed.Group.FunctionSeries
 import Mathlib.Topology.Algebra.InfiniteSum.Real
-import Mathlib.Topology.Instances.ENNReal.Lemmas
-import Mathlib.Topology.Instances.Real.Lemmas
-import Mathlib.Topology.Instances.Nat
-import Mathlib.Topology.Constructions
-import Mathlib.Data.Nat.Find
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.NormNum
 
 set_option autoImplicit false
 
@@ -37,7 +28,10 @@ noncomputable def tailMass (A : ℕ → ℕ) (N : ℕ) : ENNReal :=
 /-- Finite total capacity is equivalent to continuity of the finite-state readout at zero,
 everywhere, and to existence of a continuous real extension to the full product. In this case
 the extended sum is finite and continuous, and its prefix error has a vanishing sharp bound
-attained at the capacity corner, also bounding oscillation within every prefix cylinder. -/
+attained at the capacity corner, also bounding oscillation within every prefix cylinder.
+The extension is unique, both real level sets are closed, and the ambient closure of each
+finite-state level lies in the full level. Finite real sublevels are closed for every capacity;
+the explicit nonnegativity of the level makes negative sublevels empty. -/
 theorem summable_iff_continuous (A : ℕ → ℕ) :
     (M A ≠ ⊤ ↔ ContinuousAt (readout (A := A)) (zeroState A)) ∧
     (M A ≠ ⊤ ↔ Continuous (readout (A := A))) ∧
@@ -53,7 +47,13 @@ theorem summable_iff_continuous (A : ℕ → ℕ) :
       (∀ N, (⨆ x : X A, |(S x).toReal - P N x|) = (tailMass A N).toReal) ∧
       TendstoUniformly (fun N => P N (A := A)) (fun x => (S x).toReal) atTop ∧
       (∀ N (x y : X A), (∀ n ≤ N, x n = y n) →
-        |(S x).toReal - (S y).toReal| ≤ (tailMass A N).toReal)) := by
+        |(S x).toReal - (S y).toReal| ≤ (tailMass A N).toReal)) ∧
+    (M A ≠ ⊤ →
+      (∀ F : X A → ℝ, Continuous F → (∀ u : B A, F u.val = readout u) →
+        F = fun x => (S x).toReal) ∧
+      (∀ c : ℝ, IsClosed (L A c) ∧ IsClosed {x : X A | (S x).toReal = c} ∧
+        closure (ambientLevel A c) ⊆ {x : X A | (S x).toReal = c})) ∧
+    (∀ c : ℝ, IsClosed {x : X A | 0 ≤ c ∧ S x ≤ ENNReal.ofReal c}) := by
   classical
   let mass : ℕ → ℝ := fun n => (A n : ℝ) / 2 ^ n
   let term : ℕ → X A → ℝ := fun n x => ((x n : ℕ) : ℝ) / 2 ^ n
@@ -206,13 +206,13 @@ theorem summable_iff_continuous (A : ℕ → ℕ) :
       refine ⟨F, ?_, ?_⟩
       · intro n hn
         exact (Finset.mem_filter.mp hn).2
-      · have hsplit :
-        (∑ n ∈ Finset.range k, mass n) =
-              (∑ n ∈ F, mass n) + (∑ n ∈ (Finset.range k).filter (fun n => n ∈ I), mass n) := by
+      · have hsplit : (∑ n ∈ Finset.range k, mass n) =
+            (∑ n ∈ F, mass n) +
+              (∑ n ∈ (Finset.range k).filter (fun n => n ∈ I), mass n) := by
           have hs := Finset.sum_filter_add_sum_filter_not (Finset.range k) (fun n => n ∈ I) mass
           simpa [F, add_comm] using hs.symm
-        have hinter :
-            (∑ n ∈ (Finset.range k).filter (fun n => n ∈ I), mass n) ≤ ∑ n ∈ I, mass n := by
+        have hinter : (∑ n ∈ (Finset.range k).filter (fun n => n ∈ I), mass n) ≤
+            ∑ n ∈ I, mass n := by
           apply Finset.sum_le_sum_of_subset_of_nonneg
           · intro n hn
             exact (Finset.mem_filter.mp hn).2
@@ -261,12 +261,69 @@ theorem summable_iff_continuous (A : ℕ → ℕ) :
     have hh : Continuous (fun u : B A => F u.val) := hF.comp continuous_subtype_val
     exact hh.congr heq
   refine ⟨⟨fun h => ?_, hconverse⟩, ⟨fun h => ?_, fun h => hconverse h.continuousAt⟩,
-    ⟨fun h => ?_, ?_⟩, hforward⟩
+    ⟨fun h => ?_, ?_⟩, hforward, ?_, ?_⟩
   · exact (hextcont _ (hforward h).2.1 (hforward h).2.2.1).continuousAt
   · exact hextcont _ (hforward h).2.1 (hforward h).2.2.1
   · exact ⟨_, (hforward h).2.1, (hforward h).2.2.1⟩
   · rintro ⟨F, hF, heq⟩
     exact hconverse (hextcont F hF heq).continuousAt
+  · intro hM
+    have hc := (hforward hM).2.1
+    have hr := (hforward hM).2.2.1
+    constructor
+    · intro F hF heq
+      have hdense : Dense (Set.range (fun u : B A => u.val)) := by
+        intro x
+        apply mem_closure_iff.mpr
+        intro o ho hxo
+        have hon := ho.mem_nhds hxo
+        rw [nhds_pi, Filter.mem_pi'] at hon
+        obtain ⟨I, t, ht, hto⟩ := hon
+        let v : X A := fun n => if n ∈ I then x n else ⟨0, Nat.zero_lt_succ _⟩
+        have hvfin : (Function.support (fun n => (v n : ℕ))).Finite := by
+          apply I.finite_toSet.subset
+          intro n hn
+          by_contra h
+          have hnI : n ∉ I := h
+          exact hn (by simp [v, hnI])
+        refine ⟨v, hto ?_, ⟨⟨v, hvfin⟩, rfl⟩⟩
+        intro n hn
+        change v n ∈ t n
+        have hnI : n ∈ I := hn
+        simp only [v, if_pos hnI]
+        exact mem_of_mem_nhds (ht n)
+      apply Continuous.ext_on hdense hF hc
+      rintro _ ⟨u, rfl⟩
+      exact (heq u).trans (hr u).symm
+    · intro c
+      have hLc : IsClosed (L A c) :=
+        isClosed_eq (hextcont _ hc hr) continuous_const
+      have hFc : IsClosed {x : X A | (S x).toReal = c} :=
+        isClosed_eq hc continuous_const
+      refine ⟨hLc, hFc, closure_minimal ?_ hFc⟩
+      rintro _ ⟨u, hu, rfl⟩
+      exact (hr u).trans hu
+  · intro c
+    have heq : {x : X A | 0 ≤ c ∧ S x ≤ ENNReal.ofReal c} =
+        ⋂ N : ℕ, {x | P N x ≤ c} := by
+      ext x
+      simp only [mem_ofPred_eq, mem_iInter]
+      constructor
+      · rintro ⟨hc, hx⟩ N
+        exact (ENNReal.ofReal_le_ofReal_iff hc).mp
+          ((le_iSup (fun k => ENNReal.ofReal (P k x)) N).trans hx)
+      · intro hx
+        have hp0 : 0 ≤ P 0 x := by unfold P prefixSum; positivity
+        exact ⟨hp0.trans (hx 0), iSup_le fun N => ENNReal.ofReal_le_ofReal (hx N)⟩
+    rw [heq]
+    apply isClosed_iInter
+    intro N
+    apply isClosed_le _ continuous_const
+    unfold P prefixSum
+    apply continuous_finsetSum
+    intro n _
+    exact ((continuous_of_discreteTopology : Continuous (fun z : Fin (A n + 1) =>
+      ((z : ℕ) : ℝ))).comp (continuous_apply n)).div_const _
 
 #print axioms summable_iff_continuous
 
