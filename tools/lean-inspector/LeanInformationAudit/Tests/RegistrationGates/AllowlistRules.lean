@@ -434,6 +434,18 @@ def cleanInstanceSignature : LeanInformationAudit.StructuralPrimitiveSignature w
 def cleanInstanceRealization : LeanInformationAudit.StructuralPrimitiveRealization
     ⟨Bool⟩ cleanInstanceSignature := ⟨@CleanInstanceBox.mk⟩
 
+-- Alias-shaped counterpart for the instance-through-alias guard.  The alias
+-- expands to the listed `Inhabited` class and carries no statement evidence.
+abbrev CleanInstanceAlias : Type := Inhabited Unit
+inductive CleanAliasInstanceBox where
+  | mk [CleanInstanceAlias] (bit : Bool) : CleanAliasInstanceBox
+def cleanAliasInstanceSignature : LeanInformationAudit.StructuralPrimitiveSignature where
+  Index := CleanInstanceAlias
+  indexFintype := Fintype.ofSubsingleton inferInstance
+  Output := fun _ => CleanAliasInstanceBox
+def cleanAliasInstanceRealization : LeanInformationAudit.StructuralPrimitiveRealization
+    ⟨Bool⟩ cleanAliasInstanceSignature := ⟨@CleanAliasInstanceBox.mk⟩
+
 protected def harmlessStatement : Prop := True
 structure HarmlessPLiftBox where
   evidence : PLift AllowlistRules.harmlessStatement
@@ -445,6 +457,18 @@ def harmlessPLiftSignature : LeanInformationAudit.StructuralPrimitiveSignature w
 def harmlessPLiftRealization : LeanInformationAudit.StructuralPrimitiveRealization
     ⟨Bool⟩ harmlessPLiftSignature := ⟨HarmlessPLiftBox.mk⟩
 
+-- Protected proposition alias counterpart for the PLift declared-type guard.
+abbrev HarmlessProtectedAlias : Type := PLift True
+structure HarmlessProtectedAliasBox where
+  evidence : HarmlessProtectedAlias
+  bit : Bool
+def harmlessProtectedAliasSignature : LeanInformationAudit.StructuralPrimitiveSignature where
+  Index := HarmlessProtectedAlias
+  indexFintype := Fintype.ofSubsingleton ⟨True.intro⟩
+  Output := fun _ => HarmlessProtectedAliasBox
+def harmlessProtectedAliasRealization : LeanInformationAudit.StructuralPrimitiveRealization
+    ⟨Bool⟩ harmlessProtectedAliasSignature := ⟨HarmlessProtectedAliasBox.mk⟩
+
 inductive CleanDecidableBox where
   | mk [Decidable True] (bit : Bool) : CleanDecidableBox
 def cleanDecidableSignature : LeanInformationAudit.StructuralPrimitiveSignature where
@@ -453,6 +477,31 @@ def cleanDecidableSignature : LeanInformationAudit.StructuralPrimitiveSignature 
   Output := fun _ => CleanDecidableBox
 def cleanDecidableRealization : LeanInformationAudit.StructuralPrimitiveRealization
     ⟨Bool⟩ cleanDecidableSignature := ⟨@CleanDecidableBox.mk⟩
+
+-- Alias-shaped counterpart for the decidability-through-alias guard.
+abbrev CleanDecidableAlias : Type := Decidable True
+inductive CleanAliasDecidableBox where
+  | mk [CleanDecidableAlias] (bit : Bool) : CleanAliasDecidableBox
+def cleanAliasDecidableSignature : LeanInformationAudit.StructuralPrimitiveSignature where
+  Index := CleanDecidableAlias
+  indexFintype := Fintype.ofSubsingleton (.isTrue trivial)
+  Output := fun _ => CleanAliasDecidableBox
+def cleanAliasDecidableRealization : LeanInformationAudit.StructuralPrimitiveRealization
+    ⟨Bool⟩ cleanAliasDecidableSignature := ⟨@CleanAliasDecidableBox.mk⟩
+
+-- A genuinely deep type comparison for the positive-budget exhaustion check.
+-- The recursive family forces definitional equality to unfold 256 layers;
+-- setting a finite heartbeat budget below that work must produce the same
+-- fail-closed diagnostic as any other bounded comparison.
+def DeepType : Nat → Type
+  | 0 => Bool
+  | n + 1 => Prod (DeepType n) Bool
+def deepValue : (n : Nat) → DeepType n
+  | 0 => false
+  | n + 1 => (deepValue n, false)
+def defeqExhaustionRead (_ : Unit) (x : Bool) : Bool :=
+  let _ : DeepType 256 := deepValue 256
+  x
 
 elab "raw_payload_name" value:term : term => do
   let value ← Elab.Term.elabTerm value (some (mkConst ``LeanInformationAudit.SealedOccurrenceState))
@@ -570,7 +619,10 @@ run_cmd Elab.Command.liftCoreM do
 run_cmd Elab.Command.liftCoreM do
   for (label, realizationName) in [
       ("InstanceTypeCleanCounterpart", ``cleanInstanceRealization),
+      ("InstanceTypeAliasCleanCounterpart", ``cleanAliasInstanceRealization),
       ("ProtectedPLiftCleanCounterpart", ``harmlessPLiftRealization),
+      ("ProtectedPLiftAliasCleanCounterpart", ``harmlessProtectedAliasRealization),
+      ("DecidableTypeAliasCleanCounterpart", ``cleanAliasDecidableRealization),
       ("DecidableTypeCleanCounterpart", ``cleanDecidableRealization)] do
     try
       let actual ← provenanceErrorCurrent (← getEnv).header.mainModule `catalog
@@ -588,8 +640,9 @@ run_cmd Elab.Command.liftCoreM do
 
 run_cmd Elab.Command.liftCoreM do
   try
-    withOptions (·.set `provenanceDefEqLimit (1 : Nat)) <|
-      check "DefeqBudgetRealExhaustion" ``cleanRead ``target "unclassified_form" "defeq_budget"
+    withOptions (·.set `provenanceDefEqLimit (1000 : Nat)) <|
+      check "DefeqBudgetRealExhaustion" ``defeqExhaustionRead ``target
+        "unclassified_form" "defeq_budget"
   catch ex => logError m!"[FAIL] DefeqBudgetRealExhaustion: {ex.toMessageData}"
 
 -- Pending constants have declaration identity only. Occurrence metadata belongs
