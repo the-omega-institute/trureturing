@@ -1,0 +1,23 @@
+## 21.8 边界覆盖的全局反例
+
+**命题。** 对任意无理数 $1/4<\alpha<1/3$，存在 $A,B\subseteq\mathbb Z$ 及不同边界的实际机械轨迹 $v,w$，使 $D(B)\subseteq D(A)$、$v|_A=w|_A$，但 $v|_B\ne w|_B$。
+
+**证明。** 对任意 $1/4<\alpha<1/3$，取两条实际下机械轨迹 $v=\ell_0$、$w=\ell_{-2}$。由
+
+$$
+\lfloor\alpha\rfloor=\lfloor2\alpha\rfloor=\lfloor3\alpha\rfloor=0,
+\qquad \lfloor4\alpha\rfloor=\lfloor5\alpha\rfloor=1,
+$$
+
+得到
+
+$$
+(v(0),v(1),v(2))=(0,0,0),\qquad
+(w(0),w(1),w(2))=(0,1,0).
+$$
+
+令 $A=\{0,2\}$、$B=\{1\}$，则 $D(B)=\{1,2\}\subseteq\{0,1,2,3\}=D(A)$，但 $v|_A=w|_A$ 且 $v|_B\ne w|_B$。
+
+**定理。** 对任意轨迹集合 $\mathcal T$ 及采样集合 $A,B$，限制映射 $E_A(v)=v|_A$ 在 $\mathcal T$ 上决定 $F_B(v)=v|_B$，当且仅当每个相同观察字的纤维在目标上取同一个值。
+
+**证明。** 对 $E_A,F_B$ 应用第 21.7 节的核包含判据；核包含恰说 $E_A(v)=E_A(w)$ 蕴含 $F_B(v)=F_B(w)$。上面的反例给出第 21.6 节同边界两侧判据不能替代这一条件的实例。

@@ -1,0 +1,11 @@
+**定理。** 对任意 $u\in\mathcal O$、$\rho\in\mathbb R$ 与
+$n\in\mathbb Z$，截面进位满足
+
+$$
+\boxed{
+c_u^\rho(n)=\lfloor u_*r_\rho(n)+\rho\rfloor,
+\qquad
+s_\rho(P_u^\rho(n))=u s_\rho(n)+c_u^\rho(n).
+}\tag{GS4}
+$$
+

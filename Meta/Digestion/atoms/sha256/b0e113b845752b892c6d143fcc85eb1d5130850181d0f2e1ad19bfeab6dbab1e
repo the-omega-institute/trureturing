@@ -1,0 +1,9 @@
+**定理。** 对每个 $m\in\mathbb Z\setminus\{0\}$，
+
+$$
+\boxed{
+\lfloor T_L(m)\alpha\rfloor
+=B_Lm+C_L\lfloor m\alpha\rfloor-c_L.
+}\tag{GC10}
+$$
+

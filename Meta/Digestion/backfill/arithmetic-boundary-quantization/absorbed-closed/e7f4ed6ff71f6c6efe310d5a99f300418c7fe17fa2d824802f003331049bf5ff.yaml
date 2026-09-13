@@ -1,0 +1,25 @@
+fingerprints:
+  raw_sha256: sha256:e7f4ed6ff71f6c6efe310d5a99f300418c7fe17fa2d824802f003331049bf5ff
+  normalized_sha256: sha256:e7f4ed6ff71f6c6efe310d5a99f300418c7fe17fa2d824802f003331049bf5ff
+cas_ref: sha256:e7f4ed6ff71f6c6efe310d5a99f300418c7fe17fa2d824802f003331049bf5ff
+coverage_gids:
+  - gid: D5/S3/Analytic/Interpolation/EnvelopeKMonotone.coordinate_variance_domain
+    target_statement_id: sha256:0156ea429a9816ca30aef9627a0fd4285e109fafa7b0c544bb4c203afa23a8d9
+  - gid: D5/S3/Analytic/Interpolation/HermiteEnvelopeEquality.hermite_envelope_equality
+    target_statement_id: sha256:70126db820f83571b62984182afa39da6134b312d02372a67faa98793c926962
+  - gid: D5/S3/Analytic/Interpolation/HermiteMomentBounds.hermite_moment_bounds
+    target_statement_id: sha256:c6ad6c5410e7e7947c6f68f4ee537f8cbfcbdee49d098ef669b9a30837bed6a7
+  - gid: D5/S3/Analytic/Interpolation/HermiteUpperEnvelope.hermite_upper_envelope
+    target_statement_id: sha256:c40fcd083895cdfde68b563e35082e9a955594e45518e01720fe71f663075cdb
+  - gid: D5/S3/Analytic/Interpolation/LogOneSubExpDerivatives.log_one_sub_exp_derivatives
+    target_statement_id: sha256:efe86c77127a7e21e2ba95c9489401c0e06ba5f0ccf7f8a3e424f3624ac38e79
+  - gid: D5/S3/Arith/GoldenResourceObjectiveFactorization.golden_resource_objective_sum_on
+    target_statement_id: sha256:a656df780668a8d87e6a336d66423024214763d372f818c3d3f7642a747f1ab1
+  - gid: D5/S3/Arith/GoldenResourceOptimalInteger.golden_resource_sigma_identity
+    target_statement_id: sha256:cc1b03bcb9ef0de556e591c672a7252de97d14c8dc21bba7030ff64f6a1c636f
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 66acf221339cdff95508db4805d4950d419bd557fe26b09c0414323e2f2838a1
+    - 33cf1b704cfe5139887e92f958e848b3df71753a7f4ffaed3b031aacc55275b7
+    - cc2058915681dfbf9f643a57dfe932ed3347616168af47bd8ea8be3909c78549

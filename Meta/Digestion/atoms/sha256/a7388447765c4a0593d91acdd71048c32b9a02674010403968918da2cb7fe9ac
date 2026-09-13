@@ -1,0 +1,8 @@
+**命题。** $s_\rho$ 是 $\pi$ 的一个截面，并且
+
+$$
+\pi(s_\rho(n))=n,
+\qquad -\rho\le r_\rho(n)<1-\rho,
+\qquad (s_\rho(n))_*=-r_\rho(n).
+$$
+
