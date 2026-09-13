@@ -416,7 +416,10 @@
         "lean-toolchain",
         ".gitignore"
       ],
-      "execution_excludes": [],
+      "execution_excludes": [
+        "tools/scripts/agent/openproblem/README.md",
+        "tools/scripts/agent/openproblem/SCREENED-OUT.md"
+      ],
       "execution_environment": [
         "STRATALINT_TEST_ENVIRONMENT"
       ]
@@ -508,7 +511,10 @@
         "tools/tests/StrataLint.EngineeringScope.Tests/Fixtures/**",
         "Meta/lean-report.toml"
       ],
-      "execution_excludes": [],
+      "execution_excludes": [
+        "tools/scripts/agent/openproblem/README.md",
+        "tools/scripts/agent/openproblem/SCREENED-OUT.md"
+      ],
       "execution_environment": [
         "STRATALINT_TEST_ENVIRONMENT"
       ]
@@ -685,7 +691,10 @@
         "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json",
         "Meta/lean-report.toml"
       ],
-      "execution_excludes": [],
+      "execution_excludes": [
+        "tools/scripts/agent/openproblem/README.md",
+        "tools/scripts/agent/openproblem/SCREENED-OUT.md"
+      ],
       "execution_environment": [
         "STRATALINT_TEST_ENVIRONMENT"
       ]
@@ -739,7 +748,10 @@
         ".gitignore",
         "docs/develop/spec/**"
       ],
-      "execution_excludes": [],
+      "execution_excludes": [
+        "tools/scripts/agent/openproblem/README.md",
+        "tools/scripts/agent/openproblem/SCREENED-OUT.md"
+      ],
       "execution_environment": [
         "STRATALINT_TEST_ENVIRONMENT"
       ]
