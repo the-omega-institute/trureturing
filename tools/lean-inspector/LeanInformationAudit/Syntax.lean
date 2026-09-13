@@ -205,6 +205,9 @@ syntax (name := registerInformationTheoremViaCmd)
 @[command_elab registerInformationTheoremViaCmd]
 private def elabRegisterInformationTheoremVia : CommandElab := fun stx => do
   let saved ← getEnv
+  let errorCount := fun (log : MessageLog) =>
+    (log.reportedPlusUnreported.toList.filter (·.severity == .error)).length
+  let previousErrors := errorCount (← get).messages
   try
     let theoremId : TSyntax `ident := ⟨stx[1]⟩
     let arenaName ← resolveArena ⟨stx[5]⟩
@@ -233,6 +236,8 @@ private def elabRegisterInformationTheoremVia : CommandElab := fun stx => do
     ensureRegisterableName (← getEnv) entry
     let entry ← liftTermElabM <| RegistrationReifier.derive entry arena descriptor outputEvidence
     registerEntry entry
+    -- Term elaboration can log an error and still return a valid expression.
+    if errorCount (← get).messages > previousErrors then setEnv saved
   catch e =>
     setEnv saved
     throw e
