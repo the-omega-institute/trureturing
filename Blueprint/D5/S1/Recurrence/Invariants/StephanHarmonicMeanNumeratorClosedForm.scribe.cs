@@ -25,7 +25,11 @@ internal sealed class StephanHarmonicMeanNumeratorClosedFormDocument : IScribeDo
                 + "(3*8^m, 2*8^m). The coprime reductions and the block invariant are "
                 + "carried inside the proof. The exponent m-1 uses natural-number "
                 + "subtraction.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a107928-harmonic-mean-numerator-closed-form"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance,
