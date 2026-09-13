@@ -540,3 +540,33 @@ $$
 [R-ref5] Luis A. Medina and Eric Rowland, *p-regularity of the p-adic valuation of the Fibonacci sequence*, The Fibonacci Quarterly 53 (2015), 265–271. arXiv:0910.2907v4, Theorem 1.4 (Lengyel). https://arxiv.org/abs/0910.2907v4
 
 [R-ref6] Mathlib, `Mathlib/RingTheory/ZMod/UnitsCyclic.lean`, `exists_one_add_mul_pow_prime_eq` and `exists_one_add_mul_pow_prime_pow_eq`; `Mathlib/GroupTheory/OrderOfElement.lean`, `orderOf_eq_prime_pow` and `orderOf_pow'`; `Mathlib/NumberTheory/Padics/PadicVal/Defs.lean`, `pow_dvd_iff_le_padicValNat`. Pinned revision: `db584cd6d46c92f209a44c0f1c829460d327499d`. These are imported proof dependencies rather than assumed conclusion fields.
+
+### R.17 任意时间倍数的精确回归深度
+
+R18 还能控制任意时间倍数，超出只考察 $p^j$ 倍时间的局部展开。令 $p$ 为奇素数、$r_p=\pi(p)$、$s_p=\nu_p(C_{r_p})$。对全部 $k\ge0,e\ge1$，有
+
+$$
+\boxed{p^e\mid C_{r_pk}\iff p^{\max(e-s_p,0)}\mid k.}\tag{R21}
+$$
+
+证明：由 R5，左侧等价于 $\pi(p^e)\mid r_pk$。代入 R18，再在自然数整除见证中约去正整数 $r_p$，得到右侧。对应 `returnContent_multiple_power_dvd`。$k=0$ 时，两侧都成立；没有将零时间误当成有限深度。
+
+对 $k>0$，取 $d=s_p+\nu_p(k)$。R21 在 $e=d$ 时成立，在 $e=d+1$ 时失败，因此
+
+$$
+\boxed{\nu_p(C_{r_pk})=s_p+\nu_p(k).}\tag{R22}
+$$
+
+对应 `returnContent_multiple_valuation`。源码先证明 $C_{r_pk}\ne0$，再使用两次整除判定界定估值，避免 `padicValNat` 在零点的默认值。该公式包括奇素数5；二进分支仍由 R20 单独处理。
+
+R22 的内容是明确的时间与分辨率交换律：重复旧周期的次数只有其 $p$ 因子数会增加回归深度，与 $p$ 互素的额外重复不改变深度。每个固定素数的全部高次层级，因而被一个实际初始深度控制。这说明继续改变 $e$ 或时间倍数不能凭空增加关于跨素数例外性的独立条件。
+
+实现中，标准商明确写作 `((Nat.fib n / p : Nat) : ZMod p)`，先在自然数中整除，再降模。符号方向另由 `epsilon_eq_standard` 消费钉版 `legendreSym.quadratic_reciprocity_one_mod_four` 证明，故 $(p/5)=(5/p)$ 已是实际声明而非只靠散文约定。
+
+### R.18 向跨素数问题继续推进的文献接口
+
+Jones [R-ref7] 给出 $k$-Wall–Sun–Sun 条件与 $X^{2p}-kX^p-1$ 的非单生成性之间的等价，在 $k\not\equiv0\pmod4$ 且相应判别式平方自由的条件下成立。黄金情形 $k=1$ 的判别式为5，满足这些条件。该结果为当前 $q_p=0$ 判据提供一个有明确原文定理的数域方向。
+
+下一条可核验目标是将本节的标准商零条件，与该文黄金特化中实际多项式、数域整数环及幂整基指标的条件连接。其价值在于引入来自数域整数环的额外算术信息；仅仅复述等价关系本身不证明零集合非空。本附录当前没有交付该整数环指标的 Lean 桥，也没有给 WSS 存在性或无穷性设置解决标记。
+
+[R-ref7] Lenny Jones, *A new condition for k-Wall-Sun-Sun primes*, arXiv:2302.10357v4, 2023-07-15. https://arxiv.org/abs/2302.10357v4 。上述方向引用其实际黄金特化，未把一般 Lucas 参数下的假设删除。
