@@ -2,7 +2,6 @@ import LeanInformationAudit.RegistrationGates
 
 namespace LeanInformationAudit.RegistrationReifier
 open Lean Meta D5.S3.ConceptDynamics.InformationEscape
-open PointwiseRegistrationTemplates
 
 register_option informationReifier.fuel : Nat := {
   defValue := 65536
@@ -72,6 +71,83 @@ def rigid (name : Name) : MetaM Expr := do
   let info ← getConstInfo name
   return mkConst name (info.levelParams.map Level.param)
 
+/-- The content module is loaded by the registering client, never by the judge. -/
+def providerModule : Name := `D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates
+
+def pointwiseProvider : Name := providerModule.str "pointwise"
+def sensitivityProvider : Name := providerModule.str "sensitivity"
+def variationProvider : Name := providerModule.str "variation"
+
+private def pointwiseArenaName : Name :=
+  `D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.pointwiseEqArena
+
+/-- Independent structural type pins. No provider lookup, type inference, or
+normalization contributes to these expected telescopes. Binder names alone may vary. -/
+private def providerType (name : Name) : MetaM Expr := do
+  let zero := Level.zero
+  let one := Level.succ zero
+  let sensitivity := mkConst ``FiniteSlotSensitivity [zero, zero, zero]
+  if name == variationProvider then
+    let u := Level.param `u
+    let v := Level.param `v
+    let w := Level.param `w
+    let arenaType := mkConst ``PrimitiveLawArena [u, v, w]
+    withLocalDeclD `A arenaType fun a => do
+    let signature := mkApp (mkConst ``PrimitiveLawArena.signature [u, v, w]) a
+    let object := mkApp (mkConst ``PrimitiveLawArena.toArena [u, v, w]) a
+    let state := mkApp (mkConst ``Arena.State [u]) object
+    let index := mkAppN (mkConst ``PrimitiveSignature.Index [u, v, w]) #[state, signature]
+    withLocalDeclD `i index fun i =>
+    withLocalDeclD `h (mkApp (mkConst ``FiniteSlotSensitivity [u, v, w]) a) fun h =>
+      mkForallFVars #[a, i, h] (mkApp (mkConst ``FiniteLawVariation [u, v, w]) a)
+  else
+    withLocalDecl `X .implicit (mkSort one) fun x =>
+    withLocalDecl `Y .implicit (mkSort one) fun y =>
+    withLocalDecl `finite .instImplicit (mkApp (mkConst ``Fintype [zero]) x) fun finite =>
+    withLocalDecl `decX .instImplicit (mkApp (mkConst ``DecidableEq [one]) x) fun decX =>
+    withLocalDecl `decY .instImplicit (mkApp (mkConst ``DecidableEq [one]) y) fun decY => do
+      let object := mkAppN (mkConst ``Arena.ofFintype [zero]) #[x, finite, decX]
+      let arena := mkAppN (mkConst pointwiseArenaName) #[object, y, decY]
+      if name == pointwiseProvider then
+        let readoutType ← mkArrow x y
+        withLocalDeclD `f readoutType fun f =>
+        withLocalDeclD `g readoutType fun g => do
+          let statement ← withLocalDeclD `x x fun arg =>
+            mkForallFVars #[arg] (mkAppN (mkConst ``Eq [one]) #[y, mkApp f arg, mkApp g arg])
+          let state := mkApp (mkConst ``Arena.State [zero])
+            (mkApp (mkConst ``PrimitiveLawArena.toArena [zero, zero, zero]) arena)
+          let realization := mkAppN
+            (mkConst `D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.pointwiseEqRealization)
+            #[state, y, decY, f, g]
+          mkForallFVars #[x, y, finite, decX, decY, f, g]
+            (mkAppN (mkConst ``LegacyPrimitiveRealization [zero, zero, zero]) #[arena, statement, realization])
+      else if name == sensitivityProvider then
+        withLocalDecl `outputs .instImplicit (mkApp (mkConst ``Nontrivial [zero]) y) fun outputs =>
+        withLocalDeclD `h (mkApp (mkConst ``Arena.Nondegenerate [zero]) object) fun h =>
+          mkForallFVars #[x, y, finite, decX, decY, outputs, h] (mkApp sensitivity arena)
+      else throwError "P1.UnsupportedDescriptor: unknown provider {name}"
+
+/-- Both insertion and persisted validation bind Name, raw type and declaring module.
+A namespace spelling, even with an identical type, is not module ownership. -/
+def checkedProvider (name : Name) : MetaM ConstantInfo := bounded do
+  unless #[pointwiseProvider, sensitivityProvider, variationProvider].contains name do
+    throwError "P1.UnsupportedDescriptor: unknown provider {name}"
+  let env ← getEnv
+  let some info := env.find? name
+    | throwError "P1.UnsupportedDescriptor: missing provider {name}"
+  unless info matches .thmInfo _ do
+    throwError "P1.UnsupportedDescriptor: provider is not a theorem {name}"
+  let levels := if name == variationProvider then [Level.param `u, .param `v, .param `w] else []
+  unless info.levelParams.length == levels.length do
+    throwError "P1.UnsupportedDescriptor: provider type pin universes {name}: {info.levelParams}"
+  requireExact s!"UnsupportedDescriptor: provider type pin {name}"
+    (info.type.instantiateLevelParams info.levelParams levels) (← providerType name)
+  let owner := (env.getModuleIdxFor? name).bind (env.allImportedModuleNames[·]?)
+    |>.getD env.header.mainModule
+  unless owner == providerModule do
+    throwError "P1.UnsupportedDescriptor: provider module {name}: {owner}"
+  return info
+
 /-- Only descriptor-created application sites beta-substitute a supplied lambda. -/
 private def readoutBody (f arg : Expr) : Option Expr :=
   match f with
@@ -89,11 +165,13 @@ private def sourceSite (e : Expr) : Expr :=
 Only the two provider-created equality-side applications below may substitute. -/
 def semanticSource (descriptor : Expr) : MetaM (Expr × Expr × Expr) := do
   closed descriptor
-  unless descriptor.isAppOfArity ``ReifierTemplates.pointwise 7 do
+  unless descriptor.isAppOfArity pointwiseProvider 7 do
     throwError "P1.UnsupportedDescriptor: expected fully applied ReifierTemplates.pointwise"
   let .const provider levels := descriptor.getAppFn
     | throwError "P1.UnsupportedDescriptor: provider constant"
-  let info ← getConstInfo provider
+  let info ← checkedProvider provider
+  discard <| checkedProvider sensitivityProvider
+  discard <| checkedProvider variationProvider
   let mut type := info.type.instantiateLevelParams info.levelParams levels
   for arg in descriptor.getAppArgs do
     let .forallE _ _ body _ := type | throwError "P1.UnsupportedDescriptor: provider telescope"
@@ -112,7 +190,7 @@ def semanticSource (descriptor : Expr) : MetaM (Expr × Expr × Expr) := do
 private def arenaHead : Nat → Expr → MetaM Expr
   | 0, _ => throwError "P1.IncompleteCheck: arena head fuel exhausted"
   | fuel + 1, e => do
-    if e.isAppOf ``pointwiseEqArena then return e
+    if e.isAppOf `D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.pointwiseEqArena then return e
     match e with
     | .mdata _ body => arenaHead fuel body
     | _ =>
@@ -185,11 +263,11 @@ def derive (e : InformationRegistryEntry) (arena descriptor : Expr)
   closed nontrivial
   unless ← isDefEq (← inferType nontrivial) expected do throwError "P1.MissingEvidence: output type"
   let sensitivity := e.unitName.str "__sensitivity"
-  let sensitivityValue := mkAppN (mkConst ``ReifierTemplates.sensitivity)
+  let sensitivityValue := mkAppN (mkConst sensitivityProvider)
     (params ++ #[nontrivial, ← rigid nd])
   declaration sensitivity (← mkAppM ``FiniteSlotSensitivity #[arena]) sensitivityValue
   let variation := e.unitName.str "__variation"
-  let variationValue ← mkAppM ``ReifierTemplates.variation #[arena, mkConst ``Bool.false, ← rigid sensitivity]
+  let variationValue ← mkAppM variationProvider #[arena, mkConst ``Bool.false, ← rigid sensitivity]
   declaration variation (← mkAppM ``FiniteLawVariation #[arena]) variationValue
   let value ← unitValue e
   declaration e.unitName (← inferType value) value false
@@ -262,14 +340,14 @@ def validateDerivedCertificate (entry : InformationRegistryEntry) : MetaM Unit :
   let some value := sensitivity.value? (allowOpaque := true)
     | throwError "P1.WitnessBindingMismatch: missing sensitivity"
   requireExact "WitnessBindingMismatch" value
-    (mkAppN (mkConst ``ReifierTemplates.sensitivity)
+    (mkAppN (mkConst sensitivityProvider)
       (cert.descriptor.getAppArgs.extract 0 5 ++ #[cert.outputEvidence, ← rigid cert.nondegenerate]))
   let variation ← getConstInfo entry.variationWitness
   requireExact "WitnessBindingMismatch" variation.type (← mkAppM ``FiniteLawVariation #[cert.arena])
   let some value := variation.value? (allowOpaque := true)
     | throwError "P1.WitnessBindingMismatch: missing variation"
   requireExact "WitnessBindingMismatch" value
-    (← mkAppM ``ReifierTemplates.variation #[cert.arena, mkConst ``Bool.false, ← rigid entry.sensitivityWitness])
+    (← mkAppM variationProvider #[cert.arena, mkConst ``Bool.false, ← rigid entry.sensitivityWitness])
   lawSensitive entry cert.arena
 
 end LeanInformationAudit.RegistrationReifier

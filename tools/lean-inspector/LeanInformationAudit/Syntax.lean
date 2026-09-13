@@ -211,6 +211,10 @@ private def elabRegisterInformationTheoremVia : CommandElab := fun stx => do
     let theoremId : TSyntax `ident := ⟨stx[1]⟩
     let arenaName ← resolveArena ⟨stx[5]⟩
     let arena ← liftTermElabM <| RegistrationReifier.freezeArena arenaName
+    liftTermElabM do
+      for provider in #[RegistrationReifier.pointwiseProvider,
+          RegistrationReifier.sensitivityProvider, RegistrationReifier.variationProvider] do
+        discard <| RegistrationReifier.checkedProvider provider
     let descriptor ← liftTermElabM do
       let value ← elabTerm stx[3] none
       synthesizeSyntheticMVarsNoPostponing

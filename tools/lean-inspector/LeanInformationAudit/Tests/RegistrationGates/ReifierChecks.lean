@@ -1,3 +1,4 @@
+import D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates
 import LeanInformationAudit.Syntax
 import LeanInformationAudit.Tests.RegistrationGates.Positive
 
@@ -40,40 +41,40 @@ def eqArena := pointwiseEqArena (Arena.ofFintype Bool) Bool
 def neArena := pointwiseNeArena (Arena.ofFintype Bool) Bool
 theorem clean (renamed : Bool) : renamed.not.not = renamed := Bool.not_not _
 register_information_theorem clean
-  via (ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
+  via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
 
 theorem reflexive (x : Bool) : x = x := rfl
 reject_via "reflexive_closed_truth" expects "forbidden_dependency" in
 register_information_theorem reflexive
-  via (ReifierTemplates.pointwise (fun x : Bool => x) (fun x => x)) in eqArena
+  via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => x) (fun x => x)) in eqArena
 
 theorem wrongArena (x : Bool) : x.not.not = x := Bool.not_not _
 reject_via "same_carrier_different_law" expects "ArenaMismatch" in
 register_information_theorem wrongArena
-  via (ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in neArena
+  via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in neArena
 
 reject_via "missing_arena" expects "IE-C003" in
 register_information_theorem wrongArena
-  via (ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in absentArena
+  via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in absentArena
 
 theorem quantified (_p x : Bool) : x.not.not = x := Bool.not_not _
 reject_via "theorem_specialisation" expects "StatementIdentityMismatch" in
 register_information_theorem quantified
-  via (ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
+  via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
 
 theorem poly.{u} (X : Type u) (x : X) : x = x := rfl
 reject_via "rigid_universes" expects "RigidUniverseMismatch" in
 register_information_theorem poly
-  via (ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
+  via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
 
 theorem retained (x : Bool) : (have y := x.not.not; y) = x := Bool.not_not _
 register_information_theorem retained
-  via (ReifierTemplates.pointwise (fun x : Bool => have y := x.not.not; y) (fun x => x)) in eqArena
+  via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => have y := x.not.not; y) (fun x => x)) in eqArena
 
 theorem collapsed (x : Bool) : (have y := x.not.not; y) = x := Bool.not_not _
 reject_via "collapsed_let" expects "StatementIdentityMismatch" in
 register_information_theorem collapsed
-  via (ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
+  via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
 
 theorem unrelatedTrue : True := True.intro
 theorem trueBridge : LegacyPrimitiveRealization eqArena True
@@ -85,30 +86,30 @@ register_information_theorem unrelatedTrue via trueBridge in eqArena
 theorem hidden (x : Bool) : (have _p := clean; x.not.not) = x := Bool.not_not _
 reject_via "provenance_hidden_proof" expects "forbidden_dependency" in
 register_information_theorem hidden
-  via (ReifierTemplates.pointwise (fun x : Bool => have _p := clean; x.not.not) (fun x => x)) in eqArena
+  via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => have _p := clean; x.not.not) (fun x => x)) in eqArena
 
 def singletonArena := pointwiseEqArena (Arena.ofFintype (Fin 1)) Bool
 theorem singleton (_x : Fin 1) : false = false := rfl
 reject_via "nondegenerate_required" expects "IE-C004" in
 register_information_theorem singleton
-  via (ReifierTemplates.pointwise (fun _ : Fin 1 => false) (fun _ => false)) in singletonArena
+  via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun _ : Fin 1 => false) (fun _ => false)) in singletonArena
 
 def trivialOutput := pointwiseEqArena (Arena.ofFintype Bool) Unit
 theorem noOutputs (_x : Bool) : Unit.unit = Unit.unit := rfl
 reject_via "distinct_outputs_required" expects "MissingEvidence" in
 register_information_theorem noOutputs
-  via (ReifierTemplates.pointwise (fun _ : Bool => Unit.unit) (fun _ => Unit.unit)) in trivialOutput
+  via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun _ : Bool => Unit.unit) (fun _ => Unit.unit)) in trivialOutput
 
 theorem unresolved (x : Bool) : x.not.not = x := Bool.not_not _
 reject_via "unresolved_descriptor" expects "UnresolvedMetavariables" in
 register_information_theorem unresolved
-  via (ReifierTemplates.pointwise (fun _ : Bool => ?pending) (fun x => x)) in eqArena
+  via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun _ : Bool => ?pending) (fun x => x)) in eqArena
 
 theorem exhausted (x : Bool) : x.not.not = x := Bool.not_not _
 set_option informationReifier.fuel 0 in
 reject_via "forced_exhaustion" expects "IncompleteCheck" in
 register_information_theorem exhausted
-  via (ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
+  via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
 
 -- Type-only controls isolate the matcher from the Type-0 descriptor restriction.
 run_meta do
@@ -249,7 +250,7 @@ run_meta do
 theorem nestedNegative (x : Bool) : x.not.not = x := Bool.not_not _
 reject_via "nested_beta_in_readout" expects "StatementIdentityMismatch" in
 register_information_theorem nestedNegative
-  via (ReifierTemplates.pointwise (fun x : Bool => (fun y : Bool => y.not.not) x) (fun x => x)) in eqArena
+  via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => (fun y : Bool => y.not.not) x) (fun x => x)) in eqArena
 
 run_meta do
   let (descriptor, _) ← reviewSource true
@@ -286,7 +287,7 @@ run_meta expectPersistedRejection "raw_occurrence_identity" fun e =>
 theorem loggedError (x : Bool) : x.not.not = x := Bool.not_not _
 reject_via "logged_error_rollback" expects "review_logged_error" in
 register_information_theorem loggedError
-  via (ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
+  via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
   output_evidence (by
     run_tac Lean.logError "review_logged_error"
     exact inferInstance)
@@ -303,14 +304,14 @@ def reviewRawTypes (changed : Nat) : MetaM Unit := do
     sensitivityWitness := unit.str "__sensitivity"
     variationWitness := unit.str "__variation" }
   let ndType ← mkAppM ``Arena.Nondegenerate #[← mkAppM ``PrimitiveLawArena.toArena #[cert.arena]]
-  let sens := mkAppN (mkConst ``ReifierTemplates.sensitivity)
+  let sens := mkAppN (mkConst ``D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.sensitivity)
     (cert.descriptor.getAppArgs.extract 0 5 ++ #[cert.outputEvidence, mkConst nd])
   for i in [:4] do
     let name := #[nd, e.sensitivityWitness, e.variationWitness, unit][i]!
     let value ← match i with
       | 0 => pure ((← getConstInfo cert.nondegenerate).value? (allowOpaque := true)).get!
       | 1 => pure sens
-      | 2 => mkAppM ``ReifierTemplates.variation #[cert.arena, mkConst ``Bool.false, mkConst e.sensitivityWitness]
+      | 2 => mkAppM ``D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.variation #[cert.arena, mkConst ``Bool.false, mkConst e.sensitivityWitness]
       | _ => unitValue e
     let type ← match i with
       | 0 => pure ndType
@@ -343,7 +344,7 @@ register_information_theorem resourceDescriptor via review_exhaustion in eqArena
 theorem resourceEvidence (x : Bool) : x.not.not = x := Bool.not_not _
 reject_via "evidence_exhaustion" expects "P1.IncompleteCheck" in
 register_information_theorem resourceEvidence
-  via (ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
+  via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
   output_evidence review_exhaustion
 
 -- Q4: the consumer trusts correct report production; an empty literal is no scan proof.
@@ -378,5 +379,43 @@ run_meta do
   expectFailure "bounded_runtime" "P1.IncompleteCheck" <| bounded <|
     withOptions (fun o => o.set `maxRecDepth (1 : Nat)) <|
       MonadRecDepth.withRecDepth 1 <| withIncRecDepth <| pure ()
+
+
+-- A4: independently loaded environment, with kernel-checked impostor declarations.
+-- Changing binder information leaves the applied source intact but violates its pin.
+private def providerIdentityProbe (suffix : String) (changeType : Bool) : MetaM Unit := do
+  let name := (`D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates).str suffix
+  let .thmInfo info ← getConstInfo name | throwError "provider control: not theorem"
+  let saved ← getEnv
+  let fresh ← importModules #[{
+    module := `D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates }] {}
+  try
+    setEnv (fresh.setMainModule `P1.ImpostorProvider)
+    let type := if changeType then
+      match info.type with
+      | .forallE n domain body bi => .forallE n domain body
+          (if bi == .default then .implicit else .default)
+      | other => other
+      else info.type
+    addDecl (.thmDecl { name, levelParams := info.levelParams, type, value := info.value })
+    expectFailure ("provider_" ++ (if changeType then "type_" else "module_") ++ suffix)
+      ("P1.UnsupportedDescriptor: provider " ++ (if changeType then "type pin" else "module")) do
+        discard <| checkedProvider name
+  finally setEnv saved
+
+run_meta providerIdentityProbe "pointwise" true
+run_meta providerIdentityProbe "sensitivity" true
+run_meta providerIdentityProbe "variation" true
+run_meta providerIdentityProbe "pointwise" false
+run_meta providerIdentityProbe "sensitivity" false
+run_meta providerIdentityProbe "variation" false
+run_meta do
+  for name in #[``D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise,
+      ``D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.sensitivity,
+      ``D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.variation] do
+    discard <| checkedProvider name
+  let some entry := InformationRegistry.find? (← getEnv) ``clean | throwError "missing real provider registration"
+  validateDerivedCertificate entry
+  logInfo "P1_PROVIDER real_provider insertion_and_consumer accepted"
 
 end LeanInformationAudit.Tests.ReifierChecks
