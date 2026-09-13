@@ -8,43 +8,42 @@ internal sealed class FibonacciFrobeniusQuotientBridgeDocument : IScribeDocument
 {
     private const string Prefix = "D5/S1/Recurrence/FibonacciFrobeniusQuotientBridge.";
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(
-        ScribeNode.Create(
-            "The existing golden Frobenius theorem supplies the standard p-(5/p) Fibonacci zero. When the actual return period is identified with that index, the two normalized quotients agree exactly. The coefficient is 1 and therefore a unit.",
-            H("Fibonacci Frobenius Quotient Bridge"),
-            Blocks(
-                Describe.Lean(
-                    DescribeId.Create("quotient-period-eq-frobenius"),
-                    DeclarationHandle.Create(Prefix + "quotient_period_eq_frobenius"),
-                    H("Conditional exact identification of the two normalized quotients"),
-                    StatementSource.FromAuthor(BridgeFormula()),
-                    AssessedProvenance.FromRepo(),
-                    Blocks(
-                        Paragraph(Text(
-                            "For a prime p different from 2 and 5, assume the actual least return period equals the standard Frobenius index p minus the absolute value of the Legendre symbol (5/p). The normalized quotient at the return period is then exactly the normalized quotient at the Frobenius index, with proportionality coefficient 1.")),
-                        Paragraph(Text(
-                            "This is deliberately conditional. The current repository proves the Frobenius zero and the rank divisibility bound, but does not yet prove that every return period is the Frobenius index or derive a nontrivial Lucas multiplier for an arbitrary multiple."))),
-                    DescribeRole.Theorem),
-                Describe.Lean(
-                    DescribeId.Create("quotient-period-eq-frobenius-factor-isUnit"),
-                    DeclarationHandle.Create(Prefix + "quotient_period_eq_frobenius_factor_isUnit"),
-                    H("The proportionality factor is invertible"),
-                    StatementSource.FromAuthor(UnitFormula()),
-                    AssessedProvenance.FromRepo(),
-                    Blocks(
-                        Paragraph(Text(
-                            "The coefficient is 1 in ZMod(p), so it is a unit for every prime, including p=2 and p=5. The exceptional primes are excluded only from the Frobenius-index identification theorem, not from this unit fact."))),
-                    DescribeRole.Theorem),
-                Describe.Lean(
-                    DescribeId.Create("frobenius-index-fib-dvd"),
-                    DeclarationHandle.Create(Prefix + "frobenius_index_fib_dvd"),
-                    H("The Frobenius index is an actual p-divisible Fibonacci index"),
-                    StatementSource.FromAuthor(DvdFormula()),
-                    AssessedProvenance.FromRepo(),
-                    Blocks(
-                        Paragraph(Text(
-                            "For every prime other than 5, the existing golden Frobenius apparition theorem supplies p dividing F at the standard index. The proof converts the signed Legendre index to its natural-number form and preserves p=2 as a valid apparition case."))),
-                    DescribeRole.Theorem))));
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The actual return-period quotient is minus the period times the signed Frobenius-index "
+            + "quotient. The multiplier is a unit away from characteristics two and five.",
+        H("Exact Fibonacci Frobenius Quotient Bridge"),
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("quotient-period-eq-frobenius"),
+                DeclarationHandle.Create(Prefix + "quotient_period_eq_frobenius"),
+                H("Exact quotient transport without equating the indices"),
+                StatementSource.FromAuthor(Bridge()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For every prime p other than 2 and 5, let epsilon="
+                        + "legendreSym(5,p), n=(p-epsilon).toNat, r=period(p), "
+                        + "and Q(p,t)=F(t)/p in ZMod(p). Then Q(p,r)=-r*Q(p,n). "
+                        + "The sign of epsilon is retained: n=p+1 in the inert case.")),
+                    Paragraph(Text("The existing Frobenius theorem proves F(n)=0 and F(p)=epsilon "
+                        + "modulo p. The proof compares (phi^r)^n and (phi^n)^r, transports "
+                        + "their coefficients modulo p squared, and cancels p in the integers. "
+                        + "Evenness of r and n=-epsilon modulo p give the displayed factor. "
+                        + "No premise r=n is present."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("quotient-period-eq-frobenius-factor-isUnit"),
+                DeclarationHandle.Create(Prefix + "quotient_period_eq_frobenius_factor_isUnit"),
+                H("The actual proportionality coefficient is invertible"),
+                StatementSource.FromAuthor(Call("IsUnit", Call("neg", Call("period", F.Id("p"))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("The proof establishes period(p) divides 2*n. Since p is odd "
+                        + "and n=-epsilon is nonzero modulo p, p does not divide period(p). "
+                        + "The coefficient is -period(p), not a separately selected unit.")),
+                    Paragraph(Text("wall_iff_standard_quotient identifies the old-period plateau "
+                        + "at p squared with Q(p,n)=0. The higher-power module treats 2 and 5 "
+                        + "separately; this theorem does not cancel their nonunit coefficients."))),
+                DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] xs)
     {
@@ -58,13 +57,8 @@ internal sealed class FibonacciFrobeniusQuotientBridgeDocument : IScribeDocument
         return Seq([.. result]);
     }
 
-    private static Formula BridgeFormula() => Disp(Call("Eq",
-        Call("quotientMod", F.Id("p"), Call("period", F.Id("p"))),
-        Seq(F.Id("1"), Cdot, Call("quotientMod", F.Id("p"),
-            Call("frobeniusIndex", F.Id("p"))))));
-
-    private static Formula UnitFormula() => Disp(Call("IsUnit", F.Id("1")));
-
-    private static Formula DvdFormula() => Disp(Call("Dvd",
-        F.Id("p"), Call("F", Call("frobeniusIndex", F.Id("p")))));
+    private static Formula Bridge() => Disp(Seq(
+        Call("quotientMod", F.Id("p"), Call("period", F.Id("p"))), Sp, Eq, Sp,
+        Call("neg", Call("period", F.Id("p"))), Cdot,
+        Call("quotientMod", F.Id("p"), Call("frobeniusIndex", F.Id("p")))));
 }
