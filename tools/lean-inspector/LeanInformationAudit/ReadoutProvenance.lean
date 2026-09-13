@@ -813,11 +813,10 @@ private partial def inputType (env : Environment) (type : Expr)
         let some statement ← boundedMeta (Meta.whnf (← get).statement) `statement_head
           | return (mentions, true)
         return (mentions, unclassified || statement.getAppFn.isConstOf ``Nat.le)
-      -- List uniqueness is primitive only for a checked carrier and Ne relation. Its proof
-      -- fields are recursive Pairwise and forall b, Mem b tail -> (a = b -> False).
-      -- These forms cannot specialize to the positive heads below or to
-      -- Exists p -> False. Unknown statement heads do not prove disjointness.
-      if name == ``List.Pairwise && args.size == 3 then
+      -- Membership and uniqueness proofs over checked data carriers contain
+      -- only recursive Mem/Pairwise and equality/function proof forms. The
+      -- positive statement heads below cannot specialize to those forms.
+      if (name == ``List.Pairwise || name == ``List.Mem) && args.size == 3 then
         let some kind ← occurrenceType args[0]! | return (mentions, true)
         let some (.sort level) ← boundedMeta (Meta.whnf kind) `carrier_kind
           | return (mentions, true)
@@ -830,8 +829,19 @@ private partial def inputType (env : Environment) (type : Expr)
           | return (mentions, true)
         -- A rigid parameter is scoped to this occurrence. Applications and
         -- enclosing case substitutions get freshly inferred field types.
-        let carrierAllowed := rigid || (← compareCanonical carrier (mkConst ``Nat))
-        if carrierAllowed && (← compareCanonical args[1]! relation) then
+        let mut carrierAllowed := rigid || (← compareCanonical carrier (mkConst ``Nat))
+        if !carrierAllowed && level.isNeverZero then
+          let some carrier ← boundedMeta (Meta.whnf carrier) `carrier_whnf
+            | return (mentions, true)
+          if let some (.inductInfo family) := env.find? carrier.getAppFn.constName! then
+            let nullary := family.numParams == 0 && family.numIndices == 0 &&
+              family.ctors.all (fun ctor => match env.find? ctor with
+                | some (.ctorInfo info) => info.numFields == 0
+                | _ => false)
+            if nullary then
+              let some branches ← caseFields carrier | return (mentions, true)
+              carrierAllowed := branches.all (fun (_, _, _, fields) => fields.isEmpty)
+        if carrierAllowed && (name == ``List.Mem || (← compareCanonical args[1]! relation)) then
           let some statement ← boundedMeta (Meta.whnf (← get).statement) `statement_head
             | return (mentions, true)
           let disjoint ← match statement with
@@ -1142,7 +1152,9 @@ private def collectReadout (env : Environment) (theoremName address : Name) (rea
 private def safeCollect (env : Environment) (theoremName address : Name) (readout : Expr)
     (extractionWork : Nat := 0) (extractionFailed : Bool := false) : CoreM WalkResult :=
   tryCatchRuntimeEx (collectReadout env theoremName address readout extractionWork extractionFailed)
-    (fun _ => pure { forbidden := false, unclassified := none, incomplete := true, walked := #[] })
+    (fun ex => do
+      trace[InformationProvenance.check] "collection_failure: {ex.toMessageData}"
+      pure { forbidden := false, unclassified := none, incomplete := true, walked := #[] })
 
 private def readoutClosureCurrent (theoremName : Name) (readout : Expr) : CoreM (Bool × Option (Array String)) := do
   let env ← getEnv
