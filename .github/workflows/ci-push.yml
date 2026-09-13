@@ -188,7 +188,7 @@ jobs:
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --stage engineering --engineering-key "$ENGINEERING_KEY"
       - name: Execute selected stage
         if: steps.route.outputs.required == 'true'
-        run: make -C tools engineering
+        run: make -C tools engineering SEED_EXPORT=deferred
       - id: pack
         if: steps.route.outputs.artifact_required == 'true'
         run: python3 tools/scripts/workflow/ci.py pack --repository "$GITHUB_WORKSPACE" --stage engineering --commit "$CANDIDATE_SHA" --archive "$RUNNER_TEMP/ci-engineering.tar.gz"
@@ -332,7 +332,7 @@ jobs:
         if: steps.route.outputs.required == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
-        run: make current
+        run: make current SEED_EXPORT=deferred
       - id: pack
         if: steps.route.outputs.artifact_required == 'true'
         run: python3 tools/scripts/workflow/ci.py pack --repository "$GITHUB_WORKSPACE" --stage current --commit "$CANDIDATE_SHA" --archive "$RUNNER_TEMP/ci-current.tar.gz"

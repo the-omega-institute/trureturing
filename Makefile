@@ -99,8 +99,9 @@ pr-watch:
 	@/bin/bash tools/scripts/pr.sh watch --pr "$(PR)" $(if $(WATCH_TIMEOUT_SECONDS),--timeout-seconds "$(WATCH_TIMEOUT_SECONDS)",) $(if $(WATCH_INTERVAL_SECONDS),--interval-seconds "$(WATCH_INTERVAL_SECONDS)",)
 
 MODE ?= push
+SEED_EXPORT ?= automatic
 current:
-	@CI_PLAN_PATH="$(CI_PLAN_PATH)" CI_CHANGES_PATH="$(CI_CHANGES_PATH)" /bin/bash tools/scripts/ci-stage.sh current
+	@CI_PLAN_PATH="$(CI_PLAN_PATH)" CI_CHANGES_PATH="$(CI_CHANGES_PATH)" CI_SEED_EXPORT="$(SEED_EXPORT)" /bin/bash tools/scripts/ci-stage.sh current
 
 delta:
 	@CI_PLAN_PATH="$(CI_PLAN_PATH)" CI_CHANGES_PATH="$(CI_CHANGES_PATH)" /bin/bash tools/scripts/ci-stage.sh delta "$(BASE)"

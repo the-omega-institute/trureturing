@@ -27,6 +27,11 @@ case "$stage" in
   delta) [[ $# == 2 ]] || exit 2 ;;
   *) exit 2 ;;
 esac
+seed_options=()
+if [[ "$stage" == engineering || "$stage" == current ]]; then
+  case "${CI_SEED_EXPORT-automatic}" in automatic|deferred) ;; *) exit 2 ;; esac
+  seed_options+=(--seed-export "${CI_SEED_EXPORT-automatic}")
+fi
 if [[ -n "${PREFLIGHT_DEADLINE_AT:-}" ]]; then
   [[ "$PREFLIGHT_DEADLINE_AT" =~ ^[0-9]{1,11}$ ]] || exit 2
   [[ "$PREFLIGHT_DEADLINE_AT" -gt "$(date +%s)" ]] || { echo 'PREFLIGHT_BUDGET_EXHAUSTED owner=outer-deadline' >&2; exit 2; }
@@ -46,7 +51,7 @@ case "$stage" in
     export CI=true DOTNET_CLI_UI_LANGUAGE=en-US
     if [[ "$stage" == engineering && -n "${CI_BUILD_ROUND:-}" ]]; then
       [[ -f "$runner" ]] || exit 2
-      dotnet "$runner" "$stage" --repository "$ROOT" ${stage_options[@]+"${stage_options[@]}"} --build-round "$CI_BUILD_ROUND"
+      dotnet "$runner" "$stage" --repository "$ROOT" ${stage_options[@]+"${stage_options[@]}"} ${seed_options[@]+"${seed_options[@]}"} --build-round "$CI_BUILD_ROUND"
       completed=1
       exit 0
     fi
@@ -59,11 +64,11 @@ case "$stage" in
     /bin/bash tools/scripts/report/report-supervisor.sh --role ci-bootstrap-build -- \
       dotnet build tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj --configuration Release --no-restore --warnaserror -nr:false \
         -p:CustomAfterMicrosoftCommonTargets="$ROOT/tools/scripts/ci-build-outputs.targets"
-    dotnet "$runner" "$stage" --repository "$ROOT" ${stage_options[@]+"${stage_options[@]}"}
+    dotnet "$runner" "$stage" --repository "$ROOT" ${stage_options[@]+"${stage_options[@]}"} ${seed_options[@]+"${seed_options[@]}"}
     ;;
   current)
     [[ -f "$runner" ]] || exit 2
-    dotnet "$runner" current --repository "$ROOT" ${stage_options[@]+"${stage_options[@]}"}
+    dotnet "$runner" current --repository "$ROOT" ${stage_options[@]+"${stage_options[@]}"} ${seed_options[@]+"${seed_options[@]}"}
     ;;
   delta)
     [[ -f "$runner" ]] || exit 2
