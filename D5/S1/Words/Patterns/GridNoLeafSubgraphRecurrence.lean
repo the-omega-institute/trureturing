@@ -2,20 +2,15 @@
    generality: G
    mirror-B: D5/B/S1/Words/Patterns/GridNoLeafSubgraphRecurrence
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [lean/module/Lean.Elab.Tactic.Omega, mathlib/module/Mathlib.Algebra.BigOperators.Ring.Finset, mathlib/module/Mathlib.Data.Fin.Tuple.Finset, mathlib/module/Mathlib.Data.Finset.Powerset, mathlib/module/Mathlib.Data.Fintype.BigOperators, mathlib/module/Mathlib.Data.Fintype.Prod, mathlib/module/Mathlib.Data.Fintype.Sigma, mathlib/module/Mathlib.Data.Int.ModEq, mathlib/module/Mathlib.Tactic.FinCases, mathlib/module/Mathlib.Tactic.NormNum, mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Ring.Finset, mathlib/module/Mathlib.Data.Fintype.BigOperators, mathlib/module/Mathlib.Data.Int.ModEq, mathlib/module/Mathlib.Tactic.FinCases, mathlib/module/Mathlib.Tactic.NormNum, mathlib/module/Mathlib.Tactic.Ring]
    utility: none
    digest: No-leaf edge subgraphs of the three-by-n grid satisfy Barker's recurrence and Kagey's congruence. -/
 
 import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.Data.Fin.Tuple.Finset
-import Mathlib.Data.Finset.Powerset
 import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Fintype.Prod
-import Mathlib.Data.Fintype.Sigma
 import Mathlib.Data.Int.ModEq
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
-import Lean.Elab.Tactic.Omega
 import Mathlib.Tactic.Ring
 
 /-!
