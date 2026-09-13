@@ -1,0 +1,13 @@
+**定义。** 固定实截距 $\rho$，令
+
+$$
+a_{\alpha,\rho}(i)=\lfloor\rho+(i+1)\alpha\rfloor-\lfloor\rho+i\alpha\rfloor,
+\qquad i\in\mathbb N.
+$$
+
+定义起点 $i$ 的长度 $n$ 字 $W_n(i)=(a_{\alpha,\rho}(i+k))_{0\le k<n}$，以及全部实际长度 $n$ 字的集合
+
+$$
+W_n=\{W_n(i):i\in\mathbb N\}.
+$$
+
