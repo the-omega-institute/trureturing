@@ -34,6 +34,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/PrimeGaps/HilliardSquareIntervalPrimeCountEventualIncreaseRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a089610-square-interval-prime-count-eventual-increase-refutation` (refuted) by `D5/S3/PrimeGaps/HilliardSquareIntervalPrimeCountEventualIncreaseRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a089610-square-interval-prime-count-eventual-increase-refutation","declaration_gid":"D5/S3/PrimeGaps/HilliardSquareIntervalPrimeCountEventualIncreaseRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Cino Hilliard (2003). *OEIS A089610, Number of primes between n^2 and (n+1/2)^2*. URL: <https://oeis.org/A089610>.

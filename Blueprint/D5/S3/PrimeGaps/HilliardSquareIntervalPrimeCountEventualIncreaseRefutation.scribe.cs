@@ -49,7 +49,11 @@ internal sealed class HilliardSquareIntervalPrimeCountEventualIncreaseRefutation
                         + "through a window from M to 2M+2 would instead force the final "
                         + "value above this bound. The first conjecture a(n) > 1 after "
                         + "n = 17 and Oppermann's positivity conjecture are untouched."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a089610-square-interval-prime-count-eventual-increase-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula AFormula()
     {
