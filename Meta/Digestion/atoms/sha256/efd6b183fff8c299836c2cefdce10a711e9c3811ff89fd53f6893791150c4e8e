@@ -1,0 +1,16 @@
+**定义 461.1。**$D(n)=\sum_jd_j(n)$，$P_X$ 在全部 $p\le X$ 的素数中均匀抽取，$X\ge2$。令
+$$
+L_X=\log_\varphi X,\qquad c=\frac1{\varphi^2+1},\qquad
+v=\frac{\varphi^3}{(\varphi^2+1)^3},\qquad
+\Phi(t)=\frac1{\sqrt{2\pi}}\int_{-\infty}^t e^{-u^2/2}\,du.
+$$
+
+分析假设。DMS 的 Theorem 1.2 在标准 Zeckendorf 表示上断言：每个 $\varepsilon>0$，当 $X\to\infty$，
+$$
+\frac{\#\{p\le X:D(p)=k\}}{\pi(X)}
+=\frac1{\sqrt{2\pi vL_X}}
+\left(\exp\!\left[-\frac{(k-cL_X)^2}{2vL_X}\right]
++O_\varepsilon((\log X)^{-1/2+\varepsilon})\right),
+$$
+对全部整数 $k\ge0$ 一致成立。这是加性误差的局部极限定理；远尾处不保证相对误差小。DMS 的数字 $\delta_i$ 与这里 $d_{i-2}$ 相同，该文用 $z(n)$ 表示数字和，不能与 P3 的复相位 $z(n)$ 混用。此引用不在此处重证其长篇分析。
+

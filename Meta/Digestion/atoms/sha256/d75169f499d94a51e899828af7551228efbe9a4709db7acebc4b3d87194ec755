@@ -1,0 +1,8 @@
+**定义 463.1。**允许任意固定有限 $\beta\in\mathbb R$，令 $r=e^{-\beta}>0$。对全部正整数定义
+$$
+w_r(n)=\sum_{\gamma\in\mathcal H(n)}r^{\ell(\gamma)},\qquad
+W_\beta(p)=w_r(p),\qquad
+Z_{X,r}=\sum_{\substack{p\le X\\p\ {\rm prime}}}w_r(p).
+$$
+$X\ge2$ 时，抽样空间是带互异标签的有限不交并 $\mathcal E_X=\bigsqcup_{p\le X}\mathcal H(p)$，赋每个词概率 $r^{\ell(\gamma)}/Z_{X,r}$。终点概率为 $\nu_{X,r}(\{p\})=w_r(p)/Z_{X,r}$，圆周推前为 $\eta_{X,r}=\sum_{p\le X}\nu_{X,r}(\{p\})\delta_{[\alpha p]}$。$X<2$ 时 $\mathcal E_X=\varnothing,Z_{X,r}=0$，不定义该概率；如需记号，可记未归一化零测度，但不得称概率。
+

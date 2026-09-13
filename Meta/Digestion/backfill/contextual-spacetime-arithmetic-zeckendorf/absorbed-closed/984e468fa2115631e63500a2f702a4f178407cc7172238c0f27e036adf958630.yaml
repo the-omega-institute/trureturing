@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:984e468fa2115631e63500a2f702a4f178407cc7172238c0f27e036adf958630
+  normalized_sha256: sha256:984e468fa2115631e63500a2f702a4f178407cc7172238c0f27e036adf958630
+cas_ref: sha256:984e468fa2115631e63500a2f702a4f178407cc7172238c0f27e036adf958630
+coverage_gids:
+  - gid: D5/S3/Weil/Analytic/BaezDuarteMertensKernel.baez_duarte_kernel_integrable
+    target_statement_id: sha256:63c9a24e3a34e44eb800c2ce3ee0e63572e7832dafb6b4548c3fd72cbea29786
+  - gid: D5/S3/Weil/Analytic/BaezDuarteMertensKernel.baez_duarte_kernel_integral
+    target_statement_id: sha256:b29dce77fcffedd1d27694ff164541d3eb03a1c674abe328bca8c4c9524bb76d
+receipts:
+  unresolved_subitems: []

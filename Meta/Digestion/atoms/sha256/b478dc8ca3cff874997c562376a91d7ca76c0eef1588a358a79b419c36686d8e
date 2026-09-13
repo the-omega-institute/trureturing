@@ -1,0 +1,4 @@
+**证明。**$s/M\le1/2$ 时每一对的命中概率为 $a_M=2s/M$，期望为 $(M-1)a_M\to2s$。按无序对写为 $2M^{-1}\sum_{i<j}I_{ij}$。互不相交的对独立；共享一个指标时，条件于该点，两个剩余 Haar 点仍独立且各命中概率为 $a_M$，所以协方差也为零。故方差为 $4M^{-2}\binom M2a_M(1-a_M)\le4s/M$，由 Chebyshev 不等式得到结论。$s=0$ 时几乎必然无碰撞。证毕。
+
+分析假设。Aled Walker，〈The Primes Are Not Metric Poissonian〉，arXiv:1702.07365v2（2017-03-02，[原文](https://arxiv.org/pdf/1702.07365v2)）的 metric Poissonian 定义是：对 Lebesgue 几乎每个 $\theta$，对全部固定 $s>0$，有 $R_M(s;\theta)\to2s$。Theorem 3 断言素数不具此性质；第 3 页及第 5 页实际证明更强地给一个固定小 $s>0$、一个满测集和常数 $c_*>2s$，使其中每个 $\theta$ 有无穷多个 $M$ 满足 $R_M(s;\theta)\ge c_*$。这里是几乎处处失败，并非几乎处处 Poisson。第 5 页末尾的 $F(\mathcal P,\theta,2s,N)$ 与前面固定 $s$ 的显示下界存在记号不一致；此处只引用前面已明确推出的 $F(\mathcal P,\theta,s,N)\ge c^2>2s$，不从末行另造常数结论。
+

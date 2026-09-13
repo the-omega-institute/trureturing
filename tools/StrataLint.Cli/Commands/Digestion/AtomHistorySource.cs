@@ -1,3 +1,4 @@
+using System.Buffers;
 using System.Globalization;
 using System.Text;
 using StrataLint.Engine;
@@ -17,22 +18,63 @@ internal static class AtomHistoryParser
 {
     internal static IReadOnlyDictionary<string, DateTimeOffset> Parse(byte[] output)
     {
-        var text = new UTF8Encoding(false, true).GetString(output);
-        if (text.Length > 0 && !text.EndsWith('\n'))
-            throw new FormatException("truncated git atom history");
+        using var stream = new MemoryStream(output, writable: false);
+        return ParseAsync(stream, CancellationToken.None).GetAwaiter().GetResult();
+    }
 
-        var firstAdded = new Dictionary<string, DateTimeOffset>(StringComparer.Ordinal);
-        DateTimeOffset? committerTime = null;
-        foreach (var line in text.Split('\n'))
+    internal static async Task<IReadOnlyDictionary<string, DateTimeOffset>> ParseAsync(
+        Stream stream, CancellationToken cancellation)
+    {
+        var parser = new HistoryParser();
+        var buffer = new byte[8192];
+        int count;
+        while ((count = await stream.ReadAsync(buffer, cancellation).ConfigureAwait(false)) != 0)
+            parser.Append(buffer.AsSpan(0, count));
+        return parser.Complete();
+    }
+
+    private sealed class HistoryParser
+    {
+        private static readonly UTF8Encoding StrictUtf8 = new(false, true);
+        private readonly ArrayBufferWriter<byte> lineBytes = new();
+        private readonly Dictionary<string, DateTimeOffset> firstAdded = new(StringComparer.Ordinal);
+        private DateTimeOffset? committerTime;
+
+        internal void Append(ReadOnlySpan<byte> bytes)
         {
-            if (line.Length == 0) continue;
+            while (!bytes.IsEmpty)
+            {
+                var newline = bytes.IndexOf((byte)'\n');
+                var part = newline < 0 ? bytes : bytes[..newline];
+                // Keep the existing buffer bound on each record, rather than on
+                // the sum of repeated additions across the complete history.
+                if (part.Length > GitRepositoryGateway.DefaultGitOutputBytes - lineBytes.WrittenCount)
+                    throw new FormatException("git atom history record exceeded its buffer bound");
+                lineBytes.Write(part);
+                if (newline < 0) return;
+                ReadLine(StrictUtf8.GetString(lineBytes.WrittenSpan));
+                lineBytes.Clear();
+                bytes = bytes[(newline + 1)..];
+            }
+        }
+
+        internal IReadOnlyDictionary<string, DateTimeOffset> Complete()
+        {
+            if (lineBytes.WrittenCount != 0)
+                throw new FormatException("truncated git atom history");
+            return firstAdded;
+        }
+
+        private void ReadLine(string line)
+        {
+            if (line.Length == 0) return;
             if (line[0] == '\u001e')
             {
                 if (!long.TryParse(line.AsSpan(1), NumberStyles.AllowLeadingSign,
                     CultureInfo.InvariantCulture, out var seconds))
                     throw new FormatException("invalid git committer time");
                 committerTime = DateTimeOffset.FromUnixTimeSeconds(seconds);
-                continue;
+                return;
             }
 
             if (committerTime is null || !DigestionCasStore.IsCanonicalPath(line))
@@ -41,8 +83,6 @@ internal static class AtomHistoryParser
             if (!firstAdded.TryGetValue(id, out var previous) || committerTime.Value < previous)
                 firstAdded[id] = committerTime.Value;
         }
-
-        return firstAdded;
     }
 }
 
@@ -54,17 +94,18 @@ internal sealed class GitAtomHistorySource(string repositoryRoot) : IAtomHistory
     public AtomHistory Read()
     {
         var shallow = IsShallow();
-        var result = new ProductionGitProcessRunner().Run(
+        var result = BoundedProcessRunner.RunStreaming(
             "git",
             ["log", "--full-history", "--diff-merges=separate", "--root", "--format=%x1e%ct", "--name-only",
                 "--diff-filter=A", "--no-renames", "HEAD", "--", DigestionCasStore.RootPath],
             repositoryRoot,
             HistoryTimeout,
-            GitRepositoryGateway.DefaultGitOutputBytes);
+            GitRepositoryGateway.DefaultGitOutputBytes,
+            AtomHistoryParser.ParseAsync);
         if (result.ExitCode != 0)
             throw new IOException($"git atom history exited {result.ExitCode}: "
                 + Encoding.UTF8.GetString(result.StandardError).Trim());
-        return new AtomHistory(shallow, AtomHistoryParser.Parse(result.StandardOutput));
+        return new AtomHistory(shallow, result.StandardOutput);
     }
 
     private bool IsShallow()

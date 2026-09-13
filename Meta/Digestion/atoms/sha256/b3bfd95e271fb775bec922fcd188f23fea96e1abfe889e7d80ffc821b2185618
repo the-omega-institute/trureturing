@@ -1,0 +1,5 @@
+**定理 461.2。**上述局部极限推出
+$$
+\Pr\!\left(\frac{D(P_X)-cL_X}{\sqrt{vL_X}}\le t\right)\longrightarrow\Phi(t)
+\quad(t\in\mathbb R\ \text{固定}).
+$$

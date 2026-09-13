@@ -1,0 +1,8 @@
+**定理 466.4（定义与定理）。**令 $J=\lfloor X\rfloor\ge1$，$\Pi_J$ 保留多项式次数一至 $J$。置 $F_0(z)=z$，定义实际混合算子
+$$
+F_{k+1}(z)=\Pi_J\sum_{q\in\mathcal P_X}\bigl(z^qF_k(z)+F_k(z^q)\bigr).
+$$
+则 $[z^n]F_k=h_k(n)$，$1\le n\le J$，且
+$$
+[z^n]\sum_{k=0}^{J-1}t^kF_k(z)=w_t(n).
+$$

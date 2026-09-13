@@ -730,9 +730,9 @@ public sealed class JudgeSurfaceRevisionRuleTests
     }
 
     [Fact]
-    public void CheckingOutTheMergeRefInAWorkflowIsAllowed()
+    public void CheckingOutTheNativePullRequestShaInAWorkflowIsAllowed()
     {
-        const string workflow = "steps:\n  - uses: actions/checkout@v4\n    with: { ref: \"${{ github.event_name == 'pull_request_target' && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}\", fetch-depth: 0 }\n";
+        const string workflow = "steps:\n  - uses: actions/checkout@v4\n    with: { ref: \"${{ github.sha }}\", fetch-depth: 0 }\n";
         Assert.Empty(Evaluate(WorkflowPath, workflow));
     }
 

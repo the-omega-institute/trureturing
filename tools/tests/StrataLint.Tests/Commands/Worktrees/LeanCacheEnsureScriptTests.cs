@@ -108,6 +108,40 @@ public sealed class LeanCacheEnsureScriptTests
     private const string LeanCacheEnsureScriptPath =
         "tools/scripts/worktree/lean-cache-ensure.sh";
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void SerialBuildDistinguishesReaderFailureFromStaleTargets(bool hasStaleTarget)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new SharedLakeFixture();
+        var root = fixture.Reader;
+        var cacheRun = Path.Combine(root, "tools", "scripts", "worktree", "lean-cache-run.sh");
+        Directory.CreateDirectory(Path.GetDirectoryName(cacheRun)!);
+        File.WriteAllText(cacheRun, hasStaleTarget
+            ? "#!/bin/sh\nif [ \"$*\" = 'lake build --no-build' ]; then\n"
+                + "  [ -f rebuilt ] && exit 0\n  printf '%s\\n' '- Fixture:olean'\n  exit 1\nfi\n"
+                + "[ \"$*\" = 'lake build Fixture:olean' ] || exit 8\ntouch rebuilt\n"
+            : "#!/bin/sh\necho 'reader guard unavailable' >&2\nexit 9\n");
+        File.SetUnixFileMode(cacheRun, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        File.WriteAllText(Path.Combine(root, "Makefile"), "lean-cache-ensure:\n\t@true\n");
+        var result = TestProcessRunner.Run("/bin/bash",
+            [Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "scripts", "agent", "serial-lean.sh"), root],
+            root, TestBudgets.ScriptProcessHangGuard, 1024 * 1024);
+        Assert.Equal(hasStaleTarget ? 0 : 2, result.ExitCode);
+        var output = Encoding.UTF8.GetString(result.StandardOutput);
+        if (hasStaleTarget)
+        {
+            Assert.Contains("status=complete", output);
+            Assert.Contains("stale_built=1", output);
+        }
+        else
+        {
+            Assert.Contains("stale-query-failed", output);
+            Assert.DoesNotContain("status=complete", output);
+        }
+    }
+
     private static InstalledScript InstallScript(string fixtureRoot)
     {
         var repository = Path.Combine(fixtureRoot, "repository");

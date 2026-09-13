@@ -8,6 +8,7 @@ motivation_gids:
   - D5/S1/Digit/Raw
   - D5/S1/Digit/Carry
   - D5/S1/Digit/Normalize
+  - D5/S1/Digit/Carry/ListInversions
   - D5/S0/Rewriting/NewmanConfluence
   - D5/S0/Rewriting/NormalFormFunction
 ---
@@ -73,13 +74,30 @@ upper and lower asymptotics and a structural lemma about repetitions under LGS.
 
 ## Gap
 
-- `RawDigits` is a multiplicity map and loses order; no ordered list state or
-  inversion count exists.
-- Frozen carry orientation is not identical to the paper's bidirectional
-  merge/split game.
+- `RawDigits` erases order. Its four carry constructors match the four
+  non-switch moves after an index shift; ordered legality, the switch move and
+  length optimality all remain to be formalized.
 - Newman confluence and normal-form uniqueness say nothing about longest paths.
-- LGS contains a tie phrase "switch moves (in any order)" that must be resolved
-  before a Lean proposition is exact.
+- LGS contains a tie phrase "switch moves (in any order)".
+  `ASSUMED-UNVERIFIED`: an uncommitted exhaustive search over `n <= 16` found
+  equal minimum and maximum LGS lengths across all priority-one switch choices.
+  If correct, that supports omitting a switch tie-breaker within that range; the
+  all-`n` Lean statement still requires a proof of switch-order independence.
+- The inversion count now exists here. `D5/S1/Digit/Carry/ListInversions` is
+  frozen and supplies `inv : List Nat -> Nat`, its append law, a three-block
+  window decomposition, and four local replacement bounds, one per non-switch
+  move, stated for arbitrary lists rather than for reachable states. Entries
+  may be zero; nothing there assumes positivity.
+- The four moves themselves, and their termination, were already frozen under
+  a different vocabulary. `D5/S1/Digit/Carry` defines `CarryStep` on
+  `RawDigits` with constructors `adjacent`, `double_zero`, `double_one` and
+  `double_succ`, which are merge, merge-ones, split-twos and split in
+  zero-based indexing, and `D5/S1/Digit/Normalize` proves
+  `carryStep_measure_decreases` for every one of them and builds a terminating
+  normalizer. A search by the problem's name reaches neither module; a search
+  by the name of each operation reaches both.
+- What is still missing here is the length side. No chain-length, rank or
+  longest-path function on `CarryStep` exists, and no optimality statement.
 
 ## Route
 
@@ -99,6 +117,88 @@ upper and lower asymptotics and a structural lemma about repetitions under LGS.
 6. Prove switch-order independence as a separate lemma; if false, tighten the
    conjecture to the paper's intended deterministic interpretation and record
    the counterexample.
+
+Beyond those six steps, the following is a proposed paper-level proof **sketch**, and its claims remain
+`ASSUMED-UNVERIFIED`. **Nothing here is Lean-verified**, the four move-specific
+count calculations are not displayed, and it does not settle the conjecture. Write `inv s` for the inversion
+count of a state and `L u` for the longest game length from a sorted state `u`.
+
+- **Decomposition.** `longest s = inv s + L (sort s)`. The easy direction is that
+  `inv s` switches bubble `s` into `sort s`. The other direction is induction over
+  the move relation: the switch case is an equality because sorting is unchanged
+  and `inv` drops by one, and the merge/split case follows from the key lemma
+  below together with the Bellman recursion at `sort s`.
+- **Key lemma.** Let a merge or split act on an adjacent pair of `s` with values
+  `(a,b)`, giving `t`; let `t'` be the result of the same-valued move applied at
+  the leftmost such pair of `sort s`. Then `inv t <= inv s + inv t'`. Each of the
+  four move kinds reduces to two monotonicity steps on the counts
+  `#{p in prefix : p > j}` and `#{q in suffix : q < j}` plus one absorption using
+  that prefix and suffix are disjoint parts of the same multiset. The lemma
+  mentions no Fibonacci number and no reachability: it holds for arbitrary lists,
+  exhaustively over every list of length at most six on values one to six.
+- **Consequence.** Every switch is an optimal move, with
+  `longest s = longest t + 1`. So LGS priority one is exactly optimal, and the
+  conjecture reduces to the sorted case.
+
+**Position is no longer part of the problem.** On a sorted state the prefix
+lies at or below the smaller window value and the suffix at or above the larger
+one, so only the new window entries can form inversions with the surroundings.
+Writing `c_v` for the multiplicity of `v`, the inversions created by each move
+are then exact counts: `c_{i-1} + c_i - 2` for a split at `i > 2`, `c_2 - 2`
+for a split of twos, `c_{a+1} - 1` for a merge at `a`, and `c_1 - 2 - k` for
+the merge of ones whose window starts after `k` other ones. Only the last
+depends on position, and it strictly decreases in `k`, so the leftmost
+merge-ones is the unique best merge-ones, strictly so whenever more than one is
+available. The other three do not depend on position at all. Conditional on the
+proposed decomposition, these inversion formulas would settle the positional
+choices, and they give "combine adjacent ones from the left" a mechanism: the
+leftmost choice keeps the most inversions.
+
+**The remaining problem is a position-free recurrence.** Substituting those
+four counts and eliminating the merge-ones position parameter turns the
+sorted-state longest length into a recurrence on multisets alone:
+
+```text
+L(M) = 0 when no branch applies, otherwise 1 + max over applicable branches of
+  merge-ones (c_1 >= 2)          : (c_1 - 2)           + L(M - 2*{1} + {2})
+  split-twos (c_2 >= 2)          : (c_2 - 2)           + L(M - 2*{2} + {1,3})
+  split i    (i > 2, c_i >= 2)   : (c_{i-1} + c_i - 2) + L(M - 2*{i} + {i-2,i+1})
+  merge a    (c_a, c_{a+1} >= 1) : (c_{a+1} - 1)       + L(M - {a,a+1} + {a+2})
+```
+
+Conditional on the same decomposition, the following four guarded Bellman
+equalities would suffice for Conjecture 1.7, one per region of the LGS priority,
+the four regions being disjoint. Necessity over all multisets is not
+established:
+
+- `c_1 >= 2` implies the merge-ones branch attains the maximum;
+- `c_1 <= 1` and some `i > 2` with `c_i >= 2` implies the branch at the largest
+  such `i` attains it;
+- `c_1 <= 1`, `c_2 >= 2` and no such `i` implies the split-twos branch attains
+  it;
+- all multiplicities at most one and non-terminal implies the merge at the
+  smallest available `a` attains it.
+
+Two formulations recorded here earlier were stronger than necessary, and both
+were false as stated. Branch values below are quoted as inner maxima, excluding
+the move itself; a total continuation length is one larger.
+
+- "Any split with index above two is optimal" is false. On the sorted state
+  `(3,3,4,4)` the split at 3 has inner maximum 5 while the split at 4 has 7; the
+  same failure occurs on `(1,3,3,4,4)` and on `(1,1,3,3,4,4)`. The correct rule
+  selects the largest splittable index, which on a sorted state is exactly the
+  rightmost splittable pair, so the paper's "splits, starting from the right"
+  is a genuine rule rather than an artefact of presentation.
+- "Split-twos dominates every merge" is false without the guard. The state
+  `{2,2,3,3,7,8}`, which has `n = 2F_2 + 2F_3 + F_7 + F_8 = 65` and is
+  reachable from 65 ones by building each block separately, has total
+  continuation length 7 through split-twos and 8 through a merge. Its certificate is `L(2,5) = 0`,
+  `L(1,1,5) = 1`, `L(4,4) = 1`, `L(2,3,4) = 2`, `L(1,1,3,4) = 3`,
+  `L(1,2,2,4) = 4`, `L(1,3,3,3) = 5`, `L(2,2,3,3) = 7`. Only the guarded form,
+  in which split-twos is taken when no higher split exists, survives. The
+  mechanism is that an independent merge elsewhere can still be followed by the
+  optimal higher split, whereas taking split-twos first has already given up a
+  move; local independence preserves that loss rather than repairing it.
 
 ## Falsifier
 
@@ -123,6 +223,33 @@ Construct a memoized exact DAG for `n <= 30`:
 This extends the paper's simulation into proof-certificate-shaped data and
 directly probes the formal ambiguity.
 
+Measurements taken so far are recorded with their sampling domains, because two
+of the claims corrected above were first believed on the strength of a domain
+too small to contain their counterexamples.
+
+Over every reachable sorted state with `2 <= n <= 20`: the position-free
+recurrence agrees with the original definition at all 797 states; the four exact
+inversion counts hold in 5064 of 5064 move windows; the leftmost merge-ones is
+optimal among merge-ones in 550 of 550 states, strictly so in 451 of them; and
+the merge at the smallest index is optimal among merges in 585 of 585 states, of
+which 276 have merges at two or more distinct indices.
+
+Reachable states are still the wrong domain for the domination claims, since
+the recurrence is defined on every multiset. The `n <= 20` cutoff misses the
+`n = 65` split-twos counterexample entirely; the split-at-3 counterexample
+`(3,3,4,4)` has `n = 16` and does lie inside that range, but only above
+`n <= 13`, which is where these claims were first believed. Over 14978 arbitrary
+multisets of length at most eleven with entries at most thirteen: merge-ones
+dominates merge in 1576 of 1576 instances, dominates split-twos in 188 of 188,
+and equals the best split in 1294 of 1294; the best split dominates split-twos
+in 1377 of 1377 and merge in 10454 of 10454. On that same domain the four
+guarded equalities hold in 1776, 10356, 429 and 1957 instances respectively.
+Unguarded split-twos against merge fails in 56 of 1749 instances, which is how
+the `{2,2,3,3,7,8}` family was found independently of the analysis predicting
+it.
+
+None of the above is a proof. All of it is enumeration.
+
 ## Triage
 
 `theorem`. The state space is finite and terminating, and the repository has the
@@ -139,3 +266,23 @@ exchange lemmas rather than a new analytic theory.
   branch.
 - Whether Conjecture 1.7 was resolved after arXiv v2 is unverified; novelty of
   the exchange-lemma route is unassessed.
+- The four guarded Bellman equalities have no proof recorded here. Nothing
+  about them is kernel-verified.
+- The smallest-merge case carries an external dependency this entry does not
+  discharge. The unordered Zeckendorf game's longest length is treated in
+  arXiv:2009.09510, whose Theorem 1.2 reads "The longest game on any `n` is
+  achieved by applying split moves or combine 1's (in any order) whenever
+  possible, and, if there is no split or combine 1 move available, combine
+  consecutive indices from smallest to largest", and whose Lemmas 2.1 to 2.3
+  are each stated "starting from any game state". Two features of that theorem
+  match measurements above that were taken independently of it: that split and
+  combine-ones may be applied in any order matches the observed equality
+  between the merge-ones branch and the best split branch, and "smallest to
+  largest" matches the smallest-merge rule. The theorem concerns the unordered
+  game only, and transferring it to the ordered length requires identifying the
+  two on states whose multiplicities are all at most one, which is not
+  established here.
+- The bibliography of arXiv:2508.20222v2 cites a different paper by an
+  overlapping author group, "Winning strategy for multiplayer and multialliance
+  Zeckendorf games". Citation by author surname alone is ambiguous between the
+  two; the identifier above is the one meant here.

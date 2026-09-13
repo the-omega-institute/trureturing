@@ -1,0 +1,9 @@
+**命题 474.10（支撑选择及无符号尾的限制）。** 固定实数 $0<\theta<1/2$。单有 $Q_N\to\infty$ 和最终的 $\omega(Q_N)\le\theta\log_2N$，不保证 $c_{Q_N},\alpha_{Q_N}\to0$。另一方面，对每个固定实数 $T\ge1$，
+$$
+\lim_{y\to\infty}e_y\int_T^\infty
+\sum_{a\mid\mathcal P(y)}\mathbf1_{[a,\infty)}(u)\frac{du}{u^2}
+=\frac1{\zeta_R(2)}>0.
+\tag{474.10}
+$$
+因此在 474.3 的积分中，删去核内部符号而代以此无符号约数上界，不能给该尾部趋零。
+

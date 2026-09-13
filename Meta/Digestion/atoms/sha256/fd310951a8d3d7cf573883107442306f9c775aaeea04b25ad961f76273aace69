@@ -1,0 +1,33 @@
+**定理 474.8（完整表及准确 $U$ 求值预算）。** 在定义 474.7 下，最终表的完整长度为 $O(2^k b)$；生成并完整核对表、素数支撑及所列有理系数的位运算至多
+$$
+O(2^k k b^2+m^3).
+\tag{474.8a}
+$$
+令 $A_Q=\sum_{i=1}^t\varepsilon_i(Q/a_i)$，可使用准确公式
+$$
+c_Q=\frac{\Phi(Q)A_Q}{Q^2},\qquad
+\zeta_R(2)\alpha_Q=\frac{A_Q}{\prod_{p\mid Q}(p+1)}.
+\tag{474.8b}
+$$
+另给整数 $N\ge1$、$\ell=1+\lceil\log_2(N+1)\rceil$，表给定后准确求值 $U_Q(N)$ 至多用 $4^k$ 次带余除法及
+$$
+O(4^k(\ell+b)^2)
+\tag{474.8c}
+$$
+位运算。计算定义 472.6 的 $E_U^{\rm jump}(Q,N)=c_QN+4^k$，另需 $O((\ell+b)^2)$ 位运算；它依原 $|M|\le U$ 给有理上界，但其固定幂次障碍正是定理 472.7。
+
+取同一个 $m=m_N=\lfloor\theta\log_2N\rfloor\ge2$、$0<\theta<1/2$，上述表长、生成核对费、准确 $U$ 求值费分别满足
+$$
+O_\theta(N^\theta\log N\log\log N)=o(N),
+\tag{474.8d}
+$$
+$$
+O_\theta\bigl(N^\theta(\log N)^3(\log\log N)^2+(\log N)^3\bigr)=o(N),
+\tag{474.8e}
+$$
+$$
+O_\theta\bigl(N^{2\theta}(\log N)^2(\log\log N)^2\bigr)=o(N).
+\tag{474.8f}
+$$
+这些与 (474.6b)–(474.6d) 在同一截止点上同时成立；生成、核对及所需工作空间各被 $C_\theta N^\theta(1+\log N)^d$ 控制，其中某个固定整数 $d$ 足够大。最终表长度与工作空间分别按所列含义计算。
+

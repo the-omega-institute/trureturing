@@ -1,0 +1,15 @@
+**定理 288。** 第 287 条的正整数观察像恰为图
+$$
+\Gamma_+[\mathbb N_{>0}]
+=\{(\mathscr A(\operatorname{val}u),u,[\phi\operatorname{val}u]):u\in\mathsf W_Z^+\},
+$$
+其到中间坐标 $\mathsf W_Z^+$ 的投影是双射。对 $n>0$，置 $\ell=|\zeta(n)|=\ell_Z(n)$，则
+$$
+\mathscr A(n)\in\{\ell-1,\ell\},\qquad
+\mathscr A(n)=\ell\iff n\ge\phi^\ell.
+$$
+两个尺度值均能达到。若 $u=\zeta(n)$，则第 51 条的相位换算为
+$$
+\gamma(n)=\left[\sum_{j<\ell}(-1)^{j+1}u(j)\alpha^{j+2}\right].
+$$
+空字的同一公式给 $\gamma(0)=0$。有符号整数的尺度读取绝对值，负整数的相位为其绝对值相位的群逆。

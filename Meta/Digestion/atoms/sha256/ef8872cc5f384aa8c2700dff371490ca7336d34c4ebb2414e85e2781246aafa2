@@ -1,0 +1,13 @@
+**证明。**对整数 $n\ge1$，令 $m$ 为距 $n\alpha$ 最近的整数，$\alpha'=-\varphi$。非零整数
+$(n\alpha-m)(n\alpha'-m)=m^2+mn-n^2$
+的绝对值至少一，且 $|n\alpha'-m|\le\sqrt5n+1/2<3n$，故 $\|n\alpha\|>1/(3n)$。Walker Proposition 6 所用 $\|n\theta\|<s/(n\log n)$ 对此 $\alpha$ 在 $\log n>3s$ 后不可能成立。满测集允许排除任意指定点，故引用不解决黄金参数。证毕。
+
+待证命题（未作为前置）。黄金 $\alpha$ 是否存在上述尺度的极限，以及极限是否为 $2s$，此处未证明。准确缺口是对
+$$
+C_M(d)=\#\{(i,j):p_i-p_j=d\},\qquad
+R_M(s;\alpha)=M^{-1}\sum_{d\ne0}C_M(d)\mathbf1_{\{\|\alpha d\|\le s/M\}}
+$$
+的联合素数差与黄金逼近估计。P6 的宏观等分布不给这个估计；此处没有提出未定义的“非泊松黄金尺度”替代它。
+
+
+
