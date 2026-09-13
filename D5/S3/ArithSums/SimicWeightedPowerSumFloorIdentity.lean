@@ -64,6 +64,7 @@ theorem simic_h655_ii (s : Finset ℕ) (hs : 2 ≤ s.card)
   let c := s.max' hsne
   have hc_mem : c ∈ s := by
     exact Finset.max'_mem s hsne
+  have hc_one : 1 ≤ c := h1 c hc_mem
   have hlt_of_mem_erase {i : ℕ} (hi : i ∈ s.erase c) : i < c := by
     have hi' := Finset.mem_erase.mp hi
     exact lt_of_le_of_ne (Finset.le_max' s i hi'.2) hi'.1
@@ -98,7 +99,7 @@ theorem simic_h655_ii (s : Finset ℕ) (hs : 2 ≤ s.card)
         (q : ℚ) ^ c := by
     rw [tail_sum_identity c] at h_adjusted_le
     have hc_pos : (0 : ℚ) < (c + 1 : ℕ) := by
-      exact_mod_cast Nat.succ_pos c
+      exact_mod_cast (by omega : 0 < c + 1)
     linarith
   have hgap_pos :
       0 < ((q : ℚ) - 1) *
@@ -149,7 +150,53 @@ theorem simic_h655_ii (s : Finset ℕ) (hs : 2 ≤ s.card)
       ring
     rw [hgap_eq, hden_eq]
     linarith
-  sorry
+  have hden_pos : (0 : ℚ) < ∑ i ∈ s, (q : ℚ) ^ i := by
+    apply Finset.sum_pos
+    · intro i _
+      positivity
+    · exact hsne
+  have hcentered :
+      (c : ℚ) * (∑ i ∈ s, (q : ℚ) ^ i) -
+          (∑ i ∈ s, (i : ℚ) * (q : ℚ) ^ i) =
+        ∑ i ∈ s, ((c - i : ℕ) : ℚ) * (q : ℚ) ^ i := by
+    rw [Finset.mul_sum, ← Finset.sum_sub_distrib]
+    apply Finset.sum_congr rfl
+    intro i hi
+    have hic : i ≤ c := Finset.le_max' s i hi
+    rw [Nat.cast_sub hic]
+    ring
+  have hrecenter :
+      ((q : ℚ) - 1) * (∑ i ∈ s, (i : ℚ) * (q : ℚ) ^ i) /
+          (∑ i ∈ s, (q : ℚ) ^ i) =
+        (c : ℚ) * ((q : ℚ) - 1) -
+          (((q : ℚ) - 1) *
+            (∑ i ∈ s, ((c - i : ℕ) : ℚ) * (q : ℚ) ^ i)) /
+            (∑ i ∈ s, (q : ℚ) ^ i) := by
+    field_simp [ne_of_gt hden_pos]
+    rw [← hcentered]
+    ring
+  have hdelta_pos :
+      0 < (((q : ℚ) - 1) *
+          (∑ i ∈ s, ((c - i : ℕ) : ℚ) * (q : ℚ) ^ i)) /
+        (∑ i ∈ s, (q : ℚ) ^ i) :=
+    div_pos hgap_pos hden_pos
+  have hdelta_lt_one :
+      (((q : ℚ) - 1) *
+          (∑ i ∈ s, ((c - i : ℕ) : ℚ) * (q : ℚ) ^ i)) /
+          (∑ i ∈ s, (q : ℚ) ^ i) < 1 :=
+    (div_lt_one hden_pos).mpr hgap_lt_den
+  change
+    ⌊((q : ℚ) - 1) * (∑ i ∈ s, (i : ℚ) * (q : ℚ) ^ i) /
+        (∑ i ∈ s, (q : ℚ) ^ i)⌋ =
+      (c : ℤ) * ((q : ℤ) - 1) - 1
+  apply Int.floor_eq_iff.mpr
+  constructor
+  · push_cast
+    rw [hrecenter]
+    linarith
+  · push_cast
+    rw [hrecenter]
+    linarith
 
 #print axioms simic_h655_ii
 
