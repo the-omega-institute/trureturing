@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:8d54b2a3c7e258b1e75581d41653f043c49eef2905787b3a13bf7e92d641ad97
   normalized_sha256: sha256:8d54b2a3c7e258b1e75581d41653f043c49eef2905787b3a13bf7e92d641ad97
 cas_ref: sha256:8d54b2a3c7e258b1e75581d41653f043c49eef2905787b3a13bf7e92d641ad97
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Entanglement/OccupancyWordSectors.multiplicity_eq_factorial
+    target_statement_id: sha256:5264b0008df77f207cb3d13a1a564ce34f67ba585e78625942ccc97ac2dbbcaf
 receipts:
   unresolved_subitems: []
   chain_atoms:
