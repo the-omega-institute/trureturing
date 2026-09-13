@@ -267,10 +267,21 @@ public sealed partial class InspectorSourceModeTests
                 GITHUB_WORKFLOW_REF="owner/repo/ci-fixture.yml@refs/heads/dev",
                 GITHUB_RUN_ID="29", GITHUB_RUN_ATTEMPT="1", GITHUB_JOB="lean-inspect")
             pair_args = []
-        output = scratch / "report.json"
+        public_entry = mode not in ("local-consumers", "compatible-prior", "transfer")
+        output = root / ".lake/build/stratalint/raw-lean-report.json" if public_entry else scratch / "report.json"
         command = [str(root / "tools/scripts/lean-report-pair.sh"), *pair_args,
             "--producer", str(root / "tools/lean-inspector/inspect.sh"), "--lake-bin", lake,
             "--candidate-root", str(root), "--candidate-output", str(output)]
+        if public_entry:
+            env.pop("BASE", None)
+            env["LAKE_BIN"] = lake
+            if mode == "initial":
+                env.update(STRATALINT_PUSH_BEFORE=before, STRATALINT_PUSH_HEAD=head)
+            if actions or mode in ("base-environment", "initial"):
+                command = ["make", "--no-print-directory", "lean-report"]
+            else:
+                command = ["bash", "tools/scripts/report/lean-report.sh",
+                    *([before] if mode == "pr" else source_args)]
         def run(args):
             return subprocess.run(args, cwd=root, env=env, text=True, capture_output=True)
         cold = run(command)
@@ -311,6 +322,11 @@ public sealed partial class InspectorSourceModeTests
             # Literal public report/cache calls with synthetic fixed Git inputs.
             # No workflow source is read or asserted by this test.
             lake_calls_before_transfer = sum(json.loads(line)[0] == "lake" for line in calls.read_text().splitlines())
+            if public_entry:
+                transfer_source = scratch / "report.json"
+                for suffix in ("", ".input.attestation", ".provenance.json", ".materials.zip"):
+                    shutil.copyfile(str(output) + suffix, str(transfer_source) + suffix)
+                output = transfer_source
             shutil.rmtree(root / ".lake")
             env["LAKE_BIN"] = str(scratch / "unavailable-lake")
             def copy_bundle(source, destination):
