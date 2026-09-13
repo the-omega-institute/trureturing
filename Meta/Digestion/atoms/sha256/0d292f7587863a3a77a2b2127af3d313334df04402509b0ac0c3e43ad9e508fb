@@ -1,0 +1,6 @@
+**定理 463.2。**上述量在每个有限前缀都有限且归一化合法，
+$$
+w_r(1)=1,\qquad
+w_r(n)=r\left(\sum_{q<n,\ q\ {\rm prime}}w_r(n-q)
++\sum_{q\mid n,\ q\ {\rm prime}}w_r(n/q)\right)\quad(n\ge2).
+$$

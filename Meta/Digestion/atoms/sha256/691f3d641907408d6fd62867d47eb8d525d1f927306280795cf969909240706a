@@ -1,0 +1,100 @@
+**定义 470.30（同一全集合解释的使用域）。** 沿用 Z 卷第 71–74 条的同一个可定义类函数
+$$
+\operatorname{Enc}(x)=
+\begin{cases}
+\operatorname{NatZ}(x)=\langle0,\zeta(x)\rangle,&x\in\omega,\\
+\langle1,\operatorname{Enc}[x]\rangle,&x\notin\omega,
+\end{cases}
+\qquad \mathfrak V_Z=\{c:\exists x\ c=\operatorname{Enc}(x)\}.
+$$
+$\operatorname{Dec}$ 只在 $\mathfrak V_Z$ 上为逆。对有效码 $c,d$ 及有效码组成的任意集合 $B$，仍用原
+$$
+c\in_Z d\iff\operatorname{Dec}(c)\in\operatorname{Dec}(d),\quad
+\operatorname{El}(c)=\operatorname{Enc}[\operatorname{Dec}(c)],\quad
+\operatorname{Pack}(B)=\operatorname{Enc}(\operatorname{Dec}[B]).
+$$
+对每个集合 $X$，$X^*=\operatorname{Enc}[X]=\operatorname{El}(\operatorname{Enc}(X))$，$e_X=\operatorname{Enc}|_X$。原第 72–74 条的双逆、单射、自然分支及语义配对全部保留：$\operatorname{Pack}(\{\operatorname{NatZ}(j):j<n\})=\operatorname{NatZ}(n)$，其余有效成员集合才走非自然分支。裸空字不是有效码；语义空集为 $\operatorname{NatZ}(0)$。素数标签字 $\zeta(p)$、自然叶 $\operatorname{Enc}(p)$、字对象的码 $\operatorname{Enc}(\zeta(p))$ 按各自输入类型使用。
+
+直接使用 Z 卷第 72–81、257–260、430.2–430.3、440.2–440.7、440.11 条的完整集合定理。其外部子集和函数的两个方向在本稿仍为
+$$
+U\subseteq X\longmapsto\operatorname{Enc}[U],\qquad
+B\subseteq X^*\longmapsto\operatorname{Dec}[B],
+$$
+$$
+f:X\to Y\longmapsto f^*=e_Yfe_X^{-1},\qquad
+g:X^*\to Y^*\longmapsto\bigl(x\mapsto\operatorname{Dec}(g(\operatorname{Enc}(x)))\bigr).
+$$
+所有子集及所有函数均可在两方向取作见证，零值边不删。普通分量积与元组单码由原语义配对桥比较：
+$$
+\chi_{X,Y}(c,d)=\langle c,d\rangle_Z=\operatorname{Enc}(\langle\operatorname{Dec}(c),\operatorname{Dec}(d)\rangle),
+\quad \chi_{X,Y}:X^*\times Y^*\leftrightarrow(X\times Y)^*.
+$$
+对 $R\subseteq X\times Y$，先取外部普通关系 $(e_X\times e_Y)[R]$，再经 $\chi$ 得 $\operatorname{Enc}[R]$，经 $\operatorname{Pack}$ 得单个关系码。对 $f:D\to Y$，完整图公式及其精确域为
+$$
+\operatorname{Enc}(f)=\operatorname{Pack}\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle_Z:x\in D\},\quad
+\operatorname{dom}(f^*)=D^*,\quad \operatorname{dom}_Z(\operatorname{Enc}(f))=\operatorname{Enc}(D).
+$$
+对任何联合部分域 $D\subseteq X^k$，原固定元数桥限制到 $\operatorname{Enc}[D]$ 的准确逆像；输入位置、重复输入、联合守卫和域外失败由第 258、260、81 条保留。元数零时原输入为唯一空元组；字母表可数不改变元数有限的含义。
+
+任意集合指标 $J$ 和集合族 $(Y_i)_{i\in J}$ 使用原第 440.6 条的全部积双射
+$$
+\Psi:\prod_{i\in J}Y_i^*\leftrightarrow\left(\prod_{i\in J}Y_i\right)^*,\quad
+\Psi(c)=\operatorname{Enc}(i\mapsto\operatorname{Dec}(c_i)),\quad
+\Psi^{-1}(\operatorname{Enc}(p))=(\operatorname{Enc}(p_i))_{i\in J}.
+$$
+空指标集保留唯一空函数；有空因子时两积均空。函数总图中原索引为 $i$，整体编码时其输入边为 $\operatorname{Enc}(i)$，不直接识别二者。
+
+这些通用定理在此的实际载体依次取 $\omega,\operatorname{Pr},\mathsf W_Z,\mathsf{Pr}_Z,\mathsf F$、有限激活记录域、$\mathcal C(P,A)$、实际带身份边域、全部有序输入域、原始重数表域、任意给定语义输入集合 $X$、$\Sigma^{<\omega},\mathcal P(X^k),\mathscr I_B,W_B,\mathcal T$、$E,E^d$ 及它们的全部幂集和函数空间。固定背景 $\theta$、容量 $A$、关系 $R$、语法参数的赋值、规范化函数、各原语的域与图、正确性规格、费用及规模函数都是相应集合参数；不要求这些参数有限、可定义或可计算。每个新域由指定集合的幂集、积、有限字集、替代及分离构成，规范输出和确界有前述存在唯一性。$\mathfrak V_Z$ 是原有效码类，不作为一个普遍状态集合。
+
+对任意带身份图 $(V,\mathcal E,s,t)$，长度 $\ell$ 的路径取 $V^{\ell+1}\times\mathcal E^\ell$ 中满足逐边接合、标签、真实守卫及指定初末条件的子集；全部有限路径取所有 $\ell\in\omega$ 的并。第 81、430.3、431.2 条分别用于这些积、子集及串接图。$\ell=0$ 时状态函数仍有其起点，边函数为空；不同起点的空路径在同一解释下保持不同。无限重写序列的量词另在完整 $V^\omega\times\mathcal E^\omega$ 及其接合子集上取值；命题 T2N 的不存在性也经原第 75–78 条在这个全函数域双向解释，不能仅由有限路径运输代替。
+
+等价关系 $Q$ 在路径域上取本稿 $\sim_{\rm sw}$ 或 $\sim_{\rm end}$；原第 81、431.2 条的商比较为
+$$
+[e_V(x)]_{Q^*}=\operatorname{Enc}[[x]_Q],\qquad
+[e_V(x)]_{Q^*}\longmapsto\operatorname{Enc}([x]_Q)=\operatorname{Pack}([e_V(x)]_{Q^*}).
+$$
+此处在使用该公式时将原一般载体符号 $V$ 实例化为相应完整路径域。正向为 $\operatorname{Pack}$，逆为 $\operatorname{El}$，既保留类的全部成员，也不另选代表。观察 $H$ 及费用下降条件用其完整图和刚证的充要条件；不满足下降条件的观察继续定义在路径上。
+
+费用域取本稿已定义的整个 $V_E=E^d$，零、加法、序与确界函数分别作为原集合函数或关系：
+$$
+0^*=\operatorname{Enc}(0_{V_E}),\qquad
+\operatorname{Enc}(v)\oplus^*\operatorname{Enc}(w)=\operatorname{Enc}(v+w),\qquad
+\operatorname{Enc}(v)\preceq^*\operatorname{Enc}(w)\iff v\preceq_E w.
+$$
+$\sup,\inf:\mathcal P(V_E)\to V_E$ 使用本稿的空集及无穷约定，按全部子集和完整图的同一定理运输。逐坐标的实数或无穷码与单个向量码通过 $J=d$ 的 $\Psi$ 比较。具体费用图包括 $\gamma_B$、$c_B$、$s\mapsto c_B(I;s)$、全部成本集、费用序、$\operatorname{Min}_E$、全部达到实现和路径的关系。一个给定费用的见证集合完整编码，任意有效见证也可完整解码；下确界存在、成员取到及不存在都按原固定公式运输。这里使用第 72–81、440.3–440.7、440.11 条的一般集合域；原第 440.8 的 $\mathbb R_{\ge0}^d$ 费用公式只在所有费用向量有限的限制域与此式一致。
+
+对表示双射运输同一实际图，原第 434.3–434.5 条的路径双射以每个 $\ell$ 为固定时域逐一使用：状态、边身份、源靶、标签、任务、初末条件和各中间域均须双向对应；取全部长度的并仍保留每条有限路径，因而图、长度及带标路径计数不变。费用全部有限时直接引用其保费结论；费用在 $E^d$ 时，逐条路径的对应函数必须按上述完整图公式或指定的数值相等运输，并保留初态、各边及终端每项费用及原聚合规则。有限串接的费用等式只用已证的结合律及逐项相等，不用实数消去或最优取到假设。更换原语、守卫或局部重写规则就是另一实际图，不能凭表示双射得到其费用优势。
+
+原第 436.1–436.5 的有限递推及全部最优路径恢复在实际状态层、实际边层、原语时域均有限且费用为有限非负实向量时直接引用；平行边的身份同样须有限。原第 438.2–438.4 给此条件的准确使用范围与不取到反例，有限表示种类本身不够。宏若允许内部重写，原 438.7–438.8 要求保留其全部内部路径、前缀守卫和真实费用。广域 $E^d$ 的费用集定义没有因此删去无穷坐标、无界实际费用或没有极小元的成本集情形。
+
+CSA 卷定义 1–10、13–14、20、22，命题 1–6、11–12、14–15，以及 Z 卷第 83–84、255–274、418.5–418.9 条用于原完整对象
+$$
+X=((E_X,\prec_X,t_X,x_X,\sigma_X,\rho_X,\Omega_X),A_X),\qquad
+A_X\subseteq\Omega_X\subseteq E_X\subseteq HF.
+$$
+$E_X$ 有限，$\prec_X$ 为严格偏序；时间、位置、符号、来源都是全档案上的总函数，$e\prec_X f\Rightarrow t_X(e)<t_X(f)$。时间取原整数 $J=(\{0\}\times\omega)\cup(\{1\}\times\omega_{>0})$，空间取原括号的 $J^3$；按原维数假设另定有限维时使用该原维数。符号的陪域为 $\{1,-1\}$，来源的陪域为原自然叶和有序二叉节点生成的全部有限树，不合并同来源的事件身份。选择为任意 $A_X\subseteq\Omega_X$，不额外要求下闭。一般合法情境允许 $\Omega_X$ 的符号和非零；原平衡算术载体恰限制该和为零，不要求全档案或各位置分别平衡。全部未选、非当前档案事件及其属性仍在对象中。
+
+原整数到通常整数的双射 $v$、带符号数字双射、空间逐坐标双射及原括号比较依次按 Z 卷第 255–258 条使用；逐字段目标的合法域、全字段双逆和全部来源树逆按 261–264，运算及参数按 265–269。所有字段最终仍通过同一个 $\operatorname{Enc}$ 比较到其原集合，实际像的逆只在该像上使用。完整对象相等、全档案历史同构和整数观察相等分别为不同关系，按第 83–84、418.9 条运输。
+
+并行和以两个不交标签复制两份全档案、当前区域、选择及所有属性，只留分量内因果边。时间复合除这些数据外添加全部左档案至右档案的边，其准确域为
+$$
+\forall e\in E_X\ \forall f\in E_Y\quad t_X(e)<t_Y(f).
+$$
+空档案按空真处理，合法显式时移是另一原运算。原档案乘法保留两份带标签旧档案，另加全部 $\Omega_X\times\Omega_Y$ 对应的新事件 $p_{ef}$；新时间为 $\max(t_X(e),t_Y(f))+1$，位置为和，符号为积，来源为有序父来源树对，因果取旧边与父边的传递闭包。当前区域是全部这些新事件，选择由 $A_X\times A_Y$ 确定。原 CSA 命题 2–3、Z 卷 83、265、418.6 的完整证明保留所有新旧事件及守卫；当前因子为空时也不删两份旧档案。保存旧事件结构不增加从结果反求全部旧选择、旧当前区域或未记录中间操作的能力，原 CSA 定义 2、6 的信息范围仍保持。
+
+补集为同一完整情境中的 $\Omega_X\setminus A_X$；其读数为 $u(C_X)-q(X)$，在平衡域才是算术负号。空间、时间、联合时空筛选的参数分别遍历全部 $\mathcal P(J^3),\mathcal P(J),\mathcal P(J\times J^3)$；身份、因果过去、来源或联合属性筛选、父对限制、共同参考点及仿射变换的各个参数域和联合守卫按原 CSA 定义 13–14、Z 卷第 266–267 条整体使用。其参数可以无限；只是每份实际档案有限。全部选择族、全部索引族的图、所有成功部分运算图和失败标签以第 74、81、84 条解释，固定有限严格表达式中的每个中间守卫亦不丢弃。
+
+全档案与当前区域端点仍为
+$$
+m_X=\min t_X[E_X],\quad M_X=\max t_X[E_X],\quad s_X=\max t_X[\Omega_X].
+$$
+空档案取 $m_X=+\infty,M_X=-\infty$，空当前区域取 $s_X=-\infty$。它们使用原扩展整数类型及实际像。原空间或联合净剖面、所选整数观察、素数槽观察各自的完整总图含全部零值边，不能由净剖面反求这三个档案端点。Z 卷第 439.4 条的合法平衡档案实例给相同整数观察却不同全档案时间守卫和实际后续费用；故整数观察没有自动成为费用商。原第 439.1–439.3 条若用于费用商，须具有所列终端饱和、同费同标签边匹配和实际提升条件；它们不声称商投影是原路径身份的双射。
+
+指数标量 $\prod_pp^{a_p}$ 与 CSA 的所选符号和仍分开。Z 卷第 27 条在原正槽输入 $2,3$ 的档案乘法实例给素数槽读数五而非普通整数乘积六；第 271 条只在固定配置及所指定实现像上给逆。丰富有理数的全部非零分母域、丰富实数的全部柯西序列与零差商、原非零实类逆的完整有限零前缀分支按 CSA 命题 5–6、Z 卷第 82、418.7 条直接运输；完整集合解释不缩成指数或有限状态编码。
+
+Z 卷定义 75、定理 76–78 及 440.11 对以上每个已声明域内的新图符号先作定义消去，仍给每个固定有限集合论公式及全部集合参数的两向式
+$$
+\varphi(x_1,\ldots,x_r)\iff\varphi^Z(\operatorname{Enc}(x_1),\ldots,\operatorname{Enc}(x_r)).
+$$
+等号由原编码单射保持并反映，成员使用 $\in_Z$；存在量词正向编码原见证、反向解码任意有效见证，全称量词正向任取有效码解码、反向任取原集合编码。全部子集、全部函数、关系、历史商、费用、任意集合指标积和 CSA 的全字段及全部参数都在这些见证域内。原分离与替代的每个固定实例随定义消去保留；有效码类不成为普遍集合，逐公式比较不成为统一内部真理谓词。若另已给定 ZFC 模型，只按原第 78 条在其内部幂集、函数空间和内部有限性的意义作此比较，不据此声称模型存在。原第 79、440.12 条的有限字基数障碍继续成立。
+

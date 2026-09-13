@@ -1,0 +1,15 @@
+**定理 470.24（对 Z 卷定理 128 末句的起点与商域勘误）。** Z 卷定理 128 中“若只取路径的起点与终点商……状态商恰为 $S(P,A)$”须明确路径底集。保持其第 121、127 条的实际增减规则与守卫：$\iota_p$ 在 $a_p<A_p$ 时增一，$\delta_p$ 在 $a_p>0$ 时减一。每条成功路径是 $(a,w)$，起点 $a\in\mathcal C(P,A)=S(P,A)$，词中每一步都在实际域内执行；其终点记为 $t(a,w)$。
+
+分别记全部增长路径域和全部正负成功路径域为 $\mathsf{Path}_+$、$\mathsf{Path}_{\pm}$。全部增长路径取前述 $\sim_{\rm sw}$，则有双射
+$$
+[(a,w)]_{\rm sw}\longmapsto(a,t(a,w)):
+\mathsf{Path}_+/\!\sim_{\rm sw}\ \longrightarrow
+\{(a,b)\in\mathcal C(P,A)^2:a\le b\}.
+$$
+全部正负路径取“起点相同且终点相同”的等价关系 $\sim_{\rm end}$，则有双射
+$$
+[(a,w)]_{\rm end}\longmapsto(a,t(a,w)):
+\mathsf{Path}_{\pm}/\!\sim_{\rm end}\ \longrightarrow\mathcal C(P,A)^2.
+$$
+固定起点 $a$ 后，前一个商对应 $\{b:a\le b\}$，后一个商才由终点映射对应整个 $\mathcal C(P,A)$；后一固定起点结论正是原定理 159 的成功词域与同终点商。在两个全域端点表示中，恒等路径为各自的 $(a,a)$，复合仅在中间端点一致时定义为 $(a,b),(b,c)\mapsto(a,c)$。正负端点等价不等同于只作异标签交换的等价。
+

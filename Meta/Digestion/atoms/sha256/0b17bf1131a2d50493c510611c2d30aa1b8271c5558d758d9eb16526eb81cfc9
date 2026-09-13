@@ -1,0 +1,11 @@
+**定义 465.1。**$X\ge2$，$m=\pi(X)$，$t>0$。$m=1$ 时唯一终点为二，两概率相同。$m\ge2$ 时定义一步历史终点概率
+$$
+v_X(p)=\frac{1+\mathbf1_{p=3}}{m+1}=\frac{m u_X(p)+\delta_3(p)}{m+1},
+\qquad \delta_m=\frac{m-1}{m(m+1)}.
+$$
+记 $b_k(X)=\sum_{p\le X}h_k(p)$，$K=\lfloor P(X)/2\rfloor$，$T=\sum_{k=2}^Kb_k(X)t^k$，以及
+$$
+B=mt\sum_{j=1}^{K-1}(2mt)^j,
+$$
+空和为零。
+
